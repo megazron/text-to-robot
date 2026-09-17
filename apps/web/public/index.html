@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Text to Robot</title>
+<meta name="description" content="Describe a robot. Get a ROS 2 robot." />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>" />
+<link rel="stylesheet" href="styles.css" />
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+}}
+</script>
+</head>
+<body>
+<header id="topbar">
+  <div class="brand"><span class="logo">🤖</span><div><b>TEXT<span class="arrow">→</span>ROBOT</b><small>Describe a robot. Get a ROS&nbsp;2 robot.</small></div></div>
+  <form id="genform" class="promptrow">
+    <input id="prompt" placeholder="Describe the robot you want…  e.g. Create a 6 DOF arm with a two-finger gripper" autocomplete="off" />
+    <button id="genbtn" type="submit">Generate Robot</button>
+  </form>
+  <span id="mode" class="badge" title="LLM mode">demo</span>
+</header>
+
+<div id="examples" class="examples"></div>
+
+<main id="layout">
+  <aside id="left" class="panel">
+    <div class="panel-h">Robot Structure</div>
+    <div id="tree" class="tree"></div>
+    <div class="panel-h">Templates</div>
+    <div id="templates" class="chips"></div>
+  </aside>
+
+  <section id="center">
+    <div id="viewport"></div>
+    <div id="viewhud" class="viewhud">
+      <label><input type="checkbox" id="showCollision" /> collision</label>
+      <label><input type="checkbox" id="showAxes" checked /> joint axes</label>
+      <label><input type="checkbox" id="showFrames" /> frames</label>
+      <button id="resetView" class="mini">reset view</button>
+    </div>
+    <div id="status" class="status"></div>
+  </section>
+
+  <aside id="right" class="panel">
+    <div class="tabs">
+      <button class="tab active" data-tab="inspector">Inspector</button>
+      <button class="tab" data-tab="joints">Joints</button>
+      <button class="tab" data-tab="history">History</button>
+    </div>
+    <div id="tab-inspector" class="tabpane active"><div class="hint">Click a link or joint in the 3D view or tree.</div></div>
+    <div id="tab-joints" class="tabpane"><div id="sliders"></div></div>
+    <div id="tab-history" class="tabpane"><div id="history"></div><div id="diff" class="diff"></div></div>
+  </aside>
+</main>
+
+<footer id="bottombar">
+  <form id="modform" class="promptrow">
+    <input id="modify" placeholder="Modify your robot…  e.g. Make the forearm 30% longer, add a camera to the head" autocomplete="off" />
+    <button id="modbtn" type="submit">Modify</button>
+  </form>
+  <div class="downloads">
+    <button data-dl="urdf">URDF</button>
+    <button data-dl="xacro">XACRO</button>
+    <button data-dl="ros2">ROS 2 Package</button>
+    <button data-dl="json">JSON</button>
+    <button data-dl="launch" class="ghost">Copy launch cmd</button>
+  </div>
+</footer>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>

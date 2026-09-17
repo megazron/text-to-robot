@@ -1,0 +1,1109 @@
+{
+  "robot_name": "quadruped",
+  "links": [
+    {
+      "name": "base_link",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.4,
+          0.2,
+          0.1
+        ]
+      },
+      "mass": 21.600000000000005,
+      "material": "base_mat",
+      "role": "base",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0.35
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.09000000000000004,
+        "iyy": 0.30600000000000016,
+        "izz": 0.36000000000000015,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.4,
+          0.2,
+          0.1
+        ]
+      }
+    },
+    {
+      "name": "front_left_hip",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.03,
+        "length": 0.05
+      },
+      "mass": 0.3817035074111598,
+      "material": "accent_mat",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          1.5707963267948966,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0001654048532115026,
+        "iyy": 0.0001654048532115026,
+        "izz": 0.00017176657833502192,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.03,
+        "length": 0.05
+      }
+    },
+    {
+      "name": "front_left_thigh",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.022,
+        "length": 0.16
+      },
+      "mass": 0.6568693247537826,
+      "material": "link_mat",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.08
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0014808024144366105,
+        "iyy": 0.0014808024144366105,
+        "izz": 0.00015896237659041536,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.022,
+        "length": 0.16
+      }
+    },
+    {
+      "name": "front_left_shin",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.018,
+        "length": 0.16
+      },
+      "mass": 0.43972244053765613,
+      "material": "link_mat",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.08
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0009736920574972166,
+        "iyy": 0.0009736920574972166,
+        "izz": 0.00007123503536710027,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.018,
+        "length": 0.16
+      }
+    },
+    {
+      "name": "front_right_hip",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.03,
+        "length": 0.05
+      },
+      "mass": 0.3817035074111598,
+      "material": "accent_mat",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          1.5707963267948966,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0001654048532115026,
+        "iyy": 0.0001654048532115026,
+        "izz": 0.00017176657833502192,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.03,
+        "length": 0.05
+      }
+    },
+    {
+      "name": "front_right_thigh",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.022,
+        "length": 0.16
+      },
+      "mass": 0.6568693247537826,
+      "material": "link_mat",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.08
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0014808024144366105,
+        "iyy": 0.0014808024144366105,
+        "izz": 0.00015896237659041536,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.022,
+        "length": 0.16
+      }
+    },
+    {
+      "name": "front_right_shin",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.018,
+        "length": 0.16
+      },
+      "mass": 0.43972244053765613,
+      "material": "link_mat",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.08
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0009736920574972166,
+        "iyy": 0.0009736920574972166,
+        "izz": 0.00007123503536710027,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.018,
+        "length": 0.16
+      }
+    },
+    {
+      "name": "rear_left_hip",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.03,
+        "length": 0.05
+      },
+      "mass": 0.3817035074111598,
+      "material": "accent_mat",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          1.5707963267948966,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0001654048532115026,
+        "iyy": 0.0001654048532115026,
+        "izz": 0.00017176657833502192,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.03,
+        "length": 0.05
+      }
+    },
+    {
+      "name": "rear_left_thigh",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.022,
+        "length": 0.16
+      },
+      "mass": 0.6568693247537826,
+      "material": "link_mat",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.08
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0014808024144366105,
+        "iyy": 0.0014808024144366105,
+        "izz": 0.00015896237659041536,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.022,
+        "length": 0.16
+      }
+    },
+    {
+      "name": "rear_left_shin",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.018,
+        "length": 0.16
+      },
+      "mass": 0.43972244053765613,
+      "material": "link_mat",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.08
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0009736920574972166,
+        "iyy": 0.0009736920574972166,
+        "izz": 0.00007123503536710027,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.018,
+        "length": 0.16
+      }
+    },
+    {
+      "name": "rear_right_hip",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.03,
+        "length": 0.05
+      },
+      "mass": 0.3817035074111598,
+      "material": "accent_mat",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          1.5707963267948966,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0001654048532115026,
+        "iyy": 0.0001654048532115026,
+        "izz": 0.00017176657833502192,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.03,
+        "length": 0.05
+      }
+    },
+    {
+      "name": "rear_right_thigh",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.022,
+        "length": 0.16
+      },
+      "mass": 0.6568693247537826,
+      "material": "link_mat",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.08
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0014808024144366105,
+        "iyy": 0.0014808024144366105,
+        "izz": 0.00015896237659041536,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.022,
+        "length": 0.16
+      }
+    },
+    {
+      "name": "rear_right_shin",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.018,
+        "length": 0.16
+      },
+      "mass": 0.43972244053765613,
+      "material": "link_mat",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.08
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0009736920574972166,
+        "iyy": 0.0009736920574972166,
+        "izz": 0.00007123503536710027,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.018,
+        "length": 0.16
+      }
+    }
+  ],
+  "joints": [
+    {
+      "name": "front_left_hip_joint",
+      "type": "revolute",
+      "parent": "base_link",
+      "child": "front_left_hip",
+      "origin": {
+        "xyz": [
+          0.18,
+          0.12,
+          0.3
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.8,
+        "upper": 0.8,
+        "effort": 50,
+        "velocity": 2
+      }
+    },
+    {
+      "name": "front_left_thigh_joint",
+      "type": "revolute",
+      "parent": "front_left_hip",
+      "child": "front_left_thigh",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -1.6,
+        "upper": 1.6,
+        "effort": 50,
+        "velocity": 2
+      }
+    },
+    {
+      "name": "front_left_knee_joint",
+      "type": "revolute",
+      "parent": "front_left_thigh",
+      "child": "front_left_shin",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.16
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -2.4,
+        "upper": 0,
+        "effort": 50,
+        "velocity": 2
+      }
+    },
+    {
+      "name": "front_right_hip_joint",
+      "type": "revolute",
+      "parent": "base_link",
+      "child": "front_right_hip",
+      "origin": {
+        "xyz": [
+          0.18,
+          -0.12,
+          0.3
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.8,
+        "upper": 0.8,
+        "effort": 50,
+        "velocity": 2
+      }
+    },
+    {
+      "name": "front_right_thigh_joint",
+      "type": "revolute",
+      "parent": "front_right_hip",
+      "child": "front_right_thigh",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -1.6,
+        "upper": 1.6,
+        "effort": 50,
+        "velocity": 2
+      }
+    },
+    {
+      "name": "front_right_knee_joint",
+      "type": "revolute",
+      "parent": "front_right_thigh",
+      "child": "front_right_shin",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.16
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -2.4,
+        "upper": 0,
+        "effort": 50,
+        "velocity": 2
+      }
+    },
+    {
+      "name": "rear_left_hip_joint",
+      "type": "revolute",
+      "parent": "base_link",
+      "child": "rear_left_hip",
+      "origin": {
+        "xyz": [
+          -0.18,
+          0.12,
+          0.3
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.8,
+        "upper": 0.8,
+        "effort": 50,
+        "velocity": 2
+      }
+    },
+    {
+      "name": "rear_left_thigh_joint",
+      "type": "revolute",
+      "parent": "rear_left_hip",
+      "child": "rear_left_thigh",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -1.6,
+        "upper": 1.6,
+        "effort": 50,
+        "velocity": 2
+      }
+    },
+    {
+      "name": "rear_left_knee_joint",
+      "type": "revolute",
+      "parent": "rear_left_thigh",
+      "child": "rear_left_shin",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.16
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -2.4,
+        "upper": 0,
+        "effort": 50,
+        "velocity": 2
+      }
+    },
+    {
+      "name": "rear_right_hip_joint",
+      "type": "revolute",
+      "parent": "base_link",
+      "child": "rear_right_hip",
+      "origin": {
+        "xyz": [
+          -0.18,
+          -0.12,
+          0.3
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.8,
+        "upper": 0.8,
+        "effort": 50,
+        "velocity": 2
+      }
+    },
+    {
+      "name": "rear_right_thigh_joint",
+      "type": "revolute",
+      "parent": "rear_right_hip",
+      "child": "rear_right_thigh",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -1.6,
+        "upper": 1.6,
+        "effort": 50,
+        "velocity": 2
+      }
+    },
+    {
+      "name": "rear_right_knee_joint",
+      "type": "revolute",
+      "parent": "rear_right_thigh",
+      "child": "rear_right_shin",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.16
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -2.4,
+        "upper": 0,
+        "effort": 50,
+        "velocity": 2
+      }
+    }
+  ],
+  "materials": [
+    {
+      "name": "base_mat",
+      "color": [
+        0.25,
+        0.25,
+        0.28,
+        1
+      ]
+    },
+    {
+      "name": "link_mat",
+      "color": [
+        0.85,
+        0.85,
+        0.88,
+        1
+      ]
+    },
+    {
+      "name": "gripper_mat",
+      "color": [
+        0.15,
+        0.35,
+        0.75,
+        1
+      ]
+    },
+    {
+      "name": "wheel_mat",
+      "color": [
+        0.1,
+        0.1,
+        0.12,
+        1
+      ]
+    },
+    {
+      "name": "sensor_mat",
+      "color": [
+        0.1,
+        0.7,
+        0.4,
+        1
+      ]
+    },
+    {
+      "name": "accent_mat",
+      "color": [
+        0.9,
+        0.55,
+        0.1,
+        1
+      ]
+    }
+  ],
+  "sensors": [],
+  "end_effectors": [],
+  "metadata": {
+    "generator": "text-to-robot",
+    "created": "2026-09-17T11:27:41.940Z",
+    "inferred_fields": [
+      "joints.front_left_hip_joint.dynamics",
+      "joints.front_left_hip_joint.limit",
+      "joints.front_left_knee_joint.dynamics",
+      "joints.front_left_knee_joint.limit",
+      "joints.front_left_thigh_joint.dynamics",
+      "joints.front_left_thigh_joint.limit",
+      "joints.front_right_hip_joint.dynamics",
+      "joints.front_right_hip_joint.limit",
+      "joints.front_right_knee_joint.dynamics",
+      "joints.front_right_knee_joint.limit",
+      "joints.front_right_thigh_joint.dynamics",
+      "joints.front_right_thigh_joint.limit",
+      "joints.rear_left_hip_joint.dynamics",
+      "joints.rear_left_hip_joint.limit",
+      "joints.rear_left_knee_joint.dynamics",
+      "joints.rear_left_knee_joint.limit",
+      "joints.rear_left_thigh_joint.dynamics",
+      "joints.rear_left_thigh_joint.limit",
+      "joints.rear_right_hip_joint.dynamics",
+      "joints.rear_right_hip_joint.limit",
+      "joints.rear_right_knee_joint.dynamics",
+      "joints.rear_right_knee_joint.limit",
+      "joints.rear_right_thigh_joint.dynamics",
+      "joints.rear_right_thigh_joint.limit",
+      "links.base_link.inertia",
+      "links.base_link.mass",
+      "links.front_left_hip.inertia",
+      "links.front_left_hip.mass",
+      "links.front_left_shin.inertia",
+      "links.front_left_shin.mass",
+      "links.front_left_thigh.inertia",
+      "links.front_left_thigh.mass",
+      "links.front_right_hip.inertia",
+      "links.front_right_hip.mass",
+      "links.front_right_shin.inertia",
+      "links.front_right_shin.mass",
+      "links.front_right_thigh.inertia",
+      "links.front_right_thigh.mass",
+      "links.rear_left_hip.inertia",
+      "links.rear_left_hip.mass",
+      "links.rear_left_shin.inertia",
+      "links.rear_left_shin.mass",
+      "links.rear_left_thigh.inertia",
+      "links.rear_left_thigh.mass",
+      "links.rear_right_hip.inertia",
+      "links.rear_right_hip.mass",
+      "links.rear_right_shin.inertia",
+      "links.rear_right_shin.mass",
+      "links.rear_right_thigh.inertia",
+      "links.rear_right_thigh.mass"
+    ],
+    "notes": [
+      "Generated quadruped (12-DOF) from template.",
+      "Interpreted by demo parser: type inferred, DOF=12, gripper=parallel."
+    ],
+    "source_prompt": "Create a quadruped robot"
+  }
+}

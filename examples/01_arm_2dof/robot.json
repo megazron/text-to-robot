@@ -1,0 +1,547 @@
+{
+  "robot_name": "arm_2dof",
+  "links": [
+    {
+      "name": "base_link",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.06,
+        "length": 0.12
+      },
+      "mass": 3.664353671147134,
+      "material": "base_mat",
+      "role": "base",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0.06
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0076951427094089815,
+        "iyy": 0.0076951427094089815,
+        "izz": 0.0065958366080648406,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.06,
+        "length": 0.12
+      }
+    },
+    {
+      "name": "shoulder",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.04,
+        "length": 0.1
+      },
+      "mass": 1.3571680263507908,
+      "material": "link_mat",
+      "role": "shoulder",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0.05
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.001673840565832642,
+        "iyy": 0.001673840565832642,
+        "izz": 0.0010857344210806327,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.04,
+        "length": 0.1
+      }
+    },
+    {
+      "name": "upper_arm",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.04,
+        "length": 0.25
+      },
+      "mass": 3.392920065876977,
+      "material": "link_mat",
+      "role": "upper_arm",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0.125
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.01902862670279338,
+        "iyy": 0.01902862670279338,
+        "izz": 0.0027143360527015813,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.04,
+        "length": 0.25
+      }
+    },
+    {
+      "name": "gripper_base",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.06,
+          0.08,
+          0.03
+        ]
+      },
+      "mass": 0.3887999999999999,
+      "material": "gripper_mat",
+      "role": "gripper",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0.015
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.00023651999999999994,
+        "iyy": 0.00014579999999999994,
+        "izz": 0.0003239999999999999,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.06,
+          0.08,
+          0.03
+        ]
+      }
+    },
+    {
+      "name": "left_finger",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.015,
+          0.02,
+          0.06
+        ]
+      },
+      "mass": 0.04859999999999999,
+      "material": "gripper_mat",
+      "role": "gripper",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0.03
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000016199999999999997,
+        "iyy": 0.000015491249999999995,
+        "izz": 0.0000025312499999999993,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.015,
+          0.02,
+          0.06
+        ]
+      }
+    },
+    {
+      "name": "right_finger",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.015,
+          0.02,
+          0.06
+        ]
+      },
+      "mass": 0.04859999999999999,
+      "material": "gripper_mat",
+      "role": "gripper",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0.03
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000016199999999999997,
+        "iyy": 0.000015491249999999995,
+        "izz": 0.0000025312499999999993,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.015,
+          0.02,
+          0.06
+        ]
+      }
+    }
+  ],
+  "joints": [
+    {
+      "name": "joint_1",
+      "type": "revolute",
+      "parent": "base_link",
+      "child": "shoulder",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0.12
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -3.141592653589793,
+        "upper": 3.141592653589793,
+        "effort": 50,
+        "velocity": 2
+      }
+    },
+    {
+      "name": "joint_2",
+      "type": "revolute",
+      "parent": "shoulder",
+      "child": "upper_arm",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0.1
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -3.141592653589793,
+        "upper": 3.141592653589793,
+        "effort": 50,
+        "velocity": 2
+      }
+    },
+    {
+      "name": "gripper_base_joint",
+      "type": "fixed",
+      "parent": "upper_arm",
+      "child": "gripper_base",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0.25
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "left_finger_joint",
+      "type": "prismatic",
+      "parent": "gripper_base",
+      "child": "left_finger",
+      "origin": {
+        "xyz": [
+          0,
+          0.02,
+          0.03
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ],
+      "limit": {
+        "lower": 0,
+        "upper": 0.03,
+        "effort": 40,
+        "velocity": 0.3
+      }
+    },
+    {
+      "name": "right_finger_joint",
+      "type": "prismatic",
+      "parent": "gripper_base",
+      "child": "right_finger",
+      "origin": {
+        "xyz": [
+          0,
+          -0.02,
+          0.03
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        -1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ],
+      "limit": {
+        "lower": 0,
+        "upper": 0.03,
+        "effort": 40,
+        "velocity": 0.3
+      }
+    }
+  ],
+  "materials": [
+    {
+      "name": "base_mat",
+      "color": [
+        0.25,
+        0.25,
+        0.28,
+        1
+      ]
+    },
+    {
+      "name": "link_mat",
+      "color": [
+        0.85,
+        0.85,
+        0.88,
+        1
+      ]
+    },
+    {
+      "name": "gripper_mat",
+      "color": [
+        0.15,
+        0.35,
+        0.75,
+        1
+      ]
+    },
+    {
+      "name": "wheel_mat",
+      "color": [
+        0.1,
+        0.1,
+        0.12,
+        1
+      ]
+    },
+    {
+      "name": "sensor_mat",
+      "color": [
+        0.1,
+        0.7,
+        0.4,
+        1
+      ]
+    },
+    {
+      "name": "accent_mat",
+      "color": [
+        0.9,
+        0.55,
+        0.1,
+        1
+      ]
+    }
+  ],
+  "sensors": [],
+  "end_effectors": [
+    {
+      "name": "main_gripper",
+      "type": "two_finger_gripper",
+      "attach_link": "upper_arm"
+    }
+  ],
+  "metadata": {
+    "generator": "text-to-robot",
+    "created": "2026-09-17T11:27:41.918Z",
+    "inferred_fields": [
+      "joints.gripper_base_joint.dynamics",
+      "joints.gripper_base_joint.limit",
+      "joints.joint_1.dynamics",
+      "joints.joint_1.limit",
+      "joints.joint_2.dynamics",
+      "joints.joint_2.limit",
+      "joints.left_finger_joint.dynamics",
+      "joints.left_finger_joint.limit",
+      "joints.right_finger_joint.dynamics",
+      "joints.right_finger_joint.limit",
+      "links.base_link.inertia",
+      "links.base_link.mass",
+      "links.gripper_base.inertia",
+      "links.gripper_base.mass",
+      "links.left_finger.inertia",
+      "links.left_finger.mass",
+      "links.right_finger.inertia",
+      "links.right_finger.mass",
+      "links.shoulder.inertia",
+      "links.shoulder.mass",
+      "links.upper_arm.inertia",
+      "links.upper_arm.mass"
+    ],
+    "notes": [
+      "Generated 2-DOF serial arm from template.",
+      "Interpreted by demo parser: type inferred, DOF=4, gripper=parallel."
+    ],
+    "source_prompt": "Create a 2 DOF robotic arm"
+  }
+}

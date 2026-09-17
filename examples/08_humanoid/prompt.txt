@@ -1,0 +1,1 @@
+Create a small humanoid robot with a torso, head and two 7 DOF arms and two-finger grippers

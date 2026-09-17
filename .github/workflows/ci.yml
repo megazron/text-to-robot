@@ -1,0 +1,16 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "22" }
+      - run: npm install
+      - run: npm test
+      - name: Validate all examples
+        run: |
+          for d in examples/*/; do
+            node cli/src/index.ts validate "$d/robot.urdf" || exit 1
+          done

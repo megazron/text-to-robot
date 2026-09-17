@@ -1,0 +1,2 @@
+{ "name": "@ttr/api", "version": "0.1.0", "type": "module", "exports": { ".": "./src/server.ts" },
+  "dependencies": { "@ttr/robot-schema": "*", "@ttr/robot-generator": "*", "@ttr/urdf-validator": "*", "@ttr/ros2-export": "*", "@ttr/robot-templates": "*", "@ttr/llm-providers": "*" } }

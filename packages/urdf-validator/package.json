@@ -1,0 +1,2 @@
+{ "name": "@ttr/urdf-validator", "version": "0.1.0", "type": "module", "exports": { ".": "./src/index.ts" },
+  "dependencies": { "@ttr/robot-schema": "*" } }

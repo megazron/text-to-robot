@@ -1,0 +1,16 @@
+{
+  "name": "@ttr/robot-generator",
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@ttr/robot-schema": "*",
+    "@ttr/kinematics": "*",
+    "@ttr/robot-templates": "*",
+    "@ttr/urdf-generator": "*",
+    "@ttr/urdf-validator": "*",
+    "@ttr/llm-providers": "*"
+  }
+}

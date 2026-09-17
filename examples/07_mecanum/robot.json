@@ -1,0 +1,429 @@
+{
+  "robot_name": "mecanum_robot",
+  "links": [
+    {
+      "name": "base_link",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.4,
+          0.3,
+          0.12
+        ]
+      },
+      "mass": 38.879999999999995,
+      "material": "base_mat",
+      "role": "base",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0.12
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.33825599999999995,
+        "iyy": 0.565056,
+        "izz": 0.8099999999999999,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.4,
+          0.3,
+          0.12
+        ]
+      }
+    },
+    {
+      "name": "front_left_wheel",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.06,
+        "length": 0.04
+      },
+      "mass": 1.2214512237157116,
+      "material": "wheel_mat",
+      "role": "wheel",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          1.5707963267948966,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0012621662645062354,
+        "iyy": 0.0012621662645062354,
+        "izz": 0.0021986122026882806,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.06,
+        "length": 0.04
+      }
+    },
+    {
+      "name": "front_right_wheel",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.06,
+        "length": 0.04
+      },
+      "mass": 1.2214512237157116,
+      "material": "wheel_mat",
+      "role": "wheel",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          1.5707963267948966,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0012621662645062354,
+        "iyy": 0.0012621662645062354,
+        "izz": 0.0021986122026882806,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.06,
+        "length": 0.04
+      }
+    },
+    {
+      "name": "rear_left_wheel",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.06,
+        "length": 0.04
+      },
+      "mass": 1.2214512237157116,
+      "material": "wheel_mat",
+      "role": "wheel",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          1.5707963267948966,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0012621662645062354,
+        "iyy": 0.0012621662645062354,
+        "izz": 0.0021986122026882806,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.06,
+        "length": 0.04
+      }
+    },
+    {
+      "name": "rear_right_wheel",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.06,
+        "length": 0.04
+      },
+      "mass": 1.2214512237157116,
+      "material": "wheel_mat",
+      "role": "wheel",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          1.5707963267948966,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0012621662645062354,
+        "iyy": 0.0012621662645062354,
+        "izz": 0.0021986122026882806,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.06,
+        "length": 0.04
+      }
+    }
+  ],
+  "joints": [
+    {
+      "name": "front_left_wheel_joint",
+      "type": "continuous",
+      "parent": "base_link",
+      "child": "front_left_wheel",
+      "origin": {
+        "xyz": [
+          0.14,
+          0.16999999999999998,
+          0.06
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "front_right_wheel_joint",
+      "type": "continuous",
+      "parent": "base_link",
+      "child": "front_right_wheel",
+      "origin": {
+        "xyz": [
+          0.14,
+          -0.16999999999999998,
+          0.06
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "rear_left_wheel_joint",
+      "type": "continuous",
+      "parent": "base_link",
+      "child": "rear_left_wheel",
+      "origin": {
+        "xyz": [
+          -0.14,
+          0.16999999999999998,
+          0.06
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "rear_right_wheel_joint",
+      "type": "continuous",
+      "parent": "base_link",
+      "child": "rear_right_wheel",
+      "origin": {
+        "xyz": [
+          -0.14,
+          -0.16999999999999998,
+          0.06
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "name": "base_mat",
+      "color": [
+        0.25,
+        0.25,
+        0.28,
+        1
+      ]
+    },
+    {
+      "name": "link_mat",
+      "color": [
+        0.85,
+        0.85,
+        0.88,
+        1
+      ]
+    },
+    {
+      "name": "gripper_mat",
+      "color": [
+        0.15,
+        0.35,
+        0.75,
+        1
+      ]
+    },
+    {
+      "name": "wheel_mat",
+      "color": [
+        0.1,
+        0.1,
+        0.12,
+        1
+      ]
+    },
+    {
+      "name": "sensor_mat",
+      "color": [
+        0.1,
+        0.7,
+        0.4,
+        1
+      ]
+    },
+    {
+      "name": "accent_mat",
+      "color": [
+        0.9,
+        0.55,
+        0.1,
+        1
+      ]
+    }
+  ],
+  "sensors": [],
+  "end_effectors": [],
+  "metadata": {
+    "generator": "text-to-robot",
+    "created": "2026-09-17T11:27:41.930Z",
+    "inferred_fields": [
+      "joints.front_left_wheel_joint.dynamics",
+      "joints.front_left_wheel_joint.limit",
+      "joints.front_right_wheel_joint.dynamics",
+      "joints.front_right_wheel_joint.limit",
+      "joints.rear_left_wheel_joint.dynamics",
+      "joints.rear_left_wheel_joint.limit",
+      "joints.rear_right_wheel_joint.dynamics",
+      "joints.rear_right_wheel_joint.limit",
+      "links.base_link.inertia",
+      "links.base_link.mass",
+      "links.front_left_wheel.inertia",
+      "links.front_left_wheel.mass",
+      "links.front_right_wheel.inertia",
+      "links.front_right_wheel.mass",
+      "links.rear_left_wheel.inertia",
+      "links.rear_left_wheel.mass",
+      "links.rear_right_wheel.inertia",
+      "links.rear_right_wheel.mass"
+    ],
+    "notes": [
+      "Generated mecanum base (4 holonomic wheels) from template. Roller geometry approximated by cylinders.",
+      "Interpreted by demo parser: type inferred, DOF=4, gripper=parallel."
+    ],
+    "source_prompt": "Create a mecanum-wheel robot"
+  }
+}
