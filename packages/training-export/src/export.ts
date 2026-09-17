@@ -314,7 +314,30 @@ export function exportTraining(spec: RobotSpecification): FileMap {
   files[`training/collect_demos.py`] = collectPy(spec);
   files[`training/train_bc.py`] = bcPy(spec);
   files[`training/evaluate.py`] = evalPy(spec);
-  files[`training/requirements.txt`] = "gymnasium>=0.29\npybullet>=3.2\nstable-baselines3>=2.3\ntorch>=2.1\nnumpy>=1.24\ntensorboard>=2.15\n";
+  files[`training/requirements.txt`] = "# CPU-only torch on GPU-less machines:  pip install torch --index-url https://download.pytorch.org/whl/cpu\ngymnasium>=0.29\npybullet>=3.2\nmujoco>=3.1\nstable-baselines3>=2.3\ntorch>=2.1\nnumpy>=1.24\ntensorboard>=2.15\n";
+  files[`training/mujoco/README.md`] =
+`# ${spec.robot_name} in MuJoCo
+
+Test, render and train this exact robot in MuJoCo with the text-to-robot Python layer:
+
+\`\`\`bash
+pip install "git+https://github.com/megazron/text-to-robot#subdirectory=python[train]"
+pip install torch --index-url https://download.pytorch.org/whl/cpu    # CPU torch on GPU-less machines
+
+ttr-mujoco test   ../${name}.urdf                       # settle / hold / actuator sweep / disturbance
+ttr-mujoco render ../${name}.urdf -o ${name}.gif --motion sweep${cls === "manipulator" ? "" : " --fixed"}
+ttr-mujoco train  ../${name}.urdf --task ${cls === "manipulator" ? "reach" : "stand"} --steps 400000
+\`\`\`
+
+Or from Python:
+
+\`\`\`python
+from ttr_mujoco import urdf_to_mjcf, run_tests, render_gif
+from ttr_mujoco.env import MujocoRobotEnv
+report = run_tests("../${name}.urdf")              # dict with per-test pass/fail + metrics
+env = MujocoRobotEnv("../${name}.urdf", task="${cls === "manipulator" ? "reach" : "stand"}")
+\`\`\`
+`;
   files[`training/README.md`] =
 `# Train ${spec.robot_name}
 
@@ -328,7 +351,10 @@ pip install -r requirements.txt
 ## Tasks available
 ${taskList}
 
-## Reinforcement learning (PPO / SAC)
+## MuJoCo (recommended)
+See \`mujoco/README.md\` — the same URDF converted to an actuated MuJoCo scene, with a test battery, renderer and PPO trainer.
+
+## Reinforcement learning in PyBullet (PPO / SAC)
 \`\`\`bash
 python train_rl.py --task ${TASKS[cls][0].id} --algo ppo --steps 200000
 python train_rl.py --task ${TASKS[cls][0].id} --play          # watch it

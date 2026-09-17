@@ -14,3 +14,15 @@ jobs:
           for d in examples/*/; do
             node cli/src/index.ts validate "$d/robot.urdf" || exit 1
           done
+  mujoco:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - run: pip install "./python"
+      - name: MuJoCo simulation battery on the shipped characters
+        run: |
+          for ex in 02_arm_6dof 08_humanoid 14_iron_man_suit 15_wall_e 16_eva 17_baymax; do
+            python -m ttr_mujoco test examples/$ex/robot.urdf || exit 1
+          done

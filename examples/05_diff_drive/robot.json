@@ -325,7 +325,7 @@
   "end_effectors": [],
   "metadata": {
     "generator": "text-to-robot",
-    "created": "2026-09-17T13:22:26.434Z",
+    "created": "2026-09-17T14:00:32.639Z",
     "inferred_fields": [
       "joints.caster_joint.dynamics",
       "joints.caster_joint.limit",

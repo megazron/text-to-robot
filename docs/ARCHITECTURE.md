@@ -46,7 +46,8 @@ URDF structural validation                            (packages/urdf-validator)
 | `ros2-export` | ament_cmake package, MoveIt 2 config (SRDF/kinematics/controllers/launch), Gazebo world + spawn launch |
 | `components` | Real-part catalogue; BOM sized by per-joint holding torque and fitted to a cost budget |
 | `cad` | Native STL triangulation per link + assembly, OpenSCAD source, printability report |
-| `training-export` | PyBullet + Gymnasium suite: task catalogue per robot class, PPO/SAC, demo collection, behaviour cloning, evaluation |
+| `training-export` | Training suite: MuJoCo quick-start + PyBullet/Gymnasium fallback, task catalogue per robot class, PPO/SAC, demo collection, behaviour cloning, evaluation |
+| `python/ttr_mujoco` (Python) | URDF → actuated MuJoCo MJCF (mass-scaled servos, preserved inertials, free base, floor), simulation test battery, headless GIF renderer, Gymnasium env with delta actions + perturbations, PPO trainer, `ttr-mujoco` CLI |
 
 ## Persistence and sharing
 
@@ -56,12 +57,19 @@ The API keeps generated robots in memory and persists them to `data/robots.json`
 (spec + regenerated URDF/Xacro). The Dockerfile mounts `/data` as a volume so a hosted
 instance keeps its share links across restarts.
 
+## Why TypeScript and Python
+
+The generator/validator/viewer are TypeScript so the whole pipeline runs with zero build on Node
+and in the browser. Simulation and learning are Python because MuJoCo, Gymnasium and RL live
+there. The generated URDF is the contract between the two halves.
+
 ## Verification
 
 - `npm test` — 55 `node:test` cases across schema, kinematics, templates, URDF, NLP, CLI,
   modification, BOM, CAD, MoveIt/Gazebo, training export.
 - `npm run typecheck` — strict TypeScript (`erasableSyntaxOnly`, `verbatimModuleSyntax`).
 - `scripts/physics_check.py` — loads every example URDF in PyBullet and steps it.
+- `ttr-mujoco test` — MuJoCo battery (settle, hold, sweep, disturbance) on every example; the characters' `mujoco_report.json` files are checked by the test suite.
 - The generated training suite has been executed end to end (demo collection → PPO/SAC →
   behaviour cloning → evaluation) on a generated arm, and the environments run for every
   robot class.

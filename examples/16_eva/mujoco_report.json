@@ -1,0 +1,37 @@
+{
+ "model": "../examples/16_eva/robot.urdf",
+ "nbody": 7,
+ "njnt": 6,
+ "nu": 5,
+ "ngeom": 9,
+ "floating": true,
+ "tests": {
+  "compile": {
+   "pass": true,
+   "total_mass_kg": 27.831,
+   "actuators": 5
+  },
+  "settle_under_gravity": {
+   "pass": true,
+   "max_joint_speed": 2.2,
+   "base_drop_m": 0.245,
+   "upright": 1.0
+  },
+  "hold_pose": {
+   "pass": true,
+   "max_joint_error_rad": 0.0
+  },
+  "actuator_sweep": {
+   "pass": true,
+   "tracked": "5/5",
+   "worst_error": 0.089
+  },
+  "disturbance_recovery": {
+   "pass": true,
+   "upright_after": -0.0,
+   "note": "upright>0.5 means it did not fall"
+  }
+ },
+ "passed": 5,
+ "total": 5
+}

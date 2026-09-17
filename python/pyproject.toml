@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ttr-mujoco"
+version = "0.1.0"
+description = "text-to-robot MuJoCo layer: convert, test, render and train generated URDF robots"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = ["mujoco>=3.1", "numpy>=1.24", "gymnasium>=0.29", "Pillow>=10"]
+
+[project.optional-dependencies]
+train = ["stable-baselines3>=2.3", "torch>=2.2"]
+
+[project.scripts]
+ttr-mujoco = "ttr_mujoco.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["ttr_mujoco*"]

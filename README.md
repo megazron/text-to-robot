@@ -2,7 +2,7 @@
 
 ### «Describe a robot. Get a ROS&nbsp;2 robot.»
 
-Text-to-speech turns words into audio. **Text-to-Robot turns words into a robot** — a validated URDF/Xacro, an interactive 3D model, and a buildable ROS 2 package.
+Text-to-speech turns words into audio. **Text-to-Robot turns words into a robot** — a validated URDF/Xacro, an interactive 3D model, a buildable ROS 2 package, and a **MuJoCo simulation you can test and train**. Describe anything — a 6-DOF arm, a Mars rover, WALL-E, an Iron Man suit — and get a robot with real mechanisms and real physics.
 
 ```
         TEXT                          ROBOT                         ROS 2
@@ -24,9 +24,46 @@ Text-to-speech turns words into audio. **Text-to-Robot turns words into a robot*
 
 <p align="center"><i>Every screenshot is the real app in demo mode — no API key. Left: a six-legged scout generated from a prompt. Right: a Mars rover with its live Bill of Materials.</i></p>
 
+## From a sentence to a robot in MuJoCo: the Iron Man suit
+
+> *"Build me an Iron Man style powered exosuit with repulsor thrusters, a HUD camera and an IMU"*
+
+That one line produced a 29-link, 28-joint armoured exosuit (21 actuated joints, 13.8 kg, arc reactor, palm and boot thruster mounts, HUD camera, IMU) — then it was converted to MuJoCo and **simulated, not just drawn**:
+
+<p align="center">
+  <img src="docs/img/ironman_stand.gif" width="32%" alt="Iron Man suit standing under gravity in MuJoCo" />
+  <img src="docs/img/ironman_sweep.gif" width="32%" alt="Iron Man suit sweeping all 21 actuators on a test stand in MuJoCo" />
+  <img src="docs/img/ironman_drop.gif" width="32%" alt="Iron Man suit surviving a 0.5 m drop in MuJoCo" />
+</p>
+
+| MuJoCo test | Result |
+|---|---|
+| Compile + actuate | ✅ 21 position actuators, gains scaled to mass |
+| Settle under gravity (2 s) | ✅ stays upright, joint speeds < 1.3 rad/s |
+| Hold pose | ✅ max joint drift 0.06 rad |
+| Actuator sweep (60 % of range, every joint) | ✅ 19/21 track within tolerance |
+| 1 m/s shove | ✅ finite, no blow-up — **falls over**: a passive stance has no balance controller |
+
+That last row is the point of the training layer. Trained in MuJoCo with PPO on a *stand under random pushes* task:
+
+| Policy on the generated suit (stand under random pushes) | Steps survived (of 400) |
+|---|--:|
+| Random actions | 55–58 |
+| Do nothing (hold pose) | 180–212 |
+| PPO, default hyper-parameters, 40k steps | 117 |
+| PPO, default hyper-parameters, 400k steps | 86 |
+
+Honest numbers, unmassaged: default PPO beats random but **does not beat the passive hold** at these
+budgets — its Gaussian exploration jolts every joint, which is the worst thing you can do to a
+statically stable 21-DOF biped. Balance is a hard RL problem (millions of steps, small corrective
+actions, tuned rewards); the env now defaults to small delta actions for exactly that reason. What
+this demonstrates is the pipeline: **one sentence → URDF → actuated MuJoCo model → test battery →
+Gym env → training loop**, with every artefact in `examples/14_iron_man_suit/` (prompt, URDF, MJCF,
+BOM, `mujoco_report.json`) so you can pick up where it left off.
+
 ## Free & self-hostable
 
-Text to Robot is **free and open-source**, and designed to run as a **free service**: clone it and `npm run api`, or deploy the same server anywhere. No API key is required — an offline deterministic engine powers everything, and optional OpenAI/Anthropic keys just improve open-ended prompts. The end goal: **describe a robot, download it, and immediately start training it** (see [Train your robot](#train-your-robot)).
+Text to Robot is **free and open-source**, and designed to run as a **free service**: clone it and `npm run api`, or deploy the same server anywhere. No API key is required — an offline deterministic engine powers everything, and optional OpenAI/Anthropic keys just improve open-ended prompts. The end goal: **describe a robot, download it, and immediately test and train it in MuJoCo** (see [Simulate & train in MuJoCo](#simulate--train-in-mujoco)).
 
 ---
 
@@ -65,8 +102,9 @@ demo mode), so the repo runs the moment you clone it.
 - 🤖 **MoveIt 2 + Gazebo** — an SRDF planning group, kinematics/controllers/OMPL config and a `move_group` launch; a Gazebo (gz-sim) world and spawn launch.
 - 🔗 **Shareable robot links** — every generated robot gets a URL (`/r/<id>`) that reopens it, persisted on the server. Free-SaaS ready with the included Dockerfile.
 - 🧪 **Physics-validated** — every example loads and simulates in PyBullet; the generated training suite has been run end to end (RL, imitation, evaluation).
-- 🏋️ **Train it** — a downloadable PyBullet + Gymnasium training suite (RL with PPO/SAC, imitation
-  learning, demo collection, evaluation) that loads the generated robot directly.
+- 🧪 **MuJoCo, first-class** — `ttr-mujoco` converts the URDF to an actuated MuJoCo scene (mass-scaled servos, floor, free base), runs a simulation test battery, renders headless GIFs, and trains PPO. Every shipped example passes its battery.
+- 🏋️ **Train it** — a downloadable training suite (MuJoCo + PyBullet, Gymnasium, PPO/SAC, imitation learning, evaluation) that loads the generated robot directly.
+- 🚀 **Any robot you can describe** — templates for arms, bases, legged robots and hands, plus sci-fi builds with real mechanisms: **Iron Man suit, WALL-E, EVA, Baymax**, spider-bots, Mars rovers, battle mechs.
 - 🖥️ **CLI + HTTP API** — scriptable and embeddable.
 - 🔌 **Pluggable LLMs** — OpenAI, Anthropic, or deterministic demo mode.
 
@@ -76,6 +114,8 @@ demo mode), so the repo runs the moment you clone it.
 prompt → LLM (or demo parser) → RobotSpecification → validate → repair → inertia →
          URDF/Xacro → validate → 3D viewer + ROS 2 package
 ```
+
+Two languages, on purpose: **TypeScript** for the deterministic generator, validator and browser viewer (zero-build, runs anywhere Node runs, and in the browser), and **Python** for everything simulation and learning — MuJoCo, Gymnasium, PPO — because that is where the robotics/ML ecosystem lives. The URDF is the contract between them.
 
 Full diagram and package map in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
@@ -90,7 +130,7 @@ Templates (used as sensible starting points the AI can customize):
 | Quadruped | Hexapod (18 DOF) | Humanoid (torso, head, two arms, two legs) |
 | Rover + arm (mobile manipulator) | Parallel & suction grippers | ...and anything a prompt implies |
 
-Thirteen worked examples (including sci-fi builds) live in [`examples/`](examples/) — each passes schema **and** URDF validation.
+Seventeen worked examples (including Iron Man, WALL-E, EVA and Baymax) live in [`examples/`](examples/) — each passes schema **and** URDF validation.
 
 ## Installation
 
@@ -100,7 +140,7 @@ Requires **Node.js ≥ 22.6** (uses native TypeScript execution — no build ste
 git clone https://github.com/megazron/text-to-robot
 cd text-to-robot
 npm install          # links the workspace packages (no third-party deps to download)
-npm test             # 55 tests
+npm test             # 65 tests
 ```
 
 ## Quick start
@@ -209,11 +249,29 @@ Two deliverables per robot, both in millimetres:
 `cad/PRINTABILITY.md` checks every part against a desktop FDM build volume and flags thin features and
 parts that need splitting or supports.
 
-## Train your robot
+## Simulate & train in MuJoCo
 
-The vision: **describe a robot, download it, and start training it.** Each generated robot ships with
-a `training/` suite backed by **PyBullet + Gymnasium** (which loads the URDF directly, with a motor
-per joint). No ROS required.
+The vision: **describe a robot, download it, and start testing and training it.** The Python layer in
+[`python/`](python/) turns any generated URDF into a real MuJoCo simulation:
+
+```bash
+pip install "git+https://github.com/megazron/text-to-robot#subdirectory=python[train]"
+pip install torch --index-url https://download.pytorch.org/whl/cpu      # CPU torch on GPU-less machines
+
+ttr-mujoco test   examples/14_iron_man_suit/robot.urdf                  # settle / hold / sweep / disturbance
+ttr-mujoco render examples/14_iron_man_suit/robot.urdf -o suit.gif --motion sweep --fixed
+ttr-mujoco train  examples/14_iron_man_suit/robot.urdf --task stand --steps 400000
+```
+
+What the converter guarantees: position actuators on every joint with gains scaled to the robot's
+mass; the URDF's designed masses/inertias preserved (including the root link on a floating base);
+floor + lighting; a free base for legged/wheeled/flying robots (auto-detected); self-collision off
+by default because primitive-built robots overlap at their joints. The Gymnasium env uses **delta
+actions around the standing pose** (action 0 = hold still) and random pushes on the `stand` task, so
+a policy has to actually balance.
+
+Each generated robot also ships a `training/` suite (MuJoCo quick-start plus a **PyBullet + Gymnasium**
+fallback that loads the URDF directly). No ROS required.
 
 ```bash
 cd training && pip install -r requirements.txt
@@ -285,8 +343,15 @@ node cli/src/index.ts validate examples/02_arm_6dof/robot.urdf
 | 11 | Spider scout | `Build a six-legged reconnaissance spider-bot with a LiDAR turret, budget $1500` |
 | 12 | Mars rover | `Design a Mars rover with four wheels and a 6 DOF sampling arm, RGB-D camera, budget $4000` |
 | 13 | Battle mech | `Create a humanoid battle mech with two 7 DOF arms, a head camera and an IMU` |
+| 14 | **Iron Man suit** | `Build me an Iron Man style powered exosuit with repulsor thrusters, a HUD camera and an IMU` |
+| 15 | **WALL-E** | `Build WALL-E: a tracked trash-compactor robot with a telescoping neck, binocular eyes and two gripper arms` |
+| 16 | **EVA** | `Build EVA, a sleek hovering egg-shaped droid with a visor and two floating arms` |
+| 17 | **Baymax** | `Build Baymax, an inflatable healthcare companion robot` |
 
-**Imagine anything.** Prompts route to the closest structure and pull in the sensors you mention:
+Every one of 14–17 is built from real mechanisms (revolute/prismatic/continuous joints, sized masses,
+sensors on mounts) and **passes the MuJoCo test battery 5/5** — see each example's `mujoco_report.json`.
+
+**Imagine anything.** Sci-fi is welcome as long as it is buildable: WALL-E gets tracks with four driven wheels, a telescoping (prismatic) neck and binocular cameras; EVA is a free-floating capsule with a hover-thruster mount and flight IMU; the Iron Man suit is an armoured 21-DOF biped with repulsor mounts. Prompts route to the closest structure and pull in the sensors you mention:
 "a warehouse loader with mecanum wheels and a suction gripper", "an insectoid recon drone with a
 LiDAR", "a planetary explorer with a 1-metre arm". Each still passes schema + URDF validation.
 
@@ -295,11 +360,12 @@ LiDAR", "a planetary explorer with a 1-metre arm". Each still passes schema + UR
 ```
 text-to-robot/
 ├── apps/            web (Three.js viewer) + api (zero-dep HTTP server)
+├── python/          ttr-mujoco: URDF -> MuJoCo convert / test / render / train
 ├── packages/        robot-schema, kinematics, robot-templates, urdf-generator,
 │                    urdf-validator, llm-providers, robot-generator, ros2-export
 ├── cli/             text-to-robot command
 ├── examples/        10 validated robots
-├── tests/           55 node:test cases
+├── tests/           65 node:test cases
 └── docs/            architecture
 ```
 
@@ -328,11 +394,13 @@ npm run api           # serve web + API on :8787
 - [x] Native STL mesh export + printability checks
 - [x] Physics validation of all examples (PyBullet)
 - [x] Shareable robot links + persistence + Dockerfile
+- [x] MuJoCo layer: convert, simulation test battery, headless render, PPO training
+- [x] Sci-fi characters with real mechanisms (Iron Man suit, WALL-E, EVA, Baymax), all simulated
 
 Future (toward a free hosted service where you describe, download and train a robot):
 
 - [ ] Public hosted instance (free SaaS) with accounts and a robot gallery
-- [ ] More training backends (Isaac Lab, MuJoCo) and a richer task library
+- [ ] Isaac Lab backend and a richer task library (walk, manipulate, fly)
 - [ ] Real-part catalog integration with live pricing and stock
 - [ ] STEP export and assembly-level printability (fasteners, tolerances)
 - [ ] Isaac Sim world export

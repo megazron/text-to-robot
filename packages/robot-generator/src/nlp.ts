@@ -3,7 +3,7 @@
 // documented prompts and degrade gracefully.
 import type { RobotSpecification, Geometry, Sensor, SensorType } from "@ttr/robot-schema";
 import { safeName, pose } from "@ttr/robot-schema";
-import { nDofArm, scara, humanoid, diffDrive, fourWheel, mecanum, quadruped, hexapod, roverArm, attachParallelGripper, attachSuctionGripper, cyl, box, link, joint } from "@ttr/robot-templates";
+import { nDofArm, scara, humanoid, diffDrive, fourWheel, mecanum, quadruped, hexapod, roverArm, ironManSuit, wallE, eva, baymax, attachParallelGripper, attachSuctionGripper, cyl, box, link, joint } from "@ttr/robot-templates";
 
 const WORD_NUM: Record<string, number> = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10 };
 
@@ -29,7 +29,15 @@ export function parsePrompt(prompt: string): RobotSpecification {
   const g = gripperKind(t);
   let spec: RobotSpecification;
 
-  if (/humanoid|biped|torso.*arms|two\s+arms/.test(t)) {
+  if (/iron[\s-]?man|exosuit|exo[\s-]?skeleton|power(?:ed)?\s+(?:armou?r|suit)|mech\s+suit|battle\s+suit/.test(t)) {
+    spec = ironManSuit("iron_man_suit", prompt);
+  } else if (/wall[\s-]?e\b|trash\s+compactor|garbage\s+robot/.test(t)) {
+    spec = wallE("wall_e", prompt);
+  } else if (/\beva\b|probe\s+droid|egg[\s-]?shaped|hover(?:ing)?\s+(?:robot|droid|bot)/.test(t)) {
+    spec = eva("eva", prompt);
+  } else if (/baymax|inflatable|healthcare\s+companion|soft\s+robot/.test(t)) {
+    spec = baymax("baymax", prompt);
+  } else if (/humanoid|biped|torso.*arms|two\s+arms/.test(t)) {
     spec = humanoid({ armDof: dof ?? 7, gripper: g !== "none", prompt });
   } else if (/hexapod|six[\s-]?legged|6[\s-]?legged|spider|insect|ant[\s-]?bot/.test(t)) {
     spec = hexapod("hexapod", prompt);

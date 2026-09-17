@@ -1,0 +1,119 @@
+<mujoco model="iron_man_suit">
+  <compiler angle="radian" />
+
+  <worldbody>
+    <light pos="1.5 -2 3" dir="-0.4 0.5 -0.8" diffuse="0.9 0.9 0.9" castshadow="true" /><geom name="floor" type="plane" size="20 20 0.1" material="grid" contype="1" conaffinity="1" /><body name="iron_man_suit_base" pos="0 0 0.0800"><freejoint name="root" /><geom size="0.08 0.14 0.18" pos="0 0 0.62" type="box" rgba="0.72 0.08 0.08 1" />
+    <geom size="0.035 0.0075" pos="0.085 0 0.62" quat="0.707107 0 0.707107 0" type="cylinder" rgba="0.4 0.85 1 1" />
+    <geom size="0.02 0.03 0.015" pos="0 0 0.05" type="box" rgba="0.1 0.7 0.4 1" />
+    <body name="head" pos="0 0 0.89">
+      <inertial pos="0 0 0.00115177" mass="1.40653" diaginertia="0.00454313 0.00453813 0.004466" />
+      <joint name="neck_joint" range="-1.2 1.2" actuatorfrcrange="-50 50" damping="0.1" />
+      <geom size="0.09" rgba="0.85 0.65 0.13 1" />
+      <geom size="0.02 0.03 0.015" pos="0 0 0.05" type="box" rgba="0.1 0.7 0.4 1" />
+    </body>
+    <body name="left_shoulder" pos="0 0.175 0.77">
+      <inertial pos="0 0 -0.03" quat="0.5 0.5 -0.5 0.5" mass="0.103908" diaginertia="6.4e-05 6.3e-05 6.3e-05" />
+      <joint name="left_arm_joint_1" range="-2.6 2.6" actuatorfrcrange="-50 50" damping="0.1" axis="0 1 0" />
+      <geom size="0.035 0.03" pos="0 0 -0.03" type="cylinder" rgba="0.72 0.08 0.08 1" />
+      <body name="left_upper_arm" pos="0 0 -0.06">
+        <inertial pos="0 0 -0.11" mass="0.380997" diaginertia="0.001749 0.001749 0.000425" />
+        <joint name="left_arm_joint_2" range="-2.6 2.6" actuatorfrcrange="-50 50" damping="0.1" axis="1 0 0" />
+        <geom size="0.04725 0.11" pos="0 0 -0.11" type="cylinder" rgba="0.85 0.65 0.13 1" />
+        <body name="left_elbow" pos="0 0 -0.22">
+          <inertial pos="0 0 -0.03" quat="0.5 0.5 -0.5 0.5" mass="0.103908" diaginertia="6.4e-05 6.3e-05 6.3e-05" />
+          <joint name="left_arm_joint_3" range="-2.6 2.6" actuatorfrcrange="-50 50" damping="0.1" axis="0 1 0" />
+          <geom size="0.035 0.03" pos="0 0 -0.03" type="cylinder" rgba="0.72 0.08 0.08 1" />
+          <body name="left_forearm" pos="0 0 -0.06">
+            <inertial pos="0 0 -0.11" mass="0.380997" diaginertia="0.001749 0.001749 0.000425" />
+            <joint name="left_arm_joint_4" range="-2.6 2.6" actuatorfrcrange="-50 50" damping="0.1" axis="1 0 0" />
+            <geom size="0.04725 0.11" pos="0 0 -0.11" type="cylinder" rgba="0.85 0.65 0.13 1" />
+            <body name="left_wrist_1" pos="0 0 -0.22">
+              <inertial pos="0 0 -0.03" quat="0.5 0.5 -0.5 0.5" mass="0.103908" diaginertia="6.4e-05 6.3e-05 6.3e-05" />
+              <joint name="left_arm_joint_5" range="-2.6 2.6" actuatorfrcrange="-50 50" damping="0.1" axis="0 1 0" />
+              <geom size="0.035 0.03" pos="0 0 -0.03" type="cylinder" rgba="0.72 0.08 0.08 1" />
+              <body name="left_wrist_2" pos="0 0 -0.06">
+                <inertial pos="0 0 -0.03" quat="0.5 0.5 -0.5 0.5" mass="0.103908" diaginertia="6.4e-05 6.3e-05 6.3e-05" />
+                <joint name="left_arm_joint_6" range="-2.6 2.6" actuatorfrcrange="-50 50" damping="0.1" axis="1 0 0" />
+                <geom size="0.035 0.03" pos="0 0 -0.03" type="cylinder" rgba="0.72 0.08 0.08 1" />
+                <body name="left_wrist_3" pos="0 0 -0.06">
+                  <inertial pos="0 0 -0.0378689" mass="0.129355" diaginertia="0.000102706 0.000102706 7.5e-05" />
+                  <joint name="left_arm_joint_7" range="-2.6 2.6" actuatorfrcrange="-50 50" damping="0.1" axis="0 1 0" />
+                  <geom size="0.035 0.03" pos="0 0 -0.03" type="cylinder" rgba="0.72 0.08 0.08 1" />
+                  <geom size="0.03 0.01" pos="0 0 -0.07" type="cylinder" rgba="0.4 0.85 1 1" />
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+    <body name="right_shoulder" pos="0 -0.175 0.77">
+      <inertial pos="0 0 -0.03" quat="0.5 0.5 -0.5 0.5" mass="0.103908" diaginertia="6.4e-05 6.3e-05 6.3e-05" />
+      <joint name="right_arm_joint_1" range="-2.6 2.6" actuatorfrcrange="-50 50" damping="0.1" axis="0 1 0" />
+      <geom size="0.035 0.03" pos="0 0 -0.03" type="cylinder" rgba="0.72 0.08 0.08 1" />
+      <body name="right_upper_arm" pos="0 0 -0.06">
+        <inertial pos="0 0 -0.11" mass="0.380997" diaginertia="0.001749 0.001749 0.000425" />
+        <joint name="right_arm_joint_2" range="-2.6 2.6" actuatorfrcrange="-50 50" damping="0.1" axis="1 0 0" />
+        <geom size="0.04725 0.11" pos="0 0 -0.11" type="cylinder" rgba="0.85 0.65 0.13 1" />
+        <body name="right_elbow" pos="0 0 -0.22">
+          <inertial pos="0 0 -0.03" quat="0.5 0.5 -0.5 0.5" mass="0.103908" diaginertia="6.4e-05 6.3e-05 6.3e-05" />
+          <joint name="right_arm_joint_3" range="-2.6 2.6" actuatorfrcrange="-50 50" damping="0.1" axis="0 1 0" />
+          <geom size="0.035 0.03" pos="0 0 -0.03" type="cylinder" rgba="0.72 0.08 0.08 1" />
+          <body name="right_forearm" pos="0 0 -0.06">
+            <inertial pos="0 0 -0.11" mass="0.380997" diaginertia="0.001749 0.001749 0.000425" />
+            <joint name="right_arm_joint_4" range="-2.6 2.6" actuatorfrcrange="-50 50" damping="0.1" axis="1 0 0" />
+            <geom size="0.04725 0.11" pos="0 0 -0.11" type="cylinder" rgba="0.85 0.65 0.13 1" />
+            <body name="right_wrist_1" pos="0 0 -0.22">
+              <inertial pos="0 0 -0.03" quat="0.5 0.5 -0.5 0.5" mass="0.103908" diaginertia="6.4e-05 6.3e-05 6.3e-05" />
+              <joint name="right_arm_joint_5" range="-2.6 2.6" actuatorfrcrange="-50 50" damping="0.1" axis="0 1 0" />
+              <geom size="0.035 0.03" pos="0 0 -0.03" type="cylinder" rgba="0.72 0.08 0.08 1" />
+              <body name="right_wrist_2" pos="0 0 -0.06">
+                <inertial pos="0 0 -0.03" quat="0.5 0.5 -0.5 0.5" mass="0.103908" diaginertia="6.4e-05 6.3e-05 6.3e-05" />
+                <joint name="right_arm_joint_6" range="-2.6 2.6" actuatorfrcrange="-50 50" damping="0.1" axis="1 0 0" />
+                <geom size="0.035 0.03" pos="0 0 -0.03" type="cylinder" rgba="0.72 0.08 0.08 1" />
+                <body name="right_wrist_3" pos="0 0 -0.06">
+                  <inertial pos="0 0 -0.0378689" mass="0.129355" diaginertia="0.000102706 0.000102706 7.5e-05" />
+                  <joint name="right_arm_joint_7" range="-2.6 2.6" actuatorfrcrange="-50 50" damping="0.1" axis="0 1 0" />
+                  <geom size="0.035 0.03" pos="0 0 -0.03" type="cylinder" rgba="0.72 0.08 0.08 1" />
+                  <geom size="0.03 0.01" pos="0 0 -0.07" type="cylinder" rgba="0.4 0.85 1 1" />
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+    <body name="left_thigh" pos="0 0.07 0.44">
+      <inertial pos="0 0 -0.1" mass="0.572555" diaginertia="0.002437 0.002437 0.001057" />
+      <joint name="left_hip_joint" range="-1.6 1.6" actuatorfrcrange="-50 50" damping="0.1" axis="0 1 0" />
+      <geom size="0.06075 0.1" pos="0 0 -0.1" type="cylinder" rgba="0.72 0.08 0.08 1" />
+      <body name="left_shin" pos="0 0 -0.2">
+        <inertial pos="0 0 -0.1" mass="0.452389" diaginertia="0.001838 0.001838 0.00066" />
+        <joint name="left_knee_joint" range="0 2.4" actuatorfrcrange="-50 50" damping="0.1" axis="0 1 0" />
+        <geom size="0.054 0.1" pos="0 0 -0.1" type="cylinder" rgba="0.72 0.08 0.08 1" />
+        <body name="left_foot" pos="0 0 -0.2">
+          <inertial pos="0.0230377 0 -0.0209946" quat="0 0.697168 0 0.716908" mass="0.255847" diaginertia="0.000737736 0.00064358 0.000162844" />
+          <joint name="left_ankle_joint" range="-0.8 0.8" actuatorfrcrange="-50 50" damping="0.1" axis="0 1 0" />
+          <geom size="0.08 0.04 0.02" pos="0.03 0 -0.02" type="box" rgba="0.72 0.08 0.08 1" />
+          <geom size="0.03 0.01" pos="-0.04 0 -0.03" type="cylinder" rgba="0.4 0.85 1 1" />
+        </body>
+      </body>
+    </body>
+    <body name="right_thigh" pos="0 -0.07 0.44">
+      <inertial pos="0 0 -0.1" mass="0.572555" diaginertia="0.002437 0.002437 0.001057" />
+      <joint name="right_hip_joint" range="-1.6 1.6" actuatorfrcrange="-50 50" damping="0.1" axis="0 1 0" />
+      <geom size="0.06075 0.1" pos="0 0 -0.1" type="cylinder" rgba="0.72 0.08 0.08 1" />
+      <body name="right_shin" pos="0 0 -0.2">
+        <inertial pos="0 0 -0.1" mass="0.452389" diaginertia="0.001838 0.001838 0.00066" />
+        <joint name="right_knee_joint" range="0 2.4" actuatorfrcrange="-50 50" damping="0.1" axis="0 1 0" />
+        <geom size="0.054 0.1" pos="0 0 -0.1" type="cylinder" rgba="0.72 0.08 0.08 1" />
+        <body name="right_foot" pos="0 0 -0.2">
+          <inertial pos="0.0230377 0 -0.0209946" quat="0 0.697168 0 0.716908" mass="0.255847" diaginertia="0.000737736 0.00064358 0.000162844" />
+          <joint name="right_ankle_joint" range="-0.8 0.8" actuatorfrcrange="-50 50" damping="0.1" axis="0 1 0" />
+          <geom size="0.08 0.04 0.02" pos="0.03 0 -0.02" type="box" rgba="0.72 0.08 0.08 1" />
+          <geom size="0.03 0.01" pos="-0.04 0 -0.03" type="cylinder" rgba="0.4 0.85 1 1" />
+        </body>
+      </body>
+    </body>
+  <inertial pos="0 0 0.62" mass="7.2576" diaginertia="0.125798 0.093865 0.062899" /></body></worldbody>
+<option timestep="0.002" gravity="0 0 -9.81" integrator="implicitfast" /><default><joint damping="0.6" armature="0.01" frictionloss="0.05" /><geom friction="1 0.005 0.0001" condim="3" solref="0.005 1" solimp="0.95 0.99 0.001" contype="1" conaffinity="0" /><position kp="83.0" forcerange="-111 111" /></default><asset><texture type="skybox" builtin="gradient" rgb1="0.35 0.45 0.6" rgb2="0.05 0.06 0.08" width="256" height="256" /><texture name="grid" type="2d" builtin="checker" rgb1="0.2 0.25 0.3" rgb2="0.12 0.15 0.19" width="512" height="512" /><material name="grid" texture="grid" texrepeat="10 10" reflectance="0.15" /></asset><visual><headlight diffuse="0.7 0.7 0.7" ambient="0.35 0.35 0.35" /><global offwidth="1280" offheight="720" /></visual><actuator><position name="act_neck_joint" joint="neck_joint" ctrlrange="-1.2 1.2" ctrllimited="true" /><position name="act_left_arm_joint_1" joint="left_arm_joint_1" ctrlrange="-2.6 2.6" ctrllimited="true" /><position name="act_left_arm_joint_2" joint="left_arm_joint_2" ctrlrange="-2.6 2.6" ctrllimited="true" /><position name="act_left_arm_joint_3" joint="left_arm_joint_3" ctrlrange="-2.6 2.6" ctrllimited="true" /><position name="act_left_arm_joint_4" joint="left_arm_joint_4" ctrlrange="-2.6 2.6" ctrllimited="true" /><position name="act_left_arm_joint_5" joint="left_arm_joint_5" ctrlrange="-2.6 2.6" ctrllimited="true" /><position name="act_left_arm_joint_6" joint="left_arm_joint_6" ctrlrange="-2.6 2.6" ctrllimited="true" /><position name="act_left_arm_joint_7" joint="left_arm_joint_7" ctrlrange="-2.6 2.6" ctrllimited="true" /><position name="act_right_arm_joint_1" joint="right_arm_joint_1" ctrlrange="-2.6 2.6" ctrllimited="true" /><position name="act_right_arm_joint_2" joint="right_arm_joint_2" ctrlrange="-2.6 2.6" ctrllimited="true" /><position name="act_right_arm_joint_3" joint="right_arm_joint_3" ctrlrange="-2.6 2.6" ctrllimited="true" /><position name="act_right_arm_joint_4" joint="right_arm_joint_4" ctrlrange="-2.6 2.6" ctrllimited="true" /><position name="act_right_arm_joint_5" joint="right_arm_joint_5" ctrlrange="-2.6 2.6" ctrllimited="true" /><position name="act_right_arm_joint_6" joint="right_arm_joint_6" ctrlrange="-2.6 2.6" ctrllimited="true" /><position name="act_right_arm_joint_7" joint="right_arm_joint_7" ctrlrange="-2.6 2.6" ctrllimited="true" /><position name="act_left_hip_joint" joint="left_hip_joint" ctrlrange="-1.6 1.6" ctrllimited="true" /><position name="act_left_knee_joint" joint="left_knee_joint" ctrlrange="0 2.4" ctrllimited="true" /><position name="act_left_ankle_joint" joint="left_ankle_joint" ctrlrange="-0.8 0.8" ctrllimited="true" /><position name="act_right_hip_joint" joint="right_hip_joint" ctrlrange="-1.6 1.6" ctrllimited="true" /><position name="act_right_knee_joint" joint="right_knee_joint" ctrlrange="0 2.4" ctrllimited="true" /><position name="act_right_ankle_joint" joint="right_ankle_joint" ctrlrange="-0.8 0.8" ctrllimited="true" /></actuator></mujoco>

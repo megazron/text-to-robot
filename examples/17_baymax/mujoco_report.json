@@ -1,0 +1,37 @@
+{
+ "model": "../examples/17_baymax/robot.urdf",
+ "nbody": 17,
+ "njnt": 16,
+ "nu": 15,
+ "ngeom": 17,
+ "floating": true,
+ "tests": {
+  "compile": {
+   "pass": true,
+   "total_mass_kg": 11.772,
+   "actuators": 15
+  },
+  "settle_under_gravity": {
+   "pass": true,
+   "max_joint_speed": 1.57,
+   "base_drop_m": 0.125,
+   "upright": 1.0
+  },
+  "hold_pose": {
+   "pass": true,
+   "max_joint_error_rad": 0.0
+  },
+  "actuator_sweep": {
+   "pass": true,
+   "tracked": "15/15",
+   "worst_error": 0.244
+  },
+  "disturbance_recovery": {
+   "pass": true,
+   "upright_after": 0.942,
+   "note": "upright>0.5 means it did not fall"
+  }
+ },
+ "passed": 5,
+ "total": 5
+}
