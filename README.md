@@ -61,7 +61,10 @@ demo mode), so the repo runs the moment you clone it.
 - 💸 **Bill of Materials to a budget** — picks *real* actuators (sized by the torque each joint
   must hold), sensors, compute, power and structure, and tells you what it costs and whether it
   fits your budget. So the robot can actually be built.
-- 🛠️ **CAD parts** — parametric OpenSCAD for every link plus an assembly, ready to mesh to STL and print.
+- 🛠️ **CAD parts** — ready-to-print **STL** meshes (native, no OpenSCAD needed) plus parametric OpenSCAD source for every link and the assembly, with a **printability report**.
+- 🤖 **MoveIt 2 + Gazebo** — an SRDF planning group, kinematics/controllers/OMPL config and a `move_group` launch; a Gazebo (gz-sim) world and spawn launch.
+- 🔗 **Shareable robot links** — every generated robot gets a URL (`/r/<id>`) that reopens it, persisted on the server. Free-SaaS ready with the included Dockerfile.
+- 🧪 **Physics-validated** — every example loads and simulates in PyBullet; the generated training suite has been run end to end (RL, imitation, evaluation).
 - 🏋️ **Train it** — a downloadable PyBullet + Gymnasium training suite (RL with PPO/SAC, imitation
   learning, demo collection, evaluation) that loads the generated robot directly.
 - 🖥️ **CLI + HTTP API** — scriptable and embeddable.
@@ -84,7 +87,7 @@ Templates (used as sensible starting points the AI can customize):
 |---|---|---|
 | 2 / 3 / 6 / 7 DOF arms | SCARA | Parallel & two-finger grippers |
 | Differential drive | Four-wheel | Mecanum |
-| Quadruped | Hexapod (18 DOF) | Humanoid (torso, head, two arms) |
+| Quadruped | Hexapod (18 DOF) | Humanoid (torso, head, two arms, two legs) |
 | Rover + arm (mobile manipulator) | Parallel & suction grippers | ...and anything a prompt implies |
 
 Thirteen worked examples (including sci-fi builds) live in [`examples/`](examples/) — each passes schema **and** URDF validation.
@@ -97,7 +100,7 @@ Requires **Node.js ≥ 22.6** (uses native TypeScript execution — no build ste
 git clone https://github.com/megazron/text-to-robot
 cd text-to-robot
 npm install          # links the workspace packages (no third-party deps to download)
-npm test             # 43 tests
+npm test             # 55 tests
 ```
 
 ## Quick start
@@ -109,20 +112,29 @@ npm run api
 # open http://localhost:8787
 ```
 
-Type a prompt, watch the robot appear, drag the joint sliders, then click **ROS 2 Package**.
+Type a prompt, watch the robot appear, drag the joint sliders, then click **ROS 2 Package**. Click
+**Share link** to copy a URL that reopens that exact robot.
+
+**Docker (one command, for hosting it as a free service):**
+
+```bash
+docker compose up            # or: docker build -t text-to-robot . && docker run -p 8787:8787 -v ttr-data:/data text-to-robot
+```
+
+Generated robots are persisted under `/data` so share links survive restarts.
 
 **CLI:**
 
 ```bash
 node cli/src/index.ts "Create a 6 DOF robotic arm with a parallel gripper"
-# → ./arm_6dof/  (URDF, Xacro, launch, config, rviz, README, JSON)
+# → ./out/arm_6dof/  (ROS 2 package, URDF/Xacro, BOM.md, cad/, training/, JSON)
 ```
 
 ## CLI
 
 ```bash
 text-to-robot "<prompt>"                         # generate (bare prompt)
-text-to-robot generate "<prompt>" -o out/        # generate into out/
+text-to-robot generate "<prompt>" -o mydir/      # generate into mydir/ (default: ./out/<name>/)
 text-to-robot modify robot.json "make it longer" # modify an existing spec
 text-to-robot validate robot.urdf                # structural URDF validation
 text-to-robot inspect robot.urdf                 # print links + joints
@@ -144,8 +156,17 @@ my_robot/
 ├── launch/display.launch.py     # robot_state_publisher + joint_state_publisher_gui + rviz2
 ├── config/joint_limits.yaml
 ├── config/controllers.yaml      # optional ros2_control
+├── moveit/my_robot.srdf         # MoveIt 2: planning group, kinematics, controllers, OMPL
+├── launch/move_group.launch.py  # MoveIt 2 move_group + RViz MotionPlanning
+├── worlds/my_robot.sdf          # Gazebo world
+├── launch/gazebo.launch.py      # spawn into Gazebo via ros_gz_sim
 ├── rviz/my_robot.rviz
 └── README.md
+```
+
+```bash
+ros2 launch my_robot move_group.launch.py   # plan & execute with MoveIt 2
+ros2 launch my_robot gazebo.launch.py       # simulate in Gazebo
 ```
 
 ```bash
@@ -178,13 +199,15 @@ actuator sizing table.
 
 ## CAD parts
 
-Every link is emitted as a parametric **OpenSCAD** part, plus an assembly placed at the robot's zero
-pose. Mesh any part (or the whole robot) to STL for printing:
+Two deliverables per robot, both in millimetres:
 
-```bash
-openscad -o base_link.stl cad/parts/base_link.scad
-openscad -o my_robot.stl  cad/my_robot.scad
-```
+- **STL, ready to print** — `cad/stl/<robot>_assembly.stl` and one mesh per link in `cad/stl/parts/`,
+  triangulated natively (no OpenSCAD required). Drop them straight into a slicer.
+- **OpenSCAD source** — `cad/<robot>.scad` and `cad/parts/*.scad` for parametric edits; re-mesh with
+  `openscad -o part.stl part.scad`.
+
+`cad/PRINTABILITY.md` checks every part against a desktop FDM build volume and flags thin features and
+parts that need splitting or supports.
 
 ## Train your robot
 
@@ -202,7 +225,9 @@ python evaluate.py --task reach --rl <model> # success rate
 
 Tasks are chosen from the robot's class (manipulator → reach/track/hold, mobile → drive/goto,
 locomotion → walk/balance/turn) and are easy to extend in `tasks.py`. Classical motion planning is
-available through the exported MoveIt 2 / ROS 2 package.
+available through the exported MoveIt 2 config. **This suite is verified**: the generated environments
+run for every robot class, and the full pipeline (demo collection → PPO/SAC → behaviour cloning →
+evaluation) has been executed end to end on a generated arm.
 
 ## AI architecture
 
@@ -234,7 +259,10 @@ parent per child, unique link/joint names, valid joint types and axes, valid lim
 masses and dimensions, and physically-plausible inertia (positive principal moments + triangle
 inequality). Invalid specs enter a **repair loop** (drop dangling joints, de-duplicate names,
 enforce a single root, fix limits/axes, clamp masses) for up to 3 attempts. Failures are shown,
-never hidden. The tool validates **URDF structure**; it does not claim physical/dynamic validity.
+never hidden. Structural validation runs on every robot. In addition, `scripts/physics_check.py` loads
+every example URDF in **PyBullet** and steps it, so the shipped examples are known to simulate —
+run it yourself with `pip install pybullet numpy && python scripts/physics_check.py`. Physics checks
+are a sanity gate, not a guarantee of real-world dynamic performance.
 
 ## Examples
 
@@ -271,7 +299,7 @@ text-to-robot/
 │                    urdf-validator, llm-providers, robot-generator, ros2-export
 ├── cli/             text-to-robot command
 ├── examples/        10 validated robots
-├── tests/           43 node:test cases
+├── tests/           55 node:test cases
 └── docs/            architecture
 ```
 
@@ -295,15 +323,19 @@ npm run api           # serve web + API on :8787
 - [x] CLI + HTTP API + demo mode
 - [x] Bill of Materials sized to a cost budget (buildable in real life)
 - [x] Parametric CAD (OpenSCAD) parts + assembly
-- [x] Downloadable training suite: RL (PPO/SAC), imitation learning, evaluation
+- [x] Downloadable training suite: RL (PPO/SAC), imitation learning, evaluation — verified end to end
+- [x] MoveIt 2 configuration + Gazebo world export
+- [x] Native STL mesh export + printability checks
+- [x] Physics validation of all examples (PyBullet)
+- [x] Shareable robot links + persistence + Dockerfile
 
 Future (toward a free hosted service where you describe, download and train a robot):
 
-- [ ] One-click hosted deployment (free SaaS) + shareable robot links
-- [ ] More training backends (Isaac Lab, MuJoCo, Gazebo) and task library
+- [ ] Public hosted instance (free SaaS) with accounts and a robot gallery
+- [ ] More training backends (Isaac Lab, MuJoCo) and a richer task library
 - [ ] Real-part catalog integration with live pricing and stock
-- [ ] STL/STEP mesh export and printability checks
-- [ ] Gazebo / Isaac Sim world export
+- [ ] STEP export and assembly-level printability (fasteners, tolerances)
+- [ ] Isaac Sim world export
 - [ ] MoveIt 2 config generation
 - [ ] Automatic mesh / STL / OpenSCAD generation
 - [ ] Physics-based (not just structural) validation

@@ -40,7 +40,7 @@ async function cmdGenerate(prompt: string, outDir?: string) {
   for (const r of res.repairs) info("  repair " + r);
 
   const name = safeName(res.robot.robot_name);
-  const base = outDir ?? `./${name}`;
+  const base = outDir ?? `./out/${name}`;
   const files = exportRos2Package(res.robot, { ros2_control: true });
   writeFiles(base, files);
   writeFileSync(join(base, `${name}.json`), JSON.stringify(res.robot, null, 2));
@@ -110,9 +110,10 @@ Env: OPENAI_API_KEY / ANTHROPIC_API_KEY enable cloud mode (else deterministic de
 async function main() {
   const argv = process.argv.slice(2);
   if (!argv.length || argv[0] === "-h" || argv[0] === "--help") { usage(); return; }
-  const outFlag = argv.indexOf("-o") >= 0 ? argv.indexOf("-o") : argv.indexOf("--out");
-  const outDir = outFlag >= 0 ? argv[outFlag + 1] : undefined;
-  const clean = argv.filter((a, i) => a !== "-o" && a !== "--out" && i !== outFlag + 1);
+  // -o/--out <dir>: strip the flag and its value only when actually present
+  let outIdx = argv.indexOf("-o"); if (outIdx < 0) outIdx = argv.indexOf("--out");
+  const outDir = outIdx >= 0 ? argv[outIdx + 1] : undefined;
+  const clean = argv.filter((_, i) => outIdx < 0 || (i !== outIdx && i !== outIdx + 1));
   const cmd = clean[0];
   try {
     if (cmd === "bom") return cmdBom(clean[1], clean[2]);

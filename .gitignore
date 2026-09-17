@@ -6,3 +6,4 @@ dist/
 /out/
 /tmp/
 *_ros2.zip
+/data/

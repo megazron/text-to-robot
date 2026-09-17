@@ -399,7 +399,7 @@
   "end_effectors": [],
   "metadata": {
     "generator": "text-to-robot",
-    "created": "2026-09-17T11:54:37.564Z",
+    "created": "2026-09-17T13:22:26.436Z",
     "inferred_fields": [
       "joints.front_left_wheel_joint.dynamics",
       "joints.front_left_wheel_joint.limit",

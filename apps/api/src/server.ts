@@ -1,9 +1,11 @@
 import { createServer, type IncomingMessage, type ServerResponse } from "node:http";
-import { readFile } from "node:fs/promises";
+import { readFile, writeFile, mkdir } from "node:fs/promises";
+import { existsSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join, extname, normalize } from "node:path";
 import { randomUUID } from "node:crypto";
 import { generateRobot, modifyRobot } from "@ttr/robot-generator";
+import { generateUrdf, generateXacro } from "@ttr/urdf-generator";
 import { validateUrdf } from "@ttr/urdf-validator";
 import { validateSpec, type RobotSpecification } from "@ttr/robot-schema";
 import { exportRos2Package } from "@ttr/ros2-export";
@@ -16,7 +18,24 @@ import { providerStatus } from "@ttr/llm-providers";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const WEB_ROOT = join(__dirname, "..", "..", "web", "public");
 const PORT = Number(process.env.PORT ?? 8787);
+const DATA_DIR = process.env.TTR_DATA_DIR ?? join(__dirname, "..", "..", "..", "data");
+const STORE_FILE = join(DATA_DIR, "robots.json");
 const store = new Map<string, RobotSpecification>();
+try { if (existsSync(STORE_FILE)) for (const [k, v] of Object.entries(JSON.parse(readFileSync(STORE_FILE, "utf8")))) store.set(k, v as RobotSpecification); } catch { /* start empty */ }
+let persistTimer: NodeJS.Timeout | null = null;
+function persist() {
+  if (persistTimer) return;
+  persistTimer = setTimeout(async () => {
+    persistTimer = null;
+    try { await mkdir(DATA_DIR, { recursive: true }); await writeFile(STORE_FILE, JSON.stringify(Object.fromEntries(store))); } catch { /* best effort */ }
+  }, 300);
+}
+const MAX_STORE = Number(process.env.TTR_MAX_ROBOTS ?? 5000);
+function remember(id: string, robot: RobotSpecification) {
+  store.set(id, robot);
+  if (store.size > MAX_STORE) { const first = store.keys().next().value; if (first) store.delete(first); }
+  persist();
+}
 
 const MIME: Record<string, string> = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".json": "application/json", ".svg": "image/svg+xml", ".ico": "image/x-icon" };
 
@@ -58,13 +77,13 @@ const server = createServer(async (req, res) => {
     if (req.method === "POST" && p === "/api/robots/generate") {
       const { prompt } = await readBody(req);
       const result = await generateRobot(String(prompt ?? ""));
-      const id = randomUUID(); store.set(id, result.robot);
+      const id = randomUUID(); remember(id, result.robot);
       return json(res, 200, { id, ...result });
     }
     if (req.method === "POST" && p === "/api/robots/modify") {
       const { robot, instruction } = await readBody(req);
       const result = await modifyRobot(robot as RobotSpecification, String(instruction ?? ""));
-      const id = randomUUID(); store.set(id, result.robot);
+      const id = randomUUID(); remember(id, result.robot);
       return json(res, 200, { id, ...result });
     }
     if (req.method === "POST" && p === "/api/robots/validate") {
@@ -94,10 +113,12 @@ const server = createServer(async (req, res) => {
     if (req.method === "GET" && p.startsWith("/api/robots/")) {
       const id = p.slice("/api/robots/".length);
       const robot = store.get(id);
-      return robot ? json(res, 200, { id, robot }) : json(res, 404, { error: "not found" });
+      return robot ? json(res, 200, { id, robot, urdf: generateUrdf(robot), xacro: generateXacro(robot) }) : json(res, 404, { error: "not found" });
     }
     if (p.startsWith("/api/")) return json(res, 404, { error: "unknown endpoint" });
 
+    // shareable robot link: /r/<id> serves the app, which loads the robot by id
+    if (req.method === "GET" && p.startsWith("/r/")) { req.url = "/index.html"; if (await serveStatic(req, res)) return; }
     // static web app
     if (req.method === "GET") { if (await serveStatic(req, res)) return; }
     return json(res, 404, { error: "not found" });

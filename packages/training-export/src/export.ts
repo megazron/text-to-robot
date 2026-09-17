@@ -126,10 +126,18 @@ ALGOS = {"ppo": PPO, "sac": SAC}
 def env_id(task): return f"${c}-{task}-v0"
 
 
+def _tb_dir():
+    try:
+        import tensorboard  # noqa: F401
+        return "./tb"
+    except ImportError:
+        return None  # train fine without TensorBoard logging
+
+
 def train(task, algo, steps):
     Algo = ALGOS[algo]
     env = make_vec_env(env_id(task), n_envs=4)
-    model = Algo("MlpPolicy", env, verbose=1, tensorboard_log="./tb")
+    model = Algo("MlpPolicy", env, verbose=1, tensorboard_log=_tb_dir())
     model.learn(total_timesteps=steps)
     model.save(f"${name}_{algo}_{task}")
     print("saved", f"${name}_{algo}_{task}.zip")

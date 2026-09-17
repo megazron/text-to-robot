@@ -9,7 +9,7 @@ const el = (t, c, txt) => { const e = document.createElement(t); if (c) e.classN
 // ---------------- state ----------------
 const state = {
   robot: null, urdf: "", xacro: "", jointValues: {},
-  versions: [], version: -1, selection: null, meshes: new Map(), axisHelpers: [], frameHelpers: [], bom: null,
+  versions: [], version: -1, selection: null, meshes: new Map(), axisHelpers: [], frameHelpers: [], bom: null, id: null,
 };
 
 // ---------------- three.js scene ----------------
@@ -34,7 +34,8 @@ const robotGroup = new THREE.Group(); scene.add(robotGroup);
 
 function resize() {
   const w = viewport.clientWidth, h = viewport.clientHeight;
-  renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
+  renderer.setSize(w, h); // updates CSS size too; without it HiDPI (DPR 2) canvases overflow the layout
+  camera.aspect = w / h; camera.updateProjectionMatrix();
 }
 new ResizeObserver(resize).observe(viewport); resize();
 (function loop() { requestAnimationFrame(loop); controls.update(); renderer.render(scene, camera); })();
@@ -302,7 +303,8 @@ async function api(path, body) {
 }
 
 function applyResult(res, label, diffLines) {
-  state.robot = res.robot; state.urdf = res.urdf; state.xacro = res.xacro;
+  state.robot = res.robot; state.urdf = res.urdf; state.xacro = res.xacro; state.id = res.id ?? state.id;
+  if (state.id) history.replaceState(null, "", `/r/${state.id}`);
   state.jointValues = {};
   state.versions.push({ label, robot: res.robot, urdf: res.urdf, xacro: res.xacro });
   state.version = state.versions.length - 1;
@@ -344,6 +346,7 @@ async function handleDownload(kind) {
   if (kind === "bom") { const bom = state.bom ?? (await api("/api/robots/bom", { robot: state.robot })).bom; return download(`${name}_BOM.md`, bomMarkdown(bom), "text/markdown"); }
   if (kind === "cad") { const { files } = await api("/api/robots/cad", { robot: state.robot }); return download(`${name}_cad.zip`, makeZip(files)); }
   if (kind === "train") { const { files } = await api("/api/robots/training", { robot: state.robot }); return download(`${name}_training.zip`, makeZip(files)); }
+  if (kind === "share") { if (!state.id) return; await navigator.clipboard.writeText(`${location.origin}/r/${state.id}`); flash($("[data-dl=share]"), "link copied!"); return; }
   if (kind === "launch") { await navigator.clipboard.writeText(`ros2 launch ${name} display.launch.py`); flash($("[data-dl=launch]"), "copied!"); return; }
   if (kind === "ros2") {
     const { files } = await api("/api/robots/export", { robot: state.robot, ros2_control: true });
@@ -391,5 +394,17 @@ async function initMode() {
 }
 
 initExamples(); initTemplates(); initMode();
-doGenerate("Create a 6 DOF robotic arm with a parallel gripper");
+(async () => {
+  const m = location.pathname.match(/^\/r\/([0-9a-f-]{8,})$/i);
+  if (m) {
+    try {
+      const r = await fetch(`/api/robots/${m[1]}`); if (!r.ok) throw new Error("not found");
+      const d = await r.json();
+      const gen = await api("/api/robots/bom", { robot: d.robot }).catch(() => ({ bom: null }));
+      applyResult({ ...d, validation: { checks: ["\u2713 Loaded shared robot"] }, urdfValidation: { checks: [] }, warnings: [], repairs: [], bom: gen.bom }, "shared robot");
+      return;
+    } catch (e) { status("\u2717 shared robot not found; generating a default", "err"); }
+  }
+  doGenerate("Create a 6 DOF robotic arm with a parallel gripper");
+})();
 window.__ttr = { camera, controls, frameRobot, get robot(){return state.robot} };

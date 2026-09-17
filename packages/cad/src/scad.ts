@@ -4,6 +4,7 @@
 import type { RobotSpecification, Geometry, Link } from "@ttr/robot-schema";
 import { safeName } from "@ttr/robot-schema";
 import { forwardKinematics, poseToMat } from "@ttr/kinematics";
+import { generateStlFiles } from "./stl.ts";
 
 const n = (x: number) => (Math.abs(x) < 1e-9 ? 0 : +x.toFixed(5));
 const mm = (m: number) => n(m * 1000); // OpenSCAD in millimetres
@@ -60,10 +61,10 @@ export function generateCadFiles(spec: RobotSpecification): CadFiles {
       `// units: mm. Mesh with: openscad -o ${safeName(l.name)}.stl ${safeName(l.name)}.scad\n` +
       `multmatrix(${mat4rows(poseToMat(l.origin))})\n  ${solid(l.geometry)}\n`;
   }
+  Object.assign(files, generateStlFiles(spec));   // ready-to-print STL (no OpenSCAD needed)
   files[`cad/README.md`] =
-    `# CAD — ${spec.robot_name}\n\nParametric OpenSCAD parts (millimetres).\n\n` +
-    `- \`${name}.scad\` — full assembly at the zero pose\n- \`parts/*.scad\` — one printable part per link\n\n` +
-    `## Mesh to STL\n\n\`\`\`bash\nopenscad -o ${name}.stl ${name}.scad          # whole assembly\nopenscad -o base_link.stl parts/base_link.scad  # a single part\n\`\`\`\n\n` +
-    `Import the STL into your slicer, or the SCAD into any OpenSCAD-compatible CAD tool.\n`;
+    `# CAD — ${spec.robot_name}\n\nTwo deliverables, both in millimetres:\n\n` +
+    `- **STL (ready to print)** — \`stl/${name}_assembly.stl\` and one mesh per link in \`stl/parts/\`. Drop straight into a slicer. See \`PRINTABILITY.md\`.\n` +
+    `- **OpenSCAD (parametric source)** — \`${name}.scad\` (assembly) and \`parts/*.scad\`; edit dimensions and re-mesh with \`openscad -o part.stl part.scad\`.\n`;
   return files;
 }

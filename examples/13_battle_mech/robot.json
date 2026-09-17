@@ -18,7 +18,7 @@
         "xyz": [
           0,
           0,
-          0.78
+          0.62
         ],
         "rpy": [
           0,
@@ -944,6 +944,264 @@
       }
     },
     {
+      "name": "left_thigh",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.045,
+        "length": 0.2
+      },
+      "mass": 0.5725552611167398,
+      "material": "link_mat",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.1
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.002198373637996149,
+        "iyy": 0.002198373637996149,
+        "izz": 0.000579712201880699,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.045,
+        "length": 0.2
+      }
+    },
+    {
+      "name": "left_shin",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.04,
+        "length": 0.2
+      },
+      "mass": 0.45238934211693027,
+      "material": "link_mat",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.1
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0016889202105698734,
+        "iyy": 0.0016889202105698734,
+        "izz": 0.0003619114736935442,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.04,
+        "length": 0.2
+      }
+    },
+    {
+      "name": "left_foot",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.16,
+          0.08,
+          0.04
+        ]
+      },
+      "mass": 0.23040000000000005,
+      "material": "base_mat",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0.03,
+          0,
+          -0.02
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.00015360000000000005,
+        "iyy": 0.0005222400000000002,
+        "izz": 0.0006144000000000002,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.16,
+          0.08,
+          0.04
+        ]
+      }
+    },
+    {
+      "name": "right_thigh",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.045,
+        "length": 0.2
+      },
+      "mass": 0.5725552611167398,
+      "material": "link_mat",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.1
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.002198373637996149,
+        "iyy": 0.002198373637996149,
+        "izz": 0.000579712201880699,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.045,
+        "length": 0.2
+      }
+    },
+    {
+      "name": "right_shin",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.04,
+        "length": 0.2
+      },
+      "mass": 0.45238934211693027,
+      "material": "link_mat",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.1
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0016889202105698734,
+        "iyy": 0.0016889202105698734,
+        "izz": 0.0003619114736935442,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.04,
+        "length": 0.2
+      }
+    },
+    {
+      "name": "right_foot",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.16,
+          0.08,
+          0.04
+        ]
+      },
+      "mass": 0.23040000000000005,
+      "material": "base_mat",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0.03,
+          0,
+          -0.02
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.00015360000000000005,
+        "iyy": 0.0005222400000000002,
+        "izz": 0.0006144000000000002,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.16,
+          0.08,
+          0.04
+        ]
+      }
+    },
+    {
       "name": "camera_1_link",
       "geometry": {
         "type": "box",
@@ -1048,7 +1306,7 @@
         "xyz": [
           0,
           0,
-          1.05
+          0.89
         ],
         "rpy": [
           0,
@@ -1077,15 +1335,15 @@
       }
     },
     {
-      "name": "left_joint_1",
+      "name": "left_arm_joint_1",
       "type": "revolute",
       "parent": "torso",
       "child": "left_shoulder",
       "origin": {
         "xyz": [
           0,
-          0.14,
-          0.15
+          0.17500000000000002,
+          0.77
         ],
         "rpy": [
           0,
@@ -1107,14 +1365,14 @@
         "dynamics"
       ],
       "limit": {
-        "lower": -3.141592653589793,
-        "upper": 3.141592653589793,
+        "lower": -2.6,
+        "upper": 2.6,
         "effort": 50,
         "velocity": 2
       }
     },
     {
-      "name": "left_joint_2",
+      "name": "left_arm_joint_2",
       "type": "revolute",
       "parent": "left_shoulder",
       "child": "left_upper_arm",
@@ -1144,14 +1402,14 @@
         "dynamics"
       ],
       "limit": {
-        "lower": -3.141592653589793,
-        "upper": 3.141592653589793,
+        "lower": -2.6,
+        "upper": 2.6,
         "effort": 50,
         "velocity": 2
       }
     },
     {
-      "name": "left_joint_3",
+      "name": "left_arm_joint_3",
       "type": "revolute",
       "parent": "left_upper_arm",
       "child": "left_elbow",
@@ -1181,14 +1439,14 @@
         "dynamics"
       ],
       "limit": {
-        "lower": -3.141592653589793,
-        "upper": 3.141592653589793,
+        "lower": -2.6,
+        "upper": 2.6,
         "effort": 50,
         "velocity": 2
       }
     },
     {
-      "name": "left_joint_4",
+      "name": "left_arm_joint_4",
       "type": "revolute",
       "parent": "left_elbow",
       "child": "left_forearm",
@@ -1218,14 +1476,14 @@
         "dynamics"
       ],
       "limit": {
-        "lower": -3.141592653589793,
-        "upper": 3.141592653589793,
+        "lower": -2.6,
+        "upper": 2.6,
         "effort": 50,
         "velocity": 2
       }
     },
     {
-      "name": "left_joint_5",
+      "name": "left_arm_joint_5",
       "type": "revolute",
       "parent": "left_forearm",
       "child": "left_wrist_1",
@@ -1255,14 +1513,14 @@
         "dynamics"
       ],
       "limit": {
-        "lower": -3.141592653589793,
-        "upper": 3.141592653589793,
+        "lower": -2.6,
+        "upper": 2.6,
         "effort": 50,
         "velocity": 2
       }
     },
     {
-      "name": "left_joint_6",
+      "name": "left_arm_joint_6",
       "type": "revolute",
       "parent": "left_wrist_1",
       "child": "left_wrist_2",
@@ -1292,14 +1550,14 @@
         "dynamics"
       ],
       "limit": {
-        "lower": -3.141592653589793,
-        "upper": 3.141592653589793,
+        "lower": -2.6,
+        "upper": 2.6,
         "effort": 50,
         "velocity": 2
       }
     },
     {
-      "name": "left_joint_7",
+      "name": "left_arm_joint_7",
       "type": "revolute",
       "parent": "left_wrist_2",
       "child": "left_wrist_3",
@@ -1329,8 +1587,8 @@
         "dynamics"
       ],
       "limit": {
-        "lower": -3.141592653589793,
-        "upper": 3.141592653589793,
+        "lower": -2.6,
+        "upper": 2.6,
         "effort": 50,
         "velocity": 2
       }
@@ -1441,15 +1699,15 @@
       }
     },
     {
-      "name": "right_joint_1",
+      "name": "right_arm_joint_1",
       "type": "revolute",
       "parent": "torso",
       "child": "right_shoulder",
       "origin": {
         "xyz": [
           0,
-          -0.14,
-          0.15
+          -0.17500000000000002,
+          0.77
         ],
         "rpy": [
           0,
@@ -1471,14 +1729,14 @@
         "dynamics"
       ],
       "limit": {
-        "lower": -3.141592653589793,
-        "upper": 3.141592653589793,
+        "lower": -2.6,
+        "upper": 2.6,
         "effort": 50,
         "velocity": 2
       }
     },
     {
-      "name": "right_joint_2",
+      "name": "right_arm_joint_2",
       "type": "revolute",
       "parent": "right_shoulder",
       "child": "right_upper_arm",
@@ -1508,14 +1766,14 @@
         "dynamics"
       ],
       "limit": {
-        "lower": -3.141592653589793,
-        "upper": 3.141592653589793,
+        "lower": -2.6,
+        "upper": 2.6,
         "effort": 50,
         "velocity": 2
       }
     },
     {
-      "name": "right_joint_3",
+      "name": "right_arm_joint_3",
       "type": "revolute",
       "parent": "right_upper_arm",
       "child": "right_elbow",
@@ -1545,14 +1803,14 @@
         "dynamics"
       ],
       "limit": {
-        "lower": -3.141592653589793,
-        "upper": 3.141592653589793,
+        "lower": -2.6,
+        "upper": 2.6,
         "effort": 50,
         "velocity": 2
       }
     },
     {
-      "name": "right_joint_4",
+      "name": "right_arm_joint_4",
       "type": "revolute",
       "parent": "right_elbow",
       "child": "right_forearm",
@@ -1582,14 +1840,14 @@
         "dynamics"
       ],
       "limit": {
-        "lower": -3.141592653589793,
-        "upper": 3.141592653589793,
+        "lower": -2.6,
+        "upper": 2.6,
         "effort": 50,
         "velocity": 2
       }
     },
     {
-      "name": "right_joint_5",
+      "name": "right_arm_joint_5",
       "type": "revolute",
       "parent": "right_forearm",
       "child": "right_wrist_1",
@@ -1619,14 +1877,14 @@
         "dynamics"
       ],
       "limit": {
-        "lower": -3.141592653589793,
-        "upper": 3.141592653589793,
+        "lower": -2.6,
+        "upper": 2.6,
         "effort": 50,
         "velocity": 2
       }
     },
     {
-      "name": "right_joint_6",
+      "name": "right_arm_joint_6",
       "type": "revolute",
       "parent": "right_wrist_1",
       "child": "right_wrist_2",
@@ -1656,14 +1914,14 @@
         "dynamics"
       ],
       "limit": {
-        "lower": -3.141592653589793,
-        "upper": 3.141592653589793,
+        "lower": -2.6,
+        "upper": 2.6,
         "effort": 50,
         "velocity": 2
       }
     },
     {
-      "name": "right_joint_7",
+      "name": "right_arm_joint_7",
       "type": "revolute",
       "parent": "right_wrist_2",
       "child": "right_wrist_3",
@@ -1693,8 +1951,8 @@
         "dynamics"
       ],
       "limit": {
-        "lower": -3.141592653589793,
-        "upper": 3.141592653589793,
+        "lower": -2.6,
+        "upper": 2.6,
         "effort": 50,
         "velocity": 2
       }
@@ -1802,6 +2060,228 @@
         "upper": 0.03,
         "effort": 40,
         "velocity": 0.3
+      }
+    },
+    {
+      "name": "left_hip_joint",
+      "type": "revolute",
+      "parent": "torso",
+      "child": "left_thigh",
+      "origin": {
+        "xyz": [
+          0,
+          0.07,
+          0.44
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -1.6,
+        "upper": 1.6,
+        "effort": 50,
+        "velocity": 2
+      }
+    },
+    {
+      "name": "left_knee_joint",
+      "type": "revolute",
+      "parent": "left_thigh",
+      "child": "left_shin",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.2
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ],
+      "limit": {
+        "lower": 0,
+        "upper": 2.4,
+        "effort": 50,
+        "velocity": 2
+      }
+    },
+    {
+      "name": "left_ankle_joint",
+      "type": "revolute",
+      "parent": "left_shin",
+      "child": "left_foot",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.2
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.8,
+        "upper": 0.8,
+        "effort": 50,
+        "velocity": 2
+      }
+    },
+    {
+      "name": "right_hip_joint",
+      "type": "revolute",
+      "parent": "torso",
+      "child": "right_thigh",
+      "origin": {
+        "xyz": [
+          0,
+          -0.07,
+          0.44
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -1.6,
+        "upper": 1.6,
+        "effort": 50,
+        "velocity": 2
+      }
+    },
+    {
+      "name": "right_knee_joint",
+      "type": "revolute",
+      "parent": "right_thigh",
+      "child": "right_shin",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.2
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ],
+      "limit": {
+        "lower": 0,
+        "upper": 2.4,
+        "effort": 50,
+        "velocity": 2
+      }
+    },
+    {
+      "name": "right_ankle_joint",
+      "type": "revolute",
+      "parent": "right_shin",
+      "child": "right_foot",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.2
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.8,
+        "upper": 0.8,
+        "effort": 50,
+        "velocity": 2
       }
     },
     {
@@ -1975,50 +2455,62 @@
   ],
   "metadata": {
     "generator": "text-to-robot",
-    "created": "2026-09-17T11:54:37.579Z",
+    "created": "2026-09-17T13:22:26.458Z",
     "inferred_fields": [
       "joints.camera_1_joint.dynamics",
       "joints.camera_1_joint.limit",
       "joints.imu_1_joint.dynamics",
       "joints.imu_1_joint.limit",
+      "joints.left_ankle_joint.dynamics",
+      "joints.left_ankle_joint.limit",
+      "joints.left_arm_joint_1.dynamics",
+      "joints.left_arm_joint_1.limit",
+      "joints.left_arm_joint_2.dynamics",
+      "joints.left_arm_joint_2.limit",
+      "joints.left_arm_joint_3.dynamics",
+      "joints.left_arm_joint_3.limit",
+      "joints.left_arm_joint_4.dynamics",
+      "joints.left_arm_joint_4.limit",
+      "joints.left_arm_joint_5.dynamics",
+      "joints.left_arm_joint_5.limit",
+      "joints.left_arm_joint_6.dynamics",
+      "joints.left_arm_joint_6.limit",
+      "joints.left_arm_joint_7.dynamics",
+      "joints.left_arm_joint_7.limit",
       "joints.left_gripper_base_joint.dynamics",
       "joints.left_gripper_base_joint.limit",
-      "joints.left_joint_1.dynamics",
-      "joints.left_joint_1.limit",
-      "joints.left_joint_2.dynamics",
-      "joints.left_joint_2.limit",
-      "joints.left_joint_3.dynamics",
-      "joints.left_joint_3.limit",
-      "joints.left_joint_4.dynamics",
-      "joints.left_joint_4.limit",
-      "joints.left_joint_5.dynamics",
-      "joints.left_joint_5.limit",
-      "joints.left_joint_6.dynamics",
-      "joints.left_joint_6.limit",
-      "joints.left_joint_7.dynamics",
-      "joints.left_joint_7.limit",
+      "joints.left_hip_joint.dynamics",
+      "joints.left_hip_joint.limit",
+      "joints.left_knee_joint.dynamics",
+      "joints.left_knee_joint.limit",
       "joints.left_left_finger_joint.dynamics",
       "joints.left_left_finger_joint.limit",
       "joints.left_right_finger_joint.dynamics",
       "joints.left_right_finger_joint.limit",
       "joints.neck_joint.dynamics",
       "joints.neck_joint.limit",
+      "joints.right_ankle_joint.dynamics",
+      "joints.right_ankle_joint.limit",
+      "joints.right_arm_joint_1.dynamics",
+      "joints.right_arm_joint_1.limit",
+      "joints.right_arm_joint_2.dynamics",
+      "joints.right_arm_joint_2.limit",
+      "joints.right_arm_joint_3.dynamics",
+      "joints.right_arm_joint_3.limit",
+      "joints.right_arm_joint_4.dynamics",
+      "joints.right_arm_joint_4.limit",
+      "joints.right_arm_joint_5.dynamics",
+      "joints.right_arm_joint_5.limit",
+      "joints.right_arm_joint_6.dynamics",
+      "joints.right_arm_joint_6.limit",
+      "joints.right_arm_joint_7.dynamics",
+      "joints.right_arm_joint_7.limit",
       "joints.right_gripper_base_joint.dynamics",
       "joints.right_gripper_base_joint.limit",
-      "joints.right_joint_1.dynamics",
-      "joints.right_joint_1.limit",
-      "joints.right_joint_2.dynamics",
-      "joints.right_joint_2.limit",
-      "joints.right_joint_3.dynamics",
-      "joints.right_joint_3.limit",
-      "joints.right_joint_4.dynamics",
-      "joints.right_joint_4.limit",
-      "joints.right_joint_5.dynamics",
-      "joints.right_joint_5.limit",
-      "joints.right_joint_6.dynamics",
-      "joints.right_joint_6.limit",
-      "joints.right_joint_7.dynamics",
-      "joints.right_joint_7.limit",
+      "joints.right_hip_joint.dynamics",
+      "joints.right_hip_joint.limit",
+      "joints.right_knee_joint.dynamics",
+      "joints.right_knee_joint.limit",
       "joints.right_left_finger_joint.dynamics",
       "joints.right_left_finger_joint.limit",
       "joints.right_right_finger_joint.dynamics",
@@ -2031,6 +2523,8 @@
       "links.imu_1_link.mass",
       "links.left_elbow.inertia",
       "links.left_elbow.mass",
+      "links.left_foot.inertia",
+      "links.left_foot.mass",
       "links.left_forearm.inertia",
       "links.left_forearm.mass",
       "links.left_gripper_base.inertia",
@@ -2039,8 +2533,12 @@
       "links.left_left_finger.mass",
       "links.left_right_finger.inertia",
       "links.left_right_finger.mass",
+      "links.left_shin.inertia",
+      "links.left_shin.mass",
       "links.left_shoulder.inertia",
       "links.left_shoulder.mass",
+      "links.left_thigh.inertia",
+      "links.left_thigh.mass",
       "links.left_upper_arm.inertia",
       "links.left_upper_arm.mass",
       "links.left_wrist_1.inertia",
@@ -2051,6 +2549,8 @@
       "links.left_wrist_3.mass",
       "links.right_elbow.inertia",
       "links.right_elbow.mass",
+      "links.right_foot.inertia",
+      "links.right_foot.mass",
       "links.right_forearm.inertia",
       "links.right_forearm.mass",
       "links.right_gripper_base.inertia",
@@ -2059,8 +2559,12 @@
       "links.right_left_finger.mass",
       "links.right_right_finger.inertia",
       "links.right_right_finger.mass",
+      "links.right_shin.inertia",
+      "links.right_shin.mass",
       "links.right_shoulder.inertia",
       "links.right_shoulder.mass",
+      "links.right_thigh.inertia",
+      "links.right_thigh.mass",
       "links.right_upper_arm.inertia",
       "links.right_upper_arm.mass",
       "links.right_wrist_1.inertia",
@@ -2073,8 +2577,8 @@
       "links.torso.mass"
     ],
     "notes": [
-      "Generated humanoid: torso, head, two 7-DOF arms with grippers.",
-      "Interpreted by demo parser: type inferred, DOF=19, gripper=parallel."
+      "Generated humanoid: torso, head, two 7-DOF arms with grippers, two 3-DOF legs.",
+      "Interpreted by demo parser: type inferred, DOF=25, gripper=parallel."
     ],
     "source_prompt": "Create a humanoid battle mech with two 7 DOF arms, a head camera and an IMU"
   }

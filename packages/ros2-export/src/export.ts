@@ -2,12 +2,14 @@
 import type { RobotSpecification, Joint } from "@ttr/robot-schema";
 import { safeName } from "@ttr/robot-schema";
 import { generateUrdf, generateXacro } from "@ttr/urdf-generator";
+import { exportMoveIt } from "./moveit.ts";
+import { exportGazebo } from "./gazebo.ts";
 
 export type FileMap = Record<string, string>;
 
 const actuated = (s: RobotSpecification): Joint[] => s.joints.filter((j) => j.type === "revolute" || j.type === "prismatic" || j.type === "continuous");
 
-export function exportRos2Package(spec: RobotSpecification, opts: { ros2_control?: boolean } = {}): FileMap {
+export function exportRos2Package(spec: RobotSpecification, opts: { ros2_control?: boolean; moveit?: boolean; gazebo?: boolean } = {}): FileMap {
   const pkg = safeName(spec.robot_name);
   const files: FileMap = {};
 
@@ -24,6 +26,8 @@ export function exportRos2Package(spec: RobotSpecification, opts: { ros2_control
     files[`${pkg}/config/controllers.yaml`] = controllersYaml(spec);
     files[`${pkg}/config/ros2_control.xacro`] = ros2ControlXacro(spec);
   }
+  if (opts.moveit ?? true) Object.assign(files, exportMoveIt(spec));
+  if (opts.gazebo ?? true) Object.assign(files, exportGazebo(spec));
   return files;
 }
 
@@ -43,6 +47,8 @@ function packageXml(pkg: string): string {
   <exec_depend>joint_state_publisher_gui</exec_depend>
   <exec_depend>rviz2</exec_depend>
   <exec_depend>xacro</exec_depend>
+  <exec_depend>ros_gz_sim</exec_depend>
+  <exec_depend>moveit_configs_utils</exec_depend>
 
   <export>
     <build_type>ament_cmake</build_type>
@@ -58,7 +64,7 @@ project(${pkg})
 find_package(ament_cmake REQUIRED)
 
 install(
-  DIRECTORY urdf launch config rviz meshes
+  DIRECTORY urdf launch config rviz meshes moveit worlds
   DESTINATION share/\${PROJECT_NAME}
 )
 
