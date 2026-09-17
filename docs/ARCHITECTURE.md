@@ -47,7 +47,7 @@ URDF structural validation                            (packages/urdf-validator)
 | `components` | Real-part catalogue; BOM sized by per-joint holding torque and fitted to a cost budget |
 | `cad` | Native STL triangulation per link + assembly, OpenSCAD source, printability report |
 | `training-export` | Training suite: MuJoCo quick-start + PyBullet/Gymnasium fallback, task catalogue per robot class, PPO/SAC, demo collection, behaviour cloning, evaluation |
-| `python/ttr_mujoco` (Python) | URDF → actuated MuJoCo MJCF (mass-scaled servos, preserved inertials, free base, floor), simulation test battery, headless GIF renderer, Gymnasium env with delta actions + perturbations, PPO trainer, `ttr-mujoco` CLI |
+| `python/ttr_mujoco` (Python) | URDF → actuated MuJoCo MJCF (mass-scaled servos, preserved inertials, free base, floor), simulation test battery, headless GIF renderer, Gymnasium env with delta actions + perturbations, PPO trainer, `ttr-mujoco` CLI; `exo.py` straps an anthropometric wearer into a wearable exoskeleton and runs a powered-vs-unpowered support test |
 
 ## Persistence and sharing
 

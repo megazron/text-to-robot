@@ -23,6 +23,6 @@ jobs:
       - run: pip install "./python"
       - name: MuJoCo simulation battery on the shipped characters
         run: |
-          for ex in 02_arm_6dof 08_humanoid 14_iron_man_suit 15_wall_e 16_eva 17_baymax; do
+          for ex in 02_arm_6dof 08_humanoid 14_iron_man_exosuit 15_wall_e 16_eva 17_baymax; do
             python -m ttr_mujoco test examples/$ex/robot.urdf || exit 1
           done

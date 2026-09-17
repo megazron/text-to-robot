@@ -69,7 +69,7 @@ export interface Joint {
 
 export interface Material { name: string; color: RGBA; }
 
-export type SensorType = "camera" | "depth" | "lidar" | "imu";
+export type SensorType = "camera" | "depth" | "lidar" | "imu" | "force";
 export interface Sensor {
   name: string;
   type: SensorType;

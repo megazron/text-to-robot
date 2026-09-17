@@ -9,9 +9,10 @@ from .testbench import _hold_targets
 
 
 def render_gif(path_or_xml: str, out_gif: str, seconds: float = 4.0, fps: int = 20, width: int = 640, height: int = 400,
-               motion: str = "sweep", floating=None, azimuth: float = 135, elevation: float = -18, label: str | None = None):
+               motion: str = "sweep", floating=None, azimuth: float = 135, elevation: float = -18, label: str | None = None, unpowered: bool = False):
     """motion: 'sweep' (sinusoidal actuator sweep), 'hold' (stand still under gravity), 'drop' (fall from height)."""
     m = load_model(path_or_xml, floating=floating) if path_or_xml.endswith(".urdf") else load_model(path_or_xml)
+    if unpowered: m.actuator_gainprm[:, 0] = 0.0; m.actuator_biasprm[:, :] = 0.0
     d = mujoco.MjData(m); mujoco.mj_forward(m, d)
     if motion == "drop" and m.nq and m.jnt_type[0] == mujoco.mjtJoint.mjJNT_FREE: d.qpos[2] += 0.5
     base = _hold_targets(m, d)
@@ -23,8 +24,8 @@ def render_gif(path_or_xml: str, out_gif: str, seconds: float = 4.0, fps: int = 
     # frame on the robot's bodies (ignore the 20 m floor plane)
     bodies = np.array([d.xpos[b] for b in range(1, m.nbody)]) if m.nbody > 1 else np.zeros((1, 3))
     lo, hi = bodies.min(0), bodies.max(0); size = float(np.max(hi - lo)) + 0.3
-    cam.lookat[:] = [(lo[0] + hi[0]) / 2, (lo[1] + hi[1]) / 2, max(0.05, (lo[2] + hi[2]) / 2)]
-    cam.distance = max(0.6, size * 1.9); cam.azimuth, cam.elevation = azimuth, elevation
+    cam.lookat[:] = [(lo[0] + hi[0]) / 2, (lo[1] + hi[1]) / 2, max(0.05, (lo[2] + hi[2]) / 2 + 0.06 * size)]
+    cam.distance = max(0.6, size * 1.45); cam.azimuth, cam.elevation = azimuth, elevation
     frames = []; n = int(seconds * fps); sub = max(1, int(1 / (fps * m.opt.timestep)))
     for i in range(n):
         t = i / fps

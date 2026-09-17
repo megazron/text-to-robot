@@ -5,6 +5,7 @@ import { quadruped, hexapod } from "./legged.ts";
 import { humanoid } from "./humanoid.ts";
 import { roverArm } from "./composite.ts";
 import { ironManSuit, wallE, eva, baymax } from "./scifi.ts";
+import { wearableExosuit } from "./exosuit.ts";
 
 export * from "./builder.ts";
 export * from "./arms.ts";
@@ -12,6 +13,7 @@ export * from "./mobile.ts";
 export * from "./legged.ts";
 export * from "./composite.ts";
 export * from "./scifi.ts";
+export * from "./exosuit.ts";
 export * from "./humanoid.ts";
 export * from "./grippers.ts";
 
@@ -35,7 +37,8 @@ export const TEMPLATES: TemplateInfo[] = [
   { id: "quadruped", title: "Quadruped", description: "Four 3-DOF legs", build: (p) => quadruped("quadruped", p) },
   { id: "hexapod", title: "Hexapod", description: "Six 3-DOF legs (18 DOF)", build: (p) => hexapod("hexapod", p) },
   { id: "rover_arm", title: "Rover + arm", description: "Four-wheel base with a 6-DOF manipulator", build: (p) => roverArm("rover_arm", 6, p) },
-  { id: "iron_man_suit", title: "Iron Man suit", description: "Armoured powered exosuit with repulsor mounts", build: (p) => ironManSuit("iron_man_suit", p) },
+  { id: "iron_man_exosuit", title: "Iron Man exosuit (wearable)", description: "Powered exoskeleton a person wears: struts, cuffs, joint modules, back pack", build: (p) => wearableExosuit({ prompt: p }) },
+  { id: "battle_mech", title: "Battle mech (humanoid)", description: "Standalone armoured humanoid robot", build: (p) => ironManSuit("battle_mech", p) },
   { id: "wall_e", title: "WALL-E", description: "Tracked base, telescoping neck, binocular head, two arms", build: (p) => wallE("wall_e", p) },
   { id: "eva", title: "EVA", description: "Free-floating capsule body with arm pods", build: (p) => eva("eva", p) },
   { id: "baymax", title: "Baymax", description: "Soft rounded healthcare humanoid", build: (p) => baymax("baymax", p) },

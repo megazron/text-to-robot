@@ -66,7 +66,10 @@ function buildBomAtTier(spec: RobotSpecification, tier: Tier, budget?: number): 
 
   let motorPowerW = 0;
   for (const j of actuated) {
-    const req = requiredTorque(spec, j, pos);
+    // physics estimate from the robot's own downstream mass, floored by the designer-declared effort
+    // (a wearable exoskeleton, for example, must move the wearer's limbs, not just its own struts)
+    const designed = j.limit?.effort && !(j.inferred ?? []).includes("limit") ? j.limit.effort * 0.8 : 0;
+    const req = Math.max(requiredTorque(spec, j, pos), designed);
     const a = pickActuator(req, tier, j.type === "prismatic");
     if (!a) { warnings.push(`no actuator found for joint ${j.name}`); continue; }
     const met = a.torque >= req * 1.5;

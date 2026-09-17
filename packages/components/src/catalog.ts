@@ -6,7 +6,7 @@ export interface Part {
   name: string; category: string; unit_cost: number; spec: string; tiers: Tier[];
 }
 export interface Actuator extends Part { torque: number; kind: "servo" | "smart_servo" | "stepper" | "bldc" | "linear"; needs_driver?: string; driver_cost?: number; }
-export interface Sensor extends Part { sensor: "camera" | "depth" | "lidar" | "imu"; }
+export interface Sensor extends Part { sensor: "camera" | "depth" | "lidar" | "imu" | "force"; }
 export interface Compute extends Part { level: number; ros2: boolean; }
 
 export const ACTUATORS: Actuator[] = [
@@ -20,6 +20,9 @@ export const ACTUATORS: Actuator[] = [
   { name: "Dynamixel MX-64AR", category: "actuator", kind: "smart_servo", torque: 6.0, unit_cost: 300, spec: "RS485 smart servo", tiers: ["research"] },
   { name: "Dynamixel PRO H54", category: "actuator", kind: "smart_servo", torque: 44, unit_cost: 1800, spec: "industrial smart actuator", tiers: ["research"] },
   { name: "T-Motor AK80-9 (BLDC + driver)", category: "actuator", kind: "bldc", torque: 18, unit_cost: 320, spec: "quasi-direct-drive, CAN", tiers: ["research"] },
+  { name: "Unitree GO-M8010-6", category: "actuator", kind: "bldc", torque: 23, unit_cost: 400, spec: "integrated BLDC + planetary, RS485", tiers: ["prosumer", "research"] },
+  { name: "CubeMars AK80-64", category: "actuator", kind: "bldc", torque: 120, unit_cost: 700, spec: "exoskeleton-class QDD, 64:1, CAN", tiers: ["research"] },
+  { name: "Harmonic Drive CSD + frameless BLDC (150 N·m)", category: "actuator", kind: "bldc", torque: 150, unit_cost: 2400, spec: "wearable-robot joint module, absolute encoder", tiers: ["research"] },
   { name: "Linear actuator 100N", category: "actuator", kind: "linear", torque: 100, unit_cost: 35, spec: "12V, 100mm stroke (prismatic)", tiers: ["hobby", "prosumer"] },
   { name: "NEMA17 + lead screw", category: "actuator", kind: "linear", torque: 60, unit_cost: 26, spec: "lead-screw linear stage", needs_driver: "TMC2209 driver", driver_cost: 10, tiers: ["prosumer", "research"] },
 ];
@@ -36,6 +39,10 @@ export const SENSORS: Record<string, Sensor[]> = {
   lidar: [
     { name: "Slamtec RPLidar A1M8", category: "sensor", sensor: "lidar", unit_cost: 99, spec: "2D, 12m, 8k samples/s", tiers: ["hobby", "prosumer"] },
     { name: "Livox Mid-360", category: "sensor", sensor: "lidar", unit_cost: 620, spec: "3D, 40m", tiers: ["research"] },
+  ],
+  force: [
+    { name: "FSR insole pad (x4)", category: "sensor", sensor: "force", unit_cost: 25, spec: "foot contact / CoP estimate", tiers: ["hobby", "prosumer"] },
+    { name: "Loadstar / Tekscan insole force sensor", category: "sensor", sensor: "force", unit_cost: 350, spec: "calibrated plantar force", tiers: ["research"] },
   ],
   imu: [
     { name: "MPU-6050", category: "sensor", sensor: "imu", unit_cost: 4, spec: "6-axis, I2C", tiers: ["hobby"] },

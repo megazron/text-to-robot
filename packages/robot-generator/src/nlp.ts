@@ -3,7 +3,7 @@
 // documented prompts and degrade gracefully.
 import type { RobotSpecification, Geometry, Sensor, SensorType } from "@ttr/robot-schema";
 import { safeName, pose } from "@ttr/robot-schema";
-import { nDofArm, scara, humanoid, diffDrive, fourWheel, mecanum, quadruped, hexapod, roverArm, ironManSuit, wallE, eva, baymax, attachParallelGripper, attachSuctionGripper, cyl, box, link, joint } from "@ttr/robot-templates";
+import { nDofArm, scara, humanoid, diffDrive, fourWheel, mecanum, quadruped, hexapod, roverArm, ironManSuit, wearableExosuit, wallE, eva, baymax, attachParallelGripper, attachSuctionGripper, cyl, box, link, joint } from "@ttr/robot-templates";
 
 const WORD_NUM: Record<string, number> = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10 };
 
@@ -29,8 +29,9 @@ export function parsePrompt(prompt: string): RobotSpecification {
   const g = gripperKind(t);
   let spec: RobotSpecification;
 
-  if (/iron[\s-]?man|exosuit|exo[\s-]?skeleton|power(?:ed)?\s+(?:armou?r|suit)|mech\s+suit|battle\s+suit/.test(t)) {
-    spec = ironManSuit("iron_man_suit", prompt);
+  if (/iron[\s-]?man|exosuit|exo[\s-]?skeleton|wearable|power(?:ed)?\s+(?:armou?r|suit)|mech\s+suit|battle\s+suit/.test(t)) {
+    // a suit is WORN: build the wearable exoskeleton; "battle mech" (standalone robot) is a humanoid
+    spec = /\bmech\b(?!\s+suit)/.test(t) && !/iron[\s-]?man|exo|wearable|suit/.test(t) ? ironManSuit("battle_mech", prompt) : wearableExosuit({ prompt });
   } else if (/wall[\s-]?e\b|trash\s+compactor|garbage\s+robot/.test(t)) {
     spec = wallE("wall_e", prompt);
   } else if (/\beva\b|probe\s+droid|egg[\s-]?shaped|hover(?:ing)?\s+(?:robot|droid|bot)/.test(t)) {
@@ -233,7 +234,7 @@ function applyInlineSensors(spec: RobotSpecification, t: string) {
     [/camera|vision|eye|optical/, "camera", /wrist|gripper/.test(t) ? "wrist" : "head"],
     [/imu|gyro|acceleromet/, "imu", "base"],
   ];
-  for (const [rx, type, where] of wants) if (rx.test(t)) addSensor(spec, type, where);
+  for (const [rx, type, where] of wants) if (rx.test(t) && !spec.sensors.some((x) => x.type === type)) addSensor(spec, type, where); // templates that already carry the sensor win
 }
 
 /** parse a budget like "$500", "under 2000 dollars", "budget of 1.5k" */

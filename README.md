@@ -24,44 +24,47 @@ Text-to-speech turns words into audio. **Text-to-Robot turns words into a robot*
 
 <p align="center"><i>Every screenshot is the real app in demo mode — no API key. Left: a six-legged scout generated from a prompt. Right: a Mars rover with its live Bill of Materials.</i></p>
 
-## From a sentence to a robot in MuJoCo: the Iron Man suit
+## From a sentence to a wearable robot in MuJoCo: the Iron Man suit
 
-> *"Build me an Iron Man style powered exosuit with repulsor thrusters, a HUD camera and an IMU"*
+> *"Build me a real wearable Iron Man suit: a powered exoskeleton with repulsor thrusters, a HUD camera and an IMU"*
 
-That one line produced a 29-link, 28-joint armoured exosuit (21 actuated joints, 13.8 kg, arc reactor, palm and boot thruster mounts, HUD camera, IMU) — then it was converted to MuJoCo and **simulated, not just drawn**:
+A suit is something a person **wears**, so that sentence produces a **powered exoskeleton**, not a
+robot mannequin: a frame you stand inside. Struts run down the outside of the limbs, cuffs strap to
+the thighs, shins, upper arms and forearms, an actuator module sits at every hip, knee, ankle,
+shoulder, elbow and wrist, and a 9 kg pack on the back carries power and compute. It is built to
+adult anthropometrics (1.75 m: hip 0.96 m, knee 0.54 m, shoulder 1.47 m), has **17 actuated joints**,
+weighs **53 kg** (Sarcos's full-body Guardian XO is 68 kg), and carries insole force sensors, a trunk IMU
+and a HUD camera. Then it is put into MuJoCo **with a 75 kg person strapped in** (a passive
+anthropometric mannequin welded to the cuffs, exactly like straps) and simulated:
 
 <p align="center">
-  <img src="docs/img/ironman_stand.gif" width="32%" alt="Iron Man suit standing under gravity in MuJoCo" />
-  <img src="docs/img/ironman_sweep.gif" width="32%" alt="Iron Man suit sweeping all 21 actuators on a test stand in MuJoCo" />
-  <img src="docs/img/ironman_drop.gif" width="32%" alt="Iron Man suit surviving a 0.5 m drop in MuJoCo" />
+  <img src="docs/img/exosuit_wearer_stand.gif" width="49%" alt="Wearable exosuit with a 75 kg person inside, powered, standing in MuJoCo" />
+  <img src="docs/img/exosuit_wearer_unpowered.gif" width="49%" alt="The same suit with motors off: the wearer collapses" />
+</p>
+<p align="center">
+  <img src="docs/img/exosuit_sweep.gif" width="49%" alt="Exosuit on a test stand sweeping all 17 joint modules" />
+  <img src="docs/img/exosuit_wearer_drop.gif" width="49%" alt="Suit and wearer surviving a 0.5 m drop" />
 </p>
 
-| MuJoCo test | Result |
+| MuJoCo test (suit + 75 kg wearer) | Result |
 |---|---|
-| Compile + actuate | ✅ 21 position actuators, gains scaled to mass |
-| Settle under gravity (2 s) | ✅ stays upright, joint speeds < 1.3 rad/s |
-| Hold pose | ✅ max joint drift 0.06 rad |
-| Actuator sweep (60 % of range, every joint) | ✅ 19/21 track within tolerance |
-| 1 m/s shove | ✅ finite, no blow-up — **falls over**: a passive stance has no balance controller |
+| Compile + actuate | ✅ 17 joint modules, 128 kg total system |
+| Settle under gravity | ✅ upright (1.00), joint speeds < 0.4 rad/s |
+| Hold pose | ✅ max joint drift 0.007 rad |
+| Actuator sweep | ✅ 14/17 track within tolerance (the rest are load-limited, as expected) |
+| 1 m/s shove | ✅ stays upright (0.999) |
+| **Wearer support (powered vs motors off)** | ✅ powered: wearer's head drops **5 mm** · motors off: **0.65 m collapse** |
 
-That last row is the point of the training layer. Trained in MuJoCo with PPO on a *stand under random pushes* task:
+The suit demonstrably carries the person. Two things the physics taught us that a drawing never
+would: a standing exoskeleton under position control is only stable if joint stiffness beats the
+inverted-pendulum term *m·g·h* (the converter now scales servo stiffness from it), and an empty
+back-heavy frame must have its pack and heels placed so it stands on its own.
 
-| Policy on the generated suit (stand under random pushes) | Steps survived (of 400) |
-|---|--:|
-| Random actions | 110 |
-| Do nothing (hold pose) | 138 |
-| PPO, large joint deltas (first attempt), 40k / 400k steps | 117 / 86 |
-| **PPO, small corrective deltas, 200k steps** | **151** |
-
-Honest numbers, unmassaged, all from the same evaluation protocol (5 episodes, random pushes every
-~1 s). The first attempt let the policy command large joint deltas; its Gaussian exploration jolted
-every joint and it never beat the passive hold. Switching the env to **small corrective deltas
-around the standing pose** — how real balance controllers work — is now the default, and with it PPO
-**outperforms both baselines** after 200k steps. Balance for a 21-DOF biped still wants millions of
-steps and reward shaping; what this demonstrates is the pipeline: **one sentence → URDF → actuated
-MuJoCo model → test battery → Gym env → a policy that learns**, with every artefact in
-`examples/14_iron_man_suit/` (prompt, URDF, MJCF, BOM, `mujoco_report.json`) so you can pick up
-where it left off.
+**Can it be built?** Priced at research tier the Bill of Materials comes to **≈ $29.6k**: seven
+150 N·m harmonic-drive joint modules for the hips, knees and trunk, eight 120 N·m QDD actuators,
+calibrated insole force sensors, a Jetson Orin, a high-voltage pack. That is the honest cost of a
+full-body powered exoskeleton. The repulsors are mount points, not modelled thrust. Everything is in
+`examples/14_iron_man_exosuit/`: prompt, URDF, MJCF (suit, and suit + wearer), BOM, `mujoco_report.json`.
 
 ## Free & self-hostable
 
@@ -106,7 +109,7 @@ demo mode), so the repo runs the moment you clone it.
 - 🧪 **Physics-validated** — every example loads and simulates in PyBullet; the generated training suite has been run end to end (RL, imitation, evaluation).
 - 🧪 **MuJoCo, first-class** — `ttr-mujoco` converts the URDF to an actuated MuJoCo scene (mass-scaled servos, floor, free base), runs a simulation test battery, renders headless GIFs, and trains PPO. Every shipped example passes its battery.
 - 🏋️ **Train it** — a downloadable training suite (MuJoCo + PyBullet, Gymnasium, PPO/SAC, imitation learning, evaluation) that loads the generated robot directly.
-- 🚀 **Any robot you can describe** — templates for arms, bases, legged robots and hands, plus sci-fi builds with real mechanisms: **Iron Man suit, WALL-E, EVA, Baymax**, spider-bots, Mars rovers, battle mechs.
+- 🚀 **Any robot you can describe** — templates for arms, bases, legged robots and hands, plus sci-fi builds with real mechanisms: a **wearable Iron Man exosuit** (simulated with a person inside), **WALL-E, EVA, Baymax**, spider-bots, Mars rovers, battle mechs.
 - 🖥️ **CLI + HTTP API** — scriptable and embeddable.
 - 🔌 **Pluggable LLMs** — OpenAI, Anthropic, or deterministic demo mode.
 
@@ -142,7 +145,7 @@ Requires **Node.js ≥ 22.6** (uses native TypeScript execution — no build ste
 git clone https://github.com/megazron/text-to-robot
 cd text-to-robot
 npm install          # links the workspace packages (no third-party deps to download)
-npm test             # 65 tests
+npm test             # 67 tests
 ```
 
 ## Quick start
@@ -260,9 +263,9 @@ The vision: **describe a robot, download it, and start testing and training it.*
 pip install "git+https://github.com/megazron/text-to-robot#subdirectory=python[train]"
 pip install torch --index-url https://download.pytorch.org/whl/cpu      # CPU torch on GPU-less machines
 
-ttr-mujoco test   examples/14_iron_man_suit/robot.urdf                  # settle / hold / sweep / disturbance
-ttr-mujoco render examples/14_iron_man_suit/robot.urdf -o suit.gif --motion sweep --fixed
-ttr-mujoco train  examples/14_iron_man_suit/robot.urdf --task stand --steps 400000
+ttr-mujoco test   examples/14_iron_man_exosuit/robot.urdf --wearer      # battery + powered-vs-unpowered wearer test
+ttr-mujoco render examples/14_iron_man_exosuit/robot.urdf --wearer -o suit.gif --motion hold
+ttr-mujoco train  examples/08_humanoid/robot.urdf --task stand --steps 400000
 ```
 
 What the converter guarantees: position actuators on every joint with gains scaled to the robot's
@@ -345,7 +348,7 @@ node cli/src/index.ts validate examples/02_arm_6dof/robot.urdf
 | 11 | Spider scout | `Build a six-legged reconnaissance spider-bot with a LiDAR turret, budget $1500` |
 | 12 | Mars rover | `Design a Mars rover with four wheels and a 6 DOF sampling arm, RGB-D camera, budget $4000` |
 | 13 | Battle mech | `Create a humanoid battle mech with two 7 DOF arms, a head camera and an IMU` |
-| 14 | **Iron Man suit** | `Build me an Iron Man style powered exosuit with repulsor thrusters, a HUD camera and an IMU` |
+| 14 | **Iron Man exosuit (wearable)** | `Build me a real wearable Iron Man suit: a powered exoskeleton with repulsor thrusters, a HUD camera and an IMU` |
 | 15 | **WALL-E** | `Build WALL-E: a tracked trash-compactor robot with a telescoping neck, binocular eyes and two gripper arms` |
 | 16 | **EVA** | `Build EVA, a sleek hovering egg-shaped droid with a visor and two floating arms` |
 | 17 | **Baymax** | `Build Baymax, an inflatable healthcare companion robot` |
@@ -353,7 +356,7 @@ node cli/src/index.ts validate examples/02_arm_6dof/robot.urdf
 Every one of 14–17 is built from real mechanisms (revolute/prismatic/continuous joints, sized masses,
 sensors on mounts) and **passes the MuJoCo test battery 5/5** — see each example's `mujoco_report.json`.
 
-**Imagine anything.** Sci-fi is welcome as long as it is buildable: WALL-E gets tracks with four driven wheels, a telescoping (prismatic) neck and binocular cameras; EVA is a free-floating capsule with a hover-thruster mount and flight IMU; the Iron Man suit is an armoured 21-DOF biped with repulsor mounts. Prompts route to the closest structure and pull in the sensors you mention:
+**Imagine anything.** Sci-fi is welcome as long as it is buildable: WALL-E gets tracks with four driven wheels, a telescoping (prismatic) neck and binocular cameras; EVA is a free-floating capsule with a hover-thruster mount and flight IMU; the Iron Man suit is a wearable 17-joint powered exoskeleton that is simulated with a 75 kg person strapped inside. Prompts route to the closest structure and pull in the sensors you mention:
 "a warehouse loader with mecanum wheels and a suction gripper", "an insectoid recon drone with a
 LiDAR", "a planetary explorer with a 1-metre arm". Each still passes schema + URDF validation.
 
@@ -367,7 +370,7 @@ text-to-robot/
 │                    urdf-validator, llm-providers, robot-generator, ros2-export
 ├── cli/             text-to-robot command
 ├── examples/        10 validated robots
-├── tests/           65 node:test cases
+├── tests/           67 node:test cases
 └── docs/            architecture
 ```
 
@@ -397,7 +400,7 @@ npm run api           # serve web + API on :8787
 - [x] Physics validation of all examples (PyBullet)
 - [x] Shareable robot links + persistence + Dockerfile
 - [x] MuJoCo layer: convert, simulation test battery, headless render, PPO training
-- [x] Sci-fi characters with real mechanisms (Iron Man suit, WALL-E, EVA, Baymax), all simulated
+- [x] Sci-fi builds with real mechanisms: a wearable Iron Man exoskeleton simulated with a person inside, WALL-E, EVA, Baymax — all pass the MuJoCo battery
 
 Future (toward a free hosted service where you describe, download and train a robot):
 

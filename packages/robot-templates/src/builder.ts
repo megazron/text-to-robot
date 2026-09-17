@@ -33,7 +33,8 @@ export function joint(name: string, type: JointType, parent: string, child: stri
     origin: opts.origin ?? pose(),
     axis: opts.axis ?? [0, 0, 1],
     dynamics: { damping: opts.damping ?? DYNAMICS.damping, friction: opts.friction ?? DYNAMICS.friction },
-    inferred: ["limit", "dynamics"],
+    // "limit" is only *inferred* when the template did not design it explicitly
+    inferred: [...(opts.lower === undefined && opts.upper === undefined && opts.effort === undefined ? ["limit"] : []), "dynamics"],
   };
   if (type === "revolute" || type === "prismatic") {
     const base = type === "revolute" ? LIMITS.revolute : LIMITS.prismatic;
