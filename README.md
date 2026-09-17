@@ -48,18 +48,20 @@ That last row is the point of the training layer. Trained in MuJoCo with PPO on 
 
 | Policy on the generated suit (stand under random pushes) | Steps survived (of 400) |
 |---|--:|
-| Random actions | 55–58 |
-| Do nothing (hold pose) | 180–212 |
-| PPO, default hyper-parameters, 40k steps | 117 |
-| PPO, default hyper-parameters, 400k steps | 86 |
+| Random actions | 110 |
+| Do nothing (hold pose) | 138 |
+| PPO, large joint deltas (first attempt), 40k / 400k steps | 117 / 86 |
+| **PPO, small corrective deltas, 200k steps** | **151** |
 
-Honest numbers, unmassaged: default PPO beats random but **does not beat the passive hold** at these
-budgets — its Gaussian exploration jolts every joint, which is the worst thing you can do to a
-statically stable 21-DOF biped. Balance is a hard RL problem (millions of steps, small corrective
-actions, tuned rewards); the env now defaults to small delta actions for exactly that reason. What
-this demonstrates is the pipeline: **one sentence → URDF → actuated MuJoCo model → test battery →
-Gym env → training loop**, with every artefact in `examples/14_iron_man_suit/` (prompt, URDF, MJCF,
-BOM, `mujoco_report.json`) so you can pick up where it left off.
+Honest numbers, unmassaged, all from the same evaluation protocol (5 episodes, random pushes every
+~1 s). The first attempt let the policy command large joint deltas; its Gaussian exploration jolted
+every joint and it never beat the passive hold. Switching the env to **small corrective deltas
+around the standing pose** — how real balance controllers work — is now the default, and with it PPO
+**outperforms both baselines** after 200k steps. Balance for a 21-DOF biped still wants millions of
+steps and reward shaping; what this demonstrates is the pipeline: **one sentence → URDF → actuated
+MuJoCo model → test battery → Gym env → a policy that learns**, with every artefact in
+`examples/14_iron_man_suit/` (prompt, URDF, MJCF, BOM, `mujoco_report.json`) so you can pick up
+where it left off.
 
 ## Free & self-hostable
 
