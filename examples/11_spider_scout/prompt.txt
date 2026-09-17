@@ -1,0 +1,1 @@
+Build a six-legged reconnaissance spider-bot with a LiDAR turret, budget $1500

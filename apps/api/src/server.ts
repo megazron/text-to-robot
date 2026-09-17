@@ -8,6 +8,9 @@ import { validateUrdf } from "@ttr/urdf-validator";
 import { validateSpec, type RobotSpecification } from "@ttr/robot-schema";
 import { exportRos2Package } from "@ttr/ros2-export";
 import { listTemplates } from "@ttr/robot-templates";
+import { buildBom } from "@ttr/components";
+import { generateCadFiles } from "@ttr/cad";
+import { exportTraining } from "@ttr/training-export";
 import { providerStatus } from "@ttr/llm-providers";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -69,6 +72,18 @@ const server = createServer(async (req, res) => {
       if (body.urdf) return json(res, 200, { urdf: validateUrdf(String(body.urdf)) });
       if (body.robot) return json(res, 200, { spec: validateSpec(body.robot as RobotSpecification) });
       return json(res, 400, { error: "provide 'urdf' or 'robot'" });
+    }
+    if (req.method === "POST" && p === "/api/robots/bom") {
+      const { robot, budget } = await readBody(req);
+      return json(res, 200, { bom: buildBom(robot as RobotSpecification, budget !== undefined ? Number(budget) : undefined) });
+    }
+    if (req.method === "POST" && p === "/api/robots/cad") {
+      const { robot } = await readBody(req);
+      return json(res, 200, { files: generateCadFiles(robot as RobotSpecification) });
+    }
+    if (req.method === "POST" && p === "/api/robots/training") {
+      const { robot } = await readBody(req);
+      return json(res, 200, { files: exportTraining(robot as RobotSpecification) });
     }
     if (req.method === "POST" && p === "/api/robots/export") {
       const { robot, ros2_control } = await readBody(req);

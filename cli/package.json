@@ -1,2 +1,18 @@
-{ "name": "@ttr/cli", "version": "0.1.0", "type": "module", "bin": { "text-to-robot": "./src/index.ts" },
-  "dependencies": { "@ttr/robot-schema": "*", "@ttr/robot-generator": "*", "@ttr/urdf-validator": "*", "@ttr/ros2-export": "*", "@ttr/llm-providers": "*" } }
+{
+  "name": "@ttr/cli",
+  "version": "0.1.0",
+  "type": "module",
+  "bin": {
+    "text-to-robot": "./src/index.ts"
+  },
+  "dependencies": {
+    "@ttr/robot-schema": "*",
+    "@ttr/robot-generator": "*",
+    "@ttr/urdf-validator": "*",
+    "@ttr/ros2-export": "*",
+    "@ttr/llm-providers": "*",
+    "@ttr/components": "*",
+    "@ttr/cad": "*",
+    "@ttr/training-export": "*"
+  }
+}

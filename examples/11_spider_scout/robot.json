@@ -1,0 +1,1690 @@
+{
+  "robot_name": "hexapod",
+  "links": [
+    {
+      "name": "base_link",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.16,
+        "length": 0.06
+      },
+      "mass": 2.171468842161265,
+      "material": "base_mat",
+      "role": "base",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0.18
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.014548841242480477,
+        "iyy": 0.014548841242480477,
+        "izz": 0.027794801179664194,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.16,
+        "length": 0.06
+      }
+    },
+    {
+      "name": "front_left_coxa",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.02,
+        "length": 0.05
+      },
+      "mass": 0.028274333882308142,
+      "material": "accent_mat",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0.025,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          1.5707963267948966,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000008717919613711678,
+        "iyy": 0.000008717919613711678,
+        "izz": 0.000005654866776461628,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.02,
+        "length": 0.05
+      }
+    },
+    {
+      "name": "front_left_femur",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.016,
+        "length": 0.1
+      },
+      "mass": 0.03619114736935442,
+      "material": "link_mat",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0.05,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          1.5707963267948966,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000032475522906100706,
+        "iyy": 0.000032475522906100706,
+        "izz": 0.000004632466863277367,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.016,
+        "length": 0.1
+      }
+    },
+    {
+      "name": "front_left_tibia",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.013,
+        "length": 0.12
+      },
+      "mass": 0.02867017455666045,
+      "material": "link_mat",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.06
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000035615524343011444,
+        "iyy": 0.000035615524343011444,
+        "izz": 0.0000024226297500378078,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.013,
+        "length": 0.12
+      }
+    },
+    {
+      "name": "mid_left_coxa",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.02,
+        "length": 0.05
+      },
+      "mass": 0.028274333882308142,
+      "material": "accent_mat",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0.025,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          1.5707963267948966,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000008717919613711678,
+        "iyy": 0.000008717919613711678,
+        "izz": 0.000005654866776461628,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.02,
+        "length": 0.05
+      }
+    },
+    {
+      "name": "mid_left_femur",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.016,
+        "length": 0.1
+      },
+      "mass": 0.03619114736935442,
+      "material": "link_mat",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0.05,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          1.5707963267948966,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000032475522906100706,
+        "iyy": 0.000032475522906100706,
+        "izz": 0.000004632466863277367,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.016,
+        "length": 0.1
+      }
+    },
+    {
+      "name": "mid_left_tibia",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.013,
+        "length": 0.12
+      },
+      "mass": 0.02867017455666045,
+      "material": "link_mat",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.06
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000035615524343011444,
+        "iyy": 0.000035615524343011444,
+        "izz": 0.0000024226297500378078,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.013,
+        "length": 0.12
+      }
+    },
+    {
+      "name": "rear_left_coxa",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.02,
+        "length": 0.05
+      },
+      "mass": 0.028274333882308142,
+      "material": "accent_mat",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0.025,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          1.5707963267948966,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000008717919613711678,
+        "iyy": 0.000008717919613711678,
+        "izz": 0.000005654866776461628,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.02,
+        "length": 0.05
+      }
+    },
+    {
+      "name": "rear_left_femur",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.016,
+        "length": 0.1
+      },
+      "mass": 0.03619114736935442,
+      "material": "link_mat",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0.05,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          1.5707963267948966,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000032475522906100706,
+        "iyy": 0.000032475522906100706,
+        "izz": 0.000004632466863277367,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.016,
+        "length": 0.1
+      }
+    },
+    {
+      "name": "rear_left_tibia",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.013,
+        "length": 0.12
+      },
+      "mass": 0.02867017455666045,
+      "material": "link_mat",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.06
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000035615524343011444,
+        "iyy": 0.000035615524343011444,
+        "izz": 0.0000024226297500378078,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.013,
+        "length": 0.12
+      }
+    },
+    {
+      "name": "front_right_coxa",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.02,
+        "length": 0.05
+      },
+      "mass": 0.028274333882308142,
+      "material": "accent_mat",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0.025,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          1.5707963267948966,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000008717919613711678,
+        "iyy": 0.000008717919613711678,
+        "izz": 0.000005654866776461628,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.02,
+        "length": 0.05
+      }
+    },
+    {
+      "name": "front_right_femur",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.016,
+        "length": 0.1
+      },
+      "mass": 0.03619114736935442,
+      "material": "link_mat",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0.05,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          1.5707963267948966,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000032475522906100706,
+        "iyy": 0.000032475522906100706,
+        "izz": 0.000004632466863277367,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.016,
+        "length": 0.1
+      }
+    },
+    {
+      "name": "front_right_tibia",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.013,
+        "length": 0.12
+      },
+      "mass": 0.02867017455666045,
+      "material": "link_mat",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.06
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000035615524343011444,
+        "iyy": 0.000035615524343011444,
+        "izz": 0.0000024226297500378078,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.013,
+        "length": 0.12
+      }
+    },
+    {
+      "name": "mid_right_coxa",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.02,
+        "length": 0.05
+      },
+      "mass": 0.028274333882308142,
+      "material": "accent_mat",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0.025,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          1.5707963267948966,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000008717919613711678,
+        "iyy": 0.000008717919613711678,
+        "izz": 0.000005654866776461628,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.02,
+        "length": 0.05
+      }
+    },
+    {
+      "name": "mid_right_femur",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.016,
+        "length": 0.1
+      },
+      "mass": 0.03619114736935442,
+      "material": "link_mat",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0.05,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          1.5707963267948966,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000032475522906100706,
+        "iyy": 0.000032475522906100706,
+        "izz": 0.000004632466863277367,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.016,
+        "length": 0.1
+      }
+    },
+    {
+      "name": "mid_right_tibia",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.013,
+        "length": 0.12
+      },
+      "mass": 0.02867017455666045,
+      "material": "link_mat",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.06
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000035615524343011444,
+        "iyy": 0.000035615524343011444,
+        "izz": 0.0000024226297500378078,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.013,
+        "length": 0.12
+      }
+    },
+    {
+      "name": "rear_right_coxa",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.02,
+        "length": 0.05
+      },
+      "mass": 0.028274333882308142,
+      "material": "accent_mat",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0.025,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          1.5707963267948966,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000008717919613711678,
+        "iyy": 0.000008717919613711678,
+        "izz": 0.000005654866776461628,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.02,
+        "length": 0.05
+      }
+    },
+    {
+      "name": "rear_right_femur",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.016,
+        "length": 0.1
+      },
+      "mass": 0.03619114736935442,
+      "material": "link_mat",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0.05,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          1.5707963267948966,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000032475522906100706,
+        "iyy": 0.000032475522906100706,
+        "izz": 0.000004632466863277367,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.016,
+        "length": 0.1
+      }
+    },
+    {
+      "name": "rear_right_tibia",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.013,
+        "length": 0.12
+      },
+      "mass": 0.02867017455666045,
+      "material": "link_mat",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.06
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000035615524343011444,
+        "iyy": 0.000035615524343011444,
+        "izz": 0.0000024226297500378078,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.013,
+        "length": 0.12
+      }
+    },
+    {
+      "name": "lidar_1_link",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.03,
+        "length": 0.05
+      },
+      "mass": 0.06361725123519331,
+      "material": "sensor_mat",
+      "role": "sensor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0.025
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.00002756747553525043,
+        "iyy": 0.00002756747553525043,
+        "izz": 0.000028627763055836987,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.03,
+        "length": 0.05
+      }
+    }
+  ],
+  "joints": [
+    {
+      "name": "front_left_coxa_joint",
+      "type": "revolute",
+      "parent": "base_link",
+      "child": "front_left_coxa",
+      "origin": {
+        "xyz": [
+          0.07500000000000001,
+          0.12990381056766578,
+          0.18
+        ],
+        "rpy": [
+          0,
+          0,
+          1.0471975511965976
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.7,
+        "upper": 0.7,
+        "effort": 50,
+        "velocity": 2
+      }
+    },
+    {
+      "name": "front_left_femur_joint",
+      "type": "revolute",
+      "parent": "front_left_coxa",
+      "child": "front_left_femur",
+      "origin": {
+        "xyz": [
+          0.05,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -1.2,
+        "upper": 1.2,
+        "effort": 50,
+        "velocity": 2
+      }
+    },
+    {
+      "name": "front_left_tibia_joint",
+      "type": "revolute",
+      "parent": "front_left_femur",
+      "child": "front_left_tibia",
+      "origin": {
+        "xyz": [
+          0.1,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          1.5707963267948966,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -2.2,
+        "upper": 0.4,
+        "effort": 50,
+        "velocity": 2
+      }
+    },
+    {
+      "name": "mid_left_coxa_joint",
+      "type": "revolute",
+      "parent": "base_link",
+      "child": "mid_left_coxa",
+      "origin": {
+        "xyz": [
+          0.15,
+          0,
+          0.18
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.7,
+        "upper": 0.7,
+        "effort": 50,
+        "velocity": 2
+      }
+    },
+    {
+      "name": "mid_left_femur_joint",
+      "type": "revolute",
+      "parent": "mid_left_coxa",
+      "child": "mid_left_femur",
+      "origin": {
+        "xyz": [
+          0.05,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -1.2,
+        "upper": 1.2,
+        "effort": 50,
+        "velocity": 2
+      }
+    },
+    {
+      "name": "mid_left_tibia_joint",
+      "type": "revolute",
+      "parent": "mid_left_femur",
+      "child": "mid_left_tibia",
+      "origin": {
+        "xyz": [
+          0.1,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          1.5707963267948966,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -2.2,
+        "upper": 0.4,
+        "effort": 50,
+        "velocity": 2
+      }
+    },
+    {
+      "name": "rear_left_coxa_joint",
+      "type": "revolute",
+      "parent": "base_link",
+      "child": "rear_left_coxa",
+      "origin": {
+        "xyz": [
+          0.07500000000000001,
+          -0.12990381056766578,
+          0.18
+        ],
+        "rpy": [
+          0,
+          0,
+          -1.0471975511965976
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.7,
+        "upper": 0.7,
+        "effort": 50,
+        "velocity": 2
+      }
+    },
+    {
+      "name": "rear_left_femur_joint",
+      "type": "revolute",
+      "parent": "rear_left_coxa",
+      "child": "rear_left_femur",
+      "origin": {
+        "xyz": [
+          0.05,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -1.2,
+        "upper": 1.2,
+        "effort": 50,
+        "velocity": 2
+      }
+    },
+    {
+      "name": "rear_left_tibia_joint",
+      "type": "revolute",
+      "parent": "rear_left_femur",
+      "child": "rear_left_tibia",
+      "origin": {
+        "xyz": [
+          0.1,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          1.5707963267948966,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -2.2,
+        "upper": 0.4,
+        "effort": 50,
+        "velocity": 2
+      }
+    },
+    {
+      "name": "front_right_coxa_joint",
+      "type": "revolute",
+      "parent": "base_link",
+      "child": "front_right_coxa",
+      "origin": {
+        "xyz": [
+          -0.07499999999999997,
+          0.1299038105676658,
+          0.18
+        ],
+        "rpy": [
+          0,
+          0,
+          2.0943951023931953
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.7,
+        "upper": 0.7,
+        "effort": 50,
+        "velocity": 2
+      }
+    },
+    {
+      "name": "front_right_femur_joint",
+      "type": "revolute",
+      "parent": "front_right_coxa",
+      "child": "front_right_femur",
+      "origin": {
+        "xyz": [
+          0.05,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -1.2,
+        "upper": 1.2,
+        "effort": 50,
+        "velocity": 2
+      }
+    },
+    {
+      "name": "front_right_tibia_joint",
+      "type": "revolute",
+      "parent": "front_right_femur",
+      "child": "front_right_tibia",
+      "origin": {
+        "xyz": [
+          0.1,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          1.5707963267948966,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -2.2,
+        "upper": 0.4,
+        "effort": 50,
+        "velocity": 2
+      }
+    },
+    {
+      "name": "mid_right_coxa_joint",
+      "type": "revolute",
+      "parent": "base_link",
+      "child": "mid_right_coxa",
+      "origin": {
+        "xyz": [
+          -0.15,
+          1.8369701987210297e-17,
+          0.18
+        ],
+        "rpy": [
+          0,
+          0,
+          3.141592653589793
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.7,
+        "upper": 0.7,
+        "effort": 50,
+        "velocity": 2
+      }
+    },
+    {
+      "name": "mid_right_femur_joint",
+      "type": "revolute",
+      "parent": "mid_right_coxa",
+      "child": "mid_right_femur",
+      "origin": {
+        "xyz": [
+          0.05,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -1.2,
+        "upper": 1.2,
+        "effort": 50,
+        "velocity": 2
+      }
+    },
+    {
+      "name": "mid_right_tibia_joint",
+      "type": "revolute",
+      "parent": "mid_right_femur",
+      "child": "mid_right_tibia",
+      "origin": {
+        "xyz": [
+          0.1,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          1.5707963267948966,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -2.2,
+        "upper": 0.4,
+        "effort": 50,
+        "velocity": 2
+      }
+    },
+    {
+      "name": "rear_right_coxa_joint",
+      "type": "revolute",
+      "parent": "base_link",
+      "child": "rear_right_coxa",
+      "origin": {
+        "xyz": [
+          -0.07499999999999997,
+          -0.1299038105676658,
+          0.18
+        ],
+        "rpy": [
+          0,
+          0,
+          -2.0943951023931953
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.7,
+        "upper": 0.7,
+        "effort": 50,
+        "velocity": 2
+      }
+    },
+    {
+      "name": "rear_right_femur_joint",
+      "type": "revolute",
+      "parent": "rear_right_coxa",
+      "child": "rear_right_femur",
+      "origin": {
+        "xyz": [
+          0.05,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -1.2,
+        "upper": 1.2,
+        "effort": 50,
+        "velocity": 2
+      }
+    },
+    {
+      "name": "rear_right_tibia_joint",
+      "type": "revolute",
+      "parent": "rear_right_femur",
+      "child": "rear_right_tibia",
+      "origin": {
+        "xyz": [
+          0.1,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          1.5707963267948966,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -2.2,
+        "upper": 0.4,
+        "effort": 50,
+        "velocity": 2
+      }
+    },
+    {
+      "name": "lidar_1_joint",
+      "type": "fixed",
+      "parent": "base_link",
+      "child": "lidar_1_link",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0.05
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "name": "base_mat",
+      "color": [
+        0.25,
+        0.25,
+        0.28,
+        1
+      ]
+    },
+    {
+      "name": "link_mat",
+      "color": [
+        0.85,
+        0.85,
+        0.88,
+        1
+      ]
+    },
+    {
+      "name": "gripper_mat",
+      "color": [
+        0.15,
+        0.35,
+        0.75,
+        1
+      ]
+    },
+    {
+      "name": "wheel_mat",
+      "color": [
+        0.1,
+        0.1,
+        0.12,
+        1
+      ]
+    },
+    {
+      "name": "sensor_mat",
+      "color": [
+        0.1,
+        0.7,
+        0.4,
+        1
+      ]
+    },
+    {
+      "name": "accent_mat",
+      "color": [
+        0.9,
+        0.55,
+        0.1,
+        1
+      ]
+    }
+  ],
+  "sensors": [
+    {
+      "name": "lidar_1",
+      "type": "lidar",
+      "parent": "lidar_1_link",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "params": {}
+    }
+  ],
+  "end_effectors": [],
+  "metadata": {
+    "generator": "text-to-robot",
+    "created": "2026-09-17T11:54:37.573Z",
+    "inferred_fields": [
+      "joints.front_left_coxa_joint.dynamics",
+      "joints.front_left_coxa_joint.limit",
+      "joints.front_left_femur_joint.dynamics",
+      "joints.front_left_femur_joint.limit",
+      "joints.front_left_tibia_joint.dynamics",
+      "joints.front_left_tibia_joint.limit",
+      "joints.front_right_coxa_joint.dynamics",
+      "joints.front_right_coxa_joint.limit",
+      "joints.front_right_femur_joint.dynamics",
+      "joints.front_right_femur_joint.limit",
+      "joints.front_right_tibia_joint.dynamics",
+      "joints.front_right_tibia_joint.limit",
+      "joints.lidar_1_joint.dynamics",
+      "joints.lidar_1_joint.limit",
+      "joints.mid_left_coxa_joint.dynamics",
+      "joints.mid_left_coxa_joint.limit",
+      "joints.mid_left_femur_joint.dynamics",
+      "joints.mid_left_femur_joint.limit",
+      "joints.mid_left_tibia_joint.dynamics",
+      "joints.mid_left_tibia_joint.limit",
+      "joints.mid_right_coxa_joint.dynamics",
+      "joints.mid_right_coxa_joint.limit",
+      "joints.mid_right_femur_joint.dynamics",
+      "joints.mid_right_femur_joint.limit",
+      "joints.mid_right_tibia_joint.dynamics",
+      "joints.mid_right_tibia_joint.limit",
+      "joints.rear_left_coxa_joint.dynamics",
+      "joints.rear_left_coxa_joint.limit",
+      "joints.rear_left_femur_joint.dynamics",
+      "joints.rear_left_femur_joint.limit",
+      "joints.rear_left_tibia_joint.dynamics",
+      "joints.rear_left_tibia_joint.limit",
+      "joints.rear_right_coxa_joint.dynamics",
+      "joints.rear_right_coxa_joint.limit",
+      "joints.rear_right_femur_joint.dynamics",
+      "joints.rear_right_femur_joint.limit",
+      "joints.rear_right_tibia_joint.dynamics",
+      "joints.rear_right_tibia_joint.limit",
+      "links.base_link.inertia",
+      "links.base_link.mass",
+      "links.front_left_coxa.inertia",
+      "links.front_left_coxa.mass",
+      "links.front_left_femur.inertia",
+      "links.front_left_femur.mass",
+      "links.front_left_tibia.inertia",
+      "links.front_left_tibia.mass",
+      "links.front_right_coxa.inertia",
+      "links.front_right_coxa.mass",
+      "links.front_right_femur.inertia",
+      "links.front_right_femur.mass",
+      "links.front_right_tibia.inertia",
+      "links.front_right_tibia.mass",
+      "links.lidar_1_link.inertia",
+      "links.lidar_1_link.mass",
+      "links.mid_left_coxa.inertia",
+      "links.mid_left_coxa.mass",
+      "links.mid_left_femur.inertia",
+      "links.mid_left_femur.mass",
+      "links.mid_left_tibia.inertia",
+      "links.mid_left_tibia.mass",
+      "links.mid_right_coxa.inertia",
+      "links.mid_right_coxa.mass",
+      "links.mid_right_femur.inertia",
+      "links.mid_right_femur.mass",
+      "links.mid_right_tibia.inertia",
+      "links.mid_right_tibia.mass",
+      "links.rear_left_coxa.inertia",
+      "links.rear_left_coxa.mass",
+      "links.rear_left_femur.inertia",
+      "links.rear_left_femur.mass",
+      "links.rear_left_tibia.inertia",
+      "links.rear_left_tibia.mass",
+      "links.rear_right_coxa.inertia",
+      "links.rear_right_coxa.mass",
+      "links.rear_right_femur.inertia",
+      "links.rear_right_femur.mass",
+      "links.rear_right_tibia.inertia",
+      "links.rear_right_tibia.mass"
+    ],
+    "notes": [
+      "Generated hexapod (6 legs x 3 DOF = 18 DOF) from template.",
+      "Interpreted by demo parser: type inferred, DOF=18, gripper=parallel."
+    ],
+    "source_prompt": "Build a six-legged reconnaissance spider-bot with a LiDAR turret, budget $1500"
+  }
+}

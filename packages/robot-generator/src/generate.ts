@@ -2,10 +2,11 @@ import type { RobotSpecification, ValidationResult } from "@ttr/robot-schema";
 import { validateSpec } from "@ttr/robot-schema";
 import { generateUrdf, generateXacro } from "@ttr/urdf-generator";
 import { validateUrdf } from "@ttr/urdf-validator";
+import { buildBom, type BillOfMaterials } from "@ttr/components";
 import type { LlmProvider } from "@ttr/llm-providers";
 import { selectCloudProvider } from "@ttr/llm-providers";
 import { finalizeSpec, dofCount } from "./finalize.ts";
-import { parsePrompt, applyModification } from "./nlp.ts";
+import { parsePrompt, applyModification, extractBudget } from "./nlp.ts";
 import { repair } from "./repair.ts";
 import { diffSpecs, type SpecDiff } from "./diff.ts";
 
@@ -27,6 +28,7 @@ export interface GenerateResult {
   repairs: string[];
   provider: string;
   dof: number;
+  bom: BillOfMaterials;
 }
 
 export interface GenerateOptions { provider?: LlmProvider; }
@@ -64,7 +66,8 @@ export async function generateRobot(prompt: string, opts: GenerateOptions = {}):
   const urdf = generateUrdf(spec);
   const xacro = generateXacro(spec);
   const urdfValidation = validateUrdf(urdf);
-  return { robot: spec, urdf, xacro, validation, urdfValidation, warnings, repairs, provider: provider.name, dof: dofCount(spec) };
+  const bom = buildBom(spec, extractBudget(prompt));
+  return { robot: spec, urdf, xacro, validation, urdfValidation, warnings, repairs, provider: provider.name, dof: dofCount(spec), bom };
 }
 
 export interface ModifyResult extends GenerateResult { diff: SpecDiff; changes: string[]; }
@@ -88,5 +91,6 @@ export async function modifyRobot(prev: RobotSpecification, instruction: string,
   const urdfValidation = validateUrdf(urdf);
   const diff = diffSpecs(prev, next);
   if (!changes.length) changes = diff.lines;
-  return { robot: next, urdf, xacro, validation, urdfValidation, warnings, repairs, provider: provider.name, dof: dofCount(next), diff, changes };
+  const bom = buildBom(next, extractBudget(instruction));
+  return { robot: next, urdf, xacro, validation, urdfValidation, warnings, repairs, provider: provider.name, dof: dofCount(next), diff, changes, bom };
 }

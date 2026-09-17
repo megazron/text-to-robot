@@ -11,6 +11,9 @@
     "@ttr/robot-templates": "*",
     "@ttr/urdf-generator": "*",
     "@ttr/urdf-validator": "*",
-    "@ttr/llm-providers": "*"
+    "@ttr/llm-providers": "*",
+    "@ttr/components": "*",
+    "@ttr/cad": "*",
+    "@ttr/training-export": "*"
   }
 }

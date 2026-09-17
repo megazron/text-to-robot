@@ -23,8 +23,8 @@
     </collision>
     <inertial>
       <origin xyz="0 0 0.1" rpy="0 0 0"/>
-      <mass value="6.107256"/>
-      <inertia ixx="0.025854" ixy="0" ixz="0" iyy="0.025854" iyz="0" izz="0.010993"/>
+      <mass value="1.017876"/>
+      <inertia ixx="0.004309" ixy="0" ixz="0" iyy="0.004309" iyz="0" izz="0.001832"/>
     </inertial>
   </link>
   <link name="upper_arm">
@@ -39,8 +39,8 @@
     </collision>
     <inertial>
       <origin xyz="0.125 0 0" rpy="0 1.570796 0"/>
-      <mass value="2.597704"/>
-      <inertia ixx="0.014325" ixy="0" ixz="0" iyy="0.014325" iyz="0" izz="0.001591"/>
+      <mass value="0.432951"/>
+      <inertia ixx="0.002388" ixy="0" ixz="0" iyy="0.002388" iyz="0" izz="0.000265"/>
     </inertial>
   </link>
   <link name="forearm">
@@ -55,8 +55,8 @@
     </collision>
     <inertial>
       <origin xyz="0.1 0 0" rpy="0 1.570796 0"/>
-      <mass value="1.526814"/>
-      <inertia ixx="0.005433" ixy="0" ixz="0" iyy="0.005433" iyz="0" izz="0.000687"/>
+      <mass value="0.254469"/>
+      <inertia ixx="0.000905" ixy="0" ixz="0" iyy="0.000905" iyz="0" izz="0.000115"/>
     </inertial>
   </link>
   <link name="spindle">
@@ -71,8 +71,8 @@
     </collision>
     <inertial>
       <origin xyz="0 0 -0.06" rpy="0 0 0"/>
-      <mass value="0.40715"/>
-      <inertia ixx="0.000529" ixy="0" ixz="0" iyy="0.000529" iyz="0" izz="0.000081"/>
+      <mass value="0.067858"/>
+      <inertia ixx="0.000088" ixy="0" ixz="0" iyy="0.000088" iyz="0" izz="0.000014"/>
     </inertial>
   </link>
   <link name="tool">
@@ -87,8 +87,8 @@
     </collision>
     <inertial>
       <origin xyz="0 0 -0.015" rpy="0 0 0"/>
-      <mass value="0.057256"/>
-      <inertia ixx="0.000008" ixy="0" ixz="0" iyy="0.000008" iyz="0" izz="0.000006"/>
+      <mass value="0.02"/>
+      <inertia ixx="0.000003" ixy="0" ixz="0" iyy="0.000003" iyz="0" izz="0.000002"/>
     </inertial>
   </link>
   <joint name="joint_1" type="revolute">

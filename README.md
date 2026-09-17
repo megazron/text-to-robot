@@ -15,6 +15,19 @@ Text-to-speech turns words into audio. **Text-to-Robot turns words into a robot*
 > It only produces a typed `RobotSpecification`. Deterministic, tested code turns
 > that into XML. See [Architecture](docs/ARCHITECTURE.md).
 
+<p align="center"><img src="docs/img/viewer-arm.png" width="100%" alt="Text to Robot 3D viewer showing a generated 6-DOF arm with joint-axis arrows, structure tree, inspector, and export bar"></p>
+
+<p align="center">
+  <img src="docs/img/viewer-hexapod.png" width="49%" alt="Generated hexapod spider-bot with a LiDAR turret" />
+  <img src="docs/img/viewer-bom.png" width="49%" alt="Mars rover with a Bill of Materials panel" />
+</p>
+
+<p align="center"><i>Every screenshot is the real app in demo mode — no API key. Left: a six-legged scout generated from a prompt. Right: a Mars rover with its live Bill of Materials.</i></p>
+
+## Free & self-hostable
+
+Text to Robot is **free and open-source**, and designed to run as a **free service**: clone it and `npm run api`, or deploy the same server anywhere. No API key is required — an offline deterministic engine powers everything, and optional OpenAI/Anthropic keys just improve open-ended prompts. The end goal: **describe a robot, download it, and immediately start training it** (see [Train your robot](#train-your-robot)).
+
 ---
 
 ## Why Text to Robot?
@@ -45,6 +58,12 @@ demo mode), so the repo runs the moment you clone it.
 - 🕑 **Version history** — every change is a version you can switch between.
 - 📦 **ROS 2 export** — a complete `ament_cmake` package with `display.launch.py`, RViz config,
   joint limits, and optional `ros2_control`.
+- 💸 **Bill of Materials to a budget** — picks *real* actuators (sized by the torque each joint
+  must hold), sensors, compute, power and structure, and tells you what it costs and whether it
+  fits your budget. So the robot can actually be built.
+- 🛠️ **CAD parts** — parametric OpenSCAD for every link plus an assembly, ready to mesh to STL and print.
+- 🏋️ **Train it** — a downloadable PyBullet + Gymnasium training suite (RL with PPO/SAC, imitation
+  learning, demo collection, evaluation) that loads the generated robot directly.
 - 🖥️ **CLI + HTTP API** — scriptable and embeddable.
 - 🔌 **Pluggable LLMs** — OpenAI, Anthropic, or deterministic demo mode.
 
@@ -65,9 +84,10 @@ Templates (used as sensible starting points the AI can customize):
 |---|---|---|
 | 2 / 3 / 6 / 7 DOF arms | SCARA | Parallel & two-finger grippers |
 | Differential drive | Four-wheel | Mecanum |
-| Quadruped | Humanoid (torso, head, two arms) | Suction gripper |
+| Quadruped | Hexapod (18 DOF) | Humanoid (torso, head, two arms) |
+| Rover + arm (mobile manipulator) | Parallel & suction grippers | ...and anything a prompt implies |
 
-Ten worked examples live in [`examples/`](examples/) — each passes schema **and** URDF validation.
+Thirteen worked examples (including sci-fi builds) live in [`examples/`](examples/) — each passes schema **and** URDF validation.
 
 ## Installation
 
@@ -77,7 +97,7 @@ Requires **Node.js ≥ 22.6** (uses native TypeScript execution — no build ste
 git clone https://github.com/megazron/text-to-robot
 cd text-to-robot
 npm install          # links the workspace packages (no third-party deps to download)
-npm test             # 37 tests
+npm test             # 43 tests
 ```
 
 ## Quick start
@@ -135,6 +155,55 @@ source install/setup.bash
 ros2 launch my_robot display.launch.py
 ```
 
+## Real-world buildability (Bill of Materials)
+
+A robot you can see is not a robot you can build. Text to Robot estimates the **real components**
+needed and their cost, and fits them to a **budget** you give:
+
+- **Actuators sized by physics** — for each joint it estimates the holding torque from the mass and
+  reach of everything downstream, then picks a real actuator (hobby servo → Dynamixel → BLDC) with a
+  1.5× margin.
+- **Everything else** — sensors (cameras, LiDAR, IMU), compute (ESP32 → Raspberry Pi → Jetson),
+  power (LiPo + regulator + distribution), structure (3D-printed or aluminium, from the total mass),
+  and wiring.
+- **Budget aware** — give a budget and it chooses the richest component tier that fits, or tells you
+  honestly that it does not fit and by how much.
+
+```bash
+text-to-robot bom my_robot.json 800     # estimate a build at an $800 budget
+```
+
+Prices are planning estimates, not quotes. The output is a full table (`BOM.md`) plus a per-joint
+actuator sizing table.
+
+## CAD parts
+
+Every link is emitted as a parametric **OpenSCAD** part, plus an assembly placed at the robot's zero
+pose. Mesh any part (or the whole robot) to STL for printing:
+
+```bash
+openscad -o base_link.stl cad/parts/base_link.scad
+openscad -o my_robot.stl  cad/my_robot.scad
+```
+
+## Train your robot
+
+The vision: **describe a robot, download it, and start training it.** Each generated robot ships with
+a `training/` suite backed by **PyBullet + Gymnasium** (which loads the URDF directly, with a motor
+per joint). No ROS required.
+
+```bash
+cd training && pip install -r requirements.txt
+python train_rl.py --task reach --algo ppo   # reinforcement learning (PPO or SAC)
+python collect_demos.py --episodes 50        # scripted expert -> demos.npz
+python train_bc.py                           # imitation learning (behaviour cloning)
+python evaluate.py --task reach --rl <model> # success rate
+```
+
+Tasks are chosen from the robot's class (manipulator → reach/track/hold, mobile → drive/goto,
+locomotion → walk/balance/turn) and are easy to extend in `tasks.py`. Classical motion planning is
+available through the exported MoveIt 2 / ROS 2 package.
+
 ## AI architecture
 
 `packages/llm-providers` defines a small `LlmProvider` interface with `generateSpec` and
@@ -185,6 +254,13 @@ node cli/src/index.ts validate examples/02_arm_6dof/robot.urdf
 | 8 | Humanoid | `... torso, head and two 7 DOF arms and two-finger grippers` |
 | 9 | Gripper | `Create a two-finger parallel gripper` |
 | 10 | Quadruped | `Create a quadruped robot` |
+| 11 | Spider scout | `Build a six-legged reconnaissance spider-bot with a LiDAR turret, budget $1500` |
+| 12 | Mars rover | `Design a Mars rover with four wheels and a 6 DOF sampling arm, RGB-D camera, budget $4000` |
+| 13 | Battle mech | `Create a humanoid battle mech with two 7 DOF arms, a head camera and an IMU` |
+
+**Imagine anything.** Prompts route to the closest structure and pull in the sensors you mention:
+"a warehouse loader with mecanum wheels and a suction gripper", "an insectoid recon drone with a
+LiDAR", "a planetary explorer with a 1-metre arm". Each still passes schema + URDF validation.
 
 ## Development
 
@@ -195,7 +271,7 @@ text-to-robot/
 │                    urdf-validator, llm-providers, robot-generator, ros2-export
 ├── cli/             text-to-robot command
 ├── examples/        10 validated robots
-├── tests/           37 node:test cases
+├── tests/           43 node:test cases
 └── docs/            architecture
 ```
 
@@ -217,9 +293,16 @@ npm run api           # serve web + API on :8787
 - [x] Natural-language modification + version history + diff
 - [x] ROS 2 package export (+ optional ros2_control)
 - [x] CLI + HTTP API + demo mode
+- [x] Bill of Materials sized to a cost budget (buildable in real life)
+- [x] Parametric CAD (OpenSCAD) parts + assembly
+- [x] Downloadable training suite: RL (PPO/SAC), imitation learning, evaluation
 
-Future:
+Future (toward a free hosted service where you describe, download and train a robot):
 
+- [ ] One-click hosted deployment (free SaaS) + shareable robot links
+- [ ] More training backends (Isaac Lab, MuJoCo, Gazebo) and task library
+- [ ] Real-part catalog integration with live pricing and stock
+- [ ] STL/STEP mesh export and printability checks
 - [ ] Gazebo / Isaac Sim world export
 - [ ] MoveIt 2 config generation
 - [ ] Automatic mesh / STL / OpenSCAD generation

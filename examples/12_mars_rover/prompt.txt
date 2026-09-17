@@ -1,0 +1,1 @@
+Design a Mars rover with four wheels and a 6 DOF sampling arm, RGB-D camera, budget $4000

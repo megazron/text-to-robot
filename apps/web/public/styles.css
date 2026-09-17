@@ -90,3 +90,13 @@ button{cursor:pointer;font:inherit}
   #topbar{flex-wrap:wrap}
   .promptrow{order:3;flex-basis:100%}
 }
+.bomctl{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.bomctl input{width:110px;background:var(--panel2);border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:6px 8px}
+.bomtotal{font-family:ui-monospace,monospace;font-weight:700}
+.bomtotal.ok{color:var(--green)} .bomtotal.over{color:var(--red)}
+.bomtable{width:100%;border-collapse:collapse;font-size:12px}
+.bomtable th{text-align:left;color:var(--mute);font-weight:600;border-bottom:1px solid var(--line);padding:5px 6px;position:sticky;top:0;background:var(--panel)}
+.bomtable td{border-bottom:1px solid var(--line);padding:5px 6px;vertical-align:top}
+.bomtable td.n{text-align:right;font-family:ui-monospace,monospace}
+.bomcat{color:var(--accent2);font-size:11px;text-transform:uppercase;letter-spacing:.05em}
+.bomwarn{color:var(--accent);font-size:12px;margin-top:8px}

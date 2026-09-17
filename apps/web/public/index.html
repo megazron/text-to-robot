@@ -49,10 +49,15 @@
     <div class="tabs">
       <button class="tab active" data-tab="inspector">Inspector</button>
       <button class="tab" data-tab="joints">Joints</button>
+      <button class="tab" data-tab="bom">Build</button>
       <button class="tab" data-tab="history">History</button>
     </div>
     <div id="tab-inspector" class="tabpane active"><div class="hint">Click a link or joint in the 3D view or tree.</div></div>
     <div id="tab-joints" class="tabpane"><div id="sliders"></div></div>
+    <div id="tab-bom" class="tabpane">
+      <div class="bomctl"><label>Budget $ <input id="budget" type="number" min="0" step="50" placeholder="any" /></label><span id="bomtotal" class="bomtotal"></span></div>
+      <div id="bom"></div>
+    </div>
     <div id="tab-history" class="tabpane"><div id="history"></div><div id="diff" class="diff"></div></div>
   </aside>
 </main>
@@ -67,6 +72,9 @@
     <button data-dl="xacro">XACRO</button>
     <button data-dl="ros2">ROS 2 Package</button>
     <button data-dl="json">JSON</button>
+    <button data-dl="cad">CAD (SCAD)</button>
+    <button data-dl="bom">BOM</button>
+    <button data-dl="train">Train (RL)</button>
     <button data-dl="launch" class="ghost">Copy launch cmd</button>
   </div>
 </footer>

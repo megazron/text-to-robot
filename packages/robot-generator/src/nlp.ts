@@ -3,7 +3,7 @@
 // documented prompts and degrade gracefully.
 import type { RobotSpecification, Geometry, Sensor, SensorType } from "@ttr/robot-schema";
 import { safeName, pose } from "@ttr/robot-schema";
-import { nDofArm, scara, humanoid, diffDrive, fourWheel, mecanum, quadruped, attachParallelGripper, attachSuctionGripper, cyl, box, link, joint } from "@ttr/robot-templates";
+import { nDofArm, scara, humanoid, diffDrive, fourWheel, mecanum, quadruped, hexapod, roverArm, attachParallelGripper, attachSuctionGripper, cyl, box, link, joint } from "@ttr/robot-templates";
 
 const WORD_NUM: Record<string, number> = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10 };
 
@@ -31,6 +31,10 @@ export function parsePrompt(prompt: string): RobotSpecification {
 
   if (/humanoid|biped|torso.*arms|two\s+arms/.test(t)) {
     spec = humanoid({ armDof: dof ?? 7, gripper: g !== "none", prompt });
+  } else if (/hexapod|six[\s-]?legged|6[\s-]?legged|spider|insect|ant[\s-]?bot/.test(t)) {
+    spec = hexapod("hexapod", prompt);
+  } else if (/(rover|mars|planetary|explorer|mobile\s+manipulator|loader).*(arm|manipulat)|(arm|manipulat).*(rover|mars|planetary|mobile\s+base)/.test(t)) {
+    spec = roverArm("rover_arm", dof ?? 6, prompt, { gripper: g === "none" ? "none" : "parallel" });
   } else if (/quadruped|four[\s-]?legged|dog|legged/.test(t)) {
     spec = quadruped("quadruped", prompt);
   } else if (/scara/.test(t)) {
@@ -55,6 +59,7 @@ export function parsePrompt(prompt: string): RobotSpecification {
 
   // inline size directives (e.g. "1 meter long", "small", "large")
   applySizeDirectives(spec, t);
+  applyInlineSensors(spec, t);
   spec.metadata.source_prompt = prompt;
   spec.metadata.notes.push(`Interpreted by demo parser: type inferred, DOF=${dofOf(spec)}, gripper=${g}.`);
   return spec;
@@ -211,6 +216,26 @@ export function applyModification(specIn: RobotSpecification, instruction: strin
 
   if (!changes.length) changes.push(`(no structural change matched "${instruction}")`);
   return { spec, changes };
+}
+
+function applyInlineSensors(spec: RobotSpecification, t: string) {
+  const wants: [RegExp, SensorType, string][] = [
+    [/lidar|laser\s*scan|turret/, "lidar", /front|base/.test(t) ? "front" : "head"],
+    [/depth|rgb-?d|stereo/, "depth", /wrist|gripper/.test(t) ? "wrist" : "head"],
+    [/camera|vision|eye|optical/, "camera", /wrist|gripper/.test(t) ? "wrist" : "head"],
+    [/imu|gyro|acceleromet/, "imu", "base"],
+  ];
+  for (const [rx, type, where] of wants) if (rx.test(t)) addSensor(spec, type, where);
+}
+
+/** parse a budget like "$500", "under 2000 dollars", "budget of 1.5k" */
+export function extractBudget(text: string): number | undefined {
+  const t = text.toLowerCase();
+  let m = t.match(/\$\s*([\d,.]+)\s*(k)?/) || t.match(/([\d,.]+)\s*(k)?\s*(?:usd|dollars?|budget|rupees)/) || t.match(/(?:budget|under|below|max)\D{0,8}([\d,.]+)\s*(k)?/);
+  if (!m) return undefined;
+  let v = parseFloat(m[1].replace(/,/g, ""));
+  if (m[2] === "k") v *= 1000;
+  return v > 0 ? v : undefined;
 }
 
 function describeLen(spec: RobotSpecification, name: string): string {

@@ -5,6 +5,10 @@ import { generateRobot, modifyRobot } from "@ttr/robot-generator";
 import { validateUrdf, parseUrdf } from "@ttr/urdf-validator";
 import { exportRos2Package } from "@ttr/ros2-export";
 import { providerStatus } from "@ttr/llm-providers";
+import { buildBom, bomToMarkdown } from "@ttr/components";
+import { generateCadFiles } from "@ttr/cad";
+import { exportTraining } from "@ttr/training-export";
+import { extractBudget } from "@ttr/robot-generator";
 import { safeName, type RobotSpecification, type ValidationResult } from "@ttr/robot-schema";
 
 const C = { g: "\x1b[32m", r: "\x1b[31m", y: "\x1b[33m", d: "\x1b[2m", b: "\x1b[1m", x: "\x1b[0m", c: "\x1b[36m" };
@@ -40,6 +44,12 @@ async function cmdGenerate(prompt: string, outDir?: string) {
   const files = exportRos2Package(res.robot, { ros2_control: true });
   writeFiles(base, files);
   writeFileSync(join(base, `${name}.json`), JSON.stringify(res.robot, null, 2));
+  writeFileSync(join(base, "BOM.md"), bomToMarkdown(res.bom));
+  writeFiles(base, generateCadFiles(res.robot));
+  writeFiles(base, exportTraining(res.robot));
+  ok("Bill of materials estimated ($" + res.bom.total + ")");
+  ok("CAD (OpenSCAD) parts generated");
+  ok("RL training scaffold generated (PyBullet + PPO)");
   console.log(`\nRobot written to:\n\n  ${C.c}${base}/${C.x}\n`);
   console.log(`  ${C.d}ros2 launch ${name} display.launch.py${C.x}`);
   if (!res.validation.valid || !res.urdfValidation.valid) process.exitCode = 1;
@@ -76,6 +86,14 @@ async function cmdModify(jsonFile: string, instruction: string, outDir?: string)
   console.log(`\nUpdated robot written to ${C.c}${base}/${C.x}`);
 }
 
+function cmdBom(jsonFile: string, budgetArg?: string) {
+  const spec = JSON.parse(readFileSync(jsonFile, "utf8")) as RobotSpecification;
+  const budget = budgetArg ? Number(budgetArg) : extractBudget(spec.metadata.source_prompt ?? "");
+  const bom = buildBom(spec, budget);
+  console.log(bomToMarkdown(bom));
+  if (budget !== undefined && !bom.feasible) process.exitCode = 1;
+}
+
 function usage() {
   console.log(`text-to-robot -- describe a robot, get a ROS 2 robot
 
@@ -97,6 +115,7 @@ async function main() {
   const clean = argv.filter((a, i) => a !== "-o" && a !== "--out" && i !== outFlag + 1);
   const cmd = clean[0];
   try {
+    if (cmd === "bom") return cmdBom(clean[1], clean[2]);
     if (cmd === "validate") return cmdValidate(clean[1]);
     if (cmd === "inspect") return cmdInspect(clean[1]);
     if (cmd === "modify") return await cmdModify(clean[1], clean[2], outDir);

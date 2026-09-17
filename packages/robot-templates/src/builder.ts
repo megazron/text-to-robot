@@ -10,7 +10,7 @@ export const sph = (radius: number): Geometry => ({ type: "sphere", radius });
 export interface LinkOpts { mass?: number; material?: string; role?: string; origin?: Pose; density?: number; }
 
 export function link(name: string, geometry: Geometry, opts: LinkOpts = {}): Link {
-  const density = opts.density ?? DENSITY.structure;
+  const density = opts.density ?? DENSITY.printed;
   const mass = opts.mass ?? Math.max(0.02, massFromDensity(geometry, density));
   return {
     name, geometry, mass,

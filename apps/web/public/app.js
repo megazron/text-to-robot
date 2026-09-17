@@ -9,7 +9,7 @@ const el = (t, c, txt) => { const e = document.createElement(t); if (c) e.classN
 // ---------------- state ----------------
 const state = {
   robot: null, urdf: "", xacro: "", jointValues: {},
-  versions: [], version: -1, selection: null, meshes: new Map(), axisHelpers: [], frameHelpers: [],
+  versions: [], version: -1, selection: null, meshes: new Map(), axisHelpers: [], frameHelpers: [], bom: null,
 };
 
 // ---------------- three.js scene ----------------
@@ -95,7 +95,7 @@ function updateFK() {
   if (!state.robot) return;
   const world = forwardKinematics(state.robot, state.jointValues);
   for (const [name, group] of state.meshes) {
-    const m = world.get(name); if (m) group.matrix.copy(mat4(m));
+    const m = world.get(name); if (m) { group.matrix.copy(mat4(m)); group.matrixWorldNeedsUpdate = true; }
   }
   drawHelpers(world);
 }
@@ -116,12 +116,21 @@ function drawHelpers(world) {
 }
 
 function frameRobot() {
+  scene.updateMatrixWorld(true);
   const bb = new THREE.Box3().setFromObject(robotGroup);
-  if (!bb.isEmpty()) {
-    const c = bb.getCenter(new THREE.Vector3()); const size = bb.getSize(new THREE.Vector3()).length();
-    controls.target.copy(c);
-    camera.position.copy(c).add(new THREE.Vector3(size * 0.8, -size * 0.9, size * 0.7));
-  }
+  if (bb.isEmpty()) return;
+  const sphere = bb.getBoundingSphere(new THREE.Sphere());
+  console.log('[frame] center', sphere.center.toArray().map(x=>+x.toFixed(2)), 'r', +sphere.radius.toFixed(3));
+  const r = Math.max(0.12, sphere.radius);
+  const fov = (camera.fov * Math.PI) / 180;
+  const dist = (r / Math.sin(fov / 2)) * 1.25;
+  const dir = new THREE.Vector3(1, -1.1, 0.65).normalize();
+  camera.position.copy(sphere.center).addScaledVector(dir, dist);
+  controls.target.copy(sphere.center);
+  camera.near = Math.max(0.001, dist / 200);
+  camera.far = dist * 200;
+  camera.updateProjectionMatrix();
+  controls.update();
 }
 
 // ---------------- selection ----------------
@@ -232,6 +241,37 @@ function renderHistory() {
   });
 }
 
+function renderBom(bom) {
+  const box = $("#bom"); box.innerHTML = "";
+  const totalEl = $("#bomtotal");
+  if (!bom) { totalEl.textContent = ""; return; }
+  const over = bom.budget != null && !bom.feasible;
+  totalEl.textContent = "$" + bom.total + (bom.budget != null ? (bom.feasible ? " ✓ within" : " ✗ over") : "");
+  totalEl.className = "bomtotal " + (bom.budget == null ? "" : over ? "over" : "ok");
+  const tbl = el("table", "bomtable");
+  tbl.innerHTML = "<thead><tr><th>Component</th><th>Qty</th><th>Unit</th><th>Total</th></tr></thead>";
+  const tb = el("tbody");
+  for (const l of bom.lines) {
+    const tr = el("tr");
+    tr.innerHTML = `<td><div class="bomcat">${l.category}</div>${l.name}${l.note ? ` · <span style="color:var(--mute)">${l.note}</span>` : ""}<div style="color:var(--mute);font-size:11px">${l.spec}</div></td><td class="n">${l.qty}</td><td class="n">$${l.unit_cost}</td><td class="n">$${l.subtotal}</td>`;
+    tb.append(tr);
+  }
+  tbl.append(tb); box.append(tbl);
+  box.append(el("div", "hint", `Tier: ${bom.tier}. Estimates for planning, not quotes.`));
+  for (const w of bom.warnings ?? []) box.append(el("div", "bomwarn", "⚠ " + w));
+}
+async function refreshBom() {
+  if (!state.robot) return;
+  const v = $("#budget").value;
+  try { const { bom } = await api("/api/robots/bom", { robot: state.robot, budget: v === "" ? undefined : Number(v) }); state.bom = bom; renderBom(bom); }
+  catch (e) { /* keep last */ }
+}
+function bomMarkdown(bom) {
+  let md = `# Bill of Materials — ${bom.robot_name}\n\n**Total: $${bom.total}** · tier ${bom.tier}` + (bom.budget != null ? ` · budget $${bom.budget} ${bom.feasible ? "(within)" : "(OVER)"}` : "") + "\n\n| Category | Component | Qty | Unit $ | Subtotal $ | Spec |\n|---|---|--:|--:|--:|---|\n";
+  for (const l of bom.lines) md += `| ${l.category} | ${l.name}${l.note ? " ("+l.note+")" : ""} | ${l.qty} | ${l.unit_cost} | ${l.subtotal} | ${l.spec} |\n`;
+  return md;
+}
+
 function renderDiff(lines) {
   const box = $("#diff"); box.innerHTML = "";
   if (!lines || !lines.length) return;
@@ -267,7 +307,8 @@ function applyResult(res, label, diffLines) {
   state.versions.push({ label, robot: res.robot, urdf: res.urdf, xacro: res.xacro });
   state.version = state.versions.length - 1;
   state.selection = null;
-  buildRobot(res.robot); renderTree(); renderSliders(); renderInspector(); renderHistory(); renderDiff(diffLines);
+  state.bom = res.bom ?? null;
+  buildRobot(res.robot); renderTree(); renderSliders(); renderInspector(); renderHistory(); renderDiff(diffLines); renderBom(state.bom);
   status(checksToText(res));
 }
 
@@ -300,6 +341,9 @@ async function handleDownload(kind) {
   if (kind === "urdf") return download(`${name}.urdf`, state.urdf, "application/xml");
   if (kind === "xacro") return download(`${name}.urdf.xacro`, state.xacro, "application/xml");
   if (kind === "json") return download(`${name}.json`, JSON.stringify(state.robot, null, 2), "application/json");
+  if (kind === "bom") { const bom = state.bom ?? (await api("/api/robots/bom", { robot: state.robot })).bom; return download(`${name}_BOM.md`, bomMarkdown(bom), "text/markdown"); }
+  if (kind === "cad") { const { files } = await api("/api/robots/cad", { robot: state.robot }); return download(`${name}_cad.zip`, makeZip(files)); }
+  if (kind === "train") { const { files } = await api("/api/robots/training", { robot: state.robot }); return download(`${name}_training.zip`, makeZip(files)); }
   if (kind === "launch") { await navigator.clipboard.writeText(`ros2 launch ${name} display.launch.py`); flash($("[data-dl=launch]"), "copied!"); return; }
   if (kind === "ros2") {
     const { files } = await api("/api/robots/export", { robot: state.robot, ros2_control: true });
@@ -321,6 +365,7 @@ document.querySelectorAll(".tab").forEach((t) => (t.onclick = () => setTab(t.dat
 document.querySelectorAll("[data-dl]").forEach((b) => (b.onclick = () => handleDownload(b.dataset.dl)));
 for (const id of ["#showCollision", "#showAxes", "#showFrames"]) $(id).onchange = () => { if (state.robot) buildRobot(state.robot); };
 $("#resetView").onclick = frameRobot;
+$("#budget").oninput = () => { clearTimeout(window.__bt); window.__bt = setTimeout(refreshBom, 350); };
 
 const EXAMPLES = [
   "Create a 6 DOF robotic arm with a parallel gripper",
@@ -347,3 +392,4 @@ async function initMode() {
 
 initExamples(); initTemplates(); initMode();
 doGenerate("Create a 6 DOF robotic arm with a parallel gripper");
+window.__ttr = { camera, controls, frameRobot, get robot(){return state.robot} };

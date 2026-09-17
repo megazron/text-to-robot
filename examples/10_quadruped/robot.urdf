@@ -23,8 +23,8 @@
     </collision>
     <inertial>
       <origin xyz="0 0 0.35" rpy="0 0 0"/>
-      <mass value="21.6"/>
-      <inertia ixx="0.09" ixy="0" ixz="0" iyy="0.306" iyz="0" izz="0.36"/>
+      <mass value="3.6"/>
+      <inertia ixx="0.015" ixy="0" ixz="0" iyy="0.051" iyz="0" izz="0.06"/>
     </inertial>
   </link>
   <link name="front_left_hip">
@@ -39,8 +39,8 @@
     </collision>
     <inertial>
       <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <mass value="0.381704"/>
-      <inertia ixx="0.000165" ixy="0" ixz="0" iyy="0.000165" iyz="0" izz="0.000172"/>
+      <mass value="0.063617"/>
+      <inertia ixx="0.000028" ixy="0" ixz="0" iyy="0.000028" iyz="0" izz="0.000029"/>
     </inertial>
   </link>
   <link name="front_left_thigh">
@@ -55,8 +55,8 @@
     </collision>
     <inertial>
       <origin xyz="0 0 -0.08" rpy="0 0 0"/>
-      <mass value="0.656869"/>
-      <inertia ixx="0.001481" ixy="0" ixz="0" iyy="0.001481" iyz="0" izz="0.000159"/>
+      <mass value="0.109478"/>
+      <inertia ixx="0.000247" ixy="0" ixz="0" iyy="0.000247" iyz="0" izz="0.000026"/>
     </inertial>
   </link>
   <link name="front_left_shin">
@@ -71,8 +71,8 @@
     </collision>
     <inertial>
       <origin xyz="0 0 -0.08" rpy="0 0 0"/>
-      <mass value="0.439722"/>
-      <inertia ixx="0.000974" ixy="0" ixz="0" iyy="0.000974" iyz="0" izz="0.000071"/>
+      <mass value="0.073287"/>
+      <inertia ixx="0.000162" ixy="0" ixz="0" iyy="0.000162" iyz="0" izz="0.000012"/>
     </inertial>
   </link>
   <link name="front_right_hip">
@@ -87,8 +87,8 @@
     </collision>
     <inertial>
       <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <mass value="0.381704"/>
-      <inertia ixx="0.000165" ixy="0" ixz="0" iyy="0.000165" iyz="0" izz="0.000172"/>
+      <mass value="0.063617"/>
+      <inertia ixx="0.000028" ixy="0" ixz="0" iyy="0.000028" iyz="0" izz="0.000029"/>
     </inertial>
   </link>
   <link name="front_right_thigh">
@@ -103,8 +103,8 @@
     </collision>
     <inertial>
       <origin xyz="0 0 -0.08" rpy="0 0 0"/>
-      <mass value="0.656869"/>
-      <inertia ixx="0.001481" ixy="0" ixz="0" iyy="0.001481" iyz="0" izz="0.000159"/>
+      <mass value="0.109478"/>
+      <inertia ixx="0.000247" ixy="0" ixz="0" iyy="0.000247" iyz="0" izz="0.000026"/>
     </inertial>
   </link>
   <link name="front_right_shin">
@@ -119,8 +119,8 @@
     </collision>
     <inertial>
       <origin xyz="0 0 -0.08" rpy="0 0 0"/>
-      <mass value="0.439722"/>
-      <inertia ixx="0.000974" ixy="0" ixz="0" iyy="0.000974" iyz="0" izz="0.000071"/>
+      <mass value="0.073287"/>
+      <inertia ixx="0.000162" ixy="0" ixz="0" iyy="0.000162" iyz="0" izz="0.000012"/>
     </inertial>
   </link>
   <link name="rear_left_hip">
@@ -135,8 +135,8 @@
     </collision>
     <inertial>
       <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <mass value="0.381704"/>
-      <inertia ixx="0.000165" ixy="0" ixz="0" iyy="0.000165" iyz="0" izz="0.000172"/>
+      <mass value="0.063617"/>
+      <inertia ixx="0.000028" ixy="0" ixz="0" iyy="0.000028" iyz="0" izz="0.000029"/>
     </inertial>
   </link>
   <link name="rear_left_thigh">
@@ -151,8 +151,8 @@
     </collision>
     <inertial>
       <origin xyz="0 0 -0.08" rpy="0 0 0"/>
-      <mass value="0.656869"/>
-      <inertia ixx="0.001481" ixy="0" ixz="0" iyy="0.001481" iyz="0" izz="0.000159"/>
+      <mass value="0.109478"/>
+      <inertia ixx="0.000247" ixy="0" ixz="0" iyy="0.000247" iyz="0" izz="0.000026"/>
     </inertial>
   </link>
   <link name="rear_left_shin">
@@ -167,8 +167,8 @@
     </collision>
     <inertial>
       <origin xyz="0 0 -0.08" rpy="0 0 0"/>
-      <mass value="0.439722"/>
-      <inertia ixx="0.000974" ixy="0" ixz="0" iyy="0.000974" iyz="0" izz="0.000071"/>
+      <mass value="0.073287"/>
+      <inertia ixx="0.000162" ixy="0" ixz="0" iyy="0.000162" iyz="0" izz="0.000012"/>
     </inertial>
   </link>
   <link name="rear_right_hip">
@@ -183,8 +183,8 @@
     </collision>
     <inertial>
       <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <mass value="0.381704"/>
-      <inertia ixx="0.000165" ixy="0" ixz="0" iyy="0.000165" iyz="0" izz="0.000172"/>
+      <mass value="0.063617"/>
+      <inertia ixx="0.000028" ixy="0" ixz="0" iyy="0.000028" iyz="0" izz="0.000029"/>
     </inertial>
   </link>
   <link name="rear_right_thigh">
@@ -199,8 +199,8 @@
     </collision>
     <inertial>
       <origin xyz="0 0 -0.08" rpy="0 0 0"/>
-      <mass value="0.656869"/>
-      <inertia ixx="0.001481" ixy="0" ixz="0" iyy="0.001481" iyz="0" izz="0.000159"/>
+      <mass value="0.109478"/>
+      <inertia ixx="0.000247" ixy="0" ixz="0" iyy="0.000247" iyz="0" izz="0.000026"/>
     </inertial>
   </link>
   <link name="rear_right_shin">
@@ -215,8 +215,8 @@
     </collision>
     <inertial>
       <origin xyz="0 0 -0.08" rpy="0 0 0"/>
-      <mass value="0.439722"/>
-      <inertia ixx="0.000974" ixy="0" ixz="0" iyy="0.000974" iyz="0" izz="0.000071"/>
+      <mass value="0.073287"/>
+      <inertia ixx="0.000162" ixy="0" ixz="0" iyy="0.000162" iyz="0" izz="0.000012"/>
     </inertial>
   </link>
   <joint name="front_left_hip_joint" type="revolute">

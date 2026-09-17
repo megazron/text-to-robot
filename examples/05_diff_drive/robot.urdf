@@ -23,8 +23,8 @@
     </collision>
     <inertial>
       <origin xyz="0 0 0.12" rpy="0 0 0"/>
-      <mass value="38.88"/>
-      <inertia ixx="0.338256" ixy="0" ixz="0" iyy="0.565056" iyz="0" izz="0.81"/>
+      <mass value="6.48"/>
+      <inertia ixx="0.056376" ixy="0" ixz="0" iyy="0.094176" iyz="0" izz="0.135"/>
     </inertial>
   </link>
   <link name="left_wheel">
@@ -39,8 +39,8 @@
     </collision>
     <inertial>
       <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <mass value="1.221451"/>
-      <inertia ixx="0.001262" ixy="0" ixz="0" iyy="0.001262" iyz="0" izz="0.002199"/>
+      <mass value="0.203575"/>
+      <inertia ixx="0.00021" ixy="0" ixz="0" iyy="0.00021" iyz="0" izz="0.000366"/>
     </inertial>
   </link>
   <link name="right_wheel">
@@ -55,8 +55,8 @@
     </collision>
     <inertial>
       <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <mass value="1.221451"/>
-      <inertia ixx="0.001262" ixy="0" ixz="0" iyy="0.001262" iyz="0" izz="0.002199"/>
+      <mass value="0.203575"/>
+      <inertia ixx="0.00021" ixy="0" ixz="0" iyy="0.00021" iyz="0" izz="0.000366"/>
     </inertial>
   </link>
   <link name="caster">
@@ -71,8 +71,8 @@
     </collision>
     <inertial>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <mass value="0.527667"/>
-      <inertia ixx="0.000274" ixy="0" ixz="0" iyy="0.000274" iyz="0" izz="0.000274"/>
+      <mass value="0.087944"/>
+      <inertia ixx="0.000046" ixy="0" ixz="0" iyy="0.000046" iyz="0" izz="0.000046"/>
     </inertial>
   </link>
   <joint name="left_wheel_joint" type="continuous">

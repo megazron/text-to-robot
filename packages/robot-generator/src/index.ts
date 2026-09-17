@@ -3,3 +3,6 @@ export * from "./nlp.ts";
 export * from "./diff.ts";
 export * from "./repair.ts";
 export * from "./generate.ts";
+export { buildBom, bomToMarkdown, type BillOfMaterials } from "@ttr/components";
+export { generateScad, generateCadFiles } from "@ttr/cad";
+export { exportTraining, classify } from "@ttr/training-export";

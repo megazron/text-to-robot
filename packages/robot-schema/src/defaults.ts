@@ -7,6 +7,7 @@ export const DENSITY = {
   structure: 2700, // aluminium
   light: 900,      // plastics
   heavy: 7800,     // steel
+  printed: 450,    // effective density of a hollow 3D-printed / shelled link
 } as const;
 
 /** default palette (RGBA 0..1) */

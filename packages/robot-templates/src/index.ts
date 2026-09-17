@@ -1,13 +1,15 @@
 import type { RobotSpecification } from "@ttr/robot-schema";
 import { nDofArm, scara } from "./arms.ts";
 import { diffDrive, fourWheel, mecanum } from "./mobile.ts";
-import { quadruped } from "./legged.ts";
+import { quadruped, hexapod } from "./legged.ts";
 import { humanoid } from "./humanoid.ts";
+import { roverArm } from "./composite.ts";
 
 export * from "./builder.ts";
 export * from "./arms.ts";
 export * from "./mobile.ts";
 export * from "./legged.ts";
+export * from "./composite.ts";
 export * from "./humanoid.ts";
 export * from "./grippers.ts";
 
@@ -29,6 +31,8 @@ export const TEMPLATES: TemplateInfo[] = [
   { id: "four_wheel", title: "Four-wheel robot", description: "Four driven wheels", build: (p) => fourWheel("four_wheel_robot", p) },
   { id: "mecanum", title: "Mecanum robot", description: "Four holonomic wheels", build: (p) => mecanum("mecanum_robot", p) },
   { id: "quadruped", title: "Quadruped", description: "Four 3-DOF legs", build: (p) => quadruped("quadruped", p) },
+  { id: "hexapod", title: "Hexapod", description: "Six 3-DOF legs (18 DOF)", build: (p) => hexapod("hexapod", p) },
+  { id: "rover_arm", title: "Rover + arm", description: "Four-wheel base with a 6-DOF manipulator", build: (p) => roverArm("rover_arm", 6, p) },
 ];
 
 export function getTemplate(id: string): TemplateInfo | undefined {
