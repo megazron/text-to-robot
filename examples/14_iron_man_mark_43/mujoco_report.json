@@ -1,14 +1,14 @@
 {
- "model": "<inline mjcf, 87085 chars>",
- "nbody": 126,
+ "model": "<inline mjcf, 90979 chars>",
+ "nbody": 133,
  "njnt": 67,
  "nu": 66,
- "ngeom": 251,
+ "ngeom": 265,
  "floating": true,
  "tests": {
   "compile": {
    "pass": true,
-   "total_mass_kg": 74.11,
+   "total_mass_kg": 74.67,
    "actuators": 66
   },
   "settle_under_gravity": {
@@ -23,12 +23,12 @@
   },
   "actuator_sweep": {
    "pass": true,
-   "tracked": "65/66",
-   "worst_error": 1.391
+   "tracked": "63/66",
+   "worst_error": 2.015
   },
   "disturbance_recovery": {
    "pass": true,
-   "upright_after": 0.005,
+   "upright_after": -0.008,
    "note": "upright>0.5 means it did not fall"
   }
  },

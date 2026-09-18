@@ -29,7 +29,7 @@ What the converter does, deterministically:
 - floor, lighting, a free-floating base for legged / wheeled / flying robots (auto-detected from link names);
 - self-collision off by default (primitive robots overlap at their joints); `self_collision=True` to enable;
 - servo stiffness scaled from the inverted-pendulum term m·g·h so standing robots are stable under position control;
-- `ttr_mujoco.exo.add_wearer` puts an anthropometric human inside a wearable exoskeleton (requires the exosuit link naming: `pelvis_frame`, `*_thigh_cuff`, `*_shank_cuff`, `*_boot`, …); armour hinges are any actuator named `*_hinge` (closed = 0), which the `don`/`doff` motions drive in anatomical order.
+- `ttr_mujoco.exo.add_wearer` puts an anthropometric human (head top at the given height, dark undersuit by default, `undersuit=False` for skin) inside a wearable exoskeleton (requires the exosuit link naming: `pelvis_frame`, `*_thigh_cuff`, `*_shank_cuff`, `*_boot`, …); armour hinges are any actuator named `*_hinge` (closed = 0), which the `don`/`doff` motions drive in anatomical order.
 
 The Gymnasium env (`ttr_mujoco.env.MujocoRobotEnv`) uses **delta actions around the standing pose**
 (action 0 = hold still) and, for `stand`, random pushes so a policy must actually balance.

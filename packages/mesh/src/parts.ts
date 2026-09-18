@@ -40,7 +40,7 @@ export const PARTS: Record<string, Gen> = {
   chest_plate: (p) => {
     const w = num(p, "w", 0.36), h = num(p, "h", 0.30), d = num(p, "d", 0.10), t = num(p, "t", 0.006);
     const a0 = num(p, "a0", -1.25), a1 = num(p, "a1", 1.25);   // angular span: a half (0..1.25) makes a hinged chest door
-    const rows: [number, number, number][] = [[0, 0.62, 0.55], [0.22, 0.85, 0.75], [0.5, 1.0, 1.0], [0.78, 0.95, 1.05], [1.0, 0.80, 0.9]]; // z-frac, width-frac, depth-frac
+    const rows: [number, number, number][] = [[0, 0.62, 0.55], [0.18, 0.85, 0.80], [0.38, 1.0, 1.0], [0.55, 1.0, 1.08], [0.72, 0.98, 1.06], [0.88, 0.90, 0.95], [1.0, 0.80, 0.85]]; // z-frac, width-frac, depth-frac (pectoral bulge at 0.55–0.72)
     const sections = rows.map(([zf, wf, df]) => superArc(d * df, (w / 2) * wf, -h / 2 + h * zf, a0, a1, 25, 2.6));
     return shelledLoft(sections, t, 1);
   },

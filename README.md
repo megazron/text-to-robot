@@ -35,7 +35,7 @@ produces exactly that, as real mechanisms and real geometry:
 - **The frame** — a wearable exoskeleton built to adult anthropometrics: lateral struts, strap cuffs,
   an actuator module at every hip, knee, ankle, shoulder, elbow and wrist (17 joints), a power and
   compute pack, insole force sensors, trunk IMU, HUD camera.
-- **The armour — 90 polygon-mesh parts, 49 of them hinged servo-driven joints.** Not boxes: each
+- **The armour — 97 polygon-mesh parts, 49 of them hinged servo-driven joints.** Not boxes: each
   part is a procedurally generated shell (see [the mesh engine](#the-polygon-mesh-engine)) that
   wraps the limb or chest it covers. The Mark 43 panel map: a 1:1 **motorised helmet** (faceplate
   that flips up at the temples, lifting crown panel, cheek panels that swing out, chin guard, eye
@@ -45,10 +45,11 @@ produces exactly that, as real mechanisms and real geometry:
   gold bicep sleeves and red gauntlets, each split into a fixed outer shell and an inner clamshell
   hinged on the front seam; gauntlet hatches, palm repulsors, articulated fingers; hip flaps, thigh
   and shin shells with clamshells, gold knee caps, boots with toe caps, instep trim, heel-thruster
-  covers and ankle flaps. Closed is 0 rad; open is the joint limit. 125 links, 124 joints,
-  66 actuators, 74 kg.
-- **A person inside** — a properly proportioned 75 kg / 1.75 m passive human (neck, clavicles, chest
-  and abdomen, tapered limbs, hands, feet) welded to the cuffs like straps.
+  covers and ankle flaps, gold forearm / thigh / shin stripes. Closed is 0 rad; open is the joint limit.
+  132 links, 131 joints, 66 actuators, 75 kg.
+- **A person inside** — a properly proportioned 75 kg / 1.75 m passive human in a dark undersuit (neck,
+  clavicles, chest and abdomen, tapered limbs, hands, feet; head top at 1.75 m so the helmet fits) welded
+  to the cuffs like straps.
 
 <p align="center"><img src="docs/img/mark43_donning.gif" width="100%" alt="Donning sequence: 49 armour plates close around the wearer in MuJoCo, boots first, faceplate last"></p>
 <p align="center"><i>The donning sequence, simulated in MuJoCo: boots and shins first, then legs, torso, arms, faceplate last — every plate is a servo-driven hinge closing around the person inside.</i></p>
@@ -66,17 +67,17 @@ produces exactly that, as real mechanisms and real geometry:
   <img src="docs/img/viewer-mark43.png" width="49%" alt="The same Mark 43 in the browser viewer, polygon parts streamed as STL" />
 </p>
 
-| MuJoCo test (suit + 75 kg wearer, 149 kg system) | Result |
+| MuJoCo test (suit + 75 kg wearer, 150 kg system) | Result |
 |---|---|
 | Compile + actuate | ✅ 66 actuators (17 frame modules + 49 armour servos) |
 | Settle under gravity | ✅ spawns 5 mm above the floor, settles 5 mm, upright 1.00, joint speeds < 0.4 rad/s |
 | Hold pose | ✅ max joint drift 0.001 rad |
 | Actuator sweep | ✅ 63/66 track within tolerance (the three misses are leg joints blocked by the floor while standing) |
 | 1 m/s shove | ✅ recovers to 0.98 upright |
-| **Wearer support (powered vs motors off)** | ✅ powered: head drops **5 mm** at 17 N·m peak · motors off: **0.76 m collapse** |
+| **Wearer support (powered vs motors off)** | ✅ powered: head drops **5 mm** at 17.5 N·m peak · motors off: **0.86 m collapse** |
 | Empty suit (no wearer) | ✅ 5/5 — stands and holds pose; it does fall over from the 1 m/s shove (74 kg of shell on a 1.0 m centre of mass with no balance controller) |
 
-**Can it be built?** At research tier the Bill of Materials is **≈ $45.7k**: 150 N·m harmonic-drive
+**Can it be built?** At research tier the Bill of Materials is **≈ $45.8k**: 150 N·m harmonic-drive
 joint modules and 120 N·m QDD actuators for the frame, 49 small smart servos for the plates,
 calibrated insole force sensors, a Jetson Orin, a high-voltage pack. Repulsors and thrusters are
 mount points, not modelled propulsion.
@@ -87,7 +88,7 @@ superellipse sections, plates wrapped on cylinders) rather than the hand-sculpte
 of a screen-used suit, and the exoskeleton frame is visible between plates on purpose: this is a
 wearable machine, not a costume. Everything is in `examples/14_iron_man_mark_43/`: prompt,
 `robot.json`, `robot.urdf` (ROS `package://` mesh paths), `robot.sim.urdf` (relative paths for
-MuJoCo/PyBullet), the 90 binary STLs in `meshes/`, both MJCFs (suit, and suit + wearer), BOM,
+MuJoCo/PyBullet), the 97 binary STLs in `meshes/`, both MJCFs (suit, and suit + wearer), BOM,
 `mujoco_report.json` and `mujoco_report_wearer.json`.
 
 ### The polygon mesh engine
@@ -147,7 +148,7 @@ demo mode), so the repo runs the moment you clone it.
 - 🧪 **Physics-validated** — every example loads and simulates in PyBullet; the generated training suite has been run end to end (RL, imitation, evaluation).
 - 🧪 **MuJoCo, first-class** — `ttr-mujoco` converts the URDF to an actuated MuJoCo scene (mass-scaled servos, floor, free base), runs a simulation test battery, renders headless GIFs, and trains PPO. Every shipped example passes its battery.
 - 🏋️ **Train it** — a downloadable training suite (MuJoCo + PyBullet, Gymnasium, PPO/SAC, imitation learning, evaluation) that loads the generated robot directly.
-- 🚀 **Any robot you can describe** — templates for arms, bases, legged robots and hands, plus sci-fi builds with real mechanisms: a **wearable Iron Man Mark 43 in polygon-mesh armour with 49 articulated plates** (simulated donning with a person inside), **WALL-E, EVA, Baymax**, spider-bots, Mars rovers, battle mechs.
+- 🚀 **Any robot you can describe** — templates for arms, bases, legged robots and hands, plus sci-fi builds with real mechanisms: a **wearable Iron Man Mark 43 in polygon-mesh armour (97 parts, 49 articulated)** (simulated donning with a person inside), **WALL-E, EVA, Baymax**, spider-bots, Mars rovers, battle mechs.
 - 🖥️ **CLI + HTTP API** — scriptable and embeddable.
 - 🔌 **Pluggable LLMs** — OpenAI, Anthropic, or deterministic demo mode.
 
@@ -173,7 +174,7 @@ Templates (used as sensible starting points the AI can customize):
 | Quadruped | Hexapod (18 DOF) | Humanoid (torso, head, two arms, two legs) |
 | Rover + arm (mobile manipulator) | Parallel & suction grippers | ...and anything a prompt implies |
 
-Seventeen worked examples (including Iron Man, WALL-E, EVA and Baymax) live in [`examples/`](examples/) — each passes schema **and** URDF validation.
+Seventeen worked examples (including Iron Man, WALL-E, EVA and Baymax) live in [`examples/`](examples/) — each passes schema **and** URDF validation, and each has a MuJoCo render in the [gallery](#examples).
 
 ## Installation
 
@@ -368,6 +369,18 @@ are a sanity gate, not a guarantee of real-world dynamic performance.
 
 ## Examples
 
+Every example below is the generator's own output, converted to MuJoCo and rendered by
+`ttr-mujoco render` — no hand-editing. Click one to open its folder (prompt, JSON, URDF, MJCF, BOM,
+`mujoco_report.json`).
+
+<table>
+<tr><td align="center"><a href="examples/01_arm_2dof/"><img src="docs/img/examples/01_arm_2dof.gif" width="100%" alt="2 DOF arm simulated in MuJoCo"></a><br><sub><b>1. 2 DOF arm</b></sub></td><td align="center"><a href="examples/02_arm_6dof/"><img src="docs/img/examples/02_arm_6dof.gif" width="100%" alt="6 DOF arm + gripper simulated in MuJoCo"></a><br><sub><b>2. 6 DOF arm + gripper</b></sub></td><td align="center"><a href="examples/03_arm_7dof/"><img src="docs/img/examples/03_arm_7dof.gif" width="100%" alt="7 DOF arm + gripper simulated in MuJoCo"></a><br><sub><b>3. 7 DOF arm + gripper</b></sub></td><td align="center"><a href="examples/04_scara/"><img src="docs/img/examples/04_scara.gif" width="100%" alt="SCARA simulated in MuJoCo"></a><br><sub><b>4. SCARA</b></sub></td></tr>
+<tr><td align="center"><a href="examples/05_diff_drive/"><img src="docs/img/examples/05_diff_drive.gif" width="100%" alt="Differential drive simulated in MuJoCo"></a><br><sub><b>5. Differential drive</b></sub></td><td align="center"><a href="examples/06_four_wheel/"><img src="docs/img/examples/06_four_wheel.gif" width="100%" alt="Four-wheel simulated in MuJoCo"></a><br><sub><b>6. Four-wheel</b></sub></td><td align="center"><a href="examples/07_mecanum/"><img src="docs/img/examples/07_mecanum.gif" width="100%" alt="Mecanum simulated in MuJoCo"></a><br><sub><b>7. Mecanum</b></sub></td><td align="center"><a href="examples/08_humanoid/"><img src="docs/img/examples/08_humanoid.gif" width="100%" alt="Humanoid simulated in MuJoCo"></a><br><sub><b>8. Humanoid</b></sub></td></tr>
+<tr><td align="center"><a href="examples/09_gripper/"><img src="docs/img/examples/09_gripper.gif" width="100%" alt="Parallel gripper simulated in MuJoCo"></a><br><sub><b>9. Parallel gripper</b></sub></td><td align="center"><a href="examples/10_quadruped/"><img src="docs/img/examples/10_quadruped.gif" width="100%" alt="Quadruped simulated in MuJoCo"></a><br><sub><b>10. Quadruped</b></sub></td><td align="center"><a href="examples/11_spider_scout/"><img src="docs/img/examples/11_spider_scout.gif" width="100%" alt="Spider scout simulated in MuJoCo"></a><br><sub><b>11. Spider scout</b></sub></td><td align="center"><a href="examples/12_mars_rover/"><img src="docs/img/examples/12_mars_rover.gif" width="100%" alt="Mars rover simulated in MuJoCo"></a><br><sub><b>12. Mars rover</b></sub></td></tr>
+<tr><td align="center"><a href="examples/13_battle_mech/"><img src="docs/img/examples/13_battle_mech.gif" width="100%" alt="Battle mech simulated in MuJoCo"></a><br><sub><b>13. Battle mech</b></sub></td><td align="center"><a href="examples/14_iron_man_mark_43/"><img src="docs/img/examples/14_iron_man_mark_43.gif" width="100%" alt="Iron Man Mark 43 simulated in MuJoCo"></a><br><sub><b>14. Iron Man Mark 43</b></sub></td><td align="center"><a href="examples/15_wall_e/"><img src="docs/img/examples/15_wall_e.gif" width="100%" alt="WALL-E simulated in MuJoCo"></a><br><sub><b>15. WALL-E</b></sub></td><td align="center"><a href="examples/16_eva/"><img src="docs/img/examples/16_eva.gif" width="100%" alt="EVA simulated in MuJoCo"></a><br><sub><b>16. EVA</b></sub></td></tr>
+<tr><td align="center"><a href="examples/17_baymax/"><img src="docs/img/examples/17_baymax.gif" width="100%" alt="Baymax simulated in MuJoCo"></a><br><sub><b>17. Baymax</b></sub></td></tr>
+</table>
+
 ```bash
 node cli/src/index.ts validate examples/02_arm_6dof/robot.urdf
 ```
@@ -395,7 +408,7 @@ node cli/src/index.ts validate examples/02_arm_6dof/robot.urdf
 Every one of 14–17 is built from real mechanisms (revolute/prismatic/continuous joints, sized masses,
 sensors on mounts) and **passes the MuJoCo test battery 5/5** — see each example's `mujoco_report.json`.
 
-**Imagine anything.** Sci-fi is welcome as long as it is buildable: WALL-E gets tracks with four driven wheels, a telescoping (prismatic) neck and binocular cameras; EVA is a free-floating capsule with a hover-thruster mount and flight IMU; the Iron Man Mark 43 is a wearable 17-joint powered exoskeleton under 90 polygon-mesh armour parts (49 hinged), simulated donning with a 75 kg person strapped inside. Prompts route to the closest structure and pull in the sensors you mention:
+**Imagine anything.** Sci-fi is welcome as long as it is buildable: WALL-E gets tracks with four driven wheels, a telescoping (prismatic) neck and binocular cameras; EVA is a free-floating capsule with a hover-thruster mount and flight IMU; the Iron Man Mark 43 is a wearable 17-joint powered exoskeleton under 97 polygon-mesh armour parts (49 hinged), simulated donning with a 75 kg person strapped inside. Prompts route to the closest structure and pull in the sensors you mention:
 "a warehouse loader with mecanum wheels and a suction gripper", "an insectoid recon drone with a
 LiDAR", "a planetary explorer with a 1-metre arm". Each still passes schema + URDF validation.
 
@@ -439,7 +452,7 @@ npm run api           # serve web + API on :8787
 - [x] Physics validation of all examples (PyBullet)
 - [x] Shareable robot links + persistence + Dockerfile
 - [x] MuJoCo layer: convert, simulation test battery, headless render, PPO training
-- [x] Sci-fi builds with real mechanisms: a wearable Iron Man Mark 43 in procedural polygon armour (90 mesh parts, 49 hinged, motorised helmet) with a simulated donning sequence, WALL-E, EVA, Baymax — all pass the MuJoCo battery
+- [x] Sci-fi builds with real mechanisms: a wearable Iron Man Mark 43 in procedural polygon armour (97 mesh parts, 49 hinged, motorised helmet) with a simulated donning sequence, WALL-E, EVA, Baymax — all pass the MuJoCo battery
 - [x] Procedural polygon mesh parts (`@ttr/mesh`): recipes in the robot JSON, STL on demand, streamed to the viewer, shipped in ROS 2 / training / CAD exports
 
 Future (toward a free hosted service where you describe, download and train a robot):
