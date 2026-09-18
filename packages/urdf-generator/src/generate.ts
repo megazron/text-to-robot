@@ -1,6 +1,6 @@
 // Deterministic URDF generator. Pure functions; the LLM never builds XML.
 import type { RobotSpecification, Link, Joint, Geometry, Material, Pose, Sensor } from "@ttr/robot-schema";
-import { inertiaOf } from "@ttr/kinematics";
+import { inertiaOf, poseToMat } from "@ttr/kinematics";
 import { num, vec, xmlName } from "./format.ts";
 
 const originTag = (p: Pose): string => `<origin xyz="${vec(p.xyz)}" rpy="${vec(p.rpy)}"/>`;
@@ -12,7 +12,8 @@ export function setMeshPrefix(prefix: string) { MESH_PREFIX = prefix; }
 
 export function generateGeometry(g: Geometry): string {
   switch (g.type) {
-    case "mesh": return `<geometry><mesh filename="${MESH_PREFIX}${xmlName(g.file.replace(/\.stl$/i, ""))}.stl"${g.scale ? ` scale="${vec(g.scale)}"` : ""}/></geometry>`;
+    // buildPart already bakes recipe.scale into the exported vertices.
+    case "mesh": return `<geometry><mesh filename="${MESH_PREFIX}${xmlName(g.file.replace(/\.stl$/i, ""))}.stl"/></geometry>`;
     case "box": return `<geometry><box size="${vec(g.size)}"/></geometry>`;
     case "cylinder": return `<geometry><cylinder radius="${num(g.radius)}" length="${num(g.length)}"/></geometry>`;
     case "sphere": return `<geometry><sphere radius="${num(g.radius)}"/></geometry>`;
@@ -36,7 +37,7 @@ export function generateCollision(l: Link): string {
     // collision fallback for meshes: their bounding box (cheap, stable in every physics engine)
     const size = [g.bbox.max[0] - g.bbox.min[0], g.bbox.max[1] - g.bbox.min[1], g.bbox.max[2] - g.bbox.min[2]].map((d) => Math.max(d, 1e-3));
     const c = [(g.bbox.max[0] + g.bbox.min[0]) / 2, (g.bbox.max[1] + g.bbox.min[1]) / 2, (g.bbox.max[2] + g.bbox.min[2]) / 2];
-    const origin = { xyz: [l.origin.xyz[0] + c[0], l.origin.xyz[1] + c[1], l.origin.xyz[2] + c[2]] as [number, number, number], rpy: l.origin.rpy };
+    const origin = offsetOrigin(l.origin, c);
     return `<collision>\n  ${originTag(origin)}\n  <geometry><box size="${vec(size)}"/></geometry>\n</collision>`;
   }
   return `<collision>\n  ${originTag(l.origin)}\n  ${generateGeometry(g)}\n</collision>`;
@@ -44,8 +45,16 @@ export function generateCollision(l: Link): string {
 
 export function generateInertial(l: Link): string {
   const I = l.inertia ?? inertiaOf(l.geometry, l.mass);
-  return `<inertial>\n  ${originTag(l.origin)}\n  <mass value="${num(l.mass)}"/>\n` +
+  const origin = l.geometry.type === "mesh" && l.geometry.centroid
+    ? offsetOrigin(l.origin, l.geometry.centroid) : l.origin;
+  return `<inertial>\n  ${originTag(origin)}\n  <mass value="${num(l.mass)}"/>\n` +
     `  <inertia ixx="${num(I.ixx)}" ixy="${num(I.ixy)}" ixz="${num(I.ixz)}" iyy="${num(I.iyy)}" iyz="${num(I.iyz)}" izz="${num(I.izz)}"/>\n</inertial>`;
+}
+
+/** Translate a point expressed in the geometry frame into the link frame. */
+function offsetOrigin(origin: Pose, point: number[]): Pose {
+  const m = poseToMat(origin);
+  return { xyz: [0, 1, 2].map((r) => m[4*r] * point[0] + m[4*r+1] * point[1] + m[4*r+2] * point[2] + m[4*r+3]) as Pose["xyz"], rpy: origin.rpy };
 }
 
 export function generateLink(l: Link): string {
@@ -55,6 +64,7 @@ export function generateLink(l: Link): string {
 }
 
 export function generateLimits(j: Joint): string {
+  if (j.type === "continuous" && j.limit) return `  <limit effort="${num(j.limit.effort)}" velocity="${num(j.limit.velocity)}"/>\n`;
   if (j.type !== "revolute" && j.type !== "prismatic") return "";
   const L = j.limit!;
   const lo = L.lower ?? 0, up = L.upper ?? 0;

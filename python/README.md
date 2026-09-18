@@ -23,12 +23,12 @@ ttr-mujoco render mark43.sim.urdf --wearer -o helmet.gif --motion don --focus he
 ```
 
 What the converter does, deterministically:
-- position actuators on every joint, gains scaled to the robot's mass;
+- position actuators on every joint, gains inferred from mass, forces bounded by each URDF effort limit (missing/invalid effort is an error);
 - polygon-mesh parts: `package://` and relative `meshes/` paths are resolved next to the URDF, visual meshes are kept (MuJoCo's URDF importer drops them by default) as non-colliding geoms while their bounding-box collision stays physical, fixed links keep their names (no static fusing) so welds and `--focus` can find them, and saved MJCFs use a relative `meshdir`;
 - the URDF's designed masses and inertias are preserved (including the root link when the base floats);
 - floor, lighting, a free-floating base for legged / wheeled / flying robots (auto-detected from link names);
-- self-collision off by default (primitive robots overlap at their joints); `self_collision=True` to enable;
-- servo stiffness scaled from the inverted-pendulum term m·g·h so standing robots are stable under position control;
+- self-collision off by default (primitive robots overlap at their joints); `--self-collision` / `self_collision=True` to expose interference;
+- servo stiffness is a heuristic, not a measured controller model; speed, thermal and electrical limits are unmodelled;
 - `ttr_mujoco.exo.add_wearer` puts an anthropometric human (head top at the given height, dark undersuit by default, `undersuit=False` for skin) inside a wearable exoskeleton (requires the exosuit link naming: `pelvis_frame`, `*_thigh_cuff`, `*_shank_cuff`, `*_boot`, …); armour hinges are any actuator named `*_hinge` (closed = 0), which the `don`/`doff` motions drive in anatomical order.
 
 The Gymnasium env (`ttr_mujoco.env.MujocoRobotEnv`) uses **delta actions around the standing pose**

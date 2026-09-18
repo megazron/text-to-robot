@@ -2,7 +2,7 @@
 // ${...} expressions, plus a scale property. Processes to valid URDF.
 import type { RobotSpecification, Link, Geometry } from "@ttr/robot-schema";
 import { num, vec, xmlName } from "./format.ts";
-import { generateVisual, generateCollision, generateJoint, generateMaterial, setMeshPackage, setMeshPrefix } from "./generate.ts";
+import { generateVisual, generateCollision, generateJoint, generateMaterial, generateInertial, setMeshPackage, setMeshPrefix } from "./generate.ts";
 
 const MACROS = `  <xacro:macro name="box_inertial" params="m x y z ox oy oz">
     <inertial>
@@ -30,16 +30,13 @@ const MACROS = `  <xacro:macro name="box_inertial" params="m x y z ox oy oz">
 
 function inertialCall(l: Link): string {
   const g: Geometry = l.geometry;
-  if (g.type === "mesh") {
-    const k = l.mass / Math.max(g.volume, 1e-12); const I = g.inertia_unit;
-    const [ox, oy, oz] = l.origin.xyz.map(num);
-    return `  <inertial><origin xyz="${ox} ${oy} ${oz}"/><mass value="${num(l.mass)}"/><inertia ixx="${num(I.ixx * k)}" ixy="${num(I.ixy * k)}" ixz="${num(I.ixz * k)}" iyy="${num(I.iyy * k)}" iyz="${num(I.iyz * k)}" izz="${num(I.izz * k)}"/></inertial>`;
-  }
+  if (g.type === "mesh" || g.type === "capsule" || l.inertia || l.origin.rpy.some((v) => v !== 0))
+    return generateInertial(l);
   const [ox, oy, oz] = l.origin.xyz.map(num);
   const m = num(l.mass);
   switch (g.type) {
     case "box": return `  <xacro:box_inertial m="${m}" x="${num(g.size[0])}" y="${num(g.size[1])}" z="${num(g.size[2])}" ox="${ox}" oy="${oy}" oz="${oz}"/>`;
-    case "cylinder": case "capsule": return `  <xacro:cyl_inertial m="${m}" r="${num(g.radius)}" h="${num(g.length)}" ox="${ox}" oy="${oy}" oz="${oz}"/>`;
+    case "cylinder": return `  <xacro:cyl_inertial m="${m}" r="${num(g.radius)}" h="${num(g.length)}" ox="${ox}" oy="${oy}" oz="${oz}"/>`;
     case "sphere": return `  <xacro:sphere_inertial m="${m}" r="${num(g.radius)}" ox="${ox}" oy="${oy}" oz="${oz}"/>`;
   }
 }

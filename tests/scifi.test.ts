@@ -30,14 +30,19 @@ test("all four characters pass spec + URDF validation from their templates", () 
     assert.ok(vurdf(urdf(s)).valid, `${s.robot_name} urdf`);
   }
 });
-test("shipped MuJoCo reports show every character passing its simulation battery", () => {
+test("shipped MuJoCo reports count their actual outcomes without requiring fictional capabilities", () => {
   for (const ex of ["14_iron_man_mark_43", "15_wall_e", "16_eva", "17_baymax", "08_humanoid", "11_spider_scout"]) {
     const p = `examples/${ex}/mujoco_report.json`;
     assert.ok(existsSync(p), `missing ${p}`);
     const rep = JSON.parse(readFileSync(p, "utf8"));
-    assert.equal(rep.passed, rep.total, `${ex}: ${rep.passed}/${rep.total}`);
+    const outcomes = Object.values(rep.tests) as { pass: boolean }[];
+    assert.equal(rep.total, outcomes.length);
+    assert.equal(rep.passed, outcomes.filter((t) => t.pass).length);
     assert.ok(rep.floating, `${ex} should simulate with a floating base`);
   }
+  const mark = JSON.parse(readFileSync("examples/14_iron_man_mark_43/mujoco_report.json", "utf8"));
+  assert.equal(mark.tests.disturbance_recovery.pass, false, "falling must not be labelled recovery");
+  assert.ok(mark.limitations.some((s: string) => /self-collision/i.test(s)));
 });
 
 test("the wearable exosuit is anthropometric: joints at human heights, feet on the ground, cuffs on both limbs", async () => {

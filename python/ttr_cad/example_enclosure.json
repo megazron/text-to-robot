@@ -1,0 +1,16 @@
+{
+  "name": "electronics_bay_demo",
+  "dimension_source": "Synthetic 60 x 40 x 12 mm populated PCB envelope. Replace with measured hardware; not a vendor part.",
+  "board_mm": [60, 40, 12],
+  "mounting_holes_mm": [[-24, -14], [-24, 14], [24, -14], [24, 14]],
+  "clearance_mm": 1,
+  "wall_mm": 2,
+  "floor_mm": 2.5,
+  "lid_mm": 2,
+  "standoff_mm": 5,
+  "boss_diameter_mm": 7.2,
+  "board_screw_clearance_mm": 3.2,
+  "lid_screw_clearance_mm": 3.2,
+  "density_kg_m3": 1240,
+  "cable_port_mm": [14, 6, 13]
+}

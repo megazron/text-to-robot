@@ -2,7 +2,7 @@
 
 ### «Describe a robot. Get a ROS&nbsp;2 robot.»
 
-Text-to-speech turns words into audio. **Text-to-Robot turns words into a robot** — a validated URDF/Xacro, an interactive 3D model, a buildable ROS 2 package, and a **MuJoCo simulation you can test and train**. Describe anything — a 6-DOF arm, a Mars rover, WALL-E, an Iron Man suit — and get a robot with real mechanisms and real physics.
+Text-to-speech turns words into audio. **Text-to-Robot turns words into a robot** — a validated URDF/Xacro, an interactive 3D model, a buildable ROS 2 package, and a **MuJoCo simulation you can test and train**. Describe anything — a 6-DOF arm, a Mars rover, WALL-E, an Iron Man suit — and get a parameterized robot concept for simulation. Generated geometry is not yet a manufacturing-qualified design.
 
 ```
         TEXT                          ROBOT                         ROS 2
@@ -28,28 +28,18 @@ Text-to-speech turns words into audio. **Text-to-Robot turns words into a robot*
 
 > *"Build me a movie-accurate wearable Iron Man Mark 43 suit from Age of Ultron with all the small polygon armour plates that open and close, repulsors, a HUD and an IMU. Budget $60000"*
 
-What makes a Mark suit a Mark suit is not a red humanoid — it is a **powered exoskeleton you stand
-inside**, under **sculpted armour that opens to let you in and locks closed**. That one sentence
-produces exactly that, as real mechanisms and real geometry:
+The current Mark 43 is a **procedural powered-exoskeleton concept**, not a film-accurate
+or fabrication-ready suit. It includes a 17-joint frame, 97 polygon armour meshes,
+49 armour hinges and a passive mannequin. Geometry was authored from memory, without
+prop scans, measured wearer geometry or validated component interfaces.
 
-- **The frame** — a wearable exoskeleton built to adult anthropometrics: lateral struts, strap cuffs,
-  an actuator module at every hip, knee, ankle, shoulder, elbow and wrist (17 joints), a power and
-  compute pack, insole force sensors, trunk IMU, HUD camera.
-- **The armour — 97 polygon-mesh parts, 49 of them hinged servo-driven joints.** Not boxes: each
-  part is a procedurally generated shell (see [the mesh engine](#the-polygon-mesh-engine)) that
-  wraps the limb or chest it covers. The Mark 43 panel map: a 1:1 **motorised helmet** (faceplate
-  that flips up at the temples, lifting crown panel, cheek panels that swing out, chin guard, eye
-  lenses); two **pectoral doors** that swing forward on the armpit line around a fixed gold centre
-  trapezoid and circular arc reactor; torso side doors; back shell with **flight-stabiliser flaps**;
-  three folding gold abdominal segments, belt and codpiece; red pauldrons capping the shoulders;
-  gold bicep sleeves and red gauntlets, each split into a fixed outer shell and an inner clamshell
-  hinged on the front seam; gauntlet hatches, palm repulsors, articulated fingers; hip flaps, thigh
-  and shin shells with clamshells, gold knee caps, boots with toe caps, instep trim, heel-thruster
-  covers and ankle flaps, gold forearm / thigh / shin stripes. Closed is 0 rad; open is the joint limit.
-  132 links, 131 joints, 66 actuators, 75 kg.
-- **A person inside** — a properly proportioned 75 kg / 1.75 m passive human in a dark undersuit (neck,
-  clavicles, chest and abdomen, tapered limbs, hands, feet; head top at 1.75 m so the helmet fits) welded
-  to the cuffs like straps.
+**Fidelity corrections:** exported mesh centres of mass and rotated collision offsets
+are now preserved; MuJoCo actuators use each URDF joint's effort limit, not a shared
+whole-robot force allowance. Root/full inertia tensors retain their orientation. A fallen
+robot now fails disturbance recovery. Regenerated results are recorded below.
+
+The following animations were produced with the **older modelling assumptions** and
+are illustrations, not validation evidence for the corrected model.
 
 <p align="center"><img src="docs/img/mark43_donning.gif" width="100%" alt="Donning sequence: 49 armour plates close around the wearer in MuJoCo, boots first, faceplate last"></p>
 <p align="center"><i>The donning sequence, simulated in MuJoCo: boots and shins first, then legs, torso, arms, faceplate last — every plate is a servo-driven hinge closing around the person inside.</i></p>
@@ -67,20 +57,23 @@ produces exactly that, as real mechanisms and real geometry:
   <img src="docs/img/viewer-mark43.png" width="49%" alt="The same Mark 43 in the browser viewer, polygon parts streamed as STL" />
 </p>
 
-| MuJoCo test (suit + 75 kg wearer, 150 kg system) | Result |
+| Corrected Mark 43 checks | Result |
 |---|---|
-| Compile + actuate | ✅ 66 actuators (17 frame modules + 49 armour servos) |
-| Settle under gravity | ✅ spawns 5 mm above the floor, settles 5 mm, upright 1.00, joint speeds < 0.4 rad/s |
-| Hold pose | ✅ max joint drift 0.001 rad |
-| Actuator sweep | ✅ 63/66 track within tolerance (the three misses are leg joints blocked by the floor while standing) |
-| 1 m/s shove | ✅ recovers to 0.98 upright |
-| **Wearer support (powered vs motors off)** | ✅ powered: head drops **5 mm** at 17.5 N·m peak · motors off: **0.86 m collapse** |
-| Empty suit (no wearer) | ✅ 5/5 — stands and holds pose; it does fall over from the 1 m/s shove (74 kg of shell on a 1.0 m centre of mass with no balance controller) |
+| Empty suit smoke battery | **4/5**; fails disturbance recovery |
+| Suit + mannequin | **5/6**, including support comparison; fails actuator sweep (62/66 track) |
+| Initial pose, self-collision enabled | **479 penetrating proxy contacts**, maximum depth ≈ 93 mm |
+| Film accuracy / wearer fit / fabrication | **Unverified** |
 
-**Can it be built?** At research tier the Bill of Materials is **≈ $45.8k**: 150 N·m harmonic-drive
-joint modules and 120 N·m QDD actuators for the frame, 49 small smart servos for the plates,
-calibrated insole force sensors, a Jetson Orin, a high-voltage pack. Repulsors and thrusters are
-mount points, not modelled propulsion.
+See the regenerated `mujoco_report*.json` and `clearance_report.json` in the example.
+The collision report checks boxes, which can overestimate shell interference. It does
+not validate non-convex shell clearance or contact with a human. The mannequin uses
+ideal weld constraints and disabled human contact, not a validated strap/tissue model.
+
+**Can it be built?** Not from these files alone. The BOM is a preliminary selection,
+not a mechanically integrated design. Missing work includes measured component CAD,
+actuator mounting and transmissions, bearings, tolerances, cable paths, thermal/power
+limits, structural verification, human joint alignment, emergency release and prototype
+measurements. A successful simulation rollout does not establish any of these.
 
 **Honest notes.** The panel map and palette follow the Mark 43's layout from memory of the film and
 the commercial helmet kits, not from scanned prop data — the shapes are procedural (lofted
@@ -141,12 +134,12 @@ demo mode), so the repo runs the moment you clone it.
   joint limits, and optional `ros2_control`.
 - 💸 **Bill of Materials to a budget** — picks *real* actuators (sized by the torque each joint
   must hold), sensors, compute, power and structure, and tells you what it costs and whether it
-  fits your budget. So the robot can actually be built.
-- 🛠️ **CAD parts** — ready-to-print **STL** meshes (native, no OpenSCAD needed) plus parametric OpenSCAD source for every link and the assembly, with a **printability report**.
+  fits your budget. Selections still need component drawings, continuous-duty ratings and mechanical integration.
+- 🛠️ **CAD parts** — **STL** concept meshes (native, no OpenSCAD needed) plus parametric OpenSCAD source for every link and the assembly, with a **printability report**.
 - 🤖 **MoveIt 2 + Gazebo** — an SRDF planning group, kinematics/controllers/OMPL config and a `move_group` launch; a Gazebo (gz-sim) world and spawn launch.
 - 🔗 **Shareable robot links** — every generated robot gets a URL (`/r/<id>`) that reopens it, persisted on the server. Free-SaaS ready with the included Dockerfile.
 - 🧪 **Physics-validated** — every example loads and simulates in PyBullet; the generated training suite has been run end to end (RL, imitation, evaluation).
-- 🧪 **MuJoCo, first-class** — `ttr-mujoco` converts the URDF to an actuated MuJoCo scene (mass-scaled servos, floor, free base), runs a simulation test battery, renders headless GIFs, and trains PPO. Every shipped example passes its battery.
+- 🧪 **MuJoCo, first-class** — `ttr-mujoco` converts the URDF to an actuated MuJoCo scene (mass-scaled servos, floor, free base), runs a simulation test battery, renders headless GIFs, and trains PPO. The battery reports failures; passing is a smoke check, not hardware validation.
 - 🏋️ **Train it** — a downloadable training suite (MuJoCo + PyBullet, Gymnasium, PPO/SAC, imitation learning, evaluation) that loads the generated robot directly.
 - 🚀 **Any robot you can describe** — templates for arms, bases, legged robots and hands, plus sci-fi builds with real mechanisms: a **wearable Iron Man Mark 43 in polygon-mesh armour (97 parts, 49 articulated)** (simulated donning with a person inside), **WALL-E, EVA, Baymax**, spider-bots, Mars rovers, battle mechs.
 - 🖥️ **CLI + HTTP API** — scriptable and embeddable.
@@ -309,7 +302,7 @@ ttr-mujoco train  examples/08_humanoid/robot.urdf --task stand --steps 400000
 ```
 
 What the converter guarantees: position actuators on every joint with gains scaled to the robot's
-mass; the URDF's designed masses/inertias preserved (including the root link on a floating base);
+mass; per-joint URDF effort limits enforced; the URDF's designed masses/inertias preserved (including the root link on a floating base);
 floor + lighting; a free base for legged/wheeled/flying robots (auto-detected); self-collision off
 by default because primitive-built robots overlap at their joints. The Gymnasium env uses **delta
 actions around the standing pose** (action 0 = hold still) and random pushes on the `stand` task, so
@@ -405,12 +398,10 @@ node cli/src/index.ts validate examples/02_arm_6dof/robot.urdf
 | 16 | **EVA** | `Build EVA, a sleek hovering egg-shaped droid with a visor and two floating arms` |
 | 17 | **Baymax** | `Build Baymax, an inflatable healthcare companion robot` |
 
-Every one of 14–17 is built from real mechanisms (revolute/prismatic/continuous joints, sized masses,
-sensors on mounts) and **passes the MuJoCo test battery 5/5** — see each example's `mujoco_report.json`.
-
-**Imagine anything.** Sci-fi is welcome as long as it is buildable: WALL-E gets tracks with four driven wheels, a telescoping (prismatic) neck and binocular cameras; EVA is a free-floating capsule with a hover-thruster mount and flight IMU; the Iron Man Mark 43 is a wearable 17-joint powered exoskeleton under 97 polygon-mesh armour parts (49 hinged), simulated donning with a 75 kg person strapped inside. Prompts route to the closest structure and pull in the sensors you mention:
-"a warehouse loader with mecanum wheels and a suction gripper", "an insectoid recon drone with a
-LiDAR", "a planetary explorer with a 1-metre arm". Each still passes schema + URDF validation.
+Examples 14–17 illustrate articulated concepts. Older reports and renders for characters
+other than Mark 43 predate the fidelity fixes; regenerate them before assessing performance.
+The offline parser routes prompts to templates; it does not solve arbitrary engineering
+requirements or infer vendor-accurate mechanical interfaces.
 
 ## Development
 
@@ -434,6 +425,30 @@ npm run typecheck     # tsc --noEmit (optional; needs a local typescript)
 npm run api           # serve web + API on :8787
 ```
 
+## Solid CAD and physical fidelity
+
+Python adds value as a **solid CAD and verification backend**, while TypeScript remains
+responsible for the web app and typed generation. CAD downloads now include a portable
+CadQuery enclosure generator in `cad/hardware/`. It generates a separate hollow base and
+lid, PCB standoffs, through-bolt holes, a cable opening, STEP/STL files and CAD-derived
+mass properties. It validates solid topology and interference with a supplied board envelope.
+CadQuery supports [solid STEP and mesh STL exports](https://cadquery.readthedocs.io/en/latest/importexport.html).
+
+```bash
+pip install -e './python[cad]'
+ttr-enclosure python/ttr_cad/example_enclosure.json --out out/electronics_bay
+python -m unittest discover -s python/tests -v
+# Reveal intersections when converting a robot for a smoke test:
+ttr-mujoco test examples/14_iron_man_mark_43/robot.sim.urdf --self-collision
+```
+
+The enclosure example uses **synthetic dimensions**, not a vendor-verified PCB. Replace
+them with your measured board envelope, mounting-hole coordinates, clearance and material
+density. The enclosure is exported separately; attaching it to the robot, including hardware
+mass and checking cable/connector/thermal clearance remain explicit engineering steps.
+
+See [the fidelity audit and remaining design work](docs/PHYSICAL_FIDELITY.md).
+
 ## Roadmap
 
 - [x] Natural-language robot generation
@@ -444,7 +459,7 @@ npm run api           # serve web + API on :8787
 - [x] Natural-language modification + version history + diff
 - [x] ROS 2 package export (+ optional ros2_control)
 - [x] CLI + HTTP API + demo mode
-- [x] Bill of Materials sized to a cost budget (buildable in real life)
+- [x] Preliminary Bill of Materials sized to a cost budget (hardware integration unverified)
 - [x] Parametric CAD (OpenSCAD) parts + assembly
 - [x] Downloadable training suite: RL (PPO/SAC), imitation learning, evaluation — verified end to end
 - [x] MoveIt 2 configuration + Gazebo world export
@@ -452,7 +467,7 @@ npm run api           # serve web + API on :8787
 - [x] Physics validation of all examples (PyBullet)
 - [x] Shareable robot links + persistence + Dockerfile
 - [x] MuJoCo layer: convert, simulation test battery, headless render, PPO training
-- [x] Sci-fi builds with real mechanisms: a wearable Iron Man Mark 43 in procedural polygon armour (97 mesh parts, 49 hinged, motorised helmet) with a simulated donning sequence, WALL-E, EVA, Baymax — all pass the MuJoCo battery
+- [x] Sci-fi builds with real mechanisms: a wearable Iron Man Mark 43 in procedural polygon armour (97 mesh parts, 49 hinged, motorised helmet) with a simulated donning sequence, WALL-E, EVA, Baymax — concept examples, not hardware-qualified designs
 - [x] Procedural polygon mesh parts (`@ttr/mesh`): recipes in the robot JSON, STL on demand, streamed to the viewer, shipped in ROS 2 / training / CAD exports
 
 Future (toward a free hosted service where you describe, download and train a robot):

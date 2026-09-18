@@ -45,6 +45,7 @@ export function joint(name: string, type: JointType, parent: string, child: stri
       velocity: opts.velocity ?? base.velocity,
     };
   }
+  if (type === "continuous") j.limit = { effort: opts.effort ?? LIMITS.revolute.effort, velocity: opts.velocity ?? LIMITS.revolute.velocity };
   return j;
 }
 

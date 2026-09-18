@@ -1,5 +1,5 @@
 {
- "model": "<inline mjcf, 97136 chars>",
+ "model": "examples/14_iron_man_mark_43/robot.sim.urdf",
  "nbody": 148,
  "njnt": 79,
  "nu": 66,
@@ -13,22 +13,22 @@
   },
   "settle_under_gravity": {
    "pass": true,
-   "max_joint_speed": 0.31,
+   "max_joint_speed": 18.45,
    "base_drop_m": 0.005,
    "upright": 1.0
   },
   "hold_pose": {
    "pass": true,
-   "max_joint_error_rad": 0.001
+   "max_joint_error_rad": 0.024
   },
   "actuator_sweep": {
-   "pass": true,
-   "tracked": "63/66",
-   "worst_error": 1.435
+   "pass": false,
+   "tracked": "62/66",
+   "worst_error": 1.628
   },
   "disturbance_recovery": {
    "pass": true,
-   "upright_after": 0.979,
+   "upright_after": 0.99,
    "note": "upright>0.5 means it did not fall"
   },
   "wearer_support": {
@@ -38,19 +38,29 @@
     "wearer_head_z_end": 1.518,
     "head_drop_m": 0.005,
     "finite": true,
-    "max_actuator_torque_Nm": 17.5
+    "max_actuator_torque_Nm": 35.862
    },
    "unpowered": {
     "wearer_head_z_start": 1.523,
-    "wearer_head_z_end": 0.668,
-    "head_drop_m": 0.855,
+    "wearer_head_z_end": 0.208,
+    "head_drop_m": 1.315,
     "finite": true,
     "max_actuator_torque_Nm": 0.0
    },
+   "validation_scope": "Ideal welded mannequin with human contact disabled; not a fit or human-support qualification",
    "suit_supports_wearer": true
   }
  },
- "passed": 6,
+ "validation_scope": "simulation smoke tests, not hardware or wearable qualification",
+ "mujoco_version": "3.13.0",
+ "model_sha256": "4725b08ea960586d9a07052d674e35cd07ea4a6cf5fd4fe0cc0fe894f58674b5",
+ "limitations": [
+  "No measured motor, material, thermal or battery model",
+  "No manufacturing or human-fit validation",
+  "Robot self-collision disabled; interference is not validated"
+ ],
+ "self_collision_masks_enabled": false,
+ "passed": 5,
  "total": 6,
  "assist": {
   "powered": {
@@ -58,15 +68,16 @@
    "wearer_head_z_end": 1.518,
    "head_drop_m": 0.005,
    "finite": true,
-   "max_actuator_torque_Nm": 17.5
+   "max_actuator_torque_Nm": 35.862
   },
   "unpowered": {
    "wearer_head_z_start": 1.523,
-   "wearer_head_z_end": 0.668,
-   "head_drop_m": 0.855,
+   "wearer_head_z_end": 0.208,
+   "head_drop_m": 1.315,
    "finite": true,
    "max_actuator_torque_Nm": 0.0
   },
+  "validation_scope": "Ideal welded mannequin with human contact disabled; not a fit or human-support qualification",
   "suit_supports_wearer": true
  }
 }

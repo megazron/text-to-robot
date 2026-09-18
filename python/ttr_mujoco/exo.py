@@ -8,6 +8,7 @@ suit powered vs unpowered with the wearer inside."""
 import xml.etree.ElementTree as ET
 import numpy as np
 import mujoco
+from .testbench import _finite
 
 # segment mass fractions and lengths as fraction of height (Winter, 2009)
 SEG = {  # name: (mass_frac, length_frac, radius_m)
@@ -116,10 +117,15 @@ def assist_test(mjcf_with_wearer: str, seconds: float = 2.5) -> dict:
             j = m.actuator_trnid[a][0]; d.ctrl[a] = d.qpos[m.jnt_qposadr[j]]
         wid = mujoco.mj_name2id(m, mujoco.mjtObj.mjOBJ_BODY, "w_head")
         z0 = float(d.xpos[wid][2])
-        for _ in range(int(seconds / m.opt.timestep)): mujoco.mj_step(m, d)
+        peak = 0.0
+        for _ in range(int(seconds / m.opt.timestep)):
+            mujoco.mj_step(m, d)
+            peak = max(peak, float(np.max(np.abs(d.actuator_force))) if m.nu else 0.0)
+            if not _finite(d): break
         z1 = float(d.xpos[wid][2])
         torques = np.abs(d.actuator_force) if m.nu else np.zeros(0)
         out[label] = {"wearer_head_z_start": round(z0, 3), "wearer_head_z_end": round(z1, 3), "head_drop_m": round(z0 - z1, 3),
-                      "finite": bool(np.all(np.isfinite(d.qpos))), "max_actuator_torque_Nm": round(float(torques.max()), 1) if m.nu else 0.0}
-    out["suit_supports_wearer"] = out["powered"]["head_drop_m"] < 0.10 and out["unpowered"]["head_drop_m"] > out["powered"]["head_drop_m"] + 0.15
+                      "finite": _finite(d), "max_actuator_torque_Nm": round(peak, 3)}
+    out["validation_scope"] = "Ideal welded mannequin with human contact disabled; not a fit or human-support qualification"
+    out["suit_supports_wearer"] = out["powered"]["finite"] and out["unpowered"]["finite"] and abs(out["powered"]["head_drop_m"]) < 0.10 and out["unpowered"]["head_drop_m"] > out["powered"]["head_drop_m"] + 0.15
     return out

@@ -1,5 +1,5 @@
 {
- "model": "<inline mjcf, 90979 chars>",
+ "model": "examples/14_iron_man_mark_43/robot.sim.urdf",
  "nbody": 133,
  "njnt": 67,
  "nu": 66,
@@ -13,25 +13,34 @@
   },
   "settle_under_gravity": {
    "pass": true,
-   "max_joint_speed": 0.85,
+   "max_joint_speed": 18.11,
    "base_drop_m": 0.005,
    "upright": 1.0
   },
   "hold_pose": {
    "pass": true,
-   "max_joint_error_rad": 0.007
+   "max_joint_error_rad": 0.028
   },
   "actuator_sweep": {
    "pass": true,
-   "tracked": "63/66",
-   "worst_error": 2.015
+   "tracked": "66/66",
+   "worst_error": 0.604
   },
   "disturbance_recovery": {
-   "pass": true,
-   "upright_after": -0.008,
+   "pass": false,
+   "upright_after": -0.007,
    "note": "upright>0.5 means it did not fall"
   }
  },
- "passed": 5,
+ "validation_scope": "simulation smoke tests, not hardware or wearable qualification",
+ "mujoco_version": "3.13.0",
+ "model_sha256": "32f28f5de9859d9405cad3f1562455c76dbbc70b2fec707b58b1299d426e7c95",
+ "limitations": [
+  "No measured motor, material, thermal or battery model",
+  "No manufacturing or human-fit validation",
+  "Robot self-collision disabled; interference is not validated"
+ ],
+ "self_collision_masks_enabled": false,
+ "passed": 4,
  "total": 5
 }
