@@ -61,11 +61,12 @@ are illustrations, not validation evidence for the corrected model.
 
 | Corrected Mark 43 checks | Result |
 |---|---|
-| Empty suit smoke battery | **4/5**; fails disturbance recovery |
-| Suit + mannequin | **5/6**, including support comparison; fails actuator sweep (64/66 track) |
+| Empty suit smoke battery | **3/5**; fails trajectory tracking and disturbance recovery |
+| Suit + mannequin | **5/6**, including support comparison; fails actuator sweep (45/66 track) |
 | Initial pose, self-collision enabled | See [clearance report](examples/14_iron_man_mark_43/clearance_report.json); both box and convex models still fail clearance |
 | Closed STL solids + mass-integral audit | **106/106** |
-| Compound convex collision, initial pose | **623 penetrating contacts**, maximum depth ≈ 22 mm; clearance fails |
+| Compound convex collision, initial pose | **409 penetrating contacts**, maximum depth ≈ 9 mm; clearance fails |
+| Sampled joint-range clearance | **595 poses checked; fails**; see [witness positions](examples/14_iron_man_mark_43/motion_clearance_report.json) |
 | Film accuracy / wearer fit / fabrication | **Unverified** |
 
 See the regenerated `mujoco_report*.json` and `clearance_report.json` in the example.

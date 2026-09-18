@@ -332,19 +332,19 @@
       "part": "left_lat_plate",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 2.143272562879723e-09,
-      "com_error_m": 1.6595103416450208e-10,
-      "inertia_relative_error": 2.384054820625965e-08,
-      "sha256": "393e83692a9abf6036b99b4a815b41394dbbbec55d386e4ddb8b5817a281092a"
+      "volume_relative_error": 1.1616598797744952e-08,
+      "com_error_m": 1.9613026133735723e-10,
+      "inertia_relative_error": 2.4567569507645685e-08,
+      "sha256": "8c2f6ece9aa19e283e79d5a921e1389adbdff88e333198b99ba7d58be6a6b73c"
     },
     {
       "part": "right_lat_plate",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 2.143272562879723e-09,
-      "com_error_m": 1.6595103416450208e-10,
-      "inertia_relative_error": 2.384054820625965e-08,
-      "sha256": "393e83692a9abf6036b99b4a815b41394dbbbec55d386e4ddb8b5817a281092a"
+      "volume_relative_error": 1.1616598797744952e-08,
+      "com_error_m": 1.9613026133735723e-10,
+      "inertia_relative_error": 2.4567569507645685e-08,
+      "sha256": "8c2f6ece9aa19e283e79d5a921e1389adbdff88e333198b99ba7d58be6a6b73c"
     },
     {
       "part": "back_shell",

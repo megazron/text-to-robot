@@ -24,16 +24,16 @@
   <material name="visor_dark"><color rgba="0.06 0.06 0.07 1"/></material>
   <link name="pelvis_frame">
     <visual>
-      <origin xyz="0 0 0.98425" rpy="0 0 0"/>
+      <origin xyz="0 0 1.02925" rpy="0 0 0"/>
       <geometry><mesh filename="package://iron_man_mark_43/meshes/pelvis_frame.stl"/></geometry>
       <material name="carbon"/>
     </visual>
     <collision>
-      <origin xyz="0 0 0.98425" rpy="0 0 0"/>
+      <origin xyz="0 0 1.02925" rpy="0 0 0"/>
       <geometry><box size="0.22 0.34 0.09"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="4.04783e-17 -4.82377e-17 0.98425" rpy="0 0 0"/>
+      <origin xyz="4.04783e-17 -4.82377e-17 1.02925" rpy="0 0 0"/>
       <mass value="3"/>
       <inertia ixx="0.041606" ixy="-1.56257e-19" ixz="8.92898e-20" iyy="0.018597" iyz="3.30651e-19" izz="0.056152"/>
     </inertial>
@@ -1016,34 +1016,34 @@
   </link>
   <link name="left_lat_plate">
     <visual>
-      <origin xyz="0 -0.18 0" rpy="0 0 0"/>
+      <origin xyz="0 -0.15 0" rpy="0 0 0"/>
       <geometry><mesh filename="package://iron_man_mark_43/meshes/left_lat_plate.stl"/></geometry>
       <material name="mk43_red"/>
     </visual>
     <collision>
-      <origin xyz="-0.021628 -0.18 0" rpy="0 0 0"/>
-      <geometry><box size="0.043257 0.345798 0.23953"/></geometry>
+      <origin xyz="-0.015776 -0.15 0" rpy="0 0 0"/>
+      <geometry><box size="0.031552 0.291187 0.17965"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.015732 -0.18 1.51710e-17" rpy="0 0 0"/>
+      <origin xyz="-0.011678 -0.15 4.07618e-17" rpy="0 0 0"/>
       <mass value="0.6"/>
-      <inertia ixx="0.008701" ixy="-2.04453e-19" ixz="1.70838e-19" iyy="0.002841" iyz="-6.72493e-7" izz="0.00602"/>
+      <inertia ixx="0.005702" ixy="1.21709e-20" ixz="1.38995e-19" iyy="0.00158" iyz="-3.33042e-7" izz="0.004201"/>
     </inertial>
   </link>
   <link name="right_lat_plate">
     <visual>
-      <origin xyz="0 0.18 0" rpy="0 0 0"/>
+      <origin xyz="0 0.15 0" rpy="0 0 0"/>
       <geometry><mesh filename="package://iron_man_mark_43/meshes/right_lat_plate.stl"/></geometry>
       <material name="mk43_red"/>
     </visual>
     <collision>
-      <origin xyz="-0.021628 0.18 0" rpy="0 0 0"/>
-      <geometry><box size="0.043257 0.345798 0.23953"/></geometry>
+      <origin xyz="-0.015776 0.15 0" rpy="0 0 0"/>
+      <geometry><box size="0.031552 0.291187 0.17965"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.015732 0.18 1.51710e-17" rpy="0 0 0"/>
+      <origin xyz="-0.011678 0.15 4.07618e-17" rpy="0 0 0"/>
       <mass value="0.6"/>
-      <inertia ixx="0.008701" ixy="-2.04453e-19" ixz="1.70838e-19" iyy="0.002841" iyz="-6.72493e-7" izz="0.00602"/>
+      <inertia ixx="0.005702" ixy="1.21709e-20" ixz="1.38995e-19" iyy="0.00158" iyz="-3.33042e-7" izz="0.004201"/>
     </inertial>
   </link>
   <link name="back_shell">
@@ -2557,7 +2557,7 @@
   <joint name="left_lat_plate_hinge" type="revolute">
     <parent link="spine_frame"/>
     <child link="left_lat_plate"/>
-    <origin xyz="-0.27 0.205 0.3024" rpy="0 0 1.570796"/>
+    <origin xyz="-0.27 0.185 0.2674" rpy="0 0 1.570796"/>
     <axis xyz="0 0 1"/>
     <limit lower="0" upper="1.2" effort="4" velocity="3"/>
     <dynamics damping="0.1" friction="0"/>
@@ -2565,7 +2565,7 @@
   <joint name="right_lat_plate_hinge" type="revolute">
     <parent link="spine_frame"/>
     <child link="right_lat_plate"/>
-    <origin xyz="-0.27 -0.205 0.3024" rpy="0 0 -1.570796"/>
+    <origin xyz="-0.27 -0.185 0.2674" rpy="0 0 -1.570796"/>
     <axis xyz="0 0 1"/>
     <limit lower="-1.2" upper="0" effort="4" velocity="3"/>
     <dynamics damping="0.1" friction="0"/>
@@ -2627,7 +2627,7 @@
   <joint name="left_pauldron_hinge" type="revolute">
     <parent link="left_shoulder_module"/>
     <child link="left_pauldron"/>
-    <origin xyz="0 -0.02 0.02" rpy="-0.45 0 0"/>
+    <origin xyz="0 0.025 0.065" rpy="-0.45 0 0"/>
     <axis xyz="1 0 0"/>
     <limit lower="-0.8" upper="0" effort="3" velocity="3"/>
     <dynamics damping="0.1" friction="0"/>
@@ -2743,7 +2743,7 @@
   <joint name="right_pauldron_hinge" type="revolute">
     <parent link="right_shoulder_module"/>
     <child link="right_pauldron"/>
-    <origin xyz="0 0.02 0.02" rpy="0.45 0 0"/>
+    <origin xyz="0 -0.025 0.065" rpy="0.45 0 0"/>
     <axis xyz="1 0 0"/>
     <limit lower="0" upper="0.8" effort="3" velocity="3"/>
     <dynamics damping="0.1" friction="0"/>

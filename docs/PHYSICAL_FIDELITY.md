@@ -19,7 +19,10 @@ missing measurements, mechanisms or physical models.
 - CAD imports use the actual per-link STL filename and apply its baked origin once.
 - A falling model fails recovery. A numerical-reset warning fails a rollout even
   when the reset state is finite. Sweep tests reset each actuator trial and require
-  every actuator to track. Hold tests compare against the commanded initial pose.
+  every actuator to track across the trajectory, using RMS error (0.15 rad for hinges,
+  0.01 m for slides). A stalled actuator cannot pass by ending a sinusoid near its target.
+  Each actuator reports its RMS/peak error and peak force. These thresholds are smoke
+  criteria, not measured hardware specifications. Hold tests compare against the commanded initial pose.
 - Wearer comparison reports peak actuator force across the rollout, not only the
   last sample. It remains an ideal welded-mannequin experiment.
 
@@ -49,8 +52,8 @@ MuJoCo mesh collision hull would fill concave shell cavities; see
 [MuJoCo collision documentation](https://mujoco.readthedocs.io/en/latest/computation/).
 The example includes `robot.convex.zip`, a source-hashed decomposition report and an
 initial-pose clearance comparison. **Both collision representations still show
-interference:** 152 box contacts (maximum depth 65 mm), or 623 compound-convex
-contacts (maximum depth 22 mm). The latter uses 2,544 convex pieces from 72 unique
+interference:** 124 box contacts (maximum depth 45 mm), or 409 compound-convex
+contacts (maximum depth 9 mm). The latter uses 2,516 convex pieces from 72 unique
 decompositions; its largest sampled surface deviation is about 7 mm. Contact counts between them are not directly comparable because
 one object pair can produce many convex-hull contact points.
 
@@ -58,8 +61,11 @@ The requested 2 mm concavity is not a certified surface tolerance. The report sa
 512 points on component hull surfaces, including internal interfaces, and measures
 distance to the source mesh. This is not the union boundary or a worst-case
 Hausdorff bound; it also does not bound missing material. Hull count caps can limit
-fidelity. Adjacent-body exclusions and the initial-pose-only audit mean the reports
-do not establish full assembly clearance or clearance through motion.
+fidelity. Adjacent-body exclusions mean the reports do not establish full assembly clearance.
+`motion_clearance_report.json` adds nine samples across each limited joint range
+(595 poses including neutral), with worst-contact witness joint positions. Every
+sampled pose still has interference. This independently moves one joint at a time;
+it does not cover simultaneous motions, space between samples, or dynamic reachability.
 
 URDF effort bounds are necessary but insufficient. They do not model motor
 torque–speed curves, continuous versus peak duty, controller bandwidth, compliance,

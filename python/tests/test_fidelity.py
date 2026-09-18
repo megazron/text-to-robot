@@ -86,6 +86,16 @@ class FidelityTests(unittest.TestCase):
         report = run_tests(xml, seconds=0.02, verbose=False)
         self.assertFalse(report["tests"]["disturbance_recovery"]["pass"])
 
+    def test_stalled_actuator_cannot_pass_at_sinusoid_endpoint(self):
+        xml = '<mujoco><option gravity="0 0 0"/><worldbody><body><joint name="stalled" range="-1 1"/><geom type="sphere" size=".1" mass="1"/></body></worldbody><actuator><position name="dead_motor" joint="stalled" kp="0" ctrlrange="-1 1"/></actuator></mujoco>'
+        report = run_tests(xml, seconds=.02, verbose=False)
+        sweep = report["tests"]["actuator_sweep"]
+        self.assertFalse(sweep["pass"])
+        motor = sweep["actuators"][0]
+        self.assertEqual(motor["actuator"], "dead_motor")
+        self.assertGreater(motor["rms_error"], .4)
+        self.assertAlmostEqual(motor["peak_actuator_force"], 0)
+
     def test_numerical_reset_is_not_a_pass(self):
         m = mujoco.MjModel.from_xml_string(self.convert())
         d = mujoco.MjData(m)

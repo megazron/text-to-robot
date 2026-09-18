@@ -69,3 +69,16 @@ Regenerate evidence with `node scripts/regen_mark43_example.ts`, then
 `python scripts/audit_mark43.py --convex` and `python scripts/check_mesh_assets.py`.
 The physics audit records failures; successful file export does not mean balance or
 hardware clearance passed. See [physical fidelity](../docs/PHYSICAL_FIDELITY.md).
+
+
+Sample joint-range interference on a prepared self-colliding MJCF:
+
+```bash
+python -m ttr_mujoco.clearance out/convex/robot.mjcf.xml --samples 9 --json out/motion-clearance.json
+```
+
+This command returns nonzero for detected interference or disabled self-collision
+masks. It records body pairs and witness joint positions. Samples move one joint at
+a time; a pass cannot certify the continuous or combined configuration space.
+Actuator smoke tests now report RMS tracking over the full command trajectory,
+using explicit 0.15 rad/0.01 m tolerances rather than final-sample coincidence.

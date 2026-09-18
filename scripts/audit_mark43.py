@@ -50,6 +50,9 @@ def main():
             scene=urdf_to_mjcf(str(path/"robot.urdf"),self_collision=True)
             (path/"robot.mjcf.xml").write_text(relativize_meshes(scene,str(path)))
             collisions["convex_meshes"]=clearance(scene)
+            from ttr_mujoco.clearance import audit
+            motion=audit(mujoco.MjModel.from_xml_string(scene))
+            (directory/"motion_clearance_report.json").write_text(json.dumps(motion,indent=2)+"\n")
             (directory/"collision_report.json").write_text(json.dumps(report,indent=2)+"\n")
             with zipfile.ZipFile(directory/"robot.convex.zip","w",compression=zipfile.ZIP_DEFLATED) as archive:
                 for file in sorted(path.rglob("*")):

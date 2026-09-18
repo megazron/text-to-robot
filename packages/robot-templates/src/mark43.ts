@@ -1,8 +1,8 @@
 // Iron Man Mark 43 (Avengers: Age of Ultron) as a wearable powered exoskeleton under
 // polygon-mesh armour. Panel map and palette follow the Mark 43's layout: red-dominant
-// with a gold faceplate, gold centre-chest trapezoid around a circular arc reactor, gold
+// with a gold faceplate, red centre-chest trapezoid around a circular arc reactor, red
 // abdominal segments, gold biceps, red gauntlets with gold hatches, red pauldrons with a
-// gold edge, gold knee caps and instep trim, red boots, back flight-stabiliser flaps.
+// gold edge, red knee caps and instep trim, red boots, back flight-stabiliser flaps.
 // Every plate is a hinged, servo-driven mesh link; closed = 0 rad, open = joint limit.
 //
 // Part frame conventions (see @ttr/mesh):  armour_plate normal = +x, width along y, height
@@ -80,17 +80,17 @@ export function ironManMark43(opts: ExosuitOptions = {}): RobotSpecification {
       pivot, [0, 0, 0], RED, 1.2, { axis: [0, 0, 1], open: sign * 1.2, effort: 6, origin: [0.03 - pivot[0], -pivot[1], 0] });
     part(`${s}_pectoral_trim`, `${s}_chest_door`, mesh("armour_plate", `${s}_pectoral_trim.stl`, { w: 0.06, h: 0.11, t: 0.004, R: 0.30, corner: 0.012, taper: 0.3 }), [0.03 - pivot[0] + 0.158, sign * 0.13 - pivot[1], 0.07], [0, 0, sign * 0.35], GOLD, 0.10);
   }
-  // gold centre trapezoid (wider at the collar) carrying the circular arc reactor; stays on the harness when the doors open
+  // red centre trapezoid (wider at the collar) carrying the circular arc reactor; stays on the harness when the doors open
   part("chest_centre", "spine_frame", mesh("armour_plate", "chest_centre.stl", { w: 0.12, h: 0.20, t: 0.006, R: 0.5, corner: 0.015, taper: -0.35 }), [0.20, 0, chestZ + 0.02], [0, 0, 0], RED, 0.35);
   part("arc_reactor_housing", "chest_centre", mesh("disc", "arc_reactor_housing.stl", { radius: 0.046, depth: 0.014, chamfer: 0.005 }), [0.004, 0, 0.02], [0, PI / 2, 0], GUN, 0.20);
   part("arc_reactor", "arc_reactor_housing", mesh("disc", "arc_reactor.stl", { radius: 0.032, depth: 0.006, chamfer: 0.002 }), [0, 0, 0.014], [0, 0, 0], GLOW, 0.05);
-  // gold abdominal segments fold with the trunk
+  // red abdominal segments fold with the trunk
   const abZ = [0.135, 0.085, 0.035], abW = [0.24, 0.22, 0.20], abX = [0.160, 0.150, 0.140];
   for (let i = 0; i < 3; i++)
     part(`ab_plate_${i + 1}`, "spine_frame", mesh("armour_plate", `ab_plate_${i + 1}.stl`, { w: abW[i], h: 0.045, t: 0.005, R: 0.20, corner: 0.012 }), [abX[i], 0, abZ[i]], [0, 0, 0], RED, 0.22, { axis: [0, 1, 0], open: 0.35, effort: 2 });
   // side plates close the gap between chest and back; hinged on their rear edge, they are the torso's donning doors
   for (const [s, sign] of SIDES)
-    part(`${s}_lat_plate`, "spine_frame", mesh("armour_plate", `${s}_lat_plate.stl`, { w: 0.36, h: 0.24, t: 0.005, R: 0.40, corner: 0.03 }), [-0.27, sign * 0.205, chestZ - 0.01], [0, 0, sign * PI / 2], RED, 0.60, { axis: [0, 0, 1], open: sign * 1.2, effort: 4, origin: [0, -sign * 0.18, 0] });
+    part(`${s}_lat_plate`, "spine_frame", mesh("armour_plate", `${s}_lat_plate.stl`, { w: 0.30, h: 0.18, t: 0.005, R: 0.40, corner: 0.025 }), [-0.27, sign * 0.185, chestZ - 0.045], [0, 0, sign * PI / 2], RED, 0.60, { axis: [0, 0, 1], open: sign * 1.2, effort: 4, origin: [0, -sign * 0.15, 0] });
   // back shell over the battery pack, with the Mark 43's flight-stabiliser flaps (hinged at their top edge)
   part("back_shell", "spine_frame", mesh("armour_plate", "back_shell.stl", { w: 0.38, h: 0.46, t: 0.006, R: 0.45, corner: 0.03 }), [-0.29, 0, chestZ - 0.02], [0, 0, PI], RED, 1.3);
   for (const [s, sign] of SIDES) {
@@ -99,7 +99,7 @@ export function ironManMark43(opts: ExosuitOptions = {}): RobotSpecification {
   }
   // pelvis: slimmer exo frame box under a red belt (front + rear) and the hip flaps
   const pelvis = spec.links.find((l) => l.name === "pelvis_frame")!;
-  pelvis.geometry = mesh("ring","pelvis_frame.stl",{outer:.17,inner:.155,height:.09},[.22/.34,1,1]); pelvis.origin = pose([0, 0, A.hipZ + 0.02]);
+  pelvis.geometry = mesh("ring","pelvis_frame.stl",{outer:.17,inner:.155,height:.09},[.22/.34,1,1]); pelvis.origin = pose([0, 0, A.hipZ + 0.065]);
   part("belt_plate", "pelvis_frame", mesh("armour_plate", "belt_plate.stl", { w: 0.42, h: 0.10, t: 0.006, R: 0.6, corner: 0.02 }), [0.14, 0, A.hipZ + 0.02], [0, 0, 0], RED, 0.7);
   part("rear_belt_plate", "pelvis_frame", mesh("armour_plate", "rear_belt_plate.stl", { w: 0.42, h: 0.10, t: 0.006, R: 0.6, corner: 0.02 }), [-0.14, 0, A.hipZ + 0.02], [0, 0, PI], RED, 0.7);
   part("codpiece", "pelvis_frame", mesh("armour_plate", "codpiece.stl", { w: 0.13, h: 0.14, t: 0.006, R: 0.15, corner: 0.03, taper: 0.4 }), [0.15, 0, A.hipZ - 0.04], [0, 0, 0], RED, 0.35, { axis: [0, 1, 0], open: 0.6, effort: 2, origin: [0, 0, -0.07] });
@@ -110,7 +110,7 @@ export function ironManMark43(opts: ExosuitOptions = {}): RobotSpecification {
   const wrap = (r: number, sign: number) => ({ outer: { a0: sign > 0 ? -1.05 : -3.67, a1: sign > 0 ? 3.67 : 1.05 }, inner: { a0: sign > 0 ? -2.62 : 1.05, a1: sign > 0 ? -1.05 : 2.62 }, seam: [r * Math.cos(1.05), -sign * r * Math.sin(1.05)] as [number, number] });
   for (const [s, sign] of SIDES) {
     // red pauldron: dome capping the shoulder module, tilted outward, lifts on an x hinge
-    part(`${s}_pauldron`, `${s}_shoulder_module`, mesh("dome", `${s}_pauldron.stl`, { radius: 0.11, height: 0.065, thick: 0.005 }), [0, -sign * 0.02, 0.02], [-sign * 0.45, 0, 0], RED, 0.65, { axis: [1, 0, 0], open: -sign * 0.8, effort: 3 });
+    part(`${s}_pauldron`, `${s}_shoulder_module`, mesh("dome", `${s}_pauldron.stl`, { radius: 0.11, height: 0.065, thick: 0.005 }), [0, sign * 0.025, 0.065], [-sign * 0.45, 0, 0], RED, 0.65, { axis: [1, 0, 0], open: -sign * 0.8, effort: 3 });
     part(`${s}_pauldron_edge`, `${s}_pauldron`, mesh("armour_plate", `${s}_pauldron_edge.stl`, { w: 0.09, h: 0.03, t: 0.004, R: 0.13, corner: 0.008 }), [0.107, 0, 0.024], [0, 0, 0], GOLD, 0.06);
     // bicep: gold outer sleeve + gold inner clamshell
     const ua = 0.075, uw = wrap(ua, sign), uz = -A.uarm * 0.12, uy = -sign * 0.05;

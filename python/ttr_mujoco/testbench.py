@@ -86,21 +86,37 @@ def run_tests(path_or_xml: str, floating=None, seconds: float = 2.0, verbose: bo
 
     # 4. actuator sweep: every actuator through 60% of its range; must track and stay finite
     mujoco.mj_resetData(m, d); base = _hold_targets(m, d)
-    worst = 0.0; tracked = 0
+    worst = 0.0; tracked = 0; actuator_results = []
     sweep_finite = True
     for a in range(m.nu):
         mujoco.mj_resetData(m, d)
         lo, hi = (m.actuator_ctrlrange[a] if m.actuator_ctrllimited[a] else (-1.0, 1.0))
         mid, span = (lo + hi) / 2, (hi - lo) / 2 * 0.6
         j = m.actuator_trnid[a][0]; qi = m.jnt_qposadr[j]
+        errors = []; peak_force = 0.0
         for k in range(int(1.0 / m.opt.timestep)):
             d.ctrl[:] = base; d.ctrl[a] = mid + span * np.sin(2 * np.pi * k * m.opt.timestep)
             mujoco.mj_step(m, d)
+            errors.append(float(d.qpos[qi] - d.ctrl[a]))
+            peak_force = max(peak_force, abs(float(d.actuator_force[a])))
             if not _finite(d):
                 sweep_finite = False
                 break
-        e = abs(float(d.qpos[qi] - d.ctrl[a])); worst = max(worst, e); tracked += e < max(0.5, span)
-    rec("actuator_sweep", sweep_finite and _finite(d) and tracked == m.nu, tracked=f"{tracked}/{m.nu}", worst_error=round(worst, 3))
+        # A stalled actuator can end a sinusoid at its target. Measure the whole
+        # trajectory, not only that final sample. These are explicit smoke-test
+        # tolerances, not hardware accuracy specifications.
+        rms = float(np.sqrt(np.mean(np.square(errors))))
+        peak = max(abs(e) for e in errors); worst = max(worst, peak)
+        linear = m.jnt_type[j] == mujoco.mjtJoint.mjJNT_SLIDE
+        tolerance = .01 if linear else .15
+        ok = _finite(d) and rms <= tolerance; tracked += ok
+        actuator_results.append({"actuator": m.actuator(a).name, "joint": m.joint(j).name,
+            "pass": bool(ok), "rms_error": round(rms, 6), "peak_error": round(peak, 6),
+            "error_unit": "m" if linear else "rad", "rms_tolerance": tolerance,
+            "peak_actuator_force": round(peak_force, 6), "force_unit": "N" if linear else "N m"})
+    rec("actuator_sweep", sweep_finite and _finite(d) and tracked == m.nu, tracked=f"{tracked}/{m.nu}",
+        worst_error=round(worst, 3))
+    R["tests"]["actuator_sweep"]["actuators"] = actuator_results
 
     # 5. disturbance (floating only): shove the base, see if it recovers/stays finite
     if R["floating"]:
