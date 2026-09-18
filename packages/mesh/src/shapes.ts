@@ -1,5 +1,5 @@
 // Higher-level modelling helpers on top of core.ts.
-import { type Mesh, type V3, loft, shell, subdivide, merge, translate, rotate, revolve, add, sub, mul, norm, cross, empty, orient } from "./core.ts";
+import { type Mesh, type V3, loft, shell, subdivide, merge, translate, rotate, revolve, add, sub, mul, norm, cross, empty, orient, flip } from "./core.ts";
 
 /** Resample a polyline (open or closed) to exactly n points by arc length. */
 export function resample(pts: V3[], n: number, closed = false): V3[] {
@@ -98,7 +98,7 @@ export function insetOutline(poly: [number, number][], k: number): [number, numb
   for (let i = 0; i < n; i++) {
     const p = poly[(i - 1 + n) % n], c = poly[i], q = poly[(i + 1) % n];
     const e1 = [c[0] - p[0], c[1] - p[1]], e2 = [q[0] - c[0], q[1] - c[1]];
-    const n1 = norm2([e1[1], -e1[0]]), n2 = norm2([e2[1], -e2[0]]);   // right-hand normals (inward for CCW)
+    const n1 = norm2([-e1[1], e1[0]]), n2 = norm2([-e2[1], e2[0]]);   // left-hand normals point inward for CCW
     const nn = norm2([n1[0] + n2[0], n1[1] + n2[1]]); const cosHalf = Math.max(0.3, nn[0] * n1[0] + nn[1] * n1[1]);
     out.push([c[0] + (nn[0] * k) / cosHalf, c[1] + (nn[1] * k) / cosHalf]);
   }
@@ -116,7 +116,7 @@ export function limbShell(length: number, rTop: number, rBottom: number, opts: {
     const arc = superArc(r, r, z, a0, full ? a1 - (a1 - a0) / n : a1, n, e); sections.push(arc);
   }
   const surf = loft(sections, { closed: full }); const s = opts.smooth ? subdivide(surf, opts.smooth) : surf;
-  return shell(s, thick);
+  return shell(flip(s), thick);
 }
 
 /** Dome cap (revolved) -- pauldrons, knee caps, ear pods. */
@@ -124,13 +124,19 @@ export function dome(radius: number, height: number, segments = 28, rings = 6, r
   const profile: [number, number][] = [];
   for (let i = 0; i <= rings; i++) { const t = i / rings; const a = (Math.PI / 2) * (1 - t); profile.push([radius * Math.cos(a) * 1.0, height * Math.sin(a)]); }
   const outer = revolve(profile, segments, 2 * Math.PI, false);
-  return shell(outer, rimThick);
+  return shell(flip(outer), rimThick);
 }
 
 /** Disc with chamfer (ear pod, repulsor lens), axis Z, centred at origin. */
 export function disc(radius: number, depth: number, chamfer = 0.003, segments = 32): Mesh {
   const prof: [number, number][] = [[0, depth], [radius - chamfer, depth], [radius, depth - chamfer], [radius, 0], [0, 0]];
   return revolve(prof, segments, 2 * Math.PI, true);
+}
+
+/** Hollow annular sleeve. Unlike a solid cylinder, it leaves room for hardware or a limb. */
+export function ring(outer: number, inner: number, height: number, segments=48): Mesh {
+  if (!(outer>inner && inner>0 && height>0)) throw new Error("ring requires outer > inner > 0 and positive height");
+  return revolve([[inner,-height/2],[outer,-height/2],[outer,height/2],[inner,height/2],[inner,-height/2]],segments,2*Math.PI,false);
 }
 
 export { merge, translate, rotate, empty };

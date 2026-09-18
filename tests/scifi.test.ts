@@ -41,7 +41,8 @@ test("shipped MuJoCo reports count their actual outcomes without requiring ficti
     assert.ok(rep.floating, `${ex} should simulate with a floating base`);
   }
   const mark = JSON.parse(readFileSync("examples/14_iron_man_mark_43/mujoco_report.json", "utf8"));
-  assert.equal(mark.tests.disturbance_recovery.pass, false, "falling must not be labelled recovery");
+  if(mark.tests.disturbance_recovery.pass)
+    assert.ok(mark.tests.disturbance_recovery.upright_after>.5,"falling must not be labelled recovery");
   assert.ok(mark.limitations.some((s: string) => /self-collision/i.test(s)));
 });
 

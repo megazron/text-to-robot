@@ -29,14 +29,16 @@ Text-to-speech turns words into audio. **Text-to-Robot turns words into a robot*
 > *"Build me a movie-accurate wearable Iron Man Mark 43 suit from Age of Ultron with all the small polygon armour plates that open and close, repulsors, a HUD and an IMU. Budget $60000"*
 
 The current Mark 43 is a **procedural powered-exoskeleton concept**, not a film-accurate
-or fabrication-ready suit. It includes a 17-joint frame, 97 polygon armour meshes,
-49 armour hinges and a passive mannequin. Geometry was authored from memory, without
+or fabrication-ready suit. It includes a 17-joint frame, 106 closed mesh solids (97 armour parts and 9 hollow frame/cuff parts),
+49 armour hinges and a passive mannequin. Geometry is procedural, with palette/proportion corrections against a commercial reference, without
 prop scans, measured wearer geometry or validated component interfaces.
 
 **Fidelity corrections:** exported mesh centres of mass and rotated collision offsets
 are now preserved; MuJoCo actuators use each URDF joint's effort limit, not a shared
 whole-robot force allowance. Root/full inertia tensors retain their orientation. A fallen
-robot now fails disturbance recovery. Regenerated results are recorded below.
+robot now fails disturbance recovery. Regenerated results are recorded below. Meshes now use closed-solid volume integrals for mass and inertia, hollow cuffs, and actual faceplate eye apertures.
+
+![Current generated geometry, rendered in MuJoCo](docs/img/mark43_geometry_review.png)
 
 The following animations were produced with the **older modelling assumptions** and
 are illustrations, not validation evidence for the corrected model.
@@ -60,13 +62,16 @@ are illustrations, not validation evidence for the corrected model.
 | Corrected Mark 43 checks | Result |
 |---|---|
 | Empty suit smoke battery | **4/5**; fails disturbance recovery |
-| Suit + mannequin | **5/6**, including support comparison; fails actuator sweep (62/66 track) |
-| Initial pose, self-collision enabled | **479 penetrating proxy contacts**, maximum depth ≈ 93 mm |
+| Suit + mannequin | **5/6**, including support comparison; fails actuator sweep (64/66 track) |
+| Initial pose, self-collision enabled | See [clearance report](examples/14_iron_man_mark_43/clearance_report.json); both box and convex models still fail clearance |
+| Closed STL solids + mass-integral audit | **106/106** |
+| Compound convex collision, initial pose | **623 penetrating contacts**, maximum depth ≈ 22 mm; clearance fails |
 | Film accuracy / wearer fit / fabrication | **Unverified** |
 
 See the regenerated `mujoco_report*.json` and `clearance_report.json` in the example.
-The collision report checks boxes, which can overestimate shell interference. It does
-not validate non-convex shell clearance or contact with a human. The mannequin uses
+The collision report compares boxes with decomposed convex solids. Download the portable
+[convex collision model](examples/14_iron_man_mark_43/robot.convex.zip) for MuJoCo.
+This initial-pose audit does not validate motion paths or contact with a human. The mannequin uses
 ideal weld constraints and disabled human contact, not a validated strap/tissue model.
 
 **Can it be built?** Not from these files alone. The BOM is a preliminary selection,
@@ -75,13 +80,12 @@ actuator mounting and transmissions, bearings, tolerances, cable paths, thermal/
 limits, structural verification, human joint alignment, emergency release and prototype
 measurements. A successful simulation rollout does not establish any of these.
 
-**Honest notes.** The panel map and palette follow the Mark 43's layout from memory of the film and
-the commercial helmet kits, not from scanned prop data — the shapes are procedural (lofted
+**Honest notes.** The panel map and palette were compared with [Hot Toys reference photographs](https://www.sideshow.com/collectibles/marvel-iron-man-mark-xliii-hot-toys-902314), not scanned prop data — the shapes are procedural (lofted
 superellipse sections, plates wrapped on cylinders) rather than the hand-sculpted compound surfaces
 of a screen-used suit, and the exoskeleton frame is visible between plates on purpose: this is a
 wearable machine, not a costume. Everything is in `examples/14_iron_man_mark_43/`: prompt,
 `robot.json`, `robot.urdf` (ROS `package://` mesh paths), `robot.sim.urdf` (relative paths for
-MuJoCo/PyBullet), the 97 binary STLs in `meshes/`, both MJCFs (suit, and suit + wearer), BOM,
+MuJoCo/PyBullet), the 106 binary STLs in `meshes/`, both MJCFs (suit, and suit + wearer), BOM,
 `mujoco_report.json` and `mujoco_report_wearer.json`.
 
 ### The polygon mesh engine
@@ -94,9 +98,11 @@ cylinder with bevelled rims and grid-filled faces), tapered limb shells, domes, 
 helmet built from a sampled face profile. Every part is a **recipe** — a generator name plus
 parameters — stored in the robot JSON, so the API, the CLI, the exporters and the CAD layer all
 rebuild the identical STL on demand and the browser viewer streams them from `/api/robots/:id/mesh/`.
-Mass properties come from the surface (thin-shell) integral, which stays positive-definite for open
-shells; collision uses each part's bounding box so any physics engine loads it cleanly; winding is
-made consistent and outward across every part so renderers that cull back faces show the front.
+Mass properties use exact tetrahedral volume integrals of consistently wound, closed solids.
+Open/nonmanifold meshes are rejected. An independent trimesh audit checks all 106 Mark 43
+STLs against their exported volume, centre of mass and full inertia tensor. Default collision
+uses boxes; the optional Python `ttr-collision` tool exports compound convex geometry.
+CAD tessellations can also be embedded as indexed meshes in the same JSON/export pipeline.
 
 ## Free & self-hostable
 
@@ -435,7 +441,7 @@ mass properties. It validates solid topology and interference with a supplied bo
 CadQuery supports [solid STEP and mesh STL exports](https://cadquery.readthedocs.io/en/latest/importexport.html).
 
 ```bash
-pip install -e './python[cad]'
+pip install -e './python[cad,geometry]'
 ttr-enclosure python/ttr_cad/example_enclosure.json --out out/electronics_bay
 python -m unittest discover -s python/tests -v
 # Reveal intersections when converting a robot for a smoke test:
@@ -444,8 +450,20 @@ ttr-mujoco test examples/14_iron_man_mark_43/robot.sim.urdf --self-collision
 
 The enclosure example uses **synthetic dimensions**, not a vendor-verified PCB. Replace
 them with your measured board envelope, mounting-hole coordinates, clearance and material
-density. The enclosure is exported separately; attaching it to the robot, including hardware
-mass and checking cable/connector/thermal clearance remain explicit engineering steps.
+density. `ttr-attach-enclosure` adds the CAD base/lid and measured electronics mass to
+a chosen robot link at an explicit mounting transform. Use **Import JSON** in the browser
+to view the updated assembly and download its URDF/CAD. Fasteners, mount strength and
+cable/connector/thermal clearance still require engineering.
+
+```bash
+ttr-attach-enclosure examples/14_iron_man_mark_43/robot.json \
+  python/ttr_cad/example_enclosure.json --parent backpack \
+  --xyz -0.3 0 0.2 --rpy 0 -1.5707963268 0 \
+  --electronics-mass-kg 0.045 --out out/attached
+# Above dimensions/mass/pose are illustrative, not a verified installation.
+ttr-collision examples/14_iron_man_mark_43/robot.sim.urdf --out out/convex
+ttr-mujoco test out/convex/robot.urdf --self-collision
+```
 
 See [the fidelity audit and remaining design work](docs/PHYSICAL_FIDELITY.md).
 

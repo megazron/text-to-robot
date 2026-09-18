@@ -4,7 +4,7 @@
 import type { RobotSpecification, Geometry, Link } from "@ttr/robot-schema";
 import { safeName } from "@ttr/robot-schema";
 import { forwardKinematics, poseToMat, multiply, type Mat4 } from "@ttr/kinematics";
-import { buildPart } from "@ttr/mesh";
+import { buildPart, orient } from "@ttr/mesh";
 
 type V3 = [number, number, number];
 type Tri = [V3, V3, V3];
@@ -23,15 +23,17 @@ function boxTris(sx: number, sy: number, sz: number): Tri[] {
   for (const [a, b, c, d] of F) { out.push([P[a], P[b], P[c]]); out.push([P[a], P[c], P[d]]); }
   return out;
 }
-function cylTris(r: number, h: number, n = 32): Tri[] {
+function cylTris(r: number, h: number, n = 32, caps = true): Tri[] {
   const out: Tri[] = []; const z0 = -h / 2, z1 = h / 2;
   for (let i = 0; i < n; i++) {
     const a0 = (2 * Math.PI * i) / n, a1 = (2 * Math.PI * (i + 1)) / n;
     const p0: V3 = [r * Math.cos(a0), r * Math.sin(a0), z0], p1: V3 = [r * Math.cos(a1), r * Math.sin(a1), z0];
     const q0: V3 = [p0[0], p0[1], z1], q1: V3 = [p1[0], p1[1], z1];
     out.push([p0, p1, q1], [p0, q1, q0]);            // side
-    out.push([[0, 0, z0], p1, p0]);                  // bottom cap
-    out.push([[0, 0, z1], q0, q1]);                  // top cap
+    if (caps) {
+      out.push([[0, 0, z0], p1, p0]);
+      out.push([[0, 0, z1], q0, q1]);
+    }
   }
   return out;
 }
@@ -48,15 +50,19 @@ function sphereTris(r: number, seg = 24, rings = 12, zOff = 0, phiStart = 0, phi
   return out;
 }
 function capsuleTris(r: number, h: number): Tri[] {
-  return [...cylTris(r, h), ...sphereTris(r, 24, 6, h / 2, 0, Math.PI / 2), ...sphereTris(r, 24, 6, -h / 2, Math.PI / 2, Math.PI)];
+  return [...cylTris(r, h, 24, false), ...sphereTris(r, 24, 6, h / 2, 0, Math.PI / 2), ...sphereTris(r, 24, 6, -h / 2, Math.PI / 2, Math.PI)];
+}
+function cleanTriangles(triangles: Tri[]): Tri[] {
+  const m=orient({v:triangles.flat(),f:triangles.map((_,i)=>[3*i,3*i+1,3*i+2])});
+  return m.f.map((f)=>f.map((i)=>m.v[i]) as Tri);
 }
 export function geometryTris(g: Geometry): Tri[] {
   switch (g.type) {
     case "mesh": { const m = buildPart(g); return m.f.map(([a, b, c]) => [m.v[a], m.v[b], m.v[c]] as Tri); }
     case "box": return boxTris(g.size[0], g.size[1], g.size[2]);
     case "cylinder": return cylTris(g.radius, g.length);
-    case "sphere": return sphereTris(g.radius);
-    case "capsule": return capsuleTris(g.radius, g.length);
+    case "sphere": return cleanTriangles(sphereTris(g.radius));
+    case "capsule": return cleanTriangles(capsuleTris(g.radius, g.length));
   }
 }
 

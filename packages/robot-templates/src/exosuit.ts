@@ -11,14 +11,18 @@
 import type { RobotSpecification, Sensor } from "@ttr/robot-schema";
 import { emptySpec, pose } from "@ttr/robot-schema";
 import { box, cyl, sph, link, joint, DEFAULT_MATERIALS } from "./builder.ts";
+import { meshGeometry } from "@ttr/mesh";
 
-export interface ExosuitOptions { name?: string; height_m?: number; styled?: boolean; prompt?: string; }
+export interface ExosuitOptions { name?: string; height_m?: number; styled?: boolean; prompt?: string; hip_half_width_m?: number; shoulder_half_width_m?: number; arm_abduction_rad?: number; }
 
 /** adult anthropometric landmarks for a given stature (Winter). metres; Z up, X forward, Y left */
-export function anthropometrics(H = 1.75) {
+export function anthropometrics(H = 1.75, opts: ExosuitOptions = {}) {
+  if (![H,opts.hip_half_width_m ?? .17,opts.shoulder_half_width_m ?? .235].every(v=>Number.isFinite(v)&&v>0))
+    throw new Error("Stature and actuator half-spacings must be finite positive metres");
   const ankleZ = 0.045 * H / 1.75 + 0.06, shank = 0.246 * H, thigh = 0.245 * H;
   const kneeZ = ankleZ + shank, hipZ = kneeZ + thigh, shoulderZ = hipZ + 0.288 * H, headZ = H - 0.065;
-  return { H, ankleZ, shank, thigh, kneeZ, hipZ, shoulderZ, headZ, uarm: 0.186 * H, farm: 0.146 * H, hipY: 0.13, shY: 0.235 };
+  return { H, ankleZ, shank, thigh, kneeZ, hipZ, shoulderZ, headZ, uarm: 0.186 * H, farm: 0.146 * H,
+    hipY: opts.hip_half_width_m ?? 0.17, shY: opts.shoulder_half_width_m ?? 0.235 };
 }
 
 export function wearableExosuit(opts: ExosuitOptions = {}): RobotSpecification {
@@ -35,11 +39,14 @@ export function wearableExosuit(opts: ExosuitOptions = {}): RobotSpecification {
   const ankleZ = 0.045 * H / 1.75 + 0.06, shank = 0.246 * H, thigh = 0.245 * H;
   const kneeZ = ankleZ + shank, hipZ = kneeZ + thigh, shoulderZ = hipZ + 0.288 * H, headZ = H - 0.065;
   const uarm = 0.186 * H, farm = 0.146 * H;
-  const hipY = 0.13, shY = 0.235;          // strut lines lie OUTSIDE the limbs
+  const {hipY,shY}=anthropometrics(H,opts);
+  const armAbduction=opts.arm_abduction_rad ?? .45;
+  if(!Number.isFinite(armAbduction)||armAbduction<0||armAbduction>Math.PI/2)throw new Error("Neutral arm abduction must be between 0 and pi/2 radians");
   const add = (s: Sensor) => spec.sensors.push(s);
+  const cuff=(name:string,radius:number,height:number)=>meshGeometry("ring",`${name}.stl`,{outer:radius,inner:radius-.006,height});
 
   // ---- trunk frame ----
-  spec.links.push(link("pelvis_frame", box(0.30, 0.38, 0.10), { mass: 3.0, material: "carbon", role: "base", origin: pose([0, 0, hipZ + 0.02]) }));
+  spec.links.push(link("pelvis_frame", meshGeometry("ring","pelvis_frame.stl",{outer:.19,inner:.175,height:.10},[.30/.38,1,1]), { mass: 3.0, material: "carbon", role: "base", origin: pose([0, 0, hipZ + 0.02]) }));
   spec.links.push(link("spine_frame", box(0.05, 0.08, shoulderZ - hipZ), { mass: 2.2, material: "carbon", role: "link", origin: pose([-0.11, 0, (shoulderZ - hipZ) / 2]) }));
   spec.joints.push(joint("trunk_flex", "revolute", "pelvis_frame", "spine_frame", { origin: pose([0, 0, hipZ]), axis: [0, 1, 0], lower: -0.35, upper: 0.5, effort: 120, velocity: 2 }));
   spec.links.push(link("backpack", box(0.16, 0.32, 0.42), { mass: 9.0, material: "carbon", role: "link", origin: pose([-0.175, 0, (shoulderZ - hipZ) * 0.55]) }));
@@ -62,10 +69,10 @@ export function wearableExosuit(opts: ExosuitOptions = {}): RobotSpecification {
     const y = s * hipY;
     // hip: abduction (X) then flexion (Y); actuator module at the hip
     spec.links.push(link(`${side}_hip_module`, cyl(0.065, 0.09), { mass: 2.4, material: pod, role: "link", origin: pose([0, s * 0.045, 0], [Math.PI / 2, 0, 0]) }));
-    spec.joints.push(joint(`${side}_hip_abduction`, "revolute", "pelvis_frame", `${side}_hip_module`, { origin: pose([0, y, hipZ]), axis: [1, 0, 0], lower: -0.3, upper: 0.5, effort: 120, velocity: 3 }));
+    spec.joints.push(joint(`${side}_hip_abduction`, "revolute", "pelvis_frame", `${side}_hip_module`, { origin: pose([0, y, hipZ]), axis: [s, 0, 0], lower: -0.3, upper: 0.5, effort: 120, velocity: 3 }));
     spec.links.push(link(`${side}_thigh_strut`, box(0.055, 0.04, thigh), { mass: 1.4, material: "carbon", role: "link", origin: pose([0, 0, -thigh / 2]) }));
     spec.joints.push(joint(`${side}_hip_flexion`, "revolute", `${side}_hip_module`, `${side}_thigh_strut`, { origin: pose(), axis: [0, 1, 0], lower: -0.5, upper: 2.0, effort: 150, velocity: 4 }));
-    spec.links.push(link(`${side}_thigh_cuff`, cyl(0.105, 0.07), { mass: 0.45, material: "strap", role: "link", origin: pose() }));
+    spec.links.push(link(`${side}_thigh_cuff`, cuff(`${side}_thigh_cuff`,0.090,0.07), { mass: 0.45, material: "strap", role: "link", origin: pose() }));
     spec.joints.push(joint(`${side}_thigh_cuff_mount`, "fixed", `${side}_thigh_strut`, `${side}_thigh_cuff`, { origin: pose([0, -s * 0.045, -thigh * 0.55]) }));
     if (styled) { spec.links.push(link(`${side}_thigh_plate`, box(0.03, 0.14, thigh * 0.6), { mass: 0.6, material: plate, role: "link", origin: pose() }));
       spec.joints.push(joint(`${side}_thigh_plate_mount`, "fixed", `${side}_thigh_strut`, `${side}_thigh_plate`, { origin: pose([0.10, -s * 0.045, -thigh * 0.5]) })); }
@@ -74,7 +81,7 @@ export function wearableExosuit(opts: ExosuitOptions = {}): RobotSpecification {
     spec.joints.push(joint(`${side}_knee_module_mount`, "fixed", `${side}_thigh_strut`, `${side}_knee_module`, { origin: pose([0, 0, -thigh]) }));
     spec.links.push(link(`${side}_shank_strut`, box(0.05, 0.035, shank), { mass: 1.1, material: "carbon", role: "link", origin: pose([0, 0, -shank / 2]) }));
     spec.joints.push(joint(`${side}_knee_flexion`, "revolute", `${side}_knee_module`, `${side}_shank_strut`, { origin: pose(), axis: [0, 1, 0], lower: -2.2, upper: 0.05, effort: 150, velocity: 5 }));
-    spec.links.push(link(`${side}_shank_cuff`, cyl(0.085, 0.07), { mass: 0.4, material: "strap", role: "link", origin: pose() }));
+    spec.links.push(link(`${side}_shank_cuff`, cuff(`${side}_shank_cuff`,0.073,0.07), { mass: 0.4, material: "strap", role: "link", origin: pose() }));
     spec.joints.push(joint(`${side}_shank_cuff_mount`, "fixed", `${side}_shank_strut`, `${side}_shank_cuff`, { origin: pose([0, -s * 0.045, -shank * 0.5]) }));
     // ankle module + boot with insole force sensor
     spec.links.push(link(`${side}_ankle_module`, cyl(0.05, 0.07), { mass: 1.5, material: pod, role: "link", origin: pose([0, s * 0.035, 0], [Math.PI / 2, 0, 0]) }));
@@ -90,10 +97,10 @@ export function wearableExosuit(opts: ExosuitOptions = {}): RobotSpecification {
   for (const [side, s] of [["left", 1], ["right", -1]] as const) {
     const y = s * shY;
     spec.links.push(link(`${side}_shoulder_module`, cyl(0.055, 0.08), { mass: 1.6, material: pod, role: "link", origin: pose([0, s * 0.04, 0], [Math.PI / 2, 0, 0]) }));
-    spec.joints.push(joint(`${side}_shoulder_abduction`, "revolute", "shoulder_yoke", `${side}_shoulder_module`, { origin: pose([0, y, 0]), axis: [1, 0, 0], lower: -0.3, upper: 2.6, effort: 60, velocity: 3 }));
+    spec.joints.push(joint(`${side}_shoulder_abduction`, "revolute", "shoulder_yoke", `${side}_shoulder_module`, { origin: pose([0, y, 0],[s*armAbduction,0,0]), axis: [s, 0, 0], lower: -0.3-armAbduction, upper: 2.6-armAbduction, effort: 60, velocity: 3 }));
     spec.links.push(link(`${side}_upper_arm_strut`, box(0.04, 0.035, uarm), { mass: 0.8, material: "carbon", role: "upper_arm", origin: pose([0, 0, -uarm / 2]) }));
     spec.joints.push(joint(`${side}_shoulder_flexion`, "revolute", `${side}_shoulder_module`, `${side}_upper_arm_strut`, { origin: pose(), axis: [0, 1, 0], lower: -1.0, upper: 3.0, effort: 60, velocity: 3 }));
-    spec.links.push(link(`${side}_upper_arm_cuff`, cyl(0.06, 0.06), { mass: 0.3, material: "strap", role: "link", origin: pose() }));
+    spec.links.push(link(`${side}_upper_arm_cuff`, cuff(`${side}_upper_arm_cuff`,0.06,0.06), { mass: 0.3, material: "strap", role: "link", origin: pose() }));
     spec.joints.push(joint(`${side}_upper_arm_cuff_mount`, "fixed", `${side}_upper_arm_strut`, `${side}_upper_arm_cuff`, { origin: pose([0, -s * 0.05, -uarm * 0.55]) }));
     if (styled) { spec.links.push(link(`${side}_shoulder_plate`, box(0.14, 0.06, 0.16), { mass: 0.5, material: pod, role: "link", origin: pose() }));
       spec.joints.push(joint(`${side}_shoulder_plate_mount`, "fixed", `${side}_shoulder_module`, `${side}_shoulder_plate`, { origin: pose([0, s * 0.05, 0.04]) })); }
@@ -101,7 +108,7 @@ export function wearableExosuit(opts: ExosuitOptions = {}): RobotSpecification {
     spec.joints.push(joint(`${side}_elbow_module_mount`, "fixed", `${side}_upper_arm_strut`, `${side}_elbow_module`, { origin: pose([0, 0, -uarm]) }));
     spec.links.push(link(`${side}_forearm_strut`, box(0.035, 0.03, farm), { mass: 0.6, material: "carbon", role: "forearm", origin: pose([0, 0, -farm / 2]) }));
     spec.joints.push(joint(`${side}_elbow_flexion`, "revolute", `${side}_elbow_module`, `${side}_forearm_strut`, { origin: pose(), axis: [0, 1, 0], lower: -2.4, upper: 0.05, effort: 40, velocity: 4 }));
-    spec.links.push(link(`${side}_forearm_cuff`, cyl(0.05, 0.06), { mass: 0.25, material: "strap", role: "link", origin: pose() }));
+    spec.links.push(link(`${side}_forearm_cuff`, cuff(`${side}_forearm_cuff`,0.05,0.06), { mass: 0.25, material: "strap", role: "link", origin: pose() }));
     spec.joints.push(joint(`${side}_forearm_cuff_mount`, "fixed", `${side}_forearm_strut`, `${side}_forearm_cuff`, { origin: pose([0, -s * 0.045, -farm * 0.55]) }));
     spec.links.push(link(`${side}_hand`, box(0.10, 0.07, 0.03), { mass: 0.35, material: plate, role: "gripper", origin: pose([0.02, -s * 0.045, -0.04]) }));
     spec.joints.push(joint(`${side}_wrist_flexion`, "revolute", `${side}_forearm_strut`, `${side}_hand`, { origin: pose([0, 0, -farm]), axis: [1, 0, 0], lower: -0.8, upper: 0.8, effort: 15, velocity: 4 }));
@@ -109,5 +116,6 @@ export function wearableExosuit(opts: ExosuitOptions = {}): RobotSpecification {
       spec.joints.push(joint(`${side}_palm_repulsor_mount`, "fixed", `${side}_hand`, `${side}_palm_repulsor`, { origin: pose([0.02, -s * 0.045, -0.06]) })); }
   }
   spec.metadata.notes.push(`Wearable powered exoskeleton for a ${H} m adult: 17 actuated joints (trunk, 2x hip ab/flex, knee, ankle, 2x shoulder ab/flex, elbow, wrist), lateral struts, strap cuffs, joint actuator modules, 9 kg power/compute back pack, insole force sensors, trunk IMU, HUD camera. The wearer is added in simulation (ttr_mujoco --wearer). Thrusters are mount points, not modelled propulsion.`);
+  spec.metadata.notes.push(`Inferred neutral stance: hip actuator half-spacing ${hipY} m, shoulder half-spacing ${shY} m, arm abduction ${armAbduction} rad. These are configurable design dimensions, not measured wearer-fit validation.`);
   return spec;
 }

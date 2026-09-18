@@ -1,83 +1,84 @@
 {
- "model": "examples/14_iron_man_mark_43/robot.sim.urdf",
- "nbody": 148,
- "njnt": 79,
- "nu": 66,
- "ngeom": 288,
- "floating": true,
- "tests": {
-  "compile": {
-   "pass": true,
-   "total_mass_kg": 149.884,
-   "actuators": 66
+  "model": "robot.sim.urdf",
+  "nbody": 148,
+  "njnt": 79,
+  "nu": 66,
+  "ngeom": 288,
+  "floating": true,
+  "tests": {
+    "compile": {
+      "pass": true,
+      "total_mass_kg": 149.67,
+      "actuators": 66
+    },
+    "settle_under_gravity": {
+      "pass": true,
+      "max_joint_speed": 18.16,
+      "base_drop_m": 0.005,
+      "upright": 1.0
+    },
+    "hold_pose": {
+      "pass": true,
+      "max_joint_error_rad": 0.023
+    },
+    "actuator_sweep": {
+      "pass": false,
+      "tracked": "64/66",
+      "worst_error": 1.694
+    },
+    "disturbance_recovery": {
+      "pass": true,
+      "upright_after": 0.994,
+      "note": "upright>0.5 means it did not fall"
+    },
+    "wearer_support": {
+      "pass": true,
+      "powered": {
+        "wearer_head_z_start": 1.523,
+        "wearer_head_z_end": 1.518,
+        "head_drop_m": 0.005,
+        "finite": true,
+        "max_actuator_torque_Nm": 34.641
+      },
+      "unpowered": {
+        "wearer_head_z_start": 1.523,
+        "wearer_head_z_end": 0.444,
+        "head_drop_m": 1.079,
+        "finite": true,
+        "max_actuator_torque_Nm": 0.0
+      },
+      "validation_scope": "Ideal welded mannequin with human contact disabled; not a fit or human-support qualification",
+      "suit_supports_wearer": true
+    }
   },
-  "settle_under_gravity": {
-   "pass": true,
-   "max_joint_speed": 18.45,
-   "base_drop_m": 0.005,
-   "upright": 1.0
-  },
-  "hold_pose": {
-   "pass": true,
-   "max_joint_error_rad": 0.024
-  },
-  "actuator_sweep": {
-   "pass": false,
-   "tracked": "62/66",
-   "worst_error": 1.628
-  },
-  "disturbance_recovery": {
-   "pass": true,
-   "upright_after": 0.99,
-   "note": "upright>0.5 means it did not fall"
-  },
-  "wearer_support": {
-   "pass": true,
-   "powered": {
-    "wearer_head_z_start": 1.523,
-    "wearer_head_z_end": 1.518,
-    "head_drop_m": 0.005,
-    "finite": true,
-    "max_actuator_torque_Nm": 35.862
-   },
-   "unpowered": {
-    "wearer_head_z_start": 1.523,
-    "wearer_head_z_end": 0.208,
-    "head_drop_m": 1.315,
-    "finite": true,
-    "max_actuator_torque_Nm": 0.0
-   },
-   "validation_scope": "Ideal welded mannequin with human contact disabled; not a fit or human-support qualification",
-   "suit_supports_wearer": true
+  "validation_scope": "simulation smoke tests, not hardware or wearable qualification",
+  "mujoco_version": "3.13.0",
+  "model_sha256": "0d9e99bfab7792b3b6d97ec1614a05e2fe8701e9ac974816bd7f78ff1b035eeb",
+  "limitations": [
+    "No measured motor, material, thermal or battery model",
+    "No manufacturing or human-fit validation",
+    "Robot self-collision disabled; interference is not validated"
+  ],
+  "self_collision_masks_enabled": false,
+  "passed": 5,
+  "total": 6,
+  "wearer": true,
+  "assist": {
+    "powered": {
+      "wearer_head_z_start": 1.523,
+      "wearer_head_z_end": 1.518,
+      "head_drop_m": 0.005,
+      "finite": true,
+      "max_actuator_torque_Nm": 34.641
+    },
+    "unpowered": {
+      "wearer_head_z_start": 1.523,
+      "wearer_head_z_end": 0.444,
+      "head_drop_m": 1.079,
+      "finite": true,
+      "max_actuator_torque_Nm": 0.0
+    },
+    "validation_scope": "Ideal welded mannequin with human contact disabled; not a fit or human-support qualification",
+    "suit_supports_wearer": true
   }
- },
- "validation_scope": "simulation smoke tests, not hardware or wearable qualification",
- "mujoco_version": "3.13.0",
- "model_sha256": "4725b08ea960586d9a07052d674e35cd07ea4a6cf5fd4fe0cc0fe894f58674b5",
- "limitations": [
-  "No measured motor, material, thermal or battery model",
-  "No manufacturing or human-fit validation",
-  "Robot self-collision disabled; interference is not validated"
- ],
- "self_collision_masks_enabled": false,
- "passed": 5,
- "total": 6,
- "assist": {
-  "powered": {
-   "wearer_head_z_start": 1.523,
-   "wearer_head_z_end": 1.518,
-   "head_drop_m": 0.005,
-   "finite": true,
-   "max_actuator_torque_Nm": 35.862
-  },
-  "unpowered": {
-   "wearer_head_z_start": 1.523,
-   "wearer_head_z_end": 0.208,
-   "head_drop_m": 1.315,
-   "finite": true,
-   "max_actuator_torque_Nm": 0.0
-  },
-  "validation_scope": "Ideal welded mannequin with human contact disabled; not a fit or human-support qualification",
-  "suit_supports_wearer": true
- }
 }

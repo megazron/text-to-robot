@@ -20,9 +20,11 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: { python-version: "3.11" }
-      - run: pip install "./python[cad]"
+      - run: pip install "./python[cad,geometry]"
       - name: Physical fidelity and solid CAD regression tests
         run: python -m unittest discover -s python/tests -v
+      - name: Independent STL topology and mass-integral audit
+        run: python scripts/check_mesh_assets.py
       # These concepts are not engineered hardware. Keep physical failures visible
       # without encoding "every character can balance" as a software invariant.
       - name: Concept-model diagnostics (physical failures expected)

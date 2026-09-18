@@ -4,16 +4,16 @@ import gymnasium as gym
 from gymnasium import spaces
 import mujoco
 from .convert import load_model
-from .testbench import _hold_targets, _up
+from .testbench import _hold_targets, _up, _finite
 
 
 class MujocoRobotEnv(gym.Env):
     metadata = {"render_modes": ["rgb_array"], "render_fps": 25}
 
-    def __init__(self, path_or_xml: str, task: str = "stand", max_steps: int = 1000, frame_skip: int = 5, floating=None, action_scale: float = 0.15):
+    def __init__(self, path_or_xml: str, task: str = "stand", max_steps: int = 1000, frame_skip: int = 5, floating=None, action_scale: float = 0.15, self_collision: bool = False):
         super().__init__()
         self.action_scale = action_scale  # fraction of half-range per unit action; balance needs small deltas
-        self.m = load_model(path_or_xml, floating=floating) if path_or_xml.endswith(".urdf") else load_model(path_or_xml)
+        self.m = load_model(path_or_xml, floating=floating, self_collision=self_collision) if path_or_xml.endswith(".urdf") else load_model(path_or_xml)
         self.d = mujoco.MjData(self.m); self.task = task; self.max_steps = max_steps; self.frame_skip = frame_skip
         self.floating = bool(self.m.nq and self.m.jnt_type[0] == mujoco.mjtJoint.mjJNT_FREE)
         nu = self.m.nu
@@ -49,7 +49,7 @@ class MujocoRobotEnv(gym.Env):
             self.next_push += int(self.np_random.integers(60, 120))
         for _ in range(self.frame_skip): mujoco.mj_step(self.m, self.d)
         self.steps += 1
-        finite = bool(np.all(np.isfinite(self.d.qpos)))
+        finite = _finite(self.d)
         up = _up(self.m, self.d)
         ctrl_cost = 1e-3 * float(np.square(a).sum())
         if self.task == "walk" and self.floating:

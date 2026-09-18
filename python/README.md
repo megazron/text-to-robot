@@ -24,7 +24,7 @@ ttr-mujoco render mark43.sim.urdf --wearer -o helmet.gif --motion don --focus he
 
 What the converter does, deterministically:
 - position actuators on every joint, gains inferred from mass, forces bounded by each URDF effort limit (missing/invalid effort is an error);
-- polygon-mesh parts: `package://` and relative `meshes/` paths are resolved next to the URDF, visual meshes are kept (MuJoCo's URDF importer drops them by default) as non-colliding geoms while their bounding-box collision stays physical, fixed links keep their names (no static fusing) so welds and `--focus` can find them, and saved MJCFs use a relative `meshdir`;
+- polygon-mesh parts: `package://` and relative `meshes/` paths are resolved next to the URDF, visual meshes are kept (MuJoCo's URDF importer drops them by default) as non-colliding geoms while their URDF collision geometry stays physical (boxes by default; compound convex meshes after `ttr-collision`), fixed links keep their names (no static fusing) so welds and `--focus` can find them, and saved MJCFs use a relative `meshdir`;
 - the URDF's designed masses and inertias are preserved (including the root link when the base floats);
 - floor, lighting, a free-floating base for legged / wheeled / flying robots (auto-detected from link names);
 - self-collision off by default (primitive robots overlap at their joints); `--self-collision` / `self_collision=True` to expose interference;
@@ -33,3 +33,39 @@ What the converter does, deterministically:
 
 The Gymnasium env (`ttr_mujoco.env.MujocoRobotEnv`) uses **delta actions around the standing pose**
 (action 0 = hold still) and, for `stand`, random pushes so a policy must actually balance.
+
+
+## Solid CAD and collision preparation
+
+From the repository root:
+
+```bash
+pip install -e './python[cad,geometry]'
+ttr-enclosure python/ttr_cad/example_enclosure.json --out out/housing
+ttr-attach-enclosure examples/14_iron_man_mark_43/robot.json \
+  python/ttr_cad/example_enclosure.json --parent backpack \
+  --xyz -0.3 0 0.2 --rpy 0 -1.5707963268 0 \
+  --electronics-mass-kg 0.045 --out out/attached
+# Open out/attached/robot.json with Import JSON in the web viewer.
+ttr-collision examples/14_iron_man_mark_43/robot.sim.urdf --out out/convex --tolerance-mm 2
+ttr-mujoco convert out/convex/robot.urdf --self-collision -o out/convex/robot.mjcf.xml
+ttr-mujoco test out/convex/robot.urdf --self-collision
+# Training can use the same contact model (requires [train]):
+ttr-mujoco train out/convex/robot.urdf --self-collision --task stand --steps 400000
+```
+
+The enclosure manifest and mounting example use synthetic dimensions; replace them
+with measured component geometry, mass and a designed interface. CAD solid mass/inertia
+is included; fastener/cable mass and mounting strength are not.
+
+CoACD decomposes each closed visual solid into convex collision pieces, preserves
+URDF inertia/origins and copies every mesh into a portable output directory. Read
+`collision_report.json`: the requested concavity is not a guaranteed maximum surface
+error, and the hull cap can limit fidelity. Samples include internal hull interfaces;
+the measured deviation is not a union-boundary Hausdorff metric. Default robot boxes
+remain available for cheap diagnostics. Neither representation certifies human fit.
+
+Regenerate evidence with `node scripts/regen_mark43_example.ts`, then
+`python scripts/audit_mark43.py --convex` and `python scripts/check_mesh_assets.py`.
+The physics audit records failures; successful file export does not mean balance or
+hardware clearance passed. See [physical fidelity](../docs/PHYSICAL_FIDELITY.md).

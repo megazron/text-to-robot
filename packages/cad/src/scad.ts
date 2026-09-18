@@ -71,6 +71,8 @@ export function generateCadFiles(spec: RobotSpecification): CadFiles {
   Object.assign(files, generateStlFiles(spec));   // ready-to-print STL (no OpenSCAD needed)
   // Portable optional solid-CAD tool: no Python process runs in the API server.
   files["cad/hardware/enclosure.py"] = readFileSync(new URL("../../../python/ttr_cad/enclosure.py", import.meta.url), "utf8");
+  files["cad/hardware/attach.py"] = readFileSync(new URL("../../../python/ttr_cad/attach.py", import.meta.url), "utf8");
+  files["cad/robot.json"] = JSON.stringify(spec,null,2);
   files["cad/hardware/example_enclosure.json"] = readFileSync(new URL("../../../python/ttr_cad/example_enclosure.json", import.meta.url), "utf8");
   files["cad/hardware/requirements.txt"] = "cadquery>=2.5,<3\n";
   files[`cad/README.md`] =
@@ -81,6 +83,7 @@ export function generateCadFiles(spec: RobotSpecification): CadFiles {
     `## Dimensioned electronics housing (optional Python backend)\n\n` +
     `Edit \`hardware/example_enclosure.json\` using your PCB envelope, hole coordinates and material density. Its defaults are synthetic, not a real vendor part.\n\n` +
     `\`\`\`bash\ncd hardware\npython -m pip install -r requirements.txt\npython enclosure.py example_enclosure.json --out enclosure\n\`\`\`\n\n` +
-    `Outputs separate base/lid STEP and STL, board standoffs, through-bolt bores, cable opening, and a geometric-fit/mass-properties report. Attach the result to the robot and include electronics/fasteners in its mass model before simulation; that integration is not automatic.\n`;
+    `Outputs separate base/lid STEP and STL, board standoffs, through-bolt bores, cable opening, and a geometric-fit/mass-properties report.\n\n` +
+    `To attach it to a robot, run \`python attach.py --help\`: supply the parent link, mount pose (metres/radians), and measured electronics mass. It writes an updated robot JSON with housing CAD and mass properties. Use **Import JSON** in the viewer to inspect/export it. Fasteners, mounting strength and assembly clearance still need verification.\n`;
   return files;
 }

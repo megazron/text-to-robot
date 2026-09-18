@@ -13,6 +13,63 @@ export const norm = (a: V3): V3 => { const l = len(a) || 1; return [a[0] / l, a[
 
 export const empty = (): Mesh => ({ v: [], f: [] });
 
+/** Weld coincident vertices and discard zero-area/duplicate triangles. Never fills holes. */
+export function cleanMesh(m: Mesh, tolerance = 1e-9): Mesh {
+  const vertices: V3[] = [], ids = new Map<string, number>();
+  const remap = m.v.map((p) => {
+    if (!p.every(Number.isFinite)) throw new Error("mesh contains non-finite vertices");
+    const key = p.map((x) => Math.round(x / tolerance)).join(",");
+    if (!ids.has(key)) { ids.set(key, vertices.length); vertices.push([...p]); }
+    return ids.get(key)!;
+  });
+  const faces: Mesh["f"] = [], seen = new Set<string>();
+  for (const triangle of m.f) {
+    const f = triangle.map((i) => remap[i]) as Mesh["f"][number];
+    if (new Set(f).size < 3) continue;
+    const [a,b,c] = f.map((i) => vertices[i]);
+    if (len(cross(sub(b,a),sub(c,a))) <= tolerance*tolerance) continue;
+    const key = [...f].sort((a,b) => a-b).join(",");
+    if (!seen.has(key)) { faces.push(f); seen.add(key); }
+  }
+  const used = [...new Set(faces.flat())], compact = new Map(used.map((v,i) => [v,i]));
+  return {v: used.map((i) => vertices[i]), f: faces.map((f) => f.map((i) => compact.get(i)!) as Mesh["f"][number])};
+}
+
+/** Edge manifoldness is necessary, but does not detect self-intersections. */
+export function meshTopology(m: Mesh) {
+  const edges = new Map<string, {count: number; direction: number}>();
+  for (const f of m.f) for (let i=0;i<3;i++) {
+    const a=f[i], b=f[(i+1)%3], key=a<b ? `${a}:${b}` : `${b}:${a}`;
+    const e=edges.get(key) ?? {count:0,direction:0}; e.count++; e.direction += a<b ? 1 : -1; edges.set(key,e);
+  }
+  const boundary_edges=[...edges.values()].filter((e) => e.count===1).length;
+  const nonmanifold_edges=[...edges.values()].filter((e) => e.count>2).length;
+  const inconsistent_edges=[...edges.values()].filter((e) => e.count===2 && e.direction!==0).length;
+  return {boundary_edges,nonmanifold_edges,inconsistent_edges,closed: m.f.length>0 && boundary_edges===0 && nonmanifold_edges===0 && inconsistent_edges===0};
+}
+
+/** Split triangle edges where a clipping operation placed another vertex on them. */
+export function stitchTJunctions(input: Mesh, tolerance = 1e-8): Mesh {
+  const m=cleanMesh(input), out:Mesh={v:[...m.v],f:[]};
+  for(const face of m.f) {
+    const ring:number[]=[];
+    for(let k=0;k<3;k++) {
+      const a=face[k],b=face[(k+1)%3],edge=sub(m.v[b],m.v[a]),length2=dot(edge,edge);
+      const points:{id:number;t:number}[]=[{id:a,t:0}];
+      for(let i=0;i<m.v.length;i++) {
+        if(i===a || i===b)continue;
+        const t=dot(sub(m.v[i],m.v[a]),edge)/length2;
+        if(t>tolerance && t<1-tolerance && len(sub(m.v[i],add(m.v[a],mul(edge,t))))<tolerance)points.push({id:i,t});
+      }
+      points.sort((a,b)=>a.t-b.t);ring.push(...points.map((p)=>p.id));
+    }
+    if(ring.length===3) {out.f.push(face);continue;}
+    const center=out.v.length;out.v.push(centroid(face.map((i)=>m.v[i])));
+    for(let i=0;i<ring.length;i++)out.f.push([center,ring[i],ring[(i+1)%ring.length]]);
+  }
+  return cleanMesh(out);
+}
+
 export function merge(...ms: Mesh[]): Mesh {
   const out = empty();
   for (const m of ms) { const o = out.v.length; out.v.push(...m.v); for (const [a, b, c] of m.f) out.f.push([a + o, b + o, c + o]); }
@@ -80,6 +137,7 @@ export function vertexNormals(m: Mesh): V3[] {
 
 /** Give an open surface a thickness: offset along vertex normals (inward) and stitch the boundary. */
 export function shell(surface: Mesh, thickness: number): Mesh {
+  surface = cleanMesh(surface);
   const n = vertexNormals(surface); const off = surface.v.length;
   const inner: V3[] = surface.v.map((p, i) => sub(p, mul(n[i], thickness)));
   const out: Mesh = { v: [...surface.v, ...inner], f: [...surface.f] };
@@ -124,36 +182,32 @@ export function subdivide(m: Mesh, passes = 1): Mesh {
   return cur;
 }
 
-/** Mass properties of a closed mesh (divergence theorem). Returns volume (m^3), centroid, inertia about centroid for unit density. */
-/**
- * Mass properties of a part. Volume comes from the divergence theorem (a signed sum, so it survives
- * mixed winding). The centroid and inertia are integrated over the *surface* as a thin shell of uniform
- * areal density: armour plates and limb shells are thin, so this is the physically right model, and it
- * stays positive-definite for open or imperfectly stitched surfaces where the volume integral does not.
- * `inertia` is reported for unit density (kg/m^3) of the returned volume, so callers can scale it by
- * mass / volume exactly like a solid primitive.
+/** Exact uniform-solid tetrahedral integrals for a closed, consistently wound mesh.
+ * Inertia is about the solid centroid, at density 1 kg/m³. Does not certify that
+ * disconnected components do not overlap; such components must be boolean-unioned.
  */
-export function massProperties(m: Mesh) {
-  let vol = 0, area = 0; let cx = 0, cy = 0, cz = 0;
-  let sxx = 0, syy = 0, szz = 0, sxy = 0, sxz = 0, syz = 0;   // second moments about the origin, area-weighted
-  for (const [a, b, c] of m.f) {
-    const p = m.v[a], q = m.v[b], r = m.v[c];
-    vol += dot(p, cross(q, r)) / 6;
-    const A = 0.5 * Math.hypot(...cross(sub(q, p), sub(r, p))); if (A <= 0) continue;
-    area += A; const s: V3 = [p[0] + q[0] + r[0], p[1] + q[1] + r[1], p[2] + q[2] + r[2]];
-    cx += A * s[0] / 3; cy += A * s[1] / 3; cz += A * s[2] / 3;
-    const k = A / 12; const mom = (i: number, j: number) => k * (p[i] * p[j] + q[i] * q[j] + r[i] * r[j] + s[i] * s[j]);
-    sxx += mom(0, 0); syy += mom(1, 1); szz += mom(2, 2); sxy += mom(0, 1); sxz += mom(0, 2); syz += mom(1, 2);
+export function massProperties(input: Mesh) {
+  const m = orient(input);
+  if (!meshTopology(m).closed) throw new Error("mass properties require a closed manifold mesh");
+  const ref = centroid(m.v);
+  let volume=0, area=0; const first: V3=[0,0,0];
+  const second=Array.from({length:3},()=>[0,0,0]);
+  for (const [a,b,c] of m.f) {
+    const p=sub(m.v[a],ref), q=sub(m.v[b],ref), r=sub(m.v[c],ref);
+    const dv=dot(p,cross(q,r))/6;
+    volume+=dv; area+=len(cross(sub(q,p),sub(r,p)))/2;
+    const sum=add(add(p,q),r);
+    for(let i=0;i<3;i++) {
+      first[i]+=dv*sum[i]/4;
+      for(let j=0;j<3;j++) second[i][j]+=dv*(sum[i]*sum[j]+p[i]*p[j]+q[i]*q[j]+r[i]*r[j])/20;
+    }
   }
-  vol = Math.abs(vol); if (area <= 0) area = 1e-12;
-  const c: V3 = [cx / area, cy / area, cz / area];
-  // shift second moments to the centroid, then convert to an inertia tensor per kg of shell mass
-  sxx -= area * c[0] * c[0]; syy -= area * c[1] * c[1]; szz -= area * c[2] * c[2];
-  sxy -= area * c[0] * c[1]; sxz -= area * c[0] * c[2]; syz -= area * c[1] * c[2];
-  const perKg = { ixx: (syy + szz) / area, iyy: (sxx + szz) / area, izz: (sxx + syy) / area, ixy: -sxy / area, ixz: -sxz / area, iyz: -syz / area };
-  const scale = Math.max(vol, 1e-9);   // unit-density inertia = (per-kg inertia) x (mass of the solid at density 1)
-  const inertia = { ixx: perKg.ixx * scale, iyy: perKg.iyy * scale, izz: perKg.izz * scale, ixy: perKg.ixy * scale, ixz: perKg.ixz * scale, iyz: perKg.iyz * scale };
-  return { volume: vol, area, centroid: c, inertia };
+  if (!(volume>1e-15)) throw new Error("mesh has no positive enclosed volume");
+  const local=mul(first,1/volume), center=add(ref,local);
+  for(let i=0;i<3;i++) for(let j=0;j<3;j++) second[i][j]-=volume*local[i]*local[j];
+  const inertia={ixx:second[1][1]+second[2][2],iyy:second[0][0]+second[2][2],izz:second[0][0]+second[1][1],
+    ixy:-second[0][1],ixz:-second[0][2],iyz:-second[1][2]};
+  return {volume,area,centroid:center,inertia};
 }
 
 /**
@@ -164,8 +218,8 @@ export function massProperties(m: Mesh) {
  * front visible no matter how its rings were built.
  */
 export function orient(m: Mesh): Mesh {
-  const key = (p: V3) => `${Math.round(p[0] * 1e6)},${Math.round(p[1] * 1e6)},${Math.round(p[2] * 1e6)}`;
-  const canon = new Map<string, number>(); const cid = m.v.map((p) => { const k = key(p); if (!canon.has(k)) canon.set(k, canon.size); return canon.get(k)!; });
+  m = cleanMesh(m);
+  const cid = m.v.map((_, i) => i); // cleanMesh already welded at the declared tolerance
   const edgeTris = new Map<string, number[]>(); const ek = (a: number, b: number) => (a < b ? `${a}_${b}` : `${b}_${a}`);
   m.f.forEach((f, t) => { for (let i = 0; i < 3; i++) { const k = ek(cid[f[i]], cid[f[(i + 1) % 3]]); (edgeTris.get(k) ?? edgeTris.set(k, []).get(k)!).push(t); } });
   const faces = m.f.map((f) => [...f] as [number, number, number]); const seen = new Array(faces.length).fill(false);

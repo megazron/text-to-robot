@@ -25,17 +25,41 @@ missing measurements, mechanisms or physical models.
 
 ## What the Mark 43 results mean
 
-The corrected empty suit fails disturbance recovery. The mannequin-loaded model
-fails the actuator sweep. The initial self-collision audit finds 479 penetrating
-proxy contacts, maximum depth approximately 93 mm. These are collision-box contacts,
-not measured mesh intersection volumes. Adjacent-body collision exclusions also
-mean this is not exhaustive.
+The regenerated smoke reports record balance/tracking failures rather than hiding
+falls or enlarging actuators. See `mujoco_report*.json` beside the example. The
+mannequin remains ideal welded geometry with disabled human contact; its mass is
+75 kg without hidden decorative mass. It does not demonstrate wearable support.
 
-Current meshes still use bounding-box collision proxies. Replacing them with one
-mesh each is insufficient: MuJoCo generally uses a convex hull for mesh collision,
-which can fill a hollow shell. Use validated convex decomposition or another
-appropriate contact representation and measure its error against the CAD surface.
-See [MuJoCo collision documentation](https://mujoco.readthedocs.io/en/latest/computation/).
+All **106 exported STL parts** pass independent closed-volume/winding and mass
+integration checks. Earlier procedural meshes included open seams, degenerate poles,
+self-overlapping helmet detail and filled cuffs. These generators are repaired;
+the faceplate now has geometric eye apertures, the cuffs and pelvis are hollow,
+and mass/COM/full inertia come from solid volume integrals rather than a thin-surface
+approximation. See `mesh_quality_report.json` and `scripts/check_mesh_assets.py`.
+
+The configurable neutral stance separates legs and abducts the arms; mirrored
+abduction axes are corrected. These inferred dimensions are not a measured body fit.
+Palette and proportions were compared with [official Hot Toys photographs](https://www.sideshow.com/collectibles/marvel-iron-man-mark-xliii-hot-toys-902314).
+The procedural silhouette still differs substantially from the film suit.
+
+The default URDF retains inexpensive box collision proxies. The optional Python
+`ttr-collision` tool uses [CoACD](https://github.com/SarahWeiii/CoACD) to replace mesh
+collision proxies with compound convex solids and export portable assets. A single
+MuJoCo mesh collision hull would fill concave shell cavities; see
+[MuJoCo collision documentation](https://mujoco.readthedocs.io/en/latest/computation/).
+The example includes `robot.convex.zip`, a source-hashed decomposition report and an
+initial-pose clearance comparison. **Both collision representations still show
+interference:** 152 box contacts (maximum depth 65 mm), or 623 compound-convex
+contacts (maximum depth 22 mm). The latter uses 2,544 convex pieces from 72 unique
+decompositions; its largest sampled surface deviation is about 7 mm. Contact counts between them are not directly comparable because
+one object pair can produce many convex-hull contact points.
+
+The requested 2 mm concavity is not a certified surface tolerance. The report samples
+512 points on component hull surfaces, including internal interfaces, and measures
+distance to the source mesh. This is not the union boundary or a worst-case
+Hausdorff bound; it also does not bound missing material. Hull count caps can limit
+fidelity. Adjacent-body exclusions and the initial-pose-only audit mean the reports
+do not establish full assembly clearance or clearance through motion.
 
 URDF effort bounds are necessary but insufficient. They do not model motor
 torque–speed curves, continuous versus peak duty, controller bandwidth, compliance,
@@ -54,8 +78,14 @@ The rectangular populated-board envelope cannot express arbitrary connectors,
 underside components, screw-head keepouts or ventilation requirements. Measure those
 before using the housing. Standoffs assume a flat mounting plane with empty space
 below it; the cable opening is generic. Bolts/nuts/washers need deliberate selection.
-The output is separate from the robot until its mounting transform, collision shape
-and complete component masses are integrated. It is not a structural suit component.
+`ttr-attach-enclosure` takes an explicit parent link, mounting transform in metres/
+radians and measured electronics mass. It embeds base/lid CAD tessellations, exact
+solid mass/COM/inertia, fixed joints and a uniform electronics envelope into robot
+JSON. **Import JSON** in the web viewer validates and displays this assembly and
+makes it available to the existing URDF/CAD exporters. CAD ZIPs include the robot
+JSON and standalone enclosure/attachment scripts. The selected fixed transform is
+not a designed fastener interface: fastener/cable masses, mount strength and
+clearance remain unverified. It is not a structural suit component.
 
 ## Inputs needed for a buildable wearable
 
@@ -76,3 +106,22 @@ A human-bearing powered suit additionally needs qualified mechanical/electrical
 review, joint alignment, load-path and release design, and staged testing. Fictional
 flight/repulsor features remain decorative placeholders. No "perfect buildable
 Mark 43" or wearable qualification is delivered by this change.
+
+
+## Reproduce the evidence
+
+```bash
+npm install
+pip install -e './python[cad,geometry]'
+node scripts/regen_mark43_example.ts
+python scripts/audit_mark43.py --convex
+python scripts/check_mesh_assets.py --json examples/14_iron_man_mark_43/mesh_quality_report.json
+npm test
+npm run typecheck
+python -m unittest discover -s python/tests -v
+```
+
+The mesh audit and regression tests gate CI. Concept balance/tracking diagnostics
+are uploaded separately even when they fail. They are evidence of the remaining
+physical problems, not software tests whose expected answer should be changed to
+make the model look successful.

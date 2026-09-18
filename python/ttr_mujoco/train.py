@@ -7,8 +7,8 @@ from stable_baselines3.common.env_util import make_vec_env
 from .env import MujocoRobotEnv
 
 
-def train(model_path: str, task: str = "stand", steps: int = 100_000, out: str = "ppo_mujoco", n_envs: int = 4):
-    env = make_vec_env(lambda: MujocoRobotEnv(model_path, task=task), n_envs=n_envs)
+def train(model_path: str, task: str = "stand", steps: int = 100_000, out: str = "ppo_mujoco", n_envs: int = 4, self_collision: bool = False):
+    env = make_vec_env(lambda: MujocoRobotEnv(model_path, task=task, self_collision=self_collision), n_envs=n_envs)
     try:
         import tensorboard  # noqa
         tb = "./tb"

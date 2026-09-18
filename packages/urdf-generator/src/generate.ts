@@ -28,11 +28,13 @@ export function generateMaterial(m: Material): string {
 
 export function generateVisual(l: Link): string {
   const mat = l.material ? `\n  <material name="${xmlName(l.material)}"/>` : "";
+  if (l.geometry.type === "capsule") return capsuleElements("visual",l.geometry,l.origin,mat);
   return `<visual>\n  ${originTag(l.origin)}\n  ${generateGeometry(l.geometry)}${mat}\n</visual>`;
 }
 
 export function generateCollision(l: Link): string {
   const g = l.collision ?? l.geometry;
+  if (g.type === "capsule") return capsuleElements("collision",g,l.origin);
   if (g.type === "mesh") {
     // collision fallback for meshes: their bounding box (cheap, stable in every physics engine)
     const size = [g.bbox.max[0] - g.bbox.min[0], g.bbox.max[1] - g.bbox.min[1], g.bbox.max[2] - g.bbox.min[2]].map((d) => Math.max(d, 1e-3));
@@ -41,6 +43,14 @@ export function generateCollision(l: Link): string {
     return `<collision>\n  ${originTag(origin)}\n  <geometry><box size="${vec(size)}"/></geometry>\n</collision>`;
   }
   return `<collision>\n  ${originTag(l.origin)}\n  ${generateGeometry(g)}\n</collision>`;
+}
+
+/** URDF has no capsule primitive: its exact occupied shape is a cylinder plus
+ * end spheres. Explicit inertial remains that of their union, not their sum. */
+function capsuleElements(tag: string,g: Extract<Geometry,{type:"capsule"}>,origin:Pose,material=""):string {
+  const parts:{geometry:Geometry;origin:Pose}[]=[{geometry:{type:"cylinder",radius:g.radius,length:g.length},origin},
+    ...[-1,1].map((sign)=>({geometry:{type:"sphere" as const,radius:g.radius},origin:offsetOrigin(origin,[0,0,sign*g.length/2])}))];
+  return parts.map((p)=>`<${tag}>\n  ${originTag(p.origin)}\n  ${generateGeometry(p.geometry)}${material}\n</${tag}>`).join("\n");
 }
 
 export function generateInertial(l: Link): string {

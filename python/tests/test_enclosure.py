@@ -7,6 +7,7 @@ from pathlib import Path
 import numpy as np
 
 from ttr_cad.enclosure import validate, build, export
+from ttr_cad.attach import attach
 
 EXAMPLE = Path(__file__).parents[1] / "ttr_cad" / "example_enclosure.json"
 
@@ -22,6 +23,23 @@ class EnclosureValidationTests(unittest.TestCase):
                            ("cable_port_mm", [14, 20, 5])):
             with self.subTest(key=key), self.assertRaises(ValueError):
                 validate({**self.spec, key: value})
+
+    @unittest.skipUnless(importlib.util.find_spec("cadquery"), "install .[cad] for solid CAD tests")
+    def test_attachment_accounts_for_housing_and_electronics_mass(self):
+        robot={"robot_name":"fixture","links":[{"name":"base","mass":1}],"joints":[],"materials":[],"metadata":{"notes":[]}}
+        result=attach(robot,self.spec,"base",[.2,0,.1],[0,0,.3],.045)
+        self.assertEqual(len(robot["links"]),1,"input must not be mutated")
+        self.assertEqual(len(result["links"]),4)
+        self.assertEqual(result["joints"][0]["origin"]["xyz"],[.2,0,.1])
+        self.assertEqual(result["joints"][1]["parent"],"electronics_bay_demo_base")
+        parts,_=build(self.spec)
+        expected=.045+sum(p.val().Volume()*1e-9*self.spec["density_kg_m3"] for p in parts.values())
+        self.assertAlmostEqual(sum(l["mass"] for l in result["links"])-1,expected)
+        for link in result["links"][1:3]:
+            self.assertEqual(link["geometry"]["part"],"indexed_mesh")
+            self.assertGreater(len(link["geometry"]["triangles"]),0)
+        with self.assertRaisesRegex(ValueError,"already exist"):
+            attach(result,self.spec,"base",[0,0,0],[0,0,0],.045)
 
     @unittest.skipUnless(importlib.util.find_spec("cadquery"), "install .[cad] for solid CAD tests")
     def test_hollow_enclosure_has_mounting_bores_and_exports_real_solids(self):

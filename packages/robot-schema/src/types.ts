@@ -30,6 +30,9 @@ export interface MeshGeometry {
   inertia_unit: Inertia;
   /** Centre of mass in the geometry frame; inertia_unit is about this point. */
   centroid?: Vec3;
+  /** Portable CAD tessellation for part="indexed_mesh"; vertices are in metres. */
+  vertices?: Vec3[];
+  triangles?: [number, number, number][];
   bbox: { min: Vec3; max: Vec3 };
 }
 export type Geometry = BoxGeometry | CylinderGeometry | SphereGeometry | CapsuleGeometry | MeshGeometry;

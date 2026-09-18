@@ -34,6 +34,11 @@ def _lowest_point(model: mujoco.MjModel) -> float:
             ext = float(zrow[2] * size[1] + size[0])
         elif t == G.mjGEOM_PLANE:
             continue
+        elif t == G.mjGEOM_MESH:
+            mesh = int(model.geom_dataid[g]); start = model.mesh_vertadr[mesh]; count = model.mesh_vertnum[mesh]
+            vertices = model.mesh_vert[start:start+count]
+            lows.append(float(pos[2] + np.min(vertices @ R[2, :])))
+            continue
         else:
             ext = float(model.geom_rbound[g])
         lows.append(float(pos[2]) - ext)
@@ -42,7 +47,8 @@ def _lowest_point(model: mujoco.MjModel) -> float:
 
 def urdf_to_mjcf(urdf_path: str, floating=None, kp: float | None = None, out: str | None = None, self_collision: bool = False) -> str:
     """Convert a URDF to an MJCF scene string with actuators. floating=None -> auto."""
-    urdf_xml = open(urdf_path, encoding="utf8").read()
+    with open(urdf_path, encoding="utf8") as source_file:
+        urdf_xml = source_file.read()
     source = ET.fromstring(urdf_xml)
     joint_efforts = {}
     for joint in source.findall("joint"):

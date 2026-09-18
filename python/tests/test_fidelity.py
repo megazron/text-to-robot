@@ -8,6 +8,7 @@ import mujoco
 import numpy as np
 from ttr_mujoco.convert import urdf_to_mjcf
 from ttr_mujoco.testbench import run_tests, _finite
+from ttr_mujoco.exo import add_wearer
 
 
 def fixture(effort="2.5", joint_type="revolute"):
@@ -90,6 +91,12 @@ class FidelityTests(unittest.TestCase):
         d = mujoco.MjData(m)
         d.warning[mujoco.mjtWarning.mjWARN_BADQACC].number = 1
         self.assertFalse(_finite(d))
+
+    def test_mannequin_visual_details_do_not_add_hidden_mass(self):
+        xml=self.convert(fixture().replace('"base"','"pelvis_frame"'),floating=True)
+        base=mujoco.MjModel.from_xml_string(xml)
+        combined=mujoco.MjModel.from_xml_string(add_wearer(xml,mass=75))
+        self.assertAlmostEqual(float(combined.body_mass.sum()-base.body_mass.sum()),75,places=3)
 
 
 if __name__ == "__main__":

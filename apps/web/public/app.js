@@ -379,6 +379,17 @@ document.querySelectorAll(".tab").forEach((t) => (t.onclick = () => setTab(t.dat
 document.querySelectorAll("[data-dl]").forEach((b) => (b.onclick = () => handleDownload(b.dataset.dl)));
 for (const id of ["#showCollision", "#showAxes", "#showFrames"]) $(id).onchange = () => { if (state.robot) buildRobot(state.robot); };
 $("#resetView").onclick = frameRobot;
+$("#importRobot").onclick = () => $("#robotFile").click();
+$("#robotFile").onchange = async (event) => {
+  const file=event.target.files[0];if(!file)return;
+  const button=$("#importRobot");setBusy(button,true);
+  try {
+    if(file.size>3_900_000)throw new Error("Robot JSON must be smaller than 3.9 MB");
+    const robot=JSON.parse(await file.text());
+    const result=await api("/api/robots/import",{robot});applyResult(result,`Imported ${file.name}`);
+  }catch(error){status("✗ "+error.message,"err");}
+  finally {setBusy(button,false,"Import JSON");event.target.value="";}
+};
 $("#budget").oninput = () => { clearTimeout(window.__bt); window.__bt = setTimeout(refreshBom, 350); };
 
 const EXAMPLES = [
