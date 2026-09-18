@@ -1,72 +1,812 @@
 {
- "model": "<inline mjcf, 97136 chars>",
- "nbody": 148,
- "njnt": 79,
- "nu": 66,
- "ngeom": 288,
- "floating": true,
- "tests": {
-  "compile": {
-   "pass": true,
-   "total_mass_kg": 149.884,
-   "actuators": 66
+  "model": "robot.sim.urdf",
+  "nbody": 254,
+  "njnt": 79,
+  "nu": 66,
+  "ngeom": 500,
+  "floating": true,
+  "tests": {
+    "compile": {
+      "pass": true,
+      "total_mass_kg": 152.699,
+      "actuators": 66
+    },
+    "settle_under_gravity": {
+      "pass": true,
+      "max_joint_speed": 14.85,
+      "base_drop_m": 0.005,
+      "upright": 1.0
+    },
+    "hold_pose": {
+      "pass": true,
+      "max_joint_error_rad": 0.024
+    },
+    "actuator_sweep": {
+      "pass": false,
+      "tracked": "45/66",
+      "worst_error": 1.818,
+      "actuators": [
+        {
+          "actuator": "act_trunk_flex",
+          "joint": "trunk_flex",
+          "pass": true,
+          "rms_error": 0.069637,
+          "peak_error": 0.133783,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 120.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_shoulder_abduction",
+          "joint": "left_shoulder_abduction",
+          "pass": false,
+          "rms_error": 0.930678,
+          "peak_error": 1.568468,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 60.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_shoulder_flexion",
+          "joint": "left_shoulder_flexion",
+          "pass": false,
+          "rms_error": 1.178341,
+          "peak_error": 1.818246,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 60.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_elbow_flexion",
+          "joint": "left_elbow_flexion",
+          "pass": false,
+          "rms_error": 0.204478,
+          "peak_error": 1.171528,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 40.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_wrist_flexion",
+          "joint": "left_wrist_flexion",
+          "pass": false,
+          "rms_error": 0.175125,
+          "peak_error": 0.287912,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 15.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_finger_1_hinge",
+          "joint": "left_finger_1_hinge",
+          "pass": true,
+          "rms_error": 0.08566,
+          "peak_error": 0.634088,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 1.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_finger_2_hinge",
+          "joint": "left_finger_2_hinge",
+          "pass": true,
+          "rms_error": 0.085655,
+          "peak_error": 0.633952,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 1.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_finger_3_hinge",
+          "joint": "left_finger_3_hinge",
+          "pass": true,
+          "rms_error": 0.08564,
+          "peak_error": 0.633928,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 1.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_finger_4_hinge",
+          "joint": "left_finger_4_hinge",
+          "pass": true,
+          "rms_error": 0.085645,
+          "peak_error": 0.634014,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 1.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_thumb_hinge",
+          "joint": "left_thumb_hinge",
+          "pass": true,
+          "rms_error": 0.050788,
+          "peak_error": 0.434055,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 1.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_gauntlet_hatch_hinge",
+          "joint": "left_gauntlet_hatch_hinge",
+          "pass": true,
+          "rms_error": 0.064713,
+          "peak_error": 0.573544,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 1.5,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_gauntlet_clamshell_hinge",
+          "joint": "left_gauntlet_clamshell_hinge",
+          "pass": true,
+          "rms_error": 0.071681,
+          "peak_error": 0.68423,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 3.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_elbow_cap_hinge",
+          "joint": "left_elbow_cap_hinge",
+          "pass": true,
+          "rms_error": 0.020967,
+          "peak_error": 0.232277,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 2.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_bicep_clamshell_hinge",
+          "joint": "left_bicep_clamshell_hinge",
+          "pass": true,
+          "rms_error": 0.076659,
+          "peak_error": 0.688799,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 3.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_pauldron_hinge",
+          "joint": "left_pauldron_hinge",
+          "pass": true,
+          "rms_error": 0.061943,
+          "peak_error": 0.39718,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 3.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_shoulder_abduction",
+          "joint": "right_shoulder_abduction",
+          "pass": false,
+          "rms_error": 0.930675,
+          "peak_error": 1.568395,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 60.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_shoulder_flexion",
+          "joint": "right_shoulder_flexion",
+          "pass": false,
+          "rms_error": 1.178468,
+          "peak_error": 1.816047,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 60.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_elbow_flexion",
+          "joint": "right_elbow_flexion",
+          "pass": false,
+          "rms_error": 0.204478,
+          "peak_error": 1.171528,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 40.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_wrist_flexion",
+          "joint": "right_wrist_flexion",
+          "pass": false,
+          "rms_error": 0.174737,
+          "peak_error": 0.291307,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 15.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_finger_1_hinge",
+          "joint": "right_finger_1_hinge",
+          "pass": true,
+          "rms_error": 0.085631,
+          "peak_error": 0.634014,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 1.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_finger_2_hinge",
+          "joint": "right_finger_2_hinge",
+          "pass": true,
+          "rms_error": 0.085645,
+          "peak_error": 0.633928,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 1.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_finger_3_hinge",
+          "joint": "right_finger_3_hinge",
+          "pass": true,
+          "rms_error": 0.08568,
+          "peak_error": 0.633952,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 1.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_finger_4_hinge",
+          "joint": "right_finger_4_hinge",
+          "pass": true,
+          "rms_error": 0.085648,
+          "peak_error": 0.634088,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 1.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_thumb_hinge",
+          "joint": "right_thumb_hinge",
+          "pass": true,
+          "rms_error": 0.050835,
+          "peak_error": 0.434055,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 1.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_gauntlet_hatch_hinge",
+          "joint": "right_gauntlet_hatch_hinge",
+          "pass": true,
+          "rms_error": 0.064715,
+          "peak_error": 0.573544,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 1.5,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_gauntlet_clamshell_hinge",
+          "joint": "right_gauntlet_clamshell_hinge",
+          "pass": true,
+          "rms_error": 0.077959,
+          "peak_error": 0.684232,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 3.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_elbow_cap_hinge",
+          "joint": "right_elbow_cap_hinge",
+          "pass": true,
+          "rms_error": 0.020478,
+          "peak_error": 0.232277,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 2.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_bicep_clamshell_hinge",
+          "joint": "right_bicep_clamshell_hinge",
+          "pass": true,
+          "rms_error": 0.084247,
+          "peak_error": 0.688798,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 3.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_pauldron_hinge",
+          "joint": "right_pauldron_hinge",
+          "pass": true,
+          "rms_error": 0.064759,
+          "peak_error": 0.39718,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 3.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_helmet_crown_panel_hinge",
+          "joint": "helmet_crown_panel_hinge",
+          "pass": true,
+          "rms_error": 0.061331,
+          "peak_error": 0.447204,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 1.5,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_faceplate_hinge",
+          "joint": "faceplate_hinge",
+          "pass": false,
+          "rms_error": 0.189965,
+          "peak_error": 0.724463,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 2.5,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_cheek_panel_hinge",
+          "joint": "left_cheek_panel_hinge",
+          "pass": true,
+          "rms_error": 0.069494,
+          "peak_error": 0.494263,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 1.5,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_cheek_panel_hinge",
+          "joint": "right_cheek_panel_hinge",
+          "pass": true,
+          "rms_error": 0.060796,
+          "peak_error": 0.494263,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 1.5,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_chin_guard_hinge",
+          "joint": "chin_guard_hinge",
+          "pass": true,
+          "rms_error": 0.032699,
+          "peak_error": 0.293111,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 1.5,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_chest_door_hinge",
+          "joint": "left_chest_door_hinge",
+          "pass": false,
+          "rms_error": 0.196223,
+          "peak_error": 0.607553,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 6.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_chest_door_hinge",
+          "joint": "right_chest_door_hinge",
+          "pass": false,
+          "rms_error": 0.19233,
+          "peak_error": 0.59927,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 6.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_ab_plate_1_hinge",
+          "joint": "ab_plate_1_hinge",
+          "pass": true,
+          "rms_error": 0.014262,
+          "peak_error": 0.158328,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 2.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_ab_plate_2_hinge",
+          "joint": "ab_plate_2_hinge",
+          "pass": true,
+          "rms_error": 0.014202,
+          "peak_error": 0.156375,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 2.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_ab_plate_3_hinge",
+          "joint": "ab_plate_3_hinge",
+          "pass": true,
+          "rms_error": 0.01507,
+          "peak_error": 0.154458,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 2.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_lat_plate_hinge",
+          "joint": "left_lat_plate_hinge",
+          "pass": false,
+          "rms_error": 0.170681,
+          "peak_error": 0.604223,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 4.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_lat_plate_hinge",
+          "joint": "right_lat_plate_hinge",
+          "pass": false,
+          "rms_error": 0.163661,
+          "peak_error": 0.599022,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 4.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_flight_flap_hinge",
+          "joint": "left_flight_flap_hinge",
+          "pass": true,
+          "rms_error": 0.063515,
+          "peak_error": 0.495641,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 2.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_flight_flap_hinge",
+          "joint": "right_flight_flap_hinge",
+          "pass": true,
+          "rms_error": 0.063494,
+          "peak_error": 0.495641,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 2.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_hip_abduction",
+          "joint": "left_hip_abduction",
+          "pass": false,
+          "rms_error": 0.196378,
+          "peak_error": 0.33927,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 120.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_hip_flexion",
+          "joint": "left_hip_flexion",
+          "pass": false,
+          "rms_error": 0.728148,
+          "peak_error": 1.194205,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 150.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_knee_flexion",
+          "joint": "left_knee_flexion",
+          "pass": false,
+          "rms_error": 0.206145,
+          "peak_error": 1.072314,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 150.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_ankle_flexion",
+          "joint": "left_ankle_flexion",
+          "pass": false,
+          "rms_error": 0.29378,
+          "peak_error": 0.471354,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 100.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_shin_guard_hinge",
+          "joint": "left_shin_guard_hinge",
+          "pass": true,
+          "rms_error": 0.034222,
+          "peak_error": 0.341328,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 2.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_thruster_cover_hinge",
+          "joint": "left_thruster_cover_hinge",
+          "pass": true,
+          "rms_error": 0.073547,
+          "peak_error": 0.62938,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 1.5,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_ankle_flap_hinge",
+          "joint": "left_ankle_flap_hinge",
+          "pass": true,
+          "rms_error": 0.038506,
+          "peak_error": 0.384636,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 1.5,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_calf_clamshell_hinge",
+          "joint": "left_calf_clamshell_hinge",
+          "pass": true,
+          "rms_error": 0.092495,
+          "peak_error": 0.695026,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 3.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_knee_cap_hinge",
+          "joint": "left_knee_cap_hinge",
+          "pass": true,
+          "rms_error": 0.026987,
+          "peak_error": 0.288484,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 2.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_thigh_clamshell_hinge",
+          "joint": "left_thigh_clamshell_hinge",
+          "pass": true,
+          "rms_error": 0.103766,
+          "peak_error": 0.696629,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 3.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_hip_abduction",
+          "joint": "right_hip_abduction",
+          "pass": false,
+          "rms_error": 0.196381,
+          "peak_error": 0.339273,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 120.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_hip_flexion",
+          "joint": "right_hip_flexion",
+          "pass": false,
+          "rms_error": 0.729044,
+          "peak_error": 1.195003,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 150.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_knee_flexion",
+          "joint": "right_knee_flexion",
+          "pass": false,
+          "rms_error": 0.206086,
+          "peak_error": 1.072314,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 150.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_ankle_flexion",
+          "joint": "right_ankle_flexion",
+          "pass": false,
+          "rms_error": 0.293766,
+          "peak_error": 0.47139,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 100.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_shin_guard_hinge",
+          "joint": "right_shin_guard_hinge",
+          "pass": true,
+          "rms_error": 0.034272,
+          "peak_error": 0.341328,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 2.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_thruster_cover_hinge",
+          "joint": "right_thruster_cover_hinge",
+          "pass": true,
+          "rms_error": 0.073442,
+          "peak_error": 0.62938,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 1.5,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_ankle_flap_hinge",
+          "joint": "right_ankle_flap_hinge",
+          "pass": true,
+          "rms_error": 0.038591,
+          "peak_error": 0.384636,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 1.5,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_calf_clamshell_hinge",
+          "joint": "right_calf_clamshell_hinge",
+          "pass": true,
+          "rms_error": 0.104707,
+          "peak_error": 0.695027,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 3.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_knee_cap_hinge",
+          "joint": "right_knee_cap_hinge",
+          "pass": true,
+          "rms_error": 0.026826,
+          "peak_error": 0.288484,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 2.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_thigh_clamshell_hinge",
+          "joint": "right_thigh_clamshell_hinge",
+          "pass": true,
+          "rms_error": 0.118184,
+          "peak_error": 0.696629,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 3.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_codpiece_hinge",
+          "joint": "codpiece_hinge",
+          "pass": true,
+          "rms_error": 0.037887,
+          "peak_error": 0.296311,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 2.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_hip_flap_hinge",
+          "joint": "left_hip_flap_hinge",
+          "pass": true,
+          "rms_error": 0.046421,
+          "peak_error": 0.347503,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 2.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_hip_flap_hinge",
+          "joint": "right_hip_flap_hinge",
+          "pass": true,
+          "rms_error": 0.046391,
+          "peak_error": 0.347503,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 2.0,
+          "force_unit": "N m"
+        }
+      ]
+    },
+    "disturbance_recovery": {
+      "pass": true,
+      "upright_after": 0.889,
+      "note": "upright>0.5 means it did not fall"
+    },
+    "wearer_support": {
+      "pass": true,
+      "powered": {
+        "wearer_head_z_start": 1.523,
+        "wearer_head_z_end": 1.518,
+        "head_drop_m": 0.005,
+        "finite": true,
+        "max_actuator_torque_Nm": 34.202
+      },
+      "unpowered": {
+        "wearer_head_z_start": 1.523,
+        "wearer_head_z_end": 0.933,
+        "head_drop_m": 0.59,
+        "finite": true,
+        "max_actuator_torque_Nm": 0.0
+      },
+      "validation_scope": "Ideal welded mannequin with human contact disabled; not a fit or human-support qualification",
+      "suit_supports_wearer": true
+    }
   },
-  "settle_under_gravity": {
-   "pass": true,
-   "max_joint_speed": 0.31,
-   "base_drop_m": 0.005,
-   "upright": 1.0
-  },
-  "hold_pose": {
-   "pass": true,
-   "max_joint_error_rad": 0.001
-  },
-  "actuator_sweep": {
-   "pass": true,
-   "tracked": "63/66",
-   "worst_error": 1.435
-  },
-  "disturbance_recovery": {
-   "pass": true,
-   "upright_after": 0.979,
-   "note": "upright>0.5 means it did not fall"
-  },
-  "wearer_support": {
-   "pass": true,
-   "powered": {
-    "wearer_head_z_start": 1.523,
-    "wearer_head_z_end": 1.518,
-    "head_drop_m": 0.005,
-    "finite": true,
-    "max_actuator_torque_Nm": 17.5
-   },
-   "unpowered": {
-    "wearer_head_z_start": 1.523,
-    "wearer_head_z_end": 0.668,
-    "head_drop_m": 0.855,
-    "finite": true,
-    "max_actuator_torque_Nm": 0.0
-   },
-   "suit_supports_wearer": true
+  "validation_scope": "simulation smoke tests, not hardware or wearable qualification",
+  "mujoco_version": "3.13.0",
+  "model_sha256": "7f4f34a43838f1db5d7d5038a2af293d457ade7a48dbff1ee35203807e29d1ab",
+  "limitations": [
+    "No measured motor, material, thermal or battery model",
+    "No manufacturing or human-fit validation",
+    "Robot self-collision disabled; interference is not validated"
+  ],
+  "self_collision_masks_enabled": false,
+  "passed": 5,
+  "total": 6,
+  "wearer": true,
+  "assist": {
+    "powered": {
+      "wearer_head_z_start": 1.523,
+      "wearer_head_z_end": 1.518,
+      "head_drop_m": 0.005,
+      "finite": true,
+      "max_actuator_torque_Nm": 34.202
+    },
+    "unpowered": {
+      "wearer_head_z_start": 1.523,
+      "wearer_head_z_end": 0.933,
+      "head_drop_m": 0.59,
+      "finite": true,
+      "max_actuator_torque_Nm": 0.0
+    },
+    "validation_scope": "Ideal welded mannequin with human contact disabled; not a fit or human-support qualification",
+    "suit_supports_wearer": true
   }
- },
- "passed": 6,
- "total": 6,
- "assist": {
-  "powered": {
-   "wearer_head_z_start": 1.523,
-   "wearer_head_z_end": 1.518,
-   "head_drop_m": 0.005,
-   "finite": true,
-   "max_actuator_torque_Nm": 17.5
-  },
-  "unpowered": {
-   "wearer_head_z_start": 1.523,
-   "wearer_head_z_end": 0.668,
-   "head_drop_m": 0.855,
-   "finite": true,
-   "max_actuator_torque_Nm": 0.0
-  },
-  "suit_supports_wearer": true
- }
 }

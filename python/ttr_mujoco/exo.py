@@ -8,6 +8,7 @@ suit powered vs unpowered with the wearer inside."""
 import xml.etree.ElementTree as ET
 import numpy as np
 import mujoco
+from .testbench import _finite
 
 # segment mass fractions and lengths as fraction of height (Winter, 2009)
 SEG = {  # name: (mass_frac, length_frac, radius_m)
@@ -29,8 +30,13 @@ def _capsule(parent, name, mass, length, radius, pos, axis="down", rgba="0.86 0.
     return b
 
 
-def add_wearer(mjcf_xml: str, height: float = 1.75, mass: float = 75.0, undersuit: bool = True) -> str:
+def add_wearer(mjcf_xml: str, height: float = 1.75, mass: float = 75.0, undersuit: bool = True,
+               hip_half_width: float = .125, shoulder_half_width: float = .235, arm_abduction: float = .45) -> str:
     """Return MJCF with a passive mannequin welded to the exoskeleton cuffs (in a dark undersuit by default)."""
+    if not all(np.isfinite(v) and v>0 for v in (height,mass,hip_half_width,shoulder_half_width)):
+        raise ValueError("Wearer dimensions and mass must be finite and positive")
+    if not np.isfinite(arm_abduction) or not 0<=arm_abduction<=np.pi/2:
+        raise ValueError("Neutral arm abduction must be between 0 and pi/2")
     root = ET.fromstring(mjcf_xml)
     world = root.find("worldbody")
     names = {b.get("name") for b in root.iter("body")}
@@ -46,7 +52,7 @@ def add_wearer(mjcf_xml: str, height: float = 1.75, mass: float = 75.0, undersui
     # ---- a properly proportioned adult (Winter segment lengths/masses; widths from anthropometric tables) ----
     skin = "0.87 0.72 0.60 1"; dark = "0.16 0.11 0.08 1"; suit = "0.10 0.10 0.12 1" if undersuit else skin
     shoulderW = 0.205 * H   # biacromial half-width ~0.205H total -> half 0.18
-    hipHalf = 0.09; neck = 0.045 * H; torsoLen = shoulderZ - hipZ   # head top lands at H (crown ~0.235 m above the shoulder line)
+    hipHalf = hip_half_width; neck = 0.045 * H; torsoLen = shoulderZ - hipZ
     pel = ET.SubElement(world, "body", name="w_pelvis", pos=f"0 0 {hipZ:.4f}")
     ET.SubElement(pel, "freejoint", name="wearer_root")
     ET.SubElement(pel, "geom", type="capsule", fromto=f"0 {-hipHalf:.3f} 0.02 0 {hipHalf:.3f} 0.02", size="0.095", mass=f"{m('pelvis'):.3f}", rgba=suit, contype="0", conaffinity="0")
@@ -60,12 +66,12 @@ def add_wearer(mjcf_xml: str, height: float = 1.75, mass: float = 75.0, undersui
     head = ET.SubElement(tor, "body", name="w_head", pos=f"0.01 0 {torsoLen*0.93+0.03:.4f}")
     ET.SubElement(head, "geom", type="capsule", fromto=f"0 0 0 0 0 {neck:.4f}", size="0.05", mass=f"{m('head')*0.15:.3f}", rgba=skin, contype="0", conaffinity="0")
     ET.SubElement(head, "geom", type="capsule", fromto=f"0 0 {neck+0.02:.4f} 0 0 {neck+0.07:.4f}", size="0.082", mass=f"{m('head')*0.85:.3f}", rgba=skin, contype="0", conaffinity="0")
-    ET.SubElement(head, "geom", type="sphere", size="0.012", pos=f"0.075 0.032 {neck+0.06:.4f}", rgba=dark, contype="0", conaffinity="0")
-    ET.SubElement(head, "geom", type="sphere", size="0.012", pos=f"0.075 -0.032 {neck+0.06:.4f}", rgba=dark, contype="0", conaffinity="0")
-    ET.SubElement(head, "geom", type="capsule", fromto=f"-0.02 -0.05 {neck+0.075:.4f} -0.02 0.05 {neck+0.075:.4f}", size="0.045", mass="0.2", rgba=dark, contype="0", conaffinity="0")  # hair
+    ET.SubElement(head, "geom", type="sphere", size="0.012", mass="0", pos=f"0.075 0.032 {neck+0.06:.4f}", rgba=dark, contype="0", conaffinity="0")
+    ET.SubElement(head, "geom", type="sphere", size="0.012", mass="0", pos=f"0.075 -0.032 {neck+0.06:.4f}", rgba=dark, contype="0", conaffinity="0")
+    ET.SubElement(head, "geom", type="capsule", fromto=f"-0.02 -0.05 {neck+0.075:.4f} -0.02 0.05 {neck+0.075:.4f}", size="0.045", mass="0", rgba=dark, contype="0", conaffinity="0")
     for s, sign in (("left", 1), ("right", -1)):
         # legs: thigh tapers into the shank; feet as flat boxes with a heel
-        th = ET.SubElement(pel, "body", name=f"w_{s}_thigh", pos=f"0 {sign*0.09:.3f} 0")
+        th = ET.SubElement(pel, "body", name=f"w_{s}_thigh", pos=f"0 {sign*hipHalf:.3f} 0")
         ET.SubElement(th, "joint", name=f"w_{s}_hip", type="hinge", axis="0 1 0", range="-0.6 2.0", damping="1.5")
         ET.SubElement(th, "geom", type="capsule", fromto=f"0 0 -0.02 0 0 {-thigh+0.04:.4f}", size="0.078", mass=f"{m('thigh'):.3f}", rgba=suit, contype="0", conaffinity="0")
         sh = ET.SubElement(th, "body", name=f"w_{s}_shank", pos=f"0 0 {-thigh:.4f}")
@@ -75,7 +81,9 @@ def add_wearer(mjcf_xml: str, height: float = 1.75, mass: float = 75.0, undersui
         ET.SubElement(ft, "joint", name=f"w_{s}_ankle", type="hinge", axis="0 1 0", range="-0.6 0.6", damping="1")
         ET.SubElement(ft, "geom", type="box", size="0.125 0.045 0.022", pos=f"0.055 0 {-ankleZ+0.022:.4f}", mass=f"{m('foot'):.3f}", rgba=suit, contype="0", conaffinity="0")
         # arms: hang from the clavicles; upper arm thicker than forearm; hand as a flat box with a thumb
-        ua = ET.SubElement(tor, "body", name=f"w_{s}_upper_arm", pos=f"0 {sign*(shoulderW*0.5+0.02):.3f} {torsoLen*0.9:.4f}")
+        ua = ET.SubElement(tor, "body", name=f"w_{s}_upper_arm",
+            pos=f"0 {sign*(shoulder_half_width-.05*np.cos(arm_abduction)):.6f} {torsoLen-.06-.05*np.sin(arm_abduction):.6f}",
+            quat=f"{np.cos(arm_abduction/2):.9g} {sign*np.sin(arm_abduction/2):.9g} 0 0")
         ET.SubElement(ua, "joint", name=f"w_{s}_shoulder", type="hinge", axis="0 1 0", range="-1.0 3.0", damping="1")
         ET.SubElement(ua, "geom", type="capsule", fromto=f"0 0 -0.02 0 0 {-uarm+0.03:.4f}", size="0.046", mass=f"{m('upper_arm'):.3f}", rgba=suit, contype="0", conaffinity="0")
         fa = ET.SubElement(ua, "body", name=f"w_{s}_forearm", pos=f"0 0 {-uarm:.4f}")
@@ -116,10 +124,15 @@ def assist_test(mjcf_with_wearer: str, seconds: float = 2.5) -> dict:
             j = m.actuator_trnid[a][0]; d.ctrl[a] = d.qpos[m.jnt_qposadr[j]]
         wid = mujoco.mj_name2id(m, mujoco.mjtObj.mjOBJ_BODY, "w_head")
         z0 = float(d.xpos[wid][2])
-        for _ in range(int(seconds / m.opt.timestep)): mujoco.mj_step(m, d)
+        peak = 0.0
+        for _ in range(int(seconds / m.opt.timestep)):
+            mujoco.mj_step(m, d)
+            peak = max(peak, float(np.max(np.abs(d.actuator_force))) if m.nu else 0.0)
+            if not _finite(d): break
         z1 = float(d.xpos[wid][2])
         torques = np.abs(d.actuator_force) if m.nu else np.zeros(0)
         out[label] = {"wearer_head_z_start": round(z0, 3), "wearer_head_z_end": round(z1, 3), "head_drop_m": round(z0 - z1, 3),
-                      "finite": bool(np.all(np.isfinite(d.qpos))), "max_actuator_torque_Nm": round(float(torques.max()), 1) if m.nu else 0.0}
-    out["suit_supports_wearer"] = out["powered"]["head_drop_m"] < 0.10 and out["unpowered"]["head_drop_m"] > out["powered"]["head_drop_m"] + 0.15
+                      "finite": _finite(d), "max_actuator_torque_Nm": round(peak, 3)}
+    out["validation_scope"] = "Ideal welded mannequin with human contact disabled; not a fit or human-support qualification"
+    out["suit_supports_wearer"] = out["powered"]["finite"] and out["unpowered"]["finite"] and abs(out["powered"]["head_drop_m"]) < 0.10 and out["unpowered"]["head_drop_m"] > out["powered"]["head_drop_m"] + 0.15
     return out

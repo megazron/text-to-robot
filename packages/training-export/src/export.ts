@@ -1,6 +1,7 @@
 // "Download and train" export: a multi-task, multi-method training suite backed
 // by PyBullet (loads the generated URDF with joint motors). Supports RL (PPO/SAC),
 // demo collection with a scripted expert, and behaviour cloning.
+import {readFileSync,readdirSync} from "node:fs";
 import type { RobotSpecification } from "@ttr/robot-schema";
 import { safeName } from "@ttr/robot-schema";
 import { generateUrdf } from "@ttr/urdf-generator";
@@ -17,7 +18,7 @@ function tasksPy(cls: RobotClass): string {
   for (const t of defs) {
     out.push(`def ${t.id}(self, action):`);
     // reward bodies are authored at 8-space indent; re-indent to 4 for a standalone fn
-    const body = t.reward.split("\n").map((l) => (l.startsWith("        ") ? "    " + l.slice(8) : l)).join("\n");
+    const body = t.reward.replace(/p\.getLinkState\(self.robot, self.tip_index\)/g,"self.p.getLinkState(self.robot, self.tip_index)").replace(/p\.getJointState/g,"self.p.getJointState").replace(/p\.getBaseVelocity/g,"self.p.getBaseVelocity").replace(/p\.getBasePositionAndOrientation/g,"self.p.getBasePositionAndOrientation").split("\n").map((l) => (l.startsWith("        ") ? "    " + l.slice(8) : l)).join("\n");
     out.push(body);
     out.push(`    return float(reward), bool(terminated)`, "");
   }
@@ -37,6 +38,7 @@ import gymnasium as gym
 from gymnasium import spaces
 import pybullet as p
 import pybullet_data
+from pybullet_utils.bullet_client import BulletClient
 import tasks as T
 
 URDF = os.path.join(os.path.dirname(__file__), "${name}.urdf")
@@ -52,8 +54,8 @@ class ${cn(name)}Env(gym.Env):
         self.task_fn = T.TASKS[self.task_name][1]
         self.max_steps = max_steps
         self.fall_height = 0.15
-        self._client = p.connect(p.GUI if render_mode == "human" else p.DIRECT)
-        p.setAdditionalSearchPath(pybullet_data.getDataPath())
+        self.p = BulletClient(connection_mode=p.GUI if render_mode == "human" else p.DIRECT)
+        self.p.setAdditionalSearchPath(pybullet_data.getDataPath())
         self._load()
         n = len(self.joints)
         self.action_space = spaces.Box(-1.0, 1.0, shape=(n,), dtype=np.float32)
@@ -61,22 +63,24 @@ class ${cn(name)}Env(gym.Env):
         self.steps = 0
 
     def _load(self):
-        p.resetSimulation(); p.setGravity(0, 0, -9.81)
-        self.plane = p.loadURDF("plane.urdf")
-        self.robot = p.loadURDF(URDF, [0, 0, 0.05], useFixedBase=${fixed})
-        self.joints = [j for j in range(p.getNumJoints(self.robot))
-                       if p.getJointInfo(self.robot, j)[2] != p.JOINT_FIXED]
-        self.limits = []
+        self.p.resetSimulation(); self.p.setGravity(0, 0, -9.81)
+        self.plane = self.p.loadURDF("plane.urdf")
+        self.robot = self.p.loadURDF(URDF, [0, 0, 0.05], useFixedBase=${fixed})
+        self.joints = [j for j in range(self.p.getNumJoints(self.robot))
+                       if self.p.getJointInfo(self.robot, j)[2] != p.JOINT_FIXED]
+        self.limits = []; self.efforts = []; self.velocities = []
         for j in self.joints:
-            info = p.getJointInfo(self.robot, j); lo, hi = info[8], info[9]
+            info = self.p.getJointInfo(self.robot, j); lo, hi = info[8], info[9]
             if lo >= hi: lo, hi = -np.pi, np.pi
             self.limits.append((lo, hi))
+            if info[10] <= 0 or info[11] <= 0: raise ValueError("URDF needs positive effort and velocity limits")
+            self.efforts.append(info[10]); self.velocities.append(info[11])
         self.tip_index = self.joints[-1] if self.joints else 0
 
     def _obs(self):
-        q = [p.getJointState(self.robot, j)[0] for j in self.joints]
-        dq = [p.getJointState(self.robot, j)[1] for j in self.joints]
-        pos, _ = p.getBasePositionAndOrientation(self.robot)
+        q = [self.p.getJointState(self.robot, j)[0] for j in self.joints]
+        dq = [self.p.getJointState(self.robot, j)[1] for j in self.joints]
+        pos, _ = self.p.getBasePositionAndOrientation(self.robot)
         extra = list(self.target) + list(pos) if hasattr(self, "target") else list(pos) + [0, 0, 0]
         return np.array(q + dq + extra[:6], dtype=np.float32)
 
@@ -89,17 +93,17 @@ class ${cn(name)}Env(gym.Env):
 
     def apply(self, action):
         action = np.clip(action, -1.0, 1.0)
-        for a, j, (lo, hi) in zip(action, self.joints, self.limits):
-            p.setJointMotorControl2(self.robot, j, p.POSITION_CONTROL,
-                                    targetPosition=lo + (float(a) + 1.0) * 0.5 * (hi - lo), force=50)
+        for a, j, (lo, hi), effort, velocity in zip(action, self.joints, self.limits, self.efforts, self.velocities):
+            self.p.setJointMotorControl2(self.robot, j, p.POSITION_CONTROL,
+                                    targetPosition=lo + (float(a) + 1.0) * 0.5 * (hi - lo), force=effort, maxVelocity=velocity)
 
     def step(self, action):
-        self.apply(action); p.stepSimulation(); self.steps += 1
+        self.apply(action); self.p.stepSimulation(); self.steps += 1
         reward, terminated = self.task_fn(self, np.asarray(action, dtype=np.float32))
-        return self._obs(), reward, terminated, self.steps >= self.max_steps, {}
+        return self._obs(), reward, terminated, self.steps >= self.max_steps, {"is_success": bool(terminated and self.task_name in ("reach", "settle", "navigate"))}
 
     def close(self):
-        if p.isConnected(): p.disconnect()
+        if self.p.isConnected(): self.p.disconnect()
 
 
 for _tid in T.TASKS:
@@ -289,8 +293,8 @@ def main(task, rl, bc, episodes):
     for _ in range(episodes):
         obs, _ = env.reset(); total = 0.0; done = False
         while not done:
-            obs, r, term, trunc, _ = env.step(act(obs)); total += r; done = term or trunc
-            if term: succ += 1
+            obs, r, term, trunc, info = env.step(act(obs)); total += r; done = term or trunc
+            if info.get("is_success", False): succ += 1
         rets.append(total)
     print(f"episodes={episodes} success={succ}/{episodes} mean_return={np.mean(rets):.2f}")
 
@@ -306,6 +310,7 @@ if __name__ == "__main__":
 export function exportTraining(spec: RobotSpecification): FileMap {
   const name = safeName(spec.robot_name);
   const cls = classify(spec);
+  const tip = spec.links.find(l=>l.name==="gripper_base")?.name ?? spec.end_effectors[0]?.attach_link ?? spec.links.find(l=>l.role?.startsWith("wrist"))?.name ?? "YOUR_TOOL_LINK";
   const taskList = TASKS[cls].map((t) => `  - \`${t.id}\` — ${t.title}`).join("\n");
   const files: FileMap = {};
   files[`training/${name}.urdf`] = generateUrdf(spec, { meshPrefix: "meshes/" });   // relative paths: PyBullet/MuJoCo resolve next to the URDF
@@ -317,18 +322,23 @@ export function exportTraining(spec: RobotSpecification): FileMap {
   files[`training/train_bc.py`] = bcPy(spec);
   files[`training/evaluate.py`] = evalPy(spec);
   files[`training/requirements.txt`] = "# CPU-only torch on GPU-less machines:  pip install torch --index-url https://download.pytorch.org/whl/cpu\ngymnasium>=0.29\npybullet>=3.2\nmujoco>=3.1\nstable-baselines3>=2.3\ntorch>=2.1\nnumpy>=1.24\ntensorboard>=2.15\n";
+  const pythonRoot=new URL("../../../python/ttr_mujoco/",import.meta.url);
+  for(const file of readdirSync(pythonRoot).filter(f=>f.endsWith(".py")))files[`training/mujoco/ttr_mujoco/${file}`]=readFileSync(new URL(file,pythonRoot),"utf8");
+  files[`training/mujoco/wearer.example.json`]=readFileSync(new URL("wearer.example.json",pythonRoot),"utf8");
+  files[`training/mujoco/robot.json`]=JSON.stringify(spec,null,2);
+  files[`training/mujoco/requirements.txt`]="mujoco>=3.1,<4\ngymnasium>=0.29\nnumpy>=1.24\npillow>=10\nstable-baselines3>=2.3\ntrimesh>=4.5,<5\ncoacd>=1.0.7,<2\nrtree>=1.3,<2\n";
   files[`training/mujoco/README.md`] =
 `# ${spec.robot_name} in MuJoCo
 
 Test, render and train this exact robot in MuJoCo with the text-to-robot Python layer:
 
 \`\`\`bash
-pip install "git+https://github.com/megazron/text-to-robot#subdirectory=python[train]"
+pip install -r requirements.txt
 pip install torch --index-url https://download.pytorch.org/whl/cpu    # CPU torch on GPU-less machines
 
-ttr-mujoco test   ../${name}.urdf                       # settle / hold / actuator sweep / disturbance
-ttr-mujoco render ../${name}.urdf -o ${name}.gif --motion sweep${cls === "manipulator" ? "" : " --fixed"}
-ttr-mujoco train  ../${name}.urdf --task ${cls === "manipulator" ? "reach" : "stand"} --steps 400000
+python -m ttr_mujoco test   ../${name}.urdf --self-collision                       # settle / hold / actuator sweep / disturbance
+python -m ttr_mujoco render ../${name}.urdf -o ${name}.gif --motion sweep${cls === "manipulator" ? "" : " --fixed"}
+python -m ttr_mujoco train  ../${name}.urdf --self-collision --task ${cls === "manipulator" ? `reach --tip-body ${tip}` : "stand"} --steps 400000
 \`\`\`
 
 Or from Python:
@@ -337,7 +347,7 @@ Or from Python:
 from ttr_mujoco import urdf_to_mjcf, run_tests, render_gif
 from ttr_mujoco.env import MujocoRobotEnv
 report = run_tests("../${name}.urdf")              # dict with per-test pass/fail + metrics
-env = MujocoRobotEnv("../${name}.urdf", task="${cls === "manipulator" ? "reach" : "stand"}")
+env = MujocoRobotEnv("../${name}.urdf", task="${cls === "manipulator" ? "reach" : "stand"}"${cls === "manipulator" ? `, tip_body="${tip}"` : ""})
 \`\`\`
 `;
   files[`training/README.md`] =

@@ -26,7 +26,7 @@ test("cli generate: default output goes under ./out/<name>/ with the full delive
   const r = run(cwd, "Create a 3 DOF arm");
   assert.equal(r.status, 0, r.stdout + r.stderr);
   const base = join(cwd, "out", "arm_3dof");
-  for (const f of ["arm_3dof/package.xml", "arm_3dof/urdf/arm_3dof.urdf.xacro", "arm_3dof/moveit/arm_3dof.srdf", "arm_3dof/worlds/arm_3dof.sdf", "BOM.md", "cad/stl/arm_3dof_assembly.stl", "training/train_rl.py", "arm_3dof.json"])
+  for (const f of ["arm_3dof/package.xml", "arm_3dof/urdf/arm_3dof.urdf.xacro", "arm_3dof/moveit/arm_3dof.srdf", "arm_3dof/worlds/arm_3dof.sdf", "BOM.md", "cad/stl/arm_3dof_assembly.stl", "cad/hardware/enclosure.py", "cad/hardware/example_enclosure.json", "training/train_rl.py", "arm_3dof.json"])
     assert.ok(existsSync(join(base, f)), `missing ${f}`);
   assert.deepEqual(readdirSync(cwd), ["out"], "nothing outside ./out");
 });

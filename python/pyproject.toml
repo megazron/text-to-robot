@@ -12,11 +12,21 @@ license = { text = "MIT" }
 dependencies = ["mujoco>=3.1", "numpy>=1.24", "gymnasium>=0.29", "Pillow>=10"]
 
 [project.optional-dependencies]
+cad = ["cadquery>=2.5,<3"]
+geometry = ["trimesh>=4.5,<5", "coacd>=1.0.7,<2", "rtree>=1.3,<2"]
 train = ["stable-baselines3>=2.3", "torch>=2.2"]
 
 [project.scripts]
 ttr-mujoco = "ttr_mujoco.__main__:main"
+ttr-enclosure = "ttr_cad.enclosure:main"
+ttr-collision = "ttr_mujoco.collision:main"
+ttr-attach-enclosure = "ttr_cad.attach:main"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["ttr_mujoco*"]
+include = ["ttr_mujoco*", "ttr_cad*"]
+
+[tool.setuptools.package-data]
+ttr_cad = ["*.json"]
+
+ttr_mujoco = ["*.json"]

@@ -4,16 +4,23 @@ import gymnasium as gym
 from gymnasium import spaces
 import mujoco
 from .convert import load_model
-from .testbench import _hold_targets, _up
+from .testbench import _hold_targets, _up, _finite
 
 
 class MujocoRobotEnv(gym.Env):
     metadata = {"render_modes": ["rgb_array"], "render_fps": 25}
 
-    def __init__(self, path_or_xml: str, task: str = "stand", max_steps: int = 1000, frame_skip: int = 5, floating=None, action_scale: float = 0.15):
+    def __init__(self, path_or_xml: str, task: str = "stand", max_steps: int = 1000, frame_skip: int = 5, floating=None, action_scale: float = 0.15, self_collision: bool = False, tip_body: str | None = None):
         super().__init__()
+        if task not in ("stand","walk","reach","sweep"): raise ValueError("Unknown task")
+        if max_steps<1 or frame_skip<1 or not np.isfinite(action_scale) or action_scale<=0: raise ValueError("Invalid environment limits")
         self.action_scale = action_scale  # fraction of half-range per unit action; balance needs small deltas
-        self.m = load_model(path_or_xml, floating=floating) if path_or_xml.endswith(".urdf") else load_model(path_or_xml)
+        self.m = load_model(path_or_xml, floating=floating, self_collision=self_collision) if path_or_xml.endswith(".urdf") else load_model(path_or_xml)
+        self.tip_id = -1
+        if task=="reach":
+            if not tip_body: raise ValueError("reach requires an explicit tip_body; body order is not an end-effector definition")
+            self.tip_id=mujoco.mj_name2id(self.m,mujoco.mjtObj.mjOBJ_BODY,tip_body)
+            if self.tip_id<1: raise ValueError("tip_body not found")
         self.d = mujoco.MjData(self.m); self.task = task; self.max_steps = max_steps; self.frame_skip = frame_skip
         self.floating = bool(self.m.nq and self.m.jnt_type[0] == mujoco.mjtJoint.mjJNT_FREE)
         nu = self.m.nu
@@ -41,7 +48,9 @@ class MujocoRobotEnv(gym.Env):
         return self._obs(), {}
 
     def step(self, action):
-        a = np.clip(np.asarray(action, dtype=np.float64), -1, 1)
+        a = np.asarray(action, dtype=np.float64)
+        if a.shape != self.action_space.shape or not np.all(np.isfinite(a)): raise ValueError("Action must have the actuator shape and finite values")
+        a = np.clip(a, -1, 1)
         span = 0.5 * (self.hi - self.lo)
         self.d.ctrl[:] = np.clip(self.hold + a * span * self.action_scale, self.lo, self.hi)   # small corrective deltas around the standing pose
         if self.task == "stand" and self.floating and self.steps == self.next_push:
@@ -49,7 +58,7 @@ class MujocoRobotEnv(gym.Env):
             self.next_push += int(self.np_random.integers(60, 120))
         for _ in range(self.frame_skip): mujoco.mj_step(self.m, self.d)
         self.steps += 1
-        finite = bool(np.all(np.isfinite(self.d.qpos)))
+        finite = _finite(self.d)
         up = _up(self.m, self.d)
         ctrl_cost = 1e-3 * float(np.square(a).sum())
         if self.task == "walk" and self.floating:
@@ -57,9 +66,10 @@ class MujocoRobotEnv(gym.Env):
         elif self.task == "stand" and self.floating:
             reward = (up or 0) - 0.1 * float(np.linalg.norm(self.d.qvel[:3])) - ctrl_cost; term = (up is not None and up < 0.3) or not finite
         elif self.task == "reach":
-            tip = self.d.xpos[self.m.nbody - 1]; dist = float(np.linalg.norm(tip - self.target)); reward = -dist - ctrl_cost; term = dist < 0.05 or not finite
+            tip = self.d.xpos[self.tip_id]; dist = float(np.linalg.norm(tip - self.target)); reward = -dist - ctrl_cost; term = dist < 0.05 or not finite
         else:  # "sweep": track a moving reference (smoothness benchmark)
             ref = 0.5 * np.sin(0.02 * self.steps + np.arange(self.m.nu)); reward = -float(np.mean((a - ref) ** 2)); term = not finite
+        if not finite: reward = -100.0
         return self._obs(), float(reward), bool(term), self.steps >= self.max_steps, {"upright": up}
 
     def render(self):

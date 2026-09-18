@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { finalizeSpec } from "@ttr/robot-generator";
-import { nDofArm, humanoid, diffDrive, TEMPLATES } from "@ttr/robot-templates";
+import { nDofArm, humanoid, diffDrive, TEMPLATES, ironManMark43 } from "@ttr/robot-templates";
 import { validateSpec } from "@ttr/robot-schema";
 import { linkPositions } from "@ttr/kinematics";
 import { generateStlFiles, assemblyStl, printabilityReport, geometryTris } from "@ttr/cad";
@@ -69,4 +69,35 @@ test("training export produces a coherent suite for every template", () => {
       assert.ok(f[req], `${t.id} missing ${req}`);
     assert.ok(String(f["training/train_rl.py"]).includes("_tb_dir"), "trainer must tolerate missing tensorboard");
   }
+});
+
+test('MoveIt wearable groups separate both limbs from armour and wire mock control',()=>{
+  const spec=finalizeSpec(ironManMark43());
+  const files=exportRos2Package(spec),prefix=spec.robot_name;
+  const srdf=String(files[`${prefix}/moveit/${prefix}.srdf`]);
+  assert.ok(srdf.includes('group name="left_arm"')&&srdf.includes('group name="right_arm"'));
+  assert.ok(srdf.includes('group name="left_leg"')&&srdf.includes('group name="right_leg"'));
+  assert.ok(String(files[`${prefix}/urdf/${prefix}.urdf.xacro`]).includes('config/ros2_control.xacro'));
+  assert.ok(String(files[`${prefix}/config/controllers.yaml`]).includes('allow_partial_joints_goal: true'));
+  assert.ok(String(files[`${prefix}/config/ompl_planning.yaml`]).includes('geometric::RRTConnect'));
+});
+test('training download includes the actual MuJoCo runtime and per-joint PyBullet limits',()=>{
+  const files=exportTraining(finalizeSpec(nDofArm(6)));
+  assert.ok(files['training/mujoco/ttr_mujoco/convert.py']);
+  assert.ok(files['training/mujoco/ttr_mujoco/wearability.py']);
+  const env=String(files['training/robot_env.py']);
+  assert.ok(env.includes('force=effort')&&env.includes('BulletClient'));assert.ok(!env.includes('force=50'));
+});
+
+test('ROS collision meshes preserve hollow geometry without changing default simulation boxes', async()=>{
+  const {generateUrdf}=await import('@ttr/urdf-generator');
+  const spec=finalizeSpec(ironManMark43());
+  const files=exportRos2Package(spec),name=spec.robot_name;
+  const collisions=(xml:string)=>[...xml.matchAll(/<collision>[\s\S]*?<\/collision>/g)].map(m=>m[0]);
+  assert.ok(collisions(String(files[`${name}/urdf/${name}.urdf`])).some(c=>c.includes('<mesh')));
+  assert.ok(!collisions(generateUrdf(spec)).some(c=>c.includes('<mesh')));
+  const link=spec.links.find(l=>l.geometry.type==='mesh')!;
+  const xml=generateUrdf(spec,{meshCollisions:true});
+  const body=xml.split(`<link name="${link.name}">`)[1].split('</link>')[0];
+  assert.equal(body.match(/<visual>\s*(<origin[^>]+>)/)?.[1],body.match(/<collision>\s*(<origin[^>]+>)/)?.[1]);
 });

@@ -34,7 +34,7 @@ export function inertiaOf(g: Geometry, mass: number): Inertia {
       // hemispheres: treat as sphere shifted by h/2 (parallel-axis)
       const iSph = (2 / 5) * ms * r * r;
       const d = h / 2 + (3 / 8) * r;
-      const ixxSph = iSph + ms * d * d;
+      const ixxSph = iSph - ms * (3 * r / 8) ** 2 + ms * d * d;
       return { ixx: ixxCyl + ixxSph, iyy: ixxCyl + ixxSph, izz: izzCyl + iSph, ...zero };
     }
   }

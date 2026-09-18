@@ -1,14 +1,15 @@
 # Bill of Materials — iron_man_mark_43
 
-**Estimated total: $45764.54**  ·  tier: research  ·  budget: $60000 ✅ within budget
+**Estimated total: $32563.77**  ·  tier: research  ·  budget: $60000 ✅ within budget
+
+**Torque sizing: fails; hardware verified: no.**
 
 | Category | Component | Qty | Unit $ | Subtotal $ | Spec |
 |---|---|--:|--:|--:|---|
-| Actuator | Harmonic Drive CSD + frameless BLDC (150 N·m) _(joint trunk_flex)_ | 7 | 2400 | 16800 | wearable-robot joint module, absolute encoder (150 N·m) |
-| Actuator | CubeMars AK80-64 _(joint left_ankle_flexion)_ | 8 | 700 | 5600 | exoskeleton-class QDD, 64:1, CAN (120 N·m) |
-| Actuator | T-Motor AK80-9 (BLDC + driver) _(joint left_wrist_flexion)_ | 4 | 320 | 1280 | quasi-direct-drive, CAN (18 N·m) |
-| Actuator | Dynamixel XM430-W350 _(joint helmet_crown_panel_hinge)_ | 45 | 270 | 12150 | RS485 smart servo, encoder (4.1 N·m) |
-| Actuator | Dynamixel MX-64AR _(joint left_lat_plate_hinge)_ | 2 | 300 | 600 | RS485 smart servo (6 N·m) |
+| Actuator | CubeMars AK80-64 _(joint trunk_flex; rating source: https://www.cubemars.com/goods.php?id=1143)_ | 15 | 700 | 10500 | AK80-64 KV80: 64:1, 48 N m rated / 120 N m peak, 98 x 61.9 mm, 850 g; mounting interfaces require vendor drawing (48 N·m) |
+| Actuator | T-Motor AK80-9 (BLDC + driver) _(joint left_wrist_flexion; rating duty/source unverified)_ | 4 | 320 | 1280 | quasi-direct-drive, CAN (18 N·m) |
+| Actuator | Dynamixel XM430-W350 _(joint helmet_crown_panel_hinge; rating duty/source unverified)_ | 45 | 270 | 12150 | RS485 smart servo, encoder (4.1 N·m) |
+| Actuator | Dynamixel MX-64AR _(joint left_lat_plate_hinge; rating duty/source unverified)_ | 2 | 300 | 600 | RS485 smart servo (6 N·m) |
 | Sensor | Arducam IMX477 HQ _(hud_camera)_ | 1 | 50 | 50 | 12.3MP, C-mount |
 | Sensor | Bosch BNO085 _(trunk_imu)_ | 1 | 20 | 20 | 9-axis fused AHRS |
 | Sensor | Loadstar / Tekscan insole force sensor _(left_insole_force)_ | 2 | 350 | 700 | calibrated plantar force |
@@ -16,30 +17,30 @@
 | Power | Li-ion 48V 20Ah pack | 1 | 320 | 320 | 960 Wh; est. load 712 W |
 | Power | DC-DC buck regulator (5V/10A) | 1 | 12 | 12 | logic + servo rail |
 | Power | Power distribution board + fuse + switch | 1 | 14 | 14 | wiring harness backbone |
-| Structure | Aluminium frame + brackets | 1 | 3136.14 | 3136.14 | ~104.54 kg material @ $30/kg |
+| Structure | Aluminium frame + brackets | 1 | 3263.37 | 3263.37 | ~108.78 kg material @ $30/kg |
 | Structure | Fastener + bearing kit | 1 | 18 | 18 | M3 screws, heat inserts, 608 bearings |
-| Wiring & misc | Wiring, connectors, JST/Dupont, sleeving | 1 | 4565.4 | 4565.4 | ~12% of electronics |
+| Wiring & misc | Wiring, connectors, JST/Dupont, sleeving | 1 | 3137.4 | 3137.4 | ~12% of electronics |
 
 ## Actuator sizing
 
 | Joint | Required torque (N·m) | Chosen actuator | Margin |
 |---|--:|---|--:|
-| trunk_flex | 96 | Harmonic Drive CSD + frameless BLDC (150 N·m) | 1.6x |
-| left_hip_abduction | 96 | Harmonic Drive CSD + frameless BLDC (150 N·m) | 1.6x |
-| left_hip_flexion | 120 | Harmonic Drive CSD + frameless BLDC (150 N·m) | UNDERSIZED |
-| left_knee_flexion | 120 | Harmonic Drive CSD + frameless BLDC (150 N·m) | UNDERSIZED |
-| left_ankle_flexion | 80 | CubeMars AK80-64 | 1.5x |
-| right_hip_abduction | 96 | Harmonic Drive CSD + frameless BLDC (150 N·m) | 1.6x |
-| right_hip_flexion | 120 | Harmonic Drive CSD + frameless BLDC (150 N·m) | UNDERSIZED |
-| right_knee_flexion | 120 | Harmonic Drive CSD + frameless BLDC (150 N·m) | UNDERSIZED |
-| right_ankle_flexion | 80 | CubeMars AK80-64 | 1.5x |
-| left_shoulder_abduction | 48 | CubeMars AK80-64 | 2.5x |
-| left_shoulder_flexion | 48 | CubeMars AK80-64 | 2.5x |
-| left_elbow_flexion | 32 | CubeMars AK80-64 | 3.8x |
+| trunk_flex | 96 | CubeMars AK80-64 | UNDERSIZED |
+| left_hip_abduction | 96 | CubeMars AK80-64 | UNDERSIZED |
+| left_hip_flexion | 120 | CubeMars AK80-64 | UNDERSIZED |
+| left_knee_flexion | 120 | CubeMars AK80-64 | UNDERSIZED |
+| left_ankle_flexion | 80 | CubeMars AK80-64 | UNDERSIZED |
+| right_hip_abduction | 96 | CubeMars AK80-64 | UNDERSIZED |
+| right_hip_flexion | 120 | CubeMars AK80-64 | UNDERSIZED |
+| right_knee_flexion | 120 | CubeMars AK80-64 | UNDERSIZED |
+| right_ankle_flexion | 80 | CubeMars AK80-64 | UNDERSIZED |
+| left_shoulder_abduction | 48 | CubeMars AK80-64 | UNDERSIZED |
+| left_shoulder_flexion | 48 | CubeMars AK80-64 | UNDERSIZED |
+| left_elbow_flexion | 32 | CubeMars AK80-64 | 1.5x |
 | left_wrist_flexion | 12 | T-Motor AK80-9 (BLDC + driver) | 1.5x |
-| right_shoulder_abduction | 48 | CubeMars AK80-64 | 2.5x |
-| right_shoulder_flexion | 48 | CubeMars AK80-64 | 2.5x |
-| right_elbow_flexion | 32 | CubeMars AK80-64 | 3.8x |
+| right_shoulder_abduction | 48 | CubeMars AK80-64 | UNDERSIZED |
+| right_shoulder_flexion | 48 | CubeMars AK80-64 | UNDERSIZED |
+| right_elbow_flexion | 32 | CubeMars AK80-64 | 1.5x |
 | right_wrist_flexion | 12 | T-Motor AK80-9 (BLDC + driver) | 1.5x |
 | helmet_crown_panel_hinge | 1.2 | Dynamixel XM430-W350 | 3.4x |
 | faceplate_hinge | 2 | Dynamixel XM430-W350 | 2.0x |
@@ -92,10 +93,20 @@
 | right_ankle_flap_hinge | 1.2 | Dynamixel XM430-W350 | 3.4x |
 
 ## Warnings
-- ⚠️ joint left_hip_flexion needs ~120.00 N·m; strongest in research tier is Harmonic Drive CSD + frameless BLDC (150 N·m) (150 N·m) — increase budget for a stronger actuator
-- ⚠️ joint left_knee_flexion needs ~120.00 N·m; strongest in research tier is Harmonic Drive CSD + frameless BLDC (150 N·m) (150 N·m) — increase budget for a stronger actuator
-- ⚠️ joint right_hip_flexion needs ~120.00 N·m; strongest in research tier is Harmonic Drive CSD + frameless BLDC (150 N·m) (150 N·m) — increase budget for a stronger actuator
-- ⚠️ joint right_knee_flexion needs ~120.00 N·m; strongest in research tier is Harmonic Drive CSD + frameless BLDC (150 N·m) (150 N·m) — increase budget for a stronger actuator
+- ⚠️ Catalog values are planning estimates. Except explicitly sourced rated values, torque entries may be stall/peak ratings; continuous duty, fit and complete assemblies are unverified.
+- ⚠️ joint trunk_flex needs ~96.00 N·m; strongest in research tier is CubeMars AK80-64 (48 N·m) — increase budget for a stronger actuator
+- ⚠️ joint left_hip_abduction needs ~96.00 N·m; strongest in research tier is CubeMars AK80-64 (48 N·m) — increase budget for a stronger actuator
+- ⚠️ joint left_hip_flexion needs ~120.00 N·m; strongest in research tier is CubeMars AK80-64 (48 N·m) — increase budget for a stronger actuator
+- ⚠️ joint left_knee_flexion needs ~120.00 N·m; strongest in research tier is CubeMars AK80-64 (48 N·m) — increase budget for a stronger actuator
+- ⚠️ joint left_ankle_flexion needs ~80.00 N·m; strongest in research tier is CubeMars AK80-64 (48 N·m) — increase budget for a stronger actuator
+- ⚠️ joint right_hip_abduction needs ~96.00 N·m; strongest in research tier is CubeMars AK80-64 (48 N·m) — increase budget for a stronger actuator
+- ⚠️ joint right_hip_flexion needs ~120.00 N·m; strongest in research tier is CubeMars AK80-64 (48 N·m) — increase budget for a stronger actuator
+- ⚠️ joint right_knee_flexion needs ~120.00 N·m; strongest in research tier is CubeMars AK80-64 (48 N·m) — increase budget for a stronger actuator
+- ⚠️ joint right_ankle_flexion needs ~80.00 N·m; strongest in research tier is CubeMars AK80-64 (48 N·m) — increase budget for a stronger actuator
+- ⚠️ joint left_shoulder_abduction needs ~48.00 N·m; strongest in research tier is CubeMars AK80-64 (48 N·m) — increase budget for a stronger actuator
+- ⚠️ joint left_shoulder_flexion needs ~48.00 N·m; strongest in research tier is CubeMars AK80-64 (48 N·m) — increase budget for a stronger actuator
+- ⚠️ joint right_shoulder_abduction needs ~48.00 N·m; strongest in research tier is CubeMars AK80-64 (48 N·m) — increase budget for a stronger actuator
+- ⚠️ joint right_shoulder_flexion needs ~48.00 N·m; strongest in research tier is CubeMars AK80-64 (48 N·m) — increase budget for a stronger actuator
 
 ## Notes
 - Tier: research. Prices are planning estimates (USD), not quotes. Structure assumes machined aluminium.

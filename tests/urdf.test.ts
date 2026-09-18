@@ -22,7 +22,7 @@ test("malformed XML fails validation gracefully", () => {
   assert.ok(v.issues.length > 0);
 });
 test("xacro output declares the xacro namespace and macros", () => {
-  const x = generateXacro(finalizeSpec(nDofArm(6)));
+  const x = generateXacro(nDofArm(6));
   assert.ok(x.includes('xmlns:xacro'));
   assert.ok(x.includes("xacro:cyl_inertial"));
 });

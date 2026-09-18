@@ -1,0 +1,105 @@
+{
+  "name": "electronics_bay_demo",
+  "dimension_source": "Synthetic 60 x 40 x 12 mm populated PCB envelope. Replace with measured hardware; not a vendor part.",
+  "status": "geometric fit checked against supplied rectangular envelope; hardware fit unverified",
+  "cad_units": "mm",
+  "density_kg_m3": 1240,
+  "assembly": {
+    "lid_holes_mm": [
+      [
+        -35.6,
+        -19.4
+      ],
+      [
+        -35.6,
+        19.4
+      ],
+      [
+        35.6,
+        -19.4
+      ],
+      [
+        35.6,
+        19.4
+      ]
+    ],
+    "lid_bolt_grip_mm": 22.5,
+    "board_bolt_grip_excluding_pcb_mm": 7.5,
+    "board_origin_mm": [
+      0,
+      0,
+      7.5
+    ]
+  },
+  "parts": {
+    "base": {
+      "volume_mm3": 18772.023370173218,
+      "mass_kg": 0.02327730897901479,
+      "com_m": [
+        -0.00028638361960179833,
+        -2.425501908326629e-18,
+        0.006960061829112088
+      ],
+      "inertia_kg_m2": [
+        [
+          7.55798690237553e-06,
+          -8.5898320399262e-22,
+          4.026367743230019e-08
+        ],
+        [
+          -8.5898320399262e-22,
+          1.542104434254801e-05,
+          2.137828794759974e-22
+        ],
+        [
+          4.026367743230019e-08,
+          2.137828794759974e-22,
+          2.1109604199016144e-05
+        ]
+      ],
+      "stl_assembly_offset_mm": [
+        0,
+        0,
+        0.0
+      ]
+    },
+    "lid": {
+      "volume_mm3": 6364.780182454479,
+      "mass_kg": 0.007892327426243554,
+      "com_m": [
+        1.752695400571025e-18,
+        6.262816049174172e-19,
+        0.02150000000000001
+      ],
+      "inertia_kg_m2": [
+        [
+          1.4687923054865687e-06,
+          -1.1785584774770541e-22,
+          8.876810397850946e-23
+        ],
+        [
+          -1.1785584774770541e-22,
+          3.213114082589577e-06,
+          1.6433332916676595e-22
+        ],
+        [
+          8.876810397850946e-23,
+          1.6433332916676595e-22,
+          4.67664483645865e-06
+        ]
+      ],
+      "stl_assembly_offset_mm": [
+        0,
+        0,
+        20.5
+      ]
+    }
+  },
+  "limitations": [
+    "No connector-specific keepouts, cable bend or cooling analysis",
+    "No load or fastener-strength qualification",
+    "Choose bolts, nuts and washers using measured grip and board thickness",
+    "CAD-derived mass assumes homogeneous solid material, not slicer infill",
+    "Enclosure is not automatically attached to the robot or included in its mass model"
+  ]
+}

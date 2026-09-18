@@ -84,7 +84,7 @@ function buildRobot(spec) {
     const g = isCol ? (l.collision ?? l.geometry) : l.geometry;
     const geom = makeGeom(g);
     const color = matColor(spec, l.material, l.role === "gripper" ? 0x2a5bd0 : l.role === "wheel" ? 0x1a1a1f : l.role === "base" ? 0x3f3f46 : 0xd8d8dc);
-    const mesh = new THREE.Mesh(geom, new THREE.MeshStandardMaterial({ color, metalness: 0.25, roughness: 0.55, transparent: isCol, opacity: isCol ? 0.45 : 1, wireframe: isCol }));
+    const mesh = new THREE.Mesh(geom, new THREE.MeshStandardMaterial({ color, metalness: l.material?.startsWith("mk43_") ? 0.65 : 0.25, roughness: l.material?.startsWith("mk43_") ? 0.30 : 0.55, transparent: isCol, opacity: isCol ? 0.45 : 1, wireframe: isCol }));
     mesh.matrixAutoUpdate = false; mesh.matrix.copy(mat4(poseArr(l.origin)));
     mesh.userData.linkName = l.name;
     if (g.type === "mesh" && state.id && !isCol) loadMeshInto(mesh, g);
@@ -379,6 +379,17 @@ document.querySelectorAll(".tab").forEach((t) => (t.onclick = () => setTab(t.dat
 document.querySelectorAll("[data-dl]").forEach((b) => (b.onclick = () => handleDownload(b.dataset.dl)));
 for (const id of ["#showCollision", "#showAxes", "#showFrames"]) $(id).onchange = () => { if (state.robot) buildRobot(state.robot); };
 $("#resetView").onclick = frameRobot;
+$("#importRobot").onclick = () => $("#robotFile").click();
+$("#robotFile").onchange = async (event) => {
+  const file=event.target.files[0];if(!file)return;
+  const button=$("#importRobot");setBusy(button,true);
+  try {
+    if(file.size>3_900_000)throw new Error("Robot JSON must be smaller than 3.9 MB");
+    const robot=JSON.parse(await file.text());
+    const result=await api("/api/robots/import",{robot});applyResult(result,`Imported ${file.name}`);
+  }catch(error){status("✗ "+error.message,"err");}
+  finally {setBusy(button,false,"Import JSON");event.target.value="";}
+};
 $("#budget").oninput = () => { clearTimeout(window.__bt); window.__bt = setTimeout(refreshBom, 350); };
 
 const EXAMPLES = [

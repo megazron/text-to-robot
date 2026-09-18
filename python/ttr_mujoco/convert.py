@@ -1,5 +1,5 @@
 """URDF -> actuated MuJoCo MJCF scene (floor, light, position actuators, optional free base)."""
-import os, re, tempfile
+import os, re, tempfile, warnings
 import xml.etree.ElementTree as ET
 import numpy as np
 import mujoco
@@ -34,6 +34,11 @@ def _lowest_point(model: mujoco.MjModel) -> float:
             ext = float(zrow[2] * size[1] + size[0])
         elif t == G.mjGEOM_PLANE:
             continue
+        elif t == G.mjGEOM_MESH:
+            mesh = int(model.geom_dataid[g]); start = model.mesh_vertadr[mesh]; count = model.mesh_vertnum[mesh]
+            vertices = model.mesh_vert[start:start+count]
+            lows.append(float(pos[2] + np.min(vertices @ R[2, :])))
+            continue
         else:
             ext = float(model.geom_rbound[g])
         lows.append(float(pos[2]) - ext)
@@ -42,7 +47,18 @@ def _lowest_point(model: mujoco.MjModel) -> float:
 
 def urdf_to_mjcf(urdf_path: str, floating=None, kp: float | None = None, out: str | None = None, self_collision: bool = False) -> str:
     """Convert a URDF to an MJCF scene string with actuators. floating=None -> auto."""
-    urdf_xml = open(urdf_path, encoding="utf8").read()
+    with open(urdf_path, encoding="utf8") as source_file:
+        urdf_xml = source_file.read()
+    source = ET.fromstring(urdf_xml)
+    joint_efforts = {}
+    for joint in source.findall("joint"):
+        if joint.get("type") not in ("revolute", "continuous", "prismatic"):
+            continue
+        limit = joint.find("limit")
+        effort = float(limit.get("effort", "nan")) if limit is not None else float("nan")
+        if not np.isfinite(effort) or effort <= 0:
+            raise ValueError(f"Joint {joint.get('name')!r} needs a finite positive URDF effort limit; refusing to invent actuator capacity")
+        joint_efforts[joint.get("name")] = effort
     if floating is None:
         floating = _guess_floating(urdf_xml)
     # polygon-mesh parts: resolve package://<pkg>/meshes/<f> and relative meshes/<f> to absolute files next to the URDF
@@ -54,16 +70,24 @@ def urdf_to_mjcf(urdf_path: str, floating=None, kp: float | None = None, out: st
         return f'filename="{os.path.join(urdf_dir, "meshes", f)}"'
     resolved = re.sub(r'filename="(?:package://[^/"]+/meshes/|meshes/)([^"]+)"', _abs_mesh, urdf_xml)
     has_meshes = "<mesh " in resolved
-    if "<mujoco>" not in resolved:
-        # URDF importer defaults: fusestatic (fixed links vanish into their parents, losing the names the
-        # wearer welds and renders look up) and discardvisual (polygon parts live in <visual>; their
-        # collision is a bounding box). Keep both: visuals import as group-1, non-colliding geoms.
-        i = resolved.index(">", resolved.index("<robot")) + 1
-        resolved = resolved[:i] + f'<mujoco><compiler fusestatic="false" discardvisual="{"false" if has_meshes else "true"}"/></mujoco>' + resolved[i:]
+    imported = ET.fromstring(resolved)
+    extension = imported.find("mujoco")
+    if extension is None: extension = ET.SubElement(imported, "mujoco")
+    compiler = extension.find("compiler")
+    if compiler is None: compiler = ET.SubElement(extension, "compiler")
+    # Keep fixed-link identities so source inertias can be restored per body,
+    # even when the source supplied its own MuJoCo compiler configuration.
+    compiler.set("fusestatic", "false")
+    compiler.set("discardvisual", "false" if has_meshes else "true")
+    resolved = ET.tostring(imported, encoding="unicode")
     load_path = urdf_path
     if resolved != urdf_xml:
         tmpu = tempfile.NamedTemporaryFile(suffix=".urdf", delete=False, mode="w", encoding="utf8"); tmpu.write(resolved); tmpu.close(); load_path = tmpu.name
-    base = mujoco.MjModel.from_xml_path(load_path)
+    try:
+        base = mujoco.MjModel.from_xml_path(load_path)
+    finally:
+        if load_path != urdf_path:
+            os.unlink(load_path)
     lift = max(0.0, -_lowest_point(base)) + 0.005 if floating else 0.0
     total_mass = float(sum(base.body_mass))
     try:  # the static root link's mass is dropped by the URDF importer; count it when the base floats
@@ -80,7 +104,8 @@ def urdf_to_mjcf(urdf_path: str, floating=None, kp: float | None = None, out: st
     h_com = float((_mass * _z).sum() / _mass.sum()) if _mass.sum() > 0 else 0.3
     mgh = total_mass * 9.81 * max(h_com, 0.05)
     if kp is None: kp = float(np.clip(max(6.0 * total_mass, 3.0 * mgh), 40.0, 6000.0))
-    fmax = float(np.clip(max(8.0 * total_mass, 1.2 * mgh), 60.0, 3000.0))
+    if not np.isfinite(kp) or kp <= 0:
+        raise ValueError("kp must be finite and positive")
 
     tmp = tempfile.NamedTemporaryFile(suffix=".xml", delete=False); tmp.close()
     mujoco.mj_saveLastXML(tmp.name, base)
@@ -94,13 +119,14 @@ def urdf_to_mjcf(urdf_path: str, floating=None, kp: float | None = None, out: st
     if opt is None: opt = ET.SubElement(root, "option")
     opt.set("timestep", "0.002"); opt.set("gravity", "0 0 -9.81"); opt.set("integrator", "implicitfast")
     default = ET.SubElement(root, "default")
-    ET.SubElement(default, "joint", damping="0.6", armature="0.01", frictionloss="0.05")
+    # Imported URDF damping/friction remain authoritative. Do not add fictitious
+    # rotor inertia or friction to joints whose source does not specify them.
     # robot geoms: collide with the world (floor) but not with each other unless asked.
     # Primitive-built robots overlap at their joints; self-collision there explodes the sim.
     geom_kw = dict(friction="1 0.005 0.0001", condim="3", solref="0.005 1", solimp="0.95 0.99 0.001")
     if not self_collision: geom_kw.update(contype="1", conaffinity="0")
     ET.SubElement(default, "geom", **geom_kw)
-    ET.SubElement(default, "position", kp=f"{kp:.1f}", forcerange=f"-{fmax:.0f} {fmax:.0f}")
+    ET.SubElement(default, "position", kp=f"{kp:.9g}")
     asset = ET.SubElement(root, "asset")
     ET.SubElement(asset, "texture", type="skybox", builtin="gradient", rgb1="0.35 0.45 0.6", rgb2="0.05 0.06 0.08", width="256", height="256")
     ET.SubElement(asset, "texture", name="grid", type="2d", builtin="checker", rgb1="0.2 0.25 0.3", rgb2="0.12 0.15 0.19", width="512", height="512")
@@ -132,33 +158,32 @@ def urdf_to_mjcf(urdf_path: str, floating=None, kp: float | None = None, out: st
     else:
         for c in children: world.append(c)
 
-    # preserve the URDF's designed masses/inertias: mj_saveLastXML omits <inertial>,
-    # and MuJoCo would otherwise re-derive mass from geometry at 1000 kg/m^3.
+    # Restore source inertials directly, including products of inertia and RPY.
+    # Importer/save round-trips can discard root inertia or inertial orientation.
+    source_links = {link.get("name"): link for link in source.findall("link")}
     for body in root.iter("body"):
-        bn = body.get("name")
-        if not bn: continue
-        bid = mujoco.mj_name2id(base, mujoco.mjtObj.mjOBJ_BODY, bn)
-        if bid < 0 or base.body_mass[bid] <= 0: continue
-        if body.find("inertial") is not None: continue
-        ipos = base.body_ipos[bid]; iq = base.body_iquat[bid]; I = base.body_inertia[bid]
-        ET.SubElement(body, "inertial", pos=f"{ipos[0]:.6g} {ipos[1]:.6g} {ipos[2]:.6g}",
-                      quat=f"{iq[0]:.6g} {iq[1]:.6g} {iq[2]:.6g} {iq[3]:.6g}",
-                      mass=f"{base.body_mass[bid]:.6g}", diaginertia=f"{I[0]:.6g} {I[1]:.6g} {I[2]:.6g}")
-    # the URDF importer drops the (static) root link's inertial; when we make the base
-    # floating, read it back from the URDF so the base body is not massless/geometry-derived.
-    if floating:
-        wrapper = world.find(f"body[@name='{wrapper_name}']")
-        u = ET.fromstring(urdf_xml)
-        children = {j.find("child").get("link") for j in u.findall("joint") if j.find("child") is not None}
-        root_link = next((l for l in u.findall("link") if l.get("name") not in children), None)
-        inertial = root_link.find("inertial") if root_link is not None else None
-        if wrapper is not None and inertial is not None and wrapper.find("inertial") is None:
-            mass = float(inertial.find("mass").get("value", "0"))
-            o = inertial.find("origin"); xyz = (o.get("xyz", "0 0 0") if o is not None else "0 0 0")
-            ie = inertial.find("inertia")
-            ixx, iyy, izz = (float(ie.get(k, "0")) for k in ("ixx", "iyy", "izz")) if ie is not None else (1e-4, 1e-4, 1e-4)
-            if mass > 0:
-                ET.SubElement(wrapper, "inertial", pos=xyz, mass=f"{mass:.6g}", diaginertia=f"{max(ixx,1e-6):.6g} {max(iyy,1e-6):.6g} {max(izz,1e-6):.6g}")
+        link = source_links.get(body.get("name"))
+        inertial = link.find("inertial") if link is not None else None
+        if inertial is None:
+            continue
+        mass_node, ie = inertial.find("mass"), inertial.find("inertia")
+        if mass_node is None or ie is None:
+            raise ValueError(f"Incomplete inertial on {body.get('name')}")
+        mass = float(mass_node.get("value", "nan"))
+        o = inertial.find("origin")
+        xyz = o.get("xyz", "0 0 0") if o is not None else "0 0 0"
+        ixx, iyy, izz, ixy, ixz, iyz = (float(ie.get(k, "0")) for k in ("ixx", "iyy", "izz", "ixy", "ixz", "iyz"))
+        tensor = np.array([[ixx, ixy, ixz], [ixy, iyy, iyz], [ixz, iyz, izz]])
+        roll, pitch, yaw = (float(v) for v in (o.get("rpy", "0 0 0") if o is not None else "0 0 0").split())
+        cr, sr, cp, sp, cy, sy = np.cos(roll), np.sin(roll), np.cos(pitch), np.sin(pitch), np.cos(yaw), np.sin(yaw)
+        rotation = np.array([[cy*cp, cy*sp*sr-sy*cr, cy*sp*cr+sy*sr], [sy*cp, sy*sp*sr+cy*cr, sy*sp*cr-cy*sr], [-sp, cp*sr, cp*cr]])
+        tensor = rotation @ tensor @ rotation.T
+        if not np.isfinite(mass) or mass <= 0 or not np.all(np.isfinite(tensor)):
+            raise ValueError(f"Invalid inertial on {body.get('name')}")
+        full = [tensor[0, 0], tensor[1, 1], tensor[2, 2], tensor[0, 1], tensor[0, 2], tensor[1, 2]]
+        for old in body.findall("inertial"):
+            body.remove(old)
+        ET.SubElement(body, "inertial", pos=xyz, mass=f"{mass:.12g}", fullinertia=" ".join(f"{v:.12g}" for v in full))
 
     # mesh assets: one meshdir + bare file names, so the MJCF can be relocated (see relativize_meshes)
     meshes = [me for a_ in root.iter("asset") for me in a_.findall("mesh") if me.get("file")]
@@ -171,6 +196,12 @@ def urdf_to_mjcf(urdf_path: str, floating=None, kp: float | None = None, out: st
     # bodies that carry visual shells: their collision boxes stay physical but are hidden (group 3)
     for body in root.iter("body"):
         geoms = body.findall("geom")
+        for g in geoms:
+            if g.get("contype", "1") == "0" and g.get("conaffinity", "1") == "0":
+                continue
+            # Explicit imported attributes can override defaults: set both masks.
+            g.set("contype", "1")
+            g.set("conaffinity", "1" if self_collision else "0")
         if any(g.get("group") == "1" for g in geoms):
             for g in geoms:
                 if g.get("group", "0") == "0": g.set("group", "3")
@@ -181,8 +212,14 @@ def urdf_to_mjcf(urdf_path: str, floating=None, kp: float | None = None, out: st
         jn = j.get("name"); jt = j.get("type", "hinge")
         if not jn or jt not in ("hinge", "slide"): continue
         rng = j.get("range")
-        a = ET.SubElement(act, "position", name=f"act_{jn}", joint=jn)
+        effort = joint_efforts[jn]
+        a = ET.SubElement(act, "position", name=f"act_{jn}", joint=jn,
+                          forcelimited="true", forcerange=f"{-effort:.12g} {effort:.12g}")
         if rng: a.set("ctrlrange", rng); a.set("ctrllimited", "true")
+    custom = ET.SubElement(root, "custom")
+    ET.SubElement(custom, "text", name="ttr_fidelity", data="URDF effort limits enforced; position gains inferred; speed/thermal/electrical limits unmodelled; geometry and hardware uncalibrated")
+    if not self_collision:
+        warnings.warn("Self-collision disabled: this scene cannot validate part clearance or wearable fit", UserWarning, stacklevel=2)
     xml = ET.tostring(root, encoding="unicode")
     if out:
         with open(out, "w", encoding="utf8") as f: f.write(relativize_meshes(xml, os.path.dirname(os.path.abspath(out))))

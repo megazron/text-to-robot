@@ -4,7 +4,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join, extname, normalize } from "node:path";
 import { randomUUID } from "node:crypto";
-import { generateRobot, modifyRobot } from "@ttr/robot-generator";
+import { generateRobot, modifyRobot, finalizeSpec } from "@ttr/robot-generator";
 import { generateUrdf, generateXacro } from "@ttr/urdf-generator";
 import { validateUrdf } from "@ttr/urdf-validator";
 import { validateSpec, type RobotSpecification } from "@ttr/robot-schema";
@@ -13,7 +13,7 @@ import { listTemplates } from "@ttr/robot-templates";
 import { buildBom } from "@ttr/components";
 import { generateCadFiles } from "@ttr/cad";
 import { exportTraining } from "@ttr/training-export";
-import { buildPart, toStlBinary } from "@ttr/mesh";
+import { buildPart, toStlBinary, meshTopology } from "@ttr/mesh";
 import { providerStatus } from "@ttr/llm-providers";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -81,6 +81,23 @@ const server = createServer(async (req, res) => {
   if (req.method === "OPTIONS") { json(res, 204, {}); return; }
 
   try {
+    if (req.method === "POST" && p === "/api/robots/import") {
+      try {
+        const { robot } = await readBody(req);
+        if(!robot || !Array.isArray(robot.links) || !Array.isArray(robot.joints)) return json(res,400,{error:"provide a RobotSpecification JSON"});
+        const spec=finalizeSpec(robot as RobotSpecification),validation=validateSpec(spec);
+        if(!validation.valid)return json(res,400,{error:"Invalid robot specification",validation});
+        for(const link of spec.links)if(link.geometry.type==="mesh"){
+          if(!/^[A-Za-z0-9_][A-Za-z0-9_.-]*\.stl$/i.test(link.geometry.file))throw new Error("Mesh filenames must be simple STL names");
+          if(!meshTopology(buildPart(link.geometry)).closed)throw new Error(`${link.name}: mesh is not a closed volume`);
+        }
+        const urdf=generateUrdf(spec),urdfValidation=validateUrdf(urdf);
+        if(!urdfValidation.valid)return json(res,400,{error:"Invalid exported URDF",urdfValidation});
+        const id=randomUUID();remember(id,spec);
+        return json(res,200,{id,robot:spec,urdf,xacro:generateXacro(spec),validation,urdfValidation,bom:buildBom(spec),
+          warnings:["Imported geometry and structure checked; hardware fit and dynamic performance remain unverified."]});
+      }catch(error){return json(res,400,{error:error instanceof Error ? error.message : "Invalid robot JSON"});}
+    }
     if (req.method === "POST" && p === "/api/robots/generate") {
       const { prompt } = await readBody(req);
       const result = await generateRobot(String(prompt ?? ""));
@@ -146,6 +163,7 @@ const server = createServer(async (req, res) => {
 
 server.listen(PORT, () => {
   const st = providerStatus();
-  console.log(`text-to-robot API on http://localhost:${PORT}  (LLM mode: ${st.mode})`);
-  console.log(`web UI:  http://localhost:${PORT}/`);
+  const address=server.address();const port=address && typeof address!=="string" ? address.port : PORT;
+  console.log(`text-to-robot API on http://localhost:${port}  (LLM mode: ${st.mode})`);
+  console.log(`web UI:  http://localhost:${port}/`);
 });

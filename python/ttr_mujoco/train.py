@@ -7,19 +7,24 @@ from stable_baselines3.common.env_util import make_vec_env
 from .env import MujocoRobotEnv
 
 
-def train(model_path: str, task: str = "stand", steps: int = 100_000, out: str = "ppo_mujoco", n_envs: int = 4):
-    env = make_vec_env(lambda: MujocoRobotEnv(model_path, task=task), n_envs=n_envs)
+def train(model_path: str, task: str = "stand", steps: int = 100_000, out: str = "ppo_mujoco", n_envs: int = 4, self_collision: bool = False, tip_body: str | None = None, seed: int = 0, rollout_steps: int = 256):
+    if steps<1 or n_envs<1 or rollout_steps<2: raise ValueError("Positive steps/env count and rollout_steps>=2 required")
+    env = make_vec_env(lambda: MujocoRobotEnv(model_path, task=task, self_collision=self_collision, tip_body=tip_body), n_envs=n_envs, seed=seed)
     try:
         import tensorboard  # noqa
         tb = "./tb"
     except ImportError:
         tb = None
-    model = PPO("MlpPolicy", env, verbose=1, tensorboard_log=tb)
-    model.learn(total_timesteps=steps); model.save(out)
+    model = PPO("MlpPolicy", env, verbose=1, tensorboard_log=tb, seed=seed, n_steps=rollout_steps, batch_size=min(64,rollout_steps*n_envs))
+    try:
+        model.learn(total_timesteps=steps); model.save(out)
+    finally:
+        env.close()
     return out + ".zip"
 
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(); ap.add_argument("model"); ap.add_argument("--task", default="stand")
     ap.add_argument("--steps", type=int, default=100_000); ap.add_argument("--out", default="ppo_mujoco")
-    a = ap.parse_args(); print("saved", train(a.model, a.task, a.steps, a.out))
+    ap.add_argument("--tip-body"); ap.add_argument("--self-collision", action="store_true"); ap.add_argument("--seed", type=int, default=0)
+    a = ap.parse_args(); print("saved", train(a.model, a.task, a.steps, a.out, self_collision=a.self_collision, tip_body=a.tip_body, seed=a.seed))

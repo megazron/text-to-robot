@@ -5,7 +5,7 @@ export type Tier = "hobby" | "prosumer" | "research";
 export interface Part {
   name: string; category: string; unit_cost: number; spec: string; tiers: Tier[];
 }
-export interface Actuator extends Part { torque: number; kind: "servo" | "smart_servo" | "stepper" | "bldc" | "linear"; needs_driver?: string; driver_cost?: number; }
+export interface Actuator extends Part { torque: number; peak_torque?: number; rating_basis?: string; source_url?: string; requires_custom_design?: boolean; kind: "servo" | "smart_servo" | "stepper" | "bldc" | "linear"; needs_driver?: string; driver_cost?: number; }
 export interface Sensor extends Part { sensor: "camera" | "depth" | "lidar" | "imu" | "force"; }
 export interface Compute extends Part { level: number; ros2: boolean; }
 
@@ -21,8 +21,8 @@ export const ACTUATORS: Actuator[] = [
   { name: "Dynamixel PRO H54", category: "actuator", kind: "smart_servo", torque: 44, unit_cost: 1800, spec: "industrial smart actuator", tiers: ["research"] },
   { name: "T-Motor AK80-9 (BLDC + driver)", category: "actuator", kind: "bldc", torque: 18, unit_cost: 320, spec: "quasi-direct-drive, CAN", tiers: ["research"] },
   { name: "Unitree GO-M8010-6", category: "actuator", kind: "bldc", torque: 23, unit_cost: 400, spec: "integrated BLDC + planetary, RS485", tiers: ["prosumer", "research"] },
-  { name: "CubeMars AK80-64", category: "actuator", kind: "bldc", torque: 120, unit_cost: 700, spec: "exoskeleton-class QDD, 64:1, CAN", tiers: ["research"] },
-  { name: "Harmonic Drive CSD + frameless BLDC (150 N·m)", category: "actuator", kind: "bldc", torque: 150, unit_cost: 2400, spec: "wearable-robot joint module, absolute encoder", tiers: ["research"] },
+  { name: "CubeMars AK80-64", category: "actuator", kind: "bldc", torque: 48, peak_torque: 120, rating_basis: "manufacturer rated output torque; peak is not a continuous allowance", source_url: "https://www.cubemars.com/goods.php?id=1143", unit_cost: 700, spec: "AK80-64 KV80: 64:1, 48 N m rated / 120 N m peak, 98 x 61.9 mm, 850 g; mounting interfaces require vendor drawing", tiers: ["research"] },
+  { name: "Harmonic Drive CSD + frameless BLDC (150 N·m)", category: "actuator", kind: "bldc", torque: 150, requires_custom_design: true, unit_cost: 2400, spec: "wearable-robot joint module, absolute encoder", tiers: ["research"] },
   { name: "Linear actuator 100N", category: "actuator", kind: "linear", torque: 100, unit_cost: 35, spec: "12V, 100mm stroke (prismatic)", tiers: ["hobby", "prosumer"] },
   { name: "NEMA17 + lead screw", category: "actuator", kind: "linear", torque: 60, unit_cost: 26, spec: "lead-screw linear stage", needs_driver: "TMC2209 driver", driver_cost: 10, tiers: ["prosumer", "research"] },
 ];

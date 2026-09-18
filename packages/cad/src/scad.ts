@@ -5,6 +5,7 @@ import type { RobotSpecification, Geometry, Link } from "@ttr/robot-schema";
 import { safeName } from "@ttr/robot-schema";
 import { forwardKinematics, poseToMat } from "@ttr/kinematics";
 import { generateStlFiles } from "./stl.ts";
+import { readFileSync } from "node:fs";
 
 const n = (x: number) => (Math.abs(x) < 1e-9 ? 0 : +x.toFixed(5));
 const mm = (m: number) => n(m * 1000); // OpenSCAD in millimetres
@@ -35,8 +36,12 @@ export function generateScad(spec: RobotSpecification): string {
   out.push(``);
   for (const l of spec.links) {
     out.push(`module ${moduleName(l)}() {  // ${l.role ?? "link"}, mass ${l.mass.toFixed(3)} kg`);
-    out.push(`  multmatrix(${mat4rows(poseToMat(l.origin))})`);
-    out.push(`    ${solid(l.geometry)}`);
+    // Per-link STLs are already in link coordinates, including origin.
+    if (l.geometry.type === "mesh") out.push(`  import("stl/parts/${safeName(l.name)}.stl");`);
+    else {
+      out.push(`  multmatrix(${mat4rows(poseToMat(l.origin))})`);
+      out.push(`    ${solid(l.geometry)}`);
+    }
     out.push(`}`);
   }
   out.push(``, `module ${safeName(spec.robot_name)}_assembly() {`);
@@ -58,14 +63,27 @@ export function generateCadFiles(spec: RobotSpecification): CadFiles {
   files[`cad/${name}.scad`] = generateScad(spec);
   for (const l of spec.links) {
     files[`cad/parts/${safeName(l.name)}.scad`] =
-      `// printable part: ${l.name} (${l.role ?? "link"})\n` +
+      `// concept part: ${l.name} (${l.role ?? "link"})\n` +
       `// units: mm. Mesh with: openscad -o ${safeName(l.name)}.stl ${safeName(l.name)}.scad\n` +
-      `multmatrix(${mat4rows(poseToMat(l.origin))})\n  ${solid(l.geometry)}\n`;
+      (l.geometry.type === "mesh" ? `import("../stl/parts/${safeName(l.name)}.stl");\n` :
+      `multmatrix(${mat4rows(poseToMat(l.origin))})\n  ${solid(l.geometry)}\n`);
   }
   Object.assign(files, generateStlFiles(spec));   // ready-to-print STL (no OpenSCAD needed)
+  // Portable optional solid-CAD tool: no Python process runs in the API server.
+  files["cad/hardware/enclosure.py"] = readFileSync(new URL("../../../python/ttr_cad/enclosure.py", import.meta.url), "utf8");
+  files["cad/hardware/attach.py"] = readFileSync(new URL("../../../python/ttr_cad/attach.py", import.meta.url), "utf8");
+  files["cad/robot.json"] = JSON.stringify(spec,null,2);
+  files["cad/hardware/example_enclosure.json"] = readFileSync(new URL("../../../python/ttr_cad/example_enclosure.json", import.meta.url), "utf8");
+  files["cad/hardware/requirements.txt"] = "cadquery>=2.5,<3\n";
   files[`cad/README.md`] =
     `# CAD — ${spec.robot_name}\n\nTwo deliverables, both in millimetres:\n\n` +
-    `- **STL (ready to print)** — \`stl/${name}_assembly.stl\` and one mesh per link in \`stl/parts/\`. Drop straight into a slicer. See \`PRINTABILITY.md\`.\n` +
-    `- **OpenSCAD (parametric source)** — \`${name}.scad\` (assembly) and \`parts/*.scad\`; edit dimensions and re-mesh with \`openscad -o part.stl part.scad\`.\n`;
+    `- **STL (concept geometry)** — \`stl/${name}_assembly.stl\` and one mesh per link in \`stl/parts/\`. See \`PRINTABILITY.md\`. Assembly STL is a visualization, not a mechanically assembled printable part.\n` +
+    `- **OpenSCAD** — \`${name}.scad\` (assembly) and \`parts/*.scad\`; primitives are parametric, recipe meshes are imported.\n\n` +
+    `Hardware fit, fasteners, cable routing, material strength and moving-part clearances are not validated by this export. Bounding-box printability is not a manufacturing approval.\n\n` +
+    `## Dimensioned electronics housing (optional Python backend)\n\n` +
+    `Edit \`hardware/example_enclosure.json\` using your PCB envelope, hole coordinates and material density. Its defaults are synthetic, not a real vendor part.\n\n` +
+    `\`\`\`bash\ncd hardware\npython -m pip install -r requirements.txt\npython enclosure.py example_enclosure.json --out enclosure\n\`\`\`\n\n` +
+    `Outputs separate base/lid STEP and STL, board standoffs, through-bolt bores, cable opening, and a geometric-fit/mass-properties report.\n\n` +
+    `To attach it to a robot, run \`python attach.py --help\`: supply the parent link, mount pose (metres/radians), and measured electronics mass. It writes an updated robot JSON with housing CAD and mass properties. Use **Import JSON** in the viewer to inspect/export it. Fasteners, mounting strength and assembly clearance still need verification.\n`;
   return files;
 }

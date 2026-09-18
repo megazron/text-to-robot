@@ -6,7 +6,7 @@ import { ACTUATORS, SENSORS, COMPUTE, POWER, STRUCTURE, type Tier, type Actuator
 export interface BomLine { category: string; name: string; qty: number; unit_cost: number; subtotal: number; spec: string; note?: string; }
 export interface BillOfMaterials {
   robot_name: string; budget?: number; tier: Tier;
-  lines: BomLine[]; total: number; feasible: boolean;
+  lines: BomLine[]; total: number; feasible: boolean; sizing_pass: boolean; hardware_verified: false;
   actuator_sizing: { joint: string; required_torque_nm: number; chosen: string; margin: string }[];
   warnings: string[]; notes: string[];
 }
@@ -44,7 +44,7 @@ function requiredTorque(spec: RobotSpecification, j: Joint, pos: Record<string, 
 
 function pickActuator(reqTorque: number, tier: Tier, prismatic: boolean): Actuator | undefined {
   const safety = 1.5;
-  const pool = ACTUATORS.filter((a) => a.tiers.includes(tier) && (prismatic ? a.kind === "linear" : a.kind !== "linear"));
+  const pool = ACTUATORS.filter((a) => !a.requires_custom_design && a.tiers.includes(tier) && (prismatic ? a.kind === "linear" : a.kind !== "linear"));
   const fit = pool.filter((a) => a.torque >= reqTorque * safety).sort((a, b) => a.unit_cost - b.unit_cost);
   if (fit.length) return fit[0];
   return pool.sort((a, b) => b.torque - a.torque)[0]; // strongest available if none meets margin
@@ -58,7 +58,7 @@ function pushMerged(map: Map<string, BomLine>, line: BomLine) {
 }
 
 function buildBomAtTier(spec: RobotSpecification, tier: Tier, budget?: number): BillOfMaterials {
-  const warnings: string[] = []; const notes: string[] = [];
+  const warnings: string[] = ["Catalog values are planning estimates. Except explicitly sourced rated values, torque entries may be stall/peak ratings; continuous duty, fit and complete assemblies are unverified."]; const notes: string[] = [];
   const lines = new Map<string, BomLine>();
   const sizing: BillOfMaterials["actuator_sizing"] = [];
   const pos = linkPositions(spec, {});
@@ -75,7 +75,7 @@ function buildBomAtTier(spec: RobotSpecification, tier: Tier, budget?: number): 
     const met = a.torque >= req * 1.5;
     if (!met) warnings.push(`joint ${j.name} needs ~${req.toFixed(2)} N·m; strongest in ${tier} tier is ${a.name} (${a.torque} N·m) — increase budget for a stronger actuator`);
     sizing.push({ joint: j.name, required_torque_nm: +req.toFixed(3), chosen: a.name, margin: met ? `${(a.torque / (req || 1e-3)).toFixed(1)}x` : "UNDERSIZED" });
-    pushMerged(lines, { category: "Actuator", name: a.name, qty: 1, unit_cost: a.unit_cost, subtotal: a.unit_cost, spec: `${a.spec} (${a.torque} N·m)`, note: `joint ${j.name}` });
+    pushMerged(lines, { category: "Actuator", name: a.name, qty: 1, unit_cost: a.unit_cost, subtotal: a.unit_cost, spec: `${a.spec} (${a.torque} N·m)`, note: `joint ${j.name}${a.source_url ? "; rating source: "+a.source_url : "; rating duty/source unverified"}` });
     if (a.needs_driver) pushMerged(lines, { category: "Motor driver", name: a.needs_driver, qty: 1, unit_cost: a.driver_cost ?? 0, subtotal: a.driver_cost ?? 0, spec: `driver for ${a.name}` });
     motorPowerW += a.kind === "bldc" ? 60 : a.kind === "stepper" || a.kind === "linear" ? 12 : a.kind === "smart_servo" ? 12 : 5;
   }
@@ -122,7 +122,7 @@ function buildBomAtTier(spec: RobotSpecification, tier: Tier, budget?: number): 
   if (budget !== undefined && !feasible) notes.push(`Estimated build cost $${total} exceeds the $${budget} budget by $${(total - budget).toFixed(2)}. Consider fewer DOF, lighter links, or the demo/hobby tier.`);
   notes.push(`Tier: ${tier}. Prices are planning estimates (USD), not quotes. Structure assumes ${tier === "research" ? "machined aluminium" : "FDM 3D printing"}.`);
 
-  return { robot_name: spec.robot_name, budget, tier, lines: finalLines, total, feasible, actuator_sizing: sizing, warnings, notes };
+  return { robot_name: spec.robot_name, budget, tier, lines: finalLines, total, feasible, sizing_pass: sizing.length===actuated.length && sizing.every(s=>s.margin!=="UNDERSIZED"), hardware_verified:false, actuator_sizing: sizing, warnings, notes };
 }
 
 export function buildBom(spec: RobotSpecification, budget?: number): BillOfMaterials {
@@ -133,7 +133,7 @@ export function buildBom(spec: RobotSpecification, budget?: number): BillOfMater
   const feasible = built.filter((b) => b.total <= budget!).sort((a, b) => b.total - a.total); // richest that still fits
   if (feasible.length) return feasible[0];
   const cheapest = built.sort((a, b) => a.total - b.total)[0];
-  cheapest.notes.unshift(`No component tier fits the $${budget} budget; showing the cheapest feasible build ($${cheapest.total}).`);
+  cheapest.notes.unshift(`No component tier fits the $${budget} budget; showing the cheapest estimate ($${cheapest.total}).`);
   return cheapest;
 }
 
@@ -141,6 +141,7 @@ export function bomToMarkdown(bom: BillOfMaterials): string {
   const out: string[] = [];
   out.push(`# Bill of Materials — ${bom.robot_name}`);
   out.push(``, `**Estimated total: $${bom.total}**  ·  tier: ${bom.tier}` + (bom.budget ? `  ·  budget: $${bom.budget} ` + (bom.feasible ? "✅ within budget" : "❌ over budget") : ""), ``);
+  out.push(`**Torque sizing: ${bom.sizing_pass ? "passes catalogue estimate" : "fails"}; hardware verified: no.**`, ``);
   out.push(`| Category | Component | Qty | Unit $ | Subtotal $ | Spec |`, `|---|---|--:|--:|--:|---|`);
   for (const l of bom.lines) out.push(`| ${l.category} | ${l.name}${l.note ? ` _(${l.note})_` : ""} | ${l.qty} | ${l.unit_cost} | ${l.subtotal} | ${l.spec} |`);
   out.push(``, `## Actuator sizing`, ``, `| Joint | Required torque (N·m) | Chosen actuator | Margin |`, `|---|--:|---|--:|`);

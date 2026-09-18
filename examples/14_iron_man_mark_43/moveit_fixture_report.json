@@ -1,0 +1,17 @@
+{
+  "scope": "ROS 2 mock hardware wiring and planning; not dynamics or real robot execution",
+  "controllers": {
+    "joint_trajectory_controller": "active",
+    "joint_state_broadcaster": "active"
+  },
+  "controllers_active": true,
+  "planning_scene_available": true,
+  "group": "arm",
+  "planning_error_code": 1,
+  "planning_pass": true,
+  "trajectory_points": 10,
+  "execution_requested": true,
+  "execution_error_code": 1,
+  "execution_pass": true,
+  "pass": true
+}
