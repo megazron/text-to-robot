@@ -14,6 +14,7 @@ function solid(g: Geometry): string {
     case "box": return `cube([${mm(g.size[0])}, ${mm(g.size[1])}, ${mm(g.size[2])}], center=true);`;
     case "cylinder": return `cylinder(h=${mm(g.length)}, r=${mm(g.radius)}, center=true, $fn=48);`;
     case "sphere": return `sphere(r=${mm(g.radius)}, $fn=48);`;
+    case "mesh": return `import("stl/parts/${g.file.replace(/\.stl$/i, "")}.stl");  // polygon part from the part registry`;
     case "capsule": return `hull() { translate([0,0,${mm(g.length / 2)}]) sphere(r=${mm(g.radius)}, $fn=32); translate([0,0,${mm(-g.length / 2)}]) sphere(r=${mm(g.radius)}, $fn=32); }`;
   }
 }
@@ -48,7 +49,7 @@ export function generateScad(spec: RobotSpecification): string {
   return out.join("\n") + "\n";
 }
 
-export type CadFiles = Record<string, string>;
+export type CadFiles = Record<string, string | Uint8Array>;
 
 /** Full CAD deliverable: one part file per link + the assembly + a README. */
 export function generateCadFiles(spec: RobotSpecification): CadFiles {

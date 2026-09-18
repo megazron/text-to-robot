@@ -29,6 +29,7 @@ URDF structural validation                            (packages/urdf-validator)
    ├─► ROS 2 package + MoveIt 2 + Gazebo               (packages/ros2-export)
    ├─► Bill of Materials sized to a budget             (packages/components)
    ├─► CAD: native STL + OpenSCAD + printability       (packages/cad)
+   ├─► Polygon mesh parts, STL on demand                (packages/mesh)
    └─► Training suite: RL / imitation / evaluation     (packages/training-export)
 ```
 
@@ -46,6 +47,7 @@ URDF structural validation                            (packages/urdf-validator)
 | `ros2-export` | ament_cmake package, MoveIt 2 config (SRDF/kinematics/controllers/launch), Gazebo world + spawn launch |
 | `components` | Real-part catalogue; BOM sized by per-joint holding torque and fitted to a cost budget |
 | `cad` | Native STL triangulation per link + assembly, OpenSCAD source, printability report |
+| `mesh` | Procedural polygon kernel (loft, revolve, superellipse arcs, shell, subdivision, curved plates, limb shells, domes, 1:1 helmet) and the part registry: a `MeshGeometry` is a recipe (part + params) that every consumer rebuilds into the identical binary STL; thin-shell mass properties, bbox collision, consistent winding |
 | `training-export` | Training suite: MuJoCo quick-start + PyBullet/Gymnasium fallback, task catalogue per robot class, PPO/SAC, demo collection, behaviour cloning, evaluation |
 | `python/ttr_mujoco` (Python) | URDF → actuated MuJoCo MJCF (mass-scaled servos, preserved inertials, free base, floor), simulation test battery, headless GIF renderer, Gymnasium env with delta actions + perturbations, PPO trainer, `ttr-mujoco` CLI; `exo.py` straps an anthropometric wearer into a wearable exoskeleton and runs a powered-vs-unpowered support test; the renderer drives `*_hinge` armour servos through a donning sequence |
 

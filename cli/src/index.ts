@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 import { writeFileSync, mkdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
-import { generateRobot, modifyRobot } from "@ttr/robot-generator";
+import { generateRobot, modifyRobot, collectMeshFiles, hasMeshes } from "@ttr/robot-generator";
+import { generateUrdf } from "@ttr/urdf-generator";
 import { validateUrdf, parseUrdf } from "@ttr/urdf-validator";
 import { exportRos2Package } from "@ttr/ros2-export";
 import { providerStatus } from "@ttr/llm-providers";
@@ -16,7 +17,7 @@ const ok = (s: string) => console.log(`${C.g}✓${C.x} ${s}`);
 const bad = (s: string) => console.log(`${C.r}✗${C.x} ${s}`);
 const info = (s: string) => console.log(`${C.d}${s}${C.x}`);
 
-function writeFiles(base: string, files: Record<string, string>) {
+function writeFiles(base: string, files: Record<string, string | Uint8Array>) {
   for (const [rel, content] of Object.entries(files)) {
     const p = join(base, rel);
     mkdirSync(dirname(p), { recursive: true });
@@ -44,6 +45,11 @@ async function cmdGenerate(prompt: string, outDir?: string) {
   const files = exportRos2Package(res.robot, { ros2_control: true });
   writeFiles(base, files);
   writeFileSync(join(base, `${name}.json`), JSON.stringify(res.robot, null, 2));
+  if (hasMeshes(res.robot)) {   // simulator-friendly URDF (relative mesh paths) + the mesh files themselves
+    writeFileSync(join(base, `${name}.sim.urdf`), generateUrdf(res.robot, { meshPrefix: "meshes/" }));
+    writeFiles(base, Object.fromEntries(Object.entries(collectMeshFiles(res.robot)).map(([f, b]) => [`meshes/${f}`, b])));
+    ok("Polygon mesh parts written (meshes/*.stl)");
+  }
   writeFileSync(join(base, "BOM.md"), bomToMarkdown(res.bom));
   writeFiles(base, generateCadFiles(res.robot));
   writeFiles(base, exportTraining(res.robot));

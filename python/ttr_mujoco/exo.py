@@ -62,7 +62,7 @@ def add_wearer(mjcf_xml: str, height: float = 1.75, mass: float = 75.0) -> str:
     ET.SubElement(head, "geom", type="capsule", fromto=f"0 0 {neck+0.04:.4f} 0 0 {neck+0.13:.4f}", size="0.085", mass=f"{m('head')*0.85:.3f}", rgba=skin, contype="0", conaffinity="0")
     ET.SubElement(head, "geom", type="sphere", size="0.012", pos=f"0.078 0.032 {neck+0.11:.4f}", rgba=dark, contype="0", conaffinity="0")
     ET.SubElement(head, "geom", type="sphere", size="0.012", pos=f"0.078 -0.032 {neck+0.11:.4f}", rgba=dark, contype="0", conaffinity="0")
-    ET.SubElement(head, "geom", type="capsule", fromto=f"-0.03 -0.07 {neck+0.13:.4f} -0.03 0.07 {neck+0.13:.4f}", size="0.06", mass="0.2", rgba=dark, contype="0", conaffinity="0")  # hair
+    ET.SubElement(head, "geom", type="capsule", fromto=f"-0.02 -0.05 {neck+0.115:.4f} -0.02 0.05 {neck+0.115:.4f}", size="0.045", mass="0.2", rgba=dark, contype="0", conaffinity="0")  # hair
     for s, sign in (("left", 1), ("right", -1)):
         # legs: thigh tapers into the shank; feet as flat boxes with a heel
         th = ET.SubElement(pel, "body", name=f"w_{s}_thigh", pos=f"0 {sign*0.09:.3f} 0")

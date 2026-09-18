@@ -19,6 +19,8 @@ function readGeometry(node?: XmlNode): Geometry {
   if (box) { const [x, y, z] = nums(box.attrs.size, 3); return { type: "box", size: [x, y, z] }; }
   if (cyl) return { type: "cylinder", radius: Number(cyl.attrs.radius) || 0.01, length: Number(cyl.attrs.length) || 0.01 };
   if (sph) return { type: "sphere", radius: Number(sph.attrs.radius) || 0.01 };
+  const mesh = g && findFirst(g, "mesh");
+  if (mesh) return { type: "box", size: [0.05, 0.05, 0.05] };   // meshes are opaque to the parser; kept as a placeholder box
   return { type: "box", size: [0.05, 0.05, 0.05] };
 }
 

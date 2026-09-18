@@ -17,12 +17,14 @@ ttr-mujoco train   robot.urdf --task stand --steps 400000            # PPO in Mu
 # wearable exoskeletons: strap a 75 kg / 1.75 m person in (passive mannequin welded to the cuffs)
 ttr-mujoco test   exosuit.urdf --wearer                              # adds a powered-vs-motors-off support test
 ttr-mujoco render exosuit.urdf --wearer [--unpowered] -o suit.gif   # show the suit holding (or dropping) the wearer
-ttr-mujoco render marksuit.urdf --wearer -o don.gif --motion don --orbit 70   # armour donning: plates open -> closed in sequence (doff / open too)
-#   render flags: --motion {sweep,hold,drop,don,doff,open} --orbit DEG --azimuth DEG --zoom X --width --height --fps
+ttr-mujoco render mark43.sim.urdf --wearer -o don.gif --motion don --orbit 50   # armour donning: plates open -> closed in sequence (doff / open too)
+ttr-mujoco render mark43.sim.urdf --wearer -o helmet.gif --motion don --focus helmet --zoom 0.6   # close-up that follows one body
+#   render flags: --motion {sweep,hold,drop,don,doff,open} --orbit DEG --azimuth DEG --elevation DEG --zoom X --focus BODY --width --height --fps
 ```
 
 What the converter does, deterministically:
 - position actuators on every joint, gains scaled to the robot's mass;
+- polygon-mesh parts: `package://` and relative `meshes/` paths are resolved next to the URDF, visual meshes are kept (MuJoCo's URDF importer drops them by default) as non-colliding geoms while their bounding-box collision stays physical, fixed links keep their names (no static fusing) so welds and `--focus` can find them, and saved MJCFs use a relative `meshdir`;
 - the URDF's designed masses and inertias are preserved (including the root link when the base floats);
 - floor, lighting, a free-floating base for legged / wheeled / flying robots (auto-detected from link names);
 - self-collision off by default (primitive robots overlap at their joints); `self_collision=True` to enable;

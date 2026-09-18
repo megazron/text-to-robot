@@ -13,6 +13,7 @@ import { listTemplates } from "@ttr/robot-templates";
 import { buildBom } from "@ttr/components";
 import { generateCadFiles } from "@ttr/cad";
 import { exportTraining } from "@ttr/training-export";
+import { buildPart, toStlBinary } from "@ttr/mesh";
 import { providerStatus } from "@ttr/llm-providers";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -39,6 +40,12 @@ function remember(id: string, robot: RobotSpecification) {
 
 const MIME: Record<string, string> = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".json": "application/json", ".svg": "image/svg+xml", ".ico": "image/x-icon" };
 
+/** files maps may hold binary (meshes); encode those as {b64} for JSON transport */
+function encodeFiles(files: Record<string, string | Uint8Array>): Record<string, string | { b64: string }> {
+  const out: Record<string, string | { b64: string }> = {};
+  for (const [k, v] of Object.entries(files)) out[k] = typeof v === "string" ? v : { b64: Buffer.from(v).toString("base64") };
+  return out;
+}
 function json(res: ServerResponse, code: number, body: unknown) {
   const s = JSON.stringify(body);
   res.writeHead(code, { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Headers": "Content-Type", "Access-Control-Allow-Methods": "GET,POST,OPTIONS" });
@@ -98,18 +105,28 @@ const server = createServer(async (req, res) => {
     }
     if (req.method === "POST" && p === "/api/robots/cad") {
       const { robot } = await readBody(req);
-      return json(res, 200, { files: generateCadFiles(robot as RobotSpecification) });
+      return json(res, 200, { files: encodeFiles(generateCadFiles(robot as RobotSpecification)) });
     }
     if (req.method === "POST" && p === "/api/robots/training") {
       const { robot } = await readBody(req);
-      return json(res, 200, { files: exportTraining(robot as RobotSpecification) });
+      return json(res, 200, { files: encodeFiles(exportTraining(robot as RobotSpecification)) });
     }
     if (req.method === "POST" && p === "/api/robots/export") {
       const { robot, ros2_control } = await readBody(req);
-      return json(res, 200, { files: exportRos2Package(robot as RobotSpecification, { ros2_control: !!ros2_control }) });
+      return json(res, 200, { files: encodeFiles(exportRos2Package(robot as RobotSpecification, { ros2_control: !!ros2_control })) });
     }
     if (req.method === "GET" && p === "/api/templates") return json(res, 200, { templates: listTemplates().map((t) => ({ id: t.id, title: t.title, description: t.description })) });
     if (req.method === "GET" && p === "/api/status") return json(res, 200, providerStatus());
+    // polygon mesh part of a stored robot: regenerated deterministically from its recipe
+    const meshMatch = p.match(/^\/api\/robots\/([0-9a-f-]+)\/mesh\/([A-Za-z0-9_.-]+)$/i);
+    if (req.method === "GET" && meshMatch) {
+      const robot = store.get(meshMatch[1]); if (!robot) return json(res, 404, { error: "not found" });
+      const link = robot.links.find((l) => l.geometry.type === "mesh" && l.geometry.file === meshMatch[2]);
+      if (!link || link.geometry.type !== "mesh") return json(res, 404, { error: "no such mesh" });
+      const stl = toStlBinary(buildPart(link.geometry), 1);
+      res.writeHead(200, { "Content-Type": "model/stl", "Cache-Control": "public, max-age=31536000, immutable", "Access-Control-Allow-Origin": "*" });
+      return res.end(Buffer.from(stl));
+    }
     if (req.method === "GET" && p.startsWith("/api/robots/")) {
       const id = p.slice("/api/robots/".length);
       const robot = store.get(id);

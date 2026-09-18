@@ -2,10 +2,11 @@
 import type { RobotSpecification, Joint } from "@ttr/robot-schema";
 import { safeName } from "@ttr/robot-schema";
 import { generateUrdf, generateXacro } from "@ttr/urdf-generator";
+import { buildPart, toStlBinary } from "@ttr/mesh";
 import { exportMoveIt } from "./moveit.ts";
 import { exportGazebo } from "./gazebo.ts";
 
-export type FileMap = Record<string, string>;
+export type FileMap = Record<string, string | Uint8Array>;
 
 const actuated = (s: RobotSpecification): Joint[] => s.joints.filter((j) => j.type === "revolute" || j.type === "prismatic" || j.type === "continuous");
 
@@ -20,7 +21,9 @@ export function exportRos2Package(spec: RobotSpecification, opts: { ros2_control
   files[`${pkg}/launch/display.launch.py`] = displayLaunch(pkg);
   files[`${pkg}/config/joint_limits.yaml`] = jointLimits(spec);
   files[`${pkg}/rviz/${pkg}.rviz`] = rvizConfig();
-  files[`${pkg}/meshes/.gitkeep`] = "";
+  let anyMesh = false;
+  for (const l of spec.links) { const g = l.geometry; if (g.type === "mesh" && !files[`${pkg}/meshes/${g.file}`]) { files[`${pkg}/meshes/${g.file}`] = toStlBinary(buildPart(g), 1); anyMesh = true; } }
+  if (!anyMesh) files[`${pkg}/meshes/.gitkeep`] = "";
   files[`${pkg}/README.md`] = readme(pkg, spec);
   if (opts.ros2_control) {
     files[`${pkg}/config/controllers.yaml`] = controllersYaml(spec);

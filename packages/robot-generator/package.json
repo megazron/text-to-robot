@@ -14,6 +14,7 @@
     "@ttr/llm-providers": "*",
     "@ttr/components": "*",
     "@ttr/cad": "*",
-    "@ttr/training-export": "*"
+    "@ttr/training-export": "*",
+    "@ttr/mesh": "*"
   }
 }

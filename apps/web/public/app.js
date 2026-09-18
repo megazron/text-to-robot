@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { STLLoader } from "three/addons/loaders/STLLoader.js";
 import { forwardKinematics, findRoot, download, makeZip } from "./robotkit.js";
 
 const API = ""; // same origin
@@ -41,8 +42,17 @@ new ResizeObserver(resize).observe(viewport); resize();
 (function loop() { requestAnimationFrame(loop); controls.update(); renderer.render(scene, camera); })();
 
 // ---------------- geometry / materials ----------------
+const stlLoader = new STLLoader(); const meshCache = new Map();
+function meshUrl(file) { return `/api/robots/${state.id}/mesh/${file}`; }
+function loadMeshInto(mesh, g) {   // async: placeholder box swapped for the real polygon part when it arrives
+  const key = `${state.id}/${g.file}`;
+  const apply = (geom) => { mesh.geometry.dispose(); mesh.geometry = geom; };
+  if (meshCache.has(key)) return apply(meshCache.get(key).clone());
+  stlLoader.load(meshUrl(g.file), (geom) => { geom.computeVertexNormals(); meshCache.set(key, geom); apply(geom.clone()); }, undefined, () => {});
+}
 function makeGeom(g) {
   switch (g.type) {
+    case "mesh": { const b = g.bbox; return new THREE.BoxGeometry(Math.max(1e-3, b.max[0] - b.min[0]), Math.max(1e-3, b.max[1] - b.min[1]), Math.max(1e-3, b.max[2] - b.min[2])).translate((b.max[0] + b.min[0]) / 2, (b.max[1] + b.min[1]) / 2, (b.max[2] + b.min[2]) / 2); }
     case "box": { const b = new THREE.BoxGeometry(g.size[0], g.size[1], g.size[2]); return b; }
     case "cylinder": { const c = new THREE.CylinderGeometry(g.radius, g.radius, g.length, 28); c.rotateX(Math.PI / 2); return c; }
     case "capsule": { const c = new THREE.CapsuleGeometry(g.radius, g.length, 6, 16); c.rotateX(Math.PI / 2); return c; }
@@ -77,6 +87,7 @@ function buildRobot(spec) {
     const mesh = new THREE.Mesh(geom, new THREE.MeshStandardMaterial({ color, metalness: 0.25, roughness: 0.55, transparent: isCol, opacity: isCol ? 0.45 : 1, wireframe: isCol }));
     mesh.matrixAutoUpdate = false; mesh.matrix.copy(mat4(poseArr(l.origin)));
     mesh.userData.linkName = l.name;
+    if (g.type === "mesh" && state.id && !isCol) loadMeshInto(mesh, g);
     group.add(mesh);
     robotGroup.add(group);
     state.meshes.set(l.name, group);

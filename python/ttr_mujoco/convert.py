@@ -20,6 +20,8 @@ def _lowest_point(model: mujoco.MjModel) -> float:
     lows = []
     G = mujoco.mjtGeom
     for g in range(model.ngeom):
+        if model.geom_contype[g] == 0 and model.geom_conaffinity[g] == 0:
+            continue  # visual-only geom (polygon shells collide through their bounding boxes)
         pos = data.geom_xpos[g]; R = data.geom_xmat[g].reshape(3, 3); size = model.geom_size[g]; t = model.geom_type[g]
         zrow = np.abs(R[2, :])                      # |world-z components of the local axes|
         if t == G.mjGEOM_BOX:
@@ -43,13 +45,33 @@ def urdf_to_mjcf(urdf_path: str, floating=None, kp: float | None = None, out: st
     urdf_xml = open(urdf_path, encoding="utf8").read()
     if floating is None:
         floating = _guess_floating(urdf_xml)
-    base = mujoco.MjModel.from_xml_path(urdf_path)
+    # polygon-mesh parts: resolve package://<pkg>/meshes/<f> and relative meshes/<f> to absolute files next to the URDF
+    urdf_dir = os.path.dirname(os.path.abspath(urdf_path))
+    def _abs_mesh(mo):
+        f = mo.group(1)
+        for cand in (os.path.join(urdf_dir, "meshes", f), os.path.join(urdf_dir, f)):
+            if os.path.exists(cand): return f'filename="{cand}"'
+        return f'filename="{os.path.join(urdf_dir, "meshes", f)}"'
+    resolved = re.sub(r'filename="(?:package://[^/"]+/meshes/|meshes/)([^"]+)"', _abs_mesh, urdf_xml)
+    has_meshes = "<mesh " in resolved
+    if "<mujoco>" not in resolved:
+        # URDF importer defaults: fusestatic (fixed links vanish into their parents, losing the names the
+        # wearer welds and renders look up) and discardvisual (polygon parts live in <visual>; their
+        # collision is a bounding box). Keep both: visuals import as group-1, non-colliding geoms.
+        i = resolved.index(">", resolved.index("<robot")) + 1
+        resolved = resolved[:i] + f'<mujoco><compiler fusestatic="false" discardvisual="{"false" if has_meshes else "true"}"/></mujoco>' + resolved[i:]
+    load_path = urdf_path
+    if resolved != urdf_xml:
+        tmpu = tempfile.NamedTemporaryFile(suffix=".urdf", delete=False, mode="w", encoding="utf8"); tmpu.write(resolved); tmpu.close(); load_path = tmpu.name
+    base = mujoco.MjModel.from_xml_path(load_path)
     lift = max(0.0, -_lowest_point(base)) + 0.005 if floating else 0.0
     total_mass = float(sum(base.body_mass))
     try:  # the static root link's mass is dropped by the URDF importer; count it when the base floats
         _u = ET.fromstring(urdf_xml); _ch = {j.find("child").get("link") for j in _u.findall("joint") if j.find("child") is not None}
         _root = next((l for l in _u.findall("link") if l.get("name") not in _ch), None)
-        if floating and _root is not None and _root.find("inertial/mass") is not None: total_mass += float(_root.find("inertial/mass").get("value", "0"))
+        _rid = mujoco.mj_name2id(base, mujoco.mjtObj.mjOBJ_BODY, _root.get("name")) if _root is not None else -1
+        if floating and _root is not None and _root.find("inertial/mass") is not None and (_rid < 0 or base.body_mass[_rid] <= 0):
+            total_mass += float(_root.find("inertial/mass").get("value", "0"))
     except Exception: pass
     # Servo stiffness must beat the inverted-pendulum "negative stiffness" m*g*h_com for a
     # standing robot to be statically stable under position control (real joint modules are).
@@ -68,7 +90,8 @@ def urdf_to_mjcf(urdf_path: str, floating=None, kp: float | None = None, out: st
     name = root.get("model", "robot")
 
     # options / defaults / assets for a stable, good-looking sim
-    opt = root.find("option") or ET.SubElement(root, "option")
+    opt = root.find("option")
+    if opt is None: opt = ET.SubElement(root, "option")
     opt.set("timestep", "0.002"); opt.set("gravity", "0 0 -9.81"); opt.set("integrator", "implicitfast")
     default = ET.SubElement(root, "default")
     ET.SubElement(default, "joint", damping="0.6", armature="0.01", frictionloss="0.05")
@@ -96,7 +119,13 @@ def urdf_to_mjcf(urdf_path: str, floating=None, kp: float | None = None, out: st
         root_link_name = next((l.get("name") for l in _u2.findall("link") if l.get("name") not in _ch2), None)
     except Exception: pass
     wrapper_name = root_link_name or f"{name}_base"
-    if floating:
+    root_bodies = [c for c in children if c.tag == "body"]
+    if floating and len(root_bodies) == 1 and root_bodies[0].get("name") == root_link_name:
+        # the root link survived as a body (fusestatic off): free it directly instead of wrapping it
+        body = root_bodies[0]; body.insert(0, ET.Element("freejoint", name="root"))
+        p0 = [float(v) for v in body.get("pos", "0 0 0").split()]; body.set("pos", f"{p0[0]:.4f} {p0[1]:.4f} {p0[2] + lift:.4f}")
+        for c in children: world.append(c)
+    elif floating:
         body = ET.SubElement(world, "body", name=wrapper_name, pos=f"0 0 {lift:.4f}")
         ET.SubElement(body, "freejoint", name="root")
         for c in children: body.append(c)
@@ -131,6 +160,21 @@ def urdf_to_mjcf(urdf_path: str, floating=None, kp: float | None = None, out: st
             if mass > 0:
                 ET.SubElement(wrapper, "inertial", pos=xyz, mass=f"{mass:.6g}", diaginertia=f"{max(ixx,1e-6):.6g} {max(iyy,1e-6):.6g} {max(izz,1e-6):.6g}")
 
+    # mesh assets: one meshdir + bare file names, so the MJCF can be relocated (see relativize_meshes)
+    meshes = [me for a_ in root.iter("asset") for me in a_.findall("mesh") if me.get("file")]
+    dirs = {os.path.dirname(me.get("file")) for me in meshes}
+    if meshes and len(dirs) == 1:
+        comp = root.find("compiler")
+        if comp is None: comp = ET.SubElement(root, "compiler")
+        comp.set("meshdir", dirs.pop())
+        for me in meshes: me.set("file", os.path.basename(me.get("file")))
+    # bodies that carry visual shells: their collision boxes stay physical but are hidden (group 3)
+    for body in root.iter("body"):
+        geoms = body.findall("geom")
+        if any(g.get("group") == "1" for g in geoms):
+            for g in geoms:
+                if g.get("group", "0") == "0": g.set("group", "3")
+
     # actuators for every hinge/slide joint
     act = ET.SubElement(root, "actuator")
     for j in root.iter("joint"):
@@ -141,8 +185,16 @@ def urdf_to_mjcf(urdf_path: str, floating=None, kp: float | None = None, out: st
         if rng: a.set("ctrlrange", rng); a.set("ctrllimited", "true")
     xml = ET.tostring(root, encoding="unicode")
     if out:
-        with open(out, "w", encoding="utf8") as f: f.write(xml)
+        with open(out, "w", encoding="utf8") as f: f.write(relativize_meshes(xml, os.path.dirname(os.path.abspath(out))))
     return xml
+
+
+def relativize_meshes(xml: str, out_dir: str) -> str:
+    """Rewrite an absolute compiler meshdir to a path relative to out_dir (for MJCFs saved into a repo)."""
+    m = re.search(r'<compiler([^>]*)meshdir="([^"]+)"', xml)
+    if not m or not os.path.isabs(m.group(2)): return xml
+    rel = os.path.relpath(m.group(2), out_dir)
+    return xml.replace(f'meshdir="{m.group(2)}"', f'meshdir="{rel}"', 1)
 
 
 def load_model(path_or_xml: str, **kw):

@@ -4,10 +4,11 @@
 import type { RobotSpecification } from "@ttr/robot-schema";
 import { safeName } from "@ttr/robot-schema";
 import { generateUrdf } from "@ttr/urdf-generator";
+import { buildPart, toStlBinary } from "@ttr/mesh";
 import { classify, type RobotClass } from "./classify.ts";
 import { TASKS } from "./tasks.ts";
 
-export type FileMap = Record<string, string>;
+export type FileMap = Record<string, string | Uint8Array>;
 const cn = (name: string) => name.split(/[_\s]+/).filter(Boolean).map((w) => w[0].toUpperCase() + w.slice(1)).join("") || "Robot";
 
 function tasksPy(cls: RobotClass): string {
@@ -307,7 +308,8 @@ export function exportTraining(spec: RobotSpecification): FileMap {
   const cls = classify(spec);
   const taskList = TASKS[cls].map((t) => `  - \`${t.id}\` — ${t.title}`).join("\n");
   const files: FileMap = {};
-  files[`training/${name}.urdf`] = generateUrdf(spec);
+  files[`training/${name}.urdf`] = generateUrdf(spec, { meshPrefix: "meshes/" });   // relative paths: PyBullet/MuJoCo resolve next to the URDF
+  for (const l of spec.links) { const g = l.geometry; if (g.type === "mesh" && !files[`training/meshes/${g.file}`]) files[`training/meshes/${g.file}`] = toStlBinary(buildPart(g), 1); }
   files[`training/tasks.py`] = tasksPy(cls);
   files[`training/robot_env.py`] = envPy(spec, cls);
   files[`training/train_rl.py`] = trainRlPy(spec);

@@ -1,0 +1,72 @@
+{
+ "model": "<inline mjcf, 93242 chars>",
+ "nbody": 141,
+ "njnt": 79,
+ "nu": 66,
+ "ngeom": 274,
+ "floating": true,
+ "tests": {
+  "compile": {
+   "pass": true,
+   "total_mass_kg": 149.324,
+   "actuators": 66
+  },
+  "settle_under_gravity": {
+   "pass": true,
+   "max_joint_speed": 0.31,
+   "base_drop_m": 0.005,
+   "upright": 1.0
+  },
+  "hold_pose": {
+   "pass": true,
+   "max_joint_error_rad": 0.001
+  },
+  "actuator_sweep": {
+   "pass": true,
+   "tracked": "63/66",
+   "worst_error": 1.4
+  },
+  "disturbance_recovery": {
+   "pass": true,
+   "upright_after": 0.976,
+   "note": "upright>0.5 means it did not fall"
+  },
+  "wearer_support": {
+   "pass": true,
+   "powered": {
+    "wearer_head_z_start": 1.523,
+    "wearer_head_z_end": 1.518,
+    "head_drop_m": 0.005,
+    "finite": true,
+    "max_actuator_torque_Nm": 17.0
+   },
+   "unpowered": {
+    "wearer_head_z_start": 1.523,
+    "wearer_head_z_end": 0.765,
+    "head_drop_m": 0.758,
+    "finite": true,
+    "max_actuator_torque_Nm": 0.0
+   },
+   "suit_supports_wearer": true
+  }
+ },
+ "passed": 6,
+ "total": 6,
+ "assist": {
+  "powered": {
+   "wearer_head_z_start": 1.523,
+   "wearer_head_z_end": 1.518,
+   "head_drop_m": 0.005,
+   "finite": true,
+   "max_actuator_torque_Nm": 17.0
+  },
+  "unpowered": {
+   "wearer_head_z_start": 1.523,
+   "wearer_head_z_end": 0.765,
+   "head_drop_m": 0.758,
+   "finite": true,
+   "max_actuator_torque_Nm": 0.0
+  },
+  "suit_supports_wearer": true
+ }
+}

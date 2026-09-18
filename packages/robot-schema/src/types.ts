@@ -16,7 +16,21 @@ export interface BoxGeometry { type: "box"; size: Vec3; }
 export interface CylinderGeometry { type: "cylinder"; radius: number; length: number; }
 export interface SphereGeometry { type: "sphere"; radius: number; }
 export interface CapsuleGeometry { type: "capsule"; radius: number; length: number; }
-export type Geometry = BoxGeometry | CylinderGeometry | SphereGeometry | CapsuleGeometry;
+/** A polygon mesh generated deterministically by a named part generator (see @ttr/mesh PARTS).
+ *  `file` is the STL filename written by exporters; mass properties are precomputed so inertia
+ *  never depends on having the mesh in hand. bbox is used for the collision fallback. */
+export interface MeshGeometry {
+  type: "mesh";
+  part: string;
+  params?: Record<string, number | string>;
+  file: string;
+  scale?: Vec3;
+  /** solid volume in m^3 and inertia for unit density (kg/m^3 = 1), about the link frame origin offset by `origin` */
+  volume: number;
+  inertia_unit: Inertia;
+  bbox: { min: Vec3; max: Vec3 };
+}
+export type Geometry = BoxGeometry | CylinderGeometry | SphereGeometry | CapsuleGeometry | MeshGeometry;
 
 export interface Inertia {
   ixx: number; iyy: number; izz: number;

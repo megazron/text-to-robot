@@ -1,2 +1,13 @@
-{ "name": "@ttr/ros2-export", "version": "0.1.0", "type": "module", "exports": { ".": "./src/index.ts" },
-  "dependencies": { "@ttr/robot-schema": "*", "@ttr/urdf-generator": "*" } }
+{
+  "name": "@ttr/ros2-export",
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@ttr/robot-schema": "*",
+    "@ttr/urdf-generator": "*",
+    "@ttr/mesh": "*"
+  }
+}

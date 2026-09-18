@@ -17,6 +17,10 @@ export function inertiaOf(g: Geometry, mass: number): Inertia {
       const i = (2 / 5) * mass * g.radius * g.radius;
       return { ixx: i, iyy: i, izz: i, ...zero };
     }
+    case "mesh": {
+      const k = mass / Math.max(g.volume, 1e-12);
+      const I = g.inertia_unit; return { ixx: I.ixx * k, iyy: I.iyy * k, izz: I.izz * k, ixy: I.ixy * k, ixz: I.ixz * k, iyz: I.iyz * k };
+    }
     case "capsule": {
       // cylinder + two hemispheres, mass split by volume, axis along Z
       const r = g.radius, h = g.length;
@@ -42,6 +46,7 @@ export function volumeOf(g: Geometry): number {
     case "cylinder": return Math.PI * g.radius * g.radius * g.length;
     case "sphere": return (4 / 3) * Math.PI * g.radius ** 3;
     case "capsule": return Math.PI * g.radius * g.radius * g.length + (4 / 3) * Math.PI * g.radius ** 3;
+    case "mesh": return g.volume;
   }
 }
 

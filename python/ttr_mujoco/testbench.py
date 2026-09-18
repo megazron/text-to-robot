@@ -25,7 +25,7 @@ def run_tests(path_or_xml: str, floating=None, seconds: float = 2.0, verbose: bo
     m = load_model(path_or_xml, floating=floating) if path_or_xml.endswith(".urdf") else load_model(path_or_xml)
     d = mujoco.MjData(m)
     steps = int(seconds / m.opt.timestep)
-    R = {"model": path_or_xml, "nbody": m.nbody, "njnt": m.njnt, "nu": m.nu, "ngeom": m.ngeom,
+    R = {"model": path_or_xml if not path_or_xml.lstrip().startswith("<") else f"<inline mjcf, {len(path_or_xml)} chars>", "nbody": m.nbody, "njnt": m.njnt, "nu": m.nu, "ngeom": m.ngeom,
          "floating": bool(m.nq and m.jnt_type[0] == mujoco.mjtJoint.mjJNT_FREE), "tests": {}}
     def rec(name, ok, **metrics):
         R["tests"][name] = {"pass": bool(ok), **metrics}

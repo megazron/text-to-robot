@@ -5,8 +5,14 @@ import { num, vec, xmlName } from "./format.ts";
 
 const originTag = (p: Pose): string => `<origin xyz="${vec(p.xyz)}" rpy="${vec(p.rpy)}"/>`;
 
+let MESH_PREFIX = "package://robot/meshes/";
+/** exporters set this so mesh paths resolve as package://<pkg>/meshes/<file> (ROS) or a relative dir (simulators) */
+export function setMeshPackage(pkg: string) { MESH_PREFIX = `package://${xmlName(pkg)}/meshes/`; }
+export function setMeshPrefix(prefix: string) { MESH_PREFIX = prefix; }
+
 export function generateGeometry(g: Geometry): string {
   switch (g.type) {
+    case "mesh": return `<geometry><mesh filename="${MESH_PREFIX}${xmlName(g.file.replace(/\.stl$/i, ""))}.stl"${g.scale ? ` scale="${vec(g.scale)}"` : ""}/></geometry>`;
     case "box": return `<geometry><box size="${vec(g.size)}"/></geometry>`;
     case "cylinder": return `<geometry><cylinder radius="${num(g.radius)}" length="${num(g.length)}"/></geometry>`;
     case "sphere": return `<geometry><sphere radius="${num(g.radius)}"/></geometry>`;
@@ -25,7 +31,15 @@ export function generateVisual(l: Link): string {
 }
 
 export function generateCollision(l: Link): string {
-  return `<collision>\n  ${originTag(l.origin)}\n  ${generateGeometry(l.collision ?? l.geometry)}\n</collision>`;
+  const g = l.collision ?? l.geometry;
+  if (g.type === "mesh") {
+    // collision fallback for meshes: their bounding box (cheap, stable in every physics engine)
+    const size = [g.bbox.max[0] - g.bbox.min[0], g.bbox.max[1] - g.bbox.min[1], g.bbox.max[2] - g.bbox.min[2]].map((d) => Math.max(d, 1e-3));
+    const c = [(g.bbox.max[0] + g.bbox.min[0]) / 2, (g.bbox.max[1] + g.bbox.min[1]) / 2, (g.bbox.max[2] + g.bbox.min[2]) / 2];
+    const origin = { xyz: [l.origin.xyz[0] + c[0], l.origin.xyz[1] + c[1], l.origin.xyz[2] + c[2]] as [number, number, number], rpy: l.origin.rpy };
+    return `<collision>\n  ${originTag(origin)}\n  <geometry><box size="${vec(size)}"/></geometry>\n</collision>`;
+  }
+  return `<collision>\n  ${originTag(l.origin)}\n  ${generateGeometry(g)}\n</collision>`;
 }
 
 export function generateInertial(l: Link): string {
@@ -65,7 +79,8 @@ function header(spec: RobotSpecification): string {
     `     ${spec.links.length} links, ${spec.joints.length} joints, ${inf} inferred values\n-->`;
 }
 
-export function generateUrdf(spec: RobotSpecification): string {
+export function generateUrdf(spec: RobotSpecification, opts: { meshPrefix?: string } = {}): string {
+  if (opts.meshPrefix !== undefined) setMeshPrefix(opts.meshPrefix); else setMeshPackage(spec.robot_name);
   const parts: string[] = [];
   parts.push(`<?xml version="1.0"?>`);
   parts.push(header(spec));

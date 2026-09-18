@@ -39,8 +39,9 @@ function crc32(bytes){ let c=~0; for(let i=0;i<bytes.length;i++){ c^=bytes[i]; f
 export function makeZip(files){ // files: {path: string}
   const enc=new TextEncoder(); const chunks=[]; const central=[]; let offset=0;
   const u16=n=>[n&255,(n>>8)&255]; const u32=n=>[n&255,(n>>8)&255,(n>>16)&255,(n>>24)&255];
+  const toBytes=(c)=> c instanceof Uint8Array ? c : (c && typeof c==='object' && c.b64) ? Uint8Array.from(atob(c.b64), ch=>ch.charCodeAt(0)) : enc.encode(String(c));
   for(const [path, content] of Object.entries(files)){
-    const name=enc.encode(path); const data=enc.encode(content); const crc=crc32(data);
+    const name=enc.encode(path); const data=toBytes(content); const crc=crc32(data);
     const local=[...u32(0x04034b50),...u16(20),...u16(0),...u16(0),...u16(0),...u16(0),...u32(crc),...u32(data.length),...u32(data.length),...u16(name.length),...u16(0)];
     chunks.push(new Uint8Array(local), name, data);
     central.push([...u32(0x02014b50),...u16(20),...u16(20),...u16(0),...u16(0),...u16(0),...u16(0),...u32(crc),...u32(data.length),...u32(data.length),...u16(name.length),...u16(0),...u16(0),...u16(0),...u16(0),...u32(0),...u32(offset),name]);

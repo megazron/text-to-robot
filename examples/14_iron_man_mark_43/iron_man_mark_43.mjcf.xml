@@ -1,0 +1,790 @@
+<mujoco model="iron_man_mark_43">
+  <compiler angle="radian" meshdir="meshes" />
+
+  <asset>
+    <mesh name="helmet_cranium" content_type="model/stl" file="helmet_cranium.stl" />
+    <mesh name="helmet_neck_collar" content_type="model/stl" file="helmet_neck_collar.stl" />
+    <mesh name="helmet_left_ear_pod" content_type="model/stl" file="helmet_left_ear_pod.stl" />
+    <mesh name="helmet_right_ear_pod" content_type="model/stl" file="helmet_right_ear_pod.stl" />
+    <mesh name="helmet_crown_panel" content_type="model/stl" file="helmet_crown_panel.stl" />
+    <mesh name="helmet_faceplate" content_type="model/stl" file="helmet_faceplate.stl" />
+    <mesh name="helmet_forehead_plate" content_type="model/stl" file="helmet_forehead_plate.stl" />
+    <mesh name="helmet_mouth_line" content_type="model/stl" file="helmet_mouth_line.stl" />
+    <mesh name="helmet_left_eye_socket" content_type="model/stl" file="helmet_left_eye_socket.stl" />
+    <mesh name="helmet_left_eye_lens" content_type="model/stl" file="helmet_left_eye_lens.stl" />
+    <mesh name="helmet_left_cheek_panel" content_type="model/stl" file="helmet_left_cheek_panel.stl" />
+    <mesh name="helmet_right_eye_socket" content_type="model/stl" file="helmet_right_eye_socket.stl" />
+    <mesh name="helmet_right_eye_lens" content_type="model/stl" file="helmet_right_eye_lens.stl" />
+    <mesh name="helmet_right_cheek_panel" content_type="model/stl" file="helmet_right_cheek_panel.stl" />
+    <mesh name="helmet_chin_guard" content_type="model/stl" file="helmet_chin_guard.stl" />
+    <mesh name="collar_plate" content_type="model/stl" file="collar_plate.stl" />
+    <mesh name="left_chest_door" content_type="model/stl" file="left_chest_door.stl" />
+    <mesh name="left_pectoral_trim" content_type="model/stl" file="left_pectoral_trim.stl" />
+    <mesh name="right_chest_door" content_type="model/stl" file="right_chest_door.stl" />
+    <mesh name="right_pectoral_trim" content_type="model/stl" file="right_pectoral_trim.stl" />
+    <mesh name="chest_centre" content_type="model/stl" file="chest_centre.stl" />
+    <mesh name="arc_reactor_housing" content_type="model/stl" file="arc_reactor_housing.stl" />
+    <mesh name="arc_reactor" content_type="model/stl" file="arc_reactor.stl" />
+    <mesh name="ab_plate_1" content_type="model/stl" file="ab_plate_1.stl" />
+    <mesh name="ab_plate_2" content_type="model/stl" file="ab_plate_2.stl" />
+    <mesh name="ab_plate_3" content_type="model/stl" file="ab_plate_3.stl" />
+    <mesh name="left_lat_plate" content_type="model/stl" file="left_lat_plate.stl" />
+    <mesh name="right_lat_plate" content_type="model/stl" file="right_lat_plate.stl" />
+    <mesh name="back_shell" content_type="model/stl" file="back_shell.stl" />
+    <mesh name="left_flight_flap" content_type="model/stl" file="left_flight_flap.stl" />
+    <mesh name="left_back_vent" content_type="model/stl" file="left_back_vent.stl" />
+    <mesh name="right_flight_flap" content_type="model/stl" file="right_flight_flap.stl" />
+    <mesh name="right_back_vent" content_type="model/stl" file="right_back_vent.stl" />
+    <mesh name="belt_plate" content_type="model/stl" file="belt_plate.stl" />
+    <mesh name="rear_belt_plate" content_type="model/stl" file="rear_belt_plate.stl" />
+    <mesh name="codpiece" content_type="model/stl" file="codpiece.stl" />
+    <mesh name="left_pauldron" content_type="model/stl" file="left_pauldron.stl" />
+    <mesh name="left_pauldron_edge" content_type="model/stl" file="left_pauldron_edge.stl" />
+    <mesh name="left_bicep_sleeve" content_type="model/stl" file="left_bicep_sleeve.stl" />
+    <mesh name="left_bicep_clamshell" content_type="model/stl" file="left_bicep_clamshell.stl" />
+    <mesh name="left_elbow_cap" content_type="model/stl" file="left_elbow_cap.stl" />
+    <mesh name="left_gauntlet_sleeve" content_type="model/stl" file="left_gauntlet_sleeve.stl" />
+    <mesh name="left_gauntlet_clamshell" content_type="model/stl" file="left_gauntlet_clamshell.stl" />
+    <mesh name="left_gauntlet_hatch" content_type="model/stl" file="left_gauntlet_hatch.stl" />
+    <mesh name="left_hand_plate" content_type="model/stl" file="left_hand_plate.stl" />
+    <mesh name="left_palm_repulsor" content_type="model/stl" file="left_palm_repulsor.stl" />
+    <mesh name="left_finger_1" content_type="model/stl" file="left_finger_1.stl" />
+    <mesh name="left_finger_2" content_type="model/stl" file="left_finger_2.stl" />
+    <mesh name="left_finger_3" content_type="model/stl" file="left_finger_3.stl" />
+    <mesh name="left_finger_4" content_type="model/stl" file="left_finger_4.stl" />
+    <mesh name="left_thumb" content_type="model/stl" file="left_thumb.stl" />
+    <mesh name="right_pauldron" content_type="model/stl" file="right_pauldron.stl" />
+    <mesh name="right_pauldron_edge" content_type="model/stl" file="right_pauldron_edge.stl" />
+    <mesh name="right_bicep_sleeve" content_type="model/stl" file="right_bicep_sleeve.stl" />
+    <mesh name="right_bicep_clamshell" content_type="model/stl" file="right_bicep_clamshell.stl" />
+    <mesh name="right_elbow_cap" content_type="model/stl" file="right_elbow_cap.stl" />
+    <mesh name="right_gauntlet_sleeve" content_type="model/stl" file="right_gauntlet_sleeve.stl" />
+    <mesh name="right_gauntlet_clamshell" content_type="model/stl" file="right_gauntlet_clamshell.stl" />
+    <mesh name="right_gauntlet_hatch" content_type="model/stl" file="right_gauntlet_hatch.stl" />
+    <mesh name="right_hand_plate" content_type="model/stl" file="right_hand_plate.stl" />
+    <mesh name="right_palm_repulsor" content_type="model/stl" file="right_palm_repulsor.stl" />
+    <mesh name="right_finger_1" content_type="model/stl" file="right_finger_1.stl" />
+    <mesh name="right_finger_2" content_type="model/stl" file="right_finger_2.stl" />
+    <mesh name="right_finger_3" content_type="model/stl" file="right_finger_3.stl" />
+    <mesh name="right_finger_4" content_type="model/stl" file="right_finger_4.stl" />
+    <mesh name="right_thumb" content_type="model/stl" file="right_thumb.stl" />
+    <mesh name="left_hip_flap" content_type="model/stl" file="left_hip_flap.stl" />
+    <mesh name="left_thigh_shell" content_type="model/stl" file="left_thigh_shell.stl" />
+    <mesh name="left_thigh_clamshell" content_type="model/stl" file="left_thigh_clamshell.stl" />
+    <mesh name="left_knee_cap" content_type="model/stl" file="left_knee_cap.stl" />
+    <mesh name="left_shin_shell" content_type="model/stl" file="left_shin_shell.stl" />
+    <mesh name="left_calf_clamshell" content_type="model/stl" file="left_calf_clamshell.stl" />
+    <mesh name="left_shin_guard" content_type="model/stl" file="left_shin_guard.stl" />
+    <mesh name="left_boot_toe" content_type="model/stl" file="left_boot_toe.stl" scale="0.6 1 1" />
+    <mesh name="left_boot_trim" content_type="model/stl" file="left_boot_trim.stl" />
+    <mesh name="left_heel_thruster" content_type="model/stl" file="left_heel_thruster.stl" />
+    <mesh name="left_thruster_cover" content_type="model/stl" file="left_thruster_cover.stl" />
+    <mesh name="left_ankle_flap" content_type="model/stl" file="left_ankle_flap.stl" />
+    <mesh name="right_hip_flap" content_type="model/stl" file="right_hip_flap.stl" />
+    <mesh name="right_thigh_shell" content_type="model/stl" file="right_thigh_shell.stl" />
+    <mesh name="right_thigh_clamshell" content_type="model/stl" file="right_thigh_clamshell.stl" />
+    <mesh name="right_knee_cap" content_type="model/stl" file="right_knee_cap.stl" />
+    <mesh name="right_shin_shell" content_type="model/stl" file="right_shin_shell.stl" />
+    <mesh name="right_calf_clamshell" content_type="model/stl" file="right_calf_clamshell.stl" />
+    <mesh name="right_shin_guard" content_type="model/stl" file="right_shin_guard.stl" />
+    <mesh name="right_boot_toe" content_type="model/stl" file="right_boot_toe.stl" scale="0.6 1 1" />
+    <mesh name="right_boot_trim" content_type="model/stl" file="right_boot_trim.stl" />
+    <mesh name="right_heel_thruster" content_type="model/stl" file="right_heel_thruster.stl" />
+    <mesh name="right_thruster_cover" content_type="model/stl" file="right_thruster_cover.stl" />
+    <mesh name="right_ankle_flap" content_type="model/stl" file="right_ankle_flap.stl" />
+  </asset>
+
+  <worldbody>
+    <light pos="1.5 -2 3" dir="-0.4 0.5 -0.8" diffuse="0.9 0.9 0.9" castshadow="true" /><geom name="floor" type="plane" size="20 20 0.1" material="grid" contype="1" conaffinity="1" /><body name="pelvis_frame" pos="0.0000 0.0000 0.0050">
+      <freejoint name="root" /><inertial pos="0 0 0.98425" quat="0.5 0.5 -0.5 0.5" mass="3" diaginertia="0.041 0.030925 0.014125" />
+      <geom size="0.11 0.17 0.045" pos="0 0 0.98425" type="box" contype="0" conaffinity="0" group="1" rgba="0.13 0.14 0.16 1" density="0" />
+      <geom size="0.11 0.17 0.045" pos="0 0 0.98425" type="box" rgba="0.13 0.14 0.16 1" group="3" />
+      <body name="spine_frame" pos="0 0 0.96425">
+        <inertial pos="-0.11 0 0.252" mass="2.2" diaginertia="0.047743 0.047028 0.001632" />
+        <joint name="trunk_flex" range="-0.35 0.5" actuatorfrcrange="-120 120" damping="0.1" axis="0 1 0" />
+        <geom size="0.025 0.04 0.252" pos="-0.11 0 0.252" type="box" contype="0" conaffinity="0" group="1" rgba="0.13 0.14 0.16 1" density="0" />
+        <geom size="0.025 0.04 0.252" pos="-0.11 0 0.252" type="box" rgba="0.13 0.14 0.16 1" group="3" />
+        <body name="backpack">
+          <inertial pos="-0.175 0 0.2772" mass="9" diaginertia="0.2091 0.1515 0.096" />
+          <geom size="0.08 0.16 0.21" pos="-0.175 0 0.2772" type="box" contype="0" conaffinity="0" group="1" rgba="0.13 0.14 0.16 1" density="0" />
+          <geom size="0.08 0.16 0.21" pos="-0.175 0 0.2772" type="box" rgba="0.13 0.14 0.16 1" group="3" />
+        </body>
+        <body name="chest_plate">
+          <inertial pos="0.125 0 0.3124" quat="0.707107 0.707107 0 0" mass="1.6" diaginertia="0.018133 0.010507 0.007733" />
+          <geom size="0.01 0.14 0.12" pos="0.125 0 0.3124" type="box" contype="0" conaffinity="0" group="1" rgba="0.13 0.14 0.16 1" density="0" />
+          <geom size="0.01 0.14 0.12" pos="0.125 0 0.3124" type="box" rgba="0.13 0.14 0.16 1" group="3" />
+        </body>
+        <body name="shoulder_yoke" pos="0 0 0.504">
+          <inertial pos="-0.06 0 0" quat="0.707107 0.707107 0 0" mass="1.4" diaginertia="0.033192 0.033192 0.00084" />
+          <geom size="0.03 0.265 0.03" pos="-0.06 0 0" type="box" contype="0" conaffinity="0" group="1" rgba="0.55 0.57 0.6 1" density="0" />
+          <geom size="0.03 0.265 0.03" pos="-0.06 0 0" type="box" rgba="0.55 0.57 0.6 1" group="3" />
+          <body name="left_shoulder_module" pos="0 0.235 0">
+            <inertial pos="0 0.04 0" quat="0.5 0.5 -0.5 0.5" mass="1.6" diaginertia="0.00242 0.002063 0.002063" />
+            <joint name="left_shoulder_abduction" range="-0.3 2.6" actuatorfrcrange="-60 60" damping="0.1" axis="1 0 0" />
+            <geom size="0.055 0.04" pos="0 0.04 0" quat="0.707107 0.707107 0 0" type="cylinder" contype="0" conaffinity="0" group="1" rgba="0.55 0.57 0.6 1" density="0" />
+            <geom size="0.055 0.04" pos="0 0.04 0" quat="0.707107 0.707107 0 0" type="cylinder" rgba="0.55 0.57 0.6 1" group="3" />
+            <body name="left_upper_arm_strut">
+              <inertial pos="0 0 -0.16275" quat="0.707107 0 0 0.707107" mass="0.8" diaginertia="0.00717 0.007145 0.000188333" />
+              <joint name="left_shoulder_flexion" range="-1 3" actuatorfrcrange="-60 60" damping="0.1" axis="0 1 0" />
+              <geom size="0.02 0.0175 0.16275" pos="0 0 -0.16275" type="box" contype="0" conaffinity="0" group="1" rgba="0.13 0.14 0.16 1" density="0" />
+              <geom size="0.02 0.0175 0.16275" pos="0 0 -0.16275" type="box" rgba="0.13 0.14 0.16 1" group="3" />
+              <body name="left_upper_arm_cuff" pos="0 -0.05 -0.179025">
+                <inertial pos="0 0 0" quat="0.5 0.5 -0.5 0.5" mass="0.3" diaginertia="0.00054 0.00036 0.00036" />
+                <geom size="0.06 0.03" type="cylinder" contype="0" conaffinity="0" group="1" rgba="0.2 0.2 0.22 1" density="0" />
+                <geom size="0.06 0.03" type="cylinder" rgba="0.2 0.2 0.22 1" group="3" />
+              </body>
+              <body name="left_elbow_module" pos="0 0 -0.3255">
+                <inertial pos="0 0.035 0" quat="0.5 0.5 -0.5 0.5" mass="1.1" diaginertia="0.001114 0.001006 0.001006" />
+                <geom size="0.045 0.035" pos="0 0.035 0" quat="0.707107 0.707107 0 0" type="cylinder" contype="0" conaffinity="0" group="1" rgba="0.55 0.57 0.6 1" density="0" />
+                <geom size="0.045 0.035" pos="0 0.035 0" quat="0.707107 0.707107 0 0" type="cylinder" rgba="0.55 0.57 0.6 1" group="3" />
+                <body name="left_forearm_strut">
+                  <inertial pos="0 0 -0.12775" quat="0.707107 0 0 0.707107" mass="0.6" diaginertia="0.003325 0.003309 0.00010625" />
+                  <joint name="left_elbow_flexion" range="-2.4 0.05" actuatorfrcrange="-40 40" damping="0.1" axis="0 1 0" />
+                  <geom size="0.0175 0.015 0.12775" pos="0 0 -0.12775" type="box" contype="0" conaffinity="0" group="1" rgba="0.13 0.14 0.16 1" density="0" />
+                  <geom size="0.0175 0.015 0.12775" pos="0 0 -0.12775" type="box" rgba="0.13 0.14 0.16 1" group="3" />
+                  <body name="left_forearm_cuff" pos="0 -0.045 -0.140525">
+                    <inertial pos="0 0 0" quat="0.5 0.5 -0.5 0.5" mass="0.25" diaginertia="0.0003125 0.00023125 0.00023125" />
+                    <geom size="0.05 0.03" type="cylinder" contype="0" conaffinity="0" group="1" rgba="0.2 0.2 0.22 1" density="0" />
+                    <geom size="0.05 0.03" type="cylinder" rgba="0.2 0.2 0.22 1" group="3" />
+                  </body>
+                  <body name="left_hand" pos="0 0 -0.2555">
+                    <inertial pos="0.02 -0.045 -0.04" quat="0 0.707107 0 0.707107" mass="0.35" diaginertia="0.000434583 0.000317917 0.000169167" />
+                    <joint name="left_wrist_flexion" range="-0.8 0.8" actuatorfrcrange="-15 15" damping="0.1" axis="1 0 0" />
+                    <geom size="0.05 0.035 0.015" pos="0.02 -0.045 -0.04" type="box" contype="0" conaffinity="0" group="1" rgba="0.13 0.14 0.16 1" density="0" />
+                    <geom size="0.05 0.035 0.015" pos="0.02 -0.045 -0.04" type="box" rgba="0.13 0.14 0.16 1" group="3" />
+                    <body name="left_hand_plate" pos="0.02 -0.045 -0.02" quat="0.707107 0 -0.707107 0">
+                      <inertial pos="0 0 0" quat="1 8.33299e-05 0 0" mass="0.18" diaginertia="0.000251047 0.000170845 8.41558e-05" />
+                      <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.6 0.04 0.05 1" density="0" mesh="left_hand_plate" />
+                      <geom size="0.006136 0.0364245 0.052395" pos="-0.006136 0 0" type="box" rgba="0.6 0.04 0.05 1" group="3" />
+                    </body>
+                    <body name="left_palm_repulsor" pos="0.03 -0.045 -0.056" quat="-1.73205e-07 1 0 0">
+                      <inertial pos="0 0 0" quat="0.5 0.5 -0.5 0.5" mass="0.06" diaginertia="2.42703e-05 1.29276e-05 1.29276e-05" />
+                      <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.88 0.98 1 1" density="0" mesh="left_palm_repulsor" />
+                      <geom size="0.026 0.026 0.004" pos="0 0 0.004" type="box" rgba="0.88 0.98 1 1" group="3" />
+                    </body>
+                    <body name="left_finger_1" pos="0.075 -0.069 -0.03" quat="0.707107 0 -0.707107 0">
+                      <inertial pos="0 0 0.03" quat="1 -3.2584e-06 0 0" mass="0.03" diaginertia="1.30607e-05 1.24184e-05 2.20615e-06" />
+                      <joint name="left_finger_1_hinge" range="-1.3 0" actuatorfrcrange="-1 1" damping="0.1" axis="0 1 0" />
+                      <geom pos="0 0 0.03" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.84 0.64 0.17 1" density="0" mesh="left_finger_1" />
+                      <geom size="0.006059 0.010999 0.033932" pos="-0.006059 0 0.03" type="box" rgba="0.84 0.64 0.17 1" group="3" />
+                    </body>
+                    <body name="left_finger_2" pos="0.075 -0.053 -0.03" quat="0.707107 0 -0.707107 0">
+                      <inertial pos="0 0 0.03" quat="1 -3.2584e-06 0 0" mass="0.03" diaginertia="1.30607e-05 1.24184e-05 2.20615e-06" />
+                      <joint name="left_finger_2_hinge" range="-1.3 0" actuatorfrcrange="-1 1" damping="0.1" axis="0 1 0" />
+                      <geom pos="0 0 0.03" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.84 0.64 0.17 1" density="0" mesh="left_finger_2" />
+                      <geom size="0.006059 0.010999 0.033932" pos="-0.006059 0 0.03" type="box" rgba="0.84 0.64 0.17 1" group="3" />
+                    </body>
+                    <body name="left_finger_3" pos="0.075 -0.037 -0.03" quat="0.707107 0 -0.707107 0">
+                      <inertial pos="0 0 0.03" quat="1 -3.2584e-06 0 0" mass="0.03" diaginertia="1.30607e-05 1.24184e-05 2.20615e-06" />
+                      <joint name="left_finger_3_hinge" range="-1.3 0" actuatorfrcrange="-1 1" damping="0.1" axis="0 1 0" />
+                      <geom pos="0 0 0.03" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.84 0.64 0.17 1" density="0" mesh="left_finger_3" />
+                      <geom size="0.006059 0.010999 0.033932" pos="-0.006059 0 0.03" type="box" rgba="0.84 0.64 0.17 1" group="3" />
+                    </body>
+                    <body name="left_finger_4" pos="0.075 -0.021 -0.03" quat="0.707107 0 -0.707107 0">
+                      <inertial pos="0 0 0.03" quat="1 -3.2584e-06 0 0" mass="0.03" diaginertia="1.30607e-05 1.24184e-05 2.20615e-06" />
+                      <joint name="left_finger_4_hinge" range="-1.3 0" actuatorfrcrange="-1 1" damping="0.1" axis="0 1 0" />
+                      <geom pos="0 0 0.03" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.84 0.64 0.17 1" density="0" mesh="left_finger_4" />
+                      <geom size="0.006059 0.010999 0.033932" pos="-0.006059 0 0.03" type="box" rgba="0.84 0.64 0.17 1" group="3" />
+                    </body>
+                    <body name="left_thumb" pos="0.035 -0.085 -0.03" quat="0.651289 -0.27536 -0.651288 -0.27536">
+                      <inertial pos="0 0 0.025" quat="1 -4.1703e-06 0 0" mass="0.03" diaginertia="9.87417e-06 9.25476e-06 2.17804e-06" />
+                      <joint name="left_thumb_hinge" range="-0.9 0" actuatorfrcrange="-1 1" damping="0.1" axis="0 1 0" />
+                      <geom pos="0 0 0.025" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.84 0.64 0.17 1" density="0" mesh="left_thumb" />
+                      <geom size="0.006059 0.010999 0.028942" pos="-0.006059 0 0.025" type="box" rgba="0.84 0.64 0.17 1" group="3" />
+                    </body>
+                  </body>
+                  <body name="left_gauntlet_sleeve" pos="0 -0.045 -0.033215">
+                    <inertial pos="0 0 0" quat="0.557468 0.548027 0.458289 0.422927" mass="0.4" diaginertia="0.00212409 0.00163792 0.00161799" />
+                    <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.6 0.04 0.05 1" density="0" mesh="left_gauntlet_sleeve" />
+                    <geom size="0.0708145 0.0670315 0.087121" pos="2.1062e-07 0.003783 -0.087121" type="box" rgba="0.6 0.04 0.05 1" group="3" />
+                    <body name="left_gauntlet_hatch" pos="0 0.068 -0.035" quat="0.707107 0 0 0.707107">
+                      <inertial pos="0 0 -0.02" quat="0.707348 0.706866 0 0" mass="0.05" diaginertia="1.79251e-05 9.76592e-06 8.51161e-06" />
+                      <joint name="left_gauntlet_hatch_hinge" range="-1.2 0" actuatorfrcrange="-1.5 1.5" damping="0.1" axis="0 1 0" />
+                      <geom pos="0 0 -0.02" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.84 0.64 0.17 1" density="0" mesh="left_gauntlet_hatch" />
+                      <geom size="0.00345 0.0235325 0.021457" pos="-0.00345 0 -0.02" type="box" rgba="0.84 0.64 0.17 1" group="3" />
+                    </body>
+                  </body>
+                  <body name="left_gauntlet_clamshell" pos="0.03284 -0.10225 -0.033215">
+                    <inertial pos="-0.03284 0.05725 0" quat="0.761771 0.019362 -0.0263901 0.647019" mass="0.22" diaginertia="0.000782585 0.000586463 0.000209872" />
+                    <joint name="left_gauntlet_clamshell_hinge" range="-1.4 0" actuatorfrcrange="-3 3" damping="0.1" />
+                    <geom pos="-0.03284 0.05725 0" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.84 0.64 0.17 1" density="0" mesh="left_gauntlet_clamshell" />
+                    <geom size="0.0526965 0.0188265 0.087122" pos="-0.043814 0.005102 -0.087122" type="box" rgba="0.84 0.64 0.17 1" group="3" />
+                  </body>
+                </body>
+                <body name="left_elbow_cap" pos="-0.055 -0.05 0" quat="0.707107 0 -0.707107 0">
+                  <inertial pos="0 0 0" quat="0.5 0.5 -0.5 0.5" mass="0.18" diaginertia="0.000312114 0.000178603 0.000178603" />
+                  <joint name="left_elbow_cap_hinge" range="0 0.5" actuatorfrcrange="-2 2" damping="0.1" axis="0 1 0" />
+                  <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.6 0.04 0.05 1" density="0" mesh="left_elbow_cap" />
+                  <geom size="0.0539285 0.0539285 0.0194915" pos="0 0 0.019491" type="box" rgba="0.6 0.04 0.05 1" group="3" />
+                </body>
+              </body>
+              <body name="left_bicep_sleeve" pos="0 -0.05 -0.04557">
+                <inertial pos="0 0 0" quat="0.781306 -0.0163075 0.00707933 0.623895" mass="0.45" diaginertia="0.00333628 0.00255153 0.00252519" />
+                <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.84 0.64 0.17 1" density="0" mesh="left_bicep_sleeve" />
+                <geom size="0.079795 0.075855 0.10441" pos="2.33805e-07 0.00394 -0.104409" type="box" rgba="0.84 0.64 0.17 1" group="3" />
+              </body>
+              <body name="left_bicep_clamshell" pos="0.037318 -0.115057 -0.04557">
+                <inertial pos="-0.037318 0.065057 0" quat="0.761583 0.0134065 -0.0182535 0.647671" mass="0.25" diaginertia="0.00124863 0.000945082 0.000323919" />
+                <joint name="left_bicep_clamshell_hinge" range="-1.4 0" actuatorfrcrange="-3 3" damping="0.1" />
+                <geom pos="-0.037318 0.065057 0" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.84 0.64 0.17 1" density="0" mesh="left_bicep_clamshell" />
+                <geom size="0.059808 0.0199355 0.104411" pos="-0.049578 0.005015 -0.10441" type="box" rgba="0.84 0.64 0.17 1" group="3" />
+              </body>
+            </body>
+            <body name="left_pauldron" pos="0 -0.02 0.025" quat="0.974794 -0.223106 0 0">
+              <inertial pos="0 0 0" quat="0.5 0.5 -0.5 0.5" mass="0.65" diaginertia="0.006115 0.003445 0.003445" />
+              <joint name="left_pauldron_hinge" range="-0.8 0" actuatorfrcrange="-3 3" damping="0.1" axis="1 0 0" />
+              <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.6 0.04 0.05 1" density="0" mesh="left_pauldron" />
+              <geom size="0.124902 0.124902 0.0424905" pos="0 0 0.04249" type="box" rgba="0.6 0.04 0.05 1" group="3" />
+              <body name="left_pauldron_edge" pos="0.117 0 0.022">
+                <inertial pos="0 0 0" quat="0.707135 0.707078 0 0" mass="0.06" diaginertia="4.87693e-05 4.26877e-05 7.36178e-06" />
+                <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.84 0.64 0.17 1" density="0" mesh="left_pauldron_edge" />
+                <geom size="0.006392 0.0458075 0.016966" pos="-0.006392 0 0" type="box" rgba="0.84 0.64 0.17 1" group="3" />
+              </body>
+            </body>
+          </body>
+          <body name="right_shoulder_module" pos="0 -0.235 0">
+            <inertial pos="0 -0.04 0" quat="0.5 0.5 -0.5 0.5" mass="1.6" diaginertia="0.00242 0.002063 0.002063" />
+            <joint name="right_shoulder_abduction" range="-0.3 2.6" actuatorfrcrange="-60 60" damping="0.1" axis="1 0 0" />
+            <geom size="0.055 0.04" pos="0 -0.04 0" quat="0.707107 0.707107 0 0" type="cylinder" contype="0" conaffinity="0" group="1" rgba="0.55 0.57 0.6 1" density="0" />
+            <geom size="0.055 0.04" pos="0 -0.04 0" quat="0.707107 0.707107 0 0" type="cylinder" rgba="0.55 0.57 0.6 1" group="3" />
+            <body name="right_upper_arm_strut">
+              <inertial pos="0 0 -0.16275" quat="0.707107 0 0 0.707107" mass="0.8" diaginertia="0.00717 0.007145 0.000188333" />
+              <joint name="right_shoulder_flexion" range="-1 3" actuatorfrcrange="-60 60" damping="0.1" axis="0 1 0" />
+              <geom size="0.02 0.0175 0.16275" pos="0 0 -0.16275" type="box" contype="0" conaffinity="0" group="1" rgba="0.13 0.14 0.16 1" density="0" />
+              <geom size="0.02 0.0175 0.16275" pos="0 0 -0.16275" type="box" rgba="0.13 0.14 0.16 1" group="3" />
+              <body name="right_upper_arm_cuff" pos="0 0.05 -0.179025">
+                <inertial pos="0 0 0" quat="0.5 0.5 -0.5 0.5" mass="0.3" diaginertia="0.00054 0.00036 0.00036" />
+                <geom size="0.06 0.03" type="cylinder" contype="0" conaffinity="0" group="1" rgba="0.2 0.2 0.22 1" density="0" />
+                <geom size="0.06 0.03" type="cylinder" rgba="0.2 0.2 0.22 1" group="3" />
+              </body>
+              <body name="right_elbow_module" pos="0 0 -0.3255">
+                <inertial pos="0 -0.035 0" quat="0.5 0.5 -0.5 0.5" mass="1.1" diaginertia="0.001114 0.001006 0.001006" />
+                <geom size="0.045 0.035" pos="0 -0.035 0" quat="0.707107 0.707107 0 0" type="cylinder" contype="0" conaffinity="0" group="1" rgba="0.55 0.57 0.6 1" density="0" />
+                <geom size="0.045 0.035" pos="0 -0.035 0" quat="0.707107 0.707107 0 0" type="cylinder" rgba="0.55 0.57 0.6 1" group="3" />
+                <body name="right_forearm_strut">
+                  <inertial pos="0 0 -0.12775" quat="0.707107 0 0 0.707107" mass="0.6" diaginertia="0.003325 0.003309 0.00010625" />
+                  <joint name="right_elbow_flexion" range="-2.4 0.05" actuatorfrcrange="-40 40" damping="0.1" axis="0 1 0" />
+                  <geom size="0.0175 0.015 0.12775" pos="0 0 -0.12775" type="box" contype="0" conaffinity="0" group="1" rgba="0.13 0.14 0.16 1" density="0" />
+                  <geom size="0.0175 0.015 0.12775" pos="0 0 -0.12775" type="box" rgba="0.13 0.14 0.16 1" group="3" />
+                  <body name="right_forearm_cuff" pos="0 0.045 -0.140525">
+                    <inertial pos="0 0 0" quat="0.5 0.5 -0.5 0.5" mass="0.25" diaginertia="0.0003125 0.00023125 0.00023125" />
+                    <geom size="0.05 0.03" type="cylinder" contype="0" conaffinity="0" group="1" rgba="0.2 0.2 0.22 1" density="0" />
+                    <geom size="0.05 0.03" type="cylinder" rgba="0.2 0.2 0.22 1" group="3" />
+                  </body>
+                  <body name="right_hand" pos="0 0 -0.2555">
+                    <inertial pos="0.02 0.045 -0.04" quat="0 0.707107 0 0.707107" mass="0.35" diaginertia="0.000434583 0.000317917 0.000169167" />
+                    <joint name="right_wrist_flexion" range="-0.8 0.8" actuatorfrcrange="-15 15" damping="0.1" axis="1 0 0" />
+                    <geom size="0.05 0.035 0.015" pos="0.02 0.045 -0.04" type="box" contype="0" conaffinity="0" group="1" rgba="0.13 0.14 0.16 1" density="0" />
+                    <geom size="0.05 0.035 0.015" pos="0.02 0.045 -0.04" type="box" rgba="0.13 0.14 0.16 1" group="3" />
+                    <body name="right_hand_plate" pos="0.02 0.045 -0.02" quat="0.707107 0 -0.707107 0">
+                      <inertial pos="0 0 0" quat="1 8.33299e-05 0 0" mass="0.18" diaginertia="0.000251047 0.000170845 8.41558e-05" />
+                      <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.6 0.04 0.05 1" density="0" mesh="right_hand_plate" />
+                      <geom size="0.006136 0.0364245 0.052395" pos="-0.006136 0 0" type="box" rgba="0.6 0.04 0.05 1" group="3" />
+                    </body>
+                    <body name="right_palm_repulsor" pos="0.03 0.045 -0.056" quat="-1.73205e-07 1 0 0">
+                      <inertial pos="0 0 0" quat="0.5 0.5 -0.5 0.5" mass="0.06" diaginertia="2.42703e-05 1.29276e-05 1.29276e-05" />
+                      <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.88 0.98 1 1" density="0" mesh="right_palm_repulsor" />
+                      <geom size="0.026 0.026 0.004" pos="0 0 0.004" type="box" rgba="0.88 0.98 1 1" group="3" />
+                    </body>
+                    <body name="right_finger_1" pos="0.075 0.021 -0.03" quat="0.707107 0 -0.707107 0">
+                      <inertial pos="0 0 0.03" quat="1 -3.2584e-06 0 0" mass="0.03" diaginertia="1.30607e-05 1.24184e-05 2.20615e-06" />
+                      <joint name="right_finger_1_hinge" range="-1.3 0" actuatorfrcrange="-1 1" damping="0.1" axis="0 1 0" />
+                      <geom pos="0 0 0.03" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.84 0.64 0.17 1" density="0" mesh="right_finger_1" />
+                      <geom size="0.006059 0.010999 0.033932" pos="-0.006059 0 0.03" type="box" rgba="0.84 0.64 0.17 1" group="3" />
+                    </body>
+                    <body name="right_finger_2" pos="0.075 0.037 -0.03" quat="0.707107 0 -0.707107 0">
+                      <inertial pos="0 0 0.03" quat="1 -3.2584e-06 0 0" mass="0.03" diaginertia="1.30607e-05 1.24184e-05 2.20615e-06" />
+                      <joint name="right_finger_2_hinge" range="-1.3 0" actuatorfrcrange="-1 1" damping="0.1" axis="0 1 0" />
+                      <geom pos="0 0 0.03" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.84 0.64 0.17 1" density="0" mesh="right_finger_2" />
+                      <geom size="0.006059 0.010999 0.033932" pos="-0.006059 0 0.03" type="box" rgba="0.84 0.64 0.17 1" group="3" />
+                    </body>
+                    <body name="right_finger_3" pos="0.075 0.053 -0.03" quat="0.707107 0 -0.707107 0">
+                      <inertial pos="0 0 0.03" quat="1 -3.2584e-06 0 0" mass="0.03" diaginertia="1.30607e-05 1.24184e-05 2.20615e-06" />
+                      <joint name="right_finger_3_hinge" range="-1.3 0" actuatorfrcrange="-1 1" damping="0.1" axis="0 1 0" />
+                      <geom pos="0 0 0.03" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.84 0.64 0.17 1" density="0" mesh="right_finger_3" />
+                      <geom size="0.006059 0.010999 0.033932" pos="-0.006059 0 0.03" type="box" rgba="0.84 0.64 0.17 1" group="3" />
+                    </body>
+                    <body name="right_finger_4" pos="0.075 0.069 -0.03" quat="0.707107 0 -0.707107 0">
+                      <inertial pos="0 0 0.03" quat="1 -3.2584e-06 0 0" mass="0.03" diaginertia="1.30607e-05 1.24184e-05 2.20615e-06" />
+                      <joint name="right_finger_4_hinge" range="-1.3 0" actuatorfrcrange="-1 1" damping="0.1" axis="0 1 0" />
+                      <geom pos="0 0 0.03" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.84 0.64 0.17 1" density="0" mesh="right_finger_4" />
+                      <geom size="0.006059 0.010999 0.033932" pos="-0.006059 0 0.03" type="box" rgba="0.84 0.64 0.17 1" group="3" />
+                    </body>
+                    <body name="right_thumb" pos="0.035 0.085 -0.03" quat="0.651289 0.27536 -0.651288 0.27536">
+                      <inertial pos="0 0 0.025" quat="1 -4.1703e-06 0 0" mass="0.03" diaginertia="9.87417e-06 9.25476e-06 2.17804e-06" />
+                      <joint name="right_thumb_hinge" range="-0.9 0" actuatorfrcrange="-1 1" damping="0.1" axis="0 1 0" />
+                      <geom pos="0 0 0.025" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.84 0.64 0.17 1" density="0" mesh="right_thumb" />
+                      <geom size="0.006059 0.010999 0.028942" pos="-0.006059 0 0.025" type="box" rgba="0.84 0.64 0.17 1" group="3" />
+                    </body>
+                  </body>
+                  <body name="right_gauntlet_sleeve" pos="0 0.045 -0.033215">
+                    <inertial pos="0 0 0" quat="0.423095 0.458133 0.547824 0.557668" mass="0.4" diaginertia="0.00212409 0.00163792 0.00161799" />
+                    <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.6 0.04 0.05 1" density="0" mesh="right_gauntlet_sleeve" />
+                    <geom size="0.0708145 0.067032 0.087121" pos="1.38122e-07 -0.003783 -0.087121" type="box" rgba="0.6 0.04 0.05 1" group="3" />
+                    <body name="right_gauntlet_hatch" pos="0 -0.068 -0.035" quat="0.707107 0 0 -0.707107">
+                      <inertial pos="0 0 -0.02" quat="0.707348 0.706866 0 0" mass="0.05" diaginertia="1.79251e-05 9.76592e-06 8.51161e-06" />
+                      <joint name="right_gauntlet_hatch_hinge" range="-1.2 0" actuatorfrcrange="-1.5 1.5" damping="0.1" axis="0 1 0" />
+                      <geom pos="0 0 -0.02" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.84 0.64 0.17 1" density="0" mesh="right_gauntlet_hatch" />
+                      <geom size="0.00345 0.0235325 0.021457" pos="-0.00345 0 -0.02" type="box" rgba="0.84 0.64 0.17 1" group="3" />
+                    </body>
+                  </body>
+                  <body name="right_gauntlet_clamshell" pos="0.03284 0.10225 -0.033215">
+                    <inertial pos="-0.03284 -0.05725 0" quat="0.647018 -0.0263984 0.0193517 0.761771" mass="0.22" diaginertia="0.000782585 0.000586463 0.000209872" />
+                    <joint name="right_gauntlet_clamshell_hinge" range="0 1.4" actuatorfrcrange="-3 3" damping="0.1" />
+                    <geom pos="-0.03284 -0.05725 0" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.84 0.64 0.17 1" density="0" mesh="right_gauntlet_clamshell" />
+                    <geom size="0.0526965 0.0188265 0.087122" pos="-0.043814 -0.005102 -0.087122" type="box" rgba="0.84 0.64 0.17 1" group="3" />
+                  </body>
+                </body>
+                <body name="right_elbow_cap" pos="-0.055 0.05 0" quat="0.707107 0 -0.707107 0">
+                  <inertial pos="0 0 0" quat="0.5 0.5 -0.5 0.5" mass="0.18" diaginertia="0.000312114 0.000178603 0.000178603" />
+                  <joint name="right_elbow_cap_hinge" range="0 0.5" actuatorfrcrange="-2 2" damping="0.1" axis="0 1 0" />
+                  <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.6 0.04 0.05 1" density="0" mesh="right_elbow_cap" />
+                  <geom size="0.0539285 0.0539285 0.0194915" pos="0 0 0.019491" type="box" rgba="0.6 0.04 0.05 1" group="3" />
+                </body>
+              </body>
+              <body name="right_bicep_sleeve" pos="0 0.05 -0.04557">
+                <inertial pos="0 0 0" quat="0.623892 0.00730897 -0.016019 0.781313" mass="0.45" diaginertia="0.00333628 0.00255153 0.00252519" />
+                <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.84 0.64 0.17 1" density="0" mesh="right_bicep_sleeve" />
+                <geom size="0.079795 0.075855 0.10441" pos="1.61279e-07 -0.00394 -0.104409" type="box" rgba="0.84 0.64 0.17 1" group="3" />
+              </body>
+              <body name="right_bicep_clamshell" pos="0.037318 0.115057 -0.04557">
+                <inertial pos="-0.037318 -0.065057 0" quat="0.647671 -0.0182601 0.0133984 0.761584" mass="0.25" diaginertia="0.00124863 0.000945082 0.000323919" />
+                <joint name="right_bicep_clamshell_hinge" range="0 1.4" actuatorfrcrange="-3 3" damping="0.1" />
+                <geom pos="-0.037318 -0.065057 0" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.84 0.64 0.17 1" density="0" mesh="right_bicep_clamshell" />
+                <geom size="0.059808 0.0199355 0.104411" pos="-0.049578 -0.005015 -0.10441" type="box" rgba="0.84 0.64 0.17 1" group="3" />
+              </body>
+            </body>
+            <body name="right_pauldron" pos="0 0.02 0.025" quat="0.974794 0.223106 0 0">
+              <inertial pos="0 0 0" quat="0.5 0.5 -0.5 0.5" mass="0.65" diaginertia="0.006115 0.003445 0.003445" />
+              <joint name="right_pauldron_hinge" range="0 0.8" actuatorfrcrange="-3 3" damping="0.1" axis="1 0 0" />
+              <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.6 0.04 0.05 1" density="0" mesh="right_pauldron" />
+              <geom size="0.124902 0.124902 0.0424905" pos="0 0 0.04249" type="box" rgba="0.6 0.04 0.05 1" group="3" />
+              <body name="right_pauldron_edge" pos="0.117 0 0.022">
+                <inertial pos="0 0 0" quat="0.707135 0.707078 0 0" mass="0.06" diaginertia="4.87693e-05 4.26877e-05 7.36178e-06" />
+                <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.84 0.64 0.17 1" density="0" mesh="right_pauldron_edge" />
+                <geom size="0.006392 0.0458075 0.016966" pos="-0.006392 0 0" type="box" rgba="0.84 0.64 0.17 1" group="3" />
+              </body>
+            </body>
+          </body>
+        </body>
+        <body name="helmet" pos="0.02 0 0.71075">
+          <inertial pos="0 0 0" quat="0.700734 0.699104 0.1007 -0.100423" mass="0.95" diaginertia="0.00769571 0.00546629 0.005063" />
+          <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.6 0.04 0.05 1" density="0" mesh="helmet_cranium" />
+          <geom size="0.114814 0.101109 0.101945" pos="-0.019814 0 0.026946" type="box" rgba="0.6 0.04 0.05 1" group="3" />
+        </body>
+        <body name="helmet_neck_collar" pos="0.02 0 0.71075">
+          <inertial pos="0 0 0" quat="1.37474e-05 0.707107 -1.37474e-05 0.707107" mass="0.35" diaginertia="0.002491 0.00137 0.001207" />
+          <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.2 0.21 0.24 1" density="0" mesh="helmet_neck_collar" />
+          <geom size="0.0955985 0.087632 0.018512" pos="-0.01 0 -0.116488" type="box" rgba="0.2 0.21 0.24 1" group="3" />
+        </body>
+        <body name="helmet_left_ear_pod" pos="0.02 0 0.71075">
+          <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="0.12" diaginertia="9.56993e-05 5.24698e-05 5.24698e-05" />
+          <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.2 0.21 0.24 1" density="0" mesh="helmet_left_ear_pod" />
+          <geom size="0.036 0.007 0.036" pos="0 0.105 0" type="box" rgba="0.2 0.21 0.24 1" group="3" />
+        </body>
+        <body name="helmet_right_ear_pod" pos="0.02 0 0.71075">
+          <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="0.12" diaginertia="9.56993e-05 5.24698e-05 5.24698e-05" />
+          <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.2 0.21 0.24 1" density="0" mesh="helmet_right_ear_pod" />
+          <geom size="0.036 0.007 0.036" pos="0 -0.105 0" type="box" rgba="0.2 0.21 0.24 1" group="3" />
+        </body>
+        <body name="helmet_crown_panel" pos="-0.01 0 0.82875">
+          <inertial pos="0.03 0 -0.118" quat="0.584794 0.584787 -0.397656 0.39738" mass="0.25" diaginertia="0.000526403 0.000364455 0.00017848" />
+          <joint name="helmet_crown_panel_hinge" range="-0.9 0" actuatorfrcrange="-1.5 1.5" damping="0.1" axis="0 1 0" />
+          <geom pos="0.03 0 -0.118" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.6 0.04 0.05 1" density="0" mesh="helmet_crown_panel" />
+          <geom size="0.050033 0.075701 0.020185" pos="0.095834 0 -0.013185" type="box" rgba="0.6 0.04 0.05 1" group="3" />
+        </body>
+        <body name="faceplate" pos="0.02 0 0.76075">
+          <inertial pos="0 0 -0.05" quat="0.999265 -0.000102411 0.0383311 -0.000140131" mass="0.6" diaginertia="0.00338379 0.002408 0.00120421" />
+          <joint name="faceplate_hinge" range="-1.45 0" actuatorfrcrange="-2.5 2.5" damping="0.1" axis="0 1 0" />
+          <geom pos="0 0 -0.05" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.84 0.64 0.17 1" density="0" mesh="helmet_faceplate" />
+          <geom size="0.041296 0.0792305 0.108" pos="0.114704 0 -0.07" type="box" rgba="0.84 0.64 0.17 1" group="3" />
+          <body name="forehead_plate">
+            <inertial pos="0 0 -0.05" quat="0.666296 0.666244 -0.236811 0.236832" mass="0.1" diaginertia="7.07545e-05 5.54937e-05 1.64693e-05" />
+            <geom pos="0 0 -0.05" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.84 0.64 0.17 1" density="0" mesh="helmet_forehead_plate" />
+            <geom size="0.0174615 0.0429685 0.016815" pos="0.117038 0 0.033185" type="box" rgba="0.84 0.64 0.17 1" group="3" />
+          </body>
+          <body name="mouth_line">
+            <inertial pos="0 0 -0.05" quat="0.504068 0.504068 -0.495899 0.495899" mass="0.03" diaginertia="2.07062e-05 1.96141e-05 1.36886e-06" />
+            <geom pos="0 0 -0.05" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.06 0.06 0.07 1" density="0" mesh="helmet_mouth_line" />
+            <geom size="0.0111795 0.0480545 0.0025" pos="0.12032 0 -0.1315" type="box" rgba="0.06 0.06 0.07 1" group="3" />
+          </body>
+          <body name="left_eye_socket">
+            <inertial pos="0 0 -0.05" quat="0.64726 0.6984 0.257101 0.164895" mass="0.02" diaginertia="1.07928e-05 9.74164e-06 1.65133e-06" />
+            <geom pos="0 0 -0.05" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.06 0.06 0.07 1" density="0" mesh="helmet_left_eye_socket" />
+            <geom size="0.02523 0.0295 0.0145" pos="0.118316 0.0445 -0.0065" type="box" rgba="0.06 0.06 0.07 1" group="3" />
+          </body>
+          <body name="left_eye_lens">
+            <inertial pos="0 0 -0.05" quat="0.661704 0.673449 0.322609 0.0673626" mass="0.02" diaginertia="6.8889e-06 6.47714e-06 1.09e-06" />
+            <geom pos="0 0 -0.05" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.88 0.98 1 1" density="0" mesh="helmet_left_eye_lens" />
+            <geom size="0.0198615 0.0245 0.0105" pos="0.125486 0.0435 -0.0065" type="box" rgba="0.88 0.98 1 1" group="3" />
+          </body>
+          <body name="right_eye_socket">
+            <inertial pos="0 0 -0.05" quat="0.6984 0.64726 -0.164895 -0.257101" mass="0.02" diaginertia="1.07928e-05 9.74164e-06 1.65133e-06" />
+            <geom pos="0 0 -0.05" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.06 0.06 0.07 1" density="0" mesh="helmet_right_eye_socket" />
+            <geom size="0.02523 0.0295 0.0145" pos="0.118316 -0.0445 -0.0065" type="box" rgba="0.06 0.06 0.07 1" group="3" />
+          </body>
+          <body name="right_eye_lens">
+            <inertial pos="0 0 -0.05" quat="0.673449 0.661704 -0.0673626 -0.322609" mass="0.02" diaginertia="6.8889e-06 6.47714e-06 1.09e-06" />
+            <geom pos="0 0 -0.05" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.88 0.98 1 1" density="0" mesh="helmet_right_eye_lens" />
+            <geom size="0.0198615 0.0245 0.0105" pos="0.125486 -0.0435 -0.0065" type="box" rgba="0.88 0.98 1 1" group="3" />
+          </body>
+        </body>
+        <body name="left_cheek_panel" pos="0.02 0.1 0.71075">
+          <inertial pos="0 -0.1 0" quat="0.759509 -0.0670451 0.0830891 0.641676" mass="0.16" diaginertia="0.000867442 0.000675194 0.000246255" />
+          <joint name="left_cheek_panel_hinge" range="0 1" actuatorfrcrange="-1.5 1.5" damping="0.1" />
+          <geom pos="0 -0.1 0" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.84 0.64 0.17 1" density="0" mesh="helmet_left_cheek_panel" />
+          <geom size="0.0678005 0.0416485 0.108" pos="0.050264 -0.040651 -0.02" type="box" rgba="0.84 0.64 0.17 1" group="3" />
+        </body>
+        <body name="right_cheek_panel" pos="0.02 -0.1 0.71075">
+          <inertial pos="0 0.1 0" quat="0.641676 0.0830891 -0.0670451 0.759509" mass="0.16" diaginertia="0.000867442 0.000675194 0.000246255" />
+          <joint name="right_cheek_panel_hinge" range="-1 0" actuatorfrcrange="-1.5 1.5" damping="0.1" />
+          <geom pos="0 0.1 0" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.84 0.64 0.17 1" density="0" mesh="helmet_right_cheek_panel" />
+          <geom size="0.0678005 0.0416485 0.108" pos="0.050264 0.040651 -0.02" type="box" rgba="0.84 0.64 0.17 1" group="3" />
+        </body>
+        <body name="chin_guard" pos="0.04 0 0.61075">
+          <inertial pos="-0.02 0 0.1" quat="0.470455 0.470339 -0.527928 0.527964" mass="0.14" diaginertia="0.000525951 0.000447714 0.000110203" />
+          <joint name="chin_guard_hinge" range="0 0.6" actuatorfrcrange="-1.5 1.5" damping="0.1" axis="0 1 0" />
+          <geom pos="-0.02 0 0.1" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.84 0.64 0.17 1" density="0" mesh="helmet_chin_guard" />
+          <geom size="0.047311 0.088864 0.0189715" pos="0.054467 0 -0.013029" type="box" rgba="0.84 0.64 0.17 1" group="3" />
+        </body>
+        <body name="collar_plate" pos="0.1 0 0.539">
+          <inertial pos="0 0 0" quat="0.706482 0.70642 0.0303742 -0.0305076" mass="0.4" diaginertia="0.00392491 0.00366709 0.0004243" />
+          <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.6 0.04 0.05 1" density="0" mesh="collar_plate" />
+          <geom size="0.0294025 0.171541 0.047904" pos="-0.029402 0 0" type="box" rgba="0.6 0.04 0.05 1" group="3" />
+        </body>
+        <body name="left_chest_door" pos="0.1 0.24 0.3124">
+          <inertial pos="-0.07 -0.24 0" quat="0.982971 -0.0326035 0.0836285 0.160349" mass="1.2" diaginertia="0.0169571 0.0116124 0.00601049" />
+          <joint name="left_chest_door_hinge" range="0 1.2" actuatorfrcrange="-6 6" damping="0.1" />
+          <geom pos="-0.07 -0.24 0" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.6 0.04 0.05 1" density="0" mesh="left_chest_door" />
+          <geom size="0.0639305 0.117085 0.17" pos="0.030069 -0.122958 0" type="box" rgba="0.6 0.04 0.05 1" group="3" />
+          <body name="left_pectoral_trim" pos="0.088 -0.11 0.07" quat="0.984727 0 0 0.174108">
+            <inertial pos="0 0 0" quat="0.999999 -3.30195e-08 0.00140061 -2.3575e-05" mass="0.1" diaginertia="0.000135573 0.000107738 2.86018e-05" />
+            <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.84 0.64 0.17 1" density="0" mesh="left_pectoral_trim" />
+            <geom size="0.0028215 0.031561 0.056886" pos="-0.002821 0 0" type="box" rgba="0.84 0.64 0.17 1" group="3" />
+          </body>
+        </body>
+        <body name="right_chest_door" pos="0.1 -0.24 0.3124">
+          <inertial pos="-0.07 0.24 0" quat="0.983002 0.0326445 0.0836233 -0.16015" mass="1.2" diaginertia="0.0169577 0.0116138 0.00601147" />
+          <joint name="right_chest_door_hinge" range="-1.2 0" actuatorfrcrange="-6 6" damping="0.1" />
+          <geom pos="-0.07 0.24 0" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.6 0.04 0.05 1" density="0" mesh="right_chest_door" />
+          <geom size="0.0639495 0.117084 0.17" pos="0.03005 0.122957 0" type="box" rgba="0.6 0.04 0.05 1" group="3" />
+          <body name="right_pectoral_trim" pos="0.088 0.11 0.07" quat="0.984727 0 0 -0.174108">
+            <inertial pos="0 0 0" quat="0.999999 -3.30195e-08 0.00140061 -2.3575e-05" mass="0.1" diaginertia="0.000135573 0.000107738 2.86018e-05" />
+            <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.84 0.64 0.17 1" density="0" mesh="right_pectoral_trim" />
+            <geom size="0.0028215 0.031561 0.056886" pos="-0.002821 0 0" type="box" rgba="0.84 0.64 0.17 1" group="3" />
+          </body>
+        </body>
+        <body name="chest_centre" pos="0.2 0 0.3324">
+          <inertial pos="0 0 0" quat="0.999993 5.18616e-06 -0.00385498 5.77628e-05" mass="0.35" diaginertia="0.00186107 0.001258 0.000610803" />
+          <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.84 0.64 0.17 1" density="0" mesh="chest_centre" />
+          <geom size="0.0063725 0.082345 0.102794" pos="-0.006373 0 0" type="box" rgba="0.84 0.64 0.17 1" group="3" />
+          <body name="arc_reactor_housing" pos="0.004 0 0.02" quat="0.707107 0 0.707107 0">
+            <inertial pos="0 0 0" quat="0.5 0.5 -0.5 0.5" mass="0.2" diaginertia="0.000249376 0.000132668 0.000132668" />
+            <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.2 0.21 0.24 1" density="0" mesh="arc_reactor_housing" />
+            <geom size="0.046 0.046 0.007" pos="0 0 0.007" type="box" rgba="0.2 0.21 0.24 1" group="3" />
+            <body name="arc_reactor" pos="0 0 0.014">
+              <inertial pos="0 0 0" quat="0.5 0.5 -0.5 0.5" mass="0.05" diaginertia="2.87032e-05 1.4747e-05 1.4747e-05" />
+              <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.88 0.98 1 1" density="0" mesh="arc_reactor" />
+              <geom size="0.032 0.032 0.003" pos="0 0 0.003" type="box" rgba="0.88 0.98 1 1" group="3" />
+            </body>
+          </body>
+        </body>
+        <body name="ab_plate_1" pos="0.16 0 0.135">
+          <inertial pos="0 0 0" quat="0.707134 0.70708 0 0" mass="0.22" diaginertia="0.001051 0.001024 8.04011e-05" />
+          <joint name="ab_plate_1_hinge" range="0 0.35" actuatorfrcrange="-2 2" damping="0.1" axis="0 1 0" />
+          <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.84 0.64 0.17 1" density="0" mesh="ab_plate_1" />
+          <geom size="0.020224 0.114983 0.02495" pos="-0.020224 0 0" type="box" rgba="0.84 0.64 0.17 1" group="3" />
+        </body>
+        <body name="ab_plate_2" pos="0.15 0 0.085">
+          <inertial pos="0 0 0" quat="0.707133 0.70708 0 0" mass="0.22" diaginertia="0.000905927 0.000871842 7.30678e-05" />
+          <joint name="ab_plate_2_hinge" range="0 0.35" actuatorfrcrange="-2 2" damping="0.1" axis="0 1 0" />
+          <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.84 0.64 0.17 1" density="0" mesh="ab_plate_2" />
+          <geom size="0.0175225 0.106661 0.02495" pos="-0.017522 0 0" type="box" rgba="0.84 0.64 0.17 1" group="3" />
+        </body>
+        <body name="ab_plate_3" pos="0.14 0 0.035">
+          <inertial pos="0 0 0" quat="0.707133 0.707081 0 0" mass="0.22" diaginertia="0.000769393 0.000729918 6.73133e-05" />
+          <joint name="ab_plate_3_hinge" range="0 0.35" actuatorfrcrange="-2 2" damping="0.1" axis="0 1 0" />
+          <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.84 0.64 0.17 1" density="0" mesh="ab_plate_3" />
+          <geom size="0.0150265 0.0980715 0.02495" pos="-0.015027 0 0" type="box" rgba="0.84 0.64 0.17 1" group="3" />
+        </body>
+        <body name="left_lat_plate" pos="-0.27 0.205 0.3024" quat="0.707107 0 0 0.707107">
+          <inertial pos="0 -0.18 0" quat="0.707174 0.70704 0 0" mass="0.6" diaginertia="0.009436 0.006452 0.003172" />
+          <joint name="left_lat_plate_hinge" range="0 1.2" actuatorfrcrange="-4 4" damping="0.1" />
+          <geom pos="0 -0.18 0" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.6 0.04 0.05 1" density="0" mesh="left_lat_plate" />
+          <geom size="0.022702 0.176234 0.122255" pos="-0.022702 -0.18 0" type="box" rgba="0.6 0.04 0.05 1" group="3" />
+        </body>
+        <body name="right_lat_plate" pos="-0.27 -0.205 0.3024" quat="0.707107 0 0 -0.707107">
+          <inertial pos="0 0.18 0" quat="0.707174 0.70704 0 0" mass="0.6" diaginertia="0.009436 0.006452 0.003172" />
+          <joint name="right_lat_plate_hinge" range="-1.2 0" actuatorfrcrange="-4 4" damping="0.1" />
+          <geom pos="0 0.18 0" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.6 0.04 0.05 1" density="0" mesh="right_lat_plate" />
+          <geom size="0.022702 0.176234 0.122255" pos="-0.022702 0.18 0" type="box" rgba="0.6 0.04 0.05 1" group="3" />
+        </body>
+        <body name="back_shell" pos="-0.29 0 0.2924" quat="-1.73205e-07 0 0 1">
+          <inertial pos="0 0 0" quat="1 6.37758e-05 0 0" mass="1.3" diaginertia="0.039563 0.024077 0.015904" />
+          <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.6 0.04 0.05 1" density="0" mesh="back_shell" />
+          <geom size="0.023107 0.187138 0.232534" pos="-0.023107 0 0" type="box" rgba="0.6 0.04 0.05 1" group="3" />
+          <body name="left_flight_flap" pos="0.008 -0.1 0.21">
+            <inertial pos="0 0 -0.09" quat="0.999998 2.55201e-06 0.00200935 -3.50501e-05" mass="0.18" diaginertia="0.000691614 0.000509146 0.000184143" />
+            <joint name="left_flight_flap_hinge" range="-1 0" actuatorfrcrange="-2 2" damping="0.1" axis="0 1 0" />
+            <geom pos="0 0 -0.09" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.84 0.64 0.17 1" density="0" mesh="left_flight_flap" />
+            <geom size="0.0039 0.06177 0.091816" pos="-0.0039 0 -0.09" type="box" rgba="0.84 0.64 0.17 1" group="3" />
+          </body>
+          <body name="left_back_vent" pos="0.004 -0.09 -0.14">
+            <inertial pos="0 0 0" quat="0.5 0.5 -0.5 0.5" mass="0.05" diaginertia="2.79166e-05 1.53735e-05 1.53735e-05" />
+            <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.2 0.21 0.24 1" density="0" mesh="left_back_vent" />
+            <geom size="0.03 0.03 0.006" pos="0 0 0.006" type="box" rgba="0.2 0.21 0.24 1" group="3" />
+          </body>
+          <body name="right_flight_flap" pos="0.008 0.1 0.21">
+            <inertial pos="0 0 -0.09" quat="0.999998 2.55201e-06 0.00200935 -3.50501e-05" mass="0.18" diaginertia="0.000691614 0.000509146 0.000184143" />
+            <joint name="right_flight_flap_hinge" range="-1 0" actuatorfrcrange="-2 2" damping="0.1" axis="0 1 0" />
+            <geom pos="0 0 -0.09" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.84 0.64 0.17 1" density="0" mesh="right_flight_flap" />
+            <geom size="0.0039 0.06177 0.091816" pos="-0.0039 0 -0.09" type="box" rgba="0.84 0.64 0.17 1" group="3" />
+          </body>
+          <body name="right_back_vent" pos="0.004 0.09 -0.14">
+            <inertial pos="0 0 0" quat="0.5 0.5 -0.5 0.5" mass="0.05" diaginertia="2.79166e-05 1.53735e-05 1.53735e-05" />
+            <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.2 0.21 0.24 1" density="0" mesh="right_back_vent" />
+            <geom size="0.03 0.03 0.006" pos="0 0 0.006" type="box" rgba="0.2 0.21 0.24 1" group="3" />
+          </body>
+        </body>
+      </body>
+      <body name="left_hip_module" pos="0 0.13 0.96425">
+        <inertial pos="0 0.045 0" quat="0.5 0.5 -0.5 0.5" mass="2.4" diaginertia="0.00507 0.004155 0.004155" />
+        <joint name="left_hip_abduction" range="-0.3 0.5" actuatorfrcrange="-120 120" damping="0.1" axis="1 0 0" />
+        <geom size="0.065 0.045" pos="0 0.045 0" quat="0.707107 0.707107 0 0" type="cylinder" contype="0" conaffinity="0" group="1" rgba="0.55 0.57 0.6 1" density="0" />
+        <geom size="0.065 0.045" pos="0 0.045 0" quat="0.707107 0.707107 0 0" type="cylinder" rgba="0.55 0.57 0.6 1" group="3" />
+        <body name="left_thigh_strut">
+          <inertial pos="0 0 -0.214375" quat="0.707107 0 0 0.707107" mass="1.4" diaginertia="0.021799 0.021633 0.000539583" />
+          <joint name="left_hip_flexion" range="-0.5 2" actuatorfrcrange="-150 150" damping="0.1" axis="0 1 0" />
+          <geom size="0.0275 0.02 0.214375" pos="0 0 -0.214375" type="box" contype="0" conaffinity="0" group="1" rgba="0.13 0.14 0.16 1" density="0" />
+          <geom size="0.0275 0.02 0.214375" pos="0 0 -0.214375" type="box" rgba="0.13 0.14 0.16 1" group="3" />
+          <body name="left_thigh_cuff" pos="0 -0.045 -0.235813">
+            <inertial pos="0 0 0" quat="0.5 0.5 -0.5 0.5" mass="0.45" diaginertia="0.002481 0.001424 0.001424" />
+            <geom size="0.105 0.035" type="cylinder" contype="0" conaffinity="0" group="1" rgba="0.2 0.2 0.22 1" density="0" />
+            <geom size="0.105 0.035" type="cylinder" rgba="0.2 0.2 0.22 1" group="3" />
+          </body>
+          <body name="left_knee_module" pos="0 0 -0.42875">
+            <inertial pos="0 0.04 0" quat="0.5 0.5 -0.5 0.5" mass="2.2" diaginertia="0.00396 0.003153 0.003153" />
+            <geom size="0.06 0.04" pos="0 0.04 0" quat="0.707107 0.707107 0 0" type="cylinder" contype="0" conaffinity="0" group="1" rgba="0.55 0.57 0.6 1" density="0" />
+            <geom size="0.06 0.04" pos="0 0.04 0" quat="0.707107 0.707107 0 0" type="cylinder" rgba="0.55 0.57 0.6 1" group="3" />
+            <body name="left_shank_strut">
+              <inertial pos="0 0 -0.21525" quat="0.707107 0 0 0.707107" mass="1.1" diaginertia="0.017218 0.017101 0.000341458" />
+              <joint name="left_knee_flexion" range="-2.2 0.05" actuatorfrcrange="-150 150" damping="0.1" axis="0 1 0" />
+              <geom size="0.025 0.0175 0.21525" pos="0 0 -0.21525" type="box" contype="0" conaffinity="0" group="1" rgba="0.13 0.14 0.16 1" density="0" />
+              <geom size="0.025 0.0175 0.21525" pos="0 0 -0.21525" type="box" rgba="0.13 0.14 0.16 1" group="3" />
+              <body name="left_shank_cuff" pos="0 -0.045 -0.21525">
+                <inertial pos="0 0 0" quat="0.5 0.5 -0.5 0.5" mass="0.4" diaginertia="0.001445 0.000885833 0.000885833" />
+                <geom size="0.085 0.035" type="cylinder" contype="0" conaffinity="0" group="1" rgba="0.2 0.2 0.22 1" density="0" />
+                <geom size="0.085 0.035" type="cylinder" rgba="0.2 0.2 0.22 1" group="3" />
+              </body>
+              <body name="left_ankle_module" pos="0 0 -0.4305">
+                <inertial pos="0 0.035 0" quat="0.5 0.5 -0.5 0.5" mass="1.5" diaginertia="0.001875 0.00155 0.00155" />
+                <geom size="0.05 0.035" pos="0 0.035 0" quat="0.707107 0.707107 0 0" type="cylinder" contype="0" conaffinity="0" group="1" rgba="0.55 0.57 0.6 1" density="0" />
+                <geom size="0.05 0.035" pos="0 0.035 0" quat="0.707107 0.707107 0 0" type="cylinder" rgba="0.55 0.57 0.6 1" group="3" />
+                <body name="left_boot">
+                  <inertial pos="0.02 -0.045 -0.0875" quat="0 0.707107 0 0.707107" mass="1.3" diaginertia="0.012653 0.011226 0.001693" />
+                  <joint name="left_ankle_flexion" range="-0.6 0.6" actuatorfrcrange="-100 100" damping="0.1" axis="0 1 0" />
+                  <geom size="0.16 0.06 0.0175" pos="0.02 -0.045 -0.0875" type="box" contype="0" conaffinity="0" group="1" rgba="0.13 0.14 0.16 1" density="0" />
+                  <geom size="0.16 0.06 0.0175" pos="0.02 -0.045 -0.0875" type="box" rgba="0.13 0.14 0.16 1" group="3" />
+                  <body name="left_shin_guard" pos="0.09 -0.045 0.06">
+                    <inertial pos="0 0 -0.05" quat="0.999999 0.00141669 0 0" mass="0.26" diaginertia="0.000463618 0.000249703 0.000225149" />
+                    <joint name="left_shin_guard_hinge" range="-0.7 0" actuatorfrcrange="-2 2" damping="0.1" axis="0 1 0" />
+                    <geom pos="0 0 -0.05" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.6 0.04 0.05 1" density="0" mesh="left_shin_guard" />
+                    <geom size="0.008897 0.0501215 0.052395" pos="-0.008897 0 -0.05" type="box" rgba="0.6 0.04 0.05 1" group="3" />
+                  </body>
+                  <body name="left_boot_toe" pos="0.17 -0.045 -0.062" quat="0.707107 0 0.707107 0">
+                    <inertial pos="0 0 0" quat="0.5 0.5 -0.5 0.5" mass="0.3" diaginertia="0.000524442 0.000463336 0.000259481" />
+                    <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.6 0.04 0.05 1" density="0" mesh="left_boot_toe" />
+                    <geom size="0.0389725 0.064954 0.0324785" pos="0 0 0.032478" type="box" rgba="0.6 0.04 0.05 1" group="3" />
+                  </body>
+                  <body name="left_boot_trim" pos="0.1 -0.045 -0.03" quat="0.930508 0 -0.366273 0">
+                    <inertial pos="0 0 0" quat="0.707248 0.706965 0 0" mass="0.12" diaginertia="0.000186177 0.000109926 8.0433e-05" />
+                    <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.84 0.64 0.17 1" density="0" mesh="left_boot_trim" />
+                    <geom size="0.0079155 0.050841 0.042415" pos="-0.007916 0 0" type="box" rgba="0.84 0.64 0.17 1" group="3" />
+                  </body>
+                  <body name="left_heel_thruster" pos="-0.14 -0.045 -0.068" quat="0.707107 0 -0.707107 0">
+                    <inertial pos="0 0 0" quat="0.5 0.5 -0.5 0.5" mass="0.12" diaginertia="6.9627e-05 5.18446e-05 5.18446e-05" />
+                    <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.88 0.98 1 1" density="0" mesh="left_heel_thruster" />
+                    <geom size="0.028 0.028 0.015" pos="0 0 0.015" type="box" rgba="0.88 0.98 1 1" group="3" />
+                  </body>
+                  <body name="left_thruster_cover" pos="-0.145 -0.045 -0.02" quat="-1.73205e-07 0 0 1">
+                    <inertial pos="0 0 -0.03" quat="0.707419 0.706795 0 0" mass="0.07" diaginertia="7.42105e-05 4.08797e-05 3.48062e-05" />
+                    <joint name="left_thruster_cover_hinge" range="-1.3 0" actuatorfrcrange="-1.5 1.5" damping="0.1" axis="0 1 0" />
+                    <geom pos="0 0 -0.03" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.6 0.04 0.05 1" density="0" mesh="left_thruster_cover" />
+                    <geom size="0.0061715 0.040776 0.036926" pos="-0.006172 0 -0.03" type="box" rgba="0.6 0.04 0.05 1" group="3" />
+                  </body>
+                  <body name="left_ankle_flap" pos="0 0.03 0.02" quat="0.707107 0 0 0.707107">
+                    <inertial pos="0 0 -0.04" quat="1 8.70745e-05 0 0" mass="0.09" diaginertia="8.5561e-05 5.57671e-05 3.11057e-05" />
+                    <joint name="left_ankle_flap_hinge" range="-0.8 0" actuatorfrcrange="-1.5 1.5" damping="0.1" axis="0 1 0" />
+                    <geom pos="0 0 -0.04" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.6 0.04 0.05 1" density="0" mesh="left_ankle_flap" />
+                    <geom size="0.0049995 0.0311535 0.041916" pos="-0.005 0 -0.04" type="box" rgba="0.6 0.04 0.05 1" group="3" />
+                  </body>
+                </body>
+              </body>
+              <body name="left_shin_shell" pos="0 -0.045 -0.05166">
+                <inertial pos="0 0 0" quat="0.78132 -0.0111794 0.0129711 0.623896" mass="0.65" diaginertia="0.00875867 0.00699897 0.00565136" />
+                <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.6 0.04 0.05 1" density="0" mesh="left_shin_shell" />
+                <geom size="0.103725 0.098136 0.150957" pos="3.01166e-07 0.00559 -0.150957" type="box" rgba="0.6 0.04 0.05 1" group="3" />
+              </body>
+              <body name="left_calf_clamshell" pos="0.048762 -0.130007 -0.05166">
+                <inertial pos="-0.048762 0.085007 0" quat="0.761363 0.0187362 -0.0251351 0.647567" mass="0.42" diaginertia="0.00408848 0.00329927 0.000841093" />
+                <joint name="left_calf_clamshell_hinge" range="-1.4 0" actuatorfrcrange="-3 3" damping="0.1" />
+                <geom pos="-0.048762 0.085007 0" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.6 0.04 0.05 1" density="0" mesh="left_calf_clamshell" />
+                <geom size="0.0772525 0.0278985 0.150958" pos="-0.064755 0.008942 -0.150958" type="box" rgba="0.6 0.04 0.05 1" group="3" />
+              </body>
+            </body>
+            <body name="left_knee_cap" pos="0.075 -0.045 0" quat="0.707107 0 0.707107 0">
+              <inertial pos="0 0 0" quat="0.5 0.5 -0.5 0.5" mass="0.3" diaginertia="0.000874137 0.00049882 0.00049882" />
+              <joint name="left_knee_cap_hinge" range="-0.6 0" actuatorfrcrange="-2 2" damping="0.1" axis="0 1 0" />
+              <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.84 0.64 0.17 1" density="0" mesh="left_knee_cap" />
+              <geom size="0.069909 0.069909 0.0249895" pos="0 0 0.02499" type="box" rgba="0.84 0.64 0.17 1" group="3" />
+            </body>
+          </body>
+          <body name="left_thigh_shell" pos="0 -0.045 -0.05145">
+            <inertial pos="0 0 0" quat="0.781068 -0.014428 0.0136374 0.62413" mass="0.85" diaginertia="0.0141894 0.0109063 0.0104853" />
+            <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.6 0.04 0.05 1" density="0" mesh="left_thigh_shell" />
+            <geom size="0.120683 0.114463 0.158951" pos="3.45001e-07 0.00622 -0.158951" type="box" rgba="0.6 0.04 0.05 1" group="3" />
+          </body>
+          <body name="left_thigh_clamshell" pos="0.057221 -0.144754 -0.05145">
+            <inertial pos="-0.057221 0.099754 0" quat="0.761029 0.0176286 -0.0240019 0.648034" mass="0.48" diaginertia="0.00544712 0.00417437 0.00135251" />
+            <joint name="left_thigh_clamshell_hinge" range="-1.4 0" actuatorfrcrange="-3 3" damping="0.1" />
+            <geom pos="-0.057221 0.099754 0" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.6 0.04 0.05 1" density="0" mesh="left_thigh_clamshell" />
+            <geom size="0.0902255 0.0311565 0.158952" pos="-0.075633 0.009948 -0.158952" type="box" rgba="0.6 0.04 0.05 1" group="3" />
+          </body>
+        </body>
+      </body>
+      <body name="right_hip_module" pos="0 -0.13 0.96425">
+        <inertial pos="0 -0.045 0" quat="0.5 0.5 -0.5 0.5" mass="2.4" diaginertia="0.00507 0.004155 0.004155" />
+        <joint name="right_hip_abduction" range="-0.3 0.5" actuatorfrcrange="-120 120" damping="0.1" axis="1 0 0" />
+        <geom size="0.065 0.045" pos="0 -0.045 0" quat="0.707107 0.707107 0 0" type="cylinder" contype="0" conaffinity="0" group="1" rgba="0.55 0.57 0.6 1" density="0" />
+        <geom size="0.065 0.045" pos="0 -0.045 0" quat="0.707107 0.707107 0 0" type="cylinder" rgba="0.55 0.57 0.6 1" group="3" />
+        <body name="right_thigh_strut">
+          <inertial pos="0 0 -0.214375" quat="0.707107 0 0 0.707107" mass="1.4" diaginertia="0.021799 0.021633 0.000539583" />
+          <joint name="right_hip_flexion" range="-0.5 2" actuatorfrcrange="-150 150" damping="0.1" axis="0 1 0" />
+          <geom size="0.0275 0.02 0.214375" pos="0 0 -0.214375" type="box" contype="0" conaffinity="0" group="1" rgba="0.13 0.14 0.16 1" density="0" />
+          <geom size="0.0275 0.02 0.214375" pos="0 0 -0.214375" type="box" rgba="0.13 0.14 0.16 1" group="3" />
+          <body name="right_thigh_cuff" pos="0 0.045 -0.235813">
+            <inertial pos="0 0 0" quat="0.5 0.5 -0.5 0.5" mass="0.45" diaginertia="0.002481 0.001424 0.001424" />
+            <geom size="0.105 0.035" type="cylinder" contype="0" conaffinity="0" group="1" rgba="0.2 0.2 0.22 1" density="0" />
+            <geom size="0.105 0.035" type="cylinder" rgba="0.2 0.2 0.22 1" group="3" />
+          </body>
+          <body name="right_knee_module" pos="0 0 -0.42875">
+            <inertial pos="0 -0.04 0" quat="0.5 0.5 -0.5 0.5" mass="2.2" diaginertia="0.00396 0.003153 0.003153" />
+            <geom size="0.06 0.04" pos="0 -0.04 0" quat="0.707107 0.707107 0 0" type="cylinder" contype="0" conaffinity="0" group="1" rgba="0.55 0.57 0.6 1" density="0" />
+            <geom size="0.06 0.04" pos="0 -0.04 0" quat="0.707107 0.707107 0 0" type="cylinder" rgba="0.55 0.57 0.6 1" group="3" />
+            <body name="right_shank_strut">
+              <inertial pos="0 0 -0.21525" quat="0.707107 0 0 0.707107" mass="1.1" diaginertia="0.017218 0.017101 0.000341458" />
+              <joint name="right_knee_flexion" range="-2.2 0.05" actuatorfrcrange="-150 150" damping="0.1" axis="0 1 0" />
+              <geom size="0.025 0.0175 0.21525" pos="0 0 -0.21525" type="box" contype="0" conaffinity="0" group="1" rgba="0.13 0.14 0.16 1" density="0" />
+              <geom size="0.025 0.0175 0.21525" pos="0 0 -0.21525" type="box" rgba="0.13 0.14 0.16 1" group="3" />
+              <body name="right_shank_cuff" pos="0 0.045 -0.21525">
+                <inertial pos="0 0 0" quat="0.5 0.5 -0.5 0.5" mass="0.4" diaginertia="0.001445 0.000885833 0.000885833" />
+                <geom size="0.085 0.035" type="cylinder" contype="0" conaffinity="0" group="1" rgba="0.2 0.2 0.22 1" density="0" />
+                <geom size="0.085 0.035" type="cylinder" rgba="0.2 0.2 0.22 1" group="3" />
+              </body>
+              <body name="right_ankle_module" pos="0 0 -0.4305">
+                <inertial pos="0 -0.035 0" quat="0.5 0.5 -0.5 0.5" mass="1.5" diaginertia="0.001875 0.00155 0.00155" />
+                <geom size="0.05 0.035" pos="0 -0.035 0" quat="0.707107 0.707107 0 0" type="cylinder" contype="0" conaffinity="0" group="1" rgba="0.55 0.57 0.6 1" density="0" />
+                <geom size="0.05 0.035" pos="0 -0.035 0" quat="0.707107 0.707107 0 0" type="cylinder" rgba="0.55 0.57 0.6 1" group="3" />
+                <body name="right_boot">
+                  <inertial pos="0.02 0.045 -0.0875" quat="0 0.707107 0 0.707107" mass="1.3" diaginertia="0.012653 0.011226 0.001693" />
+                  <joint name="right_ankle_flexion" range="-0.6 0.6" actuatorfrcrange="-100 100" damping="0.1" axis="0 1 0" />
+                  <geom size="0.16 0.06 0.0175" pos="0.02 0.045 -0.0875" type="box" contype="0" conaffinity="0" group="1" rgba="0.13 0.14 0.16 1" density="0" />
+                  <geom size="0.16 0.06 0.0175" pos="0.02 0.045 -0.0875" type="box" rgba="0.13 0.14 0.16 1" group="3" />
+                  <body name="right_shin_guard" pos="0.09 0.045 0.06">
+                    <inertial pos="0 0 -0.05" quat="0.999999 0.00141669 0 0" mass="0.26" diaginertia="0.000463618 0.000249703 0.000225149" />
+                    <joint name="right_shin_guard_hinge" range="-0.7 0" actuatorfrcrange="-2 2" damping="0.1" axis="0 1 0" />
+                    <geom pos="0 0 -0.05" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.6 0.04 0.05 1" density="0" mesh="right_shin_guard" />
+                    <geom size="0.008897 0.0501215 0.052395" pos="-0.008897 0 -0.05" type="box" rgba="0.6 0.04 0.05 1" group="3" />
+                  </body>
+                  <body name="right_boot_toe" pos="0.17 0.045 -0.062" quat="0.707107 0 0.707107 0">
+                    <inertial pos="0 0 0" quat="0.5 0.5 -0.5 0.5" mass="0.3" diaginertia="0.000524442 0.000463336 0.000259481" />
+                    <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.6 0.04 0.05 1" density="0" mesh="right_boot_toe" />
+                    <geom size="0.0389725 0.064954 0.0324785" pos="0 0 0.032478" type="box" rgba="0.6 0.04 0.05 1" group="3" />
+                  </body>
+                  <body name="right_boot_trim" pos="0.1 0.045 -0.03" quat="0.930508 0 -0.366273 0">
+                    <inertial pos="0 0 0" quat="0.707248 0.706965 0 0" mass="0.12" diaginertia="0.000186177 0.000109926 8.0433e-05" />
+                    <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.84 0.64 0.17 1" density="0" mesh="right_boot_trim" />
+                    <geom size="0.0079155 0.050841 0.042415" pos="-0.007916 0 0" type="box" rgba="0.84 0.64 0.17 1" group="3" />
+                  </body>
+                  <body name="right_heel_thruster" pos="-0.14 0.045 -0.068" quat="0.707107 0 -0.707107 0">
+                    <inertial pos="0 0 0" quat="0.5 0.5 -0.5 0.5" mass="0.12" diaginertia="6.9627e-05 5.18446e-05 5.18446e-05" />
+                    <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.88 0.98 1 1" density="0" mesh="right_heel_thruster" />
+                    <geom size="0.028 0.028 0.015" pos="0 0 0.015" type="box" rgba="0.88 0.98 1 1" group="3" />
+                  </body>
+                  <body name="right_thruster_cover" pos="-0.145 0.045 -0.02" quat="-1.73205e-07 0 0 1">
+                    <inertial pos="0 0 -0.03" quat="0.707419 0.706795 0 0" mass="0.07" diaginertia="7.42105e-05 4.08797e-05 3.48062e-05" />
+                    <joint name="right_thruster_cover_hinge" range="-1.3 0" actuatorfrcrange="-1.5 1.5" damping="0.1" axis="0 1 0" />
+                    <geom pos="0 0 -0.03" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.6 0.04 0.05 1" density="0" mesh="right_thruster_cover" />
+                    <geom size="0.0061715 0.040776 0.036926" pos="-0.006172 0 -0.03" type="box" rgba="0.6 0.04 0.05 1" group="3" />
+                  </body>
+                  <body name="right_ankle_flap" pos="0 -0.03 0.02" quat="0.707107 0 0 -0.707107">
+                    <inertial pos="0 0 -0.04" quat="1 8.70745e-05 0 0" mass="0.09" diaginertia="8.5561e-05 5.57671e-05 3.11057e-05" />
+                    <joint name="right_ankle_flap_hinge" range="-0.8 0" actuatorfrcrange="-1.5 1.5" damping="0.1" axis="0 1 0" />
+                    <geom pos="0 0 -0.04" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.6 0.04 0.05 1" density="0" mesh="right_ankle_flap" />
+                    <geom size="0.0049995 0.0311535 0.041916" pos="-0.005 0 -0.04" type="box" rgba="0.6 0.04 0.05 1" group="3" />
+                  </body>
+                </body>
+              </body>
+              <body name="right_shin_shell" pos="0 0.045 -0.05166">
+                <inertial pos="0 0 0" quat="0.623894 0.0129814 -0.0111658 0.781321" mass="0.65" diaginertia="0.00875867 0.00699897 0.00565136" />
+                <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.6 0.04 0.05 1" density="0" mesh="right_shin_shell" />
+                <geom size="0.103726 0.098136 0.150957" pos="2.14428e-07 -0.00559 -0.150957" type="box" rgba="0.6 0.04 0.05 1" group="3" />
+              </body>
+              <body name="right_calf_clamshell" pos="0.048762 0.130007 -0.05166">
+                <inertial pos="-0.048762 -0.085007 0" quat="0.647567 -0.0251395 0.0187307 0.761364" mass="0.42" diaginertia="0.00408847 0.00329927 0.000841095" />
+                <joint name="right_calf_clamshell_hinge" range="0 1.4" actuatorfrcrange="-3 3" damping="0.1" />
+                <geom pos="-0.048762 -0.085007 0" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.6 0.04 0.05 1" density="0" mesh="right_calf_clamshell" />
+                <geom size="0.0772525 0.0278985 0.150958" pos="-0.064755 -0.008942 -0.150958" type="box" rgba="0.6 0.04 0.05 1" group="3" />
+              </body>
+            </body>
+            <body name="right_knee_cap" pos="0.075 0.045 0" quat="0.707107 0 0.707107 0">
+              <inertial pos="0 0 0" quat="0.5 0.5 -0.5 0.5" mass="0.3" diaginertia="0.000874137 0.00049882 0.00049882" />
+              <joint name="right_knee_cap_hinge" range="-0.6 0" actuatorfrcrange="-2 2" damping="0.1" axis="0 1 0" />
+              <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.84 0.64 0.17 1" density="0" mesh="right_knee_cap" />
+              <geom size="0.069909 0.069909 0.0249895" pos="0 0 0.02499" type="box" rgba="0.84 0.64 0.17 1" group="3" />
+            </body>
+          </body>
+          <body name="right_thigh_shell" pos="0 0.045 -0.05145">
+            <inertial pos="0 0 0" quat="0.624128 0.0136833 -0.0143699 0.78107" mass="0.85" diaginertia="0.0141894 0.0109063 0.0104853" />
+            <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.6 0.04 0.05 1" density="0" mesh="right_thigh_shell" />
+            <geom size="0.120683 0.114463 0.158951" pos="2.58296e-07 -0.00622 -0.158951" type="box" rgba="0.6 0.04 0.05 1" group="3" />
+          </body>
+          <body name="right_thigh_clamshell" pos="0.057221 0.144754 -0.05145">
+            <inertial pos="-0.057221 -0.099754 0" quat="0.648033 -0.0240064 0.017623 0.76103" mass="0.48" diaginertia="0.00544712 0.00417437 0.00135251" />
+            <joint name="right_thigh_clamshell_hinge" range="0 1.4" actuatorfrcrange="-3 3" damping="0.1" />
+            <geom pos="-0.057221 -0.099754 0" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.6 0.04 0.05 1" density="0" mesh="right_thigh_clamshell" />
+            <geom size="0.0902255 0.0311565 0.158952" pos="-0.075633 -0.009948 -0.158952" type="box" rgba="0.6 0.04 0.05 1" group="3" />
+          </body>
+        </body>
+      </body>
+      <body name="belt_plate" pos="0.14 0 0.98425">
+        <inertial pos="0 0 0" quat="0.707116 0.707097 0 0" mass="0.7" diaginertia="0.011006 0.010373 0.000818772" />
+        <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.6 0.04 0.05 1" density="0" mesh="belt_plate" />
+        <geom size="0.021519 0.208554 0.052894" pos="-0.021519 0 0" type="box" rgba="0.6 0.04 0.05 1" group="3" />
+      </body>
+      <body name="rear_belt_plate" pos="-0.14 0 0.98425" quat="-1.73205e-07 0 0 1">
+        <inertial pos="0 0 0" quat="0.707116 0.707097 0 0" mass="0.7" diaginertia="0.011006 0.010373 0.000818772" />
+        <geom type="mesh" contype="0" conaffinity="0" group="1" rgba="0.6 0.04 0.05 1" density="0" mesh="rear_belt_plate" />
+        <geom size="0.021519 0.208554 0.052894" pos="-0.021519 0 0" type="box" rgba="0.6 0.04 0.05 1" group="3" />
+      </body>
+      <body name="codpiece" pos="0.15 0 0.92425">
+        <inertial pos="0 0 -0.07" quat="0.999922 0.000146722 0.0125077 -0.000124816" mass="0.35" diaginertia="0.000947881 0.000587308 0.000374559" />
+        <joint name="codpiece_hinge" range="0 0.6" actuatorfrcrange="-2 2" damping="0.1" axis="0 1 0" />
+        <geom pos="0 0 -0.07" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.84 0.64 0.17 1" density="0" mesh="codpiece" />
+        <geom size="0.0102 0.0653835 0.072854" pos="-0.0102 0 -0.07" type="box" rgba="0.84 0.64 0.17 1" group="3" />
+      </body>
+      <body name="left_hip_flap" pos="0 0.2 1.03925" quat="0.707107 0 0 0.707107">
+        <inertial pos="0 0 -0.075" quat="0.999979 0.000204301 0.00646771 -6.41643e-05" mass="0.38" diaginertia="0.00129713 0.000767785 0.00054559" />
+        <joint name="left_hip_flap_hinge" range="-0.7 0" actuatorfrcrange="-2 2" damping="0.1" axis="0 1 0" />
+        <geom pos="0 0 -0.075" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.6 0.04 0.05 1" density="0" mesh="left_hip_flap" />
+        <geom size="0.010043 0.0709475 0.077844" pos="-0.010043 0 -0.075" type="box" rgba="0.6 0.04 0.05 1" group="3" />
+      </body>
+      <body name="right_hip_flap" pos="0 -0.2 1.03925" quat="0.707107 0 0 -0.707107">
+        <inertial pos="0 0 -0.075" quat="0.999979 0.000204301 0.00646771 -6.41643e-05" mass="0.38" diaginertia="0.00129713 0.000767785 0.00054559" />
+        <joint name="right_hip_flap_hinge" range="-0.7 0" actuatorfrcrange="-2 2" damping="0.1" axis="0 1 0" />
+        <geom pos="0 0 -0.075" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.6 0.04 0.05 1" density="0" mesh="right_hip_flap" />
+        <geom size="0.010043 0.0709475 0.077844" pos="-0.010043 0 -0.075" type="box" rgba="0.6 0.04 0.05 1" group="3" />
+      </body>
+    </body>
+  </worldbody>
+<option timestep="0.002" gravity="0 0 -9.81" integrator="implicitfast" /><default><joint damping="0.6" armature="0.01" frictionloss="0.05" /><geom friction="1 0.005 0.0001" condim="3" solref="0.005 1" solimp="0.95 0.99 0.001" contype="1" conaffinity="0" /><position kp="2108.7" forcerange="-843 843" /></default><asset><texture type="skybox" builtin="gradient" rgb1="0.35 0.45 0.6" rgb2="0.05 0.06 0.08" width="256" height="256" /><texture name="grid" type="2d" builtin="checker" rgb1="0.2 0.25 0.3" rgb2="0.12 0.15 0.19" width="512" height="512" /><material name="grid" texture="grid" texrepeat="10 10" reflectance="0.15" /></asset><visual><headlight diffuse="0.7 0.7 0.7" ambient="0.35 0.35 0.35" /><global offwidth="1280" offheight="720" /></visual><actuator><position name="act_trunk_flex" joint="trunk_flex" ctrlrange="-0.35 0.5" ctrllimited="true" /><position name="act_left_shoulder_abduction" joint="left_shoulder_abduction" ctrlrange="-0.3 2.6" ctrllimited="true" /><position name="act_left_shoulder_flexion" joint="left_shoulder_flexion" ctrlrange="-1 3" ctrllimited="true" /><position name="act_left_elbow_flexion" joint="left_elbow_flexion" ctrlrange="-2.4 0.05" ctrllimited="true" /><position name="act_left_wrist_flexion" joint="left_wrist_flexion" ctrlrange="-0.8 0.8" ctrllimited="true" /><position name="act_left_finger_1_hinge" joint="left_finger_1_hinge" ctrlrange="-1.3 0" ctrllimited="true" /><position name="act_left_finger_2_hinge" joint="left_finger_2_hinge" ctrlrange="-1.3 0" ctrllimited="true" /><position name="act_left_finger_3_hinge" joint="left_finger_3_hinge" ctrlrange="-1.3 0" ctrllimited="true" /><position name="act_left_finger_4_hinge" joint="left_finger_4_hinge" ctrlrange="-1.3 0" ctrllimited="true" /><position name="act_left_thumb_hinge" joint="left_thumb_hinge" ctrlrange="-0.9 0" ctrllimited="true" /><position name="act_left_gauntlet_hatch_hinge" joint="left_gauntlet_hatch_hinge" ctrlrange="-1.2 0" ctrllimited="true" /><position name="act_left_gauntlet_clamshell_hinge" joint="left_gauntlet_clamshell_hinge" ctrlrange="-1.4 0" ctrllimited="true" /><position name="act_left_elbow_cap_hinge" joint="left_elbow_cap_hinge" ctrlrange="0 0.5" ctrllimited="true" /><position name="act_left_bicep_clamshell_hinge" joint="left_bicep_clamshell_hinge" ctrlrange="-1.4 0" ctrllimited="true" /><position name="act_left_pauldron_hinge" joint="left_pauldron_hinge" ctrlrange="-0.8 0" ctrllimited="true" /><position name="act_right_shoulder_abduction" joint="right_shoulder_abduction" ctrlrange="-0.3 2.6" ctrllimited="true" /><position name="act_right_shoulder_flexion" joint="right_shoulder_flexion" ctrlrange="-1 3" ctrllimited="true" /><position name="act_right_elbow_flexion" joint="right_elbow_flexion" ctrlrange="-2.4 0.05" ctrllimited="true" /><position name="act_right_wrist_flexion" joint="right_wrist_flexion" ctrlrange="-0.8 0.8" ctrllimited="true" /><position name="act_right_finger_1_hinge" joint="right_finger_1_hinge" ctrlrange="-1.3 0" ctrllimited="true" /><position name="act_right_finger_2_hinge" joint="right_finger_2_hinge" ctrlrange="-1.3 0" ctrllimited="true" /><position name="act_right_finger_3_hinge" joint="right_finger_3_hinge" ctrlrange="-1.3 0" ctrllimited="true" /><position name="act_right_finger_4_hinge" joint="right_finger_4_hinge" ctrlrange="-1.3 0" ctrllimited="true" /><position name="act_right_thumb_hinge" joint="right_thumb_hinge" ctrlrange="-0.9 0" ctrllimited="true" /><position name="act_right_gauntlet_hatch_hinge" joint="right_gauntlet_hatch_hinge" ctrlrange="-1.2 0" ctrllimited="true" /><position name="act_right_gauntlet_clamshell_hinge" joint="right_gauntlet_clamshell_hinge" ctrlrange="0 1.4" ctrllimited="true" /><position name="act_right_elbow_cap_hinge" joint="right_elbow_cap_hinge" ctrlrange="0 0.5" ctrllimited="true" /><position name="act_right_bicep_clamshell_hinge" joint="right_bicep_clamshell_hinge" ctrlrange="0 1.4" ctrllimited="true" /><position name="act_right_pauldron_hinge" joint="right_pauldron_hinge" ctrlrange="0 0.8" ctrllimited="true" /><position name="act_helmet_crown_panel_hinge" joint="helmet_crown_panel_hinge" ctrlrange="-0.9 0" ctrllimited="true" /><position name="act_faceplate_hinge" joint="faceplate_hinge" ctrlrange="-1.45 0" ctrllimited="true" /><position name="act_left_cheek_panel_hinge" joint="left_cheek_panel_hinge" ctrlrange="0 1" ctrllimited="true" /><position name="act_right_cheek_panel_hinge" joint="right_cheek_panel_hinge" ctrlrange="-1 0" ctrllimited="true" /><position name="act_chin_guard_hinge" joint="chin_guard_hinge" ctrlrange="0 0.6" ctrllimited="true" /><position name="act_left_chest_door_hinge" joint="left_chest_door_hinge" ctrlrange="0 1.2" ctrllimited="true" /><position name="act_right_chest_door_hinge" joint="right_chest_door_hinge" ctrlrange="-1.2 0" ctrllimited="true" /><position name="act_ab_plate_1_hinge" joint="ab_plate_1_hinge" ctrlrange="0 0.35" ctrllimited="true" /><position name="act_ab_plate_2_hinge" joint="ab_plate_2_hinge" ctrlrange="0 0.35" ctrllimited="true" /><position name="act_ab_plate_3_hinge" joint="ab_plate_3_hinge" ctrlrange="0 0.35" ctrllimited="true" /><position name="act_left_lat_plate_hinge" joint="left_lat_plate_hinge" ctrlrange="0 1.2" ctrllimited="true" /><position name="act_right_lat_plate_hinge" joint="right_lat_plate_hinge" ctrlrange="-1.2 0" ctrllimited="true" /><position name="act_left_flight_flap_hinge" joint="left_flight_flap_hinge" ctrlrange="-1 0" ctrllimited="true" /><position name="act_right_flight_flap_hinge" joint="right_flight_flap_hinge" ctrlrange="-1 0" ctrllimited="true" /><position name="act_left_hip_abduction" joint="left_hip_abduction" ctrlrange="-0.3 0.5" ctrllimited="true" /><position name="act_left_hip_flexion" joint="left_hip_flexion" ctrlrange="-0.5 2" ctrllimited="true" /><position name="act_left_knee_flexion" joint="left_knee_flexion" ctrlrange="-2.2 0.05" ctrllimited="true" /><position name="act_left_ankle_flexion" joint="left_ankle_flexion" ctrlrange="-0.6 0.6" ctrllimited="true" /><position name="act_left_shin_guard_hinge" joint="left_shin_guard_hinge" ctrlrange="-0.7 0" ctrllimited="true" /><position name="act_left_thruster_cover_hinge" joint="left_thruster_cover_hinge" ctrlrange="-1.3 0" ctrllimited="true" /><position name="act_left_ankle_flap_hinge" joint="left_ankle_flap_hinge" ctrlrange="-0.8 0" ctrllimited="true" /><position name="act_left_calf_clamshell_hinge" joint="left_calf_clamshell_hinge" ctrlrange="-1.4 0" ctrllimited="true" /><position name="act_left_knee_cap_hinge" joint="left_knee_cap_hinge" ctrlrange="-0.6 0" ctrllimited="true" /><position name="act_left_thigh_clamshell_hinge" joint="left_thigh_clamshell_hinge" ctrlrange="-1.4 0" ctrllimited="true" /><position name="act_right_hip_abduction" joint="right_hip_abduction" ctrlrange="-0.3 0.5" ctrllimited="true" /><position name="act_right_hip_flexion" joint="right_hip_flexion" ctrlrange="-0.5 2" ctrllimited="true" /><position name="act_right_knee_flexion" joint="right_knee_flexion" ctrlrange="-2.2 0.05" ctrllimited="true" /><position name="act_right_ankle_flexion" joint="right_ankle_flexion" ctrlrange="-0.6 0.6" ctrllimited="true" /><position name="act_right_shin_guard_hinge" joint="right_shin_guard_hinge" ctrlrange="-0.7 0" ctrllimited="true" /><position name="act_right_thruster_cover_hinge" joint="right_thruster_cover_hinge" ctrlrange="-1.3 0" ctrllimited="true" /><position name="act_right_ankle_flap_hinge" joint="right_ankle_flap_hinge" ctrlrange="-0.8 0" ctrllimited="true" /><position name="act_right_calf_clamshell_hinge" joint="right_calf_clamshell_hinge" ctrlrange="0 1.4" ctrllimited="true" /><position name="act_right_knee_cap_hinge" joint="right_knee_cap_hinge" ctrlrange="-0.6 0" ctrllimited="true" /><position name="act_right_thigh_clamshell_hinge" joint="right_thigh_clamshell_hinge" ctrlrange="0 1.4" ctrllimited="true" /><position name="act_codpiece_hinge" joint="codpiece_hinge" ctrlrange="0 0.6" ctrllimited="true" /><position name="act_left_hip_flap_hinge" joint="left_hip_flap_hinge" ctrlrange="-0.7 0" ctrllimited="true" /><position name="act_right_hip_flap_hinge" joint="right_hip_flap_hinge" ctrlrange="-0.7 0" ctrllimited="true" /></actuator></mujoco>

@@ -13,6 +13,7 @@ function geometryDims(g: Geometry): number[] {
     case "cylinder": return [g.radius, g.length];
     case "sphere": return [g.radius];
     case "capsule": return [g.radius, g.length];
+    case "mesh": return [g.volume, g.bbox.max[0] - g.bbox.min[0], g.bbox.max[1] - g.bbox.min[1], g.bbox.max[2] - g.bbox.min[2]];
   }
 }
 

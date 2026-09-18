@@ -33,10 +33,10 @@ test("printability flags parts larger than the build volume", () => {
 test("MoveIt: arm gets an SRDF chain, a launch file and controllers", () => {
   const spec = finalizeSpec(nDofArm(6));
   const f = exportMoveIt(spec);
-  const srdf = f[`arm_6dof/moveit/arm_6dof.srdf`];
+  const srdf = String(f[`arm_6dof/moveit/arm_6dof.srdf`]);
   assert.ok(srdf && srdf.includes('<group name="arm">') && srdf.includes("<chain"));
-  assert.ok(f[`arm_6dof/launch/move_group.launch.py`].includes("MoveItConfigsBuilder"));
-  assert.ok(f[`arm_6dof/moveit/moveit_controllers.yaml`].includes("joint_1"));
+  assert.ok(String(f[`arm_6dof/launch/move_group.launch.py`]).includes("MoveItConfigsBuilder"));
+  assert.ok(String(f[`arm_6dof/moveit/moveit_controllers.yaml`]).includes("joint_1"));
 });
 test("MoveIt: a robot without an arm chain degrades gracefully", () => {
   const f = exportMoveIt(finalizeSpec(diffDrive()));
@@ -46,10 +46,10 @@ test("MoveIt: a robot without an arm chain degrades gracefully", () => {
 test("Gazebo: world SDF + launch are produced and referenced by the package", () => {
   const spec = finalizeSpec(nDofArm(6));
   const g = exportGazebo(spec);
-  assert.ok(g[`arm_6dof/worlds/arm_6dof.sdf`].includes("<sdf"));
-  assert.ok(g[`arm_6dof/launch/gazebo.launch.py`].includes("ros_gz_sim"));
+  assert.ok(String(g[`arm_6dof/worlds/arm_6dof.sdf`]).includes("<sdf"));
+  assert.ok(String(g[`arm_6dof/launch/gazebo.launch.py`]).includes("ros_gz_sim"));
   const pkg = exportRos2Package(spec);
-  assert.ok(pkg[`arm_6dof/CMakeLists.txt`].includes("worlds"));
+  assert.ok(String(pkg[`arm_6dof/CMakeLists.txt`]).includes("worlds"));
   assert.ok(pkg[`arm_6dof/worlds/arm_6dof.sdf`]);
 });
 test("humanoid stands on the ground with coherent frames", () => {
@@ -67,6 +67,6 @@ test("training export produces a coherent suite for every template", () => {
     const f = exportTraining(finalizeSpec(t.build()));
     for (const req of ["training/robot_env.py", "training/tasks.py", "training/train_rl.py", "training/collect_demos.py", "training/train_bc.py", "training/evaluate.py", "training/requirements.txt"])
       assert.ok(f[req], `${t.id} missing ${req}`);
-    assert.ok(f["training/train_rl.py"].includes("_tb_dir"), "trainer must tolerate missing tensorboard");
+    assert.ok(String(f["training/train_rl.py"]).includes("_tb_dir"), "trainer must tolerate missing tensorboard");
   }
 });

@@ -7,6 +7,7 @@ import { roverArm } from "./composite.ts";
 import { ironManSuit, wallE, eva, baymax } from "./scifi.ts";
 import { wearableExosuit } from "./exosuit.ts";
 import { ironManMarkSuit } from "./marksuit.ts";
+import { ironManMark43 } from "./mark43.ts";
 
 export * from "./builder.ts";
 export * from "./arms.ts";
@@ -16,6 +17,7 @@ export * from "./composite.ts";
 export * from "./scifi.ts";
 export * from "./exosuit.ts";
 export * from "./marksuit.ts";
+export * from "./mark43.ts";
 export * from "./humanoid.ts";
 export * from "./grippers.ts";
 
@@ -39,7 +41,8 @@ export const TEMPLATES: TemplateInfo[] = [
   { id: "quadruped", title: "Quadruped", description: "Four 3-DOF legs", build: (p) => quadruped("quadruped", p) },
   { id: "hexapod", title: "Hexapod", description: "Six 3-DOF legs (18 DOF)", build: (p) => hexapod("hexapod", p) },
   { id: "rover_arm", title: "Rover + arm", description: "Four-wheel base with a 6-DOF manipulator", build: (p) => roverArm("rover_arm", 6, p) },
-  { id: "iron_man_mark_suit", title: "Iron Man Mark suit (wearable)", description: "Powered exoskeleton under movie-style articulated armour: dozens of hinged plates that open to don and lock closed", build: (p) => ironManMarkSuit({ prompt: p }) },
+  { id: "iron_man_mark_43", title: "Iron Man Mark 43 (wearable)", description: "Age of Ultron suit: polygon helmet with motorised faceplate, lofted armour shells, hinged plates over a powered exoskeleton", build: (p) => ironManMark43({ prompt: p }) },
+  { id: "iron_man_mark_suit", title: "Iron Man Mark suit (primitive)", description: "Earlier primitive-geometry articulated suit", build: (p) => ironManMarkSuit({ prompt: p }) },
   { id: "exosuit", title: "Powered exoskeleton (bare)", description: "The wearable frame alone: struts, cuffs, joint modules, back pack", build: (p) => wearableExosuit({ prompt: p, styled: false, name: "exosuit" }) },
   { id: "battle_mech", title: "Battle mech (humanoid)", description: "Standalone armoured humanoid robot", build: (p) => ironManSuit("battle_mech", p) },
   { id: "wall_e", title: "WALL-E", description: "Tracked base, telescoping neck, binocular head, two arms", build: (p) => wallE("wall_e", p) },

@@ -8,7 +8,7 @@ import { generateUrdf as urdf } from "@ttr/urdf-generator";
 import { validateUrdf as vurdf } from "@ttr/urdf-validator";
 
 const CASES: [string, string, RegExp][] = [
-  ["Build me a movie-accurate wearable Iron Man Mark suit with armour plates that open and close", "iron_man_mark_suit", /faceplate|chest_plate|thigh_cuff/],
+  ["Build me a movie-accurate wearable Iron Man Mark 43 suit from Age of Ultron with armour plates that open and close", "iron_man_mark_43", /faceplate|chest_shell|helmet_cranium/],
   ["Build a bare powered exoskeleton I can wear", "exosuit", /thigh_cuff|shank_cuff|strut/],
   ["Build WALL-E, a tracked trash-compactor robot", "wall_e", /eye|track/],
   ["Build EVA, a sleek hovering egg-shaped droid", "eva", /hover|visor/],
@@ -31,7 +31,7 @@ test("all four characters pass spec + URDF validation from their templates", () 
   }
 });
 test("shipped MuJoCo reports show every character passing its simulation battery", () => {
-  for (const ex of ["14_iron_man_mark_suit", "15_wall_e", "16_eva", "17_baymax", "08_humanoid", "11_spider_scout"]) {
+  for (const ex of ["14_iron_man_mark_43", "15_wall_e", "16_eva", "17_baymax", "08_humanoid", "11_spider_scout"]) {
     const p = `examples/${ex}/mujoco_report.json`;
     assert.ok(existsSync(p), `missing ${p}`);
     const rep = JSON.parse(readFileSync(p, "utf8"));

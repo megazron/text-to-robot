@@ -6,3 +6,5 @@ export * from "./generate.ts";
 export { buildBom, bomToMarkdown, type BillOfMaterials } from "@ttr/components";
 export { generateScad, generateCadFiles } from "@ttr/cad";
 export { exportTraining, classify } from "@ttr/training-export";
+export * from "./meshes.ts";
+export { buildPart, meshGeometry, listParts, toStlBinary, toStlAscii } from "@ttr/mesh";

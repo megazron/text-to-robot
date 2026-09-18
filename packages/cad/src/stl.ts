@@ -4,6 +4,7 @@
 import type { RobotSpecification, Geometry, Link } from "@ttr/robot-schema";
 import { safeName } from "@ttr/robot-schema";
 import { forwardKinematics, poseToMat, multiply, type Mat4 } from "@ttr/kinematics";
+import { buildPart } from "@ttr/mesh";
 
 type V3 = [number, number, number];
 type Tri = [V3, V3, V3];
@@ -51,6 +52,7 @@ function capsuleTris(r: number, h: number): Tri[] {
 }
 export function geometryTris(g: Geometry): Tri[] {
   switch (g.type) {
+    case "mesh": { const m = buildPart(g); return m.f.map(([a, b, c]) => [m.v[a], m.v[b], m.v[c]] as Tri); }
     case "box": return boxTris(g.size[0], g.size[1], g.size[2]);
     case "cylinder": return cylTris(g.radius, g.length);
     case "sphere": return sphereTris(g.radius);
@@ -106,6 +108,7 @@ export function printabilityReport(spec: RobotSpecification, buildVolumeMm = 220
     const g = l.geometry;
     const dims: [number, number, number] = g.type === "box" ? [g.size[0], g.size[1], g.size[2]]
       : g.type === "sphere" ? [2 * g.radius, 2 * g.radius, 2 * g.radius]
+      : g.type === "mesh" ? [g.bbox.max[0] - g.bbox.min[0], g.bbox.max[1] - g.bbox.min[1], g.bbox.max[2] - g.bbox.min[2]]
       : [2 * g.radius, 2 * g.radius, g.length + (g.type === "capsule" ? 2 * g.radius : 0)];
     const mm = dims.map((d) => +(d * 1000).toFixed(1)) as [number, number, number];
     const fits = Math.max(...mm) <= buildVolumeMm;
@@ -118,9 +121,9 @@ export function printabilityReport(spec: RobotSpecification, buildVolumeMm = 220
   return { build_volume_mm: buildVolumeMm, issues, parts };
 }
 
-export function generateStlFiles(spec: RobotSpecification): Record<string, string> {
+export function generateStlFiles(spec: RobotSpecification): Record<string, string | Uint8Array> {
   const name = safeName(spec.robot_name);
-  const files: Record<string, string> = {};
+  const files: Record<string, string | Uint8Array> = {};
   files[`cad/stl/${name}_assembly.stl`] = assemblyStl(spec);
   for (const l of spec.links) files[`cad/stl/parts/${safeName(l.name)}.stl`] = linkStl(l);
   const rep = printabilityReport(spec);
