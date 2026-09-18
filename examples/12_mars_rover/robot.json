@@ -1171,7 +1171,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -1208,7 +1207,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -1384,7 +1382,7 @@
   ],
   "metadata": {
     "generator": "text-to-robot",
-    "created": "2026-09-17T14:00:32.653Z",
+    "created": "2026-09-18T04:41:53.838Z",
     "inferred_fields": [
       "joints.arm_mount_joint.dynamics",
       "joints.arm_mount_joint.limit",
@@ -1411,13 +1409,11 @@
       "joints.joint_6.dynamics",
       "joints.joint_6.limit",
       "joints.left_finger_joint.dynamics",
-      "joints.left_finger_joint.limit",
       "joints.rear_left_wheel_joint.dynamics",
       "joints.rear_left_wheel_joint.limit",
       "joints.rear_right_wheel_joint.dynamics",
       "joints.rear_right_wheel_joint.limit",
       "joints.right_finger_joint.dynamics",
-      "joints.right_finger_joint.limit",
       "links.arm_mount.inertia",
       "links.arm_mount.mass",
       "links.base_link.inertia",

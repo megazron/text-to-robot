@@ -1,8 +1,10 @@
 // XML-safe formatting helpers.
 export function num(n: number): string {
   if (!Number.isFinite(n)) return "0";
-  let s = n.toFixed(6);
-  s = s.replace(/\.?0+$/, "");            // trim trailing zeros
+  // keep 6 decimals for ordinary values, but never let a small non-zero quantity
+  // (tiny inertias, thin plates) round to zero -- use 6 significant figures instead
+  let s = Math.abs(n) > 0 && Math.abs(n) < 1e-3 ? n.toPrecision(6) : n.toFixed(6);
+  if (!/e/i.test(s)) s = s.replace(/\.?0+$/, "");   // trim trailing zeros (not in exponent form)
   if (s === "-0" || s === "") s = "0";
   return s;
 }

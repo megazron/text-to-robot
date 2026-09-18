@@ -18,8 +18,8 @@
 
 | Joint | Required torque (N·m) | Chosen actuator | Margin |
 |---|--:|---|--:|
-| left_finger_joint | 0.196 | NEMA17 + lead screw | 305.9x |
-| right_finger_joint | 0.196 | NEMA17 + lead screw | 305.9x |
+| left_finger_joint | 32 | NEMA17 + lead screw | 1.9x |
+| right_finger_joint | 32 | NEMA17 + lead screw | 1.9x |
 
 ## Notes
 - Tier: prosumer. Prices are planning estimates (USD), not quotes. Structure assumes FDM 3D printing.

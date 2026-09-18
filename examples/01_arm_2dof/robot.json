@@ -399,7 +399,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -436,7 +435,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -513,7 +511,7 @@
   ],
   "metadata": {
     "generator": "text-to-robot",
-    "created": "2026-09-17T14:00:32.625Z",
+    "created": "2026-09-18T04:41:53.805Z",
     "inferred_fields": [
       "joints.gripper_base_joint.dynamics",
       "joints.gripper_base_joint.limit",
@@ -522,9 +520,7 @@
       "joints.joint_2.dynamics",
       "joints.joint_2.limit",
       "joints.left_finger_joint.dynamics",
-      "joints.left_finger_joint.limit",
       "joints.right_finger_joint.dynamics",
-      "joints.right_finger_joint.limit",
       "links.base_link.inertia",
       "links.base_link.mass",
       "links.gripper_base.inertia",

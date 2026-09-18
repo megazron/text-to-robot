@@ -10,6 +10,8 @@ export function finalizeSpec(spec: RobotSpecification): RobotSpecification {
 
   for (const l of spec.links) {
     if (!l.inertia) { l.inertia = inertiaOf(l.geometry, l.mass); (l.inferred ??= []).push("inertia"); }
+    // physics engines reject degenerate tensors: floor the principal moments of very small parts
+    for (const k of ["ixx", "iyy", "izz"] as const) if (l.inertia[k] < 1e-7) l.inertia[k] = 1e-7;
     if (!l.collision) l.collision = clone(l.geometry) as Geometry;
     for (const f of l.inferred ?? []) inferred.add(`links.${l.name}.${f}`);
     if (l.material && !materialNames.has(l.material)) {

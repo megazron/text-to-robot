@@ -21,8 +21,8 @@
 |---|--:|---|--:|
 | joint_1 | 0.833 | DS3218 20kg servo | 2.4x |
 | joint_2 | 0.722 | DS3218 20kg servo | 2.7x |
-| left_finger_joint | 0.196 | NEMA17 + lead screw | 305.9x |
-| right_finger_joint | 0.196 | NEMA17 + lead screw | 305.9x |
+| left_finger_joint | 32 | NEMA17 + lead screw | 1.9x |
+| right_finger_joint | 32 | NEMA17 + lead screw | 1.9x |
 
 ## Notes
 - Tier: prosumer. Prices are planning estimates (USD), not quotes. Structure assumes FDM 3D printing.

@@ -40,7 +40,7 @@
     <inertial>
       <origin xyz="0 0 0" rpy="1.570796 0 0"/>
       <mass value="0.203575"/>
-      <inertia ixx="0.00021" ixy="0" ixz="0" iyy="0.00021" iyz="0" izz="0.000366"/>
+      <inertia ixx="0.000210361" ixy="0" ixz="0" iyy="0.000210361" iyz="0" izz="0.000366435"/>
     </inertial>
   </link>
   <link name="right_wheel">
@@ -56,7 +56,7 @@
     <inertial>
       <origin xyz="0 0 0" rpy="1.570796 0 0"/>
       <mass value="0.203575"/>
-      <inertia ixx="0.00021" ixy="0" ixz="0" iyy="0.00021" iyz="0" izz="0.000366"/>
+      <inertia ixx="0.000210361" ixy="0" ixz="0" iyy="0.000210361" iyz="0" izz="0.000366435"/>
     </inertial>
   </link>
   <link name="caster">
@@ -72,7 +72,7 @@
     <inertial>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <mass value="0.087944"/>
-      <inertia ixx="0.000046" ixy="0" ixz="0" iyy="0.000046" iyz="0" izz="0.000046"/>
+      <inertia ixx="0.0000455904" ixy="0" ixz="0" iyy="0.0000455904" iyz="0" izz="0.0000455904"/>
     </inertial>
   </link>
   <joint name="left_wheel_joint" type="continuous">

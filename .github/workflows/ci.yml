@@ -27,4 +27,4 @@ jobs:
             python -m ttr_mujoco test examples/$ex/robot.urdf || exit 1
           done
           # the wearable exosuit must also hold a 75 kg person (powered vs motors-off support test)
-          python -m ttr_mujoco test examples/14_iron_man_exosuit/robot.urdf --wearer || exit 1
+          python -m ttr_mujoco test examples/14_iron_man_mark_suit/robot.urdf --wearer || exit 1

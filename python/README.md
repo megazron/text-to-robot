@@ -17,6 +17,8 @@ ttr-mujoco train   robot.urdf --task stand --steps 400000            # PPO in Mu
 # wearable exoskeletons: strap a 75 kg / 1.75 m person in (passive mannequin welded to the cuffs)
 ttr-mujoco test   exosuit.urdf --wearer                              # adds a powered-vs-motors-off support test
 ttr-mujoco render exosuit.urdf --wearer [--unpowered] -o suit.gif   # show the suit holding (or dropping) the wearer
+ttr-mujoco render marksuit.urdf --wearer -o don.gif --motion don --orbit 70   # armour donning: plates open -> closed in sequence (doff / open too)
+#   render flags: --motion {sweep,hold,drop,don,doff,open} --orbit DEG --azimuth DEG --zoom X --width --height --fps
 ```
 
 What the converter does, deterministically:
@@ -25,7 +27,7 @@ What the converter does, deterministically:
 - floor, lighting, a free-floating base for legged / wheeled / flying robots (auto-detected from link names);
 - self-collision off by default (primitive robots overlap at their joints); `self_collision=True` to enable;
 - servo stiffness scaled from the inverted-pendulum term m·g·h so standing robots are stable under position control;
-- `ttr_mujoco.exo.add_wearer` puts an anthropometric human inside a wearable exoskeleton (requires the exosuit link naming: `pelvis_frame`, `*_thigh_cuff`, `*_shank_cuff`, `*_boot`, …).
+- `ttr_mujoco.exo.add_wearer` puts an anthropometric human inside a wearable exoskeleton (requires the exosuit link naming: `pelvis_frame`, `*_thigh_cuff`, `*_shank_cuff`, `*_boot`, …); armour hinges are any actuator named `*_hinge` (closed = 0), which the `don`/`doff` motions drive in anatomical order.
 
 The Gymnasium env (`ttr_mujoco.env.MujocoRobotEnv`) uses **delta actions around the standing pose**
 (action 0 = hold still) and, for `stand`, random pushes so a policy must actually balance.

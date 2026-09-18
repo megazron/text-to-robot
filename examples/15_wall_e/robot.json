@@ -1003,53 +1003,6 @@
           0.06
         ]
       }
-    },
-    {
-      "name": "camera_3_link",
-      "geometry": {
-        "type": "box",
-        "size": [
-          0.04,
-          0.06,
-          0.03
-        ]
-      },
-      "mass": 0.03239999999999999,
-      "material": "sensor_mat",
-      "role": "sensor",
-      "origin": {
-        "xyz": [
-          0,
-          0,
-          0
-        ],
-        "rpy": [
-          0,
-          0,
-          0
-        ]
-      },
-      "inferred": [
-        "mass",
-        "inertia",
-        "inertia"
-      ],
-      "inertia": {
-        "ixx": 0.000012149999999999995,
-        "iyy": 0.000006749999999999998,
-        "izz": 0.000014039999999999996,
-        "ixy": 0,
-        "ixz": 0,
-        "iyz": 0
-      },
-      "collision": {
-        "type": "box",
-        "size": [
-          0.04,
-          0.06,
-          0.03
-        ]
-      }
     }
   ],
   "joints": [
@@ -1266,7 +1219,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -1303,7 +1255,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -1402,7 +1353,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -1439,7 +1389,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -1476,7 +1425,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -1544,7 +1492,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -1581,7 +1528,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -1618,7 +1564,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -1655,7 +1600,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -1692,7 +1636,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -1760,7 +1703,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -1797,7 +1739,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -1806,37 +1747,6 @@
         "effort": 40,
         "velocity": 0.3
       }
-    },
-    {
-      "name": "camera_3_joint",
-      "type": "fixed",
-      "parent": "left_gripper_base",
-      "child": "camera_3_link",
-      "origin": {
-        "xyz": [
-          0,
-          0,
-          0.05
-        ],
-        "rpy": [
-          0,
-          0,
-          0
-        ]
-      },
-      "axis": [
-        0,
-        0,
-        1
-      ],
-      "dynamics": {
-        "damping": 0.1,
-        "friction": 0
-      },
-      "inferred": [
-        "limit",
-        "dynamics"
-      ]
     }
   ],
   "materials": [
@@ -1940,24 +1850,6 @@
         ]
       },
       "params": {}
-    },
-    {
-      "name": "camera_3",
-      "type": "camera",
-      "parent": "camera_3_link",
-      "origin": {
-        "xyz": [
-          0,
-          0,
-          0
-        ],
-        "rpy": [
-          0,
-          0,
-          0
-        ]
-      },
-      "params": {}
     }
   ],
   "end_effectors": [
@@ -1974,18 +1866,12 @@
   ],
   "metadata": {
     "generator": "text-to-robot",
-    "created": "2026-09-17T14:00:32.662Z",
+    "created": "2026-09-18T04:41:53.865Z",
     "inferred_fields": [
-      "joints.camera_3_joint.dynamics",
-      "joints.camera_3_joint.limit",
       "joints.head_tilt.dynamics",
-      "joints.head_tilt.limit",
       "joints.left_arm_joint_1.dynamics",
-      "joints.left_arm_joint_1.limit",
       "joints.left_arm_joint_2.dynamics",
-      "joints.left_arm_joint_2.limit",
       "joints.left_arm_joint_3.dynamics",
-      "joints.left_arm_joint_3.limit",
       "joints.left_eye_joint.dynamics",
       "joints.left_eye_joint.limit",
       "joints.left_front_wheel_joint.dynamics",
@@ -1993,21 +1879,15 @@
       "joints.left_gripper_base_joint.dynamics",
       "joints.left_gripper_base_joint.limit",
       "joints.left_left_finger_joint.dynamics",
-      "joints.left_left_finger_joint.limit",
       "joints.left_rear_wheel_joint.dynamics",
       "joints.left_rear_wheel_joint.limit",
       "joints.left_right_finger_joint.dynamics",
-      "joints.left_right_finger_joint.limit",
       "joints.left_track_joint.dynamics",
       "joints.left_track_joint.limit",
       "joints.neck_lift.dynamics",
-      "joints.neck_lift.limit",
       "joints.right_arm_joint_1.dynamics",
-      "joints.right_arm_joint_1.limit",
       "joints.right_arm_joint_2.dynamics",
-      "joints.right_arm_joint_2.limit",
       "joints.right_arm_joint_3.dynamics",
-      "joints.right_arm_joint_3.limit",
       "joints.right_eye_joint.dynamics",
       "joints.right_eye_joint.limit",
       "joints.right_front_wheel_joint.dynamics",
@@ -2015,17 +1895,13 @@
       "joints.right_gripper_base_joint.dynamics",
       "joints.right_gripper_base_joint.limit",
       "joints.right_left_finger_joint.dynamics",
-      "joints.right_left_finger_joint.limit",
       "joints.right_rear_wheel_joint.dynamics",
       "joints.right_rear_wheel_joint.limit",
       "joints.right_right_finger_joint.dynamics",
-      "joints.right_right_finger_joint.limit",
       "joints.right_track_joint.dynamics",
       "joints.right_track_joint.limit",
       "links.base_link.inertia",
       "links.base_link.mass",
-      "links.camera_3_link.inertia",
-      "links.camera_3_link.mass",
       "links.head.inertia",
       "links.head.mass",
       "links.left_eye.inertia",

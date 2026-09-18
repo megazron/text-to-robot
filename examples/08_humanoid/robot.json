@@ -1230,7 +1230,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -1267,7 +1266,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -1304,7 +1302,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -1341,7 +1338,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -1378,7 +1374,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -1415,7 +1410,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -1452,7 +1446,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -1489,7 +1482,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -1557,7 +1549,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -1594,7 +1585,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -1631,7 +1621,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -1668,7 +1657,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -1705,7 +1693,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -1742,7 +1729,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -1779,7 +1765,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -1816,7 +1801,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -1853,7 +1837,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -1921,7 +1904,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -1958,7 +1940,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -1995,7 +1976,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -2032,7 +2012,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -2069,7 +2048,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -2106,7 +2084,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -2143,7 +2120,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -2180,7 +2156,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -2262,62 +2237,37 @@
   ],
   "metadata": {
     "generator": "text-to-robot",
-    "created": "2026-09-17T14:00:32.642Z",
+    "created": "2026-09-18T04:41:53.825Z",
     "inferred_fields": [
       "joints.left_ankle_joint.dynamics",
-      "joints.left_ankle_joint.limit",
       "joints.left_arm_joint_1.dynamics",
-      "joints.left_arm_joint_1.limit",
       "joints.left_arm_joint_2.dynamics",
-      "joints.left_arm_joint_2.limit",
       "joints.left_arm_joint_3.dynamics",
-      "joints.left_arm_joint_3.limit",
       "joints.left_arm_joint_4.dynamics",
-      "joints.left_arm_joint_4.limit",
       "joints.left_arm_joint_5.dynamics",
-      "joints.left_arm_joint_5.limit",
       "joints.left_arm_joint_6.dynamics",
-      "joints.left_arm_joint_6.limit",
       "joints.left_arm_joint_7.dynamics",
-      "joints.left_arm_joint_7.limit",
       "joints.left_gripper_base_joint.dynamics",
       "joints.left_gripper_base_joint.limit",
       "joints.left_hip_joint.dynamics",
-      "joints.left_hip_joint.limit",
       "joints.left_knee_joint.dynamics",
-      "joints.left_knee_joint.limit",
       "joints.left_left_finger_joint.dynamics",
-      "joints.left_left_finger_joint.limit",
       "joints.left_right_finger_joint.dynamics",
-      "joints.left_right_finger_joint.limit",
       "joints.neck_joint.dynamics",
-      "joints.neck_joint.limit",
       "joints.right_ankle_joint.dynamics",
-      "joints.right_ankle_joint.limit",
       "joints.right_arm_joint_1.dynamics",
-      "joints.right_arm_joint_1.limit",
       "joints.right_arm_joint_2.dynamics",
-      "joints.right_arm_joint_2.limit",
       "joints.right_arm_joint_3.dynamics",
-      "joints.right_arm_joint_3.limit",
       "joints.right_arm_joint_4.dynamics",
-      "joints.right_arm_joint_4.limit",
       "joints.right_arm_joint_5.dynamics",
-      "joints.right_arm_joint_5.limit",
       "joints.right_arm_joint_6.dynamics",
-      "joints.right_arm_joint_6.limit",
       "joints.right_arm_joint_7.dynamics",
-      "joints.right_arm_joint_7.limit",
       "joints.right_gripper_base_joint.dynamics",
       "joints.right_gripper_base_joint.limit",
       "joints.right_hip_joint.dynamics",
-      "joints.right_hip_joint.limit",
       "joints.right_knee_joint.dynamics",
-      "joints.right_knee_joint.limit",
       "joints.right_left_finger_joint.dynamics",
-      "joints.right_left_finger_joint.limit",
       "joints.right_right_finger_joint.dynamics",
-      "joints.right_right_finger_joint.limit",
       "links.head.inertia",
       "links.head.mass",
       "links.left_elbow.inertia",

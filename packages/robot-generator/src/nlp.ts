@@ -3,7 +3,7 @@
 // documented prompts and degrade gracefully.
 import type { RobotSpecification, Geometry, Sensor, SensorType } from "@ttr/robot-schema";
 import { safeName, pose } from "@ttr/robot-schema";
-import { nDofArm, scara, humanoid, diffDrive, fourWheel, mecanum, quadruped, hexapod, roverArm, ironManSuit, wearableExosuit, wallE, eva, baymax, attachParallelGripper, attachSuctionGripper, cyl, box, link, joint } from "@ttr/robot-templates";
+import { nDofArm, scara, humanoid, diffDrive, fourWheel, mecanum, quadruped, hexapod, roverArm, ironManSuit, wearableExosuit, ironManMarkSuit, wallE, eva, baymax, attachParallelGripper, attachSuctionGripper, cyl, box, link, joint } from "@ttr/robot-templates";
 
 const WORD_NUM: Record<string, number> = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10 };
 
@@ -31,7 +31,9 @@ export function parsePrompt(prompt: string): RobotSpecification {
 
   if (/iron[\s-]?man|exosuit|exo[\s-]?skeleton|wearable|power(?:ed)?\s+(?:armou?r|suit)|mech\s+suit|battle\s+suit/.test(t)) {
     // a suit is WORN: build the wearable exoskeleton; "battle mech" (standalone robot) is a humanoid
-    spec = /\bmech\b(?!\s+suit)/.test(t) && !/iron[\s-]?man|exo|wearable|suit/.test(t) ? ironManSuit("battle_mech", prompt) : wearableExosuit({ prompt });
+    if (/\bmech\b(?!\s+suit)/.test(t) && !/iron[\s-]?man|exo|wearable|suit/.test(t)) spec = ironManSuit("battle_mech", prompt);
+    else if (/iron[\s-]?man|mark\s*(?:[ivx]+|\d+)|armou?r|movie/.test(t)) spec = ironManMarkSuit({ prompt });   // the armoured, articulated suit
+    else spec = wearableExosuit({ prompt, styled: false, name: "exosuit" });                                   // a bare exoskeleton
   } else if (/wall[\s-]?e\b|trash\s+compactor|garbage\s+robot/.test(t)) {
     spec = wallE("wall_e", prompt);
   } else if (/\beva\b|probe\s+droid|egg[\s-]?shaped|hover(?:ing)?\s+(?:robot|droid|bot)/.test(t)) {

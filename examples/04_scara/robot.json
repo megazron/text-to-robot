@@ -309,7 +309,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -417,14 +416,13 @@
   "end_effectors": [],
   "metadata": {
     "generator": "text-to-robot",
-    "created": "2026-09-17T14:00:32.638Z",
+    "created": "2026-09-18T04:41:53.820Z",
     "inferred_fields": [
       "joints.joint_1.dynamics",
       "joints.joint_1.limit",
       "joints.joint_2.dynamics",
       "joints.joint_2.limit",
       "joints.joint_3.dynamics",
-      "joints.joint_3.limit",
       "joints.joint_4.dynamics",
       "joints.joint_4.limit",
       "links.base_link.inertia",

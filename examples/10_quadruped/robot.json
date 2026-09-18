@@ -569,7 +569,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -606,7 +605,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -643,7 +641,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -680,7 +677,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -717,7 +713,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -754,7 +749,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -791,7 +785,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -828,7 +821,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -865,7 +857,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -902,7 +893,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -939,7 +929,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -976,7 +965,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -1047,32 +1035,20 @@
   "end_effectors": [],
   "metadata": {
     "generator": "text-to-robot",
-    "created": "2026-09-17T14:00:32.647Z",
+    "created": "2026-09-18T04:41:53.831Z",
     "inferred_fields": [
       "joints.front_left_hip_joint.dynamics",
-      "joints.front_left_hip_joint.limit",
       "joints.front_left_knee_joint.dynamics",
-      "joints.front_left_knee_joint.limit",
       "joints.front_left_thigh_joint.dynamics",
-      "joints.front_left_thigh_joint.limit",
       "joints.front_right_hip_joint.dynamics",
-      "joints.front_right_hip_joint.limit",
       "joints.front_right_knee_joint.dynamics",
-      "joints.front_right_knee_joint.limit",
       "joints.front_right_thigh_joint.dynamics",
-      "joints.front_right_thigh_joint.limit",
       "joints.rear_left_hip_joint.dynamics",
-      "joints.rear_left_hip_joint.limit",
       "joints.rear_left_knee_joint.dynamics",
-      "joints.rear_left_knee_joint.limit",
       "joints.rear_left_thigh_joint.dynamics",
-      "joints.rear_left_thigh_joint.limit",
       "joints.rear_right_hip_joint.dynamics",
-      "joints.rear_right_hip_joint.limit",
       "joints.rear_right_knee_joint.dynamics",
-      "joints.rear_right_knee_joint.limit",
       "joints.rear_right_thigh_joint.dynamics",
-      "joints.rear_right_thigh_joint.limit",
       "links.base_link.inertia",
       "links.base_link.mass",
       "links.front_left_hip.inertia",

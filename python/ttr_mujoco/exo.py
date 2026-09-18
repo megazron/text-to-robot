@@ -43,41 +43,47 @@ def add_wearer(mjcf_xml: str, height: float = 1.75, mass: float = 75.0) -> str:
     m = lambda k: SEG[k][0] * mass
     skin = "0.86 0.72 0.6 1"
 
-    # mannequin root: pelvis, floating
+    # ---- a properly proportioned adult (Winter segment lengths/masses; widths from anthropometric tables) ----
+    skin = "0.87 0.72 0.60 1"; dark = "0.16 0.11 0.08 1"
+    shoulderW = 0.205 * H   # biacromial half-width ~0.205H total -> half 0.18
+    hipHalf = 0.09; neck = 0.052 * H; torsoLen = shoulderZ - hipZ
     pel = ET.SubElement(world, "body", name="w_pelvis", pos=f"0 0 {hipZ:.4f}")
     ET.SubElement(pel, "freejoint", name="wearer_root")
-    ET.SubElement(pel, "geom", type="capsule", fromto="0 -0.09 0 0 0.09 0", size="0.10", mass=f"{m('pelvis'):.3f}", rgba=skin, contype="0", conaffinity="0")
-    tor = ET.SubElement(pel, "body", name="w_torso", pos="0 0 0.05")
+    ET.SubElement(pel, "geom", type="capsule", fromto=f"0 {-hipHalf:.3f} 0.02 0 {hipHalf:.3f} 0.02", size="0.095", mass=f"{m('pelvis'):.3f}", rgba=skin, contype="0", conaffinity="0")
+    tor = ET.SubElement(pel, "body", name="w_torso", pos="0 0 0.06")
     ET.SubElement(tor, "joint", name="w_trunk", type="hinge", axis="0 1 0", range="-0.4 0.6", damping="2")
-    ET.SubElement(tor, "geom", type="capsule", fromto=f"0 0 0.05 0 0 {shoulderZ - hipZ - 0.08:.4f}", size="0.125", mass=f"{m('torso'):.3f}", rgba=skin, contype="0", conaffinity="0")
-    head = ET.SubElement(tor, "body", name="w_head", pos=f"0.02 0 {shoulderZ - hipZ + 0.02:.4f}")
-    ET.SubElement(head, "geom", type="sphere", size="0.10", pos="0 0 0.11", mass=f"{m('head'):.3f}", rgba=skin, contype="0", conaffinity="0")
+    # abdomen (narrower) + chest (wider, flatter) + clavicles
+    ET.SubElement(tor, "geom", type="capsule", fromto=f"0 0 0.02 0 0 {torsoLen*0.42:.4f}", size="0.105", mass=f"{m('torso')*0.4:.3f}", rgba=skin, contype="0", conaffinity="0")
+    ET.SubElement(tor, "geom", type="box", size=f"0.095 {shoulderW*0.5*0.9:.3f} {torsoLen*0.22:.4f}", pos=f"0 0 {torsoLen*0.68:.4f}", mass=f"{m('torso')*0.5:.3f}", rgba=skin, contype="0", conaffinity="0")
+    ET.SubElement(tor, "geom", type="capsule", fromto=f"0 {-shoulderW*0.5:.3f} {torsoLen*0.93:.4f} 0 {shoulderW*0.5:.3f} {torsoLen*0.93:.4f}", size="0.045", mass=f"{m('torso')*0.1:.3f}", rgba=skin, contype="0", conaffinity="0")
+    # neck + head with a simple face (eyes) so it reads as a person
+    head = ET.SubElement(tor, "body", name="w_head", pos=f"0.01 0 {torsoLen*0.93+0.03:.4f}")
+    ET.SubElement(head, "geom", type="capsule", fromto=f"0 0 0 0 0 {neck:.4f}", size="0.05", mass=f"{m('head')*0.15:.3f}", rgba=skin, contype="0", conaffinity="0")
+    ET.SubElement(head, "geom", type="capsule", fromto=f"0 0 {neck+0.04:.4f} 0 0 {neck+0.13:.4f}", size="0.085", mass=f"{m('head')*0.85:.3f}", rgba=skin, contype="0", conaffinity="0")
+    ET.SubElement(head, "geom", type="sphere", size="0.012", pos=f"0.078 0.032 {neck+0.11:.4f}", rgba=dark, contype="0", conaffinity="0")
+    ET.SubElement(head, "geom", type="sphere", size="0.012", pos=f"0.078 -0.032 {neck+0.11:.4f}", rgba=dark, contype="0", conaffinity="0")
+    ET.SubElement(head, "geom", type="capsule", fromto=f"-0.03 -0.07 {neck+0.13:.4f} -0.03 0.07 {neck+0.13:.4f}", size="0.06", mass="0.2", rgba=dark, contype="0", conaffinity="0")  # hair
     for s, sign in (("left", 1), ("right", -1)):
-        # legs hang from the pelvis at +-0.09
-        th = _capsule(pel, f"w_{s}_thigh", m("thigh"), thigh, SEG["thigh"][2], f"0 {sign*0.09:.3f} 0")
+        # legs: thigh tapers into the shank; feet as flat boxes with a heel
+        th = ET.SubElement(pel, "body", name=f"w_{s}_thigh", pos=f"0 {sign*0.09:.3f} 0")
         ET.SubElement(th, "joint", name=f"w_{s}_hip", type="hinge", axis="0 1 0", range="-0.6 2.0", damping="1.5")
-        sh = _capsule(th, f"w_{s}_shank", m("shank"), shank, SEG["shank"][2], f"0 0 {-thigh:.4f}")
+        ET.SubElement(th, "geom", type="capsule", fromto=f"0 0 -0.02 0 0 {-thigh+0.04:.4f}", size="0.078", mass=f"{m('thigh'):.3f}", rgba=skin, contype="0", conaffinity="0")
+        sh = ET.SubElement(th, "body", name=f"w_{s}_shank", pos=f"0 0 {-thigh:.4f}")
         ET.SubElement(sh, "joint", name=f"w_{s}_knee", type="hinge", axis="0 1 0", range="-2.2 0.05", damping="1.5")
+        ET.SubElement(sh, "geom", type="capsule", fromto=f"0 0 -0.02 0 0 {-shank+0.03:.4f}", size="0.055", mass=f"{m('shank'):.3f}", rgba=skin, contype="0", conaffinity="0")
         ft = ET.SubElement(sh, "body", name=f"w_{s}_foot", pos=f"0 0 {-shank:.4f}")
         ET.SubElement(ft, "joint", name=f"w_{s}_ankle", type="hinge", axis="0 1 0", range="-0.6 0.6", damping="1")
-        ET.SubElement(ft, "geom", type="box", size="0.12 0.045 0.02", pos=f"0.05 0 {-ankleZ+0.03:.4f}", mass=f"{m('foot'):.3f}", rgba=skin, contype="0", conaffinity="0")
-        # arms hang from the shoulders at +-0.20
-        ua = _capsule(tor, f"w_{s}_upper_arm", m("upper_arm"), uarm, SEG["upper_arm"][2], f"0 {sign*0.20:.3f} {shoulderZ - hipZ - 0.05:.4f}")
+        ET.SubElement(ft, "geom", type="box", size="0.125 0.045 0.022", pos=f"0.055 0 {-ankleZ+0.022:.4f}", mass=f"{m('foot'):.3f}", rgba=skin, contype="0", conaffinity="0")
+        # arms: hang from the clavicles; upper arm thicker than forearm; hand as a flat box with a thumb
+        ua = ET.SubElement(tor, "body", name=f"w_{s}_upper_arm", pos=f"0 {sign*(shoulderW*0.5+0.02):.3f} {torsoLen*0.9:.4f}")
         ET.SubElement(ua, "joint", name=f"w_{s}_shoulder", type="hinge", axis="0 1 0", range="-1.0 3.0", damping="1")
-        fa = _capsule(ua, f"w_{s}_forearm", m("forearm"), farm, SEG["forearm"][2], f"0 0 {-uarm:.4f}")
+        ET.SubElement(ua, "geom", type="capsule", fromto=f"0 0 -0.02 0 0 {-uarm+0.03:.4f}", size="0.046", mass=f"{m('upper_arm'):.3f}", rgba=skin, contype="0", conaffinity="0")
+        fa = ET.SubElement(ua, "body", name=f"w_{s}_forearm", pos=f"0 0 {-uarm:.4f}")
         ET.SubElement(fa, "joint", name=f"w_{s}_elbow", type="hinge", axis="0 1 0", range="-2.4 0.05", damping="1")
+        ET.SubElement(fa, "geom", type="capsule", fromto=f"0 0 -0.02 0 0 {-farm+0.02:.4f}", size="0.037", mass=f"{m('forearm'):.3f}", rgba=skin, contype="0", conaffinity="0")
         hd = ET.SubElement(fa, "body", name=f"w_{s}_hand", pos=f"0 0 {-farm:.4f}")
-        ET.SubElement(hd, "geom", type="box", size="0.045 0.03 0.012", pos="0.02 0 -0.04", mass=f"{m('hand'):.3f}", rgba=skin, contype="0", conaffinity="0")
-
-    # the suit now carries the wearer: rescale servo stiffness / torque limits for the added mass
-    exo_mass = sum(float(g.get("mass", 0)) for g in root.iter("geom") if g.get("mass")) or 1.0
-    exo_mass = max(exo_mass, sum(float(i.get("mass", 0)) for i in root.iter("inertial")))
-    scale = (exo_mass + mass) / exo_mass
-    for pos_default in root.iter("position"):
-        if pos_default.get("kp") and pos_default.get("forcerange"):
-            pos_default.set("kp", f"{float(pos_default.get('kp')) * scale:.1f}")
-            lo, hi = pos_default.get("forcerange").split(); pos_default.set("forcerange", f"{float(lo) * scale:.0f} {float(hi) * scale:.0f}")
-            break
+        ET.SubElement(hd, "geom", type="box", size="0.045 0.038 0.012", pos="0.015 0 -0.05", mass=f"{m('hand')*0.8:.3f}", rgba=skin, contype="0", conaffinity="0")
+        ET.SubElement(hd, "geom", type="capsule", fromto=f"0.0 {sign*0.03:.3f} -0.03 0.05 {sign*0.055:.3f} -0.04", size="0.011", mass=f"{m('hand')*0.2:.3f}", rgba=skin, contype="0", conaffinity="0")
 
     # straps: weld each mannequin segment to the exo link it is strapped to
     eq = root.find("equality") or ET.SubElement(root, "equality")

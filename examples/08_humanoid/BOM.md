@@ -1,49 +1,72 @@
 # Bill of Materials — humanoid_robot
 
-**Estimated total: $1053.62**  ·  tier: prosumer
+**Estimated total: $10240.98**  ·  tier: prosumer
 
 | Category | Component | Qty | Unit $ | Subtotal $ | Spec |
 |---|---|--:|--:|--:|---|
-| Actuator | DS3218 20kg servo _(joint neck_joint)_ | 21 | 12 | 252 | PWM, waterproof, metal gears (1.96 N·m) |
+| Actuator | Unitree GO-M8010-6 _(joint neck_joint)_ | 21 | 400 | 8400 | integrated BLDC + planetary, RS485 (23 N·m) |
 | Actuator | NEMA17 + lead screw _(joint left_left_finger_joint)_ | 4 | 26 | 104 | lead-screw linear stage (60 N·m) |
 | Motor driver | TMC2209 driver | 4 | 10 | 40 | driver for NEMA17 + lead screw |
 | Compute | Raspberry Pi 5 (8GB) | 1 | 80 | 80 | SBC, runs ROS 2 |
-| Power | LiPo 4S 5000mAh | 1 | 40 | 40 | 74 Wh; est. load 69 W |
+| Power | LiPo 6S 10000mAh | 1 | 95 | 95 | 222 Wh; est. load 531 W |
 | Power | DC-DC buck regulator (5V/10A) | 1 | 12 | 12 | logic + servo rail |
 | Power | Power distribution board + fuse + switch | 1 | 14 | 14 | wiring harness backbone |
 | Structure | 3D-printed frame (PLA/PETG) | 1 | 428.58 | 428.58 | ~19.48 kg material @ $22/kg |
 | Structure | Fastener + bearing kit | 1 | 18 | 18 | M3 screws, heat inserts, 608 bearings |
-| Wiring & misc | Wiring, connectors, JST/Dupont, sleeving | 1 | 65.04 | 65.04 | ~12% of electronics |
+| Wiring & misc | Wiring, connectors, JST/Dupont, sleeving | 1 | 1049.4 | 1049.4 | ~12% of electronics |
 
 ## Actuator sizing
 
 | Joint | Required torque (N·m) | Chosen actuator | Margin |
 |---|--:|---|--:|
-| neck_joint | 0.27 | DS3218 20kg servo | 7.3x |
-| left_arm_joint_1 | 1.003 | DS3218 20kg servo | 2.0x |
-| left_arm_joint_2 | 0.973 | DS3218 20kg servo | 2.0x |
-| left_arm_joint_3 | 0.562 | DS3218 20kg servo | 3.5x |
-| left_arm_joint_4 | 0.531 | DS3218 20kg servo | 3.7x |
-| left_arm_joint_5 | 0.12 | DS3218 20kg servo | 16.3x |
-| left_arm_joint_6 | 0.09 | DS3218 20kg servo | 21.9x |
-| left_arm_joint_7 | 0.059 | DS3218 20kg servo | 33.2x |
-| left_left_finger_joint | 0.196 | NEMA17 + lead screw | 305.9x |
-| left_right_finger_joint | 0.196 | NEMA17 + lead screw | 305.9x |
-| right_arm_joint_1 | 1.003 | DS3218 20kg servo | 2.0x |
-| right_arm_joint_2 | 0.973 | DS3218 20kg servo | 2.0x |
-| right_arm_joint_3 | 0.562 | DS3218 20kg servo | 3.5x |
-| right_arm_joint_4 | 0.531 | DS3218 20kg servo | 3.7x |
-| right_arm_joint_5 | 0.12 | DS3218 20kg servo | 16.3x |
-| right_arm_joint_6 | 0.09 | DS3218 20kg servo | 21.9x |
-| right_arm_joint_7 | 0.059 | DS3218 20kg servo | 33.2x |
-| right_left_finger_joint | 0.196 | NEMA17 + lead screw | 305.9x |
-| right_right_finger_joint | 0.196 | NEMA17 + lead screw | 305.9x |
-| left_hip_joint | 1.05 | DS3218 20kg servo | 1.9x |
-| left_knee_joint | 0.489 | DS3218 20kg servo | 4.0x |
-| left_ankle_joint | 0.045 | DS3218 20kg servo | 43.4x |
-| right_hip_joint | 1.05 | DS3218 20kg servo | 1.9x |
-| right_knee_joint | 0.489 | DS3218 20kg servo | 4.0x |
-| right_ankle_joint | 0.045 | DS3218 20kg servo | 43.4x |
+| neck_joint | 40 | Unitree GO-M8010-6 | UNDERSIZED |
+| left_arm_joint_1 | 40 | Unitree GO-M8010-6 | UNDERSIZED |
+| left_arm_joint_2 | 40 | Unitree GO-M8010-6 | UNDERSIZED |
+| left_arm_joint_3 | 40 | Unitree GO-M8010-6 | UNDERSIZED |
+| left_arm_joint_4 | 40 | Unitree GO-M8010-6 | UNDERSIZED |
+| left_arm_joint_5 | 40 | Unitree GO-M8010-6 | UNDERSIZED |
+| left_arm_joint_6 | 40 | Unitree GO-M8010-6 | UNDERSIZED |
+| left_arm_joint_7 | 40 | Unitree GO-M8010-6 | UNDERSIZED |
+| left_left_finger_joint | 32 | NEMA17 + lead screw | 1.9x |
+| left_right_finger_joint | 32 | NEMA17 + lead screw | 1.9x |
+| right_arm_joint_1 | 40 | Unitree GO-M8010-6 | UNDERSIZED |
+| right_arm_joint_2 | 40 | Unitree GO-M8010-6 | UNDERSIZED |
+| right_arm_joint_3 | 40 | Unitree GO-M8010-6 | UNDERSIZED |
+| right_arm_joint_4 | 40 | Unitree GO-M8010-6 | UNDERSIZED |
+| right_arm_joint_5 | 40 | Unitree GO-M8010-6 | UNDERSIZED |
+| right_arm_joint_6 | 40 | Unitree GO-M8010-6 | UNDERSIZED |
+| right_arm_joint_7 | 40 | Unitree GO-M8010-6 | UNDERSIZED |
+| right_left_finger_joint | 32 | NEMA17 + lead screw | 1.9x |
+| right_right_finger_joint | 32 | NEMA17 + lead screw | 1.9x |
+| left_hip_joint | 40 | Unitree GO-M8010-6 | UNDERSIZED |
+| left_knee_joint | 40 | Unitree GO-M8010-6 | UNDERSIZED |
+| left_ankle_joint | 40 | Unitree GO-M8010-6 | UNDERSIZED |
+| right_hip_joint | 40 | Unitree GO-M8010-6 | UNDERSIZED |
+| right_knee_joint | 40 | Unitree GO-M8010-6 | UNDERSIZED |
+| right_ankle_joint | 40 | Unitree GO-M8010-6 | UNDERSIZED |
+
+## Warnings
+- ⚠️ joint neck_joint needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
+- ⚠️ joint left_arm_joint_1 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
+- ⚠️ joint left_arm_joint_2 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
+- ⚠️ joint left_arm_joint_3 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
+- ⚠️ joint left_arm_joint_4 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
+- ⚠️ joint left_arm_joint_5 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
+- ⚠️ joint left_arm_joint_6 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
+- ⚠️ joint left_arm_joint_7 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
+- ⚠️ joint right_arm_joint_1 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
+- ⚠️ joint right_arm_joint_2 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
+- ⚠️ joint right_arm_joint_3 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
+- ⚠️ joint right_arm_joint_4 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
+- ⚠️ joint right_arm_joint_5 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
+- ⚠️ joint right_arm_joint_6 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
+- ⚠️ joint right_arm_joint_7 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
+- ⚠️ joint left_hip_joint needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
+- ⚠️ joint left_knee_joint needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
+- ⚠️ joint left_ankle_joint needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
+- ⚠️ joint right_hip_joint needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
+- ⚠️ joint right_knee_joint needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
+- ⚠️ joint right_ankle_joint needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
 
 ## Notes
 - Tier: prosumer. Prices are planning estimates (USD), not quotes. Structure assumes FDM 3D printing.

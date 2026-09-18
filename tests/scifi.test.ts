@@ -2,13 +2,14 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
 import { generateRobot, DemoProvider, finalizeSpec } from "@ttr/robot-generator";
-import { ironManSuit, wearableExosuit, wallE, eva, baymax } from "@ttr/robot-templates";
+import { ironManSuit, wearableExosuit, ironManMarkSuit, wallE, eva, baymax } from "@ttr/robot-templates";
 import { validateSpec } from "@ttr/robot-schema";
 import { generateUrdf as urdf } from "@ttr/urdf-generator";
 import { validateUrdf as vurdf } from "@ttr/urdf-validator";
 
 const CASES: [string, string, RegExp][] = [
-  ["Build me a real wearable Iron Man suit: a powered exoskeleton with repulsor thrusters", "iron_man_exosuit", /thigh_cuff|shank_cuff|strut/],
+  ["Build me a movie-accurate wearable Iron Man Mark suit with armour plates that open and close", "iron_man_mark_suit", /faceplate|chest_plate|thigh_cuff/],
+  ["Build a bare powered exoskeleton I can wear", "exosuit", /thigh_cuff|shank_cuff|strut/],
   ["Build WALL-E, a tracked trash-compactor robot", "wall_e", /eye|track/],
   ["Build EVA, a sleek hovering egg-shaped droid", "eva", /hover|visor/],
   ["Build Baymax, an inflatable healthcare companion", "baymax", /foot|thigh/],
@@ -23,14 +24,14 @@ for (const [prompt, name, marker] of CASES) {
   });
 }
 test("all four characters pass spec + URDF validation from their templates", () => {
-  for (const b of [ironManSuit, wallE, eva, baymax, () => wearableExosuit()]) {
+  for (const b of [ironManSuit, wallE, eva, baymax, () => wearableExosuit(), () => ironManMarkSuit()]) {
     const s = finalizeSpec(b());
     assert.ok(validateSpec(s).valid, `${s.robot_name} spec`);
     assert.ok(vurdf(urdf(s)).valid, `${s.robot_name} urdf`);
   }
 });
 test("shipped MuJoCo reports show every character passing its simulation battery", () => {
-  for (const ex of ["14_iron_man_exosuit", "15_wall_e", "16_eva", "17_baymax", "08_humanoid", "11_spider_scout"]) {
+  for (const ex of ["14_iron_man_mark_suit", "15_wall_e", "16_eva", "17_baymax", "08_humanoid", "11_spider_scout"]) {
     const p = `examples/${ex}/mujoco_report.json`;
     assert.ok(existsSync(p), `missing ${p}`);
     const rep = JSON.parse(readFileSync(p, "utf8"));
@@ -52,4 +53,15 @@ test("the wearable exosuit is anthropometric: joints at human heights, feet on t
     assert.ok(spec.links.some((l) => l.name === n), `missing ${n}`);
   assert.equal(spec.joints.filter((j) => j.type !== "fixed").length, 17);
   assert.ok(spec.sensors.some((s) => s.type === "force"), "insole force sensors");
+});
+
+test("the Mark suit is articulated: dozens of hinged armour plates over the 17-joint frame, all closed at zero", async () => {
+  const { finalizeSpec } = await import("@ttr/robot-generator");
+  const spec = finalizeSpec(ironManMarkSuit());
+  const hinges = spec.joints.filter((j) => j.name.endsWith("_hinge"));
+  assert.ok(hinges.length >= 40, `expected >= 40 armour hinges, got ${hinges.length}`);
+  for (const h of hinges) assert.ok(h.limit && h.limit.lower !== undefined && h.limit.upper !== undefined && h.limit.lower <= 0 && h.limit.upper >= 0, `${h.name} must close at 0`);
+  for (const n of ["faceplate", "left_chest_plate", "right_back_door", "left_gauntlet_inner", "right_thigh_inner", "left_thruster_cover", "left_finger_1"])
+    assert.ok(spec.links.some((l) => l.name === n), `missing ${n}`);
+  assert.equal(spec.joints.filter((j) => j.type !== "fixed" && !j.name.endsWith("_hinge")).length, 17, "frame joints intact");
 });

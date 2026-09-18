@@ -360,7 +360,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -428,7 +427,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -465,7 +463,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -502,7 +499,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -539,7 +535,6 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
@@ -696,20 +691,15 @@
   "end_effectors": [],
   "metadata": {
     "generator": "text-to-robot",
-    "created": "2026-09-17T14:00:32.665Z",
+    "created": "2026-09-18T04:41:53.868Z",
     "inferred_fields": [
       "joints.hover_thruster_joint.dynamics",
       "joints.hover_thruster_joint.limit",
       "joints.left_arm_roll.dynamics",
-      "joints.left_arm_roll.limit",
       "joints.left_shoulder_joint.dynamics",
-      "joints.left_shoulder_joint.limit",
       "joints.neck_joint.dynamics",
-      "joints.neck_joint.limit",
       "joints.right_arm_roll.dynamics",
-      "joints.right_arm_roll.limit",
       "joints.right_shoulder_joint.dynamics",
-      "joints.right_shoulder_joint.limit",
       "joints.visor_joint.dynamics",
       "joints.visor_joint.limit",
       "links.body.inertia",

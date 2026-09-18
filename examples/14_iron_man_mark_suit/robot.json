@@ -1,0 +1,9136 @@
+{
+  "robot_name": "iron_man_mark_suit",
+  "links": [
+    {
+      "name": "pelvis_frame",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.3,
+          0.38,
+          0.1
+        ]
+      },
+      "mass": 3,
+      "material": "carbon",
+      "role": "base",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0.98425
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0386,
+        "iyy": 0.025,
+        "izz": 0.0586,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.3,
+          0.38,
+          0.1
+        ]
+      }
+    },
+    {
+      "name": "spine_frame",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.05,
+          0.08,
+          0.5039999999999999
+        ]
+      },
+      "mass": 2.2,
+      "material": "carbon",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          -0.11,
+          0,
+          0.25199999999999995
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.04774293333333332,
+        "iyy": 0.04702793333333332,
+        "izz": 0.0016316666666666671,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.05,
+          0.08,
+          0.5039999999999999
+        ]
+      }
+    },
+    {
+      "name": "backpack",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.16,
+          0.32,
+          0.42
+        ]
+      },
+      "mass": 9,
+      "material": "carbon",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          -0.175,
+          0,
+          0.27719999999999995
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.2091,
+        "iyy": 0.1515,
+        "izz": 0.096,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.16,
+          0.32,
+          0.42
+        ]
+      }
+    },
+    {
+      "name": "chest_plate",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.03,
+          0.34,
+          0.3
+        ]
+      },
+      "mass": 1.6,
+      "material": "carbon",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0.14,
+          0,
+          0.30239999999999995
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.027413333333333335,
+        "iyy": 0.012119999999999999,
+        "izz": 0.015533333333333336,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.03,
+          0.34,
+          0.3
+        ]
+      }
+    },
+    {
+      "name": "shoulder_yoke",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.06,
+          0.53,
+          0.06
+        ]
+      },
+      "mass": 1.4,
+      "material": "steel",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          -0.06,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.03319166666666667,
+        "iyy": 0.0008399999999999999,
+        "izz": 0.03319166666666667,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.06,
+          0.53,
+          0.06
+        ]
+      }
+    },
+    {
+      "name": "helmet",
+      "geometry": {
+        "type": "sphere",
+        "radius": 0.125
+      },
+      "mass": 1.3,
+      "material": "steel",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.008125,
+        "iyy": 0.008125,
+        "izz": 0.008125,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "sphere",
+        "radius": 0.125
+      }
+    },
+    {
+      "name": "left_hip_module",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.065,
+        "length": 0.09
+      },
+      "mass": 2.4,
+      "material": "steel",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          0.045,
+          0
+        ],
+        "rpy": [
+          1.5707963267948966,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.004155,
+        "iyy": 0.004155,
+        "izz": 0.00507,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.065,
+        "length": 0.09
+      }
+    },
+    {
+      "name": "left_thigh_strut",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.055,
+          0.04,
+          0.42874999999999996
+        ]
+      },
+      "mass": 1.4,
+      "material": "carbon",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.21437499999999998
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.021633098958333326,
+        "iyy": 0.021799348958333326,
+        "izz": 0.0005395833333333332,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.055,
+          0.04,
+          0.42874999999999996
+        ]
+      }
+    },
+    {
+      "name": "left_thigh_cuff",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.105,
+        "length": 0.07
+      },
+      "mass": 0.45,
+      "material": "strap",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0014240625,
+        "iyy": 0.0014240625,
+        "izz": 0.0024806249999999998,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.105,
+        "length": 0.07
+      }
+    },
+    {
+      "name": "left_knee_module",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.06,
+        "length": 0.08
+      },
+      "mass": 2.2,
+      "material": "steel",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          0.04,
+          0
+        ],
+        "rpy": [
+          1.5707963267948966,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0031533333333333335,
+        "iyy": 0.0031533333333333335,
+        "izz": 0.00396,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.06,
+        "length": 0.08
+      }
+    },
+    {
+      "name": "left_shank_strut",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.05,
+          0.035,
+          0.4305
+        ]
+      },
+      "mass": 1.1,
+      "material": "carbon",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.21525
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.01710089791666667,
+        "iyy": 0.01721777291666667,
+        "izz": 0.0003414583333333334,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.05,
+          0.035,
+          0.4305
+        ]
+      }
+    },
+    {
+      "name": "left_shank_cuff",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.085,
+        "length": 0.07
+      },
+      "mass": 0.4,
+      "material": "strap",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0008858333333333335,
+        "iyy": 0.0008858333333333335,
+        "izz": 0.001445,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.085,
+        "length": 0.07
+      }
+    },
+    {
+      "name": "left_ankle_module",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.05,
+        "length": 0.07
+      },
+      "mass": 1.5,
+      "material": "steel",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          0.035,
+          0
+        ],
+        "rpy": [
+          1.5707963267948966,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0015500000000000002,
+        "iyy": 0.0015500000000000002,
+        "izz": 0.0018750000000000004,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.05,
+        "length": 0.07
+      }
+    },
+    {
+      "name": "left_boot",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.32,
+          0.12,
+          0.035
+        ]
+      },
+      "mass": 1.3,
+      "material": "carbon",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0.02,
+          -0.045,
+          -0.0875
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0016927083333333334,
+        "iyy": 0.011226041666666667,
+        "izz": 0.012653333333333334,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.32,
+          0.12,
+          0.035
+        ]
+      }
+    },
+    {
+      "name": "right_hip_module",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.065,
+        "length": 0.09
+      },
+      "mass": 2.4,
+      "material": "steel",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          -0.045,
+          0
+        ],
+        "rpy": [
+          1.5707963267948966,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.004155,
+        "iyy": 0.004155,
+        "izz": 0.00507,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.065,
+        "length": 0.09
+      }
+    },
+    {
+      "name": "right_thigh_strut",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.055,
+          0.04,
+          0.42874999999999996
+        ]
+      },
+      "mass": 1.4,
+      "material": "carbon",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.21437499999999998
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.021633098958333326,
+        "iyy": 0.021799348958333326,
+        "izz": 0.0005395833333333332,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.055,
+          0.04,
+          0.42874999999999996
+        ]
+      }
+    },
+    {
+      "name": "right_thigh_cuff",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.105,
+        "length": 0.07
+      },
+      "mass": 0.45,
+      "material": "strap",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0014240625,
+        "iyy": 0.0014240625,
+        "izz": 0.0024806249999999998,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.105,
+        "length": 0.07
+      }
+    },
+    {
+      "name": "right_knee_module",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.06,
+        "length": 0.08
+      },
+      "mass": 2.2,
+      "material": "steel",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          -0.04,
+          0
+        ],
+        "rpy": [
+          1.5707963267948966,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0031533333333333335,
+        "iyy": 0.0031533333333333335,
+        "izz": 0.00396,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.06,
+        "length": 0.08
+      }
+    },
+    {
+      "name": "right_shank_strut",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.05,
+          0.035,
+          0.4305
+        ]
+      },
+      "mass": 1.1,
+      "material": "carbon",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.21525
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.01710089791666667,
+        "iyy": 0.01721777291666667,
+        "izz": 0.0003414583333333334,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.05,
+          0.035,
+          0.4305
+        ]
+      }
+    },
+    {
+      "name": "right_shank_cuff",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.085,
+        "length": 0.07
+      },
+      "mass": 0.4,
+      "material": "strap",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0008858333333333335,
+        "iyy": 0.0008858333333333335,
+        "izz": 0.001445,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.085,
+        "length": 0.07
+      }
+    },
+    {
+      "name": "right_ankle_module",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.05,
+        "length": 0.07
+      },
+      "mass": 1.5,
+      "material": "steel",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          -0.035,
+          0
+        ],
+        "rpy": [
+          1.5707963267948966,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0015500000000000002,
+        "iyy": 0.0015500000000000002,
+        "izz": 0.0018750000000000004,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.05,
+        "length": 0.07
+      }
+    },
+    {
+      "name": "right_boot",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.32,
+          0.12,
+          0.035
+        ]
+      },
+      "mass": 1.3,
+      "material": "carbon",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0.02,
+          0.045,
+          -0.0875
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0016927083333333334,
+        "iyy": 0.011226041666666667,
+        "izz": 0.012653333333333334,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.32,
+          0.12,
+          0.035
+        ]
+      }
+    },
+    {
+      "name": "left_shoulder_module",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.055,
+        "length": 0.08
+      },
+      "mass": 1.6,
+      "material": "steel",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          0.04,
+          0
+        ],
+        "rpy": [
+          1.5707963267948966,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0020633333333333333,
+        "iyy": 0.0020633333333333333,
+        "izz": 0.0024200000000000003,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.055,
+        "length": 0.08
+      }
+    },
+    {
+      "name": "left_upper_arm_strut",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.04,
+          0.035,
+          0.3255
+        ]
+      },
+      "mass": 0.8,
+      "material": "carbon",
+      "role": "upper_arm",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.16275
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.007145016666666668,
+        "iyy": 0.007170016666666668,
+        "izz": 0.00018833333333333335,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.04,
+          0.035,
+          0.3255
+        ]
+      }
+    },
+    {
+      "name": "left_upper_arm_cuff",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.06,
+        "length": 0.06
+      },
+      "mass": 0.3,
+      "material": "strap",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.00035999999999999997,
+        "iyy": 0.00035999999999999997,
+        "izz": 0.0005399999999999999,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.06,
+        "length": 0.06
+      }
+    },
+    {
+      "name": "left_elbow_module",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.045,
+        "length": 0.07
+      },
+      "mass": 1.1,
+      "material": "steel",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          0.035,
+          0
+        ],
+        "rpy": [
+          1.5707963267948966,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.001006041666666667,
+        "iyy": 0.001006041666666667,
+        "izz": 0.00111375,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.045,
+        "length": 0.07
+      }
+    },
+    {
+      "name": "left_forearm_strut",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.035,
+          0.03,
+          0.2555
+        ]
+      },
+      "mass": 0.6,
+      "material": "carbon",
+      "role": "forearm",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.12775
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0033090124999999994,
+        "iyy": 0.0033252625,
+        "izz": 0.00010625,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.035,
+          0.03,
+          0.2555
+        ]
+      }
+    },
+    {
+      "name": "left_forearm_cuff",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.05,
+        "length": 0.06
+      },
+      "mass": 0.25,
+      "material": "strap",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.00023125000000000004,
+        "iyy": 0.00023125000000000004,
+        "izz": 0.00031250000000000006,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.05,
+        "length": 0.06
+      }
+    },
+    {
+      "name": "left_hand",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.1,
+          0.07,
+          0.03
+        ]
+      },
+      "mass": 0.35,
+      "material": "carbon",
+      "role": "gripper",
+      "origin": {
+        "xyz": [
+          0.02,
+          -0.045,
+          -0.04
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.00016916666666666667,
+        "iyy": 0.0003179166666666667,
+        "izz": 0.00043458333333333337,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.1,
+          0.07,
+          0.03
+        ]
+      }
+    },
+    {
+      "name": "right_shoulder_module",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.055,
+        "length": 0.08
+      },
+      "mass": 1.6,
+      "material": "steel",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          -0.04,
+          0
+        ],
+        "rpy": [
+          1.5707963267948966,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0020633333333333333,
+        "iyy": 0.0020633333333333333,
+        "izz": 0.0024200000000000003,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.055,
+        "length": 0.08
+      }
+    },
+    {
+      "name": "right_upper_arm_strut",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.04,
+          0.035,
+          0.3255
+        ]
+      },
+      "mass": 0.8,
+      "material": "carbon",
+      "role": "upper_arm",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.16275
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.007145016666666668,
+        "iyy": 0.007170016666666668,
+        "izz": 0.00018833333333333335,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.04,
+          0.035,
+          0.3255
+        ]
+      }
+    },
+    {
+      "name": "right_upper_arm_cuff",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.06,
+        "length": 0.06
+      },
+      "mass": 0.3,
+      "material": "strap",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.00035999999999999997,
+        "iyy": 0.00035999999999999997,
+        "izz": 0.0005399999999999999,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.06,
+        "length": 0.06
+      }
+    },
+    {
+      "name": "right_elbow_module",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.045,
+        "length": 0.07
+      },
+      "mass": 1.1,
+      "material": "steel",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          -0.035,
+          0
+        ],
+        "rpy": [
+          1.5707963267948966,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.001006041666666667,
+        "iyy": 0.001006041666666667,
+        "izz": 0.00111375,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.045,
+        "length": 0.07
+      }
+    },
+    {
+      "name": "right_forearm_strut",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.035,
+          0.03,
+          0.2555
+        ]
+      },
+      "mass": 0.6,
+      "material": "carbon",
+      "role": "forearm",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.12775
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0033090124999999994,
+        "iyy": 0.0033252625,
+        "izz": 0.00010625,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.035,
+          0.03,
+          0.2555
+        ]
+      }
+    },
+    {
+      "name": "right_forearm_cuff",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.05,
+        "length": 0.06
+      },
+      "mass": 0.25,
+      "material": "strap",
+      "role": "link",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.00023125000000000004,
+        "iyy": 0.00023125000000000004,
+        "izz": 0.00031250000000000006,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.05,
+        "length": 0.06
+      }
+    },
+    {
+      "name": "right_hand",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.1,
+          0.07,
+          0.03
+        ]
+      },
+      "mass": 0.35,
+      "material": "carbon",
+      "role": "gripper",
+      "origin": {
+        "xyz": [
+          0.02,
+          0.045,
+          -0.04
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.00016916666666666667,
+        "iyy": 0.0003179166666666667,
+        "izz": 0.00043458333333333337,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.1,
+          0.07,
+          0.03
+        ]
+      }
+    },
+    {
+      "name": "helmet_dome",
+      "geometry": {
+        "type": "capsule",
+        "radius": 0.115,
+        "length": 0.06
+      },
+      "mass": 1.2,
+      "material": "hot_rod_red",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0103917509765625,
+        "iyy": 0.0103917509765625,
+        "izz": 0.006794343750000001,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "capsule",
+        "radius": 0.115,
+        "length": 0.06
+      }
+    },
+    {
+      "name": "helmet_jaw",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.1,
+          0.2,
+          0.06
+        ]
+      },
+      "mass": 0.5,
+      "material": "hot_rod_red",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0.02,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.001816666666666667,
+        "iyy": 0.0005666666666666667,
+        "izz": 0.0020833333333333337,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.1,
+          0.2,
+          0.06
+        ]
+      }
+    },
+    {
+      "name": "faceplate",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.03,
+          0.17,
+          0.19
+        ]
+      },
+      "mass": 0.55,
+      "material": "gold_titanium",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0.02,
+          0,
+          -0.1
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.002979166666666667,
+        "iyy": 0.0016958333333333335,
+        "izz": 0.0013658333333333337,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.03,
+          0.17,
+          0.19
+        ]
+      }
+    },
+    {
+      "name": "left_eye",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.006,
+          0.035,
+          0.012
+        ]
+      },
+      "mass": 0.02,
+      "material": "eye_glow",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000002281666666666667,
+        "iyy": 3.0000000000000004e-7,
+        "izz": 0.000002101666666666667,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.006,
+          0.035,
+          0.012
+        ]
+      }
+    },
+    {
+      "name": "right_eye",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.006,
+          0.035,
+          0.012
+        ]
+      },
+      "mass": 0.02,
+      "material": "eye_glow",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000002281666666666667,
+        "iyy": 3.0000000000000004e-7,
+        "izz": 0.000002101666666666667,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.006,
+          0.035,
+          0.012
+        ]
+      }
+    },
+    {
+      "name": "helmet_crest",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.06,
+          0.03,
+          0.05
+        ]
+      },
+      "mass": 0.1,
+      "material": "gold_titanium",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000028333333333333335,
+        "iyy": 0.000050833333333333333,
+        "izz": 0.0000375,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.06,
+          0.03,
+          0.05
+        ]
+      }
+    },
+    {
+      "name": "sternum_bar",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.03,
+          0.06,
+          0.34
+        ]
+      },
+      "mass": 0.6,
+      "material": "gunmetal",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.005960000000000001,
+        "iyy": 0.005825,
+        "izz": 0.00022499999999999997,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.03,
+          0.06,
+          0.34
+        ]
+      }
+    },
+    {
+      "name": "arc_reactor_housing",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.045,
+        "length": 0.025
+      },
+      "mass": 0.3,
+      "material": "arc_glow",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0001675,
+        "iyy": 0.0001675,
+        "izz": 0.00030375,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.045,
+        "length": 0.025
+      }
+    },
+    {
+      "name": "left_chest_plate",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.03,
+          0.15,
+          0.3
+        ]
+      },
+      "mass": 1.1,
+      "material": "hot_rod_red",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0.01,
+          0.085,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0103125,
+        "iyy": 0.0083325,
+        "izz": 0.002145,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.03,
+          0.15,
+          0.3
+        ]
+      }
+    },
+    {
+      "name": "left_pectoral_trim",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.02,
+          0.05,
+          0.1
+        ]
+      },
+      "mass": 0.15,
+      "material": "gold_titanium",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.00015625000000000003,
+        "iyy": 0.00013000000000000002,
+        "izz": 0.00003625000000000001,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.02,
+          0.05,
+          0.1
+        ]
+      }
+    },
+    {
+      "name": "left_back_door",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.03,
+          0.16,
+          0.36
+        ]
+      },
+      "mass": 1,
+      "material": "hot_rod_red",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          -0.01,
+          0.09,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.012933333333333333,
+        "iyy": 0.010875,
+        "izz": 0.0022083333333333334,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.03,
+          0.16,
+          0.36
+        ]
+      }
+    },
+    {
+      "name": "left_air_brake",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.015,
+          0.1,
+          0.14
+        ]
+      },
+      "mass": 0.2,
+      "material": "gold_titanium",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0.07
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0004933333333333334,
+        "iyy": 0.0003304166666666667,
+        "izz": 0.0001704166666666667,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.015,
+          0.1,
+          0.14
+        ]
+      }
+    },
+    {
+      "name": "left_lat_plate",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.14,
+          0.02,
+          0.22
+        ]
+      },
+      "mass": 0.5,
+      "material": "hot_rod_red",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.002033333333333333,
+        "iyy": 0.0028333333333333335,
+        "izz": 0.0008333333333333335,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.14,
+          0.02,
+          0.22
+        ]
+      }
+    },
+    {
+      "name": "right_chest_plate",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.03,
+          0.15,
+          0.3
+        ]
+      },
+      "mass": 1.1,
+      "material": "hot_rod_red",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0.01,
+          -0.085,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0103125,
+        "iyy": 0.0083325,
+        "izz": 0.002145,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.03,
+          0.15,
+          0.3
+        ]
+      }
+    },
+    {
+      "name": "right_pectoral_trim",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.02,
+          0.05,
+          0.1
+        ]
+      },
+      "mass": 0.15,
+      "material": "gold_titanium",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.00015625000000000003,
+        "iyy": 0.00013000000000000002,
+        "izz": 0.00003625000000000001,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.02,
+          0.05,
+          0.1
+        ]
+      }
+    },
+    {
+      "name": "right_back_door",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.03,
+          0.16,
+          0.36
+        ]
+      },
+      "mass": 1,
+      "material": "hot_rod_red",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          -0.01,
+          -0.09,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.012933333333333333,
+        "iyy": 0.010875,
+        "izz": 0.0022083333333333334,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.03,
+          0.16,
+          0.36
+        ]
+      }
+    },
+    {
+      "name": "right_air_brake",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.015,
+          0.1,
+          0.14
+        ]
+      },
+      "mass": 0.2,
+      "material": "gold_titanium",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0.07
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0004933333333333334,
+        "iyy": 0.0003304166666666667,
+        "izz": 0.0001704166666666667,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.015,
+          0.1,
+          0.14
+        ]
+      }
+    },
+    {
+      "name": "right_lat_plate",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.14,
+          0.02,
+          0.22
+        ]
+      },
+      "mass": 0.5,
+      "material": "hot_rod_red",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.002033333333333333,
+        "iyy": 0.0028333333333333335,
+        "izz": 0.0008333333333333335,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.14,
+          0.02,
+          0.22
+        ]
+      }
+    },
+    {
+      "name": "ab_plate_1",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.03,
+          0.26,
+          0.07
+        ]
+      },
+      "mass": 0.35,
+      "material": "hot_rod_red",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0.005,
+          0,
+          -0.035
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0021145833333333333,
+        "iyy": 0.00016916666666666667,
+        "izz": 0.0019979166666666665,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.03,
+          0.26,
+          0.07
+        ]
+      }
+    },
+    {
+      "name": "ab_plate_2",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.03,
+          0.26,
+          0.07
+        ]
+      },
+      "mass": 0.35,
+      "material": "gold_titanium",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0.005,
+          0,
+          -0.035
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0021145833333333333,
+        "iyy": 0.00016916666666666667,
+        "izz": 0.0019979166666666665,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.03,
+          0.26,
+          0.07
+        ]
+      }
+    },
+    {
+      "name": "ab_plate_3",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.03,
+          0.26,
+          0.07
+        ]
+      },
+      "mass": 0.35,
+      "material": "hot_rod_red",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0.005,
+          0,
+          -0.035
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0021145833333333333,
+        "iyy": 0.00016916666666666667,
+        "izz": 0.0019979166666666665,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.03,
+          0.26,
+          0.07
+        ]
+      }
+    },
+    {
+      "name": "belt_plate",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.34,
+          0.42,
+          0.09
+        ]
+      },
+      "mass": 0.9,
+      "material": "gold_titanium",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.013837499999999997,
+        "iyy": 0.009277500000000001,
+        "izz": 0.0219,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.34,
+          0.42,
+          0.09
+        ]
+      }
+    },
+    {
+      "name": "codpiece",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.06,
+          0.14,
+          0.16
+        ]
+      },
+      "mass": 0.4,
+      "material": "hot_rod_red",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.06
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0015066666666666668,
+        "iyy": 0.0009733333333333333,
+        "izz": 0.0007733333333333333,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.06,
+          0.14,
+          0.16
+        ]
+      }
+    },
+    {
+      "name": "left_pauldron",
+      "geometry": {
+        "type": "capsule",
+        "radius": 0.09,
+        "length": 0.08
+      },
+      "mass": 0.7,
+      "material": "hot_rod_red",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.004361539583333334,
+        "iyy": 0.004361539583333334,
+        "izz": 0.0024948,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "capsule",
+        "radius": 0.09,
+        "length": 0.08
+      }
+    },
+    {
+      "name": "left_pauldron_trim",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.1,
+          0.02,
+          0.06
+        ]
+      },
+      "mass": 0.1,
+      "material": "gold_titanium",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000033333333333333335,
+        "iyy": 0.00011333333333333334,
+        "izz": 0.00008666666666666668,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.1,
+          0.02,
+          0.06
+        ]
+      }
+    },
+    {
+      "name": "left_bicep_outer",
+      "geometry": {
+        "type": "capsule",
+        "radius": 0.075,
+        "length": 0.14647500000000002
+      },
+      "mass": 0.55,
+      "material": "gold_titanium",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0038387875541407287,
+        "iyy": 0.0038387875541407287,
+        "izz": 0.001421355170402678,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "capsule",
+        "radius": 0.075,
+        "length": 0.14647500000000002
+      }
+    },
+    {
+      "name": "left_bicep_inner",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.1,
+          0.02,
+          0.16275
+        ]
+      },
+      "mass": 0.35,
+      "material": "gold_titanium",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          -0.045,
+          -0.01,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0007842205729166667,
+        "iyy": 0.0010642205729166666,
+        "izz": 0.00030333333333333335,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.1,
+          0.02,
+          0.16275
+        ]
+      }
+    },
+    {
+      "name": "left_elbow_cap",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.08,
+          0.06,
+          0.08
+        ]
+      },
+      "mass": 0.25,
+      "material": "hot_rod_red",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.00020833333333333332,
+        "iyy": 0.0002666666666666667,
+        "izz": 0.00020833333333333332,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.08,
+          0.06,
+          0.08
+        ]
+      }
+    },
+    {
+      "name": "left_gauntlet_outer",
+      "geometry": {
+        "type": "capsule",
+        "radius": 0.062,
+        "length": 0.12775
+      },
+      "mass": 0.45,
+      "material": "gold_titanium",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0022479397457301985,
+        "iyy": 0.0022479397457301985,
+        "izz": 0.0007969411247524753,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "capsule",
+        "radius": 0.062,
+        "length": 0.12775
+      }
+    },
+    {
+      "name": "left_gauntlet_inner",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.09,
+          0.02,
+          0.140525
+        ]
+      },
+      "mass": 0.3,
+      "material": "gold_titanium",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          -0.04,
+          -0.01,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0005036818906250001,
+        "iyy": 0.000696181890625,
+        "izz": 0.00021249999999999996,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.09,
+          0.02,
+          0.140525
+        ]
+      }
+    },
+    {
+      "name": "left_gauntlet_hatch",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.05,
+          0.03,
+          0.01
+        ]
+      },
+      "mass": 0.06,
+      "material": "hot_rod_red",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0.025,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000005,
+        "iyy": 0.000013000000000000003,
+        "izz": 0.000017000000000000003,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.05,
+          0.03,
+          0.01
+        ]
+      }
+    },
+    {
+      "name": "left_hand_plate",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.11,
+          0.08,
+          0.02
+        ]
+      },
+      "mass": 0.25,
+      "material": "hot_rod_red",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.00014166666666666668,
+        "iyy": 0.0002604166666666666,
+        "izz": 0.0003854166666666666,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.11,
+          0.08,
+          0.02
+        ]
+      }
+    },
+    {
+      "name": "left_palm_repulsor",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.028,
+        "length": 0.012
+      },
+      "mass": 0.08,
+      "material": "arc_glow",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000016640000000000003,
+        "iyy": 0.000016640000000000003,
+        "izz": 0.000031360000000000005,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.028,
+        "length": 0.012
+      }
+    },
+    {
+      "name": "left_finger_1",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.07,
+          0.014,
+          0.014
+        ]
+      },
+      "mass": 0.03,
+      "material": "gold_titanium",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0.035,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 9.800000000000001e-7,
+        "iyy": 0.000012740000000000002,
+        "izz": 0.000012740000000000002,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.07,
+          0.014,
+          0.014
+        ]
+      }
+    },
+    {
+      "name": "left_finger_2",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.07,
+          0.014,
+          0.014
+        ]
+      },
+      "mass": 0.03,
+      "material": "gold_titanium",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0.035,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 9.800000000000001e-7,
+        "iyy": 0.000012740000000000002,
+        "izz": 0.000012740000000000002,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.07,
+          0.014,
+          0.014
+        ]
+      }
+    },
+    {
+      "name": "left_finger_3",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.07,
+          0.014,
+          0.014
+        ]
+      },
+      "mass": 0.03,
+      "material": "gold_titanium",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0.035,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 9.800000000000001e-7,
+        "iyy": 0.000012740000000000002,
+        "izz": 0.000012740000000000002,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.07,
+          0.014,
+          0.014
+        ]
+      }
+    },
+    {
+      "name": "left_finger_4",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.07,
+          0.014,
+          0.014
+        ]
+      },
+      "mass": 0.03,
+      "material": "gold_titanium",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0.035,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 9.800000000000001e-7,
+        "iyy": 0.000012740000000000002,
+        "izz": 0.000012740000000000002,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.07,
+          0.014,
+          0.014
+        ]
+      }
+    },
+    {
+      "name": "left_thumb",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.05,
+          0.014,
+          0.014
+        ]
+      },
+      "mass": 0.03,
+      "material": "gold_titanium",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0.025,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 9.800000000000001e-7,
+        "iyy": 0.0000067400000000000015,
+        "izz": 0.0000067400000000000015,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.05,
+          0.014,
+          0.014
+        ]
+      }
+    },
+    {
+      "name": "right_pauldron",
+      "geometry": {
+        "type": "capsule",
+        "radius": 0.09,
+        "length": 0.08
+      },
+      "mass": 0.7,
+      "material": "hot_rod_red",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.004361539583333334,
+        "iyy": 0.004361539583333334,
+        "izz": 0.0024948,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "capsule",
+        "radius": 0.09,
+        "length": 0.08
+      }
+    },
+    {
+      "name": "right_pauldron_trim",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.1,
+          0.02,
+          0.06
+        ]
+      },
+      "mass": 0.1,
+      "material": "gold_titanium",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000033333333333333335,
+        "iyy": 0.00011333333333333334,
+        "izz": 0.00008666666666666668,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.1,
+          0.02,
+          0.06
+        ]
+      }
+    },
+    {
+      "name": "right_bicep_outer",
+      "geometry": {
+        "type": "capsule",
+        "radius": 0.075,
+        "length": 0.14647500000000002
+      },
+      "mass": 0.55,
+      "material": "gold_titanium",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0038387875541407287,
+        "iyy": 0.0038387875541407287,
+        "izz": 0.001421355170402678,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "capsule",
+        "radius": 0.075,
+        "length": 0.14647500000000002
+      }
+    },
+    {
+      "name": "right_bicep_inner",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.1,
+          0.02,
+          0.16275
+        ]
+      },
+      "mass": 0.35,
+      "material": "gold_titanium",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          -0.045,
+          0.01,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0007842205729166667,
+        "iyy": 0.0010642205729166666,
+        "izz": 0.00030333333333333335,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.1,
+          0.02,
+          0.16275
+        ]
+      }
+    },
+    {
+      "name": "right_elbow_cap",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.08,
+          0.06,
+          0.08
+        ]
+      },
+      "mass": 0.25,
+      "material": "hot_rod_red",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.00020833333333333332,
+        "iyy": 0.0002666666666666667,
+        "izz": 0.00020833333333333332,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.08,
+          0.06,
+          0.08
+        ]
+      }
+    },
+    {
+      "name": "right_gauntlet_outer",
+      "geometry": {
+        "type": "capsule",
+        "radius": 0.062,
+        "length": 0.12775
+      },
+      "mass": 0.45,
+      "material": "gold_titanium",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0022479397457301985,
+        "iyy": 0.0022479397457301985,
+        "izz": 0.0007969411247524753,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "capsule",
+        "radius": 0.062,
+        "length": 0.12775
+      }
+    },
+    {
+      "name": "right_gauntlet_inner",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.09,
+          0.02,
+          0.140525
+        ]
+      },
+      "mass": 0.3,
+      "material": "gold_titanium",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          -0.04,
+          0.01,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0005036818906250001,
+        "iyy": 0.000696181890625,
+        "izz": 0.00021249999999999996,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.09,
+          0.02,
+          0.140525
+        ]
+      }
+    },
+    {
+      "name": "right_gauntlet_hatch",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.05,
+          0.03,
+          0.01
+        ]
+      },
+      "mass": 0.06,
+      "material": "hot_rod_red",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0.025,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000005,
+        "iyy": 0.000013000000000000003,
+        "izz": 0.000017000000000000003,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.05,
+          0.03,
+          0.01
+        ]
+      }
+    },
+    {
+      "name": "right_hand_plate",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.11,
+          0.08,
+          0.02
+        ]
+      },
+      "mass": 0.25,
+      "material": "hot_rod_red",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.00014166666666666668,
+        "iyy": 0.0002604166666666666,
+        "izz": 0.0003854166666666666,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.11,
+          0.08,
+          0.02
+        ]
+      }
+    },
+    {
+      "name": "right_palm_repulsor",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.028,
+        "length": 0.012
+      },
+      "mass": 0.08,
+      "material": "arc_glow",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000016640000000000003,
+        "iyy": 0.000016640000000000003,
+        "izz": 0.000031360000000000005,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.028,
+        "length": 0.012
+      }
+    },
+    {
+      "name": "right_finger_1",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.07,
+          0.014,
+          0.014
+        ]
+      },
+      "mass": 0.03,
+      "material": "gold_titanium",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0.035,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 9.800000000000001e-7,
+        "iyy": 0.000012740000000000002,
+        "izz": 0.000012740000000000002,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.07,
+          0.014,
+          0.014
+        ]
+      }
+    },
+    {
+      "name": "right_finger_2",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.07,
+          0.014,
+          0.014
+        ]
+      },
+      "mass": 0.03,
+      "material": "gold_titanium",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0.035,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 9.800000000000001e-7,
+        "iyy": 0.000012740000000000002,
+        "izz": 0.000012740000000000002,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.07,
+          0.014,
+          0.014
+        ]
+      }
+    },
+    {
+      "name": "right_finger_3",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.07,
+          0.014,
+          0.014
+        ]
+      },
+      "mass": 0.03,
+      "material": "gold_titanium",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0.035,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 9.800000000000001e-7,
+        "iyy": 0.000012740000000000002,
+        "izz": 0.000012740000000000002,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.07,
+          0.014,
+          0.014
+        ]
+      }
+    },
+    {
+      "name": "right_finger_4",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.07,
+          0.014,
+          0.014
+        ]
+      },
+      "mass": 0.03,
+      "material": "gold_titanium",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0.035,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 9.800000000000001e-7,
+        "iyy": 0.000012740000000000002,
+        "izz": 0.000012740000000000002,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.07,
+          0.014,
+          0.014
+        ]
+      }
+    },
+    {
+      "name": "right_thumb",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.05,
+          0.014,
+          0.014
+        ]
+      },
+      "mass": 0.03,
+      "material": "gold_titanium",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0.025,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 9.800000000000001e-7,
+        "iyy": 0.0000067400000000000015,
+        "izz": 0.0000067400000000000015,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.05,
+          0.014,
+          0.014
+        ]
+      }
+    },
+    {
+      "name": "left_hip_flap",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.14,
+          0.03,
+          0.16
+        ]
+      },
+      "mass": 0.4,
+      "material": "hot_rod_red",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.08
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0008833333333333334,
+        "iyy": 0.0015066666666666668,
+        "izz": 0.0006833333333333334,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.14,
+          0.03,
+          0.16
+        ]
+      }
+    },
+    {
+      "name": "left_thigh_outer",
+      "geometry": {
+        "type": "capsule",
+        "radius": 0.1,
+        "length": 0.19293749999999998
+      },
+      "mass": 0.9,
+      "material": "hot_rod_red",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.011053639351976795,
+        "iyy": 0.011053639351976795,
+        "izz": 0.004132207394163847,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "capsule",
+        "radius": 0.1,
+        "length": 0.19293749999999998
+      }
+    },
+    {
+      "name": "left_thigh_inner",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.14,
+          0.025,
+          0.21437499999999998
+        ]
+      },
+      "mass": 0.5,
+      "material": "hot_rod_red",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          -0.06,
+          -0.012,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0019409016927083328,
+        "iyy": 0.002731526692708333,
+        "izz": 0.0008427083333333334,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.14,
+          0.025,
+          0.21437499999999998
+        ]
+      }
+    },
+    {
+      "name": "left_knee_cap",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.09,
+          0.09,
+          0.1
+        ]
+      },
+      "mass": 0.35,
+      "material": "gold_titanium",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0005279166666666667,
+        "iyy": 0.0005279166666666667,
+        "izz": 0.00047249999999999994,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.09,
+          0.09,
+          0.1
+        ]
+      }
+    },
+    {
+      "name": "left_shin_outer",
+      "geometry": {
+        "type": "capsule",
+        "radius": 0.085,
+        "length": 0.18081
+      },
+      "mass": 0.7,
+      "material": "hot_rod_red",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.006761744211894625,
+        "iyy": 0.006761744211894625,
+        "izz": 0.0023338846849041855,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "capsule",
+        "radius": 0.085,
+        "length": 0.18081
+      }
+    },
+    {
+      "name": "left_calf_shell",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.12,
+          0.025,
+          0.21525
+        ]
+      },
+      "mass": 0.45,
+      "material": "hot_rod_red",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0.05,
+          -0.012,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.00176090859375,
+        "iyy": 0.00227747109375,
+        "izz": 0.0005634375,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.12,
+          0.025,
+          0.21525
+        ]
+      }
+    },
+    {
+      "name": "left_boot_toe_cap",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.1,
+          0.12,
+          0.06
+        ]
+      },
+      "mass": 0.35,
+      "material": "hot_rod_red",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0005249999999999999,
+        "iyy": 0.00039666666666666664,
+        "izz": 0.0007116666666666667,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.1,
+          0.12,
+          0.06
+        ]
+      }
+    },
+    {
+      "name": "left_boot_shin_guard",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.03,
+          0.11,
+          0.12
+        ]
+      },
+      "mass": 0.3,
+      "material": "gold_titanium",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0.06
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0006624999999999999,
+        "iyy": 0.0003825,
+        "izz": 0.000325,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.03,
+          0.11,
+          0.12
+        ]
+      }
+    },
+    {
+      "name": "left_heel_thruster",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.032,
+        "length": 0.03
+      },
+      "mass": 0.15,
+      "material": "arc_glow",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000049649999999999994,
+        "iyy": 0.000049649999999999994,
+        "izz": 0.0000768,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.032,
+        "length": 0.03
+      }
+    },
+    {
+      "name": "left_thruster_cover",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.07,
+          0.08,
+          0.012
+        ]
+      },
+      "mass": 0.08,
+      "material": "hot_rod_red",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          -0.035,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000043626666666666674,
+        "iyy": 0.000033626666666666674,
+        "izz": 0.00007533333333333334,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.07,
+          0.08,
+          0.012
+        ]
+      }
+    },
+    {
+      "name": "left_ankle_flap",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.06,
+          0.02,
+          0.08
+        ]
+      },
+      "mass": 0.1,
+      "material": "hot_rod_red",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0.04
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.00005666666666666667,
+        "iyy": 0.00008333333333333333,
+        "izz": 0.000033333333333333335,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.06,
+          0.02,
+          0.08
+        ]
+      }
+    },
+    {
+      "name": "right_hip_flap",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.14,
+          0.03,
+          0.16
+        ]
+      },
+      "mass": 0.4,
+      "material": "hot_rod_red",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.08
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0008833333333333334,
+        "iyy": 0.0015066666666666668,
+        "izz": 0.0006833333333333334,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.14,
+          0.03,
+          0.16
+        ]
+      }
+    },
+    {
+      "name": "right_thigh_outer",
+      "geometry": {
+        "type": "capsule",
+        "radius": 0.1,
+        "length": 0.19293749999999998
+      },
+      "mass": 0.9,
+      "material": "hot_rod_red",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.011053639351976795,
+        "iyy": 0.011053639351976795,
+        "izz": 0.004132207394163847,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "capsule",
+        "radius": 0.1,
+        "length": 0.19293749999999998
+      }
+    },
+    {
+      "name": "right_thigh_inner",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.14,
+          0.025,
+          0.21437499999999998
+        ]
+      },
+      "mass": 0.5,
+      "material": "hot_rod_red",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          -0.06,
+          0.012,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0019409016927083328,
+        "iyy": 0.002731526692708333,
+        "izz": 0.0008427083333333334,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.14,
+          0.025,
+          0.21437499999999998
+        ]
+      }
+    },
+    {
+      "name": "right_knee_cap",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.09,
+          0.09,
+          0.1
+        ]
+      },
+      "mass": 0.35,
+      "material": "gold_titanium",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0005279166666666667,
+        "iyy": 0.0005279166666666667,
+        "izz": 0.00047249999999999994,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.09,
+          0.09,
+          0.1
+        ]
+      }
+    },
+    {
+      "name": "right_shin_outer",
+      "geometry": {
+        "type": "capsule",
+        "radius": 0.085,
+        "length": 0.18081
+      },
+      "mass": 0.7,
+      "material": "hot_rod_red",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.006761744211894625,
+        "iyy": 0.006761744211894625,
+        "izz": 0.0023338846849041855,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "capsule",
+        "radius": 0.085,
+        "length": 0.18081
+      }
+    },
+    {
+      "name": "right_calf_shell",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.12,
+          0.025,
+          0.21525
+        ]
+      },
+      "mass": 0.45,
+      "material": "hot_rod_red",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0.05,
+          0.012,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.00176090859375,
+        "iyy": 0.00227747109375,
+        "izz": 0.0005634375,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.12,
+          0.025,
+          0.21525
+        ]
+      }
+    },
+    {
+      "name": "right_boot_toe_cap",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.1,
+          0.12,
+          0.06
+        ]
+      },
+      "mass": 0.35,
+      "material": "hot_rod_red",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0005249999999999999,
+        "iyy": 0.00039666666666666664,
+        "izz": 0.0007116666666666667,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.1,
+          0.12,
+          0.06
+        ]
+      }
+    },
+    {
+      "name": "right_boot_shin_guard",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.03,
+          0.11,
+          0.12
+        ]
+      },
+      "mass": 0.3,
+      "material": "gold_titanium",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0.06
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0006624999999999999,
+        "iyy": 0.0003825,
+        "izz": 0.000325,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.03,
+          0.11,
+          0.12
+        ]
+      }
+    },
+    {
+      "name": "right_heel_thruster",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.032,
+        "length": 0.03
+      },
+      "mass": 0.15,
+      "material": "arc_glow",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000049649999999999994,
+        "iyy": 0.000049649999999999994,
+        "izz": 0.0000768,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.032,
+        "length": 0.03
+      }
+    },
+    {
+      "name": "right_thruster_cover",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.07,
+          0.08,
+          0.012
+        ]
+      },
+      "mass": 0.08,
+      "material": "hot_rod_red",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          -0.035,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000043626666666666674,
+        "iyy": 0.000033626666666666674,
+        "izz": 0.00007533333333333334,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.07,
+          0.08,
+          0.012
+        ]
+      }
+    },
+    {
+      "name": "right_ankle_flap",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.06,
+          0.02,
+          0.08
+        ]
+      },
+      "mass": 0.1,
+      "material": "hot_rod_red",
+      "role": "armor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0.04
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.00005666666666666667,
+        "iyy": 0.00008333333333333333,
+        "izz": 0.000033333333333333335,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.06,
+          0.02,
+          0.08
+        ]
+      }
+    }
+  ],
+  "joints": [
+    {
+      "name": "trunk_flex",
+      "type": "revolute",
+      "parent": "pelvis_frame",
+      "child": "spine_frame",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0.9642499999999999
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.35,
+        "upper": 0.5,
+        "effort": 120,
+        "velocity": 2
+      }
+    },
+    {
+      "name": "backpack_mount",
+      "type": "fixed",
+      "parent": "spine_frame",
+      "child": "backpack",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "chest_plate_mount",
+      "type": "fixed",
+      "parent": "spine_frame",
+      "child": "chest_plate",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "shoulder_yoke_mount",
+      "type": "fixed",
+      "parent": "spine_frame",
+      "child": "shoulder_yoke",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0.5039999999999999
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "neck_mount",
+      "type": "fixed",
+      "parent": "spine_frame",
+      "child": "helmet",
+      "origin": {
+        "xyz": [
+          0.02,
+          0,
+          0.7207500000000001
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "left_hip_abduction",
+      "type": "revolute",
+      "parent": "pelvis_frame",
+      "child": "left_hip_module",
+      "origin": {
+        "xyz": [
+          0,
+          0.13,
+          0.9642499999999999
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.3,
+        "upper": 0.5,
+        "effort": 120,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "left_hip_flexion",
+      "type": "revolute",
+      "parent": "left_hip_module",
+      "child": "left_thigh_strut",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.5,
+        "upper": 2,
+        "effort": 150,
+        "velocity": 4
+      }
+    },
+    {
+      "name": "left_thigh_cuff_mount",
+      "type": "fixed",
+      "parent": "left_thigh_strut",
+      "child": "left_thigh_cuff",
+      "origin": {
+        "xyz": [
+          0,
+          -0.045,
+          -0.2358125
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "left_knee_module_mount",
+      "type": "fixed",
+      "parent": "left_thigh_strut",
+      "child": "left_knee_module",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.42874999999999996
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "left_knee_flexion",
+      "type": "revolute",
+      "parent": "left_knee_module",
+      "child": "left_shank_strut",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -2.2,
+        "upper": 0.05,
+        "effort": 150,
+        "velocity": 5
+      }
+    },
+    {
+      "name": "left_shank_cuff_mount",
+      "type": "fixed",
+      "parent": "left_shank_strut",
+      "child": "left_shank_cuff",
+      "origin": {
+        "xyz": [
+          0,
+          -0.045,
+          -0.21525
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "left_ankle_module_mount",
+      "type": "fixed",
+      "parent": "left_shank_strut",
+      "child": "left_ankle_module",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.4305
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "left_ankle_flexion",
+      "type": "revolute",
+      "parent": "left_ankle_module",
+      "child": "left_boot",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.6,
+        "upper": 0.6,
+        "effort": 100,
+        "velocity": 4
+      }
+    },
+    {
+      "name": "right_hip_abduction",
+      "type": "revolute",
+      "parent": "pelvis_frame",
+      "child": "right_hip_module",
+      "origin": {
+        "xyz": [
+          0,
+          -0.13,
+          0.9642499999999999
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.3,
+        "upper": 0.5,
+        "effort": 120,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "right_hip_flexion",
+      "type": "revolute",
+      "parent": "right_hip_module",
+      "child": "right_thigh_strut",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.5,
+        "upper": 2,
+        "effort": 150,
+        "velocity": 4
+      }
+    },
+    {
+      "name": "right_thigh_cuff_mount",
+      "type": "fixed",
+      "parent": "right_thigh_strut",
+      "child": "right_thigh_cuff",
+      "origin": {
+        "xyz": [
+          0,
+          0.045,
+          -0.2358125
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "right_knee_module_mount",
+      "type": "fixed",
+      "parent": "right_thigh_strut",
+      "child": "right_knee_module",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.42874999999999996
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "right_knee_flexion",
+      "type": "revolute",
+      "parent": "right_knee_module",
+      "child": "right_shank_strut",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -2.2,
+        "upper": 0.05,
+        "effort": 150,
+        "velocity": 5
+      }
+    },
+    {
+      "name": "right_shank_cuff_mount",
+      "type": "fixed",
+      "parent": "right_shank_strut",
+      "child": "right_shank_cuff",
+      "origin": {
+        "xyz": [
+          0,
+          0.045,
+          -0.21525
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "right_ankle_module_mount",
+      "type": "fixed",
+      "parent": "right_shank_strut",
+      "child": "right_ankle_module",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.4305
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "right_ankle_flexion",
+      "type": "revolute",
+      "parent": "right_ankle_module",
+      "child": "right_boot",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.6,
+        "upper": 0.6,
+        "effort": 100,
+        "velocity": 4
+      }
+    },
+    {
+      "name": "left_shoulder_abduction",
+      "type": "revolute",
+      "parent": "shoulder_yoke",
+      "child": "left_shoulder_module",
+      "origin": {
+        "xyz": [
+          0,
+          0.235,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.3,
+        "upper": 2.6,
+        "effort": 60,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "left_shoulder_flexion",
+      "type": "revolute",
+      "parent": "left_shoulder_module",
+      "child": "left_upper_arm_strut",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -1,
+        "upper": 3,
+        "effort": 60,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "left_upper_arm_cuff_mount",
+      "type": "fixed",
+      "parent": "left_upper_arm_strut",
+      "child": "left_upper_arm_cuff",
+      "origin": {
+        "xyz": [
+          0,
+          -0.05,
+          -0.17902500000000002
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "left_elbow_module_mount",
+      "type": "fixed",
+      "parent": "left_upper_arm_strut",
+      "child": "left_elbow_module",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.3255
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "left_elbow_flexion",
+      "type": "revolute",
+      "parent": "left_elbow_module",
+      "child": "left_forearm_strut",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -2.4,
+        "upper": 0.05,
+        "effort": 40,
+        "velocity": 4
+      }
+    },
+    {
+      "name": "left_forearm_cuff_mount",
+      "type": "fixed",
+      "parent": "left_forearm_strut",
+      "child": "left_forearm_cuff",
+      "origin": {
+        "xyz": [
+          0,
+          -0.045,
+          -0.140525
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "left_wrist_flexion",
+      "type": "revolute",
+      "parent": "left_forearm_strut",
+      "child": "left_hand",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.2555
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.8,
+        "upper": 0.8,
+        "effort": 15,
+        "velocity": 4
+      }
+    },
+    {
+      "name": "right_shoulder_abduction",
+      "type": "revolute",
+      "parent": "shoulder_yoke",
+      "child": "right_shoulder_module",
+      "origin": {
+        "xyz": [
+          0,
+          -0.235,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.3,
+        "upper": 2.6,
+        "effort": 60,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "right_shoulder_flexion",
+      "type": "revolute",
+      "parent": "right_shoulder_module",
+      "child": "right_upper_arm_strut",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -1,
+        "upper": 3,
+        "effort": 60,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "right_upper_arm_cuff_mount",
+      "type": "fixed",
+      "parent": "right_upper_arm_strut",
+      "child": "right_upper_arm_cuff",
+      "origin": {
+        "xyz": [
+          0,
+          0.05,
+          -0.17902500000000002
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "right_elbow_module_mount",
+      "type": "fixed",
+      "parent": "right_upper_arm_strut",
+      "child": "right_elbow_module",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.3255
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "right_elbow_flexion",
+      "type": "revolute",
+      "parent": "right_elbow_module",
+      "child": "right_forearm_strut",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -2.4,
+        "upper": 0.05,
+        "effort": 40,
+        "velocity": 4
+      }
+    },
+    {
+      "name": "right_forearm_cuff_mount",
+      "type": "fixed",
+      "parent": "right_forearm_strut",
+      "child": "right_forearm_cuff",
+      "origin": {
+        "xyz": [
+          0,
+          0.045,
+          -0.140525
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "right_wrist_flexion",
+      "type": "revolute",
+      "parent": "right_forearm_strut",
+      "child": "right_hand",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.2555
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.8,
+        "upper": 0.8,
+        "effort": 15,
+        "velocity": 4
+      }
+    },
+    {
+      "name": "helmet_dome_mount",
+      "type": "fixed",
+      "parent": "spine_frame",
+      "child": "helmet_dome",
+      "origin": {
+        "xyz": [
+          0.02,
+          0,
+          0.7407500000000001
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "helmet_jaw_mount",
+      "type": "fixed",
+      "parent": "helmet_dome",
+      "child": "helmet_jaw",
+      "origin": {
+        "xyz": [
+          0.05,
+          0,
+          -0.1
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "faceplate_hinge",
+      "type": "revolute",
+      "parent": "helmet_dome",
+      "child": "faceplate",
+      "origin": {
+        "xyz": [
+          0.085,
+          0,
+          0.09
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -1.4,
+        "upper": 0,
+        "effort": 3,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "left_eye_mount",
+      "type": "fixed",
+      "parent": "faceplate",
+      "child": "left_eye",
+      "origin": {
+        "xyz": [
+          0.04,
+          0.04,
+          -0.06
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "right_eye_mount",
+      "type": "fixed",
+      "parent": "faceplate",
+      "child": "right_eye",
+      "origin": {
+        "xyz": [
+          0.04,
+          -0.04,
+          -0.06
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "helmet_crest_mount",
+      "type": "fixed",
+      "parent": "helmet_dome",
+      "child": "helmet_crest",
+      "origin": {
+        "xyz": [
+          -0.06,
+          0,
+          0.09
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "sternum_bar_mount",
+      "type": "fixed",
+      "parent": "spine_frame",
+      "child": "sternum_bar",
+      "origin": {
+        "xyz": [
+          0.155,
+          0,
+          0.3124799999999999
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "arc_reactor_housing_mount",
+      "type": "fixed",
+      "parent": "sternum_bar",
+      "child": "arc_reactor_housing",
+      "origin": {
+        "xyz": [
+          0.02,
+          0,
+          0.02
+        ],
+        "rpy": [
+          0,
+          1.5707963267948966,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "left_chest_plate_hinge",
+      "type": "revolute",
+      "parent": "sternum_bar",
+      "child": "left_chest_plate",
+      "origin": {
+        "xyz": [
+          0.005,
+          0.03,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": 0,
+        "upper": 1.1,
+        "effort": 6,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "left_pectoral_trim_mount",
+      "type": "fixed",
+      "parent": "left_chest_plate",
+      "child": "left_pectoral_trim",
+      "origin": {
+        "xyz": [
+          0.03,
+          0.14,
+          0.08
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "left_back_door_hinge",
+      "type": "revolute",
+      "parent": "spine_frame",
+      "child": "left_back_door",
+      "origin": {
+        "xyz": [
+          -0.13,
+          0.03,
+          0.3124799999999999
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -1.2,
+        "upper": 0,
+        "effort": 6,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "left_air_brake_hinge",
+      "type": "revolute",
+      "parent": "left_back_door",
+      "child": "left_air_brake",
+      "origin": {
+        "xyz": [
+          -0.02,
+          0.1,
+          0.16
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -1,
+        "upper": 0,
+        "effort": 2,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "left_lat_plate_mount",
+      "type": "fixed",
+      "parent": "spine_frame",
+      "child": "left_lat_plate",
+      "origin": {
+        "xyz": [
+          0,
+          0.2,
+          0.2924799999999999
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "right_chest_plate_hinge",
+      "type": "revolute",
+      "parent": "sternum_bar",
+      "child": "right_chest_plate",
+      "origin": {
+        "xyz": [
+          0.005,
+          -0.03,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -1.1,
+        "upper": 0,
+        "effort": 6,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "right_pectoral_trim_mount",
+      "type": "fixed",
+      "parent": "right_chest_plate",
+      "child": "right_pectoral_trim",
+      "origin": {
+        "xyz": [
+          0.03,
+          -0.14,
+          0.08
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "right_back_door_hinge",
+      "type": "revolute",
+      "parent": "spine_frame",
+      "child": "right_back_door",
+      "origin": {
+        "xyz": [
+          -0.13,
+          -0.03,
+          0.3124799999999999
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": 0,
+        "upper": 1.2,
+        "effort": 6,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "right_air_brake_hinge",
+      "type": "revolute",
+      "parent": "right_back_door",
+      "child": "right_air_brake",
+      "origin": {
+        "xyz": [
+          -0.02,
+          -0.1,
+          0.16
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -1,
+        "upper": 0,
+        "effort": 2,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "right_lat_plate_mount",
+      "type": "fixed",
+      "parent": "spine_frame",
+      "child": "right_lat_plate",
+      "origin": {
+        "xyz": [
+          0,
+          -0.2,
+          0.2924799999999999
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "ab_plate_1_hinge",
+      "type": "revolute",
+      "parent": "sternum_bar",
+      "child": "ab_plate_1",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.2
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": 0,
+        "upper": 0.35,
+        "effort": 2,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "ab_plate_2_hinge",
+      "type": "revolute",
+      "parent": "ab_plate_1",
+      "child": "ab_plate_2",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.075
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": 0,
+        "upper": 0.35,
+        "effort": 2,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "ab_plate_3_hinge",
+      "type": "revolute",
+      "parent": "ab_plate_2",
+      "child": "ab_plate_3",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.075
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": 0,
+        "upper": 0.35,
+        "effort": 2,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "belt_plate_mount",
+      "type": "fixed",
+      "parent": "pelvis_frame",
+      "child": "belt_plate",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0.98425
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "codpiece_hinge",
+      "type": "revolute",
+      "parent": "pelvis_frame",
+      "child": "codpiece",
+      "origin": {
+        "xyz": [
+          0.16,
+          0,
+          0.90425
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": 0,
+        "upper": 0.6,
+        "effort": 2,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "left_pauldron_hinge",
+      "type": "revolute",
+      "parent": "left_shoulder_module",
+      "child": "left_pauldron",
+      "origin": {
+        "xyz": [
+          0,
+          0.06,
+          0.05
+        ],
+        "rpy": [
+          1.5707963267948966,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": 0,
+        "upper": 0.7,
+        "effort": 3,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "left_pauldron_trim_mount",
+      "type": "fixed",
+      "parent": "left_pauldron",
+      "child": "left_pauldron_trim",
+      "origin": {
+        "xyz": [
+          0,
+          0.1,
+          0.02
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "left_bicep_outer_mount",
+      "type": "fixed",
+      "parent": "left_upper_arm_strut",
+      "child": "left_bicep_outer",
+      "origin": {
+        "xyz": [
+          0,
+          0.02,
+          -0.14647500000000002
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "left_bicep_inner_hinge",
+      "type": "revolute",
+      "parent": "left_upper_arm_strut",
+      "child": "left_bicep_inner",
+      "origin": {
+        "xyz": [
+          0.055,
+          -0.075,
+          -0.14647500000000002
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -1.5,
+        "upper": 0,
+        "effort": 3,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "left_elbow_cap_hinge",
+      "type": "revolute",
+      "parent": "left_elbow_module",
+      "child": "left_elbow_cap",
+      "origin": {
+        "xyz": [
+          0.05,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.5,
+        "upper": 0,
+        "effort": 2,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "left_gauntlet_outer_mount",
+      "type": "fixed",
+      "parent": "left_forearm_strut",
+      "child": "left_gauntlet_outer",
+      "origin": {
+        "xyz": [
+          0,
+          0.015,
+          -0.12775
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "left_gauntlet_inner_hinge",
+      "type": "revolute",
+      "parent": "left_forearm_strut",
+      "child": "left_gauntlet_inner",
+      "origin": {
+        "xyz": [
+          0.045,
+          -0.06,
+          -0.12775
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -1.5,
+        "upper": 0,
+        "effort": 3,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "left_gauntlet_hatch_hinge",
+      "type": "revolute",
+      "parent": "left_gauntlet_outer",
+      "child": "left_gauntlet_hatch",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0.03
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -1.2,
+        "upper": 0,
+        "effort": 1.5,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "left_hand_plate_mount",
+      "type": "fixed",
+      "parent": "left_hand",
+      "child": "left_hand_plate",
+      "origin": {
+        "xyz": [
+          0.02,
+          -0.045,
+          -0.06
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "left_palm_repulsor_mount",
+      "type": "fixed",
+      "parent": "left_hand_plate",
+      "child": "left_palm_repulsor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.012
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "left_finger_1_hinge",
+      "type": "revolute",
+      "parent": "left_hand_plate",
+      "child": "left_finger_1",
+      "origin": {
+        "xyz": [
+          0.09,
+          -0.027,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": 0,
+        "upper": 1.3,
+        "effort": 1,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "left_finger_2_hinge",
+      "type": "revolute",
+      "parent": "left_hand_plate",
+      "child": "left_finger_2",
+      "origin": {
+        "xyz": [
+          0.09,
+          -0.009000000000000001,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": 0,
+        "upper": 1.3,
+        "effort": 1,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "left_finger_3_hinge",
+      "type": "revolute",
+      "parent": "left_hand_plate",
+      "child": "left_finger_3",
+      "origin": {
+        "xyz": [
+          0.09,
+          0.008999999999999998,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": 0,
+        "upper": 1.3,
+        "effort": 1,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "left_finger_4_hinge",
+      "type": "revolute",
+      "parent": "left_hand_plate",
+      "child": "left_finger_4",
+      "origin": {
+        "xyz": [
+          0.09,
+          0.026999999999999993,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": 0,
+        "upper": 1.3,
+        "effort": 1,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "left_thumb_hinge",
+      "type": "revolute",
+      "parent": "left_hand_plate",
+      "child": "left_thumb",
+      "origin": {
+        "xyz": [
+          0.03,
+          0.045,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0.8
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.9,
+        "upper": 0,
+        "effort": 1,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "right_pauldron_hinge",
+      "type": "revolute",
+      "parent": "right_shoulder_module",
+      "child": "right_pauldron",
+      "origin": {
+        "xyz": [
+          0,
+          -0.06,
+          0.05
+        ],
+        "rpy": [
+          1.5707963267948966,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.7,
+        "upper": 0,
+        "effort": 3,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "right_pauldron_trim_mount",
+      "type": "fixed",
+      "parent": "right_pauldron",
+      "child": "right_pauldron_trim",
+      "origin": {
+        "xyz": [
+          0,
+          -0.1,
+          0.02
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "right_bicep_outer_mount",
+      "type": "fixed",
+      "parent": "right_upper_arm_strut",
+      "child": "right_bicep_outer",
+      "origin": {
+        "xyz": [
+          0,
+          -0.02,
+          -0.14647500000000002
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "right_bicep_inner_hinge",
+      "type": "revolute",
+      "parent": "right_upper_arm_strut",
+      "child": "right_bicep_inner",
+      "origin": {
+        "xyz": [
+          0.055,
+          0.075,
+          -0.14647500000000002
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": 0,
+        "upper": 1.5,
+        "effort": 3,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "right_elbow_cap_hinge",
+      "type": "revolute",
+      "parent": "right_elbow_module",
+      "child": "right_elbow_cap",
+      "origin": {
+        "xyz": [
+          0.05,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.5,
+        "upper": 0,
+        "effort": 2,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "right_gauntlet_outer_mount",
+      "type": "fixed",
+      "parent": "right_forearm_strut",
+      "child": "right_gauntlet_outer",
+      "origin": {
+        "xyz": [
+          0,
+          -0.015,
+          -0.12775
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "right_gauntlet_inner_hinge",
+      "type": "revolute",
+      "parent": "right_forearm_strut",
+      "child": "right_gauntlet_inner",
+      "origin": {
+        "xyz": [
+          0.045,
+          0.06,
+          -0.12775
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": 0,
+        "upper": 1.5,
+        "effort": 3,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "right_gauntlet_hatch_hinge",
+      "type": "revolute",
+      "parent": "right_gauntlet_outer",
+      "child": "right_gauntlet_hatch",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0.03
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -1.2,
+        "upper": 0,
+        "effort": 1.5,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "right_hand_plate_mount",
+      "type": "fixed",
+      "parent": "right_hand",
+      "child": "right_hand_plate",
+      "origin": {
+        "xyz": [
+          0.02,
+          0.045,
+          -0.06
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "right_palm_repulsor_mount",
+      "type": "fixed",
+      "parent": "right_hand_plate",
+      "child": "right_palm_repulsor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.012
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "right_finger_1_hinge",
+      "type": "revolute",
+      "parent": "right_hand_plate",
+      "child": "right_finger_1",
+      "origin": {
+        "xyz": [
+          0.09,
+          -0.027,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": 0,
+        "upper": 1.3,
+        "effort": 1,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "right_finger_2_hinge",
+      "type": "revolute",
+      "parent": "right_hand_plate",
+      "child": "right_finger_2",
+      "origin": {
+        "xyz": [
+          0.09,
+          -0.009000000000000001,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": 0,
+        "upper": 1.3,
+        "effort": 1,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "right_finger_3_hinge",
+      "type": "revolute",
+      "parent": "right_hand_plate",
+      "child": "right_finger_3",
+      "origin": {
+        "xyz": [
+          0.09,
+          0.008999999999999998,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": 0,
+        "upper": 1.3,
+        "effort": 1,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "right_finger_4_hinge",
+      "type": "revolute",
+      "parent": "right_hand_plate",
+      "child": "right_finger_4",
+      "origin": {
+        "xyz": [
+          0.09,
+          0.026999999999999993,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": 0,
+        "upper": 1.3,
+        "effort": 1,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "right_thumb_hinge",
+      "type": "revolute",
+      "parent": "right_hand_plate",
+      "child": "right_thumb",
+      "origin": {
+        "xyz": [
+          0.03,
+          -0.045,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          -0.8
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": 0,
+        "upper": 0.9,
+        "effort": 1,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "left_hip_flap_hinge",
+      "type": "revolute",
+      "parent": "pelvis_frame",
+      "child": "left_hip_flap",
+      "origin": {
+        "xyz": [
+          0.02,
+          0.2,
+          0.9442499999999999
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.6,
+        "upper": 0,
+        "effort": 2,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "left_thigh_outer_mount",
+      "type": "fixed",
+      "parent": "left_thigh_strut",
+      "child": "left_thigh_outer",
+      "origin": {
+        "xyz": [
+          0,
+          -0.02,
+          -0.19293749999999998
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "left_thigh_inner_hinge",
+      "type": "revolute",
+      "parent": "left_thigh_strut",
+      "child": "left_thigh_inner",
+      "origin": {
+        "xyz": [
+          0.07,
+          -0.1,
+          -0.19293749999999998
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -1.4,
+        "upper": 0,
+        "effort": 3,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "left_knee_cap_hinge",
+      "type": "revolute",
+      "parent": "left_knee_module",
+      "child": "left_knee_cap",
+      "origin": {
+        "xyz": [
+          0.07,
+          -0.045,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.6,
+        "upper": 0,
+        "effort": 2,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "left_shin_outer_mount",
+      "type": "fixed",
+      "parent": "left_shank_strut",
+      "child": "left_shin_outer",
+      "origin": {
+        "xyz": [
+          0,
+          -0.02,
+          -0.193725
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "left_calf_shell_hinge",
+      "type": "revolute",
+      "parent": "left_shank_strut",
+      "child": "left_calf_shell",
+      "origin": {
+        "xyz": [
+          -0.06,
+          -0.09,
+          -0.193725
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": 0,
+        "upper": 1.4,
+        "effort": 3,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "left_boot_toe_cap_mount",
+      "type": "fixed",
+      "parent": "left_boot",
+      "child": "left_boot_toe_cap",
+      "origin": {
+        "xyz": [
+          0.14,
+          -0.045,
+          -0.05499999999999999
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "left_boot_shin_guard_hinge",
+      "type": "revolute",
+      "parent": "left_boot",
+      "child": "left_boot_shin_guard",
+      "origin": {
+        "xyz": [
+          0.06,
+          -0.045,
+          0.02
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": 0,
+        "upper": 0.7,
+        "effort": 2,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "left_heel_thruster_mount",
+      "type": "fixed",
+      "parent": "left_boot",
+      "child": "left_heel_thruster",
+      "origin": {
+        "xyz": [
+          -0.1,
+          -0.045,
+          -0.06999999999999999
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "left_thruster_cover_hinge",
+      "type": "revolute",
+      "parent": "left_boot",
+      "child": "left_thruster_cover",
+      "origin": {
+        "xyz": [
+          -0.06,
+          -0.045,
+          -0.045
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -1.3,
+        "upper": 0,
+        "effort": 1.5,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "left_ankle_flap_hinge",
+      "type": "revolute",
+      "parent": "left_boot",
+      "child": "left_ankle_flap",
+      "origin": {
+        "xyz": [
+          0,
+          -0.115,
+          0.02
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": 0,
+        "upper": 0.8,
+        "effort": 1.5,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "right_hip_flap_hinge",
+      "type": "revolute",
+      "parent": "pelvis_frame",
+      "child": "right_hip_flap",
+      "origin": {
+        "xyz": [
+          0.02,
+          -0.2,
+          0.9442499999999999
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": 0,
+        "upper": 0.6,
+        "effort": 2,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "right_thigh_outer_mount",
+      "type": "fixed",
+      "parent": "right_thigh_strut",
+      "child": "right_thigh_outer",
+      "origin": {
+        "xyz": [
+          0,
+          0.02,
+          -0.19293749999999998
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "right_thigh_inner_hinge",
+      "type": "revolute",
+      "parent": "right_thigh_strut",
+      "child": "right_thigh_inner",
+      "origin": {
+        "xyz": [
+          0.07,
+          0.1,
+          -0.19293749999999998
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": 0,
+        "upper": 1.4,
+        "effort": 3,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "right_knee_cap_hinge",
+      "type": "revolute",
+      "parent": "right_knee_module",
+      "child": "right_knee_cap",
+      "origin": {
+        "xyz": [
+          0.07,
+          0.045,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.6,
+        "upper": 0,
+        "effort": 2,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "right_shin_outer_mount",
+      "type": "fixed",
+      "parent": "right_shank_strut",
+      "child": "right_shin_outer",
+      "origin": {
+        "xyz": [
+          0,
+          0.02,
+          -0.193725
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "right_calf_shell_hinge",
+      "type": "revolute",
+      "parent": "right_shank_strut",
+      "child": "right_calf_shell",
+      "origin": {
+        "xyz": [
+          -0.06,
+          0.09,
+          -0.193725
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -1.4,
+        "upper": 0,
+        "effort": 3,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "right_boot_toe_cap_mount",
+      "type": "fixed",
+      "parent": "right_boot",
+      "child": "right_boot_toe_cap",
+      "origin": {
+        "xyz": [
+          0.14,
+          0.045,
+          -0.05499999999999999
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "right_boot_shin_guard_hinge",
+      "type": "revolute",
+      "parent": "right_boot",
+      "child": "right_boot_shin_guard",
+      "origin": {
+        "xyz": [
+          0.06,
+          0.045,
+          0.02
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": 0,
+        "upper": 0.7,
+        "effort": 2,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "right_heel_thruster_mount",
+      "type": "fixed",
+      "parent": "right_boot",
+      "child": "right_heel_thruster",
+      "origin": {
+        "xyz": [
+          -0.1,
+          0.045,
+          -0.06999999999999999
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "right_thruster_cover_hinge",
+      "type": "revolute",
+      "parent": "right_boot",
+      "child": "right_thruster_cover",
+      "origin": {
+        "xyz": [
+          -0.06,
+          0.045,
+          -0.045
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -1.3,
+        "upper": 0,
+        "effort": 1.5,
+        "velocity": 3
+      }
+    },
+    {
+      "name": "right_ankle_flap_hinge",
+      "type": "revolute",
+      "parent": "right_boot",
+      "child": "right_ankle_flap",
+      "origin": {
+        "xyz": [
+          0,
+          0.115,
+          0.02
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.8,
+        "upper": 0,
+        "effort": 1.5,
+        "velocity": 3
+      }
+    }
+  ],
+  "materials": [
+    {
+      "name": "base_mat",
+      "color": [
+        0.25,
+        0.25,
+        0.28,
+        1
+      ]
+    },
+    {
+      "name": "link_mat",
+      "color": [
+        0.85,
+        0.85,
+        0.88,
+        1
+      ]
+    },
+    {
+      "name": "gripper_mat",
+      "color": [
+        0.15,
+        0.35,
+        0.75,
+        1
+      ]
+    },
+    {
+      "name": "wheel_mat",
+      "color": [
+        0.1,
+        0.1,
+        0.12,
+        1
+      ]
+    },
+    {
+      "name": "sensor_mat",
+      "color": [
+        0.1,
+        0.7,
+        0.4,
+        1
+      ]
+    },
+    {
+      "name": "accent_mat",
+      "color": [
+        0.9,
+        0.55,
+        0.1,
+        1
+      ]
+    },
+    {
+      "name": "carbon",
+      "color": [
+        0.13,
+        0.14,
+        0.16,
+        1
+      ]
+    },
+    {
+      "name": "steel",
+      "color": [
+        0.55,
+        0.57,
+        0.6,
+        1
+      ]
+    },
+    {
+      "name": "armor_red",
+      "color": [
+        0.7,
+        0.08,
+        0.08,
+        1
+      ]
+    },
+    {
+      "name": "armor_gold",
+      "color": [
+        0.85,
+        0.65,
+        0.13,
+        1
+      ]
+    },
+    {
+      "name": "arc_blue",
+      "color": [
+        0.4,
+        0.85,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "strap",
+      "color": [
+        0.2,
+        0.2,
+        0.22,
+        1
+      ]
+    },
+    {
+      "name": "hot_rod_red",
+      "color": [
+        0.62,
+        0.05,
+        0.06,
+        1
+      ]
+    },
+    {
+      "name": "gold_titanium",
+      "color": [
+        0.83,
+        0.62,
+        0.16,
+        1
+      ]
+    },
+    {
+      "name": "gunmetal",
+      "color": [
+        0.22,
+        0.23,
+        0.26,
+        1
+      ]
+    },
+    {
+      "name": "arc_glow",
+      "color": [
+        0.55,
+        0.9,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "eye_glow",
+      "color": [
+        0.75,
+        0.95,
+        1,
+        1
+      ]
+    }
+  ],
+  "sensors": [
+    {
+      "name": "hud_camera",
+      "type": "camera",
+      "parent": "helmet",
+      "origin": {
+        "xyz": [
+          0.11,
+          0,
+          0.02
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "params": {}
+    },
+    {
+      "name": "trunk_imu",
+      "type": "imu",
+      "parent": "spine_frame",
+      "origin": {
+        "xyz": [
+          -0.08,
+          0,
+          0.2
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "params": {}
+    },
+    {
+      "name": "left_insole_force",
+      "type": "force",
+      "parent": "left_boot",
+      "origin": {
+        "xyz": [
+          0.05,
+          -0.045,
+          -0.105
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "params": {
+        "channels": 4
+      }
+    },
+    {
+      "name": "right_insole_force",
+      "type": "force",
+      "parent": "right_boot",
+      "origin": {
+        "xyz": [
+          0.05,
+          0.045,
+          -0.105
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "params": {
+        "channels": 4
+      }
+    }
+  ],
+  "end_effectors": [],
+  "metadata": {
+    "generator": "text-to-robot",
+    "created": "2026-09-18T04:41:53.846Z",
+    "inferred_fields": [
+      "joints.ab_plate_1_hinge.dynamics",
+      "joints.ab_plate_2_hinge.dynamics",
+      "joints.ab_plate_3_hinge.dynamics",
+      "joints.arc_reactor_housing_mount.dynamics",
+      "joints.arc_reactor_housing_mount.limit",
+      "joints.backpack_mount.dynamics",
+      "joints.backpack_mount.limit",
+      "joints.belt_plate_mount.dynamics",
+      "joints.belt_plate_mount.limit",
+      "joints.chest_plate_mount.dynamics",
+      "joints.chest_plate_mount.limit",
+      "joints.codpiece_hinge.dynamics",
+      "joints.faceplate_hinge.dynamics",
+      "joints.helmet_crest_mount.dynamics",
+      "joints.helmet_crest_mount.limit",
+      "joints.helmet_dome_mount.dynamics",
+      "joints.helmet_dome_mount.limit",
+      "joints.helmet_jaw_mount.dynamics",
+      "joints.helmet_jaw_mount.limit",
+      "joints.left_air_brake_hinge.dynamics",
+      "joints.left_ankle_flap_hinge.dynamics",
+      "joints.left_ankle_flexion.dynamics",
+      "joints.left_ankle_module_mount.dynamics",
+      "joints.left_ankle_module_mount.limit",
+      "joints.left_back_door_hinge.dynamics",
+      "joints.left_bicep_inner_hinge.dynamics",
+      "joints.left_bicep_outer_mount.dynamics",
+      "joints.left_bicep_outer_mount.limit",
+      "joints.left_boot_shin_guard_hinge.dynamics",
+      "joints.left_boot_toe_cap_mount.dynamics",
+      "joints.left_boot_toe_cap_mount.limit",
+      "joints.left_calf_shell_hinge.dynamics",
+      "joints.left_chest_plate_hinge.dynamics",
+      "joints.left_elbow_cap_hinge.dynamics",
+      "joints.left_elbow_flexion.dynamics",
+      "joints.left_elbow_module_mount.dynamics",
+      "joints.left_elbow_module_mount.limit",
+      "joints.left_eye_mount.dynamics",
+      "joints.left_eye_mount.limit",
+      "joints.left_finger_1_hinge.dynamics",
+      "joints.left_finger_2_hinge.dynamics",
+      "joints.left_finger_3_hinge.dynamics",
+      "joints.left_finger_4_hinge.dynamics",
+      "joints.left_forearm_cuff_mount.dynamics",
+      "joints.left_forearm_cuff_mount.limit",
+      "joints.left_gauntlet_hatch_hinge.dynamics",
+      "joints.left_gauntlet_inner_hinge.dynamics",
+      "joints.left_gauntlet_outer_mount.dynamics",
+      "joints.left_gauntlet_outer_mount.limit",
+      "joints.left_hand_plate_mount.dynamics",
+      "joints.left_hand_plate_mount.limit",
+      "joints.left_heel_thruster_mount.dynamics",
+      "joints.left_heel_thruster_mount.limit",
+      "joints.left_hip_abduction.dynamics",
+      "joints.left_hip_flap_hinge.dynamics",
+      "joints.left_hip_flexion.dynamics",
+      "joints.left_knee_cap_hinge.dynamics",
+      "joints.left_knee_flexion.dynamics",
+      "joints.left_knee_module_mount.dynamics",
+      "joints.left_knee_module_mount.limit",
+      "joints.left_lat_plate_mount.dynamics",
+      "joints.left_lat_plate_mount.limit",
+      "joints.left_palm_repulsor_mount.dynamics",
+      "joints.left_palm_repulsor_mount.limit",
+      "joints.left_pauldron_hinge.dynamics",
+      "joints.left_pauldron_trim_mount.dynamics",
+      "joints.left_pauldron_trim_mount.limit",
+      "joints.left_pectoral_trim_mount.dynamics",
+      "joints.left_pectoral_trim_mount.limit",
+      "joints.left_shank_cuff_mount.dynamics",
+      "joints.left_shank_cuff_mount.limit",
+      "joints.left_shin_outer_mount.dynamics",
+      "joints.left_shin_outer_mount.limit",
+      "joints.left_shoulder_abduction.dynamics",
+      "joints.left_shoulder_flexion.dynamics",
+      "joints.left_thigh_cuff_mount.dynamics",
+      "joints.left_thigh_cuff_mount.limit",
+      "joints.left_thigh_inner_hinge.dynamics",
+      "joints.left_thigh_outer_mount.dynamics",
+      "joints.left_thigh_outer_mount.limit",
+      "joints.left_thruster_cover_hinge.dynamics",
+      "joints.left_thumb_hinge.dynamics",
+      "joints.left_upper_arm_cuff_mount.dynamics",
+      "joints.left_upper_arm_cuff_mount.limit",
+      "joints.left_wrist_flexion.dynamics",
+      "joints.neck_mount.dynamics",
+      "joints.neck_mount.limit",
+      "joints.right_air_brake_hinge.dynamics",
+      "joints.right_ankle_flap_hinge.dynamics",
+      "joints.right_ankle_flexion.dynamics",
+      "joints.right_ankle_module_mount.dynamics",
+      "joints.right_ankle_module_mount.limit",
+      "joints.right_back_door_hinge.dynamics",
+      "joints.right_bicep_inner_hinge.dynamics",
+      "joints.right_bicep_outer_mount.dynamics",
+      "joints.right_bicep_outer_mount.limit",
+      "joints.right_boot_shin_guard_hinge.dynamics",
+      "joints.right_boot_toe_cap_mount.dynamics",
+      "joints.right_boot_toe_cap_mount.limit",
+      "joints.right_calf_shell_hinge.dynamics",
+      "joints.right_chest_plate_hinge.dynamics",
+      "joints.right_elbow_cap_hinge.dynamics",
+      "joints.right_elbow_flexion.dynamics",
+      "joints.right_elbow_module_mount.dynamics",
+      "joints.right_elbow_module_mount.limit",
+      "joints.right_eye_mount.dynamics",
+      "joints.right_eye_mount.limit",
+      "joints.right_finger_1_hinge.dynamics",
+      "joints.right_finger_2_hinge.dynamics",
+      "joints.right_finger_3_hinge.dynamics",
+      "joints.right_finger_4_hinge.dynamics",
+      "joints.right_forearm_cuff_mount.dynamics",
+      "joints.right_forearm_cuff_mount.limit",
+      "joints.right_gauntlet_hatch_hinge.dynamics",
+      "joints.right_gauntlet_inner_hinge.dynamics",
+      "joints.right_gauntlet_outer_mount.dynamics",
+      "joints.right_gauntlet_outer_mount.limit",
+      "joints.right_hand_plate_mount.dynamics",
+      "joints.right_hand_plate_mount.limit",
+      "joints.right_heel_thruster_mount.dynamics",
+      "joints.right_heel_thruster_mount.limit",
+      "joints.right_hip_abduction.dynamics",
+      "joints.right_hip_flap_hinge.dynamics",
+      "joints.right_hip_flexion.dynamics",
+      "joints.right_knee_cap_hinge.dynamics",
+      "joints.right_knee_flexion.dynamics",
+      "joints.right_knee_module_mount.dynamics",
+      "joints.right_knee_module_mount.limit",
+      "joints.right_lat_plate_mount.dynamics",
+      "joints.right_lat_plate_mount.limit",
+      "joints.right_palm_repulsor_mount.dynamics",
+      "joints.right_palm_repulsor_mount.limit",
+      "joints.right_pauldron_hinge.dynamics",
+      "joints.right_pauldron_trim_mount.dynamics",
+      "joints.right_pauldron_trim_mount.limit",
+      "joints.right_pectoral_trim_mount.dynamics",
+      "joints.right_pectoral_trim_mount.limit",
+      "joints.right_shank_cuff_mount.dynamics",
+      "joints.right_shank_cuff_mount.limit",
+      "joints.right_shin_outer_mount.dynamics",
+      "joints.right_shin_outer_mount.limit",
+      "joints.right_shoulder_abduction.dynamics",
+      "joints.right_shoulder_flexion.dynamics",
+      "joints.right_thigh_cuff_mount.dynamics",
+      "joints.right_thigh_cuff_mount.limit",
+      "joints.right_thigh_inner_hinge.dynamics",
+      "joints.right_thigh_outer_mount.dynamics",
+      "joints.right_thigh_outer_mount.limit",
+      "joints.right_thruster_cover_hinge.dynamics",
+      "joints.right_thumb_hinge.dynamics",
+      "joints.right_upper_arm_cuff_mount.dynamics",
+      "joints.right_upper_arm_cuff_mount.limit",
+      "joints.right_wrist_flexion.dynamics",
+      "joints.shoulder_yoke_mount.dynamics",
+      "joints.shoulder_yoke_mount.limit",
+      "joints.sternum_bar_mount.dynamics",
+      "joints.sternum_bar_mount.limit",
+      "joints.trunk_flex.dynamics",
+      "links.ab_plate_1.inertia",
+      "links.ab_plate_2.inertia",
+      "links.ab_plate_3.inertia",
+      "links.arc_reactor_housing.inertia",
+      "links.backpack.inertia",
+      "links.belt_plate.inertia",
+      "links.chest_plate.inertia",
+      "links.codpiece.inertia",
+      "links.faceplate.inertia",
+      "links.helmet.inertia",
+      "links.helmet_crest.inertia",
+      "links.helmet_dome.inertia",
+      "links.helmet_jaw.inertia",
+      "links.left_air_brake.inertia",
+      "links.left_ankle_flap.inertia",
+      "links.left_ankle_module.inertia",
+      "links.left_back_door.inertia",
+      "links.left_bicep_inner.inertia",
+      "links.left_bicep_outer.inertia",
+      "links.left_boot.inertia",
+      "links.left_boot_shin_guard.inertia",
+      "links.left_boot_toe_cap.inertia",
+      "links.left_calf_shell.inertia",
+      "links.left_chest_plate.inertia",
+      "links.left_elbow_cap.inertia",
+      "links.left_elbow_module.inertia",
+      "links.left_eye.inertia",
+      "links.left_finger_1.inertia",
+      "links.left_finger_2.inertia",
+      "links.left_finger_3.inertia",
+      "links.left_finger_4.inertia",
+      "links.left_forearm_cuff.inertia",
+      "links.left_forearm_strut.inertia",
+      "links.left_gauntlet_hatch.inertia",
+      "links.left_gauntlet_inner.inertia",
+      "links.left_gauntlet_outer.inertia",
+      "links.left_hand.inertia",
+      "links.left_hand_plate.inertia",
+      "links.left_heel_thruster.inertia",
+      "links.left_hip_flap.inertia",
+      "links.left_hip_module.inertia",
+      "links.left_knee_cap.inertia",
+      "links.left_knee_module.inertia",
+      "links.left_lat_plate.inertia",
+      "links.left_palm_repulsor.inertia",
+      "links.left_pauldron.inertia",
+      "links.left_pauldron_trim.inertia",
+      "links.left_pectoral_trim.inertia",
+      "links.left_shank_cuff.inertia",
+      "links.left_shank_strut.inertia",
+      "links.left_shin_outer.inertia",
+      "links.left_shoulder_module.inertia",
+      "links.left_thigh_cuff.inertia",
+      "links.left_thigh_inner.inertia",
+      "links.left_thigh_outer.inertia",
+      "links.left_thigh_strut.inertia",
+      "links.left_thruster_cover.inertia",
+      "links.left_thumb.inertia",
+      "links.left_upper_arm_cuff.inertia",
+      "links.left_upper_arm_strut.inertia",
+      "links.pelvis_frame.inertia",
+      "links.right_air_brake.inertia",
+      "links.right_ankle_flap.inertia",
+      "links.right_ankle_module.inertia",
+      "links.right_back_door.inertia",
+      "links.right_bicep_inner.inertia",
+      "links.right_bicep_outer.inertia",
+      "links.right_boot.inertia",
+      "links.right_boot_shin_guard.inertia",
+      "links.right_boot_toe_cap.inertia",
+      "links.right_calf_shell.inertia",
+      "links.right_chest_plate.inertia",
+      "links.right_elbow_cap.inertia",
+      "links.right_elbow_module.inertia",
+      "links.right_eye.inertia",
+      "links.right_finger_1.inertia",
+      "links.right_finger_2.inertia",
+      "links.right_finger_3.inertia",
+      "links.right_finger_4.inertia",
+      "links.right_forearm_cuff.inertia",
+      "links.right_forearm_strut.inertia",
+      "links.right_gauntlet_hatch.inertia",
+      "links.right_gauntlet_inner.inertia",
+      "links.right_gauntlet_outer.inertia",
+      "links.right_hand.inertia",
+      "links.right_hand_plate.inertia",
+      "links.right_heel_thruster.inertia",
+      "links.right_hip_flap.inertia",
+      "links.right_hip_module.inertia",
+      "links.right_knee_cap.inertia",
+      "links.right_knee_module.inertia",
+      "links.right_lat_plate.inertia",
+      "links.right_palm_repulsor.inertia",
+      "links.right_pauldron.inertia",
+      "links.right_pauldron_trim.inertia",
+      "links.right_pectoral_trim.inertia",
+      "links.right_shank_cuff.inertia",
+      "links.right_shank_strut.inertia",
+      "links.right_shin_outer.inertia",
+      "links.right_shoulder_module.inertia",
+      "links.right_thigh_cuff.inertia",
+      "links.right_thigh_inner.inertia",
+      "links.right_thigh_outer.inertia",
+      "links.right_thigh_strut.inertia",
+      "links.right_thruster_cover.inertia",
+      "links.right_thumb.inertia",
+      "links.right_upper_arm_cuff.inertia",
+      "links.right_upper_arm_strut.inertia",
+      "links.shoulder_yoke.inertia",
+      "links.spine_frame.inertia",
+      "links.sternum_bar.inertia"
+    ],
+    "notes": [
+      "Wearable powered exoskeleton for a 1.75 m adult: 17 actuated joints (trunk, 2x hip ab/flex, knee, ankle, 2x shoulder ab/flex, elbow, wrist), lateral struts, strap cuffs, joint actuator modules, 9 kg power/compute back pack, insole force sensors, trunk IMU, HUD camera. The wearer is added in simulation (ttr_mujoco --wearer). Thrusters are mount points, not modelled propulsion.",
+      "Mark-style articulated armour over the wearable exoskeleton: 45 hinged plates with their own servos (faceplate, chest halves, back doors, air-brake flaps, ab segments, codpiece, pauldrons, bicep/forearm clamshells, gauntlet hatches, fingers, hip flaps, thigh/calf clamshells, knee caps, shin guards, thruster covers, ankle flaps). Closed = 0 rad, open = joint limit; the donning sequence closes them in order. Repulsors/thrusters are mount points, not modelled propulsion.",
+      "Interpreted by demo parser: type inferred, DOF=62, gripper=parallel."
+    ],
+    "source_prompt": "Build me a movie-accurate wearable Iron Man Mark suit with all the small armour plates that open and close, repulsors, a HUD and an IMU"
+  }
+}

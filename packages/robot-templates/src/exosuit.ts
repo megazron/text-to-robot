@@ -14,6 +14,13 @@ import { box, cyl, sph, link, joint, DEFAULT_MATERIALS } from "./builder.ts";
 
 export interface ExosuitOptions { name?: string; height_m?: number; styled?: boolean; prompt?: string; }
 
+/** adult anthropometric landmarks for a given stature (Winter). metres; Z up, X forward, Y left */
+export function anthropometrics(H = 1.75) {
+  const ankleZ = 0.045 * H / 1.75 + 0.06, shank = 0.246 * H, thigh = 0.245 * H;
+  const kneeZ = ankleZ + shank, hipZ = kneeZ + thigh, shoulderZ = hipZ + 0.288 * H, headZ = H - 0.065;
+  return { H, ankleZ, shank, thigh, kneeZ, hipZ, shoulderZ, headZ, uarm: 0.186 * H, farm: 0.146 * H, hipY: 0.13, shY: 0.235 };
+}
+
 export function wearableExosuit(opts: ExosuitOptions = {}): RobotSpecification {
   const H = opts.height_m ?? 1.75;
   const spec = emptySpec(opts.name ?? "iron_man_exosuit", opts.prompt);
