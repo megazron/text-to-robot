@@ -16,7 +16,7 @@ test('all Mark 43 recipe solids have closed, consistently wound edge topology',(
     const mesh=buildPart(link.geometry); assert.ok(meshTopology(mesh).closed,link.name);
     assert.ok(massProperties(mesh).volume>0,link.name);checked++;
   }
-  assert.equal(checked,106);
+  assert.equal(checked,150);
 });
 
 test('solid integration matches an analytic translated cuboid, not its surface shell',()=>{

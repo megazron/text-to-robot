@@ -84,7 +84,7 @@ function buildRobot(spec) {
     const g = isCol ? (l.collision ?? l.geometry) : l.geometry;
     const geom = makeGeom(g);
     const color = matColor(spec, l.material, l.role === "gripper" ? 0x2a5bd0 : l.role === "wheel" ? 0x1a1a1f : l.role === "base" ? 0x3f3f46 : 0xd8d8dc);
-    const mesh = new THREE.Mesh(geom, new THREE.MeshStandardMaterial({ color, metalness: 0.25, roughness: 0.55, transparent: isCol, opacity: isCol ? 0.45 : 1, wireframe: isCol }));
+    const mesh = new THREE.Mesh(geom, new THREE.MeshStandardMaterial({ color, metalness: l.material?.startsWith("mk43_") ? 0.65 : 0.25, roughness: l.material?.startsWith("mk43_") ? 0.30 : 0.55, transparent: isCol, opacity: isCol ? 0.45 : 1, wireframe: isCol }));
     mesh.matrixAutoUpdate = false; mesh.matrix.copy(mat4(poseArr(l.origin)));
     mesh.userData.linkName = l.name;
     if (g.type === "mesh" && state.id && !isCol) loadMeshInto(mesh, g);

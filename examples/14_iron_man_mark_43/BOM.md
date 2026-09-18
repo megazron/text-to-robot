@@ -1,6 +1,6 @@
 # Bill of Materials — iron_man_mark_43
 
-**Estimated total: $45764.54**  ·  tier: research  ·  budget: $60000 ✅ within budget
+**Estimated total: $45871.22**  ·  tier: research  ·  budget: $60000 ✅ within budget
 
 | Category | Component | Qty | Unit $ | Subtotal $ | Spec |
 |---|---|--:|--:|--:|---|
@@ -16,7 +16,7 @@
 | Power | Li-ion 48V 20Ah pack | 1 | 320 | 320 | 960 Wh; est. load 712 W |
 | Power | DC-DC buck regulator (5V/10A) | 1 | 12 | 12 | logic + servo rail |
 | Power | Power distribution board + fuse + switch | 1 | 14 | 14 | wiring harness backbone |
-| Structure | Aluminium frame + brackets | 1 | 3136.14 | 3136.14 | ~104.54 kg material @ $30/kg |
+| Structure | Aluminium frame + brackets | 1 | 3242.82 | 3242.82 | ~108.09 kg material @ $30/kg |
 | Structure | Fastener + bearing kit | 1 | 18 | 18 | M3 screws, heat inserts, 608 bearings |
 | Wiring & misc | Wiring, connectors, JST/Dupont, sleeving | 1 | 4565.4 | 4565.4 | ~12% of electronics |
 

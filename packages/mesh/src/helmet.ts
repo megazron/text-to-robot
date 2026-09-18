@@ -28,10 +28,12 @@ export function faceSurface(y: number, z: number, proud = 0): V3 {
   const [z0, fx0, hw0, e0, r0] = FACE[i], [z1, fx1, hw1, e1, r1] = FACE[i + 1];
   const u = Math.min(1, Math.max(0, (z - z0) / (z1 - z0 || 1)));
   const fx = fx0 + (fx1 - fx0) * u, hw = hw0 + (hw1 - hw0) * u, e = e0 + (e1 - e0) * u, ridge = r0 + (r1 - r0) * u;
-  // Invert the SAME superellipse parameterization used by faceSections.
-  const t = Math.asin(Math.pow(Math.min(1, Math.abs(y) / hw), e / 2));
-  const baseX = Math.pow(Math.max(0, Math.cos(t)), 2 / e) * fx;
-  const x = baseX + ridge * Math.max(0, 1 - Math.abs(Math.atan2(y, baseX)) / 0.22);
+  // Piecewise planar face: central bridge, broad cheek plane and temple chamfer.
+  const ratio=Math.min(1,Math.abs(y)/hw),knots=[[0,1],[.45,.99],[.75,.91],[.90,.62],[1,0]];
+  let k=0;while(k<knots.length-2 && ratio>knots[k+1][0])k++;
+  const [u0,x0]=knots[k],[u1,x1]=knots[k+1];
+  const baseX=fx*(x0+(x1-x0)*(ratio-u0)/(u1-u0));
+  const x=baseX+ridge*Math.max(0,1-ratio/.25);
   const n = norm([1, 0, 0]);  // outward is essentially +x on the face front
   return [x + proud * n[0], y, z];
 }
@@ -42,7 +44,7 @@ function faceSections(a0: number, a1: number): V3[][] {
   return FACE.map(([z, fx, hw, e, ridge]) => {
     const arc = superArc(fx, hw, z, a0, a1, N, e);
     // vertical nose/centre ridge: push the centre points forward a little
-    return arc.map((p) => { const t = Math.atan2(p[1], p[0]); const w = Math.max(0, 1 - Math.abs(t) / 0.22); return [p[0] + ridge * w, p[1], p[2]] as V3; });
+    return arc.map((p) => { return p[0]>=0 ? faceSurface(p[1],z) : p; });
   });
 }
 
@@ -116,7 +118,7 @@ export function foreheadPlate(): Mesh {
   return shelledLoft(sec, 0.003, 0);
 }
 /** eye: an angled trapezoid slit just under the brow ledge -- dark socket recess + glowing lens proud of the surface */
-const EYE: [number, number][] = [[0.019, 0.033], [0.068, 0.039], [0.068, 0.054], [0.024, 0.050]];
+const EYE: [number, number][] = [[0.019, 0.037], [0.068, 0.043], [0.068, 0.051], [0.022, 0.047]];
 const SOCKET: P2[] = [[0.015, 0.029], [0.074, 0.036], [0.074, 0.058], [0.020, 0.054]];
 function eyeRing(outline: [number, number][], side: "left" | "right", proud: number): V3[] {
   const sgn = side === "left" ? 1 : -1;
@@ -132,9 +134,8 @@ export function eyeSocket(side: "left" | "right"): Mesh {
 }
 /** mouth line: a thin dark horizontal recess strip across the lower faceplate */
 export function mouthLine(): Mesh {
-  const front = 0.130, hw = 0.080, e = 2.5;
-  const arc = (d: number, z: number) => superArc(front + d, hw + d * 0.5, z, -0.55, 0.55, 15, e);
-  return shelledLoft([arc(0.0015,-0.084),arc(0.0015,-0.079)],0.002,0);
+  const rows=[-.084,-.081].map(z=>Array.from({length:17},(_,i)=>faceSurface(-.04+i*.005,z,.001)));
+  return shelledLoft(rows,.002,0);
 }
 /** ear pod: chamfered disc on the temple */
 export function earPod(side: "left" | "right"): Mesh {

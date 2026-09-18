@@ -29,7 +29,7 @@ Text-to-speech turns words into audio. **Text-to-Robot turns words into a robot*
 > *"Build me a movie-accurate wearable Iron Man Mark 43 suit from Age of Ultron with all the small polygon armour plates that open and close, repulsors, a HUD and an IMU. Budget $60000"*
 
 The current Mark 43 is a **procedural powered-exoskeleton concept**, not a film-accurate
-or fabrication-ready suit. It includes a 17-joint frame, 106 closed mesh solids (97 armour parts and 9 hollow frame/cuff parts),
+or fabrication-ready suit. It includes a 17-joint frame, 150 closed mesh solids, including hollow frame/cuff parts and layered armour,
 49 armour hinges and a passive mannequin. Geometry is procedural, with palette/proportion corrections against a commercial reference, without
 prop scans, measured wearer geometry or validated component interfaces.
 
@@ -38,7 +38,9 @@ are now preserved; MuJoCo actuators use each URDF joint's effort limit, not a sh
 whole-robot force allowance. Root/full inertia tensors retain their orientation. A fallen
 robot now fails disturbance recovery. Regenerated results are recorded below. Meshes now use closed-solid volume integrals for mass and inertia, hollow cuffs, and actual faceplate eye apertures.
 
-![Current generated geometry, rendered in MuJoCo](docs/img/mark43_geometry_review.png)
+![Current generated geometry, rendered in MuJoCo](docs/img/mark43_threequarter_review.png)
+
+See the [front/rear visual review and reference comparison](docs/MARK43_VISUAL_REVIEW.md).
 
 The following animations were produced with the **older modelling assumptions** and
 are illustrations, not validation evidence for the corrected model.
@@ -64,8 +66,8 @@ are illustrations, not validation evidence for the corrected model.
 | Empty suit smoke battery | **3/5**; fails trajectory tracking and disturbance recovery |
 | Suit + mannequin | **5/6**, including support comparison; fails actuator sweep (45/66 track) |
 | Initial pose, self-collision enabled | See [clearance report](examples/14_iron_man_mark_43/clearance_report.json); both box and convex models still fail clearance |
-| Closed STL solids + mass-integral audit | **106/106** |
-| Compound convex collision, initial pose | **409 penetrating contacts**, maximum depth ≈ 9 mm; clearance fails |
+| Closed STL solids + mass-integral audit | **150/150** |
+| Compound convex collision, initial pose | **843 penetrating contacts**, maximum depth ≈ 13 mm; clearance fails |
 | Sampled joint-range clearance | **595 poses checked; fails**; see [witness positions](examples/14_iron_man_mark_43/motion_clearance_report.json) |
 | Film accuracy / wearer fit / fabrication | **Unverified** |
 
@@ -86,7 +88,7 @@ superellipse sections, plates wrapped on cylinders) rather than the hand-sculpte
 of a screen-used suit, and the exoskeleton frame is visible between plates on purpose: this is a
 wearable machine, not a costume. Everything is in `examples/14_iron_man_mark_43/`: prompt,
 `robot.json`, `robot.urdf` (ROS `package://` mesh paths), `robot.sim.urdf` (relative paths for
-MuJoCo/PyBullet), the 106 binary STLs in `meshes/`, both MJCFs (suit, and suit + wearer), BOM,
+MuJoCo/PyBullet), the 150 binary STLs in `meshes/`, both MJCFs (suit, and suit + wearer), BOM,
 `mujoco_report.json` and `mujoco_report_wearer.json`.
 
 ### The polygon mesh engine
@@ -100,7 +102,7 @@ helmet built from a sampled face profile. Every part is a **recipe** — a gener
 parameters — stored in the robot JSON, so the API, the CLI, the exporters and the CAD layer all
 rebuild the identical STL on demand and the browser viewer streams them from `/api/robots/:id/mesh/`.
 Mass properties use exact tetrahedral volume integrals of consistently wound, closed solids.
-Open/nonmanifold meshes are rejected. An independent trimesh audit checks all 106 Mark 43
+Open/nonmanifold meshes are rejected. An independent trimesh audit checks all 150 Mark 43
 STLs against their exported volume, centre of mass and full inertia tensor. Default collision
 uses boxes; the optional Python `ttr-collision` tool exports compound convex geometry.
 CAD tessellations can also be embedded as indexed meshes in the same JSON/export pipeline.
@@ -148,7 +150,7 @@ demo mode), so the repo runs the moment you clone it.
 - 🧪 **Physics-validated** — every example loads and simulates in PyBullet; the generated training suite has been run end to end (RL, imitation, evaluation).
 - 🧪 **MuJoCo, first-class** — `ttr-mujoco` converts the URDF to an actuated MuJoCo scene (mass-scaled servos, floor, free base), runs a simulation test battery, renders headless GIFs, and trains PPO. The battery reports failures; passing is a smoke check, not hardware validation.
 - 🏋️ **Train it** — a downloadable training suite (MuJoCo + PyBullet, Gymnasium, PPO/SAC, imitation learning, evaluation) that loads the generated robot directly.
-- 🚀 **Any robot you can describe** — templates for arms, bases, legged robots and hands, plus sci-fi builds with real mechanisms: a **wearable Iron Man Mark 43 in polygon-mesh armour (97 parts, 49 articulated)** (simulated donning with a person inside), **WALL-E, EVA, Baymax**, spider-bots, Mars rovers, battle mechs.
+- 🚀 **Any robot you can describe** — templates for arms, bases, legged robots and hands, plus sci-fi builds with real mechanisms: a **wearable Iron Man Mark 43 in polygon-mesh armour (150 mesh parts, 49 articulated)** (simulated donning with a person inside), **WALL-E, EVA, Baymax**, spider-bots, Mars rovers, battle mechs.
 - 🖥️ **CLI + HTTP API** — scriptable and embeddable.
 - 🔌 **Pluggable LLMs** — OpenAI, Anthropic, or deterministic demo mode.
 
@@ -486,7 +488,7 @@ See [the fidelity audit and remaining design work](docs/PHYSICAL_FIDELITY.md).
 - [x] Physics validation of all examples (PyBullet)
 - [x] Shareable robot links + persistence + Dockerfile
 - [x] MuJoCo layer: convert, simulation test battery, headless render, PPO training
-- [x] Sci-fi builds with real mechanisms: a wearable Iron Man Mark 43 in procedural polygon armour (97 mesh parts, 49 hinged, motorised helmet) with a simulated donning sequence, WALL-E, EVA, Baymax — concept examples, not hardware-qualified designs
+- [x] Sci-fi builds with real mechanisms: a wearable Iron Man Mark 43 in procedural polygon armour (150 mesh parts, 49 hinged, motorised helmet) with a simulated donning sequence, WALL-E, EVA, Baymax — concept examples, not hardware-qualified designs
 - [x] Procedural polygon mesh parts (`@ttr/mesh`): recipes in the robot JSON, STL on demand, streamed to the viewer, shipped in ROS 2 / training / CAD exports
 
 Future (toward a free hosted service where you describe, download and train a robot):

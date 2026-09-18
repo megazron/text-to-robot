@@ -33,7 +33,7 @@ falls or enlarging actuators. See `mujoco_report*.json` beside the example. The
 mannequin remains ideal welded geometry with disabled human contact; its mass is
 75 kg without hidden decorative mass. It does not demonstrate wearable support.
 
-All **106 exported STL parts** pass independent closed-volume/winding and mass
+All **150 exported STL parts** pass independent closed-volume/winding and mass
 integration checks. Earlier procedural meshes included open seams, degenerate poles,
 self-overlapping helmet detail and filled cuffs. These generators are repaired;
 the faceplate now has geometric eye apertures, the cuffs and pelvis are hollow,
@@ -43,7 +43,7 @@ approximation. See `mesh_quality_report.json` and `scripts/check_mesh_assets.py`
 The configurable neutral stance separates legs and abducts the arms; mirrored
 abduction axes are corrected. These inferred dimensions are not a measured body fit.
 Palette and proportions were compared with [official Hot Toys photographs](https://www.sideshow.com/collectibles/marvel-iron-man-mark-xliii-hot-toys-902314).
-The procedural silhouette still differs substantially from the film suit.
+The authored silhouette still differs from the film suit. See the [visual comparison](MARK43_VISUAL_REVIEW.md), including current front/three-quarter/rear renders and explicit remaining mismatches.
 
 The default URDF retains inexpensive box collision proxies. The optional Python
 `ttr-collision` tool uses [CoACD](https://github.com/SarahWeiii/CoACD) to replace mesh
@@ -52,8 +52,8 @@ MuJoCo mesh collision hull would fill concave shell cavities; see
 [MuJoCo collision documentation](https://mujoco.readthedocs.io/en/latest/computation/).
 The example includes `robot.convex.zip`, a source-hashed decomposition report and an
 initial-pose clearance comparison. **Both collision representations still show
-interference:** 124 box contacts (maximum depth 45 mm), or 409 compound-convex
-contacts (maximum depth 9 mm). The latter uses 2,516 convex pieces from 72 unique
+interference:** 228 box contacts (maximum depth 49 mm), or 843 compound-convex
+contacts (maximum depth 13 mm). The latter uses 2,775 convex pieces from 91 unique
 decompositions; its largest sampled surface deviation is about 7 mm. Contact counts between them are not directly comparable because
 one object pair can produce many convex-hull contact points.
 
