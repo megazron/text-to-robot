@@ -28,3 +28,5 @@ include = ["ttr_mujoco*", "ttr_cad*"]
 
 [tool.setuptools.package-data]
 ttr_cad = ["*.json"]
+
+ttr_mujoco = ["*.json"]

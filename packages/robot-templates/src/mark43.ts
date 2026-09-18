@@ -201,6 +201,29 @@ export function ironManMark43(opts: ExosuitOptions = {}): RobotSpecification {
     part(`${side}_forearm_crest`,`${side}_gauntlet_sleeve`,mesh("mark43_panel",`${side}_forearm_crest.stl`,{style:"gauntlet",w:.079,h:.19,t:.006,R:.3}),[.075,0,-.12],[0,0,0],RED,.06);
   }
 
+  // Film production photos show silver edge trim, small mechanical interfaces
+  // and segmented knuckle armour, not additional large gold rectangles.
+  for(const [side,sign] of SIDES) {
+    for(let i=0;i<3;i++) {
+      part(`${side}_rib_edge_${i}`,"spine_frame",mesh("mark43_panel",`${side}_rib_edge_${i}.stl`,{style:"flank",w:.069,h:.058,t:.0025,R:.30}),[.150-i*.009,sign*(.139-i*.010),.23-i*.065],[0,sign*.13,sign*.40],"mk43_titanium",.025);
+      part(`${side}_rib_insert_${i}`,"spine_frame",mesh("mark43_panel",`${side}_rib_insert_${i}.stl`,{style:"flank",w:.051,h:.041,t:.002,R:.30}),[.154-i*.009,sign*(.139-i*.010),.23-i*.065],[0,sign*.13,sign*.40],GUN,.012);
+    }
+    part(`${side}_collar_inlay`,"spine_frame",mesh("mark43_panel",`${side}_collar_inlay.stl`,{style:"collar",w:.095,h:.041,t:.003,R:.4}),[.115,sign*.102,T+.025],[0,0,0],"mk43_titanium",.03);
+    for(let f=1;f<=4;f++)for(let k=0;k<2;k++)
+      part(`${side}_finger_${f}_knuckle_${k}`,`${side}_finger_${f}`,mesh("mark43_panel",`${side}_finger_${f}_knuckle_${k}.stl`,{style:"collar",w:.014,h:.012,t:.003,R:.5}),[.010,0,-.015-k*.025],[0,0,0],GUN,.003);
+  }
+  const detailedHinges=spec.joints.filter(j=>j.name.endsWith('_hinge')&&/chest_door|lat_plate|thigh_clamshell|gauntlet_clamshell/.test(j.name));
+  for(const hinge of detailedHinges) {
+    // 3 mm pin with 3.2 mm bore. These are dimensioned interface concepts;
+    // leaf brackets, retention and bearing/load qualification remain unverified.
+    const ringGeom=mesh("ring",`${hinge.child}_hinge_knuckle.stl`,{outer:.0055,inner:.0016,height:.009});
+    part(`${hinge.child}_moving_knuckle`,hinge.child,ringGeom,[0,0,0],[0,0,0],"mk43_titanium",.006);
+    for(const sign of [-1,1])part(`${hinge.child}_fixed_knuckle_${sign>0?"upper":"lower"}`,hinge.parent,ringGeom,
+      [hinge.origin.xyz[0],hinge.origin.xyz[1],hinge.origin.xyz[2]+sign*.0105],hinge.origin.rpy,"mk43_titanium",.006);
+    part(`${hinge.child}_hinge_pin`,hinge.child,{type:"cylinder",radius:.0015,length:.034},[0,0,0],[0,0,0],GUN,.0019);
+  }
+  spec.metadata.notes.push("Added 3 mm pin / 3.2 mm bore hinge interfaces and layered rib/knuckle detail. Pins and bores are dimensioned concepts, not structurally qualified mounting assemblies; manual release and ventilation are unverified.");
+
   spec.metadata.notes.push(`Iron Man Mark 43 (Age of Ultron) as a wearable powered exoskeleton under polygon-mesh armour: ${hinges} servo-driven hinged plates (motorised helmet: faceplate, crown panel, two cheek panels, chin guard; chest doors, torso side doors, flight-stabiliser flaps, folding ab segments, codpiece, pauldrons, bicep/gauntlet clamshells, gauntlet hatches, fingers, hip flaps, thigh/calf clamshells, knee caps, shin guards, thruster covers, ankle flaps). Panel map and palette follow the Mark 43 layout; repulsors/thrusters are mount points, not modelled propulsion.`);
   return spec;
 }

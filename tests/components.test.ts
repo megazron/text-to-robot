@@ -31,3 +31,15 @@ test("CAD generates a module per link + assembly", () => {
   for (const l of spec.links) assert.ok(scad.includes("part_" + l.name));
   assert.ok(Object.keys(generateCadFiles(spec)).some((k) => k.endsWith(".scad")));
 });
+
+test('catalogue sizing does not select hypothetical actuators or certify hardware', async()=>{
+  const {ACTUATORS}=await import('../packages/components/src/catalog.ts');
+  const motor=ACTUATORS.find(a=>a.name==='CubeMars AK80-64')!;
+  assert.equal(motor.torque,48);assert.equal(motor.peak_torque,120);
+  const spec=finalizeSpec(nDofArm(6));
+  for(const j of spec.joints)if(j.limit)j.limit.effort=10000;
+  const bom=buildBom(spec,1000000);
+  assert.equal(bom.hardware_verified,false);
+  assert.equal(bom.sizing_pass,false);
+  assert.ok(bom.actuator_sizing.every(s=>!s.chosen.includes('Harmonic Drive')));
+});

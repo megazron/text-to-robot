@@ -5,7 +5,18 @@ Those checks establish valid solids, not visual fidelity. This revision changes 
 actual exported geometry; these images are MuJoCo renders of the URDF/STL assets.
 They are not concept art or image-generation outputs.
 
-Reference inspected: [Hot Toys Mark XLIII, official Sideshow gallery](https://www.sideshow.com/collectibles/marvel-iron-man-mark-xliii-hot-toys-902314),
+Primary reference inspected: [Legacy Effects — Avengers: Age of Ultron](https://www.legacyefx.com/avengersaou),
+including its [production armour photograph](https://images.squarespace-cdn.com/content/v1/5bfdc74875f9ee194f3e0add/1597169230901-1YAKVO4QHQGB94IZ7KF2/2014-02-27_17077.jpg).
+The photograph shows continuous curved pectoral surfaces, silver shoulder-edge
+mechanisms, silver collar panels and rib details wrapped around the flanks.
+Our front render still has flat isolated pectoral plates, front-facing rib rings,
+oversized exposed motor housings and simplified hands. These are unresolved
+shape differences, even after adding collar inlays, rib edges and knuckle tiles.
+The production photograph is perspective imagery, not dimensioned CAD; a numerical
+surface-error comparison would be misleading. Third-party images are linked,
+not redistributed in the repository.
+
+Secondary reference inspected: [Hot Toys Mark XLIII, official Sideshow gallery](https://www.sideshow.com/collectibles/marvel-iron-man-mark-xliii-hot-toys-902314),
 particularly the [full-body three-quarter photograph](https://www.sideshow.com/storage/product-images/902314/iron-man-mark-xliii_marvel_gallery_5c4b8adb3b636_sm.jpg).
 This is a collectible interpretation, not measured screen-used prop geometry.
 No numerical visual-accuracy percentage is claimed.
@@ -43,7 +54,7 @@ animate, hide drive modules, or replace the model with a pre-rendered illustrati
 The same recipes produce the browser meshes and downloadable STL/CAD assets. The
 browser applies a metal finish to Mark 43 materials; geometry remains identical.
 
-150 mesh solids are checked independently for closed topology and mass properties.
+204 mesh instances (188 unique STL assets) are checked independently for closed topology and mass properties.
 This is still an authored approximation, not an extremely accurate replica or a
 manufacturing-qualified assembly. Revised geometry invalidates earlier collision
 numbers; see the current reports in `examples/14_iron_man_mark_43`.

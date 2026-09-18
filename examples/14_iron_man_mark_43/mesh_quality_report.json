@@ -1,8 +1,8 @@
 {
   "scope": "STL closed topology and uniform-solid integrals; no self-intersection, assembly fit or manufacturing qualification",
   "trimesh_version": "4.12.2",
-  "passed": 150,
-  "total": 150,
+  "passed": 204,
+  "total": 204,
   "parts": [
     {
       "part": "pelvis_frame",
@@ -1353,6 +1353,492 @@
       "com_error_m": 3.557920858973662e-10,
       "inertia_relative_error": 1.8389292865967605e-08,
       "sha256": "ea87c2b21fcbc73ae89b985b1bf6120fffe73037ae7974813c7588bb85011d90"
+    },
+    {
+      "part": "left_rib_edge_0",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 7.132893504187598e-09,
+      "com_error_m": 1.051808309367316e-10,
+      "inertia_relative_error": 3.199966049428662e-08,
+      "sha256": "2a968dadf28d00b4f7536c2aadaccd2d07e085ac0630078c615f9e6677309dfa"
+    },
+    {
+      "part": "left_rib_insert_0",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 3.5423080912924115e-08,
+      "com_error_m": 2.4066512920983135e-10,
+      "inertia_relative_error": 4.7629942239239716e-08,
+      "sha256": "2aee1e42635f1715228c3ceed26d5b767f3d8e863d288d72dfb39336feef007d"
+    },
+    {
+      "part": "left_rib_edge_1",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 7.132893504187598e-09,
+      "com_error_m": 1.051808309367316e-10,
+      "inertia_relative_error": 3.199966049428662e-08,
+      "sha256": "2a968dadf28d00b4f7536c2aadaccd2d07e085ac0630078c615f9e6677309dfa"
+    },
+    {
+      "part": "left_rib_insert_1",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 3.5423080912924115e-08,
+      "com_error_m": 2.4066512920983135e-10,
+      "inertia_relative_error": 4.7629942239239716e-08,
+      "sha256": "2aee1e42635f1715228c3ceed26d5b767f3d8e863d288d72dfb39336feef007d"
+    },
+    {
+      "part": "left_rib_edge_2",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 7.132893504187598e-09,
+      "com_error_m": 1.051808309367316e-10,
+      "inertia_relative_error": 3.199966049428662e-08,
+      "sha256": "2a968dadf28d00b4f7536c2aadaccd2d07e085ac0630078c615f9e6677309dfa"
+    },
+    {
+      "part": "left_rib_insert_2",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 3.5423080912924115e-08,
+      "com_error_m": 2.4066512920983135e-10,
+      "inertia_relative_error": 4.7629942239239716e-08,
+      "sha256": "2aee1e42635f1715228c3ceed26d5b767f3d8e863d288d72dfb39336feef007d"
+    },
+    {
+      "part": "left_collar_inlay",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 9.362634276434038e-09,
+      "com_error_m": 1.5107746889446438e-10,
+      "inertia_relative_error": 1.5611451432160446e-08,
+      "sha256": "e1a4b15cc1f63b0a1d11124118ad37183a7bf0965fd0a2f12447ed4d53fbb2be"
+    },
+    {
+      "part": "left_finger_1_knuckle_0",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 9.077881023182784e-09,
+      "com_error_m": 6.291964792606332e-11,
+      "inertia_relative_error": 1.62524654806446e-08,
+      "sha256": "2bbff14927e3a0103dc6ece33211020851dec452d71579565f68b85c56021572"
+    },
+    {
+      "part": "left_finger_1_knuckle_1",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 9.077881023182784e-09,
+      "com_error_m": 6.291964792606332e-11,
+      "inertia_relative_error": 1.62524654806446e-08,
+      "sha256": "2bbff14927e3a0103dc6ece33211020851dec452d71579565f68b85c56021572"
+    },
+    {
+      "part": "left_finger_2_knuckle_0",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 9.077881023182784e-09,
+      "com_error_m": 6.291964792606332e-11,
+      "inertia_relative_error": 1.62524654806446e-08,
+      "sha256": "2bbff14927e3a0103dc6ece33211020851dec452d71579565f68b85c56021572"
+    },
+    {
+      "part": "left_finger_2_knuckle_1",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 9.077881023182784e-09,
+      "com_error_m": 6.291964792606332e-11,
+      "inertia_relative_error": 1.62524654806446e-08,
+      "sha256": "2bbff14927e3a0103dc6ece33211020851dec452d71579565f68b85c56021572"
+    },
+    {
+      "part": "left_finger_3_knuckle_0",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 9.077881023182784e-09,
+      "com_error_m": 6.291964792606332e-11,
+      "inertia_relative_error": 1.62524654806446e-08,
+      "sha256": "2bbff14927e3a0103dc6ece33211020851dec452d71579565f68b85c56021572"
+    },
+    {
+      "part": "left_finger_3_knuckle_1",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 9.077881023182784e-09,
+      "com_error_m": 6.291964792606332e-11,
+      "inertia_relative_error": 1.62524654806446e-08,
+      "sha256": "2bbff14927e3a0103dc6ece33211020851dec452d71579565f68b85c56021572"
+    },
+    {
+      "part": "left_finger_4_knuckle_0",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 9.077881023182784e-09,
+      "com_error_m": 6.291964792606332e-11,
+      "inertia_relative_error": 1.62524654806446e-08,
+      "sha256": "2bbff14927e3a0103dc6ece33211020851dec452d71579565f68b85c56021572"
+    },
+    {
+      "part": "left_finger_4_knuckle_1",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 9.077881023182784e-09,
+      "com_error_m": 6.291964792606332e-11,
+      "inertia_relative_error": 1.62524654806446e-08,
+      "sha256": "2bbff14927e3a0103dc6ece33211020851dec452d71579565f68b85c56021572"
+    },
+    {
+      "part": "right_rib_edge_0",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 7.132893504187598e-09,
+      "com_error_m": 1.051808309367316e-10,
+      "inertia_relative_error": 3.199966049428662e-08,
+      "sha256": "2a968dadf28d00b4f7536c2aadaccd2d07e085ac0630078c615f9e6677309dfa"
+    },
+    {
+      "part": "right_rib_insert_0",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 3.5423080912924115e-08,
+      "com_error_m": 2.4066512920983135e-10,
+      "inertia_relative_error": 4.7629942239239716e-08,
+      "sha256": "2aee1e42635f1715228c3ceed26d5b767f3d8e863d288d72dfb39336feef007d"
+    },
+    {
+      "part": "right_rib_edge_1",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 7.132893504187598e-09,
+      "com_error_m": 1.051808309367316e-10,
+      "inertia_relative_error": 3.199966049428662e-08,
+      "sha256": "2a968dadf28d00b4f7536c2aadaccd2d07e085ac0630078c615f9e6677309dfa"
+    },
+    {
+      "part": "right_rib_insert_1",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 3.5423080912924115e-08,
+      "com_error_m": 2.4066512920983135e-10,
+      "inertia_relative_error": 4.7629942239239716e-08,
+      "sha256": "2aee1e42635f1715228c3ceed26d5b767f3d8e863d288d72dfb39336feef007d"
+    },
+    {
+      "part": "right_rib_edge_2",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 7.132893504187598e-09,
+      "com_error_m": 1.051808309367316e-10,
+      "inertia_relative_error": 3.199966049428662e-08,
+      "sha256": "2a968dadf28d00b4f7536c2aadaccd2d07e085ac0630078c615f9e6677309dfa"
+    },
+    {
+      "part": "right_rib_insert_2",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 3.5423080912924115e-08,
+      "com_error_m": 2.4066512920983135e-10,
+      "inertia_relative_error": 4.7629942239239716e-08,
+      "sha256": "2aee1e42635f1715228c3ceed26d5b767f3d8e863d288d72dfb39336feef007d"
+    },
+    {
+      "part": "right_collar_inlay",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 9.362634276434038e-09,
+      "com_error_m": 1.5107746889446438e-10,
+      "inertia_relative_error": 1.5611451432160446e-08,
+      "sha256": "e1a4b15cc1f63b0a1d11124118ad37183a7bf0965fd0a2f12447ed4d53fbb2be"
+    },
+    {
+      "part": "right_finger_1_knuckle_0",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 9.077881023182784e-09,
+      "com_error_m": 6.291964792606332e-11,
+      "inertia_relative_error": 1.62524654806446e-08,
+      "sha256": "2bbff14927e3a0103dc6ece33211020851dec452d71579565f68b85c56021572"
+    },
+    {
+      "part": "right_finger_1_knuckle_1",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 9.077881023182784e-09,
+      "com_error_m": 6.291964792606332e-11,
+      "inertia_relative_error": 1.62524654806446e-08,
+      "sha256": "2bbff14927e3a0103dc6ece33211020851dec452d71579565f68b85c56021572"
+    },
+    {
+      "part": "right_finger_2_knuckle_0",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 9.077881023182784e-09,
+      "com_error_m": 6.291964792606332e-11,
+      "inertia_relative_error": 1.62524654806446e-08,
+      "sha256": "2bbff14927e3a0103dc6ece33211020851dec452d71579565f68b85c56021572"
+    },
+    {
+      "part": "right_finger_2_knuckle_1",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 9.077881023182784e-09,
+      "com_error_m": 6.291964792606332e-11,
+      "inertia_relative_error": 1.62524654806446e-08,
+      "sha256": "2bbff14927e3a0103dc6ece33211020851dec452d71579565f68b85c56021572"
+    },
+    {
+      "part": "right_finger_3_knuckle_0",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 9.077881023182784e-09,
+      "com_error_m": 6.291964792606332e-11,
+      "inertia_relative_error": 1.62524654806446e-08,
+      "sha256": "2bbff14927e3a0103dc6ece33211020851dec452d71579565f68b85c56021572"
+    },
+    {
+      "part": "right_finger_3_knuckle_1",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 9.077881023182784e-09,
+      "com_error_m": 6.291964792606332e-11,
+      "inertia_relative_error": 1.62524654806446e-08,
+      "sha256": "2bbff14927e3a0103dc6ece33211020851dec452d71579565f68b85c56021572"
+    },
+    {
+      "part": "right_finger_4_knuckle_0",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 9.077881023182784e-09,
+      "com_error_m": 6.291964792606332e-11,
+      "inertia_relative_error": 1.62524654806446e-08,
+      "sha256": "2bbff14927e3a0103dc6ece33211020851dec452d71579565f68b85c56021572"
+    },
+    {
+      "part": "right_finger_4_knuckle_1",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 9.077881023182784e-09,
+      "com_error_m": 6.291964792606332e-11,
+      "inertia_relative_error": 1.62524654806446e-08,
+      "sha256": "2bbff14927e3a0103dc6ece33211020851dec452d71579565f68b85c56021572"
+    },
+    {
+      "part": "left_chest_door_moving_knuckle",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 2.5429783923125802e-08,
+      "com_error_m": 1.394539181768332e-19,
+      "inertia_relative_error": 4.5400504710734405e-08,
+      "sha256": "7a727e17085d00d0411e04a3fcba26a6ef9c099b82da6fe46be0f514911c7948"
+    },
+    {
+      "part": "left_chest_door_fixed_knuckle_lower",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 2.5429783923125802e-08,
+      "com_error_m": 1.394539181768332e-19,
+      "inertia_relative_error": 4.5400504710734405e-08,
+      "sha256": "7a727e17085d00d0411e04a3fcba26a6ef9c099b82da6fe46be0f514911c7948"
+    },
+    {
+      "part": "left_chest_door_fixed_knuckle_upper",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 2.5429783923125802e-08,
+      "com_error_m": 1.394539181768332e-19,
+      "inertia_relative_error": 4.5400504710734405e-08,
+      "sha256": "7a727e17085d00d0411e04a3fcba26a6ef9c099b82da6fe46be0f514911c7948"
+    },
+    {
+      "part": "right_chest_door_moving_knuckle",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 2.5429783923125802e-08,
+      "com_error_m": 1.394539181768332e-19,
+      "inertia_relative_error": 4.5400504710734405e-08,
+      "sha256": "7a727e17085d00d0411e04a3fcba26a6ef9c099b82da6fe46be0f514911c7948"
+    },
+    {
+      "part": "right_chest_door_fixed_knuckle_lower",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 2.5429783923125802e-08,
+      "com_error_m": 1.394539181768332e-19,
+      "inertia_relative_error": 4.5400504710734405e-08,
+      "sha256": "7a727e17085d00d0411e04a3fcba26a6ef9c099b82da6fe46be0f514911c7948"
+    },
+    {
+      "part": "right_chest_door_fixed_knuckle_upper",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 2.5429783923125802e-08,
+      "com_error_m": 1.394539181768332e-19,
+      "inertia_relative_error": 4.5400504710734405e-08,
+      "sha256": "7a727e17085d00d0411e04a3fcba26a6ef9c099b82da6fe46be0f514911c7948"
+    },
+    {
+      "part": "left_lat_plate_moving_knuckle",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 2.5429783923125802e-08,
+      "com_error_m": 1.394539181768332e-19,
+      "inertia_relative_error": 4.5400504710734405e-08,
+      "sha256": "7a727e17085d00d0411e04a3fcba26a6ef9c099b82da6fe46be0f514911c7948"
+    },
+    {
+      "part": "left_lat_plate_fixed_knuckle_lower",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 2.5429783923125802e-08,
+      "com_error_m": 1.394539181768332e-19,
+      "inertia_relative_error": 4.5400504710734405e-08,
+      "sha256": "7a727e17085d00d0411e04a3fcba26a6ef9c099b82da6fe46be0f514911c7948"
+    },
+    {
+      "part": "left_lat_plate_fixed_knuckle_upper",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 2.5429783923125802e-08,
+      "com_error_m": 1.394539181768332e-19,
+      "inertia_relative_error": 4.5400504710734405e-08,
+      "sha256": "7a727e17085d00d0411e04a3fcba26a6ef9c099b82da6fe46be0f514911c7948"
+    },
+    {
+      "part": "right_lat_plate_moving_knuckle",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 2.5429783923125802e-08,
+      "com_error_m": 1.394539181768332e-19,
+      "inertia_relative_error": 4.5400504710734405e-08,
+      "sha256": "7a727e17085d00d0411e04a3fcba26a6ef9c099b82da6fe46be0f514911c7948"
+    },
+    {
+      "part": "right_lat_plate_fixed_knuckle_lower",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 2.5429783923125802e-08,
+      "com_error_m": 1.394539181768332e-19,
+      "inertia_relative_error": 4.5400504710734405e-08,
+      "sha256": "7a727e17085d00d0411e04a3fcba26a6ef9c099b82da6fe46be0f514911c7948"
+    },
+    {
+      "part": "right_lat_plate_fixed_knuckle_upper",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 2.5429783923125802e-08,
+      "com_error_m": 1.394539181768332e-19,
+      "inertia_relative_error": 4.5400504710734405e-08,
+      "sha256": "7a727e17085d00d0411e04a3fcba26a6ef9c099b82da6fe46be0f514911c7948"
+    },
+    {
+      "part": "left_gauntlet_clamshell_moving_knuckle",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 2.5429783923125802e-08,
+      "com_error_m": 1.394539181768332e-19,
+      "inertia_relative_error": 4.5400504710734405e-08,
+      "sha256": "7a727e17085d00d0411e04a3fcba26a6ef9c099b82da6fe46be0f514911c7948"
+    },
+    {
+      "part": "left_gauntlet_clamshell_fixed_knuckle_lower",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 2.5429783923125802e-08,
+      "com_error_m": 1.394539181768332e-19,
+      "inertia_relative_error": 4.5400504710734405e-08,
+      "sha256": "7a727e17085d00d0411e04a3fcba26a6ef9c099b82da6fe46be0f514911c7948"
+    },
+    {
+      "part": "left_gauntlet_clamshell_fixed_knuckle_upper",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 2.5429783923125802e-08,
+      "com_error_m": 1.394539181768332e-19,
+      "inertia_relative_error": 4.5400504710734405e-08,
+      "sha256": "7a727e17085d00d0411e04a3fcba26a6ef9c099b82da6fe46be0f514911c7948"
+    },
+    {
+      "part": "right_gauntlet_clamshell_moving_knuckle",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 2.5429783923125802e-08,
+      "com_error_m": 1.394539181768332e-19,
+      "inertia_relative_error": 4.5400504710734405e-08,
+      "sha256": "7a727e17085d00d0411e04a3fcba26a6ef9c099b82da6fe46be0f514911c7948"
+    },
+    {
+      "part": "right_gauntlet_clamshell_fixed_knuckle_lower",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 2.5429783923125802e-08,
+      "com_error_m": 1.394539181768332e-19,
+      "inertia_relative_error": 4.5400504710734405e-08,
+      "sha256": "7a727e17085d00d0411e04a3fcba26a6ef9c099b82da6fe46be0f514911c7948"
+    },
+    {
+      "part": "right_gauntlet_clamshell_fixed_knuckle_upper",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 2.5429783923125802e-08,
+      "com_error_m": 1.394539181768332e-19,
+      "inertia_relative_error": 4.5400504710734405e-08,
+      "sha256": "7a727e17085d00d0411e04a3fcba26a6ef9c099b82da6fe46be0f514911c7948"
+    },
+    {
+      "part": "left_thigh_clamshell_moving_knuckle",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 2.5429783923125802e-08,
+      "com_error_m": 1.394539181768332e-19,
+      "inertia_relative_error": 4.5400504710734405e-08,
+      "sha256": "7a727e17085d00d0411e04a3fcba26a6ef9c099b82da6fe46be0f514911c7948"
+    },
+    {
+      "part": "left_thigh_clamshell_fixed_knuckle_lower",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 2.5429783923125802e-08,
+      "com_error_m": 1.394539181768332e-19,
+      "inertia_relative_error": 4.5400504710734405e-08,
+      "sha256": "7a727e17085d00d0411e04a3fcba26a6ef9c099b82da6fe46be0f514911c7948"
+    },
+    {
+      "part": "left_thigh_clamshell_fixed_knuckle_upper",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 2.5429783923125802e-08,
+      "com_error_m": 1.394539181768332e-19,
+      "inertia_relative_error": 4.5400504710734405e-08,
+      "sha256": "7a727e17085d00d0411e04a3fcba26a6ef9c099b82da6fe46be0f514911c7948"
+    },
+    {
+      "part": "right_thigh_clamshell_moving_knuckle",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 2.5429783923125802e-08,
+      "com_error_m": 1.394539181768332e-19,
+      "inertia_relative_error": 4.5400504710734405e-08,
+      "sha256": "7a727e17085d00d0411e04a3fcba26a6ef9c099b82da6fe46be0f514911c7948"
+    },
+    {
+      "part": "right_thigh_clamshell_fixed_knuckle_lower",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 2.5429783923125802e-08,
+      "com_error_m": 1.394539181768332e-19,
+      "inertia_relative_error": 4.5400504710734405e-08,
+      "sha256": "7a727e17085d00d0411e04a3fcba26a6ef9c099b82da6fe46be0f514911c7948"
+    },
+    {
+      "part": "right_thigh_clamshell_fixed_knuckle_upper",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 2.5429783923125802e-08,
+      "com_error_m": 1.394539181768332e-19,
+      "inertia_relative_error": 4.5400504710734405e-08,
+      "sha256": "7a727e17085d00d0411e04a3fcba26a6ef9c099b82da6fe46be0f514911c7948"
     }
   ]
 }

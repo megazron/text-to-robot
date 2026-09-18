@@ -9,7 +9,7 @@ const prompt = "Build me a movie-accurate wearable Iron Man Mark 43 suit from Ag
 const dir = "examples/14_iron_man_mark_43";
 // Preserve hardware manifests and CAD work; invalidate only generated model reports.
 rmSync(dir+"/meshes", { recursive: true, force: true }); mkdirSync(dir + "/meshes", { recursive: true });
-for(const file of ["mujoco_report.json","mujoco_report_wearer.json","clearance_report.json","mesh_quality_report.json","motion_clearance_report.json","collision_report.json","robot.convex.zip","iron_man_mark_43.mjcf.xml","iron_man_mark_43_with_wearer.mjcf.xml"])
+for(const file of ["moveit_report.json","wearability_report.json","robot.ros2.zip","robot.training.zip","robot.cad.zip","mujoco_report.json","mujoco_report_wearer.json","clearance_report.json","mesh_quality_report.json","motion_clearance_report.json","collision_report.json","robot.convex.zip","iron_man_mark_43.mjcf.xml","iron_man_mark_43_with_wearer.mjcf.xml"])
   rmSync(`${dir}/${file}`,{force:true});
 const res = await generateRobot(prompt,{provider:new DemoProvider()});
 console.log(res.robot.robot_name, res.validation.valid, res.urdfValidation.valid, res.robot.links.length, "links", res.warnings);

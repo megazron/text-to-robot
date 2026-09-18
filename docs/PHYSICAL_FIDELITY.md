@@ -33,7 +33,7 @@ falls or enlarging actuators. See `mujoco_report*.json` beside the example. The
 mannequin remains ideal welded geometry with disabled human contact; its mass is
 75 kg without hidden decorative mass. It does not demonstrate wearable support.
 
-All **150 exported STL parts** pass independent closed-volume/winding and mass
+All **204 exported mesh instances** pass independent closed-volume/winding and mass
 integration checks. Earlier procedural meshes included open seams, degenerate poles,
 self-overlapping helmet detail and filled cuffs. These generators are repaired;
 the faceplate now has geometric eye apertures, the cuffs and pelvis are hollow,
@@ -52,7 +52,7 @@ MuJoCo mesh collision hull would fill concave shell cavities; see
 [MuJoCo collision documentation](https://mujoco.readthedocs.io/en/latest/computation/).
 The example includes `robot.convex.zip`, a source-hashed decomposition report and an
 initial-pose clearance comparison. **Both collision representations still show
-interference:** 228 box contacts (maximum depth 49 mm), or 843 compound-convex
+interference:** 236 box contacts (maximum depth 49 mm), or 843 compound-convex
 contacts (maximum depth 13 mm). The latter uses 2,775 convex pieces from 91 unique
 decompositions; its largest sampled surface deviation is about 7 mm. Contact counts between them are not directly comparable because
 one object pair can produce many convex-hull contact points.
@@ -131,3 +131,24 @@ The mesh audit and regression tests gate CI. Concept balance/tracking diagnostic
 are uploaded separately even when they fail. They are evidence of the remaining
 physical problems, not software tests whose expected answer should be changed to
 make the model look successful.
+
+## ROS planning, wearer measurements and component ratings
+
+ROS 2 Jazzy mock controllers and the planning scene were exercised locally. The
+six-axis arm fixture planned and executed; Mark 43 still fails start-state
+collision validation using mesh-triangle collisions. The generated launch is
+mock hardware, not a hardware driver or MuJoCo bridge. See the example's
+`moveit_report.json` and `moveit_fixture_report.json`.
+
+`python -m ttr_mujoco.wearability --help` exposes the dimensioned fit audit. Copy
+`python/ttr_mujoco/wearer.example.json` and replace its illustrative measurements.
+The example's `wearability_report.json` reports opening and contact failures;
+opening every armour hinge does not demonstrate an entry path. Ventilation and
+manual release remain unverified. It always retains `build_ready: false` because
+these dimensional checks cannot qualify a wearable.
+
+The actuator catalogue now distinguishes the AK80-64's manufacturer-rated 48 Nm
+from its 120 Nm peak rating, and excludes the custom harmonic-drive placeholder
+from automatic selection. BOM budget feasibility does not establish torque-sizing
+success or verified hardware. No real mounting interface is inferred from a
+catalogue name.

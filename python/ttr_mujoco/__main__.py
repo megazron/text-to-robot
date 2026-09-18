@@ -18,6 +18,7 @@ def main(argv=None):
     tr = sub.add_parser("train", help="PPO in MuJoCo"); tr.add_argument("model"); tr.add_argument("--task", default="stand"); tr.add_argument("--steps", type=int, default=100_000); tr.add_argument("--out", default="ppo_mujoco")
     for parser in (c, t, r, tr):
         parser.add_argument("--self-collision", action="store_true", help="enable robot collision checks when converting URDF (reveals intersecting parts)")
+    tr.add_argument("--tip-body"); tr.add_argument("--seed",type=int,default=0)
     a = ap.parse_args(argv)
     fl = True if getattr(a, "floating", False) else (False if getattr(a, "fixed", False) else None)
     def model_xml(path):
@@ -42,7 +43,7 @@ def main(argv=None):
         print("wrote", render_gif(xml, a.out, seconds=a.seconds, motion=a.motion, label=a.label, floating=fl, unpowered=getattr(a, "unpowered", False), orbit=a.orbit, azimuth=a.azimuth, zoom=a.zoom, width=a.width, height=a.height, fps=a.fps, focus=a.focus, elevation=a.elevation))
     elif a.cmd == "train":
         from .train import train
-        print("saved", train(a.model, a.task, a.steps, a.out, self_collision=a.self_collision))
+        print("saved", train(a.model, a.task, a.steps, a.out, self_collision=a.self_collision, tip_body=a.tip_body, seed=a.seed))
 
 
 if __name__ == "__main__":

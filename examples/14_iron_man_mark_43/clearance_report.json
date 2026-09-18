@@ -2,7 +2,7 @@
   "mujoco_version": "3.13.0",
   "scope": "Initial pose only; adjacent-body exclusions apply. No human-fit or motion-path validation.",
   "bounding_boxes": {
-    "penetration_count": 228,
+    "penetration_count": 236,
     "max_depth_m": 0.049426140580999985,
     "contacts": [
       {
@@ -226,6 +226,26 @@
         "depth_m": 0.021109499999999982
       },
       {
+        "body1": "left_pauldron",
+        "body2": "left_collar_inlay",
+        "depth_m": 0.0026614999999999894
+      },
+      {
+        "body1": "left_pauldron",
+        "body2": "left_collar_inlay",
+        "depth_m": 0.0026614999999999894
+      },
+      {
+        "body1": "left_pauldron",
+        "body2": "left_collar_inlay",
+        "depth_m": 0.0026614999999999894
+      },
+      {
+        "body1": "left_pauldron",
+        "body2": "left_collar_inlay",
+        "depth_m": 0.0026614999999999894
+      },
+      {
         "body1": "right_hand",
         "body2": "right_gauntlet_clamshell",
         "depth_m": 0.012679499999999901
@@ -384,6 +404,26 @@
         "body1": "right_pauldron",
         "body2": "right_chest_door",
         "depth_m": 0.021101999999999982
+      },
+      {
+        "body1": "right_pauldron",
+        "body2": "right_collar_inlay",
+        "depth_m": 0.0026614999999999894
+      },
+      {
+        "body1": "right_pauldron",
+        "body2": "right_collar_inlay",
+        "depth_m": 0.0026614999999999894
+      },
+      {
+        "body1": "right_pauldron",
+        "body2": "right_collar_inlay",
+        "depth_m": 0.0026614999999999894
+      },
+      {
+        "body1": "right_pauldron",
+        "body2": "right_collar_inlay",
+        "depth_m": 0.0026614999999999894
       },
       {
         "body1": "helmet_crown_panel",

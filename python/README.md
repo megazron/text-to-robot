@@ -82,3 +82,20 @@ masks. It records body pairs and witness joint positions. Samples move one joint
 a time; a pass cannot certify the continuous or combined configuration space.
 Actuator smoke tests now report RMS tracking over the full command trajectory,
 using explicit 0.15 rad/0.01 m tolerances rather than final-sample coincidence.
+
+## Reaching and measured fit
+
+Reaching requires an explicit tool body, for example
+`ttr-mujoco train arm.urdf --task reach --tip-body gripper_base --self-collision`.
+The named body must exist in the model. Training smoke runs do not establish a
+capable policy.
+
+Copy `ttr_mujoco/wearer.example.json`, enter measured dimensions, then run:
+
+```bash
+python -m ttr_mujoco.wearability robot.json wearer.json --json wearability_report.json
+# Add --mjcf model.xml for static human-contact checks.
+```
+
+Open/closed pose checks do not validate insertion paths, ventilation or powered
+human operation. The report keeps those limitations explicit.

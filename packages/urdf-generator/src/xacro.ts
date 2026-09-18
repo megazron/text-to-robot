@@ -41,13 +41,13 @@ function inertialCall(l: Link): string {
   }
 }
 
-function xacroLink(l: Link): string {
+function xacroLink(l: Link, meshCollisions = false): string {
   const vis = "  " + generateVisual(l).split("\n").join("\n  ");
-  const col = "  " + generateCollision(l).split("\n").join("\n  ");
+  const col = "  " + generateCollision(l,meshCollisions).split("\n").join("\n  ");
   return `<link name="${xmlName(l.name)}">\n${vis}\n${col}\n${inertialCall(l)}\n</link>`;
 }
 
-export function generateXacro(spec: RobotSpecification, opts: { meshPrefix?: string } = {}): string {
+export function generateXacro(spec: RobotSpecification, opts: { meshPrefix?: string; meshCollisions?: boolean } = {}): string {
   if (opts.meshPrefix !== undefined) setMeshPrefix(opts.meshPrefix); else setMeshPackage(spec.robot_name);
   const parts: string[] = [];
   parts.push(`<?xml version="1.0"?>`);
@@ -56,7 +56,7 @@ export function generateXacro(spec: RobotSpecification, opts: { meshPrefix?: str
   parts.push(`  <xacro:property name="scale" value="1.0"/>`);
   parts.push(MACROS);
   for (const m of spec.materials) parts.push("  " + generateMaterial(m));
-  for (const l of spec.links) parts.push(indentBlock(xacroLink(l)));
+  for (const l of spec.links) parts.push(indentBlock(xacroLink(l,opts.meshCollisions)));
   for (const j of spec.joints) parts.push(indentBlock(generateJoint(j)));
   parts.push(`</robot>`);
   return parts.join("\n") + "\n";
