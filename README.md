@@ -102,12 +102,25 @@ locally and checked against saved iterations; see the [reference workflow](refer
 | Empty-suit smoke battery, self-collision off | 3/5; tracking and disturbance recovery fail |
 | Suit with passive mannequin, human/self-contact disabled | See loaded physics report; actuator tracking still fails |
 | Compound-convex initial collision | See regenerated clearance report; interference remains |
-| Collision-enabled suit smoke battery | 1/6; see the example simulation report |
+| Collision-enabled suit smoke battery | 2/6; clearance, settling, pose holding and tracking still fail |
 | Joint-range clearance | See regenerated motion-clearance report; interference remains |
-| ROS 2 Jazzy / MoveIt | Controllers and scene start; suit planning fails collision validation |
+| ROS 2 Jazzy / MoveIt | 85 neutral contacts (previously 179); planning still fails collision validation |
 | Six-axis arm MoveIt fixture | Planning and mock trajectory execution pass |
 | Wearer fit | Example measurements fail opening/clearance checks |
 | Breathing, structural strength, real hardware | Unverified |
+
+The latest geometry revision reduces the independent surface-intersection count
+from **175 to 81** (94 resolved; no new neutral pairs). It corrects mirrored chest
+wall thickness, torso/arm overlap, cuff clearance, clamshell seams and palm placement.
+The full battery envelope is retained and moved rearward; the rear silhouette is
+therefore still bulky. [Before/after evidence and remaining failures](examples/14_iron_man_mark_43/surface_contact_comparison.json).
+
+Five sampled positions per wrist and chest-door hinge introduced no additional
+surface intersections. This is not continuous-motion, human-fit or force validation.
+
+| Previous exported geometry | Current exported geometry |
+|---|---|
+| ![Before clearance changes](docs/img/mark43_before_clearance.png) | ![After clearance changes](docs/img/mark43_front_review.png) |
 
 Reports and downloadable files:
 

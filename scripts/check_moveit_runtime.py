@@ -1,15 +1,15 @@
 """Check an already-running generated MoveIt mock launch. Requires sourced ROS 2."""
-import argparse,json,time
+import argparse,hashlib,json,time
 from pathlib import Path
 import rclpy
 from rclpy.action import ActionClient
 from controller_manager_msgs.srv import ListControllers
-from moveit_msgs.srv import GetMotionPlan,GetPlanningScene
-from moveit_msgs.msg import Constraints,JointConstraint
+from moveit_msgs.srv import GetMotionPlan,GetPlanningScene,GetStateValidity
+from moveit_msgs.msg import Constraints,JointConstraint,PlanningSceneComponents
 from moveit_msgs.action import ExecuteTrajectory
 
 p=argparse.ArgumentParser(description=__doc__);p.add_argument('--group',default='arm');p.add_argument('--joints',nargs='+',default=[f'joint_{i}' for i in range(1,7)])
-p.add_argument('--execute',action='store_true');p.add_argument('--json',type=Path,required=True);a=p.parse_args()
+p.add_argument('--robot',type=Path);p.add_argument('--execute',action='store_true');p.add_argument('--json',type=Path,required=True);a=p.parse_args()
 rclpy.init();node=rclpy.create_node('ttr_export_validation')
 def call(typ,name,request):
     client=node.create_client(typ,name)
@@ -25,7 +25,10 @@ try:
         active=all(states.get(k)=='active' for k in ('joint_state_broadcaster','joint_trajectory_controller'))
         if active or time.monotonic()>deadline:break
         rclpy.spin_once(node,timeout_sec=.2)
-    scene=call(GetPlanningScene,'/get_planning_scene',GetPlanningScene.Request())
+    scene_request=GetPlanningScene.Request();scene_request.components.components=PlanningSceneComponents.ROBOT_STATE
+    scene=call(GetPlanningScene,'/get_planning_scene',scene_request)
+    validity_request=GetStateValidity.Request();validity_request.robot_state=scene.scene.robot_state
+    validity=call(GetStateValidity,'/check_state_validity',validity_request)
     request=GetMotionPlan.Request();q=request.motion_plan_request;q.group_name=a.group;q.allowed_planning_time=5.;q.num_planning_attempts=1
     q.max_velocity_scaling_factor=.2;q.max_acceleration_scaling_factor=.2;q.start_state.is_diff=True
     goal=Constraints()
@@ -36,6 +39,11 @@ try:
         'controllers':states,'controllers_active':active,'planning_scene_available':True,'group':a.group,
         'planning_error_code':response.error_code.val,'planning_pass':response.error_code.val==1,
         'trajectory_points':len(response.trajectory.joint_trajectory.points),'execution_requested':a.execute}
+    report['start_state_valid']=validity.valid
+    report['start_state_contacts']=[{'bodies':[c.contact_body_1,c.contact_body_2],'depth_m':c.depth} for c in validity.contacts]
+    report['start_state_contact_count']=len(validity.contacts)
+    report['contact_scope']='Contacts returned by GetStateValidity; service contact limits may truncate the list'
+    if a.robot:report['robot_sha256']=hashlib.sha256(a.robot.read_bytes()).hexdigest()
     if a.execute and report['planning_pass']:
         action=ActionClient(node,ExecuteTrajectory,'/execute_trajectory');assert action.wait_for_server(timeout_sec=30)
         g=ExecuteTrajectory.Goal();g.trajectory=response.trajectory

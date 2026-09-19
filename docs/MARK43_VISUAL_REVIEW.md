@@ -99,3 +99,38 @@ backpack as major visual failures. More joints do not establish movie accuracy.
 [Finger, neck and chest-motion GIFs](../examples/14_iron_man_mark_43/README.md)
 use prescribed joint positions with collisions disabled. The separate collision
 reports retain the failures; animation is not a clearance certificate.
+
+## Torso and limb clearance revision
+
+The chest solids are now mirrored **after** wall thickness is applied. Previously
+the right panel thickened in the opposite direction. Torso flank covers now use
+an axillary cutaway instead of the forearm-shell recipe. Chest lower edges clear
+the first abdominal plate; the bottom abdominal plate clears the belt. Full-size
+battery/compute geometry is offset rearward to clear flank hinges, which increases
+the already non-film-like backpack projection.
+
+Limb shells provide room around the existing cuffs. Clamshell seams have a small
+angular gap; fingers and palms begin beyond the wrist. Knee shields and rear
+covers have clearance from the parts behind them. These are concept geometry
+changes, not manufactured assemblies or demonstrated wearer fit.
+
+The same offline surface test found 175 neutral intersecting pairs before and 81
+after, with 94 resolved and no newly intersecting pairs. Native MoveIt found 85
+contacts and still rejects planning. These counts differ because the surface
+check tessellates primitives and does not test full containment. The compound
+MuJoCo collision audit remains necessary.
+
+The shoulder prototype was not retained: it introduced intersections or an
+unsuitable silhouette. Shoulder coverage, helmet topology, hip/boot interfaces,
+exposed actuators and the torso styling still need substantial work. The fresh
+renders still do not match the production photograph closely enough to claim
+movie accuracy.
+
+Reproduce the independent surface and sampled-motion check:
+
+```bash
+pip install './python[geometry]'
+python scripts/audit_surface_contacts.py examples/14_iron_man_mark_43/robot.sim.urdf \
+  --json /tmp/surface.json --joints left_wrist_flexion right_wrist_flexion \
+  left_chest_door_hinge right_chest_door_hinge
+```

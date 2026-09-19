@@ -2,7 +2,7 @@
 // (server, exporters, CAD, tests) can rebuild the identical mesh from that recipe.
 import { type Mesh, massProperties, bbox, translate, rotate, scale as scaleMesh, orient } from "./core.ts";
 import { curvedPlate, limbShell, dome, disc, ring, superArc, shelledLoft } from "./shapes.ts";
-import { limbInset, chestSurfacePanel, armourPanel, sculptedLimb, shoulderShell, bootShell } from "./mark43.ts";
+import { torsoSide, limbInset, chestSurfacePanel, armourPanel, sculptedLimb, shoulderShell, bootShell } from "./mark43.ts";
 import * as helmet from "./helmet.ts";
 
 export type Params = Record<string, number | string>;
@@ -23,6 +23,7 @@ function armourPlate(p: Params): Mesh {
 }
 
 export const PARTS: Record<string, Gen> = {
+  mark43_torso_side: p => torsoSide(num(p,"side",1)),
   mark43_chest: p => chestSurfacePanel(num(p,"side",1),str(p,"section","lower")==="upper"),
   mark43_boot: () => bootShell(),
   mark43_panel: p => armourPanel(str(p,"style","sternum"),num(p,"w",.1),num(p,"h",.1),num(p,"t",.004),num(p,"R",.3)),

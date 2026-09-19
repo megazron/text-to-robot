@@ -24,10 +24,10 @@ export function armourPanel(style:string,w:number,h:number,t:number,R:number):Me
   return loft([wrap(inner,t),wrap(outer,t-bevel),wrap(outer,bevel),wrap(inner,0)],{closed:true,capStart:true,capEnd:true});
 }
 const limbProfiles:Record<string,number[][]>={
-    thigh:[[0,.90,.94,0],[.14,1.04,1.0,.025],[.40,.99,.94,.035],[.72,.88,.86,.03],[1,.76,.78,.04]],
-    shin:[[0,.94,.92,0],[.20,1.03,1.0,-.025],[.48,.91,.88,0],[.76,.77,.78,.03],[1,.70,.74,.055]],
-    arm:[[0,.85,.90,0],[.22,1.03,1.0,0],[.52,1,.96,0],[.8,.87,.86,0],[1,.78,.82,0]],
-    forearm:[[0,.86,.93,0],[.18,1.07,1.04,0],[.40,1.0,.99,.03],[.74,.83,.88,.04],[1,.71,.77,.03]],
+    thigh:[[0,.90,.94,0],[.14,1.04,1.0,.025],[.40,1.05,1.02,.035],[.72,1.04,1.04,.03],[1,.76,.78,.04]],
+    shin:[[0,.94,.92,0],[.20,1.03,1.0,-.025],[.48,1.04,1.02,0],[.76,.90,.94,.03],[1,.70,.74,.055]],
+    arm:[[0,.85,.90,0],[.22,1.03,1.0,0],[.52,1.05,1.05,0],[.8,1.0,1.0,0],[1,.78,.82,0]],
+    forearm:[[0,.86,.93,0],[.18,1.07,1.04,0],[.40,1.0,.99,.03],[.74,1.04,.97,.04],[1,.71,.77,.03]],
   };
 
 export function sculptedLimb(length:number,rTop:number,rBottom:number,a0:number,a1:number,thickness:number,style:string):Mesh {
@@ -65,13 +65,14 @@ export function chestSurfacePanel(side:number, upper:boolean):Mesh {
       const v=upper ? cut+.007+(1-cut-.007)*j/18 : (cut-.007)*j/18;
       const width=.58+.42*Math.sin(Math.PI*(.03+.78*v));
       const y=.0015+.233*u*width;
-      const z=-.155+.31*v-.025*u*u;
+      const z=-.090+.245*v-.005*u*u;
       const x=.145+.026*Math.sin(Math.PI*v)-.118*Math.pow(u,2.4);
-      row.push([x,side*y,z]);
+      row.push([x,y,z]);
     }
     rows.push(row);
   }
-  return shell(loft(rows,{closed:false}),.006);
+  const panel=shell(loft(rows,{closed:false}),.006);
+  return side<0?mirrorY(panel):panel;
 }
 
 /** Surface-following inset, sampled from the SAME longitudinal profile as the
@@ -91,4 +92,13 @@ export function limbInset(length:number,rTop:number,rBottom:number,style:string,
     rows.push(superArc(radius*dx+offset,radius*dy+offset,-length*u,mid-half,mid+half,17,2.65,cx*rTop));
   }
   return shell(flip(loft(rows,{closed:false})),.002);
+}
+
+/** Torso flank with an axillary cutaway. Its upper width must not occupy the
+ * upper-arm cavity; this profile is separate from the forearm shell recipe. */
+export function torsoSide(side:number):Mesh {
+  const rows=[[0,.112,.112],[.065,.130,.140],[.145,.137,.166],[.265,.125,.153],[.35,.110,.133]];
+  const sections=rows.map(([d,rx,ry])=>superArc(rx,ry,-d,1.32,2.57,33,2.4));
+  const mesh=shell(flip(loft(sections,{closed:false})),.005);
+  return side<0?mirrorY(mesh):mesh;
 }

@@ -91,8 +91,8 @@
     "seconds": 2
   },
   "14_iron_man_mark_43": {
-    "source_urdf_sha256": "a7af5eb7b9e2b2557de4607c1c7baa170d98c32f9e51ce658be48a5c0410ce06",
-    "gif_sha256": "eb15f6ebdcaa1f238dc07e306288a2cdb16974203a64c4d40b45d0306b40d9ae",
+    "source_urdf_sha256": "7edde11fd8318924bc831142e47a86addaebe8c3e5d29823b17296efbe5c17bd",
+    "gif_sha256": "2bda7ab36e6b71047a860f14e2d9f24c82ceb468e7964c0f2a7d2cd8cd23b43a",
     "self_collision": true,
     "motion": "hold",
     "seconds": 2
@@ -119,16 +119,16 @@
     "seconds": 2
   },
   "mark43_articulation": {
-    "source_urdf_sha256": "859b746854eaf3824b21d50aa22f2dec100d88f6eb4142281af82365107405bb",
-    "gif_sha256": "ec46161475dd34ca87d92b7dff0dd378d86875ea28d12da8ec45aa269ddaa5f0",
+    "source_urdf_sha256": "32952828db78af66efcadde5628f1c3c2f55f2f7e5362caf66489299361c4b9a",
+    "gif_sha256": "9e2bb25996561f38f2841edb52ff0cc2e7bfb9e4683319673fd93a6426c9f279",
     "self_collision": false,
     "floating": false,
     "motion": "doff",
     "seconds": 4
   },
   "mark43_helmet": {
-    "source_urdf_sha256": "859b746854eaf3824b21d50aa22f2dec100d88f6eb4142281af82365107405bb",
-    "gif_sha256": "281f91f225ff4f4d90bf4ec1bda127955bfdbe3cc5be062c5cdcaa4170b5f6e9",
+    "source_urdf_sha256": "32952828db78af66efcadde5628f1c3c2f55f2f7e5362caf66489299361c4b9a",
+    "gif_sha256": "0d181e557e0878fc7cee4d99cab806327495129e30d8121278a3a45041a72a1c",
     "self_collision": false,
     "floating": false,
     "motion": "doff",
