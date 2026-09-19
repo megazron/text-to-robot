@@ -7,7 +7,7 @@ import os
 from pathlib import Path
 import sys
 
-os.environ.setdefault('MUJOCO_GL', 'egl')
+os.environ.setdefault('MUJOCO_GL', 'egl' if '--gif' in sys.argv else 'disable')
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'python'))
 from ttr_hf.assets import fetch_assets, source_lock
 from ttr_hf.env import JOINTS, SO101JointEnv
