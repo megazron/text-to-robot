@@ -111,3 +111,11 @@ class FidelityTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+    def test_continuous_joint_controls_speed_and_passive_bearing_has_no_motor(self):
+        m=mujoco.MjModel.from_xml_string(self.convert(fixture(joint_type="continuous"),floating=False))
+        self.assertEqual(float(m.actuator_biasprm[0,1]),0.0)
+        self.assertLess(float(m.actuator_biasprm[0,2]),0.0)
+        passive=fixture(joint_type="continuous").replace('name="servo" type=', 'name="servo" passive="true" type=')
+        m=mujoco.MjModel.from_xml_string(self.convert(passive,floating=False))
+        self.assertEqual(m.nu,0);self.assertEqual(m.njnt,1)

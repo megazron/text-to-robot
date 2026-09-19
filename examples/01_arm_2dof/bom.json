@@ -4,11 +4,11 @@
   "lines": [
     {
       "category": "Actuator",
-      "name": "DS3218 20kg servo",
+      "name": "Unitree GO-M8010-6",
       "qty": 2,
-      "unit_cost": 12,
-      "subtotal": 24,
-      "spec": "PWM, waterproof, metal gears (1.96 N·m)",
+      "unit_cost": 400,
+      "subtotal": 800,
+      "spec": "integrated BLDC + planetary, RS485 (23 N·m)",
       "note": "joint joint_1; rating duty/source unverified; joint joint_2; rating duty/source unverified"
     },
     {
@@ -42,7 +42,7 @@
       "qty": 1,
       "unit_cost": 40,
       "subtotal": 40,
-      "spec": "74 Wh; est. load 16 W"
+      "spec": "74 Wh; est. load 60 W"
     },
     {
       "category": "Power",
@@ -64,9 +64,9 @@
       "category": "Structure",
       "name": "3D-printed frame (PLA/PETG)",
       "qty": 1,
-      "unit_cost": 46.42,
-      "subtotal": 46.42,
-      "spec": "~2.11 kg material @ $22/kg"
+      "unit_cost": 53.29,
+      "subtotal": 53.29,
+      "spec": "~2.42 kg material @ $22/kg"
     },
     {
       "category": "Structure",
@@ -80,31 +80,31 @@
       "category": "Wiring & misc",
       "name": "Wiring, connectors, JST/Dupont, sleeving",
       "qty": 1,
-      "unit_cost": 23.28,
-      "subtotal": 23.28,
+      "unit_cost": 116.4,
+      "subtotal": 116.4,
       "spec": "~12% of electronics"
     }
   ],
-  "total": 281.7,
+  "total": 1157.69,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
   "actuator_sizing": [
     {
       "joint": "joint_1",
-      "required_effort": 0.833,
+      "required_effort": 9.6,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.833,
-      "chosen": "DS3218 20kg servo",
+      "required_torque_nm": 9.6,
+      "chosen": "Unitree GO-M8010-6",
       "margin": "2.4x"
     },
     {
       "joint": "joint_2",
-      "required_effort": 0.722,
+      "required_effort": 9.6,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.722,
-      "chosen": "DS3218 20kg servo",
-      "margin": "2.7x"
+      "required_torque_nm": 9.6,
+      "chosen": "Unitree GO-M8010-6",
+      "margin": "2.4x"
     },
     {
       "joint": "left_finger_joint",

@@ -1,6 +1,6 @@
 # MoveIt 2 — baymax
 
-Groups: left_arm (4 joints), right_arm (4 joints), left_leg (3 joints), right_leg (3 joints).
+Groups: left_arm (4 joints), right_arm (4 joints), left_leg (6 joints), right_leg (6 joints).
 Armour hinges are separate from arm/leg planning chains. Underactuated chains use
 position-only IK; arbitrary six-dimensional hand poses are not achievable.
 

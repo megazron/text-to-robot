@@ -6,22 +6,22 @@
 <title>Text to Robot</title>
 <meta name="description" content="Describe a robot. Get a ROS 2 robot." />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>" />
-<link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="/styles.css" />
 <script type="importmap">
 { "imports": {
-  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
-  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  "three": "/vendor/three.module.js",
+  "three/addons/": "/vendor/addons/"
 }}
 </script>
 </head>
 <body>
 <header id="topbar">
-  <div class="brand"><span class="logo">🤖</span><div><b>TEXT<span class="arrow">→</span>ROBOT</b><small>Describe a robot. Get a ROS&nbsp;2 robot.</small></div></div>
+  <div class="brand"><span class="logo">🤖</span><div><b>TEXT<span class="arrow">→</span>ROBOT</b><small>Design, inspect and export. Free.</small></div></div>
   <form id="genform" class="promptrow">
     <input id="prompt" placeholder="Describe the robot you want…  e.g. Create a 6 DOF arm with a two-finger gripper" autocomplete="off" />
     <button id="genbtn" type="submit">Generate Robot</button>
   </form>
-  <span id="mode" class="badge" title="LLM mode">demo</span>
+  <span id="mode" class="badge" title="Free local generation. No account or token required.">Free</span>
 </header>
 
 <div id="examples" class="examples"></div>
@@ -38,7 +38,7 @@
     <div id="viewport"></div>
     <div id="viewhud" class="viewhud">
       <label><input type="checkbox" id="showCollision" /> collision</label>
-      <label><input type="checkbox" id="showAxes" checked /> joint axes</label>
+      <label><input type="checkbox" id="showAxes" /> joint axes</label>
       <label><input type="checkbox" id="showFrames" /> frames</label>
       <button id="resetView" class="mini">reset view</button>
     </div>
@@ -82,6 +82,6 @@
   </div>
 </footer>
 
-<script type="module" src="app.js"></script>
+<script type="module" src="/app.js"></script>
 </body>
 </html>

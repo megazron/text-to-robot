@@ -1,14 +1,14 @@
 {
   "model": "robot.urdf",
-  "nbody": 7,
+  "nbody": 21,
   "njnt": 4,
   "nu": 4,
-  "ngeom": 7,
+  "ngeom": 41,
   "floating": false,
   "tests": {
     "compile": {
       "pass": true,
-      "total_mass_kg": 1.507,
+      "total_mass_kg": 1.73,
       "actuators": 4
     },
     "initial_clearance": {
@@ -18,61 +18,61 @@
     },
     "settle_under_gravity": {
       "pass": true,
-      "max_joint_speed": 0.0,
+      "max_joint_speed": 4.69,
       "base_drop_m": null,
       "upright": null
     },
     "hold_pose": {
       "pass": true,
-      "max_joint_error_rad": 0.0
+      "max_joint_error_rad": 0.031
     },
     "actuator_sweep": {
-      "pass": true,
-      "tracked": "4/4",
-      "worst_error": 0.261,
+      "pass": false,
+      "tracked": "3/4",
+      "worst_error": 0.641,
       "actuators": [
         {
           "actuator": "act_joint_1",
           "joint": "joint_1",
-          "pass": true,
-          "rms_error": 0.005427,
-          "peak_error": 0.03759,
+          "pass": false,
+          "rms_error": 0.366439,
+          "peak_error": 0.640902,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
-          "peak_actuator_force": 2.450174,
+          "peak_actuator_force": 12.0,
           "force_unit": "N m"
         },
         {
           "actuator": "act_joint_2",
           "joint": "joint_2",
           "pass": true,
-          "rms_error": 0.102703,
-          "peak_error": 0.261245,
+          "rms_error": 0.06489,
+          "peak_error": 0.14559,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
-          "peak_actuator_force": 10.852409,
+          "peak_actuator_force": 6.155737,
           "force_unit": "N m"
         },
         {
           "actuator": "act_left_finger_joint",
           "joint": "left_finger_joint",
           "pass": true,
-          "rms_error": 0.004525,
-          "peak_error": 0.014881,
+          "rms_error": 0.005312,
+          "peak_error": 0.01494,
           "error_unit": "m",
           "rms_tolerance": 0.01,
-          "peak_actuator_force": 0.6,
+          "peak_actuator_force": 0.602136,
           "force_unit": "N"
         },
         {
           "actuator": "act_right_finger_joint",
           "joint": "right_finger_joint",
           "pass": true,
-          "rms_error": 0.004525,
-          "peak_error": 0.014881,
+          "rms_error": 0.005312,
+          "peak_error": 0.01494,
           "error_unit": "m",
           "rms_tolerance": 0.01,
-          "peak_actuator_force": 0.6,
+          "peak_actuator_force": 0.602136,
           "force_unit": "N"
         }
       ]
@@ -80,17 +80,17 @@
   },
   "validation_scope": "simulation smoke tests, not hardware or wearable qualification",
   "mujoco_version": "3.13.0",
-  "model_sha256": "749a6e944fcb35c95699f093dee24419949c5c113e7841fe0e894fc6d8d9f4ac",
+  "model_sha256": "ea66e7eca58010bd5b828eca096369ff2b2d3be74de28d201051ea59a71cff52",
   "limitations": [
     "No measured motor, material, thermal or battery model",
     "No manufacturing or human-fit validation"
   ],
   "self_collision_masks_enabled": true,
-  "passed": 5,
+  "passed": 4,
   "total": 5,
   "collision_model": "URDF primitives / mesh bounding boxes",
   "self_collision": true,
-  "source_urdf_sha256": "d4587ab93662bdeb00bca4a43ea7e17494417074f227d7841d9a9af0662aaa84",
+  "source_urdf_sha256": "d5191f826b6f5a01bbb88ff6d3e87ebf9f59c831ca0e5fd290a156ca7ac1e526",
   "initial_penetrations": [],
   "hardware_verified": false
 }

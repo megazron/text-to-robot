@@ -2582,9 +2582,9 @@
       "role": "armor",
       "origin": {
         "xyz": [
+          0.02,
           0,
-          0,
-          -0.05
+          -0.14
         ],
         "rpy": [
           0,
@@ -2770,9 +2770,9 @@
       "role": "armor",
       "origin": {
         "xyz": [
+          0.02,
           0,
-          0,
-          -0.05
+          -0.14
         ],
         "rpy": [
           0,
@@ -2866,9 +2866,9 @@
       "role": "armor",
       "origin": {
         "xyz": [
+          0.02,
           0,
-          0,
-          -0.05
+          -0.14
         ],
         "rpy": [
           0,
@@ -2964,9 +2964,9 @@
       "role": "armor",
       "origin": {
         "xyz": [
+          0.02,
           0,
-          0,
-          -0.05
+          -0.14
         ],
         "rpy": [
           0,
@@ -3160,9 +3160,9 @@
       "role": "armor",
       "origin": {
         "xyz": [
+          0.02,
           0,
-          0,
-          -0.05
+          -0.14
         ],
         "rpy": [
           0,
@@ -3258,9 +3258,9 @@
       "role": "armor",
       "origin": {
         "xyz": [
+          0.02,
           0,
-          0,
-          -0.05
+          -0.14
         ],
         "rpy": [
           0,
@@ -27169,9 +27169,9 @@
       "child": "faceplate",
       "origin": {
         "xyz": [
+          -0.02,
           0,
-          0,
-          0.15500000000000003
+          0.245
         ],
         "rpy": [
           0,
@@ -34816,7 +34816,7 @@
   "end_effectors": [],
   "metadata": {
     "generator": "text-to-robot",
-    "created": "2026-09-19T16:12:23.670Z",
+    "created": "2026-09-19T17:34:03.745Z",
     "inferred_fields": [
       "joints.ab_plate_1_hinge.dynamics",
       "joints.ab_plate_2_hinge.dynamics",
@@ -35541,8 +35541,8 @@
       "Added 3 mm pin / 3.2 mm bore hinge interfaces and layered rib/knuckle detail. Pins and bores are dimensioned concepts, not structurally qualified mounting assemblies; manual release and ventilation are unverified.",
       "Neck yaw/pitch and three-segment fingers are independently articulated concepts. Joint limits and actuator loads are provisional; no tendon routing, human neck clearance or grasp force is validated.",
       "Iron Man Mark 43 (Age of Ultron) as a wearable powered exoskeleton under polygon-mesh armour: 67 servo-driven hinged plates (motorised helmet: faceplate, crown panel, two cheek panels, chin guard; chest doors, torso side doors, flight-stabiliser flaps, folding ab segments, codpiece, pauldrons, bicep/gauntlet clamshells, gauntlet hatches, fingers, hip flaps, thigh/calf clamshells, knee caps, shin guards, thruster covers, ankle flaps). Panel map and palette follow the Mark 43 layout; repulsors/thrusters are mount points, not modelled propulsion.",
-      "Interpreted by demo parser: type inferred, DOF=86, gripper=parallel."
+      "Interpreted locally: type inferred, DOF=86, gripper=parallel."
     ],
-    "source_prompt": "Build me a movie-accurate wearable Iron Man Mark 43 suit from Age of Ultron with all the small polygon armour plates that open and close, repulsors, a HUD and an IMU. Budget $60000"
+    "source_prompt": "Build me a movie-accurate wearable Iron Man Mark 43 suit from Age of Ultron with all the small polygon armour plates that open and close, repulsors, a HUD and an IMU. Budget $60000\n"
   }
 }

@@ -13,10 +13,14 @@ not a learned policy or proof of hardware accuracy. The model's failures remain 
 ## Download and inspect
 
 - [CAD / STL / OpenSCAD](robot.cad.zip), [ROS 2 package](robot.ros2.zip), [training package](robot.training.zip), [URDF](robot.urdf), [robot JSON](robot.json), [BOM](BOM.md).
-- [Simulation report](simulation_report.json): **5/5** checks;
+- [Simulation report](simulation_report.json): **4/5** checks;
   **0** initial penetration contacts.
-- Failed checks: none in this smoke battery.
+- Failed checks: actuator_sweep.
 - [Physical build evidence and missing interfaces](BUILDABILITY.md), [machine-readable record](buildability_report.json). **No tested physical build is documented.**
+
+## Design research
+
+[Public engineering sources and model-specific changes](../../references/engineering/README.md).
 
 ## MoveIt / ROS 2
 

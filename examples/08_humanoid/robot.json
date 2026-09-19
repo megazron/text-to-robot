@@ -4,19 +4,237 @@
     {
       "name": "torso",
       "geometry": {
-        "type": "box",
-        "size": [
-          0.16,
-          0.28,
-          0.36
+        "type": "mesh",
+        "part": "mounting_plate",
+        "params": {
+          "width": 0.16,
+          "height": 0.28,
+          "thickness": 0.003,
+          "bore": 0.0034,
+          "inset": 0.012,
+          "vents": 0
+        },
+        "file": "torso.stl",
+        "volume": 0.00013429228986618956,
+        "inertia_unit": {
+          "ixx": 8.76415919448378e-7,
+          "iyy": 2.863225906219817e-7,
+          "izz": 0.0000011625370716355604,
+          "ixy": 7.781960106534031e-23,
+          "ixz": 1.5504587775575854e-25,
+          "iyz": -1.0339757656912846e-25
+        },
+        "bbox": {
+          "min": [
+            -0.08,
+            -0.14,
+            -0.0015
+          ],
+          "max": [
+            0.08,
+            0.14,
+            0.0015
+          ]
+        },
+        "centroid": [
+          8.570648563658557e-18,
+          1.2893356736365072e-18,
+          1.3324359224129562e-21
         ]
       },
-      "mass": 7.257600000000002,
+      "mass": 0.3625891826387118,
       "material": "base_mat",
       "role": "base",
       "origin": {
         "xyz": [
           0,
+          0,
+          0.4415
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "material_density",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0023663229825106207,
+        "iyy": 0.0007730709946793505,
+        "izz": 0.003138850093416013,
+        "ixy": 2.1011292287641883e-19,
+        "ixz": 4.1862386994054807e-22,
+        "iyz": -2.7917345673664684e-22
+      },
+      "collision": {
+        "type": "mesh",
+        "part": "mounting_plate",
+        "params": {
+          "width": 0.16,
+          "height": 0.28,
+          "thickness": 0.003,
+          "bore": 0.0034,
+          "inset": 0.012,
+          "vents": 0
+        },
+        "file": "torso.stl",
+        "volume": 0.00013429228986618956,
+        "inertia_unit": {
+          "ixx": 8.76415919448378e-7,
+          "iyy": 2.863225906219817e-7,
+          "izz": 0.0000011625370716355604,
+          "ixy": 7.781960106534031e-23,
+          "ixz": 1.5504587775575854e-25,
+          "iyz": -1.0339757656912846e-25
+        },
+        "bbox": {
+          "min": [
+            -0.08,
+            -0.14,
+            -0.0015
+          ],
+          "max": [
+            0.08,
+            0.14,
+            0.0015
+          ]
+        },
+        "centroid": [
+          8.570648563658557e-18,
+          1.2893356736365072e-18,
+          1.3324359224129562e-21
+        ]
+      }
+    },
+    {
+      "name": "torso_service_lid",
+      "geometry": {
+        "type": "mesh",
+        "part": "mounting_plate",
+        "params": {
+          "width": 0.16,
+          "height": 0.28,
+          "thickness": 0.003,
+          "bore": 0.0034,
+          "inset": 0.012,
+          "vents": 5
+        },
+        "file": "torso_service_lid.stl",
+        "volume": 0.00013045228986618943,
+        "inertia_unit": {
+          "ixx": 8.759163994483775e-7,
+          "iyy": 2.85008990621982e-7,
+          "izz": 0.0000011607297116355602,
+          "ixy": 6.791928310884626e-23,
+          "ixz": 5.149683989282765e-26,
+          "iyz": -2.0679515313825692e-25
+        },
+        "bbox": {
+          "min": [
+            -0.08,
+            -0.14,
+            -0.0015
+          ],
+          "max": [
+            0.08,
+            0.14,
+            0.0015
+          ]
+        },
+        "centroid": [
+          4.069160973778649e-19,
+          -1.5429848409196507e-18,
+          1.957886127060658e-21
+        ]
+      },
+      "mass": 0.35222118263871144,
+      "material": "base_mat",
+      "role": "housing",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0.7985000000000001
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0023649742785106192,
+        "iyy": 0.0007695242746793514,
+        "izz": 0.0031339702214160125,
+        "ixy": 1.833820643938849e-19,
+        "ixz": 1.3904146771063466e-22,
+        "iyz": -5.583469134732937e-22
+      },
+      "collision": {
+        "type": "mesh",
+        "part": "mounting_plate",
+        "params": {
+          "width": 0.16,
+          "height": 0.28,
+          "thickness": 0.003,
+          "bore": 0.0034,
+          "inset": 0.012,
+          "vents": 5
+        },
+        "file": "torso_service_lid.stl",
+        "volume": 0.00013045228986618943,
+        "inertia_unit": {
+          "ixx": 8.759163994483775e-7,
+          "iyy": 2.85008990621982e-7,
+          "izz": 0.0000011607297116355602,
+          "ixy": 6.791928310884626e-23,
+          "ixz": 5.149683989282765e-26,
+          "iyz": -2.0679515313825692e-25
+        },
+        "bbox": {
+          "min": [
+            -0.08,
+            -0.14,
+            -0.0015
+          ],
+          "max": [
+            0.08,
+            0.14,
+            0.0015
+          ]
+        },
+        "centroid": [
+          4.069160973778649e-19,
+          -1.5429848409196507e-18,
+          1.957886127060658e-21
+        ]
+      }
+    },
+    {
+      "name": "torso_rear_panel",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.003,
+          0.28,
+          0.354
+        ]
+      },
+      "mass": 0.8028720000000001,
+      "material": "base_mat",
+      "role": "housing",
+      "origin": {
+        "xyz": [
+          -0.0785,
           0,
           0.62
         ],
@@ -32,9 +250,9 @@
         "inertia"
       ],
       "inertia": {
-        "ixx": 0.12579840000000003,
-        "iyy": 0.09386496000000003,
-        "izz": 0.06289920000000002,
+        "ixx": 0.013629822696000002,
+        "iyy": 0.00838499445,
+        "izz": 0.005246032554000001,
         "ixy": 0,
         "ixz": 0,
         "iyz": 0
@@ -42,9 +260,562 @@
       "collision": {
         "type": "box",
         "size": [
-          0.16,
+          0.003,
           0.28,
-          0.36
+          0.354
+        ]
+      }
+    },
+    {
+      "name": "torso_right_panel",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.154,
+          0.003,
+          0.354
+        ]
+      },
+      "mass": 0.44157959999999996,
+      "material": "base_mat",
+      "role": "housing",
+      "origin": {
+        "xyz": [
+          0,
+          -0.1385,
+          0.62
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.004611746947499999,
+        "iyy": 0.0054841242455999995,
+        "izz": 0.0008730396675,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.154,
+          0.003,
+          0.354
+        ]
+      }
+    },
+    {
+      "name": "torso_front_panel",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.003,
+          0.28,
+          0.354
+        ]
+      },
+      "mass": 0.8028720000000001,
+      "material": "base_mat",
+      "role": "housing",
+      "origin": {
+        "xyz": [
+          0.0785,
+          0,
+          0.62
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.013629822696000002,
+        "iyy": 0.00838499445,
+        "izz": 0.005246032554000001,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.003,
+          0.28,
+          0.354
+        ]
+      }
+    },
+    {
+      "name": "torso_left_panel",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.154,
+          0.003,
+          0.354
+        ]
+      },
+      "mass": 0.44157959999999996,
+      "material": "base_mat",
+      "role": "housing",
+      "origin": {
+        "xyz": [
+          0,
+          0.1385,
+          0.62
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.004611746947499999,
+        "iyy": 0.0054841242455999995,
+        "izz": 0.0008730396675,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.154,
+          0.003,
+          0.354
+        ]
+      }
+    },
+    {
+      "name": "torso_standoff_rr",
+      "geometry": {
+        "type": "mesh",
+        "part": "ring",
+        "params": {
+          "outer": 0.004,
+          "inner": 0.0017,
+          "height": 0.354
+        },
+        "file": "torso_standoff_rr.stl",
+        "volume": 0.00001453834143652144,
+        "inertia_unit": {
+          "ixx": 1.518923611480706e-7,
+          "iyy": 1.518923611480706e-7,
+          "izz": 1.3692305295571167e-10,
+          "ixy": -3.339248211800543e-27,
+          "ixz": 4.665007849114978e-26,
+          "iyz": 1.4841944615190207e-25
+        },
+        "bbox": {
+          "min": [
+            -0.004,
+            -0.004,
+            -0.177
+          ],
+          "max": [
+            0.004,
+            0.004,
+            0.177
+          ]
+        },
+        "centroid": [
+          1.5272938447938048e-19,
+          3.1007959356928555e-20,
+          6.2787152544684065e-18
+        ]
+      },
+      "mass": 0.03925352187860789,
+      "material": "base_mat",
+      "role": "housing",
+      "origin": {
+        "xyz": [
+          -0.068,
+          -0.128,
+          0.62
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0004101093750997906,
+        "iyy": 0.0004101093750997906,
+        "izz": 3.696922429804215e-7,
+        "ixy": -9.015970171861466e-24,
+        "ixz": 1.259552119261044e-22,
+        "iyz": 4.0073250461013557e-22
+      },
+      "collision": {
+        "type": "mesh",
+        "part": "ring",
+        "params": {
+          "outer": 0.004,
+          "inner": 0.0017,
+          "height": 0.354
+        },
+        "file": "torso_standoff_rr.stl",
+        "volume": 0.00001453834143652144,
+        "inertia_unit": {
+          "ixx": 1.518923611480706e-7,
+          "iyy": 1.518923611480706e-7,
+          "izz": 1.3692305295571167e-10,
+          "ixy": -3.339248211800543e-27,
+          "ixz": 4.665007849114978e-26,
+          "iyz": 1.4841944615190207e-25
+        },
+        "bbox": {
+          "min": [
+            -0.004,
+            -0.004,
+            -0.177
+          ],
+          "max": [
+            0.004,
+            0.004,
+            0.177
+          ]
+        },
+        "centroid": [
+          1.5272938447938048e-19,
+          3.1007959356928555e-20,
+          6.2787152544684065e-18
+        ]
+      }
+    },
+    {
+      "name": "torso_standoff_rl",
+      "geometry": {
+        "type": "mesh",
+        "part": "ring",
+        "params": {
+          "outer": 0.004,
+          "inner": 0.0017,
+          "height": 0.354
+        },
+        "file": "torso_standoff_rl.stl",
+        "volume": 0.00001453834143652144,
+        "inertia_unit": {
+          "ixx": 1.518923611480706e-7,
+          "iyy": 1.518923611480706e-7,
+          "izz": 1.3692305295571167e-10,
+          "ixy": -3.339248211800543e-27,
+          "ixz": 4.665007849114978e-26,
+          "iyz": 1.4841944615190207e-25
+        },
+        "bbox": {
+          "min": [
+            -0.004,
+            -0.004,
+            -0.177
+          ],
+          "max": [
+            0.004,
+            0.004,
+            0.177
+          ]
+        },
+        "centroid": [
+          1.5272938447938048e-19,
+          3.1007959356928555e-20,
+          6.2787152544684065e-18
+        ]
+      },
+      "mass": 0.03925352187860789,
+      "material": "base_mat",
+      "role": "housing",
+      "origin": {
+        "xyz": [
+          -0.068,
+          0.128,
+          0.62
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0004101093750997906,
+        "iyy": 0.0004101093750997906,
+        "izz": 3.696922429804215e-7,
+        "ixy": -9.015970171861466e-24,
+        "ixz": 1.259552119261044e-22,
+        "iyz": 4.0073250461013557e-22
+      },
+      "collision": {
+        "type": "mesh",
+        "part": "ring",
+        "params": {
+          "outer": 0.004,
+          "inner": 0.0017,
+          "height": 0.354
+        },
+        "file": "torso_standoff_rl.stl",
+        "volume": 0.00001453834143652144,
+        "inertia_unit": {
+          "ixx": 1.518923611480706e-7,
+          "iyy": 1.518923611480706e-7,
+          "izz": 1.3692305295571167e-10,
+          "ixy": -3.339248211800543e-27,
+          "ixz": 4.665007849114978e-26,
+          "iyz": 1.4841944615190207e-25
+        },
+        "bbox": {
+          "min": [
+            -0.004,
+            -0.004,
+            -0.177
+          ],
+          "max": [
+            0.004,
+            0.004,
+            0.177
+          ]
+        },
+        "centroid": [
+          1.5272938447938048e-19,
+          3.1007959356928555e-20,
+          6.2787152544684065e-18
+        ]
+      }
+    },
+    {
+      "name": "torso_standoff_fr",
+      "geometry": {
+        "type": "mesh",
+        "part": "ring",
+        "params": {
+          "outer": 0.004,
+          "inner": 0.0017,
+          "height": 0.354
+        },
+        "file": "torso_standoff_fr.stl",
+        "volume": 0.00001453834143652144,
+        "inertia_unit": {
+          "ixx": 1.518923611480706e-7,
+          "iyy": 1.518923611480706e-7,
+          "izz": 1.3692305295571167e-10,
+          "ixy": -3.339248211800543e-27,
+          "ixz": 4.665007849114978e-26,
+          "iyz": 1.4841944615190207e-25
+        },
+        "bbox": {
+          "min": [
+            -0.004,
+            -0.004,
+            -0.177
+          ],
+          "max": [
+            0.004,
+            0.004,
+            0.177
+          ]
+        },
+        "centroid": [
+          1.5272938447938048e-19,
+          3.1007959356928555e-20,
+          6.2787152544684065e-18
+        ]
+      },
+      "mass": 0.03925352187860789,
+      "material": "base_mat",
+      "role": "housing",
+      "origin": {
+        "xyz": [
+          0.068,
+          -0.128,
+          0.62
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0004101093750997906,
+        "iyy": 0.0004101093750997906,
+        "izz": 3.696922429804215e-7,
+        "ixy": -9.015970171861466e-24,
+        "ixz": 1.259552119261044e-22,
+        "iyz": 4.0073250461013557e-22
+      },
+      "collision": {
+        "type": "mesh",
+        "part": "ring",
+        "params": {
+          "outer": 0.004,
+          "inner": 0.0017,
+          "height": 0.354
+        },
+        "file": "torso_standoff_fr.stl",
+        "volume": 0.00001453834143652144,
+        "inertia_unit": {
+          "ixx": 1.518923611480706e-7,
+          "iyy": 1.518923611480706e-7,
+          "izz": 1.3692305295571167e-10,
+          "ixy": -3.339248211800543e-27,
+          "ixz": 4.665007849114978e-26,
+          "iyz": 1.4841944615190207e-25
+        },
+        "bbox": {
+          "min": [
+            -0.004,
+            -0.004,
+            -0.177
+          ],
+          "max": [
+            0.004,
+            0.004,
+            0.177
+          ]
+        },
+        "centroid": [
+          1.5272938447938048e-19,
+          3.1007959356928555e-20,
+          6.2787152544684065e-18
+        ]
+      }
+    },
+    {
+      "name": "torso_standoff_fl",
+      "geometry": {
+        "type": "mesh",
+        "part": "ring",
+        "params": {
+          "outer": 0.004,
+          "inner": 0.0017,
+          "height": 0.354
+        },
+        "file": "torso_standoff_fl.stl",
+        "volume": 0.00001453834143652144,
+        "inertia_unit": {
+          "ixx": 1.518923611480706e-7,
+          "iyy": 1.518923611480706e-7,
+          "izz": 1.3692305295571167e-10,
+          "ixy": -3.339248211800543e-27,
+          "ixz": 4.665007849114978e-26,
+          "iyz": 1.4841944615190207e-25
+        },
+        "bbox": {
+          "min": [
+            -0.004,
+            -0.004,
+            -0.177
+          ],
+          "max": [
+            0.004,
+            0.004,
+            0.177
+          ]
+        },
+        "centroid": [
+          1.5272938447938048e-19,
+          3.1007959356928555e-20,
+          6.2787152544684065e-18
+        ]
+      },
+      "mass": 0.03925352187860789,
+      "material": "base_mat",
+      "role": "housing",
+      "origin": {
+        "xyz": [
+          0.068,
+          0.128,
+          0.62
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0004101093750997906,
+        "iyy": 0.0004101093750997906,
+        "izz": 3.696922429804215e-7,
+        "ixy": -9.015970171861466e-24,
+        "ixz": 1.259552119261044e-22,
+        "iyz": 4.0073250461013557e-22
+      },
+      "collision": {
+        "type": "mesh",
+        "part": "ring",
+        "params": {
+          "outer": 0.004,
+          "inner": 0.0017,
+          "height": 0.354
+        },
+        "file": "torso_standoff_fl.stl",
+        "volume": 0.00001453834143652144,
+        "inertia_unit": {
+          "ixx": 1.518923611480706e-7,
+          "iyy": 1.518923611480706e-7,
+          "izz": 1.3692305295571167e-10,
+          "ixy": -3.339248211800543e-27,
+          "ixz": 4.665007849114978e-26,
+          "iyz": 1.4841944615190207e-25
+        },
+        "bbox": {
+          "min": [
+            -0.004,
+            -0.004,
+            -0.177
+          ],
+          "max": [
+            0.004,
+            0.004,
+            0.177
+          ]
+        },
+        "centroid": [
+          1.5272938447938048e-19,
+          3.1007959356928555e-20,
+          6.2787152544684065e-18
         ]
       }
     },
@@ -516,6 +1287,100 @@
       }
     },
     {
+      "name": "left_left_finger_pad",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.015,
+          0.002,
+          0.036
+        ]
+      },
+      "mass": 0.02,
+      "material": "wheel_mat",
+      "role": "contact_pad",
+      "origin": {
+        "xyz": [
+          0,
+          -0.011,
+          0.039
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0000021666666666666665,
+        "iyy": 0.000002535,
+        "izz": 3.816666666666667e-7,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.015,
+          0.002,
+          0.036
+        ]
+      }
+    },
+    {
+      "name": "left_right_finger_pad",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.015,
+          0.002,
+          0.036
+        ]
+      },
+      "mass": 0.02,
+      "material": "wheel_mat",
+      "role": "contact_pad",
+      "origin": {
+        "xyz": [
+          0,
+          0.011,
+          0.039
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0000021666666666666665,
+        "iyy": 0.000002535,
+        "izz": 3.816666666666667e-7,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.015,
+          0.002,
+          0.036
+        ]
+      }
+    },
+    {
       "name": "right_shoulder",
       "geometry": {
         "type": "cylinder",
@@ -944,6 +1809,180 @@
       }
     },
     {
+      "name": "right_left_finger_pad",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.015,
+          0.002,
+          0.036
+        ]
+      },
+      "mass": 0.02,
+      "material": "wheel_mat",
+      "role": "contact_pad",
+      "origin": {
+        "xyz": [
+          0,
+          -0.011,
+          0.039
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0000021666666666666665,
+        "iyy": 0.000002535,
+        "izz": 3.816666666666667e-7,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.015,
+          0.002,
+          0.036
+        ]
+      }
+    },
+    {
+      "name": "right_right_finger_pad",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.015,
+          0.002,
+          0.036
+        ]
+      },
+      "mass": 0.02,
+      "material": "wheel_mat",
+      "role": "contact_pad",
+      "origin": {
+        "xyz": [
+          0,
+          0.011,
+          0.039
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0000021666666666666665,
+        "iyy": 0.000002535,
+        "izz": 3.816666666666667e-7,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.015,
+          0.002,
+          0.036
+        ]
+      }
+    },
+    {
+      "name": "left_hip_yaw_carrier",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.023,
+        "length": 0.016
+      },
+      "mass": 0.12,
+      "material": "accent_mat",
+      "role": "joint_housing",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.00001843,
+        "iyy": 0.00001843,
+        "izz": 0.00003174,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.023,
+        "length": 0.016
+      }
+    },
+    {
+      "name": "left_hip_roll_carrier",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.02,
+        "length": 0.018
+      },
+      "mass": 0.12,
+      "material": "accent_mat",
+      "role": "joint_housing",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          1.5707963267948966,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000015239999999999998,
+        "iyy": 0.000015239999999999998,
+        "izz": 0.000023999999999999997,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.02,
+        "length": 0.018
+      }
+    },
+    {
       "name": "left_thigh",
       "geometry": {
         "type": "cylinder",
@@ -1070,6 +2109,126 @@
           0.08,
           0.04
         ]
+      }
+    },
+    {
+      "name": "left_ankle_pitch_carrier",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.015,
+        "length": 0.022
+      },
+      "mass": 0.1,
+      "material": "accent_mat",
+      "role": "joint_housing",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          1.5707963267948966,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000009658333333333332,
+        "iyy": 0.000009658333333333332,
+        "izz": 0.000011249999999999999,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.015,
+        "length": 0.022
+      }
+    },
+    {
+      "name": "right_hip_yaw_carrier",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.023,
+        "length": 0.016
+      },
+      "mass": 0.12,
+      "material": "accent_mat",
+      "role": "joint_housing",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.00001843,
+        "iyy": 0.00001843,
+        "izz": 0.00003174,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.023,
+        "length": 0.016
+      }
+    },
+    {
+      "name": "right_hip_roll_carrier",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.02,
+        "length": 0.018
+      },
+      "mass": 0.12,
+      "material": "accent_mat",
+      "role": "joint_housing",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          1.5707963267948966,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000015239999999999998,
+        "iyy": 0.000015239999999999998,
+        "izz": 0.000023999999999999997,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.02,
+        "length": 0.018
       }
     },
     {
@@ -1200,9 +2359,328 @@
           0.04
         ]
       }
+    },
+    {
+      "name": "right_ankle_pitch_carrier",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.015,
+        "length": 0.022
+      },
+      "mass": 0.1,
+      "material": "accent_mat",
+      "role": "joint_housing",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          1.5707963267948966,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000009658333333333332,
+        "iyy": 0.000009658333333333332,
+        "izz": 0.000011249999999999999,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.015,
+        "length": 0.022
+      }
     }
   ],
   "joints": [
+    {
+      "name": "torso_service_lid_mount",
+      "type": "fixed",
+      "parent": "torso",
+      "child": "torso_service_lid",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "torso_rear_panel_mount",
+      "type": "fixed",
+      "parent": "torso",
+      "child": "torso_rear_panel",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "torso_right_panel_mount",
+      "type": "fixed",
+      "parent": "torso",
+      "child": "torso_right_panel",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "torso_front_panel_mount",
+      "type": "fixed",
+      "parent": "torso",
+      "child": "torso_front_panel",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "torso_left_panel_mount",
+      "type": "fixed",
+      "parent": "torso",
+      "child": "torso_left_panel",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "torso_standoff_rr_mount",
+      "type": "fixed",
+      "parent": "torso",
+      "child": "torso_standoff_rr",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "torso_standoff_rl_mount",
+      "type": "fixed",
+      "parent": "torso",
+      "child": "torso_standoff_rl",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "torso_standoff_fr_mount",
+      "type": "fixed",
+      "parent": "torso",
+      "child": "torso_standoff_fr",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "torso_standoff_fl_mount",
+      "type": "fixed",
+      "parent": "torso",
+      "child": "torso_standoff_fl",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
     {
       "name": "neck_joint",
       "type": "revolute",
@@ -1530,7 +3008,7 @@
       "origin": {
         "xyz": [
           0,
-          0.02,
+          0.012,
           0.03
         ],
         "rpy": [
@@ -1555,7 +3033,7 @@
         "lower": 0,
         "upper": 0.03,
         "effort": 40,
-        "velocity": 0.3
+        "velocity": 0.06
       }
     },
     {
@@ -1566,7 +3044,7 @@
       "origin": {
         "xyz": [
           0,
-          -0.02,
+          -0.012,
           0.03
         ],
         "rpy": [
@@ -1591,8 +3069,70 @@
         "lower": 0,
         "upper": 0.03,
         "effort": 40,
-        "velocity": 0.3
+        "velocity": 0.06
       }
+    },
+    {
+      "name": "left_left_finger_pad_mount",
+      "type": "fixed",
+      "parent": "left_left_finger",
+      "child": "left_left_finger_pad",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "left_right_finger_pad_mount",
+      "type": "fixed",
+      "parent": "left_right_finger",
+      "child": "left_right_finger_pad",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
     },
     {
       "name": "right_arm_joint_1",
@@ -1885,7 +3425,7 @@
       "origin": {
         "xyz": [
           0,
-          0.02,
+          0.012,
           0.03
         ],
         "rpy": [
@@ -1910,7 +3450,7 @@
         "lower": 0,
         "upper": 0.03,
         "effort": 40,
-        "velocity": 0.3
+        "velocity": 0.06
       }
     },
     {
@@ -1921,7 +3461,7 @@
       "origin": {
         "xyz": [
           0,
-          -0.02,
+          -0.012,
           0.03
         ],
         "rpy": [
@@ -1946,19 +3486,153 @@
         "lower": 0,
         "upper": 0.03,
         "effort": 40,
-        "velocity": 0.3
+        "velocity": 0.06
+      }
+    },
+    {
+      "name": "right_left_finger_pad_mount",
+      "type": "fixed",
+      "parent": "right_left_finger",
+      "child": "right_left_finger_pad",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "right_right_finger_pad_mount",
+      "type": "fixed",
+      "parent": "right_right_finger",
+      "child": "right_right_finger_pad",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "left_hip_yaw",
+      "type": "revolute",
+      "parent": "torso",
+      "child": "left_hip_yaw_carrier",
+      "origin": {
+        "xyz": [
+          0,
+          0.07,
+          0.49
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.6,
+        "upper": 0.6,
+        "effort": 12,
+        "velocity": 1.5
+      }
+    },
+    {
+      "name": "left_hip_roll",
+      "type": "revolute",
+      "parent": "left_hip_yaw_carrier",
+      "child": "left_hip_roll_carrier",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.025
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.45,
+        "upper": 0.45,
+        "effort": 20,
+        "velocity": 1.5
       }
     },
     {
       "name": "left_hip_joint",
       "type": "revolute",
-      "parent": "torso",
+      "parent": "left_hip_roll_carrier",
       "child": "left_thigh",
       "origin": {
         "xyz": [
           0,
-          0.07,
-          0.44
+          0,
+          -0.025
         ],
         "rpy": [
           0,
@@ -2022,10 +3696,46 @@
       }
     },
     {
+      "name": "left_ankle_roll",
+      "type": "revolute",
+      "parent": "left_ankle_pitch_carrier",
+      "child": "left_foot",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.35,
+        "upper": 0.35,
+        "effort": 12,
+        "velocity": 1.5
+      }
+    },
+    {
       "name": "left_ankle_joint",
       "type": "revolute",
       "parent": "left_shin",
-      "child": "left_foot",
+      "child": "left_ankle_pitch_carrier",
       "origin": {
         "xyz": [
           0,
@@ -2058,15 +3768,87 @@
       }
     },
     {
-      "name": "right_hip_joint",
+      "name": "right_hip_yaw",
       "type": "revolute",
       "parent": "torso",
-      "child": "right_thigh",
+      "child": "right_hip_yaw_carrier",
       "origin": {
         "xyz": [
           0,
           -0.07,
-          0.44
+          0.49
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.6,
+        "upper": 0.6,
+        "effort": 12,
+        "velocity": 1.5
+      }
+    },
+    {
+      "name": "right_hip_roll",
+      "type": "revolute",
+      "parent": "right_hip_yaw_carrier",
+      "child": "right_hip_roll_carrier",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.025
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.45,
+        "upper": 0.45,
+        "effort": 20,
+        "velocity": 1.5
+      }
+    },
+    {
+      "name": "right_hip_joint",
+      "type": "revolute",
+      "parent": "right_hip_roll_carrier",
+      "child": "right_thigh",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.025
         ],
         "rpy": [
           0,
@@ -2130,10 +3912,46 @@
       }
     },
     {
+      "name": "right_ankle_roll",
+      "type": "revolute",
+      "parent": "right_ankle_pitch_carrier",
+      "child": "right_foot",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.35,
+        "upper": 0.35,
+        "effort": 12,
+        "velocity": 1.5
+      }
+    },
+    {
       "name": "right_ankle_joint",
       "type": "revolute",
       "parent": "right_shin",
-      "child": "right_foot",
+      "child": "right_ankle_pitch_carrier",
       "origin": {
         "xyz": [
           0,
@@ -2237,9 +4055,10 @@
   ],
   "metadata": {
     "generator": "text-to-robot",
-    "created": "2026-09-19T06:54:09.260Z",
+    "created": "2026-09-19T17:49:00.826Z",
     "inferred_fields": [
       "joints.left_ankle_joint.dynamics",
+      "joints.left_ankle_roll.dynamics",
       "joints.left_arm_joint_1.dynamics",
       "joints.left_arm_joint_2.dynamics",
       "joints.left_arm_joint_3.dynamics",
@@ -2250,11 +4069,18 @@
       "joints.left_gripper_base_joint.dynamics",
       "joints.left_gripper_base_joint.limit",
       "joints.left_hip_joint.dynamics",
+      "joints.left_hip_roll.dynamics",
+      "joints.left_hip_yaw.dynamics",
       "joints.left_knee_joint.dynamics",
       "joints.left_left_finger_joint.dynamics",
+      "joints.left_left_finger_pad_mount.dynamics",
+      "joints.left_left_finger_pad_mount.limit",
       "joints.left_right_finger_joint.dynamics",
+      "joints.left_right_finger_pad_mount.dynamics",
+      "joints.left_right_finger_pad_mount.limit",
       "joints.neck_joint.dynamics",
       "joints.right_ankle_joint.dynamics",
+      "joints.right_ankle_roll.dynamics",
       "joints.right_arm_joint_1.dynamics",
       "joints.right_arm_joint_2.dynamics",
       "joints.right_arm_joint_3.dynamics",
@@ -2265,11 +4091,36 @@
       "joints.right_gripper_base_joint.dynamics",
       "joints.right_gripper_base_joint.limit",
       "joints.right_hip_joint.dynamics",
+      "joints.right_hip_roll.dynamics",
+      "joints.right_hip_yaw.dynamics",
       "joints.right_knee_joint.dynamics",
       "joints.right_left_finger_joint.dynamics",
+      "joints.right_left_finger_pad_mount.dynamics",
+      "joints.right_left_finger_pad_mount.limit",
       "joints.right_right_finger_joint.dynamics",
+      "joints.right_right_finger_pad_mount.dynamics",
+      "joints.right_right_finger_pad_mount.limit",
+      "joints.torso_front_panel_mount.dynamics",
+      "joints.torso_front_panel_mount.limit",
+      "joints.torso_left_panel_mount.dynamics",
+      "joints.torso_left_panel_mount.limit",
+      "joints.torso_rear_panel_mount.dynamics",
+      "joints.torso_rear_panel_mount.limit",
+      "joints.torso_right_panel_mount.dynamics",
+      "joints.torso_right_panel_mount.limit",
+      "joints.torso_service_lid_mount.dynamics",
+      "joints.torso_service_lid_mount.limit",
+      "joints.torso_standoff_fl_mount.dynamics",
+      "joints.torso_standoff_fl_mount.limit",
+      "joints.torso_standoff_fr_mount.dynamics",
+      "joints.torso_standoff_fr_mount.limit",
+      "joints.torso_standoff_rl_mount.dynamics",
+      "joints.torso_standoff_rl_mount.limit",
+      "joints.torso_standoff_rr_mount.dynamics",
+      "joints.torso_standoff_rr_mount.limit",
       "links.head.inertia",
       "links.head.mass",
+      "links.left_ankle_pitch_carrier.inertia",
       "links.left_elbow.inertia",
       "links.left_elbow.mass",
       "links.left_foot.inertia",
@@ -2278,10 +4129,16 @@
       "links.left_forearm.mass",
       "links.left_gripper_base.inertia",
       "links.left_gripper_base.mass",
+      "links.left_hip_roll_carrier.inertia",
+      "links.left_hip_yaw_carrier.inertia",
       "links.left_left_finger.inertia",
       "links.left_left_finger.mass",
+      "links.left_left_finger_pad.inertia",
+      "links.left_left_finger_pad.mass",
       "links.left_right_finger.inertia",
       "links.left_right_finger.mass",
+      "links.left_right_finger_pad.inertia",
+      "links.left_right_finger_pad.mass",
       "links.left_shin.inertia",
       "links.left_shin.mass",
       "links.left_shoulder.inertia",
@@ -2296,6 +4153,7 @@
       "links.left_wrist_2.mass",
       "links.left_wrist_3.inertia",
       "links.left_wrist_3.mass",
+      "links.right_ankle_pitch_carrier.inertia",
       "links.right_elbow.inertia",
       "links.right_elbow.mass",
       "links.right_foot.inertia",
@@ -2304,10 +4162,16 @@
       "links.right_forearm.mass",
       "links.right_gripper_base.inertia",
       "links.right_gripper_base.mass",
+      "links.right_hip_roll_carrier.inertia",
+      "links.right_hip_yaw_carrier.inertia",
       "links.right_left_finger.inertia",
       "links.right_left_finger.mass",
+      "links.right_left_finger_pad.inertia",
+      "links.right_left_finger_pad.mass",
       "links.right_right_finger.inertia",
       "links.right_right_finger.mass",
+      "links.right_right_finger_pad.inertia",
+      "links.right_right_finger_pad.mass",
       "links.right_shin.inertia",
       "links.right_shin.mass",
       "links.right_shoulder.inertia",
@@ -2323,11 +4187,30 @@
       "links.right_wrist_3.inertia",
       "links.right_wrist_3.mass",
       "links.torso.inertia",
-      "links.torso.mass"
+      "links.torso.material_density",
+      "links.torso_front_panel.inertia",
+      "links.torso_front_panel.mass",
+      "links.torso_left_panel.inertia",
+      "links.torso_left_panel.mass",
+      "links.torso_rear_panel.inertia",
+      "links.torso_rear_panel.mass",
+      "links.torso_right_panel.inertia",
+      "links.torso_right_panel.mass",
+      "links.torso_service_lid.inertia",
+      "links.torso_service_lid.mass",
+      "links.torso_standoff_fl.inertia",
+      "links.torso_standoff_fl.mass",
+      "links.torso_standoff_fr.inertia",
+      "links.torso_standoff_fr.mass",
+      "links.torso_standoff_rl.inertia",
+      "links.torso_standoff_rl.mass",
+      "links.torso_standoff_rr.inertia",
+      "links.torso_standoff_rr.mass"
     ],
     "notes": [
-      "Generated humanoid: torso, head, two 7-DOF arms with grippers, two 3-DOF legs.",
-      "Interpreted by demo parser: type inferred, DOF=25, gripper=parallel."
+      "Housing torso: 3 mm aluminium panels, four 3.4 mm mounting bores with 12 mm edge offsets, vented removable lid and hollow standoffs. Interior 154 × 274 × 354 mm. Sheet density 2700 kg/m³ is assumed; electronics selection, inserts and screw lengths remain unqualified. Mesh collision proxies fill small bores.",
+      "Generated humanoid: torso, head, two 7-DOF arms with grippers, two 6-DOF legs.",
+      "Interpreted locally: type inferred, DOF=31, gripper=parallel."
     ],
     "source_prompt": "Create a small humanoid robot with a torso, head and two 7 DOF arms and two-finger grippers\n"
   }

@@ -735,31 +735,31 @@
                 <geom size="0.0084435 0.03485 0.0079385" pos="0.152011 0 -0.035938" type="box" rgba="0.43 0.018 0.026 1" contype="1" conaffinity="0" group="3" />
               <inertial pos="0.151136 0.0000037644 -0.035788" mass="0.1" fullinertia="3.54165e-05 2.97734e-06 3.4589e-05 -1.49613e-09 1.15315e-06 -3.10237e-09" /></body>
             <inertial pos="0.083244 -0.0000444695 -0.009285" mass="0.25" fullinertia="0.000491698 0.000233218 0.00067441 7.96761e-08 4.69242e-05 -2.33269e-07" /></body>
-            <body name="faceplate" pos="0 0 0.155">
+            <body name="faceplate" pos="-0.02 0 0.245">
               <joint name="faceplate_hinge" range="-1.45 0" actuatorfrcrange="-2.5 2.5" damping="0.1" axis="0 1 0" />
-              <geom pos="0 0 -0.05" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.72 0.51 0.23 1" density="0" mesh="helmet_faceplate" />
-              <geom size="0.025377 0.077541 0.096" pos="0.130623 0 -0.058" type="box" rgba="0.72 0.51 0.23 1" contype="1" conaffinity="0" group="3" />
+              <geom pos="0.02 0 -0.14" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.72 0.51 0.23 1" density="0" mesh="helmet_faceplate" />
+              <geom size="0.025377 0.077541 0.096" pos="0.150623 0 -0.148" type="box" rgba="0.72 0.51 0.23 1" contype="1" conaffinity="0" group="3" />
               <body name="mouth_line">
-                <geom pos="0 0 -0.05" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.06 0.06 0.07 1" density="0" mesh="helmet_mouth_line" />
-                <geom size="0.005007 0.04 0.0018325" pos="0.131771 0 -0.132167" type="box" rgba="0.06 0.06 0.07 1" contype="1" conaffinity="0" group="3" />
-              <inertial pos="0.130279 -0.0000224326 -0.132198" mass="0.03" fullinertia="1.58104e-05 1.87107e-07 1.59506e-05 1.5396e-09 -2.43874e-09 1.89455e-10" /></body>
+                <geom pos="0.02 0 -0.14" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.06 0.06 0.07 1" density="0" mesh="helmet_mouth_line" />
+                <geom size="0.005007 0.04 0.0018325" pos="0.151771 0 -0.222167" type="box" rgba="0.06 0.06 0.07 1" contype="1" conaffinity="0" group="3" />
+              <inertial pos="0.150279 -0.0000224326 -0.222198" mass="0.03" fullinertia="1.58104e-05 1.87107e-07 1.59506e-05 1.5396e-09 -2.43874e-09 1.89455e-10" /></body>
               <body name="left_eye_socket">
-                <geom pos="0 0 -0.05" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.06 0.06 0.07 1" density="0" mesh="helmet_left_eye_socket" />
-                <geom size="0.0108 0.0295 0.0145" pos="0.135978 0.0445 -0.0065" type="box" rgba="0.06 0.06 0.07 1" contype="1" conaffinity="0" group="3" />
-              <inertial pos="0.13518 0.046163 -0.00661" mass="0.02" fullinertia="7.47685e-06 1.66197e-06 6.48254e-06 1.1998e-06 -6.81275e-08 -7.47494e-07" /></body>
+                <geom pos="0.02 0 -0.14" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.06 0.06 0.07 1" density="0" mesh="helmet_left_eye_socket" />
+                <geom size="0.0108 0.0295 0.0145" pos="0.155978 0.0445 -0.0965" type="box" rgba="0.06 0.06 0.07 1" contype="1" conaffinity="0" group="3" />
+              <inertial pos="0.15518 0.046163 -0.09661" mass="0.02" fullinertia="7.47685e-06 1.66197e-06 6.48254e-06 1.1998e-06 -6.81275e-08 -7.47494e-07" /></body>
               <body name="left_eye_lens">
-                <geom pos="0 0 -0.05" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.88 0.98 1 1" density="0" mesh="helmet_left_eye_lens" />
-                <geom size="0.005138 0.02303 0.00546" pos="0.137017 0.04353 -0.006" type="box" rgba="0.88 0.98 1 1" contype="1" conaffinity="0" group="3" />
-              <inertial pos="0.137189 0.04352 -0.005705" mass="0.02" fullinertia="3.42741e-06 2.08747e-07 3.41952e-06 5.55433e-07 3.41412e-08 -3.07191e-07" /></body>
+                <geom pos="0.02 0 -0.14" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.88 0.98 1 1" density="0" mesh="helmet_left_eye_lens" />
+                <geom size="0.005138 0.02303 0.00546" pos="0.157017 0.04353 -0.096" type="box" rgba="0.88 0.98 1 1" contype="1" conaffinity="0" group="3" />
+              <inertial pos="0.157189 0.04352 -0.095705" mass="0.02" fullinertia="3.42741e-06 2.08747e-07 3.41952e-06 5.55433e-07 3.41412e-08 -3.07191e-07" /></body>
               <body name="right_eye_socket">
-                <geom pos="0 0 -0.05" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.06 0.06 0.07 1" density="0" mesh="helmet_right_eye_socket" />
-                <geom size="0.0108 0.0295 0.0145" pos="0.135978 -0.0445 -0.0065" type="box" rgba="0.06 0.06 0.07 1" contype="1" conaffinity="0" group="3" />
-              <inertial pos="0.135402 -0.04592 -0.005658" mass="0.02" fullinertia="7.28164e-06 1.68956e-06 6.26328e-06 -1.16622e-06 -8.25846e-08 7.00572e-07" /></body>
+                <geom pos="0.02 0 -0.14" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.06 0.06 0.07 1" density="0" mesh="helmet_right_eye_socket" />
+                <geom size="0.0108 0.0295 0.0145" pos="0.155978 -0.0445 -0.0965" type="box" rgba="0.06 0.06 0.07 1" contype="1" conaffinity="0" group="3" />
+              <inertial pos="0.155402 -0.04592 -0.095658" mass="0.02" fullinertia="7.28164e-06 1.68956e-06 6.26328e-06 -1.16622e-06 -8.25846e-08 7.00572e-07" /></body>
               <body name="right_eye_lens">
-                <geom pos="0 0 -0.05" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.88 0.98 1 1" density="0" mesh="helmet_right_eye_lens" />
-                <geom size="0.005138 0.02303 0.00546" pos="0.137017 -0.04353 -0.006" type="box" rgba="0.88 0.98 1 1" contype="1" conaffinity="0" group="3" />
-              <inertial pos="0.137189 -0.04352 -0.005705" mass="0.02" fullinertia="3.42741e-06 2.08747e-07 3.41952e-06 -5.55433e-07 3.41412e-08 3.07191e-07" /></body>
-            <inertial pos="0.131575 -0.0000299932 -0.060591" mass="0.6" fullinertia="0.002607 0.001629 0.001035 -1.53605e-07 -1.10003e-05 -8.10546e-07" /></body>
+                <geom pos="0.02 0 -0.14" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.88 0.98 1 1" density="0" mesh="helmet_right_eye_lens" />
+                <geom size="0.005138 0.02303 0.00546" pos="0.157017 -0.04353 -0.096" type="box" rgba="0.88 0.98 1 1" contype="1" conaffinity="0" group="3" />
+              <inertial pos="0.157189 -0.04352 -0.095705" mass="0.02" fullinertia="3.42741e-06 2.08747e-07 3.41952e-06 -5.55433e-07 3.41412e-08 3.07191e-07" /></body>
+            <inertial pos="0.151575 -0.0000299932 -0.150591" mass="0.6" fullinertia="0.002607 0.001629 0.001035 -1.53605e-07 -1.10003e-05 -8.10546e-07" /></body>
             <body name="left_cheek_panel" pos="0 0.1 0.105">
               <joint name="left_cheek_panel_hinge" range="0 1" actuatorfrcrange="-1.5 1.5" damping="0.1" />
               <geom pos="0 -0.1 0" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" rgba="0.43 0.018 0.026 1" density="0" mesh="helmet_left_cheek_panel" />

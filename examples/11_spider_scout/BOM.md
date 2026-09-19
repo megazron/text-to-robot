@@ -1,6 +1,6 @@
 # Bill of Materials — hexapod
 
-**Estimated total: $595.73**  ·  tier: hobby  ·  budget: $1500 ✅ within budget
+**Estimated total: $582.05**  ·  tier: hobby  ·  budget: $1500 ✅ within budget
 
 **Effort sizing: fails; hardware verified: no.**
 
@@ -12,7 +12,7 @@
 | Power | LiPo 3S 2200mAh | 1 | 18 | 18 | 24 Wh; est. load 44 W |
 | Power | DC-DC buck regulator (5V/10A) | 1 | 12 | 12 | logic + servo rail |
 | Power | Power distribution board + fuse + switch | 1 | 14 | 14 | wiring harness backbone |
-| Structure | 3D-printed frame (PLA/PETG) | 1 | 86.05 | 86.05 | ~3.91 kg material @ $22/kg |
+| Structure | 3D-printed frame (PLA/PETG) | 1 | 72.37 | 72.37 | ~3.29 kg material @ $22/kg |
 | Structure | Fastener + bearing kit | 1 | 18 | 18 | M3 screws, heat inserts, 608 bearings |
 | Wiring & misc | Wiring, connectors, JST/Dupont, sleeving | 1 | 52.68 | 52.68 | ~12% of electronics |
 

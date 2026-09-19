@@ -6,7 +6,7 @@
 
 The CAD contains conceptual link solids. It is not a set of verified motor mounts, bearing seats, electronics housings and assembly drawings. The optional enclosure generator uses synthetic dimensions until measured hardware is supplied.
 
-Declared model mass: 2.534 kg. 10 links have inferred mass. 8 joints require actuator integration.
+Declared model mass: 2.303 kg. 21 links have inferred mass. 8 joints require actuator integration.
 
 Catalogue effort sizing: passes its estimate. This does not establish speed, duty cycle, fit or electrical compatibility.
 

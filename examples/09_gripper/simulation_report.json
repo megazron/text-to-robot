@@ -1,14 +1,14 @@
 {
   "model": "robot.urdf",
-  "nbody": 5,
+  "nbody": 16,
   "njnt": 2,
   "nu": 2,
-  "ngeom": 5,
+  "ngeom": 31,
   "floating": false,
   "tests": {
     "compile": {
       "pass": true,
-      "total_mass_kg": 0.716,
+      "total_mass_kg": 1.072,
       "actuators": 2
     },
     "initial_clearance": {
@@ -35,22 +35,22 @@
           "actuator": "act_left_finger_joint",
           "joint": "left_finger_joint",
           "pass": true,
-          "rms_error": 0.004525,
-          "peak_error": 0.014881,
+          "rms_error": 0.005312,
+          "peak_error": 0.01494,
           "error_unit": "m",
           "rms_tolerance": 0.01,
-          "peak_actuator_force": 0.6,
+          "peak_actuator_force": 0.602136,
           "force_unit": "N"
         },
         {
           "actuator": "act_right_finger_joint",
           "joint": "right_finger_joint",
           "pass": true,
-          "rms_error": 0.004525,
-          "peak_error": 0.014881,
+          "rms_error": 0.005312,
+          "peak_error": 0.01494,
           "error_unit": "m",
           "rms_tolerance": 0.01,
-          "peak_actuator_force": 0.6,
+          "peak_actuator_force": 0.602136,
           "force_unit": "N"
         }
       ]
@@ -58,7 +58,7 @@
   },
   "validation_scope": "simulation smoke tests, not hardware or wearable qualification",
   "mujoco_version": "3.13.0",
-  "model_sha256": "49e1db7cc58b6ed614c5193ec2a6e76a4eed0dba5ee59457341aecd77b8f8d96",
+  "model_sha256": "82b68dcc29d41f3ab8ca73dcd027978f80e7b13b5c2edc8fc6ee4712ff12efc8",
   "limitations": [
     "No measured motor, material, thermal or battery model",
     "No manufacturing or human-fit validation"
@@ -68,7 +68,7 @@
   "total": 5,
   "collision_model": "URDF primitives / mesh bounding boxes",
   "self_collision": true,
-  "source_urdf_sha256": "a542f84ff518e308c723f0b529b180520f4743f65a8ab9fba5b7eb74a2f38423",
+  "source_urdf_sha256": "709bed01a66999a5cf8c29601373eaf5375995a3add46c8d02d59cd5d3f4ce99",
   "initial_penetrations": [],
   "hardware_verified": false
 }

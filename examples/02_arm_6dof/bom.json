@@ -4,21 +4,21 @@
   "lines": [
     {
       "category": "Actuator",
+      "name": "Unitree GO-M8010-6",
+      "qty": 4,
+      "unit_cost": 400,
+      "subtotal": 1600,
+      "spec": "integrated BLDC + planetary, RS485 (23 N·m)",
+      "note": "joint joint_1; rating duty/source unverified; joint joint_2; rating duty/source unverified; joint joint_3; rating duty/source unverified; joint joint_4; rating duty/source unverified"
+    },
+    {
+      "category": "Actuator",
       "name": "Dynamixel XM430-W350",
       "qty": 2,
       "unit_cost": 270,
       "subtotal": 540,
       "spec": "RS485 smart servo, encoder (4.1 N·m)",
-      "note": "joint joint_1; rating duty/source unverified; joint joint_2; rating duty/source unverified"
-    },
-    {
-      "category": "Actuator",
-      "name": "DS3218 20kg servo",
-      "qty": 4,
-      "unit_cost": 12,
-      "subtotal": 48,
-      "spec": "PWM, waterproof, metal gears (1.96 N·m)",
-      "note": "joint joint_3; rating duty/source unverified; joint joint_4; rating duty/source unverified; joint joint_5; rating duty/source unverified; joint joint_6; rating duty/source unverified"
+      "note": "joint joint_5; rating duty/source unverified; joint joint_6; rating duty/source unverified"
     },
     {
       "category": "Actuator",
@@ -51,7 +51,7 @@
       "qty": 1,
       "unit_cost": 40,
       "subtotal": 40,
-      "spec": "74 Wh; est. load 35 W"
+      "spec": "74 Wh; est. load 123 W"
     },
     {
       "category": "Power",
@@ -73,9 +73,9 @@
       "category": "Structure",
       "name": "3D-printed frame (PLA/PETG)",
       "qty": 1,
-      "unit_cost": 78.05,
-      "subtotal": 78.05,
-      "spec": "~3.55 kg material @ $22/kg"
+      "unit_cost": 70.93,
+      "subtotal": 70.93,
+      "spec": "~3.22 kg material @ $22/kg"
     },
     {
       "category": "Structure",
@@ -89,63 +89,63 @@
       "category": "Wiring & misc",
       "name": "Wiring, connectors, JST/Dupont, sleeving",
       "qty": 1,
-      "unit_cost": 96.72,
-      "subtotal": 96.72,
+      "unit_cost": 282.96,
+      "subtotal": 282.96,
       "spec": "~12% of electronics"
     }
   ],
-  "total": 998.77,
+  "total": 2729.89,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
   "actuator_sizing": [
     {
       "joint": "joint_1",
-      "required_effort": 1.683,
+      "required_effort": 9.6,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.683,
-      "chosen": "Dynamixel XM430-W350",
+      "required_torque_nm": 9.6,
+      "chosen": "Unitree GO-M8010-6",
       "margin": "2.4x"
     },
     {
       "joint": "joint_2",
-      "required_effort": 1.572,
+      "required_effort": 9.6,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.572,
-      "chosen": "Dynamixel XM430-W350",
-      "margin": "2.6x"
+      "required_torque_nm": 9.6,
+      "chosen": "Unitree GO-M8010-6",
+      "margin": "2.4x"
     },
     {
       "joint": "joint_3",
-      "required_effort": 0.879,
+      "required_effort": 6.4,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.879,
-      "chosen": "DS3218 20kg servo",
-      "margin": "2.2x"
+      "required_torque_nm": 6.4,
+      "chosen": "Unitree GO-M8010-6",
+      "margin": "3.6x"
     },
     {
       "joint": "joint_4",
-      "required_effort": 0.185,
+      "required_effort": 3.2,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.185,
-      "chosen": "DS3218 20kg servo",
-      "margin": "10.6x"
+      "required_torque_nm": 3.2,
+      "chosen": "Unitree GO-M8010-6",
+      "margin": "7.2x"
     },
     {
       "joint": "joint_5",
-      "required_effort": 0.151,
+      "required_effort": 2.4,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.151,
-      "chosen": "DS3218 20kg servo",
-      "margin": "13.0x"
+      "required_torque_nm": 2.4,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "1.7x"
     },
     {
       "joint": "joint_6",
-      "required_effort": 0.099,
+      "required_effort": 1.6,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.099,
-      "chosen": "DS3218 20kg servo",
-      "margin": "19.7x"
+      "required_torque_nm": 1.6,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "2.6x"
     },
     {
       "joint": "left_finger_joint",

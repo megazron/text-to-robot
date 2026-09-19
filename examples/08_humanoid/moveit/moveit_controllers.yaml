@@ -25,9 +25,15 @@ moveit_simple_controller_manager:
       - right_arm_joint_7
       - right_left_finger_joint
       - right_right_finger_joint
+      - left_hip_yaw
+      - left_hip_roll
       - left_hip_joint
       - left_knee_joint
+      - left_ankle_roll
       - left_ankle_joint
+      - right_hip_yaw
+      - right_hip_roll
       - right_hip_joint
       - right_knee_joint
+      - right_ankle_roll
       - right_ankle_joint

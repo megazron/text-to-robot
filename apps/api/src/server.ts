@@ -164,6 +164,6 @@ const server = createServer(async (req, res) => {
 server.listen(PORT, () => {
   const st = providerStatus();
   const address=server.address();const port=address && typeof address!=="string" ? address.port : PORT;
-  console.log(`text-to-robot API on http://localhost:${port}  (LLM mode: ${st.mode})`);
+  console.log(`text-to-robot API on http://localhost:${port}  (generation: ${st.mode}, no external inference)`);
   console.log(`web UI:  http://localhost:${port}/`);
 });

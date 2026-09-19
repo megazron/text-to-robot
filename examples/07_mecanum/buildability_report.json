@@ -1,13 +1,21 @@
 {
   "scope": "Design-input inventory, not a hardware qualification or a claim that missing interfaces were inspected in CAD",
-  "source_robot_sha256": "b095055e851491485ffa5c6e7f7a612e6bcbaf7a2f564c8e7f93cdebb314bfdd",
-  "source_bom_sha256": "0a2cc1dc8054ccc618c083e19aefaa9accd51191d0af296e88e393395fe02c70",
+  "source_robot_sha256": "a558eaa328f7527ca9be3607b9702830090c5f6b0cb5b23757dd0bd932c0652d",
+  "source_bom_sha256": "678a7fbb8dd94e4b80e8976967735ad66895756dfc36a4ff851e5b204e5ff873",
   "hardware_verified": false,
   "manufacturing_ready": false,
   "prototype_test_evidence": null,
-  "declared_mass_kg": 7.294300815810472,
+  "declared_mass_kg": 4.143177565277414,
   "links_with_inferred_mass": [
-    "base_link",
+    "base_link_service_lid",
+    "base_link_rear_panel",
+    "base_link_right_panel",
+    "base_link_front_panel",
+    "base_link_left_panel",
+    "base_link_standoff_rr",
+    "base_link_standoff_rl",
+    "base_link_standoff_fr",
+    "base_link_standoff_fl",
     "front_left_wheel",
     "front_right_wheel",
     "rear_left_wheel",
@@ -18,36 +26,324 @@
     {
       "joint": "front_left_wheel_joint",
       "type": "continuous",
-      "effort": 50,
+      "effort": 2.5,
       "effort_unit": "N·m",
-      "velocity": 2,
+      "velocity": 12,
       "velocity_unit": "rad/s",
       "travel": "continuous"
     },
     {
       "joint": "front_right_wheel_joint",
       "type": "continuous",
-      "effort": 50,
+      "effort": 2.5,
       "effort_unit": "N·m",
-      "velocity": 2,
+      "velocity": 12,
       "velocity_unit": "rad/s",
       "travel": "continuous"
     },
     {
       "joint": "rear_left_wheel_joint",
       "type": "continuous",
-      "effort": 50,
+      "effort": 2.5,
       "effort_unit": "N·m",
-      "velocity": 2,
+      "velocity": 12,
       "velocity_unit": "rad/s",
       "travel": "continuous"
     },
     {
       "joint": "rear_right_wheel_joint",
       "type": "continuous",
-      "effort": 50,
+      "effort": 2.5,
       "effort_unit": "N·m",
-      "velocity": 2,
+      "velocity": 12,
+      "velocity_unit": "rad/s",
+      "travel": "continuous"
+    },
+    {
+      "joint": "front_left_wheel_roller_0_bearing",
+      "type": "continuous",
+      "effort": 0.01,
+      "effort_unit": "N·m",
+      "velocity": 100,
+      "velocity_unit": "rad/s",
+      "travel": "continuous"
+    },
+    {
+      "joint": "front_left_wheel_roller_1_bearing",
+      "type": "continuous",
+      "effort": 0.01,
+      "effort_unit": "N·m",
+      "velocity": 100,
+      "velocity_unit": "rad/s",
+      "travel": "continuous"
+    },
+    {
+      "joint": "front_left_wheel_roller_2_bearing",
+      "type": "continuous",
+      "effort": 0.01,
+      "effort_unit": "N·m",
+      "velocity": 100,
+      "velocity_unit": "rad/s",
+      "travel": "continuous"
+    },
+    {
+      "joint": "front_left_wheel_roller_3_bearing",
+      "type": "continuous",
+      "effort": 0.01,
+      "effort_unit": "N·m",
+      "velocity": 100,
+      "velocity_unit": "rad/s",
+      "travel": "continuous"
+    },
+    {
+      "joint": "front_left_wheel_roller_4_bearing",
+      "type": "continuous",
+      "effort": 0.01,
+      "effort_unit": "N·m",
+      "velocity": 100,
+      "velocity_unit": "rad/s",
+      "travel": "continuous"
+    },
+    {
+      "joint": "front_left_wheel_roller_5_bearing",
+      "type": "continuous",
+      "effort": 0.01,
+      "effort_unit": "N·m",
+      "velocity": 100,
+      "velocity_unit": "rad/s",
+      "travel": "continuous"
+    },
+    {
+      "joint": "front_left_wheel_roller_6_bearing",
+      "type": "continuous",
+      "effort": 0.01,
+      "effort_unit": "N·m",
+      "velocity": 100,
+      "velocity_unit": "rad/s",
+      "travel": "continuous"
+    },
+    {
+      "joint": "front_left_wheel_roller_7_bearing",
+      "type": "continuous",
+      "effort": 0.01,
+      "effort_unit": "N·m",
+      "velocity": 100,
+      "velocity_unit": "rad/s",
+      "travel": "continuous"
+    },
+    {
+      "joint": "front_right_wheel_roller_0_bearing",
+      "type": "continuous",
+      "effort": 0.01,
+      "effort_unit": "N·m",
+      "velocity": 100,
+      "velocity_unit": "rad/s",
+      "travel": "continuous"
+    },
+    {
+      "joint": "front_right_wheel_roller_1_bearing",
+      "type": "continuous",
+      "effort": 0.01,
+      "effort_unit": "N·m",
+      "velocity": 100,
+      "velocity_unit": "rad/s",
+      "travel": "continuous"
+    },
+    {
+      "joint": "front_right_wheel_roller_2_bearing",
+      "type": "continuous",
+      "effort": 0.01,
+      "effort_unit": "N·m",
+      "velocity": 100,
+      "velocity_unit": "rad/s",
+      "travel": "continuous"
+    },
+    {
+      "joint": "front_right_wheel_roller_3_bearing",
+      "type": "continuous",
+      "effort": 0.01,
+      "effort_unit": "N·m",
+      "velocity": 100,
+      "velocity_unit": "rad/s",
+      "travel": "continuous"
+    },
+    {
+      "joint": "front_right_wheel_roller_4_bearing",
+      "type": "continuous",
+      "effort": 0.01,
+      "effort_unit": "N·m",
+      "velocity": 100,
+      "velocity_unit": "rad/s",
+      "travel": "continuous"
+    },
+    {
+      "joint": "front_right_wheel_roller_5_bearing",
+      "type": "continuous",
+      "effort": 0.01,
+      "effort_unit": "N·m",
+      "velocity": 100,
+      "velocity_unit": "rad/s",
+      "travel": "continuous"
+    },
+    {
+      "joint": "front_right_wheel_roller_6_bearing",
+      "type": "continuous",
+      "effort": 0.01,
+      "effort_unit": "N·m",
+      "velocity": 100,
+      "velocity_unit": "rad/s",
+      "travel": "continuous"
+    },
+    {
+      "joint": "front_right_wheel_roller_7_bearing",
+      "type": "continuous",
+      "effort": 0.01,
+      "effort_unit": "N·m",
+      "velocity": 100,
+      "velocity_unit": "rad/s",
+      "travel": "continuous"
+    },
+    {
+      "joint": "rear_left_wheel_roller_0_bearing",
+      "type": "continuous",
+      "effort": 0.01,
+      "effort_unit": "N·m",
+      "velocity": 100,
+      "velocity_unit": "rad/s",
+      "travel": "continuous"
+    },
+    {
+      "joint": "rear_left_wheel_roller_1_bearing",
+      "type": "continuous",
+      "effort": 0.01,
+      "effort_unit": "N·m",
+      "velocity": 100,
+      "velocity_unit": "rad/s",
+      "travel": "continuous"
+    },
+    {
+      "joint": "rear_left_wheel_roller_2_bearing",
+      "type": "continuous",
+      "effort": 0.01,
+      "effort_unit": "N·m",
+      "velocity": 100,
+      "velocity_unit": "rad/s",
+      "travel": "continuous"
+    },
+    {
+      "joint": "rear_left_wheel_roller_3_bearing",
+      "type": "continuous",
+      "effort": 0.01,
+      "effort_unit": "N·m",
+      "velocity": 100,
+      "velocity_unit": "rad/s",
+      "travel": "continuous"
+    },
+    {
+      "joint": "rear_left_wheel_roller_4_bearing",
+      "type": "continuous",
+      "effort": 0.01,
+      "effort_unit": "N·m",
+      "velocity": 100,
+      "velocity_unit": "rad/s",
+      "travel": "continuous"
+    },
+    {
+      "joint": "rear_left_wheel_roller_5_bearing",
+      "type": "continuous",
+      "effort": 0.01,
+      "effort_unit": "N·m",
+      "velocity": 100,
+      "velocity_unit": "rad/s",
+      "travel": "continuous"
+    },
+    {
+      "joint": "rear_left_wheel_roller_6_bearing",
+      "type": "continuous",
+      "effort": 0.01,
+      "effort_unit": "N·m",
+      "velocity": 100,
+      "velocity_unit": "rad/s",
+      "travel": "continuous"
+    },
+    {
+      "joint": "rear_left_wheel_roller_7_bearing",
+      "type": "continuous",
+      "effort": 0.01,
+      "effort_unit": "N·m",
+      "velocity": 100,
+      "velocity_unit": "rad/s",
+      "travel": "continuous"
+    },
+    {
+      "joint": "rear_right_wheel_roller_0_bearing",
+      "type": "continuous",
+      "effort": 0.01,
+      "effort_unit": "N·m",
+      "velocity": 100,
+      "velocity_unit": "rad/s",
+      "travel": "continuous"
+    },
+    {
+      "joint": "rear_right_wheel_roller_1_bearing",
+      "type": "continuous",
+      "effort": 0.01,
+      "effort_unit": "N·m",
+      "velocity": 100,
+      "velocity_unit": "rad/s",
+      "travel": "continuous"
+    },
+    {
+      "joint": "rear_right_wheel_roller_2_bearing",
+      "type": "continuous",
+      "effort": 0.01,
+      "effort_unit": "N·m",
+      "velocity": 100,
+      "velocity_unit": "rad/s",
+      "travel": "continuous"
+    },
+    {
+      "joint": "rear_right_wheel_roller_3_bearing",
+      "type": "continuous",
+      "effort": 0.01,
+      "effort_unit": "N·m",
+      "velocity": 100,
+      "velocity_unit": "rad/s",
+      "travel": "continuous"
+    },
+    {
+      "joint": "rear_right_wheel_roller_4_bearing",
+      "type": "continuous",
+      "effort": 0.01,
+      "effort_unit": "N·m",
+      "velocity": 100,
+      "velocity_unit": "rad/s",
+      "travel": "continuous"
+    },
+    {
+      "joint": "rear_right_wheel_roller_5_bearing",
+      "type": "continuous",
+      "effort": 0.01,
+      "effort_unit": "N·m",
+      "velocity": 100,
+      "velocity_unit": "rad/s",
+      "travel": "continuous"
+    },
+    {
+      "joint": "rear_right_wheel_roller_6_bearing",
+      "type": "continuous",
+      "effort": 0.01,
+      "effort_unit": "N·m",
+      "velocity": 100,
+      "velocity_unit": "rad/s",
+      "travel": "continuous"
+    },
+    {
+      "joint": "rear_right_wheel_roller_7_bearing",
+      "type": "continuous",
+      "effort": 0.01,
+      "effort_unit": "N·m",
+      "velocity": 100,
       "velocity_unit": "rad/s",
       "travel": "continuous"
     }

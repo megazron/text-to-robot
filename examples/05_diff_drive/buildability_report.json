@@ -1,34 +1,43 @@
 {
   "scope": "Design-input inventory, not a hardware qualification or a claim that missing interfaces were inspected in CAD",
-  "source_robot_sha256": "17a9a539a9e25f45729be25885cc034249725d2c08290bd70ff5565032393ef5",
-  "source_bom_sha256": "540a81bf90a56d0887c94d1185c7edf9044a8d31134a13167506cf97bf4c1c4b",
+  "source_robot_sha256": "9e19a92394470320596bcb066b88d0897f5e32e600843d6b2a256d38e71db052",
+  "source_bom_sha256": "8c125fc301545b3973ca3602c837af44f18dbd3abcc27a1fe7cf319d8b1a463c",
   "hardware_verified": false,
   "manufacturing_ready": false,
   "prototype_test_evidence": null,
-  "declared_mass_kg": 6.975094896012767,
+  "declared_mass_kg": 3.862216949397718,
   "links_with_inferred_mass": [
-    "base_link",
+    "base_link_service_lid",
+    "base_link_rear_panel",
+    "base_link_right_panel",
+    "base_link_front_panel",
+    "base_link_left_panel",
+    "base_link_standoff_rr",
+    "base_link_standoff_rl",
+    "base_link_standoff_fr",
+    "base_link_standoff_fl",
     "left_wheel",
     "right_wheel",
-    "caster"
+    "caster",
+    "rear_caster"
   ],
   "actuator_catalogue_sizing_pass": true,
   "joint_requirements": [
     {
       "joint": "left_wheel_joint",
       "type": "continuous",
-      "effort": 50,
+      "effort": 2.5,
       "effort_unit": "N·m",
-      "velocity": 2,
+      "velocity": 12,
       "velocity_unit": "rad/s",
       "travel": "continuous"
     },
     {
       "joint": "right_wheel_joint",
       "type": "continuous",
-      "effort": 50,
+      "effort": 2.5,
       "effort_unit": "N·m",
-      "velocity": 2,
+      "velocity": 12,
       "velocity_unit": "rad/s",
       "travel": "continuous"
     }

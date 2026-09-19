@@ -28,19 +28,35 @@
     <chain base_link="torso" tip_link="left_foot"/>
   </group>
   <group_state name="home" group="left_leg">
+    <joint name="left_hip_yaw" value="0"/>
+    <joint name="left_hip_roll" value="0"/>
     <joint name="left_hip_joint" value="0"/>
     <joint name="left_knee_joint" value="0"/>
     <joint name="left_ankle_joint" value="0"/>
+    <joint name="left_ankle_roll" value="0"/>
   </group_state>
   <group name="right_leg">
     <chain base_link="torso" tip_link="right_foot"/>
   </group>
   <group_state name="home" group="right_leg">
+    <joint name="right_hip_yaw" value="0"/>
+    <joint name="right_hip_roll" value="0"/>
     <joint name="right_hip_joint" value="0"/>
     <joint name="right_knee_joint" value="0"/>
     <joint name="right_ankle_joint" value="0"/>
+    <joint name="right_ankle_roll" value="0"/>
   </group_state>
+
   <virtual_joint name="world_joint" type="fixed" parent_frame="world" child_link="torso"/>
+  <disable_collisions link1="torso" link2="torso_service_lid" reason="Adjacent"/>
+  <disable_collisions link1="torso" link2="torso_rear_panel" reason="Adjacent"/>
+  <disable_collisions link1="torso" link2="torso_right_panel" reason="Adjacent"/>
+  <disable_collisions link1="torso" link2="torso_front_panel" reason="Adjacent"/>
+  <disable_collisions link1="torso" link2="torso_left_panel" reason="Adjacent"/>
+  <disable_collisions link1="torso" link2="torso_standoff_rr" reason="Adjacent"/>
+  <disable_collisions link1="torso" link2="torso_standoff_rl" reason="Adjacent"/>
+  <disable_collisions link1="torso" link2="torso_standoff_fr" reason="Adjacent"/>
+  <disable_collisions link1="torso" link2="torso_standoff_fl" reason="Adjacent"/>
   <disable_collisions link1="torso" link2="head" reason="Adjacent"/>
   <disable_collisions link1="torso" link2="left_shoulder" reason="Adjacent"/>
   <disable_collisions link1="left_shoulder" link2="left_upper_arm" reason="Adjacent"/>
@@ -56,12 +72,18 @@
   <disable_collisions link1="right_forearm" link2="right_wrist_1" reason="Adjacent"/>
   <disable_collisions link1="right_wrist_1" link2="right_wrist_2" reason="Adjacent"/>
   <disable_collisions link1="right_wrist_2" link2="right_wrist_3" reason="Adjacent"/>
-  <disable_collisions link1="torso" link2="left_thigh" reason="Adjacent"/>
+  <disable_collisions link1="torso" link2="left_hip_yaw_carrier" reason="Adjacent"/>
+  <disable_collisions link1="left_hip_yaw_carrier" link2="left_hip_roll_carrier" reason="Adjacent"/>
+  <disable_collisions link1="left_hip_roll_carrier" link2="left_thigh" reason="Adjacent"/>
   <disable_collisions link1="left_thigh" link2="left_shin" reason="Adjacent"/>
-  <disable_collisions link1="left_shin" link2="left_foot" reason="Adjacent"/>
-  <disable_collisions link1="torso" link2="right_thigh" reason="Adjacent"/>
+  <disable_collisions link1="left_ankle_pitch_carrier" link2="left_foot" reason="Adjacent"/>
+  <disable_collisions link1="left_shin" link2="left_ankle_pitch_carrier" reason="Adjacent"/>
+  <disable_collisions link1="torso" link2="right_hip_yaw_carrier" reason="Adjacent"/>
+  <disable_collisions link1="right_hip_yaw_carrier" link2="right_hip_roll_carrier" reason="Adjacent"/>
+  <disable_collisions link1="right_hip_roll_carrier" link2="right_thigh" reason="Adjacent"/>
   <disable_collisions link1="right_thigh" link2="right_shin" reason="Adjacent"/>
-  <disable_collisions link1="right_shin" link2="right_foot" reason="Adjacent"/>
+  <disable_collisions link1="right_ankle_pitch_carrier" link2="right_foot" reason="Adjacent"/>
+  <disable_collisions link1="right_shin" link2="right_ankle_pitch_carrier" reason="Adjacent"/>
   <disable_collisions link1="torso" link2="arc_reactor" reason="Adjacent"/>
   <disable_collisions link1="left_wrist_3" link2="left_palm_repulsor" reason="Adjacent"/>
   <disable_collisions link1="right_wrist_3" link2="right_palm_repulsor" reason="Adjacent"/>

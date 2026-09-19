@@ -66,3 +66,19 @@ print('Surface contact evidence matches the current mesh assets')
 for name in ['moveit_report.json','moveit_left_arm_report.json','moveit_right_arm_report.json','wearability_report.json']:
     r=json.loads((folder/name).read_text())
     assert r['robot_sha256']==hashlib.sha256((folder/'robot.json').read_bytes()).hexdigest(),f'Stale {name}'
+
+web=json.loads((base/'web_validation.json').read_text())
+assert not web['external_requests'] and not web['page_errors'] and not web['failed_responses']
+assert web['shared_reload_pass'] and len(web['examples'])==17
+for row in web['examples']:
+    assert row['pass'] and row['source_robot_sha256']==hashlib.sha256((base/row['example']/'robot.json').read_bytes()).hexdigest()
+for name,digest in web['web_source_sha256'].items():
+    assert digest==hashlib.sha256((root/'apps/web/public'/name).read_bytes()).hexdigest()
+runtime=json.loads((base/'runtime_validation.json').read_text())
+assert runtime['ros_packages_built']==17 and len(runtime['ros_archive_sha256'])==17
+for name,digest in runtime['ros_archive_sha256'].items():
+    assert digest==hashlib.sha256((base/name/'robot.ros2.zip').read_bytes()).hexdigest()
+for key in ['training','browser','mobile_motion']:
+    entry=runtime[key]
+    assert entry['sha256']==hashlib.sha256((base/entry['report']).read_bytes()).hexdigest()
+print('Browser and ROS build records match the current artifacts')

@@ -73,8 +73,9 @@ export function ironManMark43(opts: ExosuitOptions = {}): RobotSpecification {
   // crown panel lifts (axis Y at the back of the panel) to clear the faceplate
   const crownP: V3 = [HM[0] - 0.03, 0, HM[2] + 0.118];
   part("helmet_crown_panel", "spine_frame", mesh("helmet_crown_panel", "helmet_crown_panel.stl"), crownP, [0, 0, 0], RED, 0.25, { axis: [0, 1, 0], open: -0.9, effort: 1.5, origin: [HM[0] - crownP[0], 0, HM[2] - crownP[2]] });
-  // faceplate rotates up about the temples (axis Y through the ear line); its features ride on it
-  const faceP: V3 = [HM[0], 0, HM[2] + 0.05]; const faceO: V3 = [0, 0, -0.05];
+  // Place the faceplate pivot above its upper edge so opening first moves the
+  // plate outward. The previous low pivot drove its forehead edge into the shell.
+  const faceP: V3 = [HM[0]-.02, 0, HM[2] + 0.14]; const faceO: V3 = [.02, 0, -0.14];
   part("faceplate", "spine_frame", mesh("helmet_faceplate", "helmet_faceplate.stl"), faceP, [0, 0, 0], GOLD, 0.60, { axis: [0, 1, 0], open: -1.45, effort: 2.5, origin: faceO });
   part("forehead_plate", "helmet_crown_panel", mesh("helmet_forehead_plate", "helmet_forehead_plate.stl"), [0, 0, 0], [0, 0, 0], RED, 0.10, { origin: [HM[0]-crownP[0],0,HM[2]-crownP[2]] });
   part("mouth_line", "faceplate", mesh("helmet_mouth_line", "helmet_mouth_line.stl"), [0, 0, 0], [0, 0, 0], DARK, 0.03, { origin: faceO });

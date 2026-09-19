@@ -1,7 +1,7 @@
 {
   "robot_name": "rover_arm",
   "budget": 4000,
-  "tier": "prosumer",
+  "tier": "hobby",
   "lines": [
     {
       "category": "Actuator",
@@ -15,36 +15,27 @@
     {
       "category": "Motor driver",
       "name": "TMC2209 driver",
-      "qty": 6,
+      "qty": 4,
       "unit_cost": 10,
-      "subtotal": 60,
+      "subtotal": 40,
       "spec": "driver for NEMA17 stepper"
     },
     {
       "category": "Actuator",
-      "name": "Dynamixel XM430-W350",
-      "qty": 2,
-      "unit_cost": 270,
-      "subtotal": 540,
-      "spec": "RS485 smart servo, encoder (4.1 N·m)",
-      "note": "joint joint_1; rating duty/source unverified; joint joint_2; rating duty/source unverified"
-    },
-    {
-      "category": "Actuator",
       "name": "DS3218 20kg servo",
-      "qty": 4,
+      "qty": 6,
       "unit_cost": 12,
-      "subtotal": 48,
+      "subtotal": 72,
       "spec": "PWM, waterproof, metal gears (1.96 N·m)",
-      "note": "joint joint_3; rating duty/source unverified; joint joint_4; rating duty/source unverified; joint joint_5; rating duty/source unverified; joint joint_6; rating duty/source unverified"
+      "note": "joint joint_1; rating duty/source unverified; joint joint_2; rating duty/source unverified; joint joint_3; rating duty/source unverified; joint joint_4; rating duty/source unverified; joint joint_5; rating duty/source unverified; joint joint_6; rating duty/source unverified"
     },
     {
       "category": "Actuator",
-      "name": "NEMA17 + lead screw",
+      "name": "Linear actuator 100N",
       "qty": 2,
-      "unit_cost": 26,
-      "subtotal": 52,
-      "spec": "lead-screw linear stage (60 N)",
+      "unit_cost": 35,
+      "subtotal": 70,
+      "spec": "12V, 100mm stroke (prismatic) (100 N)",
       "note": "joint left_finger_joint; rating duty/source unverified; joint right_finger_joint; rating duty/source unverified"
     },
     {
@@ -79,7 +70,7 @@
       "qty": 1,
       "unit_cost": 40,
       "subtotal": 40,
-      "spec": "74 Wh; est. load 54 W"
+      "spec": "74 Wh; est. load 49 W"
     },
     {
       "category": "Power",
@@ -101,9 +92,9 @@
       "category": "Structure",
       "name": "3D-printed frame (PLA/PETG)",
       "qty": 1,
-      "unit_cost": 304.71,
-      "subtotal": 304.71,
-      "spec": "~13.85 kg material @ $22/kg"
+      "unit_cost": 199,
+      "subtotal": 199,
+      "spec": "~9.05 kg material @ $22/kg"
     },
     {
       "category": "Structure",
@@ -117,118 +108,128 @@
       "category": "Wiring & misc",
       "name": "Wiring, connectors, JST/Dupont, sleeving",
       "qty": 1,
-      "unit_cost": 129.24,
-      "subtotal": 129.24,
+      "unit_cost": 67.08,
+      "subtotal": 67.08,
       "spec": "~12% of electronics"
     }
   ],
-  "total": 1528.95,
+  "total": 843.08,
   "feasible": true,
-  "sizing_pass": true,
+  "sizing_pass": false,
   "hardware_verified": false,
   "actuator_sizing": [
     {
       "joint": "front_left_wheel_joint",
-      "required_effort": 0.04,
+      "required_effort": 2,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.04,
+      "required_torque_nm": 2,
       "chosen": "NEMA17 stepper",
-      "margin": "11.3x"
+      "margin": "UNDERSIZED"
     },
     {
       "joint": "front_right_wheel_joint",
-      "required_effort": 0.04,
+      "required_effort": 2,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.04,
+      "required_torque_nm": 2,
       "chosen": "NEMA17 stepper",
-      "margin": "11.3x"
+      "margin": "UNDERSIZED"
     },
     {
       "joint": "rear_left_wheel_joint",
-      "required_effort": 0.04,
+      "required_effort": 2,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.04,
+      "required_torque_nm": 2,
       "chosen": "NEMA17 stepper",
-      "margin": "11.3x"
+      "margin": "UNDERSIZED"
     },
     {
       "joint": "rear_right_wheel_joint",
-      "required_effort": 0.04,
+      "required_effort": 2,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.04,
+      "required_torque_nm": 2,
       "chosen": "NEMA17 stepper",
-      "margin": "11.3x"
+      "margin": "UNDERSIZED"
     },
     {
       "joint": "joint_1",
-      "required_effort": 1.683,
+      "required_effort": 9.6,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.683,
-      "chosen": "Dynamixel XM430-W350",
-      "margin": "2.4x"
+      "required_torque_nm": 9.6,
+      "chosen": "DS3218 20kg servo",
+      "margin": "UNDERSIZED"
     },
     {
       "joint": "joint_2",
-      "required_effort": 1.572,
+      "required_effort": 9.6,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.572,
-      "chosen": "Dynamixel XM430-W350",
-      "margin": "2.6x"
+      "required_torque_nm": 9.6,
+      "chosen": "DS3218 20kg servo",
+      "margin": "UNDERSIZED"
     },
     {
       "joint": "joint_3",
-      "required_effort": 0.879,
+      "required_effort": 6.4,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.879,
+      "required_torque_nm": 6.4,
       "chosen": "DS3218 20kg servo",
-      "margin": "2.2x"
+      "margin": "UNDERSIZED"
     },
     {
       "joint": "joint_4",
-      "required_effort": 0.185,
+      "required_effort": 3.2,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.185,
+      "required_torque_nm": 3.2,
       "chosen": "DS3218 20kg servo",
-      "margin": "10.6x"
+      "margin": "UNDERSIZED"
     },
     {
       "joint": "joint_5",
-      "required_effort": 0.151,
+      "required_effort": 2.4,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.151,
+      "required_torque_nm": 2.4,
       "chosen": "DS3218 20kg servo",
-      "margin": "13.0x"
+      "margin": "UNDERSIZED"
     },
     {
       "joint": "joint_6",
-      "required_effort": 0.099,
+      "required_effort": 1.6,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.099,
+      "required_torque_nm": 1.6,
       "chosen": "DS3218 20kg servo",
-      "margin": "19.7x"
+      "margin": "UNDERSIZED"
     },
     {
       "joint": "left_finger_joint",
       "required_effort": 32,
       "effort_unit": "N",
       "required_force_n": 32,
-      "chosen": "NEMA17 + lead screw",
-      "margin": "1.9x"
+      "chosen": "Linear actuator 100N",
+      "margin": "3.1x"
     },
     {
       "joint": "right_finger_joint",
       "required_effort": 32,
       "effort_unit": "N",
       "required_force_n": 32,
-      "chosen": "NEMA17 + lead screw",
-      "margin": "1.9x"
+      "chosen": "Linear actuator 100N",
+      "margin": "3.1x"
     }
   ],
   "warnings": [
     "Sizing uses a neutral-pose gravity proxy and declared joint effort, not a worst-case workspace or dynamic load analysis. Selection checks only approximate effort and broad motion type. Speed/torque curves, travel, voltage, feedback, mounting, thermal duty and wiring are not qualified.",
-    "Catalog values are planning estimates. Except explicitly sourced rated values, torque entries may be stall/peak ratings; continuous duty, fit and complete assemblies are unverified."
+    "Catalog values are planning estimates. Except explicitly sourced rated values, torque entries may be stall/peak ratings; continuous duty, fit and complete assemblies are unverified.",
+    "joint front_left_wheel_joint needs ~2.00 N·m; strongest in hobby tier is NEMA17 stepper (0.45 N·m) — increase budget for a stronger actuator",
+    "joint front_right_wheel_joint needs ~2.00 N·m; strongest in hobby tier is NEMA17 stepper (0.45 N·m) — increase budget for a stronger actuator",
+    "joint rear_left_wheel_joint needs ~2.00 N·m; strongest in hobby tier is NEMA17 stepper (0.45 N·m) — increase budget for a stronger actuator",
+    "joint rear_right_wheel_joint needs ~2.00 N·m; strongest in hobby tier is NEMA17 stepper (0.45 N·m) — increase budget for a stronger actuator",
+    "joint joint_1 needs ~9.60 N·m; strongest in hobby tier is DS3218 20kg servo (1.96 N·m) — increase budget for a stronger actuator",
+    "joint joint_2 needs ~9.60 N·m; strongest in hobby tier is DS3218 20kg servo (1.96 N·m) — increase budget for a stronger actuator",
+    "joint joint_3 needs ~6.40 N·m; strongest in hobby tier is DS3218 20kg servo (1.96 N·m) — increase budget for a stronger actuator",
+    "joint joint_4 needs ~3.20 N·m; strongest in hobby tier is DS3218 20kg servo (1.96 N·m) — increase budget for a stronger actuator",
+    "joint joint_5 needs ~2.40 N·m; strongest in hobby tier is DS3218 20kg servo (1.96 N·m) — increase budget for a stronger actuator",
+    "joint joint_6 needs ~1.60 N·m; strongest in hobby tier is DS3218 20kg servo (1.96 N·m) — increase budget for a stronger actuator"
   ],
   "notes": [
-    "Tier: prosumer. Prices are planning estimates (USD), not quotes. Structure assumes FDM 3D printing."
+    "Tier: hobby. Prices are planning estimates (USD), not quotes. Structure assumes FDM 3D printing."
   ]
 }

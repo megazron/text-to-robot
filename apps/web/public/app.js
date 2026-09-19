@@ -118,7 +118,7 @@ function drawHelpers(world) {
   const showAxes = $("#showAxes").checked, showFrames = $("#showFrames").checked;
   if (showFrames) for (const [, m] of world) { const a = new THREE.AxesHelper(0.06); a.matrixAutoUpdate = false; a.matrix.copy(mat4(m)); robotGroup.add(a); state.frameHelpers.push(a); }
   if (showAxes) for (const j of state.robot.joints) {
-    if (j.type === "fixed") continue;
+    if (j.type === "fixed" || j.passive) continue;
     const m = world.get(j.child); if (!m) continue;
     const origin = new THREE.Vector3(m[3], m[7], m[11]);
     const dir = new THREE.Vector3(j.axis[0], j.axis[1], j.axis[2]).applyMatrix4(new THREE.Matrix4().extractRotation(mat4(m))).normalize();
@@ -226,7 +226,7 @@ function renderInspector() {
 function renderSliders() {
   const box = $("#sliders"); box.innerHTML = "";
   if (!state.robot) return;
-  const actuated = state.robot.joints.filter((j) => j.type !== "fixed");
+  const actuated = state.robot.joints.filter((j) => j.type !== "fixed" && !j.passive);
   if (!actuated.length) { box.append(el("div", "hint", "This robot has no actuated joints.")); return; }
   for (const j of actuated) {
     const cont = j.type === "continuous";
@@ -317,7 +317,7 @@ function applyResult(res, label, diffLines) {
   state.robot = res.robot; state.urdf = res.urdf; state.xacro = res.xacro; state.id = res.id ?? state.id;
   if (state.id) history.replaceState(null, "", `/r/${state.id}`);
   state.jointValues = {};
-  state.versions.push({ label, robot: res.robot, urdf: res.urdf, xacro: res.xacro });
+  state.versions.push({ id: state.id, label, robot: res.robot, urdf: res.urdf, xacro: res.xacro });
   state.version = state.versions.length - 1;
   state.selection = null;
   state.bom = res.bom ?? null;
@@ -327,7 +327,7 @@ function applyResult(res, label, diffLines) {
 
 function loadVersion(i) {
   const v = state.versions[i]; if (!v) return;
-  state.version = i; state.robot = v.robot; state.urdf = v.urdf; state.xacro = v.xacro; state.jointValues = {}; state.selection = null;
+  state.version = i; state.id = v.id; state.robot = v.robot; state.urdf = v.urdf; state.xacro = v.xacro; state.jointValues = {}; state.selection = null;
   buildRobot(v.robot); renderTree(); renderSliders(); renderInspector(); renderHistory();
 }
 
@@ -412,7 +412,7 @@ async function initTemplates() {
   } catch {}
 }
 async function initMode() {
-  try { const s = await (await fetch("/api/status")).json(); const badge = $("#mode"); badge.textContent = s.mode; badge.classList.toggle("cloud", s.mode === "cloud"); } catch {}
+  try { const s = await (await fetch("/api/status")).json(); const badge = $("#mode"); badge.textContent = "Free · local"; badge.title = "No account, tokens or external inference"; } catch {}
 }
 
 initExamples(); initTemplates(); initMode();

@@ -1,11 +1,11 @@
 {
   "scope": "Design-input inventory, not a hardware qualification or a claim that missing interfaces were inspected in CAD",
-  "source_robot_sha256": "ea73483f9b9b826b4f4d3d74a7f16420fa6f7541434888f0756decffcaff0f7c",
-  "source_bom_sha256": "893b4f107374a56925342ca72480019a3b989b3869a6b673761dd7fbb6d5619c",
+  "source_robot_sha256": "7e24ba4d8a6720028ebcd624a298db86d0e439e02386369bb008fac8583d1108",
+  "source_bom_sha256": "298e5d996f56f10572be1a489f1b7791608230ab6660f928eb9b02b99a37daed",
   "hardware_verified": false,
   "manufacturing_ready": false,
   "prototype_test_evidence": null,
-  "declared_mass_kg": 28.254743624904375,
+  "declared_mass_kg": 30.63474362490437,
   "links_with_inferred_mass": [
     "body",
     "head",

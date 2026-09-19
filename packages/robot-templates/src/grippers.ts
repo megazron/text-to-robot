@@ -14,9 +14,17 @@ export function attachParallelGripper(spec: RobotSpecification, attachLink: stri
     const fname = `${p}${side}_finger`;
     spec.links.push(link(fname, box(fx, fy, fz), { material: "gripper_mat", role: "gripper", origin: pose([0, 0, fz / 2]) }));
     spec.joints.push(joint(`${p}${side}_finger_joint`, "prismatic", `${p}gripper_base`, fname, {
-      origin: pose([0, sign * (ARM.gripper_palm[1] / 2 - fy), ARM.gripper_palm[2]]),
-      axis: [0, sign, 0], lower: 0, upper: 0.03, effort: 40, velocity: 0.3,
+      origin: pose([0, sign * (fy / 2 + .002), ARM.gripper_palm[2]]),
+      axis: [0, sign, 0], lower: 0, upper: 0.03, effort: 40, velocity: 0.06,
     }));
+  }
+  // Replaceable compliant contact pads protrude 2 mm into the nominal finger gap.
+  // At q=0 their faces meet; travel controls a real 0–60 mm aperture.
+  for(const [side,sign] of [["left",1],["right",-1]] as const){
+    const pad=`${p}${side}_finger_pad`;
+    spec.links.push(link(pad,box(fx,.002,fz*.6),{material:"wheel_mat",role:"contact_pad",density:1100,
+      origin:pose([0,-sign*(fy/2+.001),fz*.65])}));
+    spec.joints.push(joint(`${pad}_mount`,"fixed",`${p}${side}_finger`,pad));
   }
   spec.end_effectors.push({ name: `${p || "main_"}gripper`, type: "two_finger_gripper", attach_link: attachLink } as EndEffector);
   return spec;

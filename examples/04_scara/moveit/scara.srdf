@@ -9,7 +9,17 @@
     <joint name="joint_3" value="0"/>
     <joint name="joint_4" value="0"/>
   </group_state>
+
   <virtual_joint name="world_joint" type="fixed" parent_frame="world" child_link="base_link"/>
+  <disable_collisions link1="base_link" link2="base_link_service_lid" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="base_link_rear_panel" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="base_link_right_panel" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="base_link_front_panel" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="base_link_left_panel" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="base_link_standoff_rr" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="base_link_standoff_rl" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="base_link_standoff_fr" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="base_link_standoff_fl" reason="Adjacent"/>
   <disable_collisions link1="base_link" link2="upper_arm" reason="Adjacent"/>
   <disable_collisions link1="upper_arm" link2="forearm" reason="Adjacent"/>
   <disable_collisions link1="forearm" link2="spindle" reason="Adjacent"/>

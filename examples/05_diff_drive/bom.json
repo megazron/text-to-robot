@@ -4,20 +4,12 @@
   "lines": [
     {
       "category": "Actuator",
-      "name": "NEMA17 stepper",
+      "name": "Unitree GO-M8010-6",
       "qty": 2,
-      "unit_cost": 14,
-      "subtotal": 28,
-      "spec": "1.8deg, needs driver (0.45 N·m)",
+      "unit_cost": 400,
+      "subtotal": 800,
+      "spec": "integrated BLDC + planetary, RS485 (23 N·m)",
       "note": "joint left_wheel_joint; rating duty/source unverified; joint right_wheel_joint; rating duty/source unverified"
-    },
-    {
-      "category": "Motor driver",
-      "name": "TMC2209 driver",
-      "qty": 2,
-      "unit_cost": 10,
-      "subtotal": 20,
-      "spec": "driver for NEMA17 stepper"
     },
     {
       "category": "Compute",
@@ -33,7 +25,7 @@
       "qty": 1,
       "unit_cost": 40,
       "subtotal": 40,
-      "spec": "74 Wh; est. load 12 W"
+      "spec": "74 Wh; est. load 50 W"
     },
     {
       "category": "Power",
@@ -55,9 +47,9 @@
       "category": "Structure",
       "name": "3D-printed frame (PLA/PETG)",
       "qty": 1,
-      "unit_cost": 214.83,
-      "subtotal": 214.83,
-      "spec": "~9.77 kg material @ $22/kg"
+      "unit_cost": 118.96,
+      "subtotal": 118.96,
+      "spec": "~5.41 kg material @ $22/kg"
     },
     {
       "category": "Structure",
@@ -71,31 +63,31 @@
       "category": "Wiring & misc",
       "name": "Wiring, connectors, JST/Dupont, sleeving",
       "qty": 1,
-      "unit_cost": 17.52,
-      "subtotal": 17.52,
+      "unit_cost": 107.76,
+      "subtotal": 107.76,
       "spec": "~12% of electronics"
     }
   ],
-  "total": 396.35,
+  "total": 1142.72,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
   "actuator_sizing": [
     {
       "joint": "left_wheel_joint",
-      "required_effort": 0.04,
+      "required_effort": 2,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.04,
-      "chosen": "NEMA17 stepper",
-      "margin": "11.3x"
+      "required_torque_nm": 2,
+      "chosen": "Unitree GO-M8010-6",
+      "margin": "11.5x"
     },
     {
       "joint": "right_wheel_joint",
-      "required_effort": 0.04,
+      "required_effort": 2,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.04,
-      "chosen": "NEMA17 stepper",
-      "margin": "11.3x"
+      "required_torque_nm": 2,
+      "chosen": "Unitree GO-M8010-6",
+      "margin": "11.5x"
     }
   ],
   "warnings": [

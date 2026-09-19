@@ -4,7 +4,7 @@ import gymnasium as gym
 from gymnasium import spaces
 import mujoco
 from .convert import load_model
-from .testbench import _hold_targets, _up, _finite
+from .testbench import _hold_targets, _up, _finite, _actuator_state
 
 
 class MujocoRobotEnv(gym.Env):
@@ -27,13 +27,13 @@ class MujocoRobotEnv(gym.Env):
         self.lo = np.where(self.m.actuator_ctrllimited, self.m.actuator_ctrlrange[:, 0], -1.0)
         self.hi = np.where(self.m.actuator_ctrllimited, self.m.actuator_ctrlrange[:, 1], 1.0)
         self.action_space = spaces.Box(-1, 1, shape=(nu,), dtype=np.float32)
-        self.observation_space = spaces.Box(-np.inf, np.inf, shape=(self.m.nq + self.m.nv + 3,), dtype=np.float32)
+        self.observation_space = spaces.Box(-np.inf, np.inf, shape=(self.m.nq + self.m.nv + 5,), dtype=np.float32)
         if task=="aperture" and (nu==0 or any(self.m.jnt_type[self.m.actuator_trnid[a,0]]!=mujoco.mjtJoint.mjJNT_SLIDE for a in range(nu))):
             raise ValueError("aperture requires prismatic finger actuators only")
         self.steps = 0; self.renderer = None; self.target = np.zeros(3, dtype=np.float32)
 
     def _obs(self):
-        return np.concatenate([self.d.qpos, self.d.qvel, self.target]).astype(np.float32)
+        return np.concatenate([self.d.qpos, self.d.qvel, self.target, [np.sin(.02*self.steps),np.cos(.02*self.steps)]]).astype(np.float32)
 
     def reset(self, seed=None, options=None):
         super().reset(seed=seed); mujoco.mj_resetData(self.m, self.d); self.steps = 0
@@ -45,6 +45,23 @@ class MujocoRobotEnv(gym.Env):
             self.d.ctrl[:] = self.hold + self.np_random.normal(0, 0.05, self.m.nu)
         self.next_push = int(self.np_random.integers(60, 120))
         self.target = np.array([self.np_random.uniform(0.2, 0.5), self.np_random.uniform(-0.3, 0.3), self.np_random.uniform(0.2, 0.6)], dtype=np.float32)
+        if self.task=="reach":
+            saved=self.d.qpos.copy()
+            try:
+                for attempt in range(128):
+                    for a in range(self.m.nu):
+                        j=self.m.actuator_trnid[a,0]
+                        if self.m.jnt_limited[j]:
+                            self.d.qpos[self.m.jnt_qposadr[j]]=self.np_random.uniform(*self.m.jnt_range[j])
+                    mujoco.mj_forward(self.m,self.d)
+                    if all(c.dist >= -.001 for c in self.d.contact):
+                        self.target=self.d.xpos[self.tip_id].astype(np.float32).copy()
+                        self.target_qpos=self.d.qpos.copy()
+                        break
+                else: raise ValueError("No collision-free reachable target found; revise model geometry")
+            finally:
+                self.d.qpos[:]=saved
+                mujoco.mj_forward(self.m,self.d)
         if self.task=="aperture":self.target[:]=[self.np_random.uniform(float(self.lo.sum()),float(self.hi.sum())),0,0]
         self.x0 = float(self.d.qpos[0]) if self.floating else 0.0
         mujoco.mj_forward(self.m, self.d)
@@ -56,7 +73,7 @@ class MujocoRobotEnv(gym.Env):
         a = np.clip(a, -1, 1)
         span = 0.5 * (self.hi - self.lo)
         self.d.ctrl[:] = np.clip(self.hold + a * span * self.action_scale, self.lo, self.hi)   # small corrective deltas around the standing pose
-        if self.task in ("reach","aperture"):
+        if self.task in ("reach","aperture","sweep"):
             self.d.ctrl[:] = self.lo + (a+1)*.5*(self.hi-self.lo)
         if self.task == "stand" and self.floating and self.steps == self.next_push:
             self.d.qvel[0:2] += self.np_random.normal(0, 0.6, 2)                # random shove every ~1 s
@@ -76,7 +93,11 @@ class MujocoRobotEnv(gym.Env):
         elif self.task == "reach":
             tip = self.d.xpos[self.tip_id]; dist = float(np.linalg.norm(tip - self.target)); reward = -dist - ctrl_cost; term = dist < 0.05 or not finite
         else:  # "sweep": track a moving reference (smoothness benchmark)
-            ref = 0.5 * np.sin(0.02 * self.steps + np.arange(self.m.nu)); reward = -float(np.mean((a - ref) ** 2)); term = not finite
+            ref = 0.5 * np.sin(0.02 * self.steps + np.arange(self.m.nu))
+            measured=np.array([_actuator_state(self.m,self.d,i) for i in range(self.m.nu)])
+            normalized=2*(measured-self.lo)/np.maximum(self.hi-self.lo,1e-6)-1
+            reward = -float(np.mean((normalized-ref)**2)) if self.m.nu else 0.0
+            term = not finite
         if not finite: reward = -100.0
         return self._obs(), float(reward), bool(term), self.steps >= self.max_steps, {"upright": up,"is_success":bool(finite and term and self.task in ("reach","aperture"))}
 

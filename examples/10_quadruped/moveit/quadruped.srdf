@@ -32,7 +32,17 @@
     <joint name="rear_right_thigh_joint" value="0"/>
     <joint name="rear_right_knee_joint" value="0"/>
   </group_state>
+
   <virtual_joint name="world_joint" type="fixed" parent_frame="world" child_link="base_link"/>
+  <disable_collisions link1="base_link" link2="base_link_service_lid" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="base_link_rear_panel" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="base_link_right_panel" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="base_link_front_panel" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="base_link_left_panel" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="base_link_standoff_rr" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="base_link_standoff_rl" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="base_link_standoff_fr" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="base_link_standoff_fl" reason="Adjacent"/>
   <disable_collisions link1="base_link" link2="front_left_hip" reason="Adjacent"/>
   <disable_collisions link1="front_left_hip" link2="front_left_thigh" reason="Adjacent"/>
   <disable_collisions link1="front_left_thigh" link2="front_left_shin" reason="Adjacent"/>
@@ -45,4 +55,8 @@
   <disable_collisions link1="base_link" link2="rear_right_hip" reason="Adjacent"/>
   <disable_collisions link1="rear_right_hip" link2="rear_right_thigh" reason="Adjacent"/>
   <disable_collisions link1="rear_right_thigh" link2="rear_right_shin" reason="Adjacent"/>
+  <disable_collisions link1="front_left_shin" link2="front_left_foot" reason="Adjacent"/>
+  <disable_collisions link1="front_right_shin" link2="front_right_foot" reason="Adjacent"/>
+  <disable_collisions link1="rear_left_shin" link2="rear_left_foot" reason="Adjacent"/>
+  <disable_collisions link1="rear_right_shin" link2="rear_right_foot" reason="Adjacent"/>
 </robot>

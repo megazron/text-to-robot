@@ -1,103 +1,116 @@
 {
   "01_arm_2dof": {
-    "source_urdf_sha256": "d4587ab93662bdeb00bca4a43ea7e17494417074f227d7841d9a9af0662aaa84",
-    "gif_sha256": "f3e1378706393e4dfc16fedd1181a67d15d9f4ce5cda5066e9deb3ebe6176c36",
+    "source_urdf_sha256": "d5191f826b6f5a01bbb88ff6d3e87ebf9f59c831ca0e5fd290a156ca7ac1e526",
+    "gif_sha256": "c2e70d90cbaae2fa2f812f3191e2a40636d604133df1e7c2574a989df0cde6a2",
     "self_collision": true,
     "motion": "hold",
-    "seconds": 2
+    "seconds": 2,
+    "collision_model": "URDF primitives / mesh bounding boxes"
   },
   "02_arm_6dof": {
-    "source_urdf_sha256": "11bd5e7a4b9613343771bf40f78aa6fd59f2b61356857ef570b2878e847d44ca",
-    "gif_sha256": "84428ee8784e12783a03a7df45d25ad69af65b72cc03293ff10591e3cd561660",
+    "source_urdf_sha256": "eec6c8ff46c15aa938e53f626cdaecacaaf998279415d60f2f381b76f889f666",
+    "gif_sha256": "9b295ef5cfb204ae403fdb95bb72d0a1200da4692b229cbb6ee5b50ddf32e143",
     "self_collision": true,
     "motion": "hold",
-    "seconds": 2
+    "seconds": 2,
+    "collision_model": "URDF primitives / mesh bounding boxes"
   },
   "03_arm_7dof": {
-    "source_urdf_sha256": "82d6140f19a07eca797d763e9f0b8fb7a97104f88ba1efbda71c41d18868ae96",
-    "gif_sha256": "b815b4b733a5c38691406c401fd7d91e13f6b3caa328de74f1f9533fa67eed62",
+    "source_urdf_sha256": "c0d1a2fec565baf59e805bb7e00bf5dc9652168b1e6dcb5ce1d46b6e12a515d4",
+    "gif_sha256": "733c7789c445b149de19ce9eff00acfd58687923e80a1ffc719d616f42232485",
     "self_collision": true,
     "motion": "hold",
-    "seconds": 2
+    "seconds": 2,
+    "collision_model": "URDF primitives / mesh bounding boxes"
   },
   "04_scara": {
-    "source_urdf_sha256": "3d6cd9ea14925b37626adfdc7b1504641041f14854ff0c2671fa208c662f32e2",
-    "gif_sha256": "492496fc82f6157c703bfbd40ed3744afd0e82e989d7689f1963182a8644e546",
+    "source_urdf_sha256": "60cbd23e95b9efe89fa159e6de5fb1e9fd283c5d6acb359a9b7f1a1173555675",
+    "gif_sha256": "6ab6b669c08af8892763a45fe5be6ab3c6a2005bc1068ee3db526c732db40562",
     "self_collision": true,
     "motion": "hold",
-    "seconds": 2
+    "seconds": 2,
+    "collision_model": "URDF primitives / mesh bounding boxes"
   },
   "05_diff_drive": {
-    "source_urdf_sha256": "1d1c11b2cedcca978ee0a02010529f121e59b246522607f34adb77f4006a7707",
-    "gif_sha256": "94b71a0115d3f65c4405b2c2bc20cdff4a2b535c8751b445b424d0a2c4c3f079",
+    "source_urdf_sha256": "4de848e7d6975769b37e7c4c108ba9a2372ba04d037e2b19807c17037f78d3e3",
+    "gif_sha256": "44045fb433577894914d35f7c55701f785aff94bfce2b94ddc37f06b64d04234",
     "self_collision": true,
     "motion": "hold",
-    "seconds": 2
+    "seconds": 2,
+    "collision_model": "URDF primitives / mesh bounding boxes"
   },
   "06_four_wheel": {
-    "source_urdf_sha256": "ff5d428e80c6543997e80f1a8d81fbed4a83a123faaa90055adfcfc166219221",
-    "gif_sha256": "cd64de04705b9e352b0c7a7398d71ba186219fc94a4f7fdcf44dfe7162be305c",
+    "source_urdf_sha256": "dba122eec43bede75e2321ddde28a5f7ba8326168b01fb1dad26b3d461878491",
+    "gif_sha256": "fc2cd046b20593e7dc908de88987ef15c60c7799fcf58aa236bd84ddba5fc018",
     "self_collision": true,
     "motion": "hold",
-    "seconds": 2
+    "seconds": 2,
+    "collision_model": "URDF primitives / mesh bounding boxes"
   },
   "07_mecanum": {
-    "source_urdf_sha256": "64d42c8321395960109160525ac3da5f34305d9d8bd4d43955027d0092c777f8",
-    "gif_sha256": "cd64de04705b9e352b0c7a7398d71ba186219fc94a4f7fdcf44dfe7162be305c",
+    "source_urdf_sha256": "ae0727adcf9742f0de2201cf102b362b541d49e8dfb47a6a0473efde49ba9580",
+    "gif_sha256": "5baa96d81469b255567828f54079498929ff3b238f9d50e5296ccda5e6f89076",
     "self_collision": true,
     "motion": "hold",
-    "seconds": 2
+    "seconds": 2,
+    "collision_model": "URDF primitives / mesh bounding boxes"
   },
   "08_humanoid": {
-    "source_urdf_sha256": "22e1aa68f4b4d147801a56746b395189d0f765f3ea5ccb386ec563b6b0dd4715",
-    "gif_sha256": "2ee42054a28a1d2c6792a65e872a02976b7e39005471a4df6673b27b38d7f397",
+    "source_urdf_sha256": "35bb3bbe0b216c8515a959a0767b75ebf2151be770f73d017f3b991d6689afba",
+    "gif_sha256": "3c60b125b7f8c4081dc9bc0ecc5c6b79375675310069212cf9f8f87186226bd3",
     "self_collision": true,
     "motion": "hold",
-    "seconds": 2
+    "seconds": 2,
+    "collision_model": "URDF primitives / mesh bounding boxes"
   },
   "09_gripper": {
-    "source_urdf_sha256": "a542f84ff518e308c723f0b529b180520f4743f65a8ab9fba5b7eb74a2f38423",
-    "gif_sha256": "572982ac78fb8ad2e6c333d06b7fa1e5af3d9987dcdb0e742938e2dd9c3304b6",
+    "source_urdf_sha256": "709bed01a66999a5cf8c29601373eaf5375995a3add46c8d02d59cd5d3f4ce99",
+    "gif_sha256": "0816afcd461257474591994e2c40c94fda6aeb24fedb03e4663c467606de4189",
     "self_collision": true,
     "motion": "hold",
-    "seconds": 2
+    "seconds": 2,
+    "collision_model": "URDF primitives / mesh bounding boxes"
   },
   "10_quadruped": {
-    "source_urdf_sha256": "0c281d8f3b47b08e2bf9dd93613fa7c41108d6d616b50e6cb1cae4b0f8eed757",
-    "gif_sha256": "2b946bfa6ccfcf60a5e3d23102f4b3483644b5f460de8cf038abcfa59c443c27",
+    "source_urdf_sha256": "7403028fdc49e83b1e12a18f3816494663c151073f333aaab842681fb87d0889",
+    "gif_sha256": "d8a1ffea77bcae65e3de0547036c452a8de192246f82f7717709cb48e22f7081",
     "self_collision": true,
     "motion": "hold",
-    "seconds": 2
+    "seconds": 2,
+    "collision_model": "URDF primitives / mesh bounding boxes"
   },
   "11_spider_scout": {
-    "source_urdf_sha256": "467a5cb5239f8873b2235e51d6d81a3a9f9bebb8203941d78471d6f888d5d958",
-    "gif_sha256": "f64935760bf0f42cf7fa8fad442d09ad9cb1f47e6cb67d1295f19bbedab66e7c",
+    "source_urdf_sha256": "fcac1e012dce78f2ea21430482378eb83ec17e026d94fbf48099613cf3355576",
+    "gif_sha256": "c27c7a676f5d1b743f56133de93eb7f03fb376ee55a704b79d6c808687b17e63",
     "self_collision": true,
     "motion": "hold",
-    "seconds": 2
+    "seconds": 2,
+    "collision_model": "URDF primitives / mesh bounding boxes"
   },
   "12_mars_rover": {
-    "source_urdf_sha256": "a677a10874d942e2ac2222f2ee9d0277af6e0cc85dc5aaf9c1ef74953b6497f6",
-    "gif_sha256": "bd8318e29aec73e7508b2cb622771c6cb4bf9d92549d88f02aa6d261abb36c39",
+    "source_urdf_sha256": "eef4a60aeddbffa097d7c7c9299421e2d88cabf04e9d0c4c5e616236510e15ee",
+    "gif_sha256": "1f4ed9f8f2b28a635d8b725c4a89d777fdcda07c801f55b12d1908c282c87076",
     "self_collision": true,
     "motion": "hold",
-    "seconds": 2
+    "seconds": 2,
+    "collision_model": "URDF primitives / mesh bounding boxes"
   },
   "13_battle_mech": {
-    "source_urdf_sha256": "5ce674daa394a2df041bc89507353fb91b178a658795a6834a6647bd53b7bce9",
-    "gif_sha256": "f79fa7aa7d53483cd205b47d739f91d2e3c1881596c7372789b036b2a3c53a7e",
+    "source_urdf_sha256": "7c38757d88a900ea57810f9201e8781b6aeb8fd589cb6f249095d7aa964a6b20",
+    "gif_sha256": "1969ef3a5fc06a03fa1053cae1fed953e5029dd5842a99085aa6e96b095bbdeb",
     "self_collision": true,
     "motion": "hold",
-    "seconds": 2
+    "seconds": 2,
+    "collision_model": "URDF primitives / mesh bounding boxes"
   },
   "14_iron_man_mark_43": {
-    "source_urdf_sha256": "b5ff112ffc44d47badcab294336c3ff73a22a1a6d06fa23fa65f91052e5ebe03",
-    "gif_sha256": "399d1bdb2549c08de1439d7e3560f4a1d2f7522ef6b66a52a1221ab8f2000cfd",
+    "source_urdf_sha256": "535a4bd533f498bf915eabb488f0cd62a80ee2124d69c80e74ace84dfa36ccbc",
+    "gif_sha256": "595e49f9cf529b7e4ad4e73addaa727fa8f0f0eb7253ecdafddeeaf00ba44c8a",
     "self_collision": true,
     "motion": "hold",
     "seconds": 2,
     "collision_model": "compound convex meshes and URDF primitives",
-    "collision_archive_sha256": "161d86086fecd56358468cf6dd9179fad86c49cd63d8db86c5778d6f5814f663",
+    "collision_archive_sha256": "2ab640bf62f4bfc59e5670d8184d2b382e8cc75c9a8d8cf6592643488716edf7",
     "limitations": [
       "Approximate collision geometry; sampled deviation is not a worst-case error bound",
       "No human fit, strength or motion-path certification",
@@ -106,37 +119,40 @@
     ]
   },
   "15_wall_e": {
-    "source_urdf_sha256": "72c7490fafd188e7a19f65478a19d92d19ab5014f3d347936088ca66029cf402",
-    "gif_sha256": "ca5c24338ed324fbacd38246e0f358e9900444319c06cd320dbe18c2e98112c5",
+    "source_urdf_sha256": "ad5c9f09046fcba263b6d8fba334e9a1b70ef747bff37a3ab482e04564521c94",
+    "gif_sha256": "6954e549eb5131110a05c2f2d2b6e03a0e61ea98235f81b959b9b9e0100664b2",
     "self_collision": true,
     "motion": "hold",
-    "seconds": 2
+    "seconds": 2,
+    "collision_model": "URDF primitives / mesh bounding boxes"
   },
   "16_eva": {
-    "source_urdf_sha256": "d8b7d247a183f12831455daab94d23ffeb0e584dc20aa933df8c21dc5495e6ee",
-    "gif_sha256": "44603a50e63a0bd297d106e7413382ef6b859acd53b3e813c634c49461bc2f3c",
+    "source_urdf_sha256": "87f4a76064a60e12d354f88ba8d83f378c21fd8113015efe159b19b9f85c2515",
+    "gif_sha256": "10a0dc339e79d6dbd856b62a4157308feff39ddfa8259ee5510a661e1bbed78f",
     "self_collision": true,
     "motion": "hold",
-    "seconds": 2
+    "seconds": 2,
+    "collision_model": "URDF primitives / mesh bounding boxes"
   },
   "17_baymax": {
-    "source_urdf_sha256": "2ff71343a369826185370bc03ff0ce44e7711bd194fef0b319dcf69ca189ac67",
-    "gif_sha256": "84205b2cf965b6e42e38fea6abe0b219ae1be30b0af17100eadac3eaec05ba37",
+    "source_urdf_sha256": "0f7baa59f6d3c36d97150e18d6e58171b68a83901ca0ecdc46a1377cc3ce003c",
+    "gif_sha256": "14401219b9dbc314ca3b6269856fe5924f65b8884e49992937f18747c3be8b72",
     "self_collision": true,
     "motion": "hold",
-    "seconds": 2
+    "seconds": 2,
+    "collision_model": "URDF primitives / mesh bounding boxes"
   },
   "mark43_articulation": {
-    "source_urdf_sha256": "df8651899408c1e7da7025255c16130da906ad4a85e03d07841be3b5658b7505",
-    "gif_sha256": "dd25d8647a4538381ee00121ba80ce8470517ab15d634616351db2795a0966c1",
+    "source_urdf_sha256": "a10295d0f5776087ede45fa213f0f1c0e50c08560057f045a81a5f70feb1ffaa",
+    "gif_sha256": "bfe984d9af13c4e684674549e9d55b8180d5a8a581dc920d94159886b53b974c",
     "self_collision": false,
     "floating": false,
     "motion": "doff",
     "seconds": 4
   },
   "mark43_helmet": {
-    "source_urdf_sha256": "df8651899408c1e7da7025255c16130da906ad4a85e03d07841be3b5658b7505",
-    "gif_sha256": "db3e8285991c5075cda4cb88f10c1b7d36d37ab3a055bb9404f615485704f9c5",
+    "source_urdf_sha256": "a10295d0f5776087ede45fa213f0f1c0e50c08560057f045a81a5f70feb1ffaa",
+    "gif_sha256": "ff1cd0d967329cc1f58be456aa8e1a5a789738d64e88721fbc0296ffb9a8206e",
     "self_collision": false,
     "floating": false,
     "motion": "doff",

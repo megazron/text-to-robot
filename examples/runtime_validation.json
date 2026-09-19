@@ -1,106 +1,129 @@
 {
   "date": "2026-09-19",
+  "scope": "Generated package build and software runtime checks; no hardware qualification",
   "ros_distribution": "Jazzy",
   "ros_packages_built": 17,
-  "humanoid_moveit_report": "08_humanoid/moveit_report.json",
-  "pybullet_scope": "load, finite state and floor smoke checks; not self-collision or balance validation",
-  "pybullet": [
-    {
-      "example": "02_arm_6dof",
-      "pass": true,
-      "floating": false,
-      "base_z": 0.06
+  "ros_archive_sha256": {
+    "01_arm_2dof": "5aafa5a3a4819d669e05bd09b8fa55cd4862023e10cef4d985141ac0e9c7733f",
+    "02_arm_6dof": "98bd05d4029ca2fed4e9d8180e23cba2a0e9ab189a59b81f5250c6827dc750bb",
+    "03_arm_7dof": "43e9b4d4e03aaea3e96e9fe00f897391d065f0ee9bd1e9216913ea9a59199de4",
+    "04_scara": "ba363e60dd8284084885b7814f82fd40b3c2d3e54c06d690a78485bba39f2ac7",
+    "05_diff_drive": "5b3c89e12fc778d7a0ae0d3b7178e0f254a32645e34a163e873ad90ec1d73856",
+    "06_four_wheel": "51ac67e2430b7576f787f261471cb1d66e85a50c5a7f67a184956e5ca99c62aa",
+    "07_mecanum": "b71d8dadc72c1917260bb2d07e58264007ed32d811cad25603f8d6373f1ef61e",
+    "08_humanoid": "b8289d849c15af942e22abc7e854edbf530921480db217b8d58e1cdfd21784cc",
+    "09_gripper": "aa19b13b172543efd0b110aad52a4259b0f468775857e469352ee10ecbf1e390",
+    "10_quadruped": "564327075fc2172b74456b269d742a5df3795996e385b38c8a41853975f80f7f",
+    "11_spider_scout": "9408d0be67bd70f0a74cb74a1ec0a127963953e9dd9e31ebaeff4f7b957b888c",
+    "12_mars_rover": "bd7edfc6142abbaf497ad11edf149366abd14b7ae1294a235611a1a8ae5812ae",
+    "13_battle_mech": "37d1627edca6d86894de3362ab6aedeae39d5d524b647a117ddd441e671aa065",
+    "14_iron_man_mark_43": "86896b3ccb5421fa96e21342115d0238cc9d833d67c048bebef61562c6ba8694",
+    "15_wall_e": "2ad7bc05421bfd8a8a381ae2a6cb2f7efd7583df375ddcebaebe31c2b5e722e2",
+    "16_eva": "2c818e9f472d6d72d4fba93b539ae95f61a0a09eab5f8e85a317735a4d8708a9",
+    "17_baymax": "406e20e77acdadadc23c885542c85307877f544404e6b3adc59b008bc7b3a087"
+  },
+  "moveit": {
+    "moveit_report.json": {
+      "scope": "ROS 2 mock hardware wiring and planning; not dynamics or real robot execution",
+      "controllers": {
+        "joint_trajectory_controller": "active",
+        "joint_state_broadcaster": "active"
+      },
+      "controllers_active": true,
+      "planning_scene_available": true,
+      "group": "neck",
+      "planning_error_code": 1,
+      "planning_pass": true,
+      "trajectory_points": 25,
+      "execution_requested": true,
+      "goal_positions": {
+        "neck_yaw": 0.15,
+        "neck_pitch": 0.0
+      },
+      "allowed_planning_time_s": 5.0,
+      "planning_time_s": 0.245647626,
+      "start_state_valid": true,
+      "start_state_contacts": [],
+      "start_state_contact_count": 0,
+      "contact_scope": "Contacts returned by GetStateValidity; service contact limits may truncate the list",
+      "robot_sha256": "0b56318e5b4540de4ea85f30db5259a00fbac6e893e04c9ff3fb18157ad57797",
+      "execution_error_code": 1,
+      "execution_pass": true,
+      "pass": true
     },
-    {
-      "example": "03_arm_7dof",
-      "pass": true,
-      "floating": false,
-      "base_z": 0.06
+    "moveit_left_arm_report.json": {
+      "scope": "ROS 2 mock hardware wiring and planning; not dynamics or real robot execution",
+      "controllers": {
+        "joint_trajectory_controller": "active",
+        "joint_state_broadcaster": "active"
+      },
+      "controllers_active": true,
+      "planning_scene_available": true,
+      "group": "left_arm",
+      "planning_error_code": 1,
+      "planning_pass": true,
+      "trajectory_points": 25,
+      "execution_requested": true,
+      "goal_positions": {
+        "left_shoulder_abduction": 0.15,
+        "left_shoulder_flexion": 0.0,
+        "left_elbow_flexion": 0.0,
+        "left_wrist_flexion": 0.0
+      },
+      "allowed_planning_time_s": 5.0,
+      "planning_time_s": 3.874795444,
+      "start_state_valid": true,
+      "start_state_contacts": [],
+      "start_state_contact_count": 0,
+      "contact_scope": "Contacts returned by GetStateValidity; service contact limits may truncate the list",
+      "robot_sha256": "0b56318e5b4540de4ea85f30db5259a00fbac6e893e04c9ff3fb18157ad57797",
+      "execution_error_code": 1,
+      "execution_pass": true,
+      "pass": true
     },
-    {
-      "example": "04_scara",
-      "pass": true,
-      "floating": false,
-      "base_z": 0.175
-    },
-    {
-      "example": "05_diff_drive",
-      "pass": true,
-      "floating": true,
-      "base_z": 0.12098731579728457
-    },
-    {
-      "example": "06_four_wheel",
-      "pass": true,
-      "floating": true,
-      "base_z": 0.12099000143174583
-    },
-    {
-      "example": "07_mecanum",
-      "pass": true,
-      "floating": true,
-      "base_z": 0.12099000143174583
-    },
-    {
-      "example": "08_humanoid",
-      "pass": true,
-      "floating": true,
-      "base_z": 0.6799888367626218
-    },
-    {
-      "example": "09_gripper",
-      "pass": true,
-      "floating": false,
-      "base_z": 0.06
-    },
-    {
-      "example": "10_quadruped",
-      "pass": true,
-      "floating": true,
-      "base_z": 0.37098958915324454
-    },
-    {
-      "example": "11_spider_scout",
-      "pass": true,
-      "floating": true,
-      "base_z": 0.1309903059425814
-    },
-    {
-      "example": "12_mars_rover",
-      "pass": true,
-      "floating": true,
-      "base_z": 0.12098999027105567
-    },
-    {
-      "example": "13_battle_mech",
-      "pass": true,
-      "floating": true,
-      "base_z": 0.6208423495586697
-    },
-    {
-      "example": "14_iron_man_mark_43",
-      "pass": true,
-      "floating": true,
-      "base_z": 0.3131621541797333
-    },
-    {
-      "example": "15_wall_e",
-      "pass": true,
-      "floating": true,
-      "base_z": 0.20098996746124162
-    },
-    {
-      "example": "16_eva",
-      "pass": true,
-      "floating": true,
-      "base_z": 0.3259902816934754
-    },
-    {
-      "example": "17_baymax",
-      "pass": true,
-      "floating": true,
-      "base_z": 0.6731896174946639
+    "moveit_right_arm_report.json": {
+      "scope": "ROS 2 mock hardware wiring and planning; not dynamics or real robot execution",
+      "controllers": {
+        "joint_trajectory_controller": "active",
+        "joint_state_broadcaster": "active"
+      },
+      "controllers_active": true,
+      "planning_scene_available": true,
+      "group": "right_arm",
+      "planning_error_code": 1,
+      "planning_pass": true,
+      "trajectory_points": 26,
+      "execution_requested": true,
+      "goal_positions": {
+        "right_shoulder_abduction": 0.15,
+        "right_shoulder_flexion": 0.0,
+        "right_elbow_flexion": 0.0,
+        "right_wrist_flexion": 0.0
+      },
+      "allowed_planning_time_s": 5.0,
+      "planning_time_s": 1.477793522,
+      "start_state_valid": true,
+      "start_state_contacts": [],
+      "start_state_contact_count": 0,
+      "contact_scope": "Contacts returned by GetStateValidity; service contact limits may truncate the list",
+      "robot_sha256": "0b56318e5b4540de4ea85f30db5259a00fbac6e893e04c9ff3fb18157ad57797",
+      "execution_error_code": 1,
+      "execution_pass": true,
+      "pass": true
     }
-  ],
-  "hardware_verified": false
+  },
+  "moveit_scope": "Mark 43 neck and each arm: collision-valid start, planning and execution with mock hardware; not a real motor test",
+  "training": {
+    "report": "training_validation.json",
+    "sha256": "bfaaac2136f2808a79554b430354a00359be26fd9bc0b2d97bda1ec0e347ad8c",
+    "scope": "All 17 exported PyBullet environments reset and step once; no trained skill claim"
+  },
+  "mobile_motion": {
+    "report": "mobile_motion.json",
+    "sha256": "23267ccb9046e98c347c609efcc437057d7a7ec8be2f65fb0e12a44998b468f6"
+  },
+  "browser": {
+    "report": "web_validation.json",
+    "sha256": "e7737d380b383fd6dec0ad0f35871c995425716ac26980aa357cebe0eba07c28"
+  }
 }

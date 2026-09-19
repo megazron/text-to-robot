@@ -1,6 +1,6 @@
 # Bill of Materials — scara
 
-**Estimated total: $574.98**  ·  tier: prosumer
+**Estimated total: $571.91**  ·  tier: prosumer
 
 **Effort sizing: passes catalogue estimate; hardware verified: no.**
 
@@ -13,7 +13,7 @@
 | Power | LiPo 4S 5000mAh | 1 | 40 | 40 | 74 Wh; est. load 16 W |
 | Power | DC-DC buck regulator (5V/10A) | 1 | 12 | 12 | logic + servo rail |
 | Power | Power distribution board + fuse + switch | 1 | 14 | 14 | wiring harness backbone |
-| Structure | 3D-printed frame (PLA/PETG) | 1 | 78.74 | 78.74 | ~3.58 kg material @ $22/kg |
+| Structure | 3D-printed frame (PLA/PETG) | 1 | 75.67 | 75.67 | ~3.44 kg material @ $22/kg |
 | Structure | Fastener + bearing kit | 1 | 18 | 18 | M3 screws, heat inserts, 608 bearings |
 | Wiring & misc | Wiring, connectors, JST/Dupont, sleeving | 1 | 51.24 | 51.24 | ~12% of electronics |
 

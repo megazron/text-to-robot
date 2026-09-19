@@ -1,14 +1,14 @@
 {
   "model": "robot.urdf",
-  "nbody": 6,
+  "nbody": 15,
   "njnt": 5,
   "nu": 4,
-  "ngeom": 6,
+  "ngeom": 29,
   "floating": true,
   "tests": {
     "compile": {
       "pass": true,
-      "total_mass_kg": 7.294,
+      "total_mass_kg": 4.093,
       "actuators": 4
     },
     "initial_clearance": {
@@ -27,52 +27,52 @@
       "max_joint_error_rad": 0.0
     },
     "actuator_sweep": {
-      "pass": true,
-      "tracked": "4/4",
-      "worst_error": 0.053,
+      "pass": false,
+      "tracked": "0/4",
+      "worst_error": 3.587,
       "actuators": [
         {
           "actuator": "act_front_left_wheel_joint",
           "joint": "front_left_wheel_joint",
-          "pass": true,
-          "rms_error": 0.022938,
-          "peak_error": 0.047268,
-          "error_unit": "rad",
-          "rms_tolerance": 0.15,
-          "peak_actuator_force": 2.373175,
+          "pass": false,
+          "rms_error": 1.803886,
+          "peak_error": 3.46483,
+          "error_unit": "rad/s",
+          "rms_tolerance": 0.5,
+          "peak_actuator_force": 1.734972,
           "force_unit": "N m"
         },
         {
           "actuator": "act_front_right_wheel_joint",
           "joint": "front_right_wheel_joint",
-          "pass": true,
-          "rms_error": 0.022938,
-          "peak_error": 0.047268,
-          "error_unit": "rad",
-          "rms_tolerance": 0.15,
-          "peak_actuator_force": 2.373175,
+          "pass": false,
+          "rms_error": 1.803886,
+          "peak_error": 3.46483,
+          "error_unit": "rad/s",
+          "rms_tolerance": 0.5,
+          "peak_actuator_force": 1.734972,
           "force_unit": "N m"
         },
         {
           "actuator": "act_rear_left_wheel_joint",
           "joint": "rear_left_wheel_joint",
-          "pass": true,
-          "rms_error": 0.022777,
-          "peak_error": 0.052862,
-          "error_unit": "rad",
-          "rms_tolerance": 0.15,
-          "peak_actuator_force": 2.628032,
+          "pass": false,
+          "rms_error": 1.796895,
+          "peak_error": 3.587029,
+          "error_unit": "rad/s",
+          "rms_tolerance": 0.5,
+          "peak_actuator_force": 1.79039,
           "force_unit": "N m"
         },
         {
           "actuator": "act_rear_right_wheel_joint",
           "joint": "rear_right_wheel_joint",
-          "pass": true,
-          "rms_error": 0.022777,
-          "peak_error": 0.052862,
-          "error_unit": "rad",
-          "rms_tolerance": 0.15,
-          "peak_actuator_force": 2.628032,
+          "pass": false,
+          "rms_error": 1.796895,
+          "peak_error": 3.587029,
+          "error_unit": "rad/s",
+          "rms_tolerance": 0.5,
+          "peak_actuator_force": 1.79039,
           "force_unit": "N m"
         }
       ]
@@ -85,17 +85,17 @@
   },
   "validation_scope": "simulation smoke tests, not hardware or wearable qualification",
   "mujoco_version": "3.13.0",
-  "model_sha256": "6e1d0ef4ec608026b1a84e291cc87d06d60ebfae22a3a21105caa29e65e8e868",
+  "model_sha256": "8e17c51fc7581902e8f5fd410ae8d22c252be6fba28f13a4a5017deedce768e5",
   "limitations": [
     "No measured motor, material, thermal or battery model",
     "No manufacturing or human-fit validation"
   ],
   "self_collision_masks_enabled": true,
-  "passed": 6,
+  "passed": 5,
   "total": 6,
   "collision_model": "URDF primitives / mesh bounding boxes",
   "self_collision": true,
-  "source_urdf_sha256": "ff5d428e80c6543997e80f1a8d81fbed4a83a123faaa90055adfcfc166219221",
+  "source_urdf_sha256": "dba122eec43bede75e2321ddde28a5f7ba8326168b01fb1dad26b3d461878491",
   "initial_penetrations": [],
   "hardware_verified": false
 }

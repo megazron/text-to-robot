@@ -13,19 +13,19 @@ export const TASKS: Record<RobotClass, TaskDef[]> = {
         terminated = error < 0.002`},
   ],
   manipulator: [
-    { id: "reach", title: "Reach a random 3D target", reward:
-`        tip = p.getLinkState(self.robot, self.tip_index)[0]
+    { id: "reach", title: "Reach a sampled collision-free target", reward:
+`        tip = p.getLinkState(self.robot, self.tip_index)[4]
         dist = float(np.linalg.norm(np.array(tip) - self.target))
         reward = -dist - 0.001 * float(np.square(action).sum())
         terminated = dist < 0.05` },
-    { id: "track", title: "Track a moving target", reward:
-`        self.target[0] = 0.4 + 0.15 * np.sin(self.steps * 0.02)
-        tip = p.getLinkState(self.robot, self.tip_index)[0]
+    { id: "track", title: "Track a sequence of reachable targets", reward:
+`        if self.steps % 100 == 0: self.target = self._reachable_target()
+        tip = p.getLinkState(self.robot, self.tip_index)[4]
         dist = float(np.linalg.norm(np.array(tip) - self.target))
         reward = -dist
         terminated = False` },
     { id: "hold", title: "Reach and hold (settle) at the target", reward:
-`        tip = p.getLinkState(self.robot, self.tip_index)[0]
+`        tip = p.getLinkState(self.robot, self.tip_index)[4]
         vel = np.array([p.getJointState(self.robot, j)[1] for j in self.joints])
         dist = float(np.linalg.norm(np.array(tip) - self.target))
         reward = -dist - 0.05 * float(np.linalg.norm(vel))

@@ -50,11 +50,17 @@ def urdf_to_mjcf(urdf_path: str, floating=None, kp: float | None = None, out: st
     with open(urdf_path, encoding="utf8") as source_file:
         urdf_xml = source_file.read()
     source = ET.fromstring(urdf_xml)
-    joint_efforts = {}
+    joint_efforts = {}; continuous_velocities = {}
     for joint in source.findall("joint"):
         if joint.get("type") not in ("revolute", "continuous", "prismatic"):
             continue
+        if joint.get("passive") == "true":
+            continue  # Free roller/bearing; never synthesize a motor.
         limit = joint.find("limit")
+        if joint.get("type") == "continuous":
+            velocity = float(limit.get("velocity", "nan")) if limit is not None else float("nan")
+            if not np.isfinite(velocity) or velocity <= 0: raise ValueError("Continuous joints need a positive velocity limit")
+            continuous_velocities[joint.get("name")] = velocity
         effort = float(limit.get("effort", "nan")) if limit is not None else float("nan")
         if not np.isfinite(effort) or effort <= 0:
             raise ValueError(f"Joint {joint.get('name')!r} needs a finite positive URDF effort limit; refusing to invent actuator capacity")
@@ -212,7 +218,14 @@ def urdf_to_mjcf(urdf_path: str, floating=None, kp: float | None = None, out: st
         jn = j.get("name"); jt = j.get("type", "hinge")
         if not jn or jt not in ("hinge", "slide"): continue
         rng = j.get("range")
+        if jn not in joint_efforts: continue
         effort = joint_efforts[jn]
+        if jn in continuous_velocities:
+            velocity = continuous_velocities[jn]
+            ET.SubElement(act, "velocity", name=f"act_{jn}", joint=jn, kv="0.5",
+                          forcelimited="true", forcerange=f"{-effort:.12g} {effort:.12g}",
+                          ctrllimited="true", ctrlrange=f"{-velocity:.12g} {velocity:.12g}")
+            continue
         a = ET.SubElement(act, "position", name=f"act_{jn}", joint=jn,
                           forcelimited="true", forcerange=f"{-effort:.12g} {effort:.12g}")
         if rng: a.set("ctrlrange", rng); a.set("ctrllimited", "true")

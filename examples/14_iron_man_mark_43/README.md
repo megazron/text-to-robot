@@ -2,6 +2,7 @@
 
 Prompt: Build me a movie-accurate wearable Iron Man Mark 43 suit from Age of Ultron with all the small polygon armour plates that open and close, repulsors, a HUD and an IMU. Budget $60000
 
+
 ![Current MuJoCo simulation](simulation.gif)
 
 Collision model: **compound convex meshes and URDF primitives**.
@@ -16,6 +17,10 @@ not a learned policy or proof of hardware accuracy. The model's failures remain 
   **0** initial penetration contacts.
 - Failed checks: actuator_sweep, disturbance_recovery.
 - [Physical build evidence and missing interfaces](BUILDABILITY.md), [machine-readable record](buildability_report.json). **No tested physical build is documented.**
+
+## Design research
+
+[Public engineering sources and model-specific changes](../../references/engineering/README.md).
 
 ## MoveIt / ROS 2
 

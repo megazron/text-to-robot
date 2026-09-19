@@ -6,119 +6,119 @@
       "pass": true,
       "task": "reach",
       "actuators": 4,
-      "archive_sha256": "7ffbf5b70a5049249577296edcaa2c2e17ce3cf5486621b9279e33b48c7ee10a"
+      "archive_sha256": "832c2425255f5ad335f7015188545c094e301a201fe472cb88a805c8189a9fa9"
     },
     {
       "example": "02_arm_6dof",
       "pass": true,
       "task": "reach",
       "actuators": 8,
-      "archive_sha256": "29c183f79e5b6f6d033eca1f133a630a84dbf5ca4dbb70ab763d9f49fddb1cd0"
+      "archive_sha256": "912def4bcdbb1d9f70f942069e3411377d24cc383028b11db11a03d8fab0632d"
     },
     {
       "example": "03_arm_7dof",
       "pass": true,
       "task": "reach",
       "actuators": 9,
-      "archive_sha256": "102ce7b432bb89b0db8389224339f3e652b30efe1b78fdb4d00dd227a9b75f22"
+      "archive_sha256": "4327a387e4c08b921c94ac71ccfe6ca118aeb3cb10c455408681954494e16d50"
     },
     {
       "example": "04_scara",
       "pass": true,
       "task": "reach",
       "actuators": 4,
-      "archive_sha256": "8df8c2212f10af5a1f31eea38e1ef5df94822ecd72b5d669680dcf754bb93aa5"
+      "archive_sha256": "8ccb380869d4012a4578eeb6f69cedc208b4e7357a205d98130f3f5c0f005b19"
     },
     {
       "example": "05_diff_drive",
       "pass": true,
       "task": "forward",
       "actuators": 2,
-      "archive_sha256": "9220fe674ffa0549cc8bb7b7423939cecae7c7b56e4798e98acc566332486166"
+      "archive_sha256": "b9ecade4036a6812d733682ba09fa8241240cb79d23dc3e2e0307517d82522bc"
     },
     {
       "example": "06_four_wheel",
       "pass": true,
       "task": "forward",
       "actuators": 4,
-      "archive_sha256": "75a8873b412979651179e46f119161bfec7968feb9c85113e49f9b06f18e5077"
+      "archive_sha256": "e5432c2ae5fcfaf0be6596f4a06a51b76da0af5769f13895fafb1fdafd3f9902"
     },
     {
       "example": "07_mecanum",
       "pass": true,
       "task": "forward",
       "actuators": 4,
-      "archive_sha256": "a986a735f3376f2d4c952a8465b22eeeec3b903bc55cdaa6f8981ee8d29eadfa"
+      "archive_sha256": "3f749a9b831fc094cbc4ea880090b091a9c015fea68d52b4d4294d122b2c3809"
     },
     {
       "example": "08_humanoid",
       "pass": true,
       "task": "walk",
-      "actuators": 25,
-      "archive_sha256": "1c48a3668585560dc61bfbae3a72875628dc6631d73323002d21b9a22e383b30"
+      "actuators": 31,
+      "archive_sha256": "d32b546433e32c06e122087169868ca184fd1ded98788fed0cbb37d809538a6b"
     },
     {
       "example": "09_gripper",
       "pass": true,
       "task": "aperture",
       "actuators": 2,
-      "archive_sha256": "74ea9e259f1cca64a28e8130a2de6236bda2e201c0352c47fd976319f8e50c3a"
+      "archive_sha256": "13dea570db652bb54b140c635cfd3170662ab7bb28b4a036c3da5b532058e7b7"
     },
     {
       "example": "10_quadruped",
       "pass": true,
       "task": "walk",
       "actuators": 12,
-      "archive_sha256": "b782b7a064514d7fdef58007bc156c5c2d9ad098a6e9df36e969ef8848f0ae01"
+      "archive_sha256": "75d4e2b4bfabe84dc275da3f06fc870c5f0a213fcd95922365f9358b9d54e90b"
     },
     {
       "example": "11_spider_scout",
       "pass": true,
       "task": "walk",
       "actuators": 18,
-      "archive_sha256": "9c29b2f59db33d2d13507200d9112b11495441bc7f3af613ef3e75d871b46392"
+      "archive_sha256": "5bf2c71afb4881b565f50e7875f6482c753805f8c3c224578780144f39498ce3"
     },
     {
       "example": "12_mars_rover",
       "pass": true,
       "task": "forward",
       "actuators": 12,
-      "archive_sha256": "3bec2d2b22f195fb2b6b2369b7ab46ddc8f9924a35f106769bf5025bb9e23548"
+      "archive_sha256": "5bc16d1c00f5c156a8bed550a92e924d8b35c59a1da4784fe3e99f6f029de59a"
     },
     {
       "example": "13_battle_mech",
       "pass": true,
       "task": "walk",
-      "actuators": 21,
-      "archive_sha256": "14e8258fb949ff1dc22a24e56426a410cf116e6dbda31a47163aafa9afec2173"
+      "actuators": 27,
+      "archive_sha256": "2a3b4e61880d525c106904d4943047f71467caa126fe568d4ae28522a500f05e"
     },
     {
       "example": "14_iron_man_mark_43",
       "pass": true,
       "task": "walk",
       "actuators": 86,
-      "archive_sha256": "c2ca7930aee133bb3a1580ff168350437a125965c4e0502abd67be07191d15fb"
+      "archive_sha256": "83df29db6998e94568e9bbb8d423181058be1ca42b84b7876373ef11c53d2841"
     },
     {
       "example": "15_wall_e",
       "pass": true,
       "task": "forward",
       "actuators": 16,
-      "archive_sha256": "10db98c0c1a3258bfb2317e36d2222d7fa22db684b4f20b81447104accbf3df3"
+      "archive_sha256": "25214414c0663ef80041504a5bc8b08d20d35e39c88c37ee9f29b2ee3c93372c"
     },
     {
       "example": "16_eva",
       "pass": true,
       "task": "reach",
       "actuators": 5,
-      "archive_sha256": "c4c72ac95df8b0df3b9dd6e72b13577bc8cee8c144bd38255d5dfb2b7dee7919"
+      "archive_sha256": "8f5a6a7b148bc9572201330916079099f219142e096c865037683a7ab926af66"
     },
     {
       "example": "17_baymax",
       "pass": true,
       "task": "walk",
-      "actuators": 15,
-      "archive_sha256": "ba20a4064fa53d199b359001280f0138b264a299db73ad032b8110caf567d819"
+      "actuators": 21,
+      "archive_sha256": "96dbc49ddb119786128266f45459e0652d263cf52f34acada0a876455dc2772f"
     }
   ]
 }

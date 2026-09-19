@@ -1,6 +1,6 @@
 # Bill of Materials — quadruped
 
-**Estimated total: $5760.35**  ·  tier: prosumer
+**Estimated total: $5724.44**  ·  tier: prosumer
 
 **Effort sizing: fails; hardware verified: no.**
 
@@ -11,7 +11,7 @@
 | Power | LiPo 6S 10000mAh | 1 | 95 | 95 | 222 Wh; est. load 296 W |
 | Power | DC-DC buck regulator (5V/10A) | 1 | 12 | 12 | logic + servo rail |
 | Power | Power distribution board + fuse + switch | 1 | 14 | 14 | wiring harness backbone |
-| Structure | 3D-printed frame (PLA/PETG) | 1 | 141.23 | 141.23 | ~6.42 kg material @ $22/kg |
+| Structure | 3D-printed frame (PLA/PETG) | 1 | 105.32 | 105.32 | ~4.79 kg material @ $22/kg |
 | Structure | Fastener + bearing kit | 1 | 18 | 18 | M3 screws, heat inserts, 608 bearings |
 | Wiring & misc | Wiring, connectors, JST/Dupont, sleeving | 1 | 600.12 | 600.12 | ~12% of electronics |
 

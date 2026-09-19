@@ -1,11 +1,11 @@
 {
   "scope": "Design-input inventory, not a hardware qualification or a claim that missing interfaces were inspected in CAD",
-  "source_robot_sha256": "648b65b9493cda4fb2f082f9502033f9b45f87caaf6cb0517a512d47ca0e54ec",
-  "source_bom_sha256": "23171bb95f732253d1c306ff4a4c94735c116f10782c79e3cc46b3bd7291a5d2",
+  "source_robot_sha256": "1f2c538d30361e67fa95f6241a4243780bb92c520436e5ebdf5fe78cc52be3ec",
+  "source_bom_sha256": "08c7f88fba07dd289cc9bcad2bd194a2934918f5081a741149544832fa924b83",
   "hardware_verified": false,
   "manufacturing_ready": false,
   "prototype_test_evidence": null,
-  "declared_mass_kg": 11.772221944075797,
+  "declared_mass_kg": 12.452221944075795,
   "links_with_inferred_mass": [
     "torso",
     "head",
@@ -126,6 +126,28 @@
       "position_unit": "rad"
     },
     {
+      "joint": "left_hip_yaw",
+      "type": "revolute",
+      "effort": 12,
+      "effort_unit": "N·m",
+      "velocity": 1.5,
+      "velocity_unit": "rad/s",
+      "lower": -0.6,
+      "upper": 0.6,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "left_hip_roll",
+      "type": "revolute",
+      "effort": 20,
+      "effort_unit": "N·m",
+      "velocity": 1.5,
+      "velocity_unit": "rad/s",
+      "lower": -0.45,
+      "upper": 0.45,
+      "position_unit": "rad"
+    },
+    {
       "joint": "left_hip_joint",
       "type": "revolute",
       "effort": 50,
@@ -148,6 +170,17 @@
       "position_unit": "rad"
     },
     {
+      "joint": "left_ankle_roll",
+      "type": "revolute",
+      "effort": 12,
+      "effort_unit": "N·m",
+      "velocity": 1.5,
+      "velocity_unit": "rad/s",
+      "lower": -0.35,
+      "upper": 0.35,
+      "position_unit": "rad"
+    },
+    {
       "joint": "left_ankle_joint",
       "type": "revolute",
       "effort": 50,
@@ -156,6 +189,28 @@
       "velocity_unit": "rad/s",
       "lower": -0.8,
       "upper": 0.8,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "right_hip_yaw",
+      "type": "revolute",
+      "effort": 12,
+      "effort_unit": "N·m",
+      "velocity": 1.5,
+      "velocity_unit": "rad/s",
+      "lower": -0.6,
+      "upper": 0.6,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "right_hip_roll",
+      "type": "revolute",
+      "effort": 20,
+      "effort_unit": "N·m",
+      "velocity": 1.5,
+      "velocity_unit": "rad/s",
+      "lower": -0.45,
+      "upper": 0.45,
       "position_unit": "rad"
     },
     {
@@ -178,6 +233,17 @@
       "velocity_unit": "rad/s",
       "lower": 0,
       "upper": 2.4,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "right_ankle_roll",
+      "type": "revolute",
+      "effort": 12,
+      "effort_unit": "N·m",
+      "velocity": 1.5,
+      "velocity_unit": "rad/s",
+      "lower": -0.35,
+      "upper": 0.35,
       "position_unit": "rad"
     },
     {

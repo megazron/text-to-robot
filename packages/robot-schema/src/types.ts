@@ -75,6 +75,8 @@ export interface JointLimit {
 export interface JointDynamics { damping: number; friction: number; }
 
 export interface Joint {
+  /** Free bearing/roller: contributes kinematics and contacts but has no motor. */
+  passive?: boolean;
   name: string;
   type: JointType;
   parent: string; // link name

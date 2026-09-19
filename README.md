@@ -4,8 +4,8 @@ Describe a robot, inspect its generated 3D model, and download URDF/Xacro, ROS 2
 CAD and training packages. The service is free and self-hostable. It generates
 robot concepts; it does not yet produce manufacturing-qualified machines from text.
 
-The language model produces a typed `RobotSpecification`. Deterministic TypeScript
-turns that specification into geometry and robot files. Python handles MuJoCo,
+A local prompt parser selects and parameterises our robot designs. Deterministic
+TypeScript produces geometry and robot files. Python handles MuJoCo,
 learning, collision decomposition and CadQuery solid CAD.
 
 ## Run the service
@@ -20,8 +20,9 @@ npm run api
 # Open http://localhost:8787
 ```
 
-Offline demo generation needs no API key. Optional model providers support more
-open-ended prompts. The viewer supports joint controls, JSON import, modification,
+Generation, modification and exports run on your own host. No sign-in, API key,
+model token, inference provider or browser CDN is used. The viewer supports joint
+controls, JSON import, modification,
 version history, share links and downloads. To host the service, use
 `docker compose up`; configure persistent storage for generated robots.
 Simulation and learning run on the user's machine. Hosted GPU training is not
@@ -35,44 +36,53 @@ node cli/src/index.ts validate examples/14_iron_man_mark_43/robot.urdf
 Templates include arms, grippers, wheeled robots, legged robots and character
 concepts. See [examples](examples/) and [architecture](docs/ARCHITECTURE.md).
 
-## Hugging Face integration
+## Free web service and researched designs
 
-Use Hugging Face Inference Providers for prompt generation and modification by
-setting **both** `HF_TOKEN` and `HF_MODEL` on the server before `npm run api`.
-`HF_MODEL` is the exact model/provider identifier selected from the
-[Hugging Face chat API](https://huggingface.co/docs/inference-providers/tasks/chat-completion).
-When both are set, Hugging Face takes precedence over the other cloud providers.
-The token needs Inference Providers permission; keep it out of browser code and Git.
-Docker Compose forwards both variables. Hosted inference availability and billing
-are controlled by the selected provider; the offline demo still needs no token.
-Cloud-generated geometry still passes through local validation and repair.
+Run `docker compose up --build` to serve the website with persistent robot storage.
+Three.js is bundled during installation and served locally, including on shared
+robot links. User requests make no third-party network calls. Hosting still needs
+a machine; this repository does not provision a public server or free GPU compute.
+The parser supports the listed robot families and dimensional modifications; it
+rejects unrecognised requests instead of returning an unrelated arm.
 
-A separate [SO-101 hardware reference and training benchmark](references/so101/README.md)
-now downloads a pinned, hash-verified model from the Hub, preserving real
-CAD-derived meshes, link inertias and six actuators. It includes an actual
-MuJoCo GIF, a Gymnasium environment and local PPO training/evaluation commands.
-The position controller succeeds on 32/32 small joint-target trials; the recorded
-8,192-step PPO baseline succeeds on 0/32. Neither result validates grasping or
-physical hardware. This reference is not yet an option in the web generator.
+[Public engineering research and model changes](references/engineering/README.md)
+record the sources, deductions and remaining gaps. All product geometry is
+created by our own parametric generators. Hugging Face is not a runtime or asset
+supplier for the web service, and no cloud inference adapter is included.
 
-![Hugging Face SO-101 MuJoCo rollout](references/so101/positioning.gif)
+Recent changes include hollow sheet chassis with mounting bores and removable
+vented lids; corrected planar/6-axis arm layouts and visible joint hubs; closing gripper pads; ground
+contact feet; six-axis humanoid legs; a physically supported EVA; a revised Mark 43 faceplate
+pivot; and true passive mecanum rollers. Wheel motors use velocity commands
+in MuJoCo, PyBullet and ROS configuration. Training samples reachable targets,
+observes base attitude/velocity, and scores actual motion instead of action values.
+
+[Measured wheel motion](examples/mobile_motion.json) includes forward driving and
+mecanum sideways motion produced by contacts, without external force injection.
+These are limited simulation tests, not a physical prototype certification.
+
+[Browser validation](examples/web_validation.json) covers all 17 examples with
+third-party requests blocked. Inspect the actual viewer captures:
+[arm](docs/img/web/02_arm_6dof.png), [mecanum](docs/img/web/07_mecanum.png),
+[Mark 43](docs/img/web/14_iron_man_mark_43.png), [EVA](docs/img/web/16_eva.png).
 
 ## Current examples and animations
 
 [Browse all 17 examples, their GIFs, MoveIt files and simulation results](examples/README.md).
 Every example now has a dedicated README and downloadable ROS package.
-All 17 ROS packages build on Jazzy; all 17 models load in both physics engines.
+All 17 models load in both physics engines. ROS exports include the revised joint
+and wheel controller configuration; see the recorded build validation.
 All 17 have no initial inter-body penetration above 1 mm in the current audit
-(primitive collisions for the other examples; compound hulls for Mark 43). Motion tracking and balance failures remain documented.
+(primitives and mesh proxies for the other examples; compound hulls for Mark 43). Motion tracking and balance failures remain documented.
 The [runtime record](examples/runtime_validation.json) separates these checks.
 All 17 [training exports](examples/training_validation.json) reset and take a finite
-PyBullet step. A gripper aperture task passed Gymnasium checks in both engines and
-64 PPO steps plus checkpoint reload; this is a pipeline check, not a trained skill.
+PyBullet step. These checks establish that the exported environments run; they
+do not establish learned skills or model-to-hardware accuracy.
 
 Corrections include outward-facing humanoid grippers, downward spider shins,
 SCARA base clearance, Baymax capsule lengths and arm spacing, continuous wheel
-limits, and distinct MoveIt groups for arms and legs. Training now uses named tool
-links, full-range reaching targets and an aperture task for standalone grippers.
+limits, and distinct MoveIt groups for arms and legs. Training uses named tool
+links, sampled reachable targets and an aperture task for standalone grippers.
 
 <!-- EXAMPLE_GALLERY_START -->
 
@@ -80,11 +90,11 @@ These are actual simulations of all 17 exported examples. Check counts are smoke
 
 | | | |
 |---|---|---|
-| [**arm 2dof**](examples/01_arm_2dof/)<br>![arm 2dof: actual gravity/self-collision run](examples/01_arm_2dof/simulation.gif)<br>5/5 simulation checks · [CAD](examples/01_arm_2dof/robot.cad.zip) · [Results](examples/01_arm_2dof/simulation_report.json) · [Build evidence](examples/01_arm_2dof/BUILDABILITY.md) | [**arm 6dof**](examples/02_arm_6dof/)<br>![arm 6dof: actual gravity/self-collision run](examples/02_arm_6dof/simulation.gif)<br>4/5 simulation checks · [CAD](examples/02_arm_6dof/robot.cad.zip) · [Results](examples/02_arm_6dof/simulation_report.json) · [Build evidence](examples/02_arm_6dof/BUILDABILITY.md) | [**arm 7dof**](examples/03_arm_7dof/)<br>![arm 7dof: actual gravity/self-collision run](examples/03_arm_7dof/simulation.gif)<br>4/5 simulation checks · [CAD](examples/03_arm_7dof/robot.cad.zip) · [Results](examples/03_arm_7dof/simulation_report.json) · [Build evidence](examples/03_arm_7dof/BUILDABILITY.md) |
-| [**scara**](examples/04_scara/)<br>![scara: actual gravity/self-collision run](examples/04_scara/simulation.gif)<br>4/5 simulation checks · [CAD](examples/04_scara/robot.cad.zip) · [Results](examples/04_scara/simulation_report.json) · [Build evidence](examples/04_scara/BUILDABILITY.md) | [**diff drive**](examples/05_diff_drive/)<br>![diff drive: actual gravity/self-collision run](examples/05_diff_drive/simulation.gif)<br>6/6 simulation checks · [CAD](examples/05_diff_drive/robot.cad.zip) · [Results](examples/05_diff_drive/simulation_report.json) · [Build evidence](examples/05_diff_drive/BUILDABILITY.md) | [**four wheel**](examples/06_four_wheel/)<br>![four wheel: actual gravity/self-collision run](examples/06_four_wheel/simulation.gif)<br>6/6 simulation checks · [CAD](examples/06_four_wheel/robot.cad.zip) · [Results](examples/06_four_wheel/simulation_report.json) · [Build evidence](examples/06_four_wheel/BUILDABILITY.md) |
-| [**mecanum**](examples/07_mecanum/)<br>![mecanum: actual gravity/self-collision run](examples/07_mecanum/simulation.gif)<br>6/6 simulation checks · [CAD](examples/07_mecanum/robot.cad.zip) · [Results](examples/07_mecanum/simulation_report.json) · [Build evidence](examples/07_mecanum/BUILDABILITY.md) | [**humanoid**](examples/08_humanoid/)<br>![humanoid: actual gravity/self-collision run](examples/08_humanoid/simulation.gif)<br>4/6 simulation checks · [CAD](examples/08_humanoid/robot.cad.zip) · [Results](examples/08_humanoid/simulation_report.json) · [Build evidence](examples/08_humanoid/BUILDABILITY.md) | [**gripper**](examples/09_gripper/)<br>![gripper: actual gravity/self-collision run](examples/09_gripper/simulation.gif)<br>5/5 simulation checks · [CAD](examples/09_gripper/robot.cad.zip) · [Results](examples/09_gripper/simulation_report.json) · [Build evidence](examples/09_gripper/BUILDABILITY.md) |
+| [**arm 2dof**](examples/01_arm_2dof/)<br>![arm 2dof: actual gravity/self-collision run](examples/01_arm_2dof/simulation.gif)<br>4/5 simulation checks · [CAD](examples/01_arm_2dof/robot.cad.zip) · [Results](examples/01_arm_2dof/simulation_report.json) · [Build evidence](examples/01_arm_2dof/BUILDABILITY.md) | [**arm 6dof**](examples/02_arm_6dof/)<br>![arm 6dof: actual gravity/self-collision run](examples/02_arm_6dof/simulation.gif)<br>4/5 simulation checks · [CAD](examples/02_arm_6dof/robot.cad.zip) · [Results](examples/02_arm_6dof/simulation_report.json) · [Build evidence](examples/02_arm_6dof/BUILDABILITY.md) | [**arm 7dof**](examples/03_arm_7dof/)<br>![arm 7dof: actual gravity/self-collision run](examples/03_arm_7dof/simulation.gif)<br>4/5 simulation checks · [CAD](examples/03_arm_7dof/robot.cad.zip) · [Results](examples/03_arm_7dof/simulation_report.json) · [Build evidence](examples/03_arm_7dof/BUILDABILITY.md) |
+| [**scara**](examples/04_scara/)<br>![scara: actual gravity/self-collision run](examples/04_scara/simulation.gif)<br>4/5 simulation checks · [CAD](examples/04_scara/robot.cad.zip) · [Results](examples/04_scara/simulation_report.json) · [Build evidence](examples/04_scara/BUILDABILITY.md) | [**diff drive**](examples/05_diff_drive/)<br>![diff drive: actual gravity/self-collision run](examples/05_diff_drive/simulation.gif)<br>5/6 simulation checks · [CAD](examples/05_diff_drive/robot.cad.zip) · [Results](examples/05_diff_drive/simulation_report.json) · [Build evidence](examples/05_diff_drive/BUILDABILITY.md) | [**four wheel**](examples/06_four_wheel/)<br>![four wheel: actual gravity/self-collision run](examples/06_four_wheel/simulation.gif)<br>5/6 simulation checks · [CAD](examples/06_four_wheel/robot.cad.zip) · [Results](examples/06_four_wheel/simulation_report.json) · [Build evidence](examples/06_four_wheel/BUILDABILITY.md) |
+| [**mecanum**](examples/07_mecanum/)<br>![mecanum: actual gravity/self-collision run](examples/07_mecanum/simulation.gif)<br>5/6 simulation checks · [CAD](examples/07_mecanum/robot.cad.zip) · [Results](examples/07_mecanum/simulation_report.json) · [Build evidence](examples/07_mecanum/BUILDABILITY.md) | [**humanoid**](examples/08_humanoid/)<br>![humanoid: actual gravity/self-collision run](examples/08_humanoid/simulation.gif)<br>4/6 simulation checks · [CAD](examples/08_humanoid/robot.cad.zip) · [Results](examples/08_humanoid/simulation_report.json) · [Build evidence](examples/08_humanoid/BUILDABILITY.md) | [**gripper**](examples/09_gripper/)<br>![gripper: actual gravity/self-collision run](examples/09_gripper/simulation.gif)<br>5/5 simulation checks · [CAD](examples/09_gripper/robot.cad.zip) · [Results](examples/09_gripper/simulation_report.json) · [Build evidence](examples/09_gripper/BUILDABILITY.md) |
 | [**quadruped**](examples/10_quadruped/)<br>![quadruped: actual gravity/self-collision run](examples/10_quadruped/simulation.gif)<br>5/6 simulation checks · [CAD](examples/10_quadruped/robot.cad.zip) · [Results](examples/10_quadruped/simulation_report.json) · [Build evidence](examples/10_quadruped/BUILDABILITY.md) | [**spider scout**](examples/11_spider_scout/)<br>![spider scout: actual gravity/self-collision run](examples/11_spider_scout/simulation.gif)<br>6/6 simulation checks · [CAD](examples/11_spider_scout/robot.cad.zip) · [Results](examples/11_spider_scout/simulation_report.json) · [Build evidence](examples/11_spider_scout/BUILDABILITY.md) | [**mars rover**](examples/12_mars_rover/)<br>![mars rover: actual gravity/self-collision run](examples/12_mars_rover/simulation.gif)<br>5/6 simulation checks · [CAD](examples/12_mars_rover/robot.cad.zip) · [Results](examples/12_mars_rover/simulation_report.json) · [Build evidence](examples/12_mars_rover/BUILDABILITY.md) |
-| [**battle mech**](examples/13_battle_mech/)<br>![battle mech: actual gravity/self-collision run](examples/13_battle_mech/simulation.gif)<br>3/6 simulation checks · [CAD](examples/13_battle_mech/robot.cad.zip) · [Results](examples/13_battle_mech/simulation_report.json) · [Build evidence](examples/13_battle_mech/BUILDABILITY.md) | [**iron man mark 43**](examples/14_iron_man_mark_43/)<br>![iron man mark 43: actual gravity/self-collision run](examples/14_iron_man_mark_43/simulation.gif)<br>4/6 simulation checks · [CAD](examples/14_iron_man_mark_43/robot.cad.zip) · [Results](examples/14_iron_man_mark_43/simulation_report.json) · [Build evidence](examples/14_iron_man_mark_43/BUILDABILITY.md) | [**wall e**](examples/15_wall_e/)<br>![wall e: actual gravity/self-collision run](examples/15_wall_e/simulation.gif)<br>5/6 simulation checks · [CAD](examples/15_wall_e/robot.cad.zip) · [Results](examples/15_wall_e/simulation_report.json) · [Build evidence](examples/15_wall_e/BUILDABILITY.md) |
+| [**battle mech**](examples/13_battle_mech/)<br>![battle mech: actual gravity/self-collision run](examples/13_battle_mech/simulation.gif)<br>4/6 simulation checks · [CAD](examples/13_battle_mech/robot.cad.zip) · [Results](examples/13_battle_mech/simulation_report.json) · [Build evidence](examples/13_battle_mech/BUILDABILITY.md) | [**iron man mark 43**](examples/14_iron_man_mark_43/)<br>![iron man mark 43: actual gravity/self-collision run](examples/14_iron_man_mark_43/simulation.gif)<br>4/6 simulation checks · [CAD](examples/14_iron_man_mark_43/robot.cad.zip) · [Results](examples/14_iron_man_mark_43/simulation_report.json) · [Build evidence](examples/14_iron_man_mark_43/BUILDABILITY.md) | [**wall e**](examples/15_wall_e/)<br>![wall e: actual gravity/self-collision run](examples/15_wall_e/simulation.gif)<br>5/6 simulation checks · [CAD](examples/15_wall_e/robot.cad.zip) · [Results](examples/15_wall_e/simulation_report.json) · [Build evidence](examples/15_wall_e/BUILDABILITY.md) |
 | [**eva**](examples/16_eva/)<br>![eva: actual gravity/self-collision run](examples/16_eva/simulation.gif)<br>5/6 simulation checks · [CAD](examples/16_eva/robot.cad.zip) · [Results](examples/16_eva/simulation_report.json) · [Build evidence](examples/16_eva/BUILDABILITY.md) | [**baymax**](examples/17_baymax/)<br>![baymax: actual gravity/self-collision run](examples/17_baymax/simulation.gif)<br>4/6 simulation checks · [CAD](examples/17_baymax/robot.cad.zip) · [Results](examples/17_baymax/simulation_report.json) · [Build evidence](examples/17_baymax/BUILDABILITY.md) |  |
 
 <!-- EXAMPLE_GALLERY_END -->

@@ -196,6 +196,7 @@
     <joint name="right_thruster_cover_hinge" value="0"/>
     <joint name="right_ankle_flap_hinge" value="0"/>
   </group_state>
+
   <virtual_joint name="world_joint" type="fixed" parent_frame="world" child_link="pelvis_frame"/>
   <disable_collisions link1="pelvis_frame" link2="spine_frame" reason="Adjacent"/>
   <disable_collisions link1="spine_frame" link2="backpack" reason="Adjacent"/>

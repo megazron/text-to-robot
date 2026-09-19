@@ -1,6 +1,6 @@
 // Rebuild non-Mark43 examples from their recorded prompts, preserving generated names.
 import {readdirSync,readFileSync,writeFileSync,mkdirSync,rmSync} from 'node:fs';
-import {generateRobot,DemoProvider} from '@ttr/robot-generator';
+import {generateRobot,DemoProvider,collectMeshFiles} from '@ttr/robot-generator';
 import {generateUrdf} from '@ttr/urdf-generator';
 import {exportRos2Package,planningGroups} from '@ttr/ros2-export';
 import {exportTraining} from '@ttr/training-export';
@@ -16,6 +16,8 @@ for(const name of readdirSync('examples').filter(n=>/^\d\d_/.test(n))){
   spec=res.robot;
   writeFileSync(`${dir}/robot.json`,JSON.stringify(spec,null,2));
   writeFileSync(`${dir}/robot.urdf`,generateUrdf(spec));
+  mkdirSync(`${dir}/meshes`,{recursive:true});
+  for(const [file,bytes] of Object.entries(collectMeshFiles(spec)))writeFileSync(`${dir}/meshes/${file}`,bytes);
   writeFileSync(`${dir}/BOM.md`,bomToMarkdown(res.bom));
  }
  rmSync(`/tmp/ttr-example-packages/${name}`,{recursive:true,force:true});

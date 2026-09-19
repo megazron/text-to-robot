@@ -1,5 +1,5 @@
 {
-  "source_urdf_sha256": "df8651899408c1e7da7025255c16130da906ad4a85e03d07841be3b5658b7505",
+  "source_urdf_sha256": "a10295d0f5776087ede45fa213f0f1c0e50c08560057f045a81a5f70feb1ffaa",
   "coacd_version": "1.0.14",
   "tolerance_m": 0.002,
   "links": [
@@ -3491,5 +3491,6 @@
     "No human fit, strength or motion-path certification",
     "URDF mass/inertia unchanged",
     "Run conversion with --self-collision to test interference"
-  ]
+  ],
+  "reframed_from_urdf_sha256": "df8651899408c1e7da7025255c16130da906ad4a85e03d07841be3b5658b7505"
 }

@@ -3,7 +3,7 @@
      robot: four_wheel_robot
      prompt: Create a four-wheel robot
 
-     5 links, 4 joints, 18 inferred values
+     14 links, 13 joints, 50 inferred values
 -->
 <robot name="four_wheel_robot">
   <material name="base_mat"><color rgba="0.25 0.25 0.28 1"/></material>
@@ -14,18 +14,162 @@
   <material name="accent_mat"><color rgba="0.9 0.55 0.1 1"/></material>
   <link name="base_link">
     <visual>
-      <origin xyz="0 0 0.12" rpy="0 0 0"/>
-      <geometry><box size="0.4 0.3 0.12"/></geometry>
+      <origin xyz="0 0 0.0615" rpy="0 0 0"/>
+      <geometry><mesh filename="package://four_wheel_robot/meshes/base_link.stl"/></geometry>
       <material name="base_mat"/>
     </visual>
     <collision>
-      <origin xyz="0 0 0.12" rpy="0 0 0"/>
-      <geometry><box size="0.4 0.3 0.12"/></geometry>
+      <origin xyz="0 0 0.0615" rpy="0 0 0"/>
+      <geometry><box size="0.4 0.3 0.003"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 0.12" rpy="0 0 0"/>
-      <mass value="6.48"/>
-      <inertia ixx="0.056376" ixy="0" ixz="0" iyy="0.094176" iyz="0" izz="0.135"/>
+      <origin xyz="7.78568e-18 -4.32340e-18 0.0615" rpy="0 0 0"/>
+      <mass value="0.971709"/>
+      <inertia ixx="0.007285" ixy="-1.03853e-18" ixz="3.82337e-21" iyy="0.01295" iyz="-6.33920e-21" izz="0.020234"/>
+    </inertial>
+  </link>
+  <link name="base_link_service_lid">
+    <visual>
+      <origin xyz="0 0 0.1785" rpy="0 0 0"/>
+      <geometry><mesh filename="package://four_wheel_robot/meshes/base_link_service_lid.stl"/></geometry>
+      <material name="base_mat"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.1785" rpy="0 0 0"/>
+      <geometry><box size="0.4 0.3 0.003"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="1.62146e-18 -8.06391e-19 0.1785" rpy="0 0 0"/>
+      <mass value="0.945789"/>
+      <inertia ixx="0.007282" ixy="-1.03853e-18" ixz="7.74039e-21" iyy="0.012895" iyz="-5.78194e-21" izz="0.020176"/>
+    </inertial>
+  </link>
+  <link name="base_link_rear_panel">
+    <visual>
+      <origin xyz="-0.1985 0 0.12" rpy="0 0 0"/>
+      <geometry><box size="0.003 0.3 0.114"/></geometry>
+      <material name="base_mat"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.1985 0 0.12" rpy="0 0 0"/>
+      <geometry><box size="0.003 0.3 0.114"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.1985 0 0.12" rpy="0 0 0"/>
+      <mass value="0.27702"/>
+      <inertia ixx="0.002378" ixy="0" ixz="0" iyy="0.00030022" iyz="0" izz="0.002078"/>
+    </inertial>
+  </link>
+  <link name="base_link_right_panel">
+    <visual>
+      <origin xyz="0 -0.1485 0.12" rpy="0 0 0"/>
+      <geometry><box size="0.394 0.003 0.114"/></geometry>
+      <material name="base_mat"/>
+    </visual>
+    <collision>
+      <origin xyz="0 -0.1485 0.12" rpy="0 0 0"/>
+      <geometry><box size="0.394 0.003 0.114"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 -0.1485 0.12" rpy="0 0 0"/>
+      <mass value="0.36382"/>
+      <inertia ixx="0.000394289" ixy="0" ixz="0" iyy="0.005101" iyz="0" izz="0.004707"/>
+    </inertial>
+  </link>
+  <link name="base_link_front_panel">
+    <visual>
+      <origin xyz="0.1985 0 0.12" rpy="0 0 0"/>
+      <geometry><box size="0.003 0.3 0.114"/></geometry>
+      <material name="base_mat"/>
+    </visual>
+    <collision>
+      <origin xyz="0.1985 0 0.12" rpy="0 0 0"/>
+      <geometry><box size="0.003 0.3 0.114"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.1985 0 0.12" rpy="0 0 0"/>
+      <mass value="0.27702"/>
+      <inertia ixx="0.002378" ixy="0" ixz="0" iyy="0.00030022" iyz="0" izz="0.002078"/>
+    </inertial>
+  </link>
+  <link name="base_link_left_panel">
+    <visual>
+      <origin xyz="0 0.1485 0.12" rpy="0 0 0"/>
+      <geometry><box size="0.394 0.003 0.114"/></geometry>
+      <material name="base_mat"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0.1485 0.12" rpy="0 0 0"/>
+      <geometry><box size="0.394 0.003 0.114"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0.1485 0.12" rpy="0 0 0"/>
+      <mass value="0.36382"/>
+      <inertia ixx="0.000394289" ixy="0" ixz="0" iyy="0.005101" iyz="0" izz="0.004707"/>
+    </inertial>
+  </link>
+  <link name="base_link_standoff_rr">
+    <visual>
+      <origin xyz="-0.188 -0.138 0.12" rpy="0 0 0"/>
+      <geometry><mesh filename="package://four_wheel_robot/meshes/base_link_standoff_rr.stl"/></geometry>
+      <material name="base_mat"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.188 -0.138 0.12" rpy="0 0 0"/>
+      <geometry><box size="0.008 0.008 0.114"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.188 -0.138 0.12" rpy="0 0 0"/>
+      <mass value="0.02"/>
+      <inertia ixx="0.0000217542" ixy="-2.48191e-24" ixz="1.19698e-23" iyy="0.0000217542" iyz="-5.51986e-24" izz="1.88361e-7"/>
+    </inertial>
+  </link>
+  <link name="base_link_standoff_rl">
+    <visual>
+      <origin xyz="-0.188 0.138 0.12" rpy="0 0 0"/>
+      <geometry><mesh filename="package://four_wheel_robot/meshes/base_link_standoff_rl.stl"/></geometry>
+      <material name="base_mat"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.188 0.138 0.12" rpy="0 0 0"/>
+      <geometry><box size="0.008 0.008 0.114"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.188 0.138 0.12" rpy="0 0 0"/>
+      <mass value="0.02"/>
+      <inertia ixx="0.0000217542" ixy="-2.48191e-24" ixz="1.19698e-23" iyy="0.0000217542" iyz="-5.51986e-24" izz="1.88361e-7"/>
+    </inertial>
+  </link>
+  <link name="base_link_standoff_fr">
+    <visual>
+      <origin xyz="0.188 -0.138 0.12" rpy="0 0 0"/>
+      <geometry><mesh filename="package://four_wheel_robot/meshes/base_link_standoff_fr.stl"/></geometry>
+      <material name="base_mat"/>
+    </visual>
+    <collision>
+      <origin xyz="0.188 -0.138 0.12" rpy="0 0 0"/>
+      <geometry><box size="0.008 0.008 0.114"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.188 -0.138 0.12" rpy="0 0 0"/>
+      <mass value="0.02"/>
+      <inertia ixx="0.0000217542" ixy="-2.48191e-24" ixz="1.19698e-23" iyy="0.0000217542" iyz="-5.51986e-24" izz="1.88361e-7"/>
+    </inertial>
+  </link>
+  <link name="base_link_standoff_fl">
+    <visual>
+      <origin xyz="0.188 0.138 0.12" rpy="0 0 0"/>
+      <geometry><mesh filename="package://four_wheel_robot/meshes/base_link_standoff_fl.stl"/></geometry>
+      <material name="base_mat"/>
+    </visual>
+    <collision>
+      <origin xyz="0.188 0.138 0.12" rpy="0 0 0"/>
+      <geometry><box size="0.008 0.008 0.114"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.188 0.138 0.12" rpy="0 0 0"/>
+      <mass value="0.02"/>
+      <inertia ixx="0.0000217542" ixy="-2.48191e-24" ixz="1.19698e-23" iyy="0.0000217542" iyz="-5.51986e-24" izz="1.88361e-7"/>
     </inertial>
   </link>
   <link name="front_left_wheel">
@@ -92,12 +236,66 @@
       <inertia ixx="0.000210361" ixy="0" ixz="0" iyy="0.000210361" iyz="0" izz="0.000366435"/>
     </inertial>
   </link>
+  <joint name="base_link_service_lid_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_link_service_lid"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <dynamics damping="0.1" friction="0"/>
+  </joint>
+  <joint name="base_link_rear_panel_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_link_rear_panel"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <dynamics damping="0.1" friction="0"/>
+  </joint>
+  <joint name="base_link_right_panel_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_link_right_panel"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <dynamics damping="0.1" friction="0"/>
+  </joint>
+  <joint name="base_link_front_panel_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_link_front_panel"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <dynamics damping="0.1" friction="0"/>
+  </joint>
+  <joint name="base_link_left_panel_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_link_left_panel"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <dynamics damping="0.1" friction="0"/>
+  </joint>
+  <joint name="base_link_standoff_rr_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_link_standoff_rr"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <dynamics damping="0.1" friction="0"/>
+  </joint>
+  <joint name="base_link_standoff_rl_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_link_standoff_rl"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <dynamics damping="0.1" friction="0"/>
+  </joint>
+  <joint name="base_link_standoff_fr_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_link_standoff_fr"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <dynamics damping="0.1" friction="0"/>
+  </joint>
+  <joint name="base_link_standoff_fl_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_link_standoff_fl"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <dynamics damping="0.1" friction="0"/>
+  </joint>
   <joint name="front_left_wheel_joint" type="continuous">
     <parent link="base_link"/>
     <child link="front_left_wheel"/>
     <origin xyz="0.14 0.17 0.06" rpy="0 0 0"/>
     <axis xyz="0 1 0"/>
-    <limit effort="50" velocity="2"/>
+    <limit effort="2.5" velocity="12"/>
     <dynamics damping="0.1" friction="0"/>
   </joint>
   <joint name="front_right_wheel_joint" type="continuous">
@@ -105,7 +303,7 @@
     <child link="front_right_wheel"/>
     <origin xyz="0.14 -0.17 0.06" rpy="0 0 0"/>
     <axis xyz="0 1 0"/>
-    <limit effort="50" velocity="2"/>
+    <limit effort="2.5" velocity="12"/>
     <dynamics damping="0.1" friction="0"/>
   </joint>
   <joint name="rear_left_wheel_joint" type="continuous">
@@ -113,7 +311,7 @@
     <child link="rear_left_wheel"/>
     <origin xyz="-0.14 0.17 0.06" rpy="0 0 0"/>
     <axis xyz="0 1 0"/>
-    <limit effort="50" velocity="2"/>
+    <limit effort="2.5" velocity="12"/>
     <dynamics damping="0.1" friction="0"/>
   </joint>
   <joint name="rear_right_wheel_joint" type="continuous">
@@ -121,7 +319,7 @@
     <child link="rear_right_wheel"/>
     <origin xyz="-0.14 -0.17 0.06" rpy="0 0 0"/>
     <axis xyz="0 1 0"/>
-    <limit effort="50" velocity="2"/>
+    <limit effort="2.5" velocity="12"/>
     <dynamics damping="0.1" friction="0"/>
   </joint>
 </robot>

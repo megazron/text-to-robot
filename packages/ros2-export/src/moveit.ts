@@ -12,14 +12,14 @@ export function planningGroups(spec:RobotSpecification):Group[] {
   if(spec.links.some(l=>l.name==='pelvis_frame')) {
     for(const side of ['left','right']) {
       for(const [name,base,tip] of [[`${side}_arm`,'shoulder_yoke',`${side}_hand`],[`${side}_leg`,'pelvis_frame',`${side}_boot`]]) {
-        const joints=path(base,tip).filter(j=>j.type!=='fixed');if(joints.length)groups.push({name,base,tip,joints});
+        const joints=path(base,tip).filter(j=>j.type!=='fixed'&&!j.passive);if(joints.length)groups.push({name,base,tip,joints});
       }
-      const joints=spec.joints.filter(j=>j.type!=='fixed'&&j.name.startsWith(side+'_')&&/finger|thumb/.test(j.name));
+      const joints=spec.joints.filter(j=>j.type!=='fixed'&&!j.passive&&j.name.startsWith(side+'_')&&/finger|thumb/.test(j.name));
       if(joints.length)groups.push({name:`${side}_hand`,joints});
     }
     const neck=spec.joints.filter(j=>/^neck_(yaw|pitch)$/.test(j.name));if(neck.length)groups.push({name:'neck',joints:neck});
     const torso=spec.joints.filter(j=>j.name==='trunk_flex');if(torso.length)groups.push({name:'torso',joints:torso});
-    const armour=spec.joints.filter(j=>j.type!=='fixed'&&j.name.endsWith('_hinge')&&!/finger|thumb/.test(j.name));
+    const armour=spec.joints.filter(j=>j.type!=='fixed'&&!j.passive&&j.name.endsWith('_hinge')&&!/finger|thumb/.test(j.name));
     if(armour.length)groups.push({name:'armour',joints:armour});
     return groups;
   }
@@ -29,12 +29,12 @@ export function planningGroups(spec:RobotSpecification):Group[] {
     const tips=spec.links.filter(l=>l.name.startsWith(side+'_')&&/hand$|forearm$|wrist_[123]$/.test(l.name));
     tips.sort((a,b)=>path(root,b.name).length-path(root,a.name).length);
     if(tips.length) {
-      const chain=path(root,tips[0].name),moving=chain.filter(j=>j.type!=='fixed');
+      const chain=path(root,tips[0].name),moving=chain.filter(j=>j.type!=='fixed'&&!j.passive);
       if(moving.length>=2&&!moving.some(excluded))groups.push({name:side+'_arm',base:root,tip:tips[0].name,joints:moving});
     }
   }
   for(const tip of spec.links.filter(l=>/(?:^|_)(?:foot|shin|tibia)$/.test(l.name))) {
-    const chain=path(root,tip.name),moving=chain.filter(j=>j.type!=='fixed');
+    const chain=path(root,tip.name),moving=chain.filter(j=>j.type!=='fixed'&&!j.passive);
     if(moving.length<2||moving.some(excluded))continue;
     const name=tip.name.replace(/_(foot|shin|tibia)$/,'_leg');
     const old=groups.find(g=>g.name===name);
@@ -44,19 +44,20 @@ export function planningGroups(spec:RobotSpecification):Group[] {
   if(groups.length)return groups;
   // Choose an intact serial path; filtering out middle joints would disconnect it.
   const candidates=spec.links.map(l=>path(root,l.name)).filter(chain=>!chain.some(excluded));
-  candidates.sort((a,b)=>b.filter(j=>j.type!=='fixed').length-a.filter(j=>j.type!=='fixed').length);
-  const chain=candidates[0]??[],moving=chain.filter(j=>j.type!=='fixed');
+  candidates.sort((a,b)=>b.filter(j=>j.type!=='fixed'&&!j.passive).length-a.filter(j=>j.type!=='fixed'&&!j.passive).length);
+  const chain=candidates[0]??[],moving=chain.filter(j=>j.type!=='fixed'&&!j.passive);
   if(moving.length>=2)groups.push({name:'arm',base:root,tip:moving.at(-1)!.child,joints:moving});
   return groups;
 }
 export function exportMoveIt(spec:RobotSpecification):FileMap {
   const pkg=safeName(spec.robot_name),groups=planningGroups(spec),files:FileMap={};
   if(!groups.length){files[`${pkg}/moveit/README.md`]=`# MoveIt 2\n\nNo serial arm chain with 2+ actuated joints was found in ${pkg}, so no MoveIt config was generated.\n`;return files;}
-  const {root}=findRoot(spec),joints=spec.joints.filter(j=>j.type!=='fixed');
+  const {root}=findRoot(spec),joints=spec.joints.filter(j=>j.type!=='fixed'&&j.type!=='continuous'&&!j.passive);
   const home=(j:Joint)=>Math.max(j.limit?.lower??0,Math.min(j.limit?.upper??0,0));
   files[`${pkg}/moveit/${pkg}.srdf`]=`<?xml version="1.0"?>
 <robot name="${pkg}">
 ${groups.map(g=>`  <group name="${g.name}">\n${g.base?`    <chain base_link="${g.base}" tip_link="${g.tip}"/>`:g.joints.map(j=>`    <joint name="${j.name}"/>`).join('\n')}\n  </group>\n  <group_state name="home" group="${g.name}">\n${g.joints.map(j=>`    <joint name="${j.name}" value="${home(j)}"/>`).join('\n')}\n  </group_state>`).join('\n')}
+${spec.joints.filter(j=>j.passive).map(j=>`  <passive_joint name="${j.name}"/>`).join("\n")}
   <virtual_joint name="world_joint" type="fixed" parent_frame="world" child_link="${root}"/>
 ${spec.joints.map(j=>`  <disable_collisions link1="${j.parent}" link2="${j.child}" reason="Adjacent"/>`).join('\n')}
 </robot>

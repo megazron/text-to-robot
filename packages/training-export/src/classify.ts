@@ -1,7 +1,7 @@
 import type { RobotSpecification } from "@ttr/robot-schema";
 export type RobotClass = "manipulator" | "mobile" | "locomotion" | "gripper";
 export function classify(spec: RobotSpecification): RobotClass {
-  const moving=spec.joints.filter(j=>j.type!=='fixed');
+  const moving=spec.joints.filter(j=>j.type!=='fixed'&&!j.passive);
   if(moving.length>0 && moving.every(j=>j.type==='prismatic'&&/finger/.test(j.name)))return 'gripper';
   const roles = new Set(spec.links.map((l) => l.role));
   const hasWheel = spec.links.some((l) => l.role === "wheel");

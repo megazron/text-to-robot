@@ -1,6 +1,6 @@
 # Bill of Materials — eva
 
-**Estimated total: $3342.17**  ·  tier: prosumer
+**Estimated total: $3415.47**  ·  tier: prosumer
 
 **Effort sizing: fails; hardware verified: no.**
 
@@ -13,7 +13,7 @@
 | Power | LiPo 4S 5000mAh | 1 | 40 | 40 | 74 Wh; est. load 128 W |
 | Power | DC-DC buck regulator (5V/10A) | 1 | 12 | 12 | logic + servo rail |
 | Power | Power distribution board + fuse + switch | 1 | 14 | 14 | wiring harness backbone |
-| Structure | 3D-printed frame (PLA/PETG) | 1 | 870.25 | 870.25 | ~39.56 kg material @ $22/kg |
+| Structure | 3D-printed frame (PLA/PETG) | 1 | 943.55 | 943.55 | ~42.89 kg material @ $22/kg |
 | Structure | Fastener + bearing kit | 1 | 18 | 18 | M3 screws, heat inserts, 608 bearings |
 | Wiring & misc | Wiring, connectors, JST/Dupont, sleeving | 1 | 262.92 | 262.92 | ~12% of electronics |
 

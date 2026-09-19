@@ -18,6 +18,10 @@ not a learned policy or proof of hardware accuracy. The model's failures remain 
 - Failed checks: actuator_sweep, disturbance_recovery.
 - [Physical build evidence and missing interfaces](BUILDABILITY.md), [machine-readable record](buildability_report.json). **No tested physical build is documented.**
 
+## Design research
+
+[Public engineering sources and model-specific changes](../../references/engineering/README.md).
+
 ## MoveIt / ROS 2
 
 [Browse the generated MoveIt configuration](moveit/) (SRDF, KDL, OMPL, controllers).
