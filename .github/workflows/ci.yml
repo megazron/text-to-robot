@@ -21,6 +21,8 @@ jobs:
       - uses: actions/setup-python@v5
         with: { python-version: "3.11" }
       - run: pip install "./python[cad,geometry]"
+      - name: Download and exercise pinned Hugging Face SO-101 assets
+        run: python scripts/benchmark_hf_so101.py --episodes 4 --output /tmp/so101-ci
       - name: Physical fidelity and solid CAD regression tests
         run: python -m unittest discover -s python/tests -v
       - name: Verify example reports and animations match shipped models
