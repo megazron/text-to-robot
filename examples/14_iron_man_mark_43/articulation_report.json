@@ -1,22 +1,22 @@
 {
   "scope": "Prescribed joint positions; no dynamics or collision resolution",
-  "source_urdf_sha256": "32952828db78af66efcadde5628f1c3c2f55f2f7e5362caf66489299361c4b9a",
+  "source_urdf_sha256": "df8651899408c1e7da7025255c16130da906ad4a85e03d07841be3b5658b7505",
   "previews": {
     "hand": {
       "gif": "hand_joints.gif",
-      "sha256": "d975c027a3b59b1d11f9bea7ba6e8911282b8451328f2fa43f6bf357d48c23ec",
+      "sha256": "03167f009bff2f1b5ec788db16f8b7467bd4960952c0858506268b04dc10636d",
       "tracked_body": "left_finger_2_distal_knuckle",
       "max_displacement_m": 0.07248035265722098
     },
     "neck": {
       "gif": "neck_joints.gif",
-      "sha256": "bad72de40199830f4f6196994075291bc909270416203515127c1caff98ad166",
+      "sha256": "94eb762999dfa8a6918fcafd2bd115ccd07fe7ef1d6dd9c202f51a9367c27430",
       "tracked_body": "faceplate",
       "max_displacement_m": 0.030913918509061715
     },
     "chest": {
       "gif": "chest_joints.gif",
-      "sha256": "e8a987fa6b1ad25a11c498ed9c2ae7fd7b73d06b6b773012be34bab446379dd1",
+      "sha256": "2dc8d9a2f6c390328571d0b6c95d7b99d63793af84a57c7080bd297245ce902d",
       "tracked_body": "left_chest_inlay",
       "max_displacement_m": 0.08529814244877684
     }

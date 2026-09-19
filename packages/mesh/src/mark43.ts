@@ -30,27 +30,37 @@ const limbProfiles:Record<string,number[][]>={
     forearm:[[0,.86,.93,0],[.18,1.07,1.04,0],[.40,1.0,.99,.03],[.74,1.04,.97,.04],[1,.71,.77,.03]],
   };
 
+// Shaped end rims leave room for the transverse joint housings. The front and
+// back keep their length; lateral cutaways follow the motor envelope.
+function limbZ(length:number,u:number,angle:number,style:string):number {
+  const [proximal,distal]=({thigh:[.050,.080],shin:[.030,.085],arm:[.025,.045],forearm:[.025,.015]} as Record<string,number[]>)[style]??[0,0];
+  const lateral=Math.pow(Math.abs(Math.sin(angle)),2);
+  return -length*u+lateral*(-proximal*Math.max(0,1-u/.22)+distal*Math.max(0,(u-.72)/.28));
+}
+
 export function sculptedLimb(length:number,rTop:number,rBottom:number,a0:number,a1:number,thickness:number,style:string):Mesh {
   // Depth, width and forward offset vary independently. Breaks make actual
   // longitudinal facets rather than smoothing the entire limb into a tube.
   const rows=limbProfiles[style]??limbProfiles.arm;
-  const sections=rows.map(([u,dx,dy,cx])=>{const r=rTop+(rBottom-rTop)*u;return superArc(r*dx,r*dy,-length*u,a0,a1,25,2.65,cx*rTop);});
+  const sections=rows.map(([u,dx,dy,cx])=>{const r=rTop+(rBottom-rTop)*u;return superArc(r*dx,r*dy,-length*u,a0,a1,25,2.65,cx*rTop).map(([x,y],i)=>[x,y,limbZ(length,u,a0+(a1-a0)*i/24,style)] as V3);});
   return shell(flip(loft(sections,{closed:false})),thickness);
 }
-export function shoulderShell(side:number):Mesh {
-  const rows:[[number,number,number],[number,number,number],[number,number,number],[number,number,number]]=
-    [[.012,.112,.104],[.043,.105,.096],[.074,.079,.072],[.087,.030,.026]];
-  const sections=rows.map(([z,rx,ry])=>superArc(rx,ry,z,-Math.PI,Math.PI,33,2.7).map(([x,y,z])=>[x,y,z-.45*Math.max(0,y)] as V3));
-  // A shallow crowned shell with a sloped outside skirt; open underneath.
-  sections.push(superArc(.001,.001,.09,-Math.PI,Math.PI,33,2.7));
-  const m=shell(loft(sections,{closed:true,capEnd:true}),.005);
+export function shoulderShell(side:number,edge=false):Mesh {
+  const rows=edge ? [[-.055,.1005,.1015],[-.041,.105,.1055]] :
+    [[-.055,.099,.100],[.015,.115,.106],[.062,.090,.084],[.085,.030,.028],[.090,.001,.001]];
+  const sections=rows.map(([z,rx,ry],i)=>superArc(rx,ry,z,-Math.PI,Math.PI-2*Math.PI/40,40,2.7).map(([x,y,z])=>
+    [x,y,z+(edge?1:Math.max(0,1-i/2))*Math.min(.09,.095*Math.pow(Math.max(0,-y/ry),2)+.08*Math.max(0,-x/rx)*(1-Math.max(0,y/ry)))] as V3));
+  const m=shell(loft(sections,{closed:true,capEnd:!edge}),edge?.002:.005);
   return side<0?mirrorY(m):m;
 }
 
-export function bootShell():Mesh {
-  const rows=[[ -.078,.164,.073,.035],[-.052,.162,.074,.035],[-.010,.139,.070,.021],[.035,.080,.062,-.015],[.07,.065,.055,-.028]];
-  const sec=rows.map(([z,rx,ry,cx])=>superArc(rx,ry,z,-Math.PI,Math.PI-2*Math.PI/40,40,3.4,cx));
-  return shell(flip(loft(sec,{closed:true})),.005);
+export function bootShell(inset=false):Mesh {
+  const rows=[[-.078,.164,.073,.035],[-.052,.162,.074,.035],[-.040,.139,.074,.028],[-.025,.100,.073,.005],[-.020,.080,.070,-.015]];
+  const selected=inset?rows.slice(1,4):rows;
+  const count=inset?17:40,a0=inset?-.40:-Math.PI,a1=inset?.40:Math.PI-2*Math.PI/40;
+  const sec=selected.map(([z,rx,ry,cx])=>superArc(rx,ry,z,a0,a1,count,3.4,cx).map(([x,y,z],i)=>
+    [x+(inset?.003:0),y,z-.045*((z+.078)/.058)*Math.pow(Math.sin(a0+(a1-a0)*i/(count-1)),4)+(inset?.003:0)] as V3));
+  return shell(loft(sec,{closed:!inset}),inset?.002:.005);
 }
 
 /** Two adjoining pectoral panels sampled from one continuous compound surface.
@@ -89,7 +99,7 @@ export function limbInset(length:number,rTop:number,rBottom:number,style:string,
     // Taper at both ends, with long straight side edges between the chamfers.
     const taper=Math.min(1,.48+v*4,.55+(1-v)*4);
     const mid=(a0+a1)/2,half=(a1-a0)*taper/2;
-    rows.push(superArc(radius*dx+offset,radius*dy+offset,-length*u,mid-half,mid+half,17,2.65,cx*rTop));
+    rows.push(superArc(radius*dx+offset,radius*dy+offset,-length*u,mid-half,mid+half,17,2.65,cx*rTop).map(([x,y],i)=>[x,y,limbZ(length,u,mid-half+2*half*i/16,style)] as V3));
   }
   return shell(flip(loft(rows,{closed:false})),.002);
 }

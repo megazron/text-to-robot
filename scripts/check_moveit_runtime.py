@@ -38,7 +38,9 @@ try:
     report={'scope':'ROS 2 mock hardware wiring and planning; not dynamics or real robot execution',
         'controllers':states,'controllers_active':active,'planning_scene_available':True,'group':a.group,
         'planning_error_code':response.error_code.val,'planning_pass':response.error_code.val==1,
-        'trajectory_points':len(response.trajectory.joint_trajectory.points),'execution_requested':a.execute}
+        'trajectory_points':len(response.trajectory.joint_trajectory.points),'execution_requested':a.execute,
+        'goal_positions':{j.joint_name:j.position for j in goal.joint_constraints},
+        'allowed_planning_time_s':q.allowed_planning_time,'planning_time_s':response.planning_time}
     report['start_state_valid']=validity.valid
     report['start_state_contacts']=[{'bodies':[c.contact_body_1,c.contact_body_2],'depth_m':c.depth} for c in validity.contacts]
     report['start_state_contact_count']=len(validity.contacts)
@@ -51,7 +53,7 @@ try:
         result=handle.get_result_async();rclpy.spin_until_future_complete(node,result,timeout_sec=30)
         report['execution_error_code']=result.result().result.error_code.val
         report['execution_pass']=report['execution_error_code']==1
-    report['pass']=active and report['planning_pass'] and (not a.execute or report.get('execution_pass',False))
+    report['pass']=active and report['start_state_valid'] and report['planning_pass'] and (not a.execute or report.get('execution_pass',False))
     a.json.write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))
 finally:
     node.destroy_node();rclpy.shutdown()

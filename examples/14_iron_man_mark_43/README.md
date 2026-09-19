@@ -4,15 +4,18 @@ Prompt: Build me a movie-accurate wearable Iron Man Mark 43 suit from Age of Ult
 
 ![Current MuJoCo simulation](simulation.gif)
 
-This GIF runs gravity, pose holding and self-collision on the shipped URDF. It is
+Collision model: **compound convex meshes and URDF primitives**.
+
+This GIF runs gravity, pose holding and self-collision on the shipped model. It is
 not a learned policy or proof of hardware accuracy. The model's failures remain visible.
 
 ## Download and inspect
 
-- [ROS 2 package](robot.ros2.zip), [training package](robot.training.zip), [URDF](robot.urdf), [robot JSON](robot.json), [BOM](BOM.md).
-- [Simulation report](simulation_report.json): **2/6** checks;
-  **227** initial penetration contacts.
-- Failed checks: initial_clearance, settle_under_gravity, hold_pose, actuator_sweep.
+- [CAD / STL / OpenSCAD](robot.cad.zip), [ROS 2 package](robot.ros2.zip), [training package](robot.training.zip), [URDF](robot.urdf), [robot JSON](robot.json), [BOM](BOM.md).
+- [Simulation report](simulation_report.json): **4/6** checks;
+  **0** initial penetration contacts.
+- Failed checks: actuator_sweep, disturbance_recovery.
+- [Physical build evidence and missing interfaces](BUILDABILITY.md), [machine-readable record](buildability_report.json). **No tested physical build is documented.**
 
 ## MoveIt / ROS 2
 
@@ -37,8 +40,11 @@ The fixed-root planner is not a walking controller or a simulation bridge.
 From the repository root:
 
 ```bash
+node scripts/export_examples.ts
 python scripts/audit_examples.py
 python scripts/render_example_gifs.py
+python scripts/document_examples.py
+python scripts/verify_example_artifacts.py
 ```
 
 These are procedural concept models. Masses, motors and contacts are approximate;
@@ -68,18 +74,28 @@ actuated geometry. They do not validate donning or motion clearance. The first
 GIF and simulation report above use self-collision enabled.
 
 [MoveIt runtime result](moveit_report.json): controllers and planning scene start,
-but the colliding suit start state blocks planning. [Wearer fit](wearability_report.json)
+with a collision-free neutral state. Small neck and left/right arm goals plan and
+execute through mock control; this does not validate the whole motion range or
+real motors. [Left arm](moveit_left_arm_report.json), [right arm](moveit_right_arm_report.json).
+An initial five-second right-arm request [timed out](moveit_right_arm_timeout.json)
+while other audits were running; a subsequent request succeeded. This is not a
+planning reliability benchmark. [Wearer fit](wearability_report.json)
 also fails. [Production references and downloaded design research](../../references/mark43/RESEARCH.md)
 record the sources and limitations. [Visual comparison](../../docs/MARK43_VISUAL_REVIEW.md).
 
-The current clearance revision replaces the misused forearm-shaped torso sides,
-corrects mirrored pectoral wall thickness, separates chest/abdominal plates,
-provides clamshell seam gaps and makes room around the internal cuffs. Palm
-geometry starts beyond the wrist rather than extending into the gauntlet.
+The current revision separates helmet seams and adds the red forehead insert,
+reshapes shoulders and boot uppers, and cuts limb-shell ends around joint motors.
+Surface-following boot/forearm trim replaces intersecting badges. Rear details
+follow their flight flaps. Internal struts have clearance at their connector ends.
 
-[Surface-contact comparison](surface_contact_comparison.json): **175 → 81**
-non-adjacent intersecting pairs at neutral; 94 resolved and no new pairs in this
-check. This tests visual triangle surfaces, with tessellated primitives. It does
-not measure penetration depth or full containment, and differs from native MoveIt
-and approximate MuJoCo collision geometry.
-[Joint samples](surface_contact_report.json) retain shoulder and side-door failures.
+[Surface-contact comparison](surface_contact_comparison.json): **81 → 0**
+non-adjacent intersecting pairs at neutral. No new neutral pairs were introduced.
+This tests visual triangle surfaces with tessellated primitives; it is not a
+penetration-depth, full-containment or wearer-fit measurement.
+[86 sampled poses](surface_contact_report.json) still expose shoulder, side-door,
+chin and other motion failures. Zero neutral contacts is not full articulation approval.
+
+The main physics GIF and smoke report use the source-checked compound collision
+archive, with self-collision enabled. The old box approximation fills hollow armour
+and creates false collisions; its diagnostic remains in [clearance_report.json](clearance_report.json)
+for comparison. Compound hulls are still approximations; their errors are reported.

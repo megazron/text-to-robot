@@ -1,0 +1,174 @@
+{
+  "robot_name": "arm_6dof",
+  "tier": "prosumer",
+  "lines": [
+    {
+      "category": "Actuator",
+      "name": "Dynamixel XM430-W350",
+      "qty": 2,
+      "unit_cost": 270,
+      "subtotal": 540,
+      "spec": "RS485 smart servo, encoder (4.1 N·m)",
+      "note": "joint joint_1; rating duty/source unverified; joint joint_2; rating duty/source unverified"
+    },
+    {
+      "category": "Actuator",
+      "name": "DS3218 20kg servo",
+      "qty": 4,
+      "unit_cost": 12,
+      "subtotal": 48,
+      "spec": "PWM, waterproof, metal gears (1.96 N·m)",
+      "note": "joint joint_3; rating duty/source unverified; joint joint_4; rating duty/source unverified; joint joint_5; rating duty/source unverified; joint joint_6; rating duty/source unverified"
+    },
+    {
+      "category": "Actuator",
+      "name": "NEMA17 + lead screw",
+      "qty": 2,
+      "unit_cost": 26,
+      "subtotal": 52,
+      "spec": "lead-screw linear stage (60 N)",
+      "note": "joint left_finger_joint; rating duty/source unverified; joint right_finger_joint; rating duty/source unverified"
+    },
+    {
+      "category": "Motor driver",
+      "name": "TMC2209 driver",
+      "qty": 2,
+      "unit_cost": 10,
+      "subtotal": 20,
+      "spec": "driver for NEMA17 + lead screw"
+    },
+    {
+      "category": "Compute",
+      "name": "Raspberry Pi 5 (8GB)",
+      "qty": 1,
+      "unit_cost": 80,
+      "subtotal": 80,
+      "spec": "SBC, runs ROS 2"
+    },
+    {
+      "category": "Power",
+      "name": "LiPo 4S 5000mAh",
+      "qty": 1,
+      "unit_cost": 40,
+      "subtotal": 40,
+      "spec": "74 Wh; est. load 35 W"
+    },
+    {
+      "category": "Power",
+      "name": "DC-DC buck regulator (5V/10A)",
+      "qty": 1,
+      "unit_cost": 12,
+      "subtotal": 12,
+      "spec": "logic + servo rail"
+    },
+    {
+      "category": "Power",
+      "name": "Power distribution board + fuse + switch",
+      "qty": 1,
+      "unit_cost": 14,
+      "subtotal": 14,
+      "spec": "wiring harness backbone"
+    },
+    {
+      "category": "Structure",
+      "name": "3D-printed frame (PLA/PETG)",
+      "qty": 1,
+      "unit_cost": 78.05,
+      "subtotal": 78.05,
+      "spec": "~3.55 kg material @ $22/kg"
+    },
+    {
+      "category": "Structure",
+      "name": "Fastener + bearing kit",
+      "qty": 1,
+      "unit_cost": 18,
+      "subtotal": 18,
+      "spec": "M3 screws, heat inserts, 608 bearings"
+    },
+    {
+      "category": "Wiring & misc",
+      "name": "Wiring, connectors, JST/Dupont, sleeving",
+      "qty": 1,
+      "unit_cost": 96.72,
+      "subtotal": 96.72,
+      "spec": "~12% of electronics"
+    }
+  ],
+  "total": 998.77,
+  "feasible": true,
+  "sizing_pass": true,
+  "hardware_verified": false,
+  "actuator_sizing": [
+    {
+      "joint": "joint_1",
+      "required_effort": 1.683,
+      "effort_unit": "N·m",
+      "required_torque_nm": 1.683,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "2.4x"
+    },
+    {
+      "joint": "joint_2",
+      "required_effort": 1.572,
+      "effort_unit": "N·m",
+      "required_torque_nm": 1.572,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "2.6x"
+    },
+    {
+      "joint": "joint_3",
+      "required_effort": 0.879,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.879,
+      "chosen": "DS3218 20kg servo",
+      "margin": "2.2x"
+    },
+    {
+      "joint": "joint_4",
+      "required_effort": 0.185,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.185,
+      "chosen": "DS3218 20kg servo",
+      "margin": "10.6x"
+    },
+    {
+      "joint": "joint_5",
+      "required_effort": 0.151,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.151,
+      "chosen": "DS3218 20kg servo",
+      "margin": "13.0x"
+    },
+    {
+      "joint": "joint_6",
+      "required_effort": 0.099,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.099,
+      "chosen": "DS3218 20kg servo",
+      "margin": "19.7x"
+    },
+    {
+      "joint": "left_finger_joint",
+      "required_effort": 32,
+      "effort_unit": "N",
+      "required_force_n": 32,
+      "chosen": "NEMA17 + lead screw",
+      "margin": "1.9x"
+    },
+    {
+      "joint": "right_finger_joint",
+      "required_effort": 32,
+      "effort_unit": "N",
+      "required_force_n": 32,
+      "chosen": "NEMA17 + lead screw",
+      "margin": "1.9x"
+    }
+  ],
+  "warnings": [
+    "Sizing uses a neutral-pose gravity proxy and declared joint effort, not a worst-case workspace or dynamic load analysis. Selection checks only approximate effort and broad motion type. Speed/torque curves, travel, voltage, feedback, mounting, thermal duty and wiring are not qualified.",
+    "Catalog values are planning estimates. Except explicitly sourced rated values, torque entries may be stall/peak ratings; continuous duty, fit and complete assemblies are unverified."
+  ],
+  "notes": [
+    "Tier: prosumer. Prices are planning estimates (USD), not quotes. Structure assumes FDM 3D printing."
+  ]
+}

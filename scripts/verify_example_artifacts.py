@@ -3,15 +3,22 @@ import hashlib,json,zipfile
 from pathlib import Path
 root=Path(__file__).resolve().parents[1];base=root/'examples'
 manifest=json.loads((base/'gif_manifest.json').read_text())
+training={r['example']:r for r in json.loads((base/'training_validation.json').read_text())['examples']}
+summary={r['example']:r for r in json.loads((base/'validation_summary.json').read_text())['examples']}
 for folder in sorted(base.iterdir()):
     source=folder/'robot.urdf'
     if not source.exists():continue
     digest=hashlib.sha256(source.read_bytes()).hexdigest()
     report=json.loads((folder/'simulation_report.json').read_text())
     assert report['source_urdf_sha256']==digest,f'{folder.name}: stale report'
+    assert summary[folder.name]['compiled'] and summary[folder.name]['passed']==report['passed']
+    assert training[folder.name]['pass'] and training[folder.name]['archive_sha256']==hashlib.sha256((folder/'robot.training.zip').read_bytes()).hexdigest(),f'{folder.name}: stale training smoke evidence'
     entry=manifest[folder.name]
     assert entry['source_urdf_sha256']==digest,f'{folder.name}: stale GIF source'
     assert entry['gif_sha256']==hashlib.sha256((folder/'simulation.gif').read_bytes()).hexdigest(),f'{folder.name}: changed GIF'
+    for item in (report,entry):
+        if 'collision_archive_sha256' in item:
+            assert item['collision_archive_sha256']==hashlib.sha256((folder/'robot.convex.zip').read_bytes()).hexdigest(),f'{folder.name}: stale compound evidence'
     name=json.loads((folder/'robot.json').read_text())['robot_name']
     with zipfile.ZipFile(folder/'robot.ros2.zip') as z:
         assert z.testzip() is None
@@ -21,6 +28,17 @@ for folder in sorted(base.iterdir()):
         assert z.testzip() is None
         assert 'training/robot_env.py' in z.namelist()
         assert not any('__pycache__' in n or n.endswith('.pyc') for n in z.namelist())
+    spec_bytes=(folder/'robot.json').read_bytes()
+    readiness=json.loads((folder/'buildability_report.json').read_text())
+    assert readiness['source_robot_sha256']==hashlib.sha256(spec_bytes).hexdigest(),f'{folder.name}: stale build inventory'
+    assert readiness['source_bom_sha256']==hashlib.sha256((folder/'bom.json').read_bytes()).hexdigest(),f'{folder.name}: stale BOM inventory'
+    assert readiness['hardware_verified'] is False and readiness['manufacturing_ready'] is False
+    with zipfile.ZipFile(folder/'robot.cad.zip') as z:
+        assert z.testzip() is None
+        assert json.loads(z.read('cad/robot.json'))==json.loads(spec_bytes),f'{folder.name}: stale CAD export'
+        for link in json.loads(spec_bytes)['links']:
+            assert f"cad/stl/parts/{link['name']}.stl" in z.namelist()
+    assert (folder/'BUILDABILITY.md').exists()
     assert (folder/'README.md').exists()
 for name in ('articulation','helmet'):
     folder=base/'14_iron_man_mark_43';entry=manifest['mark43_'+name]
@@ -44,3 +62,7 @@ comparison=json.loads((folder/'surface_contact_comparison.json').read_text())
 assert comparison['current_urdf_sha256']==surface['source_urdf_sha256']
 assert comparison['current_pair_count']==surface['neutral_pair_count']
 print('Surface contact evidence matches the current mesh assets')
+
+for name in ['moveit_report.json','moveit_left_arm_report.json','moveit_right_arm_report.json','wearability_report.json']:
+    r=json.loads((folder/name).read_text())
+    assert r['robot_sha256']==hashlib.sha256((folder/'robot.json').read_bytes()).hexdigest(),f'Stale {name}'

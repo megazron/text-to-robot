@@ -1,0 +1,108 @@
+{
+  "robot_name": "diff_drive_robot",
+  "tier": "prosumer",
+  "lines": [
+    {
+      "category": "Actuator",
+      "name": "NEMA17 stepper",
+      "qty": 2,
+      "unit_cost": 14,
+      "subtotal": 28,
+      "spec": "1.8deg, needs driver (0.45 N·m)",
+      "note": "joint left_wheel_joint; rating duty/source unverified; joint right_wheel_joint; rating duty/source unverified"
+    },
+    {
+      "category": "Motor driver",
+      "name": "TMC2209 driver",
+      "qty": 2,
+      "unit_cost": 10,
+      "subtotal": 20,
+      "spec": "driver for NEMA17 stepper"
+    },
+    {
+      "category": "Compute",
+      "name": "Teensy 4.1",
+      "qty": 1,
+      "unit_cost": 32,
+      "subtotal": 32,
+      "spec": "600MHz MCU, real-time control"
+    },
+    {
+      "category": "Power",
+      "name": "LiPo 4S 5000mAh",
+      "qty": 1,
+      "unit_cost": 40,
+      "subtotal": 40,
+      "spec": "74 Wh; est. load 12 W"
+    },
+    {
+      "category": "Power",
+      "name": "DC-DC buck regulator (5V/10A)",
+      "qty": 1,
+      "unit_cost": 12,
+      "subtotal": 12,
+      "spec": "logic + servo rail"
+    },
+    {
+      "category": "Power",
+      "name": "Power distribution board + fuse + switch",
+      "qty": 1,
+      "unit_cost": 14,
+      "subtotal": 14,
+      "spec": "wiring harness backbone"
+    },
+    {
+      "category": "Structure",
+      "name": "3D-printed frame (PLA/PETG)",
+      "qty": 1,
+      "unit_cost": 214.83,
+      "subtotal": 214.83,
+      "spec": "~9.77 kg material @ $22/kg"
+    },
+    {
+      "category": "Structure",
+      "name": "Fastener + bearing kit",
+      "qty": 1,
+      "unit_cost": 18,
+      "subtotal": 18,
+      "spec": "M3 screws, heat inserts, 608 bearings"
+    },
+    {
+      "category": "Wiring & misc",
+      "name": "Wiring, connectors, JST/Dupont, sleeving",
+      "qty": 1,
+      "unit_cost": 17.52,
+      "subtotal": 17.52,
+      "spec": "~12% of electronics"
+    }
+  ],
+  "total": 396.35,
+  "feasible": true,
+  "sizing_pass": true,
+  "hardware_verified": false,
+  "actuator_sizing": [
+    {
+      "joint": "left_wheel_joint",
+      "required_effort": 0.04,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.04,
+      "chosen": "NEMA17 stepper",
+      "margin": "11.3x"
+    },
+    {
+      "joint": "right_wheel_joint",
+      "required_effort": 0.04,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.04,
+      "chosen": "NEMA17 stepper",
+      "margin": "11.3x"
+    }
+  ],
+  "warnings": [
+    "Sizing uses a neutral-pose gravity proxy and declared joint effort, not a worst-case workspace or dynamic load analysis. Selection checks only approximate effort and broad motion type. Speed/torque curves, travel, voltage, feedback, mounting, thermal duty and wiring are not qualified.",
+    "Catalog values are planning estimates. Except explicitly sourced rated values, torque entries may be stall/peak ratings; continuous duty, fit and complete assemblies are unverified."
+  ],
+  "notes": [
+    "Tier: prosumer. Prices are planning estimates (USD), not quotes. Structure assumes FDM 3D printing."
+  ]
+}

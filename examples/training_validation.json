@@ -5,103 +5,120 @@
       "example": "01_arm_2dof",
       "pass": true,
       "task": "reach",
-      "actuators": 4
+      "actuators": 4,
+      "archive_sha256": "7ffbf5b70a5049249577296edcaa2c2e17ce3cf5486621b9279e33b48c7ee10a"
     },
     {
       "example": "02_arm_6dof",
       "pass": true,
       "task": "reach",
-      "actuators": 8
+      "actuators": 8,
+      "archive_sha256": "29c183f79e5b6f6d033eca1f133a630a84dbf5ca4dbb70ab763d9f49fddb1cd0"
     },
     {
       "example": "03_arm_7dof",
       "pass": true,
       "task": "reach",
-      "actuators": 9
+      "actuators": 9,
+      "archive_sha256": "102ce7b432bb89b0db8389224339f3e652b30efe1b78fdb4d00dd227a9b75f22"
     },
     {
       "example": "04_scara",
       "pass": true,
       "task": "reach",
-      "actuators": 4
+      "actuators": 4,
+      "archive_sha256": "8df8c2212f10af5a1f31eea38e1ef5df94822ecd72b5d669680dcf754bb93aa5"
     },
     {
       "example": "05_diff_drive",
       "pass": true,
       "task": "forward",
-      "actuators": 2
+      "actuators": 2,
+      "archive_sha256": "9220fe674ffa0549cc8bb7b7423939cecae7c7b56e4798e98acc566332486166"
     },
     {
       "example": "06_four_wheel",
       "pass": true,
       "task": "forward",
-      "actuators": 4
+      "actuators": 4,
+      "archive_sha256": "75a8873b412979651179e46f119161bfec7968feb9c85113e49f9b06f18e5077"
     },
     {
       "example": "07_mecanum",
       "pass": true,
       "task": "forward",
-      "actuators": 4
+      "actuators": 4,
+      "archive_sha256": "a986a735f3376f2d4c952a8465b22eeeec3b903bc55cdaa6f8981ee8d29eadfa"
     },
     {
       "example": "08_humanoid",
       "pass": true,
       "task": "walk",
-      "actuators": 25
+      "actuators": 25,
+      "archive_sha256": "1c48a3668585560dc61bfbae3a72875628dc6631d73323002d21b9a22e383b30"
     },
     {
       "example": "09_gripper",
       "pass": true,
       "task": "aperture",
-      "actuators": 2
+      "actuators": 2,
+      "archive_sha256": "74ea9e259f1cca64a28e8130a2de6236bda2e201c0352c47fd976319f8e50c3a"
     },
     {
       "example": "10_quadruped",
       "pass": true,
       "task": "walk",
-      "actuators": 12
+      "actuators": 12,
+      "archive_sha256": "b782b7a064514d7fdef58007bc156c5c2d9ad098a6e9df36e969ef8848f0ae01"
     },
     {
       "example": "11_spider_scout",
       "pass": true,
       "task": "walk",
-      "actuators": 18
+      "actuators": 18,
+      "archive_sha256": "9c29b2f59db33d2d13507200d9112b11495441bc7f3af613ef3e75d871b46392"
     },
     {
       "example": "12_mars_rover",
       "pass": true,
       "task": "forward",
-      "actuators": 12
+      "actuators": 12,
+      "archive_sha256": "3bec2d2b22f195fb2b6b2369b7ab46ddc8f9924a35f106769bf5025bb9e23548"
     },
     {
       "example": "13_battle_mech",
       "pass": true,
       "task": "walk",
-      "actuators": 21
+      "actuators": 21,
+      "archive_sha256": "14e8258fb949ff1dc22a24e56426a410cf116e6dbda31a47163aafa9afec2173"
     },
     {
       "example": "14_iron_man_mark_43",
       "pass": true,
       "task": "walk",
-      "actuators": 86
+      "actuators": 86,
+      "archive_sha256": "c2ca7930aee133bb3a1580ff168350437a125965c4e0502abd67be07191d15fb"
     },
     {
       "example": "15_wall_e",
       "pass": true,
       "task": "forward",
-      "actuators": 16
+      "actuators": 16,
+      "archive_sha256": "10db98c0c1a3258bfb2317e36d2222d7fa22db684b4f20b81447104accbf3df3"
     },
     {
       "example": "16_eva",
       "pass": true,
       "task": "reach",
-      "actuators": 5
+      "actuators": 5,
+      "archive_sha256": "c4c72ac95df8b0df3b9dd6e72b13577bc8cee8c144bd38255d5dfb2b7dee7919"
     },
     {
       "example": "17_baymax",
       "pass": true,
       "task": "walk",
-      "actuators": 15
+      "actuators": 15,
+      "archive_sha256": "ba20a4064fa53d199b359001280f0138b264a299db73ad032b8110caf567d819"
     }
   ]
 }

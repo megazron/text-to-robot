@@ -1,0 +1,254 @@
+{
+  "robot_name": "wall_e",
+  "tier": "prosumer",
+  "lines": [
+    {
+      "category": "Actuator",
+      "name": "NEMA17 stepper",
+      "qty": 4,
+      "unit_cost": 14,
+      "subtotal": 56,
+      "spec": "1.8deg, needs driver (0.45 N·m)",
+      "note": "joint left_front_wheel_joint; rating duty/source unverified; joint left_rear_wheel_joint; rating duty/source unverified; joint right_front_wheel_joint; rating duty/source unverified; joint right_rear_wheel_joint; rating duty/source unverified"
+    },
+    {
+      "category": "Motor driver",
+      "name": "TMC2209 driver",
+      "qty": 9,
+      "unit_cost": 10,
+      "subtotal": 90,
+      "spec": "driver for NEMA17 stepper"
+    },
+    {
+      "category": "Actuator",
+      "name": "NEMA17 + lead screw",
+      "qty": 5,
+      "unit_cost": 26,
+      "subtotal": 130,
+      "spec": "lead-screw linear stage (60 N)",
+      "note": "joint neck_lift; rating duty/source unverified; joint left_left_finger_joint; rating duty/source unverified; joint left_right_finger_joint; rating duty/source unverified; joint right_left_finger_joint; rating duty/source unverified; joint right_right_finger_joint; rating duty/source unverified"
+    },
+    {
+      "category": "Actuator",
+      "name": "Unitree GO-M8010-6",
+      "qty": 7,
+      "unit_cost": 400,
+      "subtotal": 2800,
+      "spec": "integrated BLDC + planetary, RS485 (23 N·m)",
+      "note": "joint head_tilt; rating duty/source unverified; joint left_arm_joint_1; rating duty/source unverified; joint left_arm_joint_2; rating duty/source unverified; joint left_arm_joint_3; rating duty/source unverified; joint right_arm_joint_1; rating duty/source unverified; joint right_arm_joint_2; rating duty/source unverified; joint right_arm_joint_3; rating duty/source unverified"
+    },
+    {
+      "category": "Sensor",
+      "name": "Raspberry Pi Camera Module 3",
+      "qty": 2,
+      "unit_cost": 25,
+      "subtotal": 50,
+      "spec": "12MP, CSI",
+      "note": "left_eye_camera; right_eye_camera"
+    },
+    {
+      "category": "Compute",
+      "name": "Raspberry Pi 5 (8GB)",
+      "qty": 1,
+      "unit_cost": 80,
+      "subtotal": 80,
+      "spec": "SBC, runs ROS 2"
+    },
+    {
+      "category": "Power",
+      "name": "LiPo 6S 10000mAh",
+      "qty": 1,
+      "unit_cost": 95,
+      "subtotal": 95,
+      "spec": "222 Wh; est. load 219 W"
+    },
+    {
+      "category": "Power",
+      "name": "DC-DC buck regulator (5V/10A)",
+      "qty": 1,
+      "unit_cost": 12,
+      "subtotal": 12,
+      "spec": "logic + servo rail"
+    },
+    {
+      "category": "Power",
+      "name": "Power distribution board + fuse + switch",
+      "qty": 1,
+      "unit_cost": 14,
+      "subtotal": 14,
+      "spec": "wiring harness backbone"
+    },
+    {
+      "category": "Structure",
+      "name": "3D-printed frame (PLA/PETG)",
+      "qty": 1,
+      "unit_cost": 538.35,
+      "subtotal": 538.35,
+      "spec": "~24.47 kg material @ $22/kg"
+    },
+    {
+      "category": "Structure",
+      "name": "Fastener + bearing kit",
+      "qty": 1,
+      "unit_cost": 18,
+      "subtotal": 18,
+      "spec": "M3 screws, heat inserts, 608 bearings"
+    },
+    {
+      "category": "Wiring & misc",
+      "name": "Wiring, connectors, JST/Dupont, sleeving",
+      "qty": 1,
+      "unit_cost": 399.24,
+      "subtotal": 399.24,
+      "spec": "~12% of electronics"
+    }
+  ],
+  "total": 4282.59,
+  "feasible": true,
+  "sizing_pass": false,
+  "hardware_verified": false,
+  "actuator_sizing": [
+    {
+      "joint": "left_front_wheel_joint",
+      "required_effort": 0.09,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.09,
+      "chosen": "NEMA17 stepper",
+      "margin": "5.0x"
+    },
+    {
+      "joint": "left_rear_wheel_joint",
+      "required_effort": 0.09,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.09,
+      "chosen": "NEMA17 stepper",
+      "margin": "5.0x"
+    },
+    {
+      "joint": "right_front_wheel_joint",
+      "required_effort": 0.09,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.09,
+      "chosen": "NEMA17 stepper",
+      "margin": "5.0x"
+    },
+    {
+      "joint": "right_rear_wheel_joint",
+      "required_effort": 0.09,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.09,
+      "chosen": "NEMA17 stepper",
+      "margin": "5.0x"
+    },
+    {
+      "joint": "neck_lift",
+      "required_effort": 32,
+      "effort_unit": "N",
+      "required_force_n": 32,
+      "chosen": "NEMA17 + lead screw",
+      "margin": "1.9x"
+    },
+    {
+      "joint": "head_tilt",
+      "required_effort": 40,
+      "effort_unit": "N·m",
+      "required_torque_nm": 40,
+      "chosen": "Unitree GO-M8010-6",
+      "margin": "UNDERSIZED"
+    },
+    {
+      "joint": "left_arm_joint_1",
+      "required_effort": 40,
+      "effort_unit": "N·m",
+      "required_torque_nm": 40,
+      "chosen": "Unitree GO-M8010-6",
+      "margin": "UNDERSIZED"
+    },
+    {
+      "joint": "left_arm_joint_2",
+      "required_effort": 40,
+      "effort_unit": "N·m",
+      "required_torque_nm": 40,
+      "chosen": "Unitree GO-M8010-6",
+      "margin": "UNDERSIZED"
+    },
+    {
+      "joint": "left_arm_joint_3",
+      "required_effort": 40,
+      "effort_unit": "N·m",
+      "required_torque_nm": 40,
+      "chosen": "Unitree GO-M8010-6",
+      "margin": "UNDERSIZED"
+    },
+    {
+      "joint": "left_left_finger_joint",
+      "required_effort": 32,
+      "effort_unit": "N",
+      "required_force_n": 32,
+      "chosen": "NEMA17 + lead screw",
+      "margin": "1.9x"
+    },
+    {
+      "joint": "left_right_finger_joint",
+      "required_effort": 32,
+      "effort_unit": "N",
+      "required_force_n": 32,
+      "chosen": "NEMA17 + lead screw",
+      "margin": "1.9x"
+    },
+    {
+      "joint": "right_arm_joint_1",
+      "required_effort": 40,
+      "effort_unit": "N·m",
+      "required_torque_nm": 40,
+      "chosen": "Unitree GO-M8010-6",
+      "margin": "UNDERSIZED"
+    },
+    {
+      "joint": "right_arm_joint_2",
+      "required_effort": 40,
+      "effort_unit": "N·m",
+      "required_torque_nm": 40,
+      "chosen": "Unitree GO-M8010-6",
+      "margin": "UNDERSIZED"
+    },
+    {
+      "joint": "right_arm_joint_3",
+      "required_effort": 40,
+      "effort_unit": "N·m",
+      "required_torque_nm": 40,
+      "chosen": "Unitree GO-M8010-6",
+      "margin": "UNDERSIZED"
+    },
+    {
+      "joint": "right_left_finger_joint",
+      "required_effort": 32,
+      "effort_unit": "N",
+      "required_force_n": 32,
+      "chosen": "NEMA17 + lead screw",
+      "margin": "1.9x"
+    },
+    {
+      "joint": "right_right_finger_joint",
+      "required_effort": 32,
+      "effort_unit": "N",
+      "required_force_n": 32,
+      "chosen": "NEMA17 + lead screw",
+      "margin": "1.9x"
+    }
+  ],
+  "warnings": [
+    "Sizing uses a neutral-pose gravity proxy and declared joint effort, not a worst-case workspace or dynamic load analysis. Selection checks only approximate effort and broad motion type. Speed/torque curves, travel, voltage, feedback, mounting, thermal duty and wiring are not qualified.",
+    "Catalog values are planning estimates. Except explicitly sourced rated values, torque entries may be stall/peak ratings; continuous duty, fit and complete assemblies are unverified.",
+    "joint head_tilt needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
+    "joint left_arm_joint_1 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
+    "joint left_arm_joint_2 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
+    "joint left_arm_joint_3 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
+    "joint right_arm_joint_1 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
+    "joint right_arm_joint_2 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
+    "joint right_arm_joint_3 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator"
+  ],
+  "notes": [
+    "Tier: prosumer. Prices are planning estimates (USD), not quotes. Structure assumes FDM 3D printing."
+  ]
+}

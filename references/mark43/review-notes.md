@@ -46,3 +46,13 @@ Rejected the shoulder-shell experiment because the silhouette and intersections
 were unsuitable. Saved the previous front render alongside the current render.
 The reference has more continuous shoulder/torso transitions, a much slimmer
 mechanical envelope and more complex panel surfacing; these gaps remain.
+
+### Helmet, shoulder and joint-envelope revision
+
+Compared the saved Legacy Effects torso and Hot Toys full-body reference against
+actual candidate helmet and three-quarter renders. Added the red forehead notch,
+separated helmet panels and replaced shallow shoulder caps with skirted shells.
+Rejected mounting the jaw on a distant pivot merely to clear its sweep: that would
+not establish a buildable mechanism. Remaining chin/neck motion collisions stay
+reported. Lateral rim cutaways clear the existing motor housings; the visible
+mechanical bulk and open ankle transitions still fall short of the reference.

@@ -1,0 +1,262 @@
+{
+  "scope": "Design-input inventory, not a hardware qualification or a claim that missing interfaces were inspected in CAD",
+  "source_robot_sha256": "6bb0776cb2110b6a7011f52d6fb604922270d59e5d230b77fb64b143adc51adf",
+  "source_bom_sha256": "57d8195480018c7df3b6b5bcc04f958e9a46f4545d3390f47a22947d18f84671",
+  "hardware_verified": false,
+  "manufacturing_ready": false,
+  "prototype_test_evidence": null,
+  "declared_mass_kg": 2.793900028246399,
+  "links_with_inferred_mass": [
+    "base_link",
+    "front_left_coxa",
+    "front_left_femur",
+    "front_left_tibia",
+    "mid_left_coxa",
+    "mid_left_femur",
+    "mid_left_tibia",
+    "rear_left_coxa",
+    "rear_left_femur",
+    "rear_left_tibia",
+    "front_right_coxa",
+    "front_right_femur",
+    "front_right_tibia",
+    "mid_right_coxa",
+    "mid_right_femur",
+    "mid_right_tibia",
+    "rear_right_coxa",
+    "rear_right_femur",
+    "rear_right_tibia",
+    "lidar_1_link"
+  ],
+  "actuator_catalogue_sizing_pass": false,
+  "joint_requirements": [
+    {
+      "joint": "front_left_coxa_joint",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -0.7,
+      "upper": 0.7,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "front_left_femur_joint",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -1.2,
+      "upper": 1.2,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "front_left_tibia_joint",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -2.2,
+      "upper": 0.4,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "mid_left_coxa_joint",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -0.7,
+      "upper": 0.7,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "mid_left_femur_joint",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -1.2,
+      "upper": 1.2,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "mid_left_tibia_joint",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -2.2,
+      "upper": 0.4,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "rear_left_coxa_joint",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -0.7,
+      "upper": 0.7,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "rear_left_femur_joint",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -1.2,
+      "upper": 1.2,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "rear_left_tibia_joint",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -2.2,
+      "upper": 0.4,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "front_right_coxa_joint",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -0.7,
+      "upper": 0.7,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "front_right_femur_joint",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -1.2,
+      "upper": 1.2,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "front_right_tibia_joint",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -2.2,
+      "upper": 0.4,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "mid_right_coxa_joint",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -0.7,
+      "upper": 0.7,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "mid_right_femur_joint",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -1.2,
+      "upper": 1.2,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "mid_right_tibia_joint",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -2.2,
+      "upper": 0.4,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "rear_right_coxa_joint",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -0.7,
+      "upper": 0.7,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "rear_right_femur_joint",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -1.2,
+      "upper": 1.2,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "rear_right_tibia_joint",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -2.2,
+      "upper": 0.4,
+      "position_unit": "rad"
+    }
+  ],
+  "missing_evidence": [
+    {
+      "id": "component_interfaces",
+      "detail": "No verified vendor drawing, shaft/horn interface, mounting-hole pattern or bearing fit is associated with each joint."
+    },
+    {
+      "id": "actuator_operating_envelope",
+      "detail": "No complete speed/effort/thermal-duty and feedback qualification; catalogue effort alone does not validate the selected actuator."
+    },
+    {
+      "id": "electronics_packaging",
+      "detail": "No verified placement, mounting, connector access or cable-bend clearance for the selected electronics. The optional enclosure example uses synthetic dimensions."
+    },
+    {
+      "id": "electrical_system",
+      "detail": "No validated rail voltages, peak currents, power budget, wiring schematic or protection sizing."
+    },
+    {
+      "id": "manufacturing_and_assembly",
+      "detail": "No complete tolerance stack, material/process specification, fastener schedule, assembly procedure or service-access validation."
+    },
+    {
+      "id": "measured_dynamics",
+      "detail": "No prototype measurements establish masses, inertias, friction, backlash, compliance or model-to-hardware agreement."
+    },
+    {
+      "id": "physical_validation",
+      "detail": "No physical assembly, load test or task-performance evidence is attached."
+    }
+  ]
+}

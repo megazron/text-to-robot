@@ -1,23 +1,11 @@
 from pathlib import Path
-import json,zipfile,shutil
+import json
 root=Path('examples');summary=json.loads((root/'validation_summary.json').read_text())
-index=['# Example gallery and validation','','All 17 examples were exported and tested with self-collision enabled. Zero initial contacts is an initial-pose check, not full-range clearance or hardware qualification.','','| Example | MuJoCo checks | Initial penetrations | Remaining failed checks |','|---|---|---|---|']
+index=['# Example gallery and validation','','All 17 examples were exported and tested with self-collision enabled. Mark 43 uses source-checked compound hulls; other examples use their URDF primitives. Zero initial contacts is an initial-pose check, not full-range clearance or hardware qualification.','','| Actual simulation | Example and downloads | MuJoCo checks | Initial penetrations | Remaining failed checks |','|---|---|---|---|---|']
 for row in summary['examples']:
  folder=root/row['example'];spec=json.loads((folder/'robot.json').read_text());name=spec['robot_name']
- source=Path('/tmp/ttr-example-packages')/folder.name
- with zipfile.ZipFile(folder/'robot.ros2.zip','w',zipfile.ZIP_DEFLATED) as z:
-  for p in sorted(source.rglob('*')):
-   if p.is_file():z.write(p,p.relative_to(source))
- training=Path('/tmp/ttr-example-training')/folder.name
- if training.exists():
-  with zipfile.ZipFile(folder/'robot.training.zip','w',zipfile.ZIP_DEFLATED) as z:
-   for p in sorted(training.rglob('*')):
-    if p.is_file() and "__pycache__" not in p.parts and p.suffix!=".pyc":z.write(p,p.relative_to(training))
- moveit=source/name/'moveit' 
- if moveit.exists():
-  if (folder/'moveit').exists():shutil.rmtree(folder/'moveit')
-  shutil.copytree(moveit,folder/'moveit')
  has_moveit=any((folder/'moveit').glob('*.srdf')) if (folder/'moveit').exists() else False
+ physics=json.loads((folder/'simulation_report.json').read_text())
  failures=', '.join(row.get('failed',[])) or 'none in this smoke battery'
  text=f'''# {name}
 
@@ -25,15 +13,18 @@ Prompt: {spec['metadata'].get('source_prompt','See prompt.txt')}
 
 ![Current MuJoCo simulation](simulation.gif)
 
-This GIF runs gravity, pose holding and self-collision on the shipped URDF. It is
+Collision model: **{physics.get('collision_model','URDF primitives / mesh bounding boxes')}**.
+
+This GIF runs gravity, pose holding and self-collision on the shipped model. It is
 not a learned policy or proof of hardware accuracy. The model's failures remain visible.
 
 ## Download and inspect
 
-- [ROS 2 package](robot.ros2.zip), [training package](robot.training.zip), [URDF](robot.urdf), [robot JSON](robot.json), [BOM](BOM.md).
+- [CAD / STL / OpenSCAD](robot.cad.zip), [ROS 2 package](robot.ros2.zip), [training package](robot.training.zip), [URDF](robot.urdf), [robot JSON](robot.json), [BOM](BOM.md).
 - [Simulation report](simulation_report.json): **{row.get('passed',0)}/{row.get('total',0)}** checks;
   **{row.get('initial_penetrations','unknown')}** initial penetration contacts.
 - Failed checks: {failures}.
+- [Physical build evidence and missing interfaces](BUILDABILITY.md), [machine-readable record](buildability_report.json). **No tested physical build is documented.**
 
 ## MoveIt / ROS 2
 
@@ -65,8 +56,11 @@ navigation controller; a gripper alone needs a gripper controller.
 From the repository root:
 
 ```bash
+node scripts/export_examples.ts
 python scripts/audit_examples.py
 python scripts/render_example_gifs.py
+python scripts/document_examples.py
+python scripts/verify_example_artifacts.py
 ```
 
 These are procedural concept models. Masses, motors and contacts are approximate;
@@ -100,23 +94,57 @@ actuated geometry. They do not validate donning or motion clearance. The first
 GIF and simulation report above use self-collision enabled.
 
 [MoveIt runtime result](moveit_report.json): controllers and planning scene start,
-but the colliding suit start state blocks planning. [Wearer fit](wearability_report.json)
+with a collision-free neutral state. Small neck and left/right arm goals plan and
+execute through mock control; this does not validate the whole motion range or
+real motors. [Left arm](moveit_left_arm_report.json), [right arm](moveit_right_arm_report.json).
+An initial five-second right-arm request [timed out](moveit_right_arm_timeout.json)
+while other audits were running; a subsequent request succeeded. This is not a
+planning reliability benchmark. [Wearer fit](wearability_report.json)
 also fails. [Production references and downloaded design research](../../references/mark43/RESEARCH.md)
 record the sources and limitations. [Visual comparison](../../docs/MARK43_VISUAL_REVIEW.md).
 
-The current clearance revision replaces the misused forearm-shaped torso sides,
-corrects mirrored pectoral wall thickness, separates chest/abdominal plates,
-provides clamshell seam gaps and makes room around the internal cuffs. Palm
-geometry starts beyond the wrist rather than extending into the gauntlet.
+The current revision separates helmet seams and adds the red forehead insert,
+reshapes shoulders and boot uppers, and cuts limb-shell ends around joint motors.
+Surface-following boot/forearm trim replaces intersecting badges. Rear details
+follow their flight flaps. Internal struts have clearance at their connector ends.
 
-[Surface-contact comparison](surface_contact_comparison.json): **175 → 81**
-non-adjacent intersecting pairs at neutral; 94 resolved and no new pairs in this
-check. This tests visual triangle surfaces, with tessellated primitives. It does
-not measure penetration depth or full containment, and differs from native MoveIt
-and approximate MuJoCo collision geometry.
-[Joint samples](surface_contact_report.json) retain shoulder and side-door failures.
+[Surface-contact comparison](surface_contact_comparison.json): **81 → 0**
+non-adjacent intersecting pairs at neutral. No new neutral pairs were introduced.
+This tests visual triangle surfaces with tessellated primitives; it is not a
+penetration-depth, full-containment or wearer-fit measurement.
+[86 sampled poses](surface_contact_report.json) still expose shoulder, side-door,
+chin and other motion failures. Zero neutral contacts is not full articulation approval.
+
+The main physics GIF and smoke report use the source-checked compound collision
+archive, with self-collision enabled. The old box approximation fills hollow armour
+and creates false collisions; its diagnostic remains in [clearance_report.json](clearance_report.json)
+for comparison. Compound hulls are still approximations; their errors are reported.
 
 '''
  (folder/'README.md').write_text(text.rstrip()+'\n')
- index.append(f"| [{folder.name}]({folder.name}/) | {row.get('passed',0)}/{row.get('total',0)} | {row.get('initial_penetrations','?')} | {failures} |")
+ index.append(f"| [<img src='{folder.name}/simulation.gif' width='220' alt='{name} simulation'>]({folder.name}/) | [{folder.name}]({folder.name}/)<br>[CAD]({folder.name}/robot.cad.zip) · [Results]({folder.name}/simulation_report.json) · [Build evidence]({folder.name}/BUILDABILITY.md) | {row.get('passed',0)}/{row.get('total',0)} | {row.get('initial_penetrations','?')} | {failures} |")
 (root/'README.md').write_text('\n'.join(index)+'\n')
+
+# Make all results visible in the main README, before the detailed Mark 43 section.
+root_readme=Path('README.md');content=root_readme.read_text()
+start='<!-- EXAMPLE_GALLERY_START -->';end='<!-- EXAMPLE_GALLERY_END -->'
+cells=[]
+for row in summary['examples']:
+ name=row['example'];label=name[3:].replace('_',' ')
+ cells.append(f"[**{label}**](examples/{name}/)<br>![{label}: actual gravity/self-collision run](examples/{name}/simulation.gif)<br>{row.get('passed',0)}/{row.get('total',0)} simulation checks · [CAD](examples/{name}/robot.cad.zip) · [Results](examples/{name}/simulation_report.json) · [Build evidence](examples/{name}/BUILDABILITY.md)")
+gallery=[start,'','These are actual simulations of all 17 exported examples. Check counts are smoke-test results; no example has a documented physical prototype. Click **Build evidence** for the missing manufacturing and hardware work.','','| | | |','|---|---|---|']
+for i in range(0,len(cells),3):gallery.append('| '+' | '.join((cells[i:i+3]+['']*3)[:3])+' |')
+gallery+=['',end]
+block='\n'.join(gallery)
+if start in content:content=content[:content.index(start)]+block+content[content.index(end)+len(end):]
+else:content=content.replace('## Iron Man: MoveIt and animated previews',block+'\n\n## Iron Man: MoveIt and animated previews')
+root_readme.write_text(content)
+for row in summary['examples']:
+ folder=root/row['example'];r=json.loads((folder/'buildability_report.json').read_text())
+ lines=[f"# Physical build evidence — {folder.name}",'','**Not manufacturing-ready. No tested physical prototype is documented.**','','[CAD export](robot.cad.zip) · [BOM](BOM.md) · [Simulation results](simulation_report.json) · [Source-hashed inventory](buildability_report.json)','','The CAD contains conceptual link solids. It is not a set of verified motor mounts, bearing seats, electronics housings and assembly drawings. The optional enclosure generator uses synthetic dimensions until measured hardware is supplied.','',f"Declared model mass: {r['declared_mass_kg']:.3f} kg. {len(r['links_with_inferred_mass'])} links have inferred mass. {len(r['joint_requirements'])} joints require actuator integration.",'',f"Catalogue effort sizing: {'passes its estimate' if r['actuator_catalogue_sizing_pass'] else 'fails'}. This does not establish speed, duty cycle, fit or electrical compatibility.",'','## Missing evidence','']
+ for item in r['missing_evidence']:lines.append('- '+item['detail'])
+ if folder.name.startswith('07_'):lines+=['','Mecanum rollers and directional traction are not modelled; cylindrical wheels cannot validate omnidirectional hardware behaviour.']
+ if folder.name.startswith('16_'):lines+=['','No levitation system is designed. The free-base EVA model falls under gravity.']
+ if folder.name.startswith('17_'):lines+=['','The rigid-body Baymax model does not validate inflatable skins, pressure control or compliant human contact.']
+ if folder.name.startswith('14_'):lines+=['','Wearer entry, joint alignment, breathing, emergency release and load-bearing safety remain unverified. See [wearer checks](wearability_report.json).']
+ (folder/'BUILDABILITY.md').write_text('\n'.join(lines)+'\n')

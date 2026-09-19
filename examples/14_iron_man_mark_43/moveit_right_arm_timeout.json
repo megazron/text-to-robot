@@ -1,0 +1,20 @@
+{
+  "scope": "ROS 2 mock hardware wiring and planning; not dynamics or real robot execution",
+  "controllers": {
+    "joint_trajectory_controller": "active",
+    "joint_state_broadcaster": "active"
+  },
+  "controllers_active": true,
+  "planning_scene_available": true,
+  "group": "right_arm",
+  "planning_error_code": 99999,
+  "planning_pass": false,
+  "trajectory_points": 0,
+  "execution_requested": true,
+  "start_state_valid": true,
+  "start_state_contacts": [],
+  "start_state_contact_count": 0,
+  "contact_scope": "Contacts returned by GetStateValidity; service contact limits may truncate the list",
+  "robot_sha256": "626e8ff65beb681852a9302d19b2d28068b787759f25b15898e0d967e1965761",
+  "pass": false
+}

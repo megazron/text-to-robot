@@ -1,0 +1,107 @@
+{
+  "scope": "Design-input inventory, not a hardware qualification or a claim that missing interfaces were inspected in CAD",
+  "source_robot_sha256": "ea73483f9b9b826b4f4d3d74a7f16420fa6f7541434888f0756decffcaff0f7c",
+  "source_bom_sha256": "893b4f107374a56925342ca72480019a3b989b3869a6b673761dd7fbb6d5619c",
+  "hardware_verified": false,
+  "manufacturing_ready": false,
+  "prototype_test_evidence": null,
+  "declared_mass_kg": 28.254743624904375,
+  "links_with_inferred_mass": [
+    "body",
+    "head",
+    "visor",
+    "left_arm",
+    "left_hand",
+    "right_arm",
+    "right_hand",
+    "hover_thruster"
+  ],
+  "actuator_catalogue_sizing_pass": false,
+  "joint_requirements": [
+    {
+      "joint": "neck_joint",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -0.6,
+      "upper": 0.6,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "left_shoulder_joint",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -2.5,
+      "upper": 2.5,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "left_arm_roll",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -1.5,
+      "upper": 1.5,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "right_shoulder_joint",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -2.5,
+      "upper": 2.5,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "right_arm_roll",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -1.5,
+      "upper": 1.5,
+      "position_unit": "rad"
+    }
+  ],
+  "missing_evidence": [
+    {
+      "id": "component_interfaces",
+      "detail": "No verified vendor drawing, shaft/horn interface, mounting-hole pattern or bearing fit is associated with each joint."
+    },
+    {
+      "id": "actuator_operating_envelope",
+      "detail": "No complete speed/effort/thermal-duty and feedback qualification; catalogue effort alone does not validate the selected actuator."
+    },
+    {
+      "id": "electronics_packaging",
+      "detail": "No verified placement, mounting, connector access or cable-bend clearance for the selected electronics. The optional enclosure example uses synthetic dimensions."
+    },
+    {
+      "id": "electrical_system",
+      "detail": "No validated rail voltages, peak currents, power budget, wiring schematic or protection sizing."
+    },
+    {
+      "id": "manufacturing_and_assembly",
+      "detail": "No complete tolerance stack, material/process specification, fastener schedule, assembly procedure or service-access validation."
+    },
+    {
+      "id": "measured_dynamics",
+      "detail": "No prototype measurements establish masses, inertias, friction, backlash, compliance or model-to-hardware agreement."
+    },
+    {
+      "id": "physical_validation",
+      "detail": "No physical assembly, load test or task-performance evidence is attached."
+    }
+  ]
+}

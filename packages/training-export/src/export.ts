@@ -324,6 +324,9 @@ if __name__ == "__main__":
 export function exportTraining(spec: RobotSpecification): FileMap {
   const name = safeName(spec.robot_name);
   const cls = classify(spec);
+  const hasMeshes=spec.links.some(l=>l.geometry.type==="mesh");
+  const mujocoSource=hasMeshes?"collision/robot.urdf":`../${name}.urdf`;
+  const collisionPreparation=hasMeshes?`python -m ttr_mujoco.collision ../${name}.urdf --out collision\n`:"";
   const tip = spec.links.find(l=>l.name==="gripper_base")?.name ?? spec.end_effectors[0]?.attach_link ?? spec.links.find(l=>l.role?.startsWith("wrist"))?.name ?? "YOUR_TOOL_LINK";
   const taskList = TASKS[cls].map((t) => `  - \`${t.id}\` — ${t.title}`).join("\n");
   const files: FileMap = {};
@@ -340,7 +343,7 @@ export function exportTraining(spec: RobotSpecification): FileMap {
   for(const file of readdirSync(pythonRoot).filter(f=>f.endsWith(".py")))files[`training/mujoco/ttr_mujoco/${file}`]=readFileSync(new URL(file,pythonRoot),"utf8");
   files[`training/mujoco/wearer.example.json`]=readFileSync(new URL("wearer.example.json",pythonRoot),"utf8");
   files[`training/mujoco/robot.json`]=JSON.stringify(spec,null,2);
-  files[`training/mujoco/requirements.txt`]="mujoco>=3.1,<4\ngymnasium>=0.29\nnumpy>=1.24\npillow>=10\nstable-baselines3>=2.3\ntrimesh>=4.5,<5\ncoacd>=1.0.7,<2\nrtree>=1.3,<2\n";
+  files[`training/mujoco/requirements.txt`]="mujoco>=3.1,<4\ngymnasium>=0.29\nnumpy>=1.24\npillow>=10\nstable-baselines3>=2.3\ntrimesh>=4.5,<5\ncoacd>=1.0.7,<2\nrtree>=1.3,<2\npython-fcl>=0.7,<0.8\n";
   files[`training/mujoco/README.md`] =
 `# ${spec.robot_name} in MuJoCo
 
@@ -350,18 +353,22 @@ Test, render and train this exact robot in MuJoCo with the text-to-robot Python 
 pip install -r requirements.txt
 pip install torch --index-url https://download.pytorch.org/whl/cpu    # CPU torch on GPU-less machines
 
-python -m ttr_mujoco test   ../${name}.urdf --self-collision                       # settle / hold / actuator sweep / disturbance
-python -m ttr_mujoco render ../${name}.urdf -o ${name}.gif --motion sweep
-python -m ttr_mujoco train  ../${name}.urdf --self-collision --task ${cls === "manipulator" ? `reach --tip-body ${tip}` : cls === "gripper" ? "aperture" : "stand"} --steps 400000
+${collisionPreparation}python -m ttr_mujoco test   ${mujocoSource} --self-collision                       # settle / hold / actuator sweep / disturbance
+python -m ttr_mujoco render ${mujocoSource} --self-collision -o ${name}.gif --motion sweep
+python -m ttr_mujoco train  ${mujocoSource} --self-collision --task ${cls === "manipulator" ? `reach --tip-body ${tip}` : cls === "gripper" ? "aperture" : "stand"} --steps 400000
 \`\`\`
+
+Mesh-based exports first prepare approximate convex collision hulls. This preserves
+hollow regions better than bounding boxes; inspect the generated collision report.
+Simulation and training do not validate hardware fit or a learned policy.
 
 Or from Python:
 
 \`\`\`python
 from ttr_mujoco import urdf_to_mjcf, run_tests, render_gif
 from ttr_mujoco.env import MujocoRobotEnv
-report = run_tests("../${name}.urdf")              # dict with per-test pass/fail + metrics
-env = MujocoRobotEnv("../${name}.urdf", task="${cls === "manipulator" ? "reach" : cls === "gripper" ? "aperture" : "stand"}"${cls === "manipulator" ? `, tip_body="${tip}"` : ""})
+report = run_tests(urdf_to_mjcf("${mujocoSource}", self_collision=True))              # dict with per-test pass/fail + metrics
+env = MujocoRobotEnv("${mujocoSource}", self_collision=True, task="${cls === "manipulator" ? "reach" : cls === "gripper" ? "aperture" : "stand"}"${cls === "manipulator" ? `, tip_body="${tip}"` : ""})
 \`\`\`
 `;
   files[`training/README.md`] =

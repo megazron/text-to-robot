@@ -1,0 +1,235 @@
+{
+  "scope": "Design-input inventory, not a hardware qualification or a claim that missing interfaces were inspected in CAD",
+  "source_robot_sha256": "3af454948dc60ae628e6164997d9e27bcd7487600fd7a776f063033e3e09a651",
+  "source_bom_sha256": "46139a617e2857d719bb90f06592c5fcc06cab77c6ec41ca070a7a03dda9a3cb",
+  "hardware_verified": false,
+  "manufacturing_ready": false,
+  "prototype_test_evidence": null,
+  "declared_mass_kg": 17.47898899573225,
+  "links_with_inferred_mass": [
+    "base_link",
+    "left_track",
+    "left_front_wheel",
+    "left_rear_wheel",
+    "right_track",
+    "right_front_wheel",
+    "right_rear_wheel",
+    "neck",
+    "head",
+    "left_eye",
+    "right_eye",
+    "left_shoulder",
+    "left_upper_arm",
+    "left_forearm",
+    "left_gripper_base",
+    "left_left_finger",
+    "left_right_finger",
+    "right_shoulder",
+    "right_upper_arm",
+    "right_forearm",
+    "right_gripper_base",
+    "right_left_finger",
+    "right_right_finger"
+  ],
+  "actuator_catalogue_sizing_pass": false,
+  "joint_requirements": [
+    {
+      "joint": "left_front_wheel_joint",
+      "type": "continuous",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "travel": "continuous"
+    },
+    {
+      "joint": "left_rear_wheel_joint",
+      "type": "continuous",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "travel": "continuous"
+    },
+    {
+      "joint": "right_front_wheel_joint",
+      "type": "continuous",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "travel": "continuous"
+    },
+    {
+      "joint": "right_rear_wheel_joint",
+      "type": "continuous",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "travel": "continuous"
+    },
+    {
+      "joint": "neck_lift",
+      "type": "prismatic",
+      "effort": 40,
+      "effort_unit": "N",
+      "velocity": 0.3,
+      "velocity_unit": "m/s",
+      "lower": 0,
+      "upper": 0.12,
+      "position_unit": "m"
+    },
+    {
+      "joint": "head_tilt",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -0.8,
+      "upper": 0.8,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "left_arm_joint_1",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -1.8,
+      "upper": 1.8,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "left_arm_joint_2",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -1.8,
+      "upper": 1.8,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "left_arm_joint_3",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -1.8,
+      "upper": 1.8,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "left_left_finger_joint",
+      "type": "prismatic",
+      "effort": 40,
+      "effort_unit": "N",
+      "velocity": 0.3,
+      "velocity_unit": "m/s",
+      "lower": 0,
+      "upper": 0.03,
+      "position_unit": "m"
+    },
+    {
+      "joint": "left_right_finger_joint",
+      "type": "prismatic",
+      "effort": 40,
+      "effort_unit": "N",
+      "velocity": 0.3,
+      "velocity_unit": "m/s",
+      "lower": 0,
+      "upper": 0.03,
+      "position_unit": "m"
+    },
+    {
+      "joint": "right_arm_joint_1",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -1.8,
+      "upper": 1.8,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "right_arm_joint_2",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -1.8,
+      "upper": 1.8,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "right_arm_joint_3",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -1.8,
+      "upper": 1.8,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "right_left_finger_joint",
+      "type": "prismatic",
+      "effort": 40,
+      "effort_unit": "N",
+      "velocity": 0.3,
+      "velocity_unit": "m/s",
+      "lower": 0,
+      "upper": 0.03,
+      "position_unit": "m"
+    },
+    {
+      "joint": "right_right_finger_joint",
+      "type": "prismatic",
+      "effort": 40,
+      "effort_unit": "N",
+      "velocity": 0.3,
+      "velocity_unit": "m/s",
+      "lower": 0,
+      "upper": 0.03,
+      "position_unit": "m"
+    }
+  ],
+  "missing_evidence": [
+    {
+      "id": "component_interfaces",
+      "detail": "No verified vendor drawing, shaft/horn interface, mounting-hole pattern or bearing fit is associated with each joint."
+    },
+    {
+      "id": "actuator_operating_envelope",
+      "detail": "No complete speed/effort/thermal-duty and feedback qualification; catalogue effort alone does not validate the selected actuator."
+    },
+    {
+      "id": "electronics_packaging",
+      "detail": "No verified placement, mounting, connector access or cable-bend clearance for the selected electronics. The optional enclosure example uses synthetic dimensions."
+    },
+    {
+      "id": "electrical_system",
+      "detail": "No validated rail voltages, peak currents, power budget, wiring schematic or protection sizing."
+    },
+    {
+      "id": "manufacturing_and_assembly",
+      "detail": "No complete tolerance stack, material/process specification, fastener schedule, assembly procedure or service-access validation."
+    },
+    {
+      "id": "measured_dynamics",
+      "detail": "No prototype measurements establish masses, inertias, friction, backlash, compliance or model-to-hardware agreement."
+    },
+    {
+      "id": "physical_validation",
+      "detail": "No physical assembly, load test or task-performance evidence is attached."
+    }
+  ]
+}
