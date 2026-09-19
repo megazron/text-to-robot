@@ -1,7 +1,7 @@
 import type { RobotSpecification } from "@ttr/robot-schema";
 import { MOBILE, emptySpec, pose } from "@ttr/robot-schema";
 import { hollowChassis } from "./mechanics.ts";
-import { box, cyl, sph, link, joint, DEFAULT_MATERIALS } from "./builder.ts";
+import { box, cyl, link, joint, DEFAULT_MATERIALS } from "./builder.ts";
 
 function chassis(spec: RobotSpecification) {
   const [cx, cy, cz] = MOBILE.chassis;
@@ -20,11 +20,17 @@ export function diffDrive(name = "diff_drive_robot", prompt?: string): RobotSpec
   const { cx, cy } = chassis(spec);
   wheel(spec, "left_wheel", 0, cy / 2 + MOBILE.wheel_width / 2, true);
   wheel(spec, "right_wheel", 0, -(cy / 2 + MOBILE.wheel_width / 2), true);
-  spec.links.push(link("caster", sph(MOBILE.wheel_radius * 0.6), { material: "wheel_mat", role: "wheel", origin: pose() }));
-  spec.joints.push(joint("caster_joint", "fixed", "base_link", "caster", { origin: pose([cx / 2 - 0.05, 0, MOBILE.wheel_radius * 0.6]) }));
-  spec.links.push(link("rear_caster",sph(MOBILE.wheel_radius*.6),{material:"wheel_mat",role:"support",origin:pose()}));
-  spec.joints.push(joint("rear_caster_mount","fixed","base_link","rear_caster",{origin:pose([-(cx/2-.05),0,MOBILE.wheel_radius*.6])}));
-  spec.metadata.notes.push("Differential drive with front and rear supports to keep the centre of mass inside the support polygon. Casters use spherical sliding-contact approximations, not a swivel-bearing model.");
+  // Trailing swivel casters: independent yaw and rolling bearings, never motors.
+  for (const [label, x] of [['front', cx/2-.05], ['rear', -(cx/2-.05)]] as const) {
+    const fork = `${label}_caster_fork`, caster = `${label}_caster_wheel`;
+    spec.links.push(link(fork, cyl(.008,.04), {mass:.03,material:'base_mat',role:'support',origin:pose([0,0,-.02])}));
+    const swivel=joint(`${label}_caster_swivel`,'continuous','base_link',fork,{origin:pose([x,0,.08]),axis:[0,0,1],effort:.01,velocity:100,damping:.0001,friction:0});
+    swivel.passive=true;spec.joints.push(swivel);
+    spec.links.push(link(caster,cyl(.03,.018),{mass:.08,material:'wheel_mat',role:'support',origin:pose([0,0,0],[Math.PI/2,0,0])}));
+    const bearing=joint(`${label}_caster_bearing`,'continuous',fork,caster,{origin:pose([-.018,0,-.05]),axis:[0,1,0],effort:.01,velocity:100,damping:.0001,friction:0});
+    bearing.passive=true;spec.joints.push(bearing);
+  }
+  spec.metadata.notes.push("Differential drive with front/rear trailing casters. Each support has passive swivel and rolling axes; provisional 30 mm wheel radius and 18 mm trail require hardware validation.");
   return spec;
 }
 

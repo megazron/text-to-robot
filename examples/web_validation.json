@@ -40,10 +40,10 @@
     {
       "example": "05_diff_drive",
       "pass": true,
-      "source_robot_sha256": "9e19a92394470320596bcb066b88d0897f5e32e600843d6b2a256d38e71db052",
+      "source_robot_sha256": "043ec529a89d10fd3ea68abb9234fc2d178f018eaf6c58db548b6e9dcb5d3699",
       "name": "diff_drive_robot",
-      "links": 14,
-      "joints": 13
+      "links": 16,
+      "joints": 15
     },
     {
       "example": "06_four_wheel",

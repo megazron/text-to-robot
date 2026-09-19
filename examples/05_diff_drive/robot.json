@@ -902,19 +902,20 @@
       }
     },
     {
-      "name": "caster",
+      "name": "front_caster_fork",
       "geometry": {
-        "type": "sphere",
-        "radius": 0.036
+        "type": "cylinder",
+        "radius": 0.008,
+        "length": 0.04
       },
-      "mass": 0.08794448810753121,
-      "material": "wheel_mat",
-      "role": "wheel",
+      "mass": 0.03,
+      "material": "base_mat",
+      "role": "support",
       "origin": {
         "xyz": [
           0,
           0,
-          0
+          -0.02
         ],
         "rpy": [
           0,
@@ -923,30 +924,31 @@
         ]
       },
       "inferred": [
-        "mass",
         "inertia",
         "inertia"
       ],
       "inertia": {
-        "ixx": 0.000045590422634944174,
-        "iyy": 0.000045590422634944174,
-        "izz": 0.000045590422634944174,
+        "ixx": 0.00000448,
+        "iyy": 0.00000448,
+        "izz": 9.600000000000001e-7,
         "ixy": 0,
         "ixz": 0,
         "iyz": 0
       },
       "collision": {
-        "type": "sphere",
-        "radius": 0.036
+        "type": "cylinder",
+        "radius": 0.008,
+        "length": 0.04
       }
     },
     {
-      "name": "rear_caster",
+      "name": "front_caster_wheel",
       "geometry": {
-        "type": "sphere",
-        "radius": 0.036
+        "type": "cylinder",
+        "radius": 0.03,
+        "length": 0.018
       },
-      "mass": 0.08794448810753121,
+      "mass": 0.08,
       "material": "wheel_mat",
       "role": "support",
       "origin": {
@@ -956,27 +958,107 @@
           0
         ],
         "rpy": [
+          1.5707963267948966,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.00002016,
+        "iyy": 0.00002016,
+        "izz": 0.000035999999999999994,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.03,
+        "length": 0.018
+      }
+    },
+    {
+      "name": "rear_caster_fork",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.008,
+        "length": 0.04
+      },
+      "mass": 0.03,
+      "material": "base_mat",
+      "role": "support",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.02
+        ],
+        "rpy": [
           0,
           0,
           0
         ]
       },
       "inferred": [
-        "mass",
         "inertia",
         "inertia"
       ],
       "inertia": {
-        "ixx": 0.000045590422634944174,
-        "iyy": 0.000045590422634944174,
-        "izz": 0.000045590422634944174,
+        "ixx": 0.00000448,
+        "iyy": 0.00000448,
+        "izz": 9.600000000000001e-7,
         "ixy": 0,
         "ixz": 0,
         "iyz": 0
       },
       "collision": {
-        "type": "sphere",
-        "radius": 0.036
+        "type": "cylinder",
+        "radius": 0.008,
+        "length": 0.04
+      }
+    },
+    {
+      "name": "rear_caster_wheel",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.03,
+        "length": 0.018
+      },
+      "mass": 0.08,
+      "material": "wheel_mat",
+      "role": "support",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          1.5707963267948966,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.00002016,
+        "iyy": 0.00002016,
+        "izz": 0.000035999999999999994,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.03,
+        "length": 0.018
       }
     }
   ],
@@ -1329,15 +1411,15 @@
       }
     },
     {
-      "name": "caster_joint",
-      "type": "fixed",
+      "name": "front_caster_swivel",
+      "type": "continuous",
       "parent": "base_link",
-      "child": "caster",
+      "child": "front_caster_fork",
       "origin": {
         "xyz": [
           0.15000000000000002,
           0,
-          0.036
+          0.08
         ],
         "rpy": [
           0,
@@ -1351,24 +1433,63 @@
         1
       ],
       "dynamics": {
-        "damping": 0.1,
+        "damping": 0.0001,
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
-      ]
+      ],
+      "limit": {
+        "effort": 0.01,
+        "velocity": 100
+      },
+      "passive": true
     },
     {
-      "name": "rear_caster_mount",
-      "type": "fixed",
+      "name": "front_caster_bearing",
+      "type": "continuous",
+      "parent": "front_caster_fork",
+      "child": "front_caster_wheel",
+      "origin": {
+        "xyz": [
+          -0.018,
+          0,
+          -0.05
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.0001,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "effort": 0.01,
+        "velocity": 100
+      },
+      "passive": true
+    },
+    {
+      "name": "rear_caster_swivel",
+      "type": "continuous",
       "parent": "base_link",
-      "child": "rear_caster",
+      "child": "rear_caster_fork",
       "origin": {
         "xyz": [
           -0.15000000000000002,
           0,
-          0.036
+          0.08
         ],
         "rpy": [
           0,
@@ -1382,13 +1503,52 @@
         1
       ],
       "dynamics": {
-        "damping": 0.1,
+        "damping": 0.0001,
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
-      ]
+      ],
+      "limit": {
+        "effort": 0.01,
+        "velocity": 100
+      },
+      "passive": true
+    },
+    {
+      "name": "rear_caster_bearing",
+      "type": "continuous",
+      "parent": "rear_caster_fork",
+      "child": "rear_caster_wheel",
+      "origin": {
+        "xyz": [
+          -0.018,
+          0,
+          -0.05
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.0001,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "effort": 0.01,
+        "velocity": 100
+      },
+      "passive": true
     }
   ],
   "materials": [
@@ -1451,7 +1611,7 @@
   "end_effectors": [],
   "metadata": {
     "generator": "text-to-robot",
-    "created": "2026-09-19T17:49:00.688Z",
+    "created": "2026-09-19T17:56:51.252Z",
     "inferred_fields": [
       "joints.base_link_front_panel_mount.dynamics",
       "joints.base_link_front_panel_mount.limit",
@@ -1471,11 +1631,11 @@
       "joints.base_link_standoff_rl_mount.limit",
       "joints.base_link_standoff_rr_mount.dynamics",
       "joints.base_link_standoff_rr_mount.limit",
-      "joints.caster_joint.dynamics",
-      "joints.caster_joint.limit",
+      "joints.front_caster_bearing.dynamics",
+      "joints.front_caster_swivel.dynamics",
       "joints.left_wheel_joint.dynamics",
-      "joints.rear_caster_mount.dynamics",
-      "joints.rear_caster_mount.limit",
+      "joints.rear_caster_bearing.dynamics",
+      "joints.rear_caster_swivel.dynamics",
       "joints.right_wheel_joint.dynamics",
       "links.base_link.inertia",
       "links.base_link.material_density",
@@ -1497,19 +1657,19 @@
       "links.base_link_standoff_rl.mass",
       "links.base_link_standoff_rr.inertia",
       "links.base_link_standoff_rr.mass",
-      "links.caster.inertia",
-      "links.caster.mass",
+      "links.front_caster_fork.inertia",
+      "links.front_caster_wheel.inertia",
       "links.left_wheel.inertia",
       "links.left_wheel.mass",
-      "links.rear_caster.inertia",
-      "links.rear_caster.mass",
+      "links.rear_caster_fork.inertia",
+      "links.rear_caster_wheel.inertia",
       "links.right_wheel.inertia",
       "links.right_wheel.mass"
     ],
     "notes": [
       "Housing base_link: 3 mm aluminium panels, four 3.4 mm mounting bores with 12 mm edge offsets, vented removable lid and hollow standoffs. Interior 394 × 294 × 114 mm. Sheet density 2700 kg/m³ is assumed; electronics selection, inserts and screw lengths remain unqualified. Mesh collision proxies fill small bores.",
-      "Differential drive with front and rear supports to keep the centre of mass inside the support polygon. Casters use spherical sliding-contact approximations, not a swivel-bearing model.",
-      "Interpreted locally: type inferred, DOF=2, gripper=parallel."
+      "Differential drive with front/rear trailing casters. Each support has passive swivel and rolling axes; provisional 30 mm wheel radius and 18 mm trail require hardware validation.",
+      "Interpreted locally: type inferred, DOF=6, gripper=parallel."
     ],
     "source_prompt": "Create a differential drive mobile robot\n"
   }

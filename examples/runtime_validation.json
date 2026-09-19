@@ -8,7 +8,7 @@
     "02_arm_6dof": "98bd05d4029ca2fed4e9d8180e23cba2a0e9ab189a59b81f5250c6827dc750bb",
     "03_arm_7dof": "43e9b4d4e03aaea3e96e9fe00f897391d065f0ee9bd1e9216913ea9a59199de4",
     "04_scara": "ba363e60dd8284084885b7814f82fd40b3c2d3e54c06d690a78485bba39f2ac7",
-    "05_diff_drive": "5b3c89e12fc778d7a0ae0d3b7178e0f254a32645e34a163e873ad90ec1d73856",
+    "05_diff_drive": "cde43b6ab5d0b1623c62d5c4b213ca2f623ff71b412f84e02648ea9093c6ed82",
     "06_four_wheel": "51ac67e2430b7576f787f261471cb1d66e85a50c5a7f67a184956e5ca99c62aa",
     "07_mecanum": "b71d8dadc72c1917260bb2d07e58264007ed32d811cad25603f8d6373f1ef61e",
     "08_humanoid": "b8289d849c15af942e22abc7e854edbf530921480db217b8d58e1cdfd21784cc",
@@ -115,15 +115,15 @@
   "moveit_scope": "Mark 43 neck and each arm: collision-valid start, planning and execution with mock hardware; not a real motor test",
   "training": {
     "report": "training_validation.json",
-    "sha256": "bfaaac2136f2808a79554b430354a00359be26fd9bc0b2d97bda1ec0e347ad8c",
+    "sha256": "f5bc170301c46443a073ffea8d17ed71b31395989b173ca8006c76597881d851",
     "scope": "All 17 exported PyBullet environments reset and step once; no trained skill claim"
   },
   "mobile_motion": {
     "report": "mobile_motion.json",
-    "sha256": "23267ccb9046e98c347c609efcc437057d7a7ec8be2f65fb0e12a44998b468f6"
+    "sha256": "507aba7ae158241bd15da3eb98689d5cf6ad77a4042b340e70f0b54361d6a1f1"
   },
   "browser": {
     "report": "web_validation.json",
-    "sha256": "e7737d380b383fd6dec0ad0f35871c995425716ac26980aa357cebe0eba07c28"
+    "sha256": "eec36d9b8a42db2a7a017a2b2216c10b8323f089e43662fe641cfa8518655b5c"
   }
 }

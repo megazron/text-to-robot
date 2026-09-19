@@ -7,18 +7,18 @@
     {
       "example": "05_diff_drive",
       "task": "forward",
-      "pass": false,
-      "source_urdf_sha256": "4de848e7d6975769b37e7c4c108ba9a2372ba04d037e2b19807c17037f78d3e3",
+      "pass": true,
+      "source_urdf_sha256": "862aba47a3aab8dab86eb8da904e819dd1cf48d79b7451d18df7b5d8f1bba046",
       "commands_rad_s": {
         "left_wheel_joint": 4.0,
         "right_wheel_joint": 4.0
       },
       "displacement_m": [
-        0.026970693335501325,
-        2.7280219016282067e-15,
-        -3.5991852928964444e-06
+        0.3948350665726228,
+        -2.2736168979886714e-16,
+        5.602860365873548e-16
       ],
-      "upright": 0.9999999957899629
+      "upright": 0.9999999999950968
     },
     {
       "example": "06_four_wheel",

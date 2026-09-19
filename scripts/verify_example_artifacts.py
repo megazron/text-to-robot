@@ -82,3 +82,9 @@ for key in ['training','browser','mobile_motion']:
     entry=runtime[key]
     assert entry['sha256']==hashlib.sha256((base/entry['report']).read_bytes()).hexdigest()
 print('Browser and ROS build records match the current artifacts')
+
+mobile=json.loads((base/'mobile_motion.json').read_text())
+assert len(mobile['results'])==6 and all(row['pass'] for row in mobile['results'])
+for row in mobile['results']:
+    assert row['source_urdf_sha256']==hashlib.sha256((base/row['example']/'robot.urdf').read_bytes()).hexdigest()
+print('All six recorded contact-driven motion checks passed on current models')

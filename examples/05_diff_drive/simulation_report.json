@@ -1,14 +1,14 @@
 {
   "model": "robot.urdf",
-  "nbody": 15,
-  "njnt": 3,
+  "nbody": 17,
+  "njnt": 7,
   "nu": 2,
-  "ngeom": 29,
+  "ngeom": 33,
   "floating": true,
   "tests": {
     "compile": {
       "pass": true,
-      "total_mass_kg": 3.862,
+      "total_mass_kg": 3.906,
       "actuators": 2
     },
     "initial_clearance": {
@@ -29,28 +29,28 @@
     "actuator_sweep": {
       "pass": false,
       "tracked": "0/2",
-      "worst_error": 3.576,
+      "worst_error": 2.126,
       "actuators": [
         {
           "actuator": "act_left_wheel_joint",
           "joint": "left_wheel_joint",
           "pass": false,
-          "rms_error": 1.736555,
-          "peak_error": 3.575528,
+          "rms_error": 1.192174,
+          "peak_error": 2.125594,
           "error_unit": "rad/s",
           "rms_tolerance": 0.5,
-          "peak_actuator_force": 1.794841,
+          "peak_actuator_force": 1.086796,
           "force_unit": "N m"
         },
         {
           "actuator": "act_right_wheel_joint",
           "joint": "right_wheel_joint",
           "pass": false,
-          "rms_error": 1.736555,
-          "peak_error": 3.575528,
+          "rms_error": 1.192174,
+          "peak_error": 2.125594,
           "error_unit": "rad/s",
           "rms_tolerance": 0.5,
-          "peak_actuator_force": 1.794841,
+          "peak_actuator_force": 1.086796,
           "force_unit": "N m"
         }
       ]
@@ -63,7 +63,7 @@
   },
   "validation_scope": "simulation smoke tests, not hardware or wearable qualification",
   "mujoco_version": "3.13.0",
-  "model_sha256": "1afad0d8a2e6887dd81eed12903911a11dd1eac016b7ae8536c2a4524269da99",
+  "model_sha256": "da101dc4d244382c7697759ce091b9f1ef9629f81e79ecadc7fd92d70b23b26e",
   "limitations": [
     "No measured motor, material, thermal or battery model",
     "No manufacturing or human-fit validation"
@@ -73,7 +73,7 @@
   "total": 6,
   "collision_model": "URDF primitives / mesh bounding boxes",
   "self_collision": true,
-  "source_urdf_sha256": "4de848e7d6975769b37e7c4c108ba9a2372ba04d037e2b19807c17037f78d3e3",
+  "source_urdf_sha256": "862aba47a3aab8dab86eb8da904e819dd1cf48d79b7451d18df7b5d8f1bba046",
   "initial_penetrations": [],
   "hardware_verified": false
 }

@@ -22,7 +22,7 @@ sources certifies our robots or establishes a physical prototype.
 | 02 six-axis arm | Correct shoulder/elbow pitch architecture, bent home pose, distinct joint hubs, hollow pedestal, closing gripper pads | Full joint-range collision/actuator qualification |
 | 03 seven-axis arm | Hollow pedestal and closing contact pads | Redundant-arm workspace/planning and real hardware interfaces |
 | 04 SCARA | Hollow column with removable panels | Linear rail, leadscrew, nut carrier and spindle support design |
-| 05 differential drive | Hollow chassis, front/rear supports, speed commands | Swivelling/rolling caster hardware and odometry |
+| 05 differential drive | Hollow chassis, front/rear passive swivel-and-roll casters, speed commands | Caster bracket/axle fabrication, bearing fits and odometry |
 | 06 four-wheel base | Hollow chassis and speed commands | Motor mounts, wiring, traction calibration |
 | 07 mecanum | Independent free rollers and physically produced sideways motion | Roller bearings, axles, hub fabrication and measured contact friction |
 | 08 humanoid | Six-axis legs, hollow torso, closing gripper pads, better training observations | Balancing controller, calibrated actuators and physical structural design |

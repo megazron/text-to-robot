@@ -34,7 +34,7 @@
       "pass": true,
       "task": "forward",
       "actuators": 2,
-      "archive_sha256": "b9ecade4036a6812d733682ba09fa8241240cb79d23dc3e2e0307517d82522bc"
+      "archive_sha256": "f94519538e65d44fb044ea3e2036cda044e28c4ddbc633515afac10055bbeae6"
     },
     {
       "example": "06_four_wheel",
