@@ -1,0 +1,840 @@
+{
+  "robot_name": "iron_man_mark_43",
+  "budget": 60000,
+  "tier": "research",
+  "lines": [
+    {
+      "category": "Actuator",
+      "name": "CubeMars AK80-64",
+      "qty": 15,
+      "unit_cost": 700,
+      "subtotal": 10500,
+      "spec": "AK80-64 KV80: 64:1, 48 N m rated / 120 N m peak, 98 x 61.9 mm, 850 g; mounting interfaces require vendor drawing (48 N·m)",
+      "note": "joint trunk_flex; rating source: https://www.cubemars.com/goods.php?id=1143; joint left_hip_abduction; rating source: https://www.cubemars.com/goods.php?id=1143; joint left_hip_flexion; rating source: https://www.cubemars.com/goods.php?id=1143; joint left_knee_flexion; rating source: https://www.cubemars.com/goods.php?id=1143; joint left_ankle_flexion; rating source: https://www.cubemars.com/goods.php?id=1143; joint right_hip_abduction; rating source: https://www.cubemars.com/goods.php?id=1143; joint right_hip_flexion; rating source: https://www.cubemars.com/goods.php?id=1143; joint right_knee_flexion; rating source: https://www.cubemars.com/goods.php?id=1143; joint right_ankle_flexion; rating source: https://www.cubemars.com/goods.php?id=1143; joint left_shoulder_abduction; rating source: https://www.cubemars.com/goods.php?id=1143; joint left_shoulder_flexion; rating source: https://www.cubemars.com/goods.php?id=1143; joint left_elbow_flexion; rating source: https://www.cubemars.com/goods.php?id=1143; joint right_shoulder_abduction; rating source: https://www.cubemars.com/goods.php?id=1143; joint right_shoulder_flexion; rating source: https://www.cubemars.com/goods.php?id=1143; joint right_elbow_flexion; rating source: https://www.cubemars.com/goods.php?id=1143"
+    },
+    {
+      "category": "Actuator",
+      "name": "T-Motor AK80-9 (BLDC + driver)",
+      "qty": 4,
+      "unit_cost": 320,
+      "subtotal": 1280,
+      "spec": "quasi-direct-drive, CAN (18 N·m)",
+      "note": "joint left_wrist_flexion; rating duty/source unverified; joint right_wrist_flexion; rating duty/source unverified; joint left_chest_door_hinge; rating duty/source unverified; joint right_chest_door_hinge; rating duty/source unverified"
+    },
+    {
+      "category": "Actuator",
+      "name": "Dynamixel XM430-W350",
+      "qty": 63,
+      "unit_cost": 270,
+      "subtotal": 17010,
+      "spec": "RS485 smart servo, encoder (4.1 N·m)",
+      "note": "joint helmet_crown_panel_hinge; rating duty/source unverified; joint faceplate_hinge; rating duty/source unverified; joint left_cheek_panel_hinge; rating duty/source unverified; joint right_cheek_panel_hinge; rating duty/source unverified; joint chin_guard_hinge; rating duty/source unverified; joint ab_plate_1_hinge; rating duty/source unverified; joint ab_plate_2_hinge; rating duty/source unverified; joint ab_plate_3_hinge; rating duty/source unverified; joint left_flight_flap_hinge; rating duty/source unverified; joint right_flight_flap_hinge; rating duty/source unverified; joint codpiece_hinge; rating duty/source unverified; joint left_pauldron_hinge; rating duty/source unverified; joint left_bicep_clamshell_hinge; rating duty/source unverified; joint left_elbow_cap_hinge; rating duty/source unverified; joint left_gauntlet_clamshell_hinge; rating duty/source unverified; joint left_gauntlet_hatch_hinge; rating duty/source unverified; joint left_finger_1_hinge; rating duty/source unverified; joint left_finger_1_middle_hinge; rating duty/source unverified; joint left_finger_1_distal_hinge; rating duty/source unverified; joint left_finger_2_hinge; rating duty/source unverified; joint left_finger_2_middle_hinge; rating duty/source unverified; joint left_finger_2_distal_hinge; rating duty/source unverified; joint left_finger_3_hinge; rating duty/source unverified; joint left_finger_3_middle_hinge; rating duty/source unverified; joint left_finger_3_distal_hinge; rating duty/source unverified; joint left_finger_4_hinge; rating duty/source unverified; joint left_finger_4_middle_hinge; rating duty/source unverified; joint left_finger_4_distal_hinge; rating duty/source unverified; joint left_thumb_hinge; rating duty/source unverified; joint left_thumb_distal_hinge; rating duty/source unverified; joint right_pauldron_hinge; rating duty/source unverified; joint right_bicep_clamshell_hinge; rating duty/source unverified; joint right_elbow_cap_hinge; rating duty/source unverified; joint right_gauntlet_clamshell_hinge; rating duty/source unverified; joint right_gauntlet_hatch_hinge; rating duty/source unverified; joint right_finger_1_hinge; rating duty/source unverified; joint right_finger_1_middle_hinge; rating duty/source unverified; joint right_finger_1_distal_hinge; rating duty/source unverified; joint right_finger_2_hinge; rating duty/source unverified; joint right_finger_2_middle_hinge; rating duty/source unverified; joint right_finger_2_distal_hinge; rating duty/source unverified; joint right_finger_3_hinge; rating duty/source unverified; joint right_finger_3_middle_hinge; rating duty/source unverified; joint right_finger_3_distal_hinge; rating duty/source unverified; joint right_finger_4_hinge; rating duty/source unverified; joint right_finger_4_middle_hinge; rating duty/source unverified; joint right_finger_4_distal_hinge; rating duty/source unverified; joint right_thumb_hinge; rating duty/source unverified; joint right_thumb_distal_hinge; rating duty/source unverified; joint left_hip_flap_hinge; rating duty/source unverified; joint left_thigh_clamshell_hinge; rating duty/source unverified; joint left_knee_cap_hinge; rating duty/source unverified; joint left_calf_clamshell_hinge; rating duty/source unverified; joint left_shin_guard_hinge; rating duty/source unverified; joint left_thruster_cover_hinge; rating duty/source unverified; joint left_ankle_flap_hinge; rating duty/source unverified; joint right_hip_flap_hinge; rating duty/source unverified; joint right_thigh_clamshell_hinge; rating duty/source unverified; joint right_knee_cap_hinge; rating duty/source unverified; joint right_calf_clamshell_hinge; rating duty/source unverified; joint right_shin_guard_hinge; rating duty/source unverified; joint right_thruster_cover_hinge; rating duty/source unverified; joint right_ankle_flap_hinge; rating duty/source unverified"
+    },
+    {
+      "category": "Actuator",
+      "name": "Dynamixel MX-64AR",
+      "qty": 4,
+      "unit_cost": 300,
+      "subtotal": 1200,
+      "spec": "RS485 smart servo (6 N·m)",
+      "note": "joint neck_yaw; rating duty/source unverified; joint neck_pitch; rating duty/source unverified; joint left_lat_plate_hinge; rating duty/source unverified; joint right_lat_plate_hinge; rating duty/source unverified"
+    },
+    {
+      "category": "Sensor",
+      "name": "Arducam IMX477 HQ",
+      "qty": 1,
+      "unit_cost": 50,
+      "subtotal": 50,
+      "spec": "12.3MP, C-mount",
+      "note": "hud_camera"
+    },
+    {
+      "category": "Sensor",
+      "name": "Bosch BNO085",
+      "qty": 1,
+      "unit_cost": 20,
+      "subtotal": 20,
+      "spec": "9-axis fused AHRS",
+      "note": "trunk_imu"
+    },
+    {
+      "category": "Sensor",
+      "name": "Loadstar / Tekscan insole force sensor",
+      "qty": 2,
+      "unit_cost": 350,
+      "subtotal": 700,
+      "spec": "calibrated plantar force",
+      "note": "left_insole_force; right_insole_force"
+    },
+    {
+      "category": "Compute",
+      "name": "NVIDIA Jetson Orin Nano",
+      "qty": 1,
+      "unit_cost": 499,
+      "subtotal": 499,
+      "spec": "GPU SBC, perception + ROS 2"
+    },
+    {
+      "category": "Power",
+      "name": "Li-ion 48V 20Ah pack",
+      "qty": 1,
+      "unit_cost": 320,
+      "subtotal": 320,
+      "spec": "960 Wh; est. load 808 W"
+    },
+    {
+      "category": "Power",
+      "name": "DC-DC buck regulator (5V/10A)",
+      "qty": 1,
+      "unit_cost": 12,
+      "subtotal": 12,
+      "spec": "logic + servo rail"
+    },
+    {
+      "category": "Power",
+      "name": "Power distribution board + fuse + switch",
+      "qty": 1,
+      "unit_cost": 14,
+      "subtotal": 14,
+      "spec": "wiring harness backbone"
+    },
+    {
+      "category": "Structure",
+      "name": "Aluminium frame + brackets",
+      "qty": 1,
+      "unit_cost": 3293.1,
+      "subtotal": 3293.1,
+      "spec": "~109.77 kg material @ $30/kg"
+    },
+    {
+      "category": "Structure",
+      "name": "Fastener + bearing kit",
+      "qty": 1,
+      "unit_cost": 18,
+      "subtotal": 18,
+      "spec": "M3 screws, heat inserts, 608 bearings"
+    },
+    {
+      "category": "Wiring & misc",
+      "name": "Wiring, connectors, JST/Dupont, sleeving",
+      "qty": 1,
+      "unit_cost": 3792.6,
+      "subtotal": 3792.6,
+      "spec": "~12% of electronics"
+    }
+  ],
+  "total": 38708.7,
+  "feasible": true,
+  "sizing_pass": false,
+  "hardware_verified": false,
+  "actuator_sizing": [
+    {
+      "joint": "trunk_flex",
+      "required_effort": 96,
+      "effort_unit": "N·m",
+      "required_torque_nm": 96,
+      "chosen": "CubeMars AK80-64",
+      "margin": "UNDERSIZED"
+    },
+    {
+      "joint": "left_hip_abduction",
+      "required_effort": 96,
+      "effort_unit": "N·m",
+      "required_torque_nm": 96,
+      "chosen": "CubeMars AK80-64",
+      "margin": "UNDERSIZED"
+    },
+    {
+      "joint": "left_hip_flexion",
+      "required_effort": 120,
+      "effort_unit": "N·m",
+      "required_torque_nm": 120,
+      "chosen": "CubeMars AK80-64",
+      "margin": "UNDERSIZED"
+    },
+    {
+      "joint": "left_knee_flexion",
+      "required_effort": 120,
+      "effort_unit": "N·m",
+      "required_torque_nm": 120,
+      "chosen": "CubeMars AK80-64",
+      "margin": "UNDERSIZED"
+    },
+    {
+      "joint": "left_ankle_flexion",
+      "required_effort": 80,
+      "effort_unit": "N·m",
+      "required_torque_nm": 80,
+      "chosen": "CubeMars AK80-64",
+      "margin": "UNDERSIZED"
+    },
+    {
+      "joint": "right_hip_abduction",
+      "required_effort": 96,
+      "effort_unit": "N·m",
+      "required_torque_nm": 96,
+      "chosen": "CubeMars AK80-64",
+      "margin": "UNDERSIZED"
+    },
+    {
+      "joint": "right_hip_flexion",
+      "required_effort": 120,
+      "effort_unit": "N·m",
+      "required_torque_nm": 120,
+      "chosen": "CubeMars AK80-64",
+      "margin": "UNDERSIZED"
+    },
+    {
+      "joint": "right_knee_flexion",
+      "required_effort": 120,
+      "effort_unit": "N·m",
+      "required_torque_nm": 120,
+      "chosen": "CubeMars AK80-64",
+      "margin": "UNDERSIZED"
+    },
+    {
+      "joint": "right_ankle_flexion",
+      "required_effort": 80,
+      "effort_unit": "N·m",
+      "required_torque_nm": 80,
+      "chosen": "CubeMars AK80-64",
+      "margin": "UNDERSIZED"
+    },
+    {
+      "joint": "left_shoulder_abduction",
+      "required_effort": 48,
+      "effort_unit": "N·m",
+      "required_torque_nm": 48,
+      "chosen": "CubeMars AK80-64",
+      "margin": "UNDERSIZED"
+    },
+    {
+      "joint": "left_shoulder_flexion",
+      "required_effort": 48,
+      "effort_unit": "N·m",
+      "required_torque_nm": 48,
+      "chosen": "CubeMars AK80-64",
+      "margin": "UNDERSIZED"
+    },
+    {
+      "joint": "left_elbow_flexion",
+      "required_effort": 32,
+      "effort_unit": "N·m",
+      "required_torque_nm": 32,
+      "chosen": "CubeMars AK80-64",
+      "margin": "1.5x"
+    },
+    {
+      "joint": "left_wrist_flexion",
+      "required_effort": 12,
+      "effort_unit": "N·m",
+      "required_torque_nm": 12,
+      "chosen": "T-Motor AK80-9 (BLDC + driver)",
+      "margin": "1.5x"
+    },
+    {
+      "joint": "right_shoulder_abduction",
+      "required_effort": 48,
+      "effort_unit": "N·m",
+      "required_torque_nm": 48,
+      "chosen": "CubeMars AK80-64",
+      "margin": "UNDERSIZED"
+    },
+    {
+      "joint": "right_shoulder_flexion",
+      "required_effort": 48,
+      "effort_unit": "N·m",
+      "required_torque_nm": 48,
+      "chosen": "CubeMars AK80-64",
+      "margin": "UNDERSIZED"
+    },
+    {
+      "joint": "right_elbow_flexion",
+      "required_effort": 32,
+      "effort_unit": "N·m",
+      "required_torque_nm": 32,
+      "chosen": "CubeMars AK80-64",
+      "margin": "1.5x"
+    },
+    {
+      "joint": "right_wrist_flexion",
+      "required_effort": 12,
+      "effort_unit": "N·m",
+      "required_torque_nm": 12,
+      "chosen": "T-Motor AK80-9 (BLDC + driver)",
+      "margin": "1.5x"
+    },
+    {
+      "joint": "helmet_crown_panel_hinge",
+      "required_effort": 1.2,
+      "effort_unit": "N·m",
+      "required_torque_nm": 1.2,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "3.4x"
+    },
+    {
+      "joint": "faceplate_hinge",
+      "required_effort": 2,
+      "effort_unit": "N·m",
+      "required_torque_nm": 2,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "2.0x"
+    },
+    {
+      "joint": "left_cheek_panel_hinge",
+      "required_effort": 1.2,
+      "effort_unit": "N·m",
+      "required_torque_nm": 1.2,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "3.4x"
+    },
+    {
+      "joint": "right_cheek_panel_hinge",
+      "required_effort": 1.2,
+      "effort_unit": "N·m",
+      "required_torque_nm": 1.2,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "3.4x"
+    },
+    {
+      "joint": "chin_guard_hinge",
+      "required_effort": 1.2,
+      "effort_unit": "N·m",
+      "required_torque_nm": 1.2,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "3.4x"
+    },
+    {
+      "joint": "neck_yaw",
+      "required_effort": 3.2,
+      "effort_unit": "N·m",
+      "required_torque_nm": 3.2,
+      "chosen": "Dynamixel MX-64AR",
+      "margin": "1.9x"
+    },
+    {
+      "joint": "neck_pitch",
+      "required_effort": 3.2,
+      "effort_unit": "N·m",
+      "required_torque_nm": 3.2,
+      "chosen": "Dynamixel MX-64AR",
+      "margin": "1.9x"
+    },
+    {
+      "joint": "left_chest_door_hinge",
+      "required_effort": 4.8,
+      "effort_unit": "N·m",
+      "required_torque_nm": 4.8,
+      "chosen": "T-Motor AK80-9 (BLDC + driver)",
+      "margin": "3.7x"
+    },
+    {
+      "joint": "right_chest_door_hinge",
+      "required_effort": 4.8,
+      "effort_unit": "N·m",
+      "required_torque_nm": 4.8,
+      "chosen": "T-Motor AK80-9 (BLDC + driver)",
+      "margin": "3.7x"
+    },
+    {
+      "joint": "ab_plate_1_hinge",
+      "required_effort": 1.6,
+      "effort_unit": "N·m",
+      "required_torque_nm": 1.6,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "2.6x"
+    },
+    {
+      "joint": "ab_plate_2_hinge",
+      "required_effort": 1.6,
+      "effort_unit": "N·m",
+      "required_torque_nm": 1.6,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "2.6x"
+    },
+    {
+      "joint": "ab_plate_3_hinge",
+      "required_effort": 1.6,
+      "effort_unit": "N·m",
+      "required_torque_nm": 1.6,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "2.6x"
+    },
+    {
+      "joint": "left_lat_plate_hinge",
+      "required_effort": 3.2,
+      "effort_unit": "N·m",
+      "required_torque_nm": 3.2,
+      "chosen": "Dynamixel MX-64AR",
+      "margin": "1.9x"
+    },
+    {
+      "joint": "right_lat_plate_hinge",
+      "required_effort": 3.2,
+      "effort_unit": "N·m",
+      "required_torque_nm": 3.2,
+      "chosen": "Dynamixel MX-64AR",
+      "margin": "1.9x"
+    },
+    {
+      "joint": "left_flight_flap_hinge",
+      "required_effort": 1.6,
+      "effort_unit": "N·m",
+      "required_torque_nm": 1.6,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "2.6x"
+    },
+    {
+      "joint": "right_flight_flap_hinge",
+      "required_effort": 1.6,
+      "effort_unit": "N·m",
+      "required_torque_nm": 1.6,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "2.6x"
+    },
+    {
+      "joint": "codpiece_hinge",
+      "required_effort": 1.6,
+      "effort_unit": "N·m",
+      "required_torque_nm": 1.6,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "2.6x"
+    },
+    {
+      "joint": "left_pauldron_hinge",
+      "required_effort": 2.4,
+      "effort_unit": "N·m",
+      "required_torque_nm": 2.4,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "1.7x"
+    },
+    {
+      "joint": "left_bicep_clamshell_hinge",
+      "required_effort": 2.4,
+      "effort_unit": "N·m",
+      "required_torque_nm": 2.4,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "1.7x"
+    },
+    {
+      "joint": "left_elbow_cap_hinge",
+      "required_effort": 1.6,
+      "effort_unit": "N·m",
+      "required_torque_nm": 1.6,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "2.6x"
+    },
+    {
+      "joint": "left_gauntlet_clamshell_hinge",
+      "required_effort": 2.4,
+      "effort_unit": "N·m",
+      "required_torque_nm": 2.4,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "1.7x"
+    },
+    {
+      "joint": "left_gauntlet_hatch_hinge",
+      "required_effort": 1.2,
+      "effort_unit": "N·m",
+      "required_torque_nm": 1.2,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "3.4x"
+    },
+    {
+      "joint": "left_finger_1_hinge",
+      "required_effort": 0.28,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.28,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "14.6x"
+    },
+    {
+      "joint": "left_finger_1_middle_hinge",
+      "required_effort": 0.28,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.28,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "14.6x"
+    },
+    {
+      "joint": "left_finger_1_distal_hinge",
+      "required_effort": 0.28,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.28,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "14.6x"
+    },
+    {
+      "joint": "left_finger_2_hinge",
+      "required_effort": 0.28,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.28,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "14.6x"
+    },
+    {
+      "joint": "left_finger_2_middle_hinge",
+      "required_effort": 0.28,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.28,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "14.6x"
+    },
+    {
+      "joint": "left_finger_2_distal_hinge",
+      "required_effort": 0.28,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.28,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "14.6x"
+    },
+    {
+      "joint": "left_finger_3_hinge",
+      "required_effort": 0.28,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.28,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "14.6x"
+    },
+    {
+      "joint": "left_finger_3_middle_hinge",
+      "required_effort": 0.28,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.28,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "14.6x"
+    },
+    {
+      "joint": "left_finger_3_distal_hinge",
+      "required_effort": 0.28,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.28,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "14.6x"
+    },
+    {
+      "joint": "left_finger_4_hinge",
+      "required_effort": 0.28,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.28,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "14.6x"
+    },
+    {
+      "joint": "left_finger_4_middle_hinge",
+      "required_effort": 0.28,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.28,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "14.6x"
+    },
+    {
+      "joint": "left_finger_4_distal_hinge",
+      "required_effort": 0.28,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.28,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "14.6x"
+    },
+    {
+      "joint": "left_thumb_hinge",
+      "required_effort": 0.32,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.32,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "12.8x"
+    },
+    {
+      "joint": "left_thumb_distal_hinge",
+      "required_effort": 0.24,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.24,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "17.1x"
+    },
+    {
+      "joint": "right_pauldron_hinge",
+      "required_effort": 2.4,
+      "effort_unit": "N·m",
+      "required_torque_nm": 2.4,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "1.7x"
+    },
+    {
+      "joint": "right_bicep_clamshell_hinge",
+      "required_effort": 2.4,
+      "effort_unit": "N·m",
+      "required_torque_nm": 2.4,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "1.7x"
+    },
+    {
+      "joint": "right_elbow_cap_hinge",
+      "required_effort": 1.6,
+      "effort_unit": "N·m",
+      "required_torque_nm": 1.6,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "2.6x"
+    },
+    {
+      "joint": "right_gauntlet_clamshell_hinge",
+      "required_effort": 2.4,
+      "effort_unit": "N·m",
+      "required_torque_nm": 2.4,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "1.7x"
+    },
+    {
+      "joint": "right_gauntlet_hatch_hinge",
+      "required_effort": 1.2,
+      "effort_unit": "N·m",
+      "required_torque_nm": 1.2,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "3.4x"
+    },
+    {
+      "joint": "right_finger_1_hinge",
+      "required_effort": 0.28,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.28,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "14.6x"
+    },
+    {
+      "joint": "right_finger_1_middle_hinge",
+      "required_effort": 0.28,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.28,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "14.6x"
+    },
+    {
+      "joint": "right_finger_1_distal_hinge",
+      "required_effort": 0.28,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.28,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "14.6x"
+    },
+    {
+      "joint": "right_finger_2_hinge",
+      "required_effort": 0.28,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.28,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "14.6x"
+    },
+    {
+      "joint": "right_finger_2_middle_hinge",
+      "required_effort": 0.28,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.28,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "14.6x"
+    },
+    {
+      "joint": "right_finger_2_distal_hinge",
+      "required_effort": 0.28,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.28,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "14.6x"
+    },
+    {
+      "joint": "right_finger_3_hinge",
+      "required_effort": 0.28,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.28,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "14.6x"
+    },
+    {
+      "joint": "right_finger_3_middle_hinge",
+      "required_effort": 0.28,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.28,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "14.6x"
+    },
+    {
+      "joint": "right_finger_3_distal_hinge",
+      "required_effort": 0.28,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.28,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "14.6x"
+    },
+    {
+      "joint": "right_finger_4_hinge",
+      "required_effort": 0.28,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.28,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "14.6x"
+    },
+    {
+      "joint": "right_finger_4_middle_hinge",
+      "required_effort": 0.28,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.28,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "14.6x"
+    },
+    {
+      "joint": "right_finger_4_distal_hinge",
+      "required_effort": 0.28,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.28,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "14.6x"
+    },
+    {
+      "joint": "right_thumb_hinge",
+      "required_effort": 0.32,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.32,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "12.8x"
+    },
+    {
+      "joint": "right_thumb_distal_hinge",
+      "required_effort": 0.24,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.24,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "17.1x"
+    },
+    {
+      "joint": "left_hip_flap_hinge",
+      "required_effort": 1.6,
+      "effort_unit": "N·m",
+      "required_torque_nm": 1.6,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "2.6x"
+    },
+    {
+      "joint": "left_thigh_clamshell_hinge",
+      "required_effort": 2.4,
+      "effort_unit": "N·m",
+      "required_torque_nm": 2.4,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "1.7x"
+    },
+    {
+      "joint": "left_knee_cap_hinge",
+      "required_effort": 1.6,
+      "effort_unit": "N·m",
+      "required_torque_nm": 1.6,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "2.6x"
+    },
+    {
+      "joint": "left_calf_clamshell_hinge",
+      "required_effort": 2.4,
+      "effort_unit": "N·m",
+      "required_torque_nm": 2.4,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "1.7x"
+    },
+    {
+      "joint": "left_shin_guard_hinge",
+      "required_effort": 1.6,
+      "effort_unit": "N·m",
+      "required_torque_nm": 1.6,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "2.6x"
+    },
+    {
+      "joint": "left_thruster_cover_hinge",
+      "required_effort": 1.2,
+      "effort_unit": "N·m",
+      "required_torque_nm": 1.2,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "3.4x"
+    },
+    {
+      "joint": "left_ankle_flap_hinge",
+      "required_effort": 1.2,
+      "effort_unit": "N·m",
+      "required_torque_nm": 1.2,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "3.4x"
+    },
+    {
+      "joint": "right_hip_flap_hinge",
+      "required_effort": 1.6,
+      "effort_unit": "N·m",
+      "required_torque_nm": 1.6,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "2.6x"
+    },
+    {
+      "joint": "right_thigh_clamshell_hinge",
+      "required_effort": 2.4,
+      "effort_unit": "N·m",
+      "required_torque_nm": 2.4,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "1.7x"
+    },
+    {
+      "joint": "right_knee_cap_hinge",
+      "required_effort": 1.6,
+      "effort_unit": "N·m",
+      "required_torque_nm": 1.6,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "2.6x"
+    },
+    {
+      "joint": "right_calf_clamshell_hinge",
+      "required_effort": 2.4,
+      "effort_unit": "N·m",
+      "required_torque_nm": 2.4,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "1.7x"
+    },
+    {
+      "joint": "right_shin_guard_hinge",
+      "required_effort": 1.6,
+      "effort_unit": "N·m",
+      "required_torque_nm": 1.6,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "2.6x"
+    },
+    {
+      "joint": "right_thruster_cover_hinge",
+      "required_effort": 1.2,
+      "effort_unit": "N·m",
+      "required_torque_nm": 1.2,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "3.4x"
+    },
+    {
+      "joint": "right_ankle_flap_hinge",
+      "required_effort": 1.2,
+      "effort_unit": "N·m",
+      "required_torque_nm": 1.2,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "3.4x"
+    }
+  ],
+  "warnings": [
+    "Sizing uses a neutral-pose gravity proxy and declared joint effort, not a worst-case workspace or dynamic load analysis. Selection checks only approximate effort and broad motion type. Speed/torque curves, travel, voltage, feedback, mounting, thermal duty and wiring are not qualified.",
+    "Catalog values are planning estimates. Except explicitly sourced rated values, torque entries may be stall/peak ratings; continuous duty, fit and complete assemblies are unverified.",
+    "joint trunk_flex needs ~96.00 N·m; strongest in research tier is CubeMars AK80-64 (48 N·m) — increase budget for a stronger actuator",
+    "joint left_hip_abduction needs ~96.00 N·m; strongest in research tier is CubeMars AK80-64 (48 N·m) — increase budget for a stronger actuator",
+    "joint left_hip_flexion needs ~120.00 N·m; strongest in research tier is CubeMars AK80-64 (48 N·m) — increase budget for a stronger actuator",
+    "joint left_knee_flexion needs ~120.00 N·m; strongest in research tier is CubeMars AK80-64 (48 N·m) — increase budget for a stronger actuator",
+    "joint left_ankle_flexion needs ~80.00 N·m; strongest in research tier is CubeMars AK80-64 (48 N·m) — increase budget for a stronger actuator",
+    "joint right_hip_abduction needs ~96.00 N·m; strongest in research tier is CubeMars AK80-64 (48 N·m) — increase budget for a stronger actuator",
+    "joint right_hip_flexion needs ~120.00 N·m; strongest in research tier is CubeMars AK80-64 (48 N·m) — increase budget for a stronger actuator",
+    "joint right_knee_flexion needs ~120.00 N·m; strongest in research tier is CubeMars AK80-64 (48 N·m) — increase budget for a stronger actuator",
+    "joint right_ankle_flexion needs ~80.00 N·m; strongest in research tier is CubeMars AK80-64 (48 N·m) — increase budget for a stronger actuator",
+    "joint left_shoulder_abduction needs ~48.00 N·m; strongest in research tier is CubeMars AK80-64 (48 N·m) — increase budget for a stronger actuator",
+    "joint left_shoulder_flexion needs ~48.00 N·m; strongest in research tier is CubeMars AK80-64 (48 N·m) — increase budget for a stronger actuator",
+    "joint right_shoulder_abduction needs ~48.00 N·m; strongest in research tier is CubeMars AK80-64 (48 N·m) — increase budget for a stronger actuator",
+    "joint right_shoulder_flexion needs ~48.00 N·m; strongest in research tier is CubeMars AK80-64 (48 N·m) — increase budget for a stronger actuator"
+  ],
+  "notes": [
+    "Tier: research. Prices are planning estimates (USD), not quotes. Structure assumes machined aluminium."
+  ]
+}

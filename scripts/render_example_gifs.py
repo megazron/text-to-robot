@@ -4,6 +4,7 @@ os.environ.setdefault('MUJOCO_GL','osmesa')
 import hashlib,json
 from pathlib import Path
 from ttr_mujoco.convert import urdf_to_mjcf
+from ttr_mujoco.evidence import example_scene
 from ttr_mujoco.render import render_gif
 root=Path(__file__).resolve().parents[1];selected=os.environ.get('TTR_EXAMPLE');manifest={}
 if selected:manifest=json.loads((root/'examples/gif_manifest.json').read_text())
@@ -11,11 +12,11 @@ for folder in sorted((root/'examples').iterdir()):
     if selected and folder.name!=selected:continue
     source=folder/'robot.urdf'
     if not source.exists():continue
-    xml=urdf_to_mjcf(str(source),self_collision=True)
-    render_gif(xml,str(folder/'simulation.gif'),seconds=2,fps=10,width=400,height=320,motion='hold',orbit=25,
-      label='Gravity + self-collision; pose-hold smoke run')
+    with example_scene(folder) as (xml,evidence):
+        render_gif(xml,str(folder/'simulation.gif'),seconds=2,fps=10,width=400,height=320,motion='hold',orbit=25,
+          label='Gravity + self-collision; pose-hold smoke run')
     manifest[folder.name]={'source_urdf_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),
-      'gif_sha256':hashlib.sha256((folder/'simulation.gif').read_bytes()).hexdigest(),'self_collision':True,'motion':'hold','seconds':2}
+      'gif_sha256':hashlib.sha256((folder/'simulation.gif').read_bytes()).hexdigest(),'self_collision':True,'motion':'hold','seconds':2,**evidence}
     print(folder.name,flush=True)
 folder=root/'examples/14_iron_man_mark_43';source=folder/'robot.sim.urdf'
 # Separate actuator previews from the above collision-enabled physical diagnostic.

@@ -40,8 +40,8 @@ concepts. See [examples](examples/) and [architecture](docs/ARCHITECTURE.md).
 [Browse all 17 examples, their GIFs, MoveIt files and simulation results](examples/README.md).
 Every example now has a dedicated README and downloadable ROS package.
 All 17 ROS packages build on Jazzy; all 17 models load in both physics engines.
-The 16 non-wearable examples have no initial inter-body penetration above 1 mm
-in the MuJoCo audit. Motion tracking and balance failures remain documented.
+All 17 have no initial inter-body penetration above 1 mm in the current audit
+(primitive collisions for the other examples; compound hulls for Mark 43). Motion tracking and balance failures remain documented.
 The [runtime record](examples/runtime_validation.json) separates these checks.
 All 17 [training exports](examples/training_validation.json) reset and take a finite
 PyBullet step. A gripper aperture task passed Gymnasium checks in both engines and
@@ -51,6 +51,21 @@ Corrections include outward-facing humanoid grippers, downward spider shins,
 SCARA base clearance, Baymax capsule lengths and arm spacing, continuous wheel
 limits, and distinct MoveIt groups for arms and legs. Training now uses named tool
 links, full-range reaching targets and an aperture task for standalone grippers.
+
+<!-- EXAMPLE_GALLERY_START -->
+
+These are actual simulations of all 17 exported examples. Check counts are smoke-test results; no example has a documented physical prototype. Click **Build evidence** for the missing manufacturing and hardware work.
+
+| | | |
+|---|---|---|
+| [**arm 2dof**](examples/01_arm_2dof/)<br>![arm 2dof: actual gravity/self-collision run](examples/01_arm_2dof/simulation.gif)<br>5/5 simulation checks · [CAD](examples/01_arm_2dof/robot.cad.zip) · [Results](examples/01_arm_2dof/simulation_report.json) · [Build evidence](examples/01_arm_2dof/BUILDABILITY.md) | [**arm 6dof**](examples/02_arm_6dof/)<br>![arm 6dof: actual gravity/self-collision run](examples/02_arm_6dof/simulation.gif)<br>4/5 simulation checks · [CAD](examples/02_arm_6dof/robot.cad.zip) · [Results](examples/02_arm_6dof/simulation_report.json) · [Build evidence](examples/02_arm_6dof/BUILDABILITY.md) | [**arm 7dof**](examples/03_arm_7dof/)<br>![arm 7dof: actual gravity/self-collision run](examples/03_arm_7dof/simulation.gif)<br>4/5 simulation checks · [CAD](examples/03_arm_7dof/robot.cad.zip) · [Results](examples/03_arm_7dof/simulation_report.json) · [Build evidence](examples/03_arm_7dof/BUILDABILITY.md) |
+| [**scara**](examples/04_scara/)<br>![scara: actual gravity/self-collision run](examples/04_scara/simulation.gif)<br>4/5 simulation checks · [CAD](examples/04_scara/robot.cad.zip) · [Results](examples/04_scara/simulation_report.json) · [Build evidence](examples/04_scara/BUILDABILITY.md) | [**diff drive**](examples/05_diff_drive/)<br>![diff drive: actual gravity/self-collision run](examples/05_diff_drive/simulation.gif)<br>6/6 simulation checks · [CAD](examples/05_diff_drive/robot.cad.zip) · [Results](examples/05_diff_drive/simulation_report.json) · [Build evidence](examples/05_diff_drive/BUILDABILITY.md) | [**four wheel**](examples/06_four_wheel/)<br>![four wheel: actual gravity/self-collision run](examples/06_four_wheel/simulation.gif)<br>6/6 simulation checks · [CAD](examples/06_four_wheel/robot.cad.zip) · [Results](examples/06_four_wheel/simulation_report.json) · [Build evidence](examples/06_four_wheel/BUILDABILITY.md) |
+| [**mecanum**](examples/07_mecanum/)<br>![mecanum: actual gravity/self-collision run](examples/07_mecanum/simulation.gif)<br>6/6 simulation checks · [CAD](examples/07_mecanum/robot.cad.zip) · [Results](examples/07_mecanum/simulation_report.json) · [Build evidence](examples/07_mecanum/BUILDABILITY.md) | [**humanoid**](examples/08_humanoid/)<br>![humanoid: actual gravity/self-collision run](examples/08_humanoid/simulation.gif)<br>4/6 simulation checks · [CAD](examples/08_humanoid/robot.cad.zip) · [Results](examples/08_humanoid/simulation_report.json) · [Build evidence](examples/08_humanoid/BUILDABILITY.md) | [**gripper**](examples/09_gripper/)<br>![gripper: actual gravity/self-collision run](examples/09_gripper/simulation.gif)<br>5/5 simulation checks · [CAD](examples/09_gripper/robot.cad.zip) · [Results](examples/09_gripper/simulation_report.json) · [Build evidence](examples/09_gripper/BUILDABILITY.md) |
+| [**quadruped**](examples/10_quadruped/)<br>![quadruped: actual gravity/self-collision run](examples/10_quadruped/simulation.gif)<br>5/6 simulation checks · [CAD](examples/10_quadruped/robot.cad.zip) · [Results](examples/10_quadruped/simulation_report.json) · [Build evidence](examples/10_quadruped/BUILDABILITY.md) | [**spider scout**](examples/11_spider_scout/)<br>![spider scout: actual gravity/self-collision run](examples/11_spider_scout/simulation.gif)<br>6/6 simulation checks · [CAD](examples/11_spider_scout/robot.cad.zip) · [Results](examples/11_spider_scout/simulation_report.json) · [Build evidence](examples/11_spider_scout/BUILDABILITY.md) | [**mars rover**](examples/12_mars_rover/)<br>![mars rover: actual gravity/self-collision run](examples/12_mars_rover/simulation.gif)<br>5/6 simulation checks · [CAD](examples/12_mars_rover/robot.cad.zip) · [Results](examples/12_mars_rover/simulation_report.json) · [Build evidence](examples/12_mars_rover/BUILDABILITY.md) |
+| [**battle mech**](examples/13_battle_mech/)<br>![battle mech: actual gravity/self-collision run](examples/13_battle_mech/simulation.gif)<br>3/6 simulation checks · [CAD](examples/13_battle_mech/robot.cad.zip) · [Results](examples/13_battle_mech/simulation_report.json) · [Build evidence](examples/13_battle_mech/BUILDABILITY.md) | [**iron man mark 43**](examples/14_iron_man_mark_43/)<br>![iron man mark 43: actual gravity/self-collision run](examples/14_iron_man_mark_43/simulation.gif)<br>4/6 simulation checks · [CAD](examples/14_iron_man_mark_43/robot.cad.zip) · [Results](examples/14_iron_man_mark_43/simulation_report.json) · [Build evidence](examples/14_iron_man_mark_43/BUILDABILITY.md) | [**wall e**](examples/15_wall_e/)<br>![wall e: actual gravity/self-collision run](examples/15_wall_e/simulation.gif)<br>5/6 simulation checks · [CAD](examples/15_wall_e/robot.cad.zip) · [Results](examples/15_wall_e/simulation_report.json) · [Build evidence](examples/15_wall_e/BUILDABILITY.md) |
+| [**eva**](examples/16_eva/)<br>![eva: actual gravity/self-collision run](examples/16_eva/simulation.gif)<br>5/6 simulation checks · [CAD](examples/16_eva/robot.cad.zip) · [Results](examples/16_eva/simulation_report.json) · [Build evidence](examples/16_eva/BUILDABILITY.md) | [**baymax**](examples/17_baymax/)<br>![baymax: actual gravity/self-collision run](examples/17_baymax/simulation.gif)<br>4/6 simulation checks · [CAD](examples/17_baymax/robot.cad.zip) · [Results](examples/17_baymax/simulation_report.json) · [Build evidence](examples/17_baymax/BUILDABILITY.md) |  |
+
+<!-- EXAMPLE_GALLERY_END -->
 
 ## Iron Man: MoveIt and animated previews
 
@@ -65,8 +80,10 @@ collision-enabled physics GIF and exact failures.
 **MoveIt:** [browse the SRDF, planning and controller configuration](examples/14_iron_man_mark_43/moveit/),
 [download the ROS package](examples/14_iron_man_mark_43/robot.ros2.zip), and follow the
 [launch instructions](examples/14_iron_man_mark_43/README.md#moveit--ros-2).
-The suit still has a colliding start state; mock control wiring does not make it
-physically buildable.
+The suit now has a collision-free neutral state. Small neck and left/right arm
+goals plan and execute through mock control. One right-arm request timed out
+before a successful retry; both records are retained in the example. Full-range
+motion and real hardware remain unqualified.
 
 [Internet research and downloaded design inspection](references/mark43/RESEARCH.md)
 now supplement the saved production photographs.
@@ -101,26 +118,28 @@ locally and checked against saved iterations; see the [reference workflow](refer
 | Closed mesh topology and mass integrals | 232/232 mesh instances pass |
 | Empty-suit smoke battery, self-collision off | 3/5; tracking and disturbance recovery fail |
 | Suit with passive mannequin, human/self-contact disabled | See loaded physics report; actuator tracking still fails |
-| Compound-convex initial collision | See regenerated clearance report; interference remains |
-| Collision-enabled suit smoke battery | 2/6; clearance, settling, pose holding and tracking still fail |
+| Compound-convex initial collision | Zero initial contacts; this does not establish full-range or human clearance |
+| Collision-enabled suit smoke battery, compound model | 4/6; actuator tracking and disturbance recovery fail |
 | Joint-range clearance | See regenerated motion-clearance report; interference remains |
-| ROS 2 Jazzy / MoveIt | 85 neutral contacts (previously 179); planning still fails collision validation |
+| ROS 2 Jazzy / MoveIt | Zero neutral contacts; small neck and both arm goals plan and execute using mock control |
 | Six-axis arm MoveIt fixture | Planning and mock trajectory execution pass |
 | Wearer fit | Example measurements fail opening/clearance checks |
 | Breathing, structural strength, real hardware | Unverified |
 
-The latest geometry revision reduces the independent surface-intersection count
-from **175 to 81** (94 resolved; no new neutral pairs). It corrects mirrored chest
-wall thickness, torso/arm overlap, cuff clearance, clamshell seams and palm placement.
-The full battery envelope is retained and moved rearward; the rear silhouette is
-therefore still bulky. [Before/after evidence and remaining failures](examples/14_iron_man_mark_43/surface_contact_comparison.json).
+The current revision reduces neutral surface intersections from **81 to 0** and
+native MoveIt contacts from **85 to 0**. It separates helmet seams, adds the red
+forehead insert, reshapes the shoulders and boots, cuts limb-shell rims around the
+motor housings, and attaches rear details to their opening flaps. These changes
+are actual exported geometry, not altered renderings.
+[Before/after evidence](examples/14_iron_man_mark_43/surface_contact_comparison.json).
 
-Five sampled positions per wrist and chest-door hinge introduced no additional
-surface intersections. This is not continuous-motion, human-fit or force validation.
+The 86 sampled poses still include motion collisions. A collision-free rest pose
+is not a safe range of movement or wearer qualification. The proportions, exposed
+mechanical components and panel details still differ substantially from the film.
 
 | Previous exported geometry | Current exported geometry |
 |---|---|
-| ![Before clearance changes](docs/img/mark43_before_clearance.png) | ![After clearance changes](docs/img/mark43_front_review.png) |
+| ![Before clearance changes](docs/img/mark43_before_joint_clearance.png) | ![After clearance changes](docs/img/mark43_front_review.png) |
 
 Reports and downloadable files:
 
@@ -144,6 +163,34 @@ Decorative grilles and eye apertures do not establish breathable space. There is
 no measured airflow, CO₂, temperature, fan-duct design or emergency breathing
 assessment. The wearer report explicitly leaves these unresolved.
 
+## Physical replication status
+
+**No example has a documented, tested physical build.** Each gallery entry links
+to its BOM, downloadable CAD and a source-hashed build-evidence inventory. These
+identify missing motor interfaces, bearings, electronics mounting, wiring,
+tolerances, assembly instructions and measured dynamics. A simulation pass does
+not fill those gaps. The CAD files are concept geometry, not complete assembly kits.
+
+The component selector now excludes limited-angle hobby servos from continuous
+wheel joints, and reports linear forces in newtons rather than torque units.
+That corrects two concrete errors; actuator speed, thermal duty, voltage, feedback
+and physical fit still require verification against the selected hardware.
+
+To reproduce the exported results from the checked-in specifications:
+
+```bash
+node scripts/export_examples.ts
+python scripts/audit_examples.py
+python scripts/render_example_gifs.py
+python scripts/check_training_exports.py
+python scripts/document_examples.py
+python scripts/verify_example_artifacts.py
+```
+
+Use the Python environment described below. The scripts reject a stale compound
+collision archive; after changing Mark 43 geometry, regenerate it with
+`python scripts/audit_mark43.py --convex` before running the example audit.
+
 ## ROS 2 and MoveIt
 
 The ROS download includes an `ament_cmake` package, URDF/Xacro, meshes, RViz,
@@ -164,8 +211,9 @@ ros2 launch iron_man_mark_43 move_group.launch.py
 MoveIt uses actual mesh triangles for collision geometry, retaining hollow parts.
 Only adjacent links are automatically excluded. The launch runs
 `mock_components/GenericSystem`: it validates ROS control/planning wiring, not
-real motors or MuJoCo dynamics. The suit's colliding start state is reported as a
-failure; collision checking is not disabled to force a successful plan.
+real motors or MuJoCo dynamics. The native start-state check, planning result and mock execution are recorded
+separately. Collision checking remains enabled; broader range-of-motion tests
+still expose interference.
 The six-axis arm fixture was built, planned and executed through mock control on
 ROS 2 Jazzy. Gazebo export is also available; it has not received the same runtime
 validation in this revision.

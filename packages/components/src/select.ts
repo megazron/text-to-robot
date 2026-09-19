@@ -7,7 +7,7 @@ export interface BomLine { category: string; name: string; qty: number; unit_cos
 export interface BillOfMaterials {
   robot_name: string; budget?: number; tier: Tier;
   lines: BomLine[]; total: number; feasible: boolean; sizing_pass: boolean; hardware_verified: false;
-  actuator_sizing: { joint: string; required_torque_nm: number; chosen: string; margin: string }[];
+  actuator_sizing: { joint: string; required_effort: number; effort_unit: "N" | "N·m"; required_torque_nm?: number; required_force_n?: number; chosen: string; margin: string }[];
   warnings: string[]; notes: string[];
 }
 
@@ -26,7 +26,7 @@ function subtree(spec: RobotSpecification, root: string): Set<string> {
   return out;
 }
 
-/** estimate the static holding torque (N*m) a joint must provide at its worst case */
+/** Neutral-pose gravity proxy, not a full-workspace or dynamic load bound. */
 function requiredTorque(spec: RobotSpecification, j: Joint, pos: Record<string, number[]>): number {
   const down = subtree(spec, j.child);
   const jp = pos[j.child] ?? [0, 0, 0];
@@ -42,23 +42,25 @@ function requiredTorque(spec: RobotSpecification, j: Joint, pos: Record<string, 
   return torque;
 }
 
-function pickActuator(reqTorque: number, tier: Tier, prismatic: boolean): Actuator | undefined {
+const capacity = (a:Actuator) => a.kind === "linear" ? (a.force_n ?? 0) : (a.torque ?? 0);
+
+function pickActuator(reqTorque: number, tier: Tier, type:Joint["type"]): Actuator | undefined {
   const safety = 1.5;
-  const pool = ACTUATORS.filter((a) => !a.requires_custom_design && a.tiers.includes(tier) && (prismatic ? a.kind === "linear" : a.kind !== "linear"));
-  const fit = pool.filter((a) => a.torque >= reqTorque * safety).sort((a, b) => a.unit_cost - b.unit_cost);
+  const pool = ACTUATORS.filter((a) => !a.requires_custom_design && a.tiers.includes(tier) && (type === "prismatic" ? a.kind === "linear" : type === "continuous" ? ["stepper","bldc"].includes(a.kind) : a.kind !== "linear"));
+  const fit = pool.filter((a) => capacity(a) >= reqTorque * safety).sort((a, b) => a.unit_cost - b.unit_cost);
   if (fit.length) return fit[0];
-  return pool.sort((a, b) => b.torque - a.torque)[0]; // strongest available if none meets margin
+  return pool.sort((a, b) => capacity(b) - capacity(a))[0]; // strongest available if none meets margin
 }
 
 function pushMerged(map: Map<string, BomLine>, line: BomLine) {
   const key = line.category + "|" + line.name;
   const ex = map.get(key);
-  if (ex) { ex.qty += line.qty; ex.subtotal = +(ex.qty * ex.unit_cost).toFixed(2); }
+  if (ex) { ex.qty += line.qty; ex.subtotal = +(ex.qty * ex.unit_cost).toFixed(2); if(line.note && !ex.note?.includes(line.note))ex.note=[ex.note,line.note].filter(Boolean).join("; "); }
   else map.set(key, { ...line, subtotal: +(line.qty * line.unit_cost).toFixed(2) });
 }
 
 function buildBomAtTier(spec: RobotSpecification, tier: Tier, budget?: number): BillOfMaterials {
-  const warnings: string[] = ["Catalog values are planning estimates. Except explicitly sourced rated values, torque entries may be stall/peak ratings; continuous duty, fit and complete assemblies are unverified."]; const notes: string[] = [];
+  const warnings: string[] = ["Sizing uses a neutral-pose gravity proxy and declared joint effort, not a worst-case workspace or dynamic load analysis. Selection checks only approximate effort and broad motion type. Speed/torque curves, travel, voltage, feedback, mounting, thermal duty and wiring are not qualified.", "Catalog values are planning estimates. Except explicitly sourced rated values, torque entries may be stall/peak ratings; continuous duty, fit and complete assemblies are unverified."]; const notes: string[] = [];
   const lines = new Map<string, BomLine>();
   const sizing: BillOfMaterials["actuator_sizing"] = [];
   const pos = linkPositions(spec, {});
@@ -70,12 +72,13 @@ function buildBomAtTier(spec: RobotSpecification, tier: Tier, budget?: number): 
     // (a wearable exoskeleton, for example, must move the wearer's limbs, not just its own struts)
     const designed = j.limit?.effort && !(j.inferred ?? []).includes("limit") ? j.limit.effort * 0.8 : 0;
     const req = Math.max(requiredTorque(spec, j, pos), designed);
-    const a = pickActuator(req, tier, j.type === "prismatic");
+    const a = pickActuator(req, tier, j.type);
     if (!a) { warnings.push(`no actuator found for joint ${j.name}`); continue; }
-    const met = a.torque >= req * 1.5;
-    if (!met) warnings.push(`joint ${j.name} needs ~${req.toFixed(2)} N·m; strongest in ${tier} tier is ${a.name} (${a.torque} N·m) — increase budget for a stronger actuator`);
-    sizing.push({ joint: j.name, required_torque_nm: +req.toFixed(3), chosen: a.name, margin: met ? `${(a.torque / (req || 1e-3)).toFixed(1)}x` : "UNDERSIZED" });
-    pushMerged(lines, { category: "Actuator", name: a.name, qty: 1, unit_cost: a.unit_cost, subtotal: a.unit_cost, spec: `${a.spec} (${a.torque} N·m)`, note: `joint ${j.name}${a.source_url ? "; rating source: "+a.source_url : "; rating duty/source unverified"}` });
+    const unit=j.type === "prismatic" ? "N" : "N·m";
+    const rated=capacity(a),met = rated >= req * 1.5;
+    if (!met) warnings.push(`joint ${j.name} needs ~${req.toFixed(2)} ${unit}; strongest in ${tier} tier is ${a.name} (${rated} ${unit}) — increase budget for a stronger actuator`);
+    sizing.push({ joint: j.name, required_effort:+req.toFixed(3),effort_unit:unit, ...(j.type === "prismatic" ? {required_force_n:+req.toFixed(3)} : {required_torque_nm:+req.toFixed(3)}), chosen: a.name, margin: met ? `${(rated / (req || 1e-3)).toFixed(1)}x` : "UNDERSIZED" });
+    pushMerged(lines, { category: "Actuator", name: a.name, qty: 1, unit_cost: a.unit_cost, subtotal: a.unit_cost, spec: `${a.spec} (${rated} ${unit})`, note: `joint ${j.name}${a.source_url ? "; rating source: "+a.source_url : "; rating duty/source unverified"}` });
     if (a.needs_driver) pushMerged(lines, { category: "Motor driver", name: a.needs_driver, qty: 1, unit_cost: a.driver_cost ?? 0, subtotal: a.driver_cost ?? 0, spec: `driver for ${a.name}` });
     motorPowerW += a.kind === "bldc" ? 60 : a.kind === "stepper" || a.kind === "linear" ? 12 : a.kind === "smart_servo" ? 12 : 5;
   }
@@ -131,7 +134,7 @@ export function buildBom(spec: RobotSpecification, budget?: number): BillOfMater
   // try to FIT the budget: cheapest tier whose total is within budget; else cheapest overall
   const built = tiers.map((t) => buildBomAtTier(spec, t, budget));
   const feasible = built.filter((b) => b.total <= budget!).sort((a, b) => b.total - a.total); // richest that still fits
-  if (feasible.length) return feasible[0];
+  if (feasible.length) return feasible.find(b=>b.sizing_pass) ?? feasible[0];
   const cheapest = built.sort((a, b) => a.total - b.total)[0];
   cheapest.notes.unshift(`No component tier fits the $${budget} budget; showing the cheapest estimate ($${cheapest.total}).`);
   return cheapest;
@@ -141,11 +144,11 @@ export function bomToMarkdown(bom: BillOfMaterials): string {
   const out: string[] = [];
   out.push(`# Bill of Materials — ${bom.robot_name}`);
   out.push(``, `**Estimated total: $${bom.total}**  ·  tier: ${bom.tier}` + (bom.budget ? `  ·  budget: $${bom.budget} ` + (bom.feasible ? "✅ within budget" : "❌ over budget") : ""), ``);
-  out.push(`**Torque sizing: ${bom.sizing_pass ? "passes catalogue estimate" : "fails"}; hardware verified: no.**`, ``);
+  out.push(`**Effort sizing: ${bom.sizing_pass ? "passes catalogue estimate" : "fails"}; hardware verified: no.**`, ``);
   out.push(`| Category | Component | Qty | Unit $ | Subtotal $ | Spec |`, `|---|---|--:|--:|--:|---|`);
   for (const l of bom.lines) out.push(`| ${l.category} | ${l.name}${l.note ? ` _(${l.note})_` : ""} | ${l.qty} | ${l.unit_cost} | ${l.subtotal} | ${l.spec} |`);
-  out.push(``, `## Actuator sizing`, ``, `| Joint | Required torque (N·m) | Chosen actuator | Margin |`, `|---|--:|---|--:|`);
-  for (const s of bom.actuator_sizing) out.push(`| ${s.joint} | ${s.required_torque_nm} | ${s.chosen} | ${s.margin} |`);
+  out.push(``, `## Actuator sizing`, ``, `| Joint | Required effort | Unit | Chosen actuator | Margin |`, `|---|--:|---|---|--:|`);
+  for (const s of bom.actuator_sizing) out.push(`| ${s.joint} | ${s.required_effort} | ${s.effort_unit} | ${s.chosen} | ${s.margin} |`);
   if (bom.warnings.length) { out.push(``, `## Warnings`); for (const w of bom.warnings) out.push(`- ⚠️ ${w}`); }
   out.push(``, `## Notes`); for (const n of bom.notes) out.push(`- ${n}`);
   return out.join("\n") + "\n";

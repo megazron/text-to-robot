@@ -43,3 +43,25 @@ test('catalogue sizing does not select hypothetical actuators or certify hardwar
   assert.equal(bom.sizing_pass,false);
   assert.ok(bom.actuator_sizing.every(s=>!s.chosen.includes('Harmonic Drive')));
 });
+
+test('continuous wheels never receive limited-angle hobby servos',async()=>{
+  const {readFileSync}=await import('node:fs');
+  const spec=JSON.parse(readFileSync('examples/05_diff_drive/robot.json','utf8'));
+  const {ACTUATORS}=await import('../packages/components/src/catalog.ts');
+  for(const budget of [200,1000,10000])for(const row of buildBom(spec,budget).actuator_sizing){
+    const actuator=ACTUATORS.find(a=>a.name===row.chosen)!;
+    assert.ok(['stepper','bldc'].includes(actuator.kind),row.chosen);
+  }
+});
+
+test('linear actuator sizing uses newtons rather than newton metres',async()=>{
+  const {readFileSync}=await import('node:fs');
+  const spec=JSON.parse(readFileSync('examples/09_gripper/robot.json','utf8'));
+  const bom=buildBom(spec);
+  for(const row of bom.actuator_sizing){
+    assert.equal(row.effort_unit,'N');assert.ok(row.required_force_n!>0);
+    assert.equal(row.required_torque_nm,undefined);
+  }
+  assert.match(bomToMarkdown(bom),/\| N \|/);
+  assert.ok(!bom.lines.filter(l=>l.category==='Actuator').some(l=>l.spec.includes('N·m')));
+});

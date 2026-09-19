@@ -2,11 +2,11 @@
 
 **Estimated total: $230.44**  ·  tier: prosumer
 
-**Torque sizing: passes catalogue estimate; hardware verified: no.**
+**Effort sizing: passes catalogue estimate; hardware verified: no.**
 
 | Category | Component | Qty | Unit $ | Subtotal $ | Spec |
 |---|---|--:|--:|--:|---|
-| Actuator | NEMA17 + lead screw _(joint left_finger_joint; rating duty/source unverified)_ | 2 | 26 | 52 | lead-screw linear stage (60 N·m) |
+| Actuator | NEMA17 + lead screw _(joint left_finger_joint; rating duty/source unverified; joint right_finger_joint; rating duty/source unverified)_ | 2 | 26 | 52 | lead-screw linear stage (60 N) |
 | Motor driver | TMC2209 driver | 2 | 10 | 20 | driver for NEMA17 + lead screw |
 | Compute | Teensy 4.1 | 1 | 32 | 32 | 600MHz MCU, real-time control |
 | Power | LiPo 4S 5000mAh | 1 | 40 | 40 | 74 Wh; est. load 12 W |
@@ -18,12 +18,13 @@
 
 ## Actuator sizing
 
-| Joint | Required torque (N·m) | Chosen actuator | Margin |
-|---|--:|---|--:|
-| left_finger_joint | 32 | NEMA17 + lead screw | 1.9x |
-| right_finger_joint | 32 | NEMA17 + lead screw | 1.9x |
+| Joint | Required effort | Unit | Chosen actuator | Margin |
+|---|--:|---|---|--:|
+| left_finger_joint | 32 | N | NEMA17 + lead screw | 1.9x |
+| right_finger_joint | 32 | N | NEMA17 + lead screw | 1.9x |
 
 ## Warnings
+- ⚠️ Sizing uses a neutral-pose gravity proxy and declared joint effort, not a worst-case workspace or dynamic load analysis. Selection checks only approximate effort and broad motion type. Speed/torque curves, travel, voltage, feedback, mounting, thermal duty and wiring are not qualified.
 - ⚠️ Catalog values are planning estimates. Except explicitly sourced rated values, torque entries may be stall/peak ratings; continuous duty, fit and complete assemblies are unverified.
 
 ## Notes

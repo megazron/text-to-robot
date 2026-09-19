@@ -138,11 +138,11 @@
     "Ellipse axes are a straight insertion screen, not a full articulated insertion planner",
     "Prototype measurements and independent mechanical/electrical review remain required"
   ],
-  "robot_sha256": "c1f5673b0e46ab646986bf2e84da534da41e906601e0ddf55161c4cb4716aec6",
+  "robot_sha256": "626e8ff65beb681852a9302d19b2d28068b787759f25b15898e0d967e1965761",
   "human_contact_audit": {
     "poses": {
       "panels_closed": {
-        "penetrating_pairs": 137,
+        "penetrating_pairs": 134,
         "pairs": [
           {
             "bodies": [
@@ -156,35 +156,21 @@
               "helmet",
               "w_head"
             ],
-            "depth_m": 0.11795629507769673
+            "depth_m": 0.11496781854300112
           },
           {
             "bodies": [
               "left_thigh_shell",
               "w_left_thigh"
             ],
-            "depth_m": 0.11142499999999984
+            "depth_m": 0.11125999999999982
           },
           {
             "bodies": [
               "right_thigh_shell",
               "w_right_thigh"
             ],
-            "depth_m": 0.11142499999999984
-          },
-          {
-            "bodies": [
-              "left_boot_toe",
-              "w_left_shank"
-            ],
-            "depth_m": 0.1056230000000002
-          },
-          {
-            "bodies": [
-              "right_boot_toe",
-              "w_right_shank"
-            ],
-            "depth_m": 0.1056230000000002
+            "depth_m": 0.11125999999999982
           },
           {
             "bodies": [
@@ -223,6 +209,34 @@
           },
           {
             "bodies": [
+              "left_pauldron",
+              "w_torso"
+            ],
+            "depth_m": 0.08419501534788545
+          },
+          {
+            "bodies": [
+              "right_pauldron",
+              "w_torso"
+            ],
+            "depth_m": 0.08419501534788543
+          },
+          {
+            "bodies": [
+              "left_pauldron_edge",
+              "w_torso"
+            ],
+            "depth_m": 0.08369501534788544
+          },
+          {
+            "bodies": [
+              "right_pauldron_edge",
+              "w_torso"
+            ],
+            "depth_m": 0.08369501534788541
+          },
+          {
+            "bodies": [
               "neck_yaw_carrier",
               "w_head"
             ],
@@ -233,28 +247,14 @@
               "left_shin_shell",
               "w_left_shank"
             ],
-            "depth_m": 0.07388999999999979
+            "depth_m": 0.07371499999999981
           },
           {
             "bodies": [
               "right_shin_shell",
               "w_right_shank"
             ],
-            "depth_m": 0.07388999999999979
-          },
-          {
-            "bodies": [
-              "left_pauldron",
-              "w_torso"
-            ],
-            "depth_m": 0.07321264024975675
-          },
-          {
-            "bodies": [
-              "right_pauldron",
-              "w_torso"
-            ],
-            "depth_m": 0.07321264024975675
+            "depth_m": 0.07371499999999981
           },
           {
             "bodies": [
@@ -268,14 +268,21 @@
               "left_thigh_strut",
               "w_pelvis"
             ],
-            "depth_m": 0.06587093376024564
+            "depth_m": 0.06479565428617934
           },
           {
             "bodies": [
               "right_thigh_strut",
               "w_pelvis"
             ],
-            "depth_m": 0.06587093376024564
+            "depth_m": 0.06479565428617934
+          },
+          {
+            "bodies": [
+              "neck_ring",
+              "w_head"
+            ],
+            "depth_m": 0.060149999999999704
           },
           {
             "bodies": [
@@ -296,21 +303,14 @@
               "left_bicep_sleeve",
               "w_left_upper_arm"
             ],
-            "depth_m": 0.058422802470786746
+            "depth_m": 0.058329802470786875
           },
           {
             "bodies": [
               "right_bicep_sleeve",
               "w_right_upper_arm"
             ],
-            "depth_m": 0.058422802470786746
-          },
-          {
-            "bodies": [
-              "helmet_neck_collar",
-              "w_head"
-            ],
-            "depth_m": 0.0578739982688388
+            "depth_m": 0.058329802470786875
           },
           {
             "bodies": [
@@ -328,31 +328,17 @@
           },
           {
             "bodies": [
-              "left_cheek_panel",
-              "w_head"
-            ],
-            "depth_m": 0.0557591909175985
-          },
-          {
-            "bodies": [
-              "right_cheek_panel",
-              "w_head"
-            ],
-            "depth_m": 0.055758963396036525
-          },
-          {
-            "bodies": [
               "left_gauntlet_sleeve",
               "w_left_forearm"
             ],
-            "depth_m": 0.052843802470844234
+            "depth_m": 0.05281280247084427
           },
           {
             "bodies": [
               "right_gauntlet_sleeve",
               "w_right_forearm"
             ],
-            "depth_m": 0.052843802470844234
+            "depth_m": 0.05281280247084427
           },
           {
             "bodies": [
@@ -370,6 +356,13 @@
           },
           {
             "bodies": [
+              "helmet_neck_collar",
+              "w_head"
+            ],
+            "depth_m": 0.05150648300407657
+          },
+          {
+            "bodies": [
               "left_chest_door",
               "w_torso"
             ],
@@ -381,20 +374,6 @@
               "w_torso"
             ],
             "depth_m": 0.050053705629951706
-          },
-          {
-            "bodies": [
-              "left_hip_cowl",
-              "w_pelvis"
-            ],
-            "depth_m": 0.050000000000000086
-          },
-          {
-            "bodies": [
-              "right_hip_cowl",
-              "w_pelvis"
-            ],
-            "depth_m": 0.050000000000000086
           },
           {
             "bodies": [
@@ -412,31 +391,17 @@
           },
           {
             "bodies": [
-              "chin_guard",
-              "w_head"
+              "left_thigh_clamshell",
+              "w_left_thigh"
             ],
-            "depth_m": 0.046022668196007234
+            "depth_m": 0.04615550000000002
           },
           {
             "bodies": [
               "right_thigh_clamshell",
               "w_right_thigh"
             ],
-            "depth_m": 0.04527050000000003
-          },
-          {
-            "bodies": [
-              "left_thigh_clamshell",
-              "w_left_thigh"
-            ],
-            "depth_m": 0.04523750000000003
-          },
-          {
-            "bodies": [
-              "neck_ring",
-              "w_torso"
-            ],
-            "depth_m": 0.045
+            "depth_m": 0.045185500000000024
           },
           {
             "bodies": [
@@ -465,34 +430,6 @@
               "w_torso"
             ],
             "depth_m": 0.04050849999999999
-          },
-          {
-            "bodies": [
-              "left_shank_strut",
-              "w_left_thigh"
-            ],
-            "depth_m": 0.04048876546308792
-          },
-          {
-            "bodies": [
-              "right_shank_strut",
-              "w_right_thigh"
-            ],
-            "depth_m": 0.04048876546308792
-          },
-          {
-            "bodies": [
-              "left_hip_cowl",
-              "w_left_thigh"
-            ],
-            "depth_m": 0.04000000000000009
-          },
-          {
-            "bodies": [
-              "right_hip_cowl",
-              "w_right_thigh"
-            ],
-            "depth_m": 0.04000000000000009
           },
           {
             "bodies": [
@@ -552,31 +489,45 @@
           },
           {
             "bodies": [
-              "left_thigh_shell",
-              "w_pelvis"
+              "right_cheek_panel",
+              "w_head"
             ],
-            "depth_m": 0.037175000000000125
+            "depth_m": 0.03895623344556295
           },
           {
             "bodies": [
-              "left_thigh_clamshell",
+              "left_cheek_panel",
+              "w_head"
+            ],
+            "depth_m": 0.03895619681554866
+          },
+          {
+            "bodies": [
+              "left_shank_strut",
+              "w_left_thigh"
+            ],
+            "depth_m": 0.038899566162562044
+          },
+          {
+            "bodies": [
+              "right_shank_strut",
+              "w_right_thigh"
+            ],
+            "depth_m": 0.038899566162562044
+          },
+          {
+            "bodies": [
+              "left_thigh_shell",
               "w_pelvis"
             ],
-            "depth_m": 0.037175000000000125
+            "depth_m": 0.037072000000000105
           },
           {
             "bodies": [
               "right_thigh_shell",
               "w_pelvis"
             ],
-            "depth_m": 0.037175000000000125
-          },
-          {
-            "bodies": [
-              "right_thigh_clamshell",
-              "w_pelvis"
-            ],
-            "depth_m": 0.037175000000000125
+            "depth_m": 0.037072000000000105
           },
           {
             "bodies": [
@@ -587,10 +538,38 @@
           },
           {
             "bodies": [
-              "neck_ring",
+              "chin_guard",
               "w_head"
             ],
-            "depth_m": 0.03285000000000027
+            "depth_m": 0.034293887447429186
+          },
+          {
+            "bodies": [
+              "left_pauldron_edge",
+              "w_left_upper_arm"
+            ],
+            "depth_m": 0.03254209765832704
+          },
+          {
+            "bodies": [
+              "right_pauldron_edge",
+              "w_right_upper_arm"
+            ],
+            "depth_m": 0.03254209765832704
+          },
+          {
+            "bodies": [
+              "left_pauldron",
+              "w_left_upper_arm"
+            ],
+            "depth_m": 0.032541597658327155
+          },
+          {
+            "bodies": [
+              "right_pauldron",
+              "w_right_upper_arm"
+            ],
+            "depth_m": 0.032541597658327155
           },
           {
             "bodies": [
@@ -608,129 +587,136 @@
           },
           {
             "bodies": [
-              "left_thigh_clamshell_fixed_knuckle_upper",
-              "w_pelvis"
+              "left_calf_clamshell",
+              "w_left_shank"
             ],
-            "depth_m": 0.029747652042244513
-          },
-          {
-            "bodies": [
-              "right_thigh_clamshell_fixed_knuckle_upper",
-              "w_pelvis"
-            ],
-            "depth_m": 0.029747652042244513
-          },
-          {
-            "bodies": [
-              "left_thigh_clamshell_hinge_pin",
-              "w_pelvis"
-            ],
-            "depth_m": 0.027914734002167138
-          },
-          {
-            "bodies": [
-              "right_thigh_clamshell_hinge_pin",
-              "w_pelvis"
-            ],
-            "depth_m": 0.027914734002167138
+            "depth_m": 0.02843650000000001
           },
           {
             "bodies": [
               "right_calf_clamshell",
               "w_right_shank"
             ],
-            "depth_m": 0.027105499999999998
-          },
-          {
-            "bodies": [
-              "left_calf_clamshell",
-              "w_left_shank"
-            ],
-            "depth_m": 0.02708999999999999
-          },
-          {
-            "bodies": [
-              "right_gauntlet_clamshell",
-              "w_right_forearm"
-            ],
-            "depth_m": 0.026865903149906223
+            "depth_m": 0.02756400000000002
           },
           {
             "bodies": [
               "left_gauntlet_clamshell",
               "w_left_forearm"
             ],
-            "depth_m": 0.02670790314990614
+            "depth_m": 0.026731898484641473
           },
           {
             "bodies": [
-              "right_bicep_clamshell",
-              "w_right_upper_arm"
+              "right_gauntlet_clamshell",
+              "w_right_forearm"
             ],
-            "depth_m": 0.02472611012249851
+            "depth_m": 0.02657339848464152
+          },
+          {
+            "bodies": [
+              "left_thigh_clamshell_fixed_knuckle_upper",
+              "w_pelvis"
+            ],
+            "depth_m": 0.026306098189140578
+          },
+          {
+            "bodies": [
+              "right_thigh_clamshell_fixed_knuckle_upper",
+              "w_pelvis"
+            ],
+            "depth_m": 0.026306098189140578
           },
           {
             "bodies": [
               "left_bicep_clamshell",
               "w_left_upper_arm"
             ],
-            "depth_m": 0.02467611012249854
+            "depth_m": 0.025157605457233792
+          },
+          {
+            "bodies": [
+              "neck_ring",
+              "w_torso"
+            ],
+            "depth_m": 0.025149999999999898
+          },
+          {
+            "bodies": [
+              "right_bicep_clamshell",
+              "w_right_upper_arm"
+            ],
+            "depth_m": 0.024722105457233915
+          },
+          {
+            "bodies": [
+              "left_thigh_clamshell_hinge_pin",
+              "w_pelvis"
+            ],
+            "depth_m": 0.024308839689817008
+          },
+          {
+            "bodies": [
+              "right_thigh_clamshell_hinge_pin",
+              "w_pelvis"
+            ],
+            "depth_m": 0.024308839689817008
           },
           {
             "bodies": [
               "left_thigh_shell",
               "w_left_shank"
             ],
-            "depth_m": 0.02392499999999978
+            "depth_m": 0.023759999999999754
           },
           {
             "bodies": [
               "right_thigh_shell",
               "w_right_shank"
             ],
-            "depth_m": 0.02392499999999978
+            "depth_m": 0.023759999999999754
           },
           {
             "bodies": [
-              "left_thigh_clamshell_moving_knuckle",
+              "left_thigh_clamshell",
               "w_pelvis"
             ],
-            "depth_m": 0.022422841651109054
+            "depth_m": 0.0229950000000001
           },
           {
             "bodies": [
-              "right_thigh_clamshell_moving_knuckle",
+              "right_thigh_clamshell",
               "w_pelvis"
             ],
-            "depth_m": 0.022422841651109054
+            "depth_m": 0.0229950000000001
+          },
+          {
+            "bodies": [
+              "left_hip_cowl",
+              "w_pelvis"
+            ],
+            "depth_m": 0.022000000000000075
+          },
+          {
+            "bodies": [
+              "right_hip_cowl",
+              "w_pelvis"
+            ],
+            "depth_m": 0.022000000000000075
           },
           {
             "bodies": [
               "left_thigh_strut",
               "w_left_shank"
             ],
-            "depth_m": 0.022144660940672453
+            "depth_m": 0.02070326101405163
           },
           {
             "bodies": [
               "right_thigh_strut",
               "w_right_shank"
             ],
-            "depth_m": 0.022144660940672453
-          },
-          {
-            "bodies": [
-              "left_bicep_clamshell",
-              "w_torso"
-            ],
-            "depth_m": 0.02002462704183803
-          },
-          {
-            "bodies": [
-              "right_bicep_clamshell",
-              "w_torso"
-            ],
-            "depth_m": 0.02002462704183803
+            "depth_m": 0.02070326101405163
           },
           {
             "bodies": [
@@ -752,6 +738,20 @@
               "w_right_upper_arm"
             ],
             "depth_m": 0.019804189321846945
+          },
+          {
+            "bodies": [
+              "left_thigh_clamshell_moving_knuckle",
+              "w_pelvis"
+            ],
+            "depth_m": 0.019313626417960875
+          },
+          {
+            "bodies": [
+              "right_thigh_clamshell_moving_knuckle",
+              "w_pelvis"
+            ],
+            "depth_m": 0.019313626417960875
           },
           {
             "bodies": [
@@ -783,6 +783,20 @@
           },
           {
             "bodies": [
+              "right_bicep_clamshell",
+              "w_torso"
+            ],
+            "depth_m": 0.016937123817702772
+          },
+          {
+            "bodies": [
+              "left_bicep_clamshell",
+              "w_torso"
+            ],
+            "depth_m": 0.016936673594008474
+          },
+          {
+            "bodies": [
               "left_rib_2",
               "w_pelvis"
             ],
@@ -808,34 +822,6 @@
               "w_torso"
             ],
             "depth_m": 0.014999999999999986
-          },
-          {
-            "bodies": [
-              "left_thigh_clamshell_fixed_knuckle_lower",
-              "w_pelvis"
-            ],
-            "depth_m": 0.014392811027799879
-          },
-          {
-            "bodies": [
-              "right_thigh_clamshell_fixed_knuckle_lower",
-              "w_pelvis"
-            ],
-            "depth_m": 0.014392811027799879
-          },
-          {
-            "bodies": [
-              "left_pauldron",
-              "w_left_upper_arm"
-            ],
-            "depth_m": 0.013467097658327216
-          },
-          {
-            "bodies": [
-              "right_pauldron",
-              "w_right_upper_arm"
-            ],
-            "depth_m": 0.013467097658327216
           },
           {
             "bodies": [
@@ -867,24 +853,24 @@
           },
           {
             "bodies": [
-              "left_bicep_sleeve",
-              "w_torso"
-            ],
-            "depth_m": 0.012786380708087554
-          },
-          {
-            "bodies": [
-              "right_bicep_sleeve",
-              "w_torso"
-            ],
-            "depth_m": 0.012786380708087554
-          },
-          {
-            "bodies": [
               "right_rib_2",
               "w_pelvis"
             ],
             "depth_m": 0.012676089441672936
+          },
+          {
+            "bodies": [
+              "left_boot_toe",
+              "w_left_shank"
+            ],
+            "depth_m": 0.012611000000000198
+          },
+          {
+            "bodies": [
+              "right_boot_toe",
+              "w_right_shank"
+            ],
+            "depth_m": 0.012611000000000198
           },
           {
             "bodies": [
@@ -919,14 +905,56 @@
               "left_boot_toe",
               "w_left_foot"
             ],
-            "depth_m": 0.012190999999999876
+            "depth_m": 0.012380999999999878
           },
           {
             "bodies": [
               "right_boot_toe",
               "w_right_foot"
             ],
-            "depth_m": 0.012190999999999876
+            "depth_m": 0.012380999999999878
+          },
+          {
+            "bodies": [
+              "left_bicep_sleeve",
+              "w_torso"
+            ],
+            "depth_m": 0.012222128168101913
+          },
+          {
+            "bodies": [
+              "right_bicep_sleeve",
+              "w_torso"
+            ],
+            "depth_m": 0.012222128168101913
+          },
+          {
+            "bodies": [
+              "left_hip_cowl",
+              "w_left_thigh"
+            ],
+            "depth_m": 0.01200000000000008
+          },
+          {
+            "bodies": [
+              "right_hip_cowl",
+              "w_right_thigh"
+            ],
+            "depth_m": 0.01200000000000008
+          },
+          {
+            "bodies": [
+              "left_thigh_clamshell_fixed_knuckle_lower",
+              "w_pelvis"
+            ],
+            "depth_m": 0.011582363099881685
+          },
+          {
+            "bodies": [
+              "right_thigh_clamshell_fixed_knuckle_lower",
+              "w_pelvis"
+            ],
+            "depth_m": 0.011582363099881685
           },
           {
             "bodies": [
@@ -940,63 +968,42 @@
               "left_thigh_stripe",
               "w_left_thigh"
             ],
-            "depth_m": 0.008080000000000004
+            "depth_m": 0.008060000000000012
           },
           {
             "bodies": [
               "right_thigh_stripe",
               "w_right_thigh"
             ],
-            "depth_m": 0.008080000000000004
-          },
-          {
-            "bodies": [
-              "left_forearm_strut",
-              "w_left_upper_arm"
-            ],
-            "depth_m": 0.007429133728933973
-          },
-          {
-            "bodies": [
-              "right_forearm_strut",
-              "w_right_upper_arm"
-            ],
-            "depth_m": 0.007429133728933973
+            "depth_m": 0.008060000000000012
           },
           {
             "bodies": [
               "left_shin_shell",
               "w_left_thigh"
             ],
-            "depth_m": 0.006950000000000137
+            "depth_m": 0.006889000000000103
           },
           {
             "bodies": [
               "right_shin_shell",
               "w_right_thigh"
             ],
-            "depth_m": 0.006950000000000137
+            "depth_m": 0.006889000000000103
           },
           {
             "bodies": [
-              "collar_plate",
-              "w_head"
+              "left_forearm_strut",
+              "w_left_upper_arm"
             ],
-            "depth_m": 0.005824999999999997
+            "depth_m": 0.006270202290000623
           },
           {
             "bodies": [
-              "right_thigh_clamshell",
-              "w_right_shank"
+              "right_forearm_strut",
+              "w_right_upper_arm"
             ],
-            "depth_m": 0.005483523809758001
-          },
-          {
-            "bodies": [
-              "left_thigh_clamshell",
-              "w_left_shank"
-            ],
-            "depth_m": 0.005458314484924558
+            "depth_m": 0.006270202290000623
           },
           {
             "bodies": [
@@ -1032,13 +1039,6 @@
               "w_right_hand"
             ],
             "depth_m": 0.005000000000000011
-          },
-          {
-            "bodies": [
-              "helmet_crown_panel",
-              "w_head"
-            ],
-            "depth_m": 0.004460019173711847
           },
           {
             "bodies": [
@@ -1077,36 +1077,15 @@
           },
           {
             "bodies": [
-              "collar_plate",
-              "w_torso"
-            ],
-            "depth_m": 0.002049999999999913
-          },
-          {
-            "bodies": [
               "right_rib_edge_2",
               "w_pelvis"
             ],
             "depth_m": 0.001288684931041173
-          },
-          {
-            "bodies": [
-              "right_calf_clamshell",
-              "w_right_thigh"
-            ],
-            "depth_m": 0.0012406534752689435
-          },
-          {
-            "bodies": [
-              "left_calf_clamshell",
-              "w_left_thigh"
-            ],
-            "depth_m": 0.0012350276070004357
           }
         ]
       },
       "panels_open": {
-        "penetrating_pairs": 140,
+        "penetrating_pairs": 142,
         "pairs": [
           {
             "bodies": [
@@ -1120,35 +1099,21 @@
               "helmet",
               "w_head"
             ],
-            "depth_m": 0.11795629507769673
+            "depth_m": 0.11496781854300112
           },
           {
             "bodies": [
               "left_thigh_shell",
               "w_left_thigh"
             ],
-            "depth_m": 0.11142499999999984
+            "depth_m": 0.11125999999999982
           },
           {
             "bodies": [
               "right_thigh_shell",
               "w_right_thigh"
             ],
-            "depth_m": 0.11142499999999984
-          },
-          {
-            "bodies": [
-              "left_boot_toe",
-              "w_left_shank"
-            ],
-            "depth_m": 0.1056230000000002
-          },
-          {
-            "bodies": [
-              "right_boot_toe",
-              "w_right_shank"
-            ],
-            "depth_m": 0.1056230000000002
+            "depth_m": 0.11125999999999982
           },
           {
             "bodies": [
@@ -1183,14 +1148,14 @@
               "left_shin_shell",
               "w_left_shank"
             ],
-            "depth_m": 0.07388999999999979
+            "depth_m": 0.07371499999999981
           },
           {
             "bodies": [
               "right_shin_shell",
               "w_right_shank"
             ],
-            "depth_m": 0.07388999999999979
+            "depth_m": 0.07371499999999981
           },
           {
             "bodies": [
@@ -1204,14 +1169,21 @@
               "left_thigh_strut",
               "w_pelvis"
             ],
-            "depth_m": 0.06587093376024564
+            "depth_m": 0.06479565428617934
           },
           {
             "bodies": [
               "right_thigh_strut",
               "w_pelvis"
             ],
-            "depth_m": 0.06587093376024564
+            "depth_m": 0.06479565428617934
+          },
+          {
+            "bodies": [
+              "neck_ring",
+              "w_head"
+            ],
+            "depth_m": 0.060149999999999704
           },
           {
             "bodies": [
@@ -1229,38 +1201,17 @@
           },
           {
             "bodies": [
-              "left_thigh_clamshell",
-              "w_left_thigh"
-            ],
-            "depth_m": 0.059061634802653896
-          },
-          {
-            "bodies": [
-              "right_thigh_clamshell",
-              "w_right_thigh"
-            ],
-            "depth_m": 0.0590606348026539
-          },
-          {
-            "bodies": [
               "left_bicep_sleeve",
               "w_left_upper_arm"
             ],
-            "depth_m": 0.058422802470786746
+            "depth_m": 0.058329802470786875
           },
           {
             "bodies": [
               "right_bicep_sleeve",
               "w_right_upper_arm"
             ],
-            "depth_m": 0.058422802470786746
-          },
-          {
-            "bodies": [
-              "helmet_neck_collar",
-              "w_head"
-            ],
-            "depth_m": 0.0578739982688388
+            "depth_m": 0.058329802470786875
           },
           {
             "bodies": [
@@ -1278,20 +1229,6 @@
           },
           {
             "bodies": [
-              "left_gauntlet_sleeve",
-              "w_left_forearm"
-            ],
-            "depth_m": 0.052843802470844234
-          },
-          {
-            "bodies": [
-              "right_gauntlet_sleeve",
-              "w_right_forearm"
-            ],
-            "depth_m": 0.052843802470844234
-          },
-          {
-            "bodies": [
               "left_lat_plate",
               "w_torso"
             ],
@@ -1303,6 +1240,20 @@
               "w_torso"
             ],
             "depth_m": 0.05283912759324096
+          },
+          {
+            "bodies": [
+              "left_gauntlet_sleeve",
+              "w_left_forearm"
+            ],
+            "depth_m": 0.05281280247084427
+          },
+          {
+            "bodies": [
+              "right_gauntlet_sleeve",
+              "w_right_forearm"
+            ],
+            "depth_m": 0.05281280247084427
           },
           {
             "bodies": [
@@ -1320,17 +1271,10 @@
           },
           {
             "bodies": [
-              "left_hip_cowl",
-              "w_pelvis"
+              "helmet_neck_collar",
+              "w_head"
             ],
-            "depth_m": 0.050000000000000086
-          },
-          {
-            "bodies": [
-              "right_hip_cowl",
-              "w_pelvis"
-            ],
-            "depth_m": 0.050000000000000086
+            "depth_m": 0.05150648300407657
           },
           {
             "bodies": [
@@ -1348,10 +1292,45 @@
           },
           {
             "bodies": [
-              "neck_ring",
+              "left_thigh_clamshell",
+              "w_left_thigh"
+            ],
+            "depth_m": 0.048161554429244864
+          },
+          {
+            "bodies": [
+              "right_thigh_clamshell",
+              "w_right_thigh"
+            ],
+            "depth_m": 0.048161554429244836
+          },
+          {
+            "bodies": [
+              "right_pauldron_edge",
               "w_torso"
             ],
-            "depth_m": 0.045
+            "depth_m": 0.046703936221108265
+          },
+          {
+            "bodies": [
+              "left_pauldron_edge",
+              "w_torso"
+            ],
+            "depth_m": 0.04670393622110824
+          },
+          {
+            "bodies": [
+              "right_pauldron",
+              "w_torso"
+            ],
+            "depth_m": 0.04670343622110834
+          },
+          {
+            "bodies": [
+              "left_pauldron",
+              "w_torso"
+            ],
+            "depth_m": 0.04670343622110833
           },
           {
             "bodies": [
@@ -1366,41 +1345,6 @@
               "w_right_forearm"
             ],
             "depth_m": 0.04249997183459914
-          },
-          {
-            "bodies": [
-              "chin_guard",
-              "w_head"
-            ],
-            "depth_m": 0.0408638949910794
-          },
-          {
-            "bodies": [
-              "left_shank_strut",
-              "w_left_thigh"
-            ],
-            "depth_m": 0.04048876546308792
-          },
-          {
-            "bodies": [
-              "right_shank_strut",
-              "w_right_thigh"
-            ],
-            "depth_m": 0.04048876546308792
-          },
-          {
-            "bodies": [
-              "left_hip_cowl",
-              "w_left_thigh"
-            ],
-            "depth_m": 0.04000000000000009
-          },
-          {
-            "bodies": [
-              "right_hip_cowl",
-              "w_right_thigh"
-            ],
-            "depth_m": 0.04000000000000009
           },
           {
             "bodies": [
@@ -1460,6 +1404,20 @@
           },
           {
             "bodies": [
+              "left_shank_strut",
+              "w_left_thigh"
+            ],
+            "depth_m": 0.038899566162562044
+          },
+          {
+            "bodies": [
+              "right_shank_strut",
+              "w_right_thigh"
+            ],
+            "depth_m": 0.038899566162562044
+          },
+          {
+            "bodies": [
               "left_lat_plate",
               "w_left_upper_arm"
             ],
@@ -1477,28 +1435,21 @@
               "left_thigh_shell",
               "w_pelvis"
             ],
-            "depth_m": 0.037175000000000125
+            "depth_m": 0.037072000000000105
           },
           {
             "bodies": [
               "right_thigh_shell",
               "w_pelvis"
             ],
-            "depth_m": 0.037175000000000125
+            "depth_m": 0.037072000000000105
           },
           {
             "bodies": [
-              "right_bicep_clamshell",
-              "w_right_upper_arm"
+              "chin_guard",
+              "w_head"
             ],
-            "depth_m": 0.034640302017601904
-          },
-          {
-            "bodies": [
-              "left_bicep_clamshell",
-              "w_left_upper_arm"
-            ],
-            "depth_m": 0.03464030201760189
+            "depth_m": 0.035854189447993665
           },
           {
             "bodies": [
@@ -1506,27 +1457,6 @@
               "w_torso"
             ],
             "depth_m": 0.03454999999999983
-          },
-          {
-            "bodies": [
-              "left_calf_clamshell",
-              "w_left_shank"
-            ],
-            "depth_m": 0.03372732612677957
-          },
-          {
-            "bodies": [
-              "right_calf_clamshell",
-              "w_right_shank"
-            ],
-            "depth_m": 0.03372682612677959
-          },
-          {
-            "bodies": [
-              "neck_ring",
-              "w_head"
-            ],
-            "depth_m": 0.03285000000000027
           },
           {
             "bodies": [
@@ -1541,20 +1471,6 @@
               "w_right_thigh"
             ],
             "depth_m": 0.032415230208426724
-          },
-          {
-            "bodies": [
-              "left_thigh_clamshell",
-              "w_pelvis"
-            ],
-            "depth_m": 0.03162390502633598
-          },
-          {
-            "bodies": [
-              "right_thigh_clamshell",
-              "w_pelvis"
-            ],
-            "depth_m": 0.03162349574297052
           },
           {
             "bodies": [
@@ -1575,112 +1491,105 @@
               "left_thigh_clamshell_fixed_knuckle_upper",
               "w_pelvis"
             ],
-            "depth_m": 0.029747652042244513
+            "depth_m": 0.026306098189140578
           },
           {
             "bodies": [
               "right_thigh_clamshell_fixed_knuckle_upper",
               "w_pelvis"
             ],
-            "depth_m": 0.029747652042244513
+            "depth_m": 0.026306098189140578
+          },
+          {
+            "bodies": [
+              "neck_ring",
+              "w_torso"
+            ],
+            "depth_m": 0.025149999999999898
           },
           {
             "bodies": [
               "left_thigh_clamshell_hinge_pin",
               "w_pelvis"
             ],
-            "depth_m": 0.027914734002167138
+            "depth_m": 0.024308839689817008
           },
           {
             "bodies": [
               "right_thigh_clamshell_hinge_pin",
               "w_pelvis"
             ],
-            "depth_m": 0.027914734002167138
-          },
-          {
-            "bodies": [
-              "left_gauntlet_clamshell",
-              "w_left_forearm"
-            ],
-            "depth_m": 0.027787406402740758
-          },
-          {
-            "bodies": [
-              "right_gauntlet_clamshell",
-              "w_right_forearm"
-            ],
-            "depth_m": 0.027787406402740748
-          },
-          {
-            "bodies": [
-              "right_pauldron",
-              "w_torso"
-            ],
-            "depth_m": 0.027628936221108374
-          },
-          {
-            "bodies": [
-              "left_pauldron",
-              "w_torso"
-            ],
-            "depth_m": 0.02762893622110836
+            "depth_m": 0.024308839689817008
           },
           {
             "bodies": [
               "left_thigh_shell",
               "w_left_shank"
             ],
-            "depth_m": 0.02392499999999978
+            "depth_m": 0.023759999999999754
           },
           {
             "bodies": [
               "right_thigh_shell",
               "w_right_shank"
             ],
-            "depth_m": 0.02392499999999978
+            "depth_m": 0.023759999999999754
           },
           {
             "bodies": [
-              "left_thigh_clamshell_moving_knuckle",
-              "w_pelvis"
+              "right_bicep_clamshell",
+              "w_right_upper_arm"
             ],
-            "depth_m": 0.02299995446667956
+            "depth_m": 0.02374339084644385
           },
           {
             "bodies": [
-              "right_thigh_clamshell_moving_knuckle",
+              "left_bicep_clamshell",
+              "w_left_upper_arm"
+            ],
+            "depth_m": 0.023742890846443845
+          },
+          {
+            "bodies": [
+              "left_calf_clamshell",
+              "w_left_shank"
+            ],
+            "depth_m": 0.022828915720513425
+          },
+          {
+            "bodies": [
+              "right_calf_clamshell",
+              "w_right_shank"
+            ],
+            "depth_m": 0.022828415720513417
+          },
+          {
+            "bodies": [
+              "left_hip_cowl",
               "w_pelvis"
             ],
-            "depth_m": 0.02299995446667956
+            "depth_m": 0.022000000000000075
+          },
+          {
+            "bodies": [
+              "right_hip_cowl",
+              "w_pelvis"
+            ],
+            "depth_m": 0.022000000000000075
           },
           {
             "bodies": [
               "left_thigh_strut",
               "w_left_shank"
             ],
-            "depth_m": 0.022144660940672453
+            "depth_m": 0.02070326101405163
           },
           {
             "bodies": [
               "right_thigh_strut",
               "w_right_shank"
             ],
-            "depth_m": 0.022144660940672453
-          },
-          {
-            "bodies": [
-              "right_cheek_panel",
-              "w_head"
-            ],
-            "depth_m": 0.02176677653491386
-          },
-          {
-            "bodies": [
-              "left_cheek_panel",
-              "w_head"
-            ],
-            "depth_m": 0.021766772526005833
+            "depth_m": 0.02070326101405163
           },
           {
             "bodies": [
@@ -1688,6 +1597,20 @@
               "w_torso"
             ],
             "depth_m": 0.020000000000000004
+          },
+          {
+            "bodies": [
+              "left_thigh_clamshell_moving_knuckle",
+              "w_pelvis"
+            ],
+            "depth_m": 0.019917816597574453
+          },
+          {
+            "bodies": [
+              "right_thigh_clamshell_moving_knuckle",
+              "w_pelvis"
+            ],
+            "depth_m": 0.019917816597574453
           },
           {
             "bodies": [
@@ -1702,20 +1625,6 @@
               "w_right_upper_arm"
             ],
             "depth_m": 0.01904487284670628
-          },
-          {
-            "bodies": [
-              "right_bicep_clamshell",
-              "w_torso"
-            ],
-            "depth_m": 0.019003402547692422
-          },
-          {
-            "bodies": [
-              "left_bicep_clamshell",
-              "w_torso"
-            ],
-            "depth_m": 0.019003402547692394
           },
           {
             "bodies": [
@@ -1730,6 +1639,34 @@
               "w_right_upper_arm"
             ],
             "depth_m": 0.017804061608726177
+          },
+          {
+            "bodies": [
+              "left_gauntlet_clamshell",
+              "w_left_forearm"
+            ],
+            "depth_m": 0.01689049599647462
+          },
+          {
+            "bodies": [
+              "right_gauntlet_clamshell",
+              "w_right_forearm"
+            ],
+            "depth_m": 0.016889995996474602
+          },
+          {
+            "bodies": [
+              "right_bicep_clamshell",
+              "w_torso"
+            ],
+            "depth_m": 0.016715943050822524
+          },
+          {
+            "bodies": [
+              "left_bicep_clamshell",
+              "w_torso"
+            ],
+            "depth_m": 0.016715866527587518
           },
           {
             "bodies": [
@@ -1754,20 +1691,6 @@
           },
           {
             "bodies": [
-              "left_thigh_clamshell",
-              "w_left_shank"
-            ],
-            "depth_m": 0.015072657234857248
-          },
-          {
-            "bodies": [
-              "right_thigh_clamshell",
-              "w_right_shank"
-            ],
-            "depth_m": 0.015072045867832548
-          },
-          {
-            "bodies": [
               "chest_plate",
               "w_torso"
             ],
@@ -1775,17 +1698,17 @@
           },
           {
             "bodies": [
-              "left_thigh_clamshell_fixed_knuckle_lower",
+              "left_thigh_clamshell",
               "w_pelvis"
             ],
-            "depth_m": 0.014392811027799879
+            "depth_m": 0.014118660390239124
           },
           {
             "bodies": [
-              "right_thigh_clamshell_fixed_knuckle_lower",
+              "right_thigh_clamshell",
               "w_pelvis"
             ],
-            "depth_m": 0.014392811027799879
+            "depth_m": 0.01411866039023911
           },
           {
             "bodies": [
@@ -1817,24 +1740,24 @@
           },
           {
             "bodies": [
-              "left_bicep_sleeve",
-              "w_torso"
-            ],
-            "depth_m": 0.012786380708087554
-          },
-          {
-            "bodies": [
-              "right_bicep_sleeve",
-              "w_torso"
-            ],
-            "depth_m": 0.012786380708087554
-          },
-          {
-            "bodies": [
               "right_rib_2",
               "w_pelvis"
             ],
             "depth_m": 0.012676089441672936
+          },
+          {
+            "bodies": [
+              "left_boot_toe",
+              "w_left_shank"
+            ],
+            "depth_m": 0.012611000000000198
+          },
+          {
+            "bodies": [
+              "right_boot_toe",
+              "w_right_shank"
+            ],
+            "depth_m": 0.012611000000000198
           },
           {
             "bodies": [
@@ -1869,14 +1792,42 @@
               "left_boot_toe",
               "w_left_foot"
             ],
-            "depth_m": 0.012190999999999876
+            "depth_m": 0.012380999999999878
           },
           {
             "bodies": [
               "right_boot_toe",
               "w_right_foot"
             ],
-            "depth_m": 0.012190999999999876
+            "depth_m": 0.012380999999999878
+          },
+          {
+            "bodies": [
+              "left_bicep_sleeve",
+              "w_torso"
+            ],
+            "depth_m": 0.012222128168101913
+          },
+          {
+            "bodies": [
+              "right_bicep_sleeve",
+              "w_torso"
+            ],
+            "depth_m": 0.012222128168101913
+          },
+          {
+            "bodies": [
+              "left_hip_cowl",
+              "w_left_thigh"
+            ],
+            "depth_m": 0.01200000000000008
+          },
+          {
+            "bodies": [
+              "right_hip_cowl",
+              "w_right_thigh"
+            ],
+            "depth_m": 0.01200000000000008
           },
           {
             "bodies": [
@@ -1894,6 +1845,20 @@
           },
           {
             "bodies": [
+              "left_thigh_clamshell_fixed_knuckle_lower",
+              "w_pelvis"
+            ],
+            "depth_m": 0.011582363099881685
+          },
+          {
+            "bodies": [
+              "right_thigh_clamshell_fixed_knuckle_lower",
+              "w_pelvis"
+            ],
+            "depth_m": 0.011582363099881685
+          },
+          {
+            "bodies": [
               "left_elbow_cap",
               "w_left_upper_arm"
             ],
@@ -1908,6 +1873,34 @@
           },
           {
             "bodies": [
+              "left_pauldron_edge",
+              "w_left_upper_arm"
+            ],
+            "depth_m": 0.01055608552420581
+          },
+          {
+            "bodies": [
+              "right_pauldron_edge",
+              "w_right_upper_arm"
+            ],
+            "depth_m": 0.01055608552420581
+          },
+          {
+            "bodies": [
+              "left_pauldron",
+              "w_left_upper_arm"
+            ],
+            "depth_m": 0.0105555855242059
+          },
+          {
+            "bodies": [
+              "right_pauldron",
+              "w_right_upper_arm"
+            ],
+            "depth_m": 0.0105555855242059
+          },
+          {
+            "bodies": [
               "spine_frame",
               "w_pelvis"
             ],
@@ -1918,49 +1911,42 @@
               "left_thigh_stripe",
               "w_left_thigh"
             ],
-            "depth_m": 0.008080000000000004
+            "depth_m": 0.008060000000000012
           },
           {
             "bodies": [
               "right_thigh_stripe",
               "w_right_thigh"
             ],
-            "depth_m": 0.008080000000000004
-          },
-          {
-            "bodies": [
-              "left_forearm_strut",
-              "w_left_upper_arm"
-            ],
-            "depth_m": 0.007429133728933973
-          },
-          {
-            "bodies": [
-              "right_forearm_strut",
-              "w_right_upper_arm"
-            ],
-            "depth_m": 0.007429133728933973
+            "depth_m": 0.008060000000000012
           },
           {
             "bodies": [
               "left_shin_shell",
               "w_left_thigh"
             ],
-            "depth_m": 0.006950000000000137
+            "depth_m": 0.006889000000000103
           },
           {
             "bodies": [
               "right_shin_shell",
               "w_right_thigh"
             ],
-            "depth_m": 0.006950000000000137
+            "depth_m": 0.006889000000000103
           },
           {
             "bodies": [
-              "collar_plate",
-              "w_head"
+              "left_forearm_strut",
+              "w_left_upper_arm"
             ],
-            "depth_m": 0.005824999999999997
+            "depth_m": 0.006270202290000623
+          },
+          {
+            "bodies": [
+              "right_forearm_strut",
+              "w_right_upper_arm"
+            ],
+            "depth_m": 0.006270202290000623
           },
           {
             "bodies": [
@@ -2006,20 +1992,6 @@
           },
           {
             "bodies": [
-              "left_calf_clamshell",
-              "w_left_thigh"
-            ],
-            "depth_m": 0.003409911612485217
-          },
-          {
-            "bodies": [
-              "right_calf_clamshell",
-              "w_right_thigh"
-            ],
-            "depth_m": 0.003409765927493827
-          },
-          {
-            "bodies": [
               "left_shoulder_module",
               "w_torso"
             ],
@@ -2031,6 +2003,20 @@
               "w_torso"
             ],
             "depth_m": 0.0031220073336519286
+          },
+          {
+            "bodies": [
+              "right_cheek_panel",
+              "w_head"
+            ],
+            "depth_m": 0.002324284492251831
+          },
+          {
+            "bodies": [
+              "left_cheek_panel",
+              "w_head"
+            ],
+            "depth_m": 0.0023241157215280837
           },
           {
             "bodies": [
@@ -2048,10 +2034,17 @@
           },
           {
             "bodies": [
-              "collar_plate",
-              "w_torso"
+              "left_hip_flap",
+              "w_left_forearm"
             ],
-            "depth_m": 0.002049999999999913
+            "depth_m": 0.00189905698311129
+          },
+          {
+            "bodies": [
+              "right_hip_flap",
+              "w_right_forearm"
+            ],
+            "depth_m": 0.00189905698311129
           },
           {
             "bodies": [

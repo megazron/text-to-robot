@@ -1,0 +1,134 @@
+{
+  "robot_name": "scara",
+  "tier": "prosumer",
+  "lines": [
+    {
+      "category": "Actuator",
+      "name": "Dynamixel XM430-W350",
+      "qty": 1,
+      "unit_cost": 270,
+      "subtotal": 270,
+      "spec": "RS485 smart servo, encoder (4.1 N·m)",
+      "note": "joint joint_1; rating duty/source unverified"
+    },
+    {
+      "category": "Actuator",
+      "name": "DS3218 20kg servo",
+      "qty": 2,
+      "unit_cost": 12,
+      "subtotal": 24,
+      "spec": "PWM, waterproof, metal gears (1.96 N·m)",
+      "note": "joint joint_2; rating duty/source unverified; joint joint_4; rating duty/source unverified"
+    },
+    {
+      "category": "Actuator",
+      "name": "Linear actuator 100N",
+      "qty": 1,
+      "unit_cost": 35,
+      "subtotal": 35,
+      "spec": "12V, 100mm stroke (prismatic) (100 N)",
+      "note": "joint joint_3; rating duty/source unverified"
+    },
+    {
+      "category": "Compute",
+      "name": "Teensy 4.1",
+      "qty": 1,
+      "unit_cost": 32,
+      "subtotal": 32,
+      "spec": "600MHz MCU, real-time control"
+    },
+    {
+      "category": "Power",
+      "name": "LiPo 4S 5000mAh",
+      "qty": 1,
+      "unit_cost": 40,
+      "subtotal": 40,
+      "spec": "74 Wh; est. load 16 W"
+    },
+    {
+      "category": "Power",
+      "name": "DC-DC buck regulator (5V/10A)",
+      "qty": 1,
+      "unit_cost": 12,
+      "subtotal": 12,
+      "spec": "logic + servo rail"
+    },
+    {
+      "category": "Power",
+      "name": "Power distribution board + fuse + switch",
+      "qty": 1,
+      "unit_cost": 14,
+      "subtotal": 14,
+      "spec": "wiring harness backbone"
+    },
+    {
+      "category": "Structure",
+      "name": "3D-printed frame (PLA/PETG)",
+      "qty": 1,
+      "unit_cost": 78.74,
+      "subtotal": 78.74,
+      "spec": "~3.58 kg material @ $22/kg"
+    },
+    {
+      "category": "Structure",
+      "name": "Fastener + bearing kit",
+      "qty": 1,
+      "unit_cost": 18,
+      "subtotal": 18,
+      "spec": "M3 screws, heat inserts, 608 bearings"
+    },
+    {
+      "category": "Wiring & misc",
+      "name": "Wiring, connectors, JST/Dupont, sleeving",
+      "qty": 1,
+      "unit_cost": 51.24,
+      "subtotal": 51.24,
+      "spec": "~12% of electronics"
+    }
+  ],
+  "total": 574.98,
+  "feasible": true,
+  "sizing_pass": true,
+  "hardware_verified": false,
+  "actuator_sizing": [
+    {
+      "joint": "joint_1",
+      "required_effort": 1.835,
+      "effort_unit": "N·m",
+      "required_torque_nm": 1.835,
+      "chosen": "Dynamixel XM430-W350",
+      "margin": "2.2x"
+    },
+    {
+      "joint": "joint_2",
+      "required_effort": 0.465,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.465,
+      "chosen": "DS3218 20kg servo",
+      "margin": "4.2x"
+    },
+    {
+      "joint": "joint_3",
+      "required_effort": 64,
+      "effort_unit": "N",
+      "required_force_n": 64,
+      "chosen": "Linear actuator 100N",
+      "margin": "1.6x"
+    },
+    {
+      "joint": "joint_4",
+      "required_effort": 0.003,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.003,
+      "chosen": "DS3218 20kg servo",
+      "margin": "666.2x"
+    }
+  ],
+  "warnings": [
+    "Sizing uses a neutral-pose gravity proxy and declared joint effort, not a worst-case workspace or dynamic load analysis. Selection checks only approximate effort and broad motion type. Speed/torque curves, travel, voltage, feedback, mounting, thermal duty and wiring are not qualified.",
+    "Catalog values are planning estimates. Except explicitly sourced rated values, torque entries may be stall/peak ratings; continuous duty, fit and complete assemblies are unverified."
+  ],
+  "notes": [
+    "Tier: prosumer. Prices are planning estimates (USD), not quotes. Structure assumes FDM 3D printing."
+  ]
+}

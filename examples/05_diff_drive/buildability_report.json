@@ -1,0 +1,66 @@
+{
+  "scope": "Design-input inventory, not a hardware qualification or a claim that missing interfaces were inspected in CAD",
+  "source_robot_sha256": "17a9a539a9e25f45729be25885cc034249725d2c08290bd70ff5565032393ef5",
+  "source_bom_sha256": "540a81bf90a56d0887c94d1185c7edf9044a8d31134a13167506cf97bf4c1c4b",
+  "hardware_verified": false,
+  "manufacturing_ready": false,
+  "prototype_test_evidence": null,
+  "declared_mass_kg": 6.975094896012767,
+  "links_with_inferred_mass": [
+    "base_link",
+    "left_wheel",
+    "right_wheel",
+    "caster"
+  ],
+  "actuator_catalogue_sizing_pass": true,
+  "joint_requirements": [
+    {
+      "joint": "left_wheel_joint",
+      "type": "continuous",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "travel": "continuous"
+    },
+    {
+      "joint": "right_wheel_joint",
+      "type": "continuous",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "travel": "continuous"
+    }
+  ],
+  "missing_evidence": [
+    {
+      "id": "component_interfaces",
+      "detail": "No verified vendor drawing, shaft/horn interface, mounting-hole pattern or bearing fit is associated with each joint."
+    },
+    {
+      "id": "actuator_operating_envelope",
+      "detail": "No complete speed/effort/thermal-duty and feedback qualification; catalogue effort alone does not validate the selected actuator."
+    },
+    {
+      "id": "electronics_packaging",
+      "detail": "No verified placement, mounting, connector access or cable-bend clearance for the selected electronics. The optional enclosure example uses synthetic dimensions."
+    },
+    {
+      "id": "electrical_system",
+      "detail": "No validated rail voltages, peak currents, power budget, wiring schematic or protection sizing."
+    },
+    {
+      "id": "manufacturing_and_assembly",
+      "detail": "No complete tolerance stack, material/process specification, fastener schedule, assembly procedure or service-access validation."
+    },
+    {
+      "id": "measured_dynamics",
+      "detail": "No prototype measurements establish masses, inertias, friction, backlash, compliance or model-to-hardware agreement."
+    },
+    {
+      "id": "physical_validation",
+      "detail": "No physical assembly, load test or task-performance evidence is attached."
+    }
+  ]
+}

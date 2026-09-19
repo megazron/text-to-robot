@@ -2,68 +2,128 @@
   "mujoco_version": "3.13.0",
   "scope": "Initial pose only; adjacent-body exclusions apply. No human-fit or motion-path validation.",
   "bounding_boxes": {
-    "penetration_count": 227,
-    "max_depth_m": 0.04860114058099999,
+    "penetration_count": 150,
+    "max_depth_m": 0.06532747967384145,
     "contacts": [
       {
         "body1": "shoulder_yoke",
-        "body2": "left_bicep_sleeve",
-        "depth_m": 0.0010023699020574595
-      },
-      {
-        "body1": "shoulder_yoke",
-        "body2": "left_bicep_sleeve",
-        "depth_m": 0.0010023699020574595
+        "body2": "left_pauldron",
+        "depth_m": 0.03877973700179883
       },
       {
         "body1": "shoulder_yoke",
         "body2": "left_pauldron",
-        "depth_m": 0.01918935190382866
+        "depth_m": 0.06532747967384145
       },
       {
         "body1": "shoulder_yoke",
         "body2": "left_pauldron",
-        "depth_m": 0.046299324779057634
+        "depth_m": 0.06532747967384145
       },
       {
         "body1": "shoulder_yoke",
         "body2": "left_pauldron",
-        "depth_m": 0.046299324779057634
+        "depth_m": 0.038779737001798834
       },
       {
         "body1": "shoulder_yoke",
+        "body2": "left_pauldron_edge",
+        "depth_m": 0.03878025052469834
+      },
+      {
+        "body1": "shoulder_yoke",
+        "body2": "left_pauldron_edge",
+        "depth_m": 0.06521397778505553
+      },
+      {
+        "body1": "shoulder_yoke",
+        "body2": "left_pauldron_edge",
+        "depth_m": 0.06521397778505553
+      },
+      {
+        "body1": "shoulder_yoke",
+        "body2": "left_pauldron_edge",
+        "depth_m": 0.03878025052469834
+      },
+      {
+        "body1": "shoulder_yoke",
+        "body2": "right_pauldron",
+        "depth_m": 0.06532747967384145
+      },
+      {
+        "body1": "shoulder_yoke",
+        "body2": "right_pauldron",
+        "depth_m": 0.06532747967384145
+      },
+      {
+        "body1": "shoulder_yoke",
+        "body2": "right_pauldron",
+        "depth_m": 0.038779737001798834
+      },
+      {
+        "body1": "shoulder_yoke",
+        "body2": "right_pauldron",
+        "depth_m": 0.03877973700179883
+      },
+      {
+        "body1": "shoulder_yoke",
+        "body2": "right_pauldron_edge",
+        "depth_m": 0.06521397778505553
+      },
+      {
+        "body1": "shoulder_yoke",
+        "body2": "right_pauldron_edge",
+        "depth_m": 0.06521397778505553
+      },
+      {
+        "body1": "shoulder_yoke",
+        "body2": "right_pauldron_edge",
+        "depth_m": 0.03878025052469834
+      },
+      {
+        "body1": "shoulder_yoke",
+        "body2": "right_pauldron_edge",
+        "depth_m": 0.03878025052469834
+      },
+      {
+        "body1": "left_upper_arm_strut",
         "body2": "left_pauldron",
-        "depth_m": 0.01918935190382866
+        "depth_m": 0.017255071766233695
       },
       {
-        "body1": "shoulder_yoke",
-        "body2": "right_bicep_sleeve",
-        "depth_m": 0.0010023699020574595
+        "body1": "left_upper_arm_strut",
+        "body2": "left_pauldron",
+        "depth_m": 0.017255071766233695
       },
       {
-        "body1": "shoulder_yoke",
-        "body2": "right_bicep_sleeve",
-        "depth_m": 0.0010023699020574595
+        "body1": "left_upper_arm_strut",
+        "body2": "left_pauldron",
+        "depth_m": 0.009617054650631594
       },
       {
-        "body1": "shoulder_yoke",
-        "body2": "right_pauldron",
-        "depth_m": 0.046299324779057634
+        "body1": "left_upper_arm_strut",
+        "body2": "left_pauldron",
+        "depth_m": 0.009617054650631594
       },
       {
-        "body1": "shoulder_yoke",
-        "body2": "right_pauldron",
-        "depth_m": 0.046299324779057634
+        "body1": "left_upper_arm_strut",
+        "body2": "left_pauldron_edge",
+        "depth_m": 0.017255571766233564
       },
       {
-        "body1": "shoulder_yoke",
-        "body2": "right_pauldron",
-        "depth_m": 0.01918935190382866
+        "body1": "left_upper_arm_strut",
+        "body2": "left_pauldron_edge",
+        "depth_m": 0.017255571766233564
       },
       {
-        "body1": "shoulder_yoke",
-        "body2": "right_pauldron",
-        "depth_m": 0.01918935190382866
+        "body1": "left_upper_arm_strut",
+        "body2": "left_pauldron_edge",
+        "depth_m": 0.009617554650631462
+      },
+      {
+        "body1": "left_upper_arm_strut",
+        "body2": "left_pauldron_edge",
+        "depth_m": 0.009617554650631462
       },
       {
         "body1": "left_upper_arm_cuff",
@@ -88,137 +148,167 @@
       {
         "body1": "left_bicep_sleeve",
         "body2": "left_chest_door",
-        "depth_m": 0.01996493029999999
+        "depth_m": 0.019998542899999985
       },
       {
         "body1": "left_bicep_sleeve",
         "body2": "left_chest_door",
-        "depth_m": 0.01996493029999999
+        "depth_m": 0.019998542899999985
       },
       {
         "body1": "left_bicep_sleeve",
         "body2": "left_chest_door",
-        "depth_m": 0.01996493029999999
+        "depth_m": 0.019998542899999985
       },
       {
         "body1": "left_bicep_sleeve",
         "body2": "left_chest_door",
-        "depth_m": 0.01996493029999999
+        "depth_m": 0.019998542899999985
       },
       {
         "body1": "left_bicep_sleeve",
         "body2": "left_pectoral_trim",
-        "depth_m": 0.015541938852886968
+        "depth_m": 0.015490938852886861
       },
       {
         "body1": "left_bicep_sleeve",
         "body2": "left_pectoral_trim",
-        "depth_m": 0.015541938852886968
+        "depth_m": 0.015490938852886861
       },
       {
         "body1": "left_bicep_sleeve",
         "body2": "left_lat_plate",
-        "depth_m": 0.017767880708087554
+        "depth_m": 0.017203628168101913
       },
       {
         "body1": "left_bicep_sleeve",
         "body2": "left_lat_plate",
-        "depth_m": 0.017767880708087554
+        "depth_m": 0.017203628168101913
       },
       {
         "body1": "left_bicep_front",
         "body2": "left_chest_door",
-        "depth_m": 0.022911499999999974
+        "depth_m": 0.022910999999999987
       },
       {
         "body1": "left_bicep_front",
         "body2": "left_chest_door",
-        "depth_m": 0.022911499999999974
+        "depth_m": 0.022910999999999987
       },
       {
         "body1": "left_bicep_front",
         "body2": "left_chest_door",
-        "depth_m": 0.022911499999999974
+        "depth_m": 0.022910999999999987
       },
       {
         "body1": "left_bicep_clamshell",
         "body2": "left_lat_plate",
-        "depth_m": 0.025006127041838015
+        "depth_m": 0.02191817359400846
       },
       {
         "body1": "left_bicep_clamshell",
         "body2": "left_lat_plate",
-        "depth_m": 0.025006127041838015
+        "depth_m": 0.02191817359400846
       },
       {
         "body1": "left_pauldron",
         "body2": "collar_plate",
-        "depth_m": 0.021580089268843708
+        "depth_m": 0.0031592383606462828
       },
       {
         "body1": "left_pauldron",
         "body2": "collar_plate",
-        "depth_m": 0.006761555409804014
+        "depth_m": 0.0031592383606462828
       },
       {
         "body1": "left_pauldron",
+        "body2": "left_pectoral_trim",
+        "depth_m": 0.028630205921133925
+      },
+      {
+        "body1": "left_pauldron",
+        "body2": "left_pectoral_trim",
+        "depth_m": 0.04404747967384126
+      },
+      {
+        "body1": "left_pauldron",
+        "body2": "left_pectoral_trim",
+        "depth_m": 0.04404747967384126
+      },
+      {
+        "body1": "left_pauldron",
+        "body2": "left_pectoral_trim",
+        "depth_m": 0.028630205921133925
+      },
+      {
+        "body1": "left_pauldron_edge",
         "body2": "collar_plate",
-        "depth_m": 0.006761555409804014
+        "depth_m": 0.0026592383606462546
       },
       {
-        "body1": "left_pauldron",
+        "body1": "left_pauldron_edge",
         "body2": "collar_plate",
-        "depth_m": 0.021580089268843708
+        "depth_m": 0.0026592383606462546
       },
       {
-        "body1": "left_pauldron",
+        "body1": "left_pauldron_edge",
         "body2": "left_pectoral_trim",
-        "depth_m": 0.009039820823163756
+        "depth_m": 0.028630719444033434
       },
       {
-        "body1": "left_pauldron",
+        "body1": "left_pauldron_edge",
         "body2": "left_pectoral_trim",
-        "depth_m": 0.02501932477905744
+        "depth_m": 0.04393397778505534
       },
       {
-        "body1": "left_pauldron",
+        "body1": "left_pauldron_edge",
         "body2": "left_pectoral_trim",
-        "depth_m": 0.02501932477905744
+        "depth_m": 0.04393397778505534
       },
       {
-        "body1": "left_pauldron",
+        "body1": "left_pauldron_edge",
         "body2": "left_pectoral_trim",
-        "depth_m": 0.009039820823163756
+        "depth_m": 0.028630719444033434
       },
       {
-        "body1": "left_clavicle_cover",
-        "body2": "left_chest_door",
-        "depth_m": 0.012712704013529575
+        "body1": "right_upper_arm_strut",
+        "body2": "right_pauldron",
+        "depth_m": 0.009617054650631594
       },
       {
-        "body1": "left_clavicle_cover",
-        "body2": "left_chest_door",
-        "depth_m": 0.012712704013529575
+        "body1": "right_upper_arm_strut",
+        "body2": "right_pauldron",
+        "depth_m": 0.009617054650631594
       },
       {
-        "body1": "left_clavicle_cover",
-        "body2": "left_pectoral_trim",
-        "depth_m": 0.014759999999999968
+        "body1": "right_upper_arm_strut",
+        "body2": "right_pauldron",
+        "depth_m": 0.017255071766233695
       },
       {
-        "body1": "left_clavicle_cover",
-        "body2": "left_pectoral_trim",
-        "depth_m": 0.014759999999999968
+        "body1": "right_upper_arm_strut",
+        "body2": "right_pauldron",
+        "depth_m": 0.017255071766233695
       },
       {
-        "body1": "left_clavicle_cover",
-        "body2": "left_pectoral_trim",
-        "depth_m": 0.014759999999999968
+        "body1": "right_upper_arm_strut",
+        "body2": "right_pauldron_edge",
+        "depth_m": 0.009617554650631462
       },
       {
-        "body1": "left_clavicle_cover",
-        "body2": "left_pectoral_trim",
-        "depth_m": 0.014759999999999968
+        "body1": "right_upper_arm_strut",
+        "body2": "right_pauldron_edge",
+        "depth_m": 0.009617554650631462
+      },
+      {
+        "body1": "right_upper_arm_strut",
+        "body2": "right_pauldron_edge",
+        "depth_m": 0.017255571766233564
+      },
+      {
+        "body1": "right_upper_arm_strut",
+        "body2": "right_pauldron_edge",
+        "depth_m": 0.017255571766233564
       },
       {
         "body1": "right_upper_arm_cuff",
@@ -243,587 +333,287 @@
       {
         "body1": "right_bicep_sleeve",
         "body2": "right_chest_door",
-        "depth_m": 0.01996493029999999
+        "depth_m": 0.019998542899999985
       },
       {
         "body1": "right_bicep_sleeve",
         "body2": "right_chest_door",
-        "depth_m": 0.01996493029999999
+        "depth_m": 0.019998542899999985
       },
       {
         "body1": "right_bicep_sleeve",
         "body2": "right_chest_door",
-        "depth_m": 0.01996493029999999
+        "depth_m": 0.019998542899999985
       },
       {
         "body1": "right_bicep_sleeve",
         "body2": "right_chest_door",
-        "depth_m": 0.01996493029999999
+        "depth_m": 0.019998542899999985
       },
       {
         "body1": "right_bicep_sleeve",
         "body2": "right_pectoral_trim",
-        "depth_m": 0.015541938852886968
+        "depth_m": 0.015490938852886861
       },
       {
         "body1": "right_bicep_sleeve",
         "body2": "right_pectoral_trim",
-        "depth_m": 0.015541938852886968
+        "depth_m": 0.015490938852886861
       },
       {
         "body1": "right_bicep_sleeve",
         "body2": "right_lat_plate",
-        "depth_m": 0.017767880708087554
+        "depth_m": 0.017203628168101913
       },
       {
         "body1": "right_bicep_sleeve",
         "body2": "right_lat_plate",
-        "depth_m": 0.017767880708087554
+        "depth_m": 0.017203628168101913
       },
       {
         "body1": "right_bicep_front",
         "body2": "right_chest_door",
-        "depth_m": 0.022911499999999974
+        "depth_m": 0.022910999999999987
       },
       {
         "body1": "right_bicep_front",
         "body2": "right_chest_door",
-        "depth_m": 0.022911499999999974
+        "depth_m": 0.022910999999999987
       },
       {
         "body1": "right_bicep_front",
         "body2": "right_chest_door",
-        "depth_m": 0.022911499999999974
+        "depth_m": 0.022910999999999987
       },
       {
         "body1": "right_bicep_clamshell",
         "body2": "right_lat_plate",
-        "depth_m": 0.025006127041838015
+        "depth_m": 0.021918623817702772
       },
       {
         "body1": "right_bicep_clamshell",
         "body2": "right_lat_plate",
-        "depth_m": 0.025006127041838015
+        "depth_m": 0.021918623817702772
       },
       {
         "body1": "right_pauldron",
         "body2": "collar_plate",
-        "depth_m": 0.021580089268843708
+        "depth_m": 0.0031592383606462828
       },
       {
         "body1": "right_pauldron",
         "body2": "collar_plate",
-        "depth_m": 0.006761555409804014
+        "depth_m": 0.0031592383606462828
       },
       {
         "body1": "right_pauldron",
+        "body2": "right_pectoral_trim",
+        "depth_m": 0.04404747967384126
+      },
+      {
+        "body1": "right_pauldron",
+        "body2": "right_pectoral_trim",
+        "depth_m": 0.04404747967384126
+      },
+      {
+        "body1": "right_pauldron",
+        "body2": "right_pectoral_trim",
+        "depth_m": 0.028630205921133925
+      },
+      {
+        "body1": "right_pauldron",
+        "body2": "right_pectoral_trim",
+        "depth_m": 0.028630205921133925
+      },
+      {
+        "body1": "right_pauldron_edge",
         "body2": "collar_plate",
-        "depth_m": 0.006761555409804014
+        "depth_m": 0.0026592383606462546
       },
       {
-        "body1": "right_pauldron",
+        "body1": "right_pauldron_edge",
         "body2": "collar_plate",
-        "depth_m": 0.021580089268843708
+        "depth_m": 0.0026592383606462546
       },
       {
-        "body1": "right_pauldron",
+        "body1": "right_pauldron_edge",
         "body2": "right_pectoral_trim",
-        "depth_m": 0.02501932477905744
+        "depth_m": 0.04393397778505534
       },
       {
-        "body1": "right_pauldron",
+        "body1": "right_pauldron_edge",
         "body2": "right_pectoral_trim",
-        "depth_m": 0.02501932477905744
+        "depth_m": 0.04393397778505534
       },
       {
-        "body1": "right_pauldron",
+        "body1": "right_pauldron_edge",
         "body2": "right_pectoral_trim",
-        "depth_m": 0.009039820823163756
+        "depth_m": 0.028630719444033434
       },
       {
-        "body1": "right_pauldron",
+        "body1": "right_pauldron_edge",
         "body2": "right_pectoral_trim",
-        "depth_m": 0.009039820823163756
-      },
-      {
-        "body1": "right_clavicle_cover",
-        "body2": "right_chest_door",
-        "depth_m": 0.012712704013529575
-      },
-      {
-        "body1": "right_clavicle_cover",
-        "body2": "right_chest_door",
-        "depth_m": 0.012712704013529575
-      },
-      {
-        "body1": "right_clavicle_cover",
-        "body2": "right_pectoral_trim",
-        "depth_m": 0.014759999999999968
-      },
-      {
-        "body1": "right_clavicle_cover",
-        "body2": "right_pectoral_trim",
-        "depth_m": 0.014759999999999968
-      },
-      {
-        "body1": "right_clavicle_cover",
-        "body2": "right_pectoral_trim",
-        "depth_m": 0.014759999999999968
-      },
-      {
-        "body1": "right_clavicle_cover",
-        "body2": "right_pectoral_trim",
-        "depth_m": 0.014759999999999968
+        "depth_m": 0.028630719444033434
       },
       {
         "body1": "neck_pitch_carrier",
         "body2": "helmet_neck_collar",
-        "depth_m": 0.012024000000000035
+        "depth_m": 0.005656499999999953
       },
       {
         "body1": "neck_pitch_carrier",
         "body2": "helmet_neck_collar",
-        "depth_m": 0.012024000000000035
+        "depth_m": 0.005656499999999953
       },
       {
         "body1": "neck_pitch_carrier",
         "body2": "helmet_neck_collar",
-        "depth_m": 0.012024000000000035
+        "depth_m": 0.005656499999999953
       },
       {
         "body1": "neck_pitch_carrier",
         "body2": "helmet_neck_collar",
-        "depth_m": 0.012024000000000035
-      },
-      {
-        "body1": "helmet_neck_collar",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.020023999999999972
-      },
-      {
-        "body1": "helmet_neck_collar",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.020023999999999972
-      },
-      {
-        "body1": "helmet_neck_collar",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.020023999999999972
-      },
-      {
-        "body1": "helmet_neck_collar",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.020023999999999972
-      },
-      {
-        "body1": "helmet_neck_collar",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.020023999999999972
-      },
-      {
-        "body1": "helmet_neck_collar",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.020023999999999972
-      },
-      {
-        "body1": "helmet_neck_collar",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.020023999999999972
-      },
-      {
-        "body1": "helmet_neck_collar",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.020023999999999972
+        "depth_m": 0.005656499999999953
       },
       {
         "body1": "helmet_neck_collar",
         "body2": "chin_guard",
-        "depth_m": 0.034024500000000124
+        "depth_m": 0.02564200000000002
       },
       {
         "body1": "helmet_neck_collar",
         "body2": "chin_guard",
-        "depth_m": 0.034024500000000124
+        "depth_m": 0.02564200000000002
       },
       {
         "body1": "helmet_neck_collar",
         "body2": "chin_guard",
-        "depth_m": 0.034024500000000124
+        "depth_m": 0.02564200000000002
       },
       {
         "body1": "helmet_neck_collar",
         "body2": "chin_guard",
-        "depth_m": 0.034024500000000124
-      },
-      {
-        "body1": "neck_yaw_carrier",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.0032594997339424614
-      },
-      {
-        "body1": "neck_yaw_carrier",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.0032594997339424614
-      },
-      {
-        "body1": "neck_yaw_carrier",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.0032594998843560666
-      },
-      {
-        "body1": "neck_yaw_carrier",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.0032594998843560666
+        "depth_m": 0.02564200000000002
       },
       {
         "body1": "neck_yaw_carrier",
         "body2": "chin_guard",
-        "depth_m": 0.00784393374535517
+        "depth_m": 0.0016415000000000735
       },
       {
         "body1": "neck_yaw_carrier",
         "body2": "chin_guard",
-        "depth_m": 0.00784393374535517
+        "depth_m": 0.0016415000000000735
       },
       {
-        "body1": "helmet_crown_panel",
+        "body1": "neck_yaw_carrier",
+        "body2": "chin_guard",
+        "depth_m": 0.0016415000000000735
+      },
+      {
+        "body1": "neck_yaw_carrier",
+        "body2": "chin_guard",
+        "depth_m": 0.0016415000000000735
+      },
+      {
+        "body1": "forehead_plate",
         "body2": "faceplate",
-        "depth_m": 0.0038180000000000436
+        "depth_m": 0.013876499999999917
       },
       {
-        "body1": "helmet_crown_panel",
+        "body1": "forehead_plate",
         "body2": "faceplate",
-        "depth_m": 0.0038180000000000436
+        "depth_m": 0.013876499999999917
       },
       {
-        "body1": "helmet_crown_panel",
+        "body1": "forehead_plate",
         "body2": "faceplate",
-        "depth_m": 0.0038180000000000436
+        "depth_m": 0.013876499999999917
       },
       {
-        "body1": "helmet_crown_panel",
+        "body1": "forehead_plate",
         "body2": "faceplate",
-        "depth_m": 0.0038180000000000436
-      },
-      {
-        "body1": "helmet_crown_panel",
-        "body2": "forehead_plate",
-        "depth_m": 0.0014765000000000195
-      },
-      {
-        "body1": "helmet_crown_panel",
-        "body2": "forehead_plate",
-        "depth_m": 0.0014765000000000195
-      },
-      {
-        "body1": "helmet_crown_panel",
-        "body2": "forehead_plate",
-        "depth_m": 0.0014765000000000195
-      },
-      {
-        "body1": "helmet_crown_panel",
-        "body2": "forehead_plate",
-        "depth_m": 0.0014765000000000195
-      },
-      {
-        "body1": "helmet_crown_panel",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.0038180000000000436
-      },
-      {
-        "body1": "helmet_crown_panel",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.0038180000000000436
-      },
-      {
-        "body1": "helmet_crown_panel",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.0038180000000000436
-      },
-      {
-        "body1": "helmet_crown_panel",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.0038180000000000436
-      },
-      {
-        "body1": "helmet_crown_panel",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.0038180000000000436
-      },
-      {
-        "body1": "helmet_crown_panel",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.0038180000000000436
-      },
-      {
-        "body1": "helmet_crown_panel",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.0038180000000000436
-      },
-      {
-        "body1": "helmet_crown_panel",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.0038180000000000436
+        "depth_m": 0.013876499999999917
       },
       {
         "body1": "faceplate",
         "body2": "left_cheek_panel",
-        "depth_m": 0.028054000000000003
+        "depth_m": 0.02739100000000003
       },
       {
         "body1": "faceplate",
         "body2": "left_cheek_panel",
-        "depth_m": 0.028054000000000003
+        "depth_m": 0.02739100000000003
       },
       {
         "body1": "faceplate",
         "body2": "left_cheek_panel",
-        "depth_m": 0.028054000000000003
+        "depth_m": 0.02739100000000003
       },
       {
         "body1": "faceplate",
         "body2": "left_cheek_panel",
-        "depth_m": 0.028054000000000003
+        "depth_m": 0.02739100000000003
       },
       {
         "body1": "faceplate",
         "body2": "right_cheek_panel",
-        "depth_m": 0.028054000000000003
+        "depth_m": 0.02739100000000003
       },
       {
         "body1": "faceplate",
         "body2": "right_cheek_panel",
-        "depth_m": 0.028054000000000003
+        "depth_m": 0.02739100000000003
       },
       {
         "body1": "faceplate",
         "body2": "right_cheek_panel",
-        "depth_m": 0.028054000000000003
+        "depth_m": 0.02739100000000003
       },
       {
         "body1": "faceplate",
         "body2": "right_cheek_panel",
-        "depth_m": 0.028054000000000003
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.016883499999999996
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.016883499999999996
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.016883499999999996
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.016883499999999996
-      },
-      {
-        "body1": "forehead_plate",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.008259499999999989
-      },
-      {
-        "body1": "forehead_plate",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.008259499999999989
-      },
-      {
-        "body1": "forehead_plate",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.008259499999999989
-      },
-      {
-        "body1": "forehead_plate",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.008259499999999989
-      },
-      {
-        "body1": "forehead_plate",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.008259499999999989
-      },
-      {
-        "body1": "forehead_plate",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.008259499999999989
-      },
-      {
-        "body1": "forehead_plate",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.008259499999999989
-      },
-      {
-        "body1": "forehead_plate",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.008259499999999989
-      },
-      {
-        "body1": "mouth_line",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.006184500000000012
-      },
-      {
-        "body1": "mouth_line",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.006184500000000012
-      },
-      {
-        "body1": "mouth_line",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.006184500000000012
-      },
-      {
-        "body1": "mouth_line",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.006184500000000012
-      },
-      {
-        "body1": "mouth_line",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.006184500000000012
-      },
-      {
-        "body1": "mouth_line",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.006184500000000012
-      },
-      {
-        "body1": "mouth_line",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.006184500000000012
-      },
-      {
-        "body1": "mouth_line",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.006184500000000012
+        "depth_m": 0.02739100000000003
       },
       {
         "body1": "left_eye_socket",
         "body2": "left_cheek_panel",
-        "depth_m": 0.007770500000000027
+        "depth_m": 0.007459000000000035
       },
       {
         "body1": "left_eye_socket",
         "body2": "left_cheek_panel",
-        "depth_m": 0.007770500000000027
+        "depth_m": 0.007459000000000035
       },
       {
         "body1": "left_eye_socket",
         "body2": "left_cheek_panel",
-        "depth_m": 0.007770500000000027
+        "depth_m": 0.007459000000000035
       },
       {
         "body1": "left_eye_socket",
         "body2": "left_cheek_panel",
-        "depth_m": 0.007770500000000027
-      },
-      {
-        "body1": "left_eye_lens",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.0014365000000000072
-      },
-      {
-        "body1": "left_eye_lens",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.0014365000000000072
-      },
-      {
-        "body1": "left_eye_lens",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.0014365000000000072
-      },
-      {
-        "body1": "left_eye_lens",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.0014365000000000072
+        "depth_m": 0.007459000000000035
       },
       {
         "body1": "right_eye_socket",
         "body2": "right_cheek_panel",
-        "depth_m": 0.007770500000000027
+        "depth_m": 0.007459000000000035
       },
       {
         "body1": "right_eye_socket",
         "body2": "right_cheek_panel",
-        "depth_m": 0.007770500000000027
+        "depth_m": 0.007459000000000035
       },
       {
         "body1": "right_eye_socket",
         "body2": "right_cheek_panel",
-        "depth_m": 0.007770500000000027
+        "depth_m": 0.007459000000000035
       },
       {
         "body1": "right_eye_socket",
         "body2": "right_cheek_panel",
-        "depth_m": 0.007770500000000027
-      },
-      {
-        "body1": "right_eye_lens",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.0014365000000000072
-      },
-      {
-        "body1": "right_eye_lens",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.0014365000000000072
-      },
-      {
-        "body1": "right_eye_lens",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.0014365000000000072
-      },
-      {
-        "body1": "right_eye_lens",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.0014365000000000072
-      },
-      {
-        "body1": "left_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.023942499999999853
-      },
-      {
-        "body1": "left_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.023942499999999853
-      },
-      {
-        "body1": "left_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.023942499999999853
-      },
-      {
-        "body1": "left_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.023942499999999853
-      },
-      {
-        "body1": "right_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.023942499999999853
-      },
-      {
-        "body1": "right_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.023942499999999853
-      },
-      {
-        "body1": "right_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.023942499999999853
-      },
-      {
-        "body1": "right_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.023942499999999853
+        "depth_m": 0.007459000000000035
       },
       {
         "body1": "ab_plate_3",
@@ -846,2991 +636,130 @@
         "depth_m": 0.003999999999999837
       },
       {
-        "body1": "left_rib_2",
-        "body2": "left_hip_cowl",
-        "depth_m": 0.006692008118829577
-      },
-      {
-        "body1": "right_rib_2",
-        "body2": "right_hip_cowl",
-        "depth_m": 0.009628198521715479
-      },
-      {
-        "body1": "right_rib_2",
-        "body2": "right_hip_cowl",
-        "depth_m": 0.011181824630751184
-      },
-      {
-        "body1": "left_rib_edge_2",
-        "body2": "left_hip_cowl",
-        "depth_m": 0.007217901661675912
-      },
-      {
-        "body1": "left_rib_edge_2",
-        "body2": "left_hip_cowl",
-        "depth_m": 0.006625213580851697
-      },
-      {
-        "body1": "left_rib_edge_2",
-        "body2": "left_hip_cowl",
-        "depth_m": 0.006625213608412958
-      },
-      {
-        "body1": "left_rib_edge_2",
-        "body2": "left_hip_cowl",
-        "depth_m": 0.007217901719230633
-      },
-      {
-        "body1": "right_rib_edge_2",
-        "body2": "right_hip_cowl",
-        "depth_m": 0.008043823083354199
-      },
-      {
-        "body1": "right_rib_edge_2",
-        "body2": "right_hip_cowl",
-        "depth_m": 0.008043823146079952
-      },
-      {
-        "body1": "right_rib_edge_2",
-        "body2": "right_hip_cowl",
-        "depth_m": 0.0074511350652557385
-      },
-      {
-        "body1": "right_rib_edge_2",
-        "body2": "right_hip_cowl",
-        "depth_m": 0.007451134972536525
-      },
-      {
-        "body1": "left_hip_module",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0027519999999999763
-      },
-      {
-        "body1": "left_hip_module",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0027519999999999763
-      },
-      {
-        "body1": "left_hip_module",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0027519999999999763
-      },
-      {
-        "body1": "left_hip_module",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0027519999999999763
+        "body1": "left_shin_guard",
+        "body2": "left_shin_shell",
+        "depth_m": 0.015303000000000004
       },
       {
         "body1": "left_shin_guard",
         "body2": "left_shin_shell",
-        "depth_m": 0.015260500000000003
+        "depth_m": 0.015303000000000004
       },
       {
         "body1": "left_shin_guard",
         "body2": "left_shin_shell",
-        "depth_m": 0.015260500000000003
+        "depth_m": 0.015303000000000004
       },
       {
         "body1": "left_shin_guard",
         "body2": "left_shin_shell",
-        "depth_m": 0.015260500000000003
-      },
-      {
-        "body1": "left_shin_guard",
-        "body2": "left_shin_shell",
-        "depth_m": 0.015260500000000003
+        "depth_m": 0.015303000000000004
       },
       {
         "body1": "left_shin_guard",
         "body2": "left_shin_stripe",
-        "depth_m": 0.013505999999999976
+        "depth_m": 0.01825050000000001
       },
       {
         "body1": "left_shin_guard",
         "body2": "left_shin_stripe",
-        "depth_m": 0.013505999999999976
+        "depth_m": 0.01825050000000001
       },
       {
         "body1": "left_shin_guard",
         "body2": "left_shin_stripe",
-        "depth_m": 0.013505999999999976
+        "depth_m": 0.01825050000000001
       },
       {
         "body1": "left_shin_guard",
         "body2": "left_shin_stripe",
-        "depth_m": 0.013505999999999976
+        "depth_m": 0.01825050000000001
       },
       {
-        "body1": "left_boot_toe",
-        "body2": "left_calf_clamshell",
-        "depth_m": 0.04858535941899998
+        "body1": "left_shin_guard",
+        "body2": "left_shin_ridge",
+        "depth_m": 0.007198999999999997
       },
       {
-        "body1": "left_boot_toe",
-        "body2": "left_calf_clamshell",
-        "depth_m": 0.04858535941899998
+        "body1": "left_shin_guard",
+        "body2": "left_shin_ridge",
+        "depth_m": 0.007198999999999997
       },
       {
-        "body1": "left_boot_toe",
-        "body2": "left_calf_clamshell",
-        "depth_m": 0.04858535941899998
+        "body1": "left_shin_guard",
+        "body2": "left_shin_ridge",
+        "depth_m": 0.007198999999999997
       },
       {
-        "body1": "left_boot_toe",
-        "body2": "left_calf_clamshell",
-        "depth_m": 0.04858535941899998
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.012751999999999963
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.012751999999999963
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.012751999999999963
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.012751999999999963
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.013318000000000014
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.013318000000000014
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.013318000000000014
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.013318000000000014
-      },
-      {
-        "body1": "right_hip_module",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0027519999999999763
-      },
-      {
-        "body1": "right_hip_module",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0027519999999999763
-      },
-      {
-        "body1": "right_hip_module",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0027519999999999763
-      },
-      {
-        "body1": "right_hip_module",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0027519999999999763
+        "body1": "left_shin_guard",
+        "body2": "left_shin_ridge",
+        "depth_m": 0.007198999999999997
       },
       {
         "body1": "right_shin_guard",
         "body2": "right_shin_shell",
-        "depth_m": 0.015260500000000003
+        "depth_m": 0.015303000000000004
       },
       {
         "body1": "right_shin_guard",
         "body2": "right_shin_shell",
-        "depth_m": 0.015260500000000003
+        "depth_m": 0.015303000000000004
       },
       {
         "body1": "right_shin_guard",
         "body2": "right_shin_shell",
-        "depth_m": 0.015260500000000003
+        "depth_m": 0.015303000000000004
       },
       {
         "body1": "right_shin_guard",
         "body2": "right_shin_shell",
-        "depth_m": 0.015260500000000003
+        "depth_m": 0.015303000000000004
       },
       {
         "body1": "right_shin_guard",
         "body2": "right_shin_stripe",
-        "depth_m": 0.013505999999999976
+        "depth_m": 0.01825050000000001
       },
       {
         "body1": "right_shin_guard",
         "body2": "right_shin_stripe",
-        "depth_m": 0.013505999999999976
+        "depth_m": 0.01825050000000001
       },
       {
         "body1": "right_shin_guard",
         "body2": "right_shin_stripe",
-        "depth_m": 0.013505999999999976
+        "depth_m": 0.01825050000000001
       },
       {
         "body1": "right_shin_guard",
         "body2": "right_shin_stripe",
-        "depth_m": 0.013505999999999976
+        "depth_m": 0.01825050000000001
       },
       {
-        "body1": "right_boot_toe",
-        "body2": "right_calf_clamshell",
-        "depth_m": 0.04860114058099999
+        "body1": "right_shin_guard",
+        "body2": "right_shin_ridge",
+        "depth_m": 0.007198999999999997
       },
       {
-        "body1": "right_boot_toe",
-        "body2": "right_calf_clamshell",
-        "depth_m": 0.04860114058099999
+        "body1": "right_shin_guard",
+        "body2": "right_shin_ridge",
+        "depth_m": 0.007198999999999997
       },
       {
-        "body1": "right_boot_toe",
-        "body2": "right_calf_clamshell",
-        "depth_m": 0.04860114058099999
+        "body1": "right_shin_guard",
+        "body2": "right_shin_ridge",
+        "depth_m": 0.007198999999999997
       },
       {
-        "body1": "right_boot_toe",
-        "body2": "right_calf_clamshell",
-        "depth_m": 0.04860114058099999
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.012751999999999963
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.012751999999999963
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.012751999999999963
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.012751999999999963
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.013318000000000014
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.013318000000000014
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.013318000000000014
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.013318000000000014
+        "body1": "right_shin_guard",
+        "body2": "right_shin_ridge",
+        "depth_m": 0.007198999999999997
       }
     ]
   },
   "convex_meshes": {
-    "penetration_count": 537,
-    "max_depth_m": 0.015912141981172793,
-    "contacts": [
-      {
-        "body1": "left_pauldron",
-        "body2": "collar_plate",
-        "depth_m": 0.0014196453772620935
-      },
-      {
-        "body1": "left_pauldron",
-        "body2": "collar_plate",
-        "depth_m": 0.001444585039460378
-      },
-      {
-        "body1": "left_pauldron",
-        "body2": "collar_plate",
-        "depth_m": 0.004024715403723079
-      },
-      {
-        "body1": "left_clavicle_cover",
-        "body2": "left_pectoral_trim",
-        "depth_m": 0.01303161468228438
-      },
-      {
-        "body1": "left_clavicle_cover",
-        "body2": "left_pectoral_trim",
-        "depth_m": 0.009363316655940056
-      },
-      {
-        "body1": "left_clavicle_cover",
-        "body2": "left_pectoral_trim",
-        "depth_m": 0.009363442579595772
-      },
-      {
-        "body1": "left_clavicle_cover",
-        "body2": "left_pectoral_trim",
-        "depth_m": 0.008181096863456904
-      },
-      {
-        "body1": "right_pauldron",
-        "body2": "collar_plate",
-        "depth_m": 0.0040835662356559985
-      },
-      {
-        "body1": "right_pauldron",
-        "body2": "collar_plate",
-        "depth_m": 0.004081731939758538
-      },
-      {
-        "body1": "right_clavicle_cover",
-        "body2": "right_pectoral_trim",
-        "depth_m": 0.013031607809048577
-      },
-      {
-        "body1": "right_clavicle_cover",
-        "body2": "right_pectoral_trim",
-        "depth_m": 0.009365127649190026
-      },
-      {
-        "body1": "right_clavicle_cover",
-        "body2": "right_pectoral_trim",
-        "depth_m": 0.009365591222264892
-      },
-      {
-        "body1": "right_clavicle_cover",
-        "body2": "right_pectoral_trim",
-        "depth_m": 0.007937273225098941
-      },
-      {
-        "body1": "helmet_neck_collar",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.0077278074825168856
-      },
-      {
-        "body1": "helmet_neck_collar",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.008347961418668538
-      },
-      {
-        "body1": "helmet_neck_collar",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.008194308228920909
-      },
-      {
-        "body1": "helmet_neck_collar",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.003861946112607005
-      },
-      {
-        "body1": "helmet_neck_collar",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.005571312958585184
-      },
-      {
-        "body1": "helmet_neck_collar",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.0031502313877005217
-      },
-      {
-        "body1": "helmet_neck_collar",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.004646598733165988
-      },
-      {
-        "body1": "helmet_neck_collar",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.003915974228479233
-      },
-      {
-        "body1": "helmet_neck_collar",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.005051747327792572
-      },
-      {
-        "body1": "helmet_neck_collar",
-        "body2": "chin_guard",
-        "depth_m": 0.004038335593884225
-      },
-      {
-        "body1": "helmet_neck_collar",
-        "body2": "chin_guard",
-        "depth_m": 0.0038942499402978763
-      },
-      {
-        "body1": "helmet_neck_collar",
-        "body2": "chin_guard",
-        "depth_m": 0.0023553486478249145
-      },
-      {
-        "body1": "helmet_neck_collar",
-        "body2": "chin_guard",
-        "depth_m": 0.002112966497351872
-      },
-      {
-        "body1": "helmet_neck_collar",
-        "body2": "chin_guard",
-        "depth_m": 0.0033220256798215607
-      },
-      {
-        "body1": "helmet_neck_collar",
-        "body2": "chin_guard",
-        "depth_m": 0.003274990864892487
-      },
-      {
-        "body1": "helmet_neck_collar",
-        "body2": "chin_guard",
-        "depth_m": 0.0014265031895350708
-      },
-      {
-        "body1": "helmet_neck_collar",
-        "body2": "chin_guard",
-        "depth_m": 0.0010193735138934162
-      },
-      {
-        "body1": "helmet_neck_collar",
-        "body2": "chin_guard",
-        "depth_m": 0.00404173733406976
-      },
-      {
-        "body1": "helmet_neck_collar",
-        "body2": "chin_guard",
-        "depth_m": 0.003827384893473943
-      },
-      {
-        "body1": "helmet_neck_collar",
-        "body2": "chin_guard",
-        "depth_m": 0.003766889026981502
-      },
-      {
-        "body1": "helmet_crown_panel",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.0011999331254427881
-      },
-      {
-        "body1": "helmet_crown_panel",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.0011688142610983352
-      },
-      {
-        "body1": "helmet_crown_panel",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.0010327033213327877
-      },
-      {
-        "body1": "helmet_crown_panel",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.0011679832797821287
-      },
-      {
-        "body1": "helmet_crown_panel",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.0012661415512180076
-      },
-      {
-        "body1": "helmet_crown_panel",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.0012818389038745152
-      },
-      {
-        "body1": "faceplate",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.0011191794271789273
-      },
-      {
-        "body1": "faceplate",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.0011150344265065603
-      },
-      {
-        "body1": "faceplate",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.0010921362412971009
-      },
-      {
-        "body1": "faceplate",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.0010971001316613213
-      },
-      {
-        "body1": "faceplate",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.0011153787866281845
-      },
-      {
-        "body1": "faceplate",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.001119371397662063
-      },
-      {
-        "body1": "faceplate",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.0015454962525130807
-      },
-      {
-        "body1": "faceplate",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.0015437040059363468
-      },
-      {
-        "body1": "faceplate",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.0017434594310975502
-      },
-      {
-        "body1": "faceplate",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.0012815584500418483
-      },
-      {
-        "body1": "faceplate",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.001286399798525741
-      },
-      {
-        "body1": "faceplate",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.0012864000252974534
-      },
-      {
-        "body1": "faceplate",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.0012863989610902866
-      },
-      {
-        "body1": "faceplate",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.0012863996151175634
-      },
-      {
-        "body1": "faceplate",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.0019225344104117966
-      },
-      {
-        "body1": "faceplate",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.001779056068748073
-      },
-      {
-        "body1": "faceplate",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.001974183372275062
-      },
-      {
-        "body1": "faceplate",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.0019833028616372634
-      },
-      {
-        "body1": "faceplate",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.001974535072340404
-      },
-      {
-        "body1": "faceplate",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.0017652879312063325
-      },
-      {
-        "body1": "faceplate",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.001959865219935756
-      },
-      {
-        "body1": "faceplate",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.0016806681255038453
-      },
-      {
-        "body1": "faceplate",
-        "body2": "left_cheek_panel",
-        "depth_m": 0.0016818686602934488
-      },
-      {
-        "body1": "faceplate",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.002239745582739453
-      },
-      {
-        "body1": "faceplate",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.002100685119552218
-      },
-      {
-        "body1": "faceplate",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.0011338161041381677
-      },
-      {
-        "body1": "faceplate",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.0011380242918494277
-      },
-      {
-        "body1": "faceplate",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.0011415934862571565
-      },
-      {
-        "body1": "faceplate",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.001137646027967247
-      },
-      {
-        "body1": "faceplate",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.0018682624478544186
-      },
-      {
-        "body1": "faceplate",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.0011369608550399382
-      },
-      {
-        "body1": "faceplate",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.0011333628011437273
-      },
-      {
-        "body1": "faceplate",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.0019044513859865731
-      },
-      {
-        "body1": "faceplate",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.0021808667919964945
-      },
-      {
-        "body1": "faceplate",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.0019964785376827237
-      },
-      {
-        "body1": "faceplate",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.0021818263652432167
-      },
-      {
-        "body1": "faceplate",
-        "body2": "right_cheek_panel",
-        "depth_m": 0.002198635747252715
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.002728328790202113
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0029643549923233153
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.003088084710927806
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0029442125784093255
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0030899051346143474
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0029426423229479033
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0031784214775639544
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.003225683221531915
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0028264932077460216
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0028948285523935063
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0028964919323098
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0029864115579026204
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0027664869323787535
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0027715198233886525
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0027737134160896516
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0022023722262770238
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0015580562326396109
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0014315115947526038
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0013016723300643238
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.001291704167886448
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.001470228280225357
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0017190185054773552
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0010906424473806897
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0012065945780053559
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0015530695654243283
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0015530697082708222
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0015530696526593684
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0015530695641080932
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0031793485417641563
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.003260711702899158
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0032502281073606867
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0034538089217470763
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0034632557066631674
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.003135220758236236
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.003068614912703827
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0023676610355187486
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0024186942861886807
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.001089680631229016
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0010896806564186824
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0010896807207917622
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0010896808841836872
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.002438462330916151
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.002459016648182712
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0012714992665222996
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0012714993549415923
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0012714992566115295
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0012714991696452342
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0033361487613675902
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0028398445026070022
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.003318028445457008
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.003506356292684751
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0034549663353399627
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0035318206797915856
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.002577407531805148
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0013334506403986435
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.00133345079897464
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0013334507808101144
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0013334509002420603
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0013334304840248931
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0013334302669227127
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0013334302940138966
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0013334301517107549
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.0028500409934815755
-      },
-      {
-        "body1": "faceplate",
-        "body2": "chin_guard",
-        "depth_m": 0.002880240318963932
-      },
-      {
-        "body1": "left_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.0018897332544584857
-      },
-      {
-        "body1": "left_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.0025674040242636706
-      },
-      {
-        "body1": "left_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.0025451691296642415
-      },
-      {
-        "body1": "left_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.0048184471923447755
-      },
-      {
-        "body1": "left_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.004711726363294203
-      },
-      {
-        "body1": "left_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.005116451692924712
-      },
-      {
-        "body1": "left_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.005116451799072241
-      },
-      {
-        "body1": "left_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.005116451421123867
-      },
-      {
-        "body1": "left_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.005116451411768627
-      },
-      {
-        "body1": "left_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.0012233778555786306
-      },
-      {
-        "body1": "left_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.0012233778020775304
-      },
-      {
-        "body1": "left_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.0012233778816643725
-      },
-      {
-        "body1": "left_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.001223377968762277
-      },
-      {
-        "body1": "left_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.005256932817552195
-      },
-      {
-        "body1": "left_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.005287960201978217
-      },
-      {
-        "body1": "left_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.001225329847888827
-      },
-      {
-        "body1": "left_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.001225329828872095
-      },
-      {
-        "body1": "left_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.0012253298796185855
-      },
-      {
-        "body1": "left_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.001225329824308383
-      },
-      {
-        "body1": "left_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.0021388662589556053
-      },
-      {
-        "body1": "right_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.003442803597285146
-      },
-      {
-        "body1": "right_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.003523219598273672
-      },
-      {
-        "body1": "right_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.005381427444451472
-      },
-      {
-        "body1": "right_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.005520845402618854
-      },
-      {
-        "body1": "right_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.002350289304656283
-      },
-      {
-        "body1": "right_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.002795356313645811
-      },
-      {
-        "body1": "right_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.0033349636048577986
-      },
-      {
-        "body1": "right_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.004422859719433256
-      },
-      {
-        "body1": "right_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.004351473338235468
-      },
-      {
-        "body1": "right_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.0021055333116400503
-      },
-      {
-        "body1": "right_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.0039928851713924044
-      },
-      {
-        "body1": "right_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.0016409976354141125
-      },
-      {
-        "body1": "right_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.0016409975111367078
-      },
-      {
-        "body1": "right_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.0016409974430817013
-      },
-      {
-        "body1": "right_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.0016409976556417732
-      },
-      {
-        "body1": "right_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.0017977444179684181
-      },
-      {
-        "body1": "right_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.004976143317961158
-      },
-      {
-        "body1": "right_cheek_panel",
-        "body2": "chin_guard",
-        "depth_m": 0.0049930855689724425
-      },
-      {
-        "body1": "left_hip_module",
-        "body2": "left_hip_flap",
-        "depth_m": 0.001858419863496525
-      },
-      {
-        "body1": "left_hip_module",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0018588940150763942
-      },
-      {
-        "body1": "left_boot_toe",
-        "body2": "left_calf_clamshell",
-        "depth_m": 0.00377103960349411
-      },
-      {
-        "body1": "left_boot_toe",
-        "body2": "left_calf_clamshell",
-        "depth_m": 0.01027302497717962
-      },
-      {
-        "body1": "left_boot_toe",
-        "body2": "left_calf_clamshell",
-        "depth_m": 0.011838812404278067
-      },
-      {
-        "body1": "left_boot_toe",
-        "body2": "left_calf_clamshell",
-        "depth_m": 0.011841312005758636
-      },
-      {
-        "body1": "left_boot_toe",
-        "body2": "left_calf_clamshell",
-        "depth_m": 0.011837933779073419
-      },
-      {
-        "body1": "left_boot_toe",
-        "body2": "left_calf_clamshell",
-        "depth_m": 0.011836786137176043
-      },
-      {
-        "body1": "left_boot_toe",
-        "body2": "left_calf_clamshell",
-        "depth_m": 0.001690930075768058
-      },
-      {
-        "body1": "left_boot_toe",
-        "body2": "left_calf_clamshell",
-        "depth_m": 0.0016909300679604701
-      },
-      {
-        "body1": "left_boot_toe",
-        "body2": "left_calf_clamshell",
-        "depth_m": 0.0016909300152171242
-      },
-      {
-        "body1": "left_boot_toe",
-        "body2": "left_calf_clamshell",
-        "depth_m": 0.001690929971511011
-      },
-      {
-        "body1": "left_boot_toe",
-        "body2": "left_calf_clamshell",
-        "depth_m": 0.01580491653029395
-      },
-      {
-        "body1": "left_boot_toe",
-        "body2": "left_calf_clamshell",
-        "depth_m": 0.002274949212260598
-      },
-      {
-        "body1": "left_boot_toe",
-        "body2": "left_calf_clamshell",
-        "depth_m": 0.0022749497339151167
-      },
-      {
-        "body1": "left_boot_toe",
-        "body2": "left_calf_clamshell",
-        "depth_m": 0.002274949804558895
-      },
-      {
-        "body1": "left_boot_toe",
-        "body2": "left_calf_clamshell",
-        "depth_m": 0.0022749492916935266
-      },
-      {
-        "body1": "left_boot_toe",
-        "body2": "left_calf_clamshell",
-        "depth_m": 0.012853937918749007
-      },
-      {
-        "body1": "left_boot_toe",
-        "body2": "left_calf_clamshell",
-        "depth_m": 0.012781455401171826
-      },
-      {
-        "body1": "left_boot_toe",
-        "body2": "left_calf_clamshell",
-        "depth_m": 0.011955670740996889
-      },
-      {
-        "body1": "left_boot_toe",
-        "body2": "left_calf_clamshell",
-        "depth_m": 0.008606199332451768
-      },
-      {
-        "body1": "left_boot_toe",
-        "body2": "left_calf_clamshell",
-        "depth_m": 0.001659776486234983
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.005533672113646825
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0050715063490202284
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0025078021933917613
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.006442248693317231
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.006442248693515239
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.006442248686095064
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.002328989351843709
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0034163787150711714
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0034163787125399176
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.003416378724284245
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.003416378743415832
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.005859521149492577
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0020979682567064946
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.00529941322453302
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.007489355555747263
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0068297661782818625
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.005152585744658429
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0037786277082050798
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0017547900827778453
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0017539801569519406
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0017192476708015611
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0017256613090502184
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0027511656262563626
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.00283291877378783
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.001098817620317995
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0010376556449342264
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.001044039774381363
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.001675241315266291
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.001730600806666148
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0017317966095508582
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0017313596100359194
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0017283600041842397
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0024065592361533984
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.010156289688463521
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0014707593508405024
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0064443720199852264
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.006444372023356308
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.006444372024271299
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.004327090192460029
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.003418502075243254
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.003418502084542426
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0034185020892760847
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.003591352413934335
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.001828143930558682
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0019633283370055947
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0034185019428189137
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.00341850194642403
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0034185019448375762
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0034185019340795724
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.006440117442104028
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.006440117472278492
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.006440117472020976
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.006440117458014007
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.008670963109463675
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0034134876482734486
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0034134876649990226
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0034134876555318694
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.006075747477270274
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.006075747195765025
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0060757474759341205
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.006632525915114424
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.003629710404932662
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.006444371673711166
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.006444371673669753
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.006444371669294809
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0064443716692912005
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.008817369795922096
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.008793507574213124
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.006444371713400306
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.006444371713395587
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0034177418975658395
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0034177418974690827
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0034177419031502054
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0016696955319536787
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.001669258104696152
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0013916215181138986
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.00611577678043185
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0034156185657605123
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0034156185521454024
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.003415618565011388
-      },
-      {
-        "body1": "left_hip_cowl",
-        "body2": "left_hip_flap",
-        "depth_m": 0.00341561856353407
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.004126210928696542
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0028101590510708576
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0032266937060251074
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0043623933254056295
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.001089755749207871
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0013775069109958518
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0017182901062513364
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0010981324779718573
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0019269863663362633
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.006333307121418153
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0055050021289516195
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.005286215278700676
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.005485855423422796
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.003306653902807575
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0015390509368305764
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0015455815461715829
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0013080714088676494
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0013063347178641155
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.00592483685703444
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0060621190116294955
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.006029118401475838
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.005892214843164882
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.004550284334306978
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.005052553997615255
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.00505021417797129
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0045712315617098135
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.003730666935406448
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0035793607637861716
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.003528827582769554
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.003722432850826383
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0015860654621690764
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0017094930957850666
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0015873076898070258
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.006691924053935586
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.00670936093441394
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.004394835568139288
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0018568729139813226
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0017450891949774988
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0014451948099482856
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0010460600560543891
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0014446128899247425
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.00109427307880593
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.001010298951730314
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.001113872761361974
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0010038047879548297
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0014257512687036254
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.001719528117477406
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.001741017080343012
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0017301534347958021
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0031972541571669965
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.003939067928729354
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0036137543626202097
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0013276045996861257
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0018532521512558148
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.002579612094524022
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.001720786895405073
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.001143523353306729
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0010302811176549228
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0017151741894732297
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0011427042871672514
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0018873633607914763
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0013076996408139378
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0010941327324851273
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0033599666677575526
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0034464370962719853
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.003614427178097538
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0035320036129265677
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.004932867272244538
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.004928767890845546
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0045604477354288025
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.004541108536910444
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0025811714399097173
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0025076572849844743
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0026198093074716283
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0035117109057601426
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.003605446114148479
-      },
-      {
-        "body1": "left_hip_outer_plate",
-        "body2": "left_hip_flap",
-        "depth_m": 0.0035962630735079447
-      },
-      {
-        "body1": "right_hip_module",
-        "body2": "right_hip_flap",
-        "depth_m": 0.001858419863496525
-      },
-      {
-        "body1": "right_hip_module",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0018588940150763942
-      },
-      {
-        "body1": "right_boot_toe",
-        "body2": "right_calf_clamshell",
-        "depth_m": 0.010335921770693465
-      },
-      {
-        "body1": "right_boot_toe",
-        "body2": "right_calf_clamshell",
-        "depth_m": 0.010337493118172095
-      },
-      {
-        "body1": "right_boot_toe",
-        "body2": "right_calf_clamshell",
-        "depth_m": 0.0014426564547339478
-      },
-      {
-        "body1": "right_boot_toe",
-        "body2": "right_calf_clamshell",
-        "depth_m": 0.0026613622598314133
-      },
-      {
-        "body1": "right_boot_toe",
-        "body2": "right_calf_clamshell",
-        "depth_m": 0.006838016124932464
-      },
-      {
-        "body1": "right_boot_toe",
-        "body2": "right_calf_clamshell",
-        "depth_m": 0.006852123195095674
-      },
-      {
-        "body1": "right_boot_toe",
-        "body2": "right_calf_clamshell",
-        "depth_m": 0.006852124254232606
-      },
-      {
-        "body1": "right_boot_toe",
-        "body2": "right_calf_clamshell",
-        "depth_m": 0.006853854896400013
-      },
-      {
-        "body1": "right_boot_toe",
-        "body2": "right_calf_clamshell",
-        "depth_m": 0.0015645034367086446
-      },
-      {
-        "body1": "right_boot_toe",
-        "body2": "right_calf_clamshell",
-        "depth_m": 0.004760141582443065
-      },
-      {
-        "body1": "right_boot_toe",
-        "body2": "right_calf_clamshell",
-        "depth_m": 0.0015207446339228498
-      },
-      {
-        "body1": "right_boot_toe",
-        "body2": "right_calf_clamshell",
-        "depth_m": 0.0015200940494139103
-      },
-      {
-        "body1": "right_boot_toe",
-        "body2": "right_calf_clamshell",
-        "depth_m": 0.0015183659117167707
-      },
-      {
-        "body1": "right_boot_toe",
-        "body2": "right_calf_clamshell",
-        "depth_m": 0.0015192218875164738
-      },
-      {
-        "body1": "right_boot_toe",
-        "body2": "right_calf_clamshell",
-        "depth_m": 0.008199122306561554
-      },
-      {
-        "body1": "right_boot_toe",
-        "body2": "right_calf_clamshell",
-        "depth_m": 0.008043813545407154
-      },
-      {
-        "body1": "right_boot_toe",
-        "body2": "right_calf_clamshell",
-        "depth_m": 0.001521210157389456
-      },
-      {
-        "body1": "right_boot_toe",
-        "body2": "right_calf_clamshell",
-        "depth_m": 0.001521210202263756
-      },
-      {
-        "body1": "right_boot_toe",
-        "body2": "right_calf_clamshell",
-        "depth_m": 0.0015207337679093327
-      },
-      {
-        "body1": "right_boot_toe",
-        "body2": "right_calf_clamshell",
-        "depth_m": 0.001519526316179203
-      },
-      {
-        "body1": "right_boot_toe",
-        "body2": "right_calf_clamshell",
-        "depth_m": 0.015912141981172793
-      },
-      {
-        "body1": "right_boot_toe",
-        "body2": "right_calf_clamshell",
-        "depth_m": 0.002794493226744824
-      },
-      {
-        "body1": "right_boot_toe",
-        "body2": "right_calf_clamshell",
-        "depth_m": 0.002793600126042602
-      },
-      {
-        "body1": "right_boot_toe",
-        "body2": "right_calf_clamshell",
-        "depth_m": 0.002794023615617006
-      },
-      {
-        "body1": "right_boot_toe",
-        "body2": "right_calf_clamshell",
-        "depth_m": 0.00279449298968378
-      },
-      {
-        "body1": "right_boot_toe",
-        "body2": "right_calf_clamshell",
-        "depth_m": 0.005259912943315875
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.005633429661115384
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0011500574167485947
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0011500568824850458
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0011500574206006657
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0011500574223671837
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.006613813351084394
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0037786095803688914
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0064422404943168445
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.006442240536657789
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.006442240533480922
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.006442240484831688
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.01047301452848555
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.003415610739087562
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0034156107274802045
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0034156107147818096
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0034156107282592076
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0013323737090592583
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.006442293195953037
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.006442293234669844
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.006442293234804903
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.005601278558687055
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.005906891289977888
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0034164232695390677
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0034164232939764656
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0034164232681291964
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0017296840639240963
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0017290828342005355
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0017214604832067055
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0017281555129064474
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.005129834582268113
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.00341642286525662
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.003416422861903189
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0034164228777761032
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.004066578330308622
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.005963062074643902
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0010399485158545279
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.002444989980204548
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0017280162758437011
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.001756916380730993
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0017564338212196337
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0017255816131830448
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0010868763558916587
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.001038397801108604
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0010448977008927559
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.001670108163308086
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0028040268718851134
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.005040156732938667
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0029786672453105986
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0034163706696751445
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0034163706570361626
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.00341637066229782
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0034163706686947543
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.00803069530281618
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.005107964050853654
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.008856247956749228
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0036622782770686373
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.006442233483950862
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.006442233483441273
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.006442233487272263
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0070273776856011674
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0034156037150880427
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.003415603698647753
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0034156036944084237
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0034156037112978003
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.008114813490739513
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.001829686811097293
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0018304854262921066
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0018304887993947658
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0018296871495436437
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.006099583425444157
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0036313176443760003
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.001674866285191261
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0016742706479065995
-      },
-      {
-        "body1": "right_hip_cowl",
-        "body2": "right_hip_flap",
-        "depth_m": 0.001396789748116471
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.004126210928696542
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0028101590510708576
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0032266937060251074
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0043623933254056295
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.001089755749207871
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0013775069109958518
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0017182901062513364
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0010981324779718573
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0019269863663362633
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.006333307121418153
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0055050021289516195
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.005286215278700676
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.005485855423422796
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.003306653902807575
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0015390509368305777
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.001545581546171584
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0013080714088676494
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0013063347178641155
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.005924836857034442
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.006062119011629502
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.006029118401475838
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.005892214843164884
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.004550284334306998
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.005052553997615254
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.00505021417797129
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.004571231561709797
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0037306669354064508
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0035793607637861773
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0035288275827695557
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0037224328508263854
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0015860654621690747
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0017094930957850649
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0015873076898070238
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.006691924053935586
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.00670936093441394
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.004394835568139288
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0018568729139813223
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0017450891949774986
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0014451948099482856
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0010460600560543891
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0014446128899247425
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0010942730788058488
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0010102989517303189
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0011138727613619745
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.001003804787954824
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0014257512687036236
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0017195281174774068
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0017410170803430127
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.001730153434795803
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.003197254157166994
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.003939067928729352
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.003613754362620208
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0013276045996861274
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.001853252151255814
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0025796120945240247
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.001720786895405074
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.001143523353306729
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0010302811176549228
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.00171517418947323
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0011427042871672514
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0018873633607914772
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.001307699640813939
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0010941327324851258
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0033599666677575526
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0034464370962719853
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.003614427178097538
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.003532003612926563
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.004932867272244538
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.004928767890845546
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0045604477354288025
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.004541108536910444
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0025811714399097173
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0025076572849844743
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0026198093074716283
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0035117109057601426
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.003605446114148479
-      },
-      {
-        "body1": "right_hip_outer_plate",
-        "body2": "right_hip_flap",
-        "depth_m": 0.0035962630735079447
-      }
-    ]
+    "penetration_count": 0,
+    "max_depth_m": 0,
+    "contacts": []
   }
 }

@@ -1,0 +1,70 @@
+{
+  "scope": "Design-input inventory, not a hardware qualification or a claim that missing interfaces were inspected in CAD",
+  "source_robot_sha256": "8865e17fa197643b94e3ff8eaf1363b971806849ff0f867df55ff54cbc09c074",
+  "source_bom_sha256": "98b50a872a058a003c7d85ec0c6c5a17c6fdd964d414203e1e34015ebdf5abe1",
+  "hardware_verified": false,
+  "manufacturing_ready": false,
+  "prototype_test_evidence": null,
+  "declared_mass_kg": 0.7155256118578557,
+  "links_with_inferred_mass": [
+    "base_link",
+    "gripper_base",
+    "left_finger",
+    "right_finger"
+  ],
+  "actuator_catalogue_sizing_pass": true,
+  "joint_requirements": [
+    {
+      "joint": "left_finger_joint",
+      "type": "prismatic",
+      "effort": 40,
+      "effort_unit": "N",
+      "velocity": 0.3,
+      "velocity_unit": "m/s",
+      "lower": 0,
+      "upper": 0.03,
+      "position_unit": "m"
+    },
+    {
+      "joint": "right_finger_joint",
+      "type": "prismatic",
+      "effort": 40,
+      "effort_unit": "N",
+      "velocity": 0.3,
+      "velocity_unit": "m/s",
+      "lower": 0,
+      "upper": 0.03,
+      "position_unit": "m"
+    }
+  ],
+  "missing_evidence": [
+    {
+      "id": "component_interfaces",
+      "detail": "No verified vendor drawing, shaft/horn interface, mounting-hole pattern or bearing fit is associated with each joint."
+    },
+    {
+      "id": "actuator_operating_envelope",
+      "detail": "No complete speed/effort/thermal-duty and feedback qualification; catalogue effort alone does not validate the selected actuator."
+    },
+    {
+      "id": "electronics_packaging",
+      "detail": "No verified placement, mounting, connector access or cable-bend clearance for the selected electronics. The optional enclosure example uses synthetic dimensions."
+    },
+    {
+      "id": "electrical_system",
+      "detail": "No validated rail voltages, peak currents, power budget, wiring schematic or protection sizing."
+    },
+    {
+      "id": "manufacturing_and_assembly",
+      "detail": "No complete tolerance stack, material/process specification, fastener schedule, assembly procedure or service-access validation."
+    },
+    {
+      "id": "measured_dynamics",
+      "detail": "No prototype measurements establish masses, inertias, friction, backlash, compliance or model-to-hardware agreement."
+    },
+    {
+      "id": "physical_validation",
+      "detail": "No physical assembly, load test or task-performance evidence is attached."
+    }
+  ]
+}

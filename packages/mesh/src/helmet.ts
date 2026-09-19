@@ -10,7 +10,7 @@ export const HELMET = { W: 0.205, D: 0.27, H: 0.25, thick: 0.0045 };
 
 // front-face cross-sections: [z, frontX, halfWidth, exponent, ridge]
 const FACE: [number, number, number, number, number][] = [
-  [-0.118, 0.112, 0.048, 2.0, 0.010],   // chin point
+  [-0.104, 0.120, 0.058, 2.0, 0.004],   // chin point
   [-0.098, 0.124, 0.066, 2.3, 0.008],   // jaw
   [-0.080, 0.130, 0.082, 2.5, 0.006],   // mouth line
   [-0.056, 0.136, 0.092, 2.7, 0.005],   // lower cheek flare
@@ -52,8 +52,9 @@ function faceSections(a0: number, a1: number): V3[][] {
 
 /** central faceplate (nose, brow, chin) -- hinged at the temples */
 export function faceplate(): Mesh {
-  const surface = loft(faceSections(-0.78, 0.78), {closed:false});
-  const holes = [SOCKET, SOCKET.map(([y,z]) => [-y,z] as P2).reverse()];
+  const surface = loft(faceSections(-0.75, 0.75), {closed:false});
+  const holes = [SOCKET, SOCKET.map(([y,z]) => [-y,z] as P2).reverse(),
+    [[-.031,.072],[.031,.072],[.042,.10],[-.042,.10]] as P2[]];
   const cut: Mesh = {v:[],f:[]};
   for (const f of surface.f) {
     let pieces: P2[][] = [f.map((i) => [surface.v[i][1],surface.v[i][2]])];
@@ -93,7 +94,7 @@ function subtractConvex(polygon: P2[], hole: P2[]): P2[][] {
 }
 /** side cheek panels -- hinged on vertical axes at the temples, swing outward */
 export function cheekPanel(side: "left" | "right"): Mesh {
-  const m = shelledLoft(faceSections(0.795, 1.62), HELMET.thick, 0);
+  const m = shelledLoft(faceSections(0.82, 1.51).filter(row=>row[0][2]>=-.098), HELMET.thick, 0);
   return side === "left" ? m : mirrorY(m);
 }
 /** cranium: back half + top, with the raised centre crest */
@@ -103,19 +104,19 @@ export function cranium(): Mesh {
     [0.098, 0.100, 0.082, 2.3], [0.118, 0.066, 0.055, 2.1], [0.126, 0.025, 0.020, 2.0], [0.130,0,0,2],
   ];
   // back half (angles 90..270 deg) as an open surface, then shelled
-  const sections = rows.map(([z, rx, ry, e]) => superArc(rx, ry, z, Math.PI / 2, (3 * Math.PI) / 2, 33, e));
+  const sections = rows.map(([z, rx, ry, e]) => superArc(rx, ry, z, 1.61, 2*Math.PI-1.61, 33, e));
   // One continuous crown surface, rather than intersecting a separate crest solid.
-  return shelledLoft(sections, HELMET.thick, 0);
+  return translate(shelledLoft(sections, HELMET.thick, 0),[-.003,0,0]);
 }
 /** Articulated top-front cap; shares the back shell's crown profile. */
 export function crownPanel(): Mesh {
-  const rows: [number, number, number, number][] = [[0.088, 0.116, 0.087, 2.4], [0.098, 0.100, 0.082, 2.3], [0.118, 0.066, 0.055, 2.1], [0.126,0.025,0.020,2], [0.130,0,0,2]];
-  const sections = rows.map(([z, rx, ry, e]) => superArc(rx, ry, z, -Math.PI/2, Math.PI/2, 33, e));
-  return shelledLoft(sections, HELMET.thick, 0);
+  const rows: [number, number, number, number][] = [[0.094, 0.111, 0.084, 2.4], [0.098, 0.100, 0.082, 2.3], [0.118, 0.066, 0.055, 2.1], [0.126,0.025,0.020,2], [0.130,0,0,2]];
+  const sections = rows.map(([z, rx, ry, e]) => superArc(rx, ry, z, -1.53, 1.53, 33, e));
+  return translate(shelledLoft(sections, HELMET.thick, 0),[.003,0,0]);
 }
-/** forehead plate: layered gold accent over the brow */
+/** Red forehead insert, separated from the gold mask by an open notch. */
 export function foreheadPlate(): Mesh {
-  const rows=[.069,.080,.090].map(z=>Array.from({length:17},(_,i)=>faceSurface(-.040+i*.005,z,.002)));
+  const rows=[.075,.082,.090].map(z=>{const w=.029+(z-.075)*.39;return Array.from({length:17},(_,i)=>faceSurface(-w+2*w*i/16,z));});
   return shelledLoft(rows,.0015,0);
 }
 /** eye: an angled trapezoid slit just under the brow ledge -- dark socket recess + glowing lens proud of the surface */
@@ -126,7 +127,8 @@ function eyeRing(outline: [number, number][], side: "left" | "right", proud: num
   return outline.map(([y, z]) => { const p = faceSurface(y, z, proud); return [p[0], sgn * y, z] as V3; });
 }
 export function eyeLens(side: "left" | "right"): Mesh {
-  const outer = eyeRing(EYE, side, 0.001), inner = eyeRing(EYE, side, -0.0005);
+  const lens = EYE.map(([y,z])=>[.044+(y-.044)*.94,.044+(z-.044)*.78] as P2);
+  const outer = eyeRing(lens, side, 0.001), inner = eyeRing(lens, side, -0.0005);
   return loft(side === "left" ? [inner, outer] : [outer, inner], { closed: true, capStart: true, capEnd: true });
 }
 export function eyeSocket(side: "left" | "right"): Mesh {
@@ -142,17 +144,17 @@ export function mouthLine(): Mesh {
 export function earPod(side: "left" | "right"): Mesh {
   const s = side === "left" ? 1 : -1;
   const d = rotate(disc(0.036, 0.014, 0.004, 36), "x", -s * Math.PI / 2);   // disc axis -> +-Y
-  return translate(d, [0.0, s * 0.098, 0.0]);
+  return translate(d, [-0.035, s * 0.106, 0.0]);
 }
 /** neck collar ring under the jaw */
 export function neckCollar(): Mesh {
-  const rows: [number, number, number][] = [[-0.135, 0.078, 0.074], [-0.118, 0.088, 0.082], [-0.100, 0.096, 0.088]];
+  const rows: [number, number, number][] = [[-0.135, 0.072, 0.067], [-0.120, 0.074, 0.067], [-0.105, 0.076, 0.067]];
   const sections = rows.map(([z, rx, ry]) => superArc(rx, ry, z, 0, 2 * Math.PI - (2 * Math.PI) / 32, 32, 2.3, -0.01));
   return shell(subdivide(loft(sections, { closed: true }), 1), 0.005);
 }
 /** chin guard under the faceplate (jaw line), hinged down slightly */
 export function chinGuard(): Mesh {
-  const sec = [[-0.132, 0.100, 0.070, 2.2, 0.0], [-0.112, 0.116, 0.084, 2.4, 0.0], [-0.096, 0.122, 0.092, 2.5, 0.0]].map(([z, fx, hw, e]) =>
+  const sec = [[-0.132, 0.100, 0.070, 2.2, 0.0], [-0.120, 0.112, 0.077, 2.4, 0.0], [-0.112, 0.118, 0.082, 2.5, 0.0]].map(([z, fx, hw, e]) =>
     superArc(fx, hw, z, -1.35, 1.35, 21, e));
   return shelledLoft(sec, 0.004, 1);
 }

@@ -134,3 +134,17 @@ python scripts/audit_surface_contacts.py examples/14_iron_man_mark_43/robot.sim.
   --json /tmp/surface.json --joints left_wrist_flexion right_wrist_flexion \
   left_chest_door_hinge right_chest_door_hinge
 ```
+
+## Helmet, shoulder and joint-envelope revision
+
+The helmet now has separated cheek/crown/jaw boundaries, eye-lens clearance and
+a red forehead insert in an actual faceplate notch. Shoulder shells have a deeper
+outer skirt, a frame cutaway and matching edge trim. Limb shell ends have lateral
+cutaways around the existing motor housings; their inlays follow the same surface.
+Boot uppers end below the ankle housings, with surface-following instep trim.
+
+Neutral surface intersections decrease from 81 to zero. Native MoveIt also reports
+zero neutral contacts and executes small neck/arm trajectories with mock hardware.
+These checks do not establish movie accuracy. The exposed drives, panel proportions,
+boot/ankle coverage and simplified face planes remain unlike the saved references.
+Remaining sampled-motion and wearer-fit failures are retained in the reports.

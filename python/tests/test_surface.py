@@ -24,8 +24,14 @@ class SurfaceTests(unittest.TestCase):
    'ab_plate_1','ab_plate_2','ab_plate_3','left_hand','right_hand','left_hand_plate','right_hand_plate',
    'left_elbow_cap','right_elbow_cap'}
   pairs=SurfaceScene(source).contacts()
-  self.assertFalse([p for p in pairs if targets.intersection(p)])
+  self.assertEqual(pairs, [], 'Every non-adjacent pair in the shipped neutral model must be clear')
   self.assertFalse([p for p in pairs if any('cuff' in name for name in p)])
   for side in ['left','right']:
    for a,b in [('thigh_clamshell','thigh_shell'),('calf_clamshell','shin_shell'),('bicep_clamshell','bicep_sleeve'),('gauntlet_clamshell','gauntlet_sleeve')]:
     self.assertNotIn(tuple(sorted((f'{side}_{a}',f'{side}_{b}'))),pairs)
+
+ def test_chest_doors_clear_their_sampled_paths(self):
+  from ttr_mujoco.surface import SurfaceScene,audit
+  source=Path(__file__).resolve().parents[2]/'examples/14_iron_man_mark_43/robot.sim.urdf'
+  report=audit(SurfaceScene(source),['left_chest_door_hinge','right_chest_door_hinge'],5)
+  self.assertTrue(report['pass'])

@@ -66,6 +66,8 @@
   "self_collision_masks_enabled": true,
   "passed": 5,
   "total": 5,
+  "collision_model": "URDF primitives / mesh bounding boxes",
+  "self_collision": true,
   "source_urdf_sha256": "a542f84ff518e308c723f0b529b180520f4743f65a8ab9fba5b7eb74a2f38423",
   "initial_penetrations": [],
   "hardware_verified": false

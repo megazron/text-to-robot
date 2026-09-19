@@ -1,389 +1,340 @@
 {
   "scope": "Offline FCL surface-intersection audit of exported URDF visual surfaces (the MoveIt mesh sources).\nTriangle intersections are not a penetration-depth or solid-containment test.\nCylinders/spheres are tessellated; counts can differ from native MoveIt primitives.\nOnly direct parent/child links are excluded, as in the generated MoveIt SRDF.\n",
-  "baseline_commit": "8b92efe200b7d2ffa1169fdc3b4ae607ffa5383d",
-  "baseline_urdf_sha256": "859b746854eaf3824b21d50aa22f2dec100d88f6eb4142281af82365107405bb",
-  "current_urdf_sha256": "32952828db78af66efcadde5628f1c3c2f55f2f7e5362caf66489299361c4b9a",
-  "baseline_pair_count": 175,
-  "current_pair_count": 81,
+  "baseline_commit": "ec456b2c4227b92ebe605d41d85ed389ac5ab243",
+  "baseline_urdf_sha256": "32952828db78af66efcadde5628f1c3c2f55f2f7e5362caf66489299361c4b9a",
+  "current_urdf_sha256": "df8651899408c1e7da7025255c16130da906ad4a85e03d07841be3b5658b7505",
+  "baseline_pair_count": 81,
+  "current_pair_count": 0,
   "resolved_pairs": [
     [
-      "ab_plate_1",
-      "left_chest_door"
+      "chin_guard",
+      "faceplate"
     ],
     [
-      "ab_plate_1",
-      "right_chest_door"
+      "chin_guard",
+      "helmet_neck_collar"
     ],
     [
-      "ab_plate_3",
-      "belt_plate"
+      "chin_guard",
+      "left_cheek_panel"
     ],
     [
-      "back_shell",
-      "backpack"
+      "chin_guard",
+      "right_cheek_panel"
     ],
     [
-      "backpack",
-      "left_lat_plate"
+      "collar_plate",
+      "left_pauldron"
     ],
     [
-      "backpack",
-      "left_lat_plate_fixed_knuckle_lower"
+      "collar_plate",
+      "neck_ring"
     ],
     [
-      "backpack",
-      "left_lat_plate_fixed_knuckle_upper"
+      "collar_plate",
+      "right_pauldron"
     ],
     [
-      "backpack",
-      "left_lat_plate_hinge_pin"
+      "faceplate",
+      "helmet_crown_panel"
     ],
     [
-      "backpack",
-      "left_lat_plate_moving_knuckle"
+      "faceplate",
+      "left_cheek_panel"
     ],
     [
-      "backpack",
-      "pelvis_frame"
+      "faceplate",
+      "right_cheek_panel"
     ],
     [
-      "backpack",
-      "right_lat_plate"
+      "helmet",
+      "helmet_crown_panel"
     ],
     [
-      "backpack",
-      "right_lat_plate_fixed_knuckle_lower"
+      "helmet",
+      "helmet_left_ear_pod"
     ],
     [
-      "backpack",
-      "right_lat_plate_fixed_knuckle_upper"
+      "helmet",
+      "helmet_right_ear_pod"
     ],
     [
-      "backpack",
-      "right_lat_plate_hinge_pin"
+      "helmet",
+      "left_cheek_panel"
     ],
     [
-      "backpack",
-      "right_lat_plate_moving_knuckle"
+      "helmet",
+      "right_cheek_panel"
     ],
     [
-      "chest_centre",
-      "left_chest_door"
+      "helmet_crown_panel",
+      "left_cheek_panel"
     ],
     [
-      "chest_centre",
-      "right_chest_door"
+      "helmet_crown_panel",
+      "right_cheek_panel"
     ],
     [
-      "chest_centre",
-      "right_pectoral_trim"
+      "helmet_left_ear_pod",
+      "left_cheek_panel"
     ],
     [
-      "chest_plate",
-      "left_chest_door"
+      "helmet_neck_collar",
+      "left_cheek_panel"
     ],
     [
-      "chest_plate",
-      "left_lat_plate"
+      "helmet_neck_collar",
+      "right_cheek_panel"
     ],
     [
-      "chest_plate",
-      "left_pectoral_trim"
+      "helmet_right_ear_pod",
+      "right_cheek_panel"
     ],
     [
-      "chest_plate",
-      "right_chest_door"
+      "left_ankle_module",
+      "left_boot_toe"
     ],
     [
-      "chest_plate",
-      "right_lat_plate"
+      "left_ankle_module",
+      "left_shin_shell"
     ],
     [
-      "chest_plate",
-      "right_pectoral_trim"
-    ],
-    [
-      "left_ankle_flap",
-      "left_ankle_motor_cover"
-    ],
-    [
-      "left_bicep_clamshell",
-      "left_bicep_sleeve"
-    ],
-    [
-      "left_bicep_clamshell",
-      "left_lat_plate"
-    ],
-    [
-      "left_bicep_clamshell",
-      "left_upper_arm_cuff"
-    ],
-    [
-      "left_bicep_front",
-      "left_chest_door"
+      "left_back_scapula",
+      "right_flight_flap"
     ],
     [
       "left_bicep_sleeve",
-      "left_chest_door"
+      "left_elbow_module"
     ],
     [
       "left_bicep_sleeve",
-      "left_elbow_cap"
+      "left_shoulder_module"
     ],
     [
       "left_bicep_sleeve",
-      "left_lat_plate"
-    ],
-    [
-      "left_bicep_sleeve",
-      "left_upper_arm_cuff"
+      "shoulder_yoke"
     ],
     [
       "left_boot_toe",
-      "left_shin_stripe"
+      "left_calf_clamshell"
     ],
     [
-      "left_calf_clamshell",
-      "left_shank_cuff"
+      "left_boot_toe",
+      "left_shank_strut"
     ],
     [
-      "left_calf_clamshell",
+      "left_boot_toe",
+      "left_shin_guard"
+    ],
+    [
+      "left_boot_toe",
       "left_shin_shell"
     ],
     [
-      "left_chest_door",
-      "left_lat_plate"
+      "left_boot_trim",
+      "left_shin_guard"
     ],
     [
-      "left_chest_door",
-      "left_rib_0"
+      "left_clavicle_cover",
+      "left_pectoral_trim"
     ],
     [
-      "left_chest_door",
-      "left_rib_edge_0"
+      "left_collar_inlay",
+      "left_pectoral_trim"
     ],
     [
-      "left_elbow_cap",
-      "left_gauntlet_clamshell"
-    ],
-    [
-      "left_elbow_cap",
+      "left_elbow_module",
       "left_gauntlet_sleeve"
     ],
     [
-      "left_forearm_cuff",
-      "left_gauntlet_clamshell"
+      "left_eye_lens",
+      "left_eye_socket"
     ],
     [
-      "left_forearm_cuff",
+      "left_flight_flap",
+      "right_back_scapula"
+    ],
+    [
+      "left_forearm_crest",
+      "left_gauntlet_stripe"
+    ],
+    [
+      "left_gauntlet_clamshell",
+      "left_gauntlet_clamshell_fixed_knuckle_lower"
+    ],
+    [
+      "left_gauntlet_clamshell_fixed_knuckle_lower",
       "left_gauntlet_sleeve"
     ],
     [
-      "left_gauntlet_clamshell",
+      "left_gauntlet_clamshell_moving_knuckle",
       "left_gauntlet_sleeve"
     ],
     [
-      "left_gauntlet_clamshell",
-      "left_hand"
+      "left_hip_cowl",
+      "left_hip_flap"
     ],
     [
-      "left_gauntlet_clamshell",
-      "left_hand_plate"
+      "left_hip_cowl",
+      "left_hip_outer_plate"
     ],
     [
-      "left_gauntlet_sleeve",
-      "left_hand"
-    ],
-    [
-      "left_gauntlet_sleeve",
-      "left_hand_plate"
-    ],
-    [
-      "left_heel_thruster",
-      "left_thruster_cover"
-    ],
-    [
-      "left_knee_bezel",
-      "left_shin_shell"
-    ],
-    [
-      "left_knee_cap",
-      "left_shin_shell"
-    ],
-    [
-      "left_knee_cap",
+      "left_hip_cowl",
       "left_thigh_shell"
     ],
     [
-      "left_knee_cap",
-      "left_thigh_stripe"
+      "left_hip_cowl",
+      "left_thigh_strut"
     ],
     [
-      "left_lat_plate",
-      "pelvis_frame"
+      "left_hip_flap",
+      "left_hip_module"
     ],
     [
-      "left_shank_cuff",
+      "left_hip_flap",
+      "left_hip_outer_plate"
+    ],
+    [
+      "left_hip_module",
+      "left_thigh_shell"
+    ],
+    [
+      "left_knee_module",
       "left_shin_shell"
+    ],
+    [
+      "left_knee_module",
+      "left_thigh_shell"
     ],
     [
       "left_thigh_clamshell",
-      "left_thigh_cuff"
+      "left_thigh_clamshell_fixed_knuckle_lower"
     ],
     [
-      "left_thigh_clamshell",
-      "left_thigh_shell"
+      "neck_ring",
+      "shoulder_yoke"
     ],
     [
-      "left_thigh_clamshell_fixed_knuckle_lower",
-      "left_thigh_shell"
+      "rear_belt_plate",
+      "spine_frame"
     ],
     [
-      "left_thigh_clamshell_moving_knuckle",
-      "left_thigh_shell"
+      "right_ankle_module",
+      "right_boot_toe"
     ],
     [
-      "left_thigh_cuff",
-      "left_thigh_shell"
-    ],
-    [
-      "pelvis_frame",
-      "right_lat_plate"
-    ],
-    [
-      "right_ankle_flap",
-      "right_ankle_motor_cover"
-    ],
-    [
-      "right_bicep_clamshell",
-      "right_bicep_sleeve"
-    ],
-    [
-      "right_bicep_clamshell",
-      "right_lat_plate"
-    ],
-    [
-      "right_bicep_clamshell",
-      "right_upper_arm_cuff"
+      "right_ankle_module",
+      "right_shin_shell"
     ],
     [
       "right_bicep_sleeve",
-      "right_elbow_cap"
+      "right_elbow_module"
     ],
     [
       "right_bicep_sleeve",
-      "right_lat_plate"
+      "right_shoulder_module"
     ],
     [
       "right_bicep_sleeve",
-      "right_upper_arm_cuff"
+      "shoulder_yoke"
     ],
     [
       "right_boot_toe",
-      "right_shin_stripe"
+      "right_calf_clamshell"
     ],
     [
-      "right_calf_clamshell",
-      "right_shank_cuff"
+      "right_boot_toe",
+      "right_shank_strut"
     ],
     [
-      "right_calf_clamshell",
+      "right_boot_toe",
+      "right_shin_guard"
+    ],
+    [
+      "right_boot_toe",
       "right_shin_shell"
     ],
     [
-      "right_chest_door",
-      "right_rib_0"
+      "right_boot_trim",
+      "right_shin_guard"
     ],
     [
-      "right_chest_door",
-      "right_rib_edge_0"
+      "right_clavicle_cover",
+      "right_pectoral_trim"
     ],
     [
-      "right_chest_door",
-      "right_rib_insert_0"
+      "right_collar_inlay",
+      "right_pectoral_trim"
     ],
     [
-      "right_elbow_cap",
-      "right_gauntlet_clamshell"
-    ],
-    [
-      "right_elbow_cap",
+      "right_elbow_module",
       "right_gauntlet_sleeve"
     ],
     [
-      "right_forearm_cuff",
-      "right_gauntlet_clamshell"
+      "right_eye_lens",
+      "right_eye_socket"
     ],
     [
-      "right_forearm_cuff",
+      "right_forearm_crest",
+      "right_gauntlet_stripe"
+    ],
+    [
+      "right_gauntlet_clamshell",
+      "right_gauntlet_clamshell_fixed_knuckle_lower"
+    ],
+    [
+      "right_gauntlet_clamshell_fixed_knuckle_lower",
       "right_gauntlet_sleeve"
     ],
     [
-      "right_gauntlet_clamshell",
+      "right_gauntlet_clamshell_moving_knuckle",
       "right_gauntlet_sleeve"
     ],
     [
-      "right_gauntlet_clamshell",
-      "right_hand"
+      "right_hip_cowl",
+      "right_hip_flap"
     ],
     [
-      "right_gauntlet_clamshell",
-      "right_hand_plate"
+      "right_hip_cowl",
+      "right_hip_outer_plate"
     ],
     [
-      "right_gauntlet_sleeve",
-      "right_hand"
-    ],
-    [
-      "right_gauntlet_sleeve",
-      "right_hand_plate"
-    ],
-    [
-      "right_heel_thruster",
-      "right_thruster_cover"
-    ],
-    [
-      "right_knee_bezel",
-      "right_shin_shell"
-    ],
-    [
-      "right_knee_cap",
-      "right_shin_shell"
-    ],
-    [
-      "right_knee_cap",
+      "right_hip_cowl",
       "right_thigh_shell"
     ],
     [
-      "right_knee_cap",
-      "right_thigh_stripe"
+      "right_hip_cowl",
+      "right_thigh_strut"
     ],
     [
-      "right_shank_cuff",
+      "right_hip_flap",
+      "right_hip_module"
+    ],
+    [
+      "right_hip_flap",
+      "right_hip_outer_plate"
+    ],
+    [
+      "right_hip_module",
+      "right_thigh_shell"
+    ],
+    [
+      "right_knee_module",
       "right_shin_shell"
+    ],
+    [
+      "right_knee_module",
+      "right_thigh_shell"
     ],
     [
       "right_thigh_clamshell",
-      "right_thigh_cuff"
-    ],
-    [
-      "right_thigh_clamshell",
-      "right_thigh_shell"
-    ],
-    [
-      "right_thigh_clamshell_fixed_knuckle_lower",
-      "right_thigh_shell"
-    ],
-    [
-      "right_thigh_clamshell_moving_knuckle",
-      "right_thigh_shell"
-    ],
-    [
-      "right_thigh_cuff",
-      "right_thigh_shell"
+      "right_thigh_clamshell_fixed_knuckle_lower"
     ]
   ],
   "introduced_pairs": [],
-  "movie_accuracy_verified": false,
-  "build_ready": false
+  "remaining_pairs": [],
+  "limitations": [
+    "Independent joint samples do not certify continuous or combined motion",
+    "Surface intersections do not test full containment or wearer fit; use compound collision and wearer audits too"
+  ]
 }

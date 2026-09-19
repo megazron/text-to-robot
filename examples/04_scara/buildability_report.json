@@ -1,0 +1,93 @@
+{
+  "scope": "Design-input inventory, not a hardware qualification or a claim that missing interfaces were inspected in CAD",
+  "source_robot_sha256": "bc6cf13ea69dec07d4219fd1ae75c593b339c0a0efec489cd3115264abe7d435",
+  "source_bom_sha256": "b8d4e3fd8519af9990f1681b7e101123f6dc442b2418f5bd6b491d236ada9e9c",
+  "hardware_verified": false,
+  "manufacturing_ready": false,
+  "prototype_test_evidence": null,
+  "declared_mass_kg": 2.556561178416569,
+  "links_with_inferred_mass": [
+    "base_link",
+    "upper_arm",
+    "forearm",
+    "spindle",
+    "tool"
+  ],
+  "actuator_catalogue_sizing_pass": true,
+  "joint_requirements": [
+    {
+      "joint": "joint_1",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -3.141592653589793,
+      "upper": 3.141592653589793,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "joint_2",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -3.141592653589793,
+      "upper": 3.141592653589793,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "joint_3",
+      "type": "prismatic",
+      "effort": 80,
+      "effort_unit": "N",
+      "velocity": 0.4,
+      "velocity_unit": "m/s",
+      "lower": -0.1,
+      "upper": 0,
+      "position_unit": "m"
+    },
+    {
+      "joint": "joint_4",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -3.141592653589793,
+      "upper": 3.141592653589793,
+      "position_unit": "rad"
+    }
+  ],
+  "missing_evidence": [
+    {
+      "id": "component_interfaces",
+      "detail": "No verified vendor drawing, shaft/horn interface, mounting-hole pattern or bearing fit is associated with each joint."
+    },
+    {
+      "id": "actuator_operating_envelope",
+      "detail": "No complete speed/effort/thermal-duty and feedback qualification; catalogue effort alone does not validate the selected actuator."
+    },
+    {
+      "id": "electronics_packaging",
+      "detail": "No verified placement, mounting, connector access or cable-bend clearance for the selected electronics. The optional enclosure example uses synthetic dimensions."
+    },
+    {
+      "id": "electrical_system",
+      "detail": "No validated rail voltages, peak currents, power budget, wiring schematic or protection sizing."
+    },
+    {
+      "id": "manufacturing_and_assembly",
+      "detail": "No complete tolerance stack, material/process specification, fastener schedule, assembly procedure or service-access validation."
+    },
+    {
+      "id": "measured_dynamics",
+      "detail": "No prototype measurements establish masses, inertias, friction, backlash, compliance or model-to-hardware agreement."
+    },
+    {
+      "id": "physical_validation",
+      "detail": "No physical assembly, load test or task-performance evidence is attached."
+    }
+  ]
+}

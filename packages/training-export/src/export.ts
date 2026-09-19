@@ -340,7 +340,7 @@ export function exportTraining(spec: RobotSpecification): FileMap {
   for(const file of readdirSync(pythonRoot).filter(f=>f.endsWith(".py")))files[`training/mujoco/ttr_mujoco/${file}`]=readFileSync(new URL(file,pythonRoot),"utf8");
   files[`training/mujoco/wearer.example.json`]=readFileSync(new URL("wearer.example.json",pythonRoot),"utf8");
   files[`training/mujoco/robot.json`]=JSON.stringify(spec,null,2);
-  files[`training/mujoco/requirements.txt`]="mujoco>=3.1,<4\ngymnasium>=0.29\nnumpy>=1.24\npillow>=10\nstable-baselines3>=2.3\ntrimesh>=4.5,<5\ncoacd>=1.0.7,<2\nrtree>=1.3,<2\n";
+  files[`training/mujoco/requirements.txt`]="mujoco>=3.1,<4\ngymnasium>=0.29\nnumpy>=1.24\npillow>=10\nstable-baselines3>=2.3\ntrimesh>=4.5,<5\ncoacd>=1.0.7,<2\nrtree>=1.3,<2\npython-fcl>=0.7,<0.8\n";
   files[`training/mujoco/README.md`] =
 `# ${spec.robot_name} in MuJoCo
 

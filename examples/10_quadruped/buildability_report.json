@@ -1,0 +1,189 @@
+{
+  "scope": "Design-input inventory, not a hardware qualification or a claim that missing interfaces were inspected in CAD",
+  "source_robot_sha256": "84802cf927d12382db54a13de2b65822393323f91413508d07317b4ca7adb6a3",
+  "source_bom_sha256": "18325c78c6285416b497621630e8b18359559c8ddacba257ea24aec81b46a1e5",
+  "hardware_verified": false,
+  "manufacturing_ready": false,
+  "prototype_test_evidence": null,
+  "declared_mass_kg": 4.585530181801735,
+  "links_with_inferred_mass": [
+    "base_link",
+    "front_left_hip",
+    "front_left_thigh",
+    "front_left_shin",
+    "front_right_hip",
+    "front_right_thigh",
+    "front_right_shin",
+    "rear_left_hip",
+    "rear_left_thigh",
+    "rear_left_shin",
+    "rear_right_hip",
+    "rear_right_thigh",
+    "rear_right_shin"
+  ],
+  "actuator_catalogue_sizing_pass": false,
+  "joint_requirements": [
+    {
+      "joint": "front_left_hip_joint",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -0.8,
+      "upper": 0.8,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "front_left_thigh_joint",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -1.6,
+      "upper": 1.6,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "front_left_knee_joint",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -2.4,
+      "upper": 0,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "front_right_hip_joint",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -0.8,
+      "upper": 0.8,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "front_right_thigh_joint",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -1.6,
+      "upper": 1.6,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "front_right_knee_joint",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -2.4,
+      "upper": 0,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "rear_left_hip_joint",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -0.8,
+      "upper": 0.8,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "rear_left_thigh_joint",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -1.6,
+      "upper": 1.6,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "rear_left_knee_joint",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -2.4,
+      "upper": 0,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "rear_right_hip_joint",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -0.8,
+      "upper": 0.8,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "rear_right_thigh_joint",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -1.6,
+      "upper": 1.6,
+      "position_unit": "rad"
+    },
+    {
+      "joint": "rear_right_knee_joint",
+      "type": "revolute",
+      "effort": 50,
+      "effort_unit": "N·m",
+      "velocity": 2,
+      "velocity_unit": "rad/s",
+      "lower": -2.4,
+      "upper": 0,
+      "position_unit": "rad"
+    }
+  ],
+  "missing_evidence": [
+    {
+      "id": "component_interfaces",
+      "detail": "No verified vendor drawing, shaft/horn interface, mounting-hole pattern or bearing fit is associated with each joint."
+    },
+    {
+      "id": "actuator_operating_envelope",
+      "detail": "No complete speed/effort/thermal-duty and feedback qualification; catalogue effort alone does not validate the selected actuator."
+    },
+    {
+      "id": "electronics_packaging",
+      "detail": "No verified placement, mounting, connector access or cable-bend clearance for the selected electronics. The optional enclosure example uses synthetic dimensions."
+    },
+    {
+      "id": "electrical_system",
+      "detail": "No validated rail voltages, peak currents, power budget, wiring schematic or protection sizing."
+    },
+    {
+      "id": "manufacturing_and_assembly",
+      "detail": "No complete tolerance stack, material/process specification, fastener schedule, assembly procedure or service-access validation."
+    },
+    {
+      "id": "measured_dynamics",
+      "detail": "No prototype measurements establish masses, inertias, friction, backlash, compliance or model-to-hardware agreement."
+    },
+    {
+      "id": "physical_validation",
+      "detail": "No physical assembly, load test or task-performance evidence is attached."
+    }
+  ]
+}

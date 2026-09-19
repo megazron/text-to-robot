@@ -2,11 +2,11 @@
 
 **Estimated total: $3342.17**  ·  tier: prosumer
 
-**Torque sizing: fails; hardware verified: no.**
+**Effort sizing: fails; hardware verified: no.**
 
 | Category | Component | Qty | Unit $ | Subtotal $ | Spec |
 |---|---|--:|--:|--:|---|
-| Actuator | Unitree GO-M8010-6 _(joint neck_joint; rating duty/source unverified)_ | 5 | 400 | 2000 | integrated BLDC + planetary, RS485 (23 N·m) |
+| Actuator | Unitree GO-M8010-6 _(joint neck_joint; rating duty/source unverified; joint left_shoulder_joint; rating duty/source unverified; joint left_arm_roll; rating duty/source unverified; joint right_shoulder_joint; rating duty/source unverified; joint right_arm_roll; rating duty/source unverified)_ | 5 | 400 | 2000 | integrated BLDC + planetary, RS485 (23 N·m) |
 | Sensor | Raspberry Pi Camera Module 3 _(visor_camera)_ | 1 | 25 | 25 | 12MP, CSI |
 | Sensor | Bosch BNO085 _(flight_imu)_ | 1 | 20 | 20 | 9-axis fused AHRS |
 | Compute | Raspberry Pi 5 (8GB) | 1 | 80 | 80 | SBC, runs ROS 2 |
@@ -19,15 +19,16 @@
 
 ## Actuator sizing
 
-| Joint | Required torque (N·m) | Chosen actuator | Margin |
-|---|--:|---|--:|
-| neck_joint | 40 | Unitree GO-M8010-6 | UNDERSIZED |
-| left_shoulder_joint | 40 | Unitree GO-M8010-6 | UNDERSIZED |
-| left_arm_roll | 40 | Unitree GO-M8010-6 | UNDERSIZED |
-| right_shoulder_joint | 40 | Unitree GO-M8010-6 | UNDERSIZED |
-| right_arm_roll | 40 | Unitree GO-M8010-6 | UNDERSIZED |
+| Joint | Required effort | Unit | Chosen actuator | Margin |
+|---|--:|---|---|--:|
+| neck_joint | 40 | N·m | Unitree GO-M8010-6 | UNDERSIZED |
+| left_shoulder_joint | 40 | N·m | Unitree GO-M8010-6 | UNDERSIZED |
+| left_arm_roll | 40 | N·m | Unitree GO-M8010-6 | UNDERSIZED |
+| right_shoulder_joint | 40 | N·m | Unitree GO-M8010-6 | UNDERSIZED |
+| right_arm_roll | 40 | N·m | Unitree GO-M8010-6 | UNDERSIZED |
 
 ## Warnings
+- ⚠️ Sizing uses a neutral-pose gravity proxy and declared joint effort, not a worst-case workspace or dynamic load analysis. Selection checks only approximate effort and broad motion type. Speed/torque curves, travel, voltage, feedback, mounting, thermal duty and wiring are not qualified.
 - ⚠️ Catalog values are planning estimates. Except explicitly sourced rated values, torque entries may be stall/peak ratings; continuous duty, fit and complete assemblies are unverified.
 - ⚠️ joint neck_joint needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
 - ⚠️ joint left_shoulder_joint needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator

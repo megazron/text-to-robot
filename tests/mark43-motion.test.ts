@@ -15,7 +15,7 @@ test('Mark 43 helmet assembly follows neck rotation while collar stays on torso'
 });
 test('Mark 43 chest inlays follow their opening door',()=>{
   for(const side of ['left','right']) {
-    for(const suffix of ['chest_inlay','chest_inlay_centre','pectoral_trim'])
+    for(const suffix of ['chest_inlay','chest_inlay_centre','pectoral_trim','collar_inlay'])
       assert.ok(changed(`${side}_${suffix}`,{[`${side}_chest_door_hinge`]:side==='left'?.5:-.5}));
     assert.equal(changed('chest_centre',{[`${side}_chest_door_hinge`]:.5}),false);
   }
@@ -43,5 +43,14 @@ test('left and right pectorals mirror the entire solid including wall thickness'
     const right=buildPart({part:'mark43_chest',params:{side:-1,section}});
     const points=(v:number[][])=>v.map(p=>p.map(x=>x.toFixed(8)).join(',')).sort();
     assert.deepEqual(points(left.v.map(([x,y,z])=>[x,-y,z])),points(right.v));
+  }
+});
+
+test('forehead insert follows crown and rear detail follows its flight flap',()=>{
+  assert.ok(changed('forehead_plate',{helmet_crown_panel_hinge:-.4}));
+  assert.equal(changed('forehead_plate',{faceplate_hinge:-.4}),false);
+  for(const side of ['left','right']) {
+    assert.ok(changed(`${side}_back_scapula`,{[`${side}_flight_flap_hinge`]:-.4}));
+    assert.equal(changed(`${side}_back_scapula`,{[`${side==='left'?'right':'left'}_flight_flap_hinge`]:-.4}),false);
   }
 });

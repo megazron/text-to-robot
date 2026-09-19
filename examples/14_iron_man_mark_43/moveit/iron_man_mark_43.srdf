@@ -237,7 +237,7 @@
   <disable_collisions link1="neck_pitch_carrier" link2="helmet_right_ear_pod" reason="Adjacent"/>
   <disable_collisions link1="neck_pitch_carrier" link2="helmet_crown_panel" reason="Adjacent"/>
   <disable_collisions link1="neck_pitch_carrier" link2="faceplate" reason="Adjacent"/>
-  <disable_collisions link1="faceplate" link2="forehead_plate" reason="Adjacent"/>
+  <disable_collisions link1="helmet_crown_panel" link2="forehead_plate" reason="Adjacent"/>
   <disable_collisions link1="faceplate" link2="mouth_line" reason="Adjacent"/>
   <disable_collisions link1="faceplate" link2="left_eye_socket" reason="Adjacent"/>
   <disable_collisions link1="faceplate" link2="left_eye_lens" reason="Adjacent"/>
@@ -383,7 +383,7 @@
   <disable_collisions link1="right_boot" link2="right_thruster_cover" reason="Adjacent"/>
   <disable_collisions link1="right_boot" link2="right_ankle_flap" reason="Adjacent"/>
   <disable_collisions link1="left_shoulder_module" link2="left_clavicle_cover" reason="Adjacent"/>
-  <disable_collisions link1="back_shell" link2="left_back_scapula" reason="Adjacent"/>
+  <disable_collisions link1="left_flight_flap" link2="left_back_scapula" reason="Adjacent"/>
   <disable_collisions link1="back_shell" link2="left_back_grille_0" reason="Adjacent"/>
   <disable_collisions link1="back_shell" link2="left_back_grille_1" reason="Adjacent"/>
   <disable_collisions link1="back_shell" link2="left_back_grille_2" reason="Adjacent"/>
@@ -401,7 +401,7 @@
   <disable_collisions link1="left_bicep_sleeve" link2="left_bicep_front" reason="Adjacent"/>
   <disable_collisions link1="left_gauntlet_sleeve" link2="left_forearm_crest" reason="Adjacent"/>
   <disable_collisions link1="right_shoulder_module" link2="right_clavicle_cover" reason="Adjacent"/>
-  <disable_collisions link1="back_shell" link2="right_back_scapula" reason="Adjacent"/>
+  <disable_collisions link1="right_flight_flap" link2="right_back_scapula" reason="Adjacent"/>
   <disable_collisions link1="back_shell" link2="right_back_grille_0" reason="Adjacent"/>
   <disable_collisions link1="back_shell" link2="right_back_grille_1" reason="Adjacent"/>
   <disable_collisions link1="back_shell" link2="right_back_grille_2" reason="Adjacent"/>
@@ -424,14 +424,14 @@
   <disable_collisions link1="spine_frame" link2="left_rib_insert_1" reason="Adjacent"/>
   <disable_collisions link1="spine_frame" link2="left_rib_edge_2" reason="Adjacent"/>
   <disable_collisions link1="spine_frame" link2="left_rib_insert_2" reason="Adjacent"/>
-  <disable_collisions link1="spine_frame" link2="left_collar_inlay" reason="Adjacent"/>
+  <disable_collisions link1="left_pectoral_trim" link2="left_collar_inlay" reason="Adjacent"/>
   <disable_collisions link1="spine_frame" link2="right_rib_edge_0" reason="Adjacent"/>
   <disable_collisions link1="spine_frame" link2="right_rib_insert_0" reason="Adjacent"/>
   <disable_collisions link1="spine_frame" link2="right_rib_edge_1" reason="Adjacent"/>
   <disable_collisions link1="spine_frame" link2="right_rib_insert_1" reason="Adjacent"/>
   <disable_collisions link1="spine_frame" link2="right_rib_edge_2" reason="Adjacent"/>
   <disable_collisions link1="spine_frame" link2="right_rib_insert_2" reason="Adjacent"/>
-  <disable_collisions link1="spine_frame" link2="right_collar_inlay" reason="Adjacent"/>
+  <disable_collisions link1="right_pectoral_trim" link2="right_collar_inlay" reason="Adjacent"/>
   <disable_collisions link1="left_chest_door" link2="left_chest_door_moving_knuckle" reason="Adjacent"/>
   <disable_collisions link1="spine_frame" link2="left_chest_door_fixed_knuckle_lower" reason="Adjacent"/>
   <disable_collisions link1="spine_frame" link2="left_chest_door_fixed_knuckle_upper" reason="Adjacent"/>

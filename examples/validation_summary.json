@@ -138,15 +138,13 @@
     {
       "example": "14_iron_man_mark_43",
       "compiled": true,
-      "passed": 2,
+      "passed": 4,
       "total": 6,
-      "initial_penetrations": 227,
+      "initial_penetrations": 0,
       "floating": true,
       "failed": [
-        "initial_clearance",
-        "settle_under_gravity",
-        "hold_pose",
-        "actuator_sweep"
+        "actuator_sweep",
+        "disturbance_recovery"
       ]
     },
     {

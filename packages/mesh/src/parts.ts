@@ -25,11 +25,11 @@ function armourPlate(p: Params): Mesh {
 export const PARTS: Record<string, Gen> = {
   mark43_torso_side: p => torsoSide(num(p,"side",1)),
   mark43_chest: p => chestSurfacePanel(num(p,"side",1),str(p,"section","lower")==="upper"),
-  mark43_boot: () => bootShell(),
+  mark43_boot: p => bootShell(p.section==="inset"),
   mark43_panel: p => armourPanel(str(p,"style","sternum"),num(p,"w",.1),num(p,"h",.1),num(p,"t",.004),num(p,"R",.3)),
   mark43_limb_inset: p => limbInset(num(p,"length",.3),num(p,"rTop",.1),num(p,"rBottom",.08),str(p,"style","thigh"),num(p,"a0",-.6),num(p,"a1",.6),num(p,"u0",.1),num(p,"u1",.9),num(p,"offset",.002)),
   mark43_limb: p => sculptedLimb(num(p,"length",.3),num(p,"rTop",.1),num(p,"rBottom",.08),num(p,"a0",-1),num(p,"a1",3.6),num(p,"thick",.005),str(p,"style","thigh")),
-  mark43_shoulder: p => shoulderShell(num(p,"side",1)),
+  mark43_shoulder: p => shoulderShell(num(p,"side",1),p.section==="edge"),
   // ---- helmet (1:1, motorised-kit layout) ----
   helmet_cranium: () => helmet.cranium(), helmet_crown_panel: () => helmet.crownPanel(), helmet_forehead_plate: () => helmet.foreheadPlate(),
   helmet_faceplate: () => helmet.faceplate(), helmet_chin_guard: () => helmet.chinGuard(), helmet_neck_collar: () => helmet.neckCollar(),
