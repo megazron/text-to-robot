@@ -1,6 +1,6 @@
 # MoveIt 2 — iron_man_mark_43
 
-Groups: left_arm (4 joints), left_leg (4 joints), left_hand (5 joints), right_arm (4 joints), right_leg (4 joints), right_hand (5 joints), torso (1 joints), armour (39 joints).
+Groups: left_arm (4 joints), left_leg (4 joints), left_hand (14 joints), right_arm (4 joints), right_leg (4 joints), right_hand (14 joints), neck (2 joints), torso (1 joints), armour (39 joints).
 Armour hinges are separate from arm/leg planning chains. Underactuated chains use
 position-only IK; arbitrary six-dimensional hand poses are not achievable.
 

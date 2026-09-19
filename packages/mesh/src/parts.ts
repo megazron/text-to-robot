@@ -2,7 +2,7 @@
 // (server, exporters, CAD, tests) can rebuild the identical mesh from that recipe.
 import { type Mesh, massProperties, bbox, translate, rotate, scale as scaleMesh, orient } from "./core.ts";
 import { curvedPlate, limbShell, dome, disc, ring, superArc, shelledLoft } from "./shapes.ts";
-import { chestSurfacePanel, armourPanel, sculptedLimb, shoulderShell, bootShell } from "./mark43.ts";
+import { limbInset, chestSurfacePanel, armourPanel, sculptedLimb, shoulderShell, bootShell } from "./mark43.ts";
 import * as helmet from "./helmet.ts";
 
 export type Params = Record<string, number | string>;
@@ -26,6 +26,7 @@ export const PARTS: Record<string, Gen> = {
   mark43_chest: p => chestSurfacePanel(num(p,"side",1),str(p,"section","lower")==="upper"),
   mark43_boot: () => bootShell(),
   mark43_panel: p => armourPanel(str(p,"style","sternum"),num(p,"w",.1),num(p,"h",.1),num(p,"t",.004),num(p,"R",.3)),
+  mark43_limb_inset: p => limbInset(num(p,"length",.3),num(p,"rTop",.1),num(p,"rBottom",.08),str(p,"style","thigh"),num(p,"a0",-.6),num(p,"a1",.6),num(p,"u0",.1),num(p,"u1",.9),num(p,"offset",.002)),
   mark43_limb: p => sculptedLimb(num(p,"length",.3),num(p,"rTop",.1),num(p,"rBottom",.08),num(p,"a0",-1),num(p,"a1",3.6),num(p,"thick",.005),str(p,"style","thigh")),
   mark43_shoulder: p => shoulderShell(num(p,"side",1)),
   // ---- helmet (1:1, motorised-kit layout) ----

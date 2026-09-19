@@ -5,8 +5,10 @@ import hashlib,json
 from pathlib import Path
 from ttr_mujoco.convert import urdf_to_mjcf
 from ttr_mujoco.render import render_gif
-root=Path(__file__).resolve().parents[1];manifest={}
+root=Path(__file__).resolve().parents[1];selected=os.environ.get('TTR_EXAMPLE');manifest={}
+if selected:manifest=json.loads((root/'examples/gif_manifest.json').read_text())
 for folder in sorted((root/'examples').iterdir()):
+    if selected and folder.name!=selected:continue
     source=folder/'robot.urdf'
     if not source.exists():continue
     xml=urdf_to_mjcf(str(source),self_collision=True)

@@ -27,3 +27,11 @@ for name in ('articulation','helmet'):
     assert entry['source_urdf_sha256']==hashlib.sha256((folder/'robot.sim.urdf').read_bytes()).hexdigest()
     assert entry['gif_sha256']==hashlib.sha256((folder/f'{name}.gif').read_bytes()).hexdigest()
 print('All 17 example reports, GIFs and ROS archives are current')
+
+folder=base/'14_iron_man_mark_43'
+report=json.loads((folder/'articulation_report.json').read_text())
+assert report['source_urdf_sha256']==hashlib.sha256((folder/'robot.sim.urdf').read_bytes()).hexdigest()
+for preview in report['previews'].values():
+    assert preview['sha256']==hashlib.sha256((folder/preview['gif']).read_bytes()).hexdigest()
+    assert preview['max_displacement_m']>.001
+print('Mark 43 isolated motion previews match the shipped model')

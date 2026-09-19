@@ -75,10 +75,18 @@ now supplement the saved production photographs.
 
 ![Actual exported model rendered in MuJoCo](docs/img/mark43_threequarter_review.png)
 
-The current model contains **240 links, 206 mesh instances using 190 unique STL
-files, 17 frame actuators and 49 armour hinges**. Smaller parts include collar
-inlays, rib inserts, finger knuckle tiles, hinge barrels and pins. Those details
-are exported geometry, not a painted preview.
+The current model contains **268 links, 232 mesh instances using 216 unique STL
+files and 86 actuated joints**. Each finger has three articulated segments, each
+thumb has two, and the helmet has neck yaw and pitch. Chest inlays follow their
+opening doors. Thigh, shin and arm trim now follows the underlying shell surface.
+Fixed trim moves with its supporting plate; it does not need an independent motor.
+
+![Actual finger articulation](examples/14_iron_man_mark_43/hand_joints.gif)
+![Actual neck articulation](examples/14_iron_man_mark_43/neck_joints.gif)
+
+These close-ups prescribe joint positions on the actual exported meshes with
+collisions disabled. They demonstrate articulation, not safe motion or qualified
+mechanisms. [Joint-motion evidence](examples/14_iron_man_mark_43/articulation_report.json).
 
 Comparison now includes [Legacy Effects' Avengers: Age of Ultron production
 references](https://www.legacyefx.com/avengersaou), alongside the licensed collectible
@@ -90,12 +98,12 @@ locally and checked against saved iterations; see the [reference workflow](refer
 
 | Check | Current evidence |
 |---|---|
-| Closed mesh topology and mass integrals | 206/206 mesh instances pass |
+| Closed mesh topology and mass integrals | 232/232 mesh instances pass |
 | Empty-suit smoke battery, self-collision off | 3/5; tracking and disturbance recovery fail |
-| Suit with passive mannequin, human/self-contact disabled | 5/6; actuator sweep fails, 47/66 joints track |
-| Compound-convex initial collision | 753 penetrating contacts, maximum depth about 24.9 mm |
+| Suit with passive mannequin, human/self-contact disabled | See loaded physics report; actuator tracking still fails |
+| Compound-convex initial collision | See regenerated clearance report; interference remains |
 | Collision-enabled suit smoke battery | 1/6; see the example simulation report |
-| Joint-range clearance | 595 sampled poses; interference remains |
+| Joint-range clearance | See regenerated motion-clearance report; interference remains |
 | ROS 2 Jazzy / MoveIt | Controllers and scene start; suit planning fails collision validation |
 | Six-axis arm MoveIt fixture | Planning and mock trajectory execution pass |
 | Wearer fit | Example measurements fail opening/clearance checks |

@@ -12,7 +12,7 @@ mechanisms, silver collar panels and rib details wrapped around the flanks.
 The current export replaces isolated pectoral badges with adjoining compound
 surfaces and moves rib details around the flanks, but still has
 oversized exposed motor housings and simplified hands. These are unresolved
-shape differences, even after adding collar inlays, rib edges and knuckle tiles.
+shape differences, even after adding conformal limb inlays and segmented fingers.
 The production photograph is perspective imagery, not dimensioned CAD; a numerical
 surface-error comparison would be misleading. Third-party images are linked,
 not redistributed in the repository.
@@ -26,11 +26,11 @@ No numerical visual-accuracy percentage is claimed.
 |---|---|---|---|
 | Chest | Round barrel with small rectangular trim | Adjoining curved upper/lower pectoral surfaces, narrower sternum and circular reactor | Chest curvature and panel junctions remain approximate |
 | Abdomen | Three isolated rounded bars | Tapered red plates, flank shells and side-wrapped rib trim | Rib shapes/spacing need closer prop-derived modelling |
-| Limbs | Nearly constant-radius sleeves | Independent depth/width profiles, sculpted taper and layered thigh/shin panels | Outer drive modules interrupt the film silhouette |
+| Limbs | Nearly constant-radius sleeves | Independent depth/width profiles with surface-following thigh/shin/arm trim | Outer drive modules interrupt the film silhouette |
 | Knees | Round dome | Angular shield, recessed-looking dark bezel and red centre | Mechanism and trim differ |
 | Feet | Visible sole with small toe cap | Full hollow boot upper with shaped instep | Toe/ankle transitions and heel details remain approximate |
 | Helmet | Smooth elongated mask | Planar cheek/bridge transitions, narrower eye lenses and surface-aligned mouth | Jaw, temple and forehead topology need refinement |
-| Hands | Short horizontal platforms | Wrist orientation follows forearm; separate extended fingers/thumb | Finger anatomy and knuckle mechanisms remain simplified |
+| Hands | Short horizontal platforms | Three flexion joints per finger, two per thumb; distinct knuckle barrels | Finger anatomy and knuckle mechanisms remain simplified |
 | Back | Plain rectangular cover and two gold tabs | Tapered panel, shoulder-blade layers and grille details | Backpack volume is still unlike the film suit; rear details are not reference-exact |
 
 ## Current exported model
@@ -55,7 +55,7 @@ animate, hide drive modules, or replace the model with a pre-rendered illustrati
 The same recipes produce the browser meshes and downloadable STL/CAD assets. The
 browser applies a metal finish to Mark 43 materials; geometry remains identical.
 
-206 mesh instances (190 unique STL assets) are checked independently for closed topology and mass properties.
+232 mesh instances (216 unique STL assets) are checked independently for closed topology and mass properties.
 This is still an authored approximation, not an extremely accurate replica or a
 manufacturing-qualified assembly. Revised geometry invalidates earlier collision
 numbers; see the current reports in `examples/14_iron_man_mark_43`.
@@ -79,3 +79,23 @@ cache, with source links preserved.
 | Torso close-up | Helmet close-up |
 |---|---|
 | ![Torso](img/mark43_torso_review.png) | ![Helmet](img/mark43_helmet_review.png) |
+
+## Articulation revision
+
+The chest inlays previously remained on the torso when the chest doors opened.
+Their parents and local transforms now follow the doors. The complete helmet
+assembly follows neck yaw/pitch, while the neck collar stays on the torso.
+Fingers previously had a single rigid strip each; they now have three independently
+articulated phalanges, with lengths varying by finger. Thumb opposition is still
+simplified. Knuckle barrels have clearance from the plate ends at rest; this is
+not a validated full-range human hand mechanism.
+
+The limb inlays sample the same cross-section profiles as their supporting shells,
+removing floating planar thigh/shin badges. Comparing the fresh front and
+three-quarter views against the saved reference still shows the oversized exposed
+motor modules, approximate chest/waist proportions, simple helmet topology and
+backpack as major visual failures. More joints do not establish movie accuracy.
+
+[Finger, neck and chest-motion GIFs](../examples/14_iron_man_mark_43/README.md)
+use prescribed joint positions with collisions disabled. The separate collision
+reports retain the failures; animation is not a clearance certificate.

@@ -28,6 +28,8 @@ moveit_simple_controller_manager:
       - left_cheek_panel_hinge
       - right_cheek_panel_hinge
       - chin_guard_hinge
+      - neck_yaw
+      - neck_pitch
       - left_chest_door_hinge
       - right_chest_door_hinge
       - ab_plate_1_hinge
@@ -44,20 +46,38 @@ moveit_simple_controller_manager:
       - left_gauntlet_clamshell_hinge
       - left_gauntlet_hatch_hinge
       - left_finger_1_hinge
+      - left_finger_1_middle_hinge
+      - left_finger_1_distal_hinge
       - left_finger_2_hinge
+      - left_finger_2_middle_hinge
+      - left_finger_2_distal_hinge
       - left_finger_3_hinge
+      - left_finger_3_middle_hinge
+      - left_finger_3_distal_hinge
       - left_finger_4_hinge
+      - left_finger_4_middle_hinge
+      - left_finger_4_distal_hinge
       - left_thumb_hinge
+      - left_thumb_distal_hinge
       - right_pauldron_hinge
       - right_bicep_clamshell_hinge
       - right_elbow_cap_hinge
       - right_gauntlet_clamshell_hinge
       - right_gauntlet_hatch_hinge
       - right_finger_1_hinge
+      - right_finger_1_middle_hinge
+      - right_finger_1_distal_hinge
       - right_finger_2_hinge
+      - right_finger_2_middle_hinge
+      - right_finger_2_distal_hinge
       - right_finger_3_hinge
+      - right_finger_3_middle_hinge
+      - right_finger_3_distal_hinge
       - right_finger_4_hinge
+      - right_finger_4_middle_hinge
+      - right_finger_4_distal_hinge
       - right_thumb_hinge
+      - right_thumb_distal_hinge
       - left_hip_flap_hinge
       - left_thigh_clamshell_hinge
       - left_knee_cap_hinge

@@ -20,17 +20,35 @@
   </group_state>
   <group name="left_hand">
     <joint name="left_finger_1_hinge"/>
+    <joint name="left_finger_1_middle_hinge"/>
+    <joint name="left_finger_1_distal_hinge"/>
     <joint name="left_finger_2_hinge"/>
+    <joint name="left_finger_2_middle_hinge"/>
+    <joint name="left_finger_2_distal_hinge"/>
     <joint name="left_finger_3_hinge"/>
+    <joint name="left_finger_3_middle_hinge"/>
+    <joint name="left_finger_3_distal_hinge"/>
     <joint name="left_finger_4_hinge"/>
+    <joint name="left_finger_4_middle_hinge"/>
+    <joint name="left_finger_4_distal_hinge"/>
     <joint name="left_thumb_hinge"/>
+    <joint name="left_thumb_distal_hinge"/>
   </group>
   <group_state name="home" group="left_hand">
     <joint name="left_finger_1_hinge" value="0"/>
+    <joint name="left_finger_1_middle_hinge" value="0"/>
+    <joint name="left_finger_1_distal_hinge" value="0"/>
     <joint name="left_finger_2_hinge" value="0"/>
+    <joint name="left_finger_2_middle_hinge" value="0"/>
+    <joint name="left_finger_2_distal_hinge" value="0"/>
     <joint name="left_finger_3_hinge" value="0"/>
+    <joint name="left_finger_3_middle_hinge" value="0"/>
+    <joint name="left_finger_3_distal_hinge" value="0"/>
     <joint name="left_finger_4_hinge" value="0"/>
+    <joint name="left_finger_4_middle_hinge" value="0"/>
+    <joint name="left_finger_4_distal_hinge" value="0"/>
     <joint name="left_thumb_hinge" value="0"/>
+    <joint name="left_thumb_distal_hinge" value="0"/>
   </group_state>
   <group name="right_arm">
     <chain base_link="shoulder_yoke" tip_link="right_hand"/>
@@ -52,17 +70,43 @@
   </group_state>
   <group name="right_hand">
     <joint name="right_finger_1_hinge"/>
+    <joint name="right_finger_1_middle_hinge"/>
+    <joint name="right_finger_1_distal_hinge"/>
     <joint name="right_finger_2_hinge"/>
+    <joint name="right_finger_2_middle_hinge"/>
+    <joint name="right_finger_2_distal_hinge"/>
     <joint name="right_finger_3_hinge"/>
+    <joint name="right_finger_3_middle_hinge"/>
+    <joint name="right_finger_3_distal_hinge"/>
     <joint name="right_finger_4_hinge"/>
+    <joint name="right_finger_4_middle_hinge"/>
+    <joint name="right_finger_4_distal_hinge"/>
     <joint name="right_thumb_hinge"/>
+    <joint name="right_thumb_distal_hinge"/>
   </group>
   <group_state name="home" group="right_hand">
     <joint name="right_finger_1_hinge" value="0"/>
+    <joint name="right_finger_1_middle_hinge" value="0"/>
+    <joint name="right_finger_1_distal_hinge" value="0"/>
     <joint name="right_finger_2_hinge" value="0"/>
+    <joint name="right_finger_2_middle_hinge" value="0"/>
+    <joint name="right_finger_2_distal_hinge" value="0"/>
     <joint name="right_finger_3_hinge" value="0"/>
+    <joint name="right_finger_3_middle_hinge" value="0"/>
+    <joint name="right_finger_3_distal_hinge" value="0"/>
     <joint name="right_finger_4_hinge" value="0"/>
+    <joint name="right_finger_4_middle_hinge" value="0"/>
+    <joint name="right_finger_4_distal_hinge" value="0"/>
     <joint name="right_thumb_hinge" value="0"/>
+    <joint name="right_thumb_distal_hinge" value="0"/>
+  </group_state>
+  <group name="neck">
+    <joint name="neck_yaw"/>
+    <joint name="neck_pitch"/>
+  </group>
+  <group_state name="home" group="neck">
+    <joint name="neck_yaw" value="0"/>
+    <joint name="neck_pitch" value="0"/>
   </group_state>
   <group name="torso">
     <joint name="trunk_flex"/>
@@ -187,21 +231,23 @@
   <disable_collisions link1="right_elbow_module" link2="right_forearm_strut" reason="Adjacent"/>
   <disable_collisions link1="right_forearm_strut" link2="right_forearm_cuff" reason="Adjacent"/>
   <disable_collisions link1="right_forearm_strut" link2="right_hand" reason="Adjacent"/>
-  <disable_collisions link1="spine_frame" link2="helmet" reason="Adjacent"/>
+  <disable_collisions link1="neck_pitch_carrier" link2="helmet" reason="Adjacent"/>
   <disable_collisions link1="spine_frame" link2="helmet_neck_collar" reason="Adjacent"/>
-  <disable_collisions link1="spine_frame" link2="helmet_left_ear_pod" reason="Adjacent"/>
-  <disable_collisions link1="spine_frame" link2="helmet_right_ear_pod" reason="Adjacent"/>
-  <disable_collisions link1="spine_frame" link2="helmet_crown_panel" reason="Adjacent"/>
-  <disable_collisions link1="spine_frame" link2="faceplate" reason="Adjacent"/>
+  <disable_collisions link1="neck_pitch_carrier" link2="helmet_left_ear_pod" reason="Adjacent"/>
+  <disable_collisions link1="neck_pitch_carrier" link2="helmet_right_ear_pod" reason="Adjacent"/>
+  <disable_collisions link1="neck_pitch_carrier" link2="helmet_crown_panel" reason="Adjacent"/>
+  <disable_collisions link1="neck_pitch_carrier" link2="faceplate" reason="Adjacent"/>
   <disable_collisions link1="faceplate" link2="forehead_plate" reason="Adjacent"/>
   <disable_collisions link1="faceplate" link2="mouth_line" reason="Adjacent"/>
   <disable_collisions link1="faceplate" link2="left_eye_socket" reason="Adjacent"/>
   <disable_collisions link1="faceplate" link2="left_eye_lens" reason="Adjacent"/>
-  <disable_collisions link1="spine_frame" link2="left_cheek_panel" reason="Adjacent"/>
+  <disable_collisions link1="neck_pitch_carrier" link2="left_cheek_panel" reason="Adjacent"/>
   <disable_collisions link1="faceplate" link2="right_eye_socket" reason="Adjacent"/>
   <disable_collisions link1="faceplate" link2="right_eye_lens" reason="Adjacent"/>
-  <disable_collisions link1="spine_frame" link2="right_cheek_panel" reason="Adjacent"/>
-  <disable_collisions link1="spine_frame" link2="chin_guard" reason="Adjacent"/>
+  <disable_collisions link1="neck_pitch_carrier" link2="right_cheek_panel" reason="Adjacent"/>
+  <disable_collisions link1="neck_pitch_carrier" link2="chin_guard" reason="Adjacent"/>
+  <disable_collisions link1="spine_frame" link2="neck_yaw_carrier" reason="Adjacent"/>
+  <disable_collisions link1="neck_yaw_carrier" link2="neck_pitch_carrier" reason="Adjacent"/>
   <disable_collisions link1="spine_frame" link2="neck_ring" reason="Adjacent"/>
   <disable_collisions link1="spine_frame" link2="collar_plate" reason="Adjacent"/>
   <disable_collisions link1="spine_frame" link2="left_chest_door" reason="Adjacent"/>
@@ -227,13 +273,13 @@
   <disable_collisions link1="spine_frame" link2="left_rib_0" reason="Adjacent"/>
   <disable_collisions link1="spine_frame" link2="left_rib_1" reason="Adjacent"/>
   <disable_collisions link1="spine_frame" link2="left_rib_2" reason="Adjacent"/>
-  <disable_collisions link1="spine_frame" link2="left_chest_inlay" reason="Adjacent"/>
-  <disable_collisions link1="spine_frame" link2="left_chest_inlay_centre" reason="Adjacent"/>
+  <disable_collisions link1="left_chest_door" link2="left_chest_inlay" reason="Adjacent"/>
+  <disable_collisions link1="left_chest_door" link2="left_chest_inlay_centre" reason="Adjacent"/>
   <disable_collisions link1="spine_frame" link2="right_rib_0" reason="Adjacent"/>
   <disable_collisions link1="spine_frame" link2="right_rib_1" reason="Adjacent"/>
   <disable_collisions link1="spine_frame" link2="right_rib_2" reason="Adjacent"/>
-  <disable_collisions link1="spine_frame" link2="right_chest_inlay" reason="Adjacent"/>
-  <disable_collisions link1="spine_frame" link2="right_chest_inlay_centre" reason="Adjacent"/>
+  <disable_collisions link1="right_chest_door" link2="right_chest_inlay" reason="Adjacent"/>
+  <disable_collisions link1="right_chest_door" link2="right_chest_inlay_centre" reason="Adjacent"/>
   <disable_collisions link1="left_shoulder_module" link2="left_pauldron" reason="Adjacent"/>
   <disable_collisions link1="left_pauldron" link2="left_pauldron_edge" reason="Adjacent"/>
   <disable_collisions link1="left_upper_arm_strut" link2="left_bicep_sleeve" reason="Adjacent"/>
@@ -246,10 +292,31 @@
   <disable_collisions link1="left_hand" link2="left_hand_plate" reason="Adjacent"/>
   <disable_collisions link1="left_hand" link2="left_palm_repulsor" reason="Adjacent"/>
   <disable_collisions link1="left_hand" link2="left_finger_1" reason="Adjacent"/>
+  <disable_collisions link1="left_finger_1" link2="left_finger_1_knuckle" reason="Adjacent"/>
+  <disable_collisions link1="left_finger_1" link2="left_finger_1_middle" reason="Adjacent"/>
+  <disable_collisions link1="left_finger_1_middle" link2="left_finger_1_middle_knuckle" reason="Adjacent"/>
+  <disable_collisions link1="left_finger_1_middle" link2="left_finger_1_distal" reason="Adjacent"/>
+  <disable_collisions link1="left_finger_1_distal" link2="left_finger_1_distal_knuckle" reason="Adjacent"/>
   <disable_collisions link1="left_hand" link2="left_finger_2" reason="Adjacent"/>
+  <disable_collisions link1="left_finger_2" link2="left_finger_2_knuckle" reason="Adjacent"/>
+  <disable_collisions link1="left_finger_2" link2="left_finger_2_middle" reason="Adjacent"/>
+  <disable_collisions link1="left_finger_2_middle" link2="left_finger_2_middle_knuckle" reason="Adjacent"/>
+  <disable_collisions link1="left_finger_2_middle" link2="left_finger_2_distal" reason="Adjacent"/>
+  <disable_collisions link1="left_finger_2_distal" link2="left_finger_2_distal_knuckle" reason="Adjacent"/>
   <disable_collisions link1="left_hand" link2="left_finger_3" reason="Adjacent"/>
+  <disable_collisions link1="left_finger_3" link2="left_finger_3_knuckle" reason="Adjacent"/>
+  <disable_collisions link1="left_finger_3" link2="left_finger_3_middle" reason="Adjacent"/>
+  <disable_collisions link1="left_finger_3_middle" link2="left_finger_3_middle_knuckle" reason="Adjacent"/>
+  <disable_collisions link1="left_finger_3_middle" link2="left_finger_3_distal" reason="Adjacent"/>
+  <disable_collisions link1="left_finger_3_distal" link2="left_finger_3_distal_knuckle" reason="Adjacent"/>
   <disable_collisions link1="left_hand" link2="left_finger_4" reason="Adjacent"/>
+  <disable_collisions link1="left_finger_4" link2="left_finger_4_knuckle" reason="Adjacent"/>
+  <disable_collisions link1="left_finger_4" link2="left_finger_4_middle" reason="Adjacent"/>
+  <disable_collisions link1="left_finger_4_middle" link2="left_finger_4_middle_knuckle" reason="Adjacent"/>
+  <disable_collisions link1="left_finger_4_middle" link2="left_finger_4_distal" reason="Adjacent"/>
+  <disable_collisions link1="left_finger_4_distal" link2="left_finger_4_distal_knuckle" reason="Adjacent"/>
   <disable_collisions link1="left_hand" link2="left_thumb" reason="Adjacent"/>
+  <disable_collisions link1="left_thumb" link2="left_thumb_distal" reason="Adjacent"/>
   <disable_collisions link1="right_shoulder_module" link2="right_pauldron" reason="Adjacent"/>
   <disable_collisions link1="right_pauldron" link2="right_pauldron_edge" reason="Adjacent"/>
   <disable_collisions link1="right_upper_arm_strut" link2="right_bicep_sleeve" reason="Adjacent"/>
@@ -262,10 +329,31 @@
   <disable_collisions link1="right_hand" link2="right_hand_plate" reason="Adjacent"/>
   <disable_collisions link1="right_hand" link2="right_palm_repulsor" reason="Adjacent"/>
   <disable_collisions link1="right_hand" link2="right_finger_1" reason="Adjacent"/>
+  <disable_collisions link1="right_finger_1" link2="right_finger_1_knuckle" reason="Adjacent"/>
+  <disable_collisions link1="right_finger_1" link2="right_finger_1_middle" reason="Adjacent"/>
+  <disable_collisions link1="right_finger_1_middle" link2="right_finger_1_middle_knuckle" reason="Adjacent"/>
+  <disable_collisions link1="right_finger_1_middle" link2="right_finger_1_distal" reason="Adjacent"/>
+  <disable_collisions link1="right_finger_1_distal" link2="right_finger_1_distal_knuckle" reason="Adjacent"/>
   <disable_collisions link1="right_hand" link2="right_finger_2" reason="Adjacent"/>
+  <disable_collisions link1="right_finger_2" link2="right_finger_2_knuckle" reason="Adjacent"/>
+  <disable_collisions link1="right_finger_2" link2="right_finger_2_middle" reason="Adjacent"/>
+  <disable_collisions link1="right_finger_2_middle" link2="right_finger_2_middle_knuckle" reason="Adjacent"/>
+  <disable_collisions link1="right_finger_2_middle" link2="right_finger_2_distal" reason="Adjacent"/>
+  <disable_collisions link1="right_finger_2_distal" link2="right_finger_2_distal_knuckle" reason="Adjacent"/>
   <disable_collisions link1="right_hand" link2="right_finger_3" reason="Adjacent"/>
+  <disable_collisions link1="right_finger_3" link2="right_finger_3_knuckle" reason="Adjacent"/>
+  <disable_collisions link1="right_finger_3" link2="right_finger_3_middle" reason="Adjacent"/>
+  <disable_collisions link1="right_finger_3_middle" link2="right_finger_3_middle_knuckle" reason="Adjacent"/>
+  <disable_collisions link1="right_finger_3_middle" link2="right_finger_3_distal" reason="Adjacent"/>
+  <disable_collisions link1="right_finger_3_distal" link2="right_finger_3_distal_knuckle" reason="Adjacent"/>
   <disable_collisions link1="right_hand" link2="right_finger_4" reason="Adjacent"/>
+  <disable_collisions link1="right_finger_4" link2="right_finger_4_knuckle" reason="Adjacent"/>
+  <disable_collisions link1="right_finger_4" link2="right_finger_4_middle" reason="Adjacent"/>
+  <disable_collisions link1="right_finger_4_middle" link2="right_finger_4_middle_knuckle" reason="Adjacent"/>
+  <disable_collisions link1="right_finger_4_middle" link2="right_finger_4_distal" reason="Adjacent"/>
+  <disable_collisions link1="right_finger_4_distal" link2="right_finger_4_distal_knuckle" reason="Adjacent"/>
   <disable_collisions link1="right_hand" link2="right_thumb" reason="Adjacent"/>
+  <disable_collisions link1="right_thumb" link2="right_thumb_distal" reason="Adjacent"/>
   <disable_collisions link1="pelvis_frame" link2="left_hip_flap" reason="Adjacent"/>
   <disable_collisions link1="left_thigh_strut" link2="left_thigh_shell" reason="Adjacent"/>
   <disable_collisions link1="left_thigh_strut" link2="left_thigh_clamshell" reason="Adjacent"/>
@@ -337,14 +425,6 @@
   <disable_collisions link1="spine_frame" link2="left_rib_edge_2" reason="Adjacent"/>
   <disable_collisions link1="spine_frame" link2="left_rib_insert_2" reason="Adjacent"/>
   <disable_collisions link1="spine_frame" link2="left_collar_inlay" reason="Adjacent"/>
-  <disable_collisions link1="left_finger_1" link2="left_finger_1_knuckle_0" reason="Adjacent"/>
-  <disable_collisions link1="left_finger_1" link2="left_finger_1_knuckle_1" reason="Adjacent"/>
-  <disable_collisions link1="left_finger_2" link2="left_finger_2_knuckle_0" reason="Adjacent"/>
-  <disable_collisions link1="left_finger_2" link2="left_finger_2_knuckle_1" reason="Adjacent"/>
-  <disable_collisions link1="left_finger_3" link2="left_finger_3_knuckle_0" reason="Adjacent"/>
-  <disable_collisions link1="left_finger_3" link2="left_finger_3_knuckle_1" reason="Adjacent"/>
-  <disable_collisions link1="left_finger_4" link2="left_finger_4_knuckle_0" reason="Adjacent"/>
-  <disable_collisions link1="left_finger_4" link2="left_finger_4_knuckle_1" reason="Adjacent"/>
   <disable_collisions link1="spine_frame" link2="right_rib_edge_0" reason="Adjacent"/>
   <disable_collisions link1="spine_frame" link2="right_rib_insert_0" reason="Adjacent"/>
   <disable_collisions link1="spine_frame" link2="right_rib_edge_1" reason="Adjacent"/>
@@ -352,14 +432,6 @@
   <disable_collisions link1="spine_frame" link2="right_rib_edge_2" reason="Adjacent"/>
   <disable_collisions link1="spine_frame" link2="right_rib_insert_2" reason="Adjacent"/>
   <disable_collisions link1="spine_frame" link2="right_collar_inlay" reason="Adjacent"/>
-  <disable_collisions link1="right_finger_1" link2="right_finger_1_knuckle_0" reason="Adjacent"/>
-  <disable_collisions link1="right_finger_1" link2="right_finger_1_knuckle_1" reason="Adjacent"/>
-  <disable_collisions link1="right_finger_2" link2="right_finger_2_knuckle_0" reason="Adjacent"/>
-  <disable_collisions link1="right_finger_2" link2="right_finger_2_knuckle_1" reason="Adjacent"/>
-  <disable_collisions link1="right_finger_3" link2="right_finger_3_knuckle_0" reason="Adjacent"/>
-  <disable_collisions link1="right_finger_3" link2="right_finger_3_knuckle_1" reason="Adjacent"/>
-  <disable_collisions link1="right_finger_4" link2="right_finger_4_knuckle_0" reason="Adjacent"/>
-  <disable_collisions link1="right_finger_4" link2="right_finger_4_knuckle_1" reason="Adjacent"/>
   <disable_collisions link1="left_chest_door" link2="left_chest_door_moving_knuckle" reason="Adjacent"/>
   <disable_collisions link1="spine_frame" link2="left_chest_door_fixed_knuckle_lower" reason="Adjacent"/>
   <disable_collisions link1="spine_frame" link2="left_chest_door_fixed_knuckle_upper" reason="Adjacent"/>

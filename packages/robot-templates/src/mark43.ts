@@ -3,7 +3,8 @@
 // with a gold faceplate, red centre-chest trapezoid around a circular arc reactor, red
 // abdominal segments, gold biceps, red gauntlets with gold hatches, red pauldrons with a
 // gold edge, red knee caps and instep trim, red boots, back flight-stabiliser flaps.
-// Every plate is a hinged, servo-driven mesh link; closed = 0 rad, open = joint limit.
+// Opening panels are hinged; trim rides on its panel. Neck and digit joints articulate
+// independently. These are proposed mechanisms, not qualified wearable hardware.
 //
 // Part frame conventions (see @ttr/mesh):  armour_plate normal = +x, width along y, height
 // along z, curving back at the edges;  limb_shell hangs from z=0 down −length around the z
@@ -77,6 +78,20 @@ export function ironManMark43(opts: ExosuitOptions = {}): RobotSpecification {
   const chinP: V3 = [HM[0] + 0.02, 0, HM[2] - 0.10];
   part("chin_guard", "spine_frame", mesh("helmet_chin_guard", "helmet_chin_guard.stl"), chinP, [0, 0, 0], RED, 0.14, { axis: [0, 1, 0], open: 0.6, effort: 1.5, origin: [HM[0] - chinP[0], 0, HM[2] - chinP[2]] });
 
+  // Move the complete helmet assembly together around a neck pivot. Previously
+  // each helmet part was welded to the torso, so the head could never turn.
+  const neckPivot: V3 = [HM[0], 0, HM[2] - .105];
+  spec.links.push(link("neck_yaw_carrier", {type:"cylinder",radius:.035,length:.012}, {mass:.12,material:GUN}));
+  spec.links.push(link("neck_pitch_carrier", {type:"cylinder",radius:.028,length:.010}, {mass:.10,material:GUN}));
+  spec.joints.push(joint("neck_yaw", "revolute", "spine_frame", "neck_yaw_carrier", {origin:pose(neckPivot),axis:[0,0,1],lower:-.65,upper:.65,effort:4,velocity:1}));
+  spec.joints.push(joint("neck_pitch", "revolute", "neck_yaw_carrier", "neck_pitch_carrier", {origin:pose(),axis:[0,1,0],lower:-.25,upper:.30,effort:4,velocity:1}));
+  for(const j of spec.joints) {
+    if(j.parent==="spine_frame" && (j.child==="helmet" || /^(helmet_.*(?:ear_pod|crown_panel)|faceplate|(?:left|right)_cheek_panel|chin_guard)$/.test(j.child))) {
+      j.parent="neck_pitch_carrier";
+      j.origin.xyz=j.origin.xyz.map((v,i)=>v-neckPivot[i]) as V3;
+    }
+  }
+
   // ================= TORSO =================
   // exo frame underneath: chest strap plate (x 0.125..0.155), backpack (x −0.255..−0.095, 0.32 wide), yoke at z 0.504
   const chestZ = T * 0.68 + 0.015;
@@ -119,8 +134,8 @@ export function ironManMark43(opts: ExosuitOptions = {}): RobotSpecification {
   // Angled gold lateral rib plates flank the red segmented abdomen.
   for(const [side,sign] of SIDES) {
     for(let i=0;i<3;i++) part(`${side}_rib_${i}`,"spine_frame",mesh("mark43_panel",`${side}_rib_${i}.stl`,{style:"flank",w:.105,h:.054,t:.004,R:.30}),[.090-i*.006,sign*(.170-i*.009),.23-i*.065],[0,sign*.13,sign*1.02],GOLD,.08);
-    part(`${side}_chest_inlay`,"spine_frame",mesh("mark43_panel",`${side}_chest_inlay.stl`,{style:"flank",w:.110,h:.175,t:.004,R:.22}),[.168,sign*.154,chestZ-.025],[0,0,sign*.78],"mk43_titanium",.09);
-    part(`${side}_chest_inlay_centre`,"spine_frame",mesh("mark43_panel",`${side}_chest_inlay_centre.stl`,{style:"flank",w:.075,h:.130,t:.003,R:.22}),[.174,sign*.160,chestZ-.025],[0,0,sign*.78],RED,.06);
+    part(`${side}_chest_inlay`,`${side}_chest_door`,mesh("mark43_panel",`${side}_chest_inlay.stl`,{style:"flank",w:.110,h:.175,t:.004,R:.22}),[.068,-sign*.086,-.025],[0,0,sign*.78],"mk43_titanium",.09);
+    part(`${side}_chest_inlay_centre`,`${side}_chest_door`,mesh("mark43_panel",`${side}_chest_inlay_centre.stl`,{style:"flank",w:.075,h:.130,t:.003,R:.22}),[.074,-sign*.080,-.025],[0,0,sign*.78],RED,.06);
   }
 
   // ================= ARMS =================
@@ -147,9 +162,31 @@ export function ironManMark43(opts: ExosuitOptions = {}): RobotSpecification {
     // hand: red plate over the back of the hand platform, repulsor in the palm, gold articulated fingers
     part(`${s}_hand_plate`, `${s}_hand`, mesh("armour_plate", `${s}_hand_plate.stl`, { w: 0.09, h: 0.12, t: 0.005, R: 0.09, corner: 0.015 }), [0.035, fy, -0.017], [0, -PI / 2, 0], RED, 0.18);
     part(`${s}_palm_repulsor`, `${s}_hand`, mesh("disc", `${s}_palm_repulsor.stl`, { radius: 0.026, depth: 0.008, chamfer: 0.002 }), [0.03, fy, -0.056], [PI, 0, 0], GLOW, 0.06);
-    for (let f = 0; f < 4; f++)
-      part(`${s}_finger_${f + 1}`, `${s}_hand`, mesh("armour_plate", `${s}_finger_${f + 1}.stl`, { w: 0.018, h: 0.072, t: 0.012, R: 0.5, corner: 0.004 }), [0.095, fy - 0.030 + f * 0.020, -0.03], [0, -PI / 2, 0 ], RED, 0.03, { axis: [0, 1, 0], open: -1.3, effort: 1, origin: [0, 0, -0.03] });
-    part(`${s}_thumb`, `${s}_hand`, mesh("armour_plate", `${s}_thumb.stl`, { w: 0.02, h: 0.06, t: 0.012, R: 0.5, corner: 0.004 }), [0.070, fy - sign * 0.065, -0.03], [0, -PI / 2, -sign * 0.8 ], RED, 0.03, { axis: [0, 1, 0], open: -0.9, effort: 1, origin: [0, 0, -0.025] });
+    // Three distinct phalanges per finger. Their local +X follows the hand;
+    // +Y flexion curls toward the palm (-Z), rather than moving a rigid strip.
+    for (let f = 0; f < 4; f++) {
+      const lengths = [[.033,.023,.017],[.036,.025,.018],[.034,.024,.017],[.027,.019,.015]][f];
+      let parent = `${s}_hand`;
+      for(let k=0;k<3;k++) {
+        const name=k===0?`${s}_finger_${f+1}`:`${s}_finger_${f+1}_${k===1?"middle":"distal"}`;
+        const len=lengths[k];
+        part(name,parent,mesh("mark43_panel",`${name}.stl`,{style:"gauntlet",w:.017,h:len-.009,t:.009,R:.25}),
+          k===0?[.100,fy-.030+f*.020,-.030]:[lengths[k-1],0,0],
+          [0,0,0],RED,.012,{axis:[0,1,0],open:k===1?1.55:1.15,effort:.35});
+        const finger=spec.links.at(-1)!;
+        finger.origin=pose([len/2,0,.004],[0,PI/2,0]);
+        part(`${name}_knuckle`,name,mesh("disc",`${name}_knuckle.stl`,{radius:.0035,depth:.018,chamfer:.0007}),
+          [0,-.009,0],[-PI/2,0,0],GUN,.003);
+        parent=name;
+      }
+    }
+    // Two thumb segments, with a splayed base frame for opposition.
+    part(`${s}_thumb`,`${s}_hand`,mesh("mark43_panel",`${s}_thumb.stl`,{style:"gauntlet",w:.020,h:.030,t:.010,R:.25}),
+      [.040,fy-sign*.048,-.03],[0,0,-sign*.85],RED,.016,{axis:[0,1,0],open:1.0,effort:.4});
+    spec.links.at(-1)!.origin=pose([.017,0,.004],[0,PI/2,0]);
+    part(`${s}_thumb_distal`,`${s}_thumb`,mesh("mark43_panel",`${s}_thumb_distal.stl`,{style:"gauntlet",w:.018,h:.023,t:.009,R:.25}),
+      [.034,0,0],[0,0,0],RED,.012,{axis:[0,1,0],open:1.2,effort:.3});
+    spec.links.at(-1)!.origin=pose([.013,0,.004],[0,PI/2,0]);
   }
 
   // ================= LEGS =================
@@ -169,8 +206,8 @@ export function ironManMark43(opts: ExosuitOptions = {}): RobotSpecification {
     part(`${s}_calf_clamshell`, `${s}_shank_strut`, mesh("limb_shell", `${s}_calf_clamshell.stl`, { length: A.shank * 0.88, rTop: sr, rBottom: sr - 0.02, ...sw.inner, thick: 0.006, bulge: 0.02 }),
       [sw.seam[0], ly + sw.seam[1], sz], [0, 0, 0], RED, 0.42, { axis: [0, 0, 1], open: -sign * 1.4, effort: 3, origin: [-sw.seam[0], -sw.seam[1], 0] });
     // boot (frame: ankle joint; sole box top at z −0.07, bottom −0.105, toe at x 0.18, heel at x −0.14)
-    part(`${s}_shin_stripe`, `${s}_shin_shell`, mesh("armour_plate", `${s}_shin_stripe.stl`, { w: 0.080, h: 0.22, t: 0.003, R: 0.10, corner: 0.008 }), [sr + 0.004, 0, -0.175], [0, 0, 0], GOLD, 0.05);
-    part(`${s}_thigh_stripe`, `${s}_thigh_shell`, mesh("armour_plate", `${s}_thigh_stripe.stl`, { w: 0.145, h: 0.275, t: 0.003, R: 0.26, corner: 0.008, taper:0.35 }), [tr + 0.012, 0, -0.18], [0, 0, 0], GOLD, 0.05);
+    part(`${s}_shin_stripe`, `${s}_shin_shell`, mesh("mark43_limb_inset",`${s}_shin_stripe.stl`,{style:"shin",length:A.shank*.88,rTop:sr,rBottom:sr-.02,a0:-.50,a1:.50,u0:.12,u1:.90,offset:.003}),[0,0,0],[0,0,0],GOLD,.05);
+    part(`${s}_thigh_stripe`, `${s}_thigh_shell`, mesh("mark43_limb_inset",`${s}_thigh_stripe.stl`,{style:"thigh",length:A.thigh*.88,rTop:tr,rBottom:tr-.02,a0:-.85,a1:.85,u0:.08,u1:.87,offset:.003}),[0,0,0],[0,0,0],GOLD,.05);
     part(`${s}_shin_guard`, `${s}_boot`, mesh("armour_plate", `${s}_shin_guard.stl`, { w: 0.10, h: 0.10, t: 0.005, R: 0.10, corner: 0.02 }), [0.09, ly, 0.06], [0, 0, 0], RED, 0.26, { axis: [0, 1, 0], open: -0.7, effort: 2, origin: [0, 0, -0.05] });
     part(`${s}_boot_toe`, `${s}_boot`, mesh("mark43_boot", `${s}_boot_toe.stl`), [0, ly, 0], [0, 0, 0], RED, 0.30);
     part(`${s}_boot_trim`, `${s}_boot`, mesh("mark43_panel", `${s}_boot_trim.stl`, { style:"shin", w: 0.075, h: 0.08, t: 0.005, R: 0.12, corner: 0.01 }), [0.10, ly, -0.03], [0, -0.75, 0], GOLD, 0.12);
@@ -189,17 +226,17 @@ export function ironManMark43(opts: ExosuitOptions = {}): RobotSpecification {
 
     part(`${side}_hip_cowl`,`${side}_hip_module`,mesh("mark43_limb",`${side}_hip_cowl.stl`,{style:"arm",length:.10,rTop:.086,rBottom:.080,a0:-1.5,a1:4.7,thick:.004}),[0,0,0],[sign*PI/2,0,0],RED,.12);
     part(`${side}_hip_outer_plate`,`${side}_hip_module`,mesh("mark43_panel",`${side}_hip_outer_plate.stl`,{style:"thigh",w:.125,h:.16,t:.005,R:.3}),[0,sign*.102,0],[0,0,sign*PI/2],RED,.10);
-    for(const [region,z,r,w,h] of [["thigh",-.20,.139,.065,.22],["shin",-.17,.115,.048,.23]] as const) {
-      const parent=`${side}_${region}_shell`;
-      part(`${side}_${region}_ridge`,parent,mesh("mark43_panel",`${side}_${region}_ridge.stl`,{style:region,w,h,t:.004,R:.4}),[r,-sign*.022,z],[0,0,-sign*.10],RED,.07);
-      part(`${side}_${region}_edge`,parent,mesh("mark43_panel",`${side}_${region}_edge.stl`,{style:region,w:.014,h:h*.93,t:.003,R:.4}),[r-.002,sign*.055,z],[0,0,0],"mk43_titanium",.025);
+    for(const [region,length,rTop,rBottom] of [["thigh",A.thigh*.88,.110,.090],["shin",A.shank*.88,.094,.074]] as const) {
+      const parent=`${side}_${region}_shell`,params={style:region,length,rTop,rBottom};
+      part(`${side}_${region}_ridge`,parent,mesh("mark43_limb_inset",`${side}_${region}_ridge.stl`,{...params,a0:-.18,a1:.18,u0:.15,u1:.82,offset:.006}),[0,0,0],[0,0,0],RED,.07);
+      part(`${side}_${region}_edge`,parent,mesh("mark43_limb_inset",`${side}_${region}_edge.stl`,{...params,a0:sign>0?.78:-.85,a1:sign>0?.85:-.78,u0:.13,u1:.82,offset:.006}),[0,0,0],[0,0,0],"mk43_titanium",.025);
     }
     part(`${side}_knee_bezel`,`${side}_knee_cap`,mesh("mark43_panel",`${side}_knee_bezel.stl`,{style:"knee",w:.09,h:.115,t:.003,R:.20}),[.006,0,.005],[0,0,0],GUN,.04);
     part(`${side}_knee_face`,`${side}_knee_cap`,mesh("mark43_panel",`${side}_knee_face.stl`,{style:"knee",w:.077,h:.090,t:.004,R:.20}),[.012,0,.009],[0,0,0],RED,.04);
     for(const [region,radius,depth] of [["knee",.063,.084],["ankle",.053,.074],["elbow",.048,.074]] as const)
       part(`${side}_${region}_motor_cover`,`${side}_${region}_module`,mesh("disc",`${side}_${region}_motor_cover.stl`,{radius,depth:.009,chamfer:.006}),[0,sign*depth,0],[-sign*PI/2,0,0],RED,.05);
-    part(`${side}_bicep_front`,`${side}_bicep_sleeve`,mesh("mark43_panel",`${side}_bicep_front.stl`,{style:"gauntlet",w:.068,h:.17,t:.004,R:.3}),[.079,-sign*.02,-.13],[0,0,0],RED,.06);
-    part(`${side}_forearm_crest`,`${side}_gauntlet_sleeve`,mesh("mark43_panel",`${side}_forearm_crest.stl`,{style:"gauntlet",w:.079,h:.19,t:.006,R:.3}),[.075,0,-.12],[0,0,0],RED,.06);
+    part(`${side}_bicep_front`,`${side}_bicep_sleeve`,mesh("mark43_limb_inset",`${side}_bicep_front.stl`,{style:"arm",length:A.uarm*.82,rTop:.075,rBottom:.065,a0:-.42,a1:.42,u0:.12,u1:.88,offset:.003}),[0,0,0],[0,0,0],RED,.06);
+    part(`${side}_forearm_crest`,`${side}_gauntlet_sleeve`,mesh("mark43_limb_inset",`${side}_forearm_crest.stl`,{style:"forearm",length:A.farm*.87,rTop:.066,rBottom:.054,a0:-.6,a1:.6,u0:.08,u1:.88,offset:.004}),[0,0,0],[0,0,0],RED,.06);
   }
 
   // Film production photos show silver edge trim, small mechanical interfaces
@@ -210,8 +247,7 @@ export function ironManMark43(opts: ExosuitOptions = {}): RobotSpecification {
       part(`${side}_rib_insert_${i}`,"spine_frame",mesh("mark43_panel",`${side}_rib_insert_${i}.stl`,{style:"flank",w:.067,h:.027,t:.002,R:.30}),[.095-i*.006,sign*(.179-i*.009),.23-i*.065],[0,sign*.13,sign*1.02],GUN,.012);
     }
     part(`${side}_collar_inlay`,"spine_frame",mesh("mark43_panel",`${side}_collar_inlay.stl`,{style:"collar",w:.095,h:.041,t:.003,R:.4}),[.165,sign*.102,T-.014],[0,0,0],"mk43_titanium",.03);
-    for(let f=1;f<=4;f++)for(let k=0;k<2;k++)
-      part(`${side}_finger_${f}_knuckle_${k}`,`${side}_finger_${f}`,mesh("mark43_panel",`${side}_finger_${f}_knuckle_${k}.stl`,{style:"collar",w:.014,h:.012,t:.003,R:.5}),[.010,0,-.015-k*.025],[0,0,0],GUN,.003);
+
   }
   const detailedHinges=spec.joints.filter(j=>j.name.endsWith('_hinge')&&/chest_door|lat_plate|thigh_clamshell|gauntlet_clamshell/.test(j.name));
   for(const hinge of detailedHinges) {
@@ -225,6 +261,7 @@ export function ironManMark43(opts: ExosuitOptions = {}): RobotSpecification {
   }
   spec.metadata.notes.push("Added 3 mm pin / 3.2 mm bore hinge interfaces and layered rib/knuckle detail. Pins and bores are dimensioned concepts, not structurally qualified mounting assemblies; manual release and ventilation are unverified.");
 
+  spec.metadata.notes.push("Neck yaw/pitch and three-segment fingers are independently articulated concepts. Joint limits and actuator loads are provisional; no tendon routing, human neck clearance or grasp force is validated.");
   spec.metadata.notes.push(`Iron Man Mark 43 (Age of Ultron) as a wearable powered exoskeleton under polygon-mesh armour: ${hinges} servo-driven hinged plates (motorised helmet: faceplate, crown panel, two cheek panels, chin guard; chest doors, torso side doors, flight-stabiliser flaps, folding ab segments, codpiece, pauldrons, bicep/gauntlet clamshells, gauntlet hatches, fingers, hip flaps, thigh/calf clamshells, knee caps, shin guards, thruster covers, ankle flaps). Panel map and palette follow the Mark 43 layout; repulsors/thrusters are mount points, not modelled propulsion.`);
   return spec;
 }
