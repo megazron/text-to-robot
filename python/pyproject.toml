@@ -24,9 +24,11 @@ ttr-attach-enclosure = "ttr_cad.attach:main"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["ttr_mujoco*", "ttr_cad*"]
+include = ["ttr_mujoco*", "ttr_cad*", "ttr_hf*"]
 
 [tool.setuptools.package-data]
 ttr_cad = ["*.json"]
 
 ttr_mujoco = ["*.json"]
+
+ttr_hf = ["*.json"]

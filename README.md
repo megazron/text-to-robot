@@ -35,6 +35,28 @@ node cli/src/index.ts validate examples/14_iron_man_mark_43/robot.urdf
 Templates include arms, grippers, wheeled robots, legged robots and character
 concepts. See [examples](examples/) and [architecture](docs/ARCHITECTURE.md).
 
+## Hugging Face integration
+
+Use Hugging Face Inference Providers for prompt generation and modification by
+setting **both** `HF_TOKEN` and `HF_MODEL` on the server before `npm run api`.
+`HF_MODEL` is the exact model/provider identifier selected from the
+[Hugging Face chat API](https://huggingface.co/docs/inference-providers/tasks/chat-completion).
+When both are set, Hugging Face takes precedence over the other cloud providers.
+The token needs Inference Providers permission; keep it out of browser code and Git.
+Docker Compose forwards both variables. Hosted inference availability and billing
+are controlled by the selected provider; the offline demo still needs no token.
+Cloud-generated geometry still passes through local validation and repair.
+
+A separate [SO-101 hardware reference and training benchmark](references/so101/README.md)
+now downloads a pinned, hash-verified model from the Hub, preserving real
+CAD-derived meshes, link inertias and six actuators. It includes an actual
+MuJoCo GIF, a Gymnasium environment and local PPO training/evaluation commands.
+The position controller succeeds on 32/32 small joint-target trials; the recorded
+8,192-step PPO baseline succeeds on 0/32. Neither result validates grasping or
+physical hardware. This reference is not yet an option in the web generator.
+
+![Hugging Face SO-101 MuJoCo rollout](references/so101/positioning.gif)
+
 ## Current examples and animations
 
 [Browse all 17 examples, their GIFs, MoveIt files and simulation results](examples/README.md).

@@ -11,4 +11,6 @@ services:
       # optional -- omit to run in deterministic demo mode
       - OPENAI_API_KEY=${OPENAI_API_KEY:-}
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - HF_TOKEN=${HF_TOKEN:-}
+      - HF_MODEL=${HF_MODEL:-}
       - PORT=8787

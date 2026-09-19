@@ -1,0 +1,895 @@
+{
+  "source": {
+    "repo_id": "namenu/so101-pick-place-env",
+    "revision": "67f6cb7676cba923c7389b2aaf298c4fd0c07b4d",
+    "upstream": "https://github.com/TheRobotStudio/SO-ARM100",
+    "license": "Apache-2.0",
+    "model": "assets/so101/mjcf/so101_new_calib.xml",
+    "files": {
+      "LICENSE": {
+        "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+        "bytes": 11358
+      },
+      "NOTICE": {
+        "sha256": "c5af4affc8bcd41626a95a76dcdb9f4446159d8dcb590a398236bd4493310d2e",
+        "bytes": 1027
+      },
+      "README.md": {
+        "sha256": "5671d83f02d5b59fd014644f4c81efac568d41ad3e53a1fe1b48ef93140743ee",
+        "bytes": 3802
+      },
+      "assets/so101/meshes/base_motor_holder_so101_v1.stl": {
+        "sha256": "8cd2f241037ea377af1191fffe0dd9d9006beea6dcc48543660ed41647072424",
+        "bytes": 1877084
+      },
+      "assets/so101/meshes/base_so101_v2.stl": {
+        "sha256": "bb12b7026575e1f70ccc7240051f9d943553bf34e5128537de6cd86fae33924d",
+        "bytes": 471584
+      },
+      "assets/so101/meshes/motor_holder_so101_base_v1.stl": {
+        "sha256": "31242ae6fb59d8b15c66617b88ad8e9bded62d57c35d11c0c43a70d2f4caa95b",
+        "bytes": 1129384
+      },
+      "assets/so101/meshes/motor_holder_so101_wrist_v1.stl": {
+        "sha256": "887f92e6013cb64ea3a1ab8675e92da1e0beacfd5e001f972523540545e08011",
+        "bytes": 1052184
+      },
+      "assets/so101/meshes/moving_jaw_so101_v1.stl": {
+        "sha256": "785a9dded2f474bc1d869e0d3dae398a3dcd9c0c345640040472210d2861fa9d",
+        "bytes": 1413584
+      },
+      "assets/so101/meshes/rotation_pitch_so101_v1.stl": {
+        "sha256": "9be900cc2a2bf718102841ef82ef8d2873842427648092c8ed2ca1e2ef4ffa34",
+        "bytes": 883684
+      },
+      "assets/so101/meshes/sts3215_03a_no_horn_v1.stl": {
+        "sha256": "75ef3781b752e4065891aea855e34dc161a38a549549cd0970cedd07eae6f887",
+        "bytes": 865884
+      },
+      "assets/so101/meshes/sts3215_03a_v1.stl": {
+        "sha256": "a37c871fb502483ab96c256baf457d36f2e97afc9205313d9c5ab275ef941cd0",
+        "bytes": 954084
+      },
+      "assets/so101/meshes/under_arm_so101_v1.stl": {
+        "sha256": "d01d1f2de365651dcad9d6669e94ff87ff7652b5bb2d10752a66a456a86dbc71",
+        "bytes": 1975884
+      },
+      "assets/so101/meshes/upper_arm_so101_v1.stl": {
+        "sha256": "475056e03a17e71919b82fd88ab9a0b898ab50164f2a7943652a6b2941bb2d4f",
+        "bytes": 1303484
+      },
+      "assets/so101/meshes/waveshare_mounting_plate_so101_v2.stl": {
+        "sha256": "e197e24005a07d01bbc06a8c42311664eaeda415bf859f68fa247884d0f1a6e9",
+        "bytes": 62784
+      },
+      "assets/so101/meshes/wrist_roll_follower_so101_v1.stl": {
+        "sha256": "4b17b410a12d64ec39554abc3e8054d8a97384b2dc4a8d95a5ecb2a93670f5f4",
+        "bytes": 1439884
+      },
+      "assets/so101/meshes/wrist_roll_pitch_so101_v2.stl": {
+        "sha256": "6c7ec5525b4d8b9e397a30ab4bb0037156a5d5f38a4adf2c7d943d6c56eda5ae",
+        "bytes": 2699784
+      },
+      "assets/so101/mjcf/so101_new_calib.xml": {
+        "sha256": "75457d3a22328fb883d2dac73f3d649a841300b6d9938dc6829fb574ef02c02f",
+        "bytes": 13924
+      }
+    }
+  },
+  "mujoco_version": "3.13.0",
+  "environment_sha256": "83656dbf31d922a17f0e8da1740b49328467c5d38f2843fd6410de6ffed70328",
+  "protocol": {
+    "task": "joint_positioning",
+    "control_hz": 20,
+    "physics_hz": 500,
+    "seeds": [
+      1000,
+      1031
+    ],
+    "success": "all joint errors <0.05 rad, all speeds <0.1 rad/s, contact penetration <1mm, for 5 consecutive steps",
+    "action_units": "absolute radians",
+    "joint_order": [
+      "shoulder_pan",
+      "shoulder_lift",
+      "elbow_flex",
+      "wrist_flex",
+      "wrist_roll",
+      "gripper"
+    ]
+  },
+  "hardware_validated": false,
+  "grasp_assistance": false,
+  "limitations": [
+    "Joint-positioning only; no pick/place or payload validation.",
+    "Upstream convex mesh contacts and estimated servo dynamics; no measured hardware system identification.",
+    "LeRobot normalized motor commands require explicit per-robot calibration; radians are not a hardware command contract."
+  ],
+  "hold_baseline": {
+    "success_rate": 0.0,
+    "mean_final_error_rad": 0.20915359982138465,
+    "episodes": [
+      {
+        "seed": 1000,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.15447866567280527,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 0.5384848805797323
+      },
+      {
+        "seed": 1001,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.24268921118056402,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 0.5384848805797323
+      },
+      {
+        "seed": 1002,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.12335301343712912,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 0.5384848805797323
+      },
+      {
+        "seed": 1003,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.15612131586568223,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 0.5384848805797323
+      },
+      {
+        "seed": 1004,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.24955977362964143,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 0.5384848805797323
+      },
+      {
+        "seed": 1005,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.23836419601332043,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 0.5384848805797323
+      },
+      {
+        "seed": 1006,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.14988497422584865,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 0.5384848805797323
+      },
+      {
+        "seed": 1007,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.21438753126955606,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 0.5384848805797323
+      },
+      {
+        "seed": 1008,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.24176780751169888,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 0.5384848805797323
+      },
+      {
+        "seed": 1009,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.2255274140603673,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 0.5384848805797323
+      },
+      {
+        "seed": 1010,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.24061600468167008,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 0.5384848805797323
+      },
+      {
+        "seed": 1011,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.20909742935189782,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 0.5384848805797323
+      },
+      {
+        "seed": 1012,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.18008341947078796,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 0.5384848805797323
+      },
+      {
+        "seed": 1013,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.21104970930360173,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 0.5384848805797323
+      },
+      {
+        "seed": 1014,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.2461734004458638,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 0.5384848805797323
+      },
+      {
+        "seed": 1015,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.2347552113682149,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 0.5384848805797323
+      },
+      {
+        "seed": 1016,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.13600420164390625,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 0.5384848805797323
+      },
+      {
+        "seed": 1017,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.23583655094158423,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 0.5384848805797323
+      },
+      {
+        "seed": 1018,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.18530379877954684,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 0.5384848805797323
+      },
+      {
+        "seed": 1019,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.1642590541704829,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 0.5384848805797323
+      },
+      {
+        "seed": 1020,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.21260675594430778,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 0.5384848805797323
+      },
+      {
+        "seed": 1021,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.24527854272390304,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 0.5384848805797323
+      },
+      {
+        "seed": 1022,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.249736677287841,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 0.5384848805797323
+      },
+      {
+        "seed": 1023,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.2043478304882148,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 0.5384848805797323
+      },
+      {
+        "seed": 1024,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.22898720317337418,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 0.5384848805797323
+      },
+      {
+        "seed": 1025,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.16938067081067143,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 0.5384848805797323
+      },
+      {
+        "seed": 1026,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.23233891154092332,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 0.5384848805797323
+      },
+      {
+        "seed": 1027,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.24594615306843398,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 0.5384848805797323
+      },
+      {
+        "seed": 1028,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.16901216859781412,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 0.5384848805797323
+      },
+      {
+        "seed": 1029,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.22585487701374035,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 0.5384848805797323
+      },
+      {
+        "seed": 1030,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.245407052115548,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 0.5384848805797323
+      },
+      {
+        "seed": 1031,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.22470566849536716,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 0.5384848805797323
+      }
+    ]
+  },
+  "position_servo": {
+    "success_rate": 1.0,
+    "mean_final_error_rad": 0.0005314910411404633,
+    "episodes": [
+      {
+        "seed": 1000,
+        "success": true,
+        "duration_s": 0.4,
+        "final_error_rad": 0.0005597185012389677,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1001,
+        "success": true,
+        "duration_s": 0.55,
+        "final_error_rad": 0.00041877513131233224,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1002,
+        "success": true,
+        "duration_s": 0.4,
+        "final_error_rad": 0.0005103095085262216,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1003,
+        "success": true,
+        "duration_s": 0.5,
+        "final_error_rad": 0.00048525623573829335,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1004,
+        "success": true,
+        "duration_s": 0.5,
+        "final_error_rad": 0.000426542350425968,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1005,
+        "success": true,
+        "duration_s": 0.55,
+        "final_error_rad": 0.0006211783460543241,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1006,
+        "success": true,
+        "duration_s": 0.4,
+        "final_error_rad": 0.0005559119938976023,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1007,
+        "success": true,
+        "duration_s": 0.55,
+        "final_error_rad": 0.0005952241710122652,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1008,
+        "success": true,
+        "duration_s": 0.5,
+        "final_error_rad": 0.0005980053586699952,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1009,
+        "success": true,
+        "duration_s": 0.5,
+        "final_error_rad": 0.0004725502187241798,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1010,
+        "success": true,
+        "duration_s": 0.5,
+        "final_error_rad": 0.0005297584577526188,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1011,
+        "success": true,
+        "duration_s": 0.45,
+        "final_error_rad": 0.000542032077754398,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1012,
+        "success": true,
+        "duration_s": 0.5,
+        "final_error_rad": 0.0005934922203764403,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1013,
+        "success": true,
+        "duration_s": 0.5,
+        "final_error_rad": 0.0004476803141116592,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1014,
+        "success": true,
+        "duration_s": 0.5,
+        "final_error_rad": 0.0005377434731339004,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1015,
+        "success": true,
+        "duration_s": 0.45,
+        "final_error_rad": 0.0005590014325444551,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1016,
+        "success": true,
+        "duration_s": 0.45,
+        "final_error_rad": 0.0005243942878575582,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1017,
+        "success": true,
+        "duration_s": 0.55,
+        "final_error_rad": 0.0005712004048368802,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1018,
+        "success": true,
+        "duration_s": 0.5,
+        "final_error_rad": 0.0005230356648188612,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1019,
+        "success": true,
+        "duration_s": 0.45,
+        "final_error_rad": 0.0005165285008706597,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1020,
+        "success": true,
+        "duration_s": 0.5,
+        "final_error_rad": 0.0004710778376554037,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1021,
+        "success": true,
+        "duration_s": 0.45,
+        "final_error_rad": 0.0004514965120050729,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1022,
+        "success": true,
+        "duration_s": 0.55,
+        "final_error_rad": 0.0006081902357497893,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1023,
+        "success": true,
+        "duration_s": 0.55,
+        "final_error_rad": 0.0005809996585208477,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1024,
+        "success": true,
+        "duration_s": 0.45,
+        "final_error_rad": 0.0004824544271875564,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1025,
+        "success": true,
+        "duration_s": 0.5,
+        "final_error_rad": 0.0005580057118688558,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1026,
+        "success": true,
+        "duration_s": 0.5,
+        "final_error_rad": 0.0005474139884988974,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1027,
+        "success": true,
+        "duration_s": 0.55,
+        "final_error_rad": 0.0005488043896123007,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1028,
+        "success": true,
+        "duration_s": 0.45,
+        "final_error_rad": 0.0005150942455711613,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1029,
+        "success": true,
+        "duration_s": 0.5,
+        "final_error_rad": 0.0005980693977483964,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1030,
+        "success": true,
+        "duration_s": 0.45,
+        "final_error_rad": 0.0004505738335555398,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1031,
+        "success": true,
+        "duration_s": 0.55,
+        "final_error_rad": 0.0006071944288634223,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      }
+    ]
+  },
+  "ppo": {
+    "requested_steps": 8192,
+    "actual_steps": 8192,
+    "success_rate": 0.0,
+    "mean_final_error_rad": 0.46869894016293745,
+    "episodes": [
+      {
+        "seed": 1000,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.3876857605997509,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1001,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.46364255851825953,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1002,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.5749864481334485,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1003,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.5432677911044234,
+        "peak_penetration_m": 0.0017338874999544103,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1004,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.6036794990609002,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1005,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.6708769020575693,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1006,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.380905007802325,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1007,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.634039316532933,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1008,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.5897022522940248,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1009,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.598989627538822,
+        "peak_penetration_m": 0.0007136268313784081,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1010,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.398571783046365,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1011,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.41558217009038145,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1012,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.4256260046056407,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1013,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.3405846693830646,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1014,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.3372387607104612,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1015,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.30807690916311836,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1016,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.317769315009054,
+        "peak_penetration_m": 0.00022343166360361526,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1017,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.3159243423902846,
+        "peak_penetration_m": 0.0003319864649399011,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1018,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.5114151407586364,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1019,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.5333405776517979,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1020,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.39698508209363276,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1021,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.62661400066143,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1022,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.5220901550062323,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1023,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.34483833691482707,
+        "peak_penetration_m": 0.0021760098793245806,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1024,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.350897191346534,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1025,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.455158934159977,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1026,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.4428018323766395,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1027,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.6317458755853944,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1028,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.3973261975205675,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1029,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.3701037750175725,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1030,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.589322522928932,
+        "peak_penetration_m": 0.0,
+        "peak_actuator_effort_nm": 3.35
+      },
+      {
+        "seed": 1031,
+        "success": false,
+        "duration_s": 2.0,
+        "final_error_rad": 0.5185773451509977,
+        "peak_penetration_m": 5.2250709620049567e-05,
+        "peak_actuator_effort_nm": 3.35
+      }
+    ]
+  }
+}
