@@ -17,6 +17,7 @@ export function planningGroups(spec:RobotSpecification):Group[] {
       const joints=spec.joints.filter(j=>j.type!=='fixed'&&j.name.startsWith(side+'_')&&/finger|thumb/.test(j.name));
       if(joints.length)groups.push({name:`${side}_hand`,joints});
     }
+    const neck=spec.joints.filter(j=>/^neck_(yaw|pitch)$/.test(j.name));if(neck.length)groups.push({name:'neck',joints:neck});
     const torso=spec.joints.filter(j=>j.name==='trunk_flex');if(torso.length)groups.push({name:'torso',joints:torso});
     const armour=spec.joints.filter(j=>j.type!=='fixed'&&j.name.endsWith('_hinge')&&!/finger|thumb/.test(j.name));
     if(armour.length)groups.push({name:'armour',joints:armour});

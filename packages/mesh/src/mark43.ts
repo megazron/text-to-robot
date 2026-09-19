@@ -23,16 +23,17 @@ export function armourPanel(style:string,w:number,h:number,t:number,R:number):Me
   // Preserve every authored corner. A regular grid rounds off oblique outlines.
   return loft([wrap(inner,t),wrap(outer,t-bevel),wrap(outer,bevel),wrap(inner,0)],{closed:true,capStart:true,capEnd:true});
 }
-export function sculptedLimb(length:number,rTop:number,rBottom:number,a0:number,a1:number,thickness:number,style:string):Mesh {
-  // Depth, width and forward offset vary independently. Breaks make actual
-  // longitudinal facets rather than smoothing the entire limb into a tube.
-  const profiles:Record<string,number[][]>={
+const limbProfiles:Record<string,number[][]>={
     thigh:[[0,.90,.94,0],[.14,1.04,1.0,.025],[.40,.99,.94,.035],[.72,.88,.86,.03],[1,.76,.78,.04]],
     shin:[[0,.94,.92,0],[.20,1.03,1.0,-.025],[.48,.91,.88,0],[.76,.77,.78,.03],[1,.70,.74,.055]],
     arm:[[0,.85,.90,0],[.22,1.03,1.0,0],[.52,1,.96,0],[.8,.87,.86,0],[1,.78,.82,0]],
     forearm:[[0,.86,.93,0],[.18,1.07,1.04,0],[.40,1.0,.99,.03],[.74,.83,.88,.04],[1,.71,.77,.03]],
   };
-  const rows=profiles[style]??profiles.arm;
+
+export function sculptedLimb(length:number,rTop:number,rBottom:number,a0:number,a1:number,thickness:number,style:string):Mesh {
+  // Depth, width and forward offset vary independently. Breaks make actual
+  // longitudinal facets rather than smoothing the entire limb into a tube.
+  const rows=limbProfiles[style]??limbProfiles.arm;
   const sections=rows.map(([u,dx,dy,cx])=>{const r=rTop+(rBottom-rTop)*u;return superArc(r*dx,r*dy,-length*u,a0,a1,25,2.65,cx*rTop);});
   return shell(flip(loft(sections,{closed:false})),thickness);
 }
@@ -71,4 +72,23 @@ export function chestSurfacePanel(side:number, upper:boolean):Mesh {
     rows.push(row);
   }
   return shell(loft(rows,{closed:false}),.006);
+}
+
+/** Surface-following inset, sampled from the SAME longitudinal profile as the
+ * supporting shell. The bevel is a real border; it is not a floating flat badge. */
+export function limbInset(length:number,rTop:number,rBottom:number,style:string,a0:number,a1:number,u0:number,u1:number,offset:number):Mesh {
+  const profile=limbProfiles[style]??limbProfiles.arm;
+  const rows:V3[][]=[];
+  for(let j=0;j<=24;j++) {
+    const v=j/24,u=u0+(u1-u0)*v;
+    const k=Math.min(profile.length-2,Math.max(0,profile.findIndex((r,i)=>i<profile.length-1&&u>=r[0]&&u<=profile[i+1][0])));
+    const lo=profile[k],hi=profile[k+1],f=(u-lo[0])/(hi[0]-lo[0]);
+    const dx=lo[1]+f*(hi[1]-lo[1]),dy=lo[2]+f*(hi[2]-lo[2]),cx=lo[3]+f*(hi[3]-lo[3]);
+    const radius=rTop+(rBottom-rTop)*u;
+    // Taper at both ends, with long straight side edges between the chamfers.
+    const taper=Math.min(1,.48+v*4,.55+(1-v)*4);
+    const mid=(a0+a1)/2,half=(a1-a0)*taper/2;
+    rows.push(superArc(radius*dx+offset,radius*dy+offset,-length*u,mid-half,mid+half,17,2.65,cx*rTop));
+  }
+  return shell(flip(loft(rows,{closed:false})),.002);
 }

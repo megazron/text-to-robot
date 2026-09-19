@@ -81,6 +81,20 @@ manufacturing interfaces and measured dynamics remain unverified.
 ![Armour actuator preview](articulation.gif)
 ![Helmet actuator preview](helmet.gif)
 
+### Individual joint checks
+
+![Finger articulation](hand_joints.gif)
+![Neck articulation](neck_joints.gif)
+![Chest door attachments](chest_joints.gif)
+
+These three close-ups prescribe joint positions on the exported meshes, with
+collision resolution disabled. They verify the joint tree, not actuator forces
+or safe motion. [Source-hashed articulation report](articulation_report.json).
+Each finger has three flexion joints; each thumb has two. The neck has yaw and
+pitch, and the chest inlays now move with their chest doors. Fixed trim is meant
+to move with its supporting plate, not have an independent motor.
+
+
 These two previews use a **fixed base and self-collision disabled** to show the
 actuated geometry. They do not validate donning or motion clearance. The first
 GIF and simulation report above use self-collision enabled.

@@ -7,6 +7,7 @@ import {exportTraining} from '@ttr/training-export';
 import {bomToMarkdown} from '@ttr/components';
 import {dirname} from 'node:path';
 for(const name of readdirSync('examples').filter(n=>/^\d\d_/.test(n))){
+ if(process.env.TTR_EXAMPLE && name!==process.env.TTR_EXAMPLE)continue;
  const dir=`examples/${name}`;let spec;
  if(name.startsWith('14_'))spec=JSON.parse(readFileSync(`${dir}/robot.json`,'utf8'));
  else {

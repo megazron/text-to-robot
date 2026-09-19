@@ -1,11 +1,13 @@
 """Run real, source-hashed MuJoCo diagnostics on every shipped example."""
-import hashlib,json
+import hashlib,json,os
 from pathlib import Path
 import mujoco
 from ttr_mujoco.convert import urdf_to_mjcf
 from ttr_mujoco.testbench import run_tests
-root=Path(__file__).resolve().parents[1];rows=[]
+root=Path(__file__).resolve().parents[1];rows=[];selected=os.environ.get('TTR_EXAMPLE')
+if selected:rows=json.loads((root/'examples/validation_summary.json').read_text())['examples']
 for folder in sorted((root/'examples').iterdir()):
+    if selected and folder.name!=selected:continue
     source=folder/'robot.urdf'
     if not source.exists():continue
     try:
@@ -22,5 +24,5 @@ for folder in sorted((root/'examples').iterdir()):
         (folder/'simulation_report.json').write_text(json.dumps(report,indent=2)+'\n')
         row={'example':folder.name,'compiled':True,'passed':report['passed'],'total':report['total'],'initial_penetrations':len(contacts),'floating':report['floating'],'failed':[k for k,v in report['tests'].items() if not v['pass']]}
     except Exception as e:row={'example':folder.name,'compiled':False,'error':str(e)}
-    rows.append(row);print(json.dumps(row),flush=True)
+    rows=[r for r in rows if r['example']!=folder.name];rows.append(row);rows.sort(key=lambda r:r['example']);print(json.dumps(row),flush=True)
 (root/'examples/validation_summary.json').write_text(json.dumps({'scope':'Self-collision enabled smoke tests, not manufacturing qualification','examples':rows},indent=2)+'\n')

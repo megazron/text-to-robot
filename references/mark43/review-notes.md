@@ -26,3 +26,13 @@ hand anatomy, leg plating and boot transitions, bulky external actuator housings
 rear reference coverage, and physical interference. This model is not accepted
 as movie-accurate. Existing hardware volumes must not simply be hidden to produce
 an apparently buildable film silhouette.
+
+### Articulated surfaces revision
+
+Viewed the saved Hot Toys full-body photograph against fresh exported front and
+three-quarter renders. Replaced flat limb overlays with conformal surfaces;
+corrected chest inlay attachment, added neck yaw/pitch and multi-segment fingers.
+Inspected exported hand/neck/chest motion close-ups. The first hand iteration
+intersected knuckle barrels and the hand plate; shortened plates and moved the
+finger pivots before rechecking. Exposed joint motors, the torso silhouette and
+helmet topology still do not match the reference. No fidelity score is claimed.
