@@ -36,3 +36,13 @@ Inspected exported hand/neck/chest motion close-ups. The first hand iteration
 intersected knuckle barrels and the hand plate; shortened plates and moved the
 finger pivots before rechecking. Exposed joint motors, the torso silhouette and
 helmet topology still do not match the reference. No fidelity score is claimed.
+
+### Torso, wrist and cuff clearance revision
+
+Reopened the saved Legacy Effects production-torso photograph and compared it
+against candidate three-quarter renders. Kept chest symmetry and clearance
+corrections, widened shells around cuffs and corrected backward-extending palms.
+Rejected the shoulder-shell experiment because the silhouette and intersections
+were unsuitable. Saved the previous front render alongside the current render.
+The reference has more continuous shoulder/torso transitions, a much slimmer
+mechanical envelope and more complex panel surfacing; these gaps remain.

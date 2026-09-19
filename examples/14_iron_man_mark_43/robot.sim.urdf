@@ -57,34 +57,34 @@
   </link>
   <link name="backpack">
     <visual>
-      <origin xyz="-0.175 0 0.2772" rpy="0 0 0"/>
+      <origin xyz="-0.2 0 0.2772" rpy="0 0 0"/>
       <geometry><box size="0.16 0.32 0.42"/></geometry>
       <material name="carbon"/>
     </visual>
     <collision>
-      <origin xyz="-0.175 0 0.2772" rpy="0 0 0"/>
+      <origin xyz="-0.2 0 0.2772" rpy="0 0 0"/>
       <geometry><box size="0.16 0.32 0.42"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.175 0 0.2772" rpy="0 0 0"/>
+      <origin xyz="-0.2 0 0.2772" rpy="0 0 0"/>
       <mass value="9"/>
       <inertia ixx="0.2091" ixy="0" ixz="0" iyy="0.1515" iyz="0" izz="0.096"/>
     </inertial>
   </link>
   <link name="chest_plate">
     <visual>
-      <origin xyz="0.125 0 0.35772" rpy="0 0 0"/>
-      <geometry><box size="0.02 0.28 0.24"/></geometry>
+      <origin xyz="0.1 0 0.35772" rpy="0 0 0"/>
+      <geometry><box size="0.02 0.16 0.24"/></geometry>
       <material name="carbon"/>
     </visual>
     <collision>
-      <origin xyz="0.125 0 0.35772" rpy="0 0 0"/>
-      <geometry><box size="0.02 0.28 0.24"/></geometry>
+      <origin xyz="0.1 0 0.35772" rpy="0 0 0"/>
+      <geometry><box size="0.02 0.16 0.24"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.125 0 0.35772" rpy="0 0 0"/>
+      <origin xyz="0.1 0 0.35772" rpy="0 0 0"/>
       <mass value="1.6"/>
-      <inertia ixx="0.018133" ixy="0" ixz="0" iyy="0.007733" iyz="0" izz="0.010507"/>
+      <inertia ixx="0.011093" ixy="0" ixz="0" iyy="0.007733" iyz="0" izz="0.003467"/>
     </inertial>
   </link>
   <link name="shoulder_yoke">
@@ -457,18 +457,18 @@
   </link>
   <link name="left_hand">
     <visual>
-      <origin xyz="0.02 -0.045 -0.04" rpy="0 0 0"/>
-      <geometry><box size="0.1 0.07 0.03"/></geometry>
+      <origin xyz="0.045 -0.045 -0.04" rpy="0 0 0"/>
+      <geometry><box size="0.09 0.07 0.03"/></geometry>
       <material name="carbon"/>
     </visual>
     <collision>
-      <origin xyz="0.02 -0.045 -0.04" rpy="0 0 0"/>
-      <geometry><box size="0.1 0.07 0.03"/></geometry>
+      <origin xyz="0.045 -0.045 -0.04" rpy="0 0 0"/>
+      <geometry><box size="0.09 0.07 0.03"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.02 -0.045 -0.04" rpy="0 0 0"/>
+      <origin xyz="0.045 -0.045 -0.04" rpy="0 0 0"/>
       <mass value="0.35"/>
-      <inertia ixx="0.000169167" ixy="0" ixz="0" iyy="0.000317917" iyz="0" izz="0.000434583"/>
+      <inertia ixx="0.000169167" ixy="0" ixz="0" iyy="0.0002625" iyz="0" izz="0.000379167"/>
     </inertial>
   </link>
   <link name="right_shoulder_module">
@@ -569,18 +569,18 @@
   </link>
   <link name="right_hand">
     <visual>
-      <origin xyz="0.02 0.045 -0.04" rpy="0 0 0"/>
-      <geometry><box size="0.1 0.07 0.03"/></geometry>
+      <origin xyz="0.045 0.045 -0.04" rpy="0 0 0"/>
+      <geometry><box size="0.09 0.07 0.03"/></geometry>
       <material name="carbon"/>
     </visual>
     <collision>
-      <origin xyz="0.02 0.045 -0.04" rpy="0 0 0"/>
-      <geometry><box size="0.1 0.07 0.03"/></geometry>
+      <origin xyz="0.045 0.045 -0.04" rpy="0 0 0"/>
+      <geometry><box size="0.09 0.07 0.03"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.02 0.045 -0.04" rpy="0 0 0"/>
+      <origin xyz="0.045 0.045 -0.04" rpy="0 0 0"/>
       <mass value="0.35"/>
-      <inertia ixx="0.000169167" ixy="0" ixz="0" iyy="0.000317917" iyz="0" izz="0.000434583"/>
+      <inertia ixx="0.000169167" ixy="0" ixz="0" iyy="0.0002625" iyz="0" izz="0.000379167"/>
     </inertial>
   </link>
   <link name="helmet">
@@ -894,13 +894,13 @@
       <material name="mk43_red"/>
     </visual>
     <collision>
-      <origin xyz="0.027644 -0.122023 -0.050885" rpy="0 0 0"/>
-      <geometry><box size="0.146661 0.233045 0.25823"/></geometry>
+      <origin xyz="0.027951 -0.122022 0.007043" rpy="0 0 0"/>
+      <geometry><box size="0.146048 0.233043 0.204085"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.047493 -0.120157 -0.043898" rpy="0 0 0"/>
+      <origin xyz="0.047091 -0.11998 0.003384" rpy="0 0 0"/>
       <mass value="1.2"/>
-      <inertia ixx="0.010023" ixy="0.002385" ixz="-0.000614228" iyy="0.007182" iyz="-0.000868293" izz="0.006259"/>
+      <inertia ixx="0.007941" ixy="0.002383" ixz="-0.00029668" iyy="0.005132" iyz="-0.00099512" izz="0.006248"/>
     </inertial>
   </link>
   <link name="left_pectoral_trim">
@@ -910,13 +910,13 @@
       <material name="mk43_red"/>
     </visual>
     <collision>
-      <origin xyz="0.095618 0.109465 0.10603" rpy="0 0 0"/>
-      <geometry><box size="0.142047 0.215998 0.097941"/></geometry>
+      <origin xyz="0.095566 0.109467 0.116085" rpy="0 0 0"/>
+      <geometry><box size="0.142149 0.215993 0.07783"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.117581 0.102549 0.108883" rpy="0 0 0"/>
+      <origin xyz="0.116831 0.103801 0.123215" rpy="0 0 0"/>
       <mass value="0.25"/>
-      <inertia ixx="0.000999397" ixy="0.000502383" ixz="0.0000231225" iyy="0.00044701" iyz="0.0000174772" izz="0.001219"/>
+      <inertia ixx="0.000964078" ixy="0.000507544" ixz="0.0000576711" iyy="0.000412767" iyz="-0.0000488109" izz="0.001228"/>
     </inertial>
   </link>
   <link name="right_chest_door">
@@ -926,13 +926,13 @@
       <material name="mk43_red"/>
     </visual>
     <collision>
-      <origin xyz="0.031987 0.119698 -0.051556" rpy="0 0 0"/>
-      <geometry><box size="0.149975 0.237603 0.264258"/></geometry>
+      <origin xyz="0.027951 0.122022 0.007043" rpy="0 0 0"/>
+      <geometry><box size="0.146048 0.233043 0.204085"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.052402 0.117365 -0.044545" rpy="0 0 0"/>
+      <origin xyz="0.047091 0.11998 0.003384" rpy="0 0 0"/>
       <mass value="1.2"/>
-      <inertia ixx="0.010414" ixy="-0.002489" ixz="-0.00063853" iyy="0.007455" iyz="0.000883866" izz="0.006519"/>
+      <inertia ixx="0.007941" ixy="-0.002383" ixz="-0.00029668" iyy="0.005132" iyz="0.00099512" izz="0.006248"/>
     </inertial>
   </link>
   <link name="right_pectoral_trim">
@@ -942,13 +942,13 @@
       <material name="mk43_red"/>
     </visual>
     <collision>
-      <origin xyz="0.099786 -0.111705 0.107249" rpy="0 0 0"/>
-      <geometry><box size="0.145571 0.22041 0.098558"/></geometry>
+      <origin xyz="0.095566 -0.109467 0.116085" rpy="0 0 0"/>
+      <geometry><box size="0.142149 0.215993 0.07783"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.122358 -0.105078 0.110843" rpy="0 0 0"/>
+      <origin xyz="0.116831 -0.103801 0.123215" rpy="0 0 0"/>
       <mass value="0.25"/>
-      <inertia ixx="0.00104" ixy="-0.000526989" ixz="0.0000288823" iyy="0.000466532" iyz="-0.00000914172" izz="0.001276"/>
+      <inertia ixx="0.000964078" ixy="-0.000507544" ixz="0.0000576711" iyy="0.000412767" iyz="0.0000488109" izz="0.001228"/>
     </inertial>
   </link>
   <link name="chest_centre">
@@ -1038,13 +1038,13 @@
       <material name="mk43_red"/>
     </visual>
     <collision>
-      <origin xyz="-0.022273 0 0" rpy="0 0 0"/>
-      <geometry><box size="0.018646 0.20326 0.069"/></geometry>
+      <origin xyz="-0.022209 0 0" rpy="0 0 0"/>
+      <geometry><box size="0.018372 0.20326 0.043"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.021904 0.000018626 0.001257" rpy="0 0 0"/>
+      <origin xyz="-0.021852 0.000021245 0.00077309" rpy="0 0 0"/>
       <mass value="0.22"/>
-      <inertia ixx="0.000677017" ixy="-9.49780e-10" ixz="0.0000102122" iyy="0.00008353" iyz="9.98999e-8" izz="0.000598885"/>
+      <inertia ixx="0.000627264" ixy="-7.06086e-10" ixz="0.000006417" iyy="0.0000336123" iyz="6.79870e-8" izz="0.000599008"/>
     </inertial>
   </link>
   <link name="left_lat_plate">
@@ -1054,13 +1054,13 @@
       <material name="gunmetal"/>
     </visual>
     <collision>
-      <origin xyz="0.099747 0.036564 -0.2" rpy="0 0 0"/>
-      <geometry><box size="0.262367 0.125605 0.4"/></geometry>
+      <origin xyz="0.062147 0.015293 -0.175" rpy="0 0 0"/>
+      <geometry><box size="0.161485 0.101377 0.35"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.102785 0.050967 -0.184055" rpy="0 0 0"/>
+      <origin xyz="0.058808 0.031521 -0.172634" rpy="0 0 0"/>
       <mass value="0.6"/>
-      <inertia ixx="0.007939" ixy="0.00000830498" ixz="0.000132312" iyy="0.01024" iyz="-0.001209" izz="0.003203"/>
+      <inertia ixx="0.006095" ixy="-0.000368985" ixz="0.0000114132" iyy="0.007011" iyz="0.000221771" izz="0.001438"/>
     </inertial>
   </link>
   <link name="right_lat_plate">
@@ -1070,13 +1070,13 @@
       <material name="gunmetal"/>
     </visual>
     <collision>
-      <origin xyz="0.099747 -0.036575 -0.2" rpy="0 0 0"/>
-      <geometry><box size="0.262367 0.125583 0.4"/></geometry>
+      <origin xyz="0.062147 -0.015293 -0.175" rpy="0 0 0"/>
+      <geometry><box size="0.161485 0.101377 0.35"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.10279 -0.050968 -0.184054" rpy="0 0 0"/>
+      <origin xyz="0.058808 -0.031521 -0.172634" rpy="0 0 0"/>
       <mass value="0.6"/>
-      <inertia ixx="0.007939" ixy="-0.00000827262" ixz="0.00013017" iyy="0.01024" iyz="0.001209" izz="0.003203"/>
+      <inertia ixx="0.006095" ixy="0.000368985" ixz="0.0000114132" iyy="0.007011" iyz="-0.000221771" izz="0.001438"/>
     </inertial>
   </link>
   <link name="back_shell">
@@ -1406,13 +1406,13 @@
       <material name="mk43_gold"/>
     </visual>
     <collision>
-      <origin xyz="-0.00000920565 0.003648 -0.133455" rpy="0 0 0"/>
-      <geometry><box size="0.149735 0.138077 0.26691"/></geometry>
+      <origin xyz="0.0000569303 0.00395 -0.133455" rpy="0 0 0"/>
+      <geometry><box size="0.14967 0.138399 0.26691"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.004156 0.019149 -0.126712" rpy="0 0 0"/>
+      <origin xyz="0.004557 0.020756 -0.129856" rpy="0 0 0"/>
       <mass value="0.45"/>
-      <inertia ixx="0.003181" ixy="0.00012635" ixz="-0.000011444" iyy="0.003734" iyz="-0.0000547324" izz="0.001838"/>
+      <inertia ixx="0.003229" ixy="0.000145105" ixz="-0.00000732116" iyy="0.003826" iyz="-0.0000335391" izz="0.002009"/>
     </inertial>
   </link>
   <link name="left_bicep_clamshell">
@@ -1422,13 +1422,13 @@
       <material name="mk43_gold"/>
     </visual>
     <collision>
-      <origin xyz="-0.048844 0.014053 -0.133455" rpy="0 0 0"/>
-      <geometry><box size="0.111606 0.043592 0.26691"/></geometry>
+      <origin xyz="-0.049135 0.013403 -0.133455" rpy="0 0 0"/>
+      <geometry><box size="0.109834 0.043268 0.26691"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.050097 0.007163 -0.126709" rpy="0 0 0"/>
+      <origin xyz="-0.050827 0.003422 -0.129681" rpy="0 0 0"/>
       <mass value="0.25"/>
-      <inertia ixx="0.001412" ixy="0.0000316452" ixz="0.000020457" iyy="0.001606" iyz="0.000091329" izz="0.000231859"/>
+      <inertia ixx="0.001407" ixy="0.0000342307" ixz="0.0000122185" iyy="0.001614" iyz="0.0000523349" izz="0.000240169"/>
     </inertial>
   </link>
   <link name="left_elbow_cap">
@@ -1454,13 +1454,13 @@
       <material name="mk43_red"/>
     </visual>
     <collision>
-      <origin xyz="-0.00000838615 0.003327 -0.111143" rpy="0 0 0"/>
-      <geometry><box size="0.136405 0.125927 0.222285"/></geometry>
+      <origin xyz="0.0000518622 0.003578 -0.111143" rpy="0 0 0"/>
+      <geometry><box size="0.136346 0.125376 0.222285"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.004952 0.016364 -0.102223" rpy="0 0 0"/>
+      <origin xyz="0.005403 0.017498 -0.104915" rpy="0 0 0"/>
       <mass value="0.4"/>
-      <inertia ixx="0.001984" ixy="0.0000826043" ixz="0.00000925613" iyy="0.002319" iyz="-0.0000547358" izz="0.001206"/>
+      <inertia ixx="0.002005" ixy="0.0000930539" ixz="0.0000138927" iyy="0.002404" iyz="-0.0000422491" izz="0.001289"/>
     </inertial>
   </link>
   <link name="left_gauntlet_clamshell">
@@ -1470,13 +1470,13 @@
       <material name="mk43_gold"/>
     </visual>
     <collision>
-      <origin xyz="-0.043339 0.012882 -0.111143" rpy="0 0 0"/>
-      <geometry><box size="0.101671 0.044051 0.222285"/></geometry>
+      <origin xyz="-0.043604 0.01256 -0.111143" rpy="0 0 0"/>
+      <geometry><box size="0.100056 0.043404 0.222285"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.042241 0.006836 -0.101585" rpy="0 0 0"/>
+      <origin xyz="-0.042719 0.005616 -0.105111" rpy="0 0 0"/>
       <mass value="0.22"/>
-      <inertia ixx="0.000858984" ixy="0.0000184461" ixz="0.0000326488" iyy="0.000978755" iyz="0.0000849198" izz="0.000154375"/>
+      <inertia ixx="0.000859865" ixy="0.0000197983" ixz="0.00002642" iyy="0.000989829" iyz="0.0000703256" izz="0.000158778"/>
     </inertial>
   </link>
   <link name="left_gauntlet_stripe">
@@ -1519,12 +1519,12 @@
     </visual>
     <collision>
       <origin xyz="-0.007151 0 0" rpy="0 0 0"/>
-      <geometry><box size="0.014302 0.083899 0.11977"/></geometry>
+      <geometry><box size="0.014302 0.083899 0.08983"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.00587 -2.33773e-18 2.40103e-18" rpy="0 0 0"/>
+      <origin xyz="-0.005836 -1.88772e-19 4.55935e-19" rpy="0 0 0"/>
       <mass value="0.18"/>
-      <inertia ixx="0.000299771" ixy="3.03035e-22" ixz="-3.74937e-22" iyy="0.000201438" iyz="-7.60085e-8" izz="0.000102164"/>
+      <inertia ixx="0.000209176" ixy="-4.79045e-22" ixz="1.13056e-22" iyy="0.000111784" iyz="-6.29665e-8" izz="0.00010117"/>
     </inertial>
   </link>
   <link name="left_palm_repulsor">
@@ -1998,13 +1998,13 @@
       <material name="mk43_gold"/>
     </visual>
     <collision>
-      <origin xyz="-0.00000920565 -0.003648 -0.133455" rpy="0 0 0"/>
-      <geometry><box size="0.149735 0.138077 0.26691"/></geometry>
+      <origin xyz="0.0000569303 -0.00395 -0.133455" rpy="0 0 0"/>
+      <geometry><box size="0.14967 0.138399 0.26691"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.004162 -0.01915 -0.126719" rpy="0 0 0"/>
+      <origin xyz="0.004558 -0.020757 -0.129859" rpy="0 0 0"/>
       <mass value="0.45"/>
-      <inertia ixx="0.003181" ixy="-0.000126119" ixz="-0.000012437" iyy="0.003734" iyz="0.0000549058" izz="0.001838"/>
+      <inertia ixx="0.003229" ixy="-0.000145087" ixz="-0.00000804447" iyy="0.003826" iyz="0.0000336033" izz="0.002009"/>
     </inertial>
   </link>
   <link name="right_bicep_clamshell">
@@ -2014,13 +2014,13 @@
       <material name="mk43_gold"/>
     </visual>
     <collision>
-      <origin xyz="-0.048844 -0.014082 -0.133455" rpy="0 0 0"/>
-      <geometry><box size="0.111606 0.043651 0.26691"/></geometry>
+      <origin xyz="-0.049135 -0.013428 -0.133455" rpy="0 0 0"/>
+      <geometry><box size="0.109834 0.043318 0.26691"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.050094 -0.007161 -0.1267" rpy="0 0 0"/>
+      <origin xyz="-0.050827 -0.003421 -0.129674" rpy="0 0 0"/>
       <mass value="0.25"/>
-      <inertia ixx="0.001412" ixy="-0.0000316406" ixz="0.0000200395" iyy="0.001606" iyz="-0.0000914774" izz="0.000231874"/>
+      <inertia ixx="0.001407" ixy="-0.0000342333" ixz="0.0000119193" iyy="0.001614" iyz="-0.0000524307" izz="0.000240163"/>
     </inertial>
   </link>
   <link name="right_elbow_cap">
@@ -2046,13 +2046,13 @@
       <material name="mk43_red"/>
     </visual>
     <collision>
-      <origin xyz="-0.00000838615 -0.003327 -0.111143" rpy="0 0 0"/>
-      <geometry><box size="0.136405 0.125927 0.222285"/></geometry>
+      <origin xyz="0.0000518622 -0.003578 -0.111143" rpy="0 0 0"/>
+      <geometry><box size="0.136346 0.125376 0.222285"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.004949 -0.016364 -0.102227" rpy="0 0 0"/>
+      <origin xyz="0.00541 -0.0175 -0.104919" rpy="0 0 0"/>
       <mass value="0.4"/>
-      <inertia ixx="0.001984" ixy="-0.0000825782" ixz="0.00000861937" iyy="0.002319" iyz="0.0000548375" izz="0.001206"/>
+      <inertia ixx="0.002005" ixy="-0.000092849" ixz="0.0000130341" iyy="0.002404" iyz="0.0000423258" izz="0.001289"/>
     </inertial>
   </link>
   <link name="right_gauntlet_clamshell">
@@ -2062,13 +2062,13 @@
       <material name="mk43_gold"/>
     </visual>
     <collision>
-      <origin xyz="-0.043339 -0.012893 -0.111143" rpy="0 0 0"/>
-      <geometry><box size="0.101671 0.044073 0.222285"/></geometry>
+      <origin xyz="-0.043604 -0.012639 -0.111143" rpy="0 0 0"/>
+      <geometry><box size="0.100056 0.043562 0.222285"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.042247 -0.006837 -0.101577" rpy="0 0 0"/>
+      <origin xyz="-0.042717 -0.005614 -0.1051" rpy="0 0 0"/>
       <mass value="0.22"/>
-      <inertia ixx="0.000859066" ixy="-0.0000184813" ixz="0.0000323341" iyy="0.000978797" iyz="-0.0000850202" izz="0.000154377"/>
+      <inertia ixx="0.000859815" ixy="-0.0000198096" ixz="0.0000259471" iyy="0.000989757" iyz="-0.0000704528" izz="0.000158781"/>
     </inertial>
   </link>
   <link name="right_gauntlet_stripe">
@@ -2111,12 +2111,12 @@
     </visual>
     <collision>
       <origin xyz="-0.007151 0 0" rpy="0 0 0"/>
-      <geometry><box size="0.014302 0.083899 0.11977"/></geometry>
+      <geometry><box size="0.014302 0.083899 0.08983"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.00587 -2.33773e-18 2.40103e-18" rpy="0 0 0"/>
+      <origin xyz="-0.005836 -1.88772e-19 4.55935e-19" rpy="0 0 0"/>
       <mass value="0.18"/>
-      <inertia ixx="0.000299771" ixy="3.03035e-22" ixz="-3.74937e-22" iyy="0.000201438" iyz="-7.60085e-8" izz="0.000102164"/>
+      <inertia ixx="0.000209176" ixy="-4.79045e-22" ixz="1.13056e-22" iyy="0.000111784" iyz="-6.29665e-8" izz="0.00010117"/>
     </inertial>
   </link>
   <link name="right_palm_repulsor">
@@ -2574,13 +2574,13 @@
       <material name="mk43_red"/>
     </visual>
     <collision>
-      <origin xyz="0.002736 0.005372 -0.18865" rpy="0 0 0"/>
-      <geometry><box size="0.222629 0.203323 0.3773"/></geometry>
+      <origin xyz="0.002835 0.005778 -0.18865" rpy="0 0 0"/>
+      <geometry><box size="0.222533 0.202434 0.3773"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.009223 0.027364 -0.174643" rpy="0 0 0"/>
+      <origin xyz="0.00995 0.030154 -0.179714" rpy="0 0 0"/>
       <mass value="0.85"/>
-      <inertia ixx="0.012154" ixy="0.000493776" ixz="-0.0000128048" iyy="0.014368" iyz="-0.000311421" izz="0.007145"/>
+      <inertia ixx="0.012324" ixy="0.000584117" ixz="-0.00000137789" iyy="0.014805" iyz="-0.000223611" izz="0.008054"/>
     </inertial>
   </link>
   <link name="left_thigh_clamshell">
@@ -2590,13 +2590,13 @@
       <material name="mk43_red"/>
     </visual>
     <collision>
-      <origin xyz="-0.06912 0.022469 -0.18865" rpy="0 0 0"/>
-      <geometry><box size="0.165938 0.068504 0.3773"/></geometry>
+      <origin xyz="-0.069552 0.021937 -0.18865" rpy="0 0 0"/>
+      <geometry><box size="0.163304 0.067435 0.3773"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.069856 0.01326 -0.174357" rpy="0 0 0"/>
+      <origin xyz="-0.071215 0.006538 -0.179238" rpy="0 0 0"/>
       <mass value="0.48"/>
-      <inertia ixx="0.005511" ixy="0.000117082" ixz="0.000152246" iyy="0.006267" iyz="0.000514251" izz="0.000945147"/>
+      <inertia ixx="0.00543" ixy="0.000134371" ixz="0.000116071" iyy="0.006269" iyz="0.000350738" izz="0.001001"/>
     </inertial>
   </link>
   <link name="left_knee_cap">
@@ -2622,13 +2622,13 @@
       <material name="mk43_red"/>
     </visual>
     <collision>
-      <origin xyz="-0.002361 0.00451 -0.18942" rpy="0 0 0"/>
-      <geometry><box size="0.185112 0.1707 0.37884"/></geometry>
+      <origin xyz="-0.00228 0.004851 -0.18942" rpy="0 0 0"/>
+      <geometry><box size="0.185031 0.169954 0.37884"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.00515 0.022111 -0.170745" rpy="0 0 0"/>
+      <origin xyz="0.005802 0.024456 -0.176067" rpy="0 0 0"/>
       <mass value="0.65"/>
-      <inertia ixx="0.008665" ixy="0.000250318" ixz="0.0000722583" iyy="0.009755" iyz="-0.000254231" izz="0.003609"/>
+      <inertia ixx="0.008665" ixy="0.000296155" ixz="0.0000783734" iyy="0.009898" iyz="-0.000198164" izz="0.00408"/>
     </inertial>
   </link>
   <link name="left_calf_clamshell">
@@ -2638,13 +2638,13 @@
       <material name="mk43_red"/>
     </visual>
     <collision>
-      <origin xyz="-0.063371 0.021729 -0.18942" rpy="0 0 0"/>
-      <geometry><box size="0.137974 0.060381 0.37884"/></geometry>
+      <origin xyz="-0.06373 0.021334 -0.18942" rpy="0 0 0"/>
+      <geometry><box size="0.135784 0.059588 0.37884"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.061145 0.014736 -0.16968" rpy="0 0 0"/>
+      <origin xyz="-0.062245 0.009085 -0.174642" rpy="0 0 0"/>
       <mass value="0.42"/>
-      <inertia ixx="0.004818" ixy="0.0000556498" ixz="0.000196626" iyy="0.005241" iyz="0.000462893" izz="0.000569655"/>
+      <inertia ixx="0.004709" ixy="0.0000684311" ixz="0.000169903" iyy="0.005189" iyz="0.000334256" izz="0.000596265"/>
     </inertial>
   </link>
   <link name="left_shin_stripe">
@@ -2654,13 +2654,13 @@
       <material name="mk43_gold"/>
     </visual>
     <collision>
-      <origin xyz="0.07542 0 -0.1932" rpy="0 0 0"/>
-      <geometry><box size="0.035611 0.104154 0.295512"/></geometry>
+      <origin xyz="0.078113 0 -0.1932" rpy="0 0 0"/>
+      <geometry><box size="0.030225 0.106011 0.295512"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.076733 2.99940e-7 -0.183027" rpy="0 0 0"/>
+      <origin xyz="0.083231 7.53064e-7 -0.187533" rpy="0 0 0"/>
       <mass value="0.05"/>
-      <inertia ixx="0.000362754" ixy="-2.38170e-9" ixz="-0.0000385633" iyy="0.000335826" iyz="-3.91006e-8" izz="0.0000363847"/>
+      <inertia ixx="0.00036387" ixy="-2.10071e-9" ixz="-0.0000276172" iyy="0.000328351" iyz="-4.17917e-8" izz="0.0000412251"/>
     </inertial>
   </link>
   <link name="left_thigh_stripe">
@@ -2670,13 +2670,13 @@
       <material name="mk43_gold"/>
     </visual>
     <collision>
-      <origin xyz="0.090299 0 -0.179217" rpy="0 0 0"/>
-      <geometry><box size="0.053445 0.172838 0.298067"/></geometry>
+      <origin xyz="0.097079 0 -0.166012" rpy="0 0 0"/>
+      <geometry><box size="0.040318 0.176468 0.271656"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.095335 -0.00000607767 -0.172049" rpy="0 0 0"/>
+      <origin xyz="0.103122 -0.00000250084 -0.164695" rpy="0 0 0"/>
       <mass value="0.05"/>
-      <inertia ixx="0.00043943" ixy="5.62890e-9" ixz="-0.0000388799" iyy="0.00034409" iyz="-1.26881e-8" izz="0.000109779"/>
+      <inertia ixx="0.000406161" ixy="2.06815e-9" ixz="-0.0000151347" iyy="0.000286358" iyz="-1.03453e-8" izz="0.000127794"/>
     </inertial>
   </link>
   <link name="left_shin_guard">
@@ -2798,13 +2798,13 @@
       <material name="mk43_red"/>
     </visual>
     <collision>
-      <origin xyz="0.002736 -0.005372 -0.18865" rpy="0 0 0"/>
-      <geometry><box size="0.222629 0.203323 0.3773"/></geometry>
+      <origin xyz="0.002835 -0.005778 -0.18865" rpy="0 0 0"/>
+      <geometry><box size="0.222533 0.202434 0.3773"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.009225 -0.027367 -0.17465" rpy="0 0 0"/>
+      <origin xyz="0.009946 -0.030155 -0.179717" rpy="0 0 0"/>
       <mass value="0.85"/>
-      <inertia ixx="0.012154" ixy="-0.000493156" ixz="-0.0000160185" iyy="0.014368" iyz="0.000312123" izz="0.007145"/>
+      <inertia ixx="0.012324" ixy="-0.000584433" ixz="-0.00000386116" iyy="0.014805" iyz="0.000223925" izz="0.008054"/>
     </inertial>
   </link>
   <link name="right_thigh_clamshell">
@@ -2814,13 +2814,13 @@
       <material name="mk43_red"/>
     </visual>
     <collision>
-      <origin xyz="-0.06912 -0.022498 -0.18865" rpy="0 0 0"/>
-      <geometry><box size="0.165938 0.068563 0.3773"/></geometry>
+      <origin xyz="-0.069552 -0.021954 -0.18865" rpy="0 0 0"/>
+      <geometry><box size="0.163304 0.067467 0.3773"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.069857 -0.01326 -0.174345" rpy="0 0 0"/>
+      <origin xyz="-0.071219 -0.006539 -0.179227" rpy="0 0 0"/>
       <mass value="0.48"/>
-      <inertia ixx="0.005511" ixy="-0.000117147" ixz="0.000151092" iyy="0.006267" iyz="-0.00051468" izz="0.00094524"/>
+      <inertia ixx="0.00543" ixy="-0.000134445" ixz="0.000115313" iyy="0.006269" iyz="-0.000350998" izz="0.001001"/>
     </inertial>
   </link>
   <link name="right_knee_cap">
@@ -2846,13 +2846,13 @@
       <material name="mk43_red"/>
     </visual>
     <collision>
-      <origin xyz="-0.002361 -0.00451 -0.18942" rpy="0 0 0"/>
-      <geometry><box size="0.185112 0.1707 0.37884"/></geometry>
+      <origin xyz="-0.00228 -0.004851 -0.18942" rpy="0 0 0"/>
+      <geometry><box size="0.185031 0.169954 0.37884"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.005141 -0.02211 -0.17075" rpy="0 0 0"/>
+      <origin xyz="0.005786 -0.024453 -0.176071" rpy="0 0 0"/>
       <mass value="0.65"/>
-      <inertia ixx="0.008665" ixy="-0.000250524" ixz="0.000071065" iyy="0.009755" iyz="0.000254412" izz="0.00361"/>
+      <inertia ixx="0.008665" ixy="-0.00029677" ixz="0.0000774684" iyy="0.009898" iyz="0.000198225" izz="0.00408"/>
     </inertial>
   </link>
   <link name="right_calf_clamshell">
@@ -2862,13 +2862,13 @@
       <material name="mk43_red"/>
     </visual>
     <collision>
-      <origin xyz="-0.063371 -0.021753 -0.18942" rpy="0 0 0"/>
-      <geometry><box size="0.137974 0.060431 0.37884"/></geometry>
+      <origin xyz="-0.06373 -0.021342 -0.18942" rpy="0 0 0"/>
+      <geometry><box size="0.135784 0.059603 0.37884"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.061158 -0.014739 -0.169677" rpy="0 0 0"/>
+      <origin xyz="-0.062261 -0.00909 -0.174639" rpy="0 0 0"/>
       <mass value="0.42"/>
-      <inertia ixx="0.004818" ixy="-0.0000557815" ixz="0.000196099" iyy="0.00524" iyz="-0.000463076" izz="0.000569619"/>
+      <inertia ixx="0.00471" ixy="-0.0000685968" ixz="0.000169545" iyy="0.005189" iyz="-0.000334392" izz="0.000596247"/>
     </inertial>
   </link>
   <link name="right_shin_stripe">
@@ -2878,13 +2878,13 @@
       <material name="mk43_gold"/>
     </visual>
     <collision>
-      <origin xyz="0.07542 0 -0.1932" rpy="0 0 0"/>
-      <geometry><box size="0.035611 0.104154 0.295512"/></geometry>
+      <origin xyz="0.078113 0 -0.1932" rpy="0 0 0"/>
+      <geometry><box size="0.030225 0.106011 0.295512"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.076733 2.99940e-7 -0.183027" rpy="0 0 0"/>
+      <origin xyz="0.083231 7.53064e-7 -0.187533" rpy="0 0 0"/>
       <mass value="0.05"/>
-      <inertia ixx="0.000362754" ixy="-2.38170e-9" ixz="-0.0000385633" iyy="0.000335826" iyz="-3.91006e-8" izz="0.0000363847"/>
+      <inertia ixx="0.00036387" ixy="-2.10071e-9" ixz="-0.0000276172" iyy="0.000328351" iyz="-4.17917e-8" izz="0.0000412251"/>
     </inertial>
   </link>
   <link name="right_thigh_stripe">
@@ -2894,13 +2894,13 @@
       <material name="mk43_gold"/>
     </visual>
     <collision>
-      <origin xyz="0.090299 0 -0.179217" rpy="0 0 0"/>
-      <geometry><box size="0.053445 0.172838 0.298067"/></geometry>
+      <origin xyz="0.097079 0 -0.166012" rpy="0 0 0"/>
+      <geometry><box size="0.040318 0.176468 0.271656"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.095335 -0.00000607767 -0.172049" rpy="0 0 0"/>
+      <origin xyz="0.103122 -0.00000250084 -0.164695" rpy="0 0 0"/>
       <mass value="0.05"/>
-      <inertia ixx="0.00043943" ixy="5.62890e-9" ixz="-0.0000388799" iyy="0.00034409" iyz="-1.26881e-8" izz="0.000109779"/>
+      <inertia ixx="0.000406161" ixy="2.06815e-9" ixz="-0.0000151347" iyy="0.000286358" iyz="-1.03453e-8" izz="0.000127794"/>
     </inertial>
   </link>
   <link name="right_shin_guard">
@@ -3086,13 +3086,13 @@
       <material name="mk43_red"/>
     </visual>
     <collision>
-      <origin xyz="-0.0000399762 -0.0000111738 -0.05" rpy="0 0 0"/>
-      <geometry><box size="0.174356 0.169328 0.1"/></geometry>
+      <origin xyz="-0.0000399762 -0.0000114831 -0.05" rpy="0 0 0"/>
+      <geometry><box size="0.174356 0.174015 0.1"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.0000945004 0.001964 -0.048181" rpy="0 0 0"/>
+      <origin xyz="-0.0000972984 0.00206 -0.050213" rpy="0 0 0"/>
       <mass value="0.12"/>
-      <inertia ixx="0.000456707" ixy="-7.38770e-7" ixz="2.59224e-8" iyy="0.000489279" iyz="-4.10800e-7" izz="0.000757031"/>
+      <inertia ixx="0.000502088" ixy="-0.00000102738" ixz="2.18000e-8" iyy="0.000527344" iyz="-2.55146e-7" izz="0.000834295"/>
     </inertial>
   </link>
   <link name="left_hip_outer_plate">
@@ -3118,13 +3118,13 @@
       <material name="mk43_red"/>
     </visual>
     <collision>
-      <origin xyz="0.102813 0 -0.182886" rpy="0 0 0"/>
-      <geometry><box size="0.034108 0.058873 0.252999"/></geometry>
+      <origin xyz="0.107761 0 -0.182951" rpy="0 0 0"/>
+      <geometry><box size="0.024705 0.061015 0.25287"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.104659 3.82630e-7 -0.178073" rpy="0 0 0"/>
+      <origin xyz="0.112407 3.87994e-7 -0.181885" rpy="0 0 0"/>
       <mass value="0.07"/>
-      <inertia ixx="0.000357689" ixy="-1.94745e-9" ixz="-0.0000439584" iyy="0.000347627" iyz="-1.69918e-8" izz="0.0000214997"/>
+      <inertia ixx="0.000361198" ixy="-1.02230e-9" ixz="-0.0000237013" iyy="0.000344043" iyz="-1.50122e-8" izz="0.000020853"/>
     </inertial>
   </link>
   <link name="left_thigh_edge">
@@ -3134,13 +3134,13 @@
       <material name="mk43_titanium"/>
     </visual>
     <collision>
-      <origin xyz="0.078535 0.076754 -0.179206" rpy="0 0 0"/>
-      <geometry><box size="0.027342 0.026298 0.26036"/></geometry>
+      <origin xyz="0.082442 0.08126 -0.179217" rpy="0 0 0"/>
+      <geometry><box size="0.020824 0.018385 0.260337"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.08026 0.077317 -0.17394" rpy="0 0 0"/>
+      <origin xyz="0.085924 0.084532 -0.177845" rpy="0 0 0"/>
       <mass value="0.025"/>
-      <inertia ixx="0.00012695" ixy="-0.00000104657" ixz="-0.0000119984" iyy="0.000127101" iyz="-0.000011274" izz="0.00000223721"/>
+      <inertia ixx="0.000126789" ixy="-2.38750e-7" ixz="-0.00000633717" iyy="0.000126941" iyz="-0.0000047598" izz="6.50977e-7"/>
     </inertial>
   </link>
   <link name="left_shin_ridge">
@@ -3150,13 +3150,13 @@
       <material name="mk43_red"/>
     </visual>
     <collision>
-      <origin xyz="0.080868 0 -0.183737" rpy="0 0 0"/>
-      <geometry><box size="0.030595 0.050574 0.253823"/></geometry>
+      <origin xyz="0.084718 0 -0.183737" rpy="0 0 0"/>
+      <geometry><box size="0.023159 0.051957 0.253823"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.082132 -3.72820e-7 -0.176424" rpy="0 0 0"/>
+      <origin xyz="0.089233 2.21657e-7 -0.180432" rpy="0 0 0"/>
       <mass value="0.07"/>
-      <inertia ixx="0.000354192" ixy="-1.34336e-9" ixz="-0.0000423805" iyy="0.000348656" iyz="-1.22524e-8" izz="0.0000160713"/>
+      <inertia ixx="0.00035333" ixy="-9.15664e-10" ixz="-0.0000270423" iyy="0.000342685" iyz="-1.32069e-8" izz="0.0000155467"/>
     </inertial>
   </link>
   <link name="left_shin_edge">
@@ -3166,13 +3166,13 @@
       <material name="mk43_titanium"/>
     </visual>
     <collision>
-      <origin xyz="0.061644 0.063231 -0.179949" rpy="0 0 0"/>
-      <geometry><box size="0.023757 0.027269 0.2614"/></geometry>
+      <origin xyz="0.0646 0.067007 -0.179949" rpy="0 0 0"/>
+      <geometry><box size="0.018441 0.020286 0.2614"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.062401 0.063891 -0.172069" rpy="0 0 0"/>
+      <origin xyz="0.067626 0.070077 -0.176017" rpy="0 0 0"/>
       <mass value="0.025"/>
-      <inertia ixx="0.000127407" ixy="-0.00000110118" ixz="-0.0000108975" iyy="0.000127029" iyz="-0.0000128925" izz="0.00000232211"/>
+      <inertia ixx="0.000125724" ixy="-4.03003e-7" ixz="-0.00000649576" iyy="0.000125662" iyz="-0.00000724302" izz="9.14870e-7"/>
     </inertial>
   </link>
   <link name="left_knee_bezel">
@@ -3262,13 +3262,13 @@
       <material name="mk43_red"/>
     </visual>
     <collision>
-      <origin xyz="0.066407 0 -0.133455" rpy="0 0 0"/>
-      <geometry><box size="0.022661 0.076498 0.202852"/></geometry>
+      <origin xyz="0.069018 0 -0.133455" rpy="0 0 0"/>
+      <geometry><box size="0.017641 0.077505 0.202852"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.069002 -1.05153e-7 -0.130037" rpy="0 0 0"/>
+      <origin xyz="0.072356 7.02253e-7 -0.132634" rpy="0 0 0"/>
       <mass value="0.06"/>
-      <inertia ixx="0.000209725" ixy="-1.81194e-9" ixz="-0.0000173955" iyy="0.000188298" iyz="-2.81987e-8" izz="0.0000252695"/>
+      <inertia ixx="0.000213215" ixy="-6.14251e-10" ixz="-0.00000884304" iyy="0.00018723" iyz="-2.30662e-8" izz="0.0000273849"/>
     </inertial>
   </link>
   <link name="left_forearm_crest">
@@ -3278,13 +3278,13 @@
       <material name="mk43_red"/>
     </visual>
     <collision>
-      <origin xyz="0.058158 0 -0.106697" rpy="0 0 0"/>
-      <geometry><box size="0.028302 0.090293 0.177828"/></geometry>
+      <origin xyz="0.061213 0 -0.106697" rpy="0 0 0"/>
+      <geometry><box size="0.022191 0.090293 0.177828"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.060244 -0.0000011826 -0.102254" rpy="0 0 0"/>
+      <origin xyz="0.063792 -0.00000111871 -0.104087" rpy="0 0 0"/>
       <mass value="0.06"/>
-      <inertia ixx="0.000174179" ixy="-2.44332e-9" ixz="-0.000018709" iyy="0.00014587" iyz="-3.21692e-8" izz="0.0000341123"/>
+      <inertia ixx="0.00017834" ixy="-9.60840e-10" ixz="-0.00000834048" iyy="0.000146673" iyz="-3.26168e-8" izz="0.0000336099"/>
     </inertial>
   </link>
   <link name="right_clavicle_cover">
@@ -3374,13 +3374,13 @@
       <material name="mk43_red"/>
     </visual>
     <collision>
-      <origin xyz="-0.0000399762 -0.0000111738 -0.05" rpy="0 0 0"/>
-      <geometry><box size="0.174356 0.169328 0.1"/></geometry>
+      <origin xyz="-0.0000399762 -0.0000114831 -0.05" rpy="0 0 0"/>
+      <geometry><box size="0.174356 0.174015 0.1"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.0000945004 0.001964 -0.048181" rpy="0 0 0"/>
+      <origin xyz="-0.0000972984 0.00206 -0.050213" rpy="0 0 0"/>
       <mass value="0.12"/>
-      <inertia ixx="0.000456707" ixy="-7.38770e-7" ixz="2.59224e-8" iyy="0.000489279" iyz="-4.10800e-7" izz="0.000757031"/>
+      <inertia ixx="0.000502088" ixy="-0.00000102738" ixz="2.18000e-8" iyy="0.000527344" iyz="-2.55146e-7" izz="0.000834295"/>
     </inertial>
   </link>
   <link name="right_hip_outer_plate">
@@ -3406,13 +3406,13 @@
       <material name="mk43_red"/>
     </visual>
     <collision>
-      <origin xyz="0.102813 0 -0.182886" rpy="0 0 0"/>
-      <geometry><box size="0.034108 0.058873 0.252999"/></geometry>
+      <origin xyz="0.107761 0 -0.182951" rpy="0 0 0"/>
+      <geometry><box size="0.024705 0.061015 0.25287"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.104659 3.82630e-7 -0.178073" rpy="0 0 0"/>
+      <origin xyz="0.112407 3.87994e-7 -0.181885" rpy="0 0 0"/>
       <mass value="0.07"/>
-      <inertia ixx="0.000357689" ixy="-1.94745e-9" ixz="-0.0000439584" iyy="0.000347627" iyz="-1.69918e-8" izz="0.0000214997"/>
+      <inertia ixx="0.000361198" ixy="-1.02230e-9" ixz="-0.0000237013" iyy="0.000344043" iyz="-1.50122e-8" izz="0.000020853"/>
     </inertial>
   </link>
   <link name="right_thigh_edge">
@@ -3422,13 +3422,13 @@
       <material name="mk43_titanium"/>
     </visual>
     <collision>
-      <origin xyz="0.078531 -0.076756 -0.179206" rpy="0 0 0"/>
-      <geometry><box size="0.02735 0.026294 0.26036"/></geometry>
+      <origin xyz="0.082439 -0.081263 -0.179217" rpy="0 0 0"/>
+      <geometry><box size="0.020831 0.018381 0.260337"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.080257 -0.077314 -0.173974" rpy="0 0 0"/>
+      <origin xyz="0.085924 -0.084531 -0.17786" rpy="0 0 0"/>
       <mass value="0.025"/>
-      <inertia ixx="0.000126944" ixy="0.00000104663" ixz="-0.0000120011" iyy="0.000127097" iyz="0.0000112718" izz="0.0000022374"/>
+      <inertia ixx="0.000126779" ixy="2.38728e-7" ixz="-0.00000633938" iyy="0.00012693" iyz="0.00000475764" izz="6.51117e-7"/>
     </inertial>
   </link>
   <link name="right_shin_ridge">
@@ -3438,13 +3438,13 @@
       <material name="mk43_red"/>
     </visual>
     <collision>
-      <origin xyz="0.080868 0 -0.183737" rpy="0 0 0"/>
-      <geometry><box size="0.030595 0.050574 0.253823"/></geometry>
+      <origin xyz="0.084718 0 -0.183737" rpy="0 0 0"/>
+      <geometry><box size="0.023159 0.051957 0.253823"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.082132 -3.72820e-7 -0.176424" rpy="0 0 0"/>
+      <origin xyz="0.089233 2.21657e-7 -0.180432" rpy="0 0 0"/>
       <mass value="0.07"/>
-      <inertia ixx="0.000354192" ixy="-1.34336e-9" ixz="-0.0000423805" iyy="0.000348656" iyz="-1.22524e-8" izz="0.0000160713"/>
+      <inertia ixx="0.00035333" ixy="-9.15664e-10" ixz="-0.0000270423" iyy="0.000342685" iyz="-1.32069e-8" izz="0.0000155467"/>
     </inertial>
   </link>
   <link name="right_shin_edge">
@@ -3454,13 +3454,13 @@
       <material name="mk43_titanium"/>
     </visual>
     <collision>
-      <origin xyz="0.061641 -0.063233 -0.179949" rpy="0 0 0"/>
-      <geometry><box size="0.023765 0.027266 0.2614"/></geometry>
+      <origin xyz="0.064597 -0.067009 -0.179949" rpy="0 0 0"/>
+      <geometry><box size="0.018447 0.020281 0.2614"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.062397 -0.063887 -0.172108" rpy="0 0 0"/>
+      <origin xyz="0.067625 -0.070075 -0.176046" rpy="0 0 0"/>
       <mass value="0.025"/>
-      <inertia ixx="0.000127429" ixy="0.00000110145" ixz="-0.0000109019" iyy="0.000127053" iyz="0.0000128929" izz="0.00000232257"/>
+      <inertia ixx="0.000125715" ixy="4.03030e-7" ixz="-0.00000649823" iyy="0.000125654" iyz="0.00000724106" izz="9.14981e-7"/>
     </inertial>
   </link>
   <link name="right_knee_bezel">
@@ -3550,13 +3550,13 @@
       <material name="mk43_red"/>
     </visual>
     <collision>
-      <origin xyz="0.066407 0 -0.133455" rpy="0 0 0"/>
-      <geometry><box size="0.022661 0.076498 0.202852"/></geometry>
+      <origin xyz="0.069018 0 -0.133455" rpy="0 0 0"/>
+      <geometry><box size="0.017641 0.077505 0.202852"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.069002 -1.05153e-7 -0.130037" rpy="0 0 0"/>
+      <origin xyz="0.072356 7.02253e-7 -0.132634" rpy="0 0 0"/>
       <mass value="0.06"/>
-      <inertia ixx="0.000209725" ixy="-1.81194e-9" ixz="-0.0000173955" iyy="0.000188298" iyz="-2.81987e-8" izz="0.0000252695"/>
+      <inertia ixx="0.000213215" ixy="-6.14251e-10" ixz="-0.00000884304" iyy="0.00018723" iyz="-2.30662e-8" izz="0.0000273849"/>
     </inertial>
   </link>
   <link name="right_forearm_crest">
@@ -3566,13 +3566,13 @@
       <material name="mk43_red"/>
     </visual>
     <collision>
-      <origin xyz="0.058158 0 -0.106697" rpy="0 0 0"/>
-      <geometry><box size="0.028302 0.090293 0.177828"/></geometry>
+      <origin xyz="0.061213 0 -0.106697" rpy="0 0 0"/>
+      <geometry><box size="0.022191 0.090293 0.177828"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.060244 -0.0000011826 -0.102254" rpy="0 0 0"/>
+      <origin xyz="0.063792 -0.00000111871 -0.104087" rpy="0 0 0"/>
       <mass value="0.06"/>
-      <inertia ixx="0.000174179" ixy="-2.44332e-9" ixz="-0.000018709" iyy="0.00014587" iyz="-3.21692e-8" izz="0.0000341123"/>
+      <inertia ixx="0.00017834" ixy="-9.60840e-10" ixz="-0.00000834048" iyy="0.000146673" iyz="-3.26168e-8" izz="0.0000336099"/>
     </inertial>
   </link>
   <link name="left_rib_edge_0">
@@ -4708,7 +4708,7 @@
   <joint name="chest_centre_mount" type="fixed">
     <parent link="spine_frame"/>
     <child link="chest_centre"/>
-    <origin xyz="0.204 0 0.37772" rpy="0 0 0"/>
+    <origin xyz="0.214 0 0.37772" rpy="0 0 0"/>
     <dynamics damping="0.1" friction="0"/>
   </joint>
   <joint name="arc_reactor_housing_mount" type="fixed">
@@ -4766,7 +4766,7 @@
   <joint name="back_shell_mount" type="fixed">
     <parent link="spine_frame"/>
     <child link="back_shell"/>
-    <origin xyz="-0.29 0 0.33772" rpy="0 0 3.141593"/>
+    <origin xyz="-0.335 0 0.33772" rpy="0 0 3.141593"/>
     <dynamics damping="0.1" friction="0"/>
   </joint>
   <joint name="left_flight_flap_hinge" type="revolute">
@@ -4908,7 +4908,7 @@
   <joint name="left_elbow_cap_hinge" type="revolute">
     <parent link="left_elbow_module"/>
     <child link="left_elbow_cap"/>
-    <origin xyz="-0.055 -0.05 0" rpy="0 -1.570796 0"/>
+    <origin xyz="-0.068 -0.05 0" rpy="0 -1.570796 0"/>
     <axis xyz="0 1 0"/>
     <limit lower="0" upper="0.5" effort="2" velocity="3"/>
     <dynamics damping="0.1" friction="0"/>
@@ -4944,13 +4944,13 @@
   <joint name="left_hand_plate_mount" type="fixed">
     <parent link="left_hand"/>
     <child link="left_hand_plate"/>
-    <origin xyz="0.035 -0.045 -0.017" rpy="0 -1.570796 0"/>
+    <origin xyz="0.05 -0.045 -0.017" rpy="0 -1.570796 0"/>
     <dynamics damping="0.1" friction="0"/>
   </joint>
   <joint name="left_palm_repulsor_mount" type="fixed">
     <parent link="left_hand"/>
     <child link="left_palm_repulsor"/>
-    <origin xyz="0.03 -0.045 -0.056" rpy="3.141593 0 0"/>
+    <origin xyz="0.045 -0.045 -0.056" rpy="3.141593 0 0"/>
     <dynamics damping="0.1" friction="0"/>
   </joint>
   <joint name="left_finger_1_hinge" type="revolute">
@@ -5168,7 +5168,7 @@
   <joint name="right_elbow_cap_hinge" type="revolute">
     <parent link="right_elbow_module"/>
     <child link="right_elbow_cap"/>
-    <origin xyz="-0.055 0.05 0" rpy="0 -1.570796 0"/>
+    <origin xyz="-0.068 0.05 0" rpy="0 -1.570796 0"/>
     <axis xyz="0 1 0"/>
     <limit lower="0" upper="0.5" effort="2" velocity="3"/>
     <dynamics damping="0.1" friction="0"/>
@@ -5204,13 +5204,13 @@
   <joint name="right_hand_plate_mount" type="fixed">
     <parent link="right_hand"/>
     <child link="right_hand_plate"/>
-    <origin xyz="0.035 0.045 -0.017" rpy="0 -1.570796 0"/>
+    <origin xyz="0.05 0.045 -0.017" rpy="0 -1.570796 0"/>
     <dynamics damping="0.1" friction="0"/>
   </joint>
   <joint name="right_palm_repulsor_mount" type="fixed">
     <parent link="right_hand"/>
     <child link="right_palm_repulsor"/>
-    <origin xyz="0.03 0.045 -0.056" rpy="3.141593 0 0"/>
+    <origin xyz="0.045 0.045 -0.056" rpy="3.141593 0 0"/>
     <dynamics damping="0.1" friction="0"/>
   </joint>
   <joint name="right_finger_1_hinge" type="revolute">
@@ -5422,7 +5422,7 @@
   <joint name="left_knee_cap_hinge" type="revolute">
     <parent link="left_knee_module"/>
     <child link="left_knee_cap"/>
-    <origin xyz="0.085 -0.045 0" rpy="0 0 0"/>
+    <origin xyz="0.11 -0.045 0" rpy="0 0 0"/>
     <axis xyz="0 1 0"/>
     <limit lower="-0.6" upper="0" effort="2" velocity="3"/>
     <dynamics damping="0.1" friction="0"/>
@@ -5482,7 +5482,7 @@
   <joint name="left_thruster_cover_hinge" type="revolute">
     <parent link="left_boot"/>
     <child link="left_thruster_cover"/>
-    <origin xyz="-0.145 -0.045 -0.02" rpy="0 0 3.141593"/>
+    <origin xyz="-0.18 -0.045 -0.02" rpy="0 0 3.141593"/>
     <axis xyz="0 1 0"/>
     <limit lower="-1.3" upper="0" effort="1.5" velocity="3"/>
     <dynamics damping="0.1" friction="0"/>
@@ -5490,7 +5490,7 @@
   <joint name="left_ankle_flap_hinge" type="revolute">
     <parent link="left_boot"/>
     <child link="left_ankle_flap"/>
-    <origin xyz="0 0.085 0.02" rpy="0 0 1.570796"/>
+    <origin xyz="0 0.095 0.02" rpy="0 0 1.570796"/>
     <axis xyz="0 1 0"/>
     <limit lower="-0.8" upper="0" effort="1.5" velocity="3"/>
     <dynamics damping="0.1" friction="0"/>
@@ -5520,7 +5520,7 @@
   <joint name="right_knee_cap_hinge" type="revolute">
     <parent link="right_knee_module"/>
     <child link="right_knee_cap"/>
-    <origin xyz="0.085 0.045 0" rpy="0 0 0"/>
+    <origin xyz="0.11 0.045 0" rpy="0 0 0"/>
     <axis xyz="0 1 0"/>
     <limit lower="-0.6" upper="0" effort="2" velocity="3"/>
     <dynamics damping="0.1" friction="0"/>
@@ -5580,7 +5580,7 @@
   <joint name="right_thruster_cover_hinge" type="revolute">
     <parent link="right_boot"/>
     <child link="right_thruster_cover"/>
-    <origin xyz="-0.145 0.045 -0.02" rpy="0 0 3.141593"/>
+    <origin xyz="-0.18 0.045 -0.02" rpy="0 0 3.141593"/>
     <axis xyz="0 1 0"/>
     <limit lower="-1.3" upper="0" effort="1.5" velocity="3"/>
     <dynamics damping="0.1" friction="0"/>
@@ -5588,7 +5588,7 @@
   <joint name="right_ankle_flap_hinge" type="revolute">
     <parent link="right_boot"/>
     <child link="right_ankle_flap"/>
-    <origin xyz="0 -0.085 0.02" rpy="0 0 -1.570796"/>
+    <origin xyz="0 -0.095 0.02" rpy="0 0 -1.570796"/>
     <axis xyz="0 1 0"/>
     <limit lower="-0.8" upper="0" effort="1.5" velocity="3"/>
     <dynamics damping="0.1" friction="0"/>

@@ -103,7 +103,20 @@ GIF and simulation report above use self-collision enabled.
 but the colliding suit start state blocks planning. [Wearer fit](wearability_report.json)
 also fails. [Production references and downloaded design research](../../references/mark43/RESEARCH.md)
 record the sources and limitations. [Visual comparison](../../docs/MARK43_VISUAL_REVIEW.md).
+
+The current clearance revision replaces the misused forearm-shaped torso sides,
+corrects mirrored pectoral wall thickness, separates chest/abdominal plates,
+provides clamshell seam gaps and makes room around the internal cuffs. Palm
+geometry starts beyond the wrist rather than extending into the gauntlet.
+
+[Surface-contact comparison](surface_contact_comparison.json): **175 → 81**
+non-adjacent intersecting pairs at neutral; 94 resolved and no new pairs in this
+check. This tests visual triangle surfaces, with tessellated primitives. It does
+not measure penetration depth or full containment, and differs from native MoveIt
+and approximate MuJoCo collision geometry.
+[Joint samples](surface_contact_report.json) retain shoulder and side-door failures.
+
 '''
- (folder/'README.md').write_text(text)
+ (folder/'README.md').write_text(text.rstrip()+'\n')
  index.append(f"| [{folder.name}]({folder.name}/) | {row.get('passed',0)}/{row.get('total',0)} | {row.get('initial_penetrations','?')} | {failures} |")
 (root/'README.md').write_text('\n'.join(index)+'\n')

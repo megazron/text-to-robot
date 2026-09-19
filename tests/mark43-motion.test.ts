@@ -35,3 +35,13 @@ test('Mark 43 MoveIt exposes neck and every digit joint',async()=>{
   assert.deepEqual(groups.find(g=>g.name==='neck')!.joints.map(j=>j.name),['neck_yaw','neck_pitch']);
   for(const side of ['left','right'])assert.equal(groups.find(g=>g.name===`${side}_hand`)!.joints.length,14);
 });
+
+test('left and right pectorals mirror the entire solid including wall thickness',async()=>{
+  const {buildPart}=await import('@ttr/mesh');
+  for(const section of ['lower','upper']) {
+    const left=buildPart({part:'mark43_chest',params:{side:1,section}});
+    const right=buildPart({part:'mark43_chest',params:{side:-1,section}});
+    const points=(v:number[][])=>v.map(p=>p.map(x=>x.toFixed(8)).join(',')).sort();
+    assert.deepEqual(points(left.v.map(([x,y,z])=>[x,-y,z])),points(right.v));
+  }
+});

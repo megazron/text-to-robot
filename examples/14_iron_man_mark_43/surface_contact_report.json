@@ -1,0 +1,1210 @@
+{
+  "scope": "Offline FCL surface-intersection audit of exported URDF visual surfaces (the MoveIt mesh sources).\nTriangle intersections are not a penetration-depth or solid-containment test.\nCylinders/spheres are tessellated; counts can differ from native MoveIt primitives.\nOnly direct parent/child links are excluded, as in the generated MoveIt SRDF.\n",
+  "source_urdf_sha256": "32952828db78af66efcadde5628f1c3c2f55f2f7e5362caf66489299361c4b9a",
+  "source_mesh_sha256": {
+    "meshes/pelvis_frame.stl": "b39c497f29f2d4be5f925de8bd98aa23f04c4fe2ec4ddef54e6bbd9fa10f4bf2",
+    "meshes/left_thigh_cuff.stl": "3674e5ff1e8a138e37aced22909094adf5f8c0bb026c943ea5863fa1d31f034e",
+    "meshes/left_shank_cuff.stl": "2d1d125e70815e0d070a9773b51945d863756704ddd263d525ce28d32fc0de9d",
+    "meshes/right_thigh_cuff.stl": "3674e5ff1e8a138e37aced22909094adf5f8c0bb026c943ea5863fa1d31f034e",
+    "meshes/right_shank_cuff.stl": "2d1d125e70815e0d070a9773b51945d863756704ddd263d525ce28d32fc0de9d",
+    "meshes/left_upper_arm_cuff.stl": "a44a9c5ef3c615a15c62973be9b151da21c6f731ae2775ea74b20a49611600f2",
+    "meshes/left_forearm_cuff.stl": "12c8c99fff5942ae5deb1f44c15431ec6842662dc573b14b1d909cf0303ea921",
+    "meshes/right_upper_arm_cuff.stl": "a44a9c5ef3c615a15c62973be9b151da21c6f731ae2775ea74b20a49611600f2",
+    "meshes/right_forearm_cuff.stl": "12c8c99fff5942ae5deb1f44c15431ec6842662dc573b14b1d909cf0303ea921",
+    "meshes/helmet_cranium.stl": "e9b516b85235921a05aa1adec3d1de0cae27258a33b0f88a578ed13a6ff0d6bd",
+    "meshes/helmet_neck_collar.stl": "8567bb6c016c472328912cbaa2f3d29427866ec8463b9a98a473639f99e7502a",
+    "meshes/helmet_left_ear_pod.stl": "41960728cce3cae06dcd3326e71bdcd73cec72a6951eefb3a395c93ef5bd197d",
+    "meshes/helmet_right_ear_pod.stl": "474fe16f47a6471e0dcd2e5f8c09e2d4efbb0dc8c87d40b87bc4da1b8be04db2",
+    "meshes/helmet_crown_panel.stl": "bf8b2170439a6dfa5dd5a1d01a5b36110c581c764a4404aeebd3bc769aad236e",
+    "meshes/helmet_faceplate.stl": "fd82848f8c544f240a370bfa661d1458558c13c8022f392827e3daaa70cc084b",
+    "meshes/helmet_forehead_plate.stl": "d6fb3dc89aca47b81bd3969f3cb9e31e307788995ea346a58f29b847a4f2ea65",
+    "meshes/helmet_mouth_line.stl": "220ca989540153287eea7569b7a5906ec7e45d1b236d516a67bd96b9b9ea404c",
+    "meshes/helmet_left_eye_socket.stl": "8f7c5f3ad7c0cd22f07a569a50a90945d87c68af34438dd6969d54849bab0348",
+    "meshes/helmet_left_eye_lens.stl": "dd7616f14007b9e2dfad918f13ccce432a9e81e725e22beb793cebb2a7176ff0",
+    "meshes/helmet_left_cheek_panel.stl": "9d0ca9e26e77ea849eb5a6a5d841e4de58d61053292a1e26ba7544a182f11196",
+    "meshes/helmet_right_eye_socket.stl": "cdc4b8b1c36c8eab5d7197904e807f778b5cc6521479f0393619b5d41b7875af",
+    "meshes/helmet_right_eye_lens.stl": "7a383cfce12c633aedbbb99a65238a0f3a4d5033de9c1546b319973eccec3f77",
+    "meshes/helmet_right_cheek_panel.stl": "1303e61cb2b930c7aa4987b1d7eb7edb662803e4ef50059ee202d2a2c164bb03",
+    "meshes/helmet_chin_guard.stl": "4d8c8eea5d3df15bb845e09feea57ab893759fca3229a46d773318c1cffb8070",
+    "meshes/neck_ring.stl": "4748932cd060e0442054219ff079ad2623532b2bc73a679687949c07b3a081fe",
+    "meshes/collar_plate.stl": "be1cc3454fd9f9bf59b73bac685cae7ad7a47a112c40218dba938abd533ae368",
+    "meshes/left_chest_door.stl": "347fa98fe93e86bb9c09a837a7f911a98429f7147f57decc93f83f861607f482",
+    "meshes/left_pectoral_trim.stl": "56c8d79627cd86fc52ad599b940b3967a4fa80cd148f5e37312e058813af9a0d",
+    "meshes/right_chest_door.stl": "0518b09298e35a079b8aaa11ea065ac44630dd4de1bd3713498b85333c1a2acf",
+    "meshes/right_pectoral_trim.stl": "c0adb53d191d101ae4c065f3fa279862907d7b69f611708851ff97b41925ee3c",
+    "meshes/chest_centre.stl": "b2cc5e43682979b2bb4e5d668d495117621b1d6d64b6e367ccb6cbf8f65ebfff",
+    "meshes/arc_reactor_housing.stl": "48c051ee028ad57c50853668c8b18df96f75931610d3f3947b55e0049f9a1cb7",
+    "meshes/arc_reactor.stl": "40ea3cc9128ede6737fe464710f4b95b0497ff5858fcc0c452374336b778fab7",
+    "meshes/ab_plate_1.stl": "ede2ad77e876a2a17d0aa336615ef17ef2c68e4a27813b0cdd32d3a32cacf28a",
+    "meshes/ab_plate_2.stl": "ce9f80aacd7e28bd5a275fc2f0b8a12a56a3c56f2c2e3857de6947bb2c86e9c1",
+    "meshes/ab_plate_3.stl": "476e14024009c08388819aad859eb058e488339467dbc1bd8c6463771811e9f8",
+    "meshes/left_lat_plate.stl": "19914af66592fd7db6852d5c7ad29f37dc12abcc543b0004aba85699b27f8c69",
+    "meshes/right_lat_plate.stl": "adec1c0eb7265182a1bd0935dfff8776d360183dea5b7172a6b551d233e9bf2d",
+    "meshes/back_shell.stl": "418c57fa290a4b4bf94ba629b7439efc4d73c4c955ddd68b34c22956ecabba6e",
+    "meshes/left_flight_flap.stl": "1e064df9af42b51ee5599e1536620f25cea110d1d537b7edbf442380fc07dc2b",
+    "meshes/left_back_vent.stl": "55f04635832b72ce0af5a98aa9550a1a796e0c6c16581e9cd8608b174764a43e",
+    "meshes/right_flight_flap.stl": "1e064df9af42b51ee5599e1536620f25cea110d1d537b7edbf442380fc07dc2b",
+    "meshes/right_back_vent.stl": "55f04635832b72ce0af5a98aa9550a1a796e0c6c16581e9cd8608b174764a43e",
+    "meshes/belt_plate.stl": "ab1b80a1959e15f53871daf70bb77faa5eadb8234660a5eeae9fb332aff94ffe",
+    "meshes/rear_belt_plate.stl": "ab1b80a1959e15f53871daf70bb77faa5eadb8234660a5eeae9fb332aff94ffe",
+    "meshes/codpiece.stl": "b1d132dffd48978bece343f431ff862a3d388806c495cb6ab6213022ea52e37d",
+    "meshes/left_rib_0.stl": "ab0ffb428e31e20ca32b1cb001d2bb8ed30a93607a634473479c043d3b11e862",
+    "meshes/left_rib_1.stl": "ab0ffb428e31e20ca32b1cb001d2bb8ed30a93607a634473479c043d3b11e862",
+    "meshes/left_rib_2.stl": "ab0ffb428e31e20ca32b1cb001d2bb8ed30a93607a634473479c043d3b11e862",
+    "meshes/left_chest_inlay.stl": "e927b1d3a0eab0b6c86f4040d7e58c7a17ed09f5183de634c8279d6d86463b8d",
+    "meshes/left_chest_inlay_centre.stl": "1979d36ac0ab5dee19b5e03ef38daf98ab0e9bc5eb94856ad6184b9efb98c10d",
+    "meshes/right_rib_0.stl": "ab0ffb428e31e20ca32b1cb001d2bb8ed30a93607a634473479c043d3b11e862",
+    "meshes/right_rib_1.stl": "ab0ffb428e31e20ca32b1cb001d2bb8ed30a93607a634473479c043d3b11e862",
+    "meshes/right_rib_2.stl": "ab0ffb428e31e20ca32b1cb001d2bb8ed30a93607a634473479c043d3b11e862",
+    "meshes/right_chest_inlay.stl": "e927b1d3a0eab0b6c86f4040d7e58c7a17ed09f5183de634c8279d6d86463b8d",
+    "meshes/right_chest_inlay_centre.stl": "1979d36ac0ab5dee19b5e03ef38daf98ab0e9bc5eb94856ad6184b9efb98c10d",
+    "meshes/left_pauldron.stl": "fb9711664ac94e08044c9a3a461099681ba013adfbc36ccb6a8940e14a865c7a",
+    "meshes/left_pauldron_edge.stl": "2a6c0d0d5c434d3e89a9348e6f84a2bf7da791a2fea5fd63f055e58c1291a966",
+    "meshes/left_bicep_sleeve.stl": "5190ce0265dd94b1bc37f198e495a2584da80b40ee24e4f18ef0aa72eddffde0",
+    "meshes/left_bicep_clamshell.stl": "f28e05a8a148a52d2cc100e3261c8be7dd9d233cfa32599800dc55c02190cc83",
+    "meshes/left_elbow_cap.stl": "48fec090a1c7e739815092e0d204b8e257c916766ed8e44b852e9f42e461965d",
+    "meshes/left_gauntlet_sleeve.stl": "eed7bd51637d5ca56c4a09a86d9e02b35571f2d6211b34001efb82d71d429e4b",
+    "meshes/left_gauntlet_clamshell.stl": "7c03f773b721845bee853c9a750f8bd876532d66ba0593150956919266dcb29b",
+    "meshes/left_gauntlet_stripe.stl": "af374cdeaf70eabe81e02c394a255c1e4407b95be3660054c0ec420837f80fb5",
+    "meshes/left_gauntlet_hatch.stl": "f6b3fdb172ba2066f2e84db752ebdd62b386e6a213244b14aee50031dd1918f8",
+    "meshes/left_hand_plate.stl": "6d88829832878186d387b6020428c0f0178abefdc1857518fc75f68517f70e2a",
+    "meshes/left_palm_repulsor.stl": "2f3e471036cc430ba837da1f34009ca56d834f3b8b9b35a2cbcb61db8b95a2c7",
+    "meshes/left_finger_1.stl": "b531421eab88d78cb8b8dda8d93afcede00e0e6e9a12b54f6d5d34dde665dee6",
+    "meshes/left_finger_1_knuckle.stl": "7c7883b20f1b46fc1a3e4921eb57ca40a6131bc8735d11de0cf230d51acd69e4",
+    "meshes/left_finger_1_middle.stl": "ec13d03c8f019da15ad2877c738e9b7d6fecb59fe580188aafae93a81328bd69",
+    "meshes/left_finger_1_middle_knuckle.stl": "7c7883b20f1b46fc1a3e4921eb57ca40a6131bc8735d11de0cf230d51acd69e4",
+    "meshes/left_finger_1_distal.stl": "9404a70608aba01b0f7ea163ce54f64412d33794221dd4395b246c72a9a917d9",
+    "meshes/left_finger_1_distal_knuckle.stl": "7c7883b20f1b46fc1a3e4921eb57ca40a6131bc8735d11de0cf230d51acd69e4",
+    "meshes/left_finger_2.stl": "8097cf7ad5b08efa480cb27898351b2f6d1edfd0679bbfb4270d7aba8b03d9a5",
+    "meshes/left_finger_2_knuckle.stl": "7c7883b20f1b46fc1a3e4921eb57ca40a6131bc8735d11de0cf230d51acd69e4",
+    "meshes/left_finger_2_middle.stl": "84f046fa39d031b0633ef39c3eaa76ead32f4349f92a70c2e9ebb3d5572f996d",
+    "meshes/left_finger_2_middle_knuckle.stl": "7c7883b20f1b46fc1a3e4921eb57ca40a6131bc8735d11de0cf230d51acd69e4",
+    "meshes/left_finger_2_distal.stl": "44d11c334a9214e8319aed7674100cff114a94355d19fa347c154b3efc5e549e",
+    "meshes/left_finger_2_distal_knuckle.stl": "7c7883b20f1b46fc1a3e4921eb57ca40a6131bc8735d11de0cf230d51acd69e4",
+    "meshes/left_finger_3.stl": "4fb472a662ca2431bcc7f1e205f41c41859a2eae6a0f5528ffbebe51fe01925c",
+    "meshes/left_finger_3_knuckle.stl": "7c7883b20f1b46fc1a3e4921eb57ca40a6131bc8735d11de0cf230d51acd69e4",
+    "meshes/left_finger_3_middle.stl": "ae9d648271abd0af207e8c68f4a80864364c6bc3820cdda74e20a52efb4c64ca",
+    "meshes/left_finger_3_middle_knuckle.stl": "7c7883b20f1b46fc1a3e4921eb57ca40a6131bc8735d11de0cf230d51acd69e4",
+    "meshes/left_finger_3_distal.stl": "9404a70608aba01b0f7ea163ce54f64412d33794221dd4395b246c72a9a917d9",
+    "meshes/left_finger_3_distal_knuckle.stl": "7c7883b20f1b46fc1a3e4921eb57ca40a6131bc8735d11de0cf230d51acd69e4",
+    "meshes/left_finger_4.stl": "d2db75c50a54037f7065e0b021fb159410c6e84e9f20c79033de07d2b6022efa",
+    "meshes/left_finger_4_knuckle.stl": "7c7883b20f1b46fc1a3e4921eb57ca40a6131bc8735d11de0cf230d51acd69e4",
+    "meshes/left_finger_4_middle.stl": "676747cec789b39465368a870a8d6ae0aa9c8c2b7176f822551d4f4d05bdac74",
+    "meshes/left_finger_4_middle_knuckle.stl": "7c7883b20f1b46fc1a3e4921eb57ca40a6131bc8735d11de0cf230d51acd69e4",
+    "meshes/left_finger_4_distal.stl": "971d7d5fba8662bc8663fd51164b29dfc232b92dd3eccf44763f02d69a2e4006",
+    "meshes/left_finger_4_distal_knuckle.stl": "7c7883b20f1b46fc1a3e4921eb57ca40a6131bc8735d11de0cf230d51acd69e4",
+    "meshes/left_thumb.stl": "c154d3022d2a8e2494becc1926e6b76c15668217f025bf3093cfb25019853e0b",
+    "meshes/left_thumb_distal.stl": "30ee839e87345c1a4e583d061df991a9d34cc4c008517afb0a257708d2b16a30",
+    "meshes/right_pauldron.stl": "833aa48a7e72c9bda079111e16936e49d8667177f600d38c563e2426511dc002",
+    "meshes/right_pauldron_edge.stl": "2a6c0d0d5c434d3e89a9348e6f84a2bf7da791a2fea5fd63f055e58c1291a966",
+    "meshes/right_bicep_sleeve.stl": "fb7256f18f31745d304718f23f74ec063c7900d9b7a5be303032177d52d2d31c",
+    "meshes/right_bicep_clamshell.stl": "755e9cecc7a8f07f36e1ee8dfdaf11c85eab97aaf7737a8430c927680afdc2e9",
+    "meshes/right_elbow_cap.stl": "48fec090a1c7e739815092e0d204b8e257c916766ed8e44b852e9f42e461965d",
+    "meshes/right_gauntlet_sleeve.stl": "af2e6e7b93f4afa49082f58ca2070f3fb15d751fdf55241a63e12e44a4497c6c",
+    "meshes/right_gauntlet_clamshell.stl": "c1e49ddce04c79bd0dd4d6824db23bcd9a340ae8819e7c3993c5a911c7d737ec",
+    "meshes/right_gauntlet_stripe.stl": "af374cdeaf70eabe81e02c394a255c1e4407b95be3660054c0ec420837f80fb5",
+    "meshes/right_gauntlet_hatch.stl": "f6b3fdb172ba2066f2e84db752ebdd62b386e6a213244b14aee50031dd1918f8",
+    "meshes/right_hand_plate.stl": "6d88829832878186d387b6020428c0f0178abefdc1857518fc75f68517f70e2a",
+    "meshes/right_palm_repulsor.stl": "2f3e471036cc430ba837da1f34009ca56d834f3b8b9b35a2cbcb61db8b95a2c7",
+    "meshes/right_finger_1.stl": "b531421eab88d78cb8b8dda8d93afcede00e0e6e9a12b54f6d5d34dde665dee6",
+    "meshes/right_finger_1_knuckle.stl": "7c7883b20f1b46fc1a3e4921eb57ca40a6131bc8735d11de0cf230d51acd69e4",
+    "meshes/right_finger_1_middle.stl": "ec13d03c8f019da15ad2877c738e9b7d6fecb59fe580188aafae93a81328bd69",
+    "meshes/right_finger_1_middle_knuckle.stl": "7c7883b20f1b46fc1a3e4921eb57ca40a6131bc8735d11de0cf230d51acd69e4",
+    "meshes/right_finger_1_distal.stl": "9404a70608aba01b0f7ea163ce54f64412d33794221dd4395b246c72a9a917d9",
+    "meshes/right_finger_1_distal_knuckle.stl": "7c7883b20f1b46fc1a3e4921eb57ca40a6131bc8735d11de0cf230d51acd69e4",
+    "meshes/right_finger_2.stl": "8097cf7ad5b08efa480cb27898351b2f6d1edfd0679bbfb4270d7aba8b03d9a5",
+    "meshes/right_finger_2_knuckle.stl": "7c7883b20f1b46fc1a3e4921eb57ca40a6131bc8735d11de0cf230d51acd69e4",
+    "meshes/right_finger_2_middle.stl": "84f046fa39d031b0633ef39c3eaa76ead32f4349f92a70c2e9ebb3d5572f996d",
+    "meshes/right_finger_2_middle_knuckle.stl": "7c7883b20f1b46fc1a3e4921eb57ca40a6131bc8735d11de0cf230d51acd69e4",
+    "meshes/right_finger_2_distal.stl": "44d11c334a9214e8319aed7674100cff114a94355d19fa347c154b3efc5e549e",
+    "meshes/right_finger_2_distal_knuckle.stl": "7c7883b20f1b46fc1a3e4921eb57ca40a6131bc8735d11de0cf230d51acd69e4",
+    "meshes/right_finger_3.stl": "4fb472a662ca2431bcc7f1e205f41c41859a2eae6a0f5528ffbebe51fe01925c",
+    "meshes/right_finger_3_knuckle.stl": "7c7883b20f1b46fc1a3e4921eb57ca40a6131bc8735d11de0cf230d51acd69e4",
+    "meshes/right_finger_3_middle.stl": "ae9d648271abd0af207e8c68f4a80864364c6bc3820cdda74e20a52efb4c64ca",
+    "meshes/right_finger_3_middle_knuckle.stl": "7c7883b20f1b46fc1a3e4921eb57ca40a6131bc8735d11de0cf230d51acd69e4",
+    "meshes/right_finger_3_distal.stl": "9404a70608aba01b0f7ea163ce54f64412d33794221dd4395b246c72a9a917d9",
+    "meshes/right_finger_3_distal_knuckle.stl": "7c7883b20f1b46fc1a3e4921eb57ca40a6131bc8735d11de0cf230d51acd69e4",
+    "meshes/right_finger_4.stl": "d2db75c50a54037f7065e0b021fb159410c6e84e9f20c79033de07d2b6022efa",
+    "meshes/right_finger_4_knuckle.stl": "7c7883b20f1b46fc1a3e4921eb57ca40a6131bc8735d11de0cf230d51acd69e4",
+    "meshes/right_finger_4_middle.stl": "676747cec789b39465368a870a8d6ae0aa9c8c2b7176f822551d4f4d05bdac74",
+    "meshes/right_finger_4_middle_knuckle.stl": "7c7883b20f1b46fc1a3e4921eb57ca40a6131bc8735d11de0cf230d51acd69e4",
+    "meshes/right_finger_4_distal.stl": "971d7d5fba8662bc8663fd51164b29dfc232b92dd3eccf44763f02d69a2e4006",
+    "meshes/right_finger_4_distal_knuckle.stl": "7c7883b20f1b46fc1a3e4921eb57ca40a6131bc8735d11de0cf230d51acd69e4",
+    "meshes/right_thumb.stl": "c154d3022d2a8e2494becc1926e6b76c15668217f025bf3093cfb25019853e0b",
+    "meshes/right_thumb_distal.stl": "30ee839e87345c1a4e583d061df991a9d34cc4c008517afb0a257708d2b16a30",
+    "meshes/left_hip_flap.stl": "f1fd12ded986ab05c6655977799e89da04887a5b060e6cb022b6065481f6164e",
+    "meshes/left_thigh_shell.stl": "f715c2a4c357a84a43107b5db8487394a295be5a56f8a9444b8cab17d0b5319c",
+    "meshes/left_thigh_clamshell.stl": "613d405596f55db88efc3c0fad1f95b07faa509602de82123e0669d1a07abf8d",
+    "meshes/left_knee_cap.stl": "2f499c8ccfbd17b589d3e2447a51e166f0e5d721651f93cf5fa74a934b69e993",
+    "meshes/left_shin_shell.stl": "c85f21c2cfef284a68e76ac2e9506113b60fcd68ac91ab70c30dfbbebe4ddea6",
+    "meshes/left_calf_clamshell.stl": "074d7fcb69bbc80570e65b8a4c308f791e52c74e016582795543022ae0867f62",
+    "meshes/left_shin_stripe.stl": "9343f2d187e516b3efa2578fe645b8f8771f0c2cef64c82f052f1576a1703370",
+    "meshes/left_thigh_stripe.stl": "ed2fda292fcc62937817d0b24f0f0fa4964e80bcc292eb0131122d399fdee2ab",
+    "meshes/left_shin_guard.stl": "8161f0114186589388e20e7027fd4c3736b63ad79a1ef7609ff03c165f2b3d07",
+    "meshes/left_boot_toe.stl": "66d24c0212ab065f50034ef55e8d639b2cb84e02e3ec21ab2a24ed7938ca7612",
+    "meshes/left_boot_trim.stl": "59a2a9e726ddf8719c022d9ba62ee1920172c7eb03694a2821e178a026f01710",
+    "meshes/left_heel_thruster.stl": "87e1699a7f29e2fd3386403a7f8f9df2704a4c465bf7230683be31f0ea9a7acf",
+    "meshes/left_thruster_cover.stl": "5b749a44b83b4c0593d191333904e8d1f4c6e49f262b9fcfd128c79d45b512fc",
+    "meshes/left_ankle_flap.stl": "511f77eb39c7e092f53e6e9ed9e25f70555cb9b804ea9bb7383490d2635033cd",
+    "meshes/right_hip_flap.stl": "f1fd12ded986ab05c6655977799e89da04887a5b060e6cb022b6065481f6164e",
+    "meshes/right_thigh_shell.stl": "4cbf05a766ef65c44668a0f0ed2b2c3ee8e42882d8b9919098bc83d8a8f031e6",
+    "meshes/right_thigh_clamshell.stl": "48aa04b1dcb52fc03a0a7003c5134b55f915b1988502155a87b3de24641c24cf",
+    "meshes/right_knee_cap.stl": "2f499c8ccfbd17b589d3e2447a51e166f0e5d721651f93cf5fa74a934b69e993",
+    "meshes/right_shin_shell.stl": "d5449fbf6579ee71deff239e9d80d9ede0c40abd39bf8fb1754f369cacab82f6",
+    "meshes/right_calf_clamshell.stl": "d9f26afe9f5747207ea7d87974dc0a2cf78b39df5b4f94a6ee33a12742adce67",
+    "meshes/right_shin_stripe.stl": "9343f2d187e516b3efa2578fe645b8f8771f0c2cef64c82f052f1576a1703370",
+    "meshes/right_thigh_stripe.stl": "ed2fda292fcc62937817d0b24f0f0fa4964e80bcc292eb0131122d399fdee2ab",
+    "meshes/right_shin_guard.stl": "8161f0114186589388e20e7027fd4c3736b63ad79a1ef7609ff03c165f2b3d07",
+    "meshes/right_boot_toe.stl": "66d24c0212ab065f50034ef55e8d639b2cb84e02e3ec21ab2a24ed7938ca7612",
+    "meshes/right_boot_trim.stl": "59a2a9e726ddf8719c022d9ba62ee1920172c7eb03694a2821e178a026f01710",
+    "meshes/right_heel_thruster.stl": "87e1699a7f29e2fd3386403a7f8f9df2704a4c465bf7230683be31f0ea9a7acf",
+    "meshes/right_thruster_cover.stl": "5b749a44b83b4c0593d191333904e8d1f4c6e49f262b9fcfd128c79d45b512fc",
+    "meshes/right_ankle_flap.stl": "511f77eb39c7e092f53e6e9ed9e25f70555cb9b804ea9bb7383490d2635033cd",
+    "meshes/left_clavicle_cover.stl": "b1f43ad8f9cdcb47cfccfdc8f564050b38137ad8cb9f5a0a9280b2e4d176db15",
+    "meshes/left_back_scapula.stl": "b87a12a5ccae407ad1934a065874ce9daf70130abfc4351e2f6d88f39c2a5d4d",
+    "meshes/left_back_grille_0.stl": "9d3e70df96a17668ab51980ec977acce0638256862057dd91bdbefc6deb83ee2",
+    "meshes/left_back_grille_1.stl": "9d3e70df96a17668ab51980ec977acce0638256862057dd91bdbefc6deb83ee2",
+    "meshes/left_back_grille_2.stl": "9d3e70df96a17668ab51980ec977acce0638256862057dd91bdbefc6deb83ee2",
+    "meshes/left_hip_cowl.stl": "f6adcf9585c2b9d58d133abe91bc6a08904478a42614b3b17bb051a8f77cfa15",
+    "meshes/left_hip_outer_plate.stl": "b2f9dcf7517663ad6007726af30e3fb5933b5f6c8a2747742020f996b436e8e3",
+    "meshes/left_thigh_ridge.stl": "4dc78383787b4ec73e3d02638241e61cc8ab3828a11ce1d975384f34cfb986b8",
+    "meshes/left_thigh_edge.stl": "513fb7ddda4ce7c48d16dcf771084addd5919aa68d2de5460bfbc153742be6b7",
+    "meshes/left_shin_ridge.stl": "3cbacab2234525998d64c6a4e14fdc47d374c5ad9e797facb4b31741a89de0c8",
+    "meshes/left_shin_edge.stl": "66d3ca89524003bea7b038975a49926721e70fd02d6df166e472ee19414e05d1",
+    "meshes/left_knee_bezel.stl": "98ab2a6ea1ea00b820ed4c3de17aad5646699e5391582d0abb56906d7eca8df8",
+    "meshes/left_knee_face.stl": "498a52a3ebab766d2e4c5b3581e65b832f10ee0efcfac704216f1501fd0e8d94",
+    "meshes/left_knee_motor_cover.stl": "e81880a479090e960d96e2dd743a529f57a56bf1368dd5e5891ba01fec1b1f34",
+    "meshes/left_ankle_motor_cover.stl": "8ef48247f67bb16c08e86aab2f86a84e65c4e72692e1bc10785b8fe7274fcc7e",
+    "meshes/left_elbow_motor_cover.stl": "cdec3a97b8e406d4e53acb0fa0d1a6d60dae71f2116767ef6521f76501bbc774",
+    "meshes/left_bicep_front.stl": "f273c0ad0dbe8ac0ed61a12ff132b2e3a92f2ea1416f71b4a72e93014721fad0",
+    "meshes/left_forearm_crest.stl": "9efab8774a00296b6687c262e72ee4b3b1a50ccd9a1fbd89421dee45ce0926a4",
+    "meshes/right_clavicle_cover.stl": "b1f43ad8f9cdcb47cfccfdc8f564050b38137ad8cb9f5a0a9280b2e4d176db15",
+    "meshes/right_back_scapula.stl": "b87a12a5ccae407ad1934a065874ce9daf70130abfc4351e2f6d88f39c2a5d4d",
+    "meshes/right_back_grille_0.stl": "9d3e70df96a17668ab51980ec977acce0638256862057dd91bdbefc6deb83ee2",
+    "meshes/right_back_grille_1.stl": "9d3e70df96a17668ab51980ec977acce0638256862057dd91bdbefc6deb83ee2",
+    "meshes/right_back_grille_2.stl": "9d3e70df96a17668ab51980ec977acce0638256862057dd91bdbefc6deb83ee2",
+    "meshes/right_hip_cowl.stl": "f6adcf9585c2b9d58d133abe91bc6a08904478a42614b3b17bb051a8f77cfa15",
+    "meshes/right_hip_outer_plate.stl": "b2f9dcf7517663ad6007726af30e3fb5933b5f6c8a2747742020f996b436e8e3",
+    "meshes/right_thigh_ridge.stl": "4dc78383787b4ec73e3d02638241e61cc8ab3828a11ce1d975384f34cfb986b8",
+    "meshes/right_thigh_edge.stl": "7d3f6771d350bad29ef63ba7ab3edc1f60fd4f04ea2af2e6145e34469c874d8a",
+    "meshes/right_shin_ridge.stl": "3cbacab2234525998d64c6a4e14fdc47d374c5ad9e797facb4b31741a89de0c8",
+    "meshes/right_shin_edge.stl": "17c9648e0561a01a893846a9026ae6bfa9770d7ac4c5c39a5714dc949fe99abb",
+    "meshes/right_knee_bezel.stl": "98ab2a6ea1ea00b820ed4c3de17aad5646699e5391582d0abb56906d7eca8df8",
+    "meshes/right_knee_face.stl": "498a52a3ebab766d2e4c5b3581e65b832f10ee0efcfac704216f1501fd0e8d94",
+    "meshes/right_knee_motor_cover.stl": "e81880a479090e960d96e2dd743a529f57a56bf1368dd5e5891ba01fec1b1f34",
+    "meshes/right_ankle_motor_cover.stl": "8ef48247f67bb16c08e86aab2f86a84e65c4e72692e1bc10785b8fe7274fcc7e",
+    "meshes/right_elbow_motor_cover.stl": "cdec3a97b8e406d4e53acb0fa0d1a6d60dae71f2116767ef6521f76501bbc774",
+    "meshes/right_bicep_front.stl": "f273c0ad0dbe8ac0ed61a12ff132b2e3a92f2ea1416f71b4a72e93014721fad0",
+    "meshes/right_forearm_crest.stl": "9efab8774a00296b6687c262e72ee4b3b1a50ccd9a1fbd89421dee45ce0926a4",
+    "meshes/left_rib_edge_0.stl": "993a3db977de299e8ac74a636797591db62c453eb35482ad60469c11014a6872",
+    "meshes/left_rib_insert_0.stl": "aead1dd1051db24d0608f69fc56c73455e88bf4da44467987511f7754d87a8bd",
+    "meshes/left_rib_edge_1.stl": "993a3db977de299e8ac74a636797591db62c453eb35482ad60469c11014a6872",
+    "meshes/left_rib_insert_1.stl": "aead1dd1051db24d0608f69fc56c73455e88bf4da44467987511f7754d87a8bd",
+    "meshes/left_rib_edge_2.stl": "993a3db977de299e8ac74a636797591db62c453eb35482ad60469c11014a6872",
+    "meshes/left_rib_insert_2.stl": "aead1dd1051db24d0608f69fc56c73455e88bf4da44467987511f7754d87a8bd",
+    "meshes/left_collar_inlay.stl": "e1a4b15cc1f63b0a1d11124118ad37183a7bf0965fd0a2f12447ed4d53fbb2be",
+    "meshes/right_rib_edge_0.stl": "993a3db977de299e8ac74a636797591db62c453eb35482ad60469c11014a6872",
+    "meshes/right_rib_insert_0.stl": "aead1dd1051db24d0608f69fc56c73455e88bf4da44467987511f7754d87a8bd",
+    "meshes/right_rib_edge_1.stl": "993a3db977de299e8ac74a636797591db62c453eb35482ad60469c11014a6872",
+    "meshes/right_rib_insert_1.stl": "aead1dd1051db24d0608f69fc56c73455e88bf4da44467987511f7754d87a8bd",
+    "meshes/right_rib_edge_2.stl": "993a3db977de299e8ac74a636797591db62c453eb35482ad60469c11014a6872",
+    "meshes/right_rib_insert_2.stl": "aead1dd1051db24d0608f69fc56c73455e88bf4da44467987511f7754d87a8bd",
+    "meshes/right_collar_inlay.stl": "e1a4b15cc1f63b0a1d11124118ad37183a7bf0965fd0a2f12447ed4d53fbb2be",
+    "meshes/left_chest_door_hinge_knuckle.stl": "7a727e17085d00d0411e04a3fcba26a6ef9c099b82da6fe46be0f514911c7948",
+    "meshes/right_chest_door_hinge_knuckle.stl": "7a727e17085d00d0411e04a3fcba26a6ef9c099b82da6fe46be0f514911c7948",
+    "meshes/left_lat_plate_hinge_knuckle.stl": "7a727e17085d00d0411e04a3fcba26a6ef9c099b82da6fe46be0f514911c7948",
+    "meshes/right_lat_plate_hinge_knuckle.stl": "7a727e17085d00d0411e04a3fcba26a6ef9c099b82da6fe46be0f514911c7948",
+    "meshes/left_gauntlet_clamshell_hinge_knuckle.stl": "7a727e17085d00d0411e04a3fcba26a6ef9c099b82da6fe46be0f514911c7948",
+    "meshes/right_gauntlet_clamshell_hinge_knuckle.stl": "7a727e17085d00d0411e04a3fcba26a6ef9c099b82da6fe46be0f514911c7948",
+    "meshes/left_thigh_clamshell_hinge_knuckle.stl": "7a727e17085d00d0411e04a3fcba26a6ef9c099b82da6fe46be0f514911c7948",
+    "meshes/right_thigh_clamshell_hinge_knuckle.stl": "7a727e17085d00d0411e04a3fcba26a6ef9c099b82da6fe46be0f514911c7948"
+  },
+  "neutral_pair_count": 81,
+  "pairs": [
+    [
+      "chin_guard",
+      "faceplate"
+    ],
+    [
+      "chin_guard",
+      "helmet_neck_collar"
+    ],
+    [
+      "chin_guard",
+      "left_cheek_panel"
+    ],
+    [
+      "chin_guard",
+      "right_cheek_panel"
+    ],
+    [
+      "collar_plate",
+      "left_pauldron"
+    ],
+    [
+      "collar_plate",
+      "neck_ring"
+    ],
+    [
+      "collar_plate",
+      "right_pauldron"
+    ],
+    [
+      "faceplate",
+      "helmet_crown_panel"
+    ],
+    [
+      "faceplate",
+      "left_cheek_panel"
+    ],
+    [
+      "faceplate",
+      "right_cheek_panel"
+    ],
+    [
+      "helmet",
+      "helmet_crown_panel"
+    ],
+    [
+      "helmet",
+      "helmet_left_ear_pod"
+    ],
+    [
+      "helmet",
+      "helmet_right_ear_pod"
+    ],
+    [
+      "helmet",
+      "left_cheek_panel"
+    ],
+    [
+      "helmet",
+      "right_cheek_panel"
+    ],
+    [
+      "helmet_crown_panel",
+      "left_cheek_panel"
+    ],
+    [
+      "helmet_crown_panel",
+      "right_cheek_panel"
+    ],
+    [
+      "helmet_left_ear_pod",
+      "left_cheek_panel"
+    ],
+    [
+      "helmet_neck_collar",
+      "left_cheek_panel"
+    ],
+    [
+      "helmet_neck_collar",
+      "right_cheek_panel"
+    ],
+    [
+      "helmet_right_ear_pod",
+      "right_cheek_panel"
+    ],
+    [
+      "left_ankle_module",
+      "left_boot_toe"
+    ],
+    [
+      "left_ankle_module",
+      "left_shin_shell"
+    ],
+    [
+      "left_back_scapula",
+      "right_flight_flap"
+    ],
+    [
+      "left_bicep_sleeve",
+      "left_elbow_module"
+    ],
+    [
+      "left_bicep_sleeve",
+      "left_shoulder_module"
+    ],
+    [
+      "left_bicep_sleeve",
+      "shoulder_yoke"
+    ],
+    [
+      "left_boot_toe",
+      "left_calf_clamshell"
+    ],
+    [
+      "left_boot_toe",
+      "left_shank_strut"
+    ],
+    [
+      "left_boot_toe",
+      "left_shin_guard"
+    ],
+    [
+      "left_boot_toe",
+      "left_shin_shell"
+    ],
+    [
+      "left_boot_trim",
+      "left_shin_guard"
+    ],
+    [
+      "left_clavicle_cover",
+      "left_pectoral_trim"
+    ],
+    [
+      "left_collar_inlay",
+      "left_pectoral_trim"
+    ],
+    [
+      "left_elbow_module",
+      "left_gauntlet_sleeve"
+    ],
+    [
+      "left_eye_lens",
+      "left_eye_socket"
+    ],
+    [
+      "left_flight_flap",
+      "right_back_scapula"
+    ],
+    [
+      "left_forearm_crest",
+      "left_gauntlet_stripe"
+    ],
+    [
+      "left_gauntlet_clamshell",
+      "left_gauntlet_clamshell_fixed_knuckle_lower"
+    ],
+    [
+      "left_gauntlet_clamshell_fixed_knuckle_lower",
+      "left_gauntlet_sleeve"
+    ],
+    [
+      "left_gauntlet_clamshell_moving_knuckle",
+      "left_gauntlet_sleeve"
+    ],
+    [
+      "left_hip_cowl",
+      "left_hip_flap"
+    ],
+    [
+      "left_hip_cowl",
+      "left_hip_outer_plate"
+    ],
+    [
+      "left_hip_cowl",
+      "left_thigh_shell"
+    ],
+    [
+      "left_hip_cowl",
+      "left_thigh_strut"
+    ],
+    [
+      "left_hip_flap",
+      "left_hip_module"
+    ],
+    [
+      "left_hip_flap",
+      "left_hip_outer_plate"
+    ],
+    [
+      "left_hip_module",
+      "left_thigh_shell"
+    ],
+    [
+      "left_knee_module",
+      "left_shin_shell"
+    ],
+    [
+      "left_knee_module",
+      "left_thigh_shell"
+    ],
+    [
+      "left_thigh_clamshell",
+      "left_thigh_clamshell_fixed_knuckle_lower"
+    ],
+    [
+      "neck_ring",
+      "shoulder_yoke"
+    ],
+    [
+      "rear_belt_plate",
+      "spine_frame"
+    ],
+    [
+      "right_ankle_module",
+      "right_boot_toe"
+    ],
+    [
+      "right_ankle_module",
+      "right_shin_shell"
+    ],
+    [
+      "right_bicep_sleeve",
+      "right_elbow_module"
+    ],
+    [
+      "right_bicep_sleeve",
+      "right_shoulder_module"
+    ],
+    [
+      "right_bicep_sleeve",
+      "shoulder_yoke"
+    ],
+    [
+      "right_boot_toe",
+      "right_calf_clamshell"
+    ],
+    [
+      "right_boot_toe",
+      "right_shank_strut"
+    ],
+    [
+      "right_boot_toe",
+      "right_shin_guard"
+    ],
+    [
+      "right_boot_toe",
+      "right_shin_shell"
+    ],
+    [
+      "right_boot_trim",
+      "right_shin_guard"
+    ],
+    [
+      "right_clavicle_cover",
+      "right_pectoral_trim"
+    ],
+    [
+      "right_collar_inlay",
+      "right_pectoral_trim"
+    ],
+    [
+      "right_elbow_module",
+      "right_gauntlet_sleeve"
+    ],
+    [
+      "right_eye_lens",
+      "right_eye_socket"
+    ],
+    [
+      "right_forearm_crest",
+      "right_gauntlet_stripe"
+    ],
+    [
+      "right_gauntlet_clamshell",
+      "right_gauntlet_clamshell_fixed_knuckle_lower"
+    ],
+    [
+      "right_gauntlet_clamshell_fixed_knuckle_lower",
+      "right_gauntlet_sleeve"
+    ],
+    [
+      "right_gauntlet_clamshell_moving_knuckle",
+      "right_gauntlet_sleeve"
+    ],
+    [
+      "right_hip_cowl",
+      "right_hip_flap"
+    ],
+    [
+      "right_hip_cowl",
+      "right_hip_outer_plate"
+    ],
+    [
+      "right_hip_cowl",
+      "right_thigh_shell"
+    ],
+    [
+      "right_hip_cowl",
+      "right_thigh_strut"
+    ],
+    [
+      "right_hip_flap",
+      "right_hip_module"
+    ],
+    [
+      "right_hip_flap",
+      "right_hip_outer_plate"
+    ],
+    [
+      "right_hip_module",
+      "right_thigh_shell"
+    ],
+    [
+      "right_knee_module",
+      "right_shin_shell"
+    ],
+    [
+      "right_knee_module",
+      "right_thigh_shell"
+    ],
+    [
+      "right_thigh_clamshell",
+      "right_thigh_clamshell_fixed_knuckle_lower"
+    ]
+  ],
+  "samples_per_joint": 5,
+  "poses_checked": 41,
+  "motion": [
+    {
+      "joint": "left_shoulder_abduction",
+      "position": -0.75,
+      "pair_count": 108,
+      "new_pairs": [
+        [
+          "left_bicep_clamshell",
+          "left_lat_plate"
+        ],
+        [
+          "left_bicep_clamshell",
+          "shoulder_yoke"
+        ],
+        [
+          "left_bicep_front",
+          "left_chest_door"
+        ],
+        [
+          "left_bicep_sleeve",
+          "left_chest_door"
+        ],
+        [
+          "left_bicep_sleeve",
+          "left_lat_plate"
+        ],
+        [
+          "left_elbow_cap",
+          "left_lat_plate"
+        ],
+        [
+          "left_elbow_module",
+          "left_lat_plate"
+        ],
+        [
+          "left_elbow_module",
+          "left_rib_1"
+        ],
+        [
+          "left_finger_2",
+          "right_thigh_clamshell"
+        ],
+        [
+          "left_finger_2_distal",
+          "right_thigh_cuff"
+        ],
+        [
+          "left_finger_2_distal_knuckle",
+          "right_thigh_clamshell"
+        ],
+        [
+          "left_finger_2_knuckle",
+          "right_thigh_clamshell"
+        ],
+        [
+          "left_finger_2_middle",
+          "right_thigh_clamshell"
+        ],
+        [
+          "left_finger_2_middle_knuckle",
+          "right_thigh_clamshell"
+        ],
+        [
+          "left_finger_3_distal",
+          "right_thigh_clamshell"
+        ],
+        [
+          "left_finger_3_distal_knuckle",
+          "right_thigh_clamshell"
+        ],
+        [
+          "left_finger_3_middle",
+          "right_thigh_clamshell"
+        ],
+        [
+          "left_finger_4",
+          "left_thigh_clamshell"
+        ],
+        [
+          "left_finger_4_knuckle",
+          "left_thigh_clamshell"
+        ],
+        [
+          "left_forearm_strut",
+          "left_lat_plate"
+        ],
+        [
+          "left_gauntlet_sleeve",
+          "left_lat_plate"
+        ],
+        [
+          "left_hand",
+          "left_thigh_clamshell"
+        ],
+        [
+          "left_hand",
+          "right_thigh_clamshell"
+        ],
+        [
+          "left_hand_plate",
+          "left_thigh_clamshell"
+        ],
+        [
+          "left_hand_plate",
+          "right_thigh_clamshell"
+        ],
+        [
+          "left_lat_plate",
+          "left_upper_arm_cuff"
+        ],
+        [
+          "left_lat_plate",
+          "left_upper_arm_strut"
+        ],
+        [
+          "left_palm_repulsor",
+          "left_thigh_clamshell"
+        ]
+      ]
+    },
+    {
+      "joint": "left_shoulder_abduction",
+      "position": -0.025000000000000022,
+      "pair_count": 81,
+      "new_pairs": []
+    },
+    {
+      "joint": "left_shoulder_abduction",
+      "position": 0.7,
+      "pair_count": 84,
+      "new_pairs": [
+        [
+          "left_chest_door",
+          "left_clavicle_cover"
+        ],
+        [
+          "left_pauldron",
+          "left_pectoral_trim"
+        ],
+        [
+          "left_pauldron",
+          "shoulder_yoke"
+        ]
+      ]
+    },
+    {
+      "joint": "left_shoulder_abduction",
+      "position": 1.4249999999999998,
+      "pair_count": 84,
+      "new_pairs": [
+        [
+          "left_chest_door",
+          "left_clavicle_cover"
+        ],
+        [
+          "left_pauldron",
+          "left_pectoral_trim"
+        ],
+        [
+          "left_pauldron",
+          "shoulder_yoke"
+        ],
+        [
+          "left_pauldron_edge",
+          "left_pectoral_trim"
+        ]
+      ]
+    },
+    {
+      "joint": "left_shoulder_abduction",
+      "position": 2.15,
+      "pair_count": 87,
+      "new_pairs": [
+        [
+          "left_chest_door",
+          "left_clavicle_cover"
+        ],
+        [
+          "left_chest_door",
+          "left_pauldron"
+        ],
+        [
+          "left_chest_door",
+          "left_pauldron_edge"
+        ],
+        [
+          "left_pauldron",
+          "left_pectoral_trim"
+        ],
+        [
+          "left_pauldron",
+          "shoulder_yoke"
+        ],
+        [
+          "left_pauldron_edge",
+          "left_pectoral_trim"
+        ]
+      ]
+    },
+    {
+      "joint": "right_shoulder_abduction",
+      "position": -0.75,
+      "pair_count": 107,
+      "new_pairs": [
+        [
+          "left_thigh_clamshell",
+          "right_finger_2_distal"
+        ],
+        [
+          "left_thigh_clamshell",
+          "right_finger_2_distal_knuckle"
+        ],
+        [
+          "left_thigh_clamshell",
+          "right_finger_2_middle"
+        ],
+        [
+          "left_thigh_clamshell",
+          "right_finger_3"
+        ],
+        [
+          "left_thigh_clamshell",
+          "right_finger_3_distal_knuckle"
+        ],
+        [
+          "left_thigh_clamshell",
+          "right_finger_3_knuckle"
+        ],
+        [
+          "left_thigh_clamshell",
+          "right_finger_3_middle"
+        ],
+        [
+          "left_thigh_clamshell",
+          "right_finger_3_middle_knuckle"
+        ],
+        [
+          "left_thigh_clamshell",
+          "right_hand"
+        ],
+        [
+          "left_thigh_clamshell",
+          "right_hand_plate"
+        ],
+        [
+          "right_bicep_clamshell",
+          "right_lat_plate"
+        ],
+        [
+          "right_bicep_clamshell",
+          "shoulder_yoke"
+        ],
+        [
+          "right_bicep_front",
+          "right_chest_door"
+        ],
+        [
+          "right_bicep_sleeve",
+          "right_chest_door"
+        ],
+        [
+          "right_bicep_sleeve",
+          "right_lat_plate"
+        ],
+        [
+          "right_elbow_cap",
+          "right_lat_plate"
+        ],
+        [
+          "right_elbow_module",
+          "right_lat_plate"
+        ],
+        [
+          "right_elbow_module",
+          "right_rib_1"
+        ],
+        [
+          "right_finger_1",
+          "right_thigh_clamshell"
+        ],
+        [
+          "right_finger_1_knuckle",
+          "right_thigh_clamshell"
+        ],
+        [
+          "right_forearm_strut",
+          "right_lat_plate"
+        ],
+        [
+          "right_gauntlet_sleeve",
+          "right_lat_plate"
+        ],
+        [
+          "right_hand",
+          "right_thigh_clamshell"
+        ],
+        [
+          "right_hand_plate",
+          "right_thigh_clamshell"
+        ],
+        [
+          "right_lat_plate",
+          "right_upper_arm_cuff"
+        ],
+        [
+          "right_lat_plate",
+          "right_upper_arm_strut"
+        ],
+        [
+          "right_palm_repulsor",
+          "right_thigh_clamshell"
+        ]
+      ]
+    },
+    {
+      "joint": "right_shoulder_abduction",
+      "position": -0.025000000000000022,
+      "pair_count": 81,
+      "new_pairs": []
+    },
+    {
+      "joint": "right_shoulder_abduction",
+      "position": 0.7,
+      "pair_count": 84,
+      "new_pairs": [
+        [
+          "right_chest_door",
+          "right_clavicle_cover"
+        ],
+        [
+          "right_pauldron",
+          "right_pectoral_trim"
+        ],
+        [
+          "right_pauldron",
+          "shoulder_yoke"
+        ]
+      ]
+    },
+    {
+      "joint": "right_shoulder_abduction",
+      "position": 1.4249999999999998,
+      "pair_count": 84,
+      "new_pairs": [
+        [
+          "right_chest_door",
+          "right_clavicle_cover"
+        ],
+        [
+          "right_pauldron",
+          "right_pectoral_trim"
+        ],
+        [
+          "right_pauldron",
+          "shoulder_yoke"
+        ],
+        [
+          "right_pauldron_edge",
+          "right_pectoral_trim"
+        ]
+      ]
+    },
+    {
+      "joint": "right_shoulder_abduction",
+      "position": 2.15,
+      "pair_count": 87,
+      "new_pairs": [
+        [
+          "right_chest_door",
+          "right_clavicle_cover"
+        ],
+        [
+          "right_chest_door",
+          "right_pauldron"
+        ],
+        [
+          "right_chest_door",
+          "right_pauldron_edge"
+        ],
+        [
+          "right_pauldron",
+          "right_pectoral_trim"
+        ],
+        [
+          "right_pauldron",
+          "shoulder_yoke"
+        ],
+        [
+          "right_pauldron_edge",
+          "right_pectoral_trim"
+        ]
+      ]
+    },
+    {
+      "joint": "left_wrist_flexion",
+      "position": -0.8,
+      "pair_count": 81,
+      "new_pairs": []
+    },
+    {
+      "joint": "left_wrist_flexion",
+      "position": -0.4,
+      "pair_count": 81,
+      "new_pairs": []
+    },
+    {
+      "joint": "left_wrist_flexion",
+      "position": 0.0,
+      "pair_count": 81,
+      "new_pairs": []
+    },
+    {
+      "joint": "left_wrist_flexion",
+      "position": 0.40000000000000013,
+      "pair_count": 81,
+      "new_pairs": []
+    },
+    {
+      "joint": "left_wrist_flexion",
+      "position": 0.8,
+      "pair_count": 81,
+      "new_pairs": []
+    },
+    {
+      "joint": "right_wrist_flexion",
+      "position": -0.8,
+      "pair_count": 81,
+      "new_pairs": []
+    },
+    {
+      "joint": "right_wrist_flexion",
+      "position": -0.4,
+      "pair_count": 81,
+      "new_pairs": []
+    },
+    {
+      "joint": "right_wrist_flexion",
+      "position": 0.0,
+      "pair_count": 81,
+      "new_pairs": []
+    },
+    {
+      "joint": "right_wrist_flexion",
+      "position": 0.40000000000000013,
+      "pair_count": 81,
+      "new_pairs": []
+    },
+    {
+      "joint": "right_wrist_flexion",
+      "position": 0.8,
+      "pair_count": 81,
+      "new_pairs": []
+    },
+    {
+      "joint": "left_chest_door_hinge",
+      "position": 0.0,
+      "pair_count": 81,
+      "new_pairs": []
+    },
+    {
+      "joint": "left_chest_door_hinge",
+      "position": 0.3,
+      "pair_count": 80,
+      "new_pairs": []
+    },
+    {
+      "joint": "left_chest_door_hinge",
+      "position": 0.6,
+      "pair_count": 79,
+      "new_pairs": []
+    },
+    {
+      "joint": "left_chest_door_hinge",
+      "position": 0.8999999999999999,
+      "pair_count": 79,
+      "new_pairs": []
+    },
+    {
+      "joint": "left_chest_door_hinge",
+      "position": 1.2,
+      "pair_count": 79,
+      "new_pairs": []
+    },
+    {
+      "joint": "right_chest_door_hinge",
+      "position": -1.2,
+      "pair_count": 79,
+      "new_pairs": []
+    },
+    {
+      "joint": "right_chest_door_hinge",
+      "position": -0.8999999999999999,
+      "pair_count": 79,
+      "new_pairs": []
+    },
+    {
+      "joint": "right_chest_door_hinge",
+      "position": -0.6,
+      "pair_count": 79,
+      "new_pairs": []
+    },
+    {
+      "joint": "right_chest_door_hinge",
+      "position": -0.30000000000000004,
+      "pair_count": 80,
+      "new_pairs": []
+    },
+    {
+      "joint": "right_chest_door_hinge",
+      "position": 0.0,
+      "pair_count": 81,
+      "new_pairs": []
+    },
+    {
+      "joint": "left_lat_plate_hinge",
+      "position": 0.0,
+      "pair_count": 81,
+      "new_pairs": []
+    },
+    {
+      "joint": "left_lat_plate_hinge",
+      "position": 0.3,
+      "pair_count": 82,
+      "new_pairs": [
+        [
+          "left_bicep_clamshell",
+          "left_lat_plate"
+        ]
+      ]
+    },
+    {
+      "joint": "left_lat_plate_hinge",
+      "position": 0.6,
+      "pair_count": 83,
+      "new_pairs": [
+        [
+          "left_bicep_clamshell",
+          "left_lat_plate"
+        ],
+        [
+          "left_lat_plate",
+          "left_upper_arm_cuff"
+        ]
+      ]
+    },
+    {
+      "joint": "left_lat_plate_hinge",
+      "position": 0.8999999999999999,
+      "pair_count": 85,
+      "new_pairs": [
+        [
+          "backpack",
+          "left_lat_plate"
+        ],
+        [
+          "left_bicep_clamshell",
+          "left_lat_plate"
+        ],
+        [
+          "left_bicep_sleeve",
+          "left_lat_plate"
+        ],
+        [
+          "left_lat_plate",
+          "left_upper_arm_cuff"
+        ]
+      ]
+    },
+    {
+      "joint": "left_lat_plate_hinge",
+      "position": 1.2,
+      "pair_count": 83,
+      "new_pairs": [
+        [
+          "backpack",
+          "left_lat_plate"
+        ],
+        [
+          "left_bicep_sleeve",
+          "left_lat_plate"
+        ]
+      ]
+    },
+    {
+      "joint": "right_lat_plate_hinge",
+      "position": -1.2,
+      "pair_count": 83,
+      "new_pairs": [
+        [
+          "backpack",
+          "right_lat_plate"
+        ],
+        [
+          "right_bicep_sleeve",
+          "right_lat_plate"
+        ]
+      ]
+    },
+    {
+      "joint": "right_lat_plate_hinge",
+      "position": -0.8999999999999999,
+      "pair_count": 85,
+      "new_pairs": [
+        [
+          "backpack",
+          "right_lat_plate"
+        ],
+        [
+          "right_bicep_clamshell",
+          "right_lat_plate"
+        ],
+        [
+          "right_bicep_sleeve",
+          "right_lat_plate"
+        ],
+        [
+          "right_lat_plate",
+          "right_upper_arm_cuff"
+        ]
+      ]
+    },
+    {
+      "joint": "right_lat_plate_hinge",
+      "position": -0.6,
+      "pair_count": 83,
+      "new_pairs": [
+        [
+          "right_bicep_clamshell",
+          "right_lat_plate"
+        ],
+        [
+          "right_lat_plate",
+          "right_upper_arm_cuff"
+        ]
+      ]
+    },
+    {
+      "joint": "right_lat_plate_hinge",
+      "position": -0.30000000000000004,
+      "pair_count": 82,
+      "new_pairs": [
+        [
+          "right_bicep_clamshell",
+          "right_lat_plate"
+        ]
+      ]
+    },
+    {
+      "joint": "right_lat_plate_hinge",
+      "position": 0.0,
+      "pair_count": 81,
+      "new_pairs": []
+    }
+  ],
+  "pass": false,
+  "limitations": [
+    "Independent joint samples do not certify continuous or combined motion",
+    "Surface intersections do not test full containment or wearer fit; use compound collision and wearer audits too"
+  ]
+}

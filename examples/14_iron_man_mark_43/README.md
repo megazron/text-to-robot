@@ -10,9 +10,9 @@ not a learned policy or proof of hardware accuracy. The model's failures remain 
 ## Download and inspect
 
 - [ROS 2 package](robot.ros2.zip), [training package](robot.training.zip), [URDF](robot.urdf), [robot JSON](robot.json), [BOM](BOM.md).
-- [Simulation report](simulation_report.json): **1/6** checks;
-  **383** initial penetration contacts.
-- Failed checks: initial_clearance, settle_under_gravity, hold_pose, actuator_sweep, disturbance_recovery.
+- [Simulation report](simulation_report.json): **2/6** checks;
+  **227** initial penetration contacts.
+- Failed checks: initial_clearance, settle_under_gravity, hold_pose, actuator_sweep.
 
 ## MoveIt / ROS 2
 
@@ -71,3 +71,15 @@ GIF and simulation report above use self-collision enabled.
 but the colliding suit start state blocks planning. [Wearer fit](wearability_report.json)
 also fails. [Production references and downloaded design research](../../references/mark43/RESEARCH.md)
 record the sources and limitations. [Visual comparison](../../docs/MARK43_VISUAL_REVIEW.md).
+
+The current clearance revision replaces the misused forearm-shaped torso sides,
+corrects mirrored pectoral wall thickness, separates chest/abdominal plates,
+provides clamshell seam gaps and makes room around the internal cuffs. Palm
+geometry starts beyond the wrist rather than extending into the gauntlet.
+
+[Surface-contact comparison](surface_contact_comparison.json): **175 → 81**
+non-adjacent intersecting pairs at neutral; 94 resolved and no new pairs in this
+check. This tests visual triangle surfaces, with tessellated primitives. It does
+not measure penetration depth or full containment, and differs from native MoveIt
+and approximate MuJoCo collision geometry.
+[Joint samples](surface_contact_report.json) retain shoulder and side-door failures.

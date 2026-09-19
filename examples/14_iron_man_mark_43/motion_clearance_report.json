@@ -10,19 +10,19 @@
     {
       "bodies": [
         "backpack",
-        "right_thigh_clamshell"
+        "left_thigh_clamshell"
       ],
-      "max_depth_m": 0.11007838994743523,
-      "witness_joint": "right_hip_flexion",
+      "max_depth_m": 0.1204457393715879,
+      "witness_joint": "left_hip_flexion",
       "witness_position": 2.0,
       "position_unit": "rad"
     },
     {
       "bodies": [
         "backpack",
-        "left_thigh_clamshell"
+        "left_thigh_cuff"
       ],
-      "max_depth_m": 0.10955442014680505,
+      "max_depth_m": 0.10666788477577072,
       "witness_joint": "left_hip_flexion",
       "witness_position": 2.0,
       "position_unit": "rad"
@@ -32,18 +32,8 @@
         "backpack",
         "right_thigh_cuff"
       ],
-      "max_depth_m": 0.10040947344510263,
+      "max_depth_m": 0.10495699350240435,
       "witness_joint": "right_hip_flexion",
-      "witness_position": 2.0,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "backpack",
-        "left_thigh_cuff"
-      ],
-      "max_depth_m": 0.10039612622929348,
-      "witness_joint": "left_hip_flexion",
       "witness_position": 2.0,
       "position_unit": "rad"
     },
@@ -52,7 +42,7 @@
         "backpack",
         "left_thigh_shell"
       ],
-      "max_depth_m": 0.09524818876161412,
+      "max_depth_m": 0.09492952607100391,
       "witness_joint": "left_hip_flexion",
       "witness_position": 2.0,
       "position_unit": "rad"
@@ -62,9 +52,29 @@
         "backpack",
         "right_thigh_shell"
       ],
-      "max_depth_m": 0.09524813812186483,
+      "max_depth_m": 0.09492570179994303,
       "witness_joint": "right_hip_flexion",
       "witness_position": 2.0,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "backpack",
+        "right_thigh_clamshell"
+      ],
+      "max_depth_m": 0.09045207923677778,
+      "witness_joint": "right_hip_flexion",
+      "witness_position": 2.0,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_shin_guard",
+        "left_shin_shell"
+      ],
+      "max_depth_m": 0.07105154126887762,
+      "witness_joint": "left_ankle_flexion",
+      "witness_position": -0.3,
       "position_unit": "rad"
     },
     {
@@ -139,22 +149,12 @@
     },
     {
       "bodies": [
-        "right_bicep_clamshell",
-        "shoulder_yoke"
+        "backpack",
+        "left_bicep_sleeve"
       ],
-      "max_depth_m": 0.04407550754075596,
-      "witness_joint": "right_shoulder_flexion",
-      "witness_position": 2.0,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_bicep_clamshell",
-        "shoulder_yoke"
-      ],
-      "max_depth_m": 0.04405398356593926,
+      "max_depth_m": 0.04463513055241662,
       "witness_joint": "left_shoulder_flexion",
-      "witness_position": 2.0,
+      "witness_position": 1.5,
       "position_unit": "rad"
     },
     {
@@ -162,7 +162,7 @@
         "left_bicep_sleeve",
         "shoulder_yoke"
       ],
-      "max_depth_m": 0.04344111896183389,
+      "max_depth_m": 0.04369460264935597,
       "witness_joint": "left_shoulder_flexion",
       "witness_position": 3.0,
       "position_unit": "rad"
@@ -172,9 +172,29 @@
         "right_bicep_sleeve",
         "shoulder_yoke"
       ],
-      "max_depth_m": 0.041561255024591154,
+      "max_depth_m": 0.04292721113514134,
       "witness_joint": "right_shoulder_flexion",
       "witness_position": 3.0,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_bicep_clamshell",
+        "shoulder_yoke"
+      ],
+      "max_depth_m": 0.042291368788761385,
+      "witness_joint": "left_shoulder_flexion",
+      "witness_position": 2.5,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_bicep_clamshell",
+        "shoulder_yoke"
+      ],
+      "max_depth_m": 0.04216376580700709,
+      "witness_joint": "right_shoulder_flexion",
+      "witness_position": 2.0,
       "position_unit": "rad"
     },
     {
@@ -192,7 +212,7 @@
         "backpack",
         "left_bicep_clamshell"
       ],
-      "max_depth_m": 0.03980745778904782,
+      "max_depth_m": 0.03949533758769815,
       "witness_joint": "left_shoulder_flexion",
       "witness_position": 1.5,
       "position_unit": "rad"
@@ -202,7 +222,7 @@
         "backpack",
         "right_bicep_clamshell"
       ],
-      "max_depth_m": 0.03980724991543444,
+      "max_depth_m": 0.03885075827688769,
       "witness_joint": "right_shoulder_flexion",
       "witness_position": 1.5,
       "position_unit": "rad"
@@ -219,11 +239,21 @@
     },
     {
       "bodies": [
-        "backpack",
-        "right_bicep_sleeve"
+        "back_shell",
+        "left_thigh_shell"
       ],
-      "max_depth_m": 0.0376993661578421,
-      "witness_joint": "right_shoulder_flexion",
+      "max_depth_m": 0.038320124529369594,
+      "witness_joint": "left_hip_flexion",
+      "witness_position": 2.0,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "back_shell",
+        "right_thigh_shell"
+      ],
+      "max_depth_m": 0.03783338881292625,
+      "witness_joint": "right_hip_flexion",
       "witness_position": 2.0,
       "position_unit": "rad"
     },
@@ -240,10 +270,10 @@
     {
       "bodies": [
         "backpack",
-        "left_bicep_sleeve"
+        "right_bicep_sleeve"
       ],
-      "max_depth_m": 0.03590202241128271,
-      "witness_joint": "left_shoulder_flexion",
+      "max_depth_m": 0.03676141630503506,
+      "witness_joint": "right_shoulder_flexion",
       "witness_position": 2.0,
       "position_unit": "rad"
     },
@@ -299,6 +329,16 @@
     },
     {
       "bodies": [
+        "back_shell",
+        "right_thigh_clamshell"
+      ],
+      "max_depth_m": 0.03242266271806156,
+      "witness_joint": "right_hip_flexion",
+      "witness_position": 2.0,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
         "right_forearm_cuff",
         "right_hip_module"
       ],
@@ -309,12 +349,12 @@
     },
     {
       "bodies": [
-        "left_calf_clamshell",
+        "right_knee_cap",
         "right_shank_strut"
       ],
-      "max_depth_m": 0.03130085974675231,
-      "witness_joint": "right_hip_abduction",
-      "witness_position": -0.3,
+      "max_depth_m": 0.031113639109369595,
+      "witness_joint": "right_knee_flexion",
+      "witness_position": -1.9187500000000002,
       "position_unit": "rad"
     },
     {
@@ -322,29 +362,9 @@
         "left_knee_cap",
         "left_shank_strut"
       ],
-      "max_depth_m": 0.031160761091145323,
+      "max_depth_m": 0.031100291444346836,
       "witness_joint": "left_knee_flexion",
-      "witness_position": -2.2,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_knee_cap",
-        "right_shank_strut"
-      ],
-      "max_depth_m": 0.031160760368313525,
-      "witness_joint": "right_knee_flexion",
-      "witness_position": -2.2,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_gauntlet_clamshell",
-        "left_hip_module"
-      ],
-      "max_depth_m": 0.030672333510248364,
-      "witness_joint": "left_shoulder_abduction",
-      "witness_position": -0.3875,
+      "witness_position": -1.9187500000000002,
       "position_unit": "rad"
     },
     {
@@ -369,12 +389,22 @@
     },
     {
       "bodies": [
-        "right_gauntlet_clamshell",
-        "right_hip_module"
+        "left_calf_clamshell",
+        "right_shank_strut"
       ],
-      "max_depth_m": 0.029720112420705457,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.3875,
+      "max_depth_m": 0.028888330069939766,
+      "witness_joint": "right_hip_abduction",
+      "witness_position": -0.3,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "pelvis_frame",
+        "right_thigh_shell"
+      ],
+      "max_depth_m": 0.02826362314720432,
+      "witness_joint": "right_hip_flexion",
+      "witness_position": 1.375,
       "position_unit": "rad"
     },
     {
@@ -382,79 +412,19 @@
         "left_thigh_clamshell",
         "pelvis_frame"
       ],
-      "max_depth_m": 0.029026922912683686,
+      "max_depth_m": 0.028202308823939846,
       "witness_joint": "left_hip_flexion",
       "witness_position": 1.0625,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_lat_plate",
-        "left_thigh_shell"
+        "left_thigh_shell",
+        "pelvis_frame"
       ],
-      "max_depth_m": 0.028582306780238105,
+      "max_depth_m": 0.02813175912917601,
       "witness_joint": "left_hip_flexion",
-      "witness_position": 2.0,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_lat_plate",
-        "right_thigh_shell"
-      ],
-      "max_depth_m": 0.027695712711856595,
-      "witness_joint": "right_hip_flexion",
-      "witness_position": 2.0,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_lat_plate",
-        "left_upper_arm_strut"
-      ],
-      "max_depth_m": 0.027574372353503462,
-      "witness_joint": "left_lat_plate_hinge",
-      "witness_position": 0.8999999999999999,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_gauntlet_sleeve",
-        "left_hip_module"
-      ],
-      "max_depth_m": 0.027461484242722017,
-      "witness_joint": "left_shoulder_abduction",
-      "witness_position": -0.3875,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_bicep_sleeve",
-        "right_pauldron"
-      ],
-      "max_depth_m": 0.027157733034495368,
-      "witness_joint": "right_shoulder_flexion",
-      "witness_position": 2.5,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_gauntlet_sleeve",
-        "right_hip_module"
-      ],
-      "max_depth_m": 0.027043691956821957,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.3875,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "back_shell",
-        "left_thigh_shell"
-      ],
-      "max_depth_m": 0.026739272589479623,
-      "witness_joint": "left_hip_flexion",
-      "witness_position": 2.0,
+      "witness_position": 1.375,
       "position_unit": "rad"
     },
     {
@@ -462,19 +432,69 @@
         "left_boot_toe",
         "right_shin_shell"
       ],
-      "max_depth_m": 0.02613776295279804,
+      "max_depth_m": 0.028107742690640546,
+      "witness_joint": "left_hip_abduction",
+      "witness_position": -0.19999999999999998,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_shin_shell",
+        "right_boot_toe"
+      ],
+      "max_depth_m": 0.027675536361667308,
+      "witness_joint": "right_hip_abduction",
+      "witness_position": -0.19999999999999998,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_knee_bezel",
+        "left_shin_shell"
+      ],
+      "max_depth_m": 0.027219037357398886,
+      "witness_joint": "left_knee_flexion",
+      "witness_position": -2.2,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_knee_bezel",
+        "right_shin_shell"
+      ],
+      "max_depth_m": 0.02703739149567264,
+      "witness_joint": "right_knee_flexion",
+      "witness_position": -2.2,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_lat_plate",
+        "left_upper_arm_strut"
+      ],
+      "max_depth_m": 0.02693629020504563,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": -0.75,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_shank_strut",
+        "right_calf_clamshell"
+      ],
+      "max_depth_m": 0.02634155039273881,
       "witness_joint": "left_hip_abduction",
       "witness_position": -0.3,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "right_hand",
-        "right_hip_cowl"
+        "right_lat_plate",
+        "right_upper_arm_strut"
       ],
-      "max_depth_m": 0.025863951720728785,
+      "max_depth_m": 0.025765910021571702,
       "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.3875,
+      "witness_position": -0.75,
       "position_unit": "rad"
     },
     {
@@ -489,6 +509,16 @@
     },
     {
       "bodies": [
+        "left_knee_cap",
+        "left_shin_shell"
+      ],
+      "max_depth_m": 0.025278620613193522,
+      "witness_joint": "left_knee_flexion",
+      "witness_position": -2.2,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
         "backpack",
         "right_upper_arm_cuff"
       ],
@@ -499,132 +529,82 @@
     },
     {
       "bodies": [
-        "right_bicep_clamshell",
-        "right_lat_plate"
-      ],
-      "max_depth_m": 0.024939088991801864,
-      "witness_joint": "neutral",
-      "witness_position": 0.0,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_lat_plate",
-        "right_upper_arm_strut"
-      ],
-      "max_depth_m": 0.02490705202198077,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.75,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_thigh_shell",
-        "pelvis_frame"
-      ],
-      "max_depth_m": 0.024865428639105652,
-      "witness_joint": "left_hip_flexion",
-      "witness_position": 1.375,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "back_shell",
-        "right_thigh_shell"
-      ],
-      "max_depth_m": 0.024805908407023042,
-      "witness_joint": "right_hip_flexion",
-      "witness_position": 2.0,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "pelvis_frame",
-        "right_thigh_shell"
-      ],
-      "max_depth_m": 0.02472832271014057,
-      "witness_joint": "right_hip_flexion",
-      "witness_position": 1.375,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_shank_strut",
-        "right_calf_clamshell"
-      ],
-      "max_depth_m": 0.024184443262651567,
-      "witness_joint": "right_hip_abduction",
-      "witness_position": -0.3,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_bicep_sleeve",
-        "left_pauldron"
-      ],
-      "max_depth_m": 0.024129112188700744,
-      "witness_joint": "left_shoulder_flexion",
-      "witness_position": 2.5,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_chest_door",
-        "right_lat_plate"
-      ],
-      "max_depth_m": 0.024124559201564668,
-      "witness_joint": "right_lat_plate_hinge",
-      "witness_position": -0.1499999999999999,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_lat_plate",
-        "pelvis_frame"
-      ],
-      "max_depth_m": 0.023851638351497676,
-      "witness_joint": "trunk_flex",
-      "witness_position": 0.5,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
         "helmet_left_ear_pod",
         "left_bicep_sleeve"
       ],
-      "max_depth_m": 0.023377385011227457,
+      "max_depth_m": 0.024441494320545643,
       "witness_joint": "left_shoulder_flexion",
       "witness_position": 3.0,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_lat_plate",
-        "left_pauldron"
+        "helmet_right_ear_pod",
+        "right_bicep_sleeve"
       ],
-      "max_depth_m": 0.02334322009734154,
-      "witness_joint": "left_shoulder_abduction",
-      "witness_position": 1.7875,
+      "max_depth_m": 0.02436276154520191,
+      "witness_joint": "right_shoulder_flexion",
+      "witness_position": 3.0,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "back_shell",
-        "right_thigh_clamshell"
+        "right_lat_plate",
+        "right_thigh_shell"
       ],
-      "max_depth_m": 0.023318104055915924,
+      "max_depth_m": 0.023994882274662333,
       "witness_joint": "right_hip_flexion",
       "witness_position": 2.0,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "right_lat_plate",
-        "right_pauldron"
+        "right_bicep_sleeve",
+        "right_cheek_panel"
       ],
-      "max_depth_m": 0.022957215314481822,
+      "max_depth_m": 0.02352417423816374,
+      "witness_joint": "right_shoulder_flexion",
+      "witness_position": 3.0,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_gauntlet_sleeve",
+        "right_hip_module"
+      ],
+      "max_depth_m": 0.02317424976162671,
       "witness_joint": "right_shoulder_abduction",
-      "witness_position": 1.7875,
+      "witness_position": -0.3875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_gauntlet_sleeve",
+        "left_hip_module"
+      ],
+      "max_depth_m": 0.02311531373341463,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": -0.3875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_gauntlet_clamshell",
+        "left_thigh_strut"
+      ],
+      "max_depth_m": 0.022936289755199485,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": -0.3875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_gauntlet_clamshell",
+        "right_thigh_strut"
+      ],
+      "max_depth_m": 0.022933396406335183,
+      "witness_joint": "right_shoulder_abduction",
+      "witness_position": -0.3875,
       "position_unit": "rad"
     },
     {
@@ -649,22 +629,42 @@
     },
     {
       "bodies": [
-        "right_boot_toe",
-        "right_calf_clamshell"
+        "left_thigh_clamshell",
+        "rear_belt_plate"
       ],
-      "max_depth_m": 0.02275428828065234,
-      "witness_joint": "right_calf_clamshell_hinge",
-      "witness_position": 1.4,
+      "max_depth_m": 0.022584337991443798,
+      "witness_joint": "left_hip_flexion",
+      "witness_position": 1.6875,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "right_thigh_clamshell",
-        "spine_frame"
+        "left_forearm_strut",
+        "left_hip_cowl"
       ],
-      "max_depth_m": 0.022199743812697015,
-      "witness_joint": "right_hip_flexion",
-      "witness_position": 1.6875,
+      "max_depth_m": 0.022546518511174278,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": -0.3875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "back_shell",
+        "left_thigh_clamshell"
+      ],
+      "max_depth_m": 0.022412454265681028,
+      "witness_joint": "left_hip_flexion",
+      "witness_position": 2.0,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_bicep_sleeve",
+        "left_pauldron"
+      ],
+      "max_depth_m": 0.02219694221089033,
+      "witness_joint": "left_shoulder_flexion",
+      "witness_position": 2.5,
       "position_unit": "rad"
     },
     {
@@ -672,19 +672,19 @@
         "left_thigh_clamshell",
         "spine_frame"
       ],
-      "max_depth_m": 0.022168942684310064,
+      "max_depth_m": 0.02219174143321676,
       "witness_joint": "left_hip_flexion",
       "witness_position": 1.6875,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_ankle_module",
-        "right_calf_clamshell"
+        "right_thigh_clamshell",
+        "spine_frame"
       ],
-      "max_depth_m": 0.02187003695994564,
-      "witness_joint": "left_hip_abduction",
-      "witness_position": -0.3,
+      "max_depth_m": 0.02219066121864844,
+      "witness_joint": "right_hip_flexion",
+      "witness_position": 2.0,
       "position_unit": "rad"
     },
     {
@@ -692,49 +692,69 @@
         "left_calf_clamshell",
         "right_ankle_module"
       ],
-      "max_depth_m": 0.02186727271985197,
+      "max_depth_m": 0.0218710903464092,
       "witness_joint": "right_hip_abduction",
       "witness_position": -0.3,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "right_back_vent",
-        "right_thigh_shell"
+        "left_ankle_module",
+        "right_calf_clamshell"
       ],
-      "max_depth_m": 0.021595238928405914,
-      "witness_joint": "right_hip_flexion",
-      "witness_position": 2.0,
+      "max_depth_m": 0.021870773595671814,
+      "witness_joint": "left_hip_abduction",
+      "witness_position": -0.3,
       "position_unit": "rad"
     },
     {
       "bodies": [
         "left_lat_plate",
-        "left_upper_arm_cuff"
+        "left_thigh_shell"
       ],
-      "max_depth_m": 0.02155441174852749,
-      "witness_joint": "left_lat_plate_hinge",
-      "witness_position": 0.6,
+      "max_depth_m": 0.021670533982901787,
+      "witness_joint": "left_hip_flexion",
+      "witness_position": 2.0,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "helmet_right_ear_pod",
-        "right_bicep_sleeve"
+        "right_gauntlet_clamshell",
+        "right_hip_module"
       ],
-      "max_depth_m": 0.021521834335320126,
+      "max_depth_m": 0.021427052924508305,
+      "witness_joint": "right_shoulder_abduction",
+      "witness_position": -0.3875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_gauntlet_clamshell",
+        "left_hip_module"
+      ],
+      "max_depth_m": 0.021395577967385393,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": -0.3875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "rear_belt_plate",
+        "right_thigh_clamshell"
+      ],
+      "max_depth_m": 0.021354216171095133,
+      "witness_joint": "right_hip_flexion",
+      "witness_position": 1.375,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_bicep_sleeve",
+        "right_pauldron"
+      ],
+      "max_depth_m": 0.021348114826035772,
       "witness_joint": "right_shoulder_flexion",
-      "witness_position": 3.0,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_boot_toe",
-        "left_calf_clamshell"
-      ],
-      "max_depth_m": 0.02136404659294522,
-      "witness_joint": "left_calf_clamshell_hinge",
-      "witness_position": -1.0499999999999998,
+      "witness_position": 2.0,
       "position_unit": "rad"
     },
     {
@@ -749,32 +769,12 @@
     },
     {
       "bodies": [
-        "right_gauntlet_clamshell",
-        "right_thigh_strut"
-      ],
-      "max_depth_m": 0.021123616957411072,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.3875,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
         "left_shin_guard",
         "right_boot_toe"
       ],
       "max_depth_m": 0.021119924300433468,
       "witness_joint": "left_hip_abduction",
       "witness_position": -0.3,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_gauntlet_clamshell",
-        "left_thigh_strut"
-      ],
-      "max_depth_m": 0.021119742763440322,
-      "witness_joint": "left_shoulder_abduction",
-      "witness_position": -0.3875,
       "position_unit": "rad"
     },
     {
@@ -809,112 +809,12 @@
     },
     {
       "bodies": [
-        "left_bicep_sleeve",
-        "left_lat_plate"
+        "right_knee_cap",
+        "right_shin_shell"
       ],
-      "max_depth_m": 0.021010835644469712,
-      "witness_joint": "left_lat_plate_hinge",
-      "witness_position": 0.75,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_back_vent",
-        "left_thigh_shell"
-      ],
-      "max_depth_m": 0.020968155794396225,
-      "witness_joint": "left_hip_flexion",
-      "witness_position": 2.0,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_bicep_sleeve",
-        "right_lat_plate"
-      ],
-      "max_depth_m": 0.02062123876731174,
-      "witness_joint": "right_lat_plate_hinge",
-      "witness_position": -0.6,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "pelvis_frame",
-        "right_lat_plate"
-      ],
-      "max_depth_m": 0.020597470491405853,
-      "witness_joint": "trunk_flex",
-      "witness_position": 0.5,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_bicep_clamshell",
-        "left_lat_plate"
-      ],
-      "max_depth_m": 0.020524671180984593,
-      "witness_joint": "left_bicep_clamshell_hinge",
-      "witness_position": -0.17500000000000004,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "back_shell",
-        "left_bicep_clamshell"
-      ],
-      "max_depth_m": 0.020436148440894697,
-      "witness_joint": "left_shoulder_flexion",
-      "witness_position": 1.5,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_thigh_clamshell",
-        "rear_belt_plate"
-      ],
-      "max_depth_m": 0.020405563805496945,
-      "witness_joint": "left_hip_flexion",
-      "witness_position": 2.0,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_hip_cowl",
-        "right_hip_flap"
-      ],
-      "max_depth_m": 0.02029227688119259,
-      "witness_joint": "right_hip_abduction",
-      "witness_position": 0.5,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_hip_cowl",
-        "left_hip_flap"
-      ],
-      "max_depth_m": 0.020243193991565368,
-      "witness_joint": "left_hip_abduction",
-      "witness_position": 0.5,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_shin_shell",
-        "right_boot_toe"
-      ],
-      "max_depth_m": 0.020193328568580797,
-      "witness_joint": "right_hip_abduction",
-      "witness_position": -0.3,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_hand",
-        "left_thigh_clamshell"
-      ],
-      "max_depth_m": 0.02016811116055462,
-      "witness_joint": "left_shoulder_abduction",
-      "witness_position": -0.75,
+      "max_depth_m": 0.020777427995897293,
+      "witness_joint": "right_knee_flexion",
+      "witness_position": -1.9187500000000002,
       "position_unit": "rad"
     },
     {
@@ -939,42 +839,32 @@
     },
     {
       "bodies": [
-        "left_elbow_module",
-        "left_lat_plate"
+        "left_hand",
+        "left_thigh_clamshell"
       ],
-      "max_depth_m": 0.01991095112839708,
+      "max_depth_m": 0.01978278943555522,
       "witness_joint": "left_shoulder_abduction",
       "witness_position": -0.75,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "right_elbow_module",
-        "right_lat_plate"
+        "left_boot_toe",
+        "left_calf_clamshell"
       ],
-      "max_depth_m": 0.019840732190692267,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.75,
+      "max_depth_m": 0.01976689811058163,
+      "witness_joint": "left_calf_clamshell_hinge",
+      "witness_position": -1.0499999999999998,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "right_back_vent",
-        "right_thigh_clamshell"
+        "left_bicep_clamshell",
+        "left_chest_door"
       ],
-      "max_depth_m": 0.019677811387330855,
-      "witness_joint": "right_hip_flexion",
-      "witness_position": 2.0,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_back_vent",
-        "left_thigh_clamshell"
-      ],
-      "max_depth_m": 0.019656741038884824,
-      "witness_joint": "left_hip_flexion",
-      "witness_position": 2.0,
+      "max_depth_m": 0.019644005493926992,
+      "witness_joint": "left_shoulder_flexion",
+      "witness_position": -0.5,
       "position_unit": "rad"
     },
     {
@@ -989,52 +879,12 @@
     },
     {
       "bodies": [
-        "right_lat_plate",
-        "right_upper_arm_cuff"
+        "right_hand",
+        "right_thigh_clamshell"
       ],
-      "max_depth_m": 0.019394596546809018,
-      "witness_joint": "right_lat_plate_hinge",
-      "witness_position": -1.05,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "helmet",
-        "right_gauntlet_sleeve"
-      ],
-      "max_depth_m": 0.019339786276331587,
-      "witness_joint": "right_shoulder_flexion",
-      "witness_position": 3.0,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_forearm_strut",
-        "left_hip_cowl"
-      ],
-      "max_depth_m": 0.019264930422047372,
-      "witness_joint": "left_shoulder_abduction",
-      "witness_position": -0.3875,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_bicep_sleeve",
-        "left_chest_door"
-      ],
-      "max_depth_m": 0.019155493171687105,
-      "witness_joint": "left_shoulder_flexion",
-      "witness_position": -0.5,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_bicep_sleeve",
-        "right_chest_door"
-      ],
-      "max_depth_m": 0.01895479098122354,
-      "witness_joint": "right_shoulder_flexion",
-      "witness_position": -1.0,
+      "max_depth_m": 0.019361120041360376,
+      "witness_joint": "right_shoulder_abduction",
+      "witness_position": -0.75,
       "position_unit": "rad"
     },
     {
@@ -1059,12 +909,22 @@
     },
     {
       "bodies": [
-        "right_chest_door",
-        "right_upper_arm_cuff"
+        "left_thigh_clamshell",
+        "right_hand"
       ],
-      "max_depth_m": 0.018771396185633463,
-      "witness_joint": "right_shoulder_flexion",
-      "witness_position": -1.0,
+      "max_depth_m": 0.018784021725162074,
+      "witness_joint": "right_shoulder_abduction",
+      "witness_position": -0.75,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_boot_toe",
+        "right_calf_clamshell"
+      ],
+      "max_depth_m": 0.018691758388562362,
+      "witness_joint": "right_calf_clamshell_hinge",
+      "witness_position": 1.4,
       "position_unit": "rad"
     },
     {
@@ -1079,22 +939,52 @@
     },
     {
       "bodies": [
-        "right_hand",
-        "right_thigh_clamshell"
+        "right_bicep_sleeve",
+        "right_chest_door"
       ],
-      "max_depth_m": 0.018676411758068064,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.75,
+      "max_depth_m": 0.018660455676693787,
+      "witness_joint": "right_shoulder_flexion",
+      "witness_position": -0.5,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "back_shell",
-        "left_thigh_clamshell"
+        "right_pauldron",
+        "right_pectoral_trim"
       ],
-      "max_depth_m": 0.01861936407899382,
-      "witness_joint": "left_hip_flexion",
-      "witness_position": 2.0,
+      "max_depth_m": 0.01856005025117774,
+      "witness_joint": "right_shoulder_abduction",
+      "witness_position": 1.7875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "helmet",
+        "right_gauntlet_sleeve"
+      ],
+      "max_depth_m": 0.01842726415125611,
+      "witness_joint": "right_shoulder_flexion",
+      "witness_position": 3.0,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_shin_shell",
+        "right_shin_shell"
+      ],
+      "max_depth_m": 0.018388250995200583,
+      "witness_joint": "left_hip_abduction",
+      "witness_position": -0.19999999999999998,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_hand",
+        "right_thigh_clamshell"
+      ],
+      "max_depth_m": 0.01818374021442236,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": -0.75,
       "position_unit": "rad"
     },
     {
@@ -1102,67 +992,57 @@
         "left_hand",
         "left_thigh_shell"
       ],
-      "max_depth_m": 0.018281060007432515,
+      "max_depth_m": 0.018085230352540102,
       "witness_joint": "left_shoulder_abduction",
       "witness_position": -0.3875,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_pauldron",
-        "left_pectoral_trim"
+        "right_bicep_sleeve",
+        "right_pectoral_trim"
       ],
-      "max_depth_m": 0.018193341358404155,
-      "witness_joint": "left_shoulder_abduction",
+      "max_depth_m": 0.018067028257545737,
+      "witness_joint": "right_shoulder_flexion",
+      "witness_position": -1.0,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_chest_door",
+        "right_pauldron"
+      ],
+      "max_depth_m": 0.018010557651517767,
+      "witness_joint": "right_shoulder_abduction",
       "witness_position": 2.15,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_gauntlet_clamshell",
-        "left_hand"
+        "left_bicep_sleeve",
+        "left_chest_door"
       ],
-      "max_depth_m": 0.017955897521452414,
-      "witness_joint": "left_wrist_flexion",
-      "witness_position": -0.19999999999999996,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_chest_door",
-        "left_upper_arm_cuff"
-      ],
-      "max_depth_m": 0.017932742467025403,
+      "max_depth_m": 0.01788208735174305,
       "witness_joint": "left_shoulder_flexion",
       "witness_position": -0.5,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "helmet",
-        "right_gauntlet_clamshell"
-      ],
-      "max_depth_m": 0.017824240192970988,
-      "witness_joint": "right_shoulder_flexion",
-      "witness_position": 3.0,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
         "left_bicep_sleeve",
-        "left_cheek_panel"
+        "left_pectoral_trim"
       ],
-      "max_depth_m": 0.017801894398140054,
+      "max_depth_m": 0.017826818014650414,
       "witness_joint": "left_shoulder_flexion",
-      "witness_position": 3.0,
+      "witness_position": -0.5,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "right_hand",
+        "right_palm_repulsor",
         "right_thigh_shell"
       ],
-      "max_depth_m": 0.01780113094742574,
+      "max_depth_m": 0.017747303705793475,
       "witness_joint": "right_shoulder_abduction",
       "witness_position": -0.3875,
       "position_unit": "rad"
@@ -1199,32 +1079,22 @@
     },
     {
       "bodies": [
-        "right_forearm_crest",
-        "right_hip_module"
+        "right_bicep_front",
+        "right_pauldron"
       ],
-      "max_depth_m": 0.017626106557527832,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.3875,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_forearm_crest",
-        "left_hip_module"
-      ],
-      "max_depth_m": 0.017593332120813394,
-      "witness_joint": "left_shoulder_abduction",
-      "witness_position": -0.3875,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "helmet",
-        "left_gauntlet_clamshell"
-      ],
-      "max_depth_m": 0.017435994733080384,
-      "witness_joint": "left_shoulder_flexion",
+      "max_depth_m": 0.017553571146714953,
+      "witness_joint": "right_shoulder_flexion",
       "witness_position": 3.0,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_knee_face",
+        "right_shin_shell"
+      ],
+      "max_depth_m": 0.01741952350704935,
+      "witness_joint": "right_knee_flexion",
+      "witness_position": -0.7937500000000002,
       "position_unit": "rad"
     },
     {
@@ -1249,6 +1119,36 @@
     },
     {
       "bodies": [
+        "left_knee_face",
+        "left_shin_shell"
+      ],
+      "max_depth_m": 0.017294888965472807,
+      "witness_joint": "left_knee_flexion",
+      "witness_position": -0.7937500000000002,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "codpiece",
+        "left_thigh_shell"
+      ],
+      "max_depth_m": 0.017132135742981145,
+      "witness_joint": "left_hip_flexion",
+      "witness_position": -0.5,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_pauldron",
+        "left_pectoral_trim"
+      ],
+      "max_depth_m": 0.016947852627497307,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": 2.15,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
         "left_knee_bezel",
         "left_shank_strut"
       ],
@@ -1269,12 +1169,22 @@
     },
     {
       "bodies": [
-        "right_gauntlet_clamshell",
-        "right_hand"
+        "codpiece",
+        "right_thigh_shell"
       ],
-      "max_depth_m": 0.0168557113341983,
-      "witness_joint": "right_wrist_flexion",
-      "witness_position": 0.19999999999999996,
+      "max_depth_m": 0.016877726699201994,
+      "witness_joint": "codpiece_hinge",
+      "witness_position": 0.6,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "helmet",
+        "right_gauntlet_clamshell"
+      ],
+      "max_depth_m": 0.016860192901247528,
+      "witness_joint": "right_shoulder_flexion",
+      "witness_position": 3.0,
       "position_unit": "rad"
     },
     {
@@ -1289,162 +1199,12 @@
     },
     {
       "bodies": [
-        "back_shell",
-        "right_bicep_clamshell"
-      ],
-      "max_depth_m": 0.016734631219388577,
-      "witness_joint": "right_shoulder_flexion",
-      "witness_position": 2.0,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_calf_clamshell",
-        "right_calf_clamshell"
-      ],
-      "max_depth_m": 0.01669908477972196,
-      "witness_joint": "left_hip_abduction",
-      "witness_position": -0.19999999999999998,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_hand",
-        "left_hip_cowl"
-      ],
-      "max_depth_m": 0.016614039110858007,
-      "witness_joint": "left_shoulder_abduction",
-      "witness_position": -0.3875,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "back_shell",
-        "left_bicep_sleeve"
-      ],
-      "max_depth_m": 0.016563721986739454,
-      "witness_joint": "left_shoulder_flexion",
-      "witness_position": 2.0,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_ankle_module",
-        "right_shin_shell"
-      ],
-      "max_depth_m": 0.01654414636111584,
-      "witness_joint": "left_hip_abduction",
-      "witness_position": -0.3,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_bicep_front",
-        "right_pauldron"
-      ],
-      "max_depth_m": 0.016541259638849955,
-      "witness_joint": "right_shoulder_flexion",
-      "witness_position": 3.0,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_shin_shell",
-        "right_ankle_module"
-      ],
-      "max_depth_m": 0.016540858126497516,
-      "witness_joint": "right_hip_abduction",
-      "witness_position": -0.3,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_bicep_clamshell",
-        "right_flight_flap"
-      ],
-      "max_depth_m": 0.01653880731259849,
-      "witness_joint": "right_shoulder_flexion",
-      "witness_position": 1.5,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_bicep_clamshell",
-        "left_chest_door"
-      ],
-      "max_depth_m": 0.016462784716272882,
-      "witness_joint": "left_shoulder_flexion",
-      "witness_position": -0.5,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "rear_belt_plate",
-        "right_thigh_clamshell"
-      ],
-      "max_depth_m": 0.0162233685087397,
-      "witness_joint": "right_hip_flexion",
-      "witness_position": 1.375,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
         "helmet",
-        "left_gauntlet_sleeve"
+        "left_gauntlet_clamshell"
       ],
-      "max_depth_m": 0.01620826530202441,
+      "max_depth_m": 0.016591431617114343,
       "witness_joint": "left_shoulder_flexion",
       "witness_position": 3.0,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_bicep_clamshell",
-        "right_chest_inlay"
-      ],
-      "max_depth_m": 0.01617796161385102,
-      "witness_joint": "right_shoulder_flexion",
-      "witness_position": -1.0,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "back_shell",
-        "right_bicep_sleeve"
-      ],
-      "max_depth_m": 0.016078109424184722,
-      "witness_joint": "right_shoulder_flexion",
-      "witness_position": 2.0,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_shin_shell",
-        "right_shin_shell"
-      ],
-      "max_depth_m": 0.015934334413080606,
-      "witness_joint": "left_hip_abduction",
-      "witness_position": -0.19999999999999998,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_bicep_sleeve",
-        "right_cheek_panel"
-      ],
-      "max_depth_m": 0.015925998845899833,
-      "witness_joint": "right_shoulder_flexion",
-      "witness_position": 3.0,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_bicep_sleeve",
-        "left_pectoral_trim"
-      ],
-      "max_depth_m": 0.01571158984857747,
-      "witness_joint": "left_shoulder_flexion",
-      "witness_position": -0.5,
       "position_unit": "rad"
     },
     {
@@ -1452,19 +1212,119 @@
         "right_bicep_clamshell",
         "right_chest_door"
       ],
-      "max_depth_m": 0.015688941348740514,
+      "max_depth_m": 0.016542380245848885,
       "witness_joint": "right_shoulder_flexion",
       "witness_position": -1.0,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "right_pauldron",
-        "right_pectoral_trim"
+        "left_bicep_sleeve",
+        "left_cheek_panel"
       ],
-      "max_depth_m": 0.015571618525540024,
+      "max_depth_m": 0.01649387095523086,
+      "witness_joint": "left_shoulder_flexion",
+      "witness_position": 3.0,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_thigh_cuff",
+        "right_thigh_clamshell"
+      ],
+      "max_depth_m": 0.016174212243479702,
+      "witness_joint": "right_hip_abduction",
+      "witness_position": -0.3,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_bicep_front",
+        "right_chest_door"
+      ],
+      "max_depth_m": 0.01617211335862812,
+      "witness_joint": "right_shoulder_flexion",
+      "witness_position": -0.5,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_bicep_clamshell",
+        "left_lat_plate"
+      ],
+      "max_depth_m": 0.01600053672912579,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": -0.3875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_calf_clamshell",
+        "right_calf_clamshell"
+      ],
+      "max_depth_m": 0.015994903104150502,
+      "witness_joint": "left_hip_abduction",
+      "witness_position": -0.19999999999999998,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_bicep_front",
+        "left_chest_door"
+      ],
+      "max_depth_m": 0.01590282151561436,
+      "witness_joint": "left_shoulder_flexion",
+      "witness_position": -0.5,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_thigh_clamshell",
+        "right_thigh_cuff"
+      ],
+      "max_depth_m": 0.015852149555341172,
+      "witness_joint": "left_hip_abduction",
+      "witness_position": -0.3,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "helmet",
+        "right_bicep_sleeve"
+      ],
+      "max_depth_m": 0.015850115203568067,
+      "witness_joint": "right_shoulder_flexion",
+      "witness_position": 3.0,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_bicep_clamshell",
+        "right_lat_plate"
+      ],
+      "max_depth_m": 0.015812706333640042,
+      "witness_joint": "right_lat_plate_hinge",
+      "witness_position": -0.6,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "helmet",
+        "left_gauntlet_sleeve"
+      ],
+      "max_depth_m": 0.01580051732827742,
+      "witness_joint": "left_shoulder_flexion",
+      "witness_position": 3.0,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_hand",
+        "right_thigh_shell"
+      ],
+      "max_depth_m": 0.01573040975481821,
       "witness_joint": "right_shoulder_abduction",
-      "witness_position": 1.0625,
+      "witness_position": -0.3875,
       "position_unit": "rad"
     },
     {
@@ -1472,9 +1332,59 @@
         "right_forearm_strut",
         "right_hip_cowl"
       ],
-      "max_depth_m": 0.015553429487560713,
+      "max_depth_m": 0.015495720447853602,
       "witness_joint": "right_shoulder_abduction",
       "witness_position": -0.3875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_boot_toe",
+        "right_shin_stripe"
+      ],
+      "max_depth_m": 0.015444701843785357,
+      "witness_joint": "left_hip_abduction",
+      "witness_position": -0.3,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_calf_clamshell",
+        "right_shin_shell"
+      ],
+      "max_depth_m": 0.015239935696569402,
+      "witness_joint": "right_hip_abduction",
+      "witness_position": -0.3,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_bicep_sleeve",
+        "right_lat_plate"
+      ],
+      "max_depth_m": 0.015194501921766565,
+      "witness_joint": "right_lat_plate_hinge",
+      "witness_position": -0.8999999999999999,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_chest_door",
+        "left_upper_arm_cuff"
+      ],
+      "max_depth_m": 0.015065440351125997,
+      "witness_joint": "left_shoulder_flexion",
+      "witness_position": -0.5,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_chest_door",
+        "right_upper_arm_cuff"
+      ],
+      "max_depth_m": 0.015065252062009492,
+      "witness_joint": "right_shoulder_flexion",
+      "witness_position": -0.5,
       "position_unit": "rad"
     },
     {
@@ -1499,112 +1409,122 @@
     },
     {
       "bodies": [
-        "right_knee_cap",
-        "right_shin_shell"
+        "left_shin_stripe",
+        "right_boot_toe"
       ],
-      "max_depth_m": 0.01457216077727918,
-      "witness_joint": "right_knee_flexion",
-      "witness_position": -1.9187500000000002,
+      "max_depth_m": 0.014722319593034716,
+      "witness_joint": "right_hip_abduction",
+      "witness_position": -0.3,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_knee_cap",
-        "left_shin_shell"
-      ],
-      "max_depth_m": 0.014561474732954173,
-      "witness_joint": "left_knee_flexion",
-      "witness_position": -1.9187500000000002,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_pauldron_edge",
-        "left_pectoral_trim"
-      ],
-      "max_depth_m": 0.014520192872129262,
-      "witness_joint": "left_shoulder_abduction",
-      "witness_position": 2.15,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "helmet",
-        "right_bicep_sleeve"
-      ],
-      "max_depth_m": 0.014507568446421886,
-      "witness_joint": "right_shoulder_flexion",
-      "witness_position": 3.0,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_gauntlet_sleeve",
-        "right_hip_cowl"
-      ],
-      "max_depth_m": 0.014434565889214794,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.3875,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "pelvis_frame",
-        "right_thigh_clamshell"
-      ],
-      "max_depth_m": 0.014431257446038362,
-      "witness_joint": "right_hip_flexion",
-      "witness_position": 2.0,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_shin_guard",
-        "right_shin_shell"
-      ],
-      "max_depth_m": 0.014405517888568975,
-      "witness_joint": "right_ankle_flexion",
-      "witness_position": -0.6,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_bicep_front",
+        "right_elbow_module",
         "right_lat_plate"
       ],
-      "max_depth_m": 0.014283494309712368,
+      "max_depth_m": 0.014708726341733553,
       "witness_joint": "right_shoulder_abduction",
       "witness_position": -0.75,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "helmet_neck_collar",
-        "left_bicep_clamshell"
+        "left_bicep_sleeve",
+        "left_lat_plate"
       ],
-      "max_depth_m": 0.014136635381007656,
+      "max_depth_m": 0.014680922782360429,
+      "witness_joint": "left_lat_plate_hinge",
+      "witness_position": 0.8999999999999999,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_elbow_module",
+        "left_lat_plate"
+      ],
+      "max_depth_m": 0.014665339314753377,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": -0.75,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_gauntlet_sleeve",
+        "right_thigh_shell"
+      ],
+      "max_depth_m": 0.01451612692753503,
+      "witness_joint": "right_shoulder_abduction",
+      "witness_position": -0.3875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_shin_shell",
+        "right_ankle_module"
+      ],
+      "max_depth_m": 0.014423769506268792,
+      "witness_joint": "right_hip_abduction",
+      "witness_position": -0.3,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_ankle_module",
+        "right_shin_shell"
+      ],
+      "max_depth_m": 0.014396290850297581,
+      "witness_joint": "left_hip_abduction",
+      "witness_position": -0.3,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_bicep_front",
+        "left_pauldron"
+      ],
+      "max_depth_m": 0.014334158110794313,
       "witness_joint": "left_shoulder_flexion",
       "witness_position": 3.0,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "right_pauldron_edge",
-        "right_pectoral_trim"
+        "left_chest_door",
+        "left_pauldron"
       ],
-      "max_depth_m": 0.014078540334315893,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": 1.4249999999999998,
+      "max_depth_m": 0.014294708557220988,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": 2.15,
       "position_unit": "rad"
     },
     {
       "bodies": [
         "codpiece",
-        "left_thigh_shell"
+        "right_thigh_clamshell"
       ],
-      "max_depth_m": 0.014071867297472167,
-      "witness_joint": "codpiece_hinge",
-      "witness_position": 0.6,
+      "max_depth_m": 0.01412558903826642,
+      "witness_joint": "right_hip_flexion",
+      "witness_position": -0.5,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_thigh_shell",
+        "rear_belt_plate"
+      ],
+      "max_depth_m": 0.014054973352163637,
+      "witness_joint": "left_hip_flexion",
+      "witness_position": 1.0625,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "rear_belt_plate",
+        "right_thigh_shell"
+      ],
+      "max_depth_m": 0.013956312374597369,
+      "witness_joint": "right_hip_flexion",
+      "witness_position": 1.0625,
       "position_unit": "rad"
     },
     {
@@ -1619,192 +1539,102 @@
     },
     {
       "bodies": [
-        "pelvis_frame",
-        "right_gauntlet_clamshell"
-      ],
-      "max_depth_m": 0.013883124025936475,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.3875,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_bicep_sleeve",
+        "right_pauldron_edge",
         "right_pectoral_trim"
       ],
-      "max_depth_m": 0.013743124803196036,
+      "max_depth_m": 0.013932331840971585,
+      "witness_joint": "right_shoulder_abduction",
+      "witness_position": 1.7875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "helmet_neck_collar",
+        "right_bicep_clamshell"
+      ],
+      "max_depth_m": 0.01389599069317994,
       "witness_joint": "right_shoulder_flexion",
-      "witness_position": -1.0,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_gauntlet_clamshell",
-        "pelvis_frame"
-      ],
-      "max_depth_m": 0.013656936922298808,
-      "witness_joint": "left_shoulder_abduction",
-      "witness_position": -0.3875,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "codpiece",
-        "right_thigh_shell"
-      ],
-      "max_depth_m": 0.013616404098750767,
-      "witness_joint": "right_hip_flexion",
-      "witness_position": -0.5,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_bicep_front",
-        "left_pauldron"
-      ],
-      "max_depth_m": 0.013571586907936781,
-      "witness_joint": "left_shoulder_flexion",
       "witness_position": 3.0,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "right_chest_door",
-        "right_pauldron"
+        "left_boot_toe",
+        "right_shin_ridge"
       ],
-      "max_depth_m": 0.013494932349843048,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": 2.15,
+      "max_depth_m": 0.013845136562273368,
+      "witness_joint": "left_hip_abduction",
+      "witness_position": -0.3,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_thigh_shell",
-        "rear_belt_plate"
+        "pelvis_frame",
+        "right_thigh_clamshell"
       ],
-      "max_depth_m": 0.013488891061691153,
-      "witness_joint": "left_hip_flexion",
-      "witness_position": 1.0625,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_knee_bezel",
-        "left_shin_shell"
-      ],
-      "max_depth_m": 0.01342376604904384,
-      "witness_joint": "left_knee_flexion",
-      "witness_position": -1.0750000000000002,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "rear_belt_plate",
-        "right_thigh_shell"
-      ],
-      "max_depth_m": 0.013395421876840107,
+      "max_depth_m": 0.013838268674219117,
       "witness_joint": "right_hip_flexion",
-      "witness_position": 1.0625,
+      "witness_position": 1.6875,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_thigh_clamshell",
-        "right_hand"
+        "left_shin_ridge",
+        "right_boot_toe"
       ],
-      "max_depth_m": 0.013327776946107511,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.75,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_knee_bezel",
-        "right_shin_shell"
-      ],
-      "max_depth_m": 0.013291949095313376,
-      "witness_joint": "right_knee_flexion",
-      "witness_position": -1.0750000000000002,
+      "max_depth_m": 0.013829460420263711,
+      "witness_joint": "right_hip_abduction",
+      "witness_position": -0.3,
       "position_unit": "rad"
     },
     {
       "bodies": [
         "left_chest_door",
-        "left_lat_plate"
+        "left_pauldron_edge"
       ],
-      "max_depth_m": 0.013289568307212762,
-      "witness_joint": "left_lat_plate_hinge",
-      "witness_position": 0.15,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_hand",
-        "right_thigh_clamshell"
-      ],
-      "max_depth_m": 0.01327343089962003,
+      "max_depth_m": 0.013781295603275324,
       "witness_joint": "left_shoulder_abduction",
-      "witness_position": -0.75,
+      "witness_position": 2.15,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_bicep_front",
-        "left_lat_plate"
+        "left_bicep_sleeve",
+        "left_rib_0"
       ],
-      "max_depth_m": 0.013222769382488054,
-      "witness_joint": "left_lat_plate_hinge",
-      "witness_position": 0.44999999999999996,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_clavicle_cover",
-        "left_pectoral_trim"
-      ],
-      "max_depth_m": 0.013202267232937503,
+      "max_depth_m": 0.013483674028589588,
       "witness_joint": "left_shoulder_abduction",
-      "witness_position": 0.7,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_bicep_front",
-        "left_chest_door"
-      ],
-      "max_depth_m": 0.013149355282603211,
-      "witness_joint": "left_shoulder_flexion",
-      "witness_position": -0.5,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_hip_cowl",
-        "right_lat_plate"
-      ],
-      "max_depth_m": 0.013099731523793292,
-      "witness_joint": "right_lat_plate_hinge",
-      "witness_position": -0.75,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_shin_shell",
-        "right_thigh_clamshell"
-      ],
-      "max_depth_m": 0.012993856124209936,
-      "witness_joint": "right_knee_flexion",
-      "witness_position": -1.9187500000000002,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_gauntlet_clamshell",
-        "right_hip_cowl"
-      ],
-      "max_depth_m": 0.012904151870474152,
-      "witness_joint": "right_shoulder_abduction",
       "witness_position": -0.3875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_bicep_clamshell",
+        "right_cheek_panel"
+      ],
+      "max_depth_m": 0.013473181681767855,
+      "witness_joint": "right_shoulder_flexion",
+      "witness_position": 3.0,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_thigh_clamshell",
+        "right_thigh_clamshell"
+      ],
+      "max_depth_m": 0.013446425898425828,
+      "witness_joint": "right_hip_abduction",
+      "witness_position": -0.3,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_shin_shell",
+        "right_shank_cuff"
+      ],
+      "max_depth_m": 0.013429939253498521,
+      "witness_joint": "right_hip_abduction",
+      "witness_position": -0.3,
       "position_unit": "rad"
     },
     {
@@ -1812,29 +1642,109 @@
         "left_bicep_clamshell",
         "left_chest_inlay"
       ],
-      "max_depth_m": 0.012867033218945011,
+      "max_depth_m": 0.013379059873233078,
       "witness_joint": "left_shoulder_flexion",
       "witness_position": -1.0,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_gauntlet_sleeve",
-        "left_rib_2"
+        "left_clavicle_cover",
+        "left_pectoral_trim"
       ],
-      "max_depth_m": 0.012810388340757243,
+      "max_depth_m": 0.013318881221709355,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": 0.3374999999999999,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_clavicle_cover",
+        "right_pectoral_trim"
+      ],
+      "max_depth_m": 0.013318871554326692,
+      "witness_joint": "right_shoulder_abduction",
+      "witness_position": 0.3374999999999999,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "helmet_neck_collar",
+        "left_bicep_clamshell"
+      ],
+      "max_depth_m": 0.013204560091759094,
+      "witness_joint": "left_shoulder_flexion",
+      "witness_position": 3.0,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "backpack",
+        "right_bicep_front"
+      ],
+      "max_depth_m": 0.013146421189258602,
+      "witness_joint": "right_shoulder_flexion",
+      "witness_position": 2.0,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "backpack",
+        "left_bicep_front"
+      ],
+      "max_depth_m": 0.013145635642287438,
+      "witness_joint": "left_shoulder_flexion",
+      "witness_position": 2.0,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "helmet",
+        "left_bicep_sleeve"
+      ],
+      "max_depth_m": 0.013117630266157124,
+      "witness_joint": "left_shoulder_flexion",
+      "witness_position": 3.0,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_lat_plate",
+        "left_upper_arm_cuff"
+      ],
+      "max_depth_m": 0.01305251722245074,
+      "witness_joint": "left_lat_plate_hinge",
+      "witness_position": 0.6,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_gauntlet_clamshell",
+        "pelvis_frame"
+      ],
+      "max_depth_m": 0.013009919954848095,
       "witness_joint": "left_shoulder_abduction",
       "witness_position": -0.3875,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_bicep_clamshell",
-        "left_flight_flap"
+        "right_chest_door",
+        "right_pauldron_edge"
       ],
-      "max_depth_m": 0.012760425487594375,
-      "witness_joint": "left_shoulder_flexion",
-      "witness_position": 1.5,
+      "max_depth_m": 0.0129975929089229,
+      "witness_joint": "right_shoulder_abduction",
+      "witness_position": 2.15,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "codpiece",
+        "right_thigh_stripe"
+      ],
+      "max_depth_m": 0.012821425504135354,
+      "witness_joint": "codpiece_hinge",
+      "witness_position": 0.525,
       "position_unit": "rad"
     },
     {
@@ -1849,31 +1759,101 @@
     },
     {
       "bodies": [
-        "left_gauntlet_sleeve",
-        "left_hip_cowl"
+        "left_bicep_clamshell",
+        "left_cheek_panel"
       ],
-      "max_depth_m": 0.012554953477717963,
-      "witness_joint": "left_shoulder_abduction",
+      "max_depth_m": 0.01270628455954687,
+      "witness_joint": "left_shoulder_flexion",
+      "witness_position": 3.0,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "pelvis_frame",
+        "right_gauntlet_clamshell"
+      ],
+      "max_depth_m": 0.012613449303725821,
+      "witness_joint": "right_shoulder_abduction",
       "witness_position": -0.3875,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_hip_cowl",
-        "left_lat_plate"
+        "right_gauntlet_clamshell",
+        "right_hip_cowl"
       ],
-      "max_depth_m": 0.012493600438961397,
-      "witness_joint": "left_lat_plate_hinge",
-      "witness_position": 0.75,
+      "max_depth_m": 0.01259874496424633,
+      "witness_joint": "right_shoulder_abduction",
+      "witness_position": -0.3875,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_hand_plate",
-        "left_hip_cowl"
+        "right_hip_cowl",
+        "right_hip_flap"
       ],
-      "max_depth_m": 0.012367936586979954,
+      "max_depth_m": 0.012592737376951322,
+      "witness_joint": "right_hip_abduction",
+      "witness_position": 0.2,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_hip_cowl",
+        "left_hip_flap"
+      ],
+      "max_depth_m": 0.012572677931614387,
+      "witness_joint": "left_hip_abduction",
+      "witness_position": -0.19999999999999998,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_pauldron_edge",
+        "left_pectoral_trim"
+      ],
+      "max_depth_m": 0.012554242353395435,
       "witness_joint": "left_shoulder_abduction",
+      "witness_position": 1.7875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_shin_shell",
+        "right_calf_clamshell"
+      ],
+      "max_depth_m": 0.012476799014601834,
+      "witness_joint": "left_hip_abduction",
+      "witness_position": -0.3,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_lat_plate",
+        "right_upper_arm_cuff"
+      ],
+      "max_depth_m": 0.012451479472718562,
+      "witness_joint": "right_shoulder_abduction",
+      "witness_position": -0.3875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_bicep_clamshell",
+        "right_chest_inlay_centre"
+      ],
+      "max_depth_m": 0.012431893743825684,
+      "witness_joint": "right_shoulder_flexion",
+      "witness_position": -1.0,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_gauntlet_sleeve",
+        "right_hip_cowl"
+      ],
+      "max_depth_m": 0.01235290978819277,
+      "witness_joint": "right_shoulder_abduction",
       "witness_position": -0.3875,
       "position_unit": "rad"
     },
@@ -1899,11 +1879,11 @@
     },
     {
       "bodies": [
-        "left_shin_stripe",
-        "right_boot_toe"
+        "left_thigh_shell",
+        "right_thigh_shell"
       ],
-      "max_depth_m": 0.012199462518924372,
-      "witness_joint": "right_hip_abduction",
+      "max_depth_m": 0.012194851911816575,
+      "witness_joint": "left_hip_abduction",
       "witness_position": -0.3,
       "position_unit": "rad"
     },
@@ -1912,37 +1892,7 @@
         "right_gauntlet_sleeve",
         "right_rib_2"
       ],
-      "max_depth_m": 0.012187733382584201,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.3875,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_knee_face",
-        "left_shin_shell"
-      ],
-      "max_depth_m": 0.012167803644059266,
-      "witness_joint": "left_knee_flexion",
-      "witness_position": -1.0750000000000002,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_hand",
-        "left_hip_module"
-      ],
-      "max_depth_m": 0.012162173622930851,
-      "witness_joint": "left_shoulder_abduction",
-      "witness_position": -0.3875,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_hand",
-        "right_hip_module"
-      ],
-      "max_depth_m": 0.012162085171971043,
+      "max_depth_m": 0.012184977015065686,
       "witness_joint": "right_shoulder_abduction",
       "witness_position": -0.3875,
       "position_unit": "rad"
@@ -1959,72 +1909,62 @@
     },
     {
       "bodies": [
-        "right_knee_face",
-        "right_shin_shell"
+        "right_elbow_cap",
+        "right_flight_flap"
       ],
-      "max_depth_m": 0.012035571011369978,
-      "witness_joint": "right_knee_flexion",
-      "witness_position": -1.0750000000000002,
+      "max_depth_m": 0.01206847097536652,
+      "witness_joint": "right_shoulder_flexion",
+      "witness_position": 1.5,
       "position_unit": "rad"
     },
     {
       "bodies": [
         "codpiece",
-        "right_thigh_stripe"
+        "left_thigh_clamshell"
       ],
-      "max_depth_m": 0.011977531392076394,
-      "witness_joint": "codpiece_hinge",
-      "witness_position": 0.525,
+      "max_depth_m": 0.011932266784070365,
+      "witness_joint": "left_hip_flexion",
+      "witness_position": -0.5,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "right_palm_repulsor",
-        "right_thigh_shell"
+        "codpiece",
+        "left_thigh_stripe"
       ],
-      "max_depth_m": 0.011967368062117453,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.3875,
+      "max_depth_m": 0.011919787226756769,
+      "witness_joint": "left_hip_flexion",
+      "witness_position": -0.5,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_shin_guard",
-        "left_shin_shell"
+        "left_shank_cuff",
+        "right_shin_shell"
       ],
-      "max_depth_m": 0.011937965750982056,
-      "witness_joint": "left_ankle_flexion",
-      "witness_position": -0.6,
+      "max_depth_m": 0.011908723637743165,
+      "witness_joint": "left_hip_abduction",
+      "witness_position": -0.3,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_palm_repulsor",
-        "left_thigh_shell"
+        "left_gauntlet_sleeve",
+        "left_rib_2"
       ],
-      "max_depth_m": 0.011880505423839243,
+      "max_depth_m": 0.011846514921557383,
       "witness_joint": "left_shoulder_abduction",
       "witness_position": -0.3875,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_boot_toe",
-        "right_shin_stripe"
+        "left_gauntlet_sleeve",
+        "left_hip_cowl"
       ],
-      "max_depth_m": 0.011832374789519425,
-      "witness_joint": "left_hip_abduction",
-      "witness_position": -0.3,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_shin_shell",
-        "right_shank_cuff"
-      ],
-      "max_depth_m": 0.011829608372206932,
-      "witness_joint": "left_hip_abduction",
-      "witness_position": -0.3,
+      "max_depth_m": 0.011715955492402622,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": -0.3875,
       "position_unit": "rad"
     },
     {
@@ -2049,22 +1989,72 @@
     },
     {
       "bodies": [
-        "left_bicep_clamshell",
-        "left_chest_inlay_centre"
+        "left_gauntlet_clamshell",
+        "left_hip_cowl"
       ],
-      "max_depth_m": 0.011618346098464063,
+      "max_depth_m": 0.011630977639456103,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": -0.3875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_lat_plate",
+        "pelvis_frame"
+      ],
+      "max_depth_m": 0.011599883094544633,
+      "witness_joint": "trunk_flex",
+      "witness_position": 0.5,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "pelvis_frame",
+        "right_lat_plate"
+      ],
+      "max_depth_m": 0.011594743475104675,
+      "witness_joint": "trunk_flex",
+      "witness_position": 0.5,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_finger_3_knuckle",
+        "right_thigh_shell"
+      ],
+      "max_depth_m": 0.01156813634551221,
+      "witness_joint": "right_shoulder_abduction",
+      "witness_position": -0.3875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_forearm_crest",
+        "right_hip_cowl"
+      ],
+      "max_depth_m": 0.011496411260053132,
+      "witness_joint": "right_shoulder_abduction",
+      "witness_position": -0.3875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_bicep_front",
+        "left_pectoral_trim"
+      ],
+      "max_depth_m": 0.011434224725987525,
       "witness_joint": "left_shoulder_flexion",
       "witness_position": -1.0,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_shin_shell",
-        "right_calf_clamshell"
+        "left_elbow_cap",
+        "left_lat_plate"
       ],
-      "max_depth_m": 0.0115699386016478,
-      "witness_joint": "left_hip_abduction",
-      "witness_position": -0.3,
+      "max_depth_m": 0.011431260149301408,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": -0.75,
       "position_unit": "rad"
     },
     {
@@ -2072,59 +2062,9 @@
         "right_bicep_front",
         "right_pectoral_trim"
       ],
-      "max_depth_m": 0.01154332813246853,
+      "max_depth_m": 0.011425354430671265,
       "witness_joint": "right_shoulder_flexion",
-      "witness_position": -0.5,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_calf_clamshell",
-        "right_shin_shell"
-      ],
-      "max_depth_m": 0.011398951864025942,
-      "witness_joint": "right_hip_abduction",
-      "witness_position": -0.3,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "ab_plate_1",
-        "right_chest_door"
-      ],
-      "max_depth_m": 0.01137842843715341,
-      "witness_joint": "trunk_flex",
-      "witness_position": 0.18125000000000002,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_gauntlet_sleeve",
-        "right_hip_outer_plate"
-      ],
-      "max_depth_m": 0.011374519886927498,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.3875,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "ab_plate_1",
-        "left_chest_door"
-      ],
-      "max_depth_m": 0.011371403973335322,
-      "witness_joint": "trunk_flex",
-      "witness_position": 0.2875,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_knee_cap",
-        "right_thigh_clamshell"
-      ],
-      "max_depth_m": 0.011369392956397476,
-      "witness_joint": "right_thigh_clamshell_hinge",
-      "witness_position": 1.4,
+      "witness_position": -1.0,
       "position_unit": "rad"
     },
     {
@@ -2149,42 +2089,12 @@
     },
     {
       "bodies": [
-        "left_knee_cap",
-        "left_thigh_clamshell"
+        "right_shin_guard",
+        "right_shin_shell"
       ],
-      "max_depth_m": 0.011294832171047956,
-      "witness_joint": "left_thigh_clamshell_hinge",
-      "witness_position": -1.4,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_calf_clamshell",
-        "right_boot_toe"
-      ],
-      "max_depth_m": 0.01127096111225865,
-      "witness_joint": "right_hip_abduction",
-      "witness_position": -0.3,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_bicep_front",
-        "right_chest_door"
-      ],
-      "max_depth_m": 0.011199704237301735,
-      "witness_joint": "right_shoulder_flexion",
-      "witness_position": -0.5,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_shin_stripe",
-        "right_shin_ridge"
-      ],
-      "max_depth_m": 0.011138896891570955,
-      "witness_joint": "right_hip_abduction",
-      "witness_position": -0.3,
+      "max_depth_m": 0.011314680824564088,
+      "witness_joint": "right_ankle_flexion",
+      "witness_position": -0.44999999999999996,
       "position_unit": "rad"
     },
     {
@@ -2199,162 +2109,62 @@
     },
     {
       "bodies": [
-        "codpiece",
-        "left_thigh_stripe"
+        "left_gauntlet_sleeve",
+        "left_hip_outer_plate"
       ],
-      "max_depth_m": 0.011089477848787761,
-      "witness_joint": "left_hip_flexion",
-      "witness_position": -0.5,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_shank_cuff",
-        "right_shin_shell"
-      ],
-      "max_depth_m": 0.010945331048664086,
-      "witness_joint": "right_hip_abduction",
-      "witness_position": -0.3,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "codpiece",
-        "left_thigh_clamshell"
-      ],
-      "max_depth_m": 0.010920633730226954,
-      "witness_joint": "left_hip_flexion",
-      "witness_position": -0.5,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_bicep_sleeve",
-        "left_rib_0"
-      ],
-      "max_depth_m": 0.010869467719063547,
+      "max_depth_m": 0.010774712065448862,
       "witness_joint": "left_shoulder_abduction",
       "witness_position": -0.3875,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "right_clavicle_cover",
-        "right_pectoral_trim"
+        "back_shell",
+        "right_bicep_sleeve"
       ],
-      "max_depth_m": 0.010810176835955905,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": 0.7,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_shank_cuff",
-        "right_calf_clamshell"
-      ],
-      "max_depth_m": 0.010780114251032698,
-      "witness_joint": "left_hip_abduction",
-      "witness_position": -0.19999999999999998,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_bicep_clamshell",
-        "left_elbow_cap"
-      ],
-      "max_depth_m": 0.010775344781109145,
-      "witness_joint": "left_elbow_cap_hinge",
-      "witness_position": 0.4375,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "backpack",
-        "left_pauldron"
-      ],
-      "max_depth_m": 0.010710469134060943,
-      "witness_joint": "left_shoulder_abduction",
-      "witness_position": 1.7875,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "helmet_neck_collar",
-        "right_bicep_clamshell"
-      ],
-      "max_depth_m": 0.010690804763290691,
+      "max_depth_m": 0.010771752036534495,
       "witness_joint": "right_shoulder_flexion",
-      "witness_position": 3.0,
+      "witness_position": 1.5,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_thigh_clamshell",
-        "right_thigh_cuff"
+        "back_shell",
+        "left_bicep_sleeve"
       ],
-      "max_depth_m": 0.010685021805337331,
-      "witness_joint": "left_hip_abduction",
-      "witness_position": -0.3,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_gauntlet_stripe",
-        "left_hip_cowl"
-      ],
-      "max_depth_m": 0.010677009346357482,
-      "witness_joint": "left_shoulder_abduction",
-      "witness_position": -0.3875,
+      "max_depth_m": 0.01076781799734346,
+      "witness_joint": "left_shoulder_flexion",
+      "witness_position": 1.5,
       "position_unit": "rad"
     },
     {
       "bodies": [
         "right_bicep_sleeve",
-        "right_rib_0"
+        "right_gauntlet_clamshell"
       ],
-      "max_depth_m": 0.01062973262698696,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.3875,
+      "max_depth_m": 0.010762275977967011,
+      "witness_joint": "right_elbow_flexion",
+      "witness_position": -2.4,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_thigh_cuff",
-        "right_thigh_clamshell"
+        "left_gauntlet_sleeve",
+        "left_rib_edge_2"
       ],
-      "max_depth_m": 0.010611722818128763,
-      "witness_joint": "right_hip_abduction",
-      "witness_position": -0.3,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_hand_plate",
-        "right_hip_cowl"
-      ],
-      "max_depth_m": 0.010547249681890802,
-      "witness_joint": "right_shoulder_abduction",
+      "max_depth_m": 0.010738763384175523,
+      "witness_joint": "left_shoulder_abduction",
       "witness_position": -0.3875,
       "position_unit": "rad"
     },
     {
       "bodies": [
         "right_bicep_clamshell",
-        "right_elbow_cap"
+        "right_gauntlet_clamshell"
       ],
-      "max_depth_m": 0.01052986127564556,
-      "witness_joint": "right_elbow_cap_hinge",
-      "witness_position": 0.4375,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "backpack",
-        "right_pauldron"
-      ],
-      "max_depth_m": 0.010519890452405034,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": 1.7875,
+      "max_depth_m": 0.01069818321542991,
+      "witness_joint": "right_elbow_flexion",
+      "witness_position": -2.09375,
       "position_unit": "rad"
     },
     {
@@ -2365,6 +2175,16 @@
       "max_depth_m": 0.010501129715235405,
       "witness_joint": "left_cheek_panel_hinge",
       "witness_position": 0.75,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_finger_3_middle_knuckle",
+        "right_thigh_shell"
+      ],
+      "max_depth_m": 0.010496401892313724,
+      "witness_joint": "right_shoulder_abduction",
+      "witness_position": -0.3875,
       "position_unit": "rad"
     },
     {
@@ -2389,102 +2209,92 @@
     },
     {
       "bodies": [
-        "left_gauntlet_clamshell",
-        "left_hip_cowl"
+        "right_calf_clamshell",
+        "right_thigh_clamshell"
       ],
-      "max_depth_m": 0.01046923411645361,
+      "max_depth_m": 0.010469439090980342,
+      "witness_joint": "right_knee_flexion",
+      "witness_position": -1.9187500000000002,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_finger_2_knuckle",
+        "left_thigh_shell"
+      ],
+      "max_depth_m": 0.010412799115291178,
       "witness_joint": "left_shoulder_abduction",
       "witness_position": -0.3875,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "helmet",
-        "left_bicep_sleeve"
+        "left_finger_2_middle_knuckle",
+        "left_thigh_shell"
       ],
-      "max_depth_m": 0.010426490380575993,
-      "witness_joint": "left_shoulder_flexion",
-      "witness_position": 3.0,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_boot_toe",
-        "right_shin_ridge"
-      ],
-      "max_depth_m": 0.01041509022887411,
-      "witness_joint": "left_hip_abduction",
-      "witness_position": -0.3,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_hand_plate",
-        "right_thigh_clamshell"
-      ],
-      "max_depth_m": 0.010328449175456876,
+      "max_depth_m": 0.010412799115291178,
       "witness_joint": "left_shoulder_abduction",
-      "witness_position": -0.75,
+      "witness_position": -0.3875,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "right_hip_cowl",
-        "right_thigh_clamshell"
+        "right_gauntlet_sleeve",
+        "right_hip_outer_plate"
       ],
-      "max_depth_m": 0.010226012626978219,
-      "witness_joint": "right_thigh_clamshell_hinge",
-      "witness_position": 1.2249999999999999,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_thigh_clamshell",
-        "right_hand_plate"
-      ],
-      "max_depth_m": 0.010194948666747323,
+      "max_depth_m": 0.01040468059427914,
       "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.75,
+      "witness_position": -0.3875,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "right_bicep_clamshell",
-        "right_cheek_panel"
+        "right_gauntlet_sleeve",
+        "right_rib_edge_2"
       ],
-      "max_depth_m": 0.010162624440461988,
-      "witness_joint": "right_shoulder_flexion",
-      "witness_position": 3.0,
+      "max_depth_m": 0.010315533980589682,
+      "witness_joint": "right_shoulder_abduction",
+      "witness_position": -0.3875,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_cheek_panel",
-        "left_elbow_cap"
+        "right_gauntlet_sleeve",
+        "right_hip_flap"
       ],
-      "max_depth_m": 0.010157920675391932,
+      "max_depth_m": 0.010149854853421054,
+      "witness_joint": "right_shoulder_abduction",
+      "witness_position": -0.3875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_calf_clamshell",
+        "right_thigh_shell"
+      ],
+      "max_depth_m": 0.010143178399716834,
+      "witness_joint": "right_knee_flexion",
+      "witness_position": -2.2,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "back_shell",
+        "left_bicep_clamshell"
+      ],
+      "max_depth_m": 0.010125375882602367,
       "witness_joint": "left_shoulder_flexion",
-      "witness_position": 3.0,
+      "witness_position": 1.5,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_elbow_cap",
-        "left_gauntlet_sleeve"
+        "back_shell",
+        "right_bicep_clamshell"
       ],
-      "max_depth_m": 0.01013775901648779,
-      "witness_joint": "left_elbow_flexion",
-      "witness_position": 0.05,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "ab_plate_3",
-        "pelvis_frame"
-      ],
-      "max_depth_m": 0.010124995714329428,
-      "witness_joint": "trunk_flex",
-      "witness_position": -0.35,
+      "max_depth_m": 0.010076312878732886,
+      "witness_joint": "right_shoulder_flexion",
+      "witness_position": 1.5,
       "position_unit": "rad"
     },
     {
@@ -2495,26 +2305,6 @@
       "max_depth_m": 0.010075852780635873,
       "witness_joint": "right_shoulder_flexion",
       "witness_position": 3.0,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_calf_clamshell",
-        "right_shank_cuff"
-      ],
-      "max_depth_m": 0.010054475727580352,
-      "witness_joint": "right_hip_abduction",
-      "witness_position": -0.19999999999999998,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_elbow_cap",
-        "right_gauntlet_sleeve"
-      ],
-      "max_depth_m": 0.010001991867534065,
-      "witness_joint": "right_elbow_flexion",
-      "witness_position": 0.05,
       "position_unit": "rad"
     },
     {
@@ -2539,82 +2329,42 @@
     },
     {
       "bodies": [
-        "codpiece",
-        "right_thigh_clamshell"
+        "left_thigh_clamshell",
+        "right_hand_plate"
       ],
-      "max_depth_m": 0.009889428995859454,
-      "witness_joint": "right_hip_flexion",
-      "witness_position": -0.5,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_shin_shell",
-        "left_thigh_clamshell"
-      ],
-      "max_depth_m": 0.009886211406275333,
-      "witness_joint": "left_knee_flexion",
-      "witness_position": -2.2,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_lat_plate",
-        "right_shoulder_module"
-      ],
-      "max_depth_m": 0.009859257959432877,
-      "witness_joint": "right_lat_plate_hinge",
+      "max_depth_m": 0.009863929591249375,
+      "witness_joint": "right_shoulder_abduction",
       "witness_position": -0.75,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_lat_plate",
-        "left_shoulder_module"
-      ],
-      "max_depth_m": 0.009827606571213558,
-      "witness_joint": "left_lat_plate_hinge",
-      "witness_position": 0.75,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "helmet_crown_panel",
-        "left_elbow_cap"
-      ],
-      "max_depth_m": 0.00975675553319136,
-      "witness_joint": "left_shoulder_flexion",
-      "witness_position": 3.0,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_bicep_clamshell",
-        "left_cheek_panel"
-      ],
-      "max_depth_m": 0.009727166566016401,
-      "witness_joint": "left_shoulder_flexion",
-      "witness_position": 3.0,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_gauntlet_sleeve",
-        "left_hip_outer_plate"
-      ],
-      "max_depth_m": 0.00972607510497711,
-      "witness_joint": "left_shoulder_abduction",
-      "witness_position": -0.3875,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_thigh_clamshell",
+        "left_hand_plate",
         "right_thigh_clamshell"
       ],
-      "max_depth_m": 0.009706800217805159,
-      "witness_joint": "right_hip_abduction",
-      "witness_position": -0.3,
+      "max_depth_m": 0.009828429514617485,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": -0.75,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_elbow_cap",
+        "right_lat_plate"
+      ],
+      "max_depth_m": 0.009801675591227297,
+      "witness_joint": "right_shoulder_abduction",
+      "witness_position": -0.75,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_bicep_clamshell",
+        "right_chest_inlay"
+      ],
+      "max_depth_m": 0.009680903232685925,
+      "witness_joint": "right_shoulder_flexion",
+      "witness_position": -1.0,
       "position_unit": "rad"
     },
     {
@@ -2625,6 +2375,56 @@
       "max_depth_m": 0.009670355663826726,
       "witness_joint": "left_shoulder_flexion",
       "witness_position": 3.0,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_hip_flap",
+        "right_thigh_shell"
+      ],
+      "max_depth_m": 0.009648947674746753,
+      "witness_joint": "right_hip_abduction",
+      "witness_position": 0.5,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_hip_flap",
+        "left_thigh_shell"
+      ],
+      "max_depth_m": 0.00963903665224232,
+      "witness_joint": "left_hip_abduction",
+      "witness_position": 0.5,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_bicep_clamshell",
+        "left_chest_inlay_centre"
+      ],
+      "max_depth_m": 0.00962642619934147,
+      "witness_joint": "left_shoulder_flexion",
+      "witness_position": -1.0,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_calf_clamshell",
+        "right_boot_toe"
+      ],
+      "max_depth_m": 0.009625572221895279,
+      "witness_joint": "right_hip_abduction",
+      "witness_position": -0.19999999999999998,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_finger_2",
+        "left_thigh_shell"
+      ],
+      "max_depth_m": 0.009612721568991166,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": -0.3875,
       "position_unit": "rad"
     },
     {
@@ -2659,6 +2459,16 @@
     },
     {
       "bodies": [
+        "left_calf_clamshell",
+        "right_shank_cuff"
+      ],
+      "max_depth_m": 0.009527148512158266,
+      "witness_joint": "right_hip_abduction",
+      "witness_position": -0.3,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
         "right_finger_4_distal",
         "right_thigh_cuff"
       ],
@@ -2669,22 +2479,12 @@
     },
     {
       "bodies": [
-        "right_gauntlet_sleeve",
-        "right_thigh_shell"
+        "left_palm_repulsor",
+        "left_thigh_shell"
       ],
-      "max_depth_m": 0.009521065318109912,
-      "witness_joint": "right_shoulder_abduction",
+      "max_depth_m": 0.009467079153349232,
+      "witness_joint": "left_shoulder_abduction",
       "witness_position": -0.3875,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_elbow_cap",
-        "right_lat_plate"
-      ],
-      "max_depth_m": 0.009500854402487468,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.75,
       "position_unit": "rad"
     },
     {
@@ -2709,22 +2509,72 @@
     },
     {
       "bodies": [
-        "left_finger_1_distal_knuckle",
+        "left_cheek_panel",
+        "left_elbow_cap"
+      ],
+      "max_depth_m": 0.00942560431387656,
+      "witness_joint": "left_shoulder_flexion",
+      "witness_position": 3.0,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_calf_clamshell",
         "left_thigh_shell"
       ],
-      "max_depth_m": 0.0093509778735596,
-      "witness_joint": "left_shoulder_abduction",
+      "max_depth_m": 0.009401635608220894,
+      "witness_joint": "left_knee_flexion",
+      "witness_position": -2.2,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_forearm_crest",
+        "right_hip_module"
+      ],
+      "max_depth_m": 0.00931858264219076,
+      "witness_joint": "right_shoulder_abduction",
       "witness_position": -0.3875,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_elbow_cap",
-        "left_flight_flap"
+        "right_hip_cowl",
+        "right_rib_2"
       ],
-      "max_depth_m": 0.009197431485768211,
-      "witness_joint": "left_shoulder_flexion",
-      "witness_position": 1.5,
+      "max_depth_m": 0.009306335899859493,
+      "witness_joint": "right_hip_abduction",
+      "witness_position": 0.5,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_finger_3",
+        "right_thigh_shell"
+      ],
+      "max_depth_m": 0.009226050368175224,
+      "witness_joint": "right_shoulder_abduction",
+      "witness_position": -0.3875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_finger_3_middle",
+        "right_thigh_shell"
+      ],
+      "max_depth_m": 0.009223283273413839,
+      "witness_joint": "right_shoulder_abduction",
+      "witness_position": -0.3875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_bicep_front",
+        "right_rib_0"
+      ],
+      "max_depth_m": 0.009222305918882153,
+      "witness_joint": "right_shoulder_abduction",
+      "witness_position": -0.3875,
       "position_unit": "rad"
     },
     {
@@ -2739,72 +2589,62 @@
     },
     {
       "bodies": [
-        "right_cheek_panel",
-        "right_elbow_cap"
+        "left_gauntlet_sleeve",
+        "left_hip_flap"
       ],
-      "max_depth_m": 0.009081484868204594,
-      "witness_joint": "right_shoulder_flexion",
-      "witness_position": 3.0,
+      "max_depth_m": 0.00916806519301508,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": -0.3875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_calf_clamshell",
+        "left_thigh_clamshell"
+      ],
+      "max_depth_m": 0.009162636193444821,
+      "witness_joint": "left_knee_flexion",
+      "witness_position": -1.9187500000000002,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_forearm_strut",
+        "left_lat_plate"
+      ],
+      "max_depth_m": 0.0091570485332189,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": -0.75,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_finger_2_middle",
+        "left_thigh_shell"
+      ],
+      "max_depth_m": 0.009095771132685905,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": -0.3875,
       "position_unit": "rad"
     },
     {
       "bodies": [
         "left_gauntlet_sleeve",
-        "left_hip_flap"
+        "left_thigh_shell"
       ],
-      "max_depth_m": 0.009057833291056572,
+      "max_depth_m": 0.009091452807165529,
       "witness_joint": "left_shoulder_abduction",
       "witness_position": -0.3875,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_bicep_clamshell",
-        "right_chest_inlay_centre"
-      ],
-      "max_depth_m": 0.008949865076165726,
-      "witness_joint": "right_shoulder_flexion",
-      "witness_position": -1.0,
       "position_unit": "rad"
     },
     {
       "bodies": [
         "left_forearm_crest",
-        "left_hip_cowl"
+        "left_hip_module"
       ],
-      "max_depth_m": 0.008870246212860783,
+      "max_depth_m": 0.009000883275339234,
       "witness_joint": "left_shoulder_abduction",
       "witness_position": -0.3875,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_hip_flap",
-        "left_thigh_shell"
-      ],
-      "max_depth_m": 0.008853096241620423,
-      "witness_joint": "left_hip_abduction",
-      "witness_position": 0.5,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_hip_flap",
-        "right_thigh_shell"
-      ],
-      "max_depth_m": 0.008843590674028155,
-      "witness_joint": "right_hip_abduction",
-      "witness_position": 0.5,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_shin_ridge",
-        "right_boot_toe"
-      ],
-      "max_depth_m": 0.008820453589338553,
-      "witness_joint": "right_hip_abduction",
-      "witness_position": -0.3,
       "position_unit": "rad"
     },
     {
@@ -2812,39 +2652,79 @@
         "helmet_crown_panel",
         "right_elbow_cap"
       ],
-      "max_depth_m": 0.008816668266269364,
+      "max_depth_m": 0.008988878498924676,
       "witness_joint": "right_shoulder_flexion",
       "witness_position": 3.0,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "right_bicep_clamshell",
-        "right_gauntlet_clamshell"
+        "left_hip_cowl",
+        "left_thigh_clamshell"
       ],
-      "max_depth_m": 0.00873188340304725,
-      "witness_joint": "right_elbow_flexion",
-      "witness_position": -2.09375,
+      "max_depth_m": 0.00897752814451695,
+      "witness_joint": "left_thigh_clamshell_hinge",
+      "witness_position": -1.2249999999999999,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_shin_shell",
-        "right_shin_stripe"
+        "right_hip_cowl",
+        "right_thigh_clamshell"
       ],
-      "max_depth_m": 0.008694081035876716,
-      "witness_joint": "right_hip_abduction",
-      "witness_position": -0.3,
+      "max_depth_m": 0.008955863807883867,
+      "witness_joint": "right_thigh_clamshell_hinge",
+      "witness_position": 1.2249999999999999,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_elbow_cap",
-        "left_lat_plate"
+        "left_thigh_clamshell",
+        "right_finger_3_middle_knuckle"
       ],
-      "max_depth_m": 0.008676341739065924,
-      "witness_joint": "left_shoulder_abduction",
+      "max_depth_m": 0.008887101768008512,
+      "witness_joint": "right_shoulder_abduction",
       "witness_position": -0.75,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_forearm_strut",
+        "right_lat_plate"
+      ],
+      "max_depth_m": 0.008866966660157433,
+      "witness_joint": "right_shoulder_abduction",
+      "witness_position": -0.75,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_cheek_panel",
+        "right_elbow_cap"
+      ],
+      "max_depth_m": 0.008813299328466546,
+      "witness_joint": "right_shoulder_flexion",
+      "witness_position": 3.0,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "ab_plate_3",
+        "pelvis_frame"
+      ],
+      "max_depth_m": 0.008812496419270453,
+      "witness_joint": "trunk_flex",
+      "witness_position": -0.35,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_back_vent",
+        "left_thigh_clamshell"
+      ],
+      "max_depth_m": 0.008789535734750931,
+      "witness_joint": "left_hip_flexion",
+      "witness_position": 2.0,
       "position_unit": "rad"
     },
     {
@@ -2852,9 +2732,49 @@
         "left_boot_toe",
         "right_calf_clamshell"
       ],
-      "max_depth_m": 0.008647230231361193,
-      "witness_joint": "right_hip_abduction",
+      "max_depth_m": 0.00874483670182322,
+      "witness_joint": "left_hip_abduction",
       "witness_position": -0.19999999999999998,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_back_vent",
+        "right_thigh_clamshell"
+      ],
+      "max_depth_m": 0.008720270089437985,
+      "witness_joint": "right_hip_flexion",
+      "witness_position": 2.0,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_shank_cuff",
+        "right_calf_clamshell"
+      ],
+      "max_depth_m": 0.008718300375322528,
+      "witness_joint": "left_hip_abduction",
+      "witness_position": -0.19999999999999998,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_bicep_front",
+        "left_rib_edge_0"
+      ],
+      "max_depth_m": 0.008694062566329841,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": -0.3875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "helmet_crown_panel",
+        "left_elbow_cap"
+      ],
+      "max_depth_m": 0.008607229884354209,
+      "witness_joint": "left_shoulder_flexion",
+      "witness_position": 3.0,
       "position_unit": "rad"
     },
     {
@@ -2869,12 +2789,12 @@
     },
     {
       "bodies": [
-        "left_gauntlet_sleeve",
-        "left_thigh_shell"
+        "left_bicep_sleeve",
+        "left_gauntlet_clamshell"
       ],
-      "max_depth_m": 0.008580892749168774,
-      "witness_joint": "left_shoulder_abduction",
-      "witness_position": -0.3875,
+      "max_depth_m": 0.008565092783234612,
+      "witness_joint": "left_elbow_flexion",
+      "witness_position": -2.4,
       "position_unit": "rad"
     },
     {
@@ -2899,22 +2819,12 @@
     },
     {
       "bodies": [
-        "right_gauntlet_sleeve",
-        "right_hip_flap"
+        "right_bicep_clamshell",
+        "right_gauntlet_clamshell_fixed_knuckle_upper"
       ],
-      "max_depth_m": 0.008547263166784917,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.3875,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_hand_plate",
-        "left_thigh_clamshell"
-      ],
-      "max_depth_m": 0.008493576986764697,
-      "witness_joint": "left_shoulder_abduction",
-      "witness_position": -0.75,
+      "max_depth_m": 0.008544261153526855,
+      "witness_joint": "right_elbow_flexion",
+      "witness_position": -1.48125,
       "position_unit": "rad"
     },
     {
@@ -2939,62 +2849,22 @@
     },
     {
       "bodies": [
-        "right_forearm_cuff",
+        "right_gauntlet_stripe",
         "right_hip_cowl"
       ],
-      "max_depth_m": 0.008471509597213225,
+      "max_depth_m": 0.00835338583019702,
       "witness_joint": "right_shoulder_abduction",
       "witness_position": -0.3875,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "right_gauntlet_clamshell",
-        "right_hand_plate"
+        "left_forearm_crest",
+        "left_hip_cowl"
       ],
-      "max_depth_m": 0.008431318168954122,
-      "witness_joint": "right_wrist_flexion",
-      "witness_position": 0.40000000000000013,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_finger_4_distal_knuckle",
-        "right_thigh_shell"
-      ],
-      "max_depth_m": 0.008395431784818257,
-      "witness_joint": "right_shoulder_abduction",
+      "max_depth_m": 0.0082518536279852,
+      "witness_joint": "left_shoulder_abduction",
       "witness_position": -0.3875,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_bicep_clamshell",
-        "left_gauntlet_clamshell"
-      ],
-      "max_depth_m": 0.008383794038730512,
-      "witness_joint": "left_elbow_flexion",
-      "witness_position": -2.09375,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_bicep_sleeve",
-        "right_chest_door_fixed_knuckle_lower"
-      ],
-      "max_depth_m": 0.00836035454435388,
-      "witness_joint": "right_shoulder_flexion",
-      "witness_position": -1.0,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_gauntlet_clamshell",
-        "left_hand_plate"
-      ],
-      "max_depth_m": 0.008342098384002718,
-      "witness_joint": "left_wrist_flexion",
-      "witness_position": -0.4,
       "position_unit": "rad"
     },
     {
@@ -3009,32 +2879,12 @@
     },
     {
       "bodies": [
-        "right_palm_repulsor",
-        "right_thigh_clamshell"
+        "left_bicep_clamshell",
+        "left_gauntlet_clamshell"
       ],
-      "max_depth_m": 0.008213160971356707,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.75,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_chest_door",
-        "left_pauldron"
-      ],
-      "max_depth_m": 0.008212822302899728,
-      "witness_joint": "left_shoulder_abduction",
-      "witness_position": 2.15,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_palm_repulsor",
-        "left_thigh_clamshell"
-      ],
-      "max_depth_m": 0.008212544135417036,
-      "witness_joint": "left_shoulder_abduction",
-      "witness_position": -0.75,
+      "max_depth_m": 0.008205728801066611,
+      "witness_joint": "left_elbow_flexion",
+      "witness_position": -1.7875,
       "position_unit": "rad"
     },
     {
@@ -3042,29 +2892,9 @@
         "left_bicep_clamshell",
         "left_gauntlet_clamshell_fixed_knuckle_lower"
       ],
-      "max_depth_m": 0.008165335547308285,
+      "max_depth_m": 0.008183345231687648,
       "witness_joint": "left_elbow_flexion",
-      "witness_position": -2.09375,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_hand_plate",
-        "left_hip_module"
-      ],
-      "max_depth_m": 0.00815692775392683,
-      "witness_joint": "left_shoulder_abduction",
-      "witness_position": -0.3875,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_hand_plate",
-        "right_hip_module"
-      ],
-      "max_depth_m": 0.008156600755349743,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.3875,
+      "witness_position": -1.7875,
       "position_unit": "rad"
     },
     {
@@ -3072,79 +2902,29 @@
         "right_bicep_clamshell",
         "right_gauntlet_clamshell_fixed_knuckle_lower"
       ],
-      "max_depth_m": 0.008141246585225364,
+      "max_depth_m": 0.008181653620556643,
       "witness_joint": "right_elbow_flexion",
-      "witness_position": -2.09375,
+      "witness_position": -1.7875,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "right_gauntlet_stripe",
-        "right_hip_cowl"
+        "left_chest_door_hinge_pin",
+        "left_gauntlet_sleeve"
       ],
-      "max_depth_m": 0.008130312216818624,
+      "max_depth_m": 0.00812957453026361,
+      "witness_joint": "left_elbow_flexion",
+      "witness_position": -2.4,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_finger_3_distal_knuckle",
+        "right_thigh_shell"
+      ],
+      "max_depth_m": 0.008085013408897607,
       "witness_joint": "right_shoulder_abduction",
       "witness_position": -0.3875,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "helmet",
-        "right_elbow_cap"
-      ],
-      "max_depth_m": 0.008111752578445678,
-      "witness_joint": "right_shoulder_flexion",
-      "witness_position": 3.0,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_bicep_clamshell",
-        "left_gauntlet_clamshell_fixed_knuckle_upper"
-      ],
-      "max_depth_m": 0.008110677964918635,
-      "witness_joint": "left_elbow_flexion",
-      "witness_position": -2.09375,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_bicep_clamshell",
-        "right_gauntlet_clamshell_fixed_knuckle_upper"
-      ],
-      "max_depth_m": 0.008096839582431839,
-      "witness_joint": "right_elbow_flexion",
-      "witness_position": -2.09375,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "backpack",
-        "right_bicep_front"
-      ],
-      "max_depth_m": 0.00809095284230299,
-      "witness_joint": "right_shoulder_flexion",
-      "witness_position": 2.0,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_bicep_clamshell",
-        "left_gauntlet_clamshell_moving_knuckle"
-      ],
-      "max_depth_m": 0.008089359243894152,
-      "witness_joint": "left_elbow_flexion",
-      "witness_position": -2.09375,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_bicep_clamshell",
-        "right_gauntlet_clamshell_moving_knuckle"
-      ],
-      "max_depth_m": 0.008084269365572903,
-      "witness_joint": "right_elbow_flexion",
-      "witness_position": -2.09375,
       "position_unit": "rad"
     },
     {
@@ -3159,72 +2939,32 @@
     },
     {
       "bodies": [
-        "backpack",
-        "left_bicep_front"
+        "right_bicep_clamshell",
+        "right_gauntlet_clamshell_moving_knuckle"
       ],
-      "max_depth_m": 0.008015355259113843,
-      "witness_joint": "left_shoulder_flexion",
-      "witness_position": 2.0,
+      "max_depth_m": 0.008009994285357699,
+      "witness_joint": "right_elbow_flexion",
+      "witness_position": -1.7875,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "right_shin_guard",
+        "left_shin_shell",
         "right_shin_stripe"
       ],
-      "max_depth_m": 0.007947072928948444,
-      "witness_joint": "right_ankle_flexion",
-      "witness_position": -0.44999999999999996,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_shin_guard",
-        "left_shin_stripe"
-      ],
-      "max_depth_m": 0.007947072928948442,
-      "witness_joint": "left_ankle_flexion",
-      "witness_position": -0.44999999999999996,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_forearm_crest",
-        "right_hip_cowl"
-      ],
-      "max_depth_m": 0.007891135736212885,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.3875,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "helmet",
-        "left_elbow_cap"
-      ],
-      "max_depth_m": 0.007877860541655181,
-      "witness_joint": "left_shoulder_flexion",
-      "witness_position": 3.0,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_forearm_cuff",
-        "left_hip_cowl"
-      ],
-      "max_depth_m": 0.007829492957559579,
-      "witness_joint": "left_shoulder_abduction",
-      "witness_position": -0.3875,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_shin_stripe",
-        "right_shank_cuff"
-      ],
-      "max_depth_m": 0.007808132044900046,
-      "witness_joint": "left_hip_abduction",
+      "max_depth_m": 0.007912132686982081,
+      "witness_joint": "right_hip_abduction",
       "witness_position": -0.3,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_finger_4_knuckle",
+        "left_thigh_clamshell"
+      ],
+      "max_depth_m": 0.007802616800688987,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": -0.75,
       "position_unit": "rad"
     },
     {
@@ -3239,26 +2979,6 @@
     },
     {
       "bodies": [
-        "left_shin_shell",
-        "right_knee_cap"
-      ],
-      "max_depth_m": 0.007699641194167011,
-      "witness_joint": "left_hip_abduction",
-      "witness_position": -0.3,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_knee_cap",
-        "right_shin_shell"
-      ],
-      "max_depth_m": 0.007697773978638165,
-      "witness_joint": "right_hip_abduction",
-      "witness_position": -0.3,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
         "chin_guard",
         "faceplate"
       ],
@@ -3269,62 +2989,72 @@
     },
     {
       "bodies": [
-        "right_hip_module",
-        "right_thigh_clamshell"
+        "left_elbow_cap",
+        "left_flight_flap"
       ],
-      "max_depth_m": 0.007615841358165414,
-      "witness_joint": "right_thigh_clamshell_hinge",
-      "witness_position": 1.2249999999999999,
+      "max_depth_m": 0.007671628136528679,
+      "witness_joint": "left_shoulder_flexion",
+      "witness_position": 1.5,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_hip_module",
-        "left_thigh_clamshell"
+        "left_thigh_clamshell",
+        "right_finger_3_knuckle"
       ],
-      "max_depth_m": 0.007614867191216052,
-      "witness_joint": "left_thigh_clamshell_hinge",
-      "witness_position": -1.2249999999999999,
+      "max_depth_m": 0.007623545640619187,
+      "witness_joint": "right_shoulder_abduction",
+      "witness_position": -0.75,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_bicep_sleeve",
-        "left_gauntlet_clamshell"
+        "left_back_vent",
+        "left_thigh_shell"
       ],
-      "max_depth_m": 0.007524414182122567,
-      "witness_joint": "left_elbow_flexion",
-      "witness_position": -2.4,
+      "max_depth_m": 0.007611388781627906,
+      "witness_joint": "left_hip_flexion",
+      "witness_position": 2.0,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_chest_door_fixed_knuckle_lower",
-        "left_forearm_crest"
+        "left_finger_2_distal_knuckle",
+        "left_thigh_shell"
       ],
-      "max_depth_m": 0.0074109890494595985,
-      "witness_joint": "left_elbow_flexion",
-      "witness_position": -2.4,
+      "max_depth_m": 0.007606811520321478,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": -0.3875,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "right_chest_door_fixed_knuckle_lower",
-        "right_forearm_crest"
+        "right_back_vent",
+        "right_thigh_shell"
       ],
-      "max_depth_m": 0.007410860720621066,
+      "max_depth_m": 0.007595463540835182,
+      "witness_joint": "right_hip_flexion",
+      "witness_position": 2.0,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_finger_3_distal",
+        "right_thigh_shell"
+      ],
+      "max_depth_m": 0.007495514293938739,
+      "witness_joint": "right_shoulder_abduction",
+      "witness_position": -0.3875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_elbow_cap",
+        "right_gauntlet_sleeve"
+      ],
+      "max_depth_m": 0.007493199458984143,
       "witness_joint": "right_elbow_flexion",
-      "witness_position": -2.4,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_hip_cowl",
-        "left_thigh_clamshell"
-      ],
-      "max_depth_m": 0.007396230055394308,
-      "witness_joint": "left_thigh_clamshell_hinge",
-      "witness_position": -1.2249999999999999,
+      "witness_position": 0.05,
       "position_unit": "rad"
     },
     {
@@ -3369,92 +3099,92 @@
     },
     {
       "bodies": [
-        "left_bicep_sleeve",
-        "left_chest_door_fixed_knuckle_lower"
-      ],
-      "max_depth_m": 0.007357648194549541,
-      "witness_joint": "left_shoulder_flexion",
-      "witness_position": -1.0,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_elbow_cap",
-        "right_flight_flap"
-      ],
-      "max_depth_m": 0.007316030954831039,
-      "witness_joint": "right_shoulder_flexion",
-      "witness_position": 1.5,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
         "left_shin_stripe",
         "right_shin_shell"
       ],
-      "max_depth_m": 0.007289094181355375,
+      "max_depth_m": 0.007351868000822047,
       "witness_joint": "left_hip_abduction",
       "witness_position": -0.3,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_finger_2_knuckle",
-        "left_thigh_shell"
+        "left_gauntlet_sleeve",
+        "left_lat_plate"
       ],
-      "max_depth_m": 0.007236044394556726,
+      "max_depth_m": 0.007263310243240877,
       "witness_joint": "left_shoulder_abduction",
-      "witness_position": -0.3875,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_shank_cuff",
-        "right_shin_stripe"
-      ],
-      "max_depth_m": 0.007217041680295041,
-      "witness_joint": "right_hip_abduction",
-      "witness_position": -0.3,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_lat_plate",
-        "left_pectoral_trim"
-      ],
-      "max_depth_m": 0.0071957330156899495,
-      "witness_joint": "left_lat_plate_hinge",
-      "witness_position": 0.3,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_finger_3_knuckle",
-        "right_thigh_shell"
-      ],
-      "max_depth_m": 0.007144286791641929,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.3875,
+      "witness_position": -0.75,
       "position_unit": "rad"
     },
     {
       "bodies": [
         "left_bicep_clamshell",
-        "left_gauntlet_sleeve"
+        "left_gauntlet_clamshell_fixed_knuckle_upper"
       ],
-      "max_depth_m": 0.007079048496047696,
+      "max_depth_m": 0.007252954838833766,
       "witness_joint": "left_elbow_flexion",
-      "witness_position": -2.09375,
+      "witness_position": -2.4,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "right_bicep_clamshell",
-        "right_gauntlet_sleeve"
+        "left_shin_shell",
+        "left_thigh_clamshell"
       ],
-      "max_depth_m": 0.007051791534201814,
-      "witness_joint": "right_elbow_flexion",
-      "witness_position": -2.09375,
+      "max_depth_m": 0.007165794550336085,
+      "witness_joint": "left_knee_flexion",
+      "witness_position": -1.6375000000000002,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_shin_shell",
+        "right_thigh_clamshell"
+      ],
+      "max_depth_m": 0.007145408473385111,
+      "witness_joint": "right_knee_flexion",
+      "witness_position": -1.6375000000000002,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_hand_plate",
+        "left_thigh_clamshell"
+      ],
+      "max_depth_m": 0.00713999507816125,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": -0.75,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "back_shell",
+        "right_elbow_cap"
+      ],
+      "max_depth_m": 0.0071241136269035304,
+      "witness_joint": "right_shoulder_flexion",
+      "witness_position": 1.5,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_hand_plate",
+        "right_thigh_clamshell"
+      ],
+      "max_depth_m": 0.007119703955762455,
+      "witness_joint": "right_shoulder_abduction",
+      "witness_position": -0.75,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_finger_2_distal",
+        "left_thigh_shell"
+      ],
+      "max_depth_m": 0.007118467083651601,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": -0.3875,
       "position_unit": "rad"
     },
     {
@@ -3469,32 +3199,22 @@
     },
     {
       "bodies": [
-        "left_bicep_front",
-        "shoulder_yoke"
-      ],
-      "max_depth_m": 0.006998901042065242,
-      "witness_joint": "left_shoulder_flexion",
-      "witness_position": 3.0,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
         "right_bicep_front",
         "shoulder_yoke"
       ],
-      "max_depth_m": 0.006997210469272597,
+      "max_depth_m": 0.006998776183600342,
       "witness_joint": "right_shoulder_flexion",
       "witness_position": 3.0,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "right_finger_4_distal",
-        "right_thigh_shell"
+        "left_bicep_front",
+        "shoulder_yoke"
       ],
-      "max_depth_m": 0.006857762632443336,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.3875,
+      "max_depth_m": 0.006996622121062224,
+      "witness_joint": "left_shoulder_flexion",
+      "witness_position": 3.0,
       "position_unit": "rad"
     },
     {
@@ -3509,22 +3229,12 @@
     },
     {
       "bodies": [
-        "left_gauntlet_sleeve",
-        "left_rib_edge_2"
+        "right_chest_door_hinge_pin",
+        "right_gauntlet_sleeve"
       ],
-      "max_depth_m": 0.006811945075303146,
-      "witness_joint": "left_shoulder_abduction",
-      "witness_position": -0.3875,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_gauntlet_sleeve",
-        "right_lat_plate"
-      ],
-      "max_depth_m": 0.006740988577994874,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.75,
+      "max_depth_m": 0.0067207922988707985,
+      "witness_joint": "right_elbow_flexion",
+      "witness_position": -2.4,
       "position_unit": "rad"
     },
     {
@@ -3539,112 +3249,122 @@
     },
     {
       "bodies": [
-        "left_gauntlet_sleeve",
-        "left_lat_plate"
+        "left_gauntlet_stripe",
+        "left_hip_cowl"
       ],
-      "max_depth_m": 0.0066433892634619116,
+      "max_depth_m": 0.006666150611182501,
       "witness_joint": "left_shoulder_abduction",
-      "witness_position": -0.75,
+      "witness_position": -0.3875,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "right_bicep_sleeve",
-        "right_gauntlet_clamshell"
+        "left_chest_door_hinge_pin",
+        "left_forearm_crest"
       ],
-      "max_depth_m": 0.00661110155812594,
+      "max_depth_m": 0.006620444904000923,
+      "witness_joint": "left_elbow_flexion",
+      "witness_position": -2.4,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_bicep_clamshell",
+        "left_gauntlet_clamshell_moving_knuckle"
+      ],
+      "max_depth_m": 0.0065628615388151155,
+      "witness_joint": "left_elbow_flexion",
+      "witness_position": -1.7875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_hip_module",
+        "left_thigh_clamshell"
+      ],
+      "max_depth_m": 0.006463090519747264,
+      "witness_joint": "left_thigh_clamshell_hinge",
+      "witness_position": -1.2249999999999999,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_hip_module",
+        "right_thigh_clamshell"
+      ],
+      "max_depth_m": 0.006462734597138392,
+      "witness_joint": "right_thigh_clamshell_hinge",
+      "witness_position": 1.2249999999999999,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "back_shell",
+        "left_elbow_cap"
+      ],
+      "max_depth_m": 0.006423190122434539,
+      "witness_joint": "left_shoulder_flexion",
+      "witness_position": 1.5,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_chest_door_moving_knuckle",
+        "right_gauntlet_sleeve"
+      ],
+      "max_depth_m": 0.006421744916377113,
       "witness_joint": "right_elbow_flexion",
       "witness_position": -2.4,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "right_ankle_flap",
-        "right_ankle_motor_cover"
+        "left_chest_door_moving_knuckle",
+        "left_gauntlet_sleeve"
       ],
-      "max_depth_m": 0.006607911237896842,
-      "witness_joint": "right_hip_abduction",
-      "witness_position": 0.4000000000000001,
+      "max_depth_m": 0.0064215179520206575,
+      "witness_joint": "left_elbow_flexion",
+      "witness_position": -2.4,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_ankle_flap",
-        "left_ankle_motor_cover"
+        "right_bicep_front",
+        "right_rib_edge_0"
       ],
-      "max_depth_m": 0.006607911237896796,
-      "witness_joint": "left_hip_flexion",
-      "witness_position": 2.0,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_finger_1_distal",
-        "left_thigh_shell"
-      ],
-      "max_depth_m": 0.0065665611071316415,
-      "witness_joint": "left_shoulder_abduction",
+      "max_depth_m": 0.006375712644001406,
+      "witness_joint": "right_shoulder_abduction",
       "witness_position": -0.3875,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "ab_plate_3",
-        "belt_plate"
+        "left_shin_edge",
+        "right_boot_toe"
       ],
-      "max_depth_m": 0.006552633554614614,
-      "witness_joint": "ab_plate_3_hinge",
-      "witness_position": 0.30624999999999997,
+      "max_depth_m": 0.006355162588262844,
+      "witness_joint": "right_hip_abduction",
+      "witness_position": -0.3,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_knee_bezel",
-        "left_thigh_clamshell"
+        "right_bicep_sleeve",
+        "right_rib_0"
       ],
-      "max_depth_m": 0.006545451106299316,
-      "witness_joint": "left_thigh_clamshell_hinge",
-      "witness_position": -1.4,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_hand_plate",
-        "left_thigh_shell"
-      ],
-      "max_depth_m": 0.006494071741979876,
-      "witness_joint": "left_shoulder_abduction",
+      "max_depth_m": 0.006352909337126171,
+      "witness_joint": "right_shoulder_abduction",
       "witness_position": -0.3875,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "right_hip_cowl",
-        "right_rib_2"
+        "left_forearm_cuff",
+        "left_hip_cowl"
       ],
-      "max_depth_m": 0.006471803328838576,
-      "witness_joint": "right_hip_abduction",
-      "witness_position": 0.5,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_knee_bezel",
-        "right_thigh_clamshell"
-      ],
-      "max_depth_m": 0.006405509495047363,
-      "witness_joint": "right_thigh_clamshell_hinge",
-      "witness_position": 1.4,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_bicep_front",
-        "left_pectoral_trim"
-      ],
-      "max_depth_m": 0.006384799152074313,
-      "witness_joint": "left_shoulder_flexion",
-      "witness_position": -0.5,
+      "max_depth_m": 0.006318215922381548,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": -0.3875,
       "position_unit": "rad"
     },
     {
@@ -3669,22 +3389,42 @@
     },
     {
       "bodies": [
-        "left_finger_2_middle_knuckle",
-        "right_thigh_clamshell"
+        "left_shin_guard",
+        "left_shin_stripe"
       ],
-      "max_depth_m": 0.006221739344414192,
-      "witness_joint": "left_shoulder_abduction",
-      "witness_position": -0.75,
+      "max_depth_m": 0.006243817867430539,
+      "witness_joint": "left_ankle_flexion",
+      "witness_position": -0.3,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_finger_2_distal_knuckle",
-        "right_thigh_clamshell"
+        "right_shin_guard",
+        "right_shin_stripe"
       ],
-      "max_depth_m": 0.006221739344414191,
-      "witness_joint": "left_shoulder_abduction",
-      "witness_position": -0.75,
+      "max_depth_m": 0.006243817867430533,
+      "witness_joint": "right_ankle_flexion",
+      "witness_position": -0.3,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_hand_plate",
+        "right_thigh_shell"
+      ],
+      "max_depth_m": 0.006116975352257825,
+      "witness_joint": "right_shoulder_abduction",
+      "witness_position": -0.3875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_chest_door_moving_knuckle",
+        "left_forearm_crest"
+      ],
+      "max_depth_m": 0.006106481584419143,
+      "witness_joint": "left_elbow_flexion",
+      "witness_position": -2.4,
       "position_unit": "rad"
     },
     {
@@ -3709,62 +3449,82 @@
     },
     {
       "bodies": [
-        "helmet",
-        "right_bicep_clamshell"
+        "left_boot_toe",
+        "right_shin_edge"
       ],
-      "max_depth_m": 0.006000288460867566,
-      "witness_joint": "right_shoulder_flexion",
-      "witness_position": 3.0,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_lat_plate",
-        "right_pectoral_trim"
-      ],
-      "max_depth_m": 0.005896885892758502,
-      "witness_joint": "right_lat_plate_hinge",
-      "witness_position": -0.44999999999999996,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_thruster_cover",
-        "right_boot"
-      ],
-      "max_depth_m": 0.005848212281292148,
-      "witness_joint": "right_hip_abduction",
-      "witness_position": -0.19999999999999998,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_boot",
-        "right_thruster_cover"
-      ],
-      "max_depth_m": 0.005848212281292119,
+      "max_depth_m": 0.006054003657461045,
       "witness_joint": "left_hip_abduction",
       "witness_position": -0.3,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "right_hand_plate",
-        "right_thigh_clamshell"
+        "helmet",
+        "right_elbow_cap"
       ],
-      "max_depth_m": 0.005813432464726495,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.75,
+      "max_depth_m": 0.005977770631139432,
+      "witness_joint": "right_shoulder_flexion",
+      "witness_position": 3.0,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "right_hand_plate",
+        "left_thigh_clamshell",
         "right_thigh_shell"
       ],
-      "max_depth_m": 0.005812590612140239,
+      "max_depth_m": 0.005969902385168898,
+      "witness_joint": "right_hip_abduction",
+      "witness_position": -0.3,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_hand",
+        "left_hip_cowl"
+      ],
+      "max_depth_m": 0.005968681632555157,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": -0.3875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_hand_plate",
+        "left_thigh_shell"
+      ],
+      "max_depth_m": 0.005967587380783342,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": -0.3875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_chest_door_moving_knuckle",
+        "right_forearm_crest"
+      ],
+      "max_depth_m": 0.00590309297955146,
+      "witness_joint": "right_elbow_flexion",
+      "witness_position": -2.4,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_hand",
+        "right_hip_cowl"
+      ],
+      "max_depth_m": 0.00589705822130407,
       "witness_joint": "right_shoulder_abduction",
       "witness_position": -0.3875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_thigh_shell",
+        "right_thigh_clamshell"
+      ],
+      "max_depth_m": 0.005851432232758124,
+      "witness_joint": "left_hip_abduction",
+      "witness_position": -0.3,
       "position_unit": "rad"
     },
     {
@@ -3772,7 +3532,7 @@
         "right_gauntlet_sleeve",
         "right_rib_insert_2"
       ],
-      "max_depth_m": 0.005803196579036182,
+      "max_depth_m": 0.00584349415813719,
       "witness_joint": "right_shoulder_abduction",
       "witness_position": -0.3875,
       "position_unit": "rad"
@@ -3789,12 +3549,22 @@
     },
     {
       "bodies": [
-        "left_gauntlet_sleeve",
-        "left_rib_insert_2"
+        "left_bicep_front",
+        "left_rib_0"
       ],
-      "max_depth_m": 0.005711808670525276,
+      "max_depth_m": 0.005711225934778248,
       "witness_joint": "left_shoulder_abduction",
       "witness_position": -0.3875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_gauntlet_sleeve",
+        "right_lat_plate"
+      ],
+      "max_depth_m": 0.005681795560906249,
+      "witness_joint": "right_shoulder_abduction",
+      "witness_position": -0.75,
       "position_unit": "rad"
     },
     {
@@ -3814,6 +3584,36 @@
       ],
       "max_depth_m": 0.005656169374357369,
       "witness_joint": "right_shoulder_abduction",
+      "witness_position": -0.3875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_back_scapula",
+        "right_gauntlet_clamshell_moving_knuckle"
+      ],
+      "max_depth_m": 0.005619221101888779,
+      "witness_joint": "right_shoulder_flexion",
+      "witness_position": 1.5,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "helmet",
+        "right_bicep_clamshell"
+      ],
+      "max_depth_m": 0.005615499942298793,
+      "witness_joint": "right_shoulder_flexion",
+      "witness_position": 3.0,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_gauntlet_sleeve",
+        "left_rib_insert_2"
+      ],
+      "max_depth_m": 0.005557025912963672,
+      "witness_joint": "left_shoulder_abduction",
       "witness_position": -0.3875,
       "position_unit": "rad"
     },
@@ -3839,12 +3639,82 @@
     },
     {
       "bodies": [
-        "helmet",
-        "left_bicep_clamshell"
+        "left_calf_clamshell",
+        "left_thigh_stripe"
       ],
-      "max_depth_m": 0.0053444146303199885,
+      "max_depth_m": 0.005540838108377582,
+      "witness_joint": "left_knee_flexion",
+      "witness_position": -2.2,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_forearm_cuff",
+        "right_hip_cowl"
+      ],
+      "max_depth_m": 0.005538397382975889,
+      "witness_joint": "right_shoulder_abduction",
+      "witness_position": -0.3875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_calf_clamshell",
+        "right_thigh_stripe"
+      ],
+      "max_depth_m": 0.0055317567637563035,
+      "witness_joint": "right_knee_flexion",
+      "witness_position": -2.2,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_palm_repulsor",
+        "right_thigh_clamshell"
+      ],
+      "max_depth_m": 0.005515875286896951,
+      "witness_joint": "right_shoulder_abduction",
+      "witness_position": -0.75,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_palm_repulsor",
+        "left_thigh_clamshell"
+      ],
+      "max_depth_m": 0.005515705313583204,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": -0.75,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_chest_door_fixed_knuckle_lower",
+        "left_gauntlet_sleeve"
+      ],
+      "max_depth_m": 0.005392636251539658,
+      "witness_joint": "left_elbow_flexion",
+      "witness_position": -2.4,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "helmet",
+        "left_elbow_cap"
+      ],
+      "max_depth_m": 0.0053924502239348845,
       "witness_joint": "left_shoulder_flexion",
       "witness_position": 3.0,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_shin_stripe",
+        "right_shin_ridge"
+      ],
+      "max_depth_m": 0.005348849886817197,
+      "witness_joint": "right_hip_abduction",
+      "witness_position": -0.3,
       "position_unit": "rad"
     },
     {
@@ -3869,82 +3739,82 @@
     },
     {
       "bodies": [
-        "left_bicep_sleeve",
-        "left_chest_inlay"
-      ],
-      "max_depth_m": 0.00530426989511016,
-      "witness_joint": "left_shoulder_flexion",
-      "witness_position": -1.0,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
         "left_bicep_clamshell",
-        "right_back_scapula"
+        "left_gauntlet_clamshell_hinge_pin"
       ],
-      "max_depth_m": 0.005131241528771011,
+      "max_depth_m": 0.0052314350770830366,
+      "witness_joint": "left_elbow_flexion",
+      "witness_position": -1.7875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_bicep_clamshell",
+        "right_gauntlet_clamshell_hinge_pin"
+      ],
+      "max_depth_m": 0.0052227033441179455,
+      "witness_joint": "right_elbow_flexion",
+      "witness_position": -1.7875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_chest_door_fixed_knuckle_lower",
+        "right_gauntlet_sleeve"
+      ],
+      "max_depth_m": 0.005154201751972698,
+      "witness_joint": "right_elbow_flexion",
+      "witness_position": -2.4,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "helmet",
+        "left_bicep_clamshell"
+      ],
+      "max_depth_m": 0.005150200872071143,
       "witness_joint": "left_shoulder_flexion",
-      "witness_position": 1.5,
+      "witness_position": 3.0,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "right_forearm_strut",
-        "right_lat_plate"
+        "left_shin_stripe",
+        "right_shin_stripe"
       ],
-      "max_depth_m": 0.005117511833194177,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.75,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_finger_1_middle_knuckle",
-        "left_thigh_shell"
-      ],
-      "max_depth_m": 0.005088269154329434,
-      "witness_joint": "left_shoulder_abduction",
-      "witness_position": -0.3875,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_finger_2",
-        "right_thigh_clamshell"
-      ],
-      "max_depth_m": 0.00500914995869936,
-      "witness_joint": "left_shoulder_abduction",
-      "witness_position": -0.75,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_finger_2_middle",
-        "right_thigh_clamshell"
-      ],
-      "max_depth_m": 0.00500631120922003,
-      "witness_joint": "left_shoulder_abduction",
-      "witness_position": -0.75,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_thruster_cover",
-        "right_heel_thruster"
-      ],
-      "max_depth_m": 0.00500341330234886,
+      "max_depth_m": 0.005149883549007473,
       "witness_joint": "right_hip_abduction",
       "witness_position": -0.3,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_finger_2_distal",
-        "right_thigh_clamshell"
+        "right_bicep_sleeve",
+        "right_chest_door_fixed_knuckle_lower"
       ],
-      "max_depth_m": 0.005002711995966277,
-      "witness_joint": "left_shoulder_abduction",
-      "witness_position": -0.75,
+      "max_depth_m": 0.005103896504888274,
+      "witness_joint": "right_shoulder_flexion",
+      "witness_position": -1.0,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_bicep_sleeve",
+        "left_chest_door_fixed_knuckle_lower"
+      ],
+      "max_depth_m": 0.005080997260795548,
+      "witness_joint": "left_shoulder_flexion",
+      "witness_position": -1.0,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_bicep_sleeve",
+        "right_rib_edge_0"
+      ],
+      "max_depth_m": 0.005059696870651394,
+      "witness_joint": "right_shoulder_abduction",
+      "witness_position": -0.3875,
       "position_unit": "rad"
     },
     {
@@ -3959,42 +3829,12 @@
     },
     {
       "bodies": [
-        "left_heel_thruster",
-        "right_thruster_cover"
-      ],
-      "max_depth_m": 0.004999805924528432,
-      "witness_joint": "left_hip_abduction",
-      "witness_position": -0.3,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
         "codpiece",
         "right_thigh_cuff"
       ],
       "max_depth_m": 0.004996457644263567,
       "witness_joint": "right_hip_flexion",
       "witness_position": -0.5,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_boot_toe",
-        "right_shin_edge"
-      ],
-      "max_depth_m": 0.004974933839547007,
-      "witness_joint": "left_hip_abduction",
-      "witness_position": -0.3,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_chest_door_fixed_knuckle_lower",
-        "left_gauntlet_sleeve"
-      ],
-      "max_depth_m": 0.004924527243948998,
-      "witness_joint": "left_elbow_flexion",
-      "witness_position": -2.4,
       "position_unit": "rad"
     },
     {
@@ -4029,22 +3869,42 @@
     },
     {
       "bodies": [
-        "left_finger_2_knuckle",
+        "right_chest_door_hinge_pin",
+        "right_forearm_crest"
+      ],
+      "max_depth_m": 0.004772973159523057,
+      "witness_joint": "right_elbow_flexion",
+      "witness_position": -2.4,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_bicep_sleeve",
+        "left_chest_inlay"
+      ],
+      "max_depth_m": 0.0046801168567696385,
+      "witness_joint": "left_shoulder_flexion",
+      "witness_position": -1.0,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_finger_2",
         "right_thigh_clamshell"
       ],
-      "max_depth_m": 0.0048958825031915195,
+      "max_depth_m": 0.004566683571089795,
       "witness_joint": "left_shoulder_abduction",
       "witness_position": -0.75,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "right_chest_door_fixed_knuckle_lower",
-        "right_gauntlet_sleeve"
+        "left_finger_3_distal",
+        "right_thigh_clamshell"
       ],
-      "max_depth_m": 0.004888856599426369,
-      "witness_joint": "right_elbow_flexion",
-      "witness_position": -2.4,
+      "max_depth_m": 0.0045522750989861124,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": -0.75,
       "position_unit": "rad"
     },
     {
@@ -4052,7 +3912,7 @@
         "left_thigh_clamshell",
         "right_finger_3"
       ],
-      "max_depth_m": 0.0048744505550689585,
+      "max_depth_m": 0.0045442798394601715,
       "witness_joint": "right_shoulder_abduction",
       "witness_position": -0.75,
       "position_unit": "rad"
@@ -4060,201 +3920,11 @@
     {
       "bodies": [
         "left_thigh_clamshell",
-        "right_finger_3_middle"
+        "right_finger_2_distal"
       ],
-      "max_depth_m": 0.004871682204093641,
+      "max_depth_m": 0.004539137719436883,
       "witness_joint": "right_shoulder_abduction",
       "witness_position": -0.75,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_thigh_clamshell",
-        "right_finger_3_distal"
-      ],
-      "max_depth_m": 0.004869818410638465,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.75,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_bicep_front",
-        "left_rib_0"
-      ],
-      "max_depth_m": 0.004831377986146115,
-      "witness_joint": "left_shoulder_abduction",
-      "witness_position": -0.3875,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_gauntlet_sleeve",
-        "right_rib_edge_2"
-      ],
-      "max_depth_m": 0.0048274025930103775,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.3875,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_calf_clamshell",
-        "right_shin_guard"
-      ],
-      "max_depth_m": 0.004796643402236164,
-      "witness_joint": "right_calf_clamshell_hinge",
-      "witness_position": 1.4,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_finger_1_middle",
-        "left_thigh_shell"
-      ],
-      "max_depth_m": 0.004783600815499368,
-      "witness_joint": "left_shoulder_abduction",
-      "witness_position": -0.3875,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_finger_4_middle_knuckle",
-        "right_thigh_shell"
-      ],
-      "max_depth_m": 0.004778893413248534,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.3875,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_calf_clamshell",
-        "left_shin_guard"
-      ],
-      "max_depth_m": 0.004756580499614258,
-      "witness_joint": "left_calf_clamshell_hinge",
-      "witness_position": -1.4,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_bicep_sleeve",
-        "right_chest_door_hinge_pin"
-      ],
-      "max_depth_m": 0.004712233471618604,
-      "witness_joint": "right_shoulder_flexion",
-      "witness_position": -1.0,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_calf_clamshell",
-        "right_thigh_clamshell"
-      ],
-      "max_depth_m": 0.004610286043392156,
-      "witness_joint": "right_knee_flexion",
-      "witness_position": -2.2,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_calf_clamshell",
-        "left_thigh_clamshell"
-      ],
-      "max_depth_m": 0.004586395859481966,
-      "witness_joint": "left_knee_flexion",
-      "witness_position": -2.2,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_thigh_clamshell",
-        "right_finger_3_knuckle"
-      ],
-      "max_depth_m": 0.00455748078053615,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.75,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_thigh_clamshell",
-        "right_finger_3_middle_knuckle"
-      ],
-      "max_depth_m": 0.00455748078053615,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.75,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_thigh_clamshell",
-        "right_finger_3_distal_knuckle"
-      ],
-      "max_depth_m": 0.00455748078053615,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.75,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_forearm_strut",
-        "left_lat_plate"
-      ],
-      "max_depth_m": 0.004507585963469826,
-      "witness_joint": "left_shoulder_abduction",
-      "witness_position": -0.75,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_gauntlet_hatch",
-        "right_lat_plate"
-      ],
-      "max_depth_m": 0.004503247943896753,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.75,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_gauntlet_hatch",
-        "left_lat_plate"
-      ],
-      "max_depth_m": 0.004500873797250429,
-      "witness_joint": "left_shoulder_abduction",
-      "witness_position": -0.75,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_thigh_clamshell",
-        "right_calf_clamshell"
-      ],
-      "max_depth_m": 0.004441443794931987,
-      "witness_joint": "right_hip_abduction",
-      "witness_position": -0.3,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_bicep_clamshell",
-        "right_gauntlet_clamshell_hinge_pin"
-      ],
-      "max_depth_m": 0.004433821129347315,
-      "witness_joint": "right_elbow_flexion",
-      "witness_position": -2.4,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_back_scapula",
-        "right_bicep_clamshell"
-      ],
-      "max_depth_m": 0.0044240307870120395,
-      "witness_joint": "right_shoulder_flexion",
-      "witness_position": 1.5,
       "position_unit": "rad"
     },
     {
@@ -4262,37 +3932,57 @@
         "left_forearm_crest",
         "left_thigh_shell"
       ],
-      "max_depth_m": 0.0043831234943672425,
+      "max_depth_m": 0.004516101454917845,
       "witness_joint": "left_shoulder_abduction",
       "witness_position": -0.3875,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_chest_door_hinge_pin",
-        "left_forearm_crest"
+        "left_bicep_sleeve",
+        "left_rib_edge_0"
       ],
-      "max_depth_m": 0.0043696879250454,
-      "witness_joint": "left_elbow_flexion",
-      "witness_position": -2.4,
+      "max_depth_m": 0.004482066793624159,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": -0.3875,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "right_chest_door_hinge_pin",
-        "right_forearm_crest"
+        "right_bicep_sleeve",
+        "right_chest_door_hinge_pin"
       ],
-      "max_depth_m": 0.004369566948850343,
-      "witness_joint": "right_elbow_flexion",
-      "witness_position": -2.4,
+      "max_depth_m": 0.004480328061591726,
+      "witness_joint": "right_shoulder_flexion",
+      "witness_position": -1.0,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_calf_clamshell",
-        "right_thigh_clamshell"
+        "right_forearm_crest",
+        "right_thigh_shell"
       ],
-      "max_depth_m": 0.004366449027092858,
+      "max_depth_m": 0.004428928966895766,
+      "witness_joint": "right_shoulder_abduction",
+      "witness_position": -0.3875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_bicep_sleeve",
+        "left_chest_door_hinge_pin"
+      ],
+      "max_depth_m": 0.004410113751314685,
+      "witness_joint": "left_shoulder_flexion",
+      "witness_position": -1.0,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_shin_ridge",
+        "right_shin_shell"
+      ],
+      "max_depth_m": 0.00439985638988597,
       "witness_joint": "left_hip_abduction",
       "witness_position": -0.3,
       "position_unit": "rad"
@@ -4319,42 +4009,32 @@
     },
     {
       "bodies": [
-        "right_bicep_sleeve",
-        "right_flight_flap"
+        "left_shin_shell",
+        "right_shin_ridge"
       ],
-      "max_depth_m": 0.0043280109924022465,
-      "witness_joint": "right_shoulder_flexion",
-      "witness_position": 1.5,
+      "max_depth_m": 0.0042962579066807855,
+      "witness_joint": "right_hip_abduction",
+      "witness_position": -0.3,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "right_forearm_crest",
-        "right_thigh_shell"
+        "left_finger_2_knuckle",
+        "right_thigh_clamshell"
       ],
-      "max_depth_m": 0.00432483927287293,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.3875,
+      "max_depth_m": 0.004274669203378125,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": -0.75,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_bicep_sleeve",
-        "left_flight_flap"
+        "left_finger_2_middle_knuckle",
+        "right_thigh_clamshell"
       ],
-      "max_depth_m": 0.004321279347175498,
-      "witness_joint": "left_shoulder_flexion",
-      "witness_position": 1.5,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_bicep_clamshell",
-        "left_gauntlet_clamshell_hinge_pin"
-      ],
-      "max_depth_m": 0.004276903345366577,
-      "witness_joint": "left_elbow_flexion",
-      "witness_position": -2.09375,
+      "max_depth_m": 0.004274669203378125,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": -0.75,
       "position_unit": "rad"
     },
     {
@@ -4362,39 +4042,49 @@
         "right_finger_1_knuckle",
         "right_thigh_clamshell"
       ],
-      "max_depth_m": 0.004239349423952464,
+      "max_depth_m": 0.004274669203378125,
       "witness_joint": "right_shoulder_abduction",
       "witness_position": -0.75,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "right_finger_4_middle",
-        "right_thigh_shell"
+        "left_hip_cowl",
+        "left_rib_2"
       ],
-      "max_depth_m": 0.004112458201206783,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.3875,
+      "max_depth_m": 0.004256965470203123,
+      "witness_joint": "left_hip_abduction",
+      "witness_position": 0.5,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "right_chest_door",
-        "right_pauldron_edge"
+        "left_back_scapula",
+        "right_gauntlet_clamshell"
       ],
-      "max_depth_m": 0.004065805438518637,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": 2.15,
+      "max_depth_m": 0.00423547651162817,
+      "witness_joint": "right_shoulder_flexion",
+      "witness_position": 1.5,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "right_bicep_front",
-        "right_rib_0"
+        "left_thigh_clamshell",
+        "right_finger_2_distal_knuckle"
       ],
-      "max_depth_m": 0.004049778376314021,
+      "max_depth_m": 0.004159913296220101,
       "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.3875,
+      "witness_position": -0.75,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_shin_ridge",
+        "right_shin_stripe"
+      ],
+      "max_depth_m": 0.004159034740677097,
+      "witness_joint": "left_hip_abduction",
+      "witness_position": -0.3,
       "position_unit": "rad"
     },
     {
@@ -4409,12 +4099,12 @@
     },
     {
       "bodies": [
-        "left_shin_stripe",
-        "right_shin_stripe"
+        "left_gauntlet_clamshell_moving_knuckle",
+        "right_back_scapula"
       ],
-      "max_depth_m": 0.003970574493433807,
-      "witness_joint": "left_hip_abduction",
-      "witness_position": -0.3,
+      "max_depth_m": 0.003956512473896421,
+      "witness_joint": "left_shoulder_flexion",
+      "witness_position": 1.5,
       "position_unit": "rad"
     },
     {
@@ -4439,32 +4129,22 @@
     },
     {
       "bodies": [
-        "left_finger_4_knuckle",
-        "left_thigh_clamshell"
+        "left_gauntlet_clamshell",
+        "right_back_scapula"
       ],
-      "max_depth_m": 0.0038965351762518096,
-      "witness_joint": "left_shoulder_abduction",
-      "witness_position": -0.75,
+      "max_depth_m": 0.003839068583137051,
+      "witness_joint": "left_shoulder_flexion",
+      "witness_position": 1.5,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_shin_ridge",
-        "right_shin_stripe"
+        "left_calf_clamshell",
+        "left_shin_guard"
       ],
-      "max_depth_m": 0.003890752421745968,
-      "witness_joint": "left_hip_abduction",
-      "witness_position": -0.3,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_gauntlet_sleeve",
-        "left_thigh_strut"
-      ],
-      "max_depth_m": 0.0038337564440374377,
-      "witness_joint": "left_shoulder_abduction",
-      "witness_position": -0.3875,
+      "max_depth_m": 0.003837045197086885,
+      "witness_joint": "left_calf_clamshell_hinge",
+      "witness_position": -1.4,
       "position_unit": "rad"
     },
     {
@@ -4479,30 +4159,40 @@
     },
     {
       "bodies": [
-        "right_gauntlet_sleeve",
-        "right_thigh_strut"
+        "right_calf_clamshell",
+        "right_shin_guard"
       ],
-      "max_depth_m": 0.003743433726069149,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.3875,
+      "max_depth_m": 0.0037453586861179,
+      "witness_joint": "right_calf_clamshell_hinge",
+      "witness_position": 1.4,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_shin_edge",
-        "right_boot_toe"
+        "left_finger_3_distal_knuckle",
+        "right_thigh_clamshell"
       ],
-      "max_depth_m": 0.003694891346974476,
-      "witness_joint": "right_hip_abduction",
+      "max_depth_m": 0.0037415329146793757,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": -0.75,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_calf_clamshell",
+        "right_thigh_clamshell"
+      ],
+      "max_depth_m": 0.0036619951608126903,
+      "witness_joint": "left_hip_abduction",
       "witness_position": -0.3,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_thigh_shell",
-        "right_shin_shell"
+        "left_thigh_clamshell",
+        "right_calf_clamshell"
       ],
-      "max_depth_m": 0.003630546295415997,
+      "max_depth_m": 0.003660793161047586,
       "witness_joint": "right_hip_abduction",
       "witness_position": -0.3,
       "position_unit": "rad"
@@ -4512,19 +4202,29 @@
         "left_shin_shell",
         "right_thigh_shell"
       ],
-      "max_depth_m": 0.0036296055550258735,
+      "max_depth_m": 0.003637421223892377,
       "witness_joint": "left_hip_abduction",
       "witness_position": -0.3,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "collar_plate",
-        "right_bicep_sleeve"
+        "left_forearm_crest",
+        "left_hip_flap"
       ],
-      "max_depth_m": 0.0036145800611164193,
-      "witness_joint": "right_shoulder_flexion",
-      "witness_position": 3.0,
+      "max_depth_m": 0.0035687346237007755,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": -0.3875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_thigh_shell",
+        "right_shin_shell"
+      ],
+      "max_depth_m": 0.0035490255016904938,
+      "witness_joint": "right_hip_abduction",
+      "witness_position": -0.3,
       "position_unit": "rad"
     },
     {
@@ -4532,29 +4232,19 @@
         "collar_plate",
         "left_bicep_sleeve"
       ],
-      "max_depth_m": 0.0036130744454220725,
+      "max_depth_m": 0.0035036668642524547,
       "witness_joint": "left_shoulder_flexion",
       "witness_position": 3.0,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_finger_2",
-        "left_thigh_shell"
+        "collar_plate",
+        "right_bicep_sleeve"
       ],
-      "max_depth_m": 0.003485065038330003,
-      "witness_joint": "left_shoulder_abduction",
-      "witness_position": -0.3875,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_bicep_front",
-        "left_rib_edge_0"
-      ],
-      "max_depth_m": 0.0034623645602839264,
-      "witness_joint": "left_shoulder_abduction",
-      "witness_position": -0.3875,
+      "max_depth_m": 0.003503275000465356,
+      "witness_joint": "right_shoulder_flexion",
+      "witness_position": 3.0,
       "position_unit": "rad"
     },
     {
@@ -4569,42 +4259,12 @@
     },
     {
       "bodies": [
-        "right_finger_3",
-        "right_thigh_shell"
-      ],
-      "max_depth_m": 0.003378121030963561,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.3875,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_bicep_sleeve",
-        "left_chest_door_hinge_pin"
-      ],
-      "max_depth_m": 0.0033334505953572305,
-      "witness_joint": "left_shoulder_flexion",
-      "witness_position": -1.0,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
         "faceplate",
         "right_cheek_panel"
       ],
       "max_depth_m": 0.0032851191813426488,
       "witness_joint": "faceplate_hinge",
       "witness_position": -0.1812499999999999,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_chest_door",
-        "right_forearm_crest"
-      ],
-      "max_depth_m": 0.0032835604192110756,
-      "witness_joint": "right_elbow_flexion",
-      "witness_position": -2.4,
       "position_unit": "rad"
     },
     {
@@ -4619,72 +4279,22 @@
     },
     {
       "bodies": [
-        "left_shin_ridge",
-        "right_shin_shell"
+        "right_bicep_sleeve",
+        "right_gauntlet_clamshell_moving_knuckle"
       ],
-      "max_depth_m": 0.00326167828353348,
-      "witness_joint": "left_hip_abduction",
-      "witness_position": -0.3,
+      "max_depth_m": 0.0031594478220437383,
+      "witness_joint": "right_elbow_flexion",
+      "witness_position": -1.48125,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_clavicle_cover",
-        "left_lat_plate"
+        "left_bicep_sleeve",
+        "left_gauntlet_clamshell_moving_knuckle"
       ],
-      "max_depth_m": 0.0031858484808567006,
-      "witness_joint": "left_lat_plate_hinge",
-      "witness_position": 0.3,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_clavicle_cover",
-        "right_lat_plate"
-      ],
-      "max_depth_m": 0.0031848210576176633,
-      "witness_joint": "right_lat_plate_hinge",
-      "witness_position": -0.30000000000000004,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_thigh_shell",
-        "right_calf_clamshell"
-      ],
-      "max_depth_m": 0.0030710857109157875,
-      "witness_joint": "right_hip_abduction",
-      "witness_position": -0.3,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_hand_plate",
-        "right_thigh_strut"
-      ],
-      "max_depth_m": 0.0030356474904612548,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.3875,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_hand_plate",
-        "left_thigh_strut"
-      ],
-      "max_depth_m": 0.0030353625356903282,
-      "witness_joint": "left_shoulder_abduction",
-      "witness_position": -0.3875,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_shin_shell",
-        "right_shin_ridge"
-      ],
-      "max_depth_m": 0.0029949492285196513,
-      "witness_joint": "right_hip_abduction",
-      "witness_position": -0.3,
+      "max_depth_m": 0.003157274979798973,
+      "witness_joint": "left_elbow_flexion",
+      "witness_position": -1.48125,
       "position_unit": "rad"
     },
     {
@@ -4692,69 +4302,9 @@
         "left_forearm_crest",
         "left_rib_insert_2"
       ],
-      "max_depth_m": 0.0029648670584318205,
+      "max_depth_m": 0.00297084008175791,
       "witness_joint": "left_shoulder_abduction",
       "witness_position": -0.3875,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_calf_clamshell",
-        "right_thigh_shell"
-      ],
-      "max_depth_m": 0.002956351062107686,
-      "witness_joint": "left_hip_abduction",
-      "witness_position": -0.3,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_calf_clamshell",
-        "right_knee_module"
-      ],
-      "max_depth_m": 0.0029229126133676225,
-      "witness_joint": "right_calf_clamshell_hinge",
-      "witness_position": 1.2249999999999999,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_calf_clamshell",
-        "left_knee_module"
-      ],
-      "max_depth_m": 0.0029224155619902385,
-      "witness_joint": "left_calf_clamshell_hinge",
-      "witness_position": -1.2249999999999999,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_elbow_cap",
-        "right_gauntlet_clamshell"
-      ],
-      "max_depth_m": 0.0029223683004192327,
-      "witness_joint": "right_elbow_flexion",
-      "witness_position": 0.05,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_elbow_cap",
-        "left_gauntlet_clamshell"
-      ],
-      "max_depth_m": 0.0029208148389633305,
-      "witness_joint": "left_elbow_flexion",
-      "witness_position": 0.05,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "left_chest_door_hinge_pin",
-        "left_gauntlet_sleeve"
-      ],
-      "max_depth_m": 0.002906009260375424,
-      "witness_joint": "left_elbow_flexion",
-      "witness_position": -2.4,
       "position_unit": "rad"
     },
     {
@@ -4762,39 +4312,29 @@
         "right_forearm_crest",
         "right_rib_insert_2"
       ],
-      "max_depth_m": 0.0028901217820637,
+      "max_depth_m": 0.002890814045409222,
       "witness_joint": "right_shoulder_abduction",
       "witness_position": -0.3875,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_hand_plate",
-        "left_hip_outer_plate"
+        "right_lat_plate",
+        "right_pauldron"
       ],
-      "max_depth_m": 0.0028037948349897094,
+      "max_depth_m": 0.0028881627813193396,
+      "witness_joint": "right_shoulder_abduction",
+      "witness_position": 1.7875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_lat_plate",
+        "left_pauldron"
+      ],
+      "max_depth_m": 0.0028872827216007905,
       "witness_joint": "left_shoulder_abduction",
-      "witness_position": -0.3875,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_chest_door_hinge_pin",
-        "right_gauntlet_sleeve"
-      ],
-      "max_depth_m": 0.002801226755918497,
-      "witness_joint": "right_elbow_flexion",
-      "witness_position": -2.4,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "belt_plate",
-        "right_thigh_shell"
-      ],
-      "max_depth_m": 0.002777963174156687,
-      "witness_joint": "right_hip_flexion",
-      "witness_position": -0.5,
+      "witness_position": 1.7875,
       "position_unit": "rad"
     },
     {
@@ -4802,39 +4342,49 @@
         "belt_plate",
         "left_thigh_shell"
       ],
-      "max_depth_m": 0.0027744192321250694,
+      "max_depth_m": 0.0027792228872398177,
       "witness_joint": "left_hip_flexion",
       "witness_position": -0.5,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_chest_door",
-        "left_pauldron_edge"
+        "belt_plate",
+        "right_thigh_shell"
       ],
-      "max_depth_m": 0.0027727060780204328,
-      "witness_joint": "left_shoulder_abduction",
-      "witness_position": 2.15,
+      "max_depth_m": 0.002742496264486523,
+      "witness_joint": "right_hip_flexion",
+      "witness_position": -0.5,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_gauntlet_sleeve",
-        "pelvis_frame"
+        "left_finger_4",
+        "left_thigh_clamshell"
       ],
-      "max_depth_m": 0.002689341917681677,
+      "max_depth_m": 0.002727093471453939,
       "witness_joint": "left_shoulder_abduction",
-      "witness_position": -0.3875,
+      "witness_position": -0.75,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "pelvis_frame",
-        "right_gauntlet_sleeve"
+        "right_finger_1",
+        "right_thigh_clamshell"
       ],
-      "max_depth_m": 0.002687373479932318,
+      "max_depth_m": 0.002723069322499372,
       "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.3875,
+      "witness_position": -0.75,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_thigh_clamshell",
+        "right_finger_3_distal_knuckle"
+      ],
+      "max_depth_m": 0.002650597617257555,
+      "witness_joint": "right_shoulder_abduction",
+      "witness_position": -0.75,
       "position_unit": "rad"
     },
     {
@@ -4859,82 +4409,132 @@
     },
     {
       "bodies": [
-        "right_hand_plate",
-        "right_hip_outer_plate"
+        "right_hip_cowl",
+        "right_rib_edge_2"
       ],
-      "max_depth_m": 0.0022905419195206602,
+      "max_depth_m": 0.0025037562847895836,
+      "witness_joint": "right_hip_abduction",
+      "witness_position": 0.5,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_thigh_clamshell",
+        "right_finger_3_middle"
+      ],
+      "max_depth_m": 0.0023659031056773674,
+      "witness_joint": "right_shoulder_abduction",
+      "witness_position": -0.75,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_gauntlet_sleeve",
+        "left_thigh_strut"
+      ],
+      "max_depth_m": 0.0023280086166734297,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": -0.3875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_gauntlet_sleeve",
+        "right_thigh_strut"
+      ],
+      "max_depth_m": 0.0023273012510227724,
       "witness_joint": "right_shoulder_abduction",
       "witness_position": -0.3875,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "right_chest_door_moving_knuckle",
-        "right_forearm_crest"
+        "right_knee_cap",
+        "right_shin_stripe"
       ],
-      "max_depth_m": 0.0021989662803887297,
-      "witness_joint": "right_elbow_flexion",
-      "witness_position": -2.4,
+      "max_depth_m": 0.002255365039822062,
+      "witness_joint": "right_knee_flexion",
+      "witness_position": -1.3562500000000002,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_chest_door_moving_knuckle",
-        "left_forearm_crest"
+        "left_knee_cap",
+        "left_shin_stripe"
       ],
-      "max_depth_m": 0.0021980076628283496,
-      "witness_joint": "left_elbow_flexion",
-      "witness_position": -2.4,
+      "max_depth_m": 0.0022553650398220606,
+      "witness_joint": "left_knee_flexion",
+      "witness_position": -1.3562500000000002,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_thigh_shell",
-        "right_thigh_clamshell"
+        "right_hand_plate",
+        "right_thigh_strut"
       ],
-      "max_depth_m": 0.00219327747077714,
-      "witness_joint": "left_hip_abduction",
-      "witness_position": -0.3,
+      "max_depth_m": 0.002171123117560499,
+      "witness_joint": "right_shoulder_abduction",
+      "witness_position": -0.3875,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_thigh_clamshell",
-        "right_thigh_shell"
+        "left_hand_plate",
+        "left_thigh_strut"
       ],
-      "max_depth_m": 0.0021781175897279082,
+      "max_depth_m": 0.0021710623622151334,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": -0.3875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_shank_cuff",
+        "right_shin_stripe"
+      ],
+      "max_depth_m": 0.0021587347966504763,
       "witness_joint": "right_hip_abduction",
       "witness_position": -0.3,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_bicep_sleeve",
-        "left_gauntlet_clamshell_moving_knuckle"
+        "right_chest_door_fixed_knuckle_upper",
+        "right_forearm_crest"
       ],
-      "max_depth_m": 0.002160089991173886,
+      "max_depth_m": 0.0021294030686075326,
+      "witness_joint": "right_elbow_flexion",
+      "witness_position": -2.4,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_chest_door_fixed_knuckle_upper",
+        "left_forearm_crest"
+      ],
+      "max_depth_m": 0.0021292341451239014,
       "witness_joint": "left_elbow_flexion",
-      "witness_position": -1.48125,
+      "witness_position": -2.4,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "right_bicep_front",
-        "right_rib_edge_0"
+        "helmet_neck_collar",
+        "left_bicep_sleeve"
       ],
-      "max_depth_m": 0.002110055880134953,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.3875,
+      "max_depth_m": 0.0020647366014593274,
+      "witness_joint": "left_shoulder_flexion",
+      "witness_position": 3.0,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "right_knee_face",
-        "right_thigh_clamshell"
+        "helmet_neck_collar",
+        "right_bicep_sleeve"
       ],
-      "max_depth_m": 0.0019753961777994058,
-      "witness_joint": "right_thigh_clamshell_hinge",
-      "witness_position": 1.4,
+      "max_depth_m": 0.0020625204528550217,
+      "witness_joint": "right_shoulder_flexion",
+      "witness_position": 3.0,
       "position_unit": "rad"
     },
     {
@@ -4949,42 +4549,82 @@
     },
     {
       "bodies": [
-        "left_knee_face",
-        "left_thigh_clamshell"
+        "left_shin_stripe",
+        "right_shank_cuff"
       ],
-      "max_depth_m": 0.0019219865724642562,
-      "witness_joint": "left_thigh_clamshell_hinge",
-      "witness_position": -1.4,
+      "max_depth_m": 0.001949383106025156,
+      "witness_joint": "left_hip_abduction",
+      "witness_position": -0.3,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "right_bicep_sleeve",
-        "right_gauntlet_clamshell_moving_knuckle"
+        "left_chest_door",
+        "left_clavicle_cover"
       ],
-      "max_depth_m": 0.0019004281191594352,
-      "witness_joint": "right_elbow_flexion",
-      "witness_position": -1.48125,
+      "max_depth_m": 0.0018928128886428874,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": 0.3374999999999999,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "helmet_neck_collar",
-        "right_bicep_sleeve"
+        "right_chest_door",
+        "right_clavicle_cover"
       ],
-      "max_depth_m": 0.0018791850523208185,
-      "witness_joint": "right_shoulder_flexion",
-      "witness_position": 3.0,
+      "max_depth_m": 0.0018926174514589118,
+      "witness_joint": "right_shoulder_abduction",
+      "witness_position": 0.3374999999999999,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "helmet_neck_collar",
-        "left_bicep_sleeve"
+        "right_calf_clamshell",
+        "right_knee_module"
       ],
-      "max_depth_m": 0.0017934696752611571,
-      "witness_joint": "left_shoulder_flexion",
-      "witness_position": 3.0,
+      "max_depth_m": 0.0018565225934657232,
+      "witness_joint": "right_calf_clamshell_hinge",
+      "witness_position": 1.2249999999999999,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_calf_clamshell",
+        "left_knee_module"
+      ],
+      "max_depth_m": 0.0018556595735985235,
+      "witness_joint": "left_calf_clamshell_hinge",
+      "witness_position": -1.2249999999999999,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_calf_clamshell",
+        "left_knee_cap"
+      ],
+      "max_depth_m": 0.0018451340548063713,
+      "witness_joint": "left_knee_flexion",
+      "witness_position": -2.2,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_calf_clamshell",
+        "right_knee_cap"
+      ],
+      "max_depth_m": 0.0018433299816161012,
+      "witness_joint": "right_knee_flexion",
+      "witness_position": -2.2,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_thigh_clamshell",
+        "right_finger_2_middle"
+      ],
+      "max_depth_m": 0.001841914358880587,
+      "witness_joint": "right_shoulder_abduction",
+      "witness_position": -0.75,
       "position_unit": "rad"
     },
     {
@@ -4999,22 +4639,102 @@
     },
     {
       "bodies": [
-        "left_finger_2_distal",
-        "right_thigh_cuff"
+        "left_bicep_clamshell",
+        "left_elbow_cap"
       ],
-      "max_depth_m": 0.001749002139506313,
+      "max_depth_m": 0.0017879123130689425,
+      "witness_joint": "left_elbow_cap_hinge",
+      "witness_position": 0.5,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_bicep_clamshell",
+        "right_elbow_cap"
+      ],
+      "max_depth_m": 0.001787740391670409,
+      "witness_joint": "right_elbow_cap_hinge",
+      "witness_position": 0.5,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_thigh_shell",
+        "right_back_grille_2"
+      ],
+      "max_depth_m": 0.0017809645919641933,
+      "witness_joint": "left_hip_flexion",
+      "witness_position": 2.0,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_forearm_crest",
+        "right_hip_flap"
+      ],
+      "max_depth_m": 0.0017794266644903752,
+      "witness_joint": "right_shoulder_abduction",
+      "witness_position": -0.3875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_back_grille_2",
+        "right_thigh_shell"
+      ],
+      "max_depth_m": 0.0017793125762636177,
+      "witness_joint": "right_hip_flexion",
+      "witness_position": 2.0,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_shin_ridge",
+        "right_shin_guard"
+      ],
+      "max_depth_m": 0.0017600361658881647,
+      "witness_joint": "right_hip_abduction",
+      "witness_position": -0.3,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_finger_2_middle",
+        "right_thigh_clamshell"
+      ],
+      "max_depth_m": 0.0017566536090345237,
       "witness_joint": "left_shoulder_abduction",
       "witness_position": -0.75,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "left_hip_cowl",
-        "left_rib_2"
+        "left_gauntlet_sleeve",
+        "pelvis_frame"
       ],
-      "max_depth_m": 0.0017468195602384654,
-      "witness_joint": "left_hip_abduction",
-      "witness_position": 0.5,
+      "max_depth_m": 0.0017513853472035151,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": -0.3875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "pelvis_frame",
+        "right_gauntlet_sleeve"
+      ],
+      "max_depth_m": 0.0017495042317012663,
+      "witness_joint": "right_shoulder_abduction",
+      "witness_position": -0.3875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_finger_2_distal",
+        "right_thigh_cuff"
+      ],
+      "max_depth_m": 0.001749002139506313,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": -0.75,
       "position_unit": "rad"
     },
     {
@@ -5029,22 +4749,102 @@
     },
     {
       "bodies": [
+        "right_bicep_sleeve",
+        "right_chest_inlay"
+      ],
+      "max_depth_m": 0.0017138262762692747,
+      "witness_joint": "right_shoulder_flexion",
+      "witness_position": -1.0,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_finger_2_distal_knuckle",
+        "right_thigh_clamshell"
+      ],
+      "max_depth_m": 0.0017121163553670102,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": -0.75,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_bicep_sleeve",
+        "right_gauntlet_clamshell_hinge_pin"
+      ],
+      "max_depth_m": 0.0016671992746827551,
+      "witness_joint": "right_elbow_flexion",
+      "witness_position": -1.7875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_bicep_sleeve",
+        "left_gauntlet_clamshell_hinge_pin"
+      ],
+      "max_depth_m": 0.0016656064914709625,
+      "witness_joint": "left_elbow_flexion",
+      "witness_position": -1.7875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_bicep_clamshell",
+        "left_gauntlet_sleeve"
+      ],
+      "max_depth_m": 0.0016349570892494252,
+      "witness_joint": "left_elbow_flexion",
+      "witness_position": -1.7875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_back_scapula",
+        "right_gauntlet_clamshell_hinge_pin"
+      ],
+      "max_depth_m": 0.001631710911792178,
+      "witness_joint": "right_shoulder_flexion",
+      "witness_position": 1.5,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_bicep_clamshell",
+        "right_gauntlet_sleeve"
+      ],
+      "max_depth_m": 0.0016227575843495504,
+      "witness_joint": "right_elbow_flexion",
+      "witness_position": -1.7875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "right_hand_plate",
+        "right_hip_cowl"
+      ],
+      "max_depth_m": 0.0016076204709273764,
+      "witness_joint": "right_shoulder_abduction",
+      "witness_position": -0.3875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_hand_plate",
+        "left_hip_cowl"
+      ],
+      "max_depth_m": 0.0015975508936775015,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": -0.3875,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
         "helmet",
         "right_gauntlet_clamshell_fixed_knuckle_lower"
       ],
       "max_depth_m": 0.001582740244910055,
       "witness_joint": "right_shoulder_flexion",
       "witness_position": 3.0,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_hand_plate",
-        "right_hip_flap"
-      ],
-      "max_depth_m": 0.0015719907954091555,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.3875,
       "position_unit": "rad"
     },
     {
@@ -5079,22 +4879,52 @@
     },
     {
       "bodies": [
-        "left_bicep_sleeve",
-        "left_rib_edge_0"
+        "back_shell",
+        "left_gauntlet_clamshell_fixed_knuckle_upper"
       ],
-      "max_depth_m": 0.0014659041992605443,
-      "witness_joint": "left_shoulder_abduction",
-      "witness_position": -0.3875,
+      "max_depth_m": 0.0015107153451918837,
+      "witness_joint": "left_shoulder_flexion",
+      "witness_position": 2.0,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "ab_plate_2",
-        "ab_plate_3"
+        "back_shell",
+        "right_gauntlet_clamshell_fixed_knuckle_upper"
       ],
-      "max_depth_m": 0.0013709162760385024,
-      "witness_joint": "ab_plate_3_hinge",
-      "witness_position": 0.35,
+      "max_depth_m": 0.0015100705984414445,
+      "witness_joint": "right_shoulder_flexion",
+      "witness_position": 2.0,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "back_shell",
+        "right_gauntlet_clamshell_hinge_pin"
+      ],
+      "max_depth_m": 0.001498642264421505,
+      "witness_joint": "right_shoulder_flexion",
+      "witness_position": 2.0,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "back_shell",
+        "left_gauntlet_clamshell_hinge_pin"
+      ],
+      "max_depth_m": 0.0014984937306979217,
+      "witness_joint": "left_shoulder_flexion",
+      "witness_position": 2.0,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_shin_guard",
+        "right_shin_ridge"
+      ],
+      "max_depth_m": 0.001405952891448657,
+      "witness_joint": "left_hip_abduction",
+      "witness_position": -0.3,
       "position_unit": "rad"
     },
     {
@@ -5109,12 +4939,22 @@
     },
     {
       "bodies": [
-        "left_hand_plate",
-        "left_hip_flap"
+        "left_calf_clamshell",
+        "right_thigh_shell"
       ],
-      "max_depth_m": 0.0013128070654432112,
-      "witness_joint": "left_shoulder_abduction",
-      "witness_position": -0.3875,
+      "max_depth_m": 0.0012744668834156784,
+      "witness_joint": "left_hip_abduction",
+      "witness_position": -0.3,
+      "position_unit": "rad"
+    },
+    {
+      "bodies": [
+        "left_thigh_shell",
+        "right_calf_clamshell"
+      ],
+      "max_depth_m": 0.0012408035152752352,
+      "witness_joint": "right_hip_abduction",
+      "witness_position": -0.3,
       "position_unit": "rad"
     },
     {
@@ -5122,39 +4962,19 @@
         "right_gauntlet_sleeve",
         "right_rib_1"
       ],
-      "max_depth_m": 0.0012369697966028211,
+      "max_depth_m": 0.0012017713734235984,
       "witness_joint": "right_shoulder_abduction",
       "witness_position": -0.3875,
       "position_unit": "rad"
     },
     {
       "bodies": [
-        "belt_plate",
-        "right_lat_plate"
+        "left_finger_3_middle",
+        "right_thigh_clamshell"
       ],
-      "max_depth_m": 0.001139025371430985,
-      "witness_joint": "trunk_flex",
-      "witness_position": 0.5,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "belt_plate",
-        "left_lat_plate"
-      ],
-      "max_depth_m": 0.0011360943300556237,
-      "witness_joint": "trunk_flex",
-      "witness_position": 0.5,
-      "position_unit": "rad"
-    },
-    {
-      "bodies": [
-        "right_finger_3_middle_knuckle",
-        "right_thigh_shell"
-      ],
-      "max_depth_m": 0.0011276889311504935,
-      "witness_joint": "right_shoulder_abduction",
-      "witness_position": -0.3875,
+      "max_depth_m": 0.0011086367053759838,
+      "witness_joint": "left_shoulder_abduction",
+      "witness_position": -0.75,
       "position_unit": "rad"
     }
   ],

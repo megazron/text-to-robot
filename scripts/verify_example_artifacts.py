@@ -35,3 +35,12 @@ for preview in report['previews'].values():
     assert preview['sha256']==hashlib.sha256((folder/preview['gif']).read_bytes()).hexdigest()
     assert preview['max_displacement_m']>.001
 print('Mark 43 isolated motion previews match the shipped model')
+
+surface=json.loads((folder/'surface_contact_report.json').read_text())
+assert surface['source_urdf_sha256']==hashlib.sha256((folder/'robot.sim.urdf').read_bytes()).hexdigest()
+for name,digest in surface['source_mesh_sha256'].items():
+    assert digest==hashlib.sha256((folder/name).read_bytes()).hexdigest(),f'Stale surface mesh: {name}'
+comparison=json.loads((folder/'surface_contact_comparison.json').read_text())
+assert comparison['current_urdf_sha256']==surface['source_urdf_sha256']
+assert comparison['current_pair_count']==surface['neutral_pair_count']
+print('Surface contact evidence matches the current mesh assets')

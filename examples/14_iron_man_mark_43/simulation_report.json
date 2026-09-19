@@ -15,46 +15,6 @@
       "pass": false,
       "penetrations": [
         {
-          "body1": "pelvis_frame",
-          "body2": "left_lat_plate",
-          "depth_m": 0.04228
-        },
-        {
-          "body1": "pelvis_frame",
-          "body2": "left_lat_plate",
-          "depth_m": 0.04228
-        },
-        {
-          "body1": "pelvis_frame",
-          "body2": "left_lat_plate",
-          "depth_m": 0.04228
-        },
-        {
-          "body1": "pelvis_frame",
-          "body2": "left_lat_plate",
-          "depth_m": 0.04228
-        },
-        {
-          "body1": "pelvis_frame",
-          "body2": "right_lat_plate",
-          "depth_m": 0.04228
-        },
-        {
-          "body1": "pelvis_frame",
-          "body2": "right_lat_plate",
-          "depth_m": 0.04228
-        },
-        {
-          "body1": "pelvis_frame",
-          "body2": "right_lat_plate",
-          "depth_m": 0.04228
-        },
-        {
-          "body1": "pelvis_frame",
-          "body2": "right_lat_plate",
-          "depth_m": 0.04228
-        },
-        {
           "body1": "shoulder_yoke",
           "body2": "left_bicep_sleeve",
           "depth_m": 0.001002
@@ -117,177 +77,217 @@
         {
           "body1": "left_upper_arm_cuff",
           "body2": "left_chest_door",
-          "depth_m": 0.005686
+          "depth_m": 0.005073
         },
         {
           "body1": "left_upper_arm_cuff",
           "body2": "left_chest_door",
-          "depth_m": 0.005686
+          "depth_m": 0.005073
         },
         {
           "body1": "left_upper_arm_cuff",
           "body2": "left_chest_door",
-          "depth_m": 0.005686
+          "depth_m": 0.005073
         },
         {
           "body1": "left_upper_arm_cuff",
           "body2": "left_chest_door",
-          "depth_m": 0.005686
-        },
-        {
-          "body1": "left_hand",
-          "body2": "left_gauntlet_clamshell",
-          "depth_m": 0.012657
-        },
-        {
-          "body1": "left_hand",
-          "body2": "left_gauntlet_clamshell",
-          "depth_m": 0.012657
-        },
-        {
-          "body1": "left_hand",
-          "body2": "left_gauntlet_clamshell",
-          "depth_m": 0.012657
-        },
-        {
-          "body1": "left_hand",
-          "body2": "left_gauntlet_clamshell",
-          "depth_m": 0.012657
-        },
-        {
-          "body1": "left_hand_plate",
-          "body2": "left_gauntlet_clamshell",
-          "depth_m": 0.019607
-        },
-        {
-          "body1": "left_hand_plate",
-          "body2": "left_gauntlet_clamshell",
-          "depth_m": 0.019607
-        },
-        {
-          "body1": "left_hand_plate",
-          "body2": "left_gauntlet_clamshell",
-          "depth_m": 0.019607
-        },
-        {
-          "body1": "left_hand_plate",
-          "body2": "left_gauntlet_clamshell",
-          "depth_m": 0.019607
-        },
-        {
-          "body1": "left_gauntlet_sleeve",
-          "body2": "left_elbow_cap",
-          "depth_m": 0.013923
-        },
-        {
-          "body1": "left_gauntlet_sleeve",
-          "body2": "left_elbow_cap",
-          "depth_m": 0.013923
-        },
-        {
-          "body1": "left_gauntlet_sleeve",
-          "body2": "left_elbow_cap",
-          "depth_m": 0.013923
-        },
-        {
-          "body1": "left_gauntlet_sleeve",
-          "body2": "left_elbow_cap",
-          "depth_m": 0.013923
-        },
-        {
-          "body1": "left_gauntlet_clamshell",
-          "body2": "left_elbow_cap",
-          "depth_m": 0.007047
-        },
-        {
-          "body1": "left_gauntlet_clamshell",
-          "body2": "left_elbow_cap",
-          "depth_m": 0.007047
-        },
-        {
-          "body1": "left_gauntlet_clamshell",
-          "body2": "left_elbow_cap",
-          "depth_m": 0.007047
-        },
-        {
-          "body1": "left_gauntlet_clamshell",
-          "body2": "left_elbow_cap",
-          "depth_m": 0.007047
-        },
-        {
-          "body1": "left_elbow_cap",
-          "body2": "left_bicep_clamshell",
-          "depth_m": 0.013041
-        },
-        {
-          "body1": "left_elbow_cap",
-          "body2": "left_bicep_clamshell",
-          "depth_m": 0.013041
-        },
-        {
-          "body1": "left_elbow_cap",
-          "body2": "left_bicep_clamshell",
-          "depth_m": 0.013041
-        },
-        {
-          "body1": "left_elbow_cap",
-          "body2": "left_bicep_clamshell",
-          "depth_m": 0.013041
+          "depth_m": 0.005073
         },
         {
           "body1": "left_bicep_sleeve",
           "body2": "left_chest_door",
-          "depth_m": 0.020545
+          "depth_m": 0.019965
         },
         {
           "body1": "left_bicep_sleeve",
           "body2": "left_chest_door",
-          "depth_m": 0.020545
+          "depth_m": 0.019965
         },
         {
           "body1": "left_bicep_sleeve",
           "body2": "left_chest_door",
-          "depth_m": 0.020545
+          "depth_m": 0.019965
         },
         {
           "body1": "left_bicep_sleeve",
           "body2": "left_chest_door",
-          "depth_m": 0.020545
+          "depth_m": 0.019965
         },
         {
           "body1": "left_bicep_sleeve",
           "body2": "left_pectoral_trim",
-          "depth_m": 0.020264
+          "depth_m": 0.015542
         },
         {
           "body1": "left_bicep_sleeve",
           "body2": "left_pectoral_trim",
-          "depth_m": 0.020264
+          "depth_m": 0.015542
+        },
+        {
+          "body1": "left_bicep_sleeve",
+          "body2": "left_lat_plate",
+          "depth_m": 0.017768
+        },
+        {
+          "body1": "left_bicep_sleeve",
+          "body2": "left_lat_plate",
+          "depth_m": 0.017768
+        },
+        {
+          "body1": "left_bicep_front",
+          "body2": "left_chest_door",
+          "depth_m": 0.022911
+        },
+        {
+          "body1": "left_bicep_front",
+          "body2": "left_chest_door",
+          "depth_m": 0.022911
+        },
+        {
+          "body1": "left_bicep_front",
+          "body2": "left_chest_door",
+          "depth_m": 0.022911
+        },
+        {
+          "body1": "left_bicep_clamshell",
+          "body2": "left_lat_plate",
+          "depth_m": 0.025006
+        },
+        {
+          "body1": "left_bicep_clamshell",
+          "body2": "left_lat_plate",
+          "depth_m": 0.025006
+        },
+        {
+          "body1": "left_pauldron",
+          "body2": "collar_plate",
+          "depth_m": 0.02158
+        },
+        {
+          "body1": "left_pauldron",
+          "body2": "collar_plate",
+          "depth_m": 0.006762
+        },
+        {
+          "body1": "left_pauldron",
+          "body2": "collar_plate",
+          "depth_m": 0.006762
+        },
+        {
+          "body1": "left_pauldron",
+          "body2": "collar_plate",
+          "depth_m": 0.02158
+        },
+        {
+          "body1": "left_pauldron",
+          "body2": "left_pectoral_trim",
+          "depth_m": 0.00904
+        },
+        {
+          "body1": "left_pauldron",
+          "body2": "left_pectoral_trim",
+          "depth_m": 0.025019
+        },
+        {
+          "body1": "left_pauldron",
+          "body2": "left_pectoral_trim",
+          "depth_m": 0.025019
+        },
+        {
+          "body1": "left_pauldron",
+          "body2": "left_pectoral_trim",
+          "depth_m": 0.00904
+        },
+        {
+          "body1": "left_clavicle_cover",
+          "body2": "left_chest_door",
+          "depth_m": 0.012713
+        },
+        {
+          "body1": "left_clavicle_cover",
+          "body2": "left_chest_door",
+          "depth_m": 0.012713
+        },
+        {
+          "body1": "left_clavicle_cover",
+          "body2": "left_pectoral_trim",
+          "depth_m": 0.01476
+        },
+        {
+          "body1": "left_clavicle_cover",
+          "body2": "left_pectoral_trim",
+          "depth_m": 0.01476
+        },
+        {
+          "body1": "left_clavicle_cover",
+          "body2": "left_pectoral_trim",
+          "depth_m": 0.01476
+        },
+        {
+          "body1": "left_clavicle_cover",
+          "body2": "left_pectoral_trim",
+          "depth_m": 0.01476
+        },
+        {
+          "body1": "right_upper_arm_cuff",
+          "body2": "right_chest_door",
+          "depth_m": 0.005073
+        },
+        {
+          "body1": "right_upper_arm_cuff",
+          "body2": "right_chest_door",
+          "depth_m": 0.005073
+        },
+        {
+          "body1": "right_upper_arm_cuff",
+          "body2": "right_chest_door",
+          "depth_m": 0.005073
+        },
+        {
+          "body1": "right_upper_arm_cuff",
+          "body2": "right_chest_door",
+          "depth_m": 0.005073
+        },
+        {
+          "body1": "right_bicep_sleeve",
+          "body2": "right_chest_door",
+          "depth_m": 0.019965
+        },
+        {
+          "body1": "right_bicep_sleeve",
+          "body2": "right_chest_door",
+          "depth_m": 0.019965
+        },
+        {
+          "body1": "right_bicep_sleeve",
+          "body2": "right_chest_door",
+          "depth_m": 0.019965
         }
       ],
-      "count": 383
+      "count": 227
     },
     "settle_under_gravity": {
       "pass": false,
-      "max_joint_speed": 263.4,
-      "base_drop_m": -0.275,
-      "upright": 0.067
+      "max_joint_speed": 121.82,
+      "base_drop_m": -0.135,
+      "upright": 0.205
     },
     "hold_pose": {
       "pass": false,
-      "max_joint_error_rad": 1.906
+      "max_joint_error_rad": 1.644
     },
     "actuator_sweep": {
       "pass": false,
-      "tracked": "9/86",
-      "worst_error": 2.732,
+      "tracked": "20/86",
+      "worst_error": 2.706,
       "actuators": [
         {
           "actuator": "act_trunk_flex",
           "joint": "trunk_flex",
           "pass": false,
-          "rms_error": 0.244592,
-          "peak_error": 0.422044,
+          "rms_error": 0.297555,
+          "peak_error": 0.498682,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 120.0,
@@ -297,8 +297,8 @@
           "actuator": "act_left_shoulder_abduction",
           "joint": "left_shoulder_abduction",
           "pass": false,
-          "rms_error": 0.932146,
-          "peak_error": 1.575859,
+          "rms_error": 1.018349,
+          "peak_error": 1.682521,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 60.0,
@@ -308,8 +308,8 @@
           "actuator": "act_left_shoulder_flexion",
           "joint": "left_shoulder_flexion",
           "pass": false,
-          "rms_error": 1.389713,
-          "peak_error": 2.315571,
+          "rms_error": 1.376051,
+          "peak_error": 2.308462,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 60.0,
@@ -319,8 +319,8 @@
           "actuator": "act_left_elbow_flexion",
           "joint": "left_elbow_flexion",
           "pass": false,
-          "rms_error": 0.809553,
-          "peak_error": 1.327239,
+          "rms_error": 1.360248,
+          "peak_error": 1.972736,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 40.0,
@@ -329,9 +329,9 @@
         {
           "actuator": "act_left_wrist_flexion",
           "joint": "left_wrist_flexion",
-          "pass": false,
-          "rms_error": 0.63777,
-          "peak_error": 1.04673,
+          "pass": true,
+          "rms_error": 0.044513,
+          "peak_error": 0.324799,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 15.0,
@@ -341,8 +341,8 @@
           "actuator": "act_left_finger_1_hinge",
           "joint": "left_finger_1_hinge",
           "pass": false,
-          "rms_error": 0.170854,
-          "peak_error": 0.570763,
+          "rms_error": 0.16741,
+          "peak_error": 0.579816,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 0.35,
@@ -352,8 +352,8 @@
           "actuator": "act_left_finger_1_middle_hinge",
           "joint": "left_finger_1_middle_hinge",
           "pass": false,
-          "rms_error": 0.314728,
-          "peak_error": 0.768122,
+          "rms_error": 0.31381,
+          "peak_error": 0.770568,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 0.35,
@@ -363,8 +363,8 @@
           "actuator": "act_left_finger_1_distal_hinge",
           "joint": "left_finger_1_distal_hinge",
           "pass": false,
-          "rms_error": 0.188233,
-          "peak_error": 0.568104,
+          "rms_error": 0.189327,
+          "peak_error": 0.568115,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 0.35,
@@ -374,8 +374,8 @@
           "actuator": "act_left_finger_2_hinge",
           "joint": "left_finger_2_hinge",
           "pass": false,
-          "rms_error": 0.166106,
-          "peak_error": 0.56901,
+          "rms_error": 0.167822,
+          "peak_error": 0.563048,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 0.35,
@@ -385,8 +385,8 @@
           "actuator": "act_left_finger_2_middle_hinge",
           "joint": "left_finger_2_middle_hinge",
           "pass": false,
-          "rms_error": 0.315412,
-          "peak_error": 0.767675,
+          "rms_error": 0.315982,
+          "peak_error": 0.765424,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 0.35,
@@ -396,8 +396,8 @@
           "actuator": "act_left_finger_2_distal_hinge",
           "joint": "left_finger_2_distal_hinge",
           "pass": false,
-          "rms_error": 0.188029,
-          "peak_error": 0.568056,
+          "rms_error": 0.189229,
+          "peak_error": 0.567505,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 0.35,
@@ -407,8 +407,8 @@
           "actuator": "act_left_finger_3_hinge",
           "joint": "left_finger_3_hinge",
           "pass": false,
-          "rms_error": 0.166236,
-          "peak_error": 0.567728,
+          "rms_error": 0.166395,
+          "peak_error": 0.574049,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 0.35,
@@ -418,8 +418,8 @@
           "actuator": "act_left_finger_3_middle_hinge",
           "joint": "left_finger_3_middle_hinge",
           "pass": false,
-          "rms_error": 0.312966,
-          "peak_error": 0.7674,
+          "rms_error": 0.3159,
+          "peak_error": 0.767994,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 0.35,
@@ -429,8 +429,8 @@
           "actuator": "act_left_finger_3_distal_hinge",
           "joint": "left_finger_3_distal_hinge",
           "pass": false,
-          "rms_error": 0.188012,
-          "peak_error": 0.568058,
+          "rms_error": 0.189443,
+          "peak_error": 0.567028,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 0.35,
@@ -440,8 +440,8 @@
           "actuator": "act_left_finger_4_hinge",
           "joint": "left_finger_4_hinge",
           "pass": false,
-          "rms_error": 0.169658,
-          "peak_error": 0.567202,
+          "rms_error": 0.170978,
+          "peak_error": 0.585366,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 0.35,
@@ -451,8 +451,8 @@
           "actuator": "act_left_finger_4_middle_hinge",
           "joint": "left_finger_4_middle_hinge",
           "pass": false,
-          "rms_error": 0.316001,
-          "peak_error": 0.767372,
+          "rms_error": 0.316186,
+          "peak_error": 0.771401,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 0.35,
@@ -462,8 +462,8 @@
           "actuator": "act_left_finger_4_distal_hinge",
           "joint": "left_finger_4_distal_hinge",
           "pass": false,
-          "rms_error": 0.188223,
-          "peak_error": 0.568089,
+          "rms_error": 0.189403,
+          "peak_error": 0.566509,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 0.35,
@@ -473,8 +473,8 @@
           "actuator": "act_left_thumb_hinge",
           "joint": "left_thumb_hinge",
           "pass": true,
-          "rms_error": 0.120592,
-          "peak_error": 0.502771,
+          "rms_error": 0.126573,
+          "peak_error": 0.53883,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 0.4,
@@ -484,8 +484,8 @@
           "actuator": "act_left_thumb_distal_hinge",
           "joint": "left_thumb_distal_hinge",
           "pass": false,
-          "rms_error": 0.229637,
-          "peak_error": 0.596096,
+          "rms_error": 0.226323,
+          "peak_error": 0.603966,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 0.3,
@@ -495,8 +495,8 @@
           "actuator": "act_left_gauntlet_hatch_hinge",
           "joint": "left_gauntlet_hatch_hinge",
           "pass": true,
-          "rms_error": 0.065488,
-          "peak_error": 0.565628,
+          "rms_error": 0.061188,
+          "peak_error": 0.546457,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 1.5,
@@ -506,8 +506,8 @@
           "actuator": "act_left_gauntlet_clamshell_hinge",
           "joint": "left_gauntlet_clamshell_hinge",
           "pass": false,
-          "rms_error": 0.285384,
-          "peak_error": 0.870439,
+          "rms_error": 0.689974,
+          "peak_error": 1.034814,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 3.0,
@@ -516,9 +516,9 @@
         {
           "actuator": "act_left_elbow_cap_hinge",
           "joint": "left_elbow_cap_hinge",
-          "pass": false,
-          "rms_error": 0.475845,
-          "peak_error": 0.907606,
+          "pass": true,
+          "rms_error": 0.12407,
+          "peak_error": 0.340337,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 2.0,
@@ -528,8 +528,8 @@
           "actuator": "act_left_bicep_clamshell_hinge",
           "joint": "left_bicep_clamshell_hinge",
           "pass": false,
-          "rms_error": 0.375459,
-          "peak_error": 0.660142,
+          "rms_error": 0.942498,
+          "peak_error": 1.364181,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 3.0,
@@ -539,8 +539,8 @@
           "actuator": "act_left_pauldron_hinge",
           "joint": "left_pauldron_hinge",
           "pass": false,
-          "rms_error": 0.175211,
-          "peak_error": 0.361946,
+          "rms_error": 0.205844,
+          "peak_error": 0.368575,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 3.0,
@@ -550,8 +550,8 @@
           "actuator": "act_right_shoulder_abduction",
           "joint": "right_shoulder_abduction",
           "pass": false,
-          "rms_error": 0.903136,
-          "peak_error": 1.531223,
+          "rms_error": 1.010046,
+          "peak_error": 1.671905,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 60.0,
@@ -561,8 +561,8 @@
           "actuator": "act_right_shoulder_flexion",
           "joint": "right_shoulder_flexion",
           "pass": false,
-          "rms_error": 1.389366,
-          "peak_error": 2.316598,
+          "rms_error": 1.382303,
+          "peak_error": 2.308066,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 60.0,
@@ -572,8 +572,8 @@
           "actuator": "act_right_elbow_flexion",
           "joint": "right_elbow_flexion",
           "pass": false,
-          "rms_error": 1.207487,
-          "peak_error": 1.800341,
+          "rms_error": 1.37639,
+          "peak_error": 1.992271,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 40.0,
@@ -582,9 +582,9 @@
         {
           "actuator": "act_right_wrist_flexion",
           "joint": "right_wrist_flexion",
-          "pass": false,
-          "rms_error": 0.270817,
-          "peak_error": 0.937879,
+          "pass": true,
+          "rms_error": 0.054936,
+          "peak_error": 0.278633,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 15.0,
@@ -594,8 +594,8 @@
           "actuator": "act_right_finger_1_hinge",
           "joint": "right_finger_1_hinge",
           "pass": false,
-          "rms_error": 0.181154,
-          "peak_error": 0.562582,
+          "rms_error": 0.17984,
+          "peak_error": 0.562244,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 0.35,
@@ -605,8 +605,8 @@
           "actuator": "act_right_finger_1_middle_hinge",
           "joint": "right_finger_1_middle_hinge",
           "pass": false,
-          "rms_error": 0.318117,
-          "peak_error": 0.765528,
+          "rms_error": 0.319059,
+          "peak_error": 0.765499,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 0.35,
@@ -616,8 +616,8 @@
           "actuator": "act_right_finger_1_distal_hinge",
           "joint": "right_finger_1_distal_hinge",
           "pass": false,
-          "rms_error": 0.189237,
-          "peak_error": 0.567564,
+          "rms_error": 0.190042,
+          "peak_error": 0.566203,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 0.35,
@@ -627,8 +627,8 @@
           "actuator": "act_right_finger_2_hinge",
           "joint": "right_finger_2_hinge",
           "pass": false,
-          "rms_error": 0.178887,
-          "peak_error": 0.564427,
+          "rms_error": 0.182026,
+          "peak_error": 0.552176,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 0.35,
@@ -638,8 +638,8 @@
           "actuator": "act_right_finger_2_middle_hinge",
           "joint": "right_finger_2_middle_hinge",
           "pass": false,
-          "rms_error": 0.317856,
-          "peak_error": 0.765861,
+          "rms_error": 0.3186,
+          "peak_error": 0.760343,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 0.35,
@@ -649,8 +649,8 @@
           "actuator": "act_right_finger_2_distal_hinge",
           "joint": "right_finger_2_distal_hinge",
           "pass": false,
-          "rms_error": 0.189183,
-          "peak_error": 0.567604,
+          "rms_error": 0.189921,
+          "peak_error": 0.566662,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 0.35,
@@ -660,8 +660,8 @@
           "actuator": "act_right_finger_3_hinge",
           "joint": "right_finger_3_hinge",
           "pass": false,
-          "rms_error": 0.178139,
-          "peak_error": 0.567573,
+          "rms_error": 0.178986,
+          "peak_error": 0.56209,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 0.35,
@@ -671,8 +671,8 @@
           "actuator": "act_right_finger_3_middle_hinge",
           "joint": "right_finger_3_middle_hinge",
           "pass": false,
-          "rms_error": 0.317691,
-          "peak_error": 0.766367,
+          "rms_error": 0.319487,
+          "peak_error": 0.764492,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 0.35,
@@ -682,8 +682,8 @@
           "actuator": "act_right_finger_3_distal_hinge",
           "joint": "right_finger_3_distal_hinge",
           "pass": false,
-          "rms_error": 0.189266,
-          "peak_error": 0.567679,
+          "rms_error": 0.19008,
+          "peak_error": 0.567168,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 0.35,
@@ -693,8 +693,8 @@
           "actuator": "act_right_finger_4_hinge",
           "joint": "right_finger_4_hinge",
           "pass": false,
-          "rms_error": 0.179448,
-          "peak_error": 0.567702,
+          "rms_error": 0.17647,
+          "peak_error": 0.575367,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 0.35,
@@ -704,8 +704,8 @@
           "actuator": "act_right_finger_4_middle_hinge",
           "joint": "right_finger_4_middle_hinge",
           "pass": false,
-          "rms_error": 0.319812,
-          "peak_error": 0.767073,
+          "rms_error": 0.320683,
+          "peak_error": 0.769082,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 0.35,
@@ -715,8 +715,8 @@
           "actuator": "act_right_finger_4_distal_hinge",
           "joint": "right_finger_4_distal_hinge",
           "pass": false,
-          "rms_error": 0.189494,
-          "peak_error": 0.567788,
+          "rms_error": 0.190063,
+          "peak_error": 0.567796,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 0.35,
@@ -726,8 +726,8 @@
           "actuator": "act_right_thumb_hinge",
           "joint": "right_thumb_hinge",
           "pass": true,
-          "rms_error": 0.128573,
-          "peak_error": 0.499031,
+          "rms_error": 0.130044,
+          "peak_error": 0.530816,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 0.4,
@@ -737,8 +737,8 @@
           "actuator": "act_right_thumb_distal_hinge",
           "joint": "right_thumb_distal_hinge",
           "pass": false,
-          "rms_error": 0.230614,
-          "peak_error": 0.594879,
+          "rms_error": 0.227143,
+          "peak_error": 0.602214,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 0.3,
@@ -748,8 +748,8 @@
           "actuator": "act_right_gauntlet_hatch_hinge",
           "joint": "right_gauntlet_hatch_hinge",
           "pass": true,
-          "rms_error": 0.066703,
-          "peak_error": 0.571476,
+          "rms_error": 0.062549,
+          "peak_error": 0.550119,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 1.5,
@@ -759,8 +759,8 @@
           "actuator": "act_right_gauntlet_clamshell_hinge",
           "joint": "right_gauntlet_clamshell_hinge",
           "pass": false,
-          "rms_error": 0.554069,
-          "peak_error": 0.918807,
+          "rms_error": 0.661677,
+          "peak_error": 1.03043,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 3.0,
@@ -769,9 +769,9 @@
         {
           "actuator": "act_right_elbow_cap_hinge",
           "joint": "right_elbow_cap_hinge",
-          "pass": false,
-          "rms_error": 0.184907,
-          "peak_error": 0.402549,
+          "pass": true,
+          "rms_error": 0.096866,
+          "peak_error": 0.319284,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 2.0,
@@ -781,8 +781,8 @@
           "actuator": "act_right_bicep_clamshell_hinge",
           "joint": "right_bicep_clamshell_hinge",
           "pass": false,
-          "rms_error": 0.742794,
-          "peak_error": 1.120734,
+          "rms_error": 0.212019,
+          "peak_error": 0.592972,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 3.0,
@@ -792,8 +792,8 @@
           "actuator": "act_right_pauldron_hinge",
           "joint": "right_pauldron_hinge",
           "pass": false,
-          "rms_error": 0.171824,
-          "peak_error": 0.36114,
+          "rms_error": 0.202321,
+          "peak_error": 0.368855,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 3.0,
@@ -803,8 +803,8 @@
           "actuator": "act_neck_yaw",
           "joint": "neck_yaw",
           "pass": false,
-          "rms_error": 0.275862,
-          "peak_error": 0.390797,
+          "rms_error": 0.275848,
+          "peak_error": 0.390897,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 4.0,
@@ -814,8 +814,8 @@
           "actuator": "act_neck_pitch",
           "joint": "neck_pitch",
           "pass": false,
-          "rms_error": 0.169261,
-          "peak_error": 0.288459,
+          "rms_error": 0.167462,
+          "peak_error": 0.285893,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 4.0,
@@ -825,8 +825,8 @@
           "actuator": "act_helmet_crown_panel_hinge",
           "joint": "helmet_crown_panel_hinge",
           "pass": true,
-          "rms_error": 0.128038,
-          "peak_error": 0.476914,
+          "rms_error": 0.06033,
+          "peak_error": 0.442483,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 1.5,
@@ -836,8 +836,8 @@
           "actuator": "act_faceplate_hinge",
           "joint": "faceplate_hinge",
           "pass": false,
-          "rms_error": 0.653329,
-          "peak_error": 1.007563,
+          "rms_error": 0.653333,
+          "peak_error": 1.00765,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 2.5,
@@ -847,8 +847,8 @@
           "actuator": "act_left_cheek_panel_hinge",
           "joint": "left_cheek_panel_hinge",
           "pass": false,
-          "rms_error": 0.671085,
-          "peak_error": 0.945014,
+          "rms_error": 0.671084,
+          "peak_error": 0.945652,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 1.5,
@@ -858,8 +858,8 @@
           "actuator": "act_right_cheek_panel_hinge",
           "joint": "right_cheek_panel_hinge",
           "pass": false,
-          "rms_error": 0.672326,
-          "peak_error": 0.945347,
+          "rms_error": 0.672324,
+          "peak_error": 0.945341,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 1.5,
@@ -869,8 +869,8 @@
           "actuator": "act_chin_guard_hinge",
           "joint": "chin_guard_hinge",
           "pass": false,
-          "rms_error": 0.224403,
-          "peak_error": 0.362125,
+          "rms_error": 0.22497,
+          "peak_error": 0.363788,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 1.5,
@@ -880,8 +880,8 @@
           "actuator": "act_left_chest_door_hinge",
           "joint": "left_chest_door_hinge",
           "pass": false,
-          "rms_error": 0.666943,
-          "peak_error": 0.989054,
+          "rms_error": 0.808041,
+          "peak_error": 1.154702,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 6.0,
@@ -891,8 +891,8 @@
           "actuator": "act_right_chest_door_hinge",
           "joint": "right_chest_door_hinge",
           "pass": false,
-          "rms_error": 0.738882,
-          "peak_error": 1.08906,
+          "rms_error": 0.79023,
+          "peak_error": 1.140423,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 6.0,
@@ -901,9 +901,9 @@
         {
           "actuator": "act_ab_plate_1_hinge",
           "joint": "ab_plate_1_hinge",
-          "pass": false,
-          "rms_error": 2.029565,
-          "peak_error": 2.174177,
+          "pass": true,
+          "rms_error": 0.015228,
+          "peak_error": 0.160627,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 2.0,
@@ -912,9 +912,9 @@
         {
           "actuator": "act_ab_plate_2_hinge",
           "joint": "ab_plate_2_hinge",
-          "pass": false,
-          "rms_error": 0.180738,
-          "peak_error": 0.315948,
+          "pass": true,
+          "rms_error": 0.121778,
+          "peak_error": 0.199997,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 2.0,
@@ -924,8 +924,8 @@
           "actuator": "act_ab_plate_3_hinge",
           "joint": "ab_plate_3_hinge",
           "pass": true,
-          "rms_error": 0.111063,
-          "peak_error": 0.224607,
+          "rms_error": 0.091812,
+          "peak_error": 0.17099,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 2.0,
@@ -935,8 +935,8 @@
           "actuator": "act_left_lat_plate_hinge",
           "joint": "left_lat_plate_hinge",
           "pass": false,
-          "rms_error": 0.934958,
-          "peak_error": 1.274623,
+          "rms_error": 1.175864,
+          "peak_error": 1.508025,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 4.0,
@@ -946,8 +946,8 @@
           "actuator": "act_right_lat_plate_hinge",
           "joint": "right_lat_plate_hinge",
           "pass": false,
-          "rms_error": 0.922644,
-          "peak_error": 1.261385,
+          "rms_error": 1.115659,
+          "peak_error": 1.448919,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 4.0,
@@ -957,8 +957,8 @@
           "actuator": "act_left_flight_flap_hinge",
           "joint": "left_flight_flap_hinge",
           "pass": true,
-          "rms_error": 0.078703,
-          "peak_error": 0.488808,
+          "rms_error": 0.061863,
+          "peak_error": 0.490822,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 2.0,
@@ -967,9 +967,9 @@
         {
           "actuator": "act_right_flight_flap_hinge",
           "joint": "right_flight_flap_hinge",
-          "pass": false,
-          "rms_error": 0.210331,
-          "peak_error": 0.832613,
+          "pass": true,
+          "rms_error": 0.063789,
+          "peak_error": 0.49085,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 2.0,
@@ -979,8 +979,8 @@
           "actuator": "act_left_hip_abduction",
           "joint": "left_hip_abduction",
           "pass": false,
-          "rms_error": 0.195193,
-          "peak_error": 0.3568,
+          "rms_error": 0.175164,
+          "peak_error": 0.267281,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 120.0,
@@ -990,8 +990,8 @@
           "actuator": "act_left_hip_flexion",
           "joint": "left_hip_flexion",
           "pass": false,
-          "rms_error": 0.767659,
-          "peak_error": 1.284335,
+          "rms_error": 0.750854,
+          "peak_error": 1.266997,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 150.0,
@@ -1001,8 +1001,8 @@
           "actuator": "act_left_knee_flexion",
           "joint": "left_knee_flexion",
           "pass": false,
-          "rms_error": 1.44071,
-          "peak_error": 2.028853,
+          "rms_error": 1.275281,
+          "peak_error": 1.852486,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 150.0,
@@ -1012,8 +1012,8 @@
           "actuator": "act_left_ankle_flexion",
           "joint": "left_ankle_flexion",
           "pass": false,
-          "rms_error": 0.308228,
-          "peak_error": 0.510538,
+          "rms_error": 0.281612,
+          "peak_error": 0.459376,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 100.0,
@@ -1023,8 +1023,8 @@
           "actuator": "act_left_shin_guard_hinge",
           "joint": "left_shin_guard_hinge",
           "pass": false,
-          "rms_error": 1.041329,
-          "peak_error": 1.57025,
+          "rms_error": 1.105475,
+          "peak_error": 1.520874,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 2.0,
@@ -1034,8 +1034,8 @@
           "actuator": "act_left_thruster_cover_hinge",
           "joint": "left_thruster_cover_hinge",
           "pass": true,
-          "rms_error": 0.120615,
-          "peak_error": 0.636975,
+          "rms_error": 0.073989,
+          "peak_error": 0.629593,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 1.5,
@@ -1044,9 +1044,9 @@
         {
           "actuator": "act_left_ankle_flap_hinge",
           "joint": "left_ankle_flap_hinge",
-          "pass": false,
-          "rms_error": 0.861445,
-          "peak_error": 1.0938,
+          "pass": true,
+          "rms_error": 0.035644,
+          "peak_error": 0.359701,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 1.5,
@@ -1056,8 +1056,8 @@
           "actuator": "act_left_calf_clamshell_hinge",
           "joint": "left_calf_clamshell_hinge",
           "pass": false,
-          "rms_error": 2.245893,
-          "peak_error": 2.730795,
+          "rms_error": 2.245308,
+          "peak_error": 2.705561,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 3.0,
@@ -1067,8 +1067,8 @@
           "actuator": "act_left_knee_cap_hinge",
           "joint": "left_knee_cap_hinge",
           "pass": false,
-          "rms_error": 0.213383,
-          "peak_error": 0.344522,
+          "rms_error": 0.17453,
+          "peak_error": 0.327596,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 2.0,
@@ -1078,8 +1078,8 @@
           "actuator": "act_left_thigh_clamshell_hinge",
           "joint": "left_thigh_clamshell_hinge",
           "pass": false,
-          "rms_error": 0.972592,
-          "peak_error": 1.363852,
+          "rms_error": 0.539772,
+          "peak_error": 0.888266,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 3.0,
@@ -1089,8 +1089,8 @@
           "actuator": "act_right_hip_abduction",
           "joint": "right_hip_abduction",
           "pass": false,
-          "rms_error": 0.248833,
-          "peak_error": 0.426283,
+          "rms_error": 0.237643,
+          "peak_error": 0.41153,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 120.0,
@@ -1100,8 +1100,8 @@
           "actuator": "act_right_hip_flexion",
           "joint": "right_hip_flexion",
           "pass": false,
-          "rms_error": 1.009966,
-          "peak_error": 1.622502,
+          "rms_error": 0.820891,
+          "peak_error": 1.37054,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 150.0,
@@ -1111,8 +1111,8 @@
           "actuator": "act_right_knee_flexion",
           "joint": "right_knee_flexion",
           "pass": false,
-          "rms_error": 1.506044,
-          "peak_error": 2.113402,
+          "rms_error": 1.174729,
+          "peak_error": 1.749079,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 150.0,
@@ -1122,8 +1122,8 @@
           "actuator": "act_right_ankle_flexion",
           "joint": "right_ankle_flexion",
           "pass": false,
-          "rms_error": 0.291486,
-          "peak_error": 0.483386,
+          "rms_error": 0.273602,
+          "peak_error": 0.440693,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 100.0,
@@ -1133,8 +1133,8 @@
           "actuator": "act_right_shin_guard_hinge",
           "joint": "right_shin_guard_hinge",
           "pass": false,
-          "rms_error": 1.081246,
-          "peak_error": 1.644691,
+          "rms_error": 1.234693,
+          "peak_error": 1.509083,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 2.0,
@@ -1144,8 +1144,8 @@
           "actuator": "act_right_thruster_cover_hinge",
           "joint": "right_thruster_cover_hinge",
           "pass": true,
-          "rms_error": 0.072798,
-          "peak_error": 0.635912,
+          "rms_error": 0.072849,
+          "peak_error": 0.628961,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 1.5,
@@ -1154,9 +1154,9 @@
         {
           "actuator": "act_right_ankle_flap_hinge",
           "joint": "right_ankle_flap_hinge",
-          "pass": false,
-          "rms_error": 0.86151,
-          "peak_error": 1.093838,
+          "pass": true,
+          "rms_error": 0.037958,
+          "peak_error": 0.346615,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 1.5,
@@ -1166,8 +1166,8 @@
           "actuator": "act_right_calf_clamshell_hinge",
           "joint": "right_calf_clamshell_hinge",
           "pass": false,
-          "rms_error": 2.225113,
-          "peak_error": 2.732208,
+          "rms_error": 2.231197,
+          "peak_error": 2.704378,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 3.0,
@@ -1176,9 +1176,9 @@
         {
           "actuator": "act_right_knee_cap_hinge",
           "joint": "right_knee_cap_hinge",
-          "pass": false,
-          "rms_error": 0.567015,
-          "peak_error": 0.839587,
+          "pass": true,
+          "rms_error": 0.068678,
+          "peak_error": 0.286581,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 2.0,
@@ -1188,8 +1188,8 @@
           "actuator": "act_right_thigh_clamshell_hinge",
           "joint": "right_thigh_clamshell_hinge",
           "pass": false,
-          "rms_error": 0.753296,
-          "peak_error": 1.119877,
+          "rms_error": 0.392953,
+          "peak_error": 0.690736,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 3.0,
@@ -1199,8 +1199,8 @@
           "actuator": "act_codpiece_hinge",
           "joint": "codpiece_hinge",
           "pass": false,
-          "rms_error": 0.38692,
-          "peak_error": 0.6517,
+          "rms_error": 0.392872,
+          "peak_error": 0.56631,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 2.0,
@@ -1209,9 +1209,9 @@
         {
           "actuator": "act_left_hip_flap_hinge",
           "joint": "left_hip_flap_hinge",
-          "pass": false,
-          "rms_error": 0.772972,
-          "peak_error": 1.006363,
+          "pass": true,
+          "rms_error": 0.149976,
+          "peak_error": 0.334523,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 2.0,
@@ -1221,8 +1221,8 @@
           "actuator": "act_right_hip_flap_hinge",
           "joint": "right_hip_flap_hinge",
           "pass": false,
-          "rms_error": 0.61341,
-          "peak_error": 0.81815,
+          "rms_error": 0.15017,
+          "peak_error": 0.29635,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 2.0,
@@ -1231,81 +1231,25 @@
       ]
     },
     "disturbance_recovery": {
-      "pass": false,
-      "upright_after": -0.101,
+      "pass": true,
+      "upright_after": 0.527,
       "note": "upright>0.5 means it did not fall"
     }
   },
   "validation_scope": "simulation smoke tests, not hardware or wearable qualification",
   "mujoco_version": "3.13.0",
-  "model_sha256": "0a0d31c76a93b05289fb6fc3fb1b818318e412afcd4672765a87a18e636db6c5",
+  "model_sha256": "406f7434a77e43182a00b55c5b17d7d2e0892691971842e65a97afce0c7fbf24",
   "limitations": [
     "No measured motor, material, thermal or battery model",
     "No manufacturing or human-fit validation"
   ],
   "self_collision_masks_enabled": true,
-  "passed": 1,
+  "passed": 2,
   "total": 6,
-  "source_urdf_sha256": "a7af5eb7b9e2b2557de4607c1c7baa170d98c32f9e51ce658be48a5c0410ce06",
+  "source_urdf_sha256": "7edde11fd8318924bc831142e47a86addaebe8c3e5d29823b17296efbe5c17bd",
   "initial_penetrations": [
     {
       "bodies": [
-        "pelvis_frame",
-        "left_lat_plate"
-      ],
-      "depth_m": 0.042279999999999776
-    },
-    {
-      "bodies": [
-        "pelvis_frame",
-        "left_lat_plate"
-      ],
-      "depth_m": 0.042279999999999776
-    },
-    {
-      "bodies": [
-        "pelvis_frame",
-        "left_lat_plate"
-      ],
-      "depth_m": 0.042279999999999776
-    },
-    {
-      "bodies": [
-        "pelvis_frame",
-        "left_lat_plate"
-      ],
-      "depth_m": 0.042279999999999776
-    },
-    {
-      "bodies": [
-        "pelvis_frame",
-        "right_lat_plate"
-      ],
-      "depth_m": 0.042279999999999776
-    },
-    {
-      "bodies": [
-        "pelvis_frame",
-        "right_lat_plate"
-      ],
-      "depth_m": 0.042279999999999776
-    },
-    {
-      "bodies": [
-        "pelvis_frame",
-        "right_lat_plate"
-      ],
-      "depth_m": 0.042279999999999776
-    },
-    {
-      "bodies": [
-        "pelvis_frame",
-        "right_lat_plate"
-      ],
-      "depth_m": 0.042279999999999776
-    },
-    {
-      "bodies": [
         "shoulder_yoke",
         "left_bicep_sleeve"
       ],
@@ -1393,301 +1337,119 @@
         "left_upper_arm_cuff",
         "left_chest_door"
       ],
-      "depth_m": 0.005686499999999983
+      "depth_m": 0.00507299999999998
     },
     {
       "bodies": [
         "left_upper_arm_cuff",
         "left_chest_door"
       ],
-      "depth_m": 0.005686499999999983
+      "depth_m": 0.00507299999999998
     },
     {
       "bodies": [
         "left_upper_arm_cuff",
         "left_chest_door"
       ],
-      "depth_m": 0.005686499999999983
+      "depth_m": 0.00507299999999998
     },
     {
       "bodies": [
         "left_upper_arm_cuff",
         "left_chest_door"
       ],
-      "depth_m": 0.005686499999999983
-    },
-    {
-      "bodies": [
-        "left_hand",
-        "left_gauntlet_clamshell"
-      ],
-      "depth_m": 0.012657499999999938
-    },
-    {
-      "bodies": [
-        "left_hand",
-        "left_gauntlet_clamshell"
-      ],
-      "depth_m": 0.01265749999999994
-    },
-    {
-      "bodies": [
-        "left_hand",
-        "left_gauntlet_clamshell"
-      ],
-      "depth_m": 0.01265749999999994
-    },
-    {
-      "bodies": [
-        "left_hand",
-        "left_gauntlet_clamshell"
-      ],
-      "depth_m": 0.012657499999999938
-    },
-    {
-      "bodies": [
-        "left_hand_plate",
-        "left_gauntlet_clamshell"
-      ],
-      "depth_m": 0.019606999999999906
-    },
-    {
-      "bodies": [
-        "left_hand_plate",
-        "left_gauntlet_clamshell"
-      ],
-      "depth_m": 0.019606999999999906
-    },
-    {
-      "bodies": [
-        "left_hand_plate",
-        "left_gauntlet_clamshell"
-      ],
-      "depth_m": 0.019606999999999906
-    },
-    {
-      "bodies": [
-        "left_hand_plate",
-        "left_gauntlet_clamshell"
-      ],
-      "depth_m": 0.019606999999999906
-    },
-    {
-      "bodies": [
-        "left_gauntlet_sleeve",
-        "left_elbow_cap"
-      ],
-      "depth_m": 0.013922886150000008
-    },
-    {
-      "bodies": [
-        "left_gauntlet_sleeve",
-        "left_elbow_cap"
-      ],
-      "depth_m": 0.013922886150000008
-    },
-    {
-      "bodies": [
-        "left_gauntlet_sleeve",
-        "left_elbow_cap"
-      ],
-      "depth_m": 0.013922886150000008
-    },
-    {
-      "bodies": [
-        "left_gauntlet_sleeve",
-        "left_elbow_cap"
-      ],
-      "depth_m": 0.013922886150000008
-    },
-    {
-      "bodies": [
-        "left_gauntlet_clamshell",
-        "left_elbow_cap"
-      ],
-      "depth_m": 0.007046500000000012
-    },
-    {
-      "bodies": [
-        "left_gauntlet_clamshell",
-        "left_elbow_cap"
-      ],
-      "depth_m": 0.007046500000000012
-    },
-    {
-      "bodies": [
-        "left_gauntlet_clamshell",
-        "left_elbow_cap"
-      ],
-      "depth_m": 0.007046500000000012
-    },
-    {
-      "bodies": [
-        "left_gauntlet_clamshell",
-        "left_elbow_cap"
-      ],
-      "depth_m": 0.007046500000000012
-    },
-    {
-      "bodies": [
-        "left_elbow_cap",
-        "left_bicep_clamshell"
-      ],
-      "depth_m": 0.013041000000000011
-    },
-    {
-      "bodies": [
-        "left_elbow_cap",
-        "left_bicep_clamshell"
-      ],
-      "depth_m": 0.013041000000000011
-    },
-    {
-      "bodies": [
-        "left_elbow_cap",
-        "left_bicep_clamshell"
-      ],
-      "depth_m": 0.013041000000000011
-    },
-    {
-      "bodies": [
-        "left_elbow_cap",
-        "left_bicep_clamshell"
-      ],
-      "depth_m": 0.013041000000000011
+      "depth_m": 0.00507299999999998
     },
     {
       "bodies": [
         "left_bicep_sleeve",
         "left_chest_door"
       ],
-      "depth_m": 0.02054479434999998
+      "depth_m": 0.01996493029999999
     },
     {
       "bodies": [
         "left_bicep_sleeve",
         "left_chest_door"
       ],
-      "depth_m": 0.02054479434999998
+      "depth_m": 0.01996493029999999
     },
     {
       "bodies": [
         "left_bicep_sleeve",
         "left_chest_door"
       ],
-      "depth_m": 0.02054479434999998
+      "depth_m": 0.01996493029999999
     },
     {
       "bodies": [
         "left_bicep_sleeve",
         "left_chest_door"
       ],
-      "depth_m": 0.02054479434999998
+      "depth_m": 0.01996493029999999
     },
     {
       "bodies": [
         "left_bicep_sleeve",
         "left_pectoral_trim"
       ],
-      "depth_m": 0.020263794349999975
+      "depth_m": 0.015541938852886968
     },
     {
       "bodies": [
         "left_bicep_sleeve",
         "left_pectoral_trim"
       ],
-      "depth_m": 0.020263794349999975
-    },
-    {
-      "bodies": [
-        "left_bicep_sleeve",
-        "left_pectoral_trim"
-      ],
-      "depth_m": 0.020263794349999975
-    },
-    {
-      "bodies": [
-        "left_bicep_sleeve",
-        "left_pectoral_trim"
-      ],
-      "depth_m": 0.020263794349999975
+      "depth_m": 0.015541938852886968
     },
     {
       "bodies": [
         "left_bicep_sleeve",
         "left_lat_plate"
       ],
-      "depth_m": 0.051279843789888736
+      "depth_m": 0.017767880708087554
     },
     {
       "bodies": [
         "left_bicep_sleeve",
         "left_lat_plate"
       ],
-      "depth_m": 0.051279843789888736
+      "depth_m": 0.017767880708087554
     },
     {
       "bodies": [
         "left_bicep_front",
         "left_chest_door"
       ],
-      "depth_m": 0.02342399999999998
+      "depth_m": 0.022911499999999974
     },
     {
       "bodies": [
         "left_bicep_front",
         "left_chest_door"
       ],
-      "depth_m": 0.02342399999999998
+      "depth_m": 0.022911499999999974
     },
     {
       "bodies": [
         "left_bicep_front",
         "left_chest_door"
       ],
-      "depth_m": 0.02342399999999998
-    },
-    {
-      "bodies": [
-        "left_bicep_front",
-        "left_pectoral_trim"
-      ],
-      "depth_m": 0.001621821027492941
-    },
-    {
-      "bodies": [
-        "left_bicep_front",
-        "left_pectoral_trim"
-      ],
-      "depth_m": 0.001621821027492941
-    },
-    {
-      "bodies": [
-        "left_bicep_front",
-        "left_lat_plate"
-      ],
-      "depth_m": 0.012908858882202341
-    },
-    {
-      "bodies": [
-        "left_bicep_front",
-        "left_lat_plate"
-      ],
-      "depth_m": 0.012908858882202341
+      "depth_m": 0.022911499999999974
     },
     {
       "bodies": [
         "left_bicep_clamshell",
         "left_lat_plate"
       ],
-      "depth_m": 0.057951708716171495
+      "depth_m": 0.025006127041838015
     },
     {
       "bodies": [
         "left_bicep_clamshell",
         "left_lat_plate"
       ],
-      "depth_m": 0.057951708716171495
+      "depth_m": 0.025006127041838015
     },
     {
       "bodies": [
@@ -1722,385 +1484,189 @@
         "left_pauldron",
         "left_pectoral_trim"
       ],
-      "depth_m": 0.009040086679887656
+      "depth_m": 0.009039820823163756
     },
     {
       "bodies": [
         "left_pauldron",
         "left_pectoral_trim"
       ],
-      "depth_m": 0.025019824779057516
+      "depth_m": 0.02501932477905744
     },
     {
       "bodies": [
         "left_pauldron",
         "left_pectoral_trim"
       ],
-      "depth_m": 0.025019824779057516
+      "depth_m": 0.02501932477905744
     },
     {
       "bodies": [
         "left_pauldron",
         "left_pectoral_trim"
       ],
-      "depth_m": 0.00904008667988766
+      "depth_m": 0.009039820823163756
+    },
+    {
+      "bodies": [
+        "left_clavicle_cover",
+        "left_chest_door"
+      ],
+      "depth_m": 0.012712704013529575
+    },
+    {
+      "bodies": [
+        "left_clavicle_cover",
+        "left_chest_door"
+      ],
+      "depth_m": 0.012712704013529575
     },
     {
       "bodies": [
         "left_clavicle_cover",
         "left_pectoral_trim"
       ],
-      "depth_m": 0.014656999999999976
+      "depth_m": 0.014759999999999968
     },
     {
       "bodies": [
         "left_clavicle_cover",
         "left_pectoral_trim"
       ],
-      "depth_m": 0.014656999999999976
+      "depth_m": 0.014759999999999968
     },
     {
       "bodies": [
         "left_clavicle_cover",
         "left_pectoral_trim"
       ],
-      "depth_m": 0.014656999999999976
+      "depth_m": 0.014759999999999968
     },
     {
       "bodies": [
         "left_clavicle_cover",
         "left_pectoral_trim"
       ],
-      "depth_m": 0.014656999999999976
-    },
-    {
-      "bodies": [
-        "left_clavicle_cover",
-        "left_lat_plate"
-      ],
-      "depth_m": 0.009252169625839034
-    },
-    {
-      "bodies": [
-        "left_clavicle_cover",
-        "left_lat_plate"
-      ],
-      "depth_m": 0.013627704013529824
-    },
-    {
-      "bodies": [
-        "left_clavicle_cover",
-        "left_lat_plate"
-      ],
-      "depth_m": 0.013627704013529824
-    },
-    {
-      "bodies": [
-        "left_clavicle_cover",
-        "left_lat_plate"
-      ],
-      "depth_m": 0.009252169625839031
+      "depth_m": 0.014759999999999968
     },
     {
       "bodies": [
         "right_upper_arm_cuff",
         "right_chest_door"
       ],
-      "depth_m": 0.0030004999999999615
+      "depth_m": 0.00507299999999998
     },
     {
       "bodies": [
         "right_upper_arm_cuff",
         "right_chest_door"
       ],
-      "depth_m": 0.0030004999999999615
+      "depth_m": 0.00507299999999998
     },
     {
       "bodies": [
         "right_upper_arm_cuff",
         "right_chest_door"
       ],
-      "depth_m": 0.0030004999999999615
+      "depth_m": 0.00507299999999998
     },
     {
       "bodies": [
         "right_upper_arm_cuff",
         "right_chest_door"
       ],
-      "depth_m": 0.0030004999999999615
-    },
-    {
-      "bodies": [
-        "right_hand",
-        "right_gauntlet_clamshell"
-      ],
-      "depth_m": 0.012679499999999901
-    },
-    {
-      "bodies": [
-        "right_hand",
-        "right_gauntlet_clamshell"
-      ],
-      "depth_m": 0.012679499999999903
-    },
-    {
-      "bodies": [
-        "right_hand",
-        "right_gauntlet_clamshell"
-      ],
-      "depth_m": 0.012679499999999903
-    },
-    {
-      "bodies": [
-        "right_hand",
-        "right_gauntlet_clamshell"
-      ],
-      "depth_m": 0.012679499999999901
-    },
-    {
-      "bodies": [
-        "right_hand_plate",
-        "right_gauntlet_clamshell"
-      ],
-      "depth_m": 0.019628999999999883
-    },
-    {
-      "bodies": [
-        "right_hand_plate",
-        "right_gauntlet_clamshell"
-      ],
-      "depth_m": 0.019628999999999883
-    },
-    {
-      "bodies": [
-        "right_hand_plate",
-        "right_gauntlet_clamshell"
-      ],
-      "depth_m": 0.019628999999999883
-    },
-    {
-      "bodies": [
-        "right_hand_plate",
-        "right_gauntlet_clamshell"
-      ],
-      "depth_m": 0.019628999999999883
-    },
-    {
-      "bodies": [
-        "right_gauntlet_sleeve",
-        "right_elbow_cap"
-      ],
-      "depth_m": 0.013922886150000008
-    },
-    {
-      "bodies": [
-        "right_gauntlet_sleeve",
-        "right_elbow_cap"
-      ],
-      "depth_m": 0.013922886150000008
-    },
-    {
-      "bodies": [
-        "right_gauntlet_sleeve",
-        "right_elbow_cap"
-      ],
-      "depth_m": 0.013922886150000008
-    },
-    {
-      "bodies": [
-        "right_gauntlet_sleeve",
-        "right_elbow_cap"
-      ],
-      "depth_m": 0.013922886150000008
-    },
-    {
-      "bodies": [
-        "right_gauntlet_clamshell",
-        "right_elbow_cap"
-      ],
-      "depth_m": 0.007046500000000012
-    },
-    {
-      "bodies": [
-        "right_gauntlet_clamshell",
-        "right_elbow_cap"
-      ],
-      "depth_m": 0.007046500000000012
-    },
-    {
-      "bodies": [
-        "right_gauntlet_clamshell",
-        "right_elbow_cap"
-      ],
-      "depth_m": 0.007046500000000012
-    },
-    {
-      "bodies": [
-        "right_gauntlet_clamshell",
-        "right_elbow_cap"
-      ],
-      "depth_m": 0.007046500000000012
-    },
-    {
-      "bodies": [
-        "right_elbow_cap",
-        "right_bicep_clamshell"
-      ],
-      "depth_m": 0.013041000000000011
-    },
-    {
-      "bodies": [
-        "right_elbow_cap",
-        "right_bicep_clamshell"
-      ],
-      "depth_m": 0.013041000000000011
-    },
-    {
-      "bodies": [
-        "right_elbow_cap",
-        "right_bicep_clamshell"
-      ],
-      "depth_m": 0.013041000000000011
-    },
-    {
-      "bodies": [
-        "right_elbow_cap",
-        "right_bicep_clamshell"
-      ],
-      "depth_m": 0.013041000000000011
+      "depth_m": 0.00507299999999998
     },
     {
       "bodies": [
         "right_bicep_sleeve",
         "right_chest_door"
       ],
-      "depth_m": 0.017858794349999957
+      "depth_m": 0.01996493029999999
     },
     {
       "bodies": [
         "right_bicep_sleeve",
         "right_chest_door"
       ],
-      "depth_m": 0.017858794349999957
+      "depth_m": 0.01996493029999999
     },
     {
       "bodies": [
         "right_bicep_sleeve",
         "right_chest_door"
       ],
-      "depth_m": 0.017858794349999957
+      "depth_m": 0.01996493029999999
     },
     {
       "bodies": [
         "right_bicep_sleeve",
         "right_chest_door"
       ],
-      "depth_m": 0.017858794349999957
+      "depth_m": 0.01996493029999999
     },
     {
       "bodies": [
         "right_bicep_sleeve",
         "right_pectoral_trim"
       ],
-      "depth_m": 0.01785779434999997
+      "depth_m": 0.015541938852886968
     },
     {
       "bodies": [
         "right_bicep_sleeve",
         "right_pectoral_trim"
       ],
-      "depth_m": 0.01785779434999997
-    },
-    {
-      "bodies": [
-        "right_bicep_sleeve",
-        "right_pectoral_trim"
-      ],
-      "depth_m": 0.01785779434999997
-    },
-    {
-      "bodies": [
-        "right_bicep_sleeve",
-        "right_pectoral_trim"
-      ],
-      "depth_m": 0.01785779434999997
+      "depth_m": 0.015541938852886968
     },
     {
       "bodies": [
         "right_bicep_sleeve",
         "right_lat_plate"
       ],
-      "depth_m": 0.05127984378988872
+      "depth_m": 0.017767880708087554
     },
     {
       "bodies": [
         "right_bicep_sleeve",
         "right_lat_plate"
       ],
-      "depth_m": 0.05127984378988872
+      "depth_m": 0.017767880708087554
     },
     {
       "bodies": [
         "right_bicep_front",
         "right_chest_door"
       ],
-      "depth_m": 0.020737999999999958
+      "depth_m": 0.022911499999999974
     },
     {
       "bodies": [
         "right_bicep_front",
         "right_chest_door"
       ],
-      "depth_m": 0.020737999999999958
+      "depth_m": 0.022911499999999974
     },
     {
       "bodies": [
         "right_bicep_front",
         "right_chest_door"
       ],
-      "depth_m": 0.020737999999999958
-    },
-    {
-      "bodies": [
-        "right_bicep_front",
-        "right_pectoral_trim"
-      ],
-      "depth_m": 0.0027358178096159452
-    },
-    {
-      "bodies": [
-        "right_bicep_front",
-        "right_pectoral_trim"
-      ],
-      "depth_m": 0.0027358178096159452
-    },
-    {
-      "bodies": [
-        "right_bicep_front",
-        "right_lat_plate"
-      ],
-      "depth_m": 0.012908858882202327
-    },
-    {
-      "bodies": [
-        "right_bicep_front",
-        "right_lat_plate"
-      ],
-      "depth_m": 0.012908858882202327
+      "depth_m": 0.022911499999999974
     },
     {
       "bodies": [
         "right_bicep_clamshell",
         "right_lat_plate"
       ],
-      "depth_m": 0.05795215893986586
+      "depth_m": 0.025006127041838015
     },
     {
       "bodies": [
         "right_bicep_clamshell",
         "right_lat_plate"
       ],
-      "depth_m": 0.05795215893986586
+      "depth_m": 0.025006127041838015
     },
     {
       "bodies": [
@@ -2135,84 +1701,70 @@
         "right_pauldron",
         "right_pectoral_trim"
       ],
-      "depth_m": 0.026547324779057378
+      "depth_m": 0.02501932477905744
     },
     {
       "bodies": [
         "right_pauldron",
         "right_pectoral_trim"
       ],
-      "depth_m": 0.026547324779057378
+      "depth_m": 0.02501932477905744
     },
     {
       "bodies": [
         "right_pauldron",
         "right_pectoral_trim"
       ],
-      "depth_m": 0.009526585674031779
+      "depth_m": 0.009039820823163756
     },
     {
       "bodies": [
         "right_pauldron",
         "right_pectoral_trim"
       ],
-      "depth_m": 0.009526585674031779
+      "depth_m": 0.009039820823163756
+    },
+    {
+      "bodies": [
+        "right_clavicle_cover",
+        "right_chest_door"
+      ],
+      "depth_m": 0.012712704013529575
+    },
+    {
+      "bodies": [
+        "right_clavicle_cover",
+        "right_chest_door"
+      ],
+      "depth_m": 0.012712704013529575
     },
     {
       "bodies": [
         "right_clavicle_cover",
         "right_pectoral_trim"
       ],
-      "depth_m": 0.01225099999999997
+      "depth_m": 0.014759999999999968
     },
     {
       "bodies": [
         "right_clavicle_cover",
         "right_pectoral_trim"
       ],
-      "depth_m": 0.01225099999999997
+      "depth_m": 0.014759999999999968
     },
     {
       "bodies": [
         "right_clavicle_cover",
         "right_pectoral_trim"
       ],
-      "depth_m": 0.01225099999999997
+      "depth_m": 0.014759999999999968
     },
     {
       "bodies": [
         "right_clavicle_cover",
         "right_pectoral_trim"
       ],
-      "depth_m": 0.01225099999999997
-    },
-    {
-      "bodies": [
-        "right_clavicle_cover",
-        "right_lat_plate"
-      ],
-      "depth_m": 0.013627704013529824
-    },
-    {
-      "bodies": [
-        "right_clavicle_cover",
-        "right_lat_plate"
-      ],
-      "depth_m": 0.013627704013529824
-    },
-    {
-      "bodies": [
-        "right_clavicle_cover",
-        "right_lat_plate"
-      ],
-      "depth_m": 0.009252169625839038
-    },
-    {
-      "bodies": [
-        "right_clavicle_cover",
-        "right_lat_plate"
-      ],
-      "depth_m": 0.009252169625839041
+      "depth_m": 0.014759999999999968
     },
     {
       "bodies": [
@@ -2846,465 +2398,45 @@
     },
     {
       "bodies": [
-        "left_chest_door",
-        "ab_plate_1"
-      ],
-      "depth_m": 0.06816150000000004
-    },
-    {
-      "bodies": [
-        "left_chest_door",
-        "ab_plate_1"
-      ],
-      "depth_m": 0.06816150000000004
-    },
-    {
-      "bodies": [
-        "left_chest_door",
-        "ab_plate_1"
-      ],
-      "depth_m": 0.06816150000000004
-    },
-    {
-      "bodies": [
-        "left_chest_door",
-        "ab_plate_1"
-      ],
-      "depth_m": 0.06816150000000004
-    },
-    {
-      "bodies": [
-        "left_chest_door",
-        "ab_plate_2"
-      ],
-      "depth_m": 0.0017800000000000593
-    },
-    {
-      "bodies": [
-        "left_chest_door",
-        "ab_plate_2"
-      ],
-      "depth_m": 0.0017800000000000593
-    },
-    {
-      "bodies": [
-        "left_chest_door",
-        "ab_plate_2"
-      ],
-      "depth_m": 0.0017800000000000593
-    },
-    {
-      "bodies": [
-        "left_chest_door",
-        "ab_plate_2"
-      ],
-      "depth_m": 0.0017800000000000593
-    },
-    {
-      "bodies": [
-        "left_chest_door",
-        "left_lat_plate"
-      ],
-      "depth_m": 0.07661749999999999
-    },
-    {
-      "bodies": [
-        "left_chest_door",
-        "left_lat_plate"
-      ],
-      "depth_m": 0.07661749999999999
-    },
-    {
-      "bodies": [
-        "left_chest_door",
-        "left_lat_plate"
-      ],
-      "depth_m": 0.07661749999999999
-    },
-    {
-      "bodies": [
-        "left_chest_door",
-        "left_lat_plate"
-      ],
-      "depth_m": 0.07661749999999999
-    },
-    {
-      "bodies": [
-        "left_pectoral_trim",
-        "left_lat_plate"
-      ],
-      "depth_m": 0.052940500000000085
-    },
-    {
-      "bodies": [
-        "left_pectoral_trim",
-        "left_lat_plate"
-      ],
-      "depth_m": 0.052940500000000085
-    },
-    {
-      "bodies": [
-        "left_pectoral_trim",
-        "left_lat_plate"
-      ],
-      "depth_m": 0.052940500000000085
-    },
-    {
-      "bodies": [
-        "left_pectoral_trim",
-        "left_lat_plate"
-      ],
-      "depth_m": 0.052940500000000085
-    },
-    {
-      "bodies": [
-        "left_chest_inlay",
-        "left_lat_plate"
-      ],
-      "depth_m": 0.008335416415906148
-    },
-    {
-      "bodies": [
-        "left_chest_inlay",
-        "left_lat_plate"
-      ],
-      "depth_m": 0.008335416415906148
-    },
-    {
-      "bodies": [
-        "right_chest_door",
-        "ab_plate_1"
-      ],
-      "depth_m": 0.07416150000000005
-    },
-    {
-      "bodies": [
-        "right_chest_door",
-        "ab_plate_1"
-      ],
-      "depth_m": 0.07416150000000005
-    },
-    {
-      "bodies": [
-        "right_chest_door",
-        "ab_plate_1"
-      ],
-      "depth_m": 0.07416150000000005
-    },
-    {
-      "bodies": [
-        "right_chest_door",
-        "ab_plate_1"
-      ],
-      "depth_m": 0.07416150000000005
-    },
-    {
-      "bodies": [
-        "right_chest_door",
-        "ab_plate_2"
-      ],
-      "depth_m": 0.005464999999999914
-    },
-    {
-      "bodies": [
-        "right_chest_door",
-        "ab_plate_2"
-      ],
-      "depth_m": 0.005464999999999914
-    },
-    {
-      "bodies": [
-        "right_chest_door",
-        "ab_plate_2"
-      ],
-      "depth_m": 0.005464999999999914
-    },
-    {
-      "bodies": [
-        "right_chest_door",
-        "ab_plate_2"
-      ],
-      "depth_m": 0.005464999999999914
-    },
-    {
-      "bodies": [
-        "right_chest_door",
-        "right_lat_plate"
-      ],
-      "depth_m": 0.07393149999999997
-    },
-    {
-      "bodies": [
-        "right_chest_door",
-        "right_lat_plate"
-      ],
-      "depth_m": 0.07393149999999997
-    },
-    {
-      "bodies": [
-        "right_chest_door",
-        "right_lat_plate"
-      ],
-      "depth_m": 0.07393149999999997
-    },
-    {
-      "bodies": [
-        "right_chest_door",
-        "right_lat_plate"
-      ],
-      "depth_m": 0.07393149999999997
-    },
-    {
-      "bodies": [
-        "right_pectoral_trim",
-        "right_lat_plate"
-      ],
-      "depth_m": 0.05203000000000024
-    },
-    {
-      "bodies": [
-        "right_pectoral_trim",
-        "right_lat_plate"
-      ],
-      "depth_m": 0.05203000000000024
-    },
-    {
-      "bodies": [
-        "right_pectoral_trim",
-        "right_lat_plate"
-      ],
-      "depth_m": 0.05203000000000024
-    },
-    {
-      "bodies": [
-        "right_pectoral_trim",
-        "right_lat_plate"
-      ],
-      "depth_m": 0.05203000000000024
-    },
-    {
-      "bodies": [
-        "right_chest_inlay",
-        "right_lat_plate"
-      ],
-      "depth_m": 0.008335416415906148
-    },
-    {
-      "bodies": [
-        "right_chest_inlay",
-        "right_lat_plate"
-      ],
-      "depth_m": 0.008335416415906148
-    },
-    {
-      "bodies": [
-        "ab_plate_2",
-        "left_lat_plate"
-      ],
-      "depth_m": 0.0036209999999999853
-    },
-    {
-      "bodies": [
-        "ab_plate_2",
-        "left_lat_plate"
-      ],
-      "depth_m": 0.0036209999999999853
-    },
-    {
-      "bodies": [
-        "ab_plate_2",
-        "left_lat_plate"
-      ],
-      "depth_m": 0.0036209999999999853
-    },
-    {
-      "bodies": [
-        "ab_plate_2",
-        "left_lat_plate"
-      ],
-      "depth_m": 0.0036209999999999853
-    },
-    {
-      "bodies": [
-        "ab_plate_2",
-        "right_lat_plate"
-      ],
-      "depth_m": 0.0036209999999999853
-    },
-    {
-      "bodies": [
-        "ab_plate_2",
-        "right_lat_plate"
-      ],
-      "depth_m": 0.0036209999999999853
-    },
-    {
-      "bodies": [
-        "ab_plate_2",
-        "right_lat_plate"
-      ],
-      "depth_m": 0.0036209999999999853
-    },
-    {
-      "bodies": [
-        "ab_plate_2",
-        "right_lat_plate"
-      ],
-      "depth_m": 0.0036209999999999853
-    },
-    {
-      "bodies": [
         "ab_plate_3",
-        "left_lat_plate"
+        "belt_plate"
       ],
-      "depth_m": 0.00952700000000001
-    },
-    {
-      "bodies": [
-        "ab_plate_3",
-        "left_lat_plate"
-      ],
-      "depth_m": 0.00952700000000001
-    },
-    {
-      "bodies": [
-        "ab_plate_3",
-        "left_lat_plate"
-      ],
-      "depth_m": 0.00952700000000001
-    },
-    {
-      "bodies": [
-        "ab_plate_3",
-        "left_lat_plate"
-      ],
-      "depth_m": 0.00952700000000001
-    },
-    {
-      "bodies": [
-        "ab_plate_3",
-        "right_lat_plate"
-      ],
-      "depth_m": 0.00952700000000001
-    },
-    {
-      "bodies": [
-        "ab_plate_3",
-        "right_lat_plate"
-      ],
-      "depth_m": 0.00952700000000001
-    },
-    {
-      "bodies": [
-        "ab_plate_3",
-        "right_lat_plate"
-      ],
-      "depth_m": 0.00952700000000001
-    },
-    {
-      "bodies": [
-        "ab_plate_3",
-        "right_lat_plate"
-      ],
-      "depth_m": 0.00952700000000001
+      "depth_m": 0.003999999999999837
     },
     {
       "bodies": [
         "ab_plate_3",
         "belt_plate"
       ],
-      "depth_m": 0.01699999999999984
+      "depth_m": 0.003999999999999837
     },
     {
       "bodies": [
         "ab_plate_3",
         "belt_plate"
       ],
-      "depth_m": 0.01699999999999984
+      "depth_m": 0.003999999999999837
     },
     {
       "bodies": [
         "ab_plate_3",
         "belt_plate"
       ],
-      "depth_m": 0.01699999999999984
-    },
-    {
-      "bodies": [
-        "ab_plate_3",
-        "belt_plate"
-      ],
-      "depth_m": 0.01699999999999984
-    },
-    {
-      "bodies": [
-        "left_lat_plate",
-        "left_hip_cowl"
-      ],
-      "depth_m": 0.01693282619999989
-    },
-    {
-      "bodies": [
-        "left_lat_plate",
-        "left_hip_cowl"
-      ],
-      "depth_m": 0.01693282619999989
-    },
-    {
-      "bodies": [
-        "left_lat_plate",
-        "left_hip_cowl"
-      ],
-      "depth_m": 0.01693282619999989
-    },
-    {
-      "bodies": [
-        "left_lat_plate",
-        "left_hip_cowl"
-      ],
-      "depth_m": 0.01693282619999989
-    },
-    {
-      "bodies": [
-        "right_lat_plate",
-        "right_hip_cowl"
-      ],
-      "depth_m": 0.016955173799999973
-    },
-    {
-      "bodies": [
-        "right_lat_plate",
-        "right_hip_cowl"
-      ],
-      "depth_m": 0.016955173799999973
-    },
-    {
-      "bodies": [
-        "right_lat_plate",
-        "right_hip_cowl"
-      ],
-      "depth_m": 0.016955173799999973
-    },
-    {
-      "bodies": [
-        "right_lat_plate",
-        "right_hip_cowl"
-      ],
-      "depth_m": 0.016955173799999973
+      "depth_m": 0.003999999999999837
     },
     {
       "bodies": [
         "left_rib_2",
         "left_hip_cowl"
       ],
-      "depth_m": 0.006432575797480202
+      "depth_m": 0.006692008118829577
     },
     {
       "bodies": [
         "right_rib_2",
         "right_hip_cowl"
       ],
-      "depth_m": 0.00988930463600618
+      "depth_m": 0.009628198521715479
     },
     {
       "bodies": [
@@ -3318,56 +2450,56 @@
         "left_rib_edge_2",
         "left_hip_cowl"
       ],
-      "depth_m": 0.004874710961675859
+      "depth_m": 0.007217901661675912
     },
     {
       "bodies": [
         "left_rib_edge_2",
         "left_hip_cowl"
       ],
-      "depth_m": 0.004282022880851644
+      "depth_m": 0.006625213580851697
     },
     {
       "bodies": [
         "left_rib_edge_2",
         "left_hip_cowl"
       ],
-      "depth_m": 0.004282022908412905
+      "depth_m": 0.006625213608412958
     },
     {
       "bodies": [
         "left_rib_edge_2",
         "left_hip_cowl"
       ],
-      "depth_m": 0.00487471101923058
+      "depth_m": 0.007217901719230633
     },
     {
       "bodies": [
         "right_rib_edge_2",
         "right_hip_cowl"
       ],
-      "depth_m": 0.005700013783354256
+      "depth_m": 0.008043823083354199
     },
     {
       "bodies": [
         "right_rib_edge_2",
         "right_hip_cowl"
       ],
-      "depth_m": 0.005700013846080009
+      "depth_m": 0.008043823146079952
     },
     {
       "bodies": [
         "right_rib_edge_2",
         "right_hip_cowl"
       ],
-      "depth_m": 0.005107325765255795
+      "depth_m": 0.0074511350652557385
     },
     {
       "bodies": [
         "right_rib_edge_2",
         "right_hip_cowl"
       ],
-      "depth_m": 0.005107325672536581
+      "depth_m": 0.007451134972536525
     },
     {
       "bodies": [
@@ -3402,28 +2534,28 @@
         "left_shin_guard",
         "left_shin_shell"
       ],
-      "depth_m": 0.015220000000000004
+      "depth_m": 0.015260500000000003
     },
     {
       "bodies": [
         "left_shin_guard",
         "left_shin_shell"
       ],
-      "depth_m": 0.015220000000000004
+      "depth_m": 0.015260500000000003
     },
     {
       "bodies": [
         "left_shin_guard",
         "left_shin_shell"
       ],
-      "depth_m": 0.015220000000000004
+      "depth_m": 0.015260500000000003
     },
     {
       "bodies": [
         "left_shin_guard",
         "left_shin_shell"
       ],
-      "depth_m": 0.015220000000000004
+      "depth_m": 0.015260500000000003
     },
     {
       "bodies": [
@@ -3458,140 +2590,28 @@
         "left_boot_toe",
         "left_calf_clamshell"
       ],
-      "depth_m": 0.04937685941899998
+      "depth_m": 0.04858535941899998
     },
     {
       "bodies": [
         "left_boot_toe",
         "left_calf_clamshell"
       ],
-      "depth_m": 0.04937685941899998
+      "depth_m": 0.04858535941899998
     },
     {
       "bodies": [
         "left_boot_toe",
         "left_calf_clamshell"
       ],
-      "depth_m": 0.04937685941899998
+      "depth_m": 0.04858535941899998
     },
     {
       "bodies": [
         "left_boot_toe",
         "left_calf_clamshell"
       ],
-      "depth_m": 0.04937685941899998
-    },
-    {
-      "bodies": [
-        "left_ankle_flap",
-        "left_ankle_motor_cover"
-      ],
-      "depth_m": 0.006607999999999966
-    },
-    {
-      "bodies": [
-        "left_ankle_flap",
-        "left_ankle_motor_cover"
-      ],
-      "depth_m": 0.006607999999999966
-    },
-    {
-      "bodies": [
-        "left_ankle_flap",
-        "left_ankle_motor_cover"
-      ],
-      "depth_m": 0.006607999999999966
-    },
-    {
-      "bodies": [
-        "left_ankle_flap",
-        "left_ankle_motor_cover"
-      ],
-      "depth_m": 0.006607999999999966
-    },
-    {
-      "bodies": [
-        "left_shin_shell",
-        "left_knee_cap"
-      ],
-      "depth_m": 0.025161000000000003
-    },
-    {
-      "bodies": [
-        "left_shin_shell",
-        "left_knee_cap"
-      ],
-      "depth_m": 0.025161000000000003
-    },
-    {
-      "bodies": [
-        "left_shin_shell",
-        "left_knee_cap"
-      ],
-      "depth_m": 0.025161000000000003
-    },
-    {
-      "bodies": [
-        "left_shin_shell",
-        "left_knee_cap"
-      ],
-      "depth_m": 0.025161000000000003
-    },
-    {
-      "bodies": [
-        "left_shin_shell",
-        "left_knee_bezel"
-      ],
-      "depth_m": 0.006922999999999999
-    },
-    {
-      "bodies": [
-        "left_shin_shell",
-        "left_knee_bezel"
-      ],
-      "depth_m": 0.006922999999999999
-    },
-    {
-      "bodies": [
-        "left_shin_shell",
-        "left_knee_bezel"
-      ],
-      "depth_m": 0.006922999999999999
-    },
-    {
-      "bodies": [
-        "left_shin_shell",
-        "left_knee_bezel"
-      ],
-      "depth_m": 0.006922999999999999
-    },
-    {
-      "bodies": [
-        "left_knee_cap",
-        "left_thigh_clamshell"
-      ],
-      "depth_m": 0.0035479999999999956
-    },
-    {
-      "bodies": [
-        "left_knee_cap",
-        "left_thigh_clamshell"
-      ],
-      "depth_m": 0.0035479999999999956
-    },
-    {
-      "bodies": [
-        "left_knee_cap",
-        "left_thigh_clamshell"
-      ],
-      "depth_m": 0.0035479999999999956
-    },
-    {
-      "bodies": [
-        "left_knee_cap",
-        "left_thigh_clamshell"
-      ],
-      "depth_m": 0.0035479999999999956
+      "depth_m": 0.04858535941899998
     },
     {
       "bodies": [
@@ -3682,28 +2702,28 @@
         "right_shin_guard",
         "right_shin_shell"
       ],
-      "depth_m": 0.015220000000000004
+      "depth_m": 0.015260500000000003
     },
     {
       "bodies": [
         "right_shin_guard",
         "right_shin_shell"
       ],
-      "depth_m": 0.015220000000000004
+      "depth_m": 0.015260500000000003
     },
     {
       "bodies": [
         "right_shin_guard",
         "right_shin_shell"
       ],
-      "depth_m": 0.015220000000000004
+      "depth_m": 0.015260500000000003
     },
     {
       "bodies": [
         "right_shin_guard",
         "right_shin_shell"
       ],
-      "depth_m": 0.015220000000000004
+      "depth_m": 0.015260500000000003
     },
     {
       "bodies": [
@@ -3738,140 +2758,28 @@
         "right_boot_toe",
         "right_calf_clamshell"
       ],
-      "depth_m": 0.049426140580999985
+      "depth_m": 0.04860114058099999
     },
     {
       "bodies": [
         "right_boot_toe",
         "right_calf_clamshell"
       ],
-      "depth_m": 0.049426140580999985
+      "depth_m": 0.04860114058099999
     },
     {
       "bodies": [
         "right_boot_toe",
         "right_calf_clamshell"
       ],
-      "depth_m": 0.049426140580999985
+      "depth_m": 0.04860114058099999
     },
     {
       "bodies": [
         "right_boot_toe",
         "right_calf_clamshell"
       ],
-      "depth_m": 0.049426140580999985
-    },
-    {
-      "bodies": [
-        "right_ankle_flap",
-        "right_ankle_motor_cover"
-      ],
-      "depth_m": 0.006607999999999966
-    },
-    {
-      "bodies": [
-        "right_ankle_flap",
-        "right_ankle_motor_cover"
-      ],
-      "depth_m": 0.006607999999999966
-    },
-    {
-      "bodies": [
-        "right_ankle_flap",
-        "right_ankle_motor_cover"
-      ],
-      "depth_m": 0.006607999999999966
-    },
-    {
-      "bodies": [
-        "right_ankle_flap",
-        "right_ankle_motor_cover"
-      ],
-      "depth_m": 0.006607999999999966
-    },
-    {
-      "bodies": [
-        "right_shin_shell",
-        "right_knee_cap"
-      ],
-      "depth_m": 0.025161000000000003
-    },
-    {
-      "bodies": [
-        "right_shin_shell",
-        "right_knee_cap"
-      ],
-      "depth_m": 0.025161000000000003
-    },
-    {
-      "bodies": [
-        "right_shin_shell",
-        "right_knee_cap"
-      ],
-      "depth_m": 0.025161000000000003
-    },
-    {
-      "bodies": [
-        "right_shin_shell",
-        "right_knee_cap"
-      ],
-      "depth_m": 0.025161000000000003
-    },
-    {
-      "bodies": [
-        "right_shin_shell",
-        "right_knee_bezel"
-      ],
-      "depth_m": 0.006922999999999999
-    },
-    {
-      "bodies": [
-        "right_shin_shell",
-        "right_knee_bezel"
-      ],
-      "depth_m": 0.006922999999999999
-    },
-    {
-      "bodies": [
-        "right_shin_shell",
-        "right_knee_bezel"
-      ],
-      "depth_m": 0.006922999999999999
-    },
-    {
-      "bodies": [
-        "right_shin_shell",
-        "right_knee_bezel"
-      ],
-      "depth_m": 0.006922999999999999
-    },
-    {
-      "bodies": [
-        "right_knee_cap",
-        "right_thigh_clamshell"
-      ],
-      "depth_m": 0.0035479999999999956
-    },
-    {
-      "bodies": [
-        "right_knee_cap",
-        "right_thigh_clamshell"
-      ],
-      "depth_m": 0.0035479999999999956
-    },
-    {
-      "bodies": [
-        "right_knee_cap",
-        "right_thigh_clamshell"
-      ],
-      "depth_m": 0.0035479999999999956
-    },
-    {
-      "bodies": [
-        "right_knee_cap",
-        "right_thigh_clamshell"
-      ],
-      "depth_m": 0.0035479999999999956
+      "depth_m": 0.04860114058099999
     },
     {
       "bodies": [
