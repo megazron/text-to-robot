@@ -12,9 +12,11 @@ for row in summary['examples']:
  if training.exists():
   with zipfile.ZipFile(folder/'robot.training.zip','w',zipfile.ZIP_DEFLATED) as z:
    for p in sorted(training.rglob('*')):
-    if p.is_file():z.write(p,p.relative_to(training))
+    if p.is_file() and "__pycache__" not in p.parts and p.suffix!=".pyc":z.write(p,p.relative_to(training))
  moveit=source/name/'moveit' 
- if moveit.exists():shutil.copytree(moveit,folder/'moveit',dirs_exist_ok=True)
+ if moveit.exists():
+  if (folder/'moveit').exists():shutil.rmtree(folder/'moveit')
+  shutil.copytree(moveit,folder/'moveit')
  has_moveit=any((folder/'moveit').glob('*.srdf')) if (folder/'moveit').exists() else False
  failures=', '.join(row.get('failed',[])) or 'none in this smoke battery'
  text=f'''# {name}

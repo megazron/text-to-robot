@@ -17,6 +17,10 @@ for folder in sorted(base.iterdir()):
         assert z.testzip() is None
         assert f'{name}/package.xml' in z.namelist()
         assert len([n for n in z.namelist() if n.endswith('/package.xml')])==1
+    with zipfile.ZipFile(folder/'robot.training.zip') as z:
+        assert z.testzip() is None
+        assert 'training/robot_env.py' in z.namelist()
+        assert not any('__pycache__' in n or n.endswith('.pyc') for n in z.namelist())
     assert (folder/'README.md').exists()
 for name in ('articulation','helmet'):
     folder=base/'14_iron_man_mark_43';entry=manifest['mark43_'+name]
