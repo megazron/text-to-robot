@@ -38,6 +38,14 @@ ros2 launch arm_6dof move_group.launch.py
 The launch uses mock hardware. Planning requires a collision-free start state.
 The fixed-root planner is not a walking controller or a simulation bridge.
 
+## Coordinated motion
+
+![Actual coordinated arm motion](task_motion.gif)
+
+[Motion report](task_motion_report.json): **PASS** for one smooth outward/return path. Gravity and self-collision are enabled; model-based bias compensation acts through the original effort-limited motors. Requested speed stays below half the declared limit. This does not validate the full workspace, a learned skill or a hardware build. The independent stress-sweep results above are unchanged.
+
+[Recorded MoveIt runtime result](moveit_report.json).
+
 ## Reproduce
 
 From the repository root:

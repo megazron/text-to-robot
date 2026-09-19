@@ -1,23 +1,23 @@
 {
   "01_arm_2dof": {
-    "source_urdf_sha256": "d5191f826b6f5a01bbb88ff6d3e87ebf9f59c831ca0e5fd290a156ca7ac1e526",
-    "gif_sha256": "c2e70d90cbaae2fa2f812f3191e2a40636d604133df1e7c2574a989df0cde6a2",
+    "source_urdf_sha256": "e6c0742ef026480b4624ca13f10526bdecb4bdc779fff9a0be36d6c0b57cb767",
+    "gif_sha256": "4c1a68e923f6de46f7426309c99a82177cd90fda1d101a12122985a50a449624",
     "self_collision": true,
     "motion": "hold",
     "seconds": 2,
     "collision_model": "URDF primitives / mesh bounding boxes"
   },
   "02_arm_6dof": {
-    "source_urdf_sha256": "eec6c8ff46c15aa938e53f626cdaecacaaf998279415d60f2f381b76f889f666",
-    "gif_sha256": "9b295ef5cfb204ae403fdb95bb72d0a1200da4692b229cbb6ee5b50ddf32e143",
+    "source_urdf_sha256": "0613cbcf950fd67489b78786c0a7e4047e300b7b2e49531f1cd69dadbe36b528",
+    "gif_sha256": "d2a101cb8f36081ff4882bed7100a4467918df1d9a03f7332c626517731c0a28",
     "self_collision": true,
     "motion": "hold",
     "seconds": 2,
     "collision_model": "URDF primitives / mesh bounding boxes"
   },
   "03_arm_7dof": {
-    "source_urdf_sha256": "c0d1a2fec565baf59e805bb7e00bf5dc9652168b1e6dcb5ce1d46b6e12a515d4",
-    "gif_sha256": "733c7789c445b149de19ce9eff00acfd58687923e80a1ffc719d616f42232485",
+    "source_urdf_sha256": "ce0aa8609bd89e3a088780e5dc2a8a6d8babfda4a0199129c20e1f30ac2ca8b0",
+    "gif_sha256": "bd1a2d99bb2d01e268bd2c7eb56d6f4b81796ba876323c7507e3a93b902533e6",
     "self_collision": true,
     "motion": "hold",
     "seconds": 2,
@@ -56,8 +56,8 @@
     "collision_model": "URDF primitives / mesh bounding boxes"
   },
   "08_humanoid": {
-    "source_urdf_sha256": "35bb3bbe0b216c8515a959a0767b75ebf2151be770f73d017f3b991d6689afba",
-    "gif_sha256": "3c60b125b7f8c4081dc9bc0ecc5c6b79375675310069212cf9f8f87186226bd3",
+    "source_urdf_sha256": "8d286b44d98645cd29d6d0e765b790e89e99cea1dd098dd0a678b6a755db06ed",
+    "gif_sha256": "c574ab41cbc80b09e42b728ef1740382ccc914d1ea16db617e4fe26900d0cafe",
     "self_collision": true,
     "motion": "hold",
     "seconds": 2,
@@ -88,16 +88,16 @@
     "collision_model": "URDF primitives / mesh bounding boxes"
   },
   "12_mars_rover": {
-    "source_urdf_sha256": "eef4a60aeddbffa097d7c7c9299421e2d88cabf04e9d0c4c5e616236510e15ee",
-    "gif_sha256": "1f4ed9f8f2b28a635d8b725c4a89d777fdcda07c801f55b12d1908c282c87076",
+    "source_urdf_sha256": "e06d18e63f71600ca7b6927ae3cd1d321e892f20cb4876a29725b2193c6d96fc",
+    "gif_sha256": "7fda4f510c7e08a4fc75ef7a6174f4b3b4c1108e4b60a765c0ecd841668263fd",
     "self_collision": true,
     "motion": "hold",
     "seconds": 2,
     "collision_model": "URDF primitives / mesh bounding boxes"
   },
   "13_battle_mech": {
-    "source_urdf_sha256": "7c38757d88a900ea57810f9201e8781b6aeb8fd589cb6f249095d7aa964a6b20",
-    "gif_sha256": "1969ef3a5fc06a03fa1053cae1fed953e5029dd5842a99085aa6e96b095bbdeb",
+    "source_urdf_sha256": "87d0e081a4e3716605c969b6f35abcf663b8d364d8aa621fd903f0e097076aa1",
+    "gif_sha256": "7e8c21852ddbb089f8952acfe83419e505a2a7dcaec28bf7c3193f15aec90fa3",
     "self_collision": true,
     "motion": "hold",
     "seconds": 2,
@@ -135,8 +135,8 @@
     "collision_model": "URDF primitives / mesh bounding boxes"
   },
   "17_baymax": {
-    "source_urdf_sha256": "0f7baa59f6d3c36d97150e18d6e58171b68a83901ca0ecdc46a1377cc3ce003c",
-    "gif_sha256": "14401219b9dbc314ca3b6269856fe5924f65b8884e49992937f18747c3be8b72",
+    "source_urdf_sha256": "2465ceb98c8b69ed2cd5cc7d242bc60f7134f1117184bcb6ec6a51527ece15b0",
+    "gif_sha256": "1331d116d87452ab35c3bbdd3433554a7cc86bd7073ae294c7fea5f7ccbdb770",
     "self_collision": true,
     "motion": "hold",
     "seconds": 2,

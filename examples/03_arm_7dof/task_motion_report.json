@@ -1,0 +1,130 @@
+{
+  "scope": "One coordinated outward/return trajectory; not full workspace, learned policy or hardware validation",
+  "controller_sha256": "d9c626d6a0afeb253d1782491f536a544bca2fcf61b8222643288f7cdab781fd",
+  "script_sha256": "e832c1d9b6007117e05a1b4ebf059d439ea774af3d5b6ae753058ba0e9d92485",
+  "pass": true,
+  "source_urdf_sha256": "ce0aa8609bd89e3a088780e5dc2a8a6d8babfda4a0199129c20e1f30ac2ca8b0",
+  "mujoco_version": "3.13.0",
+  "controller": "Position servo with model bias-force compensation, original effort limits enforced",
+  "gravity": true,
+  "self_collision": true,
+  "finite": true,
+  "max_interbody_penetration_m": 1.601078182512472e-05,
+  "deepest_pair": [
+    "left_finger_pad",
+    "right_finger_pad"
+  ],
+  "leg_duration_s": 1.5,
+  "command_profile": "Cubic smoothstep, requested peak speed <= 50% of URDF velocity limit",
+  "gif_sha256": "5c2ac260c8a2bf21ddd18f4c1b186b739a4a178272d38349939627d6cb6030d3",
+  "joints": [
+    {
+      "joint": "joint_1",
+      "goal": 0.35,
+      "rms_error": 0.0023177466965668835,
+      "tolerance": 0.1,
+      "position_unit": "rad",
+      "declared_speed_limit": 1.5,
+      "requested_peak_speed": 0.3499999999999999,
+      "measured_peak_speed": 0.37017214493639017,
+      "measured_peak_effort": 0.22387186686075822,
+      "effort_limit": 12.0
+    },
+    {
+      "joint": "joint_2",
+      "goal": 0.25,
+      "rms_error": 0.004935199551687894,
+      "tolerance": 0.1,
+      "position_unit": "rad",
+      "declared_speed_limit": 1.5,
+      "requested_peak_speed": 0.25,
+      "measured_peak_speed": 0.2902714555712208,
+      "measured_peak_effort": 4.780517555526654,
+      "effort_limit": 12.0
+    },
+    {
+      "joint": "joint_3",
+      "goal": -0.35,
+      "rms_error": 0.00015031421898056117,
+      "tolerance": 0.1,
+      "position_unit": "rad",
+      "declared_speed_limit": 1.5,
+      "requested_peak_speed": 0.3499999999999999,
+      "measured_peak_speed": 0.3506229136083179,
+      "measured_peak_effort": 0.06800913452478596,
+      "effort_limit": 8.0
+    },
+    {
+      "joint": "joint_4",
+      "goal": 0.2,
+      "rms_error": 0.0010873370730126706,
+      "tolerance": 0.1,
+      "position_unit": "rad",
+      "declared_speed_limit": 1.5,
+      "requested_peak_speed": 0.20000000000000004,
+      "measured_peak_speed": 0.1959544693976763,
+      "measured_peak_effort": 0.9451176183913157,
+      "effort_limit": 4.0
+    },
+    {
+      "joint": "joint_5",
+      "goal": 0.2,
+      "rms_error": 7.992738753406869e-05,
+      "tolerance": 0.1,
+      "position_unit": "rad",
+      "declared_speed_limit": 1.5,
+      "requested_peak_speed": 0.20000000000000004,
+      "measured_peak_speed": 0.20027343395539146,
+      "measured_peak_effort": 0.022660445644556937,
+      "effort_limit": 3.0
+    },
+    {
+      "joint": "joint_6",
+      "goal": -0.2,
+      "rms_error": 0.00042382118800731827,
+      "tolerance": 0.1,
+      "position_unit": "rad",
+      "declared_speed_limit": 1.5,
+      "requested_peak_speed": 0.20000000000000004,
+      "measured_peak_speed": 0.20464856795098937,
+      "measured_peak_effort": 0.31494095398878397,
+      "effort_limit": 2.0
+    },
+    {
+      "joint": "joint_7",
+      "goal": 0.15,
+      "rms_error": 4.7462064283320814e-05,
+      "tolerance": 0.1,
+      "position_unit": "rad",
+      "declared_speed_limit": 1.5,
+      "requested_peak_speed": 0.15,
+      "measured_peak_speed": 0.1499987231423097,
+      "measured_peak_effort": 0.015080345492190173,
+      "effort_limit": 2.0
+    },
+    {
+      "joint": "left_finger_joint",
+      "goal": 0.015,
+      "rms_error": 0.00036160099376723566,
+      "tolerance": 0.008,
+      "position_unit": "m",
+      "declared_speed_limit": 0.06,
+      "requested_peak_speed": 0.015,
+      "measured_peak_speed": 0.02503463387956149,
+      "measured_peak_effort": 0.03819516638624698,
+      "effort_limit": 40.0
+    },
+    {
+      "joint": "right_finger_joint",
+      "goal": 0.015,
+      "rms_error": 0.0003587555492111165,
+      "tolerance": 0.008,
+      "position_unit": "m",
+      "declared_speed_limit": 0.06,
+      "requested_peak_speed": 0.015,
+      "measured_peak_speed": 0.022952687083498666,
+      "measured_peak_effort": 0.0419281890088844,
+      "effort_limit": 40.0
+    }
+  ]
+}

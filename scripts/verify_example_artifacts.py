@@ -88,3 +88,28 @@ assert len(mobile['results'])==6 and all(row['pass'] for row in mobile['results'
 for row in mobile['results']:
     assert row['source_urdf_sha256']==hashlib.sha256((base/row['example']/'robot.urdf').read_bytes()).hexdigest()
 print('All six recorded contact-driven motion checks passed on current models')
+
+assert web['mesh_failure_and_retry_pass']
+for row in web['examples']:
+    spec=json.loads((base/row['example']/'robot.json').read_text())
+    assert row['mesh_triangles_verified'] and row['rendered_meshes']==sum(l['geometry']['type']=='mesh' for l in spec['links'])
+for folder in sorted(base.glob('0[1-4]_*')):
+    r=json.loads((folder/'task_motion_report.json').read_text())
+    for key,p in [('source_urdf_sha256',folder/'robot.urdf'),('gif_sha256',folder/'task_motion.gif'),('controller_sha256',root/'python/ttr_mujoco/control.py'),('script_sha256',root/'scripts/check_arm_motion.py')]:
+        assert r[key]==hashlib.sha256(p.read_bytes()).hexdigest(),f'{folder.name}: stale motion evidence'
+    assert r['pass'] and r['self_collision'] and r['gravity'] and r['finite'] and r['max_interbody_penetration_m']<.001
+    for j in r['joints']:
+        assert j['measured_peak_effort']<=j['effort_limit']+1e-8
+        assert j['requested_peak_speed']<=j['declared_speed_limit']*.5+1e-8
+print('Verified rendered-mesh counts and four current coordinated arm motion reports')
+
+training_smoke=json.loads((base/'arm_training_smoke.json').read_text())
+for row in training_smoke['examples']:
+    assert row['pass'] and row['checkpoint_reload'] and row['bias_compensation'] and row['self_collision']
+    assert row['archive_sha256']==hashlib.sha256((base/row['example']/'robot.training.zip').read_bytes()).hexdigest()
+arm=base/'02_arm_6dof';moveit=json.loads((arm/'moveit_report.json').read_text())
+assert moveit['robot_sha256']==hashlib.sha256((arm/'robot.json').read_bytes()).hexdigest() and moveit['pass']
+print('Exported compensated-arm training and MoveIt evidence is current')
+
+humanoid=base/'08_humanoid';r=json.loads((humanoid/'moveit_report.json').read_text())
+assert r['robot_sha256']==hashlib.sha256((humanoid/'robot.json').read_bytes()).hexdigest() and r['pass']

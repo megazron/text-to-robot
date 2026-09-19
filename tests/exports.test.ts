@@ -26,7 +26,7 @@ test("STL: assembly is valid ASCII STL with one part file per link", () => {
 test("printability flags parts larger than the build volume", () => {
   const spec = finalizeSpec(nDofArm(6));
   const forearm = spec.links.find((l) => l.role === "forearm")!;
-  if (forearm.geometry.type === "cylinder") forearm.geometry.length = 0.5; // 500 mm > 220 mm
+  forearm.geometry = {type:"cylinder",radius:.03,length:.5}; // 500 mm > 220 mm
   const rep = printabilityReport(spec, 220);
   assert.ok(rep.issues.some((i) => i.part === "forearm" && /build volume/.test(i.message)));
 });
@@ -111,4 +111,24 @@ test('MoveIt creates separate humanoid arms and names legged chains as legs', as
     const groups=planningGroups(finalizeSpec(spec));assert.equal(groups.length,n);
     assert.ok(groups.every(g=>g.name.endsWith('_leg')));
   }
+});
+
+test('MoveIt excludes fixed-assembly contacts while keeping non-adjacent bodies checked',()=>{
+  const spec=finalizeSpec(nDofArm(6));
+  const srdf=exportMoveIt(spec)['arm_6dof/moveit/arm_6dof.srdf'] as string;
+  const excluded=(a:string,b:string)=>srdf.includes(`link1="${a}" link2="${b}"`) || srdf.includes(`link1="${b}" link2="${a}"`);
+  assert.ok(excluded('base_link_service_lid','base_link_front_panel'));
+  assert.ok(excluded('forearm','wrist_1_joint_hub'));
+  assert.ok(!excluded('shoulder_joint_hub','forearm'));
+  assert.ok(!excluded('base_link_service_lid','forearm'));
+});
+
+test('mock control starts sliding fingers open without excluding opposing pad contacts',()=>{
+  const spec=finalizeSpec(nDofArm(6));const files=exportRos2Package(spec);
+  const xacro=files['arm_6dof/config/ros2_control.xacro'] as string;
+  assert.ok(xacro);
+  const finger=xacro.split('<joint name="left_finger_joint">')[1].split('</joint>')[0];
+  assert.match(finger,/<param name="initial_value">0.01<\/param>/);
+  const srdf=files['arm_6dof/moveit/arm_6dof.srdf'] as string;
+  assert.ok(!/link1="left_finger_pad" link2="right_finger_pad"|link1="right_finger_pad" link2="left_finger_pad"/.test(srdf));
 });

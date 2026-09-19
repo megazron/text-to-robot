@@ -1,11 +1,11 @@
 {
   "scope": "Design-input inventory, not a hardware qualification or a claim that missing interfaces were inspected in CAD",
-  "source_robot_sha256": "c544bb95afd6fd7039bf2b62c706e15f63952c2725c3c1e0aa1096961bff64c0",
-  "source_bom_sha256": "d8173b01df3c1e13c55a93fdc54e1d1f292e5e41879f989929ab31ae8a398da2",
+  "source_robot_sha256": "39a2d010dd8068d99b085cf50720b2a5b2b370b860a01ff0b8ae03af8b20d075",
+  "source_bom_sha256": "84eea4c3362ed29a1f82a947eed73fd94459556c45fddab2f037a49fb1b86f32",
   "hardware_verified": false,
   "manufacturing_ready": false,
   "prototype_test_evidence": null,
-  "declared_mass_kg": 10.616382498601283,
+  "declared_mass_kg": 10.585634160504274,
   "links_with_inferred_mass": [
     "torso_service_lid",
     "torso_rear_panel",

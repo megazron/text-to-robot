@@ -4,23 +4,23 @@
   "ros_distribution": "Jazzy",
   "ros_packages_built": 17,
   "ros_archive_sha256": {
-    "01_arm_2dof": "5aafa5a3a4819d669e05bd09b8fa55cd4862023e10cef4d985141ac0e9c7733f",
-    "02_arm_6dof": "98bd05d4029ca2fed4e9d8180e23cba2a0e9ab189a59b81f5250c6827dc750bb",
-    "03_arm_7dof": "43e9b4d4e03aaea3e96e9fe00f897391d065f0ee9bd1e9216913ea9a59199de4",
-    "04_scara": "ba363e60dd8284084885b7814f82fd40b3c2d3e54c06d690a78485bba39f2ac7",
+    "01_arm_2dof": "27bc46fe8b4489fbdcb506cc1bfaa18d0564b138487d7ad797cb0f952d64c5b8",
+    "02_arm_6dof": "1f2d5849dfad7f69b19281c56723c5b0ec9718888b5f22d17fb1bd6d189854ea",
+    "03_arm_7dof": "88e4ffeb7b0312c209b70a8bce53a90d5bdd1cdbe18e547fe1f55a723b62226c",
+    "04_scara": "43fd39df0da617518fe7b743798cfdc607cbe12f07522c3f39f42b9d419023cf",
     "05_diff_drive": "cde43b6ab5d0b1623c62d5c4b213ca2f623ff71b412f84e02648ea9093c6ed82",
     "06_four_wheel": "51ac67e2430b7576f787f261471cb1d66e85a50c5a7f67a184956e5ca99c62aa",
     "07_mecanum": "b71d8dadc72c1917260bb2d07e58264007ed32d811cad25603f8d6373f1ef61e",
-    "08_humanoid": "b8289d849c15af942e22abc7e854edbf530921480db217b8d58e1cdfd21784cc",
-    "09_gripper": "aa19b13b172543efd0b110aad52a4259b0f468775857e469352ee10ecbf1e390",
-    "10_quadruped": "564327075fc2172b74456b269d742a5df3795996e385b38c8a41853975f80f7f",
-    "11_spider_scout": "9408d0be67bd70f0a74cb74a1ec0a127963953e9dd9e31ebaeff4f7b957b888c",
-    "12_mars_rover": "bd7edfc6142abbaf497ad11edf149366abd14b7ae1294a235611a1a8ae5812ae",
-    "13_battle_mech": "37d1627edca6d86894de3362ab6aedeae39d5d524b647a117ddd441e671aa065",
-    "14_iron_man_mark_43": "86896b3ccb5421fa96e21342115d0238cc9d833d67c048bebef61562c6ba8694",
-    "15_wall_e": "2ad7bc05421bfd8a8a381ae2a6cb2f7efd7583df375ddcebaebe31c2b5e722e2",
-    "16_eva": "2c818e9f472d6d72d4fba93b539ae95f61a0a09eab5f8e85a317735a4d8708a9",
-    "17_baymax": "406e20e77acdadadc23c885542c85307877f544404e6b3adc59b008bc7b3a087"
+    "08_humanoid": "208437e90e7939da86c03e7f10608b08a2effda9d2715753852620014d89f796",
+    "09_gripper": "f1eb5611aea7adc52658772d9d52b00f12c7e67c6399441dfded359fac1fcb1a",
+    "10_quadruped": "e4bd6c91c2c4db94cac7be6e375d15d6a100366777c80e17510cf118430dd0e3",
+    "11_spider_scout": "8dc498b19645faa0bc332124e514e979486d74123fddb59dcc09dd1c0666409f",
+    "12_mars_rover": "a607a01c75b555353bd128cbb7fc2b6f52781faa4fc48e44d24b9ca1d23578d0",
+    "13_battle_mech": "9f36ea30c6f686bbe6a0333105e2beed375289fe88cd650a43a51c681c2ea295",
+    "14_iron_man_mark_43": "6f08fb09b1721dd4cd02c4fa293ead85643c38afe6a716f42f251c651379f77c",
+    "15_wall_e": "07ddcc66bd3500bb3a4d53e118b780fb5b335033ab48989e09e9114c1055585c",
+    "16_eva": "c103eba1704c2be3780eb84d04e0797b06df57ca248ca010ccd5c44f90a0e995",
+    "17_baymax": "f50962801dea8691f93f63c3592d475ec99f8c4aba684567893accba44cadd35"
   },
   "moveit": {
     "moveit_report.json": {
@@ -34,14 +34,14 @@
       "group": "neck",
       "planning_error_code": 1,
       "planning_pass": true,
-      "trajectory_points": 25,
+      "trajectory_points": 27,
       "execution_requested": true,
       "goal_positions": {
         "neck_yaw": 0.15,
         "neck_pitch": 0.0
       },
       "allowed_planning_time_s": 5.0,
-      "planning_time_s": 0.245647626,
+      "planning_time_s": 0.129183748,
       "start_state_valid": true,
       "start_state_contacts": [],
       "start_state_contact_count": 0,
@@ -71,7 +71,7 @@
         "left_wrist_flexion": 0.0
       },
       "allowed_planning_time_s": 5.0,
-      "planning_time_s": 3.874795444,
+      "planning_time_s": 0.14610139900000002,
       "start_state_valid": true,
       "start_state_contacts": [],
       "start_state_contact_count": 0,
@@ -92,7 +92,7 @@
       "group": "right_arm",
       "planning_error_code": 1,
       "planning_pass": true,
-      "trajectory_points": 26,
+      "trajectory_points": 25,
       "execution_requested": true,
       "goal_positions": {
         "right_shoulder_abduction": 0.15,
@@ -101,7 +101,7 @@
         "right_wrist_flexion": 0.0
       },
       "allowed_planning_time_s": 5.0,
-      "planning_time_s": 1.477793522,
+      "planning_time_s": 0.125464205,
       "start_state_valid": true,
       "start_state_contacts": [],
       "start_state_contact_count": 0,
@@ -112,18 +112,30 @@
       "pass": true
     }
   },
-  "moveit_scope": "Mark 43 neck and each arm: collision-valid start, planning and execution with mock hardware; not a real motor test",
+  "moveit_scope": "Mark 43 neck and each arm, six-axis arm and humanoid left arm: mock planning/execution; fixed-assembly and adjacent-rigid-body exclusions, not manufacturing interference or real motor validation",
   "training": {
     "report": "training_validation.json",
-    "sha256": "f5bc170301c46443a073ffea8d17ed71b31395989b173ca8006c76597881d851",
+    "sha256": "de61ed802c073bedfe431980950ea2f611e184acc2593120032b45cb751d644d",
     "scope": "All 17 exported PyBullet environments reset and step once; no trained skill claim"
   },
   "mobile_motion": {
     "report": "mobile_motion.json",
-    "sha256": "507aba7ae158241bd15da3eb98689d5cf6ad77a4042b340e70f0b54361d6a1f1"
+    "sha256": "5f271e25f9314a590a167af435035662b215890a646178251596e928069fc4ec"
   },
   "browser": {
     "report": "web_validation.json",
-    "sha256": "eec36d9b8a42db2a7a017a2b2216c10b8323f089e43662fe641cfa8518655b5c"
+    "sha256": "d5bb486d223731508fd21669cba8f7269ecda4890df8a516d3e2a6fb52a87ec9"
+  },
+  "arm_moveit": {
+    "report": "02_arm_6dof/moveit_report.json",
+    "sha256": "aa0b72192b179b6c6f24913fc36a17fe4cfde2455e375d57596a0ae03140edfc"
+  },
+  "arm_training": {
+    "report": "arm_training_smoke.json",
+    "sha256": "55aad6c88c04ab970fa4a188a8ab24a07eadb85fdbd6f9345e8ac281ce7a36c9"
+  },
+  "humanoid_moveit": {
+    "report": "08_humanoid/moveit_report.json",
+    "sha256": "f118d0d9dce971ae80c78a7c0d9c8fb9e4aeac802124323243149338648e34ce"
   }
 }

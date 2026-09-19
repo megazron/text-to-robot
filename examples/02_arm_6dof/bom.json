@@ -73,9 +73,9 @@
       "category": "Structure",
       "name": "3D-printed frame (PLA/PETG)",
       "qty": 1,
-      "unit_cost": 70.93,
-      "subtotal": 70.93,
-      "spec": "~3.22 kg material @ $22/kg"
+      "unit_cost": 72.56,
+      "subtotal": 72.56,
+      "spec": "~3.30 kg material @ $22/kg"
     },
     {
       "category": "Structure",
@@ -94,7 +94,7 @@
       "spec": "~12% of electronics"
     }
   ],
-  "total": 2729.89,
+  "total": 2731.52,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,

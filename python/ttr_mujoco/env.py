@@ -10,7 +10,7 @@ from .testbench import _hold_targets, _up, _finite, _actuator_state
 class MujocoRobotEnv(gym.Env):
     metadata = {"render_modes": ["rgb_array"], "render_fps": 25}
 
-    def __init__(self, path_or_xml: str, task: str = "stand", max_steps: int = 1000, frame_skip: int = 5, floating=None, action_scale: float = 0.15, self_collision: bool = False, tip_body: str | None = None):
+    def __init__(self, path_or_xml: str, task: str = "stand", max_steps: int = 1000, frame_skip: int = 5, floating=None, action_scale: float = 0.15, self_collision: bool = False, tip_body: str | None = None, bias_compensation: bool = False):
         super().__init__()
         if task not in ("stand","walk","reach","sweep","aperture"): raise ValueError("Unknown task")
         if max_steps<1 or frame_skip<1 or not np.isfinite(action_scale) or action_scale<=0: raise ValueError("Invalid environment limits")
@@ -26,6 +26,10 @@ class MujocoRobotEnv(gym.Env):
         nu = self.m.nu
         self.lo = np.where(self.m.actuator_ctrllimited, self.m.actuator_ctrlrange[:, 0], -1.0)
         self.hi = np.where(self.m.actuator_ctrllimited, self.m.actuator_ctrlrange[:, 1], 1.0)
+        self.controller=None
+        if bias_compensation:
+            from .control import ModelBiasController
+            self.controller=ModelBiasController(self.m)
         self.action_space = spaces.Box(-1, 1, shape=(nu,), dtype=np.float32)
         self.observation_space = spaces.Box(-np.inf, np.inf, shape=(self.m.nq + self.m.nv + 5,), dtype=np.float32)
         if task=="aperture" and (nu==0 or any(self.m.jnt_type[self.m.actuator_trnid[a,0]]!=mujoco.mjtJoint.mjJNT_SLIDE for a in range(nu))):
@@ -78,7 +82,10 @@ class MujocoRobotEnv(gym.Env):
         if self.task == "stand" and self.floating and self.steps == self.next_push:
             self.d.qvel[0:2] += self.np_random.normal(0, 0.6, 2)                # random shove every ~1 s
             self.next_push += int(self.np_random.integers(60, 120))
-        for _ in range(self.frame_skip): mujoco.mj_step(self.m, self.d)
+        targets=self.d.ctrl.copy()
+        for _ in range(self.frame_skip):
+            if self.controller:self.controller.apply(self.d,targets)
+            mujoco.mj_step(self.m, self.d)
         self.steps += 1
         finite = _finite(self.d)
         up = _up(self.m, self.d)

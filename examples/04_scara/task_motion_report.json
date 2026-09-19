@@ -1,0 +1,67 @@
+{
+  "scope": "One coordinated outward/return trajectory; not full workspace, learned policy or hardware validation",
+  "controller_sha256": "d9c626d6a0afeb253d1782491f536a544bca2fcf61b8222643288f7cdab781fd",
+  "script_sha256": "e832c1d9b6007117e05a1b4ebf059d439ea774af3d5b6ae753058ba0e9d92485",
+  "pass": true,
+  "source_urdf_sha256": "60cbd23e95b9efe89fa159e6de5fb1e9fd283c5d6acb359a9b7f1a1173555675",
+  "mujoco_version": "3.13.0",
+  "controller": "Position servo with model bias-force compensation, original effort limits enforced",
+  "gravity": true,
+  "self_collision": true,
+  "finite": true,
+  "max_interbody_penetration_m": 0.0,
+  "deepest_pair": null,
+  "leg_duration_s": 1.5,
+  "command_profile": "Cubic smoothstep, requested peak speed <= 50% of URDF velocity limit",
+  "gif_sha256": "805f4ee8d8b2b17d321235fe6004ea485c7988453af0907c62f3d008f1d09b96",
+  "joints": [
+    {
+      "joint": "joint_1",
+      "goal": 0.3,
+      "rms_error": 0.0005149714906798233,
+      "tolerance": 0.1,
+      "position_unit": "rad",
+      "declared_speed_limit": 2.0,
+      "requested_peak_speed": 0.3,
+      "measured_peak_speed": 0.31044445134082,
+      "measured_peak_effort": 0.06237709426109145,
+      "effort_limit": 50.0
+    },
+    {
+      "joint": "joint_2",
+      "goal": -0.35,
+      "rms_error": 0.00017638260890762793,
+      "tolerance": 0.1,
+      "position_unit": "rad",
+      "declared_speed_limit": 2.0,
+      "requested_peak_speed": 0.3499999999999999,
+      "measured_peak_speed": 0.35115753140697065,
+      "measured_peak_effort": 0.04038494009787197,
+      "effort_limit": 50.0
+    },
+    {
+      "joint": "joint_3",
+      "goal": -0.035,
+      "rms_error": 0.00016810272199136323,
+      "tolerance": 0.008,
+      "position_unit": "m",
+      "declared_speed_limit": 0.4,
+      "requested_peak_speed": 0.035,
+      "measured_peak_speed": 0.03975233001378617,
+      "measured_peak_effort": 0.8822033031708911,
+      "effort_limit": 80.0
+    },
+    {
+      "joint": "joint_4",
+      "goal": 0.4,
+      "rms_error": 0.000126490831887852,
+      "tolerance": 0.1,
+      "position_unit": "rad",
+      "declared_speed_limit": 2.0,
+      "requested_peak_speed": 0.4000000000000001,
+      "measured_peak_speed": 0.3999988223696641,
+      "measured_peak_effort": 0.03999978106673474,
+      "effort_limit": 50.0
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "scope": "Gymnasium API check, 64 PPO steps and checkpoint reload; not a learned task or hardware validation",
+  "examples": [
+    {
+      "example": "02_arm_6dof",
+      "pass": true,
+      "archive_sha256": "a44fa254de7a0e5efdb8af411699833d9cc2c28210424276d435953bb17a80b6",
+      "gymnasium_check": true,
+      "ppo_steps": 64,
+      "checkpoint_reload": true,
+      "self_collision": true,
+      "bias_compensation": true
+    },
+    {
+      "example": "04_scara",
+      "pass": true,
+      "archive_sha256": "160a2a461eddb4fe6142886ccffb4666ed6575a0799e9e33a9d5381a9c702a15",
+      "gymnasium_check": true,
+      "ppo_steps": 64,
+      "checkpoint_reload": true,
+      "self_collision": true,
+      "bias_compensation": true
+    }
+  ]
+}

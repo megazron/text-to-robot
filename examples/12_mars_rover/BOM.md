@@ -1,6 +1,6 @@
 # Bill of Materials — rover_arm
 
-**Estimated total: $843.08**  ·  tier: hobby  ·  budget: $4000 ✅ within budget
+**Estimated total: $844.71**  ·  tier: hobby  ·  budget: $4000 ✅ within budget
 
 **Effort sizing: fails; hardware verified: no.**
 
@@ -16,7 +16,7 @@
 | Power | LiPo 4S 5000mAh | 1 | 40 | 40 | 74 Wh; est. load 49 W |
 | Power | DC-DC buck regulator (5V/10A) | 1 | 12 | 12 | logic + servo rail |
 | Power | Power distribution board + fuse + switch | 1 | 14 | 14 | wiring harness backbone |
-| Structure | 3D-printed frame (PLA/PETG) | 1 | 199 | 199 | ~9.05 kg material @ $22/kg |
+| Structure | 3D-printed frame (PLA/PETG) | 1 | 200.63 | 200.63 | ~9.12 kg material @ $22/kg |
 | Structure | Fastener + bearing kit | 1 | 18 | 18 | M3 screws, heat inserts, 608 bearings |
 | Wiring & misc | Wiring, connectors, JST/Dupont, sleeving | 1 | 67.08 | 67.08 | ~12% of electronics |
 

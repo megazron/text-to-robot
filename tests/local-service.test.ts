@@ -46,3 +46,45 @@ test('mecanum rollers stay passive through URDF, BOM and training export',()=>{
   assert.match(code,/passive_names = \[/);assert.match(code,/p.VELOCITY_CONTROL,targetVelocity/);
   assert.match(code,/URDF_USE_SELF_COLLISION/);assert.match(code,/range\(12\)/);
 });
+
+test('arm spars are connected closed solids extending between joint centres',()=>{
+  for(const dof of [2,6,7]) {
+    const spec=nDofArm(dof);
+    for(const l of spec.links.filter(l=>l.geometry.type==='mesh' && l.geometry.part==='arm_spar')) {
+      if(l.geometry.type!=='mesh')throw new Error('Expected mesh');
+      const mesh=buildPart(l.geometry),topology=meshTopology(mesh);
+      assert.ok(topology.closed,`${dof}/${l.name}`);
+      assert.ok(massProperties(mesh).volume>0);
+      assert.ok(Math.abs(l.origin.xyz[2]+l.geometry.bbox.min[2])<1e-8);
+      const next=spec.joints.find(j=>j.parent===l.name && j.origin.xyz[2]>0);
+      assert.ok(next,`${l.name} requires a distal attachment`);
+      assert.ok(Math.abs(l.origin.xyz[2]+l.geometry.bbox.max[2]-next.origin.xyz[2])<1e-8);
+    }
+  }
+});
+
+test('length modification keeps a mesh spar attached and scales its actual solid',async()=>{
+  const before=await generateRobot('6 DOF arm');
+  const after=await modifyRobot(before.robot,'make the forearm 30% longer');
+  const a=before.robot.links.find(l=>l.name==='forearm'),b=after.robot.links.find(l=>l.name==='forearm');
+  assert.ok(a?.geometry.type==='mesh' && b?.geometry.type==='mesh');
+  assert.ok(Math.abs(b.geometry.volume/a.geometry.volume-1.3)<1e-8);
+  const distal=after.robot.joints.find(j=>j.parent==='forearm' && j.type==='revolute');
+  assert.ok(distal);
+  assert.ok(Math.abs(b.origin.xyz[2]+b.geometry.bbox.max[2]-distal.origin.xyz[2])<1e-8);
+  assert.notDeepEqual(a.inertia,b.inertia);
+});
+
+test('arm spar compound collisions cover the solid without filling narrow-end clearance',()=>{
+  const spec=nDofArm(2),l=spec.links.find(l=>l.name==='shoulder');
+  assert.ok(l?.geometry.type==='mesh');
+  const p=l.geometry.params;assert.ok(p);const L=Number(p.length),R=Number(p.radius),neck=Number(p.neck),gap=Number(p.gap);
+  const half=(L-2*gap+2*Math.min(gap*.3,.006))/2;
+  for(const [x,y,z] of buildPart(l.geometry).v) {
+    const r=Math.hypot(x,y);
+    assert.ok((r<=neck+1e-9 && Math.abs(z)<=L/2+1e-9) || (r<=R+1e-9 && Math.abs(z)<=half+1e-9));
+  }
+  assert.ok(half<L/2-.001 && neck<R*.5);
+  const urdf=generateUrdf(spec),block=urdf.split('<link name="shoulder">')[1].split('</link>')[0];
+  assert.equal((block.match(/<collision>/g)||[]).length,2);
+});

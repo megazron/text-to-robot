@@ -14,6 +14,8 @@ for(const name of readdirSync('examples').filter(n=>/^\d\d_/.test(n))){
   const res=await generateRobot(readFileSync(`${dir}/prompt.txt`,'utf8'),{provider:new DemoProvider()});
   if(!res.validation.valid||!res.urdfValidation.valid)throw new Error(`Invalid ${name}`);
   spec=res.robot;
+  // This is a revision of the same example document, not a new creation.
+  spec.metadata.created=JSON.parse(readFileSync(`${dir}/robot.json`,'utf8')).metadata.created;
   writeFileSync(`${dir}/robot.json`,JSON.stringify(spec,null,2));
   writeFileSync(`${dir}/robot.urdf`,generateUrdf(spec));
   mkdirSync(`${dir}/meshes`,{recursive:true});

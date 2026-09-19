@@ -2,6 +2,7 @@
 // engine used by every provider. No ML; keyword + regex rules that cover the
 // documented prompts and degrade gracefully.
 import type { RobotSpecification, Geometry, Sensor, SensorType } from "@ttr/robot-schema";
+import { meshGeometry } from "@ttr/mesh";
 import { safeName, pose } from "@ttr/robot-schema";
 import { nDofArm, scara, humanoid, diffDrive, fourWheel, mecanum, quadruped, hexapod, roverArm, ironManSuit, wearableExosuit, ironManMarkSuit, ironManMark43, wallE, eva, baymax, attachParallelGripper, attachSuctionGripper, cyl, box, link, joint } from "@ttr/robot-templates";
 
@@ -117,6 +118,10 @@ function scaleLinkLength(spec: RobotSpecification, linkName: string, f: number):
   if (!l) return false;
   if (l.geometry.type === "cylinder" || l.geometry.type === "capsule") l.geometry.length *= f;
   else if (l.geometry.type === "box") l.geometry.size[2] *= f;
+  else if (l.geometry.type === "mesh" && l.geometry.part === "arm_spar") {
+    const g=l.geometry,scaling=g.scale??[1,1,1];
+    l.geometry=meshGeometry(g.part,g.file,g.params,[scaling[0],scaling[1],scaling[2]*f]);
+  }
   else return false;
   l.origin.xyz = [l.origin.xyz[0], l.origin.xyz[1], l.origin.xyz[2] * f];
   l.mass *= f;            // volume (and mass at constant density) scales with length
@@ -145,7 +150,7 @@ function applySizeDirectives(spec: RobotSpecification, t: string) {
     if (segs.length) {
       const per = target / segs.length;
       for (const s of segs) {
-        const cur = s.geometry.type === "cylinder" ? s.geometry.length : 1;
+        const cur = s.geometry.type === "cylinder" ? s.geometry.length : s.geometry.type === "mesh" ? s.geometry.bbox.max[2]-s.geometry.bbox.min[2] : 1;
         if (cur > 0) scaleLinkLength(spec, s.name, per / cur);
       }
     }
@@ -255,5 +260,6 @@ function describeLen(spec: RobotSpecification, name: string): string {
   if (!l) return "?";
   if (l.geometry.type === "cylinder" || l.geometry.type === "capsule") return `${l.geometry.length.toFixed(3)}m`;
   if (l.geometry.type === "box") return `${l.geometry.size[2].toFixed(3)}m`;
+  if (l.geometry.type === "mesh") return `${(l.geometry.bbox.max[2]-l.geometry.bbox.min[2]).toFixed(3)}m`;
   return "?";
 }

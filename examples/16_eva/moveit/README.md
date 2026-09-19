@@ -15,7 +15,13 @@ This launches MoveIt, robot_state_publisher, world TF, ros2_control GenericSyste
 joint-state broadcaster and a partial-goal trajectory controller. GenericSystem is
 mock hardware, not MuJoCo and not a motor driver. The root is fixed for planning;
 whole-body balance and load feasibility require a dynamics/controller layer.
+Sliding finger joints start 10 mm above their closed limit (clamped to travel)
+to avoid pad-on-pad contact during arm planning. Contact checks remain enabled
+between opposing fingers.
 ROS collision geometry uses the actual STL triangles for MoveIt/FCL, not filled bounding boxes.
-Adjacent links are excluded; other collisions remain active. Existing model
-intersections can correctly cause planning requests to fail. Joint accelerations
+Parts within one fixed subassembly and across one articulated joint are excluded,
+matching rigid-body adjacency used in physics. Non-adjacent rigid bodies remain
+checked. This exclusion is not an assembly-interference or bearing-fit validation;
+independent mesh/fit audits are still required. Other intersections can correctly
+cause planning requests to fail. Joint accelerations
 are conservative inferred planning limits, not measured actuator specifications.

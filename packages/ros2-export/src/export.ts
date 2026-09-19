@@ -169,8 +169,13 @@ ${velocity.length ? `wheel_velocity_controller:\n  ros__parameters:\n    joints:
 }
 
 function ros2ControlXacro(spec: RobotSpecification): string {
+  // Start sliding gripper jaws open: touching pads at the closed stop can
+  // become numerical collisions during planning, despite being intentional contact.
+  const initial=(j:Joint)=>j.type==='prismatic' && /finger/.test(j.name)
+    ? Math.min(j.limit?.upper??.01,(j.limit?.lower??0)+.01)
+    : Math.max(j.limit?.lower??0,Math.min(j.limit?.upper??0,0));
   const joints = actuated(spec).map((j) =>
-    `    <joint name="${j.name}">\n      <command_interface name="${j.type==='continuous'?'velocity':'position'}"/>\n      <state_interface name="position"><param name="initial_value">${Math.max(j.limit?.lower??0,Math.min(j.limit?.upper??0,0))}</param></state_interface>\n      <state_interface name="velocity"/>\n    </joint>`).join("\n");
+    `    <joint name="${j.name}">\n      <command_interface name="${j.type==='continuous'?'velocity':'position'}"/>\n      <state_interface name="position"><param name="initial_value">${initial(j)}</param></state_interface>\n      <state_interface name="velocity"/>\n    </joint>`).join("\n");
   return `<?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
   <ros2_control name="${safeName(spec.robot_name)}_system" type="system">

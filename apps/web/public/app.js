@@ -43,12 +43,43 @@ new ResizeObserver(resize).observe(viewport); resize();
 
 // ---------------- geometry / materials ----------------
 const stlLoader = new STLLoader(); const meshCache = new Map();
-function meshUrl(file) { return `/api/robots/${state.id}/mesh/${file}`; }
-function loadMeshInto(mesh, g) {   // async: placeholder box swapped for the real polygon part when it arrives
-  const key = `${state.id}/${g.file}`;
-  const apply = (geom) => { mesh.geometry.dispose(); mesh.geometry = geom; };
-  if (meshCache.has(key)) return apply(meshCache.get(key).clone());
-  stlLoader.load(meshUrl(g.file), (geom) => { geom.computeVertexNormals(); meshCache.set(key, geom); apply(geom.clone()); }, undefined, () => {});
+let previewRevision = 0;
+let preview = { ready: false, expected: 0, loaded: 0, errors: [] };
+async function loadMeshInto(mesh, g, revision, robotId) {
+  const key = `${robotId}/${g.file}`;
+  try {
+    let geometry = meshCache.get(key);
+    if (!geometry) {
+      geometry = await stlLoader.loadAsync(`/api/robots/${robotId}/mesh/${g.file}`);
+      const positions = geometry.getAttribute('position');
+      if (!positions || positions.count < 3 || positions.count % 3 || !positions.array.every(Number.isFinite)) {
+        geometry.dispose(); throw new Error('Invalid triangle geometry');
+      }
+      geometry.computeVertexNormals(); meshCache.set(key, geometry);
+      if (meshCache.size > 512) {
+        const oldest = meshCache.keys().next().value;
+        meshCache.get(oldest).dispose(); meshCache.delete(oldest);
+      }
+    }
+    if (revision !== previewRevision) return;
+    mesh.geometry.dispose(); mesh.geometry = geometry.clone();
+    mesh.userData.meshLoaded = true;
+    preview.loaded++;
+  } catch (error) {
+    if (revision !== previewRevision) return;
+    preview.errors.push(`${g.file}: ${error.message}`);
+    mesh.material.color.set(0xff3366); mesh.material.wireframe = true;
+  }
+}
+function showPreviewStatus() {
+  const node = $('#previewStatus');
+  node.hidden = preview.ready;
+  node.replaceChildren();
+  if (preview.errors.length) {
+    node.append(document.createTextNode(`Incomplete preview: ${preview.errors.length} part(s) failed to load. `));
+    const retry = el('button', '', 'Retry'); retry.onclick = () => buildRobot(state.robot); node.append(retry);
+    node.title = preview.errors.join('\n');
+  } else node.textContent = `Loading geometry: ${preview.loaded}/${preview.expected}`;
 }
 function makeGeom(g) {
   switch (g.type) {
@@ -69,7 +100,10 @@ function mat4(arr) { const m = new THREE.Matrix4(); m.set(...arr); return m; }
 
 // ---------------- build robot ----------------
 function clearRobot() {
-  for (const [, obj] of state.meshes) robotGroup.remove(obj);
+  for (const [, obj] of state.meshes) {
+    obj.traverse(child => { child.geometry?.dispose(); child.material?.dispose(); });
+    robotGroup.remove(obj);
+  }
   state.meshes.clear();
   for (const h of [...state.axisHelpers, ...state.frameHelpers]) robotGroup.remove(h);
   state.axisHelpers = []; state.frameHelpers = [];
@@ -77,23 +111,48 @@ function clearRobot() {
 }
 
 function buildRobot(spec) {
+  const revision = ++previewRevision;
   clearRobot();
+  preview = { ready: false, expected: 0, loaded: 0, errors: [] };
+  const pending = [];
   for (const l of spec.links) {
     const group = new THREE.Group(); group.matrixAutoUpdate = false;
     const isCol = $("#showCollision").checked;
     const g = isCol ? (l.collision ?? l.geometry) : l.geometry;
-    const geom = makeGeom(g);
-    const color = matColor(spec, l.material, l.role === "gripper" ? 0x2a5bd0 : l.role === "wheel" ? 0x1a1a1f : l.role === "base" ? 0x3f3f46 : 0xd8d8dc);
-    const mesh = new THREE.Mesh(geom, new THREE.MeshStandardMaterial({ color, metalness: l.material?.startsWith("mk43_") ? 0.65 : 0.25, roughness: l.material?.startsWith("mk43_") ? 0.30 : 0.55, transparent: isCol, opacity: isCol ? 0.45 : 1, wireframe: isCol }));
-    mesh.matrixAutoUpdate = false; mesh.matrix.copy(mat4(poseArr(l.origin)));
-    mesh.userData.linkName = l.name;
-    if (g.type === "mesh" && state.id && !isCol) loadMeshInto(mesh, g);
-    group.add(mesh);
+    let shapes=[g];
+    if(isCol && g.type==='mesh' && g.part==='arm_spar' && (!g.scale || g.scale[0]===g.scale[1])) {
+      const radial=g.scale?.[0]??1,axial=g.scale?.[2]??1;
+      const p=Object.fromEntries(Object.entries({length:.25,radius:.025,neck:.010,gap:.04}).map(([key,value])=>[key,typeof g.params?.[key]==='number'?g.params[key]:value]));
+      shapes=[{type:'cylinder',radius:p.neck*radial,length:p.length*axial},
+        {type:'cylinder',radius:p.radius*radial,length:(p.length-2*p.gap+2*Math.min(p.gap*.3,.006))*axial}];
+    }
+    for(const shape of shapes) {
+      const geom = makeGeom(shape);
+      const color = matColor(spec, l.material, l.role === "gripper" ? 0x2a5bd0 : l.role === "wheel" ? 0x1a1a1f : l.role === "base" ? 0x3f3f46 : 0xd8d8dc);
+      const mesh = new THREE.Mesh(geom, new THREE.MeshStandardMaterial({ color, metalness: l.material?.startsWith("mk43_") ? 0.65 : 0.25, roughness: l.material?.startsWith("mk43_") ? 0.30 : 0.55, transparent: isCol, opacity: isCol ? 0.45 : 1, wireframe: isCol }));
+      mesh.matrixAutoUpdate = false; mesh.matrix.copy(mat4(poseArr(l.origin)));
+      mesh.userData.linkName = l.name;
+      if (g.type === "mesh" && !isCol) {
+        preview.expected++;
+        if (state.id) pending.push(loadMeshInto(mesh, g, revision, state.id));
+        else preview.errors.push(`${g.file}: missing robot identifier`);
+      }
+      group.add(mesh);
+    }
     robotGroup.add(group);
     state.meshes.set(l.name, group);
   }
   updateFK();
   frameRobot();
+  showPreviewStatus();
+  Promise.all(pending).then(() => {
+    if (revision !== previewRevision) return;
+    frameRobot();
+    // Explicitly draw the loaded geometry. Network-idle does not imply a painted frame.
+    renderer.render(scene, camera);
+    preview.ready = preview.errors.length === 0 && preview.loaded === preview.expected;
+    showPreviewStatus();
+  });
 }
 
 function poseArr(p) {
@@ -429,4 +488,4 @@ initExamples(); initTemplates(); initMode();
   }
   doGenerate("Create a 6 DOF robotic arm with a parallel gripper");
 })();
-window.__ttr = { camera, controls, frameRobot, get robot(){return state.robot} };
+window.__ttr = { get preview() { return { ...preview, parts: [...state.meshes].filter(([name]) => state.robot.links.find(l => l.name === name)?.geometry.type === 'mesh').map(([name, group]) => ({ name, loaded: !!group.children[0].userData.meshLoaded, triangles: group.children[0].geometry.getAttribute('position').count / 3 })) }; }, camera, controls, frameRobot, get robot(){return state.robot} };
