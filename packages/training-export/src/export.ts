@@ -18,7 +18,7 @@ function tasksPy(cls: RobotClass): string {
   for (const t of defs) {
     out.push(`def ${t.id}(self, action):`);
     // reward bodies are authored at 8-space indent; re-indent to 4 for a standalone fn
-    const body = t.reward.replace(/p\.getLinkState\(self.robot, self.tip_index\)/g,"self.p.getLinkState(self.robot, self.tip_index)").replace(/p\.getJointState/g,"self.p.getJointState").replace(/p\.getBaseVelocity/g,"self.p.getBaseVelocity").replace(/p\.getBasePositionAndOrientation/g,"self.p.getBasePositionAndOrientation").split("\n").map((l) => (l.startsWith("        ") ? "    " + l.slice(8) : l)).join("\n");
+    const body = t.reward.replace(/p\.getLinkState\(self.robot, self.tip_index\)/g,"self.p.getLinkState(self.robot, self.tip_index)").replace(/(?<![\w.])p\.getJointState/g,"self.p.getJointState").replace(/(?<![\w.])p\.getBaseVelocity/g,"self.p.getBaseVelocity").replace(/(?<![\w.])p\.getBasePositionAndOrientation/g,"self.p.getBasePositionAndOrientation").split("\n").map((l) => (l.startsWith("        ") ? "    " + l.slice(8) : l)).join("\n");
     out.push(body);
     out.push(`    return float(reward), bool(terminated)`, "");
   }
@@ -30,7 +30,8 @@ function tasksPy(cls: RobotClass): string {
 
 function envPy(spec: RobotSpecification, cls: RobotClass): string {
   const name = safeName(spec.robot_name);
-  const fixed = cls === "manipulator" ? "True" : "False";
+  const fixed = (cls === "manipulator" || cls === "gripper") ? "True" : "False";
+  const tip = spec.links.find(l=>l.name==='gripper_base')?.name ?? spec.end_effectors[0]?.attach_link ?? spec.joints.filter(j=>j.type!=='fixed'&&!/finger|thumb|wheel/.test(j.name)).at(-1)?.child ?? '';
   return `"""Gymnasium environment for ${spec.robot_name} (auto-generated). Backend: PyBullet."""
 import os
 import numpy as np
@@ -65,7 +66,7 @@ class ${cn(name)}Env(gym.Env):
     def _load(self):
         self.p.resetSimulation(); self.p.setGravity(0, 0, -9.81)
         self.plane = self.p.loadURDF("plane.urdf")
-        self.robot = self.p.loadURDF(URDF, [0, 0, 0.05], useFixedBase=${fixed})
+        self.robot = self.p.loadURDF(URDF, [0, 0, 0.05], useFixedBase=${fixed}, flags=p.URDF_USE_INERTIA_FROM_FILE${spec.links.length>127 ? " | p.URDF_MERGE_FIXED_LINKS" : ""})
         self.joints = [j for j in range(self.p.getNumJoints(self.robot))
                        if self.p.getJointInfo(self.robot, j)[2] != p.JOINT_FIXED]
         self.limits = []; self.efforts = []; self.velocities = []
@@ -75,7 +76,11 @@ class ${cn(name)}Env(gym.Env):
             self.limits.append((lo, hi))
             if info[10] <= 0 or info[11] <= 0: raise ValueError("URDF needs positive effort and velocity limits")
             self.efforts.append(info[10]); self.velocities.append(info[11])
-        self.tip_index = self.joints[-1] if self.joints else 0
+        tip_name = ${JSON.stringify(tip)}
+        self.tip_index = next((j for j in range(self.p.getNumJoints(self.robot))
+                               if self.p.getJointInfo(self.robot,j)[12].decode() == tip_name), -1)
+        if self.task_name == "reach" and self.tip_index < 0:
+            raise ValueError("Reaching requires a named tool link in the robot specification")
 
     def _obs(self):
         q = [self.p.getJointState(self.robot, j)[0] for j in self.joints]
@@ -89,9 +94,14 @@ class ${cn(name)}Env(gym.Env):
         self.target = np.array([self.np_random.uniform(0.2, 0.6),
                                 self.np_random.uniform(-0.3, 0.3),
                                 self.np_random.uniform(0.1, 0.6)], dtype=np.float32)
+        if self.task_name == "aperture":
+            self.target[:] = [self.np_random.uniform(0, sum(hi-lo for lo,hi in self.limits)),0,0]
         return self._obs(), {}
 
     def apply(self, action):
+        action = np.asarray(action, dtype=np.float32)
+        if action.shape != (len(self.joints),) or not np.all(np.isfinite(action)):
+            raise ValueError("Expected one finite action per actuated joint")
         action = np.clip(action, -1.0, 1.0)
         for a, j, (lo, hi), effort, velocity in zip(action, self.joints, self.limits, self.efforts, self.velocities):
             self.p.setJointMotorControl2(self.robot, j, p.POSITION_CONTROL,
@@ -100,7 +110,7 @@ class ${cn(name)}Env(gym.Env):
     def step(self, action):
         self.apply(action); self.p.stepSimulation(); self.steps += 1
         reward, terminated = self.task_fn(self, np.asarray(action, dtype=np.float32))
-        return self._obs(), reward, terminated, self.steps >= self.max_steps, {"is_success": bool(terminated and self.task_name in ("reach", "settle", "navigate"))}
+        return self._obs(), reward, terminated, self.steps >= self.max_steps, {"is_success": bool(terminated and self.task_name in ("reach", "hold", "goto", "aperture"))}
 
     def close(self):
         if self.p.isConnected(): self.p.disconnect()
@@ -184,8 +194,12 @@ import robot_env, tasks as T
 
 
 def expert_action(env):
-    # simple IK expert: drive the tip toward the target, mapped to normalized targets
-    ik = p.calculateInverseKinematics(env.robot, env.tip_index, list(env.target))
+    if env.task_name == "aperture":
+        q = float(env.target[0]) / len(env.joints)
+        return np.clip(np.array([2*(q-lo)/(hi-lo)-1 for lo,hi in env.limits],dtype=np.float32),-1,1)
+    if env.task_name not in ("reach","hold","track"):
+        raise ValueError("No scripted expert supplied for this task; use RL or measured demonstrations")
+    ik = env.p.calculateInverseKinematics(env.robot, env.tip_index, list(env.target))
     action = []
     for idx, j in enumerate(env.joints):
         lo, hi = env.limits[idx]
@@ -337,8 +351,8 @@ pip install -r requirements.txt
 pip install torch --index-url https://download.pytorch.org/whl/cpu    # CPU torch on GPU-less machines
 
 python -m ttr_mujoco test   ../${name}.urdf --self-collision                       # settle / hold / actuator sweep / disturbance
-python -m ttr_mujoco render ../${name}.urdf -o ${name}.gif --motion sweep${cls === "manipulator" ? "" : " --fixed"}
-python -m ttr_mujoco train  ../${name}.urdf --self-collision --task ${cls === "manipulator" ? `reach --tip-body ${tip}` : "stand"} --steps 400000
+python -m ttr_mujoco render ../${name}.urdf -o ${name}.gif --motion sweep
+python -m ttr_mujoco train  ../${name}.urdf --self-collision --task ${cls === "manipulator" ? `reach --tip-body ${tip}` : cls === "gripper" ? "aperture" : "stand"} --steps 400000
 \`\`\`
 
 Or from Python:
@@ -347,7 +361,7 @@ Or from Python:
 from ttr_mujoco import urdf_to_mjcf, run_tests, render_gif
 from ttr_mujoco.env import MujocoRobotEnv
 report = run_tests("../${name}.urdf")              # dict with per-test pass/fail + metrics
-env = MujocoRobotEnv("../${name}.urdf", task="${cls === "manipulator" ? "reach" : "stand"}"${cls === "manipulator" ? `, tip_body="${tip}"` : ""})
+env = MujocoRobotEnv("../${name}.urdf", task="${cls === "manipulator" ? "reach" : cls === "gripper" ? "aperture" : "stand"}"${cls === "manipulator" ? `, tip_body="${tip}"` : ""})
 \`\`\`
 `;
   files[`training/README.md`] =

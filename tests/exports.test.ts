@@ -101,3 +101,14 @@ test('ROS collision meshes preserve hollow geometry without changing default sim
   const body=xml.split(`<link name="${link.name}">`)[1].split('</link>')[0];
   assert.equal(body.match(/<visual>\s*(<origin[^>]+>)/)?.[1],body.match(/<collision>\s*(<origin[^>]+>)/)?.[1]);
 });
+
+test('MoveIt creates separate humanoid arms and names legged chains as legs', async()=>{
+  const {planningGroups}=await import('@ttr/ros2-export');
+  const {quadruped,hexapod}=await import('@ttr/robot-templates');
+  const arms=planningGroups(finalizeSpec(humanoid())).map(g=>g.name);
+  assert.ok(arms.includes('left_arm')&&arms.includes('right_arm'));
+  for(const [spec,n] of [[quadruped(),4],[hexapod(),6]] as const){
+    const groups=planningGroups(finalizeSpec(spec));assert.equal(groups.length,n);
+    assert.ok(groups.every(g=>g.name.endsWith('_leg')));
+  }
+});

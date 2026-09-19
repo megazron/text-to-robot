@@ -1,0 +1,94 @@
+{
+  "model": "robot.urdf",
+  "nbody": 6,
+  "njnt": 4,
+  "nu": 4,
+  "ngeom": 6,
+  "floating": false,
+  "tests": {
+    "compile": {
+      "pass": true,
+      "total_mass_kg": 2.557,
+      "actuators": 4
+    },
+    "initial_clearance": {
+      "pass": true,
+      "penetrations": [],
+      "count": 0
+    },
+    "settle_under_gravity": {
+      "pass": true,
+      "max_joint_speed": 0.44,
+      "base_drop_m": null,
+      "upright": null
+    },
+    "hold_pose": {
+      "pass": true,
+      "max_joint_error_rad": 0.02
+    },
+    "actuator_sweep": {
+      "pass": false,
+      "tracked": "2/4",
+      "worst_error": 0.506,
+      "actuators": [
+        {
+          "actuator": "act_joint_1",
+          "joint": "joint_1",
+          "pass": false,
+          "rms_error": 0.248942,
+          "peak_error": 0.505898,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 19.892677,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_joint_2",
+          "joint": "joint_2",
+          "pass": true,
+          "rms_error": 0.021888,
+          "peak_error": 0.064031,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 3.506467,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_joint_3",
+          "joint": "joint_3",
+          "pass": false,
+          "rms_error": 0.033646,
+          "peak_error": 0.076934,
+          "error_unit": "m",
+          "rms_tolerance": 0.01,
+          "peak_actuator_force": 3.087922,
+          "force_unit": "N"
+        },
+        {
+          "actuator": "act_joint_4",
+          "joint": "joint_4",
+          "pass": true,
+          "rms_error": 0.004176,
+          "peak_error": 0.005922,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 1.184312,
+          "force_unit": "N m"
+        }
+      ]
+    }
+  },
+  "validation_scope": "simulation smoke tests, not hardware or wearable qualification",
+  "mujoco_version": "3.13.0",
+  "model_sha256": "65d6c3d2d88b7e7ee1acda257ce04687abae3b76cc937531f31438de072de718",
+  "limitations": [
+    "No measured motor, material, thermal or battery model",
+    "No manufacturing or human-fit validation"
+  ],
+  "self_collision_masks_enabled": true,
+  "passed": 4,
+  "total": 5,
+  "source_urdf_sha256": "3d6cd9ea14925b37626adfdc7b1504641041f14854ff0c2671fa208c662f32e2",
+  "initial_penetrations": [],
+  "hardware_verified": false
+}

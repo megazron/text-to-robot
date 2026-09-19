@@ -5,6 +5,13 @@ import type { RobotClass } from "./classify.ts";
 export interface TaskDef { id: string; title: string; reward: string; }
 
 export const TASKS: Record<RobotClass, TaskDef[]> = {
+  gripper: [
+    {id:"aperture",title:"Control additional finger opening from home",reward:
+`        travel = sum(p.getJointState(self.robot,j)[0] for j in self.joints)
+        error = abs(travel - float(self.target[0]))
+        reward = -error - 0.001 * float(np.square(action).sum())
+        terminated = error < 0.002`},
+  ],
   manipulator: [
     { id: "reach", title: "Reach a random 3D target", reward:
 `        tip = p.getLinkState(self.robot, self.tip_index)[0]

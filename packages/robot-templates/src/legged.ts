@@ -37,7 +37,7 @@ export function hexapod(name = "hexapod", prompt?: string): RobotSpecification {
     spec.links.push(link(femur, cyl(0.016, 0.10), { material: "link_mat", role: "link", origin: pose([0.05, 0, 0], [0, Math.PI / 2, 0]) }));
     spec.joints.push(joint(`${leg}_femur_joint`, "revolute", coxa, femur, { origin: pose([0.05, 0, 0]), axis: [0, 1, 0], lower: -1.2, upper: 1.2 }));
     spec.links.push(link(tibia, cyl(0.013, 0.12), { material: "link_mat", role: "link", origin: pose([0, 0, -0.06]) }));
-    spec.joints.push(joint(`${leg}_tibia_joint`, "revolute", femur, tibia, { origin: pose([0.10, 0, 0], [0, Math.PI / 2, 0]), axis: [0, 1, 0], lower: -2.2, upper: 0.4 }));
+    spec.joints.push(joint(`${leg}_tibia_joint`, "revolute", femur, tibia, { origin: pose([0.10, 0, 0]), axis: [0, 1, 0], lower: -2.2, upper: 0.4 }));
   }
   spec.metadata.notes.push("Generated hexapod (6 legs x 3 DOF = 18 DOF) from template.");
   return spec;

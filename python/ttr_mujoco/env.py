@@ -12,7 +12,7 @@ class MujocoRobotEnv(gym.Env):
 
     def __init__(self, path_or_xml: str, task: str = "stand", max_steps: int = 1000, frame_skip: int = 5, floating=None, action_scale: float = 0.15, self_collision: bool = False, tip_body: str | None = None):
         super().__init__()
-        if task not in ("stand","walk","reach","sweep"): raise ValueError("Unknown task")
+        if task not in ("stand","walk","reach","sweep","aperture"): raise ValueError("Unknown task")
         if max_steps<1 or frame_skip<1 or not np.isfinite(action_scale) or action_scale<=0: raise ValueError("Invalid environment limits")
         self.action_scale = action_scale  # fraction of half-range per unit action; balance needs small deltas
         self.m = load_model(path_or_xml, floating=floating, self_collision=self_collision) if path_or_xml.endswith(".urdf") else load_model(path_or_xml)
@@ -28,6 +28,8 @@ class MujocoRobotEnv(gym.Env):
         self.hi = np.where(self.m.actuator_ctrllimited, self.m.actuator_ctrlrange[:, 1], 1.0)
         self.action_space = spaces.Box(-1, 1, shape=(nu,), dtype=np.float32)
         self.observation_space = spaces.Box(-np.inf, np.inf, shape=(self.m.nq + self.m.nv + 3,), dtype=np.float32)
+        if task=="aperture" and (nu==0 or any(self.m.jnt_type[self.m.actuator_trnid[a,0]]!=mujoco.mjtJoint.mjJNT_SLIDE for a in range(nu))):
+            raise ValueError("aperture requires prismatic finger actuators only")
         self.steps = 0; self.renderer = None; self.target = np.zeros(3, dtype=np.float32)
 
     def _obs(self):
@@ -43,6 +45,7 @@ class MujocoRobotEnv(gym.Env):
             self.d.ctrl[:] = self.hold + self.np_random.normal(0, 0.05, self.m.nu)
         self.next_push = int(self.np_random.integers(60, 120))
         self.target = np.array([self.np_random.uniform(0.2, 0.5), self.np_random.uniform(-0.3, 0.3), self.np_random.uniform(0.2, 0.6)], dtype=np.float32)
+        if self.task=="aperture":self.target[:]=[self.np_random.uniform(float(self.lo.sum()),float(self.hi.sum())),0,0]
         self.x0 = float(self.d.qpos[0]) if self.floating else 0.0
         mujoco.mj_forward(self.m, self.d)
         return self._obs(), {}
@@ -53,6 +56,8 @@ class MujocoRobotEnv(gym.Env):
         a = np.clip(a, -1, 1)
         span = 0.5 * (self.hi - self.lo)
         self.d.ctrl[:] = np.clip(self.hold + a * span * self.action_scale, self.lo, self.hi)   # small corrective deltas around the standing pose
+        if self.task in ("reach","aperture"):
+            self.d.ctrl[:] = self.lo + (a+1)*.5*(self.hi-self.lo)
         if self.task == "stand" and self.floating and self.steps == self.next_push:
             self.d.qvel[0:2] += self.np_random.normal(0, 0.6, 2)                # random shove every ~1 s
             self.next_push += int(self.np_random.integers(60, 120))
@@ -65,12 +70,15 @@ class MujocoRobotEnv(gym.Env):
             vx = float(self.d.qvel[0]); reward = vx + 0.5 * (up or 0) - ctrl_cost; term = (up is not None and up < 0.3) or not finite
         elif self.task == "stand" and self.floating:
             reward = (up or 0) - 0.1 * float(np.linalg.norm(self.d.qvel[:3])) - ctrl_cost; term = (up is not None and up < 0.3) or not finite
+        elif self.task == "aperture":
+            travel=sum(float(self.d.qpos[self.m.jnt_qposadr[self.m.actuator_trnid[i,0]]]) for i in range(self.m.nu))
+            error=abs(travel-float(self.target[0]));reward=-error-ctrl_cost;term=error<.002 or not finite
         elif self.task == "reach":
             tip = self.d.xpos[self.tip_id]; dist = float(np.linalg.norm(tip - self.target)); reward = -dist - ctrl_cost; term = dist < 0.05 or not finite
         else:  # "sweep": track a moving reference (smoothness benchmark)
             ref = 0.5 * np.sin(0.02 * self.steps + np.arange(self.m.nu)); reward = -float(np.mean((a - ref) ** 2)); term = not finite
         if not finite: reward = -100.0
-        return self._obs(), float(reward), bool(term), self.steps >= self.max_steps, {"upright": up}
+        return self._obs(), float(reward), bool(term), self.steps >= self.max_steps, {"upright": up,"is_success":bool(finite and term and self.task in ("reach","aperture"))}
 
     def render(self):
         import os; os.environ.setdefault("MUJOCO_GL", "osmesa")

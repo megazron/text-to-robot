@@ -2,10 +2,12 @@
 
 **Estimated total: $10240.98**  ·  tier: prosumer
 
+**Torque sizing: fails; hardware verified: no.**
+
 | Category | Component | Qty | Unit $ | Subtotal $ | Spec |
 |---|---|--:|--:|--:|---|
-| Actuator | Unitree GO-M8010-6 _(joint neck_joint)_ | 21 | 400 | 8400 | integrated BLDC + planetary, RS485 (23 N·m) |
-| Actuator | NEMA17 + lead screw _(joint left_left_finger_joint)_ | 4 | 26 | 104 | lead-screw linear stage (60 N·m) |
+| Actuator | Unitree GO-M8010-6 _(joint neck_joint; rating duty/source unverified)_ | 21 | 400 | 8400 | integrated BLDC + planetary, RS485 (23 N·m) |
+| Actuator | NEMA17 + lead screw _(joint left_left_finger_joint; rating duty/source unverified)_ | 4 | 26 | 104 | lead-screw linear stage (60 N·m) |
 | Motor driver | TMC2209 driver | 4 | 10 | 40 | driver for NEMA17 + lead screw |
 | Compute | Raspberry Pi 5 (8GB) | 1 | 80 | 80 | SBC, runs ROS 2 |
 | Power | LiPo 6S 10000mAh | 1 | 95 | 95 | 222 Wh; est. load 531 W |
@@ -46,6 +48,7 @@
 | right_ankle_joint | 40 | Unitree GO-M8010-6 | UNDERSIZED |
 
 ## Warnings
+- ⚠️ Catalog values are planning estimates. Except explicitly sourced rated values, torque entries may be stall/peak ratings; continuous duty, fit and complete assemblies are unverified.
 - ⚠️ joint neck_joint needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
 - ⚠️ joint left_arm_joint_1 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
 - ⚠️ joint left_arm_joint_2 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator

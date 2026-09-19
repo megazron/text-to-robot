@@ -1,0 +1,181 @@
+{
+  "units": "STL has no embedded units; dimensions require confirmation before use",
+  "product_imported": false,
+  "meshes": [
+    {
+      "file": "designs/Helmet Mechanics V1.0 by unlimitedbacon/Helmet Back Hinge.STL",
+      "vertices": 467,
+      "triangles": 942,
+      "bounds_native_units": [
+        [
+          0.00024214386940002441,
+          0.0,
+          0.0
+        ],
+        [
+          16.00026512145996,
+          23.137121200561523,
+          32.255062103271484
+        ]
+      ],
+      "extents_native_units": [
+        16.00002297759056,
+        23.137121200561523,
+        32.255062103271484
+      ],
+      "watertight": false,
+      "connected_components": 7,
+      "sha256": "0164d0957507f8f4eb3769eca414f7f4ced55557a99bb1bb561ae62f1b9b4829"
+    },
+    {
+      "file": "designs/Helmet Mechanics V1.0 by unlimitedbacon/Helmet Back Linkage.STL",
+      "vertices": 345,
+      "triangles": 694,
+      "bounds_native_units": [
+        [
+          0.015370547771453857,
+          0.007208436727523804,
+          0.0
+        ],
+        [
+          75.61500549316406,
+          15.992792129516602,
+          4.0
+        ]
+      ],
+      "extents_native_units": [
+        75.59963494539261,
+        15.985583692789078,
+        4.0
+      ],
+      "watertight": true,
+      "connected_components": 1,
+      "sha256": "1220f7f599ea2c045d6d43a8b90837b7327100cc2561ac48c8ad1565bb83f2bd"
+    },
+    {
+      "file": "designs/Helmet Mechanics V1.0 by unlimitedbacon/Helmet Front Hinge.STL",
+      "vertices": 252,
+      "triangles": 504,
+      "bounds_native_units": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          16.0,
+          17.882286071777344,
+          14.488886833190918
+        ]
+      ],
+      "extents_native_units": [
+        16.0,
+        17.882286071777344,
+        14.488886833190918
+      ],
+      "watertight": true,
+      "connected_components": 1,
+      "sha256": "d13cde288fbf6d6668af1cfc2b9983ac4fcca903270b1179e9a9bffe8f5a9191"
+    },
+    {
+      "file": "designs/Helmet Mechanics V1.0 by unlimitedbacon/Helmet Front Linkage.STL",
+      "vertices": 364,
+      "triangles": 732,
+      "bounds_native_units": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          79.39000701904297,
+          9.0,
+          6.0
+        ]
+      ],
+      "extents_native_units": [
+        79.39000701904297,
+        9.0,
+        6.0
+      ],
+      "watertight": true,
+      "connected_components": 1,
+      "sha256": "7bd6bdc6937aade6d77681eaa515d295146a257f4f9b2e12b44897e8cb9681bb"
+    },
+    {
+      "file": "designs/Helmet Mechanics V1.0 by unlimitedbacon/Helmet Other Back Hinge.STL",
+      "vertices": 209,
+      "triangles": 418,
+      "bounds_native_units": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          16.0,
+          30.339275360107422,
+          13.594616889953613
+        ]
+      ],
+      "extents_native_units": [
+        16.0,
+        30.339275360107422,
+        13.594616889953613
+      ],
+      "watertight": true,
+      "connected_components": 1,
+      "sha256": "f03f090e086d95593db821fea621b303cfa5efee54e55e6e8bcfd721b502df5e"
+    },
+    {
+      "file": "designs/Helmet Mechanics V1.0 by unlimitedbacon/Helmet Servo Linkage.STL",
+      "vertices": 424,
+      "triangles": 852,
+      "bounds_native_units": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          79.39000701904297,
+          9.0,
+          6.0
+        ]
+      ],
+      "extents_native_units": [
+        79.39000701904297,
+        9.0,
+        6.0
+      ],
+      "watertight": true,
+      "connected_components": 1,
+      "sha256": "37287a882c4192c778e39006c95ee7fb636abaeb53f3d09869f2ff0375fe64bf"
+    },
+    {
+      "file": "designs/Helmet Mechanics V1.0 by unlimitedbacon/Servo Bracket.STL",
+      "vertices": 1634,
+      "triangles": 3272,
+      "bounds_native_units": [
+        [
+          0.0,
+          0.0,
+          3.469446951953614e-15
+        ],
+        [
+          55.0,
+          52.30000305175781,
+          20.0
+        ]
+      ],
+      "extents_native_units": [
+        55.0,
+        52.30000305175781,
+        19.999999999999996
+      ],
+      "watertight": true,
+      "connected_components": 1,
+      "sha256": "21e7c58a3965d4337c78c252db8059629b8d0789bdcdd81ab7fe1c5c92c6eb1d"
+    }
+  ]
+}

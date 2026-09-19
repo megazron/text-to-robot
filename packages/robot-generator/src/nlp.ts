@@ -29,7 +29,7 @@ export function parsePrompt(prompt: string): RobotSpecification {
   const g = gripperKind(t);
   let spec: RobotSpecification;
 
-  if (/iron[\s-]?man|exosuit|exo[\s-]?skeleton|wearable|power(?:ed)?\s+(?:armou?r|suit)|mech\s+suit|battle\s+suit/.test(t)) {
+  if (/iron[\s-]?man|exosuit|exo[\s-]?skeleton|wearable|power(?:ed)?\s+(?:armou?r|suit)|mech\s+suit|battle\s+(?:suit|mech)/.test(t)) {
     // a suit is WORN: build the wearable exoskeleton; "battle mech" (standalone robot) is a humanoid
     if (/\bmech\b(?!\s+suit)/.test(t) && !/iron[\s-]?man|exo|wearable|suit/.test(t)) spec = ironManSuit("battle_mech", prompt);
     else if (/iron[\s-]?man|mark\s*(?:[ivx]+|\d+)|armou?r|movie|ultron/.test(t)) spec = ironManMark43({ prompt });   // the Mark 43: polygon helmet + lofted armour

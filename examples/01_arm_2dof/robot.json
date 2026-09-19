@@ -511,7 +511,7 @@
   ],
   "metadata": {
     "generator": "text-to-robot",
-    "created": "2026-09-18T04:41:53.805Z",
+    "created": "2026-09-19T06:54:09.203Z",
     "inferred_fields": [
       "joints.gripper_base_joint.dynamics",
       "joints.gripper_base_joint.limit",
@@ -538,6 +538,6 @@
       "Generated 2-DOF serial arm from template.",
       "Interpreted by demo parser: type inferred, DOF=4, gripper=parallel."
     ],
-    "source_prompt": "Create a 2 DOF robotic arm"
+    "source_prompt": "Create a 2 DOF robotic arm\n"
   }
 }

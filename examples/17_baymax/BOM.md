@@ -2,9 +2,11 @@
 
 **Estimated total: $7376.1**  ·  tier: prosumer
 
+**Torque sizing: fails; hardware verified: no.**
+
 | Category | Component | Qty | Unit $ | Subtotal $ | Spec |
 |---|---|--:|--:|--:|---|
-| Actuator | Unitree GO-M8010-6 _(joint neck_joint)_ | 15 | 400 | 6000 | integrated BLDC + planetary, RS485 (23 N·m) |
+| Actuator | Unitree GO-M8010-6 _(joint neck_joint; rating duty/source unverified)_ | 15 | 400 | 6000 | integrated BLDC + planetary, RS485 (23 N·m) |
 | Sensor | Raspberry Pi Camera Module 3 _(face_camera)_ | 1 | 25 | 25 | 12MP, CSI |
 | Sensor | Bosch BNO085 _(chest_imu)_ | 1 | 20 | 20 | 9-axis fused AHRS |
 | Compute | Raspberry Pi 5 (8GB) | 1 | 80 | 80 | SBC, runs ROS 2 |
@@ -36,6 +38,7 @@
 | right_ankle_joint | 40 | Unitree GO-M8010-6 | UNDERSIZED |
 
 ## Warnings
+- ⚠️ Catalog values are planning estimates. Except explicitly sourced rated values, torque entries may be stall/peak ratings; continuous duty, fit and complete assemblies are unverified.
 - ⚠️ joint neck_joint needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
 - ⚠️ joint left_arm_joint_1 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
 - ⚠️ joint left_arm_joint_2 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator

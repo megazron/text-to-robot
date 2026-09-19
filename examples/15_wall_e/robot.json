@@ -1066,7 +1066,11 @@
       "inferred": [
         "limit",
         "dynamics"
-      ]
+      ],
+      "limit": {
+        "effort": 50,
+        "velocity": 2
+      }
     },
     {
       "name": "left_rear_wheel_joint",
@@ -1097,7 +1101,11 @@
       "inferred": [
         "limit",
         "dynamics"
-      ]
+      ],
+      "limit": {
+        "effort": 50,
+        "velocity": 2
+      }
     },
     {
       "name": "right_track_joint",
@@ -1159,7 +1167,11 @@
       "inferred": [
         "limit",
         "dynamics"
-      ]
+      ],
+      "limit": {
+        "effort": 50,
+        "velocity": 2
+      }
     },
     {
       "name": "right_rear_wheel_joint",
@@ -1190,7 +1202,11 @@
       "inferred": [
         "limit",
         "dynamics"
-      ]
+      ],
+      "limit": {
+        "effort": 50,
+        "velocity": 2
+      }
     },
     {
       "name": "neck_lift",
@@ -1866,7 +1882,7 @@
   ],
   "metadata": {
     "generator": "text-to-robot",
-    "created": "2026-09-18T04:41:53.865Z",
+    "created": "2026-09-19T06:54:09.869Z",
     "inferred_fields": [
       "joints.head_tilt.dynamics",
       "joints.left_arm_joint_1.dynamics",
@@ -1951,6 +1967,6 @@
       "WALL-E: tracked base (4 driven wheels), telescoping neck, binocular camera head, two 3-DOF arms with grippers.",
       "Interpreted by demo parser: type inferred, DOF=16, gripper=parallel."
     ],
-    "source_prompt": "Build WALL-E: a tracked trash-compactor robot with a telescoping neck, binocular eyes and two gripper arms"
+    "source_prompt": "Build WALL-E: a tracked trash-compactor robot with a telescoping neck, binocular eyes and two gripper arms\n"
   }
 }

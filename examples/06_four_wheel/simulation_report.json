@@ -1,0 +1,99 @@
+{
+  "model": "robot.urdf",
+  "nbody": 6,
+  "njnt": 5,
+  "nu": 4,
+  "ngeom": 6,
+  "floating": true,
+  "tests": {
+    "compile": {
+      "pass": true,
+      "total_mass_kg": 7.294,
+      "actuators": 4
+    },
+    "initial_clearance": {
+      "pass": true,
+      "penetrations": [],
+      "count": 0
+    },
+    "settle_under_gravity": {
+      "pass": true,
+      "max_joint_speed": 0.31,
+      "base_drop_m": 0.005,
+      "upright": 1.0
+    },
+    "hold_pose": {
+      "pass": true,
+      "max_joint_error_rad": 0.0
+    },
+    "actuator_sweep": {
+      "pass": true,
+      "tracked": "4/4",
+      "worst_error": 0.053,
+      "actuators": [
+        {
+          "actuator": "act_front_left_wheel_joint",
+          "joint": "front_left_wheel_joint",
+          "pass": true,
+          "rms_error": 0.022938,
+          "peak_error": 0.047268,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 2.373175,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_front_right_wheel_joint",
+          "joint": "front_right_wheel_joint",
+          "pass": true,
+          "rms_error": 0.022938,
+          "peak_error": 0.047268,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 2.373175,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_rear_left_wheel_joint",
+          "joint": "rear_left_wheel_joint",
+          "pass": true,
+          "rms_error": 0.022777,
+          "peak_error": 0.052862,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 2.628032,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_rear_right_wheel_joint",
+          "joint": "rear_right_wheel_joint",
+          "pass": true,
+          "rms_error": 0.022777,
+          "peak_error": 0.052862,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 2.628032,
+          "force_unit": "N m"
+        }
+      ]
+    },
+    "disturbance_recovery": {
+      "pass": true,
+      "upright_after": 1.0,
+      "note": "upright>0.5 means it did not fall"
+    }
+  },
+  "validation_scope": "simulation smoke tests, not hardware or wearable qualification",
+  "mujoco_version": "3.13.0",
+  "model_sha256": "6e1d0ef4ec608026b1a84e291cc87d06d60ebfae22a3a21105caa29e65e8e868",
+  "limitations": [
+    "No measured motor, material, thermal or battery model",
+    "No manufacturing or human-fit validation"
+  ],
+  "self_collision_masks_enabled": true,
+  "passed": 6,
+  "total": 6,
+  "source_urdf_sha256": "ff5d428e80c6543997e80f1a8d81fbed4a83a123faaa90055adfcfc166219221",
+  "initial_penetrations": [],
+  "hardware_verified": false
+}

@@ -243,7 +243,11 @@
       "inferred": [
         "limit",
         "dynamics"
-      ]
+      ],
+      "limit": {
+        "effort": 50,
+        "velocity": 2
+      }
     },
     {
       "name": "front_right_wheel_joint",
@@ -274,7 +278,11 @@
       "inferred": [
         "limit",
         "dynamics"
-      ]
+      ],
+      "limit": {
+        "effort": 50,
+        "velocity": 2
+      }
     },
     {
       "name": "rear_left_wheel_joint",
@@ -305,7 +313,11 @@
       "inferred": [
         "limit",
         "dynamics"
-      ]
+      ],
+      "limit": {
+        "effort": 50,
+        "velocity": 2
+      }
     },
     {
       "name": "rear_right_wheel_joint",
@@ -336,7 +348,11 @@
       "inferred": [
         "limit",
         "dynamics"
-      ]
+      ],
+      "limit": {
+        "effort": 50,
+        "velocity": 2
+      }
     }
   ],
   "materials": [
@@ -399,7 +415,7 @@
   "end_effectors": [],
   "metadata": {
     "generator": "text-to-robot",
-    "created": "2026-09-18T04:41:53.824Z",
+    "created": "2026-09-19T06:54:09.256Z",
     "inferred_fields": [
       "joints.front_left_wheel_joint.dynamics",
       "joints.front_left_wheel_joint.limit",
@@ -424,6 +440,6 @@
       "Generated mecanum base (4 holonomic wheels) from template. Roller geometry approximated by cylinders.",
       "Interpreted by demo parser: type inferred, DOF=4, gripper=parallel."
     ],
-    "source_prompt": "Create a mecanum-wheel robot"
+    "source_prompt": "Create a mecanum-wheel robot\n"
   }
 }

@@ -2,9 +2,11 @@
 
 **Estimated total: $406.18**  ·  tier: prosumer
 
+**Torque sizing: passes catalogue estimate; hardware verified: no.**
+
 | Category | Component | Qty | Unit $ | Subtotal $ | Spec |
 |---|---|--:|--:|--:|---|
-| Actuator | DS3218 20kg servo _(joint front_left_wheel_joint)_ | 4 | 12 | 48 | PWM, waterproof, metal gears (1.96 N·m) |
+| Actuator | DS3218 20kg servo _(joint front_left_wheel_joint; rating duty/source unverified)_ | 4 | 12 | 48 | PWM, waterproof, metal gears (1.96 N·m) |
 | Compute | Teensy 4.1 | 1 | 32 | 32 | 600MHz MCU, real-time control |
 | Power | LiPo 4S 5000mAh | 1 | 40 | 40 | 74 Wh; est. load 10 W |
 | Power | DC-DC buck regulator (5V/10A) | 1 | 12 | 12 | logic + servo rail |
@@ -21,6 +23,9 @@
 | front_right_wheel_joint | 0.04 | DS3218 20kg servo | 49.1x |
 | rear_left_wheel_joint | 0.04 | DS3218 20kg servo | 49.1x |
 | rear_right_wheel_joint | 0.04 | DS3218 20kg servo | 49.1x |
+
+## Warnings
+- ⚠️ Catalog values are planning estimates. Except explicitly sourced rated values, torque entries may be stall/peak ratings; continuous duty, fit and complete assemblies are unverified.
 
 ## Notes
 - Tier: prosumer. Prices are planning estimates (USD), not quotes. Structure assumes FDM 3D printing.

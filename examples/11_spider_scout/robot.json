@@ -908,7 +908,7 @@
         ],
         "rpy": [
           0,
-          1.5707963267948966,
+          0,
           0
         ]
       },
@@ -1016,7 +1016,7 @@
         ],
         "rpy": [
           0,
-          1.5707963267948966,
+          0,
           0
         ]
       },
@@ -1124,7 +1124,7 @@
         ],
         "rpy": [
           0,
-          1.5707963267948966,
+          0,
           0
         ]
       },
@@ -1232,7 +1232,7 @@
         ],
         "rpy": [
           0,
-          1.5707963267948966,
+          0,
           0
         ]
       },
@@ -1340,7 +1340,7 @@
         ],
         "rpy": [
           0,
-          1.5707963267948966,
+          0,
           0
         ]
       },
@@ -1448,7 +1448,7 @@
         ],
         "rpy": [
           0,
-          1.5707963267948966,
+          0,
           0
         ]
       },
@@ -1582,7 +1582,7 @@
   "end_effectors": [],
   "metadata": {
     "generator": "text-to-robot",
-    "created": "2026-09-18T04:41:53.833Z",
+    "created": "2026-09-19T06:54:09.283Z",
     "inferred_fields": [
       "joints.front_left_coxa_joint.dynamics",
       "joints.front_left_femur_joint.dynamics",
@@ -1649,6 +1649,6 @@
       "Generated hexapod (6 legs x 3 DOF = 18 DOF) from template.",
       "Interpreted by demo parser: type inferred, DOF=18, gripper=parallel."
     ],
-    "source_prompt": "Build a six-legged reconnaissance spider-bot with a LiDAR turret, budget $1500"
+    "source_prompt": "Build a six-legged reconnaissance spider-bot with a LiDAR turret, budget $1500\n"
   }
 }

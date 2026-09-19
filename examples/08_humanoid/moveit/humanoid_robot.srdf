@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<robot name="humanoid_robot">
+  <group name="left_arm">
+    <chain base_link="torso" tip_link="left_wrist_3"/>
+  </group>
+  <group_state name="home" group="left_arm">
+    <joint name="left_arm_joint_1" value="0"/>
+    <joint name="left_arm_joint_2" value="0"/>
+    <joint name="left_arm_joint_3" value="0"/>
+    <joint name="left_arm_joint_4" value="0"/>
+    <joint name="left_arm_joint_5" value="0"/>
+    <joint name="left_arm_joint_6" value="0"/>
+    <joint name="left_arm_joint_7" value="0"/>
+  </group_state>
+  <group name="right_arm">
+    <chain base_link="torso" tip_link="right_wrist_3"/>
+  </group>
+  <group_state name="home" group="right_arm">
+    <joint name="right_arm_joint_1" value="0"/>
+    <joint name="right_arm_joint_2" value="0"/>
+    <joint name="right_arm_joint_3" value="0"/>
+    <joint name="right_arm_joint_4" value="0"/>
+    <joint name="right_arm_joint_5" value="0"/>
+    <joint name="right_arm_joint_6" value="0"/>
+    <joint name="right_arm_joint_7" value="0"/>
+  </group_state>
+  <group name="left_leg">
+    <chain base_link="torso" tip_link="left_foot"/>
+  </group>
+  <group_state name="home" group="left_leg">
+    <joint name="left_hip_joint" value="0"/>
+    <joint name="left_knee_joint" value="0"/>
+    <joint name="left_ankle_joint" value="0"/>
+  </group_state>
+  <group name="right_leg">
+    <chain base_link="torso" tip_link="right_foot"/>
+  </group>
+  <group_state name="home" group="right_leg">
+    <joint name="right_hip_joint" value="0"/>
+    <joint name="right_knee_joint" value="0"/>
+    <joint name="right_ankle_joint" value="0"/>
+  </group_state>
+  <virtual_joint name="world_joint" type="fixed" parent_frame="world" child_link="torso"/>
+  <disable_collisions link1="torso" link2="head" reason="Adjacent"/>
+  <disable_collisions link1="torso" link2="left_shoulder" reason="Adjacent"/>
+  <disable_collisions link1="left_shoulder" link2="left_upper_arm" reason="Adjacent"/>
+  <disable_collisions link1="left_upper_arm" link2="left_elbow" reason="Adjacent"/>
+  <disable_collisions link1="left_elbow" link2="left_forearm" reason="Adjacent"/>
+  <disable_collisions link1="left_forearm" link2="left_wrist_1" reason="Adjacent"/>
+  <disable_collisions link1="left_wrist_1" link2="left_wrist_2" reason="Adjacent"/>
+  <disable_collisions link1="left_wrist_2" link2="left_wrist_3" reason="Adjacent"/>
+  <disable_collisions link1="left_wrist_3" link2="left_gripper_base" reason="Adjacent"/>
+  <disable_collisions link1="left_gripper_base" link2="left_left_finger" reason="Adjacent"/>
+  <disable_collisions link1="left_gripper_base" link2="left_right_finger" reason="Adjacent"/>
+  <disable_collisions link1="torso" link2="right_shoulder" reason="Adjacent"/>
+  <disable_collisions link1="right_shoulder" link2="right_upper_arm" reason="Adjacent"/>
+  <disable_collisions link1="right_upper_arm" link2="right_elbow" reason="Adjacent"/>
+  <disable_collisions link1="right_elbow" link2="right_forearm" reason="Adjacent"/>
+  <disable_collisions link1="right_forearm" link2="right_wrist_1" reason="Adjacent"/>
+  <disable_collisions link1="right_wrist_1" link2="right_wrist_2" reason="Adjacent"/>
+  <disable_collisions link1="right_wrist_2" link2="right_wrist_3" reason="Adjacent"/>
+  <disable_collisions link1="right_wrist_3" link2="right_gripper_base" reason="Adjacent"/>
+  <disable_collisions link1="right_gripper_base" link2="right_left_finger" reason="Adjacent"/>
+  <disable_collisions link1="right_gripper_base" link2="right_right_finger" reason="Adjacent"/>
+  <disable_collisions link1="torso" link2="left_thigh" reason="Adjacent"/>
+  <disable_collisions link1="left_thigh" link2="left_shin" reason="Adjacent"/>
+  <disable_collisions link1="left_shin" link2="left_foot" reason="Adjacent"/>
+  <disable_collisions link1="torso" link2="right_thigh" reason="Adjacent"/>
+  <disable_collisions link1="right_thigh" link2="right_shin" reason="Adjacent"/>
+  <disable_collisions link1="right_shin" link2="right_foot" reason="Adjacent"/>
+</robot>

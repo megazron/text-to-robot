@@ -765,7 +765,11 @@
       "inferred": [
         "limit",
         "dynamics"
-      ]
+      ],
+      "limit": {
+        "effort": 50,
+        "velocity": 2
+      }
     },
     {
       "name": "front_right_wheel_joint",
@@ -796,7 +800,11 @@
       "inferred": [
         "limit",
         "dynamics"
-      ]
+      ],
+      "limit": {
+        "effort": 50,
+        "velocity": 2
+      }
     },
     {
       "name": "rear_left_wheel_joint",
@@ -827,7 +835,11 @@
       "inferred": [
         "limit",
         "dynamics"
-      ]
+      ],
+      "limit": {
+        "effort": 50,
+        "velocity": 2
+      }
     },
     {
       "name": "rear_right_wheel_joint",
@@ -858,7 +870,11 @@
       "inferred": [
         "limit",
         "dynamics"
-      ]
+      ],
+      "limit": {
+        "effort": 50,
+        "velocity": 2
+      }
     },
     {
       "name": "arm_mount_joint",
@@ -1382,7 +1398,7 @@
   ],
   "metadata": {
     "generator": "text-to-robot",
-    "created": "2026-09-18T04:41:53.838Z",
+    "created": "2026-09-19T06:54:09.295Z",
     "inferred_fields": [
       "joints.arm_mount_joint.dynamics",
       "joints.arm_mount_joint.limit",
@@ -1454,6 +1470,6 @@
       "Generated rover + 6-DOF arm (mobile manipulator) from templates.",
       "Interpreted by demo parser: type inferred, DOF=12, gripper=parallel."
     ],
-    "source_prompt": "Design a Mars rover with four wheels and a 6 DOF sampling arm, RGB-D camera, budget $4000"
+    "source_prompt": "Design a Mars rover with four wheels and a 6 DOF sampling arm, RGB-D camera, budget $4000\n"
   }
 }

@@ -1035,7 +1035,7 @@
   "end_effectors": [],
   "metadata": {
     "generator": "text-to-robot",
-    "created": "2026-09-18T04:41:53.831Z",
+    "created": "2026-09-19T06:54:09.276Z",
     "inferred_fields": [
       "joints.front_left_hip_joint.dynamics",
       "joints.front_left_knee_joint.dynamics",
@@ -1080,6 +1080,6 @@
       "Generated quadruped (12-DOF) from template.",
       "Interpreted by demo parser: type inferred, DOF=12, gripper=parallel."
     ],
-    "source_prompt": "Create a quadruped robot"
+    "source_prompt": "Create a quadruped robot\n"
   }
 }

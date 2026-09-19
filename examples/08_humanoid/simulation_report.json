@@ -1,0 +1,330 @@
+{
+  "model": "robot.urdf",
+  "nbody": 29,
+  "njnt": 26,
+  "nu": 25,
+  "ngeom": 29,
+  "floating": true,
+  "tests": {
+    "compile": {
+      "pass": true,
+      "total_mass_kg": 13.915,
+      "actuators": 25
+    },
+    "initial_clearance": {
+      "pass": true,
+      "penetrations": [],
+      "count": 0
+    },
+    "settle_under_gravity": {
+      "pass": true,
+      "max_joint_speed": 3.26,
+      "base_drop_m": -0.001,
+      "upright": 0.8
+    },
+    "hold_pose": {
+      "pass": true,
+      "max_joint_error_rad": 0.029
+    },
+    "actuator_sweep": {
+      "pass": false,
+      "tracked": "17/25",
+      "worst_error": 1.827,
+      "actuators": [
+        {
+          "actuator": "act_neck_joint",
+          "joint": "neck_joint",
+          "pass": true,
+          "rms_error": 0.00562,
+          "peak_error": 0.022782,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 4.506887,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_arm_joint_1",
+          "joint": "left_arm_joint_1",
+          "pass": false,
+          "rms_error": 0.562886,
+          "peak_error": 1.24511,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 50.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_arm_joint_2",
+          "joint": "left_arm_joint_2",
+          "pass": false,
+          "rms_error": 1.033003,
+          "peak_error": 1.826728,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 50.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_arm_joint_3",
+          "joint": "left_arm_joint_3",
+          "pass": true,
+          "rms_error": 0.098817,
+          "peak_error": 0.283824,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 50.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_arm_joint_4",
+          "joint": "left_arm_joint_4",
+          "pass": false,
+          "rms_error": 0.316057,
+          "peak_error": 0.732656,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 50.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_arm_joint_5",
+          "joint": "left_arm_joint_5",
+          "pass": true,
+          "rms_error": 0.051867,
+          "peak_error": 0.203546,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 47.660784,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_arm_joint_6",
+          "joint": "left_arm_joint_6",
+          "pass": true,
+          "rms_error": 0.054041,
+          "peak_error": 0.199957,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 46.382188,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_arm_joint_7",
+          "joint": "left_arm_joint_7",
+          "pass": true,
+          "rms_error": 0.025694,
+          "peak_error": 0.101554,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 24.883517,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_left_finger_joint",
+          "joint": "left_left_finger_joint",
+          "pass": false,
+          "rms_error": 0.010405,
+          "peak_error": 0.016144,
+          "error_unit": "m",
+          "rms_tolerance": 0.01,
+          "peak_actuator_force": 3.463551,
+          "force_unit": "N"
+        },
+        {
+          "actuator": "act_left_right_finger_joint",
+          "joint": "left_right_finger_joint",
+          "pass": true,
+          "rms_error": 0.009511,
+          "peak_error": 0.015283,
+          "error_unit": "m",
+          "rms_tolerance": 0.01,
+          "peak_actuator_force": 3.283182,
+          "force_unit": "N"
+        },
+        {
+          "actuator": "act_right_arm_joint_1",
+          "joint": "right_arm_joint_1",
+          "pass": false,
+          "rms_error": 0.687084,
+          "peak_error": 1.497109,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 50.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_arm_joint_2",
+          "joint": "right_arm_joint_2",
+          "pass": false,
+          "rms_error": 0.80389,
+          "peak_error": 1.559498,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 50.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_arm_joint_3",
+          "joint": "right_arm_joint_3",
+          "pass": true,
+          "rms_error": 0.080582,
+          "peak_error": 0.253676,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 50.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_arm_joint_4",
+          "joint": "right_arm_joint_4",
+          "pass": true,
+          "rms_error": 0.114992,
+          "peak_error": 0.240141,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 50.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_arm_joint_5",
+          "joint": "right_arm_joint_5",
+          "pass": true,
+          "rms_error": 0.05222,
+          "peak_error": 0.203388,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 47.626954,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_arm_joint_6",
+          "joint": "right_arm_joint_6",
+          "pass": false,
+          "rms_error": 0.282561,
+          "peak_error": 0.799121,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 50.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_arm_joint_7",
+          "joint": "right_arm_joint_7",
+          "pass": true,
+          "rms_error": 0.025694,
+          "peak_error": 0.101554,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 24.883449,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_left_finger_joint",
+          "joint": "right_left_finger_joint",
+          "pass": true,
+          "rms_error": 0.009512,
+          "peak_error": 0.015283,
+          "error_unit": "m",
+          "rms_tolerance": 0.01,
+          "peak_actuator_force": 3.28319,
+          "force_unit": "N"
+        },
+        {
+          "actuator": "act_right_right_finger_joint",
+          "joint": "right_right_finger_joint",
+          "pass": false,
+          "rms_error": 0.010405,
+          "peak_error": 0.016144,
+          "error_unit": "m",
+          "rms_tolerance": 0.01,
+          "peak_actuator_force": 3.463401,
+          "force_unit": "N"
+        },
+        {
+          "actuator": "act_left_hip_joint",
+          "joint": "left_hip_joint",
+          "pass": true,
+          "rms_error": 0.029038,
+          "peak_error": 0.070242,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 17.593899,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_knee_joint",
+          "joint": "left_knee_joint",
+          "pass": true,
+          "rms_error": 0.121993,
+          "peak_error": 1.122317,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 50.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_ankle_joint",
+          "joint": "left_ankle_joint",
+          "pass": true,
+          "rms_error": 0.003294,
+          "peak_error": 0.008282,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 1.427484,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_hip_joint",
+          "joint": "right_hip_joint",
+          "pass": true,
+          "rms_error": 0.029,
+          "peak_error": 0.069975,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 17.536692,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_knee_joint",
+          "joint": "right_knee_joint",
+          "pass": true,
+          "rms_error": 0.121993,
+          "peak_error": 1.122317,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 50.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_ankle_joint",
+          "joint": "right_ankle_joint",
+          "pass": true,
+          "rms_error": 0.003294,
+          "peak_error": 0.008282,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 1.427484,
+          "force_unit": "N m"
+        }
+      ]
+    },
+    "disturbance_recovery": {
+      "pass": false,
+      "upright_after": 0.002,
+      "note": "upright>0.5 means it did not fall"
+    }
+  },
+  "validation_scope": "simulation smoke tests, not hardware or wearable qualification",
+  "mujoco_version": "3.13.0",
+  "model_sha256": "5dfea721533473a8901f315e0fe54c183ba613df99694319cee721eb1147c181",
+  "limitations": [
+    "No measured motor, material, thermal or battery model",
+    "No manufacturing or human-fit validation"
+  ],
+  "self_collision_masks_enabled": true,
+  "passed": 4,
+  "total": 6,
+  "source_urdf_sha256": "22e1aa68f4b4d147801a56746b395189d0f765f3ea5ccb386ec563b6b0dd4715",
+  "initial_penetrations": [],
+  "hardware_verified": false
+}

@@ -2,9 +2,11 @@
 
 **Estimated total: $230.44**  ·  tier: prosumer
 
+**Torque sizing: passes catalogue estimate; hardware verified: no.**
+
 | Category | Component | Qty | Unit $ | Subtotal $ | Spec |
 |---|---|--:|--:|--:|---|
-| Actuator | NEMA17 + lead screw _(joint left_finger_joint)_ | 2 | 26 | 52 | lead-screw linear stage (60 N·m) |
+| Actuator | NEMA17 + lead screw _(joint left_finger_joint; rating duty/source unverified)_ | 2 | 26 | 52 | lead-screw linear stage (60 N·m) |
 | Motor driver | TMC2209 driver | 2 | 10 | 20 | driver for NEMA17 + lead screw |
 | Compute | Teensy 4.1 | 1 | 32 | 32 | 600MHz MCU, real-time control |
 | Power | LiPo 4S 5000mAh | 1 | 40 | 40 | 74 Wh; est. load 12 W |
@@ -20,6 +22,9 @@
 |---|--:|---|--:|
 | left_finger_joint | 32 | NEMA17 + lead screw | 1.9x |
 | right_finger_joint | 32 | NEMA17 + lead screw | 1.9x |
+
+## Warnings
+- ⚠️ Catalog values are planning estimates. Except explicitly sourced rated values, torque entries may be stall/peak ratings; continuous duty, fit and complete assemblies are unverified.
 
 ## Notes
 - Tier: prosumer. Prices are planning estimates (USD), not quotes. Structure assumes FDM 3D printing.

@@ -51,9 +51,9 @@ export function nDofArm(dof: number, opts: ArmOptions = {}): RobotSpecification 
 export function scara(opts: ArmOptions = {}): RobotSpecification {
   const spec = emptySpec(opts.name ?? "scara", opts.prompt);
   spec.materials = [...DEFAULT_MATERIALS];
-  spec.links.push(link("base_link", cyl(0.06, 0.20), { material: "base_mat", role: "base", origin: pose([0, 0, 0.10]) }));
+  spec.links.push(link("base_link", cyl(0.06, 0.35), { material: "base_mat", role: "base", origin: pose([0, 0, 0.175]) }));
   spec.links.push(link("upper_arm", cyl(0.035, 0.25), { material: "link_mat", role: "upper_arm", origin: pose([0.125, 0, 0], [0, Math.PI / 2, 0]) }));
-  spec.joints.push(joint("joint_1", "revolute", "base_link", "upper_arm", { origin: pose([0, 0, 0.20]), axis: [0, 0, 1] }));
+  spec.joints.push(joint("joint_1", "revolute", "base_link", "upper_arm", { origin: pose([0, 0, 0.39]), axis: [0, 0, 1] }));
   spec.links.push(link("forearm", cyl(0.03, 0.20), { material: "link_mat", role: "forearm", origin: pose([0.10, 0, 0], [0, Math.PI / 2, 0]) }));
   spec.joints.push(joint("joint_2", "revolute", "upper_arm", "forearm", { origin: pose([0.25, 0, 0]), axis: [0, 0, 1] }));
   spec.links.push(link("spindle", cyl(0.02, 0.12), { material: "accent_mat", role: "wrist", origin: pose([0, 0, -0.06]) }));

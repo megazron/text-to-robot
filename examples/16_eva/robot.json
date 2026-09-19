@@ -29,8 +29,8 @@
         "inertia"
       ],
       "inertia": {
-        "ixx": 0.570464166781028,
-        "iyy": 0.570464166781028,
+        "ixx": 0.5426693656013639,
+        "iyy": 0.5426693656013639,
         "izz": 0.21803477369825475,
         "ixy": 0,
         "ixz": 0,
@@ -70,8 +70,8 @@
         "inertia"
       ],
       "inertia": {
-        "ixx": 0.03963332544819473,
-        "iyy": 0.03963332544819473,
+        "ixx": 0.0353643163112451,
+        "iyy": 0.0353643163112451,
         "izz": 0.022492072382150792,
         "ixy": 0,
         "ixz": 0,
@@ -158,8 +158,8 @@
         "inertia"
       ],
       "inertia": {
-        "ixx": 0.02193030849179913,
-        "iyy": 0.02193030849179913,
+        "ixx": 0.021724188597797102,
+        "iyy": 0.021724188597797102,
         "izz": 0.003151344157186535,
         "ixy": 0,
         "ixz": 0,
@@ -238,8 +238,8 @@
         "inertia"
       ],
       "inertia": {
-        "ixx": 0.02193030849179913,
-        "iyy": 0.02193030849179913,
+        "ixx": 0.021724188597797102,
+        "iyy": 0.021724188597797102,
         "izz": 0.003151344157186535,
         "ixy": 0,
         "ixz": 0,
@@ -691,7 +691,7 @@
   "end_effectors": [],
   "metadata": {
     "generator": "text-to-robot",
-    "created": "2026-09-18T04:41:53.868Z",
+    "created": "2026-09-19T06:54:09.880Z",
     "inferred_fields": [
       "joints.hover_thruster_joint.dynamics",
       "joints.hover_thruster_joint.limit",
@@ -723,6 +723,6 @@
       "EVA: free-floating capsule body, tilting head with visor camera, two 2-DOF arm pods, downward hover thruster mount + flight IMU. In simulation it is a floating base; hovering needs a controller.",
       "Interpreted by demo parser: type inferred, DOF=5, gripper=parallel."
     ],
-    "source_prompt": "Build EVA, a sleek hovering egg-shaped droid with a visor and two floating arms"
+    "source_prompt": "Build EVA, a sleek hovering egg-shaped droid with a visor and two floating arms\n"
   }
 }
