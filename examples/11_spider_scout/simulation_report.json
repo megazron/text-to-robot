@@ -1,0 +1,253 @@
+{
+  "model": "robot.urdf",
+  "nbody": 21,
+  "njnt": 19,
+  "nu": 18,
+  "ngeom": 21,
+  "floating": true,
+  "tests": {
+    "compile": {
+      "pass": true,
+      "total_mass_kg": 2.794,
+      "actuators": 18
+    },
+    "initial_clearance": {
+      "pass": true,
+      "penetrations": [],
+      "count": 0
+    },
+    "settle_under_gravity": {
+      "pass": true,
+      "max_joint_speed": 6.08,
+      "base_drop_m": 0.055,
+      "upright": 1.0
+    },
+    "hold_pose": {
+      "pass": true,
+      "max_joint_error_rad": 0.001
+    },
+    "actuator_sweep": {
+      "pass": true,
+      "tracked": "18/18",
+      "worst_error": 0.437,
+      "actuators": [
+        {
+          "actuator": "act_front_left_coxa_joint",
+          "joint": "front_left_coxa_joint",
+          "pass": true,
+          "rms_error": 0.001377,
+          "peak_error": 0.00984,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 0.604389,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_front_left_femur_joint",
+          "joint": "front_left_femur_joint",
+          "pass": true,
+          "rms_error": 0.020272,
+          "peak_error": 0.110521,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 4.679943,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_front_left_tibia_joint",
+          "joint": "front_left_tibia_joint",
+          "pass": true,
+          "rms_error": 0.020562,
+          "peak_error": 0.437353,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 36.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_mid_left_coxa_joint",
+          "joint": "mid_left_coxa_joint",
+          "pass": true,
+          "rms_error": 0.001377,
+          "peak_error": 0.00984,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 0.604389,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_mid_left_femur_joint",
+          "joint": "mid_left_femur_joint",
+          "pass": true,
+          "rms_error": 0.023231,
+          "peak_error": 0.111585,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 4.722515,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_mid_left_tibia_joint",
+          "joint": "mid_left_tibia_joint",
+          "pass": true,
+          "rms_error": 0.020569,
+          "peak_error": 0.437353,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 36.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_rear_left_coxa_joint",
+          "joint": "rear_left_coxa_joint",
+          "pass": true,
+          "rms_error": 0.001377,
+          "peak_error": 0.00984,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 0.604389,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_rear_left_femur_joint",
+          "joint": "rear_left_femur_joint",
+          "pass": true,
+          "rms_error": 0.020272,
+          "peak_error": 0.110521,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 4.679943,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_rear_left_tibia_joint",
+          "joint": "rear_left_tibia_joint",
+          "pass": true,
+          "rms_error": 0.020562,
+          "peak_error": 0.437353,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 36.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_front_right_coxa_joint",
+          "joint": "front_right_coxa_joint",
+          "pass": true,
+          "rms_error": 0.001377,
+          "peak_error": 0.00984,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 0.604389,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_front_right_femur_joint",
+          "joint": "front_right_femur_joint",
+          "pass": true,
+          "rms_error": 0.020272,
+          "peak_error": 0.110521,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 4.679943,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_front_right_tibia_joint",
+          "joint": "front_right_tibia_joint",
+          "pass": true,
+          "rms_error": 0.020562,
+          "peak_error": 0.437353,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 36.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_mid_right_coxa_joint",
+          "joint": "mid_right_coxa_joint",
+          "pass": true,
+          "rms_error": 0.001377,
+          "peak_error": 0.00984,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 0.604389,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_mid_right_femur_joint",
+          "joint": "mid_right_femur_joint",
+          "pass": true,
+          "rms_error": 0.023231,
+          "peak_error": 0.111585,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 4.722515,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_mid_right_tibia_joint",
+          "joint": "mid_right_tibia_joint",
+          "pass": true,
+          "rms_error": 0.020569,
+          "peak_error": 0.437353,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 36.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_rear_right_coxa_joint",
+          "joint": "rear_right_coxa_joint",
+          "pass": true,
+          "rms_error": 0.001377,
+          "peak_error": 0.00984,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 0.604389,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_rear_right_femur_joint",
+          "joint": "rear_right_femur_joint",
+          "pass": true,
+          "rms_error": 0.020272,
+          "peak_error": 0.110521,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 4.679943,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_rear_right_tibia_joint",
+          "joint": "rear_right_tibia_joint",
+          "pass": true,
+          "rms_error": 0.020562,
+          "peak_error": 0.437353,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 36.0,
+          "force_unit": "N m"
+        }
+      ]
+    },
+    "disturbance_recovery": {
+      "pass": true,
+      "upright_after": 1.0,
+      "note": "upright>0.5 means it did not fall"
+    }
+  },
+  "validation_scope": "simulation smoke tests, not hardware or wearable qualification",
+  "mujoco_version": "3.13.0",
+  "model_sha256": "a433dfbdad86f3376f6b880afc3c58ca282008dee1663064d6ac71d88a27b182",
+  "limitations": [
+    "No measured motor, material, thermal or battery model",
+    "No manufacturing or human-fit validation"
+  ],
+  "self_collision_masks_enabled": true,
+  "passed": 6,
+  "total": 6,
+  "source_urdf_sha256": "467a5cb5239f8873b2235e51d6d81a3a9f9bebb8203941d78471d6f888d5d958",
+  "initial_penetrations": [],
+  "hardware_verified": false
+}

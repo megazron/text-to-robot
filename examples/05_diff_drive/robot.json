@@ -200,7 +200,11 @@
       "inferred": [
         "limit",
         "dynamics"
-      ]
+      ],
+      "limit": {
+        "effort": 50,
+        "velocity": 2
+      }
     },
     {
       "name": "right_wheel_joint",
@@ -231,7 +235,11 @@
       "inferred": [
         "limit",
         "dynamics"
-      ]
+      ],
+      "limit": {
+        "effort": 50,
+        "velocity": 2
+      }
     },
     {
       "name": "caster_joint",
@@ -325,7 +333,7 @@
   "end_effectors": [],
   "metadata": {
     "generator": "text-to-robot",
-    "created": "2026-09-18T04:41:53.822Z",
+    "created": "2026-09-19T06:54:09.245Z",
     "inferred_fields": [
       "joints.caster_joint.dynamics",
       "joints.caster_joint.limit",
@@ -346,6 +354,6 @@
       "Generated differential-drive base from template.",
       "Interpreted by demo parser: type inferred, DOF=2, gripper=parallel."
     ],
-    "source_prompt": "Create a differential drive mobile robot"
+    "source_prompt": "Create a differential drive mobile robot\n"
   }
 }

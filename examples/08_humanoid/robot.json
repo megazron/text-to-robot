@@ -1503,7 +1503,7 @@
           -0.06
         ],
         "rpy": [
-          0,
+          3.141592653589793,
           0,
           0
         ]
@@ -1858,7 +1858,7 @@
           -0.06
         ],
         "rpy": [
-          0,
+          3.141592653589793,
           0,
           0
         ]
@@ -2237,7 +2237,7 @@
   ],
   "metadata": {
     "generator": "text-to-robot",
-    "created": "2026-09-18T04:41:53.825Z",
+    "created": "2026-09-19T06:54:09.260Z",
     "inferred_fields": [
       "joints.left_ankle_joint.dynamics",
       "joints.left_arm_joint_1.dynamics",
@@ -2329,6 +2329,6 @@
       "Generated humanoid: torso, head, two 7-DOF arms with grippers, two 3-DOF legs.",
       "Interpreted by demo parser: type inferred, DOF=25, gripper=parallel."
     ],
-    "source_prompt": "Create a small humanoid robot with a torso, head and two 7 DOF arms and two-finger grippers"
+    "source_prompt": "Create a small humanoid robot with a torso, head and two 7 DOF arms and two-finger grippers\n"
   }
 }

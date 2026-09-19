@@ -1,0 +1,110 @@
+{
+  "model": "robot.urdf",
+  "nbody": 9,
+  "njnt": 6,
+  "nu": 5,
+  "ngeom": 17,
+  "floating": true,
+  "tests": {
+    "compile": {
+      "pass": true,
+      "total_mass_kg": 28.255,
+      "actuators": 5
+    },
+    "initial_clearance": {
+      "pass": true,
+      "penetrations": [],
+      "count": 0
+    },
+    "settle_under_gravity": {
+      "pass": true,
+      "max_joint_speed": 2.12,
+      "base_drop_m": 0.23,
+      "upright": 1.0
+    },
+    "hold_pose": {
+      "pass": true,
+      "max_joint_error_rad": 0.0
+    },
+    "actuator_sweep": {
+      "pass": true,
+      "tracked": "5/5",
+      "worst_error": 0.128,
+      "actuators": [
+        {
+          "actuator": "act_neck_joint",
+          "joint": "neck_joint",
+          "pass": true,
+          "rms_error": 0.008891,
+          "peak_error": 0.022316,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 9.469633,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_shoulder_joint",
+          "joint": "left_shoulder_joint",
+          "pass": true,
+          "rms_error": 0.043103,
+          "peak_error": 0.128164,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 50.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_arm_roll",
+          "joint": "left_arm_roll",
+          "pass": true,
+          "rms_error": 0.007226,
+          "peak_error": 0.01842,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 5.560083,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_shoulder_joint",
+          "joint": "right_shoulder_joint",
+          "pass": true,
+          "rms_error": 0.043103,
+          "peak_error": 0.128164,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 50.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_arm_roll",
+          "joint": "right_arm_roll",
+          "pass": true,
+          "rms_error": 0.007226,
+          "peak_error": 0.01842,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 5.560083,
+          "force_unit": "N m"
+        }
+      ]
+    },
+    "disturbance_recovery": {
+      "pass": false,
+      "upright_after": -0.0,
+      "note": "upright>0.5 means it did not fall"
+    }
+  },
+  "validation_scope": "simulation smoke tests, not hardware or wearable qualification",
+  "mujoco_version": "3.13.0",
+  "model_sha256": "ed796b1efbb0567083d076f2ece241306f28b772aa3854da67f86898cdf950d6",
+  "limitations": [
+    "No measured motor, material, thermal or battery model",
+    "No manufacturing or human-fit validation"
+  ],
+  "self_collision_masks_enabled": true,
+  "passed": 5,
+  "total": 6,
+  "source_urdf_sha256": "d8b7d247a183f12831455daab94d23ffeb0e584dc20aa933df8c21dc5495e6ee",
+  "initial_penetrations": [],
+  "hardware_verified": false
+}

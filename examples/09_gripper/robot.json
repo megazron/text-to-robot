@@ -355,7 +355,7 @@
   ],
   "metadata": {
     "generator": "text-to-robot",
-    "created": "2026-09-18T04:41:53.830Z",
+    "created": "2026-09-19T06:54:09.270Z",
     "inferred_fields": [
       "joints.gripper_base_joint.dynamics",
       "joints.gripper_base_joint.limit",
@@ -375,6 +375,6 @@
       "Standalone gripper on a mount.",
       "Interpreted by demo parser: type inferred, DOF=2, gripper=parallel."
     ],
-    "source_prompt": "Create a two-finger parallel gripper"
+    "source_prompt": "Create a two-finger parallel gripper\n"
   }
 }

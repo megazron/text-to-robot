@@ -99,3 +99,12 @@ python -m ttr_mujoco.wearability robot.json wearer.json --json wearability_repor
 
 Open/closed pose checks do not validate insertion paths, ventilation or powered
 human operation. The report keeps those limitations explicit.
+
+## Standalone gripper training
+
+Use `ttr-mujoco train examples/09_gripper/robot.urdf --task aperture --self-collision`
+from the repository root. This task controls summed finger travel from home, not
+object grasp force or contact success. Reaching and aperture actions span the
+actuator limits; standing/walking use small corrective targets around the initial
+pose. The generated PyBullet gripper package uses the same additional-opening
+objective instead of an unreachable fixed-tool reaching task.

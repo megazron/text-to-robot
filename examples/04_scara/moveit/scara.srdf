@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<robot name="scara">
+  <group name="arm">
+    <chain base_link="base_link" tip_link="tool"/>
+  </group>
+  <group_state name="home" group="arm">
+    <joint name="joint_1" value="0"/>
+    <joint name="joint_2" value="0"/>
+    <joint name="joint_3" value="0"/>
+    <joint name="joint_4" value="0"/>
+  </group_state>
+  <virtual_joint name="world_joint" type="fixed" parent_frame="world" child_link="base_link"/>
+  <disable_collisions link1="base_link" link2="upper_arm" reason="Adjacent"/>
+  <disable_collisions link1="upper_arm" link2="forearm" reason="Adjacent"/>
+  <disable_collisions link1="forearm" link2="spindle" reason="Adjacent"/>
+  <disable_collisions link1="spindle" link2="tool" reason="Adjacent"/>
+</robot>

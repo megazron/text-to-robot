@@ -1,5 +1,5 @@
 {
-  "robot_name": "humanoid_robot",
+  "robot_name": "battle_mech",
   "links": [
     {
       "name": "torso",
@@ -12,7 +12,7 @@
         ]
       },
       "mass": 7.257600000000002,
-      "material": "base_mat",
+      "material": "armor_red",
       "role": "base",
       "origin": {
         "xyz": [
@@ -55,7 +55,7 @@
         "radius": 0.09
       },
       "mass": 1.3741326266801752,
-      "material": "link_mat",
+      "material": "armor_gold",
       "role": "link",
       "origin": {
         "xyz": [
@@ -95,7 +95,7 @@
         "length": 0.06
       },
       "mass": 0.10390817701748244,
-      "material": "link_mat",
+      "material": "armor_red",
       "role": "shoulder",
       "origin": {
         "xyz": [
@@ -132,11 +132,11 @@
       "name": "left_upper_arm",
       "geometry": {
         "type": "cylinder",
-        "radius": 0.035,
+        "radius": 0.04725000000000001,
         "length": 0.22
       },
       "mass": 0.38099664906410224,
-      "material": "link_mat",
+      "material": "armor_gold",
       "role": "upper_arm",
       "origin": {
         "xyz": [
@@ -156,16 +156,16 @@
         "inertia"
       ],
       "inertia": {
-        "ixx": 0.001653366708334427,
-        "iyy": 0.001653366708334427,
-        "izz": 0.00023336044755176266,
+        "ixx": 0.0017493361923900893,
+        "iyy": 0.0017493361923900893,
+        "izz": 0.00042529941566308747,
         "ixy": 0,
         "ixz": 0,
         "iyz": 0
       },
       "collision": {
         "type": "cylinder",
-        "radius": 0.035,
+        "radius": 0.04725000000000001,
         "length": 0.22
       }
     },
@@ -177,7 +177,7 @@
         "length": 0.06
       },
       "mass": 0.10390817701748244,
-      "material": "link_mat",
+      "material": "armor_red",
       "role": "elbow",
       "origin": {
         "xyz": [
@@ -214,11 +214,11 @@
       "name": "left_forearm",
       "geometry": {
         "type": "cylinder",
-        "radius": 0.035,
+        "radius": 0.04725000000000001,
         "length": 0.22
       },
       "mass": 0.38099664906410224,
-      "material": "link_mat",
+      "material": "armor_gold",
       "role": "forearm",
       "origin": {
         "xyz": [
@@ -238,16 +238,16 @@
         "inertia"
       ],
       "inertia": {
-        "ixx": 0.001653366708334427,
-        "iyy": 0.001653366708334427,
-        "izz": 0.00023336044755176266,
+        "ixx": 0.0017493361923900893,
+        "iyy": 0.0017493361923900893,
+        "izz": 0.00042529941566308747,
         "ixy": 0,
         "ixz": 0,
         "iyz": 0
       },
       "collision": {
         "type": "cylinder",
-        "radius": 0.035,
+        "radius": 0.04725000000000001,
         "length": 0.22
       }
     },
@@ -259,7 +259,7 @@
         "length": 0.06
       },
       "mass": 0.10390817701748244,
-      "material": "link_mat",
+      "material": "armor_red",
       "role": "wrist_1",
       "origin": {
         "xyz": [
@@ -300,7 +300,7 @@
         "length": 0.06
       },
       "mass": 0.10390817701748244,
-      "material": "link_mat",
+      "material": "armor_red",
       "role": "wrist_2",
       "origin": {
         "xyz": [
@@ -341,7 +341,7 @@
         "length": 0.06
       },
       "mass": 0.10390817701748244,
-      "material": "link_mat",
+      "material": "armor_red",
       "role": "wrist_3",
       "origin": {
         "xyz": [
@@ -375,147 +375,6 @@
       }
     },
     {
-      "name": "left_gripper_base",
-      "geometry": {
-        "type": "box",
-        "size": [
-          0.06,
-          0.08,
-          0.03
-        ]
-      },
-      "mass": 0.06479999999999998,
-      "material": "gripper_mat",
-      "role": "gripper",
-      "origin": {
-        "xyz": [
-          0,
-          0,
-          0.015
-        ],
-        "rpy": [
-          0,
-          0,
-          0
-        ]
-      },
-      "inferred": [
-        "mass",
-        "inertia",
-        "inertia"
-      ],
-      "inertia": {
-        "ixx": 0.00003941999999999999,
-        "iyy": 0.00002429999999999999,
-        "izz": 0.000053999999999999984,
-        "ixy": 0,
-        "ixz": 0,
-        "iyz": 0
-      },
-      "collision": {
-        "type": "box",
-        "size": [
-          0.06,
-          0.08,
-          0.03
-        ]
-      }
-    },
-    {
-      "name": "left_left_finger",
-      "geometry": {
-        "type": "box",
-        "size": [
-          0.015,
-          0.02,
-          0.06
-        ]
-      },
-      "mass": 0.02,
-      "material": "gripper_mat",
-      "role": "gripper",
-      "origin": {
-        "xyz": [
-          0,
-          0,
-          0.03
-        ],
-        "rpy": [
-          0,
-          0,
-          0
-        ]
-      },
-      "inferred": [
-        "mass",
-        "inertia",
-        "inertia"
-      ],
-      "inertia": {
-        "ixx": 0.0000066666666666666675,
-        "iyy": 0.000006375,
-        "izz": 0.0000010416666666666667,
-        "ixy": 0,
-        "ixz": 0,
-        "iyz": 0
-      },
-      "collision": {
-        "type": "box",
-        "size": [
-          0.015,
-          0.02,
-          0.06
-        ]
-      }
-    },
-    {
-      "name": "left_right_finger",
-      "geometry": {
-        "type": "box",
-        "size": [
-          0.015,
-          0.02,
-          0.06
-        ]
-      },
-      "mass": 0.02,
-      "material": "gripper_mat",
-      "role": "gripper",
-      "origin": {
-        "xyz": [
-          0,
-          0,
-          0.03
-        ],
-        "rpy": [
-          0,
-          0,
-          0
-        ]
-      },
-      "inferred": [
-        "mass",
-        "inertia",
-        "inertia"
-      ],
-      "inertia": {
-        "ixx": 0.0000066666666666666675,
-        "iyy": 0.000006375,
-        "izz": 0.0000010416666666666667,
-        "ixy": 0,
-        "ixz": 0,
-        "iyz": 0
-      },
-      "collision": {
-        "type": "box",
-        "size": [
-          0.015,
-          0.02,
-          0.06
-        ]
-      }
-    },
-    {
       "name": "right_shoulder",
       "geometry": {
         "type": "cylinder",
@@ -523,7 +382,7 @@
         "length": 0.06
       },
       "mass": 0.10390817701748244,
-      "material": "link_mat",
+      "material": "armor_red",
       "role": "shoulder",
       "origin": {
         "xyz": [
@@ -560,11 +419,11 @@
       "name": "right_upper_arm",
       "geometry": {
         "type": "cylinder",
-        "radius": 0.035,
+        "radius": 0.04725000000000001,
         "length": 0.22
       },
       "mass": 0.38099664906410224,
-      "material": "link_mat",
+      "material": "armor_gold",
       "role": "upper_arm",
       "origin": {
         "xyz": [
@@ -584,16 +443,16 @@
         "inertia"
       ],
       "inertia": {
-        "ixx": 0.001653366708334427,
-        "iyy": 0.001653366708334427,
-        "izz": 0.00023336044755176266,
+        "ixx": 0.0017493361923900893,
+        "iyy": 0.0017493361923900893,
+        "izz": 0.00042529941566308747,
         "ixy": 0,
         "ixz": 0,
         "iyz": 0
       },
       "collision": {
         "type": "cylinder",
-        "radius": 0.035,
+        "radius": 0.04725000000000001,
         "length": 0.22
       }
     },
@@ -605,7 +464,7 @@
         "length": 0.06
       },
       "mass": 0.10390817701748244,
-      "material": "link_mat",
+      "material": "armor_red",
       "role": "elbow",
       "origin": {
         "xyz": [
@@ -642,11 +501,11 @@
       "name": "right_forearm",
       "geometry": {
         "type": "cylinder",
-        "radius": 0.035,
+        "radius": 0.04725000000000001,
         "length": 0.22
       },
       "mass": 0.38099664906410224,
-      "material": "link_mat",
+      "material": "armor_gold",
       "role": "forearm",
       "origin": {
         "xyz": [
@@ -666,16 +525,16 @@
         "inertia"
       ],
       "inertia": {
-        "ixx": 0.001653366708334427,
-        "iyy": 0.001653366708334427,
-        "izz": 0.00023336044755176266,
+        "ixx": 0.0017493361923900893,
+        "iyy": 0.0017493361923900893,
+        "izz": 0.00042529941566308747,
         "ixy": 0,
         "ixz": 0,
         "iyz": 0
       },
       "collision": {
         "type": "cylinder",
-        "radius": 0.035,
+        "radius": 0.04725000000000001,
         "length": 0.22
       }
     },
@@ -687,7 +546,7 @@
         "length": 0.06
       },
       "mass": 0.10390817701748244,
-      "material": "link_mat",
+      "material": "armor_red",
       "role": "wrist_1",
       "origin": {
         "xyz": [
@@ -728,7 +587,7 @@
         "length": 0.06
       },
       "mass": 0.10390817701748244,
-      "material": "link_mat",
+      "material": "armor_red",
       "role": "wrist_2",
       "origin": {
         "xyz": [
@@ -769,7 +628,7 @@
         "length": 0.06
       },
       "mass": 0.10390817701748244,
-      "material": "link_mat",
+      "material": "armor_red",
       "role": "wrist_3",
       "origin": {
         "xyz": [
@@ -803,155 +662,14 @@
       }
     },
     {
-      "name": "right_gripper_base",
-      "geometry": {
-        "type": "box",
-        "size": [
-          0.06,
-          0.08,
-          0.03
-        ]
-      },
-      "mass": 0.06479999999999998,
-      "material": "gripper_mat",
-      "role": "gripper",
-      "origin": {
-        "xyz": [
-          0,
-          0,
-          0.015
-        ],
-        "rpy": [
-          0,
-          0,
-          0
-        ]
-      },
-      "inferred": [
-        "mass",
-        "inertia",
-        "inertia"
-      ],
-      "inertia": {
-        "ixx": 0.00003941999999999999,
-        "iyy": 0.00002429999999999999,
-        "izz": 0.000053999999999999984,
-        "ixy": 0,
-        "ixz": 0,
-        "iyz": 0
-      },
-      "collision": {
-        "type": "box",
-        "size": [
-          0.06,
-          0.08,
-          0.03
-        ]
-      }
-    },
-    {
-      "name": "right_left_finger",
-      "geometry": {
-        "type": "box",
-        "size": [
-          0.015,
-          0.02,
-          0.06
-        ]
-      },
-      "mass": 0.02,
-      "material": "gripper_mat",
-      "role": "gripper",
-      "origin": {
-        "xyz": [
-          0,
-          0,
-          0.03
-        ],
-        "rpy": [
-          0,
-          0,
-          0
-        ]
-      },
-      "inferred": [
-        "mass",
-        "inertia",
-        "inertia"
-      ],
-      "inertia": {
-        "ixx": 0.0000066666666666666675,
-        "iyy": 0.000006375,
-        "izz": 0.0000010416666666666667,
-        "ixy": 0,
-        "ixz": 0,
-        "iyz": 0
-      },
-      "collision": {
-        "type": "box",
-        "size": [
-          0.015,
-          0.02,
-          0.06
-        ]
-      }
-    },
-    {
-      "name": "right_right_finger",
-      "geometry": {
-        "type": "box",
-        "size": [
-          0.015,
-          0.02,
-          0.06
-        ]
-      },
-      "mass": 0.02,
-      "material": "gripper_mat",
-      "role": "gripper",
-      "origin": {
-        "xyz": [
-          0,
-          0,
-          0.03
-        ],
-        "rpy": [
-          0,
-          0,
-          0
-        ]
-      },
-      "inferred": [
-        "mass",
-        "inertia",
-        "inertia"
-      ],
-      "inertia": {
-        "ixx": 0.0000066666666666666675,
-        "iyy": 0.000006375,
-        "izz": 0.0000010416666666666667,
-        "ixy": 0,
-        "ixz": 0,
-        "iyz": 0
-      },
-      "collision": {
-        "type": "box",
-        "size": [
-          0.015,
-          0.02,
-          0.06
-        ]
-      }
-    },
-    {
       "name": "left_thigh",
       "geometry": {
         "type": "cylinder",
-        "radius": 0.045,
+        "radius": 0.06075,
         "length": 0.2
       },
       "mass": 0.5725552611167398,
-      "material": "link_mat",
+      "material": "armor_red",
       "role": "link",
       "origin": {
         "xyz": [
@@ -971,16 +689,16 @@
         "inertia"
       ],
       "inertia": {
-        "ixx": 0.002198373637996149,
-        "iyy": 0.002198373637996149,
-        "izz": 0.000579712201880699,
+        "ixx": 0.0024367802810195864,
+        "iyy": 0.0024367802810195864,
+        "izz": 0.001056525487927574,
         "ixy": 0,
         "ixz": 0,
         "iyz": 0
       },
       "collision": {
         "type": "cylinder",
-        "radius": 0.045,
+        "radius": 0.06075,
         "length": 0.2
       }
     },
@@ -988,11 +706,11 @@
       "name": "left_shin",
       "geometry": {
         "type": "cylinder",
-        "radius": 0.04,
+        "radius": 0.054000000000000006,
         "length": 0.2
       },
       "mass": 0.45238934211693027,
-      "material": "link_mat",
+      "material": "armor_red",
       "role": "link",
       "origin": {
         "xyz": [
@@ -1012,16 +730,16 @@
         "inertia"
       ],
       "inertia": {
-        "ixx": 0.0016889202105698734,
-        "iyy": 0.0016889202105698734,
-        "izz": 0.0003619114736935442,
+        "ixx": 0.0018377563041263438,
+        "iyy": 0.0018377563041263438,
+        "izz": 0.0006595836608064844,
         "ixy": 0,
         "ixz": 0,
         "iyz": 0
       },
       "collision": {
         "type": "cylinder",
-        "radius": 0.04,
+        "radius": 0.054000000000000006,
         "length": 0.2
       }
     },
@@ -1036,7 +754,7 @@
         ]
       },
       "mass": 0.23040000000000005,
-      "material": "base_mat",
+      "material": "armor_red",
       "role": "link",
       "origin": {
         "xyz": [
@@ -1076,11 +794,11 @@
       "name": "right_thigh",
       "geometry": {
         "type": "cylinder",
-        "radius": 0.045,
+        "radius": 0.06075,
         "length": 0.2
       },
       "mass": 0.5725552611167398,
-      "material": "link_mat",
+      "material": "armor_red",
       "role": "link",
       "origin": {
         "xyz": [
@@ -1100,16 +818,16 @@
         "inertia"
       ],
       "inertia": {
-        "ixx": 0.002198373637996149,
-        "iyy": 0.002198373637996149,
-        "izz": 0.000579712201880699,
+        "ixx": 0.0024367802810195864,
+        "iyy": 0.0024367802810195864,
+        "izz": 0.001056525487927574,
         "ixy": 0,
         "ixz": 0,
         "iyz": 0
       },
       "collision": {
         "type": "cylinder",
-        "radius": 0.045,
+        "radius": 0.06075,
         "length": 0.2
       }
     },
@@ -1117,11 +835,11 @@
       "name": "right_shin",
       "geometry": {
         "type": "cylinder",
-        "radius": 0.04,
+        "radius": 0.054000000000000006,
         "length": 0.2
       },
       "mass": 0.45238934211693027,
-      "material": "link_mat",
+      "material": "armor_red",
       "role": "link",
       "origin": {
         "xyz": [
@@ -1141,16 +859,16 @@
         "inertia"
       ],
       "inertia": {
-        "ixx": 0.0016889202105698734,
-        "iyy": 0.0016889202105698734,
-        "izz": 0.0003619114736935442,
+        "ixx": 0.0018377563041263438,
+        "iyy": 0.0018377563041263438,
+        "izz": 0.0006595836608064844,
         "ixy": 0,
         "ixz": 0,
         "iyz": 0
       },
       "collision": {
         "type": "cylinder",
-        "radius": 0.04,
+        "radius": 0.054000000000000006,
         "length": 0.2
       }
     },
@@ -1165,7 +883,7 @@
         ]
       },
       "mass": 0.23040000000000005,
-      "material": "base_mat",
+      "material": "armor_red",
       "role": "link",
       "origin": {
         "xyz": [
@@ -1202,17 +920,14 @@
       }
     },
     {
-      "name": "camera_1_link",
+      "name": "arc_reactor",
       "geometry": {
-        "type": "box",
-        "size": [
-          0.04,
-          0.06,
-          0.03
-        ]
+        "type": "cylinder",
+        "radius": 0.035,
+        "length": 0.015
       },
-      "mass": 0.03239999999999999,
-      "material": "sensor_mat",
+      "mass": 0.02597704425437061,
+      "material": "arc_blue",
       "role": "sensor",
       "origin": {
         "xyz": [
@@ -1232,34 +947,28 @@
         "inertia"
       ],
       "inertia": {
-        "ixx": 0.000012149999999999995,
-        "iyy": 0.000006749999999999998,
-        "izz": 0.000014039999999999996,
+        "ixx": 0.00000844253938267045,
+        "iyy": 0.00000844253938267045,
+        "izz": 0.000015910939605802,
         "ixy": 0,
         "ixz": 0,
         "iyz": 0
       },
       "collision": {
-        "type": "box",
-        "size": [
-          0.04,
-          0.06,
-          0.03
-        ]
+        "type": "cylinder",
+        "radius": 0.035,
+        "length": 0.015
       }
     },
     {
-      "name": "imu_1_link",
+      "name": "left_palm_repulsor",
       "geometry": {
-        "type": "box",
-        "size": [
-          0.04,
-          0.06,
-          0.03
-        ]
+        "type": "cylinder",
+        "radius": 0.03,
+        "length": 0.02
       },
-      "mass": 0.03239999999999999,
-      "material": "sensor_mat",
+      "mass": 0.025446900494077322,
+      "material": "arc_blue",
       "role": "sensor",
       "origin": {
         "xyz": [
@@ -1279,20 +988,140 @@
         "inertia"
       ],
       "inertia": {
-        "ixx": 0.000012149999999999995,
-        "iyy": 0.000006749999999999998,
-        "izz": 0.000014039999999999996,
+        "ixx": 0.000006573782627636641,
+        "iyy": 0.000006573782627636641,
+        "izz": 0.000011451105222334793,
         "ixy": 0,
         "ixz": 0,
         "iyz": 0
       },
       "collision": {
-        "type": "box",
-        "size": [
-          0.04,
-          0.06,
-          0.03
+        "type": "cylinder",
+        "radius": 0.03,
+        "length": 0.02
+      }
+    },
+    {
+      "name": "right_palm_repulsor",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.03,
+        "length": 0.02
+      },
+      "mass": 0.025446900494077322,
+      "material": "arc_blue",
+      "role": "sensor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
         ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000006573782627636641,
+        "iyy": 0.000006573782627636641,
+        "izz": 0.000011451105222334793,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.03,
+        "length": 0.02
+      }
+    },
+    {
+      "name": "left_boot_thruster",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.03,
+        "length": 0.02
+      },
+      "mass": 0.025446900494077322,
+      "material": "arc_blue",
+      "role": "sensor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000006573782627636641,
+        "iyy": 0.000006573782627636641,
+        "izz": 0.000011451105222334793,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.03,
+        "length": 0.02
+      }
+    },
+    {
+      "name": "right_boot_thruster",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.03,
+        "length": 0.02
+      },
+      "mass": 0.025446900494077322,
+      "material": "arc_blue",
+      "role": "sensor",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000006573782627636641,
+        "iyy": 0.000006573782627636641,
+        "izz": 0.000011451105222334793,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.03,
+        "length": 0.02
       }
     }
   ],
@@ -1341,7 +1170,7 @@
       "origin": {
         "xyz": [
           0,
-          0.17500000000000002,
+          0.19600000000000004,
           0.77
         ],
         "rpy": [
@@ -1586,109 +1415,6 @@
       }
     },
     {
-      "name": "left_gripper_base_joint",
-      "type": "fixed",
-      "parent": "left_wrist_3",
-      "child": "left_gripper_base",
-      "origin": {
-        "xyz": [
-          0,
-          0,
-          -0.06
-        ],
-        "rpy": [
-          0,
-          0,
-          0
-        ]
-      },
-      "axis": [
-        0,
-        0,
-        1
-      ],
-      "dynamics": {
-        "damping": 0.1,
-        "friction": 0
-      },
-      "inferred": [
-        "limit",
-        "dynamics"
-      ]
-    },
-    {
-      "name": "left_left_finger_joint",
-      "type": "prismatic",
-      "parent": "left_gripper_base",
-      "child": "left_left_finger",
-      "origin": {
-        "xyz": [
-          0,
-          0.02,
-          0.03
-        ],
-        "rpy": [
-          0,
-          0,
-          0
-        ]
-      },
-      "axis": [
-        0,
-        1,
-        0
-      ],
-      "dynamics": {
-        "damping": 0.1,
-        "friction": 0
-      },
-      "inferred": [
-        "dynamics"
-      ],
-      "limit": {
-        "lower": 0,
-        "upper": 0.03,
-        "effort": 40,
-        "velocity": 0.3
-      }
-    },
-    {
-      "name": "left_right_finger_joint",
-      "type": "prismatic",
-      "parent": "left_gripper_base",
-      "child": "left_right_finger",
-      "origin": {
-        "xyz": [
-          0,
-          -0.02,
-          0.03
-        ],
-        "rpy": [
-          0,
-          0,
-          0
-        ]
-      },
-      "axis": [
-        0,
-        -1,
-        0
-      ],
-      "dynamics": {
-        "damping": 0.1,
-        "friction": 0
-      },
-      "inferred": [
-        "dynamics"
-      ],
-      "limit": {
-        "lower": 0,
-        "upper": 0.03,
-        "effort": 40,
-        "velocity": 0.3
-      }
-    },
-    {
       "name": "right_arm_joint_1",
       "type": "revolute",
       "parent": "torso",
@@ -1696,7 +1422,7 @@
       "origin": {
         "xyz": [
           0,
-          -0.17500000000000002,
+          -0.19600000000000004,
           0.77
         ],
         "rpy": [
@@ -1941,109 +1667,6 @@
       }
     },
     {
-      "name": "right_gripper_base_joint",
-      "type": "fixed",
-      "parent": "right_wrist_3",
-      "child": "right_gripper_base",
-      "origin": {
-        "xyz": [
-          0,
-          0,
-          -0.06
-        ],
-        "rpy": [
-          0,
-          0,
-          0
-        ]
-      },
-      "axis": [
-        0,
-        0,
-        1
-      ],
-      "dynamics": {
-        "damping": 0.1,
-        "friction": 0
-      },
-      "inferred": [
-        "limit",
-        "dynamics"
-      ]
-    },
-    {
-      "name": "right_left_finger_joint",
-      "type": "prismatic",
-      "parent": "right_gripper_base",
-      "child": "right_left_finger",
-      "origin": {
-        "xyz": [
-          0,
-          0.02,
-          0.03
-        ],
-        "rpy": [
-          0,
-          0,
-          0
-        ]
-      },
-      "axis": [
-        0,
-        1,
-        0
-      ],
-      "dynamics": {
-        "damping": 0.1,
-        "friction": 0
-      },
-      "inferred": [
-        "dynamics"
-      ],
-      "limit": {
-        "lower": 0,
-        "upper": 0.03,
-        "effort": 40,
-        "velocity": 0.3
-      }
-    },
-    {
-      "name": "right_right_finger_joint",
-      "type": "prismatic",
-      "parent": "right_gripper_base",
-      "child": "right_right_finger",
-      "origin": {
-        "xyz": [
-          0,
-          -0.02,
-          0.03
-        ],
-        "rpy": [
-          0,
-          0,
-          0
-        ]
-      },
-      "axis": [
-        0,
-        -1,
-        0
-      ],
-      "dynamics": {
-        "damping": 0.1,
-        "friction": 0
-      },
-      "inferred": [
-        "dynamics"
-      ],
-      "limit": {
-        "lower": 0,
-        "upper": 0.03,
-        "effort": 40,
-        "velocity": 0.3
-      }
-    },
-    {
       "name": "left_hip_joint",
       "type": "revolute",
       "parent": "torso",
@@ -2260,15 +1883,46 @@
       }
     },
     {
-      "name": "camera_1_joint",
+      "name": "arc_reactor_joint",
       "type": "fixed",
-      "parent": "head",
-      "child": "camera_1_link",
+      "parent": "torso",
+      "child": "arc_reactor",
+      "origin": {
+        "xyz": [
+          0.085,
+          0,
+          0.62
+        ],
+        "rpy": [
+          0,
+          1.5707963267948966,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "left_palm_repulsor_joint",
+      "type": "fixed",
+      "parent": "left_wrist_3",
+      "child": "left_palm_repulsor",
       "origin": {
         "xyz": [
           0,
           0,
-          0.05
+          -0.07
         ],
         "rpy": [
           0,
@@ -2291,15 +1945,77 @@
       ]
     },
     {
-      "name": "imu_1_joint",
+      "name": "right_palm_repulsor_joint",
       "type": "fixed",
-      "parent": "torso",
-      "child": "imu_1_link",
+      "parent": "right_wrist_3",
+      "child": "right_palm_repulsor",
       "origin": {
         "xyz": [
           0,
           0,
-          0.05
+          -0.07
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "left_boot_thruster_joint",
+      "type": "fixed",
+      "parent": "left_foot",
+      "child": "left_boot_thruster",
+      "origin": {
+        "xyz": [
+          -0.04,
+          0,
+          -0.03
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "right_boot_thruster_joint",
+      "type": "fixed",
+      "parent": "right_foot",
+      "child": "right_boot_thruster",
+      "origin": {
+        "xyz": [
+          -0.04,
+          0,
+          -0.03
         ],
         "rpy": [
           0,
@@ -2376,18 +2092,45 @@
         0.1,
         1
       ]
+    },
+    {
+      "name": "armor_red",
+      "color": [
+        0.72,
+        0.08,
+        0.08,
+        1
+      ]
+    },
+    {
+      "name": "armor_gold",
+      "color": [
+        0.85,
+        0.65,
+        0.13,
+        1
+      ]
+    },
+    {
+      "name": "arc_blue",
+      "color": [
+        0.4,
+        0.85,
+        1,
+        1
+      ]
     }
   ],
   "sensors": [
     {
-      "name": "camera_1",
+      "name": "hud_camera",
       "type": "camera",
-      "parent": "camera_1_link",
+      "parent": "head",
       "origin": {
         "xyz": [
+          0.08,
           0,
-          0,
-          0
+          0.02
         ],
         "rpy": [
           0,
@@ -2398,14 +2141,14 @@
       "params": {}
     },
     {
-      "name": "imu_1",
+      "name": "suit_imu",
       "type": "imu",
-      "parent": "imu_1_link",
+      "parent": "torso",
       "origin": {
         "xyz": [
           0,
           0,
-          0
+          0.5
         ],
         "rpy": [
           0,
@@ -2416,26 +2159,13 @@
       "params": {}
     }
   ],
-  "end_effectors": [
-    {
-      "name": "left_gripper",
-      "type": "two_finger_gripper",
-      "attach_link": "left_wrist_3"
-    },
-    {
-      "name": "right_gripper",
-      "type": "two_finger_gripper",
-      "attach_link": "right_wrist_3"
-    }
-  ],
+  "end_effectors": [],
   "metadata": {
     "generator": "text-to-robot",
-    "created": "2026-09-18T04:41:53.842Z",
+    "created": "2026-09-19T06:54:09.304Z",
     "inferred_fields": [
-      "joints.camera_1_joint.dynamics",
-      "joints.camera_1_joint.limit",
-      "joints.imu_1_joint.dynamics",
-      "joints.imu_1_joint.limit",
+      "joints.arc_reactor_joint.dynamics",
+      "joints.arc_reactor_joint.limit",
       "joints.left_ankle_joint.dynamics",
       "joints.left_arm_joint_1.dynamics",
       "joints.left_arm_joint_2.dynamics",
@@ -2444,12 +2174,12 @@
       "joints.left_arm_joint_5.dynamics",
       "joints.left_arm_joint_6.dynamics",
       "joints.left_arm_joint_7.dynamics",
-      "joints.left_gripper_base_joint.dynamics",
-      "joints.left_gripper_base_joint.limit",
+      "joints.left_boot_thruster_joint.dynamics",
+      "joints.left_boot_thruster_joint.limit",
       "joints.left_hip_joint.dynamics",
       "joints.left_knee_joint.dynamics",
-      "joints.left_left_finger_joint.dynamics",
-      "joints.left_right_finger_joint.dynamics",
+      "joints.left_palm_repulsor_joint.dynamics",
+      "joints.left_palm_repulsor_joint.limit",
       "joints.neck_joint.dynamics",
       "joints.right_ankle_joint.dynamics",
       "joints.right_arm_joint_1.dynamics",
@@ -2459,30 +2189,26 @@
       "joints.right_arm_joint_5.dynamics",
       "joints.right_arm_joint_6.dynamics",
       "joints.right_arm_joint_7.dynamics",
-      "joints.right_gripper_base_joint.dynamics",
-      "joints.right_gripper_base_joint.limit",
+      "joints.right_boot_thruster_joint.dynamics",
+      "joints.right_boot_thruster_joint.limit",
       "joints.right_hip_joint.dynamics",
       "joints.right_knee_joint.dynamics",
-      "joints.right_left_finger_joint.dynamics",
-      "joints.right_right_finger_joint.dynamics",
-      "links.camera_1_link.inertia",
-      "links.camera_1_link.mass",
+      "joints.right_palm_repulsor_joint.dynamics",
+      "joints.right_palm_repulsor_joint.limit",
+      "links.arc_reactor.inertia",
+      "links.arc_reactor.mass",
       "links.head.inertia",
       "links.head.mass",
-      "links.imu_1_link.inertia",
-      "links.imu_1_link.mass",
+      "links.left_boot_thruster.inertia",
+      "links.left_boot_thruster.mass",
       "links.left_elbow.inertia",
       "links.left_elbow.mass",
       "links.left_foot.inertia",
       "links.left_foot.mass",
       "links.left_forearm.inertia",
       "links.left_forearm.mass",
-      "links.left_gripper_base.inertia",
-      "links.left_gripper_base.mass",
-      "links.left_left_finger.inertia",
-      "links.left_left_finger.mass",
-      "links.left_right_finger.inertia",
-      "links.left_right_finger.mass",
+      "links.left_palm_repulsor.inertia",
+      "links.left_palm_repulsor.mass",
       "links.left_shin.inertia",
       "links.left_shin.mass",
       "links.left_shoulder.inertia",
@@ -2497,18 +2223,16 @@
       "links.left_wrist_2.mass",
       "links.left_wrist_3.inertia",
       "links.left_wrist_3.mass",
+      "links.right_boot_thruster.inertia",
+      "links.right_boot_thruster.mass",
       "links.right_elbow.inertia",
       "links.right_elbow.mass",
       "links.right_foot.inertia",
       "links.right_foot.mass",
       "links.right_forearm.inertia",
       "links.right_forearm.mass",
-      "links.right_gripper_base.inertia",
-      "links.right_gripper_base.mass",
-      "links.right_left_finger.inertia",
-      "links.right_left_finger.mass",
-      "links.right_right_finger.inertia",
-      "links.right_right_finger.mass",
+      "links.right_palm_repulsor.inertia",
+      "links.right_palm_repulsor.mass",
       "links.right_shin.inertia",
       "links.right_shin.mass",
       "links.right_shoulder.inertia",
@@ -2527,9 +2251,10 @@
       "links.torso.mass"
     ],
     "notes": [
-      "Generated humanoid: torso, head, two 7-DOF arms with grippers, two 3-DOF legs.",
-      "Interpreted by demo parser: type inferred, DOF=25, gripper=parallel."
+      "Generated humanoid: torso, head, two 7-DOF arms, two 3-DOF legs.",
+      "Iron Man style exosuit: armoured humanoid (25 actuated joints), palm + boot thrusters as fixed mounts, HUD camera, IMU. Thrust is not modelled as a force; it is a mount point for a propulsion actuator.",
+      "Interpreted by demo parser: type inferred, DOF=21, gripper=parallel."
     ],
-    "source_prompt": "Create a humanoid battle mech with two 7 DOF arms, a head camera and an IMU"
+    "source_prompt": "Create a humanoid battle mech with two 7 DOF arms, a head camera and an IMU\n"
   }
 }

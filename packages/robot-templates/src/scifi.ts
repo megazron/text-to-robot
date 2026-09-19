@@ -23,6 +23,8 @@ export function ironManSuit(name = "iron_man_suit", prompt?: string): RobotSpeci
     else if (/upper_arm|forearm|thigh|shin/.test(l.name)) { l.material = /thigh|shin/.test(l.name) ? "armor_red" : "armor_gold"; if (l.geometry.type === "cylinder") l.geometry.radius *= 1.35; }
     else if (/shoulder|elbow|wrist|foot/.test(l.name)) l.material = "armor_red";
   }
+  // Enlarged arm shells need extra lateral clearance from the torso.
+  for(const j of spec.joints)if(/^(left|right)_arm_joint_1$/.test(j.name))j.origin.xyz[1]*=1.12;
   // arc reactor on the chest (visual + small mass)
   spec.links.push(link("arc_reactor", cyl(0.035, 0.015), { material: "arc_blue", role: "sensor", origin: pose() }));
   spec.joints.push(joint("arc_reactor_joint", "fixed", "torso", "arc_reactor", { origin: pose([0.085, 0, 0.44 + 0.18], [0, Math.PI / 2, 0]) }));
@@ -115,8 +117,14 @@ export function baymax(name = "baymax", prompt?: string): RobotSpecification {
     l.material = "vinyl_white";
     // round torso that stays ABOVE the hips (a capsule that reached into the legs exploded the sim)
     if (l.name === "torso" && l.geometry.type === "box") { const [x, y, z] = l.geometry.size; l.geometry = { type: "capsule", radius: Math.max(x, y) * 0.55, length: z * 0.45 }; l.origin = pose([0, 0, l.origin.xyz[2] + z * 0.12]); }
-    else if (l.geometry.type === "cylinder" && /arm|thigh|shin|shoulder|elbow|wrist/.test(l.name)) { l.geometry = { type: "capsule", radius: l.geometry.radius * 1.8, length: l.geometry.length }; }
+    else if (l.geometry.type === "cylinder" && /arm|thigh|shin|shoulder|elbow|wrist/.test(l.name)) { l.geometry = { type: "capsule", radius: l.geometry.radius * 1.8, length: Math.max(.005, l.geometry.length - 2*l.geometry.radius*1.8) }; }
     else if (l.name === "head" && l.geometry.type === "sphere") l.geometry.radius *= 0.8;
+  }
+  // Capsule radius adds two hemispherical ends: preserve the original total span.
+  // Move enlarged arms outside the torso and legs rather than intersecting them.
+  for(const j of spec.joints)if(/^(left|right)_arm_joint_1$/.test(j.name)) {
+    const sign=j.name.startsWith('left')?1:-1;
+    j.origin.xyz[1]=sign*.27;
   }
   // static stability: an inflatable body is light up top and planted at the bottom.
   for (const l of spec.links) {

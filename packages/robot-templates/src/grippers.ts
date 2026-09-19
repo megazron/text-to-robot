@@ -9,7 +9,7 @@ export function attachParallelGripper(spec: RobotSpecification, attachLink: stri
   const palm = box(ARM.gripper_palm[0], ARM.gripper_palm[1], ARM.gripper_palm[2]);
   const [fx, fy, fz] = ARM.finger;
   spec.links.push(link(`${p}gripper_base`, palm, { material: "gripper_mat", role: "gripper", origin: pose([0, 0, ARM.gripper_palm[2] / 2]) }));
-  spec.joints.push(joint(`${p}gripper_base_joint`, "fixed", attachLink, `${p}gripper_base`, { origin: pose([0, 0, atZ]) }));
+  spec.joints.push(joint(`${p}gripper_base_joint`, "fixed", attachLink, `${p}gripper_base`, { origin: pose([0, 0, atZ], atZ < 0 ? [Math.PI, 0, 0] : [0, 0, 0]) }));
   for (const [side, sign] of [["left", 1], ["right", -1]] as const) {
     const fname = `${p}${side}_finger`;
     spec.links.push(link(fname, box(fx, fy, fz), { material: "gripper_mat", role: "gripper", origin: pose([0, 0, fz / 2]) }));
@@ -26,7 +26,7 @@ export function attachParallelGripper(spec: RobotSpecification, attachLink: stri
 export function attachSuctionGripper(spec: RobotSpecification, attachLink: string, atZ: number, prefix = ""): RobotSpecification {
   const p = prefix;
   spec.links.push(link(`${p}suction_cup`, { type: "cylinder", radius: 0.025, length: 0.04 }, { material: "gripper_mat", role: "gripper", origin: pose([0, 0, 0.02]) }));
-  spec.joints.push(joint(`${p}suction_joint`, "fixed", attachLink, `${p}suction_cup`, { origin: pose([0, 0, atZ]) }));
+  spec.joints.push(joint(`${p}suction_joint`, "fixed", attachLink, `${p}suction_cup`, { origin: pose([0, 0, atZ], atZ < 0 ? [Math.PI, 0, 0] : [0, 0, 0]) }));
   spec.end_effectors.push({ name: `${p || "main_"}suction`, type: "suction_gripper", attach_link: attachLink });
   return spec;
 }

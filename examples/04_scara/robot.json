@@ -6,16 +6,16 @@
       "geometry": {
         "type": "cylinder",
         "radius": 0.06,
-        "length": 0.2
+        "length": 0.35
       },
-      "mass": 1.017876019763093,
+      "mass": 1.7812830345854127,
       "material": "base_mat",
       "role": "base",
       "origin": {
         "xyz": [
           0,
           0,
-          0.1
+          0.175
         ],
         "rpy": [
           0,
@@ -29,9 +29,9 @@
         "inertia"
       ],
       "inertia": {
-        "ixx": 0.0043090084836637605,
-        "iyy": 0.0043090084836637605,
-        "izz": 0.0018321768355735672,
+        "ixx": 0.01978708570918629,
+        "iyy": 0.01978708570918629,
+        "izz": 0.0032063094622537427,
         "ixy": 0,
         "ixz": 0,
         "iyz": 0
@@ -39,7 +39,7 @@
       "collision": {
         "type": "cylinder",
         "radius": 0.06,
-        "length": 0.2
+        "length": 0.35
       }
     },
     {
@@ -217,7 +217,7 @@
         "xyz": [
           0,
           0,
-          0.2
+          0.39
         ],
         "rpy": [
           0,
@@ -416,7 +416,7 @@
   "end_effectors": [],
   "metadata": {
     "generator": "text-to-robot",
-    "created": "2026-09-18T04:41:53.820Z",
+    "created": "2026-09-19T06:54:09.239Z",
     "inferred_fields": [
       "joints.joint_1.dynamics",
       "joints.joint_1.limit",
@@ -440,6 +440,6 @@
       "Generated SCARA (RRPR) from template.",
       "Interpreted by demo parser: type inferred, DOF=4, gripper=parallel."
     ],
-    "source_prompt": "Create a SCARA robot"
+    "source_prompt": "Create a SCARA robot\n"
   }
 }

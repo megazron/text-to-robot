@@ -22,8 +22,27 @@ export function planningGroups(spec:RobotSpecification):Group[] {
     if(armour.length)groups.push({name:'armour',joints:armour});
     return groups;
   }
-  // Generic manipulator fallback: never traverse decorative armour or gripper branches.
-  const candidates=spec.links.map(l=>path(root,l.name).filter(j=>!/_hinge$|finger|thumb|gripper|suction/.test(j.name)));
+  const excluded=(j:Joint)=>/_hinge$|finger|thumb|gripper|suction|wheel|track/.test(j.name);
+  // Every named limb has its own chain; a quadruped leg is not an "arm".
+  for(const side of ['left','right']) {
+    const tips=spec.links.filter(l=>l.name.startsWith(side+'_')&&/hand$|forearm$|wrist_[123]$/.test(l.name));
+    tips.sort((a,b)=>path(root,b.name).length-path(root,a.name).length);
+    if(tips.length) {
+      const chain=path(root,tips[0].name),moving=chain.filter(j=>j.type!=='fixed');
+      if(moving.length>=2&&!moving.some(excluded))groups.push({name:side+'_arm',base:root,tip:tips[0].name,joints:moving});
+    }
+  }
+  for(const tip of spec.links.filter(l=>/(?:^|_)(?:foot|shin|tibia)$/.test(l.name))) {
+    const chain=path(root,tip.name),moving=chain.filter(j=>j.type!=='fixed');
+    if(moving.length<2||moving.some(excluded))continue;
+    const name=tip.name.replace(/_(foot|shin|tibia)$/,'_leg');
+    const old=groups.find(g=>g.name===name);
+    if(old){if(old.joints.length<moving.length){old.tip=tip.name;old.joints=moving;}}
+    else groups.push({name,base:root,tip:tip.name,joints:moving});
+  }
+  if(groups.length)return groups;
+  // Choose an intact serial path; filtering out middle joints would disconnect it.
+  const candidates=spec.links.map(l=>path(root,l.name)).filter(chain=>!chain.some(excluded));
   candidates.sort((a,b)=>b.filter(j=>j.type!=='fixed').length-a.filter(j=>j.type!=='fixed').length);
   const chain=candidates[0]??[],moving=chain.filter(j=>j.type!=='fixed');
   if(moving.length>=2)groups.push({name:'arm',base:root,tip:moving.at(-1)!.child,joints:moving});

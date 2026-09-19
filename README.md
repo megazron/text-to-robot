@@ -35,6 +35,42 @@ node cli/src/index.ts validate examples/14_iron_man_mark_43/robot.urdf
 Templates include arms, grippers, wheeled robots, legged robots and character
 concepts. See [examples](examples/) and [architecture](docs/ARCHITECTURE.md).
 
+## Current examples and animations
+
+[Browse all 17 examples, their GIFs, MoveIt files and simulation results](examples/README.md).
+Every example now has a dedicated README and downloadable ROS package.
+All 17 ROS packages build on Jazzy; all 17 models load in both physics engines.
+The 16 non-wearable examples have no initial inter-body penetration above 1 mm
+in the MuJoCo audit. Motion tracking and balance failures remain documented.
+The [runtime record](examples/runtime_validation.json) separates these checks.
+All 17 [training exports](examples/training_validation.json) reset and take a finite
+PyBullet step. A gripper aperture task passed Gymnasium checks in both engines and
+64 PPO steps plus checkpoint reload; this is a pipeline check, not a trained skill.
+
+Corrections include outward-facing humanoid grippers, downward spider shins,
+SCARA base clearance, Baymax capsule lengths and arm spacing, continuous wheel
+limits, and distinct MoveIt groups for arms and legs. Training now uses named tool
+links, full-range reaching targets and an aperture task for standalone grippers.
+
+## Iron Man: MoveIt and animated previews
+
+![Current armour opening preview](examples/14_iron_man_mark_43/articulation.gif)
+![Current helmet opening preview](examples/14_iron_man_mark_43/helmet.gif)
+
+These are fresh actuator previews of the exported geometry, using a fixed base
+and self-collision disabled. They show articulation, not validated human entry.
+The [Iron Man example README](examples/14_iron_man_mark_43/README.md) also shows the
+collision-enabled physics GIF and exact failures.
+
+**MoveIt:** [browse the SRDF, planning and controller configuration](examples/14_iron_man_mark_43/moveit/),
+[download the ROS package](examples/14_iron_man_mark_43/robot.ros2.zip), and follow the
+[launch instructions](examples/14_iron_man_mark_43/README.md#moveit--ros-2).
+The suit still has a colliding start state; mock control wiring does not make it
+physically buildable.
+
+[Internet research and downloaded design inspection](references/mark43/RESEARCH.md)
+now supplement the saved production photographs.
+
 ## Mark 43: current model and actual limits
 
 ![Actual exported model rendered in MuJoCo](docs/img/mark43_threequarter_review.png)
@@ -55,9 +91,10 @@ locally and checked against saved iterations; see the [reference workflow](refer
 | Check | Current evidence |
 |---|---|
 | Closed mesh topology and mass integrals | 206/206 mesh instances pass |
-| Empty-suit MuJoCo smoke battery | 3/5; tracking and disturbance recovery fail |
-| Suit with passive mannequin | 5/6; actuator sweep fails, 47/66 joints track |
+| Empty-suit smoke battery, self-collision off | 3/5; tracking and disturbance recovery fail |
+| Suit with passive mannequin, human/self-contact disabled | 5/6; actuator sweep fails, 47/66 joints track |
 | Compound-convex initial collision | 753 penetrating contacts, maximum depth about 24.9 mm |
+| Collision-enabled suit smoke battery | 1/6; see the example simulation report |
 | Joint-range clearance | 595 sampled poses; interference remains |
 | ROS 2 Jazzy / MoveIt | Controllers and scene start; suit planning fails collision validation |
 | Six-axis arm MoveIt fixture | Planning and mock trajectory execution pass |

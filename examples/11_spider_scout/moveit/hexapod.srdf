@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<robot name="hexapod">
+  <group name="front_left_leg">
+    <chain base_link="base_link" tip_link="front_left_tibia"/>
+  </group>
+  <group_state name="home" group="front_left_leg">
+    <joint name="front_left_coxa_joint" value="0"/>
+    <joint name="front_left_femur_joint" value="0"/>
+    <joint name="front_left_tibia_joint" value="0"/>
+  </group_state>
+  <group name="mid_left_leg">
+    <chain base_link="base_link" tip_link="mid_left_tibia"/>
+  </group>
+  <group_state name="home" group="mid_left_leg">
+    <joint name="mid_left_coxa_joint" value="0"/>
+    <joint name="mid_left_femur_joint" value="0"/>
+    <joint name="mid_left_tibia_joint" value="0"/>
+  </group_state>
+  <group name="rear_left_leg">
+    <chain base_link="base_link" tip_link="rear_left_tibia"/>
+  </group>
+  <group_state name="home" group="rear_left_leg">
+    <joint name="rear_left_coxa_joint" value="0"/>
+    <joint name="rear_left_femur_joint" value="0"/>
+    <joint name="rear_left_tibia_joint" value="0"/>
+  </group_state>
+  <group name="front_right_leg">
+    <chain base_link="base_link" tip_link="front_right_tibia"/>
+  </group>
+  <group_state name="home" group="front_right_leg">
+    <joint name="front_right_coxa_joint" value="0"/>
+    <joint name="front_right_femur_joint" value="0"/>
+    <joint name="front_right_tibia_joint" value="0"/>
+  </group_state>
+  <group name="mid_right_leg">
+    <chain base_link="base_link" tip_link="mid_right_tibia"/>
+  </group>
+  <group_state name="home" group="mid_right_leg">
+    <joint name="mid_right_coxa_joint" value="0"/>
+    <joint name="mid_right_femur_joint" value="0"/>
+    <joint name="mid_right_tibia_joint" value="0"/>
+  </group_state>
+  <group name="rear_right_leg">
+    <chain base_link="base_link" tip_link="rear_right_tibia"/>
+  </group>
+  <group_state name="home" group="rear_right_leg">
+    <joint name="rear_right_coxa_joint" value="0"/>
+    <joint name="rear_right_femur_joint" value="0"/>
+    <joint name="rear_right_tibia_joint" value="0"/>
+  </group_state>
+  <virtual_joint name="world_joint" type="fixed" parent_frame="world" child_link="base_link"/>
+  <disable_collisions link1="base_link" link2="front_left_coxa" reason="Adjacent"/>
+  <disable_collisions link1="front_left_coxa" link2="front_left_femur" reason="Adjacent"/>
+  <disable_collisions link1="front_left_femur" link2="front_left_tibia" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="mid_left_coxa" reason="Adjacent"/>
+  <disable_collisions link1="mid_left_coxa" link2="mid_left_femur" reason="Adjacent"/>
+  <disable_collisions link1="mid_left_femur" link2="mid_left_tibia" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="rear_left_coxa" reason="Adjacent"/>
+  <disable_collisions link1="rear_left_coxa" link2="rear_left_femur" reason="Adjacent"/>
+  <disable_collisions link1="rear_left_femur" link2="rear_left_tibia" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="front_right_coxa" reason="Adjacent"/>
+  <disable_collisions link1="front_right_coxa" link2="front_right_femur" reason="Adjacent"/>
+  <disable_collisions link1="front_right_femur" link2="front_right_tibia" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="mid_right_coxa" reason="Adjacent"/>
+  <disable_collisions link1="mid_right_coxa" link2="mid_right_femur" reason="Adjacent"/>
+  <disable_collisions link1="mid_right_femur" link2="mid_right_tibia" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="rear_right_coxa" reason="Adjacent"/>
+  <disable_collisions link1="rear_right_coxa" link2="rear_right_femur" reason="Adjacent"/>
+  <disable_collisions link1="rear_right_femur" link2="rear_right_tibia" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="lidar_1_link" reason="Adjacent"/>
+</robot>

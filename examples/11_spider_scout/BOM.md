@@ -2,9 +2,11 @@
 
 **Estimated total: $595.73**  ·  tier: hobby  ·  budget: $1500 ✅ within budget
 
+**Torque sizing: fails; hardware verified: no.**
+
 | Category | Component | Qty | Unit $ | Subtotal $ | Spec |
 |---|---|--:|--:|--:|---|
-| Actuator | DS3218 20kg servo _(joint front_left_coxa_joint)_ | 18 | 12 | 216 | PWM, waterproof, metal gears (1.96 N·m) |
+| Actuator | DS3218 20kg servo _(joint front_left_coxa_joint; rating duty/source unverified)_ | 18 | 12 | 216 | PWM, waterproof, metal gears (1.96 N·m) |
 | Sensor | Slamtec RPLidar A1M8 _(lidar_1)_ | 1 | 99 | 99 | 2D, 12m, 8k samples/s |
 | Compute | Raspberry Pi 5 (8GB) | 1 | 80 | 80 | SBC, runs ROS 2 |
 | Power | LiPo 3S 2200mAh | 1 | 18 | 18 | 24 Wh; est. load 44 W |
@@ -38,6 +40,7 @@
 | rear_right_tibia_joint | 40 | DS3218 20kg servo | UNDERSIZED |
 
 ## Warnings
+- ⚠️ Catalog values are planning estimates. Except explicitly sourced rated values, torque entries may be stall/peak ratings; continuous duty, fit and complete assemblies are unverified.
 - ⚠️ joint front_left_coxa_joint needs ~40.00 N·m; strongest in hobby tier is DS3218 20kg servo (1.96 N·m) — increase budget for a stronger actuator
 - ⚠️ joint front_left_femur_joint needs ~40.00 N·m; strongest in hobby tier is DS3218 20kg servo (1.96 N·m) — increase budget for a stronger actuator
 - ⚠️ joint front_left_tibia_joint needs ~40.00 N·m; strongest in hobby tier is DS3218 20kg servo (1.96 N·m) — increase budget for a stronger actuator

@@ -1,0 +1,188 @@
+{
+  "scope": "Self-collision enabled smoke tests, not manufacturing qualification",
+  "examples": [
+    {
+      "example": "01_arm_2dof",
+      "compiled": true,
+      "passed": 5,
+      "total": 5,
+      "initial_penetrations": 0,
+      "floating": false,
+      "failed": []
+    },
+    {
+      "example": "02_arm_6dof",
+      "compiled": true,
+      "passed": 4,
+      "total": 5,
+      "initial_penetrations": 0,
+      "floating": false,
+      "failed": [
+        "actuator_sweep"
+      ]
+    },
+    {
+      "example": "03_arm_7dof",
+      "compiled": true,
+      "passed": 4,
+      "total": 5,
+      "initial_penetrations": 0,
+      "floating": false,
+      "failed": [
+        "actuator_sweep"
+      ]
+    },
+    {
+      "example": "04_scara",
+      "compiled": true,
+      "passed": 4,
+      "total": 5,
+      "initial_penetrations": 0,
+      "floating": false,
+      "failed": [
+        "actuator_sweep"
+      ]
+    },
+    {
+      "example": "05_diff_drive",
+      "compiled": true,
+      "passed": 6,
+      "total": 6,
+      "initial_penetrations": 0,
+      "floating": true,
+      "failed": []
+    },
+    {
+      "example": "06_four_wheel",
+      "compiled": true,
+      "passed": 6,
+      "total": 6,
+      "initial_penetrations": 0,
+      "floating": true,
+      "failed": []
+    },
+    {
+      "example": "07_mecanum",
+      "compiled": true,
+      "passed": 6,
+      "total": 6,
+      "initial_penetrations": 0,
+      "floating": true,
+      "failed": []
+    },
+    {
+      "example": "08_humanoid",
+      "compiled": true,
+      "passed": 4,
+      "total": 6,
+      "initial_penetrations": 0,
+      "floating": true,
+      "failed": [
+        "actuator_sweep",
+        "disturbance_recovery"
+      ]
+    },
+    {
+      "example": "09_gripper",
+      "compiled": true,
+      "passed": 5,
+      "total": 5,
+      "initial_penetrations": 0,
+      "floating": false,
+      "failed": []
+    },
+    {
+      "example": "10_quadruped",
+      "compiled": true,
+      "passed": 5,
+      "total": 6,
+      "initial_penetrations": 0,
+      "floating": true,
+      "failed": [
+        "actuator_sweep"
+      ]
+    },
+    {
+      "example": "11_spider_scout",
+      "compiled": true,
+      "passed": 6,
+      "total": 6,
+      "initial_penetrations": 0,
+      "floating": true,
+      "failed": []
+    },
+    {
+      "example": "12_mars_rover",
+      "compiled": true,
+      "passed": 5,
+      "total": 6,
+      "initial_penetrations": 0,
+      "floating": true,
+      "failed": [
+        "actuator_sweep"
+      ]
+    },
+    {
+      "example": "13_battle_mech",
+      "compiled": true,
+      "passed": 3,
+      "total": 6,
+      "initial_penetrations": 0,
+      "floating": true,
+      "failed": [
+        "settle_under_gravity",
+        "actuator_sweep",
+        "disturbance_recovery"
+      ]
+    },
+    {
+      "example": "14_iron_man_mark_43",
+      "compiled": true,
+      "passed": 1,
+      "total": 6,
+      "initial_penetrations": 346,
+      "floating": true,
+      "failed": [
+        "initial_clearance",
+        "settle_under_gravity",
+        "hold_pose",
+        "actuator_sweep",
+        "disturbance_recovery"
+      ]
+    },
+    {
+      "example": "15_wall_e",
+      "compiled": true,
+      "passed": 5,
+      "total": 6,
+      "initial_penetrations": 0,
+      "floating": true,
+      "failed": [
+        "actuator_sweep"
+      ]
+    },
+    {
+      "example": "16_eva",
+      "compiled": true,
+      "passed": 5,
+      "total": 6,
+      "initial_penetrations": 0,
+      "floating": true,
+      "failed": [
+        "disturbance_recovery"
+      ]
+    },
+    {
+      "example": "17_baymax",
+      "compiled": true,
+      "passed": 4,
+      "total": 6,
+      "initial_penetrations": 0,
+      "floating": true,
+      "failed": [
+        "actuator_sweep",
+        "disturbance_recovery"
+      ]
+    }
+  ]
+}

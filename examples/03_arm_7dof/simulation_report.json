@@ -1,0 +1,149 @@
+{
+  "model": "robot.urdf",
+  "nbody": 12,
+  "njnt": 9,
+  "nu": 9,
+  "ngeom": 12,
+  "floating": false,
+  "tests": {
+    "compile": {
+      "pass": true,
+      "total_mass_kg": 2.738,
+      "actuators": 9
+    },
+    "initial_clearance": {
+      "pass": true,
+      "penetrations": [],
+      "count": 0
+    },
+    "settle_under_gravity": {
+      "pass": true,
+      "max_joint_speed": 0.0,
+      "base_drop_m": null,
+      "upright": null
+    },
+    "hold_pose": {
+      "pass": true,
+      "max_joint_error_rad": 0.0
+    },
+    "actuator_sweep": {
+      "pass": false,
+      "tracked": "8/9",
+      "worst_error": 1.265,
+      "actuators": [
+        {
+          "actuator": "act_joint_1",
+          "joint": "joint_1",
+          "pass": true,
+          "rms_error": 0.008505,
+          "peak_error": 0.050225,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 2.954224,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_joint_2",
+          "joint": "joint_2",
+          "pass": false,
+          "rms_error": 0.672681,
+          "peak_error": 1.264622,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 50.0,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_joint_3",
+          "joint": "joint_3",
+          "pass": true,
+          "rms_error": 0.006232,
+          "peak_error": 0.031611,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 2.210419,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_joint_4",
+          "joint": "joint_4",
+          "pass": true,
+          "rms_error": 0.073328,
+          "peak_error": 0.151483,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 6.991117,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_joint_5",
+          "joint": "joint_5",
+          "pass": true,
+          "rms_error": 0.004621,
+          "peak_error": 0.021187,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 1.794058,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_joint_6",
+          "joint": "joint_6",
+          "pass": true,
+          "rms_error": 0.022812,
+          "peak_error": 0.049982,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 2.926473,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_joint_7",
+          "joint": "joint_7",
+          "pass": true,
+          "rms_error": 0.004336,
+          "peak_error": 0.015522,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 1.567896,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_left_finger_joint",
+          "joint": "left_finger_joint",
+          "pass": true,
+          "rms_error": 0.004525,
+          "peak_error": 0.014881,
+          "error_unit": "m",
+          "rms_tolerance": 0.01,
+          "peak_actuator_force": 0.6,
+          "force_unit": "N"
+        },
+        {
+          "actuator": "act_right_finger_joint",
+          "joint": "right_finger_joint",
+          "pass": true,
+          "rms_error": 0.004525,
+          "peak_error": 0.014881,
+          "error_unit": "m",
+          "rms_tolerance": 0.01,
+          "peak_actuator_force": 0.6,
+          "force_unit": "N"
+        }
+      ]
+    }
+  },
+  "validation_scope": "simulation smoke tests, not hardware or wearable qualification",
+  "mujoco_version": "3.13.0",
+  "model_sha256": "50d193e341363546e73092616f4ffae94a23698b712a98c7a21fceaf2cef9103",
+  "limitations": [
+    "No measured motor, material, thermal or battery model",
+    "No manufacturing or human-fit validation"
+  ],
+  "self_collision_masks_enabled": true,
+  "passed": 4,
+  "total": 5,
+  "source_urdf_sha256": "82d6140f19a07eca797d763e9f0b8fb7a97104f88ba1efbda71c41d18868ae96",
+  "initial_penetrations": [],
+  "hardware_verified": false
+}

@@ -1,0 +1,77 @@
+{
+  "model": "robot.urdf",
+  "nbody": 5,
+  "njnt": 3,
+  "nu": 2,
+  "ngeom": 5,
+  "floating": true,
+  "tests": {
+    "compile": {
+      "pass": true,
+      "total_mass_kg": 6.975,
+      "actuators": 2
+    },
+    "initial_clearance": {
+      "pass": true,
+      "penetrations": [],
+      "count": 0
+    },
+    "settle_under_gravity": {
+      "pass": true,
+      "max_joint_speed": 0.31,
+      "base_drop_m": 0.005,
+      "upright": 1.0
+    },
+    "hold_pose": {
+      "pass": true,
+      "max_joint_error_rad": 0.0
+    },
+    "actuator_sweep": {
+      "pass": true,
+      "tracked": "2/2",
+      "worst_error": 0.05,
+      "actuators": [
+        {
+          "actuator": "act_left_wheel_joint",
+          "joint": "left_wheel_joint",
+          "pass": true,
+          "rms_error": 0.009622,
+          "peak_error": 0.049621,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 2.373544,
+          "force_unit": "N m"
+        },
+        {
+          "actuator": "act_right_wheel_joint",
+          "joint": "right_wheel_joint",
+          "pass": true,
+          "rms_error": 0.009622,
+          "peak_error": 0.049621,
+          "error_unit": "rad",
+          "rms_tolerance": 0.15,
+          "peak_actuator_force": 2.373544,
+          "force_unit": "N m"
+        }
+      ]
+    },
+    "disturbance_recovery": {
+      "pass": true,
+      "upright_after": 0.954,
+      "note": "upright>0.5 means it did not fall"
+    }
+  },
+  "validation_scope": "simulation smoke tests, not hardware or wearable qualification",
+  "mujoco_version": "3.13.0",
+  "model_sha256": "5beb7e117690f6836c09784b1c424bd5efef3b80718d79826871a314835c07ef",
+  "limitations": [
+    "No measured motor, material, thermal or battery model",
+    "No manufacturing or human-fit validation"
+  ],
+  "self_collision_masks_enabled": true,
+  "passed": 6,
+  "total": 6,
+  "source_urdf_sha256": "1d1c11b2cedcca978ee0a02010529f121e59b246522607f34adb77f4006a7707",
+  "initial_penetrations": [],
+  "hardware_verified": false
+}

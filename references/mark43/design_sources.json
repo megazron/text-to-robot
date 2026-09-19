@@ -1,0 +1,28 @@
+[
+  {
+    "file": "Helmet Mechanics V1.0 by unlimitedbacon.zip",
+    "bytes": 715618,
+    "sha256": "19dc77fdc3349a3ca2bcd891f72d360ffd4b02323b5ac8f19c3f8df045888476",
+    "url": "https://cdn.hackaday.io/files/9327399046368/Helmet%20Mechanics%20V1.0%20by%20unlimitedbacon.zip",
+    "source": "https://hackaday.io/project/9327-mk-iii-iron-man-suit",
+    "license": "CC BY-SA 4.0",
+    "scope": "Mark III mechanism/assembly study, not Mark 43 surface truth",
+    "files": [
+      "Helmet Back Hinge.SLDPRT",
+      "Helmet Back Hinge.STL",
+      "Helmet Back Linkage.SLDPRT",
+      "Helmet Back Linkage.STL",
+      "Helmet Front Hinge.SLDPRT",
+      "Helmet Front Hinge.STL",
+      "Helmet Front Linkage.SLDPRT",
+      "Helmet Front Linkage.STL",
+      "Helmet Other Back Hinge.SLDPRT",
+      "Helmet Other Back Hinge.STL",
+      "Helmet Servo Linkage.SLDPRT",
+      "Helmet Servo Linkage.STL",
+      "README",
+      "Servo Bracket.SLDPRT",
+      "Servo Bracket.STL"
+    ]
+  }
+]
