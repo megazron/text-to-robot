@@ -66,6 +66,21 @@ third-party requests blocked. Inspect the actual viewer captures:
 [arm](docs/img/web/02_arm_6dof.png), [mecanum](docs/img/web/07_mecanum.png),
 [Mark 43](docs/img/web/14_iron_man_mark_43.png), [EVA](docs/img/web/16_eva.png).
 
+The viewer now waits for the actual mesh geometry before marking the preview
+ready, reports failed parts and offers retry. Browser validation compares rendered
+triangle counts with the served STL files instead of only checking HTTP success.
+
+Serial-arm link blanks now extend continuously between pivots, with narrowed
+ends and compound collision cylinders. These remain provisional link blanks;
+bearings, transmissions and component interfaces are not yet qualified.
+
+Four [coordinated arm motion demos](examples/02_arm_6dof/#coordinated-motion) use
+smooth commands and optional model-based bias-force compensation through the
+original effort-limited actuators. Their reports and GIFs show the specific tested
+paths; separate stress-sweep failures remain visible. The six-axis arm and SCARA
+[training smoke checks](examples/arm_training_smoke.json) include Gymnasium checks,
+64 PPO steps and checkpoint reload, without claiming a learned task.
+
 ## Current examples and animations
 
 [Browse all 17 examples, their GIFs, MoveIt files and simulation results](examples/README.md).

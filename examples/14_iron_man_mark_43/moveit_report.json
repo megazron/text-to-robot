@@ -9,14 +9,14 @@
   "group": "neck",
   "planning_error_code": 1,
   "planning_pass": true,
-  "trajectory_points": 25,
+  "trajectory_points": 27,
   "execution_requested": true,
   "goal_positions": {
     "neck_yaw": 0.15,
     "neck_pitch": 0.0
   },
   "allowed_planning_time_s": 5.0,
-  "planning_time_s": 0.245647626,
+  "planning_time_s": 0.129183748,
   "start_state_valid": true,
   "start_state_contacts": [],
   "start_state_contact_count": 0,

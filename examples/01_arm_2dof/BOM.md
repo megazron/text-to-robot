@@ -1,6 +1,6 @@
 # Bill of Materials — arm_2dof
 
-**Estimated total: $1157.69**  ·  tier: prosumer
+**Estimated total: $1159.51**  ·  tier: prosumer
 
 **Effort sizing: passes catalogue estimate; hardware verified: no.**
 
@@ -13,7 +13,7 @@
 | Power | LiPo 4S 5000mAh | 1 | 40 | 40 | 74 Wh; est. load 60 W |
 | Power | DC-DC buck regulator (5V/10A) | 1 | 12 | 12 | logic + servo rail |
 | Power | Power distribution board + fuse + switch | 1 | 14 | 14 | wiring harness backbone |
-| Structure | 3D-printed frame (PLA/PETG) | 1 | 53.29 | 53.29 | ~2.42 kg material @ $22/kg |
+| Structure | 3D-printed frame (PLA/PETG) | 1 | 55.11 | 55.11 | ~2.50 kg material @ $22/kg |
 | Structure | Fastener + bearing kit | 1 | 18 | 18 | M3 screws, heat inserts, 608 bearings |
 | Wiring & misc | Wiring, connectors, JST/Dupont, sleeving | 1 | 116.4 | 116.4 | ~12% of electronics |
 

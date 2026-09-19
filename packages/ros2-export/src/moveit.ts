@@ -49,6 +49,23 @@ export function planningGroups(spec:RobotSpecification):Group[] {
   if(moving.length>=2)groups.push({name:'arm',base:root,tip:moving.at(-1)!.child,joints:moving});
   return groups;
 }
+/** Collision checking treats fixed subassemblies as rigid bodies. Disable only
+ * internal pairs and pairs across one articulated joint, never arbitrary overlap. */
+export function rigidBodyCollisionExclusions(spec:RobotSpecification) {
+  const parent=new Map(spec.links.map(l=>[l.name,l.name]));
+  const find=(name:string):string=>{const p=parent.get(name)!;if(p===name)return name;const root=find(p);parent.set(name,root);return root;};
+  for(const j of spec.joints)if(j.type==='fixed')parent.set(find(j.child),find(j.parent));
+  const key=(a:string,b:string)=>[a,b].sort().join('\0');
+  const adjacent=new Set(spec.joints.filter(j=>j.type!=='fixed').map(j=>key(find(j.parent),find(j.child))));
+  const pairs:{link1:string;link2:string;reason:string}[]=[];
+  for(let a=0;a<spec.links.length;a++)for(let b=a+1;b<spec.links.length;b++) {
+    const link1=spec.links[a].name,link2=spec.links[b].name,x=find(link1),y=find(link2);
+    if(x===y)pairs.push({link1,link2,reason:'RigidAssembly'});
+    else if(adjacent.has(key(x,y)))pairs.push({link1,link2,reason:'AdjacentRigidBodies'});
+  }
+  return pairs;
+}
+
 export function exportMoveIt(spec:RobotSpecification):FileMap {
   const pkg=safeName(spec.robot_name),groups=planningGroups(spec),files:FileMap={};
   if(!groups.length){files[`${pkg}/moveit/README.md`]=`# MoveIt 2\n\nNo serial arm chain with 2+ actuated joints was found in ${pkg}, so no MoveIt config was generated.\n`;return files;}
@@ -59,7 +76,7 @@ export function exportMoveIt(spec:RobotSpecification):FileMap {
 ${groups.map(g=>`  <group name="${g.name}">\n${g.base?`    <chain base_link="${g.base}" tip_link="${g.tip}"/>`:g.joints.map(j=>`    <joint name="${j.name}"/>`).join('\n')}\n  </group>\n  <group_state name="home" group="${g.name}">\n${g.joints.map(j=>`    <joint name="${j.name}" value="${home(j)}"/>`).join('\n')}\n  </group_state>`).join('\n')}
 ${spec.joints.filter(j=>j.passive).map(j=>`  <passive_joint name="${j.name}"/>`).join("\n")}
   <virtual_joint name="world_joint" type="fixed" parent_frame="world" child_link="${root}"/>
-${spec.joints.map(j=>`  <disable_collisions link1="${j.parent}" link2="${j.child}" reason="Adjacent"/>`).join('\n')}
+${rigidBodyCollisionExclusions(spec).map(p=>`  <disable_collisions link1="${p.link1}" link2="${p.link2}" reason="${p.reason}"/>`).join('\n')}
 </robot>
 `;
   files[`${pkg}/moveit/kinematics.yaml`]=groups.filter(g=>g.base).map(g=>`${g.name}:
@@ -143,9 +160,15 @@ This launches MoveIt, robot_state_publisher, world TF, ros2_control GenericSyste
 joint-state broadcaster and a partial-goal trajectory controller. GenericSystem is
 mock hardware, not MuJoCo and not a motor driver. The root is fixed for planning;
 whole-body balance and load feasibility require a dynamics/controller layer.
+Sliding finger joints start 10 mm above their closed limit (clamped to travel)
+to avoid pad-on-pad contact during arm planning. Contact checks remain enabled
+between opposing fingers.
 ROS collision geometry uses the actual STL triangles for MoveIt/FCL, not filled bounding boxes.
-Adjacent links are excluded; other collisions remain active. Existing model
-intersections can correctly cause planning requests to fail. Joint accelerations
+Parts within one fixed subassembly and across one articulated joint are excluded,
+matching rigid-body adjacency used in physics. Non-adjacent rigid bodies remain
+checked. This exclusion is not an assembly-interference or bearing-fit validation;
+independent mesh/fit audits are still required. Other intersections can correctly
+cause planning requests to fail. Joint accelerations
 are conservative inferred planning limits, not measured actuator specifications.
 `;
   return files;

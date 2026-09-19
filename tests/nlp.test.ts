@@ -27,9 +27,9 @@ test("prompt -> quadruped / diff drive / scara", () => {
 });
 test("modify: forearm 30% longer changes only the forearm", () => {
   const s = finalizeSpec(parsePrompt("6 dof arm"));
-  const before = (s.links.find((l) => l.role === "forearm")!.geometry as any).length;
+  const before = s.links.find((l) => l.role === "forearm")!.origin.xyz[2]*2;
   const { spec, changes } = applyModification(s, "make the forearm 30% longer");
-  const after = (spec.links.find((l) => l.role === "forearm")!.geometry as any).length;
+  const after = spec.links.find((l) => l.role === "forearm")!.origin.xyz[2]*2;
   assert.ok(Math.abs(after - before * 1.3) < 1e-6, `expected ${before * 1.3}, got ${after}`);
   assert.ok(changes.some((c) => c.includes("forearm")));
 });

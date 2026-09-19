@@ -1,7 +1,7 @@
 from pathlib import Path
 import json
 root=Path('examples');summary=json.loads((root/'validation_summary.json').read_text())
-index=['# Example gallery and validation','','All 17 examples were exported and tested with self-collision enabled. Mark 43 uses source-checked compound hulls; other examples use their URDF primitives. Zero initial contacts is an initial-pose check, not full-range clearance or hardware qualification.','','| Actual simulation | Example and downloads | MuJoCo checks | Initial penetrations | Remaining failed checks |','|---|---|---|---|---|']
+index=['# Example gallery and validation','','All 17 examples were exported and tested with self-collision enabled. Mark 43 uses source-checked compound hulls; other examples use primitives and mesh proxies. Zero initial contacts is an initial-pose check, not full-range clearance or hardware qualification.','','| Actual simulation | Example and downloads | MuJoCo checks | Initial penetrations | Remaining failed checks |','|---|---|---|---|---|']
 for row in summary['examples']:
  folder=root/row['example'];spec=json.loads((folder/'robot.json').read_text());name=spec['robot_name']
  has_moveit=any((folder/'moveit').glob('*.srdf')) if (folder/'moveit').exists() else False
@@ -53,6 +53,9 @@ The fixed-root planner is not a walking controller or a simulation bridge.
 The ROS package includes display and control files. Wheeled navigation needs a
 navigation controller; a gripper alone needs a gripper controller.
 '''
+ if (folder/'task_motion_report.json').exists():
+  motion=json.loads((folder/'task_motion_report.json').read_text())
+  text+=f"\n## Coordinated motion\n\n![Actual coordinated arm motion](task_motion.gif)\n\n[Motion report](task_motion_report.json): **{'PASS' if motion['pass'] else 'FAIL'}** for one smooth outward/return path. Gravity and self-collision are enabled; model-based bias compensation acts through the original effort-limited motors. Requested speed stays below half the declared limit. This does not validate the full workspace, a learned skill or a hardware build. The independent stress-sweep results above are unchanged.\n"
  if (folder/'moveit_report.json').exists():text+='\n[Recorded MoveIt runtime result](moveit_report.json).\n'
  text+='''
 ## Reproduce
@@ -116,7 +119,7 @@ follow their flight flaps. Internal struts have clearance at their connector end
 non-adjacent intersecting pairs at neutral. No new neutral pairs were introduced.
 This tests visual triangle surfaces with tessellated primitives; it is not a
 penetration-depth, full-containment or wearer-fit measurement.
-[86 sampled poses](surface_contact_report.json) still expose shoulder, side-door,
+[Sampled motion poses](surface_contact_report.json) still expose shoulder, side-door,
 chin and other motion failures. Zero neutral contacts is not full articulation approval.
 
 The main physics GIF and smoke report use the source-checked compound collision

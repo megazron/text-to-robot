@@ -1,6 +1,6 @@
 # Bill of Materials — battle_mech
 
-**Estimated total: $12716.5**  ·  tier: prosumer
+**Estimated total: $12715.56**  ·  tier: prosumer
 
 **Effort sizing: fails; hardware verified: no.**
 
@@ -13,7 +13,7 @@
 | Power | LiPo 6S 10000mAh | 1 | 95 | 95 | 222 Wh; est. load 656 W |
 | Power | DC-DC buck regulator (5V/10A) | 1 | 12 | 12 | logic + servo rail |
 | Power | Power distribution board + fuse + switch | 1 | 14 | 14 | wiring harness backbone |
-| Structure | 3D-printed frame (PLA/PETG) | 1 | 326.98 | 326.98 | ~14.86 kg material @ $22/kg |
+| Structure | 3D-printed frame (PLA/PETG) | 1 | 326.04 | 326.04 | ~14.82 kg material @ $22/kg |
 | Structure | Fastener + bearing kit | 1 | 18 | 18 | M3 screws, heat inserts, 608 bearings |
 | Wiring & misc | Wiring, connectors, JST/Dupont, sleeving | 1 | 1325.52 | 1325.52 | ~12% of electronics |
 

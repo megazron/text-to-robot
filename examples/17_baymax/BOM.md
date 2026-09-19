@@ -1,6 +1,6 @@
 # Bill of Materials — baymax
 
-**Estimated total: $10085.05**  ·  tier: prosumer
+**Estimated total: $10082.68**  ·  tier: prosumer
 
 **Effort sizing: fails; hardware verified: no.**
 
@@ -13,7 +13,7 @@
 | Power | LiPo 6S 10000mAh | 1 | 95 | 95 | 222 Wh; est. load 512 W |
 | Power | DC-DC buck regulator (5V/10A) | 1 | 12 | 12 | logic + servo rail |
 | Power | Power distribution board + fuse + switch | 1 | 14 | 14 | wiring harness backbone |
-| Structure | 3D-printed frame (PLA/PETG) | 1 | 383.53 | 383.53 | ~17.43 kg material @ $22/kg |
+| Structure | 3D-printed frame (PLA/PETG) | 1 | 381.16 | 381.16 | ~17.33 kg material @ $22/kg |
 | Structure | Fastener + bearing kit | 1 | 18 | 18 | M3 screws, heat inserts, 608 bearings |
 | Wiring & misc | Wiring, connectors, JST/Dupont, sleeving | 1 | 1037.52 | 1037.52 | ~12% of electronics |
 

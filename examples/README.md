@@ -1,6 +1,6 @@
 # Example gallery and validation
 
-All 17 examples were exported and tested with self-collision enabled. Mark 43 uses source-checked compound hulls; other examples use their URDF primitives. Zero initial contacts is an initial-pose check, not full-range clearance or hardware qualification.
+All 17 examples were exported and tested with self-collision enabled. Mark 43 uses source-checked compound hulls; other examples use primitives and mesh proxies. Zero initial contacts is an initial-pose check, not full-range clearance or hardware qualification.
 
 | Actual simulation | Example and downloads | MuJoCo checks | Initial penetrations | Remaining failed checks |
 |---|---|---|---|---|

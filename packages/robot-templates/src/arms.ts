@@ -1,5 +1,6 @@
 import type { RobotSpecification } from "@ttr/robot-schema";
 import { ARM, emptySpec, pose } from "@ttr/robot-schema";
+import { meshGeometry } from "@ttr/mesh";
 import { hollowChassis } from "./mechanics.ts";
 import { box, cyl, link, joint, DEFAULT_MATERIALS } from "./builder.ts";
 import { attachParallelGripper } from "./grippers.ts";
@@ -46,7 +47,7 @@ export function nDofArm(dof: number, opts: ArmOptions = {}): RobotSpecification 
   segs.forEach((s, i) => {
     const child = s.role;
     const gap=Math.min(.040,s.length*.30), radius=Math.min(s.radius*.72,s.length*.24);
-    spec.links.push(link(child, cyl(radius, s.length-2*gap), { material: "link_mat", role: s.role, origin: pose([0, 0, s.length / 2]) }));
+    spec.links.push(link(child, meshGeometry("arm_spar",`${child}_spar.stl`,{length:s.length,radius,neck:radius*.40,gap}), { material: "link_mat", role: s.role, origin: pose([0, 0, s.length / 2]) }));
     // Fixed frame offsets define a bent, nonsingular home layout; joint values
     // remain zero at home. Two-axis arms retain a common pitch plane.
     const bend=i===1 ? .55 : i===2 && dof!==7 ? -1.1 : 0;
@@ -54,8 +55,18 @@ export function nDofArm(dof: number, opts: ArmOptions = {}): RobotSpecification 
     spec.joints.push(joint(`joint_${i + 1}`, "revolute", parent, child, { origin: mount, axis: s.axis,effort:[12,12,8,4,3,2,2][i]??2,velocity:1.5 }));
     const hub=`${child}_joint_hub`;
     const rotation:[number,number,number]=s.axis[1] ? [Math.PI/2,0,0] : [0,0,0];
-    if (i === 0) {
-      const supportHeight = .040 - (s.axis[1] ? radius * 1.18 : .013);
+    if (i === 0 && s.axis[1]) {
+      // Pitch hub sits between yoke cheeks, not on a tangent-contact pedestal.
+      // Bearing/shaft interfaces within the 6 mm side clearance remain unqualified.
+      for(const side of [-1,1]) {
+        const mountName=side>0?'shoulder_mount_left':'shoulder_mount_right';
+        spec.links.push(link(mountName,box(.020,.008,.044),{
+          material:'base_mat',role:'joint_mount',origin:pose([0,side*.023,ARM.base_height+.022]),
+        }));
+        spec.joints.push(joint(`${mountName}_fixed`,'fixed','base_link',mountName));
+      }
+    } else if (i === 0) {
+      const supportHeight = .040 - .013;
       spec.links.push(link('shoulder_mount', cyl(.020, supportHeight), {
         material: 'base_mat', role: 'joint_mount', origin: pose([0, 0, ARM.base_height + supportHeight / 2]),
       }));

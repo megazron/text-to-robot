@@ -18,7 +18,7 @@
     "left_wrist_flexion": 0.0
   },
   "allowed_planning_time_s": 5.0,
-  "planning_time_s": 3.874795444,
+  "planning_time_s": 0.14610139900000002,
   "start_state_valid": true,
   "start_state_contacts": [],
   "start_state_contact_count": 0,

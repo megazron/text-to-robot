@@ -1,14 +1,14 @@
 {
   "model": "robot.urdf",
-  "nbody": 21,
+  "nbody": 22,
   "njnt": 4,
   "nu": 4,
-  "ngeom": 41,
+  "ngeom": 45,
   "floating": false,
   "tests": {
     "compile": {
       "pass": true,
-      "total_mass_kg": 1.73,
+      "total_mass_kg": 1.789,
       "actuators": 4
     },
     "initial_clearance": {
@@ -18,25 +18,25 @@
     },
     "settle_under_gravity": {
       "pass": true,
-      "max_joint_speed": 4.69,
+      "max_joint_speed": 0.41,
       "base_drop_m": null,
       "upright": null
     },
     "hold_pose": {
       "pass": true,
-      "max_joint_error_rad": 0.031
+      "max_joint_error_rad": 0.013
     },
     "actuator_sweep": {
       "pass": false,
       "tracked": "3/4",
-      "worst_error": 0.641,
+      "worst_error": 0.627,
       "actuators": [
         {
           "actuator": "act_joint_1",
           "joint": "joint_1",
           "pass": false,
-          "rms_error": 0.366439,
-          "peak_error": 0.640902,
+          "rms_error": 0.355478,
+          "peak_error": 0.626942,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
           "peak_actuator_force": 12.0,
@@ -46,11 +46,11 @@
           "actuator": "act_joint_2",
           "joint": "joint_2",
           "pass": true,
-          "rms_error": 0.06489,
-          "peak_error": 0.14559,
+          "rms_error": 0.064372,
+          "peak_error": 0.129554,
           "error_unit": "rad",
           "rms_tolerance": 0.15,
-          "peak_actuator_force": 6.155737,
+          "peak_actuator_force": 5.248006,
           "force_unit": "N m"
         },
         {
@@ -80,7 +80,7 @@
   },
   "validation_scope": "simulation smoke tests, not hardware or wearable qualification",
   "mujoco_version": "3.13.0",
-  "model_sha256": "ea66e7eca58010bd5b828eca096369ff2b2d3be74de28d201051ea59a71cff52",
+  "model_sha256": "b16039774976613d1407ba1a0f9ecff55c21493afee371ad49ed0e865fe38c6a",
   "limitations": [
     "No measured motor, material, thermal or battery model",
     "No manufacturing or human-fit validation"
@@ -90,7 +90,7 @@
   "total": 5,
   "collision_model": "URDF primitives / mesh bounding boxes",
   "self_collision": true,
-  "source_urdf_sha256": "d5191f826b6f5a01bbb88ff6d3e87ebf9f59c831ca0e5fd290a156ca7ac1e526",
+  "source_urdf_sha256": "e6c0742ef026480b4624ca13f10526bdecb4bdc779fff9a0be36d6c0b57cb767",
   "initial_penetrations": [],
   "hardware_verified": false
 }

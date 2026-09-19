@@ -19,6 +19,7 @@ def main(argv=None):
     for parser in (c, t, r, tr):
         parser.add_argument("--self-collision", action="store_true", help="enable robot collision checks when converting URDF (reveals intersecting parts)")
     tr.add_argument("--tip-body"); tr.add_argument("--seed",type=int,default=0)
+    tr.add_argument("--bias-compensation",action="store_true",help="fixed-base position servos: model bias feedforward through effort-limited motors")
     a = ap.parse_args(argv)
     fl = True if getattr(a, "floating", False) else (False if getattr(a, "fixed", False) else None)
     def model_xml(path):
@@ -43,7 +44,7 @@ def main(argv=None):
         print("wrote", render_gif(xml, a.out, seconds=a.seconds, motion=a.motion, label=a.label, floating=fl, unpowered=getattr(a, "unpowered", False), orbit=a.orbit, azimuth=a.azimuth, zoom=a.zoom, width=a.width, height=a.height, fps=a.fps, focus=a.focus, elevation=a.elevation))
     elif a.cmd == "train":
         from .train import train
-        print("saved", train(a.model, a.task, a.steps, a.out, self_collision=a.self_collision, tip_body=a.tip_body, seed=a.seed))
+        print("saved", train(a.model, a.task, a.steps, a.out, self_collision=a.self_collision, tip_body=a.tip_body, seed=a.seed, bias_compensation=a.bias_compensation))
 
 
 if __name__ == "__main__":

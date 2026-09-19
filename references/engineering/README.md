@@ -47,3 +47,30 @@ A simulation result is tied to the shipped model and recorded in each example.
 The mobile-motion report evaluates two-second commands, not navigation or learned
 skills. Manufacturing drawings, component interfaces and prototype tests remain
 necessary. The source list is a research record, not a declaration of perfection.
+
+## Follow-up: rendered geometry and controlled arm motion
+
+The web viewer now verifies completed mesh loading before presenting a ready
+preview. Screenshot timing previously allowed placeholder boxes to be captured.
+Browser checks compare every displayed mesh's triangle count with its binary STL.
+
+The serial-arm blanks now use one closed, stepped solid between pivot centres.
+Two conservative cylinder collision volumes preserve the narrowed-end clearance;
+a full bounding box falsely filled it. A planar shoulder yoke provides clearance
+around the rotating hub. The six-millimetre side clearance is provisional and
+still needs actual shaft, bearing and fastening interfaces.
+
+The coordinated arm demos use cubic trajectories with requested speeds below
+half each URDF limit and a model-based gravity/Coriolis feedforward controller.
+The compensation acts through the existing effort-clamped motors. An underpowered
+motor regression still fails to hold its load; no external force is added.
+This improves control for the modeled mass distribution, without establishing
+measured motor behavior or hardware accuracy. Full workspace, load capacity,
+strength, thermal duty, wiring and manufacturing tolerances remain unqualified.
+
+MoveIt exports now exclude fixed-assembly internal pairs and directly adjoining
+rigid bodies, while retaining checks between non-adjacent bodies. Independent
+assembly-interference checks are still necessary. Sliding fingers start open
+in mock control, so intentional contact at the closed stop does not block arm
+planning. Humanoid arms have 3 mm torso clearance, and thigh/shin ends leave
+3 mm clearance from the torso/foot across the added joint carriers.

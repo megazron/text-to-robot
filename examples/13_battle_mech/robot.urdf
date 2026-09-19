@@ -449,34 +449,34 @@
   </link>
   <link name="left_thigh">
     <visual>
-      <origin xyz="0 0 -0.1" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.06075" length="0.2"/></geometry>
+      <origin xyz="0 0 -0.1015" rpy="0 0 0"/>
+      <geometry><cylinder radius="0.06075" length="0.197"/></geometry>
       <material name="armor_red"/>
     </visual>
     <collision>
-      <origin xyz="0 0 -0.1" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.06075" length="0.2"/></geometry>
+      <origin xyz="0 0 -0.1015" rpy="0 0 0"/>
+      <geometry><cylinder radius="0.06075" length="0.197"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 -0.1" rpy="0 0 0"/>
-      <mass value="0.572555"/>
-      <inertia ixx="0.002437" ixy="0" ixz="0" iyy="0.002437" iyz="0" izz="0.001057"/>
+      <origin xyz="0 0 -0.1015" rpy="0 0 0"/>
+      <mass value="0.563967"/>
+      <inertia ixx="0.002344" ixy="0" ixz="0" iyy="0.002344" iyz="0" izz="0.001041"/>
     </inertial>
   </link>
   <link name="left_shin">
     <visual>
-      <origin xyz="0 0 -0.1" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.054" length="0.2"/></geometry>
+      <origin xyz="0 0 -0.0985" rpy="0 0 0"/>
+      <geometry><cylinder radius="0.054" length="0.197"/></geometry>
       <material name="armor_red"/>
     </visual>
     <collision>
-      <origin xyz="0 0 -0.1" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.054" length="0.2"/></geometry>
+      <origin xyz="0 0 -0.0985" rpy="0 0 0"/>
+      <geometry><cylinder radius="0.054" length="0.197"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 -0.1" rpy="0 0 0"/>
-      <mass value="0.452389"/>
-      <inertia ixx="0.001838" ixy="0" ixz="0" iyy="0.001838" iyz="0" izz="0.000659584"/>
+      <origin xyz="0 0 -0.0985" rpy="0 0 0"/>
+      <mass value="0.445604"/>
+      <inertia ixx="0.001766" ixy="0" ixz="0" iyy="0.001766" iyz="0" izz="0.00064969"/>
     </inertial>
   </link>
   <link name="left_foot">
@@ -545,34 +545,34 @@
   </link>
   <link name="right_thigh">
     <visual>
-      <origin xyz="0 0 -0.1" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.06075" length="0.2"/></geometry>
+      <origin xyz="0 0 -0.1015" rpy="0 0 0"/>
+      <geometry><cylinder radius="0.06075" length="0.197"/></geometry>
       <material name="armor_red"/>
     </visual>
     <collision>
-      <origin xyz="0 0 -0.1" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.06075" length="0.2"/></geometry>
+      <origin xyz="0 0 -0.1015" rpy="0 0 0"/>
+      <geometry><cylinder radius="0.06075" length="0.197"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 -0.1" rpy="0 0 0"/>
-      <mass value="0.572555"/>
-      <inertia ixx="0.002437" ixy="0" ixz="0" iyy="0.002437" iyz="0" izz="0.001057"/>
+      <origin xyz="0 0 -0.1015" rpy="0 0 0"/>
+      <mass value="0.563967"/>
+      <inertia ixx="0.002344" ixy="0" ixz="0" iyy="0.002344" iyz="0" izz="0.001041"/>
     </inertial>
   </link>
   <link name="right_shin">
     <visual>
-      <origin xyz="0 0 -0.1" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.054" length="0.2"/></geometry>
+      <origin xyz="0 0 -0.0985" rpy="0 0 0"/>
+      <geometry><cylinder radius="0.054" length="0.197"/></geometry>
       <material name="armor_red"/>
     </visual>
     <collision>
-      <origin xyz="0 0 -0.1" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.054" length="0.2"/></geometry>
+      <origin xyz="0 0 -0.0985" rpy="0 0 0"/>
+      <geometry><cylinder radius="0.054" length="0.197"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 -0.1" rpy="0 0 0"/>
-      <mass value="0.452389"/>
-      <inertia ixx="0.001838" ixy="0" ixz="0" iyy="0.001838" iyz="0" izz="0.000659584"/>
+      <origin xyz="0 0 -0.0985" rpy="0 0 0"/>
+      <mass value="0.445604"/>
+      <inertia ixx="0.001766" ixy="0" ixz="0" iyy="0.001766" iyz="0" izz="0.00064969"/>
     </inertial>
   </link>
   <link name="right_foot">
@@ -752,7 +752,7 @@
   <joint name="left_arm_joint_1" type="revolute">
     <parent link="torso"/>
     <child link="left_shoulder"/>
-    <origin xyz="0 0.196 0.77" rpy="0 0 0"/>
+    <origin xyz="0 0.19936 0.77" rpy="0 0 0"/>
     <axis xyz="0 1 0"/>
     <limit lower="-2.6" upper="2.6" effort="50" velocity="2"/>
     <dynamics damping="0.1" friction="0"/>
@@ -808,7 +808,7 @@
   <joint name="right_arm_joint_1" type="revolute">
     <parent link="torso"/>
     <child link="right_shoulder"/>
-    <origin xyz="0 -0.196 0.77" rpy="0 0 0"/>
+    <origin xyz="0 -0.19936 0.77" rpy="0 0 0"/>
     <axis xyz="0 1 0"/>
     <limit lower="-2.6" upper="2.6" effort="50" velocity="2"/>
     <dynamics damping="0.1" friction="0"/>

@@ -26,7 +26,7 @@ export function roverArm(name = "rover_arm", dof = 6, prompt?: string, opts: Arm
   const tip = arm.joints.filter(j=>j.type!=="fixed").at(-1)?.child ?? "arm_mount";
   if ((opts.gripper ?? "parallel") === "parallel") {
     const seg = arm.links.find((l) => l.name === tip)!;
-    attachParallelGripper(base, tip, seg.geometry.type === "cylinder" ? seg.origin.xyz[2]*2 : 0.05);
+    attachParallelGripper(base, tip, seg.origin.xyz[2]*2);
   }
   base.robot_name = name;
   base.metadata.notes.push(`Generated rover + ${dof}-DOF arm (mobile manipulator) from templates.`);

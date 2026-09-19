@@ -402,6 +402,11 @@ python -m ttr_mujoco train  ${mujocoSource} --self-collision --task ${cls === "m
 Mesh-based exports first prepare approximate convex collision hulls. This preserves
 hollow regions better than bounding boxes; inspect the generated collision report.
 Simulation and training do not validate hardware fit or a learned policy.
+For fixed-base position-servo arms, optional \`--bias-compensation\` on the train
+command adds model-based gravity/Coriolis feedforward through the existing motors.
+Effort limits remain active. This is not a measured hardware controller; it rejects
+floating bases and velocity actuators. The Python equivalent is
+\`MujocoRobotEnv(..., bias_compensation=True)\`.
 
 Or from Python:
 

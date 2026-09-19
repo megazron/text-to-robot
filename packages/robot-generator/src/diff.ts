@@ -6,6 +6,7 @@ function linkLen(l: Link): number | undefined {
   if (l.geometry.type === "cylinder" || l.geometry.type === "capsule") return l.geometry.length;
   if (l.geometry.type === "box") return l.geometry.size[2];
   if (l.geometry.type === "sphere") return l.geometry.radius;
+  if (l.geometry.type === "mesh") return l.geometry.bbox.max[2]-l.geometry.bbox.min[2];
   return undefined;
 }
 

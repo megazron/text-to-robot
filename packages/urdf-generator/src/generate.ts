@@ -35,6 +35,14 @@ export function generateVisual(l: Link): string {
 export function generateCollision(l: Link, meshCollisions = false): string {
   const g = l.collision ?? l.geometry;
   if (g.type === "capsule") return capsuleElements("collision",g,l.origin);
+  if (g.type === "mesh" && g.part === "arm_spar" && !meshCollisions && (!g.scale || g.scale[0]===g.scale[1])) {
+    const radial=g.scale?.[0]??1, axial=g.scale?.[2]??1;
+    const dimension=(key:string,fallback:number)=>{const value=g.params?.[key];return typeof value==="number"?value:fallback;};
+    const length=dimension('length',.25)*axial, radius=dimension('radius',.025)*radial, neck=dimension('neck',.010)*radial;
+    const gap=dimension('gap',.04)*axial, bevel=Math.min(dimension('gap',.04)*.3,.006)*axial;
+    // Conservative union covers the bevels without filling the narrow ends.
+    return [neck,radius].map((r,i)=>`<collision>\n  ${originTag(l.origin)}\n  ${generateGeometry({type:"cylinder",radius:r,length:i===0?length:length-2*gap+2*bevel})}\n</collision>`).join("\n");
+  }
   if (g.type === "mesh" && !meshCollisions) {
     // collision fallback for meshes: their bounding box (cheap, stable in every physics engine)
     const size = [g.bbox.max[0] - g.bbox.min[0], g.bbox.max[1] - g.bbox.min[1], g.bbox.max[2] - g.bbox.min[2]].map((d) => Math.max(d, 1e-3));

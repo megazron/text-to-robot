@@ -11,6 +11,22 @@
   "planning_pass": true,
   "trajectory_points": 26,
   "execution_requested": true,
+  "goal_positions": {
+    "left_arm_joint_1": 0.15,
+    "left_arm_joint_2": 0.0,
+    "left_arm_joint_3": 0.0,
+    "left_arm_joint_4": 0.0,
+    "left_arm_joint_5": 0.0,
+    "left_arm_joint_6": 0.0,
+    "left_arm_joint_7": 0.0
+  },
+  "allowed_planning_time_s": 5.0,
+  "planning_time_s": 0.010141899999999999,
+  "start_state_valid": true,
+  "start_state_contacts": [],
+  "start_state_contact_count": 0,
+  "contact_scope": "Contacts returned by GetStateValidity; service contact limits may truncate the list",
+  "robot_sha256": "e051d09049f25b9c5fc16b84d2be9aa7cd64833c3060f8bb6b824c9cdcd1e13c",
   "execution_error_code": 1,
   "execution_pass": true,
   "pass": true

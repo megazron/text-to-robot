@@ -9,7 +9,7 @@
   "group": "right_arm",
   "planning_error_code": 1,
   "planning_pass": true,
-  "trajectory_points": 26,
+  "trajectory_points": 25,
   "execution_requested": true,
   "goal_positions": {
     "right_shoulder_abduction": 0.15,
@@ -18,7 +18,7 @@
     "right_wrist_flexion": 0.0
   },
   "allowed_planning_time_s": 5.0,
-  "planning_time_s": 1.477793522,
+  "planning_time_s": 0.125464205,
   "start_state_valid": true,
   "start_state_contacts": [],
   "start_state_contact_count": 0,

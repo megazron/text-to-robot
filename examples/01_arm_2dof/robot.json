@@ -822,11 +822,43 @@
     {
       "name": "shoulder",
       "geometry": {
-        "type": "cylinder",
-        "radius": 0.0288,
-        "length": 0.16999999999999998
+        "type": "mesh",
+        "part": "arm_spar",
+        "params": {
+          "length": 0.25,
+          "radius": 0.0288,
+          "neck": 0.01152,
+          "gap": 0.04
+        },
+        "file": "shoulder_spar.stl",
+        "volume": 0.0004861990374962357,
+        "inertia_unit": {
+          "ixx": 0.00000161395999696,
+          "iyy": 0.00000161395999696,
+          "izz": 1.8879043162865953e-7,
+          "ixy": 1.7385737044602084e-24,
+          "ixz": 2.3005960786631383e-24,
+          "iyz": -4.6238103772007295e-24
+        },
+        "bbox": {
+          "min": [
+            -0.0288,
+            -0.0288,
+            -0.125
+          ],
+          "max": [
+            0.0288,
+            0.0288,
+            0.125
+          ]
+        },
+        "centroid": [
+          2.124306953931776e-20,
+          -4.667781493184103e-19,
+          3.621404280292784e-17
+        ]
       },
-      "mass": 0.1993408397104041,
+      "mass": 0.21878956687330606,
       "material": "link_mat",
       "role": "shoulder",
       "origin": {
@@ -847,25 +879,60 @@
         "inertia"
       ],
       "inertia": {
-        "ixx": 0.0005214145054915725,
-        "iyy": 0.0005214145054915725,
-        "izz": 0.00008267063304469878,
-        "ixy": 0,
-        "ixz": 0,
-        "iyz": 0
+        "ixx": 0.000726281998632,
+        "iyy": 0.000726281998632,
+        "izz": 0.00008495569423289678,
+        "ixy": 7.823581670070938e-22,
+        "ixz": 1.0352682353984122e-21,
+        "iyz": -2.080714669740328e-21
       },
       "collision": {
-        "type": "cylinder",
-        "radius": 0.0288,
-        "length": 0.16999999999999998
+        "type": "mesh",
+        "part": "arm_spar",
+        "params": {
+          "length": 0.25,
+          "radius": 0.0288,
+          "neck": 0.01152,
+          "gap": 0.04
+        },
+        "file": "shoulder_spar.stl",
+        "volume": 0.0004861990374962357,
+        "inertia_unit": {
+          "ixx": 0.00000161395999696,
+          "iyy": 0.00000161395999696,
+          "izz": 1.8879043162865953e-7,
+          "ixy": 1.7385737044602084e-24,
+          "ixz": 2.3005960786631383e-24,
+          "iyz": -4.6238103772007295e-24
+        },
+        "bbox": {
+          "min": [
+            -0.0288,
+            -0.0288,
+            -0.125
+          ],
+          "max": [
+            0.0288,
+            0.0288,
+            0.125
+          ]
+        },
+        "centroid": [
+          2.124306953931776e-20,
+          -4.667781493184103e-19,
+          3.621404280292784e-17
+        ]
       }
     },
     {
-      "name": "shoulder_mount",
+      "name": "shoulder_mount_right",
       "geometry": {
-        "type": "cylinder",
-        "radius": 0.02,
-        "length": 0.0060160000000000005
+        "type": "box",
+        "size": [
+          0.02,
+          0.008,
+          0.044
+        ]
       },
       "mass": 0.02,
       "material": "base_mat",
@@ -873,8 +940,8 @@
       "origin": {
         "xyz": [
           0,
-          0,
-          0.12300799999999999
+          -0.023,
+          0.142
         ],
         "rpy": [
           0,
@@ -888,17 +955,67 @@
         "inertia"
       ],
       "inertia": {
-        "ixx": 0.0000020603204266666668,
-        "iyy": 0.0000020603204266666668,
-        "izz": 0.000004000000000000001,
+        "ixx": 0.000003333333333333333,
+        "iyy": 0.000003893333333333334,
+        "izz": 7.733333333333334e-7,
         "ixy": 0,
         "ixz": 0,
         "iyz": 0
       },
       "collision": {
-        "type": "cylinder",
-        "radius": 0.02,
-        "length": 0.0060160000000000005
+        "type": "box",
+        "size": [
+          0.02,
+          0.008,
+          0.044
+        ]
+      }
+    },
+    {
+      "name": "shoulder_mount_left",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.02,
+          0.008,
+          0.044
+        ]
+      },
+      "mass": 0.02,
+      "material": "base_mat",
+      "role": "joint_mount",
+      "origin": {
+        "xyz": [
+          0,
+          0.023,
+          0.142
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000003333333333333333,
+        "iyy": 0.000003893333333333334,
+        "izz": 7.733333333333334e-7,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.02,
+          0.008,
+          0.044
+        ]
       }
     },
     {
@@ -944,11 +1061,43 @@
     {
       "name": "upper_arm",
       "geometry": {
-        "type": "cylinder",
-        "radius": 0.0288,
-        "length": 0.16999999999999998
+        "type": "mesh",
+        "part": "arm_spar",
+        "params": {
+          "length": 0.25,
+          "radius": 0.0288,
+          "neck": 0.01152,
+          "gap": 0.04
+        },
+        "file": "upper_arm_spar.stl",
+        "volume": 0.0004861990374962357,
+        "inertia_unit": {
+          "ixx": 0.00000161395999696,
+          "iyy": 0.00000161395999696,
+          "izz": 1.8879043162865953e-7,
+          "ixy": 1.7385737044602084e-24,
+          "ixz": 2.3005960786631383e-24,
+          "iyz": -4.6238103772007295e-24
+        },
+        "bbox": {
+          "min": [
+            -0.0288,
+            -0.0288,
+            -0.125
+          ],
+          "max": [
+            0.0288,
+            0.0288,
+            0.125
+          ]
+        },
+        "centroid": [
+          2.124306953931776e-20,
+          -4.667781493184103e-19,
+          3.621404280292784e-17
+        ]
       },
-      "mass": 0.1993408397104041,
+      "mass": 0.21878956687330606,
       "material": "link_mat",
       "role": "upper_arm",
       "origin": {
@@ -969,17 +1118,49 @@
         "inertia"
       ],
       "inertia": {
-        "ixx": 0.0005214145054915725,
-        "iyy": 0.0005214145054915725,
-        "izz": 0.00008267063304469878,
-        "ixy": 0,
-        "ixz": 0,
-        "iyz": 0
+        "ixx": 0.000726281998632,
+        "iyy": 0.000726281998632,
+        "izz": 0.00008495569423289678,
+        "ixy": 7.823581670070938e-22,
+        "ixz": 1.0352682353984122e-21,
+        "iyz": -2.080714669740328e-21
       },
       "collision": {
-        "type": "cylinder",
-        "radius": 0.0288,
-        "length": 0.16999999999999998
+        "type": "mesh",
+        "part": "arm_spar",
+        "params": {
+          "length": 0.25,
+          "radius": 0.0288,
+          "neck": 0.01152,
+          "gap": 0.04
+        },
+        "file": "upper_arm_spar.stl",
+        "volume": 0.0004861990374962357,
+        "inertia_unit": {
+          "ixx": 0.00000161395999696,
+          "iyy": 0.00000161395999696,
+          "izz": 1.8879043162865953e-7,
+          "ixy": 1.7385737044602084e-24,
+          "ixz": 2.3005960786631383e-24,
+          "iyz": -4.6238103772007295e-24
+        },
+        "bbox": {
+          "min": [
+            -0.0288,
+            -0.0288,
+            -0.125
+          ],
+          "max": [
+            0.0288,
+            0.0288,
+            0.125
+          ]
+        },
+        "centroid": [
+          2.124306953931776e-20,
+          -4.667781493184103e-19,
+          3.621404280292784e-17
+        ]
       }
     },
     {
@@ -1575,10 +1756,41 @@
       }
     },
     {
-      "name": "shoulder_mount_fixed",
+      "name": "shoulder_mount_right_fixed",
       "type": "fixed",
       "parent": "base_link",
-      "child": "shoulder_mount",
+      "child": "shoulder_mount_right",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "shoulder_mount_left_fixed",
+      "type": "fixed",
+      "parent": "base_link",
+      "child": "shoulder_mount_left",
       "origin": {
         "xyz": [
           0,
@@ -1935,7 +2147,7 @@
   ],
   "metadata": {
     "generator": "text-to-robot",
-    "created": "2026-09-19T17:49:00.425Z",
+    "created": "2026-09-19T18:43:18.369Z",
     "inferred_fields": [
       "joints.base_link_front_panel_mount.dynamics",
       "joints.base_link_front_panel_mount.limit",
@@ -1967,8 +2179,10 @@
       "joints.right_finger_pad_mount.limit",
       "joints.shoulder_joint_hub_mount.dynamics",
       "joints.shoulder_joint_hub_mount.limit",
-      "joints.shoulder_mount_fixed.dynamics",
-      "joints.shoulder_mount_fixed.limit",
+      "joints.shoulder_mount_left_fixed.dynamics",
+      "joints.shoulder_mount_left_fixed.limit",
+      "joints.shoulder_mount_right_fixed.dynamics",
+      "joints.shoulder_mount_right_fixed.limit",
       "joints.upper_arm_joint_hub_mount.dynamics",
       "joints.upper_arm_joint_hub_mount.limit",
       "links.base_link.inertia",
@@ -2004,8 +2218,10 @@
       "links.shoulder.inertia",
       "links.shoulder.mass",
       "links.shoulder_joint_hub.inertia",
-      "links.shoulder_mount.inertia",
-      "links.shoulder_mount.mass",
+      "links.shoulder_mount_left.inertia",
+      "links.shoulder_mount_left.mass",
+      "links.shoulder_mount_right.inertia",
+      "links.shoulder_mount_right.mass",
       "links.upper_arm.inertia",
       "links.upper_arm.mass",
       "links.upper_arm_joint_hub.inertia"

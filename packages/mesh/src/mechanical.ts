@@ -1,6 +1,6 @@
 // Original parametric sheet parts. Hole geometry is real, not painted on.
 import earcut from 'earcut';
-import { orient, type Mesh } from './core.ts';
+import { orient, revolve, type Mesh } from './core.ts';
 
 export function mountingPlate(width: number, height: number, thickness: number, bore: number, inset: number, vents = 0): Mesh {
   if (!(width > 0 && height > 0 && thickness > 0 && bore > 0 && inset > bore && 2 * (inset + bore) < Math.min(width, height)))
@@ -23,4 +23,14 @@ export function mountingPlate(width: number, height: number, thickness: number, 
   offset=0;
   for(const contour of contours){for(let i=0;i<contour.length;i++){const a=offset+i,b=offset+(i+1)%contour.length;mesh.f.push([a,b,b+n],[a,b+n,a+n]);}offset+=contour.length;}
   return orient(mesh);
+}
+
+/** One continuous solid from pivot to pivot; narrowed ends clear joint housings.
+ * This is an original link blank, not a qualified bearing/gearbox interface. */
+export function armSpar(length:number,radius:number,neck:number,gap:number):Mesh {
+  if (![length,radius,neck,gap].every(Number.isFinite) || !(length>2*gap && gap>0 && radius>neck && neck>0))
+    throw new Error('Invalid arm spar dimensions');
+  const bevel=Math.min(gap*.3,.006),h=length/2;
+  return orient(revolve([[neck,-h],[neck,-h+gap-bevel],[radius,-h+gap],
+    [radius,h-gap],[neck,h-gap+bevel],[neck,h]],48));
 }

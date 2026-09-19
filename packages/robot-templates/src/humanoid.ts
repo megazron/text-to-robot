@@ -39,9 +39,9 @@ function appendLeg(spec: RobotSpecification, side: "left" | "right", hipY: numbe
   spec.joints.push(joint(`${p}hip_yaw`,"revolute","torso",`${p}hip_yaw_carrier`,{origin:pose([0,hipY,HIP_Z+.05]),axis:[0,0,1],lower:-.6,upper:.6,effort:12,velocity:1.5}));
   spec.links.push(link(`${p}hip_roll_carrier`,cyl(.020,.018),{mass:.12,material:"accent_mat",role:"joint_housing",origin:pose([0,0,0],[0,Math.PI/2,0])}));
   spec.joints.push(joint(`${p}hip_roll`,"revolute",`${p}hip_yaw_carrier`,`${p}hip_roll_carrier`,{origin:pose([0,0,-.025]),axis:[1,0,0],lower:-.45,upper:.45,effort:20,velocity:1.5}));
-  spec.links.push(link(`${p}thigh`, cyl(0.045, THIGH), { material: "link_mat", role: "link", origin: pose([0, 0, -THIGH / 2]) }));
+  spec.links.push(link(`${p}thigh`, cyl(0.045, THIGH-.003), { material: "link_mat", role: "link", origin: pose([0, 0, -(THIGH+.003) / 2]) }));
   spec.joints.push(joint(`${p}hip_joint`, "revolute", `${p}hip_roll_carrier`, `${p}thigh`, { origin: pose([0, 0, -.025]), axis: [0, 1, 0], lower: -1.6, upper: 1.6 }));
-  spec.links.push(link(`${p}shin`, cyl(0.04, SHIN), { material: "link_mat", role: "link", origin: pose([0, 0, -SHIN / 2]) }));
+  spec.links.push(link(`${p}shin`, cyl(0.04, SHIN-.003), { material: "link_mat", role: "link", origin: pose([0, 0, -(SHIN-.003) / 2]) }));
   spec.joints.push(joint(`${p}knee_joint`, "revolute", `${p}thigh`, `${p}shin`, { origin: pose([0, 0, -THIGH]), axis: [0, 1, 0], lower: 0, upper: 2.4 }));
   spec.links.push(link(`${p}foot`, box(0.16, 0.08, FOOT), { material: "base_mat", role: "link", origin: pose([0.03, 0, -FOOT / 2]) }));
   spec.links.push(link(`${p}ankle_pitch_carrier`,cyl(.015,.022),{mass:.10,material:"accent_mat",role:"joint_housing",origin:pose([0,0,0],[Math.PI/2,0,0])}));
@@ -64,8 +64,8 @@ export function humanoid(opts: HumanoidOptions = {}): RobotSpecification {
   const dof = opts.armDof ?? 7;
   const g = opts.gripper ?? true;
   const shoulderZ = baseZ + tz - 0.03;
-  appendArm(spec, "left", dof, ty / 2 + HUMANOID.arm_radius, shoulderZ, g);
-  appendArm(spec, "right", dof, -(ty / 2 + HUMANOID.arm_radius), shoulderZ, g);
+  appendArm(spec, "left", dof, ty / 2 + HUMANOID.arm_radius + .003, shoulderZ, g);
+  appendArm(spec, "right", dof, -(ty / 2 + HUMANOID.arm_radius + .003), shoulderZ, g);
   if (legs) { appendLeg(spec, "left", 0.07); appendLeg(spec, "right", -0.07); }
   spec.metadata.notes.push(`Generated humanoid: torso, head, two ${dof}-DOF arms${g ? " with grippers" : ""}${legs ? ", two 6-DOF legs" : ""}.`);
   return spec;

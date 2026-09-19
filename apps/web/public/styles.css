@@ -100,3 +100,6 @@ button{cursor:pointer;font:inherit}
 .bomtable td.n{text-align:right;font-family:ui-monospace,monospace}
 .bomcat{color:var(--accent2);font-size:11px;text-transform:uppercase;letter-spacing:.05em}
 .bomwarn{color:var(--accent);font-size:12px;margin-top:8px}
+
+#previewStatus{position:absolute;top:54px;left:10px;right:10px;padding:10px;background:#251f16;color:var(--accent);border:1px solid #65502c;border-radius:6px;z-index:2}
+#previewStatus[hidden]{display:none}

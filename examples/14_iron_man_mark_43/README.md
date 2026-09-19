@@ -97,7 +97,7 @@ follow their flight flaps. Internal struts have clearance at their connector end
 non-adjacent intersecting pairs at neutral. No new neutral pairs were introduced.
 This tests visual triangle surfaces with tessellated primitives; it is not a
 penetration-depth, full-containment or wearer-fit measurement.
-[86 sampled poses](surface_contact_report.json) still expose shoulder, side-door,
+[Sampled motion poses](surface_contact_report.json) still expose shoulder, side-door,
 chin and other motion failures. Zero neutral contacts is not full articulation approval.
 
 The main physics GIF and smoke report use the source-checked compound collision

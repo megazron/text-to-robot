@@ -987,7 +987,7 @@
   },
   "validation_scope": "simulation smoke tests, not hardware or wearable qualification",
   "mujoco_version": "3.13.0",
-  "model_sha256": "e378d6ebe298947ed922a513af2ec541a1f5ac83f869ffdb85455b95a96229a0",
+  "model_sha256": "6af24a4e43047f819b535964fba2e9aae0aaba4fd3ec0f0aa7f33d9ac32c04bc",
   "limitations": [
     "Approximate collision geometry; sampled deviation is not a worst-case error bound",
     "No human fit, strength or motion-path certification",

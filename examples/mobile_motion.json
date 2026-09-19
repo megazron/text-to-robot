@@ -78,7 +78,7 @@
       "example": "12_mars_rover",
       "task": "forward",
       "pass": true,
-      "source_urdf_sha256": "eef4a60aeddbffa097d7c7c9299421e2d88cabf04e9d0c4c5e616236510e15ee",
+      "source_urdf_sha256": "e06d18e63f71600ca7b6927ae3cd1d321e892f20cb4876a29725b2193c6d96fc",
       "commands_rad_s": {
         "front_left_wheel_joint": 4.0,
         "front_right_wheel_joint": 4.0,
@@ -86,11 +86,11 @@
         "rear_right_wheel_joint": 4.0
       },
       "displacement_m": [
-        0.3972086480929667,
-        -3.005039949035166e-18,
-        -3.83740214384031e-08
+        0.3970979595553457,
+        1.2970399800276083e-17,
+        -4.555214259203905e-08
       ],
-      "upright": 0.999999999999829
+      "upright": 0.9999999999997325
     },
     {
       "example": "15_wall_e",

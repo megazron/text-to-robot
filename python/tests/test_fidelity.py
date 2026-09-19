@@ -108,10 +108,6 @@ class FidelityTests(unittest.TestCase):
         combined=mujoco.MjModel.from_xml_string(add_wearer(xml,mass=75))
         self.assertAlmostEqual(float(combined.body_mass.sum()-base.body_mass.sum()),75,places=3)
 
-
-if __name__ == "__main__":
-    unittest.main()
-
     def test_continuous_joint_controls_speed_and_passive_bearing_has_no_motor(self):
         m=mujoco.MjModel.from_xml_string(self.convert(fixture(joint_type="continuous"),floating=False))
         self.assertEqual(float(m.actuator_biasprm[0,1]),0.0)
@@ -119,3 +115,7 @@ if __name__ == "__main__":
         passive=fixture(joint_type="continuous").replace('name="servo" type=', 'name="servo" passive="true" type=')
         m=mujoco.MjModel.from_xml_string(self.convert(passive,floating=False))
         self.assertEqual(m.nu,0);self.assertEqual(m.njnt,1)
+
+
+if __name__ == "__main__":
+    unittest.main()
