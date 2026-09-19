@@ -51,3 +51,24 @@ export function bootShell():Mesh {
   const sec=rows.map(([z,rx,ry,cx])=>superArc(rx,ry,z,-Math.PI,Math.PI-2*Math.PI/40,40,3.4,cx));
   return shell(flip(loft(sec,{closed:true})),.005);
 }
+
+/** Two adjoining pectoral panels sampled from one continuous compound surface.
+ * The upper panel is a separate solid with a narrow real seam, not a flat badge.
+ * Dimensions are authored from photographs, not measured prop data. */
+export function chestSurfacePanel(side:number, upper:boolean):Mesh {
+  const rows:V3[][]=[];
+  for(let j=0;j<=18;j++) {
+    const row:V3[]=[];
+    for(let i=0;i<=32;i++) {
+      const u=i/32,cut=.68+.16*u;
+      const v=upper ? cut+.007+(1-cut-.007)*j/18 : (cut-.007)*j/18;
+      const width=.58+.42*Math.sin(Math.PI*(.03+.78*v));
+      const y=.0015+.233*u*width;
+      const z=-.155+.31*v-.025*u*u;
+      const x=.145+.026*Math.sin(Math.PI*v)-.118*Math.pow(u,2.4);
+      row.push([x,side*y,z]);
+    }
+    rows.push(row);
+  }
+  return shell(loft(rows,{closed:false}),.006);
+}

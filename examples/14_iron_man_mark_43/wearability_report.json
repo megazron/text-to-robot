@@ -138,11 +138,11 @@
     "Ellipse axes are a straight insertion screen, not a full articulated insertion planner",
     "Prototype measurements and independent mechanical/electrical review remain required"
   ],
-  "robot_sha256": "03234b761ebd035cd8d5a8f93b03b45bda7c0f159e4cabe32d763708620d51f5",
+  "robot_sha256": "1c6793cee2c8d52bbe36c18c62d1eca1c2eeeee8f053f6ca296c22c9ad506326",
   "human_contact_audit": {
     "poses": {
       "panels_closed": {
-        "penetrating_pairs": 104,
+        "penetrating_pairs": 111,
         "pairs": [
           {
             "bodies": [
@@ -202,6 +202,20 @@
           },
           {
             "bodies": [
+              "right_lat_plate",
+              "w_pelvis"
+            ],
+            "depth_m": 0.042219533164661184
+          },
+          {
+            "bodies": [
+              "left_lat_plate",
+              "w_pelvis"
+            ],
+            "depth_m": 0.04221945711492974
+          },
+          {
+            "bodies": [
               "left_shank_strut",
               "w_left_thigh"
             ],
@@ -213,6 +227,20 @@
               "w_right_thigh"
             ],
             "depth_m": 0.04048876546308792
+          },
+          {
+            "bodies": [
+              "left_lat_plate",
+              "w_left_upper_arm"
+            ],
+            "depth_m": 0.04000546576035134
+          },
+          {
+            "bodies": [
+              "right_lat_plate",
+              "w_right_upper_arm"
+            ],
+            "depth_m": 0.040004720504190086
           },
           {
             "bodies": [
@@ -440,20 +468,6 @@
           },
           {
             "bodies": [
-              "right_cheek_panel",
-              "w_head"
-            ],
-            "depth_m": 0.020991549285833223
-          },
-          {
-            "bodies": [
-              "left_cheek_panel",
-              "w_head"
-            ],
-            "depth_m": 0.020991546363410874
-          },
-          {
-            "bodies": [
               "right_hip_cowl",
               "w_pelvis"
             ],
@@ -465,6 +479,13 @@
               "w_torso"
             ],
             "depth_m": 0.020000000000000004
+          },
+          {
+            "bodies": [
+              "left_lat_plate",
+              "w_torso"
+            ],
+            "depth_m": 0.019322285995326323
           },
           {
             "bodies": [
@@ -510,6 +531,13 @@
           },
           {
             "bodies": [
+              "right_lat_plate",
+              "w_torso"
+            ],
+            "depth_m": 0.017703572311701152
+          },
+          {
+            "bodies": [
               "left_hand",
               "w_left_forearm"
             ],
@@ -528,6 +556,20 @@
               "w_head"
             ],
             "depth_m": 0.01699159852119501
+          },
+          {
+            "bodies": [
+              "right_cheek_panel",
+              "w_head"
+            ],
+            "depth_m": 0.01665172841505091
+          },
+          {
+            "bodies": [
+              "left_cheek_panel",
+              "w_head"
+            ],
+            "depth_m": 0.016651162832524664
           },
           {
             "bodies": [
@@ -713,20 +755,6 @@
           },
           {
             "bodies": [
-              "left_lat_plate",
-              "w_torso"
-            ],
-            "depth_m": 0.0077747407313051575
-          },
-          {
-            "bodies": [
-              "right_lat_plate",
-              "w_torso"
-            ],
-            "depth_m": 0.007748648618240261
-          },
-          {
-            "bodies": [
               "left_forearm_strut",
               "w_left_upper_arm"
             ],
@@ -783,6 +811,20 @@
           },
           {
             "bodies": [
+              "right_rib_2",
+              "w_pelvis"
+            ],
+            "depth_m": 0.006263655171433735
+          },
+          {
+            "bodies": [
+              "left_rib_2",
+              "w_pelvis"
+            ],
+            "depth_m": 0.0058290617506188275
+          },
+          {
+            "bodies": [
               "shoulder_yoke",
               "w_head"
             ],
@@ -822,6 +864,13 @@
               "w_torso"
             ],
             "depth_m": 0.004796947222128381
+          },
+          {
+            "bodies": [
+              "left_pectoral_trim",
+              "w_torso"
+            ],
+            "depth_m": 0.0035360216056744415
           },
           {
             "bodies": [
@@ -875,7 +924,7 @@
         ]
       },
       "panels_open": {
-        "penetrating_pairs": 108,
+        "penetrating_pairs": 114,
         "pairs": [
           {
             "bodies": [
@@ -1166,6 +1215,20 @@
           },
           {
             "bodies": [
+              "right_lat_plate",
+              "w_right_upper_arm"
+            ],
+            "depth_m": 0.026604406671348627
+          },
+          {
+            "bodies": [
+              "left_lat_plate",
+              "w_left_upper_arm"
+            ],
+            "depth_m": 0.026591031212263538
+          },
+          {
+            "bodies": [
               "left_hand_plate",
               "w_left_forearm"
             ],
@@ -1432,6 +1495,20 @@
           },
           {
             "bodies": [
+              "left_lat_plate",
+              "w_pelvis"
+            ],
+            "depth_m": 0.011604123489539167
+          },
+          {
+            "bodies": [
+              "right_lat_plate",
+              "w_pelvis"
+            ],
+            "depth_m": 0.01157971750971798
+          },
+          {
+            "bodies": [
               "left_gauntlet_sleeve",
               "w_left_forearm"
             ],
@@ -1516,6 +1593,20 @@
           },
           {
             "bodies": [
+              "right_rib_2",
+              "w_pelvis"
+            ],
+            "depth_m": 0.006263655171433735
+          },
+          {
+            "bodies": [
+              "left_rib_2",
+              "w_pelvis"
+            ],
+            "depth_m": 0.0058290617506188275
+          },
+          {
+            "bodies": [
               "shoulder_yoke",
               "w_head"
             ],
@@ -1551,17 +1642,17 @@
           },
           {
             "bodies": [
-              "right_cheek_panel",
-              "w_head"
-            ],
-            "depth_m": 0.004897377966113091
-          },
-          {
-            "bodies": [
               "left_cheek_panel",
               "w_head"
             ],
-            "depth_m": 0.0048965122594824325
+            "depth_m": 0.0049478090272298166
+          },
+          {
+            "bodies": [
+              "right_cheek_panel",
+              "w_head"
+            ],
+            "depth_m": 0.004947383035300258
           },
           {
             "bodies": [

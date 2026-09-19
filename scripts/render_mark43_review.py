@@ -15,6 +15,12 @@ for name,azimuth in [('front',180),('threequarter',145),('rear',0)]:
     camera.lookat[:]=[0,0,1.0];camera.distance=2.7;camera.azimuth=azimuth;camera.elevation=-5
     renderer.update_scene(data,camera)
     Image.fromarray(renderer.render()).save(root/f'docs/img/mark43_{name}_review.png')
+# Close views are actual geometry, using the same scene and material definitions.
+for name,z,distance,azimuth in [('helmet',1.70,.62,165),('torso',1.38,1.15,145)]:
+    camera=mujoco.MjvCamera();mujoco.mjv_defaultFreeCamera(model,camera)
+    camera.lookat[:]=[.03,0,z];camera.distance=distance;camera.azimuth=azimuth;camera.elevation=0
+    renderer.update_scene(data,camera)
+    Image.fromarray(renderer.render()).save(root/f'docs/img/mark43_{name}_review.png')
 renderer.close()
 
 # An open-panel mannequin view illustrates the proposed entry geometry; it does
@@ -29,3 +35,10 @@ camera=mujoco.MjvCamera();mujoco.mjv_defaultFreeCamera(model,camera)
 camera.lookat[:]=[0,0,1.0];camera.distance=3.1;camera.azimuth=150;camera.elevation=-8
 renderer.update_scene(data,camera)
 Image.fromarray(renderer.render()).save(root/'docs/img/mark43_entry_review.png');renderer.close()
+
+# Tie visual evidence to the exported model; reference review refuses stale images.
+import hashlib, json
+views=['front','threequarter','rear','torso','helmet','entry']
+manifest={'robot_sha256':hashlib.sha256((root/'examples/14_iron_man_mark_43/robot.json').read_bytes()).hexdigest(),
+          'images':{v:hashlib.sha256((root/f'docs/img/mark43_{v}_review.png').read_bytes()).hexdigest() for v in views}}
+(root/'docs/img/mark43_render_manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')

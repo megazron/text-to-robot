@@ -33,7 +33,7 @@ falls or enlarging actuators. See `mujoco_report*.json` beside the example. The
 mannequin remains ideal welded geometry with disabled human contact; its mass is
 75 kg without hidden decorative mass. It does not demonstrate wearable support.
 
-All **204 exported mesh instances** pass independent closed-volume/winding and mass
+All **206 exported mesh instances** pass independent closed-volume/winding and mass
 integration checks. Earlier procedural meshes included open seams, degenerate poles,
 self-overlapping helmet detail and filled cuffs. These generators are repaired;
 the faceplate now has geometric eye apertures, the cuffs and pelvis are hollow,
@@ -52,9 +52,9 @@ MuJoCo mesh collision hull would fill concave shell cavities; see
 [MuJoCo collision documentation](https://mujoco.readthedocs.io/en/latest/computation/).
 The example includes `robot.convex.zip`, a source-hashed decomposition report and an
 initial-pose clearance comparison. **Both collision representations still show
-interference:** 236 box contacts (maximum depth 49 mm), or 843 compound-convex
-contacts (maximum depth 13 mm). The latter uses 2,775 convex pieces from 91 unique
-decompositions; its largest sampled surface deviation is about 7 mm. Contact counts between them are not directly comparable because
+interference:** 346 box contacts (maximum depth 77 mm), or 753 compound-convex
+contacts (maximum depth 25 mm). The updated model uses 2,957 convex pieces from 99 unique
+decompositions; sampled surface deviations are recorded per part in the report. Contact counts between them are not directly comparable because
 one object pair can produce many convex-hull contact points.
 
 The requested 2 mm concavity is not a certified surface tolerance. The report samples
