@@ -3,7 +3,7 @@
      robot: scara
      prompt: Create a SCARA robot
 
-     5 links, 4 joints, 17 inferred values
+     14 links, 13 joints, 53 inferred values
 -->
 <robot name="scara">
   <material name="base_mat"><color rgba="0.25 0.25 0.28 1"/></material>
@@ -14,18 +14,162 @@
   <material name="accent_mat"><color rgba="0.9 0.55 0.1 1"/></material>
   <link name="base_link">
     <visual>
-      <origin xyz="0 0 0.175" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.06" length="0.35"/></geometry>
+      <origin xyz="0 0 0.0015" rpy="0 0 0"/>
+      <geometry><mesh filename="package://scara/meshes/base_link.stl"/></geometry>
       <material name="base_mat"/>
     </visual>
     <collision>
-      <origin xyz="0 0 0.175" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.06" length="0.35"/></geometry>
+      <origin xyz="0 0 0.0015" rpy="0 0 0"/>
+      <geometry><box size="0.12 0.12 0.003"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 0.175" rpy="0 0 0"/>
-      <mass value="1.781283"/>
-      <inertia ixx="0.019787" ixy="0" ixz="0" iyy="0.019787" iyz="0" izz="0.003206"/>
+      <origin xyz="-1.07968e-18 2.89006e-18 0.0015" rpy="0 0 0"/>
+      <mass value="0.116349"/>
+      <inertia ixx="0.000139385" ixy="-9.98918e-21" ixz="-8.41065e-23" iyy="0.000139385" iyz="-2.08017e-22" izz="0.000278595"/>
+    </inertial>
+  </link>
+  <link name="base_link_service_lid">
+    <visual>
+      <origin xyz="0 0 0.3485" rpy="0 0 0"/>
+      <geometry><mesh filename="package://scara/meshes/base_link_service_lid.stl"/></geometry>
+      <material name="base_mat"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.3485" rpy="0 0 0"/>
+      <geometry><box size="0.12 0.12 0.003"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="7.15453e-18 -1.08383e-18 0.3485" rpy="0 0 0"/>
+      <mass value="0.108573"/>
+      <inertia ixx="0.000138373" ixy="-6.10692e-22" ixz="-1.64941e-23" iyy="0.000137886" iyz="7.68818e-23" izz="0.000276097"/>
+    </inertial>
+  </link>
+  <link name="base_link_rear_panel">
+    <visual>
+      <origin xyz="-0.0585 0 0.175" rpy="0 0 0"/>
+      <geometry><box size="0.003 0.12 0.344"/></geometry>
+      <material name="base_mat"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.0585 0 0.175" rpy="0 0 0"/>
+      <geometry><box size="0.003 0.12 0.344"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.0585 0 0.175" rpy="0 0 0"/>
+      <mass value="0.334368"/>
+      <inertia ixx="0.003699" ixy="0" ixz="0" iyy="0.003298" iyz="0" izz="0.000401492"/>
+    </inertial>
+  </link>
+  <link name="base_link_right_panel">
+    <visual>
+      <origin xyz="0 -0.0585 0.175" rpy="0 0 0"/>
+      <geometry><box size="0.114 0.003 0.344"/></geometry>
+      <material name="base_mat"/>
+    </visual>
+    <collision>
+      <origin xyz="0 -0.0585 0.175" rpy="0 0 0"/>
+      <geometry><box size="0.114 0.003 0.344"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 -0.0585 0.175" rpy="0 0 0"/>
+      <mass value="0.31765"/>
+      <inertia ixx="0.003133" ixy="0" ixz="0" iyy="0.003476" iyz="0" izz="0.000344253"/>
+    </inertial>
+  </link>
+  <link name="base_link_front_panel">
+    <visual>
+      <origin xyz="0.0585 0 0.175" rpy="0 0 0"/>
+      <geometry><box size="0.003 0.12 0.344"/></geometry>
+      <material name="base_mat"/>
+    </visual>
+    <collision>
+      <origin xyz="0.0585 0 0.175" rpy="0 0 0"/>
+      <geometry><box size="0.003 0.12 0.344"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.0585 0 0.175" rpy="0 0 0"/>
+      <mass value="0.334368"/>
+      <inertia ixx="0.003699" ixy="0" ixz="0" iyy="0.003298" iyz="0" izz="0.000401492"/>
+    </inertial>
+  </link>
+  <link name="base_link_left_panel">
+    <visual>
+      <origin xyz="0 0.0585 0.175" rpy="0 0 0"/>
+      <geometry><box size="0.114 0.003 0.344"/></geometry>
+      <material name="base_mat"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0.0585 0.175" rpy="0 0 0"/>
+      <geometry><box size="0.114 0.003 0.344"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0.0585 0.175" rpy="0 0 0"/>
+      <mass value="0.31765"/>
+      <inertia ixx="0.003133" ixy="0" ixz="0" iyy="0.003476" iyz="0" izz="0.000344253"/>
+    </inertial>
+  </link>
+  <link name="base_link_standoff_rr">
+    <visual>
+      <origin xyz="-0.048 -0.048 0.175" rpy="0 0 0"/>
+      <geometry><mesh filename="package://scara/meshes/base_link_standoff_rr.stl"/></geometry>
+      <material name="base_mat"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.048 -0.048 0.175" rpy="0 0 0"/>
+      <geometry><box size="0.008 0.008 0.344"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.048 -0.048 0.175" rpy="0 0 0"/>
+      <mass value="0.038145"/>
+      <inertia ixx="0.000376337" ixy="-6.68477e-24" ixz="9.76017e-23" iyy="0.000376337" iyz="8.17550e-23" izz="3.59249e-7"/>
+    </inertial>
+  </link>
+  <link name="base_link_standoff_rl">
+    <visual>
+      <origin xyz="-0.048 0.048 0.175" rpy="0 0 0"/>
+      <geometry><mesh filename="package://scara/meshes/base_link_standoff_rl.stl"/></geometry>
+      <material name="base_mat"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.048 0.048 0.175" rpy="0 0 0"/>
+      <geometry><box size="0.008 0.008 0.344"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.048 0.048 0.175" rpy="0 0 0"/>
+      <mass value="0.038145"/>
+      <inertia ixx="0.000376337" ixy="-6.68477e-24" ixz="9.76017e-23" iyy="0.000376337" iyz="8.17550e-23" izz="3.59249e-7"/>
+    </inertial>
+  </link>
+  <link name="base_link_standoff_fr">
+    <visual>
+      <origin xyz="0.048 -0.048 0.175" rpy="0 0 0"/>
+      <geometry><mesh filename="package://scara/meshes/base_link_standoff_fr.stl"/></geometry>
+      <material name="base_mat"/>
+    </visual>
+    <collision>
+      <origin xyz="0.048 -0.048 0.175" rpy="0 0 0"/>
+      <geometry><box size="0.008 0.008 0.344"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.048 -0.048 0.175" rpy="0 0 0"/>
+      <mass value="0.038145"/>
+      <inertia ixx="0.000376337" ixy="-6.68477e-24" ixz="9.76017e-23" iyy="0.000376337" iyz="8.17550e-23" izz="3.59249e-7"/>
+    </inertial>
+  </link>
+  <link name="base_link_standoff_fl">
+    <visual>
+      <origin xyz="0.048 0.048 0.175" rpy="0 0 0"/>
+      <geometry><mesh filename="package://scara/meshes/base_link_standoff_fl.stl"/></geometry>
+      <material name="base_mat"/>
+    </visual>
+    <collision>
+      <origin xyz="0.048 0.048 0.175" rpy="0 0 0"/>
+      <geometry><box size="0.008 0.008 0.344"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.048 0.048 0.175" rpy="0 0 0"/>
+      <mass value="0.038145"/>
+      <inertia ixx="0.000376337" ixy="-6.68477e-24" ixz="9.76017e-23" iyy="0.000376337" iyz="8.17550e-23" izz="3.59249e-7"/>
     </inertial>
   </link>
   <link name="upper_arm">
@@ -92,6 +236,60 @@
       <inertia ixx="0.000002625" ixy="0" ixz="0" iyy="0.000002625" iyz="0" izz="0.00000225"/>
     </inertial>
   </link>
+  <joint name="base_link_service_lid_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_link_service_lid"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <dynamics damping="0.1" friction="0"/>
+  </joint>
+  <joint name="base_link_rear_panel_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_link_rear_panel"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <dynamics damping="0.1" friction="0"/>
+  </joint>
+  <joint name="base_link_right_panel_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_link_right_panel"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <dynamics damping="0.1" friction="0"/>
+  </joint>
+  <joint name="base_link_front_panel_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_link_front_panel"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <dynamics damping="0.1" friction="0"/>
+  </joint>
+  <joint name="base_link_left_panel_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_link_left_panel"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <dynamics damping="0.1" friction="0"/>
+  </joint>
+  <joint name="base_link_standoff_rr_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_link_standoff_rr"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <dynamics damping="0.1" friction="0"/>
+  </joint>
+  <joint name="base_link_standoff_rl_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_link_standoff_rl"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <dynamics damping="0.1" friction="0"/>
+  </joint>
+  <joint name="base_link_standoff_fr_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_link_standoff_fr"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <dynamics damping="0.1" friction="0"/>
+  </joint>
+  <joint name="base_link_standoff_fl_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_link_standoff_fl"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <dynamics damping="0.1" friction="0"/>
+  </joint>
   <joint name="joint_1" type="revolute">
     <parent link="base_link"/>
     <child link="upper_arm"/>

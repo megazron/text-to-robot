@@ -15,7 +15,7 @@
         "xyz": [
           0,
           0,
-          0.6632
+          0.6732
         ],
         "rpy": [
           0,
@@ -410,6 +410,86 @@
       }
     },
     {
+      "name": "left_hip_yaw_carrier",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.023,
+        "length": 0.016
+      },
+      "mass": 0.12,
+      "material": "vinyl_white",
+      "role": "joint_housing",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.00001843,
+        "iyy": 0.00001843,
+        "izz": 0.00003174,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.023,
+        "length": 0.016
+      }
+    },
+    {
+      "name": "left_hip_roll_carrier",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.02,
+        "length": 0.018
+      },
+      "mass": 0.12,
+      "material": "vinyl_white",
+      "role": "joint_housing",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          1.5707963267948966,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000015239999999999998,
+        "iyy": 0.000015239999999999998,
+        "izz": 0.000023999999999999997,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.02,
+        "length": 0.018
+      }
+    },
+    {
       "name": "left_thigh",
       "geometry": {
         "type": "capsule",
@@ -539,6 +619,126 @@
       }
     },
     {
+      "name": "left_ankle_pitch_carrier",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.015,
+        "length": 0.022
+      },
+      "mass": 0.1,
+      "material": "vinyl_white",
+      "role": "joint_housing",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          1.5707963267948966,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000009658333333333332,
+        "iyy": 0.000009658333333333332,
+        "izz": 0.000011249999999999999,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.015,
+        "length": 0.022
+      }
+    },
+    {
+      "name": "right_hip_yaw_carrier",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.023,
+        "length": 0.016
+      },
+      "mass": 0.12,
+      "material": "vinyl_white",
+      "role": "joint_housing",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.00001843,
+        "iyy": 0.00001843,
+        "izz": 0.00003174,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.023,
+        "length": 0.016
+      }
+    },
+    {
+      "name": "right_hip_roll_carrier",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.02,
+        "length": 0.018
+      },
+      "mass": 0.12,
+      "material": "vinyl_white",
+      "role": "joint_housing",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          1.5707963267948966,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000015239999999999998,
+        "iyy": 0.000015239999999999998,
+        "izz": 0.000023999999999999997,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.02,
+        "length": 0.018
+      }
+    },
+    {
       "name": "right_thigh",
       "geometry": {
         "type": "capsule",
@@ -665,6 +865,46 @@
           0.16,
           0.05
         ]
+      }
+    },
+    {
+      "name": "right_ankle_pitch_carrier",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.015,
+        "length": 0.022
+      },
+      "mass": 0.1,
+      "material": "vinyl_white",
+      "role": "joint_housing",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          1.5707963267948966,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000009658333333333332,
+        "iyy": 0.000009658333333333332,
+        "izz": 0.000011249999999999999,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.015,
+        "length": 0.022
       }
     }
   ],
@@ -994,15 +1234,87 @@
       }
     },
     {
-      "name": "left_hip_joint",
+      "name": "left_hip_yaw",
       "type": "revolute",
       "parent": "torso",
-      "child": "left_thigh",
+      "child": "left_hip_yaw_carrier",
       "origin": {
         "xyz": [
           0,
           0.12600000000000003,
-          0.44
+          0.49
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.6,
+        "upper": 0.6,
+        "effort": 12,
+        "velocity": 1.5
+      }
+    },
+    {
+      "name": "left_hip_roll",
+      "type": "revolute",
+      "parent": "left_hip_yaw_carrier",
+      "child": "left_hip_roll_carrier",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.025
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.45,
+        "upper": 0.45,
+        "effort": 20,
+        "velocity": 1.5
+      }
+    },
+    {
+      "name": "left_hip_joint",
+      "type": "revolute",
+      "parent": "left_hip_roll_carrier",
+      "child": "left_thigh",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.025
         ],
         "rpy": [
           0,
@@ -1066,10 +1378,46 @@
       }
     },
     {
+      "name": "left_ankle_roll",
+      "type": "revolute",
+      "parent": "left_ankle_pitch_carrier",
+      "child": "left_foot",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.35,
+        "upper": 0.35,
+        "effort": 12,
+        "velocity": 1.5
+      }
+    },
+    {
       "name": "left_ankle_joint",
       "type": "revolute",
       "parent": "left_shin",
-      "child": "left_foot",
+      "child": "left_ankle_pitch_carrier",
       "origin": {
         "xyz": [
           0,
@@ -1102,15 +1450,87 @@
       }
     },
     {
-      "name": "right_hip_joint",
+      "name": "right_hip_yaw",
       "type": "revolute",
       "parent": "torso",
-      "child": "right_thigh",
+      "child": "right_hip_yaw_carrier",
       "origin": {
         "xyz": [
           0,
           -0.12600000000000003,
-          0.44
+          0.49
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.6,
+        "upper": 0.6,
+        "effort": 12,
+        "velocity": 1.5
+      }
+    },
+    {
+      "name": "right_hip_roll",
+      "type": "revolute",
+      "parent": "right_hip_yaw_carrier",
+      "child": "right_hip_roll_carrier",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.025
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.45,
+        "upper": 0.45,
+        "effort": 20,
+        "velocity": 1.5
+      }
+    },
+    {
+      "name": "right_hip_joint",
+      "type": "revolute",
+      "parent": "right_hip_roll_carrier",
+      "child": "right_thigh",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          -0.025
         ],
         "rpy": [
           0,
@@ -1174,10 +1594,46 @@
       }
     },
     {
+      "name": "right_ankle_roll",
+      "type": "revolute",
+      "parent": "right_ankle_pitch_carrier",
+      "child": "right_foot",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -0.35,
+        "upper": 0.35,
+        "effort": 12,
+        "velocity": 1.5
+      }
+    },
+    {
       "name": "right_ankle_joint",
       "type": "revolute",
       "parent": "right_shin",
-      "child": "right_foot",
+      "child": "right_ankle_pitch_carrier",
       "origin": {
         "xyz": [
           0,
@@ -1316,31 +1772,40 @@
   "end_effectors": [],
   "metadata": {
     "generator": "text-to-robot",
-    "created": "2026-09-19T06:54:09.886Z",
+    "created": "2026-09-19T17:49:01.850Z",
     "inferred_fields": [
       "joints.left_ankle_joint.dynamics",
+      "joints.left_ankle_roll.dynamics",
       "joints.left_arm_joint_1.dynamics",
       "joints.left_arm_joint_2.dynamics",
       "joints.left_arm_joint_3.dynamics",
       "joints.left_arm_joint_4.dynamics",
       "joints.left_hip_joint.dynamics",
+      "joints.left_hip_roll.dynamics",
+      "joints.left_hip_yaw.dynamics",
       "joints.left_knee_joint.dynamics",
       "joints.neck_joint.dynamics",
       "joints.right_ankle_joint.dynamics",
+      "joints.right_ankle_roll.dynamics",
       "joints.right_arm_joint_1.dynamics",
       "joints.right_arm_joint_2.dynamics",
       "joints.right_arm_joint_3.dynamics",
       "joints.right_arm_joint_4.dynamics",
       "joints.right_hip_joint.dynamics",
+      "joints.right_hip_roll.dynamics",
+      "joints.right_hip_yaw.dynamics",
       "joints.right_knee_joint.dynamics",
       "links.head.inertia",
       "links.head.mass",
+      "links.left_ankle_pitch_carrier.inertia",
       "links.left_elbow.inertia",
       "links.left_elbow.mass",
       "links.left_foot.inertia",
       "links.left_foot.mass",
       "links.left_forearm.inertia",
       "links.left_forearm.mass",
+      "links.left_hip_roll_carrier.inertia",
+      "links.left_hip_yaw_carrier.inertia",
       "links.left_shin.inertia",
       "links.left_shin.mass",
       "links.left_shoulder.inertia",
@@ -1349,12 +1814,15 @@
       "links.left_thigh.mass",
       "links.left_upper_arm.inertia",
       "links.left_upper_arm.mass",
+      "links.right_ankle_pitch_carrier.inertia",
       "links.right_elbow.inertia",
       "links.right_elbow.mass",
       "links.right_foot.inertia",
       "links.right_foot.mass",
       "links.right_forearm.inertia",
       "links.right_forearm.mass",
+      "links.right_hip_roll_carrier.inertia",
+      "links.right_hip_yaw_carrier.inertia",
       "links.right_shin.inertia",
       "links.right_shin.mass",
       "links.right_shoulder.inertia",
@@ -1367,9 +1835,9 @@
       "links.torso.mass"
     ],
     "notes": [
-      "Generated humanoid: torso, head, two 4-DOF arms, two 3-DOF legs.",
+      "Generated humanoid: torso, head, two 4-DOF arms, two 6-DOF legs.",
       "Baymax: soft rounded humanoid (capsule limbs), 4-DOF arms, short legs, wide planted stance with large feet, face camera. Rigid-body approximation of an inflatable body (light torso, ballast in the legs).",
-      "Interpreted by demo parser: type inferred, DOF=15, gripper=parallel."
+      "Interpreted locally: type inferred, DOF=21, gripper=parallel."
     ],
     "source_prompt": "Build Baymax, an inflatable healthcare companion robot\n"
   }

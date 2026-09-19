@@ -27,4 +27,4 @@ export function finalizeSpec(spec: RobotSpecification): RobotSpecification {
 
 /** total actuated DOF (revolute/continuous/prismatic) */
 export const dofCount = (spec: RobotSpecification): number =>
-  spec.joints.filter((j) => j.type !== "fixed").length;
+  spec.joints.filter((j) => j.type !== "fixed" && !j.passive).length;

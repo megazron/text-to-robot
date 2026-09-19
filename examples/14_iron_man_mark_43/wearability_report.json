@@ -138,7 +138,7 @@
     "Ellipse axes are a straight insertion screen, not a full articulated insertion planner",
     "Prototype measurements and independent mechanical/electrical review remain required"
   ],
-  "robot_sha256": "626e8ff65beb681852a9302d19b2d28068b787759f25b15898e0d967e1965761",
+  "robot_sha256": "0b56318e5b4540de4ea85f30db5259a00fbac6e893e04c9ff3fb18157ad57797",
   "human_contact_audit": {
     "poses": {
       "panels_closed": {

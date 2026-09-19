@@ -18,6 +18,10 @@ not a learned policy or proof of hardware accuracy. The model's failures remain 
 - Failed checks: disturbance_recovery.
 - [Physical build evidence and missing interfaces](BUILDABILITY.md), [machine-readable record](buildability_report.json). **No tested physical build is documented.**
 
+## Design research
+
+[Public engineering sources and model-specific changes](../../references/engineering/README.md).
+
 ## MoveIt / ROS 2
 
 [Browse the generated MoveIt configuration](moveit/) (SRDF, KDL, OMPL, controllers).
@@ -49,4 +53,4 @@ python scripts/verify_example_artifacts.py
 These are procedural concept models. Masses, motors and contacts are approximate;
 manufacturing interfaces and measured dynamics remain unverified.
 
-EVA has a free base under gravity; there is no physical levitation or flight controller.
+EVA is a supported display prototype with a pedestal, column, neck support and shoulder connectors. There is no levitation or flight controller.

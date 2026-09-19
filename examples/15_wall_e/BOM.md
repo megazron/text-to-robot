@@ -1,6 +1,6 @@
 # Bill of Materials — wall_e
 
-**Estimated total: $4282.59**  ·  tier: prosumer
+**Estimated total: $3970.49**  ·  tier: prosumer
 
 **Effort sizing: fails; hardware verified: no.**
 
@@ -15,7 +15,7 @@
 | Power | LiPo 6S 10000mAh | 1 | 95 | 95 | 222 Wh; est. load 219 W |
 | Power | DC-DC buck regulator (5V/10A) | 1 | 12 | 12 | logic + servo rail |
 | Power | Power distribution board + fuse + switch | 1 | 14 | 14 | wiring harness backbone |
-| Structure | 3D-printed frame (PLA/PETG) | 1 | 538.35 | 538.35 | ~24.47 kg material @ $22/kg |
+| Structure | 3D-printed frame (PLA/PETG) | 1 | 226.25 | 226.25 | ~10.28 kg material @ $22/kg |
 | Structure | Fastener + bearing kit | 1 | 18 | 18 | M3 screws, heat inserts, 608 bearings |
 | Wiring & misc | Wiring, connectors, JST/Dupont, sleeving | 1 | 399.24 | 399.24 | ~12% of electronics |
 

@@ -4,11 +4,13 @@
     {
       "example": "01_arm_2dof",
       "compiled": true,
-      "passed": 5,
+      "passed": 4,
       "total": 5,
       "initial_penetrations": 0,
       "floating": false,
-      "failed": []
+      "failed": [
+        "actuator_sweep"
+      ]
     },
     {
       "example": "02_arm_6dof",
@@ -46,29 +48,35 @@
     {
       "example": "05_diff_drive",
       "compiled": true,
-      "passed": 6,
+      "passed": 5,
       "total": 6,
       "initial_penetrations": 0,
       "floating": true,
-      "failed": []
+      "failed": [
+        "actuator_sweep"
+      ]
     },
     {
       "example": "06_four_wheel",
       "compiled": true,
-      "passed": 6,
+      "passed": 5,
       "total": 6,
       "initial_penetrations": 0,
       "floating": true,
-      "failed": []
+      "failed": [
+        "actuator_sweep"
+      ]
     },
     {
       "example": "07_mecanum",
       "compiled": true,
-      "passed": 6,
+      "passed": 5,
       "total": 6,
       "initial_penetrations": 0,
       "floating": true,
-      "failed": []
+      "failed": [
+        "actuator_sweep"
+      ]
     },
     {
       "example": "08_humanoid",
@@ -125,12 +133,11 @@
     {
       "example": "13_battle_mech",
       "compiled": true,
-      "passed": 3,
+      "passed": 4,
       "total": 6,
       "initial_penetrations": 0,
       "floating": true,
       "failed": [
-        "settle_under_gravity",
         "actuator_sweep",
         "disturbance_recovery"
       ]

@@ -86,7 +86,7 @@ export function generateJoint(j: Joint): string {
   const axis = needsAxis ? `  <axis xyz="${vec(j.axis)}"/>\n` : "";
   const limits = generateLimits(j);
   const dyn = j.dynamics ? `  <dynamics damping="${num(j.dynamics.damping)}" friction="${num(j.dynamics.friction)}"/>\n` : "";
-  return `<joint name="${xmlName(j.name)}" type="${j.type}">\n` +
+  return `<joint name="${xmlName(j.name)}" type="${j.type}"${j.passive ? ' passive="true"' : ""}>\n` +
     `  <parent link="${xmlName(j.parent)}"/>\n  <child link="${xmlName(j.child)}"/>\n` +
     `  ${originTag(j.origin)}\n${axis}${limits}${dyn}</joint>`;
 }

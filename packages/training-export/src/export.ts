@@ -46,7 +46,7 @@ URDF = os.path.join(os.path.dirname(__file__), "${name}.urdf")
 
 
 class ${cn(name)}Env(gym.Env):
-    metadata = {"render_modes": ["human", "rgb_array"], "render_fps": 60}
+    metadata = {"render_modes": ["human", "rgb_array"], "render_fps": 20}
 
     def __init__(self, render_mode=None, task=None, max_steps=1000):
         super().__init__()
@@ -60,18 +60,36 @@ class ${cn(name)}Env(gym.Env):
         self._load()
         n = len(self.joints)
         self.action_space = spaces.Box(-1.0, 1.0, shape=(n,), dtype=np.float32)
-        self.observation_space = spaces.Box(-np.inf, np.inf, shape=(2 * n + 6,), dtype=np.float32)
+        self.observation_space = spaces.Box(-np.inf, np.inf, shape=(2 * n + 16,), dtype=np.float32)
         self.steps = 0
 
     def _load(self):
         self.p.resetSimulation(); self.p.setGravity(0, 0, -9.81)
+        self.p.setTimeStep(1/240)
         self.plane = self.p.loadURDF("plane.urdf")
-        self.robot = self.p.loadURDF(URDF, [0, 0, 0.05], useFixedBase=${fixed}, flags=p.URDF_USE_INERTIA_FROM_FILE${spec.links.length>127 ? " | p.URDF_MERGE_FIXED_LINKS" : ""})
-        self.joints = [j for j in range(self.p.getNumJoints(self.robot))
-                       if self.p.getJointInfo(self.robot, j)[2] != p.JOINT_FIXED]
-        self.limits = []; self.efforts = []; self.velocities = []
+        self.robot = self.p.loadURDF(URDF, [0, 0, 0.05], useFixedBase=${fixed}, flags=p.URDF_USE_INERTIA_FROM_FILE | p.URDF_USE_SELF_COLLISION | p.URDF_USE_SELF_COLLISION_EXCLUDE_PARENT${spec.links.length>127 ? " | p.URDF_MERGE_FIXED_LINKS" : ""})
+        passive_names = ${JSON.stringify(spec.joints.filter(j=>j.passive).map(j=>j.name))}
+        movable = [j for j in range(self.p.getNumJoints(self.robot)) if self.p.getJointInfo(self.robot,j)[2] != p.JOINT_FIXED]
+        # Fixed links are one rigid body. Match MuJoCo's welded-body and adjacent
+        # body exclusions without disabling collisions between unrelated links.
+        parents = {-1:-1}
+        def group(j):
+            while parents[j] != j: j=parents[j]
+            return j
+        infos = [self.p.getJointInfo(self.robot,j) for j in range(self.p.getNumJoints(self.robot))]
+        for j,info in enumerate(infos):
+            parents[j] = group(info[16]) if info[2] == p.JOINT_FIXED else j
+        adjacent = {frozenset((group(j),group(info[16]))) for j,info in enumerate(infos) if info[2] != p.JOINT_FIXED}
+        for a in range(-1,len(infos)):
+            for b in range(a+1,len(infos)):
+                if group(a)==group(b) or frozenset((group(a),group(b))) in adjacent:
+                    self.p.setCollisionFilterPair(self.robot,self.robot,a,b,0)
+        self.joints = [j for j in movable if self.p.getJointInfo(self.robot,j)[1].decode() not in passive_names]
+        for j in movable: self.p.setJointMotorControl2(self.robot,j,p.VELOCITY_CONTROL,force=0)
+        self.limits = []; self.efforts = []; self.velocities = []; self.continuous = []
         for j in self.joints:
             info = self.p.getJointInfo(self.robot, j); lo, hi = info[8], info[9]
+            self.continuous.append(info[1].decode() in ${JSON.stringify(spec.joints.filter(j=>j.type==='continuous'&&!j.passive).map(j=>j.name))})
             if lo >= hi: lo, hi = -np.pi, np.pi
             self.limits.append((lo, hi))
             if info[10] <= 0 or info[11] <= 0: raise ValueError("URDF needs positive effort and velocity limits")
@@ -79,36 +97,59 @@ class ${cn(name)}Env(gym.Env):
         tip_name = ${JSON.stringify(tip)}
         self.tip_index = next((j for j in range(self.p.getNumJoints(self.robot))
                                if self.p.getJointInfo(self.robot,j)[12].decode() == tip_name), -1)
-        if self.task_name == "reach" and self.tip_index < 0:
+        if self.task_name in ("reach", "hold", "track") and self.tip_index < 0:
             raise ValueError("Reaching requires a named tool link in the robot specification")
 
     def _obs(self):
         q = [self.p.getJointState(self.robot, j)[0] for j in self.joints]
         dq = [self.p.getJointState(self.robot, j)[1] for j in self.joints]
-        pos, _ = self.p.getBasePositionAndOrientation(self.robot)
-        extra = list(self.target) + list(pos) if hasattr(self, "target") else list(pos) + [0, 0, 0]
-        return np.array(q + dq + extra[:6], dtype=np.float32)
+        pos, orn = self.p.getBasePositionAndOrientation(self.robot)
+        linear, angular = self.p.getBaseVelocity(self.robot)
+        return np.array(q + dq + list(self.target) + list(pos) + list(orn) + list(linear) + list(angular), dtype=np.float32)
 
     def reset(self, seed=None, options=None):
         super().reset(seed=seed); self._load(); self.steps = 0
         self.target = np.array([self.np_random.uniform(0.2, 0.6),
                                 self.np_random.uniform(-0.3, 0.3),
                                 self.np_random.uniform(0.1, 0.6)], dtype=np.float32)
+        if self.task_name in ("reach", "hold", "track"):
+            self.target = self._reachable_target()
         if self.task_name == "aperture":
             self.target[:] = [self.np_random.uniform(0, sum(hi-lo for lo,hi in self.limits)),0,0]
         return self._obs(), {}
+
+    def _reachable_target(self):
+        # Forward kinematics samples the robot's own workspace, including planar arms.
+        initial = [self.p.getJointState(self.robot,j)[:2] for j in self.joints]
+        try:
+            for _ in range(128):
+                for j,(lo,hi),continuous in zip(self.joints,self.limits,self.continuous):
+                    self.p.resetJointState(self.robot,j,0 if continuous else self.np_random.uniform(lo,hi))
+                self.p.performCollisionDetection()
+                bad = any(c[8] < -0.001 for c in self.p.getContactPoints(bodyA=self.robot))
+                if not bad:
+                    return np.array(self.p.getLinkState(self.robot,self.tip_index,computeForwardKinematics=True)[4],dtype=np.float32)
+            raise ValueError("No collision-free target found in 128 joint configurations; revise the model")
+        finally:
+            for j,(q,dq) in zip(self.joints,initial): self.p.resetJointState(self.robot,j,q,dq)
+            self.p.performCollisionDetection()
 
     def apply(self, action):
         action = np.asarray(action, dtype=np.float32)
         if action.shape != (len(self.joints),) or not np.all(np.isfinite(action)):
             raise ValueError("Expected one finite action per actuated joint")
         action = np.clip(action, -1.0, 1.0)
-        for a, j, (lo, hi), effort, velocity in zip(action, self.joints, self.limits, self.efforts, self.velocities):
-            self.p.setJointMotorControl2(self.robot, j, p.POSITION_CONTROL,
-                                    targetPosition=lo + (float(a) + 1.0) * 0.5 * (hi - lo), force=effort, maxVelocity=velocity)
+        for a, j, (lo, hi), effort, velocity, continuous in zip(action, self.joints, self.limits, self.efforts, self.velocities, self.continuous):
+            if continuous:
+                self.p.setJointMotorControl2(self.robot,j,p.VELOCITY_CONTROL,targetVelocity=float(a)*velocity,force=effort)
+            else:
+                self.p.setJointMotorControl2(self.robot, j, p.POSITION_CONTROL,
+                                        targetPosition=lo + (float(a) + 1.0) * 0.5 * (hi - lo), force=effort, maxVelocity=velocity)
 
     def step(self, action):
-        self.apply(action); self.p.stepSimulation(); self.steps += 1
+        self.apply(action)
+        for _ in range(12): self.p.stepSimulation()
+        self.steps += 1
         reward, terminated = self.task_fn(self, np.asarray(action, dtype=np.float32))
         return self._obs(), reward, terminated, self.steps >= self.max_steps, {"is_success": bool(terminated and self.task_name in ("reach", "hold", "goto", "aperture"))}
 

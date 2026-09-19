@@ -1,4 +1,4 @@
-// Deterministic natural-language understanding for demo mode + a modification
+// Deterministic natural-language understanding for local generation + a modification
 // engine used by every provider. No ML; keyword + regex rules that cover the
 // documented prompts and degrade gracefully.
 import type { RobotSpecification, Geometry, Sensor, SensorType } from "@ttr/robot-schema";
@@ -22,7 +22,7 @@ function gripperKind(text: string): "parallel" | "suction" | "none" {
   return "parallel";
 }
 
-/** Deterministic NL -> RobotSpecification (demo mode / fallback). */
+/** Deterministic NL -> RobotSpecification (local generation). */
 export function parsePrompt(prompt: string): RobotSpecification {
   const t = (prompt || "").toLowerCase();
   const dof = extractDof(t);
@@ -59,7 +59,8 @@ export function parsePrompt(prompt: string): RobotSpecification {
   } else if (/gripper|end.?effector/.test(t) && !/arm/.test(t)) {
     spec = standaloneGripper(g === "suction" ? "suction" : "parallel", prompt);
   } else {
-    // default: robotic arm
+    if(!/arm|manipulator/.test(t) && dof===undefined)
+      throw new Error("Robot type not recognised. Choose an arm, SCARA, gripper, wheeled base, quadruped, hexapod, humanoid or character template, then describe your changes.");
     spec = nDofArm(dof ?? 6, { name: `arm_${dof ?? 6}dof`, prompt, gripper: g === "none" ? "none" : "parallel" });
     if (g === "suction") { replaceGripperWithSuction(spec); }
   }
@@ -72,7 +73,7 @@ export function parsePrompt(prompt: string): RobotSpecification {
   applySizeDirectives(spec, t);
   applyInlineSensors(spec, t);
   spec.metadata.source_prompt = prompt;
-  spec.metadata.notes.push(`Interpreted by demo parser: type inferred, DOF=${dofOf(spec)}, gripper=${g}.`);
+  spec.metadata.notes.push(`Interpreted locally: type inferred, DOF=${dofOf(spec)}, gripper=${g}.`);
   return spec;
 }
 

@@ -1,13 +1,14 @@
 # Architecture
 
-The central rule: **the LLM never writes URDF**. It only produces a structured
-`RobotSpecification`. Everything downstream is deterministic, typed and tested.
+The web service uses **local, deterministic generation**. A prompt parser selects
+our parameterised robot designs and produces a typed `RobotSpecification`. There
+is no cloud inference, account, token or runtime dependency on external assets.
 
 ```
 User prompt
    │
    ▼
-LLM provider  ──(or)──►  deterministic demo parser   (packages/llm-providers, robot-generator/nlp)
+Local prompt parser + researched design templates  (robot-generator/nlp, robot-templates)
    │
    ▼
 RobotSpecification (JSON)                              (packages/robot-schema)
@@ -42,7 +43,7 @@ URDF structural validation                            (packages/urdf-validator)
 | `robot-templates` | Deterministic starting robots (arms, mobile, legged, humanoid, grippers) |
 | `urdf-generator` | Pure URDF + Xacro string generation |
 | `urdf-validator` | XML parser, URDF structural validation, URDF→spec parser |
-| `llm-providers` | Provider interface + OpenAI + Anthropic; demo mode owned by generator |
+| `llm-providers` | Legacy extension types and local service status; no cloud adapters |
 | `robot-generator` | Orchestration: NL parse, generate, modify, repair loop, diff |
 | `ros2-export` | ament_cmake package, MoveIt 2 config (SRDF/kinematics/controllers/launch), Gazebo world + spawn launch |
 | `components` | Real-part catalogue; BOM sized by per-joint holding torque and fitted to a cost budget |

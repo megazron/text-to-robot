@@ -4,16 +4,237 @@
     {
       "name": "base_link",
       "geometry": {
-        "type": "cylinder",
-        "radius": 0.06,
-        "length": 0.12
+        "type": "mesh",
+        "part": "mounting_plate",
+        "params": {
+          "width": 0.144,
+          "height": 0.144,
+          "thickness": 0.003,
+          "bore": 0.0034,
+          "inset": 0.012,
+          "vents": 0
+        },
+        "file": "base_link.stl",
+        "volume": 0.00006210028986619019,
+        "inertia_unit": {
+          "ixx": 1.0715416579900305e-7,
+          "iyy": 1.0715416579900305e-7,
+          "izz": 2.1421518116320682e-7,
+          "ixy": -1.5186519058590717e-24,
+          "ixz": -1.088501831460161e-25,
+          "iyz": 9.380502796164096e-26
+        },
+        "bbox": {
+          "min": [
+            -0.072,
+            -0.072,
+            -0.0015
+          ],
+          "max": [
+            0.072,
+            0.072,
+            0.0015
+          ]
+        },
+        "centroid": [
+          -2.905644322007687e-18,
+          -5.177841390057396e-18,
+          8.732205145896446e-21
+        ]
       },
-      "mass": 0.6107256118578557,
+      "mass": 0.16767078263871352,
       "material": "base_mat",
       "role": "base",
       "origin": {
         "xyz": [
           0,
+          0,
+          0.0015
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "material_density",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.00028931624765730826,
+        "iyy": 0.00028931624765730826,
+        "izz": 0.0005783809891406585,
+        "ixy": -4.100360145819494e-21,
+        "ixz": -2.9389549449424345e-22,
+        "iyz": 2.532735754964306e-22
+      },
+      "collision": {
+        "type": "mesh",
+        "part": "mounting_plate",
+        "params": {
+          "width": 0.144,
+          "height": 0.144,
+          "thickness": 0.003,
+          "bore": 0.0034,
+          "inset": 0.012,
+          "vents": 0
+        },
+        "file": "base_link.stl",
+        "volume": 0.00006210028986619019,
+        "inertia_unit": {
+          "ixx": 1.0715416579900305e-7,
+          "iyy": 1.0715416579900305e-7,
+          "izz": 2.1421518116320682e-7,
+          "ixy": -1.5186519058590717e-24,
+          "ixz": -1.088501831460161e-25,
+          "iyz": 9.380502796164096e-26
+        },
+        "bbox": {
+          "min": [
+            -0.072,
+            -0.072,
+            -0.0015
+          ],
+          "max": [
+            0.072,
+            0.072,
+            0.0015
+          ]
+        },
+        "centroid": [
+          -2.905644322007687e-18,
+          -5.177841390057396e-18,
+          8.732205145896446e-21
+        ]
+      }
+    },
+    {
+      "name": "base_link_service_lid",
+      "geometry": {
+        "type": "mesh",
+        "part": "mounting_plate",
+        "params": {
+          "width": 0.144,
+          "height": 0.144,
+          "thickness": 0.003,
+          "bore": 0.0034,
+          "inset": 0.012,
+          "vents": 5
+        },
+        "file": "base_link_service_lid.stl",
+        "volume": 0.00005864428986619015,
+        "inertia_unit": {
+          "ixx": 1.067045977990031e-7,
+          "iyy": 1.0619605891900305e-7,
+          "izz": 2.1281269028320687e-7,
+          "ixy": 9.047287949798735e-25,
+          "ixz": 3.6451684708452514e-26,
+          "iyz": -1.3974828708171268e-25
+        },
+        "bbox": {
+          "min": [
+            -0.072,
+            -0.072,
+            -0.0015
+          ],
+          "max": [
+            0.072,
+            0.072,
+            0.0015
+          ]
+        },
+        "centroid": [
+          -8.118300007142343e-18,
+          2.7195325931405324e-18,
+          -1.0181876772551665e-20
+        ]
+      },
+      "mass": 0.1583395826387134,
+      "material": "base_mat",
+      "role": "housing",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0.1185
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0002881024140573084,
+        "iyy": 0.00028672935908130825,
+        "izz": 0.0005745942637646585,
+        "ixy": 2.4427677464456583e-21,
+        "ixz": 9.841954871282179e-23,
+        "iyz": -3.7732037512062425e-22
+      },
+      "collision": {
+        "type": "mesh",
+        "part": "mounting_plate",
+        "params": {
+          "width": 0.144,
+          "height": 0.144,
+          "thickness": 0.003,
+          "bore": 0.0034,
+          "inset": 0.012,
+          "vents": 5
+        },
+        "file": "base_link_service_lid.stl",
+        "volume": 0.00005864428986619015,
+        "inertia_unit": {
+          "ixx": 1.067045977990031e-7,
+          "iyy": 1.0619605891900305e-7,
+          "izz": 2.1281269028320687e-7,
+          "ixy": 9.047287949798735e-25,
+          "ixz": 3.6451684708452514e-26,
+          "iyz": -1.3974828708171268e-25
+        },
+        "bbox": {
+          "min": [
+            -0.072,
+            -0.072,
+            -0.0015
+          ],
+          "max": [
+            0.072,
+            0.072,
+            0.0015
+          ]
+        },
+        "centroid": [
+          -8.118300007142343e-18,
+          2.7195325931405324e-18,
+          -1.0181876772551665e-20
+        ]
+      }
+    },
+    {
+      "name": "base_link_rear_panel",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.003,
+          0.144,
+          0.11399999999999999
+        ]
+      },
+      "mass": 0.1329696,
+      "material": "base_mat",
+      "role": "housing",
+      "origin": {
+        "xyz": [
+          -0.0705,
           0,
           0.06
         ],
@@ -29,34 +250,40 @@
         "inertia"
       ],
       "inertia": {
-        "ixx": 0.001282523784901497,
-        "iyy": 0.001282523784901497,
-        "izz": 0.00109930610134414,
+        "ixx": 0.00037377754559999996,
+        "iyy": 0.00014410580399999996,
+        "izz": 0.00022987119599999996,
         "ixy": 0,
         "ixz": 0,
         "iyz": 0
       },
       "collision": {
-        "type": "cylinder",
-        "radius": 0.06,
-        "length": 0.12
+        "type": "box",
+        "size": [
+          0.003,
+          0.144,
+          0.11399999999999999
+        ]
       }
     },
     {
-      "name": "shoulder",
+      "name": "base_link_right_panel",
       "geometry": {
-        "type": "cylinder",
-        "radius": 0.04,
-        "length": 0.1
+        "type": "box",
+        "size": [
+          0.13799999999999998,
+          0.003,
+          0.11399999999999999
+        ]
       },
-      "mass": 0.22619467105846514,
-      "material": "link_mat",
-      "role": "shoulder",
+      "mass": 0.1274292,
+      "material": "base_mat",
+      "role": "housing",
       "origin": {
         "xyz": [
           0,
-          0,
-          0.05
+          -0.0705,
+          0.06
         ],
         "rpy": [
           0,
@@ -70,27 +297,658 @@
         "inertia"
       ],
       "inertia": {
-        "ixx": 0.0002789734276387737,
-        "iyy": 0.0002789734276387737,
-        "izz": 0.0001809557368467721,
+        "ixx": 0.00013810139549999998,
+        "iyy": 0.00034023596399999987,
+        "izz": 0.00020232571229999993,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.13799999999999998,
+          0.003,
+          0.11399999999999999
+        ]
+      }
+    },
+    {
+      "name": "base_link_front_panel",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.003,
+          0.144,
+          0.11399999999999999
+        ]
+      },
+      "mass": 0.1329696,
+      "material": "base_mat",
+      "role": "housing",
+      "origin": {
+        "xyz": [
+          0.0705,
+          0,
+          0.06
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.00037377754559999996,
+        "iyy": 0.00014410580399999996,
+        "izz": 0.00022987119599999996,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.003,
+          0.144,
+          0.11399999999999999
+        ]
+      }
+    },
+    {
+      "name": "base_link_left_panel",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.13799999999999998,
+          0.003,
+          0.11399999999999999
+        ]
+      },
+      "mass": 0.1274292,
+      "material": "base_mat",
+      "role": "housing",
+      "origin": {
+        "xyz": [
+          0,
+          0.0705,
+          0.06
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.00013810139549999998,
+        "iyy": 0.00034023596399999987,
+        "izz": 0.00020232571229999993,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.13799999999999998,
+          0.003,
+          0.11399999999999999
+        ]
+      }
+    },
+    {
+      "name": "base_link_standoff_rr",
+      "geometry": {
+        "type": "mesh",
+        "part": "ring",
+        "params": {
+          "outer": 0.004,
+          "inner": 0.0017,
+          "height": 0.11399999999999999
+        },
+        "file": "base_link_standoff_rr.stl",
+        "volume": 0.0000046818387676933485,
+        "inertia_unit": {
+          "ixx": 5.092478317667482e-9,
+          "iyy": 5.092478317667482e-9,
+          "izz": 4.4093864511161333e-11,
+          "ixy": -5.809960566952752e-28,
+          "ixz": 2.8020339353450332e-27,
+          "iyz": -1.2921541627520182e-27
+        },
+        "bbox": {
+          "min": [
+            -0.004,
+            -0.004,
+            -0.056999999999999995
+          ],
+          "max": [
+            0.004,
+            0.004,
+            0.056999999999999995
+          ]
+        },
+        "centroid": [
+          -1.142536563011404e-19,
+          -1.2329628340052175e-19,
+          3.659816561591636e-18
+        ]
+      },
+      "mass": 0.02,
+      "material": "base_mat",
+      "role": "housing",
+      "origin": {
+        "xyz": [
+          -0.06,
+          -0.06,
+          0.06
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.00002175418065571894,
+        "iyy": 0.00002175418065571894,
+        "izz": 1.8836131143783717e-7,
+        "ixy": -2.4819139894538517e-24,
+        "ixz": 1.1969801073374173e-23,
+        "iyz": -5.5198575895796495e-24
+      },
+      "collision": {
+        "type": "mesh",
+        "part": "ring",
+        "params": {
+          "outer": 0.004,
+          "inner": 0.0017,
+          "height": 0.11399999999999999
+        },
+        "file": "base_link_standoff_rr.stl",
+        "volume": 0.0000046818387676933485,
+        "inertia_unit": {
+          "ixx": 5.092478317667482e-9,
+          "iyy": 5.092478317667482e-9,
+          "izz": 4.4093864511161333e-11,
+          "ixy": -5.809960566952752e-28,
+          "ixz": 2.8020339353450332e-27,
+          "iyz": -1.2921541627520182e-27
+        },
+        "bbox": {
+          "min": [
+            -0.004,
+            -0.004,
+            -0.056999999999999995
+          ],
+          "max": [
+            0.004,
+            0.004,
+            0.056999999999999995
+          ]
+        },
+        "centroid": [
+          -1.142536563011404e-19,
+          -1.2329628340052175e-19,
+          3.659816561591636e-18
+        ]
+      }
+    },
+    {
+      "name": "base_link_standoff_rl",
+      "geometry": {
+        "type": "mesh",
+        "part": "ring",
+        "params": {
+          "outer": 0.004,
+          "inner": 0.0017,
+          "height": 0.11399999999999999
+        },
+        "file": "base_link_standoff_rl.stl",
+        "volume": 0.0000046818387676933485,
+        "inertia_unit": {
+          "ixx": 5.092478317667482e-9,
+          "iyy": 5.092478317667482e-9,
+          "izz": 4.4093864511161333e-11,
+          "ixy": -5.809960566952752e-28,
+          "ixz": 2.8020339353450332e-27,
+          "iyz": -1.2921541627520182e-27
+        },
+        "bbox": {
+          "min": [
+            -0.004,
+            -0.004,
+            -0.056999999999999995
+          ],
+          "max": [
+            0.004,
+            0.004,
+            0.056999999999999995
+          ]
+        },
+        "centroid": [
+          -1.142536563011404e-19,
+          -1.2329628340052175e-19,
+          3.659816561591636e-18
+        ]
+      },
+      "mass": 0.02,
+      "material": "base_mat",
+      "role": "housing",
+      "origin": {
+        "xyz": [
+          -0.06,
+          0.06,
+          0.06
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.00002175418065571894,
+        "iyy": 0.00002175418065571894,
+        "izz": 1.8836131143783717e-7,
+        "ixy": -2.4819139894538517e-24,
+        "ixz": 1.1969801073374173e-23,
+        "iyz": -5.5198575895796495e-24
+      },
+      "collision": {
+        "type": "mesh",
+        "part": "ring",
+        "params": {
+          "outer": 0.004,
+          "inner": 0.0017,
+          "height": 0.11399999999999999
+        },
+        "file": "base_link_standoff_rl.stl",
+        "volume": 0.0000046818387676933485,
+        "inertia_unit": {
+          "ixx": 5.092478317667482e-9,
+          "iyy": 5.092478317667482e-9,
+          "izz": 4.4093864511161333e-11,
+          "ixy": -5.809960566952752e-28,
+          "ixz": 2.8020339353450332e-27,
+          "iyz": -1.2921541627520182e-27
+        },
+        "bbox": {
+          "min": [
+            -0.004,
+            -0.004,
+            -0.056999999999999995
+          ],
+          "max": [
+            0.004,
+            0.004,
+            0.056999999999999995
+          ]
+        },
+        "centroid": [
+          -1.142536563011404e-19,
+          -1.2329628340052175e-19,
+          3.659816561591636e-18
+        ]
+      }
+    },
+    {
+      "name": "base_link_standoff_fr",
+      "geometry": {
+        "type": "mesh",
+        "part": "ring",
+        "params": {
+          "outer": 0.004,
+          "inner": 0.0017,
+          "height": 0.11399999999999999
+        },
+        "file": "base_link_standoff_fr.stl",
+        "volume": 0.0000046818387676933485,
+        "inertia_unit": {
+          "ixx": 5.092478317667482e-9,
+          "iyy": 5.092478317667482e-9,
+          "izz": 4.4093864511161333e-11,
+          "ixy": -5.809960566952752e-28,
+          "ixz": 2.8020339353450332e-27,
+          "iyz": -1.2921541627520182e-27
+        },
+        "bbox": {
+          "min": [
+            -0.004,
+            -0.004,
+            -0.056999999999999995
+          ],
+          "max": [
+            0.004,
+            0.004,
+            0.056999999999999995
+          ]
+        },
+        "centroid": [
+          -1.142536563011404e-19,
+          -1.2329628340052175e-19,
+          3.659816561591636e-18
+        ]
+      },
+      "mass": 0.02,
+      "material": "base_mat",
+      "role": "housing",
+      "origin": {
+        "xyz": [
+          0.06,
+          -0.06,
+          0.06
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.00002175418065571894,
+        "iyy": 0.00002175418065571894,
+        "izz": 1.8836131143783717e-7,
+        "ixy": -2.4819139894538517e-24,
+        "ixz": 1.1969801073374173e-23,
+        "iyz": -5.5198575895796495e-24
+      },
+      "collision": {
+        "type": "mesh",
+        "part": "ring",
+        "params": {
+          "outer": 0.004,
+          "inner": 0.0017,
+          "height": 0.11399999999999999
+        },
+        "file": "base_link_standoff_fr.stl",
+        "volume": 0.0000046818387676933485,
+        "inertia_unit": {
+          "ixx": 5.092478317667482e-9,
+          "iyy": 5.092478317667482e-9,
+          "izz": 4.4093864511161333e-11,
+          "ixy": -5.809960566952752e-28,
+          "ixz": 2.8020339353450332e-27,
+          "iyz": -1.2921541627520182e-27
+        },
+        "bbox": {
+          "min": [
+            -0.004,
+            -0.004,
+            -0.056999999999999995
+          ],
+          "max": [
+            0.004,
+            0.004,
+            0.056999999999999995
+          ]
+        },
+        "centroid": [
+          -1.142536563011404e-19,
+          -1.2329628340052175e-19,
+          3.659816561591636e-18
+        ]
+      }
+    },
+    {
+      "name": "base_link_standoff_fl",
+      "geometry": {
+        "type": "mesh",
+        "part": "ring",
+        "params": {
+          "outer": 0.004,
+          "inner": 0.0017,
+          "height": 0.11399999999999999
+        },
+        "file": "base_link_standoff_fl.stl",
+        "volume": 0.0000046818387676933485,
+        "inertia_unit": {
+          "ixx": 5.092478317667482e-9,
+          "iyy": 5.092478317667482e-9,
+          "izz": 4.4093864511161333e-11,
+          "ixy": -5.809960566952752e-28,
+          "ixz": 2.8020339353450332e-27,
+          "iyz": -1.2921541627520182e-27
+        },
+        "bbox": {
+          "min": [
+            -0.004,
+            -0.004,
+            -0.056999999999999995
+          ],
+          "max": [
+            0.004,
+            0.004,
+            0.056999999999999995
+          ]
+        },
+        "centroid": [
+          -1.142536563011404e-19,
+          -1.2329628340052175e-19,
+          3.659816561591636e-18
+        ]
+      },
+      "mass": 0.02,
+      "material": "base_mat",
+      "role": "housing",
+      "origin": {
+        "xyz": [
+          0.06,
+          0.06,
+          0.06
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.00002175418065571894,
+        "iyy": 0.00002175418065571894,
+        "izz": 1.8836131143783717e-7,
+        "ixy": -2.4819139894538517e-24,
+        "ixz": 1.1969801073374173e-23,
+        "iyz": -5.5198575895796495e-24
+      },
+      "collision": {
+        "type": "mesh",
+        "part": "ring",
+        "params": {
+          "outer": 0.004,
+          "inner": 0.0017,
+          "height": 0.11399999999999999
+        },
+        "file": "base_link_standoff_fl.stl",
+        "volume": 0.0000046818387676933485,
+        "inertia_unit": {
+          "ixx": 5.092478317667482e-9,
+          "iyy": 5.092478317667482e-9,
+          "izz": 4.4093864511161333e-11,
+          "ixy": -5.809960566952752e-28,
+          "ixz": 2.8020339353450332e-27,
+          "iyz": -1.2921541627520182e-27
+        },
+        "bbox": {
+          "min": [
+            -0.004,
+            -0.004,
+            -0.056999999999999995
+          ],
+          "max": [
+            0.004,
+            0.004,
+            0.056999999999999995
+          ]
+        },
+        "centroid": [
+          -1.142536563011404e-19,
+          -1.2329628340052175e-19,
+          3.659816561591636e-18
+        ]
+      }
+    },
+    {
+      "name": "shoulder",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.0288,
+        "length": 0.16999999999999998
+      },
+      "mass": 0.1993408397104041,
+      "material": "link_mat",
+      "role": "shoulder",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0.125
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0005214145054915725,
+        "iyy": 0.0005214145054915725,
+        "izz": 0.00008267063304469878,
         "ixy": 0,
         "ixz": 0,
         "iyz": 0
       },
       "collision": {
         "type": "cylinder",
-        "radius": 0.04,
-        "length": 0.1
+        "radius": 0.0288,
+        "length": 0.16999999999999998
+      }
+    },
+    {
+      "name": "shoulder_mount",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.02,
+        "length": 0.0060160000000000005
+      },
+      "mass": 0.02,
+      "material": "base_mat",
+      "role": "joint_mount",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0.12300799999999999
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0000020603204266666668,
+        "iyy": 0.0000020603204266666668,
+        "izz": 0.000004000000000000001,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.02,
+        "length": 0.0060160000000000005
+      }
+    },
+    {
+      "name": "shoulder_joint_hub",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.033984,
+        "length": 0.026
+      },
+      "mass": 0.12,
+      "material": "accent_mat",
+      "role": "joint_housing",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          1.5707963267948966,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.00004140736768,
+        "iyy": 0.00004140736768,
+        "izz": 0.00006929473535999999,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.033984,
+        "length": 0.026
       }
     },
     {
       "name": "upper_arm",
       "geometry": {
         "type": "cylinder",
-        "radius": 0.04,
-        "length": 0.25
+        "radius": 0.0288,
+        "length": 0.16999999999999998
       },
-      "mass": 0.5654866776461629,
+      "mass": 0.1993408397104041,
       "material": "link_mat",
       "role": "upper_arm",
       "origin": {
@@ -111,17 +969,57 @@
         "inertia"
       ],
       "inertia": {
-        "ixx": 0.003171437783798897,
-        "iyy": 0.003171437783798897,
-        "izz": 0.00045238934211693036,
+        "ixx": 0.0005214145054915725,
+        "iyy": 0.0005214145054915725,
+        "izz": 0.00008267063304469878,
         "ixy": 0,
         "ixz": 0,
         "iyz": 0
       },
       "collision": {
         "type": "cylinder",
-        "radius": 0.04,
-        "length": 0.25
+        "radius": 0.0288,
+        "length": 0.16999999999999998
+      }
+    },
+    {
+      "name": "upper_arm_joint_hub",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.033984,
+        "length": 0.026
+      },
+      "mass": 0.12,
+      "material": "accent_mat",
+      "role": "joint_housing",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          1.5707963267948966,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.00004140736768,
+        "iyy": 0.00004140736768,
+        "izz": 0.00006929473535999999,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.033984,
+        "length": 0.026
       }
     },
     {
@@ -264,19 +1162,113 @@
           0.06
         ]
       }
+    },
+    {
+      "name": "left_finger_pad",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.015,
+          0.002,
+          0.036
+        ]
+      },
+      "mass": 0.02,
+      "material": "wheel_mat",
+      "role": "contact_pad",
+      "origin": {
+        "xyz": [
+          0,
+          -0.011,
+          0.039
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0000021666666666666665,
+        "iyy": 0.000002535,
+        "izz": 3.816666666666667e-7,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.015,
+          0.002,
+          0.036
+        ]
+      }
+    },
+    {
+      "name": "right_finger_pad",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.015,
+          0.002,
+          0.036
+        ]
+      },
+      "mass": 0.02,
+      "material": "wheel_mat",
+      "role": "contact_pad",
+      "origin": {
+        "xyz": [
+          0,
+          0.011,
+          0.039
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "mass",
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0000021666666666666665,
+        "iyy": 0.000002535,
+        "izz": 3.816666666666667e-7,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.015,
+          0.002,
+          0.036
+        ]
+      }
     }
   ],
   "joints": [
     {
-      "name": "joint_1",
-      "type": "revolute",
+      "name": "base_link_service_lid_mount",
+      "type": "fixed",
       "parent": "base_link",
-      "child": "shoulder",
+      "child": "base_link_service_lid",
       "origin": {
         "xyz": [
           0,
           0,
-          0.12
+          0
         ],
         "rpy": [
           0,
@@ -296,24 +1288,266 @@
       "inferred": [
         "limit",
         "dynamics"
-      ],
-      "limit": {
-        "lower": -3.141592653589793,
-        "upper": 3.141592653589793,
-        "effort": 50,
-        "velocity": 2
-      }
+      ]
     },
     {
-      "name": "joint_2",
-      "type": "revolute",
-      "parent": "shoulder",
-      "child": "upper_arm",
+      "name": "base_link_rear_panel_mount",
+      "type": "fixed",
+      "parent": "base_link",
+      "child": "base_link_rear_panel",
       "origin": {
         "xyz": [
           0,
           0,
-          0.1
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "base_link_right_panel_mount",
+      "type": "fixed",
+      "parent": "base_link",
+      "child": "base_link_right_panel",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "base_link_front_panel_mount",
+      "type": "fixed",
+      "parent": "base_link",
+      "child": "base_link_front_panel",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "base_link_left_panel_mount",
+      "type": "fixed",
+      "parent": "base_link",
+      "child": "base_link_left_panel",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "base_link_standoff_rr_mount",
+      "type": "fixed",
+      "parent": "base_link",
+      "child": "base_link_standoff_rr",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "base_link_standoff_rl_mount",
+      "type": "fixed",
+      "parent": "base_link",
+      "child": "base_link_standoff_rl",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "base_link_standoff_fr_mount",
+      "type": "fixed",
+      "parent": "base_link",
+      "child": "base_link_standoff_fr",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "base_link_standoff_fl_mount",
+      "type": "fixed",
+      "parent": "base_link",
+      "child": "base_link_standoff_fl",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "joint_1",
+      "type": "revolute",
+      "parent": "base_link",
+      "child": "shoulder",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0.16
         ],
         "rpy": [
           0,
@@ -331,15 +1565,143 @@
         "friction": 0
       },
       "inferred": [
-        "limit",
         "dynamics"
       ],
       "limit": {
         "lower": -3.141592653589793,
         "upper": 3.141592653589793,
-        "effort": 50,
-        "velocity": 2
+        "effort": 12,
+        "velocity": 1.5
       }
+    },
+    {
+      "name": "shoulder_mount_fixed",
+      "type": "fixed",
+      "parent": "base_link",
+      "child": "shoulder_mount",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "shoulder_joint_hub_mount",
+      "type": "fixed",
+      "parent": "shoulder",
+      "child": "shoulder_joint_hub",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "joint_2",
+      "type": "revolute",
+      "parent": "shoulder",
+      "child": "upper_arm",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0.25
+        ],
+        "rpy": [
+          0,
+          0.55,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "dynamics"
+      ],
+      "limit": {
+        "lower": -3.141592653589793,
+        "upper": 3.141592653589793,
+        "effort": 12,
+        "velocity": 1.5
+      }
+    },
+    {
+      "name": "upper_arm_joint_hub_mount",
+      "type": "fixed",
+      "parent": "upper_arm",
+      "child": "upper_arm_joint_hub",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
     },
     {
       "name": "gripper_base_joint",
@@ -380,7 +1742,7 @@
       "origin": {
         "xyz": [
           0,
-          0.02,
+          0.012,
           0.03
         ],
         "rpy": [
@@ -405,7 +1767,7 @@
         "lower": 0,
         "upper": 0.03,
         "effort": 40,
-        "velocity": 0.3
+        "velocity": 0.06
       }
     },
     {
@@ -416,7 +1778,7 @@
       "origin": {
         "xyz": [
           0,
-          -0.02,
+          -0.012,
           0.03
         ],
         "rpy": [
@@ -441,8 +1803,70 @@
         "lower": 0,
         "upper": 0.03,
         "effort": 40,
-        "velocity": 0.3
+        "velocity": 0.06
       }
+    },
+    {
+      "name": "left_finger_pad_mount",
+      "type": "fixed",
+      "parent": "left_finger",
+      "child": "left_finger_pad",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "right_finger_pad_mount",
+      "type": "fixed",
+      "parent": "right_finger",
+      "child": "right_finger_pad",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
     }
   ],
   "materials": [
@@ -511,32 +1935,85 @@
   ],
   "metadata": {
     "generator": "text-to-robot",
-    "created": "2026-09-19T06:54:09.203Z",
+    "created": "2026-09-19T17:49:00.425Z",
     "inferred_fields": [
+      "joints.base_link_front_panel_mount.dynamics",
+      "joints.base_link_front_panel_mount.limit",
+      "joints.base_link_left_panel_mount.dynamics",
+      "joints.base_link_left_panel_mount.limit",
+      "joints.base_link_rear_panel_mount.dynamics",
+      "joints.base_link_rear_panel_mount.limit",
+      "joints.base_link_right_panel_mount.dynamics",
+      "joints.base_link_right_panel_mount.limit",
+      "joints.base_link_service_lid_mount.dynamics",
+      "joints.base_link_service_lid_mount.limit",
+      "joints.base_link_standoff_fl_mount.dynamics",
+      "joints.base_link_standoff_fl_mount.limit",
+      "joints.base_link_standoff_fr_mount.dynamics",
+      "joints.base_link_standoff_fr_mount.limit",
+      "joints.base_link_standoff_rl_mount.dynamics",
+      "joints.base_link_standoff_rl_mount.limit",
+      "joints.base_link_standoff_rr_mount.dynamics",
+      "joints.base_link_standoff_rr_mount.limit",
       "joints.gripper_base_joint.dynamics",
       "joints.gripper_base_joint.limit",
       "joints.joint_1.dynamics",
-      "joints.joint_1.limit",
       "joints.joint_2.dynamics",
-      "joints.joint_2.limit",
       "joints.left_finger_joint.dynamics",
+      "joints.left_finger_pad_mount.dynamics",
+      "joints.left_finger_pad_mount.limit",
       "joints.right_finger_joint.dynamics",
+      "joints.right_finger_pad_mount.dynamics",
+      "joints.right_finger_pad_mount.limit",
+      "joints.shoulder_joint_hub_mount.dynamics",
+      "joints.shoulder_joint_hub_mount.limit",
+      "joints.shoulder_mount_fixed.dynamics",
+      "joints.shoulder_mount_fixed.limit",
+      "joints.upper_arm_joint_hub_mount.dynamics",
+      "joints.upper_arm_joint_hub_mount.limit",
       "links.base_link.inertia",
-      "links.base_link.mass",
+      "links.base_link.material_density",
+      "links.base_link_front_panel.inertia",
+      "links.base_link_front_panel.mass",
+      "links.base_link_left_panel.inertia",
+      "links.base_link_left_panel.mass",
+      "links.base_link_rear_panel.inertia",
+      "links.base_link_rear_panel.mass",
+      "links.base_link_right_panel.inertia",
+      "links.base_link_right_panel.mass",
+      "links.base_link_service_lid.inertia",
+      "links.base_link_service_lid.mass",
+      "links.base_link_standoff_fl.inertia",
+      "links.base_link_standoff_fl.mass",
+      "links.base_link_standoff_fr.inertia",
+      "links.base_link_standoff_fr.mass",
+      "links.base_link_standoff_rl.inertia",
+      "links.base_link_standoff_rl.mass",
+      "links.base_link_standoff_rr.inertia",
+      "links.base_link_standoff_rr.mass",
       "links.gripper_base.inertia",
       "links.gripper_base.mass",
       "links.left_finger.inertia",
       "links.left_finger.mass",
+      "links.left_finger_pad.inertia",
+      "links.left_finger_pad.mass",
       "links.right_finger.inertia",
       "links.right_finger.mass",
+      "links.right_finger_pad.inertia",
+      "links.right_finger_pad.mass",
       "links.shoulder.inertia",
       "links.shoulder.mass",
+      "links.shoulder_joint_hub.inertia",
+      "links.shoulder_mount.inertia",
+      "links.shoulder_mount.mass",
       "links.upper_arm.inertia",
-      "links.upper_arm.mass"
+      "links.upper_arm.mass",
+      "links.upper_arm_joint_hub.inertia"
     ],
     "notes": [
-      "Generated 2-DOF serial arm from template.",
-      "Interpreted by demo parser: type inferred, DOF=4, gripper=parallel."
+      "Housing base_link: 3 mm aluminium panels, four 3.4 mm mounting bores with 12 mm edge offsets, vented removable lid and hollow standoffs. Interior 138 × 138 × 114 mm. Sheet density 2700 kg/m³ is assumed; electronics selection, inserts and screw lengths remain unqualified. Mesh collision proxies fill small bores.",
+      "Generated 2-DOF serial arm. 2-axis version is planar; 6-axis version has parallel shoulder/elbow pitch axes and a three-axis wrist. Joint offsets and motor capacities remain design assumptions.",
+      "Interpreted locally: type inferred, DOF=4, gripper=parallel."
     ],
     "source_prompt": "Create a 2 DOF robotic arm\n"
   }

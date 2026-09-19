@@ -1,14 +1,14 @@
 {
   "model": "robot.urdf",
-  "nbody": 6,
+  "nbody": 15,
   "njnt": 4,
   "nu": 4,
-  "ngeom": 6,
+  "ngeom": 29,
   "floating": false,
   "tests": {
     "compile": {
       "pass": true,
-      "total_mass_kg": 2.557,
+      "total_mass_kg": 2.457,
       "actuators": 4
     },
     "initial_clearance": {
@@ -80,7 +80,7 @@
   },
   "validation_scope": "simulation smoke tests, not hardware or wearable qualification",
   "mujoco_version": "3.13.0",
-  "model_sha256": "65d6c3d2d88b7e7ee1acda257ce04687abae3b76cc937531f31438de072de718",
+  "model_sha256": "6bf939440b4f83133a863a275f46ba7a9af47969160e2c0a5e24835503e882eb",
   "limitations": [
     "No measured motor, material, thermal or battery model",
     "No manufacturing or human-fit validation"
@@ -90,7 +90,7 @@
   "total": 5,
   "collision_model": "URDF primitives / mesh bounding boxes",
   "self_collision": true,
-  "source_urdf_sha256": "3d6cd9ea14925b37626adfdc7b1504641041f14854ff0c2671fa208c662f32e2",
+  "source_urdf_sha256": "60cbd23e95b9efe89fa159e6de5fb1e9fd283c5d6acb359a9b7f1a1173555675",
   "initial_penetrations": [],
   "hardware_verified": false
 }

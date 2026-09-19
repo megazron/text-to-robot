@@ -1,11 +1,13 @@
 import type { RobotSpecification } from "@ttr/robot-schema";
 import { emptySpec, pose } from "@ttr/robot-schema";
+import { hollowChassis } from "./mechanics.ts";
 import { box, cyl, link, joint, DEFAULT_MATERIALS } from "./builder.ts";
 
 export function quadruped(name = "quadruped", prompt?: string): RobotSpecification {
   const spec = emptySpec(name, prompt); spec.materials = [...DEFAULT_MATERIALS];
-  const bodyH = 0.35;
+  const bodyH = 0.385;
   spec.links.push(link("base_link", box(0.4, 0.2, 0.1), { material: "base_mat", role: "base", origin: pose([0, 0, bodyH]) }));
+  hollowChassis(spec);
   const corners: [string, number, number][] = [
     ["front_left", 0.18, 0.12], ["front_right", 0.18, -0.12],
     ["rear_left", -0.18, 0.12], ["rear_right", -0.18, -0.12],
@@ -19,17 +21,23 @@ export function quadruped(name = "quadruped", prompt?: string): RobotSpecificati
     spec.links.push(link(lower, cyl(0.018, 0.16), { material: "link_mat", role: "link", origin: pose([0, 0, -0.08]) }));
     spec.joints.push(joint(`${leg}_knee_joint`, "revolute", upper, lower, { origin: pose([0, 0, -0.16]), axis: [0, 1, 0], lower: -2.4, upper: 0 }));
   }
+  for(const [leg] of corners){
+    const foot=`${leg}_foot`;
+    spec.links.push(link(foot,{type:"sphere",radius:.025},{mass:.045,material:"wheel_mat",role:"contact_pad"}));
+    spec.joints.push(joint(`${foot}_mount`,"fixed",`${leg}_shin`,foot,{origin:pose([0,0,-.16])}));
+  }
   spec.metadata.notes.push("Generated quadruped (12-DOF) from template.");
   return spec;
 }
 
 export function hexapod(name = "hexapod", prompt?: string): RobotSpecification {
   const spec = emptySpec(name, prompt); spec.materials = [...DEFAULT_MATERIALS];
-  const bodyH = 0.18;
-  spec.links.push(link("base_link", cyl(0.16, 0.06), { material: "base_mat", role: "base", origin: pose([0, 0, bodyH]) }));
-  const legs: [string, number][] = [["front_left", 60], ["mid_left", 0], ["rear_left", -60], ["front_right", 120], ["mid_right", 180], ["rear_right", -120]];
+  const bodyH = 0.135;
+  spec.links.push(link("base_link", box(.26,.26,.06), { material: "base_mat", role: "base", origin: pose([0, 0, bodyH]) }));
+  hollowChassis(spec);
+  const legs: [string, number][] = [["front_left", 45], ["mid_left", 90], ["rear_left", 135], ["front_right", -45], ["mid_right", -90], ["rear_right", -135]];
   for (const [leg, deg] of legs) {
-    const a = (deg * Math.PI) / 180, R = 0.15;
+    const a = (deg * Math.PI) / 180, R = 0.20;
     const x = R * Math.cos(a), y = R * Math.sin(a);
     const coxa = `${leg}_coxa`, femur = `${leg}_femur`, tibia = `${leg}_tibia`;
     spec.links.push(link(coxa, cyl(0.02, 0.05), { material: "accent_mat", role: "link", origin: pose([0.025, 0, 0], [0, Math.PI / 2, 0]) }));
@@ -38,6 +46,11 @@ export function hexapod(name = "hexapod", prompt?: string): RobotSpecification {
     spec.joints.push(joint(`${leg}_femur_joint`, "revolute", coxa, femur, { origin: pose([0.05, 0, 0]), axis: [0, 1, 0], lower: -1.2, upper: 1.2 }));
     spec.links.push(link(tibia, cyl(0.013, 0.12), { material: "link_mat", role: "link", origin: pose([0, 0, -0.06]) }));
     spec.joints.push(joint(`${leg}_tibia_joint`, "revolute", femur, tibia, { origin: pose([0.10, 0, 0]), axis: [0, 1, 0], lower: -2.2, upper: 0.4 }));
+  }
+  for(const [leg] of legs){
+    const foot=`${leg}_foot`;
+    spec.links.push(link(foot,{type:"sphere",radius:.015},{mass:.02,material:"wheel_mat",role:"contact_pad"}));
+    spec.joints.push(joint(`${foot}_mount`,"fixed",`${leg}_tibia`,foot,{origin:pose([0,0,-.12])}));
   }
   spec.metadata.notes.push("Generated hexapod (6 legs x 3 DOF = 18 DOF) from template.");
   return spec;

@@ -13,10 +13,14 @@ not a learned policy or proof of hardware accuracy. The model's failures remain 
 ## Download and inspect
 
 - [CAD / STL / OpenSCAD](robot.cad.zip), [ROS 2 package](robot.ros2.zip), [training package](robot.training.zip), [URDF](robot.urdf), [robot JSON](robot.json), [BOM](BOM.md).
-- [Simulation report](simulation_report.json): **6/6** checks;
+- [Simulation report](simulation_report.json): **5/6** checks;
   **0** initial penetration contacts.
-- Failed checks: none in this smoke battery.
+- Failed checks: actuator_sweep.
 - [Physical build evidence and missing interfaces](BUILDABILITY.md), [machine-readable record](buildability_report.json). **No tested physical build is documented.**
+
+## Design research
+
+[Public engineering sources and model-specific changes](../../references/engineering/README.md).
 
 ## MoveIt / ROS 2
 
@@ -39,4 +43,4 @@ python scripts/verify_example_artifacts.py
 These are procedural concept models. Masses, motors and contacts are approximate;
 manufacturing interfaces and measured dynamics remain unverified.
 
-The mecanum wheels currently use cylindrical contact geometry; roller contact and holonomic traction are not modelled.
+Mecanum wheels have 32 passive rollers and four velocity-controlled hubs. See [measured forward/strafe motion](../mobile_motion.json); this is an open-loop simulation check, not calibrated hardware traction.

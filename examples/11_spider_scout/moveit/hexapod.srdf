@@ -48,7 +48,17 @@
     <joint name="rear_right_femur_joint" value="0"/>
     <joint name="rear_right_tibia_joint" value="0"/>
   </group_state>
+
   <virtual_joint name="world_joint" type="fixed" parent_frame="world" child_link="base_link"/>
+  <disable_collisions link1="base_link" link2="base_link_service_lid" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="base_link_rear_panel" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="base_link_right_panel" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="base_link_front_panel" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="base_link_left_panel" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="base_link_standoff_rr" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="base_link_standoff_rl" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="base_link_standoff_fr" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="base_link_standoff_fl" reason="Adjacent"/>
   <disable_collisions link1="base_link" link2="front_left_coxa" reason="Adjacent"/>
   <disable_collisions link1="front_left_coxa" link2="front_left_femur" reason="Adjacent"/>
   <disable_collisions link1="front_left_femur" link2="front_left_tibia" reason="Adjacent"/>
@@ -67,5 +77,11 @@
   <disable_collisions link1="base_link" link2="rear_right_coxa" reason="Adjacent"/>
   <disable_collisions link1="rear_right_coxa" link2="rear_right_femur" reason="Adjacent"/>
   <disable_collisions link1="rear_right_femur" link2="rear_right_tibia" reason="Adjacent"/>
+  <disable_collisions link1="front_left_tibia" link2="front_left_foot" reason="Adjacent"/>
+  <disable_collisions link1="mid_left_tibia" link2="mid_left_foot" reason="Adjacent"/>
+  <disable_collisions link1="rear_left_tibia" link2="rear_left_foot" reason="Adjacent"/>
+  <disable_collisions link1="front_right_tibia" link2="front_right_foot" reason="Adjacent"/>
+  <disable_collisions link1="mid_right_tibia" link2="mid_right_foot" reason="Adjacent"/>
+  <disable_collisions link1="rear_right_tibia" link2="rear_right_foot" reason="Adjacent"/>
   <disable_collisions link1="base_link" link2="lidar_1_link" reason="Adjacent"/>
 </robot>

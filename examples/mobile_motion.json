@@ -1,0 +1,114 @@
+{
+  "scope": "Two-second open-loop motion from wheel actuators and contact physics; not navigation, learning or hardware validation",
+  "mujoco_version": "3.13.0",
+  "self_collision": true,
+  "external_forces": false,
+  "results": [
+    {
+      "example": "05_diff_drive",
+      "task": "forward",
+      "pass": true,
+      "source_urdf_sha256": "862aba47a3aab8dab86eb8da904e819dd1cf48d79b7451d18df7b5d8f1bba046",
+      "commands_rad_s": {
+        "left_wheel_joint": 4.0,
+        "right_wheel_joint": 4.0
+      },
+      "displacement_m": [
+        0.3948350665726228,
+        -2.2736168979886714e-16,
+        5.602860365873548e-16
+      ],
+      "upright": 0.9999999999950968
+    },
+    {
+      "example": "06_four_wheel",
+      "task": "forward",
+      "pass": true,
+      "source_urdf_sha256": "dba122eec43bede75e2321ddde28a5f7ba8326168b01fb1dad26b3d461878491",
+      "commands_rad_s": {
+        "front_left_wheel_joint": 4.0,
+        "front_right_wheel_joint": 4.0,
+        "rear_left_wheel_joint": 4.0,
+        "rear_right_wheel_joint": 4.0
+      },
+      "displacement_m": [
+        0.3977290073015401,
+        3.434029464604102e-11,
+        6.348850752849883e-17
+      ],
+      "upright": 1.0
+    },
+    {
+      "example": "07_mecanum",
+      "task": "forward",
+      "pass": true,
+      "source_urdf_sha256": "ae0727adcf9742f0de2201cf102b362b541d49e8dfb47a6a0473efde49ba9580",
+      "commands_rad_s": {
+        "front_left_wheel_joint": 4.0,
+        "front_right_wheel_joint": 4.0,
+        "rear_left_wheel_joint": 4.0,
+        "rear_right_wheel_joint": 4.0
+      },
+      "displacement_m": [
+        0.39598194234833517,
+        1.270530829507322e-16,
+        0.00011998124266510967
+      ],
+      "upright": 0.9999997099354971
+    },
+    {
+      "example": "07_mecanum",
+      "task": "strafe",
+      "pass": true,
+      "source_urdf_sha256": "ae0727adcf9742f0de2201cf102b362b541d49e8dfb47a6a0473efde49ba9580",
+      "commands_rad_s": {
+        "front_left_wheel_joint": 4.0,
+        "front_right_wheel_joint": -4.0,
+        "rear_left_wheel_joint": -4.0,
+        "rear_right_wheel_joint": 4.0
+      },
+      "displacement_m": [
+        8.852661996784383e-08,
+        -0.38646462887820043,
+        0.00014662240776896915
+      ],
+      "upright": 0.9999998987467857
+    },
+    {
+      "example": "12_mars_rover",
+      "task": "forward",
+      "pass": true,
+      "source_urdf_sha256": "eef4a60aeddbffa097d7c7c9299421e2d88cabf04e9d0c4c5e616236510e15ee",
+      "commands_rad_s": {
+        "front_left_wheel_joint": 4.0,
+        "front_right_wheel_joint": 4.0,
+        "rear_left_wheel_joint": 4.0,
+        "rear_right_wheel_joint": 4.0
+      },
+      "displacement_m": [
+        0.3972086480929667,
+        -3.005039949035166e-18,
+        -3.83740214384031e-08
+      ],
+      "upright": 0.999999999999829
+    },
+    {
+      "example": "15_wall_e",
+      "task": "forward",
+      "pass": true,
+      "source_urdf_sha256": "ad5c9f09046fcba263b6d8fba334e9a1b70ef747bff37a3ab482e04564521c94",
+      "commands_rad_s": {
+        "left_front_wheel_joint": 4.0,
+        "left_rear_wheel_joint": 4.0,
+        "right_front_wheel_joint": 4.0,
+        "right_rear_wheel_joint": 4.0
+      },
+      "displacement_m": [
+        0.1986552861585618,
+        1.6516351099867857e-18,
+        -1.2952018811227523e-07
+      ],
+      "upright": 0.9999999999309994
+    }
+  ]
+}

@@ -12,15 +12,35 @@
     <joint name="joint_6" value="0"/>
     <joint name="joint_7" value="0"/>
   </group_state>
+
   <virtual_joint name="world_joint" type="fixed" parent_frame="world" child_link="base_link"/>
+  <disable_collisions link1="base_link" link2="base_link_service_lid" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="base_link_rear_panel" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="base_link_right_panel" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="base_link_front_panel" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="base_link_left_panel" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="base_link_standoff_rr" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="base_link_standoff_rl" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="base_link_standoff_fr" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="base_link_standoff_fl" reason="Adjacent"/>
   <disable_collisions link1="base_link" link2="shoulder" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="shoulder_mount" reason="Adjacent"/>
+  <disable_collisions link1="shoulder" link2="shoulder_joint_hub" reason="Adjacent"/>
   <disable_collisions link1="shoulder" link2="upper_arm" reason="Adjacent"/>
+  <disable_collisions link1="upper_arm" link2="upper_arm_joint_hub" reason="Adjacent"/>
   <disable_collisions link1="upper_arm" link2="forearm" reason="Adjacent"/>
+  <disable_collisions link1="forearm" link2="forearm_joint_hub" reason="Adjacent"/>
   <disable_collisions link1="forearm" link2="link_4" reason="Adjacent"/>
+  <disable_collisions link1="link_4" link2="link_4_joint_hub" reason="Adjacent"/>
   <disable_collisions link1="link_4" link2="wrist_1" reason="Adjacent"/>
+  <disable_collisions link1="wrist_1" link2="wrist_1_joint_hub" reason="Adjacent"/>
   <disable_collisions link1="wrist_1" link2="wrist_2" reason="Adjacent"/>
+  <disable_collisions link1="wrist_2" link2="wrist_2_joint_hub" reason="Adjacent"/>
   <disable_collisions link1="wrist_2" link2="wrist_3" reason="Adjacent"/>
+  <disable_collisions link1="wrist_3" link2="wrist_3_joint_hub" reason="Adjacent"/>
   <disable_collisions link1="wrist_3" link2="gripper_base" reason="Adjacent"/>
   <disable_collisions link1="gripper_base" link2="left_finger" reason="Adjacent"/>
   <disable_collisions link1="gripper_base" link2="right_finger" reason="Adjacent"/>
+  <disable_collisions link1="left_finger" link2="left_finger_pad" reason="Adjacent"/>
+  <disable_collisions link1="right_finger" link2="right_finger_pad" reason="Adjacent"/>
 </robot>

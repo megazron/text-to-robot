@@ -1,6 +1,6 @@
 {
   "scope": "Offline FCL surface-intersection audit of exported URDF visual surfaces (the MoveIt mesh sources).\nTriangle intersections are not a penetration-depth or solid-containment test.\nCylinders/spheres are tessellated; counts can differ from native MoveIt primitives.\nOnly direct parent/child links are excluded, as in the generated MoveIt SRDF.\n",
-  "source_urdf_sha256": "df8651899408c1e7da7025255c16130da906ad4a85e03d07841be3b5658b7505",
+  "source_urdf_sha256": "a10295d0f5776087ede45fa213f0f1c0e50c08560057f045a81a5f70feb1ffaa",
   "source_mesh_sha256": {
     "meshes/pelvis_frame.stl": "b39c497f29f2d4be5f925de8bd98aa23f04c4fe2ec4ddef54e6bbd9fa10f4bf2",
     "meshes/left_thigh_cuff.stl": "3674e5ff1e8a138e37aced22909094adf5f8c0bb026c943ea5863fa1d31f034e",
@@ -221,732 +221,18 @@
   },
   "neutral_pair_count": 0,
   "pairs": [],
-  "samples_per_joint": 5,
-  "poses_checked": 86,
+  "samples_per_joint": 9,
+  "poses_checked": 64,
   "motion": [
     {
-      "joint": "left_pauldron_hinge",
-      "position": -0.8,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "left_pauldron_hinge",
-      "position": -0.6000000000000001,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "left_pauldron_hinge",
-      "position": -0.4,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "left_pauldron_hinge",
-      "position": -0.19999999999999996,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "left_pauldron_hinge",
-      "position": 0.0,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "right_pauldron_hinge",
-      "position": 0.0,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "right_pauldron_hinge",
-      "position": 0.2,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "right_pauldron_hinge",
-      "position": 0.4,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "right_pauldron_hinge",
-      "position": 0.6000000000000001,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "right_pauldron_hinge",
-      "position": 0.8,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "left_shoulder_abduction",
-      "position": -0.75,
-      "pair_count": 29,
-      "new_pairs": [
-        [
-          "left_bicep_clamshell",
-          "left_lat_plate"
-        ],
-        [
-          "left_bicep_clamshell",
-          "shoulder_yoke"
-        ],
-        [
-          "left_bicep_front",
-          "left_chest_door"
-        ],
-        [
-          "left_bicep_sleeve",
-          "left_chest_door"
-        ],
-        [
-          "left_bicep_sleeve",
-          "left_lat_plate"
-        ],
-        [
-          "left_bicep_sleeve",
-          "shoulder_yoke"
-        ],
-        [
-          "left_elbow_cap",
-          "left_lat_plate"
-        ],
-        [
-          "left_elbow_module",
-          "left_lat_plate"
-        ],
-        [
-          "left_elbow_module",
-          "left_rib_1"
-        ],
-        [
-          "left_finger_2",
-          "right_thigh_clamshell"
-        ],
-        [
-          "left_finger_2_distal",
-          "right_thigh_cuff"
-        ],
-        [
-          "left_finger_2_distal_knuckle",
-          "right_thigh_clamshell"
-        ],
-        [
-          "left_finger_2_knuckle",
-          "right_thigh_clamshell"
-        ],
-        [
-          "left_finger_2_middle",
-          "right_thigh_clamshell"
-        ],
-        [
-          "left_finger_2_middle_knuckle",
-          "right_thigh_clamshell"
-        ],
-        [
-          "left_finger_3_distal",
-          "right_thigh_clamshell"
-        ],
-        [
-          "left_finger_3_distal_knuckle",
-          "right_thigh_clamshell"
-        ],
-        [
-          "left_finger_3_middle",
-          "right_thigh_clamshell"
-        ],
-        [
-          "left_finger_4",
-          "left_thigh_clamshell"
-        ],
-        [
-          "left_finger_4_knuckle",
-          "left_thigh_clamshell"
-        ],
-        [
-          "left_forearm_strut",
-          "left_lat_plate"
-        ],
-        [
-          "left_gauntlet_sleeve",
-          "left_lat_plate"
-        ],
-        [
-          "left_hand",
-          "left_thigh_clamshell"
-        ],
-        [
-          "left_hand",
-          "right_thigh_clamshell"
-        ],
-        [
-          "left_hand_plate",
-          "left_thigh_clamshell"
-        ],
-        [
-          "left_hand_plate",
-          "right_thigh_clamshell"
-        ],
-        [
-          "left_lat_plate",
-          "left_upper_arm_cuff"
-        ],
-        [
-          "left_lat_plate",
-          "left_upper_arm_strut"
-        ],
-        [
-          "left_palm_repulsor",
-          "left_thigh_clamshell"
-        ]
-      ]
-    },
-    {
-      "joint": "left_shoulder_abduction",
-      "position": -0.025000000000000022,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "left_shoulder_abduction",
-      "position": 0.7,
-      "pair_count": 4,
-      "new_pairs": [
-        [
-          "left_pauldron",
-          "left_pectoral_trim"
-        ],
-        [
-          "left_pauldron",
-          "shoulder_yoke"
-        ],
-        [
-          "left_pauldron_edge",
-          "left_pectoral_trim"
-        ],
-        [
-          "left_pauldron_edge",
-          "shoulder_yoke"
-        ]
-      ]
-    },
-    {
-      "joint": "left_shoulder_abduction",
-      "position": 1.4249999999999998,
-      "pair_count": 4,
-      "new_pairs": [
-        [
-          "left_chest_door",
-          "left_pauldron"
-        ],
-        [
-          "left_chest_door",
-          "left_pauldron_edge"
-        ],
-        [
-          "left_pauldron",
-          "left_pectoral_trim"
-        ],
-        [
-          "left_pauldron",
-          "shoulder_yoke"
-        ]
-      ]
-    },
-    {
-      "joint": "left_shoulder_abduction",
-      "position": 2.15,
-      "pair_count": 5,
-      "new_pairs": [
-        [
-          "left_chest_door",
-          "left_pauldron"
-        ],
-        [
-          "left_clavicle_cover",
-          "left_pectoral_trim"
-        ],
-        [
-          "left_lat_plate",
-          "left_pauldron"
-        ],
-        [
-          "left_pauldron",
-          "left_pectoral_trim"
-        ],
-        [
-          "left_pauldron",
-          "shoulder_yoke"
-        ]
-      ]
-    },
-    {
-      "joint": "right_shoulder_abduction",
-      "position": -0.75,
-      "pair_count": 28,
-      "new_pairs": [
-        [
-          "left_thigh_clamshell",
-          "right_finger_2_distal"
-        ],
-        [
-          "left_thigh_clamshell",
-          "right_finger_2_distal_knuckle"
-        ],
-        [
-          "left_thigh_clamshell",
-          "right_finger_2_middle"
-        ],
-        [
-          "left_thigh_clamshell",
-          "right_finger_3"
-        ],
-        [
-          "left_thigh_clamshell",
-          "right_finger_3_distal_knuckle"
-        ],
-        [
-          "left_thigh_clamshell",
-          "right_finger_3_knuckle"
-        ],
-        [
-          "left_thigh_clamshell",
-          "right_finger_3_middle"
-        ],
-        [
-          "left_thigh_clamshell",
-          "right_finger_3_middle_knuckle"
-        ],
-        [
-          "left_thigh_clamshell",
-          "right_hand"
-        ],
-        [
-          "left_thigh_clamshell",
-          "right_hand_plate"
-        ],
-        [
-          "right_bicep_clamshell",
-          "right_lat_plate"
-        ],
-        [
-          "right_bicep_clamshell",
-          "shoulder_yoke"
-        ],
-        [
-          "right_bicep_front",
-          "right_chest_door"
-        ],
-        [
-          "right_bicep_sleeve",
-          "right_chest_door"
-        ],
-        [
-          "right_bicep_sleeve",
-          "right_lat_plate"
-        ],
-        [
-          "right_bicep_sleeve",
-          "shoulder_yoke"
-        ],
-        [
-          "right_elbow_cap",
-          "right_lat_plate"
-        ],
-        [
-          "right_elbow_module",
-          "right_lat_plate"
-        ],
-        [
-          "right_elbow_module",
-          "right_rib_1"
-        ],
-        [
-          "right_finger_1",
-          "right_thigh_clamshell"
-        ],
-        [
-          "right_finger_1_knuckle",
-          "right_thigh_clamshell"
-        ],
-        [
-          "right_forearm_strut",
-          "right_lat_plate"
-        ],
-        [
-          "right_gauntlet_sleeve",
-          "right_lat_plate"
-        ],
-        [
-          "right_hand",
-          "right_thigh_clamshell"
-        ],
-        [
-          "right_hand_plate",
-          "right_thigh_clamshell"
-        ],
-        [
-          "right_lat_plate",
-          "right_upper_arm_cuff"
-        ],
-        [
-          "right_lat_plate",
-          "right_upper_arm_strut"
-        ],
-        [
-          "right_palm_repulsor",
-          "right_thigh_clamshell"
-        ]
-      ]
-    },
-    {
-      "joint": "right_shoulder_abduction",
-      "position": -0.025000000000000022,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "right_shoulder_abduction",
-      "position": 0.7,
-      "pair_count": 4,
-      "new_pairs": [
-        [
-          "right_pauldron",
-          "right_pectoral_trim"
-        ],
-        [
-          "right_pauldron",
-          "shoulder_yoke"
-        ],
-        [
-          "right_pauldron_edge",
-          "right_pectoral_trim"
-        ],
-        [
-          "right_pauldron_edge",
-          "shoulder_yoke"
-        ]
-      ]
-    },
-    {
-      "joint": "right_shoulder_abduction",
-      "position": 1.4249999999999998,
-      "pair_count": 4,
-      "new_pairs": [
-        [
-          "right_chest_door",
-          "right_pauldron"
-        ],
-        [
-          "right_chest_door",
-          "right_pauldron_edge"
-        ],
-        [
-          "right_pauldron",
-          "right_pectoral_trim"
-        ],
-        [
-          "right_pauldron",
-          "shoulder_yoke"
-        ]
-      ]
-    },
-    {
-      "joint": "right_shoulder_abduction",
-      "position": 2.15,
-      "pair_count": 5,
-      "new_pairs": [
-        [
-          "right_chest_door",
-          "right_pauldron"
-        ],
-        [
-          "right_clavicle_cover",
-          "right_pectoral_trim"
-        ],
-        [
-          "right_lat_plate",
-          "right_pauldron"
-        ],
-        [
-          "right_pauldron",
-          "right_pectoral_trim"
-        ],
-        [
-          "right_pauldron",
-          "shoulder_yoke"
-        ]
-      ]
-    },
-    {
-      "joint": "left_wrist_flexion",
-      "position": -0.8,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "left_wrist_flexion",
-      "position": -0.4,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "left_wrist_flexion",
-      "position": 0.0,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "left_wrist_flexion",
-      "position": 0.40000000000000013,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "left_wrist_flexion",
-      "position": 0.8,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "right_wrist_flexion",
-      "position": -0.8,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "right_wrist_flexion",
-      "position": -0.4,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "right_wrist_flexion",
-      "position": 0.0,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "right_wrist_flexion",
-      "position": 0.40000000000000013,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "right_wrist_flexion",
-      "position": 0.8,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "left_chest_door_hinge",
-      "position": 0.0,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "left_chest_door_hinge",
-      "position": 0.3,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "left_chest_door_hinge",
-      "position": 0.6,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "left_chest_door_hinge",
-      "position": 0.8999999999999999,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "left_chest_door_hinge",
-      "position": 1.2,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "right_chest_door_hinge",
-      "position": -1.2,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "right_chest_door_hinge",
-      "position": -0.8999999999999999,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "right_chest_door_hinge",
-      "position": -0.6,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "right_chest_door_hinge",
-      "position": -0.30000000000000004,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "right_chest_door_hinge",
-      "position": 0.0,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "left_lat_plate_hinge",
-      "position": 0.0,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "left_lat_plate_hinge",
-      "position": 0.3,
-      "pair_count": 1,
-      "new_pairs": [
-        [
-          "left_bicep_clamshell",
-          "left_lat_plate"
-        ]
-      ]
-    },
-    {
-      "joint": "left_lat_plate_hinge",
-      "position": 0.6,
-      "pair_count": 2,
-      "new_pairs": [
-        [
-          "left_bicep_clamshell",
-          "left_lat_plate"
-        ],
-        [
-          "left_lat_plate",
-          "left_upper_arm_cuff"
-        ]
-      ]
-    },
-    {
-      "joint": "left_lat_plate_hinge",
-      "position": 0.8999999999999999,
-      "pair_count": 4,
-      "new_pairs": [
-        [
-          "backpack",
-          "left_lat_plate"
-        ],
-        [
-          "left_bicep_clamshell",
-          "left_lat_plate"
-        ],
-        [
-          "left_bicep_sleeve",
-          "left_lat_plate"
-        ],
-        [
-          "left_lat_plate",
-          "left_upper_arm_cuff"
-        ]
-      ]
-    },
-    {
-      "joint": "left_lat_plate_hinge",
-      "position": 1.2,
-      "pair_count": 2,
-      "new_pairs": [
-        [
-          "backpack",
-          "left_lat_plate"
-        ],
-        [
-          "left_bicep_sleeve",
-          "left_lat_plate"
-        ]
-      ]
-    },
-    {
-      "joint": "right_lat_plate_hinge",
-      "position": -1.2,
-      "pair_count": 2,
-      "new_pairs": [
-        [
-          "backpack",
-          "right_lat_plate"
-        ],
-        [
-          "right_bicep_sleeve",
-          "right_lat_plate"
-        ]
-      ]
-    },
-    {
-      "joint": "right_lat_plate_hinge",
-      "position": -0.8999999999999999,
-      "pair_count": 4,
-      "new_pairs": [
-        [
-          "backpack",
-          "right_lat_plate"
-        ],
-        [
-          "right_bicep_clamshell",
-          "right_lat_plate"
-        ],
-        [
-          "right_bicep_sleeve",
-          "right_lat_plate"
-        ],
-        [
-          "right_lat_plate",
-          "right_upper_arm_cuff"
-        ]
-      ]
-    },
-    {
-      "joint": "right_lat_plate_hinge",
-      "position": -0.6,
-      "pair_count": 2,
-      "new_pairs": [
-        [
-          "right_bicep_clamshell",
-          "right_lat_plate"
-        ],
-        [
-          "right_lat_plate",
-          "right_upper_arm_cuff"
-        ]
-      ]
-    },
-    {
-      "joint": "right_lat_plate_hinge",
-      "position": -0.30000000000000004,
-      "pair_count": 1,
-      "new_pairs": [
-        [
-          "right_bicep_clamshell",
-          "right_lat_plate"
-        ]
-      ]
-    },
-    {
-      "joint": "right_lat_plate_hinge",
-      "position": 0.0,
+      "joint": "faceplate_hinge",
+      "position": -1.45,
       "pair_count": 0,
       "new_pairs": []
     },
     {
       "joint": "faceplate_hinge",
-      "position": -1.45,
+      "position": -1.26875,
       "pair_count": 0,
       "new_pairs": []
     },
@@ -958,24 +244,33 @@
     },
     {
       "joint": "faceplate_hinge",
+      "position": -0.90625,
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "faceplate_hinge",
       "position": -0.725,
       "pair_count": 0,
       "new_pairs": []
     },
     {
       "joint": "faceplate_hinge",
+      "position": -0.54375,
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "faceplate_hinge",
       "position": -0.36250000000000004,
-      "pair_count": 2,
-      "new_pairs": [
-        [
-          "faceplate",
-          "left_cheek_panel"
-        ],
-        [
-          "faceplate",
-          "right_cheek_panel"
-        ]
-      ]
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "faceplate_hinge",
+      "position": -0.1812499999999999,
+      "pair_count": 0,
+      "new_pairs": []
     },
     {
       "joint": "faceplate_hinge",
@@ -984,155 +279,14 @@
       "new_pairs": []
     },
     {
-      "joint": "helmet_crown_panel_hinge",
-      "position": -0.9,
+      "joint": "neck_yaw",
+      "position": -0.65,
       "pair_count": 0,
       "new_pairs": []
-    },
-    {
-      "joint": "helmet_crown_panel_hinge",
-      "position": -0.675,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "helmet_crown_panel_hinge",
-      "position": -0.45,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "helmet_crown_panel_hinge",
-      "position": -0.22499999999999998,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "helmet_crown_panel_hinge",
-      "position": 0.0,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "left_cheek_panel_hinge",
-      "position": 0.0,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "left_cheek_panel_hinge",
-      "position": 0.25,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "left_cheek_panel_hinge",
-      "position": 0.5,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "left_cheek_panel_hinge",
-      "position": 0.75,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "left_cheek_panel_hinge",
-      "position": 1.0,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "right_cheek_panel_hinge",
-      "position": -1.0,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "right_cheek_panel_hinge",
-      "position": -0.75,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "right_cheek_panel_hinge",
-      "position": -0.5,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "right_cheek_panel_hinge",
-      "position": -0.25,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "right_cheek_panel_hinge",
-      "position": 0.0,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "chin_guard_hinge",
-      "position": 0.0,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "chin_guard_hinge",
-      "position": 0.15,
-      "pair_count": 0,
-      "new_pairs": []
-    },
-    {
-      "joint": "chin_guard_hinge",
-      "position": 0.3,
-      "pair_count": 1,
-      "new_pairs": [
-        [
-          "chin_guard",
-          "neck_ring"
-        ]
-      ]
-    },
-    {
-      "joint": "chin_guard_hinge",
-      "position": 0.44999999999999996,
-      "pair_count": 2,
-      "new_pairs": [
-        [
-          "chin_guard",
-          "collar_plate"
-        ],
-        [
-          "chin_guard",
-          "neck_ring"
-        ]
-      ]
-    },
-    {
-      "joint": "chin_guard_hinge",
-      "position": 0.6,
-      "pair_count": 3,
-      "new_pairs": [
-        [
-          "chin_guard",
-          "collar_plate"
-        ],
-        [
-          "chin_guard",
-          "helmet_neck_collar"
-        ],
-        [
-          "chin_guard",
-          "neck_ring"
-        ]
-      ]
     },
     {
       "joint": "neck_yaw",
-      "position": -0.65,
+      "position": -0.48750000000000004,
       "pair_count": 0,
       "new_pairs": []
     },
@@ -1144,13 +298,31 @@
     },
     {
       "joint": "neck_yaw",
+      "position": -0.16249999999999998,
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "neck_yaw",
       "position": 0.0,
       "pair_count": 0,
       "new_pairs": []
     },
     {
       "joint": "neck_yaw",
+      "position": 0.16249999999999998,
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "neck_yaw",
       "position": 0.32500000000000007,
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "neck_yaw",
+      "position": 0.48749999999999993,
       "pair_count": 0,
       "new_pairs": []
     },
@@ -1168,7 +340,19 @@
     },
     {
       "joint": "neck_pitch",
+      "position": -0.18125,
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "neck_pitch",
       "position": -0.11249999999999999,
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "neck_pitch",
+      "position": -0.04374999999999998,
       "pair_count": 0,
       "new_pairs": []
     },
@@ -1180,9 +364,26 @@
     },
     {
       "joint": "neck_pitch",
+      "position": 0.09375,
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "neck_pitch",
       "position": 0.16250000000000003,
       "pair_count": 0,
       "new_pairs": []
+    },
+    {
+      "joint": "neck_pitch",
+      "position": 0.23125000000000007,
+      "pair_count": 1,
+      "new_pairs": [
+        [
+          "chin_guard",
+          "neck_ring"
+        ]
+      ]
     },
     {
       "joint": "neck_pitch",
@@ -1198,6 +399,248 @@
           "neck_ring"
         ]
       ]
+    },
+    {
+      "joint": "left_chest_door_hinge",
+      "position": 0.0,
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "left_chest_door_hinge",
+      "position": 0.15,
+      "pair_count": 3,
+      "new_pairs": [
+        [
+          "arc_reactor",
+          "left_chest_door"
+        ],
+        [
+          "chest_centre",
+          "left_chest_door"
+        ],
+        [
+          "chest_centre",
+          "left_pectoral_trim"
+        ]
+      ]
+    },
+    {
+      "joint": "left_chest_door_hinge",
+      "position": 0.3,
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "left_chest_door_hinge",
+      "position": 0.44999999999999996,
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "left_chest_door_hinge",
+      "position": 0.6,
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "left_chest_door_hinge",
+      "position": 0.75,
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "left_chest_door_hinge",
+      "position": 0.8999999999999999,
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "left_chest_door_hinge",
+      "position": 1.05,
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "left_chest_door_hinge",
+      "position": 1.2,
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "right_chest_door_hinge",
+      "position": -1.2,
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "right_chest_door_hinge",
+      "position": -1.05,
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "right_chest_door_hinge",
+      "position": -0.8999999999999999,
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "right_chest_door_hinge",
+      "position": -0.75,
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "right_chest_door_hinge",
+      "position": -0.6,
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "right_chest_door_hinge",
+      "position": -0.44999999999999996,
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "right_chest_door_hinge",
+      "position": -0.30000000000000004,
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "right_chest_door_hinge",
+      "position": -0.1499999999999999,
+      "pair_count": 3,
+      "new_pairs": [
+        [
+          "arc_reactor",
+          "right_chest_door"
+        ],
+        [
+          "chest_centre",
+          "right_chest_door"
+        ],
+        [
+          "chest_centre",
+          "right_pectoral_trim"
+        ]
+      ]
+    },
+    {
+      "joint": "right_chest_door_hinge",
+      "position": 0.0,
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "left_wrist_flexion",
+      "position": -0.8,
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "left_wrist_flexion",
+      "position": -0.6000000000000001,
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "left_wrist_flexion",
+      "position": -0.4,
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "left_wrist_flexion",
+      "position": -0.19999999999999996,
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "left_wrist_flexion",
+      "position": 0.0,
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "left_wrist_flexion",
+      "position": 0.19999999999999996,
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "left_wrist_flexion",
+      "position": 0.40000000000000013,
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "left_wrist_flexion",
+      "position": 0.6000000000000001,
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "left_wrist_flexion",
+      "position": 0.8,
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "right_wrist_flexion",
+      "position": -0.8,
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "right_wrist_flexion",
+      "position": -0.6000000000000001,
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "right_wrist_flexion",
+      "position": -0.4,
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "right_wrist_flexion",
+      "position": -0.19999999999999996,
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "right_wrist_flexion",
+      "position": 0.0,
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "right_wrist_flexion",
+      "position": 0.19999999999999996,
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "right_wrist_flexion",
+      "position": 0.40000000000000013,
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "right_wrist_flexion",
+      "position": 0.6000000000000001,
+      "pair_count": 0,
+      "new_pairs": []
+    },
+    {
+      "joint": "right_wrist_flexion",
+      "position": 0.8,
+      "pair_count": 0,
+      "new_pairs": []
     }
   ],
   "pass": false,

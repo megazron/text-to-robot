@@ -26,6 +26,10 @@ not a learned policy or proof of hardware accuracy. The model's failures remain 
 - Failed checks: {failures}.
 - [Physical build evidence and missing interfaces](BUILDABILITY.md), [machine-readable record](buildability_report.json). **No tested physical build is documented.**
 
+## Design research
+
+[Public engineering sources and model-specific changes](../../references/engineering/README.md).
+
 ## MoveIt / ROS 2
 
 '''
@@ -66,8 +70,8 @@ python scripts/verify_example_artifacts.py
 These are procedural concept models. Masses, motors and contacts are approximate;
 manufacturing interfaces and measured dynamics remain unverified.
 '''
- if folder.name.startswith('07_'):text+='\nThe mecanum wheels currently use cylindrical contact geometry; roller contact and holonomic traction are not modelled.\n'
- if folder.name.startswith('16_'):text+='\nEVA has a free base under gravity; there is no physical levitation or flight controller.\n'
+ if folder.name.startswith('07_'):text+='\nMecanum wheels have 32 passive rollers and four velocity-controlled hubs. See [measured forward/strafe motion](../mobile_motion.json); this is an open-loop simulation check, not calibrated hardware traction.\n'
+ if folder.name.startswith('16_'):text+='\nEVA is a supported display prototype with a pedestal, column, neck support and shoulder connectors. There is no levitation or flight controller.\n'
  if folder.name.startswith('14_'):
   text+='''
 ## Current armour and helmet animations

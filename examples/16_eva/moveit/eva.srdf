@@ -14,6 +14,7 @@
     <joint name="right_shoulder_joint" value="0"/>
     <joint name="right_arm_roll" value="0"/>
   </group_state>
+
   <virtual_joint name="world_joint" type="fixed" parent_frame="world" child_link="body"/>
   <disable_collisions link1="body" link2="head" reason="Adjacent"/>
   <disable_collisions link1="head" link2="visor" reason="Adjacent"/>
@@ -21,5 +22,10 @@
   <disable_collisions link1="left_arm" link2="left_hand" reason="Adjacent"/>
   <disable_collisions link1="body" link2="right_arm" reason="Adjacent"/>
   <disable_collisions link1="right_arm" link2="right_hand" reason="Adjacent"/>
+  <disable_collisions link1="body" link2="display_base" reason="Adjacent"/>
+  <disable_collisions link1="body" link2="support_column" reason="Adjacent"/>
+  <disable_collisions link1="body" link2="neck_support" reason="Adjacent"/>
+  <disable_collisions link1="body" link2="left_shoulder_support" reason="Adjacent"/>
+  <disable_collisions link1="body" link2="right_shoulder_support" reason="Adjacent"/>
   <disable_collisions link1="body" link2="hover_thruster" reason="Adjacent"/>
 </robot>

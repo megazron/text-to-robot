@@ -16,7 +16,17 @@
     <joint name="right_arm_joint_2" value="0"/>
     <joint name="right_arm_joint_3" value="0"/>
   </group_state>
+
   <virtual_joint name="world_joint" type="fixed" parent_frame="world" child_link="base_link"/>
+  <disable_collisions link1="base_link" link2="base_link_service_lid" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="base_link_rear_panel" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="base_link_right_panel" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="base_link_front_panel" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="base_link_left_panel" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="base_link_standoff_rr" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="base_link_standoff_rl" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="base_link_standoff_fr" reason="Adjacent"/>
+  <disable_collisions link1="base_link" link2="base_link_standoff_fl" reason="Adjacent"/>
   <disable_collisions link1="base_link" link2="left_track" reason="Adjacent"/>
   <disable_collisions link1="base_link" link2="left_front_wheel" reason="Adjacent"/>
   <disable_collisions link1="base_link" link2="left_rear_wheel" reason="Adjacent"/>
@@ -33,10 +43,14 @@
   <disable_collisions link1="left_forearm" link2="left_gripper_base" reason="Adjacent"/>
   <disable_collisions link1="left_gripper_base" link2="left_left_finger" reason="Adjacent"/>
   <disable_collisions link1="left_gripper_base" link2="left_right_finger" reason="Adjacent"/>
+  <disable_collisions link1="left_left_finger" link2="left_left_finger_pad" reason="Adjacent"/>
+  <disable_collisions link1="left_right_finger" link2="left_right_finger_pad" reason="Adjacent"/>
   <disable_collisions link1="base_link" link2="right_shoulder" reason="Adjacent"/>
   <disable_collisions link1="right_shoulder" link2="right_upper_arm" reason="Adjacent"/>
   <disable_collisions link1="right_upper_arm" link2="right_forearm" reason="Adjacent"/>
   <disable_collisions link1="right_forearm" link2="right_gripper_base" reason="Adjacent"/>
   <disable_collisions link1="right_gripper_base" link2="right_left_finger" reason="Adjacent"/>
   <disable_collisions link1="right_gripper_base" link2="right_right_finger" reason="Adjacent"/>
+  <disable_collisions link1="right_left_finger" link2="right_left_finger_pad" reason="Adjacent"/>
+  <disable_collisions link1="right_right_finger" link2="right_right_finger_pad" reason="Adjacent"/>
 </robot>

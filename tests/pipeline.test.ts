@@ -25,7 +25,6 @@ test("acceptance: modify forearm keeps validity and recomputes inertia", async (
 test("empty prompt throws", async () => {
   await assert.rejects(() => generateRobot("", { provider: new DemoProvider() }));
 });
-test("garbage prompt still produces a valid robot (demo fallback)", async () => {
-  const r = await generateRobot("asdf qwerty zzz", { provider: new DemoProvider() });
-  assert.ok(r.validation.valid && r.urdfValidation.valid);
+test("unrecognised requests do not silently become unrelated arms", async () => {
+  await assert.rejects(generateRobot("asdf qwerty zzz"), /Robot type not recognised/);
 });

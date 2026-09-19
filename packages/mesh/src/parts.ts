@@ -3,6 +3,7 @@
 import { type Mesh, massProperties, bbox, translate, rotate, scale as scaleMesh, orient } from "./core.ts";
 import { curvedPlate, limbShell, dome, disc, ring, superArc, shelledLoft } from "./shapes.ts";
 import { torsoSide, limbInset, chestSurfacePanel, armourPanel, sculptedLimb, shoulderShell, bootShell } from "./mark43.ts";
+import { mountingPlate } from "./mechanical.ts";
 import * as helmet from "./helmet.ts";
 
 export type Params = Record<string, number | string>;
@@ -23,6 +24,7 @@ function armourPlate(p: Params): Mesh {
 }
 
 export const PARTS: Record<string, Gen> = {
+  mounting_plate: p => mountingPlate(num(p,"width",.16),num(p,"height",.12),num(p,"thickness",.003),num(p,"bore",.0034),num(p,"inset",.01),num(p,"vents",0)),
   mark43_torso_side: p => torsoSide(num(p,"side",1)),
   mark43_chest: p => chestSurfacePanel(num(p,"side",1),str(p,"section","lower")==="upper"),
   mark43_boot: p => bootShell(p.section==="inset"),

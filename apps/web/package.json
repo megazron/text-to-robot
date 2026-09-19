@@ -1,1 +1,1 @@
-{ "name": "@ttr/web", "version": "0.1.0", "type": "module", "private": true }
+{"name":"@ttr/web","version":"0.1.0","type":"module","private":true,"dependencies":{"three":"0.160.0"}}

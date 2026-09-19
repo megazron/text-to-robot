@@ -1,6 +1,6 @@
 {
   "scope": "Prescribed joint positions; no dynamics or collision resolution",
-  "source_urdf_sha256": "df8651899408c1e7da7025255c16130da906ad4a85e03d07841be3b5658b7505",
+  "source_urdf_sha256": "a10295d0f5776087ede45fa213f0f1c0e50c08560057f045a81a5f70feb1ffaa",
   "previews": {
     "hand": {
       "gif": "hand_joints.gif",
@@ -12,7 +12,7 @@
       "gif": "neck_joints.gif",
       "sha256": "94eb762999dfa8a6918fcafd2bd115ccd07fe7ef1d6dd9c202f51a9367c27430",
       "tracked_body": "faceplate",
-      "max_displacement_m": 0.030913918509061715
+      "max_displacement_m": 0.05296382060052989
     },
     "chest": {
       "gif": "chest_joints.gif",

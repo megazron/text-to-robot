@@ -64,7 +64,7 @@ function buildBomAtTier(spec: RobotSpecification, tier: Tier, budget?: number): 
   const lines = new Map<string, BomLine>();
   const sizing: BillOfMaterials["actuator_sizing"] = [];
   const pos = linkPositions(spec, {});
-  const actuated = spec.joints.filter((j) => j.type !== "fixed");
+  const actuated = spec.joints.filter((j) => j.type !== "fixed" && !j.passive);
 
   let motorPowerW = 0;
   for (const j of actuated) {

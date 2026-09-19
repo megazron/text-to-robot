@@ -291,6 +291,212 @@
       }
     },
     {
+      "name": "display_base",
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.36,
+          0.3,
+          0.025
+        ]
+      },
+      "mass": 2,
+      "material": "base_mat",
+      "role": "support",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0.0125
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.015104166666666665,
+        "iyy": 0.021704166666666663,
+        "izz": 0.036599999999999994,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "box",
+        "size": [
+          0.36,
+          0.3,
+          0.025
+        ]
+      }
+    },
+    {
+      "name": "support_column",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.018,
+        "length": 0.215
+      },
+      "mass": 0.2,
+      "material": "base_mat",
+      "role": "support",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0.1325
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.0007866166666666666,
+        "iyy": 0.0007866166666666666,
+        "izz": 0.000032399999999999995,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.018,
+        "length": 0.215
+      }
+    },
+    {
+      "name": "neck_support",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.022,
+        "length": 0.06
+      },
+      "mass": 0.06,
+      "material": "base_mat",
+      "role": "support",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0.88
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000025260000000000002,
+        "iyy": 0.000025260000000000002,
+        "izz": 0.000014519999999999997,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.022,
+        "length": 0.06
+      }
+    },
+    {
+      "name": "left_shoulder_support",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.019,
+        "length": 0.09
+      },
+      "mass": 0.06,
+      "material": "base_mat",
+      "role": "support",
+      "origin": {
+        "xyz": [
+          0,
+          0.2,
+          0.65
+        ],
+        "rpy": [
+          1.5707963267948966,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000045915000000000003,
+        "iyy": 0.000045915000000000003,
+        "izz": 0.00001083,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.019,
+        "length": 0.09
+      }
+    },
+    {
+      "name": "right_shoulder_support",
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.019,
+        "length": 0.09
+      },
+      "mass": 0.06,
+      "material": "base_mat",
+      "role": "support",
+      "origin": {
+        "xyz": [
+          0,
+          -0.2,
+          0.65
+        ],
+        "rpy": [
+          1.5707963267948966,
+          0,
+          0
+        ]
+      },
+      "inferred": [
+        "inertia",
+        "inertia"
+      ],
+      "inertia": {
+        "ixx": 0.000045915000000000003,
+        "iyy": 0.000045915000000000003,
+        "izz": 0.00001083,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "collision": {
+        "type": "cylinder",
+        "radius": 0.019,
+        "length": 0.09
+      }
+    },
+    {
       "name": "hover_thruster",
       "geometry": {
         "type": "cylinder",
@@ -342,7 +548,7 @@
         "xyz": [
           0,
           0,
-          0.9400000000000001
+          1.05
         ],
         "rpy": [
           0,
@@ -545,6 +751,161 @@
       }
     },
     {
+      "name": "display_base_mount",
+      "type": "fixed",
+      "parent": "body",
+      "child": "display_base",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "support_column_mount",
+      "type": "fixed",
+      "parent": "body",
+      "child": "support_column",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "neck_support_mount",
+      "type": "fixed",
+      "parent": "body",
+      "child": "neck_support",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "left_shoulder_support_mount",
+      "type": "fixed",
+      "parent": "body",
+      "child": "left_shoulder_support",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
+      "name": "right_shoulder_support_mount",
+      "type": "fixed",
+      "parent": "body",
+      "child": "right_shoulder_support",
+      "origin": {
+        "xyz": [
+          0,
+          0,
+          0
+        ],
+        "rpy": [
+          0,
+          0,
+          0
+        ]
+      },
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "dynamics": {
+        "damping": 0.1,
+        "friction": 0
+      },
+      "inferred": [
+        "limit",
+        "dynamics"
+      ]
+    },
+    {
       "name": "hover_thruster_joint",
       "type": "fixed",
       "parent": "body",
@@ -691,19 +1052,30 @@
   "end_effectors": [],
   "metadata": {
     "generator": "text-to-robot",
-    "created": "2026-09-19T06:54:09.880Z",
+    "created": "2026-09-19T17:49:01.841Z",
     "inferred_fields": [
+      "joints.display_base_mount.dynamics",
+      "joints.display_base_mount.limit",
       "joints.hover_thruster_joint.dynamics",
       "joints.hover_thruster_joint.limit",
       "joints.left_arm_roll.dynamics",
       "joints.left_shoulder_joint.dynamics",
+      "joints.left_shoulder_support_mount.dynamics",
+      "joints.left_shoulder_support_mount.limit",
       "joints.neck_joint.dynamics",
+      "joints.neck_support_mount.dynamics",
+      "joints.neck_support_mount.limit",
       "joints.right_arm_roll.dynamics",
       "joints.right_shoulder_joint.dynamics",
+      "joints.right_shoulder_support_mount.dynamics",
+      "joints.right_shoulder_support_mount.limit",
+      "joints.support_column_mount.dynamics",
+      "joints.support_column_mount.limit",
       "joints.visor_joint.dynamics",
       "joints.visor_joint.limit",
       "links.body.inertia",
       "links.body.mass",
+      "links.display_base.inertia",
       "links.head.inertia",
       "links.head.mass",
       "links.hover_thruster.inertia",
@@ -712,16 +1084,20 @@
       "links.left_arm.mass",
       "links.left_hand.inertia",
       "links.left_hand.mass",
+      "links.left_shoulder_support.inertia",
+      "links.neck_support.inertia",
       "links.right_arm.inertia",
       "links.right_arm.mass",
       "links.right_hand.inertia",
       "links.right_hand.mass",
+      "links.right_shoulder_support.inertia",
+      "links.support_column.inertia",
       "links.visor.inertia",
       "links.visor.mass"
     ],
     "notes": [
-      "EVA: free-floating capsule body, tilting head with visor camera, two 2-DOF arm pods, downward hover thruster mount + flight IMU. In simulation it is a floating base; hovering needs a controller.",
-      "Interpreted by demo parser: type inferred, DOF=5, gripper=parallel."
+      "EVA supported display prototype: pedestal, support column, neck support and shoulder connectors. Head clears the body at neutral; neck motion still needs a swept-clearance check. Decorative thruster is not propulsion. No hovering or flight controller is implemented.",
+      "Interpreted locally: type inferred, DOF=5, gripper=parallel."
     ],
     "source_prompt": "Build EVA, a sleek hovering egg-shaped droid with a visor and two floating arms\n"
   }

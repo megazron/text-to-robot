@@ -3,6 +3,7 @@
 import type { RobotSpecification, Sensor } from "@ttr/robot-schema";
 import { emptySpec, pose } from "@ttr/robot-schema";
 import { box, cyl, sph, link, joint, DEFAULT_MATERIALS } from "./builder.ts";
+import { hollowChassis } from "./mechanics.ts";
 import { humanoid } from "./humanoid.ts";
 import { attachParallelGripper } from "./grippers.ts";
 
@@ -51,8 +52,9 @@ export function wallE(name = "wall_e", prompt?: string): RobotSpecification {
   const spec = emptySpec(name, prompt); spec.materials = [...DEFAULT_MATERIALS, { name: "rust_yellow", color: [0.82, 0.62, 0.12, 1] }];
   const W = 0.30, D = 0.30, H = 0.28, tr = 0.06;
   spec.links.push(link("base_link", box(D, W, H), { material: "rust_yellow", role: "base", origin: pose([0, 0, H / 2 + tr]) }));
+  hollowChassis(spec);
   for (const [side, y] of [["left", W / 2 + 0.05], ["right", -(W / 2 + 0.05)]] as const) {
-    spec.links.push(link(`${side}_track`, box(D + 0.08, 0.08, tr * 2), { material: "wheel_mat", role: "wheel", origin: pose([0, 0, tr]) }));
+    spec.links.push(link(`${side}_track`, box(D + 0.08, 0.025, 0.025), { material: "wheel_mat", role: "wheel", origin: pose([0, 0, tr*2+.02]) }));
     spec.joints.push(joint(`${side}_track_joint`, "fixed", "base_link", `${side}_track`, { origin: pose([0, y, 0]) }));
     for (const [pos, x] of [["front", D / 2], ["rear", -D / 2]] as const) {
       const w = `${side}_${pos}_wheel`;
@@ -83,7 +85,7 @@ export function wallE(name = "wall_e", prompt?: string): RobotSpecification {
     attachParallelGripper(spec, parent, 0, `${side}_`);
     const gb = spec.joints.find((j) => j.name === `${side}_gripper_base_joint`)!; gb.origin = pose([len, 0, 0], [0, Math.PI / 2, 0]);
   }
-  spec.metadata.notes.push("WALL-E: tracked base (4 driven wheels), telescoping neck, binocular camera head, two 3-DOF arms with grippers.");
+  spec.metadata.notes.push("WALL-E wheeled prototype: four driven wheels with raised track guards; continuous belts are not modelled, telescoping neck, binocular camera head, two 3-DOF arms with grippers.");
   return spec;
 }
 
@@ -92,7 +94,7 @@ export function eva(name = "eva", prompt?: string): RobotSpecification {
   const spec = emptySpec(name, prompt); spec.materials = [...DEFAULT_MATERIALS, { name: "gloss_white", color: [0.95, 0.95, 0.97, 1] }, { name: "visor", color: [0.05, 0.1, 0.2, 1] }];
   spec.links.push(link("body", capsule(0.16, 0.30), { material: "gloss_white", role: "base", origin: pose([0, 0, 0.55]) }));
   spec.links.push(link("head", capsule(0.11, 0.10), { material: "gloss_white", role: "link", origin: pose() }));
-  spec.joints.push(joint("neck_joint", "revolute", "body", "head", { origin: pose([0, 0, 0.55 + 0.15 + 0.16 + 0.08]), axis: [0, 1, 0], lower: -0.6, upper: 0.6 }));
+  spec.joints.push(joint("neck_joint", "revolute", "body", "head", { origin: pose([0, 0, 1.05]), axis: [0, 1, 0], lower: -0.6, upper: 0.6 }));
   spec.links.push(link("visor", box(0.02, 0.14, 0.06), { material: "visor", role: "sensor", origin: pose() }));
   spec.joints.push(joint("visor_joint", "fixed", "head", "visor", { origin: pose([0.10, 0, 0.01]) }));
   sensor(spec, "visor_camera", "camera", "visor", [0.01, 0, 0]);
@@ -102,21 +104,33 @@ export function eva(name = "eva", prompt?: string): RobotSpecification {
     spec.joints.push(joint(`${side}_arm_roll`, "revolute", `${side}_arm`, `${side}_hand`, { origin: pose([0, 0, -0.28]), axis: [0, 0, 1], lower: -1.5, upper: 1.5 }));
     spec.links.push(link(`${side}_hand`, sph(0.07), { material: "gloss_white", role: "gripper", origin: pose() }));
   }
+  // Physical support for the display prototype; no levitation assumption.
+  spec.links.push(link("display_base",box(.36,.30,.025),{mass:2.0,material:"base_mat",role:"support",origin:pose([0,0,.0125])}));
+  spec.joints.push(joint("display_base_mount","fixed","body","display_base"));
+  spec.links.push(link("support_column",cyl(.018,.215),{mass:.20,material:"base_mat",role:"support",origin:pose([0,0,.1325])}));
+  spec.joints.push(joint("support_column_mount","fixed","body","support_column"));
+  spec.links.push(link("neck_support",cyl(.022,.06),{mass:.06,material:"base_mat",role:"support",origin:pose([0,0,.88])}));
+  spec.joints.push(joint("neck_support_mount","fixed","body","neck_support"));
+  for(const [side,sign] of [["left",1],["right",-1]] as const){
+    const mount=`${side}_shoulder_support`;
+    spec.links.push(link(mount,cyl(.019,.09),{mass:.06,material:"base_mat",role:"support",origin:pose([0,sign*.20,.65],[Math.PI/2,0,0])}));
+    spec.joints.push(joint(`${mount}_mount`,"fixed","body",mount));
+  }
   spec.links.push(link("hover_thruster", cyl(0.10, 0.03), { material: "sensor_mat", role: "sensor", origin: pose() }));
   spec.joints.push(joint("hover_thruster_joint", "fixed", "body", "hover_thruster", { origin: pose([0, 0, 0.55 - 0.15 - 0.16]) }));
   sensor(spec, "flight_imu", "imu", "body", [0, 0, 0.55]);
-  spec.metadata.notes.push("EVA: free-floating capsule body, tilting head with visor camera, two 2-DOF arm pods, downward hover thruster mount + flight IMU. In simulation it is a floating base; hovering needs a controller.");
+  spec.metadata.notes.push("EVA supported display prototype: pedestal, support column, neck support and shoulder connectors. Head clears the body at neutral; neck motion still needs a swept-clearance check. Decorative thruster is not propulsion. No hovering or flight controller is implemented.");
   return spec;
 }
 
 /** Baymax: inflatable healthcare companion -- soft, rounded humanoid with short legs and capsule limbs. */
 export function baymax(name = "baymax", prompt?: string): RobotSpecification {
-  const spec = humanoid({ name, armDof: 4, gripper: false, legs: true, prompt });
+  const spec = humanoid({ name, armDof: 4, gripper: false, legs: true, housing: false, prompt });
   spec.materials = [...DEFAULT_MATERIALS, { name: "vinyl_white", color: [0.97, 0.97, 0.97, 1] }];
   for (const l of spec.links) {
     l.material = "vinyl_white";
     // round torso that stays ABOVE the hips (a capsule that reached into the legs exploded the sim)
-    if (l.name === "torso" && l.geometry.type === "box") { const [x, y, z] = l.geometry.size; l.geometry = { type: "capsule", radius: Math.max(x, y) * 0.55, length: z * 0.45 }; l.origin = pose([0, 0, l.origin.xyz[2] + z * 0.12]); }
+    if (l.name === "torso" && l.geometry.type === "box") { const [x, y, z] = l.geometry.size; l.geometry = { type: "capsule", radius: Math.max(x, y) * 0.55, length: z * 0.45 }; l.origin = pose([0, 0, l.origin.xyz[2] + z * 0.12 + .01]); }
     else if (l.geometry.type === "cylinder" && /arm|thigh|shin|shoulder|elbow|wrist/.test(l.name)) { l.geometry = { type: "capsule", radius: l.geometry.radius * 1.8, length: Math.max(.005, l.geometry.length - 2*l.geometry.radius*1.8) }; }
     else if (l.name === "head" && l.geometry.type === "sphere") l.geometry.radius *= 0.8;
   }
@@ -133,7 +147,7 @@ export function baymax(name = "baymax", prompt?: string): RobotSpecification {
     if (/foot/.test(l.name) && l.geometry.type === "box") { l.geometry.size = [0.26, 0.16, 0.05]; l.origin = pose([0.05, 0, -0.025]); l.mass *= 3; }
     if (/thigh|shin/.test(l.name)) l.mass *= 2.5;                             // ballast low down
   }
-  for (const j of spec.joints) { if (/hip_joint/.test(j.name)) j.origin.xyz = [j.origin.xyz[0], j.origin.xyz[1] * 1.8, j.origin.xyz[2]]; } // wide stance
+  for (const j of spec.joints) { if (/hip_yaw$/.test(j.name)) j.origin.xyz = [j.origin.xyz[0], j.origin.xyz[1] * 1.8, j.origin.xyz[2]]; } // wide stance
   sensor(spec, "face_camera", "camera", "head", [0.07, 0, 0]);
   sensor(spec, "chest_imu", "imu", "torso", [0, 0, 0.5]);
   spec.metadata.notes.push("Baymax: soft rounded humanoid (capsule limbs), 4-DOF arms, short legs, wide planted stance with large feet, face camera. Rigid-body approximation of an inflatable body (light torso, ballast in the legs).");
