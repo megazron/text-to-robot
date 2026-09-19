@@ -10,9 +10,9 @@ export const HELMET = { W: 0.205, D: 0.27, H: 0.25, thick: 0.0045 };
 
 // front-face cross-sections: [z, frontX, halfWidth, exponent, ridge]
 const FACE: [number, number, number, number, number][] = [
-  [-0.128, 0.105, 0.032, 2.0, 0.010],   // chin point
-  [-0.104, 0.120, 0.058, 2.3, 0.008],   // jaw
-  [-0.080, 0.130, 0.080, 2.5, 0.006],   // mouth line
+  [-0.118, 0.112, 0.048, 2.0, 0.010],   // chin point
+  [-0.098, 0.124, 0.066, 2.3, 0.008],   // jaw
+  [-0.080, 0.130, 0.082, 2.5, 0.006],   // mouth line
   [-0.056, 0.136, 0.092, 2.7, 0.005],   // lower cheek flare
   [-0.026, 0.140, 0.101, 2.9, 0.004],   // cheek (widest)
   [ 0.010, 0.138, 0.101, 2.9, 0.004],   // under-eye
@@ -29,7 +29,9 @@ export function faceSurface(y: number, z: number, proud = 0): V3 {
   const u = Math.min(1, Math.max(0, (z - z0) / (z1 - z0 || 1)));
   const fx = fx0 + (fx1 - fx0) * u, hw = hw0 + (hw1 - hw0) * u, e = e0 + (e1 - e0) * u, ridge = r0 + (r1 - r0) * u;
   // Piecewise planar face: central bridge, broad cheek plane and temple chamfer.
-  const ratio=Math.min(1,Math.abs(y)/hw),knots=[[0,1],[.45,.99],[.75,.91],[.90,.62],[1,0]];
+  const ratio=Math.min(1,Math.abs(y)/hw);
+  const cheekBreak=.35+.32*Math.min(1,Math.max(0,(.01-z)/.10));
+  const knots=[[0,1],[cheekBreak,.99],[.80,.92],[.93,.62],[1,0]];
   let k=0;while(k<knots.length-2 && ratio>knots[k+1][0])k++;
   const [u0,x0]=knots[k],[u1,x1]=knots[k+1];
   const baseX=fx*(x0+(x1-x0)*(ratio-u0)/(u1-u0));
@@ -91,7 +93,7 @@ function subtractConvex(polygon: P2[], hole: P2[]): P2[][] {
 }
 /** side cheek panels -- hinged on vertical axes at the temples, swing outward */
 export function cheekPanel(side: "left" | "right"): Mesh {
-  const m = shelledLoft(faceSections(0.70, 1.62), HELMET.thick, 0);
+  const m = shelledLoft(faceSections(0.795, 1.62), HELMET.thick, 0);
   return side === "left" ? m : mirrorY(m);
 }
 /** cranium: back half + top, with the raised centre crest */
@@ -113,9 +115,8 @@ export function crownPanel(): Mesh {
 }
 /** forehead plate: layered gold accent over the brow */
 export function foreheadPlate(): Mesh {
-  const sec = FACE.slice(8, 10).map(([z, fx, hw, e]) => superArc(fx + 0.0035, hw + 0.001, z + 0.002, -0.38, 0.38, 13, e));
-  sec.push(superArc(0.108, 0.080, 0.100, -0.38, 0.38, 13, 2.3));
-  return shelledLoft(sec, 0.003, 0);
+  const rows=[.069,.080,.090].map(z=>Array.from({length:17},(_,i)=>faceSurface(-.040+i*.005,z,.002)));
+  return shelledLoft(rows,.0015,0);
 }
 /** eye: an angled trapezoid slit just under the brow ledge -- dark socket recess + glowing lens proud of the surface */
 const EYE: [number, number][] = [[0.019, 0.037], [0.068, 0.043], [0.068, 0.051], [0.022, 0.047]];

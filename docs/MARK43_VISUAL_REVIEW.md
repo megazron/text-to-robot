@@ -9,7 +9,8 @@ Primary reference inspected: [Legacy Effects — Avengers: Age of Ultron](https:
 including its [production armour photograph](https://images.squarespace-cdn.com/content/v1/5bfdc74875f9ee194f3e0add/1597169230901-1YAKVO4QHQGB94IZ7KF2/2014-02-27_17077.jpg).
 The photograph shows continuous curved pectoral surfaces, silver shoulder-edge
 mechanisms, silver collar panels and rib details wrapped around the flanks.
-Our front render still has flat isolated pectoral plates, front-facing rib rings,
+The current export replaces isolated pectoral badges with adjoining compound
+surfaces and moves rib details around the flanks, but still has
 oversized exposed motor housings and simplified hands. These are unresolved
 shape differences, even after adding collar inlays, rib edges and knuckle tiles.
 The production photograph is perspective imagery, not dimensioned CAD; a numerical
@@ -23,8 +24,8 @@ No numerical visual-accuracy percentage is claimed.
 
 | Feature | Previous geometry | Current geometry | Still different from reference |
 |---|---|---|---|
-| Chest | Round barrel with small rectangular trim | Higher chest, broad angular pectoral plates and smaller reactor | Chest curvature and panel junctions remain approximate |
-| Abdomen | Three isolated rounded bars | Contiguous tapered red plates with angled gold lateral ribs | Rib shapes/spacing need closer prop-derived modelling |
+| Chest | Round barrel with small rectangular trim | Adjoining curved upper/lower pectoral surfaces, narrower sternum and circular reactor | Chest curvature and panel junctions remain approximate |
+| Abdomen | Three isolated rounded bars | Tapered red plates, flank shells and side-wrapped rib trim | Rib shapes/spacing need closer prop-derived modelling |
 | Limbs | Nearly constant-radius sleeves | Independent depth/width profiles, sculpted taper and layered thigh/shin panels | Outer drive modules interrupt the film silhouette |
 | Knees | Round dome | Angular shield, recessed-looking dark bezel and red centre | Mechanism and trim differ |
 | Feet | Visible sole with small toe cap | Full hollow boot upper with shaped instep | Toe/ankle transitions and heel details remain approximate |
@@ -54,7 +55,27 @@ animate, hide drive modules, or replace the model with a pre-rendered illustrati
 The same recipes produce the browser meshes and downloadable STL/CAD assets. The
 browser applies a metal finish to Mark 43 materials; geometry remains identical.
 
-204 mesh instances (188 unique STL assets) are checked independently for closed topology and mass properties.
+206 mesh instances (190 unique STL assets) are checked independently for closed topology and mass properties.
 This is still an authored approximation, not an extremely accurate replica or a
 manufacturing-qualified assembly. Revised geometry invalidates earlier collision
 numbers; see the current reports in `examples/14_iron_man_mark_43`.
+
+## Persistent reference workflow
+
+Photographs are saved locally in `references/mark43/images/`. The source manifest,
+fetch/review script and [review log](../references/mark43/review-notes.md) are tracked.
+
+```bash
+python scripts/render_mark43_review.py
+python scripts/mark43_reference_review.py --fetch --snapshot review-name
+# Open references/mark43/review.html
+```
+
+The review refuses renders whose model/image hashes no longer match. Each snapshot
+records the model and reference hashes. This detects stale evidence; it does not
+automatically certify visual similarity. Reference photographs remain a local
+cache, with source links preserved.
+
+| Torso close-up | Helmet close-up |
+|---|---|
+| ![Torso](img/mark43_torso_review.png) | ![Helmet](img/mark43_helmet_review.png) |

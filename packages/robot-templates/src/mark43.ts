@@ -88,12 +88,12 @@ export function ironManMark43(opts: ExosuitOptions = {}): RobotSpecification {
   // red pectoral shell in two halves; each hinges on a vertical axis at the armpit and swings forward/outward for donning
   for (const [s, sign] of SIDES) {
     const pivot: V3 = [0.10, sign * 0.24, chestZ];
-    part(`${s}_chest_door`, "spine_frame", mesh("chest_plate", `${s}_chest_door.stl`, { w: 0.47, h: 0.31, d: 0.16, t: 0.006, a0: sign > 0 ? 0 : -1.25, a1: sign > 0 ? 1.25 : 0 }),
+    part(`${s}_chest_door`, "spine_frame", mesh("mark43_chest", `${s}_chest_door.stl`, { side: sign, section: "lower" }),
       pivot, [0, 0, 0], RED, 1.2, { axis: [0, 0, 1], open: sign * 1.2, effort: 6, origin: [0.03 - pivot[0], -pivot[1], 0] });
-    part(`${s}_pectoral_trim`, `${s}_chest_door`, mesh("armour_plate", `${s}_pectoral_trim.stl`, { w: 0.20, h: 0.14, t: 0.006, R: 0.70, corner: 0.012, taper: 0.3 }), [0.03 - pivot[0] + 0.180, sign * 0.108 - pivot[1], 0.078], [0, 0, sign * 0.18], RED, 0.10);
+    part(`${s}_pectoral_trim`, `${s}_chest_door`, mesh("mark43_chest", `${s}_pectoral_trim.stl`, {side:sign,section:"upper"}), [0.03-pivot[0],-pivot[1],0], [0,0,0], RED, 0.25);
   }
   // red centre trapezoid (wider at the collar) carrying the circular arc reactor; stays on the harness when the doors open
-  part("chest_centre", "spine_frame", mesh("armour_plate", "chest_centre.stl", { w: 0.135, h: 0.22, t: 0.006, R: 0.5, corner: 0.015, taper: -0.35 }), [0.20, 0, chestZ + 0.02], [0, 0, 0], RED, 0.35);
+  part("chest_centre", "spine_frame", mesh("armour_plate", "chest_centre.stl", { w: 0.095, h: 0.22, t: 0.006, R: 0.5, corner: 0.015, taper: -0.35 }), [0.204, 0, chestZ + 0.02], [0, 0, 0], RED, 0.35);
   part("arc_reactor_housing", "chest_centre", mesh("disc", "arc_reactor_housing.stl", { radius: 0.035, depth: 0.008, chamfer: 0.005 }), [0.004, 0, 0.02], [0, PI / 2, 0], GUN, 0.20);
   part("arc_reactor", "arc_reactor_housing", mesh("disc", "arc_reactor.stl", { radius: 0.027, depth: 0.005, chamfer: 0.002 }), [0, 0, 0.008], [0, 0, 0], GLOW, 0.05);
   // red abdominal segments fold with the trunk
@@ -102,7 +102,7 @@ export function ironManMark43(opts: ExosuitOptions = {}): RobotSpecification {
     part(`ab_plate_${i + 1}`, "spine_frame", mesh("armour_plate", `ab_plate_${i + 1}.stl`, { w: abW[i], h: 0.069, t: 0.005, R: 0.20, corner: 0.012 }), [abX[i], 0, abZ[i]], [0, 0, 0], RED, 0.22, { axis: [0, 1, 0], open: 0.35, effort: 2 });
   // side plates close the gap between chest and back; hinged on their rear edge, they are the torso's donning doors
   for (const [s, sign] of SIDES)
-    part(`${s}_lat_plate`, "spine_frame", mesh("armour_plate", `${s}_lat_plate.stl`, { w: 0.30, h: 0.18, t: 0.005, R: 0.40, corner: 0.025 }), [-0.27, sign * 0.185, chestZ - 0.045], [0, 0, sign * PI / 2], RED, 0.60, { axis: [0, 0, 1], open: sign * 1.2, effort: 4, origin: [0, -sign * 0.15, 0] });
+    part(`${s}_lat_plate`, "spine_frame", mesh("limb_shell", `${s}_lat_plate.stl`, {length:.40,rTop:.198,rBottom:.163,a0:sign>0?.55:-2.60,a1:sign>0?2.60:-.55,thick:.005}, [.72,1,1]), [-.10,sign*.10,chestZ+.11], [0,0,0], GUN, .60, {axis:[0,0,1],open:sign*1.2,effort:4,origin:[.10,-sign*.10,0]});
   // back shell over the battery pack, with the Mark 43's flight-stabiliser flaps (hinged at their top edge)
   part("back_shell", "spine_frame", mesh("armour_plate", "back_shell.stl", { w: 0.38, h: 0.46, t: 0.006, R: 0.45, corner: 0.03 }), [-0.29, 0, chestZ - 0.02], [0, 0, PI], RED, 1.3);
   for (const [s, sign] of SIDES) {
@@ -118,8 +118,9 @@ export function ironManMark43(opts: ExosuitOptions = {}): RobotSpecification {
 
   // Angled gold lateral rib plates flank the red segmented abdomen.
   for(const [side,sign] of SIDES) {
-    for(let i=0;i<3;i++) part(`${side}_rib_${i}`,"spine_frame",mesh("mark43_panel",`${side}_rib_${i}.stl`,{style:"flank",w:.095,h:.082,t:.004,R:.30}),[.142-i*.009,sign*(.139-i*.010),.23-i*.065],[0,sign*.13,sign*.40],GOLD,.08);
-    part(`${side}_chest_inlay`,"spine_frame",mesh("mark43_panel",`${side}_chest_inlay.stl`,{style:"flank",w:.082,h:.145,t:.004,R:.22}),[.15,sign*.178,chestZ-.025],[0,0,sign*.48],GOLD,.09);
+    for(let i=0;i<3;i++) part(`${side}_rib_${i}`,"spine_frame",mesh("mark43_panel",`${side}_rib_${i}.stl`,{style:"flank",w:.105,h:.054,t:.004,R:.30}),[.090-i*.006,sign*(.170-i*.009),.23-i*.065],[0,sign*.13,sign*1.02],GOLD,.08);
+    part(`${side}_chest_inlay`,"spine_frame",mesh("mark43_panel",`${side}_chest_inlay.stl`,{style:"flank",w:.110,h:.175,t:.004,R:.22}),[.168,sign*.154,chestZ-.025],[0,0,sign*.78],"mk43_titanium",.09);
+    part(`${side}_chest_inlay_centre`,"spine_frame",mesh("mark43_panel",`${side}_chest_inlay_centre.stl`,{style:"flank",w:.075,h:.130,t:.003,R:.22}),[.174,sign*.160,chestZ-.025],[0,0,sign*.78],RED,.06);
   }
 
   // ================= ARMS =================
@@ -129,7 +130,7 @@ export function ironManMark43(opts: ExosuitOptions = {}): RobotSpecification {
   for (const [s, sign] of SIDES) {
     // red pauldron: dome capping the shoulder module, tilted outward, lifts on an x hinge
     part(`${s}_pauldron`, `${s}_shoulder_module`, mesh("mark43_shoulder", `${s}_pauldron.stl`, { side:sign }), [0, sign * 0.025, 0.035], [-sign * 0.22, 0, 0], RED, 0.65, { axis: [1, 0, 0], open: -sign * 0.8, effort: 3 });
-    part(`${s}_pauldron_edge`, `${s}_pauldron`, mesh("armour_plate", `${s}_pauldron_edge.stl`, { w: 0.09, h: 0.03, t: 0.004, R: 0.13, corner: 0.008 }), [0.107, 0, 0.024], [0, 0, 0], GOLD, 0.06);
+    part(`${s}_pauldron_edge`, `${s}_pauldron`, mesh("armour_plate", `${s}_pauldron_edge.stl`, { w: 0.09, h: 0.03, t: 0.004, R: 0.13, corner: 0.008 }), [0.107, 0, 0.024], [0, 0, 0], "mk43_titanium", 0.06);
     // bicep: gold outer sleeve + gold inner clamshell
     const ua = 0.075, uw = wrap(ua, sign), uz = -A.uarm * 0.12, uy = -sign * 0.05;
     part(`${s}_bicep_sleeve`, `${s}_upper_arm_strut`, mesh("limb_shell", `${s}_bicep_sleeve.stl`, { length: A.uarm * 0.82, rTop: ua, rBottom: ua - 0.01, ...uw.outer, thick: 0.005, bulge: 0.04 }), [0, uy, uz], [0, 0, 0], GOLD, 0.45);
@@ -205,10 +206,10 @@ export function ironManMark43(opts: ExosuitOptions = {}): RobotSpecification {
   // and segmented knuckle armour, not additional large gold rectangles.
   for(const [side,sign] of SIDES) {
     for(let i=0;i<3;i++) {
-      part(`${side}_rib_edge_${i}`,"spine_frame",mesh("mark43_panel",`${side}_rib_edge_${i}.stl`,{style:"flank",w:.069,h:.058,t:.0025,R:.30}),[.150-i*.009,sign*(.139-i*.010),.23-i*.065],[0,sign*.13,sign*.40],"mk43_titanium",.025);
-      part(`${side}_rib_insert_${i}`,"spine_frame",mesh("mark43_panel",`${side}_rib_insert_${i}.stl`,{style:"flank",w:.051,h:.041,t:.002,R:.30}),[.154-i*.009,sign*(.139-i*.010),.23-i*.065],[0,sign*.13,sign*.40],GUN,.012);
+      part(`${side}_rib_edge_${i}`,"spine_frame",mesh("mark43_panel",`${side}_rib_edge_${i}.stl`,{style:"flank",w:.086,h:.041,t:.0025,R:.30}),[.093-i*.006,sign*(.176-i*.009),.23-i*.065],[0,sign*.13,sign*1.02],"mk43_titanium",.025);
+      part(`${side}_rib_insert_${i}`,"spine_frame",mesh("mark43_panel",`${side}_rib_insert_${i}.stl`,{style:"flank",w:.067,h:.027,t:.002,R:.30}),[.095-i*.006,sign*(.179-i*.009),.23-i*.065],[0,sign*.13,sign*1.02],GUN,.012);
     }
-    part(`${side}_collar_inlay`,"spine_frame",mesh("mark43_panel",`${side}_collar_inlay.stl`,{style:"collar",w:.095,h:.041,t:.003,R:.4}),[.115,sign*.102,T+.025],[0,0,0],"mk43_titanium",.03);
+    part(`${side}_collar_inlay`,"spine_frame",mesh("mark43_panel",`${side}_collar_inlay.stl`,{style:"collar",w:.095,h:.041,t:.003,R:.4}),[.165,sign*.102,T-.014],[0,0,0],"mk43_titanium",.03);
     for(let f=1;f<=4;f++)for(let k=0;k<2;k++)
       part(`${side}_finger_${f}_knuckle_${k}`,`${side}_finger_${f}`,mesh("mark43_panel",`${side}_finger_${f}_knuckle_${k}.stl`,{style:"collar",w:.014,h:.012,t:.003,R:.5}),[.010,0,-.015-k*.025],[0,0,0],GUN,.003);
   }

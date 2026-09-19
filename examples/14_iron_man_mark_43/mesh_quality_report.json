@@ -1,8 +1,8 @@
 {
   "scope": "STL closed topology and uniform-solid integrals; no self-intersection, assembly fit or manufacturing qualification",
   "trimesh_version": "4.12.2",
-  "passed": 204,
-  "total": 204,
+  "passed": 206,
+  "total": 206,
   "parts": [
     {
       "part": "pelvis_frame",
@@ -134,82 +134,82 @@
       "part": "faceplate",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 3.099804132700828e-08,
-      "com_error_m": 9.95548111830391e-09,
-      "inertia_relative_error": 1.2167682505088875e-07,
-      "sha256": "7397abf218b6542e324767d3a1d2a5fc48e04044ea94133f6a9aa932e7bcd6ca"
+      "volume_relative_error": 2.859317458372115e-08,
+      "com_error_m": 3.754492682028765e-09,
+      "inertia_relative_error": 3.636280427914983e-08,
+      "sha256": "fd82848f8c544f240a370bfa661d1458558c13c8022f392827e3daaa70cc084b"
     },
     {
       "part": "forehead_plate",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 1.5061929435475306e-07,
-      "com_error_m": 3.3755911676980332e-09,
-      "inertia_relative_error": 4.916834473550451e-07,
-      "sha256": "c3849bd9d9b6f483a67ef5825e2b64adaa791a64624719320e2c3434849eeb69"
+      "volume_relative_error": 6.585308418739033e-08,
+      "com_error_m": 4.884016732709107e-09,
+      "inertia_relative_error": 1.6717266129859568e-07,
+      "sha256": "d6fb3dc89aca47b81bd3969f3cb9e31e307788995ea346a58f29b847a4f2ea65"
     },
     {
       "part": "mouth_line",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 3.3230123084244604e-07,
-      "com_error_m": 5.8760000292942035e-09,
-      "inertia_relative_error": 7.148067778770595e-07,
-      "sha256": "5609936e581fe1b155c1ae44e43547370467e5d48c72c864490ff2c0dbfe888c"
+      "volume_relative_error": 7.498472525320417e-07,
+      "com_error_m": 1.0642669245886083e-09,
+      "inertia_relative_error": 1.081803659599624e-06,
+      "sha256": "220ca989540153287eea7569b7a5906ec7e45d1b236d516a67bd96b9b9ea404c"
     },
     {
       "part": "left_eye_socket",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 2.338340177685209e-07,
-      "com_error_m": 1.1195965057830826e-09,
-      "inertia_relative_error": 2.020880845229753e-07,
-      "sha256": "17833525e3e5bf4ce8cdac25fb6c9690a50e470ee6f99b6e92f5fa772da9f0a3"
+      "volume_relative_error": 2.5832076990716957e-07,
+      "com_error_m": 6.017716970563303e-09,
+      "inertia_relative_error": 2.9236194702640374e-07,
+      "sha256": "8f7c5f3ad7c0cd22f07a569a50a90945d87c68af34438dd6969d54849bab0348"
     },
     {
       "part": "left_eye_lens",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 1.908432108288923e-06,
-      "com_error_m": 1.6758059800947578e-08,
-      "inertia_relative_error": 8.607105264918859e-07,
-      "sha256": "19a1a65b71f6bd643ac471c8704f13a1726f0347ed7f9b84c8b2d487c9cddbe5"
+      "volume_relative_error": 1.7980536071671329e-06,
+      "com_error_m": 2.121790547426894e-08,
+      "inertia_relative_error": 1.0614892008775188e-06,
+      "sha256": "dd7616f14007b9e2dfad918f13ccce432a9e81e725e22beb793cebb2a7176ff0"
     },
     {
       "part": "left_cheek_panel",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 4.612292516420444e-08,
-      "com_error_m": 1.2572558334700279e-08,
-      "inertia_relative_error": 1.901062968028875e-07,
-      "sha256": "8dc156ad212195da6d0d39aa7578534bfe0e640fb869c7730ae4d42006aaaa57"
+      "volume_relative_error": 2.8991935037329756e-08,
+      "com_error_m": 2.4973632953284586e-09,
+      "inertia_relative_error": 8.567113667285029e-08,
+      "sha256": "9d0ca9e26e77ea849eb5a6a5d841e4de58d61053292a1e26ba7544a182f11196"
     },
     {
       "part": "right_eye_socket",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 1.022908134194476e-10,
-      "com_error_m": 1.222150644575315e-09,
-      "inertia_relative_error": 1.4326466115413397e-07,
-      "sha256": "7cd980c6ad02fe71c2355117ac15de266c2a8104012741b22f092c0b1c0c508f"
+      "volume_relative_error": 4.885254013899907e-07,
+      "com_error_m": 5.68584471172251e-09,
+      "inertia_relative_error": 3.6682943184453453e-07,
+      "sha256": "cdc4b8b1c36c8eab5d7197904e807f778b5cc6521479f0393619b5d41b7875af"
     },
     {
       "part": "right_eye_lens",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 1.908432108288923e-06,
-      "com_error_m": 1.6758059800947578e-08,
-      "inertia_relative_error": 8.607102924573135e-07,
-      "sha256": "eb359e04ea3cef673f3e4c64d71b3a2f38b69de98ea161806196c2840e85facb"
+      "volume_relative_error": 1.7980536073351952e-06,
+      "com_error_m": 2.121790546039115e-08,
+      "inertia_relative_error": 1.0614888473833472e-06,
+      "sha256": "7a383cfce12c633aedbbb99a65238a0f3a4d5033de9c1546b319973eccec3f77"
     },
     {
       "part": "right_cheek_panel",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 4.612292516420444e-08,
-      "com_error_m": 1.2572558324291938e-08,
-      "inertia_relative_error": 1.9010629630120307e-07,
-      "sha256": "582bb132785de4e1e0361868c23e3cded67891b3d37215c20e99b76b2045046d"
+      "volume_relative_error": 2.8991934444096196e-08,
+      "com_error_m": 2.4973632953284586e-09,
+      "inertia_relative_error": 8.567113790714675e-08,
+      "sha256": "1303e61cb2b930c7aa4987b1d7eb7edb662803e4ef50059ee202d2a2c164bb03"
     },
     {
       "part": "chin_guard",
@@ -242,46 +242,46 @@
       "part": "left_chest_door",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 8.396768186321418e-08,
-      "com_error_m": 1.3976648007354986e-08,
-      "inertia_relative_error": 1.0586874506144019e-07,
-      "sha256": "d0a617f0318389333f3341eee039448701840b3429f1b2e5e3575ac0645d6f46"
+      "volume_relative_error": 1.7379508050047203e-08,
+      "com_error_m": 2.3633237589137934e-09,
+      "inertia_relative_error": 1.2925046795754332e-08,
+      "sha256": "8280ece460db865528ffbb6fbeaf14cc0ffbfa9de08df273d1392a269ef5f7b4"
     },
     {
       "part": "left_pectoral_trim",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 3.1045963880782697e-09,
-      "com_error_m": 4.182058440868608e-10,
-      "inertia_relative_error": 1.0639093367001072e-08,
-      "sha256": "b40ce25b388484b5c5ac642675d4cf78afaaf5dab1e597b204bfd64b938b26b8"
+      "volume_relative_error": 2.1069010005175753e-09,
+      "com_error_m": 1.1912051206541818e-09,
+      "inertia_relative_error": 3.9808987097845264e-08,
+      "sha256": "f93d0858130c45387b447f6ef3d79a25946e58d4f5290d6859f761be32fa9389"
     },
     {
       "part": "right_chest_door",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 1.0778345025444961e-07,
-      "com_error_m": 1.5631960460435468e-08,
-      "inertia_relative_error": 1.0133565455491039e-07,
-      "sha256": "717eecd69feeb271de64fcb7d994837a97d52ef04c12eb0bb7f311ea157bb123"
+      "volume_relative_error": 3.7572137221005235e-09,
+      "com_error_m": 1.3518803992917938e-09,
+      "inertia_relative_error": 2.966268623120743e-08,
+      "sha256": "1766b8b5d29cb7ef71b4eec800129041bde8140d26695dfbe4a0090cb5156ca1"
     },
     {
       "part": "right_pectoral_trim",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 3.1045963880782697e-09,
-      "com_error_m": 4.182058440868608e-10,
-      "inertia_relative_error": 1.0639093367001072e-08,
-      "sha256": "b40ce25b388484b5c5ac642675d4cf78afaaf5dab1e597b204bfd64b938b26b8"
+      "volume_relative_error": 4.913245895350143e-08,
+      "com_error_m": 3.326880590459602e-09,
+      "inertia_relative_error": 2.062916104061313e-08,
+      "sha256": "a975e0c041c3cb1bda50862e658f540089e5e275b0c1118adb570b69d74bcf7a"
     },
     {
       "part": "chest_centre",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 8.1404749695674e-09,
-      "com_error_m": 6.577177700042847e-10,
-      "inertia_relative_error": 2.6272754123029975e-08,
-      "sha256": "fa4cf143ef2d0c83e773c7673139071a2877f6df8987fdc98b8300f7302cb9b0"
+      "volume_relative_error": 3.213272467519051e-09,
+      "com_error_m": 9.5528992138591e-10,
+      "inertia_relative_error": 3.07640260415973e-08,
+      "sha256": "b2cc5e43682979b2bb4e5d668d495117621b1d6d64b6e367ccb6cbf8f65ebfff"
     },
     {
       "part": "arc_reactor_housing",
@@ -332,19 +332,19 @@
       "part": "left_lat_plate",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 1.1323649526322428e-07,
-      "com_error_m": 9.524806733260394e-10,
-      "inertia_relative_error": 1.6971854574299674e-07,
-      "sha256": "21cfd47fe298d6099ca3b3519b19f7242619edb7f48052e021fa7e1d6acf11d3"
+      "volume_relative_error": 6.259298458615606e-09,
+      "com_error_m": 6.636619670485899e-09,
+      "inertia_relative_error": 1.1508021251436744e-07,
+      "sha256": "e83386e9d4160cda1a6dcec6f410a0a6180deb171c3720973d338338d59486da"
     },
     {
       "part": "right_lat_plate",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 1.1323649526322428e-07,
-      "com_error_m": 9.524806733260394e-10,
-      "inertia_relative_error": 1.6971854574299674e-07,
-      "sha256": "21cfd47fe298d6099ca3b3519b19f7242619edb7f48052e021fa7e1d6acf11d3"
+      "volume_relative_error": 1.447845985385489e-07,
+      "com_error_m": 3.239024764980364e-09,
+      "inertia_relative_error": 2.007683446121515e-08,
+      "sha256": "f64d85c92904b385b9f1c51a2ff303b9ed067b214c913d99fef5361747d1d842"
     },
     {
       "part": "back_shell",
@@ -422,73 +422,91 @@
       "part": "left_rib_0",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 3.7285214674551365e-08,
-      "com_error_m": 3.2767841608508097e-10,
-      "inertia_relative_error": 7.254893059541228e-08,
-      "sha256": "cb25c64473936dc1d5251ec4053f77ca4696c21a4b29354d904612cea3a746c9"
+      "volume_relative_error": 1.1570342845442357e-08,
+      "com_error_m": 1.8573362173344293e-10,
+      "inertia_relative_error": 4.800587378089769e-08,
+      "sha256": "ab0ffb428e31e20ca32b1cb001d2bb8ed30a93607a634473479c043d3b11e862"
     },
     {
       "part": "left_rib_1",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 3.7285214674551365e-08,
-      "com_error_m": 3.2767841608508097e-10,
-      "inertia_relative_error": 7.254893059541228e-08,
-      "sha256": "cb25c64473936dc1d5251ec4053f77ca4696c21a4b29354d904612cea3a746c9"
+      "volume_relative_error": 1.1570342845442357e-08,
+      "com_error_m": 1.8573362173344293e-10,
+      "inertia_relative_error": 4.800587378089769e-08,
+      "sha256": "ab0ffb428e31e20ca32b1cb001d2bb8ed30a93607a634473479c043d3b11e862"
     },
     {
       "part": "left_rib_2",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 3.7285214674551365e-08,
-      "com_error_m": 3.2767841608508097e-10,
-      "inertia_relative_error": 7.254893059541228e-08,
-      "sha256": "cb25c64473936dc1d5251ec4053f77ca4696c21a4b29354d904612cea3a746c9"
+      "volume_relative_error": 1.1570342845442357e-08,
+      "com_error_m": 1.8573362173344293e-10,
+      "inertia_relative_error": 4.800587378089769e-08,
+      "sha256": "ab0ffb428e31e20ca32b1cb001d2bb8ed30a93607a634473479c043d3b11e862"
     },
     {
       "part": "left_chest_inlay",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 3.076828377728804e-08,
-      "com_error_m": 1.2635362455762009e-10,
-      "inertia_relative_error": 2.139206945809778e-08,
-      "sha256": "a8eb5beefec54f2dd262c5090f7bc48c78a46e9d9de7d48c227e0e3f1782189c"
+      "volume_relative_error": 3.463273713417701e-09,
+      "com_error_m": 3.470508817935043e-10,
+      "inertia_relative_error": 6.311186375784737e-09,
+      "sha256": "e927b1d3a0eab0b6c86f4040d7e58c7a17ed09f5183de634c8279d6d86463b8d"
+    },
+    {
+      "part": "left_chest_inlay_centre",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 1.222927531072047e-08,
+      "com_error_m": 2.1797869065309783e-10,
+      "inertia_relative_error": 1.0432721523644791e-08,
+      "sha256": "1979d36ac0ab5dee19b5e03ef38daf98ab0e9bc5eb94856ad6184b9efb98c10d"
     },
     {
       "part": "right_rib_0",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 3.7285214674551365e-08,
-      "com_error_m": 3.2767841608508097e-10,
-      "inertia_relative_error": 7.254893059541228e-08,
-      "sha256": "cb25c64473936dc1d5251ec4053f77ca4696c21a4b29354d904612cea3a746c9"
+      "volume_relative_error": 1.1570342845442357e-08,
+      "com_error_m": 1.8573362173344293e-10,
+      "inertia_relative_error": 4.800587378089769e-08,
+      "sha256": "ab0ffb428e31e20ca32b1cb001d2bb8ed30a93607a634473479c043d3b11e862"
     },
     {
       "part": "right_rib_1",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 3.7285214674551365e-08,
-      "com_error_m": 3.2767841608508097e-10,
-      "inertia_relative_error": 7.254893059541228e-08,
-      "sha256": "cb25c64473936dc1d5251ec4053f77ca4696c21a4b29354d904612cea3a746c9"
+      "volume_relative_error": 1.1570342845442357e-08,
+      "com_error_m": 1.8573362173344293e-10,
+      "inertia_relative_error": 4.800587378089769e-08,
+      "sha256": "ab0ffb428e31e20ca32b1cb001d2bb8ed30a93607a634473479c043d3b11e862"
     },
     {
       "part": "right_rib_2",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 3.7285214674551365e-08,
-      "com_error_m": 3.2767841608508097e-10,
-      "inertia_relative_error": 7.254893059541228e-08,
-      "sha256": "cb25c64473936dc1d5251ec4053f77ca4696c21a4b29354d904612cea3a746c9"
+      "volume_relative_error": 1.1570342845442357e-08,
+      "com_error_m": 1.8573362173344293e-10,
+      "inertia_relative_error": 4.800587378089769e-08,
+      "sha256": "ab0ffb428e31e20ca32b1cb001d2bb8ed30a93607a634473479c043d3b11e862"
     },
     {
       "part": "right_chest_inlay",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 3.076828377728804e-08,
-      "com_error_m": 1.2635362455762009e-10,
-      "inertia_relative_error": 2.139206945809778e-08,
-      "sha256": "a8eb5beefec54f2dd262c5090f7bc48c78a46e9d9de7d48c227e0e3f1782189c"
+      "volume_relative_error": 3.463273713417701e-09,
+      "com_error_m": 3.470508817935043e-10,
+      "inertia_relative_error": 6.311186375784737e-09,
+      "sha256": "e927b1d3a0eab0b6c86f4040d7e58c7a17ed09f5183de634c8279d6d86463b8d"
+    },
+    {
+      "part": "right_chest_inlay_centre",
+      "pass": true,
+      "closed_volume": true,
+      "volume_relative_error": 1.222927531072047e-08,
+      "com_error_m": 2.1797869065309783e-10,
+      "inertia_relative_error": 1.0432721523644791e-08,
+      "sha256": "1979d36ac0ab5dee19b5e03ef38daf98ab0e9bc5eb94856ad6184b9efb98c10d"
     },
     {
       "part": "left_pauldron",
@@ -1358,55 +1376,55 @@
       "part": "left_rib_edge_0",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 7.132893504187598e-09,
-      "com_error_m": 1.051808309367316e-10,
-      "inertia_relative_error": 3.199966049428662e-08,
-      "sha256": "2a968dadf28d00b4f7536c2aadaccd2d07e085ac0630078c615f9e6677309dfa"
+      "volume_relative_error": 2.4295922859221408e-09,
+      "com_error_m": 1.9319435701008972e-10,
+      "inertia_relative_error": 3.7784811316253766e-08,
+      "sha256": "993a3db977de299e8ac74a636797591db62c453eb35482ad60469c11014a6872"
     },
     {
       "part": "left_rib_insert_0",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 3.5423080912924115e-08,
-      "com_error_m": 2.4066512920983135e-10,
-      "inertia_relative_error": 4.7629942239239716e-08,
-      "sha256": "2aee1e42635f1715228c3ceed26d5b767f3d8e863d288d72dfb39336feef007d"
+      "volume_relative_error": 4.702666981204615e-08,
+      "com_error_m": 2.642911139504739e-10,
+      "inertia_relative_error": 8.455131447350324e-08,
+      "sha256": "aead1dd1051db24d0608f69fc56c73455e88bf4da44467987511f7754d87a8bd"
     },
     {
       "part": "left_rib_edge_1",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 7.132893504187598e-09,
-      "com_error_m": 1.051808309367316e-10,
-      "inertia_relative_error": 3.199966049428662e-08,
-      "sha256": "2a968dadf28d00b4f7536c2aadaccd2d07e085ac0630078c615f9e6677309dfa"
+      "volume_relative_error": 2.4295922859221408e-09,
+      "com_error_m": 1.9319435701008972e-10,
+      "inertia_relative_error": 3.7784811316253766e-08,
+      "sha256": "993a3db977de299e8ac74a636797591db62c453eb35482ad60469c11014a6872"
     },
     {
       "part": "left_rib_insert_1",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 3.5423080912924115e-08,
-      "com_error_m": 2.4066512920983135e-10,
-      "inertia_relative_error": 4.7629942239239716e-08,
-      "sha256": "2aee1e42635f1715228c3ceed26d5b767f3d8e863d288d72dfb39336feef007d"
+      "volume_relative_error": 4.702666981204615e-08,
+      "com_error_m": 2.642911139504739e-10,
+      "inertia_relative_error": 8.455131447350324e-08,
+      "sha256": "aead1dd1051db24d0608f69fc56c73455e88bf4da44467987511f7754d87a8bd"
     },
     {
       "part": "left_rib_edge_2",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 7.132893504187598e-09,
-      "com_error_m": 1.051808309367316e-10,
-      "inertia_relative_error": 3.199966049428662e-08,
-      "sha256": "2a968dadf28d00b4f7536c2aadaccd2d07e085ac0630078c615f9e6677309dfa"
+      "volume_relative_error": 2.4295922859221408e-09,
+      "com_error_m": 1.9319435701008972e-10,
+      "inertia_relative_error": 3.7784811316253766e-08,
+      "sha256": "993a3db977de299e8ac74a636797591db62c453eb35482ad60469c11014a6872"
     },
     {
       "part": "left_rib_insert_2",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 3.5423080912924115e-08,
-      "com_error_m": 2.4066512920983135e-10,
-      "inertia_relative_error": 4.7629942239239716e-08,
-      "sha256": "2aee1e42635f1715228c3ceed26d5b767f3d8e863d288d72dfb39336feef007d"
+      "volume_relative_error": 4.702666981204615e-08,
+      "com_error_m": 2.642911139504739e-10,
+      "inertia_relative_error": 8.455131447350324e-08,
+      "sha256": "aead1dd1051db24d0608f69fc56c73455e88bf4da44467987511f7754d87a8bd"
     },
     {
       "part": "left_collar_inlay",
@@ -1493,55 +1511,55 @@
       "part": "right_rib_edge_0",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 7.132893504187598e-09,
-      "com_error_m": 1.051808309367316e-10,
-      "inertia_relative_error": 3.199966049428662e-08,
-      "sha256": "2a968dadf28d00b4f7536c2aadaccd2d07e085ac0630078c615f9e6677309dfa"
+      "volume_relative_error": 2.4295922859221408e-09,
+      "com_error_m": 1.9319435701008972e-10,
+      "inertia_relative_error": 3.7784811316253766e-08,
+      "sha256": "993a3db977de299e8ac74a636797591db62c453eb35482ad60469c11014a6872"
     },
     {
       "part": "right_rib_insert_0",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 3.5423080912924115e-08,
-      "com_error_m": 2.4066512920983135e-10,
-      "inertia_relative_error": 4.7629942239239716e-08,
-      "sha256": "2aee1e42635f1715228c3ceed26d5b767f3d8e863d288d72dfb39336feef007d"
+      "volume_relative_error": 4.702666981204615e-08,
+      "com_error_m": 2.642911139504739e-10,
+      "inertia_relative_error": 8.455131447350324e-08,
+      "sha256": "aead1dd1051db24d0608f69fc56c73455e88bf4da44467987511f7754d87a8bd"
     },
     {
       "part": "right_rib_edge_1",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 7.132893504187598e-09,
-      "com_error_m": 1.051808309367316e-10,
-      "inertia_relative_error": 3.199966049428662e-08,
-      "sha256": "2a968dadf28d00b4f7536c2aadaccd2d07e085ac0630078c615f9e6677309dfa"
+      "volume_relative_error": 2.4295922859221408e-09,
+      "com_error_m": 1.9319435701008972e-10,
+      "inertia_relative_error": 3.7784811316253766e-08,
+      "sha256": "993a3db977de299e8ac74a636797591db62c453eb35482ad60469c11014a6872"
     },
     {
       "part": "right_rib_insert_1",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 3.5423080912924115e-08,
-      "com_error_m": 2.4066512920983135e-10,
-      "inertia_relative_error": 4.7629942239239716e-08,
-      "sha256": "2aee1e42635f1715228c3ceed26d5b767f3d8e863d288d72dfb39336feef007d"
+      "volume_relative_error": 4.702666981204615e-08,
+      "com_error_m": 2.642911139504739e-10,
+      "inertia_relative_error": 8.455131447350324e-08,
+      "sha256": "aead1dd1051db24d0608f69fc56c73455e88bf4da44467987511f7754d87a8bd"
     },
     {
       "part": "right_rib_edge_2",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 7.132893504187598e-09,
-      "com_error_m": 1.051808309367316e-10,
-      "inertia_relative_error": 3.199966049428662e-08,
-      "sha256": "2a968dadf28d00b4f7536c2aadaccd2d07e085ac0630078c615f9e6677309dfa"
+      "volume_relative_error": 2.4295922859221408e-09,
+      "com_error_m": 1.9319435701008972e-10,
+      "inertia_relative_error": 3.7784811316253766e-08,
+      "sha256": "993a3db977de299e8ac74a636797591db62c453eb35482ad60469c11014a6872"
     },
     {
       "part": "right_rib_insert_2",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 3.5423080912924115e-08,
-      "com_error_m": 2.4066512920983135e-10,
-      "inertia_relative_error": 4.7629942239239716e-08,
-      "sha256": "2aee1e42635f1715228c3ceed26d5b767f3d8e863d288d72dfb39336feef007d"
+      "volume_relative_error": 4.702666981204615e-08,
+      "com_error_m": 2.642911139504739e-10,
+      "inertia_relative_error": 8.455131447350324e-08,
+      "sha256": "aead1dd1051db24d0608f69fc56c73455e88bf4da44467987511f7754d87a8bd"
     },
     {
       "part": "right_collar_inlay",

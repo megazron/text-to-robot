@@ -39,7 +39,7 @@ concepts. See [examples](examples/) and [architecture](docs/ARCHITECTURE.md).
 
 ![Actual exported model rendered in MuJoCo](docs/img/mark43_threequarter_review.png)
 
-The current model contains **238 links, 204 mesh instances using 188 unique STL
+The current model contains **240 links, 206 mesh instances using 190 unique STL
 files, 17 frame actuators and 49 armour hinges**. Smaller parts include collar
 inlays, rib inserts, finger knuckle tiles, hinge barrels and pins. Those details
 are exported geometry, not a painted preview.
@@ -49,14 +49,15 @@ references](https://www.legacyefx.com/avengersaou), alongside the licensed colle
 reference used previously. The [visual review](docs/MARK43_VISUAL_REVIEW.md) compares
 specific shapes and shows front/rear views. **This is not movie-accurate yet.**
 Chest continuity, helmet topology, rib placement, hand anatomy and exposed drive
-modules remain conspicuous differences. No visual accuracy percentage is claimed.
+modules remain conspicuous differences. No visual accuracy percentage is claimed. Reference photographs are now cached
+locally and checked against saved iterations; see the [reference workflow](references/mark43/README.md).
 
 | Check | Current evidence |
 |---|---|
-| Closed mesh topology and mass integrals | 204/204 mesh instances pass |
+| Closed mesh topology and mass integrals | 206/206 mesh instances pass |
 | Empty-suit MuJoCo smoke battery | 3/5; tracking and disturbance recovery fail |
-| Suit with passive mannequin | 5/6; actuator sweep fails, 45/66 joints track |
-| Compound-convex initial collision | 843 penetrating contacts, maximum depth about 12.6 mm |
+| Suit with passive mannequin | 5/6; actuator sweep fails, 47/66 joints track |
+| Compound-convex initial collision | 753 penetrating contacts, maximum depth about 24.9 mm |
 | Joint-range clearance | 595 sampled poses; interference remains |
 | ROS 2 Jazzy / MoveIt | Controllers and scene start; suit planning fails collision validation |
 | Six-axis arm MoveIt fixture | Planning and mock trajectory execution pass |
