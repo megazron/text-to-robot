@@ -56,3 +56,19 @@ Rejected mounting the jaw on a distant pivot merely to clear its sweep: that wou
 not establish a buildable mechanism. Remaining chin/neck motion collisions stay
 reported. Lateral rim cutaways clear the existing motor housings; the visible
 mechanical bulk and open ankle transitions still fall short of the reference.
+
+### Chest opening clearance — 2026-09-20
+
+Compared the saved Legacy Effects production-torso photograph with the existing
+and regenerated torso close-ups. The original pectorals ran behind the fixed
+sternum; a five-pose test missed intersections at the start of opening. Rejected
+hinge relocation because it introduced arm interference. Trimmed both chest
+solids to follow the sternum boundary with 4 mm nominal lateral clearance,
+keeping the outer surface and existing inlay positions. The top opening remains
+visibly simplified compared with the continuous film collar/chest transition.
+
+Both doors pass 61 independent sampled positions and 61 simultaneous openings
+across the original ±1.2 rad ranges. No collision exclusions or limits were
+changed. The visual result still has exposed mechanisms and simplified panel
+shapes; this correction establishes neither movie accuracy nor a wearable build.
+Neck pitch, broader articulation and wearer-fit failures remain in the reports.

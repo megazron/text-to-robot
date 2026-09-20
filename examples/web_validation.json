@@ -141,7 +141,7 @@
       "mesh_triangles_verified": true,
       "example": "14_iron_man_mark_43",
       "pass": true,
-      "source_robot_sha256": "0b56318e5b4540de4ea85f30db5259a00fbac6e893e04c9ff3fb18157ad57797",
+      "source_robot_sha256": "10cdf0986a8447fdfa28f53ee40f5ddbfe251747146c5166e145c83b30a34841",
       "name": "iron_man_mark_43",
       "links": 268,
       "joints": 267

@@ -180,7 +180,11 @@ motor housings, and attaches rear details to their opening flaps. These changes
 are actual exported geometry, not altered renderings.
 [Before/after evidence](examples/14_iron_man_mark_43/surface_contact_comparison.json).
 
-The 86 sampled poses still include motion collisions. A collision-free rest pose
+The surface audit checks 428 poses across seven selected joints. Both chest doors
+clear 61 samples over their full opening ranges after removing the overlap behind
+the fixed sternum. A regression also checks 61 simultaneous door-opening poses.
+Neck pitch still intersects the collar in 14 samples; the broader compound audit
+still finds 121 failing poses out of 775. A collision-free rest pose
 is not a safe range of movement or wearer qualification. The proportions, exposed
 mechanical components and panel details still differ substantially from the film.
 

@@ -1,8 +1,8 @@
 {
-  "scope": "Offline FCL surface-intersection audit of exported URDF visual surfaces (the MoveIt mesh sources).\nTriangle intersections are not a penetration-depth or solid-containment test.\nCylinders/spheres are tessellated; counts can differ from native MoveIt primitives.\nOnly direct parent/child links are excluded, as in the generated MoveIt SRDF.\n",
+  "scope": "Offline FCL surface-intersection audit of exported URDF visual surfaces (the MoveIt mesh sources).\nTriangle intersections are not a penetration-depth or solid-containment test.\nCylinders/spheres are tessellated; counts can differ from native MoveIt primitives.\nOnly direct parent/child links are excluded. This is deliberately stricter than\nthe MoveIt SRDF, which also excludes pairs within and between adjacent rigid assemblies.\n",
   "baseline_commit": "ec456b2c4227b92ebe605d41d85ed389ac5ab243",
   "baseline_urdf_sha256": "32952828db78af66efcadde5628f1c3c2f55f2f7e5362caf66489299361c4b9a",
-  "current_urdf_sha256": "a10295d0f5776087ede45fa213f0f1c0e50c08560057f045a81a5f70feb1ffaa",
+  "current_urdf_sha256": "e7d6dce1cc8f8b9ddcf22d34a852f87fb8761351c5068cb3a70639818b5c47b6",
   "baseline_pair_count": 81,
   "current_pair_count": 0,
   "resolved_pairs": [
