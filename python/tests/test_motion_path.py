@@ -1,5 +1,6 @@
 import importlib.util
 import json
+import os
 import subprocess
 import sys
 import tempfile
@@ -91,7 +92,9 @@ class MotionPathTests(unittest.TestCase):
         output = Path(self.temp.name)/'report.json'
         path.write_text(json.dumps(self.crossing))
         command = [sys.executable,str(ROOT/'scripts/audit_motion_path.py'),str(self.source),str(path),'--json',str(output)]
-        result = subprocess.run(command, capture_output=True, text=True, timeout=30)
+        # A geometry-only command must work without any usable GL backend.
+        env = {**os.environ, 'MUJOCO_GL':'unavailable_backend'}
+        result = subprocess.run(command, capture_output=True, text=True, timeout=30, env=env)
         self.assertEqual(result.returncode,1,result.stderr)
         self.assertTrue(output.exists(),result.stderr)
         self.assertFalse(json.loads(output.read_text())['pass'])

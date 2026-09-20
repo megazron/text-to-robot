@@ -7,7 +7,13 @@ import argparse
 import hashlib
 import json
 import math
+import os
 from pathlib import Path
+
+# The command only queries FCL; an inherited renderer setting must not require
+# system OpenGL libraries merely to import the MuJoCo package initializer.
+if __name__ == '__main__':
+    os.environ['MUJOCO_GL'] = 'disable'
 
 from ttr_mujoco.surface import SurfaceScene
 

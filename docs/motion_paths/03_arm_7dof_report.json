@@ -3756,5 +3756,5 @@
     "Unspecified movable joints are held at zero; continuous joint angles are not wrapped"
   ],
   "source_path_sha256": "271d0d58dec547cb41a9b7f3cdd8a7671337be5d26eef04913537b67b60b727a",
-  "auditor_sha256": "2af91fadab3345ece5a6aa54a266ed0012a3e5b063324cd8fee3ed9f8cdf6278"
+  "auditor_sha256": "55226f7390ec32dc291fae677b6c0ed5f638701d13ceaaebacbce548a301b81d"
 }

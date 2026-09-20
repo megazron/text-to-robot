@@ -2,7 +2,11 @@
 import argparse
 import hashlib
 import json
+import os
 from pathlib import Path
+
+if __name__ == '__main__':
+    os.environ['MUJOCO_GL'] = 'disable'
 
 from audit_motion_path import audit_path, SurfaceScene
 
