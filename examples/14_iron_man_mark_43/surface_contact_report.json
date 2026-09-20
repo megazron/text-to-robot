@@ -1,6 +1,6 @@
 {
   "scope": "Offline FCL surface-intersection audit of exported URDF visual surfaces (the MoveIt mesh sources).\nTriangle intersections are not a penetration-depth or solid-containment test.\nCylinders/spheres are tessellated; counts can differ from native MoveIt primitives.\nOnly direct parent/child links are excluded. This is deliberately stricter than\nthe MoveIt SRDF, which also excludes pairs within and between adjacent rigid assemblies.\n",
-  "source_urdf_sha256": "e7d6dce1cc8f8b9ddcf22d34a852f87fb8761351c5068cb3a70639818b5c47b6",
+  "source_urdf_sha256": "71421d15f0a79f46195802bccd899efe86dc9fd6be66d632457b30713af7ed31",
   "source_mesh_sha256": {
     "meshes/pelvis_frame.stl": "b39c497f29f2d4be5f925de8bd98aa23f04c4fe2ec4ddef54e6bbd9fa10f4bf2",
     "meshes/left_thigh_cuff.stl": "3674e5ff1e8a138e37aced22909094adf5f8c0bb026c943ea5863fa1d31f034e",
@@ -26,7 +26,7 @@
     "meshes/helmet_right_eye_lens.stl": "96b41e4c6e5d2067363cb3b482074a34589c2e17296fca53316175aed349ef4f",
     "meshes/helmet_right_cheek_panel.stl": "3663ed8e5bf9803f7e7e4f56347cc51a458d76aebc695354b571b074e891cd6c",
     "meshes/helmet_chin_guard.stl": "23ac25b60428de71a94f075179185e542b96f3742b7428fb753d4c8ff4c2027b",
-    "meshes/neck_ring.stl": "4748932cd060e0442054219ff079ad2623532b2bc73a679687949c07b3a081fe",
+    "meshes/neck_ring.stl": "8ae3ee8927f6b3af9e097a83350e16cf3f6e02e86cfa2a5681167d822daa6e85",
     "meshes/collar_plate.stl": "da5404411123f26f27f7f3ceed5248898a7f336a8327b57a03a6d5bb664e9099",
     "meshes/left_chest_door.stl": "e8010b46cdb6fc26737767d3c612a12063ac2a5d1922536f94e44c80678e1b1c",
     "meshes/left_pectoral_trim.stl": "2eebc653595fe91b79855263acd83ace72c967c22255205c9e8c8f4ff798d3bf",
@@ -1241,184 +1241,86 @@
     {
       "joint": "neck_pitch",
       "position": 0.18083333333333335,
-      "pair_count": 1,
-      "new_pairs": [
-        [
-          "chin_guard",
-          "neck_ring"
-        ]
-      ]
+      "pair_count": 0,
+      "new_pairs": []
     },
     {
       "joint": "neck_pitch",
       "position": 0.19,
-      "pair_count": 1,
-      "new_pairs": [
-        [
-          "chin_guard",
-          "neck_ring"
-        ]
-      ]
+      "pair_count": 0,
+      "new_pairs": []
     },
     {
       "joint": "neck_pitch",
       "position": 0.19916666666666666,
-      "pair_count": 1,
-      "new_pairs": [
-        [
-          "chin_guard",
-          "neck_ring"
-        ]
-      ]
+      "pair_count": 0,
+      "new_pairs": []
     },
     {
       "joint": "neck_pitch",
       "position": 0.20833333333333331,
-      "pair_count": 1,
-      "new_pairs": [
-        [
-          "chin_guard",
-          "neck_ring"
-        ]
-      ]
+      "pair_count": 0,
+      "new_pairs": []
     },
     {
       "joint": "neck_pitch",
       "position": 0.21750000000000003,
-      "pair_count": 1,
-      "new_pairs": [
-        [
-          "chin_guard",
-          "neck_ring"
-        ]
-      ]
+      "pair_count": 0,
+      "new_pairs": []
     },
     {
       "joint": "neck_pitch",
       "position": 0.22666666666666668,
-      "pair_count": 1,
-      "new_pairs": [
-        [
-          "chin_guard",
-          "neck_ring"
-        ]
-      ]
+      "pair_count": 0,
+      "new_pairs": []
     },
     {
       "joint": "neck_pitch",
       "position": 0.23583333333333334,
-      "pair_count": 1,
-      "new_pairs": [
-        [
-          "chin_guard",
-          "neck_ring"
-        ]
-      ]
+      "pair_count": 0,
+      "new_pairs": []
     },
     {
       "joint": "neck_pitch",
       "position": 0.245,
-      "pair_count": 2,
-      "new_pairs": [
-        [
-          "chin_guard",
-          "collar_plate"
-        ],
-        [
-          "chin_guard",
-          "neck_ring"
-        ]
-      ]
+      "pair_count": 0,
+      "new_pairs": []
     },
     {
       "joint": "neck_pitch",
       "position": 0.25416666666666665,
-      "pair_count": 2,
-      "new_pairs": [
-        [
-          "chin_guard",
-          "collar_plate"
-        ],
-        [
-          "chin_guard",
-          "neck_ring"
-        ]
-      ]
+      "pair_count": 0,
+      "new_pairs": []
     },
     {
       "joint": "neck_pitch",
       "position": 0.2633333333333333,
-      "pair_count": 2,
-      "new_pairs": [
-        [
-          "chin_guard",
-          "collar_plate"
-        ],
-        [
-          "chin_guard",
-          "neck_ring"
-        ]
-      ]
+      "pair_count": 0,
+      "new_pairs": []
     },
     {
       "joint": "neck_pitch",
       "position": 0.27249999999999996,
-      "pair_count": 2,
-      "new_pairs": [
-        [
-          "chin_guard",
-          "collar_plate"
-        ],
-        [
-          "chin_guard",
-          "neck_ring"
-        ]
-      ]
+      "pair_count": 0,
+      "new_pairs": []
     },
     {
       "joint": "neck_pitch",
       "position": 0.2816666666666666,
-      "pair_count": 2,
-      "new_pairs": [
-        [
-          "chin_guard",
-          "collar_plate"
-        ],
-        [
-          "chin_guard",
-          "neck_ring"
-        ]
-      ]
+      "pair_count": 0,
+      "new_pairs": []
     },
     {
       "joint": "neck_pitch",
       "position": 0.2908333333333334,
-      "pair_count": 2,
-      "new_pairs": [
-        [
-          "chin_guard",
-          "collar_plate"
-        ],
-        [
-          "chin_guard",
-          "neck_ring"
-        ]
-      ]
+      "pair_count": 0,
+      "new_pairs": []
     },
     {
       "joint": "neck_pitch",
       "position": 0.3,
-      "pair_count": 2,
-      "new_pairs": [
-        [
-          "chin_guard",
-          "collar_plate"
-        ],
-        [
-          "chin_guard",
-          "neck_ring"
-        ]
-      ]
+      "pair_count": 0,
+      "new_pairs": []
     },
     {
       "joint": "left_chest_door_hinge",
@@ -2885,7 +2787,7 @@
       "new_pairs": []
     }
   ],
-  "pass": false,
+  "pass": true,
   "limitations": [
     "Independent joint samples do not certify continuous or combined motion",
     "Surface intersections do not test full containment or wearer fit; use compound collision and wearer audits too"

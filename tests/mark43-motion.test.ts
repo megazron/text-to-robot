@@ -8,10 +8,12 @@ function changed(name:string,values:Record<string,number>) {
   const after=forwardKinematics(spec,values).get(name)!;
   return before.some((v,i)=>Math.abs(v-after[i])>1e-6);
 }
-test('Mark 43 helmet assembly follows neck rotation while collar stays on torso',()=>{
+test('Mark 43 head pitches inside a yaw-following shroud and fixed torso ring',()=>{
   for(const name of ['helmet','faceplate','left_eye_lens','right_cheek_panel','helmet_crown_panel','chin_guard'])
     assert.ok(changed(name,{neck_yaw:.3,neck_pitch:.15}),name);
-  assert.equal(changed('helmet_neck_collar',{neck_yaw:.3,neck_pitch:.15}),false);
+  assert.ok(changed('helmet_neck_collar',{neck_yaw:.3}));
+  assert.equal(changed('helmet_neck_collar',{neck_pitch:.15}),false);
+  for(const name of ['neck_ring','collar_plate'])assert.equal(changed(name,{neck_yaw:.3,neck_pitch:.15}),false);
 });
 test('Mark 43 chest inlays follow their opening door',()=>{
   for(const side of ['left','right']) {

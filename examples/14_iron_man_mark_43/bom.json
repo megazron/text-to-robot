@@ -102,9 +102,9 @@
       "category": "Structure",
       "name": "Aluminium frame + brackets",
       "qty": 1,
-      "unit_cost": 3293.1,
-      "subtotal": 3293.1,
-      "spec": "~109.77 kg material @ $30/kg"
+      "unit_cost": 3287.05,
+      "subtotal": 3287.05,
+      "spec": "~109.57 kg material @ $30/kg"
     },
     {
       "category": "Structure",
@@ -123,7 +123,7 @@
       "spec": "~12% of electronics"
     }
   ],
-  "total": 38708.7,
+  "total": 38702.65,
   "feasible": true,
   "sizing_pass": false,
   "hardware_verified": false,

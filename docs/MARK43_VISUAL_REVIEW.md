@@ -162,3 +162,16 @@ Both doors pass 61 positions each over their original ranges; regression tests
 also check 61 simultaneous openings. The 14 failing neck-pitch samples and the
 broader compound-collision failures remain visible. These are sampled geometry
 checks, not a continuous-motion, linkage-load or manufacturing qualification.
+
+## Neck clearance and opening directions
+
+The lower helmet shroud now follows yaw; pitch moves inside it. Relieving the
+fixed ring's top and lowering the red collar keeps the head in the same position
+and clears the 31×31 yaw/pitch grid plus neutral. This supersedes the neck-pitch
+failures in the preceding revision. The ring bore and head-entry restriction
+are unchanged. The neck transition remains visually simplified.
+
+Eight clamshells now rotate away from their own cuffs and fixed shells. Their
+full 1.4 rad travel remains, including reported collisions with neighbouring
+body parts in the standing pose. The complete 86-joint surface sweep has 295
+failing moving samples; passing neck/chest subsets do not establish wearability.

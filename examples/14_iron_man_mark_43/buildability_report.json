@@ -1,11 +1,11 @@
 {
   "scope": "Design-input inventory, not a hardware qualification or a claim that missing interfaces were inspected in CAD",
-  "source_robot_sha256": "10cdf0986a8447fdfa28f53ee40f5ddbfe251747146c5166e145c83b30a34841",
-  "source_bom_sha256": "c3b59cac6a215fa7b70d4a284ee5c080dcbb20ca06c218b01b2a99ee33bd2380",
+  "source_robot_sha256": "de5963f103b46853f8eb061938d2abd3ad095106501c6ed0bcb21f945fdff5d3",
+  "source_bom_sha256": "b89d7db66608128dcecb64b77d420614d5579e0a369671d79c6c6c00556bbda6",
   "hardware_verified": false,
   "manufacturing_ready": false,
   "prototype_test_evidence": null,
-  "declared_mass_kg": 78.40720000000019,
+  "declared_mass_kg": 78.2632000000002,
   "links_with_inferred_mass": [],
   "actuator_catalogue_sizing_pass": false,
   "joint_requirements": [
@@ -401,8 +401,8 @@
       "effort_unit": "N·m",
       "velocity": 3,
       "velocity_unit": "rad/s",
-      "lower": -1.4,
-      "upper": 0,
+      "lower": 0,
+      "upper": 1.4,
       "position_unit": "rad"
     },
     {
@@ -423,8 +423,8 @@
       "effort_unit": "N·m",
       "velocity": 3,
       "velocity_unit": "rad/s",
-      "lower": -1.4,
-      "upper": 0,
+      "lower": 0,
+      "upper": 1.4,
       "position_unit": "rad"
     },
     {
@@ -610,8 +610,8 @@
       "effort_unit": "N·m",
       "velocity": 3,
       "velocity_unit": "rad/s",
-      "lower": 0,
-      "upper": 1.4,
+      "lower": -1.4,
+      "upper": 0,
       "position_unit": "rad"
     },
     {
@@ -632,8 +632,8 @@
       "effort_unit": "N·m",
       "velocity": 3,
       "velocity_unit": "rad/s",
-      "lower": 0,
-      "upper": 1.4,
+      "lower": -1.4,
+      "upper": 0,
       "position_unit": "rad"
     },
     {
@@ -819,8 +819,8 @@
       "effort_unit": "N·m",
       "velocity": 3,
       "velocity_unit": "rad/s",
-      "lower": -1.4,
-      "upper": 0,
+      "lower": 0,
+      "upper": 1.4,
       "position_unit": "rad"
     },
     {
@@ -841,8 +841,8 @@
       "effort_unit": "N·m",
       "velocity": 3,
       "velocity_unit": "rad/s",
-      "lower": -1.4,
-      "upper": 0,
+      "lower": 0,
+      "upper": 1.4,
       "position_unit": "rad"
     },
     {
@@ -896,8 +896,8 @@
       "effort_unit": "N·m",
       "velocity": 3,
       "velocity_unit": "rad/s",
-      "lower": 0,
-      "upper": 1.4,
+      "lower": -1.4,
+      "upper": 0,
       "position_unit": "rad"
     },
     {
@@ -918,8 +918,8 @@
       "effort_unit": "N·m",
       "velocity": 3,
       "velocity_unit": "rad/s",
-      "lower": 0,
-      "upper": 1.4,
+      "lower": -1.4,
+      "upper": 0,
       "position_unit": "rad"
     },
     {

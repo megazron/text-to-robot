@@ -76,9 +76,51 @@ def audit(scene,joints=(),samples=5):
   'limitations':['Independent joint samples do not certify continuous or combined motion',
    'Surface intersections do not test full containment or wearer fit; use compound collision and wearer audits too']}
 
+def audit_grid(scene, joints, samples=9):
+ """Sample simultaneous motion of two or three joints, retaining failure witnesses.
+
+ This complements independent sweeps; it is not continuous collision detection.
+ Limit the grid size to prevent accidental exponential work on a whole robot.
+ """
+ from itertools import product
+ if not isinstance(samples,int) or isinstance(samples,bool) or samples<3:
+  raise ValueError('samples must be an integer >= 3')
+ if len(joints) not in (2,3) or len(set(joints))!=len(joints):
+  raise ValueError('grid requires two or three distinct joints')
+ if samples**len(joints)>10000:
+  raise ValueError('grid exceeds 10000 poses; select fewer joints or samples')
+ by_name={j.get('name'):j for j in scene.joints}
+ limits={}
+ for name in joints:
+  joint=by_name.get(name)
+  if joint is None:raise ValueError('Unknown joint '+name)
+  limit=joint.find('limit')
+  if joint.get('type') not in ('revolute','prismatic') or limit is None:
+   raise ValueError('A limited revolute/prismatic joint is required: '+name)
+  lo,hi=float(limit.get('lower')),float(limit.get('upper'))
+  if not np.isfinite([lo,hi]).all() or lo>hi:raise ValueError('Invalid limits: '+name)
+  limits[name]={'lower':lo,'upper':hi,'unit':'m' if joint.get('type')=='prismatic' else 'rad'}
+ neutral=scene.contacts();failures=[]
+ for values in product(*(np.linspace(limits[n]['lower'],limits[n]['upper'],samples) for n in joints)):
+  pose=dict(zip(joints,map(float,values)));pairs=scene.contacts(pose)
+  if pairs:failures.append({'positions':pose,'pairs':pairs})
+ return {'scope':__doc__,'mode':'simultaneous_joint_grid',
+  'source_urdf_sha256':hashlib.sha256(scene.source.read_bytes()).hexdigest(),
+  'source_mesh_sha256':scene.mesh_hashes,'joint_limits':limits,
+  'samples_per_joint':samples,'poses_checked':1+samples**len(joints),
+  'neutral_pairs':neutral,'failing_grid_poses':len(failures),'failures':failures,
+  'pass':not neutral and not failures,
+  'limitations':['Uniform grid samples are not continuous collision detection',
+   'Only the named joints vary; every other joint stays at zero',
+   'Surface intersections do not test full containment, human fit or achievable dynamics']}
+
 def main():
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('urdf',type=Path);p.add_argument('--json',type=Path,required=True)
- p.add_argument('--joints',nargs='*',default=[]);p.add_argument('--samples',type=int,default=5);a=p.parse_args()
- report=audit(SurfaceScene(a.urdf),a.joints,a.samples)
- a.json.write_text(json.dumps(report,indent=2)+'\n');print(report['neutral_pair_count'],'non-adjacent surface intersections;',report['poses_checked'],'poses')
+ group=p.add_mutually_exclusive_group();group.add_argument('--joints',nargs='*',default=[]);group.add_argument('--all-joints',action='store_true',help='Sweep every limited revolute/prismatic joint');p.add_argument('--samples',type=int,default=5);p.add_argument('--grid',action='store_true',help='Sample simultaneous motion of two or three joints');a=p.parse_args()
+ scene=SurfaceScene(a.urdf)
+ joints=[j.get('name') for j in scene.joints if j.get('type') in ('revolute','prismatic') and j.find('limit') is not None] if a.all_joints else a.joints
+ if a.grid and a.all_joints:p.error('--grid requires two or three explicitly named --joints')
+ report=(audit_grid if a.grid else audit)(scene,joints,a.samples)
+ if a.all_joints:report['coverage']='Every limited revolute/prismatic joint in the exported URDF, moved independently; no combined-motion guarantee'
+ a.json.write_text(json.dumps(report,indent=2)+'\n');print(report['poses_checked'],'poses; pass:',report['pass'])
 if __name__=='__main__':main()

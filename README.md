@@ -180,13 +180,19 @@ motor housings, and attaches rear details to their opening flaps. These changes
 are actual exported geometry, not altered renderings.
 [Before/after evidence](examples/14_iron_man_mark_43/surface_contact_comparison.json).
 
-The surface audit checks 428 poses across seven selected joints. Both chest doors
-clear 61 samples over their full opening ranges after removing the overlap behind
-the fixed sternum. A regression also checks 61 simultaneous door-opening poses.
-Neck pitch still intersects the collar in 14 samples; the broader compound audit
-still finds 121 failing poses out of 775. A collision-free rest pose
-is not a safe range of movement or wearer qualification. The proportions, exposed
-mechanical components and panel details still differ substantially from the film.
+The 428-pose surface audit of seven selected joints now passes, together with
+[a 962-pose combined neck yaw/pitch check](examples/14_iron_man_mark_43/neck_motion_report.json).
+The helmet shroud follows yaw; the fixed neck ring and collar have pitch clearance.
+Eight clamshell hinges now open away from their own cuffs over the original travel.
+Large openings still hit neighbouring body parts in the standing pose.
+
+The [full surface audit](examples/14_iron_man_mark_43/all_joint_surface_report.json)
+checks every one of the 86 limited joints: **295 moving samples fail out of 1,119
+poses including neutral**. The [example README](examples/14_iron_man_mark_43/README.md)
+reports **159/775 failing compound-collision poses**, including increased
+neighbouring-body interference with the corrected clamshell directions. These failures, the closed
+head/hip entry restrictions, and unverified hardware interfaces remain release
+blockers. The proportions and visible mechanics still differ from the film.
 
 | Previous exported geometry | Current exported geometry |
 |---|---|

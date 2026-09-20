@@ -102,14 +102,23 @@ export function ironManMark43(opts: ExosuitOptions = {}): RobotSpecification {
     }
   }
 
+  // The lower helmet shroud follows the yaw bearing, while pitch occurs
+  // inside it. Welding it to the torso traps the chin/cheek corners during
+  // combined yaw and pitch. The structural neck ring remains on the torso.
+  const shroudMount=spec.joints.find(j=>j.child==="helmet_neck_collar")!;
+  shroudMount.parent="neck_yaw_carrier";
+  shroudMount.origin.xyz=shroudMount.origin.xyz.map((v,i)=>v-neckPivot[i]) as V3;
+
   // ================= TORSO =================
   // Keep the harness inside the pectoral surfaces and clear of the flank covers.
   const chestZ = T * 0.68 + 0.015;
   const strap = spec.links.find((l) => l.name === "chest_plate")!;   // exo chest strap plate: slimmer under the armour
   strap.geometry = { type: "box", size: [0.02, 0.16, 0.24] }; strap.origin = pose([0.100, 0, chestZ]);
-  part("neck_ring", "spine_frame", mesh("ring", "neck_ring.stl", { outer: 0.08, inner:0.070, height: 0.025 }), [0.02, 0, T + 0.052], [0, 0, 0], GUN, 0.30);
+  part("neck_ring", "spine_frame", mesh("ring", "neck_ring.stl", { outer: 0.08, inner:0.070, height: 0.013 }), [0.02, 0, T + 0.046], [0, 0, 0], GUN, 0.30 * .013 / .025);
+  // Keep the ring's lower mounting plane; relieve 12 mm from its top so
+  // the jaw clears pitch motion. Scale the provisional mass by its volume.
   // red collar plate over the shoulder yoke and clavicles
-  part("collar_plate", "spine_frame", mesh("armour_plate", "collar_plate.stl", { w: 0.28, h: 0.035, t: 0.006, R: 0.30, corner: 0.02, taper: 0.15 }), [0.135, 0, T + 0.035], [0, 0, 0], RED, 0.40);
+  part("collar_plate", "spine_frame", mesh("armour_plate", "collar_plate.stl", { w: 0.28, h: 0.035, t: 0.006, R: 0.30, corner: 0.02, taper: 0.15 }), [0.135, 0, T + 0.027], [0, 0, 0], RED, 0.40);
   // red pectoral shell in two halves; each hinges on a vertical axis at the armpit and swings forward/outward for donning
   for (const [s, sign] of SIDES) {
     const pivot: V3 = [0.10, sign * 0.24, chestZ];
@@ -152,7 +161,9 @@ export function ironManMark43(opts: ExosuitOptions = {}): RobotSpecification {
 
   // ================= ARMS =================
   // limb shells are centred on the wearer's limb axis (0.05 inboard of the strut); the fixed outer shell wraps
-  // front→outside→back, the inner clamshell hinges on the front seam and swings outward for donning
+  // front→outside→back. Positive left / negative right opening moves the
+  // inner clamshell away from its cuff. Full opening can still strike adjacent
+  // limbs or torso in the standing pose; a donning sequence is not validated.
   const wrap = (r: number, sign: number) => ({ outer: { a0: sign > 0 ? -1.01 : -3.62, a1: sign > 0 ? 3.62 : 1.01 }, inner: { a0: sign > 0 ? -2.58 : 1.09, a1: sign > 0 ? -1.09 : 2.58 }, seam: [(r+.009) * Math.cos(1.05), -sign * (r+.009) * Math.sin(1.05)] as [number, number] });
   for (const [s, sign] of SIDES) {
     // red pauldron: dome capping the shoulder module, tilted outward, lifts on an x hinge
@@ -162,13 +173,13 @@ export function ironManMark43(opts: ExosuitOptions = {}): RobotSpecification {
     const ua = 0.075, uw = wrap(ua, sign), uz = -A.uarm * 0.12, uy = -sign * 0.05;
     part(`${s}_bicep_sleeve`, `${s}_upper_arm_strut`, mesh("limb_shell", `${s}_bicep_sleeve.stl`, { length: A.uarm * 0.82, rTop: ua, rBottom: ua - 0.01, ...uw.outer, thick: 0.005, bulge: 0.04 }), [0, uy, uz], [0, 0, 0], GOLD, 0.45);
     part(`${s}_bicep_clamshell`, `${s}_upper_arm_strut`, mesh("limb_shell", `${s}_bicep_clamshell.stl`, { length: A.uarm * 0.82, rTop: ua, rBottom: ua - 0.01, ...uw.inner, thick: 0.005, bulge: 0.04 }),
-      [uw.seam[0], uy + uw.seam[1], uz], [0, 0, 0], GOLD, 0.25, { axis: [0, 0, 1], open: -sign * 1.4, effort: 3, origin: [-uw.seam[0], -uw.seam[1], 0] });
+      [uw.seam[0], uy + uw.seam[1], uz], [0, 0, 0], GOLD, 0.25, { axis: [0, 0, 1], open: sign * 1.4, effort: 3, origin: [-uw.seam[0], -uw.seam[1], 0] });
     part(`${s}_elbow_cap`, `${s}_elbow_module`, mesh("dome", `${s}_elbow_cap.stl`, { radius: 0.055, height: 0.04, thick: 0.004 }), [-0.068, uy, 0], [0, -PI / 2, 0], RED, 0.18, { axis: [0, 1, 0], open: 0.5, effort: 2 });
     // forearm gauntlet: red outer sleeve + gold inner clamshell + gold missile hatch on the outer face
     const fa = 0.066, fw = wrap(fa, sign), fz = -A.farm * 0.11, fy = -sign * 0.045;
     part(`${s}_gauntlet_sleeve`, `${s}_forearm_strut`, mesh("limb_shell", `${s}_gauntlet_sleeve.stl`, { length: A.farm * 0.87, rTop: fa, rBottom: fa - 0.012, ...fw.outer, thick: 0.005, bulge: 0.02 }), [0, fy, fz], [0, 0, 0], RED, 0.40);
     part(`${s}_gauntlet_clamshell`, `${s}_forearm_strut`, mesh("limb_shell", `${s}_gauntlet_clamshell.stl`, { length: A.farm * 0.87, rTop: fa, rBottom: fa - 0.012, ...fw.inner, thick: 0.005, bulge: 0.02 }),
-      [fw.seam[0], fy + fw.seam[1], fz], [0, 0, 0], GOLD, 0.22, { axis: [0, 0, 1], open: -sign * 1.4, effort: 3, origin: [-fw.seam[0], -fw.seam[1], 0] });
+      [fw.seam[0], fy + fw.seam[1], fz], [0, 0, 0], GOLD, 0.22, { axis: [0, 0, 1], open: sign * 1.4, effort: 3, origin: [-fw.seam[0], -fw.seam[1], 0] });
     part(`${s}_gauntlet_stripe`, `${s}_gauntlet_sleeve`, mesh("mark43_limb_inset", `${s}_gauntlet_stripe.stl`, {style:"forearm",length:A.farm*.87,rTop:fa,rBottom:fa-.012,a0:-.18,a1:.18,u0:.20,u1:.65,offset:.008}), [0, 0, 0], [0, 0, 0], GOLD, 0.03);
     part(`${s}_gauntlet_hatch`, `${s}_gauntlet_sleeve`, mesh("armour_plate", `${s}_gauntlet_hatch.stl`, { w: 0.045, h: 0.04, t: 0.003, R: 0.07, corner: 0.006 }), [0, sign * (fa + 0.002), -0.035], [0, 0, sign * PI / 2], GOLD, 0.05, { axis: [0, 1, 0], open: -1.2, effort: 1.5, origin: [0, 0, -0.02] });
     // hand: red plate over the back of the hand platform, repulsor in the palm, gold articulated fingers
@@ -210,13 +221,13 @@ export function ironManMark43(opts: ExosuitOptions = {}): RobotSpecification {
     const tr = 0.110, tw = wrap(tr, sign), tz = -A.thigh * 0.10;
     part(`${s}_thigh_shell`, `${s}_thigh_strut`, mesh("limb_shell", `${s}_thigh_shell.stl`, { length: A.thigh * 0.88, rTop: tr, rBottom: tr - 0.02, ...tw.outer, thick: 0.006, bulge: 0.03 }), [0, ly, tz], [0, 0, 0], RED, 0.85);
     part(`${s}_thigh_clamshell`, `${s}_thigh_strut`, mesh("limb_shell", `${s}_thigh_clamshell.stl`, { length: A.thigh * 0.88, rTop: tr, rBottom: tr - 0.02, ...tw.inner, thick: 0.006, bulge: 0.03 }),
-      [tw.seam[0], ly + tw.seam[1], tz], [0, 0, 0], RED, 0.48, { axis: [0, 0, 1], open: -sign * 1.4, effort: 3, origin: [-tw.seam[0], -tw.seam[1], 0] });
+      [tw.seam[0], ly + tw.seam[1], tz], [0, 0, 0], RED, 0.48, { axis: [0, 0, 1], open: sign * 1.4, effort: 3, origin: [-tw.seam[0], -tw.seam[1], 0] });
     part(`${s}_knee_cap`, `${s}_knee_module`, mesh("mark43_panel", `${s}_knee_cap.stl`, {style:"knee",w:.12,h:.145,t:.012,R:.20}), [0.110, ly, 0], [0, 0, 0], RED, 0.30, { axis: [0, 1, 0], open: -0.6, effort: 2 });
     // shin: red outer shell + red inner (calf) clamshell
     const sr = 0.094, sw = wrap(sr, sign), sz = -A.shank * 0.10;
     part(`${s}_shin_shell`, `${s}_shank_strut`, mesh("limb_shell", `${s}_shin_shell.stl`, { length: A.shank * 0.88, rTop: sr, rBottom: sr - 0.02, ...sw.outer, thick: 0.006, bulge: 0.02 }), [0, ly, sz], [0, 0, 0], RED, 0.65);
     part(`${s}_calf_clamshell`, `${s}_shank_strut`, mesh("limb_shell", `${s}_calf_clamshell.stl`, { length: A.shank * 0.88, rTop: sr, rBottom: sr - 0.02, ...sw.inner, thick: 0.006, bulge: 0.02 }),
-      [sw.seam[0], ly + sw.seam[1], sz], [0, 0, 0], RED, 0.42, { axis: [0, 0, 1], open: -sign * 1.4, effort: 3, origin: [-sw.seam[0], -sw.seam[1], 0] });
+      [sw.seam[0], ly + sw.seam[1], sz], [0, 0, 0], RED, 0.42, { axis: [0, 0, 1], open: sign * 1.4, effort: 3, origin: [-sw.seam[0], -sw.seam[1], 0] });
     // boot (frame: ankle joint; sole box top at z −0.07, bottom −0.105, toe at x 0.18, heel at x −0.14)
     part(`${s}_shin_stripe`, `${s}_shin_shell`, mesh("mark43_limb_inset",`${s}_shin_stripe.stl`,{style:"shin",length:A.shank*.88,rTop:sr,rBottom:sr-.02,a0:-.50,a1:.50,u0:.12,u1:.90,offset:.003}),[0,0,0],[0,0,0],GOLD,.05);
     part(`${s}_thigh_stripe`, `${s}_thigh_shell`, mesh("mark43_limb_inset",`${s}_thigh_stripe.stl`,{style:"thigh",length:A.thigh*.88,rTop:tr,rBottom:tr-.02,a0:-.85,a1:.85,u0:.08,u1:.80,offset:.003}),[0,0,0],[0,0,0],GOLD,.05);

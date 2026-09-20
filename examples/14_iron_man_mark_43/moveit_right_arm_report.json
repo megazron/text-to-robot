@@ -9,7 +9,7 @@
   "group": "right_arm",
   "planning_error_code": 1,
   "planning_pass": true,
-  "trajectory_points": 27,
+  "trajectory_points": 26,
   "execution_requested": true,
   "goal_positions": {
     "right_shoulder_abduction": 0.15,
@@ -18,12 +18,12 @@
     "right_wrist_flexion": 0.0
   },
   "allowed_planning_time_s": 5.0,
-  "planning_time_s": 0.08695604900000001,
+  "planning_time_s": 0.100712734,
   "start_state_valid": true,
   "start_state_contacts": [],
   "start_state_contact_count": 0,
   "contact_scope": "Contacts returned by GetStateValidity; service contact limits may truncate the list",
-  "robot_sha256": "10cdf0986a8447fdfa28f53ee40f5ddbfe251747146c5166e145c83b30a34841",
+  "robot_sha256": "de5963f103b46853f8eb061938d2abd3ad095106501c6ed0bcb21f945fdff5d3",
   "execution_error_code": 1,
   "execution_pass": true,
   "pass": true

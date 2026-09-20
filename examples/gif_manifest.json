@@ -104,13 +104,13 @@
     "collision_model": "URDF primitives / mesh bounding boxes"
   },
   "14_iron_man_mark_43": {
-    "source_urdf_sha256": "71fe948756bc372c53aa1d9a00bc3dccbe7b8676eee5c67e94c0b12e91b92ae0",
-    "gif_sha256": "c1c1fd297620fad01297c8488ea5622c3d7b7ce356f6c604d811d6b7f083fc28",
+    "source_urdf_sha256": "286d741375efccdd560bf3b7f633178ec9b6f67d27ec8ca8c27168484f66b1e0",
+    "gif_sha256": "ac23d1b19fea9a09adada9367ea87efa02a9135a3363edc8dbba5b39e486e4af",
     "self_collision": true,
     "motion": "hold",
     "seconds": 2,
     "collision_model": "compound convex meshes and URDF primitives",
-    "collision_archive_sha256": "dfec58a7cd935ea93390847eb2e225ef026306b7ed9b38e08cdce14938f75a52",
+    "collision_archive_sha256": "aaa59c80aaa969bc10443fefc83f4561739844c1cc3bc46f209d5deec3c7177a",
     "limitations": [
       "Approximate collision geometry; sampled deviation is not a worst-case error bound",
       "No human fit, strength or motion-path certification",
@@ -143,16 +143,16 @@
     "collision_model": "URDF primitives / mesh bounding boxes"
   },
   "mark43_articulation": {
-    "source_urdf_sha256": "e7d6dce1cc8f8b9ddcf22d34a852f87fb8761351c5068cb3a70639818b5c47b6",
-    "gif_sha256": "3dd5f2fbf4ddef324838fd84edde754ae1bb1a8f2f614b994aeeeb41b671a7e9",
+    "source_urdf_sha256": "71421d15f0a79f46195802bccd899efe86dc9fd6be66d632457b30713af7ed31",
+    "gif_sha256": "46bcc1af39e024d759b88da97ceb6f7f037f375f9561a60e44a86ffc7555bfec",
     "self_collision": false,
     "floating": false,
     "motion": "doff",
     "seconds": 4
   },
   "mark43_helmet": {
-    "source_urdf_sha256": "e7d6dce1cc8f8b9ddcf22d34a852f87fb8761351c5068cb3a70639818b5c47b6",
-    "gif_sha256": "976463d4702f439059f93f0f6a5072e9b93bbd4be9dc1f209d86ac3a4a6fcc76",
+    "source_urdf_sha256": "71421d15f0a79f46195802bccd899efe86dc9fd6be66d632457b30713af7ed31",
+    "gif_sha256": "0a79efefd6d58326add63484b1ce1fed5d11164e6dea2625679f2fab05324ebb",
     "self_collision": false,
     "floating": false,
     "motion": "doff",
