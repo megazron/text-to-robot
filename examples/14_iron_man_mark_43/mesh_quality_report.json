@@ -242,37 +242,37 @@
       "part": "left_chest_door",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 5.211194840190167e-08,
-      "com_error_m": 1.8273132590396202e-09,
-      "inertia_relative_error": 2.5695585727256603e-08,
-      "sha256": "347fa98fe93e86bb9c09a837a7f911a98429f7147f57decc93f83f861607f482"
+      "volume_relative_error": 2.5191667572777127e-08,
+      "com_error_m": 2.902537170248326e-09,
+      "inertia_relative_error": 3.669150934124778e-08,
+      "sha256": "e8010b46cdb6fc26737767d3c612a12063ac2a5d1922536f94e44c80678e1b1c"
     },
     {
       "part": "left_pectoral_trim",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 3.5537926128277316e-08,
-      "com_error_m": 6.399368673859485e-10,
-      "inertia_relative_error": 3.452867708441621e-08,
-      "sha256": "56c8d79627cd86fc52ad599b940b3967a4fa80cd148f5e37312e058813af9a0d"
+      "volume_relative_error": 6.0477480328423514e-09,
+      "com_error_m": 2.249395766873441e-09,
+      "inertia_relative_error": 1.5389370265512855e-08,
+      "sha256": "2eebc653595fe91b79855263acd83ace72c967c22255205c9e8c8f4ff798d3bf"
     },
     {
       "part": "right_chest_door",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 5.211194840190167e-08,
-      "com_error_m": 1.8273132590396202e-09,
-      "inertia_relative_error": 2.5695585608879123e-08,
-      "sha256": "0518b09298e35a079b8aaa11ea065ac44630dd4de1bd3713498b85333c1a2acf"
+      "volume_relative_error": 2.5191667572777127e-08,
+      "com_error_m": 2.902537170248326e-09,
+      "inertia_relative_error": 3.6691507821815645e-08,
+      "sha256": "3eeb241c44b1ff630776b2aad4f875a94596e09973dee80bfa7b2530e0134f34"
     },
     {
       "part": "right_pectoral_trim",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 3.5537926128277316e-08,
-      "com_error_m": 6.399368812637363e-10,
-      "inertia_relative_error": 3.452867802055688e-08,
-      "sha256": "c0adb53d191d101ae4c065f3fa279862907d7b69f611708851ff97b41925ee3c"
+      "volume_relative_error": 6.0477480328423514e-09,
+      "com_error_m": 2.249395766873441e-09,
+      "inertia_relative_error": 1.538937035841026e-08,
+      "sha256": "7f2054a80242b6bf6d034e5f8108807ccb625da6be1b34687d1a27ec18a5d488"
     },
     {
       "part": "chest_centre",

@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-19",
+  "date": "2026-09-20",
   "scope": "Generated package build and software runtime checks; no hardware qualification",
   "ros_distribution": "Jazzy",
   "ros_packages_built": 17,
@@ -17,7 +17,7 @@
     "11_spider_scout": "8dc498b19645faa0bc332124e514e979486d74123fddb59dcc09dd1c0666409f",
     "12_mars_rover": "a607a01c75b555353bd128cbb7fc2b6f52781faa4fc48e44d24b9ca1d23578d0",
     "13_battle_mech": "9f36ea30c6f686bbe6a0333105e2beed375289fe88cd650a43a51c681c2ea295",
-    "14_iron_man_mark_43": "6f08fb09b1721dd4cd02c4fa293ead85643c38afe6a716f42f251c651379f77c",
+    "14_iron_man_mark_43": "4463f13a16343d1b6bd90e2cd68d643b522abbd32de5d068013315dfe25b7ef9",
     "15_wall_e": "07ddcc66bd3500bb3a4d53e118b780fb5b335033ab48989e09e9114c1055585c",
     "16_eva": "c103eba1704c2be3780eb84d04e0797b06df57ca248ca010ccd5c44f90a0e995",
     "17_baymax": "f50962801dea8691f93f63c3592d475ec99f8c4aba684567893accba44cadd35"
@@ -34,19 +34,19 @@
       "group": "neck",
       "planning_error_code": 1,
       "planning_pass": true,
-      "trajectory_points": 27,
+      "trajectory_points": 25,
       "execution_requested": true,
       "goal_positions": {
         "neck_yaw": 0.15,
         "neck_pitch": 0.0
       },
       "allowed_planning_time_s": 5.0,
-      "planning_time_s": 0.129183748,
+      "planning_time_s": 0.20083507499999997,
       "start_state_valid": true,
       "start_state_contacts": [],
       "start_state_contact_count": 0,
       "contact_scope": "Contacts returned by GetStateValidity; service contact limits may truncate the list",
-      "robot_sha256": "0b56318e5b4540de4ea85f30db5259a00fbac6e893e04c9ff3fb18157ad57797",
+      "robot_sha256": "10cdf0986a8447fdfa28f53ee40f5ddbfe251747146c5166e145c83b30a34841",
       "execution_error_code": 1,
       "execution_pass": true,
       "pass": true
@@ -71,12 +71,12 @@
         "left_wrist_flexion": 0.0
       },
       "allowed_planning_time_s": 5.0,
-      "planning_time_s": 0.14610139900000002,
+      "planning_time_s": 0.099063872,
       "start_state_valid": true,
       "start_state_contacts": [],
       "start_state_contact_count": 0,
       "contact_scope": "Contacts returned by GetStateValidity; service contact limits may truncate the list",
-      "robot_sha256": "0b56318e5b4540de4ea85f30db5259a00fbac6e893e04c9ff3fb18157ad57797",
+      "robot_sha256": "10cdf0986a8447fdfa28f53ee40f5ddbfe251747146c5166e145c83b30a34841",
       "execution_error_code": 1,
       "execution_pass": true,
       "pass": true
@@ -92,7 +92,7 @@
       "group": "right_arm",
       "planning_error_code": 1,
       "planning_pass": true,
-      "trajectory_points": 25,
+      "trajectory_points": 27,
       "execution_requested": true,
       "goal_positions": {
         "right_shoulder_abduction": 0.15,
@@ -101,12 +101,12 @@
         "right_wrist_flexion": 0.0
       },
       "allowed_planning_time_s": 5.0,
-      "planning_time_s": 0.125464205,
+      "planning_time_s": 0.08695604900000001,
       "start_state_valid": true,
       "start_state_contacts": [],
       "start_state_contact_count": 0,
       "contact_scope": "Contacts returned by GetStateValidity; service contact limits may truncate the list",
-      "robot_sha256": "0b56318e5b4540de4ea85f30db5259a00fbac6e893e04c9ff3fb18157ad57797",
+      "robot_sha256": "10cdf0986a8447fdfa28f53ee40f5ddbfe251747146c5166e145c83b30a34841",
       "execution_error_code": 1,
       "execution_pass": true,
       "pass": true
@@ -115,7 +115,7 @@
   "moveit_scope": "Mark 43 neck and each arm, six-axis arm and humanoid left arm: mock planning/execution; fixed-assembly and adjacent-rigid-body exclusions, not manufacturing interference or real motor validation",
   "training": {
     "report": "training_validation.json",
-    "sha256": "de61ed802c073bedfe431980950ea2f611e184acc2593120032b45cb751d644d",
+    "sha256": "41c9bfd723ce2e6d413810612c41fbe986d934d3f386e6694d7ec1af7f19330c",
     "scope": "All 17 exported PyBullet environments reset and step once; no trained skill claim"
   },
   "mobile_motion": {
@@ -124,7 +124,7 @@
   },
   "browser": {
     "report": "web_validation.json",
-    "sha256": "d5bb486d223731508fd21669cba8f7269ecda4890df8a516d3e2a6fb52a87ec9"
+    "sha256": "faa4c81927a93d9cf65cf1a6ceb9c981367f4f6cbffdb34faa34090490befecf"
   },
   "arm_moveit": {
     "report": "02_arm_6dof/moveit_report.json",
@@ -132,10 +132,11 @@
   },
   "arm_training": {
     "report": "arm_training_smoke.json",
-    "sha256": "55aad6c88c04ab970fa4a188a8ab24a07eadb85fdbd6f9345e8ac281ce7a36c9"
+    "sha256": "7dc614dd56b643f4ed384b1958ad2327b07330df34e3bb6a380a18e987457d33"
   },
   "humanoid_moveit": {
     "report": "08_humanoid/moveit_report.json",
     "sha256": "f118d0d9dce971ae80c78a7c0d9c8fb9e4aeac802124323243149338648e34ce"
-  }
+  },
+  "mark43_rebuild": "ROS 2 Jazzy colcon build of regenerated Mark 43 package passed; other 16 archive hashes unchanged from recorded build"
 }

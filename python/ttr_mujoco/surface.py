@@ -1,7 +1,8 @@
 """Offline FCL surface-intersection audit of exported URDF visual surfaces (the MoveIt mesh sources).
 Triangle intersections are not a penetration-depth or solid-containment test.
 Cylinders/spheres are tessellated; counts can differ from native MoveIt primitives.
-Only direct parent/child links are excluded, as in the generated MoveIt SRDF.
+Only direct parent/child links are excluded. This is deliberately stricter than
+the MoveIt SRDF, which also excludes pairs within and between adjacent rigid assemblies.
 """
 import argparse,hashlib,json
 from pathlib import Path

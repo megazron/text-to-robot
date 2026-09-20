@@ -148,3 +148,17 @@ zero neutral contacts and executes small neck/arm trajectories with mock hardwar
 These checks do not establish movie accuracy. The exposed drives, panel proportions,
 boot/ankle coverage and simplified face planes remain unlike the saved references.
 Remaining sampled-motion and wearer-fit failures are retained in the reports.
+
+## Chest opening clearance revision
+
+The pectoral solids now stop at a shaped boundary around the fixed sternum instead
+of extending behind it. This removes the early-opening interference missed by the
+old five-pose test. The outer surface and inlay positions are preserved. Current
+renders above show a visible clearance seam and an unfinished upper centre-chest
+transition compared with the saved production photograph.
+
+The surface report now contains 428 sampled poses across seven selected joints.
+Both doors pass 61 positions each over their original ranges; regression tests
+also check 61 simultaneous openings. The 14 failing neck-pitch samples and the
+broader compound-collision failures remain visible. These are sampled geometry
+checks, not a continuous-motion, linkage-load or manufacturing qualification.

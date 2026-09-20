@@ -33,5 +33,13 @@ class SurfaceTests(unittest.TestCase):
  def test_chest_doors_clear_their_sampled_paths(self):
   from ttr_mujoco.surface import SurfaceScene,audit
   source=Path(__file__).resolve().parents[2]/'examples/14_iron_man_mark_43/robot.sim.urdf'
-  report=audit(SurfaceScene(source),['left_chest_door_hinge','right_chest_door_hinge'],5)
+  report=audit(SurfaceScene(source),['left_chest_door_hinge','right_chest_door_hinge'],61)
   self.assertTrue(report['pass'])
+
+ def test_chest_doors_clear_simultaneous_opening(self):
+  import numpy as np
+  from ttr_mujoco.surface import SurfaceScene
+  source=Path(__file__).resolve().parents[2]/'examples/14_iron_man_mark_43/robot.sim.urdf'
+  scene=SurfaceScene(source)
+  for angle in np.linspace(0,1.2,61):
+   self.assertEqual(scene.contacts({'left_chest_door_hinge':float(angle),'right_chest_door_hinge':-float(angle)}),[],f'Opening angle {angle}')

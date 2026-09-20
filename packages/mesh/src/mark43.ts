@@ -74,9 +74,18 @@ export function chestSurfacePanel(side:number, upper:boolean):Mesh {
       const u=i/32,cut=.68+.16*u;
       const v=upper ? cut+.007+(1-cut-.007)*j/18 : (cut-.007)*j/18;
       const width=.58+.42*Math.sin(Math.PI*(.03+.78*v));
-      const y=.0015+.233*u*width;
-      const z=-.090+.245*v-.005*u*u;
-      const x=.145+.026*Math.sin(Math.PI*v)-.118*Math.pow(u,2.4);
+      // The fixed sternum sits in front of these doors. Extending the
+      // doors to the centreline traps their inner edges behind it on opening.
+      // Follow its six-sided outline with a 4 mm lateral running clearance.
+      const sternumZ=-.110+.245*v;
+      const edge=sternumZ<=.033
+        ? .02945+(.0475-.02945)*(sternumZ+.110)/.143
+        : .0475+(.0285-.0475)*(sternumZ-.033)/.077;
+      const inner=Math.max(.0285,edge)+.004;
+      const y=inner+(.0015+.233*width-inner)*u;
+      const surfaceU=(y-.0015)/(.233*width);
+      const z=-.090+.245*v-.005*surfaceU*surfaceU;
+      const x=.145+.026*Math.sin(Math.PI*v)-.118*Math.pow(surfaceU,2.4);
       row.push([x,y,z]);
     }
     rows.push(row);

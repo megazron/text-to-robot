@@ -119,8 +119,12 @@ follow their flight flaps. Internal struts have clearance at their connector end
 non-adjacent intersecting pairs at neutral. No new neutral pairs were introduced.
 This tests visual triangle surfaces with tessellated primitives; it is not a
 penetration-depth, full-containment or wearer-fit measurement.
-[Sampled motion poses](surface_contact_report.json) still expose shoulder, side-door,
-chin and other motion failures. Zero neutral contacts is not full articulation approval.
+The chest doors now have a shaped clearance seam around the fixed sternum.
+[Surface motion checks](surface_contact_report.json) cover 428 poses across seven
+selected joints, including 61 samples per chest door. Both doors clear those
+samples; a regression also checks 61 simultaneous openings. Neck pitch still
+fails 14 samples. The [broader compound audit](motion_clearance_report.json)
+retains other motion failures. Zero neutral contacts is not full articulation approval.
 
 The main physics GIF and smoke report use the source-checked compound collision
 archive, with self-collision enabled. The old box approximation fills hollow armour

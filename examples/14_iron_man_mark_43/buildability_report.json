@@ -1,6 +1,6 @@
 {
   "scope": "Design-input inventory, not a hardware qualification or a claim that missing interfaces were inspected in CAD",
-  "source_robot_sha256": "0b56318e5b4540de4ea85f30db5259a00fbac6e893e04c9ff3fb18157ad57797",
+  "source_robot_sha256": "10cdf0986a8447fdfa28f53ee40f5ddbfe251747146c5166e145c83b30a34841",
   "source_bom_sha256": "c3b59cac6a215fa7b70d4a284ee5c080dcbb20ca06c218b01b2a99ee33bd2380",
   "hardware_verified": false,
   "manufacturing_ready": false,

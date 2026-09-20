@@ -18,12 +18,12 @@
     "left_wrist_flexion": 0.0
   },
   "allowed_planning_time_s": 5.0,
-  "planning_time_s": 0.14610139900000002,
+  "planning_time_s": 0.099063872,
   "start_state_valid": true,
   "start_state_contacts": [],
   "start_state_contact_count": 0,
   "contact_scope": "Contacts returned by GetStateValidity; service contact limits may truncate the list",
-  "robot_sha256": "0b56318e5b4540de4ea85f30db5259a00fbac6e893e04c9ff3fb18157ad57797",
+  "robot_sha256": "10cdf0986a8447fdfa28f53ee40f5ddbfe251747146c5166e145c83b30a34841",
   "execution_error_code": 1,
   "execution_pass": true,
   "pass": true
