@@ -93,6 +93,7 @@ class MotionPathTests(unittest.TestCase):
         command = [sys.executable,str(ROOT/'scripts/audit_motion_path.py'),str(self.source),str(path),'--json',str(output)]
         result = subprocess.run(command, capture_output=True, text=True, timeout=30)
         self.assertEqual(result.returncode,1,result.stderr)
+        self.assertTrue(output.exists(),result.stderr)
         self.assertFalse(json.loads(output.read_text())['pass'])
         result = subprocess.run(command[:-1]+[str(path)], capture_output=True, text=True, timeout=30)
         self.assertEqual(result.returncode,2)
