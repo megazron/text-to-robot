@@ -72,3 +72,27 @@ across the original ±1.2 rad ranges. No collision exclusions or limits were
 changed. The visual result still has exposed mechanisms and simplified panel
 shapes; this correction establishes neither movie accuracy nor a wearable build.
 Neck pitch, broader articulation and wearer-fit failures remain in the reports.
+
+### Neck motion and clamshell directions — 2026-09-20
+
+Compared the saved Legacy Effects torso photograph with regenerated helmet and
+front views. Kept the head position, shell proportions and joint ranges. Rejected
+lowering the complete neck ring because it intersected the shoulder frame. The
+ring now retains its lower plane and bore, with its height reduced from 25 to
+13 mm; provisional mass scales with volume. The red collar plate is 8 mm lower.
+The lower helmet shroud follows yaw, avoiding combined-motion cheek/chin catches.
+All 962 sampled neck-grid poses clear, including neutral. The open neck transition
+still differs from the production photograph; no movie-accuracy claim follows.
+
+The all-joint sweep exposed eight clamshells rotating into their own cuffs.
+Reversed opening directions without reducing travel. All clear their own cuff
+and fixed shell in 61 samples each, but large openings hit neighbouring anatomy
+or armour in the standing pose. No valid donning sequence is established. The
+full surface audit retains 295 failing samples across 86 individually swept joints.
+
+The corrected clamshell directions increase the standing-pose compound audit's
+failing poses from 121 in the preceding published model to 159/775 (the neck-only
+candidate had 117). The surface representation and sampling grid differ: its
+295 failing moving samples do not contradict the compound count. The own-cuff
+regression tests are deliberately narrow; adjacent-body contacts remain published.
+A supported entry pose and coordinated panel/body path are still required.

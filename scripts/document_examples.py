@@ -76,7 +76,11 @@ manufacturing interfaces and measured dynamics remain unverified.
  if folder.name.startswith('07_'):text+='\nMecanum wheels have 32 passive rollers and four velocity-controlled hubs. See [measured forward/strafe motion](../mobile_motion.json); this is an open-loop simulation check, not calibrated hardware traction.\n'
  if folder.name.startswith('16_'):text+='\nEVA is a supported display prototype with a pedestal, column, neck support and shoulder connectors. There is no levitation or flight controller.\n'
  if folder.name.startswith('14_'):
-  text+='''
+  surface=json.loads((folder/'surface_contact_report.json').read_text())
+  neck=json.loads((folder/'neck_motion_report.json').read_text())
+  full=json.loads((folder/'all_joint_surface_report.json').read_text())
+  compound=json.loads((folder/'motion_clearance_report.json').read_text())
+  text+=f'''
 ## Current armour and helmet animations
 
 ![Armour actuator preview](articulation.gif)
@@ -119,12 +123,35 @@ follow their flight flaps. Internal struts have clearance at their connector end
 non-adjacent intersecting pairs at neutral. No new neutral pairs were introduced.
 This tests visual triangle surfaces with tessellated primitives; it is not a
 penetration-depth, full-containment or wearer-fit measurement.
-The chest doors now have a shaped clearance seam around the fixed sternum.
-[Surface motion checks](surface_contact_report.json) cover 428 poses across seven
-selected joints, including 61 samples per chest door. Both doors clear those
-samples; a regression also checks 61 simultaneous openings. Neck pitch still
-fails 14 samples. The [broader compound audit](motion_clearance_report.json)
-retains other motion failures. Zero neutral contacts is not full articulation approval.
+The chest doors have a clearance seam around the fixed sternum. The lower helmet
+shroud follows yaw while pitch moves inside it; the fixed ring keeps its mounting
+plane with 12 mm relieved from the top. The red collar plate is 8 mm lower.
+The helmet position, neck limits and 140 mm ring bore are unchanged. Its closed
+head-entry failure remains in the wearer report.
+
+Eight limb clamshells now open away from their own cuffs and outer shells over
+the original 1.4 rad travel. Each has 61 regression samples. In the standing pose,
+large openings still strike neighbouring body parts; this is not a donning sequence.
+The compound sweep has more failing poses than before the direction correction;
+clearing each panel's own cuff does not establish a safe full-body opening path.
+
+| Audit | Poses including neutral | Failing moving samples |
+|---|---:|---:|
+| [Seven selected joints](surface_contact_report.json) | {surface['poses_checked']} | {sum(bool(p['pair_count']) for p in surface['motion'])} |
+| [Combined neck yaw/pitch grid](neck_motion_report.json) | {neck['poses_checked']} | {neck['failing_grid_poses']} |
+| [Every limited joint, independently](all_joint_surface_report.json) | {full['poses_checked']} | {sum(bool(p['pair_count']) for p in full['motion'])} |
+| [Compound collision audit](motion_clearance_report.json) | {compound['poses_checked']} | {compound['failing_poses']} |
+
+These are different sampling grids and collision representations, not comparable
+accuracy scores. Passing the neck grid does not validate the other joints,
+continuous motion, a wearer insertion path or a physical mechanism.
+
+Reproduce the full surface sweep and combined neck check:
+
+```bash
+python scripts/audit_surface_contacts.py examples/14_iron_man_mark_43/robot.sim.urdf --all-joints --samples 13 --json /tmp/all-joints.json
+python scripts/audit_surface_contacts.py examples/14_iron_man_mark_43/robot.sim.urdf --joints neck_yaw neck_pitch --grid --samples 31 --json /tmp/neck.json
+```
 
 The main physics GIF and smoke report use the source-checked compound collision
 archive, with self-collision enabled. The old box approximation fills hollow armour

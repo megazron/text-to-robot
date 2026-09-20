@@ -113,3 +113,21 @@ print('Exported compensated-arm training and MoveIt evidence is current')
 
 humanoid=base/'08_humanoid';r=json.loads((humanoid/'moveit_report.json').read_text())
 assert r['robot_sha256']==hashlib.sha256((humanoid/'robot.json').read_bytes()).hexdigest() and r['pass']
+
+# Do not replace full articulation diagnostics with the passing neck subset.
+folder=base/'14_iron_man_mark_43'
+neck=json.loads((folder/'neck_motion_report.json').read_text())
+assert neck['mode']=='simultaneous_joint_grid' and neck['pass']
+assert neck['samples_per_joint']==31 and neck['poses_checked']==962
+assert not neck['neutral_pairs'] and not neck['failures']
+assert set(neck['joint_limits'])=={'neck_yaw','neck_pitch'}
+full=json.loads((folder/'all_joint_surface_report.json').read_text())
+import xml.etree.ElementTree as ET
+urdf=ET.parse(folder/'robot.sim.urdf').getroot()
+limited={j.get('name') for j in urdf.findall('joint') if j.get('type') in ('revolute','prismatic') and j.find('limit') is not None}
+assert {p['joint'] for p in full['motion']}==limited
+assert full['poses_checked']==1+len(limited)*full['samples_per_joint']
+for report in (neck,full):
+ assert report['source_urdf_sha256']==surface['source_urdf_sha256']
+ assert report['source_mesh_sha256']==surface['source_mesh_sha256']
+print('Combined neck grid and complete joint-sweep coverage match the exported surfaces')

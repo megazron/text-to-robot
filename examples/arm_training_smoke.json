@@ -4,7 +4,7 @@
     {
       "example": "02_arm_6dof",
       "pass": true,
-      "archive_sha256": "8ae0f4b3ec4b5a5c0950fc08da909f10cb2a430ee99d0a61dd7d690ac8094c24",
+      "archive_sha256": "4760a2917fc594cddc74751088705571eed2ce0642ad1604c59e06c8954e98dc",
       "gymnasium_check": true,
       "ppo_steps": 64,
       "checkpoint_reload": true,
@@ -14,7 +14,7 @@
     {
       "example": "04_scara",
       "pass": true,
-      "archive_sha256": "ecdcc76ff7d4123e1014aec8008df92bc438996a5e93f5108d15d9f3e2006111",
+      "archive_sha256": "0e1f403451b9d86fe1393bf1f0d7ee4d658f8f7eaf6623243cfb13c8faecc9f1",
       "gymnasium_check": true,
       "ppo_steps": 64,
       "checkpoint_reload": true,

@@ -9,19 +9,19 @@
   "group": "neck",
   "planning_error_code": 1,
   "planning_pass": true,
-  "trajectory_points": 25,
+  "trajectory_points": 27,
   "execution_requested": true,
   "goal_positions": {
     "neck_yaw": 0.15,
     "neck_pitch": 0.0
   },
   "allowed_planning_time_s": 5.0,
-  "planning_time_s": 0.20083507499999997,
+  "planning_time_s": 0.08922160800000001,
   "start_state_valid": true,
   "start_state_contacts": [],
   "start_state_contact_count": 0,
   "contact_scope": "Contacts returned by GetStateValidity; service contact limits may truncate the list",
-  "robot_sha256": "10cdf0986a8447fdfa28f53ee40f5ddbfe251747146c5166e145c83b30a34841",
+  "robot_sha256": "de5963f103b46853f8eb061938d2abd3ad095106501c6ed0bcb21f945fdff5d3",
   "execution_error_code": 1,
   "execution_pass": true,
   "pass": true

@@ -2,7 +2,7 @@
   "mujoco_version": "3.13.0",
   "scope": "Initial pose only; adjacent-body exclusions apply. No human-fit or motion-path validation.",
   "bounding_boxes": {
-    "penetration_count": 150,
+    "penetration_count": 142,
     "max_depth_m": 0.06532747967384145,
     "contacts": [
       {
@@ -213,12 +213,12 @@
       {
         "body1": "left_pauldron",
         "body2": "collar_plate",
-        "depth_m": 0.0031592383606462828
+        "depth_m": 0.0013354188087644605
       },
       {
         "body1": "left_pauldron",
         "body2": "collar_plate",
-        "depth_m": 0.0031592383606462828
+        "depth_m": 0.0013354188087644605
       },
       {
         "body1": "left_pauldron",
@@ -239,16 +239,6 @@
         "body1": "left_pauldron",
         "body2": "left_pectoral_trim",
         "depth_m": 0.028496971777857802
-      },
-      {
-        "body1": "left_pauldron_edge",
-        "body2": "collar_plate",
-        "depth_m": 0.0026592383606462546
-      },
-      {
-        "body1": "left_pauldron_edge",
-        "body2": "collar_plate",
-        "depth_m": 0.0026592383606462546
       },
       {
         "body1": "left_pauldron_edge",
@@ -398,12 +388,12 @@
       {
         "body1": "right_pauldron",
         "body2": "collar_plate",
-        "depth_m": 0.0031592383606462828
+        "depth_m": 0.0013354188087644605
       },
       {
         "body1": "right_pauldron",
         "body2": "collar_plate",
-        "depth_m": 0.0031592383606462828
+        "depth_m": 0.0013354188087644605
       },
       {
         "body1": "right_pauldron",
@@ -424,16 +414,6 @@
         "body1": "right_pauldron",
         "body2": "right_pectoral_trim",
         "depth_m": 0.028496971777857802
-      },
-      {
-        "body1": "right_pauldron_edge",
-        "body2": "collar_plate",
-        "depth_m": 0.0026592383606462546
-      },
-      {
-        "body1": "right_pauldron_edge",
-        "body2": "collar_plate",
-        "depth_m": 0.0026592383606462546
       },
       {
         "body1": "right_pauldron_edge",
@@ -456,24 +436,24 @@
         "depth_m": 0.02849748530075731
       },
       {
-        "body1": "neck_pitch_carrier",
-        "body2": "helmet_neck_collar",
-        "depth_m": 0.005656499999999953
+        "body1": "neck_yaw_carrier",
+        "body2": "chin_guard",
+        "depth_m": 0.0016415000000000735
       },
       {
-        "body1": "neck_pitch_carrier",
-        "body2": "helmet_neck_collar",
-        "depth_m": 0.005656499999999953
+        "body1": "neck_yaw_carrier",
+        "body2": "chin_guard",
+        "depth_m": 0.0016415000000000735
       },
       {
-        "body1": "neck_pitch_carrier",
-        "body2": "helmet_neck_collar",
-        "depth_m": 0.005656499999999953
+        "body1": "neck_yaw_carrier",
+        "body2": "chin_guard",
+        "depth_m": 0.0016415000000000735
       },
       {
-        "body1": "neck_pitch_carrier",
-        "body2": "helmet_neck_collar",
-        "depth_m": 0.005656499999999953
+        "body1": "neck_yaw_carrier",
+        "body2": "chin_guard",
+        "depth_m": 0.0016415000000000735
       },
       {
         "body1": "helmet_neck_collar",
@@ -494,26 +474,6 @@
         "body1": "helmet_neck_collar",
         "body2": "chin_guard",
         "depth_m": 0.02564200000000002
-      },
-      {
-        "body1": "neck_yaw_carrier",
-        "body2": "chin_guard",
-        "depth_m": 0.0016415000000000735
-      },
-      {
-        "body1": "neck_yaw_carrier",
-        "body2": "chin_guard",
-        "depth_m": 0.0016415000000000735
-      },
-      {
-        "body1": "neck_yaw_carrier",
-        "body2": "chin_guard",
-        "depth_m": 0.0016415000000000735
-      },
-      {
-        "body1": "neck_yaw_carrier",
-        "body2": "chin_guard",
-        "depth_m": 0.0016415000000000735
       },
       {
         "body1": "forehead_plate",

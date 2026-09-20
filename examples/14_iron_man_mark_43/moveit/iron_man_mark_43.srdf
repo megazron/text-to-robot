@@ -204,7 +204,6 @@
   <disable_collisions link1="pelvis_frame" link2="shoulder_yoke" reason="AdjacentRigidBodies"/>
   <disable_collisions link1="pelvis_frame" link2="left_hip_module" reason="AdjacentRigidBodies"/>
   <disable_collisions link1="pelvis_frame" link2="right_hip_module" reason="AdjacentRigidBodies"/>
-  <disable_collisions link1="pelvis_frame" link2="helmet_neck_collar" reason="AdjacentRigidBodies"/>
   <disable_collisions link1="pelvis_frame" link2="neck_ring" reason="AdjacentRigidBodies"/>
   <disable_collisions link1="pelvis_frame" link2="collar_plate" reason="AdjacentRigidBodies"/>
   <disable_collisions link1="pelvis_frame" link2="chest_centre" reason="AdjacentRigidBodies"/>
@@ -259,7 +258,7 @@
   <disable_collisions link1="spine_frame" link2="shoulder_yoke" reason="RigidAssembly"/>
   <disable_collisions link1="spine_frame" link2="left_shoulder_module" reason="AdjacentRigidBodies"/>
   <disable_collisions link1="spine_frame" link2="right_shoulder_module" reason="AdjacentRigidBodies"/>
-  <disable_collisions link1="spine_frame" link2="helmet_neck_collar" reason="RigidAssembly"/>
+  <disable_collisions link1="spine_frame" link2="helmet_neck_collar" reason="AdjacentRigidBodies"/>
   <disable_collisions link1="spine_frame" link2="neck_yaw_carrier" reason="AdjacentRigidBodies"/>
   <disable_collisions link1="spine_frame" link2="neck_ring" reason="RigidAssembly"/>
   <disable_collisions link1="spine_frame" link2="collar_plate" reason="RigidAssembly"/>
@@ -336,7 +335,7 @@
   <disable_collisions link1="backpack" link2="shoulder_yoke" reason="RigidAssembly"/>
   <disable_collisions link1="backpack" link2="left_shoulder_module" reason="AdjacentRigidBodies"/>
   <disable_collisions link1="backpack" link2="right_shoulder_module" reason="AdjacentRigidBodies"/>
-  <disable_collisions link1="backpack" link2="helmet_neck_collar" reason="RigidAssembly"/>
+  <disable_collisions link1="backpack" link2="helmet_neck_collar" reason="AdjacentRigidBodies"/>
   <disable_collisions link1="backpack" link2="neck_yaw_carrier" reason="AdjacentRigidBodies"/>
   <disable_collisions link1="backpack" link2="neck_ring" reason="RigidAssembly"/>
   <disable_collisions link1="backpack" link2="collar_plate" reason="RigidAssembly"/>
@@ -412,7 +411,7 @@
   <disable_collisions link1="chest_plate" link2="shoulder_yoke" reason="RigidAssembly"/>
   <disable_collisions link1="chest_plate" link2="left_shoulder_module" reason="AdjacentRigidBodies"/>
   <disable_collisions link1="chest_plate" link2="right_shoulder_module" reason="AdjacentRigidBodies"/>
-  <disable_collisions link1="chest_plate" link2="helmet_neck_collar" reason="RigidAssembly"/>
+  <disable_collisions link1="chest_plate" link2="helmet_neck_collar" reason="AdjacentRigidBodies"/>
   <disable_collisions link1="chest_plate" link2="neck_yaw_carrier" reason="AdjacentRigidBodies"/>
   <disable_collisions link1="chest_plate" link2="neck_ring" reason="RigidAssembly"/>
   <disable_collisions link1="chest_plate" link2="collar_plate" reason="RigidAssembly"/>
@@ -487,7 +486,7 @@
   <disable_collisions link1="chest_plate" link2="right_lat_plate_hinge_pin" reason="AdjacentRigidBodies"/>
   <disable_collisions link1="shoulder_yoke" link2="left_shoulder_module" reason="AdjacentRigidBodies"/>
   <disable_collisions link1="shoulder_yoke" link2="right_shoulder_module" reason="AdjacentRigidBodies"/>
-  <disable_collisions link1="shoulder_yoke" link2="helmet_neck_collar" reason="RigidAssembly"/>
+  <disable_collisions link1="shoulder_yoke" link2="helmet_neck_collar" reason="AdjacentRigidBodies"/>
   <disable_collisions link1="shoulder_yoke" link2="neck_yaw_carrier" reason="AdjacentRigidBodies"/>
   <disable_collisions link1="shoulder_yoke" link2="neck_ring" reason="RigidAssembly"/>
   <disable_collisions link1="shoulder_yoke" link2="collar_plate" reason="RigidAssembly"/>
@@ -865,7 +864,6 @@
   <disable_collisions link1="left_shoulder_module" link2="left_upper_arm_strut" reason="AdjacentRigidBodies"/>
   <disable_collisions link1="left_shoulder_module" link2="left_upper_arm_cuff" reason="AdjacentRigidBodies"/>
   <disable_collisions link1="left_shoulder_module" link2="left_elbow_module" reason="AdjacentRigidBodies"/>
-  <disable_collisions link1="left_shoulder_module" link2="helmet_neck_collar" reason="AdjacentRigidBodies"/>
   <disable_collisions link1="left_shoulder_module" link2="neck_ring" reason="AdjacentRigidBodies"/>
   <disable_collisions link1="left_shoulder_module" link2="collar_plate" reason="AdjacentRigidBodies"/>
   <disable_collisions link1="left_shoulder_module" link2="chest_centre" reason="AdjacentRigidBodies"/>
@@ -1004,7 +1002,6 @@
   <disable_collisions link1="right_shoulder_module" link2="right_upper_arm_strut" reason="AdjacentRigidBodies"/>
   <disable_collisions link1="right_shoulder_module" link2="right_upper_arm_cuff" reason="AdjacentRigidBodies"/>
   <disable_collisions link1="right_shoulder_module" link2="right_elbow_module" reason="AdjacentRigidBodies"/>
-  <disable_collisions link1="right_shoulder_module" link2="helmet_neck_collar" reason="AdjacentRigidBodies"/>
   <disable_collisions link1="right_shoulder_module" link2="neck_ring" reason="AdjacentRigidBodies"/>
   <disable_collisions link1="right_shoulder_module" link2="collar_plate" reason="AdjacentRigidBodies"/>
   <disable_collisions link1="right_shoulder_module" link2="chest_centre" reason="AdjacentRigidBodies"/>
@@ -1140,6 +1137,7 @@
   <disable_collisions link1="right_hand" link2="right_forearm_crest" reason="AdjacentRigidBodies"/>
   <disable_collisions link1="right_hand" link2="right_gauntlet_clamshell_fixed_knuckle_lower" reason="AdjacentRigidBodies"/>
   <disable_collisions link1="right_hand" link2="right_gauntlet_clamshell_fixed_knuckle_upper" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet" link2="helmet_neck_collar" reason="AdjacentRigidBodies"/>
   <disable_collisions link1="helmet" link2="helmet_left_ear_pod" reason="RigidAssembly"/>
   <disable_collisions link1="helmet" link2="helmet_right_ear_pod" reason="RigidAssembly"/>
   <disable_collisions link1="helmet" link2="helmet_crown_panel" reason="AdjacentRigidBodies"/>
@@ -1155,78 +1153,50 @@
   <disable_collisions link1="helmet" link2="chin_guard" reason="AdjacentRigidBodies"/>
   <disable_collisions link1="helmet" link2="neck_yaw_carrier" reason="AdjacentRigidBodies"/>
   <disable_collisions link1="helmet" link2="neck_pitch_carrier" reason="RigidAssembly"/>
-  <disable_collisions link1="helmet_neck_collar" link2="neck_yaw_carrier" reason="AdjacentRigidBodies"/>
-  <disable_collisions link1="helmet_neck_collar" link2="neck_ring" reason="RigidAssembly"/>
-  <disable_collisions link1="helmet_neck_collar" link2="collar_plate" reason="RigidAssembly"/>
-  <disable_collisions link1="helmet_neck_collar" link2="left_chest_door" reason="AdjacentRigidBodies"/>
-  <disable_collisions link1="helmet_neck_collar" link2="left_pectoral_trim" reason="AdjacentRigidBodies"/>
-  <disable_collisions link1="helmet_neck_collar" link2="right_chest_door" reason="AdjacentRigidBodies"/>
-  <disable_collisions link1="helmet_neck_collar" link2="right_pectoral_trim" reason="AdjacentRigidBodies"/>
-  <disable_collisions link1="helmet_neck_collar" link2="chest_centre" reason="RigidAssembly"/>
-  <disable_collisions link1="helmet_neck_collar" link2="arc_reactor_housing" reason="RigidAssembly"/>
-  <disable_collisions link1="helmet_neck_collar" link2="arc_reactor" reason="RigidAssembly"/>
-  <disable_collisions link1="helmet_neck_collar" link2="ab_plate_1" reason="AdjacentRigidBodies"/>
-  <disable_collisions link1="helmet_neck_collar" link2="ab_plate_2" reason="AdjacentRigidBodies"/>
-  <disable_collisions link1="helmet_neck_collar" link2="ab_plate_3" reason="AdjacentRigidBodies"/>
-  <disable_collisions link1="helmet_neck_collar" link2="left_lat_plate" reason="AdjacentRigidBodies"/>
-  <disable_collisions link1="helmet_neck_collar" link2="right_lat_plate" reason="AdjacentRigidBodies"/>
-  <disable_collisions link1="helmet_neck_collar" link2="back_shell" reason="RigidAssembly"/>
-  <disable_collisions link1="helmet_neck_collar" link2="left_flight_flap" reason="AdjacentRigidBodies"/>
-  <disable_collisions link1="helmet_neck_collar" link2="left_back_vent" reason="RigidAssembly"/>
-  <disable_collisions link1="helmet_neck_collar" link2="right_flight_flap" reason="AdjacentRigidBodies"/>
-  <disable_collisions link1="helmet_neck_collar" link2="right_back_vent" reason="RigidAssembly"/>
-  <disable_collisions link1="helmet_neck_collar" link2="belt_plate" reason="AdjacentRigidBodies"/>
-  <disable_collisions link1="helmet_neck_collar" link2="rear_belt_plate" reason="AdjacentRigidBodies"/>
-  <disable_collisions link1="helmet_neck_collar" link2="left_rib_0" reason="RigidAssembly"/>
-  <disable_collisions link1="helmet_neck_collar" link2="left_rib_1" reason="RigidAssembly"/>
-  <disable_collisions link1="helmet_neck_collar" link2="left_rib_2" reason="RigidAssembly"/>
-  <disable_collisions link1="helmet_neck_collar" link2="left_chest_inlay" reason="AdjacentRigidBodies"/>
-  <disable_collisions link1="helmet_neck_collar" link2="left_chest_inlay_centre" reason="AdjacentRigidBodies"/>
-  <disable_collisions link1="helmet_neck_collar" link2="right_rib_0" reason="RigidAssembly"/>
-  <disable_collisions link1="helmet_neck_collar" link2="right_rib_1" reason="RigidAssembly"/>
-  <disable_collisions link1="helmet_neck_collar" link2="right_rib_2" reason="RigidAssembly"/>
-  <disable_collisions link1="helmet_neck_collar" link2="right_chest_inlay" reason="AdjacentRigidBodies"/>
-  <disable_collisions link1="helmet_neck_collar" link2="right_chest_inlay_centre" reason="AdjacentRigidBodies"/>
-  <disable_collisions link1="helmet_neck_collar" link2="left_clavicle_cover" reason="AdjacentRigidBodies"/>
-  <disable_collisions link1="helmet_neck_collar" link2="left_back_scapula" reason="AdjacentRigidBodies"/>
-  <disable_collisions link1="helmet_neck_collar" link2="left_back_grille_0" reason="RigidAssembly"/>
-  <disable_collisions link1="helmet_neck_collar" link2="left_back_grille_1" reason="RigidAssembly"/>
-  <disable_collisions link1="helmet_neck_collar" link2="left_back_grille_2" reason="RigidAssembly"/>
-  <disable_collisions link1="helmet_neck_collar" link2="right_clavicle_cover" reason="AdjacentRigidBodies"/>
-  <disable_collisions link1="helmet_neck_collar" link2="right_back_scapula" reason="AdjacentRigidBodies"/>
-  <disable_collisions link1="helmet_neck_collar" link2="right_back_grille_0" reason="RigidAssembly"/>
-  <disable_collisions link1="helmet_neck_collar" link2="right_back_grille_1" reason="RigidAssembly"/>
-  <disable_collisions link1="helmet_neck_collar" link2="right_back_grille_2" reason="RigidAssembly"/>
-  <disable_collisions link1="helmet_neck_collar" link2="left_rib_edge_0" reason="RigidAssembly"/>
-  <disable_collisions link1="helmet_neck_collar" link2="left_rib_insert_0" reason="RigidAssembly"/>
-  <disable_collisions link1="helmet_neck_collar" link2="left_rib_edge_1" reason="RigidAssembly"/>
-  <disable_collisions link1="helmet_neck_collar" link2="left_rib_insert_1" reason="RigidAssembly"/>
-  <disable_collisions link1="helmet_neck_collar" link2="left_rib_edge_2" reason="RigidAssembly"/>
-  <disable_collisions link1="helmet_neck_collar" link2="left_rib_insert_2" reason="RigidAssembly"/>
-  <disable_collisions link1="helmet_neck_collar" link2="left_collar_inlay" reason="AdjacentRigidBodies"/>
-  <disable_collisions link1="helmet_neck_collar" link2="right_rib_edge_0" reason="RigidAssembly"/>
-  <disable_collisions link1="helmet_neck_collar" link2="right_rib_insert_0" reason="RigidAssembly"/>
-  <disable_collisions link1="helmet_neck_collar" link2="right_rib_edge_1" reason="RigidAssembly"/>
-  <disable_collisions link1="helmet_neck_collar" link2="right_rib_insert_1" reason="RigidAssembly"/>
-  <disable_collisions link1="helmet_neck_collar" link2="right_rib_edge_2" reason="RigidAssembly"/>
-  <disable_collisions link1="helmet_neck_collar" link2="right_rib_insert_2" reason="RigidAssembly"/>
-  <disable_collisions link1="helmet_neck_collar" link2="right_collar_inlay" reason="AdjacentRigidBodies"/>
-  <disable_collisions link1="helmet_neck_collar" link2="left_chest_door_moving_knuckle" reason="AdjacentRigidBodies"/>
-  <disable_collisions link1="helmet_neck_collar" link2="left_chest_door_fixed_knuckle_lower" reason="RigidAssembly"/>
-  <disable_collisions link1="helmet_neck_collar" link2="left_chest_door_fixed_knuckle_upper" reason="RigidAssembly"/>
-  <disable_collisions link1="helmet_neck_collar" link2="left_chest_door_hinge_pin" reason="AdjacentRigidBodies"/>
-  <disable_collisions link1="helmet_neck_collar" link2="right_chest_door_moving_knuckle" reason="AdjacentRigidBodies"/>
-  <disable_collisions link1="helmet_neck_collar" link2="right_chest_door_fixed_knuckle_lower" reason="RigidAssembly"/>
-  <disable_collisions link1="helmet_neck_collar" link2="right_chest_door_fixed_knuckle_upper" reason="RigidAssembly"/>
-  <disable_collisions link1="helmet_neck_collar" link2="right_chest_door_hinge_pin" reason="AdjacentRigidBodies"/>
-  <disable_collisions link1="helmet_neck_collar" link2="left_lat_plate_moving_knuckle" reason="AdjacentRigidBodies"/>
-  <disable_collisions link1="helmet_neck_collar" link2="left_lat_plate_fixed_knuckle_lower" reason="RigidAssembly"/>
-  <disable_collisions link1="helmet_neck_collar" link2="left_lat_plate_fixed_knuckle_upper" reason="RigidAssembly"/>
-  <disable_collisions link1="helmet_neck_collar" link2="left_lat_plate_hinge_pin" reason="AdjacentRigidBodies"/>
-  <disable_collisions link1="helmet_neck_collar" link2="right_lat_plate_moving_knuckle" reason="AdjacentRigidBodies"/>
-  <disable_collisions link1="helmet_neck_collar" link2="right_lat_plate_fixed_knuckle_lower" reason="RigidAssembly"/>
-  <disable_collisions link1="helmet_neck_collar" link2="right_lat_plate_fixed_knuckle_upper" reason="RigidAssembly"/>
-  <disable_collisions link1="helmet_neck_collar" link2="right_lat_plate_hinge_pin" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="helmet_left_ear_pod" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="helmet_right_ear_pod" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="neck_yaw_carrier" reason="RigidAssembly"/>
+  <disable_collisions link1="helmet_neck_collar" link2="neck_pitch_carrier" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="neck_ring" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="collar_plate" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="chest_centre" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="arc_reactor_housing" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="arc_reactor" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="back_shell" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="left_back_vent" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="right_back_vent" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="left_rib_0" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="left_rib_1" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="left_rib_2" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="right_rib_0" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="right_rib_1" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="right_rib_2" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="left_back_grille_0" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="left_back_grille_1" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="left_back_grille_2" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="right_back_grille_0" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="right_back_grille_1" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="right_back_grille_2" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="left_rib_edge_0" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="left_rib_insert_0" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="left_rib_edge_1" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="left_rib_insert_1" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="left_rib_edge_2" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="left_rib_insert_2" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="right_rib_edge_0" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="right_rib_insert_0" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="right_rib_edge_1" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="right_rib_insert_1" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="right_rib_edge_2" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="right_rib_insert_2" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="left_chest_door_fixed_knuckle_lower" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="left_chest_door_fixed_knuckle_upper" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="right_chest_door_fixed_knuckle_lower" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="right_chest_door_fixed_knuckle_upper" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="left_lat_plate_fixed_knuckle_lower" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="left_lat_plate_fixed_knuckle_upper" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="right_lat_plate_fixed_knuckle_lower" reason="AdjacentRigidBodies"/>
+  <disable_collisions link1="helmet_neck_collar" link2="right_lat_plate_fixed_knuckle_upper" reason="AdjacentRigidBodies"/>
   <disable_collisions link1="helmet_left_ear_pod" link2="helmet_right_ear_pod" reason="RigidAssembly"/>
   <disable_collisions link1="helmet_left_ear_pod" link2="helmet_crown_panel" reason="AdjacentRigidBodies"/>
   <disable_collisions link1="helmet_left_ear_pod" link2="faceplate" reason="AdjacentRigidBodies"/>

@@ -863,12 +863,12 @@
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><box size="0.16 0.16 0.025"/></geometry>
+      <geometry><box size="0.16 0.16 0.013"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-9.48944e-18 -2.93904e-17 2.12914e-20" rpy="0 0 0"/>
-      <mass value="0.3"/>
-      <inertia ixx="0.000860708" ixy="-5.88839e-20" ixz="6.33728e-21" iyy="0.000860708" iyz="-6.25476e-21" izz="0.00169"/>
+      <origin xyz="-1.59632e-17 2.33558e-17 -1.85116e-19" rpy="0 0 0"/>
+      <mass value="0.156"/>
+      <inertia ixx="0.00044164" ixy="-3.31387e-20" ixz="7.26146e-22" iyy="0.00044164" iyz="1.23775e-21" izz="0.000878887"/>
     </inertial>
   </link>
   <link name="collar_plate">
@@ -4556,9 +4556,9 @@
     <dynamics damping="0.1" friction="0"/>
   </joint>
   <joint name="helmet_neck_collar_mount" type="fixed">
-    <parent link="spine_frame"/>
+    <parent link="neck_yaw_carrier"/>
     <child link="helmet_neck_collar"/>
-    <origin xyz="0.02 0 0.71075" rpy="0 0 0"/>
+    <origin xyz="0 0 0.105" rpy="0 0 0"/>
     <dynamics damping="0.1" friction="0"/>
   </joint>
   <joint name="helmet_left_ear_pod_mount" type="fixed">
@@ -4668,13 +4668,13 @@
   <joint name="neck_ring_mount" type="fixed">
     <parent link="spine_frame"/>
     <child link="neck_ring"/>
-    <origin xyz="0.02 0 0.556" rpy="0 0 0"/>
+    <origin xyz="0.02 0 0.55" rpy="0 0 0"/>
     <dynamics damping="0.1" friction="0"/>
   </joint>
   <joint name="collar_plate_mount" type="fixed">
     <parent link="spine_frame"/>
     <child link="collar_plate"/>
-    <origin xyz="0.135 0 0.539" rpy="0 0 0"/>
+    <origin xyz="0.135 0 0.531" rpy="0 0 0"/>
     <dynamics damping="0.1" friction="0"/>
   </joint>
   <joint name="left_chest_door_hinge" type="revolute">
@@ -4902,7 +4902,7 @@
     <child link="left_bicep_clamshell"/>
     <origin xyz="0.041796 -0.122864 -0.03906" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-1.4" upper="0" effort="3" velocity="3"/>
+    <limit lower="0" upper="1.4" effort="3" velocity="3"/>
     <dynamics damping="0.1" friction="0"/>
   </joint>
   <joint name="left_elbow_cap_hinge" type="revolute">
@@ -4924,7 +4924,7 @@
     <child link="left_gauntlet_clamshell"/>
     <origin xyz="0.037318 -0.110057 -0.028105" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-1.4" upper="0" effort="3" velocity="3"/>
+    <limit lower="0" upper="1.4" effort="3" velocity="3"/>
     <dynamics damping="0.1" friction="0"/>
   </joint>
   <joint name="left_gauntlet_stripe_mount" type="fixed">
@@ -5162,7 +5162,7 @@
     <child link="right_bicep_clamshell"/>
     <origin xyz="0.041796 0.122864 -0.03906" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
-    <limit lower="0" upper="1.4" effort="3" velocity="3"/>
+    <limit lower="-1.4" upper="0" effort="3" velocity="3"/>
     <dynamics damping="0.1" friction="0"/>
   </joint>
   <joint name="right_elbow_cap_hinge" type="revolute">
@@ -5184,7 +5184,7 @@
     <child link="right_gauntlet_clamshell"/>
     <origin xyz="0.037318 0.110057 -0.028105" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
-    <limit lower="0" upper="1.4" effort="3" velocity="3"/>
+    <limit lower="-1.4" upper="0" effort="3" velocity="3"/>
     <dynamics damping="0.1" friction="0"/>
   </joint>
   <joint name="right_gauntlet_stripe_mount" type="fixed">
@@ -5416,7 +5416,7 @@
     <child link="left_thigh_clamshell"/>
     <origin xyz="0.059211 -0.148223 -0.042875" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-1.4" upper="0" effort="3" velocity="3"/>
+    <limit lower="0" upper="1.4" effort="3" velocity="3"/>
     <dynamics damping="0.1" friction="0"/>
   </joint>
   <joint name="left_knee_cap_hinge" type="revolute">
@@ -5438,7 +5438,7 @@
     <child link="left_calf_clamshell"/>
     <origin xyz="0.05125 -0.134345 -0.04305" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-1.4" upper="0" effort="3" velocity="3"/>
+    <limit lower="0" upper="1.4" effort="3" velocity="3"/>
     <dynamics damping="0.1" friction="0"/>
   </joint>
   <joint name="left_shin_stripe_mount" type="fixed">
@@ -5514,7 +5514,7 @@
     <child link="right_thigh_clamshell"/>
     <origin xyz="0.059211 0.148223 -0.042875" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
-    <limit lower="0" upper="1.4" effort="3" velocity="3"/>
+    <limit lower="-1.4" upper="0" effort="3" velocity="3"/>
     <dynamics damping="0.1" friction="0"/>
   </joint>
   <joint name="right_knee_cap_hinge" type="revolute">
@@ -5536,7 +5536,7 @@
     <child link="right_calf_clamshell"/>
     <origin xyz="0.05125 0.134345 -0.04305" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
-    <limit lower="0" upper="1.4" effort="3" velocity="3"/>
+    <limit lower="-1.4" upper="0" effort="3" velocity="3"/>
     <dynamics damping="0.1" friction="0"/>
   </joint>
   <joint name="right_shin_stripe_mount" type="fixed">

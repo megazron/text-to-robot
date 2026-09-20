@@ -224,10 +224,10 @@
       "part": "neck_ring",
       "pass": true,
       "closed_volume": true,
-      "volume_relative_error": 1.39826377362439e-08,
-      "com_error_m": 2.9866015192260584e-17,
-      "inertia_relative_error": 2.1239600346812097e-08,
-      "sha256": "4748932cd060e0442054219ff079ad2623532b2bc73a679687949c07b3a081fe"
+      "volume_relative_error": 1.971384104643724e-08,
+      "com_error_m": 2.4574256367827647e-17,
+      "inertia_relative_error": 2.688638459018794e-08,
+      "sha256": "8ae3ee8927f6b3af9e097a83350e16cf3f6e02e86cfa2a5681167d822daa6e85"
     },
     {
       "part": "collar_plate",
