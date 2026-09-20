@@ -1,0 +1,20 @@
+[
+  {
+    "left_chest_door_hinge": 0.0,
+    "right_chest_door_hinge": 0.0,
+    "neck_yaw": 0.0,
+    "neck_pitch": 0.0
+  },
+  {
+    "left_chest_door_hinge": 1.2,
+    "right_chest_door_hinge": -1.2,
+    "neck_yaw": 0.5,
+    "neck_pitch": 0.2
+  },
+  {
+    "left_chest_door_hinge": 0.0,
+    "right_chest_door_hinge": 0.0,
+    "neck_yaw": 0.0,
+    "neck_pitch": 0.0
+  }
+]

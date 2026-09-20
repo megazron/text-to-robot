@@ -1,0 +1,3962 @@
+{
+  "scope": "Check coordinated joint waypoints against exported visual surfaces, locally.\n\nThis samples straight segments in joint space, not continuous collision detection.\nIt checks geometry only: no timing, torque, balance or human-fit guarantee.\n",
+  "mode": "sampled_joint_path",
+  "source_urdf_sha256": "e6c0742ef026480b4624ca13f10526bdecb4bdc779fff9a0be36d6c0b57cb767",
+  "source_mesh_sha256": {
+    "package://arm_2dof/meshes/base_link.stl": "2994e381b397b98672be9d1f3a99e6653e63251309f8d1f9dd58450fae2d2927",
+    "package://arm_2dof/meshes/base_link_service_lid.stl": "76f829c2c0ef3004eb6a40aadc12f2621db5827f4b6a2d740b6d5594683c8076",
+    "package://arm_2dof/meshes/base_link_standoff_rr.stl": "141136875a00eb051e3920b3d9f66a379042fee186cf5aab1b32eeb6ee90be73",
+    "package://arm_2dof/meshes/base_link_standoff_rl.stl": "141136875a00eb051e3920b3d9f66a379042fee186cf5aab1b32eeb6ee90be73",
+    "package://arm_2dof/meshes/base_link_standoff_fr.stl": "141136875a00eb051e3920b3d9f66a379042fee186cf5aab1b32eeb6ee90be73",
+    "package://arm_2dof/meshes/base_link_standoff_fl.stl": "141136875a00eb051e3920b3d9f66a379042fee186cf5aab1b32eeb6ee90be73",
+    "package://arm_2dof/meshes/shoulder_spar.stl": "86528f8ad72d91b337c01a141e93f1137887198ad3e49dc8619f17be12fb540c",
+    "package://arm_2dof/meshes/upper_arm_spar.stl": "86528f8ad72d91b337c01a141e93f1137887198ad3e49dc8619f17be12fb540c"
+  },
+  "waypoints": [
+    {
+      "joint_1": 0.0,
+      "joint_2": 0.0,
+      "left_finger_joint": 0.0,
+      "right_finger_joint": 0.0
+    },
+    {
+      "joint_1": 0.3,
+      "joint_2": -0.5,
+      "left_finger_joint": 0.015,
+      "right_finger_joint": 0.015
+    },
+    {
+      "joint_1": 0.0,
+      "joint_2": 0.0,
+      "left_finger_joint": 0.0,
+      "right_finger_joint": 0.0
+    }
+  ],
+  "held_joint_positions": {},
+  "angular_step_rad": 0.02,
+  "linear_step_m": 0.002,
+  "poses_checked": 51,
+  "failing_poses": 51,
+  "initial_pairs": [
+    [
+      "base_link_front_panel",
+      "base_link_left_panel"
+    ],
+    [
+      "base_link_front_panel",
+      "base_link_right_panel"
+    ],
+    [
+      "base_link_front_panel",
+      "base_link_service_lid"
+    ],
+    [
+      "base_link_left_panel",
+      "base_link_rear_panel"
+    ],
+    [
+      "base_link_left_panel",
+      "base_link_service_lid"
+    ],
+    [
+      "base_link_rear_panel",
+      "base_link_right_panel"
+    ],
+    [
+      "base_link_rear_panel",
+      "base_link_service_lid"
+    ],
+    [
+      "base_link_right_panel",
+      "base_link_service_lid"
+    ],
+    [
+      "base_link_service_lid",
+      "base_link_standoff_fl"
+    ],
+    [
+      "base_link_service_lid",
+      "base_link_standoff_fr"
+    ],
+    [
+      "base_link_service_lid",
+      "base_link_standoff_rl"
+    ],
+    [
+      "base_link_service_lid",
+      "base_link_standoff_rr"
+    ],
+    [
+      "base_link_service_lid",
+      "shoulder_mount_left"
+    ],
+    [
+      "base_link_service_lid",
+      "shoulder_mount_right"
+    ],
+    [
+      "shoulder",
+      "upper_arm_joint_hub"
+    ]
+  ],
+  "poses_with_new_pairs": 0,
+  "first_failure": {
+    "sample": 0,
+    "segment": 0,
+    "fraction": 0.0,
+    "positions": {
+      "joint_1": 0.0,
+      "joint_2": 0.0,
+      "left_finger_joint": 0.0,
+      "right_finger_joint": 0.0
+    },
+    "pairs": [
+      [
+        "base_link_front_panel",
+        "base_link_left_panel"
+      ],
+      [
+        "base_link_front_panel",
+        "base_link_right_panel"
+      ],
+      [
+        "base_link_front_panel",
+        "base_link_service_lid"
+      ],
+      [
+        "base_link_left_panel",
+        "base_link_rear_panel"
+      ],
+      [
+        "base_link_left_panel",
+        "base_link_service_lid"
+      ],
+      [
+        "base_link_rear_panel",
+        "base_link_right_panel"
+      ],
+      [
+        "base_link_rear_panel",
+        "base_link_service_lid"
+      ],
+      [
+        "base_link_right_panel",
+        "base_link_service_lid"
+      ],
+      [
+        "base_link_service_lid",
+        "base_link_standoff_fl"
+      ],
+      [
+        "base_link_service_lid",
+        "base_link_standoff_fr"
+      ],
+      [
+        "base_link_service_lid",
+        "base_link_standoff_rl"
+      ],
+      [
+        "base_link_service_lid",
+        "base_link_standoff_rr"
+      ],
+      [
+        "base_link_service_lid",
+        "shoulder_mount_left"
+      ],
+      [
+        "base_link_service_lid",
+        "shoulder_mount_right"
+      ],
+      [
+        "shoulder",
+        "upper_arm_joint_hub"
+      ]
+    ],
+    "new_pairs": []
+  },
+  "failures": [
+    {
+      "sample": 0,
+      "segment": 0,
+      "fraction": 0.0,
+      "positions": {
+        "joint_1": 0.0,
+        "joint_2": 0.0,
+        "left_finger_joint": 0.0,
+        "right_finger_joint": 0.0
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 1,
+      "segment": 0,
+      "fraction": 0.04,
+      "positions": {
+        "joint_1": 0.012,
+        "joint_2": -0.02,
+        "left_finger_joint": 0.0006,
+        "right_finger_joint": 0.0006
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 2,
+      "segment": 0,
+      "fraction": 0.08,
+      "positions": {
+        "joint_1": 0.024,
+        "joint_2": -0.04,
+        "left_finger_joint": 0.0012,
+        "right_finger_joint": 0.0012
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 3,
+      "segment": 0,
+      "fraction": 0.12,
+      "positions": {
+        "joint_1": 0.036,
+        "joint_2": -0.06,
+        "left_finger_joint": 0.0018,
+        "right_finger_joint": 0.0018
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 4,
+      "segment": 0,
+      "fraction": 0.16,
+      "positions": {
+        "joint_1": 0.048,
+        "joint_2": -0.08,
+        "left_finger_joint": 0.0024,
+        "right_finger_joint": 0.0024
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 5,
+      "segment": 0,
+      "fraction": 0.2,
+      "positions": {
+        "joint_1": 0.06,
+        "joint_2": -0.1,
+        "left_finger_joint": 0.003,
+        "right_finger_joint": 0.003
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 6,
+      "segment": 0,
+      "fraction": 0.24,
+      "positions": {
+        "joint_1": 0.072,
+        "joint_2": -0.12,
+        "left_finger_joint": 0.0036,
+        "right_finger_joint": 0.0036
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 7,
+      "segment": 0,
+      "fraction": 0.28,
+      "positions": {
+        "joint_1": 0.084,
+        "joint_2": -0.14,
+        "left_finger_joint": 0.004200000000000001,
+        "right_finger_joint": 0.004200000000000001
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 8,
+      "segment": 0,
+      "fraction": 0.32,
+      "positions": {
+        "joint_1": 0.096,
+        "joint_2": -0.16,
+        "left_finger_joint": 0.0048,
+        "right_finger_joint": 0.0048
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 9,
+      "segment": 0,
+      "fraction": 0.36,
+      "positions": {
+        "joint_1": 0.108,
+        "joint_2": -0.18,
+        "left_finger_joint": 0.005399999999999999,
+        "right_finger_joint": 0.005399999999999999
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 10,
+      "segment": 0,
+      "fraction": 0.4,
+      "positions": {
+        "joint_1": 0.12,
+        "joint_2": -0.2,
+        "left_finger_joint": 0.006,
+        "right_finger_joint": 0.006
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 11,
+      "segment": 0,
+      "fraction": 0.44,
+      "positions": {
+        "joint_1": 0.132,
+        "joint_2": -0.22,
+        "left_finger_joint": 0.0066,
+        "right_finger_joint": 0.0066
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 12,
+      "segment": 0,
+      "fraction": 0.48,
+      "positions": {
+        "joint_1": 0.144,
+        "joint_2": -0.24,
+        "left_finger_joint": 0.0072,
+        "right_finger_joint": 0.0072
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 13,
+      "segment": 0,
+      "fraction": 0.52,
+      "positions": {
+        "joint_1": 0.156,
+        "joint_2": -0.26,
+        "left_finger_joint": 0.0078,
+        "right_finger_joint": 0.0078
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 14,
+      "segment": 0,
+      "fraction": 0.56,
+      "positions": {
+        "joint_1": 0.168,
+        "joint_2": -0.28,
+        "left_finger_joint": 0.008400000000000001,
+        "right_finger_joint": 0.008400000000000001
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 15,
+      "segment": 0,
+      "fraction": 0.6,
+      "positions": {
+        "joint_1": 0.18,
+        "joint_2": -0.3,
+        "left_finger_joint": 0.009,
+        "right_finger_joint": 0.009
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 16,
+      "segment": 0,
+      "fraction": 0.64,
+      "positions": {
+        "joint_1": 0.192,
+        "joint_2": -0.32,
+        "left_finger_joint": 0.0096,
+        "right_finger_joint": 0.0096
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 17,
+      "segment": 0,
+      "fraction": 0.68,
+      "positions": {
+        "joint_1": 0.20400000000000001,
+        "joint_2": -0.34,
+        "left_finger_joint": 0.0102,
+        "right_finger_joint": 0.0102
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 18,
+      "segment": 0,
+      "fraction": 0.72,
+      "positions": {
+        "joint_1": 0.216,
+        "joint_2": -0.36,
+        "left_finger_joint": 0.010799999999999999,
+        "right_finger_joint": 0.010799999999999999
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 19,
+      "segment": 0,
+      "fraction": 0.76,
+      "positions": {
+        "joint_1": 0.22799999999999998,
+        "joint_2": -0.38,
+        "left_finger_joint": 0.0114,
+        "right_finger_joint": 0.0114
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 20,
+      "segment": 0,
+      "fraction": 0.8,
+      "positions": {
+        "joint_1": 0.24,
+        "joint_2": -0.4,
+        "left_finger_joint": 0.012,
+        "right_finger_joint": 0.012
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 21,
+      "segment": 0,
+      "fraction": 0.84,
+      "positions": {
+        "joint_1": 0.252,
+        "joint_2": -0.42,
+        "left_finger_joint": 0.012599999999999998,
+        "right_finger_joint": 0.012599999999999998
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 22,
+      "segment": 0,
+      "fraction": 0.88,
+      "positions": {
+        "joint_1": 0.264,
+        "joint_2": -0.44,
+        "left_finger_joint": 0.0132,
+        "right_finger_joint": 0.0132
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 23,
+      "segment": 0,
+      "fraction": 0.92,
+      "positions": {
+        "joint_1": 0.276,
+        "joint_2": -0.46,
+        "left_finger_joint": 0.0138,
+        "right_finger_joint": 0.0138
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 24,
+      "segment": 0,
+      "fraction": 0.96,
+      "positions": {
+        "joint_1": 0.288,
+        "joint_2": -0.48,
+        "left_finger_joint": 0.0144,
+        "right_finger_joint": 0.0144
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 25,
+      "segment": 0,
+      "fraction": 1.0,
+      "positions": {
+        "joint_1": 0.3,
+        "joint_2": -0.5,
+        "left_finger_joint": 0.015,
+        "right_finger_joint": 0.015
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 26,
+      "segment": 1,
+      "fraction": 0.04,
+      "positions": {
+        "joint_1": 0.288,
+        "joint_2": -0.48,
+        "left_finger_joint": 0.0144,
+        "right_finger_joint": 0.0144
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 27,
+      "segment": 1,
+      "fraction": 0.08,
+      "positions": {
+        "joint_1": 0.276,
+        "joint_2": -0.46,
+        "left_finger_joint": 0.0138,
+        "right_finger_joint": 0.0138
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 28,
+      "segment": 1,
+      "fraction": 0.12,
+      "positions": {
+        "joint_1": 0.264,
+        "joint_2": -0.44,
+        "left_finger_joint": 0.0132,
+        "right_finger_joint": 0.0132
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 29,
+      "segment": 1,
+      "fraction": 0.16,
+      "positions": {
+        "joint_1": 0.252,
+        "joint_2": -0.42,
+        "left_finger_joint": 0.012599999999999998,
+        "right_finger_joint": 0.012599999999999998
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 30,
+      "segment": 1,
+      "fraction": 0.2,
+      "positions": {
+        "joint_1": 0.24,
+        "joint_2": -0.4,
+        "left_finger_joint": 0.012,
+        "right_finger_joint": 0.012
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 31,
+      "segment": 1,
+      "fraction": 0.24,
+      "positions": {
+        "joint_1": 0.22799999999999998,
+        "joint_2": -0.38,
+        "left_finger_joint": 0.0114,
+        "right_finger_joint": 0.0114
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 32,
+      "segment": 1,
+      "fraction": 0.28,
+      "positions": {
+        "joint_1": 0.216,
+        "joint_2": -0.36,
+        "left_finger_joint": 0.010799999999999999,
+        "right_finger_joint": 0.010799999999999999
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 33,
+      "segment": 1,
+      "fraction": 0.32,
+      "positions": {
+        "joint_1": 0.204,
+        "joint_2": -0.33999999999999997,
+        "left_finger_joint": 0.010199999999999999,
+        "right_finger_joint": 0.010199999999999999
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 34,
+      "segment": 1,
+      "fraction": 0.36,
+      "positions": {
+        "joint_1": 0.192,
+        "joint_2": -0.32,
+        "left_finger_joint": 0.0096,
+        "right_finger_joint": 0.0096
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 35,
+      "segment": 1,
+      "fraction": 0.4,
+      "positions": {
+        "joint_1": 0.18,
+        "joint_2": -0.3,
+        "left_finger_joint": 0.009,
+        "right_finger_joint": 0.009
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 36,
+      "segment": 1,
+      "fraction": 0.44,
+      "positions": {
+        "joint_1": 0.168,
+        "joint_2": -0.28,
+        "left_finger_joint": 0.008400000000000001,
+        "right_finger_joint": 0.008400000000000001
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 37,
+      "segment": 1,
+      "fraction": 0.48,
+      "positions": {
+        "joint_1": 0.156,
+        "joint_2": -0.26,
+        "left_finger_joint": 0.0078,
+        "right_finger_joint": 0.0078
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 38,
+      "segment": 1,
+      "fraction": 0.52,
+      "positions": {
+        "joint_1": 0.144,
+        "joint_2": -0.24,
+        "left_finger_joint": 0.0072,
+        "right_finger_joint": 0.0072
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 39,
+      "segment": 1,
+      "fraction": 0.56,
+      "positions": {
+        "joint_1": 0.13199999999999998,
+        "joint_2": -0.21999999999999997,
+        "left_finger_joint": 0.006599999999999999,
+        "right_finger_joint": 0.006599999999999999
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 40,
+      "segment": 1,
+      "fraction": 0.6,
+      "positions": {
+        "joint_1": 0.12,
+        "joint_2": -0.2,
+        "left_finger_joint": 0.006,
+        "right_finger_joint": 0.006
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 41,
+      "segment": 1,
+      "fraction": 0.64,
+      "positions": {
+        "joint_1": 0.108,
+        "joint_2": -0.18,
+        "left_finger_joint": 0.005399999999999999,
+        "right_finger_joint": 0.005399999999999999
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 42,
+      "segment": 1,
+      "fraction": 0.68,
+      "positions": {
+        "joint_1": 0.09599999999999999,
+        "joint_2": -0.15999999999999998,
+        "left_finger_joint": 0.004799999999999999,
+        "right_finger_joint": 0.004799999999999999
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 43,
+      "segment": 1,
+      "fraction": 0.72,
+      "positions": {
+        "joint_1": 0.084,
+        "joint_2": -0.14,
+        "left_finger_joint": 0.004200000000000001,
+        "right_finger_joint": 0.004200000000000001
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 44,
+      "segment": 1,
+      "fraction": 0.76,
+      "positions": {
+        "joint_1": 0.072,
+        "joint_2": -0.12,
+        "left_finger_joint": 0.0036,
+        "right_finger_joint": 0.0036
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 45,
+      "segment": 1,
+      "fraction": 0.8,
+      "positions": {
+        "joint_1": 0.059999999999999984,
+        "joint_2": -0.09999999999999998,
+        "left_finger_joint": 0.002999999999999999,
+        "right_finger_joint": 0.002999999999999999
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 46,
+      "segment": 1,
+      "fraction": 0.84,
+      "positions": {
+        "joint_1": 0.04800000000000001,
+        "joint_2": -0.08000000000000002,
+        "left_finger_joint": 0.0024000000000000002,
+        "right_finger_joint": 0.0024000000000000002
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 47,
+      "segment": 1,
+      "fraction": 0.88,
+      "positions": {
+        "joint_1": 0.036,
+        "joint_2": -0.06,
+        "left_finger_joint": 0.0018,
+        "right_finger_joint": 0.0018
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 48,
+      "segment": 1,
+      "fraction": 0.92,
+      "positions": {
+        "joint_1": 0.023999999999999987,
+        "joint_2": -0.03999999999999998,
+        "left_finger_joint": 0.0011999999999999995,
+        "right_finger_joint": 0.0011999999999999995
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 49,
+      "segment": 1,
+      "fraction": 0.96,
+      "positions": {
+        "joint_1": 0.01200000000000001,
+        "joint_2": -0.020000000000000018,
+        "left_finger_joint": 0.0006000000000000005,
+        "right_finger_joint": 0.0006000000000000005
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    },
+    {
+      "sample": 50,
+      "segment": 1,
+      "fraction": 1.0,
+      "positions": {
+        "joint_1": 0.0,
+        "joint_2": 0.0,
+        "left_finger_joint": 0.0,
+        "right_finger_joint": 0.0
+      },
+      "pairs": [
+        [
+          "base_link_front_panel",
+          "base_link_left_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_front_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_rear_panel"
+        ],
+        [
+          "base_link_left_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_right_panel"
+        ],
+        [
+          "base_link_rear_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_right_panel",
+          "base_link_service_lid"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_fr"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rl"
+        ],
+        [
+          "base_link_service_lid",
+          "base_link_standoff_rr"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_left"
+        ],
+        [
+          "base_link_service_lid",
+          "shoulder_mount_right"
+        ],
+        [
+          "shoulder",
+          "upper_arm_joint_hub"
+        ]
+      ],
+      "new_pairs": []
+    }
+  ],
+  "pass": false,
+  "limitations": [
+    "Finite samples can miss collisions between samples; no continuous clearance guarantee",
+    "Surface intersections do not test containment, human fit or achievable dynamics",
+    "Only direct parent-child link pairs are excluded; rigid assembly overlaps can be reported",
+    "Unspecified movable joints are held at zero; continuous joint angles are not wrapped"
+  ],
+  "source_path_sha256": "e3d0a47c0ea8aff08b7e2777f6a066394d9c0a97934abbd9380a7649d15ba144",
+  "auditor_sha256": "2af91fadab3345ece5a6aa54a266ed0012a3e5b063324cd8fee3ed9f8cdf6278"
+}

@@ -250,6 +250,29 @@ collision archive; after changing Mark 43 geometry, regenerate it with
 
 ## ROS 2 and MoveIt
 
+Before sending a proposed joint path to a controller, you can inspect sampled
+surface intersections locally with no API or token:
+
+```bash
+python scripts/audit_motion_path.py examples/14_iron_man_mark_43/robot.sim.urdf \
+  docs/motion_paths/mark43_chest_neck.json --json /tmp/path-report.json
+python scripts/check_motion_paths.py --check
+```
+
+Waypoints specify joint positions in radians/metres. The checker interpolates
+all named joints together at steps of at most 0.02 rad / 2 mm and records the
+exact failing pose and link pairs. It rejects unknown joints, invalid limits,
+nonfinite inputs and excessive work. Exit status is 0 for clear samples, 1 for
+intersections, and 2 for invalid input. This is sampled geometry checking;
+it does not establish continuous clearance or safe physical operation.
+
+[Six reproducible paths and their results](docs/motion_paths/README.md)
+cover the four arm examples and Mark 43 chest/neck and knee motion. The combined
+chest/neck path clears 121 samples; the knee path has intersections at 45 of 51.
+The arm reports retain existing assembly contacts, even where the separate
+MuJoCo task-motion test passes. These checks have different collision geometry
+and exclusions; neither is hardware validation.
+
 The ROS download includes an `ament_cmake` package, URDF/Xacro, meshes, RViz,
 `ros2_control`, SRDF, joint limits, KDL and OMPL configuration. Wearables have
 separate arm, leg, hand, torso and armour groups. Underactuated chains use
