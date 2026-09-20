@@ -1,0 +1,47 @@
+{
+  "scope": "Sampled geometric paths, not dynamic or hardware validation; reported collisions are not suppressed",
+  "paths": [
+    {
+      "path": "01_arm_2dof.json",
+      "example": "01_arm_2dof",
+      "poses_checked": 51,
+      "failing_poses": 51,
+      "pass": false
+    },
+    {
+      "path": "02_arm_6dof.json",
+      "example": "02_arm_6dof",
+      "poses_checked": 37,
+      "failing_poses": 37,
+      "pass": false
+    },
+    {
+      "path": "03_arm_7dof.json",
+      "example": "03_arm_7dof",
+      "poses_checked": 37,
+      "failing_poses": 37,
+      "pass": false
+    },
+    {
+      "path": "04_scara.json",
+      "example": "04_scara",
+      "poses_checked": 41,
+      "failing_poses": 41,
+      "pass": false
+    },
+    {
+      "path": "mark43_chest_neck.json",
+      "example": "14_iron_man_mark_43",
+      "poses_checked": 121,
+      "failing_poses": 0,
+      "pass": true
+    },
+    {
+      "path": "mark43_knees.json",
+      "example": "14_iron_man_mark_43",
+      "poses_checked": 51,
+      "failing_poses": 45,
+      "pass": false
+    }
+  ]
+}

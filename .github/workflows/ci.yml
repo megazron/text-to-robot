@@ -40,6 +40,8 @@ jobs:
         run: python scripts/check_arm_motion.py --check
       - name: Physical fidelity and solid CAD regression tests
         run: python -m unittest discover -s python/tests -v
+      - name: Reproduce coordinated surface-path evidence including known failures
+        run: python scripts/check_motion_paths.py --check
       - name: Verify example reports and animations match shipped models
         run: python scripts/verify_example_artifacts.py
       - name: Verify visual evidence matches the exported model
