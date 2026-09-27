@@ -105,13 +105,14 @@ function usage() {
   console.log(`text-to-robot -- describe a robot, get a ROS 2 robot
 
 Usage:
-  text-to-robot "<prompt>"                 generate from a prompt
+  text-to-robot "<prompt>" [-o dir]        generate from a prompt (default ./out/<name>)
   text-to-robot generate "<prompt>" [-o dir]
   text-to-robot modify robot.json "<instruction>" [-o dir]
+  text-to-robot bom robot.json [budget_usd]
   text-to-robot validate robot.urdf
   text-to-robot inspect robot.urdf
 
-Env: OPENAI_API_KEY / ANTHROPIC_API_KEY enable cloud mode (else deterministic demo mode).`);
+Generation is local and deterministic: no account, API key or network access.`);
 }
 
 async function main() {

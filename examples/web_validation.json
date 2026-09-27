@@ -111,7 +111,7 @@
       "mesh_triangles_verified": true,
       "example": "11_spider_scout",
       "pass": true,
-      "source_robot_sha256": "4c47f9503e6f4831d028a49febd15d47b3bc16579c07ea86c43a1370bc824d74",
+      "source_robot_sha256": "b2bee224684d760550778061da77ab519277f58ea4fb2977802f2e958b556e47",
       "name": "hexapod",
       "links": 35,
       "joints": 34
@@ -121,7 +121,7 @@
       "mesh_triangles_verified": true,
       "example": "12_mars_rover",
       "pass": true,
-      "source_robot_sha256": "8de592e93f92c29e36c595763e7db72b19b40452a2eff8b734152480348759d2",
+      "source_robot_sha256": "470bb7302537a4ba34bc97d3a73641c7cc770bafda905c0549aca0c828cb061a",
       "name": "rover_arm",
       "links": 44,
       "joints": 43
@@ -178,9 +178,9 @@
     }
   ],
   "web_source_sha256": {
-    "styles.css": "7d748ff866b3644bb94c2fecff7ba6163e54f3a35c777305c03a1ea887b627d2",
+    "styles.css": "ded2c3ddc44f2d54cc5027b9e278a3424635adfc0914a9c0ee1b32fdacd393a0",
     "robotkit.js": "973e3dfec5021cef16560317682cf522b34e58ae46687503c9cca52912f0c412",
     "index.html": "85b6c5424d09a83344c9a2a10169848b94792150f289b19727066f43f8af122f",
-    "app.js": "e5b89e3d231613a22dd8098c6585d7e2c87e3ce8e2c9e4942ec95d1126f63a75"
+    "app.js": "e7d245a2175edb5dd20573aaaa8ac0dbbc3016f433a0262c592e715c76a47631"
   }
 }

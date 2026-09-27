@@ -809,7 +809,7 @@
   <joint name="lidar_1_joint" type="fixed">
     <parent link="base_link"/>
     <child link="lidar_1_link"/>
-    <origin xyz="0 0 0.05" rpy="0 0 0"/>
+    <origin xyz="0 0 0.165" rpy="0 0 0"/>
     <dynamics damping="0.1" friction="0"/>
   </joint>
 </robot>

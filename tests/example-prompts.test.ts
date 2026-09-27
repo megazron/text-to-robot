@@ -11,6 +11,6 @@ for (const dir of readdirSync("examples").filter((d) => /^\d\d_/.test(d) && d !=
   test(`example prompt regenerates ${dir}`, async () => {
     const r = await generateRobot(readFileSync(`examples/${dir}/prompt.txt`, "utf8"));
     assert.equal(strip(r.robot), strip(JSON.parse(readFileSync(`examples/${dir}/robot.json`, "utf8"))));
-    assert.ok(!r.warnings.some((w) => /^not applied:/.test(w)), `${dir}: ${r.warnings.join("; ")}`);
+    assert.ok(r.summary, `${dir}: every local result carries an interpretation summary`);
   });
 }

@@ -52,25 +52,29 @@ $ node cli/src/index.ts "a red 6 dof arm with 70 cm reach, a wrist camera and no
 | `6 DOF`, `seven-axis`, `5 joints` | arm DOF (1–12; larger values are clamped with a note) |
 | `60 cm reach`, `600 mm reach`, `1 m long`, `under 2 m reach` | rescales the upper arm and forearm to the stretched reach; `under`/`at least` act as limits |
 | `small`, `compact`, `large` | 0.7× / 1.4× arm reach (a "small camera" is not a small robot) |
-| `2 kg payload`, `lifts 10 lb` | actuators in the BOM are sized for the payload at the tool |
+| `2 kg payload`, `lifts 10 lb`, `picks up 500 g parts` | actuators in the BOM are sized for the payload at the tool; "weighs under 20 kg" is robot mass and is reported, not applied |
 | `budget $1500`, `under 2000 dollars`, `1.5k budget` | BOM tier; other currencies are reported rather than treated as dollars |
-| `with a wrist camera`, `lidar`, `RGB-D camera`, `IMU` / `no lidar`, `without a camera` | adds sensors, or removes/prevents them |
-| `suction cup`, `no gripper`, `three-finger gripper` | gripper choice (multi-finger → two-finger, noted) |
+| `with a wrist camera`, `two cameras`, `lidar on the front`, `RGB-D camera`, `IMU` | adds sensors on the body surface (lidars on top, cameras at the front or wrist, IMUs inside) |
+| `no lidar`, `doesn't need a gripper`, `neither lidar nor camera`, `no sensors except a camera` | prevents or removes them |
+| `suction cup`, `no gripper`, `three-finger gripper` | gripper choice for arms, SCARA and mobile manipulators (multi-finger → two-finger, noted) |
 | `called Atlas`, `named "Rover Prime"` | robot name |
 | `a red arm`, `painted blue` | body colour (characters keep their livery) |
 | `for a 6 ft 2 wearer`, `1.62 m person` | fits the exosuit / Mark 43 to the wearer (1.50–2.05 m; audits cover 1.75 m) |
-| `mobile manipulator`, `robot dog`, `biped`, `robot vacuum`, `cobot` | synonyms for the template families |
+| `mobile manipulator`, `robot dog`, `biped`, `robot with 4 legs`, `robot vacuum`, `cobot` | synonyms for the template families |
 | `omni wheels`, `tracked`, `dual-arm`, `eight-legged` | nearest template, with the substitution stated |
 
 Drones, delta/gantry robots, snake robots, marine robots and dexterous hands are
-refused with a reason and an alternative. Height, width, speed and target mass
-for fixed templates are reported as not applied.
+refused with a reason and an alternative. Height, width, speed, target mass, size words
+for fixed templates, unmodelled sensors (GPS, ultrasonic, force/torque) and arms on legged
+bases are reported as not applied. Names and quoted text ("named Tiny", "called 'Unit 50'")
+never change the robot's features.
 
 Modifications are split into clauses, and each clause is applied or reported on its own:
 `make the upper arm 50% longer and the forearm 10% shorter`, `make the forearm 20 cm longer`,
 `set the reach to 80 cm`, `add a lidar and a camera to the wrist`, `remove the camera`,
 `remove the gripper`, `add a suction gripper`, `replace the suction cup with a two-finger gripper`,
-`make it 7 dof`, `paint it blue`, `rename it to atlas`. Resized links keep their collision
+`make it 7 dof`, `add two joints`, `remove the lidar but keep the camera`, `make the forearm and upper arm
+10% longer`, `paint it blue`, `rename it to atlas`, and for suits `fit it to a 1.85 m wearer`. Resized links keep their collision
 geometry, mass and downstream joints in step. A modification keeps the original prompt's
 budget and payload for the BOM.
 
