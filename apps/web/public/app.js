@@ -348,7 +348,7 @@ function renderDiff(lines) {
   if (!lines || !lines.length) return;
   box.append(el("div", null, "ROBOT CHANGES"));
   for (const ln of lines) {
-    const c = ln.startsWith("+") ? "add" : ln.startsWith("-") ? "del" : ln.startsWith("~") ? "chg" : "";
+    const c = ln.startsWith("+") ? "add" : ln.startsWith("-") ? "del" : ln.startsWith("~") ? "chg" : /^[!?]/.test(ln) ? "warn" : "";
     box.append(el("div", c, ln));
   }
 }
@@ -359,7 +359,7 @@ function status(lines, kind) {
   box.textContent = Array.isArray(lines) ? lines.join("\n") : lines;
 }
 function checksToText(res) {
-  const out = [...(res.validation?.checks ?? []), ...(res.urdfValidation?.checks ?? [])];
+  const out = [...(res.summary ? ["→ Interpreted as: " + res.summary] : []), ...(res.validation?.checks ?? []), ...(res.urdfValidation?.checks ?? [])];
   for (const w of res.warnings ?? []) out.push("⚠ " + w);
   for (const r of res.repairs ?? []) out.push("↻ " + r);
   return out;

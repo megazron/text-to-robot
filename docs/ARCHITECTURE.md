@@ -8,7 +8,8 @@ is no cloud inference, account, token or runtime dependency on external assets.
 User prompt
    │
    ▼
-Local prompt parser + researched design templates  (robot-generator/nlp, robot-templates)
+Local prompt parser + researched design templates  (robot-generator/nlp + text, robot-templates)
+   │   └─ Interpretation: template, sizes, sensors, payload, budget, approximations, ignored
    │
    ▼
 RobotSpecification (JSON)                              (packages/robot-schema)

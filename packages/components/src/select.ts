@@ -26,8 +26,10 @@ function subtree(spec: RobotSpecification, root: string): Set<string> {
   return out;
 }
 
+export interface BomOptions { /** payload held at each end effector, kg */ payloadKg?: number; }
+
 /** Neutral-pose gravity proxy, not a full-workspace or dynamic load bound. */
-function requiredTorque(spec: RobotSpecification, j: Joint, pos: Record<string, number[]>): number {
+function requiredTorque(spec: RobotSpecification, j: Joint, pos: Record<string, number[]>, payloadKg = 0): number {
   const down = subtree(spec, j.child);
   const jp = pos[j.child] ?? [0, 0, 0];
   let torque = 0, mass = 0;
@@ -37,6 +39,13 @@ function requiredTorque(spec: RobotSpecification, j: Joint, pos: Record<string, 
     const horiz = Math.hypot(p[0] - jp[0], p[1] - jp[1]) + (l.geometry.type === "cylinder" ? l.geometry.length / 2 : 0.02);
     torque += l.mass * GRAVITY * horiz;
     mass += l.mass;
+  }
+  // payload held at the tool of every end effector downstream of this joint
+  if (payloadKg > 0) for (const ee of spec.end_effectors) {
+    if (!down.has(ee.attach_link)) continue;
+    const p = pos[ee.attach_link] ?? jp;
+    torque += payloadKg * GRAVITY * (Math.hypot(p[0] - jp[0], p[1] - jp[1]) + 0.1);
+    mass += payloadKg;
   }
   if (j.type === "prismatic") return mass * GRAVITY; // vertical force (N)
   return torque;
@@ -59,7 +68,7 @@ function pushMerged(map: Map<string, BomLine>, line: BomLine) {
   else map.set(key, { ...line, subtotal: +(line.qty * line.unit_cost).toFixed(2) });
 }
 
-function buildBomAtTier(spec: RobotSpecification, tier: Tier, budget?: number): BillOfMaterials {
+function buildBomAtTier(spec: RobotSpecification, tier: Tier, budget?: number, opts: BomOptions = {}): BillOfMaterials {
   const warnings: string[] = ["Sizing uses a neutral-pose gravity proxy and declared joint effort, not a worst-case workspace or dynamic load analysis. Selection checks only approximate effort and broad motion type. Speed/torque curves, travel, voltage, feedback, mounting, thermal duty and wiring are not qualified.", "Catalog values are planning estimates. Except explicitly sourced rated values, torque entries may be stall/peak ratings; continuous duty, fit and complete assemblies are unverified."]; const notes: string[] = [];
   const lines = new Map<string, BomLine>();
   const sizing: BillOfMaterials["actuator_sizing"] = [];
@@ -71,7 +80,7 @@ function buildBomAtTier(spec: RobotSpecification, tier: Tier, budget?: number): 
     // physics estimate from the robot's own downstream mass, floored by the designer-declared effort
     // (a wearable exoskeleton, for example, must move the wearer's limbs, not just its own struts)
     const designed = j.limit?.effort && !(j.inferred ?? []).includes("limit") ? j.limit.effort * 0.8 : 0;
-    const req = Math.max(requiredTorque(spec, j, pos), designed);
+    const req = Math.max(requiredTorque(spec, j, pos, opts.payloadKg), designed);
     const a = pickActuator(req, tier, j.type);
     if (!a) { warnings.push(`no actuator found for joint ${j.name}`); continue; }
     const unit=j.type === "prismatic" ? "N" : "N·m";
@@ -123,16 +132,17 @@ function buildBomAtTier(spec: RobotSpecification, tier: Tier, budget?: number): 
   const total = +finalLines.reduce((s, l) => s + l.subtotal, 0).toFixed(2);
   const feasible = budget === undefined ? true : total <= budget;
   if (budget !== undefined && !feasible) notes.push(`Estimated build cost $${total} exceeds the $${budget} budget by $${(total - budget).toFixed(2)}. Consider fewer DOF, lighter links, or the demo/hobby tier.`);
+  if (opts.payloadKg) notes.push(`Actuators sized for a ${opts.payloadKg} kg payload held 0.1 m beyond each end-effector mount.`);
   notes.push(`Tier: ${tier}. Prices are planning estimates (USD), not quotes. Structure assumes ${tier === "research" ? "machined aluminium" : "FDM 3D printing"}.`);
 
   return { robot_name: spec.robot_name, budget, tier, lines: finalLines, total, feasible, sizing_pass: sizing.length===actuated.length && sizing.every(s=>s.margin!=="UNDERSIZED"), hardware_verified:false, actuator_sizing: sizing, warnings, notes };
 }
 
-export function buildBom(spec: RobotSpecification, budget?: number): BillOfMaterials {
+export function buildBom(spec: RobotSpecification, budget?: number, opts: BomOptions = {}): BillOfMaterials {
   const tiers: Tier[] = ["hobby", "prosumer", "research"];
-  if (budget === undefined) return buildBomAtTier(spec, tierForBudget(undefined), undefined);
+  if (budget === undefined) return buildBomAtTier(spec, tierForBudget(undefined), undefined, opts);
   // try to FIT the budget: cheapest tier whose total is within budget; else cheapest overall
-  const built = tiers.map((t) => buildBomAtTier(spec, t, budget));
+  const built = tiers.map((t) => buildBomAtTier(spec, t, budget, opts));
   const feasible = built.filter((b) => b.total <= budget!).sort((a, b) => b.total - a.total); // richest that still fits
   if (feasible.length) return feasible.find(b=>b.sizing_pass) ?? feasible[0];
   const cheapest = built.sort((a, b) => a.total - b.total)[0];

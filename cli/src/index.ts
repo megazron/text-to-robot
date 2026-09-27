@@ -9,13 +9,14 @@ import { providerStatus } from "@ttr/llm-providers";
 import { buildBom, bomToMarkdown } from "@ttr/components";
 import { generateCadFiles } from "@ttr/cad";
 import { exportTraining } from "@ttr/training-export";
-import { extractBudget } from "@ttr/robot-generator";
+import { extractBudget, extractPayload } from "@ttr/robot-generator";
 import { safeName, type RobotSpecification, type ValidationResult } from "@ttr/robot-schema";
 
 const C = { g: "\x1b[32m", r: "\x1b[31m", y: "\x1b[33m", d: "\x1b[2m", b: "\x1b[1m", x: "\x1b[0m", c: "\x1b[36m" };
 const ok = (s: string) => console.log(`${C.g}✓${C.x} ${s}`);
 const bad = (s: string) => console.log(`${C.r}✗${C.x} ${s}`);
 const info = (s: string) => console.log(`${C.d}${s}${C.x}`);
+const warn = (s: string) => console.log(`${C.y}${s}${C.x}`);
 
 function writeFiles(base: string, files: Record<string, string | Uint8Array>) {
   for (const [rel, content] of Object.entries(files)) {
@@ -31,13 +32,13 @@ async function cmdGenerate(prompt: string, outDir?: string) {
   console.log(`\n${C.b}Generating robot...${C.x}`);
   info(`mode: ${providerStatus().mode}`);
   const res = await generateRobot(prompt);
-  ok("Natural language interpreted");
+  ok(res.summary ? `Interpreted as: ${res.summary}` : "Natural language interpreted");
   ok("Robot specification generated");
   res.validation.valid ? ok("Specification validated") : bad("Specification invalid");
   ok("Inertia calculated");
   ok("URDF generated");
   res.urdfValidation.valid ? ok("URDF validated") : bad("URDF validation failed");
-  for (const w of res.warnings) info("  ! " + w);
+  for (const w of res.warnings) (/^(?:approximated|not applied):/.test(w) ? warn : info)("  ! " + w);
   for (const r of res.repairs) info("  repair " + r);
 
   const name = safeName(res.robot.robot_name);
@@ -95,7 +96,7 @@ async function cmdModify(jsonFile: string, instruction: string, outDir?: string)
 function cmdBom(jsonFile: string, budgetArg?: string) {
   const spec = JSON.parse(readFileSync(jsonFile, "utf8")) as RobotSpecification;
   const budget = budgetArg ? Number(budgetArg) : extractBudget(spec.metadata.source_prompt ?? "");
-  const bom = buildBom(spec, budget);
+  const bom = buildBom(spec, budget, { payloadKg: spec.end_effectors.length ? extractPayload(spec.metadata.source_prompt ?? "") : undefined });
   console.log(bomToMarkdown(bom));
   if (budget !== undefined && !bom.feasible) process.exitCode = 1;
 }
