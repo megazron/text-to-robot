@@ -1,5 +1,5 @@
 import type { RobotSpecification } from "@ttr/robot-schema";
-import { HUMANOID, emptySpec, pose } from "@ttr/robot-schema";
+import { ARM, HUMANOID, emptySpec, pose } from "@ttr/robot-schema";
 import { box, cyl, sph, link, joint, DEFAULT_MATERIALS } from "./builder.ts";
 import { hollowChassis } from "./mechanics.ts";
 import { attachParallelGripper } from "./grippers.ts";
@@ -10,9 +10,13 @@ import { attachParallelGripper } from "./grippers.ts";
 const THIGH = 0.20, SHIN = 0.20, FOOT = 0.04;
 const HIP_Z = THIGH + SHIN + FOOT;
 
-function appendArm(spec: RobotSpecification, side: "left" | "right", dof: number, mountY: number, shoulderZ: number, gripper: boolean) {
+const WRIST_LEN = 0.06;   // every arm link except the upper arm and forearm
+const longSegments = (dof: number) => (dof > 1 ? 1 : 0) + (dof > 3 ? 1 : 0);
+const gripperLen = () => ARM.gripper_palm[2] + ARM.finger[2];
+
+function appendArm(spec: RobotSpecification, side: "left" | "right", dof: number, mountY: number, shoulderZ: number, gripper: boolean, seg = HUMANOID.arm_segment) {
   const p = `${side}_`;
-  const seg = HUMANOID.arm_segment, r = HUMANOID.arm_radius;
+  const r = HUMANOID.arm_radius;
   const axisAt = (i: number): [number, number, number] => (i % 2 === 0 ? [0, 1, 0] : [1, 0, 0]);
   const names = ["shoulder", "upper_arm", "elbow", "forearm", "wrist_1", "wrist_2", "wrist_3"];
   let parent = "torso";
@@ -20,7 +24,7 @@ function appendArm(spec: RobotSpecification, side: "left" | "right", dof: number
   for (let i = 0; i < dof; i++) {
     const role = names[Math.min(i, names.length - 1)];
     const child = `${p}${role}`;
-    const len = i === 1 || i === 3 ? seg : 0.06;
+    const len = i === 1 || i === 3 ? seg : WRIST_LEN;
     spec.links.push(link(child, cyl(r, len), { material: "link_mat", role, origin: pose([0, 0, -len / 2]) }));
     spec.joints.push(joint(`${p}arm_joint_${i + 1}`, "revolute", parent, child, {
       origin: i === 0 ? pose([0, mountY, shoulderZ]) : pose([0, 0, -parentLen]), axis: axisAt(i),
@@ -64,8 +68,15 @@ export function humanoid(opts: HumanoidOptions = {}): RobotSpecification {
   const dof = opts.armDof ?? 7;
   const g = opts.gripper ?? true;
   const shoulderZ = baseZ + tz - 0.03;
-  appendArm(spec, "left", dof, ty / 2 + HUMANOID.arm_radius + .003, shoulderZ, g);
-  appendArm(spec, "right", dof, -(ty / 2 + HUMANOID.arm_radius + .003), shoulderZ, g);
+  // A hanging hand must never be a support point: on legs, shorten the long arm
+  // segments so the fingertips stay half a foot height above the soles.
+  let seg = HUMANOID.arm_segment;
+  if (legs && longSegments(dof) > 0) {
+    const fixed = WRIST_LEN * (dof - longSegments(dof)) + (g ? gripperLen() : 0);
+    seg = Math.min(seg, (shoulderZ - FOOT / 2 - fixed) / longSegments(dof));
+  }
+  appendArm(spec, "left", dof, ty / 2 + HUMANOID.arm_radius + .003, shoulderZ, g, seg);
+  appendArm(spec, "right", dof, -(ty / 2 + HUMANOID.arm_radius + .003), shoulderZ, g, seg);
   if (legs) { appendLeg(spec, "left", 0.07); appendLeg(spec, "right", -0.07); }
   spec.metadata.notes.push(`Generated humanoid: torso, head, two ${dof}-DOF arms${g ? " with grippers" : ""}${legs ? ", two 6-DOF legs" : ""}.`);
   return spec;
