@@ -1,4 +1,4 @@
-// Deterministic URDF generator. Pure functions; the LLM never builds XML.
+// Deterministic URDF generator. Pure functions; the prompt parser never builds XML.
 import type { RobotSpecification, Link, Joint, Geometry, Material, Pose, Sensor } from "@ttr/robot-schema";
 import { inertiaOf, poseToMat } from "@ttr/kinematics";
 import { num, vec, xmlName } from "./format.ts";

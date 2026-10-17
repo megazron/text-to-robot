@@ -1,5 +1,5 @@
 // Text-to-Robot :: RobotSpecification -- the strongly-typed intermediate
-// representation. The LLM produces this; deterministic code turns it into URDF.
+// representation. The local prompt parser (or an optional custom provider) produces this; deterministic code turns it into URDF.
 
 export type Vec3 = [number, number, number];
 export type RGBA = [number, number, number, number];

@@ -1,5 +1,6 @@
 import type { RobotSpecification } from "@ttr/robot-schema";
 
+/** Optional custom spec source. The shipped generator uses LocalProvider (rule-based parser). */
 export interface LlmProvider {
   readonly name: string;
   /** true if this provider is configured (e.g. an API key is present) */
@@ -10,6 +11,7 @@ export interface LlmProvider {
   modifySpec(spec: RobotSpecification, instruction: string): Promise<RobotSpecification>;
 }
 
+/** Suggested instruction text for a bring-your-own model provider; not used by the shipped code. */
 export const SYSTEM_PROMPT =
   "You are a robotics URDF architect. Convert the user's request into a JSON " +
   "RobotSpecification with fields: robot_name (string), links[], joints[], " +
