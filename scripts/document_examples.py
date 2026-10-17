@@ -159,6 +159,9 @@ and creates false collisions; its diagnostic remains in [clearance_report.json](
 for comparison. Compound hulls are still approximations; their errors are reported.
 
 '''
+ # Hand-written notes below the marker survive regeneration.
+ keep='<!-- MANUAL_NOTES -->';prev=folder/'README.md'
+ if prev.exists() and keep in prev.read_text():text=text.rstrip()+'\n\n'+prev.read_text()[prev.read_text().index(keep):]
  (folder/'README.md').write_text(text.rstrip()+'\n')
  index.append(f"| [<img src='{folder.name}/simulation.gif' width='220' alt='{name} simulation'>]({folder.name}/) | [{folder.name}]({folder.name}/)<br>[CAD]({folder.name}/robot.cad.zip) · [Results]({folder.name}/simulation_report.json) · [Build evidence]({folder.name}/BUILDABILITY.md) | {row.get('passed',0)}/{row.get('total',0)} | {row.get('initial_penetrations','?')} | {failures} |")
 (root/'README.md').write_text('\n'.join(index)+'\n')

@@ -8,7 +8,9 @@ is no cloud inference, account, token or runtime dependency on external assets.
 User prompt
    │
    ▼
-Local prompt parser + researched design templates  (robot-generator/nlp, robot-templates)
+Local rule-based prompt parser + design templates   (robot-generator/nlp, robot-templates)
+   │   ├─ basic German/French/Spanish keywords mapped to English (lexicon.ts)
+   │   └─ Interpretation: template, sizes, sensors, payload, budget, approximations, ignored, conflicts
    │
    ▼
 RobotSpecification (JSON)                              (packages/robot-schema)
@@ -43,7 +45,7 @@ URDF structural validation                            (packages/urdf-validator)
 | `robot-templates` | Deterministic starting robots (arms, mobile, legged, humanoid, grippers) |
 | `urdf-generator` | Pure URDF + Xacro string generation |
 | `urdf-validator` | XML parser, URDF structural validation, URDF→spec parser |
-| `llm-providers` | Legacy extension types and local service status; no cloud adapters |
+| `llm-providers` | Unused "bring your own model" hook: the `LlmProvider` interface plus JSON coercion, and the local service status. No model adapter ships; generation is the rule-based parser |
 | `robot-generator` | Orchestration: NL parse, generate, modify, repair loop, diff |
 | `ros2-export` | ament_cmake package, MoveIt 2 config (SRDF/kinematics/controllers/launch), Gazebo world + spawn launch |
 | `components` | Real-part catalogue; BOM sized by per-joint holding torque and fitted to a cost budget |
@@ -79,6 +81,7 @@ there. The generated URDF is the contract between the two halves.
 
 ## Safety
 
-The LLM is treated as an untrusted data source. Its output is parsed as JSON,
-coerced into the spec shape, then fully validated and repaired. No LLM output is
-ever executed, and all identifiers, filenames and XML are sanitized before use.
+Prompts are interpreted by a local rule-based parser; no language model is
+involved. If you plug in your own model through the optional `LlmProvider` hook,
+its output is treated as untrusted: parsed as JSON, coerced into the spec shape,
+then fully validated and repaired. No provider output is ever executed, and all identifiers, filenames and XML are sanitized before use.

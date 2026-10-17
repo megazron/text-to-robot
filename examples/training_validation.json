@@ -76,14 +76,14 @@
       "pass": true,
       "task": "walk",
       "actuators": 18,
-      "archive_sha256": "fc1f9a5ae4a43206bf0be86bcf2cdcb2eab896e3c081f85782b9f6fc60bc0175"
+      "archive_sha256": "2eaaa22a0aec38f75696d578d27ecc7e665419e5d7751a74fff84c29150ec4af"
     },
     {
       "example": "12_mars_rover",
       "pass": true,
       "task": "forward",
       "actuators": 12,
-      "archive_sha256": "71a453d1d0227b960a04e8093d895e967f46fbfcac569f95597810be0e180733"
+      "archive_sha256": "4f68befcdd17460e5e4df9b97f0dbfd2942a888ce9fa9860cd92aa135e66a59c"
     },
     {
       "example": "13_battle_mech",

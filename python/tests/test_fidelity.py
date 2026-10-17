@@ -1,3 +1,6 @@
+from _deps import require
+require('mujoco')
+
 import tempfile
 import unittest
 import warnings

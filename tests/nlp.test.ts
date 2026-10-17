@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { parsePrompt, applyModification, extractDof, finalizeSpec, dofCount } from "@ttr/robot-generator";
+import { parsePrompt, applyModification, extractDof, finalizeSpec, } from "@ttr/robot-generator";
 import { validateSpec } from "@ttr/robot-schema";
 
 test("extractDof parses digits and words", () => {

@@ -1,3 +1,6 @@
+from _deps import require
+require('mujoco')
+
 import hashlib,json,tempfile,unittest,zipfile
 from pathlib import Path
 from ttr_mujoco.evidence import example_scene

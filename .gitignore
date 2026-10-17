@@ -1,5 +1,4 @@
 node_modules/
-package-lock.json
 dist/
 *.log
 .DS_Store
@@ -9,6 +8,7 @@ dist/
 /data/
 .venv/
 __pycache__/
+*.py[cod]
 *.egg-info/
 
 # Locally cached third-party visual references and iteration captures

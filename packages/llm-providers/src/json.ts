@@ -1,3 +1,4 @@
+// For custom LlmProvider implementations only (see index.ts); unused by the shipped generator.
 // Coerce untrusted model output into a RobotSpecification-shaped object.
 // The generator still runs full validation + repair afterwards.
 import type { RobotSpecification } from "@ttr/robot-schema";

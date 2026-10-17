@@ -56,7 +56,7 @@ function readBody(req: IncomingMessage): Promise<any> {
   return new Promise((resolve, reject) => {
     let data = ""; let size = 0;
     req.on("data", (c) => { size += c.length; if (size > 4_000_000) { reject(new Error("payload too large")); req.destroy(); } data += c; });
-    req.on("end", () => { try { resolve(data ? JSON.parse(data) : {}); } catch (e) { reject(new Error("invalid JSON body")); } });
+    req.on("end", () => { try { resolve(data ? JSON.parse(data) : {}); } catch { reject(new Error("invalid JSON body")); } });
     req.on("error", reject);
   });
 }

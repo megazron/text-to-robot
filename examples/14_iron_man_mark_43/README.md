@@ -130,3 +130,86 @@ The main physics GIF and smoke report use the source-checked compound collision
 archive, with self-collision enabled. The old box approximation fills hollow armour
 and creates false collisions; its diagnostic remains in [clearance_report.json](clearance_report.json)
 for comparison. Compound hulls are still approximations; their errors are reported.
+
+<!-- MANUAL_NOTES -->
+
+## Model detail and audit status
+
+![Exported model rendered in MuJoCo](../../docs/img/mark43_threequarter_review.png)
+
+![Mark 43 in the web viewer](../../docs/img/web/14_iron_man_mark_43.png)
+
+The model contains **268 links, 232 mesh instances using 216 unique STL files and
+86 actuated joints**. Each finger has three articulated segments, each thumb has
+two, and the helmet has neck yaw and pitch. Chest inlays follow their opening
+doors. Thigh, shin and arm trim follows the underlying shell surface.
+
+### Visual reference
+
+Shapes are compared against [Legacy Effects' Avengers: Age of Ultron production
+references](https://www.legacyefx.com/avengersaou) and a licensed collectible
+reference. The [visual review](../../docs/MARK43_VISUAL_REVIEW.md) compares specific
+shapes with front and rear views. **This is not movie-accurate yet.** Chest
+continuity, helmet topology, rib placement, hand anatomy and exposed drive modules
+remain visible differences, and no visual accuracy percentage is claimed.
+Reference photographs are cached locally and checked against saved iterations; see
+the [reference workflow](../../references/mark43/README.md) and
+[research notes](../../references/mark43/RESEARCH.md).
+
+### Check summary
+
+| Check | Current evidence |
+|---|---|
+| Closed mesh topology and mass integrals | 232/232 mesh instances pass |
+| Empty-suit smoke battery, self-collision off | 3/5; tracking and disturbance recovery fail |
+| Suit with passive mannequin, human/self-contact disabled | See [loaded physics report](mujoco_report_wearer.json); actuator tracking fails |
+| Compound-convex initial collision | Zero initial contacts; not full-range or human clearance |
+| Collision-enabled smoke battery, compound model | 4/6; actuator tracking and disturbance recovery fail |
+| Joint-range clearance | Interference remains; see the audit table above |
+| ROS 2 Jazzy / MoveIt | Zero neutral contacts; small neck and both arm goals plan and execute with mock control |
+| Wearer fit | Example measurements fail opening/clearance checks |
+| Breathing, structural strength, real hardware | Unverified |
+
+Neutral surface intersections went from **81 to 0** and native MoveIt contacts from
+**85 to 0** ([before/after evidence](surface_contact_comparison.json)). The combined
+chest/neck [coordinated path](../../docs/motion_paths/README.md) clears 121 samples;
+the knee path intersects at 45 of 51.
+
+| Previous exported geometry | Current exported geometry |
+|---|---|
+| ![Before clearance changes](../../docs/img/mark43_before_joint_clearance.png) | ![After clearance changes](../../docs/img/mark43_front_review.png) |
+
+Further reports: [physics](mujoco_report.json), [collision](clearance_report.json),
+[motion clearance](motion_clearance_report.json), [suit MoveIt](moveit_report.json),
+[arm MoveIt fixture](moveit_fixture_report.json),
+[compound-convex model](robot.convex.zip), [preliminary BOM](BOM.md).
+
+### Entry and breathing
+
+![Open panels with the example mannequin](../../docs/img/mark43_entry_review.png)
+
+Opening the panels does not establish that a person can enter. The closed pelvis
+and neck openings fail straight-insertion checks against the illustrative wearer
+dimensions, and static human-contact checks find interference in both open and
+closed poses. These are proxy checks, not a continuous donning path or tissue
+model. Measurements, separable frame interfaces, joint alignment and a manual
+release system still need design and validation.
+
+Decorative grilles and eye apertures do not establish breathable space. There is no
+measured airflow, CO2, temperature, fan-duct design or emergency breathing
+assessment; the wearer report leaves these unresolved.
+
+### Regenerate the suit
+
+```bash
+node scripts/regen_mark43_example.ts
+python3 scripts/audit_mark43.py --convex
+python3 scripts/check_mesh_assets.py --json examples/14_iron_man_mark_43/mesh_quality_report.json
+python3 scripts/render_mark43_review.py
+ttr-mujoco test examples/14_iron_man_mark_43/robot.sim.urdf --self-collision
+```
+
+Regeneration invalidates reports and download bundles tied to old geometry. The
+example audit rejects a stale compound collision archive, so run
+`audit_mark43.py --convex` before `audit_examples.py`. Character references and
+associated intellectual property belong to their respective owners.

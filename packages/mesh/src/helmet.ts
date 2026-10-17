@@ -3,8 +3,8 @@
 // cheek panels that swing outward, a crown panel that lifts to clear the
 // faceplate, ear pods, glowing eye lenses, a forehead plate and a neck collar.
 // Frame: origin at ear level in the head centre; X forward, Y left, Z up. Metres.
-import { type Mesh, type V3, merge, translate, rotate, loft, subdivide, shell, mirrorY, scale, norm, cleanMesh, stitchTJunctions } from "./core.ts";
-import { superArc, shelledLoft, disc, resample } from "./shapes.ts";
+import { type Mesh, type V3, translate, rotate, loft, subdivide, shell, mirrorY, norm, stitchTJunctions } from "./core.ts";
+import { superArc, shelledLoft, disc, } from "./shapes.ts";
 
 export const HELMET = { W: 0.205, D: 0.27, H: 0.25, thick: 0.0045 };
 
@@ -25,9 +25,9 @@ const FACE: [number, number, number, number, number][] = [
 /** point on the faceplate's outer surface at (y, z), interpolating the FACE rows (includes the nose ridge) */
 export function faceSurface(y: number, z: number, proud = 0): V3 {
   let i = 0; while (i < FACE.length - 2 && FACE[i + 1][0] < z) i++;
-  const [z0, fx0, hw0, e0, r0] = FACE[i], [z1, fx1, hw1, e1, r1] = FACE[i + 1];
+  const [z0, fx0, hw0, , r0] = FACE[i], [z1, fx1, hw1, , r1] = FACE[i + 1];
   const u = Math.min(1, Math.max(0, (z - z0) / (z1 - z0 || 1)));
-  const fx = fx0 + (fx1 - fx0) * u, hw = hw0 + (hw1 - hw0) * u, e = e0 + (e1 - e0) * u, ridge = r0 + (r1 - r0) * u;
+  const fx = fx0 + (fx1 - fx0) * u, hw = hw0 + (hw1 - hw0) * u, ridge = r0 + (r1 - r0) * u;
   // Piecewise planar face: central bridge, broad cheek plane and temple chamfer.
   const ratio=Math.min(1,Math.abs(y)/hw);
   const cheekBreak=.35+.32*Math.min(1,Math.max(0,(.01-z)/.10));
@@ -157,18 +157,6 @@ export function chinGuard(): Mesh {
   const sec = [[-0.132, 0.100, 0.070, 2.2, 0.0], [-0.120, 0.112, 0.077, 2.4, 0.0], [-0.112, 0.118, 0.082, 2.5, 0.0]].map(([z, fx, hw, e]) =>
     superArc(fx, hw, z, -1.35, 1.35, 21, e));
   return shelledLoft(sec, 0.004, 1);
-}
-
-/** a raised ridge along a 3D polyline: rectangular cross-section, tapered ends */
-function ridge(path: V3[], width: number, height: number): Mesh {
-  const P = resample(path, 12); const sections: V3[][] = [];
-  for (let i = 0; i < P.length; i++) {
-    const t = i / (P.length - 1); const k = Math.sin(Math.PI * t) ** 0.5; const w = width * k / 2, h = height * k;
-    const p = P[i]; const dir = i < P.length - 1 ? [P[i + 1][0] - p[0], 0, P[i + 1][2] - p[2]] : [p[0] - P[i - 1][0], 0, p[2] - P[i - 1][2]];
-    const l = Math.hypot(dir[0], dir[2]) || 1; const up: V3 = [-dir[2] / l, 0, dir[0] / l];  // normal in XZ plane
-    sections.push([[p[0], -w, p[2]], [p[0] + up[0] * h, -w * 0.6, p[2] + up[2] * h], [p[0] + up[0] * h, w * 0.6, p[2] + up[2] * h], [p[0], w, p[2]]]);
-  }
-  return loft(sections, { closed: true, capStart: true, capEnd: true });
 }
 
 /** all helmet parts, in the helmet frame */

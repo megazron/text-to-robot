@@ -47,7 +47,6 @@ export function ironManMarkSuit(opts: ExosuitOptions = {}): RobotSpecification {
     plate(`${s}_lat_plate`, "spine_frame", box(0.14, 0.02, 0.22), [0.0, sign * 0.20, chestZ - 0.02], [0, 0, 0], [0, 0, 0], "hot_rod_red", 0.5);
   }
   for (let i = 0; i < 3; i++) {   // segmented abdominal plates that fold with the trunk
-    const z = T * 0.38 - i * 0.075;
     plate(`ab_plate_${i + 1}`, i === 0 ? "sternum_bar" : `ab_plate_${i}`, box(0.03, 0.26, 0.07), i === 0 ? [0.0, 0, -0.20] : [0, 0, -0.075], [0, 0, 0], [0.005, 0, -0.035], i % 2 ? "gold_titanium" : "hot_rod_red", 0.35, [0, 1, 0], 0.35, 2);
   }
   plate("belt_plate", "pelvis_frame", box(0.34, 0.42, 0.09), [0, 0, A.hipZ + 0.02], [0, 0, 0], [0, 0, 0], "gold_titanium", 0.9);

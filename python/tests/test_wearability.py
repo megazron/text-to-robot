@@ -1,3 +1,6 @@
+from _deps import require
+require('mujoco')
+
 import json,unittest
 from pathlib import Path
 from ttr_mujoco.wearability import assess

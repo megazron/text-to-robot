@@ -335,7 +335,7 @@ async function refreshBom() {
   if (!state.robot) return;
   const v = $("#budget").value;
   try { const { bom } = await api("/api/robots/bom", { robot: state.robot, budget: v === "" ? undefined : Number(v) }); state.bom = bom; renderBom(bom); }
-  catch (e) { /* keep last */ }
+  catch { /* keep last */ }
 }
 function bomMarkdown(bom) {
   let md = `# Bill of Materials — ${bom.robot_name}\n\n**Total: $${bom.total}** · tier ${bom.tier}` + (bom.budget != null ? ` · budget $${bom.budget} ${bom.feasible ? "(within)" : "(OVER)"}` : "") + "\n\n| Category | Component | Qty | Unit $ | Subtotal $ | Spec |\n|---|---|--:|--:|--:|---|\n";
@@ -348,7 +348,7 @@ function renderDiff(lines) {
   if (!lines || !lines.length) return;
   box.append(el("div", null, "ROBOT CHANGES"));
   for (const ln of lines) {
-    const c = ln.startsWith("+") ? "add" : ln.startsWith("-") ? "del" : ln.startsWith("~") ? "chg" : "";
+    const c = ln.startsWith("+") ? "add" : ln.startsWith("-") ? "del" : ln.startsWith("~") ? "chg" : /^[!?]/.test(ln) ? "warn" : "";
     box.append(el("div", c, ln));
   }
 }
@@ -359,7 +359,7 @@ function status(lines, kind) {
   box.textContent = Array.isArray(lines) ? lines.join("\n") : lines;
 }
 function checksToText(res) {
-  const out = [...(res.validation?.checks ?? []), ...(res.urdfValidation?.checks ?? [])];
+  const out = [...(res.summary ? ["→ Interpreted as: " + res.summary] : []), ...(res.validation?.checks ?? []), ...(res.urdfValidation?.checks ?? [])];
   for (const w of res.warnings ?? []) out.push("⚠ " + w);
   for (const r of res.repairs ?? []) out.push("↻ " + r);
   return out;
@@ -471,7 +471,7 @@ async function initTemplates() {
   } catch {}
 }
 async function initMode() {
-  try { const s = await (await fetch("/api/status")).json(); const badge = $("#mode"); badge.textContent = "Free · local"; badge.title = "No account, tokens or external inference"; } catch {}
+  try { await (await fetch("/api/status")).json(); const badge = $("#mode"); badge.textContent = "Free · local"; badge.title = "No account, tokens or external inference"; } catch {}
 }
 
 initExamples(); initTemplates(); initMode();
@@ -484,7 +484,7 @@ initExamples(); initTemplates(); initMode();
       const gen = await api("/api/robots/bom", { robot: d.robot }).catch(() => ({ bom: null }));
       applyResult({ ...d, validation: { checks: ["\u2713 Loaded shared robot"] }, urdfValidation: { checks: [] }, warnings: [], repairs: [], bom: gen.bom }, "shared robot");
       return;
-    } catch (e) { status("\u2717 shared robot not found; generating a default", "err"); }
+    } catch { status("\u2717 shared robot not found; generating a default", "err"); }
   }
   doGenerate("Create a 6 DOF robotic arm with a parallel gripper");
 })();

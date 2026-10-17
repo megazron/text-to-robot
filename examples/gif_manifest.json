@@ -80,16 +80,16 @@
     "collision_model": "URDF primitives / mesh bounding boxes"
   },
   "11_spider_scout": {
-    "source_urdf_sha256": "fcac1e012dce78f2ea21430482378eb83ec17e026d94fbf48099613cf3355576",
-    "gif_sha256": "c27c7a676f5d1b743f56133de93eb7f03fb376ee55a704b79d6c808687b17e63",
+    "source_urdf_sha256": "2b46718427de3cef40ccf154fdea41da76bd0faa4813f11973c56202f52c7870",
+    "gif_sha256": "2eeb2c7ece65d6ee31e09364d8d467b130b914be41555a29ec00ec185837fabf",
     "self_collision": true,
     "motion": "hold",
     "seconds": 2,
     "collision_model": "URDF primitives / mesh bounding boxes"
   },
   "12_mars_rover": {
-    "source_urdf_sha256": "e06d18e63f71600ca7b6927ae3cd1d321e892f20cb4876a29725b2193c6d96fc",
-    "gif_sha256": "7fda4f510c7e08a4fc75ef7a6174f4b3b4c1108e4b60a765c0ecd841668263fd",
+    "source_urdf_sha256": "ad585f30ce7ae25c0182cac3725f250a7dc499b401065d04f396969c80f998fe",
+    "gif_sha256": "084fbdcc6460de0aceb80fcae383580813a4fa29d786996a479b273a05fe66eb",
     "self_collision": true,
     "motion": "hold",
     "seconds": 2,

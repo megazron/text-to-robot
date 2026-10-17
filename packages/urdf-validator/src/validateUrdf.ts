@@ -8,7 +8,7 @@ export function validateUrdf(xml: string): ValidationResult {
   const err = (code: string, message: string) => issues.push({ severity: "error", code, message });
   const warn = (code: string, message: string) => issues.push({ severity: "warning", code, message });
 
-  let root;
+  let root: ReturnType<typeof parseXml>;
   try { root = parseXml(xml); }
   catch (e) {
     const msg = e instanceof XmlParseError ? e.message : String(e);

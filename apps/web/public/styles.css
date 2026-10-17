@@ -74,7 +74,7 @@ button{cursor:pointer;font:inherit}
 #history .ver b{font-size:12.5px}
 #history .ver small{display:block;color:var(--mute)}
 .diff{font-family:ui-monospace,monospace;font-size:12px;margin-top:10px;white-space:pre-wrap}
-.diff .add{color:var(--green)} .diff .del{color:var(--red)} .diff .chg{color:var(--accent)}
+.diff .add{color:var(--green)} .diff .del{color:var(--red)} .diff .chg{color:var(--accent)} .diff .warn{color:var(--mute);font-style:italic}
 
 #bottombar{display:flex;gap:14px;align-items:center;padding:10px 16px;border-top:1px solid var(--line);background:var(--panel)}
 .downloads{display:flex;gap:6px}

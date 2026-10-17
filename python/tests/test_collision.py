@@ -1,3 +1,6 @@
+from _deps import require
+require('mujoco')
+
 import importlib.util
 import json
 import tempfile
