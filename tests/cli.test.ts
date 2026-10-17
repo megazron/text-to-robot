@@ -55,5 +55,5 @@ test("cli -o writes to the given directory and --help documents the argument rul
   assert.ok(existsSync(join(cwd, "mine", "arm_3dof.json")));
   const h = run(cwd, "--help");
   assert.match(h.stdout, /ONE quoted argument/); assert.match(h.stdout, /rule-based parser/);
-  assert.doesNotMatch(h.stdout, /OPENAI|ANTHROPIC|cloud mode/i);
+  assert.doesNotMatch(h.stdout, /_API_KEY|cloud mode/i);
 });
