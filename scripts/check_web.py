@@ -1,11 +1,22 @@
 """Exercise all 17 designs in Chromium with third-party requests blocked.
-Developer check: pip install playwright; playwright install chromium.
+Developer check: pip install -r requirements-dev.txt; python -m playwright install chromium.
 TTR_CHROMIUM may select an existing Chromium executable.
+
+Screenshots and the JSON report go to out/web-check/ (git-ignored) by default.
+Pass --update-docs to refresh the tracked docs/img/web/*.png screenshots and
+examples/web_validation.json instead.
 """
-import hashlib,json,os,subprocess,tempfile
+import argparse,hashlib,json,os,subprocess,tempfile
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 root=Path(__file__).resolve().parents[1]
+ap=argparse.ArgumentParser(description=__doc__.splitlines()[0])
+ap.add_argument('--update-docs',action='store_true',help='write screenshots to docs/img/web and the report to examples/web_validation.json (tracked files)')
+ap.add_argument('--out',type=Path,default=root/'out/web-check',help='output directory when not updating docs (default: out/web-check)')
+args=ap.parse_args()
+shots=root/'docs/img/web' if args.update_docs else args.out/'screenshots'
+report_path=root/'examples/web_validation.json' if args.update_docs else args.out/'web_validation.json'
+shots.mkdir(parents=True,exist_ok=True)
 with tempfile.TemporaryDirectory() as td:
     server=subprocess.Popen(['node','apps/api/src/server.ts'],cwd=root,env={**os.environ,'PORT':'0','TTR_DATA_DIR':td},stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True)
     try:
@@ -22,7 +33,6 @@ with tempfile.TemporaryDirectory() as td:
             page.on('pageerror',lambda e:errors.append(str(e)))
             page.on('response',lambda r:responses.append({'url':r.url.replace(url,''),'status':r.status}) if r.status>=400 else None)
             page.goto(url);page.wait_for_function('window.__ttr?.robot?.links.length>0')
-            shots=root/'docs/img/web';shots.mkdir(exist_ok=True)
             for folder in sorted((root/'examples').glob('[0-9][0-9]_*')):
                 prompt=(folder/'prompt.txt').read_text();spec=json.loads((folder/'robot.json').read_text());expected=spec['robot_name']
                 page.fill('#prompt',prompt)
@@ -66,7 +76,7 @@ with tempfile.TemporaryDirectory() as td:
         report={'scope':'Chromium generation of all 17 examples with external network blocked; shared URL reload; not physical validation',
                 'external_requests':external,'page_errors':errors,'failed_responses':responses,'shared_reload_pass':True,'mesh_failure_and_retry_pass':True,'examples':rows,
                 'web_source_sha256':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in (root/'apps/web/public').glob('*') if p.is_file()}}
-        (root/'examples/web_validation.json').write_text(json.dumps(report,indent=2)+'\n')
-        print(f'PASS: {len(rows)} designs with verified rendered meshes, shared reload, failure/retry, no external requests or browser errors')
+        report_path.write_text(json.dumps(report,indent=2)+'\n')
+        print(f'PASS: {len(rows)} designs with verified rendered meshes, shared reload, failure/retry, no external requests or browser errors; wrote {report_path.relative_to(root) if report_path.is_relative_to(root) else report_path} and screenshots in {shots}')
     finally:
         server.terminate();server.wait(timeout=10)

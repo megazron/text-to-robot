@@ -1,0 +1,3 @@
+# Developer-only tools (not needed to generate robots).
+# Browser check: python scripts/check_web.py  (then: python -m playwright install chromium)
+playwright==1.63.0
