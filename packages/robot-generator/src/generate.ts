@@ -66,7 +66,7 @@ async function specFromProvider(provider: LlmProvider, prompt: string, warnings:
 
 function interpretationWarnings(i: Interpretation | undefined): string[] {
   if (!i) return [];
-  return [...i.approximations.map((a) => `approximated: ${a}`), ...i.ignored.map((x) => `not applied: ${x}`)];
+  return [...i.conflicts.map((c) => `conflict: ${c}`), ...i.approximations.map((a) => `approximated: ${a}`), ...i.ignored.map((x) => `not applied: ${x}`)];
 }
 
 /** Budget and payload stated in this instruction, else in the prompt that created the robot. */

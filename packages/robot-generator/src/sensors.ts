@@ -1,6 +1,6 @@
 // Sensor requests: which sensors, how many, and where they mount on the body surface.
 import type { RobotSpecification, Geometry, Sensor, SensorType, Pose, Vec3 } from "@ttr/robot-schema";
-import { poseToMat } from "@ttr/kinematics";
+import { poseToMat, type Mat4 } from "@ttr/kinematics";
 import { pose } from "@ttr/robot-schema";
 import { cyl, box, link, joint } from "@ttr/robot-templates";
 import { find, findAll, negates, type Hit } from "./text.ts";
@@ -8,15 +8,15 @@ import { subtreeLinks } from "./spec-utils.ts";
 
 export type Box3 = { min: Vec3; max: Vec3 };
 
-/** Axis-aligned bounds of a geometry placed at `origin`, in the frame `origin` is expressed in. */
-export function placedBounds(g: Geometry, origin: Pose): Box3 {
+/** Axis-aligned bounds of a geometry placed at `origin` (a pose or a 4x4 frame), in that pose's parent frame. */
+export function placedBounds(g: Geometry, origin: Pose | Mat4): Box3 {
   const half: Vec3 = g.type === "box" ? [g.size[0] / 2, g.size[1] / 2, g.size[2] / 2]
     : g.type === "cylinder" ? [g.radius, g.radius, g.length / 2]
     : g.type === "capsule" ? [g.radius, g.radius, g.length / 2 + g.radius]
     : g.type === "sphere" ? [g.radius, g.radius, g.radius] : [0, 0, 0];
   const lo: Vec3 = g.type === "mesh" ? g.bbox.min : [-half[0], -half[1], -half[2]];
   const hi: Vec3 = g.type === "mesh" ? g.bbox.max : half;
-  const m = poseToMat(origin);
+  const m = Array.isArray(origin) ? origin : poseToMat(origin);
   const out: Box3 = { min: [Infinity, Infinity, Infinity], max: [-Infinity, -Infinity, -Infinity] };
   for (const x of [lo[0], hi[0]]) for (const y of [lo[1], hi[1]]) for (const z of [lo[2], hi[2]]) {
     const p = [m[0] * x + m[1] * y + m[2] * z + m[3], m[4] * x + m[5] * y + m[6] * z + m[7], m[8] * x + m[9] * y + m[10] * z + m[11]];

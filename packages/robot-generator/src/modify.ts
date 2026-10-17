@@ -6,6 +6,7 @@ import { nDofArm, attachParallelGripper, attachSuctionGripper, cyl, link, joint 
 import { normalize, find, mentions, negates, extractDofRaw, extractLengths, parseBudget, extractColour, maskNames, COLOURS } from "./text.ts";
 import { MAX_ARM_DOF, chooseFamily, RECOLOURABLE } from "./families.ts";
 import { interpretPrompt } from "./interpret.ts";
+import { translateKeywords } from "./lexicon.ts";
 import { scaleLinkLength, describeLen, reachModel, setReach } from "./sizing.ts";
 import { addSensor, removeSensor, SENSOR_WORDS, cameraHit, locationOf, countOf } from "./sensors.ts";
 import { swapGrippers, replaceGripperWithSuction, removeGripper, armTip } from "./grippers.ts";
@@ -213,7 +214,7 @@ function modifyDof(spec: RobotSpecification, c: string): { spec: RobotSpecificat
 
 /** Family the spec was generated as, recovered from its prompt (characters keep their livery). */
 function familyOf(spec: RobotSpecification): string | undefined {
-  try { return spec.metadata.source_prompt ? chooseFamily(maskNames(spec.metadata.source_prompt), "", undefined, "parallel").family : undefined; }
+  try { return spec.metadata.source_prompt ? chooseFamily(translateKeywords(maskNames(spec.metadata.source_prompt)).text, "", undefined, "parallel").family : undefined; }
   catch { return undefined; }
 }
 

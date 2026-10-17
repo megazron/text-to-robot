@@ -71,11 +71,23 @@ const WORD_NUM: Record<string, number> = { one: 1, two: 2, three: 3, four: 4, fi
 const NUM = String.raw`(\d+(?:\.\d+)?|${Object.keys(WORD_NUM).join("|")})`;
 const toNumber = (s: string) => WORD_NUM[s] ?? parseFloat(s);
 
-/** Requested degrees of freedom, e.g. "6 DOF", "seven-axis", "5 joints". Not clamped. */
-export function extractDofRaw(text: string): number | undefined {
+export type DofUnit = "dof" | "axis" | "joint" | "link";
+export interface DofMention { value: number; raw: string; index: number; unit: DofUnit; }
+
+const DOF_RX = new RegExp(String.raw`\b${NUM}\s*-?\s*(dof|d\.o\.f\.?|degrees?\s+of\s+freedom|axis|axes|joints?|links?)\b`, "g");
+const dofUnit = (u: string): DofUnit => /^ax/.test(u) ? "axis" : /^joint/.test(u) ? "joint" : /^link/.test(u) ? "link" : "dof";
+
+/** Every stated joint count: "6 DOF", "seven-axis", "5 joints", "a 2-link arm" (one joint per
+ *  link), in prompt order. Negated counts ("not 7 dof") are left out. */
+export function extractDofMentions(text: string): DofMention[] {
   const t = normalize(text);
-  const m = t.match(new RegExp(String.raw`\b${NUM}\s*-?\s*(?:dof|d\.o\.f\.?|degrees?\s+of\s+freedom|axis|axes|joints?)\b`));
-  return m ? toNumber(m[1]) : undefined;
+  return [...t.matchAll(DOF_RX)].filter((m) => !isDirectlyNegated(t, m.index!))
+    .map((m) => ({ value: toNumber(m[1]), raw: m[0], index: m.index!, unit: dofUnit(m[2]) }));
+}
+
+/** Requested degrees of freedom: the first stated count. Not clamped. */
+export function extractDofRaw(text: string): number | undefined {
+  return extractDofMentions(text)[0]?.value;
 }
 
 // ---------------- lengths ----------------
@@ -94,6 +106,11 @@ const SPELLED: Record<string, number> = { "one and a half": 1.5, "half a": 0.5, 
 function lengthContext(t: string, start: number, end: number): LengthContext | undefined {
   const after = t.slice(end, end + 24), before = t.slice(Math.max(0, start - 24), start);
   const near = (rx: RegExp) => rx.test(after) || rx.test(before);
+  // the word right next to the number wins: "25 cm long, reach 750 mm" is a length then a reach
+  if (/^\s*(?:of\s+)?(?:reach|span)\b/.test(after) || /\b(?:reach|span|reaching)\s*(?:of|is|=|:)?\s*(?:about|around|up to|under|at least|max(?:imum)?|min(?:imum)?)?\s*$/.test(before)) return "reach";
+  if (/^\s*(?:tall|high|in height)\b/.test(after) || /\b(?:height|stature)\s*(?:of|is|=|:)?\s*(?:about|around)?\s*$/.test(before)) return "height";
+  if (/^\s*(?:wide|in width)\b/.test(after) || /\bwidth\s*(?:of|is|=|:)?\s*$/.test(before)) return "width";
+  if (/^\s*(?:long|in length)\b/.test(after) || /\blength\s*(?:of|is|=|:)?\s*$/.test(before)) return "length";
   if (near(/\breach\b|\bspan\b|\bworking (?:radius|range)\b/)) return "reach";
   if (near(/\btall\b|\bheight\b|\bhigh\b|\bstature\b|\bwearer\b|\bperson\b|\bpilot\b/)) return "height";
   if (near(/\bwide\b|\bwidth\b/)) return "width";

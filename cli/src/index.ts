@@ -38,7 +38,7 @@ async function cmdGenerate(prompt: string, outDir?: string) {
   ok("Inertia calculated");
   ok("URDF generated");
   res.urdfValidation.valid ? ok("URDF validated") : bad("URDF validation failed");
-  for (const w of res.warnings) (/^(?:approximated|not applied):/.test(w) ? warn : info)("  ! " + w);
+  for (const w of res.warnings) (/^(?:conflict|approximated|not applied):/.test(w) ? warn : info)("  ! " + w);
   for (const r of res.repairs) info("  repair " + r);
 
   const name = safeName(res.robot.robot_name);
