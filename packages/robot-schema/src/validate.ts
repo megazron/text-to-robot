@@ -1,7 +1,7 @@
 // Deterministic validation of a RobotSpecification: shape, physics and topology.
 // Never throws on bad data -- returns a structured result with a checklist.
 import type {
-  RobotSpecification, Link, Joint, Geometry, ValidationIssue, ValidationResult,
+  RobotSpecification, Link, Geometry, ValidationIssue, ValidationResult,
 } from "./types.ts";
 import { JOINT_TYPES } from "./types.ts";
 

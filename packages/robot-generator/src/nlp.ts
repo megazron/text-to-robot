@@ -7,7 +7,7 @@ import { poseToMat } from "@ttr/kinematics";
 import { meshGeometry } from "@ttr/mesh";
 import { safeName, pose, ARM } from "@ttr/robot-schema";
 import { nDofArm, scara, humanoid, diffDrive, fourWheel, mecanum, quadruped, hexapod, roverArm, ironManSuit, wearableExosuit, ironManMark43, wallE, eva, baymax, attachParallelGripper, attachSuctionGripper, cyl, box, link, joint } from "@ttr/robot-templates";
-import { normalize, find, findAll, mentions, negates, isNegated, isDirectlyNegated, extractDofRaw, extractLengths, extractMasses, extractSpeeds, parseBudget, extractName, extractColour, maskNames, ROBOT_NOUN, COLOURS, type Length, type Hit } from "./text.ts";
+import { normalize, find, findAll, mentions, negates, isDirectlyNegated, extractDofRaw, extractLengths, extractMasses, extractSpeeds, parseBudget, extractName, extractColour, maskNames, ROBOT_NOUN, COLOURS, type Length, type Hit } from "./text.ts";
 
 export const MAX_ARM_DOF = 12;
 

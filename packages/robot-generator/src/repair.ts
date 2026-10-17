@@ -1,5 +1,5 @@
 import type { RobotSpecification } from "@ttr/robot-schema";
-import { findRoot, pose } from "@ttr/robot-schema";
+import { pose } from "@ttr/robot-schema";
 import { finalizeSpec } from "./finalize.ts";
 
 export interface RepairReport { actions: string[]; }

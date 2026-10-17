@@ -1,5 +1,5 @@
 // Higher-level modelling helpers on top of core.ts.
-import { type Mesh, type V3, loft, shell, subdivide, merge, translate, rotate, revolve, add, sub, mul, norm, cross, empty, orient, flip } from "./core.ts";
+import { type Mesh, type V3, loft, shell, subdivide, merge, translate, rotate, revolve, add, sub, mul, empty, orient, flip } from "./core.ts";
 
 /** Resample a polyline (open or closed) to exactly n points by arc length. */
 export function resample(pts: V3[], n: number, closed = false): V3[] {

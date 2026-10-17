@@ -1,7 +1,7 @@
 // Deterministic Xacro generator: real <xacro:macro> inertials computed with
 // ${...} expressions, plus a scale property. Processes to valid URDF.
 import type { RobotSpecification, Link, Geometry } from "@ttr/robot-schema";
-import { num, vec, xmlName } from "./format.ts";
+import { num, xmlName } from "./format.ts";
 import { generateVisual, generateCollision, generateJoint, generateMaterial, generateInertial, setMeshPackage, setMeshPrefix } from "./generate.ts";
 
 const MACROS = `  <xacro:macro name="box_inertial" params="m x y z ox oy oz">

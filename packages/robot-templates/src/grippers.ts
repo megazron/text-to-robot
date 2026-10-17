@@ -1,4 +1,4 @@
-import type { Link, Joint, RobotSpecification, EndEffector } from "@ttr/robot-schema";
+import type { RobotSpecification, EndEffector } from "@ttr/robot-schema";
 import { ARM, pose } from "@ttr/robot-schema";
 import { box, link, joint } from "./builder.ts";
 

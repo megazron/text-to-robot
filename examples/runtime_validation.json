@@ -124,7 +124,7 @@
   },
   "browser": {
     "report": "web_validation.json",
-    "sha256": "2f2383fe66e70da781d9daac2060e5d8a54ade5718bde178baf5fb68dbc8e55a"
+    "sha256": "acd1e09e20ced811fccc363159f3d36b8ccfdb47547f30c95309133c704f4bd4"
   },
   "arm_moveit": {
     "report": "02_arm_6dof/moveit_report.json",

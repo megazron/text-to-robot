@@ -242,7 +242,6 @@ export function ironManMark43(opts: ExosuitOptions = {}): RobotSpecification {
   // Layered shields and narrow metallic edge details break up the large shells.
   spec.materials.push({name:"mk43_titanium",color:[.40,.43,.46,1]});
   for(const [side,sign] of SIDES) {
-    const ly=-sign*.045;
     part(`${side}_clavicle_cover`,`${side}_shoulder_module`,mesh("mark43_panel",`${side}_clavicle_cover.stl`,{style:"collar",w:.095,h:.075,t:.004,R:.25}),[.125,sign*.065,.012],[0,0,0],RED,.05);
     part(`${side}_back_scapula`,`${side}_flight_flap`,mesh("mark43_panel",`${side}_back_scapula.stl`,{style:"pectoral",w:.10,h:.14,t:.006,R:.5}),[.009,0,-.09],[0,0,0],RED,.10);
     for(let i=0;i<3;i++)part(`${side}_back_grille_${i}`,"back_shell",mesh("mark43_panel",`${side}_back_grille_${i}.stl`,{style:"collar",w:.10,h:.012,t:.004,R:.4}),[.024,sign*.10,-.055-i*.023],[0,0,0],GUN,.01);

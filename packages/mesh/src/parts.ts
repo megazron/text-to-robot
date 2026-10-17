@@ -1,6 +1,6 @@
 // Deterministic part registry: a MeshGeometry names a generator + params; anyone
 // (server, exporters, CAD, tests) can rebuild the identical mesh from that recipe.
-import { type Mesh, massProperties, bbox, translate, rotate, scale as scaleMesh, orient } from "./core.ts";
+import { type Mesh, massProperties, bbox, scale as scaleMesh, orient } from "./core.ts";
 import { curvedPlate, limbShell, dome, disc, ring, superArc, shelledLoft } from "./shapes.ts";
 import { torsoSide, limbInset, chestSurfacePanel, armourPanel, sculptedLimb, shoulderShell, bootShell } from "./mark43.ts";
 import { mountingPlate, armSpar } from "./mechanical.ts";

@@ -335,7 +335,7 @@ async function refreshBom() {
   if (!state.robot) return;
   const v = $("#budget").value;
   try { const { bom } = await api("/api/robots/bom", { robot: state.robot, budget: v === "" ? undefined : Number(v) }); state.bom = bom; renderBom(bom); }
-  catch (e) { /* keep last */ }
+  catch { /* keep last */ }
 }
 function bomMarkdown(bom) {
   let md = `# Bill of Materials — ${bom.robot_name}\n\n**Total: $${bom.total}** · tier ${bom.tier}` + (bom.budget != null ? ` · budget $${bom.budget} ${bom.feasible ? "(within)" : "(OVER)"}` : "") + "\n\n| Category | Component | Qty | Unit $ | Subtotal $ | Spec |\n|---|---|--:|--:|--:|---|\n";
@@ -471,7 +471,7 @@ async function initTemplates() {
   } catch {}
 }
 async function initMode() {
-  try { const s = await (await fetch("/api/status")).json(); const badge = $("#mode"); badge.textContent = "Free · local"; badge.title = "No account, tokens or external inference"; } catch {}
+  try { await (await fetch("/api/status")).json(); const badge = $("#mode"); badge.textContent = "Free · local"; badge.title = "No account, tokens or external inference"; } catch {}
 }
 
 initExamples(); initTemplates(); initMode();
@@ -484,7 +484,7 @@ initExamples(); initTemplates(); initMode();
       const gen = await api("/api/robots/bom", { robot: d.robot }).catch(() => ({ bom: null }));
       applyResult({ ...d, validation: { checks: ["\u2713 Loaded shared robot"] }, urdfValidation: { checks: [] }, warnings: [], repairs: [], bom: gen.bom }, "shared robot");
       return;
-    } catch (e) { status("\u2717 shared robot not found; generating a default", "err"); }
+    } catch { status("\u2717 shared robot not found; generating a default", "err"); }
   }
   doGenerate("Create a 6 DOF robotic arm with a parallel gripper");
 })();

@@ -1,6 +1,6 @@
 import type { RobotSpecification } from "@ttr/robot-schema";
 import { MOBILE, pose } from "@ttr/robot-schema";
-import { cyl, link, joint } from "./builder.ts";
+import { joint } from "./builder.ts";
 import { fourWheel } from "./mobile.ts";
 import { nDofArm, type ArmOptions } from "./arms.ts";
 import { attachParallelGripper } from "./grippers.ts";
