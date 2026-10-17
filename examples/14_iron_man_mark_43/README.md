@@ -131,6 +131,8 @@ archive, with self-collision enabled. The old box approximation fills hollow arm
 and creates false collisions; its diagnostic remains in [clearance_report.json](clearance_report.json)
 for comparison. Compound hulls are still approximations; their errors are reported.
 
+<!-- MANUAL_NOTES -->
+
 ## Model detail and audit status
 
 ![Exported model rendered in MuJoCo](../../docs/img/mark43_threequarter_review.png)

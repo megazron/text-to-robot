@@ -42,7 +42,7 @@ Requires Node.js 22.6 or newer.
 ```bash
 git clone https://github.com/megazron/text-to-robot
 cd text-to-robot
-npm install
+npm ci
 node cli/src/index.ts "a 6 DOF arm with a gripper" -o out/arm
 npm run api          # web viewer and API on http://localhost:8787
 ```
@@ -75,11 +75,15 @@ $ node cli/src/index.ts "a red 6 dof arm with 70 cm reach, a wrist camera and no
 
 | Say | Effect |
 |---|---|
-| `6 DOF`, `seven-axis`, `60 cm reach`, `small` | arm size and joint count |
+| `6 DOF`, `seven-axis`, `3-link arm`, `60 cm reach`, `each link 25 cm`, `small` | arm size and joint count |
 | `2 kg payload`, `budget $1500` | actuator sizing and BOM tier |
 | `wrist camera`, `lidar on the front`, `no lidar`, `suction cup` | sensors and gripper, including negation |
 | `robot dog`, `mobile manipulator`, `mecanum`, `hexapod`, `cobot` | template family |
 | `called Atlas`, `painted blue`, `for a 1.85 m wearer` | name, colour, wearable fit |
+
+Anything it cannot apply is listed as `not applied`, and contradictions (two robot types,
+two joint counts, two reaches) are each flagged as `conflict:`. A small German, French and
+Spanish keyword list covers the common robot words (`Roboterarm mit sechs Achsen und Greifer`).
 
 Families: 1-12 DOF arms, SCARA, grippers, differential/four-wheel/mecanum bases, a
 rover with an arm, quadruped, hexapod, humanoid, and character robots. Drones, delta and
@@ -138,7 +142,7 @@ specification gets the same generators and checks. See
 
 Measured on a fresh clone of this revision:
 
-- **154/154** Node tests pass (`npm test`) and the TypeScript typecheck is clean.
+- **162/162** Node tests pass (`npm test`); typecheck and lint are clean and gate CI.
 - **17/17** example URDFs pass structural validation (`node cli/src/index.ts validate`).
 - **MuJoCo smoke battery** (compile, initial clearance, settle under gravity, hold pose,
   actuator sweep, and disturbance recovery for free-standing robots): **78/97** checks
@@ -167,12 +171,14 @@ Measured on a fresh clone of this revision:
 ## Development
 
 ```bash
-npm test && npm run typecheck
+npm ci
+npm test && npm run typecheck && npm run lint
 pip install -e ./python                    # MuJoCo layer: convert, test, render, train
 pip install -e './python[geometry]'        # collision decomposition and surface audits
 pip install -e './python[train]'           # stable-baselines3 + torch
 pip install -e './python[cad]'             # CadQuery STEP backend (large, optional)
-python3 -m unittest discover -s python/tests -v
+python3 -m unittest discover -s python/tests -v   # modules whose deps are missing are skipped
+pip install -r requirements-dev.txt && python3 scripts/check_web.py --update-docs   # refresh browser screenshots
 ```
 
 Regenerate and re-audit the examples:
