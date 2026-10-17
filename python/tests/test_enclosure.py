@@ -1,3 +1,6 @@
+from _deps import require
+require("numpy")
+
 import copy
 import importlib.util
 import json

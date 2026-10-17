@@ -1,3 +1,6 @@
+from _deps import require
+require('mujoco', 'gymnasium')
+
 import unittest,numpy as np
 from ttr_mujoco.env import MujocoRobotEnv
 XML='<mujoco><option gravity="0 0 0"/><worldbody><body name="tool"><joint name="j" range="-1 1"/><geom type="sphere" size=".1"/></body><body name="decoration" pos="10 0 0"><geom type="sphere" size=".1"/></body></worldbody><actuator><position joint="j" kp="1" ctrlrange="-1 1"/></actuator></mujoco>'

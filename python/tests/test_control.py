@@ -1,3 +1,6 @@
+from _deps import require
+require('mujoco', 'gymnasium')
+
 import unittest
 import mujoco
 import numpy as np

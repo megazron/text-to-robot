@@ -1,3 +1,6 @@
+from _deps import require
+require('mujoco', 'gymnasium')
+
 import hashlib
 from pathlib import Path
 import tempfile

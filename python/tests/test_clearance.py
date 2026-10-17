@@ -1,3 +1,6 @@
+from _deps import require
+require('mujoco')
+
 import unittest
 import mujoco
 from ttr_mujoco.clearance import audit

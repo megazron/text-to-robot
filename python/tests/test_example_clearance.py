@@ -1,3 +1,6 @@
+from _deps import require
+require('mujoco')
+
 """Regression coverage for the concrete shipped-example geometry fixes."""
 import unittest
 from pathlib import Path

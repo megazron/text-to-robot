@@ -1,3 +1,4 @@
+import _deps  # noqa: F401  (puts python/ on sys.path)
 import importlib.util,tempfile,unittest
 from pathlib import Path
 
