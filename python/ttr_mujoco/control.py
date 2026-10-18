@@ -12,7 +12,8 @@ class ModelBiasController:
         self.m=m;self.axes=[]
         for a in range(m.nu):
             kp=float(m.actuator_gainprm[a,0]);j=int(m.actuator_trnid[a,0])
-            if not (kp>0 and m.actuator_biasprm[a,1]==-kp and m.actuator_biasprm[a,2]==0):
+            # Servo damping (biasprm[2]=-kv) only opposes velocity; the static load feedforward is unchanged.
+            if not (kp>0 and m.actuator_biasprm[a,1]==-kp and m.actuator_biasprm[a,2]<=0):
                 raise ValueError('Bias controller requires simple position actuators')
             if (m.actuator_trntype[a]!=mujoco.mjtTrn.mjTRN_JOINT or m.actuator_gear[a,0]!=1
                 or not m.actuator_forcelimited[a] or not m.actuator_ctrllimited[a]):
