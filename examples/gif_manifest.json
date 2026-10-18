@@ -56,8 +56,8 @@
     "collision_model": "URDF primitives / mesh bounding boxes"
   },
   "08_humanoid": {
-    "source_urdf_sha256": "8d286b44d98645cd29d6d0e765b790e89e99cea1dd098dd0a678b6a755db06ed",
-    "gif_sha256": "c574ab41cbc80b09e42b728ef1740382ccc914d1ea16db617e4fe26900d0cafe",
+    "source_urdf_sha256": "3671cda0cdd848008abd59fdd9feeaed24ed25e6dda6417612cad4bf41ed2b0f",
+    "gif_sha256": "e2d53fca8afe10ffeda5ff58155e1a1eb466e1ab469b8e6f6d0f6f9f41c01b23",
     "self_collision": true,
     "motion": "hold",
     "seconds": 2,

@@ -81,7 +81,7 @@
       "mesh_triangles_verified": true,
       "example": "08_humanoid",
       "pass": true,
-      "source_robot_sha256": "e051d09049f25b9c5fc16b84d2be9aa7cd64833c3060f8bb6b824c9cdcd1e13c",
+      "source_robot_sha256": "baab5a170991f84d2411a795d56c9ec5250dacc868255496ff6908ac89ca4f25",
       "name": "humanoid_robot",
       "links": 47,
       "joints": 46

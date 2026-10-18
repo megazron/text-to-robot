@@ -206,18 +206,18 @@
   </link>
   <link name="left_upper_arm">
     <visual>
-      <origin xyz="0 0 -0.11" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.035" length="0.22"/></geometry>
+      <origin xyz="0 0 -0.09" rpy="0 0 0"/>
+      <geometry><cylinder radius="0.035" length="0.18"/></geometry>
       <material name="link_mat"/>
     </visual>
     <collision>
-      <origin xyz="0 0 -0.11" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.035" length="0.22"/></geometry>
+      <origin xyz="0 0 -0.09" rpy="0 0 0"/>
+      <geometry><cylinder radius="0.035" length="0.18"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 -0.11" rpy="0 0 0"/>
-      <mass value="0.380997"/>
-      <inertia ixx="0.001653" ixy="0" ixz="0" iyy="0.001653" iyz="0" izz="0.00023336"/>
+      <origin xyz="0 0 -0.09" rpy="0 0 0"/>
+      <mass value="0.311725"/>
+      <inertia ixx="0.000937122" ixy="0" ixz="0" iyy="0.000937122" iyz="0" izz="0.000190931"/>
     </inertial>
   </link>
   <link name="left_elbow">
@@ -238,18 +238,18 @@
   </link>
   <link name="left_forearm">
     <visual>
-      <origin xyz="0 0 -0.11" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.035" length="0.22"/></geometry>
+      <origin xyz="0 0 -0.09" rpy="0 0 0"/>
+      <geometry><cylinder radius="0.035" length="0.18"/></geometry>
       <material name="link_mat"/>
     </visual>
     <collision>
-      <origin xyz="0 0 -0.11" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.035" length="0.22"/></geometry>
+      <origin xyz="0 0 -0.09" rpy="0 0 0"/>
+      <geometry><cylinder radius="0.035" length="0.18"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 -0.11" rpy="0 0 0"/>
-      <mass value="0.380997"/>
-      <inertia ixx="0.001653" ixy="0" ixz="0" iyy="0.001653" iyz="0" izz="0.00023336"/>
+      <origin xyz="0 0 -0.09" rpy="0 0 0"/>
+      <mass value="0.311725"/>
+      <inertia ixx="0.000937122" ixy="0" ixz="0" iyy="0.000937122" iyz="0" izz="0.000190931"/>
     </inertial>
   </link>
   <link name="left_wrist_1">
@@ -398,18 +398,18 @@
   </link>
   <link name="right_upper_arm">
     <visual>
-      <origin xyz="0 0 -0.11" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.035" length="0.22"/></geometry>
+      <origin xyz="0 0 -0.09" rpy="0 0 0"/>
+      <geometry><cylinder radius="0.035" length="0.18"/></geometry>
       <material name="link_mat"/>
     </visual>
     <collision>
-      <origin xyz="0 0 -0.11" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.035" length="0.22"/></geometry>
+      <origin xyz="0 0 -0.09" rpy="0 0 0"/>
+      <geometry><cylinder radius="0.035" length="0.18"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 -0.11" rpy="0 0 0"/>
-      <mass value="0.380997"/>
-      <inertia ixx="0.001653" ixy="0" ixz="0" iyy="0.001653" iyz="0" izz="0.00023336"/>
+      <origin xyz="0 0 -0.09" rpy="0 0 0"/>
+      <mass value="0.311725"/>
+      <inertia ixx="0.000937122" ixy="0" ixz="0" iyy="0.000937122" iyz="0" izz="0.000190931"/>
     </inertial>
   </link>
   <link name="right_elbow">
@@ -430,18 +430,18 @@
   </link>
   <link name="right_forearm">
     <visual>
-      <origin xyz="0 0 -0.11" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.035" length="0.22"/></geometry>
+      <origin xyz="0 0 -0.09" rpy="0 0 0"/>
+      <geometry><cylinder radius="0.035" length="0.18"/></geometry>
       <material name="link_mat"/>
     </visual>
     <collision>
-      <origin xyz="0 0 -0.11" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.035" length="0.22"/></geometry>
+      <origin xyz="0 0 -0.09" rpy="0 0 0"/>
+      <geometry><cylinder radius="0.035" length="0.18"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 -0.11" rpy="0 0 0"/>
-      <mass value="0.380997"/>
-      <inertia ixx="0.001653" ixy="0" ixz="0" iyy="0.001653" iyz="0" izz="0.00023336"/>
+      <origin xyz="0 0 -0.09" rpy="0 0 0"/>
+      <mass value="0.311725"/>
+      <inertia ixx="0.000937122" ixy="0" ixz="0" iyy="0.000937122" iyz="0" izz="0.000190931"/>
     </inertial>
   </link>
   <link name="right_wrist_1">
@@ -845,7 +845,7 @@
   <joint name="left_arm_joint_3" type="revolute">
     <parent link="left_upper_arm"/>
     <child link="left_elbow"/>
-    <origin xyz="0 0 -0.22" rpy="0 0 0"/>
+    <origin xyz="0 0 -0.18" rpy="0 0 0"/>
     <axis xyz="0 1 0"/>
     <limit lower="-2.6" upper="2.6" effort="50" velocity="2"/>
     <dynamics damping="0.1" friction="0"/>
@@ -861,7 +861,7 @@
   <joint name="left_arm_joint_5" type="revolute">
     <parent link="left_forearm"/>
     <child link="left_wrist_1"/>
-    <origin xyz="0 0 -0.22" rpy="0 0 0"/>
+    <origin xyz="0 0 -0.18" rpy="0 0 0"/>
     <axis xyz="0 1 0"/>
     <limit lower="-2.6" upper="2.6" effort="50" velocity="2"/>
     <dynamics damping="0.1" friction="0"/>
@@ -935,7 +935,7 @@
   <joint name="right_arm_joint_3" type="revolute">
     <parent link="right_upper_arm"/>
     <child link="right_elbow"/>
-    <origin xyz="0 0 -0.22" rpy="0 0 0"/>
+    <origin xyz="0 0 -0.18" rpy="0 0 0"/>
     <axis xyz="0 1 0"/>
     <limit lower="-2.6" upper="2.6" effort="50" velocity="2"/>
     <dynamics damping="0.1" friction="0"/>
@@ -951,7 +951,7 @@
   <joint name="right_arm_joint_5" type="revolute">
     <parent link="right_forearm"/>
     <child link="right_wrist_1"/>
-    <origin xyz="0 0 -0.22" rpy="0 0 0"/>
+    <origin xyz="0 0 -0.18" rpy="0 0 0"/>
     <axis xyz="0 1 0"/>
     <limit lower="-2.6" upper="2.6" effort="50" velocity="2"/>
     <dynamics damping="0.1" friction="0"/>

@@ -13,9 +13,9 @@ not a learned policy or proof of hardware accuracy. The model's failures remain 
 ## Download and inspect
 
 - [CAD / STL / OpenSCAD](robot.cad.zip), [ROS 2 package](robot.ros2.zip), [training package](robot.training.zip), [URDF](robot.urdf), [robot JSON](robot.json), [BOM](BOM.md).
-- [Simulation report](simulation_report.json): **4/6** checks;
+- [Simulation report](simulation_report.json): **6/7** checks;
   **0** initial penetration contacts.
-- Failed checks: actuator_sweep, disturbance_recovery.
+- Failed checks: disturbance_recovery.
 - [Physical build evidence and missing interfaces](BUILDABILITY.md), [machine-readable record](buildability_report.json). **No tested physical build is documented.**
 
 ## Design research

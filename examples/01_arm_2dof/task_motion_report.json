@@ -1,6 +1,6 @@
 {
   "scope": "One coordinated outward/return trajectory; not full workspace, learned policy or hardware validation",
-  "controller_sha256": "d9c626d6a0afeb253d1782491f536a544bca2fcf61b8222643288f7cdab781fd",
+  "controller_sha256": "85339434d761e204ab0ec0a20ea20a2ecb35ced363bf939f067dbcd1469a74c7",
   "script_sha256": "e832c1d9b6007117e05a1b4ebf059d439ea774af3d5b6ae753058ba0e9d92485",
   "pass": true,
   "source_urdf_sha256": "e6c0742ef026480b4624ca13f10526bdecb4bdc779fff9a0be36d6c0b57cb767",
@@ -9,61 +9,61 @@
   "gravity": true,
   "self_collision": true,
   "finite": true,
-  "max_interbody_penetration_m": 2.7502377050998925e-06,
+  "max_interbody_penetration_m": 7.956764049564004e-08,
   "deepest_pair": [
     "left_finger_pad",
     "right_finger_pad"
   ],
   "leg_duration_s": 1.5,
   "command_profile": "Cubic smoothstep, requested peak speed <= 50% of URDF velocity limit",
-  "gif_sha256": "a55a898a78dcaaf648fecc1d6ff4736b8700f499fcbb442786ac9adfff582d12",
+  "gif_sha256": "7e4bc54650c5f59bf95b4abf99cfdd9952c6d3c606e80f1780bf8c68d91a63b1",
   "joints": [
     {
       "joint": "joint_1",
       "goal": 0.3,
-      "rms_error": 0.000542375695862772,
+      "rms_error": 0.010367681896642335,
       "tolerance": 0.1,
       "position_unit": "rad",
       "declared_speed_limit": 1.5,
       "requested_peak_speed": 0.3,
-      "measured_peak_speed": 0.3103793993437665,
-      "measured_peak_effort": 0.7298682363126794,
+      "measured_peak_speed": 0.2986330437996408,
+      "measured_peak_effort": 0.6947473548837237,
       "effort_limit": 12.0
     },
     {
       "joint": "joint_2",
       "goal": -0.5,
-      "rms_error": 0.000248558841578903,
+      "rms_error": 0.013029461271134316,
       "tolerance": 0.1,
       "position_unit": "rad",
       "declared_speed_limit": 1.5,
       "requested_peak_speed": 0.5,
-      "measured_peak_speed": 0.5047376908733903,
-      "measured_peak_effort": 0.38209133501894277,
+      "measured_peak_speed": 0.4982639229539607,
+      "measured_peak_effort": 0.3753134993198106,
       "effort_limit": 12.0
     },
     {
       "joint": "left_finger_joint",
       "goal": 0.015,
-      "rms_error": 2.6428697724347975e-05,
+      "rms_error": 4.299992094812449e-06,
       "tolerance": 0.008,
       "position_unit": "m",
       "declared_speed_limit": 0.06,
       "requested_peak_speed": 0.015,
-      "measured_peak_speed": 0.015780617791027136,
-      "measured_peak_effort": 0.0038305445943463967,
+      "measured_peak_speed": 0.015000033488377707,
+      "measured_peak_effort": 0.007298203156422545,
       "effort_limit": 40.0
     },
     {
       "joint": "right_finger_joint",
       "goal": 0.015,
-      "rms_error": 2.6428697724347975e-05,
+      "rms_error": 4.299992094812449e-06,
       "tolerance": 0.008,
       "position_unit": "m",
       "declared_speed_limit": 0.06,
       "requested_peak_speed": 0.015,
-      "measured_peak_speed": 0.015780617791027136,
-      "measured_peak_effort": 0.0038305445943463967,
+      "measured_peak_speed": 0.015000033488377707,
+      "measured_peak_effort": 0.007298203156422545,
       "effort_limit": 40.0
     }
   ]
