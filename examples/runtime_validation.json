@@ -11,7 +11,7 @@
     "05_diff_drive": "cde43b6ab5d0b1623c62d5c4b213ca2f623ff71b412f84e02648ea9093c6ed82",
     "06_four_wheel": "51ac67e2430b7576f787f261471cb1d66e85a50c5a7f67a184956e5ca99c62aa",
     "07_mecanum": "b71d8dadc72c1917260bb2d07e58264007ed32d811cad25603f8d6373f1ef61e",
-    "08_humanoid": "208437e90e7939da86c03e7f10608b08a2effda9d2715753852620014d89f796",
+    "08_humanoid": "a0203627f50d7e71824c52c35d96256281ebe68c52b83f83a874723c62ed48a0",
     "09_gripper": "f1eb5611aea7adc52658772d9d52b00f12c7e67c6399441dfded359fac1fcb1a",
     "10_quadruped": "e4bd6c91c2c4db94cac7be6e375d15d6a100366777c80e17510cf118430dd0e3",
     "11_spider_scout": "6087be8d4b70549043a8e031b76a4b5b987a9f5bc632aa3f6c0ec5b4d6dd3467",
@@ -115,7 +115,7 @@
   "moveit_scope": "Mark 43 neck and each arm, six-axis arm and humanoid left arm: mock planning/execution; fixed-assembly and adjacent-rigid-body exclusions, not manufacturing interference or real motor validation",
   "training": {
     "report": "training_validation.json",
-    "sha256": "247bd670f1b3dac10c1620742f00e7d155d774cba3e141e8d43a1db48e7dcd76",
+    "sha256": "bd6d60ce440fd10bd919f64778412f8d5ea46444cc86dd5a1e952c19e6a31999",
     "scope": "All 17 exported PyBullet environments reset and step once; no trained skill claim"
   },
   "mobile_motion": {
@@ -124,7 +124,7 @@
   },
   "browser": {
     "report": "web_validation.json",
-    "sha256": "acd1e09e20ced811fccc363159f3d36b8ccfdb47547f30c95309133c704f4bd4"
+    "sha256": "d75ea09762f88422a9a410d2db4d9e502727602804dba533e4958b97bc535c01"
   },
   "arm_moveit": {
     "report": "02_arm_6dof/moveit_report.json",
@@ -136,8 +136,9 @@
   },
   "humanoid_moveit": {
     "report": "08_humanoid/moveit_report.json",
-    "sha256": "f118d0d9dce971ae80c78a7c0d9c8fb9e4aeac802124323243149338648e34ce"
+    "sha256": "36617a0b2ff9b590c0ffb1a16a0f8dc6d42a49a4d1f4ab86ca3e471afcf814e6"
   },
   "mark43_rebuild": "ROS 2 Jazzy colcon build of regenerated Mark 43 package passed; other 16 archive hashes unchanged from recorded build",
-  "sensor_mount_rebuild": "2026-09-27: 11_spider_scout and 12_mars_rover regenerated with inline sensors mounted on the body surface; both packages rebuilt with ROS 2 Jazzy colcon and their URDFs parsed by check_urdf. Other 15 archive hashes unchanged from the recorded build."
+  "sensor_mount_rebuild": "2026-09-27: 11_spider_scout and 12_mars_rover regenerated with inline sensors mounted on the body surface; both packages rebuilt with ROS 2 Jazzy colcon and their URDFs parsed by check_urdf. Other 15 archive hashes unchanged from the recorded build.",
+  "humanoid_rebuild": "2026-10-18: 08_humanoid regenerated (arm segments shortened so the hands hang above the soles); package rebuilt with ROS 2 Jazzy colcon, MoveIt mock left-arm plan and execution re-run. Other 16 archive hashes unchanged from the recorded build."
 }

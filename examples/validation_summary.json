@@ -81,12 +81,11 @@
     {
       "example": "08_humanoid",
       "compiled": true,
-      "passed": 4,
-      "total": 6,
+      "passed": 6,
+      "total": 7,
       "initial_penetrations": 0,
       "floating": true,
       "failed": [
-        "actuator_sweep",
         "disturbance_recovery"
       ]
     },

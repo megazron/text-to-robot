@@ -55,7 +55,7 @@
       "pass": true,
       "task": "walk",
       "actuators": 31,
-      "archive_sha256": "73c631c9bd7bf6f93019de0dd31ca97d59235b04adb977e36ea5ab6ed40556cf"
+      "archive_sha256": "a51332b594f9133f29cfdafa55b95996d527e834668bc3bc342e8a0337780f9e"
     },
     {
       "example": "09_gripper",

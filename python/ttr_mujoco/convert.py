@@ -6,6 +6,7 @@ import mujoco
 
 # whole-word hints, matched against link/joint NAMES only (never the header comment/prompt)
 FLOATING_HINT = re.compile(r"\b(hip|thigh|knee|shin|coxa|femur|tibia|wheel|leg|foot|track|thruster|hover|torso)\b", re.I)
+GRAVITY_SAG_RAD = 0.02   # a hinge servo may sag at most this far under the weight it carries
 NAME_ATTR = re.compile(r'<(?:link|joint)\s+name="([^"]+)"')
 
 
@@ -50,15 +51,16 @@ def urdf_to_mjcf(urdf_path: str, floating=None, kp: float | None = None, out: st
     with open(urdf_path, encoding="utf8") as source_file:
         urdf_xml = source_file.read()
     source = ET.fromstring(urdf_xml)
-    joint_efforts = {}; continuous_velocities = {}
+    joint_efforts = {}; continuous_velocities = {}; joint_velocities = {}
     for joint in source.findall("joint"):
         if joint.get("type") not in ("revolute", "continuous", "prismatic"):
             continue
         if joint.get("passive") == "true":
             continue  # Free roller/bearing; never synthesize a motor.
         limit = joint.find("limit")
+        velocity = float(limit.get("velocity", "nan")) if limit is not None else float("nan")
+        if np.isfinite(velocity) and velocity > 0: joint_velocities[joint.get("name")] = velocity
         if joint.get("type") == "continuous":
-            velocity = float(limit.get("velocity", "nan")) if limit is not None else float("nan")
             if not np.isfinite(velocity) or velocity <= 0: raise ValueError("Continuous joints need a positive velocity limit")
             continuous_velocities[joint.get("name")] = velocity
         effort = float(limit.get("effort", "nan")) if limit is not None else float("nan")
@@ -109,6 +111,15 @@ def urdf_to_mjcf(urdf_path: str, floating=None, kp: float | None = None, out: st
     _mass = base.body_mass[1:]; _z = _d.xipos[1:, 2] if base.nbody > 1 else np.array([0.3])
     h_com = float((_mass * _z).sum() / _mass.sum()) if _mass.sum() > 0 else 0.3
     mgh = total_mass * 9.81 * max(h_com, 0.05)
+    # Worst-case gravity torque on each hinge: subtree weight times its lever arm
+    # perpendicular to the axis, scaled by how horizontal the axis is.
+    gravity_load = {}
+    for jid in range(base.njnt):
+        if base.jnt_type[jid] != mujoco.mjtJoint.mjJNT_HINGE: continue
+        b = int(base.jnt_bodyid[jid]); axis = _d.xaxis[jid]
+        r = _d.subtree_com[b] - _d.xanchor[jid]; r_perp = r - (r @ axis) * axis
+        gravity_load[base.joint(jid).name] = float(base.body_subtreemass[b] * 9.81 * np.linalg.norm(r_perp) * np.sqrt(max(0.0, 1 - axis[2] ** 2)))
+    kp_given = kp is not None
     if kp is None: kp = float(np.clip(max(6.0 * total_mass, 3.0 * mgh), 40.0, 6000.0))
     if not np.isfinite(kp) or kp <= 0:
         raise ValueError("kp must be finite and positive")
@@ -132,7 +143,9 @@ def urdf_to_mjcf(urdf_path: str, floating=None, kp: float | None = None, out: st
     geom_kw = dict(friction="1 0.005 0.0001", condim="3", solref="0.005 1", solimp="0.95 0.99 0.001")
     if not self_collision: geom_kw.update(contype="1", conaffinity="0")
     ET.SubElement(default, "geom", **geom_kw)
-    ET.SubElement(default, "position", kp=f"{kp:.9g}")
+    # Critically damp every position servo about its own reflected inertia (MuJoCo
+    # dampratio): one shared kp otherwise rings on light distal joints.
+    ET.SubElement(default, "position", kp=f"{kp:.9g}", dampratio="1")
     asset = ET.SubElement(root, "asset")
     ET.SubElement(asset, "texture", type="skybox", builtin="gradient", rgb1="0.35 0.45 0.6", rgb2="0.05 0.06 0.08", width="256", height="256")
     ET.SubElement(asset, "texture", name="grid", type="2d", builtin="checker", rgb1="0.2 0.25 0.3", rgb2="0.12 0.15 0.19", width="512", height="512")
@@ -222,15 +235,32 @@ def urdf_to_mjcf(urdf_path: str, floating=None, kp: float | None = None, out: st
         effort = joint_efforts[jn]
         if jn in continuous_velocities:
             velocity = continuous_velocities[jn]
-            ET.SubElement(act, "velocity", name=f"act_{jn}", joint=jn, kv="0.5",
+            # Speed loop that reaches the effort limit at a 10% speed error, so a
+            # wheel tracks its command instead of being swamped by its bearing damping.
+            ET.SubElement(act, "velocity", name=f"act_{jn}", joint=jn, kv=f"{effort / (0.1 * velocity):.9g}",
                           forcelimited="true", forcerange=f"{-effort:.12g} {effort:.12g}",
                           ctrllimited="true", ctrlrange=f"{-velocity:.12g} {velocity:.12g}")
             continue
         a = ET.SubElement(act, "position", name=f"act_{jn}", joint=jn,
                           forcelimited="true", forcerange=f"{-effort:.12g} {effort:.12g}")
         if rng: a.set("ctrlrange", rng); a.set("ctrllimited", "true")
+        if jt == "slide" and rng and not kp_given:
+            # The inferred kp is a rotary stiffness (N m/rad); reusing the number as N/m
+            # leaves a slide sagging centimetres. Saturate at 5% of the stroke instead.
+            travel = abs(float(rng.split()[1]) - float(rng.split()[0]))
+            if travel > 0: a.set("kp", f"{effort / (0.05 * travel):.9g}")
+        elif jt == "hinge" and not kp_given and gravity_load.get(jn, 0.0) / GRAVITY_SAG_RAD > kp:
+            # The whole-robot kp lets a joint carrying a long, heavy chain sag tenths of a
+            # radian. Stiffen it to its own worst-case gravity torque (stable: that chain's
+            # inertia grows with the same mass and lever).
+            a.set("kp", f"{gravity_load[jn] / GRAVITY_SAG_RAD:.9g}")
     custom = ET.SubElement(root, "custom")
     ET.SubElement(custom, "text", name="ttr_fidelity", data="URDF effort limits enforced; position gains inferred; speed/thermal/electrical limits unmodelled; geometry and hardware uncalibrated")
+    # MJCF has no joint speed limit: carry the URDF rating so tests never command a joint past it.
+    for a in act:
+        jn = a.get("joint")
+        if jn in joint_velocities:
+            ET.SubElement(custom, "numeric", name=f"ttr_vmax_{a.get('name')}", data=f"{joint_velocities[jn]:.12g}")
     if not self_collision:
         warnings.warn("Self-collision disabled: this scene cannot validate part clearance or wearable fit", UserWarning, stacklevel=2)
     xml = ET.tostring(root, encoding="unicode")

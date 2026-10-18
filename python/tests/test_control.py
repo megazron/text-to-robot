@@ -37,6 +37,10 @@ class BiasControlTests(unittest.TestCase):
         env.reset(seed=1);np.testing.assert_allclose(env.lo,[-.2]);np.testing.assert_allclose(env.hi,[.2])
         obs,reward,*_=env.step([0]);self.assertTrue(np.isfinite(obs).all());self.assertTrue(np.isfinite(reward));env.close()
 
+    def test_damped_position_servo_is_accepted(self):
+        xml=model().replace('<position joint="lift" kp="100"','<position joint="lift" kp="100" kv="5"')
+        self.assertIn('kv="5"',xml);ModelBiasController(mujoco.MjModel.from_xml_string(xml))
+
     def test_velocity_motor_cannot_be_reinterpreted_as_position_servo(self):
         xml=model().replace('<position joint="lift" kp="100"','<velocity joint="lift" kv="1"')
         with self.assertRaisesRegex(ValueError,'position actuators'):ModelBiasController(mujoco.MjModel.from_xml_string(xml))
