@@ -108,3 +108,25 @@ object grasp force or contact success. Reaching and aperture actions span the
 actuator limits; standing/walking use small corrective targets around the initial
 pose. The generated PyBullet gripper package uses the same additional-opening
 objective instead of an unreachable fixed-tool reaching task.
+
+
+## Buildable component library (`ttr_build.components`)
+
+Real, purchasable parts with datasheet numbers (mass, price, torque, hole patterns) and a
+build123d solid + keepout per part, so printed structure can be generated against them.
+
+```bash
+pip install "./python[build]"
+python -m ttr_build.components.render          # contact sheet -> docs/img/components.png
+```
+
+```python
+from ttr_build.components import get
+servo = get("feetech_sts3215_c001")
+servo.holes, servo.output_frame, servo.specs["stall_torque_nm"], servo.si()
+servo.solid(), servo.keepout()                 # build123d Parts in the component frame (mm)
+```
+
+Frames, hole conventions and the insert exception are documented in
+`ttr_build/components/base.py`; numbers not confirmed on a primary source are listed in
+`specs["uncertain"]`.
