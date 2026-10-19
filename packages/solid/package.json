@@ -1,0 +1,12 @@
+{
+  "name": "@ttr/solid",
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@ttr/parts": "*",
+    "manifold-3d": "3.5.4"
+  }
+}

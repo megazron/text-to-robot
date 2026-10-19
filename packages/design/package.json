@@ -1,0 +1,14 @@
+{
+  "name": "@ttr/design",
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@ttr/robot-schema": "*",
+    "@ttr/mesh": "*",
+    "@ttr/parts": "*",
+    "@ttr/solid": "*"
+  }
+}

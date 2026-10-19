@@ -1,0 +1,8557 @@
+{
+ "bearing_608zz": {
+  "key": "bearing_608zz",
+  "name": "Ball bearing 608-2Z 8x22x7 mm",
+  "category": "bearing",
+  "mass_g": 12.0,
+  "price_usd": 0.6,
+  "supplier_url": "https://www.vxb.com/search?q=608-2Z",
+  "datasheet_url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-608-2Z",
+  "envelope_mm": [
+   22.0,
+   22.0,
+   7.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     3.5
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 8.0,
+    "thread": null
+   }
+  ],
+  "specs": {
+   "designation": "608-2Z",
+   "bore_mm": 8.0,
+   "od_mm": 22.0,
+   "width_mm": 7.0,
+   "dynamic_load_kn": 3.45,
+   "static_load_kn": 1.37,
+   "housing_bore_mm": 22.0,
+   "shaft_mm": 8.0,
+   "inner_ring_od_mm": 12.48,
+   "outer_ring_id_mm": 17.52,
+   "housing_shoulder_max_d_mm": 17.72,
+   "shaft_shoulder_min_d_mm": 12.28,
+   "material": "chrome steel 52100, steel shields"
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -11.0,
+    -11.0,
+    -3.5
+   ],
+   "max": [
+    11.0,
+    11.0,
+    3.5
+   ]
+  },
+  "mesh_triangles": 624
+ },
+ "bearing_625zz": {
+  "key": "bearing_625zz",
+  "name": "Ball bearing 625-2Z 5x16x5 mm",
+  "category": "bearing",
+  "mass_g": 4.8,
+  "price_usd": 0.55,
+  "supplier_url": "https://www.vxb.com/search?q=625-2Z",
+  "datasheet_url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-625-2Z",
+  "envelope_mm": [
+   16.0,
+   16.0,
+   5.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     2.5
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 5.0,
+    "thread": null
+   }
+  ],
+  "specs": {
+   "designation": "625-2Z",
+   "bore_mm": 5.0,
+   "od_mm": 16.0,
+   "width_mm": 5.0,
+   "dynamic_load_kn": 1.14,
+   "static_load_kn": 0.38,
+   "housing_bore_mm": 16.0,
+   "shaft_mm": 5.0,
+   "inner_ring_od_mm": 8.52,
+   "outer_ring_id_mm": 12.48,
+   "housing_shoulder_max_d_mm": 12.68,
+   "shaft_shoulder_min_d_mm": 8.32,
+   "material": "chrome steel 52100, steel shields"
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -8.0,
+    -8.0,
+    -2.5
+   ],
+   "max": [
+    8.0,
+    8.0,
+    2.5
+   ]
+  },
+  "mesh_triangles": 624
+ },
+ "bearing_6800zz": {
+  "key": "bearing_6800zz",
+  "name": "Ball bearing 61800-2Z (6800ZZ) 10x19x5 mm",
+  "category": "bearing",
+  "mass_g": 5.5,
+  "price_usd": 0.9,
+  "supplier_url": "https://www.vxb.com/search?q=61800-2Z",
+  "datasheet_url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-61800-2Z",
+  "envelope_mm": [
+   19.0,
+   19.0,
+   5.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     2.5
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 10.0,
+    "thread": null
+   }
+  ],
+  "specs": {
+   "designation": "61800-2Z (6800ZZ)",
+   "bore_mm": 10.0,
+   "od_mm": 19.0,
+   "width_mm": 5.0,
+   "dynamic_load_kn": 1.72,
+   "static_load_kn": 0.83,
+   "housing_bore_mm": 19.0,
+   "shaft_mm": 10.0,
+   "inner_ring_od_mm": 12.88,
+   "outer_ring_id_mm": 16.12,
+   "housing_shoulder_max_d_mm": 16.32,
+   "shaft_shoulder_min_d_mm": 12.68,
+   "material": "chrome steel 52100, steel shields"
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -9.5,
+    -9.5,
+    -2.5
+   ],
+   "max": [
+    9.5,
+    9.5,
+    2.5
+   ]
+  },
+  "mesh_triangles": 624
+ },
+ "bearing_6803zz": {
+  "key": "bearing_6803zz",
+  "name": "Ball bearing 61803-2Z (6803ZZ) 17x26x5 mm",
+  "category": "bearing",
+  "mass_g": 7.8,
+  "price_usd": 1.2,
+  "supplier_url": "https://www.vxb.com/search?q=61803-2Z",
+  "datasheet_url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-61803-2Z",
+  "envelope_mm": [
+   26.0,
+   26.0,
+   5.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     2.5
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 17.0,
+    "thread": null
+   }
+  ],
+  "specs": {
+   "designation": "61803-2Z (6803ZZ)",
+   "bore_mm": 17.0,
+   "od_mm": 26.0,
+   "width_mm": 5.0,
+   "dynamic_load_kn": 2.03,
+   "static_load_kn": 1.27,
+   "housing_bore_mm": 26.0,
+   "shaft_mm": 17.0,
+   "inner_ring_od_mm": 19.88,
+   "outer_ring_id_mm": 23.12,
+   "housing_shoulder_max_d_mm": 23.32,
+   "shaft_shoulder_min_d_mm": 19.68,
+   "material": "chrome steel 52100, steel shields",
+   "uncertain": [
+    "dynamic_load_kn",
+    "static_load_kn"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -13.0,
+    -13.0,
+    -2.5
+   ],
+   "max": [
+    13.0,
+    13.0,
+    2.5
+   ]
+  },
+  "mesh_triangles": 624
+ },
+ "bearing_6806zz": {
+  "key": "bearing_6806zz",
+  "name": "Ball bearing 61806-2Z (6806ZZ) 30x42x7 mm",
+  "category": "bearing",
+  "mass_g": 23.0,
+  "price_usd": 2.5,
+  "supplier_url": "https://www.vxb.com/search?q=61806-2Z",
+  "datasheet_url": "https://www.qualitybearingsonline.ca/61806-timken-thin-section-30x42x7mm/",
+  "envelope_mm": [
+   42.0,
+   42.0,
+   7.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     3.5
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 30.0,
+    "thread": null
+   }
+  ],
+  "specs": {
+   "designation": "61806-2Z (6806ZZ)",
+   "bore_mm": 30.0,
+   "od_mm": 42.0,
+   "width_mm": 7.0,
+   "dynamic_load_kn": 4.5,
+   "static_load_kn": 3.4,
+   "housing_bore_mm": 42.0,
+   "shaft_mm": 30.0,
+   "inner_ring_od_mm": 33.84,
+   "outer_ring_id_mm": 38.16,
+   "housing_shoulder_max_d_mm": 38.36,
+   "shaft_shoulder_min_d_mm": 33.64,
+   "material": "chrome steel 52100, steel shields"
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -21.0,
+    -21.0,
+    -3.5
+   ],
+   "max": [
+    21.0,
+    21.0,
+    3.5
+   ]
+  },
+  "mesh_triangles": 624
+ },
+ "bearing_6808": {
+  "key": "bearing_6808",
+  "name": "Ball bearing 61808-2RZ (6808 thin section) 40x52x7 mm",
+  "category": "bearing",
+  "mass_g": 30.0,
+  "price_usd": 3.5,
+  "supplier_url": "https://www.vxb.com/search?q=61808-2RZ",
+  "datasheet_url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-61808-2RZ",
+  "envelope_mm": [
+   52.0,
+   52.0,
+   7.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     3.5
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 40.0,
+    "thread": null
+   }
+  ],
+  "specs": {
+   "designation": "61808-2RZ (6808 thin section)",
+   "bore_mm": 40.0,
+   "od_mm": 52.0,
+   "width_mm": 7.0,
+   "dynamic_load_kn": 4.94,
+   "static_load_kn": 3.45,
+   "housing_bore_mm": 52.0,
+   "shaft_mm": 40.0,
+   "inner_ring_od_mm": 43.84,
+   "outer_ring_id_mm": 48.16,
+   "housing_shoulder_max_d_mm": 48.36,
+   "shaft_shoulder_min_d_mm": 43.64,
+   "material": "chrome steel 52100, steel shields",
+   "uncertain": [
+    "mass_g",
+    "dynamic_load_kn",
+    "static_load_kn"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -26.0,
+    -26.0,
+    -3.5
+   ],
+   "max": [
+    26.0,
+    26.0,
+    3.5
+   ]
+  },
+  "mesh_triangles": 624
+ },
+ "bno085_breakout": {
+  "key": "bno085_breakout",
+  "name": "Adafruit BNO085 9-DoF IMU breakout (STEMMA QT, #4754)",
+  "category": "sensor",
+  "mass_g": 2.5,
+  "price_usd": 29.5,
+  "supplier_url": "https://www.adafruit.com/product/4754",
+  "datasheet_url": "https://learn.adafruit.com/adafruit-9-dof-orientation-imu-fusion-breakout-bno085/downloads",
+  "envelope_mm": [
+   25.6,
+   22.7,
+   4.6
+  ],
+  "holes": [
+   {
+    "pos": [
+     2.54,
+     2.54,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     23.06,
+     2.54,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     2.54,
+     20.16,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     23.06,
+     20.16,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M2"
+   }
+  ],
+  "specs": {
+   "voltage_v": 3.3,
+   "vin_range_v": [
+    3.3,
+    5.0
+   ],
+   "interface": "I2C / UART / SPI, STEMMA QT",
+   "hole_positions_mm": [
+    [
+     2.54,
+     2.54
+    ],
+    [
+     23.06,
+     2.54
+    ],
+    [
+     2.54,
+     20.16
+    ],
+    [
+     23.06,
+     20.16
+    ]
+   ],
+   "uncertain": [
+    "hole_positions_mm"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "max": [
+    25.6,
+    22.7,
+    4.6
+   ]
+  },
+  "mesh_triangles": 620
+ },
+ "buck_5v_5a": {
+  "key": "buck_5v_5a",
+  "name": "Pololu D36V50F5 5 V 5.5 A step-down regulator (#4091)",
+  "category": "misc",
+  "mass_g": 7.0,
+  "price_usd": 39.95,
+  "supplier_url": "https://www.pololu.com/product/4091",
+  "datasheet_url": "https://www.pololu.com/product/4091",
+  "envelope_mm": [
+   25.4,
+   25.4,
+   9.5
+  ],
+  "holes": [
+   {
+    "pos": [
+     2.54,
+     2.54,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.18,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     22.86,
+     2.54,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.18,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     22.86,
+     22.86,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.18,
+    "thread": "M2"
+   }
+  ],
+  "specs": {
+   "voltage_v": 5.0,
+   "current_a": 5.5,
+   "input_v": [
+    5.5,
+    50.0
+   ],
+   "hole_dia_mm": 2.18,
+   "hole_positions_mm": [
+    [
+     2.54,
+     2.54
+    ],
+    [
+     22.86,
+     2.54
+    ],
+    [
+     22.86,
+     22.86
+    ]
+   ],
+   "uncertain": [
+    "hole_positions_mm"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "max": [
+    25.4,
+    25.4,
+    9.5
+   ]
+  },
+  "mesh_triangles": 498
+ },
+ "cubemars_ak60_6": {
+  "key": "cubemars_ak60_6",
+  "name": "CubeMars AK60-6 V3.0 KV80",
+  "category": "actuator",
+  "mass_g": 380.0,
+  "price_usd": 229.9,
+  "supplier_url": "https://www.cubemars.com/product/ak60-6-v3-0-kv80-robotic-actuator.html",
+  "datasheet_url": "https://www.cubemars.com/data/cms/202602/ak60-6-v3-0-robotic-actuator-2d-drawing.pdf",
+  "envelope_mm": [
+   79.0,
+   79.0,
+   43.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     10.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     5.000000000000001,
+     8.660254037844386,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -4.999999999999998,
+     8.660254037844387,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -10.0,
+     1.2246467991473533e-15,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -5.000000000000004,
+     -8.660254037844384,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     5.000000000000001,
+     -8.660254037844386,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     34.0,
+     0.0,
+     -2.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     17.000000000000004,
+     29.444863728670914,
+     -2.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -16.999999999999993,
+     29.444863728670917,
+     -2.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -34.0,
+     4.1637991171010006e-15,
+     -2.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -17.000000000000014,
+     -29.444863728670903,
+     -2.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     17.000000000000004,
+     -29.444863728670914,
+     -2.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     34.0,
+     0.0,
+     -33.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     17.000000000000004,
+     29.444863728670914,
+     -33.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -16.999999999999993,
+     29.444863728670917,
+     -33.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -34.0,
+     4.1637991171010006e-15,
+     -33.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -17.000000000000014,
+     -29.444863728670903,
+     -33.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     17.000000000000004,
+     -29.444863728670914,
+     -33.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "model": "AK60-6 V3.0 KV80",
+   "voltage_v": 48.0,
+   "rated_torque_nm": 3.0,
+   "stall_torque_nm": 9.0,
+   "peak_torque_nm": 9.0,
+   "no_load_speed_rpm": 640,
+   "no_load_speed_rad_s": 67.021,
+   "rated_speed_rad_s": 51.313,
+   "current_a": 3.8,
+   "peak_current_a": 11.2,
+   "gear_ratio": 6,
+   "encoder": "21-bit",
+   "od_mm": 79.0,
+   "length_mm": 43.0,
+   "hub_hole_pcd_mm": 20.0,
+   "hub_thread": "M3",
+   "hub_thread_depth_mm": 6.0,
+   "housing_out_pcd_mm": 68.0,
+   "housing_back_pcd_mm": 68.0,
+   "bus": "CAN 1 Mbps (MIT / servo mode) + UART",
+   "connector": "XT30(2+2) power+CAN, 3-pin UART on back cover",
+   "cable_exit_deg": 270.0,
+   "uncertain": [
+    "hub_thread_depth_mm",
+    "cable_exit_deg"
+   ]
+  },
+  "output_frame": [
+   [
+    0.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "bbox_mm": {
+   "min": [
+    -39.5,
+    -39.5,
+    -43.0
+   ],
+   "max": [
+    39.5,
+    39.5,
+    0.0
+   ]
+  },
+  "mesh_triangles": 2920
+ },
+ "cubemars_ak70_10": {
+  "key": "cubemars_ak70_10",
+  "name": "CubeMars AK70-10 KV100",
+  "category": "actuator",
+  "mass_g": 621.0,
+  "price_usd": 398.9,
+  "supplier_url": "https://www.cubemars.com/product/ak70-10-kv100-robotic-actuator.html",
+  "datasheet_url": "https://www.cubemars.com/data/cms/202602/ak70-10-robotic-actuator-2d-drawing.pdf",
+  "envelope_mm": [
+   89.0,
+   89.0,
+   50.25
+  ],
+  "holes": [
+   {
+    "pos": [
+     12.5,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     6.250000000000002,
+     10.825317547305483,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -6.249999999999997,
+     10.825317547305485,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -12.5,
+     1.5308084989341915e-15,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -6.250000000000005,
+     -10.82531754730548,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     6.250000000000002,
+     -10.825317547305483,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     41.5,
+     0.0,
+     -6.5
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     29.344931419241725,
+     29.34493141924172,
+     -6.5
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     2.541142108230758e-15,
+     41.5,
+     -6.5
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -29.34493141924172,
+     29.344931419241725,
+     -6.5
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -41.5,
+     5.082284216461516e-15,
+     -6.5
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -29.34493141924173,
+     -29.34493141924172,
+     -6.5
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -7.623426324692272e-15,
+     -41.5,
+     -6.5
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     29.344931419241714,
+     -29.34493141924173,
+     -6.5
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     41.19066529311486,
+     5.05757775131362,
+     -39.05
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     25.54995122601482,
+     32.70244627467896,
+     -39.05
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -5.057577751313616,
+     41.19066529311487,
+     -39.05
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -32.70244627467896,
+     25.549951226014823,
+     -39.05
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -41.19066529311487,
+     -5.057577751313613,
+     -39.05
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -25.54995122601481,
+     -32.70244627467897,
+     -39.05
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     5.057577751313629,
+     -41.19066529311486,
+     -39.05
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     32.70244627467896,
+     -25.549951226014816,
+     -39.05
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "model": "AK70-10 KV100",
+   "voltage_v": 48.0,
+   "rated_torque_nm": 8.3,
+   "stall_torque_nm": 24.8,
+   "peak_torque_nm": 24.8,
+   "no_load_speed_rpm": 480,
+   "no_load_speed_rad_s": 50.265,
+   "rated_speed_rad_s": 32.463,
+   "current_a": 7.2,
+   "peak_current_a": 23.2,
+   "gear_ratio": 10,
+   "encoder": "14-bit",
+   "od_mm": 89.0,
+   "length_mm": 50.25,
+   "hub_hole_pcd_mm": 25.0,
+   "hub_thread": "M3",
+   "hub_thread_depth_mm": 7.0,
+   "housing_out_pcd_mm": 83.0,
+   "housing_back_pcd_mm": 83.0,
+   "bus": "CAN 1 Mbps (MIT / servo mode) + UART",
+   "connector": "XT30(2+2) power+CAN, 3-pin UART on back cover",
+   "cable_exit_deg": 254.5,
+   "uncertain": [
+    "cable_exit_deg"
+   ]
+  },
+  "output_frame": [
+   [
+    0.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "bbox_mm": {
+   "min": [
+    -44.5,
+    -44.5,
+    -50.25
+   ],
+   "max": [
+    44.5,
+    44.5,
+    0.0
+   ]
+  },
+  "mesh_triangles": 3442
+ },
+ "cubemars_ak80_64": {
+  "key": "cubemars_ak80_64",
+  "name": "CubeMars AK80-64 KV80",
+  "category": "actuator",
+  "mass_g": 850.0,
+  "price_usd": 889.9,
+  "supplier_url": "https://www.cubemars.com/product/ak80-64-kv80-robotic-actuator.html",
+  "datasheet_url": "https://www.cubemars.com/data/cms/202602/ak80-64-robotic-actuator-2d-drawing.pdf",
+  "envelope_mm": [
+   98.0,
+   98.0,
+   61.9
+  ],
+  "holes": [
+   {
+    "pos": [
+     14.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 3.3,
+    "thread": "M4"
+   },
+   {
+    "pos": [
+     7.000000000000002,
+     12.12435565298214,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 3.3,
+    "thread": "M4"
+   },
+   {
+    "pos": [
+     -6.9999999999999964,
+     12.124355652982143,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 3.3,
+    "thread": "M4"
+   },
+   {
+    "pos": [
+     -14.0,
+     1.7145055188062944e-15,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 3.3,
+    "thread": "M4"
+   },
+   {
+    "pos": [
+     -7.000000000000006,
+     -12.124355652982137,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 3.3,
+    "thread": "M4"
+   },
+   {
+    "pos": [
+     7.000000000000002,
+     -12.12435565298214,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 3.3,
+    "thread": "M4"
+   },
+   {
+    "pos": [
+     44.5,
+     0.0,
+     -8.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     31.466251762801367,
+     31.466251762801363,
+     -8.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     2.724839128102861e-15,
+     44.5,
+     -8.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -31.466251762801363,
+     31.466251762801367,
+     -8.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -44.5,
+     5.449678256205722e-15,
+     -8.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -31.46625176280137,
+     -31.466251762801363,
+     -8.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -8.174517384308582e-15,
+     -44.5,
+     -8.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     31.466251762801356,
+     -31.46625176280137,
+     -8.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     41.051847617285404,
+     10.999809416857131,
+     -50.7
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     21.250000000000004,
+     36.80607966083864,
+     -50.7
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -10.999809416857136,
+     41.051847617285404,
+     -50.7
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -36.80607966083865,
+     21.249999999999996,
+     -50.7
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -41.051847617285404,
+     -10.999809416857135,
+     -50.7
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -21.250000000000018,
+     -36.806079660838634,
+     -50.7
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     10.999809416857113,
+     -41.05184761728541,
+     -50.7
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     36.806079660838634,
+     -21.250000000000018,
+     -50.7
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "model": "AK80-64 KV80",
+   "voltage_v": 48.0,
+   "rated_torque_nm": 48.0,
+   "stall_torque_nm": 120.0,
+   "peak_torque_nm": 120.0,
+   "no_load_speed_rpm": 75,
+   "no_load_speed_rad_s": 7.854,
+   "rated_speed_rad_s": 5.027,
+   "current_a": 7.0,
+   "peak_current_a": 19.0,
+   "gear_ratio": 64,
+   "encoder": "14-bit",
+   "od_mm": 98.0,
+   "length_mm": 61.9,
+   "hub_hole_pcd_mm": 28.0,
+   "hub_thread": "M4",
+   "hub_thread_depth_mm": 8.0,
+   "housing_out_pcd_mm": 89.0,
+   "housing_back_pcd_mm": 85.0,
+   "bus": "CAN 1 Mbps (MIT / servo mode) + UART",
+   "connector": "XT30(2+2) power+CAN, 3-pin UART on back cover",
+   "cable_exit_deg": 262.5,
+   "uncertain": [
+    "cable_exit_deg"
+   ]
+  },
+  "output_frame": [
+   [
+    0.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "bbox_mm": {
+   "min": [
+    -49.0,
+    -49.0,
+    -61.9
+   ],
+   "max": [
+    49.0,
+    49.0,
+    0.0
+   ]
+  },
+  "mesh_triangles": 3442
+ },
+ "cubemars_ak80_9": {
+  "key": "cubemars_ak80_9",
+  "name": "CubeMars AK80-9 V3.0 KV100",
+  "category": "actuator",
+  "mass_g": 490.0,
+  "price_usd": 479.9,
+  "supplier_url": "https://www.cubemars.com/goods-982-AK80-9.html",
+  "datasheet_url": "https://www.cubemars.com/data/cms/202602/ak80-9-v3-0-robotic-actuator-2d-drawing.pdf",
+  "envelope_mm": [
+   98.0,
+   98.0,
+   38.5
+  ],
+  "holes": [
+   {
+    "pos": [
+     14.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 3.3,
+    "thread": "M4"
+   },
+   {
+    "pos": [
+     7.000000000000002,
+     12.12435565298214,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 3.3,
+    "thread": "M4"
+   },
+   {
+    "pos": [
+     -6.9999999999999964,
+     12.124355652982143,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 3.3,
+    "thread": "M4"
+   },
+   {
+    "pos": [
+     -14.0,
+     1.7145055188062944e-15,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 3.3,
+    "thread": "M4"
+   },
+   {
+    "pos": [
+     -7.000000000000006,
+     -12.124355652982137,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 3.3,
+    "thread": "M4"
+   },
+   {
+    "pos": [
+     7.000000000000002,
+     -12.12435565298214,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 3.3,
+    "thread": "M4"
+   },
+   {
+    "pos": [
+     42.5,
+     0.0,
+     -4.3
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     30.05203820042827,
+     30.052038200428267,
+     -4.3
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     2.6023744481881254e-15,
+     42.5,
+     -4.3
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -30.052038200428267,
+     30.05203820042827,
+     -4.3
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -42.5,
+     5.204748896376251e-15,
+     -4.3
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -30.052038200428278,
+     -30.052038200428267,
+     -4.3
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -7.807123344564377e-15,
+     -42.5,
+     -4.3
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     30.052038200428264,
+     -30.052038200428278,
+     -4.3
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     42.5,
+     0.0,
+     -27.5
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     30.05203820042827,
+     30.052038200428267,
+     -27.5
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     2.6023744481881254e-15,
+     42.5,
+     -27.5
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -30.052038200428267,
+     30.05203820042827,
+     -27.5
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -42.5,
+     5.204748896376251e-15,
+     -27.5
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -30.052038200428278,
+     -30.052038200428267,
+     -27.5
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -7.807123344564377e-15,
+     -42.5,
+     -27.5
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     30.052038200428264,
+     -30.052038200428278,
+     -27.5
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "model": "AK80-9 V3.0 KV100",
+   "voltage_v": 48.0,
+   "rated_torque_nm": 9.0,
+   "stall_torque_nm": 22.0,
+   "peak_torque_nm": 22.0,
+   "no_load_speed_rpm": 570,
+   "no_load_speed_rad_s": 59.69,
+   "rated_speed_rad_s": 40.841,
+   "current_a": 12.0,
+   "peak_current_a": 28.0,
+   "gear_ratio": 9,
+   "encoder": "16-bit",
+   "od_mm": 98.0,
+   "length_mm": 38.5,
+   "hub_hole_pcd_mm": 28.0,
+   "hub_thread": "M4",
+   "hub_thread_depth_mm": 6.0,
+   "housing_out_pcd_mm": 85.0,
+   "housing_back_pcd_mm": 85.0,
+   "bus": "CAN 1 Mbps (MIT / servo mode) + UART",
+   "connector": "XT30(2+2) power+CAN, 3-pin UART on back cover",
+   "cable_exit_deg": 247.5,
+   "uncertain": [
+    "hub_thread_depth_mm",
+    "housing_back_pcd_mm",
+    "price_usd",
+    "cable_exit_deg"
+   ]
+  },
+  "output_frame": [
+   [
+    0.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "bbox_mm": {
+   "min": [
+    -49.0,
+    -49.0,
+    -38.5
+   ],
+   "max": [
+    49.0,
+    49.0,
+    0.0
+   ]
+  },
+  "mesh_triangles": 3338
+ },
+ "dxl_u2d2": {
+  "key": "dxl_u2d2",
+  "name": "ROBOTIS U2D2 USB to TTL/RS-485 interface",
+  "category": "motor_driver",
+  "mass_g": 9.0,
+  "price_usd": 32.1,
+  "supplier_url": "https://www.generationrobots.com/en/400848-usb2dynamixel-robotis.html",
+  "datasheet_url": "https://emanual.robotis.com/docs/en/parts/interface/u2d2/",
+  "envelope_mm": [
+   50.5,
+   18.0,
+   14.9
+  ],
+  "holes": [
+   {
+    "pos": [
+     24.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 1.6,
+    "thread": "M2"
+   }
+  ],
+  "specs": {
+   "interface": "USB-C to TTL (JST EH 3P) / RS-485 (JST EH 4P) / UART",
+   "voltage_v": 5.0,
+   "mount": "M2 tap, valid depth 4.7 mm",
+   "hole_position": "bottom centre (assumed)",
+   "uncertain": [
+    "hole_position"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -1.5,
+    -9.0,
+    0.0
+   ],
+   "max": [
+    49.0,
+    9.0,
+    14.9
+   ]
+  },
+  "mesh_triangles": 292
+ },
+ "dxl_xh540_w270": {
+  "key": "dxl_xh540_w270",
+  "name": "DYNAMIXEL XH540-W270-T(R)",
+  "category": "actuator",
+  "mass_g": 165.0,
+  "price_usd": 539.9,
+  "supplier_url": "https://robotis.us/dynamixel-xh540-w270-t",
+  "datasheet_url": "https://emanual.robotis.com/docs/en/dxl/x/xh540-w270/",
+  "envelope_mm": [
+   59.5,
+   33.5,
+   48.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     10.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     6.123233995736766e-16,
+     10.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -10.0,
+     1.2246467991473533e-15,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -1.8369701987210296e-15,
+     -10.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -1.75,
+     16.75,
+     -18.0
+    ],
+    "axis": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -1.75,
+     16.75,
+     -34.0
+    ],
+    "axis": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -29.75,
+     16.75,
+     -18.0
+    ],
+    "axis": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -29.75,
+     16.75,
+     -34.0
+    ],
+    "axis": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -1.75,
+     -16.75,
+     -18.0
+    ],
+    "axis": [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -1.75,
+     -16.75,
+     -34.0
+    ],
+    "axis": [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -29.75,
+     -16.75,
+     -18.0
+    ],
+    "axis": [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -29.75,
+     -16.75,
+     -34.0
+    ],
+    "axis": [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -45.0,
+     10.0,
+     -26.0
+    ],
+    "axis": [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -45.0,
+     -10.0,
+     -26.0
+    ],
+    "axis": [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "model": "XH540-W270-T(R)",
+   "voltage_v": 12.0,
+   "stall_torque_nm": 9.9,
+   "stall_current_a": 4.9,
+   "current_a": 4.9,
+   "rated_torque_nm": 2.97,
+   "no_load_speed_rpm": 39,
+   "no_load_speed_rad_s": 4.084,
+   "gear_ratio": 272.5,
+   "resolution_counts": 4096,
+   "horn_hole_pcd_mm": 20.0,
+   "horn_thread": "M3",
+   "case_thread": "M3",
+   "side_hole_pattern_mm": [
+    28.0,
+    16.0
+   ],
+   "end_hole_spacing_mm": 20.0,
+   "geometry_source": "https://github.com/jess-moss/koch-v1-1 (ROBOTIS STEP)",
+   "note": "rated_torque_nm = 30% of stall (ROBOTIS publishes stall torque only)",
+   "uncertain": [
+    "rated_torque_nm",
+    "side_hole_pattern_mm",
+    "end_hole_spacing_mm",
+    "horn_hole_pcd_mm",
+    "horn_thread",
+    "case_thread",
+    "output_axis_offset_mm"
+   ],
+   "output_axis_offset_mm": 13.5
+  },
+  "output_frame": [
+   [
+    0.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "bbox_mm": {
+   "min": [
+    -46.0,
+    -16.75,
+    -48.0
+   ],
+   "max": [
+    13.5,
+    16.75,
+    0.0
+   ]
+  },
+  "mesh_triangles": 2456
+ },
+ "dxl_xl330_m288": {
+  "key": "dxl_xl330_m288",
+  "name": "DYNAMIXEL XL330-M288-T",
+  "category": "actuator",
+  "mass_g": 18.0,
+  "price_usd": 25.9,
+  "supplier_url": "https://robotis.us/dynamixel-xl330-m288-t",
+  "datasheet_url": "https://emanual.robotis.com/docs/en/dxl/x/xl330-m288/",
+  "envelope_mm": [
+   35.0,
+   20.0,
+   26.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     6.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.6,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     3.6739403974420594e-16,
+     6.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.6,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -6.0,
+     7.347880794884119e-16,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.6,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -1.102182119232618e-15,
+     -6.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.6,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     4.55,
+     8.4,
+     -26.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 1.6,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     4.55,
+     -8.4,
+     -26.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 1.6,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -19.35,
+     8.4,
+     -26.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 1.6,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -22.85,
+     -4.9,
+     -26.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 1.6,
+    "thread": "M2"
+   }
+  ],
+  "specs": {
+   "model": "XL330-M288-T",
+   "voltage_v": 5.0,
+   "stall_torque_nm": 0.52,
+   "stall_current_a": 1.47,
+   "current_a": 1.47,
+   "rated_torque_nm": 0.156,
+   "no_load_speed_rpm": 103,
+   "no_load_speed_rad_s": 10.786,
+   "gear_ratio": 288.4,
+   "resolution_counts": 4096,
+   "horn_hole_pcd_mm": 12.0,
+   "horn_thread": "M2",
+   "case_thread": "M2",
+   "side_hole_pattern_mm": [
+    16.0,
+    10.0
+   ],
+   "end_hole_spacing_mm": 10.0,
+   "geometry_source": "https://github.com/jess-moss/koch-v1-1 (ROBOTIS STEP)",
+   "note": "rated_torque_nm = 30% of stall (ROBOTIS publishes stall torque only)",
+   "uncertain": [
+    "rated_torque_nm",
+    "side_hole_pattern_mm",
+    "end_hole_spacing_mm",
+    "price_usd"
+   ]
+  },
+  "output_frame": [
+   [
+    0.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "bbox_mm": {
+   "min": [
+    -25.5,
+    -10.0,
+    -26.0
+   ],
+   "max": [
+    9.5,
+    10.0,
+    0.0
+   ]
+  },
+  "mesh_triangles": 1712
+ },
+ "dxl_xl430_w250": {
+  "key": "dxl_xl430_w250",
+  "name": "DYNAMIXEL XL430-W250-T",
+  "category": "actuator",
+  "mass_g": 57.2,
+  "price_usd": 44.9,
+  "supplier_url": "https://robotis.us/dynamixel-xl430-w250-t",
+  "datasheet_url": "https://emanual.robotis.com/docs/en/dxl/x/xl430-w250/",
+  "envelope_mm": [
+   47.5,
+   28.5,
+   37.9
+  ],
+  "holes": [
+   {
+    "pos": [
+     8.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.6,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     5.656854249492381,
+     5.65685424949238,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.6,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     4.898587196589413e-16,
+     8.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.6,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -5.65685424949238,
+     5.656854249492381,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.6,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -8.0,
+     9.797174393178826e-16,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.6,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -5.6568542494923815,
+     -5.65685424949238,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.6,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -1.4695761589768238e-15,
+     -8.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.6,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     5.656854249492379,
+     -5.6568542494923815,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.6,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     0.0,
+     14.25,
+     -14.899999999999999
+    ],
+    "axis": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "dia_mm": 2.05,
+    "thread": "M2.5"
+   },
+   {
+    "pos": [
+     0.0,
+     14.25,
+     -26.9
+    ],
+    "axis": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "dia_mm": 2.05,
+    "thread": "M2.5"
+   },
+   {
+    "pos": [
+     -24.0,
+     14.25,
+     -14.899999999999999
+    ],
+    "axis": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "dia_mm": 2.05,
+    "thread": "M2.5"
+   },
+   {
+    "pos": [
+     -24.0,
+     14.25,
+     -26.9
+    ],
+    "axis": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "dia_mm": 2.05,
+    "thread": "M2.5"
+   },
+   {
+    "pos": [
+     0.0,
+     -14.25,
+     -14.899999999999999
+    ],
+    "axis": [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    "dia_mm": 2.05,
+    "thread": "M2.5"
+   },
+   {
+    "pos": [
+     0.0,
+     -14.25,
+     -26.9
+    ],
+    "axis": [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    "dia_mm": 2.05,
+    "thread": "M2.5"
+   },
+   {
+    "pos": [
+     -24.0,
+     -14.25,
+     -14.899999999999999
+    ],
+    "axis": [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    "dia_mm": 2.05,
+    "thread": "M2.5"
+   },
+   {
+    "pos": [
+     -24.0,
+     -14.25,
+     -26.9
+    ],
+    "axis": [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    "dia_mm": 2.05,
+    "thread": "M2.5"
+   },
+   {
+    "pos": [
+     -35.25,
+     8.0,
+     -20.9
+    ],
+    "axis": [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    "dia_mm": 2.05,
+    "thread": "M2.5"
+   },
+   {
+    "pos": [
+     -35.25,
+     -8.0,
+     -20.9
+    ],
+    "axis": [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    "dia_mm": 2.05,
+    "thread": "M2.5"
+   }
+  ],
+  "specs": {
+   "model": "XL430-W250-T",
+   "voltage_v": 11.1,
+   "stall_torque_nm": 1.4,
+   "stall_current_a": 1.3,
+   "current_a": 1.3,
+   "rated_torque_nm": 0.42,
+   "no_load_speed_rpm": 57,
+   "no_load_speed_rad_s": 5.969,
+   "gear_ratio": 258.5,
+   "resolution_counts": 4096,
+   "horn_hole_pcd_mm": 16.0,
+   "horn_thread": "M2",
+   "case_thread": "M2.5",
+   "side_hole_pattern_mm": [
+    24.0,
+    12.0
+   ],
+   "end_hole_spacing_mm": 16.0,
+   "geometry_source": "https://github.com/jess-moss/koch-v1-1 (ROBOTIS STEP)",
+   "note": "rated_torque_nm = 30% of stall (ROBOTIS publishes stall torque only)",
+   "uncertain": [
+    "rated_torque_nm",
+    "side_hole_pattern_mm",
+    "end_hole_spacing_mm"
+   ]
+  },
+  "output_frame": [
+   [
+    0.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "bbox_mm": {
+   "min": [
+    -36.25,
+    -14.25,
+    -37.9
+   ],
+   "max": [
+    11.25,
+    14.25,
+    0.0
+   ]
+  },
+  "mesh_triangles": 2888
+ },
+ "dxl_xm430_w350": {
+  "key": "dxl_xm430_w350",
+  "name": "DYNAMIXEL XM430-W350-T(R)",
+  "category": "actuator",
+  "mass_g": 82.0,
+  "price_usd": 310.39,
+  "supplier_url": "https://www.robotshop.com/products/robotis-dynamixel-xm430-w350-t-smart-servo-actuator",
+  "datasheet_url": "https://emanual.robotis.com/docs/en/dxl/x/xm430-w350/",
+  "envelope_mm": [
+   47.5,
+   28.5,
+   37.9
+  ],
+  "holes": [
+   {
+    "pos": [
+     8.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.6,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     5.656854249492381,
+     5.65685424949238,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.6,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     4.898587196589413e-16,
+     8.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.6,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -5.65685424949238,
+     5.656854249492381,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.6,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -8.0,
+     9.797174393178826e-16,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.6,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -5.6568542494923815,
+     -5.65685424949238,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.6,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -1.4695761589768238e-15,
+     -8.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.6,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     5.656854249492379,
+     -5.6568542494923815,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.6,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     0.0,
+     14.25,
+     -14.899999999999999
+    ],
+    "axis": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "dia_mm": 2.05,
+    "thread": "M2.5"
+   },
+   {
+    "pos": [
+     0.0,
+     14.25,
+     -26.9
+    ],
+    "axis": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "dia_mm": 2.05,
+    "thread": "M2.5"
+   },
+   {
+    "pos": [
+     -24.0,
+     14.25,
+     -14.899999999999999
+    ],
+    "axis": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "dia_mm": 2.05,
+    "thread": "M2.5"
+   },
+   {
+    "pos": [
+     -24.0,
+     14.25,
+     -26.9
+    ],
+    "axis": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "dia_mm": 2.05,
+    "thread": "M2.5"
+   },
+   {
+    "pos": [
+     0.0,
+     -14.25,
+     -14.899999999999999
+    ],
+    "axis": [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    "dia_mm": 2.05,
+    "thread": "M2.5"
+   },
+   {
+    "pos": [
+     0.0,
+     -14.25,
+     -26.9
+    ],
+    "axis": [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    "dia_mm": 2.05,
+    "thread": "M2.5"
+   },
+   {
+    "pos": [
+     -24.0,
+     -14.25,
+     -14.899999999999999
+    ],
+    "axis": [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    "dia_mm": 2.05,
+    "thread": "M2.5"
+   },
+   {
+    "pos": [
+     -24.0,
+     -14.25,
+     -26.9
+    ],
+    "axis": [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    "dia_mm": 2.05,
+    "thread": "M2.5"
+   },
+   {
+    "pos": [
+     -35.25,
+     8.0,
+     -20.9
+    ],
+    "axis": [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    "dia_mm": 2.05,
+    "thread": "M2.5"
+   },
+   {
+    "pos": [
+     -35.25,
+     -8.0,
+     -20.9
+    ],
+    "axis": [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    "dia_mm": 2.05,
+    "thread": "M2.5"
+   }
+  ],
+  "specs": {
+   "model": "XM430-W350-T(R)",
+   "voltage_v": 12.0,
+   "stall_torque_nm": 4.1,
+   "stall_current_a": 2.3,
+   "current_a": 2.3,
+   "rated_torque_nm": 1.23,
+   "no_load_speed_rpm": 46,
+   "no_load_speed_rad_s": 4.817,
+   "gear_ratio": 353.5,
+   "resolution_counts": 4096,
+   "horn_hole_pcd_mm": 16.0,
+   "horn_thread": "M2",
+   "case_thread": "M2.5",
+   "side_hole_pattern_mm": [
+    24.0,
+    12.0
+   ],
+   "end_hole_spacing_mm": 16.0,
+   "geometry_source": "https://github.com/jess-moss/koch-v1-1 (ROBOTIS STEP)",
+   "note": "rated_torque_nm = 30% of stall (ROBOTIS publishes stall torque only)",
+   "uncertain": [
+    "rated_torque_nm",
+    "side_hole_pattern_mm",
+    "end_hole_spacing_mm"
+   ]
+  },
+  "output_frame": [
+   [
+    0.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "bbox_mm": {
+   "min": [
+    -36.25,
+    -14.25,
+    -37.9
+   ],
+   "max": [
+    11.25,
+    14.25,
+    0.0
+   ]
+  },
+  "mesh_triangles": 2888
+ },
+ "esp32_s3_devkitc1": {
+  "key": "esp32_s3_devkitc1",
+  "name": "Espressif ESP32-S3-DevKitC-1 (N8R8)",
+  "category": "compute",
+  "mass_g": 10.0,
+  "price_usd": 15.0,
+  "supplier_url": "https://www.adafruit.com/product/5364",
+  "datasheet_url": "https://dl.espressif.com/dl/PCB_ESP32-S3-DevKitC-1_V1_20210312CB.pdf",
+  "envelope_mm": [
+   64.24,
+   25.4,
+   13.3
+  ],
+  "holes": [],
+  "specs": {
+   "board_mm": [
+    62.74,
+    25.4
+   ],
+   "header_rows": 2,
+   "pins_per_row": 22,
+   "pitch_mm": 2.54,
+   "row_spacing_mm": 22.86,
+   "voltage_v": 5.0,
+   "no_mounting_holes": true,
+   "mount": "no screw holes: plug into 2x22 female headers or a printed slot clamping the board edges",
+   "uncertain": [
+    "mass_g",
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -1.0,
+    0.0,
+    -8.5
+   ],
+   "max": [
+    63.24,
+    25.4,
+    4.8
+   ]
+  },
+  "mesh_triangles": 276
+ },
+ "feetech_fe_urt1": {
+  "key": "feetech_fe_urt1",
+  "name": "Feetech FE-URT-1 USB to TTL/RS485 bus servo adapter",
+  "category": "motor_driver",
+  "mass_g": 12.5,
+  "price_usd": 12.0,
+  "supplier_url": "https://uk.robotshop.com/products/fe-urt-1-usb-to-ttl-485-bus-programmer",
+  "datasheet_url": "https://www.feetechrc.com/2020-05-13_56655.html",
+  "envelope_mm": [
+   55.8,
+   36.6,
+   11.5
+  ],
+  "holes": [
+   {
+    "pos": [
+     3.5,
+     3.9000000000000004,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.2,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     52.3,
+     3.9000000000000004,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.2,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     3.5,
+     32.7,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.2,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     52.3,
+     32.7,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.2,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "interface": "USB to TTL + RS485 half-duplex",
+   "voltage_v": 12.0,
+   "board_mm": [
+    55.8,
+    36.6
+   ],
+   "hole_pattern_mm": [
+    48.8,
+    28.8
+   ],
+   "hole_dia_mm": 3.2,
+   "connectors": "USB, 2.54 mm UART header, 5264-3P (SCS/TTL), 5264-4P (SMS/RS485), 5.08 mm power terminal",
+   "successor": "FE-URT-2 (same outline and holes, USB-C)",
+   "uncertain": [
+    "hole_dia_mm",
+    "price_usd",
+    "voltage_v"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "max": [
+    55.8,
+    36.6,
+    11.5
+   ]
+  },
+  "mesh_triangles": 620
+ },
+ "feetech_sts3215_c001": {
+  "key": "feetech_sts3215_c001",
+  "name": "Feetech STS3215 C001 7.4 V 19.5 kg.cm (1:345)",
+  "category": "actuator",
+  "mass_g": 55.0,
+  "price_usd": 13.89,
+  "supplier_url": "https://openelab.io/products/feetech-sts3215-c001-servo",
+  "datasheet_url": "https://www.feetechrc.com/2020-05-13_56655.html",
+  "envelope_mm": [
+   45.4,
+   24.8,
+   39.6
+  ],
+  "holes": [
+   {
+    "pos": [
+     -29.0,
+     10.25,
+     -2.8
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -29.0,
+     -10.25,
+     -2.8
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -8.3,
+     10.25,
+     -2.8
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -8.3,
+     -10.25,
+     -2.8
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -32.8,
+     10.25,
+     -34.6
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -32.8,
+     -10.25,
+     -34.6
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -8.3,
+     10.25,
+     -34.6
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -8.3,
+     -10.25,
+     -34.6
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     4.9,
+     4.9,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     4.9,
+     -4.9,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -4.9,
+     4.9,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -4.9,
+     -4.9,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     4.9,
+     4.9,
+     -36.4
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     4.9,
+     -4.9,
+     -36.4
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -4.9,
+     4.9,
+     -36.4
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -4.9,
+     -4.9,
+     -36.4
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "variant": "C001",
+   "voltage_v": 7.4,
+   "gear_ratio": 345,
+   "stall_torque_nm": 1.9123,
+   "rated_torque_nm": 0.4903,
+   "stall_torque_kgcm": 19.5,
+   "no_load_speed_rpm": 52,
+   "no_load_speed_rad_s": 5.445,
+   "current_a": 2.5,
+   "stall_current_a": 2.5,
+   "resolution_counts": 4096,
+   "range_deg": 360,
+   "bus": "TTL half-duplex serial (SCS protocol), 1 Mbps",
+   "connector": "2x Molex 5264 3-pin on bottom face",
+   "spline": "25T",
+   "horn_hole_pcd_mm": 13.86,
+   "case_screw": "M2 self-tapping (d1.5 pilot), SO-ARM uses M2x6",
+   "horn_screw": "M3 self-tapping into horn (d2.5)",
+   "geometry_source": "https://github.com/TheRobotStudio/SO-ARM100 STEP/SO100/STS3215_03a.step",
+   "note": "SO-100/SO-101 follower arm servo (7.4 V)",
+   "uncertain": [
+    "rated_torque_nm",
+    "stall_current_a",
+    "current_a"
+   ]
+  },
+  "output_frame": [
+   [
+    0.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "bbox_mm": {
+   "min": [
+    -35.2,
+    -12.4,
+    -38.1
+   ],
+   "max": [
+    10.2,
+    12.4,
+    1.5
+   ]
+  },
+  "mesh_triangles": 3152
+ },
+ "feetech_sts3215_c018": {
+  "key": "feetech_sts3215_c018",
+  "name": "Feetech STS3215 C018 12 V 30 kg.cm (1:345)",
+  "category": "actuator",
+  "mass_g": 55.0,
+  "price_usd": 22.0,
+  "supplier_url": "https://www.robotshop.com/products/feetech-12v-30kgcm-magnetic-encoding-servo-sts3215",
+  "datasheet_url": "https://www.waveshare.com/wiki/ST3215_Servo",
+  "envelope_mm": [
+   45.4,
+   24.8,
+   39.6
+  ],
+  "holes": [
+   {
+    "pos": [
+     -29.0,
+     10.25,
+     -2.8
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -29.0,
+     -10.25,
+     -2.8
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -8.3,
+     10.25,
+     -2.8
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -8.3,
+     -10.25,
+     -2.8
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -32.8,
+     10.25,
+     -34.6
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -32.8,
+     -10.25,
+     -34.6
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -8.3,
+     10.25,
+     -34.6
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -8.3,
+     -10.25,
+     -34.6
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     4.9,
+     4.9,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     4.9,
+     -4.9,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -4.9,
+     4.9,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -4.9,
+     -4.9,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     4.9,
+     4.9,
+     -36.4
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     4.9,
+     -4.9,
+     -36.4
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -4.9,
+     4.9,
+     -36.4
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -4.9,
+     -4.9,
+     -36.4
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "variant": "C018",
+   "voltage_v": 12.0,
+   "gear_ratio": 345,
+   "stall_torque_nm": 2.942,
+   "rated_torque_nm": 0.9807,
+   "stall_torque_kgcm": 30.0,
+   "no_load_speed_rpm": 45,
+   "no_load_speed_rad_s": 4.712,
+   "current_a": 2.7,
+   "stall_current_a": 2.7,
+   "resolution_counts": 4096,
+   "range_deg": 360,
+   "bus": "TTL half-duplex serial (SCS protocol), 1 Mbps",
+   "connector": "2x Molex 5264 3-pin on bottom face",
+   "spline": "25T",
+   "horn_hole_pcd_mm": 13.86,
+   "case_screw": "M2 self-tapping (d1.5 pilot), SO-ARM uses M2x6",
+   "horn_screw": "M3 self-tapping into horn (d2.5)",
+   "geometry_source": "https://github.com/TheRobotStudio/SO-ARM100 STEP/SO100/STS3215_03a.step",
+   "note": "SO-100/SO-101 follower arm, 12 V build",
+   "uncertain": [
+    "rated_torque_nm",
+    "mass_g",
+    "price_usd"
+   ]
+  },
+  "output_frame": [
+   [
+    0.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "bbox_mm": {
+   "min": [
+    -35.2,
+    -12.4,
+    -38.1
+   ],
+   "max": [
+    10.2,
+    12.4,
+    1.5
+   ]
+  },
+  "mesh_triangles": 3152
+ },
+ "feetech_sts3215_c044": {
+  "key": "feetech_sts3215_c044",
+  "name": "Feetech STS3215 C044 7.4 V (1:191, SO-101 leader j1/j3)",
+  "category": "actuator",
+  "mass_g": 55.0,
+  "price_usd": 13.89,
+  "supplier_url": "https://openelab.io/products/feetech-sts3215-c044-servo",
+  "datasheet_url": "https://github.com/TheRobotStudio/SO-ARM100",
+  "envelope_mm": [
+   45.4,
+   24.8,
+   39.6
+  ],
+  "holes": [
+   {
+    "pos": [
+     -29.0,
+     10.25,
+     -2.8
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -29.0,
+     -10.25,
+     -2.8
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -8.3,
+     10.25,
+     -2.8
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -8.3,
+     -10.25,
+     -2.8
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -32.8,
+     10.25,
+     -34.6
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -32.8,
+     -10.25,
+     -34.6
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -8.3,
+     10.25,
+     -34.6
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -8.3,
+     -10.25,
+     -34.6
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     4.9,
+     4.9,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     4.9,
+     -4.9,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -4.9,
+     4.9,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -4.9,
+     -4.9,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     4.9,
+     4.9,
+     -36.4
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     4.9,
+     -4.9,
+     -36.4
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -4.9,
+     4.9,
+     -36.4
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -4.9,
+     -4.9,
+     -36.4
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "variant": "C044",
+   "voltage_v": 7.4,
+   "gear_ratio": 191,
+   "stall_torque_nm": 1.0591,
+   "rated_torque_nm": 0.353,
+   "stall_torque_kgcm": 10.8,
+   "no_load_speed_rpm": 94,
+   "no_load_speed_rad_s": 9.844,
+   "current_a": 2.5,
+   "stall_current_a": 2.5,
+   "resolution_counts": 4096,
+   "range_deg": 360,
+   "bus": "TTL half-duplex serial (SCS protocol), 1 Mbps",
+   "connector": "2x Molex 5264 3-pin on bottom face",
+   "spline": "25T",
+   "horn_hole_pcd_mm": 13.86,
+   "case_screw": "M2 self-tapping (d1.5 pilot), SO-ARM uses M2x6",
+   "horn_screw": "M3 self-tapping into horn (d2.5)",
+   "geometry_source": "https://github.com/TheRobotStudio/SO-ARM100 STEP/SO100/STS3215_03a.step",
+   "note": "leader-arm gearing; torque/speed scaled from C001 by gear ratio",
+   "uncertain": [
+    "stall_torque_nm",
+    "rated_torque_nm",
+    "no_load_speed_rad_s",
+    "stall_current_a",
+    "current_a"
+   ]
+  },
+  "output_frame": [
+   [
+    0.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "bbox_mm": {
+   "min": [
+    -35.2,
+    -12.4,
+    -38.1
+   ],
+   "max": [
+    10.2,
+    12.4,
+    1.5
+   ]
+  },
+  "mesh_triangles": 3152
+ },
+ "feetech_sts3215_c046": {
+  "key": "feetech_sts3215_c046",
+  "name": "Feetech STS3215 C046 7.4 V (1:147, SO-101 leader j4-j6)",
+  "category": "actuator",
+  "mass_g": 55.0,
+  "price_usd": 13.89,
+  "supplier_url": "https://openelab.io/products/feetech-sts3215-c046-servo",
+  "datasheet_url": "https://github.com/TheRobotStudio/SO-ARM100",
+  "envelope_mm": [
+   45.4,
+   24.8,
+   39.6
+  ],
+  "holes": [
+   {
+    "pos": [
+     -29.0,
+     10.25,
+     -2.8
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -29.0,
+     -10.25,
+     -2.8
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -8.3,
+     10.25,
+     -2.8
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -8.3,
+     -10.25,
+     -2.8
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -32.8,
+     10.25,
+     -34.6
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -32.8,
+     -10.25,
+     -34.6
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -8.3,
+     10.25,
+     -34.6
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -8.3,
+     -10.25,
+     -34.6
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     4.9,
+     4.9,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     4.9,
+     -4.9,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -4.9,
+     4.9,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -4.9,
+     -4.9,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     4.9,
+     4.9,
+     -36.4
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     4.9,
+     -4.9,
+     -36.4
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -4.9,
+     4.9,
+     -36.4
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -4.9,
+     -4.9,
+     -36.4
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "variant": "C046",
+   "voltage_v": 7.4,
+   "gear_ratio": 147,
+   "stall_torque_nm": 1.4122,
+   "rated_torque_nm": 0.4707,
+   "stall_torque_kgcm": 14.4,
+   "no_load_speed_rpm": 122,
+   "no_load_speed_rad_s": 12.776,
+   "current_a": 2.5,
+   "stall_current_a": 2.5,
+   "resolution_counts": 4096,
+   "range_deg": 360,
+   "bus": "TTL half-duplex serial (SCS protocol), 1 Mbps",
+   "connector": "2x Molex 5264 3-pin on bottom face",
+   "spline": "25T",
+   "horn_hole_pcd_mm": 13.86,
+   "case_screw": "M2 self-tapping (d1.5 pilot), SO-ARM uses M2x6",
+   "horn_screw": "M3 self-tapping into horn (d2.5)",
+   "geometry_source": "https://github.com/TheRobotStudio/SO-ARM100 STEP/SO100/STS3215_03a.step",
+   "note": "leader-arm gearing",
+   "uncertain": [
+    "stall_torque_nm",
+    "rated_torque_nm",
+    "no_load_speed_rad_s",
+    "stall_current_a",
+    "current_a"
+   ]
+  },
+  "output_frame": [
+   [
+    0.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "bbox_mm": {
+   "min": [
+    -35.2,
+    -12.4,
+    -38.1
+   ],
+   "max": [
+    10.2,
+    12.4,
+    1.5
+   ]
+  },
+  "mesh_triangles": 3152
+ },
+ "feetech_sts3215_c047": {
+  "key": "feetech_sts3215_c047",
+  "name": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+  "category": "actuator",
+  "mass_g": 55.0,
+  "price_usd": 22.0,
+  "supplier_url": "https://www.seeedstudio.com/STS3215-30KG-Serial-Servo-p-6340.html",
+  "datasheet_url": "https://files.seeedstudio.com/Bazaar/product_pdf/108090003.pdf",
+  "envelope_mm": [
+   45.4,
+   24.8,
+   39.6
+  ],
+  "holes": [
+   {
+    "pos": [
+     -29.0,
+     10.25,
+     -2.8
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -29.0,
+     -10.25,
+     -2.8
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -8.3,
+     10.25,
+     -2.8
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -8.3,
+     -10.25,
+     -2.8
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -32.8,
+     10.25,
+     -34.6
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -32.8,
+     -10.25,
+     -34.6
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -8.3,
+     10.25,
+     -34.6
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -8.3,
+     -10.25,
+     -34.6
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     4.9,
+     4.9,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     4.9,
+     -4.9,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -4.9,
+     4.9,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -4.9,
+     -4.9,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     4.9,
+     4.9,
+     -36.4
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     4.9,
+     -4.9,
+     -36.4
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -4.9,
+     4.9,
+     -36.4
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -4.9,
+     -4.9,
+     -36.4
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "variant": "C047",
+   "voltage_v": 12.0,
+   "gear_ratio": 345,
+   "stall_torque_nm": 2.942,
+   "rated_torque_nm": 0.9807,
+   "stall_torque_kgcm": 30.0,
+   "no_load_speed_rpm": 45,
+   "no_load_speed_rad_s": 4.712,
+   "current_a": 2.7,
+   "stall_current_a": 2.7,
+   "resolution_counts": 4096,
+   "range_deg": 360,
+   "bus": "TTL half-duplex serial (SCS protocol), 1 Mbps",
+   "connector": "2x Molex 5264 3-pin on bottom face",
+   "spline": "25T",
+   "horn_hole_pcd_mm": 13.86,
+   "case_screw": "M2 self-tapping (d1.5 pilot), SO-ARM uses M2x6",
+   "horn_screw": "M3 self-tapping into horn (d2.5)",
+   "geometry_source": "https://github.com/TheRobotStudio/SO-ARM100 STEP/SO100/STS3215_03a.step",
+   "note": "12 V / 1:345 variant sold for SO-101 kits (not 1:147)",
+   "uncertain": [
+    "rated_torque_nm",
+    "stall_current_a",
+    "current_a",
+    "no_load_speed_rad_s",
+    "mass_g"
+   ]
+  },
+  "output_frame": [
+   [
+    0.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "bbox_mm": {
+   "min": [
+    -35.2,
+    -12.4,
+    -38.1
+   ],
+   "max": [
+    10.2,
+    12.4,
+    1.5
+   ]
+  },
+  "mesh_triangles": 3152
+ },
+ "feetech_sts3250": {
+  "key": "feetech_sts3250",
+  "name": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
+  "category": "actuator",
+  "mass_g": 74.5,
+  "price_usd": 40.0,
+  "supplier_url": "https://openelab.io/products/feetech-sts3250-c002-servo-12v",
+  "datasheet_url": "https://www.evelta.com/sts3250-12v-50kg-360deg-magnetic-encoder-double-shaft-ttl-servo/",
+  "envelope_mm": [
+   45.4,
+   24.8,
+   39.6
+  ],
+  "holes": [
+   {
+    "pos": [
+     -29.0,
+     10.25,
+     -2.8
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -29.0,
+     -10.25,
+     -2.8
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -8.3,
+     10.25,
+     -2.8
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -8.3,
+     -10.25,
+     -2.8
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -32.8,
+     10.25,
+     -34.6
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -32.8,
+     -10.25,
+     -34.6
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -8.3,
+     10.25,
+     -34.6
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -8.3,
+     -10.25,
+     -34.6
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     4.9,
+     4.9,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     4.9,
+     -4.9,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -4.9,
+     4.9,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -4.9,
+     -4.9,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     4.9,
+     4.9,
+     -36.4
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     4.9,
+     -4.9,
+     -36.4
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -4.9,
+     4.9,
+     -36.4
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -4.9,
+     -4.9,
+     -36.4
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "variant": "STS3250-C002",
+   "voltage_v": 12.0,
+   "gear_ratio": 345,
+   "stall_torque_nm": 4.9033,
+   "rated_torque_nm": 1.5691,
+   "stall_torque_kgcm": 50.0,
+   "no_load_speed_rpm": 75,
+   "no_load_speed_rad_s": 7.854,
+   "current_a": 4.2,
+   "stall_current_a": 4.2,
+   "resolution_counts": 4096,
+   "range_deg": 360,
+   "bus": "TTL half-duplex serial (SCS protocol), 1 Mbps",
+   "connector": "2x Molex 5264 3-pin on bottom face",
+   "spline": "25T",
+   "horn_hole_pcd_mm": 13.86,
+   "case_screw": "M2 self-tapping (d1.5 pilot), SO-ARM uses M2x6",
+   "horn_screw": "M3 self-tapping into horn (d2.5)",
+   "geometry_source": "https://github.com/TheRobotStudio/SO-ARM100 STEP/SO100/STS3215_03a.step",
+   "note": "same 45.2x24.7x35 case as STS3215",
+   "uncertain": [
+    "stall_torque_nm",
+    "rated_torque_nm",
+    "no_load_speed_rad_s",
+    "mass_g",
+    "price_usd"
+   ]
+  },
+  "output_frame": [
+   [
+    0.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "bbox_mm": {
+   "min": [
+    -35.2,
+    -12.4,
+    -38.1
+   ],
+   "max": [
+    10.2,
+    12.4,
+    1.5
+   ]
+  },
+  "mesh_triangles": 3152
+ },
+ "horn_dxl_hn12_n101": {
+  "key": "horn_dxl_hn12_n101",
+  "name": "ROBOTIS HN12-N101 X430 output horn (8x M2 on PCD 16)",
+  "category": "horn",
+  "mass_g": 2.6,
+  "price_usd": 10.0,
+  "supplier_url": "https://robotis.us/hn12-n101-set/",
+  "datasheet_url": "https://emanual.robotis.com/docs/en/dxl/x/xm430-w350/",
+  "envelope_mm": [
+   20.5,
+   20.5,
+   4.5
+  ],
+  "holes": [
+   {
+    "pos": [
+     8.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.6,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     5.656854249492381,
+     5.65685424949238,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.6,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     4.898587196589413e-16,
+     8.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.6,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -5.65685424949238,
+     5.656854249492381,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.6,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -8.0,
+     9.797174393178826e-16,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.6,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -5.6568542494923815,
+     -5.65685424949238,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.6,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -1.4695761589768238e-15,
+     -8.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.6,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     5.656854249492379,
+     -5.6568542494923815,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.6,
+    "thread": "M2"
+   }
+  ],
+  "specs": {
+   "od_mm": 20.5,
+   "thickness_mm": 3.3,
+   "hole_pcd_mm": 16.0,
+   "hole_count": 8,
+   "hole_thread": "M2",
+   "fits": [
+    "dxl_xm430_w350"
+   ],
+   "frames": "FR12-H101K / FR12-S101K (M2x3 wrench bolts)",
+   "note": "geometry measured from the ROBOTIS HN11-I101 (XL430 idler) STEP, which shares the 8-hole PCD 16 frame pattern; HN12-N101 is not for XL430 (XL430 ships with its own horn)",
+   "material": "aluminium",
+   "geometry_source": "https://github.com/jess-moss/koch-v1-1 Robotis_HN11_I101.step",
+   "uncertain": [
+    "mass_g",
+    "price_usd",
+    "hole_thread",
+    "thickness_mm"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -10.25,
+    -10.25,
+    -4.5
+   ],
+   "max": [
+    10.25,
+    10.25,
+    0.0
+   ]
+  },
+  "mesh_triangles": 1280
+ },
+ "horn_sts3215_25t": {
+  "key": "horn_sts3215_25t",
+  "name": "Feetech STS3215 standard horn (25T spline, d20)",
+  "category": "horn",
+  "mass_g": 1.5,
+  "price_usd": 1.0,
+  "supplier_url": "https://www.feetechrc.com/2020-05-13_56655.html",
+  "datasheet_url": "https://github.com/TheRobotStudio/SO-ARM100",
+  "envelope_mm": [
+   20.0,
+   20.0,
+   2.5
+  ],
+  "holes": [
+   {
+    "pos": [
+     4.9,
+     4.9,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     4.9,
+     -4.9,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -4.9,
+     4.9,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -4.9,
+     -4.9,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "od_mm": 20.0,
+   "thickness_mm": 2.5,
+   "spline": "25T",
+   "spline_od_mm": 5.9,
+   "hole_pcd_mm": 13.86,
+   "hole_count": 4,
+   "hole_dia_mm": 2.5,
+   "hole_thread": "M3 self-tapping",
+   "center_counterbore_mm": 4.5,
+   "material": "aluminium alloy",
+   "note": "ships with every STS3215/STS3250",
+   "geometry_source": "https://github.com/TheRobotStudio/SO-ARM100 STEP/SO100/STS3215_03a.step",
+   "uncertain": [
+    "mass_g",
+    "price_usd",
+    "material"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -10.0,
+    -10.0,
+    -2.5
+   ],
+   "max": [
+    10.0,
+    10.0,
+    0.0
+   ]
+  },
+  "mesh_triangles": 848
+ },
+ "insert_m3": {
+  "key": "insert_m3",
+  "name": "Heat-set insert M3x5.7 (ruthex)",
+  "category": "insert",
+  "mass_g": 0.406,
+  "price_usd": 0.12,
+  "supplier_url": "https://www.3djake.com/ruthex/threaded-insert-m3-100-pieces",
+  "datasheet_url": "https://www.3djake.com/ruthex/threaded-insert-m3-100-pieces",
+  "envelope_mm": [
+   4.6,
+   4.6,
+   5.7
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 3.0,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "thread": "M3",
+   "length_mm": 5.7,
+   "knurl_od_mm": 4.6,
+   "pilot_od_mm": 3.9,
+   "print_hole_dia_mm": 4.0,
+   "print_hole_depth_mm": 6.7,
+   "min_wall_mm": 1.6,
+   "material": "brass",
+   "brand": "ruthex",
+   "mass_source": "computed from ruthex nominal geometry",
+   "note": "interference fit: cut print_hole_dia_mm, not the keepout"
+  },
+  "output_frame": null
+ },
+ "insert_m4": {
+  "key": "insert_m4",
+  "name": "Heat-set insert M4x8.1 (ruthex)",
+  "category": "insert",
+  "mass_g": 1.153,
+  "price_usd": 0.18,
+  "supplier_url": "https://www.3djake.com/ruthex/threaded-inserts-m4-50-pieces",
+  "datasheet_url": "https://www.3djake.com/ruthex/threaded-inserts-m4-50-pieces",
+  "envelope_mm": [
+   6.3,
+   6.3,
+   8.1
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 4.0,
+    "thread": "M4"
+   }
+  ],
+  "specs": {
+   "thread": "M4",
+   "length_mm": 8.1,
+   "knurl_od_mm": 6.3,
+   "pilot_od_mm": 5.5,
+   "print_hole_dia_mm": 5.6,
+   "print_hole_depth_mm": 9.1,
+   "min_wall_mm": 2.1,
+   "material": "brass",
+   "brand": "ruthex",
+   "mass_source": "computed from ruthex nominal geometry",
+   "note": "interference fit: cut print_hole_dia_mm, not the keepout"
+  },
+  "output_frame": null
+ },
+ "jetson_orin_nano_super": {
+  "key": "jetson_orin_nano_super",
+  "name": "NVIDIA Jetson Orin Nano Super Developer Kit",
+  "category": "compute",
+  "mass_g": 176.0,
+  "price_usd": 249.0,
+  "supplier_url": "https://developer.nvidia.com/buy-jetson?product=jetson_orin_nano",
+  "datasheet_url": "https://www.electrokit.com/upload/quick/db/0e/bff7_datasheet.pdf",
+  "envelope_mm": [
+   100.0,
+   92.0,
+   34.77
+  ],
+  "holes": [
+   {
+    "pos": [
+     7.0,
+     10.5,
+     -3.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.0,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     93.0,
+     10.5,
+     -3.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.0,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     7.0,
+     68.5,
+     -3.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.0,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     93.0,
+     68.5,
+     -3.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.0,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "devkit_envelope_mm": [
+    103.0,
+    90.5,
+    34.77
+   ],
+   "carrier_mm": [
+    100.0,
+    79.0
+   ],
+   "voltage_v": 19.0,
+   "power_w": [
+    7,
+    25
+   ],
+   "input": "DC barrel 5.5x2.5 mm, 9-20 V (19 V adapter supplied)",
+   "hole_pattern_mm": [
+    86.0,
+    58.0
+   ],
+   "note": "carrier hole pattern assumed equal to the Jetson Nano B01 carrier (86 x 58 mm)",
+   "uncertain": [
+    "mass_g",
+    "hole_pattern_mm",
+    "carrier_mm",
+    "voltage_v"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    -1.5,
+    -3.0
+   ],
+   "max": [
+    100.0,
+    90.5,
+    31.77
+   ]
+  },
+  "mesh_triangles": 1628
+ },
+ "lipo_3s_2200": {
+  "key": "lipo_3s_2200",
+  "name": "LiPo 3S 2200 mAh 25C, XT60 (Gens Ace G-Tech)",
+  "category": "battery",
+  "mass_g": 173.5,
+  "price_usd": 27.0,
+  "supplier_url": "https://www.buddyrc.com/products/gens-ace-25c-2200mah-11-1v-3s-lipo-battery-pack-with-xt60-plug",
+  "datasheet_url": "https://www.buddyrc.com/products/gens-ace-25c-2200mah-11-1v-3s-lipo-battery-pack-with-xt60-plug",
+  "envelope_mm": [
+   119.0,
+   33.5,
+   22.0
+  ],
+  "holes": [],
+  "specs": {
+   "cells": 3,
+   "capacity_mah": 2200,
+   "voltage_v": 11.1,
+   "voltage_max_v": 12.6,
+   "energy_wh": 24.4,
+   "c_rating": 25,
+   "max_current_a": 55.0,
+   "plug": "XT60",
+   "mount": "hook-and-loop strap / printed cradle; never screw into a pack",
+   "uncertain": [
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -12.0,
+    -16.75,
+    0.0
+   ],
+   "max": [
+    107.0,
+    16.75,
+    22.0
+   ]
+  },
+  "mesh_triangles": 172
+ },
+ "lipo_4s_5000": {
+  "key": "lipo_4s_5000",
+  "name": "LiPo 4S 5000 mAh 60C, XT90 (Gens Ace G-Tech)",
+  "category": "battery",
+  "mass_g": 436.0,
+  "price_usd": 57.0,
+  "supplier_url": "https://www.unmannedtechshop.co.uk/de/products/gens-ace-g-tech-5000mah-14-8v-4s-60c-lipo-battery-pack-xt90",
+  "datasheet_url": "https://www.unmannedtechshop.co.uk/de/products/gens-ace-g-tech-5000mah-14-8v-4s-60c-lipo-battery-pack-xt90",
+  "envelope_mm": [
+   149.0,
+   43.0,
+   34.0
+  ],
+  "holes": [],
+  "specs": {
+   "cells": 4,
+   "capacity_mah": 5000,
+   "voltage_v": 14.8,
+   "voltage_max_v": 16.8,
+   "energy_wh": 74.0,
+   "c_rating": 60,
+   "max_current_a": 300.0,
+   "plug": "XT90",
+   "mount": "hook-and-loop strap / printed cradle; never screw into a pack",
+   "uncertain": [
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -12.0,
+    -21.5,
+    0.0
+   ],
+   "max": [
+    137.0,
+    21.5,
+    34.0
+   ]
+  },
+  "mesh_triangles": 172
+ },
+ "lipo_6s_10000": {
+  "key": "lipo_6s_10000",
+  "name": "LiPo 6S 10000 mAh 30C, EC5 (Tattu)",
+  "category": "battery",
+  "mass_g": 1350.0,
+  "price_usd": 216.99,
+  "supplier_url": "https://www.buddyrc.com/products/tattu-22-2v-30c-6s-10000mah-lipo-battery-pack-with-ec5-plug-for-uav-drone",
+  "datasheet_url": "https://www.buddyrc.com/products/tattu-22-2v-30c-6s-10000mah-lipo-battery-pack-with-ec5-plug-for-uav-drone",
+  "envelope_mm": [
+   188.0,
+   66.0,
+   58.0
+  ],
+  "holes": [],
+  "specs": {
+   "cells": 6,
+   "capacity_mah": 10000,
+   "voltage_v": 22.2,
+   "voltage_max_v": 25.2,
+   "energy_wh": 222.0,
+   "c_rating": 30,
+   "max_current_a": 300.0,
+   "plug": "EC5",
+   "mount": "hook-and-loop strap / printed cradle; never screw into a pack"
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -12.0,
+    -33.0,
+    0.0
+   ],
+   "max": [
+    176.0,
+    33.0,
+    58.0
+   ]
+  },
+  "mesh_triangles": 172
+ },
+ "n20_gearmotor_100to1": {
+  "key": "n20_gearmotor_100to1",
+  "name": "Micro metal gearmotor (N20) HP 6 V 100:1 (Pololu #1101)",
+  "category": "actuator",
+  "mass_g": 9.5,
+  "price_usd": 23.95,
+  "supplier_url": "https://www.pololu.com/product/1101",
+  "datasheet_url": "https://www.pololu.com/file/0J949/micro-metal-gearmotors-dimensions.pdf",
+  "envelope_mm": [
+   12.0,
+   10.0,
+   37.6
+  ],
+  "holes": [
+   {
+    "pos": [
+     4.5,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.3,
+    "thread": "M1.6"
+   },
+   {
+    "pos": [
+     -4.5,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.3,
+    "thread": "M1.6"
+   }
+  ],
+  "specs": {
+   "voltage_v": 6.0,
+   "gear_ratio": 100.37,
+   "stall_torque_nm": 0.167,
+   "stall_torque_kgcm": 1.7,
+   "rated_torque_nm": 0.04,
+   "no_load_speed_rpm": 310,
+   "no_load_speed_rad_s": 32.463,
+   "no_load_current_a": 0.1,
+   "stall_current_a": 1.6,
+   "current_a": 1.6,
+   "shaft_d_mm": 3.0,
+   "shaft_flat_mm": 2.5,
+   "shaft_length_mm": 10.0,
+   "hole_spacing_mm": 9.0,
+   "note": "rated_torque_nm is an estimate (~25% of stall) for continuous use; cheaper generic N20s share the 12x10 face and 2x M1.6 / 9 mm pattern",
+   "uncertain": [
+    "rated_torque_nm"
+   ]
+  },
+  "output_frame": [
+   [
+    0.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "bbox_mm": {
+   "min": [
+    -6.0,
+    -5.0,
+    -27.6
+   ],
+   "max": [
+    6.0,
+    5.0,
+    10.0
+   ]
+  },
+  "mesh_triangles": 614
+ },
+ "nema17_42x40": {
+  "key": "nema17_42x40",
+  "name": "NEMA17 stepper 42x42x40 mm, 0.45 N.m (StepperOnline 17HS16-2004S1)",
+  "category": "actuator",
+  "mass_g": 300.0,
+  "price_usd": 9.5,
+  "supplier_url": "https://www.stepperonline.co.uk/nema-17-bipolar-45ncm-64oz-in-2a-42x42x40mm-4-wires-w-1m-cable-connector-17hs16-2004s1.html",
+  "datasheet_url": "https://www.oyostepper.com/images/upload/File/17HS16-2004S1.pdf",
+  "envelope_mm": [
+   47.0,
+   42.0,
+   63.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     15.5,
+     15.5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     15.5,
+     -15.5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -15.5,
+     15.5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -15.5,
+     -15.5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "holding_torque_nm": 0.45,
+   "stall_torque_nm": 0.45,
+   "rated_torque_nm": 0.3,
+   "no_load_speed_rpm": 600,
+   "no_load_speed_rad_s": 62.832,
+   "voltage_v": 24.0,
+   "phase_current_a": 2.0,
+   "current_a": 2.0,
+   "phase_resistance_ohm": 1.1,
+   "inductance_mh": 2.6,
+   "step_angle_deg": 1.8,
+   "hole_pattern_mm": 31.0,
+   "hole_thread_depth_mm": 4.5,
+   "pilot_d_mm": 22.0,
+   "pilot_h_mm": 2.0,
+   "shaft_d_mm": 5.0,
+   "shaft_length_mm": 23.0,
+   "shaft_flat_mm": 4.5,
+   "connector": "4-pin 2.54 mm on side face near rear cap",
+   "note": "voltage_v = driver supply; speed/rated torque are typical pull-out values with a 24 V chopper driver",
+   "uncertain": [
+    "rated_torque_nm",
+    "no_load_speed_rad_s",
+    "price_usd"
+   ]
+  },
+  "output_frame": [
+   [
+    0.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "bbox_mm": {
+   "min": [
+    -21.0,
+    -21.0,
+    -40.0
+   ],
+   "max": [
+    26.0,
+    21.0,
+    23.0
+   ]
+  },
+  "mesh_triangles": 1000
+ },
+ "nema17_42x40_pg5": {
+  "key": "nema17_42x40_pg5",
+  "name": "NEMA17 stepper + 5.18:1 planetary gearbox (StepperOnline 17HS19-1684S-PG5)",
+  "category": "actuator",
+  "mass_g": 600.0,
+  "price_usd": 34.77,
+  "supplier_url": "https://www.stepperonline.co.uk/nema-17-stepper-motor-bipolar-l-48mm-w-gear-ratio-5-1-planetary-gearbox-17hs19-1684s-pg5.html",
+  "datasheet_url": "https://www.oyostepper.com/images/upload/File/17HS19-1684S-PG5.pdf",
+  "envelope_mm": [
+   47.0,
+   42.0,
+   97.3
+  ],
+  "holes": [
+   {
+    "pos": [
+     9.899494936611665,
+     9.899494936611664,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -9.899494936611664,
+     9.899494936611665,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -9.899494936611667,
+     -9.899494936611664,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     9.899494936611664,
+     -9.899494936611667,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "gear_ratio": 5.18,
+   "rated_torque_nm": 2.0,
+   "stall_torque_nm": 4.0,
+   "permissible_torque_nm": 2.0,
+   "momentary_torque_nm": 4.0,
+   "motor_holding_torque_nm": 0.44,
+   "no_load_speed_rpm": 116,
+   "no_load_speed_rad_s": 12.147,
+   "voltage_v": 24.0,
+   "phase_current_a": 1.68,
+   "current_a": 1.68,
+   "backlash_deg": 1.0,
+   "gearbox_od_mm": 36.0,
+   "gearbox_length_mm": 27.3,
+   "body_length_mm": 75.3,
+   "hole_pcd_mm": 28.0,
+   "pilot_d_mm": 22.0,
+   "shaft_d_mm": 8.0,
+   "shaft_length_mm": 20.0,
+   "shaft_flat_mm": 7.0,
+   "axial_load_n": 50,
+   "radial_load_n": 100,
+   "note": "shaft modelled 22 mm (20 +-1 from pilot face + tolerance)",
+   "uncertain": [
+    "mass_g",
+    "no_load_speed_rad_s",
+    "shaft_flat_mm",
+    "hole_orientation_deg"
+   ],
+   "hole_orientation_deg": 45.0
+  },
+  "output_frame": [
+   [
+    0.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "bbox_mm": {
+   "min": [
+    -21.15,
+    -21.15,
+    -75.3
+   ],
+   "max": [
+    26.0,
+    21.15,
+    22.0
+   ]
+  },
+  "mesh_triangles": 1360
+ },
+ "nut_m3": {
+  "key": "nut_m3",
+  "name": "Hex nut M3 (ISO 4032)",
+  "category": "fastener",
+  "mass_g": 0.397,
+  "price_usd": 0.04,
+  "supplier_url": "https://www.mcmaster.com/products/hex-nuts/",
+  "datasheet_url": "https://webstore.ansi.org/standards/iso/iso40322012",
+  "envelope_mm": [
+   6.351,
+   5.5,
+   2.4
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.0,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "thread": "M3",
+   "across_flats_mm": 5.5,
+   "across_corners_mm": 6.35,
+   "height_mm": 2.4,
+   "pocket_af_mm": 5.8,
+   "pocket_depth_mm": 2.7,
+   "standard": "ISO 4032",
+   "material": "steel class 8, zinc",
+   "mass_source": "computed from ISO 4032 nominal geometry"
+  },
+  "output_frame": null
+ },
+ "nut_m4": {
+  "key": "nut_m4",
+  "name": "Hex nut M4 (ISO 4032)",
+  "category": "fastener",
+  "mass_g": 0.838,
+  "price_usd": 0.05,
+  "supplier_url": "https://www.mcmaster.com/products/hex-nuts/",
+  "datasheet_url": "https://webstore.ansi.org/standards/iso/iso40322012",
+  "envelope_mm": [
+   8.083,
+   7.0,
+   3.2
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 4.0,
+    "thread": "M4"
+   }
+  ],
+  "specs": {
+   "thread": "M4",
+   "across_flats_mm": 7.0,
+   "across_corners_mm": 8.08,
+   "height_mm": 3.2,
+   "pocket_af_mm": 7.3,
+   "pocket_depth_mm": 3.5,
+   "standard": "ISO 4032",
+   "material": "steel class 8, zinc",
+   "mass_source": "computed from ISO 4032 nominal geometry"
+  },
+  "output_frame": null
+ },
+ "pololu_37d_50to1_64cpr": {
+  "key": "pololu_37d_50to1_64cpr",
+  "name": "Pololu 50:1 Metal Gearmotor 37Dx70L 12 V with 64 CPR encoder (#4753)",
+  "category": "actuator",
+  "mass_g": 205.0,
+  "price_usd": 60.95,
+  "supplier_url": "https://www.pololu.com/product/4753",
+  "datasheet_url": "https://www.pololu.com/file/0J1735/37d-metal-gearmotors-dimension-diagram.pdf",
+  "envelope_mm": [
+   36.8,
+   38.4,
+   95.1
+  ],
+  "holes": [
+   {
+    "pos": [
+     6.423393758658801,
+     7.749999999999999,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -6.999999999999999,
+     15.5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -20.4233937586588,
+     7.749999999999999,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -20.423393758658797,
+     -7.750000000000002,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -7.000000000000003,
+     -15.5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     6.423393758658795,
+     -7.750000000000007,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "voltage_v": 12.0,
+   "gear_ratio": 50,
+   "stall_torque_nm": 2.06,
+   "stall_torque_kgcm": 21.0,
+   "rated_torque_nm": 0.98,
+   "no_load_speed_rpm": 200,
+   "no_load_speed_rad_s": 20.944,
+   "no_load_current_a": 0.2,
+   "stall_current_a": 5.5,
+   "current_a": 5.5,
+   "max_power_w": 10.0,
+   "encoder_cpr_motor": 64,
+   "encoder_cpr_output": 3200,
+   "shaft_d_mm": 6.0,
+   "shaft_flat_mm": 5.4,
+   "shaft_length_mm": 22.0,
+   "shaft_offset_mm": 7.0,
+   "gearbox_center_xy_mm": [
+    -7.0,
+    0.0
+   ],
+   "hole_pcd_mm": 31.0,
+   "hole_thread_depth_mm": 3.0,
+   "hole_orientation_deg": 30.0,
+   "note": "rated_torque_nm = Pololu continuous-load guideline (10 kg.cm); output face holes are on a circle concentric with the gearbox, not the shaft",
+   "uncertain": [
+    "hole_orientation_deg"
+   ]
+  },
+  "output_frame": [
+   [
+    0.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "bbox_mm": {
+   "min": [
+    -25.4,
+    -18.4,
+    -73.1
+   ],
+   "max": [
+    11.4,
+    20.0,
+    22.0
+   ]
+  },
+  "mesh_triangles": 1142
+ },
+ "psu_12v_lrs75": {
+  "key": "psu_12v_lrs75",
+  "name": "Mean Well LRS-75-12 enclosed PSU, 12 V 6 A (75 W)",
+  "category": "misc",
+  "mass_g": 230.0,
+  "price_usd": 22.0,
+  "supplier_url": "https://www.digikey.com/en/products/result?keywords=LRS-75-12",
+  "datasheet_url": "https://www.meanwell.com/Upload/PDF/LRS-75/LRS-75-SPEC.PDF",
+  "envelope_mm": [
+   99.0,
+   97.0,
+   30.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     20.5,
+     45.5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     75.5,
+     45.5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     10.0,
+     0.0,
+     15.0
+    ],
+    "axis": [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     84.0,
+     0.0,
+     14.5
+    ],
+    "axis": [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "voltage_v": 12.0,
+   "current_a": 6.0,
+   "power_w": 75.0,
+   "input_vac": [
+    85,
+    264
+   ],
+   "terminals": "AC L, AC N, FG, -V, +V (9.5 mm pitch)",
+   "bottom_screw_depth_max_mm": 3.0,
+   "side_screw_depth_max_mm": 5.0,
+   "note": "satisfies a 12 V / 5 A requirement with 20 % margin; Mean Well's 12 V 5 A frame is LRS-75",
+   "uncertain": [
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "max": [
+    99.0,
+    97.0,
+    30.0
+   ]
+  },
+  "mesh_triangles": 664
+ },
+ "realsense_d435i": {
+  "key": "realsense_d435i",
+  "name": "Intel RealSense D435i depth camera + IMU",
+  "category": "sensor",
+  "mass_g": 75.0,
+  "price_usd": 399.0,
+  "supplier_url": "https://www.realsenseai.com/products/depth-camera-d435i/",
+  "datasheet_url": "https://www.realsenseai.com/download/21345/",
+  "envelope_mm": [
+   90.0,
+   25.0,
+   25.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     22.5,
+     12.5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -22.5,
+     12.5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -7.5,
+     0.0,
+     -12.5
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 5.1,
+    "thread": "1/4-20"
+   }
+  ],
+  "specs": {
+   "baseline_mm": 50.0,
+   "back_holes": "2x M3, 45 mm apart, max insertion 3 mm, 0.4 N.m",
+   "tripod": "1/4-20 UNC on bottom",
+   "voltage_v": 5.0,
+   "power_w": 3.4,
+   "interface": "USB-C 3.1",
+   "tripod_x_mm": -7.5,
+   "lens_positions_mm": "approximate",
+   "uncertain": [
+    "tripod_x_mm",
+    "lens_positions_mm"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -45.0,
+    -12.5,
+    -12.5
+   ],
+   "max": [
+    45.0,
+    12.5,
+    12.5
+   ]
+  },
+  "mesh_triangles": 852
+ },
+ "rpi5": {
+  "key": "rpi5",
+  "name": "Raspberry Pi 5 (4 GB)",
+  "category": "compute",
+  "mass_g": 46.0,
+  "price_usd": 110.0,
+  "supplier_url": "https://www.raspberrypi.com/products/raspberry-pi-5/",
+  "datasheet_url": "https://datasheets.raspberrypi.com/rpi5/raspberry-pi-5-mechanical-drawing.pdf",
+  "envelope_mm": [
+   88.0,
+   57.2,
+   19.1
+  ],
+  "holes": [
+   {
+    "pos": [
+     3.5,
+     3.5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.7,
+    "thread": "M2.5"
+   },
+   {
+    "pos": [
+     61.5,
+     3.5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.7,
+    "thread": "M2.5"
+   },
+   {
+    "pos": [
+     3.5,
+     52.5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.7,
+    "thread": "M2.5"
+   },
+   {
+    "pos": [
+     61.5,
+     52.5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.7,
+    "thread": "M2.5"
+   }
+  ],
+  "specs": {
+   "board_mm": [
+    85.0,
+    56.0
+   ],
+   "hole_pattern_mm": [
+    58.0,
+    49.0
+   ],
+   "hole_dia_mm": 2.7,
+   "voltage_v": 5.0,
+   "current_a": 5.0,
+   "power": "USB-C PD 5 V / 5 A",
+   "price_note": "Raspberry Pi product brief list price, 4 GB",
+   "uncertain": [
+    "mass_g",
+    "usb_stack_height_mm"
+   ],
+   "usb_stack_height_mm": 16.0
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    -1.2,
+    -1.5
+   ],
+   "max": [
+    88.0,
+    56.0,
+    17.6
+   ]
+  },
+  "mesh_triangles": 766
+ },
+ "rpi_camera_module_3": {
+  "key": "rpi_camera_module_3",
+  "name": "Raspberry Pi Camera Module 3 (standard lens)",
+  "category": "sensor",
+  "mass_g": 4.0,
+  "price_usd": 25.0,
+  "supplier_url": "https://www.raspberrypi.com/products/camera-module-3/",
+  "datasheet_url": "https://datasheets.raspberrypi.com/camera/camera-module-3-standard-mechanical-drawing.pdf",
+  "envelope_mm": [
+   25.0,
+   23.862,
+   11.3
+  ],
+  "holes": [
+   {
+    "pos": [
+     2.0,
+     2.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.2,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     23.0,
+     2.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.2,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     2.0,
+     14.5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.2,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     23.0,
+     14.5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.2,
+    "thread": "M2"
+   }
+  ],
+  "specs": {
+   "lens_xy_mm": [
+    12.5,
+    14.4
+   ],
+   "fov_deg": [
+    66,
+    41
+   ],
+   "hole_pattern_mm": [
+    21.0,
+    12.5
+   ],
+   "pcb_t_mm": 1.12,
+   "voltage_v": 3.3,
+   "interface": "15-pin 1 mm FFC (CSI-2)",
+   "uncertain": [
+    "mass_g"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    0.0,
+    -2.2
+   ],
+   "max": [
+    25.0,
+    23.86,
+    9.1
+   ]
+  },
+  "mesh_triangles": 692
+ },
+ "rplidar_a1m8": {
+  "key": "rplidar_a1m8",
+  "name": "Slamtec RPLIDAR A1M8 (360 deg, 12 m)",
+  "category": "sensor",
+  "mass_g": 170.0,
+  "price_usd": 99.0,
+  "supplier_url": "https://www.dfrobot.com/product-1125.html",
+  "datasheet_url": "https://www.slamtec.com/en/lidar/a1spec",
+  "envelope_mm": [
+   96.8,
+   70.3,
+   55.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     20.0,
+     20.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.05,
+    "thread": "M2.5"
+   },
+   {
+    "pos": [
+     20.0,
+     -20.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.05,
+    "thread": "M2.5"
+   },
+   {
+    "pos": [
+     -20.0,
+     20.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.05,
+    "thread": "M2.5"
+   },
+   {
+    "pos": [
+     -20.0,
+     -20.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.05,
+    "thread": "M2.5"
+   }
+  ],
+  "specs": {
+   "voltage_v": 5.0,
+   "current_a": 0.4,
+   "range_m": 12.0,
+   "scan_rate_hz": 5.5,
+   "scan_plane_z_mm": 42.0,
+   "hole_positions_mm": "4x M2.5 on 40 mm square under the head (assumed)",
+   "uncertain": [
+    "hole_positions_mm",
+    "scan_plane_z_mm",
+    "current_a",
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -35.15,
+    -35.15,
+    0.0
+   ],
+   "max": [
+    61.65,
+    35.15,
+    55.0
+   ]
+  },
+  "mesh_triangles": 1002
+ },
+ "rplidar_c1": {
+  "key": "rplidar_c1",
+  "name": "Slamtec RPLIDAR C1 (DTOF 360 deg, 12 m)",
+  "category": "sensor",
+  "mass_g": 110.0,
+  "price_usd": 79.99,
+  "supplier_url": "https://www.waveshare.com/rplidar-c1.htm",
+  "datasheet_url": "https://cdn.shopify.com/s/files/1/0058/3145/8904/files/SLAMTEC_rplidar_datasheet_C1_v1.1_en.pdf",
+  "envelope_mm": [
+   55.6,
+   59.6,
+   41.3
+  ],
+  "holes": [
+   {
+    "pos": [
+     21.5,
+     21.5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.05,
+    "thread": "M2.5"
+   },
+   {
+    "pos": [
+     21.5,
+     -21.5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.05,
+    "thread": "M2.5"
+   },
+   {
+    "pos": [
+     -21.5,
+     21.5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.05,
+    "thread": "M2.5"
+   },
+   {
+    "pos": [
+     -21.5,
+     -21.5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.05,
+    "thread": "M2.5"
+   }
+  ],
+  "specs": {
+   "scan_plane_z_mm": 29.8,
+   "range_m": 12.0,
+   "voltage_v": 5.0,
+   "current_a": 0.23,
+   "power_w": 1.15,
+   "hole_pattern_mm": 43.0,
+   "max_screw_depth_mm": 4.0,
+   "interface": "UART 460800",
+   "head_d_mm": 44.0,
+   "uncertain": [
+    "head_d_mm"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -27.8,
+    -31.8,
+    0.0
+   ],
+   "max": [
+    27.8,
+    27.8,
+    41.3
+   ]
+  },
+  "mesh_triangles": 868
+ },
+ "shcs_m2.5x10": {
+  "key": "shcs_m2.5x10",
+  "name": "Socket head cap screw M2.5x10 (ISO 4762)",
+  "category": "fastener",
+  "mass_g": 0.597,
+  "price_usd": 0.1,
+  "supplier_url": "https://www.mcmaster.com/products/socket-head-screws/",
+  "datasheet_url": "https://www.iso.org/standard/34460.html",
+  "envelope_mm": [
+   4.5,
+   4.5,
+   12.5
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.9,
+    "thread": "M2.5"
+   }
+  ],
+  "specs": {
+   "thread": "M2.5",
+   "length_mm": 10.0,
+   "pitch_mm": 0.45,
+   "head_dia_mm": 4.5,
+   "head_height_mm": 2.5,
+   "hex_key_mm": 2.0,
+   "clearance_hole_mm": 2.9,
+   "tap_drill_mm": 2.05,
+   "counterbore_dia_mm": 5.1,
+   "counterbore_depth_mm": 2.8,
+   "material": "alloy steel 12.9, black oxide",
+   "standard": "ISO 4762",
+   "mass_source": "computed from ISO 4762 nominal geometry"
+  },
+  "output_frame": null
+ },
+ "shcs_m2.5x12": {
+  "key": "shcs_m2.5x12",
+  "name": "Socket head cap screw M2.5x12 (ISO 4762)",
+  "category": "fastener",
+  "mass_g": 0.663,
+  "price_usd": 0.1,
+  "supplier_url": "https://www.mcmaster.com/products/socket-head-screws/",
+  "datasheet_url": "https://www.iso.org/standard/34460.html",
+  "envelope_mm": [
+   4.5,
+   4.5,
+   14.5
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.9,
+    "thread": "M2.5"
+   }
+  ],
+  "specs": {
+   "thread": "M2.5",
+   "length_mm": 12.0,
+   "pitch_mm": 0.45,
+   "head_dia_mm": 4.5,
+   "head_height_mm": 2.5,
+   "hex_key_mm": 2.0,
+   "clearance_hole_mm": 2.9,
+   "tap_drill_mm": 2.05,
+   "counterbore_dia_mm": 5.1,
+   "counterbore_depth_mm": 2.8,
+   "material": "alloy steel 12.9, black oxide",
+   "standard": "ISO 4762",
+   "mass_source": "computed from ISO 4762 nominal geometry"
+  },
+  "output_frame": null
+ },
+ "shcs_m2.5x16": {
+  "key": "shcs_m2.5x16",
+  "name": "Socket head cap screw M2.5x16 (ISO 4762)",
+  "category": "fastener",
+  "mass_g": 0.793,
+  "price_usd": 0.1,
+  "supplier_url": "https://www.mcmaster.com/products/socket-head-screws/",
+  "datasheet_url": "https://www.iso.org/standard/34460.html",
+  "envelope_mm": [
+   4.5,
+   4.5,
+   18.5
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.9,
+    "thread": "M2.5"
+   }
+  ],
+  "specs": {
+   "thread": "M2.5",
+   "length_mm": 16.0,
+   "pitch_mm": 0.45,
+   "head_dia_mm": 4.5,
+   "head_height_mm": 2.5,
+   "hex_key_mm": 2.0,
+   "clearance_hole_mm": 2.9,
+   "tap_drill_mm": 2.05,
+   "counterbore_dia_mm": 5.1,
+   "counterbore_depth_mm": 2.8,
+   "material": "alloy steel 12.9, black oxide",
+   "standard": "ISO 4762",
+   "mass_source": "computed from ISO 4762 nominal geometry"
+  },
+  "output_frame": null
+ },
+ "shcs_m2.5x20": {
+  "key": "shcs_m2.5x20",
+  "name": "Socket head cap screw M2.5x20 (ISO 4762)",
+  "category": "fastener",
+  "mass_g": 0.924,
+  "price_usd": 0.1,
+  "supplier_url": "https://www.mcmaster.com/products/socket-head-screws/",
+  "datasheet_url": "https://www.iso.org/standard/34460.html",
+  "envelope_mm": [
+   4.5,
+   4.5,
+   22.5
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.9,
+    "thread": "M2.5"
+   }
+  ],
+  "specs": {
+   "thread": "M2.5",
+   "length_mm": 20.0,
+   "pitch_mm": 0.45,
+   "head_dia_mm": 4.5,
+   "head_height_mm": 2.5,
+   "hex_key_mm": 2.0,
+   "clearance_hole_mm": 2.9,
+   "tap_drill_mm": 2.05,
+   "counterbore_dia_mm": 5.1,
+   "counterbore_depth_mm": 2.8,
+   "material": "alloy steel 12.9, black oxide",
+   "standard": "ISO 4762",
+   "mass_source": "computed from ISO 4762 nominal geometry"
+  },
+  "output_frame": null
+ },
+ "shcs_m2.5x25": {
+  "key": "shcs_m2.5x25",
+  "name": "Socket head cap screw M2.5x25 (ISO 4762)",
+  "category": "fastener",
+  "mass_g": 1.087,
+  "price_usd": 0.1,
+  "supplier_url": "https://www.mcmaster.com/products/socket-head-screws/",
+  "datasheet_url": "https://www.iso.org/standard/34460.html",
+  "envelope_mm": [
+   4.5,
+   4.5,
+   27.5
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.9,
+    "thread": "M2.5"
+   }
+  ],
+  "specs": {
+   "thread": "M2.5",
+   "length_mm": 25.0,
+   "pitch_mm": 0.45,
+   "head_dia_mm": 4.5,
+   "head_height_mm": 2.5,
+   "hex_key_mm": 2.0,
+   "clearance_hole_mm": 2.9,
+   "tap_drill_mm": 2.05,
+   "counterbore_dia_mm": 5.1,
+   "counterbore_depth_mm": 2.8,
+   "material": "alloy steel 12.9, black oxide",
+   "standard": "ISO 4762",
+   "mass_source": "computed from ISO 4762 nominal geometry"
+  },
+  "output_frame": null
+ },
+ "shcs_m2.5x30": {
+  "key": "shcs_m2.5x30",
+  "name": "Socket head cap screw M2.5x30 (ISO 4762)",
+  "category": "fastener",
+  "mass_g": 1.25,
+  "price_usd": 0.1,
+  "supplier_url": "https://www.mcmaster.com/products/socket-head-screws/",
+  "datasheet_url": "https://www.iso.org/standard/34460.html",
+  "envelope_mm": [
+   4.5,
+   4.5,
+   32.5
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.9,
+    "thread": "M2.5"
+   }
+  ],
+  "specs": {
+   "thread": "M2.5",
+   "length_mm": 30.0,
+   "pitch_mm": 0.45,
+   "head_dia_mm": 4.5,
+   "head_height_mm": 2.5,
+   "hex_key_mm": 2.0,
+   "clearance_hole_mm": 2.9,
+   "tap_drill_mm": 2.05,
+   "counterbore_dia_mm": 5.1,
+   "counterbore_depth_mm": 2.8,
+   "material": "alloy steel 12.9, black oxide",
+   "standard": "ISO 4762",
+   "mass_source": "computed from ISO 4762 nominal geometry"
+  },
+  "output_frame": null
+ },
+ "shcs_m2.5x6": {
+  "key": "shcs_m2.5x6",
+  "name": "Socket head cap screw M2.5x6 (ISO 4762)",
+  "category": "fastener",
+  "mass_g": 0.467,
+  "price_usd": 0.1,
+  "supplier_url": "https://www.mcmaster.com/products/socket-head-screws/",
+  "datasheet_url": "https://www.iso.org/standard/34460.html",
+  "envelope_mm": [
+   4.5,
+   4.5,
+   8.5
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.9,
+    "thread": "M2.5"
+   }
+  ],
+  "specs": {
+   "thread": "M2.5",
+   "length_mm": 6.0,
+   "pitch_mm": 0.45,
+   "head_dia_mm": 4.5,
+   "head_height_mm": 2.5,
+   "hex_key_mm": 2.0,
+   "clearance_hole_mm": 2.9,
+   "tap_drill_mm": 2.05,
+   "counterbore_dia_mm": 5.1,
+   "counterbore_depth_mm": 2.8,
+   "material": "alloy steel 12.9, black oxide",
+   "standard": "ISO 4762",
+   "mass_source": "computed from ISO 4762 nominal geometry"
+  },
+  "output_frame": null
+ },
+ "shcs_m2.5x8": {
+  "key": "shcs_m2.5x8",
+  "name": "Socket head cap screw M2.5x8 (ISO 4762)",
+  "category": "fastener",
+  "mass_g": 0.532,
+  "price_usd": 0.1,
+  "supplier_url": "https://www.mcmaster.com/products/socket-head-screws/",
+  "datasheet_url": "https://www.iso.org/standard/34460.html",
+  "envelope_mm": [
+   4.5,
+   4.5,
+   10.5
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.9,
+    "thread": "M2.5"
+   }
+  ],
+  "specs": {
+   "thread": "M2.5",
+   "length_mm": 8.0,
+   "pitch_mm": 0.45,
+   "head_dia_mm": 4.5,
+   "head_height_mm": 2.5,
+   "hex_key_mm": 2.0,
+   "clearance_hole_mm": 2.9,
+   "tap_drill_mm": 2.05,
+   "counterbore_dia_mm": 5.1,
+   "counterbore_depth_mm": 2.8,
+   "material": "alloy steel 12.9, black oxide",
+   "standard": "ISO 4762",
+   "mass_source": "computed from ISO 4762 nominal geometry"
+  },
+  "output_frame": null
+ },
+ "shcs_m2x10": {
+  "key": "shcs_m2x10",
+  "name": "Socket head cap screw M2x10 (ISO 4762)",
+  "category": "fastener",
+  "mass_g": 0.368,
+  "price_usd": 0.1,
+  "supplier_url": "https://www.mcmaster.com/products/socket-head-screws/",
+  "datasheet_url": "https://www.iso.org/standard/34460.html",
+  "envelope_mm": [
+   3.8,
+   3.8,
+   12.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.4,
+    "thread": "M2"
+   }
+  ],
+  "specs": {
+   "thread": "M2",
+   "length_mm": 10.0,
+   "pitch_mm": 0.4,
+   "head_dia_mm": 3.8,
+   "head_height_mm": 2.0,
+   "hex_key_mm": 1.5,
+   "clearance_hole_mm": 2.4,
+   "tap_drill_mm": 1.6,
+   "counterbore_dia_mm": 4.4,
+   "counterbore_depth_mm": 2.3,
+   "material": "alloy steel 12.9, black oxide",
+   "standard": "ISO 4762",
+   "mass_source": "computed from ISO 4762 nominal geometry"
+  },
+  "output_frame": null
+ },
+ "shcs_m2x12": {
+  "key": "shcs_m2x12",
+  "name": "Socket head cap screw M2x12 (ISO 4762)",
+  "category": "fastener",
+  "mass_g": 0.41,
+  "price_usd": 0.1,
+  "supplier_url": "https://www.mcmaster.com/products/socket-head-screws/",
+  "datasheet_url": "https://www.iso.org/standard/34460.html",
+  "envelope_mm": [
+   3.8,
+   3.8,
+   14.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.4,
+    "thread": "M2"
+   }
+  ],
+  "specs": {
+   "thread": "M2",
+   "length_mm": 12.0,
+   "pitch_mm": 0.4,
+   "head_dia_mm": 3.8,
+   "head_height_mm": 2.0,
+   "hex_key_mm": 1.5,
+   "clearance_hole_mm": 2.4,
+   "tap_drill_mm": 1.6,
+   "counterbore_dia_mm": 4.4,
+   "counterbore_depth_mm": 2.3,
+   "material": "alloy steel 12.9, black oxide",
+   "standard": "ISO 4762",
+   "mass_source": "computed from ISO 4762 nominal geometry"
+  },
+  "output_frame": null
+ },
+ "shcs_m2x16": {
+  "key": "shcs_m2x16",
+  "name": "Socket head cap screw M2x16 (ISO 4762)",
+  "category": "fastener",
+  "mass_g": 0.494,
+  "price_usd": 0.1,
+  "supplier_url": "https://www.mcmaster.com/products/socket-head-screws/",
+  "datasheet_url": "https://www.iso.org/standard/34460.html",
+  "envelope_mm": [
+   3.8,
+   3.8,
+   18.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.4,
+    "thread": "M2"
+   }
+  ],
+  "specs": {
+   "thread": "M2",
+   "length_mm": 16.0,
+   "pitch_mm": 0.4,
+   "head_dia_mm": 3.8,
+   "head_height_mm": 2.0,
+   "hex_key_mm": 1.5,
+   "clearance_hole_mm": 2.4,
+   "tap_drill_mm": 1.6,
+   "counterbore_dia_mm": 4.4,
+   "counterbore_depth_mm": 2.3,
+   "material": "alloy steel 12.9, black oxide",
+   "standard": "ISO 4762",
+   "mass_source": "computed from ISO 4762 nominal geometry"
+  },
+  "output_frame": null
+ },
+ "shcs_m2x20": {
+  "key": "shcs_m2x20",
+  "name": "Socket head cap screw M2x20 (ISO 4762)",
+  "category": "fastener",
+  "mass_g": 0.577,
+  "price_usd": 0.1,
+  "supplier_url": "https://www.mcmaster.com/products/socket-head-screws/",
+  "datasheet_url": "https://www.iso.org/standard/34460.html",
+  "envelope_mm": [
+   3.8,
+   3.8,
+   22.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.4,
+    "thread": "M2"
+   }
+  ],
+  "specs": {
+   "thread": "M2",
+   "length_mm": 20.0,
+   "pitch_mm": 0.4,
+   "head_dia_mm": 3.8,
+   "head_height_mm": 2.0,
+   "hex_key_mm": 1.5,
+   "clearance_hole_mm": 2.4,
+   "tap_drill_mm": 1.6,
+   "counterbore_dia_mm": 4.4,
+   "counterbore_depth_mm": 2.3,
+   "material": "alloy steel 12.9, black oxide",
+   "standard": "ISO 4762",
+   "mass_source": "computed from ISO 4762 nominal geometry"
+  },
+  "output_frame": null
+ },
+ "shcs_m2x25": {
+  "key": "shcs_m2x25",
+  "name": "Socket head cap screw M2x25 (ISO 4762)",
+  "category": "fastener",
+  "mass_g": 0.682,
+  "price_usd": 0.1,
+  "supplier_url": "https://www.mcmaster.com/products/socket-head-screws/",
+  "datasheet_url": "https://www.iso.org/standard/34460.html",
+  "envelope_mm": [
+   3.8,
+   3.8,
+   27.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.4,
+    "thread": "M2"
+   }
+  ],
+  "specs": {
+   "thread": "M2",
+   "length_mm": 25.0,
+   "pitch_mm": 0.4,
+   "head_dia_mm": 3.8,
+   "head_height_mm": 2.0,
+   "hex_key_mm": 1.5,
+   "clearance_hole_mm": 2.4,
+   "tap_drill_mm": 1.6,
+   "counterbore_dia_mm": 4.4,
+   "counterbore_depth_mm": 2.3,
+   "material": "alloy steel 12.9, black oxide",
+   "standard": "ISO 4762",
+   "mass_source": "computed from ISO 4762 nominal geometry"
+  },
+  "output_frame": null
+ },
+ "shcs_m2x30": {
+  "key": "shcs_m2x30",
+  "name": "Socket head cap screw M2x30 (ISO 4762)",
+  "category": "fastener",
+  "mass_g": 0.786,
+  "price_usd": 0.1,
+  "supplier_url": "https://www.mcmaster.com/products/socket-head-screws/",
+  "datasheet_url": "https://www.iso.org/standard/34460.html",
+  "envelope_mm": [
+   3.8,
+   3.8,
+   32.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.4,
+    "thread": "M2"
+   }
+  ],
+  "specs": {
+   "thread": "M2",
+   "length_mm": 30.0,
+   "pitch_mm": 0.4,
+   "head_dia_mm": 3.8,
+   "head_height_mm": 2.0,
+   "hex_key_mm": 1.5,
+   "clearance_hole_mm": 2.4,
+   "tap_drill_mm": 1.6,
+   "counterbore_dia_mm": 4.4,
+   "counterbore_depth_mm": 2.3,
+   "material": "alloy steel 12.9, black oxide",
+   "standard": "ISO 4762",
+   "mass_source": "computed from ISO 4762 nominal geometry"
+  },
+  "output_frame": null
+ },
+ "shcs_m2x6": {
+  "key": "shcs_m2x6",
+  "name": "Socket head cap screw M2x6 (ISO 4762)",
+  "category": "fastener",
+  "mass_g": 0.285,
+  "price_usd": 0.1,
+  "supplier_url": "https://www.mcmaster.com/products/socket-head-screws/",
+  "datasheet_url": "https://www.iso.org/standard/34460.html",
+  "envelope_mm": [
+   3.8,
+   3.8,
+   8.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.4,
+    "thread": "M2"
+   }
+  ],
+  "specs": {
+   "thread": "M2",
+   "length_mm": 6.0,
+   "pitch_mm": 0.4,
+   "head_dia_mm": 3.8,
+   "head_height_mm": 2.0,
+   "hex_key_mm": 1.5,
+   "clearance_hole_mm": 2.4,
+   "tap_drill_mm": 1.6,
+   "counterbore_dia_mm": 4.4,
+   "counterbore_depth_mm": 2.3,
+   "material": "alloy steel 12.9, black oxide",
+   "standard": "ISO 4762",
+   "mass_source": "computed from ISO 4762 nominal geometry"
+  },
+  "output_frame": null
+ },
+ "shcs_m2x8": {
+  "key": "shcs_m2x8",
+  "name": "Socket head cap screw M2x8 (ISO 4762)",
+  "category": "fastener",
+  "mass_g": 0.327,
+  "price_usd": 0.1,
+  "supplier_url": "https://www.mcmaster.com/products/socket-head-screws/",
+  "datasheet_url": "https://www.iso.org/standard/34460.html",
+  "envelope_mm": [
+   3.8,
+   3.8,
+   10.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.4,
+    "thread": "M2"
+   }
+  ],
+  "specs": {
+   "thread": "M2",
+   "length_mm": 8.0,
+   "pitch_mm": 0.4,
+   "head_dia_mm": 3.8,
+   "head_height_mm": 2.0,
+   "hex_key_mm": 1.5,
+   "clearance_hole_mm": 2.4,
+   "tap_drill_mm": 1.6,
+   "counterbore_dia_mm": 4.4,
+   "counterbore_depth_mm": 2.3,
+   "material": "alloy steel 12.9, black oxide",
+   "standard": "ISO 4762",
+   "mass_source": "computed from ISO 4762 nominal geometry"
+  },
+  "output_frame": null
+ },
+ "shcs_m3x10": {
+  "key": "shcs_m3x10",
+  "name": "Socket head cap screw M3x10 (ISO 4762)",
+  "category": "fastener",
+  "mass_g": 0.953,
+  "price_usd": 0.08,
+  "supplier_url": "https://www.mcmaster.com/products/socket-head-screws/",
+  "datasheet_url": "https://www.iso.org/standard/34460.html",
+  "envelope_mm": [
+   5.5,
+   5.5,
+   13.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.4,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "thread": "M3",
+   "length_mm": 10.0,
+   "pitch_mm": 0.5,
+   "head_dia_mm": 5.5,
+   "head_height_mm": 3.0,
+   "hex_key_mm": 2.5,
+   "clearance_hole_mm": 3.4,
+   "tap_drill_mm": 2.5,
+   "counterbore_dia_mm": 6.1,
+   "counterbore_depth_mm": 3.3,
+   "material": "alloy steel 12.9, black oxide",
+   "standard": "ISO 4762",
+   "mass_source": "computed from ISO 4762 nominal geometry"
+  },
+  "output_frame": null
+ },
+ "shcs_m3x12": {
+  "key": "shcs_m3x12",
+  "name": "Socket head cap screw M3x12 (ISO 4762)",
+  "category": "fastener",
+  "mass_g": 1.047,
+  "price_usd": 0.08,
+  "supplier_url": "https://www.mcmaster.com/products/socket-head-screws/",
+  "datasheet_url": "https://www.iso.org/standard/34460.html",
+  "envelope_mm": [
+   5.5,
+   5.5,
+   15.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.4,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "thread": "M3",
+   "length_mm": 12.0,
+   "pitch_mm": 0.5,
+   "head_dia_mm": 5.5,
+   "head_height_mm": 3.0,
+   "hex_key_mm": 2.5,
+   "clearance_hole_mm": 3.4,
+   "tap_drill_mm": 2.5,
+   "counterbore_dia_mm": 6.1,
+   "counterbore_depth_mm": 3.3,
+   "material": "alloy steel 12.9, black oxide",
+   "standard": "ISO 4762",
+   "mass_source": "computed from ISO 4762 nominal geometry"
+  },
+  "output_frame": null
+ },
+ "shcs_m3x16": {
+  "key": "shcs_m3x16",
+  "name": "Socket head cap screw M3x16 (ISO 4762)",
+  "category": "fastener",
+  "mass_g": 1.234,
+  "price_usd": 0.08,
+  "supplier_url": "https://www.mcmaster.com/products/socket-head-screws/",
+  "datasheet_url": "https://www.iso.org/standard/34460.html",
+  "envelope_mm": [
+   5.5,
+   5.5,
+   19.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.4,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "thread": "M3",
+   "length_mm": 16.0,
+   "pitch_mm": 0.5,
+   "head_dia_mm": 5.5,
+   "head_height_mm": 3.0,
+   "hex_key_mm": 2.5,
+   "clearance_hole_mm": 3.4,
+   "tap_drill_mm": 2.5,
+   "counterbore_dia_mm": 6.1,
+   "counterbore_depth_mm": 3.3,
+   "material": "alloy steel 12.9, black oxide",
+   "standard": "ISO 4762",
+   "mass_source": "computed from ISO 4762 nominal geometry"
+  },
+  "output_frame": null
+ },
+ "shcs_m3x20": {
+  "key": "shcs_m3x20",
+  "name": "Socket head cap screw M3x20 (ISO 4762)",
+  "category": "fastener",
+  "mass_g": 1.422,
+  "price_usd": 0.08,
+  "supplier_url": "https://www.mcmaster.com/products/socket-head-screws/",
+  "datasheet_url": "https://www.iso.org/standard/34460.html",
+  "envelope_mm": [
+   5.5,
+   5.5,
+   23.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.4,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "thread": "M3",
+   "length_mm": 20.0,
+   "pitch_mm": 0.5,
+   "head_dia_mm": 5.5,
+   "head_height_mm": 3.0,
+   "hex_key_mm": 2.5,
+   "clearance_hole_mm": 3.4,
+   "tap_drill_mm": 2.5,
+   "counterbore_dia_mm": 6.1,
+   "counterbore_depth_mm": 3.3,
+   "material": "alloy steel 12.9, black oxide",
+   "standard": "ISO 4762",
+   "mass_source": "computed from ISO 4762 nominal geometry"
+  },
+  "output_frame": null
+ },
+ "shcs_m3x25": {
+  "key": "shcs_m3x25",
+  "name": "Socket head cap screw M3x25 (ISO 4762)",
+  "category": "fastener",
+  "mass_g": 1.657,
+  "price_usd": 0.08,
+  "supplier_url": "https://www.mcmaster.com/products/socket-head-screws/",
+  "datasheet_url": "https://www.iso.org/standard/34460.html",
+  "envelope_mm": [
+   5.5,
+   5.5,
+   28.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.4,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "thread": "M3",
+   "length_mm": 25.0,
+   "pitch_mm": 0.5,
+   "head_dia_mm": 5.5,
+   "head_height_mm": 3.0,
+   "hex_key_mm": 2.5,
+   "clearance_hole_mm": 3.4,
+   "tap_drill_mm": 2.5,
+   "counterbore_dia_mm": 6.1,
+   "counterbore_depth_mm": 3.3,
+   "material": "alloy steel 12.9, black oxide",
+   "standard": "ISO 4762",
+   "mass_source": "computed from ISO 4762 nominal geometry"
+  },
+  "output_frame": null
+ },
+ "shcs_m3x30": {
+  "key": "shcs_m3x30",
+  "name": "Socket head cap screw M3x30 (ISO 4762)",
+  "category": "fastener",
+  "mass_g": 1.892,
+  "price_usd": 0.08,
+  "supplier_url": "https://www.mcmaster.com/products/socket-head-screws/",
+  "datasheet_url": "https://www.iso.org/standard/34460.html",
+  "envelope_mm": [
+   5.5,
+   5.5,
+   33.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.4,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "thread": "M3",
+   "length_mm": 30.0,
+   "pitch_mm": 0.5,
+   "head_dia_mm": 5.5,
+   "head_height_mm": 3.0,
+   "hex_key_mm": 2.5,
+   "clearance_hole_mm": 3.4,
+   "tap_drill_mm": 2.5,
+   "counterbore_dia_mm": 6.1,
+   "counterbore_depth_mm": 3.3,
+   "material": "alloy steel 12.9, black oxide",
+   "standard": "ISO 4762",
+   "mass_source": "computed from ISO 4762 nominal geometry"
+  },
+  "output_frame": null
+ },
+ "shcs_m3x6": {
+  "key": "shcs_m3x6",
+  "name": "Socket head cap screw M3x6 (ISO 4762)",
+  "category": "fastener",
+  "mass_g": 0.765,
+  "price_usd": 0.08,
+  "supplier_url": "https://www.mcmaster.com/products/socket-head-screws/",
+  "datasheet_url": "https://www.iso.org/standard/34460.html",
+  "envelope_mm": [
+   5.5,
+   5.5,
+   9.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.4,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "thread": "M3",
+   "length_mm": 6.0,
+   "pitch_mm": 0.5,
+   "head_dia_mm": 5.5,
+   "head_height_mm": 3.0,
+   "hex_key_mm": 2.5,
+   "clearance_hole_mm": 3.4,
+   "tap_drill_mm": 2.5,
+   "counterbore_dia_mm": 6.1,
+   "counterbore_depth_mm": 3.3,
+   "material": "alloy steel 12.9, black oxide",
+   "standard": "ISO 4762",
+   "mass_source": "computed from ISO 4762 nominal geometry"
+  },
+  "output_frame": null
+ },
+ "shcs_m3x8": {
+  "key": "shcs_m3x8",
+  "name": "Socket head cap screw M3x8 (ISO 4762)",
+  "category": "fastener",
+  "mass_g": 0.859,
+  "price_usd": 0.08,
+  "supplier_url": "https://www.mcmaster.com/products/socket-head-screws/",
+  "datasheet_url": "https://www.iso.org/standard/34460.html",
+  "envelope_mm": [
+   5.5,
+   5.5,
+   11.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.4,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "thread": "M3",
+   "length_mm": 8.0,
+   "pitch_mm": 0.5,
+   "head_dia_mm": 5.5,
+   "head_height_mm": 3.0,
+   "hex_key_mm": 2.5,
+   "clearance_hole_mm": 3.4,
+   "tap_drill_mm": 2.5,
+   "counterbore_dia_mm": 6.1,
+   "counterbore_depth_mm": 3.3,
+   "material": "alloy steel 12.9, black oxide",
+   "standard": "ISO 4762",
+   "mass_source": "computed from ISO 4762 nominal geometry"
+  },
+  "output_frame": null
+ },
+ "shcs_m4x10": {
+  "key": "shcs_m4x10",
+  "name": "Socket head cap screw M4x10 (ISO 4762)",
+  "category": "fastener",
+  "mass_g": 1.897,
+  "price_usd": 0.1,
+  "supplier_url": "https://www.mcmaster.com/products/socket-head-screws/",
+  "datasheet_url": "https://www.iso.org/standard/34460.html",
+  "envelope_mm": [
+   7.0,
+   7.0,
+   14.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 4.5,
+    "thread": "M4"
+   }
+  ],
+  "specs": {
+   "thread": "M4",
+   "length_mm": 10.0,
+   "pitch_mm": 0.7,
+   "head_dia_mm": 7.0,
+   "head_height_mm": 4.0,
+   "hex_key_mm": 3.0,
+   "clearance_hole_mm": 4.5,
+   "tap_drill_mm": 3.3,
+   "counterbore_dia_mm": 7.6,
+   "counterbore_depth_mm": 4.3,
+   "material": "alloy steel 12.9, black oxide",
+   "standard": "ISO 4762",
+   "mass_source": "computed from ISO 4762 nominal geometry"
+  },
+  "output_frame": null
+ },
+ "shcs_m4x12": {
+  "key": "shcs_m4x12",
+  "name": "Socket head cap screw M4x12 (ISO 4762)",
+  "category": "fastener",
+  "mass_g": 2.063,
+  "price_usd": 0.1,
+  "supplier_url": "https://www.mcmaster.com/products/socket-head-screws/",
+  "datasheet_url": "https://www.iso.org/standard/34460.html",
+  "envelope_mm": [
+   7.0,
+   7.0,
+   16.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 4.5,
+    "thread": "M4"
+   }
+  ],
+  "specs": {
+   "thread": "M4",
+   "length_mm": 12.0,
+   "pitch_mm": 0.7,
+   "head_dia_mm": 7.0,
+   "head_height_mm": 4.0,
+   "hex_key_mm": 3.0,
+   "clearance_hole_mm": 4.5,
+   "tap_drill_mm": 3.3,
+   "counterbore_dia_mm": 7.6,
+   "counterbore_depth_mm": 4.3,
+   "material": "alloy steel 12.9, black oxide",
+   "standard": "ISO 4762",
+   "mass_source": "computed from ISO 4762 nominal geometry"
+  },
+  "output_frame": null
+ },
+ "shcs_m4x16": {
+  "key": "shcs_m4x16",
+  "name": "Socket head cap screw M4x16 (ISO 4762)",
+  "category": "fastener",
+  "mass_g": 2.397,
+  "price_usd": 0.1,
+  "supplier_url": "https://www.mcmaster.com/products/socket-head-screws/",
+  "datasheet_url": "https://www.iso.org/standard/34460.html",
+  "envelope_mm": [
+   7.0,
+   7.0,
+   20.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 4.5,
+    "thread": "M4"
+   }
+  ],
+  "specs": {
+   "thread": "M4",
+   "length_mm": 16.0,
+   "pitch_mm": 0.7,
+   "head_dia_mm": 7.0,
+   "head_height_mm": 4.0,
+   "hex_key_mm": 3.0,
+   "clearance_hole_mm": 4.5,
+   "tap_drill_mm": 3.3,
+   "counterbore_dia_mm": 7.6,
+   "counterbore_depth_mm": 4.3,
+   "material": "alloy steel 12.9, black oxide",
+   "standard": "ISO 4762",
+   "mass_source": "computed from ISO 4762 nominal geometry"
+  },
+  "output_frame": null
+ },
+ "shcs_m4x20": {
+  "key": "shcs_m4x20",
+  "name": "Socket head cap screw M4x20 (ISO 4762)",
+  "category": "fastener",
+  "mass_g": 2.731,
+  "price_usd": 0.1,
+  "supplier_url": "https://www.mcmaster.com/products/socket-head-screws/",
+  "datasheet_url": "https://www.iso.org/standard/34460.html",
+  "envelope_mm": [
+   7.0,
+   7.0,
+   24.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 4.5,
+    "thread": "M4"
+   }
+  ],
+  "specs": {
+   "thread": "M4",
+   "length_mm": 20.0,
+   "pitch_mm": 0.7,
+   "head_dia_mm": 7.0,
+   "head_height_mm": 4.0,
+   "hex_key_mm": 3.0,
+   "clearance_hole_mm": 4.5,
+   "tap_drill_mm": 3.3,
+   "counterbore_dia_mm": 7.6,
+   "counterbore_depth_mm": 4.3,
+   "material": "alloy steel 12.9, black oxide",
+   "standard": "ISO 4762",
+   "mass_source": "computed from ISO 4762 nominal geometry"
+  },
+  "output_frame": null
+ },
+ "shcs_m4x25": {
+  "key": "shcs_m4x25",
+  "name": "Socket head cap screw M4x25 (ISO 4762)",
+  "category": "fastener",
+  "mass_g": 3.149,
+  "price_usd": 0.1,
+  "supplier_url": "https://www.mcmaster.com/products/socket-head-screws/",
+  "datasheet_url": "https://www.iso.org/standard/34460.html",
+  "envelope_mm": [
+   7.0,
+   7.0,
+   29.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 4.5,
+    "thread": "M4"
+   }
+  ],
+  "specs": {
+   "thread": "M4",
+   "length_mm": 25.0,
+   "pitch_mm": 0.7,
+   "head_dia_mm": 7.0,
+   "head_height_mm": 4.0,
+   "hex_key_mm": 3.0,
+   "clearance_hole_mm": 4.5,
+   "tap_drill_mm": 3.3,
+   "counterbore_dia_mm": 7.6,
+   "counterbore_depth_mm": 4.3,
+   "material": "alloy steel 12.9, black oxide",
+   "standard": "ISO 4762",
+   "mass_source": "computed from ISO 4762 nominal geometry"
+  },
+  "output_frame": null
+ },
+ "shcs_m4x30": {
+  "key": "shcs_m4x30",
+  "name": "Socket head cap screw M4x30 (ISO 4762)",
+  "category": "fastener",
+  "mass_g": 3.566,
+  "price_usd": 0.1,
+  "supplier_url": "https://www.mcmaster.com/products/socket-head-screws/",
+  "datasheet_url": "https://www.iso.org/standard/34460.html",
+  "envelope_mm": [
+   7.0,
+   7.0,
+   34.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 4.5,
+    "thread": "M4"
+   }
+  ],
+  "specs": {
+   "thread": "M4",
+   "length_mm": 30.0,
+   "pitch_mm": 0.7,
+   "head_dia_mm": 7.0,
+   "head_height_mm": 4.0,
+   "hex_key_mm": 3.0,
+   "clearance_hole_mm": 4.5,
+   "tap_drill_mm": 3.3,
+   "counterbore_dia_mm": 7.6,
+   "counterbore_depth_mm": 4.3,
+   "material": "alloy steel 12.9, black oxide",
+   "standard": "ISO 4762",
+   "mass_source": "computed from ISO 4762 nominal geometry"
+  },
+  "output_frame": null
+ },
+ "shcs_m4x6": {
+  "key": "shcs_m4x6",
+  "name": "Socket head cap screw M4x6 (ISO 4762)",
+  "category": "fastener",
+  "mass_g": 1.563,
+  "price_usd": 0.1,
+  "supplier_url": "https://www.mcmaster.com/products/socket-head-screws/",
+  "datasheet_url": "https://www.iso.org/standard/34460.html",
+  "envelope_mm": [
+   7.0,
+   7.0,
+   10.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 4.5,
+    "thread": "M4"
+   }
+  ],
+  "specs": {
+   "thread": "M4",
+   "length_mm": 6.0,
+   "pitch_mm": 0.7,
+   "head_dia_mm": 7.0,
+   "head_height_mm": 4.0,
+   "hex_key_mm": 3.0,
+   "clearance_hole_mm": 4.5,
+   "tap_drill_mm": 3.3,
+   "counterbore_dia_mm": 7.6,
+   "counterbore_depth_mm": 4.3,
+   "material": "alloy steel 12.9, black oxide",
+   "standard": "ISO 4762",
+   "mass_source": "computed from ISO 4762 nominal geometry"
+  },
+  "output_frame": null
+ },
+ "shcs_m4x8": {
+  "key": "shcs_m4x8",
+  "name": "Socket head cap screw M4x8 (ISO 4762)",
+  "category": "fastener",
+  "mass_g": 1.73,
+  "price_usd": 0.1,
+  "supplier_url": "https://www.mcmaster.com/products/socket-head-screws/",
+  "datasheet_url": "https://www.iso.org/standard/34460.html",
+  "envelope_mm": [
+   7.0,
+   7.0,
+   12.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 4.5,
+    "thread": "M4"
+   }
+  ],
+  "specs": {
+   "thread": "M4",
+   "length_mm": 8.0,
+   "pitch_mm": 0.7,
+   "head_dia_mm": 7.0,
+   "head_height_mm": 4.0,
+   "hex_key_mm": 3.0,
+   "clearance_hole_mm": 4.5,
+   "tap_drill_mm": 3.3,
+   "counterbore_dia_mm": 7.6,
+   "counterbore_depth_mm": 4.3,
+   "material": "alloy steel 12.9, black oxide",
+   "standard": "ISO 4762",
+   "mass_source": "computed from ISO 4762 nominal geometry"
+  },
+  "output_frame": null
+ },
+ "waveshare_bus_servo_adapter": {
+  "key": "waveshare_bus_servo_adapter",
+  "name": "Waveshare Bus Servo Adapter (A)",
+  "category": "motor_driver",
+  "mass_g": 10.0,
+  "price_usd": 10.6,
+  "supplier_url": "https://www.waveshare.com/bus-servo-adapter-a.htm",
+  "datasheet_url": "https://www.waveshare.com/wiki/Bus_Servo_Adapter_(A)",
+  "envelope_mm": [
+   42.0,
+   33.0,
+   12.6
+  ],
+  "holes": [
+   {
+    "pos": [
+     3.0,
+     3.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     39.0,
+     3.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     3.0,
+     30.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     39.0,
+     30.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M2"
+   }
+  ],
+  "specs": {
+   "interface": "USB/UART to TTL bus servo",
+   "voltage_v": 12.0,
+   "input_v_range": [
+    9.0,
+    12.6
+   ],
+   "board_mm": [
+    42.0,
+    33.0
+   ],
+   "hole_dia_mm": 2.5,
+   "uncertain": [
+    "mass_g",
+    "hole_positions",
+    "envelope_mm"
+   ],
+   "hole_positions": "3 mm from each corner (assumed)"
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "max": [
+    42.0,
+    33.0,
+    12.6
+   ]
+  },
+  "mesh_triangles": 632
+ },
+ "wheel_65mm_tt": {
+  "key": "wheel_65mm_tt",
+  "name": "65 mm rubber wheel for TT gearmotors (double-D 5.3x3.7 bore)",
+  "category": "wheel",
+  "mass_g": 36.3,
+  "price_usd": 2.0,
+  "supplier_url": "https://makerlab-electronics.com/products/65mm-yellow-wheel",
+  "datasheet_url": "https://makerlab-electronics.com/products/65mm-yellow-wheel",
+  "envelope_mm": [
+   65.0,
+   65.0,
+   26.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 5.3,
+    "thread": null
+   }
+  ],
+  "specs": {
+   "od_mm": 65.0,
+   "width_mm": 26.0,
+   "bore": "double-D 5.3 x 3.7 mm (TT gearmotor)",
+   "retaining_screw": "M2.5 self-tapping into shaft end",
+   "material": "ABS rim, rubber tyre",
+   "uncertain": [
+    "bore",
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -32.5,
+    -32.5,
+    0.0
+   ],
+   "max": [
+    32.5,
+    32.5,
+    26.0
+   ]
+  },
+  "mesh_triangles": 2192
+ },
+ "wheel_90mm_37d": {
+  "key": "wheel_90mm_37d",
+  "name": "Pololu 90x10 mm wheel + 6 mm universal aluminium hub (for 37D gearmotors)",
+  "category": "wheel",
+  "mass_g": 31.3,
+  "price_usd": 11.22,
+  "supplier_url": "https://www.pololu.com/product/1435",
+  "datasheet_url": "https://www.pololu.com/file/0J161/1083-6mm-4-40-hub-dimensions.pdf",
+  "envelope_mm": [
+   90.0,
+   90.0,
+   19.2
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 6.0,
+    "thread": null
+   }
+  ],
+  "specs": {
+   "od_mm": 90.0,
+   "width_mm": 10.0,
+   "bore_mm": 6.0,
+   "hub": "Pololu #1999 (M3) / #1083 (#4-40)",
+   "hub_flange_d_mm": 25.4,
+   "hub_holes": "6 on 19 mm PCD, pairs 12.7 / 19.1 mm apart",
+   "set_screws": 2,
+   "parts": {
+    "wheel_1435_each_g": 23.0,
+    "hub_g": 6.8,
+    "screws_g": 1.5
+   },
+   "note": "Pololu sells no 100 mm wheel for the 6 mm hub; 90 mm is the closest catalogue size",
+   "hub_hole_angles_deg": "0/90/180/270 + 180+-41.9",
+   "uncertain": [
+    "mass_g",
+    "hub_hole_angles_deg"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -45.0,
+    -45.0,
+    0.0
+   ],
+   "max": [
+    45.0,
+    45.0,
+    19.2
+   ]
+  },
+  "mesh_triangles": 2312
+ }
+}
