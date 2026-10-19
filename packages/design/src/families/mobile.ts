@@ -621,12 +621,33 @@ function designBase(kind: BaseKind, req: MobileRequest): RobotSpecification {
     const lidarAt: [number, number] = [-L / 2 + 36, 0];
     if (sensors.includes("lidar")) reserved.push({ x0: lidarAt[0] - 33, x1: lidarAt[0] + 33, y0: -33, y1: 33 });
     if (sensors.includes("depth")) reserved.push({ x0: front - 50, x1: front, y0: -34, y1: 34 });
-    if (sensors.includes("camera")) reserved.push({ x0: front - 24, x1: front, y0: sensors.includes("depth") ? 36 : -20, y1: sensors.includes("depth") ? 70 : 20 });
-    const clear = electronicsBay(b, items, { x0: -L / 2 + 4, x1: L / 2 - 4, y0: -W / 2 + 4, y1: W / 2 - 4 }, reserved, top);
-    if (sensors.includes("lidar")) lidarMast(b, lidarAt[0], lidarAt[1], top, clear);
+    if (sensors.includes("camera")) reserved.push({ x0: front - 24, x1: front, y0: sensors.includes("depth") ? 46 : -20, y1: sensors.includes("depth") ? 82 : 20 });
+    const area: Rect = { x0: -L / 2 + 4, x1: L / 2 - 4, y0: -W / 2 + 4, y1: W / 2 - 4 };
+    if (packBay(items, area, reserved)) {
+      const clear = electronicsBay(b, items, area, reserved, top);
+      if (sensors.includes("lidar")) lidarMast(b, lidarAt[0], lidarAt[1], top, clear);
+    } else {
+      // too much for one deck (TurtleBot "waffle" layout): battery and drivers below, computer, IMU and
+      // regulator on an upper deck on four printed pillars, the lidar on top of it
+      const ux0 = -L / 2 + 6, ux1 = front - (sensors.includes("depth") || sensors.includes("camera") ? 58 : 6), uy = W / 2 - 6;
+      const pillars: [number, number][] = [[ux0 + 12, uy - 12], [ux0 + 12, -uy + 12], [ux1 - 12, uy - 12], [ux1 - 12, -uy + 12]];
+      const low = items.filter((i) => i.kind === "battery" || i.key === "cytron_mdd10a"), high = items.filter((i) => !low.includes(i));
+      const lowRes = [...reserved.filter((_, i) => !(sensors.includes("lidar") && i === 0)), ...pillars.map(([x, y]) => ({ x0: x - 10, x1: x + 10, y0: y - 10, y1: y + 10 }))];
+      const lowTop = electronicsBay(b, low, area, lowRes, top);
+      const zU = Math.max(lowTop + 6, top + 50);
+      const upOps: Op[] = [{ op: "box", min: [ux0, -uy, zU], max: [ux1, uy, zU + 4], r: 12 }, ...pillars.map(([x, y]) => ({ op: "hole", a: [x, y, zU - 1], b: [x, y, zU + 5], d: 3.4 }) as Op)];
+      if (fitsBed([ux1 - ux0, 2 * uy, 4])) b.printed("upper_deck", "base_link", upOps, "printed_dark");
+      else b.fabricated("upper_deck", "base_link", upOps, { density: ALU, material: "aluminium", item: `${Math.round(ux1 - ux0)} x ${2 * uy} x 4 mm upper deck (aluminium, ~$25)`, usd: 25 });
+      pillars.forEach(([x, y], i) => b.printed(`pillar_${i + 1}`, "base_link", [{ op: "rod", a: [x, y, top], b: [x, y, zU], r: 7 }, { op: "hole", a: [x, y, top - 1], b: [x, y, zU + 1], d: 2.8 }], "printed_dark"));
+      b.A.fastener("M3 x 10 (pillars)", 8);
+      const upTop = zU + 4, uArea: Rect = { x0: ux0 + 4, x1: ux1 - 4, y0: -uy + 4, y1: uy - 4 };
+      const uRes: Rect[] = [...pillars.map(([x, y]) => ({ x0: x - 9, x1: x + 9, y0: y - 9, y1: y + 9 })), ...(sensors.includes("lidar") ? [{ x0: ux0 + 4, x1: ux0 + 70, y0: -33, y1: 33 }] : [])];
+      const clear = electronicsBay(b, high, uArea, uRes, upTop, "upper_deck");
+      if (sensors.includes("lidar")) lidarMast(b, ux0 + 37, 0, upTop, clear, "upper_deck");
+    }
     if (sensors.includes("depth")) depthCamera(b, front - 14, 0, top + 40, top);
     if (sensors.includes("camera")) {
-      const y = sensors.includes("depth") ? 52 : 0, x = front - 14;
+      const y = sensors.includes("depth") ? 64 : 0, x = front - 14;
       const T = cameraModule(b, "front_camera", "base_link", [x + 10, y, top + 30]);
       b.printed("front_camera_bracket", "base_link", [{ op: "box", min: [x - 6, y - 16, top], max: [x, y + 16, top + 45], r: 2 },
         { op: "box", min: [x - 6, y - 16, top], max: [x + 8, y + 16, top + 4], r: 2 }, { op: "box", min: [x - 6, y - 15, top + 18], max: [x + 9.3, y + 15, top + 42] }, bodyCut("rpi_camera_module_3", T),
@@ -1043,6 +1064,8 @@ export function designEva(req: MobileRequest = {}): RobotSpecification {
     "The head turns on a single pan servo; the film's free-floating head tilt is not reproduced. The arms are two-servo fins hanging beside the egg (they cannot fold flush into the body like the film's).",
     "The camera looks out through a 12 mm hole in the visor centre.",
   );
+  if (sensors.includes("depth")) A.design.assumptions.push("The RGB-D camera sits low in the head behind a window in the visor and runs on the Raspberry Pi 5 over USB 3 at reduced frame rate: the egg has no room for a Jetson.");
+  if (sensors.includes("lidar")) A.design.assumptions.push("The lidar sits on the base deck and scans through the gap between the skirt and the egg; the spine shadows a narrow sector behind it.");
   A.design.request = { ...req };
   const spec = A.finish(`EVA-style companion robot: ${A.design.performance.mass_kg} kg, hidden diff-drive base, pan head with camera, two servo fins`);
   costing(b, spec, req.budget);

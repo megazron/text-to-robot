@@ -54,3 +54,24 @@ node scripts/stage_ros2.ts robot.json /tmp/stage     # prints <pkg>/robot.urdf (
 MUJOCO_GL=osmesa .venv/bin/python -B scripts/render_stills.py <urdf> out.png [--floating] [joint=rad ...]
 cd python && ../.venv/bin/python -B -m ttr_mujoco test <urdf> [--floating]
 ```
+
+## Wheeled robots (`families/mobile.ts`)
+
+`designDiffDrive`, `designFourWheel`, `designMecanum`, `designRover`, `designWallE`, `designEva`, `designBaymax`
+take `{ name?, prompt?, budget?, payloadKg?, sensors?, wheels?, arm? }` and record it as `design.request`.
+
+* Wheel stations: Pololu 37D gearmotor (axis along y, gearbox above the shaft) bolted through its six face holes
+  to a printed L-bracket / rocker / track frame, wheel on the shaft as a `continuous` joint (collision: cylinder).
+* Sizing loop (`sizeAndBuild`): build, take the robot's mass, wheel torque for a 10 deg slope + 0.5 m/s^2
+  (Crr 0.03) against the motor's continuous rating, runtime >= 1 h at the estimated average power; step up the
+  motor (37D 30:1 -> 50:1 -> 70:1) or battery (3S 2200 -> 3S 5000 -> 2 x 3S 5000) and rebuild.
+* Checks: `drive:slope_torque`, `drive:top_speed`, `drive:traction`, `drive:skid_turn`, `power:runtime`,
+  `power:voltage`, `power:peak_current`, `stability:tip` (CoM vs support polygon, arms stretched with payload),
+  `torque:*` for every servo as mounted on the robot, `print:*`, `budget`.
+* Arms and necks reuse `designArm` (`kinds`, `basePlateMm`) and are grafted with `graftArm`.
+* Decks larger than the bed are laser-cut aluminium (fabricated, costed, not catalog parts).
+
+```
+node scripts/design_robot.ts rover robot.json '{"wheels":4,"arm":{"dof":6},"sensors":["depth"]}'
+node scripts/check_interference.ts robot.json        # exact pairwise overlap of all solids at home pose
+```
