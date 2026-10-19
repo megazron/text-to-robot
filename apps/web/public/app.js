@@ -4,6 +4,7 @@ import { STLLoader } from "three/addons/loaders/STLLoader.js";
 import { forwardKinematics, findRoot, download, makeZip } from "./robotkit.js";
 
 const API = ""; // same origin
+const STATIC = globalThis.ttrStatic; // GitHub Pages build: generator runs in this tab, see apps/web/src/browser-api.ts
 const $ = (s) => document.querySelector(s);
 const el = (t, c, txt) => { const e = document.createElement(t); if (c) e.className = c; if (txt != null) e.textContent = txt; return e; };
 
@@ -374,7 +375,7 @@ async function api(path, body) {
 
 function applyResult(res, label, diffLines) {
   state.robot = res.robot; state.urdf = res.urdf; state.xacro = res.xacro; state.id = res.id ?? state.id;
-  if (state.id) history.replaceState(null, "", `/r/${state.id}`);
+  if (state.id && !STATIC) history.replaceState(null, "", `/r/${state.id}`);
   state.jointValues = {};
   state.versions.push({ id: state.id, label, robot: res.robot, urdf: res.urdf, xacro: res.xacro });
   state.version = state.versions.length - 1;
@@ -416,7 +417,7 @@ async function handleDownload(kind) {
   if (kind === "bom") { const bom = state.bom ?? (await api("/api/robots/bom", { robot: state.robot })).bom; return download(`${name}_BOM.md`, bomMarkdown(bom), "text/markdown"); }
   if (kind === "cad") { const { files } = await api("/api/robots/cad", { robot: state.robot }); return download(`${name}_cad.zip`, makeZip(files)); }
   if (kind === "train") { const { files } = await api("/api/robots/training", { robot: state.robot }); return download(`${name}_training.zip`, makeZip(files)); }
-  if (kind === "share") { if (!state.id) return; await navigator.clipboard.writeText(`${location.origin}/r/${state.id}`); flash($("[data-dl=share]"), "link copied!"); return; }
+  if (kind === "share") { if (!state.id) return; await navigator.clipboard.writeText(STATIC ? await STATIC.shareUrl(state.robot) : `${location.origin}/r/${state.id}`); flash($("[data-dl=share]"), "link copied!"); return; }
   if (kind === "launch") { await navigator.clipboard.writeText(`ros2 launch ${name} display.launch.py`); flash($("[data-dl=launch]"), "copied!"); return; }
   if (kind === "ros2") {
     const { files } = await api("/api/robots/export", { robot: state.robot, ros2_control: true });
@@ -476,6 +477,10 @@ async function initMode() {
 
 initExamples(); initTemplates(); initMode();
 (async () => {
+  if (STATIC && location.hash.includes("robot=")) {
+    try { const robot = await STATIC.sharedRobot(); history.replaceState(null, "", location.pathname); applyResult(await api("/api/robots/import", { robot }), "shared robot"); return; }
+    catch { status("\u2717 shared robot link is damaged; generating a default", "err"); }
+  }
   const m = location.pathname.match(/^\/r\/([0-9a-f-]{8,})$/i);
   if (m) {
     try {

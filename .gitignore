@@ -28,4 +28,6 @@ __pycache__/
 /references/so101/ppo_so101.zip
 
 /apps/web/public/vendor/
-/site-dist/
+
+/apps/web/src/.generated/
+/pages-dist/
