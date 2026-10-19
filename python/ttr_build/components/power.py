@@ -95,6 +95,11 @@ COMPONENTS = [
           "https://www.buddyrc.com/products/gens-ace-25c-2200mah-11-1v-3s-lipo-battery-pack-with-xt60-plug",
           "https://www.buddyrc.com/products/gens-ace-25c-2200mah-11-1v-3s-lipo-battery-pack-with-xt60-plug",
           ["price_usd"]),
+    _lipo("lipo_3s_5000", "LiPo 3S 5000 mAh 60C, XT60 (Gens Ace G-Tech, GEA50003S60X6)", 3, 5000, 153.0, 44.0, 25.0,
+          359.0, 52.0, 60, "XT60",
+          "https://www.gensace.de/gens-ace-5000mah-11-1v-60c-3s1p-lipo-with-xt60-plug.html",
+          "https://www.gensace.de/gens-ace-5000mah-11-1v-60c-3s1p-lipo-with-xt60-plug.html",
+          ["price_usd", "mass_g"]),  # resellers list 380 g / 155 x 46 x 24 mm
     _lipo("lipo_4s_5000", "LiPo 4S 5000 mAh 60C, XT90 (Gens Ace G-Tech)", 4, 5000, 137.0, 43.0, 34.0, 436.0,
           57.0, 60, "XT90",
           "https://www.unmannedtechshop.co.uk/de/products/gens-ace-g-tech-5000mah-14-8v-4s-60c-lipo-battery-pack-xt90",

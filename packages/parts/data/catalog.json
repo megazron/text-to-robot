@@ -5594,6 +5594,50 @@
   },
   "mesh_triangles": 172
  },
+ "lipo_3s_5000": {
+  "key": "lipo_3s_5000",
+  "name": "LiPo 3S 5000 mAh 60C, XT60 (Gens Ace G-Tech, GEA50003S60X6)",
+  "category": "battery",
+  "mass_g": 359.0,
+  "price_usd": 52.0,
+  "supplier_url": "https://www.gensace.de/gens-ace-5000mah-11-1v-60c-3s1p-lipo-with-xt60-plug.html",
+  "datasheet_url": "https://www.gensace.de/gens-ace-5000mah-11-1v-60c-3s1p-lipo-with-xt60-plug.html",
+  "envelope_mm": [
+   165.0,
+   44.0,
+   25.0
+  ],
+  "holes": [],
+  "specs": {
+   "cells": 3,
+   "capacity_mah": 5000,
+   "voltage_v": 11.1,
+   "voltage_max_v": 12.6,
+   "energy_wh": 55.5,
+   "c_rating": 60,
+   "max_current_a": 300.0,
+   "plug": "XT60",
+   "mount": "hook-and-loop strap / printed cradle; never screw into a pack",
+   "uncertain": [
+    "price_usd",
+    "mass_g"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -12.0,
+    -22.0,
+    0.0
+   ],
+   "max": [
+    153.0,
+    22.0,
+    25.0
+   ]
+  },
+  "mesh_triangles": 172
+ },
  "lipo_4s_5000": {
   "key": "lipo_4s_5000",
   "name": "LiPo 4S 5000 mAh 60C, XT90 (Gens Ace G-Tech)",
@@ -8329,6 +8373,49 @@
    "mass_source": "computed from ISO 4762 nominal geometry"
   },
   "output_frame": null
+ },
+ "usb_can_adapter": {
+  "key": "usb_can_adapter",
+  "name": "EYOU Robotics CANable PRO isolated USB-CAN adapter",
+  "category": "motor_driver",
+  "mass_g": 8.0,
+  "price_usd": 42.0,
+  "supplier_url": "https://www.robotshop.com/products/eyou-robotics-can-usb-adapter-canable-pro",
+  "datasheet_url": "https://cdn.robotshop.com/media/E/EYO/RBC-Eyo-33/pdf/eyou-canable-pro-datasheet.pdf",
+  "envelope_mm": [
+   56.0,
+   16.0,
+   10.1
+  ],
+  "holes": [],
+  "specs": {
+   "interface": "USB to CAN 2.0 (gs_usb / slcan), 1 Mbps, galvanically isolated",
+   "voltage_v": 5.0,
+   "board_mm": [
+    54.0,
+    16.0
+   ],
+   "mount": "no screw holes: printed clip or hook-and-loop",
+   "note": "one adapter per CAN bus; CubeMars AK actuators daisy-chain on CAN at 1 Mbps",
+   "uncertain": [
+    "mass_g",
+    "envelope_mm"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -1.5,
+    0.0,
+    0.0
+   ],
+   "max": [
+    54.5,
+    16.0,
+    10.1
+   ]
+  },
+  "mesh_triangles": 188
  },
  "waveshare_bus_servo_adapter": {
   "key": "waveshare_bus_servo_adapter",
