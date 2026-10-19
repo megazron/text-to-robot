@@ -10,3 +10,4 @@ export { designWallE } from "./families/mobile.ts";
 export { designEva } from "./families/mobile.ts";
 export { designBaymax } from "./families/mobile.ts";
 export type { MobileRequest, MobileSensor } from "./families/mobile.ts";
+export { interference, type Overlap } from "./interference.ts";

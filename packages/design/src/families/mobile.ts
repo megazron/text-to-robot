@@ -179,10 +179,10 @@ function deckBracket(b: Build, st: ReturnType<typeof wheelStation>, o: WheelOpts
 /** Ball caster on a printed post under the deck; the ball is a free roller (two passive hinges). */
 function ballCaster(b: Build, tag: string, x: number, y: number, deckBottom: number) {
   const key = "ball_caster_pololu_2692", c = part(key), H = Number(c.specs.height_mm), zc = H + Number(c.specs.ball_center_z_mm);
-  const post: Op[] = [{ op: "box", min: [x - 21, y - 21, H], max: [x + 21, y + 21, deckBottom], r: 8 },
-    { op: "cutbox", min: [x - 15, y - 15, H + 4], max: [x + 15, y + 15, deckBottom - 4] }];
+  const post: Op[] = [{ op: "rod", a: [x, y, H], b: [x, y, deckBottom], r: 20 },
+    { op: "cutbox", min: [x - 12, y - 12, H + 4], max: [x + 12, y + 12, deckBottom - 4] }];
   for (const h of c.holes) post.push({ op: "hole", a: [x + h.pos[0], y + h.pos[1], H - 1], b: [x + h.pos[0], y + h.pos[1], H + 4.5], d: 3.4 });
-  for (const dx of [-13, 13]) post.push({ op: "hole", a: [x + dx, y + 13, deckBottom - 4.5], b: [x + dx, y + 13, deckBottom + 1], d: 3.4 });
+  for (const dx of [-12, 12]) post.push({ op: "hole", a: [x + dx, y + 12, deckBottom - 4.5], b: [x + dx, y + 12, deckBottom + 1], d: 3.4 });
   b.printed(`${tag}_post`, "base_link", post, "printed_dark");
   const housing = b.mount("base_link", key, translation([x, y, H]), tag, "ball caster");
   housing.collision = { type: "sphere", radius: 0.004 };
@@ -330,6 +330,15 @@ function depthCamera(b: Build, x: number, y: number, zc: number, deckTop: number
   b.sensor("depth_camera", "depth", "depth_camera", frame([x, y, zc], [0, 0, 1], [1, 0, 0]), { hfov_deg: 87, range_m: 6, rate_hz: 30 });
   b.A.fastener("M3 x 6 (camera back)", 2);
   b.power.push({ what: "depth camera", w: Number(part(key).specs.power_w) });
+}
+/** D435i whose back face bolts straight to a wall at x = xWall (its two M3 back holes), lenses looking +x. Returns the wall holes. */
+function depthOnWall(b: Build, parent: string, xWall: number, y: number, zc: number): Op[] {
+  const key = "realsense_d435i", T = frame([xWall + 12.5 + 0.5, y, zc], [0, 0, 1], [0, 1, 0]);
+  b.mount(parent, key, T, "depth_camera", "RGB-D camera");
+  b.sensor("depth_camera", "depth", "depth_camera", frame([xWall + 13, y, zc], [0, 0, 1], [1, 0, 0]), { hfov_deg: 87, range_m: 6, rate_hz: 30 });
+  b.A.fastener("M3 x 8 (camera back)", 2);
+  b.power.push({ what: "depth camera", w: Number(part(key).specs.power_w) });
+  return [-22.5, 22.5].map((dy) => ({ op: "hole", a: [xWall - 8, y + dy, zc], b: [xWall + 1, y + dy, zc], d: 3.4 }) as Op);
 }
 /** Raspberry Pi Camera Module 3 looking along +x (world dir `look`) with its PCB at T. */
 function cameraModule(b: Build, name: string, parent: string, origin: Vec3, look: Vec3 = [1, 0, 0]) {
@@ -605,7 +614,7 @@ function designBase(kind: BaseKind, req: MobileRequest): RobotSpecification {
       ? [1, -1].map((s) => ({ tag: s > 0 ? "left" : "right", parent: "base_link", x: 0, side: s as 1 | -1, yFace, motor, wheel }))
       : [[90, 1, "front_left"], [90, -1, "front_right"], [-90, 1, "rear_left"], [-90, -1, "rear_right"]].map(([x, s, t]) => ({ tag: String(t), parent: "base_link", x: Number(x), side: Number(s) as 1 | -1, yFace, motor, wheel }));
     for (const o of stations) deckBracket(b, wheelStation(b, o), o, zB);
-    if (kind === "diff") for (const [t, x] of [["front_caster", 92], ["rear_caster", -92]] as const) ballCaster(b, t, x, 0, zB);
+    if (kind === "diff") for (const [t, x] of [["front_caster", 98], ["rear_caster", -98]] as const) ballCaster(b, t, x, 0, zB);
     const { items, compute } = electronicsFor(sensors, stations.length, battery, false, false);
     const top = b.deckTop;
     const front = L / 2, reserved: Rect[] = [];
@@ -695,7 +704,7 @@ export function designRover(req: MobileRequest = {}): RobotSpecification {
         ...front.plate(h + 32),
         { op: "hole", a: [pivot[0], ry0 - 1, pivot[2]], b: [pivot[0], ry1 + 1, pivot[2]], d: 8.4 },
         { op: "hole", a: [pivot[0], s > 0 ? 116 : -124.6, pivot[2]], b: [pivot[0], s > 0 ? 124.6 : -116, pivot[2]], d: 22.1 },
-        { op: "keepout", key: motor, T: front.Tm },
+        { op: "keepout", key: motor, T: front.Tm }, { op: "hole", a: [xF, ry0 - 1, h], b: [xF, ry1 + 1, h], d: 14 }, { op: "cutbox", min: [xF - 19.5, s > 0 ? yFace - 1.5 : -yFace, h + 7 - 19.5], max: [xF + 19.5, s > 0 ? yFace : -yFace + 1.5, h + 7 + 19.5] },
       ];
       b.A.buy("bearing_608zz", 1, "rocker pivot"); b.A.fastener("M8 x 40 shoulder bolt + spacer (rocker pivot)", 1);
       if (nW === 6) {
@@ -721,7 +730,7 @@ export function designRover(req: MobileRequest = {}): RobotSpecification {
         // a 4-wheel rocker is too long for the bed: the rear arm is a second print bolted to the hub
         const rear = wheelStation(b, { tag: `${side}_rear`, parent: rocker, x: -xF, side: s, yFace, motor, wheel });
         b.printed(`${rocker}_rear_arm`, rocker, [{ op: "beam", a: [pivot[0], (ry0 + ry1) / 2, pivot[2]], b: [-xF, (ry0 + ry1) / 2, h + 28], w: 22, h: 14.5, up: [0, 1, 0] },
-          { op: "box", min: [-xF - 22, ry0, h + 14], max: [-xF + 22, ry1, h + 32], r: 4 }, ...rear.plate(h + 32), { op: "keepout", key: motor, T: rear.Tm },
+          { op: "box", min: [-xF - 22, ry0, h + 14], max: [-xF + 22, ry1, h + 32], r: 4 }, ...rear.plate(h + 32), { op: "keepout", key: motor, T: rear.Tm }, { op: "hole", a: [-xF, ry0 - 1, h], b: [-xF, ry1 + 1, h], d: 14 }, { op: "cutbox", min: [-xF - 19.5, s > 0 ? yFace - 1.5 : -yFace, h + 7 - 19.5], max: [-xF + 19.5, s > 0 ? yFace : -yFace + 1.5, h + 7 + 19.5] },
           { op: "hole", a: [pivot[0], ry0 - 1, pivot[2]], b: [pivot[0], ry1 + 1, pivot[2]], d: 36.2 }], "printed_accent");
         b.A.fastener("M4 x 20 + nut (rocker rear arm to hub)", 2);
       }
@@ -741,7 +750,7 @@ export function designRover(req: MobileRequest = {}): RobotSpecification {
       b.printed("camera_mast", "deck_lid", [{ op: "rod", a: [x, y, lidTop], b: [x, y, mz + 12], r: 10 }, { op: "box", min: [x - 25, y - 25, lidTop], max: [x + 25, y + 25, lidTop + 4], r: 5 },
         { op: "box", min: [x, y - 15, mz - 14], max: [x + 4, y + 15, mz + 14], r: 2 }, bodyCut("rpi_camera_module_3", T)], "printed_dark");
     }
-    if (sensors.includes("lidar")) lidarMast(b, -BL / 2 + 45, sensors.includes("camera") ? 55 : 0, lidTop, lidTop, "deck_lid");
+    if (sensors.includes("lidar")) lidarMast(b, -BL / 2 + 45, sensors.includes("camera") ? 62 : 0, lidTop, lidTop, "deck_lid");
     if (sensors.includes("imu")) b.sensor("imu_frame", "imu", "imu", translation([12.8, 11.35, 2]), { rate_hz: 400 });
     if (armSpec) {
       const n0 = b.A.spec.joints.length;
@@ -850,29 +859,37 @@ export function designWallE(req: MobileRequest = {}): RobotSpecification {
     panel("body_right", [-BL / 2, -BW / 2, z0], [BL / 2, -BW / 2 + t, z1]);
     panel("body_back", [-BL / 2, -BW / 2 + t, z0], [-BL / 2 + t, BW / 2 - t, z1]);
     // front: the "compactor door" with a recessed lower panel
-    panel("body_front", [BL / 2 - t, -BW / 2 + t, z0], [BL / 2, BW / 2 - t, z1], [{ op: "box", min: [BL / 2 - 0.1, -BW / 2 + 20, z0 + 20], max: [BL / 2 + 3, BW / 2 - 20, z0 + 110], r: 4 }]);
+    panel("body_front", [BL / 2 - t, -BW / 2 + t, z0], [BL / 2, BW / 2 - t, z1], [{ op: "box", min: [BL / 2 - 0.1, -BW / 2 + 20, z0 + 20], max: [BL / 2 + 3, BW / 2 - 20, z0 + 110], r: 4 },
+      ...(sensors.includes("depth") ? depthOnWall(b, "base_link", BL / 2, 0, z1 - 40) : [])]);
     panel("body_top", [-BL / 2, -BW / 2, z1], [BL / 2, BW / 2, z1 + t], [{ op: "hole", a: [BL / 2 - 80, 0, z1 - 1], b: [BL / 2 - 80, 0, z1 + t + 1], d: 20 }]);
     b.A.fastener("M3 x 10 + printed corner cleats (body panels)", 24);
     // electronics inside the body on the deck
     const { items, compute } = electronicsFor(sensors.filter((x) => x !== "lidar"), 2, battery, sensors.includes("depth"), true);
-    electronicsBay(b, items, { x0: -BL / 2 + 8, x1: BL / 2 - 8, y0: -BW / 2 + 8, y1: BW / 2 - 8 }, [], z0);
+    // battery, motor driver and regulator on the floor; computer, IMU and servo bus on a printed shelf
+    const zs = z0 + 95, low = items.filter((i) => i.kind === "battery" || i.key === "cytron_mdd10a" || i.key === "buck_5v_5a"), high = items.filter((i) => !low.includes(i));
+    electronicsBay(b, low, { x0: -BL / 2 + 8, x1: BL / 2 - 8, y0: -BW / 2 + 8, y1: BW / 2 - 8 }, [], z0);
+    b.printed("shelf", "base_link", [{ op: "box", min: [-BL / 2 + t + 0.5, -BW / 2 + t + 0.5, zs - 4], max: [BL / 2 - t - 0.5, BW / 2 - t - 0.5, zs], r: 3 },
+], "printed_dark");
+    b.A.fastener("M3 x 10 + printed cleats (shelf to side panels)", 4);
+    electronicsBay(b, high, { x0: -BL / 2 + 8, x1: BL / 2 - 8, y0: -BW / 2 + 8, y1: BW / 2 - 8 }, [], zs);
     if (sensors.includes("imu")) b.sensor("imu_frame", "imu", "imu", translation([12.8, 11.35, 2]), { rate_hz: 400 });
     if (sensors.includes("lidar")) lidarMast(b, -BL / 2 + 40, 0, z1 + t, z1 + t, "body_top");
-    if (sensors.includes("depth")) depthCamera(b, BL / 2 + 14, 0, z0 + 150, z1 + t, "body_top");
     // neck + head: pitch neck (the lift), pan and tilt, all serial-bus servos
     // the lift: neck pitch limited to +-26 deg so the head stays over the body
     const neck = attachArm(b, "neck", { dof: 3, kinds: ["P", "Y", "P"], gripper: false, payloadKg: 0.2, basePlateMm: 70, ladder: "feetech" }, "body_top", translation([BL / 2 - 80, 0, z1 + t]), "walle", { shoulder_pitch: [-0.45, 0.45] });
     // binocular head on the tilt servo's tool flange
     const Tt = b.pose(neck.rec.tool.link), tip = apply(Tt, neck.rec.tool.xyz_m.map((v) => v * 1000) as Vec3);
-    const hx = tip[0] + 30, hz = tip[2] + 30;
+    // the head rides on a plate rising from the tilt servo's tool flange, clear above the pan turret
+    const ya = apply(Tt, [0, 0, 10])[1], yb = apply(Tt, [0, 0, 16])[1];
+    const hx = tip[0] + 20, hz = tip[2] + 82;
     const head: Op[] = [];
     for (const s of [1, -1]) {
       head.push({ op: "hull", of: [{ op: "rod", a: [hx - 35, s * 34, hz], b: [hx + 15, s * 34, hz], r: 30 }, { op: "rod", a: [hx + 15, s * 36, hz + 2], b: [hx + 45, s * 40, hz + 6], r: 24 }] },
         { op: "hole", a: [hx + 20, s * 39, hz + 5], b: [hx + 50, s * 41, hz + 6], d: 34 });
     }
     head.push({ op: "box", min: [hx - 30, -12, hz - 12], max: [hx + 10, 12, hz + 12] },
-      { op: "beam", a: [tip[0], tip[1], tip[2]], b: [hx - 20, 0, hz - 10], w: 24, h: 10, up: [0, 0, 1] });
-    for (const l of b.A.spec.links.filter((x) => x.name.startsWith("neck_") && x.role !== "frame")) void l;
+      { op: "box", min: [tip[0] - 14, Math.min(ya, yb), tip[2] - 14], max: [tip[0] + 14, Math.max(ya, yb), hz - 20], r: 3 },
+      { op: "box", min: [tip[0] - 14, Math.min(ya, yb, 0), hz - 28], max: [hx + 10, Math.max(ya, yb, 0), hz - 20], r: 3 });
     const headLink = "head";
     b.W.set(neck.rec.tool.link, Tt);
     const Th = Tt;
@@ -881,7 +898,6 @@ export function designWallE(req: MobileRequest = {}): RobotSpecification {
     for (const s of [1, -1]) {
       const name = s > 0 ? "left_eye_camera" : "right_eye_camera";
       cameraModule(b, name, headLink, [hx + 30, s * 39, hz + 5]);
-      if (!sensors.includes("camera")) void 0;
     }
     // arms: shoulder + elbow + gripper hand on each side, pointing forward from the body sides
     const armReq: ArmRequest = { dof: 2, kinds: ["P", "P"], gripper: true, payloadKg: payload, reachM: 0.24, basePlateMm: 60, ladder: "feetech" };
@@ -921,45 +937,49 @@ export function designEva(req: MobileRequest = {}): RobotSpecification {
     const b = new Build(req.name ?? "eva_robot", "character_eva", req.prompt);
     const wheel = "wheel_90mm_37d", h = wheelInfo(wheel).r, zB = Math.ceil(h + MOTOR_TOP + 7), yFace = 90;
     // round aluminium deck (Ø 236) inside a dark skirt: the "hover" base
-    const deckOps: Op[] = [{ op: "revolve", pts: [[0, zB], [118, zB], [118, zB + 3], [0, zB + 3]] }];
+    const deckOps: Op[] = [{ op: "revolve", pts: [[0, zB], [118, zB], [118, zB + 3], [0, zB + 3]] },
+      ...[1, -1].map((s) => ({ op: "cutbox", min: [-52, s > 0 ? yFace + 6 : -130, zB - 1], max: [52, s > 0 ? 130 : -yFace - 6, zB + 4] }) as Op)]; // wheel wells
     b.fabricated("base_link", null, deckOps, { density: ALU, material: "aluminium", item: "Ø 236 x 3 mm aluminium disc deck, laser cut (~$30)", usd: 30, role: "base" });
     b.deckTop = zB + 3;
     for (const s of [1, -1] as const) {
       const o: WheelOpts = { tag: s > 0 ? "left" : "right", parent: "base_link", x: 0, side: s, yFace, motor, wheel };
       deckBracket(b, wheelStation(b, o), o, zB);
     }
-    for (const [t, x] of [["front_caster", 96], ["rear_caster", -96]] as const) ballCaster(b, t, x, 0, zB);
+    for (const [t, x] of [["front_caster", 98], ["rear_caster", -98]] as const) ballCaster(b, t, x, 0, zB);
     // skirt halves: dark ring that hides the wheels, 6 mm off the floor
     for (const s of [1, -1]) {
       b.printed(s > 0 ? "skirt_left" : "skirt_right", "base_link", [
-        { op: "revolve", pts: shellOutline([[124, 8], [124.5, 60], [118, zB + 3], [100, zB + 22]], 2.4) },
-        { op: "cutbox", min: [-200, s > 0 ? -200 : 0, -10], max: [200, s > 0 ? 0 : 200, 300] },
-        { op: "box", min: [-6, s > 0 ? 0 : -116, zB + 3], max: [6, s > 0 ? 116 : 0, zB + 6] }], "printed_dark");
+        { op: "revolve", pts: shellOutline([[124, 8], [124.5, 60], [121, zB + 3], [118, zB + 12]], 2.4) },
+        { op: "cutbox", min: [-200, s > 0 ? -200 : 0, -10], max: [200, s > 0 ? 0 : 200, 300] }, { op: "cutbox", min: [-52, s > 0 ? 90 : -200, -10], max: [52, s > 0 ? 200 : -90, 97] }, // wheel arch
+        ], "printed_dark");
     }
     // electronics on the deck under the egg
     const { items, compute } = electronicsFor(sensors.filter((x) => x !== "lidar" && x !== "depth"), 2, battery, false, true);
     // battery, regulator, IMU and servo bus low on the deck; computer and motor driver on a shelf (the mid rib)
     const low = items.filter((i) => i.kind === "battery" || i.key === "buck_5v_5a" || i.key === "bno085_breakout" || i.key === "waveshare_bus_servo_adapter"), high = items.filter((i) => !low.includes(i));
-    electronicsBay(b, low, { x0: -80, x1: 80, y0: -80, y1: 80 }, [{ x0: SX - 27, x1: SX + 27, y0: -27, y1: 27 }], b.deckTop);
+    const lidarRes: Rect[] = sensors.includes("lidar") ? [{ x0: 14, x1: 80, y0: -33, y1: 33 }] : [];
+    const lowTop = electronicsBay(b, low, { x0: -78, x1: 78, y0: -80, y1: 80 }, [{ x0: SX - 27, x1: SX + 27, y0: -27, y1: 27 }, ...lidarRes], b.deckTop);
+    // lidar on the deck: it scans through the "hover" gap between the skirt and the egg
+    if (sensors.includes("lidar")) lidarMast(b, 47, 0, b.deckTop, lowTop);
     if (sensors.includes("imu")) b.sensor("imu_frame", "imu", "imu", translation([12.8, 11.35, 2]), { rate_hz: 400 });
     // spine: 20 mm aluminium tube (behind the centre, leaving the deck and shelf free) from the deck to the top rib
-    b.fabricated("spine", "base_link", [{ op: "rod", a: [SX, 0, b.deckTop], b: [SX, 0, zEgg1 - 27], r: 10 }, { op: "hole", a: [SX, 0, b.deckTop - 1], b: [SX, 0, zEgg1], d: 16 }],
+    b.fabricated("spine", "base_link", [{ op: "rod", a: [SX, 0, b.deckTop + 5], b: [SX, 0, zEgg1 - 27], r: 10 }, { op: "hole", a: [SX, 0, b.deckTop], b: [SX, 0, zEgg1], d: 16 }],
       { density: ALU, material: "aluminium", item: "20 x 2 mm aluminium tube, 0.45 m (~$8)", usd: 8 });
     b.printed("spine_foot", "base_link", [{ op: "box", min: [SX - 26, -26, b.deckTop], max: [SX + 26, 26, b.deckTop + 5], r: 6 }, { op: "rod", a: [SX, 0, b.deckTop], b: [SX, 0, b.deckTop + 40], r: 14 }, { op: "hole", a: [SX, 0, b.deckTop + 4], b: [SX, 0, b.deckTop + 41], d: 20.2 }], "printed_dark");
     const prof = eggProfile(zEgg0, zEgg1, R, zEggW, 32, 0.28, 0.25);
     const rAt = (z: number) => { for (let i = 1; i < prof.length; i++) if (prof[i][1] >= z) { const [r0, z0] = prof[i - 1], [r1, z1] = prof[i]; return r0 + ((r1 - r0) * (z - z0)) / (z1 - z0); } return prof[prof.length - 1][0]; };
     const zSeam = 355, zS = zEggW + 10, yS = rAt(zS) + 30;
     for (const [zr, nm] of [[zSeam, "rib_mid"], [zEgg1 - 30, "rib_top"]] as const) {
-      const rr = rAt(zr) - tShell - 0.5;
+      const rr = rAt(zr) - tShell - (nm === "rib_top" ? 7 : 1.5);
       for (const s of [1, -1]) b.printed(`${nm}_${s > 0 ? "left" : "right"}`, "spine", [{ op: "revolve", pts: [[0, zr - 3], [rr, zr - 3], [rr, zr + 3], [0, zr + 3]] }, { op: "rod", a: [SX, 0, zr - 3], b: [SX, 0, zr - 15], r: 16 }, { op: "hole", a: [SX, 0, zr - 16], b: [SX, 0, zr + 4], d: 20.2 },
-        { op: "cutbox", min: [-300, s > 0 ? -300 : 0, zr - 10], max: [300, s > 0 ? 0 : 300, zr + 10] }, ...(nm === "rib_top" ? [{ op: "lighten", a: [-rr * 0.55, s * rr * 0.4, zr], b: [rr * 0.55, s * rr * 0.4, zr], r: rr * 0.18, n: 2 } as Op] : [])]);
+        { op: "cutbox", min: [-300, s > 0 ? -300 : 0, zr - 20], max: [300, s > 0 ? 0 : 300, zr + 10] }, ...(nm === "rib_top" ? [{ op: "lighten", a: [-rr * 0.55, s * rr * 0.4, zr], b: [rr * 0.55, s * rr * 0.4, zr], r: rr * 0.18, n: 2 } as Op] : [])]);
     }
     electronicsBay(b, high, { x0: -86, x1: 86, y0: -74, y1: 74 }, [{ x0: SX - 18, x1: SX + 18, y0: -18, y1: 18 }], zSeam + 3, "spine");
     // egg shell: two bands x two halves, each fits the bed
     const shell = shellOutline(prof, tShell);
     for (const [za, zb, band] of [[zEgg0 - 1, zSeam, "lower"], [zSeam, zEgg1 + 1, "upper"]] as const) for (const s of [1, -1]) {
       const ops: Op[] = [{ op: "revolve", pts: shell, seg: 96 }, { op: "cutbox", min: [-300, -300, -10], max: [300, 300, za] }, { op: "cutbox", min: [-300, -300, zb], max: [300, 300, 900] },
-        { op: "cutbox", min: [-300, s > 0 ? -300 : 0, 0], max: [300, s > 0 ? 0 : 300, 900] }, { op: "hole", a: [SX, 0, 0], b: [SX, 0, 900], d: 22 },
+        { op: "cutbox", min: [-300, s > 0 ? -300 : 0, 0], max: [300, s > 0 ? 0 : 300, 900] }, { op: "hole", a: [SX, 0, 0], b: [SX, 0, 900], d: 22 }, { op: "cutbox", min: [-40, -26, zEgg1 - 45], max: [26, 26, 900] }, // spine hole, neck opening
         { op: "cutbox", min: [-17, s * rAt(zS) - 16, zS - 5], max: [17, s * rAt(zS) + 16, zS + 7] }]; // slot for the shoulder bracket
       b.printed(`shell_${band}_${s > 0 ? "left" : "right"}`, "spine", ops);
     }
@@ -968,31 +988,35 @@ export function designEva(req: MobileRequest = {}): RobotSpecification {
     // head: pan servo on top of the spine, egg-shaped head with a dark visor and the camera behind it
     const zTop = zEgg1 + 2;
     const panKey = servoKey(0.05);
-    const Tpan = frame([0, 0, zTop + 8], [0, 0, 1], [1, 0, 0]);
+    const zP = zTop + 14, Tpan = frame([0, 0, zP], [0, 0, 1], [1, 0, 0]);
     // servo cradle on the top rib through the top of the egg
-    b.printed("neck_mount", "spine", [{ op: "cradle", key: panKey, T: Tpan, wall: 3 }, { op: "rod", a: [0, 0, zEgg1 - 27.1], b: [0, 0, zTop + 8 - 38], r: 15 },
-      { op: "box", min: [-24, -24, zEgg1 - 27.1], max: [24, 24, zEgg1 - 23], r: 5 }], "printed");
+    b.printed("neck_mount", "spine", [{ op: "cradle", key: panKey, T: Tpan, wall: 3 }, { op: "rod", a: [0, 0, zEgg1 - 26.9], b: [0, 0, zP - 40], r: 15 },
+      { op: "box", min: [-24, -24, zEgg1 - 26.9], max: [24, 24, zEgg1 - 23], r: 5 }], "printed");
     b.mount("spine", panKey, Tpan, "head_pan_actuator", "head pan");
     b.servo("head_pan", "spine", "head", Tpan, panKey, -2.6, 2.6);
     const hz0 = zTop + 20, HR = 112, HH = 150;
     const headProf: [number, number][] = [];
     for (let i = 0; i <= 24; i++) { const a = -Math.PI / 2 + (Math.PI * i) / 24; headProf.push([HR * Math.cos(a), hz0 + HH / 2 + (HH / 2) * Math.sin(a)]); }
     const scaleX: Mat4 = mul(translation([0, 0, 0]), scaleM(0.9, 1, 1));
+    // optional RGB-D camera low in the head, looking out through a window in shell and visor
+    const dz = hz0 + 40, depthWindow: Op[] = sensors.includes("depth") ? [{ op: "cutbox", min: [40, -47, dz - 15], max: [140, 47, dz + 15] }] : [];
     const headOps: Op[] = [{ op: "at", T: scaleX, of: [{ op: "revolve", pts: shellOutline(headProf, 2.4), seg: 96 }] },
-      { op: "horn", key: panKey, t: 4 } as Op, { op: "rod", a: [0, 0, zTop + 8], b: [0, 0, hz0 + 3], r: 14 }, { op: "hole", a: [0, 0, zTop + 8 + 3], b: [0, 0, hz0 + 4], d: 9 },
-      { op: "hole", a: [70, 0, hz0 + 70], b: [120, 0, hz0 + 70], d: 12 }];
+      { op: "horn", key: panKey, t: 4 } as Op, { op: "rod", a: [0, 0, zP], b: [0, 0, hz0 + 3], r: 14 }, { op: "hole", a: [0, 0, zP + 3], b: [0, 0, hz0 + 4], d: 9 },
+      { op: "hole", a: [70, 0, hz0 + 70], b: [120, 0, hz0 + 70], d: 12 }, ...depthWindow];
     headOps[1] = { op: "at", T: Tpan, of: [{ op: "horn", key: panKey, t: 4 }] };
     b.A.printedLink("head", { name: "head", ops: b.in("head", headOps) }, { role: "head", material: "printed" });
     b.A.fastener("horn screws", 4);
     // visor: thin dark band on the front of the head
     const visor: Op[] = [{ op: "at", T: scaleX, of: [{ op: "revolve", pts: shellOutline(headProf.map(([r, z]) => [r + 2.5, z]), 1.6), seg: 96 }] },
       { op: "cutbox", min: [-300, -300, -10], max: [300, 300, hz0 + 32] }, { op: "cutbox", min: [-300, -300, hz0 + 118], max: [300, 300, 900] },
-      { op: "cutbox", min: [-300, -300, 0], max: [40, 300, 900] }, { op: "hole", a: [70, 0, hz0 + 70], b: [130, 0, hz0 + 70], d: 12 }];
+      { op: "cutbox", min: [-300, -300, 0], max: [40, 300, 900] }, { op: "hole", a: [70, 0, hz0 + 70], b: [130, 0, hz0 + 70], d: 12 }, ...depthWindow];
     b.printed("visor", "head", visor, "visor");
     for (const s of [1, -1]) b.printed(s > 0 ? "left_eye" : "right_eye", "head", [{ op: "at", T: frame([100.5, s * 30, hz0 + 78], [1, 0.2 * s, 0], [0, 0, 1]), of: [{ op: "box", min: [-9, -16, 0], max: [9, 16, 2.5], r: 8 }] }], "led");
     b.fab.push({ item: "two 8-LED WS2812 sticks behind translucent eye diffusers (~$8)", usd: 8 });
     cameraModule(b, "head_camera", "head", [86, 0, hz0 + 70]);
-    b.printed("camera_bracket", "head", [{ op: "box", min: [70, -16, hz0 + 50], max: [74, 16, hz0 + 88], r: 2 }, { op: "box", min: [40, -16, hz0 + 50], max: [74, 16, hz0 + 54] }, bodyCut("rpi_camera_module_3", b.W.get("head_camera")!)]);
+    if (sensors.includes("depth")) b.printed("depth_camera_bracket", "head", [{ op: "box", min: [44, -30, dz - 14], max: [49, 30, dz + 8], r: 3 },
+      { op: "beam", a: [26, 0, hz0 + 14], b: [46, 0, dz - 10], w: 20, h: 8, up: [0, 1, 0] }, ...depthOnWall(b, "head", 49, 0, dz)]);
+    b.printed("camera_bracket", "head", [{ op: "box", min: [70, -16, hz0 + 56], max: [74, 16, hz0 + 88], r: 2 }, { op: "box", min: [40, -16, hz0 + 56], max: [74, 16, hz0 + 60] }, bodyCut("rpi_camera_module_3", b.W.get("head_camera")!)]);
     // arms: two-servo fins hanging along the egg's sides
     for (const s of [1, -1]) {
       const prefix = s > 0 ? "left_arm" : "right_arm";
@@ -1006,7 +1030,7 @@ export function designEva(req: MobileRequest = {}): RobotSpecification {
         { op: "box", min: [-14, lo(ri - 12, yS - 20), zS], max: [14, hi(ri - 12, yS - 20), zS + 4] },
         { op: "box", min: [-23, y(yS) - 23, zS + 4], max: [23, y(yS) + 23, zS + 8], r: 4 },
         { op: "box", min: [-14, lo(yS - 22, yS - 18), zS], max: [14, hi(yS - 22, yS - 18), zS + 8] },
-        { op: "rod", a: [SX, 0, zS - 10], b: [SX, 0, zS + 14], r: 16 }, { op: "cutbox", min: [SX - 20, s > 0 ? -20 : 0.5, zS - 11], max: [SX + 20, s > 0 ? -0.5 : 20, zS + 15] },
+        { op: "rod", a: [SX, 0, zS - 10], b: [SX, 0, zS + 14], r: 16 }, { op: "cutbox", min: [SX - 20, s > 0 ? -20 : -0.5, zS - 11], max: [SX + 20, s > 0 ? 0.5 : 20, zS + 15] },
         { op: "hole", a: [SX, 0, zS - 11], b: [SX, 0, zS + 15], d: 20.2 }]);
     }
     const eng = engineer(b, { motor, wheel, nDriven: 2, battery, compute, casterMaxKg: Number(part("ball_caster_pololu_2692").specs.max_robot_mass_kg) });
@@ -1029,12 +1053,14 @@ export function designEva(req: MobileRequest = {}): RobotSpecification {
 export function designBaymax(req: MobileRequest = {}): RobotSpecification {
   const sensors = defaults(req, ["camera", "imu"]);
   const payload = req.payloadKg ?? 0.3;
-  const zSh = 820, ySh = 175, splay = 22 * D2R;
+  const zSh = 820, ySh = 190, splay = 25 * D2R;
   const result = sizeAndBuild((motor, battery) => {
     const b = new Build(req.name ?? "baymax_robot", "character_baymax", req.prompt);
-    const ch = characterChassis(b, { motor, perSide: 2, drivenPerSide: 2, wheelbase: 240, yFace: 125, L: 340, W: 260 });
+    const ch = characterChassis(b, { motor, perSide: 2, drivenPerSide: 2, wheelbase: 300, yFace: 140, L: 380, W: 290 });
     const { items, compute } = electronicsFor(sensors.filter((x) => x !== "lidar"), 4, battery, sensors.includes("depth"), true);
-    electronicsBay(b, items, { x0: -166, x1: 166, y0: -126, y1: 126 }, [{ x0: -30, x1: 30, y0: -30, y1: 30 }], ch.top);
+    const lidarRes: Rect[] = sensors.includes("lidar") ? [{ x0: 110, x1: 176, y0: -33, y1: 33 }] : [];
+    const lowTop = electronicsBay(b, items, { x0: -186, x1: 186, y0: -141, y1: 141 }, [{ x0: -30, x1: 30, y0: -30, y1: 30 }, ...lidarRes], ch.top);
+    const scanZ = sensors.includes("lidar") ? lidarMast(b, 143, 0, ch.top, lowTop) : 0;
     if (sensors.includes("imu")) b.sensor("imu_frame", "imu", "imu", translation([12.8, 11.35, 2]), { rate_hz: 400 });
     // spine: 2020 aluminium extrusion up to the shoulder yoke
     b.printed("spine_foot", "base_link", [{ op: "box", min: [-28, -28, ch.top], max: [28, 28, ch.top + 5], r: 6 }, { op: "box", min: [-14, -14, ch.top], max: [14, 14, ch.top + 40], r: 3 }, { op: "cutbox", min: [-10.2, -10.2, ch.top + 5], max: [10.2, 10.2, ch.top + 41] }], "printed_dark");
@@ -1046,52 +1072,85 @@ export function designBaymax(req: MobileRequest = {}): RobotSpecification {
     for (const s of [1, -1]) {
       const prefix = s > 0 ? "left_arm" : "right_arm";
       const z: Vec3 = [0, s * Math.sin(splay), -Math.cos(splay)];
-      const T = frame([0, s * ySh, zSh - 6], z, [1, 0, 0]);
-      attachArm(b, prefix, { dof: 3, kinds: ["Y", "P", "P"], gripper: false, payloadKg: payload, reachM: 0.42, basePlateMm: 70 }, "shoulder_yoke", T, "fabric");
-      // mitten hand on the tool flange
-      const tool = b.arms[b.arms.length - 1].tool, Tt = b.pose(tool.link), p = apply(Tt, tool.xyz_m.map((v) => v * 1000) as Vec3);
+      const T = frame([0, s * ySh, zSh - 22], z, [1, 0, 0]);
+      b.printed(`${prefix}_shoulder_wedge`, "shoulder_yoke", [{ op: "hull", of: [{ op: "box", min: [-20, s * ySh - 30, zSh - 8], max: [20, s * ySh + 30, zSh - 6] },
+        { op: "at", T, of: [{ op: "box", min: [-30, -30, -1], max: [30, 30, 0] }] }] }, { op: "hole", a: [0, s * ySh - 12, zSh - 30], b: [0, s * ySh - 12, zSh + 1], d: 5.5 }, { op: "hole", a: [0, s * ySh + 12, zSh - 30], b: [0, s * ySh + 12, zSh + 1], d: 5.5 }], "printed");
+      // sized with the mitten and sleeves (about 0.18 kg) added to the hand payload
+      attachArm(b, prefix, { dof: 4, kinds: ["Y", "P", "P", "P"], gripper: false, payloadKg: payload + 0.18, reachM: 0.38, basePlateMm: 70 }, "shoulder_yoke", T, "fabric");
+      // fabric sleeves over the upper arm and forearm (Baymax's soft limbs) and a foam mitten on the wrist
+      const jp = fk(b.A.spec).joint, c0 = apply(T, [0, 0, 0]);
+      const along = (j: string) => { const p = jp[`${prefix}_${j}`].p.map((v) => v * 1000); return (p[0] - c0[0]) * z[0] + (p[1] - c0[1]) * z[1] + (p[2] - c0[2]) * z[2]; };
+      const onAxis = (d: number): Vec3 => [c0[0] + z[0] * d, c0[1] + z[1] * d, c0[2] + z[2] * d];
+      const dS = along("shoulder_pitch"), dE = along("elbow_pitch"), dW = along("wrist_pitch");
+      for (const [link, d0, d1, R] of [["upper_arm", dS, dE, 52], ["forearm", dE, dW, 46]] as const) {
+        const nm = `${prefix}_${link}`; b.W.set(nm, b.pose(nm));
+        b.fabricated(`${nm}_sleeve`, nm, [{ op: "at", T: frame(onAxis(d0 + 4), z, [1, 0, 0]), of: [{ op: "revolve", pts: shellOutline([[R - 12, 0], [R, 14], [R, d1 - d0 - 22], [R - 12, d1 - d0 - 8]], 1.2), seg: 64 }] }],
+          { density: 0, massKg: 0.04, material: "fabric", item: `${link} fabric sleeve (in the cover kit)`, usd: 0, role: "cover" });
+      }
+      const tool = b.arms[b.arms.length - 1].tool, Tt = b.pose(tool.link);
       b.W.set(tool.link, Tt);
-      const zt = apply(Tt, [0, 0, 1]).map((v, i) => v - Tt[12 + i]) as Vec3;
-      b.printed(`${prefix}_mitten`, tool.link, [{ op: "hull", of: [{ op: "rod", a: p, b: [p[0] + zt[0] * 60, p[1] + zt[1] * 60, p[2] + zt[2] * 60], r: 34 }, { op: "rod", a: [p[0] + zt[0] * 20, p[1] + zt[1] * 20, p[2] + zt[2] * 20], b: [p[0] + zt[0] * 90, p[1] + zt[1] * 90, p[2] + zt[2] * 90], r: 26 }] },
-        { op: "keepout", key: b.A.design.joints.find((j) => j.joint === `${prefix}_elbow_pitch`)?.actuator ?? "feetech_sts3215_c047", T: Tt }], "fabric", "hand");
+      const m0 = onAxis(dW + 34), m1 = onAxis(dW + 120);
+      // the payload is held in the mitten, not on the wrist axis
+      tool.xyz_m = apply(invert(Tt), onAxis(dW + 80)).map((v) => +(v / 1000).toFixed(5)) as Vec3;
+      b.fabricated(`${prefix}_mitten`, tool.link, [{ op: "hull", of: [{ op: "rod", a: m0, b: onAxis(dW + 80), r: 34 }, { op: "rod", a: onAxis(dW + 60), b: m1, r: 26 }] },
+        { op: "keepout", key: b.A.design.joints.find((j) => j.joint === `${prefix}_wrist_pitch`)?.actuator ?? "feetech_sts3215_c047", T: Tt },
+        { op: "at", T: frame(m0, z, [1, 0, 0]), of: [{ op: "cutbox", min: [-60, -60, -60], max: [60, 60, -16] }] }],
+        { density: 0, massKg: 0.09, material: "fabric", item: "foam-filled fabric mitten on a printed wrist plate (in the cover kit)", usd: 0, role: "hand" });
     }
     // head: pan servo on the yoke centre, printed head shell with two eyes and a camera
     const panKey = servoKey(0.08);
-    const Tpan = frame([0, 0, zSh + 34], [0, 0, 1], [1, 0, 0]);
-    b.printed("neck_mount", "shoulder_yoke", [{ op: "cradle", key: panKey, T: Tpan, wall: 3 }, { op: "box", min: [-26, -24, zSh], max: [26, 24, zSh + 4], r: 4 }], "printed");
+    const Tpan = frame([0, 0, zSh + 46], [0, 0, 1], [1, 0, 0]);
+    b.printed("neck_mount", "shoulder_yoke", [{ op: "cradle", key: panKey, T: Tpan, wall: 3 }, { op: "box", min: [-26, -24, zSh], max: [26, 24, zSh + 6], r: 4 }], "printed");
     b.mount("shoulder_yoke", panKey, Tpan, "head_pan_actuator", "head pan");
     b.servo("head_pan", "shoulder_yoke", "head", Tpan, panKey, -1.4, 1.4);
-    const hz0 = zSh + 60, HR = 105, HH = 130;
+    const hz0 = zSh + 60, HR = 108, HH = 132;
     const headProf: [number, number][] = [];
     for (let i = 0; i <= 24; i++) { const a = -Math.PI / 2 + (Math.PI * i) / 24; headProf.push([HR * Math.cos(a), hz0 + HH / 2 + (HH / 2) * Math.sin(a)]); }
     const sx = mul(translation([0, 0, 0]), scaleM(0.78, 1, 1));
     const head: Op[] = [{ op: "at", T: sx, of: [{ op: "revolve", pts: shellOutline(headProf, 2.4), seg: 96 }] }, { op: "at", T: Tpan, of: [{ op: "horn", key: panKey, t: 4 }] },
-      { op: "rod", a: [0, 0, zSh + 38], b: [0, 0, hz0 + 3], r: 14 }, { op: "hole", a: [0, 0, zSh + 37], b: [0, 0, hz0 + 4], d: 9 }, { op: "hole", a: [60, 0, hz0 + 68], b: [100, 0, hz0 + 68], d: 12 }];
+      { op: "rod", a: [0, 0, zSh + 50], b: [0, 0, hz0 + 3], r: 14 }, { op: "hole", a: [0, 0, zSh + 49], b: [0, 0, hz0 + 4], d: 9 }, { op: "hole", a: [60, 0, hz0 + 68], b: [100, 0, hz0 + 68], d: 12 }];
+    // eyes and the line between them: black decal inlays following the head's surface
+    const surfX = (y: number, dz: number) => 0.78 * Math.sqrt(HR * HR * (1 - (dz / (HH / 2)) ** 2) - y * y);
+    const eyeOps: Op[] = [];
+    for (const y of [-28, 28]) { const x = surfX(Math.abs(y) + 11, 2) - 0.6; eyeOps.push({ op: "rod", a: [x, y, hz0 + 68], b: [surfX(Math.abs(y), 2) + 1.2, y, hz0 + 68], r: 11 }); }
+    for (let y = -20; y <= 20; y += 8) eyeOps.push({ op: "box", min: [surfX(Math.abs(y) + 4, 2) - 0.2, y - 4, hz0 + 66.5], max: [surfX(Math.abs(y), 2) + 1, y + 4, hz0 + 69.5] });
+    // matching pockets in the head shell so the inlays sit flush
+    for (const o of eyeOps) head.push(o.op === "rod" ? { op: "hole", a: o.a, b: o.b, d: 2 * o.r } : { op: "cutbox", min: (o as { min: Vec3 }).min, max: (o as { max: Vec3 }).max });
     b.A.printedLink("head", { name: "head", ops: b.in("head", head) }, { role: "head", material: "fabric" });
     b.A.fastener("horn screws", 4);
-    b.printed("eyes", "head", [{ op: "at", T: frame([78.5, 0, hz0 + 68], [1, 0, 0], [0, 0, 1]), of: [{ op: "rod", a: [0, 28, 0], b: [0, 28, 3], r: 11 }, { op: "rod", a: [0, -28, 0], b: [0, -28, 3], r: 11 }, { op: "box", min: [-1.5, -28, 0], max: [1.5, 28, 2] }] }], "visor");
+    b.printed("eyes", "head", eyeOps, "visor");
     cameraModule(b, "head_camera", "head", [70, 0, hz0 + 68]);
     b.printed("camera_bracket", "head", [{ op: "box", min: [55, -16, hz0 + 46], max: [59, 16, hz0 + 86], r: 2 }, { op: "box", min: [30, -16, hz0 + 46], max: [59, 16, hz0 + 50] }, bodyCut("rpi_camera_module_3", b.W.get("head_camera")!)]);
     // soft cover: sewn ripstop body (pear shape) zipped over the frame; negligible structure
-    const prof: [number, number][] = [[150, 70], [205, 120], [228, 220], [232, 330], [222, 460], [200, 600], [170, 720], [140, 790], [95, 840], [70, zSh + 30]];
-    b.fabricated("soft_cover", "spine", [{ op: "at", T: scaleM(0.82, 1, 1), of: [{ op: "revolve", pts: shellOutline(prof, 1.5), seg: 96 }] }],
+    const prof: [number, number][] = [[290, 60], [286, 120], [272, 220], [254, 330], [234, 460], [206, 600], [174, 720], [140, 790], [95, 840], [70, zSh + 30]];
+    b.fabricated("soft_cover", "spine", [{ op: "at", T: scaleM(0.9, 1, 1), of: [{ op: "revolve", pts: shellOutline(prof, 1.5), seg: 96 }] },
+      ...(scanZ ? [{ op: "cutbox", min: [-400, -400, scanZ - 10], max: [400, 400, scanZ + 10] } as Op] : []),
+      ...[1, -1].map((s) => ({ op: "cutbox", min: [-62, s > 0 ? 105 : -300, 560], max: [62, s > 0 ? 300 : -105, 900] }) as Op), // armholes
+      ...(sensors.includes("depth") ? [{ op: "cutbox", min: [140, -34, 566], max: [220, 34, 616] } as Op] : [])],
       { density: 0, massKg: 0.55, material: "fabric", item: "sewn white ripstop body cover with zip and foam lining, about 2 m^2 (~$60)", usd: 60, role: "cover" });
-    if (sensors.includes("depth")) depthCamera(b, 192, 0, 620, 600, "spine");
+    if (sensors.includes("depth")) {
+      // chest camera on a printed arm clamped to the extrusion with T-nuts, looking out through the cover
+      const zc = 600, xw = 0.9 * 210;
+      b.printed("chest_camera_arm", "spine", [{ op: "box", min: [10, -16, zc - 30], max: [xw, 16, zc - 24] }, { op: "box", min: [xw - 5, -30, zc - 30], max: [xw, 30, zc + 14], r: 3 },
+        { op: "box", min: [10, -16, zc - 30], max: [14, 16, zc + 10] }, ...depthOnWall(b, "spine", xw, 0, zc)], "printed");
+      b.A.fastener("M5 T-nut + M5 x 10 (camera arm to 2020)", 2);
+    }
     const eng = engineer(b, { motor, wheel: ch.wheel, nDriven: 4, battery, compute, skid: true });
     return { b, eng, compute };
   });
   const { b } = result, A = b.A;
   A.design.assumptions.push(
     "Baymax's inflatable vinyl body is a sewn ripstop cover with a foam-lined zip, bought or sewn, with negligible structural role; it hangs on the shoulder yoke and hides a 4WD skid-steer base. It is not inflated, so it does not cushion like the film's.",
-    "Structure: 2020 aluminium extrusion spine and a 6 mm aluminium shoulder yoke; arms are three servos each (shoulder yaw, shoulder pitch, elbow) splayed 22 deg so they clear the belly; the hands are printed mittens covered with the same fabric.",
+    "Structure: 2020 aluminium extrusion spine and a 6 mm aluminium shoulder yoke; arms are four servos each (shoulder yaw, shoulder pitch, elbow, wrist) splayed 25 deg so they clear the belly; the hands are printed mittens covered with the same fabric.",
     `Each arm is sized as mounted to lift ${payload} kg in the mitten at full reach; the tipping check includes both arms stretched forward with that payload.`,
     "The head turns on one pan servo; a camera looks out between the eyes through a 12 mm hole.",
   );
   A.design.request = { ...req };
-  const spec = A.finish(`Baymax-style service robot: ${A.design.performance.mass_kg} kg, about ${(1 + (zSh + 190) / 1000 - 1).toFixed(2)} m tall, 4WD hidden base, two 3-servo arms, pan head with camera`);
+  A.design.performance.height_m = +((820 + 60 + 132) / 1000).toFixed(2);
+  const spec = A.finish(`Baymax-style service robot: ${A.design.performance.mass_kg} kg, ${A.design.performance.height_m} m tall, 4WD hidden base, two 4-servo arms, pan head with camera`);
   costing(b, spec, req.budget);
   return spec;
 }
 
 export const MOBILE_DESIGNERS = { designDiffDrive, designFourWheel, designMecanum, designRover, designWallE, designEva, designBaymax };
-void rotZ;
+
