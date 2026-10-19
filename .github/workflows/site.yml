@@ -1,0 +1,53 @@
+name: Website
+# Builds the texttorobot.org bundle onto the `site` branch and tells the live site to switch to it.
+on:
+  push:
+    branches: [main]
+  release:
+    types: [published]
+  workflow_dispatch:
+
+concurrency:
+  group: website
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "22" }
+      - run: npm ci
+      - name: Build site bundle
+        run: deploy/build-site.sh site-dist
+      - name: Smoke test the bundle
+        run: |
+          cd site-dist
+          PORT=8790 TTR_DATA_DIR="$RUNNER_TEMP/data" node apps/api/src/server.mjs &
+          for i in $(seq 1 50); do curl -fsS localhost:8790/api/status >/dev/null && break; sleep 0.2; done
+          curl -fsS localhost:8790/ | grep -q "Text to Robot"
+          curl -fsS -X POST localhost:8790/api/robots/generate -H 'Content-Type: application/json' \
+            -d '{"prompt":"Create a 6 DOF arm with a two-finger gripper"}' | grep -q '"urdf"'
+          kill %1
+      - name: Publish to the site branch
+        run: |
+          cd site-dist
+          git init -q -b site
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Website build of ${GITHUB_SHA::7}"
+          git push -f -q "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" site
+          echo "SITE_COMMIT=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+      - name: Tell the live site to update
+        env:
+          SITE_URL: ${{ vars.SITE_URL }}
+          TOKEN: ${{ secrets.SITE_DEPLOY_TOKEN }}
+        run: |
+          if [ -z "$SITE_URL" ] || [ -z "$TOKEN" ]; then echo "SITE_URL/SITE_DEPLOY_TOKEN not set; the site picks this up on its next poll."; exit 0; fi
+          curl -fsS -X POST "$SITE_URL/__deploy" -H "Authorization: Bearer $TOKEN" -H "X-Site-Commit: $SITE_COMMIT" --max-time 30 \
+            || echo "::warning::$SITE_URL did not answer; it will pick the update up on its next poll."

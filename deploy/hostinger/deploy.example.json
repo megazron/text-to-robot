@@ -1,0 +1,6 @@
+{
+  "repo": "megazron/text-to-robot",
+  "branch": "site",
+  "pollMinutes": 10,
+  "deployToken": "<same value as the SITE_DEPLOY_TOKEN repository secret>"
+}
