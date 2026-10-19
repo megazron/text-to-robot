@@ -5,3 +5,4 @@ export { designArm, type ArmRequest } from "./families/arm.ts";
 export * from "./clearance.ts";
 export { designQuadruped, type LeggedRequest, type SensorKind } from "./families/legged.ts";
 export { designHexapod } from "./families/hexapod.ts";
+export { designHumanoid, designBattleMech } from "./families/humanoid.ts";

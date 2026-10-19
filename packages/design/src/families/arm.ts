@@ -92,7 +92,7 @@ function linkOps(cur: JointPlan, nextKey: string, nextT: Mat4, nextKind: Kind | 
   return ops;
 }
 
-function gripperOps(G: Mat4, gripKey: string, fingerLen: number): { fixed: Op[]; jaw: Op[]; tcp: Vec3; closeAngle: number } {
+export function gripperOps(G: Mat4, gripKey: string, fingerLen: number): { fixed: Op[]; jaw: Op[]; tcp: Vec3; closeAngle: number } {
   const d = depth(gripKey), o = apply(G, [0, 0, 0]), zg = o[2], F = fingerLen;
   const xa = o[0] + 0.5, xb = o[0] + 6.5, gap = 34, half = gap / 2; // jaw plane on the horn side; opening at q = 0
   const fixed: Op[] = [

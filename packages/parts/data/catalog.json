@@ -2027,6 +2027,50 @@
   },
   "mesh_triangles": 3338
  },
+ "dcdc_48v_12v_sd50c12": {
+  "key": "dcdc_48v_12v_sd50c12",
+  "name": "Mean Well SD-50C-12 enclosed DC-DC converter, 36-72 V in, 12 V 4.2 A (50 W)",
+  "category": "misc",
+  "mass_g": 487.5,
+  "price_usd": 45.0,
+  "supplier_url": "https://www.digikey.com/en/products/detail/mean-well-usa-inc/SD-50C-12/7706533",
+  "datasheet_url": "https://www.meanwell.com/Upload/PDF/SD-50/SD-50-SPEC.PDF",
+  "envelope_mm": [
+   159.0,
+   97.0,
+   38.0
+  ],
+  "holes": [],
+  "specs": {
+   "voltage_v": 12.0,
+   "current_a": 4.2,
+   "power_w": 50.0,
+   "input_v": [
+    36.0,
+    72.0
+   ],
+   "terminals": "screw terminal block on the -X end",
+   "note": "feeds 12 V DYNAMIXEL buses from a 12S (44.4 V) pack",
+   "uncertain": [
+    "price_usd",
+    "holes"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "max": [
+    159.0,
+    97.0,
+    38.0
+   ]
+  },
+  "mesh_triangles": 316
+ },
  "dxl_u2d2": {
   "key": "dxl_u2d2",
   "name": "ROBOTIS U2D2 USB to TTL/RS-485 interface",

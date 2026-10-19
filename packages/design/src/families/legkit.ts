@@ -185,7 +185,7 @@ export function addSensor(A: Assembly, type: SensorType, name: string, parent: s
  * Shrink each listed joint's limits to its collision-free range (other joints at home), keeping a margin,
  * then record an interference check at home and at sampled limit combinations.
  */
-export function limitsFromGeometry(A: Assembly, joints: string[], combos: Record<string, number>[] = [], margin = 0.06, skipPairs: [string, string][] = []) {
+export function limitsFromGeometry(A: Assembly, joints: string[], combos: Record<string, number>[] = [], margin = 0.06, skipPairs: [string, string][] = [], baseFor: (joint: string) => Record<string, number> = () => ({})) {
   const skip = new Set(skipPairs.map(([a, b]) => `${a}|${b}`));
   // bought boards/packs/pads sit on the part that carries them; their box approximations (PCB with
   // under-board connectors, pads clamped over a shin tip) overlap that carrier by design
@@ -198,7 +198,7 @@ export function limitsFromGeometry(A: Assembly, joints: string[], combos: Record
     for (const name of joints) {
       const j = A.spec.joints.find((x) => x.name === name)!;
       const lo = j.limit!.lower!, hi = j.limit!.upper!;
-      const [a, b] = freeRange(m, name, {}, lo, hi, 0.04, skip);
+      const [a, b] = freeRange(m, name, baseFor(name), lo, hi, 0.04, skip);
       const nlo = a > lo ? Math.min(0, a + margin) : lo, nhi = b < hi ? Math.max(0, b - margin) : hi;
       j.limit!.lower = +nlo.toFixed(3); j.limit!.upper = +nhi.toFixed(3);
       if (a > lo || b < hi) report.push(`${name} [${lo.toFixed(2)}, ${hi.toFixed(2)}] -> [${nlo.toFixed(2)}, ${nhi.toFixed(2)}]`);
