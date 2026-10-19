@@ -354,6 +354,10 @@ export function designArm(req: ArmRequest): RobotSpecification {
   const segs = segmentsOf(built!, kinds);
   if (segs.upper_arm !== undefined) A.design.performance.upper_arm_m = +(segs.upper_arm / 1000).toFixed(3);
   if (segs.forearm !== undefined) A.design.performance.forearm_m = +(segs.forearm / 1000).toFixed(3);
+  // ready pose: shoulder forward, elbow and wrist folded back (signs follow each pitch actuator's side)
+  const pjs = joints.filter((j) => j.kind === "P"), sign = (j: JointPlan) => j.side;
+  const ready = [0.7, 1.3, -0.8]; // physical bend; a pitch actuator mounted on the other side turns the other way
+  A.design.home = Object.fromEntries(pjs.slice(0, 3).map((j, k) => [j.name, +(ready[k] * sign(j)).toFixed(3)]));
   A.design.request = { ...req, dof };
   return A.finish(`${dof}-DOF arm, ${(reachActual * 1000).toFixed(0)} mm reach, ${payload} kg payload, ${LADDERS[ladder].label}`);
 }

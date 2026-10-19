@@ -103,3 +103,30 @@ button{cursor:pointer;font:inherit}
 
 #previewStatus{position:absolute;top:54px;left:10px;right:10px;padding:10px;background:#251f16;color:var(--accent);border:1px solid #65502c;border-radius:6px;z-index:2}
 #previewStatus[hidden]{display:none}
+
+.nowebgl{position:absolute;inset:auto 16px 16px 16px;padding:12px 14px;border:1px solid #a86;border-radius:8px;background:#2a2016;color:#f3d9b8;font-size:13px;line-height:1.4}
+.design .panel-h{margin-top:12px}
+.checks{list-style:none;margin:6px 0;padding:0;font-size:12px;line-height:1.45}
+.checks li{padding:2px 0;color:var(--mute)}
+.checks li.ok{color:#9fd8a8}.checks li.bad{color:#ff9b8a}
+.bomtable a{color:inherit;text-decoration:underline dotted}
+/* phones: one scrolling column, nothing wider than the screen */
+@media(max-width:700px){
+  html,body{height:auto;overflow-x:hidden}
+  body{height:auto;min-height:100vh;overflow-y:auto}
+  #topbar{gap:10px;padding:10px 12px}
+  .brand small{display:none}
+  .promptrow{min-width:0}
+  .promptrow input{min-width:0;font-size:16px}
+  .promptrow button{padding:10px 12px}
+  #layout{display:flex;flex-direction:column}
+  #left{max-height:30vh}
+  #center{height:60vh;flex:none}
+  #right{border-left:0;border-top:1px solid var(--line)}
+  .tabpane{max-height:none}
+  .viewhud{flex-wrap:wrap;right:10px;gap:8px}
+  #bottombar{flex-direction:column;align-items:stretch;gap:10px;padding:10px 12px}
+  .downloads{flex-wrap:wrap}
+  .downloads button{flex:1 1 30%;padding:9px 6px}
+  .bomtable{font-size:11px}
+}

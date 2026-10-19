@@ -21,7 +21,16 @@ scene.background = new THREE.Color(0x0a0c0f);
 const camera = new THREE.PerspectiveCamera(50, 1, 0.01, 100);
 camera.up.set(0, 0, 1);
 camera.position.set(0.9, -0.9, 0.7);
-const renderer = new THREE.WebGLRenderer({ antialias: true });
+// Without WebGL (hardware acceleration off, blocked GPU) the 3D view is skipped but generation,
+// the engineering report and every download still work.
+let renderer;
+try { renderer = new THREE.WebGLRenderer({ antialias: true }); }
+catch {
+  const canvas = document.createElement("canvas");
+  renderer = { domElement: canvas, setPixelRatio() {}, setSize() {}, render() {} };
+  const note = el("div", "nowebgl", "3D preview unavailable: this browser has WebGL turned off (enable hardware acceleration to see the model). Generating, the Build report and all downloads still work.");
+  viewport.append(note);
+}
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
 viewport.appendChild(renderer.domElement);
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -325,12 +334,33 @@ function renderBom(bom) {
   const tb = el("tbody");
   for (const l of bom.lines) {
     const tr = el("tr");
-    tr.innerHTML = `<td><div class="bomcat">${l.category}</div>${l.name}${l.note ? ` · <span style="color:var(--mute)">${l.note}</span>` : ""}<div style="color:var(--mute);font-size:11px">${l.spec}</div></td><td class="n">${l.qty}</td><td class="n">$${l.unit_cost}</td><td class="n">$${l.subtotal}</td>`;
+    const url = (l.note ?? "").match(/https?:\/\/\S+$/)?.[0], note = url ? l.note.slice(0, -url.length).replace(/\s*·\s*$/, "") : l.note;
+    tr.innerHTML = `<td><div class="bomcat">${esc(l.category)}</div>${url ? link(url, esc(l.name)) : esc(l.name)}${note ? ` · <span style="color:var(--mute)">${esc(note)}</span>` : ""}<div style="color:var(--mute);font-size:11px">${esc(l.spec)}</div></td><td class="n">${l.qty}</td><td class="n">$${l.unit_cost}</td><td class="n">$${l.subtotal}</td>`;
     tb.append(tr);
   }
   tbl.append(tb); box.append(tbl);
-  box.append(el("div", "hint", `Tier: ${bom.tier}. Estimates for planning, not quotes.`));
+  box.append(el("div", "hint", `Tier: ${bom.tier}. Street prices from the linked suppliers; check before ordering.`));
   for (const w of bom.warnings ?? []) box.append(el("div", "bomwarn", "⚠ " + w));
+  renderDesign(state.robot?.metadata?.design);
+}
+const link = (url, text) => `<a href="${encodeURI(url)}" target="_blank" rel="noopener">${text}</a>`;
+const esc = (x) => String(x).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+/** Engineering record of a designed robot: what it can do, how each motor was sized, every check. */
+function renderDesign(d) {
+  const box = $("#bom");
+  if (!d) return;
+  const sec = el("div", "design");
+  const perf = Object.entries(d.performance ?? {}).map(([k, v]) => `<tr><td>${esc(k.replace(/_/g, " "))}</td><td class="n">${esc(v)}</td></tr>`).join("");
+  const joints = (d.joints ?? []).map((j) => `<tr><td>${esc(j.joint)}</td><td>${esc(j.actuator)}</td><td class="n">${j.required_nm}</td><td class="n">${j.rated_nm} / ${j.peak_nm}</td><td class="n">${j.margin}x</td><td class="n">${j.speed_rad_s}</td></tr>`).join("");
+  const checks = (d.checks ?? []).map((c) => `<li class="${c.pass ? "ok" : "bad"}">${c.pass ? "✓" : "✗"} <b>${esc(c.name)}</b> — ${esc(c.detail)}</li>`).join("");
+  const printed = (d.printed ?? []).map((p) => `<li>${esc(p.name)}: ${p.check.bbox_mm.join(" × ")} mm, ${Math.round(p.mass_kg * 1000)} g${p.check.fits_bed ? "" : " — <b>too big for the bed</b>"}</li>`).join("");
+  sec.innerHTML = `<div class="panel-h">Engineering</div><div class="hint">${esc(d.summary)}</div>
+    <table class="bomtable"><tbody>${perf}</tbody></table>
+    ${joints ? `<div class="panel-h">Actuator sizing</div><table class="bomtable"><thead><tr><th>Joint</th><th>Actuator</th><th>Peak need N·m</th><th>Rated / peak</th><th>Margin</th><th>rad/s loaded</th></tr></thead><tbody>${joints}</tbody></table>` : ""}
+    <div class="panel-h">Checks</div><ul class="checks">${checks}</ul>
+    <div class="panel-h">Printed parts (${d.printed?.length ?? 0})</div><ul class="checks">${printed}</ul>
+    ${(d.assumptions ?? []).length ? `<div class="panel-h">Assumptions</div><ul class="checks">${d.assumptions.map((a) => `<li>${esc(a)}</li>`).join("")}</ul>` : ""}`;
+  box.append(sec);
 }
 async function refreshBom() {
   if (!state.robot) return;
@@ -376,7 +406,7 @@ async function api(path, body) {
 function applyResult(res, label, diffLines) {
   state.robot = res.robot; state.urdf = res.urdf; state.xacro = res.xacro; state.id = res.id ?? state.id;
   if (state.id && !STATIC) history.replaceState(null, "", `/r/${state.id}`);
-  state.jointValues = {};
+  state.jointValues = { ...(res.robot?.metadata?.design?.home ?? {}) }; // designed robots open in their ready pose
   state.versions.push({ id: state.id, label, robot: res.robot, urdf: res.urdf, xacro: res.xacro });
   state.version = state.versions.length - 1;
   state.selection = null;
@@ -387,7 +417,7 @@ function applyResult(res, label, diffLines) {
 
 function loadVersion(i) {
   const v = state.versions[i]; if (!v) return;
-  state.version = i; state.id = v.id; state.robot = v.robot; state.urdf = v.urdf; state.xacro = v.xacro; state.jointValues = {}; state.selection = null;
+  state.version = i; state.id = v.id; state.robot = v.robot; state.urdf = v.urdf; state.xacro = v.xacro; state.jointValues = { ...(v.robot?.metadata?.design?.home ?? {}) }; state.selection = null;
   buildRobot(v.robot); renderTree(); renderSliders(); renderInspector(); renderHistory();
 }
 

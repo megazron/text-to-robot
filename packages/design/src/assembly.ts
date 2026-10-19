@@ -49,6 +49,8 @@ export interface DesignRecord {
   performance: Record<string, number | string>;
   assumptions: string[];
   fasteners: Record<string, number>;
+  /** joint angles of a natural "ready" pose for previews (the URDF zero pose stays the build pose) */
+  home?: Record<string, number>;
   /** the designer's input; edits change it and run the designer again */
   request?: Record<string, unknown>;
   /** Tool centre point (link frame, metres) for task tests: payload hold, reach, grip. */

@@ -117,3 +117,8 @@ const fromB64Url = (s: string) => Uint8Array.from(atob(s.replace(/-/g, "+").repl
     return JSON.parse(new TextDecoder().decode(await pipe(fromB64Url(m[1]), new DecompressionStream("deflate-raw"))));
   },
 };
+
+// The engine finishes loading (WASM CSG kernel) before this line runs; only now start the app,
+// so its first /api calls are answered here. A computed specifier keeps the bundler from inlining it.
+const appUrl = new URL("./app.js", document.baseURI).href;
+await import(appUrl);
