@@ -1,4 +1,90 @@
 {
+ "ball_caster_pololu_2692": {
+  "key": "ball_caster_pololu_2692",
+  "name": "Pololu ball caster, 1\" POM ball on ball bearings (#2692)",
+  "category": "wheel",
+  "mass_g": 18.4,
+  "price_usd": 9.95,
+  "supplier_url": "https://www.pololu.com/product/2692",
+  "datasheet_url": "https://www.pololu.com/product/2692",
+  "envelope_mm": [
+   38.0,
+   38.0,
+   29.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     9.18485099360515e-16,
+     15.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 3.2,
+    "thread": null
+   },
+   {
+    "pos": [
+     -12.990381056766578,
+     -7.500000000000002,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 3.2,
+    "thread": null
+   },
+   {
+    "pos": [
+     12.990381056766577,
+     -7.500000000000007,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 3.2,
+    "thread": null
+   }
+  ],
+  "specs": {
+   "ball_d_mm": 25.4,
+   "height_mm": 29.0,
+   "ball_center_z_mm": -16.3,
+   "max_robot_mass_kg": 4.5,
+   "screws": "3x M3 / #4",
+   "note": "rated by Pololu for differential-drive robots up to about ten pounds",
+   "hole_positions_mm": "3 holes on a 30 mm circle (our reading; Pololu gives 0.48 in hole spacing)",
+   "uncertain": [
+    "hole_positions_mm",
+    "housing_d_mm"
+   ],
+   "housing_d_mm": 38.0
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -19.0,
+    -19.0,
+    -29.0
+   ],
+   "max": [
+    19.0,
+    19.0,
+    0.0
+   ]
+  },
+  "mesh_triangles": 863
+ },
  "bearing_608zz": {
   "key": "bearing_608zz",
   "name": "Ball bearing 608-2Z 8x22x7 mm",
@@ -2026,6 +2112,129 @@
    ]
   },
   "mesh_triangles": 3338
+ },
+ "cytron_mdd10a": {
+  "key": "cytron_mdd10a",
+  "name": "Cytron MDD10A dual-channel 10 A DC motor driver (5-30 V)",
+  "category": "motor_driver",
+  "mass_g": 40.0,
+  "price_usd": 21.0,
+  "supplier_url": "https://www.cytron.io/p-10amp-5v-30v-dc-motor-driver-2-channels",
+  "datasheet_url": "https://botland.com.pl/en/drivers-dc-motors/15818-cytron-mdd10a-dual-channel-30v-10a-motor-controller.html",
+  "envelope_mm": [
+   85.0,
+   62.0,
+   12.6
+  ],
+  "holes": [
+   {
+    "pos": [
+     3.5,
+     3.5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.2,
+    "thread": null
+   },
+   {
+    "pos": [
+     81.5,
+     3.5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.2,
+    "thread": null
+   },
+   {
+    "pos": [
+     3.5,
+     58.5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.2,
+    "thread": null
+   },
+   {
+    "pos": [
+     81.5,
+     58.5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.2,
+    "thread": null
+   }
+  ],
+  "specs": {
+   "channels": 2,
+   "current_a": 10.0,
+   "peak_current_a": 30.0,
+   "voltage_v": 12.0,
+   "input_v": [
+    5.0,
+    30.0
+   ],
+   "logic": "PWM + DIR, 3.3 / 5 V",
+   "pwm_khz": 20,
+   "note": "retailers list 85 x 62 x 25 mm and 40 g (one lists 80 g); hole pattern assumed 3.5 mm in from each corner",
+   "uncertain": [
+    "mass_g",
+    "hole_positions",
+    "price_usd",
+    "envelope_mm"
+   ],
+   "hole_positions": [
+    [
+     3.5,
+     3.5
+    ],
+    [
+     81.5,
+     3.5
+    ],
+    [
+     3.5,
+     58.5
+    ],
+    [
+     81.5,
+     58.5
+    ]
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "max": [
+    85.0,
+    62.0,
+    12.6
+   ]
+  },
+  "mesh_triangles": 636
  },
  "dxl_u2d2": {
   "key": "dxl_u2d2",
@@ -5594,6 +5803,50 @@
   },
   "mesh_triangles": 172
  },
+ "lipo_3s_5000": {
+  "key": "lipo_3s_5000",
+  "name": "LiPo 3S 5000 mAh 60C, XT60 (Gens Ace G-Tech)",
+  "category": "battery",
+  "mass_g": 355.0,
+  "price_usd": 59.99,
+  "supplier_url": "https://classicrcshop.com/products/gens-ace-5000mah-3s-60c-11-1v-g-tech-lipo-battery-pack-with-xt60-plug",
+  "datasheet_url": "https://classicrcshop.com/products/gens-ace-5000mah-3s-60c-11-1v-g-tech-lipo-battery-pack-with-xt60-plug",
+  "envelope_mm": [
+   166.0,
+   42.5,
+   24.7
+  ],
+  "holes": [],
+  "specs": {
+   "cells": 3,
+   "capacity_mah": 5000,
+   "voltage_v": 11.1,
+   "voltage_max_v": 12.6,
+   "energy_wh": 55.5,
+   "c_rating": 60,
+   "max_current_a": 300.0,
+   "plug": "XT60",
+   "mount": "hook-and-loop strap / printed cradle; never screw into a pack",
+   "uncertain": [
+    "price_usd",
+    "envelope_mm"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -12.0,
+    -21.25,
+    0.0
+   ],
+   "max": [
+    154.0,
+    21.25,
+    24.7
+   ]
+  },
+  "mesh_triangles": 172
+ },
  "lipo_4s_5000": {
   "key": "lipo_4s_5000",
   "name": "LiPo 4S 5000 mAh 60C, XT90 (Gens Ace G-Tech)",
@@ -5676,6 +5929,70 @@
    ]
   },
   "mesh_triangles": 172
+ },
+ "mecanum_96mm_gobilda": {
+  "key": "mecanum_96mm_gobilda",
+  "name": "goBILDA 96 mm mecanum wheel (3213-3606-0002, 70A rollers) + 1309 6 mm D-bore sonic hub",
+  "category": "wheel",
+  "mass_g": 216.6,
+  "price_usd": 50.49,
+  "supplier_url": "https://www.gobilda.com/96mm-mecanum-wheel-set-70a-durometer-bearing-supported-rollers/",
+  "datasheet_url": "https://servocity.com/96mm-mecanum-wheel-set-70a-durometer-bearing-supported-rollers",
+  "envelope_mm": [
+   96.0,
+   96.0,
+   46.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 6.0,
+    "thread": null
+   }
+  ],
+  "specs": {
+   "od_mm": 96.0,
+   "width_mm": 38.0,
+   "bore_mm": 6.0,
+   "bore": "6 mm D (goBILDA 1309-0016-1006 sonic hub)",
+   "hub_mass_g": 9.6,
+   "wheel_mass_g": 207.0,
+   "rollers": 10,
+   "roller_durometer": "70A",
+   "sold_as": "set of 4 (2 left-hand + 2 right-hand), $169.99 per set",
+   "hub_offset_mm": 8.0,
+   "set_screw": "hub clamps the 6 mm D shaft (Pololu 37D)",
+   "note": "rollers modelled as 45 deg cylinders; mount left/right-hand wheels in an X pattern seen from above",
+   "uncertain": [
+    "width_mm",
+    "rollers",
+    "hub_offset_mm",
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -48.33,
+    -49.87,
+    0.0
+   ],
+   "max": [
+    48.33,
+    49.87,
+    49.36
+   ]
+  },
+  "mesh_triangles": 3430
  },
  "n20_gearmotor_100to1": {
   "key": "n20_gearmotor_100to1",
@@ -6103,6 +6420,164 @@
   },
   "output_frame": null
  },
+ "pololu_37d_30to1_64cpr": {
+  "key": "pololu_37d_30to1_64cpr",
+  "name": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
+  "category": "actuator",
+  "mass_g": 205.0,
+  "price_usd": 60.95,
+  "supplier_url": "https://www.pololu.com/product/4752",
+  "datasheet_url": "https://www.pololu.com/file/0J1735/37d-metal-gearmotors-dimension-diagram.pdf",
+  "envelope_mm": [
+   36.8,
+   38.4,
+   93.1
+  ],
+  "holes": [
+   {
+    "pos": [
+     6.423393758658801,
+     7.749999999999999,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -6.999999999999999,
+     15.5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -20.4233937586588,
+     7.749999999999999,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -20.423393758658797,
+     -7.750000000000002,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -7.000000000000003,
+     -15.5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     6.423393758658795,
+     -7.750000000000007,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "voltage_v": 12.0,
+   "gear_ratio": 30,
+   "stall_torque_nm": 1.373,
+   "stall_torque_kgcm": 14.0,
+   "rated_torque_nm": 0.686,
+   "no_load_speed_rpm": 330,
+   "no_load_speed_rad_s": 34.558,
+   "no_load_current_a": 0.2,
+   "stall_current_a": 5.5,
+   "current_a": 5.5,
+   "max_power_w": 10.0,
+   "encoder_cpr_motor": 64,
+   "encoder_cpr_output": 1920,
+   "shaft_d_mm": 6.0,
+   "shaft_flat_mm": 5.4,
+   "shaft_length_mm": 22.0,
+   "shaft_offset_mm": 7.0,
+   "gearbox_center_xy_mm": [
+    -7.0,
+    0.0
+   ],
+   "hole_pcd_mm": 31.0,
+   "hole_thread_depth_mm": 3.0,
+   "hole_orientation_deg": 30.0,
+   "note": "Pololu: max recommended continuous load 10 kg.cm; stall values extrapolated. rated_torque_nm = min(10 kg.cm, stall/2)",
+   "uncertain": [
+    "hole_orientation_deg",
+    "mass_g",
+    "rated_torque_nm"
+   ],
+   "gearbox_length_mm": 22.0
+  },
+  "output_frame": [
+   [
+    0.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "bbox_mm": {
+   "min": [
+    -25.4,
+    -18.4,
+    -71.1
+   ],
+   "max": [
+    11.4,
+    20.0,
+    22.0
+   ]
+  },
+  "mesh_triangles": 1142
+ },
  "pololu_37d_50to1_64cpr": {
   "key": "pololu_37d_50to1_64cpr",
   "name": "Pololu 50:1 Metal Gearmotor 37Dx70L 12 V with 64 CPR encoder (#4753)",
@@ -6231,6 +6706,164 @@
    "uncertain": [
     "hole_orientation_deg"
    ]
+  },
+  "output_frame": [
+   [
+    0.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "bbox_mm": {
+   "min": [
+    -25.4,
+    -18.4,
+    -73.1
+   ],
+   "max": [
+    11.4,
+    20.0,
+    22.0
+   ]
+  },
+  "mesh_triangles": 1142
+ },
+ "pololu_37d_70to1_64cpr": {
+  "key": "pololu_37d_70to1_64cpr",
+  "name": "Pololu 70:1 Metal Gearmotor 37Dx70L 12 V with 64 CPR encoder (#4754)",
+  "category": "actuator",
+  "mass_g": 205.0,
+  "price_usd": 60.95,
+  "supplier_url": "https://www.pololu.com/product/4754",
+  "datasheet_url": "https://www.pololu.com/file/0J1735/37d-metal-gearmotors-dimension-diagram.pdf",
+  "envelope_mm": [
+   36.8,
+   38.4,
+   95.1
+  ],
+  "holes": [
+   {
+    "pos": [
+     6.423393758658801,
+     7.749999999999999,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -6.999999999999999,
+     15.5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -20.4233937586588,
+     7.749999999999999,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -20.423393758658797,
+     -7.750000000000002,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -7.000000000000003,
+     -15.5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     6.423393758658795,
+     -7.750000000000007,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "voltage_v": 12.0,
+   "gear_ratio": 70,
+   "stall_torque_nm": 2.648,
+   "stall_torque_kgcm": 27.0,
+   "rated_torque_nm": 0.981,
+   "no_load_speed_rpm": 150,
+   "no_load_speed_rad_s": 15.708,
+   "no_load_current_a": 0.2,
+   "stall_current_a": 5.5,
+   "current_a": 5.5,
+   "max_power_w": 10.0,
+   "encoder_cpr_motor": 64,
+   "encoder_cpr_output": 4480,
+   "shaft_d_mm": 6.0,
+   "shaft_flat_mm": 5.4,
+   "shaft_length_mm": 22.0,
+   "shaft_offset_mm": 7.0,
+   "gearbox_center_xy_mm": [
+    -7.0,
+    0.0
+   ],
+   "hole_pcd_mm": 31.0,
+   "hole_thread_depth_mm": 3.0,
+   "hole_orientation_deg": 30.0,
+   "note": "Pololu: max recommended continuous load 10 kg.cm; stall values extrapolated. rated_torque_nm = min(10 kg.cm, stall/2)",
+   "uncertain": [
+    "hole_orientation_deg",
+    "mass_g",
+    "rated_torque_nm"
+   ],
+   "gearbox_length_mm": 24.0
   },
   "output_frame": [
    [

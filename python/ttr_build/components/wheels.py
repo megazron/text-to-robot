@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import math
 
-from .base import Component, Hole, box, cyl, polar, tube, union
+from .base import Component, Hole, box, cyl, cyl_between, polar, tube, union
 
 
 def _tt_build(c):
@@ -87,4 +87,78 @@ P90 = Component(
     build=_p90_build, build_keepout=_keepout(90.0, 0.0, 19.2),
 )
 
-COMPONENTS = [TT65, P90]
+
+
+# ------------------------------------------- goBILDA 96 mm mecanum + 1309 6 mm D-bore sonic hub
+MEC_HUB_T = 8.0     # sonic hub between the motor shaft and the wheel side plate
+MEC_W = 38.0        # wheel width (roller envelope), see uncertain
+MEC_N = 10          # rollers
+
+
+def _mec_build(c):
+    hub = cyl(16.0, 0.0, MEC_HUB_T) - cyl(6.0, -0.1, MEC_HUB_T + 0.1)
+    hub = hub + (cyl(30.0, MEC_HUB_T - 3.0, MEC_HUB_T) - cyl(6.0, -0.1, MEC_HUB_T + 0.1))
+    z0, z1 = MEC_HUB_T, MEC_HUB_T + MEC_W
+    plates = [cyl(82.0, z, z + 2.0) - cyl(14.0, z - 0.1, z + 2.1) for z in (z0, z1 - 2.0)]
+    core = tube(46.0, 14.0, z0, z1)
+    rollers = []
+    for k in range(MEC_N):
+        a = 2 * math.pi * k / MEC_N
+        # roller axis at 45 deg to the wheel axis, tangent to the wheel, centred on a 38 mm radius
+        cx, cy = 38.0 * math.cos(a), 38.0 * math.sin(a)
+        tx, ty = -math.sin(a), math.cos(a)
+        h = (MEC_W - 6.0) / 2
+        zc = (z0 + z1) / 2
+        p0 = (cx - tx * h, cy - ty * h, zc - h)
+        p1 = (cx + tx * h, cy + ty * h, zc + h)
+        rollers.append(cyl_between(18.0, p0, p1))
+    return union(hub, *plates, core, *rollers)
+
+
+MEC96 = Component(
+    key="mecanum_96mm_gobilda", name="goBILDA 96 mm mecanum wheel (3213-3606-0002, 70A rollers) + 1309 6 mm D-bore sonic hub",
+    category="wheel", mass_g=207.0 + 9.6, price_usd=round(169.99 / 4 + 7.99, 2),
+    supplier_url="https://www.gobilda.com/96mm-mecanum-wheel-set-70a-durometer-bearing-supported-rollers/",
+    datasheet_url="https://servocity.com/96mm-mecanum-wheel-set-70a-durometer-bearing-supported-rollers",
+    envelope_mm=(96.0, 96.0, MEC_HUB_T + MEC_W), holes=[Hole((0.0, 0.0, 0.0), (0.0, 0.0, -1.0), 6.0, None)],
+    specs={"od_mm": 96.0, "width_mm": MEC_W, "bore_mm": 6.0, "bore": "6 mm D (goBILDA 1309-0016-1006 sonic hub)",
+           "hub_mass_g": 9.6, "wheel_mass_g": 207.0, "rollers": MEC_N, "roller_durometer": "70A",
+           "sold_as": "set of 4 (2 left-hand + 2 right-hand), $169.99 per set",
+           "hub_offset_mm": MEC_HUB_T, "set_screw": "hub clamps the 6 mm D shaft (Pololu 37D)",
+           "note": "rollers modelled as 45 deg cylinders; mount left/right-hand wheels in an X pattern seen from above",
+           "uncertain": ["width_mm", "rollers", "hub_offset_mm", "price_usd"]},
+    build=_mec_build, build_keepout=_keepout(96.0, MEC_HUB_T, MEC_HUB_T + MEC_W),
+)
+
+# ----------------------------------------- Pololu ball caster, 1" POM ball with ball bearings (#2692)
+# Frame: top (mounting) face at z = 0, housing below, ball touching the floor at z = -29.
+BC_H, BC_BALL = 29.0, 25.4
+BC_HOLES = [Hole((15.0 * math.cos(math.radians(a)), 15.0 * math.sin(math.radians(a)), 0.0), (0.0, 0.0, 1.0), 3.2, None)
+            for a in (90.0, 210.0, 330.0)]
+
+
+def _bc_build(c):
+    zc = -BC_H + BC_BALL / 2
+    flange = cyl(38.0, -3.0, 0.0)
+    for h in BC_HOLES:
+        flange = flange - cyl(3.2, -3.1, 0.1, h.pos[0], h.pos[1])
+    cup = cyl(30.0, zc, -2.99) - cyl(BC_BALL + 1.0, zc - 0.1, zc + 2.0)
+    import build123d as bd
+    ball = bd.Pos(0, 0, zc) * bd.Sphere(BC_BALL / 2)
+    return union(flange, cup, ball)
+
+
+BALL_CASTER = Component(
+    key="ball_caster_pololu_2692", name="Pololu ball caster, 1\" POM ball on ball bearings (#2692)", category="wheel",
+    mass_g=18.4, price_usd=9.95, supplier_url="https://www.pololu.com/product/2692",
+    datasheet_url="https://www.pololu.com/product/2692",
+    envelope_mm=(38.0, 38.0, BC_H), holes=BC_HOLES,
+    specs={"ball_d_mm": BC_BALL, "height_mm": BC_H, "ball_center_z_mm": -BC_H + BC_BALL / 2,
+           "max_robot_mass_kg": 4.5, "screws": "3x M3 / #4",
+           "note": "rated by Pololu for differential-drive robots up to about ten pounds",
+           "hole_positions_mm": "3 holes on a 30 mm circle (our reading; Pololu gives 0.48 in hole spacing)",
+           "uncertain": ["hole_positions_mm", "housing_d_mm"], "housing_d_mm": 38.0},
+    build=_bc_build,
+)
+
+COMPONENTS = [TT65, P90, MEC96, BALL_CASTER]

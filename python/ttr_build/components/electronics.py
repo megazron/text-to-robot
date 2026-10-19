@@ -271,4 +271,34 @@ BNO085 = Component(
     build=_bno_build,
 )
 
-COMPONENTS = [RPI5, JETSON, ESP32, RPLIDAR_C1, RPLIDAR_A1, D435I, CAM3, BNO085]
+# ------------------------------------------------------------- Cytron MDD10A dual 10 A driver
+MDD_HOLES = [(3.5, 3.5), (81.5, 3.5), (3.5, 58.5), (81.5, 58.5)]
+
+
+def _mdd_build(c):
+    return pcb(85.0, 62.0, 1.6, MDD_HOLES, 3.2, parts=[
+        (8.0, 23.0, 50.0, 60.0, 11.0),    # motor 1 terminal block
+        (62.0, 77.0, 50.0, 60.0, 11.0),   # motor 2 terminal block
+        (35.0, 50.0, 50.0, 60.0, 11.0),   # power terminal block
+        (12.0, 73.0, 18.0, 44.0, 4.0),    # MOSFET H-bridges
+        (30.0, 55.0, 2.0, 8.0, 8.5),      # control header
+    ], r=2.0)
+
+
+def _mdd_keepout(c):
+    return box(5.0, 80.0, 60.0 - 0.01, 85.0, 1.6, 12.0)  # wires into the screw terminals
+
+
+MDD10A = Component(
+    key="cytron_mdd10a", name="Cytron MDD10A dual-channel 10 A DC motor driver (5-30 V)", category="motor_driver",
+    mass_g=40.0, price_usd=21.0, supplier_url="https://www.cytron.io/p-10amp-5v-30v-dc-motor-driver-2-channels",
+    datasheet_url="https://botland.com.pl/en/drivers-dc-motors/15818-cytron-mdd10a-dual-channel-30v-10a-motor-controller.html",
+    envelope_mm=(85.0, 62.0, 12.6), holes=pcb_holes(MDD_HOLES, 3.2, None),
+    specs={"channels": 2, "current_a": 10.0, "peak_current_a": 30.0, "voltage_v": 12.0, "input_v": (5.0, 30.0),
+           "logic": "PWM + DIR, 3.3 / 5 V", "pwm_khz": 20,
+           "note": "retailers list 85 x 62 x 25 mm and 40 g (one lists 80 g); hole pattern assumed 3.5 mm in from each corner",
+           "uncertain": ["mass_g", "hole_positions", "price_usd", "envelope_mm"], "hole_positions": MDD_HOLES},
+    build=_mdd_build, build_keepout=_mdd_keepout,
+)
+
+COMPONENTS = [MDD10A, RPI5, JETSON, ESP32, RPLIDAR_C1, RPLIDAR_A1, D435I, CAM3, BNO085]
