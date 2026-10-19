@@ -5966,7 +5966,7 @@
    "bore": "6 mm D (goBILDA 1309-0016-1006 sonic hub)",
    "hub_mass_g": 9.6,
    "wheel_mass_g": 207.0,
-   "rollers": 10,
+   "rollers": 12,
    "roller_durometer": "70A",
    "sold_as": "set of 4 (2 left-hand + 2 right-hand), $169.99 per set",
    "hub_offset_mm": 8.0,
@@ -5982,17 +5982,17 @@
   "output_frame": null,
   "bbox_mm": {
    "min": [
-    -48.33,
-    -49.87,
+    -48.0,
+    -48.0,
     0.0
    ],
    "max": [
-    48.33,
-    49.87,
-    49.36
+    48.0,
+    48.0,
+    46.0
    ]
   },
-  "mesh_triangles": 3430
+  "mesh_triangles": 4552
  },
  "n20_gearmotor_100to1": {
   "key": "n20_gearmotor_100to1",

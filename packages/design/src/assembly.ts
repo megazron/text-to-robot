@@ -39,6 +39,10 @@ export interface DesignRecord {
   performance: Record<string, number | string>;
   assumptions: string[];
   fasteners: Record<string, number>;
+  /** tool point of a serial chain: link, offset (m) and the payload it was sized for */
+  tool?: { link: string; xyz_m: Vec3; payload_kg: number };
+  /** the request the designer was run with; re-running the designer on it reproduces the robot */
+  request?: Record<string, unknown>;
 }
 
 export class Assembly {

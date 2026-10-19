@@ -92,7 +92,7 @@ P90 = Component(
 # ------------------------------------------- goBILDA 96 mm mecanum + 1309 6 mm D-bore sonic hub
 MEC_HUB_T = 8.0     # sonic hub between the motor shaft and the wheel side plate
 MEC_W = 38.0        # wheel width (roller envelope), see uncertain
-MEC_N = 10          # rollers
+MEC_N = 12          # rollers
 
 
 def _mec_build(c):
@@ -102,16 +102,16 @@ def _mec_build(c):
     plates = [cyl(82.0, z, z + 2.0) - cyl(14.0, z - 0.1, z + 2.1) for z in (z0, z1 - 2.0)]
     core = tube(46.0, 14.0, z0, z1)
     rollers = []
+    zc = (z0 + z1) / 2
     for k in range(MEC_N):
         a = 2 * math.pi * k / MEC_N
-        # roller axis at 45 deg to the wheel axis, tangent to the wheel, centred on a 38 mm radius
-        cx, cy = 38.0 * math.cos(a), 38.0 * math.sin(a)
+        # barrel roller, axis at 45 deg to the wheel axis in the plane tangent to the wheel
+        cx, cy = 40.0 * math.cos(a), 40.0 * math.sin(a)
         tx, ty = -math.sin(a), math.cos(a)
-        h = (MEC_W - 6.0) / 2
-        zc = (z0 + z1) / 2
-        p0 = (cx - tx * h, cy - ty * h, zc - h)
-        p1 = (cx + tx * h, cy + ty * h, zc + h)
-        rollers.append(cyl_between(18.0, p0, p1))
+        for seg, (d, h0, h1) in enumerate(((16.0, -6.0, 6.0), (13.0, -11.0, -5.9), (13.0, 5.9, 11.0))):
+            p0 = (cx + tx * h0, cy + ty * h0, zc + h0)
+            p1 = (cx + tx * h1, cy + ty * h1, zc + h1)
+            rollers.append(cyl_between(d, p0, p1))
     return union(hub, *plates, core, *rollers)
 
 

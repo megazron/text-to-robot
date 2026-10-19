@@ -18,7 +18,8 @@ export type Op =
   | { op: "hole"; a: Vec3; b: Vec3; d: number }                               // subtract a cylinder
   | { op: "cutbox"; min: Vec3; max: Vec3 }
   | { op: "lighten"; a: Vec3; b: Vec3; r: number; n: number }                 // row of lightening holes along a->b
-  | { op: "at"; T: Mat4; of: Op[] };                                           // sub-program placed by T
+  | { op: "revolve"; pts: [number, number][]; seg?: number }                  // closed (radius, z) outline turned about +z (shells, domes)
+  | { op: "at"; T: Mat4; of: Op[] };                                           // sub-program placed by T (may scale)
 
 export interface Program { name: string; ops: Op[]; }
 
@@ -36,6 +37,12 @@ function solidOf(o: Op): { add: M[]; cut: M[] } {
     case "rod": return { add: [rod(o.a, o.b, o.r)], cut: [] };
     case "box": return { add: [o.r ? roundedBox(o.min, o.max, o.r) : box(o.min, o.max)], cut: [] };
     case "hull": { const parts = o.of.map(solidOf); return { add: [Manifold.hull(parts.flatMap((p) => p.add))], cut: parts.flatMap((p) => p.cut) }; }
+    case "revolve": {
+      // Manifold fills counter-clockwise outlines: normalise the winding
+      let area = 0; for (let i = 0; i < o.pts.length; i++) { const [a, b] = o.pts[i], [c, d] = o.pts[(i + 1) % o.pts.length]; area += a * d - c * b; }
+      const pts = (area < 0 ? [...o.pts].reverse() : o.pts).map(([r, z]) => [Math.max(0, r), z] as [number, number]);
+      return { add: [Manifold.revolve([pts], o.seg ?? 72)], cut: [] };
+    }
     case "keepout": return { add: [], cut: [actuatorKeepout({ key: o.key, T: o.T })] };
     case "hole": return { add: [], cut: [rod(o.a, o.b, o.d / 2, 24)] };
     case "cutbox": return { add: [], cut: [box(o.min, o.max)] };
