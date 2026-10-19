@@ -8,7 +8,7 @@ import { exportGazebo } from "./gazebo.ts";
 
 export type FileMap = Record<string, string | Uint8Array>;
 
-const actuated = (s: RobotSpecification): Joint[] => s.joints.filter((j) => !j.passive && (j.type === "revolute" || j.type === "prismatic" || j.type === "continuous"));
+const actuated = (s: RobotSpecification): Joint[] => s.joints.filter((j) => !j.passive && !j.mimic && (j.type === "revolute" || j.type === "prismatic" || j.type === "continuous"));
 
 export function exportRos2Package(spec: RobotSpecification, opts: { ros2_control?: boolean; moveit?: boolean; gazebo?: boolean } = {}): FileMap {
   const pkg = safeName(spec.robot_name);

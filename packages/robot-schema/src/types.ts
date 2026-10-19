@@ -74,6 +74,10 @@ export interface JointLimit {
 
 export interface JointDynamics { damping: number; friction: number; }
 
+/** URDF mimic: this joint follows `joint` as q = multiplier * q_joint + offset. It has no motor of its own
+ *  (e.g. the second finger of a rack-and-pinion gripper). */
+export interface JointMimic { joint: string; multiplier: number; offset: number; }
+
 export interface Joint {
   /** Free bearing/roller: contributes kinematics and contacts but has no motor. */
   passive?: boolean;
@@ -85,6 +89,8 @@ export interface Joint {
   axis: Vec3;
   limit?: JointLimit;
   dynamics?: JointDynamics;
+  /** follows another joint (no motor of its own) */
+  mimic?: JointMimic;
   inferred?: string[];
 }
 

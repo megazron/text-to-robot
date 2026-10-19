@@ -71,6 +71,9 @@ export function parseUrdf(xml: string): RobotSpecification {
       effort: Number(limitEl.attrs.effort) || 0, velocity: Number(limitEl.attrs.velocity) || 0,
     };
     if (dynEl) joint.dynamics = { damping: Number(dynEl.attrs.damping) || 0, friction: Number(dynEl.attrs.friction) || 0 };
+    const mimicEl = findFirst(j, "mimic");
+    if (mimicEl) joint.mimic = { joint: mimicEl.attrs.joint ?? "", multiplier: mimicEl.attrs.multiplier === undefined ? 1 : Number(mimicEl.attrs.multiplier), offset: Number(mimicEl.attrs.offset) || 0 };
+    if (j.attrs.passive === "true") joint.passive = true;
     spec.joints.push(joint);
   }
   return spec;

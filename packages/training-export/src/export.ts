@@ -68,7 +68,7 @@ class ${cn(name)}Env(gym.Env):
         self.p.setTimeStep(1/240)
         self.plane = self.p.loadURDF("plane.urdf")
         self.robot = self.p.loadURDF(URDF, [0, 0, 0.05], useFixedBase=${fixed}, flags=p.URDF_USE_INERTIA_FROM_FILE | p.URDF_USE_SELF_COLLISION | p.URDF_USE_SELF_COLLISION_EXCLUDE_PARENT${spec.links.length>127 ? " | p.URDF_MERGE_FIXED_LINKS" : ""})
-        passive_names = ${JSON.stringify(spec.joints.filter(j=>j.passive).map(j=>j.name))}
+        passive_names = ${JSON.stringify(spec.joints.filter(j=>j.passive||j.mimic).map(j=>j.name))}
         movable = [j for j in range(self.p.getNumJoints(self.robot)) if self.p.getJointInfo(self.robot,j)[2] != p.JOINT_FIXED]
         # Fixed links are one rigid body. Match MuJoCo's welded-body and adjacent
         # body exclusions without disabling collisions between unrelated links.

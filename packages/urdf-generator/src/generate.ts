@@ -94,9 +94,10 @@ export function generateJoint(j: Joint): string {
   const axis = needsAxis ? `  <axis xyz="${vec(j.axis)}"/>\n` : "";
   const limits = generateLimits(j);
   const dyn = j.dynamics ? `  <dynamics damping="${num(j.dynamics.damping)}" friction="${num(j.dynamics.friction)}"/>\n` : "";
+  const mimic = j.mimic ? `  <mimic joint="${xmlName(j.mimic.joint)}" multiplier="${num(j.mimic.multiplier)}" offset="${num(j.mimic.offset)}"/>\n` : "";
   return `<joint name="${xmlName(j.name)}" type="${j.type}"${j.passive ? ' passive="true"' : ""}>\n` +
     `  <parent link="${xmlName(j.parent)}"/>\n  <child link="${xmlName(j.child)}"/>\n` +
-    `  ${originTag(j.origin)}\n${axis}${limits}${dyn}</joint>`;
+    `  ${originTag(j.origin)}\n${axis}${limits}${dyn}${mimic}</joint>`;
 }
 
 function header(spec: RobotSpecification): string {

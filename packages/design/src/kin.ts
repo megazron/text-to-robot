@@ -1,5 +1,6 @@
 // Forward kinematics and static joint loads straight from a RobotSpecification (SI units).
 import type { RobotSpecification, Pose, Link } from "@ttr/robot-schema";
+import { inertiaOf } from "@ttr/kinematics";
 import type { Vec3 } from "@ttr/parts";
 
 type M3 = number[][];
@@ -81,3 +82,22 @@ export function pointWorld(spec: RobotSpecification, q: Record<string, number>, 
   return mv(T.R, at).map((x, i) => x + T.p[i]) as Vec3;
 }
 export const totalMass = (spec: RobotSpecification) => spec.links.reduce((s, l) => s + l.mass, 0);
+
+/** Moment of inertia (kg·m²) of everything a joint moves, about that joint's axis, in configuration q
+ *  (parallel-axis sum over links including their own rotational inertia, plus point loads). */
+export function axisInertia(spec: RobotSpecification, joint: string, q: Record<string, number> = {}, loads: PointLoad[] = []): number {
+  const f = fk(spec, q), j = spec.joints.find((x) => x.name === joint)!;
+  const below = descendants(spec, j.child), { p, axis } = f.joint[joint];
+  const perp2 = (pos: Vec3) => { const r: Vec3 = [pos[0] - p[0], pos[1] - p[1], pos[2] - p[2]]; const d = r[0] * axis[0] + r[1] * axis[1] + r[2] * axis[2]; return r[0] ** 2 + r[1] ** 2 + r[2] ** 2 - d * d; };
+  let J = 0;
+  for (const l of spec.links) {
+    if (!below.has(l.name)) continue;
+    const T = f.link[l.name], com = mv(T.R, linkCom(l)).map((x, i) => x + T.p[i]) as Vec3;
+    const I = l.inertia ?? inertiaOf(l.geometry, l.mass);
+    const R = matmul(T.R, rpyToR(l.origin.rpy)), u = [0, 1, 2].map((k) => R[0][k] * axis[0] + R[1][k] * axis[1] + R[2][k] * axis[2]);
+    const own = I.ixx * u[0] * u[0] + I.iyy * u[1] * u[1] + I.izz * u[2] * u[2] + 2 * (I.ixy * u[0] * u[1] + I.ixz * u[0] * u[2] + I.iyz * u[1] * u[2]);
+    J += l.mass * perp2(com) + own;
+  }
+  for (const L of loads) if (below.has(L.link)) { const T = f.link[L.link]; J += L.massKg * perp2(mv(T.R, L.at).map((x, i) => x + T.p[i]) as Vec3); }
+  return J;
+}
