@@ -132,3 +132,11 @@ export function mountSensors(A: Assembly, requested: string[] | undefined, slots
   }
   return fitted;
 }
+
+/** Cut through a cradle wall where a servo's bus connectors are, so the plug and cable fit (T: servo pose). */
+export function plugWindowOps(key: string, T: Mat4): Op[] {
+  const b = bodyMm(key);
+  if (key.startsWith("feetech_sts")) return [at(T, [{ op: "cutbox", min: [-18.5, -10, b.min[2] - 8], max: [-9.5, 10, b.min[2] + 6] }])];   // plugs on the bottom face
+  if (key.startsWith("dxl_")) return [at(T, [{ op: "cutbox", min: [b.min[0] - 8, -11, b.min[2] + 0.5], max: [b.min[0] + 0.5, 11, b.min[2] + 12] }])]; // plugs on the far end face
+  return [];
+}

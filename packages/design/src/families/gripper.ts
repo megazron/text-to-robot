@@ -10,16 +10,20 @@ import { part, rating, hornRadiusMm, type Vec3 } from "@ttr/parts";
 import { frame, mul, I4, apply, translation, type Mat4, type Op } from "@ttr/solid";
 import { Assembly } from "../assembly.ts";
 import { totalMass } from "../kin.ts";
-import { bodyMm, gearOps, rackOps, recordCost, mountSensors, sensorTypes, type DesignRequest } from "./common.ts";
+import { bodyMm, plugWindowOps, gearOps, rackOps, recordCost, mountSensors, sensorTypes, type DesignRequest } from "./common.ts";
 
 const WALL = 3;
-export const GRIP = {
+export interface GripCfg { module: number; teeth: number; gearT: number; stroke: number; carriage: number; fingerLen: number; fingerT: number; fingerW: number; adapterT: number; adapterR: number; boltPcd: number; mu: number; safety: number; petgAllowMpa: number; }
+/** Stock rod lengths in the parts library (mm). */
+const RODS = [110, 130];
+export const rodLenFor = (c: GripCfg) => { const need = 2 * (c.stroke + c.carriage + 1 + 4); const L = RODS.find((r) => r >= need && r <= need + 12); if (!L) throw new Error(`no stock rod for a ${need} mm gripper frame`); return L; };
+export const GRIP: GripCfg = {
   module: 1.5, teeth: 14, gearT: 8, stroke: 30, carriage: 30, fingerLen: 62, fingerT: 12, fingerW: 26,
-  adapterT: 10, adapterR: 31.5, boltPcd: 50, rodLen: 130, mu: 0.5, safety: 1.5,
+  adapterT: 10, adapterR: 31.5, boltPcd: 50, mu: 0.5, safety: 1.5,
   /** layer-direction (weakest) allowable bending stress of PETG used for the finger check, MPa */
   petgAllowMpa: 20,
 };
-export const pinionRadiusMm = () => (GRIP.module * GRIP.teeth) / 2;
+export const pinionRadiusMm = (c: GripCfg = GRIP) => (c.module * c.teeth) / 2;
 
 export interface GripperBuild {
   servo: string; rp: number; stroke: number; links: string[];
@@ -30,18 +34,18 @@ export interface GripperBuild {
 }
 
 /** Heights (mm, adapter frame: z = 0 at the robot face, +z towards the fingers). */
-export function gripperLevels(servo: string) {
-  const b = bodyMm(servo), AT = GRIP.adapterT;
+export function gripperLevels(servo: string, c: GripCfg = GRIP) {
+  const b = bodyMm(servo), AT = c.adapterT;
   const floor = AT + 16;                               // cradle floor on two end supports: room for the bus plug + cable below
   const zs = floor + WALL + -b.min[2];                 // servo output (horn) face
-  const zr0 = zs + 4, zr1 = zr0 + GRIP.gearT;         // pinion teeth / racks
+  const zr0 = zs + 4, zr1 = zr0 + c.gearT;         // pinion teeth / racks
   const zc0 = zr1 + 1, rod1 = zc0 + 10.5, rod2 = rod1 + 36, zc1 = rod2 + 10.5; // carriages and rods (stacked in z)
-  return { AT, zs, zr0, zr1, zc0, rod1, rod2, zc1, tip: zc1 + GRIP.fingerLen };
+  return { AT, zs, zr0, zr1, zc0, rod1, rod2, zc1, tip: zc1 + c.fingerLen };
 }
 
 /** Adapter plate: bolts to the robot flange (or to a servo horn) and receives the gripper housing. */
-function adapterOps(mount: { horn?: string }): Op[] {
-  const { adapterT: AT, adapterR: R, boltPcd } = GRIP, ops: Op[] = [];
+function adapterOps(mount: { horn?: string }, c: GripCfg): Op[] {
+  const { adapterT: AT, adapterR: R, boltPcd } = c, ops: Op[] = [];
   if (mount.horn) {
     ops.push({ op: "horn", key: mount.horn, t: 4, extra: Math.max(4, R - hornRadiusMm(mount.horn)) }, { op: "rod", a: [0, 0, 3.9], b: [0, 0, AT], r: R });
   } else {
@@ -60,15 +64,15 @@ function adapterOps(mount: { horn?: string }): Op[] {
 }
 
 /** Sensor boards that can sit on top of the end walls (component frame -> gripper frame, mm). */
-export function gripperSensorSlots(servo: string): Partial<Record<"camera" | "imu", Mat4>> {
-  const L = gripperLevels(servo), XE = GRIP.stroke + GRIP.carriage + 1, top = L.rod2 + 12 + 4;
+export function gripperSensorSlots(servo: string, c: GripCfg = GRIP): Partial<Record<"camera" | "imu", Mat4>> {
+  const L = gripperLevels(servo, c), XE = c.stroke + c.carriage + 1, top = L.rod2 + 12 + 4;
   return { camera: translation([XE + 5 - 12.5, -11.93, top]), imu: translation([-XE - 5 - 12.8, -11.35, top]) };
 }
 const PAD_HOLES: Record<string, [number, number][]> = { camera: [[2, 2], [23, 2], [2, 14.5], [23, 14.5]], imu: [[2.54, 2.54], [23.06, 2.54], [2.54, 20.16], [23.06, 20.16]] };
 
-function bodyOps(servo: string, servoT: Mat4, sensors: ("camera" | "imu")[] = []): Op[] {
-  const L = gripperLevels(servo), { AT, adapterR: R, stroke: S, carriage: CW, rodLen } = { ...GRIP, ...L };
-  const XE = S + CW + 1, half = rodLen / 2, YW = 27, b = bodyMm(servo);
+function bodyOps(servo: string, servoT: Mat4, sensors: ("camera" | "imu")[], c: GripCfg): Op[] {
+  const L = gripperLevels(servo, c), { AT, adapterR: R, stroke: S, carriage: CW } = { ...c, ...L };
+  const XE = S + CW + 1, half = rodLenFor(c) / 2, YW = 27, b = bodyMm(servo);
   const ops: Op[] = [
     // floor: housing footprint merged with a disc that covers the adapter
     { op: "hull", of: [{ op: "box", min: [-XE - 10, -YW, AT], max: [XE + 10, YW, AT + 4] }, { op: "rod", a: [0, 0, AT], b: [0, 0, AT + 4], r: R + 4.5 }] },
@@ -91,16 +95,16 @@ function bodyOps(servo: string, servoT: Mat4, sensors: ("camera" | "imu")[] = []
   const cz = L.zs + b.min[2] - WALL;
   for (const [xa, xb] of [[b.min[0] - WALL, b.min[0] + 7], [b.max[0] - 7, b.max[0] + WALL]]) ops.push({ op: "box", min: [xa, b.min[1] - WALL, AT + 2], max: [xb, b.max[1] + WALL, cz + 0.5] });
   ops.push({ op: "cutbox", min: [-24, -YW - 1, AT + 4], max: [-6, -YW + 5, AT + 15] });
-  const slots = gripperSensorSlots(servo);
+  const slots = gripperSensorSlots(servo, c);
   for (const t of sensors) for (const [hx, hy] of PAD_HOLES[t]) { const p = apply(slots[t]!, [hx, hy, 0]); ops.push({ op: "rod", a: [p[0], p[1], p[2] - 4.5], b: [p[0], p[1], p[2]], r: 1.9 }, { op: "hole", a: [p[0], p[1], p[2] - 6], b: [p[0], p[1], p[2] + 1], d: 1.6 }); }
-  if (servo.startsWith("dxl_")) ops.push({ op: "cutbox", min: [b.min[0] - WALL - 1, -11, L.zs + b.min[2] + 0.5], max: [b.min[0] + 0.5, 11, L.zs + b.min[2] + 12] }); // end-face connectors
+  ops.push(...plugWindowOps(servo, servoT));
   return ops;
 }
 
 /** One finger link (carriage + rack + finger) in the adapter frame at the open position. side: +1 = +x finger. */
-function fingerOps(servo: string, side: 1 | -1): Op[] {
-  const L = gripperLevels(servo), { stroke: S, carriage: CW, fingerLen: FL, fingerT: FT, fingerW: FW, module: m } = GRIP;
-  const rp = pinionRadiusMm(), yr = rp + 1.25 * m, Y = yr + 6;
+function fingerOps(servo: string, side: 1 | -1, c: GripCfg): Op[] {
+  const L = gripperLevels(servo, c), { stroke: S, carriage: CW, fingerLen: FL, fingerT: FT, fingerW: FW, module: m } = c;
+  const rp = pinionRadiusMm(c), yr = rp + 1.25 * m, Y = yr + 6;
   const x0 = S, x1 = S + CW;
   const sx = (a: number, b: number): [number, number] => (side > 0 ? [a, b] : [-b, -a]);
   const [cx0, cx1] = sx(x0, x1), [fx0, fx1] = sx(x0, x0 + FT), [rx0, rx1] = sx(-8, x1), [gx0, gx1] = sx(x0, x0 + 22);
@@ -126,12 +130,12 @@ function fingerOps(servo: string, side: 1 | -1): Op[] {
  * Add a parallel gripper to an assembly. `G` is the world pose of the adapter frame (z = approach),
  * `adapter` the name of the adapter link (the caller joins it to the robot, or it is the root).
  */
-export function buildParallelGripper(A: Assembly, G: Mat4, servo: string, adapter: string, mount: { horn?: string } = {}, prefix = "", sensors: ("camera" | "imu")[] = []): GripperBuild {
-  const L = gripperLevels(servo), rp = pinionRadiusMm(), S = GRIP.stroke;
+export function buildParallelGripper(A: Assembly, G: Mat4, servo: string, adapter: string, mount: { horn?: string } = {}, prefix = "", sensors: ("camera" | "imu")[] = [], c: GripCfg = GRIP): GripperBuild {
+  const L = gripperLevels(servo, c), rp = pinionRadiusMm(c), S = c.stroke;
   const servoT = frame([0, 0, L.zs], [0, 0, 1], [1, 0, 0]);
   const n = (s: string) => `${prefix}${s}`;
-  A.printedLink(adapter, { name: adapter, ops: adapterOps(mount) }, { role: mount.horn ? "wrist" : "base", material: "printed_dark" });
-  A.printedLink(n("gripper_body"), { name: n("gripper_body"), ops: bodyOps(servo, servoT, sensors) }, { role: "gripper", material: "printed_dark" });
+  A.printedLink(adapter, { name: adapter, ops: adapterOps(mount, c) }, { role: mount.horn ? "wrist" : "base", material: "printed_dark" });
+  A.printedLink(n("gripper_body"), { name: n("gripper_body"), ops: bodyOps(servo, servoT, sensors, c) }, { role: "gripper", material: "printed_dark" });
   A.fixed(n("gripper_body_mount"), adapter, n("gripper_body"), I4());
   A.mount(n("gripper_body"), servo, servoT, n("gripper_servo"), "gripper pinion drive");
   const r = rating(servo);
@@ -140,29 +144,29 @@ export function buildParallelGripper(A: Assembly, G: Mat4, servo: string, adapte
   // servo's torque and speed through the pinion); the second finger and the pinion itself mimic it.
   const pin = A.revolute(n("gripper_pinion"), n("gripper_body"), n("pinion"), servoT, servo, 0, +(S / rp).toFixed(4));
   pin.mimic = { joint: n("finger_a"), multiplier: +(1000 / rp).toFixed(6), offset: 0 };
-  A.printedLink(n("pinion"), { name: n("pinion"), ops: [{ op: "horn", key: servo, t: 4 }, ...gearOps(GRIP.module, GRIP.teeth, 4, 4 + GRIP.gearT, 90)] }, { role: "gripper", material: "printed_accent" });
-  const half = GRIP.rodLen / 2;
+  A.printedLink(n("pinion"), { name: n("pinion"), ops: [{ op: "horn", key: servo, t: 4 }, ...gearOps(c.module, c.teeth, 4, 4 + c.gearT, 90)] }, { role: "gripper", material: "printed_accent" });
+  const half = rodLenFor(c) / 2;
   for (const [side, nm] of [[1, "finger_a"], [-1, "finger_b"]] as const) {
-    A.printedLink(n(nm), { name: n(nm), ops: fingerOps(servo, side) }, { role: "gripper", material: side > 0 ? "printed_accent" : "printed" });
+    A.printedLink(n(nm), { name: n(nm), ops: fingerOps(servo, side, c) }, { role: "gripper", material: side > 0 ? "printed_accent" : "printed" });
     const j = A.prismatic(n(nm), n("gripper_body"), n(nm), I4(), 0, S / 1000, +forcePeak.toFixed(2), +speed.toFixed(4), [-side, 0, 0]);
     j.dynamics = { damping: 2, friction: 0.3 }; // two LM8UU per carriage: rolling friction ~0.003 x load, plus rack mesh
     if (side < 0) j.mimic = { joint: n("finger_a"), multiplier: 1, offset: 0 };
-    for (const z of [L.rod1, L.rod2]) A.mount(n(nm), "lm8uu", frame([side * (S + GRIP.carriage / 2), 0, z], [1, 0, 0], [0, 0, 1]), n(`${nm}_bushing_${z === L.rod1 ? "lower" : "upper"}`), "finger carriage bushings");
+    for (const z of [L.rod1, L.rod2]) A.mount(n(nm), "lm8uu", frame([side * (S + c.carriage / 2), 0, z], [1, 0, 0], [0, 0, 1]), n(`${nm}_bushing_${z === L.rod1 ? "lower" : "upper"}`), "finger carriage bushings");
   }
-  for (const z of [L.rod1, L.rod2]) A.mount(n("gripper_body"), "rod_8mm_h8_130", frame([-half, 0, z], [1, 0, 0], [0, 0, 1]), n(`gripper_rod_${z === L.rod1 ? "lower" : "upper"}`), "finger guide rods", "metal");
+  for (const z of [L.rod1, L.rod2]) A.mount(n("gripper_body"), `rod_8mm_h8_${rodLenFor(c)}`, frame([-half, 0, z], [1, 0, 0], [0, 0, 1]), n(`gripper_rod_${z === L.rod1 ? "lower" : "upper"}`), "finger guide rods", "metal");
   A.fastener("M6 x 16 socket head (adapter to robot flange)", mount.horn ? 0 : 4);
   A.fastener("M4 x 10 socket head + M4 heat-set insert (housing to adapter, radial)", 4);
   A.fastener("M3 x 6 set screw (rod retention)", 4);
   A.fastener(`servo case screws (${part(servo).specs.case_screw ? "M2 x 6" : "M2.5 x 6"})`, 4);
   A.fastener("horn screws", 4);
   // ---- engineering checks ----
-  const g = 9.81, holdKg = (2 * GRIP.mu * forceRated) / g;
-  const tcpZ = L.zc1 + GRIP.fingerLen - 15, lever = (L.zc1 + GRIP.fingerLen - 8 - L.zc1) / 1000;
-  const sigma = (6 * forcePeak * lever) / ((GRIP.fingerW / 1000) * (GRIP.fingerT / 1000) ** 2) / 1e6;
+  const g = 9.81, holdKg = (2 * c.mu * forceRated) / g;
+  const tcpZ = L.zc1 + c.fingerLen - 15, lever = (L.zc1 + c.fingerLen - 8 - L.zc1) / 1000;
+  const sigma = (6 * forcePeak * lever) / ((c.fingerW / 1000) * (c.fingerT / 1000) ** 2) / 1e6;
   const pitchArm = (tcpZ - (L.rod1 + L.rod2) / 2) / 1000, bushingN = (forcePeak * pitchArm) / ((L.rod2 - L.rod1) / 1000) + forcePeak / 2;
   const checks = [
-    { name: "grip:fingers_parallel", pass: true, detail: `rack-and-pinion (m${GRIP.module}, ${GRIP.teeth} teeth, pitch radius ${rp} mm) drives both fingers in opposite directions on two 8 mm rods: pads stay parallel by construction` },
-    { name: "grip:finger_stress", pass: sigma <= GRIP.petgAllowMpa, detail: `stall force ${forcePeak.toFixed(0)} N at ${(lever * 1000).toFixed(0)} mm gives ${sigma.toFixed(1)} MPa in the ${GRIP.fingerW} x ${GRIP.fingerT} mm finger root vs ${GRIP.petgAllowMpa} MPa allowable (PETG across layers)` },
+    { name: "grip:fingers_parallel", pass: true, detail: `rack-and-pinion (m${c.module}, ${c.teeth} teeth, pitch radius ${rp} mm) drives both fingers in opposite directions on two 8 mm rods: pads stay parallel by construction` },
+    { name: "grip:finger_stress", pass: sigma <= c.petgAllowMpa, detail: `stall force ${forcePeak.toFixed(0)} N at ${(lever * 1000).toFixed(0)} mm gives ${sigma.toFixed(1)} MPa in the ${c.fingerW} x ${c.fingerT} mm finger root vs ${c.petgAllowMpa} MPa allowable (PETG across layers)` },
     { name: "grip:bushing_load", pass: bushingN <= part("lm8uu").specs.static_load_n, detail: `pitch moment of the stall force over the ${L.rod2 - L.rod1} mm rod spacing loads one LM8UU with ${bushingN.toFixed(0)} N vs ${part("lm8uu").specs.static_load_n} N static rating` },
   ];
   const links = [adapter, n("gripper_body"), n("pinion"), n("finger_a"), n("finger_b")];

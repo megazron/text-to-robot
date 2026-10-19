@@ -66,7 +66,7 @@ def _nut_build(c: Component):
     for h in NUT_HOLES:
         flange = flange - cyl(3.5, -3.6, 0.1, h.pos[0], h.pos[1])
     body = cyl(10.2, -0.01, 11.5)
-    return union(flange, body) - cyl(7.0, -4.0, 12.0)  # threaded bore (minor diameter)
+    return union(flange, body) - cyl(8.2, -4.0, 12.0)  # threaded bore, modelled at the screw's major diameter
 
 
 def _nut_keepout(c: Component):
@@ -78,7 +78,7 @@ T8_NUT = Component(
     mass_g=12.0, price_usd=2.5,
     supplier_url="https://www.robotdigg.com/product/228/T8-Lead-Screw-with-Copper-Nut",
     datasheet_url="https://www.robotdigg.com/product/228/T8-Lead-Screw-with-Copper-Nut",
-    envelope_mm=(22.0, 22.0, 15.0), holes=NUT_HOLES + [Hole((0.0, 0.0, 11.5), (0.0, 0.0, 1.0), 7.0, None)],
+    envelope_mm=(22.0, 22.0, 15.0), holes=NUT_HOLES + [Hole((0.0, 0.0, 11.5), (0.0, 0.0, 1.0), 8.2, None)],
     specs={"lead_mm": 8.0, "flange_d_mm": 22.0, "flange_t_mm": 3.5, "body_d_mm": 10.2, "length_mm": 15.0,
            "hole_pcd_mm": 16.0, "hole_dia_mm": 3.5, "material": "brass",
            "carriage_bore_mm": 10.6, "uncertain": ["mass_g", "price_usd"]},
@@ -133,7 +133,7 @@ def _cpl_build(c: Component):
     body = cyl(19.0, 0.0, 25.0)
     for z in (6.0, 9.5, 13.0, 16.5):  # helical-beam slots (as rings)
         body = body - tube(19.2, 13.0, z, z + 1.2)
-    body = body - cyl(5.0, -0.1, 11.0) - cyl(8.0, 14.0, 25.1)
+    body = body - cyl(5.2, -0.1, 11.0) - cyl(8.2, 14.0, 25.1)  # bores with slip clearance
     return body
 
 
@@ -143,7 +143,7 @@ COUPLER = Component(
     supplier_url="https://www.robotdigg.com/product/27/Flexible-Coupler",
     datasheet_url="https://www.robotdigg.com/product/27/Flexible-Coupler",
     envelope_mm=(19.0, 19.0, 25.0),
-    holes=[Hole((0.0, 0.0, 0.0), (0.0, 0.0, -1.0), 5.0, None), Hole((0.0, 0.0, 25.0), (0.0, 0.0, 1.0), 8.0, None)],
+    holes=[Hole((0.0, 0.0, 0.0), (0.0, 0.0, -1.0), 5.2, None), Hole((0.0, 0.0, 25.0), (0.0, 0.0, 1.0), 8.2, None)],
     specs={"bore_a_mm": 5.0, "bore_b_mm": 8.0, "od_mm": 19.0, "length_mm": 25.0, "rated_torque_nm": 1.5,
            "clamp": "2x M3 set screws per hub", "uncertain": ["rated_torque_nm", "mass_g", "price_usd"]},
     build=_cpl_build,
@@ -172,5 +172,5 @@ def _tube(od: float, wall: float, price: float) -> Component:
     )
 
 
-COMPONENTS = [T8_SCREW, T8_NUT, _rod(130), _rod(300), LM8UU, COUPLER,
+COMPONENTS = [T8_SCREW, T8_NUT, _rod(110), _rod(130), _rod(300), LM8UU, COUPLER,
               _tube(25.0, 2.0, 16.0), _tube(20.0, 2.0, 13.0)]

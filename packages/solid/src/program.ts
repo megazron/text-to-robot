@@ -37,7 +37,8 @@ function solidOf(o: Op): { add: M[]; cut: M[] } {
     case "box": return { add: [o.r ? roundedBox(o.min, o.max, o.r) : box(o.min, o.max)], cut: [] };
     case "hull": { const parts = o.of.map(solidOf); return { add: [Manifold.hull(parts.flatMap((p) => p.add))], cut: parts.flatMap((p) => p.cut) }; }
     case "keepout": return { add: [], cut: [actuatorKeepout({ key: o.key, T: o.T })] };
-    case "hole": return { add: [], cut: [rod(o.a, o.b, o.d / 2, 24)] };
+    // circumscribed polygon: the hole is never smaller than its nominal diameter (bearing seats, rods, shafts)
+    case "hole": return { add: [], cut: [rod(o.a, o.b, o.d / 2 / Math.cos(Math.PI / 24), 24)] };
     case "cutbox": return { add: [], cut: [box(o.min, o.max)] };
     case "at": { const parts = o.of.map(solidOf); return { add: parts.flatMap((p) => p.add.map((m) => m.transform(o.T))), cut: parts.flatMap((p) => p.cut.map((m) => m.transform(o.T))) }; }
     case "lighten": {

@@ -21,7 +21,7 @@ REQUIRED = [
     "dxl_u2d2", "rplidar_c1", "rplidar_a1m8", "realsense_d435i", "rpi_camera_module_3", "bno085_breakout",
     "lipo_3s_2200", "lipo_4s_5000", "lipo_6s_10000", "psu_12v_lrs75", "buck_5v_5a",
     "wheel_65mm_tt", "wheel_90mm_37d",
-    "leadscrew_t8x8_300", "leadnut_t8_brass", "rod_8mm_h8_130", "rod_8mm_h8_300", "lm8uu", "coupler_5x8",
+    "leadscrew_t8x8_300", "leadnut_t8_brass", "rod_8mm_h8_110", "rod_8mm_h8_130", "rod_8mm_h8_300", "lm8uu", "coupler_5x8",
     "al_tube_25x2_1m", "al_tube_20x2_1m", "tmc2209_stepstick", "lcd_2in_st7789", "canable2_usb_can",
     "estop_22mm_nc", "strap_50mm_velcro", "psu_24v_lrs150",
 ]

@@ -730,7 +730,7 @@
      0.0,
      -1.0
     ],
-    "dia_mm": 5.0,
+    "dia_mm": 5.2,
     "thread": null
    },
    {
@@ -744,7 +744,7 @@
      0.0,
      1.0
     ],
-    "dia_mm": 8.0,
+    "dia_mm": 8.2,
     "thread": null
    }
   ],
@@ -5996,7 +5996,7 @@
      0.0,
      1.0
     ],
-    "dia_mm": 7.0,
+    "dia_mm": 8.2,
     "thread": null
    }
   ],
@@ -7137,6 +7137,46 @@
    ]
   },
   "mesh_triangles": 852
+ },
+ "rod_8mm_h8_110": {
+  "key": "rod_8mm_h8_110",
+  "name": "Hardened chromed linear rod 8 mm h6, 110 mm",
+  "category": "misc",
+  "mass_g": 43.4,
+  "price_usd": 4.32,
+  "supplier_url": "https://us.misumi-ec.com/vona2/mech/M0100000000/M0101000000/M0101010000/",
+  "datasheet_url": "https://us.misumi-ec.com/vona2/mech/M0100000000/M0101000000/M0101010000/",
+  "envelope_mm": [
+   8.0,
+   8.0,
+   110.0
+  ],
+  "holes": [],
+  "specs": {
+   "d_mm": 8.0,
+   "length_mm": 110.0,
+   "tolerance": "h6",
+   "hardness": "HRC 58-62 (induction)",
+   "no_mounting_holes": true,
+   "mount": "ends clamped in printed pockets (8.0 mm, set screw)",
+   "uncertain": [
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -4.0,
+    -4.0,
+    0.0
+   ],
+   "max": [
+    4.0,
+    4.0,
+    110.0
+   ]
+  },
+  "mesh_triangles": 308
  },
  "rod_8mm_h8_130": {
   "key": "rod_8mm_h8_130",
