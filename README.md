@@ -168,6 +168,12 @@ Measured on a fresh clone of this revision:
 - MoveIt runs have been executed with `mock_components`; Gazebo export has not had the
   same runtime validation. The BOM is preliminary.
 
+## Website
+
+The hosted version runs at [texttorobot.org](https://texttorobot.org). It redeploys itself from
+this repository on every push to `main` and every release; see
+[deploy/hostinger/README.md](deploy/hostinger/README.md).
+
 ## Development
 
 ```bash
