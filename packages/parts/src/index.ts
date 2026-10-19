@@ -80,3 +80,19 @@ export function hornRadiusMm(key: string): number {
   if (s.shaft_d_mm) return Number(s.shaft_d_mm) / 2;
   return 5;
 }
+
+// Reflected rotor inertia (kg m^2 at the output) = J_rotor * N^2. The catalog has gear ratios but no
+// rotor inertia, so J_rotor is a per-family estimate (+-50 %), the same table the MuJoCo converter uses
+// (python/ttr_mujoco/actuators.py).
+const ROTOR_INERTIA: Record<string, number> = { feetech_sts: 2.4e-7, dynamixel_x: 1.0e-7, cubemars_ak60: 3.0e-5, cubemars_ak70: 4.5e-5, cubemars_ak80: 6.0e-5, stepper: 5.4e-6, dc_gearmotor_37: 1.5e-6, dc_gearmotor_n20: 1.0e-8, dc_gearmotor: 1.0e-6 };
+const DEFAULT_RATIO: Record<string, number> = { feetech_sts: 345, dynamixel_x: 300, cubemars_ak: 9, stepper: 1, dc_gearmotor: 50 };
+export function armature(key: string): number {
+  const s = part(key).specs, fam = actuatorFamily(key);
+  if (s.rotor_inertia_kgm2) return Number(s.rotor_inertia_kgm2) * Number(s.gear_ratio ?? 1) ** 2;
+  const sub = fam === "cubemars_ak" ? `cubemars_${key.includes("ak80") ? "ak80" : key.includes("ak70") ? "ak70" : "ak60"}`
+    : fam === "dc_gearmotor" ? (key.startsWith("n20") ? "dc_gearmotor_n20" : key.includes("37d") ? "dc_gearmotor_37" : "dc_gearmotor") : fam;
+  const ratio = Number(s.gear_ratio) || DEFAULT_RATIO[fam] || 1;
+  return ROTOR_INERTIA[sub] * ratio * ratio;
+}
+/** No-load output speed (rad/s): the end of the linear torque-speed line. */
+export const noLoadSpeed = (key: string) => Number(part(key).specs.no_load_speed_rad_s ?? rating(key).speed_rad_s);

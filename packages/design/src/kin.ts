@@ -81,3 +81,18 @@ export function pointWorld(spec: RobotSpecification, q: Record<string, number>, 
   return mv(T.R, at).map((x, i) => x + T.p[i]) as Vec3;
 }
 export const totalMass = (spec: RobotSpecification) => spec.links.reduce((s, l) => s + l.mass, 0);
+
+/** Moment of inertia (kg m^2) of everything downstream of each actuated joint about its axis, in pose q. */
+export function axisInertias(spec: RobotSpecification, q: Record<string, number>, loads: PointLoad[] = []): Record<string, number> {
+  const f = fk(spec, q), out: Record<string, number> = {}, lmap = new Map(spec.links.map((l) => [l.name, l]));
+  for (const j of spec.joints) {
+    if (j.type === "fixed" || j.passive || j.type === "prismatic") continue;
+    const below = descendants(spec, j.child), { p, axis } = f.joint[j.name];
+    let I = 0;
+    const add = (pos: Vec3, m: number) => { const r: Vec3 = [pos[0] - p[0], pos[1] - p[1], pos[2] - p[2]]; const along = r[0] * axis[0] + r[1] * axis[1] + r[2] * axis[2]; I += m * Math.max(0, r[0] ** 2 + r[1] ** 2 + r[2] ** 2 - along ** 2); };
+    for (const n of below) { const l = lmap.get(n)!, T = f.link[n]; add(mv(T.R, linkCom(l)).map((x, i) => x + T.p[i]) as Vec3, l.mass); }
+    for (const L of loads) if (below.has(L.link)) { const T = f.link[L.link]; add(mv(T.R, L.at).map((x, i) => x + T.p[i]) as Vec3, L.massKg); }
+    out[j.name] = I * 1.15; // + the links' own rotational inertia (thin brackets: ~15 % of the point-mass value)
+  }
+  return out;
+}

@@ -1,5 +1,5 @@
 // Actuator selection: smallest real actuator whose datasheet rating covers the load with margin.
-import { rating, part, type ActuatorRating } from "@ttr/parts";
+import { rating, part, armature, noLoadSpeed, type ActuatorRating } from "@ttr/parts";
 
 /** Families share one bus and one supply voltage; ladders are ordered weakest -> strongest. */
 export const LADDERS = {
@@ -9,21 +9,37 @@ export const LADDERS = {
 } as const;
 export type Ladder = keyof typeof LADDERS;
 
-/** Load factor for acceleration and model error applied to static gravity torque. */
+/** Load factor for acceleration and model error applied to static gravity torque (peak check). */
 export const DYNAMIC_FACTOR = 1.3;
-/** Fraction of the worst static pose an arm spends on average (duty), compared with the rated torque. */
-export const DUTY = 0.5;
+/** The worst static pose must be holdable indefinitely: static load <= rated (continuous) torque. */
+export const DUTY = 1.0;
+/** Slowest joint speed under load worth calling a working robot joint (rad/s). */
+export const MIN_SPEED = 1.0;
 
-export interface Choice { key: string; rating: ActuatorRating; required_nm: number; margin: number; ok: boolean; continuous_ok: boolean; }
-export function evaluate(key: string, staticNm: number): Choice {
+export interface Choice { key: string; rating: ActuatorRating; required_nm: number; margin: number; ok: boolean; continuous_ok: boolean; speed_ok: boolean; loaded_speed_rad_s: number; }
+/**
+ * Joint speed this actuator reaches while carrying the load: a point-to-point move over pi rad
+ * peaks at accel ~ 1.05 v^2 / pi (min-jerk at 80 % of v), and the motor follows the linear
+ * torque-speed line tau <= peak * (1 - w / w0). Keep 10 % in hand.
+ */
+export function loadedSpeed(key: string, staticNm: number, inertia: number): number {
+  const r = rating(key), w0 = noLoadSpeed(key), I = inertia + armature(key);
+  for (let v = Math.min(r.speed_rad_s, w0) * 0.95; v > 0.05; v -= 0.02) {
+    if (staticNm + I * 1.05 * v * v / Math.PI <= 0.9 * r.peak_nm * (1 - (0.8 * v) / w0)) return +v.toFixed(2);
+  }
+  return 0;
+}
+export function evaluate(key: string, staticNm: number, inertia = 0): Choice {
   const r = rating(key), req = staticNm * DYNAMIC_FACTOR;
   const ok = r.peak_nm >= req, continuous_ok = r.rated_nm >= staticNm * DUTY;
-  return { key, rating: r, required_nm: +req.toFixed(3), margin: +Math.min(99, r.peak_nm / Math.max(req, 1e-6)).toFixed(2), ok, continuous_ok };
+  const loaded_speed_rad_s = loadedSpeed(key, staticNm, inertia);
+  return { key, rating: r, required_nm: +req.toFixed(3), margin: +Math.min(99, r.peak_nm / Math.max(req, 1e-6)).toFixed(2), ok, continuous_ok, speed_ok: loaded_speed_rad_s >= MIN_SPEED, loaded_speed_rad_s };
 }
+export const passes = (c: Choice) => c.ok && c.continuous_ok && c.speed_ok;
 /** Smallest actuator in the ladder that passes; the strongest one (failing) if none does. */
-export function choose(ladder: readonly string[], staticNm: number): Choice {
-  for (const k of ladder) { const c = evaluate(k, staticNm); if (c.ok && c.continuous_ok) return c; }
-  return evaluate(ladder[ladder.length - 1], staticNm);
+export function choose(ladder: readonly string[], staticNm: number, inertia = 0): Choice {
+  for (const k of ladder) { const c = evaluate(k, staticNm, inertia); if (passes(c)) return c; }
+  return evaluate(ladder[ladder.length - 1], staticNm, inertia);
 }
 export const ladderFor = (budget?: number, need?: number): Ladder => {
   if (need !== undefined) {

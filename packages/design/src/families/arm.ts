@@ -6,8 +6,8 @@ import type { RobotSpecification, SensorType } from "@ttr/robot-schema";
 import { part, rating, bboxM, hornRadiusMm, type Vec3 } from "@ttr/parts";
 import { Assembly } from "../assembly.ts";
 import { frame, invert, mul, apply, I4, translation, type Mat4, type Op } from "@ttr/solid";
-import { worstTorques, pointWorld, totalMass, type PointLoad } from "../kin.ts";
-import { LADDERS, choose, evaluate, ladderFor, type Ladder, DYNAMIC_FACTOR } from "../sizing.ts";
+import { worstTorques, axisInertias, pointWorld, totalMass, type PointLoad } from "../kin.ts";
+import { LADDERS, choose, evaluate, passes, ladderFor, type Ladder, DYNAMIC_FACTOR } from "../sizing.ts";
 
 export interface ArmRequest {
   name?: string; dof: number; reachM?: number; payloadKg?: number; gripper?: boolean; budget?: number; prompt?: string; ladder?: Ladder;
@@ -249,7 +249,7 @@ let lastTorques: Record<string, number> = {};
 /** Design an arm: choose lengths from the reach, size every actuator from the built arm's real loads. */
 export function designArm(req: ArmRequest): RobotSpecification {
   const dof = Math.max(1, Math.min(7, Math.round(req.dof)));
-  const kinds = KINDS[dof], payload = req.payloadKg ?? (req.gripper === false ? 0.2 : 0.25);
+  const kinds = KINDS[dof], payload = req.payloadKg ?? 0.1; // desktop class: what a ~$150 servo arm holds stretched out continuously
   const reach = (req.reachM ?? (dof >= 5 ? 0.45 : 0.35)) * 1000;
   // gripper actuator: fingertip force at 70 mm must hold the payload with friction 0.5 on both jaws, x1.5
   const gripNeedNm = (payload * 9.81 * 1.5) / (2 * 0.5) * 0.07;
@@ -273,7 +273,7 @@ export function designArm(req: ArmRequest): RobotSpecification {
     const adjustable = lengths.map((l, i) => (l > 0 ? i : -1)).filter((i) => i >= 0);
     for (const i of adjustable) lengths[i] = Math.max(60, lengths[i] - err / adjustable.length);
   }
-  let built = null as ReturnType<typeof buildArm> | null, torques: Record<string, number> = {};
+  let built = null as ReturnType<typeof buildArm> | null, torques: Record<string, number> = {}, inertias: Record<string, number> = {};
   lastTorques = {};
   for (let iter = 0; iter < 8; iter++) {
     built = buildArm({ ...req, ladder, dof }, kinds, keys, req.gripper === false ? null : gripKeyFor(ladder), lengths);
@@ -281,10 +281,13 @@ export function designArm(req: ArmRequest): RobotSpecification {
     const firstP = kinds.indexOf("P");
     const poses = firstP < 0 ? [{}] : [-1, 1].flatMap((s) => [{ [built!.joints[firstP].name]: s * Math.PI / 2 }, { [built!.joints[firstP].name]: s * Math.PI / 2, ...(kinds[0] === "Y" ? { base_yaw: Math.PI / 2 } : {}) }]);
     torques = worstTorques(built.A.spec, poses, loads);
+    // everything downstream swung about each axis with the arm stretched out (worst case for yaw too)
+    inertias = {};
+    for (const q of poses) for (const [k, v] of Object.entries(axisInertias(built.A.spec, q, loads))) inertias[k] = Math.max(inertias[k] ?? 0, v);
     lastTorques = torques;
     const ladderKeys = LADDERS[ladder].keys as readonly string[];
-    const next = built.joints.map((j) => choose(ladderKeys, torques[j.name] ?? 0).key);
-    const failing = built.joints.some((j) => { const c = choose(ladderKeys, torques[j.name] ?? 0); return !(c.ok && c.continuous_ok); });
+    const next = built.joints.map((j) => choose(ladderKeys, torques[j.name] ?? 0, inertias[j.name] ?? 0).key);
+    const failing = built.joints.some((j) => !passes(choose(ladderKeys, torques[j.name] ?? 0, inertias[j.name] ?? 0)));
     if (failing && ladder !== "cubemars") { ladder = ladder === "feetech" ? "dynamixel" : "cubemars"; keys = kinds.map(() => LADDERS[ladder].keys[0] as string); continue; }
     if (next.every((k, i) => k === keys[i])) break;
     keys = next;
@@ -292,14 +295,18 @@ export function designArm(req: ArmRequest): RobotSpecification {
   const { A, joints } = built!;
   // ---- engineering record ----
   for (const j of joints) {
-    const c = evaluate(j.key, torques[j.name] ?? 0), r = rating(j.key);
-    A.design.joints.push({ joint: j.name, actuator: j.key, required_nm: c.required_nm, rated_nm: r.rated_nm, peak_nm: r.peak_nm, margin: c.margin, speed_rad_s: r.speed_rad_s,
-      note: `worst static ${(torques[j.name] ?? 0).toFixed(3)} N·m (arm stretched horizontally with ${payload} kg) x ${DYNAMIC_FACTOR} dynamic factor` });
-    A.check(`torque:${j.name}`, c.ok && c.continuous_ok, `needs ${c.required_nm} N·m peak, ${part(j.key).name} gives ${r.peak_nm} N·m peak / ${r.rated_nm} N·m rated (margin ${c.margin}x)`);
+    const st = torques[j.name] ?? 0, c = evaluate(j.key, st, inertias[j.name] ?? 0), r = rating(j.key);
+    A.design.joints.push({ joint: j.name, actuator: j.key, required_nm: c.required_nm, rated_nm: r.rated_nm, peak_nm: r.peak_nm, margin: c.margin, speed_rad_s: c.loaded_speed_rad_s,
+      note: `worst static ${st.toFixed(3)} N·m (arm stretched out with ${payload} kg; held continuously within the rated torque) x ${DYNAMIC_FACTOR} for peaks; ${c.loaded_speed_rad_s} rad/s under that load with ${((inertias[j.name] ?? 0)).toFixed(4)} kg·m² swung` });
+    A.check(`torque:${j.name}`, c.ok && c.continuous_ok, `holds ${st.toFixed(2)} N·m continuously (rated ${r.rated_nm}), peaks ${c.required_nm} N·m (peak ${r.peak_nm}, margin ${c.margin}x) — ${part(j.key).name}`);
+    A.check(`speed:${j.name}`, c.speed_ok, `${c.loaded_speed_rad_s} rad/s with the payload stretched out (no-load ${r.speed_rad_s} rad/s)`);
+    // the URDF velocity limit is the speed this joint actually reaches loaded
+    const uj = A.spec.joints.find((x) => x.name === j.name);
+    if (uj?.limit && c.loaded_speed_rad_s > 0) uj.limit.velocity = c.loaded_speed_rad_s;
   }
   const reachActual = reachOf(built!, kinds);
   A.design.tcp = { link: built!.tcpLink, xyz: built!.tcp.map((x) => +(x / 1000).toFixed(6)) as Vec3 };
-  A.design.performance = { reach_m: +reachActual.toFixed(3), payload_kg: payload, mass_kg: +totalMass(A.spec).toFixed(3), actuators: LADDERS[ladder].label, max_joint_speed_rad_s: Math.min(...joints.map((j) => rating(j.key).speed_rad_s)) };
+  A.design.performance = { reach_m: +reachActual.toFixed(3), payload_kg: payload, mass_kg: +totalMass(A.spec).toFixed(3), actuators: LADDERS[ladder].label, max_joint_speed_rad_s: Math.min(...A.design.joints.map((j) => j.speed_rad_s)) };
   if (req.reachM && Math.abs(reachActual - req.reachM) > 0.05) A.design.assumptions.push(`requested reach ${req.reachM} m; built reach is ${reachActual.toFixed(3)} m (actuator bodies set the minimum spacing)`);
   if (A.spec.end_effectors.length) {
     const g = rating(gripKeyFor(ladder));
