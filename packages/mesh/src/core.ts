@@ -186,8 +186,8 @@ export function subdivide(m: Mesh, passes = 1): Mesh {
  * Inertia is about the solid centroid, at density 1 kg/m³. Does not certify that
  * disconnected components do not overlap; such components must be boolean-unioned.
  */
-export function massProperties(input: Mesh) {
-  const m = orient(input);
+export function massProperties(input: Mesh, alreadyClean = false) {
+  const m = alreadyClean ? input : orient(input);
   if (!meshTopology(m).closed) throw new Error("mass properties require a closed manifold mesh");
   const ref = centroid(m.v);
   let volume=0, area=0; const first: V3=[0,0,0];

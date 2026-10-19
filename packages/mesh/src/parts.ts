@@ -73,14 +73,16 @@ export function buildPart(g: { part: string; params?: Params; scale?: [number, n
     return g.scale ? scaleMesh(m,g.scale) : m;
   }
   const gen = PARTS[g.part]; if (!gen) throw new Error(`unknown mesh part '${g.part}'`);
-  const m = orient(gen(g.params ?? {}));   // consistent outward winding for every part (renderers cull back faces)
+  // consistent outward winding for every part (renderers cull back faces); manifold CSG output is already
+  // watertight and outward, and welding its near-coincident vertices would break it
+  const raw = gen(g.params ?? {}), m = g.part === "printed" ? raw : orient(raw);
   return g.scale ? scaleMesh(m, g.scale) : m;
 }
 
 /** Build a MeshGeometry recipe with precomputed mass properties (solid volume, unit-density inertia, bbox). */
 export function meshGeometry(part: string, file: string, params: Params = {}, scale?: [number, number, number]) {
   const m = buildPart({ part, params, scale });
-  const mp = massProperties(m); const bb = bbox(m);
+  const mp = massProperties(m, part === "printed"); const bb = bbox(m);
   return { type: "mesh" as const, part, params, file, ...(scale ? { scale } : {}), volume: Math.max(mp.volume, 1e-9), inertia_unit: mp.inertia, bbox: bb, centroid: mp.centroid };
 }
 

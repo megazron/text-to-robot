@@ -140,7 +140,17 @@ export function hornCuts(key: string, t = 4): M[] {
 export interface TriMesh { v: Vec3[]; f: [number, number, number][]; }
 export function toMesh(m: M, scale = 0.001): TriMesh {
   const g = m.getMesh(), n = g.numProp, v: Vec3[] = [], f: [number, number, number][] = [];
-  for (let i = 0; i < g.vertProperties.length; i += n) v.push([g.vertProperties[i] * scale, g.vertProperties[i + 1] * scale, g.vertProperties[i + 2] * scale]);
-  for (let i = 0; i < g.triVerts.length; i += 3) f.push([g.triVerts[i], g.triVerts[i + 1], g.triVerts[i + 2]]);
+  // vertices split along property seams must be re-joined, or the mesh has open edges
+  const to = new Map<number, number>();
+  for (let i = 0; i < (g.mergeFromVert?.length ?? 0); i++) to.set(g.mergeFromVert[i], g.mergeToVert[i]);
+  const remap = new Int32Array(g.vertProperties.length / n).fill(-1);
+  for (let i = 0; i < remap.length; i++) {
+    const src = to.get(i) ?? i;
+    if (src !== i) continue;
+    remap[i] = v.length;
+    v.push([g.vertProperties[i * n] * scale, g.vertProperties[i * n + 1] * scale, g.vertProperties[i * n + 2] * scale]);
+  }
+  for (const [from, target] of to) remap[from] = remap[target];
+  for (let i = 0; i < g.triVerts.length; i += 3) f.push([remap[g.triVerts[i]], remap[g.triVerts[i + 1]], remap[g.triVerts[i + 2]]]);
   return { v, f };
 }

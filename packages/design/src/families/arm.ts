@@ -2,14 +2,20 @@
 // every joint is a bought actuator, every link a printed bracket bolted to its horn and
 // cradling the next actuator by its case screws. Actuators are sized from the exact
 // worst-case gravity torque of the built arm, holding the payload fully stretched out.
-import type { RobotSpecification } from "@ttr/robot-schema";
+import type { RobotSpecification, SensorType } from "@ttr/robot-schema";
 import { part, rating, bboxM, hornRadiusMm, type Vec3 } from "@ttr/parts";
 import { Assembly } from "../assembly.ts";
-import { frame, invert, mul, apply, I4, type Mat4, type Op } from "@ttr/solid";
+import { frame, invert, mul, apply, I4, translation, type Mat4, type Op } from "@ttr/solid";
 import { worstTorques, pointWorld, totalMass, type PointLoad } from "../kin.ts";
 import { LADDERS, choose, evaluate, ladderFor, type Ladder, DYNAMIC_FACTOR } from "../sizing.ts";
 
-export interface ArmRequest { name?: string; dof: number; reachM?: number; payloadKg?: number; gripper?: boolean; budget?: number; prompt?: string; ladder?: Ladder; }
+export interface ArmRequest {
+  name?: string; dof: number; reachM?: number; payloadKg?: number; gripper?: boolean; budget?: number; prompt?: string; ladder?: Ladder;
+  /** fixed axis-to-axis lengths (m) that override the reach split */
+  segments?: { upper_arm?: number; forearm?: number };
+  /** wrist-mounted sensors (camera / depth); an IMU sits in the base */
+  sensors?: SensorType[];
+}
 type Kind = "Y" | "P" | "R";
 const KINDS: Record<number, Kind[]> = { 1: ["Y"], 2: ["P", "P"], 3: ["Y", "P", "P"], 4: ["Y", "P", "P", "P"], 5: ["Y", "P", "P", "P", "R"], 6: ["Y", "P", "P", "R", "P", "R"], 7: ["Y", "P", "R", "P", "R", "P", "R"] };
 const PLATE = 4; // horn plate thickness, mm
@@ -44,23 +50,25 @@ function plan(kinds: Kind[], keys: string[], lengths: number[], gripKey: string 
   let G: Mat4 | null = null;
   if (gripKey && prev) {
     const p = prev as JointPlan, b = bodyMm(gripKey), d = depth(gripKey);
-    const zg = p.kind === "P" ? z + bodyRadius(p.key) + WALL + 3 + WALL - b.min[0] : z + PLATE + WALL - b.min[0] + 2;
+    const zg = p.kind === "P" ? z + Math.max(lengths[kinds.length - 1] ?? 0, bodyRadius(p.key) + WALL + 3 + WALL - b.min[0]) : z + PLATE + WALL - b.min[0] + 2;
     // gripper actuator: axis along +x, body centred on the arm, output end up
     G = frame([d / 2, 0, zg], [1, 0, 0], [0, 0, 1]);
   }
-  return { joints, G };
+  // a pitch joint at the end of the chain carries a forearm out to a tool flange
+  const last = joints[joints.length - 1];
+  const tail: Vec3 | null = !gripKey && last?.kind === "P" && (lengths[kinds.length - 1] ?? 0) > 0
+    ? [0, last.side * (depth(last.key) / 2 + 0.5), z + Math.max(lengths[kinds.length - 1], bodyRadius(last.key) + 12)] : null;
+  return { joints, G, tail };
 }
 
 function nameJoints(kinds: Kind[]): string[] {
-  const p = kinds.map((k, i) => (k === "P" ? i : -1)).filter((i) => i >= 0);
-  return kinds.map((k, i) => {
-    if (k === "Y") return "base_yaw";
-    if (k === "R") return kinds.slice(0, i).includes("R") ? "wrist_roll_2" : "wrist_roll";
-    const n = p.indexOf(i);
-    return kinds.length === 2 ? ["shoulder_pitch", "elbow_pitch"][n] : ["shoulder_pitch", "elbow_pitch", "wrist_pitch", "wrist_pitch_2"][n] ?? `pitch_${n}`;
-  });
+  const pitches = kinds.length === 2 ? ["shoulder_pitch", "elbow_pitch"] : ["shoulder_pitch", "elbow_pitch", "wrist_pitch"];
+  const rolls = ["wrist_roll", "forearm_roll", "upper_arm_roll"]; // counted from the tool end
+  const rCount = kinds.filter((k) => k === "R").length;
+  let p = 0, r = 0;
+  return kinds.map((k) => (k === "Y" ? "base_yaw" : k === "P" ? pitches[p++] : rolls[rCount - 1 - r++]));
 }
-const LINK_NAMES: Record<string, string> = { base_yaw: "turret", shoulder_pitch: "upper_arm", elbow_pitch: "forearm", wrist_pitch: "wrist", wrist_roll: "wrist_rotator", wrist_pitch_2: "wrist_2", wrist_roll_2: "tool_rotator" };
+const LINK_NAMES: Record<string, string> = { base_yaw: "turret", shoulder_pitch: "upper_arm", upper_arm_roll: "upper_arm_rotator", elbow_pitch: "forearm", forearm_roll: "forearm_rotator", wrist_pitch: "wrist", wrist_roll: "wrist_rotator" };
 
 /** Printed structure between the output of joint `cur` and the cradle of the next actuator (world mm, home pose). */
 function linkOps(cur: JointPlan, nextKey: string, nextT: Mat4, nextKind: Kind | "G", plateT: number, plateW: number): Op[] {
@@ -87,7 +95,7 @@ function linkOps(cur: JointPlan, nextKey: string, nextT: Mat4, nextKind: Kind | 
     ] });
     // keep clear of the previous actuator's body as this link swings
     const span = top - o[2];
-    if (span > 120) ops.push({ op: "lighten", a: [o[0], 0, o[2] + 45], b: [o[0], 0, top - 45], r: Math.min(plateW * 0.28, 9), n: Math.max(1, Math.floor((span - 90) / 45)) });
+    if (span > 120) ops.push({ op: "lighten", a: [o[0], y0, o[2] + 45], b: [o[0], y0, top - 45], r: Math.min(plateW * 0.28, 9), n: Math.max(1, Math.floor((span - 90) / 45)), axis: [0, 1, 0] });
   }
   return ops;
 }
@@ -116,7 +124,7 @@ function gripperOps(G: Mat4, gripKey: string, fingerLen: number): { fixed: Op[];
 function buildArm(req: ArmRequest, kinds: Kind[], keys: string[], gripKey: string | null, lengths: number[]) {
   const name = req.name ?? `arm_${req.dof}dof`;
   const A = new Assembly(name, "arm", req.prompt);
-  const { joints, G } = plan(kinds, keys, lengths, gripKey);
+  const { joints, G, tail } = plan(kinds, keys, lengths, gripKey);
   // ---- base: plate with table-mount holes, pedestal and the first actuator's cradle ----
   const j0 = joints[0], side = Math.max(110, Math.round((req.reachM ?? 0.3) * 1000 * 0.3));
   const baseOps: Op[] = [
@@ -149,18 +157,28 @@ function buildArm(req: ArmRequest, kinds: Kind[], keys: string[], gripKey: strin
     else if (G) {
       const g = gripperOps(G, gripKey!, 70);
       ops = [...linkOps(j, gripKey!, G, "G", t, w), ...g.fixed];
+    } else if (tail) {
+      // forearm side plate to a 4-hole M3 tool flange (ISO-style pattern on 25 mm)
+      const o = apply(j.W, [0, 0, 0]), s = j.side, { t, w } = plateFor(i), y0 = o[1] + s * 0.5, y1 = o[1] + s * (t + 0.5);
+      const [ya, yb] = s > 0 ? [y0, y1] : [y1, y0];
+      ops = [{ op: "at", T: j.W, of: [{ op: "horn", key: j.key, t: PLATE }] },
+        { op: "box", min: [o[0] - w / 2, ya, o[2]], max: [o[0] + w / 2, yb, tail[2]], r: 3 },
+        { op: "box", min: [o[0] - 20, Math.min(ya, -20), tail[2] - 6], max: [o[0] + 20, Math.max(yb, 20), tail[2]], r: 4 }];
+      for (const [dx, dy] of [[-12.5, -12.5], [12.5, -12.5], [-12.5, 12.5], [12.5, 12.5]]) ops.push({ op: "hole", a: [o[0] + dx, dy, tail[2] - 8], b: [o[0] + dx, dy, tail[2] + 1], d: 3.4 });
+      const span = tail[2] - o[2];
+      if (span > 120) ops.push({ op: "lighten", a: [o[0], y0, o[2] + 45], b: [o[0], y0, tail[2] - 40], r: Math.min(w * 0.28, 9), n: Math.max(1, Math.floor((span - 85) / 45)), axis: [0, 1, 0] });
     } else {
       const r = hornRadiusMm(j.key) + 6, o = apply(j.W, [0, 0, 0]);
       ops = [{ op: "at", T: j.W, of: [{ op: "horn", key: j.key, t: PLATE }, { op: "box", min: [-r, -r, PLATE], max: [r, r, PLATE + 6], r: 4 }] }];
       for (const a of [0, 1, 2, 3]) { const p = apply(j.W, [Math.cos(a * Math.PI / 2 + Math.PI / 4) * (r - 5), Math.sin(a * Math.PI / 2 + Math.PI / 4) * (r - 5), 0]); const q = apply(j.W, [Math.cos(a * Math.PI / 2 + Math.PI / 4) * (r - 5), Math.sin(a * Math.PI / 2 + Math.PI / 4) * (r - 5), PLATE + 7]); ops.push({ op: "hole", a: p, b: q, d: 3.4 }); }
       void o;
     }
-    A.printedLink(linkName, { name: linkName, ops: [{ op: "at", T: invert(j.W), of: ops }] }, { role: j.kind === "P" ? "link" : "joint_housing", material: i % 2 ? "printed" : "printed_accent" });
+    A.printedLink(linkName, { name: linkName, ops: [{ op: "at", T: invert(j.W), of: ops }] }, { role: linkName, material: i % 2 ? "printed" : "printed_accent" });
     A.fastener(`${part(j.key).specs.case_screw ? "M2 x 6" : "M2.5 x 6"} case screws`, 4);
     A.fastener("horn screws", outputHolesCount(j.key));
     parent = linkName; parentW = j.W;
   });
-  let tcpLink = parent, tcp: Vec3 = apply(invert(parentW), apply(joints[joints.length - 1].W, [0, 0, PLATE + 6]));
+  let tcpLink = parent, tcp: Vec3 = apply(invert(parentW), tail ? [0, 0, tail[2]] : apply(joints[joints.length - 1].W, [0, 0, PLATE + 6]));
   if (G && gripKey) {
     const g = gripperOps(G, gripKey, 70);
     A.mount(parent, gripKey, mul(invert(parentW), G), "gripper_actuator", "gripper");
@@ -170,8 +188,52 @@ function buildArm(req: ArmRequest, kinds: Kind[], keys: string[], gripKey: strin
     tcp = apply(invert(parentW), g.tcp);
     A.fastener("horn screws", outputHolesCount(gripKey));
   }
+  mountSensors(A, req.sensors ?? [], parent, parentW, G, gripKey, joints[joints.length - 1]);
   A.spec.root = "base_link";
   return { A, joints, tcpLink, tcp };
+}
+/** Wrist camera / depth camera on a printed bracket behind the tool, IMU in the base. */
+function mountSensors(A: Assembly, sensors: string[], parent: string, parentW: Mat4, G: Mat4 | null, gripKey: string | null, last: JointPlan) {
+  const toLocal = invert(parentW);
+  // world (home pose) point just behind the tool, on the -x side of the wrist
+  const anchor: Vec3 = G && gripKey ? [apply(G, [0, 0, 0])[0] - depth(gripKey) - WALL, 0, apply(G, [0, 0, 0])[2] + 12] : apply(last.W, [0, 0, 0]).map((v, i) => v + (i === 2 ? 10 : i === 0 ? -hornRadiusMm(last.key) - 8 : 0)) as Vec3;
+  let x = anchor[0];
+  if (sensors.includes("depth")) {
+    // eye-to-hand: D435i on a printed mast at the back of the base, looking down 35 deg at the workspace
+    const key = "realsense_d435i", side = 110, h = 190, tilt = 35 * Math.PI / 180;
+    const mx = -side / 2 + 12, my = side / 2 - 12;
+    const lens: Vec3 = [Math.cos(tilt), 0, -Math.sin(tilt)];
+    const T = frame([mx + 8, my, h + 22], [Math.sin(tilt), 0, Math.cos(tilt)], [0, 1, 0]); // lenses (-y) along `lens`
+    void lens;
+    A.printedLink("depth_mast", { name: "depth_mast", ops: [
+      { op: "box", min: [mx - 9, my - 9, 0], max: [mx + 9, my + 9, h], r: 3 },
+      { op: "hull", of: [{ op: "box", min: [mx - 9, my - 9, h - 10], max: [mx + 9, my + 9, h] }, { op: "at", T, of: [{ op: "box", min: [-20, -9, -18], max: [20, 9, -12.5] }] }] },
+      { op: "at", T, of: [{ op: "keepout", key, T: I4() }, { op: "hole", a: [-7.5, 0, -30], b: [-7.5, 0, -12], d: 6.8 }] },
+    ] }, { role: "sensor_mount", material: "printed_dark" });
+    A.fixed("depth_mast_mount", "base_link", "depth_mast", I4());
+    A.mount("depth_mast", key, T, "workspace_depth", "depth camera over the workspace");
+    A.fastener("1/4-20 x 3/8 camera screw", 1);
+    A.spec.sensors.push({ name: "workspace_depth", type: "depth", parent: "workspace_depth", origin: { xyz: [0, 0, 0], rpy: [0, 0, 0] } });
+  }
+  for (const type of ["camera"] as const) {
+    if (!sensors.includes(type)) continue;
+    const key = "rpi_camera_module_3", b = bodyMm(key);
+    const thick = b.max[1] - b.min[1];
+    // stand the board on its edge facing +z (the tool direction): component +z -> world +z
+    const T = frame([x - b.max[0] - 4, -(b.min[1] + b.max[1]) / 2, anchor[2] - b.min[2]], [0, 0, 1], [1, 0, 0]);
+    const lo = apply(T, b.min), hi = apply(T, b.max);
+    A.printedLink(`${type}_bracket`, { name: `${type}_bracket`, ops: [{ op: "at", T: toLocal, of: [
+      { op: "box", min: [Math.min(lo[0], hi[0]) - 2, Math.min(lo[1], hi[1]) - 2, anchor[2] - 6], max: [anchor[0] + 2, Math.max(lo[1], hi[1]) + 2, anchor[2]], r: 2 },
+    ] }] }, { role: "sensor_mount", material: "printed_dark" });
+    A.fixed(`${type}_bracket_mount`, parent, `${type}_bracket`, mul(toLocal, I4()));
+    A.mount(parent, key, mul(toLocal, T), `wrist_${type}`, `${type} on the wrist`);
+    A.spec.sensors.push({ name: `wrist_${type}`, type, parent: `wrist_${type}`, origin: { xyz: [0, 0, 0], rpy: [0, 0, 0] } });
+    x -= thick + 6;
+  }
+  if (sensors.includes("imu")) {
+    A.mount("base_link", "bno085_breakout", translation([-30, -12, 6]), "base_imu", "IMU in the base");
+    A.spec.sensors.push({ name: "base_imu", type: "imu", parent: "base_imu", origin: { xyz: [0, 0, 0], rpy: [0, 0, 0] } });
+  }
 }
 /** Shoulder axis to tool centre point, arm stretched out (m). */
 function reachOf(b: ReturnType<typeof buildArm>, kinds: Kind[]): number {
@@ -188,17 +250,23 @@ let lastTorques: Record<string, number> = {};
 export function designArm(req: ArmRequest): RobotSpecification {
   const dof = Math.max(1, Math.min(7, Math.round(req.dof)));
   const kinds = KINDS[dof], payload = req.payloadKg ?? (req.gripper === false ? 0.2 : 0.25);
-  const reach = (req.reachM ?? 0.35) * 1000;
-  const gripKeyFor = (l: Ladder) => (l === "feetech" ? "feetech_sts3215_c047" : "dxl_xl430_w250");
+  const reach = (req.reachM ?? (dof >= 5 ? 0.45 : 0.35)) * 1000;
+  // gripper actuator: fingertip force at 70 mm must hold the payload with friction 0.5 on both jaws, x1.5
+  const gripNeedNm = (payload * 9.81 * 1.5) / (2 * 0.5) * 0.07;
+  const gripKeyFor = (l: Ladder) => { const pool = l === "feetech" ? ["feetech_sts3215_c047", "feetech_sts3250"] : ["dxl_xl430_w250", "dxl_xm430_w350", "dxl_xh540_w270"]; return pool.find((k) => rating(k).rated_nm >= gripNeedNm) ?? pool[pool.length - 1]; };
   let ladder: Ladder = req.ladder ?? ladderFor(req.budget);
   let keys = kinds.map(() => LADDERS[ladder].keys[0] as string);
   const pitchCount = kinds.filter((k) => k === "P").length;
   const wristAllowance = 150;
   const main = Math.max(0, reach - wristAllowance) / Math.max(1, Math.min(2, pitchCount));
-  const lengths = kinds.map((k, i) => (k === "P" && kinds.slice(i + 1).includes("P") ? main : 0));
+  const lengths = kinds.map((k, i) => (k === "P" && (kinds.slice(i + 1).includes("P") || (i === kinds.length - 1 && pitchCount <= 2)) ? main : 0));
   if (pitchCount === 1) lengths[kinds.indexOf("P")] = main;
+  const pIdx = kinds.map((k, i) => (k === "P" ? i : -1)).filter((i) => i >= 0);
+  const fixedSeg = new Set<number>();
+  if (req.segments?.upper_arm && pIdx.length >= 2) { lengths[pIdx[0]] = req.segments.upper_arm * 1000; fixedSeg.add(pIdx[0]); }
+  if (req.segments?.forearm && pIdx.length >= 3) { lengths[pIdx[1]] = req.segments.forearm * 1000; fixedSeg.add(pIdx[1]); }
   // match the requested reach: the first build tells how much the wrist and bodies add
-  if (req.reachM && pitchCount >= 1) for (let k = 0; k < 3; k++) {
+  if (pitchCount >= 1 && fixedSeg.size === 0) for (let k = 0; k < 3; k++) {
     const probe = buildArm({ ...req, ladder, dof }, kinds, keys, req.gripper === false ? null : gripKeyFor(ladder), lengths);
     const err = reachOf(probe, kinds) * 1000 - reach;
     if (Math.abs(err) < 5) break;
@@ -250,5 +318,9 @@ export function designArm(req: ArmRequest): RobotSpecification {
     "Links are cantilevered from one side of each horn (as on SO-101 / Koch arms); add an idler bearing on the far side for heavy use.",
     `Torques are exact static gravity loads of this geometry plus ${Math.round((DYNAMIC_FACTOR - 1) * 100)} % for acceleration; continuous duty is checked at ${Math.round(0.5 * 100)} % of the worst pose.`,
   );
+  const pj = joints.filter((j) => j.kind === "P");
+  if (pj.length >= 2) A.design.performance.upper_arm_m = +(Math.hypot(...[0, 1, 2].map((k) => apply(pj[1].W, [0, 0, 0])[k] - apply(pj[0].W, [0, 0, 0])[k])) / 1000).toFixed(3);
+  if (pj.length >= 3) A.design.performance.forearm_m = +(Math.hypot(...[0, 1, 2].map((k) => apply(pj[2].W, [0, 0, 0])[k] - apply(pj[1].W, [0, 0, 0])[k])) / 1000).toFixed(3);
+  A.design.request = { ...req, dof };
   return A.finish(`${dof}-DOF arm, ${(reachActual * 1000).toFixed(0)} mm reach, ${payload} kg payload, ${LADDERS[ladder].label}`);
 }

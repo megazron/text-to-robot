@@ -3,7 +3,7 @@
 import type { RobotSpecification, SensorType } from "@ttr/robot-schema";
 import { safeName, pose } from "@ttr/robot-schema";
 import { nDofArm, attachParallelGripper, attachSuctionGripper, cyl, link, joint } from "@ttr/robot-templates";
-import { normalize, find, mentions, negates, extractDofRaw, extractLengths, parseBudget, extractColour, maskNames, COLOURS } from "./text.ts";
+import { normalize, find, mentions, negates, extractDofRaw, extractLengths, extractMasses, parseBudget, extractColour, maskNames, COLOURS } from "./text.ts";
 import { MAX_ARM_DOF, chooseFamily, RECOLOURABLE } from "./families.ts";
 import { interpretPrompt } from "./interpret.ts";
 import { translateKeywords } from "./lexicon.ts";
@@ -11,6 +11,7 @@ import { scaleLinkLength, describeLen, reachModel, setReach } from "./sizing.ts"
 import { addSensor, removeSensor, SENSOR_WORDS, cameraHit, locationOf, countOf } from "./sensors.ts";
 import { swapGrippers, replaceGripperWithSuction, removeGripper, armTip } from "./grippers.ts";
 import { geometryLength, linksByRoles } from "./spec-utils.ts";
+import { DESIGNERS, designOf } from "@ttr/design";
 
 export interface ModResult { spec: RobotSpecification; changes: string[]; }
 
@@ -262,8 +263,103 @@ function modifyBase(spec: RobotSpecification, c: string): Outcome | undefined {
   return { changes: ["! The base is a hollow machined chassis; its footprint cannot be widened yet"], understood: true };
 }
 
+/** Designed robots: each clause edits the design request; the designer then re-sizes everything. */
+function modifyDesigned(specIn: RobotSpecification, instruction: string): ModResult | undefined {
+  const record = designOf(specIn), designer = record && DESIGNERS[record.family];
+  if (!record?.request || !designer) return undefined;
+  const req: Record<string, any> = structuredClone(record.request);
+  const changes: string[] = [];
+  let name = specIn.robot_name, colour: string | undefined, redesign = false;
+  const perf = record.performance;
+  for (const c of splitClauses(instruction)) {
+    const verb = c.match(VERB)?.[1]?.replace(/\s+/g, " ") ?? "";
+    const body = c.slice(verb.length).trim();
+    if (/^(?:keep|leave)$/.test(verb) || /^(?:not|except|excluding|without|never)\b/.test(body)) { changes.push(`= Left unchanged: ${body.replace(/^(?:not|except|excluding|without|never)\s+/, "") || "as requested"}`); continue; }
+    const rename = RENAME.exec(c);
+    if (rename) { const before = name; name = safeName(c.slice(rename.index + rename[0].length).replace(/^["']|["']$/g, "").trim(), name); changes.push(`~ renamed ${before} -> ${name}`); continue; }
+    const budget = parseBudget(c).usd;
+    if (budget !== undefined) { req.budget = budget; redesign = true; changes.push(`~ budget $${budget}: actuators re-chosen for it`); }
+    const rest = budget !== undefined ? c.replace(/(?:with\s+)?(?:a\s+)?budget\b[^,;]*|\$\s*[\d,.]+\s*k?/g, "").trim() : c;
+    if (rest !== c && !rest.replace(VERB, "").trim()) continue;
+    const col = extractColour(`${rest} robot`) ?? rest.match(new RegExp(String.raw`\b(${Object.keys(COLOURS).join("|")})\b`))?.[1];
+    if (col && /^(?:paint|colou?r|make|change|turn|set)\b/.test(rest) && !lengthRequest(rest)) {
+      if (/\b(?:camera|lidar|sensor|imu|gripper|wheels?|eyes?|visor|servos?|motors?)\b/.test(rest)) { changes.push("! Only the body colour can be changed; sensors, grippers, wheels and bought parts keep theirs"); continue; }
+      colour = col; changes.push(`~ body colour -> ${col} (printed accent parts)`); continue;
+    }
+    const payload = extractMasses(rest).find((x) => x.context === "payload") ?? (/\b(?:carry|lift|hold|payload)\b/.test(rest) ? extractMasses(rest)[0] : undefined);
+    if (payload) { req.payloadKg = +payload.kg.toFixed(3); redesign = true; changes.push(`~ payload ${payload.raw}: actuators re-sized for it`); continue; }
+    // DOF
+    const rel = rest.match(/\b(add|remove|drop|delete)\s+(an?|one|two|three|four|five|six|\d+)\s+(?:more\s+|extra\s+)?(?:joints?|axes|axis|dof|degrees?\s+of\s+freedom)\b/);
+    const rawDof = rel ? undefined : extractDofRaw(rest);
+    if ((rel || rawDof !== undefined) && "dof" in req) {
+      const cur = Number(req.dof), want = rawDof ?? cur + (COUNT[rel![2]] ?? parseInt(rel![2], 10)) * (/^(?:remove|drop|delete)$/.test(rel![1]) ? -1 : 1);
+      const target = Math.min(MAX_ARM_DOF, Math.max(1, want));
+      if (target === cur) changes.push(`! The arm already has ${cur} DOF`);
+      else { req.dof = target; if (name === `arm_${cur}dof`) name = `arm_${target}dof`; redesign = true; changes.push(`~ Redesigned as a ${target}-DOF arm (was ${cur}-DOF)${want !== target ? ` (${want} requested; supported range 1–${MAX_ARM_DOF})` : ""}`); }
+      continue;
+    }
+    // sensors
+    const types = sensorTypesIn(rest);
+    if (types.length && (ADD_VERB.test(verb) || REMOVE_VERB.test(verb))) {
+      const have = new Set<string>((req.sensors as string[] | undefined) ?? []);
+      for (const t of types) {
+        if (ADD_VERB.test(verb)) { if (have.has(t)) changes.push(`! It already has a ${t}`); else { have.add(t); changes.push(`+ Added ${t} sensor (real part, mounted and counted in the loads)`); } }
+        else if (have.delete(t)) changes.push(`- Removed ${t}`); else changes.push(`! No ${t} to remove`);
+      }
+      req.sensors = [...have]; redesign = true; continue;
+    }
+    // gripper
+    if (/gripper|end[\s-]?effector|\bclaw\b|two[\s-]?finger|parallel\s+jaw/.test(rest) && "gripper" in req) {
+      if (/suction|vacuum/.test(rest)) { changes.push("! Suction cups are not in the parts library yet; the two-finger servo gripper is available"); continue; }
+      if (REMOVE_VERB.test(verb)) { if (req.gripper === false) changes.push("! No gripper to remove"); else { req.gripper = false; redesign = true; changes.push("- Removed gripper (wrist re-sized)"); } continue; }
+      if (ADD_VERB.test(verb)) { if (req.gripper !== false) changes.push("! This robot already has a gripper"); else { req.gripper = true; redesign = true; changes.push("+ Added servo gripper (wrist re-sized)"); } continue; }
+    }
+    // lengths / reach
+    const lr = lengthRequest(rest);
+    if (lr && /\b(?:long|longer|short|shorter|length|lengthen|shorten|extend|reach|bigger|smaller|larger|arms?|forearm|upper|twice|double|half|halve|times|\d+x)\b/.test(rest)) {
+      const seg = /\bfore[\s_-]?arms?\b|\blower\s+arms?\b/.test(rest) ? "forearm" : /\bupper[\s_-]?arms?\b/.test(rest) ? "upper_arm" : undefined;
+      if (seg && typeof perf[`${seg}_m`] === "number") {
+        const cur = Number(perf[`${seg}_m`]);
+        const next = lr.absoluteM ?? (lr.deltaM !== undefined ? cur + lr.deltaM : cur * lr.factor!);
+        if (!(next >= 0.06 && next <= 1.5)) { changes.push(`! ${seg.replace("_", " ")} ${next.toFixed(3)} m is outside 0.06–1.5 m; unchanged`); continue; }
+        req.segments = { ...(req.segments ?? {}), upper_arm: Number(perf.upper_arm_m), ...(perf.forearm_m ? { forearm: Number(perf.forearm_m) } : {}), ...(req.segments ?? {}), [seg]: +next.toFixed(4) };
+        delete req.reachM; redesign = true;
+        changes.push(`~ ${seg.replace("_", " ")} ${cur.toFixed(3)} m -> ${next.toFixed(3)} m${lr.defaulted ? " (no amount given, used 20%)" : ""}; actuators re-sized`);
+        continue;
+      }
+      if (typeof perf.reach_m === "number" && !seg) {
+        const cur = Number(perf.reach_m), next = lr.absoluteM ?? (lr.deltaM !== undefined ? cur + lr.deltaM : cur * lr.factor!);
+        req.reachM = +next.toFixed(4); delete req.segments; redesign = true;
+        changes.push(`~ reach ${cur.toFixed(3)} m -> ${next.toFixed(3)} m requested${lr.defaulted ? " (no amount given, used 20%)" : ""}; actuators re-sized`);
+        continue;
+      }
+      changes.push(`! ${seg ? seg.replace("_", " ") : "This size"} cannot be changed on this design`); continue;
+    }
+    if (budget === undefined) changes.push(`? Not understood: "${c}"`);
+  }
+  let spec = specIn;
+  if (redesign) {
+    spec = designer({ ...req, name });
+    spec.metadata.source_prompt = specIn.metadata.source_prompt;
+    spec.materials = structuredClone(specIn.materials);
+    const was = new Map(record.joints.map((j) => [j.joint, j.actuator]));
+    for (const j of designOf(spec)!.joints) { const before = was.get(j.joint); if (before && before !== j.actuator) changes.push(`~ ${j.joint}: ${before} -> ${j.actuator} (load ${j.required_nm} N·m)`); }
+    for (const ck of designOf(spec)!.checks.filter((x) => !x.pass)) changes.push(`! check failed: ${ck.name} — ${ck.detail}`);
+    for (const t of (req.sensors as string[] | undefined) ?? []) if (!spec.sensors.some((x) => x.type === t)) {
+      const i = changes.findIndex((x) => x.startsWith(`+ Added ${t}`));
+      if (i >= 0) changes[i] = `! ${t}: this ${record.family} design has no mount for it`;
+    }
+  } else spec = structuredClone(specIn);
+  spec.robot_name = name;
+  if (colour) { const mat = spec.materials.find((x) => x.name === "printed_accent"); if (mat) mat.color = [...COLOURS[colour]]; }
+  if (!changes.length) changes.push(`(no structural change matched "${instruction}")`);
+  return { spec, changes };
+}
+
 /** Apply a natural-language modification to a spec (mutates a clone). */
 export function applyModification(specIn: RobotSpecification, instruction: string): ModResult {
+  const designed = modifyDesigned(specIn, instruction);
+  if (designed) return designed;
   let spec = structuredClone(specIn);
   const changes: string[] = [];
   const clauses = splitClauses(instruction);

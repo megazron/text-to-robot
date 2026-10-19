@@ -50,6 +50,8 @@ interface ReachModel { reach: number; scalable: string[]; horizontal: boolean; }
 /** Stretched reach from the first pitch axis (or, for all-vertical-axis SCARA arms, the
  *  base yaw axis in the horizontal plane) to the tool tip of the first end effector. */
 export function reachModel(spec: RobotSpecification): ReachModel | undefined {
+  const designed = (spec.metadata as { design?: { performance?: { reach_m?: unknown } } }).design?.performance?.reach_m;
+  if (typeof designed === "number") return { reach: designed, scalable: [] } as unknown as ReachModel;
   const ee = spec.end_effectors[0];
   const tip = ee ? spec.joints.find((j) => j.parent === ee.attach_link && spec.links.find((l) => l.name === j.child)?.role === "gripper")?.child ?? ee.attach_link
     : [...spec.links].reverse().find((l) => /^(?:wrist|forearm|link_)/.test(l.role ?? ""))?.name;
@@ -199,4 +201,52 @@ export function applySizeDirectives(spec: RobotSpecification, t: string, family:
       ignored.push(`${what}: ${describe(l)}`);
     }
   }
+}
+
+/** Size words for designed arms: they become design inputs (reach, segment lengths) rather than
+ *  rescaled geometry. Returns the inputs plus the notes; `report` adds what was actually built. */
+export function designedSizes(t: string, label: string, lengths: Length[], stature: Length | undefined, notes: SizeNotes) {
+  const { dimensions, ignored, conflicts } = notes;
+  const sized = (words: string) => find(t, new RegExp(String.raw`\b(?:${words})\b[\s-]+(?:(?!with|for|on|to|that|and|or|parts?|objects?|boxes|items)[a-z0-9-]+[\s-]+){0,3}?${ROBOT_NOUN}\b`));
+  const small = sized(SMALL), large = sized(LARGE);
+  const word = (h: { text: string }) => h.text.split(/[\s-]/)[0];
+  if (small && large) conflicts.push(`"${word(small)}" and "${word(large)}" contradict each other; used "${word(small)}"`);
+  const perLink = lengths.find((l) => isPerLink(t, l));
+  const reaches = lengths.filter((l) => l.context === "reach");
+  const reachLen = reaches[0] ?? lengths.find((l) => l !== perLink && l !== stature && (!l.context || l.context === "length"));
+  const out: { reachM?: number; segments?: { upper_arm: number; forearm: number }; requested?: Length; limit?: Length; word?: string } = {};
+  if (!reachLen && !perLink && (small || large)) { out.reachM = small ? 0.25 : 0.65; out.word = small ? "small" : "large"; }
+  for (const l of lengths) {
+    if (l === stature) continue;
+    if (l === perLink) {
+      if (reachLen) { ignored.push(`each link ${l.raw}: the stated reach ${reachLen.raw} takes precedence over per-link lengths`); continue; }
+      if (l.metres < 0.06 || l.metres > 1.2) { ignored.push(`each link ${l.raw}: outside the supported 0.06–1.2 m per link`); continue; }
+      out.segments = { upper_arm: l.metres, forearm: l.metres };
+      dimensions.push(`upper_arm, forearm ${l.metres.toFixed(2)} m each`);
+    } else if (l === reachLen) {
+      if (l.bound) out.limit = l; else { out.reachM = l.metres; out.requested = l; }
+    } else if (l.context === "reach") {
+      conflicts.push(`reach ${l.raw} contradicts the earlier reach ${reachLen!.raw}; used ${reachLen!.raw}`);
+    } else {
+      const what = l.context && l.context !== "position" ? `${l.context} ${l.raw}` : l.raw;
+      ignored.push(`${what}: ${l.context === "position" ? "positions and part sizes are not modelled" : `the ${label}'s overall ${l.context ?? "size"} cannot be set; only its reach and link lengths can`}`);
+    }
+  }
+  return out;
+}
+/** After design: record the reach that was built against what was asked. */
+export function reportDesignedReach(spec: RobotSpecification, asked: ReturnType<typeof designedSizes>, notes: SizeNotes) {
+  const built = reachModel(spec)?.reach;
+  if (built === undefined) return;
+  if (asked.word) notes.dimensions.push(`${asked.word}: reach ${built.toFixed(2)} m`);
+  if (asked.limit) {
+    const l = asked.limit, ok = l.bound === "max" ? built <= l.metres : built >= l.metres;
+    if (ok) notes.dimensions.push(`reach ${built.toFixed(2)} m (${l.bound === "max" ? "within" : "meets"} the ${l.raw} limit)`);
+    else notes.approximations.push(`${l.raw} limit: built reach ${built.toFixed(2)} m`);
+  }
+  if (!asked.requested) return;
+  const l = asked.requested;
+  if (Math.abs(built - l.metres) <= 0.02) { notes.dimensions.push(`reach ${built.toFixed(2)} m`); return; }
+  notes.dimensions.push(`reach ${built.toFixed(2)} m`);
+  notes.approximations.push(`${l.raw}: reach ${built.toFixed(2)} m, the ${built > l.metres ? "shortest" : "longest"} this arm design allows (actuator bodies set the spacing)`);
 }

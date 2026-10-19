@@ -15,6 +15,7 @@
     "@ttr/components": "*",
     "@ttr/cad": "*",
     "@ttr/training-export": "*",
-    "@ttr/mesh": "*"
+    "@ttr/mesh": "*",
+    "@ttr/design": "*"
   }
 }

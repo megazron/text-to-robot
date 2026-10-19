@@ -1,10 +1,12 @@
 // Robot-family vocabulary and template selection for the local prompt parser.
 import type { RobotSpecification } from "@ttr/robot-schema";
+import { designArm } from "@ttr/design";
+import type { SensorType } from "@ttr/robot-schema";
 import { nDofArm, scara, humanoid, diffDrive, fourWheel, mecanum, quadruped, hexapod, roverArm, ironManSuit, wearableExosuit, ironManMark43, wallE, eva, baymax, attachParallelGripper, attachSuctionGripper } from "@ttr/robot-templates";
 import { find, mentions, negates, isDirectlyNegated } from "./text.ts";
 import { armTip, replaceGripperWithSuction } from "./grippers.ts";
 
-export const MAX_ARM_DOF = 12;
+export const MAX_ARM_DOF = 7; // the arm designer builds 1–7 DOF chains
 
 export type GripperKind = "parallel" | "suction" | "none";
 
@@ -58,7 +60,11 @@ export function gripperRequest(t: string): { kind: GripperKind; explicit: boolea
   return { kind: "parallel", explicit: mentions(t, RX.gripper) };
 }
 
-export interface Choice { family: string; label: string; matched: string; build: () => RobotSpecification; usesDof?: boolean; usesGripper?: boolean; approx?: string; }
+/** What the prompt asks for, known before the robot is designed. */
+export interface DesignContext { prompt: string; budget?: number; payloadKg?: number; reachM?: number; segments?: { upper_arm: number; forearm: number }; sensors: SensorType[]; heightM?: number; }
+export interface Choice { family: string; label: string; matched: string; build: (ctx: DesignContext) => RobotSpecification; usesDof?: boolean; usesGripper?: boolean; approx?: string;
+  /** built by the parts-first design engine (sized from real components) rather than a fixed template */
+  designed?: boolean; }
 
 export function chooseFamily(t: string, prompt: string, dof: number | undefined, g: GripperKind, heightM?: number, explicitGripper = false): Choice {
   // "no camera on my quadruped" negates the camera, not the quadruped: only "not a quadruped" rejects a family
@@ -110,8 +116,10 @@ export function chooseFamily(t: string, prompt: string, dof: number | undefined,
   m = hit(RX.arm);
   if (!m && dof === undefined) throw new Error(`Robot type not recognised. ${SUPPORTED_HINT}`);
   const n = dof ?? 6;
-  return { family: "serial_arm", label: `${n}-DOF serial arm`, matched: m ?? `${n} DOF`, usesDof: true, usesGripper: true,
-    build: () => { const s = nDofArm(n, { name: `arm_${n}dof`, prompt, gripper: g === "none" ? "none" : "parallel" }); if (g === "suction") replaceGripperWithSuction(s); return s; } };
+  if (g === "suction") return { family: "serial_arm", label: `${n}-DOF serial arm`, matched: m ?? `${n} DOF`, usesDof: true, usesGripper: true,
+    build: () => { const s = nDofArm(n, { name: `arm_${n}dof`, prompt, gripper: "none" }); replaceGripperWithSuction(s); return s; } };
+  return { family: "serial_arm", label: `${n}-DOF serial arm`, matched: m ?? `${n} DOF`, usesDof: true, usesGripper: true, designed: true,
+    build: (ctx) => designArm({ name: `arm_${n}dof`, dof: n, gripper: g !== "none", prompt: ctx.prompt, budget: ctx.budget, payloadKg: ctx.payloadKg, reachM: ctx.reachM, segments: ctx.segments, sensors: ctx.sensors }) };
 }
 
 export const ARM_FAMILIES = new Set(["serial_arm", "rover_arm", "scara"]);

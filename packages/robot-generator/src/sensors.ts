@@ -146,6 +146,12 @@ export function countOf(t: string, hit: Hit): number {
   return ({ two: 2, three: 3, four: 4, "a pair of": 2, "pair of": 2, dual: 2, twin: 2 } as Record<string, number>)[m[1]] ?? Math.min(4, parseInt(m[1], 10));
 }
 
+/** Sensor types the prompt asks for (designers mount real parts for them). */
+export function requestedSensors(t: string): SensorType[] {
+  const hits: [unknown, SensorType][] = [[find(t, SENSOR_WORDS[0][0]), "lidar"], [find(t, SENSOR_WORDS[1][0]), "depth"], [cameraHit(t), "camera"], [find(t, SENSOR_WORDS[3][0]), "imu"]];
+  return hits.filter(([h]) => h).map(([, type]) => type);
+}
+
 export function applyInlineSensors(spec: RobotSpecification, t: string): { type: SensorType; mount: string }[] {
   const out: { type: SensorType; mount: string }[] = [];
   const lidar = find(t, SENSOR_WORDS[0][0]), depth = find(t, SENSOR_WORDS[1][0]), camera = cameraHit(t), imu = find(t, SENSOR_WORDS[3][0]);

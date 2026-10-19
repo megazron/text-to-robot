@@ -1,6 +1,7 @@
 import type { RobotSpecification, Joint } from "@ttr/robot-schema";
 import { GRAVITY } from "@ttr/robot-schema";
 import { linkPositions } from "@ttr/kinematics";
+import { designRecord, buildDesignedBom } from "./designed.ts";
 import { ACTUATORS, SENSORS, COMPUTE, POWER, STRUCTURE, type Tier, type Actuator } from "./catalog.ts";
 
 export interface BomLine { category: string; name: string; qty: number; unit_cost: number; subtotal: number; spec: string; note?: string; }
@@ -139,6 +140,7 @@ function buildBomAtTier(spec: RobotSpecification, tier: Tier, budget?: number, o
 }
 
 export function buildBom(spec: RobotSpecification, budget?: number, opts: BomOptions = {}): BillOfMaterials {
+  if (designRecord(spec)) return buildDesignedBom(spec, budget, opts.payloadKg);
   const tiers: Tier[] = ["hobby", "prosumer", "research"];
   if (budget === undefined) return buildBomAtTier(spec, tierForBudget(undefined), undefined, opts);
   // try to FIT the budget: cheapest tier whose total is within budget; else cheapest overall

@@ -4,11 +4,11 @@
 // ignored; nothing is dropped silently.
 import type { RobotSpecification, SensorType } from "@ttr/robot-schema";
 import { safeName } from "@ttr/robot-schema";
-import { normalize, find, findAll, mentions, extractDofMentions, type DofMention, extractLengths, extractMasses, extractSpeeds, parseBudget, extractName, extractColour, maskNames, COLOURS } from "./text.ts";
-import { MAX_ARM_DOF, RX, gripperRequest, chooseFamily, RECOLOURABLE, type Choice, type GripperKind } from "./families.ts";
+import { normalize, find, findAll, mentions, negates, extractDofMentions, type DofMention, extractLengths, extractMasses, extractSpeeds, parseBudget, extractName, extractColour, maskNames, COLOURS } from "./text.ts";
+import { MAX_ARM_DOF, RX, gripperRequest, chooseFamily, RECOLOURABLE, ARM_FAMILIES, type Choice, type GripperKind, type DesignContext } from "./families.ts";
 import { translateKeywords } from "./lexicon.ts";
-import { applySizeDirectives } from "./sizing.ts";
-import { applyInlineSensors, UNMODELLED_SENSORS } from "./sensors.ts";
+import { applySizeDirectives, designedSizes, reportDesignedReach } from "./sizing.ts";
+import { applyInlineSensors, requestedSensors, SENSOR_WORDS, UNMODELLED_SENSORS } from "./sensors.ts";
 import { dofOf } from "./spec-utils.ts";
 
 export { MAX_ARM_DOF } from "./families.ts";
@@ -42,6 +42,9 @@ export interface Interpretation {
 
 export interface PromptResult { spec: RobotSpecification; interpretation: Interpretation; }
 
+/** Sensors a designed robot carries, reported like inline sensors (type + the link they sit on). */
+const designedSensors = (spec: RobotSpecification) => spec.sensors.map((x) => ({ type: x.type, mount: x.parent }));
+
 /** Deterministic NL -> RobotSpecification plus a record of how each request was handled. */
 export function interpretPrompt(prompt: string): PromptResult {
   if (!normalize(prompt)) throw new Error("empty prompt");
@@ -68,7 +71,14 @@ export function interpretPrompt(prompt: string): PromptResult {
   }
 
   const choice = chooseFamily(t, prompt, dof, g, heightM, grip.explicit);
-  const spec = choice.build();
+  const budget = parseBudget(t);
+  const masses = extractMasses(t);
+  const payload = masses.find((x) => x.context === "payload");
+  const asked = choice.designed && ARM_FAMILIES.has(choice.family) ? designedSizes(t, choice.label, lengths, stature, { dimensions, approximations, ignored, conflicts }) : undefined;
+  const ctx: DesignContext = { prompt, budget: budget.usd, payloadKg: payload ? +payload.kg.toFixed(3) : undefined, reachM: asked?.reachM, segments: asked?.segments,
+    sensors: requestedSensors(t).filter((type) => !negates(t, SENSOR_WORDS.find(([, k]) => k === type)![0])), ...(heightM ? { heightM } : {}) };
+  const spec = choice.build(ctx);
+  if (asked) reportDesignedReach(spec, asked, { dimensions, approximations, ignored, conflicts });
   if (choice.approx) approximations.push(choice.approx);
   if (grip.note && choice.usesGripper) approximations.push(grip.note);
 
@@ -92,31 +102,29 @@ export function interpretPrompt(prompt: string): PromptResult {
   const name = extractName(prompt);
   if (name) spec.robot_name = safeName(name, spec.robot_name);
 
-  applySizeDirectives(spec, t, choice.family, choice.label, lengths, stature, { dimensions, approximations, ignored, conflicts });
+  if (!asked) applySizeDirectives(spec, t, choice.family, choice.label, lengths, stature, { dimensions, approximations, ignored, conflicts });
   if (heightM) {
     dimensions.push(`fitted to a ${heightM.toFixed(2)} m wearer`);
     if (Math.abs(heightM - 1.75) > 0.005) approximations.push("suit proportions scaled from the 1.75 m reference; clearance and wearer-contact audits cover the reference size only");
   }
-  const sensors = applyInlineSensors(spec, t);
+  const sensors = choice.designed ? designedSensors(spec) : applyInlineSensors(spec, t);
+  if (choice.designed) for (const type of ctx.sensors) if (!spec.sensors.some((x) => x.type === type)) ignored.push(`${type}: the ${choice.label} design has no mount for it yet`);
   for (const x of findAll(t, UNMODELLED_SENSORS)) ignored.push(`${x.text}: only cameras, depth cameras, lidars and IMUs are modelled`);
 
   const colour = extractColour(t);
   if (colour) {
-    const mat = spec.materials.find((x) => x.name === "link_mat");
+    const mat = spec.materials.find((x) => x.name === (choice.designed ? "printed_accent" : "link_mat"));
     if (RECOLOURABLE.has(choice.family) && mat) mat.color = [...COLOURS[colour]];
     else ignored.push(`colour "${colour}": the ${choice.label} keeps its own livery`);
   }
 
-  const budget = parseBudget(t);
   if (budget.unsupported) ignored.push(`budget "${budget.unsupported}": only US-dollar budgets are supported`);
-  const masses = extractMasses(t);
-  const payload = masses.find((x) => x.context === "payload");
   let payloadKg: number | undefined;
   if (payload) {
     if (spec.end_effectors.length) payloadKg = +payload.kg.toFixed(3);
     else ignored.push(`payload ${payload.raw}: the ${choice.label} has no end effector to carry it`);
   }
-  for (const v of extractSpeeds(t)) ignored.push(`speed ${v}: speed targets are not modelled; joint velocity limits come from the template`);
+  for (const v of extractSpeeds(t)) ignored.push(`speed ${v}: speed targets are not modelled; ${choice.designed ? "speeds follow the chosen actuators' datasheets" : "joint velocity limits come from the template"}`);
   for (const x of masses) {
     if (x === payload) continue;
     ignored.push(x.context === "payload" ? `payload ${x.raw}: only one payload is sized; using ${payload!.raw}`

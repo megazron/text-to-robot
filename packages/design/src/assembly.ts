@@ -6,9 +6,19 @@ import { part, rating, type Vec3 } from "@ttr/parts";
 import { meshGeometry } from "@ttr/mesh";
 import { toPose, printCheck, type Mat4, type Program, type PrintCheck } from "@ttr/solid";
 
+// Sizing loops rebuild the same parts many times: cache geometry by recipe (bounded).
+const cache = new Map<string, unknown>();
+function memo<T>(key: string, make: () => T): T {
+  if (cache.has(key)) return structuredClone(cache.get(key)) as T;
+  const v = make();
+  if (cache.size > 400) cache.delete(cache.keys().next().value as string);
+  cache.set(key, v);
+  return structuredClone(v);
+}
 /** MeshGeometry for a printed program / a catalog component (mass properties precomputed). */
-export const printedGeometry = (p: Program) => meshGeometry("printed", `${p.name}.stl`, { program: JSON.stringify(p) });
-export const componentGeometry = (key: string, file?: string) => meshGeometry("component", file ?? `${key}.stl`, { key });
+export const printedGeometry = (p: Program) => { const program = JSON.stringify(p); return memo(`p:${program}`, () => meshGeometry("printed", `${p.name}.stl`, { program })); };
+export const componentGeometry = (key: string, file?: string) => memo(`c:${key}:${file ?? ""}`, () => meshGeometry("component", file ?? `${key}.stl`, { key }));
+const checkOf = (p: Program) => memo(`k:${JSON.stringify(p.ops)}`, () => printCheck(p));
 
 /** PETG printed with 4 perimeters and 30 % gyroid infill: effective density of a typical bracket. */
 export const PRINT_DENSITY = 1270 * 0.72; // kg/m^3
@@ -39,6 +49,8 @@ export interface DesignRecord {
   performance: Record<string, number | string>;
   assumptions: string[];
   fasteners: Record<string, number>;
+  /** the designer's input; edits change it and run the designer again */
+  request?: Record<string, unknown>;
 }
 
 export class Assembly {
@@ -63,7 +75,7 @@ export class Assembly {
   /** A link whose body is a printed part. Mass from solid volume at print density. */
   printedLink(name: string, program: Program, opts: { role?: string; material?: string; extraMassKg?: number } = {}): Link {
     const geometry = printedGeometry({ ...program, name });
-    const check = printCheck(program);
+    const check = checkOf(program);
     const mass = geometry.volume * PRINT_DENSITY + (opts.extraMassKg ?? 0);
     const link: Link = { name, role: opts.role ?? "link", geometry, mass: Math.max(mass, 0.002), material: opts.material ?? "printed", origin: { xyz: [0, 0, 0], rpy: [0, 0, 0] } };
     this.spec.links.push(link);

@@ -24,6 +24,10 @@ for g in range(m.ngeom):
     if m.geom_bodyid[g] == 0: continue
     pts.append(d.geom_xpos[g] + m.geom_aabb[g][3:] * 0); 
 pts = np.array(pts); lo = pts.min(0); hi = pts.max(0); c = (lo + hi) / 2
+focus = os.environ.get("FOCUS")
+if focus:
+    b = mujoco.mj_name2id(m, mujoco.mjtObj.mjOBJ_BODY, focus)
+    if b >= 0: c = d.xpos[b].copy()
 zoom = float(os.environ.get("ZOOM", "1"))
 ext = max(float(np.max(hi - lo)), 0.12) / zoom
 tiles = []
