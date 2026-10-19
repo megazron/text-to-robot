@@ -170,9 +170,10 @@ Measured on a fresh clone of this revision:
 
 ## Website
 
-The hosted version runs at [texttorobot.org](https://texttorobot.org). It redeploys itself from
-this repository on every push to `main` and every release; see
-[deploy/hostinger/README.md](deploy/hostinger/README.md).
+Try it at **[megazron.github.io/text-to-robot](https://megazron.github.io/text-to-robot/)**. That
+page runs the whole generator inside your browser (no server, nothing uploaded) and is rebuilt
+by the Website workflow on every push to `main` and every release. Share links carry the robot
+in the URL itself. Build it locally with `npm ci && deploy/build-pages.sh`.
 
 ## Development
 
