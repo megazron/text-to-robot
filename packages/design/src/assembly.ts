@@ -39,6 +39,8 @@ export interface DesignRecord {
   performance: Record<string, number | string>;
   assumptions: string[];
   fasteners: Record<string, number>;
+  /** Tool centre point (link frame, metres) for task tests: payload hold, reach, grip. */
+  tcp?: { link: string; xyz: Vec3 };
 }
 
 export class Assembly {

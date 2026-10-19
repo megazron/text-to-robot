@@ -230,6 +230,7 @@ export function designArm(req: ArmRequest): RobotSpecification {
     A.check(`torque:${j.name}`, c.ok && c.continuous_ok, `needs ${c.required_nm} N·m peak, ${part(j.key).name} gives ${r.peak_nm} N·m peak / ${r.rated_nm} N·m rated (margin ${c.margin}x)`);
   }
   const reachActual = reachOf(built!, kinds);
+  A.design.tcp = { link: built!.tcpLink, xyz: built!.tcp.map((x) => +(x / 1000).toFixed(6)) as Vec3 };
   A.design.performance = { reach_m: +reachActual.toFixed(3), payload_kg: payload, mass_kg: +totalMass(A.spec).toFixed(3), actuators: LADDERS[ladder].label, max_joint_speed_rad_s: Math.min(...joints.map((j) => rating(j.key).speed_rad_s)) };
   if (req.reachM && Math.abs(reachActual - req.reachM) > 0.05) A.design.assumptions.push(`requested reach ${req.reachM} m; built reach is ${reachActual.toFixed(3)} m (actuator bodies set the minimum spacing)`);
   if (A.spec.end_effectors.length) {

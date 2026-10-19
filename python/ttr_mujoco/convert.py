@@ -3,6 +3,7 @@ import os, re, tempfile, warnings
 import xml.etree.ElementTree as ET
 import numpy as np
 import mujoco
+from .actuators import joint_actuators, load_spec
 
 # whole-word hints, matched against link/joint NAMES only (never the header comment/prompt)
 FLOATING_HINT = re.compile(r"\b(hip|thigh|knee|shin|coxa|femur|tibia|wheel|leg|foot|track|thruster|hover|torso)\b", re.I)
@@ -46,8 +47,14 @@ def _lowest_point(model: mujoco.MjModel) -> float:
     return float(min(lows)) if lows else 0.0
 
 
-def urdf_to_mjcf(urdf_path: str, floating=None, kp: float | None = None, out: str | None = None, self_collision: bool = False) -> str:
-    """Convert a URDF to an MJCF scene string with actuators. floating=None -> auto."""
+def urdf_to_mjcf(urdf_path: str, floating=None, kp: float | None = None, out: str | None = None, self_collision: bool = False,
+                 spec=None) -> str:
+    """Convert a URDF to an MJCF scene string with actuators. floating=None -> auto.
+
+    spec: optional robot.json (path or dict). When given, each actuated joint gets the
+    armature (reflected rotor inertia) of its real actuator and the datasheet ratings are
+    stored as custom numerics (ttr_rated_/ttr_peak_/ttr_noload_<actuator>) for the task
+    tests. Without it the URDF alone is authoritative and no armature is invented."""
     with open(urdf_path, encoding="utf8") as source_file:
         urdf_xml = source_file.read()
     source = ET.fromstring(urdf_xml)
@@ -225,6 +232,14 @@ def urdf_to_mjcf(urdf_path: str, floating=None, kp: float | None = None, out: st
             for g in geoms:
                 if g.get("group", "0") == "0": g.set("group", "3")
 
+    # real actuators: reflected rotor inertia on the joint (URDF has no field for it)
+    ratings = joint_actuators(load_spec(spec)) if spec is not None else {}
+    armature_notes = []
+    for j in root.iter("joint"):
+        r = ratings.get(j.get("name") or "")
+        if r and r.get("armature_kgm2") and not j.get("armature"):
+            j.set("armature", f"{r['armature_kgm2']:.6g}")
+            armature_notes.append(f"{j.get('name')}: {r['armature_kgm2']:.3g} kg m^2 ({r['armature_source']})")
     # actuators for every hinge/slide joint
     act = ET.SubElement(root, "actuator")
     for j in root.iter("joint"):
@@ -255,12 +270,18 @@ def urdf_to_mjcf(urdf_path: str, floating=None, kp: float | None = None, out: st
             # inertia grows with the same mass and lever).
             a.set("kp", f"{gravity_load[jn] / GRAVITY_SAG_RAD:.9g}")
     custom = ET.SubElement(root, "custom")
-    ET.SubElement(custom, "text", name="ttr_fidelity", data="URDF effort limits enforced; position gains inferred; speed/thermal/electrical limits unmodelled; geometry and hardware uncalibrated")
+    fidelity = "URDF effort limits enforced; position gains inferred; speed/thermal/electrical limits unmodelled; geometry and hardware uncalibrated"
+    if armature_notes: fidelity += "; armature = rotor inertia x gear ratio^2 from the actuator record: " + "; ".join(armature_notes)
+    ET.SubElement(custom, "text", name="ttr_fidelity", data=fidelity)
     # MJCF has no joint speed limit: carry the URDF rating so tests never command a joint past it.
     for a in act:
         jn = a.get("joint")
         if jn in joint_velocities:
             ET.SubElement(custom, "numeric", name=f"ttr_vmax_{a.get('name')}", data=f"{joint_velocities[jn]:.12g}")
+        r = ratings.get(jn)
+        for field, tag in (("rated_nm", "rated"), ("peak_nm", "peak"), ("no_load_speed_rad_s", "noload")):
+            if r and r.get(field):
+                ET.SubElement(custom, "numeric", name=f"ttr_{tag}_{a.get('name')}", data=f"{float(r[field]):.12g}")
     if not self_collision:
         warnings.warn("Self-collision disabled: this scene cannot validate part clearance or wearable fit", UserWarning, stacklevel=2)
     xml = ET.tostring(root, encoding="unicode")
