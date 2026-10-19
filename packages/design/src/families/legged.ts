@@ -225,7 +225,7 @@ function buildQuadruped(req: LeggedRequest, cfg: QuadCfg, sensors: SensorKind[])
 }
 const lerp3 = (p: Vec3, q: Vec3, t: number): Vec3 => add(p, scale(sub(q, p), t));
 
-function sensorsOf(req: LeggedRequest, dflt: SensorKind[]): SensorKind[] {
+export function sensorsOf(req: LeggedRequest, dflt: SensorKind[]): SensorKind[] {
   const s = new Set<SensorKind>([...dflt, ...(req.sensors ?? [])]); s.add("imu"); return [...s];
 }
 
@@ -267,7 +267,8 @@ export function designQuadruped(req: LeggedRequest): RobotSpecification {
   const peakA = sum(Object.entries(torques).map(([k, v]) => holdCurrent(keyOf(A, k), v * DYNAMIC_FACTOR)));
   A.check("power:battery_current", peakA <= Number(part(cfg.batt).specs.max_current_a), `worst-case gait current ~${peakA.toFixed(1)} A vs ${part(cfg.batt).specs.max_current_a} A pack rating`);
   A.check("power:regulator", (COMPUTE_W[built.compute] ?? 7) / 5 <= 5.5 * 0.9 || built.compute === "jetson_orin_nano_super", built.compute === "jetson_orin_nano_super" ? "Jetson takes the pack voltage directly (9-20 V input); the 5 V regulator feeds the sensors" : `${part(built.compute).name} draws ${((COMPUTE_W[built.compute] ?? 7) / 5).toFixed(1)} A of the 5.5 A regulator`);
-  quadStability(A, built.feet, built.h);
+  stabilityCheck(A, [{ name: "standing (4 feet)", feet: built.feet.map((f) => f.link) }], 0.03);
+  A.design.assumptions.push("A trot has two diagonal feet on the ground: the COM sits on the support line, so trotting needs the dynamic balance of the gait controller; the creep gait keeps three feet down (statically stable).");
   // joint limits from exact solid sweeps
   const actuated = A.spec.joints.filter((j) => j.type === "revolute").map((j) => j.name);
   limitsFromGeometry(A, actuated, gaitCombos(["fl", "fr", "rl", "rr"]));
@@ -286,10 +287,11 @@ export function designQuadruped(req: LeggedRequest): RobotSpecification {
     cfg.cls === "qdd" ? "Research-grade QDD quadruped: needs a torque-controlled locomotion controller (MPC / RL policy) running on the computer over CAN." : "Servo dog: position-controlled gaits (open-loop trot / creep) run on the computer through the serial servo bus.",
     "Battery is strapped into the printed fence on the body floor; never screw into a pack.",
   );
+  A.design.request = { ...req };
   return A.finish(`${cfg.cls === "qdd" ? "QDD" : "Servo"} quadruped, ${(m).toFixed(2)} kg, hip height ${(built.H / 1000).toFixed(2)} m, 12 DOF, ${batt.minutes.toFixed(0)} min runtime, $${bom.cost_usd.toFixed(0)} of parts`);
 }
 
-const keyOf = (A: Assembly, joint: string) => { const g = A.spec.links.find((l) => l.name === `${joint}_actuator`)!.geometry; return g.type === "mesh" ? String(g.params!.key) : ""; };
+export const keyOf = (A: Assembly, joint: string) => { const g = A.spec.links.find((l) => l.name === `${joint}_actuator`)!.geometry; return g.type === "mesh" ? String(g.params!.key) : ""; };
 
 /** Gait envelope: each leg's joints displaced around the standing pose (one leg group at a time is enough: legs are independent). */
 function gaitPoses(legs: string[], amp: { abd: number; hip: number; knee: number }): Record<string, number>[] {
@@ -311,7 +313,7 @@ function gaitCombos(legs: string[]): Record<string, number>[] {
   return out;
 }
 
-function quadPower(A: Assembly, torques: Record<string, number>, compute: string, sensors: SensorKind[], cls: string) {
+export function quadPower(A: Assembly, torques: Record<string, number>, compute: string, sensors: SensorKind[], cls: string) {
   const items: PowerItem[] = [];
   // walking: on average a joint carries about half of its worst trot load
   const act = sum(Object.entries(torques).map(([k, v]) => { const key = keyOf(A, k); return walkPower(key, v * 0.5); }));
@@ -321,14 +323,28 @@ function quadPower(A: Assembly, torques: Record<string, number>, compute: string
   void sensors;
   return { items, total: sum(items.map((i) => i.watts)) / 0.9 }; // 90 % regulator / wiring efficiency
 }
-function quadStability(A: Assembly, feet: Foot[], h: number) {
-  const c = comWorld(A.spec), P = feet.map((f) => pointWorld(A.spec, {}, f.link));
-  const xs = P.map((p) => p[0]), ys = P.map((p) => p[1]);
-  const mx = Math.min(c[0] - Math.min(...xs), Math.max(...xs) - c[0]), my = Math.min(c[1] - Math.min(...ys), Math.max(...ys) - c[1]);
-  A.check("stability:com_inside_support", mx > 0 && my > 0, `centre of mass ${(c[0] * 1000).toFixed(0)}, ${(c[1] * 1000).toFixed(0)} mm; support margin ${(mx * 1000).toFixed(0)} mm fore/aft, ${(my * 1000).toFixed(0)} mm lateral; COM ${((c[2] + h / 1000) * 1000).toFixed(0)} mm above the foot centres`);
+/** Smallest distance (m) from the COM projection to the edges of the convex support polygon (negative = outside). */
+export function supportMargin(P: Vec3[], c: Vec3): number {
+  const cx = sum(P.map((p) => p[0])) / P.length, cy = sum(P.map((p) => p[1])) / P.length;
+  const Q = [...P].sort((p, q) => Math.atan2(p[1] - cy, p[0] - cx) - Math.atan2(q[1] - cy, q[0] - cx));
+  let m = Infinity;
+  for (let i = 0; i < Q.length; i++) {
+    const p = Q[i], q = Q[(i + 1) % Q.length], ex = q[0] - p[0], ey = q[1] - p[1], l = Math.hypot(ex, ey) || 1;
+    m = Math.min(m, (ex * (c[1] - p[1]) - ey * (c[0] - p[0])) / l); // left of each CCW edge = inside
+  }
+  return m;
+}
+/** COM inside the support polygon for each named stance set, recorded as checks. */
+export function stabilityCheck(A: Assembly, sets: { name: string; feet: string[] }[], need = 0.01) {
+  const c = comWorld(A.spec);
+  for (const set of sets) {
+    const P = set.feet.map((f) => pointWorld(A.spec, {}, f)), m = supportMargin(P, c);
+    A.check(`stability:${set.name}`, m >= need, `COM projection ${(m * 1000).toFixed(0)} mm inside the ${set.name} support polygon (${set.feet.length} feet; need ${need * 1000} mm)`);
+  }
+  const P = A.spec.links.filter((l) => l.role === "foot").map((l) => pointWorld(A.spec, {}, l.name));
   A.design.performance.com_height_m = +(c[2] - Math.min(...P.map((p) => p[2]))).toFixed(3);
 }
-function derateSpeed(A: Assembly, f: number, why: string) {
+export function derateSpeed(A: Assembly, f: number, why: string) {
   for (const j of A.spec.joints) if (j.limit && j.type === "revolute") j.limit.velocity = +(j.limit.velocity * f).toFixed(3);
   A.design.assumptions.push(`Actuator speed limits derated x${f} for the ${why}: CubeMars ratings are quoted at 48 V.`);
 }

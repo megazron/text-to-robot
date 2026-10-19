@@ -23,7 +23,7 @@ function linkSolid(l: Link): M | null {
 }
 
 export interface Interference { a: string; b: string; volume_mm3: number; }
-export interface ClearanceModel { names: string[]; solids: (M | null)[]; spec: RobotSpecification; }
+export interface ClearanceModel { names: string[]; solids: (M | null)[]; boxes: ({ min: Vec3; max: Vec3 } | null)[]; spec: RobotSpecification; }
 
 const toMat = (R: number[][], p: Vec3): Mat4 => fromRt(R, [p[0] * 1000, p[1] * 1000, p[2] * 1000]);
 
@@ -32,7 +32,9 @@ export function withSolids<T>(spec: RobotSpecification, fn: (m: ClearanceModel) 
   return build(() => {
     const names = spec.links.map((l) => l.name);
     const solids = spec.links.map(linkSolid);
-    return fn({ names, solids, spec });
+    // local boxes once: manifold's boundingBox() leaks wasm memory on every call
+    const boxes = solids.map((x) => { if (!x) return null; const b = x.boundingBox(); return { min: [...b.min] as Vec3, max: [...b.max] as Vec3 }; });
+    return fn({ names, solids, boxes, spec });
   });
 }
 
@@ -41,13 +43,21 @@ export function withSolids<T>(spec: RobotSpecification, fn: (m: ClearanceModel) 
  * `moving` limits the check to pairs with exactly one link in that set (a sweep); otherwise all pairs.
  */
 export function interferences(m: ClearanceModel, q: Record<string, number>, moving?: Set<string>, tol = 2, skip: Set<string> = new Set()): Interference[] {
+  // transformed copies and intersections are freed per call (sweeps make thousands)
+  return build(() => interferencesIn(m, q, moving, tol, skip));
+}
+function interferencesIn(m: ClearanceModel, q: Record<string, number>, moving: Set<string> | undefined, tol: number, skip: Set<string>): Interference[] {
   const f = fk(m.spec, q);
   const placed: { name: string; s: M; lo: number[]; hi: number[] }[] = [];
   m.names.forEach((n, i) => {
     const s0 = m.solids[i]; if (!s0) return;
     const T = f.link[n]; if (!T) return;
-    const s = s0.transform(toMat(T.R, T.p)); const bb = s.boundingBox();
-    placed.push({ name: n, s, lo: bb.min as number[], hi: bb.max as number[] });
+    const M4 = toMat(T.R, T.p), b = m.boxes[i]!, lo = [Infinity, Infinity, Infinity], hi = [-Infinity, -Infinity, -Infinity];
+    for (const x of [b.min[0], b.max[0]]) for (const y of [b.min[1], b.max[1]]) for (const z of [b.min[2], b.max[2]]) {
+      const p = [M4[0] * x + M4[4] * y + M4[8] * z + M4[12], M4[1] * x + M4[5] * y + M4[9] * z + M4[13], M4[2] * x + M4[6] * y + M4[10] * z + M4[14]];
+      for (let k = 0; k < 3; k++) { lo[k] = Math.min(lo[k], p[k]); hi[k] = Math.max(hi[k], p[k]); }
+    }
+    placed.push({ name: n, s: s0.transform(M4), lo, hi });
   });
   const out: Interference[] = [];
   for (let i = 0; i < placed.length; i++) for (let j = i + 1; j < placed.length; j++) {

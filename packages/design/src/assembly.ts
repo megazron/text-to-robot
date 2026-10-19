@@ -39,6 +39,8 @@ export interface DesignRecord {
   performance: Record<string, number | string>;
   assumptions: string[];
   fasteners: Record<string, number>;
+  /** The request the designer ran with (re-running the designer with it reproduces the robot). */
+  request?: Record<string, unknown>;
 }
 
 export class Assembly {
