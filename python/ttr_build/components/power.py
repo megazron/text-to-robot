@@ -107,3 +107,40 @@ COMPONENTS = [
     PSU,
     BUCK,
 ]
+
+# ------------------------------------------------------------ Mean Well LRS-150-24 (24 V 6.5 A)
+LRS150_HOLES = ([Hole((x, 50.0, 0.0), (0.0, 0.0, -1.0), 2.5, "M3") for x in (32.0, 132.0)]
+                + [Hole((x, 0.0, 15.0), (0.0, -1.0, 0.0), 2.5, "M3") for x in (32.0, 132.0)])
+
+
+def _lrs150_build(c):
+    case = box(0.0, 159.0, 0.0, 97.0, 0.0, 30.0)
+    case = case - box(-0.1, 12.0, 4.0, 72.0, 3.0, 30.1)
+    term = union(*[box(0.5, 11.5, 6.0 + k * 9.5, 13.5 + k * 9.5, 3.0, 22.0) for k in range(7)])
+    for x in range(30, 150, 8):
+        case = case - box(x, x + 3.0, 15.0, 85.0, 29.0, 30.1)
+    for h in LRS150_HOLES:
+        p = h.pos
+        if h.axis[2] < 0:
+            case = case - cyl(2.5, -0.1, 3.0, p[0], p[1])
+        else:
+            case = case - cyl_between(2.5, (p[0], -0.1, p[2]), (p[0], 5.0, p[2]))
+    return union(case, term)
+
+
+def _lrs150_keepout(c):
+    return union(box(-30.0, 12.0 + 0.01, 4.0, 72.0, 3.0, 45.0), box(25.0, 155.0, 10.0, 90.0, 30.0 - 0.01, 40.0))
+
+
+PSU24 = Component(
+    key="psu_24v_lrs150", name="Mean Well LRS-150-24 enclosed PSU, 24 V 6.5 A (156 W)", category="misc",
+    mass_g=530.0, price_usd=29.0, supplier_url="https://www.digikey.com/en/products/result?keywords=LRS-150-24",
+    datasheet_url="https://www.meanwell.com/Upload/PDF/LRS-150/LRS-150-SPEC.PDF",
+    envelope_mm=(159.0, 97.0, 30.0), holes=LRS150_HOLES,
+    specs={"voltage_v": 24.0, "current_a": 6.5, "power_w": 156.0, "input_vac": (85, 264),
+           "terminals": "AC L, AC N, FG, 2x -V, 2x +V (9.5 mm pitch)",
+           "uncertain": ["mass_g", "price_usd", "hole_positions"], "hole_positions": "bottom 2x M3 at x 32/132 mm"},
+    build=_lrs150_build, build_keepout=_lrs150_keepout,
+)
+
+COMPONENTS.append(PSU24)
