@@ -235,6 +235,16 @@ function mountSensors(A: Assembly, sensors: string[], parent: string, parentW: M
     A.spec.sensors.push({ name: "base_imu", type: "imu", parent: "base_imu", origin: { xyz: [0, 0, 0], rpy: [0, 0, 0] } });
   }
 }
+/** Built pitch-axis distances (mm): upper arm = shoulder->elbow, forearm = elbow->wrist pitch (or tool on 2–3 DOF arms). */
+function segmentsOf(b: ReturnType<typeof buildArm>, kinds: Kind[]): { upper_arm?: number; forearm?: number } {
+  const pj = b.joints.filter((j) => j.kind === "P"), o = (j: JointPlan) => apply(j.W, [0, 0, 0]);
+  const d = (p: Vec3, q: Vec3) => Math.hypot(p[0] - q[0], p[2] - q[2]);
+  const out: { upper_arm?: number; forearm?: number } = {};
+  if (pj.length >= 2) out.upper_arm = d(o(pj[1]), o(pj[0]));
+  if (pj.length >= 3) out.forearm = d(o(pj[2]), o(pj[1]));
+  else if (pj.length === 2 && kinds[kinds.length - 1] === "P") { const t = apply(pj[1].W, [0, 0, 0]), tool = pointWorld(b.A.spec, {}, b.tcpLink, b.tcp.map((x) => x / 1000) as Vec3).map((x) => x * 1000) as Vec3; out.forearm = d(tool, t); }
+  return out;
+}
 /** Shoulder axis to tool centre point, arm stretched out (m). */
 function reachOf(b: ReturnType<typeof buildArm>, kinds: Kind[]): number {
   const i = Math.max(0, kinds.indexOf("P")), sh = b.joints[i];
@@ -265,6 +275,9 @@ export function designArm(req: ArmRequest): RobotSpecification {
   const fixedSeg = new Set<number>();
   if (req.segments?.upper_arm && pIdx.length >= 2) { lengths[pIdx[0]] = req.segments.upper_arm * 1000; fixedSeg.add(pIdx[0]); }
   if (req.segments?.forearm && pIdx.length >= 3) { lengths[pIdx[1]] = req.segments.forearm * 1000; fixedSeg.add(pIdx[1]); }
+  // 2–3 DOF arms end on the elbow: its forearm runs out to the tool
+  const tailP = pIdx.length && pIdx[pIdx.length - 1] === kinds.length - 1 && pitchCount <= 2 ? pIdx[pIdx.length - 1] : -1;
+  if (req.segments?.forearm && tailP >= 0 && pIdx.length === 2) { lengths[tailP] = req.segments.forearm * 1000; fixedSeg.add(tailP); }
   // match the requested reach: the first build tells how much the wrist and bodies add
   if (pitchCount >= 1 && fixedSeg.size === 0) for (let k = 0; k < 3; k++) {
     const probe = buildArm({ ...req, ladder, dof }, kinds, keys, req.gripper === false ? null : gripKeyFor(ladder), lengths);
@@ -272,6 +285,18 @@ export function designArm(req: ArmRequest): RobotSpecification {
     if (Math.abs(err) < 5) break;
     const adjustable = lengths.map((l, i) => (l > 0 ? i : -1)).filter((i) => i >= 0);
     for (const i of adjustable) lengths[i] = Math.max(60, lengths[i] - err / adjustable.length);
+  }
+  // requested segments are pitch-axis to pitch-axis distances; offsets of joints in between are fixed, so correct
+  if (fixedSeg.size) for (let k = 0; k < 4; k++) {
+    const probe = buildArm({ ...req, ladder, dof }, kinds, keys, req.gripper === false ? null : gripKeyFor(ladder), lengths);
+    const m = segmentsOf(probe, kinds);
+    let worst = 0;
+    for (const [name, idx] of [["upper_arm", pIdx[0]], ["forearm", tailP >= 0 && pIdx.length === 2 ? tailP : pIdx[1]]] as const) {
+      const want = req.segments?.[name]; if (!want || idx === undefined || !fixedSeg.has(idx) || m[name] === undefined) continue;
+      const err = m[name]! - want * 1000; worst = Math.max(worst, Math.abs(err));
+      lengths[idx] = Math.max(20, lengths[idx] - err);
+    }
+    if (worst < 0.5) break;
   }
   let built = null as ReturnType<typeof buildArm> | null, torques: Record<string, number> = {}, inertias: Record<string, number> = {};
   lastTorques = {};
@@ -326,9 +351,9 @@ export function designArm(req: ArmRequest): RobotSpecification {
     "Links are cantilevered from one side of each horn (as on SO-101 / Koch arms); add an idler bearing on the far side for heavy use.",
     `Torques are exact static gravity loads of this geometry plus ${Math.round((DYNAMIC_FACTOR - 1) * 100)} % for acceleration; continuous duty is checked at ${Math.round(0.5 * 100)} % of the worst pose.`,
   );
-  const pj = joints.filter((j) => j.kind === "P");
-  if (pj.length >= 2) A.design.performance.upper_arm_m = +(Math.hypot(...[0, 1, 2].map((k) => apply(pj[1].W, [0, 0, 0])[k] - apply(pj[0].W, [0, 0, 0])[k])) / 1000).toFixed(3);
-  if (pj.length >= 3) A.design.performance.forearm_m = +(Math.hypot(...[0, 1, 2].map((k) => apply(pj[2].W, [0, 0, 0])[k] - apply(pj[1].W, [0, 0, 0])[k])) / 1000).toFixed(3);
+  const segs = segmentsOf(built!, kinds);
+  if (segs.upper_arm !== undefined) A.design.performance.upper_arm_m = +(segs.upper_arm / 1000).toFixed(3);
+  if (segs.forearm !== undefined) A.design.performance.forearm_m = +(segs.forearm / 1000).toFixed(3);
   A.design.request = { ...req, dof };
   return A.finish(`${dof}-DOF arm, ${(reachActual * 1000).toFixed(0)} mm reach, ${payload} kg payload, ${LADDERS[ladder].label}`);
 }

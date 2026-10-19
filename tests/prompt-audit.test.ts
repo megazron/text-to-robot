@@ -28,12 +28,8 @@ test("an explicitly stated reach wins over a per-link length", () => {
 test("a per-link length without a reach sets the arm segment lengths", () => {
   const { spec, interpretation: i } = interpretPrompt("robotic arm with 3 links, each 25 cm long");
   assert.match(i.dimensions.join(), /upper_arm, forearm 0\.25 m each/);
-  for (const name of ["upper_arm", "forearm"]) {
-    const g = spec.links.find((l) => l.name === name)!.geometry;
-    assert.equal(g.type, "mesh");
-    if (g.type === "mesh") near(g.bbox.max[2] - g.bbox.min[2], 0.25, 0.002);
-  }
-  assert.match(i.approximations.join(), /shoulder keeps the template length/);
+  const perf = (spec.metadata as any).design.performance;
+  near(perf.upper_arm_m, 0.25, 0.003); near(perf.forearm_m, 0.25, 0.01);
   // impossible per-link lengths are reported, not silently dropped
   assert.match(read("arm with 3 links, each 4 m long").ignored.join(), /each link 4 m: .*outside the supported/);
 });
@@ -43,12 +39,12 @@ test("N links / N-link arms map to N DOF", () => {
     const r = interpretPrompt(p);
     assert.equal(r.interpretation.family, "serial_arm", p);
     assert.equal(r.spec.robot_name, `arm_${n}dof`, p);
-    assert.equal(r.spec.joints.filter((j) => /^joint_\d+$/.test(j.name)).length, n, p);
+    assert.equal(r.spec.joints.filter((j) => j.type === "revolute" && j.name !== "gripper").length, n, p);
   }
   assert.match(read("arm with 2 links").approximations.join(), /"2 links" read as 2 DOF/);
   assert.ok(!read("a simple 2-link planar arm").ignored.length, "the 2-DOF arm is planar");
   assert.match(read("a 3-link planar arm").ignored.join(), /planar: .*only the 2-DOF arm is planar/);
-  assert.match(read("a 20 link arm").approximations.join(), /20 DOF clamped to 12/);
+  assert.match(read("a 20 link arm").approximations.join(), /20 DOF clamped to 7/);
   assert.deepEqual(extractDofMentions("2 dof arm with 7 joints").map((m) => [m.value, m.unit]), [[2, "dof"], [7, "joint"]]);
 });
 
@@ -89,7 +85,7 @@ test("requested overall sizes are applied when the template supports them, else 
   const humanoid = read("humanoid 1.5 m tall");
   assert.match(humanoid.ignored.join(), /height 1\.5 m: the humanoid template has a fixed size \(built about \d\.\d\d m tall\); scaling to a stated size is not supported/);
   const tiny = read("tiny 5 cm arm");
-  assert.match(tiny.approximations.join(), /5 cm: reach 0\.\d\d m, the shortest this arm template allows/);
+  assert.match(tiny.approximations.join(), /5 cm: reach 0\.\d\d m, the shortest this arm design allows/)
   assert.ok(tiny.dimensions.some((d) => /^reach 0\.\d\d m$/.test(d)), tiny.dimensions.join());
   assert.ok(reachOf("tiny 5 cm arm") < reachOf("6 dof arm"), "the shortest feasible arm is built");
   assert.ok(reachOf("tiny arm") < reachOf("6 dof arm") && reachOf("large arm") > reachOf("6 dof arm"));

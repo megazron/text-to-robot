@@ -54,8 +54,8 @@ test("unsupported robot types explain themselves", () => {
 
 test("DOF: clamped with a note; fixed templates accept per-limb counts", () => {
   const i = read("a 20 dof arm");
-  assert.equal(i.dof, 14); // 12 arm joints + 2 finger joints
-  assert.match(i.approximations.join(), /20 DOF clamped to 12/);
+  assert.equal(i.dof, 8); // 7 arm joints + the gripper jaw
+  assert.match(i.approximations.join(), /20 DOF clamped to 7/);
   assert.ok(!read("Create a humanoid battle mech with two 7 DOF arms").ignored.length);
   assert.match(read("a quadruped with 5 dof legs").ignored.join(), /fixed kinematics/);
   assert.equal(family("a manipulator with 7 joints"), "serial_arm");
@@ -104,9 +104,10 @@ test("payload is sized into the BOM actuators", async () => {
   const loaded = await generateRobot("6 dof arm with a 2 kg payload");
   assert.equal(loaded.interpretation?.payload_kg, 2);
   const effort = (r: typeof plain, j: string) => r.bom.actuator_sizing.find((s) => s.joint === j)!.required_effort;
-  // Neutral-pose proxy; joints whose declared effort floor is higher (the shoulder) keep that floor.
-  for (const j of ["joint_3", "joint_4", "joint_5", "joint_6"]) assert.ok(effort(loaded, j) > effort(plain, j), j);
-  assert.ok(effort(loaded, "joint_6") - effort(plain, "joint_6") > 0.4, "wrist carries the payload's tool moment");
+  // exact worst-case loads of the built arm: every pitch joint carries the payload's moment
+  for (const j of ["shoulder_pitch", "elbow_pitch", "wrist_pitch"]) assert.ok(effort(loaded, j) > effort(plain, j), j);
+  assert.ok(effort(loaded, "wrist_pitch") - effort(plain, "wrist_pitch") > 0.4, "wrist carries the payload's tool moment");
+  assert.ok(loaded.bom.total > plain.bom.total, "a 2 kg payload needs bigger (dearer) actuators");
   assert.match(loaded.bom.notes.join(), /2 kg payload/);
   assert.match(read("a quadruped carrying 3 kg").ignored.join(), /no end effector/);
 });
@@ -134,6 +135,7 @@ test("every generate result carries a readable summary and surfaced warnings", a
 
 // ---------------- modifications ----------------
 const arm = () => finalizeSpec(parsePrompt("6 dof arm"));
+const seg = (spec: ReturnType<typeof arm>, name: string): number => (spec.metadata as any).design.performance[`${name}_m`];
 const lengthOf = (spec: ReturnType<typeof arm>, name: string) => {
   const g = spec.links.find((l) => l.name === name)!.geometry; return g.type === "mesh" ? g.bbox.max[2] - g.bbox.min[2] : NaN;
 };
@@ -145,23 +147,25 @@ test("clauses split on 'and' and inherit the verb", () => {
 });
 
 test("modify: each clause targets its own link", () => {
-  const { spec } = applyModification(arm(), "make the upper arm 50% longer and the forearm 10% shorter");
-  assert.ok(Math.abs(lengthOf(spec, "upper_arm") - 0.375) < 1e-6);
-  assert.ok(Math.abs(lengthOf(spec, "forearm") - 0.225) < 1e-6);
+  const a = arm(), { spec } = applyModification(a, "make the upper arm 50% longer and the forearm 10% shorter");
+  assert.ok(Math.abs(seg(spec, "upper_arm") - seg(a, "upper_arm") * 1.5) < 0.002);
+  assert.ok(Math.abs(seg(spec, "forearm") - seg(a, "forearm") * 0.9) < 0.002);
 });
 
 test("modify: absolute and relative lengths", () => {
-  assert.ok(Math.abs(lengthOf(applyModification(arm(), "make the forearm 20 cm longer").spec, "forearm") - 0.45) < 1e-6);
-  assert.ok(Math.abs(lengthOf(applyModification(arm(), "set the forearm to 40 cm").spec, "forearm") - 0.40) < 1e-6);
-  const reach = applyModification(arm(), "set the reach to 80 cm");
-  assert.match(reach.changes.join(), /-> 0\.800m/);
+  const a = arm();
+  assert.ok(Math.abs(seg(applyModification(a, "make the forearm 20 cm longer").spec, "forearm") - (seg(a, "forearm") + 0.2)) < 0.002);
+  assert.ok(Math.abs(seg(applyModification(a, "set the forearm to 40 cm").spec, "forearm") - 0.40) < 0.002);
+  const reach = applyModification(a, "set the reach to 80 cm");
+  assert.match(reach.changes.join(), /-> 0\.800 m/);
+  assert.ok(Math.abs((reach.spec.metadata as any).design.performance.reach_m - 0.8) < 0.02, "the arm is redesigned to that reach");
   assert.match(applyModification(arm(), "make the arm shorter").changes.join(), /used 20%/);
 });
 
 test("modify: resized links keep collision geometry in step with visuals", () => {
   const { spec } = applyModification(arm(), "make the forearm 30% longer");
   const f = spec.links.find((l) => l.name === "forearm")!;
-  assert.deepEqual(f.collision, f.geometry);
+  assert.ok(f.collision === undefined || JSON.stringify(f.collision) === JSON.stringify(f.geometry), "collision follows the printed bracket");
   const scara = applyModification(finalizeSpec(parsePrompt("a scara robot")), "make the forearm 50% longer").spec;
   assert.ok(Math.abs(scara.joints.find((j) => j.name === "joint_3")!.origin.xyz[0] - 0.30) < 1e-9, "SCARA links extend along x");
 });
@@ -172,27 +176,28 @@ test("modify: humanoid arms change symmetrically", () => {
 });
 
 test("modify: sensors add to the named location and can be removed", () => {
+  // a designed arm mounts real parts where they can work: a wrist camera yes, a 2D lidar no
   const added = applyModification(arm(), "add a lidar and a camera to the wrist");
-  assert.deepEqual(added.spec.sensors.map((s) => s.type), ["lidar", "camera"]);
-  assert.ok(added.changes.every((c) => !c.includes("base_link")));
+  assert.deepEqual(added.spec.sensors.map((s) => s.type), ["camera"]);
+  assert.match(added.changes.join(), /lidar: this arm design has no mount for it/);
+  assert.ok(added.spec.links.some((l) => l.name === "wrist_camera" && (l.geometry as any).params?.key === "rpi_camera_module_3"));
   const removed = applyModification(added.spec, "remove the camera");
-  assert.deepEqual(removed.spec.sensors.map((s) => s.type), ["lidar"]);
-  assert.ok(!removed.spec.links.some((l) => l.name === "camera_1_link"));
+  assert.deepEqual(removed.spec.sensors.map((s) => s.type), []);
+  assert.ok(!removed.spec.links.some((l) => l.name === "wrist_camera"));
 });
 
 test("modify: grippers can be removed, added and swapped both ways", () => {
   const bare = applyModification(arm(), "remove the gripper").spec;
   assert.equal(bare.end_effectors.length, 0);
   assert.ok(!bare.links.some((l) => l.role === "gripper" || l.role === "contact_pad"));
-  const suction = applyModification(bare, "add a suction gripper").spec;
-  assert.deepEqual(suction.end_effectors.map((e) => e.type), ["suction_gripper"]);
-  const back = applyModification(suction, "replace the suction cup with a two-finger gripper").spec;
+  assert.match(applyModification(bare, "add a suction gripper").changes.join(), /Suction cups are not in the parts library/);
+  const back = applyModification(bare, "add a two-finger gripper").spec;
   assert.deepEqual(back.end_effectors.map((e) => e.type), ["two_finger_gripper"]);
 });
 
 test("modify: DOF, colour and name", () => {
   const seven = applyModification(finalizeSpec(parsePrompt("6 dof arm with a wrist camera")), "make it 7 dof");
-  assert.equal(seven.spec.joints.filter((j) => /^joint_\d+$/.test(j.name)).length, 7);
+  assert.equal(seven.spec.joints.filter((j) => j.type === "revolute" && j.name !== "gripper").length, 7);
   assert.deepEqual(seven.spec.sensors.map((s) => s.type), ["camera"]);
   assert.match(applyModification(arm(), "paint it blue").changes.join(), /blue/);
   assert.equal(applyModification(arm(), "rename it to atlas").spec.robot_name, "atlas");
@@ -226,9 +231,7 @@ test("inline sensors sit on the outer surface, never inside the body", () => {
       assert.ok(!inside, `${prompt}: ${s.name} mount ${j.origin.xyz} is inside ${j.parent} ${JSON.stringify(env)}`);
     }
   }
-  const arm = finalizeSpec(parsePrompt("6 dof arm with a lidar"));
-  const lidar = arm.joints.find((j) => j.child === "lidar_1_link")!;
-  assert.ok(lidar.origin.xyz[0] > 0.05, "a crowded arm base puts the lidar on its front face, clear of the shoulder");
+  assert.match(read("6 dof arm with a lidar").ignored.join(), /lidar: the 6-DOF serial arm design has no mount/);
   const imu = finalizeSpec(parsePrompt("diff drive robot with an imu")).joints.find((j) => j.child === "imu_1_link")!;
   const env = bodyEnvelope(finalizeSpec(parsePrompt("diff drive robot")), "base_link");
   assert.ok(imu.origin.xyz[2] > env.min[2] && imu.origin.xyz[2] < env.max[2], "IMUs belong inside the body");
@@ -288,24 +291,26 @@ test("budgets, colours and sensor counts", () => {
   assert.equal(extractColour("6 dof arm (blue)"), "blue");
   assert.equal(extractColour("a golden robot dog"), "gold");
   assert.match(read("a red baymax").ignored.join(), /livery/);
-  assert.deepEqual(parsePrompt("an arm with two cameras").sensors.map((s) => s.type), ["camera", "camera"]);
+  assert.deepEqual(parsePrompt("an arm with two cameras").sensors.map((s) => s.type), ["camera"]);
+  assert.match(read("an arm with two cameras").ignored.join(), /2 cameras: .* mounts 1/);
   const noWrist = finalizeSpec(parsePrompt("a 6 dof arm with a camera, but no gripper"));
-  assert.equal(noWrist.joints.find((j) => j.child === "camera_1_link")!.parent, "base_link");
+  assert.equal(noWrist.end_effectors.length, 0);
+  assert.equal(noWrist.joints.find((j) => j.child === "wrist_camera")!.parent, "tool_link");
 });
 
 test("modify: relative DOF, gripper-mounted sensors, shared predicates, exclusions", () => {
-  const joints = (m: string) => applyModification(arm(), m).spec.joints.filter((j) => /^joint_\d+$/.test(j.name)).length;
-  assert.equal(joints("add two joints"), 8);
+  const joints = (m: string) => applyModification(arm(), m).spec.joints.filter((j) => j.type === "revolute" && j.name !== "gripper").length;
+  assert.equal(joints("add one joint"), 7);
   assert.equal(joints("remove one axis"), 5);
+  assert.match(applyModification(arm(), "add two joints").changes.join(), /8 requested; supported range 1–7/);
   assert.equal(applyModification(arm(), "add a camera to the gripper").spec.sensors[0]?.type, "camera");
-  const both = applyModification(arm(), "make the forearm and upper arm 10% longer").spec;
-  assert.ok(Math.abs(lengthOf(both, "forearm") - 0.275) < 1e-6 && Math.abs(lengthOf(both, "upper_arm") - 0.275) < 1e-6);
-  const partial = applyModification(arm(), "make the forearm longer but not the upper arm").spec;
-  assert.ok(Math.abs(lengthOf(partial, "upper_arm") - 0.25) < 1e-9 && lengthOf(partial, "forearm") > 0.25);
-  const sensored = finalizeSpec(parsePrompt("6 dof arm with a lidar and a camera"));
-  assert.deepEqual(applyModification(sensored, "remove the lidar but keep the camera").spec.sensors.map((s) => s.type), ["camera"]);
-  assert.deepEqual(applyModification(sensored, "remove everything except the camera").spec.sensors.map((s) => s.type), ["camera"]);
-  assert.deepEqual(applyModification(arm(), "add a lidar, not a camera").spec.sensors.map((s) => s.type), ["lidar"]);
+  const a = arm(), both = applyModification(a, "make the forearm and upper arm 10% longer").spec;
+  assert.ok(Math.abs(seg(both, "forearm") - seg(a, "forearm") * 1.1) < 0.002 && Math.abs(seg(both, "upper_arm") - seg(a, "upper_arm") * 1.1) < 0.002);
+  const partial = applyModification(a, "make the forearm longer but not the upper arm").spec;
+  assert.ok(Math.abs(seg(partial, "upper_arm") - seg(a, "upper_arm")) < 0.002 && seg(partial, "forearm") > seg(a, "forearm"));
+  const sensored = finalizeSpec(parsePrompt("6 dof arm with a depth camera and a camera"));
+  assert.deepEqual(applyModification(sensored, "remove the depth camera but keep the camera").spec.sensors.map((s) => s.type), ["camera"]);
+  assert.deepEqual(applyModification(arm(), "add a depth camera, not a camera").spec.sensors.map((s) => s.type), ["depth"]);
 });
 
 test("modify: names, politeness, sentence splits, budgets alongside edits", () => {

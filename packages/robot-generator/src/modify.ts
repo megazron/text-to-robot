@@ -317,14 +317,17 @@ function modifyDesigned(specIn: RobotSpecification, instruction: string): ModRes
     // lengths / reach
     const lr = lengthRequest(rest);
     if (lr && /\b(?:long|longer|short|shorter|length|lengthen|shorten|extend|reach|bigger|smaller|larger|arms?|forearm|upper|twice|double|half|halve|times|\d+x)\b/.test(rest)) {
-      const seg = /\bfore[\s_-]?arms?\b|\blower\s+arms?\b/.test(rest) ? "forearm" : /\bupper[\s_-]?arms?\b/.test(rest) ? "upper_arm" : undefined;
-      if (seg && typeof perf[`${seg}_m`] === "number") {
-        const cur = Number(perf[`${seg}_m`]);
-        const next = lr.absoluteM ?? (lr.deltaM !== undefined ? cur + lr.deltaM : cur * lr.factor!);
-        if (!(next >= 0.06 && next <= 1.5)) { changes.push(`! ${seg.replace("_", " ")} ${next.toFixed(3)} m is outside 0.06–1.5 m; unchanged`); continue; }
-        req.segments = { ...(req.segments ?? {}), upper_arm: Number(perf.upper_arm_m), ...(perf.forearm_m ? { forearm: Number(perf.forearm_m) } : {}), ...(req.segments ?? {}), [seg]: +next.toFixed(4) };
-        delete req.reachM; redesign = true;
-        changes.push(`~ ${seg.replace("_", " ")} ${cur.toFixed(3)} m -> ${next.toFixed(3)} m${lr.defaulted ? " (no amount given, used 20%)" : ""}; actuators re-sized`);
+      const segs = [...(/\bfore[\s_-]?arms?\b|\blower\s+arms?\b/.test(rest) ? ["forearm"] : []), ...(/\bupper[\s_-]?arms?\b/.test(rest) ? ["upper_arm"] : [])];
+      const seg = segs[0];
+      if (seg && segs.every((x) => typeof perf[`${x}_m`] === "number")) {
+        for (const sg of segs) {
+          const cur = Number(perf[`${sg}_m`]);
+          const next = lr.absoluteM ?? (lr.deltaM !== undefined ? cur + lr.deltaM / segs.length : cur * lr.factor!);
+          if (!(next >= 0.06 && next <= 1.5)) { changes.push(`! ${sg.replace("_", " ")} ${next.toFixed(3)} m is outside 0.06–1.5 m; unchanged`); continue; }
+          req.segments = { upper_arm: Number(perf.upper_arm_m), ...(perf.forearm_m ? { forearm: Number(perf.forearm_m) } : {}), ...(req.segments ?? {}), [sg]: +next.toFixed(4) };
+          delete req.reachM; redesign = true;
+          changes.push(`~ ${sg.replace("_", " ")} ${cur.toFixed(3)} m -> ${next.toFixed(3)} m${lr.defaulted ? " (no amount given, used 20%)" : ""}; actuators re-sized`);
+        }
         continue;
       }
       if (typeof perf.reach_m === "number" && !seg) {

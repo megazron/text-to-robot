@@ -63,15 +63,17 @@ test('arm spars are connected closed solids extending between joint centres',()=
   }
 });
 
-test('length modification keeps a mesh spar attached and scales its actual solid',async()=>{
+test('length modification redesigns the forearm bracket and keeps the next actuator attached',async()=>{
   const before=await generateRobot('6 DOF arm');
   const after=await modifyRobot(before.robot,'make the forearm 30% longer');
+  const perf=(s:any)=>s.metadata.design.performance;
+  assert.ok(Math.abs(perf(after.robot).forearm_m/perf(before.robot).forearm_m-1.3)<0.02);
   const a=before.robot.links.find(l=>l.name==='forearm'),b=after.robot.links.find(l=>l.name==='forearm');
   assert.ok(a?.geometry.type==='mesh' && b?.geometry.type==='mesh');
-  assert.ok(Math.abs(b.geometry.volume/a.geometry.volume-1.3)<1e-8);
+  assert.ok(b.geometry.volume>a.geometry.volume,'a longer printed bracket');
   const distal=after.robot.joints.find(j=>j.parent==='forearm' && j.type==='revolute');
-  assert.ok(distal);
-  assert.ok(Math.abs(b.origin.xyz[2]+b.geometry.bbox.max[2]-distal.origin.xyz[2])<1e-8);
+  assert.ok(distal,'the next joint still hangs off the forearm');
+  assert.ok(after.robot.links.some(l=>l.name===`${distal.name}_actuator`),'with its actuator mounted in the forearm bracket');
   assert.notDeepEqual(a.inertia,b.inertia);
 });
 

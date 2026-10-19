@@ -27,10 +27,10 @@ test("prompt -> quadruped / diff drive / scara", () => {
 });
 test("modify: forearm 30% longer changes only the forearm", () => {
   const s = finalizeSpec(parsePrompt("6 dof arm"));
-  const before = s.links.find((l) => l.role === "forearm")!.origin.xyz[2]*2;
+  const seg = (x: any, k: string) => x.metadata.design.performance[k];
   const { spec, changes } = applyModification(s, "make the forearm 30% longer");
-  const after = spec.links.find((l) => l.role === "forearm")!.origin.xyz[2]*2;
-  assert.ok(Math.abs(after - before * 1.3) < 1e-6, `expected ${before * 1.3}, got ${after}`);
+  assert.ok(Math.abs(seg(spec, "forearm_m") - seg(s, "forearm_m") * 1.3) < 0.002, `${seg(spec, "forearm_m")}`);
+  assert.equal(seg(spec, "upper_arm_m"), seg(s, "upper_arm_m"));
   assert.ok(changes.some((c) => c.includes("forearm")));
 });
 test("modify: add camera to head adds a sensor + link", () => {
@@ -40,11 +40,15 @@ test("modify: add camera to head adds a sensor + link", () => {
 });
 test("modify: replace gripper with suction", () => {
   const s = finalizeSpec(parsePrompt("6 dof arm with a parallel gripper"));
-  const { spec } = applyModification(s, "replace the gripper with a suction gripper");
-  assert.ok(spec.end_effectors.some((e) => e.type === "suction_gripper"));
+  const { spec, changes } = applyModification(s, "replace the gripper with a suction gripper");
+  // no suction cup + vacuum pump in the parts library yet: refused, gripper kept
+  assert.match(changes.join(), /Suction cups are not in the parts library/);
+  assert.ok(spec.end_effectors.some((e) => e.type === "two_finger_gripper"));
 });
 test("modify: change elbow joint to prismatic", () => {
   const s = finalizeSpec(parsePrompt("6 dof arm"));
-  const { spec } = applyModification(s, "change the elbow joint to a prismatic joint");
-  assert.ok(spec.joints.some((j) => j.type === "prismatic"));
+  // a servo elbow cannot become a linear axis: reported, not faked
+  const { spec, changes } = applyModification(s, "change the elbow joint to a prismatic joint");
+  assert.ok(!spec.joints.some((j) => j.type === "prismatic"));
+  assert.match(changes.join(), /Not understood/);
 });

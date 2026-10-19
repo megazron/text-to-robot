@@ -4,11 +4,12 @@
 // ignored; nothing is dropped silently.
 import type { RobotSpecification, SensorType } from "@ttr/robot-schema";
 import { safeName } from "@ttr/robot-schema";
+import { fk } from "@ttr/design";
 import { normalize, find, findAll, mentions, negates, extractDofMentions, type DofMention, extractLengths, extractMasses, extractSpeeds, parseBudget, extractName, extractColour, maskNames, COLOURS } from "./text.ts";
 import { MAX_ARM_DOF, RX, gripperRequest, chooseFamily, RECOLOURABLE, ARM_FAMILIES, type Choice, type GripperKind, type DesignContext } from "./families.ts";
 import { translateKeywords } from "./lexicon.ts";
 import { applySizeDirectives, designedSizes, reportDesignedReach } from "./sizing.ts";
-import { applyInlineSensors, requestedSensors, SENSOR_WORDS, UNMODELLED_SENSORS } from "./sensors.ts";
+import { applyInlineSensors, requestedSensors, sensorCount, SENSOR_WORDS, UNMODELLED_SENSORS } from "./sensors.ts";
 import { dofOf } from "./spec-utils.ts";
 
 export { MAX_ARM_DOF } from "./families.ts";
@@ -108,7 +109,11 @@ export function interpretPrompt(prompt: string): PromptResult {
     if (Math.abs(heightM - 1.75) > 0.005) approximations.push("suit proportions scaled from the 1.75 m reference; clearance and wearer-contact audits cover the reference size only");
   }
   const sensors = choice.designed ? designedSensors(spec) : applyInlineSensors(spec, t);
-  if (choice.designed) for (const type of ctx.sensors) if (!spec.sensors.some((x) => x.type === type)) ignored.push(`${type}: the ${choice.label} design has no mount for it yet`);
+  if (choice.designed) for (const type of ctx.sensors) {
+    const mounted = spec.sensors.filter((x) => x.type === type).length, wanted = sensorCount(t, type);
+    if (!mounted) ignored.push(`${type}: the ${choice.label} design has no mount for it yet`);
+    else if (wanted > mounted) ignored.push(`${wanted} ${type}s: the ${choice.label} design mounts ${mounted}`);
+  }
   for (const x of findAll(t, UNMODELLED_SENSORS)) ignored.push(`${x.text}: only cameras, depth cameras, lidars and IMUs are modelled`);
 
   const colour = extractColour(t);
@@ -223,8 +228,8 @@ function familyConflicts(t: string, choice: Choice): string[] {
   return out;
 }
 
-/** All moving joints share one axis (a planar chain). */
+/** All moving joints share one axis (a planar chain), compared in the world frame. */
 function isPlanar(spec: RobotSpecification): boolean {
-  const axes = spec.joints.filter((j) => j.type === "revolute" && /^joint_\d+$/.test(j.name)).map((j) => j.axis.join(","));
-  return new Set(axes).size <= 1;
+  const f = fk(spec), axes = spec.joints.filter((j) => (j.type === "revolute" || j.type === "continuous") && j.name !== "gripper").map((j) => f.joint[j.name].axis);
+  return axes.length > 0 && axes.every((a) => Math.abs(a[0] * axes[0][0] + a[1] * axes[0][1] + a[2] * axes[0][2]) > 0.999);
 }

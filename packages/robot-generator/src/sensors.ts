@@ -152,6 +152,12 @@ export function requestedSensors(t: string): SensorType[] {
   return hits.filter(([h]) => h).map(([, type]) => type);
 }
 
+/** How many sensors of a type the prompt asks for ("two cameras" -> 2). */
+export function sensorCount(t: string, type: SensorType): number {
+  const hit = type === "camera" ? cameraHit(t) : find(t, SENSOR_WORDS.find(([, k]) => k === type)![0]);
+  return hit ? countOf(t, hit) : 0;
+}
+
 export function applyInlineSensors(spec: RobotSpecification, t: string): { type: SensorType; mount: string }[] {
   const out: { type: SensorType; mount: string }[] = [];
   const lidar = find(t, SENSOR_WORDS[0][0]), depth = find(t, SENSOR_WORDS[1][0]), camera = cameraHit(t), imu = find(t, SENSOR_WORDS[3][0]);
