@@ -124,15 +124,21 @@ def assist_test(mjcf_with_wearer: str, seconds: float = 2.5) -> dict:
             j = m.actuator_trnid[a][0]; d.ctrl[a] = d.qpos[m.jnt_qposadr[j]]
         wid = mujoco.mj_name2id(m, mujoco.mjtObj.mjOBJ_BODY, "w_head")
         z0 = float(d.xpos[wid][2])
-        peak = 0.0
-        for _ in range(int(seconds / m.opt.timestep)):
+        peak = 0.0; n = int(seconds / m.opt.timestep); log = []
+        limit = np.where(m.actuator_forcelimited, np.max(np.abs(m.actuator_forcerange), axis=1), np.inf) if m.nu else np.zeros(0)
+        for k in range(n):
             mujoco.mj_step(m, d)
             peak = max(peak, float(np.max(np.abs(d.actuator_force))) if m.nu else 0.0)
+            if m.nu and k >= n // 2: log.append(np.abs(d.actuator_force))
             if not _finite(d): break
         z1 = float(d.xpos[wid][2])
         torques = np.abs(d.actuator_force) if m.nu else np.zeros(0)
         out[label] = {"wearer_head_z_start": round(z0, 3), "wearer_head_z_end": round(z1, 3), "head_drop_m": round(z0 - z1, 3),
                       "finite": _finite(d), "max_actuator_torque_Nm": round(peak, 3)}
+        if powered and log:   # per-actuator torque over the second half (the steady hold), for utilisation
+            F = np.array(log)
+            out[label]["actuators"] = {m.actuator(a).name: {"peak": round(float(F[:, a].max()), 4), "mean": round(float(F[:, a].mean()), 4),
+                                                            "saturated_frac": round(float(np.mean(F[:, a] >= 0.995 * limit[a])), 3)} for a in range(m.nu)}
     out["validation_scope"] = "Ideal welded mannequin with human contact disabled; not a fit or human-support qualification"
     out["suit_supports_wearer"] = out["powered"]["finite"] and out["unpowered"]["finite"] and abs(out["powered"]["head_drop_m"]) < 0.10 and out["unpowered"]["head_drop_m"] > out["powered"]["head_drop_m"] + 0.15
     return out

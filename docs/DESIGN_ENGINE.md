@@ -53,4 +53,23 @@ Rules every designer follows:
 node scripts/stage_ros2.ts robot.json /tmp/stage     # prints <pkg>/robot.urdf (meshes beside it)
 MUJOCO_GL=osmesa .venv/bin/python -B scripts/render_stills.py <urdf> out.png [--floating] [joint=rad ...]
 cd python && ../.venv/bin/python -B -m ttr_mujoco test <urdf> [--floating]
+cd python && ../.venv/bin/python -B -m ttr_mujoco task <urdf> --spec robot.json [--json report.json]
 ```
+
+`test` only proves the model compiles and stays stable. `task` (`python/ttr_mujoco/tasks.py`) checks the
+**claims** of `metadata.design` under the real actuator limits: motors force-limited to the datasheet peak
+and, at speed, to the linear torque-speed line (peak at standstill, zero at no-load speed); reflected rotor
+inertia as joint armature (`python/ttr_mujoco/actuators.py`, rotor inertia estimated per actuator family x
+gear ratio squared); utilisation from the actual actuator forces against `peak_nm` and `rated_nm`.
+
+| family | tests | pass when |
+| --- | --- | --- |
+| arm, scara | payload hold (payload at `design.tcp`, shoulder to +-90 deg, hold 3 s), speed (point-to-point at 80 % of rated joint speed with the payload), reach | tracking within 0.02 rad while holding / 0.1 rad while moving, no torque saturation in the hold, mean hold torque <= rated; reach >= claimed - max(5 mm, 2 %) |
+| gripper (and arms with one) | close on a box of the payload mass (friction 0.5) with the gripper limited to its rated torque, then let its weight pull it out of the fingers for 3 s | slip <= 5 mm |
+| diff_drive, four_wheel, mecanum, rover, ... | 2 m straight at the claimed top speed, 10 deg ramp (and the claimed slope) from standstill, turn in place, strafe (mecanum, if rollers are modelled) | >= 90 % of the claimed speed, drift <= 5 deg / 10 cm, climbs at >= 50 % of the commanded speed, mean wheel torque <= rated |
+| quadruped, hexapod | free stand 5 s holding the home pose (no balance controller), squat: body lowered 20 % of the leg length by per-leg IK | upright, no saturation, mean <= rated, squat within 30 % |
+| humanoid | free stand (informational), stand / single leg / squat on a vertical guide rail (balance removed, full weight on the legs) | as above |
+| exo | wearer mannequin assist test with per-actuator utilisation | suit holds the wearer, no saturation, mean <= rated |
+
+The report's `scope` states what a pass does not cover (thermal duty, backlash, compliance, control).
+`render --motion task --spec robot.json` plays the arm payload hold with the payload drawn as a red box.

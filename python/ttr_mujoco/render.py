@@ -76,3 +76,49 @@ def render_gif(path_or_xml: str, out_gif: str, seconds: float = 4.0, fps: int = 
     r.close()
     frames[0].save(out_gif, save_all=True, append_images=frames[1:], duration=int(1000 / fps), loop=0, optimize=True)
     return out_gif
+
+
+def render_task_gif(urdf: str, spec, out_gif: str, width: int = 640, height: int = 400, fps: int = 20, azimuth: float = 135,
+                    elevation: float = -18, zoom: float = 1.0, label: str | None = None):
+    """Play the arm payload-hold task (tasks.arm_payload_hold): the payload (red box) at the TCP,
+    home -> arm stretched out -> hold -> home, with the live shoulder torque vs its ratings."""
+    import warnings
+    from PIL import ImageDraw
+    from .actuators import load_spec
+    from .convert import urdf_to_mjcf
+    from .tasks import Layout, Rig, _with_payload, _min_jerk, _clip_pose, HOLD_S
+    spec = load_spec(spec); design = (spec.get("metadata") or {}).get("design") or {}
+    payload = float((design.get("performance") or {}).get("payload_kg") or 0.0)
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore"); xml = urdf_to_mjcf(urdf, floating=False, spec=spec)
+    lay = Layout(mujoco.MjModel.from_xml_string(xml), spec, design)
+    m, _ = _with_payload(xml, lay.tcp_body, lay.tcp_local, payload)
+    rig = Rig(m, feedforward=True); mujoco.mj_forward(m, rig.d)
+    pose = _clip_pose(m, rig, {lay.shoulder: np.pi / 2} if lay.shoulder else {})
+    q0 = rig.q(); q1 = q0.copy()
+    for i, A in enumerate(rig.acts):
+        if A["joint"] in pose: q1[i] = pose[A["joint"]]
+    T = 2.0; plan = [(q0, q1, T), (q1, q1, HOLD_S), (q1, q0, T)]
+    sh = rig.by_joint(lay.shoulder) if lay.shoulder else None
+    r = mujoco.Renderer(m, height, width); cam = mujoco.MjvCamera(); mujoco.mjv_defaultFreeCamera(m, cam)
+    from .tasks import _tcp_world
+    span = max(0.15, float(np.linalg.norm(_tcp_world(m, rig.d, lay.tcp_body, lay.tcp_local))))
+    cam.lookat[:] = [0, 0, 0.2 * span]; cam.distance = 2.0 * span * zoom
+    cam.azimuth, cam.elevation = azimuth, elevation
+    frames = []; sub = max(1, int(1 / (fps * m.opt.timestep)))
+    for qa, qb, dur in plan:
+        t0 = rig.t; k = 0
+        while rig.t - t0 < dur:
+            s_, ds, dds = _min_jerk(rig.t - t0, dur)
+            rig.step(qa + (qb - qa) * s_, (qb - qa) * ds, (qb - qa) * dds, log=False); k += 1
+            if k % sub: continue
+            r.update_scene(rig.d, cam); img = Image.fromarray(r.render())
+            text = label or f"{payload:g} kg payload hold"
+            if sh:
+                tau = abs(float(rig.d.actuator_force[sh['index']]))
+                text += f" | {lay.shoulder} {tau:.2f} N m = {tau / sh['peak']:.0%} peak" + (f", {tau / sh['rated']:.0%} rated" if sh["rated"] else "")
+            dr = ImageDraw.Draw(img); dr.rectangle([0, height - 22, width, height], fill=(0, 0, 0)); dr.text((8, height - 19), text, fill=(160, 230, 190))
+            frames.append(img)
+    r.close()
+    frames[0].save(out_gif, save_all=True, append_images=frames[1:], duration=int(1000 / fps), loop=0, optimize=True)
+    return out_gif

@@ -51,6 +51,8 @@ export interface DesignRecord {
   fasteners: Record<string, number>;
   /** the designer's input; edits change it and run the designer again */
   request?: Record<string, unknown>;
+  /** Tool centre point (link frame, metres) for task tests: payload hold, reach, grip. */
+  tcp?: { link: string; xyz: Vec3 };
 }
 
 export class Assembly {
