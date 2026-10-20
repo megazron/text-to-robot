@@ -1,6 +1,6 @@
 // Robot-family vocabulary and template selection for the local prompt parser.
 import type { RobotSpecification } from "@ttr/robot-schema";
-import { designArm } from "@ttr/design";
+import { designArm, designDiffDrive, designFourWheel, designMecanum, designRover, designWallE, designEva, designBaymax } from "@ttr/design";
 import type { SensorType } from "@ttr/robot-schema";
 import { nDofArm, scara, humanoid, diffDrive, fourWheel, mecanum, quadruped, hexapod, roverArm, ironManSuit, wearableExosuit, ironManMark43, wallE, eva, baymax, attachParallelGripper, attachSuctionGripper } from "@ttr/robot-templates";
 import { find, mentions, negates, isDirectlyNegated } from "./text.ts";
@@ -61,10 +61,19 @@ export function gripperRequest(t: string): { kind: GripperKind; explicit: boolea
 }
 
 /** What the prompt asks for, known before the robot is designed. */
-export interface DesignContext { prompt: string; budget?: number; payloadKg?: number; reachM?: number; segments?: { upper_arm: number; forearm: number }; sensors: SensorType[]; heightM?: number; }
+export interface DesignContext { prompt: string; budget?: number; payloadKg?: number; reachM?: number; segments?: { upper_arm: number; forearm: number }; sensors: SensorType[]; /** sensor types the prompt rules out ("no lidar") */ excludeSensors: SensorType[]; heightM?: number; }
 export interface Choice { family: string; label: string; matched: string; build: (ctx: DesignContext) => RobotSpecification; usesDof?: boolean; usesGripper?: boolean; approx?: string;
   /** built by the parts-first design engine (sized from real components) rather than a fixed template */
   designed?: boolean; }
+
+const NUM: Record<string, number> = { two: 2, three: 3, four: 4, five: 5, six: 6, eight: 8 };
+/** "four wheels", "6-wheeled" */
+export function wheelCount(t: string): number | undefined {
+  const m = t.match(/\b(two|three|four|five|six|eight|\d+)[\s-]+wheel(?:s|ed)?\b/);
+  return m ? (NUM[m[1]] ?? parseInt(m[1], 10)) : undefined;
+}
+/** common inputs of every wheeled designer */
+const mobileReq = (ctx: DesignContext) => ({ prompt: ctx.prompt, budget: ctx.budget, sensors: ctx.sensors as never, ...(ctx.excludeSensors.length ? { excludeSensors: ctx.excludeSensors as never } : {}), ...(ctx.payloadKg !== undefined ? { payloadKg: ctx.payloadKg } : {}) });
 
 export function chooseFamily(t: string, prompt: string, dof: number | undefined, g: GripperKind, heightM?: number, explicitGripper = false): Choice {
   // "no camera on my quadruped" negates the camera, not the quadruped: only "not a quadruped" rejects a family
@@ -80,9 +89,9 @@ export function chooseFamily(t: string, prompt: string, dof: number | undefined,
     return { family: "exosuit", label: "wearable exoskeleton", matched: m,
         build: () => wearableExosuit({ prompt, styled: false, name: "exosuit", ...(heightM ? { height_m: heightM } : {}) }) };
   }
-  if ((m = hit(RX.wallE))) return { family: "wall_e", label: "WALL-E character", matched: m, build: () => wallE("wall_e", prompt) };
-  if ((m = hit(RX.eva))) return { family: "eva", label: "EVA character", matched: m, build: () => eva("eva", prompt) };
-  if ((m = hit(RX.baymax))) return { family: "baymax", label: "Baymax character", matched: m, build: () => baymax("baymax", prompt) };
+  if ((m = hit(RX.wallE))) return { family: "wall_e", label: "WALL-E character", matched: m, designed: true, build: (ctx) => designWallE({ name: "wall_e", ...mobileReq(ctx) }) };
+  if ((m = hit(RX.eva))) return { family: "eva", label: "EVA character", matched: m, designed: true, build: (ctx) => designEva({ name: "eva", ...mobileReq(ctx) }) };
+  if ((m = hit(RX.baymax))) return { family: "baymax", label: "Baymax character", matched: m, designed: true, build: (ctx) => designBaymax({ name: "baymax", ...mobileReq(ctx) }) };
   for (const [rx, why] of UNSUPPORTED) if (mentions(t, rx)) throw new Error(why);
   const humanoidOf = (matched: string, approx?: string): Choice => ({ family: "humanoid", label: "humanoid", matched, approx, usesDof: true, usesGripper: true,
     build: () => humanoid({ armDof: dof ?? 7, gripper: g !== "none", prompt }) });
@@ -93,23 +102,24 @@ export function chooseFamily(t: string, prompt: string, dof: number | undefined,
       build: () => hexapod("hexapod", prompt) };
   if ((m = hit(RX.roverArm))) return { family: "rover_arm", label: "mobile manipulator (wheeled rover + arm)", matched: m, usesDof: true, usesGripper: true,
     approx: mentions(t, RX.tracked) ? "tracks approximated by the wheeled rover base" : mentions(t, RX.mecanum) || mentions(t, RX.omni) ? "the arm is mounted on the wheeled rover base, not a mecanum base" : undefined,
-    build: () => { const s = roverArm("rover_arm", dof ?? 6, prompt, { gripper: g === "none" ? "none" : "parallel" }); if (g === "suction") replaceGripperWithSuction(s); return s; } };
+    ...(g === "suction" ? { build: () => { const s = roverArm("rover_arm", dof ?? 6, prompt, { gripper: "parallel" }); replaceGripperWithSuction(s); return s; } }
+      : { designed: true, build: (ctx: DesignContext) => designRover({ name: "rover_arm", ...mobileReq(ctx), payloadKg: undefined, wheels: wheelCount(t) ?? 6, arm: { dof: dof ?? 6, ...(ctx.payloadKg !== undefined ? { payloadKg: ctx.payloadKg } : {}) } }) }) };
   if ((m = hit(RX.quadruped))) return { family: "quadruped", label: "quadruped", matched: m, build: () => quadruped("quadruped", prompt) };
   if ((m = hit(RX.scara))) return { family: "scara", label: "SCARA", matched: m, usesGripper: true,
     build: () => { const s = scara({ prompt }); const tip = explicitGripper && g !== "none" ? armTip(s) : undefined;
       if (tip) (g === "suction" ? attachSuctionGripper : attachParallelGripper)(s, tip.link, tip.atZ); return s; } };
-  if ((m = hit(RX.mecanum))) return { family: "mecanum", label: "mecanum-wheel base", matched: m, build: () => mecanum("mecanum_robot", prompt) };
+  if ((m = hit(RX.mecanum))) return { family: "mecanum", label: "mecanum-wheel base", matched: m, designed: true, build: (ctx) => designMecanum({ name: "mecanum_robot", ...mobileReq(ctx) }) };
   if ((m = hit(RX.omni))) return { family: "mecanum", label: "mecanum-wheel base", matched: m, approx: "omni-directional drive built with mecanum wheels",
-      build: () => mecanum("mecanum_robot", prompt) };
+      designed: true, build: (ctx) => designMecanum({ name: "mecanum_robot", ...mobileReq(ctx) }) };
   if ((m = hit(RX.fourWheel))) return { family: "four_wheel", label: "four-wheel skid-steer base", matched: m,
-      build: () => fourWheel("four_wheel_robot", prompt) };
+      designed: true, build: (ctx) => designFourWheel({ name: "four_wheel_robot", ...mobileReq(ctx) }) };
   if ((m = hit(RX.tracked))) return { family: "four_wheel", label: "four-wheel skid-steer base", matched: m, approx: "tracks approximated by a four-wheel skid-steer base",
-      build: () => fourWheel("four_wheel_robot", prompt) };
+      designed: true, build: (ctx) => designFourWheel({ name: "four_wheel_robot", ...mobileReq(ctx) }) };
   if ((m = hit(RX.diffDrive))) return { family: "diff_drive", label: "differential-drive base", matched: m,
-      build: () => diffDrive("diff_drive_robot", prompt) };
+      designed: true, build: (ctx) => designDiffDrive({ name: "diff_drive_robot", ...mobileReq(ctx) }) };
   if ((m = hit(RX.legs))) return { family: "quadruped", label: "quadruped", matched: m, build: () => quadruped("quadruped", prompt) };
   if ((m = hit(RX.wheels)) && !mentions(t, RX.arm)) return { family: "diff_drive", label: "differential-drive base", matched: m,
-      build: () => diffDrive("diff_drive_robot", prompt) };
+      designed: true, build: (ctx) => designDiffDrive({ name: "diff_drive_robot", ...mobileReq(ctx) }) };
   if ((m = hit(RX.gripper)) && !mentions(t, RX.arm)) return { family: "gripper", label: `standalone ${g === "suction" ? "suction" : "parallel"} gripper`, matched: m, usesGripper: true,
     build: () => standaloneGripper(g === "suction" ? "suction" : "parallel", prompt) };
   if (mentions(t, RX.hand)) throw new Error("Dexterous robot hands are not supported yet. Try \"two-finger parallel gripper\" or a humanoid.");

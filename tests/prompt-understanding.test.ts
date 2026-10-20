@@ -232,15 +232,19 @@ test("inline sensors sit on the outer surface, never inside the body", () => {
     }
   }
   assert.match(read("6 dof arm with a lidar").ignored.join(), /lidar: the 6-DOF serial arm design has no mount/);
-  const imu = finalizeSpec(parsePrompt("diff drive robot with an imu")).joints.find((j) => j.child === "imu_1_link")!;
-  const env = bodyEnvelope(finalizeSpec(parsePrompt("diff drive robot")), "base_link");
-  assert.ok(imu.origin.xyz[2] > env.min[2] && imu.origin.xyz[2] < env.max[2], "IMUs belong inside the body");
+  // designed robots mount the real IMU board on the chassis, never on a wheel or another sensor
+  const dd = finalizeSpec(parsePrompt("diff drive robot with an imu"));
+  const imu = dd.sensors.find((x) => x.type === "imu")!;
+  assert.equal((dd.links.find((l) => l.name === imu.parent)!.geometry as any).params?.key, "bno085_breakout");
+  const holder = dd.links.find((l) => l.name === dd.joints.find((j) => j.child === imu.parent)!.parent)!;
+  assert.ok(!["wheel", "sensor", "actuator"].includes(holder.role ?? ""), `IMU sits on ${holder.name} (${holder.role})`);
 });
 
 // ---------------- adversarial regressions ----------------
 test("negation: doesn't / neither-nor / postfix / instead of / blanket exceptions", () => {
   const types = (p: string) => parsePrompt(p).sensors.map((s) => s.type).sort();
-  assert.deepEqual(types("a rover that doesn't have a lidar"), []);
+  // a designed base keeps its default IMU; the negated lidar is never mounted
+  assert.ok(!types("a rover that doesn't have a lidar").includes("lidar"));
   assert.deepEqual(types("a rover with neither lidar nor camera"), []);
   assert.deepEqual(types("rover, lidar is not needed"), []);
   assert.deepEqual(types("a rover but not with a lidar"), []);

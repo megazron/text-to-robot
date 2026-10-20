@@ -284,6 +284,7 @@ function modifyDesigned(specIn: RobotSpecification, instruction: string): ModRes
     const col = extractColour(`${rest} robot`) ?? rest.match(new RegExp(String.raw`\b(${Object.keys(COLOURS).join("|")})\b`))?.[1];
     if (col && /^(?:paint|colou?r|make|change|turn|set)\b/.test(rest) && !lengthRequest(rest)) {
       if (/\b(?:camera|lidar|sensor|imu|gripper|wheels?|eyes?|visor|servos?|motors?)\b/.test(rest)) { changes.push("! Only the body colour can be changed; sensors, grippers, wheels and bought parts keep theirs"); continue; }
+      if (record.family.startsWith("character_")) { changes.push(`! The ${record.family.replace("character_", "").replace("walle", "WALL-E")} keeps its own livery`); continue; }
       colour = col; changes.push(`~ body colour -> ${col} (printed accent parts)`); continue;
     }
     const payload = extractMasses(rest).find((x) => x.context === "payload") ?? (/\b(?:carry|lift|hold|payload)\b/.test(rest) ? extractMasses(rest)[0] : undefined);

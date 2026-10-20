@@ -44,7 +44,7 @@ export interface Interpretation {
 export interface PromptResult { spec: RobotSpecification; interpretation: Interpretation; }
 
 /** Sensors a designed robot carries, reported like inline sensors (type + the link they sit on). */
-const designedSensors = (spec: RobotSpecification) => spec.sensors.map((x) => ({ type: x.type, mount: x.parent }));
+const designedSensors = (spec: RobotSpecification) => spec.sensors.map((x) => ({ type: x.type, mount: spec.joints.find((j) => j.child === x.parent)?.parent ?? x.parent }));
 
 /** Deterministic NL -> RobotSpecification plus a record of how each request was handled. */
 export function interpretPrompt(prompt: string): PromptResult {
@@ -75,9 +75,10 @@ export function interpretPrompt(prompt: string): PromptResult {
   const budget = parseBudget(t);
   const masses = extractMasses(t);
   const payload = masses.find((x) => x.context === "payload");
-  const asked = choice.designed && ARM_FAMILIES.has(choice.family) ? designedSizes(t, choice.label, lengths, stature, { dimensions, approximations, ignored, conflicts }) : undefined;
+  const asked = choice.designed && choice.family === "serial_arm" ? designedSizes(t, choice.label, lengths, stature, { dimensions, approximations, ignored, conflicts }) : undefined;
   const ctx: DesignContext = { prompt, budget: budget.usd, payloadKg: payload ? +payload.kg.toFixed(3) : undefined, reachM: asked?.reachM, segments: asked?.segments,
-    sensors: requestedSensors(t).filter((type) => !negates(t, SENSOR_WORDS.find(([, k]) => k === type)![0])), ...(heightM ? { heightM } : {}) };
+    sensors: requestedSensors(t).filter((type) => !negates(t, SENSOR_WORDS.find(([, k]) => k === type)![0])),
+    excludeSensors: SENSOR_WORDS.filter(([rx]) => negates(t, rx)).map(([, k]) => k), ...(heightM ? { heightM } : {}) };
   const spec = choice.build(ctx);
   if (asked) reportDesignedReach(spec, asked, { dimensions, approximations, ignored, conflicts });
   if (choice.approx) approximations.push(choice.approx);
@@ -126,7 +127,7 @@ export function interpretPrompt(prompt: string): PromptResult {
   if (budget.unsupported) ignored.push(`budget "${budget.unsupported}": only US-dollar budgets are supported`);
   let payloadKg: number | undefined;
   if (payload) {
-    if (spec.end_effectors.length) payloadKg = +payload.kg.toFixed(3);
+    if (spec.end_effectors.length || choice.designed) payloadKg = +payload.kg.toFixed(3); // designed bases carry it as cargo
     else ignored.push(`payload ${payload.raw}: the ${choice.label} has no end effector to carry it`);
   }
   for (const v of extractSpeeds(t)) ignored.push(`speed ${v}: speed targets are not modelled; ${choice.designed ? "speeds follow the chosen actuators' datasheets" : "joint velocity limits come from the template"}`);
