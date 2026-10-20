@@ -8,6 +8,8 @@
   "dependencies": {
     "@ttr/robot-schema": "*",
     "@ttr/kinematics": "*",
-    "@ttr/mesh": "*"
+    "@ttr/mesh": "*",
+    "@ttr/parts": "*",
+    "@ttr/components": "*"
   }
 }

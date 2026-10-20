@@ -6,6 +6,7 @@ import { safeName } from "@ttr/robot-schema";
 import { forwardKinematics, poseToMat } from "@ttr/kinematics";
 import { generateStlFiles } from "./stl.ts";
 import { readFileSync } from "node:fs";
+import { generateBuildPackage } from "./build.ts";
 
 const n = (x: number) => (Math.abs(x) < 1e-9 ? 0 : +x.toFixed(5));
 const mm = (m: number) => n(m * 1000); // OpenSCAD in millimetres
@@ -58,6 +59,7 @@ export type CadFiles = Record<string, string | Uint8Array>;
 
 /** Full CAD deliverable: one part file per link + the assembly + a README. */
 export function generateCadFiles(spec: RobotSpecification): CadFiles {
+  if ((spec.metadata as { design?: unknown }).design) return generateBuildPackage(spec) as CadFiles;
   const name = safeName(spec.robot_name);
   const files: CadFiles = {};
   files[`cad/${name}.scad`] = generateScad(spec);
