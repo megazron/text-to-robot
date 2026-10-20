@@ -6,6 +6,7 @@ import type { RobotSpecification, SensorType } from "@ttr/robot-schema";
 import { part, rating, bboxM, hornRadiusMm, type Vec3 } from "@ttr/parts";
 import { Assembly } from "../assembly.ts";
 import { frame, invert, mul, apply, I4, translation, type Mat4, type Op } from "@ttr/solid";
+export { linkOps as servoLinkOps, gripperOps as servoGripperOps };
 import { worstTorques, axisInertias, pointWorld, totalMass, type PointLoad } from "../kin.ts";
 import { LADDERS, choose, evaluate, passes, ladderFor, type Ladder, DYNAMIC_FACTOR } from "../sizing.ts";
 
@@ -15,8 +16,12 @@ export interface ArmRequest {
   segments?: { upper_arm?: number; forearm?: number };
   /** wrist-mounted sensors (camera / depth); an IMU sits in the base */
   sensors?: SensorType[];
+  /** joint sequence overriding the default for `dof` (Y = yaw about the stack, P = pitch, R = roll) */
+  kinds?: Kind[];
+  /** side of the square base plate (mm); default scales with reach (min 110) */
+  basePlateMm?: number;
 }
-type Kind = "Y" | "P" | "R";
+export type Kind = "Y" | "P" | "R";
 const KINDS: Record<number, Kind[]> = { 1: ["Y"], 2: ["P", "P"], 3: ["Y", "P", "P"], 4: ["Y", "P", "P", "P"], 5: ["Y", "P", "P", "P", "R"], 6: ["Y", "P", "P", "R", "P", "R"], 7: ["Y", "P", "R", "P", "R", "P", "R"] };
 const PLATE = 4; // horn plate thickness, mm
 const WALL = 3;
@@ -126,7 +131,7 @@ function buildArm(req: ArmRequest, kinds: Kind[], keys: string[], gripKey: strin
   const A = new Assembly(name, "arm", req.prompt);
   const { joints, G, tail } = plan(kinds, keys, lengths, gripKey);
   // ---- base: plate with table-mount holes, pedestal and the first actuator's cradle ----
-  const j0 = joints[0], side = Math.max(110, Math.round((req.reachM ?? 0.3) * 1000 * 0.3));
+  const j0 = joints[0], side = req.basePlateMm ?? Math.max(110, Math.round((req.reachM ?? 0.3) * 1000 * 0.3));
   const baseOps: Op[] = [
     { op: "box", min: [-side / 2, -side / 2, 0], max: [side / 2, side / 2, 6], r: 8 },
     { op: "cradle", key: j0.key, T: j0.W, wall: WALL },
@@ -258,8 +263,8 @@ let lastTorques: Record<string, number> = {};
 
 /** Design an arm: choose lengths from the reach, size every actuator from the built arm's real loads. */
 export function designArm(req: ArmRequest): RobotSpecification {
-  const dof = Math.max(1, Math.min(7, Math.round(req.dof)));
-  const kinds = KINDS[dof], payload = req.payloadKg ?? 0.1; // desktop class: what a ~$150 servo arm holds stretched out continuously
+  const kinds = req.kinds ?? KINDS[Math.max(1, Math.min(7, Math.round(req.dof)))];
+  const dof = kinds.length, payload = req.payloadKg ?? 0.1; // desktop class: what a ~$150 servo arm holds stretched out continuously
   const reach = (req.reachM ?? (dof >= 5 ? 0.45 : 0.35)) * 1000;
   // gripper actuator: fingertip force at 70 mm must hold the payload with friction 0.5 on both jaws, x1.5
   const gripNeedNm = (payload * 9.81 * 1.5) / (2 * 0.5) * 0.07;
@@ -318,6 +323,7 @@ export function designArm(req: ArmRequest): RobotSpecification {
     keys = next;
   }
   const { A, joints } = built!;
+  A.design.tool = { link: built!.tcpLink, xyz_m: built!.tcp.map((x) => +(x / 1000).toFixed(5)) as Vec3, payload_kg: payload };
   // ---- engineering record ----
   for (const j of joints) {
     const st = torques[j.name] ?? 0, c = evaluate(j.key, st, inertias[j.name] ?? 0), r = rating(j.key);
@@ -360,4 +366,29 @@ export function designArm(req: ArmRequest): RobotSpecification {
   A.design.home = Object.fromEntries(pjs.slice(0, 3).map((j, k) => [j.name, +(ready[k] * sign(j)).toFixed(3)]));
   A.design.request = { ...req, dof };
   return A.finish(`${dof}-DOF arm, ${(reachActual * 1000).toFixed(0)} mm reach, ${payload} kg payload, ${LADDERS[ladder].label}`);
+}
+
+/**
+ * Graft a designed arm (or any designer's spec) onto `host`: every link and joint is copied with a
+ * name prefix and its base is bolted to `parent` at T (mm, parent frame). The arm's engineering record
+ * (purchases, printed parts, joint sizing, checks) moves with it; the bench PSU is left out because a
+ * mobile host powers the arm from its own battery.
+ */
+export function graftArm(host: Assembly, arm: RobotSpecification, parent: string, T: Mat4, prefix: string) {
+  const rec = (arm.metadata as any).design as Assembly["design"];
+  const n = (s: string) => `${prefix}_${s}`;
+  for (const l of arm.links) {
+    const link = structuredClone(l); link.name = n(l.name);
+    if (link.geometry.type === "mesh" && link.geometry.part === "printed") link.geometry.file = n(link.geometry.file);
+    host.spec.links.push(link);
+  }
+  for (const j of arm.joints) host.spec.joints.push({ ...structuredClone(j), name: n(j.name), parent: n(j.parent), child: n(j.child) });
+  host.fixed(n("mount"), parent, n(arm.root ?? "base_link"), T);
+  for (const e of arm.end_effectors) host.spec.end_effectors.push({ ...e, name: n(e.name), attach_link: n(e.attach_link) });
+  for (const p of rec.printed) host.design.printed.push({ ...p, name: n(p.name), link: n(p.link) });
+  for (const j of rec.joints) host.design.joints.push({ ...j, joint: n(j.joint) });
+  for (const c of rec.checks) if (!c.name.startsWith("print:") && !c.name.startsWith("power:")) host.check(`${prefix}:${c.name}`, c.pass, c.detail);
+  for (const p of rec.purchased) if (p.key !== "psu_12v_lrs75") host.buy(p.key, p.qty, `${prefix}: ${p.uses.join(", ")}`);
+  for (const [k, v] of Object.entries(rec.fasteners)) host.fastener(k, v);
+  return { tool: rec.tool ? { ...rec.tool, link: n(rec.tool.link) } : undefined, performance: rec.performance, joints: rec.joints.map((j) => ({ ...j, joint: n(j.joint) })) };
 }

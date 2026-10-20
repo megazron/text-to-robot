@@ -55,6 +55,8 @@ export interface DesignRecord {
   request?: Record<string, unknown>;
   /** Tool centre point (link frame, metres) for task tests: payload hold, reach, grip. */
   tcp?: { link: string; xyz: Vec3 };
+  /** tool point of a serial chain: link, offset (m) and the payload it was sized for */
+  tool?: { link: string; xyz_m: Vec3; payload_kg: number };
 }
 
 export class Assembly {
