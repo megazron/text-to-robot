@@ -1,174 +1,122 @@
 {
   "robot_name": "arm_6dof",
-  "tier": "prosumer",
+  "tier": "hobby",
   "lines": [
     {
       "category": "Actuator",
-      "name": "Unitree GO-M8010-6",
-      "qty": 4,
-      "unit_cost": 400,
-      "subtotal": 1600,
-      "spec": "integrated BLDC + planetary, RS485 (23 N·m)",
-      "note": "joint joint_1; rating duty/source unverified; joint joint_2; rating duty/source unverified; joint joint_3; rating duty/source unverified; joint joint_4; rating duty/source unverified"
+      "name": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "qty": 6,
+      "unit_cost": 22,
+      "subtotal": 132,
+      "spec": "0.9807 N·m rated / 2.942 N·m peak, 12 V",
+      "note": "joint base_yaw; joint elbow_pitch; joint forearm_roll; joint wrist_pitch; … · https://www.seeedstudio.com/STS3215-30KG-Serial-Servo-p-6340.html"
     },
     {
       "category": "Actuator",
-      "name": "Dynamixel XM430-W350",
-      "qty": 2,
-      "unit_cost": 270,
-      "subtotal": 540,
-      "spec": "RS485 smart servo, encoder (4.1 N·m)",
-      "note": "joint joint_5; rating duty/source unverified; joint joint_6; rating duty/source unverified"
-    },
-    {
-      "category": "Actuator",
-      "name": "NEMA17 + lead screw",
-      "qty": 2,
-      "unit_cost": 26,
-      "subtotal": 52,
-      "spec": "lead-screw linear stage (60 N)",
-      "note": "joint left_finger_joint; rating duty/source unverified; joint right_finger_joint; rating duty/source unverified"
-    },
-    {
-      "category": "Motor driver",
-      "name": "TMC2209 driver",
-      "qty": 2,
-      "unit_cost": 10,
-      "subtotal": 20,
-      "spec": "driver for NEMA17 + lead screw"
-    },
-    {
-      "category": "Compute",
-      "name": "Raspberry Pi 5 (8GB)",
-      "qty": 1,
-      "unit_cost": 80,
-      "subtotal": 80,
-      "spec": "SBC, runs ROS 2"
-    },
-    {
-      "category": "Power",
-      "name": "LiPo 4S 5000mAh",
+      "name": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
       "qty": 1,
       "unit_cost": 40,
       "subtotal": 40,
-      "spec": "74 Wh; est. load 123 W"
+      "spec": "1.5691 N·m rated / 4.9033 N·m peak, 12 V",
+      "note": "joint shoulder_pitch · https://openelab.io/products/feetech-sts3250-c002-servo-12v"
     },
     {
       "category": "Power",
-      "name": "DC-DC buck regulator (5V/10A)",
+      "name": "Mean Well LRS-75-12 enclosed PSU, 12 V 6 A (75 W)",
       "qty": 1,
-      "unit_cost": 12,
-      "subtotal": 12,
-      "spec": "logic + servo rail"
+      "unit_cost": 22,
+      "subtotal": 22,
+      "spec": "12 V",
+      "note": "12 V actuator supply · https://www.digikey.com/en/products/result?keywords=LRS-75-12"
     },
     {
-      "category": "Power",
-      "name": "Power distribution board + fuse + switch",
+      "category": "Electronics",
+      "name": "Waveshare Bus Servo Adapter (A)",
       "qty": 1,
-      "unit_cost": 14,
-      "subtotal": 14,
-      "spec": "wiring harness backbone"
+      "unit_cost": 10.6,
+      "subtotal": 10.6,
+      "spec": "12 V",
+      "note": "USB to actuator bus · https://www.waveshare.com/bus-servo-adapter-a.htm"
     },
     {
-      "category": "Structure",
-      "name": "3D-printed frame (PLA/PETG)",
+      "category": "Printed structure",
+      "name": "PETG filament for 8 printed parts",
       "qty": 1,
-      "unit_cost": 72.56,
-      "subtotal": 72.56,
-      "spec": "~3.30 kg material @ $22/kg"
+      "unit_cost": 5.86,
+      "subtotal": 5.86,
+      "spec": "231 g of parts (+15 % supports/waste), about 21.1 h of printing",
+      "note": "base_link, turret, upper_arm, forearm, forearm_rotator, wrist, wrist_rotator, gripper_jaw"
     },
     {
-      "category": "Structure",
-      "name": "Fastener + bearing kit",
-      "qty": 1,
-      "unit_cost": 18,
-      "subtotal": 18,
-      "spec": "M3 screws, heat inserts, 608 bearings"
-    },
-    {
-      "category": "Wiring & misc",
-      "name": "Wiring, connectors, JST/Dupont, sleeving",
-      "qty": 1,
-      "unit_cost": 282.96,
-      "subtotal": 282.96,
-      "spec": "~12% of electronics"
+      "category": "Fasteners",
+      "name": "Screws, nuts and inserts",
+      "qty": 56,
+      "unit_cost": 0.12,
+      "subtotal": 6.72,
+      "spec": "4x M5 x 12 socket head (base to bench); 24x M2 x 6 case screws; 28x horn screws"
     }
   ],
-  "total": 2731.52,
+  "total": 217.18,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
   "actuator_sizing": [
     {
-      "joint": "joint_1",
-      "required_effort": 9.6,
+      "joint": "base_yaw",
+      "required_effort": 0,
       "effort_unit": "N·m",
-      "required_torque_nm": 9.6,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "2.4x"
+      "required_torque_nm": 0,
+      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "margin": "99x"
     },
     {
-      "joint": "joint_2",
-      "required_effort": 9.6,
+      "joint": "shoulder_pitch",
+      "required_effort": 1.858,
       "effort_unit": "N·m",
-      "required_torque_nm": 9.6,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "2.4x"
+      "required_torque_nm": 1.858,
+      "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
+      "margin": "2.64x"
     },
     {
-      "joint": "joint_3",
-      "required_effort": 6.4,
+      "joint": "elbow_pitch",
+      "required_effort": 1.176,
       "effort_unit": "N·m",
-      "required_torque_nm": 6.4,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "3.6x"
+      "required_torque_nm": 1.176,
+      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "margin": "2.5x"
     },
     {
-      "joint": "joint_4",
-      "required_effort": 3.2,
+      "joint": "forearm_roll",
+      "required_effort": 0.002,
       "effort_unit": "N·m",
-      "required_torque_nm": 3.2,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "7.2x"
+      "required_torque_nm": 0.002,
+      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "margin": "99x"
     },
     {
-      "joint": "joint_5",
-      "required_effort": 2.4,
+      "joint": "wrist_pitch",
+      "required_effort": 0.435,
       "effort_unit": "N·m",
-      "required_torque_nm": 2.4,
-      "chosen": "Dynamixel XM430-W350",
-      "margin": "1.7x"
+      "required_torque_nm": 0.435,
+      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "margin": "6.76x"
     },
     {
-      "joint": "joint_6",
-      "required_effort": 1.6,
+      "joint": "wrist_roll",
+      "required_effort": 0.001,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.6,
-      "chosen": "Dynamixel XM430-W350",
-      "margin": "2.6x"
-    },
-    {
-      "joint": "left_finger_joint",
-      "required_effort": 32,
-      "effort_unit": "N",
-      "required_force_n": 32,
-      "chosen": "NEMA17 + lead screw",
-      "margin": "1.9x"
-    },
-    {
-      "joint": "right_finger_joint",
-      "required_effort": 32,
-      "effort_unit": "N",
-      "required_force_n": 32,
-      "chosen": "NEMA17 + lead screw",
-      "margin": "1.9x"
+      "required_torque_nm": 0.001,
+      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "margin": "99x"
     }
   ],
-  "warnings": [
-    "Sizing uses a neutral-pose gravity proxy and declared joint effort, not a worst-case workspace or dynamic load analysis. Selection checks only approximate effort and broad motion type. Speed/torque curves, travel, voltage, feedback, mounting, thermal duty and wiring are not qualified.",
-    "Catalog values are planning estimates. Except explicitly sourced rated values, torque entries may be stall/peak ratings; continuous duty, fit and complete assemblies are unverified."
-  ],
+  "warnings": [],
   "notes": [
-    "Tier: prosumer. Prices are planning estimates (USD), not quotes. Structure assumes FDM 3D printing."
+    "6-DOF arm, 450 mm reach, 0.1 kg payload, Feetech STS serial-bus servos (12 V)",
+    "Sized for a 0.1 kg payload.",
+    "Arm clamps or bolts to the bench through the four M5 holes in the base; it is not free-standing at full reach.",
+    "Links are cantilevered from one side of each horn (as on SO-101 / Koch arms); add an idler bearing on the far side for heavy use.",
+    "Torques are exact static gravity loads of this geometry: the worst pose (stretched out with the payload) must be held within each actuator's rated continuous torque, peaks get +30 %, and each joint must still reach >= 1 rad/s loaded on its torque-speed line.",
+    "Prices are list/street prices from the linked suppliers at the time the catalog was written; check before ordering."
   ]
 }

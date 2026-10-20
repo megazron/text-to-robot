@@ -109,6 +109,8 @@ function header(spec: RobotSpecification): string {
 
 export function generateUrdf(spec: RobotSpecification, opts: { meshPrefix?: string; meshCollisions?: boolean } = {}): string {
   if (opts.meshPrefix !== undefined) setMeshPrefix(opts.meshPrefix); else setMeshPackage(spec.robot_name);
+  // designed robots carry accurate part meshes: collide with those, not with their bounding boxes
+  if (opts.meshCollisions === undefined && (spec.metadata as { design?: unknown }).design) opts = { ...opts, meshCollisions: true };
   const parts: string[] = [];
   parts.push(`<?xml version="1.0"?>`);
   parts.push(header(spec));

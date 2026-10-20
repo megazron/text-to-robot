@@ -1,62 +1,72 @@
-# arm_6dof
+# arm 6dof
 
-Prompt: Create a 6 DOF robotic arm with a parallel gripper
+> Create a 6 DOF robotic arm with a parallel gripper
 
+![simulation](simulation.gif)
 
-![Current MuJoCo simulation](simulation.gif)
+Interpreted as: 6-DOF serial arm · parallel gripper
 
-Collision model: **URDF primitives / mesh bounding boxes**.
+**6-DOF arm, 450 mm reach, 0.1 kg payload, Feetech STS serial-bus servos (12 V)**
 
-This GIF runs gravity, pose holding and self-collision on the shipped model. It is
-not a learned policy or proof of hardware accuracy. The model's failures remain visible.
+Parts cost **$217.18** · printed structure 8 parts, 231 g · checks passed 22/22
 
-## Download and inspect
+## What it can do
 
-- [CAD / STL / OpenSCAD](robot.cad.zip), [ROS 2 package](robot.ros2.zip), [training package](robot.training.zip), [URDF](robot.urdf), [robot JSON](robot.json), [BOM](BOM.md).
-- [Simulation report](simulation_report.json): **4/5** checks;
-  **0** initial penetration contacts.
-- Failed checks: actuator_sweep.
-- [Physical build evidence and missing interfaces](BUILDABILITY.md), [machine-readable record](buildability_report.json). **No tested physical build is documented.**
+| | |
+|---|--:|
+| reach m | 0.45 |
+| payload kg | 0.1 |
+| mass kg | 0.636 |
+| actuators | Feetech STS serial-bus servos (12 V) |
+| max joint speed rad s | 3.4 |
+| grip force n | 14 |
+| holding current a | 2.36 |
+| upper arm m | 0.108 |
+| forearm m | 0.152 |
 
-## Design research
+## Actuators (sized from this robot's own loads)
 
-[Public engineering sources and model-specific changes](../../references/engineering/README.md).
+| Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
+|---|---|--:|--:|--:|--:|
+| base_yaw | feetech_sts3215_c047 | 0 | 0.9807 / 2.942 | 99x | 4.48 |
+| shoulder_pitch | feetech_sts3250 | 1.858 | 1.5691 / 4.9033 | 2.64x | 5.02 |
+| elbow_pitch | feetech_sts3215_c047 | 1.176 | 0.9807 / 2.942 | 2.5x | 3.4 |
+| forearm_roll | feetech_sts3215_c047 | 0.002 | 0.9807 / 2.942 | 99x | 4.48 |
+| wrist_pitch | feetech_sts3215_c047 | 0.435 | 0.9807 / 2.942 | 6.76x | 4.48 |
+| wrist_roll | feetech_sts3215_c047 | 0.001 | 0.9807 / 2.942 | 99x | 4.48 |
 
-## MoveIt / ROS 2
+## Engineering checks
 
-[Browse the generated MoveIt configuration](moveit/) (SRDF, KDL, OMPL, controllers).
-Unzip the ROS package into a workspace's `src/` directory, then:
+All 22 checks pass (torque, speed, power, stability, print-bed fit, grip). Details in `robot.json` → `metadata.design.checks`.
 
-```bash
-source /opt/ros/jazzy/setup.bash
-rosdep install --from-paths src --ignore-src -r -y
-colcon build
-source install/setup.bash
-ros2 launch arm_6dof move_group.launch.py
-```
+## Assumptions and limits
 
-The launch uses mock hardware. Planning requires a collision-free start state.
-The fixed-root planner is not a walking controller or a simulation bridge.
+- Arm clamps or bolts to the bench through the four M5 holes in the base; it is not free-standing at full reach.
+- Links are cantilevered from one side of each horn (as on SO-101 / Koch arms); add an idler bearing on the far side for heavy use.
+- Torques are exact static gravity loads of this geometry: the worst pose (stretched out with the payload) must be held within each actuator's rated continuous torque, peaks get +30 %, and each joint must still reach >= 1 rad/s loaded on its torque-speed line.
 
-## Coordinated motion
+<!-- SIM -->
+## Simulation (MuJoCo, real actuator limits)
 
-![Actual coordinated arm motion](task_motion.gif)
+**4/4 task tests pass.** Every motor is limited to its datasheet peak torque and its torque-speed line, with the rotor inertia reflected through its gearbox; continuous loads are compared with the rated torque. The animation above is recorded from these tests.
 
-[Motion report](task_motion_report.json): **PASS** for one smooth outward/return path. Gravity and self-collision are enabled; model-based bias compensation acts through the original effort-limited motors. Requested speed stays below half the declared limit. This does not validate the full workspace, a learned skill or a hardware build. The independent stress-sweep results above are unchanged.
+| | Test | Result |
+|---|---|---|
+| ✅ | payload hold | stretched_plus: holds 0.1 kg with the arm stretched out for 3 s; worst continuous utilisation 0.92x rated at elbow_pitch | stretched_minus: holds 0.1 kg with the arm stretched out for 3 s; worst continuous utilisation 0.92x rated at elbow_pitch |
+| ✅ | reach | TCP 0.450 m from the shoulder axis with the payload, claimed 0.450 m (tolerance 9 mm) |
+| ✅ | speed | 1.47 s move at 80 % rated speed tracks within 0.1 rad; most saturated wrist_roll (0 % of the move) |
+| ✅ | grip | holds 0.1 kg against its weight with friction 0.5: slip 0.1 mm in 3 s, clamp force 27.1 N (needs >= 1.0 N), gripper limited to its rated (continuous) torque |
 
-[Recorded MoveIt runtime result](moveit_report.json).
+_PASS means the modelled actuators (datasheet peak torque as a hard limit, a linear torque-speed line to no-load speed, reflected rotor inertia, URDF damping/friction) can produce the torques and speeds the task needs in this geometry and mass distribution, and that mean torque over the hold stays within the continuous (rated) torque. Joint control uses an ideal model-based feedforward (computed torque) through the force-limited servo for fixed-base robots and plain position servos for floating robots; a pass therefore proves torque/speed capacity, not that a given controller achieves it. Untested: thermal limits over long duty cycles (only the mean-vs-rated proxy), gearbox backlash and compliance, link and joint flexibility, encoder resolution, supply voltage sag and current limits, bus latency, controller tuning, and contact/friction values (nominal friction only)._
+<!-- /SIM -->
 
-## Reproduce
+## Files
 
-From the repository root:
-
-```bash
-node scripts/export_examples.ts
-python scripts/audit_examples.py
-python scripts/render_example_gifs.py
-python scripts/document_examples.py
-python scripts/verify_example_artifacts.py
-```
-
-These are procedural concept models. Masses, motors and contacts are approximate;
-manufacturing interfaces and measured dynamics remain unverified.
+| File | What |
+|---|---|
+| `robot.urdf`, `meshes/` | URDF with real component and printed-part meshes, datasheet effort/velocity limits |
+| `BOM.md`, `bom.json` | every part to buy, with supplier links and prices |
+| `robot.cad.zip` | build package: printable STLs, print list, bought-part models, assembly order |
+| `robot.ros2.zip` | ROS 2 description package (ros2_control, MoveIt config, Gazebo launch) |
+| `robot.training.zip` | MuJoCo / RL training scaffold |
+| `simulation_report.json` | MuJoCo task tests under the real actuator limits |

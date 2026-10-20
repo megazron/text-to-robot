@@ -355,7 +355,7 @@ export function designArm(req: ArmRequest): RobotSpecification {
   A.design.assumptions.push(
     "Arm clamps or bolts to the bench through the four M5 holes in the base; it is not free-standing at full reach.",
     "Links are cantilevered from one side of each horn (as on SO-101 / Koch arms); add an idler bearing on the far side for heavy use.",
-    `Torques are exact static gravity loads of this geometry plus ${Math.round((DYNAMIC_FACTOR - 1) * 100)} % for acceleration; continuous duty is checked at ${Math.round(0.5 * 100)} % of the worst pose.`,
+    `Torques are exact static gravity loads of this geometry: the worst pose (stretched out with the payload) must be held within each actuator's rated continuous torque, peaks get +${Math.round((DYNAMIC_FACTOR - 1) * 100)} %, and each joint must still reach >= 1 rad/s loaded on its torque-speed line.`,
   );
   const segs = segmentsOf(built!, kinds);
   if (segs.upper_arm !== undefined) A.design.performance.upper_arm_m = +(segs.upper_arm / 1000).toFixed(3);

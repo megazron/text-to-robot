@@ -48,7 +48,8 @@ SCOPE = ("PASS means the modelled actuators (datasheet peak torque as a hard lim
          "bus latency, controller tuning, and contact/friction values (nominal friction only).")
 
 ARM = {"arm", "scara", "manipulator", "mobile_manipulator"}
-WHEELED = {"diff_drive", "four_wheel", "mecanum", "rover", "skid_steer", "wheeled", "omni", "tracked", "ackermann", "differential"}
+WHEELED = {"diff_drive", "four_wheel", "mecanum", "rover", "skid_steer", "wheeled", "omni", "tracked", "ackermann", "differential",
+           "rocker_bogie", "character_walle", "character_eva", "character_baymax"}
 LEGGED = {"quadruped", "hexapod", "humanoid", "biped", "legged"}
 GRIPPER = {"gripper", "end_effector"}
 EXO = {"exo", "exoskeleton"}
@@ -989,8 +990,9 @@ def run_tasks(urdf_path, spec=None, verbose=True, family=None):
     design = ((spec or {}).get("metadata") or {}).get("design") or {}
     urdf_xml = open(urdf_path, encoding="utf8").read()
     family = (family or family_of(spec, urdf_xml)).lower()
-    group = ("arm" if family in ARM else "wheeled" if family in WHEELED or "wheel" in family else "legged" if family in LEGGED
-             else "gripper" if family in GRIPPER else "exo" if family in EXO else "unknown")
+    has = lambda words: family in words or any(w in family for w in words)  # design families are prefixed: mobile_diff_drive, character_walle
+    group = ("arm" if family in ARM else "wheeled" if has(WHEELED) or "wheel" in family else "legged" if has(LEGGED)
+             else "gripper" if has(GRIPPER) else "exo" if has(EXO) else "unknown")
     floating = {"arm": False, "gripper": False, "wheeled": True, "legged": True, "exo": None, "unknown": None}[group]
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")

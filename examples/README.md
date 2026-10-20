@@ -1,23 +1,23 @@
-# Example gallery and validation
+# Examples
 
-All 17 examples were exported and tested with self-collision enabled. Mark 43 uses source-checked compound hulls; other examples use primitives and mesh proxies. Zero initial contacts is an initial-pose check, not full-range clearance or hardware qualification.
+Every example is regenerated from its prompt by `node scripts/build_examples.ts` and simulated by `scripts/simulate_examples.py`. Each robot is built from real, purchasable parts sized from its own loads; the GIF is recorded from its MuJoCo task tests under the real actuator limits.
 
-| Actual simulation | Example and downloads | MuJoCo checks | Initial penetrations | Remaining failed checks |
-|---|---|---|---|---|
-| [<img src='01_arm_2dof/simulation.gif' width='220' alt='arm_2dof simulation'>](01_arm_2dof/) | [01_arm_2dof](01_arm_2dof/)<br>[CAD](01_arm_2dof/robot.cad.zip) · [Results](01_arm_2dof/simulation_report.json) · [Build evidence](01_arm_2dof/BUILDABILITY.md) | 4/5 | 0 | actuator_sweep |
-| [<img src='02_arm_6dof/simulation.gif' width='220' alt='arm_6dof simulation'>](02_arm_6dof/) | [02_arm_6dof](02_arm_6dof/)<br>[CAD](02_arm_6dof/robot.cad.zip) · [Results](02_arm_6dof/simulation_report.json) · [Build evidence](02_arm_6dof/BUILDABILITY.md) | 4/5 | 0 | actuator_sweep |
-| [<img src='03_arm_7dof/simulation.gif' width='220' alt='arm_7dof simulation'>](03_arm_7dof/) | [03_arm_7dof](03_arm_7dof/)<br>[CAD](03_arm_7dof/robot.cad.zip) · [Results](03_arm_7dof/simulation_report.json) · [Build evidence](03_arm_7dof/BUILDABILITY.md) | 4/5 | 0 | actuator_sweep |
-| [<img src='04_scara/simulation.gif' width='220' alt='scara simulation'>](04_scara/) | [04_scara](04_scara/)<br>[CAD](04_scara/robot.cad.zip) · [Results](04_scara/simulation_report.json) · [Build evidence](04_scara/BUILDABILITY.md) | 4/5 | 0 | actuator_sweep |
-| [<img src='05_diff_drive/simulation.gif' width='220' alt='diff_drive_robot simulation'>](05_diff_drive/) | [05_diff_drive](05_diff_drive/)<br>[CAD](05_diff_drive/robot.cad.zip) · [Results](05_diff_drive/simulation_report.json) · [Build evidence](05_diff_drive/BUILDABILITY.md) | 5/6 | 0 | actuator_sweep |
-| [<img src='06_four_wheel/simulation.gif' width='220' alt='four_wheel_robot simulation'>](06_four_wheel/) | [06_four_wheel](06_four_wheel/)<br>[CAD](06_four_wheel/robot.cad.zip) · [Results](06_four_wheel/simulation_report.json) · [Build evidence](06_four_wheel/BUILDABILITY.md) | 5/6 | 0 | actuator_sweep |
-| [<img src='07_mecanum/simulation.gif' width='220' alt='mecanum_robot simulation'>](07_mecanum/) | [07_mecanum](07_mecanum/)<br>[CAD](07_mecanum/robot.cad.zip) · [Results](07_mecanum/simulation_report.json) · [Build evidence](07_mecanum/BUILDABILITY.md) | 5/6 | 0 | actuator_sweep |
-| [<img src='08_humanoid/simulation.gif' width='220' alt='humanoid_robot simulation'>](08_humanoid/) | [08_humanoid](08_humanoid/)<br>[CAD](08_humanoid/robot.cad.zip) · [Results](08_humanoid/simulation_report.json) · [Build evidence](08_humanoid/BUILDABILITY.md) | 6/7 | 0 | disturbance_recovery |
-| [<img src='09_gripper/simulation.gif' width='220' alt='parallel_gripper simulation'>](09_gripper/) | [09_gripper](09_gripper/)<br>[CAD](09_gripper/robot.cad.zip) · [Results](09_gripper/simulation_report.json) · [Build evidence](09_gripper/BUILDABILITY.md) | 5/5 | 0 | none in this smoke battery |
-| [<img src='10_quadruped/simulation.gif' width='220' alt='quadruped simulation'>](10_quadruped/) | [10_quadruped](10_quadruped/)<br>[CAD](10_quadruped/robot.cad.zip) · [Results](10_quadruped/simulation_report.json) · [Build evidence](10_quadruped/BUILDABILITY.md) | 5/6 | 0 | actuator_sweep |
-| [<img src='11_spider_scout/simulation.gif' width='220' alt='hexapod simulation'>](11_spider_scout/) | [11_spider_scout](11_spider_scout/)<br>[CAD](11_spider_scout/robot.cad.zip) · [Results](11_spider_scout/simulation_report.json) · [Build evidence](11_spider_scout/BUILDABILITY.md) | 6/6 | 0 | none in this smoke battery |
-| [<img src='12_mars_rover/simulation.gif' width='220' alt='rover_arm simulation'>](12_mars_rover/) | [12_mars_rover](12_mars_rover/)<br>[CAD](12_mars_rover/robot.cad.zip) · [Results](12_mars_rover/simulation_report.json) · [Build evidence](12_mars_rover/BUILDABILITY.md) | 5/6 | 0 | actuator_sweep |
-| [<img src='13_battle_mech/simulation.gif' width='220' alt='battle_mech simulation'>](13_battle_mech/) | [13_battle_mech](13_battle_mech/)<br>[CAD](13_battle_mech/robot.cad.zip) · [Results](13_battle_mech/simulation_report.json) · [Build evidence](13_battle_mech/BUILDABILITY.md) | 4/6 | 0 | actuator_sweep, disturbance_recovery |
-| [<img src='14_iron_man_mark_43/simulation.gif' width='220' alt='iron_man_mark_43 simulation'>](14_iron_man_mark_43/) | [14_iron_man_mark_43](14_iron_man_mark_43/)<br>[CAD](14_iron_man_mark_43/robot.cad.zip) · [Results](14_iron_man_mark_43/simulation_report.json) · [Build evidence](14_iron_man_mark_43/BUILDABILITY.md) | 4/6 | 0 | actuator_sweep, disturbance_recovery |
-| [<img src='15_wall_e/simulation.gif' width='220' alt='wall_e simulation'>](15_wall_e/) | [15_wall_e](15_wall_e/)<br>[CAD](15_wall_e/robot.cad.zip) · [Results](15_wall_e/simulation_report.json) · [Build evidence](15_wall_e/BUILDABILITY.md) | 5/6 | 0 | actuator_sweep |
-| [<img src='16_eva/simulation.gif' width='220' alt='eva simulation'>](16_eva/) | [16_eva](16_eva/)<br>[CAD](16_eva/robot.cad.zip) · [Results](16_eva/simulation_report.json) · [Build evidence](16_eva/BUILDABILITY.md) | 5/6 | 0 | disturbance_recovery |
-| [<img src='17_baymax/simulation.gif' width='220' alt='baymax simulation'>](17_baymax/) | [17_baymax](17_baymax/)<br>[CAD](17_baymax/robot.cad.zip) · [Results](17_baymax/simulation_report.json) · [Build evidence](17_baymax/BUILDABILITY.md) | 4/6 | 0 | actuator_sweep, disturbance_recovery |
+| Example | Robot | Parts cost | Mass | Design checks | Simulation |
+|---|---|--:|--:|--:|--:|
+| [01_arm_2dof](01_arm_2dof/README.md)<br><img src="01_arm_2dof/simulation.gif" width="220"> | arm_2dof | $1159.51 | ? kg | 0/0 | 4/5 |
+| [02_arm_6dof](02_arm_6dof/README.md)<br><img src="02_arm_6dof/simulation.gif" width="220"> | 6-DOF arm, 450 mm reach, 0.1 kg payload, Feetech STS serial-bus servos (12 V) | $217.18 | 0.636 kg | 22/22 | 4/4 |
+| [03_arm_7dof](03_arm_7dof/README.md)<br><img src="03_arm_7dof/simulation.gif" width="220"> | arm_7dof | $3038.61 | ? kg | 0/0 | 4/5 |
+| [04_scara](04_scara/README.md)<br><img src="04_scara/simulation.gif" width="220"> | scara | $571.91 | ? kg | 0/0 | 4/5 |
+| [05_diff_drive](05_diff_drive/README.md)<br><img src="05_diff_drive/simulation.gif" width="220"> | diff_drive_robot | $1144.07 | ? kg | 0/0 | 5/6 |
+| [06_four_wheel](06_four_wheel/README.md)<br><img src="06_four_wheel/simulation.gif" width="220"> | four_wheel_robot | $2045.84 | ? kg | 0/0 | 5/6 |
+| [07_mecanum](07_mecanum/README.md)<br><img src="07_mecanum/simulation.gif" width="220"> | mecanum_robot | $2047.37 | ? kg | 0/0 | 5/6 |
+| [08_humanoid](08_humanoid/README.md)<br><img src="08_humanoid/simulation.gif" width="220"> | humanoid_robot | $12822.89 | ? kg | 0/0 | 6/7 |
+| [09_gripper](09_gripper/README.md)<br><img src="09_gripper/simulation.gif" width="220"> | parallel_gripper | $241.41 | ? kg | 0/0 | 5/5 |
+| [10_quadruped](10_quadruped/README.md)<br><img src="10_quadruped/simulation.gif" width="220"> | quadruped | $5724.44 | ? kg | 0/0 | 5/6 |
+| [11_spider_scout](11_spider_scout/README.md)<br><img src="11_spider_scout/simulation.gif" width="220"> | hexapod | $582.05 | ? kg | 0/0 | 6/6 |
+| [12_mars_rover](12_mars_rover/README.md)<br><img src="12_mars_rover/simulation.gif" width="220"> | rover_arm | $844.71 | ? kg | 0/0 | 5/6 |
+| [13_battle_mech](13_battle_mech/README.md)<br><img src="13_battle_mech/simulation.gif" width="220"> | battle_mech | $12715.56 | ? kg | 0/0 | 4/6 |
+| [14_iron_man_mark_43](14_iron_man_mark_43/README.md)<br><img src="14_iron_man_mark_43/simulation.gif" width="220"> | iron_man_mark_43 | $38702.65 | ? kg | 0/0 | 4/6 |
+| [15_wall_e](15_wall_e/README.md)<br><img src="15_wall_e/simulation.gif" width="220"> | wall_e | $3970.49 | ? kg | 0/0 | 5/6 |
+| [16_eva](16_eva/README.md)<br><img src="16_eva/simulation.gif" width="220"> | eva | $3415.47 | ? kg | 0/0 | 5/6 |
+| [17_baymax](17_baymax/README.md)<br><img src="17_baymax/simulation.gif" width="220"> | baymax | $10082.68 | ? kg | 0/0 | 4/6 |
