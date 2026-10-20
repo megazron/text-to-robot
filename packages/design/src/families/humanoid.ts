@@ -16,7 +16,7 @@ import {
   PLATE, WALL, G, add, sub, scale, norm, bodyMm, depth, bodyRadius, reframe, originOf, plate, horn, hornR, printed, mountAt,
   recordJoints, holdCurrent, walkPower, pickBattery, COMPUTE_W, SENSOR_W, addSensor, limitsFromGeometry, sum, type Frame, type PowerItem,
 } from "./legkit.ts";
-import { placeChain, bracketOps, type ChainJoint, type PlacedJoint } from "./chain.ts";
+import { placeChain, bracketOps, cradleSamples, type ChainJoint, type PlacedJoint } from "./chain.ts";
 import { gripperOps } from "./arm.ts";
 import { supportMargin, keyOf, type LeggedRequest, type SensorKind } from "./legged.ts";
 
@@ -31,7 +31,7 @@ const ARM_JOINTS: Record<number, string[]> = {
 interface BipedCfg {
   mech: boolean; leg: Record<LegJ, string>; arm: Record<string, string>; grip: string; neck: [string, string];
   armDof: number; gripper: boolean; L1: number; L2: number; Yh: number; bend: number; upperArm: number;
-  batt: string; nBatt: number; extraKg: number; t: number; bodyWall: number; footLen: number; footW: number;
+  batt: string; nBatt: number; extraKg: number; t: number; bodyWall: number; footLen: number; footW: number; nDcdc?: number;
 }
 const SIDES = [{ p: "l", s: 1 }, { p: "r", s: -1 }];
 const Y: Vec3 = [0, 1, 0], X: Vec3 = [1, 0, 0], Z: Vec3 = [0, 0, 1], DOWN: Vec3 = [0, 0, -1];
@@ -109,8 +109,8 @@ function buildChain(A: Assembly, parent: Frame, chain: PlacedJoint[], end: (last
     A.fastener("horn / hub screws", 4);
     const f: Frame = { name: linkName(j.name), W: childW };
     const ops = next ? bracketOps(j, next.key, next.W, t) : e!.ops;
-    printed(A, f, ops, { role: "link", material: mat[i % mat.length] });
     setFrame(A, f.name, childW);
+    printedToBed(A, f, null, ops, { role: "link", material: mat[i % mat.length] });
     frames.push(f); pf = f;
   });
   return frames;
@@ -130,7 +130,7 @@ function buildBiped(req: LeggedRequest, cfg: BipedCfg, sensors: SensorKind[]) {
   const pelHalfX = Math.max(-bYaw.min[0], bYaw.max[0]) + WALL + 4, pelHalfY = Yh + Math.max(bYaw.max[1], bYaw.max[0]) + WALL + 4;
   const pelvis: Op[] = [{ op: "box", min: [-pelHalfX, -pelHalfY, zPel], max: [pelHalfX * 0.6, pelHalfY, zPel + BW + 3], r: 8 }];
   for (const L of legs) pelvis.push({ op: "cradle", key: yawKey, T: L.chain[0].W, wall: WALL });
-  printed(A, base, pelvis, { role: "base", material: "printed_dark" });
+  printedToBed(A, base, null, pelvis, { role: "base", material: "printed_dark" });
   // ---- torso: battery on the floor, electronics shelf, shoulder actuators at the top corners ----
   const battB = bodyMm(cfg.batt), bl = battB.max[0] - battB.min[0], bwid = battB.max[1] - battB.min[1], bh = battB.max[2];
   const compute = sensors.includes("depth") || sensors.includes("lidar") || cfg.mech ? "jetson_orin_nano_super" : "rpi5";
@@ -152,7 +152,11 @@ function buildBiped(req: LeggedRequest, cfg: BipedCfg, sensors: SensorKind[]) {
     { op: "cutbox", min: [Dt - BW - 1, -Wt + 18, zShelf + 12], max: [Dt + 1, Wt - 18, zSh - 30] }, // chest window: ports
   ];
   // ---- arms ----
-  const arms = SIDES.map(({ p, s }) => ({ p, s, chain: placeChain([0, s * Wt, zSh], armChain(cfg, s, p)) }));
+  // the arms hang outside the hips: lateral extent of the hip actuators + the widest arm actuator
+  const hipOuter = Math.max(...legs[0].chain.slice(0, 3).flatMap((j) => cradleSamples(j.key, j.W).map((p) => p[1])));
+  const armR = Math.max(...ARM_JOINTS[cfg.armDof].slice(1).map((n) => bodyRadius(cfg.arm[n]))) + WALL + 8;
+  const armIn = Math.max(0, hipOuter + armR - Wt);
+  const arms = SIDES.map(({ p, s }) => ({ p, s, chain: placeChain([0, s * Wt, zSh], armChain(cfg, s, p).map((j) => (j.name.endsWith("shoulder_roll") ? { ...j, minLen: Math.max(j.minLen ?? 0, armIn) } : j))) }));
   for (const L of arms) tOps.push({ op: "cradle", key: L.chain[0].key, T: L.chain[0].W, wall: WALL });
   // ---- neck ----
   const neck = placeChain([0, 0, zTop], [
@@ -177,7 +181,7 @@ function buildBiped(req: LeggedRequest, cfg: BipedCfg, sensors: SensorKind[]) {
     { x0: -Dt - 175, x1: -Dt - 1, y0: -Wt + 5, y1: Wt - 5, z: zShelf + 3, zMax: zShelf + 60 }, // backpack shelf
   ];
   const items: [string, string, string][] = [[cfg.mech ? "usb_can_adapter" : "waveshare_bus_servo_adapter", "leg_bus", cfg.mech ? "USB-CAN bus (left leg)" : "USB to leg servo bus"], ["dxl_u2d2", "arm_bus", "USB to the arm / neck DYNAMIXEL bus"]];
-  if (cfg.mech) items.push(["usb_can_adapter", "leg_bus_2", "USB-CAN bus (right leg)"], ["dcdc_48v_12v_sd50c12", "dcdc_12v", "12 V for the DYNAMIXEL arms and the computer"], ["buck_5v_5a", "regulator_5v", "5 V regulator (sensors)"]);
+  if (cfg.mech) items.push(["usb_can_adapter", "leg_bus_2", "USB-CAN bus (right leg)"], ...Array.from({ length: cfg.nDcdc ?? 1 }, (_, i) => ["dcdc_48v_12v_sd50c12", i ? `dcdc_12v_${i + 1}` : "dcdc_12v", "12 V for the DYNAMIXEL arms and the computer"] as [string, string, string]), ["buck_5v_5a", "regulator_5v", "5 V regulator (sensors)"]);
   else items.push(["buck_5v_5a", "regulator_5v", "5 V regulator (computer)"], ["buck_5v_5a", "regulator_5v_arms", "5 V regulator (arm / neck XL330 bus)"]);
   const cursor = regions.map((r) => ({ x: r.x0, y: r.y0, rowD: 0 }));
   let usedBackpack = false;
@@ -190,7 +194,7 @@ function buildBiped(req: LeggedRequest, cfg: BipedCfg, sensors: SensorKind[]) {
       if (c.y + L > R.y1) { c.y = R.y0; c.x += c.rowD + 2; c.rowD = 0; }
       if (c.x + Wd > R.x1 || c.y + L > R.y1) continue;
       const T = mul(translation([c.x + Wd, c.y, R.z + 3]), [0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1] as Mat4); // board x -> world y
-      mountAt(A, torso, key, mul(T, translation([-b.min[0], -b.max[1], -b.min[2]])), name, use);
+      mountAt(A, torso, key, mul(T, translation([-b.min[0], -b.min[1], -b.min[2]])), name, use);
       tOps.push({ op: "box", min: [c.x + 3, c.y + 3, R.z - 0.5], max: [c.x + Wd - 3, c.y + L - 3, R.z + 3], r: 2 });
       c.y += L + 2; c.rowD = Math.max(c.rowD, Wd);
       if (r === 2) usedBackpack = true;
@@ -267,9 +271,9 @@ function buildBiped(req: LeggedRequest, cfg: BipedCfg, sensors: SensorKind[]) {
   const zTopHead = zTop;
   buildChain(A, torso, neck, (j) => {
     const R = bodyRadius(j.key) + WALL + 3, o = originOf(j.W), c = j.P;
-    const depthCam = sensors.includes("depth"), hw = Math.max(depthCam ? 50 : 36, Wt * 0.45), front = c[0] + R + (cfg.mech ? 60 : 36);
+    const depthCam = sensors.includes("depth"), hw = Math.max(depthCam ? 50 : 36, Wt * (cfg.mech ? 0.6 : 0.45)), front = c[0] + R + (cfg.mech ? 60 : 36);
     const zb = Math.max(c[2] - 26, zTopHead + 6);
-    const box: Op = { op: "box", min: [c[0] + R, c[1] - hw, zb], max: [front, c[1] + hw, Math.max(c[2] + 40, zb + 60)], r: 8 };
+    const box: Op = { op: "box", min: [c[0] + R, c[1] - hw, zb], max: [front, c[1] + hw, Math.max(c[2] + 40, zb + (cfg.mech ? 110 : 60))], r: 8 };
     const visor: Op = { op: "box", min: [c[0] - 20, c[1] - hw, c[2] + R], max: [front, c[1] + hw, c[2] + R + 3], r: 6 };
     const ops: Op[] = [horn(j.W, j.key, t), plate(j.W, [o, [front - 4, o[1], c[2] + 30], [front - 4, o[1], Math.max(c[2] - 20, zTopHead + 6 + hornR(j.key))], [c[0], o[1], c[2] + R + 2]], hornR(j.key), 0, t), box, visor];
     if (depthCam) {
@@ -297,33 +301,63 @@ let pending: (() => void)[] = [];
 const queueMicrotaskLike = (f: () => void) => pending.push(f);
 const flushQueue = () => { const p = pending; pending = []; p.forEach((f) => f()); };
 
-/** Armour: 2.5 mm printed shells standing 3 mm off the structure, screwed to it; no structural role. */
+/**
+ * Armour: 2.5 mm printed shells standing 3 mm off a link and everything bolted to it, screwed on through
+ * printed standoffs. No structural role (mass counted). Each panel is cut back around the swept body of the
+ * actuator that drives its link, so it never touches the parent while the joint moves.
+ */
 function armour(A: Assembly) {
-  const panels: { on: string; face: "front" | "back" | "out"; inset?: number }[] = [
-    { on: "torso", face: "front" }, { on: "torso", face: "back" },
+  const panels: { on: string; face: "front" | "back" | "out" }[] = [
+    { on: "torso", face: "front" },
     ...["l", "r"].flatMap((p) => [{ on: `${p}_hip_pitch_link`, face: "front" as const }, { on: `${p}_knee_link`, face: "front" as const }, { on: `${p}_shoulder_roll_link`, face: "out" as const }]),
   ];
   for (const pn of panels) {
     const link = A.spec.links.find((l) => l.name === pn.on);
     if (!link || link.geometry.type !== "mesh") continue;
     const Wl = framesOf(A, pn.on);
+    // world box of the link's printed solid and of every bought part fixed to it
     const prog = JSON.parse(String(link.geometry.params!.program));
     const b = worldBox([{ op: "at", T: Wl, of: prog.ops }]);
-    const side = pn.on.startsWith("r_") ? -1 : 1;
-    const ins = 6;
+    for (const piece of A.spec.links.filter((l) => l.name.startsWith(`${pn.on}_b`) && l.geometry.type === "mesh")) {
+      const pb = worldBox([{ op: "at", T: Wl, of: JSON.parse(String((piece.geometry as any).params.program)).ops }]);
+      for (let k = 0; k < 3; k++) { b.lo[k] = Math.min(b.lo[k], pb.lo[k]); b.hi[k] = Math.max(b.hi[k], pb.hi[k]); }
+    }
+    for (const j of A.spec.joints) {
+      if (j.type !== "fixed" || j.parent !== pn.on) continue;
+      const c = A.spec.links.find((l) => l.name === j.child)!;
+      if (c.geometry.type !== "mesh" || c.geometry.part !== "component") continue;
+      const bb = part(String(c.geometry.params!.key)).bbox_mm!;
+      const T = mul(Wl, poseMat(j.origin));
+      for (const x of [bb.min[0], bb.max[0]]) for (const y of [bb.min[1], bb.max[1]]) for (const z of [bb.min[2], bb.max[2]]) {
+        const p = apply(T, [x, y, z]); for (let k = 0; k < 3; k++) { b.lo[k] = Math.min(b.lo[k], p[k]); b.hi[k] = Math.max(b.hi[k], p[k]); }
+      }
+    }
+    const side = pn.on.startsWith("r_") ? -1 : 1, ins = 6;
     let box: { min: Vec3; max: Vec3 };
     if (pn.face === "front") box = { min: [b.hi[0] + 3, b.lo[1] + ins, b.lo[2] + ins], max: [b.hi[0] + 5.5, b.hi[1] - ins, b.hi[2] - ins] };
     else if (pn.face === "back") box = { min: [b.lo[0] - 5.5, b.lo[1] + ins, b.lo[2] + ins], max: [b.lo[0] - 3, b.hi[1] - ins, b.hi[2] - ins] };
     else box = side > 0 ? { min: [b.lo[0] + ins, b.hi[1] + 3, b.lo[2] + ins], max: [b.hi[0] - ins, b.hi[1] + 5.5, b.hi[2] - ins] } : { min: [b.lo[0] + ins, b.lo[1] - 5.5, b.lo[2] + ins], max: [b.hi[0] - ins, b.lo[1] - 3, b.hi[2] - ins] };
-    // standoffs back to the structure
     const ops: Op[] = [{ op: "box", min: box.min, max: box.max, r: 4 }];
+    // standoffs back to the link at the four corners
+    const mid = (k: number) => (box.min[k] + box.max[k]) / 2;
+    void mid;
+    // clear the driving actuator's swept body
+    const drive = A.spec.joints.find((j) => j.child === pn.on && j.type === "revolute");
+    if (drive) {
+      const act = A.spec.links.find((l) => l.name === `${drive.name}_actuator`)!, key = String((act.geometry as any).params.key);
+      const W = mul(framesOf(A, drive.parent), poseMat(drive.origin)), o = originOf(W), z: Vec3 = [W[8], W[9], W[10]], R = bodyRadius(key) + WALL + 4;
+      ops.push({ op: "hole", a: add(o, scale(z, -200)), b: add(o, scale(z, 200)), d: 2 * R });
+    }
     const name = `${pn.on.replace(/_link$/, "")}_armour_${pn.face}`;
-    const W = Wl;
-    A.printedLink(name, { name, ops: [{ op: "at", T: invert(W), of: ops }] }, { role: "armour", material: "printed_accent" });
+    A.printedLink(name, { name, ops: [{ op: "at", T: invert(Wl), of: ops }] }, { role: "armour", material: "printed_accent" });
     A.fixed(`${name}_mount`, pn.on, name, translation([0, 0, 0]));
-    A.fastener("M3 x 10 armour screws + 6 mm standoffs", 4);
+    A.fastener("M3 x 10 armour screws + printed standoffs", 4);
   }
 }
+const poseMat = (p: { xyz: Vec3; rpy: Vec3 }): Mat4 => {
+  const [r, pp, y] = p.rpy, cr = Math.cos(r), sr = Math.sin(r), cp = Math.cos(pp), sp = Math.sin(pp), cy = Math.cos(y), sy = Math.sin(y);
+  return [cy * cp, sy * cp, -sp, 0, cy * sp * sr - sy * cr, sy * sp * sr + cy * cr, cp * sr, 0, cy * sp * cr + sy * sr, sy * sp * cr - cy * sr, cp * cr, 0, p.xyz[0] * 1000, p.xyz[1] * 1000, p.xyz[2] * 1000, 1];
+};
 
 // ---------------------------------------------------------------- loads
 function pitchSign(A: Assembly, joint: string): number {
@@ -392,12 +426,12 @@ function designBiped(req: LeggedRequest, mech: boolean): RobotSpecification {
   const legLadder = mech ? ["cubemars_ak60_6", "cubemars_ak70_10", "cubemars_ak80_9", "cubemars_ak80_64"] : ["feetech_sts3215_c047", "feetech_sts3250", "dxl_xh540_w270"];
   const armLadder = mech ? ["dxl_xm430_w350", "dxl_xh540_w270", "cubemars_ak60_6", "cubemars_ak70_10"] : ["dxl_xl330_m288", "dxl_xl430_w250", "dxl_xm430_w350"];
   const neckLadder = mech ? ["dxl_xl430_w250", "dxl_xm430_w350"] : ["dxl_xl330_m288", "dxl_xl430_w250"];
-  const sc = mech ? Math.max(0.8, Math.min(1.25, (req.heightM ?? 1.0) / 1.0)) : Math.max(0.8, Math.min(1.3, (req.heightM ?? 0.6) / 0.6));
+  const sc = mech ? Math.max(0.75, Math.min(1.3, (req.heightM ?? 1.0) / 1.0)) : Math.max(0.8, Math.min(1.3, (req.heightM ?? 0.6) / 0.6));
   const legKeys = (k: string) => Object.fromEntries(LEG.map((j) => [j, k])) as Record<LegJ, string>;
   const armKeys = (k: string) => Object.fromEntries(ARM_JOINTS[7].map((j) => [j, k]));
   const cfg: BipedCfg = mech
     ? { mech, leg: legKeys(legLadder[1]), arm: armKeys(armLadder[0]), grip: "dxl_xm430_w350", neck: [neckLadder[0], neckLadder[0]], armDof, gripper: req.gripper !== false,
-      L1: 240 * sc, L2: 240 * sc, Yh: 95, bend: 0.25, upperArm: 150 * sc, batt: "lipo_6s_10000", nBatt: 2, extraKg: req.payloadKg ?? 1.0, t: 8, bodyWall: 5, footLen: 260 * sc, footW: 130 }
+      L1: 180 * sc, L2: 180 * sc, Yh: 95, bend: 0.12, upperArm: 110 * sc, batt: "lipo_6s_10000", nBatt: 2, extraKg: req.payloadKg ?? 0.5, t: 8, bodyWall: 5, footLen: 220 * sc, footW: 120 }
     : { mech, leg: legKeys(legLadder[0]), arm: armKeys(armLadder[0]), grip: "dxl_xl330_m288", neck: [neckLadder[0], neckLadder[0]], armDof, gripper: req.gripper !== false,
       L1: 90 * sc, L2: 90 * sc, Yh: 46, bend: 0.12, upperArm: 0, batt: "lipo_3s_2200", nBatt: 1, extraKg: req.payloadKg ?? 0.15, t: 4, bodyWall: 3, footLen: 120 * sc, footW: 62 };
   let built = buildBiped(req, cfg, sensors), torques: Record<string, number> = {};
@@ -412,9 +446,11 @@ function designBiped(req: LeggedRequest, mech: boolean): RobotSpecification {
     const grip = choose(neckLadder, grp("_gripper")).key;
     const pw = bipedPower(built.A, torques, built.compute).total;
     batt = pickBattery(mech ? [["lipo_6s_10000", 2], ["lipo_6s_10000", 4]] : [["lipo_3s_2200", 1], ["lipo_3s_5000", 1]], pw, 20);
-    const same = LEG.every((j) => leg[j] === cfg.leg[j]) && ARM_JOINTS[7].every((j) => arm[j] === cfg.arm[j]) && neck[0] === cfg.neck[0] && neck[1] === cfg.neck[1] && batt.key === cfg.batt && batt.n === cfg.nBatt && (grip === cfg.grip || mech);
+    const dxlA = mech ? sum(Object.entries(torques).filter(([k]) => !/hip|knee|ankle/.test(k) && keyOf(built.A, k).startsWith("dxl_")).map(([k, v]) => holdCurrent(keyOf(built.A, k), v))) : 0;
+    const nDcdc = mech ? Math.max(1, Math.ceil((dxlA + 25 / 12) / (4.2 * 0.9))) : undefined;
+    const same = nDcdc === cfg.nDcdc && LEG.every((j) => leg[j] === cfg.leg[j]) && ARM_JOINTS[7].every((j) => arm[j] === cfg.arm[j]) && neck[0] === cfg.neck[0] && neck[1] === cfg.neck[1] && batt.key === cfg.batt && batt.n === cfg.nBatt && (grip === cfg.grip || mech);
     if (same) break;
-    Object.assign(cfg, { leg, arm, neck, batt: batt.key, nBatt: batt.n, grip: mech ? cfg.grip : grip });
+    Object.assign(cfg, { leg, arm, neck, batt: batt.key, nBatt: batt.n, grip: mech ? cfg.grip : grip, nDcdc });
     built = buildBiped(req, cfg, sensors);
   }
   const { A } = built;
@@ -427,7 +463,8 @@ function designBiped(req: LeggedRequest, mech: boolean): RobotSpecification {
   A.check("power:battery_current", peakA <= Number(part(cfg.batt).specs.max_current_a), `worst-case leg current ~${peakA.toFixed(1)} A vs ${part(cfg.batt).specs.max_current_a} A pack rating`);
   if (mech) {
     const arm12 = sum(Object.entries(torques).filter(([k]) => !/hip|knee|ankle/.test(k) && keyOf(A, k).startsWith("dxl_")).map(([k, v]) => holdCurrent(keyOf(A, k), v)));
-    A.check("power:12v_converter", arm12 + 25 / 12 <= 4.2, `DYNAMIXEL arms holding the payload draw ~${arm12.toFixed(1)} A + Jetson ~2.1 A of the SD-50C-12's 4.2 A`);
+    const n = cfg.nDcdc ?? 1;
+    A.check("power:12v_converter", arm12 + 25 / 12 <= 4.2 * n * 0.9, `DYNAMIXEL arms holding the payload draw ~${arm12.toFixed(1)} A + Jetson ~2.1 A of ${n} x SD-50C-12 (${(4.2 * n).toFixed(1)} A, converters in parallel per bus)`);
   } else {
     const five = Object.entries(torques).filter(([k]) => !/hip|knee|ankle/.test(k) && part(keyOf(A, k)).specs.voltage_v <= 6);
     const xl = sum(five.map(([k, v]) => holdCurrent(keyOf(A, k), v)));
@@ -454,10 +491,16 @@ function designBiped(req: LeggedRequest, mech: boolean): RobotSpecification {
   if (mech) A.design.assumptions.push("CubeMars actuators run on a 12S bus (two 6S packs in series, 44.4 V nominal) at their 48 V ratings; DYNAMIXEL arms and the computer run from the 12 V DC-DC converter.");
   const bom = A.bom();
   const footZ = built.feet[0].sole.lo[2];
-  const height = (built.zTop - footZ + 110 * (mech ? 1.6 : 1)) / 1000;
-  const headTop = Math.max(...A.spec.links.filter((l) => l.name.startsWith("neck_tilt")).map((l) => pointWorld(A.spec, {}, l.name)[2] * 1000)) - footZ;
+  // overall height: highest point of any part's box at home above the sole
+  let top = -Infinity;
+  for (const l of A.spec.links) {
+    if (l.geometry.type !== "mesh") continue;
+    const bb = l.geometry.bbox;
+    for (const x of [bb.min[0], bb.max[0]]) for (const y of [bb.min[1], bb.max[1]]) for (const z of [bb.min[2], bb.max[2]]) top = Math.max(top, pointWorld(A.spec, {}, l.name, [x, y, z])[2] * 1000);
+  }
+  const height = (top - footZ + 2) / 1000, headTop = 0;
   A.design.performance = {
-    ...A.design.performance, mass_kg: +m.toFixed(3), height_m: +(Math.max(height, headTop / 1000 + 0.04)).toFixed(3), hip_height_m: +(-footZ / 1000).toFixed(3),
+    ...A.design.performance, mass_kg: +m.toFixed(3), height_m: +(Math.max(height, headTop)).toFixed(3), hip_height_m: +(-footZ / 1000).toFixed(3),
     dof: A.spec.joints.filter((j) => j.type === "revolute").length, arm_dof: armDof, payload_per_hand_kg: cfg.extraKg,
     leg_actuators: [...new Set(LEG.map((j) => part(cfg.leg[j]).name))].join(" / "), arm_actuators: [...new Set(ARM_JOINTS[armDof].map((j) => part(cfg.arm[j]).name))].join(" / "),
     runtime_min: +batt.minutes.toFixed(0), cost_usd: bom.cost_usd, sensors: sensors.join(", "),

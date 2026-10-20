@@ -190,7 +190,11 @@ export function limitsFromGeometry(A: Assembly, joints: string[], combos: Record
   // bought boards/packs/pads sit on the part that carries them; their box approximations (PCB with
   // under-board connectors, pads clamped over a shin tip) overlap that carrier by design
   const carried = new Set(["foot", "battery", "compute", "sensor", "motor_driver", "misc"]);
-  for (const j of A.spec.joints) if (j.type === "fixed" && carried.has(A.spec.links.find((l) => l.name === j.child)?.role ?? "")) skip.add(`${j.parent}|${j.child}`);
+  for (const j of A.spec.joints) if (j.type === "fixed" && carried.has(A.spec.links.find((l) => l.name === j.child)?.role ?? "")) {
+    skip.add(`${j.parent}|${j.child}`);
+    // a part printed in bed-sized pieces (<name>_b, <name>_b_b ...) carries the board as one body
+    for (const l of A.spec.links) if (l.name.startsWith(`${j.parent}_b`)) skip.add(`${l.name}|${j.child}`);
+  }
   const report: string[] = [];
   withSolids(A.spec, (m) => {
     const home = interferences(m, {}, undefined, 2, skip);
