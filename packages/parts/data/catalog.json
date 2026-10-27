@@ -6891,6 +6891,79 @@
   },
   "mesh_triangles": 1142
  },
+ "psu_12v_lrs150": {
+  "key": "psu_12v_lrs150",
+  "name": "Mean Well LRS-150-12 enclosed PSU, 12 V 12.5 A (150 W)",
+  "category": "misc",
+  "mass_g": 500.0,
+  "price_usd": 27.0,
+  "supplier_url": "https://www.digikey.com/en/products/result?keywords=LRS-150-12",
+  "datasheet_url": "https://www.meanwell.com/Upload/PDF/LRS-150/LRS-150-SPEC.PDF",
+  "envelope_mm": [
+   159.0,
+   97.0,
+   30.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     32.0,
+     48.5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     127.0,
+     48.5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "voltage_v": 12.0,
+   "current_a": 12.5,
+   "power_w": 150.0,
+   "input_vac": [
+    85,
+    264
+   ],
+   "terminals": "AC L, AC N, FG, -V, +V",
+   "uncertain": [
+    "mass_g",
+    "price_usd",
+    "hole positions (taken from the LRS-75 pattern scaled to the case)"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "max": [
+    159.0,
+    97.0,
+    30.0
+   ]
+  },
+  "mesh_triangles": 572
+ },
  "psu_12v_lrs75": {
   "key": "psu_12v_lrs75",
   "name": "Mean Well LRS-75-12 enclosed PSU, 12 V 6 A (75 W)",
@@ -6992,6 +7065,79 @@
    ]
   },
   "mesh_triangles": 664
+ },
+ "psu_48v_lrs350": {
+  "key": "psu_48v_lrs350",
+  "name": "Mean Well LRS-350-48 enclosed PSU, 48 V 7.3 A (350 W)",
+  "category": "misc",
+  "mass_g": 760.0,
+  "price_usd": 45.0,
+  "supplier_url": "https://www.digikey.com/en/products/result?keywords=LRS-350-48",
+  "datasheet_url": "https://www.meanwell.com/Upload/PDF/LRS-350/LRS-350-SPEC.PDF",
+  "envelope_mm": [
+   215.0,
+   115.0,
+   30.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     32.5,
+     57.5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     182.5,
+     57.5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "voltage_v": 48.0,
+   "current_a": 7.3,
+   "power_w": 350.4,
+   "input_vac": [
+    85,
+    264
+   ],
+   "terminals": "AC L, AC N, FG, -V, +V",
+   "uncertain": [
+    "mass_g",
+    "price_usd",
+    "hole positions (from the case outline, not the drawing)"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "max": [
+    215.0,
+    115.0,
+    30.0
+   ]
+  },
+  "mesh_triangles": 684
  },
  "realsense_d435i": {
   "key": "realsense_d435i",
@@ -8962,6 +9108,45 @@
    "mass_source": "computed from ISO 4762 nominal geometry"
   },
   "output_frame": null
+ },
+ "usb_can_canable2": {
+  "key": "usb_can_canable2",
+  "name": "CANable 2.0 USB to CAN-FD adapter (candlelight firmware)",
+  "category": "motor_driver",
+  "mass_g": 10.0,
+  "price_usd": 35.0,
+  "supplier_url": "https://canable.io/",
+  "datasheet_url": "https://canable.io/getting-started.html",
+  "envelope_mm": [
+   56.0,
+   20.0,
+   9.0
+  ],
+  "holes": [],
+  "specs": {
+   "voltage_v": 5.0,
+   "bus": "CAN 2.0 / CAN-FD up to 5 Mbit/s, SocketCAN (gs_usb) on Linux",
+   "note": "CubeMars AK actuators speak CAN (MIT or servo mode); one adapter drives the whole bus with 120 ohm termination at both ends",
+   "uncertain": [
+    "mass_g",
+    "envelope_mm",
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -6.0,
+    -10.0,
+    0.0
+   ],
+   "max": [
+    50.0,
+    10.0,
+    9.0
+   ]
+  },
+  "mesh_triangles": 44
  },
  "waveshare_bus_servo_adapter": {
   "key": "waveshare_bus_servo_adapter",
