@@ -31,3 +31,6 @@ __pycache__/
 
 /apps/web/src/.generated/
 /pages-dist/
+
+# Open hardware references (download with scripts/fetch_hardware_refs.py)
+/references/hardware/cache/

@@ -16,7 +16,7 @@ from .base import CATEGORIES, Component, Hole, kgcm_to_nm, rpm_to_rad_s, si
 from . import bearings, fasteners  # noqa: E402
 
 _MODULES = [bearings, fasteners]
-for _name in ("feetech", "dynamixel", "cubemars", "motors", "electronics", "power", "wheels", "supplies"):
+for _name in ("feetech", "dynamixel", "cubemars", "hobby", "motors", "electronics", "arduino", "power", "wheels", "supplies"):
     try:
         _MODULES.append(__import__(f"{__name__}.{_name}", fromlist=["COMPONENTS"]))
     except ModuleNotFoundError as _e:  # pragma: no cover - only while building the library

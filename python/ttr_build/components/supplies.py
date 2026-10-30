@@ -31,7 +31,8 @@ def _psu(key, name, model, L, W, H, volts, amps, mass, price, holes_x, hole_y, u
         supplier_url=f"https://www.digikey.com/en/products/result?keywords={model}",
         datasheet_url=MW.format(model.rsplit("-", 1)[0]), envelope_mm=(L, W, H), holes=holes,
         specs={"voltage_v": volts, "current_a": amps, "power_w": round(volts * amps, 1), "input_vac": (85, 264),
-               "terminals": "AC L, AC N, FG, -V, +V", "uncertain": list(uncertain)},
+               "terminals": "AC L, AC N, FG, -V, +V", "uncertain": ["holes" if u.startswith("hole") else u.split(" (")[0] for u in uncertain],
+               "uncertain_notes": list(uncertain)},
         build=build, build_keepout=keepout)
 
 
@@ -56,7 +57,7 @@ CAN_ADAPTER = Component(
     envelope_mm=(56.0, 20.0, 9.0), holes=[],
     specs={"voltage_v": 5.0, "bus": "CAN 2.0 / CAN-FD up to 5 Mbit/s, SocketCAN (gs_usb) on Linux",
            "note": "CubeMars AK actuators speak CAN (MIT or servo mode); one adapter drives the whole bus with 120 ohm termination at both ends",
-           "uncertain": ["mass_g", "envelope_mm", "price_usd"]},
+           "uncertain": ["mass_g", "envelope_mm", "price_usd"], "no_mounting_holes": True},
     build=_can_build, build_keepout=None)
 
 COMPONENTS = [PSU_12V_150, PSU_48V_350, CAN_ADAPTER]

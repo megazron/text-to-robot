@@ -39,6 +39,7 @@ export function actuatorFamily(key: string): string {
   if (key.startsWith("feetech_sts")) return "feetech_sts";
   if (key.startsWith("dxl_")) return "dynamixel_x";
   if (key.startsWith("cubemars_")) return "cubemars_ak";
+  if (key.startsWith("hobby_")) return "hobby_pwm";
   if (key.startsWith("nema17")) return "stepper";
   return "dc_gearmotor";
 }
@@ -77,6 +78,7 @@ export function hornRadiusMm(key: string): number {
   if (key.startsWith("feetech_sts")) return 10;
   if (key.startsWith("dxl_")) return key.includes("xl330") ? 8 : key.includes("xh540") ? 12.5 : 10.25;
   if (key.startsWith("cubemars_")) return Number(s.hub_hole_pcd_mm ?? 30) / 2 + 4;
+  if (s.horn_radius_mm) return Number(s.horn_radius_mm);
   if (s.shaft_d_mm) return Number(s.shaft_d_mm) / 2;
   return 5;
 }
@@ -84,14 +86,16 @@ export function hornRadiusMm(key: string): number {
 // Reflected rotor inertia (kg m^2 at the output) = J_rotor * N^2. The catalog has gear ratios but no
 // rotor inertia, so J_rotor is a per-family estimate (+-50 %), the same table the MuJoCo converter uses
 // (python/ttr_mujoco/actuators.py).
-const ROTOR_INERTIA: Record<string, number> = { feetech_sts: 2.4e-7, dynamixel_x: 1.0e-7, cubemars_ak60: 3.0e-5, cubemars_ak70: 4.5e-5, cubemars_ak80: 6.0e-5, stepper: 5.4e-6, dc_gearmotor_37: 1.5e-6, dc_gearmotor_n20: 1.0e-8, dc_gearmotor: 1.0e-6 };
-const DEFAULT_RATIO: Record<string, number> = { feetech_sts: 345, dynamixel_x: 300, cubemars_ak: 9, stepper: 1, dc_gearmotor: 50 };
+// hobby_pwm: micro (SG90/MG90S) ~5e-9 kg m^2 coreless motor behind ~1:300; standard (MG996R/DS3218) ~1.2e-7 behind ~1:400
+const ROTOR_INERTIA: Record<string, number> = { hobby_pwm_micro: 5.0e-9, hobby_pwm: 1.2e-7, feetech_sts: 2.4e-7, dynamixel_x: 1.0e-7, cubemars_ak60: 3.0e-5, cubemars_ak70: 4.5e-5, cubemars_ak80: 6.0e-5, stepper: 5.4e-6, dc_gearmotor_37: 1.5e-6, dc_gearmotor_n20: 1.0e-8, dc_gearmotor: 1.0e-6 };
+const DEFAULT_RATIO: Record<string, number> = { hobby_pwm: 400, hobby_pwm_micro: 300, feetech_sts: 345, dynamixel_x: 300, cubemars_ak: 9, stepper: 1, dc_gearmotor: 50 };
 export function armature(key: string): number {
   const s = part(key).specs, fam = actuatorFamily(key);
   if (s.rotor_inertia_kgm2) return Number(s.rotor_inertia_kgm2) * Number(s.gear_ratio ?? 1) ** 2;
   const sub = fam === "cubemars_ak" ? `cubemars_${key.includes("ak80") ? "ak80" : key.includes("ak70") ? "ak70" : "ak60"}`
-    : fam === "dc_gearmotor" ? (key.startsWith("n20") ? "dc_gearmotor_n20" : key.includes("37d") ? "dc_gearmotor_37" : "dc_gearmotor") : fam;
-  const ratio = Number(s.gear_ratio) || DEFAULT_RATIO[fam] || 1;
+    : fam === "dc_gearmotor" ? (key.startsWith("n20") ? "dc_gearmotor_n20" : key.includes("37d") ? "dc_gearmotor_37" : "dc_gearmotor")
+    : fam === "hobby_pwm" && /sg90|mg90/.test(key) ? "hobby_pwm_micro" : fam;
+  const ratio = Number(s.gear_ratio) || DEFAULT_RATIO[sub] || DEFAULT_RATIO[fam] || 1;
   return ROTOR_INERTIA[sub] * ratio * ratio;
 }
 /** No-load output speed (rad/s): the end of the linear torque-speed line. */

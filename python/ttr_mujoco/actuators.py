@@ -22,6 +22,8 @@ from functools import lru_cache
 
 # Rotor inertia estimates (kg m^2) per actuator family -- motor-side, before the gearbox.
 ROTOR_INERTIA = {
+    # hobby PWM servos: ~7 mm coreless motor (SG90/MG90S), ~20 mm iron-core motor (MG996R/DS3218)
+    "hobby_pwm_micro": 5.0e-9, "hobby_pwm": 1.2e-7,
     # ~20 mm iron-core DC motor in the STS3215/3250 case
     "feetech_sts": 2.4e-7,
     # ~20 mm coreless DC motor in DYNAMIXEL X (XL/XM/XH)
@@ -34,7 +36,7 @@ ROTOR_INERTIA = {
     "dc_gearmotor_37": 1.5e-6, "dc_gearmotor_n20": 1.0e-8, "dc_gearmotor": 1.0e-6,
 }
 # Gear ratio fallback when the catalog does not say (family typical).
-DEFAULT_RATIO = {"feetech_sts": 345.0, "dynamixel_x": 300.0, "cubemars_ak": 9.0, "stepper": 1.0, "dc_gearmotor": 50.0}
+DEFAULT_RATIO = {"hobby_pwm": 400.0, "hobby_pwm_micro": 300.0, "feetech_sts": 345.0, "dynamixel_x": 300.0, "cubemars_ak": 9.0, "stepper": 1.0, "dc_gearmotor": 50.0}
 
 _CATALOG_PATH = os.path.normpath(os.path.join(os.path.dirname(__file__), "..", "..", "packages", "parts", "data", "catalog.json"))
 
@@ -54,8 +56,14 @@ def family_of(key: str) -> str:
     if key.startswith("feetech_sts"): return "feetech_sts"
     if key.startswith("dxl_"): return "dynamixel_x"
     if key.startswith("cubemars_"): return "cubemars_ak"
+    if key.startswith("hobby_"): return "hobby_pwm"
     if key.startswith("nema17"): return "stepper"
     return "dc_gearmotor"
+
+
+def _sub_family(key: str) -> str:
+    fam = family_of(key)
+    return "hobby_pwm_micro" if fam == "hobby_pwm" and ("sg90" in key or "mg90" in key) else fam
 
 
 def rotor_inertia(key: str) -> tuple[float, str]:
@@ -70,7 +78,8 @@ def rotor_inertia(key: str) -> tuple[float, str]:
     if fam == "dc_gearmotor":
         sub = "dc_gearmotor_n20" if key.startswith("n20") else "dc_gearmotor_37" if "37d" in key else "dc_gearmotor"
         return ROTOR_INERTIA[sub], f"estimate ({sub})"
-    return ROTOR_INERTIA[fam], f"estimate ({fam} motor)"
+    sub = _sub_family(key)
+    return ROTOR_INERTIA[sub], f"estimate ({sub} motor)"
 
 
 def actuator_rating(key: str) -> dict | None:
@@ -84,7 +93,7 @@ def actuator_rating(key: str) -> dict | None:
     except (KeyError, TypeError, ValueError):
         return None
     noload = float(s.get("no_load_speed_rad_s", speed))
-    ratio = float(s.get("gear_ratio") or DEFAULT_RATIO.get(family_of(key), 1.0))
+    ratio = float(s.get("gear_ratio") or DEFAULT_RATIO.get(_sub_family(key)) or DEFAULT_RATIO.get(family_of(key), 1.0))
     j, src = rotor_inertia(key)
     return {"key": key, "family": family_of(key), "rated_nm": rated, "peak_nm": peak, "speed_rad_s": speed,
             "no_load_speed_rad_s": noload, "gear_ratio": ratio, "rotor_inertia_kgm2": j,

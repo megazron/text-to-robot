@@ -1,0 +1,212 @@
+{
+ "about": "Open hardware the hobby-arm designer is checked against. Files download to references/hardware/cache/ (not committed). Only measurements from permissively licensed sources are copied into the code, each with its source. 'use' says what we take from it.",
+ "checked": "2026-10-27",
+ "items": [
+  {
+   "id": "so_arm100",
+   "kind": "arm_design",
+   "url": "https://github.com/TheRobotStudio/SO-ARM100/archive/refs/heads/main.zip",
+   "file": "so-arm100.zip",
+   "license": "Apache-2.0",
+   "redistributable": true,
+   "what": "SO-ARM100/101: 5 DOF + gripper, 6x Feetech STS3215. STEP, STL, URDF, MJCF.",
+   "use": "reference arm for bus-servo designs: link lengths from URDF joint origins, part sizes, STS3215 STEP"
+  },
+  {
+   "id": "menagerie_small_arms",
+   "kind": "simulation_model",
+   "git": "https://github.com/google-deepmind/mujoco_menagerie.git",
+   "sparse": [
+    "trs_so_arm100",
+    "robotstudio_so101",
+    "low_cost_robot_arm",
+    "dynamixel_2r"
+   ],
+   "dir": "mujoco_menagerie",
+   "license": "Apache-2.0 (trs_so_arm100, robotstudio_so101, low_cost_robot_arm), MIT (dynamixel_2r)",
+   "redistributable": true,
+   "what": "Tuned MuJoCo models of small arms.",
+   "use": "sanity reference for masses, inertias, actuator gains of small arms"
+  },
+  {
+   "id": "koch_v11",
+   "kind": "arm_design",
+   "url": "https://github.com/jess-moss/koch-v1-1/archive/refs/heads/main.zip",
+   "file": "koch-v1-1.zip",
+   "license": "Apache-2.0",
+   "redistributable": true,
+   "what": "Koch v1.1: 2x Dynamixel XL430 + 4x XL330, printable STL.",
+   "use": "reference small Dynamixel arm"
+  },
+  {
+   "id": "mearm_v3_dxf",
+   "kind": "arm_design",
+   "url": "https://raw.githubusercontent.com/mimeindustries/MeArm/master/hardware/Robot%20Chassis/v3/MeArmV3.dxf",
+   "file": "MeArmV3.dxf",
+   "license": "CC-BY-SA-3.0 (hardware)",
+   "redistributable": true,
+   "what": "MeArm v3: 4 DOF, 4x SG90/MG90S, 3 mm laser-cut parts.",
+   "use": "reference proportions and servo loads for the smallest SG90 arms (not copied: share-alike)"
+  },
+  {
+   "id": "sg90_step",
+   "kind": "component_cad",
+   "url": "https://raw.githubusercontent.com/FreeCAD/FreeCAD-library/master/Electrical%20Parts/Servos/SG-90/Servo-sg90.step",
+   "file": "sg90.step",
+   "license": "CC-BY-3.0 (FreeCAD-library)",
+   "redistributable": true,
+   "what": "TowerPro SG90 micro servo STEP.",
+   "use": "case, tab holes and output-shaft position of SG90"
+  },
+  {
+   "id": "futaba_s3003_step",
+   "kind": "component_cad",
+   "url": "https://raw.githubusercontent.com/FreeCAD/FreeCAD-library/master/Electrical%20Parts/Servos/Futaba3003/Futaba3003.stp",
+   "file": "futaba3003.step",
+   "license": "CC-BY-3.0 (FreeCAD-library)",
+   "redistributable": true,
+   "what": "Futaba S3003 standard-size servo STEP.",
+   "use": "standard-servo case and tab footprint (MG996R / DS3218 share the standard size; no open STEP of those exists)"
+  },
+  {
+   "id": "mg90s_class_step",
+   "kind": "component_cad",
+   "url": "https://raw.githubusercontent.com/adafruit/Adafruit_CAD_Parts/main/1143%20Micro%20Servo%20-%20High%20Torque%20Metal%20Gear/1143%20Micro%20Servo%20High%20Torque%20Metal%20Gear.step",
+   "file": "mg90s_1143.step",
+   "license": "MIT (Adafruit_CAD_Parts)",
+   "redistributable": true,
+   "what": "Adafruit 1143 metal-gear micro servo (MG90S class) STEP.",
+   "use": "MG90S case, tabs and output position"
+  },
+  {
+   "id": "sg90_horn_1arm",
+   "kind": "component_cad",
+   "url": "https://raw.githubusercontent.com/FreeCAD/FreeCAD-library/master/Electrical%20Parts/Servos/SG-90/SG90-1-arm-horn.step",
+   "file": "sg90_horn_1arm.step",
+   "license": "CC-BY-3.0 (FreeCAD-library)",
+   "redistributable": true,
+   "what": "SG90 single-arm horn STEP.",
+   "use": "horn outline, arm length, hole positions for printed horn pockets"
+  },
+  {
+   "id": "sg90_horn_2arm",
+   "kind": "component_cad",
+   "url": "https://raw.githubusercontent.com/FreeCAD/FreeCAD-library/master/Electrical%20Parts/Servos/SG-90/SG90-2-arms-horn.step",
+   "file": "sg90_horn_2arm.step",
+   "license": "CC-BY-3.0 (FreeCAD-library)",
+   "redistributable": true,
+   "what": "SG90 two-arm horn STEP.",
+   "use": "horn outline, arm length, hole positions for printed horn pockets"
+  },
+  {
+   "id": "sg90_horn_4arm",
+   "kind": "component_cad",
+   "url": "https://raw.githubusercontent.com/FreeCAD/FreeCAD-library/master/Electrical%20Parts/Servos/SG-90/SG90-4-arms-horn.step",
+   "file": "sg90_horn_4arm.step",
+   "license": "CC-BY-3.0 (FreeCAD-library)",
+   "redistributable": true,
+   "what": "SG90 cross (4-arm) horn STEP.",
+   "use": "horn outline, arm length, hole positions for printed horn pockets"
+  },
+  {
+   "id": "std_horn_4arm",
+   "kind": "component_cad",
+   "url": "https://raw.githubusercontent.com/FreeCAD/FreeCAD-library/master/Electrical%20Parts/Servos/Futaba3003/Futaba3003-4-arms-horn.step",
+   "file": "std_horn_4arm.step",
+   "license": "CC-BY-3.0 (FreeCAD-library)",
+   "redistributable": true,
+   "what": "standard servo 4-arm horn STEP.",
+   "use": "horn outline, arm length, hole positions for printed horn pockets"
+  },
+  {
+   "id": "std_horn_round",
+   "kind": "component_cad",
+   "url": "https://raw.githubusercontent.com/FreeCAD/FreeCAD-library/master/Electrical%20Parts/Servos/Futaba3003/Futaba3003-big-rounded-horn.stp",
+   "file": "std_horn_round.stp",
+   "license": "CC-BY-3.0 (FreeCAD-library)",
+   "redistributable": true,
+   "what": "standard servo round (disc) horn STEP.",
+   "use": "horn outline, arm length, hole positions for printed horn pockets"
+  },
+  {
+   "id": "pca9685_step",
+   "kind": "component_cad",
+   "url": "https://raw.githubusercontent.com/adafruit/Adafruit_CAD_Parts/main/815%20Servo%20Driver%2016%20Channel/815%20Servo%20Driver%2016%20Channel.step",
+   "file": "pca9685_815.step",
+   "license": "MIT (Adafruit_CAD_Parts)",
+   "redistributable": true,
+   "what": "Adafruit 815 PCA9685 16-channel servo driver STEP.",
+   "use": "board outline, hole pattern, header and terminal positions"
+  },
+  {
+   "id": "lm2596_step",
+   "kind": "component_cad",
+   "url": "https://raw.githubusercontent.com/FreeCAD/FreeCAD-library/master/Electrical%20Parts/DCDC/LM2596S_Buck_Module_43x21/LM2596S_Buck_Module_43x21.step",
+   "file": "lm2596.step",
+   "license": "CC-BY-3.0 (FreeCAD-library)",
+   "redistributable": true,
+   "what": "LM2596S 43x21 buck module STEP.",
+   "use": "outline and holes of the common buck module"
+  },
+  {
+   "id": "nano_step",
+   "kind": "component_cad",
+   "url": "https://raw.githubusercontent.com/FreeCAD/FreeCAD-library/master/Computing/SingleBoardComputers/Arduino/Nano-Rev3_0.step",
+   "file": "nano.step",
+   "license": "CC-BY-3.0 (FreeCAD-library)",
+   "redistributable": true,
+   "what": "Arduino Nano Rev3 STEP.",
+   "use": "outline, header and USB position"
+  },
+  {
+   "id": "bd_warehouse",
+   "kind": "cad_library",
+   "url": "https://github.com/gumyr/bd_warehouse/archive/refs/heads/main.zip",
+   "file": "bd_warehouse.zip",
+   "license": "Apache-2.0",
+   "redistributable": true,
+   "what": "build123d parts: ISO fasteners, bearings, gears, threads.",
+   "use": "fastener and bearing dimension tables"
+  },
+  {
+   "id": "nopscadlib",
+   "kind": "cad_library",
+   "url": "https://github.com/nophead/NopSCADlib/archive/refs/heads/master.zip",
+   "file": "nopscadlib.zip",
+   "license": "GPL-3.0",
+   "redistributable": true,
+   "what": "OpenSCAD vitamins: Arduino Uno/Nano PCB data, inserts, bearings, screws, polyholes.",
+   "use": "cross-check only (GPL: values are facts we verify against, no code copied)"
+  },
+  {
+   "id": "mg996r_datasheet",
+   "kind": "datasheet",
+   "url": "https://people.ece.cornell.edu/land/courses/ece4760/FinalProjects/f2017/kmv48_rp625/kmv48_rp625/kmv48_rp625/MG996RTowerPro.pdf",
+   "file": "MG996R.pdf",
+   "license": "manufacturer datasheet (reference)",
+   "redistributable": false,
+   "what": "TowerPro MG996R datasheet copy.",
+   "use": "torque, speed, stall current, dimensions"
+  },
+  {
+   "id": "sts3215_datasheet",
+   "kind": "datasheet",
+   "url": "https://core-electronics.com.au/attachments/uploads/sts3215-smart-servo-datasheet-translated.pdf",
+   "file": "STS3215.pdf",
+   "license": "manufacturer datasheet (reference)",
+   "redistributable": false,
+   "what": "Feetech STS3215 datasheet (translated).",
+   "use": "variants, torque, speed, current"
+  },
+  {
+   "id": "eezybotarm",
+   "kind": "arm_design",
+   "url": "https://www.thingiverse.com/thing:1454048",
+   "download": false,
+   "license": "unconfirmed, reported CC-BY-NC",
+   "redistributable": false,
+   "what": "EEZYbotARM MK2: 3x MG996R + SG90 gripper, parallelogram linkage.",
+   "use": "reference only for MG996R arm proportions; nothing downloaded or copied"
+  }
+ ]
+}

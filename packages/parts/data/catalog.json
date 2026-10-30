@@ -1,4 +1,161 @@
 {
+ "arduino_nano_v3": {
+  "key": "arduino_nano_v3",
+  "name": "Arduino Nano V3 (ATmega328P)",
+  "category": "compute",
+  "mass_g": 7.0,
+  "price_usd": 24.9,
+  "supplier_url": "https://store.arduino.cc/products/arduino-nano",
+  "datasheet_url": "https://docs.arduino.cc/resources/datasheets/A000005-datasheet.pdf",
+  "envelope_mm": [
+   44.7,
+   17.8,
+   14.1
+  ],
+  "holes": [],
+  "specs": {
+   "voltage_v": 5.0,
+   "input_v": [
+    7,
+    12
+   ],
+   "mcu": "ATmega328P",
+   "pwm_pins": [
+    3,
+    5,
+    6,
+    9,
+    10,
+    11
+   ],
+   "i2c": "A4 SDA, A5 SCL",
+   "usb": "Mini-B (clones: Micro-B / USB-C)",
+   "fqbn": "arduino:avr:nano",
+   "mount": "printed clip around the board edges (header pins below)",
+   "no_mounting_holes": true
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -1.5,
+    0.0,
+    -8.5
+   ],
+   "max": [
+    43.18,
+    17.78,
+    5.6
+   ]
+  },
+  "mesh_triangles": 200
+ },
+ "arduino_uno_r3": {
+  "key": "arduino_uno_r3",
+  "name": "Arduino Uno R3 (ATmega328P, 5 V, 16 MHz)",
+  "category": "compute",
+  "mass_g": 25.0,
+  "price_usd": 27.6,
+  "supplier_url": "https://store.arduino.cc/products/arduino-uno-rev3",
+  "datasheet_url": "https://docs.arduino.cc/resources/datasheets/A000066-datasheet.pdf",
+  "envelope_mm": [
+   74.8,
+   53.3,
+   12.6
+  ],
+  "holes": [
+   {
+    "pos": [
+     13.97,
+     2.54,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.2,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     15.24,
+     50.8,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.2,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     66.04,
+     7.62,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.2,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     66.04,
+     35.56,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.2,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "voltage_v": 5.0,
+   "input_v": [
+    7,
+    12
+   ],
+   "mcu": "ATmega328P",
+   "pwm_pins": [
+    3,
+    5,
+    6,
+    9,
+    10,
+    11
+   ],
+   "i2c": "A4 SDA, A5 SCL",
+   "usb": "USB-B",
+   "fqbn": "arduino:avr:uno",
+   "note": "Never power servos from the 5 V pin; feed them through the driver's V+ terminal and join grounds.",
+   "hole_source": "Arduino UNO R3 drawing (NopSCADlib ArduinoUno3 agrees)"
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -6.2,
+    0.0,
+    0.0
+   ],
+   "max": [
+    68.58,
+    53.34,
+    12.6
+   ]
+  },
+  "mesh_triangles": 698
+ },
  "ball_caster_pololu_2692": {
   "key": "ball_caster_pololu_2692",
   "name": "Pololu ball caster, 1\" POM ball on ball bearings (#2692)",
@@ -660,6 +817,78 @@
    ]
   },
   "mesh_triangles": 498
+ },
+ "buck_lm2596": {
+  "key": "buck_lm2596",
+  "name": "LM2596S adjustable buck module (3 A, 43 x 21 mm)",
+  "category": "misc",
+  "mass_g": 12.0,
+  "price_usd": 3.0,
+  "supplier_url": "https://www.amazon.com/s?k=LM2596S+buck+module",
+  "datasheet_url": "https://www.ti.com/lit/ds/symlink/lm2596.pdf",
+  "envelope_mm": [
+   43.2,
+   21.0,
+   12.6
+  ],
+  "holes": [
+   {
+    "pos": [
+     6.7,
+     18.6,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.0,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     35.8,
+     2.3,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.0,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "input_v": [
+    4.5,
+    40
+   ],
+   "output_v": [
+    1.25,
+    35
+   ],
+   "current_a": 3.0,
+   "voltage_v": 5.0,
+   "note": "3 A continuous: enough for SG90/MG90S arms, too small for MG996R arms",
+   "geometry_source": "FreeCAD-library LM2596S_Buck_Module_43x21.step (CC-BY 3.0)"
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "max": [
+    43.2,
+    21.0,
+    12.6
+   ]
+  },
+  "mesh_triangles": 404
  },
  "cubemars_ak60_6": {
   "key": "cubemars_ak60_6",
@@ -2235,6 +2464,42 @@
    ]
   },
   "mesh_triangles": 636
+ },
+ "dc_jack_5521_panel": {
+  "key": "dc_jack_5521_panel",
+  "name": "Panel-mount DC barrel jack 5.5 x 2.1 mm (M8 thread)",
+  "category": "misc",
+  "mass_g": 4.0,
+  "price_usd": 1.0,
+  "supplier_url": "https://www.adafruit.com/product/610",
+  "datasheet_url": "https://www.adafruit.com/product/610",
+  "envelope_mm": [
+   11.0,
+   11.0,
+   18.0
+  ],
+  "holes": [],
+  "specs": {
+   "panel_hole_mm": 8.0,
+   "panel_max_mm": 4.0,
+   "current_a": 5.0,
+   "mount": "8 mm hole, nut behind a <=4 mm wall",
+   "no_mounting_holes": true
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -5.5,
+    -5.5,
+    -18.0
+   ],
+   "max": [
+    5.5,
+    5.5,
+    0.0
+   ]
+  },
+  "mesh_triangles": 220
  },
  "dxl_u2d2": {
   "key": "dxl_u2d2",
@@ -5291,6 +5556,1290 @@
   },
   "mesh_triangles": 3152
  },
+ "hobby_ds3218": {
+  "key": "hobby_ds3218",
+  "name": "DSSERVO DS3218 20 kg digital servo (metal gears) + round horn",
+  "category": "actuator",
+  "mass_g": 60.0,
+  "price_usd": 14.0,
+  "supplier_url": "https://www.amazon.com/s?k=DS3218",
+  "datasheet_url": "https://servodatabase.com/servo/dsservo/ds3218-pro",
+  "envelope_mm": [
+   54.5,
+   35.5,
+   42.2
+  ],
+  "holes": [
+   {
+    "pos": [
+     15.35,
+     5.0,
+     -17.000000000000004
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 4.4,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     15.35,
+     -5.0,
+     -17.000000000000004
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 4.4,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -34.15,
+     5.0,
+     -17.000000000000004
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 4.4,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -34.15,
+     -5.0,
+     -17.000000000000004
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 4.4,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     15.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     10.607,
+     10.607,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     0.0,
+     15.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -10.607,
+     10.607,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -15.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -10.607,
+     -10.607,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -0.0,
+     -15.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     10.607,
+     -10.607,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   }
+  ],
+  "specs": {
+   "voltage_v": 6.8,
+   "voltage_range_v": [
+    5.0,
+    6.8
+   ],
+   "stall_torque_nm": 2.1084,
+   "rated_torque_nm": 0.6325,
+   "stall_torque_kgcm_at_v": {
+    "5.0": 19.0,
+    "6.8": 21.5
+   },
+   "no_load_speed_s_per_60_at_v": {
+    "5.0": 0.16,
+    "6.8": 0.14
+   },
+   "no_load_speed_rad_s": 7.48,
+   "stall_current_a": 2.7,
+   "current_a": 2.7,
+   "idle_current_ma": 10,
+   "control": "PWM 50 Hz, 500-2500 us for 180 deg",
+   "pulse_us": [
+    500,
+    2500
+   ],
+   "range_deg": 180,
+   "deadband_us": 3,
+   "feedback": "none (open-loop position servo)",
+   "gears": "metal (copper/aluminium)",
+   "spline": "25T, 5.9 mm",
+   "horn": "disc",
+   "horn_radius_mm": 17.75,
+   "horn_screw": "M2 self-tapping (horn kit)",
+   "case_screw": "M3 through tabs",
+   "connector": "3-pin 2.54 mm: brown GND, red V+, orange signal",
+   "case_mm": [
+    40.0,
+    20.0,
+    34.0
+   ],
+   "output_offset_mm": 9.4,
+   "tab_hole_spacing_mm": [
+    49.5,
+    10.0
+   ],
+   "geometry_source": "https://github.com/FreeCAD/FreeCAD-library/tree/master/Electrical%20Parts/Servos Futaba3003.stp tab pattern, resized to the DS3218 40 x 20 x 40.5 outline",
+   "uncertain": [
+    "stall_current_a",
+    "output_offset_mm",
+    "case_mm",
+    "horn"
+   ],
+   "uncertain_notes": [
+    "stall_current_a (servodatabase: 2.1-2.9 A)",
+    "output_offset_mm",
+    "case_mm (height split estimated)",
+    "horn (stock horn is aluminium; modelled with the round horn outline)"
+   ]
+  },
+  "output_frame": [
+   [
+    0.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "bbox_mm": {
+   "min": [
+    -36.65,
+    -17.75,
+    -41.7
+   ],
+   "max": [
+    17.85,
+    17.75,
+    0.5
+   ]
+  },
+  "mesh_triangles": 2308
+ },
+ "hobby_mg90s": {
+  "key": "hobby_mg90s",
+  "name": "TowerPro MG90S micro servo (metal gears) + cross horn",
+  "category": "actuator",
+  "mass_g": 13.4,
+  "price_usd": 4.0,
+  "supplier_url": "https://www.adafruit.com/product/1143",
+  "datasheet_url": "https://components101.com/motors/mg90s-metal-gear-servo-motor",
+  "envelope_mm": [
+   38.22,
+   17.0,
+   31.5
+  ],
+  "holes": [
+   {
+    "pos": [
+     9.700000000000001,
+     0.0,
+     -9.899999999999999
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 1.7,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -19.9,
+     0.0,
+     -9.899999999999999
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 1.7,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     5,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.4,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -5,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.4,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     7,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.4,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -7,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.4,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     9,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.4,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -9,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.4,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     11,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.4,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -11,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.4,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     13,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.4,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -13,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.4,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     15,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.4,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -15,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.4,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     17,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.4,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -17,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.4,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     0.0,
+     5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.4,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     0.0,
+     -5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.4,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     0.0,
+     7,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.4,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     0.0,
+     -7,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.4,
+    "thread": "M2"
+   }
+  ],
+  "specs": {
+   "voltage_v": 6.0,
+   "voltage_range_v": [
+    4.8,
+    6.0
+   ],
+   "stall_torque_nm": 0.2157,
+   "rated_torque_nm": 0.0647,
+   "stall_torque_kgcm_at_v": {
+    "4.8": 1.8,
+    "6.0": 2.2
+   },
+   "no_load_speed_s_per_60_at_v": {
+    "4.8": 0.1,
+    "6.0": 0.08
+   },
+   "no_load_speed_rad_s": 13.09,
+   "stall_current_a": 0.7,
+   "current_a": 0.7,
+   "idle_current_ma": 10,
+   "control": "PWM 50 Hz, 500-2400 us for 180 deg",
+   "pulse_us": [
+    500,
+    2400
+   ],
+   "range_deg": 180,
+   "deadband_us": 5,
+   "feedback": "none (open-loop position servo)",
+   "gears": "metal",
+   "spline": "21T, 4.8 mm",
+   "horn": "cross",
+   "horn_radius_mm": 17.5,
+   "horn_screw": "M2 self-tapping (horn kit)",
+   "case_screw": "M2 self-tapping (kit screws)",
+   "connector": "3-pin 2.54 mm: brown GND, red V+, orange signal",
+   "case_mm": [
+    22.8,
+    12.0,
+    22.7
+   ],
+   "output_offset_mm": 5.1,
+   "tab_hole_spacing_mm": [
+    29.6,
+    0.0
+   ],
+   "geometry_source": "https://github.com/adafruit/Adafruit_CAD_Parts/tree/main/1143%20Micro%20Servo%20-%20High%20Torque%20Metal%20Gear (MIT)",
+   "uncertain": [
+    "stall_current_a",
+    "tab_hole_spacing_mm"
+   ],
+   "uncertain_notes": [
+    "stall_current_a",
+    "tab_hole_spacing_mm (from the Adafruit 1143 model; MG90S clones vary +-1 mm)"
+   ]
+  },
+  "output_frame": [
+   [
+    0.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "bbox_mm": {
+   "min": [
+    -20.75,
+    -8.5,
+    -28.7
+   ],
+   "max": [
+    17.47,
+    8.5,
+    2.8
+   ]
+  },
+  "mesh_triangles": 3068
+ },
+ "hobby_mg996r": {
+  "key": "hobby_mg996r",
+  "name": "TowerPro MG996R standard servo (metal gears) + round horn",
+  "category": "actuator",
+  "mass_g": 55.0,
+  "price_usd": 6.0,
+  "supplier_url": "https://www.towerpro.com.tw/product/mg996r/",
+  "datasheet_url": "https://people.ece.cornell.edu/land/courses/ece4760/FinalProjects/f2017/kmv48_rp625/kmv48_rp625/kmv48_rp625/MG996RTowerPro.pdf",
+  "envelope_mm": [
+   54.5,
+   35.5,
+   44.6
+  ],
+  "holes": [
+   {
+    "pos": [
+     15.35,
+     5.0,
+     -18.3
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 4.4,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     15.35,
+     -5.0,
+     -18.3
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 4.4,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -34.15,
+     5.0,
+     -18.3
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 4.4,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -34.15,
+     -5.0,
+     -18.3
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 4.4,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     15.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     10.607,
+     10.607,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     0.0,
+     15.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -10.607,
+     10.607,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -15.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -10.607,
+     -10.607,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -0.0,
+     -15.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     10.607,
+     -10.607,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.5,
+    "thread": "M2"
+   }
+  ],
+  "specs": {
+   "voltage_v": 6.0,
+   "voltage_range_v": [
+    4.8,
+    6.0
+   ],
+   "stall_torque_nm": 1.0787,
+   "rated_torque_nm": 0.3236,
+   "stall_torque_kgcm_at_v": {
+    "4.8": 9.4,
+    "6.0": 11.0
+   },
+   "no_load_speed_s_per_60_at_v": {
+    "4.8": 0.17,
+    "6.0": 0.14
+   },
+   "no_load_speed_rad_s": 7.48,
+   "stall_current_a": 2.5,
+   "current_a": 2.5,
+   "idle_current_ma": 10,
+   "control": "PWM 50 Hz, 500-2500 us for 180 deg",
+   "pulse_us": [
+    500,
+    2500
+   ],
+   "range_deg": 180,
+   "deadband_us": 5,
+   "feedback": "none (open-loop position servo)",
+   "gears": "metal",
+   "spline": "25T, 5.9 mm",
+   "horn": "disc",
+   "horn_radius_mm": 17.75,
+   "horn_screw": "M2 self-tapping (horn kit)",
+   "case_screw": "M3 (or M2.5) through tabs",
+   "connector": "3-pin 2.54 mm: brown GND, red V+, orange signal",
+   "case_mm": [
+    40.7,
+    19.7,
+    36.4
+   ],
+   "output_offset_mm": 9.4,
+   "tab_hole_spacing_mm": [
+    49.5,
+    10.0
+   ],
+   "geometry_source": "https://github.com/FreeCAD/FreeCAD-library/tree/master/Electrical%20Parts/Servos Futaba3003.stp + big rounded horn (CC-BY 3.0), resized to the MG996R outline",
+   "note": "Stall current 2.5 A at 6 V: budget the supply for two stalled servos at once.",
+   "uncertain": [
+    "output_offset_mm",
+    "range_deg"
+   ],
+   "uncertain_notes": [
+    "output_offset_mm (from the Futaba S3003 model)",
+    "range_deg (travel is 120-180 deg depending on batch)"
+   ]
+  },
+  "output_frame": [
+   [
+    0.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "bbox_mm": {
+   "min": [
+    -36.65,
+    -17.75,
+    -44.1
+   ],
+   "max": [
+    17.85,
+    17.75,
+    0.5
+   ]
+  },
+  "mesh_triangles": 2308
+ },
+ "hobby_sg90": {
+  "key": "hobby_sg90",
+  "name": "TowerPro SG90 micro servo (nylon gears) + cross horn",
+  "category": "actuator",
+  "mass_g": 9.0,
+  "price_usd": 2.5,
+  "supplier_url": "https://www.adafruit.com/product/169",
+  "datasheet_url": "https://docs.m5stack.com/en/accessory/SG90_Servo",
+  "envelope_mm": [
+   38.87,
+   17.0,
+   31.5
+  ],
+  "holes": [
+   {
+    "pos": [
+     8.25,
+     0.0,
+     -12.849999999999998
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.0,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -18.65,
+     0.0,
+     -12.849999999999998
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.0,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     5,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.4,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -5,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.4,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     7,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.4,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -7,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.4,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     9,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.4,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -9,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.4,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     11,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.4,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -11,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.4,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     13,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.4,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -13,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.4,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     15,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.4,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -15,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.4,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     17,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.4,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -17,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.4,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     0.0,
+     5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.4,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     0.0,
+     -5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.4,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     0.0,
+     7,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.4,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     0.0,
+     -7,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 1.4,
+    "thread": "M2"
+   }
+  ],
+  "specs": {
+   "voltage_v": 4.8,
+   "voltage_range_v": [
+    4.8,
+    4.8
+   ],
+   "stall_torque_nm": 0.1765,
+   "rated_torque_nm": 0.0529,
+   "stall_torque_kgcm_at_v": {
+    "4.8": 1.8
+   },
+   "no_load_speed_s_per_60_at_v": {
+    "4.8": 0.1
+   },
+   "no_load_speed_rad_s": 10.472,
+   "stall_current_a": 0.65,
+   "current_a": 0.65,
+   "idle_current_ma": 10,
+   "control": "PWM 50 Hz, 500-2400 us for 180 deg",
+   "pulse_us": [
+    500,
+    2400
+   ],
+   "range_deg": 180,
+   "deadband_us": 10,
+   "feedback": "none (open-loop position servo)",
+   "gears": "nylon",
+   "spline": "21T, 4.8 mm",
+   "horn": "cross",
+   "horn_radius_mm": 17.5,
+   "horn_screw": "M2 self-tapping (horn kit)",
+   "case_screw": "M2 self-tapping (kit screws)",
+   "connector": "3-pin 2.54 mm: brown GND, red V+, orange signal",
+   "case_mm": [
+    22.8,
+    11.8,
+    22.7
+   ],
+   "output_offset_mm": 5.2,
+   "tab_hole_spacing_mm": [
+    26.9,
+    0.0
+   ],
+   "geometry_source": "https://github.com/FreeCAD/FreeCAD-library/tree/master/Electrical%20Parts/Servos Servo-sg90.step + SG90-4-arms-horn.step (CC-BY 3.0)",
+   "note": "Nylon gears strip under shock loads; fine for grippers and light wrists.",
+   "uncertain": [
+    "stall_current_a",
+    "pulse_us"
+   ],
+   "uncertain_notes": [
+    "stall_current_a (no primary source; 0.65 A is the commonly measured value)",
+    "pulse_us (varies by batch)"
+   ]
+  },
+  "output_frame": [
+   [
+    0.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "bbox_mm": {
+   "min": [
+    -21.4,
+    -8.5,
+    -28.7
+   ],
+   "max": [
+    17.47,
+    8.5,
+    2.8
+   ]
+  },
+  "mesh_triangles": 3068
+ },
  "horn_dxl_hn12_n101": {
   "key": "horn_dxl_hn12_n101",
   "name": "ROBOTIS HN12-N101 X430 output horn (8x M2 on PCD 16)",
@@ -6420,6 +7969,106 @@
   },
   "output_frame": null
  },
+ "pca9685_16ch": {
+  "key": "pca9685_16ch",
+  "name": "Adafruit PCA9685 16-channel 12-bit PWM/servo driver (#815)",
+  "category": "motor_driver",
+  "mass_g": 9.0,
+  "price_usd": 14.95,
+  "supplier_url": "https://www.adafruit.com/product/815",
+  "datasheet_url": "https://learn.adafruit.com/16-channel-pwm-servo-driver",
+  "envelope_mm": [
+   62.2,
+   25.4,
+   10.2
+  ],
+  "holes": [
+   {
+    "pos": [
+     3.21,
+     3.18,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M2.5"
+   },
+   {
+    "pos": [
+     59.01,
+     3.18,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M2.5"
+   },
+   {
+    "pos": [
+     3.21,
+     22.18,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M2.5"
+   },
+   {
+    "pos": [
+     59.01,
+     22.18,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M2.5"
+   }
+  ],
+  "specs": {
+   "voltage_v": 5.0,
+   "logic_v": [
+    3.3,
+    5.0
+   ],
+   "servo_v_max": 6.0,
+   "channels": 16,
+   "pwm_bits": 12,
+   "i2c_address": "0x40",
+   "library": "Adafruit PWM Servo Driver Library",
+   "power": "servo V+ via the screw terminal; add 470-1000 uF across V+/GND",
+   "geometry_source": "Adafruit_CAD_Parts 815 (MIT)"
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "max": [
+    62.23,
+    25.4,
+    10.17
+   ]
+  },
+  "mesh_triangles": 636
+ },
  "pololu_37d_30to1_64cpr": {
   "key": "pololu_37d_30to1_64cpr",
   "name": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
@@ -6946,6 +8595,11 @@
    "uncertain": [
     "mass_g",
     "price_usd",
+    "holes"
+   ],
+   "uncertain_notes": [
+    "mass_g",
+    "price_usd",
     "hole positions (taken from the LRS-75 pattern scaled to the case)"
    ]
   },
@@ -7121,6 +8775,11 @@
    "uncertain": [
     "mass_g",
     "price_usd",
+    "holes"
+   ],
+   "uncertain_notes": [
+    "mass_g",
+    "price_usd",
     "hole positions (from the case outline, not the drawing)"
    ]
   },
@@ -7138,6 +8797,119 @@
    ]
   },
   "mesh_triangles": 684
+ },
+ "psu_5v4a_adapter": {
+  "key": "psu_5v4a_adapter",
+  "name": "5 V 4 A wall adapter, 5.5 x 2.1 mm plug (UL listed)",
+  "category": "misc",
+  "mass_g": 180.0,
+  "price_usd": 12.0,
+  "supplier_url": "https://www.adafruit.com/product/1466",
+  "datasheet_url": "https://www.adafruit.com/product/1466",
+  "envelope_mm": [
+   90.0,
+   50.0,
+   32.0
+  ],
+  "holes": [],
+  "specs": {
+   "voltage_v": 5.0,
+   "current_a": 4.0,
+   "mount": "off-board, cable to the panel jack",
+   "no_mounting_holes": true
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    -25.0,
+    0.0
+   ],
+   "max": [
+    90.0,
+    25.0,
+    32.0
+   ]
+  },
+  "mesh_triangles": 12
+ },
+ "psu_5v_lrs50": {
+  "key": "psu_5v_lrs50",
+  "name": "Mean Well LRS-50-5 enclosed PSU, 5 V 10 A (50 W)",
+  "category": "misc",
+  "mass_g": 230.0,
+  "price_usd": 13.0,
+  "supplier_url": "https://www.digikey.com/en/products/result?keywords=LRS-50-5",
+  "datasheet_url": "https://www.meanwell.com/Upload/PDF/LRS-50/LRS-50-SPEC.PDF",
+  "envelope_mm": [
+   99.0,
+   82.0,
+   30.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     12.0,
+     41.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     87.0,
+     41.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "voltage_v": 5.0,
+   "current_a": 10.0,
+   "power_w": 50.0,
+   "input_vac": [
+    85,
+    264
+   ],
+   "terminals": "AC L, AC N, FG, -V, +V",
+   "uncertain": [
+    "mass_g",
+    "price_usd",
+    "holes"
+   ],
+   "uncertain_notes": [
+    "mass_g",
+    "price_usd",
+    "hole positions (from the LRS-50 outline, not the drawing)"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "max": [
+    99.0,
+    82.0,
+    30.0
+   ]
+  },
+  "mesh_triangles": 452
  },
  "realsense_d435i": {
   "key": "realsense_d435i",
@@ -9131,7 +10903,8 @@
     "mass_g",
     "envelope_mm",
     "price_usd"
-   ]
+   ],
+   "no_mounting_holes": true
   },
   "output_frame": null,
   "bbox_mm": {
