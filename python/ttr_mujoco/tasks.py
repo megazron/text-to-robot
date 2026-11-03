@@ -366,7 +366,7 @@ def arm_payload_hold(xml, lay, payload, claimed_reach):
                f"worst continuous utilisation {wj[0]:.2f}x rated at {wj[1]}" if wj[0] is not None else f"no continuous ratings known; worst {wp[0]:.2f}x peak at {wp[1]}")) if passed else \
               "; ".join(x for x in [
                   "simulation diverged" if not ok else "",
-                  f"mean holding torque exceeds the continuous rating at {', '.join(f'{j} ({util[j]['util_rated']:.2f}x rated)' for j in over)}" if over else "",
+                  "mean holding torque exceeds the continuous rating at " + ", ".join(f"{j} ({util[j]['util_rated']:.2f}x rated)" for j in over) if over else "",
                   f"torque saturates at the peak/speed limit at {_names(sat)}" if sat else "",
                   f"cannot hold position within {TRACK_HOLD_RAD} rad at {_names(bad)}" if bad else ""] if x)
         results[label] = _result(passed, why, shoulder=lay.shoulder, shoulder_target_rad=_r(pose.get(lay.shoulder)) if lay.shoulder else None,
@@ -438,7 +438,7 @@ def arm_speed(xml, lay, payload):
     ws = _worst(util, "saturated_frac")
     why = (f"{T:.2f} s move at {int(SPEED_FRACTION*100)} % rated speed tracks within {TRACK_MOVE_RAD} rad; most saturated {ws[1]} ({ws[0]*100:.0f} % of the move)"
            if passed else "; ".join(x for x in ["simulation diverged" if not ok else "",
-                                               f"lags more than {TRACK_MOVE_RAD} rad at {', '.join(f'{j} ({util[j]['max_err']:.3f} rad, saturated {util[j]['saturated_frac']*100:.0f} %)' for j in late)}" if late else "",
+                                               f"lags more than {TRACK_MOVE_RAD} rad at " + ", ".join(f"{j} ({util[j]['max_err']:.3f} rad, saturated {util[j]['saturated_frac']*100:.0f} %)" for j in late) if late else "",
                                                "; ".join(f"{j} needs {need[j]['needs_nm']} N m at {need[j]['at_speed_rad_s']} rad/s where the torque-speed line allows {need[j]['available_nm']} N m"
                                                          for j in util if need.get(j, {}).get("ideal_worst_vs_available", 0) > 1),
                                                f"does not settle within {TRACK_HOLD_RAD} rad at {_names(unsettled)}" if unsettled else ""] if x))

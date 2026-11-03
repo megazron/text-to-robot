@@ -7,6 +7,9 @@ import math
 import unittest
 from pathlib import Path
 
+from _deps import require
+require("build123d")  # ttr_build solids; skipped on installs without it
+
 from ttr_build.components import get
 
 ROOT = Path(__file__).resolve().parents[2]
