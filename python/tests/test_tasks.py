@@ -183,3 +183,11 @@ class ConverterArmatureTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class PackagedCatalogTests(unittest.TestCase):
+    def test_packaged_parts_catalog_matches_the_repo_catalog(self):
+        # pip-installed ttr_mujoco reads its own copy; it must stay identical to packages/parts/data/catalog.json
+        root = Path(__file__).resolve().parents[2]
+        self.assertEqual((root / "python/ttr_mujoco/parts_catalog.json").read_bytes(), (root / "packages/parts/data/catalog.json").read_bytes(),
+                         "run: cp packages/parts/data/catalog.json python/ttr_mujoco/parts_catalog.json")

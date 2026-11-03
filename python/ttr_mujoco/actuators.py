@@ -41,14 +41,20 @@ DEFAULT_RATIO = {"hobby_pwm": 400.0, "hobby_pwm_micro": 300.0, "feetech_sts": 34
 _CATALOG_PATH = os.path.normpath(os.path.join(os.path.dirname(__file__), "..", "..", "packages", "parts", "data", "catalog.json"))
 
 
+# a copy ships inside the package (pip installs have no packages/ tree); tests keep it identical to the repo catalog
+_PACKAGED_CATALOG = os.path.join(os.path.dirname(__file__), "parts_catalog.json")
+
+
 @lru_cache(maxsize=1)
 def catalog() -> dict:
-    path = os.environ.get("TTR_PARTS_CATALOG", _CATALOG_PATH)
-    try:
-        with open(path, encoding="utf8") as f:
-            return json.load(f)
-    except OSError:
-        return {}
+    for path in (os.environ.get("TTR_PARTS_CATALOG"), _CATALOG_PATH, _PACKAGED_CATALOG):
+        if not path: continue
+        try:
+            with open(path, encoding="utf8") as f:
+                return json.load(f)
+        except OSError:
+            continue
+    return {}
 
 
 def family_of(key: str) -> str:

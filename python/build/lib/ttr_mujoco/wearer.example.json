@@ -1,0 +1,15 @@
+{
+  "dimension_source": "Illustrative dimensions only; replace with measurements including clothing and padding",
+  "height_m": 1.75,
+  "mass_kg": 75,
+  "head_width_m": 0.165,
+  "head_depth_m": 0.205,
+  "head_height_m": 0.235,
+  "hip_width_m": 0.32,
+  "hip_depth_m": 0.23,
+  "thigh_diameter_m": 0.16,
+  "shank_diameter_m": 0.105,
+  "upper_arm_diameter_m": 0.095,
+  "forearm_diameter_m": 0.075,
+  "padding_m": 0.005
+}
