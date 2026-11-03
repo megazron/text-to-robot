@@ -6,34 +6,34 @@
 
 Interpreted as: 6-DOF serial arm · parallel gripper
 
-**6-DOF arm, 420 mm reach, 0.1 kg payload, Feetech STS serial-bus servos (12 V)**
+**6-DOF arm, 455 mm reach, 0.1 kg payload, ROBOTIS DYNAMIXEL X-series (12 V)**
 
-Parts cost **$222.28** · printed structure 8 parts, 354 g · checks passed 22/22
+Parts cost **$1151.04** · printed structure 8 parts, 417 g · checks passed 22/22
 
 ## What it can do
 
 | | |
 |---|--:|
-| reach m | 0.42 |
+| reach m | 0.455 |
 | payload kg | 0.1 |
-| mass kg | 0.759 |
-| actuators | Feetech STS serial-bus servos (12 V) |
-| max joint speed rad s | 3.32 |
-| grip force n | 14 |
-| holding current a | 2.49 |
-| upper arm m | 0.093 |
-| forearm m | 0.137 |
+| mass kg | 0.95 |
+| actuators | ROBOTIS DYNAMIXEL X-series (12 V) |
+| max joint speed rad s | 3.86 |
+| grip force n | 6 |
+| holding current a | 1.82 |
+| upper arm m | 0.114 |
+| forearm m | 0.149 |
 
 ## Actuators (sized from this robot's own loads)
 
 | Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
 |---|---|--:|--:|--:|--:|
-| base_yaw | feetech_sts3215_c047 | 0 | 0.9807 / 2.942 | 99x | 4.48 |
-| shoulder_pitch | feetech_sts3250 | 1.944 | 1.5691 / 4.9033 | 2.52x | 4.98 |
-| elbow_pitch | feetech_sts3215_c047 | 1.238 | 0.9807 / 2.942 | 2.38x | 3.32 |
-| forearm_roll | feetech_sts3215_c047 | 0.007 | 0.9807 / 2.942 | 99x | 4.48 |
-| wrist_pitch | feetech_sts3215_c047 | 0.473 | 0.9807 / 2.942 | 6.23x | 4.48 |
-| wrist_roll | feetech_sts3215_c047 | 0.001 | 0.9807 / 2.942 | 99x | 4.48 |
+| base_yaw | dxl_xl430_w250 | 0 | 0.42 / 1.4 | 99x | 4.49 |
+| shoulder_pitch | dxl_xh540_w270 | 2.32 | 2.97 / 9.9 | 4.27x | 3.86 |
+| elbow_pitch | dxl_xm430_w350 | 1.355 | 1.23 / 4.1 | 3.03x | 3.94 |
+| forearm_roll | dxl_xl430_w250 | 0.009 | 0.42 / 1.4 | 99x | 5.67 |
+| wrist_pitch | dxl_xl430_w250 | 0.488 | 0.42 / 1.4 | 2.87x | 4.65 |
+| wrist_roll | dxl_xl430_w250 | 0.001 | 0.42 / 1.4 | 99x | 5.67 |
 
 ## Engineering checks
 
@@ -53,10 +53,10 @@ All 22 checks pass (torque, speed, power, stability, print-bed fit, grip). Detai
 
 | | Test | Result |
 |---|---|---|
-| ✅ | payload hold | stretched_plus: holds 0.1 kg with the arm stretched out for 3 s; worst continuous utilisation 0.92x rated at elbow_pitch | stretched_minus: holds 0.1 kg with the arm stretched out for 3 s; worst continuous utilisation 0.92x rated at elbow_pitch |
-| ✅ | reach | TCP 0.450 m from the shoulder axis with the payload, claimed 0.450 m (tolerance 9 mm) |
-| ✅ | speed | 1.47 s move at 80 % rated speed tracks within 0.1 rad; most saturated wrist_roll (0 % of the move) |
-| ✅ | grip | holds 0.1 kg against its weight with friction 0.5: slip 0.1 mm in 3 s, clamp force 27.1 N (needs >= 1.0 N), gripper limited to its rated (continuous) torque |
+| ✅ | payload hold | stretched_plus: holds 0.1 kg with the arm stretched out for 3 s; worst continuous utilisation 0.89x rated at wrist_pitch | stretched_minus: holds 0.1 kg with the arm stretched out for 3 s; worst continuous utilisation 0.89x rated at wrist_pitch |
+| ✅ | reach | TCP 0.455 m from the shoulder axis with the payload, claimed 0.455 m (tolerance 9 mm) |
+| ✅ | speed | 1.91 s move at 80 % rated speed tracks within 0.1 rad; most saturated wrist_roll (0 % of the move) |
+| ✅ | grip | holds 0.1 kg against its weight with friction 0.5: slip 0.1 mm in 3 s, clamp force 11.8 N (needs >= 1.0 N), gripper limited to its rated (continuous) torque |
 
 _PASS means the modelled actuators (datasheet peak torque as a hard limit, a linear torque-speed line to no-load speed, reflected rotor inertia, URDF damping/friction) can produce the torques and speeds the task needs in this geometry and mass distribution, and that mean torque over the hold stays within the continuous (rated) torque. Joint control uses an ideal model-based feedforward (computed torque) through the force-limited servo for fixed-base robots and plain position servos for floating robots; a pass therefore proves torque/speed capacity, not that a given controller achieves it. Untested: thermal limits over long duty cycles (only the mean-vs-rated proxy), gearbox backlash and compliance, link and joint flexibility, encoder resolution, supply voltage sag and current limits, bus latency, controller tuning, and contact/friction values (nominal friction only)._
 <!-- /SIM -->

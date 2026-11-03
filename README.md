@@ -149,6 +149,15 @@ Every check below runs in CI on each push:
   battery runtime, tipping on a slope while braking). All shipped designed examples pass all of them; a prompt
   whose request cannot be met (e.g. SG90 servos for a long arm) is built and shown with a **warning** that names
   the failing check.
+- **Every printed part is printable** (`scripts/print_audit.py`, [docs/PRINTABILITY.md](docs/PRINTABILITY.md)): each STL is checked in
+  its best orientation on a Prusa MK4 bed (250 x 210 x 220 mm) for a flat face to stand on, support area (faces steeper than 45 deg),
+  wall thickness (under 0.8 mm fails, 0.8-1.2 mm is a thin-wall warning) and that it is one connected, watertight solid. Parts that
+  are not printed (laser-cut aluminium decks, tube, vacuum-formed visor, sewn covers) go to `cad/fabricate/` with their own list.
+  Known open issues are listed with a reason in `examples/print_known_issues.json` and `examples/sim_known_issues.json`; CI fails on
+  anything not listed there.
+- **How the parts are built**: arm pitch joints are clevises (horn cheek + a cheek on a 625ZZ bearing riding an M5 bolt in a
+  heat-set insert on the back of the servo's cradle), servos sit in closed cradles screwed through their case holes, links are
+  truss-lightened beams; electronics on wheeled bases live in a vented printed enclosure with a screwed lid and cable slot.
 - **No two parts intersect** in any shipped designed example, checked on the exact meshes
   (`tests/examples-interference.test.ts`).
 - **MuJoCo task tests** for every example (`scripts/simulate_examples.py`), recorded into each example's GIF:
@@ -166,9 +175,11 @@ Every check below runs in CI on each push:
 
 - The parser covers the families and phrases above. Unsupported requests are refused
   or reported rather than guessed, but it does not understand arbitrary language.
-- Designed robots (arms, wheeled bases, rover, WALL-E, EVA, Baymax) are built from real parts with printable
-  structure and checked as above, but none has been physically built yet. The humanoid, SCARA, quadruped,
-  hexapod, gripper and battle mech are still fixed templates (scaled to a stated size), not parts-designed.
+- Designed robots (arms, wheeled bases, rover, WALL-E, EVA, Baymax) are built from real parts and every printed
+  part passes the printability audit except the listed known issues, but none has been physically built yet, and
+  printability is audited geometrically, not with a slicer.
+- Not yet re-engineered for printing: the Iron Man Mark 43 suit (procedural armour plates without print splits,
+  fasteners or real actuators) and the template robots (humanoid, SCARA, quadruped, hexapod, gripper, battle mech).
 - Simulation uses approximate servo gains, friction and motor dynamics, and results are recorded with MuJoCo
   3.13.0 (CI pins it): contact behaviour differs between MuJoCo releases, most visibly for skid-steer turning.
   Passing the task tests is not evidence of sim-to-real accuracy or a learned skill.

@@ -1,0 +1,384 @@
+{
+ "bed_mm": [
+  250.0,
+  210.0,
+  220.0
+ ],
+ "parts": [
+  {
+   "name": "base_link",
+   "watertight": true,
+   "volume_cm3": 272.7,
+   "size_mm": [
+    244.0,
+    200.0,
+    6.0
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 0.0,
+   "support_frac": 0.0,
+   "bed_contact_cm2": 454.5,
+   "min_wall_mm": 6.0,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "battery_tray",
+   "watertight": true,
+   "volume_cm3": 18.0,
+   "size_mm": [
+    110.6,
+    40.7,
+    16.2
+   ],
+   "orientation": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 2.58,
+   "support_frac": 0.018,
+   "bed_contact_cm2": 2.23,
+   "min_wall_mm": 1.5,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "computer_tray",
+   "watertight": true,
+   "volume_cm3": 16.34,
+   "size_mm": [
+    59.2,
+    90.0,
+    7.0
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 0.0,
+   "support_frac": 0.0,
+   "bed_contact_cm2": 53.02,
+   "min_wall_mm": 1.84,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "electronics_enclosure_front",
+   "watertight": true,
+   "volume_cm3": 32.96,
+   "size_mm": [
+    127.4,
+    204.3,
+    33.0
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 2.45,
+   "support_frac": 0.008,
+   "bed_contact_cm2": 13.62,
+   "min_wall_mm": 1.4,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "electronics_enclosure_rear",
+   "watertight": true,
+   "volume_cm3": 40.45,
+   "size_mm": [
+    127.4,
+    204.3,
+    33.0
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 1.92,
+   "support_frac": 0.005,
+   "bed_contact_cm2": 16.18,
+   "min_wall_mm": 2.4,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "electronics_lid_front",
+   "watertight": true,
+   "volume_cm3": 48.0,
+   "size_mm": [
+    114.4,
+    178.3,
+    5.4
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 0.0,
+   "support_frac": 0.0,
+   "bed_contact_cm2": 189.83,
+   "min_wall_mm": 2.0,
+   "thin_wall_frac": 0.001,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "electronics_lid_rear",
+   "watertight": true,
+   "volume_cm3": 36.45,
+   "size_mm": [
+    114.4,
+    178.3,
+    5.4
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 0.0,
+   "support_frac": 0.0,
+   "bed_contact_cm2": 143.44,
+   "min_wall_mm": 2.0,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "front_caster_post",
+   "watertight": true,
+   "volume_cm3": 37.37,
+   "size_mm": [
+    40.0,
+    40.0,
+    49.0
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 5.87,
+   "support_frac": 0.042,
+   "bed_contact_cm2": 12.31,
+   "min_wall_mm": 3.08,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "imu_tray",
+   "watertight": true,
+   "volume_cm3": 2.4,
+   "size_mm": [
+    24.7,
+    27.6,
+    7.0
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 0.0,
+   "support_frac": 0.0,
+   "bed_contact_cm2": 6.56,
+   "min_wall_mm": 1.6,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "left_bracket",
+   "watertight": true,
+   "volume_cm3": 17.07,
+   "size_mm": [
+    44.0,
+    41.0,
+    48.0
+   ],
+   "orientation": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 0.89,
+   "support_frac": 0.01,
+   "bed_contact_cm2": 17.29,
+   "min_wall_mm": 4.97,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "lidar_mast",
+   "watertight": true,
+   "volume_cm3": 32.6,
+   "size_mm": [
+    62.0,
+    62.0,
+    12.6
+   ],
+   "orientation": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 3.76,
+   "support_frac": 0.028,
+   "bed_contact_cm2": 2.66,
+   "min_wall_mm": 4.0,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "motor_driver_1_tray",
+   "watertight": true,
+   "volume_cm3": 17.06,
+   "size_mm": [
+    64.0,
+    87.0,
+    7.0
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 0.0,
+   "support_frac": 0.0,
+   "bed_contact_cm2": 55.42,
+   "min_wall_mm": 2.09,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "rear_caster_post",
+   "watertight": true,
+   "volume_cm3": 37.37,
+   "size_mm": [
+    40.0,
+    40.0,
+    49.0
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 5.87,
+   "support_frac": 0.042,
+   "bed_contact_cm2": 12.31,
+   "min_wall_mm": 3.08,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "regulator_5v_tray",
+   "watertight": true,
+   "volume_cm3": 2.5,
+   "size_mm": [
+    27.4,
+    27.4,
+    7.0
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 0.0,
+   "support_frac": 0.0,
+   "bed_contact_cm2": 7.25,
+   "min_wall_mm": 1.6,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "right_bracket",
+   "watertight": true,
+   "volume_cm3": 17.07,
+   "size_mm": [
+    44.0,
+    41.0,
+    48.0
+   ],
+   "orientation": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 0.89,
+   "support_frac": 0.01,
+   "bed_contact_cm2": 17.29,
+   "min_wall_mm": 4.28,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  }
+ ]
+}

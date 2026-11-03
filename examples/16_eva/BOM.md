@@ -1,6 +1,6 @@
 # Bill of Materials — eva
 
-**Estimated total: $622.25**  ·  tier: hobby
+**Estimated total: $622.71**  ·  tier: hobby
 
 **Effort sizing: passes catalogue estimate; hardware verified: no.**
 
@@ -19,22 +19,22 @@
 | Compute | Raspberry Pi 5 (4 GB) _(on-board computer · https://www.raspberrypi.com/products/raspberry-pi-5/)_ | 1 | 110 | 110 | 5 V |
 | Electronics | Waveshare Bus Servo Adapter (A) _(servo bus adapter; left_arm: USB to actuator bus; right_arm: USB to actuator bus · https://www.waveshare.com/bus-servo-adapter-a.htm)_ | 3 | 10.6 | 31.8 | 12 V |
 | Drive | Pololu 90x10 mm wheel + 6 mm universal aluminium hub (for 37D gearmotors) _(driven wheel · https://www.pololu.com/product/1435)_ | 2 | 11.22 | 22.44 | https://www.pololu.com/file/0J161/1083-6mm-4-40-hub-dimensions.pdf |
-| Printed structure | PETG filament for 35 printed parts _(left_bracket, right_bracket, front_caster_post, rear_caster_post, skirt_left, skirt_right, battery_tray, servo_bus_tray, imu_tray, regulator_5v_tray, spine_foot, rib_mid_left, rib_mid_right, rib_top_left, rib_top_right, computer_tray, motor_driver_1_tray, shell_lower_left, shell_lower_right, shell_upper_left, shell_upper_right, neck_mount, head, visor, left_eye, right_eye, camera_bracket, left_arm_base_link, left_arm_upper_arm, left_arm_tool_link, left_arm_shoulder, right_arm_base_link, right_arm_upper_arm, right_arm_tool_link, right_arm_shoulder)_ | 1 | 45.48 | 45.48 | 1797 g of parts (+15 % supports/waste), about 163.8 h of printing |
-| Fasteners | Screws, nuts and inserts | 118 | 0.12 | 14.16 | 12x M3 x 8 socket head (motor face); 4x M3 x 10 socket head + nut (bracket to deck); 6x M3 x 6 socket head (caster); 1x 20 mm hook-and-loop battery strap; 12x M3 x 8 socket head (tray to deck); 19x M2.5 x 6 screws (board to standoffs); 16x M3 x 8 + heat-set inserts (shell to ribs); 20x horn screws; 8x M5 x 12 socket head (base to bench); 16x M2 x 6 case screws; 4x M5 x 16 socket head + M5 washer + M5 heat-set insert (clevis bearing axle) |
+| Printed structure | PETG filament for 36 printed parts _(left_bracket, right_bracket, front_caster_post, rear_caster_post, skirt_left_front, skirt_left_rear, skirt_right_front, skirt_right_rear, battery_tray, servo_bus_tray, imu_tray, regulator_5v_tray, spine_foot, rib_mid_left, rib_mid_right, rib_top_left, rib_top_right, computer_tray, motor_driver_1_tray, shell_lower_left, shell_lower_right, shell_upper_left, shell_upper_right, neck_mount, head, left_eye, right_eye, camera_bracket, left_arm_base_link, left_arm_upper_arm, left_arm_tool_link, left_arm_shoulder, right_arm_base_link, right_arm_upper_arm, right_arm_tool_link, right_arm_shoulder)_ | 1 | 44.98 | 44.98 | 1778 g of parts (+15 % supports/waste), about 162.0 h of printing |
+| Fasteners | Screws, nuts and inserts | 126 | 0.12 | 15.12 | 12x M3 x 8 socket head (motor face); 4x M3 x 10 socket head + nut (bracket to deck); 6x M3 x 6 socket head (caster); 8x M3 x 8 (skirt arcs to the deck edge); 1x 20 mm hook-and-loop battery strap; 12x M3 x 8 socket head (tray to deck); 19x M2.5 x 6 screws (board to standoffs); 16x M3 x 8 + heat-set inserts (shell to ribs); 20x horn screws; 8x M5 x 12 socket head (base to bench); 16x M2 x 6 case screws; 4x M5 x 16 socket head + M5 washer + M5 heat-set insert (clevis bearing axle) |
 
 ## Actuator sizing
 
 | Joint | Required effort | Unit | Chosen actuator | Margin |
 |---|--:|---|---|--:|
-| left_arm_shoulder_pitch | 0.269 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 10.93x |
-| left_arm_elbow_pitch | 0.082 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 35.7x |
-| right_arm_shoulder_pitch | 0.269 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 10.93x |
-| right_arm_elbow_pitch | 0.082 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 35.7x |
-| left_wheel_joint | 0.188 | N·m | Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752) | 3.65x |
-| right_wheel_joint | 0.188 | N·m | Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752) | 3.65x |
+| left_arm_shoulder_pitch | 0.253 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 11.62x |
+| left_arm_elbow_pitch | 0.083 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 35.25x |
+| right_arm_shoulder_pitch | 0.253 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 11.62x |
+| right_arm_elbow_pitch | 0.083 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 35.25x |
+| left_wheel_joint | 0.189 | N·m | Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752) | 3.62x |
+| right_wheel_joint | 0.189 | N·m | Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752) | 3.62x |
 
 ## Notes
-- EVA-style companion robot: 3.354 kg, hidden diff-drive base, pan head with camera, two servo fins
+- EVA-style companion robot: 3.374 kg, hidden diff-drive base, pan head with camera, two servo fins
 - EVA cannot hover: this EVA rolls on a hidden differential-drive base (two 37D gearmotors, two ball casters) under a dark skirt; the egg rides on a 20 mm aluminium spine above it, so the gap reads as the film's hover.
 - The egg body is four printed PETG shell segments (two bands, two halves) screwed to two printed ribs on the spine; the head is one print (230 x 200 x 150 mm) with a dark visor band and two LED eye diffusers.
 - The head turns on a single pan servo; the film's free-floating head tilt is not reproduced. The arms are two-servo fins hanging beside the egg (they cannot fold flush into the body like the film's).

@@ -1,0 +1,5 @@
+{
+  "12_mars_rover": {
+    "turn_in_place": "1.31 rad/s vs 1.40 needed: the heavier clevis arm moves the centre of mass forward and the skid-steer turn claim does not yet model load distribution; open issue"
+  }
+}

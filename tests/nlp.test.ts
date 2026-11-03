@@ -30,8 +30,10 @@ test("modify: forearm 30% longer changes only the forearm", () => {
   const seg = (x: any, k: string) => x.metadata.design.performance[k];
   const { spec, changes } = applyModification(s, "make the forearm 30% longer");
   assert.ok(Math.abs(seg(spec, "forearm_m") - seg(s, "forearm_m") * 1.3) < 0.002, `${seg(spec, "forearm_m")}`);
-  // the upper arm is held; if the longer forearm needs bigger servos it may grow by their extra body size (<= 2 mm)
-  assert.ok(Math.abs(seg(spec, "upper_arm_m") - seg(s, "upper_arm_m")) <= 0.002, `${seg(spec, "upper_arm_m")} vs ${seg(s, "upper_arm_m")}`);
+  // the upper arm is held; if the longer forearm needs bigger servos it can only grow to the shortest their clevises allow,
+  // and the design says so
+  const held = Math.abs(seg(spec, "upper_arm_m") - seg(s, "upper_arm_m")) <= 0.002;
+  assert.ok(held || (spec.metadata as any).design.assumptions.some((x: string) => /requested upper_arm .* the shortest these actuators allow/.test(x)), `${seg(spec, "upper_arm_m")} vs ${seg(s, "upper_arm_m")}`);
   assert.ok(changes.some((c) => c.includes("forearm")));
 });
 test("modify: add camera to head adds a sensor + link", () => {

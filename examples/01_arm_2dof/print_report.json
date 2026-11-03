@@ -1,0 +1,111 @@
+{
+ "bed_mm": [
+  250.0,
+  210.0,
+  220.0
+ ],
+ "parts": [
+  {
+   "name": "base_link",
+   "watertight": true,
+   "volume_cm3": 93.23,
+   "size_mm": [
+    110.0,
+    110.0,
+    58.4
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 10.65,
+   "support_frac": 0.027,
+   "bed_contact_cm2": 119.49,
+   "min_wall_mm": 2.3,
+   "thin_wall_frac": 0.001,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "forearm",
+   "watertight": true,
+   "volume_cm3": 168.34,
+   "size_mm": [
+    228.2,
+    49.6,
+    60.2
+   ],
+   "orientation": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 56.26,
+   "support_frac": 0.136,
+   "bed_contact_cm2": 17.83,
+   "min_wall_mm": 0.2,
+   "thin_wall_frac": 0.012,
+   "passed": false,
+   "supports": "needed",
+   "problems": [
+    "walls down to 0.20 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
+   ],
+   "warnings": []
+  },
+  {
+   "name": "gripper_jaw",
+   "watertight": true,
+   "volume_cm3": 11.27,
+   "size_mm": [
+    84.0,
+    39.0,
+    8.5
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 3.33,
+   "support_frac": 0.062,
+   "bed_contact_cm2": 11.65,
+   "min_wall_mm": 2.28,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "upper_arm",
+   "watertight": true,
+   "volume_cm3": 127.72,
+   "size_mm": [
+    171.4,
+    30.8,
+    62.3
+   ],
+   "orientation": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 22.93,
+   "support_frac": 0.062,
+   "bed_contact_cm2": 12.04,
+   "min_wall_mm": 2.0,
+   "thin_wall_frac": 0.003,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  }
+ ]
+}

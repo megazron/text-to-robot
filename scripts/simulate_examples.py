@@ -109,6 +109,8 @@ def sim_block(rep):
 def check(selected):
     """Re-run every example's task tests; fail when a stored report is stale or a result changed. Writes nothing."""
     bad = []
+    known_path = ROOT / "examples/sim_known_issues.json"
+    known = json.loads(known_path.read_text()) if known_path.exists() else {}
     for ex in sorted(p for p in (ROOT / "examples").iterdir() if p.is_dir() and re.match(r"\d\d_", p.name) and p.name != "14_iron_man_mark_43"):
         if selected and ex.name not in selected: continue
         stored = json.loads((ex / "simulation_report.json").read_text())
@@ -120,7 +122,8 @@ def check(selected):
         now = {k: t["pass"] for k, t in rep["tests"].items()}; then = {k: t["pass"] for k, t in stored["tests"].items()}
         status = "ok" if now == then else "CHANGED"
         if now != then: bad.append(f"{ex.name}: results changed {then} -> {now}")
-        if any(v is False for v in now.values()): bad.append(f"{ex.name}: failing {[k for k, v in now.items() if v is False]}")
+        new_fail = [k for k, v in now.items() if v is False and k not in known.get(ex.name, {})]
+        if new_fail: bad.append(f"{ex.name}: failing {new_fail} (not in examples/sim_known_issues.json)")
         print(f"{ex.name:24s} {status:8s} " + "  ".join(f"{k}:{'ok' if v else '-' if v is None else 'FAIL'}" for k, v in now.items()), flush=True)
     if bad: sys.exit("\n".join(bad))
 

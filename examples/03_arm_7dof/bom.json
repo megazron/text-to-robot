@@ -60,9 +60,9 @@
       "category": "Printed structure",
       "name": "PETG filament for 9 printed parts",
       "qty": 1,
-      "unit_cost": 10.08,
-      "subtotal": 10.08,
-      "spec": "398 g of parts (+15 % supports/waste), about 36.3 h of printing",
+      "unit_cost": 11.76,
+      "subtotal": 11.76,
+      "spec": "465 g of parts (+15 % supports/waste), about 42.4 h of printing",
       "note": "base_link, turret, upper_arm, upper_arm_rotator, forearm, forearm_rotator, wrist, wrist_rotator, gripper_jaw"
     },
     {
@@ -74,7 +74,7 @@
       "spec": "4x M5 x 12 socket head (base to bench); 28x M2.5 x 6 case screws; 60x horn screws; 3x M5 x 16 socket head + M5 washer + M5 heat-set insert (clevis bearing axle)"
     }
   ],
-  "total": 1196.92,
+  "total": 1198.6,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
@@ -89,27 +89,27 @@
     },
     {
       "joint": "shoulder_pitch",
-      "required_effort": 2.415,
+      "required_effort": 2.811,
       "effort_unit": "N·m",
-      "required_torque_nm": 2.415,
+      "required_torque_nm": 2.811,
       "chosen": "DYNAMIXEL XH540-W270-T(R)",
-      "margin": "4.1x"
+      "margin": "3.52x"
     },
     {
       "joint": "upper_arm_roll",
-      "required_effort": 0.017,
+      "required_effort": 0.019,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.017,
+      "required_torque_nm": 0.019,
       "chosen": "DYNAMIXEL XL430-W250-T",
-      "margin": "81.85x"
+      "margin": "75.31x"
     },
     {
       "joint": "elbow_pitch",
-      "required_effort": 1.216,
+      "required_effort": 1.355,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.216,
+      "required_torque_nm": 1.355,
       "chosen": "DYNAMIXEL XM430-W350-T(R)",
-      "margin": "3.37x"
+      "margin": "3.03x"
     },
     {
       "joint": "forearm_roll",
@@ -121,11 +121,11 @@
     },
     {
       "joint": "wrist_pitch",
-      "required_effort": 0.486,
+      "required_effort": 0.488,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.486,
+      "required_torque_nm": 0.488,
       "chosen": "DYNAMIXEL XL430-W250-T",
-      "margin": "2.88x"
+      "margin": "2.87x"
     },
     {
       "joint": "wrist_roll",
@@ -138,7 +138,7 @@
   ],
   "warnings": [],
   "notes": [
-    "7-DOF arm, 464 mm reach, 0.1 kg payload, ROBOTIS DYNAMIXEL X-series (12 V)",
+    "7-DOF arm, 500 mm reach, 0.1 kg payload, ROBOTIS DYNAMIXEL X-series (12 V)",
     "Sized for a 0.1 kg payload.",
     "Arm clamps or bolts to the bench through the four M5 holes in the base; it is not free-standing at full reach.",
     "Every pitch joint is a clevis: one cheek bolts to the servo horn, the other turns on a 625ZZ bearing on an M5 bolt screwed into a heat-set insert in a boss on the back of the servo's cradle, so the servo's own bearing carries no bending moment. An M5 washer sits between the boss and the bearing's inner race.",

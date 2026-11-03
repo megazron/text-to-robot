@@ -133,9 +133,9 @@
       "category": "Printed structure",
       "name": "PETG filament for 20 printed parts",
       "qty": 1,
-      "unit_cost": 18.75,
-      "subtotal": 18.75,
-      "spec": "741 g of parts (+15 % supports/waste), about 67.5 h of printing",
+      "unit_cost": 20.94,
+      "subtotal": 20.94,
+      "spec": "828 g of parts (+15 % supports/waste), about 75.4 h of printing",
       "note": "left_rocker_rear_arm, left_rocker_frame, right_rocker_rear_arm, right_rocker_frame, battery_tray, computer_tray, motor_driver_1_tray, motor_driver_2_tray, servo_bus_tray, regulator_5v_tray, depth_camera_bracket, camera_mast, arm_base_link, arm_turret, arm_upper_arm, arm_forearm, arm_forearm_rotator, arm_wrist, arm_wrist_rotator, arm_gripper_jaw"
     },
     {
@@ -147,7 +147,7 @@
       "spec": "24x M3 x 8 socket head (motor face); 2x M8 x 40 shoulder bolt + spacer (rocker pivot); 4x M4 x 20 + nut (rocker rear arm to hub); 1x 20 mm hook-and-loop battery strap; 12x M3 x 8 socket head (tray to deck); 19x M2.5 x 6 screws (board to standoffs); 2x M3 x 6 (camera back); 4x M5 x 12 socket head (base to bench); 24x M2.5 x 6 case screws; 48x horn screws; 3x M5 x 16 socket head + M5 washer + M5 heat-set insert (clevis bearing axle)"
     }
   ],
-  "total": 3816.83,
+  "total": 3819.02,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
@@ -162,35 +162,35 @@
     },
     {
       "joint": "arm_shoulder_pitch",
-      "required_effort": 3.116,
+      "required_effort": 3.632,
       "effort_unit": "N·m",
-      "required_torque_nm": 3.116,
+      "required_torque_nm": 3.632,
       "chosen": "DYNAMIXEL XH540-W270-T(R)",
-      "margin": "3.18x"
+      "margin": "2.73x"
     },
     {
       "joint": "arm_elbow_pitch",
-      "required_effort": 1.927,
+      "required_effort": 2.119,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.927,
+      "required_torque_nm": 2.119,
       "chosen": "DYNAMIXEL XH540-W270-T(R)",
-      "margin": "5.14x"
+      "margin": "4.67x"
     },
     {
       "joint": "arm_forearm_roll",
-      "required_effort": 0.788,
+      "required_effort": 0.791,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.788,
+      "required_torque_nm": 0.791,
       "chosen": "DYNAMIXEL XM430-W350-T(R)",
-      "margin": "5.2x"
+      "margin": "5.19x"
     },
     {
       "joint": "arm_wrist_pitch",
-      "required_effort": 0.788,
+      "required_effort": 0.79,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.788,
+      "required_torque_nm": 0.79,
       "chosen": "DYNAMIXEL XM430-W350-T(R)",
-      "margin": "5.2x"
+      "margin": "5.19x"
     },
     {
       "joint": "arm_wrist_roll",
@@ -198,44 +198,44 @@
       "effort_unit": "N·m",
       "required_torque_nm": 0.058,
       "chosen": "DYNAMIXEL XM430-W350-T(R)",
-      "margin": "70.6x"
+      "margin": "70.64x"
     },
     {
       "joint": "left_front_wheel_joint",
-      "required_effort": 0.129,
+      "required_effort": 0.131,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.129,
+      "required_torque_nm": 0.131,
       "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
-      "margin": "5.33x"
+      "margin": "5.23x"
     },
     {
       "joint": "left_rear_wheel_joint",
-      "required_effort": 0.129,
+      "required_effort": 0.131,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.129,
+      "required_torque_nm": 0.131,
       "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
-      "margin": "5.33x"
+      "margin": "5.23x"
     },
     {
       "joint": "right_front_wheel_joint",
-      "required_effort": 0.129,
+      "required_effort": 0.131,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.129,
+      "required_torque_nm": 0.131,
       "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
-      "margin": "5.33x"
+      "margin": "5.23x"
     },
     {
       "joint": "right_rear_wheel_joint",
-      "required_effort": 0.129,
+      "required_effort": 0.131,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.129,
+      "required_torque_nm": 0.131,
       "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
-      "margin": "5.33x"
+      "margin": "5.23x"
     }
   ],
   "warnings": [],
   "notes": [
-    "4-wheel rocker-bogie rover with a 6-DOF arm: 4.591 kg, 1.24 m/s, 1.53 h, jetson_orin_nano_super",
+    "4-wheel rocker-bogie rover with a 6-DOF arm: 4.677 kg, 1.24 m/s, 1.53 h, jetson_orin_nano_super",
     "Rocker-bogie after the JPL Open Source Rover, 4 driven wheels, skid steering (the OSR's four corner-steering servos are left out; add them for less tyre scrub).",
     "A rover's differential bar links the two rockers through the body, a closed loop URDF cannot describe; the model frees the left rocker on its pivot and bolts the right rocker to the body, which keeps every wheel on the ground and the body supported on three points (body pitch follows the right rocker instead of the average).",
     "Rockers and bogies are printed in PETG; for outdoor use print them in 6 bolt-on sections from aluminium channel instead (as the OSR does).",

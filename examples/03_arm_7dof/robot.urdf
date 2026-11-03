@@ -89,9 +89,9 @@
       <geometry><mesh filename="package://arm_7dof/meshes/upper_arm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.057561 -0.00675 -0.030057" rpy="0 0 0"/>
-      <mass value="0.074895"/>
-      <inertia ixx="0.0000574092" ixy="0.00000633505" ixz="8.28768e-7" iyy="0.0000813814" iyz="6.29545e-7" izz="0.0000565993"/>
+      <origin xyz="0.066214 -0.00648 -0.02905" rpy="0 0 0"/>
+      <mass value="0.108968"/>
+      <inertia ixx="0.0000711252" ixy="0.00000983823" ixz="-2.48112e-7" iyy="0.000114146" iyz="7.66372e-7" izz="0.0000864656"/>
     </inertial>
   </link>
   <link name="upper_arm_roll_actuator">
@@ -153,9 +153,9 @@
       <geometry><mesh filename="package://arm_7dof/meshes/forearm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.049273 -0.007023 -0.025602" rpy="0 0 0"/>
-      <mass value="0.060627"/>
-      <inertia ixx="0.0000385253" ixy="0.00000461371" ixz="-1.03612e-7" iyy="0.000050547" iyz="6.28687e-7" izz="0.0000397221"/>
+      <origin xyz="0.05761 -0.006694 -0.024288" rpy="0 0 0"/>
+      <mass value="0.091609"/>
+      <inertia ixx="0.0000496517" ixy="0.0000076362" ixz="-9.88365e-7" iyy="0.0000756702" iyz="7.35629e-7" izz="0.0000636983"/>
     </inertial>
   </link>
   <link name="forearm_roll_actuator">
@@ -249,9 +249,9 @@
       <geometry><mesh filename="package://arm_7dof/meshes/wrist_rotator.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.00157 -0.005787 0.041451" rpy="0 0 0"/>
-      <mass value="0.030489"/>
-      <inertia ixx="0.0000294558" ixy="0.00000171209" ixz="-0.00000424908" iyy="0.0000300832" iyz="0.00000574386" izz="0.0000121794"/>
+      <origin xyz="-0.001576 -0.006484 0.042163" rpy="0 0 0"/>
+      <mass value="0.031971"/>
+      <inertia ixx="0.000030122" ixy="0.00000170615" ixz="-0.00000424658" iyy="0.0000306204" iyz="0.00000607011" izz="0.0000127087"/>
     </inertial>
   </link>
   <link name="gripper_actuator">
@@ -296,7 +296,7 @@
     <child link="turret"/>
     <origin xyz="0 0 0.0479" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-2.97" upper="2.97" effort="1.4" velocity="4.43"/>
+    <limit lower="-2.97" upper="2.97" effort="1.4" velocity="4.17"/>
     <dynamics damping="0.0469" friction="0.028"/>
   </joint>
   <joint name="shoulder_pitch_actuator_mount" type="fixed">
@@ -309,18 +309,18 @@
     <child link="upper_arm"/>
     <origin xyz="0 0.024 0.055" rpy="0 -1.570796 -1.570796"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-1.75" upper="1.75" effort="9.9" velocity="3.82"/>
+    <limit lower="-1.75" upper="1.75" effort="9.9" velocity="3.62"/>
     <dynamics damping="0.4848" friction="0.198"/>
   </joint>
   <joint name="upper_arm_roll_actuator_mount" type="fixed">
     <parent link="upper_arm"/>
     <child link="upper_arm_roll_actuator"/>
-    <origin xyz="0.095855 0 -0.024" rpy="1.570796 0 1.570796"/>
+    <origin xyz="0.113905 0 -0.024" rpy="1.570796 0 1.570796"/>
   </joint>
   <joint name="upper_arm_roll" type="revolute">
     <parent link="upper_arm"/>
     <child link="upper_arm_rotator"/>
-    <origin xyz="0.095855 0 -0.024" rpy="1.570796 0 1.570796"/>
+    <origin xyz="0.113905 0 -0.024" rpy="1.570796 0 1.570796"/>
     <axis xyz="0 0 1"/>
     <limit lower="-2.97" upper="2.97" effort="1.4" velocity="5.67"/>
     <dynamics damping="0.0469" friction="0.028"/>
@@ -335,18 +335,18 @@
     <child link="forearm"/>
     <origin xyz="0 0.01895 0.04525" rpy="0 -1.570796 -1.570796"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-2.3" upper="2.3" effort="4.1" velocity="4.12"/>
+    <limit lower="-2.3" upper="2.3" effort="4.1" velocity="3.94"/>
     <dynamics damping="0.1702" friction="0.082"/>
   </joint>
   <joint name="forearm_roll_actuator_mount" type="fixed">
     <parent link="forearm"/>
     <child link="forearm_roll_actuator"/>
-    <origin xyz="0.08585 0 -0.01895" rpy="1.570796 0 1.570796"/>
+    <origin xyz="0.103901 0 -0.01895" rpy="1.570796 0 1.570796"/>
   </joint>
   <joint name="forearm_roll" type="revolute">
     <parent link="forearm"/>
     <child link="forearm_rotator"/>
-    <origin xyz="0.08585 0 -0.01895" rpy="1.570796 0 1.570796"/>
+    <origin xyz="0.103901 0 -0.01895" rpy="1.570796 0 1.570796"/>
     <axis xyz="0 0 1"/>
     <limit lower="-2.97" upper="2.97" effort="1.4" velocity="5.67"/>
     <dynamics damping="0.0469" friction="0.028"/>
@@ -361,7 +361,7 @@
     <child link="wrist"/>
     <origin xyz="0 0.01895 0.04525" rpy="0 -1.570796 -1.570796"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-2.3" upper="2.3" effort="1.4" velocity="4.67"/>
+    <limit lower="-2.3" upper="2.3" effort="1.4" velocity="4.65"/>
     <dynamics damping="0.0469" friction="0.028"/>
   </joint>
   <joint name="wrist_roll_actuator_mount" type="fixed">

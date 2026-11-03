@@ -1,6 +1,6 @@
 # Bill of Materials — arm_7dof
 
-**Estimated total: $1196.92**  ·  tier: prosumer
+**Estimated total: $1198.6**  ·  tier: prosumer
 
 **Effort sizing: passes catalogue estimate; hardware verified: no.**
 
@@ -12,7 +12,7 @@
 | Actuator | DYNAMIXEL XL430-W250-T _(joint base_yaw; joint upper_arm_roll; joint forearm_roll; joint wrist_pitch; … · https://robotis.us/dynamixel-xl430-w250-t)_ | 6 | 44.9 | 269.4 | 0.42 N·m rated / 1.4 N·m peak, 11.1 V |
 | Actuator | DYNAMIXEL XM430-W350-T(R) _(joint elbow_pitch · https://www.robotshop.com/products/robotis-dynamixel-xm430-w350-t-smart-servo-actuator)_ | 1 | 310.39 | 310.39 | 1.23 N·m rated / 4.1 N·m peak, 12 V |
 | Power | Mean Well LRS-75-12 enclosed PSU, 12 V 6 A (75 W) _(12 V actuator supply · https://www.digikey.com/en/products/result?keywords=LRS-75-12)_ | 1 | 22 | 22 | 12 V |
-| Printed structure | PETG filament for 9 printed parts _(base_link, turret, upper_arm, upper_arm_rotator, forearm, forearm_rotator, wrist, wrist_rotator, gripper_jaw)_ | 1 | 10.08 | 10.08 | 398 g of parts (+15 % supports/waste), about 36.3 h of printing |
+| Printed structure | PETG filament for 9 printed parts _(base_link, turret, upper_arm, upper_arm_rotator, forearm, forearm_rotator, wrist, wrist_rotator, gripper_jaw)_ | 1 | 11.76 | 11.76 | 465 g of parts (+15 % supports/waste), about 42.4 h of printing |
 | Fasteners | Screws, nuts and inserts | 95 | 0.12 | 11.4 | 4x M5 x 12 socket head (base to bench); 28x M2.5 x 6 case screws; 60x horn screws; 3x M5 x 16 socket head + M5 washer + M5 heat-set insert (clevis bearing axle) |
 
 ## Actuator sizing
@@ -20,15 +20,15 @@
 | Joint | Required effort | Unit | Chosen actuator | Margin |
 |---|--:|---|---|--:|
 | base_yaw | 0 | N·m | DYNAMIXEL XL430-W250-T | 99x |
-| shoulder_pitch | 2.415 | N·m | DYNAMIXEL XH540-W270-T(R) | 4.1x |
-| upper_arm_roll | 0.017 | N·m | DYNAMIXEL XL430-W250-T | 81.85x |
-| elbow_pitch | 1.216 | N·m | DYNAMIXEL XM430-W350-T(R) | 3.37x |
+| shoulder_pitch | 2.811 | N·m | DYNAMIXEL XH540-W270-T(R) | 3.52x |
+| upper_arm_roll | 0.019 | N·m | DYNAMIXEL XL430-W250-T | 75.31x |
+| elbow_pitch | 1.355 | N·m | DYNAMIXEL XM430-W350-T(R) | 3.03x |
 | forearm_roll | 0.009 | N·m | DYNAMIXEL XL430-W250-T | 99x |
-| wrist_pitch | 0.486 | N·m | DYNAMIXEL XL430-W250-T | 2.88x |
+| wrist_pitch | 0.488 | N·m | DYNAMIXEL XL430-W250-T | 2.87x |
 | wrist_roll | 0.001 | N·m | DYNAMIXEL XL430-W250-T | 99x |
 
 ## Notes
-- 7-DOF arm, 464 mm reach, 0.1 kg payload, ROBOTIS DYNAMIXEL X-series (12 V)
+- 7-DOF arm, 500 mm reach, 0.1 kg payload, ROBOTIS DYNAMIXEL X-series (12 V)
 - Sized for a 0.1 kg payload.
 - Arm clamps or bolts to the bench through the four M5 holes in the base; it is not free-standing at full reach.
 - Every pitch joint is a clevis: one cheek bolts to the servo horn, the other turns on a 625ZZ bearing on an M5 bolt screwed into a heat-set insert in a boss on the back of the servo's cradle, so the servo's own bearing carries no bending moment. An M5 washer sits between the boss and the bearing's inner race.

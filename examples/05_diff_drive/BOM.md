@@ -1,6 +1,6 @@
 # Bill of Materials — diff_drive_robot
 
-**Estimated total: $492.78**  ·  tier: hobby
+**Estimated total: $494.38**  ·  tier: hobby
 
 **Effort sizing: passes catalogue estimate; hardware verified: no.**
 
@@ -15,18 +15,18 @@
 | Compute | Raspberry Pi 5 (4 GB) _(on-board computer · https://www.raspberrypi.com/products/raspberry-pi-5/)_ | 1 | 110 | 110 | 5 V |
 | Sensor | Slamtec RPLIDAR C1 (DTOF 360 deg, 12 m) _(2D lidar · https://www.waveshare.com/rplidar-c1.htm)_ | 1 | 79.99 | 79.99 | 5 V |
 | Drive | Pololu 90x10 mm wheel + 6 mm universal aluminium hub (for 37D gearmotors) _(driven wheel · https://www.pololu.com/product/1435)_ | 2 | 11.22 | 22.44 | https://www.pololu.com/file/0J161/1083-6mm-4-40-hub-dimensions.pdf |
-| Printed structure | PETG filament for 13 printed parts _(base_link, left_bracket, right_bracket, front_caster_post, rear_caster_post, computer_tray, motor_driver_1_tray, battery_tray, regulator_5v_tray, imu_tray, electronics_enclosure, electronics_lid, lidar_mast)_ | 1 | 13.9 | 13.9 | 549 g of parts (+15 % supports/waste), about 50.1 h of printing |
-| Fasteners | Screws, nuts and inserts | 60 | 0.12 | 7.2 | 12x M3 x 8 socket head (motor face); 4x M3 x 10 socket head + nut (bracket to deck); 6x M3 x 6 socket head (caster); 15x M2.5 x 6 screws (board to standoffs); 10x M3 x 8 socket head (tray to deck); 1x 20 mm hook-and-loop battery strap; 4x M3 x 10 self-tapping (enclosure lid); 4x M3 x 8 + nut (enclosure tabs to deck; drill 3.4 mm through the deck at the tabs); 4x M2.5 x 6 (lidar) |
+| Printed structure | PETG filament for 15 printed parts _(base_link, left_bracket, right_bracket, front_caster_post, rear_caster_post, computer_tray, motor_driver_1_tray, battery_tray, regulator_5v_tray, imu_tray, electronics_enclosure_front, electronics_enclosure_rear, electronics_lid_front, electronics_lid_rear, lidar_mast)_ | 1 | 14.54 | 14.54 | 575 g of parts (+15 % supports/waste), about 52.4 h of printing |
+| Fasteners | Screws, nuts and inserts | 68 | 0.12 | 8.16 | 12x M3 x 8 socket head (motor face); 4x M3 x 10 socket head + nut (bracket to deck); 6x M3 x 6 socket head (caster); 15x M2.5 x 6 screws (board to standoffs); 10x M3 x 8 socket head (tray to deck); 1x 20 mm hook-and-loop battery strap; 8x M3 x 8 + nut (enclosure halves lap joint); 4x M3 x 10 self-tapping (enclosure lid); 4x M3 x 8 + nut (enclosure tabs to deck; drill 3.4 mm through the deck at the tabs); 4x M2.5 x 6 (lidar) |
 
 ## Actuator sizing
 
 | Joint | Required effort | Unit | Chosen actuator | Margin |
 |---|--:|---|---|--:|
-| left_wheel_joint | 0.138 | N·m | Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752) | 4.96x |
-| right_wheel_joint | 0.138 | N·m | Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752) | 4.96x |
+| left_wheel_joint | 0.14 | N·m | Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752) | 4.91x |
+| right_wheel_joint | 0.14 | N·m | Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752) | 4.91x |
 
 ## Notes
-- Differential-drive base: pololu_37d_30to1_64cpr gearmotors, 1.464 kg, 1.24 m/s, 1.8 h on 1 x lipo_3s_2200, rpi5
+- Differential-drive base: pololu_37d_30to1_64cpr gearmotors, 1.489 kg, 1.24 m/s, 1.8 h on 1 x lipo_3s_2200, rpi5
 - Drive sized for the robot plus 1 kg cargo on a 10 deg slope accelerating at 0.5 m/s^2, rolling resistance 0.03; motors compared at their continuous (not stall) rating.
 - All motors and servos are 12 V parts run straight from a 3S LiPo (9.9-12.6 V); a power switch, 15 A blade fuse and XT60 wiring are budgeted as a lump sum.
 - Printed parts: PETG; brackets bolt to the deck with M3 screws and nuts; the motor face screws are the gearmotor's own six M3 holes.

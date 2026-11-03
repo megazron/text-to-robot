@@ -6,45 +6,45 @@
 
 Interpreted as: mobile manipulator (wheeled rover + arm) · parallel gripper · depth (deck_lid) · camera (deck_lid) · budget $4000
 
-**4-wheel rocker-bogie rover with a 6-DOF arm: 4.591 kg, 1.24 m/s, 1.53 h, jetson_orin_nano_super**
+**4-wheel rocker-bogie rover with a 6-DOF arm: 4.677 kg, 1.24 m/s, 1.53 h, jetson_orin_nano_super**
 
-Parts cost **$3816.83** (budget $4000: within) · printed structure 20 parts, 741 g · checks passed 42/42
+Parts cost **$3819.02** (budget $4000: within) · printed structure 20 parts, 828 g · checks passed 42/42
 
 ## What it can do
 
 | | |
 |---|--:|
-| arm | 6-DOF, reach 0.437 m, 0.2 kg, ROBOTIS DYNAMIXEL XM/XH (12 V) |
-| mass kg | 4.591 |
-| loaded mass kg | 4.591 |
+| arm | 6-DOF, reach 0.475 m, 0.2 kg, ROBOTIS DYNAMIXEL XM/XH (12 V) |
+| mass kg | 4.677 |
+| loaded mass kg | 4.677 |
 | top speed m s | 1.24 |
-| wheel torque nm | 0.129 |
+| wheel torque nm | 0.131 |
 | drive motor | pololu_37d_30to1_64cpr |
 | battery | 1 x lipo_3s_5000 |
 | average power w | 29 |
 | runtime h | 1.53 |
-| tip angle deg | 23 |
+| tip angle deg | 20.6 |
 | compute | jetson_orin_nano_super |
 | slope deg | 10 |
 | turn rate rad s | 1.65 |
 | turn slip factor | 2.54 |
-| cost usd | 3929 |
-| cost breakdown | catalog parts $3781, filament 0.85 kg $21, fasteners $17, fabricated/other $110 (320 x 210 x 100 mm folded 2 mm aluminium body box (~$60); 320 x 210 x 3 mm aluminium lid, laser cut (~$35); power switch, 15 A fuse, wiring) |
+| cost usd | 3932 |
+| cost breakdown | catalog parts $3781, filament 0.95 kg $24, fasteners $17, fabricated/other $110 (320 x 210 x 100 mm folded 2 mm aluminium body box (~$60); 320 x 210 x 3 mm aluminium lid, laser cut (~$35); power switch, 15 A fuse, wiring) |
 
 ## Actuators (sized from this robot's own loads)
 
 | Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
 |---|---|--:|--:|--:|--:|
-| arm_base_yaw | dxl_xm430_w350 | 0 | 1.23 / 4.1 | 99x | 4.58 |
-| arm_shoulder_pitch | dxl_xh540_w270 | 3.116 | 2.97 / 9.9 | 3.18x | 3.48 |
-| arm_elbow_pitch | dxl_xh540_w270 | 1.927 | 2.97 / 9.9 | 5.14x | 3.88 |
-| arm_forearm_roll | dxl_xm430_w350 | 0.788 | 1.23 / 4.1 | 5.2x | 4.58 |
-| arm_wrist_pitch | dxl_xm430_w350 | 0.788 | 1.23 / 4.1 | 5.2x | 4.58 |
-| arm_wrist_roll | dxl_xm430_w350 | 0.058 | 1.23 / 4.1 | 70.6x | 4.58 |
-| left_front_wheel_joint | pololu_37d_30to1_64cpr | 0.129 | 0.686 / 1.373 | 5.33x | 34.558 |
-| left_rear_wheel_joint | pololu_37d_30to1_64cpr | 0.129 | 0.686 / 1.373 | 5.33x | 34.558 |
-| right_front_wheel_joint | pololu_37d_30to1_64cpr | 0.129 | 0.686 / 1.373 | 5.33x | 34.558 |
-| right_rear_wheel_joint | pololu_37d_30to1_64cpr | 0.129 | 0.686 / 1.373 | 5.33x | 34.558 |
+| arm_base_yaw | dxl_xm430_w350 | 0 | 1.23 / 4.1 | 99x | 4.56 |
+| arm_shoulder_pitch | dxl_xh540_w270 | 3.632 | 2.97 / 9.9 | 2.73x | 3.24 |
+| arm_elbow_pitch | dxl_xh540_w270 | 2.119 | 2.97 / 9.9 | 4.67x | 3.88 |
+| arm_forearm_roll | dxl_xm430_w350 | 0.791 | 1.23 / 4.1 | 5.19x | 4.58 |
+| arm_wrist_pitch | dxl_xm430_w350 | 0.79 | 1.23 / 4.1 | 5.19x | 4.58 |
+| arm_wrist_roll | dxl_xm430_w350 | 0.058 | 1.23 / 4.1 | 70.64x | 4.58 |
+| left_front_wheel_joint | pololu_37d_30to1_64cpr | 0.131 | 0.686 / 1.373 | 5.23x | 34.558 |
+| left_rear_wheel_joint | pololu_37d_30to1_64cpr | 0.131 | 0.686 / 1.373 | 5.23x | 34.558 |
+| right_front_wheel_joint | pololu_37d_30to1_64cpr | 0.131 | 0.686 / 1.373 | 5.23x | 34.558 |
+| right_rear_wheel_joint | pololu_37d_30to1_64cpr | 0.131 | 0.686 / 1.373 | 5.23x | 34.558 |
 
 ## Engineering checks
 
@@ -62,13 +62,13 @@ All 42 checks pass (torque, speed, power, stability, print-bed fit). Details in 
 <!-- SIM -->
 ## Simulation (MuJoCo, real actuator limits)
 
-**3/3 task tests pass.** Every motor is limited to its datasheet peak torque and its torque-speed line, with the rotor inertia reflected through its gearbox; continuous loads are compared with the rated torque. The animation above is recorded from these tests.
+**2/3 task tests pass.** Every motor is limited to its datasheet peak torque and its torque-speed line, with the rotor inertia reflected through its gearbox; continuous loads are compared with the rated torque. The animation above is recorded from these tests.
 
 | | Test | Result |
 |---|---|---|
 | ✅ | drive straight | 3.44 m in 4.01 s, cruise speed 1.213 m/s vs claimed 1.240 m/s, heading drift -0.0 deg, lateral -0.0 cm |
-| ✅ | ramp 10deg | from standstill on a 10 deg slope (speed ramped over 4.7 s at 0.5 m/s^2): 5.17 m uphill in 6.7 s, speed 1.203 m/s of 1.240 commanded |
-| ✅ | turn in place | yaw rate 1.40 rad/s with 4.06 commanded (no-slip), claimed 1.65 rad/s (needs >= 1.40), centre moved 3.8 cm over 1.0 turn(s) (3.8 cm per turn) |
+| ✅ | ramp 10deg | from standstill on a 10 deg slope (speed ramped over 4.7 s at 0.5 m/s^2): 5.16 m uphill in 6.7 s, speed 1.202 m/s of 1.240 commanded |
+| ❌ | turn in place | yaw rate 1.35 rad/s with 4.06 commanded (no-slip), claimed 1.65 rad/s (needs >= 1.40), centre moved 2.3 cm over 1.0 turn(s) (2.3 cm per turn) |
 
 _PASS means the modelled actuators (datasheet peak torque as a hard limit, a linear torque-speed line to no-load speed, reflected rotor inertia, URDF damping/friction) can produce the torques and speeds the task needs in this geometry and mass distribution, and that mean torque over the hold stays within the continuous (rated) torque. Joint control uses an ideal model-based feedforward (computed torque) through the force-limited servo for fixed-base robots and plain position servos for floating robots; a pass therefore proves torque/speed capacity, not that a given controller achieves it. Untested: thermal limits over long duty cycles (only the mean-vs-rated proxy), gearbox backlash and compliance, link and joint flexibility, encoder resolution, supply voltage sag and current limits, bus latency, controller tuning, and contact/friction values (nominal friction only)._
 <!-- /SIM -->

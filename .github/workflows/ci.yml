@@ -42,6 +42,8 @@ jobs:
         run: python -m unittest discover -s python/tests -v
       - name: Examples match their pipeline (deliverables, report from the shipped URDF, no failing checks)
         run: python scripts/verify_examples.py
+      - name: Every printed part is printable (orientation, supports, walls, one solid); known issues listed with a reason
+        run: python scripts/print_audit.py --check
       - name: Re-run every example's MuJoCo task tests (drive, ramp, turn, hold, squat, grip)
         env: { MUJOCO_GL: disable }
         run: python scripts/simulate_examples.py --check

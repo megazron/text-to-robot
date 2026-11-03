@@ -3668,7 +3668,7 @@
   "end_effectors": [],
   "metadata": {
     "generator": "text-to-robot",
-    "created": "2026-11-03T16:15:49.567Z",
+    "created": "2026-11-03T17:05:05.887Z",
     "inferred_fields": [
       "joints.arc_reactor_joint.dynamics",
       "joints.arc_reactor_joint.limit",

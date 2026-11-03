@@ -274,12 +274,37 @@ function enclosure(b: Build, items: Item[], area: Rect, reserved: Rect[], deckTo
   const t = 2.4, m = 3;
   // the bay was packed inset by the wall allowance: the walls stand just outside the trays
   x0 = Math.max(area.x0 - m - t, x0 - m - t); x1 = Math.min(area.x1 + m + t, x1 + m + t); y0 = Math.max(area.y0 - m - t, y0 - m - t); y1 = Math.min(area.y1 + m + t, y1 + m + t);
-  const zTop = clearTop + 8, zLid = zTop + t;
-  const walls: Op[] = [{ op: "box", min: [x0, y0, deckTop], max: [x1, y1, zTop], r: 4 }, { op: "cutbox", min: [x0 + t, y0 + t, deckTop - 1], max: [x1 - t, y1 - t, zTop + 1] }];
-  const bosses: [number, number][] = [[x0 + t + 4, y0 + t + 4], [x1 - t - 4, y0 + t + 4], [x0 + t + 4, y1 - t - 4], [x1 - t - 4, y1 - t - 4]];
+  // reserved zones on the edge (pillar heads, a mast at the end): move that wall in past the zone when no board sits in
+  // the strip that is given up; zones in the middle get a chimney ring further down
+  const boards = plan.map(({ it, yaw, x, y }) => { const fp = footprint(it), dx = fp.max[0] - fp.min[0], dy = fp.max[1] - fp.min[1], [w, h] = yaw ? [dy, dx] : [dx, dy]; return { x0: x, x1: x + w, y0: y, y1: y + h }; });
+  const free = (q: Rect) => !boards.some((bd) => bd.x1 > q.x0 && bd.x0 < q.x1 && bd.y1 > q.y0 && bd.y0 < q.y1);
+  for (const r of reserved) {
+    if (r.x1 < x0 || r.x0 > x1 || r.y1 < y0 || r.y0 > y1) continue;
+    const opts: [number, () => void, Rect][] = [
+      [r.x1 + 2 + t - x0, () => { x0 = r.x1 + 2 + t; }, { x0, x1: r.x1 + 2 + t, y0, y1 }],
+      [x1 - (r.x0 - 2 - t), () => { x1 = r.x0 - 2 - t; }, { x0: r.x0 - 2 - t, x1, y0, y1 }],
+      [r.y1 + 2 + t - y0, () => { y0 = r.y1 + 2 + t; }, { x0, x1, y0, y1: r.y1 + 2 + t }],
+      [y1 - (r.y0 - 2 - t), () => { y1 = r.y0 - 2 - t; }, { x0, x1, y0: r.y0 - 2 - t, y1 }],
+    ];
+    const best = opts.filter(([d, , band]) => d > 0 && d < 45 && free(band)).sort((a, c) => a[0] - c[0])[0];
+    if (best) best[1]();
+  }
+  const zTop = clearTop + 8, zSeat = zTop + 0.2, zLid = zSeat + t; // the lid sits 0.2 mm proud of the walls (assembly clearance)
+  // four wall slabs (no hollowing cut, which would also remove the rings round openings inside)
+  const walls: Op[] = [{ op: "box", min: [x0, y0, deckTop], max: [x1, y0 + t, zTop] }, { op: "box", min: [x0, y1 - t, deckTop], max: [x1, y1, zTop] },
+    { op: "box", min: [x0, y0, deckTop], max: [x0 + t, y1, zTop] }, { op: "box", min: [x1 - t, y0, deckTop], max: [x1, y1, zTop] }];
+  // lid screw bosses in the corners, except where a board sits
+  const bosses = ([[x0 + t + 4, y0 + t + 4], [x1 - t - 4, y0 + t + 4], [x0 + t + 4, y1 - t - 4], [x1 - t - 4, y1 - t - 4]] as [number, number][])
+    .filter(([x, y]) => free({ x0: x - 5.5, x1: x + 5.5, y0: y - 5.5, y1: y + 5.5 }));
   for (const [x, y] of bosses) walls.push({ op: "rod", a: [x, y, deckTop], b: [x, y, zTop], r: 4.5 }, { op: "hole", a: [x, y, zTop - 12], b: [x, y, zTop + 1], d: 2.6 });
   // deck tabs (outside the walls) with M3 holes
-  for (const [x, y, dx, dy] of [[(x0 + x1) / 2, y0, 0, -1], [(x0 + x1) / 2, y1, 0, 1], [x0, (y0 + y1) / 2, -1, 0], [x1, (y0 + y1) / 2, 1, 0]] as const) {
+  // tabs only where the wall is solid: not on the rear cable slot, not on an opening for a mast or camera
+  const blocked = (x: number, y: number) => reserved.some((r) => x > r.x0 - 12 && x < r.x1 + 12 && y > r.y0 - 12 && y < r.y1 + 12) || (Math.abs(x - x0) < 3 && Math.abs(y - (y0 + y1) / 2) < 30);
+  const along = (a: number, b: number, fixed: number, isX: boolean) => { for (const f of [0.5, 0.3, 0.7, 0.15, 0.85]) { const v = a + (b - a) * f; if (!(isX ? blocked(v, fixed) : blocked(fixed, v))) return v; } return null; };
+  const tabSpots: [number, number, number, number][] = [];
+  { const tx0 = along(x0, x1, y0, true), tx1 = along(x0, x1, y1, true), ty0 = along(y0, y1, x0, false), ty1 = along(y0, y1, x1, false);
+    if (tx0 !== null) tabSpots.push([tx0, y0, 0, -1]); if (tx1 !== null) tabSpots.push([tx1, y1, 0, 1]); if (ty0 !== null) tabSpots.push([x0, ty0, -1, 0]); if (ty1 !== null) tabSpots.push([x1, ty1, 1, 0]); }
+  for (const [x, y, dx, dy] of tabSpots) {
     const cx = x + dx * 6, cy = y + dy * 6;
     walls.push({ op: "box", min: [cx - 7, cy - 7, deckTop], max: [cx + 7, cy + 7, deckTop + 3], r: 3 }, { op: "hole", a: [cx, cy, deckTop - 1], b: [cx, cy, deckTop + 4], d: 3.4 });
   }
@@ -287,15 +312,21 @@ function enclosure(b: Build, items: Item[], area: Rect, reserved: Rect[], deckTo
   const ventsX = Math.max(1, Math.floor((x1 - x0 - 40) / 12));
   for (let i = 0; i < ventsX; i++) { const vx = x0 + 20 + i * 12; for (const [ya, yb] of [[y0 - 1, y0 + t + 1], [y1 - t - 1, y1 + 1]]) walls.push({ op: "cutbox", min: [vx, ya, deckTop + 10], max: [vx + 5, yb, zTop - 8] }); }
   walls.push({ op: "cutbox", min: [x0 - 1, (y0 + y1) / 2 - 18, deckTop - 1], max: [x0 + t + 1, (y0 + y1) / 2 + 18, deckTop + 12] });
-  const lid: Op[] = [{ op: "box", min: [x0, y0, zTop], max: [x1, y1, zLid], r: 4 }, { op: "box", min: [x0 + t + 0.3, y0 + t + 0.3, zTop - 3], max: [x1 - t - 0.3, y1 - t - 0.3, zTop], r: 2 },
-    { op: "cutbox", min: [x0 + t + 2.3, y0 + t + 2.3, zTop - 4], max: [x1 - t - 2.3, y1 - t - 2.3, zTop - 0.01] }];
-  for (const [x, y] of bosses) lid.push({ op: "hole", a: [x, y, zTop - 4], b: [x, y, zLid + 1], d: 3.4 });
+  const lid: Op[] = [{ op: "box", min: [x0, y0, zSeat], max: [x1, y1, zLid], r: 4 }, { op: "box", min: [x0 + t + 0.3, y0 + t + 0.3, zSeat - 3], max: [x1 - t - 0.3, y1 - t - 0.3, zSeat], r: 2 },
+    { op: "cutbox", min: [x0 + t + 2.3, y0 + t + 2.3, zSeat - 4], max: [x1 - t - 2.3, y1 - t - 2.3, zSeat - 0.01] }];
+  for (const [x, y] of bosses) lid.push({ op: "hole", a: [x, y, zSeat - 4], b: [x, y, zLid + 1], d: 3.4 }, { op: "hole", a: [x, y, zSeat - 4], b: [x, y, zSeat - 0.01], d: 2 * 4.5 + 1 }); // lip notched round the bosses
   const ventsY = Math.max(1, Math.floor((y1 - y0 - 30) / 10));
   for (let i = 0; i < ventsY; i++) { const vy = y0 + 15 + i * 10; lid.push({ op: "cutbox", min: [(x0 + x1) / 2 - 25, vy, zTop - 4], max: [(x0 + x1) / 2 + 25, vy + 4, zLid + 1] }); }
   for (const r of reserved) {
     if (r.x1 < x0 || r.x0 > x1 || r.y1 < y0 || r.y0 > y1) continue;
-    const cut: Op = { op: "cutbox", min: [r.x0 - 2, r.y0 - 2, deckTop - 1], max: [r.x1 + 2, r.y1 + 2, zLid + 1] };
+    // an opening for something that stands inside (lidar mast): a wall ring round it keeps the walls one piece. The zones
+    // were padded by 5 mm for packing, so the ring (inside that pad) never touches a board.
+    const q = { x0: r.x0 + 5, x1: r.x1 - 5, y0: r.y0 + 5, y1: r.y1 - 5 };
+    walls.push({ op: "box", min: [Math.max(x0, q.x0 - 2 - t), Math.max(y0, q.y0 - 2 - t), deckTop], max: [Math.min(x1, q.x1 + 2 + t), Math.min(y1, q.y1 + 2 + t), zTop], r: 2 });
+    const cut: Op = { op: "cutbox", min: [q.x0 - 2, q.y0 - 2, deckTop - 1], max: [q.x1 + 2, q.y1 + 2, zLid + 1] };
     walls.push(cut); lid.push(cut);
+    // the lid's locating lip steps over the ring
+    lid.push({ op: "cutbox", min: [q.x0 - 2 - t - 0.5, q.y0 - 2 - t - 0.5, zSeat - 4], max: [q.x1 + 2 + t + 0.5, q.y1 + 2 + t + 0.5, zSeat - 0.01] });
   }
   const split = (name: string, ops: Op[], zh: number) => {
     if (fitsBed([x1 - x0 + 26, y1 - y0 + 26, zh])) { b.printed(name, parent, ops, "printed_dark"); return; }
@@ -550,7 +581,9 @@ function turnClaim(b: Build, topSpeed: number, skid: boolean): Record<string, nu
   const xs = b.contacts.filter((c) => c.driven).map((c) => c.x), ys = b.contacts.filter((c) => c.driven).map((c) => c.y);
   const track = (Math.max(...ys) - Math.min(...ys)) / 1000, wb = (Math.max(...xs) - Math.min(...xs)) / 1000;
   if (!(track > 0)) return {};
-  const ideal = (0.5 * topSpeed) / (track / 2), chi = skid ? 1 + 2 * (wb / track) ** 2 : 1;
+  // every wheel beyond two per side is one more patch dragged sideways in a turn
+  const perSide = Math.max(2, Math.round(b.contacts.length / 2)); // driven or idler: every wheel on the ground scrubs
+  const ideal = (0.5 * topSpeed) / (track / 2), chi = skid ? 1 + 2 * (wb / track) ** 2 + 0.25 * (perSide - 2) : 1;
   return { turn_rate_rad_s: +(ideal / chi).toFixed(2), turn_slip_factor: +chi.toFixed(2) };
 }
 /** Records every whole-robot check; call after the robot is complete. Returns what the outer loop needs to resize. */
@@ -698,9 +731,10 @@ function designBase(kind: BaseKind, req: MobileRequest): RobotSpecification {
     if (sensors.includes("camera")) reserved.push({ x0: front - 24, x1: front, y0: sensors.includes("depth") ? 46 : -20, y1: sensors.includes("depth") ? 82 : 20 });
     // boards are packed inside the enclosure walls (2.4 mm + 3 mm air gap)
     const area: Rect = { x0: -L / 2 + 10, x1: L / 2 - 10, y0: -W / 2 + 10, y1: W / 2 - 10 };
-    if (packBay(items, area, reserved)) {
-      const clear = electronicsBay(b, items, area, reserved, top);
-      enclosure(b, items, area, reserved, top, clear);
+    const pad = (rs: Rect[]) => rs.map((r) => ({ x0: r.x0 - 5, x1: r.x1 + 5, y0: r.y0 - 5, y1: r.y1 + 5 }));
+    if (packBay(items, area, pad(reserved))) {
+      const clear = electronicsBay(b, items, area, pad(reserved), top);
+      enclosure(b, items, area, pad(reserved), top, clear);
       if (sensors.includes("lidar")) lidarMast(b, lidarAt[0], lidarAt[1], top, clear + 10.4);
     } else {
       // too much for one deck (TurtleBot "waffle" layout): battery and drivers below, computer, IMU and
@@ -718,16 +752,16 @@ function designBase(kind: BaseKind, req: MobileRequest): RobotSpecification {
       b.A.fastener("M3 x 10 (pillars)", 8);
       const upTop = zU + 4, uArea: Rect = { x0: ux0 + 10, x1: ux1 - 10, y0: -uy + 10, y1: uy - 10 };
       const uRes: Rect[] = [...pillars.map(([x, y]) => ({ x0: x - 9, x1: x + 9, y0: y - 9, y1: y + 9 })), ...(sensors.includes("lidar") ? [{ x0: ux0 + 4, x1: ux0 + 70, y0: -33, y1: 33 }] : [])];
-      const clear = electronicsBay(b, high, uArea, uRes, upTop, "upper_deck");
-      enclosure(b, high, uArea, uRes, upTop, clear, "upper_deck");
+      const clear = electronicsBay(b, high, uArea, pad(uRes), upTop, "upper_deck");
+      enclosure(b, high, uArea, pad(uRes), upTop, clear, "upper_deck");
       if (sensors.includes("lidar")) lidarMast(b, ux0 + 37, 0, upTop, clear + 10.4, "upper_deck");
     }
     if (sensors.includes("depth")) depthCamera(b, front - 14, 0, top + 40, top);
     if (sensors.includes("camera")) {
       const y = sensors.includes("depth") ? 64 : 0, x = front - 14;
       const T = cameraModule(b, "front_camera", "base_link", [x + 10, y, top + 30]);
-      b.printed("front_camera_bracket", "base_link", [{ op: "box", min: [x - 6, y - 16, top], max: [x, y + 16, top + 45], r: 2 },
-        { op: "box", min: [x - 6, y - 16, top], max: [x + 8, y + 16, top + 4], r: 2 }, { op: "box", min: [x - 6, y - 15, top + 18], max: [x + 9.3, y + 15, top + 42] }, bodyCut("rpi_camera_module_3", T),
+      b.printed("front_camera_bracket", "base_link", [{ op: "box", min: [x - 6, y - 18, top], max: [x, y + 18, top + 45], r: 2 },
+        { op: "box", min: [x - 6, y - 18, top], max: [x + 8, y + 18, top + 4], r: 2 }, { op: "box", min: [x - 6, y - 18, top + 18], max: [x + 9.3, y + 18, top + 42] }, bodyCut("rpi_camera_module_3", T),
         { op: "hole", a: [x + 4, y, top - 1], b: [x + 4, y, top + 5], d: 3.4 }], "printed_dark");
     }
     if (sensors.includes("imu")) b.sensor("imu_frame", "imu", "imu", translation([12.8, 11.35, 2]), { rate_hz: 400 });
@@ -1059,12 +1093,15 @@ export function designEva(req: MobileRequest = {}): RobotSpecification {
     }
     for (const [t, x] of [["front_caster", 98], ["rear_caster", -98]] as const) ballCaster(b, t, x, 0, zB);
     // skirt halves: dark ring that hides the wheels, 6 mm off the floor
-    for (const s of [1, -1]) {
-      b.printed(s > 0 ? "skirt_left" : "skirt_right", "base_link", [
+    // the wheel arch cuts the ring's full height, so each side is two arcs (front, rear), each screwed to the deck edge
+    for (const s of [1, -1]) for (const f of [1, -1]) {
+      b.printed(`skirt_${s > 0 ? "left" : "right"}_${f > 0 ? "front" : "rear"}`, "base_link", [
         { op: "revolve", pts: shellOutline([[124, 8], [124.5, 60], [121, zB + 3], [118, zB + 12]], 2.4) },
         { op: "cutbox", min: [-200, s > 0 ? -200 : 0, -10], max: [200, s > 0 ? 0 : 200, 300] }, { op: "cutbox", min: [-52, s > 0 ? 90 : -200, -10], max: [52, s > 0 ? 200 : -90, 97] }, // wheel arch
+        { op: "cutbox", min: [f > 0 ? -200 : 0, -200, -10], max: [f > 0 ? 0 : 200, 200, 300] },
         ], "printed_dark");
     }
+    b.A.fastener("M3 x 8 (skirt arcs to the deck edge)", 8);
     // electronics on the deck under the egg
     const { items, compute } = electronicsFor(sensors.filter((x) => x !== "lidar" && x !== "depth"), 2, battery, false, true);
     // battery, regulator, IMU and servo bus low on the deck; computer and motor driver on a shelf (the mid rib)
@@ -1120,10 +1157,11 @@ export function designEva(req: MobileRequest = {}): RobotSpecification {
     b.A.printedLink("head", { name: "head", ops: b.in("head", headOps) }, { role: "head", material: "printed" });
     b.A.fastener("horn screws", 4);
     // visor: thin dark band on the front of the head
-    const visor: Op[] = [{ op: "at", T: scaleX, of: [{ op: "revolve", pts: shellOutline(headProf.map(([r, z]) => [r + 2.5, z]), 1.6), seg: 96 }] },
+    const visor: Op[] = [{ op: "at", T: scaleX, of: [{ op: "revolve", pts: shellOutline(headProf.map(([r, z]) => [r + 3, z]), 1.5), seg: 96 }] },
       { op: "cutbox", min: [-300, -300, -10], max: [300, 300, hz0 + 32] }, { op: "cutbox", min: [-300, -300, hz0 + 118], max: [300, 300, 900] },
       { op: "cutbox", min: [-300, -300, 0], max: [40, 300, 900] }, { op: "hole", a: [70, 0, hz0 + 70], b: [130, 0, hz0 + 70], d: 12 }, ...depthWindow];
-    b.printed("visor", "head", visor, "visor");
+    // a thin curved band is not a print: vacuum-form it from 1.5 mm smoked PETG sheet over the printed head as the buck
+    b.fabricated("visor", "head", visor, { density: 1270, material: "visor", item: "visor: vacuum-formed 1.5 mm smoked PETG sheet (the printed head is the forming buck, ~$8)", usd: 8 });
     for (const s of [1, -1]) b.printed(s > 0 ? "left_eye" : "right_eye", "head", [{ op: "at", T: frame([100.5, s * 30, hz0 + 78], [1, 0.2 * s, 0], [0, 0, 1]), of: [{ op: "box", min: [-9, -16, 0], max: [9, 16, 2.5], r: 8 }] }], "led");
     b.fab.push({ item: "two 8-LED WS2812 sticks behind translucent eye diffusers (~$8)", usd: 8 });
     cameraModule(b, "head_camera", "head", [86, 0, hz0 + 70]);
@@ -1134,8 +1172,8 @@ export function designEva(req: MobileRequest = {}): RobotSpecification {
     for (const s of [1, -1]) {
       const prefix = s > 0 ? "left_arm" : "right_arm";
       const T = frame([0, s * yS, zS], [0, 0, -1], [1, 0, 0]);
-      // fins swing +-75 deg: enough for EVA's gestures, and a fully raised fin with a load would tip her on a slope
-      attachArm(b, prefix, { dof: 2, kinds: ["P", "P"], gripper: false, payloadKg: payload, reachM: 0.2, basePlateMm: 46, ladder: "feetech" }, "spine", T, "printed", { shoulder_pitch: [-1.3, 1.3] });
+      // fins swing +-63 deg: enough for EVA's gestures; a fully raised fin with a load (and every sensor fitted) would tip her on a slope
+      attachArm(b, prefix, { dof: 2, kinds: ["P", "P"], gripper: false, payloadKg: payload, reachM: 0.2, basePlateMm: 46, ladder: "feetech" }, "spine", T, "printed", { shoulder_pitch: [-1.1, 1.1] });
       const ri = rAt(zS) - tShell;
       // shoulder bracket: clamps half the spine, runs out through a slot in the shell to the arm's base plate
       const y = (v: number) => s * v, lo = (a: number, c: number) => Math.min(y(a), y(c)), hi = (a: number, c: number) => Math.max(y(a), y(c));
@@ -1235,8 +1273,33 @@ export function designBaymax(req: MobileRequest = {}): RobotSpecification {
     for (let y = -20; y <= 20; y += 8) eyeOps.push({ op: "box", min: [surfX(Math.abs(y) + 4, 2) - 0.2, y - 4, hz0 + 66.5], max: [surfX(Math.abs(y), 2) + 1, y + 4, hz0 + 69.5] });
     // matching pockets in the head shell so the inlays sit flush
     for (const o of eyeOps) head.push(o.op === "rod" ? { op: "hole", a: o.a, b: o.b, d: 2 * o.r } : { op: "cutbox", min: (o as { min: Vec3 }).min, max: (o as { max: Vec3 }).max });
-    b.A.printedLink("head", { name: "head", ops: b.in("head", head) }, { role: "head", material: "fabric" });
+    // a closed egg has no face to print on: split at the equator. The lower half (with the horn and neck) is the head
+    // link and prints on its rim; the dome prints on its rim. A lip on the lower half locates the dome; four internal
+    // tabs take M3 screws.
+    const ze = hz0 + HH / 2 + 14, tabs: Op[] = [], tabsTop: Op[] = []; // seam above the eye inlays
+    const Re = HR * Math.sqrt(1 - (14 / (HH / 2)) ** 2); // shell radius at the seam
+    for (let k = 0; k < 4; k++) {
+      // tabs bridge from the shell wall inward (hull of an inner and an outer block), the lower ones below the seam (they
+      // merge with the lip), the dome's above the lip; an M3 x 12 joins each pair
+      const a = Math.PI / 4 + (k * Math.PI) / 2, at = (r: number): [number, number] => [0.78 * r * Math.cos(a), r * Math.sin(a)];
+      const [ix, iy] = at(Re - 20), [ox, oy] = at(Re - 1.5), [hx, hy] = at(Re - 15);
+      const blk = (x: number, y: number, z0: number, z1: number): Op => ({ op: "box", min: [x - 5, y - 5, z0], max: [x + 5, y + 5, z1] });
+      tabs.push({ op: "hull", of: [blk(ix, iy, ze - 8, ze - 1.3), blk(ox, oy, ze - 8, ze - 1.3)] }, { op: "hole", a: [hx, hy, ze - 9], b: [hx, hy, ze + 1], d: 2.6 });
+      tabsTop.push({ op: "hull", of: [blk(ix, iy, ze + 4.6, ze + 11), blk(ox, oy, ze + 4.6, ze + 11)] }, { op: "hole", a: [hx, hy, ze + 3], b: [hx, hy, ze + 12], d: 3.4 });
+    }
+    // each half is revolved from its own half of the profile (open shells with flat rims), so the lip survives
+    const rAtZ = (z: number) => HR * Math.sqrt(Math.max(0, 1 - ((z - (hz0 + HH / 2)) / (HH / 2)) ** 2));
+    // rims 0.8 mm either side of the seam: the shell offset leans with the egg's slope, so a smaller gap closes up
+    const half = (lo: boolean): [number, number][] => lo ? [...headProf.filter(([, z]) => z < ze - 0.8), [rAtZ(ze - 0.8), ze - 0.8]] : [[rAtZ(ze + 0.8), ze + 0.8], ...headProf.filter(([, z]) => z > ze + 0.8)];
+    const lowerShell: Op = { op: "at", T: sx, of: [{ op: "revolve", pts: shellOutline(half(true), 2.4), seg: 96 }] };
+    const upperShell: Op = { op: "at", T: sx, of: [{ op: "revolve", pts: shellOutline(half(false), 2.4), seg: 96 }] };
+    const lip: Op = { op: "at", T: sx, of: [{ op: "revolve", pts: [[Re - 6.4, ze - 6], [Re - 1.2, ze - 6], [Re - 1.2, ze], [Re - 3.2, ze], [rAtZ(ze + 4) - 4.2, ze + 4], [rAtZ(ze + 4) - 7.4, ze + 4]] /* tapers with the egg */, seg: 96 }] };
+    b.A.printedLink("head", { name: "head", ops: b.in("head", [lowerShell, ...head.slice(1), ...tabs, lip]) }, { role: "head", material: "fabric" });
+    // dome: its inner wall clears the lip by 0.6 mm; eye and camera pockets carry over
+    const domeOps: Op[] = [upperShell, ...head.slice(1).filter((o) => o.op === "hole" || o.op === "cutbox"), ...tabsTop];
+    b.printed("head_dome", "head", domeOps, "fabric");
     b.A.fastener("horn screws", 4);
+    b.A.fastener("M3 x 10 (head dome to head)", 4);
     b.printed("eyes", "head", eyeOps, "visor");
     cameraModule(b, "head_camera", "head", [70, 0, hz0 + 68]);
     b.printed("camera_bracket", "head", [{ op: "box", min: [55, -16, hz0 + 46], max: [59, 16, hz0 + 86], r: 2 }, { op: "box", min: [30, -16, hz0 + 46], max: [59, 16, hz0 + 50] }, bodyCut("rpi_camera_module_3", b.W.get("head_camera")!)]);

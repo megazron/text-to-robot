@@ -112,50 +112,50 @@
     },
     {
       "category": "Printed structure",
-      "name": "PETG filament for 28 printed parts",
+      "name": "PETG filament for 29 printed parts",
       "qty": 1,
-      "unit_cost": 29.71,
-      "subtotal": 29.71,
-      "spec": "1174 g of parts (+15 % supports/waste), about 107.0 h of printing",
-      "note": "left_front_bracket, left_rear_bracket, right_front_bracket, right_rear_bracket, battery_tray, computer_tray, motor_driver_1_tray, motor_driver_2_tray, servo_bus_tray, imu_tray, regulator_5v_tray, spine_foot, left_arm_shoulder_wedge, left_arm_base_link, left_arm_turret, left_arm_upper_arm, left_arm_forearm, left_arm_tool_link, right_arm_shoulder_wedge, right_arm_base_link, right_arm_turret, right_arm_upper_arm, right_arm_forearm, right_arm_tool_link, neck_mount, head, eyes, camera_bracket"
+      "unit_cost": 30.98,
+      "subtotal": 30.98,
+      "spec": "1224 g of parts (+15 % supports/waste), about 111.6 h of printing",
+      "note": "left_front_bracket, left_rear_bracket, right_front_bracket, right_rear_bracket, battery_tray, computer_tray, motor_driver_1_tray, motor_driver_2_tray, servo_bus_tray, imu_tray, regulator_5v_tray, spine_foot, left_arm_shoulder_wedge, left_arm_base_link, left_arm_turret, left_arm_upper_arm, left_arm_forearm, left_arm_tool_link, right_arm_shoulder_wedge, right_arm_base_link, right_arm_turret, right_arm_upper_arm, right_arm_forearm, right_arm_tool_link, neck_mount, head, head_dome, eyes, camera_bracket"
     },
     {
       "category": "Fasteners",
       "name": "Screws, nuts and inserts",
-      "qty": 152,
+      "qty": 156,
       "unit_cost": 0.12,
-      "subtotal": 18.24,
-      "spec": "24x M3 x 8 socket head (motor face); 8x M3 x 10 socket head + nut (bracket to deck); 1x 20 mm hook-and-loop battery strap; 14x M3 x 8 socket head (tray to deck); 23x M2.5 x 6 screws (board to standoffs); 8x M5 x 12 socket head (base to bench); 32x M2 x 6 case screws; 36x horn screws; 6x M5 x 16 socket head + M5 washer + M5 heat-set insert (clevis bearing axle)"
+      "subtotal": 18.72,
+      "spec": "24x M3 x 8 socket head (motor face); 8x M3 x 10 socket head + nut (bracket to deck); 1x 20 mm hook-and-loop battery strap; 14x M3 x 8 socket head (tray to deck); 23x M2.5 x 6 screws (board to standoffs); 8x M5 x 12 socket head (base to bench); 32x M2 x 6 case screws; 36x horn screws; 6x M5 x 16 socket head + M5 washer + M5 heat-set insert (clevis bearing axle); 4x M3 x 10 (head dome to head)"
     }
   ],
-  "total": 879.18,
+  "total": 880.93,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
   "actuator_sizing": [
     {
       "joint": "left_arm_base_yaw",
-      "required_effort": 0.914,
+      "required_effort": 0.92,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.914,
+      "required_torque_nm": 0.92,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "3.22x"
+      "margin": "3.2x"
     },
     {
       "joint": "left_arm_shoulder_pitch",
-      "required_effort": 1.96,
+      "required_effort": 1.973,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.96,
+      "required_torque_nm": 1.973,
       "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
-      "margin": "2.5x"
+      "margin": "2.49x"
     },
     {
       "joint": "left_arm_elbow_pitch",
-      "required_effort": 0.833,
+      "required_effort": 0.839,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.833,
+      "required_torque_nm": 0.839,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "3.53x"
+      "margin": "3.51x"
     },
     {
       "joint": "left_arm_wrist_pitch",
@@ -167,27 +167,27 @@
     },
     {
       "joint": "right_arm_base_yaw",
-      "required_effort": 0.914,
+      "required_effort": 0.92,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.914,
+      "required_torque_nm": 0.92,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "3.22x"
+      "margin": "3.2x"
     },
     {
       "joint": "right_arm_shoulder_pitch",
-      "required_effort": 1.96,
+      "required_effort": 1.973,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.96,
+      "required_torque_nm": 1.973,
       "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
-      "margin": "2.5x"
+      "margin": "2.49x"
     },
     {
       "joint": "right_arm_elbow_pitch",
-      "required_effort": 0.833,
+      "required_effort": 0.839,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.833,
+      "required_torque_nm": 0.839,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "3.53x"
+      "margin": "3.51x"
     },
     {
       "joint": "right_arm_wrist_pitch",
@@ -199,40 +199,40 @@
     },
     {
       "joint": "left_front_wheel_joint",
-      "required_effort": 0.15,
+      "required_effort": 0.152,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.15,
+      "required_torque_nm": 0.152,
       "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
-      "margin": "4.56x"
+      "margin": "4.52x"
     },
     {
       "joint": "left_rear_wheel_joint",
-      "required_effort": 0.15,
+      "required_effort": 0.152,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.15,
+      "required_torque_nm": 0.152,
       "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
-      "margin": "4.56x"
+      "margin": "4.52x"
     },
     {
       "joint": "right_front_wheel_joint",
-      "required_effort": 0.15,
+      "required_effort": 0.152,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.15,
+      "required_torque_nm": 0.152,
       "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
-      "margin": "4.56x"
+      "margin": "4.52x"
     },
     {
       "joint": "right_rear_wheel_joint",
-      "required_effort": 0.15,
+      "required_effort": 0.152,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.15,
+      "required_torque_nm": 0.152,
       "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
-      "margin": "4.56x"
+      "margin": "4.52x"
     }
   ],
   "warnings": [],
   "notes": [
-    "Baymax-style service robot: 5.358 kg, 1.01 m tall, 4WD hidden base, two 4-servo arms, pan head with camera",
+    "Baymax-style service robot: 5.407 kg, 1.01 m tall, 4WD hidden base, two 4-servo arms, pan head with camera",
     "Baymax's inflatable vinyl body is a sewn ripstop cover with a foam-lined zip, bought or sewn, with negligible structural role; it hangs on the shoulder yoke and hides a 4WD skid-steer base. It is not inflated, so it does not cushion like the film's.",
     "Structure: 2020 aluminium extrusion spine and a 6 mm aluminium shoulder yoke; arms are four servos each (shoulder yaw, shoulder pitch, elbow, wrist) splayed 25 deg so they clear the belly; the hands are printed mittens covered with the same fabric.",
     "Each arm is sized as mounted to lift 0.1 kg in the mitten at full reach; the tipping check includes both arms stretched forward with that payload.",

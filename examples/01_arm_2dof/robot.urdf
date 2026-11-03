@@ -89,9 +89,9 @@
       <geometry><mesh filename="package://arm_2dof/meshes/forearm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.085046 -0.001571 -0.02199" rpy="0 0 0"/>
-      <mass value="0.152123"/>
-      <inertia ixx="0.0000646409" ixy="-0.00000783052" ixz="-0.0000253247" iyy="0.00029939" iyz="5.41651e-7" izz="0.000275556"/>
+      <origin xyz="0.08589 -0.001512 -0.021713" rpy="0 0 0"/>
+      <mass value="0.153931"/>
+      <inertia ixx="0.0000658365" ixy="-0.00000843461" ixz="-0.0000283175" iyy="0.000309534" iyz="3.83426e-7" izz="0.000285001"/>
     </inertial>
   </link>
   <link name="gripper_actuator">
@@ -136,7 +136,7 @@
     <child link="upper_arm"/>
     <origin xyz="0 0.01905 0.0452" rpy="0 -1.570796 -1.570796"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-1.75" upper="1.75" effort="4.9033" velocity="5.96"/>
+    <limit lower="-1.75" upper="1.75" effort="4.9033" velocity="5.94"/>
     <dynamics damping="0.1249" friction="0.0981"/>
   </joint>
   <joint name="elbow_pitch_actuator_mount" type="fixed">
@@ -149,7 +149,7 @@
     <child link="forearm"/>
     <origin xyz="0.144165 0 -0.0381" rpy="3.141593 0 0"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-2.3" upper="2.3" effort="2.942" velocity="4.44"/>
+    <limit lower="-2.3" upper="2.3" effort="2.942" velocity="4.42"/>
     <dynamics damping="0.1249" friction="0.0588"/>
   </joint>
   <joint name="gripper_actuator_mount" type="fixed">

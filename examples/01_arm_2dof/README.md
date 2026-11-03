@@ -8,7 +8,7 @@ Interpreted as: 2-DOF serial arm · parallel gripper
 
 **2-DOF arm, 350 mm reach, 0.1 kg payload, Feetech STS serial-bus servos (12 V)**
 
-Parts cost **$130.04** · printed structure 4 parts, 365 g · checks passed 10/10
+Parts cost **$130.09** · printed structure 4 parts, 366 g · checks passed 10/10
 
 ## What it can do
 
@@ -16,11 +16,11 @@ Parts cost **$130.04** · printed structure 4 parts, 365 g · checks passed 10/1
 |---|--:|
 | reach m | 0.35 |
 | payload kg | 0.1 |
-| mass kg | 0.549 |
+| mass kg | 0.551 |
 | actuators | Feetech STS serial-bus servos (12 V) |
-| max joint speed rad s | 4.44 |
+| max joint speed rad s | 4.42 |
 | grip force n | 14 |
-| holding current a | 1.25 |
+| holding current a | 1.26 |
 | upper arm m | 0.144 |
 | forearm m | 0.205 |
 
@@ -28,8 +28,8 @@ Parts cost **$130.04** · printed structure 4 parts, 365 g · checks passed 10/1
 
 | Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
 |---|---|--:|--:|--:|--:|
-| shoulder_pitch | feetech_sts3250 | 1.326 | 1.5691 / 4.9033 | 3.7x | 5.96 |
-| elbow_pitch | feetech_sts3215_c047 | 0.539 | 0.9807 / 2.942 | 5.45x | 4.44 |
+| shoulder_pitch | feetech_sts3250 | 1.333 | 1.5691 / 4.9033 | 3.68x | 5.94 |
+| elbow_pitch | feetech_sts3215_c047 | 0.543 | 0.9807 / 2.942 | 5.42x | 4.42 |
 
 ## Engineering checks
 
@@ -49,10 +49,10 @@ All 10 checks pass (torque, speed, power, stability, print-bed fit, grip). Detai
 
 | | Test | Result |
 |---|---|---|
-| ✅ | payload hold | stretched_plus: holds 0.1 kg with the arm stretched out for 3 s; worst continuous utilisation 0.74x rated at shoulder_pitch | stretched_minus: holds 0.1 kg with the arm stretched out for 3 s; worst continuous utilisation 0.74x rated at shoulder_pitch |
+| ✅ | payload hold | stretched_plus: holds 0.1 kg with the arm stretched out for 3 s; worst continuous utilisation 0.65x rated at shoulder_pitch | stretched_minus: holds 0.1 kg with the arm stretched out for 3 s; worst continuous utilisation 0.65x rated at shoulder_pitch |
 | ✅ | reach | TCP 0.350 m from the shoulder axis with the payload, claimed 0.350 m (tolerance 7 mm) |
-| ✅ | speed | 1.98 s move at 80 % rated speed tracks within 0.1 rad; most saturated shoulder_pitch (0 % of the move) |
-| ✅ | grip | holds 0.1 kg against its weight with friction 0.5: slip 0.0 mm in 3 s, clamp force 27.1 N (needs >= 1.0 N), gripper limited to its rated (continuous) torque |
+| ✅ | speed | 1.24 s move at 80 % rated speed tracks within 0.1 rad; most saturated shoulder_pitch (0 % of the move) |
+| ✅ | grip | holds 0.1 kg against its weight with friction 0.5: slip 0.1 mm in 3 s, clamp force 27.5 N (needs >= 1.0 N), gripper limited to its rated (continuous) torque |
 
 _PASS means the modelled actuators (datasheet peak torque as a hard limit, a linear torque-speed line to no-load speed, reflected rotor inertia, URDF damping/friction) can produce the torques and speeds the task needs in this geometry and mass distribution, and that mean torque over the hold stays within the continuous (rated) torque. Joint control uses an ideal model-based feedforward (computed torque) through the force-limited servo for fixed-base robots and plain position servos for floating robots; a pass therefore proves torque/speed capacity, not that a given controller achieves it. Untested: thermal limits over long duty cycles (only the mean-vs-rated proxy), gearbox backlash and compliance, link and joint flexibility, encoder resolution, supply voltage sag and current limits, bus latency, controller tuning, and contact/friction values (nominal friction only)._
 <!-- /SIM -->

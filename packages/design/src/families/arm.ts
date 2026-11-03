@@ -104,7 +104,7 @@ function linkOps(cur: JointPlan, nextKey: string, nextT: Mat4, nextKind: Kind | 
   } else {
     // pitch joint: a clevis round the actuator (horn cheek + bearing cheek joined by a bridge outside its sweep),
     // then a solid link into the next cradle. Built in this actuator's frame (output axis +z).
-    const Wi = invert(cur.W), nT = mul(Wi, nextT), b = bodyMm(cur.key);
+    const Wi = invert(cur.W), nT = mul(Wi, nextT);
     const pN = apply(nT, [0, 0, 0]); let dx = pN[0], dy = pN[1];
     if (Math.hypot(dx, dy) < 1) { dx = 1; dy = 0; }
     const n = Math.hypot(dx, dy), dir: Vec3 = [dx / n, dy / n, 0];
@@ -145,7 +145,7 @@ function linkOps(cur: JointPlan, nextKey: string, nextT: Mat4, nextKind: Kind | 
       ops.push({ op: "at", T: nextT, of: [{ op: "hole", a: [0, 0, -1], b: [0, 0, 60], d: 2 * Rn }, { op: "hole", a: [0, 0, idlerZ(nextKey) + 0.6], b: [0, 0, idlerZ(nextKey) - 60], d: 2 * Rn }] });
     }
     // the gripper jaw's horn plate turns in front of the gripper servo: keep that disc clear
-    if (nextKind === "G") ops.push({ op: "at", T: nextT, of: [{ op: "hole", a: [0, 0, -0.5], b: [0, 0, 10], d: 2 * Math.hypot(14, 13) + 2 }] });
+    if (nextKind === "G") ops.push({ op: "at", T: nextT, of: [{ op: "hole", a: [0, 0, -2.0], b: [0, 0, 10], d: 2 * Math.hypot(14, 13) + 2 }] }); // from the cradle top: no skin left
     void lo; void hi;
   }
   if (nextKind === "P") ops.push({ op: "at", T: nextT, of: bossOps(nextKey) });
@@ -157,7 +157,8 @@ function gripperOps(G: Mat4, gripKey: string, fingerLen: number): { fixed: Op[];
   const xa = o[0] + 0.5, xb = o[0] + 8.5, gap = 34, half = gap / 2; // jaw plane on the horn side (8 mm jaws); opening at q = 0
   const fixed: Op[] = [
     // on top of the cradle, behind the jaw plane
-    { op: "box", min: [o[0] - d - WALL, -half - 8, zg + 14], max: [o[0] - 1, -8, zg + 25], r: 2 },
+    // root of the fixed finger: on top of the cradle, behind the jaw plane (the jaw never reaches x < o[0])
+    { op: "box", min: [o[0] - d - WALL, -half - 8, zg + 9], max: [o[0] - 1, -8, zg + 25], r: 2 },
     // across into the jaw plane, outside the jaw's swept horn plate
     { op: "box", min: [o[0] - 3, -half - 8, zg + 14], max: [xb, -half, zg + 28], r: 2 },
     { op: "box", min: [xa, -half - 8, zg + 14], max: [xb, -half, zg + F], r: 2 },
@@ -221,9 +222,10 @@ function buildArm(req: ArmRequest, kinds: Kind[], keys: string[], gripKey: strin
       const span = tail[2] - o[2];
       if (span > 120) ops.push({ op: "lighten", a: [o[0], y0, o[2] + 45], b: [o[0], y0, tail[2] - 40], r: Math.min(w * 0.28, 9), n: Math.max(1, Math.floor((span - 85) / 45)), axis: [0, 1, 0] });
     } else {
-      const r = hornRadiusMm(j.key) + 6, o = apply(j.W, [0, 0, 0]);
+      // tool flange: wide enough that its 4 M3 holes sit clear of the horn-screw pocket
+      const r = hornRadiusMm(j.key) + 10, o = apply(j.W, [0, 0, 0]);
       ops = [{ op: "at", T: j.W, of: [{ op: "horn", key: j.key, t: PLATE }, { op: "box", min: [-r, -r, PLATE], max: [r, r, PLATE + 6], r: 4 }] }];
-      for (const a of [0, 1, 2, 3]) { const p = apply(j.W, [Math.cos(a * Math.PI / 2 + Math.PI / 4) * (r - 5), Math.sin(a * Math.PI / 2 + Math.PI / 4) * (r - 5), 0]); const q = apply(j.W, [Math.cos(a * Math.PI / 2 + Math.PI / 4) * (r - 5), Math.sin(a * Math.PI / 2 + Math.PI / 4) * (r - 5), PLATE + 7]); ops.push({ op: "hole", a: p, b: q, d: 3.4 }); }
+      for (const a of [0, 1, 2, 3]) { const p = apply(j.W, [Math.cos(a * Math.PI / 2 + Math.PI / 4) * (r - 4), Math.sin(a * Math.PI / 2 + Math.PI / 4) * (r - 4), 0]); const q = apply(j.W, [Math.cos(a * Math.PI / 2 + Math.PI / 4) * (r - 4), Math.sin(a * Math.PI / 2 + Math.PI / 4) * (r - 4), PLATE + 7]); ops.push({ op: "hole", a: p, b: q, d: 3.4 }); }
       void o;
     }
     A.printedLink(linkName, { name: linkName, ops: [{ op: "at", T: invert(j.W), of: ops }] }, { role: linkName, material: i % 2 ? "printed" : "printed_accent" });
@@ -341,6 +343,9 @@ export function designArm(req: ArmRequest): RobotSpecification {
   const tailP = pIdx.length && pIdx[pIdx.length - 1] === kinds.length - 1 && pitchCount <= 2 ? pIdx[pIdx.length - 1] : -1;
   if (req.segments?.forearm && tailP >= 0 && pIdx.length === 2) { lengths[tailP] = req.segments.forearm * 1000; fixedSeg.add(tailP); }
   // match the requested reach: a build tells how much the wrist and bodies add (redone whenever the actuators change size)
+  // a pitch link must leave room for both clevises (this joint's bridge outside its sweep, the next joint's sweep)
+  const minLen = (i: number) => { const nk = keys[i + 1] ?? keys[i];
+    return kinds[i] === "P" ? bodyRadius(keys[i]) + 4 + 14 + bodyRadius(nk) + 8 : hobby ? 25 : 60; };
   const matchReach = () => {
     if (pitchCount < 1 || fixedSeg.size) return;
     for (let k = 0; k < 4; k++) {
@@ -348,7 +353,7 @@ export function designArm(req: ArmRequest): RobotSpecification {
       const err = reachOf(probe, kinds) * 1000 - reach;
       if (Math.abs(err) < 5) break;
       const adjustable = lengths.map((l, i) => (l > 0 ? i : -1)).filter((i) => i >= 0);
-      for (const i of adjustable) lengths[i] = Math.max(hobby ? 25 : 60, lengths[i] - err / adjustable.length);
+      for (const i of adjustable) lengths[i] = Math.max(minLen(i), lengths[i] - err / adjustable.length);
     }
   };
   matchReach();
@@ -362,7 +367,7 @@ export function designArm(req: ArmRequest): RobotSpecification {
     for (const [name, idx] of [["upper_arm", pIdx[0]], ["forearm", tailP >= 0 && pIdx.length === 2 ? tailP : pIdx[1]]] as const) {
       const want = req.segments?.[name]; if (!want || idx === undefined || !fixedSeg.has(idx) || m[name] === undefined) continue;
       const err = m[name]! - want * 1000; worst = Math.max(worst, Math.abs(err));
-      lengths[idx] = Math.max(20, lengths[idx] - err);
+      lengths[idx] = Math.max(minLen(idx), lengths[idx] - err);
     }
     if (worst < 0.1) break;
   }

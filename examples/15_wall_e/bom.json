@@ -105,9 +105,9 @@
       "category": "Printed structure",
       "name": "PETG filament for 29 printed parts",
       "qty": 1,
-      "unit_cost": 59.37,
-      "subtotal": 59.37,
-      "spec": "2347 g of parts (+15 % supports/waste), about 213.9 h of printing",
+      "unit_cost": 63.02,
+      "subtotal": 63.02,
+      "spec": "2491 g of parts (+15 % supports/waste), about 227.0 h of printing",
       "note": "base_link, left_track_frame, right_track_frame, body_left, body_right, body_back, body_front, body_top, battery_tray, motor_driver_1_tray, regulator_5v_tray, shelf, computer_tray, servo_bus_tray, neck_base_link, neck_upper_arm, neck_turret, neck_tool_link, head, left_arm_base_link, left_arm_upper_arm, left_arm_forearm, left_arm_gripper_jaw, left_arm_shoulder, right_arm_base_link, right_arm_upper_arm, right_arm_forearm, right_arm_gripper_jaw, right_arm_shoulder"
     },
     {
@@ -119,87 +119,87 @@
       "spec": "4x M5 x 30 shoulder bolt (idler axle); 12x M3 x 8 socket head (motor face); 24x M3 x 10 + printed corner cleats (body panels); 1x 20 mm hook-and-loop battery strap; 10x M3 x 8 socket head (tray to deck); 15x M2.5 x 6 screws (board to standoffs); 4x M3 x 10 + printed cleats (shelf to side panels); 12x M5 x 12 socket head (base to bench); 28x M2 x 6 case screws; 36x horn screws; 6x M5 x 16 socket head + M5 washer + M5 heat-set insert (clevis bearing axle)"
     }
   ],
-  "total": 780.88,
+  "total": 784.53,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
   "actuator_sizing": [
     {
       "joint": "neck_shoulder_pitch",
-      "required_effort": 1.036,
+      "required_effort": 1.285,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.036,
+      "required_torque_nm": 1.285,
       "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
-      "margin": "4.73x"
+      "margin": "3.82x"
     },
     {
       "joint": "neck_base_yaw",
-      "required_effort": 0.298,
+      "required_effort": 0.388,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.298,
+      "required_torque_nm": 0.388,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "9.87x"
+      "margin": "7.59x"
     },
     {
       "joint": "neck_elbow_pitch",
-      "required_effort": 0.685,
+      "required_effort": 0.891,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.685,
+      "required_torque_nm": 0.891,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "4.29x"
+      "margin": "3.3x"
     },
     {
       "joint": "left_arm_shoulder_pitch",
-      "required_effort": 0.638,
+      "required_effort": 0.83,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.638,
+      "required_torque_nm": 0.83,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "4.61x"
+      "margin": "3.54x"
     },
     {
       "joint": "left_arm_elbow_pitch",
-      "required_effort": 0.307,
+      "required_effort": 0.374,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.307,
+      "required_torque_nm": 0.374,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "9.59x"
+      "margin": "7.87x"
     },
     {
       "joint": "right_arm_shoulder_pitch",
-      "required_effort": 0.638,
+      "required_effort": 0.83,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.638,
+      "required_torque_nm": 0.83,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "4.61x"
+      "margin": "3.54x"
     },
     {
       "joint": "right_arm_elbow_pitch",
-      "required_effort": 0.307,
+      "required_effort": 0.374,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.307,
+      "required_torque_nm": 0.374,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "9.59x"
+      "margin": "7.87x"
     },
     {
       "joint": "left_middle_wheel_joint",
-      "required_effort": 0.07,
+      "required_effort": 0.073,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.07,
+      "required_torque_nm": 0.073,
       "chosen": "Pololu 70:1 Metal Gearmotor 37Dx70L 12 V with 64 CPR encoder (#4754)",
-      "margin": "14.01x"
+      "margin": "13.49x"
     },
     {
       "joint": "right_middle_wheel_joint",
-      "required_effort": 0.07,
+      "required_effort": 0.073,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.07,
+      "required_torque_nm": 0.073,
       "chosen": "Pololu 70:1 Metal Gearmotor 37Dx70L 12 V with 64 CPR encoder (#4754)",
-      "margin": "14.01x"
+      "margin": "13.49x"
     }
   ],
   "warnings": [],
   "notes": [
-    "WALL-E style tracked robot: 3.744 kg, 0.57 m/s, pan/tilt/lift head with stereo cameras, two servo arms",
+    "WALL-E style tracked robot: 3.888 kg, 0.57 m/s, pan/tilt/lift head with stereo cameras, two servo arms",
     "WALL-E's tracks are represented by three 90 mm wheels per side: the middle wheel of each side is driven by a gearmotor, the front and rear are idlers on 625 bearings. A real build wraps a printed or rubber track (or a T5 timing belt) round the three wheels, so traction and drive sizing use the full weight.",
     "The film's telescoping neck is replaced by a servo-driven pitch neck (the 'lift') with pan and tilt servos above it; the binoculars are two printed eye barrels with a Raspberry Pi Camera Module 3 in each (stereo pair).",
     "Arms: a shoulder and an elbow servo plus a one-servo gripper hand per side, reusing the arm designer's brackets; they are sized as mounted (pointing forward) for the hand payload.",

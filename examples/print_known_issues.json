@@ -1,0 +1,11 @@
+{
+  "01_arm_2dof": {
+    "forearm": "0.2 mm skin where the gripper servo's pocket meets the link side wall (2-DOF arm with gripper only); open issue"
+  },
+  "16_eva": {
+    "skirt_left_front": "0.53 mm knife edge where the wheel arch is cut by a plane at a shallow angle to the ring; needs a radial (pie-slice) cut op; open issue"
+  },
+  "17_baymax": {
+    "head_dome": "a shallow dome: printed rim-down it needs tree supports under ~30 % of its surface (inside the dome, removable); prints with supports, listed so it is not hidden"
+  }
+}
