@@ -8,7 +8,7 @@ Interpreted as: 7-DOF serial arm · parallel gripper
 
 **7-DOF arm, 464 mm reach, 0.1 kg payload, ROBOTIS DYNAMIXEL X-series (12 V)**
 
-Parts cost **$1197.03** · printed structure 9 parts, 403 g · checks passed 25/25
+Parts cost **$1196.81** · printed structure 9 parts, 394 g · checks passed 25/25
 
 ## What it can do
 
@@ -16,11 +16,11 @@ Parts cost **$1197.03** · printed structure 9 parts, 403 g · checks passed 25/
 |---|--:|
 | reach m | 0.464 |
 | payload kg | 0.1 |
-| mass kg | 0.993 |
+| mass kg | 0.984 |
 | actuators | ROBOTIS DYNAMIXEL X-series (12 V) |
 | max joint speed rad s | 3.82 |
 | grip force n | 6 |
-| holding current a | 1.81 |
+| holding current a | 1.79 |
 | upper arm m | 0.141 |
 | forearm m | 0.131 |
 
@@ -29,11 +29,11 @@ Parts cost **$1197.03** · printed structure 9 parts, 403 g · checks passed 25/
 | Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
 |---|---|--:|--:|--:|--:|
 | base_yaw | dxl_xl430_w250 | 0 | 0.42 / 1.4 | 99x | 4.43 |
-| shoulder_pitch | dxl_xh540_w270 | 2.418 | 2.97 / 9.9 | 4.09x | 3.82 |
-| upper_arm_roll | dxl_xl430_w250 | 0.017 | 0.42 / 1.4 | 82.8x | 5.67 |
-| elbow_pitch | dxl_xm430_w350 | 1.215 | 1.23 / 4.1 | 3.38x | 4.14 |
+| shoulder_pitch | dxl_xh540_w270 | 2.393 | 2.97 / 9.9 | 4.14x | 3.82 |
+| upper_arm_roll | dxl_xl430_w250 | 0.017 | 0.42 / 1.4 | 82.22x | 5.67 |
+| elbow_pitch | dxl_xm430_w350 | 1.202 | 1.23 / 4.1 | 3.41x | 4.14 |
 | forearm_roll | dxl_xl430_w250 | 0.009 | 0.42 / 1.4 | 99x | 5.67 |
-| wrist_pitch | dxl_xl430_w250 | 0.483 | 0.42 / 1.4 | 2.9x | 4.69 |
+| wrist_pitch | dxl_xl430_w250 | 0.478 | 0.42 / 1.4 | 2.93x | 4.69 |
 | wrist_roll | dxl_xl430_w250 | 0.001 | 0.42 / 1.4 | 99x | 5.67 |
 
 ## Engineering checks
@@ -43,7 +43,8 @@ All 25 checks pass (torque, speed, power, stability, print-bed fit, grip). Detai
 ## Assumptions and limits
 
 - Arm clamps or bolts to the bench through the four M5 holes in the base; it is not free-standing at full reach.
-- Links are cantilevered from one side of each horn (as on SO-101 / Koch arms); add an idler bearing on the far side for heavy use.
+- Every pitch joint is a clevis: one cheek bolts to the servo horn, the other turns on a 625ZZ bearing on an M5 bolt screwed into a heat-set insert in a boss on the back of the servo's cradle, so the servo's own bearing carries no bending moment. An M5 washer sits between the boss and the bearing's inner race.
+- Print the links in PETG or PLA+ with 4 perimeters and 30 % gyroid infill, cradle opening up; press the 625ZZ bearings into their seats (16.15 mm) and set the M5 inserts with a soldering iron.
 - Torques are exact static gravity loads of this geometry: the worst pose (stretched out with the payload) must be held within each actuator's rated continuous torque, peaks get +30 %, and each joint must still reach >= 1 rad/s loaded on its torque-speed line.
 
 <!-- SIM -->

@@ -131,7 +131,14 @@ export function hornPlate(key: string, t = 4, extra = 4): M {
   return cyl(hornRadiusMm(key) + extra, 0, t);
 }
 export function hornCuts(key: string, t = 4): M[] {
-  const cuts = screwCuts(outputHoles(key), I4(), t, t);
+  // screw holes through the plate, then ONE round pocket above it over the whole screw circle (screwdriver access);
+  // separate counterbores through thicker parts leave sub-millimetre webs between them
+  const holes = outputHoles(key);
+  const cuts = screwCuts(holes, I4(), t, 0);
+  if (holes.length) {
+    const rMax = Math.max(...holes.map((h) => Math.hypot(h.pos[0], h.pos[1]))), dHead = (holes[0].thread ? Number(holes[0].thread.replace(/^M/, "")) + 0.4 : holes[0].dia_mm + 0.3) * 1.9;
+    cuts.push(cyl(rMax + dHead / 2 + 0.6, t, t + 60));
+  }
   // centre screw head (M3 socket head 5.5 mm) / hub boss: a larger hole leaves sub-1 mm webs to the horn screws
   cuts.push(cyl(key.startsWith("cubemars_") ? 8 : 3.3, -1, t + 1));
   return cuts;

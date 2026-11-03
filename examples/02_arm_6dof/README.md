@@ -8,7 +8,7 @@ Interpreted as: 6-DOF serial arm · parallel gripper
 
 **6-DOF arm, 420 mm reach, 0.1 kg payload, Feetech STS serial-bus servos (12 V)**
 
-Parts cost **$222.38** · printed structure 8 parts, 358 g · checks passed 22/22
+Parts cost **$222.28** · printed structure 8 parts, 354 g · checks passed 22/22
 
 ## What it can do
 
@@ -16,7 +16,7 @@ Parts cost **$222.38** · printed structure 8 parts, 358 g · checks passed 22/2
 |---|--:|
 | reach m | 0.42 |
 | payload kg | 0.1 |
-| mass kg | 0.762 |
+| mass kg | 0.759 |
 | actuators | Feetech STS serial-bus servos (12 V) |
 | max joint speed rad s | 3.32 |
 | grip force n | 14 |
@@ -29,10 +29,10 @@ Parts cost **$222.38** · printed structure 8 parts, 358 g · checks passed 22/2
 | Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
 |---|---|--:|--:|--:|--:|
 | base_yaw | feetech_sts3215_c047 | 0 | 0.9807 / 2.942 | 99x | 4.48 |
-| shoulder_pitch | feetech_sts3250 | 1.945 | 1.5691 / 4.9033 | 2.52x | 4.98 |
+| shoulder_pitch | feetech_sts3250 | 1.944 | 1.5691 / 4.9033 | 2.52x | 4.98 |
 | elbow_pitch | feetech_sts3215_c047 | 1.238 | 0.9807 / 2.942 | 2.38x | 3.32 |
 | forearm_roll | feetech_sts3215_c047 | 0.007 | 0.9807 / 2.942 | 99x | 4.48 |
-| wrist_pitch | feetech_sts3215_c047 | 0.47 | 0.9807 / 2.942 | 6.25x | 4.48 |
+| wrist_pitch | feetech_sts3215_c047 | 0.473 | 0.9807 / 2.942 | 6.23x | 4.48 |
 | wrist_roll | feetech_sts3215_c047 | 0.001 | 0.9807 / 2.942 | 99x | 4.48 |
 
 ## Engineering checks
@@ -42,7 +42,8 @@ All 22 checks pass (torque, speed, power, stability, print-bed fit, grip). Detai
 ## Assumptions and limits
 
 - Arm clamps or bolts to the bench through the four M5 holes in the base; it is not free-standing at full reach.
-- Links are cantilevered from one side of each horn (as on SO-101 / Koch arms); add an idler bearing on the far side for heavy use.
+- Every pitch joint is a clevis: one cheek bolts to the servo horn, the other turns on a 625ZZ bearing on an M5 bolt screwed into a heat-set insert in a boss on the back of the servo's cradle, so the servo's own bearing carries no bending moment. An M5 washer sits between the boss and the bearing's inner race.
+- Print the links in PETG or PLA+ with 4 perimeters and 30 % gyroid infill, cradle opening up; press the 625ZZ bearings into their seats (16.15 mm) and set the M5 inserts with a soldering iron.
 - Torques are exact static gravity loads of this geometry: the worst pose (stretched out with the payload) must be held within each actuator's rated continuous torque, peaks get +30 %, and each joint must still reach >= 1 rad/s loaded on its torque-speed line.
 
 <!-- SIM -->

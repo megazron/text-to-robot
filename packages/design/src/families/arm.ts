@@ -145,7 +145,7 @@ function linkOps(cur: JointPlan, nextKey: string, nextT: Mat4, nextKind: Kind | 
       ops.push({ op: "at", T: nextT, of: [{ op: "hole", a: [0, 0, -1], b: [0, 0, 60], d: 2 * Rn }, { op: "hole", a: [0, 0, idlerZ(nextKey) + 0.6], b: [0, 0, idlerZ(nextKey) - 60], d: 2 * Rn }] });
     }
     // the gripper jaw's horn plate turns in front of the gripper servo: keep that disc clear
-    if (nextKind === "G") ops.push({ op: "at", T: nextT, of: [{ op: "hole", a: [0, 0, -0.5], b: [0, 0, 60], d: 2 * (hornRadiusMm(nextKey) + 4) + 2 }] });
+    if (nextKind === "G") ops.push({ op: "at", T: nextT, of: [{ op: "hole", a: [0, 0, -0.5], b: [0, 0, 10], d: 2 * Math.hypot(14, 13) + 2 }] });
     void lo; void hi;
   }
   if (nextKind === "P") ops.push({ op: "at", T: nextT, of: bossOps(nextKey) });
@@ -157,14 +157,14 @@ function gripperOps(G: Mat4, gripKey: string, fingerLen: number): { fixed: Op[];
   const xa = o[0] + 0.5, xb = o[0] + 8.5, gap = 34, half = gap / 2; // jaw plane on the horn side (8 mm jaws); opening at q = 0
   const fixed: Op[] = [
     // on top of the cradle, behind the jaw plane
-    { op: "box", min: [o[0] - d - WALL, -half - 8, zg + 9], max: [o[0] - 1, -8, zg + 20], r: 2 },
+    { op: "box", min: [o[0] - d - WALL, -half - 8, zg + 14], max: [o[0] - 1, -8, zg + 25], r: 2 },
     // across into the jaw plane, outside the jaw's swept horn plate
-    { op: "box", min: [o[0] - 3, -half - 8, zg + 9], max: [xb, -half, zg + 24], r: 2 },
-    { op: "box", min: [xa, -half - 8, zg + 9], max: [xb, -half, zg + F], r: 2 },
+    { op: "box", min: [o[0] - 3, -half - 8, zg + 14], max: [xb, -half, zg + 28], r: 2 },
+    { op: "box", min: [xa, -half - 8, zg + 14], max: [xb, -half, zg + F], r: 2 },
   ];
   const jaw: Op[] = [
     { op: "at", T: G, of: [{ op: "horn", key: gripKey, t: PLATE }] },
-    { op: "hull", of: [{ op: "box", min: [xa, -9, zg - 8], max: [xb, 9, zg + 8] }, { op: "box", min: [xa, half, zg + F * 0.45], max: [xb, half + 8, zg + F * 0.55] }] },
+    { op: "hull", of: [{ op: "box", min: [xa, -14, zg - 13], max: [xb, 14, zg + 13] }, { op: "box", min: [xa, half, zg + F * 0.45], max: [xb, half + 8, zg + F * 0.55] }] },
     { op: "box", min: [xa, half, zg + F * 0.45], max: [xb, half + 8, zg + F], r: 2 },
   ];
   // closing rotates the jaw about +x; find where its inner face meets the fixed finger's inner face

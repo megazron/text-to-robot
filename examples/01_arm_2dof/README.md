@@ -8,7 +8,7 @@ Interpreted as: 2-DOF serial arm · parallel gripper
 
 **2-DOF arm, 350 mm reach, 0.1 kg payload, Feetech STS serial-bus servos (12 V)**
 
-Parts cost **$129.98** · printed structure 4 parts, 362 g · checks passed 10/10
+Parts cost **$130.04** · printed structure 4 parts, 365 g · checks passed 10/10
 
 ## What it can do
 
@@ -16,11 +16,11 @@ Parts cost **$129.98** · printed structure 4 parts, 362 g · checks passed 10/1
 |---|--:|
 | reach m | 0.35 |
 | payload kg | 0.1 |
-| mass kg | 0.547 |
+| mass kg | 0.549 |
 | actuators | Feetech STS serial-bus servos (12 V) |
 | max joint speed rad s | 4.44 |
 | grip force n | 14 |
-| holding current a | 1.24 |
+| holding current a | 1.25 |
 | upper arm m | 0.144 |
 | forearm m | 0.205 |
 
@@ -28,8 +28,8 @@ Parts cost **$129.98** · printed structure 4 parts, 362 g · checks passed 10/1
 
 | Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
 |---|---|--:|--:|--:|--:|
-| shoulder_pitch | feetech_sts3250 | 1.316 | 1.5691 / 4.9033 | 3.73x | 5.98 |
-| elbow_pitch | feetech_sts3215_c047 | 0.534 | 0.9807 / 2.942 | 5.51x | 4.44 |
+| shoulder_pitch | feetech_sts3250 | 1.326 | 1.5691 / 4.9033 | 3.7x | 5.96 |
+| elbow_pitch | feetech_sts3215_c047 | 0.539 | 0.9807 / 2.942 | 5.45x | 4.44 |
 
 ## Engineering checks
 
@@ -38,7 +38,8 @@ All 10 checks pass (torque, speed, power, stability, print-bed fit, grip). Detai
 ## Assumptions and limits
 
 - Arm clamps or bolts to the bench through the four M5 holes in the base; it is not free-standing at full reach.
-- Links are cantilevered from one side of each horn (as on SO-101 / Koch arms); add an idler bearing on the far side for heavy use.
+- Every pitch joint is a clevis: one cheek bolts to the servo horn, the other turns on a 625ZZ bearing on an M5 bolt screwed into a heat-set insert in a boss on the back of the servo's cradle, so the servo's own bearing carries no bending moment. An M5 washer sits between the boss and the bearing's inner race.
+- Print the links in PETG or PLA+ with 4 perimeters and 30 % gyroid infill, cradle opening up; press the 625ZZ bearings into their seats (16.15 mm) and set the M5 inserts with a soldering iron.
 - Torques are exact static gravity loads of this geometry: the worst pose (stretched out with the payload) must be held within each actuator's rated continuous torque, peaks get +30 %, and each joint must still reach >= 1 rad/s loaded on its torque-speed line.
 
 <!-- SIM -->

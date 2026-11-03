@@ -57,9 +57,9 @@
       <geometry><mesh filename="package://arm_2dof/meshes/upper_arm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.07423 0.000025793 -0.021701" rpy="0 0 0"/>
-      <mass value="0.116969"/>
-      <inertia ixx="0.0000468188" ixy="-1.37981e-7" ixz="-0.0000144653" iyy="0.000179883" iyz="-4.96308e-8" izz="0.000154099"/>
+      <origin xyz="0.074347 0.0000258335 -0.021742" rpy="0 0 0"/>
+      <mass value="0.116785"/>
+      <inertia ixx="0.0000466862" ixy="-1.37629e-7" ixz="-0.0000148229" iyy="0.000178738" iyz="-4.97550e-8" izz="0.000153073"/>
     </inertial>
   </link>
   <link name="elbow_pitch_actuator">
@@ -89,9 +89,9 @@
       <geometry><mesh filename="package://arm_2dof/meshes/forearm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.084325 -0.001641 -0.022022" rpy="0 0 0"/>
-      <mass value="0.151468"/>
-      <inertia ixx="0.0000646753" ixy="-0.00000692026" ixz="-0.0000235559" iyy="0.00029126" iyz="7.55446e-7" izz="0.00026736"/>
+      <origin xyz="0.085046 -0.001571 -0.02199" rpy="0 0 0"/>
+      <mass value="0.152123"/>
+      <inertia ixx="0.0000646409" ixy="-0.00000783052" ixz="-0.0000253247" iyy="0.00029939" iyz="5.41651e-7" izz="0.000275556"/>
     </inertial>
   </link>
   <link name="gripper_actuator">
@@ -121,9 +121,9 @@
       <geometry><mesh filename="package://arm_2dof/meshes/gripper_jaw.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.020823 -0.009952 0.004177" rpy="0 0 0"/>
-      <mass value="0.008397"/>
-      <inertia ixx="8.70753e-7" ixy="0.00000134675" ixz="-6.26175e-8" iyy="0.00000379221" iyz="3.10672e-8" izz="0.00000456889"/>
+      <origin xyz="0.018573 -0.008709 0.004188" rpy="0 0 0"/>
+      <mass value="0.010307"/>
+      <inertia ixx="0.00000130525" ixy="0.00000150606" ixz="-6.04150e-8" iyy="0.00000446478" iyz="2.80229e-8" izz="0.00000565582"/>
     </inertial>
   </link>
   <joint name="shoulder_pitch_actuator_mount" type="fixed">
@@ -136,7 +136,7 @@
     <child link="upper_arm"/>
     <origin xyz="0 0.01905 0.0452" rpy="0 -1.570796 -1.570796"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-1.75" upper="1.75" effort="4.9033" velocity="5.98"/>
+    <limit lower="-1.75" upper="1.75" effort="4.9033" velocity="5.96"/>
     <dynamics damping="0.1249" friction="0.0981"/>
   </joint>
   <joint name="elbow_pitch_actuator_mount" type="fixed">
