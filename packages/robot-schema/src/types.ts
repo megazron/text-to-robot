@@ -85,6 +85,8 @@ export interface Joint {
   axis: Vec3;
   limit?: JointLimit;
   dynamics?: JointDynamics;
+  /** this joint follows another (URDF <mimic>): q = multiplier * q_joint + offset, e.g. track idlers coupled to the drive wheel */
+  mimic?: { joint: string; multiplier?: number; offset?: number };
   inferred?: string[];
 }
 

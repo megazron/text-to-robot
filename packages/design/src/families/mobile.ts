@@ -491,6 +491,16 @@ function averagePower(b: Build, massKg: number, cruise: number, compute: string)
   return { total: parts.reduce((s, p) => s + p.w, 0), parts };
 }
 
+/** Turn-in-place rate at half the top wheel speed. Skid-steer wheel sets slide sideways while turning, so the yaw rate is the
+ *  no-slip rate divided by an ICR-expansion factor; chi = 1 + 2 (wheelbase / track)^2 is the conservative value for grippy
+ *  floors (lateral friction ~1; measured skid-steer factors are 1.5-2.5), about 3 for a square base. */
+function turnClaim(b: Build, topSpeed: number, skid: boolean): Record<string, number> {
+  const xs = b.contacts.filter((c) => c.driven).map((c) => c.x), ys = b.contacts.filter((c) => c.driven).map((c) => c.y);
+  const track = (Math.max(...ys) - Math.min(...ys)) / 1000, wb = (Math.max(...xs) - Math.min(...xs)) / 1000;
+  if (!(track > 0)) return {};
+  const ideal = (0.5 * topSpeed) / (track / 2), chi = skid ? 1 + 2 * (wb / track) ** 2 : 1;
+  return { turn_rate_rad_s: +(ideal / chi).toFixed(2), turn_slip_factor: +chi.toFixed(2) };
+}
 /** Records every whole-robot check; call after the robot is complete. Returns what the outer loop needs to resize. */
 function engineer(b: Build, o: { motor: string; wheel: string; nDriven: number; battery: [string, number]; compute: string; eff?: number; skid?: boolean; casterMaxKg?: number; extraMassKg?: number; extraLoads?: PointLoad[] }) {
   const A = b.A, mass = totalMass(A.spec) + (o.extraMassKg ?? 0);
@@ -544,6 +554,7 @@ function engineer(b: Build, o: { motor: string; wheel: string; nDriven: number; 
     ...A.design.performance, mass_kg: +totalMass(A.spec).toFixed(3), loaded_mass_kg: +mass.toFixed(3), top_speed_m_s: +d.topSpeed.toFixed(2), wheel_torque_nm: +d.tauNm.toFixed(3), drive_motor: o.motor,
     battery: `${o.battery[1]} x ${o.battery[0]}`, average_power_w: +pw.total.toFixed(1), runtime_h: +runtime.toFixed(2), tip_angle_deg: +worst.tipDeg.toFixed(1), compute: o.compute,
     slope_deg: DRIVE_REQ.slopeDeg,
+    ...turnClaim(b, d.topSpeed, !!o.skid),
   };
   return { mass, drive: d, runtime, pw };
 }
@@ -849,6 +860,11 @@ function characterChassis(b: Build, o: { motor: string; perSide: 2 | 3; drivenPe
         plates.push(...st.plate(zB));
         if (driven) Tm = st.Tm;
       });
+      // the track couples the idlers to the drive wheel: same angular speed (same wheel size)
+      if (o.perSide === 3) for (const pos of ["front", "rear"]) {
+        const j = b.A.spec.joints.find((x) => x.name === `${side}_${pos}_wheel_joint`);
+        if (j) j.mimic = { joint: `${side}_middle_wheel_joint`, multiplier: 1, offset: 0 };
+      }
       const y0 = s > 0 ? o.yFace : -o.yFace - 5, y1 = s > 0 ? o.yFace + 5 : -o.yFace;
       const xa = xs[xs.length - 1] - 22, xb = xs[0] + 22;
       plates.push({ op: "hull", of: [{ op: "box", min: [xa, y0, h - 15], max: [xb, y1, h + 10] }, { op: "box", min: [xa + 30, y0, zB - 5], max: [xb - 30, y1, zB] }] },

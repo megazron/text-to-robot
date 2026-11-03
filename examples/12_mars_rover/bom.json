@@ -1,235 +1,238 @@
 {
   "robot_name": "rover_arm",
   "budget": 4000,
-  "tier": "hobby",
+  "tier": "prosumer",
   "lines": [
     {
-      "category": "Actuator",
-      "name": "NEMA17 stepper",
-      "qty": 4,
-      "unit_cost": 14,
-      "subtotal": 56,
-      "spec": "1.8deg, needs driver (0.45 N·m)",
-      "note": "joint front_left_wheel_joint; rating duty/source unverified; joint front_right_wheel_joint; rating duty/source unverified; joint rear_left_wheel_joint; rating duty/source unverified; joint rear_right_wheel_joint; rating duty/source unverified"
-    },
-    {
-      "category": "Motor driver",
-      "name": "TMC2209 driver",
-      "qty": 4,
-      "unit_cost": 10,
-      "subtotal": 40,
-      "spec": "driver for NEMA17 stepper"
-    },
-    {
-      "category": "Actuator",
-      "name": "DS3218 20kg servo",
-      "qty": 6,
-      "unit_cost": 12,
-      "subtotal": 72,
-      "spec": "PWM, waterproof, metal gears (1.96 N·m)",
-      "note": "joint joint_1; rating duty/source unverified; joint joint_2; rating duty/source unverified; joint joint_3; rating duty/source unverified; joint joint_4; rating duty/source unverified; joint joint_5; rating duty/source unverified; joint joint_6; rating duty/source unverified"
-    },
-    {
-      "category": "Actuator",
-      "name": "Linear actuator 100N",
+      "category": "Mechanical",
+      "name": "Ball bearing 608-2Z 8x22x7 mm",
       "qty": 2,
-      "unit_cost": 35,
-      "subtotal": 70,
-      "spec": "12V, 100mm stroke (prismatic) (100 N)",
-      "note": "joint left_finger_joint; rating duty/source unverified; joint right_finger_joint; rating duty/source unverified"
+      "unit_cost": 0.6,
+      "subtotal": 1.2,
+      "spec": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-608-2Z",
+      "note": "rocker pivot · https://www.vxb.com/search?q=608-2Z"
     },
     {
-      "category": "Sensor",
-      "name": "OAK-D Lite",
+      "category": "Power",
+      "name": "Pololu D36V50F5 5 V 5.5 A step-down regulator (#4091)",
       "qty": 1,
-      "unit_cost": 150,
-      "subtotal": 150,
-      "spec": "stereo depth + AI",
-      "note": "depth_1"
+      "unit_cost": 39.95,
+      "subtotal": 39.95,
+      "spec": "5 V",
+      "note": "5 V rail for the computer / USB · https://www.pololu.com/product/4091"
     },
     {
-      "category": "Sensor",
-      "name": "Raspberry Pi Camera Module 3",
+      "category": "Electronics",
+      "name": "Cytron MDD10A dual-channel 10 A DC motor driver (5-30 V)",
+      "qty": 2,
+      "unit_cost": 21,
+      "subtotal": 42,
+      "spec": "12 V",
+      "note": "dual DC motor driver · https://www.cytron.io/p-10amp-5v-30v-dc-motor-driver-2-channels"
+    },
+    {
+      "category": "Electronics",
+      "name": "ROBOTIS U2D2 USB to TTL/RS-485 interface",
       "qty": 1,
-      "unit_cost": 25,
-      "subtotal": 25,
-      "spec": "12MP, CSI",
-      "note": "camera_1"
+      "unit_cost": 32.1,
+      "subtotal": 32.1,
+      "spec": "5 V",
+      "note": "arm: USB to actuator bus · https://www.generationrobots.com/en/400848-usb2dynamixel-robotis.html"
+    },
+    {
+      "category": "Actuator",
+      "name": "DYNAMIXEL XH540-W270-T(R)",
+      "qty": 2,
+      "unit_cost": 539.9,
+      "subtotal": 1079.8,
+      "spec": "2.97 N·m rated / 9.9 N·m peak, 12 V",
+      "note": "arm: joint shoulder_pitch, joint elbow_pitch · https://robotis.us/dynamixel-xh540-w270-t"
+    },
+    {
+      "category": "Actuator",
+      "name": "DYNAMIXEL XM430-W350-T(R)",
+      "qty": 5,
+      "unit_cost": 310.39,
+      "subtotal": 1551.95,
+      "spec": "1.23 N·m rated / 4.1 N·m peak, 12 V",
+      "note": "arm: joint base_yaw, joint forearm_roll, joint wrist_pitch, joint wrist_roll, gripper · https://www.robotshop.com/products/robotis-dynamixel-xm430-w350-t-smart-servo-actuator"
     },
     {
       "category": "Compute",
-      "name": "Raspberry Pi 5 (8GB)",
+      "name": "NVIDIA Jetson Orin Nano Super Developer Kit",
       "qty": 1,
-      "unit_cost": 80,
-      "subtotal": 80,
-      "spec": "SBC, runs ROS 2"
+      "unit_cost": 249,
+      "subtotal": 249,
+      "spec": "19 V",
+      "note": "on-board computer · https://developer.nvidia.com/buy-jetson?product=jetson_orin_nano"
     },
     {
       "category": "Power",
-      "name": "LiPo 4S 5000mAh",
+      "name": "LiPo 3S 5000 mAh 60C, XT60 (Gens Ace G-Tech)",
       "qty": 1,
-      "unit_cost": 40,
-      "subtotal": 40,
-      "spec": "74 Wh; est. load 49 W"
+      "unit_cost": 59.99,
+      "subtotal": 59.99,
+      "spec": "11.1 V, 55.5 Wh",
+      "note": "main battery · https://classicrcshop.com/products/gens-ace-5000mah-3s-60c-11-1v-g-tech-lipo-battery-pack-with-xt60-plug"
     },
     {
-      "category": "Power",
-      "name": "DC-DC buck regulator (5V/10A)",
-      "qty": 1,
-      "unit_cost": 12,
-      "subtotal": 12,
-      "spec": "logic + servo rail"
+      "category": "Actuator",
+      "name": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
+      "qty": 4,
+      "unit_cost": 60.95,
+      "subtotal": 243.8,
+      "spec": "0.686 N·m rated / 1.373 N·m peak, 12 V",
+      "note": "drive motor · https://www.pololu.com/product/4752"
     },
     {
-      "category": "Power",
-      "name": "Power distribution board + fuse + switch",
+      "category": "Sensor",
+      "name": "Intel RealSense D435i depth camera + IMU",
       "qty": 1,
-      "unit_cost": 14,
-      "subtotal": 14,
-      "spec": "wiring harness backbone"
+      "unit_cost": 399,
+      "subtotal": 399,
+      "spec": "5 V",
+      "note": "RGB-D camera · https://www.realsenseai.com/products/depth-camera-d435i/"
     },
     {
-      "category": "Structure",
-      "name": "3D-printed frame (PLA/PETG)",
+      "category": "Sensor",
+      "name": "Raspberry Pi Camera Module 3 (standard lens)",
       "qty": 1,
-      "unit_cost": 200.63,
-      "subtotal": 200.63,
-      "spec": "~9.12 kg material @ $22/kg"
+      "unit_cost": 25,
+      "subtotal": 25,
+      "spec": "3.3 V",
+      "note": "camera · https://www.raspberrypi.com/products/camera-module-3/"
     },
     {
-      "category": "Structure",
-      "name": "Fastener + bearing kit",
+      "category": "Electronics",
+      "name": "Waveshare Bus Servo Adapter (A)",
       "qty": 1,
-      "unit_cost": 18,
-      "subtotal": 18,
-      "spec": "M3 screws, heat inserts, 608 bearings"
+      "unit_cost": 10.6,
+      "subtotal": 10.6,
+      "spec": "12 V",
+      "note": "servo bus adapter · https://www.waveshare.com/bus-servo-adapter-a.htm"
     },
     {
-      "category": "Wiring & misc",
-      "name": "Wiring, connectors, JST/Dupont, sleeving",
+      "category": "Drive",
+      "name": "Pololu 90x10 mm wheel + 6 mm universal aluminium hub (for 37D gearmotors)",
+      "qty": 4,
+      "unit_cost": 11.22,
+      "subtotal": 44.88,
+      "spec": "https://www.pololu.com/file/0J161/1083-6mm-4-40-hub-dimensions.pdf",
+      "note": "driven wheel · https://www.pololu.com/product/1435"
+    },
+    {
+      "category": "Printed structure",
+      "name": "PETG filament for 20 printed parts",
       "qty": 1,
-      "unit_cost": 67.08,
-      "subtotal": 67.08,
-      "spec": "~12% of electronics"
+      "unit_cost": 15.87,
+      "subtotal": 15.87,
+      "spec": "627 g of parts (+15 % supports/waste), about 57.2 h of printing",
+      "note": "left_rocker_rear_arm, left_rocker_frame, right_rocker_rear_arm, right_rocker_frame, battery_tray, computer_tray, motor_driver_1_tray, motor_driver_2_tray, servo_bus_tray, regulator_5v_tray, depth_camera_bracket, camera_mast, arm_base_link, arm_turret, arm_upper_arm, arm_forearm, arm_forearm_rotator, arm_wrist, arm_wrist_rotator, arm_gripper_jaw"
+    },
+    {
+      "category": "Fasteners",
+      "name": "Screws, nuts and inserts",
+      "qty": 140,
+      "unit_cost": 0.12,
+      "subtotal": 16.8,
+      "spec": "24x M3 x 8 socket head (motor face); 2x M8 x 40 shoulder bolt + spacer (rocker pivot); 4x M4 x 20 + nut (rocker rear arm to hub); 1x 20 mm hook-and-loop battery strap; 12x M3 x 8 socket head (tray to deck); 19x M2.5 x 6 screws (board to standoffs); 2x M3 x 6 (camera back); 4x M5 x 12 socket head (base to bench); 24x M2.5 x 6 case screws; 48x horn screws"
     }
   ],
-  "total": 844.71,
+  "total": 3811.94,
   "feasible": true,
-  "sizing_pass": false,
+  "sizing_pass": true,
   "hardware_verified": false,
   "actuator_sizing": [
     {
-      "joint": "front_left_wheel_joint",
-      "required_effort": 2,
+      "joint": "arm_base_yaw",
+      "required_effort": 0,
       "effort_unit": "N·m",
-      "required_torque_nm": 2,
-      "chosen": "NEMA17 stepper",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 0,
+      "chosen": "DYNAMIXEL XM430-W350-T(R)",
+      "margin": "99x"
     },
     {
-      "joint": "front_right_wheel_joint",
-      "required_effort": 2,
+      "joint": "arm_shoulder_pitch",
+      "required_effort": 2.851,
       "effort_unit": "N·m",
-      "required_torque_nm": 2,
-      "chosen": "NEMA17 stepper",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 2.851,
+      "chosen": "DYNAMIXEL XH540-W270-T(R)",
+      "margin": "3.47x"
     },
     {
-      "joint": "rear_left_wheel_joint",
-      "required_effort": 2,
+      "joint": "arm_elbow_pitch",
+      "required_effort": 1.783,
       "effort_unit": "N·m",
-      "required_torque_nm": 2,
-      "chosen": "NEMA17 stepper",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 1.783,
+      "chosen": "DYNAMIXEL XH540-W270-T(R)",
+      "margin": "5.55x"
     },
     {
-      "joint": "rear_right_wheel_joint",
-      "required_effort": 2,
+      "joint": "arm_forearm_roll",
+      "required_effort": 0.75,
       "effort_unit": "N·m",
-      "required_torque_nm": 2,
-      "chosen": "NEMA17 stepper",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 0.75,
+      "chosen": "DYNAMIXEL XM430-W350-T(R)",
+      "margin": "5.47x"
     },
     {
-      "joint": "joint_1",
-      "required_effort": 9.6,
+      "joint": "arm_wrist_pitch",
+      "required_effort": 0.75,
       "effort_unit": "N·m",
-      "required_torque_nm": 9.6,
-      "chosen": "DS3218 20kg servo",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 0.75,
+      "chosen": "DYNAMIXEL XM430-W350-T(R)",
+      "margin": "5.47x"
     },
     {
-      "joint": "joint_2",
-      "required_effort": 9.6,
+      "joint": "arm_wrist_roll",
+      "required_effort": 0.056,
       "effort_unit": "N·m",
-      "required_torque_nm": 9.6,
-      "chosen": "DS3218 20kg servo",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 0.056,
+      "chosen": "DYNAMIXEL XM430-W350-T(R)",
+      "margin": "72.91x"
     },
     {
-      "joint": "joint_3",
-      "required_effort": 6.4,
+      "joint": "left_front_wheel_joint",
+      "required_effort": 0.126,
       "effort_unit": "N·m",
-      "required_torque_nm": 6.4,
-      "chosen": "DS3218 20kg servo",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 0.126,
+      "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
+      "margin": "5.46x"
     },
     {
-      "joint": "joint_4",
-      "required_effort": 3.2,
+      "joint": "left_rear_wheel_joint",
+      "required_effort": 0.126,
       "effort_unit": "N·m",
-      "required_torque_nm": 3.2,
-      "chosen": "DS3218 20kg servo",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 0.126,
+      "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
+      "margin": "5.46x"
     },
     {
-      "joint": "joint_5",
-      "required_effort": 2.4,
+      "joint": "right_front_wheel_joint",
+      "required_effort": 0.126,
       "effort_unit": "N·m",
-      "required_torque_nm": 2.4,
-      "chosen": "DS3218 20kg servo",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 0.126,
+      "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
+      "margin": "5.46x"
     },
     {
-      "joint": "joint_6",
-      "required_effort": 1.6,
+      "joint": "right_rear_wheel_joint",
+      "required_effort": 0.126,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.6,
-      "chosen": "DS3218 20kg servo",
-      "margin": "UNDERSIZED"
-    },
-    {
-      "joint": "left_finger_joint",
-      "required_effort": 32,
-      "effort_unit": "N",
-      "required_force_n": 32,
-      "chosen": "Linear actuator 100N",
-      "margin": "3.1x"
-    },
-    {
-      "joint": "right_finger_joint",
-      "required_effort": 32,
-      "effort_unit": "N",
-      "required_force_n": 32,
-      "chosen": "Linear actuator 100N",
-      "margin": "3.1x"
+      "required_torque_nm": 0.126,
+      "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
+      "margin": "5.46x"
     }
   ],
-  "warnings": [
-    "Sizing uses a neutral-pose gravity proxy and declared joint effort, not a worst-case workspace or dynamic load analysis. Selection checks only approximate effort and broad motion type. Speed/torque curves, travel, voltage, feedback, mounting, thermal duty and wiring are not qualified.",
-    "Catalog values are planning estimates. Except explicitly sourced rated values, torque entries may be stall/peak ratings; continuous duty, fit and complete assemblies are unverified.",
-    "joint front_left_wheel_joint needs ~2.00 N·m; strongest in hobby tier is NEMA17 stepper (0.45 N·m) — increase budget for a stronger actuator",
-    "joint front_right_wheel_joint needs ~2.00 N·m; strongest in hobby tier is NEMA17 stepper (0.45 N·m) — increase budget for a stronger actuator",
-    "joint rear_left_wheel_joint needs ~2.00 N·m; strongest in hobby tier is NEMA17 stepper (0.45 N·m) — increase budget for a stronger actuator",
-    "joint rear_right_wheel_joint needs ~2.00 N·m; strongest in hobby tier is NEMA17 stepper (0.45 N·m) — increase budget for a stronger actuator",
-    "joint joint_1 needs ~9.60 N·m; strongest in hobby tier is DS3218 20kg servo (1.96 N·m) — increase budget for a stronger actuator",
-    "joint joint_2 needs ~9.60 N·m; strongest in hobby tier is DS3218 20kg servo (1.96 N·m) — increase budget for a stronger actuator",
-    "joint joint_3 needs ~6.40 N·m; strongest in hobby tier is DS3218 20kg servo (1.96 N·m) — increase budget for a stronger actuator",
-    "joint joint_4 needs ~3.20 N·m; strongest in hobby tier is DS3218 20kg servo (1.96 N·m) — increase budget for a stronger actuator",
-    "joint joint_5 needs ~2.40 N·m; strongest in hobby tier is DS3218 20kg servo (1.96 N·m) — increase budget for a stronger actuator",
-    "joint joint_6 needs ~1.60 N·m; strongest in hobby tier is DS3218 20kg servo (1.96 N·m) — increase budget for a stronger actuator"
-  ],
+  "warnings": [],
   "notes": [
-    "Tier: hobby. Prices are planning estimates (USD), not quotes. Structure assumes FDM 3D printing."
+    "4-wheel rocker-bogie rover with a 6-DOF arm: 4.477 kg, 1.24 m/s, 1.53 h, jetson_orin_nano_super",
+    "Rocker-bogie after the JPL Open Source Rover, 4 driven wheels, skid steering (the OSR's four corner-steering servos are left out; add them for less tyre scrub).",
+    "A rover's differential bar links the two rockers through the body, a closed loop URDF cannot describe; the model frees the left rocker on its pivot and bolts the right rocker to the body, which keeps every wheel on the ground and the body supported on three points (body pitch follows the right rocker instead of the average).",
+    "Rockers and bogies are printed in PETG; for outdoor use print them in 6 bolt-on sections from aluminium channel instead (as the OSR does).",
+    "Body: folded 2 mm aluminium box with a 3 mm lid; electronics on printed standoff plates on its floor.",
+    "All motors and servos are 12 V parts run straight from a 3S LiPo; arm servos share the pack through the bus adapter.",
+    "Arm: 6 DOF bolted to the lid front, sized as mounted for a 0.2 kg sample at full reach; the rover's tipping check includes the arm stretched forward, sideways and back with the sample.",
+    "Prices are list/street prices from the linked suppliers at the time the catalog was written; check before ordering."
   ]
 }

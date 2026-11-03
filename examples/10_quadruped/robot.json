@@ -2361,7 +2361,7 @@
   "end_effectors": [],
   "metadata": {
     "generator": "text-to-robot",
-    "created": "2026-09-19T18:43:19.467Z",
+    "created": "2026-11-03T10:13:47.980Z",
     "inferred_fields": [
       "joints.base_link_front_panel_mount.dynamics",
       "joints.base_link_front_panel_mount.limit",
@@ -2455,6 +2455,7 @@
       "Generated quadruped (12-DOF) from template.",
       "Interpreted locally: type inferred, DOF=12, gripper=parallel."
     ],
-    "source_prompt": "Create a quadruped robot\n"
+    "source_prompt": "Create a quadruped robot\n",
+    "family": "quadruped"
   }
 }

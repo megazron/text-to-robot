@@ -3,377 +3,1283 @@
      robot: eva
      prompt: Build EVA, a sleek hovering egg-shaped droid with a visor and two floating arms
 
-     13 links, 12 joints, 40 inferred values
+     59 links, 58 joints, 59 inferred values
 -->
 <robot name="eva">
-  <material name="base_mat"><color rgba="0.25 0.25 0.28 1"/></material>
-  <material name="link_mat"><color rgba="0.85 0.85 0.88 1"/></material>
-  <material name="gripper_mat"><color rgba="0.15 0.35 0.75 1"/></material>
-  <material name="wheel_mat"><color rgba="0.1 0.1 0.12 1"/></material>
-  <material name="sensor_mat"><color rgba="0.1 0.7 0.4 1"/></material>
-  <material name="accent_mat"><color rgba="0.9 0.55 0.1 1"/></material>
-  <material name="gloss_white"><color rgba="0.95 0.95 0.97 1"/></material>
-  <material name="visor"><color rgba="0.05 0.1 0.2 1"/></material>
-  <link name="body">
+  <material name="printed"><color rgba="0.93 0.93 0.95 1"/></material>
+  <material name="printed_accent"><color rgba="0.95 0.5 0.12 1"/></material>
+  <material name="printed_dark"><color rgba="0.22 0.23 0.26 1"/></material>
+  <material name="actuator"><color rgba="0.1 0.1 0.11 1"/></material>
+  <material name="metal"><color rgba="0.62 0.64 0.68 1"/></material>
+  <material name="electronics"><color rgba="0.08 0.45 0.25 1"/></material>
+  <material name="rubber"><color rgba="0.07 0.07 0.08 1"/></material>
+  <material name="battery"><color rgba="0.15 0.3 0.75 1"/></material>
+  <material name="fabric"><color rgba="0.97 0.97 0.95 1"/></material>
+  <material name="visor"><color rgba="0.03 0.03 0.05 1"/></material>
+  <material name="led"><color rgba="0.25 0.75 1 1"/></material>
+  <material name="aluminium"><color rgba="0.56 0.58 0.62 1"/></material>
+  <material name="walle"><color rgba="0.85 0.62 0.15 1"/></material>
+  <link name="base_link">
     <visual>
-      <origin xyz="0 0 0.55" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.16" length="0.3"/></geometry>
-      <material name="gloss_white"/>
-    </visual>
-    <visual>
-      <origin xyz="0 0 0.4" rpy="0 0 0"/>
-      <geometry><sphere radius="0.16"/></geometry>
-      <material name="gloss_white"/>
-    </visual>
-    <visual>
-      <origin xyz="0 0 0.7" rpy="0 0 0"/>
-      <geometry><sphere radius="0.16"/></geometry>
-      <material name="gloss_white"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/base_link.stl"/></geometry>
+      <material name="aluminium"/>
     </visual>
     <collision>
-      <origin xyz="0 0 0.55" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.16" length="0.3"/></geometry>
-    </collision>
-    <collision>
-      <origin xyz="0 0 0.4" rpy="0 0 0"/>
-      <geometry><sphere radius="0.16"/></geometry>
-    </collision>
-    <collision>
-      <origin xyz="0 0 0.7" rpy="0 0 0"/>
-      <geometry><sphere radius="0.16"/></geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/base_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 0.55" rpy="0 0 0"/>
-      <mass value="18.578122"/>
-      <inertia ixx="0.542669" ixy="0" ixz="0" iyy="0.542669" iyz="0" izz="0.218035"/>
+      <origin xyz="-8.16455e-18 1.70671e-19 0.0795" rpy="0 0 0"/>
+      <mass value="0.323572"/>
+      <inertia ixx="0.000893245" ixy="1.39587e-21" ixz="-4.27484e-22" iyy="0.001208" iyz="-3.31518e-22" izz="0.002101"/>
+    </inertial>
+  </link>
+  <link name="left_motor">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/pololu_37d_30to1_64cpr.stl"/></geometry>
+      <material name="actuator"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/pololu_37d_30to1_64cpr.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.006887 0.0000382144 -0.032404" rpy="0 0 0"/>
+      <mass value="0.205"/>
+      <inertia ixx="0.000099893" ixy="-5.96546e-10" ixz="-9.26890e-7" iyy="0.0000999234" iyz="2.88850e-7" izz="0.0000314453"/>
+    </inertial>
+  </link>
+  <link name="left_wheel">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/wheel_90mm_37d.stl"/></geometry>
+      <material name="rubber"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><cylinder radius="0.045" length="0.0384"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.0000103826 1.34843e-18 0.013246" rpy="0 0 0"/>
+      <mass value="0.0313"/>
+      <inertia ixx="0.0000191946" ixy="-1.13975e-21" ixz="2.13039e-9" iyy="0.0000191966" iyz="7.16242e-23" izz="0.0000377527"/>
+    </inertial>
+  </link>
+  <link name="left_bracket">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/left_bracket.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/left_bracket.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-6.83787e-12 0.083174 0.064266" rpy="0 0 0"/>
+      <mass value="0.01561"/>
+      <inertia ixx="0.00000578614" ixy="8.92251e-16" ixz="-1.36271e-15" iyy="0.00000593489" iyz="0.00000163541" izz="0.00000495776"/>
+    </inertial>
+  </link>
+  <link name="right_motor">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/pololu_37d_30to1_64cpr.stl"/></geometry>
+      <material name="actuator"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/pololu_37d_30to1_64cpr.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.006887 0.0000382144 -0.032404" rpy="0 0 0"/>
+      <mass value="0.205"/>
+      <inertia ixx="0.000099893" ixy="-5.96546e-10" ixz="-9.26890e-7" iyy="0.0000999234" iyz="2.88850e-7" izz="0.0000314453"/>
+    </inertial>
+  </link>
+  <link name="right_wheel">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/wheel_90mm_37d.stl"/></geometry>
+      <material name="rubber"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><cylinder radius="0.045" length="0.0384"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.0000103826 1.34843e-18 0.013246" rpy="0 0 0"/>
+      <mass value="0.0313"/>
+      <inertia ixx="0.0000191946" ixy="-1.13975e-21" ixz="2.13039e-9" iyy="0.0000191966" iyz="7.16242e-23" izz="0.0000377527"/>
+    </inertial>
+  </link>
+  <link name="right_bracket">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/right_bracket.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/right_bracket.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="6.83787e-12 -0.083174 0.064266" rpy="0 0 0"/>
+      <mass value="0.01561"/>
+      <inertia ixx="0.00000578614" ixy="8.92251e-16" ixz="1.36271e-15" iyy="0.00000593489" iyz="-0.00000163541" izz="0.00000495776"/>
+    </inertial>
+  </link>
+  <link name="front_caster_post">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/front_caster_post.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/front_caster_post.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.098 -0.000025535 0.053525" rpy="0 0 0"/>
+      <mass value="0.034167"/>
+      <inertia ixx="0.0000125769" ixy="4.98998e-19" ixz="-2.17589e-22" iyy="0.000012577" iyz="1.90460e-8" izz="0.0000089982"/>
+    </inertial>
+  </link>
+  <link name="front_caster">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/ball_caster_pololu_2692.stl"/></geometry>
+      <material name="rubber"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><sphere radius="0.004"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.00000213185 -0.00000463244 -0.010802" rpy="0 0 0"/>
+      <mass value="0.0184"/>
+      <inertia ixx="0.00000203111" ixy="2.74819e-10" ixz="4.59664e-10" iyy="0.0000020315" iyz="1.36069e-10" izz="0.00000206523"/>
+    </inertial>
+  </link>
+  <link name="front_caster_gimbal">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><sphere radius="0.004"/></geometry>
+      <material name="metal"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><sphere radius="0.004"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.001"/>
+      <inertia ixx="1.00000e-7" ixy="0" ixz="0" iyy="1.00000e-7" iyz="0" izz="1.00000e-7"/>
+    </inertial>
+  </link>
+  <link name="front_caster_ball">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><sphere radius="0.0127"/></geometry>
+      <material name="printed"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><sphere radius="0.0127"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.012"/>
+      <inertia ixx="7.74192e-7" ixy="0" ixz="0" iyy="7.74192e-7" iyz="0" izz="7.74192e-7"/>
+    </inertial>
+  </link>
+  <link name="rear_caster_post">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/rear_caster_post.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/rear_caster_post.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.098 -0.000025535 0.053525" rpy="0 0 0"/>
+      <mass value="0.034167"/>
+      <inertia ixx="0.0000125769" ixy="4.98837e-19" ixz="-4.83830e-24" iyy="0.000012577" iyz="1.90460e-8" izz="0.0000089982"/>
+    </inertial>
+  </link>
+  <link name="rear_caster">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/ball_caster_pololu_2692.stl"/></geometry>
+      <material name="rubber"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><sphere radius="0.004"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.00000213185 -0.00000463244 -0.010802" rpy="0 0 0"/>
+      <mass value="0.0184"/>
+      <inertia ixx="0.00000203111" ixy="2.74819e-10" ixz="4.59664e-10" iyy="0.0000020315" iyz="1.36069e-10" izz="0.00000206523"/>
+    </inertial>
+  </link>
+  <link name="rear_caster_gimbal">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><sphere radius="0.004"/></geometry>
+      <material name="metal"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><sphere radius="0.004"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.001"/>
+      <inertia ixx="1.00000e-7" ixy="0" ixz="0" iyy="1.00000e-7" iyz="0" izz="1.00000e-7"/>
+    </inertial>
+  </link>
+  <link name="rear_caster_ball">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><sphere radius="0.0127"/></geometry>
+      <material name="printed"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><sphere radius="0.0127"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.012"/>
+      <inertia ixx="7.74192e-7" ixy="0" ixz="0" iyy="7.74192e-7" iyz="0" izz="7.74192e-7"/>
+    </inertial>
+  </link>
+  <link name="skirt_left">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/skirt_left.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/skirt_left.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="1.90037e-10 0.061993 0.048751" rpy="0 0 0"/>
+      <mass value="0.049787"/>
+      <inertia ixx="0.0000810068" ixy="-2.91821e-12" ixz="6.25234e-14" iyy="0.000525123" iyz="9.06456e-7" izz="0.000551013"/>
+    </inertial>
+  </link>
+  <link name="skirt_right">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/skirt_right.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/skirt_right.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-1.90038e-10 -0.061993 0.048751" rpy="0 0 0"/>
+      <mass value="0.049787"/>
+      <inertia ixx="0.0000810068" ixy="-2.91821e-12" ixz="-6.25236e-14" iyy="0.000525123" iyz="-9.06456e-7" izz="0.000551013"/>
+    </inertial>
+  </link>
+  <link name="battery">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/lipo_3s_2200.stl"/></geometry>
+      <material name="battery"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/lipo_3s_2200.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.053187 0.00000431129 0.011" rpy="0 0 0"/>
+      <mass value="0.1735"/>
+      <inertia ixx="0.0000231075" ixy="4.24769e-8" ixz="-1.30384e-21" iyy="0.000174522" iyz="-1.18221e-22" izz="0.000183705"/>
+    </inertial>
+  </link>
+  <link name="battery_tray">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/battery_tray.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/battery_tray.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.020229 -0.05825 0.085051" rpy="0 0 0"/>
+      <mass value="0.016461"/>
+      <inertia ixx="0.00000350696" ixy="6.36822e-22" ixz="-1.63712e-7" iyy="0.0000170792" iyz="-7.22805e-24" izz="0.0000200766"/>
+    </inertial>
+  </link>
+  <link name="servo_bus">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/waveshare_bus_servo_adapter.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/waveshare_bus_servo_adapter.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.027562 0.015038 0.003831" rpy="0 0 0"/>
+      <mass value="0.01"/>
+      <inertia ixx="9.12163e-7" ixy="6.01736e-8" ixz="-2.03984e-7" iyy="0.00000169433" iyz="6.44612e-8" izz="0.00000236615"/>
+    </inertial>
+  </link>
+  <link name="servo_bus_tray">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/servo_bus_tray.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/servo_bus_tray.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.00799 -0.01399 0.082931" rpy="0 0 0"/>
+      <mass value="0.003355"/>
+      <inertia ixx="2.89835e-7" ixy="2.02241e-17" ixz="3.98257e-16" iyy="4.86215e-7" iyz="2.23864e-16" izz="7.61649e-7"/>
+    </inertial>
+  </link>
+  <link name="imu">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/bno085_breakout.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/bno085_breakout.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.0128 0.01114 0.001089" rpy="0 0 0"/>
+      <mass value="0.0025"/>
+      <inertia ixx="1.00000e-7" ixy="-7.18056e-24" ixz="1.50030e-24" iyy="1.47883e-7" iyz="4.24673e-10" izz="2.39851e-7"/>
+    </inertial>
+  </link>
+  <link name="imu_tray">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/imu_tray.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/imu_tray.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.03582 -0.02114 0.083501" rpy="0 0 0"/>
+      <mass value="0.002"/>
+      <inertia ixx="1.00000e-7" ixy="6.24290e-17" ixz="-3.45701e-15" iyy="1.22700e-7" iyz="9.79719e-16" izz="2.04195e-7"/>
+    </inertial>
+  </link>
+  <link name="regulator_5v">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/buck_5v_5a.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/buck_5v_5a.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.012564 0.012657 0.003445" rpy="0 0 0"/>
+      <mass value="0.007"/>
+      <inertia ixx="2.56895e-7" ixy="8.14755e-9" ixz="1.85795e-9" iyy="3.06643e-7" iyz="1.94440e-9" izz="4.54796e-7"/>
+    </inertial>
+  </link>
+  <link name="regulator_5v_tray">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/regulator_5v_tray.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/regulator_5v_tray.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.036425 0.010215 0.083228" rpy="0 0 0"/>
+      <mass value="0.002"/>
+      <inertia ixx="1.10095e-7" ixy="-1.53380e-8" ixz="-3.90754e-9" iyy="1.07956e-7" iyz="3.90754e-9" izz="2.06528e-7"/>
+    </inertial>
+  </link>
+  <link name="spine">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/spine.stl"/></geometry>
+      <material name="aluminium"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/spine.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.062 -1.58639e-18 0.3095" rpy="0 0 0"/>
+      <mass value="0.136828"/>
+      <inertia ixx="0.002284" ixy="5.84519e-22" ixz="2.65217e-21" iyy="0.002284" iyz="-8.51479e-21" izz="0.0000111261"/>
+    </inertial>
+  </link>
+  <link name="spine_foot">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/spine_foot.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/spine_foot.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.062 5.95651e-19 0.09231" rpy="0 0 0"/>
+      <mass value="0.021366"/>
+      <inertia ixx="0.00000649252" ixy="6.20094e-22" ixz="-1.31115e-13" iyy="0.00000649252" iyz="1.09950e-22" izz="0.0000067732"/>
+    </inertial>
+  </link>
+  <link name="rib_mid_left">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/rib_mid_left.stl"/></geometry>
+      <material name="printed"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/rib_mid_left.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.001013 0.046691 0.354781" rpy="0 0 0"/>
+      <mass value="0.108785"/>
+      <inertia ixx="0.0000957925" ixy="-0.00000399261" ixz="-0.0000014523" iyy="0.000339667" iyz="-9.11452e-7" izz="0.000434341"/>
+    </inertial>
+  </link>
+  <link name="rib_mid_right">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/rib_mid_right.stl"/></geometry>
+      <material name="printed"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/rib_mid_right.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.001013 -0.046691 0.354781" rpy="0 0 0"/>
+      <mass value="0.108785"/>
+      <inertia ixx="0.0000957925" ixy="0.00000399261" ixz="-0.0000014523" iyy="0.000339667" iyz="9.11452e-7" izz="0.000434341"/>
+    </inertial>
+  </link>
+  <link name="rib_top_left">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/rib_top_left.stl"/></geometry>
+      <material name="printed"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/rib_top_left.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.00203 0.03494 0.529561" rpy="0 0 0"/>
+      <mass value="0.054256"/>
+      <inertia ixx="0.0000304282" ixy="-0.00000269817" ixz="-0.00000142806" iyy="0.000110099" iyz="-6.31636e-7" izz="0.000139746"/>
+    </inertial>
+  </link>
+  <link name="rib_top_right">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/rib_top_right.stl"/></geometry>
+      <material name="printed"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/rib_top_right.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.00203 -0.03494 0.529561" rpy="0 0 0"/>
+      <mass value="0.054256"/>
+      <inertia ixx="0.0000304282" ixy="0.00000269817" ixz="-0.00000142806" iyy="0.000110099" iyz="6.31636e-7" izz="0.000139746"/>
+    </inertial>
+  </link>
+  <link name="computer">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/rpi5.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/rpi5.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.059962 0.029623 0.00588" rpy="0 0 0"/>
+      <mass value="0.046"/>
+      <inertia ixx="0.0000141581" ixy="0.0000013483" ixz="-0.00000312605" iyy="0.0000308409" iyz="-2.80313e-7" izz="0.0000426283"/>
+    </inertial>
+  </link>
+  <link name="computer_tray">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/computer_tray.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/computer_tray.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.01565 -0.042379 0.359614" rpy="0 0 0"/>
+      <mass value="0.012576"/>
+      <inertia ixx="0.00000312577" ixy="3.28406e-9" ixz="1.60599e-8" iyy="0.0000074969" iyz="-8.71257e-10" izz="0.0000105935"/>
+    </inertial>
+  </link>
+  <link name="motor_driver_1">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/cytron_mdd10a.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/cytron_mdd10a.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.0425 0.035089 0.003444" rpy="0 0 0"/>
+      <mass value="0.04"/>
+      <inertia ixx="0.0000126478" ixy="-2.36142e-22" ixz="1.65267e-22" iyy="0.0000185659" iyz="-6.77095e-7" izz="0.0000304495"/>
+    </inertial>
+  </link>
+  <link name="motor_driver_1_tray">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/motor_driver_1_tray.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/motor_driver_1_tray.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.00251 0.02921 0.359609" rpy="0 0 0"/>
+      <mass value="0.013209"/>
+      <inertia ixx="0.00000390832" ixy="-1.41310e-15" ixz="-2.39708e-15" iyy="0.00000756256" iyz="-4.12772e-15" izz="0.0000114408"/>
+    </inertial>
+  </link>
+  <link name="shell_lower_left">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/shell_lower_left.stl"/></geometry>
+      <material name="printed"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/shell_lower_left.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.000357627 0.057077 0.265226" rpy="0 0 0"/>
+      <mass value="0.128232"/>
+      <inertia ixx="0.000531567" ixy="0.00000240487" ixz="0.00000320916" iyy="0.000946442" iyz="-0.0000975403" izz="0.00067276"/>
+    </inertial>
+  </link>
+  <link name="shell_lower_right">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/shell_lower_right.stl"/></geometry>
+      <material name="printed"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/shell_lower_right.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.000357627 -0.057077 0.265226" rpy="0 0 0"/>
+      <mass value="0.128232"/>
+      <inertia ixx="0.000531567" ixy="-0.00000240488" ixz="0.00000320916" iyy="0.000946442" iyz="0.0000975403" izz="0.00067276"/>
+    </inertial>
+  </link>
+  <link name="shell_upper_left">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/shell_upper_left.stl"/></geometry>
+      <material name="printed"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/shell_upper_left.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.000308134 0.069031 0.459507" rpy="0 0 0"/>
+      <mass value="0.173017"/>
+      <inertia ixx="0.000822907" ixy="0.00000321234" ixz="-0.000004757" iyy="0.001658" iyz="0.0000841113" izz="0.001282"/>
+    </inertial>
+  </link>
+  <link name="shell_upper_right">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/shell_upper_right.stl"/></geometry>
+      <material name="printed"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/shell_upper_right.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.000308134 -0.069031 0.459507" rpy="0 0 0"/>
+      <mass value="0.173017"/>
+      <inertia ixx="0.000822907" ixy="-0.00000321234" ixz="-0.000004757" iyy="0.001658" iyz="-0.0000841113" izz="0.001282"/>
+    </inertial>
+  </link>
+  <link name="neck_mount">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/neck_mount.stl"/></geometry>
+      <material name="printed"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/neck_mount.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.00784 2.50205e-18 0.544957" rpy="0 0 0"/>
+      <mass value="0.018299"/>
+      <inertia ixx="0.0000058492" ixy="8.86705e-22" ixz="8.64068e-7" iyy="0.00000994076" iyz="1.19819e-22" izz="0.00000957372"/>
+    </inertial>
+  </link>
+  <link name="head_pan_actuator">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/feetech_sts3215_c047.stl"/></geometry>
+      <material name="actuator"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/feetech_sts3215_c047.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.012045 -3.31269e-19 -0.01871" rpy="0 0 0"/>
+      <mass value="0.055"/>
+      <inertia ixx="0.00000783597" ixy="3.06243e-22" ixz="-8.49823e-8" iyy="0.0000144597" iyz="2.80348e-22" izz="0.0000120957"/>
     </inertial>
   </link>
   <link name="head">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.11" length="0.1"/></geometry>
-      <material name="gloss_white"/>
-    </visual>
-    <visual>
-      <origin xyz="0 0 -0.05" rpy="0 0 0"/>
-      <geometry><sphere radius="0.11"/></geometry>
-      <material name="gloss_white"/>
-    </visual>
-    <visual>
-      <origin xyz="0 0 0.05" rpy="0 0 0"/>
-      <geometry><sphere radius="0.11"/></geometry>
-      <material name="gloss_white"/>
+      <geometry><mesh filename="package://eva/meshes/head.stl"/></geometry>
+      <material name="printed"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.11" length="0.1"/></geometry>
-    </collision>
-    <collision>
-      <origin xyz="0 0 -0.05" rpy="0 0 0"/>
-      <geometry><sphere radius="0.11"/></geometry>
-    </collision>
-    <collision>
-      <origin xyz="0 0 0.05" rpy="0 0 0"/>
-      <geometry><sphere radius="0.11"/></geometry>
+      <geometry><mesh filename="package://eva/meshes/head.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <mass value="4.219473"/>
-      <inertia ixx="0.035364" ixy="0" ixz="0" iyy="0.035364" iyz="0" izz="0.022492"/>
+      <origin xyz="-0.0000912809 -9.44440e-14 0.080193" rpy="0 0 0"/>
+      <mass value="0.240606"/>
+      <inertia ixx="0.001412" ixy="3.76492e-15" ixz="-9.21942e-8" iyy="0.001236" iyz="1.88804e-15" izz="0.001655"/>
     </inertial>
   </link>
   <link name="visor">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><box size="0.02 0.14 0.06"/></geometry>
+      <geometry><mesh filename="package://eva/meshes/visor.stl"/></geometry>
       <material name="visor"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><box size="0.02 0.14 0.06"/></geometry>
+      <geometry><mesh filename="package://eva/meshes/visor.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <mass value="0.0756"/>
-      <inertia ixx="0.00014616" ixy="0" ixz="0" iyy="0.0000252" iyz="0" izz="0.000126"/>
+      <origin xyz="0.076387 -6.28170e-11 0.081024" rpy="0 0 0"/>
+      <mass value="0.03103"/>
+      <inertia ixx="0.000138951" ixy="-4.31572e-14" ixz="-1.86830e-8" iyy="0.0000291312" iyz="-1.78653e-13" izz="0.000128573"/>
     </inertial>
   </link>
-  <link name="left_arm">
-    <visual>
-      <origin xyz="0 0 -0.14" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.06" length="0.28"/></geometry>
-      <material name="gloss_white"/>
-    </visual>
-    <visual>
-      <origin xyz="0 0 -0.28" rpy="0 0 0"/>
-      <geometry><sphere radius="0.06"/></geometry>
-      <material name="gloss_white"/>
-    </visual>
+  <link name="left_eye">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><sphere radius="0.06"/></geometry>
-      <material name="gloss_white"/>
+      <geometry><mesh filename="package://eva/meshes/left_eye.stl"/></geometry>
+      <material name="led"/>
     </visual>
     <collision>
-      <origin xyz="0 0 -0.14" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.06" length="0.28"/></geometry>
-    </collision>
-    <collision>
-      <origin xyz="0 0 -0.28" rpy="0 0 0"/>
-      <geometry><sphere radius="0.06"/></geometry>
-    </collision>
-    <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><sphere radius="0.06"/></geometry>
+      <geometry><mesh filename="package://eva/meshes/left_eye.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 -0.14" rpy="0 0 0"/>
-      <mass value="1.832177"/>
-      <inertia ixx="0.021724" ixy="0" ixz="0" iyy="0.021724" iyz="0" izz="0.003151"/>
+      <origin xyz="0.101726 0.030245 0.084" rpy="0 0 0"/>
+      <mass value="0.002"/>
+      <inertia ixx="1.87226e-7" ixy="2.76205e-8" ixz="1.33110e-15" iyy="1.00000e-7" iyz="-4.21503e-15" izz="1.45710e-7"/>
     </inertial>
   </link>
-  <link name="left_hand">
+  <link name="right_eye">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><sphere radius="0.07"/></geometry>
-      <material name="gloss_white"/>
+      <geometry><mesh filename="package://eva/meshes/right_eye.stl"/></geometry>
+      <material name="led"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><sphere radius="0.07"/></geometry>
+      <geometry><mesh filename="package://eva/meshes/right_eye.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <mass value="0.64654"/>
-      <inertia ixx="0.001267" ixy="0" ixz="0" iyy="0.001267" iyz="0" izz="0.001267"/>
+      <origin xyz="0.101726 -0.030245 0.084" rpy="0 0 0"/>
+      <mass value="0.002"/>
+      <inertia ixx="1.87226e-7" ixy="-2.76205e-8" ixz="-2.99932e-16" iyy="1.00000e-7" iyz="3.27132e-15" izz="1.45710e-7"/>
     </inertial>
   </link>
-  <link name="right_arm">
-    <visual>
-      <origin xyz="0 0 -0.14" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.06" length="0.28"/></geometry>
-      <material name="gloss_white"/>
-    </visual>
-    <visual>
-      <origin xyz="0 0 -0.28" rpy="0 0 0"/>
-      <geometry><sphere radius="0.06"/></geometry>
-      <material name="gloss_white"/>
-    </visual>
+  <link name="head_camera">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><sphere radius="0.06"/></geometry>
-      <material name="gloss_white"/>
+      <geometry><mesh filename="package://eva/meshes/rpi_camera_module_3.stl"/></geometry>
+      <material name="electronics"/>
     </visual>
     <collision>
-      <origin xyz="0 0 -0.14" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.06" length="0.28"/></geometry>
-    </collision>
-    <collision>
-      <origin xyz="0 0 -0.28" rpy="0 0 0"/>
-      <geometry><sphere radius="0.06"/></geometry>
-    </collision>
-    <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><sphere radius="0.06"/></geometry>
+      <geometry><mesh filename="package://eva/meshes/rpi_camera_module_3.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 -0.14" rpy="0 0 0"/>
-      <mass value="1.832177"/>
-      <inertia ixx="0.021724" ixy="0" ixz="0" iyy="0.021724" iyz="0" izz="0.003151"/>
+      <origin xyz="0.0125 0.011417 0.001647" rpy="0 0 0"/>
+      <mass value="0.004"/>
+      <inertia ixx="1.86138e-7" ixy="-1.04163e-23" ixz="-3.30020e-24" iyy="1.45948e-7" iyz="-2.50246e-8" izz="2.84453e-7"/>
     </inertial>
   </link>
-  <link name="right_hand">
+  <link name="camera_bracket">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><sphere radius="0.07"/></geometry>
-      <material name="gloss_white"/>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><sphere radius="0.07"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <mass value="0.64654"/>
-      <inertia ixx="0.001267" ixy="0" ixz="0" iyy="0.001267" iyz="0" izz="0.001267"/>
-    </inertial>
-  </link>
-  <link name="display_base">
-    <visual>
-      <origin xyz="0 0 0.0125" rpy="0 0 0"/>
-      <geometry><box size="0.36 0.3 0.025"/></geometry>
-      <material name="base_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0.0125" rpy="0 0 0"/>
-      <geometry><box size="0.36 0.3 0.025"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0 0 0.0125" rpy="0 0 0"/>
-      <mass value="2"/>
-      <inertia ixx="0.015104" ixy="0" ixz="0" iyy="0.021704" iyz="0" izz="0.0366"/>
-    </inertial>
-  </link>
-  <link name="support_column">
-    <visual>
-      <origin xyz="0 0 0.1325" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.018" length="0.215"/></geometry>
-      <material name="base_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0.1325" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.018" length="0.215"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0 0 0.1325" rpy="0 0 0"/>
-      <mass value="0.2"/>
-      <inertia ixx="0.000786617" ixy="0" ixz="0" iyy="0.000786617" iyz="0" izz="0.0000324"/>
-    </inertial>
-  </link>
-  <link name="neck_support">
-    <visual>
-      <origin xyz="0 0 0.88" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.022" length="0.06"/></geometry>
-      <material name="base_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0.88" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.022" length="0.06"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0 0 0.88" rpy="0 0 0"/>
-      <mass value="0.06"/>
-      <inertia ixx="0.00002526" ixy="0" ixz="0" iyy="0.00002526" iyz="0" izz="0.00001452"/>
-    </inertial>
-  </link>
-  <link name="left_shoulder_support">
-    <visual>
-      <origin xyz="0 0.2 0.65" rpy="1.570796 0 0"/>
-      <geometry><cylinder radius="0.019" length="0.09"/></geometry>
-      <material name="base_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 0.2 0.65" rpy="1.570796 0 0"/>
-      <geometry><cylinder radius="0.019" length="0.09"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0 0.2 0.65" rpy="1.570796 0 0"/>
-      <mass value="0.06"/>
-      <inertia ixx="0.000045915" ixy="0" ixz="0" iyy="0.000045915" iyz="0" izz="0.00001083"/>
-    </inertial>
-  </link>
-  <link name="right_shoulder_support">
-    <visual>
-      <origin xyz="0 -0.2 0.65" rpy="1.570796 0 0"/>
-      <geometry><cylinder radius="0.019" length="0.09"/></geometry>
-      <material name="base_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 -0.2 0.65" rpy="1.570796 0 0"/>
-      <geometry><cylinder radius="0.019" length="0.09"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0 -0.2 0.65" rpy="1.570796 0 0"/>
-      <mass value="0.06"/>
-      <inertia ixx="0.000045915" ixy="0" ixz="0" iyy="0.000045915" iyz="0" izz="0.00001083"/>
-    </inertial>
-  </link>
-  <link name="hover_thruster">
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.1" length="0.03"/></geometry>
-      <material name="sensor_mat"/>
+      <geometry><mesh filename="package://eva/meshes/camera_bracket.stl"/></geometry>
+      <material name="printed"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.1" length="0.03"/></geometry>
+      <geometry><mesh filename="package://eva/meshes/camera_bracket.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <mass value="0.424115"/>
-      <inertia ixx="0.001092" ixy="0" ixz="0" iyy="0.001092" iyz="0" izz="0.002121"/>
+      <origin xyz="0.06367 5.42101e-20 0.071115" rpy="0 0 0"/>
+      <mass value="0.007166"/>
+      <inertia ixx="0.00000126382" ixy="-8.27284e-23" ixz="-4.24697e-7" iyy="0.00000145215" iyz="-5.31825e-23" izz="0.00000138297"/>
     </inertial>
   </link>
-  <joint name="neck_joint" type="revolute">
-    <parent link="body"/>
-    <child link="head"/>
-    <origin xyz="0 0 1.05" rpy="0 0 0"/>
-    <axis xyz="0 1 0"/>
-    <limit lower="-0.6" upper="0.6" effort="50" velocity="2"/>
-    <dynamics damping="0.1" friction="0"/>
+  <link name="left_arm_base_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/left_arm_base_link.stl"/></geometry>
+      <material name="printed"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/left_arm_base_link.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="4.40244e-18 -0.004577 0.016836" rpy="0 0 0"/>
+      <mass value="0.027254"/>
+      <inertia ixx="0.0000160345" ixy="-7.06001e-22" ixz="-1.53722e-21" iyy="0.0000143793" iyz="8.80504e-7" izz="0.00000944084"/>
+    </inertial>
+  </link>
+  <link name="left_arm_shoulder_pitch_actuator">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/feetech_sts3215_c047.stl"/></geometry>
+      <material name="actuator"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/feetech_sts3215_c047.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.012045 -3.31269e-19 -0.01871" rpy="0 0 0"/>
+      <mass value="0.055"/>
+      <inertia ixx="0.00000783597" ixy="3.06243e-22" ixz="-8.49823e-8" iyy="0.0000144597" iyz="2.80348e-22" izz="0.0000120957"/>
+    </inertial>
+  </link>
+  <link name="left_arm_upper_arm">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/left_arm_upper_arm.stl"/></geometry>
+      <material name="printed"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/left_arm_upper_arm.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.06559 3.78073e-13 -0.004333" rpy="0 0 0"/>
+      <mass value="0.024823"/>
+      <inertia ixx="0.00000592108" ixy="3.54277e-16" ixz="0.00000377012" iyy="0.0000331373" iyz="-4.59848e-17" izz="0.0000317726"/>
+    </inertial>
+  </link>
+  <link name="left_arm_elbow_pitch_actuator">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/feetech_sts3215_c047.stl"/></geometry>
+      <material name="actuator"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/feetech_sts3215_c047.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.012045 -3.31269e-19 -0.01871" rpy="0 0 0"/>
+      <mass value="0.055"/>
+      <inertia ixx="0.00000783597" ixy="3.06243e-22" ixz="-8.49823e-8" iyy="0.0000144597" iyz="2.80348e-22" izz="0.0000120957"/>
+    </inertial>
+  </link>
+  <link name="left_arm_tool_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/left_arm_tool_link.stl"/></geometry>
+      <material name="printed"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/left_arm_tool_link.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.065745 -4.57924e-13 -0.005342" rpy="0 0 0"/>
+      <mass value="0.022629"/>
+      <inertia ixx="0.00000586148" ixy="-1.75552e-16" ixz="0.00000567158" iyy="0.00003041" iyz="6.19974e-17" izz="0.0000288725"/>
+    </inertial>
+  </link>
+  <link name="left_arm_shoulder">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/left_arm_shoulder.stl"/></geometry>
+      <material name="printed"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/left_arm_shoulder.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.024322 0.078998 0.48303" rpy="0 0 0"/>
+      <mass value="0.029852"/>
+      <inertia ixx="0.0000893553" ixy="-0.0000378923" ixz="-7.47882e-7" iyy="0.0000224304" iyz="-0.00000222412" izz="0.000111042"/>
+    </inertial>
+  </link>
+  <link name="right_arm_base_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/right_arm_base_link.stl"/></geometry>
+      <material name="printed"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/right_arm_base_link.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="4.40244e-18 -0.004577 0.016836" rpy="0 0 0"/>
+      <mass value="0.027254"/>
+      <inertia ixx="0.0000160345" ixy="-7.06001e-22" ixz="-1.53722e-21" iyy="0.0000143793" iyz="8.80504e-7" izz="0.00000944084"/>
+    </inertial>
+  </link>
+  <link name="right_arm_shoulder_pitch_actuator">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/feetech_sts3215_c047.stl"/></geometry>
+      <material name="actuator"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/feetech_sts3215_c047.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.012045 -3.31269e-19 -0.01871" rpy="0 0 0"/>
+      <mass value="0.055"/>
+      <inertia ixx="0.00000783597" ixy="3.06243e-22" ixz="-8.49823e-8" iyy="0.0000144597" iyz="2.80348e-22" izz="0.0000120957"/>
+    </inertial>
+  </link>
+  <link name="right_arm_upper_arm">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/right_arm_upper_arm.stl"/></geometry>
+      <material name="printed"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/right_arm_upper_arm.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.06559 3.78073e-13 -0.004333" rpy="0 0 0"/>
+      <mass value="0.024823"/>
+      <inertia ixx="0.00000592108" ixy="3.54277e-16" ixz="0.00000377012" iyy="0.0000331373" iyz="-4.59848e-17" izz="0.0000317726"/>
+    </inertial>
+  </link>
+  <link name="right_arm_elbow_pitch_actuator">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/feetech_sts3215_c047.stl"/></geometry>
+      <material name="actuator"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/feetech_sts3215_c047.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.012045 -3.31269e-19 -0.01871" rpy="0 0 0"/>
+      <mass value="0.055"/>
+      <inertia ixx="0.00000783597" ixy="3.06243e-22" ixz="-8.49823e-8" iyy="0.0000144597" iyz="2.80348e-22" izz="0.0000120957"/>
+    </inertial>
+  </link>
+  <link name="right_arm_tool_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/right_arm_tool_link.stl"/></geometry>
+      <material name="printed"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/right_arm_tool_link.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.065745 -4.57924e-13 -0.005342" rpy="0 0 0"/>
+      <mass value="0.022629"/>
+      <inertia ixx="0.00000586148" ixy="-1.75552e-16" ixz="0.00000567158" iyy="0.00003041" iyz="6.19974e-17" izz="0.0000288725"/>
+    </inertial>
+  </link>
+  <link name="right_arm_shoulder">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/right_arm_shoulder.stl"/></geometry>
+      <material name="printed"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://eva/meshes/right_arm_shoulder.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.024322 -0.078998 0.48303" rpy="0 0 0"/>
+      <mass value="0.029852"/>
+      <inertia ixx="0.0000893553" ixy="0.0000378923" ixz="-7.47882e-7" iyy="0.0000224304" iyz="0.00000222412" izz="0.000111042"/>
+    </inertial>
+  </link>
+  <joint name="left_motor_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="left_motor"/>
+    <origin xyz="0 0.09 0.045" rpy="0 1.570796 1.570796"/>
   </joint>
-  <joint name="visor_joint" type="fixed">
+  <joint name="left_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="left_wheel"/>
+    <origin xyz="0 0.1 0.045" rpy="-1.570796 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="1.373" velocity="34.558"/>
+    <dynamics damping="0.0079" friction="0.0275"/>
+  </joint>
+  <joint name="left_bracket_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="left_bracket"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="right_motor_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="right_motor"/>
+    <origin xyz="0 -0.09 0.045" rpy="0 1.570796 -1.570796"/>
+  </joint>
+  <joint name="right_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="right_wheel"/>
+    <origin xyz="0 -0.1 0.045" rpy="1.570796 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="1.373" velocity="34.558"/>
+    <dynamics damping="0.0079" friction="0.0275"/>
+  </joint>
+  <joint name="right_bracket_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="right_bracket"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="front_caster_post_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="front_caster_post"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="front_caster_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="front_caster"/>
+    <origin xyz="0.098 0 0.029" rpy="0 0 0"/>
+  </joint>
+  <joint name="front_caster_roll" type="continuous" passive="true">
+    <parent link="base_link"/>
+    <child link="front_caster_gimbal"/>
+    <origin xyz="0.098 0 0.0127" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <dynamics damping="0.00001" friction="0.0005"/>
+  </joint>
+  <joint name="front_caster_spin" type="continuous" passive="true">
+    <parent link="front_caster_gimbal"/>
+    <child link="front_caster_ball"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <dynamics damping="0.00001" friction="0.0005"/>
+  </joint>
+  <joint name="rear_caster_post_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="rear_caster_post"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="rear_caster_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="rear_caster"/>
+    <origin xyz="-0.098 0 0.029" rpy="0 0 0"/>
+  </joint>
+  <joint name="rear_caster_roll" type="continuous" passive="true">
+    <parent link="base_link"/>
+    <child link="rear_caster_gimbal"/>
+    <origin xyz="-0.098 0 0.0127" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <dynamics damping="0.00001" friction="0.0005"/>
+  </joint>
+  <joint name="rear_caster_spin" type="continuous" passive="true">
+    <parent link="rear_caster_gimbal"/>
+    <child link="rear_caster_ball"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <dynamics damping="0.00001" friction="0.0005"/>
+  </joint>
+  <joint name="skirt_left_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="skirt_left"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="skirt_right_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="skirt_right"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="battery_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="battery"/>
+    <origin xyz="-0.036 -0.05825 0.084" rpy="0 0 0"/>
+  </joint>
+  <joint name="battery_tray_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="battery_tray"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="servo_bus_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="servo_bus"/>
+    <origin xyz="-0.02899 -0.03049 0.088" rpy="0 0 0"/>
+  </joint>
+  <joint name="servo_bus_tray_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="servo_bus_tray"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="imu_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="imu"/>
+    <origin xyz="0.02302 -0.03249 0.088" rpy="0 0 0"/>
+  </joint>
+  <joint name="imu_tray_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="imu_tray"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="regulator_5v_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="regulator_5v"/>
+    <origin xyz="0.02302 -0.00178 0.088" rpy="0 0 0"/>
+  </joint>
+  <joint name="regulator_5v_tray_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="regulator_5v_tray"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="spine_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="spine"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="spine_foot_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="spine_foot"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="rib_mid_left_mount" type="fixed">
+    <parent link="spine"/>
+    <child link="rib_mid_left"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="rib_mid_right_mount" type="fixed">
+    <parent link="spine"/>
+    <child link="rib_mid_right"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="rib_top_left_mount" type="fixed">
+    <parent link="spine"/>
+    <child link="rib_top_left"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="rib_top_right_mount" type="fixed">
+    <parent link="spine"/>
+    <child link="rib_top_right"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="computer_mount" type="fixed">
+    <parent link="spine"/>
+    <child link="computer"/>
+    <origin xyz="-0.02799 -0.0698 0.365" rpy="0 0 0"/>
+  </joint>
+  <joint name="computer_tray_mount" type="fixed">
+    <parent link="spine"/>
+    <child link="computer_tray"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="motor_driver_1_mount" type="fixed">
+    <parent link="spine"/>
+    <child link="motor_driver_1"/>
+    <origin xyz="-0.03999 -0.00179 0.365" rpy="0 0 0"/>
+  </joint>
+  <joint name="motor_driver_1_tray_mount" type="fixed">
+    <parent link="spine"/>
+    <child link="motor_driver_1_tray"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="shell_lower_left_mount" type="fixed">
+    <parent link="spine"/>
+    <child link="shell_lower_left"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="shell_lower_right_mount" type="fixed">
+    <parent link="spine"/>
+    <child link="shell_lower_right"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="shell_upper_left_mount" type="fixed">
+    <parent link="spine"/>
+    <child link="shell_upper_left"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="shell_upper_right_mount" type="fixed">
+    <parent link="spine"/>
+    <child link="shell_upper_right"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="neck_mount_mount" type="fixed">
+    <parent link="spine"/>
+    <child link="neck_mount"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="head_pan_actuator_mount" type="fixed">
+    <parent link="spine"/>
+    <child link="head_pan_actuator"/>
+    <origin xyz="0 0 0.576" rpy="0 0 0"/>
+  </joint>
+  <joint name="head_pan" type="revolute">
+    <parent link="spine"/>
+    <child link="head"/>
+    <origin xyz="0 0 0.576" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-2.6" upper="2.6" effort="2.942" velocity="4.712"/>
+    <dynamics damping="0.1249" friction="0.0588"/>
+  </joint>
+  <joint name="visor_mount" type="fixed">
     <parent link="head"/>
     <child link="visor"/>
-    <origin xyz="0.1 0 0.01" rpy="0 0 0"/>
-    <dynamics damping="0.1" friction="0"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
-  <joint name="left_shoulder_joint" type="revolute">
-    <parent link="body"/>
-    <child link="left_arm"/>
-    <origin xyz="0 0.24 0.65" rpy="0 0 0"/>
-    <axis xyz="0 1 0"/>
-    <limit lower="-2.5" upper="2.5" effort="50" velocity="2"/>
-    <dynamics damping="0.1" friction="0"/>
+  <joint name="left_eye_mount" type="fixed">
+    <parent link="head"/>
+    <child link="left_eye"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
-  <joint name="left_arm_roll" type="revolute">
-    <parent link="left_arm"/>
-    <child link="left_hand"/>
-    <origin xyz="0 0 -0.28" rpy="0 0 0"/>
+  <joint name="right_eye_mount" type="fixed">
+    <parent link="head"/>
+    <child link="right_eye"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="head_camera_mount" type="fixed">
+    <parent link="head"/>
+    <child link="head_camera"/>
+    <origin xyz="0.086 0.0144 0.0635" rpy="0 -1.570796 -3.141593"/>
+  </joint>
+  <joint name="camera_bracket_mount" type="fixed">
+    <parent link="head"/>
+    <child link="camera_bracket"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="left_arm_shoulder_pitch_actuator_mount" type="fixed">
+    <parent link="left_arm_base_link"/>
+    <child link="left_arm_shoulder_pitch_actuator"/>
+    <origin xyz="0 0.01905 0.0452" rpy="0 -1.570796 -1.570796"/>
+  </joint>
+  <joint name="left_arm_shoulder_pitch" type="revolute">
+    <parent link="left_arm_base_link"/>
+    <child link="left_arm_upper_arm"/>
+    <origin xyz="0 0.01905 0.0452" rpy="0 -1.570796 -1.570796"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-1.5" upper="1.5" effort="50" velocity="2"/>
-    <dynamics damping="0.1" friction="0"/>
+    <limit lower="-1.75" upper="1.75" effort="2.942" velocity="4.48"/>
+    <dynamics damping="0.1249" friction="0.0588"/>
   </joint>
-  <joint name="right_shoulder_joint" type="revolute">
-    <parent link="body"/>
-    <child link="right_arm"/>
-    <origin xyz="0 -0.24 0.65" rpy="0 0 0"/>
-    <axis xyz="0 1 0"/>
-    <limit lower="-2.5" upper="2.5" effort="50" velocity="2"/>
-    <dynamics damping="0.1" friction="0"/>
+  <joint name="left_arm_elbow_pitch_actuator_mount" type="fixed">
+    <parent link="left_arm_upper_arm"/>
+    <child link="left_arm_elbow_pitch_actuator"/>
+    <origin xyz="0.099489 0 -0.0381" rpy="3.141593 0 0"/>
   </joint>
-  <joint name="right_arm_roll" type="revolute">
-    <parent link="right_arm"/>
-    <child link="right_hand"/>
-    <origin xyz="0 0 -0.28" rpy="0 0 0"/>
+  <joint name="left_arm_elbow_pitch" type="revolute">
+    <parent link="left_arm_upper_arm"/>
+    <child link="left_arm_tool_link"/>
+    <origin xyz="0.099489 0 -0.0381" rpy="3.141593 0 0"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-1.5" upper="1.5" effort="50" velocity="2"/>
-    <dynamics damping="0.1" friction="0"/>
+    <limit lower="-2.3" upper="2.3" effort="2.942" velocity="4.48"/>
+    <dynamics damping="0.1249" friction="0.0588"/>
   </joint>
-  <joint name="display_base_mount" type="fixed">
-    <parent link="body"/>
-    <child link="display_base"/>
+  <joint name="left_arm_mount" type="fixed">
+    <parent link="spine"/>
+    <child link="left_arm_base_link"/>
+    <origin xyz="0 0.15133 0.48" rpy="3.141593 0 0"/>
+  </joint>
+  <joint name="left_arm_shoulder_mount" type="fixed">
+    <parent link="spine"/>
+    <child link="left_arm_shoulder"/>
     <origin xyz="0 0 0" rpy="0 0 0"/>
-    <dynamics damping="0.1" friction="0"/>
   </joint>
-  <joint name="support_column_mount" type="fixed">
-    <parent link="body"/>
-    <child link="support_column"/>
+  <joint name="right_arm_shoulder_pitch_actuator_mount" type="fixed">
+    <parent link="right_arm_base_link"/>
+    <child link="right_arm_shoulder_pitch_actuator"/>
+    <origin xyz="0 0.01905 0.0452" rpy="0 -1.570796 -1.570796"/>
+  </joint>
+  <joint name="right_arm_shoulder_pitch" type="revolute">
+    <parent link="right_arm_base_link"/>
+    <child link="right_arm_upper_arm"/>
+    <origin xyz="0 0.01905 0.0452" rpy="0 -1.570796 -1.570796"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1.75" upper="1.75" effort="2.942" velocity="4.48"/>
+    <dynamics damping="0.1249" friction="0.0588"/>
+  </joint>
+  <joint name="right_arm_elbow_pitch_actuator_mount" type="fixed">
+    <parent link="right_arm_upper_arm"/>
+    <child link="right_arm_elbow_pitch_actuator"/>
+    <origin xyz="0.099489 0 -0.0381" rpy="3.141593 0 0"/>
+  </joint>
+  <joint name="right_arm_elbow_pitch" type="revolute">
+    <parent link="right_arm_upper_arm"/>
+    <child link="right_arm_tool_link"/>
+    <origin xyz="0.099489 0 -0.0381" rpy="3.141593 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-2.3" upper="2.3" effort="2.942" velocity="4.48"/>
+    <dynamics damping="0.1249" friction="0.0588"/>
+  </joint>
+  <joint name="right_arm_mount" type="fixed">
+    <parent link="spine"/>
+    <child link="right_arm_base_link"/>
+    <origin xyz="0 -0.15133 0.48" rpy="3.141593 0 0"/>
+  </joint>
+  <joint name="right_arm_shoulder_mount" type="fixed">
+    <parent link="spine"/>
+    <child link="right_arm_shoulder"/>
     <origin xyz="0 0 0" rpy="0 0 0"/>
-    <dynamics damping="0.1" friction="0"/>
-  </joint>
-  <joint name="neck_support_mount" type="fixed">
-    <parent link="body"/>
-    <child link="neck_support"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <dynamics damping="0.1" friction="0"/>
-  </joint>
-  <joint name="left_shoulder_support_mount" type="fixed">
-    <parent link="body"/>
-    <child link="left_shoulder_support"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <dynamics damping="0.1" friction="0"/>
-  </joint>
-  <joint name="right_shoulder_support_mount" type="fixed">
-    <parent link="body"/>
-    <child link="right_shoulder_support"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <dynamics damping="0.1" friction="0"/>
-  </joint>
-  <joint name="hover_thruster_joint" type="fixed">
-    <parent link="body"/>
-    <child link="hover_thruster"/>
-    <origin xyz="0 0 0.24" rpy="0 0 0"/>
-    <dynamics damping="0.1" friction="0"/>
   </joint>
 </robot>

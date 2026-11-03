@@ -124,7 +124,9 @@ export class Assembly {
     const j: Joint = {
       name, type: "continuous", parent, child, origin: toPose(T), axis,
       ...(r ? { limit: { effort: r.peak_nm, velocity: r.speed_rad_s } } : { passive: true }),
-      dynamics: { damping: r ? defaultDamping(actuator!) : 0.002, friction: r ? frictionOf(actuator!) : 0.001 },
+      // passive rollers (idler wheels on deep-groove bearings, caster balls): a bearing's friction torque is ~0.5 mN·m and its
+      // viscous drag negligible; 2 mN·m·s/rad would brake a 12.7 mm caster ball spinning at 95 rad/s with ~15 N
+      dynamics: { damping: r ? defaultDamping(actuator!) : 1e-5, friction: r ? frictionOf(actuator!) : 5e-4 },
     };
     this.spec.joints.push(j);
     return j;

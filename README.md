@@ -140,29 +140,35 @@ specification gets the same generators and checks. See
 
 ## What is validated
 
-Measured on a fresh clone of this revision:
+Every check below runs in CI on each push:
 
-- **162/162** Node tests pass (`npm test`); typecheck and lint are clean and gate CI.
-- **17/17** example URDFs pass structural validation (`node cli/src/index.ts validate`).
-- **MuJoCo smoke battery** (compile, initial clearance, settle under gravity, hold pose,
-  actuator sweep, and disturbance recovery for free-standing robots): **78/97** checks
-  pass across the 17 examples, with **0** initial penetrations. Gripper and spider scout
-  pass every check; the remaining failures are actuator sweep (14 examples) and
-  disturbance recovery (5). See [examples/validation_summary.json](examples/validation_summary.json).
-- **Motion checks:** wheel-driven forward driving and mecanum strafing
-  ([mobile_motion.json](examples/mobile_motion.json)) and four coordinated
-  arm paths through effort-limited actuators all pass.
-- **CI** also renders all 17 examples in headless Chromium with third-party requests
-  blocked, compares rendered triangles with the served STL files, checks that shipped
-  GIFs and reports match the models by hash, and audits every STL for closed topology.
+- **Node tests** (`npm test`): prompt understanding (incl. Hinglish and task-only prompts), the parts-first
+  design engine, exporters and CLI; typecheck and lint are clean.
+- **Design checks** recorded in each designed robot (servo torque held continuously within the rated torque,
+  peak torque, loaded speed, supply voltage and current, wheel torque on a 10° slope, traction, skid turning,
+  battery runtime, tipping on a slope while braking). All shipped designed examples pass all of them; a prompt
+  whose request cannot be met (e.g. SG90 servos for a long arm) is built and shown with a **warning** that names
+  the failing check.
+- **No two parts intersect** in any shipped designed example, checked on the exact meshes
+  (`tests/examples-interference.test.ts`).
+- **MuJoCo task tests** for every example (`scripts/simulate_examples.py`), recorded into each example's GIF:
+  arms hold their payload, reach and move at rated speed and grip; wheeled robots drive straight at their claimed
+  speed, climb a 10° ramp and turn in place at their claimed rate (speed ramped at the design acceleration);
+  legged robots stand and squat. **All 16 non-wearable examples pass; nothing fails.** Mecanum strafing and
+  free-standing bipeds are reported as untested (no roller joints / no balance controller), not as passes.
+  CI re-runs them with `simulate_examples.py --check` and `scripts/verify_examples.py` checks every report was
+  produced from the shipped URDF.
+- **Browser**: all 17 examples render in headless Chromium with third-party requests blocked and rendered
+  triangles compared with the served STL files (`scripts/check_web.py`).
+- **Mark 43**: its own render review and joint-path evidence (`mark43_reference_review.py`, `check_motion_paths.py`).
 
 ## Limitations
 
 - The parser covers the families and phrases above. Unsupported requests are refused
   or reported rather than guessed, but it does not understand arbitrary language.
-- Outputs are concept models. No example has a documented physical build; motor
-  interfaces, bearings, wiring, tolerances and assembly remain open
-  (see each example's `BUILDABILITY.md`).
+- Designed robots (arms, wheeled bases, rover, WALL-E, EVA, Baymax) are built from real parts with printable
+  structure and checked as above, but none has been physically built yet. The humanoid, SCARA, quadruped,
+  hexapod, gripper and battle mech are still fixed templates (scaled to a stated size), not parts-designed.
 - Simulation uses approximate servo gains, friction and motor dynamics. Passing the
   smoke battery is not evidence of sim-to-real accuracy or a learned skill.
 - MoveIt runs have been executed with `mock_components`; Gazebo export has not had the
@@ -191,10 +197,9 @@ pip install -r requirements-dev.txt && python3 scripts/check_web.py --update-doc
 Regenerate and re-audit the examples:
 
 ```bash
-node scripts/export_examples.ts
-python3 scripts/audit_examples.py
-python3 scripts/render_example_gifs.py
-python3 scripts/verify_example_artifacts.py
+node scripts/build_examples.ts                                  # every deliverable from each prompt
+MUJOCO_GL=osmesa python3 -B scripts/simulate_examples.py         # task tests, GIFs, README results, gallery
+python3 scripts/verify_examples.py                               # what CI checks
 ```
 
 Further reading: [Python layer](python/README.md),

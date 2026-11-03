@@ -1,56 +1,78 @@
 # eva
 
-Prompt: Build EVA, a sleek hovering egg-shaped droid with a visor and two floating arms
+> Build EVA, a sleek hovering egg-shaped droid with a visor and two floating arms
 
+![simulation](simulation.gif)
 
-![Current MuJoCo simulation](simulation.gif)
+Interpreted as: EVA character · imu (base_link) · camera (head)
 
-Collision model: **URDF primitives / mesh bounding boxes**.
+**EVA-style companion robot: 3.263 kg, hidden diff-drive base, pan head with camera, two servo fins**
 
-This GIF runs gravity, pose holding and self-collision on the shipped model. It is
-not a learned policy or proof of hardware accuracy. The model's failures remain visible.
+Parts cost **$617.27** · printed structure 35 parts, 1707 g · checks passed 51/51
 
-## Download and inspect
+## What it can do
 
-- [CAD / STL / OpenSCAD](robot.cad.zip), [ROS 2 package](robot.ros2.zip), [training package](robot.training.zip), [URDF](robot.urdf), [robot JSON](robot.json), [BOM](BOM.md).
-- [Simulation report](simulation_report.json): **5/6** checks;
-  **0** initial penetration contacts.
-- Failed checks: disturbance_recovery.
-- [Physical build evidence and missing interfaces](BUILDABILITY.md), [machine-readable record](buildability_report.json). **No tested physical build is documented.**
+| | |
+|---|--:|
+| mass kg | 3.263 |
+| loaded mass kg | 3.263 |
+| top speed m s | 1.24 |
+| wheel torque nm | 0.183 |
+| drive motor | pololu_37d_30to1_64cpr |
+| battery | 1 x lipo_3s_2200 |
+| average power w | 14.4 |
+| runtime h | 1.36 |
+| tip angle deg | 13 |
+| compute | rpi5 |
+| slope deg | 10 |
+| turn rate rad s | 5.45 |
+| turn slip factor | 1 |
+| cost usd | 684 |
+| cost breakdown | catalog parts $560, filament 1.96 kg $49, fasteners $14, fabricated/other $61 (Ø 236 x 3 mm aluminium disc deck, laser cut (~$30); 20 x 2 mm aluminium tube, 0.45 m (~$8); two 8-LED WS2812 sticks behind translucent eye diffusers (~$8); power switch, 15 A fuse, wiring) |
 
-## Design research
+## Actuators (sized from this robot's own loads)
 
-[Public engineering sources and model-specific changes](../../references/engineering/README.md).
+| Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
+|---|---|--:|--:|--:|--:|
+| left_arm_shoulder_pitch | feetech_sts3215_c047 | 0.257 | 0.9807 / 2.942 | 11.46x | 4.48 |
+| left_arm_elbow_pitch | feetech_sts3215_c047 | 0.082 | 0.9807 / 2.942 | 35.7x | 4.48 |
+| right_arm_shoulder_pitch | feetech_sts3215_c047 | 0.257 | 0.9807 / 2.942 | 11.46x | 4.48 |
+| right_arm_elbow_pitch | feetech_sts3215_c047 | 0.082 | 0.9807 / 2.942 | 35.7x | 4.48 |
+| left_wheel_joint | pololu_37d_30to1_64cpr | 0.183 | 0.686 / 1.373 | 3.75x | 34.558 |
+| right_wheel_joint | pololu_37d_30to1_64cpr | 0.183 | 0.686 / 1.373 | 3.75x | 34.558 |
 
-## MoveIt / ROS 2
+## Engineering checks
 
-[Browse the generated MoveIt configuration](moveit/) (SRDF, KDL, OMPL, controllers).
-Unzip the ROS package into a workspace's `src/` directory, then:
+All 51 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
 
-```bash
-source /opt/ros/jazzy/setup.bash
-rosdep install --from-paths src --ignore-src -r -y
-colcon build
-source install/setup.bash
-ros2 launch eva move_group.launch.py
-```
+## Assumptions and limits
 
-The launch uses mock hardware. Planning requires a collision-free start state.
-The fixed-root planner is not a walking controller or a simulation bridge.
+- EVA cannot hover: this EVA rolls on a hidden differential-drive base (two 37D gearmotors, two ball casters) under a dark skirt; the egg rides on a 20 mm aluminium spine above it, so the gap reads as the film's hover.
+- The egg body is four printed PETG shell segments (two bands, two halves) screwed to two printed ribs on the spine; the head is one print (230 x 200 x 150 mm) with a dark visor band and two LED eye diffusers.
+- The head turns on a single pan servo; the film's free-floating head tilt is not reproduced. The arms are two-servo fins hanging beside the egg (they cannot fold flush into the body like the film's).
+- The camera looks out through a 12 mm hole in the visor centre.
 
-## Reproduce
+<!-- SIM -->
+## Simulation (MuJoCo, real actuator limits)
 
-From the repository root:
+**3/3 task tests pass.** Every motor is limited to its datasheet peak torque and its torque-speed line, with the rotor inertia reflected through its gearbox; continuous loads are compared with the rated torque. The animation above is recorded from these tests.
 
-```bash
-node scripts/export_examples.ts
-python scripts/audit_examples.py
-python scripts/render_example_gifs.py
-python scripts/document_examples.py
-python scripts/verify_example_artifacts.py
-```
+| | Test | Result |
+|---|---|---|
+| ✅ | drive straight | 3.44 m in 4.02 s, cruise speed 1.212 m/s vs claimed 1.240 m/s, heading drift -0.1 deg, lateral -0.4 cm |
+| ✅ | ramp 10deg | from standstill on a 10 deg slope (speed ramped over 4.7 s at 0.5 m/s^2): 5.13 m uphill in 6.7 s, speed 1.198 m/s of 1.240 commanded |
+| ✅ | turn in place | yaw rate 4.77 rad/s with 5.31 commanded (no-slip), claimed 5.45 rad/s (needs >= 4.63), centre moved 0.8 cm over 1.9 turn(s) (0.4 cm per turn) |
 
-These are procedural concept models. Masses, motors and contacts are approximate;
-manufacturing interfaces and measured dynamics remain unverified.
+_PASS means the modelled actuators (datasheet peak torque as a hard limit, a linear torque-speed line to no-load speed, reflected rotor inertia, URDF damping/friction) can produce the torques and speeds the task needs in this geometry and mass distribution, and that mean torque over the hold stays within the continuous (rated) torque. Joint control uses an ideal model-based feedforward (computed torque) through the force-limited servo for fixed-base robots and plain position servos for floating robots; a pass therefore proves torque/speed capacity, not that a given controller achieves it. Untested: thermal limits over long duty cycles (only the mean-vs-rated proxy), gearbox backlash and compliance, link and joint flexibility, encoder resolution, supply voltage sag and current limits, bus latency, controller tuning, and contact/friction values (nominal friction only)._
+<!-- /SIM -->
 
-EVA is a supported display prototype with a pedestal, column, neck support and shoulder connectors. There is no levitation or flight controller.
+## Files
+
+| File | What |
+|---|---|
+| `robot.urdf`, `meshes/` | URDF with real component and printed-part meshes, datasheet effort/velocity limits |
+| `BOM.md`, `bom.json` | every part to buy, with supplier links and prices |
+| `robot.cad.zip` | build package: printable STLs, print list, bought-part models, assembly order |
+| `robot.ros2.zip` | ROS 2 description package (ros2_control, MoveIt config, Gazebo launch) |
+| `robot.training.zip` | MuJoCo / RL training scaffold |
+| `simulation_report.json` | MuJoCo task tests under the real actuator limits |

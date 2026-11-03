@@ -3,6 +3,26 @@
 Dated from the git history. Pull request numbers refer to
 [github.com/megazron/text-to-robot](https://github.com/megazron/text-to-robot/pulls).
 
+## 2026-11-03: Fixes from a full audit (prompts, design engine, simulation)
+
+- Prompts: hobby-servo arms (`SG90`, `MG90S`, `MG996R`, `DS3218`, `arduino`, `hobby servo`) are designed on an
+  Arduino Uno + PCA9685 with a 5 V supply; Hinglish (`jo 1 kg utha sake`, `char pahiye`, `robot kutta`); task-only
+  prompts (`a robot that can water my plants`) pick a robot type and say why; `SCARA for pick and place` gets a
+  suction cup; `6 dof arm with a suction cup` builds the designed arm with a cup (it built no tool before);
+  template robots (humanoid, quadruped, hexapod...) scale to a stated height or size word; failed design checks
+  are shown as warnings with a suggestion.
+- Design engine: servos are sized with gravity in the arm's real mounting direction and with everything it
+  carries counted once; 3S robots only use 12 V servo families (no 11.1 V XL430 on a 12.6 V pack); WALL-E's
+  neck and battery placement, Baymax's arm load; excluded sensors (`no lidar`) are honoured by designed bases;
+  passive rollers and caster balls get bearing-level friction (they used to brake a robot with ~15 N);
+  claimed turn rates include skid-steer slip; WALL-E's track idlers are coupled to the drive wheel (URDF `mimic`).
+- Simulation: speed is ramped at the design acceleration (it used to launch at ~4.7 m/s^2 and tip tall robots);
+  mecanum families were tested as plain wheels; fixed-base robots crashed the generic test; template robots now
+  record their family so the right tests run; turn drift is judged per full turn.
+- Humanoid arms end at mid-thigh (hands used to touch the floor and hold the robot up in a squat).
+- CI moved to the new example pipeline (`verify_examples.py`, `simulate_examples.py --check`); retired stale
+  evidence from the old smoke battery.
+
 ## 2026-09-27: Prompt understanding
 
 - Every request in a prompt is now applied, approximated with a named substitute, or

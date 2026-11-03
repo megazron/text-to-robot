@@ -31,14 +31,15 @@ test("all four characters pass spec + URDF validation from their templates", () 
   }
 });
 test("shipped MuJoCo reports count their actual outcomes without requiring fictional capabilities", () => {
-  for (const ex of ["14_iron_man_mark_43", "15_wall_e", "16_eva", "17_baymax", "08_humanoid", "11_spider_scout"]) {
-    const p = `examples/${ex}/mujoco_report.json`;
+  for (const ex of ["15_wall_e", "16_eva", "17_baymax", "08_humanoid", "11_spider_scout"]) {
+    const p = `examples/${ex}/simulation_report.json`;
     assert.ok(existsSync(p), `missing ${p}`);
     const rep = JSON.parse(readFileSync(p, "utf8"));
-    const outcomes = Object.values(rep.tests) as { pass: boolean }[];
+    // untested (pass: null) results are reported but never counted as passes
+    const outcomes = (Object.values(rep.tests) as { pass: boolean | null }[]).filter((t) => t.pass !== null);
     assert.equal(rep.total, outcomes.length);
     assert.equal(rep.passed, outcomes.filter((t) => t.pass).length);
-    assert.ok(rep.floating, `${ex} should simulate with a floating base`);
+    assert.ok(["wheeled", "legged"].includes(rep.group), `${ex} is simulated as a free-moving robot (${rep.group})`);
   }
   const mark = JSON.parse(readFileSync("examples/14_iron_man_mark_43/mujoco_report.json", "utf8"));
   if(mark.tests.disturbance_recovery.pass)

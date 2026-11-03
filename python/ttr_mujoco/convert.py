@@ -241,6 +241,7 @@ def urdf_to_mjcf(urdf_path: str, floating=None, kp: float | None = None, out: st
             j.set("armature", f"{r['armature_kgm2']:.6g}")
             armature_notes.append(f"{j.get('name')}: {r['armature_kgm2']:.3g} kg m^2 ({r['armature_source']})")
     # actuators for every hinge/slide joint
+    # URDF <mimic> joints (track idlers) are turned into joint equality constraints by MuJoCo's own URDF importer
     act = ET.SubElement(root, "actuator")
     for j in root.iter("joint"):
         jn = j.get("name"); jt = j.get("type", "hinge")

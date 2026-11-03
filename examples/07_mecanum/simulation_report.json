@@ -1,101 +1,190 @@
 {
-  "model": "robot.urdf",
-  "nbody": 47,
-  "njnt": 37,
-  "nu": 4,
-  "ngeom": 93,
-  "floating": true,
-  "tests": {
-    "compile": {
-      "pass": true,
-      "total_mass_kg": 4.143,
-      "actuators": 4
+ "model": "robot.urdf",
+ "family": "mobile_mecanum",
+ "group": "wheeled",
+ "scope": "PASS means the modelled actuators (datasheet peak torque as a hard limit, a linear torque-speed line to no-load speed, reflected rotor inertia, URDF damping/friction) can produce the torques and speeds the task needs in this geometry and mass distribution, and that mean torque over the hold stays within the continuous (rated) torque. Joint control uses an ideal model-based feedforward (computed torque) through the force-limited servo for fixed-base robots and plain position servos for floating robots; a pass therefore proves torque/speed capacity, not that a given controller achieves it. Untested: thermal limits over long duty cycles (only the mean-vs-rated proxy), gearbox backlash and compliance, link and joint flexibility, encoder resolution, supply voltage sag and current limits, bus latency, controller tuning, and contact/friction values (nominal friction only).",
+ "untested": [],
+ "fidelity": "URDF effort limits enforced; position gains inferred; speed/thermal/electrical limits unmodelled; geometry and hardware uncalibrated; armature = rotor inertia x gear ratio^2 from the actuator record: front_left_wheel_joint: 0.00135 kg m^2 (estimate (dc_gearmotor_37) x gear ratio 30^2); front_right_wheel_joint: 0.00135 kg m^2 (estimate (dc_gearmotor_37) x gear ratio 30^2); rear_left_wheel_joint: 0.00135 kg m^2 (estimate (dc_gearmotor_37) x gear ratio 30^2); rear_right_wheel_joint: 0.00135 kg m^2 (estimate (dc_gearmotor_37) x gear ratio 30^2)",
+ "tests": {
+  "drive_straight": {
+   "pass": true,
+   "explanation": "3.66 m in 4.07 s, cruise speed 1.301 m/s vs claimed 1.330 m/s, heading drift -0.0 deg, lateral -0.0 cm",
+   "claimed_speed_m_s": 1.33,
+   "claim_key": "top_speed_m_s",
+   "commanded_m_s": 1.33,
+   "cruise_speed_m_s": 1.3008,
+   "mean_speed_m_s": 0.8989,
+   "distance_m": 3.6587,
+   "heading_drift_deg": -0.0,
+   "lateral_m": -0.0003,
+   "wheel_radius_m": [
+    0.048,
+    0.048,
+    0.048,
+    0.048
+   ],
+   "joints": {
+    "front_left_wheel_joint": {
+     "peak_nm": 0.2646,
+     "peak_rating_nm": 1.373,
+     "util_peak": 0.193,
+     "mean_cruise_nm": 0.2416,
+     "rated_nm": 0.686,
+     "util_rated": 0.352,
+     "max_err": 0.6439,
+     "max_err_hold": 0.6082,
+     "saturated_frac": 0.0
     },
-    "initial_clearance": {
-      "pass": true,
-      "penetrations": [],
-      "count": 0
+    "front_right_wheel_joint": {
+     "peak_nm": 0.2647,
+     "peak_rating_nm": 1.373,
+     "util_peak": 0.193,
+     "mean_cruise_nm": 0.2416,
+     "rated_nm": 0.686,
+     "util_rated": 0.352,
+     "max_err": 0.644,
+     "max_err_hold": 0.6081,
+     "saturated_frac": 0.0
     },
-    "settle_under_gravity": {
-      "pass": true,
-      "max_joint_speed": 0.31,
-      "base_drop_m": 0.005,
-      "upright": 1.0
+    "rear_left_wheel_joint": {
+     "peak_nm": 0.2646,
+     "peak_rating_nm": 1.373,
+     "util_peak": 0.193,
+     "mean_cruise_nm": 0.2416,
+     "rated_nm": 0.686,
+     "util_rated": 0.352,
+     "max_err": 0.644,
+     "max_err_hold": 0.6081,
+     "saturated_frac": 0.0
     },
-    "hold_pose": {
-      "pass": true,
-      "max_joint_error_rad": 0.0
-    },
-    "actuator_sweep": {
-      "pass": false,
-      "tracked": "0/4",
-      "worst_error": 2.439,
-      "actuators": [
-        {
-          "actuator": "act_front_left_wheel_joint",
-          "joint": "front_left_wheel_joint",
-          "pass": false,
-          "rms_error": 1.098602,
-          "peak_error": 2.406668,
-          "error_unit": "rad/s",
-          "rms_tolerance": 0.5,
-          "peak_actuator_force": 1.210972,
-          "force_unit": "N m"
-        },
-        {
-          "actuator": "act_front_right_wheel_joint",
-          "joint": "front_right_wheel_joint",
-          "pass": false,
-          "rms_error": 1.098602,
-          "peak_error": 2.406668,
-          "error_unit": "rad/s",
-          "rms_tolerance": 0.5,
-          "peak_actuator_force": 1.210972,
-          "force_unit": "N m"
-        },
-        {
-          "actuator": "act_rear_left_wheel_joint",
-          "joint": "rear_left_wheel_joint",
-          "pass": false,
-          "rms_error": 1.100737,
-          "peak_error": 2.438637,
-          "error_unit": "rad/s",
-          "rms_tolerance": 0.5,
-          "peak_actuator_force": 1.238323,
-          "force_unit": "N m"
-        },
-        {
-          "actuator": "act_rear_right_wheel_joint",
-          "joint": "rear_right_wheel_joint",
-          "pass": false,
-          "rms_error": 1.100737,
-          "peak_error": 2.438637,
-          "error_unit": "rad/s",
-          "rms_tolerance": 0.5,
-          "peak_actuator_force": 1.238323,
-          "force_unit": "N m"
-        }
-      ]
-    },
-    "disturbance_recovery": {
-      "pass": true,
-      "upright_after": 1.0,
-      "note": "upright>0.5 means it did not fall"
+    "rear_right_wheel_joint": {
+     "peak_nm": 0.2647,
+     "peak_rating_nm": 1.373,
+     "util_peak": 0.193,
+     "mean_cruise_nm": 0.2416,
+     "rated_nm": 0.686,
+     "util_rated": 0.352,
+     "max_err": 0.6441,
+     "max_err_hold": 0.608,
+     "saturated_frac": 0.0
     }
+   }
   },
-  "validation_scope": "simulation smoke tests, not hardware or wearable qualification",
-  "mujoco_version": "3.13.0",
-  "model_sha256": "279866a84ba958383f7db5ce96b5285fe55011f5e75a717861fea4cb5b49961e",
-  "limitations": [
-    "No measured motor, material, thermal or battery model",
-    "No manufacturing or human-fit validation"
-  ],
-  "self_collision_masks_enabled": true,
-  "passed": 5,
-  "total": 6,
-  "collision_model": "URDF primitives / mesh bounding boxes",
-  "self_collision": true,
-  "source_urdf_sha256": "ae0727adcf9742f0de2201cf102b362b541d49e8dfb47a6a0473efde49ba9580",
-  "initial_penetrations": [],
-  "hardware_verified": false
+  "ramp_10deg": {
+   "pass": true,
+   "explanation": "from standstill on a 10 deg slope (speed ramped over 5.0 s at 0.5 m/s^2): 5.78 m uphill in 7.0 s, speed 1.294 m/s of 1.330 commanded",
+   "slope_deg": 10.0,
+   "claim_key": "slope_deg",
+   "uphill_m": 5.7835,
+   "speed_m_s": 1.294,
+   "joints": {
+    "front_left_wheel_joint": {
+     "peak_nm": 0.301,
+     "peak_rating_nm": 1.373,
+     "util_peak": 0.219,
+     "mean_climb_nm": 0.2962,
+     "rated_nm": 0.686,
+     "util_rated": 0.432,
+     "max_err": 0.7524,
+     "max_err_hold": 0.7456,
+     "saturated_frac": 0.0
+    },
+    "front_right_wheel_joint": {
+     "peak_nm": 0.3012,
+     "peak_rating_nm": 1.373,
+     "util_peak": 0.219,
+     "mean_climb_nm": 0.2964,
+     "rated_nm": 0.686,
+     "util_rated": 0.432,
+     "max_err": 0.7529,
+     "max_err_hold": 0.7461,
+     "saturated_frac": 0.0
+    },
+    "rear_left_wheel_joint": {
+     "peak_nm": 0.3009,
+     "peak_rating_nm": 1.373,
+     "util_peak": 0.219,
+     "mean_climb_nm": 0.2961,
+     "rated_nm": 0.686,
+     "util_rated": 0.432,
+     "max_err": 0.7522,
+     "max_err_hold": 0.7453,
+     "saturated_frac": 0.0
+    },
+    "rear_right_wheel_joint": {
+     "peak_nm": 0.3012,
+     "peak_rating_nm": 1.373,
+     "util_peak": 0.219,
+     "mean_climb_nm": 0.2963,
+     "rated_nm": 0.686,
+     "util_rated": 0.432,
+     "max_err": 0.7527,
+     "max_err_hold": 0.7459,
+     "saturated_frac": 0.0
+    }
+   }
+  },
+  "turn_in_place": {
+   "pass": null,
+   "explanation": "untested: mecanum rollers are not modelled as joints (rigid wheels scrub like skid steer); measured yaw rate 3.84 rad/s with 4.94 commanded (no-slip), claimed 5.14 rad/s (needs >= 4.37), centre moved 12.4 cm over 1.5 turn(s) (8.1 cm per turn)",
+   "claimed_rad_s": 5.14,
+   "commanded_rad_s": 4.9401,
+   "yaw_rate_rad_s": 3.8448,
+   "drift_m": 0.1242,
+   "track_m": 0.2692,
+   "joints": {
+    "front_left_wheel_joint": {
+     "peak_nm": 0.9798,
+     "peak_rating_nm": 1.373,
+     "util_peak": 0.714,
+     "mean_turn_nm": 0.3572,
+     "rated_nm": 0.686,
+     "util_rated": 0.521,
+     "max_err": 10.311,
+     "max_err_hold": 8.2575,
+     "saturated_frac": 0.162
+    },
+    "front_right_wheel_joint": {
+     "peak_nm": 0.9129,
+     "peak_rating_nm": 1.373,
+     "util_peak": 0.665,
+     "mean_turn_nm": 0.3002,
+     "rated_nm": 0.686,
+     "util_rated": 0.438,
+     "max_err": 6.4951,
+     "max_err_hold": 6.4951,
+     "saturated_frac": 0.08
+    },
+    "rear_left_wheel_joint": {
+     "peak_nm": 1.0876,
+     "peak_rating_nm": 1.373,
+     "util_peak": 0.792,
+     "mean_turn_nm": 0.3344,
+     "rated_nm": 0.686,
+     "util_rated": 0.487,
+     "max_err": 5.2138,
+     "max_err_hold": 5.2138,
+     "saturated_frac": 0.114
+    },
+    "rear_right_wheel_joint": {
+     "peak_nm": 1.0233,
+     "peak_rating_nm": 1.373,
+     "util_peak": 0.745,
+     "mean_turn_nm": 0.3398,
+     "rated_nm": 0.686,
+     "util_rated": 0.495,
+     "max_err": 7.1183,
+     "max_err_hold": 7.1183,
+     "saturated_frac": 0.123
+    }
+   }
+  },
+  "strafe": {
+   "pass": null,
+   "explanation": "untested: mecanum rollers are not modelled as joints, so a rigid wheel cannot strafe in simulation"
+  }
+ },
+ "passed": 2,
+ "total": 2,
+ "source_urdf_sha256": "4bca1aa542fb2db3709292a9d5b2e2a6a2fe40a4ca370e0269d85d8f350e5a8b"
 }

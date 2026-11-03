@@ -1,8 +1,8 @@
 # Bill of Materials — humanoid_robot
 
-**Estimated total: $12822.89**  ·  tier: prosumer
+**Estimated total: $12629.25**  ·  tier: prosumer
 
-**Effort sizing: fails; hardware verified: no.**
+**Effort sizing: passes catalogue estimate; hardware verified: no.**
 
 | Category | Component | Qty | Unit $ | Subtotal $ | Spec |
 |---|---|--:|--:|--:|---|
@@ -13,7 +13,7 @@
 | Power | LiPo 6S 10000mAh | 1 | 95 | 95 | 222 Wh; est. load 675 W |
 | Power | DC-DC buck regulator (5V/10A) | 1 | 12 | 12 | logic + servo rail |
 | Power | Power distribution board + fuse + switch | 1 | 14 | 14 | wiring harness backbone |
-| Structure | 3D-printed frame (PLA/PETG) | 1 | 322.49 | 322.49 | ~14.66 kg material @ $22/kg |
+| Structure | 3D-printed frame (PLA/PETG) | 1 | 128.85 | 128.85 | ~5.86 kg material @ $22/kg |
 | Structure | Fastener + bearing kit | 1 | 18 | 18 | M3 screws, heat inserts, 608 bearings |
 | Wiring & misc | Wiring, connectors, JST/Dupont, sleeving | 1 | 1337.4 | 1337.4 | ~12% of electronics |
 
@@ -21,64 +21,41 @@
 
 | Joint | Required effort | Unit | Chosen actuator | Margin |
 |---|--:|---|---|--:|
-| neck_joint | 40 | N·m | Unitree GO-M8010-6 | UNDERSIZED |
-| left_arm_joint_1 | 40 | N·m | Unitree GO-M8010-6 | UNDERSIZED |
-| left_arm_joint_2 | 40 | N·m | Unitree GO-M8010-6 | UNDERSIZED |
-| left_arm_joint_3 | 40 | N·m | Unitree GO-M8010-6 | UNDERSIZED |
-| left_arm_joint_4 | 40 | N·m | Unitree GO-M8010-6 | UNDERSIZED |
-| left_arm_joint_5 | 40 | N·m | Unitree GO-M8010-6 | UNDERSIZED |
-| left_arm_joint_6 | 40 | N·m | Unitree GO-M8010-6 | UNDERSIZED |
-| left_arm_joint_7 | 40 | N·m | Unitree GO-M8010-6 | UNDERSIZED |
-| left_left_finger_joint | 32 | N | NEMA17 + lead screw | 1.9x |
-| left_right_finger_joint | 32 | N | NEMA17 + lead screw | 1.9x |
-| right_arm_joint_1 | 40 | N·m | Unitree GO-M8010-6 | UNDERSIZED |
-| right_arm_joint_2 | 40 | N·m | Unitree GO-M8010-6 | UNDERSIZED |
-| right_arm_joint_3 | 40 | N·m | Unitree GO-M8010-6 | UNDERSIZED |
-| right_arm_joint_4 | 40 | N·m | Unitree GO-M8010-6 | UNDERSIZED |
-| right_arm_joint_5 | 40 | N·m | Unitree GO-M8010-6 | UNDERSIZED |
-| right_arm_joint_6 | 40 | N·m | Unitree GO-M8010-6 | UNDERSIZED |
-| right_arm_joint_7 | 40 | N·m | Unitree GO-M8010-6 | UNDERSIZED |
-| right_left_finger_joint | 32 | N | NEMA17 + lead screw | 1.9x |
-| right_right_finger_joint | 32 | N | NEMA17 + lead screw | 1.9x |
-| left_hip_yaw | 9.6 | N·m | Unitree GO-M8010-6 | 2.4x |
-| left_hip_roll | 16 | N·m | Unitree GO-M8010-6 | UNDERSIZED |
-| left_hip_joint | 40 | N·m | Unitree GO-M8010-6 | UNDERSIZED |
-| left_knee_joint | 40 | N·m | Unitree GO-M8010-6 | UNDERSIZED |
-| left_ankle_roll | 9.6 | N·m | Unitree GO-M8010-6 | 2.4x |
-| left_ankle_joint | 40 | N·m | Unitree GO-M8010-6 | UNDERSIZED |
-| right_hip_yaw | 9.6 | N·m | Unitree GO-M8010-6 | 2.4x |
-| right_hip_roll | 16 | N·m | Unitree GO-M8010-6 | UNDERSIZED |
-| right_hip_joint | 40 | N·m | Unitree GO-M8010-6 | UNDERSIZED |
-| right_knee_joint | 40 | N·m | Unitree GO-M8010-6 | UNDERSIZED |
-| right_ankle_roll | 9.6 | N·m | Unitree GO-M8010-6 | 2.4x |
-| right_ankle_joint | 40 | N·m | Unitree GO-M8010-6 | UNDERSIZED |
+| neck_joint | 12.656 | N·m | Unitree GO-M8010-6 | 1.8x |
+| left_arm_joint_1 | 12.656 | N·m | Unitree GO-M8010-6 | 1.8x |
+| left_arm_joint_2 | 12.656 | N·m | Unitree GO-M8010-6 | 1.8x |
+| left_arm_joint_3 | 12.656 | N·m | Unitree GO-M8010-6 | 1.8x |
+| left_arm_joint_4 | 12.656 | N·m | Unitree GO-M8010-6 | 1.8x |
+| left_arm_joint_5 | 12.656 | N·m | Unitree GO-M8010-6 | 1.8x |
+| left_arm_joint_6 | 12.656 | N·m | Unitree GO-M8010-6 | 1.8x |
+| left_arm_joint_7 | 12.656 | N·m | Unitree GO-M8010-6 | 1.8x |
+| left_left_finger_joint | 10.125 | N | NEMA17 + lead screw | 5.9x |
+| left_right_finger_joint | 10.125 | N | NEMA17 + lead screw | 5.9x |
+| right_arm_joint_1 | 12.656 | N·m | Unitree GO-M8010-6 | 1.8x |
+| right_arm_joint_2 | 12.656 | N·m | Unitree GO-M8010-6 | 1.8x |
+| right_arm_joint_3 | 12.656 | N·m | Unitree GO-M8010-6 | 1.8x |
+| right_arm_joint_4 | 12.656 | N·m | Unitree GO-M8010-6 | 1.8x |
+| right_arm_joint_5 | 12.656 | N·m | Unitree GO-M8010-6 | 1.8x |
+| right_arm_joint_6 | 12.656 | N·m | Unitree GO-M8010-6 | 1.8x |
+| right_arm_joint_7 | 12.656 | N·m | Unitree GO-M8010-6 | 1.8x |
+| right_left_finger_joint | 10.125 | N | NEMA17 + lead screw | 5.9x |
+| right_right_finger_joint | 10.125 | N | NEMA17 + lead screw | 5.9x |
+| left_hip_yaw | 3.038 | N·m | Unitree GO-M8010-6 | 7.6x |
+| left_hip_roll | 5.063 | N·m | Unitree GO-M8010-6 | 4.5x |
+| left_hip_joint | 12.656 | N·m | Unitree GO-M8010-6 | 1.8x |
+| left_knee_joint | 12.656 | N·m | Unitree GO-M8010-6 | 1.8x |
+| left_ankle_roll | 3.038 | N·m | Unitree GO-M8010-6 | 7.6x |
+| left_ankle_joint | 12.656 | N·m | Unitree GO-M8010-6 | 1.8x |
+| right_hip_yaw | 3.038 | N·m | Unitree GO-M8010-6 | 7.6x |
+| right_hip_roll | 5.063 | N·m | Unitree GO-M8010-6 | 4.5x |
+| right_hip_joint | 12.656 | N·m | Unitree GO-M8010-6 | 1.8x |
+| right_knee_joint | 12.656 | N·m | Unitree GO-M8010-6 | 1.8x |
+| right_ankle_roll | 3.038 | N·m | Unitree GO-M8010-6 | 7.6x |
+| right_ankle_joint | 12.656 | N·m | Unitree GO-M8010-6 | 1.8x |
 
 ## Warnings
 - ⚠️ Sizing uses a neutral-pose gravity proxy and declared joint effort, not a worst-case workspace or dynamic load analysis. Selection checks only approximate effort and broad motion type. Speed/torque curves, travel, voltage, feedback, mounting, thermal duty and wiring are not qualified.
 - ⚠️ Catalog values are planning estimates. Except explicitly sourced rated values, torque entries may be stall/peak ratings; continuous duty, fit and complete assemblies are unverified.
-- ⚠️ joint neck_joint needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
-- ⚠️ joint left_arm_joint_1 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
-- ⚠️ joint left_arm_joint_2 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
-- ⚠️ joint left_arm_joint_3 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
-- ⚠️ joint left_arm_joint_4 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
-- ⚠️ joint left_arm_joint_5 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
-- ⚠️ joint left_arm_joint_6 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
-- ⚠️ joint left_arm_joint_7 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
-- ⚠️ joint right_arm_joint_1 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
-- ⚠️ joint right_arm_joint_2 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
-- ⚠️ joint right_arm_joint_3 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
-- ⚠️ joint right_arm_joint_4 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
-- ⚠️ joint right_arm_joint_5 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
-- ⚠️ joint right_arm_joint_6 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
-- ⚠️ joint right_arm_joint_7 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
-- ⚠️ joint left_hip_roll needs ~16.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
-- ⚠️ joint left_hip_joint needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
-- ⚠️ joint left_knee_joint needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
-- ⚠️ joint left_ankle_joint needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
-- ⚠️ joint right_hip_roll needs ~16.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
-- ⚠️ joint right_hip_joint needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
-- ⚠️ joint right_knee_joint needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
-- ⚠️ joint right_ankle_joint needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator
 
 ## Notes
 - Tier: prosumer. Prices are planning estimates (USD), not quotes. Structure assumes FDM 3D printing.

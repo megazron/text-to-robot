@@ -11,6 +11,9 @@ class ExampleClearanceTests(unittest.TestCase):
         root=Path(__file__).resolve().parents[2]/'examples'
         for source in sorted(root.glob('*/robot.urdf')):
             if source.parent.name.startswith('14_'):continue # known unresolved wearable, reported separately
+            # parts-designed robots: MuJoCo collides each mesh as its convex hull, so a bracket that wraps a servo or a
+            # shell skirt over casters "overlaps" here; tests/examples-interference.test.ts checks them with exact meshes
+            if '"design"' in (source.parent/'robot.json').read_text():continue
             with self.subTest(example=source.parent.name):
                 m=mujoco.MjModel.from_xml_string(urdf_to_mjcf(str(source),self_collision=True));d=mujoco.MjData(m);mujoco.mj_forward(m,d)
                 bad=[float(c.dist) for c in d.contact if c.dist<-.001 and all(m.geom_type[g]!=mujoco.mjtGeom.mjGEOM_PLANE for g in (c.geom1,c.geom2))]

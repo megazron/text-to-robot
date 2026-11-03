@@ -3,1091 +3,594 @@
      robot: mecanum_robot
      prompt: Create a mecanum-wheel robot
 
-     46 links, 45 joints, 114 inferred values
+     27 links, 26 joints, 27 inferred values
 -->
 <robot name="mecanum_robot">
-  <material name="base_mat"><color rgba="0.25 0.25 0.28 1"/></material>
-  <material name="link_mat"><color rgba="0.85 0.85 0.88 1"/></material>
-  <material name="gripper_mat"><color rgba="0.15 0.35 0.75 1"/></material>
-  <material name="wheel_mat"><color rgba="0.1 0.1 0.12 1"/></material>
-  <material name="sensor_mat"><color rgba="0.1 0.7 0.4 1"/></material>
-  <material name="accent_mat"><color rgba="0.9 0.55 0.1 1"/></material>
+  <material name="printed"><color rgba="0.93 0.93 0.95 1"/></material>
+  <material name="printed_accent"><color rgba="0.95 0.5 0.12 1"/></material>
+  <material name="printed_dark"><color rgba="0.22 0.23 0.26 1"/></material>
+  <material name="actuator"><color rgba="0.1 0.1 0.11 1"/></material>
+  <material name="metal"><color rgba="0.62 0.64 0.68 1"/></material>
+  <material name="electronics"><color rgba="0.08 0.45 0.25 1"/></material>
+  <material name="rubber"><color rgba="0.07 0.07 0.08 1"/></material>
+  <material name="battery"><color rgba="0.15 0.3 0.75 1"/></material>
+  <material name="fabric"><color rgba="0.97 0.97 0.95 1"/></material>
+  <material name="visor"><color rgba="0.03 0.03 0.05 1"/></material>
+  <material name="led"><color rgba="0.25 0.75 1 1"/></material>
+  <material name="aluminium"><color rgba="0.56 0.58 0.62 1"/></material>
+  <material name="walle"><color rgba="0.85 0.62 0.15 1"/></material>
   <link name="base_link">
     <visual>
-      <origin xyz="0 0 0.0615" rpy="0 0 0"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry><mesh filename="package://mecanum_robot/meshes/base_link.stl"/></geometry>
-      <material name="base_mat"/>
+      <material name="aluminium"/>
     </visual>
     <collision>
-      <origin xyz="0 0 0.0615" rpy="0 0 0"/>
-      <geometry><box size="0.4 0.3 0.003"/></geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/base_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="7.78568e-18 -4.32340e-18 0.0615" rpy="0 0 0"/>
-      <mass value="0.971709"/>
-      <inertia ixx="0.007285" ixy="-1.03853e-18" ixz="3.82337e-21" iyy="0.01295" iyz="-6.33920e-21" izz="0.020234"/>
+      <origin xyz="0.0000166094 -8.38758e-18 0.0825" rpy="0 0 0"/>
+      <mass value="0.481503"/>
+      <inertia ixx="0.001582" ixy="2.00255e-19" ixz="6.52599e-21" iyy="0.003574" iyz="3.25957e-21" izz="0.005155"/>
     </inertial>
   </link>
-  <link name="base_link_service_lid">
+  <link name="front_left_motor">
     <visual>
-      <origin xyz="0 0 0.1785" rpy="0 0 0"/>
-      <geometry><mesh filename="package://mecanum_robot/meshes/base_link_service_lid.stl"/></geometry>
-      <material name="base_mat"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/pololu_37d_30to1_64cpr.stl"/></geometry>
+      <material name="actuator"/>
     </visual>
     <collision>
-      <origin xyz="0 0 0.1785" rpy="0 0 0"/>
-      <geometry><box size="0.4 0.3 0.003"/></geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/pololu_37d_30to1_64cpr.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="1.62146e-18 -8.06391e-19 0.1785" rpy="0 0 0"/>
-      <mass value="0.945789"/>
-      <inertia ixx="0.007282" ixy="-1.03853e-18" ixz="7.74039e-21" iyy="0.012895" iyz="-5.78194e-21" izz="0.020176"/>
-    </inertial>
-  </link>
-  <link name="base_link_rear_panel">
-    <visual>
-      <origin xyz="-0.1985 0 0.12" rpy="0 0 0"/>
-      <geometry><box size="0.003 0.3 0.114"/></geometry>
-      <material name="base_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="-0.1985 0 0.12" rpy="0 0 0"/>
-      <geometry><box size="0.003 0.3 0.114"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="-0.1985 0 0.12" rpy="0 0 0"/>
-      <mass value="0.27702"/>
-      <inertia ixx="0.002378" ixy="0" ixz="0" iyy="0.00030022" iyz="0" izz="0.002078"/>
-    </inertial>
-  </link>
-  <link name="base_link_right_panel">
-    <visual>
-      <origin xyz="0 -0.1485 0.12" rpy="0 0 0"/>
-      <geometry><box size="0.394 0.003 0.114"/></geometry>
-      <material name="base_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 -0.1485 0.12" rpy="0 0 0"/>
-      <geometry><box size="0.394 0.003 0.114"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0 -0.1485 0.12" rpy="0 0 0"/>
-      <mass value="0.36382"/>
-      <inertia ixx="0.000394289" ixy="0" ixz="0" iyy="0.005101" iyz="0" izz="0.004707"/>
-    </inertial>
-  </link>
-  <link name="base_link_front_panel">
-    <visual>
-      <origin xyz="0.1985 0 0.12" rpy="0 0 0"/>
-      <geometry><box size="0.003 0.3 0.114"/></geometry>
-      <material name="base_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0.1985 0 0.12" rpy="0 0 0"/>
-      <geometry><box size="0.003 0.3 0.114"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0.1985 0 0.12" rpy="0 0 0"/>
-      <mass value="0.27702"/>
-      <inertia ixx="0.002378" ixy="0" ixz="0" iyy="0.00030022" iyz="0" izz="0.002078"/>
-    </inertial>
-  </link>
-  <link name="base_link_left_panel">
-    <visual>
-      <origin xyz="0 0.1485 0.12" rpy="0 0 0"/>
-      <geometry><box size="0.394 0.003 0.114"/></geometry>
-      <material name="base_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 0.1485 0.12" rpy="0 0 0"/>
-      <geometry><box size="0.394 0.003 0.114"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0 0.1485 0.12" rpy="0 0 0"/>
-      <mass value="0.36382"/>
-      <inertia ixx="0.000394289" ixy="0" ixz="0" iyy="0.005101" iyz="0" izz="0.004707"/>
-    </inertial>
-  </link>
-  <link name="base_link_standoff_rr">
-    <visual>
-      <origin xyz="-0.188 -0.138 0.12" rpy="0 0 0"/>
-      <geometry><mesh filename="package://mecanum_robot/meshes/base_link_standoff_rr.stl"/></geometry>
-      <material name="base_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="-0.188 -0.138 0.12" rpy="0 0 0"/>
-      <geometry><box size="0.008 0.008 0.114"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="-0.188 -0.138 0.12" rpy="0 0 0"/>
-      <mass value="0.02"/>
-      <inertia ixx="0.0000217542" ixy="-2.48191e-24" ixz="1.19698e-23" iyy="0.0000217542" iyz="-5.51986e-24" izz="1.88361e-7"/>
-    </inertial>
-  </link>
-  <link name="base_link_standoff_rl">
-    <visual>
-      <origin xyz="-0.188 0.138 0.12" rpy="0 0 0"/>
-      <geometry><mesh filename="package://mecanum_robot/meshes/base_link_standoff_rl.stl"/></geometry>
-      <material name="base_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="-0.188 0.138 0.12" rpy="0 0 0"/>
-      <geometry><box size="0.008 0.008 0.114"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="-0.188 0.138 0.12" rpy="0 0 0"/>
-      <mass value="0.02"/>
-      <inertia ixx="0.0000217542" ixy="-2.48191e-24" ixz="1.19698e-23" iyy="0.0000217542" iyz="-5.51986e-24" izz="1.88361e-7"/>
-    </inertial>
-  </link>
-  <link name="base_link_standoff_fr">
-    <visual>
-      <origin xyz="0.188 -0.138 0.12" rpy="0 0 0"/>
-      <geometry><mesh filename="package://mecanum_robot/meshes/base_link_standoff_fr.stl"/></geometry>
-      <material name="base_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0.188 -0.138 0.12" rpy="0 0 0"/>
-      <geometry><box size="0.008 0.008 0.114"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0.188 -0.138 0.12" rpy="0 0 0"/>
-      <mass value="0.02"/>
-      <inertia ixx="0.0000217542" ixy="-2.48191e-24" ixz="1.19698e-23" iyy="0.0000217542" iyz="-5.51986e-24" izz="1.88361e-7"/>
-    </inertial>
-  </link>
-  <link name="base_link_standoff_fl">
-    <visual>
-      <origin xyz="0.188 0.138 0.12" rpy="0 0 0"/>
-      <geometry><mesh filename="package://mecanum_robot/meshes/base_link_standoff_fl.stl"/></geometry>
-      <material name="base_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0.188 0.138 0.12" rpy="0 0 0"/>
-      <geometry><box size="0.008 0.008 0.114"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0.188 0.138 0.12" rpy="0 0 0"/>
-      <mass value="0.02"/>
-      <inertia ixx="0.0000217542" ixy="-2.48191e-24" ixz="1.19698e-23" iyy="0.0000217542" iyz="-5.51986e-24" izz="1.88361e-7"/>
+      <origin xyz="-0.006887 0.0000382144 -0.032404" rpy="0 0 0"/>
+      <mass value="0.205"/>
+      <inertia ixx="0.000099893" ixy="-5.96546e-10" ixz="-9.26890e-7" iyy="0.0000999234" iyz="2.88850e-7" izz="0.0000314453"/>
     </inertial>
   </link>
   <link name="front_left_wheel">
     <visual>
-      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <geometry><cylinder radius="0.043" length="0.04"/></geometry>
-      <material name="wheel_mat"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/mecanum_96mm_gobilda.stl"/></geometry>
+      <material name="rubber"/>
     </visual>
     <collision>
-      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <geometry><cylinder radius="0.043" length="0.04"/></geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><cylinder radius="0.048" length="0.092"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <mass value="0.12"/>
-      <inertia ixx="0.00007147" ixy="0" ixz="0" iyy="0.00007147" iyz="0" izz="0.00011094"/>
+      <origin xyz="-0.00000107331 -9.16049e-7 0.026545" rpy="0 0 0"/>
+      <mass value="0.2166"/>
+      <inertia ixx="0.000132216" ixy="5.08424e-11" ixz="-6.78247e-10" iyy="0.000132214" iyz="7.23975e-10" izz="0.000215655"/>
+    </inertial>
+  </link>
+  <link name="front_left_bracket">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/front_left_bracket.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/front_left_bracket.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.09 0.088174 0.067266" rpy="0 0 0"/>
+      <mass value="0.01561"/>
+      <inertia ixx="0.00000578614" ixy="6.71455e-16" ixz="-1.02550e-15" iyy="0.00000593489" iyz="0.00000163541" izz="0.00000495776"/>
+    </inertial>
+  </link>
+  <link name="front_right_motor">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/pololu_37d_30to1_64cpr.stl"/></geometry>
+      <material name="actuator"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/pololu_37d_30to1_64cpr.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.006887 0.0000382144 -0.032404" rpy="0 0 0"/>
+      <mass value="0.205"/>
+      <inertia ixx="0.000099893" ixy="-5.96546e-10" ixz="-9.26890e-7" iyy="0.0000999234" iyz="2.88850e-7" izz="0.0000314453"/>
     </inertial>
   </link>
   <link name="front_right_wheel">
     <visual>
-      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <geometry><cylinder radius="0.043" length="0.04"/></geometry>
-      <material name="wheel_mat"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/mecanum_96mm_gobilda.stl"/></geometry>
+      <material name="rubber"/>
     </visual>
     <collision>
-      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <geometry><cylinder radius="0.043" length="0.04"/></geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><cylinder radius="0.048" length="0.092"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <mass value="0.12"/>
-      <inertia ixx="0.00007147" ixy="0" ixz="0" iyy="0.00007147" iyz="0" izz="0.00011094"/>
+      <origin xyz="-0.00000107331 -9.16049e-7 0.026545" rpy="0 0 0"/>
+      <mass value="0.2166"/>
+      <inertia ixx="0.000132216" ixy="5.08424e-11" ixz="-6.78247e-10" iyy="0.000132214" iyz="7.23975e-10" izz="0.000215655"/>
+    </inertial>
+  </link>
+  <link name="front_right_bracket">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/front_right_bracket.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/front_right_bracket.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.09 -0.088174 0.067266" rpy="0 0 0"/>
+      <mass value="0.01561"/>
+      <inertia ixx="0.00000578614" ixy="6.71454e-16" ixz="1.02550e-15" iyy="0.00000593489" iyz="-0.00000163541" izz="0.00000495776"/>
+    </inertial>
+  </link>
+  <link name="rear_left_motor">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/pololu_37d_30to1_64cpr.stl"/></geometry>
+      <material name="actuator"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/pololu_37d_30to1_64cpr.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.006887 0.0000382144 -0.032404" rpy="0 0 0"/>
+      <mass value="0.205"/>
+      <inertia ixx="0.000099893" ixy="-5.96546e-10" ixz="-9.26890e-7" iyy="0.0000999234" iyz="2.88850e-7" izz="0.0000314453"/>
     </inertial>
   </link>
   <link name="rear_left_wheel">
     <visual>
-      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <geometry><cylinder radius="0.043" length="0.04"/></geometry>
-      <material name="wheel_mat"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/mecanum_96mm_gobilda.stl"/></geometry>
+      <material name="rubber"/>
     </visual>
     <collision>
-      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <geometry><cylinder radius="0.043" length="0.04"/></geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><cylinder radius="0.048" length="0.092"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <mass value="0.12"/>
-      <inertia ixx="0.00007147" ixy="0" ixz="0" iyy="0.00007147" iyz="0" izz="0.00011094"/>
+      <origin xyz="-0.00000107331 -9.16049e-7 0.026545" rpy="0 0 0"/>
+      <mass value="0.2166"/>
+      <inertia ixx="0.000132216" ixy="5.08424e-11" ixz="-6.78247e-10" iyy="0.000132214" iyz="7.23975e-10" izz="0.000215655"/>
+    </inertial>
+  </link>
+  <link name="rear_left_bracket">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/rear_left_bracket.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/rear_left_bracket.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.09 0.088174 0.067266" rpy="0 0 0"/>
+      <mass value="0.01561"/>
+      <inertia ixx="0.00000578614" ixy="6.71454e-16" ixz="-1.02550e-15" iyy="0.00000593489" iyz="0.00000163541" izz="0.00000495776"/>
+    </inertial>
+  </link>
+  <link name="rear_right_motor">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/pololu_37d_30to1_64cpr.stl"/></geometry>
+      <material name="actuator"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/pololu_37d_30to1_64cpr.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.006887 0.0000382144 -0.032404" rpy="0 0 0"/>
+      <mass value="0.205"/>
+      <inertia ixx="0.000099893" ixy="-5.96546e-10" ixz="-9.26890e-7" iyy="0.0000999234" iyz="2.88850e-7" izz="0.0000314453"/>
     </inertial>
   </link>
   <link name="rear_right_wheel">
     <visual>
-      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <geometry><cylinder radius="0.043" length="0.04"/></geometry>
-      <material name="wheel_mat"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/mecanum_96mm_gobilda.stl"/></geometry>
+      <material name="rubber"/>
     </visual>
     <collision>
-      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <geometry><cylinder radius="0.043" length="0.04"/></geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><cylinder radius="0.048" length="0.092"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <mass value="0.12"/>
-      <inertia ixx="0.00007147" ixy="0" ixz="0" iyy="0.00007147" iyz="0" izz="0.00011094"/>
+      <origin xyz="-0.00000107331 -9.16049e-7 0.026545" rpy="0 0 0"/>
+      <mass value="0.2166"/>
+      <inertia ixx="0.000132216" ixy="5.08424e-11" ixz="-6.78247e-10" iyy="0.000132214" iyz="7.23975e-10" izz="0.000215655"/>
     </inertial>
   </link>
-  <link name="front_left_wheel_roller_0">
+  <link name="rear_right_bracket">
     <visual>
-      <origin xyz="0 0 0" rpy="0 1.570796 0.785398"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-      <material name="wheel_mat"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/rear_right_bracket.stl"/></geometry>
+      <material name="printed_dark"/>
     </visual>
     <collision>
-      <origin xyz="0 0 0" rpy="0 1.570796 0.785398"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/rear_right_bracket.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 0" rpy="0 1.570796 0.785398"/>
-      <mass value="0.012"/>
-      <inertia ixx="0.000001108" ixy="0" ixz="0" iyy="0.000001108" iyz="0" izz="8.64000e-7"/>
+      <origin xyz="-0.09 -0.088174 0.067266" rpy="0 0 0"/>
+      <mass value="0.01561"/>
+      <inertia ixx="0.00000578614" ixy="6.71454e-16" ixz="1.02550e-15" iyy="0.00000593489" iyz="-0.00000163541" izz="0.00000495776"/>
     </inertial>
   </link>
-  <link name="front_left_wheel_roller_1">
+  <link name="battery">
     <visual>
-      <origin xyz="0 0 0" rpy="0 2.094395 0.955317"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-      <material name="wheel_mat"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/lipo_3s_2200.stl"/></geometry>
+      <material name="battery"/>
     </visual>
     <collision>
-      <origin xyz="0 0 0" rpy="0 2.094395 0.955317"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/lipo_3s_2200.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 0" rpy="0 2.094395 0.955317"/>
-      <mass value="0.012"/>
-      <inertia ixx="0.000001108" ixy="0" ixz="0" iyy="0.000001108" iyz="0" izz="8.64000e-7"/>
+      <origin xyz="0.053187 0.00000431129 0.011" rpy="0 0 0"/>
+      <mass value="0.1735"/>
+      <inertia ixx="0.0000231075" ixy="4.24769e-8" ixz="-1.30384e-21" iyy="0.000174522" iyz="-1.18221e-22" izz="0.000183705"/>
     </inertial>
   </link>
-  <link name="front_left_wheel_roller_2">
+  <link name="battery_tray">
     <visual>
-      <origin xyz="0 0 0" rpy="0 2.356194 1.570796"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-      <material name="wheel_mat"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/battery_tray.stl"/></geometry>
+      <material name="printed_dark"/>
     </visual>
     <collision>
-      <origin xyz="0 0 0" rpy="0 2.356194 1.570796"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/battery_tray.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 0" rpy="0 2.356194 1.570796"/>
-      <mass value="0.012"/>
-      <inertia ixx="0.000001108" ixy="0" ixz="0" iyy="0.000001108" iyz="0" izz="8.64000e-7"/>
+      <origin xyz="-0.047771 -0.07425 0.088051" rpy="0 0 0"/>
+      <mass value="0.016461"/>
+      <inertia ixx="0.00000350696" ixy="3.69315e-23" ixz="-1.63712e-7" iyy="0.0000170792" iyz="7.54927e-24" izz="0.0000200766"/>
     </inertial>
   </link>
-  <link name="front_left_wheel_roller_3">
+  <link name="computer">
     <visual>
-      <origin xyz="0 0 0" rpy="0 2.094395 2.186276"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-      <material name="wheel_mat"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/rpi5.stl"/></geometry>
+      <material name="electronics"/>
     </visual>
     <collision>
-      <origin xyz="0 0 0" rpy="0 2.094395 2.186276"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/rpi5.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 0" rpy="0 2.094395 2.186276"/>
-      <mass value="0.012"/>
-      <inertia ixx="0.000001108" ixy="0" ixz="0" iyy="0.000001108" iyz="0" izz="8.64000e-7"/>
+      <origin xyz="0.059962 0.029623 0.00588" rpy="0 0 0"/>
+      <mass value="0.046"/>
+      <inertia ixx="0.0000141581" ixy="0.0000013483" ixz="-0.00000312605" iyy="0.0000308409" iyz="-2.80313e-7" izz="0.0000426283"/>
     </inertial>
   </link>
-  <link name="front_left_wheel_roller_4">
+  <link name="computer_tray">
     <visual>
-      <origin xyz="0 0 0" rpy="0 1.570796 2.356194"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-      <material name="wheel_mat"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/computer_tray.stl"/></geometry>
+      <material name="printed_dark"/>
     </visual>
     <collision>
-      <origin xyz="0 0 0" rpy="0 1.570796 2.356194"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/computer_tray.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 0" rpy="0 1.570796 2.356194"/>
-      <mass value="0.012"/>
-      <inertia ixx="0.000001108" ixy="0" ixz="0" iyy="0.000001108" iyz="0" izz="8.64000e-7"/>
+      <origin xyz="0.06765 -0.064379 0.085614" rpy="0 0 0"/>
+      <mass value="0.012576"/>
+      <inertia ixx="0.00000312577" ixy="3.28402e-9" ixz="1.60599e-8" iyy="0.0000074969" iyz="-8.71249e-10" izz="0.0000105935"/>
     </inertial>
   </link>
-  <link name="front_left_wheel_roller_5">
+  <link name="motor_driver_1">
     <visual>
-      <origin xyz="0 0 0" rpy="0 1.047198 2.186276"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-      <material name="wheel_mat"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/cytron_mdd10a.stl"/></geometry>
+      <material name="electronics"/>
     </visual>
     <collision>
-      <origin xyz="0 0 0" rpy="0 1.047198 2.186276"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/cytron_mdd10a.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 0" rpy="0 1.047198 2.186276"/>
-      <mass value="0.012"/>
-      <inertia ixx="0.000001108" ixy="0" ixz="0" iyy="0.000001108" iyz="0" izz="8.64000e-7"/>
+      <origin xyz="0.0425 0.035089 0.003444" rpy="0 0 0"/>
+      <mass value="0.04"/>
+      <inertia ixx="0.0000126478" ixy="-2.36142e-22" ixz="1.65267e-22" iyy="0.0000185659" iyz="-6.77095e-7" izz="0.0000304495"/>
     </inertial>
   </link>
-  <link name="front_left_wheel_roller_6">
+  <link name="motor_driver_1_tray">
     <visual>
-      <origin xyz="0 0 0" rpy="0 0.785398 1.570796"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-      <material name="wheel_mat"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/motor_driver_1_tray.stl"/></geometry>
+      <material name="printed_dark"/>
     </visual>
     <collision>
-      <origin xyz="0 0 0" rpy="0 0.785398 1.570796"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/motor_driver_1_tray.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 0" rpy="0 0.785398 1.570796"/>
-      <mass value="0.012"/>
-      <inertia ixx="0.000001108" ixy="0" ixz="0" iyy="0.000001108" iyz="0" izz="8.64000e-7"/>
+      <origin xyz="-0.03449 0.00721 0.085609" rpy="0 0 0"/>
+      <mass value="0.013209"/>
+      <inertia ixx="0.00000390832" ixy="1.86551e-16" ixz="-7.97436e-15" iyy="0.00000756256" iyz="-3.72291e-15" izz="0.0000114408"/>
     </inertial>
   </link>
-  <link name="front_left_wheel_roller_7">
+  <link name="motor_driver_2">
     <visual>
-      <origin xyz="0 0 0" rpy="0 1.047198 0.955317"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-      <material name="wheel_mat"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/cytron_mdd10a.stl"/></geometry>
+      <material name="electronics"/>
     </visual>
     <collision>
-      <origin xyz="0 0 0" rpy="0 1.047198 0.955317"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/cytron_mdd10a.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 0" rpy="0 1.047198 0.955317"/>
-      <mass value="0.012"/>
-      <inertia ixx="0.000001108" ixy="0" ixz="0" iyy="0.000001108" iyz="0" izz="8.64000e-7"/>
+      <origin xyz="0.0425 0.035089 0.003444" rpy="0 0 0"/>
+      <mass value="0.04"/>
+      <inertia ixx="0.0000126478" ixy="-2.36142e-22" ixz="1.65267e-22" iyy="0.0000185659" iyz="-6.77095e-7" izz="0.0000304495"/>
     </inertial>
   </link>
-  <link name="front_right_wheel_roller_0">
+  <link name="motor_driver_2_tray">
     <visual>
-      <origin xyz="0 0 0" rpy="0 1.570796 -0.785398"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-      <material name="wheel_mat"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/motor_driver_2_tray.stl"/></geometry>
+      <material name="printed_dark"/>
     </visual>
     <collision>
-      <origin xyz="0 0 0" rpy="0 1.570796 -0.785398"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/motor_driver_2_tray.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 0" rpy="0 1.570796 -0.785398"/>
-      <mass value="0.012"/>
-      <inertia ixx="0.000001108" ixy="0" ixz="0" iyy="0.000001108" iyz="0" izz="8.64000e-7"/>
+      <origin xyz="0.05852 0.00721 0.085609" rpy="0 0 0"/>
+      <mass value="0.013209"/>
+      <inertia ixx="0.00000390832" ixy="1.35705e-15" ixz="-1.93476e-14" iyy="0.00000756256" iyz="-3.79680e-15" izz="0.0000114408"/>
     </inertial>
   </link>
-  <link name="front_right_wheel_roller_1">
+  <link name="imu">
     <visual>
-      <origin xyz="0 0 0" rpy="0 2.094395 -0.955317"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-      <material name="wheel_mat"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/bno085_breakout.stl"/></geometry>
+      <material name="electronics"/>
     </visual>
     <collision>
-      <origin xyz="0 0 0" rpy="0 2.094395 -0.955317"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/bno085_breakout.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 0" rpy="0 2.094395 -0.955317"/>
-      <mass value="0.012"/>
-      <inertia ixx="0.000001108" ixy="0" ixz="0" iyy="0.000001108" iyz="0" izz="8.64000e-7"/>
+      <origin xyz="0.0128 0.01114 0.001089" rpy="0 0 0"/>
+      <mass value="0.0025"/>
+      <inertia ixx="1.00000e-7" ixy="-7.18056e-24" ixz="1.50030e-24" iyy="1.47883e-7" iyz="4.24673e-10" izz="2.39851e-7"/>
     </inertial>
   </link>
-  <link name="front_right_wheel_roller_2">
+  <link name="imu_tray">
     <visual>
-      <origin xyz="0 0 0" rpy="0 2.356194 -1.570796"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-      <material name="wheel_mat"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/imu_tray.stl"/></geometry>
+      <material name="printed_dark"/>
     </visual>
     <collision>
-      <origin xyz="0 0 0" rpy="0 2.356194 -1.570796"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/imu_tray.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 0" rpy="0 2.356194 -1.570796"/>
-      <mass value="0.012"/>
-      <inertia ixx="0.000001108" ixy="0" ixz="0" iyy="0.000001108" iyz="0" izz="8.64000e-7"/>
+      <origin xyz="0.12183 -0.01244 0.086501" rpy="0 0 0"/>
+      <mass value="0.002"/>
+      <inertia ixx="1.00000e-7" ixy="2.15276e-16" ixz="1.28683e-15" iyy="1.22700e-7" iyz="6.28976e-16" izz="2.04195e-7"/>
     </inertial>
   </link>
-  <link name="front_right_wheel_roller_3">
+  <link name="regulator_5v">
     <visual>
-      <origin xyz="0 0 0" rpy="0 2.094395 -2.186276"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-      <material name="wheel_mat"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/buck_5v_5a.stl"/></geometry>
+      <material name="electronics"/>
     </visual>
     <collision>
-      <origin xyz="0 0 0" rpy="0 2.094395 -2.186276"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/buck_5v_5a.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 0" rpy="0 2.094395 -2.186276"/>
-      <mass value="0.012"/>
-      <inertia ixx="0.000001108" ixy="0" ixz="0" iyy="0.000001108" iyz="0" izz="8.64000e-7"/>
+      <origin xyz="0.012564 0.012657 0.003445" rpy="0 0 0"/>
+      <mass value="0.007"/>
+      <inertia ixx="2.56895e-7" ixy="8.14755e-9" ixz="1.85795e-9" iyy="3.06643e-7" iyz="1.94440e-9" izz="4.54796e-7"/>
     </inertial>
   </link>
-  <link name="front_right_wheel_roller_4">
+  <link name="regulator_5v_tray">
     <visual>
-      <origin xyz="0 0 0" rpy="0 1.570796 -2.356194"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-      <material name="wheel_mat"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/regulator_5v_tray.stl"/></geometry>
+      <material name="printed_dark"/>
     </visual>
     <collision>
-      <origin xyz="0 0 0" rpy="0 1.570796 -2.356194"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/regulator_5v_tray.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 0" rpy="0 1.570796 -2.356194"/>
-      <mass value="0.012"/>
-      <inertia ixx="0.000001108" ixy="0" ixz="0" iyy="0.000001108" iyz="0" izz="8.64000e-7"/>
+      <origin xyz="0.122435 0.018915 0.086228" rpy="0 0 0"/>
+      <mass value="0.002"/>
+      <inertia ixx="1.10095e-7" ixy="-1.53380e-8" ixz="-3.90755e-9" iyy="1.07956e-7" iyz="3.90754e-9" izz="2.06528e-7"/>
     </inertial>
   </link>
-  <link name="front_right_wheel_roller_5">
+  <link name="lidar_mast">
     <visual>
-      <origin xyz="0 0 0" rpy="0 1.047198 -2.186276"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-      <material name="wheel_mat"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/lidar_mast.stl"/></geometry>
+      <material name="printed_dark"/>
     </visual>
     <collision>
-      <origin xyz="0 0 0" rpy="0 1.047198 -2.186276"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/lidar_mast.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 0" rpy="0 1.047198 -2.186276"/>
-      <mass value="0.012"/>
-      <inertia ixx="0.000001108" ixy="0" ixz="0" iyy="0.000001108" iyz="0" izz="8.64000e-7"/>
+      <origin xyz="-0.114 0.000886953 0.08713" rpy="0 0 0"/>
+      <mass value="0.019058"/>
+      <inertia ixx="0.00000557838" ixy="5.17670e-16" ixz="5.51029e-18" iyy="0.00000601888" iyz="-1.71928e-9" izz="0.0000114901"/>
     </inertial>
   </link>
-  <link name="front_right_wheel_roller_6">
+  <link name="lidar">
     <visual>
-      <origin xyz="0 0 0" rpy="0 0.785398 -1.570796"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-      <material name="wheel_mat"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/rplidar_c1.stl"/></geometry>
+      <material name="electronics"/>
     </visual>
     <collision>
-      <origin xyz="0 0 0" rpy="0 0.785398 -1.570796"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://mecanum_robot/meshes/rplidar_c1.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 0" rpy="0 0.785398 -1.570796"/>
-      <mass value="0.012"/>
-      <inertia ixx="0.000001108" ixy="0" ixz="0" iyy="0.000001108" iyz="0" izz="8.64000e-7"/>
+      <origin xyz="-5.14415e-18 -0.0000588468 0.017179" rpy="0 0 0"/>
+      <mass value="0.11"/>
+      <inertia ixx="0.0000376341" ixy="-8.49519e-22" ixz="-2.79514e-21" iyy="0.0000374417" iyz="-7.23608e-8" izz="0.0000475283"/>
     </inertial>
   </link>
-  <link name="front_right_wheel_roller_7">
-    <visual>
-      <origin xyz="0 0 0" rpy="0 1.047198 -0.955317"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-      <material name="wheel_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="0 1.047198 -0.955317"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0 0 0" rpy="0 1.047198 -0.955317"/>
-      <mass value="0.012"/>
-      <inertia ixx="0.000001108" ixy="0" ixz="0" iyy="0.000001108" iyz="0" izz="8.64000e-7"/>
-    </inertial>
-  </link>
-  <link name="rear_left_wheel_roller_0">
-    <visual>
-      <origin xyz="0 0 0" rpy="0 1.570796 -0.785398"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-      <material name="wheel_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="0 1.570796 -0.785398"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0 0 0" rpy="0 1.570796 -0.785398"/>
-      <mass value="0.012"/>
-      <inertia ixx="0.000001108" ixy="0" ixz="0" iyy="0.000001108" iyz="0" izz="8.64000e-7"/>
-    </inertial>
-  </link>
-  <link name="rear_left_wheel_roller_1">
-    <visual>
-      <origin xyz="0 0 0" rpy="0 2.094395 -0.955317"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-      <material name="wheel_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="0 2.094395 -0.955317"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0 0 0" rpy="0 2.094395 -0.955317"/>
-      <mass value="0.012"/>
-      <inertia ixx="0.000001108" ixy="0" ixz="0" iyy="0.000001108" iyz="0" izz="8.64000e-7"/>
-    </inertial>
-  </link>
-  <link name="rear_left_wheel_roller_2">
-    <visual>
-      <origin xyz="0 0 0" rpy="0 2.356194 -1.570796"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-      <material name="wheel_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="0 2.356194 -1.570796"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0 0 0" rpy="0 2.356194 -1.570796"/>
-      <mass value="0.012"/>
-      <inertia ixx="0.000001108" ixy="0" ixz="0" iyy="0.000001108" iyz="0" izz="8.64000e-7"/>
-    </inertial>
-  </link>
-  <link name="rear_left_wheel_roller_3">
-    <visual>
-      <origin xyz="0 0 0" rpy="0 2.094395 -2.186276"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-      <material name="wheel_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="0 2.094395 -2.186276"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0 0 0" rpy="0 2.094395 -2.186276"/>
-      <mass value="0.012"/>
-      <inertia ixx="0.000001108" ixy="0" ixz="0" iyy="0.000001108" iyz="0" izz="8.64000e-7"/>
-    </inertial>
-  </link>
-  <link name="rear_left_wheel_roller_4">
-    <visual>
-      <origin xyz="0 0 0" rpy="0 1.570796 -2.356194"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-      <material name="wheel_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="0 1.570796 -2.356194"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0 0 0" rpy="0 1.570796 -2.356194"/>
-      <mass value="0.012"/>
-      <inertia ixx="0.000001108" ixy="0" ixz="0" iyy="0.000001108" iyz="0" izz="8.64000e-7"/>
-    </inertial>
-  </link>
-  <link name="rear_left_wheel_roller_5">
-    <visual>
-      <origin xyz="0 0 0" rpy="0 1.047198 -2.186276"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-      <material name="wheel_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="0 1.047198 -2.186276"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0 0 0" rpy="0 1.047198 -2.186276"/>
-      <mass value="0.012"/>
-      <inertia ixx="0.000001108" ixy="0" ixz="0" iyy="0.000001108" iyz="0" izz="8.64000e-7"/>
-    </inertial>
-  </link>
-  <link name="rear_left_wheel_roller_6">
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0.785398 -1.570796"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-      <material name="wheel_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0.785398 -1.570796"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0 0 0" rpy="0 0.785398 -1.570796"/>
-      <mass value="0.012"/>
-      <inertia ixx="0.000001108" ixy="0" ixz="0" iyy="0.000001108" iyz="0" izz="8.64000e-7"/>
-    </inertial>
-  </link>
-  <link name="rear_left_wheel_roller_7">
-    <visual>
-      <origin xyz="0 0 0" rpy="0 1.047198 -0.955317"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-      <material name="wheel_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="0 1.047198 -0.955317"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0 0 0" rpy="0 1.047198 -0.955317"/>
-      <mass value="0.012"/>
-      <inertia ixx="0.000001108" ixy="0" ixz="0" iyy="0.000001108" iyz="0" izz="8.64000e-7"/>
-    </inertial>
-  </link>
-  <link name="rear_right_wheel_roller_0">
-    <visual>
-      <origin xyz="0 0 0" rpy="0 1.570796 0.785398"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-      <material name="wheel_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="0 1.570796 0.785398"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0 0 0" rpy="0 1.570796 0.785398"/>
-      <mass value="0.012"/>
-      <inertia ixx="0.000001108" ixy="0" ixz="0" iyy="0.000001108" iyz="0" izz="8.64000e-7"/>
-    </inertial>
-  </link>
-  <link name="rear_right_wheel_roller_1">
-    <visual>
-      <origin xyz="0 0 0" rpy="0 2.094395 0.955317"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-      <material name="wheel_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="0 2.094395 0.955317"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0 0 0" rpy="0 2.094395 0.955317"/>
-      <mass value="0.012"/>
-      <inertia ixx="0.000001108" ixy="0" ixz="0" iyy="0.000001108" iyz="0" izz="8.64000e-7"/>
-    </inertial>
-  </link>
-  <link name="rear_right_wheel_roller_2">
-    <visual>
-      <origin xyz="0 0 0" rpy="0 2.356194 1.570796"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-      <material name="wheel_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="0 2.356194 1.570796"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0 0 0" rpy="0 2.356194 1.570796"/>
-      <mass value="0.012"/>
-      <inertia ixx="0.000001108" ixy="0" ixz="0" iyy="0.000001108" iyz="0" izz="8.64000e-7"/>
-    </inertial>
-  </link>
-  <link name="rear_right_wheel_roller_3">
-    <visual>
-      <origin xyz="0 0 0" rpy="0 2.094395 2.186276"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-      <material name="wheel_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="0 2.094395 2.186276"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0 0 0" rpy="0 2.094395 2.186276"/>
-      <mass value="0.012"/>
-      <inertia ixx="0.000001108" ixy="0" ixz="0" iyy="0.000001108" iyz="0" izz="8.64000e-7"/>
-    </inertial>
-  </link>
-  <link name="rear_right_wheel_roller_4">
-    <visual>
-      <origin xyz="0 0 0" rpy="0 1.570796 2.356194"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-      <material name="wheel_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="0 1.570796 2.356194"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0 0 0" rpy="0 1.570796 2.356194"/>
-      <mass value="0.012"/>
-      <inertia ixx="0.000001108" ixy="0" ixz="0" iyy="0.000001108" iyz="0" izz="8.64000e-7"/>
-    </inertial>
-  </link>
-  <link name="rear_right_wheel_roller_5">
-    <visual>
-      <origin xyz="0 0 0" rpy="0 1.047198 2.186276"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-      <material name="wheel_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="0 1.047198 2.186276"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0 0 0" rpy="0 1.047198 2.186276"/>
-      <mass value="0.012"/>
-      <inertia ixx="0.000001108" ixy="0" ixz="0" iyy="0.000001108" iyz="0" izz="8.64000e-7"/>
-    </inertial>
-  </link>
-  <link name="rear_right_wheel_roller_6">
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0.785398 1.570796"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-      <material name="wheel_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0.785398 1.570796"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0 0 0" rpy="0 0.785398 1.570796"/>
-      <mass value="0.012"/>
-      <inertia ixx="0.000001108" ixy="0" ixz="0" iyy="0.000001108" iyz="0" izz="8.64000e-7"/>
-    </inertial>
-  </link>
-  <link name="rear_right_wheel_roller_7">
-    <visual>
-      <origin xyz="0 0 0" rpy="0 1.047198 0.955317"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-      <material name="wheel_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="0 1.047198 0.955317"/>
-      <geometry><cylinder radius="0.012" length="0.026"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0 0 0" rpy="0 1.047198 0.955317"/>
-      <mass value="0.012"/>
-      <inertia ixx="0.000001108" ixy="0" ixz="0" iyy="0.000001108" iyz="0" izz="8.64000e-7"/>
-    </inertial>
-  </link>
-  <joint name="base_link_service_lid_mount" type="fixed">
+  <joint name="front_left_motor_mount" type="fixed">
     <parent link="base_link"/>
-    <child link="base_link_service_lid"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <dynamics damping="0.1" friction="0"/>
-  </joint>
-  <joint name="base_link_rear_panel_mount" type="fixed">
-    <parent link="base_link"/>
-    <child link="base_link_rear_panel"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <dynamics damping="0.1" friction="0"/>
-  </joint>
-  <joint name="base_link_right_panel_mount" type="fixed">
-    <parent link="base_link"/>
-    <child link="base_link_right_panel"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <dynamics damping="0.1" friction="0"/>
-  </joint>
-  <joint name="base_link_front_panel_mount" type="fixed">
-    <parent link="base_link"/>
-    <child link="base_link_front_panel"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <dynamics damping="0.1" friction="0"/>
-  </joint>
-  <joint name="base_link_left_panel_mount" type="fixed">
-    <parent link="base_link"/>
-    <child link="base_link_left_panel"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <dynamics damping="0.1" friction="0"/>
-  </joint>
-  <joint name="base_link_standoff_rr_mount" type="fixed">
-    <parent link="base_link"/>
-    <child link="base_link_standoff_rr"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <dynamics damping="0.1" friction="0"/>
-  </joint>
-  <joint name="base_link_standoff_rl_mount" type="fixed">
-    <parent link="base_link"/>
-    <child link="base_link_standoff_rl"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <dynamics damping="0.1" friction="0"/>
-  </joint>
-  <joint name="base_link_standoff_fr_mount" type="fixed">
-    <parent link="base_link"/>
-    <child link="base_link_standoff_fr"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <dynamics damping="0.1" friction="0"/>
-  </joint>
-  <joint name="base_link_standoff_fl_mount" type="fixed">
-    <parent link="base_link"/>
-    <child link="base_link_standoff_fl"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <dynamics damping="0.1" friction="0"/>
+    <child link="front_left_motor"/>
+    <origin xyz="0.09 0.095 0.048" rpy="0 1.570796 1.570796"/>
   </joint>
   <joint name="front_left_wheel_joint" type="continuous">
     <parent link="base_link"/>
     <child link="front_left_wheel"/>
-    <origin xyz="0.14 0.17 0.06" rpy="0 0 0"/>
-    <axis xyz="0 1 0"/>
-    <limit effort="2.5" velocity="12"/>
-    <dynamics damping="0.1" friction="0"/>
+    <origin xyz="0.09 0.102 0.048" rpy="-1.570796 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="1.373" velocity="34.558"/>
+    <dynamics damping="0.0079" friction="0.0275"/>
+  </joint>
+  <joint name="front_left_bracket_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="front_left_bracket"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="front_right_motor_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="front_right_motor"/>
+    <origin xyz="0.09 -0.095 0.048" rpy="0 1.570796 -1.570796"/>
   </joint>
   <joint name="front_right_wheel_joint" type="continuous">
     <parent link="base_link"/>
     <child link="front_right_wheel"/>
-    <origin xyz="0.14 -0.17 0.06" rpy="0 0 0"/>
-    <axis xyz="0 1 0"/>
-    <limit effort="2.5" velocity="12"/>
-    <dynamics damping="0.1" friction="0"/>
+    <origin xyz="0.09 -0.102 0.048" rpy="1.570796 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="1.373" velocity="34.558"/>
+    <dynamics damping="0.0079" friction="0.0275"/>
+  </joint>
+  <joint name="front_right_bracket_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="front_right_bracket"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="rear_left_motor_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="rear_left_motor"/>
+    <origin xyz="-0.09 0.095 0.048" rpy="0 1.570796 1.570796"/>
   </joint>
   <joint name="rear_left_wheel_joint" type="continuous">
     <parent link="base_link"/>
     <child link="rear_left_wheel"/>
-    <origin xyz="-0.14 0.17 0.06" rpy="0 0 0"/>
-    <axis xyz="0 1 0"/>
-    <limit effort="2.5" velocity="12"/>
-    <dynamics damping="0.1" friction="0"/>
+    <origin xyz="-0.09 0.102 0.048" rpy="-1.570796 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="1.373" velocity="34.558"/>
+    <dynamics damping="0.0079" friction="0.0275"/>
+  </joint>
+  <joint name="rear_left_bracket_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="rear_left_bracket"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="rear_right_motor_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="rear_right_motor"/>
+    <origin xyz="-0.09 -0.095 0.048" rpy="0 1.570796 -1.570796"/>
   </joint>
   <joint name="rear_right_wheel_joint" type="continuous">
     <parent link="base_link"/>
     <child link="rear_right_wheel"/>
-    <origin xyz="-0.14 -0.17 0.06" rpy="0 0 0"/>
-    <axis xyz="0 1 0"/>
-    <limit effort="2.5" velocity="12"/>
-    <dynamics damping="0.1" friction="0"/>
+    <origin xyz="-0.09 -0.102 0.048" rpy="1.570796 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="1.373" velocity="34.558"/>
+    <dynamics damping="0.0079" friction="0.0275"/>
   </joint>
-  <joint name="front_left_wheel_roller_0_bearing" type="continuous" passive="true">
-    <parent link="front_left_wheel"/>
-    <child link="front_left_wheel_roller_0"/>
-    <origin xyz="0 0 0.048" rpy="0 0 0"/>
-    <axis xyz="0.707107 0.707107 0"/>
-    <limit effort="0.01" velocity="100"/>
-    <dynamics damping="0.00001" friction="0"/>
+  <joint name="rear_right_bracket_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="rear_right_bracket"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
-  <joint name="front_left_wheel_roller_1_bearing" type="continuous" passive="true">
-    <parent link="front_left_wheel"/>
-    <child link="front_left_wheel_roller_1"/>
-    <origin xyz="0.033941 0 0.033941" rpy="0 0 0"/>
-    <axis xyz="0.5 0.707107 -0.5"/>
-    <limit effort="0.01" velocity="100"/>
-    <dynamics damping="0.00001" friction="0"/>
+  <joint name="battery_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="battery"/>
+    <origin xyz="-0.104 -0.07425 0.087" rpy="0 0 0"/>
   </joint>
-  <joint name="front_left_wheel_roller_2_bearing" type="continuous" passive="true">
-    <parent link="front_left_wheel"/>
-    <child link="front_left_wheel_roller_2"/>
-    <origin xyz="0.048 0 2.93915e-18" rpy="0 0 0"/>
-    <axis xyz="4.32978e-17 0.707107 -0.707107"/>
-    <limit effort="0.01" velocity="100"/>
-    <dynamics damping="0.00001" friction="0"/>
+  <joint name="battery_tray_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="battery_tray"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
-  <joint name="front_left_wheel_roller_3_bearing" type="continuous" passive="true">
-    <parent link="front_left_wheel"/>
-    <child link="front_left_wheel_roller_3"/>
-    <origin xyz="0.033941 0 -0.033941" rpy="0 0 0"/>
-    <axis xyz="-0.5 0.707107 -0.5"/>
-    <limit effort="0.01" velocity="100"/>
-    <dynamics damping="0.00001" friction="0"/>
+  <joint name="computer_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="computer"/>
+    <origin xyz="0.02401 -0.0918 0.091" rpy="0 0 0"/>
   </joint>
-  <joint name="front_left_wheel_roller_4_bearing" type="continuous" passive="true">
-    <parent link="front_left_wheel"/>
-    <child link="front_left_wheel_roller_4"/>
-    <origin xyz="5.87830e-18 0 -0.048" rpy="0 0 0"/>
-    <axis xyz="-0.707107 0.707107 -8.65956e-17"/>
-    <limit effort="0.01" velocity="100"/>
-    <dynamics damping="0.00001" friction="0"/>
+  <joint name="computer_tray_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="computer_tray"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
-  <joint name="front_left_wheel_roller_5_bearing" type="continuous" passive="true">
-    <parent link="front_left_wheel"/>
-    <child link="front_left_wheel_roller_5"/>
-    <origin xyz="-0.033941 0 -0.033941" rpy="0 0 0"/>
-    <axis xyz="-0.5 0.707107 0.5"/>
-    <limit effort="0.01" velocity="100"/>
-    <dynamics damping="0.00001" friction="0"/>
+  <joint name="motor_driver_1_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="motor_driver_1"/>
+    <origin xyz="-0.07699 -0.02379 0.091" rpy="0 0 0"/>
   </joint>
-  <joint name="front_left_wheel_roller_6_bearing" type="continuous" passive="true">
-    <parent link="front_left_wheel"/>
-    <child link="front_left_wheel_roller_6"/>
-    <origin xyz="-0.048 0 -8.81746e-18" rpy="0 0 0"/>
-    <axis xyz="-1.29893e-16 0.707107 0.707107"/>
-    <limit effort="0.01" velocity="100"/>
-    <dynamics damping="0.00001" friction="0"/>
+  <joint name="motor_driver_1_tray_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="motor_driver_1_tray"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
-  <joint name="front_left_wheel_roller_7_bearing" type="continuous" passive="true">
-    <parent link="front_left_wheel"/>
-    <child link="front_left_wheel_roller_7"/>
-    <origin xyz="-0.033941 0 0.033941" rpy="0 0 0"/>
-    <axis xyz="0.5 0.707107 0.5"/>
-    <limit effort="0.01" velocity="100"/>
-    <dynamics damping="0.00001" friction="0"/>
+  <joint name="motor_driver_2_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="motor_driver_2"/>
+    <origin xyz="0.01602 -0.02379 0.091" rpy="0 0 0"/>
   </joint>
-  <joint name="front_right_wheel_roller_0_bearing" type="continuous" passive="true">
-    <parent link="front_right_wheel"/>
-    <child link="front_right_wheel_roller_0"/>
-    <origin xyz="0 0 0.048" rpy="0 0 0"/>
-    <axis xyz="0.707107 -0.707107 0"/>
-    <limit effort="0.01" velocity="100"/>
-    <dynamics damping="0.00001" friction="0"/>
+  <joint name="motor_driver_2_tray_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="motor_driver_2_tray"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
-  <joint name="front_right_wheel_roller_1_bearing" type="continuous" passive="true">
-    <parent link="front_right_wheel"/>
-    <child link="front_right_wheel_roller_1"/>
-    <origin xyz="0.033941 0 0.033941" rpy="0 0 0"/>
-    <axis xyz="0.5 -0.707107 -0.5"/>
-    <limit effort="0.01" velocity="100"/>
-    <dynamics damping="0.00001" friction="0"/>
+  <joint name="imu_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="imu"/>
+    <origin xyz="0.10903 -0.02379 0.091" rpy="0 0 0"/>
   </joint>
-  <joint name="front_right_wheel_roller_2_bearing" type="continuous" passive="true">
-    <parent link="front_right_wheel"/>
-    <child link="front_right_wheel_roller_2"/>
-    <origin xyz="0.048 0 2.93915e-18" rpy="0 0 0"/>
-    <axis xyz="4.32978e-17 -0.707107 -0.707107"/>
-    <limit effort="0.01" velocity="100"/>
-    <dynamics damping="0.00001" friction="0"/>
+  <joint name="imu_tray_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="imu_tray"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
-  <joint name="front_right_wheel_roller_3_bearing" type="continuous" passive="true">
-    <parent link="front_right_wheel"/>
-    <child link="front_right_wheel_roller_3"/>
-    <origin xyz="0.033941 0 -0.033941" rpy="0 0 0"/>
-    <axis xyz="-0.5 -0.707107 -0.5"/>
-    <limit effort="0.01" velocity="100"/>
-    <dynamics damping="0.00001" friction="0"/>
+  <joint name="regulator_5v_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="regulator_5v"/>
+    <origin xyz="0.10903 0.00692 0.091" rpy="0 0 0"/>
   </joint>
-  <joint name="front_right_wheel_roller_4_bearing" type="continuous" passive="true">
-    <parent link="front_right_wheel"/>
-    <child link="front_right_wheel_roller_4"/>
-    <origin xyz="5.87830e-18 0 -0.048" rpy="0 0 0"/>
-    <axis xyz="-0.707107 -0.707107 -8.65956e-17"/>
-    <limit effort="0.01" velocity="100"/>
-    <dynamics damping="0.00001" friction="0"/>
+  <joint name="regulator_5v_tray_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="regulator_5v_tray"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
-  <joint name="front_right_wheel_roller_5_bearing" type="continuous" passive="true">
-    <parent link="front_right_wheel"/>
-    <child link="front_right_wheel_roller_5"/>
-    <origin xyz="-0.033941 0 -0.033941" rpy="0 0 0"/>
-    <axis xyz="-0.5 -0.707107 0.5"/>
-    <limit effort="0.01" velocity="100"/>
-    <dynamics damping="0.00001" friction="0"/>
+  <joint name="lidar_mast_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="lidar_mast"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
-  <joint name="front_right_wheel_roller_6_bearing" type="continuous" passive="true">
-    <parent link="front_right_wheel"/>
-    <child link="front_right_wheel_roller_6"/>
-    <origin xyz="-0.048 0 -8.81746e-18" rpy="0 0 0"/>
-    <axis xyz="-1.29893e-16 -0.707107 0.707107"/>
-    <limit effort="0.01" velocity="100"/>
-    <dynamics damping="0.00001" friction="0"/>
-  </joint>
-  <joint name="front_right_wheel_roller_7_bearing" type="continuous" passive="true">
-    <parent link="front_right_wheel"/>
-    <child link="front_right_wheel_roller_7"/>
-    <origin xyz="-0.033941 0 0.033941" rpy="0 0 0"/>
-    <axis xyz="0.5 -0.707107 0.5"/>
-    <limit effort="0.01" velocity="100"/>
-    <dynamics damping="0.00001" friction="0"/>
-  </joint>
-  <joint name="rear_left_wheel_roller_0_bearing" type="continuous" passive="true">
-    <parent link="rear_left_wheel"/>
-    <child link="rear_left_wheel_roller_0"/>
-    <origin xyz="0 0 0.048" rpy="0 0 0"/>
-    <axis xyz="0.707107 -0.707107 0"/>
-    <limit effort="0.01" velocity="100"/>
-    <dynamics damping="0.00001" friction="0"/>
-  </joint>
-  <joint name="rear_left_wheel_roller_1_bearing" type="continuous" passive="true">
-    <parent link="rear_left_wheel"/>
-    <child link="rear_left_wheel_roller_1"/>
-    <origin xyz="0.033941 0 0.033941" rpy="0 0 0"/>
-    <axis xyz="0.5 -0.707107 -0.5"/>
-    <limit effort="0.01" velocity="100"/>
-    <dynamics damping="0.00001" friction="0"/>
-  </joint>
-  <joint name="rear_left_wheel_roller_2_bearing" type="continuous" passive="true">
-    <parent link="rear_left_wheel"/>
-    <child link="rear_left_wheel_roller_2"/>
-    <origin xyz="0.048 0 2.93915e-18" rpy="0 0 0"/>
-    <axis xyz="4.32978e-17 -0.707107 -0.707107"/>
-    <limit effort="0.01" velocity="100"/>
-    <dynamics damping="0.00001" friction="0"/>
-  </joint>
-  <joint name="rear_left_wheel_roller_3_bearing" type="continuous" passive="true">
-    <parent link="rear_left_wheel"/>
-    <child link="rear_left_wheel_roller_3"/>
-    <origin xyz="0.033941 0 -0.033941" rpy="0 0 0"/>
-    <axis xyz="-0.5 -0.707107 -0.5"/>
-    <limit effort="0.01" velocity="100"/>
-    <dynamics damping="0.00001" friction="0"/>
-  </joint>
-  <joint name="rear_left_wheel_roller_4_bearing" type="continuous" passive="true">
-    <parent link="rear_left_wheel"/>
-    <child link="rear_left_wheel_roller_4"/>
-    <origin xyz="5.87830e-18 0 -0.048" rpy="0 0 0"/>
-    <axis xyz="-0.707107 -0.707107 -8.65956e-17"/>
-    <limit effort="0.01" velocity="100"/>
-    <dynamics damping="0.00001" friction="0"/>
-  </joint>
-  <joint name="rear_left_wheel_roller_5_bearing" type="continuous" passive="true">
-    <parent link="rear_left_wheel"/>
-    <child link="rear_left_wheel_roller_5"/>
-    <origin xyz="-0.033941 0 -0.033941" rpy="0 0 0"/>
-    <axis xyz="-0.5 -0.707107 0.5"/>
-    <limit effort="0.01" velocity="100"/>
-    <dynamics damping="0.00001" friction="0"/>
-  </joint>
-  <joint name="rear_left_wheel_roller_6_bearing" type="continuous" passive="true">
-    <parent link="rear_left_wheel"/>
-    <child link="rear_left_wheel_roller_6"/>
-    <origin xyz="-0.048 0 -8.81746e-18" rpy="0 0 0"/>
-    <axis xyz="-1.29893e-16 -0.707107 0.707107"/>
-    <limit effort="0.01" velocity="100"/>
-    <dynamics damping="0.00001" friction="0"/>
-  </joint>
-  <joint name="rear_left_wheel_roller_7_bearing" type="continuous" passive="true">
-    <parent link="rear_left_wheel"/>
-    <child link="rear_left_wheel_roller_7"/>
-    <origin xyz="-0.033941 0 0.033941" rpy="0 0 0"/>
-    <axis xyz="0.5 -0.707107 0.5"/>
-    <limit effort="0.01" velocity="100"/>
-    <dynamics damping="0.00001" friction="0"/>
-  </joint>
-  <joint name="rear_right_wheel_roller_0_bearing" type="continuous" passive="true">
-    <parent link="rear_right_wheel"/>
-    <child link="rear_right_wheel_roller_0"/>
-    <origin xyz="0 0 0.048" rpy="0 0 0"/>
-    <axis xyz="0.707107 0.707107 0"/>
-    <limit effort="0.01" velocity="100"/>
-    <dynamics damping="0.00001" friction="0"/>
-  </joint>
-  <joint name="rear_right_wheel_roller_1_bearing" type="continuous" passive="true">
-    <parent link="rear_right_wheel"/>
-    <child link="rear_right_wheel_roller_1"/>
-    <origin xyz="0.033941 0 0.033941" rpy="0 0 0"/>
-    <axis xyz="0.5 0.707107 -0.5"/>
-    <limit effort="0.01" velocity="100"/>
-    <dynamics damping="0.00001" friction="0"/>
-  </joint>
-  <joint name="rear_right_wheel_roller_2_bearing" type="continuous" passive="true">
-    <parent link="rear_right_wheel"/>
-    <child link="rear_right_wheel_roller_2"/>
-    <origin xyz="0.048 0 2.93915e-18" rpy="0 0 0"/>
-    <axis xyz="4.32978e-17 0.707107 -0.707107"/>
-    <limit effort="0.01" velocity="100"/>
-    <dynamics damping="0.00001" friction="0"/>
-  </joint>
-  <joint name="rear_right_wheel_roller_3_bearing" type="continuous" passive="true">
-    <parent link="rear_right_wheel"/>
-    <child link="rear_right_wheel_roller_3"/>
-    <origin xyz="0.033941 0 -0.033941" rpy="0 0 0"/>
-    <axis xyz="-0.5 0.707107 -0.5"/>
-    <limit effort="0.01" velocity="100"/>
-    <dynamics damping="0.00001" friction="0"/>
-  </joint>
-  <joint name="rear_right_wheel_roller_4_bearing" type="continuous" passive="true">
-    <parent link="rear_right_wheel"/>
-    <child link="rear_right_wheel_roller_4"/>
-    <origin xyz="5.87830e-18 0 -0.048" rpy="0 0 0"/>
-    <axis xyz="-0.707107 0.707107 -8.65956e-17"/>
-    <limit effort="0.01" velocity="100"/>
-    <dynamics damping="0.00001" friction="0"/>
-  </joint>
-  <joint name="rear_right_wheel_roller_5_bearing" type="continuous" passive="true">
-    <parent link="rear_right_wheel"/>
-    <child link="rear_right_wheel_roller_5"/>
-    <origin xyz="-0.033941 0 -0.033941" rpy="0 0 0"/>
-    <axis xyz="-0.5 0.707107 0.5"/>
-    <limit effort="0.01" velocity="100"/>
-    <dynamics damping="0.00001" friction="0"/>
-  </joint>
-  <joint name="rear_right_wheel_roller_6_bearing" type="continuous" passive="true">
-    <parent link="rear_right_wheel"/>
-    <child link="rear_right_wheel_roller_6"/>
-    <origin xyz="-0.048 0 -8.81746e-18" rpy="0 0 0"/>
-    <axis xyz="-1.29893e-16 0.707107 0.707107"/>
-    <limit effort="0.01" velocity="100"/>
-    <dynamics damping="0.00001" friction="0"/>
-  </joint>
-  <joint name="rear_right_wheel_roller_7_bearing" type="continuous" passive="true">
-    <parent link="rear_right_wheel"/>
-    <child link="rear_right_wheel_roller_7"/>
-    <origin xyz="-0.033941 0 0.033941" rpy="0 0 0"/>
-    <axis xyz="0.5 0.707107 0.5"/>
-    <limit effort="0.01" velocity="100"/>
-    <dynamics damping="0.00001" friction="0"/>
+  <joint name="lidar_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="lidar"/>
+    <origin xyz="-0.114 0 0.09" rpy="0 0 0"/>
   </joint>
 </robot>

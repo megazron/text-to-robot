@@ -1472,7 +1472,7 @@
   "end_effectors": [],
   "metadata": {
     "generator": "text-to-robot",
-    "created": "2026-09-19T18:43:19.217Z",
+    "created": "2026-11-03T10:13:42.048Z",
     "inferred_fields": [
       "joints.base_link_front_panel_mount.dynamics",
       "joints.base_link_front_panel_mount.limit",
@@ -1533,6 +1533,7 @@
       "Generated SCARA (RRPR) from template.",
       "Interpreted locally: type inferred, DOF=4, gripper=parallel."
     ],
-    "source_prompt": "Create a SCARA robot\n"
+    "source_prompt": "Create a SCARA robot\n",
+    "family": "scara"
   }
 }

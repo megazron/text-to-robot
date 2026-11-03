@@ -1,255 +1,435 @@
 {
-  "model": "robot.urdf",
-  "nbody": 36,
-  "njnt": 19,
-  "nu": 18,
-  "ngeom": 71,
-  "floating": true,
-  "tests": {
-    "compile": {
-      "pass": true,
-      "total_mass_kg": 2.35,
-      "actuators": 18
+ "model": "robot.urdf",
+ "family": "hexapod",
+ "group": "legged",
+ "scope": "PASS means the modelled actuators (datasheet peak torque as a hard limit, a linear torque-speed line to no-load speed, reflected rotor inertia, URDF damping/friction) can produce the torques and speeds the task needs in this geometry and mass distribution, and that mean torque over the hold stays within the continuous (rated) torque. Joint control uses an ideal model-based feedforward (computed torque) through the force-limited servo for fixed-base robots and plain position servos for floating robots; a pass therefore proves torque/speed capacity, not that a given controller achieves it. Untested: thermal limits over long duty cycles (only the mean-vs-rated proxy), gearbox backlash and compliance, link and joint flexibility, encoder resolution, supply voltage sag and current limits, bus latency, controller tuning, and contact/friction values (nominal friction only).",
+ "untested": [],
+ "fidelity": "URDF effort limits enforced; position gains inferred; speed/thermal/electrical limits unmodelled; geometry and hardware uncalibrated",
+ "tests": {
+  "stand_free": {
+   "pass": true,
+   "explanation": "base z 0.005 -> -0.001 m (creep after settling 0.0 mm), upright 1.000; no continuous ratings known; worst leg joint at 0.02x peak",
+   "base_z_start": 0.005,
+   "base_z_settled": -0.0009,
+   "base_z_end": -0.0009,
+   "base_drop_m": 0.0059,
+   "creep_m": 0.0,
+   "upright": 1.0,
+   "leg_length_m": 0.2018,
+   "joints": {
+    "front_left_coxa_joint": {
+     "peak_nm": 0.0,
+     "peak_rating_nm": 50.0,
+     "util_peak": 0.0,
+     "mean_hold_nm": 0.0,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.0,
+     "max_err_hold": 0.0,
+     "saturated_frac": 0.0
     },
-    "initial_clearance": {
-      "pass": true,
-      "penetrations": [],
-      "count": 0
+    "front_left_femur_joint": {
+     "peak_nm": 1.0942,
+     "peak_rating_nm": 50.0,
+     "util_peak": 0.022,
+     "mean_hold_nm": 0.3221,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.0136,
+     "max_err_hold": 0.0081,
+     "saturated_frac": 0.0
     },
-    "settle_under_gravity": {
-      "pass": true,
-      "max_joint_speed": 4.46,
-      "base_drop_m": 0.006,
-      "upright": 1.0
+    "front_left_tibia_joint": {
+     "peak_nm": 0.5425,
+     "peak_rating_nm": 50.0,
+     "util_peak": 0.011,
+     "mean_hold_nm": 0.0034,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.0084,
+     "max_err_hold": 0.0001,
+     "saturated_frac": 0.0
     },
-    "hold_pose": {
-      "pass": true,
-      "max_joint_error_rad": 0.008
+    "mid_left_coxa_joint": {
+     "peak_nm": 0.0,
+     "peak_rating_nm": 50.0,
+     "util_peak": 0.0,
+     "mean_hold_nm": 0.0,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.0,
+     "max_err_hold": 0.0,
+     "saturated_frac": 0.0
     },
-    "actuator_sweep": {
-      "pass": true,
-      "tracked": "18/18",
-      "worst_error": 0.592,
-      "actuators": [
-        {
-          "actuator": "act_front_left_coxa_joint",
-          "joint": "front_left_coxa_joint",
-          "pass": true,
-          "rms_error": 0.011395,
-          "peak_error": 0.026776,
-          "error_unit": "rad",
-          "rms_tolerance": 0.15,
-          "peak_actuator_force": 1.272225,
-          "force_unit": "N m"
-        },
-        {
-          "actuator": "act_front_left_femur_joint",
-          "joint": "front_left_femur_joint",
-          "pass": true,
-          "rms_error": 0.025168,
-          "peak_error": 0.099579,
-          "error_unit": "rad",
-          "rms_tolerance": 0.15,
-          "peak_actuator_force": 4.331938,
-          "force_unit": "N m"
-        },
-        {
-          "actuator": "act_front_left_tibia_joint",
-          "joint": "front_left_tibia_joint",
-          "pass": true,
-          "rms_error": 0.033164,
-          "peak_error": 0.59068,
-          "error_unit": "rad",
-          "rms_tolerance": 0.15,
-          "peak_actuator_force": 36.0,
-          "force_unit": "N m"
-        },
-        {
-          "actuator": "act_mid_left_coxa_joint",
-          "joint": "mid_left_coxa_joint",
-          "pass": true,
-          "rms_error": 0.013122,
-          "peak_error": 0.027604,
-          "error_unit": "rad",
-          "rms_tolerance": 0.15,
-          "peak_actuator_force": 1.305332,
-          "force_unit": "N m"
-        },
-        {
-          "actuator": "act_mid_left_femur_joint",
-          "joint": "mid_left_femur_joint",
-          "pass": true,
-          "rms_error": 0.029048,
-          "peak_error": 0.099867,
-          "error_unit": "rad",
-          "rms_tolerance": 0.15,
-          "peak_actuator_force": 4.343455,
-          "force_unit": "N m"
-        },
-        {
-          "actuator": "act_mid_left_tibia_joint",
-          "joint": "mid_left_tibia_joint",
-          "pass": true,
-          "rms_error": 0.03472,
-          "peak_error": 0.591677,
-          "error_unit": "rad",
-          "rms_tolerance": 0.15,
-          "peak_actuator_force": 36.0,
-          "force_unit": "N m"
-        },
-        {
-          "actuator": "act_rear_left_coxa_joint",
-          "joint": "rear_left_coxa_joint",
-          "pass": true,
-          "rms_error": 0.011544,
-          "peak_error": 0.026843,
-          "error_unit": "rad",
-          "rms_tolerance": 0.15,
-          "peak_actuator_force": 1.274924,
-          "force_unit": "N m"
-        },
-        {
-          "actuator": "act_rear_left_femur_joint",
-          "joint": "rear_left_femur_joint",
-          "pass": true,
-          "rms_error": 0.025194,
-          "peak_error": 0.099579,
-          "error_unit": "rad",
-          "rms_tolerance": 0.15,
-          "peak_actuator_force": 4.331939,
-          "force_unit": "N m"
-        },
-        {
-          "actuator": "act_rear_left_tibia_joint",
-          "joint": "rear_left_tibia_joint",
-          "pass": true,
-          "rms_error": 0.033164,
-          "peak_error": 0.59068,
-          "error_unit": "rad",
-          "rms_tolerance": 0.15,
-          "peak_actuator_force": 36.0,
-          "force_unit": "N m"
-        },
-        {
-          "actuator": "act_front_right_coxa_joint",
-          "joint": "front_right_coxa_joint",
-          "pass": true,
-          "rms_error": 0.011544,
-          "peak_error": 0.026843,
-          "error_unit": "rad",
-          "rms_tolerance": 0.15,
-          "peak_actuator_force": 1.274924,
-          "force_unit": "N m"
-        },
-        {
-          "actuator": "act_front_right_femur_joint",
-          "joint": "front_right_femur_joint",
-          "pass": true,
-          "rms_error": 0.025168,
-          "peak_error": 0.099579,
-          "error_unit": "rad",
-          "rms_tolerance": 0.15,
-          "peak_actuator_force": 4.331938,
-          "force_unit": "N m"
-        },
-        {
-          "actuator": "act_front_right_tibia_joint",
-          "joint": "front_right_tibia_joint",
-          "pass": true,
-          "rms_error": 0.033164,
-          "peak_error": 0.59068,
-          "error_unit": "rad",
-          "rms_tolerance": 0.15,
-          "peak_actuator_force": 36.0,
-          "force_unit": "N m"
-        },
-        {
-          "actuator": "act_mid_right_coxa_joint",
-          "joint": "mid_right_coxa_joint",
-          "pass": true,
-          "rms_error": 0.013122,
-          "peak_error": 0.027604,
-          "error_unit": "rad",
-          "rms_tolerance": 0.15,
-          "peak_actuator_force": 1.305331,
-          "force_unit": "N m"
-        },
-        {
-          "actuator": "act_mid_right_femur_joint",
-          "joint": "mid_right_femur_joint",
-          "pass": true,
-          "rms_error": 0.029048,
-          "peak_error": 0.099867,
-          "error_unit": "rad",
-          "rms_tolerance": 0.15,
-          "peak_actuator_force": 4.343455,
-          "force_unit": "N m"
-        },
-        {
-          "actuator": "act_mid_right_tibia_joint",
-          "joint": "mid_right_tibia_joint",
-          "pass": true,
-          "rms_error": 0.03472,
-          "peak_error": 0.591677,
-          "error_unit": "rad",
-          "rms_tolerance": 0.15,
-          "peak_actuator_force": 36.0,
-          "force_unit": "N m"
-        },
-        {
-          "actuator": "act_rear_right_coxa_joint",
-          "joint": "rear_right_coxa_joint",
-          "pass": true,
-          "rms_error": 0.011395,
-          "peak_error": 0.026776,
-          "error_unit": "rad",
-          "rms_tolerance": 0.15,
-          "peak_actuator_force": 1.272225,
-          "force_unit": "N m"
-        },
-        {
-          "actuator": "act_rear_right_femur_joint",
-          "joint": "rear_right_femur_joint",
-          "pass": true,
-          "rms_error": 0.025194,
-          "peak_error": 0.099579,
-          "error_unit": "rad",
-          "rms_tolerance": 0.15,
-          "peak_actuator_force": 4.331939,
-          "force_unit": "N m"
-        },
-        {
-          "actuator": "act_rear_right_tibia_joint",
-          "joint": "rear_right_tibia_joint",
-          "pass": true,
-          "rms_error": 0.033164,
-          "peak_error": 0.59068,
-          "error_unit": "rad",
-          "rms_tolerance": 0.15,
-          "peak_actuator_force": 36.0,
-          "force_unit": "N m"
-        }
-      ]
+    "mid_left_femur_joint": {
+     "peak_nm": 1.0942,
+     "peak_rating_nm": 50.0,
+     "util_peak": 0.022,
+     "mean_hold_nm": 0.3221,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.0136,
+     "max_err_hold": 0.0081,
+     "saturated_frac": 0.0
     },
-    "disturbance_recovery": {
-      "pass": true,
-      "upright_after": 1.0,
-      "note": "upright>0.5 means it did not fall"
+    "mid_left_tibia_joint": {
+     "peak_nm": 0.5425,
+     "peak_rating_nm": 50.0,
+     "util_peak": 0.011,
+     "mean_hold_nm": 0.0034,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.0084,
+     "max_err_hold": 0.0001,
+     "saturated_frac": 0.0
+    },
+    "rear_left_coxa_joint": {
+     "peak_nm": 0.0,
+     "peak_rating_nm": 50.0,
+     "util_peak": 0.0,
+     "mean_hold_nm": 0.0,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.0,
+     "max_err_hold": 0.0,
+     "saturated_frac": 0.0
+    },
+    "rear_left_femur_joint": {
+     "peak_nm": 1.0942,
+     "peak_rating_nm": 50.0,
+     "util_peak": 0.022,
+     "mean_hold_nm": 0.3221,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.0136,
+     "max_err_hold": 0.0081,
+     "saturated_frac": 0.0
+    },
+    "rear_left_tibia_joint": {
+     "peak_nm": 0.5425,
+     "peak_rating_nm": 50.0,
+     "util_peak": 0.011,
+     "mean_hold_nm": 0.0034,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.0084,
+     "max_err_hold": 0.0001,
+     "saturated_frac": 0.0
+    },
+    "front_right_coxa_joint": {
+     "peak_nm": 0.0,
+     "peak_rating_nm": 50.0,
+     "util_peak": 0.0,
+     "mean_hold_nm": 0.0,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.0,
+     "max_err_hold": 0.0,
+     "saturated_frac": 0.0
+    },
+    "front_right_femur_joint": {
+     "peak_nm": 1.0942,
+     "peak_rating_nm": 50.0,
+     "util_peak": 0.022,
+     "mean_hold_nm": 0.3221,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.0136,
+     "max_err_hold": 0.0081,
+     "saturated_frac": 0.0
+    },
+    "front_right_tibia_joint": {
+     "peak_nm": 0.5425,
+     "peak_rating_nm": 50.0,
+     "util_peak": 0.011,
+     "mean_hold_nm": 0.0034,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.0084,
+     "max_err_hold": 0.0001,
+     "saturated_frac": 0.0
+    },
+    "mid_right_coxa_joint": {
+     "peak_nm": 0.0,
+     "peak_rating_nm": 50.0,
+     "util_peak": 0.0,
+     "mean_hold_nm": 0.0,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.0,
+     "max_err_hold": 0.0,
+     "saturated_frac": 0.0
+    },
+    "mid_right_femur_joint": {
+     "peak_nm": 1.0942,
+     "peak_rating_nm": 50.0,
+     "util_peak": 0.022,
+     "mean_hold_nm": 0.3221,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.0136,
+     "max_err_hold": 0.0081,
+     "saturated_frac": 0.0
+    },
+    "mid_right_tibia_joint": {
+     "peak_nm": 0.5425,
+     "peak_rating_nm": 50.0,
+     "util_peak": 0.011,
+     "mean_hold_nm": 0.0034,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.0084,
+     "max_err_hold": 0.0001,
+     "saturated_frac": 0.0
+    },
+    "rear_right_coxa_joint": {
+     "peak_nm": 0.0,
+     "peak_rating_nm": 50.0,
+     "util_peak": 0.0,
+     "mean_hold_nm": 0.0,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.0,
+     "max_err_hold": 0.0,
+     "saturated_frac": 0.0
+    },
+    "rear_right_femur_joint": {
+     "peak_nm": 1.0942,
+     "peak_rating_nm": 50.0,
+     "util_peak": 0.022,
+     "mean_hold_nm": 0.3221,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.0136,
+     "max_err_hold": 0.0081,
+     "saturated_frac": 0.0
+    },
+    "rear_right_tibia_joint": {
+     "peak_nm": 0.5425,
+     "peak_rating_nm": 50.0,
+     "util_peak": 0.011,
+     "mean_hold_nm": 0.0034,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.0084,
+     "max_err_hold": 0.0001,
+     "saturated_frac": 0.0
     }
+   }
   },
-  "validation_scope": "simulation smoke tests, not hardware or wearable qualification",
-  "mujoco_version": "3.13.0",
-  "model_sha256": "05a17474a15635699de757a2bef8eeebfb3f3fd1c4ba8c09f801b03bc9950332",
-  "limitations": [
-    "No measured motor, material, thermal or battery model",
-    "No manufacturing or human-fit validation"
-  ],
-  "self_collision_masks_enabled": true,
-  "passed": 6,
-  "total": 6,
-  "collision_model": "URDF primitives / mesh bounding boxes",
-  "self_collision": true,
-  "source_urdf_sha256": "2b46718427de3cef40ccf154fdea41da76bd0faa4813f11973c56202f52c7870",
-  "initial_penetrations": [],
-  "hardware_verified": false
+  "squat": {
+   "pass": true,
+   "explanation": "free standing: commanded body drop 40 mm (20 % of 202 mm leg), achieved 40 mm, back up to 40 mm above the low point, upright 1.000",
+   "commanded_drop_m": 0.0404,
+   "achieved_drop_m": 0.0403,
+   "base_z_top": -0.0009,
+   "base_z_low": -0.0412,
+   "base_z_back": -0.0009,
+   "upright": 1.0,
+   "ik_error_m": 0.0,
+   "joints": {
+    "front_left_coxa_joint": {
+     "peak_nm": 0.0,
+     "peak_rating_nm": 50.0,
+     "util_peak": 0.0,
+     "mean_low_nm": 0.0,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.0,
+     "max_err_hold": 0.0,
+     "saturated_frac": 0.0
+    },
+    "front_left_femur_joint": {
+     "peak_nm": 0.4232,
+     "peak_rating_nm": 50.0,
+     "util_peak": 0.008,
+     "mean_low_nm": 0.3214,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.0126,
+     "max_err_hold": 0.0082,
+     "saturated_frac": 0.0
+    },
+    "front_left_tibia_joint": {
+     "peak_nm": 0.121,
+     "peak_rating_nm": 50.0,
+     "util_peak": 0.002,
+     "mean_low_nm": 0.0308,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.004,
+     "max_err_hold": 0.001,
+     "saturated_frac": 0.0
+    },
+    "mid_left_coxa_joint": {
+     "peak_nm": 0.0,
+     "peak_rating_nm": 50.0,
+     "util_peak": 0.0,
+     "mean_low_nm": 0.0,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.0,
+     "max_err_hold": 0.0,
+     "saturated_frac": 0.0
+    },
+    "mid_left_femur_joint": {
+     "peak_nm": 0.4232,
+     "peak_rating_nm": 50.0,
+     "util_peak": 0.008,
+     "mean_low_nm": 0.3214,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.0126,
+     "max_err_hold": 0.0082,
+     "saturated_frac": 0.0
+    },
+    "mid_left_tibia_joint": {
+     "peak_nm": 0.121,
+     "peak_rating_nm": 50.0,
+     "util_peak": 0.002,
+     "mean_low_nm": 0.0308,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.004,
+     "max_err_hold": 0.001,
+     "saturated_frac": 0.0
+    },
+    "rear_left_coxa_joint": {
+     "peak_nm": 0.0,
+     "peak_rating_nm": 50.0,
+     "util_peak": 0.0,
+     "mean_low_nm": 0.0,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.0,
+     "max_err_hold": 0.0,
+     "saturated_frac": 0.0
+    },
+    "rear_left_femur_joint": {
+     "peak_nm": 0.4232,
+     "peak_rating_nm": 50.0,
+     "util_peak": 0.008,
+     "mean_low_nm": 0.3214,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.0126,
+     "max_err_hold": 0.0082,
+     "saturated_frac": 0.0
+    },
+    "rear_left_tibia_joint": {
+     "peak_nm": 0.121,
+     "peak_rating_nm": 50.0,
+     "util_peak": 0.002,
+     "mean_low_nm": 0.0308,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.004,
+     "max_err_hold": 0.001,
+     "saturated_frac": 0.0
+    },
+    "front_right_coxa_joint": {
+     "peak_nm": 0.0,
+     "peak_rating_nm": 50.0,
+     "util_peak": 0.0,
+     "mean_low_nm": 0.0,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.0,
+     "max_err_hold": 0.0,
+     "saturated_frac": 0.0
+    },
+    "front_right_femur_joint": {
+     "peak_nm": 0.4232,
+     "peak_rating_nm": 50.0,
+     "util_peak": 0.008,
+     "mean_low_nm": 0.3214,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.0126,
+     "max_err_hold": 0.0082,
+     "saturated_frac": 0.0
+    },
+    "front_right_tibia_joint": {
+     "peak_nm": 0.121,
+     "peak_rating_nm": 50.0,
+     "util_peak": 0.002,
+     "mean_low_nm": 0.0308,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.004,
+     "max_err_hold": 0.001,
+     "saturated_frac": 0.0
+    },
+    "mid_right_coxa_joint": {
+     "peak_nm": 0.0,
+     "peak_rating_nm": 50.0,
+     "util_peak": 0.0,
+     "mean_low_nm": 0.0,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.0,
+     "max_err_hold": 0.0,
+     "saturated_frac": 0.0
+    },
+    "mid_right_femur_joint": {
+     "peak_nm": 0.4232,
+     "peak_rating_nm": 50.0,
+     "util_peak": 0.008,
+     "mean_low_nm": 0.3214,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.0126,
+     "max_err_hold": 0.0082,
+     "saturated_frac": 0.0
+    },
+    "mid_right_tibia_joint": {
+     "peak_nm": 0.121,
+     "peak_rating_nm": 50.0,
+     "util_peak": 0.002,
+     "mean_low_nm": 0.0308,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.004,
+     "max_err_hold": 0.001,
+     "saturated_frac": 0.0
+    },
+    "rear_right_coxa_joint": {
+     "peak_nm": 0.0,
+     "peak_rating_nm": 50.0,
+     "util_peak": 0.0,
+     "mean_low_nm": 0.0,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.0,
+     "max_err_hold": 0.0,
+     "saturated_frac": 0.0
+    },
+    "rear_right_femur_joint": {
+     "peak_nm": 0.4232,
+     "peak_rating_nm": 50.0,
+     "util_peak": 0.008,
+     "mean_low_nm": 0.3214,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.0126,
+     "max_err_hold": 0.0082,
+     "saturated_frac": 0.0
+    },
+    "rear_right_tibia_joint": {
+     "peak_nm": 0.121,
+     "peak_rating_nm": 50.0,
+     "util_peak": 0.002,
+     "mean_low_nm": 0.0308,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.004,
+     "max_err_hold": 0.001,
+     "saturated_frac": 0.0
+    }
+   }
+  }
+ },
+ "passed": 2,
+ "total": 2,
+ "source_urdf_sha256": "2b46718427de3cef40ccf154fdea41da76bd0faa4813f11973c56202f52c7870"
 }

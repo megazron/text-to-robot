@@ -1,112 +1,118 @@
 {
-  "model": "robot.urdf",
-  "nbody": 14,
-  "njnt": 6,
-  "nu": 5,
-  "ngeom": 22,
-  "floating": true,
-  "tests": {
-    "compile": {
-      "pass": true,
-      "total_mass_kg": 30.635,
-      "actuators": 5
+ "model": "robot.urdf",
+ "family": "character_eva",
+ "group": "wheeled",
+ "scope": "PASS means the modelled actuators (datasheet peak torque as a hard limit, a linear torque-speed line to no-load speed, reflected rotor inertia, URDF damping/friction) can produce the torques and speeds the task needs in this geometry and mass distribution, and that mean torque over the hold stays within the continuous (rated) torque. Joint control uses an ideal model-based feedforward (computed torque) through the force-limited servo for fixed-base robots and plain position servos for floating robots; a pass therefore proves torque/speed capacity, not that a given controller achieves it. Untested: thermal limits over long duty cycles (only the mean-vs-rated proxy), gearbox backlash and compliance, link and joint flexibility, encoder resolution, supply voltage sag and current limits, bus latency, controller tuning, and contact/friction values (nominal friction only).",
+ "untested": [],
+ "fidelity": "URDF effort limits enforced; position gains inferred; speed/thermal/electrical limits unmodelled; geometry and hardware uncalibrated; armature = rotor inertia x gear ratio^2 from the actuator record: left_wheel_joint: 0.00135 kg m^2 (estimate (dc_gearmotor_37) x gear ratio 30^2); right_wheel_joint: 0.00135 kg m^2 (estimate (dc_gearmotor_37) x gear ratio 30^2); head_pan: 0.0286 kg m^2 (estimate (feetech_sts motor) x gear ratio 345^2); left_arm_shoulder_pitch: 0.0286 kg m^2 (estimate (feetech_sts motor) x gear ratio 345^2); left_arm_elbow_pitch: 0.0286 kg m^2 (estimate (feetech_sts motor) x gear ratio 345^2); right_arm_shoulder_pitch: 0.0286 kg m^2 (estimate (feetech_sts motor) x gear ratio 345^2); right_arm_elbow_pitch: 0.0286 kg m^2 (estimate (feetech_sts motor) x gear ratio 345^2)",
+ "tests": {
+  "drive_straight": {
+   "pass": true,
+   "explanation": "3.44 m in 4.02 s, cruise speed 1.212 m/s vs claimed 1.240 m/s, heading drift -0.1 deg, lateral -0.4 cm",
+   "claimed_speed_m_s": 1.24,
+   "claim_key": "top_speed_m_s",
+   "commanded_m_s": 1.24,
+   "cruise_speed_m_s": 1.2121,
+   "mean_speed_m_s": 0.857,
+   "distance_m": 3.4417,
+   "heading_drift_deg": -0.07,
+   "lateral_m": -0.0038,
+   "wheel_radius_m": [
+    0.045,
+    0.045
+   ],
+   "joints": {
+    "left_wheel_joint": {
+     "peak_nm": 0.2942,
+     "peak_rating_nm": 1.373,
+     "util_peak": 0.214,
+     "mean_cruise_nm": 0.2455,
+     "rated_nm": 0.686,
+     "util_rated": 0.358,
+     "max_err": 0.7092,
+     "max_err_hold": 0.6179,
+     "saturated_frac": 0.0
     },
-    "initial_clearance": {
-      "pass": true,
-      "penetrations": [],
-      "count": 0
-    },
-    "settle_under_gravity": {
-      "pass": true,
-      "max_joint_speed": 0.31,
-      "base_drop_m": 0.005,
-      "upright": 1.0
-    },
-    "hold_pose": {
-      "pass": true,
-      "max_joint_error_rad": 0.0
-    },
-    "actuator_sweep": {
-      "pass": true,
-      "tracked": "5/5",
-      "worst_error": 0.106,
-      "actuators": [
-        {
-          "actuator": "act_neck_joint",
-          "joint": "neck_joint",
-          "pass": true,
-          "rms_error": 0.00777,
-          "peak_error": 0.021823,
-          "error_unit": "rad",
-          "rms_tolerance": 0.15,
-          "peak_actuator_force": 9.711982,
-          "force_unit": "N m"
-        },
-        {
-          "actuator": "act_left_shoulder_joint",
-          "joint": "left_shoulder_joint",
-          "pass": true,
-          "rms_error": 0.043986,
-          "peak_error": 0.105552,
-          "error_unit": "rad",
-          "rms_tolerance": 0.15,
-          "peak_actuator_force": 50.0,
-          "force_unit": "N m"
-        },
-        {
-          "actuator": "act_left_arm_roll",
-          "joint": "left_arm_roll",
-          "pass": true,
-          "rms_error": 0.007256,
-          "peak_error": 0.017992,
-          "error_unit": "rad",
-          "rms_tolerance": 0.15,
-          "peak_actuator_force": 5.778011,
-          "force_unit": "N m"
-        },
-        {
-          "actuator": "act_right_shoulder_joint",
-          "joint": "right_shoulder_joint",
-          "pass": true,
-          "rms_error": 0.043986,
-          "peak_error": 0.105552,
-          "error_unit": "rad",
-          "rms_tolerance": 0.15,
-          "peak_actuator_force": 50.0,
-          "force_unit": "N m"
-        },
-        {
-          "actuator": "act_right_arm_roll",
-          "joint": "right_arm_roll",
-          "pass": true,
-          "rms_error": 0.007256,
-          "peak_error": 0.017992,
-          "error_unit": "rad",
-          "rms_tolerance": 0.15,
-          "peak_actuator_force": 5.778011,
-          "force_unit": "N m"
-        }
-      ]
-    },
-    "disturbance_recovery": {
-      "pass": false,
-      "upright_after": -0.03,
-      "note": "upright>0.5 means it did not fall"
+    "right_wheel_joint": {
+     "peak_nm": 0.2955,
+     "peak_rating_nm": 1.373,
+     "util_peak": 0.215,
+     "mean_cruise_nm": 0.2455,
+     "rated_nm": 0.686,
+     "util_rated": 0.358,
+     "max_err": 0.7123,
+     "max_err_hold": 0.6179,
+     "saturated_frac": 0.0
     }
+   }
   },
-  "validation_scope": "simulation smoke tests, not hardware or wearable qualification",
-  "mujoco_version": "3.13.0",
-  "model_sha256": "25dda13079d1c51fcd5592c1bf352caec7778086547dc93a82079005aa79e496",
-  "limitations": [
-    "No measured motor, material, thermal or battery model",
-    "No manufacturing or human-fit validation"
-  ],
-  "self_collision_masks_enabled": true,
-  "passed": 5,
-  "total": 6,
-  "collision_model": "URDF primitives / mesh bounding boxes",
-  "self_collision": true,
-  "source_urdf_sha256": "87f4a76064a60e12d354f88ba8d83f378c21fd8113015efe159b19b9f85c2515",
-  "initial_penetrations": [],
-  "hardware_verified": false
+  "ramp_10deg": {
+   "pass": true,
+   "explanation": "from standstill on a 10 deg slope (speed ramped over 4.7 s at 0.5 m/s^2): 5.13 m uphill in 6.7 s, speed 1.198 m/s of 1.240 commanded",
+   "slope_deg": 10.0,
+   "claim_key": "slope_deg",
+   "uphill_m": 5.1337,
+   "speed_m_s": 1.1982,
+   "joints": {
+    "left_wheel_joint": {
+     "peak_nm": 0.3756,
+     "peak_rating_nm": 1.373,
+     "util_peak": 0.274,
+     "mean_climb_nm": 0.364,
+     "rated_nm": 0.686,
+     "util_rated": 0.531,
+     "max_err": 0.9364,
+     "max_err_hold": 0.9163,
+     "saturated_frac": 0.0
+    },
+    "right_wheel_joint": {
+     "peak_nm": 0.38,
+     "peak_rating_nm": 1.373,
+     "util_peak": 0.277,
+     "mean_climb_nm": 0.3671,
+     "rated_nm": 0.686,
+     "util_rated": 0.535,
+     "max_err": 0.9466,
+     "max_err_hold": 0.9239,
+     "saturated_frac": 0.0
+    }
+   }
+  },
+  "turn_in_place": {
+   "pass": 1.0,
+   "explanation": "yaw rate 4.77 rad/s with 5.31 commanded (no-slip), claimed 5.45 rad/s (needs >= 4.63), centre moved 0.8 cm over 1.9 turn(s) (0.4 cm per turn)",
+   "claimed_rad_s": 5.45,
+   "commanded_rad_s": 5.3057,
+   "yaw_rate_rad_s": 4.7708,
+   "drift_m": 0.0081,
+   "track_m": 0.2337,
+   "joints": {
+    "left_wheel_joint": {
+     "peak_nm": 0.6668,
+     "peak_rating_nm": 1.373,
+     "util_peak": 0.486,
+     "mean_turn_nm": 0.2006,
+     "rated_nm": 0.686,
+     "util_rated": 0.292,
+     "max_err": 1.8638,
+     "max_err_hold": 1.8638,
+     "saturated_frac": 0.0
+    },
+    "right_wheel_joint": {
+     "peak_nm": 0.6611,
+     "peak_rating_nm": 1.373,
+     "util_peak": 0.481,
+     "mean_turn_nm": 0.2052,
+     "rated_nm": 0.686,
+     "util_rated": 0.299,
+     "max_err": 1.8415,
+     "max_err_hold": 1.6254,
+     "saturated_frac": 0.0
+    }
+   }
+  }
+ },
+ "passed": 3,
+ "total": 3,
+ "source_urdf_sha256": "337b1fa1ddcc1330ff9b6020d05e827e37217115f149960c119cfba8dab95a14"
 }

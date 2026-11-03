@@ -34,3 +34,7 @@ __pycache__/
 
 # Open hardware references (download with scripts/fetch_hardware_refs.py)
 /references/hardware/cache/
+
+# local scratch (QA screenshots, test builds)
+.cache/
+out/

@@ -6,9 +6,11 @@ simulation_report.json, simulation.gif and the results section of each example R
 the gallery in examples/README.md.
 
     MUJOCO_GL=osmesa .venv/bin/python -B scripts/simulate_examples.py [example ...]
+    MUJOCO_GL=osmesa .venv/bin/python -B scripts/simulate_examples.py --check   (CI: re-run, compare, write nothing)
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import re
@@ -104,9 +106,28 @@ def sim_block(rep):
     return "\n".join(out)
 
 
+def check(selected):
+    """Re-run every example's task tests; fail when a stored report is stale or a result changed. Writes nothing."""
+    bad = []
+    for ex in sorted(p for p in (ROOT / "examples").iterdir() if p.is_dir() and re.match(r"\d\d_", p.name) and p.name != "14_iron_man_mark_43"):
+        if selected and ex.name not in selected: continue
+        stored = json.loads((ex / "simulation_report.json").read_text())
+        sha = hashlib.sha256((ex / "robot.urdf").read_bytes()).hexdigest()
+        if stored.get("source_urdf_sha256") != sha: bad.append(f"{ex.name}: report is stale (robot.urdf changed)"); continue
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            rep = tasks.run_tasks(str(ex / "robot.urdf"), spec=json.loads((ex / "robot.json").read_text()), verbose=False)
+        now = {k: t["pass"] for k, t in rep["tests"].items()}; then = {k: t["pass"] for k, t in stored["tests"].items()}
+        status = "ok" if now == then else "CHANGED"
+        if now != then: bad.append(f"{ex.name}: results changed {then} -> {now}")
+        if any(v is False for v in now.values()): bad.append(f"{ex.name}: failing {[k for k, v in now.items() if v is False]}")
+        print(f"{ex.name:24s} {status:8s} " + "  ".join(f"{k}:{'ok' if v else '-' if v is None else 'FAIL'}" for k, v in now.items()), flush=True)
+    if bad: sys.exit("\n".join(bad))
+
+
 def main(selected):
     rows = []
-    for ex in sorted(p for p in (ROOT / "examples").iterdir() if p.is_dir() and re.match(r"\d\d_", p.name)):
+    for ex in sorted(p for p in (ROOT / "examples").iterdir() if p.is_dir() and re.match(r"\d\d_", p.name) and p.name != "14_iron_man_mark_43"):  # Mark 43 has its own evidence pipeline
         if selected and ex.name not in selected:
             report = ex / "simulation_report.json"
             if report.exists(): rows.append((ex, json.loads(report.read_text())))
@@ -116,6 +137,7 @@ def main(selected):
             warnings.simplefilter("ignore")
             rep = tasks.run_tasks(str(ex / "robot.urdf"), spec=spec, verbose=False)
         rep["model"] = "robot.urdf"
+        rep["source_urdf_sha256"] = hashlib.sha256((ex / "robot.urdf").read_bytes()).hexdigest()
         (ex / "simulation_report.json").write_text(json.dumps(rep, indent=1, default=float) + "\n")
         gif(rec.frames, ex / "simulation.gif", f"{ex.name[3:].replace('_', ' ')} - MuJoCo task tests, real actuator limits")
         readme = ex / "README.md"
@@ -143,4 +165,5 @@ def gallery(rows):
 
 
 if __name__ == "__main__":
-    main(set(sys.argv[1:]))
+    args = set(sys.argv[1:])
+    check(args - {"--check"}) if "--check" in args else main(args)

@@ -3,371 +3,596 @@
      robot: diff_drive_robot
      prompt: Create a differential drive mobile robot
 
-     16 links, 15 joints, 52 inferred values
+     27 links, 26 joints, 27 inferred values
 -->
 <robot name="diff_drive_robot">
-  <material name="base_mat"><color rgba="0.25 0.25 0.28 1"/></material>
-  <material name="link_mat"><color rgba="0.85 0.85 0.88 1"/></material>
-  <material name="gripper_mat"><color rgba="0.15 0.35 0.75 1"/></material>
-  <material name="wheel_mat"><color rgba="0.1 0.1 0.12 1"/></material>
-  <material name="sensor_mat"><color rgba="0.1 0.7 0.4 1"/></material>
-  <material name="accent_mat"><color rgba="0.9 0.55 0.1 1"/></material>
+  <material name="printed"><color rgba="0.93 0.93 0.95 1"/></material>
+  <material name="printed_accent"><color rgba="0.95 0.5 0.12 1"/></material>
+  <material name="printed_dark"><color rgba="0.22 0.23 0.26 1"/></material>
+  <material name="actuator"><color rgba="0.1 0.1 0.11 1"/></material>
+  <material name="metal"><color rgba="0.62 0.64 0.68 1"/></material>
+  <material name="electronics"><color rgba="0.08 0.45 0.25 1"/></material>
+  <material name="rubber"><color rgba="0.07 0.07 0.08 1"/></material>
+  <material name="battery"><color rgba="0.15 0.3 0.75 1"/></material>
+  <material name="fabric"><color rgba="0.97 0.97 0.95 1"/></material>
+  <material name="visor"><color rgba="0.03 0.03 0.05 1"/></material>
+  <material name="led"><color rgba="0.25 0.75 1 1"/></material>
+  <material name="aluminium"><color rgba="0.56 0.58 0.62 1"/></material>
+  <material name="walle"><color rgba="0.85 0.62 0.15 1"/></material>
   <link name="base_link">
     <visual>
-      <origin xyz="0 0 0.0615" rpy="0 0 0"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry><mesh filename="package://diff_drive_robot/meshes/base_link.stl"/></geometry>
-      <material name="base_mat"/>
+      <material name="printed_dark"/>
     </visual>
     <collision>
-      <origin xyz="0 0 0.0615" rpy="0 0 0"/>
-      <geometry><box size="0.4 0.3 0.003"/></geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/base_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="7.78568e-18 -4.32340e-18 0.0615" rpy="0 0 0"/>
-      <mass value="0.971709"/>
-      <inertia ixx="0.007285" ixy="-1.03853e-18" ixz="3.82337e-21" iyy="0.01295" iyz="-6.33920e-21" izz="0.020234"/>
+      <origin xyz="-0.00000643596 -1.15227e-17 0.081" rpy="0 0 0"/>
+      <mass value="0.249355"/>
+      <inertia ixx="0.000753793" ixy="-3.02482e-20" ixz="1.08270e-21" iyy="0.001118" iyz="5.78499e-22" izz="0.00187"/>
     </inertial>
   </link>
-  <link name="base_link_service_lid">
+  <link name="left_motor">
     <visual>
-      <origin xyz="0 0 0.1785" rpy="0 0 0"/>
-      <geometry><mesh filename="package://diff_drive_robot/meshes/base_link_service_lid.stl"/></geometry>
-      <material name="base_mat"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/pololu_37d_30to1_64cpr.stl"/></geometry>
+      <material name="actuator"/>
     </visual>
     <collision>
-      <origin xyz="0 0 0.1785" rpy="0 0 0"/>
-      <geometry><box size="0.4 0.3 0.003"/></geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/pololu_37d_30to1_64cpr.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="1.62146e-18 -8.06391e-19 0.1785" rpy="0 0 0"/>
-      <mass value="0.945789"/>
-      <inertia ixx="0.007282" ixy="-1.03853e-18" ixz="7.74039e-21" iyy="0.012895" iyz="-5.78194e-21" izz="0.020176"/>
-    </inertial>
-  </link>
-  <link name="base_link_rear_panel">
-    <visual>
-      <origin xyz="-0.1985 0 0.12" rpy="0 0 0"/>
-      <geometry><box size="0.003 0.3 0.114"/></geometry>
-      <material name="base_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="-0.1985 0 0.12" rpy="0 0 0"/>
-      <geometry><box size="0.003 0.3 0.114"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="-0.1985 0 0.12" rpy="0 0 0"/>
-      <mass value="0.27702"/>
-      <inertia ixx="0.002378" ixy="0" ixz="0" iyy="0.00030022" iyz="0" izz="0.002078"/>
-    </inertial>
-  </link>
-  <link name="base_link_right_panel">
-    <visual>
-      <origin xyz="0 -0.1485 0.12" rpy="0 0 0"/>
-      <geometry><box size="0.394 0.003 0.114"/></geometry>
-      <material name="base_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 -0.1485 0.12" rpy="0 0 0"/>
-      <geometry><box size="0.394 0.003 0.114"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0 -0.1485 0.12" rpy="0 0 0"/>
-      <mass value="0.36382"/>
-      <inertia ixx="0.000394289" ixy="0" ixz="0" iyy="0.005101" iyz="0" izz="0.004707"/>
-    </inertial>
-  </link>
-  <link name="base_link_front_panel">
-    <visual>
-      <origin xyz="0.1985 0 0.12" rpy="0 0 0"/>
-      <geometry><box size="0.003 0.3 0.114"/></geometry>
-      <material name="base_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0.1985 0 0.12" rpy="0 0 0"/>
-      <geometry><box size="0.003 0.3 0.114"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0.1985 0 0.12" rpy="0 0 0"/>
-      <mass value="0.27702"/>
-      <inertia ixx="0.002378" ixy="0" ixz="0" iyy="0.00030022" iyz="0" izz="0.002078"/>
-    </inertial>
-  </link>
-  <link name="base_link_left_panel">
-    <visual>
-      <origin xyz="0 0.1485 0.12" rpy="0 0 0"/>
-      <geometry><box size="0.394 0.003 0.114"/></geometry>
-      <material name="base_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 0.1485 0.12" rpy="0 0 0"/>
-      <geometry><box size="0.394 0.003 0.114"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0 0.1485 0.12" rpy="0 0 0"/>
-      <mass value="0.36382"/>
-      <inertia ixx="0.000394289" ixy="0" ixz="0" iyy="0.005101" iyz="0" izz="0.004707"/>
-    </inertial>
-  </link>
-  <link name="base_link_standoff_rr">
-    <visual>
-      <origin xyz="-0.188 -0.138 0.12" rpy="0 0 0"/>
-      <geometry><mesh filename="package://diff_drive_robot/meshes/base_link_standoff_rr.stl"/></geometry>
-      <material name="base_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="-0.188 -0.138 0.12" rpy="0 0 0"/>
-      <geometry><box size="0.008 0.008 0.114"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="-0.188 -0.138 0.12" rpy="0 0 0"/>
-      <mass value="0.02"/>
-      <inertia ixx="0.0000217542" ixy="-2.48191e-24" ixz="1.19698e-23" iyy="0.0000217542" iyz="-5.51986e-24" izz="1.88361e-7"/>
-    </inertial>
-  </link>
-  <link name="base_link_standoff_rl">
-    <visual>
-      <origin xyz="-0.188 0.138 0.12" rpy="0 0 0"/>
-      <geometry><mesh filename="package://diff_drive_robot/meshes/base_link_standoff_rl.stl"/></geometry>
-      <material name="base_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="-0.188 0.138 0.12" rpy="0 0 0"/>
-      <geometry><box size="0.008 0.008 0.114"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="-0.188 0.138 0.12" rpy="0 0 0"/>
-      <mass value="0.02"/>
-      <inertia ixx="0.0000217542" ixy="-2.48191e-24" ixz="1.19698e-23" iyy="0.0000217542" iyz="-5.51986e-24" izz="1.88361e-7"/>
-    </inertial>
-  </link>
-  <link name="base_link_standoff_fr">
-    <visual>
-      <origin xyz="0.188 -0.138 0.12" rpy="0 0 0"/>
-      <geometry><mesh filename="package://diff_drive_robot/meshes/base_link_standoff_fr.stl"/></geometry>
-      <material name="base_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0.188 -0.138 0.12" rpy="0 0 0"/>
-      <geometry><box size="0.008 0.008 0.114"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0.188 -0.138 0.12" rpy="0 0 0"/>
-      <mass value="0.02"/>
-      <inertia ixx="0.0000217542" ixy="-2.48191e-24" ixz="1.19698e-23" iyy="0.0000217542" iyz="-5.51986e-24" izz="1.88361e-7"/>
-    </inertial>
-  </link>
-  <link name="base_link_standoff_fl">
-    <visual>
-      <origin xyz="0.188 0.138 0.12" rpy="0 0 0"/>
-      <geometry><mesh filename="package://diff_drive_robot/meshes/base_link_standoff_fl.stl"/></geometry>
-      <material name="base_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0.188 0.138 0.12" rpy="0 0 0"/>
-      <geometry><box size="0.008 0.008 0.114"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0.188 0.138 0.12" rpy="0 0 0"/>
-      <mass value="0.02"/>
-      <inertia ixx="0.0000217542" ixy="-2.48191e-24" ixz="1.19698e-23" iyy="0.0000217542" iyz="-5.51986e-24" izz="1.88361e-7"/>
+      <origin xyz="-0.006887 0.0000382144 -0.032404" rpy="0 0 0"/>
+      <mass value="0.205"/>
+      <inertia ixx="0.000099893" ixy="-5.96546e-10" ixz="-9.26890e-7" iyy="0.0000999234" iyz="2.88850e-7" izz="0.0000314453"/>
     </inertial>
   </link>
   <link name="left_wheel">
     <visual>
-      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <geometry><cylinder radius="0.06" length="0.04"/></geometry>
-      <material name="wheel_mat"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/wheel_90mm_37d.stl"/></geometry>
+      <material name="rubber"/>
     </visual>
     <collision>
-      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <geometry><cylinder radius="0.06" length="0.04"/></geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><cylinder radius="0.045" length="0.0384"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <mass value="0.203575"/>
-      <inertia ixx="0.000210361" ixy="0" ixz="0" iyy="0.000210361" iyz="0" izz="0.000366435"/>
+      <origin xyz="0.0000103826 1.34843e-18 0.013246" rpy="0 0 0"/>
+      <mass value="0.0313"/>
+      <inertia ixx="0.0000191946" ixy="-1.13975e-21" ixz="2.13039e-9" iyy="0.0000191966" iyz="7.16242e-23" izz="0.0000377527"/>
+    </inertial>
+  </link>
+  <link name="left_bracket">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/left_bracket.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/left_bracket.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-6.83787e-12 0.088174 0.064266" rpy="0 0 0"/>
+      <mass value="0.01561"/>
+      <inertia ixx="0.00000578614" ixy="8.92251e-16" ixz="-1.36271e-15" iyy="0.00000593489" iyz="0.00000163541" izz="0.00000495776"/>
+    </inertial>
+  </link>
+  <link name="right_motor">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/pololu_37d_30to1_64cpr.stl"/></geometry>
+      <material name="actuator"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/pololu_37d_30to1_64cpr.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.006887 0.0000382144 -0.032404" rpy="0 0 0"/>
+      <mass value="0.205"/>
+      <inertia ixx="0.000099893" ixy="-5.96546e-10" ixz="-9.26890e-7" iyy="0.0000999234" iyz="2.88850e-7" izz="0.0000314453"/>
     </inertial>
   </link>
   <link name="right_wheel">
     <visual>
-      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <geometry><cylinder radius="0.06" length="0.04"/></geometry>
-      <material name="wheel_mat"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/wheel_90mm_37d.stl"/></geometry>
+      <material name="rubber"/>
     </visual>
     <collision>
-      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <geometry><cylinder radius="0.06" length="0.04"/></geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><cylinder radius="0.045" length="0.0384"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <mass value="0.203575"/>
-      <inertia ixx="0.000210361" ixy="0" ixz="0" iyy="0.000210361" iyz="0" izz="0.000366435"/>
+      <origin xyz="0.0000103826 1.34843e-18 0.013246" rpy="0 0 0"/>
+      <mass value="0.0313"/>
+      <inertia ixx="0.0000191946" ixy="-1.13975e-21" ixz="2.13039e-9" iyy="0.0000191966" iyz="7.16242e-23" izz="0.0000377527"/>
     </inertial>
   </link>
-  <link name="front_caster_fork">
+  <link name="right_bracket">
     <visual>
-      <origin xyz="0 0 -0.02" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.008" length="0.04"/></geometry>
-      <material name="base_mat"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/right_bracket.stl"/></geometry>
+      <material name="printed_dark"/>
     </visual>
     <collision>
-      <origin xyz="0 0 -0.02" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.008" length="0.04"/></geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/right_bracket.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 -0.02" rpy="0 0 0"/>
-      <mass value="0.03"/>
-      <inertia ixx="0.00000448" ixy="0" ixz="0" iyy="0.00000448" iyz="0" izz="9.60000e-7"/>
+      <origin xyz="6.83787e-12 -0.088174 0.064266" rpy="0 0 0"/>
+      <mass value="0.01561"/>
+      <inertia ixx="0.00000578614" ixy="8.92251e-16" ixz="1.36271e-15" iyy="0.00000593489" iyz="-0.00000163541" izz="0.00000495776"/>
     </inertial>
   </link>
-  <link name="front_caster_wheel">
+  <link name="front_caster_post">
     <visual>
-      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <geometry><cylinder radius="0.03" length="0.018"/></geometry>
-      <material name="wheel_mat"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/front_caster_post.stl"/></geometry>
+      <material name="printed_dark"/>
     </visual>
     <collision>
-      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <geometry><cylinder radius="0.03" length="0.018"/></geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/front_caster_post.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <mass value="0.08"/>
-      <inertia ixx="0.00002016" ixy="0" ixz="0" iyy="0.00002016" iyz="0" izz="0.000036"/>
+      <origin xyz="0.098 -0.000025535 0.053525" rpy="0 0 0"/>
+      <mass value="0.034167"/>
+      <inertia ixx="0.0000125769" ixy="4.98998e-19" ixz="-2.17589e-22" iyy="0.000012577" iyz="1.90460e-8" izz="0.0000089982"/>
     </inertial>
   </link>
-  <link name="rear_caster_fork">
+  <link name="front_caster">
     <visual>
-      <origin xyz="0 0 -0.02" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.008" length="0.04"/></geometry>
-      <material name="base_mat"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/ball_caster_pololu_2692.stl"/></geometry>
+      <material name="rubber"/>
     </visual>
     <collision>
-      <origin xyz="0 0 -0.02" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.008" length="0.04"/></geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><sphere radius="0.004"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 -0.02" rpy="0 0 0"/>
-      <mass value="0.03"/>
-      <inertia ixx="0.00000448" ixy="0" ixz="0" iyy="0.00000448" iyz="0" izz="9.60000e-7"/>
+      <origin xyz="0.00000213185 -0.00000463244 -0.010802" rpy="0 0 0"/>
+      <mass value="0.0184"/>
+      <inertia ixx="0.00000203111" ixy="2.74819e-10" ixz="4.59664e-10" iyy="0.0000020315" iyz="1.36069e-10" izz="0.00000206523"/>
     </inertial>
   </link>
-  <link name="rear_caster_wheel">
+  <link name="front_caster_gimbal">
     <visual>
-      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <geometry><cylinder radius="0.03" length="0.018"/></geometry>
-      <material name="wheel_mat"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><sphere radius="0.004"/></geometry>
+      <material name="metal"/>
     </visual>
     <collision>
-      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <geometry><cylinder radius="0.03" length="0.018"/></geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><sphere radius="0.004"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <mass value="0.08"/>
-      <inertia ixx="0.00002016" ixy="0" ixz="0" iyy="0.00002016" iyz="0" izz="0.000036"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.001"/>
+      <inertia ixx="1.00000e-7" ixy="0" ixz="0" iyy="1.00000e-7" iyz="0" izz="1.00000e-7"/>
     </inertial>
   </link>
-  <joint name="base_link_service_lid_mount" type="fixed">
+  <link name="front_caster_ball">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><sphere radius="0.0127"/></geometry>
+      <material name="printed"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><sphere radius="0.0127"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.012"/>
+      <inertia ixx="7.74192e-7" ixy="0" ixz="0" iyy="7.74192e-7" iyz="0" izz="7.74192e-7"/>
+    </inertial>
+  </link>
+  <link name="rear_caster_post">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/rear_caster_post.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/rear_caster_post.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.098 -0.000025535 0.053525" rpy="0 0 0"/>
+      <mass value="0.034167"/>
+      <inertia ixx="0.0000125769" ixy="4.98837e-19" ixz="-4.83830e-24" iyy="0.000012577" iyz="1.90460e-8" izz="0.0000089982"/>
+    </inertial>
+  </link>
+  <link name="rear_caster">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/ball_caster_pololu_2692.stl"/></geometry>
+      <material name="rubber"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><sphere radius="0.004"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.00000213185 -0.00000463244 -0.010802" rpy="0 0 0"/>
+      <mass value="0.0184"/>
+      <inertia ixx="0.00000203111" ixy="2.74819e-10" ixz="4.59664e-10" iyy="0.0000020315" iyz="1.36069e-10" izz="0.00000206523"/>
+    </inertial>
+  </link>
+  <link name="rear_caster_gimbal">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><sphere radius="0.004"/></geometry>
+      <material name="metal"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><sphere radius="0.004"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.001"/>
+      <inertia ixx="1.00000e-7" ixy="0" ixz="0" iyy="1.00000e-7" iyz="0" izz="1.00000e-7"/>
+    </inertial>
+  </link>
+  <link name="rear_caster_ball">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><sphere radius="0.0127"/></geometry>
+      <material name="printed"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><sphere radius="0.0127"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.012"/>
+      <inertia ixx="7.74192e-7" ixy="0" ixz="0" iyy="7.74192e-7" iyz="0" izz="7.74192e-7"/>
+    </inertial>
+  </link>
+  <link name="battery">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/lipo_3s_2200.stl"/></geometry>
+      <material name="battery"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/lipo_3s_2200.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.053187 0.00000431129 0.011" rpy="0 0 0"/>
+      <mass value="0.1735"/>
+      <inertia ixx="0.0000231075" ixy="4.24769e-8" ixz="-1.30384e-21" iyy="0.000174522" iyz="-1.18221e-22" izz="0.000183705"/>
+    </inertial>
+  </link>
+  <link name="battery_tray">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/battery_tray.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/battery_tray.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.019771 -0.07425 0.088051" rpy="0 0 0"/>
+      <mass value="0.016461"/>
+      <inertia ixx="0.00000350696" ixy="-3.46896e-22" ixz="-1.63712e-7" iyy="0.0000170792" iyz="1.15676e-22" izz="0.0000200766"/>
+    </inertial>
+  </link>
+  <link name="computer">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/rpi5.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/rpi5.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.059962 0.029623 0.00588" rpy="0 0 0"/>
+      <mass value="0.046"/>
+      <inertia ixx="0.0000141581" ixy="0.0000013483" ixz="-0.00000312605" iyy="0.0000308409" iyz="-2.80313e-7" izz="0.0000426283"/>
+    </inertial>
+  </link>
+  <link name="computer_tray">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/computer_tray.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/computer_tray.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.00665 -0.020869 0.085614" rpy="0 0 0"/>
+      <mass value="0.012576"/>
+      <inertia ixx="0.00000312577" ixy="3.28404e-9" ixz="1.60599e-8" iyy="0.0000074969" iyz="-8.71254e-10" izz="0.0000105935"/>
+    </inertial>
+  </link>
+  <link name="motor_driver_1">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/cytron_mdd10a.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/cytron_mdd10a.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.0425 0.035089 0.003444" rpy="0 0 0"/>
+      <mass value="0.04"/>
+      <inertia ixx="0.0000126478" ixy="-2.36142e-22" ixz="1.65267e-22" iyy="0.0000185659" iyz="-6.77095e-7" izz="0.0000304495"/>
+    </inertial>
+  </link>
+  <link name="motor_driver_1_tray">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/motor_driver_1_tray.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/motor_driver_1_tray.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.00649 0.05072 0.085609" rpy="0 0 0"/>
+      <mass value="0.013209"/>
+      <inertia ixx="0.00000390832" ixy="-1.22933e-15" ixz="1.00552e-15" iyy="0.00000756256" iyz="5.47383e-15" izz="0.0000114408"/>
+    </inertial>
+  </link>
+  <link name="imu">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/bno085_breakout.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/bno085_breakout.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.0128 0.01114 0.001089" rpy="0 0 0"/>
+      <mass value="0.0025"/>
+      <inertia ixx="1.00000e-7" ixy="-7.18056e-24" ixz="1.50030e-24" iyy="1.47883e-7" iyz="4.24673e-10" izz="2.39851e-7"/>
+    </inertial>
+  </link>
+  <link name="imu_tray">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/imu_tray.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/imu_tray.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.05281 -0.08065 0.086501" rpy="0 0 0"/>
+      <mass value="0.002"/>
+      <inertia ixx="1.00000e-7" ixy="-1.38780e-17" ixz="5.89701e-16" iyy="1.22700e-7" iyz="-6.89734e-15" izz="2.04195e-7"/>
+    </inertial>
+  </link>
+  <link name="regulator_5v">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/buck_5v_5a.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/buck_5v_5a.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.012564 0.012657 0.003445" rpy="0 0 0"/>
+      <mass value="0.007"/>
+      <inertia ixx="2.56895e-7" ixy="8.14755e-9" ixz="1.85795e-9" iyy="3.06643e-7" iyz="1.94440e-9" izz="4.54796e-7"/>
+    </inertial>
+  </link>
+  <link name="regulator_5v_tray">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/regulator_5v_tray.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/regulator_5v_tray.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.087025 -0.080005 0.086228" rpy="0 0 0"/>
+      <mass value="0.002"/>
+      <inertia ixx="1.10095e-7" ixy="-1.53380e-8" ixz="-3.90754e-9" iyy="1.07956e-7" iyz="3.90754e-9" izz="2.06528e-7"/>
+    </inertial>
+  </link>
+  <link name="lidar_mast">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/lidar_mast.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/lidar_mast.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.086 0.000886953 0.08713" rpy="0 0 0"/>
+      <mass value="0.019058"/>
+      <inertia ixx="0.00000557838" ixy="-1.10385e-16" ixz="7.58520e-17" iyy="0.00000601888" iyz="-1.71928e-9" izz="0.0000114901"/>
+    </inertial>
+  </link>
+  <link name="lidar">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/rplidar_c1.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/rplidar_c1.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-5.14415e-18 -0.0000588468 0.017179" rpy="0 0 0"/>
+      <mass value="0.11"/>
+      <inertia ixx="0.0000376341" ixy="-8.49519e-22" ixz="-2.79514e-21" iyy="0.0000374417" iyz="-7.23608e-8" izz="0.0000475283"/>
+    </inertial>
+  </link>
+  <joint name="left_motor_mount" type="fixed">
     <parent link="base_link"/>
-    <child link="base_link_service_lid"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <dynamics damping="0.1" friction="0"/>
-  </joint>
-  <joint name="base_link_rear_panel_mount" type="fixed">
-    <parent link="base_link"/>
-    <child link="base_link_rear_panel"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <dynamics damping="0.1" friction="0"/>
-  </joint>
-  <joint name="base_link_right_panel_mount" type="fixed">
-    <parent link="base_link"/>
-    <child link="base_link_right_panel"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <dynamics damping="0.1" friction="0"/>
-  </joint>
-  <joint name="base_link_front_panel_mount" type="fixed">
-    <parent link="base_link"/>
-    <child link="base_link_front_panel"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <dynamics damping="0.1" friction="0"/>
-  </joint>
-  <joint name="base_link_left_panel_mount" type="fixed">
-    <parent link="base_link"/>
-    <child link="base_link_left_panel"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <dynamics damping="0.1" friction="0"/>
-  </joint>
-  <joint name="base_link_standoff_rr_mount" type="fixed">
-    <parent link="base_link"/>
-    <child link="base_link_standoff_rr"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <dynamics damping="0.1" friction="0"/>
-  </joint>
-  <joint name="base_link_standoff_rl_mount" type="fixed">
-    <parent link="base_link"/>
-    <child link="base_link_standoff_rl"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <dynamics damping="0.1" friction="0"/>
-  </joint>
-  <joint name="base_link_standoff_fr_mount" type="fixed">
-    <parent link="base_link"/>
-    <child link="base_link_standoff_fr"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <dynamics damping="0.1" friction="0"/>
-  </joint>
-  <joint name="base_link_standoff_fl_mount" type="fixed">
-    <parent link="base_link"/>
-    <child link="base_link_standoff_fl"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <dynamics damping="0.1" friction="0"/>
+    <child link="left_motor"/>
+    <origin xyz="0 0.095 0.045" rpy="0 1.570796 1.570796"/>
   </joint>
   <joint name="left_wheel_joint" type="continuous">
     <parent link="base_link"/>
     <child link="left_wheel"/>
-    <origin xyz="0 0.17 0.06" rpy="0 0 0"/>
-    <axis xyz="0 1 0"/>
-    <limit effort="2.5" velocity="12"/>
-    <dynamics damping="0.1" friction="0"/>
+    <origin xyz="0 0.105 0.045" rpy="-1.570796 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="1.373" velocity="34.558"/>
+    <dynamics damping="0.0079" friction="0.0275"/>
+  </joint>
+  <joint name="left_bracket_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="left_bracket"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="right_motor_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="right_motor"/>
+    <origin xyz="0 -0.095 0.045" rpy="0 1.570796 -1.570796"/>
   </joint>
   <joint name="right_wheel_joint" type="continuous">
     <parent link="base_link"/>
     <child link="right_wheel"/>
-    <origin xyz="0 -0.17 0.06" rpy="0 0 0"/>
-    <axis xyz="0 1 0"/>
-    <limit effort="2.5" velocity="12"/>
-    <dynamics damping="0.1" friction="0"/>
-  </joint>
-  <joint name="front_caster_swivel" type="continuous" passive="true">
-    <parent link="base_link"/>
-    <child link="front_caster_fork"/>
-    <origin xyz="0.15 0 0.08" rpy="0 0 0"/>
+    <origin xyz="0 -0.105 0.045" rpy="1.570796 0 0"/>
     <axis xyz="0 0 1"/>
-    <limit effort="0.01" velocity="100"/>
-    <dynamics damping="0.0001" friction="0"/>
+    <limit effort="1.373" velocity="34.558"/>
+    <dynamics damping="0.0079" friction="0.0275"/>
   </joint>
-  <joint name="front_caster_bearing" type="continuous" passive="true">
-    <parent link="front_caster_fork"/>
-    <child link="front_caster_wheel"/>
-    <origin xyz="-0.018 0 -0.05" rpy="0 0 0"/>
-    <axis xyz="0 1 0"/>
-    <limit effort="0.01" velocity="100"/>
-    <dynamics damping="0.0001" friction="0"/>
-  </joint>
-  <joint name="rear_caster_swivel" type="continuous" passive="true">
+  <joint name="right_bracket_mount" type="fixed">
     <parent link="base_link"/>
-    <child link="rear_caster_fork"/>
-    <origin xyz="-0.15 0 0.08" rpy="0 0 0"/>
-    <axis xyz="0 0 1"/>
-    <limit effort="0.01" velocity="100"/>
-    <dynamics damping="0.0001" friction="0"/>
+    <child link="right_bracket"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
-  <joint name="rear_caster_bearing" type="continuous" passive="true">
-    <parent link="rear_caster_fork"/>
-    <child link="rear_caster_wheel"/>
-    <origin xyz="-0.018 0 -0.05" rpy="0 0 0"/>
+  <joint name="front_caster_post_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="front_caster_post"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="front_caster_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="front_caster"/>
+    <origin xyz="0.098 0 0.029" rpy="0 0 0"/>
+  </joint>
+  <joint name="front_caster_roll" type="continuous" passive="true">
+    <parent link="base_link"/>
+    <child link="front_caster_gimbal"/>
+    <origin xyz="0.098 0 0.0127" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <dynamics damping="0.00001" friction="0.0005"/>
+  </joint>
+  <joint name="front_caster_spin" type="continuous" passive="true">
+    <parent link="front_caster_gimbal"/>
+    <child link="front_caster_ball"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
     <axis xyz="0 1 0"/>
-    <limit effort="0.01" velocity="100"/>
-    <dynamics damping="0.0001" friction="0"/>
+    <dynamics damping="0.00001" friction="0.0005"/>
+  </joint>
+  <joint name="rear_caster_post_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="rear_caster_post"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="rear_caster_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="rear_caster"/>
+    <origin xyz="-0.098 0 0.029" rpy="0 0 0"/>
+  </joint>
+  <joint name="rear_caster_roll" type="continuous" passive="true">
+    <parent link="base_link"/>
+    <child link="rear_caster_gimbal"/>
+    <origin xyz="-0.098 0 0.0127" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <dynamics damping="0.00001" friction="0.0005"/>
+  </joint>
+  <joint name="rear_caster_spin" type="continuous" passive="true">
+    <parent link="rear_caster_gimbal"/>
+    <child link="rear_caster_ball"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <dynamics damping="0.00001" friction="0.0005"/>
+  </joint>
+  <joint name="battery_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="battery"/>
+    <origin xyz="-0.076 -0.07425 0.087" rpy="0 0 0"/>
+  </joint>
+  <joint name="battery_tray_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="battery_tray"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="computer_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="computer"/>
+    <origin xyz="-0.03699 -0.04829 0.091" rpy="0 0 0"/>
+  </joint>
+  <joint name="computer_tray_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="computer_tray"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="motor_driver_1_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="motor_driver_1"/>
+    <origin xyz="-0.04899 0.01972 0.091" rpy="0 0 0"/>
+  </joint>
+  <joint name="motor_driver_1_tray_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="motor_driver_1_tray"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="imu_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="imu"/>
+    <origin xyz="0.04001 -0.092 0.091" rpy="0 0 0"/>
+  </joint>
+  <joint name="imu_tray_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="imu_tray"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="regulator_5v_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="regulator_5v"/>
+    <origin xyz="0.07362 -0.092 0.091" rpy="0 0 0"/>
+  </joint>
+  <joint name="regulator_5v_tray_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="regulator_5v_tray"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="lidar_mast_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="lidar_mast"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="lidar_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="lidar"/>
+    <origin xyz="-0.086 0 0.09" rpy="0 0 0"/>
   </joint>
 </robot>

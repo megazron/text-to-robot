@@ -36,16 +36,15 @@ jobs:
       - uses: actions/setup-python@v5
         with: { python-version: "3.11" }
       - run: pip install "./python[cad,geometry]"
-      - name: Verify wheel-driven forward and mecanum strafe motion
-        run: python scripts/check_mobile_motion.py --check
-      - name: Coordinated arm motion with effort-limited bias compensation
-        run: python scripts/check_arm_motion.py --check
       - name: Physical fidelity and solid CAD regression tests
         run: python -m unittest discover -s python/tests -v
-      - name: Reproduce coordinated surface-path evidence including known failures
+      - name: Examples match their pipeline (deliverables, report from the shipped URDF, no failing checks)
+        run: python scripts/verify_examples.py
+      - name: Re-run every example's MuJoCo task tests (drive, ramp, turn, hold, squat, grip)
+        env: { MUJOCO_GL: disable }
+        run: python scripts/simulate_examples.py --check
+      - name: Reproduce Mark 43 surface-path evidence including known failures
         run: python scripts/check_motion_paths.py --check
-      - name: Verify example reports and animations match shipped models
-        run: python scripts/verify_example_artifacts.py
       - name: Verify visual evidence matches the exported model
         run: python scripts/mark43_reference_review.py --check-renders
       - name: Independent STL topology and mass-integral audit

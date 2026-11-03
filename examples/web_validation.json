@@ -7,81 +7,81 @@
   "mesh_failure_and_retry_pass": true,
   "examples": [
     {
-      "rendered_meshes": 8,
+      "rendered_meshes": 7,
       "mesh_triangles_verified": true,
       "example": "01_arm_2dof",
       "pass": true,
-      "source_robot_sha256": "587c96f19608f8115996ca7cb53e551c5052d174b74a539b3189e281c8e77b74",
+      "source_robot_sha256": "3f74caac80fb0b49cb3ba1114ff40f70d452abd35837114e49be038ddf8e4308",
       "name": "arm_2dof",
-      "links": 21,
-      "joints": 20
+      "links": 7,
+      "joints": 6
     },
     {
-      "rendered_meshes": 12,
+      "rendered_meshes": 15,
       "mesh_triangles_verified": true,
       "example": "02_arm_6dof",
       "pass": true,
-      "source_robot_sha256": "392f77eea21120f3fce0cbd03936a34acd8e4c9154f59a75091daf3f8e6ba735",
+      "source_robot_sha256": "1265a7e3ed358006c2b8d8ccf9317611695aaf0fe68451ade5076568578c0b92",
       "name": "arm_6dof",
-      "links": 28,
-      "joints": 27
+      "links": 15,
+      "joints": 14
     },
     {
-      "rendered_meshes": 13,
+      "rendered_meshes": 17,
       "mesh_triangles_verified": true,
       "example": "03_arm_7dof",
       "pass": true,
-      "source_robot_sha256": "71f4935675657c8948d58f2962247b65fb9bf82462a4475f0ca77fdff9018cf5",
+      "source_robot_sha256": "bb23860633d6f5a47207373d7868e1c2c1037553e1242dfb8cdec46d71407f02",
       "name": "arm_7dof",
-      "links": 30,
-      "joints": 29
+      "links": 17,
+      "joints": 16
     },
     {
       "rendered_meshes": 6,
       "mesh_triangles_verified": true,
       "example": "04_scara",
       "pass": true,
-      "source_robot_sha256": "ee57efe12c913560d74578e274847ed23eb3077ac0cc27ae145c43d437b22393",
+      "source_robot_sha256": "8cf9e15066b9e99c76cad8cd8ee78fc720122966b93c6902216054d96b16d79d",
       "name": "scara",
       "links": 14,
       "joints": 13
     },
     {
-      "rendered_meshes": 6,
+      "rendered_meshes": 23,
       "mesh_triangles_verified": true,
       "example": "05_diff_drive",
       "pass": true,
-      "source_robot_sha256": "b288fa52d91613d07b8c41f428fad732b3d590fc166ec17abe08926e73d8ba95",
+      "source_robot_sha256": "755e97b2c5aae8da117d4e835bae90ec01c43c633c86f51ff89427e1de236faa",
       "name": "diff_drive_robot",
-      "links": 16,
-      "joints": 15
+      "links": 27,
+      "joints": 26
     },
     {
-      "rendered_meshes": 6,
+      "rendered_meshes": 29,
       "mesh_triangles_verified": true,
       "example": "06_four_wheel",
       "pass": true,
-      "source_robot_sha256": "2546ebbcfc496be0e5d8fed2bdae231f5abbc1bd96b686fcbe3f08e4ddab3da0",
+      "source_robot_sha256": "2b3549e89757417c78e49654b3143557a2ed907707671c080363868469ce4bcb",
       "name": "four_wheel_robot",
-      "links": 14,
-      "joints": 13
+      "links": 29,
+      "joints": 28
     },
     {
-      "rendered_meshes": 6,
+      "rendered_meshes": 27,
       "mesh_triangles_verified": true,
       "example": "07_mecanum",
       "pass": true,
-      "source_robot_sha256": "80dda990f3684c012a70136a5eefb1c1981d58384dc2f2a042f795a22b30a409",
+      "source_robot_sha256": "3c1c6661fae9e784af1e11918f2b86dbbe093004c8fe1896d930ca04fe631073",
       "name": "mecanum_robot",
-      "links": 46,
-      "joints": 45
+      "links": 27,
+      "joints": 26
     },
     {
       "rendered_meshes": 6,
       "mesh_triangles_verified": true,
       "example": "08_humanoid",
       "pass": true,
-      "source_robot_sha256": "baab5a170991f84d2411a795d56c9ec5250dacc868255496ff6908ac89ca4f25",
+      "source_robot_sha256": "731d261cfaf29501ab4013950a693e20905fd8718fcf8b3da26d3ebcac92baaf",
       "name": "humanoid_robot",
       "links": 47,
       "joints": 46
@@ -91,7 +91,7 @@
       "mesh_triangles_verified": true,
       "example": "09_gripper",
       "pass": true,
-      "source_robot_sha256": "9246f56aff346d38ec92dbb11335870e46573ef9c23bd42c40a519739f57dd47",
+      "source_robot_sha256": "d6242caaff9bf646689a2c84bf0c27b3537fac69164b8cdc3c74935f627fc946",
       "name": "parallel_gripper",
       "links": 15,
       "joints": 14
@@ -101,7 +101,7 @@
       "mesh_triangles_verified": true,
       "example": "10_quadruped",
       "pass": true,
-      "source_robot_sha256": "6decbe72302aadd5b216055ff0cfb4efe90f3817fbdbb8880c9941e3748a5151",
+      "source_robot_sha256": "8aea1f206f8f383c889ee5478cdbeb26483066d3f1729b42509436de0d8822c2",
       "name": "quadruped",
       "links": 26,
       "joints": 25
@@ -111,27 +111,27 @@
       "mesh_triangles_verified": true,
       "example": "11_spider_scout",
       "pass": true,
-      "source_robot_sha256": "b2bee224684d760550778061da77ab519277f58ea4fb2977802f2e958b556e47",
+      "source_robot_sha256": "00686da471ffca57faecf5d867e08a217607a16e041b1f519e0d019818ecd349",
       "name": "hexapod",
       "links": 35,
       "joints": 34
     },
     {
-      "rendered_meshes": 18,
+      "rendered_meshes": 45,
       "mesh_triangles_verified": true,
       "example": "12_mars_rover",
       "pass": true,
-      "source_robot_sha256": "470bb7302537a4ba34bc97d3a73641c7cc770bafda905c0549aca0c828cb061a",
+      "source_robot_sha256": "3850b9fb8eeafd82d11eeb2b525446cc04c173a4f0fbc2f8002343948a159ec9",
       "name": "rover_arm",
-      "links": 44,
-      "joints": 43
+      "links": 47,
+      "joints": 46
     },
     {
       "rendered_meshes": 6,
       "mesh_triangles_verified": true,
       "example": "13_battle_mech",
       "pass": true,
-      "source_robot_sha256": "39a2d010dd8068d99b085cf50720b2a5b2b370b860a01ff0b8ae03af8b20d075",
+      "source_robot_sha256": "de419ef50632ff0c536fb4d463d28d3aff846dc04c14449d8e9a6db4f1776371",
       "name": "battle_mech",
       "links": 42,
       "joints": 41
@@ -147,40 +147,40 @@
       "joints": 267
     },
     {
-      "rendered_meshes": 6,
+      "rendered_meshes": 53,
       "mesh_triangles_verified": true,
       "example": "15_wall_e",
       "pass": true,
-      "source_robot_sha256": "0c5d57945a18ae0f71c2601bba206ecd4d5d3eb53bd9efc586b1d9d8e72256a4",
+      "source_robot_sha256": "68e7740fe3373850b6eaa165e3bb5661807930a6b5f2c307d96f5bad4d019c18",
       "name": "wall_e",
-      "links": 36,
-      "joints": 35
+      "links": 53,
+      "joints": 52
     },
     {
-      "rendered_meshes": 0,
+      "rendered_meshes": 55,
       "mesh_triangles_verified": true,
       "example": "16_eva",
       "pass": true,
-      "source_robot_sha256": "77b7026faf824e6d9e62afe80c4a947bb6b756d744d4cd0fd5a08e1dff0c1b24",
+      "source_robot_sha256": "80e3639b278adc3c6557c1580b5c41927fa350310d55ce0b12f6b6db98e997ec",
       "name": "eva",
-      "links": 13,
-      "joints": 12
+      "links": 59,
+      "joints": 58
     },
     {
-      "rendered_meshes": 0,
+      "rendered_meshes": 63,
       "mesh_triangles_verified": true,
       "example": "17_baymax",
       "pass": true,
-      "source_robot_sha256": "6e69a4b41c453655fa8d932f3d60670d699341e95cf8ffb6d1ffadcaa30a0b08",
+      "source_robot_sha256": "6e94a4bc935f535e9858a589427d6b64dd75065e3b4484baec50a552a6db349b",
       "name": "baymax",
-      "links": 22,
-      "joints": 21
+      "links": 63,
+      "joints": 62
     }
   ],
   "web_source_sha256": {
-    "styles.css": "ded2c3ddc44f2d54cc5027b9e278a3424635adfc0914a9c0ee1b32fdacd393a0",
+    "styles.css": "342c87496418c8fc3a911f9f2f5d3145e70788698041938b9810fc11a3f0d7d1",
     "robotkit.js": "973e3dfec5021cef16560317682cf522b34e58ae46687503c9cca52912f0c412",
     "index.html": "7ce6f562cfeb822e8023628794aa4aa8b3d411474979bb12661082c00565cba2",
-    "app.js": "42511e1326d78189c21263dd1223084377fdf84bdcfb56eec94c2883fba8f137"
+    "app.js": "260ef65aea7db18a4b5bc04e006436a4b2a4a9de4d2422fceda16008647d3e14"
   }
 }

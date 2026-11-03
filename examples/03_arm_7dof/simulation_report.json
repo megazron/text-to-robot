@@ -1,151 +1,393 @@
 {
-  "model": "robot.urdf",
-  "nbody": 31,
-  "njnt": 9,
-  "nu": 9,
-  "ngeom": 68,
-  "floating": false,
-  "tests": {
-    "compile": {
-      "pass": true,
-      "total_mass_kg": 2.508,
-      "actuators": 9
+ "model": "robot.urdf",
+ "family": "arm",
+ "group": "arm",
+ "scope": "PASS means the modelled actuators (datasheet peak torque as a hard limit, a linear torque-speed line to no-load speed, reflected rotor inertia, URDF damping/friction) can produce the torques and speeds the task needs in this geometry and mass distribution, and that mean torque over the hold stays within the continuous (rated) torque. Joint control uses an ideal model-based feedforward (computed torque) through the force-limited servo for fixed-base robots and plain position servos for floating robots; a pass therefore proves torque/speed capacity, not that a given controller achieves it. Untested: thermal limits over long duty cycles (only the mean-vs-rated proxy), gearbox backlash and compliance, link and joint flexibility, encoder resolution, supply voltage sag and current limits, bus latency, controller tuning, and contact/friction values (nominal friction only).",
+ "untested": [],
+ "fidelity": "URDF effort limits enforced; position gains inferred; speed/thermal/electrical limits unmodelled; geometry and hardware uncalibrated; armature = rotor inertia x gear ratio^2 from the actuator record: base_yaw: 0.0286 kg m^2 (estimate (feetech_sts motor) x gear ratio 345^2); shoulder_pitch: 0.0286 kg m^2 (estimate (feetech_sts motor) x gear ratio 345^2); upper_arm_roll: 0.0286 kg m^2 (estimate (feetech_sts motor) x gear ratio 345^2); elbow_pitch: 0.0286 kg m^2 (estimate (feetech_sts motor) x gear ratio 345^2); forearm_roll: 0.0286 kg m^2 (estimate (feetech_sts motor) x gear ratio 345^2); wrist_pitch: 0.0286 kg m^2 (estimate (feetech_sts motor) x gear ratio 345^2); wrist_roll: 0.0286 kg m^2 (estimate (feetech_sts motor) x gear ratio 345^2); gripper: 0.0286 kg m^2 (estimate (feetech_sts motor) x gear ratio 345^2)",
+ "tests": {
+  "payload_hold": {
+   "pass": true,
+   "explanation": "stretched_plus: holds 0.1 kg with the arm stretched out for 3 s; worst continuous utilisation 0.95x rated at shoulder_pitch | stretched_minus: holds 0.1 kg with the arm stretched out for 3 s; worst continuous utilisation 0.95x rated at shoulder_pitch",
+   "poses": {
+    "stretched_plus": {
+     "pass": true,
+     "explanation": "holds 0.1 kg with the arm stretched out for 3 s; worst continuous utilisation 0.95x rated at shoulder_pitch",
+     "shoulder": "shoulder_pitch",
+     "shoulder_target_rad": 1.5708,
+     "move_s": 2.0,
+     "hold_s": 3.0,
+     "payload_kg": 0.1,
+     "joints": {
+      "base_yaw": {
+       "peak_nm": 0.0009,
+       "peak_rating_nm": 2.942,
+       "util_peak": 0.0,
+       "mean_hold_nm": 0.0,
+       "rated_nm": 0.9807,
+       "util_rated": 0.0,
+       "max_err": 0.0,
+       "max_err_hold": 0.0,
+       "saturated_frac": 0.0
+      },
+      "shoulder_pitch": {
+       "peak_nm": 1.5265,
+       "peak_rating_nm": 4.9033,
+       "util_peak": 0.311,
+       "mean_hold_nm": 1.4898,
+       "rated_nm": 1.5691,
+       "util_rated": 0.949,
+       "max_err": 0.0029,
+       "max_err_hold": 0.0,
+       "saturated_frac": 0.0
+      },
+      "upper_arm_roll": {
+       "peak_nm": 0.005,
+       "peak_rating_nm": 2.942,
+       "util_peak": 0.002,
+       "mean_hold_nm": 0.0047,
+       "rated_nm": 0.9807,
+       "util_rated": 0.005,
+       "max_err": 0.0,
+       "max_err_hold": 0.0,
+       "saturated_frac": 0.0
+      },
+      "elbow_pitch": {
+       "peak_nm": 0.8889,
+       "peak_rating_nm": 2.942,
+       "util_peak": 0.302,
+       "mean_hold_nm": 0.8121,
+       "rated_nm": 0.9807,
+       "util_rated": 0.828,
+       "max_err": 0.0015,
+       "max_err_hold": 0.0,
+       "saturated_frac": 0.0
+      },
+      "forearm_roll": {
+       "peak_nm": 0.002,
+       "peak_rating_nm": 2.942,
+       "util_peak": 0.001,
+       "mean_hold_nm": 0.0018,
+       "rated_nm": 0.9807,
+       "util_rated": 0.002,
+       "max_err": 0.0,
+       "max_err_hold": 0.0,
+       "saturated_frac": 0.0
+      },
+      "wrist_pitch": {
+       "peak_nm": 0.3655,
+       "peak_rating_nm": 2.942,
+       "util_peak": 0.124,
+       "mean_hold_nm": 0.3344,
+       "rated_nm": 0.9807,
+       "util_rated": 0.341,
+       "max_err": 0.0007,
+       "max_err_hold": 0.0,
+       "saturated_frac": 0.0
+      },
+      "wrist_roll": {
+       "peak_nm": 0.0011,
+       "peak_rating_nm": 2.942,
+       "util_peak": 0.0,
+       "mean_hold_nm": 0.001,
+       "rated_nm": 0.9807,
+       "util_rated": 0.001,
+       "max_err": 0.0,
+       "max_err_hold": 0.0,
+       "saturated_frac": 0.0
+      }
+     }
     },
-    "initial_clearance": {
-      "pass": true,
-      "penetrations": [],
-      "count": 0
-    },
-    "settle_under_gravity": {
-      "pass": true,
-      "max_joint_speed": 0.83,
-      "base_drop_m": null,
-      "upright": null
-    },
-    "hold_pose": {
-      "pass": true,
-      "max_joint_error_rad": 0.021
-    },
-    "actuator_sweep": {
-      "pass": false,
-      "tracked": "7/9",
-      "worst_error": 3.473,
-      "actuators": [
-        {
-          "actuator": "act_joint_1",
-          "joint": "joint_1",
-          "pass": false,
-          "rms_error": 1.94339,
-          "peak_error": 3.47273,
-          "error_unit": "rad",
-          "rms_tolerance": 0.15,
-          "peak_actuator_force": 12.0,
-          "force_unit": "N m"
-        },
-        {
-          "actuator": "act_joint_2",
-          "joint": "joint_2",
-          "pass": false,
-          "rms_error": 1.193673,
-          "peak_error": 2.563968,
-          "error_unit": "rad",
-          "rms_tolerance": 0.15,
-          "peak_actuator_force": 12.0,
-          "force_unit": "N m"
-        },
-        {
-          "actuator": "act_joint_3",
-          "joint": "joint_3",
-          "pass": true,
-          "rms_error": 0.004459,
-          "peak_error": 0.021654,
-          "error_unit": "rad",
-          "rms_tolerance": 0.15,
-          "peak_actuator_force": 1.813179,
-          "force_unit": "N m"
-        },
-        {
-          "actuator": "act_joint_4",
-          "joint": "joint_4",
-          "pass": true,
-          "rms_error": 0.078499,
-          "peak_error": 0.178336,
-          "error_unit": "rad",
-          "rms_tolerance": 0.15,
-          "peak_actuator_force": 4.0,
-          "force_unit": "N m"
-        },
-        {
-          "actuator": "act_joint_5",
-          "joint": "joint_5",
-          "pass": true,
-          "rms_error": 0.004276,
-          "peak_error": 0.01259,
-          "error_unit": "rad",
-          "rms_tolerance": 0.15,
-          "peak_actuator_force": 1.450614,
-          "force_unit": "N m"
-        },
-        {
-          "actuator": "act_joint_6",
-          "joint": "joint_6",
-          "pass": true,
-          "rms_error": 0.037772,
-          "peak_error": 0.169829,
-          "error_unit": "rad",
-          "rms_tolerance": 0.15,
-          "peak_actuator_force": 2.0,
-          "force_unit": "N m"
-        },
-        {
-          "actuator": "act_joint_7",
-          "joint": "joint_7",
-          "pass": true,
-          "rms_error": 0.004258,
-          "peak_error": 0.01082,
-          "error_unit": "rad",
-          "rms_tolerance": 0.15,
-          "peak_actuator_force": 1.379794,
-          "force_unit": "N m"
-        },
-        {
-          "actuator": "act_left_finger_joint",
-          "joint": "left_finger_joint",
-          "pass": true,
-          "rms_error": 0.004878,
-          "peak_error": 0.014935,
-          "error_unit": "m",
-          "rms_tolerance": 0.01,
-          "peak_actuator_force": 0.60191,
-          "force_unit": "N"
-        },
-        {
-          "actuator": "act_right_finger_joint",
-          "joint": "right_finger_joint",
-          "pass": true,
-          "rms_error": 0.004878,
-          "peak_error": 0.014935,
-          "error_unit": "m",
-          "rms_tolerance": 0.01,
-          "peak_actuator_force": 0.60191,
-          "force_unit": "N"
-        }
-      ]
+    "stretched_minus": {
+     "pass": true,
+     "explanation": "holds 0.1 kg with the arm stretched out for 3 s; worst continuous utilisation 0.95x rated at shoulder_pitch",
+     "shoulder": "shoulder_pitch",
+     "shoulder_target_rad": -1.5708,
+     "move_s": 2.0,
+     "hold_s": 3.0,
+     "payload_kg": 0.1,
+     "joints": {
+      "base_yaw": {
+       "peak_nm": 0.0009,
+       "peak_rating_nm": 2.942,
+       "util_peak": 0.0,
+       "mean_hold_nm": 0.0,
+       "rated_nm": 0.9807,
+       "util_rated": 0.0,
+       "max_err": 0.0,
+       "max_err_hold": 0.0,
+       "saturated_frac": 0.0
+      },
+      "shoulder_pitch": {
+       "peak_nm": 1.5267,
+       "peak_rating_nm": 4.9033,
+       "util_peak": 0.311,
+       "mean_hold_nm": 1.4898,
+       "rated_nm": 1.5691,
+       "util_rated": 0.949,
+       "max_err": 0.0029,
+       "max_err_hold": 0.0,
+       "saturated_frac": 0.0
+      },
+      "upper_arm_roll": {
+       "peak_nm": 0.005,
+       "peak_rating_nm": 2.942,
+       "util_peak": 0.002,
+       "mean_hold_nm": 0.0047,
+       "rated_nm": 0.9807,
+       "util_rated": 0.005,
+       "max_err": 0.0,
+       "max_err_hold": 0.0,
+       "saturated_frac": 0.0
+      },
+      "elbow_pitch": {
+       "peak_nm": 0.8877,
+       "peak_rating_nm": 2.942,
+       "util_peak": 0.302,
+       "mean_hold_nm": 0.8121,
+       "rated_nm": 0.9807,
+       "util_rated": 0.828,
+       "max_err": 0.0015,
+       "max_err_hold": 0.0,
+       "saturated_frac": 0.0
+      },
+      "forearm_roll": {
+       "peak_nm": 0.002,
+       "peak_rating_nm": 2.942,
+       "util_peak": 0.001,
+       "mean_hold_nm": 0.0018,
+       "rated_nm": 0.9807,
+       "util_rated": 0.002,
+       "max_err": 0.0,
+       "max_err_hold": 0.0,
+       "saturated_frac": 0.0
+      },
+      "wrist_pitch": {
+       "peak_nm": 0.3591,
+       "peak_rating_nm": 2.942,
+       "util_peak": 0.122,
+       "mean_hold_nm": 0.3344,
+       "rated_nm": 0.9807,
+       "util_rated": 0.341,
+       "max_err": 0.0007,
+       "max_err_hold": 0.0,
+       "saturated_frac": 0.0
+      },
+      "wrist_roll": {
+       "peak_nm": 0.0011,
+       "peak_rating_nm": 2.942,
+       "util_peak": 0.0,
+       "mean_hold_nm": 0.001,
+       "rated_nm": 0.9807,
+       "util_rated": 0.001,
+       "max_err": 0.0,
+       "max_err_hold": 0.0,
+       "saturated_frac": 0.0
+      }
+     }
     }
+   },
+   "tcp": {
+    "link": "wrist_rotator",
+    "xyz": [
+     0.0226,
+     0.0,
+     0.1042
+    ],
+    "source": "metadata.design.tcp"
+   }
   },
-  "validation_scope": "simulation smoke tests, not hardware or wearable qualification",
-  "mujoco_version": "3.13.0",
-  "model_sha256": "53163ebfac2d2c19d875bd5eab8adcf09550b0d3227ca9e870be2cb51483f16a",
-  "limitations": [
-    "No measured motor, material, thermal or battery model",
-    "No manufacturing or human-fit validation"
-  ],
-  "self_collision_masks_enabled": true,
-  "passed": 4,
-  "total": 5,
-  "collision_model": "URDF primitives / mesh bounding boxes",
-  "self_collision": true,
-  "source_urdf_sha256": "ce0aa8609bd89e3a088780e5dc2a8a6d8babfda4a0199129c20e1f30ac2ca8b0",
-  "initial_penetrations": [],
-  "hardware_verified": false
+  "reach": {
+   "pass": true,
+   "explanation": "TCP 0.450 m from the shoulder axis with the payload, claimed 0.450 m (tolerance 9 mm)",
+   "achieved_m": 0.4502,
+   "claimed_m": 0.45,
+   "tcp_source": "metadata.design.tcp"
+  },
+  "speed": {
+   "pass": true,
+   "explanation": "1.50 s move at 80 % rated speed tracks within 0.1 rad; most saturated wrist_roll (0 % of the move)",
+   "move_s": 1.497,
+   "payload_kg": 0.1,
+   "start": {
+    "shoulder_pitch": 1.5707963267948966
+   },
+   "end": {
+    "base_yaw": 1.5707963267948966,
+    "shoulder_pitch": -1.5707963267948966,
+    "upper_arm_roll": 1.5707963267948966,
+    "forearm_roll": 1.5707963267948966,
+    "wrist_roll": 1.5707963267948966
+   },
+   "joints": {
+    "base_yaw": {
+     "peak_nm": 0.5074,
+     "peak_rating_nm": 2.942,
+     "util_peak": 0.172,
+     "mean_move_nm": 0.2507,
+     "rated_nm": 0.9807,
+     "util_rated": 0.256,
+     "max_err": 0.0039,
+     "max_err_hold": 0.0039,
+     "saturated_frac": 0.0,
+     "ideal_peak_nm": 0.5137,
+     "ideal_worst_vs_available": 0.256,
+     "at_speed_rad_s": 1.885,
+     "needs_nm": 0.513,
+     "available_nm": 2.0004,
+     "peak_speed_rad_s": 1.968,
+     "rated_speed_rad_s": 4.48,
+     "err_after_0p5s": 0.0
+    },
+    "shoulder_pitch": {
+     "peak_nm": 2.5089,
+     "peak_rating_nm": 4.9033,
+     "util_peak": 0.512,
+     "mean_move_nm": 1.6898,
+     "rated_nm": 1.5691,
+     "util_rated": 1.077,
+     "max_err": 0.0077,
+     "max_err_hold": 0.0077,
+     "saturated_frac": 0.0,
+     "ideal_peak_nm": 2.443,
+     "ideal_worst_vs_available": 0.671,
+     "at_speed_rad_s": 2.846,
+     "needs_nm": 2.3374,
+     "available_nm": 3.4822,
+     "peak_speed_rad_s": 3.936,
+     "rated_speed_rad_s": 4.92,
+     "err_after_0p5s": 0.0
+    },
+    "upper_arm_roll": {
+     "peak_nm": 0.3761,
+     "peak_rating_nm": 2.942,
+     "util_peak": 0.128,
+     "mean_move_nm": 0.211,
+     "rated_nm": 0.9807,
+     "util_rated": 0.215,
+     "max_err": 0.0039,
+     "max_err_hold": 0.0039,
+     "saturated_frac": 0.0,
+     "ideal_peak_nm": 0.3644,
+     "ideal_worst_vs_available": 0.177,
+     "at_speed_rad_s": 1.848,
+     "needs_nm": 0.3579,
+     "available_nm": 2.0189,
+     "peak_speed_rad_s": 1.968,
+     "rated_speed_rad_s": 4.48,
+     "err_after_0p5s": 0.0
+    },
+    "elbow_pitch": {
+     "peak_nm": 1.0434,
+     "peak_rating_nm": 2.942,
+     "util_peak": 0.355,
+     "mean_move_nm": 0.4941,
+     "rated_nm": 0.9807,
+     "util_rated": 0.504,
+     "max_err": 0.0026,
+     "max_err_hold": 0.0026,
+     "saturated_frac": 0.0,
+     "ideal_peak_nm": 1.0464,
+     "ideal_worst_vs_available": 0.356,
+     "at_speed_rad_s": 0.0,
+     "needs_nm": 1.0464,
+     "available_nm": 2.942,
+     "peak_speed_rad_s": 0.0,
+     "rated_speed_rad_s": 3.58,
+     "err_after_0p5s": 0.0
+    },
+    "forearm_roll": {
+     "peak_nm": 0.3754,
+     "peak_rating_nm": 2.942,
+     "util_peak": 0.128,
+     "mean_move_nm": 0.207,
+     "rated_nm": 0.9807,
+     "util_rated": 0.211,
+     "max_err": 0.0039,
+     "max_err_hold": 0.0039,
+     "saturated_frac": 0.0,
+     "ideal_peak_nm": 0.3633,
+     "ideal_worst_vs_available": 0.177,
+     "at_speed_rad_s": 1.834,
+     "needs_nm": 0.3579,
+     "available_nm": 2.0258,
+     "peak_speed_rad_s": 1.968,
+     "rated_speed_rad_s": 4.48,
+     "err_after_0p5s": 0.0
+    },
+    "wrist_pitch": {
+     "peak_nm": 0.4638,
+     "peak_rating_nm": 2.942,
+     "util_peak": 0.158,
+     "mean_move_nm": 0.3541,
+     "rated_nm": 0.9807,
+     "util_rated": 0.361,
+     "max_err": 0.0016,
+     "max_err_hold": 0.0016,
+     "saturated_frac": 0.0,
+     "ideal_peak_nm": 0.4372,
+     "ideal_worst_vs_available": 0.149,
+     "at_speed_rad_s": 0.0,
+     "needs_nm": 0.4372,
+     "available_nm": 2.942,
+     "peak_speed_rad_s": 0.0,
+     "rated_speed_rad_s": 4.48,
+     "err_after_0p5s": 0.0
+    },
+    "wrist_roll": {
+     "peak_nm": 0.3772,
+     "peak_rating_nm": 2.942,
+     "util_peak": 0.128,
+     "mean_move_nm": 0.2043,
+     "rated_nm": 0.9807,
+     "util_rated": 0.208,
+     "max_err": 0.0039,
+     "max_err_hold": 0.0039,
+     "saturated_frac": 0.0,
+     "ideal_peak_nm": 0.365,
+     "ideal_worst_vs_available": 0.177,
+     "at_speed_rad_s": 1.834,
+     "needs_nm": 0.3592,
+     "available_nm": 2.0258,
+     "peak_speed_rad_s": 1.968,
+     "rated_speed_rad_s": 4.48,
+     "err_after_0p5s": 0.0
+    }
+   }
+  },
+  "grip": {
+   "pass": true,
+   "explanation": "holds 0.1 kg against its weight with friction 0.5: slip 0.1 mm in 3 s, clamp force 27.4 N (needs >= 1.0 N), gripper limited to its rated (continuous) torque",
+   "payload_kg": 0.1,
+   "friction": 0.5,
+   "slip_mm": 0.07,
+   "sideways_drift_mm": 0.12,
+   "clamp_force_n": 27.44,
+   "normal_force_end_n": 27.62,
+   "required_normal_n": 0.98,
+   "box_width_m": 0.0241,
+   "finger_gap_m": 0.0481,
+   "close_targets": {
+    "gripper": 0.464
+   },
+   "actuator_limit": "rated torque (continuous)",
+   "pads": 2,
+   "joints": {
+    "gripper": {
+     "peak_nm": 0.9807,
+     "peak_rating_nm": 2.942,
+     "util_peak": 0.333,
+     "mean_hold_nm": 0.9807,
+     "rated_nm": 0.9807,
+     "util_rated": 1.0,
+     "max_err": 0.3209,
+     "max_err_hold": 0.3209,
+     "saturated_frac": 1.0
+    }
+   }
+  }
+ },
+ "passed": 4,
+ "total": 4,
+ "source_urdf_sha256": "537a5f9aba20bffaccc9597b7d91690e0b5d5ba531da2f48b734ef7923314cfb"
 }

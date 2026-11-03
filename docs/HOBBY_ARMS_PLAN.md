@@ -23,8 +23,8 @@ Status key: ☐ todo · ◐ in progress · ☑ done (with the check that proves 
 - ☐ Fasteners with lengths, inserts, bearings used by printed joints
 
 ## 3. Design engine
-- ☐ Hobby ladder (SG90 → MG90S → MG996R → DS3218) chosen for small/cheap/Arduino prompts
-- ☐ Real torque at the supply voltage, stall-current power budget, deadband and speed
+- ☑ Hobby ladder (SG90 → MG90S → MG996R → DS3218) chosen for SG90/MG996R/Arduino/hobby-servo prompts (named models restrict the choice); tests in prompt + design suites
+- ◐ Rated (30 % stall) / peak torque, loaded speed, all-servo stall current vs the 5 V 10 A supply; deadband and voltage-dependent torque still to do
 - ☐ Horn couplers for cross/disc horns, bearing-supported joints opposite the horn
 - ☐ Base housing for Arduino + driver + power with cable channels and strain relief
 
@@ -46,3 +46,7 @@ Status key: ☐ todo · ◐ in progress · ☑ done (with the check that proves 
 ## Session log
 - 2026-10-27: mapped the codebase; backed up the unpushed `rebuild/real-parts` branch;
   installed arduino-cli (Uno/Nano core, Servo + PCA9685 libs) and PrusaSlicer CLI for checks.
+- 2026-11-03: full audit of the live site and branch. Hobby ladder + Arduino/PCA9685/5 V supply wired into the arm
+  designer and the prompt reader; failing design checks surfaced as warnings. Fixed mounted-arm sizing, 3S voltage,
+  caster friction, turn claims, track coupling, humanoid proportions, template scaling; CI moved to
+  verify_examples.py + simulate_examples.py --check. Next here: servo cradles/horn couplers for hobby servos, firmware.

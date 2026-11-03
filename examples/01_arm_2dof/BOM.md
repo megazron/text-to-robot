@@ -1,34 +1,28 @@
 # Bill of Materials — arm_2dof
 
-**Estimated total: $1159.51**  ·  tier: prosumer
+**Estimated total: $105.59**  ·  tier: hobby
 
 **Effort sizing: passes catalogue estimate; hardware verified: no.**
 
 | Category | Component | Qty | Unit $ | Subtotal $ | Spec |
 |---|---|--:|--:|--:|---|
-| Actuator | Unitree GO-M8010-6 _(joint joint_1; rating duty/source unverified; joint joint_2; rating duty/source unverified)_ | 2 | 400 | 800 | integrated BLDC + planetary, RS485 (23 N·m) |
-| Actuator | NEMA17 + lead screw _(joint left_finger_joint; rating duty/source unverified; joint right_finger_joint; rating duty/source unverified)_ | 2 | 26 | 52 | lead-screw linear stage (60 N) |
-| Motor driver | TMC2209 driver | 2 | 10 | 20 | driver for NEMA17 + lead screw |
-| Compute | Teensy 4.1 | 1 | 32 | 32 | 600MHz MCU, real-time control |
-| Power | LiPo 4S 5000mAh | 1 | 40 | 40 | 74 Wh; est. load 60 W |
-| Power | DC-DC buck regulator (5V/10A) | 1 | 12 | 12 | logic + servo rail |
-| Power | Power distribution board + fuse + switch | 1 | 14 | 14 | wiring harness backbone |
-| Structure | 3D-printed frame (PLA/PETG) | 1 | 55.11 | 55.11 | ~2.50 kg material @ $22/kg |
-| Structure | Fastener + bearing kit | 1 | 18 | 18 | M3 screws, heat inserts, 608 bearings |
-| Wiring & misc | Wiring, connectors, JST/Dupont, sleeving | 1 | 116.4 | 116.4 | ~12% of electronics |
+| Actuator | Feetech STS3215 C047 12 V 30 kg.cm (1:345) _(joint shoulder_pitch; joint elbow_pitch; gripper · https://www.seeedstudio.com/STS3215-30KG-Serial-Servo-p-6340.html)_ | 3 | 22 | 66 | 0.9807 N·m rated / 2.942 N·m peak, 12 V |
+| Power | Mean Well LRS-75-12 enclosed PSU, 12 V 6 A (75 W) _(12 V actuator supply · https://www.digikey.com/en/products/result?keywords=LRS-75-12)_ | 1 | 22 | 22 | 12 V |
+| Electronics | Waveshare Bus Servo Adapter (A) _(USB to actuator bus · https://www.waveshare.com/bus-servo-adapter-a.htm)_ | 1 | 10.6 | 10.6 | 12 V |
+| Printed structure | PETG filament for 4 printed parts _(base_link, upper_arm, forearm, gripper_jaw)_ | 1 | 4.11 | 4.11 | 163 g of parts (+15 % supports/waste), about 14.8 h of printing |
+| Fasteners | Screws, nuts and inserts | 24 | 0.12 | 2.88 | 4x M5 x 12 socket head (base to bench); 8x M2 x 6 case screws; 12x horn screws |
 
 ## Actuator sizing
 
 | Joint | Required effort | Unit | Chosen actuator | Margin |
 |---|--:|---|---|--:|
-| joint_1 | 9.6 | N·m | Unitree GO-M8010-6 | 2.4x |
-| joint_2 | 9.6 | N·m | Unitree GO-M8010-6 | 2.4x |
-| left_finger_joint | 32 | N | NEMA17 + lead screw | 1.9x |
-| right_finger_joint | 32 | N | NEMA17 + lead screw | 1.9x |
-
-## Warnings
-- ⚠️ Sizing uses a neutral-pose gravity proxy and declared joint effort, not a worst-case workspace or dynamic load analysis. Selection checks only approximate effort and broad motion type. Speed/torque curves, travel, voltage, feedback, mounting, thermal duty and wiring are not qualified.
-- ⚠️ Catalog values are planning estimates. Except explicitly sourced rated values, torque entries may be stall/peak ratings; continuous duty, fit and complete assemblies are unverified.
+| shoulder_pitch | 0.939 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 3.13x |
+| elbow_pitch | 0.43 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 6.83x |
 
 ## Notes
-- Tier: prosumer. Prices are planning estimates (USD), not quotes. Structure assumes FDM 3D printing.
+- 2-DOF arm, 350 mm reach, 0.1 kg payload, Feetech STS serial-bus servos (12 V)
+- Sized for a 0.1 kg payload.
+- Arm clamps or bolts to the bench through the four M5 holes in the base; it is not free-standing at full reach.
+- Links are cantilevered from one side of each horn (as on SO-101 / Koch arms); add an idler bearing on the far side for heavy use.
+- Torques are exact static gravity loads of this geometry: the worst pose (stretched out with the payload) must be held within each actuator's rated continuous torque, peaks get +30 %, and each joint must still reach >= 1 rad/s loaded on its torque-speed line.
+- Prices are list/street prices from the linked suppliers at the time the catalog was written; check before ordering.

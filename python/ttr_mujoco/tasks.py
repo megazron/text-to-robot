@@ -50,7 +50,7 @@ SCOPE = ("PASS means the modelled actuators (datasheet peak torque as a hard lim
 ARM = {"arm", "scara", "manipulator", "mobile_manipulator"}
 WHEELED = {"diff_drive", "four_wheel", "mecanum", "rover", "skid_steer", "wheeled", "omni", "tracked", "ackermann", "differential",
            "rocker_bogie", "character_walle", "character_eva", "character_baymax"}
-LEGGED = {"quadruped", "hexapod", "humanoid", "biped", "legged"}
+LEGGED = {"quadruped", "hexapod", "humanoid", "biped", "legged", "battle_mech", "mech"}
 GRIPPER = {"gripper", "end_effector"}
 EXO = {"exo", "exoskeleton"}
 
@@ -662,10 +662,14 @@ def wheeled_tasks(xml, design, family):
     rig0 = Rig(m)
     v_free = min(rig0.by_joint(w["joint"])["noload"] * w["radius"] for w in W.items if rig0.by_joint(w["joint"])["noload"]) if all(rig0.by_joint(w["joint"])["noload"] for w in W.items) else 0.5
     v_cmd = claim or 0.8 * v_free
-    mec = family == "mecanum"
+    # speed is ramped like a real motor controller would: the design's acceleration (0.5 m/s^2 unless it states one) on
+    # slopes, twice that on flat ground; a min-jerk ramp over T peaks at 1.875 v / T
+    a_design = float(((design or {}).get("performance") or {}).get("accel_m_s2") or 0.5)
+    ramp = lambda v, a: max(0.5, 1.875 * abs(v) / a)
+    mec = "mecanum" in family          # design families are prefixed (mobile_mecanum)
     out = {}
 
-    def run(cmd_fn, seconds, gravity=None, stop=None):
+    def run(cmd_fn, seconds, gravity=None, stop=None, ramp_s=0.5):
         mm = mujoco.MjModel.from_xml_string(xml)
         if gravity is not None: mm.opt.gravity[:] = gravity
         rig = Rig(mm); mujoco.mj_forward(mm, rig.d)
@@ -676,7 +680,7 @@ def wheeled_tasks(xml, design, family):
         p0, y0 = _base_pose(mm, rig.d); t0 = rig.t; ok = True; min_up = 1.0
         while rig.t - t0 < seconds:
             min_up = min(min_up, _upright(rig.d))
-            ref = hold.copy(); s_, _, _ = _min_jerk(rig.t - t0, 0.5)
+            ref = hold.copy(); s_, _, _ = _min_jerk(rig.t - t0, ramp_s)
             for a, w in cmd_fn().items(): ref[a] = w * s_
             ok = rig.step(ref) and ok
             if not ok: break
@@ -685,14 +689,15 @@ def wheeled_tasks(xml, design, family):
         rig.min_upright = min_up
         return rig, p0, y0, p1, y1, t0, ok
 
-    # straight 2 m
-    dist = 2.0
+    # straight: the ramp distance plus 2 m at cruise
+    Tr = ramp(v_cmd, 2 * a_design)
+    dist = 2.0 + 0.5 * v_cmd * Tr
     cmd = W.command(vx=v_cmd, mecanum=mec)
-    rig, p0, y0, p1, y1, t0, ok = run(lambda: cmd, 0.5 + 2.5 * dist / max(v_cmd, 1e-3), stop=lambda d, p0: np.linalg.norm(d.qpos[:2] - p0[:2]) >= dist)
+    rig, p0, y0, p1, y1, t0, ok = run(lambda: cmd, Tr + 2.5 * dist / max(v_cmd, 1e-3), stop=lambda d, p0: np.linalg.norm(d.qpos[:2] - p0[:2]) >= dist, ramp_s=Tr)
     T = rig.t - t0; heading = np.array([np.cos(y0), np.sin(y0)])
     travel = float((p1[:2] - p0[:2]) @ heading); dp = p1[:2] - p0[:2]; lateral = float(heading[0] * dp[1] - heading[1] * dp[0])
-    # cruise speed: second half of the run
-    cruise_t = t0 + 0.5 + 0.5 * max(T - 0.5, 0)
+    # cruise speed: second half of the time after the ramp
+    cruise_t = t0 + Tr + 0.5 * max(T - Tr, 0)
     v_ach = travel / T if T > 0 else 0.0
     util = rig.utilisation(names, hold=(cruise_t, None), mean_label="mean_cruise")
     drift = float(np.degrees(np.angle(np.exp(1j * (y1 - y0)))))
@@ -714,12 +719,14 @@ def wheeled_tasks(xml, design, family):
     for deg in sorted({10.0} | ({sclaim} if sclaim and sclaim > 10 else set())):
         th = np.radians(deg); g = [-G * np.sin(th), 0.0, -G * np.cos(th)]
         cmd = W.command(vx=v_cmd, mecanum=mec)
-        rig, p0, y0, p1, y1, t0, ok = run(lambda: cmd, 3.0, gravity=g)
+        Tr = ramp(v_cmd, a_design); secs = Tr + 2.0
+        rig, p0, y0, p1, y1, t0, ok = run(lambda: cmd, secs, gravity=g, ramp_s=Tr)
         up = float(p1[0] - p0[0]); v_up = float(rig.d.qvel[0])
-        util = rig.utilisation(names, hold=(t0 + 1.0, None), mean_label="mean_climb")
+        util = rig.utilisation(names, hold=(t0 + Tr, None), mean_label="mean_climb")
         tipped = rig.min_upright < np.cos(np.radians(30))
-        passed = ok and up >= 0.5 * v_cmd * 2.5 and v_up >= 0.5 * v_cmd and not tipped
-        out[f"ramp_{deg:g}deg"] = _result(passed, f"from standstill on a {deg:g} deg slope: {up:.2f} m uphill in 3 s, speed {v_up:.3f} m/s of {v_cmd:.3f} commanded"
+        expect = 0.5 * v_cmd * Tr + 2.0 * v_cmd       # distance if it tracked the command exactly
+        passed = ok and up >= 0.5 * expect and v_up >= 0.5 * v_cmd and not tipped
+        out[f"ramp_{deg:g}deg"] = _result(passed, f"from standstill on a {deg:g} deg slope (speed ramped over {Tr:.1f} s at {a_design:g} m/s^2): {up:.2f} m uphill in {secs:.1f} s, speed {v_up:.3f} m/s of {v_cmd:.3f} commanded"
                                           + ("" if passed else " (needs >= 50 % of the commanded speed)") + ("; the body tipped over" if tipped else ""),
                                           slope_deg=deg, claim_key=sk if deg == sclaim else None, uphill_m=_r(up), speed_m_s=_r(v_up), joints=util)
 
@@ -728,9 +735,20 @@ def wheeled_tasks(xml, design, family):
     cmd = W.command(wz=wz, mecanum=mec)
     rig, p0, y0, p1, y1, t0, ok = run(lambda: cmd, 3.0)
     yaw_rate = float(rig.d.qvel[5]); moved = float(np.linalg.norm(p1[:2] - p0[:2]))
+    # drift is judged per full turn: a fast spinner makes several turns in the 3 s and should not be penalised for that
+    turns = max(1.0, abs(float(np.unwrap([y0, y1])[1] - y0)) / (2 * np.pi), abs(yaw_rate) * 2.5 / (2 * np.pi))
+    moved_per_turn = moved / turns
     util = rig.utilisation(names, hold=(t0 + 1.0, None), mean_label="mean_turn")
-    passed = ok and yaw_rate >= 0.5 * wz and moved <= 0.1 + 0.05 * W.track and rig.min_upright >= np.cos(np.radians(30))
-    out["turn_in_place"] = _result(passed, f"yaw rate {yaw_rate:.2f} rad/s of {wz:.2f} commanded, centre moved {moved*100:.1f} cm",
+    # a design that states its turn rate (skid-steer slip included) is held to 85 % of that claim; otherwise 50 % of the no-slip rate
+    tclaim = ((design or {}).get("performance") or {}).get("turn_rate_rad_s")
+    need = 0.85 * tclaim if tclaim else 0.5 * wz
+    passed = ok and yaw_rate >= need and moved_per_turn <= 0.1 + 0.05 * W.track and rig.min_upright >= np.cos(np.radians(30))
+    if mec and not any(w["rollers"] for w in W.items):
+        # a rigid stand-in for a mecanum wheel scrubs like skid steer; the real wheel's rollers make this turn kinematic
+        passed = None
+    out["turn_in_place"] = _result(passed, ("untested: mecanum rollers are not modelled as joints (rigid wheels scrub like skid steer); measured " if passed is None else "")
+                                   + f"yaw rate {yaw_rate:.2f} rad/s with {wz:.2f} commanded (no-slip)" + (f", claimed {tclaim:.2f} rad/s (needs >= {need:.2f})" if tclaim else f" (needs >= {need:.2f})") + f", centre moved {moved*100:.1f} cm over {turns:.1f} turn(s) ({moved_per_turn*100:.1f} cm per turn)",
+                                   claimed_rad_s=tclaim,
                                    commanded_rad_s=_r(wz), yaw_rate_rad_s=_r(yaw_rate), drift_m=_r(moved), track_m=_r(W.track), joints=util)
     if mec:
         if not any(w["rollers"] for w in W.items):
@@ -845,7 +863,8 @@ def _stand(xml, seconds=5.0, rail=False, no_contact=()):
     for k in range(int(seconds / m.opt.timestep)):
         ok = rig.step(hold) and ok
         if not ok: break
-        if k % 5 == 0: zs.append((rig.t, float(rig.d.qpos[2] if not rail else rig.d.xpos[1][2])))
+        # base height: free base qpos z, rail body z; a fixed-base robot (bolted down) has no base height to log
+        if k % 5 == 0: zs.append((rig.t, float(rig.d.xpos[1][2] if rail or not _is_free(m) else rig.d.qpos[2])))
     return rig, hold, np.array(zs), ok
 
 
@@ -979,6 +998,9 @@ def family_of(spec, urdf_xml=""):
     design = ((spec or {}).get("metadata") or {}).get("design") or {}
     fam = design.get("family") or ((spec or {}).get("metadata") or {}).get("family")
     if fam: return str(fam).lower()
+    rname = str((spec or {}).get("robot_name") or re.search(r'<robot\s+name="([^"]+)"', urdf_xml or "") and re.search(r'<robot\s+name="([^"]+)"', urdf_xml).group(1) or "").lower()
+    for word in ("scara", "gripper", "humanoid", "quadruped", "hexapod"):
+        if word in rname: return word
     names = " ".join(re.findall(r'<joint\s+name="([^"]+)"', urdf_xml)).lower()
     if re.search(r"wheel", names): return "wheeled"
     if re.search(r"hip|knee", names): return "legged"

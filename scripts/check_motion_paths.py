@@ -38,8 +38,9 @@ def main():
         rows.append({'path': source.name, 'example': example, 'poses_checked': report['poses_checked'],
                      'failing_poses': report['failing_poses'], 'pass': report['pass']})
         print(rows[-1], flush=True)
-    if len(rows) != 6:
-        raise SystemExit('Expected six motion fixtures')
+    # Mark 43 joint paths only; the designed examples' motion is covered by simulate_examples.py task tests
+    if len(rows) != 2:
+        raise SystemExit('Expected two Mark 43 motion fixtures')
     summary = {'scope': 'Sampled geometric paths, not dynamic or hardware validation; reported collisions are not suppressed', 'paths': rows}
     output = directory/'summary.json'
     if args.check:

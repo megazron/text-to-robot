@@ -83,6 +83,9 @@ export function interpretPrompt(prompt: string): PromptResult {
     sensors: requestedSensors(t).filter((type) => !negates(t, SENSOR_WORDS.find(([, k]) => k === type)![0])),
     excludeSensors: SENSOR_WORDS.filter(([rx]) => negates(t, rx)).map(([, k]) => k), ...(heightM ? { heightM } : {}) };
   const spec = choice.build(ctx);
+  // record what kind of robot this is, so simulators and exporters pick the right tests and controllers
+  const meta = spec.metadata as unknown as Record<string, unknown>;
+  if (!meta.family && !(meta.design as { family?: string } | undefined)?.family) meta.family = choice.family;
   if (hobby) {
     if (choice.family === "serial_arm" && choice.designed) dimensions.push(`hobby servos${hobby.only ? ` (${hobby.only.map((k) => k.replace("hobby_", "").toUpperCase()).join(", ")})` : ""} on an Arduino Uno + PCA9685`);
     else ignored.push(`hobby servos / Arduino: only arms are designed for hobby servos so far; the ${choice.label} uses its standard actuators`);

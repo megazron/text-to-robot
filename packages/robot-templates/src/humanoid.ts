@@ -10,7 +10,7 @@ import { attachParallelGripper } from "./grippers.ts";
 const THIGH = 0.20, SHIN = 0.20, FOOT = 0.04;
 const HIP_Z = THIGH + SHIN + FOOT;
 
-const WRIST_LEN = 0.06;   // every arm link except the upper arm and forearm
+const WRIST_LEN = 0.045;  // every arm link except the upper arm and forearm (compact wrist, human-like proportions)
 const longSegments = (dof: number) => (dof > 1 ? 1 : 0) + (dof > 3 ? 1 : 0);
 const gripperLen = () => ARM.gripper_palm[2] + ARM.finger[2];
 
@@ -68,12 +68,12 @@ export function humanoid(opts: HumanoidOptions = {}): RobotSpecification {
   const dof = opts.armDof ?? 7;
   const g = opts.gripper ?? true;
   const shoulderZ = baseZ + tz - 0.03;
-  // A hanging hand must never be a support point: on legs, shorten the long arm
-  // segments so the fingertips stay half a foot height above the soles.
+  // A hanging hand must never be a support point: on legs, shorten the long arm segments so the fingertips hang
+  // at least 35 % of the leg length above the soles (a person's fingertips reach mid-thigh), clear of the floor in a squat.
   let seg = HUMANOID.arm_segment;
   if (legs && longSegments(dof) > 0) {
     const fixed = WRIST_LEN * (dof - longSegments(dof)) + (g ? gripperLen() : 0);
-    seg = Math.min(seg, (shoulderZ - FOOT / 2 - fixed) / longSegments(dof));
+    seg = Math.max(0.05, Math.min(seg, (shoulderZ - FOOT - 0.35 * (THIGH + SHIN) - fixed) / longSegments(dof)));
   }
   appendArm(spec, "left", dof, ty / 2 + HUMANOID.arm_radius + .003, shoulderZ, g, seg);
   appendArm(spec, "right", dof, -(ty / 2 + HUMANOID.arm_radius + .003), shoulderZ, g, seg);

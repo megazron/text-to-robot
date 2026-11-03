@@ -3052,7 +3052,7 @@
   "end_effectors": [],
   "metadata": {
     "generator": "text-to-robot",
-    "created": "2026-09-19T18:43:19.510Z",
+    "created": "2026-11-03T10:13:48.281Z",
     "inferred_fields": [
       "joints.base_link_front_panel_mount.dynamics",
       "joints.base_link_front_panel_mount.limit",
@@ -3174,6 +3174,7 @@
       "Generated hexapod (6 legs x 3 DOF = 18 DOF) from template.",
       "Interpreted locally: type inferred, DOF=18, gripper=parallel."
     ],
-    "source_prompt": "Build a six-legged reconnaissance spider-bot with a LiDAR turret, budget $1500\n"
+    "source_prompt": "Build a six-legged reconnaissance spider-bot with a LiDAR turret, budget $1500\n",
+    "family": "hexapod"
   }
 }

@@ -1,96 +1,177 @@
 {
-  "model": "robot.urdf",
-  "nbody": 15,
-  "njnt": 4,
-  "nu": 4,
-  "ngeom": 29,
-  "floating": false,
-  "tests": {
-    "compile": {
-      "pass": true,
-      "total_mass_kg": 2.457,
-      "actuators": 4
-    },
-    "initial_clearance": {
-      "pass": true,
-      "penetrations": [],
-      "count": 0
-    },
-    "settle_under_gravity": {
-      "pass": true,
-      "max_joint_speed": 0.44,
-      "base_drop_m": null,
-      "upright": null
-    },
-    "hold_pose": {
-      "pass": true,
-      "max_joint_error_rad": 0.02
-    },
-    "actuator_sweep": {
-      "pass": false,
-      "tracked": "2/4",
-      "worst_error": 0.506,
-      "actuators": [
-        {
-          "actuator": "act_joint_1",
-          "joint": "joint_1",
-          "pass": false,
-          "rms_error": 0.248942,
-          "peak_error": 0.505898,
-          "error_unit": "rad",
-          "rms_tolerance": 0.15,
-          "peak_actuator_force": 19.892677,
-          "force_unit": "N m"
-        },
-        {
-          "actuator": "act_joint_2",
-          "joint": "joint_2",
-          "pass": true,
-          "rms_error": 0.021888,
-          "peak_error": 0.064031,
-          "error_unit": "rad",
-          "rms_tolerance": 0.15,
-          "peak_actuator_force": 3.506467,
-          "force_unit": "N m"
-        },
-        {
-          "actuator": "act_joint_3",
-          "joint": "joint_3",
-          "pass": false,
-          "rms_error": 0.033646,
-          "peak_error": 0.076934,
-          "error_unit": "m",
-          "rms_tolerance": 0.01,
-          "peak_actuator_force": 3.087922,
-          "force_unit": "N"
-        },
-        {
-          "actuator": "act_joint_4",
-          "joint": "joint_4",
-          "pass": true,
-          "rms_error": 0.004176,
-          "peak_error": 0.005922,
-          "error_unit": "rad",
-          "rms_tolerance": 0.15,
-          "peak_actuator_force": 1.184312,
-          "force_unit": "N m"
-        }
-      ]
+ "model": "robot.urdf",
+ "family": "scara",
+ "group": "arm",
+ "scope": "PASS means the modelled actuators (datasheet peak torque as a hard limit, a linear torque-speed line to no-load speed, reflected rotor inertia, URDF damping/friction) can produce the torques and speeds the task needs in this geometry and mass distribution, and that mean torque over the hold stays within the continuous (rated) torque. Joint control uses an ideal model-based feedforward (computed torque) through the force-limited servo for fixed-base robots and plain position servos for floating robots; a pass therefore proves torque/speed capacity, not that a given controller achieves it. Untested: thermal limits over long duty cycles (only the mean-vs-rated proxy), gearbox backlash and compliance, link and joint flexibility, encoder resolution, supply voltage sag and current limits, bus latency, controller tuning, and contact/friction values (nominal friction only).",
+ "untested": [
+  "no payload claim (performance.payload_kg); arm tests run with 0 kg",
+  "grip: the arm has no gripper joint"
+ ],
+ "fidelity": "URDF effort limits enforced; position gains inferred; speed/thermal/electrical limits unmodelled; geometry and hardware uncalibrated",
+ "tests": {
+  "payload_hold": {
+   "pass": true,
+   "explanation": "home: holds 0 kg at home for 3 s; no continuous ratings known; worst 0.01x peak at joint_3",
+   "poses": {
+    "home": {
+     "pass": true,
+     "explanation": "holds 0 kg at home for 3 s; no continuous ratings known; worst 0.01x peak at joint_3",
+     "shoulder": null,
+     "shoulder_target_rad": null,
+     "move_s": 2.0,
+     "hold_s": 3.0,
+     "payload_kg": 0.0,
+     "joints": {
+      "joint_1": {
+       "peak_nm": 0.0,
+       "peak_rating_nm": 50.0,
+       "util_peak": 0.0,
+       "mean_hold_nm": 0.0,
+       "rated_nm": null,
+       "util_rated": null,
+       "max_err": 0.0,
+       "max_err_hold": 0.0,
+       "saturated_frac": 0.0
+      },
+      "joint_2": {
+       "peak_nm": 0.0,
+       "peak_rating_nm": 50.0,
+       "util_peak": 0.0,
+       "mean_hold_nm": 0.0,
+       "rated_nm": null,
+       "util_rated": null,
+       "max_err": 0.0,
+       "max_err_hold": 0.0,
+       "saturated_frac": 0.0
+      },
+      "joint_3": {
+       "peak_nm": 0.8619,
+       "peak_rating_nm": 80.0,
+       "util_peak": 0.011,
+       "mean_hold_nm": 0.8619,
+       "rated_nm": null,
+       "util_rated": null,
+       "max_err": 0.0,
+       "max_err_hold": 0.0,
+       "saturated_frac": 0.0
+      },
+      "joint_4": {
+       "peak_nm": 0.0,
+       "peak_rating_nm": 50.0,
+       "util_peak": 0.0,
+       "mean_hold_nm": 0.0,
+       "rated_nm": null,
+       "util_rated": null,
+       "max_err": 0.0,
+       "max_err_hold": 0.0,
+       "saturated_frac": 0.0
+      }
+     }
     }
+   },
+   "tcp": {
+    "link": "tool",
+    "xyz": [
+     0.015,
+     0.0,
+     -0.03
+    ],
+    "source": "estimated (tool point farthest from the first joint; no metadata.design.tcp)"
+   }
   },
-  "validation_scope": "simulation smoke tests, not hardware or wearable qualification",
-  "mujoco_version": "3.13.0",
-  "model_sha256": "6bf939440b4f83133a863a275f46ba7a9af47969160e2c0a5e24835503e882eb",
-  "limitations": [
-    "No measured motor, material, thermal or battery model",
-    "No manufacturing or human-fit validation"
-  ],
-  "self_collision_masks_enabled": true,
-  "passed": 4,
-  "total": 5,
-  "collision_model": "URDF primitives / mesh bounding boxes",
-  "self_collision": true,
-  "source_urdf_sha256": "60cbd23e95b9efe89fa159e6de5fb1e9fd283c5d6acb359a9b7f1a1173555675",
-  "initial_penetrations": [],
-  "hardware_verified": false
+  "speed": {
+   "pass": true,
+   "explanation": "1.84 s move at 80 % rated speed tracks within 0.1 rad; most saturated joint_4 (0 % of the move)",
+   "move_s": 1.841,
+   "payload_kg": 0.0,
+   "start": {},
+   "end": {
+    "joint_1": 1.5707963267948966,
+    "joint_2": 1.5707963267948966,
+    "joint_3": -0.001,
+    "joint_4": 1.5707963267948966
+   },
+   "joints": {
+    "joint_1": {
+     "peak_nm": 0.3017,
+     "peak_rating_nm": 50.0,
+     "util_peak": 0.006,
+     "mean_move_nm": 0.1374,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.0032,
+     "max_err_hold": 0.0032,
+     "saturated_frac": 0.0,
+     "ideal_peak_nm": 0.2855,
+     "ideal_worst_vs_available": 0.016,
+     "at_speed_rad_s": 1.467,
+     "needs_nm": 0.2141,
+     "available_nm": 13.4705,
+     "peak_speed_rad_s": 1.6,
+     "rated_speed_rad_s": 2.0,
+     "err_after_0p5s": 0.0
+    },
+    "joint_2": {
+     "peak_nm": 0.1929,
+     "peak_rating_nm": 50.0,
+     "util_peak": 0.004,
+     "mean_move_nm": 0.1028,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.0032,
+     "max_err_hold": 0.0032,
+     "saturated_frac": 0.0,
+     "ideal_peak_nm": 0.1901,
+     "ideal_worst_vs_available": 0.018,
+     "at_speed_rad_s": 1.596,
+     "needs_nm": 0.1833,
+     "available_nm": 10.2585,
+     "peak_speed_rad_s": 1.6,
+     "rated_speed_rad_s": 2.0,
+     "err_after_0p5s": 0.0
+    },
+    "joint_3": {
+     "peak_nm": 0.8623,
+     "peak_rating_nm": 80.0,
+     "util_peak": 0.011,
+     "mean_move_nm": 0.8618,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.0,
+     "max_err_hold": 0.0,
+     "saturated_frac": 0.0,
+     "ideal_peak_nm": 0.862,
+     "ideal_worst_vs_available": 0.011,
+     "at_speed_rad_s": 0.0,
+     "needs_nm": 0.862,
+     "available_nm": 80.0,
+     "peak_speed_rad_s": 0.001,
+     "rated_speed_rad_s": 0.4,
+     "err_after_0p5s": 0.0
+    },
+    "joint_4": {
+     "peak_nm": 0.16,
+     "peak_rating_nm": 50.0,
+     "util_peak": 0.003,
+     "mean_move_nm": 0.0854,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.0032,
+     "max_err_hold": 0.0032,
+     "saturated_frac": 0.0,
+     "ideal_peak_nm": 0.16,
+     "ideal_worst_vs_available": 0.016,
+     "at_speed_rad_s": 1.6,
+     "needs_nm": 0.16,
+     "available_nm": 10.162,
+     "peak_speed_rad_s": 1.6,
+     "rated_speed_rad_s": 2.0,
+     "err_after_0p5s": 0.0
+    }
+   }
+  }
+ },
+ "passed": 2,
+ "total": 2,
+ "source_urdf_sha256": "60cbd23e95b9efe89fa159e6de5fb1e9fd283c5d6acb359a9b7f1a1173555675"
 }

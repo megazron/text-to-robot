@@ -42,7 +42,8 @@ function scaleGeometry(g: Geometry, f: number): Geometry {
     case "box": return { ...g, size: g.size.map((v) => v * f) as Vec3 };
     case "cylinder": case "capsule": return { ...g, radius: g.radius * f, length: g.length * f };
     case "sphere": return { ...g, radius: g.radius * f };
-    case "mesh": { const sc = g.scale ?? [1, 1, 1]; return { ...g, scale: sc.map((v) => v * f) as Vec3 }; }
+    // rebuild the mesh record at the new scale so its bounding box, volume and inertia (and the collision proxy) follow
+    case "mesh": { const sc = g.scale ?? [1, 1, 1]; return g.part ? meshGeometry(g.part, g.file, g.params, sc.map((v) => v * f) as Vec3) : { ...g, scale: sc.map((v) => v * f) as Vec3 }; }
   }
 }
 /** Scale a whole template robot by f: geometry, frames and sensor mounts by f, mass by f^3 (same materials),

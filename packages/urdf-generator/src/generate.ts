@@ -93,7 +93,8 @@ export function generateJoint(j: Joint): string {
   const needsAxis = j.type === "revolute" || j.type === "continuous" || j.type === "prismatic";
   const axis = needsAxis ? `  <axis xyz="${vec(j.axis)}"/>\n` : "";
   const limits = generateLimits(j);
-  const dyn = j.dynamics ? `  <dynamics damping="${num(j.dynamics.damping)}" friction="${num(j.dynamics.friction)}"/>\n` : "";
+  const dyn = (j.dynamics ? `  <dynamics damping="${num(j.dynamics.damping)}" friction="${num(j.dynamics.friction)}"/>\n` : "")
+    + (j.mimic ? `  <mimic joint="${xmlName(j.mimic.joint)}" multiplier="${num(j.mimic.multiplier ?? 1)}" offset="${num(j.mimic.offset ?? 0)}"/>\n` : "");
   return `<joint name="${xmlName(j.name)}" type="${j.type}"${j.passive ? ' passive="true"' : ""}>\n` +
     `  <parent link="${xmlName(j.parent)}"/>\n  <child link="${xmlName(j.child)}"/>\n` +
     `  ${originTag(j.origin)}\n${axis}${limits}${dyn}</joint>`;

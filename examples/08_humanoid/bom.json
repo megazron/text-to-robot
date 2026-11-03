@@ -64,9 +64,9 @@
       "category": "Structure",
       "name": "3D-printed frame (PLA/PETG)",
       "qty": 1,
-      "unit_cost": 322.49,
-      "subtotal": 322.49,
-      "spec": "~14.66 kg material @ $22/kg"
+      "unit_cost": 128.85,
+      "subtotal": 128.85,
+      "spec": "~5.86 kg material @ $22/kg"
     },
     {
       "category": "Structure",
@@ -85,286 +85,263 @@
       "spec": "~12% of electronics"
     }
   ],
-  "total": 12822.89,
+  "total": 12629.25,
   "feasible": true,
-  "sizing_pass": false,
+  "sizing_pass": true,
   "hardware_verified": false,
   "actuator_sizing": [
     {
       "joint": "neck_joint",
-      "required_effort": 40,
+      "required_effort": 12.656,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
+      "required_torque_nm": 12.656,
       "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "margin": "1.8x"
     },
     {
       "joint": "left_arm_joint_1",
-      "required_effort": 40,
+      "required_effort": 12.656,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
+      "required_torque_nm": 12.656,
       "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "margin": "1.8x"
     },
     {
       "joint": "left_arm_joint_2",
-      "required_effort": 40,
+      "required_effort": 12.656,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
+      "required_torque_nm": 12.656,
       "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "margin": "1.8x"
     },
     {
       "joint": "left_arm_joint_3",
-      "required_effort": 40,
+      "required_effort": 12.656,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
+      "required_torque_nm": 12.656,
       "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "margin": "1.8x"
     },
     {
       "joint": "left_arm_joint_4",
-      "required_effort": 40,
+      "required_effort": 12.656,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
+      "required_torque_nm": 12.656,
       "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "margin": "1.8x"
     },
     {
       "joint": "left_arm_joint_5",
-      "required_effort": 40,
+      "required_effort": 12.656,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
+      "required_torque_nm": 12.656,
       "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "margin": "1.8x"
     },
     {
       "joint": "left_arm_joint_6",
-      "required_effort": 40,
+      "required_effort": 12.656,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
+      "required_torque_nm": 12.656,
       "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "margin": "1.8x"
     },
     {
       "joint": "left_arm_joint_7",
-      "required_effort": 40,
+      "required_effort": 12.656,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
+      "required_torque_nm": 12.656,
       "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "margin": "1.8x"
     },
     {
       "joint": "left_left_finger_joint",
-      "required_effort": 32,
+      "required_effort": 10.125,
       "effort_unit": "N",
-      "required_force_n": 32,
+      "required_force_n": 10.125,
       "chosen": "NEMA17 + lead screw",
-      "margin": "1.9x"
+      "margin": "5.9x"
     },
     {
       "joint": "left_right_finger_joint",
-      "required_effort": 32,
+      "required_effort": 10.125,
       "effort_unit": "N",
-      "required_force_n": 32,
+      "required_force_n": 10.125,
       "chosen": "NEMA17 + lead screw",
-      "margin": "1.9x"
+      "margin": "5.9x"
     },
     {
       "joint": "right_arm_joint_1",
-      "required_effort": 40,
+      "required_effort": 12.656,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
+      "required_torque_nm": 12.656,
       "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "margin": "1.8x"
     },
     {
       "joint": "right_arm_joint_2",
-      "required_effort": 40,
+      "required_effort": 12.656,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
+      "required_torque_nm": 12.656,
       "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "margin": "1.8x"
     },
     {
       "joint": "right_arm_joint_3",
-      "required_effort": 40,
+      "required_effort": 12.656,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
+      "required_torque_nm": 12.656,
       "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "margin": "1.8x"
     },
     {
       "joint": "right_arm_joint_4",
-      "required_effort": 40,
+      "required_effort": 12.656,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
+      "required_torque_nm": 12.656,
       "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "margin": "1.8x"
     },
     {
       "joint": "right_arm_joint_5",
-      "required_effort": 40,
+      "required_effort": 12.656,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
+      "required_torque_nm": 12.656,
       "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "margin": "1.8x"
     },
     {
       "joint": "right_arm_joint_6",
-      "required_effort": 40,
+      "required_effort": 12.656,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
+      "required_torque_nm": 12.656,
       "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "margin": "1.8x"
     },
     {
       "joint": "right_arm_joint_7",
-      "required_effort": 40,
+      "required_effort": 12.656,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
+      "required_torque_nm": 12.656,
       "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "margin": "1.8x"
     },
     {
       "joint": "right_left_finger_joint",
-      "required_effort": 32,
+      "required_effort": 10.125,
       "effort_unit": "N",
-      "required_force_n": 32,
+      "required_force_n": 10.125,
       "chosen": "NEMA17 + lead screw",
-      "margin": "1.9x"
+      "margin": "5.9x"
     },
     {
       "joint": "right_right_finger_joint",
-      "required_effort": 32,
+      "required_effort": 10.125,
       "effort_unit": "N",
-      "required_force_n": 32,
+      "required_force_n": 10.125,
       "chosen": "NEMA17 + lead screw",
-      "margin": "1.9x"
+      "margin": "5.9x"
     },
     {
       "joint": "left_hip_yaw",
-      "required_effort": 9.6,
+      "required_effort": 3.038,
       "effort_unit": "N·m",
-      "required_torque_nm": 9.6,
+      "required_torque_nm": 3.038,
       "chosen": "Unitree GO-M8010-6",
-      "margin": "2.4x"
+      "margin": "7.6x"
     },
     {
       "joint": "left_hip_roll",
-      "required_effort": 16,
+      "required_effort": 5.063,
       "effort_unit": "N·m",
-      "required_torque_nm": 16,
+      "required_torque_nm": 5.063,
       "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "margin": "4.5x"
     },
     {
       "joint": "left_hip_joint",
-      "required_effort": 40,
+      "required_effort": 12.656,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
+      "required_torque_nm": 12.656,
       "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "margin": "1.8x"
     },
     {
       "joint": "left_knee_joint",
-      "required_effort": 40,
+      "required_effort": 12.656,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
+      "required_torque_nm": 12.656,
       "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "margin": "1.8x"
     },
     {
       "joint": "left_ankle_roll",
-      "required_effort": 9.6,
+      "required_effort": 3.038,
       "effort_unit": "N·m",
-      "required_torque_nm": 9.6,
+      "required_torque_nm": 3.038,
       "chosen": "Unitree GO-M8010-6",
-      "margin": "2.4x"
+      "margin": "7.6x"
     },
     {
       "joint": "left_ankle_joint",
-      "required_effort": 40,
+      "required_effort": 12.656,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
+      "required_torque_nm": 12.656,
       "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "margin": "1.8x"
     },
     {
       "joint": "right_hip_yaw",
-      "required_effort": 9.6,
+      "required_effort": 3.038,
       "effort_unit": "N·m",
-      "required_torque_nm": 9.6,
+      "required_torque_nm": 3.038,
       "chosen": "Unitree GO-M8010-6",
-      "margin": "2.4x"
+      "margin": "7.6x"
     },
     {
       "joint": "right_hip_roll",
-      "required_effort": 16,
+      "required_effort": 5.063,
       "effort_unit": "N·m",
-      "required_torque_nm": 16,
+      "required_torque_nm": 5.063,
       "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "margin": "4.5x"
     },
     {
       "joint": "right_hip_joint",
-      "required_effort": 40,
+      "required_effort": 12.656,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
+      "required_torque_nm": 12.656,
       "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "margin": "1.8x"
     },
     {
       "joint": "right_knee_joint",
-      "required_effort": 40,
+      "required_effort": 12.656,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
+      "required_torque_nm": 12.656,
       "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "margin": "1.8x"
     },
     {
       "joint": "right_ankle_roll",
-      "required_effort": 9.6,
+      "required_effort": 3.038,
       "effort_unit": "N·m",
-      "required_torque_nm": 9.6,
+      "required_torque_nm": 3.038,
       "chosen": "Unitree GO-M8010-6",
-      "margin": "2.4x"
+      "margin": "7.6x"
     },
     {
       "joint": "right_ankle_joint",
-      "required_effort": 40,
+      "required_effort": 12.656,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
+      "required_torque_nm": 12.656,
       "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "margin": "1.8x"
     }
   ],
   "warnings": [
     "Sizing uses a neutral-pose gravity proxy and declared joint effort, not a worst-case workspace or dynamic load analysis. Selection checks only approximate effort and broad motion type. Speed/torque curves, travel, voltage, feedback, mounting, thermal duty and wiring are not qualified.",
-    "Catalog values are planning estimates. Except explicitly sourced rated values, torque entries may be stall/peak ratings; continuous duty, fit and complete assemblies are unverified.",
-    "joint neck_joint needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint left_arm_joint_1 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint left_arm_joint_2 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint left_arm_joint_3 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint left_arm_joint_4 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint left_arm_joint_5 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint left_arm_joint_6 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint left_arm_joint_7 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint right_arm_joint_1 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint right_arm_joint_2 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint right_arm_joint_3 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint right_arm_joint_4 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint right_arm_joint_5 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint right_arm_joint_6 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint right_arm_joint_7 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint left_hip_roll needs ~16.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint left_hip_joint needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint left_knee_joint needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint left_ankle_joint needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint right_hip_roll needs ~16.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint right_hip_joint needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint right_knee_joint needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint right_ankle_joint needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator"
+    "Catalog values are planning estimates. Except explicitly sourced rated values, torque entries may be stall/peak ratings; continuous duty, fit and complete assemblies are unverified."
   ],
   "notes": [
     "Tier: prosumer. Prices are planning estimates (USD), not quotes. Structure assumes FDM 3D printing."

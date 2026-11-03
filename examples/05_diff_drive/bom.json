@@ -1,100 +1,135 @@
 {
   "robot_name": "diff_drive_robot",
-  "tier": "prosumer",
+  "tier": "hobby",
   "lines": [
     {
-      "category": "Actuator",
-      "name": "Unitree GO-M8010-6",
+      "category": "Drive",
+      "name": "Pololu ball caster, 1\" POM ball on ball bearings (#2692)",
       "qty": 2,
-      "unit_cost": 400,
-      "subtotal": 800,
-      "spec": "integrated BLDC + planetary, RS485 (23 N·m)",
-      "note": "joint left_wheel_joint; rating duty/source unverified; joint right_wheel_joint; rating duty/source unverified"
+      "unit_cost": 9.95,
+      "subtotal": 19.9,
+      "spec": "https://www.pololu.com/product/2692",
+      "note": "ball caster · https://www.pololu.com/product/2692"
+    },
+    {
+      "category": "Sensor",
+      "name": "Adafruit BNO085 9-DoF IMU breakout (STEMMA QT, #4754)",
+      "qty": 1,
+      "unit_cost": 29.5,
+      "subtotal": 29.5,
+      "spec": "3.3 V",
+      "note": "9-DoF IMU · https://www.adafruit.com/product/4754"
+    },
+    {
+      "category": "Power",
+      "name": "Pololu D36V50F5 5 V 5.5 A step-down regulator (#4091)",
+      "qty": 1,
+      "unit_cost": 39.95,
+      "subtotal": 39.95,
+      "spec": "5 V",
+      "note": "5 V rail for the computer / USB · https://www.pololu.com/product/4091"
+    },
+    {
+      "category": "Electronics",
+      "name": "Cytron MDD10A dual-channel 10 A DC motor driver (5-30 V)",
+      "qty": 1,
+      "unit_cost": 21,
+      "subtotal": 21,
+      "spec": "12 V",
+      "note": "dual DC motor driver · https://www.cytron.io/p-10amp-5v-30v-dc-motor-driver-2-channels"
+    },
+    {
+      "category": "Power",
+      "name": "LiPo 3S 2200 mAh 25C, XT60 (Gens Ace G-Tech)",
+      "qty": 1,
+      "unit_cost": 27,
+      "subtotal": 27,
+      "spec": "11.1 V, 24.4 Wh",
+      "note": "main battery · https://www.buddyrc.com/products/gens-ace-25c-2200mah-11-1v-3s-lipo-battery-pack-with-xt60-plug"
+    },
+    {
+      "category": "Actuator",
+      "name": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
+      "qty": 2,
+      "unit_cost": 60.95,
+      "subtotal": 121.9,
+      "spec": "0.686 N·m rated / 1.373 N·m peak, 12 V",
+      "note": "drive motor · https://www.pololu.com/product/4752"
     },
     {
       "category": "Compute",
-      "name": "Teensy 4.1",
+      "name": "Raspberry Pi 5 (4 GB)",
       "qty": 1,
-      "unit_cost": 32,
-      "subtotal": 32,
-      "spec": "600MHz MCU, real-time control"
+      "unit_cost": 110,
+      "subtotal": 110,
+      "spec": "5 V",
+      "note": "on-board computer · https://www.raspberrypi.com/products/raspberry-pi-5/"
     },
     {
-      "category": "Power",
-      "name": "LiPo 4S 5000mAh",
+      "category": "Sensor",
+      "name": "Slamtec RPLIDAR C1 (DTOF 360 deg, 12 m)",
       "qty": 1,
-      "unit_cost": 40,
-      "subtotal": 40,
-      "spec": "74 Wh; est. load 50 W"
+      "unit_cost": 79.99,
+      "subtotal": 79.99,
+      "spec": "5 V",
+      "note": "2D lidar · https://www.waveshare.com/rplidar-c1.htm"
     },
     {
-      "category": "Power",
-      "name": "DC-DC buck regulator (5V/10A)",
-      "qty": 1,
-      "unit_cost": 12,
-      "subtotal": 12,
-      "spec": "logic + servo rail"
+      "category": "Drive",
+      "name": "Pololu 90x10 mm wheel + 6 mm universal aluminium hub (for 37D gearmotors)",
+      "qty": 2,
+      "unit_cost": 11.22,
+      "subtotal": 22.44,
+      "spec": "https://www.pololu.com/file/0J161/1083-6mm-4-40-hub-dimensions.pdf",
+      "note": "driven wheel · https://www.pololu.com/product/1435"
     },
     {
-      "category": "Power",
-      "name": "Power distribution board + fuse + switch",
+      "category": "Printed structure",
+      "name": "PETG filament for 11 printed parts",
       "qty": 1,
-      "unit_cost": 14,
-      "subtotal": 14,
-      "spec": "wiring harness backbone"
+      "unit_cost": 10.46,
+      "subtotal": 10.46,
+      "spec": "413 g of parts (+15 % supports/waste), about 37.7 h of printing",
+      "note": "base_link, left_bracket, right_bracket, front_caster_post, rear_caster_post, battery_tray, computer_tray, motor_driver_1_tray, imu_tray, regulator_5v_tray, lidar_mast"
     },
     {
-      "category": "Structure",
-      "name": "3D-printed frame (PLA/PETG)",
-      "qty": 1,
-      "unit_cost": 120.31,
-      "subtotal": 120.31,
-      "spec": "~5.47 kg material @ $22/kg"
-    },
-    {
-      "category": "Structure",
-      "name": "Fastener + bearing kit",
-      "qty": 1,
-      "unit_cost": 18,
-      "subtotal": 18,
-      "spec": "M3 screws, heat inserts, 608 bearings"
-    },
-    {
-      "category": "Wiring & misc",
-      "name": "Wiring, connectors, JST/Dupont, sleeving",
-      "qty": 1,
-      "unit_cost": 107.76,
-      "subtotal": 107.76,
-      "spec": "~12% of electronics"
+      "category": "Fasteners",
+      "name": "Screws, nuts and inserts",
+      "qty": 52,
+      "unit_cost": 0.12,
+      "subtotal": 6.24,
+      "spec": "12x M3 x 8 socket head (motor face); 4x M3 x 10 socket head + nut (bracket to deck); 6x M3 x 6 socket head (caster); 1x 20 mm hook-and-loop battery strap; 10x M3 x 8 socket head (tray to deck); 15x M2.5 x 6 screws (board to standoffs); 4x M2.5 x 6 (lidar)"
     }
   ],
-  "total": 1144.07,
+  "total": 488.38,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
   "actuator_sizing": [
     {
       "joint": "left_wheel_joint",
-      "required_effort": 2,
+      "required_effort": 0.131,
       "effort_unit": "N·m",
-      "required_torque_nm": 2,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "11.5x"
+      "required_torque_nm": 0.131,
+      "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
+      "margin": "5.25x"
     },
     {
       "joint": "right_wheel_joint",
-      "required_effort": 2,
+      "required_effort": 0.131,
       "effort_unit": "N·m",
-      "required_torque_nm": 2,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "11.5x"
+      "required_torque_nm": 0.131,
+      "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
+      "margin": "5.25x"
     }
   ],
-  "warnings": [
-    "Sizing uses a neutral-pose gravity proxy and declared joint effort, not a worst-case workspace or dynamic load analysis. Selection checks only approximate effort and broad motion type. Speed/torque curves, travel, voltage, feedback, mounting, thermal duty and wiring are not qualified.",
-    "Catalog values are planning estimates. Except explicitly sourced rated values, torque entries may be stall/peak ratings; continuous duty, fit and complete assemblies are unverified."
-  ],
+  "warnings": [],
   "notes": [
-    "Tier: prosumer. Prices are planning estimates (USD), not quotes. Structure assumes FDM 3D printing."
+    "Differential-drive base: pololu_37d_30to1_64cpr gearmotors, 1.329 kg, 1.24 m/s, 1.8 h on 1 x lipo_3s_2200, rpi5",
+    "Drive sized for the robot plus 1 kg cargo on a 10 deg slope accelerating at 0.5 m/s^2, rolling resistance 0.03; motors compared at their continuous (not stall) rating.",
+    "All motors and servos are 12 V parts run straight from a 3S LiPo (9.9-12.6 V); a power switch, 15 A blade fuse and XT60 wiring are budgeted as a lump sum.",
+    "Printed parts: PETG; brackets bolt to the deck with M3 screws and nuts; the motor face screws are the gearmotor's own six M3 holes.",
+    "Two ball casters (front and rear) keep the deck level; on rough floors fit only one or add the Pololu spacer set so the drive wheels never lift.",
+    "Prices are list/street prices from the linked suppliers at the time the catalog was written; check before ordering."
   ]
 }

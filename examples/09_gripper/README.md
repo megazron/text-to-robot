@@ -1,44 +1,30 @@
-# parallel_gripper
+# gripper
 
-Prompt: Create a two-finger parallel gripper
+> Create a two-finger parallel gripper
 
+![simulation](simulation.gif)
 
-![Current MuJoCo simulation](simulation.gif)
+Interpreted as: standalone parallel gripper · parallel gripper
 
-Collision model: **URDF primitives / mesh bounding boxes**.
+<!-- SIM -->
+## Simulation (MuJoCo, real actuator limits)
 
-This GIF runs gravity, pose holding and self-collision on the shipped model. It is
-not a learned policy or proof of hardware accuracy. The model's failures remain visible.
+**1/1 task tests pass.** Every motor is limited to its datasheet peak torque and its torque-speed line, with the rotor inertia reflected through its gearbox; continuous loads are compared with the rated torque. The animation above is recorded from these tests.
 
-## Download and inspect
+| | Test | Result |
+|---|---|---|
+| ✅ | grip | holds 0.1 kg against its weight with friction 0.5: slip 0.1 mm in 3 s, clamp force 40.0 N (needs >= 1.0 N), gripper limited to its peak torque (no continuous rating known) |
 
-- [CAD / STL / OpenSCAD](robot.cad.zip), [ROS 2 package](robot.ros2.zip), [training package](robot.training.zip), [URDF](robot.urdf), [robot JSON](robot.json), [BOM](BOM.md).
-- [Simulation report](simulation_report.json): **5/5** checks;
-  **0** initial penetration contacts.
-- Failed checks: none in this smoke battery.
-- [Physical build evidence and missing interfaces](BUILDABILITY.md), [machine-readable record](buildability_report.json). **No tested physical build is documented.**
+_PASS means the modelled actuators (datasheet peak torque as a hard limit, a linear torque-speed line to no-load speed, reflected rotor inertia, URDF damping/friction) can produce the torques and speeds the task needs in this geometry and mass distribution, and that mean torque over the hold stays within the continuous (rated) torque. Joint control uses an ideal model-based feedforward (computed torque) through the force-limited servo for fixed-base robots and plain position servos for floating robots; a pass therefore proves torque/speed capacity, not that a given controller achieves it. Untested: thermal limits over long duty cycles (only the mean-vs-rated proxy), gearbox backlash and compliance, link and joint flexibility, encoder resolution, supply voltage sag and current limits, bus latency, controller tuning, and contact/friction values (nominal friction only)._
+<!-- /SIM -->
 
-## Design research
+## Files
 
-[Public engineering sources and model-specific changes](../../references/engineering/README.md).
-
-## MoveIt / ROS 2
-
-No serial manipulator group applies to this example; MoveIt is not generated.
-The ROS package includes display and control files. Wheeled navigation needs a
-navigation controller; a gripper alone needs a gripper controller.
-
-## Reproduce
-
-From the repository root:
-
-```bash
-node scripts/export_examples.ts
-python scripts/audit_examples.py
-python scripts/render_example_gifs.py
-python scripts/document_examples.py
-python scripts/verify_example_artifacts.py
-```
-
-These are procedural concept models. Masses, motors and contacts are approximate;
-manufacturing interfaces and measured dynamics remain unverified.
+| File | What |
+|---|---|
+| `robot.urdf`, `meshes/` | URDF with real component and printed-part meshes, datasheet effort/velocity limits |
+| `BOM.md`, `bom.json` | every part to buy, with supplier links and prices |
+| `robot.cad.zip` | build package: printable STLs, print list, bought-part models, assembly order |
+| `robot.ros2.zip` | ROS 2 description package (ros2_control, MoveIt config, Gazebo launch) |
+| `robot.training.zip` | MuJoCo / RL training scaffold |
+| `simulation_report.json` | MuJoCo task tests under the real actuator limits |

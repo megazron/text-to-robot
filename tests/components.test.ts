@@ -49,8 +49,11 @@ test('continuous wheels never receive limited-angle hobby servos',async()=>{
   const spec=JSON.parse(readFileSync('examples/05_diff_drive/robot.json','utf8'));
   const {ACTUATORS}=await import('../packages/components/src/catalog.ts');
   for(const budget of [200,1000,10000])for(const row of buildBom(spec,budget).actuator_sizing){
-    const actuator=ACTUATORS.find(a=>a.name===row.chosen)!;
-    assert.ok(['stepper','bldc'].includes(actuator.kind),row.chosen);
+    // designed bases carry real gearmotors from the parts catalog; template bases are sized from the generic list
+    const actuator=ACTUATORS.find(a=>a.name===row.chosen);
+    if(actuator)assert.ok(['stepper','bldc'].includes(actuator.kind),row.chosen);
+    else assert.match(row.chosen,/gearmotor/i,`${row.joint}: a wheel needs a continuous-rotation motor, got ${row.chosen}`);
+    assert.doesNotMatch(row.chosen,/\bservo\b/i,row.chosen);
   }
 });
 

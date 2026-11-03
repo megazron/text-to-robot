@@ -1,287 +1,233 @@
 {
   "robot_name": "baymax",
-  "tier": "prosumer",
+  "tier": "hobby",
   "lines": [
     {
+      "category": "Sensor",
+      "name": "Adafruit BNO085 9-DoF IMU breakout (STEMMA QT, #4754)",
+      "qty": 1,
+      "unit_cost": 29.5,
+      "subtotal": 29.5,
+      "spec": "3.3 V",
+      "note": "9-DoF IMU · https://www.adafruit.com/product/4754"
+    },
+    {
+      "category": "Power",
+      "name": "Pololu D36V50F5 5 V 5.5 A step-down regulator (#4091)",
+      "qty": 1,
+      "unit_cost": 39.95,
+      "subtotal": 39.95,
+      "spec": "5 V",
+      "note": "5 V rail for the computer / USB · https://www.pololu.com/product/4091"
+    },
+    {
+      "category": "Electronics",
+      "name": "Cytron MDD10A dual-channel 10 A DC motor driver (5-30 V)",
+      "qty": 2,
+      "unit_cost": 21,
+      "subtotal": 42,
+      "spec": "12 V",
+      "note": "dual DC motor driver · https://www.cytron.io/p-10amp-5v-30v-dc-motor-driver-2-channels"
+    },
+    {
       "category": "Actuator",
-      "name": "Unitree GO-M8010-6",
-      "qty": 21,
-      "unit_cost": 400,
-      "subtotal": 8400,
-      "spec": "integrated BLDC + planetary, RS485 (23 N·m)",
-      "note": "joint neck_joint; rating duty/source unverified; joint left_arm_joint_1; rating duty/source unverified; joint left_arm_joint_2; rating duty/source unverified; joint left_arm_joint_3; rating duty/source unverified; joint left_arm_joint_4; rating duty/source unverified; joint right_arm_joint_1; rating duty/source unverified; joint right_arm_joint_2; rating duty/source unverified; joint right_arm_joint_3; rating duty/source unverified; joint right_arm_joint_4; rating duty/source unverified; joint left_hip_yaw; rating duty/source unverified; joint left_hip_roll; rating duty/source unverified; joint left_hip_joint; rating duty/source unverified; joint left_knee_joint; rating duty/source unverified; joint left_ankle_roll; rating duty/source unverified; joint left_ankle_joint; rating duty/source unverified; joint right_hip_yaw; rating duty/source unverified; joint right_hip_roll; rating duty/source unverified; joint right_hip_joint; rating duty/source unverified; joint right_knee_joint; rating duty/source unverified; joint right_ankle_roll; rating duty/source unverified; joint right_ankle_joint; rating duty/source unverified"
+      "name": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "qty": 7,
+      "unit_cost": 22,
+      "subtotal": 154,
+      "spec": "0.9807 N·m rated / 2.942 N·m peak, 12 V",
+      "note": "left_arm: joint base_yaw, joint elbow_pitch, joint wrist_pitch; right_arm: joint base_yaw, joint elbow_pitch, joint wrist_pitch; head pan · https://www.seeedstudio.com/STS3215-30KG-Serial-Servo-p-6340.html"
+    },
+    {
+      "category": "Actuator",
+      "name": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
+      "qty": 2,
+      "unit_cost": 40,
+      "subtotal": 80,
+      "spec": "1.5691 N·m rated / 4.9033 N·m peak, 12 V",
+      "note": "left_arm: joint shoulder_pitch; right_arm: joint shoulder_pitch · https://openelab.io/products/feetech-sts3250-c002-servo-12v"
+    },
+    {
+      "category": "Power",
+      "name": "LiPo 3S 2200 mAh 25C, XT60 (Gens Ace G-Tech)",
+      "qty": 1,
+      "unit_cost": 27,
+      "subtotal": 27,
+      "spec": "11.1 V, 24.4 Wh",
+      "note": "main battery · https://www.buddyrc.com/products/gens-ace-25c-2200mah-11-1v-3s-lipo-battery-pack-with-xt60-plug"
+    },
+    {
+      "category": "Actuator",
+      "name": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
+      "qty": 4,
+      "unit_cost": 60.95,
+      "subtotal": 243.8,
+      "spec": "0.686 N·m rated / 1.373 N·m peak, 12 V",
+      "note": "drive motor · https://www.pololu.com/product/4752"
     },
     {
       "category": "Sensor",
-      "name": "Raspberry Pi Camera Module 3",
+      "name": "Raspberry Pi Camera Module 3 (standard lens)",
       "qty": 1,
       "unit_cost": 25,
       "subtotal": 25,
-      "spec": "12MP, CSI",
-      "note": "face_camera"
-    },
-    {
-      "category": "Sensor",
-      "name": "Bosch BNO085",
-      "qty": 1,
-      "unit_cost": 20,
-      "subtotal": 20,
-      "spec": "9-axis fused AHRS",
-      "note": "chest_imu"
+      "spec": "3.3 V",
+      "note": "camera · https://www.raspberrypi.com/products/camera-module-3/"
     },
     {
       "category": "Compute",
-      "name": "Raspberry Pi 5 (8GB)",
+      "name": "Raspberry Pi 5 (4 GB)",
       "qty": 1,
-      "unit_cost": 80,
-      "subtotal": 80,
-      "spec": "SBC, runs ROS 2"
+      "unit_cost": 110,
+      "subtotal": 110,
+      "spec": "5 V",
+      "note": "on-board computer · https://www.raspberrypi.com/products/raspberry-pi-5/"
     },
     {
-      "category": "Power",
-      "name": "LiPo 6S 10000mAh",
-      "qty": 1,
-      "unit_cost": 95,
-      "subtotal": 95,
-      "spec": "222 Wh; est. load 512 W"
+      "category": "Electronics",
+      "name": "Waveshare Bus Servo Adapter (A)",
+      "qty": 3,
+      "unit_cost": 10.6,
+      "subtotal": 31.8,
+      "spec": "12 V",
+      "note": "servo bus adapter; left_arm: USB to actuator bus; right_arm: USB to actuator bus · https://www.waveshare.com/bus-servo-adapter-a.htm"
     },
     {
-      "category": "Power",
-      "name": "DC-DC buck regulator (5V/10A)",
-      "qty": 1,
-      "unit_cost": 12,
-      "subtotal": 12,
-      "spec": "logic + servo rail"
+      "category": "Drive",
+      "name": "Pololu 90x10 mm wheel + 6 mm universal aluminium hub (for 37D gearmotors)",
+      "qty": 4,
+      "unit_cost": 11.22,
+      "subtotal": 44.88,
+      "spec": "https://www.pololu.com/file/0J161/1083-6mm-4-40-hub-dimensions.pdf",
+      "note": "driven wheel · https://www.pololu.com/product/1435"
     },
     {
-      "category": "Power",
-      "name": "Power distribution board + fuse + switch",
+      "category": "Printed structure",
+      "name": "PETG filament for 28 printed parts",
       "qty": 1,
-      "unit_cost": 14,
-      "subtotal": 14,
-      "spec": "wiring harness backbone"
+      "unit_cost": 18.3,
+      "subtotal": 18.3,
+      "spec": "723 g of parts (+15 % supports/waste), about 65.9 h of printing",
+      "note": "left_front_bracket, left_rear_bracket, right_front_bracket, right_rear_bracket, battery_tray, computer_tray, motor_driver_1_tray, motor_driver_2_tray, servo_bus_tray, imu_tray, regulator_5v_tray, spine_foot, left_arm_shoulder_wedge, left_arm_base_link, left_arm_turret, left_arm_upper_arm, left_arm_forearm, left_arm_tool_link, right_arm_shoulder_wedge, right_arm_base_link, right_arm_turret, right_arm_upper_arm, right_arm_forearm, right_arm_tool_link, neck_mount, head, eyes, camera_bracket"
     },
     {
-      "category": "Structure",
-      "name": "3D-printed frame (PLA/PETG)",
-      "qty": 1,
-      "unit_cost": 381.16,
-      "subtotal": 381.16,
-      "spec": "~17.33 kg material @ $22/kg"
-    },
-    {
-      "category": "Structure",
-      "name": "Fastener + bearing kit",
-      "qty": 1,
-      "unit_cost": 18,
-      "subtotal": 18,
-      "spec": "M3 screws, heat inserts, 608 bearings"
-    },
-    {
-      "category": "Wiring & misc",
-      "name": "Wiring, connectors, JST/Dupont, sleeving",
-      "qty": 1,
-      "unit_cost": 1037.52,
-      "subtotal": 1037.52,
-      "spec": "~12% of electronics"
+      "category": "Fasteners",
+      "name": "Screws, nuts and inserts",
+      "qty": 146,
+      "unit_cost": 0.12,
+      "subtotal": 17.52,
+      "spec": "24x M3 x 8 socket head (motor face); 8x M3 x 10 socket head + nut (bracket to deck); 1x 20 mm hook-and-loop battery strap; 14x M3 x 8 socket head (tray to deck); 23x M2.5 x 6 screws (board to standoffs); 8x M5 x 12 socket head (base to bench); 32x M2 x 6 case screws; 36x horn screws"
     }
   ],
-  "total": 10082.68,
+  "total": 863.75,
   "feasible": true,
-  "sizing_pass": false,
+  "sizing_pass": true,
   "hardware_verified": false,
   "actuator_sizing": [
     {
-      "joint": "neck_joint",
-      "required_effort": 40,
+      "joint": "left_arm_base_yaw",
+      "required_effort": 0.949,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 0.949,
+      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "margin": "3.1x"
     },
     {
-      "joint": "left_arm_joint_1",
-      "required_effort": 40,
+      "joint": "left_arm_shoulder_pitch",
+      "required_effort": 2.034,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 2.034,
+      "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
+      "margin": "2.41x"
     },
     {
-      "joint": "left_arm_joint_2",
-      "required_effort": 40,
+      "joint": "left_arm_elbow_pitch",
+      "required_effort": 1.023,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 1.023,
+      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "margin": "2.88x"
     },
     {
-      "joint": "left_arm_joint_3",
-      "required_effort": 40,
+      "joint": "left_arm_wrist_pitch",
+      "required_effort": 0.262,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 0.262,
+      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "margin": "11.25x"
     },
     {
-      "joint": "left_arm_joint_4",
-      "required_effort": 40,
+      "joint": "right_arm_base_yaw",
+      "required_effort": 0.949,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 0.949,
+      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "margin": "3.1x"
     },
     {
-      "joint": "right_arm_joint_1",
-      "required_effort": 40,
+      "joint": "right_arm_shoulder_pitch",
+      "required_effort": 2.034,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 2.034,
+      "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
+      "margin": "2.41x"
     },
     {
-      "joint": "right_arm_joint_2",
-      "required_effort": 40,
+      "joint": "right_arm_elbow_pitch",
+      "required_effort": 1.023,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 1.023,
+      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "margin": "2.88x"
     },
     {
-      "joint": "right_arm_joint_3",
-      "required_effort": 40,
+      "joint": "right_arm_wrist_pitch",
+      "required_effort": 0.262,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 0.262,
+      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "margin": "11.25x"
     },
     {
-      "joint": "right_arm_joint_4",
-      "required_effort": 40,
+      "joint": "left_front_wheel_joint",
+      "required_effort": 0.138,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 0.138,
+      "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
+      "margin": "4.98x"
     },
     {
-      "joint": "left_hip_yaw",
-      "required_effort": 9.6,
+      "joint": "left_rear_wheel_joint",
+      "required_effort": 0.138,
       "effort_unit": "N·m",
-      "required_torque_nm": 9.6,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "2.4x"
+      "required_torque_nm": 0.138,
+      "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
+      "margin": "4.98x"
     },
     {
-      "joint": "left_hip_roll",
-      "required_effort": 16,
+      "joint": "right_front_wheel_joint",
+      "required_effort": 0.138,
       "effort_unit": "N·m",
-      "required_torque_nm": 16,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 0.138,
+      "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
+      "margin": "4.98x"
     },
     {
-      "joint": "left_hip_joint",
-      "required_effort": 40,
+      "joint": "right_rear_wheel_joint",
+      "required_effort": 0.138,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
-    },
-    {
-      "joint": "left_knee_joint",
-      "required_effort": 40,
-      "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
-    },
-    {
-      "joint": "left_ankle_roll",
-      "required_effort": 9.6,
-      "effort_unit": "N·m",
-      "required_torque_nm": 9.6,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "2.4x"
-    },
-    {
-      "joint": "left_ankle_joint",
-      "required_effort": 40,
-      "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
-    },
-    {
-      "joint": "right_hip_yaw",
-      "required_effort": 9.6,
-      "effort_unit": "N·m",
-      "required_torque_nm": 9.6,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "2.4x"
-    },
-    {
-      "joint": "right_hip_roll",
-      "required_effort": 16,
-      "effort_unit": "N·m",
-      "required_torque_nm": 16,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
-    },
-    {
-      "joint": "right_hip_joint",
-      "required_effort": 40,
-      "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
-    },
-    {
-      "joint": "right_knee_joint",
-      "required_effort": 40,
-      "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
-    },
-    {
-      "joint": "right_ankle_roll",
-      "required_effort": 9.6,
-      "effort_unit": "N·m",
-      "required_torque_nm": 9.6,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "2.4x"
-    },
-    {
-      "joint": "right_ankle_joint",
-      "required_effort": 40,
-      "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 0.138,
+      "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
+      "margin": "4.98x"
     }
   ],
-  "warnings": [
-    "Sizing uses a neutral-pose gravity proxy and declared joint effort, not a worst-case workspace or dynamic load analysis. Selection checks only approximate effort and broad motion type. Speed/torque curves, travel, voltage, feedback, mounting, thermal duty and wiring are not qualified.",
-    "Catalog values are planning estimates. Except explicitly sourced rated values, torque entries may be stall/peak ratings; continuous duty, fit and complete assemblies are unverified.",
-    "joint neck_joint needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint left_arm_joint_1 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint left_arm_joint_2 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint left_arm_joint_3 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint left_arm_joint_4 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint right_arm_joint_1 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint right_arm_joint_2 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint right_arm_joint_3 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint right_arm_joint_4 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint left_hip_roll needs ~16.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint left_hip_joint needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint left_knee_joint needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint left_ankle_joint needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint right_hip_roll needs ~16.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint right_hip_joint needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint right_knee_joint needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint right_ankle_joint needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator"
-  ],
+  "warnings": [],
   "notes": [
-    "Tier: prosumer. Prices are planning estimates (USD), not quotes. Structure assumes FDM 3D printing."
+    "Baymax-style service robot: 4.907 kg, 1.01 m tall, 4WD hidden base, two 4-servo arms, pan head with camera",
+    "Baymax's inflatable vinyl body is a sewn ripstop cover with a foam-lined zip, bought or sewn, with negligible structural role; it hangs on the shoulder yoke and hides a 4WD skid-steer base. It is not inflated, so it does not cushion like the film's.",
+    "Structure: 2020 aluminium extrusion spine and a 6 mm aluminium shoulder yoke; arms are four servos each (shoulder yaw, shoulder pitch, elbow, wrist) splayed 25 deg so they clear the belly; the hands are printed mittens covered with the same fabric.",
+    "Each arm is sized as mounted to lift 0.2 kg in the mitten at full reach; the tipping check includes both arms stretched forward with that payload.",
+    "The head turns on one pan servo; a camera looks out between the eyes through a 12 mm hole.",
+    "Prices are list/street prices from the linked suppliers at the time the catalog was written; check before ordering."
   ]
 }

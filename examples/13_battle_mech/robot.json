@@ -863,16 +863,16 @@
       "geometry": {
         "type": "cylinder",
         "radius": 0.035,
-        "length": 0.06
+        "length": 0.045
       },
-      "mass": 0.10390817701748244,
+      "mass": 0.07793113276311181,
       "material": "armor_red",
       "role": "shoulder",
       "origin": {
         "xyz": [
           0,
           0,
-          -0.03
+          -0.0225
         ],
         "rpy": [
           0,
@@ -886,9 +886,9 @@
         "inertia"
       ],
       "inertia": {
-        "ixx": 0.00006299433231684874,
-        "iyy": 0.00006299433231684874,
-        "izz": 0.000063643758423208,
+        "ixx": 0.00003701728806247811,
+        "iyy": 0.00003701728806247811,
+        "izz": 0.00004773281881740599,
         "ixy": 0,
         "ixz": 0,
         "iyz": 0
@@ -896,7 +896,7 @@
       "collision": {
         "type": "cylinder",
         "radius": 0.035,
-        "length": 0.06
+        "length": 0.045
       }
     },
     {
@@ -904,16 +904,16 @@
       "geometry": {
         "type": "cylinder",
         "radius": 0.04725000000000001,
-        "length": 0.22
+        "length": 0.1825
       },
-      "mass": 0.38099664906410224,
+      "mass": 0.3160540384281757,
       "material": "armor_gold",
       "role": "upper_arm",
       "origin": {
         "xyz": [
           0,
           0,
-          -0.11
+          -0.09125
         ],
         "rpy": [
           0,
@@ -927,9 +927,9 @@
         "inertia"
       ],
       "inertia": {
-        "ixx": 0.0017493361923900893,
-        "iyy": 0.0017493361923900893,
-        "izz": 0.00042529941566308747,
+        "ixx": 0.0010536171666586116,
+        "iyy": 0.0010536171666586116,
+        "izz": 0.00035280519708415215,
         "ixy": 0,
         "ixz": 0,
         "iyz": 0
@@ -937,7 +937,7 @@
       "collision": {
         "type": "cylinder",
         "radius": 0.04725000000000001,
-        "length": 0.22
+        "length": 0.1825
       }
     },
     {
@@ -945,16 +945,16 @@
       "geometry": {
         "type": "cylinder",
         "radius": 0.035,
-        "length": 0.06
+        "length": 0.045
       },
-      "mass": 0.10390817701748244,
+      "mass": 0.07793113276311181,
       "material": "armor_red",
       "role": "elbow",
       "origin": {
         "xyz": [
           0,
           0,
-          -0.03
+          -0.0225
         ],
         "rpy": [
           0,
@@ -968,9 +968,9 @@
         "inertia"
       ],
       "inertia": {
-        "ixx": 0.00006299433231684874,
-        "iyy": 0.00006299433231684874,
-        "izz": 0.000063643758423208,
+        "ixx": 0.00003701728806247811,
+        "iyy": 0.00003701728806247811,
+        "izz": 0.00004773281881740599,
         "ixy": 0,
         "ixz": 0,
         "iyz": 0
@@ -978,7 +978,7 @@
       "collision": {
         "type": "cylinder",
         "radius": 0.035,
-        "length": 0.06
+        "length": 0.045
       }
     },
     {
@@ -986,16 +986,16 @@
       "geometry": {
         "type": "cylinder",
         "radius": 0.04725000000000001,
-        "length": 0.22
+        "length": 0.1825
       },
-      "mass": 0.38099664906410224,
+      "mass": 0.3160540384281757,
       "material": "armor_gold",
       "role": "forearm",
       "origin": {
         "xyz": [
           0,
           0,
-          -0.11
+          -0.09125
         ],
         "rpy": [
           0,
@@ -1009,9 +1009,9 @@
         "inertia"
       ],
       "inertia": {
-        "ixx": 0.0017493361923900893,
-        "iyy": 0.0017493361923900893,
-        "izz": 0.00042529941566308747,
+        "ixx": 0.0010536171666586116,
+        "iyy": 0.0010536171666586116,
+        "izz": 0.00035280519708415215,
         "ixy": 0,
         "ixz": 0,
         "iyz": 0
@@ -1019,7 +1019,7 @@
       "collision": {
         "type": "cylinder",
         "radius": 0.04725000000000001,
-        "length": 0.22
+        "length": 0.1825
       }
     },
     {
@@ -1027,16 +1027,16 @@
       "geometry": {
         "type": "cylinder",
         "radius": 0.035,
-        "length": 0.06
+        "length": 0.045
       },
-      "mass": 0.10390817701748244,
+      "mass": 0.07793113276311181,
       "material": "armor_red",
       "role": "wrist_1",
       "origin": {
         "xyz": [
           0,
           0,
-          -0.03
+          -0.0225
         ],
         "rpy": [
           0,
@@ -1050,9 +1050,9 @@
         "inertia"
       ],
       "inertia": {
-        "ixx": 0.00006299433231684874,
-        "iyy": 0.00006299433231684874,
-        "izz": 0.000063643758423208,
+        "ixx": 0.00003701728806247811,
+        "iyy": 0.00003701728806247811,
+        "izz": 0.00004773281881740599,
         "ixy": 0,
         "ixz": 0,
         "iyz": 0
@@ -1060,7 +1060,7 @@
       "collision": {
         "type": "cylinder",
         "radius": 0.035,
-        "length": 0.06
+        "length": 0.045
       }
     },
     {
@@ -1068,16 +1068,16 @@
       "geometry": {
         "type": "cylinder",
         "radius": 0.035,
-        "length": 0.06
+        "length": 0.045
       },
-      "mass": 0.10390817701748244,
+      "mass": 0.07793113276311181,
       "material": "armor_red",
       "role": "wrist_2",
       "origin": {
         "xyz": [
           0,
           0,
-          -0.03
+          -0.0225
         ],
         "rpy": [
           0,
@@ -1091,9 +1091,9 @@
         "inertia"
       ],
       "inertia": {
-        "ixx": 0.00006299433231684874,
-        "iyy": 0.00006299433231684874,
-        "izz": 0.000063643758423208,
+        "ixx": 0.00003701728806247811,
+        "iyy": 0.00003701728806247811,
+        "izz": 0.00004773281881740599,
         "ixy": 0,
         "ixz": 0,
         "iyz": 0
@@ -1101,7 +1101,7 @@
       "collision": {
         "type": "cylinder",
         "radius": 0.035,
-        "length": 0.06
+        "length": 0.045
       }
     },
     {
@@ -1109,16 +1109,16 @@
       "geometry": {
         "type": "cylinder",
         "radius": 0.035,
-        "length": 0.06
+        "length": 0.045
       },
-      "mass": 0.10390817701748244,
+      "mass": 0.07793113276311181,
       "material": "armor_red",
       "role": "wrist_3",
       "origin": {
         "xyz": [
           0,
           0,
-          -0.03
+          -0.0225
         ],
         "rpy": [
           0,
@@ -1132,9 +1132,9 @@
         "inertia"
       ],
       "inertia": {
-        "ixx": 0.00006299433231684874,
-        "iyy": 0.00006299433231684874,
-        "izz": 0.000063643758423208,
+        "ixx": 0.00003701728806247811,
+        "iyy": 0.00003701728806247811,
+        "izz": 0.00004773281881740599,
         "ixy": 0,
         "ixz": 0,
         "iyz": 0
@@ -1142,7 +1142,7 @@
       "collision": {
         "type": "cylinder",
         "radius": 0.035,
-        "length": 0.06
+        "length": 0.045
       }
     },
     {
@@ -1150,16 +1150,16 @@
       "geometry": {
         "type": "cylinder",
         "radius": 0.035,
-        "length": 0.06
+        "length": 0.045
       },
-      "mass": 0.10390817701748244,
+      "mass": 0.07793113276311181,
       "material": "armor_red",
       "role": "shoulder",
       "origin": {
         "xyz": [
           0,
           0,
-          -0.03
+          -0.0225
         ],
         "rpy": [
           0,
@@ -1173,9 +1173,9 @@
         "inertia"
       ],
       "inertia": {
-        "ixx": 0.00006299433231684874,
-        "iyy": 0.00006299433231684874,
-        "izz": 0.000063643758423208,
+        "ixx": 0.00003701728806247811,
+        "iyy": 0.00003701728806247811,
+        "izz": 0.00004773281881740599,
         "ixy": 0,
         "ixz": 0,
         "iyz": 0
@@ -1183,7 +1183,7 @@
       "collision": {
         "type": "cylinder",
         "radius": 0.035,
-        "length": 0.06
+        "length": 0.045
       }
     },
     {
@@ -1191,16 +1191,16 @@
       "geometry": {
         "type": "cylinder",
         "radius": 0.04725000000000001,
-        "length": 0.22
+        "length": 0.1825
       },
-      "mass": 0.38099664906410224,
+      "mass": 0.3160540384281757,
       "material": "armor_gold",
       "role": "upper_arm",
       "origin": {
         "xyz": [
           0,
           0,
-          -0.11
+          -0.09125
         ],
         "rpy": [
           0,
@@ -1214,9 +1214,9 @@
         "inertia"
       ],
       "inertia": {
-        "ixx": 0.0017493361923900893,
-        "iyy": 0.0017493361923900893,
-        "izz": 0.00042529941566308747,
+        "ixx": 0.0010536171666586116,
+        "iyy": 0.0010536171666586116,
+        "izz": 0.00035280519708415215,
         "ixy": 0,
         "ixz": 0,
         "iyz": 0
@@ -1224,7 +1224,7 @@
       "collision": {
         "type": "cylinder",
         "radius": 0.04725000000000001,
-        "length": 0.22
+        "length": 0.1825
       }
     },
     {
@@ -1232,16 +1232,16 @@
       "geometry": {
         "type": "cylinder",
         "radius": 0.035,
-        "length": 0.06
+        "length": 0.045
       },
-      "mass": 0.10390817701748244,
+      "mass": 0.07793113276311181,
       "material": "armor_red",
       "role": "elbow",
       "origin": {
         "xyz": [
           0,
           0,
-          -0.03
+          -0.0225
         ],
         "rpy": [
           0,
@@ -1255,9 +1255,9 @@
         "inertia"
       ],
       "inertia": {
-        "ixx": 0.00006299433231684874,
-        "iyy": 0.00006299433231684874,
-        "izz": 0.000063643758423208,
+        "ixx": 0.00003701728806247811,
+        "iyy": 0.00003701728806247811,
+        "izz": 0.00004773281881740599,
         "ixy": 0,
         "ixz": 0,
         "iyz": 0
@@ -1265,7 +1265,7 @@
       "collision": {
         "type": "cylinder",
         "radius": 0.035,
-        "length": 0.06
+        "length": 0.045
       }
     },
     {
@@ -1273,16 +1273,16 @@
       "geometry": {
         "type": "cylinder",
         "radius": 0.04725000000000001,
-        "length": 0.22
+        "length": 0.1825
       },
-      "mass": 0.38099664906410224,
+      "mass": 0.3160540384281757,
       "material": "armor_gold",
       "role": "forearm",
       "origin": {
         "xyz": [
           0,
           0,
-          -0.11
+          -0.09125
         ],
         "rpy": [
           0,
@@ -1296,9 +1296,9 @@
         "inertia"
       ],
       "inertia": {
-        "ixx": 0.0017493361923900893,
-        "iyy": 0.0017493361923900893,
-        "izz": 0.00042529941566308747,
+        "ixx": 0.0010536171666586116,
+        "iyy": 0.0010536171666586116,
+        "izz": 0.00035280519708415215,
         "ixy": 0,
         "ixz": 0,
         "iyz": 0
@@ -1306,7 +1306,7 @@
       "collision": {
         "type": "cylinder",
         "radius": 0.04725000000000001,
-        "length": 0.22
+        "length": 0.1825
       }
     },
     {
@@ -1314,16 +1314,16 @@
       "geometry": {
         "type": "cylinder",
         "radius": 0.035,
-        "length": 0.06
+        "length": 0.045
       },
-      "mass": 0.10390817701748244,
+      "mass": 0.07793113276311181,
       "material": "armor_red",
       "role": "wrist_1",
       "origin": {
         "xyz": [
           0,
           0,
-          -0.03
+          -0.0225
         ],
         "rpy": [
           0,
@@ -1337,9 +1337,9 @@
         "inertia"
       ],
       "inertia": {
-        "ixx": 0.00006299433231684874,
-        "iyy": 0.00006299433231684874,
-        "izz": 0.000063643758423208,
+        "ixx": 0.00003701728806247811,
+        "iyy": 0.00003701728806247811,
+        "izz": 0.00004773281881740599,
         "ixy": 0,
         "ixz": 0,
         "iyz": 0
@@ -1347,7 +1347,7 @@
       "collision": {
         "type": "cylinder",
         "radius": 0.035,
-        "length": 0.06
+        "length": 0.045
       }
     },
     {
@@ -1355,16 +1355,16 @@
       "geometry": {
         "type": "cylinder",
         "radius": 0.035,
-        "length": 0.06
+        "length": 0.045
       },
-      "mass": 0.10390817701748244,
+      "mass": 0.07793113276311181,
       "material": "armor_red",
       "role": "wrist_2",
       "origin": {
         "xyz": [
           0,
           0,
-          -0.03
+          -0.0225
         ],
         "rpy": [
           0,
@@ -1378,9 +1378,9 @@
         "inertia"
       ],
       "inertia": {
-        "ixx": 0.00006299433231684874,
-        "iyy": 0.00006299433231684874,
-        "izz": 0.000063643758423208,
+        "ixx": 0.00003701728806247811,
+        "iyy": 0.00003701728806247811,
+        "izz": 0.00004773281881740599,
         "ixy": 0,
         "ixz": 0,
         "iyz": 0
@@ -1388,7 +1388,7 @@
       "collision": {
         "type": "cylinder",
         "radius": 0.035,
-        "length": 0.06
+        "length": 0.045
       }
     },
     {
@@ -1396,16 +1396,16 @@
       "geometry": {
         "type": "cylinder",
         "radius": 0.035,
-        "length": 0.06
+        "length": 0.045
       },
-      "mass": 0.10390817701748244,
+      "mass": 0.07793113276311181,
       "material": "armor_red",
       "role": "wrist_3",
       "origin": {
         "xyz": [
           0,
           0,
-          -0.03
+          -0.0225
         ],
         "rpy": [
           0,
@@ -1419,9 +1419,9 @@
         "inertia"
       ],
       "inertia": {
-        "ixx": 0.00006299433231684874,
-        "iyy": 0.00006299433231684874,
-        "izz": 0.000063643758423208,
+        "ixx": 0.00003701728806247811,
+        "iyy": 0.00003701728806247811,
+        "izz": 0.00004773281881740599,
         "ixy": 0,
         "ixz": 0,
         "iyz": 0
@@ -1429,7 +1429,7 @@
       "collision": {
         "type": "cylinder",
         "radius": 0.035,
-        "length": 0.06
+        "length": 0.045
       }
     },
     {
@@ -2497,7 +2497,7 @@
         "xyz": [
           0,
           0,
-          -0.06
+          -0.045
         ],
         "rpy": [
           0,
@@ -2533,7 +2533,7 @@
         "xyz": [
           0,
           0,
-          -0.22
+          -0.1825
         ],
         "rpy": [
           0,
@@ -2569,7 +2569,7 @@
         "xyz": [
           0,
           0,
-          -0.06
+          -0.045
         ],
         "rpy": [
           0,
@@ -2605,7 +2605,7 @@
         "xyz": [
           0,
           0,
-          -0.22
+          -0.1825
         ],
         "rpy": [
           0,
@@ -2641,7 +2641,7 @@
         "xyz": [
           0,
           0,
-          -0.06
+          -0.045
         ],
         "rpy": [
           0,
@@ -2677,7 +2677,7 @@
         "xyz": [
           0,
           0,
-          -0.06
+          -0.045
         ],
         "rpy": [
           0,
@@ -2749,7 +2749,7 @@
         "xyz": [
           0,
           0,
-          -0.06
+          -0.045
         ],
         "rpy": [
           0,
@@ -2785,7 +2785,7 @@
         "xyz": [
           0,
           0,
-          -0.22
+          -0.1825
         ],
         "rpy": [
           0,
@@ -2821,7 +2821,7 @@
         "xyz": [
           0,
           0,
-          -0.06
+          -0.045
         ],
         "rpy": [
           0,
@@ -2857,7 +2857,7 @@
         "xyz": [
           0,
           0,
-          -0.22
+          -0.1825
         ],
         "rpy": [
           0,
@@ -2893,7 +2893,7 @@
         "xyz": [
           0,
           0,
-          -0.06
+          -0.045
         ],
         "rpy": [
           0,
@@ -2929,7 +2929,7 @@
         "xyz": [
           0,
           0,
-          -0.06
+          -0.045
         ],
         "rpy": [
           0,
@@ -3668,7 +3668,7 @@
   "end_effectors": [],
   "metadata": {
     "generator": "text-to-robot",
-    "created": "2026-09-19T18:43:19.687Z",
+    "created": "2026-11-03T10:13:54.051Z",
     "inferred_fields": [
       "joints.arc_reactor_joint.dynamics",
       "joints.arc_reactor_joint.limit",
@@ -3810,6 +3810,7 @@
       "Iron Man style exosuit: armoured humanoid (25 actuated joints), palm + boot thrusters as fixed mounts, HUD camera, IMU. Thrust is not modelled as a force; it is a mount point for a propulsion actuator.",
       "Interpreted locally: type inferred, DOF=27, gripper=parallel."
     ],
-    "source_prompt": "Create a humanoid battle mech with two 7 DOF arms, a head camera and an IMU\n"
+    "source_prompt": "Create a humanoid battle mech with two 7 DOF arms, a head camera and an IMU\n",
+    "family": "battle_mech"
   }
 }
