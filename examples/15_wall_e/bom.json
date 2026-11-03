@@ -76,12 +76,12 @@
     },
     {
       "category": "Actuator",
-      "name": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
+      "name": "Pololu 70:1 Metal Gearmotor 37Dx70L 12 V with 64 CPR encoder (#4754)",
       "qty": 2,
       "unit_cost": 60.95,
       "subtotal": 121.9,
-      "spec": "0.686 N·m rated / 1.373 N·m peak, 12 V",
-      "note": "drive motor · https://www.pololu.com/product/4752"
+      "spec": "0.981 N·m rated / 2.648 N·m peak, 12 V",
+      "note": "drive motor · https://www.pololu.com/product/4754"
     },
     {
       "category": "Sensor",
@@ -203,21 +203,21 @@
       "required_effort": 0.07,
       "effort_unit": "N·m",
       "required_torque_nm": 0.07,
-      "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
-      "margin": "9.82x"
+      "chosen": "Pololu 70:1 Metal Gearmotor 37Dx70L 12 V with 64 CPR encoder (#4754)",
+      "margin": "14.04x"
     },
     {
       "joint": "right_middle_wheel_joint",
       "required_effort": 0.07,
       "effort_unit": "N·m",
       "required_torque_nm": 0.07,
-      "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
-      "margin": "9.82x"
+      "chosen": "Pololu 70:1 Metal Gearmotor 37Dx70L 12 V with 64 CPR encoder (#4754)",
+      "margin": "14.04x"
     }
   ],
   "warnings": [],
   "notes": [
-    "WALL-E style tracked robot: 3.736 kg, 1.24 m/s, pan/tilt/lift head with stereo cameras, two servo arms",
+    "WALL-E style tracked robot: 3.736 kg, 0.57 m/s, pan/tilt/lift head with stereo cameras, two servo arms",
     "WALL-E's tracks are represented by three 90 mm wheels per side: the middle wheel of each side is driven by a gearmotor, the front and rear are idlers on 625 bearings. A real build wraps a printed or rubber track (or a T5 timing belt) round the three wheels, so traction and drive sizing use the full weight.",
     "The film's telescoping neck is replaced by a servo-driven pitch neck (the 'lift') with pan and tilt servos above it; the binoculars are two printed eye barrels with a Raspberry Pi Camera Module 3 in each (stereo pair).",
     "Arms: a shoulder and an elbow servo plus a one-servo gripper hand per side, reusing the arm designer's brackets; they are sized as mounted (pointing forward) for the hand payload.",

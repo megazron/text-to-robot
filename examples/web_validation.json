@@ -81,7 +81,7 @@
       "mesh_triangles_verified": true,
       "example": "08_humanoid",
       "pass": true,
-      "source_robot_sha256": "731d261cfaf29501ab4013950a693e20905fd8718fcf8b3da26d3ebcac92baaf",
+      "source_robot_sha256": "f78eb151ccf618a18a8aa8aac2cd639dec5eeeff91bc402319cf16f1eec5cecd",
       "name": "humanoid_robot",
       "links": 47,
       "joints": 46
@@ -151,7 +151,7 @@
       "mesh_triangles_verified": true,
       "example": "15_wall_e",
       "pass": true,
-      "source_robot_sha256": "68e7740fe3373850b6eaa165e3bb5661807930a6b5f2c307d96f5bad4d019c18",
+      "source_robot_sha256": "dee267acd9e9c091887bb5db1296caa6c186c1360c724f22d2433c7c370597ce",
       "name": "wall_e",
       "links": 53,
       "joints": 52

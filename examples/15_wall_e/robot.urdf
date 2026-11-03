@@ -54,17 +54,17 @@
   <link name="left_middle_motor">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://wall_e/meshes/pololu_37d_30to1_64cpr.stl"/></geometry>
+      <geometry><mesh filename="package://wall_e/meshes/pololu_37d_70to1_64cpr.stl"/></geometry>
       <material name="actuator"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://wall_e/meshes/pololu_37d_30to1_64cpr.stl"/></geometry>
+      <geometry><mesh filename="package://wall_e/meshes/pololu_37d_70to1_64cpr.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.006887 0.0000382144 -0.032404" rpy="0 0 0"/>
+      <origin xyz="-0.006891 0.0000370514 -0.033358" rpy="0 0 0"/>
       <mass value="0.205"/>
-      <inertia ixx="0.000099893" ixy="-5.96546e-10" ixz="-9.26890e-7" iyy="0.0000999234" iyz="2.88850e-7" izz="0.0000314453"/>
+      <inertia ixx="0.00010461" ixy="-6.04448e-10" ixz="-9.20404e-7" iyy="0.00010464" iyz="2.88002e-7" izz="0.0000315342"/>
     </inertial>
   </link>
   <link name="left_middle_wheel">
@@ -134,17 +134,17 @@
   <link name="right_middle_motor">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://wall_e/meshes/pololu_37d_30to1_64cpr.stl"/></geometry>
+      <geometry><mesh filename="package://wall_e/meshes/pololu_37d_70to1_64cpr.stl"/></geometry>
       <material name="actuator"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://wall_e/meshes/pololu_37d_30to1_64cpr.stl"/></geometry>
+      <geometry><mesh filename="package://wall_e/meshes/pololu_37d_70to1_64cpr.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.006887 0.0000382144 -0.032404" rpy="0 0 0"/>
+      <origin xyz="-0.006891 0.0000370514 -0.033358" rpy="0 0 0"/>
       <mass value="0.205"/>
-      <inertia ixx="0.000099893" ixy="-5.96546e-10" ixz="-9.26890e-7" iyy="0.0000999234" iyz="2.88850e-7" izz="0.0000314453"/>
+      <inertia ixx="0.00010461" ixy="-6.04448e-10" ixz="-9.20404e-7" iyy="0.00010464" iyz="2.88002e-7" izz="0.0000315342"/>
     </inertial>
   </link>
   <link name="right_middle_wheel">
@@ -885,8 +885,8 @@
     <child link="left_middle_wheel"/>
     <origin xyz="0 0.105 0.045" rpy="-1.570796 0 0"/>
     <axis xyz="0 0 1"/>
-    <limit effort="1.373" velocity="34.558"/>
-    <dynamics damping="0.0079" friction="0.0275"/>
+    <limit effort="2.648" velocity="15.708"/>
+    <dynamics damping="0.0337" friction="0.053"/>
   </joint>
   <joint name="left_rear_wheel_joint" type="continuous" passive="true">
     <parent link="base_link"/>
@@ -919,8 +919,8 @@
     <child link="right_middle_wheel"/>
     <origin xyz="0 -0.105 0.045" rpy="1.570796 0 0"/>
     <axis xyz="0 0 1"/>
-    <limit effort="1.373" velocity="34.558"/>
-    <dynamics damping="0.0079" friction="0.0275"/>
+    <limit effort="2.648" velocity="15.708"/>
+    <dynamics damping="0.0337" friction="0.053"/>
   </joint>
   <joint name="right_rear_wheel_joint" type="continuous" passive="true">
     <parent link="base_link"/>

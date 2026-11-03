@@ -6,7 +6,7 @@
 
 Interpreted as: WALL-E character · camera (head) · camera (head)
 
-**WALL-E style tracked robot: 3.736 kg, 1.24 m/s, pan/tilt/lift head with stereo cameras, two servo arms**
+**WALL-E style tracked robot: 3.736 kg, 0.57 m/s, pan/tilt/lift head with stereo cameras, two servo arms**
 
 Parts cost **$1872.14** · printed structure 29 parts, 2194 g · checks passed 53/53
 
@@ -16,16 +16,16 @@ Parts cost **$1872.14** · printed structure 29 parts, 2194 g · checks passed 5
 |---|--:|
 | mass kg | 3.736 |
 | loaded mass kg | 3.736 |
-| top speed m s | 1.24 |
+| top speed m s | 0.57 |
 | wheel torque nm | 0.07 |
-| drive motor | pololu_37d_30to1_64cpr |
+| drive motor | pololu_37d_70to1_64cpr |
 | battery | 1 x lipo_3s_2200 |
-| average power w | 18.3 |
-| runtime h | 1.06 |
+| average power w | 18.2 |
+| runtime h | 1.07 |
 | tip angle deg | 13.1 |
 | compute | rpi5 |
 | slope deg | 10 |
-| turn rate rad s | 2.17 |
+| turn rate rad s | 0.99 |
 | turn slip factor | 2.41 |
 | cost usd | 1895 |
 | cost breakdown | catalog parts $1798, filament 2.52 kg $63, fasteners $18, fabricated/other $15 (power switch, 15 A fuse, wiring) |
@@ -41,8 +41,8 @@ Parts cost **$1872.14** · printed structure 29 parts, 2194 g · checks passed 5
 | left_arm_elbow_pitch | feetech_sts3215_c047 | 0.272 | 0.9807 / 2.942 | 10.82x | 4.48 |
 | right_arm_shoulder_pitch | feetech_sts3215_c047 | 0.547 | 0.9807 / 2.942 | 5.38x | 4.4 |
 | right_arm_elbow_pitch | feetech_sts3215_c047 | 0.272 | 0.9807 / 2.942 | 10.82x | 4.48 |
-| left_middle_wheel_joint | pololu_37d_30to1_64cpr | 0.07 | 0.686 / 1.373 | 9.82x | 34.558 |
-| right_middle_wheel_joint | pololu_37d_30to1_64cpr | 0.07 | 0.686 / 1.373 | 9.82x | 34.558 |
+| left_middle_wheel_joint | pololu_37d_70to1_64cpr | 0.07 | 0.981 / 2.648 | 14.04x | 15.708 |
+| right_middle_wheel_joint | pololu_37d_70to1_64cpr | 0.07 | 0.981 / 2.648 | 14.04x | 15.708 |
 
 ## Engineering checks
 
@@ -62,9 +62,9 @@ All 53 checks pass (torque, speed, power, stability, print-bed fit). Details in 
 
 | | Test | Result |
 |---|---|---|
-| ✅ | drive straight | 3.44 m in 4.02 s, cruise speed 1.212 m/s vs claimed 1.240 m/s, heading drift -0.0 deg, lateral -0.0 cm |
-| ✅ | ramp 10deg | from standstill on a 10 deg slope (speed ramped over 4.7 s at 0.5 m/s^2): 5.12 m uphill in 6.7 s, speed 1.196 m/s of 1.240 commanded |
-| ✅ | turn in place | yaw rate 4.80 rad/s with 5.18 commanded (no-slip), claimed 2.17 rad/s (needs >= 1.84), centre moved 20.1 cm over 1.9 turn(s) (10.5 cm per turn) |
+| ✅ | drive straight | 2.30 m in 4.68 s, cruise speed 0.557 m/s vs claimed 0.570 m/s, heading drift -0.0 deg, lateral -0.0 cm |
+| ✅ | ramp 10deg | from standstill on a 10 deg slope (speed ramped over 2.1 s at 0.5 m/s^2): 1.69 m uphill in 4.1 s, speed 0.554 m/s of 0.570 commanded |
+| ✅ | turn in place | yaw rate 1.98 rad/s with 2.38 commanded (no-slip), claimed 0.99 rad/s (needs >= 0.84), centre moved 4.6 cm over 1.0 turn(s) (4.6 cm per turn) |
 
 _PASS means the modelled actuators (datasheet peak torque as a hard limit, a linear torque-speed line to no-load speed, reflected rotor inertia, URDF damping/friction) can produce the torques and speeds the task needs in this geometry and mass distribution, and that mean torque over the hold stays within the continuous (rated) torque. Joint control uses an ideal model-based feedforward (computed torque) through the force-limited servo for fixed-base robots and plain position servos for floating robots; a pass therefore proves torque/speed capacity, not that a given controller achieves it. Untested: thermal limits over long duty cycles (only the mean-vs-rated proxy), gearbox backlash and compliance, link and joint flexibility, encoder resolution, supply voltage sag and current limits, bus latency, controller tuning, and contact/friction values (nominal friction only)._
 <!-- /SIM -->

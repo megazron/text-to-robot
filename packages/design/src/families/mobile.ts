@@ -578,8 +578,9 @@ function costing(b: Build, spec: RobotSpecification, budget?: number) {
  * Choose drive motor and battery from the robot as built: build with a guess, compute the loads and
  * power of that robot, move up the ladders until both pass, rebuild, repeat until the choice is stable.
  */
-function sizeAndBuild<T extends { b: Build; eng: ReturnType<typeof engineer> }>(build: (motor: string, battery: [string, number]) => T): T {
-  let mi = 0, bi = 0, out: T | null = null;
+/** `firstMotor`: start the gearmotor ladder here (slower, stronger), e.g. a character that should move at walking pace. */
+function sizeAndBuild<T extends { b: Build; eng: ReturnType<typeof engineer> }>(build: (motor: string, battery: [string, number]) => T, firstMotor = 0): T {
+  let mi = firstMotor, bi = 0, out: T | null = null;
   const seen = new Set<string>();
   for (let iter = 0; iter < 8; iter++) {
     const key = `${mi}/${bi}`;
@@ -965,7 +966,9 @@ export function designWallE(req: MobileRequest = {}): RobotSpecification {
     }
     const eng = engineer(b, { motor, wheel: ch.wheel, nDriven: 6, battery, compute, skid: true });
     return { b, eng, compute };
-  });
+  // WALL-E trundles at walking pace (~0.5 m/s): the 70:1 gearbox, which also keeps an on-the-spot turn of this tall,
+  // six-wheel skid-steer body calm
+  }, DRIVE_MOTORS.indexOf("pololu_37d_70to1_64cpr"));
   const { b } = result, A = b.A;
   A.design.assumptions.push(
     "WALL-E's tracks are represented by three 90 mm wheels per side: the middle wheel of each side is driven by a gearmotor, the front and rear are idlers on 625 bearings. A real build wraps a printed or rubber track (or a T5 timing belt) round the three wheels, so traction and drive sizing use the full weight.",

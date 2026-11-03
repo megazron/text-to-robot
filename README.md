@@ -169,8 +169,9 @@ Every check below runs in CI on each push:
 - Designed robots (arms, wheeled bases, rover, WALL-E, EVA, Baymax) are built from real parts with printable
   structure and checked as above, but none has been physically built yet. The humanoid, SCARA, quadruped,
   hexapod, gripper and battle mech are still fixed templates (scaled to a stated size), not parts-designed.
-- Simulation uses approximate servo gains, friction and motor dynamics. Passing the
-  smoke battery is not evidence of sim-to-real accuracy or a learned skill.
+- Simulation uses approximate servo gains, friction and motor dynamics, and results are recorded with MuJoCo
+  3.13.0 (CI pins it): contact behaviour differs between MuJoCo releases, most visibly for skid-steer turning.
+  Passing the task tests is not evidence of sim-to-real accuracy or a learned skill.
 - MoveIt runs have been executed with `mock_components`; Gazebo export has not had the
   same runtime validation. The BOM is preliminary.
 

@@ -241,7 +241,13 @@ def urdf_to_mjcf(urdf_path: str, floating=None, kp: float | None = None, out: st
             j.set("armature", f"{r['armature_kgm2']:.6g}")
             armature_notes.append(f"{j.get('name')}: {r['armature_kgm2']:.3g} kg m^2 ({r['armature_source']})")
     # actuators for every hinge/slide joint
-    # URDF <mimic> joints (track idlers) are turned into joint equality constraints by MuJoCo's own URDF importer
+    # URDF <mimic> joints (track idlers) are turned into joint equality constraints by MuJoCo's own URDF importer, with
+    # MuJoCo's soft default (0.02 s): a belt or track is a stiff coupling, and a soft one lets idlers lag so a tracked
+    # robot crabs sideways while turning. 0.004 s is the stiffest that stays stable at the 2 ms timestep.
+    eq = root.find("equality")
+    if eq is not None:
+        for c in eq.findall("joint"):
+            if c.get("solref") is None: c.set("solref", "0.004 1")
     act = ET.SubElement(root, "actuator")
     for j in root.iter("joint"):
         jn = j.get("name"); jt = j.get("type", "hinge")

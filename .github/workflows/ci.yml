@@ -35,7 +35,9 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: { python-version: "3.11" }
-      - run: pip install "./python[cad,geometry]"
+      # the shipped simulation evidence is recorded with MuJoCo 3.13.0; contact behaviour (skid-steer turning most) differs
+      # between releases, so the re-run check pins the same version
+      - run: pip install "./python[cad,geometry]" "mujoco==3.13.0"
       - name: Physical fidelity and solid CAD regression tests
         run: python -m unittest discover -s python/tests -v
       - name: Examples match their pipeline (deliverables, report from the shipped URDF, no failing checks)

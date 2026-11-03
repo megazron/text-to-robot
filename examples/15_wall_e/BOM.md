@@ -14,7 +14,7 @@
 | Actuator | DYNAMIXEL XM430-W350-T(R) _(neck: joint base_yaw, joint elbow_pitch · https://www.robotshop.com/products/robotis-dynamixel-xm430-w350-t-smart-servo-actuator)_ | 2 | 310.39 | 620.78 | 1.23 N·m rated / 4.1 N·m peak, 12 V |
 | Actuator | Feetech STS3215 C047 12 V 30 kg.cm (1:345) _(left_arm: joint shoulder_pitch, joint elbow_pitch, gripper; right_arm: joint shoulder_pitch, joint elbow_pitch, gripper · https://www.seeedstudio.com/STS3215-30KG-Serial-Servo-p-6340.html)_ | 6 | 22 | 132 | 0.9807 N·m rated / 2.942 N·m peak, 12 V |
 | Power | LiPo 3S 2200 mAh 25C, XT60 (Gens Ace G-Tech) _(main battery · https://www.buddyrc.com/products/gens-ace-25c-2200mah-11-1v-3s-lipo-battery-pack-with-xt60-plug)_ | 1 | 27 | 27 | 11.1 V, 24.4 Wh |
-| Actuator | Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752) _(drive motor · https://www.pololu.com/product/4752)_ | 2 | 60.95 | 121.9 | 0.686 N·m rated / 1.373 N·m peak, 12 V |
+| Actuator | Pololu 70:1 Metal Gearmotor 37Dx70L 12 V with 64 CPR encoder (#4754) _(drive motor · https://www.pololu.com/product/4754)_ | 2 | 60.95 | 121.9 | 0.981 N·m rated / 2.648 N·m peak, 12 V |
 | Sensor | Raspberry Pi Camera Module 3 (standard lens) _(camera · https://www.raspberrypi.com/products/camera-module-3/)_ | 2 | 25 | 50 | 3.3 V |
 | Compute | Raspberry Pi 5 (4 GB) _(on-board computer · https://www.raspberrypi.com/products/raspberry-pi-5/)_ | 1 | 110 | 110 | 5 V |
 | Electronics | Waveshare Bus Servo Adapter (A) _(servo bus adapter; left_arm: USB to actuator bus; right_arm: USB to actuator bus · https://www.waveshare.com/bus-servo-adapter-a.htm)_ | 3 | 10.6 | 31.8 | 12 V |
@@ -33,11 +33,11 @@
 | left_arm_elbow_pitch | 0.272 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 10.82x |
 | right_arm_shoulder_pitch | 0.547 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 5.38x |
 | right_arm_elbow_pitch | 0.272 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 10.82x |
-| left_middle_wheel_joint | 0.07 | N·m | Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752) | 9.82x |
-| right_middle_wheel_joint | 0.07 | N·m | Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752) | 9.82x |
+| left_middle_wheel_joint | 0.07 | N·m | Pololu 70:1 Metal Gearmotor 37Dx70L 12 V with 64 CPR encoder (#4754) | 14.04x |
+| right_middle_wheel_joint | 0.07 | N·m | Pololu 70:1 Metal Gearmotor 37Dx70L 12 V with 64 CPR encoder (#4754) | 14.04x |
 
 ## Notes
-- WALL-E style tracked robot: 3.736 kg, 1.24 m/s, pan/tilt/lift head with stereo cameras, two servo arms
+- WALL-E style tracked robot: 3.736 kg, 0.57 m/s, pan/tilt/lift head with stereo cameras, two servo arms
 - WALL-E's tracks are represented by three 90 mm wheels per side: the middle wheel of each side is driven by a gearmotor, the front and rear are idlers on 625 bearings. A real build wraps a printed or rubber track (or a T5 timing belt) round the three wheels, so traction and drive sizing use the full weight.
 - The film's telescoping neck is replaced by a servo-driven pitch neck (the 'lift') with pan and tilt servos above it; the binoculars are two printed eye barrels with a Raspberry Pi Camera Module 3 in each (stereo pair).
 - Arms: a shoulder and an elbow servo plus a one-servo gripper hand per side, reusing the arm designer's brackets; they are sized as mounted (pointing forward) for the hand payload.

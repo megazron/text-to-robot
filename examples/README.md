@@ -17,6 +17,6 @@ Every example is regenerated from its prompt by `node scripts/build_examples.ts`
 | [11_spider_scout](11_spider_scout/README.md)<br><img src="11_spider_scout/simulation.gif" width="220"> | hexapod | $582.05 | ? kg | 0/0 | 2/2 |
 | [12_mars_rover](12_mars_rover/README.md)<br><img src="12_mars_rover/simulation.gif" width="220"> | 4-wheel rocker-bogie rover with a 6-DOF arm: 4.477 kg, 1.24 m/s, 1.53 h, jetson_orin_nano_super | $3811.94 | 4.477 kg | 42/42 | 3/3 |
 | [13_battle_mech](13_battle_mech/README.md)<br><img src="13_battle_mech/simulation.gif" width="220"> | battle_mech | $12699.56 | ? kg | 0/0 | 3/3 |
-| [15_wall_e](15_wall_e/README.md)<br><img src="15_wall_e/simulation.gif" width="220"> | WALL-E style tracked robot: 3.736 kg, 1.24 m/s, pan/tilt/lift head with stereo cameras, two servo arms | $1872.14 | 3.736 kg | 53/53 | 3/3 |
+| [15_wall_e](15_wall_e/README.md)<br><img src="15_wall_e/simulation.gif" width="220"> | WALL-E style tracked robot: 3.736 kg, 0.57 m/s, pan/tilt/lift head with stereo cameras, two servo arms | $1872.14 | 3.736 kg | 53/53 | 3/3 |
 | [16_eva](16_eva/README.md)<br><img src="16_eva/simulation.gif" width="220"> | EVA-style companion robot: 3.263 kg, hidden diff-drive base, pan head with camera, two servo fins | $617.27 | 3.263 kg | 51/51 | 3/3 |
 | [17_baymax](17_baymax/README.md)<br><img src="17_baymax/simulation.gif" width="220"> | Baymax-style service robot: 4.907 kg, 1.01 m tall, 4WD hidden base, two 4-servo arms, pan head with camera | $863.75 | 4.907 kg | 52/52 | 3/3 |
