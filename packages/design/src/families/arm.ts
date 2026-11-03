@@ -144,6 +144,8 @@ function linkOps(cur: JointPlan, nextKey: string, nextT: Mat4, nextKind: Kind | 
       const Rn = bodyRadius(nextKey) + 6;
       ops.push({ op: "at", T: nextT, of: [{ op: "hole", a: [0, 0, -1], b: [0, 0, 60], d: 2 * Rn }, { op: "hole", a: [0, 0, idlerZ(nextKey) + 0.6], b: [0, 0, idlerZ(nextKey) - 60], d: 2 * Rn }] });
     }
+    // the gripper jaw's horn plate turns in front of the gripper servo: keep that disc clear
+    if (nextKind === "G") ops.push({ op: "at", T: nextT, of: [{ op: "hole", a: [0, 0, -0.5], b: [0, 0, 60], d: 2 * (hornRadiusMm(nextKey) + 4) + 2 }] });
     void lo; void hi;
   }
   if (nextKind === "P") ops.push({ op: "at", T: nextT, of: bossOps(nextKey) });
@@ -162,7 +164,7 @@ function gripperOps(G: Mat4, gripKey: string, fingerLen: number): { fixed: Op[];
   ];
   const jaw: Op[] = [
     { op: "at", T: G, of: [{ op: "horn", key: gripKey, t: PLATE }] },
-    { op: "hull", of: [{ op: "box", min: [xa, -9, zg - 9], max: [xb, 9, zg + 9] }, { op: "box", min: [xa, half, zg + F * 0.45], max: [xb, half + 8, zg + F * 0.55] }] },
+    { op: "hull", of: [{ op: "box", min: [xa, -9, zg - 8], max: [xb, 9, zg + 8] }, { op: "box", min: [xa, half, zg + F * 0.45], max: [xb, half + 8, zg + F * 0.55] }] },
     { op: "box", min: [xa, half, zg + F * 0.45], max: [xb, half + 8, zg + F], r: 2 },
   ];
   // closing rotates the jaw about +x; find where its inner face meets the fixed finger's inner face
@@ -351,7 +353,9 @@ export function designArm(req: ArmRequest): RobotSpecification {
   };
   matchReach();
   // requested segments are pitch-axis to pitch-axis distances; offsets of joints in between are fixed, so correct
-  if (fixedSeg.size) for (let k = 0; k < 4; k++) {
+  // (redone whenever the actuators change size, like the reach)
+  const fitSegments = () => {
+    if (fixedSeg.size) for (let k = 0; k < 10; k++) {
     const probe = buildArm({ ...req, ladder, dof }, kinds, keys, req.gripper === false ? null : gripKeyFor(ladder), lengths);
     const m = segmentsOf(probe, kinds);
     let worst = 0;
@@ -360,8 +364,10 @@ export function designArm(req: ArmRequest): RobotSpecification {
       const err = m[name]! - want * 1000; worst = Math.max(worst, Math.abs(err));
       lengths[idx] = Math.max(20, lengths[idx] - err);
     }
-    if (worst < 0.5) break;
+    if (worst < 0.1) break;
   }
+  };
+  fitSegments();
   let built = null as ReturnType<typeof buildArm> | null, torques: Record<string, number> = {}, inertias: Record<string, number> = {};
   lastTorques = {};
   for (let iter = 0; iter < 8; iter++) {
@@ -386,10 +392,10 @@ export function designArm(req: ArmRequest): RobotSpecification {
     const next = built.joints.map((j) => choose(ladderKeys, torques[j.name] ?? 0, inertias[j.name] ?? 0).key);
     const failing = built.joints.some((j) => !passes(choose(ladderKeys, torques[j.name] ?? 0, inertias[j.name] ?? 0)));
     const step = path.indexOf(ladder);
-    if (failing && step >= 0 && step < path.length - 1) { ladder = path[step + 1]; keys = kinds.map(() => LADDERS[ladder].keys[0] as string); continue; }
+    if (failing && step >= 0 && step < path.length - 1) { ladder = path[step + 1]; keys = kinds.map(() => LADDERS[ladder].keys[0] as string); matchReach(); fitSegments(); continue; }
     if (next.every((k, i) => k === keys[i])) break;
     keys = next;
-    matchReach();
+    matchReach(); fitSegments();
   }
   const { A, joints } = built!;
   A.design.tool = { link: built!.tcpLink, xyz_m: built!.tcp.map((x) => +(x / 1000).toFixed(5)) as Vec3, payload_kg: payload };
@@ -434,10 +440,15 @@ export function designArm(req: ArmRequest): RobotSpecification {
   }
   A.design.assumptions.push(
     "Arm clamps or bolts to the bench through the four M5 holes in the base; it is not free-standing at full reach.",
-    "Links are cantilevered from one side of each horn (as on SO-101 / Koch arms); add an idler bearing on the far side for heavy use.",
+    "Every pitch joint is a clevis: one cheek bolts to the servo horn, the other turns on a 625ZZ bearing on an M5 bolt screwed into a heat-set insert in a boss on the back of the servo's cradle, so the servo's own bearing carries no bending moment. An M5 washer sits between the boss and the bearing's inner race.",
+    "Print the links in PETG or PLA+ with 4 perimeters and 30 % gyroid infill, cradle opening up; press the 625ZZ bearings into their seats (16.15 mm) and set the M5 inserts with a soldering iron.",
     `Torques are exact static gravity loads of this geometry: the worst pose (stretched out with the payload) must be held within each actuator's rated continuous torque, peaks get +${Math.round((DYNAMIC_FACTOR - 1) * 100)} %, and each joint must still reach >= 1 rad/s loaded on its torque-speed line.`,
   );
   const segs = segmentsOf(built!, kinds);
+  for (const [nm, want] of Object.entries(req.segments ?? {})) {
+    const got = (segs as Record<string, number | undefined>)[nm];
+    if (want && got !== undefined && Math.abs(got - want * 1000) > 0.6) A.design.assumptions.push(`requested ${nm} ${want} m; built ${(got / 1000).toFixed(3)} m, the shortest these actuators allow`);
+  }
   if (segs.upper_arm !== undefined) A.design.performance.upper_arm_m = +(segs.upper_arm / 1000).toFixed(3);
   if (segs.forearm !== undefined) A.design.performance.forearm_m = +(segs.forearm / 1000).toFixed(3);
   // ready pose: shoulder forward, elbow and wrist folded back (signs follow each pitch actuator's side)

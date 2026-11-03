@@ -895,7 +895,8 @@ export function designWallE(req: MobileRequest = {}): RobotSpecification {
   const sensors = defaults(req, ["camera", "imu"]);
   const payload = req.payloadKg ?? 0.1;
   const BL = 220, BW = 200, BH = 200, yFace = BW / 2 - 5;
-  const armMounts = [1, -1].map((s) => frame([-20, s * (BW / 2 + 34), 0], [1, 0, 0], [0, 0, -1]));
+  // arms stand off the body sides far enough for the clevis bearing cheek behind each shoulder servo
+  const armMounts = [1, -1].map((s) => frame([-20, s * (BW / 2 + 48), 0], [1, 0, 0], [0, 0, -1]));
   const result = sizeAndBuild((motor, battery) => {
     const b = new Build(req.name ?? "walle_robot", "character_walle", req.prompt);
     const ch = characterChassis(b, { motor, perSide: 3, drivenPerSide: 1, wheelbase: 200, yFace, L: BL, W: BW, tracks: true });
@@ -928,7 +929,7 @@ export function designWallE(req: MobileRequest = {}): RobotSpecification {
     // the lift: neck pitch limited to -26 / +17 deg (forward lean less) so the head stays over the body and it cannot tip on a slope
     // sized for the binocular head (~0.38 kg with both eye cameras) on the tilt flange; after the head is built as real
     // links the check carries no extra payload, so the head is counted once
-    const neck = attachArm(b, "neck", { dof: 3, kinds: ["P", "Y", "P"], gripper: false, payloadKg: 0.45, basePlateMm: 70 }, "body_top", translation([BL / 2 - 80, 0, z1 + t]), "walle", { shoulder_pitch: [-0.45, 0.3] });
+    const neck = attachArm(b, "neck", { dof: 3, kinds: ["P", "Y", "P"], gripper: false, payloadKg: 0.45, reachM: 0.16, basePlateMm: 70 }, "body_top", translation([BL / 2 - 80, 0, z1 + t]), "walle", { shoulder_pitch: [-0.45, 0.3] });
     neck.rec.tool = { ...neck.rec.tool, payload_kg: 0 };
     // binocular head on the tilt servo's tool flange
     const Tt = b.pose(neck.rec.tool.link), tip = apply(Tt, neck.rec.tool.xyz_m.map((v) => v * 1000) as Vec3);
@@ -1023,7 +1024,8 @@ export function designEva(req: MobileRequest = {}): RobotSpecification {
     b.printed("spine_foot", "base_link", [{ op: "box", min: [SX - 26, -26, b.deckTop], max: [SX + 26, 26, b.deckTop + 5], r: 6 }, { op: "rod", a: [SX, 0, b.deckTop], b: [SX, 0, b.deckTop + 40], r: 14 }, { op: "hole", a: [SX, 0, b.deckTop + 4], b: [SX, 0, b.deckTop + 41], d: 20.2 }], "printed_dark");
     const prof = eggProfile(zEgg0, zEgg1, R, zEggW, 32, 0.28, 0.25);
     const rAt = (z: number) => { for (let i = 1; i < prof.length; i++) if (prof[i][1] >= z) { const [r0, z0] = prof[i - 1], [r1, z1] = prof[i]; return r0 + ((r1 - r0) * (z - z0)) / (z1 - z0); } return prof[prof.length - 1][0]; };
-    const zSeam = 355, zS = zEggW + 10, yS = rAt(zS) + 30;
+    // arms stand 44 mm off the shell: room for the clevis bearing cheek on the inside of each shoulder servo
+    const zSeam = 355, zS = zEggW + 10, yS = rAt(zS) + 44;
     for (const [zr, nm] of [[zSeam, "rib_mid"], [zEgg1 - 30, "rib_top"]] as const) {
       const rr = rAt(zr) - tShell - (nm === "rib_top" ? 7 : 1.5);
       for (const s of [1, -1]) b.printed(`${nm}_${s > 0 ? "left" : "right"}`, "spine", [{ op: "revolve", pts: [[0, zr - 3], [rr, zr - 3], [rr, zr + 3], [0, zr + 3]] }, { op: "rod", a: [SX, 0, zr - 3], b: [SX, 0, zr - 15], r: 16 }, { op: "hole", a: [SX, 0, zr - 16], b: [SX, 0, zr + 4], d: 20.2 },
@@ -1076,7 +1078,8 @@ export function designEva(req: MobileRequest = {}): RobotSpecification {
     for (const s of [1, -1]) {
       const prefix = s > 0 ? "left_arm" : "right_arm";
       const T = frame([0, s * yS, zS], [0, 0, -1], [1, 0, 0]);
-      attachArm(b, prefix, { dof: 2, kinds: ["P", "P"], gripper: false, payloadKg: payload, reachM: 0.2, basePlateMm: 46, ladder: "feetech" }, "spine", T, "printed");
+      // fins swing +-75 deg: enough for EVA's gestures, and a fully raised fin with a load would tip her on a slope
+      attachArm(b, prefix, { dof: 2, kinds: ["P", "P"], gripper: false, payloadKg: payload, reachM: 0.2, basePlateMm: 46, ladder: "feetech" }, "spine", T, "printed", { shoulder_pitch: [-1.3, 1.3] });
       const ri = rAt(zS) - tShell;
       // shoulder bracket: clamps half the spine, runs out through a slot in the shell to the arm's base plate
       const y = (v: number) => s * v, lo = (a: number, c: number) => Math.min(y(a), y(c)), hi = (a: number, c: number) => Math.max(y(a), y(c));
@@ -1109,7 +1112,7 @@ export function designEva(req: MobileRequest = {}): RobotSpecification {
 // ----------------------------------------------------------------------------------- Baymax
 export function designBaymax(req: MobileRequest = {}): RobotSpecification {
   const sensors = defaults(req, ["camera", "imu"]);
-  const payload = req.payloadKg ?? 0.2;
+  const payload = req.payloadKg ?? 0.1; // Baymax's arms hug and carry light things
   const zSh = 820, ySh = 190, splay = 25 * D2R;
   const result = sizeAndBuild((motor, battery) => {
     const b = new Build(req.name ?? "baymax_robot", "character_baymax", req.prompt);
@@ -1141,7 +1144,8 @@ export function designBaymax(req: MobileRequest = {}): RobotSpecification {
       const along = (j: string) => { const p = jp[`${prefix}_${j}`].p.map((v) => v * 1000); return (p[0] - c0[0]) * z[0] + (p[1] - c0[1]) * z[1] + (p[2] - c0[2]) * z[2]; };
       const onAxis = (d: number): Vec3 => [c0[0] + z[0] * d, c0[1] + z[1] * d, c0[2] + z[2] * d];
       const dS = along("shoulder_pitch"), dE = along("elbow_pitch"), dW = along("wrist_pitch");
-      for (const [link, d0, d1, R] of [["upper_arm", dS, dE, 52], ["forearm", dE, dW, 46]] as const) {
+      // sleeve radius clears the clevis links (bearing cheeks and truss beams) with a few mm of foam
+      for (const [link, d0, d1, R] of [["upper_arm", dS, dE, 58], ["forearm", dE, dW, 52]] as const) {
         const nm = `${prefix}_${link}`; b.W.set(nm, b.pose(nm));
         b.fabricated(`${nm}_sleeve`, nm, [{ op: "at", T: frame(onAxis(d0 + 4), z, [1, 0, 0]), of: [{ op: "revolve", pts: shellOutline([[R - 12, 0], [R, 14], [R, d1 - d0 - 22], [R - 12, d1 - d0 - 8]], 1.2), seg: 64 }] }],
           { density: 0, massKg: 0.04, material: "fabric", item: `${link} fabric sleeve (in the cover kit)`, usd: 0, role: "cover" });
