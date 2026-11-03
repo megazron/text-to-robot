@@ -83,11 +83,12 @@ test("contradictions produce one explicit warning per conflict", async () => {
 
 test("requested overall sizes are applied when the template supports them, else reported", () => {
   const humanoid = read("humanoid 1.5 m tall");
-  assert.match(humanoid.ignored.join(), /height 1\.5 m: the humanoid template has a fixed size \(built about \d\.\d\d m tall\); scaling to a stated size is not supported/);
+  assert.ok(humanoid.dimensions.includes("height 1.50 m"), humanoid.dimensions.join());
+  assert.match(humanoid.approximations.join(), /1\.5 m: the humanoid template scaled x1\.\d\d as a whole/);
   const tiny = read("tiny 5 cm arm");
   assert.match(tiny.approximations.join(), /5 cm: reach 0\.\d\d m, the shortest this arm design allows/)
   assert.ok(tiny.dimensions.some((d) => /^reach 0\.\d\d m$/.test(d)), tiny.dimensions.join());
   assert.ok(reachOf("tiny 5 cm arm") < reachOf("6 dof arm"), "the shortest feasible arm is built");
   assert.ok(reachOf("tiny arm") < reachOf("6 dof arm") && reachOf("large arm") > reachOf("6 dof arm"));
-  assert.match(read("a 2 m wide quadruped").ignored.join(), /width 2 m: the quadruped template has a fixed size/);
+  assert.match(read("a 2 m wide quadruped").ignored.join(), /width 2 m: the quadruped template can be scaled 0\.4-2\.5x \(built about 0\.\d\d m wide\)/);
 });

@@ -20,6 +20,8 @@ export interface MobileRequest {
   /** cargo on the deck (bases) or payload in each hand (robots with arms), kg */
   payloadKg?: number;
   sensors?: MobileSensor[];
+  /** sensor types the prompt rules out ("no lidar"): dropped from the defaults */
+  excludeSensors?: string[];
   wheels?: number;
   arm?: { dof: number; reachM?: number; payloadKg?: number };
 }
@@ -435,13 +437,15 @@ function verifyArms(b: Build) {
   }
 }
 
-/** Design an arm (or neck) for a mount orientation: escalate the servo family until it holds the payload in place. */
+/** Design an arm (or neck) for a mount orientation on a 3S robot: try each 12 V servo family and keep the first that
+ *  holds the payload in this mount, else the one with the most torque margin (its checks then report the shortfall). */
+const PACK_MAX_V = 12.6;
 function sizeArm(req: ArmRequest, Rmount: Mat4, limits: Record<string, [number, number]> = {}): RobotSpecification {
   const g: Vec3 = [-Rmount[2] * G, -Rmount[6] * G, -Rmount[10] * G]; // world -z in the arm base frame
-  const ladders: Ladder[] = req.ladder ? [req.ladder] : ["feetech", "dynamixel"];
-  let spec: RobotSpecification | null = null;
+  const ladders: Ladder[] = req.ladder ? [req.ladder] : ["feetech", "dynamixel12"];
+  let best: { spec: RobotSpecification; score: number } | null = null;
   for (const ladder of ladders) {
-    spec = designArm({ ...req, ladder });
+    const spec = designArm({ ...req, ladder, maxSupplyV: PACK_MAX_V, gravity: g });
     for (const j of spec.joints) if (limits[j.name] && j.limit) [j.limit.lower, j.limit.upper] = limits[j.name];
     const tool = (spec.metadata as any).design.tool;
     const loads: PointLoad[] = tool ? [{ link: tool.link, at: tool.xyz_m, massKg: tool.payload_kg }] : [];
@@ -451,9 +455,11 @@ function sizeArm(req: ArmRequest, Rmount: Mat4, limits: Record<string, [number, 
     const worst: Record<string, number> = {};
     for (const q of grid) for (const [k, v] of Object.entries(gravityTorques(spec, q, loads, g))) worst[k] = Math.max(worst[k] ?? 0, v);
     const recs = (spec.metadata as any).design.joints as { joint: string; actuator: string }[];
-    if (recs.every((r) => { const c = evaluate(r.actuator, worst[r.joint] ?? 0); return c.ok && c.continuous_ok; })) return spec;
+    const score = Math.min(...recs.map((r) => { const st = worst[r.joint] ?? 0, rt = rating(r.actuator); return Math.min(rt.rated_nm / Math.max(st, 1e-6), rt.peak_nm / Math.max(st * DYNAMIC_FACTOR, 1e-6)); }));
+    if (score >= 1) return spec;
+    if (!best || score > best.score) best = { spec, score };
   }
-  return spec!;
+  return best!.spec;
 }
 function attachArm(b: Build, prefix: string, req: ArmRequest, parent: string, Tw: Mat4, material?: string, limits: Record<string, [number, number]> = {}) {
   const R: Mat4 = [...Tw]; R[12] = R[13] = R[14] = 0;
@@ -594,7 +600,10 @@ function deck(b: Build, L: number, W: number, zB: number, extra: Op[] = [], corn
   return { printed, top: zB + t };
 }
 
-function defaults(req: MobileRequest, sensors: MobileSensor[]) { return req.sensors?.length ? [...new Set(req.sensors)] : sensors; }
+function defaults(req: MobileRequest, sensors: MobileSensor[]) {
+  const out = req.sensors?.length ? [...new Set(req.sensors)] : sensors;
+  return out.filter((s) => !(req.excludeSensors ?? []).includes(s));
+}
 
 // ============================================================================ wheeled bases
 type BaseKind = "diff" | "four" | "mecanum";
@@ -888,7 +897,10 @@ export function designWallE(req: MobileRequest = {}): RobotSpecification {
     const { items, compute } = electronicsFor(sensors.filter((x) => x !== "lidar"), 2, battery, sensors.includes("depth"), true);
     // battery, motor driver and regulator on the floor; computer, IMU and servo bus on a printed shelf
     const zs = z0 + 95, low = items.filter((i) => i.kind === "battery" || i.key === "cytron_mdd10a" || i.key === "buck_5v_5a"), high = items.filter((i) => !low.includes(i));
-    electronicsBay(b, low, { x0: -BL / 2 + 8, x1: BL / 2 - 8, y0: -BW / 2 + 8, y1: BW / 2 - 8 }, [], z0);
+    // heavy parts in the rear of the floor: they balance the head when the neck leans forward
+    // (rear 60 % of the floor when they fit there, the whole floor for the larger pack)
+    try { electronicsBay(b, low, { x0: -BL / 2 + 8, x1: 30, y0: -BW / 2 + 8, y1: BW / 2 - 8 }, [], z0); }
+    catch { electronicsBay(b, low, { x0: -BL / 2 + 8, x1: BL / 2 - 8, y0: -BW / 2 + 8, y1: BW / 2 - 8 }, [], z0); }
     b.printed("shelf", "base_link", [{ op: "box", min: [-BL / 2 + t + 0.5, -BW / 2 + t + 0.5, zs - 4], max: [BL / 2 - t - 0.5, BW / 2 - t - 0.5, zs], r: 3 },
 ], "printed_dark");
     b.A.fastener("M3 x 10 + printed cleats (shelf to side panels)", 4);
@@ -896,8 +908,11 @@ export function designWallE(req: MobileRequest = {}): RobotSpecification {
     if (sensors.includes("imu")) b.sensor("imu_frame", "imu", "imu", translation([12.8, 11.35, 2]), { rate_hz: 400 });
     if (sensors.includes("lidar")) lidarMast(b, -BL / 2 + 40, 0, z1 + t, z1 + t, "body_top");
     // neck + head: pitch neck (the lift), pan and tilt, all serial-bus servos
-    // the lift: neck pitch limited to +-26 deg so the head stays over the body
-    const neck = attachArm(b, "neck", { dof: 3, kinds: ["P", "Y", "P"], gripper: false, payloadKg: 0.2, basePlateMm: 70, ladder: "feetech" }, "body_top", translation([BL / 2 - 80, 0, z1 + t]), "walle", { shoulder_pitch: [-0.45, 0.45] });
+    // the lift: neck pitch limited to -26 / +17 deg (forward lean less) so the head stays over the body and it cannot tip on a slope
+    // sized for the binocular head (~0.38 kg with both eye cameras) on the tilt flange; after the head is built as real
+    // links the check carries no extra payload, so the head is counted once
+    const neck = attachArm(b, "neck", { dof: 3, kinds: ["P", "Y", "P"], gripper: false, payloadKg: 0.45, basePlateMm: 70 }, "body_top", translation([BL / 2 - 80, 0, z1 + t]), "walle", { shoulder_pitch: [-0.45, 0.3] });
+    neck.rec.tool = { ...neck.rec.tool, payload_kg: 0 };
     // binocular head on the tilt servo's tool flange
     const Tt = b.pose(neck.rec.tool.link), tip = apply(Tt, neck.rec.tool.xyz_m.map((v) => v * 1000) as Vec3);
     // the head rides on a plate rising from the tilt servo's tool flange, clear above the pan turret
@@ -1075,7 +1090,7 @@ export function designEva(req: MobileRequest = {}): RobotSpecification {
 // ----------------------------------------------------------------------------------- Baymax
 export function designBaymax(req: MobileRequest = {}): RobotSpecification {
   const sensors = defaults(req, ["camera", "imu"]);
-  const payload = req.payloadKg ?? 0.3;
+  const payload = req.payloadKg ?? 0.2;
   const zSh = 820, ySh = 190, splay = 25 * D2R;
   const result = sizeAndBuild((motor, battery) => {
     const b = new Build(req.name ?? "baymax_robot", "character_baymax", req.prompt);
@@ -1098,8 +1113,10 @@ export function designBaymax(req: MobileRequest = {}): RobotSpecification {
       const T = frame([0, s * ySh, zSh - 22], z, [1, 0, 0]);
       b.printed(`${prefix}_shoulder_wedge`, "shoulder_yoke", [{ op: "hull", of: [{ op: "box", min: [-20, s * ySh - 30, zSh - 8], max: [20, s * ySh + 30, zSh - 6] },
         { op: "at", T, of: [{ op: "box", min: [-30, -30, -1], max: [30, 30, 0] }] }] }, { op: "hole", a: [0, s * ySh - 12, zSh - 30], b: [0, s * ySh - 12, zSh + 1], d: 5.5 }, { op: "hole", a: [0, s * ySh + 12, zSh - 30], b: [0, s * ySh + 12, zSh + 1], d: 5.5 }], "printed");
-      // sized with the mitten and sleeves (about 0.18 kg) added to the hand payload
-      attachArm(b, prefix, { dof: 4, kinds: ["Y", "P", "P", "P"], gripper: false, payloadKg: payload + 0.18, reachM: 0.38, basePlateMm: 70 }, "shoulder_yoke", T, "fabric");
+      // sized with the mitten and sleeves (about 0.18 kg) added to the hand payload; once they exist as real links the
+      // check carries only the object in the hand, so their mass is not counted twice
+      const arm = attachArm(b, prefix, { dof: 4, kinds: ["Y", "P", "P", "P"], gripper: false, payloadKg: payload + 0.18, reachM: 0.34, basePlateMm: 70 }, "shoulder_yoke", T, "fabric");
+      arm.rec.tool = { ...arm.rec.tool, payload_kg: payload };
       // fabric sleeves over the upper arm and forearm (Baymax's soft limbs) and a foam mitten on the wrist
       const jp = fk(b.A.spec).joint, c0 = apply(T, [0, 0, 0]);
       const along = (j: string) => { const p = jp[`${prefix}_${j}`].p.map((v) => v * 1000); return (p[0] - c0[0]) * z[0] + (p[1] - c0[1]) * z[1] + (p[2] - c0[2]) * z[2]; };

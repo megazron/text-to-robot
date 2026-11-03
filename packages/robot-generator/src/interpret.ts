@@ -6,7 +6,7 @@ import type { RobotSpecification, SensorType } from "@ttr/robot-schema";
 import { safeName } from "@ttr/robot-schema";
 import { fk } from "@ttr/design";
 import { normalize, find, findAll, mentions, negates, extractDofMentions, type DofMention, extractLengths, extractMasses, extractSpeeds, parseBudget, extractName, extractColour, maskNames, COLOURS } from "./text.ts";
-import { MAX_ARM_DOF, RX, gripperRequest, chooseFamily, RECOLOURABLE, ARM_FAMILIES, type Choice, type GripperKind, type DesignContext } from "./families.ts";
+import { MAX_ARM_DOF, RX, gripperRequest, chooseFamily, RECOLOURABLE, type Choice, type GripperKind, type DesignContext } from "./families.ts";
 import { translateKeywords } from "./lexicon.ts";
 import { applySizeDirectives, designedSizes, reportDesignedReach } from "./sizing.ts";
 import { applyInlineSensors, requestedSensors, sensorCount, SENSOR_WORDS, UNMODELLED_SENSORS } from "./sensors.ts";
@@ -39,6 +39,8 @@ export interface Interpretation {
   ignored: string[];
   /** requests that contradict each other ("2 DOF ... 7 joints"); each says which one was used */
   conflicts: string[];
+  /** engineering checks the designed robot fails (it was built, but would not work as asked) */
+  warnings?: string[];
 }
 
 export interface PromptResult { spec: RobotSpecification; interpretation: Interpretation; }
@@ -59,7 +61,7 @@ export function interpretPrompt(prompt: string): PromptResult {
   const grip = gripperRequest(t);
   const g = grip.kind;
   const lengths = extractLengths(t);
-  const ignored: string[] = [], approximations: string[] = [], dimensions: string[] = [], conflicts: string[] = [];
+  const ignored: string[] = [], approximations: string[] = [], dimensions: string[] = [], conflicts: string[] = [], warnings: string[] = [];
   if (translation.mapped.length) approximations.push(`read non-English keywords as English: ${translation.mapped.join(", ")}`);
 
   // A stated stature fits a wearable suit to its wearer.
@@ -76,11 +78,23 @@ export function interpretPrompt(prompt: string): PromptResult {
   const masses = extractMasses(t);
   const payload = masses.find((x) => x.context === "payload");
   const asked = choice.designed && choice.family === "serial_arm" ? designedSizes(t, choice.label, lengths, stature, { dimensions, approximations, ignored, conflicts }) : undefined;
-  const ctx: DesignContext = { prompt, budget: budget.usd, payloadKg: payload ? +payload.kg.toFixed(3) : undefined, reachM: asked?.reachM, segments: asked?.segments,
+  const hobby = hobbyServos(t);
+  const ctx: DesignContext = { ...(hobby ? { hobby } : {}), prompt, budget: budget.usd, payloadKg: payload ? +payload.kg.toFixed(3) : undefined, reachM: asked?.reachM, segments: asked?.segments,
     sensors: requestedSensors(t).filter((type) => !negates(t, SENSOR_WORDS.find(([, k]) => k === type)![0])),
     excludeSensors: SENSOR_WORDS.filter(([rx]) => negates(t, rx)).map(([, k]) => k), ...(heightM ? { heightM } : {}) };
   const spec = choice.build(ctx);
+  if (hobby) {
+    if (choice.family === "serial_arm" && choice.designed) dimensions.push(`hobby servos${hobby.only ? ` (${hobby.only.map((k) => k.replace("hobby_", "").toUpperCase()).join(", ")})` : ""} on an Arduino Uno + PCA9685`);
+    else ignored.push(`hobby servos / Arduino: only arms are designed for hobby servos so far; the ${choice.label} uses its standard actuators`);
+  }
   if (asked) reportDesignedReach(spec, asked, { dimensions, approximations, ignored, conflicts });
+  // engineering checks that fail are shown with the result, not only in the build report
+  const failed = ((spec.metadata as { design?: { checks?: { name: string; pass: boolean; detail: string }[] } }).design?.checks ?? []).filter((c) => !c.pass);
+  if (failed.length) {
+    const weak = failed.filter((c) => c.name.startsWith("torque:")).map((c) => c.name.slice(7));
+    const hint = weak.length && hobby?.only ? ` (try stronger servos, e.g. "with MG996R servos", a shorter reach or a lighter payload)` : weak.length ? " (try a shorter reach or a lighter payload)" : "";
+    warnings.push(`design check failed: ${failed.slice(0, 4).map((c) => `${c.name}: ${c.detail.split(" — ")[0]}`).join("; ")}${failed.length > 4 ? ` and ${failed.length - 4} more` : ""}${hint}`);
+  }
   if (choice.approx) approximations.push(choice.approx);
   if (grip.note && choice.usesGripper) approximations.push(grip.note);
 
@@ -141,13 +155,14 @@ export function interpretPrompt(prompt: string): PromptResult {
   spec.metadata.notes.push(`Interpreted locally: type inferred, DOF=${dofOf(spec)}, gripper=${g}.`);
   const interpretation: Interpretation = {
     family: choice.family, label: choice.label, matched: choice.matched, dof: dofOf(spec),
-    ...(choice.usesGripper ? { gripper: spec.end_effectors.length ? g : "none" as GripperKind } : {}),
+    // report the tool that was actually built (a pick-and-place SCARA gets a suction cup without asking)
+    ...(choice.usesGripper ? { gripper: !spec.end_effectors.length ? "none" as GripperKind : /suction/.test(spec.end_effectors[0].type) ? "suction" as GripperKind : g === "none" ? "parallel" as GripperKind : g } : {}),
     sensors, dimensions, ...(name ? { name: spec.robot_name } : {}),
     ...(colour && !ignored.some((i) => i.startsWith("colour")) ? { colour } : {}),
     ...(budget.usd !== undefined ? { budget_usd: budget.usd } : {}),
     ...(payloadKg !== undefined ? { payload_kg: payloadKg } : {}),
     ...(heightM ? { wearer_height_m: heightM } : {}),
-    approximations, ignored, conflicts,
+    approximations, ignored, conflicts, ...(warnings.length ? { warnings } : {}),
   };
   return { spec, interpretation };
 }
@@ -158,6 +173,15 @@ export function parsePrompt(prompt: string): RobotSpecification {
 }
 
 /** One line: "6-DOF serial arm · parallel gripper · camera (wrist) · reach 0.60 m · budget $500". */
+const HOBBY_MODELS: [RegExp, string][] = [[/\bsg[\s-]?90\b/, "hobby_sg90"], [/\bmg[\s-]?90s?\b/, "hobby_mg90s"], [/\bmg[\s-]?996r?\b/, "hobby_mg996r"], [/\bds[\s-]?3218\b/, "hobby_ds3218"]];
+/** Hobby-servo / Arduino build requested? Named servo models limit the choice to those models. */
+export function hobbyServos(t: string): { only?: string[] } | undefined {
+  const named = HOBBY_MODELS.filter(([rx]) => rx.test(t)).map(([, k]) => k);
+  if (named.length) return { only: named };
+  if (/\b(?:hobby|micro|rc|pwm|analog(?:ue)?)\s+servos?\b|\barduino\b|\bpca\s?9685\b|\bservo\s+(?:driver|shield)\b/.test(t)) return {};
+  return undefined;
+}
+
 export function describeInterpretation(i: Interpretation): string {
   const parts = [i.label];
   if (i.name) parts.push(`named ${i.name}`);

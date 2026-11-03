@@ -1,4 +1,4 @@
-// Basic multilingual keywords (German, French, Spanish) for the local prompt parser.
+// Basic multilingual keywords (German, French, Spanish, romanised Hindi / Hinglish) for the local prompt parser.
 // This is a small word list, not translation: it maps robot types, parts, sensors,
 // joint-count units, number words and a few function words ("with", "without",
 // "and") onto the English vocabulary the rule-based parser already understands.
@@ -24,6 +24,10 @@ const CONTENT: Record<string, string> = {
   brazo: "arm", brazos: "arms", pinza: "gripper", pinzas: "grippers", garra: "claw", ventosa: "suction gripper", ruedas: "wheels",
   rueda: "wheel", piernas: "legs", patas: "legs", cuadrupedo: "quadruped", hexapodo: "hexapod", articulaciones: "joints",
   articulacion: "joint", ejes: "axes", eje: "axis", camara: "camera", camaras: "cameras", orugas: "tracks", robotico: "robotic", robotica: "robotic",
+  // Hinglish (romanised Hindi)
+  haath: "arm", hath: "arm", haathon: "arms", pahiye: "wheels", pahiya: "wheel", pahiyon: "wheels", kutta: "dog", kutte: "dog",
+  pakadne: "gripping", pakad: "grip", pakdne: "gripping", chalne: "walking", chalta: "walking", chalti: "walking", ghoomne: "driving",
+  insaan: "human", insan: "human", aankh: "camera", aankhen: "cameras", chahiye: "", banao: "make", bana: "make",
 };
 
 /** Multi-word phrases, matched before single words (accent-free). */
@@ -35,6 +39,11 @@ const PHRASES: [RegExp, string][] = [
   [/\bbras robot(?:ique|ise)?\b/g, "robot arm"],
   [/\bbrazo robot(?:ico)?\b/g, "robot arm"],
   [/\bmit (?:raedern|radern|rader)\b/g, "with wheels"],
+  // Hinglish: "jo 1 kg utha sake" (that can lift 1 kg), "2 kilo tak uthane wala"
+  [/\b(\d+(?:\.\d+)?\s*(?:kg|kgs|kilo|kilos|g|gm|gram|grams))\s+(?:tak\s+|ka\s+|ki\s+)?(?:wajan\s+|vajan\s+|bhaar\s+|saman\s+|samaan\s+)?(?:utha|uthaa|uthane|uthaye)\s*(?:sake|sakta|sakti|sakte|paye|le|wala|wali|ne\s+wala|ne\s+wali)?\b/g, "that lifts $1"],
+  [/\binsaan jaisa\b|\binsan jaisa\b/g, "humanoid"],
+  [/\brobot kutta\b/g, "robot dog"],
+  [/\bke saath\b|\bke sath\b/g, "with"],
   // German compounds such as "sechsachsig", "6-achsiger": "six axis"
   [/\b(\w+?)-?achsig\w*\b/g, "$1 axis"],
 ];
@@ -51,6 +60,10 @@ const FUNCTION: Record<string, string> = {
   // Spanish
   con: "with", sin: "without", y: "and", una: "a", uno: "one", dos: "two", tres: "three", cuatro: "four", cinco: "five",
   seis: "six", siete: "seven", ocho: "eight", nueve: "nine", diez: "ten", doce: "twelve", ningun: "no", ninguna: "no",
+  // Hinglish
+  ek: "a", teen: "three", char: "four", chaar: "four", paanch: "five", panch: "five", chhe: "six", chhah: "six", saat: "seven", aath: "eight",
+  aur: "and", bina: "without", saath: "with", sath: "with", jo: "that", mujhe: "", mera: "my", meri: "my", wala: "", wali: "", wale: "", ka: "", ki: "", ke: "",
+  nahi: "no", nahin: "no",
 };
 /** Also English words: mapped, but they never mark a prompt as non-English on their own. */
 const ALSO_ENGLISH = new Set(["articulations"]);

@@ -2,7 +2,7 @@
 // (exporters, browser, MuJoCo) rebuilds the identical watertight solid from it.
 import { componentMesh, type Vec3 } from "@ttr/parts";
 import {
-  build, box, cyl, rod, roundedBox, unionAll, frame, Manifold, toMesh, cradle, cradleCuts, hornPlate, hornCuts,
+  build, box, rod, roundedBox, unionAll, frame, Manifold, toMesh, cradle, cradleCuts, hornPlate, hornCuts,
   actuatorKeepout, type Mat4, type Manifold as M,
 } from "./geom.ts";
 export type { Mat4 } from "./geom.ts";

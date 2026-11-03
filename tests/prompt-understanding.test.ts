@@ -77,7 +77,8 @@ test("lengths are unit-aware and set the arm's stretched reach", () => {
   for (const [prompt, reach] of [["6 dof arm with 60 cm reach", "0.60"], ["6 dof arm with 1 m reach", "1.00"], ["a scara with 600 mm reach", "0.60"]] as const)
     assert.match(read(prompt).dimensions.join(), new RegExp(`reach ${reach} m`), prompt);
   assert.match(read("6 dof arm under 2 m reach").dimensions.join(), /within the 2 m limit/);
-  assert.match(read("1.2 m tall humanoid").ignored.join(), /height 1.2 m/);
+  assert.ok(read("1.2 m tall humanoid").dimensions.includes("height 1.20 m"), "a template humanoid is scaled to a stated height");
+  assert.match(read("humanoid 5 m tall").ignored.join(), /height 5 m: the humanoid template can be scaled 0\.4-2\.5x/);
   assert.match(read("a quadruped that moves at 2 m/s").ignored.join(), /speed 2 m\/s/);
 });
 
@@ -136,9 +137,6 @@ test("every generate result carries a readable summary and surfaced warnings", a
 // ---------------- modifications ----------------
 const arm = () => finalizeSpec(parsePrompt("6 dof arm"));
 const seg = (spec: ReturnType<typeof arm>, name: string): number => (spec.metadata as any).design.performance[`${name}_m`];
-const lengthOf = (spec: ReturnType<typeof arm>, name: string) => {
-  const g = spec.links.find((l) => l.name === name)!.geometry; return g.type === "mesh" ? g.bbox.max[2] - g.bbox.min[2] : NaN;
-};
 
 test("clauses split on 'and' and inherit the verb", () => {
   assert.deepEqual(splitClauses("add a lidar and a camera"), ["add a lidar", "add a camera"]);
@@ -245,9 +243,9 @@ test("negation: doesn't / neither-nor / postfix / instead of / blanket exception
   const types = (p: string) => parsePrompt(p).sensors.map((s) => s.type).sort();
   // a designed base keeps its default IMU; the negated lidar is never mounted
   assert.ok(!types("a rover that doesn't have a lidar").includes("lidar"));
-  assert.deepEqual(types("a rover with neither lidar nor camera"), []);
-  assert.deepEqual(types("rover, lidar is not needed"), []);
-  assert.deepEqual(types("a rover but not with a lidar"), []);
+  assert.deepEqual(types("a rover with neither lidar nor camera"), ["imu"]);
+  assert.deepEqual(types("rover, lidar is not needed"), ["imu"]);
+  assert.deepEqual(types("a rover but not with a lidar"), ["imu"]);
   assert.deepEqual(types("a rover with lidar instead of a camera"), ["lidar"]);
   assert.deepEqual(types("a quadruped with no sensors except a camera"), ["camera"]);
   assert.equal(parsePrompt("a robot arm that doesn't need a gripper").end_effectors.length, 0);
@@ -270,7 +268,8 @@ test("sizes, names and objects are not confused", () => {
   assert.equal(parsePrompt("a robot arm named after my dog").robot_name, "arm_6dof");
   assert.equal(parsePrompt("an arm that can be called from ROS").robot_name, "arm_6dof");
   assert.equal(parsePrompt("an arm, name: atlas").robot_name, "atlas");
-  assert.match(read("small quadruped").ignored.join(), /fixed size/);
+  assert.ok(read("small quadruped").dimensions.includes("small: x0.75"), "size words scale a template robot");
+  assert.match(read("small diff drive robot").ignored.join(), /sized from its parts/);
   assert.match(read("6 dof arm mounted 50 cm above the table").ignored.join(), /positions and part sizes/);
   assert.ok(Math.abs(extractLengths("1,000 mm reach")[0].metres - 1) < 1e-9);
   assert.ok(Math.abs(extractLengths("a reach of one meter")[0].metres - 1) < 1e-9);

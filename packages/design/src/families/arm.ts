@@ -20,6 +20,12 @@ export interface ArmRequest {
   kinds?: Kind[];
   /** side of the square base plate (mm); default scales with reach (min 110) */
   basePlateMm?: number;
+  /** highest voltage the actuator supply reaches (e.g. 12.6 V for a full 3S pack): actuators rated below it / 1.1 are not used */
+  maxSupplyV?: number;
+  /** gravity in the arm's base frame when it is mounted tilted or sideways (default: upright, [0, 0, -9.81]) */
+  gravity?: Vec3;
+  /** only these actuators may be used (e.g. the prompt named "SG90 servos"); a failing check then says what it would take */
+  onlyActuators?: string[];
 }
 export type Kind = "Y" | "P" | "R";
 const KINDS: Record<number, Kind[]> = { 1: ["Y"], 2: ["P", "P"], 3: ["Y", "P", "P"], 4: ["Y", "P", "P", "P"], 5: ["Y", "P", "P", "P", "R"], 6: ["Y", "P", "P", "R", "P", "R"], 7: ["Y", "P", "R", "P", "R", "P", "R"] };
@@ -264,15 +270,20 @@ let lastTorques: Record<string, number> = {};
 /** Design an arm: choose lengths from the reach, size every actuator from the built arm's real loads. */
 export function designArm(req: ArmRequest): RobotSpecification {
   const kinds = req.kinds ?? KINDS[Math.max(1, Math.min(7, Math.round(req.dof)))];
-  const dof = kinds.length, payload = req.payloadKg ?? 0.1; // desktop class: what a ~$150 servo arm holds stretched out continuously
-  const reach = (req.reachM ?? (dof >= 5 ? 0.45 : 0.35)) * 1000;
+  const dof = kinds.length, payload = req.payloadKg ?? (req.ladder === "hobby" ? (req.onlyActuators?.every((k) => /sg90|mg90/.test(k)) ? 0.02 : 0.05) : 0.1); // desktop class: what a ~$150 servo arm holds stretched out continuously
+  const hobby = (req.ladder ?? ladderFor(req.budget)) === "hobby";
+  // hobby-servo arms are MeArm / EEZYbotARM class: short reach, light objects
+  const micro = hobby && !!req.onlyActuators?.length && req.onlyActuators.every((k) => /sg90|mg90/.test(k));
+  const reach = (req.reachM ?? (micro ? 0.15 : hobby ? (dof >= 5 ? 0.24 : 0.2) : dof >= 5 ? 0.45 : 0.35)) * 1000;
   // gripper actuator: fingertip force at 70 mm must hold the payload with friction 0.5 on both jaws, x1.5
   const gripNeedNm = (payload * 9.81 * 1.5) / (2 * 0.5) * 0.07;
-  const gripKeyFor = (l: Ladder) => { const pool = l === "feetech" ? ["feetech_sts3215_c047", "feetech_sts3250"] : ["dxl_xl430_w250", "dxl_xm430_w350", "dxl_xh540_w270"]; return pool.find((k) => rating(k).rated_nm >= gripNeedNm) ?? pool[pool.length - 1]; };
+  const gripKeyFor = (l: Ladder) => { const pool = l === "hobby" ? (req.onlyActuators ?? ["hobby_sg90", "hobby_mg90s", "hobby_mg996r", "hobby_ds3218"]) : l === "feetech" ? ["feetech_sts3215_c047", "feetech_sts3250"] : l === "dynamixel12" ? ["dxl_xm430_w350", "dxl_xh540_w270"] : ["dxl_xl430_w250", "dxl_xm430_w350", "dxl_xh540_w270"]; return pool.find((k) => rating(k).rated_nm >= gripNeedNm) ?? pool[pool.length - 1]; };
+  // escalation path when the weakest family can't hold the load; a battery that peaks above 12 V rules out the 11.1 V XL430 and the 48 V CAN motors
+  const path: Ladder[] = req.ladder === "hobby" ? ["hobby"] : req.maxSupplyV && req.maxSupplyV > 11.1 * 1.1 ? ["feetech", "dynamixel12"] : ["feetech", "dynamixel", "cubemars"];
   let ladder: Ladder = req.ladder ?? ladderFor(req.budget);
-  let keys = kinds.map(() => LADDERS[ladder].keys[0] as string);
+  let keys = kinds.map(() => (ladder === "hobby" && req.onlyActuators ? req.onlyActuators[0] : LADDERS[ladder].keys[0]) as string);
   const pitchCount = kinds.filter((k) => k === "P").length;
-  const wristAllowance = 150;
+  const wristAllowance = hobby ? 45 : 150; // wrist servos + tool beyond the last main link
   const main = Math.max(0, reach - wristAllowance) / Math.max(1, Math.min(2, pitchCount));
   const lengths = kinds.map((k, i) => (k === "P" && (kinds.slice(i + 1).includes("P") || (i === kinds.length - 1 && pitchCount <= 2)) ? main : 0));
   if (pitchCount === 1) lengths[kinds.indexOf("P")] = main;
@@ -283,14 +294,18 @@ export function designArm(req: ArmRequest): RobotSpecification {
   // 2–3 DOF arms end on the elbow: its forearm runs out to the tool
   const tailP = pIdx.length && pIdx[pIdx.length - 1] === kinds.length - 1 && pitchCount <= 2 ? pIdx[pIdx.length - 1] : -1;
   if (req.segments?.forearm && tailP >= 0 && pIdx.length === 2) { lengths[tailP] = req.segments.forearm * 1000; fixedSeg.add(tailP); }
-  // match the requested reach: the first build tells how much the wrist and bodies add
-  if (pitchCount >= 1 && fixedSeg.size === 0) for (let k = 0; k < 3; k++) {
-    const probe = buildArm({ ...req, ladder, dof }, kinds, keys, req.gripper === false ? null : gripKeyFor(ladder), lengths);
-    const err = reachOf(probe, kinds) * 1000 - reach;
-    if (Math.abs(err) < 5) break;
-    const adjustable = lengths.map((l, i) => (l > 0 ? i : -1)).filter((i) => i >= 0);
-    for (const i of adjustable) lengths[i] = Math.max(60, lengths[i] - err / adjustable.length);
-  }
+  // match the requested reach: a build tells how much the wrist and bodies add (redone whenever the actuators change size)
+  const matchReach = () => {
+    if (pitchCount < 1 || fixedSeg.size) return;
+    for (let k = 0; k < 4; k++) {
+      const probe = buildArm({ ...req, ladder, dof }, kinds, keys, req.gripper === false ? null : gripKeyFor(ladder), lengths);
+      const err = reachOf(probe, kinds) * 1000 - reach;
+      if (Math.abs(err) < 5) break;
+      const adjustable = lengths.map((l, i) => (l > 0 ? i : -1)).filter((i) => i >= 0);
+      for (const i of adjustable) lengths[i] = Math.max(hobby ? 25 : 60, lengths[i] - err / adjustable.length);
+    }
+  };
+  matchReach();
   // requested segments are pitch-axis to pitch-axis distances; offsets of joints in between are fixed, so correct
   if (fixedSeg.size) for (let k = 0; k < 4; k++) {
     const probe = buildArm({ ...req, ladder, dof }, kinds, keys, req.gripper === false ? null : gripKeyFor(ladder), lengths);
@@ -309,18 +324,28 @@ export function designArm(req: ArmRequest): RobotSpecification {
     built = buildArm({ ...req, ladder, dof }, kinds, keys, req.gripper === false ? null : gripKeyFor(ladder), lengths);
     const loads: PointLoad[] = [{ link: built.tcpLink, at: built.tcp.map((x) => x / 1000) as Vec3, massKg: payload }];
     const firstP = kinds.indexOf("P");
-    const poses = firstP < 0 ? [{}] : [-1, 1].flatMap((s) => [{ [built!.joints[firstP].name]: s * Math.PI / 2 }, { [built!.joints[firstP].name]: s * Math.PI / 2, ...(kinds[0] === "Y" ? { base_yaw: Math.PI / 2 } : {}) }]);
-    torques = worstTorques(built.A.spec, poses, loads);
+    let poses: Record<string, number>[] = firstP < 0 ? [{}] : [-1, 1].flatMap((s) => [{ [built!.joints[firstP].name]: s * Math.PI / 2 }, { [built!.joints[firstP].name]: s * Math.PI / 2, ...(kinds[0] === "Y" ? { base_yaw: Math.PI / 2 } : {}) }]);
+    if (req.gravity) {
+      // mounted tilted: any joint can end up lifting, so search every joint at -90 / 0 / +90 deg within its limits
+      poses = [{}];
+      for (const j of built.A.spec.joints.filter((x) => x.type === "revolute" && x.name !== "gripper")) {
+        const lim = (v: number) => Math.max(j.limit?.lower ?? -Math.PI, Math.min(j.limit?.upper ?? Math.PI, v));
+        poses = poses.flatMap((q) => [...new Set([-Math.PI / 2, 0, Math.PI / 2].map(lim))].map((v) => ({ ...q, [j.name]: v })));
+      }
+    }
+    torques = worstTorques(built.A.spec, poses, loads, req.gravity);
     // everything downstream swung about each axis with the arm stretched out (worst case for yaw too)
     inertias = {};
     for (const q of poses) for (const [k, v] of Object.entries(axisInertias(built.A.spec, q, loads))) inertias[k] = Math.max(inertias[k] ?? 0, v);
     lastTorques = torques;
-    const ladderKeys = LADDERS[ladder].keys as readonly string[];
+    const ladderKeys = (ladder === "hobby" && req.onlyActuators ? req.onlyActuators : LADDERS[ladder].keys) as readonly string[];
     const next = built.joints.map((j) => choose(ladderKeys, torques[j.name] ?? 0, inertias[j.name] ?? 0).key);
     const failing = built.joints.some((j) => !passes(choose(ladderKeys, torques[j.name] ?? 0, inertias[j.name] ?? 0)));
-    if (failing && ladder !== "cubemars") { ladder = ladder === "feetech" ? "dynamixel" : "cubemars"; keys = kinds.map(() => LADDERS[ladder].keys[0] as string); continue; }
+    const step = path.indexOf(ladder);
+    if (failing && step >= 0 && step < path.length - 1) { ladder = path[step + 1]; keys = kinds.map(() => LADDERS[ladder].keys[0] as string); continue; }
     if (next.every((k, i) => k === keys[i])) break;
     keys = next;
+    matchReach();
   }
   const { A, joints } = built!;
   A.design.tool = { link: built!.tcpLink, xyz_m: built!.tcp.map((x) => +(x / 1000).toFixed(5)) as Vec3, payload_kg: payload };
@@ -347,11 +372,22 @@ export function designArm(req: ArmRequest): RobotSpecification {
   }
   // supply: bus adapter and power; current estimated from load share of stall current
   const bus = LADDERS[ladder].bus;
-  A.buy(bus, 1, "USB to actuator bus");
-  if (ladder !== "cubemars") A.buy("psu_12v_lrs75", 1, "12 V actuator supply");
   const amps = joints.reduce((s, j) => s + Number(part(j.key).specs.stall_current_a ?? part(j.key).specs.current_a ?? 1) * Math.min(1, (torques[j.name] ?? 0) / rating(j.key).peak_nm), 0);
   A.design.performance.holding_current_a = +amps.toFixed(2);
-  if (ladder !== "cubemars") A.check("power:supply", amps <= 6 * 0.8, `holding the payload stretched out draws ~${amps.toFixed(1)} A of the 6 A supply`);
+  if (ladder === "hobby") {
+    // Arduino drives a PCA9685 over I2C; servos get their own 5 V rail (never the Arduino's 5 V pin)
+    A.buy("arduino_uno_r3", 1, "controller (USB serial commands, I2C to the servo driver)");
+    A.buy(bus, 1, "16-channel PWM servo driver (I2C)");
+    A.buy("psu_5v_lrs50", 1, "5 V 10 A servo supply (V+ terminal of the PCA9685)");
+    // a move can stall every servo at once for a moment: size for all stall currents
+    const stall = joints.reduce((s, j) => s + Number(part(j.key).specs.stall_current_a ?? 1), 0);
+    A.check("power:supply", stall <= 10, `all ${joints.length} servos stalled together draw ${stall.toFixed(1)} A of the 10 A 5 V supply; holding the payload draws ~${amps.toFixed(1)} A`);
+    A.check("power:voltage", joints.every((j) => Number(part(j.key).specs.voltage_v) >= 4.8), `5 V rail is inside every servo's 4.8-6 V range (${[...new Set(joints.map((j) => part(j.key).name.split(" (")[0]))].join(", ")})`);
+  } else {
+    A.buy(bus, 1, "USB to actuator bus");
+    if (ladder !== "cubemars") A.buy("psu_12v_lrs75", 1, "12 V actuator supply");
+    if (ladder !== "cubemars") A.check("power:supply", amps <= 6 * 0.8, `holding the payload stretched out draws ~${amps.toFixed(1)} A of the 6 A supply`);
+  }
   A.design.assumptions.push(
     "Arm clamps or bolts to the bench through the four M5 holes in the base; it is not free-standing at full reach.",
     "Links are cantilevered from one side of each horn (as on SO-101 / Koch arms); add an idler bearing on the far side for heavy use.",

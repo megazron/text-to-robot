@@ -71,9 +71,9 @@ export function gravityTorques(spec: RobotSpecification, q: Record<string, numbe
   return out;
 }
 /** Worst gravity torque per joint over a set of poses. */
-export function worstTorques(spec: RobotSpecification, poses: Record<string, number>[], loads: PointLoad[] = []): Record<string, number> {
+export function worstTorques(spec: RobotSpecification, poses: Record<string, number>[], loads: PointLoad[] = [], g?: Vec3): Record<string, number> {
   const worst: Record<string, number> = {};
-  for (const q of poses) for (const [k, v] of Object.entries(gravityTorques(spec, q, loads))) worst[k] = Math.max(worst[k] ?? 0, v);
+  for (const q of poses) for (const [k, v] of Object.entries(gravityTorques(spec, q, loads, g))) worst[k] = Math.max(worst[k] ?? 0, v);
   return worst;
 }
 export function pointWorld(spec: RobotSpecification, q: Record<string, number>, link: string, at: Vec3 = [0, 0, 0]): Vec3 {

@@ -2,7 +2,7 @@
 import type { RobotSpecification } from "@ttr/robot-schema";
 import { designArm, designDiffDrive, designFourWheel, designMecanum, designRover, designWallE, designEva, designBaymax } from "@ttr/design";
 import type { SensorType } from "@ttr/robot-schema";
-import { nDofArm, scara, humanoid, diffDrive, fourWheel, mecanum, quadruped, hexapod, roverArm, ironManSuit, wearableExosuit, ironManMark43, wallE, eva, baymax, attachParallelGripper, attachSuctionGripper } from "@ttr/robot-templates";
+import { nDofArm, scara, humanoid, quadruped, hexapod, roverArm, ironManSuit, wearableExosuit, ironManMark43, attachParallelGripper, attachSuctionGripper } from "@ttr/robot-templates";
 import { find, mentions, negates, isDirectlyNegated } from "./text.ts";
 import { armTip, replaceGripperWithSuction } from "./grippers.ts";
 
@@ -61,7 +61,9 @@ export function gripperRequest(t: string): { kind: GripperKind; explicit: boolea
 }
 
 /** What the prompt asks for, known before the robot is designed. */
-export interface DesignContext { prompt: string; budget?: number; payloadKg?: number; reachM?: number; segments?: { upper_arm: number; forearm: number }; sensors: SensorType[]; /** sensor types the prompt rules out ("no lidar") */ excludeSensors: SensorType[]; heightM?: number; }
+/** "SG90 servos", "MG996R", "Arduino": an Arduino + PCA9685 hobby-servo build, optionally limited to the named servos */
+export interface HobbyServos { only?: string[] }
+export interface DesignContext { hobby?: HobbyServos; prompt: string; budget?: number; payloadKg?: number; reachM?: number; segments?: { upper_arm: number; forearm: number }; sensors: SensorType[]; /** sensor types the prompt rules out ("no lidar") */ excludeSensors: SensorType[]; heightM?: number; }
 export interface Choice { family: string; label: string; matched: string; build: (ctx: DesignContext) => RobotSpecification; usesDof?: boolean; usesGripper?: boolean; approx?: string;
   /** built by the parts-first design engine (sized from real components) rather than a fixed template */
   designed?: boolean; }
@@ -106,8 +108,12 @@ export function chooseFamily(t: string, prompt: string, dof: number | undefined,
       : { designed: true, build: (ctx: DesignContext) => designRover({ name: "rover_arm", ...mobileReq(ctx), payloadKg: undefined, wheels: wheelCount(t) ?? 6, arm: { dof: dof ?? 6, ...(ctx.payloadKg !== undefined ? { payloadKg: ctx.payloadKg } : {}) } }) }) };
   if ((m = hit(RX.quadruped))) return { family: "quadruped", label: "quadruped", matched: m, build: () => quadruped("quadruped", prompt) };
   if ((m = hit(RX.scara))) return { family: "scara", label: "SCARA", matched: m, usesGripper: true,
-    build: () => { const s = scara({ prompt }); const tip = explicitGripper && g !== "none" ? armTip(s) : undefined;
-      if (tip) (g === "suction" ? attachSuctionGripper : attachParallelGripper)(s, tip.link, tip.atZ); return s; } };
+    build: () => {
+      // a pick-and-place / sorting task needs a tool even when none is named: SCARAs usually carry a suction cup
+      const task = /\bpick(?:s|ing)?\b|\bplace\b|\bsort(?:s|ing)?\b|\bgrab(?:s|bing)?\b|\bpackag(?:e|ing)\b|\bassembl(?:e|y|ing)\b/.test(t);
+      const kind = explicitGripper ? g : task ? "suction" : "none";
+      const s = scara({ prompt }); const tip = kind !== "none" ? armTip(s) : undefined;
+      if (tip) (kind === "suction" ? attachSuctionGripper : attachParallelGripper)(s, tip.link, tip.atZ); return s; } };
   if ((m = hit(RX.mecanum))) return { family: "mecanum", label: "mecanum-wheel base", matched: m, designed: true, build: (ctx) => designMecanum({ name: "mecanum_robot", ...mobileReq(ctx) }) };
   if ((m = hit(RX.omni))) return { family: "mecanum", label: "mecanum-wheel base", matched: m, approx: "omni-directional drive built with mecanum wheels",
       designed: true, build: (ctx) => designMecanum({ name: "mecanum_robot", ...mobileReq(ctx) }) };
@@ -124,13 +130,38 @@ export function chooseFamily(t: string, prompt: string, dof: number | undefined,
     build: () => standaloneGripper(g === "suction" ? "suction" : "parallel", prompt) };
   if (mentions(t, RX.hand)) throw new Error("Dexterous robot hands are not supported yet. Try \"two-finger parallel gripper\" or a humanoid.");
   m = hit(RX.arm);
-  if (!m && dof === undefined) throw new Error(`Robot type not recognised. ${SUPPORTED_HINT}`);
+  if (!m && dof === undefined) {
+    // only a task was described: pick the robot type that does it, and say why
+    for (const [rx, as, why] of TASKS) {
+      const tm = t.match(rx);
+      if (tm) { const c = chooseFamily(as, as, dof, g, heightM, explicitGripper); return { ...c, matched: tm[0], approx: `"${tm[0]}" is a task, not a robot type: built a ${c.label} (${why})${c.approx ? `; ${c.approx}` : ""}` }; }
+    }
+    throw new Error(`Robot type not recognised. ${SUPPORTED_HINT}`);
+  }
   const n = dof ?? 6;
-  if (g === "suction") return { family: "serial_arm", label: `${n}-DOF serial arm`, matched: m ?? `${n} DOF`, usesDof: true, usesGripper: true,
-    build: () => { const s = nDofArm(n, { name: `arm_${n}dof`, prompt, gripper: "none" }); replaceGripperWithSuction(s); return s; } };
+  if (g === "suction") return { family: "serial_arm", label: `${n}-DOF serial arm`, matched: m ?? `${n} DOF`, usesDof: true, usesGripper: true, designed: true,
+    build: (ctx) => {
+      // the designed arm without jaws, a suction cup on its tool flange
+      const s = designArm({ name: `arm_${n}dof`, dof: n, gripper: false, prompt: ctx.prompt, budget: ctx.budget, payloadKg: ctx.payloadKg, reachM: ctx.reachM, segments: ctx.segments, sensors: ctx.sensors,
+        ...(ctx.hobby ? { ladder: "hobby" as const, ...(ctx.hobby.only ? { onlyActuators: ctx.hobby.only } : {}) } : {}) });
+      const tool = (s.metadata as { design?: { tool?: { link: string; xyz_m: number[] } } }).design?.tool;
+      if (tool) attachSuctionGripper(s, tool.link, tool.xyz_m[2]); else { const tip = armTip(s); if (tip) attachSuctionGripper(s, tip.link, tip.atZ); }
+      return s; } };
   return { family: "serial_arm", label: `${n}-DOF serial arm`, matched: m ?? `${n} DOF`, usesDof: true, usesGripper: true, designed: true,
-    build: (ctx) => designArm({ name: `arm_${n}dof`, dof: n, gripper: g !== "none", prompt: ctx.prompt, budget: ctx.budget, payloadKg: ctx.payloadKg, reachM: ctx.reachM, segments: ctx.segments, sensors: ctx.sensors }) };
+    build: (ctx) => designArm({ name: `arm_${n}dof`, dof: n, gripper: g !== "none", prompt: ctx.prompt, budget: ctx.budget, payloadKg: ctx.payloadKg, reachM: ctx.reachM, segments: ctx.segments, sensors: ctx.sensors,
+      ...(ctx.hobby ? { ladder: "hobby" as const, ...(ctx.hobby.only ? { onlyActuators: ctx.hobby.only } : {}) } : {}) }) };
 }
+
+/** Task words -> the robot that does the task (used only when no robot type is named). Most specific first. */
+const TASKS: [RegExp, string, string][] = [
+  [/\bwater(?:s|ing)?\b[\w\s]{0,20}\b(?:plants?|garden|flowers?|pots?)\b|\b(?:garden(?:ing)?|weed(?:s|ing)?|harvest(?:s|ing)?|fruit[\s-]?pick\w*)\b/, "mobile manipulator rover with an arm", "it drives to each plant and aims the tool with the arm"],
+  [/\b(?:fetch(?:es|ing)?|tidy|tidies|tidying|clean(?:s|ing)? up|pick(?:s|ing)? up (?:toys|things|stuff|clothes|trash|litter)|serve(?:s|ing)? (?:drinks|food|tea|coffee))\b/, "mobile manipulator rover with an arm", "it moves around the room and picks things up"],
+  [/\b(?:climb(?:s|ing)? stairs|stairs|rough terrain|hik(?:e|es|ing)|off[\s-]?road|rocky|uneven ground)\b/, "quadruped", "legs handle steps and rough ground"],
+  [/\b(?:deliver(?:s|y|ing)?|carr(?:y|ies|ying)|transport(?:s|ing)?|haul(?:s|ing)?|patrol(?:s|ling)?|security|explor(?:e|es|ing)|map(?:s|ping)? (?:the |my )?(?:house|room|office|area)|follow(?:s|ing)? me|vacuum(?:s|ing)? (?:the )?floor|mow(?:s|ing)?)\b/, "four-wheel robot with a camera", "a wheeled base carries the load and covers distance"],
+  [/\b(?:pick(?:s|ing)?(?:[\s-]+(?:and|&|n)[\s-]+place)?|sort(?:s|ing)?|stack(?:s|ing)?|assembl(?:e|es|y|ing)|pack(?:s|ing)?|solder(?:s|ing)?|paint(?:s|ing)?|draw(?:s|ing)?|writ(?:e|es|ing)|pour(?:s|ing)?|cook(?:s|ing)?|grab(?:s|bing)?|lift(?:s|ing)?|weld(?:s|ing)?|3d[\s-]?print\w*|play(?:s|ing)? chess)\b/, "6 dof robot arm with a gripper", "a fixed arm does precise work at a bench"],
+  [/\b(?:walk(?:s|ing)?|run(?:s|ning)?|jump(?:s|ing)?|dance|dancing)\b/, "quadruped", "legged robots walk; a quadruped is the most stable"],
+  [/\b(?:companion|pet|friend|talk(?:s|ing)? to me|greet(?:s|ing)?|reception(?:ist)?)\b/, "differential drive robot", "a small wheeled robot that can follow people around"],
+];
 
 export const ARM_FAMILIES = new Set(["serial_arm", "rover_arm", "scara"]);
 /** templates with a generic structural material we may recolour (characters keep their livery) */

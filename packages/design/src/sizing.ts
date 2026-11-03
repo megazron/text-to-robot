@@ -3,8 +3,12 @@ import { rating, part, armature, noLoadSpeed, type ActuatorRating } from "@ttr/p
 
 /** Families share one bus and one supply voltage; ladders are ordered weakest -> strongest. */
 export const LADDERS = {
+  /** Arduino-class arms: PWM hobby servos on a PCA9685 driver, 5 V supply */
+  hobby: { label: "hobby PWM servos (SG90 / MG90S / MG996R / DS3218) on a PCA9685, 5 V", bus: "pca9685_16ch", keys: ["hobby_sg90", "hobby_mg90s", "hobby_mg996r", "hobby_ds3218"] },
   feetech: { label: "Feetech STS serial-bus servos (12 V)", bus: "waveshare_bus_servo_adapter", keys: ["feetech_sts3215_c047", "feetech_sts3250"] },
   dynamixel: { label: "ROBOTIS DYNAMIXEL X-series (12 V)", bus: "dxl_u2d2", keys: ["dxl_xl430_w250", "dxl_xm430_w350", "dxl_xh540_w270"] },
+  /** DYNAMIXEL without the 11.1 V XL430: for robots whose 3S pack reaches 12.6 V */
+  dynamixel12: { label: "ROBOTIS DYNAMIXEL XM/XH (12 V)", bus: "dxl_u2d2", keys: ["dxl_xm430_w350", "dxl_xh540_w270"] },
   cubemars: { label: "CubeMars AK quasi-direct-drive (48 V, CAN) with DYNAMIXEL wrist", bus: "dxl_u2d2", keys: ["dxl_xm430_w350", "dxl_xh540_w270", "cubemars_ak60_6", "cubemars_ak70_10", "cubemars_ak80_9", "cubemars_ak80_64"] },
 } as const;
 export type Ladder = keyof typeof LADDERS;

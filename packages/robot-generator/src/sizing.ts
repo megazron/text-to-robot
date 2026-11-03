@@ -37,6 +37,33 @@ export function scaleLinkLength(spec: RobotSpecification, linkName: string, f: n
   return true;
 }
 
+function scaleGeometry(g: Geometry, f: number): Geometry {
+  switch (g.type) {
+    case "box": return { ...g, size: g.size.map((v) => v * f) as Vec3 };
+    case "cylinder": case "capsule": return { ...g, radius: g.radius * f, length: g.length * f };
+    case "sphere": return { ...g, radius: g.radius * f };
+    case "mesh": { const sc = g.scale ?? [1, 1, 1]; return { ...g, scale: sc.map((v) => v * f) as Vec3 }; }
+  }
+}
+/** Scale a whole template robot by f: geometry, frames and sensor mounts by f, mass by f^3 (same materials),
+ *  joint efforts by f^4 (weight x lever arm), prismatic travel by f. */
+export function scaleWhole(spec: RobotSpecification, f: number) {
+  for (const l of spec.links) {
+    l.geometry = scaleGeometry(l.geometry, f);
+    if (l.collision) l.collision = scaleGeometry(l.collision, f);
+    l.origin.xyz = l.origin.xyz.map((v) => v * f) as Vec3;
+    l.mass *= f ** 3; l.inertia = undefined;
+  }
+  for (const j of spec.joints) {
+    j.origin.xyz = j.origin.xyz.map((v) => v * f) as Vec3;
+    if (j.limit) {
+      j.limit.effort *= f ** 4;
+      if (j.type === "prismatic") { if (j.limit.lower !== undefined) j.limit.lower *= f; if (j.limit.upper !== undefined) j.limit.upper *= f; }
+    }
+  }
+  for (const s of spec.sensors) s.origin.xyz = s.origin.xyz.map((v) => v * f) as Vec3;
+}
+
 export function describeLen(spec: RobotSpecification, name: string): string {
   const l = spec.links.find((x) => x.name === name);
   const v = l && geometryLength(l.geometry);
@@ -168,7 +195,25 @@ export function applySizeDirectives(spec: RobotSpecification, t: string, family:
     if (isArm) return `the ${label}'s overall ${l.context ?? "size"} cannot be set; only its reach and link lengths can`;
     return `the ${label} template has a fixed size (built about ${builtAt(l.context)}); scaling to a stated size is not supported`;
   };
-  if (!isArm && (small || large)) ignored.push(`"${word((small ?? large)!)}": the ${family.replace(/_/g, " ")} template has a fixed size`);
+  // template robots (not sized from real parts) can be scaled as a whole to a stated size or a size word
+  const designedRobot = !!(spec.metadata as { design?: unknown }).design;
+  let scaled = false;
+  const scaleTo = (l: Length) => {
+    const [x, y, z] = size(), cur = l.context === "height" ? z : l.context === "width" ? y : l.context === "length" ? x : Math.max(x, y, z);
+    const f = l.metres / cur;
+    if (!(f >= 0.4 && f <= 2.5)) return `the ${label} template can be scaled 0.4-2.5x (built about ${builtAt(l.context)}); ${l.raw} is outside that`;
+    scaleWhole(spec, f); scaled = true;
+    dimensions.push(`${l.context ?? "size"} ${l.metres.toFixed(2)} m`);
+    approximations.push(`${l.raw}: the ${label} template scaled x${f.toFixed(2)} as a whole (mass x${(f ** 3).toFixed(2)}, joint torque limits x${(f ** 4).toFixed(2)})`);
+    return undefined;
+  };
+  if (!isArm && (small || large)) {
+    if (designedRobot) ignored.push(`"${word((small ?? large)!)}": the ${family.replace(/_/g, " ")} is sized from its parts and load`);
+    else if (!lengths.some((l) => l !== stature && l.context !== "position")) {
+      const f = small ? 0.75 : 1.35; scaleWhole(spec, f); scaled = true;
+      dimensions.push(`${small ? "small" : "large"}: x${f}`);
+    }
+  }
   if (isArm && !reachLen && !perLink) {
     const scaleWord = small ? 0.7 : large ? 1.4 : undefined;
     if (scaleWord) {
@@ -196,9 +241,12 @@ export function applySizeDirectives(spec: RobotSpecification, t: string, family:
       else dimensions.push(r.message);
     } else if (l.context === "reach" && reachLen && isArm) {
       conflicts.push(`reach ${l.raw} contradicts the earlier reach ${reachLen.raw}; used ${reachLen.raw}`);
+    } else if (!isArm && !designedRobot && !scaled && l.context !== "position") {
+      const why = scaleTo(l);
+      if (why) ignored.push(`${l.context ?? "size"} ${l.raw}: ${why}`);
     } else {
       const what = l.context && l.context !== "position" ? `${l.context} ${l.raw}` : l.raw;
-      ignored.push(`${what}: ${describe(l)}`);
+      ignored.push(`${what}: ${scaled && !isArm ? "the size was already set by an earlier length" : designedRobot && !isArm ? `the ${label} is sized from its parts and load, not to a stated size` : describe(l)}`);
     }
   }
 }
