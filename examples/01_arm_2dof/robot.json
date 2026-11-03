@@ -935,7 +935,7 @@
   ],
   "metadata": {
     "generator": "text-to-robot design engine (real components + printed structure)",
-    "created": "2026-11-03T16:12:06.030Z",
+    "created": "2026-11-03T16:15:26.731Z",
     "inferred_fields": [
       "links.base_link.inertia",
       "links.elbow_pitch_actuator.inertia",

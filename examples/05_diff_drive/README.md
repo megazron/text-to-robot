@@ -6,37 +6,37 @@
 
 Interpreted as: differential-drive base · lidar (base_link) · imu (base_link)
 
-**Differential-drive base: pololu_37d_30to1_64cpr gearmotors, 1.458 kg, 1.24 m/s, 1.8 h on 1 x lipo_3s_2200, rpi5**
+**Differential-drive base: pololu_37d_30to1_64cpr gearmotors, 1.464 kg, 1.24 m/s, 1.8 h on 1 x lipo_3s_2200, rpi5**
 
-Parts cost **$492.62** · printed structure 13 parts, 543 g · checks passed 21/21
+Parts cost **$492.78** · printed structure 13 parts, 549 g · checks passed 21/21
 
 ## What it can do
 
 | | |
 |---|--:|
-| mass kg | 1.458 |
-| loaded mass kg | 2.458 |
+| mass kg | 1.464 |
+| loaded mass kg | 2.464 |
 | top speed m s | 1.24 |
 | wheel torque nm | 0.138 |
 | drive motor | pololu_37d_30to1_64cpr |
 | battery | 1 x lipo_3s_2200 |
 | average power w | 10.8 |
 | runtime h | 1.8 |
-| tip angle deg | 36.3 |
+| tip angle deg | 36.4 |
 | compute | rpi5 |
 | slope deg | 10 |
 | turn rate rad s | 5.22 |
 | turn slip factor | 1 |
 | cargo kg | 1 |
-| cost usd | 509 |
-| cost breakdown | catalog parts $472, filament 0.62 kg $16, fasteners $7, fabricated/other $15 (power switch, 15 A fuse, wiring) |
+| cost usd | 510 |
+| cost breakdown | catalog parts $472, filament 0.63 kg $16, fasteners $7, fabricated/other $15 (power switch, 15 A fuse, wiring) |
 
 ## Actuators (sized from this robot's own loads)
 
 | Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
 |---|---|--:|--:|--:|--:|
-| left_wheel_joint | pololu_37d_30to1_64cpr | 0.138 | 0.686 / 1.373 | 4.97x | 34.558 |
-| right_wheel_joint | pololu_37d_30to1_64cpr | 0.138 | 0.686 / 1.373 | 4.97x | 34.558 |
+| left_wheel_joint | pololu_37d_30to1_64cpr | 0.138 | 0.686 / 1.373 | 4.96x | 34.558 |
+| right_wheel_joint | pololu_37d_30to1_64cpr | 0.138 | 0.686 / 1.373 | 4.96x | 34.558 |
 
 ## Engineering checks
 

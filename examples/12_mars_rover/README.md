@@ -6,17 +6,17 @@
 
 Interpreted as: mobile manipulator (wheeled rover + arm) · parallel gripper · depth (deck_lid) · camera (deck_lid) · budget $4000
 
-**4-wheel rocker-bogie rover with a 6-DOF arm: 4.593 kg, 1.24 m/s, 1.53 h, jetson_orin_nano_super**
+**4-wheel rocker-bogie rover with a 6-DOF arm: 4.591 kg, 1.24 m/s, 1.53 h, jetson_orin_nano_super**
 
-Parts cost **$3816.9** (budget $4000: within) · printed structure 20 parts, 744 g · checks passed 42/42
+Parts cost **$3816.83** (budget $4000: within) · printed structure 20 parts, 741 g · checks passed 42/42
 
 ## What it can do
 
 | | |
 |---|--:|
 | arm | 6-DOF, reach 0.437 m, 0.2 kg, ROBOTIS DYNAMIXEL XM/XH (12 V) |
-| mass kg | 4.593 |
-| loaded mass kg | 4.593 |
+| mass kg | 4.591 |
+| loaded mass kg | 4.591 |
 | top speed m s | 1.24 |
 | wheel torque nm | 0.129 |
 | drive motor | pololu_37d_30to1_64cpr |
@@ -29,7 +29,7 @@ Parts cost **$3816.9** (budget $4000: within) · printed structure 20 parts, 744
 | turn rate rad s | 1.65 |
 | turn slip factor | 2.54 |
 | cost usd | 3929 |
-| cost breakdown | catalog parts $3781, filament 0.86 kg $21, fasteners $17, fabricated/other $110 (320 x 210 x 100 mm folded 2 mm aluminium body box (~$60); 320 x 210 x 3 mm aluminium lid, laser cut (~$35); power switch, 15 A fuse, wiring) |
+| cost breakdown | catalog parts $3781, filament 0.85 kg $21, fasteners $17, fabricated/other $110 (320 x 210 x 100 mm folded 2 mm aluminium body box (~$60); 320 x 210 x 3 mm aluminium lid, laser cut (~$35); power switch, 15 A fuse, wiring) |
 
 ## Actuators (sized from this robot's own loads)
 
@@ -37,14 +37,14 @@ Parts cost **$3816.9** (budget $4000: within) · printed structure 20 parts, 744
 |---|---|--:|--:|--:|--:|
 | arm_base_yaw | dxl_xm430_w350 | 0 | 1.23 / 4.1 | 99x | 4.58 |
 | arm_shoulder_pitch | dxl_xh540_w270 | 3.116 | 2.97 / 9.9 | 3.18x | 3.48 |
-| arm_elbow_pitch | dxl_xh540_w270 | 1.925 | 2.97 / 9.9 | 5.14x | 3.88 |
-| arm_forearm_roll | dxl_xm430_w350 | 0.785 | 1.23 / 4.1 | 5.22x | 4.58 |
-| arm_wrist_pitch | dxl_xm430_w350 | 0.785 | 1.23 / 4.1 | 5.22x | 4.58 |
-| arm_wrist_roll | dxl_xm430_w350 | 0.058 | 1.23 / 4.1 | 71.09x | 4.58 |
-| left_front_wheel_joint | pololu_37d_30to1_64cpr | 0.129 | 0.686 / 1.373 | 5.32x | 34.558 |
-| left_rear_wheel_joint | pololu_37d_30to1_64cpr | 0.129 | 0.686 / 1.373 | 5.32x | 34.558 |
-| right_front_wheel_joint | pololu_37d_30to1_64cpr | 0.129 | 0.686 / 1.373 | 5.32x | 34.558 |
-| right_rear_wheel_joint | pololu_37d_30to1_64cpr | 0.129 | 0.686 / 1.373 | 5.32x | 34.558 |
+| arm_elbow_pitch | dxl_xh540_w270 | 1.927 | 2.97 / 9.9 | 5.14x | 3.88 |
+| arm_forearm_roll | dxl_xm430_w350 | 0.788 | 1.23 / 4.1 | 5.2x | 4.58 |
+| arm_wrist_pitch | dxl_xm430_w350 | 0.788 | 1.23 / 4.1 | 5.2x | 4.58 |
+| arm_wrist_roll | dxl_xm430_w350 | 0.058 | 1.23 / 4.1 | 70.6x | 4.58 |
+| left_front_wheel_joint | pololu_37d_30to1_64cpr | 0.129 | 0.686 / 1.373 | 5.33x | 34.558 |
+| left_rear_wheel_joint | pololu_37d_30to1_64cpr | 0.129 | 0.686 / 1.373 | 5.33x | 34.558 |
+| right_front_wheel_joint | pololu_37d_30to1_64cpr | 0.129 | 0.686 / 1.373 | 5.33x | 34.558 |
+| right_rear_wheel_joint | pololu_37d_30to1_64cpr | 0.129 | 0.686 / 1.373 | 5.33x | 34.558 |
 
 ## Engineering checks
 

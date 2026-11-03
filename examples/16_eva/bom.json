@@ -123,9 +123,9 @@
       "category": "Printed structure",
       "name": "PETG filament for 35 printed parts",
       "qty": 1,
-      "unit_cost": 45.45,
-      "subtotal": 45.45,
-      "spec": "1796 g of parts (+15 % supports/waste), about 163.7 h of printing",
+      "unit_cost": 45.48,
+      "subtotal": 45.48,
+      "spec": "1797 g of parts (+15 % supports/waste), about 163.8 h of printing",
       "note": "left_bracket, right_bracket, front_caster_post, rear_caster_post, skirt_left, skirt_right, battery_tray, servo_bus_tray, imu_tray, regulator_5v_tray, spine_foot, rib_mid_left, rib_mid_right, rib_top_left, rib_top_right, computer_tray, motor_driver_1_tray, shell_lower_left, shell_lower_right, shell_upper_left, shell_upper_right, neck_mount, head, visor, left_eye, right_eye, camera_bracket, left_arm_base_link, left_arm_upper_arm, left_arm_tool_link, left_arm_shoulder, right_arm_base_link, right_arm_upper_arm, right_arm_tool_link, right_arm_shoulder"
     },
     {
@@ -137,18 +137,18 @@
       "spec": "12x M3 x 8 socket head (motor face); 4x M3 x 10 socket head + nut (bracket to deck); 6x M3 x 6 socket head (caster); 1x 20 mm hook-and-loop battery strap; 12x M3 x 8 socket head (tray to deck); 19x M2.5 x 6 screws (board to standoffs); 16x M3 x 8 + heat-set inserts (shell to ribs); 20x horn screws; 8x M5 x 12 socket head (base to bench); 16x M2 x 6 case screws; 4x M5 x 16 socket head + M5 washer + M5 heat-set insert (clevis bearing axle)"
     }
   ],
-  "total": 622.22,
+  "total": 622.25,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
   "actuator_sizing": [
     {
       "joint": "left_arm_shoulder_pitch",
-      "required_effort": 0.28,
+      "required_effort": 0.269,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.28,
+      "required_torque_nm": 0.269,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "10.52x"
+      "margin": "10.93x"
     },
     {
       "joint": "left_arm_elbow_pitch",
@@ -160,11 +160,11 @@
     },
     {
       "joint": "right_arm_shoulder_pitch",
-      "required_effort": 0.28,
+      "required_effort": 0.269,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.28,
+      "required_torque_nm": 0.269,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "10.52x"
+      "margin": "10.93x"
     },
     {
       "joint": "right_arm_elbow_pitch",
@@ -191,11 +191,9 @@
       "margin": "3.65x"
     }
   ],
-  "warnings": [
-    "stability:tip: CoM -7, -3, 293 mm is 67 mm inside the support polygon; tips at 12.9 deg vs 12.9 deg (10 deg slope + braking), worst pose left_arm_shoulder_pitch=-1.57 with payload"
-  ],
+  "warnings": [],
   "notes": [
-    "EVA-style companion robot: 3.352 kg, hidden diff-drive base, pan head with camera, two servo fins",
+    "EVA-style companion robot: 3.354 kg, hidden diff-drive base, pan head with camera, two servo fins",
     "EVA cannot hover: this EVA rolls on a hidden differential-drive base (two 37D gearmotors, two ball casters) under a dark skirt; the egg rides on a 20 mm aluminium spine above it, so the gap reads as the film's hover.",
     "The egg body is four printed PETG shell segments (two bands, two halves) screwed to two printed ribs on the spine; the head is one print (230 x 200 x 150 mm) with a dark visor band and two LED eye diffusers.",
     "The head turns on a single pan servo; the film's free-floating head tilt is not reproduced. The arms are two-servo fins hanging beside the egg (they cannot fold flush into the body like the film's).",

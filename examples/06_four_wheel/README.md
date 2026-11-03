@@ -6,43 +6,43 @@
 
 Interpreted as: four-wheel skid-steer base · lidar (base_link) · camera (base_link) · imu (base_link)
 
-**Four-wheel skid-steer base: pololu_37d_30to1_64cpr gearmotors, 2.004 kg, 1.24 m/s, 1.47 h on 1 x lipo_3s_2200, rpi5**
+**Four-wheel skid-steer base: pololu_37d_30to1_64cpr gearmotors, 2.157 kg, 1.24 m/s, 1.47 h on 1 x lipo_3s_2200, rpi5**
 
-Parts cost **$654.17** · printed structure 12 parts, 154 g · checks passed 20/20
+Parts cost **$659.94** · printed structure 16 parts, 306 g · checks passed 24/24
 
 ## What it can do
 
 | | |
 |---|--:|
-| mass kg | 2.004 |
-| loaded mass kg | 4.004 |
+| mass kg | 2.157 |
+| loaded mass kg | 4.157 |
 | top speed m s | 1.24 |
-| wheel torque nm | 0.112 |
+| wheel torque nm | 0.117 |
 | drive motor | pololu_37d_30to1_64cpr |
 | battery | 1 x lipo_3s_2200 |
 | average power w | 13.3 |
 | runtime h | 1.47 |
-| tip angle deg | 42 |
+| tip angle deg | 42.1 |
 | compute | rpi5 |
 | slope deg | 10 |
 | turn rate rad s | 2.44 |
 | turn slip factor | 2.14 |
 | cargo kg | 2 |
-| cost usd | 714 |
-| cost breakdown | catalog parts $642, filament 0.18 kg $4, fasteners $8, fabricated/other $59 (300 x 200 x 3 mm 5052 aluminium deck, laser cut (~$44); power switch, 15 A fuse, wiring) |
+| cost usd | 720 |
+| cost breakdown | catalog parts $642, filament 0.35 kg $9, fasteners $10, fabricated/other $59 (300 x 200 x 3 mm 5052 aluminium deck, laser cut (~$44); power switch, 15 A fuse, wiring) |
 
 ## Actuators (sized from this robot's own loads)
 
 | Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
 |---|---|--:|--:|--:|--:|
-| front_left_wheel_joint | pololu_37d_30to1_64cpr | 0.112 | 0.686 / 1.373 | 6.11x | 34.558 |
-| front_right_wheel_joint | pololu_37d_30to1_64cpr | 0.112 | 0.686 / 1.373 | 6.11x | 34.558 |
-| rear_left_wheel_joint | pololu_37d_30to1_64cpr | 0.112 | 0.686 / 1.373 | 6.11x | 34.558 |
-| rear_right_wheel_joint | pololu_37d_30to1_64cpr | 0.112 | 0.686 / 1.373 | 6.11x | 34.558 |
+| front_left_wheel_joint | pololu_37d_30to1_64cpr | 0.117 | 0.686 / 1.373 | 5.88x | 34.558 |
+| front_right_wheel_joint | pololu_37d_30to1_64cpr | 0.117 | 0.686 / 1.373 | 5.88x | 34.558 |
+| rear_left_wheel_joint | pololu_37d_30to1_64cpr | 0.117 | 0.686 / 1.373 | 5.88x | 34.558 |
+| rear_right_wheel_joint | pololu_37d_30to1_64cpr | 0.117 | 0.686 / 1.373 | 5.88x | 34.558 |
 
 ## Engineering checks
 
-All 20 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
+All 24 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
 
 ## Assumptions and limits
 

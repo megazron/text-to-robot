@@ -6,47 +6,47 @@
 
 Interpreted as: Baymax character · imu (base_link) · camera (head)
 
-**Baymax-style service robot: 5.773 kg, 1.01 m tall, 4WD hidden base, two 4-servo arms, pan head with camera**
+**Baymax-style service robot: 5.358 kg, 1.01 m tall, 4WD hidden base, two 4-servo arms, pan head with camera**
 
-Parts cost **$3657.01** · printed structure 28 parts, 1246 g · checks passed 52/52
+Parts cost **$879.18** · printed structure 28 parts, 1174 g · checks passed 52/52
 
 ## What it can do
 
 | | |
 |---|--:|
-| mass kg | 5.773 |
-| loaded mass kg | 5.773 |
+| mass kg | 5.358 |
+| loaded mass kg | 5.358 |
 | top speed m s | 1.24 |
-| wheel torque nm | 0.162 |
+| wheel torque nm | 0.15 |
 | drive motor | pololu_37d_30to1_64cpr |
 | battery | 1 x lipo_3s_2200 |
 | average power w | 18.8 |
 | runtime h | 1.04 |
-| tip angle deg | 14.9 |
+| tip angle deg | 16.5 |
 | compute | rpi5 |
 | slope deg | 10 |
 | turn rate rad s | 1.42 |
 | turn slip factor | 2.67 |
 | height m | 1.01 |
-| cost usd | 3821 |
-| cost breakdown | catalog parts $3604, filament 1.43 kg $36, fasteners $21, fabricated/other $160 (380 x 290 x 3 mm 5052 aluminium deck, laser cut (~$64); 2020 aluminium extrusion, 0.75 m (~$9); 420 x 40 x 6 mm aluminium flat bar shoulder yoke (~$12); upper_arm fabric sleeve (in the cover kit); forearm fabric sleeve (in the cover kit); foam-filled fabric mitten on a printed wrist plate (in the cover kit); upper_arm fabric sleeve (in the cover kit); forearm fabric sleeve (in the cover kit); foam-filled fabric mitten on a printed wrist plate (in the cover kit); sewn white ripstop body cover with zip and foam lining, about 2 m^2 (~$60); power switch, 15 A fuse, wiring) |
+| cost usd | 1043 |
+| cost breakdown | catalog parts $831, filament 1.35 kg $34, fasteners $18, fabricated/other $160 (380 x 290 x 3 mm 5052 aluminium deck, laser cut (~$64); 2020 aluminium extrusion, 0.75 m (~$9); 420 x 40 x 6 mm aluminium flat bar shoulder yoke (~$12); upper_arm fabric sleeve (in the cover kit); forearm fabric sleeve (in the cover kit); foam-filled fabric mitten on a printed wrist plate (in the cover kit); upper_arm fabric sleeve (in the cover kit); forearm fabric sleeve (in the cover kit); foam-filled fabric mitten on a printed wrist plate (in the cover kit); sewn white ripstop body cover with zip and foam lining, about 2 m^2 (~$60); power switch, 15 A fuse, wiring) |
 
 ## Actuators (sized from this robot's own loads)
 
 | Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
 |---|---|--:|--:|--:|--:|
-| left_arm_base_yaw | dxl_xm430_w350 | 1.231 | 1.23 / 4.1 | 3.33x | 3.8 |
-| left_arm_shoulder_pitch | dxl_xh540_w270 | 2.64 | 2.97 / 9.9 | 3.75x | 3.74 |
-| left_arm_elbow_pitch | dxl_xm430_w350 | 1.182 | 1.23 / 4.1 | 3.47x | 4.38 |
-| left_arm_wrist_pitch | dxl_xm430_w350 | 0.262 | 1.23 / 4.1 | 15.67x | 4.58 |
-| right_arm_base_yaw | dxl_xm430_w350 | 1.231 | 1.23 / 4.1 | 3.33x | 3.8 |
-| right_arm_shoulder_pitch | dxl_xh540_w270 | 2.64 | 2.97 / 9.9 | 3.75x | 3.74 |
-| right_arm_elbow_pitch | dxl_xm430_w350 | 1.182 | 1.23 / 4.1 | 3.47x | 4.38 |
-| right_arm_wrist_pitch | dxl_xm430_w350 | 0.262 | 1.23 / 4.1 | 15.67x | 4.58 |
-| left_front_wheel_joint | pololu_37d_30to1_64cpr | 0.162 | 0.686 / 1.373 | 4.24x | 34.558 |
-| left_rear_wheel_joint | pololu_37d_30to1_64cpr | 0.162 | 0.686 / 1.373 | 4.24x | 34.558 |
-| right_front_wheel_joint | pololu_37d_30to1_64cpr | 0.162 | 0.686 / 1.373 | 4.24x | 34.558 |
-| right_rear_wheel_joint | pololu_37d_30to1_64cpr | 0.162 | 0.686 / 1.373 | 4.24x | 34.558 |
+| left_arm_base_yaw | feetech_sts3215_c047 | 0.914 | 0.9807 / 2.942 | 3.22x | 3.5 |
+| left_arm_shoulder_pitch | feetech_sts3250 | 1.96 | 1.5691 / 4.9033 | 2.5x | 4.88 |
+| left_arm_elbow_pitch | feetech_sts3215_c047 | 0.833 | 0.9807 / 2.942 | 3.53x | 4.02 |
+| left_arm_wrist_pitch | feetech_sts3215_c047 | 0.169 | 0.9807 / 2.942 | 17.39x | 4.48 |
+| right_arm_base_yaw | feetech_sts3215_c047 | 0.914 | 0.9807 / 2.942 | 3.22x | 3.5 |
+| right_arm_shoulder_pitch | feetech_sts3250 | 1.96 | 1.5691 / 4.9033 | 2.5x | 4.88 |
+| right_arm_elbow_pitch | feetech_sts3215_c047 | 0.833 | 0.9807 / 2.942 | 3.53x | 4.02 |
+| right_arm_wrist_pitch | feetech_sts3215_c047 | 0.169 | 0.9807 / 2.942 | 17.39x | 4.48 |
+| left_front_wheel_joint | pololu_37d_30to1_64cpr | 0.15 | 0.686 / 1.373 | 4.56x | 34.558 |
+| left_rear_wheel_joint | pololu_37d_30to1_64cpr | 0.15 | 0.686 / 1.373 | 4.56x | 34.558 |
+| right_front_wheel_joint | pololu_37d_30to1_64cpr | 0.15 | 0.686 / 1.373 | 4.56x | 34.558 |
+| right_rear_wheel_joint | pololu_37d_30to1_64cpr | 0.15 | 0.686 / 1.373 | 4.56x | 34.558 |
 
 ## Engineering checks
 
@@ -56,7 +56,7 @@ All 52 checks pass (torque, speed, power, stability, print-bed fit). Details in 
 
 - Baymax's inflatable vinyl body is a sewn ripstop cover with a foam-lined zip, bought or sewn, with negligible structural role; it hangs on the shoulder yoke and hides a 4WD skid-steer base. It is not inflated, so it does not cushion like the film's.
 - Structure: 2020 aluminium extrusion spine and a 6 mm aluminium shoulder yoke; arms are four servos each (shoulder yaw, shoulder pitch, elbow, wrist) splayed 25 deg so they clear the belly; the hands are printed mittens covered with the same fabric.
-- Each arm is sized as mounted to lift 0.2 kg in the mitten at full reach; the tipping check includes both arms stretched forward with that payload.
+- Each arm is sized as mounted to lift 0.1 kg in the mitten at full reach; the tipping check includes both arms stretched forward with that payload.
 - The head turns on one pan servo; a camera looks out between the eyes through a 12 mm hole.
 
 <!-- SIM -->

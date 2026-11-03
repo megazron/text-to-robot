@@ -71,8 +71,9 @@ export function printCheck(p: Program): PrintCheck {
   return build(() => {
     const s = evaluate(p), bb = s.boundingBox();
     const size: Vec3 = [bb.max[0] - bb.min[0], bb.max[1] - bb.min[1], bb.max[2] - bb.min[2]];
-    const sorted = [...size].sort((a, b) => b - a), bed = [...BED].sort((a, b) => b - a);
-    return { volume_cm3: +(s.volume() / 1000).toFixed(2), bbox_mm: size.map((x) => +x.toFixed(1)) as Vec3, fits_bed: sorted.every((x, i) => x <= bed[i]),
+    // some orientation of the part's three sizes must fit X x Y x Z of the bed
+    const fits = [[0, 1, 2], [1, 0, 2], [0, 2, 1], [2, 0, 1], [1, 2, 0], [2, 1, 0]].some((p) => p.every((k, i) => size[k] <= BED[i]));
+    return { volume_cm3: +(s.volume() / 1000).toFixed(2), bbox_mm: size.map((x) => +x.toFixed(1)) as Vec3, fits_bed: fits,
       watertight: s.status() === "NoError" && !s.isEmpty(), min_feature_ok: s.volume() > 50, genus: s.genus() };
   });
 }

@@ -60,9 +60,9 @@
       "category": "Printed structure",
       "name": "PETG filament for 9 printed parts",
       "qty": 1,
-      "unit_cost": 9.97,
-      "subtotal": 9.97,
-      "spec": "394 g of parts (+15 % supports/waste), about 35.9 h of printing",
+      "unit_cost": 10.08,
+      "subtotal": 10.08,
+      "spec": "398 g of parts (+15 % supports/waste), about 36.3 h of printing",
       "note": "base_link, turret, upper_arm, upper_arm_rotator, forearm, forearm_rotator, wrist, wrist_rotator, gripper_jaw"
     },
     {
@@ -74,7 +74,7 @@
       "spec": "4x M5 x 12 socket head (base to bench); 28x M2.5 x 6 case screws; 60x horn screws; 3x M5 x 16 socket head + M5 washer + M5 heat-set insert (clevis bearing axle)"
     }
   ],
-  "total": 1196.81,
+  "total": 1196.92,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
@@ -89,11 +89,11 @@
     },
     {
       "joint": "shoulder_pitch",
-      "required_effort": 2.393,
+      "required_effort": 2.415,
       "effort_unit": "N·m",
-      "required_torque_nm": 2.393,
+      "required_torque_nm": 2.415,
       "chosen": "DYNAMIXEL XH540-W270-T(R)",
-      "margin": "4.14x"
+      "margin": "4.1x"
     },
     {
       "joint": "upper_arm_roll",
@@ -101,15 +101,15 @@
       "effort_unit": "N·m",
       "required_torque_nm": 0.017,
       "chosen": "DYNAMIXEL XL430-W250-T",
-      "margin": "82.22x"
+      "margin": "81.85x"
     },
     {
       "joint": "elbow_pitch",
-      "required_effort": 1.202,
+      "required_effort": 1.216,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.202,
+      "required_torque_nm": 1.216,
       "chosen": "DYNAMIXEL XM430-W350-T(R)",
-      "margin": "3.41x"
+      "margin": "3.37x"
     },
     {
       "joint": "forearm_roll",
@@ -121,11 +121,11 @@
     },
     {
       "joint": "wrist_pitch",
-      "required_effort": 0.478,
+      "required_effort": 0.486,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.478,
+      "required_torque_nm": 0.486,
       "chosen": "DYNAMIXEL XL430-W250-T",
-      "margin": "2.93x"
+      "margin": "2.88x"
     },
     {
       "joint": "wrist_roll",

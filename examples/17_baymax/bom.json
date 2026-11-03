@@ -1,6 +1,6 @@
 {
   "robot_name": "baymax",
-  "tier": "prosumer",
+  "tier": "hobby",
   "lines": [
     {
       "category": "Mechanical",
@@ -39,40 +39,22 @@
       "note": "dual DC motor driver · https://www.cytron.io/p-10amp-5v-30v-dc-motor-driver-2-channels"
     },
     {
-      "category": "Electronics",
-      "name": "ROBOTIS U2D2 USB to TTL/RS-485 interface",
-      "qty": 2,
-      "unit_cost": 32.1,
-      "subtotal": 64.2,
-      "spec": "5 V",
-      "note": "left_arm: USB to actuator bus; right_arm: USB to actuator bus · https://www.generationrobots.com/en/400848-usb2dynamixel-robotis.html"
-    },
-    {
-      "category": "Actuator",
-      "name": "DYNAMIXEL XH540-W270-T(R)",
-      "qty": 2,
-      "unit_cost": 539.9,
-      "subtotal": 1079.8,
-      "spec": "2.97 N·m rated / 9.9 N·m peak, 12 V",
-      "note": "left_arm: joint shoulder_pitch; right_arm: joint shoulder_pitch · https://robotis.us/dynamixel-xh540-w270-t"
-    },
-    {
-      "category": "Actuator",
-      "name": "DYNAMIXEL XM430-W350-T(R)",
-      "qty": 6,
-      "unit_cost": 310.39,
-      "subtotal": 1862.34,
-      "spec": "1.23 N·m rated / 4.1 N·m peak, 12 V",
-      "note": "left_arm: joint base_yaw, joint elbow_pitch, joint wrist_pitch; right_arm: joint base_yaw, joint elbow_pitch, joint wrist_pitch · https://www.robotshop.com/products/robotis-dynamixel-xm430-w350-t-smart-servo-actuator"
-    },
-    {
       "category": "Actuator",
       "name": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "qty": 1,
+      "qty": 7,
       "unit_cost": 22,
-      "subtotal": 22,
+      "subtotal": 154,
       "spec": "0.9807 N·m rated / 2.942 N·m peak, 12 V",
-      "note": "head pan · https://www.seeedstudio.com/STS3215-30KG-Serial-Servo-p-6340.html"
+      "note": "left_arm: joint base_yaw, joint elbow_pitch, joint wrist_pitch; right_arm: joint base_yaw, joint elbow_pitch, joint wrist_pitch; head pan · https://www.seeedstudio.com/STS3215-30KG-Serial-Servo-p-6340.html"
+    },
+    {
+      "category": "Actuator",
+      "name": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
+      "qty": 2,
+      "unit_cost": 40,
+      "subtotal": 80,
+      "spec": "1.5691 N·m rated / 4.9033 N·m peak, 12 V",
+      "note": "left_arm: joint shoulder_pitch; right_arm: joint shoulder_pitch · https://openelab.io/products/feetech-sts3250-c002-servo-12v"
     },
     {
       "category": "Power",
@@ -113,11 +95,11 @@
     {
       "category": "Electronics",
       "name": "Waveshare Bus Servo Adapter (A)",
-      "qty": 1,
+      "qty": 3,
       "unit_cost": 10.6,
-      "subtotal": 10.6,
+      "subtotal": 31.8,
       "spec": "12 V",
-      "note": "servo bus adapter · https://www.waveshare.com/bus-servo-adapter-a.htm"
+      "note": "servo bus adapter; left_arm: USB to actuator bus; right_arm: USB to actuator bus · https://www.waveshare.com/bus-servo-adapter-a.htm"
     },
     {
       "category": "Drive",
@@ -132,128 +114,128 @@
       "category": "Printed structure",
       "name": "PETG filament for 28 printed parts",
       "qty": 1,
-      "unit_cost": 31.52,
-      "subtotal": 31.52,
-      "spec": "1246 g of parts (+15 % supports/waste), about 113.5 h of printing",
+      "unit_cost": 29.71,
+      "subtotal": 29.71,
+      "spec": "1174 g of parts (+15 % supports/waste), about 107.0 h of printing",
       "note": "left_front_bracket, left_rear_bracket, right_front_bracket, right_rear_bracket, battery_tray, computer_tray, motor_driver_1_tray, motor_driver_2_tray, servo_bus_tray, imu_tray, regulator_5v_tray, spine_foot, left_arm_shoulder_wedge, left_arm_base_link, left_arm_turret, left_arm_upper_arm, left_arm_forearm, left_arm_tool_link, right_arm_shoulder_wedge, right_arm_base_link, right_arm_turret, right_arm_upper_arm, right_arm_forearm, right_arm_tool_link, neck_mount, head, eyes, camera_bracket"
     },
     {
       "category": "Fasteners",
       "name": "Screws, nuts and inserts",
-      "qty": 176,
+      "qty": 152,
       "unit_cost": 0.12,
-      "subtotal": 21.12,
-      "spec": "24x M3 x 8 socket head (motor face); 8x M3 x 10 socket head + nut (bracket to deck); 1x 20 mm hook-and-loop battery strap; 14x M3 x 8 socket head (tray to deck); 23x M2.5 x 6 screws (board to standoffs); 8x M5 x 12 socket head (base to bench); 32x M2.5 x 6 case screws; 60x horn screws; 6x M5 x 16 socket head + M5 washer + M5 heat-set insert (clevis bearing axle)"
+      "subtotal": 18.24,
+      "spec": "24x M3 x 8 socket head (motor face); 8x M3 x 10 socket head + nut (bracket to deck); 1x 20 mm hook-and-loop battery strap; 14x M3 x 8 socket head (tray to deck); 23x M2.5 x 6 screws (board to standoffs); 8x M5 x 12 socket head (base to bench); 32x M2 x 6 case screws; 36x horn screws; 6x M5 x 16 socket head + M5 washer + M5 heat-set insert (clevis bearing axle)"
     }
   ],
-  "total": 3657.01,
+  "total": 879.18,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
   "actuator_sizing": [
     {
       "joint": "left_arm_base_yaw",
-      "required_effort": 1.231,
+      "required_effort": 0.914,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.231,
-      "chosen": "DYNAMIXEL XM430-W350-T(R)",
-      "margin": "3.33x"
+      "required_torque_nm": 0.914,
+      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "margin": "3.22x"
     },
     {
       "joint": "left_arm_shoulder_pitch",
-      "required_effort": 2.64,
+      "required_effort": 1.96,
       "effort_unit": "N·m",
-      "required_torque_nm": 2.64,
-      "chosen": "DYNAMIXEL XH540-W270-T(R)",
-      "margin": "3.75x"
+      "required_torque_nm": 1.96,
+      "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
+      "margin": "2.5x"
     },
     {
       "joint": "left_arm_elbow_pitch",
-      "required_effort": 1.182,
+      "required_effort": 0.833,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.182,
-      "chosen": "DYNAMIXEL XM430-W350-T(R)",
-      "margin": "3.47x"
+      "required_torque_nm": 0.833,
+      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "margin": "3.53x"
     },
     {
       "joint": "left_arm_wrist_pitch",
-      "required_effort": 0.262,
+      "required_effort": 0.169,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.262,
-      "chosen": "DYNAMIXEL XM430-W350-T(R)",
-      "margin": "15.67x"
+      "required_torque_nm": 0.169,
+      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "margin": "17.39x"
     },
     {
       "joint": "right_arm_base_yaw",
-      "required_effort": 1.231,
+      "required_effort": 0.914,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.231,
-      "chosen": "DYNAMIXEL XM430-W350-T(R)",
-      "margin": "3.33x"
+      "required_torque_nm": 0.914,
+      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "margin": "3.22x"
     },
     {
       "joint": "right_arm_shoulder_pitch",
-      "required_effort": 2.64,
+      "required_effort": 1.96,
       "effort_unit": "N·m",
-      "required_torque_nm": 2.64,
-      "chosen": "DYNAMIXEL XH540-W270-T(R)",
-      "margin": "3.75x"
+      "required_torque_nm": 1.96,
+      "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
+      "margin": "2.5x"
     },
     {
       "joint": "right_arm_elbow_pitch",
-      "required_effort": 1.182,
+      "required_effort": 0.833,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.182,
-      "chosen": "DYNAMIXEL XM430-W350-T(R)",
-      "margin": "3.47x"
+      "required_torque_nm": 0.833,
+      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "margin": "3.53x"
     },
     {
       "joint": "right_arm_wrist_pitch",
-      "required_effort": 0.262,
+      "required_effort": 0.169,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.262,
-      "chosen": "DYNAMIXEL XM430-W350-T(R)",
-      "margin": "15.67x"
+      "required_torque_nm": 0.169,
+      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "margin": "17.39x"
     },
     {
       "joint": "left_front_wheel_joint",
-      "required_effort": 0.162,
+      "required_effort": 0.15,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.162,
+      "required_torque_nm": 0.15,
       "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
-      "margin": "4.24x"
+      "margin": "4.56x"
     },
     {
       "joint": "left_rear_wheel_joint",
-      "required_effort": 0.162,
+      "required_effort": 0.15,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.162,
+      "required_torque_nm": 0.15,
       "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
-      "margin": "4.24x"
+      "margin": "4.56x"
     },
     {
       "joint": "right_front_wheel_joint",
-      "required_effort": 0.162,
+      "required_effort": 0.15,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.162,
+      "required_torque_nm": 0.15,
       "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
-      "margin": "4.24x"
+      "margin": "4.56x"
     },
     {
       "joint": "right_rear_wheel_joint",
-      "required_effort": 0.162,
+      "required_effort": 0.15,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.162,
+      "required_torque_nm": 0.15,
       "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
-      "margin": "4.24x"
+      "margin": "4.56x"
     }
   ],
   "warnings": [],
   "notes": [
-    "Baymax-style service robot: 5.773 kg, 1.01 m tall, 4WD hidden base, two 4-servo arms, pan head with camera",
+    "Baymax-style service robot: 5.358 kg, 1.01 m tall, 4WD hidden base, two 4-servo arms, pan head with camera",
     "Baymax's inflatable vinyl body is a sewn ripstop cover with a foam-lined zip, bought or sewn, with negligible structural role; it hangs on the shoulder yoke and hides a 4WD skid-steer base. It is not inflated, so it does not cushion like the film's.",
     "Structure: 2020 aluminium extrusion spine and a 6 mm aluminium shoulder yoke; arms are four servos each (shoulder yaw, shoulder pitch, elbow, wrist) splayed 25 deg so they clear the belly; the hands are printed mittens covered with the same fabric.",
-    "Each arm is sized as mounted to lift 0.2 kg in the mitten at full reach; the tipping check includes both arms stretched forward with that payload.",
+    "Each arm is sized as mounted to lift 0.1 kg in the mitten at full reach; the tipping check includes both arms stretched forward with that payload.",
     "The head turns on one pan servo; a camera looks out between the eyes through a 12 mm hole.",
     "Prices are list/street prices from the linked suppliers at the time the catalog was written; check before ordering."
   ]

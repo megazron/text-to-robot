@@ -316,9 +316,10 @@ function boardOutline(key: string, T: Mat4) {
 }
 function standoffPlate(key: string, T: Mat4, deckTop: number): Op[] {
   const o = boardOutline(key, T), holes = part(key).holes.map((h) => apply(T, h.pos));
-  const ops: Op[] = [{ op: "box", min: [o.x0 + 2, o.y0 + 2, deckTop], max: [o.x1 - 2, o.y1 - 2, deckTop + 3], r: 3 }];
+  // plate 1 mm beyond the board outline so the corner standoffs sit fully on it; blind screw holes keep a 1.6 mm floor
+  const ops: Op[] = [{ op: "box", min: [o.x0 - 1, o.y0 - 1, deckTop], max: [o.x1 + 1, o.y1 + 1, deckTop + 3], r: 3 }];
   for (const p of holes) ops.push({ op: "rod", a: [p[0], p[1], deckTop + 2.9], b: [p[0], p[1], p[2]], r: 3.2 });
-  for (const p of holes) ops.push({ op: "hole", a: [p[0], p[1], deckTop + 1], b: [p[0], p[1], p[2] + 0.5], d: 2.2 });
+  for (const p of holes) ops.push({ op: "hole", a: [p[0], p[1], deckTop + 1.6], b: [p[0], p[1], p[2] + 0.5], d: 2.2 });
   if (!holes.length) { // board without screw holes: edge clips
     for (const y of [o.y0 + 2, o.y1 - 5]) ops.push({ op: "box", min: [(o.x0 + o.x1) / 2 - 8, y, deckTop + 2.9], max: [(o.x0 + o.x1) / 2 + 8, y + 3, deckTop + 9] });
   }
@@ -649,8 +650,9 @@ function sizeAndBuild<T extends { b: Build; eng: ReturnType<typeof engineer> }>(
 }
 
 // ---------------------------------------------------------------------------- plates / decks
-const BED = [250, 220, 210];
-const fitsBed = (dims: number[]) => { const s = [...dims].sort((a, c) => c - a); return s.every((v, i) => v <= BED[i]); };
+/** Prusa MK4 build volume X x Y x Z (mm); a part fits if some orientation puts its three sizes inside it */
+const BED = [250, 210, 220];
+const fitsBed = (d: number[]) => [[0, 1, 2], [1, 0, 2], [0, 2, 1], [2, 0, 1], [1, 2, 0], [2, 1, 0]].some((p) => p.every((k, i) => d[k] <= BED[i]));
 /** Deck: printed in one piece if it fits the bed, else a laser-cut 3 mm aluminium plate (fabricated). */
 function deck(b: Build, L: number, W: number, zB: number, extra: Op[] = [], corner = 25) {
   const printed = fitsBed([L, W, 6]);

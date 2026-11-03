@@ -686,9 +686,9 @@
       <geometry><mesh filename="package://eva/meshes/head.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.0000912456 -9.33652e-14 0.080162" rpy="0 0 0"/>
-      <mass value="0.240699"/>
-      <inertia ixx="0.001413" ixy="3.76734e-15" ixz="-9.15274e-8" iyy="0.001237" iyz="1.90995e-15" izz="0.001655"/>
+      <origin xyz="-0.0000915559 -9.36390e-14 0.080413" rpy="0 0 0"/>
+      <mass value="0.239883"/>
+      <inertia ixx="0.001408" ixy="3.76616e-15" ixz="-9.70286e-8" iyy="0.001232" iyz="1.90431e-15" izz="0.001655"/>
     </inertial>
   </link>
   <link name="visor">
@@ -814,9 +814,9 @@
       <geometry><mesh filename="package://eva/meshes/left_arm_upper_arm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.054207 0.0000479262 -0.020717" rpy="0 0 0"/>
-      <mass value="0.06295"/>
-      <inertia ixx="0.000028818" ixy="-6.36051e-8" ixz="-0.00000717925" iyy="0.0000704463" iyz="-4.66635e-8" izz="0.0000529736"/>
+      <origin xyz="0.054366 0.0000480663 -0.020791" rpy="0 0 0"/>
+      <mass value="0.062767"/>
+      <inertia ixx="0.0000286945" ixy="-6.31267e-8" ixz="-0.00000743096" iyy="0.0000697817" iyz="-4.68860e-8" izz="0.0000524198"/>
     </inertial>
   </link>
   <link name="left_arm_elbow_pitch_actuator">
@@ -846,9 +846,9 @@
       <geometry><mesh filename="package://eva/meshes/left_arm_tool_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.065374 -4.49417e-13 -0.005299" rpy="0 0 0"/>
-      <mass value="0.022758"/>
-      <inertia ixx="0.00000587004" ixy="-1.62914e-16" ixz="0.00000573491" iyy="0.0000309683" iyz="6.05560e-17" izz="0.0000294243"/>
+      <origin xyz="0.065764 -4.79624e-13 -0.005364" rpy="0 0 0"/>
+      <mass value="0.022612"/>
+      <inertia ixx="0.00000585033" ixy="-2.10301e-16" ixz="0.00000564536" iyy="0.0000304127" iyz="6.63857e-17" izz="0.0000288787"/>
     </inertial>
   </link>
   <link name="left_arm_shoulder">
@@ -862,9 +862,9 @@
       <geometry><mesh filename="package://eva/meshes/left_arm_shoulder.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.024322 0.078998 0.48303" rpy="0 0 0"/>
-      <mass value="0.029852"/>
-      <inertia ixx="0.0000893553" ixy="-0.0000378923" ixz="-7.47882e-7" iyy="0.0000224304" iyz="-0.00000222412" izz="0.000111042"/>
+      <origin xyz="-0.023208 0.085248 0.482983" rpy="0 0 0"/>
+      <mass value="0.031286"/>
+      <inertia ixx="0.000110629" ixy="-0.0000424308" ixz="-7.13608e-7" iyy="0.0000233367" iyz="-0.0000024624" izz="0.000133215"/>
     </inertial>
   </link>
   <link name="right_arm_base_link">
@@ -910,9 +910,9 @@
       <geometry><mesh filename="package://eva/meshes/right_arm_upper_arm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.054207 0.0000479262 -0.020717" rpy="0 0 0"/>
-      <mass value="0.06295"/>
-      <inertia ixx="0.000028818" ixy="-6.36051e-8" ixz="-0.00000717925" iyy="0.0000704463" iyz="-4.66635e-8" izz="0.0000529736"/>
+      <origin xyz="0.054366 0.0000480663 -0.020791" rpy="0 0 0"/>
+      <mass value="0.062767"/>
+      <inertia ixx="0.0000286945" ixy="-6.31267e-8" ixz="-0.00000743096" iyy="0.0000697817" iyz="-4.68860e-8" izz="0.0000524198"/>
     </inertial>
   </link>
   <link name="right_arm_elbow_pitch_actuator">
@@ -942,9 +942,9 @@
       <geometry><mesh filename="package://eva/meshes/right_arm_tool_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.065374 -4.49417e-13 -0.005299" rpy="0 0 0"/>
-      <mass value="0.022758"/>
-      <inertia ixx="0.00000587004" ixy="-1.62914e-16" ixz="0.00000573491" iyy="0.0000309683" iyz="6.05560e-17" izz="0.0000294243"/>
+      <origin xyz="0.065764 -4.79624e-13 -0.005364" rpy="0 0 0"/>
+      <mass value="0.022612"/>
+      <inertia ixx="0.00000585033" ixy="-2.10301e-16" ixz="0.00000564536" iyy="0.0000304127" iyz="6.63857e-17" izz="0.0000288787"/>
     </inertial>
   </link>
   <link name="right_arm_shoulder">
@@ -958,9 +958,9 @@
       <geometry><mesh filename="package://eva/meshes/right_arm_shoulder.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.024322 -0.078998 0.48303" rpy="0 0 0"/>
-      <mass value="0.029852"/>
-      <inertia ixx="0.0000893553" ixy="0.0000378923" ixz="-7.47882e-7" iyy="0.0000224304" iyz="0.00000222412" izz="0.000111042"/>
+      <origin xyz="-0.023208 -0.085248 0.482983" rpy="0 0 0"/>
+      <mass value="0.031286"/>
+      <inertia ixx="0.000110629" ixy="0.0000424308" ixz="-7.13608e-7" iyy="0.0000233367" iyz="0.0000024624" izz="0.000133215"/>
     </inertial>
   </link>
   <joint name="left_motor_mount" type="fixed">
@@ -1220,7 +1220,7 @@
     <child link="left_arm_upper_arm"/>
     <origin xyz="0 0.01905 0.0452" rpy="0 -1.570796 -1.570796"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-1.75" upper="1.75" effort="2.942" velocity="4.48"/>
+    <limit lower="-1.3" upper="1.3" effort="2.942" velocity="4.48"/>
     <dynamics damping="0.1249" friction="0.0588"/>
   </joint>
   <joint name="left_arm_elbow_pitch_actuator_mount" type="fixed">
@@ -1239,7 +1239,7 @@
   <joint name="left_arm_mount" type="fixed">
     <parent link="spine"/>
     <child link="left_arm_base_link"/>
-    <origin xyz="0 0.15133 0.48" rpy="3.141593 0 0"/>
+    <origin xyz="0 0.16533 0.48" rpy="3.141593 0 0"/>
   </joint>
   <joint name="left_arm_shoulder_mount" type="fixed">
     <parent link="spine"/>
@@ -1256,7 +1256,7 @@
     <child link="right_arm_upper_arm"/>
     <origin xyz="0 0.01905 0.0452" rpy="0 -1.570796 -1.570796"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-1.75" upper="1.75" effort="2.942" velocity="4.48"/>
+    <limit lower="-1.3" upper="1.3" effort="2.942" velocity="4.48"/>
     <dynamics damping="0.1249" friction="0.0588"/>
   </joint>
   <joint name="right_arm_elbow_pitch_actuator_mount" type="fixed">
@@ -1275,7 +1275,7 @@
   <joint name="right_arm_mount" type="fixed">
     <parent link="spine"/>
     <child link="right_arm_base_link"/>
-    <origin xyz="0 -0.15133 0.48" rpy="3.141593 0 0"/>
+    <origin xyz="0 -0.16533 0.48" rpy="3.141593 0 0"/>
   </joint>
   <joint name="right_arm_shoulder_mount" type="fixed">
     <parent link="spine"/>

@@ -1,6 +1,6 @@
 {
   "robot_name": "wall_e",
-  "tier": "prosumer",
+  "tier": "hobby",
   "lines": [
     {
       "category": "Mechanical",
@@ -30,40 +30,22 @@
       "note": "dual DC motor driver · https://www.cytron.io/p-10amp-5v-30v-dc-motor-driver-2-channels"
     },
     {
-      "category": "Electronics",
-      "name": "ROBOTIS U2D2 USB to TTL/RS-485 interface",
-      "qty": 1,
-      "unit_cost": 32.1,
-      "subtotal": 32.1,
-      "spec": "5 V",
-      "note": "neck: USB to actuator bus · https://www.generationrobots.com/en/400848-usb2dynamixel-robotis.html"
-    },
-    {
-      "category": "Actuator",
-      "name": "DYNAMIXEL XH540-W270-T(R)",
-      "qty": 1,
-      "unit_cost": 539.9,
-      "subtotal": 539.9,
-      "spec": "2.97 N·m rated / 9.9 N·m peak, 12 V",
-      "note": "neck: joint shoulder_pitch · https://robotis.us/dynamixel-xh540-w270-t"
-    },
-    {
-      "category": "Actuator",
-      "name": "DYNAMIXEL XM430-W350-T(R)",
-      "qty": 2,
-      "unit_cost": 310.39,
-      "subtotal": 620.78,
-      "spec": "1.23 N·m rated / 4.1 N·m peak, 12 V",
-      "note": "neck: joint base_yaw, joint elbow_pitch · https://www.robotshop.com/products/robotis-dynamixel-xm430-w350-t-smart-servo-actuator"
-    },
-    {
       "category": "Actuator",
       "name": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "qty": 6,
+      "qty": 8,
       "unit_cost": 22,
-      "subtotal": 132,
+      "subtotal": 176,
       "spec": "0.9807 N·m rated / 2.942 N·m peak, 12 V",
-      "note": "left_arm: joint shoulder_pitch, joint elbow_pitch, gripper; right_arm: joint shoulder_pitch, joint elbow_pitch, gripper · https://www.seeedstudio.com/STS3215-30KG-Serial-Servo-p-6340.html"
+      "note": "neck: joint base_yaw, joint elbow_pitch; left_arm: joint shoulder_pitch, joint elbow_pitch, gripper; right_arm: joint shoulder_pitch, joint elbow_pitch, gripper · https://www.seeedstudio.com/STS3215-30KG-Serial-Servo-p-6340.html"
+    },
+    {
+      "category": "Actuator",
+      "name": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
+      "qty": 1,
+      "unit_cost": 40,
+      "subtotal": 40,
+      "spec": "1.5691 N·m rated / 4.9033 N·m peak, 12 V",
+      "note": "neck: joint shoulder_pitch · https://openelab.io/products/feetech-sts3250-c002-servo-12v"
     },
     {
       "category": "Power",
@@ -104,11 +86,11 @@
     {
       "category": "Electronics",
       "name": "Waveshare Bus Servo Adapter (A)",
-      "qty": 3,
+      "qty": 4,
       "unit_cost": 10.6,
-      "subtotal": 31.8,
+      "subtotal": 42.4,
       "spec": "12 V",
-      "note": "servo bus adapter; left_arm: USB to actuator bus; right_arm: USB to actuator bus · https://www.waveshare.com/bus-servo-adapter-a.htm"
+      "note": "servo bus adapter; neck: USB to actuator bus; left_arm: USB to actuator bus; right_arm: USB to actuator bus · https://www.waveshare.com/bus-servo-adapter-a.htm"
     },
     {
       "category": "Drive",
@@ -123,103 +105,101 @@
       "category": "Printed structure",
       "name": "PETG filament for 29 printed parts",
       "qty": 1,
-      "unit_cost": 62.23,
-      "subtotal": 62.23,
-      "spec": "2460 g of parts (+15 % supports/waste), about 224.2 h of printing",
+      "unit_cost": 59.37,
+      "subtotal": 59.37,
+      "spec": "2347 g of parts (+15 % supports/waste), about 213.9 h of printing",
       "note": "base_link, left_track_frame, right_track_frame, body_left, body_right, body_back, body_front, body_top, battery_tray, motor_driver_1_tray, regulator_5v_tray, shelf, computer_tray, servo_bus_tray, neck_base_link, neck_upper_arm, neck_turret, neck_tool_link, head, left_arm_base_link, left_arm_upper_arm, left_arm_forearm, left_arm_gripper_jaw, left_arm_shoulder, right_arm_base_link, right_arm_upper_arm, right_arm_forearm, right_arm_gripper_jaw, right_arm_shoulder"
     },
     {
       "category": "Fasteners",
       "name": "Screws, nuts and inserts",
-      "qty": 160,
+      "qty": 152,
       "unit_cost": 0.12,
-      "subtotal": 19.2,
-      "spec": "4x M5 x 30 shoulder bolt (idler axle); 12x M3 x 8 socket head (motor face); 24x M3 x 10 + printed corner cleats (body panels); 1x 20 mm hook-and-loop battery strap; 10x M3 x 8 socket head (tray to deck); 15x M2.5 x 6 screws (board to standoffs); 4x M3 x 10 + printed cleats (shelf to side panels); 12x M5 x 12 socket head (base to bench); 12x M2.5 x 6 case screws; 44x horn screws; 6x M5 x 16 socket head + M5 washer + M5 heat-set insert (clevis bearing axle); 16x M2 x 6 case screws"
+      "subtotal": 18.24,
+      "spec": "4x M5 x 30 shoulder bolt (idler axle); 12x M3 x 8 socket head (motor face); 24x M3 x 10 + printed corner cleats (body panels); 1x 20 mm hook-and-loop battery strap; 10x M3 x 8 socket head (tray to deck); 15x M2.5 x 6 screws (board to standoffs); 4x M3 x 10 + printed cleats (shelf to side panels); 12x M5 x 12 socket head (base to bench); 28x M2 x 6 case screws; 36x horn screws; 6x M5 x 16 socket head + M5 washer + M5 heat-set insert (clevis bearing axle)"
     }
   ],
-  "total": 1882.88,
+  "total": 780.88,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
   "actuator_sizing": [
     {
       "joint": "neck_shoulder_pitch",
-      "required_effort": 1.798,
+      "required_effort": 1.036,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.798,
-      "chosen": "DYNAMIXEL XH540-W270-T(R)",
-      "margin": "5.51x"
+      "required_torque_nm": 1.036,
+      "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
+      "margin": "4.73x"
     },
     {
       "joint": "neck_base_yaw",
-      "required_effort": 0.503,
+      "required_effort": 0.298,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.503,
-      "chosen": "DYNAMIXEL XM430-W350-T(R)",
-      "margin": "8.15x"
+      "required_torque_nm": 0.298,
+      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "margin": "9.87x"
     },
     {
       "joint": "neck_elbow_pitch",
-      "required_effort": 1.157,
+      "required_effort": 0.685,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.157,
-      "chosen": "DYNAMIXEL XM430-W350-T(R)",
-      "margin": "3.54x"
+      "required_torque_nm": 0.685,
+      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "margin": "4.29x"
     },
     {
       "joint": "left_arm_shoulder_pitch",
-      "required_effort": 0.634,
+      "required_effort": 0.638,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.634,
+      "required_torque_nm": 0.638,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "4.64x"
+      "margin": "4.61x"
     },
     {
       "joint": "left_arm_elbow_pitch",
-      "required_effort": 0.304,
+      "required_effort": 0.307,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.304,
+      "required_torque_nm": 0.307,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "9.68x"
+      "margin": "9.59x"
     },
     {
       "joint": "right_arm_shoulder_pitch",
-      "required_effort": 0.634,
+      "required_effort": 0.638,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.634,
+      "required_torque_nm": 0.638,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "4.64x"
+      "margin": "4.61x"
     },
     {
       "joint": "right_arm_elbow_pitch",
-      "required_effort": 0.304,
+      "required_effort": 0.307,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.304,
+      "required_torque_nm": 0.307,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "9.68x"
+      "margin": "9.59x"
     },
     {
       "joint": "left_middle_wheel_joint",
-      "required_effort": 0.075,
+      "required_effort": 0.07,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.075,
+      "required_torque_nm": 0.07,
       "chosen": "Pololu 70:1 Metal Gearmotor 37Dx70L 12 V with 64 CPR encoder (#4754)",
-      "margin": "13.11x"
+      "margin": "14.01x"
     },
     {
       "joint": "right_middle_wheel_joint",
-      "required_effort": 0.075,
+      "required_effort": 0.07,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.075,
+      "required_torque_nm": 0.07,
       "chosen": "Pololu 70:1 Metal Gearmotor 37Dx70L 12 V with 64 CPR encoder (#4754)",
-      "margin": "13.11x"
+      "margin": "14.01x"
     }
   ],
-  "warnings": [
-    "stability:tip: CoM 48, -1, 241 mm is 52 mm inside the support polygon; tips at 12.3 deg vs 12.9 deg (10 deg slope + braking), worst pose neck_shoulder_pitch=0.30 with payload"
-  ],
+  "warnings": [],
   "notes": [
-    "WALL-E style tracked robot: 4.001 kg, 0.57 m/s, pan/tilt/lift head with stereo cameras, two servo arms",
+    "WALL-E style tracked robot: 3.744 kg, 0.57 m/s, pan/tilt/lift head with stereo cameras, two servo arms",
     "WALL-E's tracks are represented by three 90 mm wheels per side: the middle wheel of each side is driven by a gearmotor, the front and rear are idlers on 625 bearings. A real build wraps a printed or rubber track (or a T5 timing belt) round the three wheels, so traction and drive sizing use the full weight.",
     "The film's telescoping neck is replaced by a servo-driven pitch neck (the 'lift') with pan and tilt servos above it; the binoculars are two printed eye barrels with a Raspberry Pi Camera Module 3 in each (stereo pair).",
     "Arms: a shoulder and an elbow servo plus a one-servo gripper hand per side, reusing the arm designer's brackets; they are sized as mounted (pointing forward) for the hand payload.",

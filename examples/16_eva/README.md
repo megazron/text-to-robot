@@ -6,23 +6,23 @@
 
 Interpreted as: EVA character · imu (base_link) · camera (head)
 
-**EVA-style companion robot: 3.352 kg, hidden diff-drive base, pan head with camera, two servo fins**
+**EVA-style companion robot: 3.354 kg, hidden diff-drive base, pan head with camera, two servo fins**
 
-Parts cost **$622.22** · printed structure 35 parts, 1796 g · checks passed 50/51
+Parts cost **$622.25** · printed structure 35 parts, 1797 g · checks passed 51/51
 
 ## What it can do
 
 | | |
 |---|--:|
-| mass kg | 3.352 |
-| loaded mass kg | 3.352 |
+| mass kg | 3.354 |
+| loaded mass kg | 3.354 |
 | top speed m s | 1.24 |
 | wheel torque nm | 0.188 |
 | drive motor | pololu_37d_30to1_64cpr |
 | battery | 1 x lipo_3s_2200 |
 | average power w | 14.4 |
 | runtime h | 1.35 |
-| tip angle deg | 12.9 |
+| tip angle deg | 13 |
 | compute | rpi5 |
 | slope deg | 10 |
 | turn rate rad s | 5.45 |
@@ -34,16 +34,16 @@ Parts cost **$622.22** · printed structure 35 parts, 1796 g · checks passed 50
 
 | Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
 |---|---|--:|--:|--:|--:|
-| left_arm_shoulder_pitch | feetech_sts3215_c047 | 0.28 | 0.9807 / 2.942 | 10.52x | 4.48 |
+| left_arm_shoulder_pitch | feetech_sts3215_c047 | 0.269 | 0.9807 / 2.942 | 10.93x | 4.48 |
 | left_arm_elbow_pitch | feetech_sts3215_c047 | 0.082 | 0.9807 / 2.942 | 35.7x | 4.48 |
-| right_arm_shoulder_pitch | feetech_sts3215_c047 | 0.28 | 0.9807 / 2.942 | 10.52x | 4.48 |
+| right_arm_shoulder_pitch | feetech_sts3215_c047 | 0.269 | 0.9807 / 2.942 | 10.93x | 4.48 |
 | right_arm_elbow_pitch | feetech_sts3215_c047 | 0.082 | 0.9807 / 2.942 | 35.7x | 4.48 |
 | left_wheel_joint | pololu_37d_30to1_64cpr | 0.188 | 0.686 / 1.373 | 3.65x | 34.558 |
 | right_wheel_joint | pololu_37d_30to1_64cpr | 0.188 | 0.686 / 1.373 | 3.65x | 34.558 |
 
 ## Engineering checks
 
-- ❌ **stability:tip** — CoM -7, -3, 293 mm is 67 mm inside the support polygon; tips at 12.9 deg vs 12.9 deg (10 deg slope + braking), worst pose left_arm_shoulder_pitch=-1.57 with payload
+All 51 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
 
 ## Assumptions and limits
 
@@ -51,10 +51,6 @@ Parts cost **$622.22** · printed structure 35 parts, 1796 g · checks passed 50
 - The egg body is four printed PETG shell segments (two bands, two halves) screwed to two printed ribs on the spine; the head is one print (230 x 200 x 150 mm) with a dark visor band and two LED eye diffusers.
 - The head turns on a single pan servo; the film's free-floating head tilt is not reproduced. The arms are two-servo fins hanging beside the egg (they cannot fold flush into the body like the film's).
 - The camera looks out through a 12 mm hole in the visor centre.
-
-## Prompt notes
-
-- warning: design check failed: stability:tip: CoM -7, -3, 293 mm is 67 mm inside the support polygon; tips at 12.9 deg vs 12.9 deg (10 deg slope + braking), worst pose left_arm_shoulder_pitch=-1.57 with payload
 
 <!-- SIM -->
 ## Simulation (MuJoCo, real actuator limits)

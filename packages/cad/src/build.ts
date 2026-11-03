@@ -15,8 +15,15 @@ export function generateBuildPackage(spec: RobotSpecification): Record<string, s
   const d = designRecord(spec)!;
   const name = safeName(spec.robot_name), files: Record<string, string | Uint8Array> = {};
   // ---- print ----
-  const printed = spec.links.filter(isPrinted);
+  // printed parts are the ones in the design's print record; other solid-modelled links are fabricated (laser-cut
+  // aluminium plates, tube, sewn covers) and go to fabricate/ with their own list
+  const printedNames = new Set(d.printed.map((p) => p.name));
+  const printed = spec.links.filter((l) => isPrinted(l) && printedNames.has(l.name));
+  const fabricated = spec.links.filter((l) => isPrinted(l) && !printedNames.has(l.name));
   for (const l of printed) files[`cad/print/${safeName(l.name)}.stl`] = toStlBinary(buildPart(l.geometry as never), 1000);
+  for (const l of fabricated) files[`cad/fabricate/${safeName(l.name)}.stl`] = toStlBinary(buildPart(l.geometry as never), 1000);
+  if (fabricated.length) files["cad/fabricate/FABRICATE.md"] = `# Fabricated parts — ${spec.robot_name}\n\nNot printed: made from sheet, tube or fabric (see BOM.md for the exact item and cost). Each STL is the finished shape; plates are 2D-cut from it (export the top face as DXF for laser or waterjet cutting).\n\n| Part | Material | Mass (g) |\n|---|---|--:|\n` +
+    fabricated.map((l) => `| ${l.name} | ${l.material ?? "?"} | ${(l.mass * 1000).toFixed(0)} |`).join("\n") + "\n";
   const rows = d.printed.map((p) => `| ${p.name} | ${p.check.bbox_mm.join(" × ")} | ${(p.mass_kg * 1000).toFixed(0)} | ${(p.check.volume_cm3 / PRINT_CM3_PER_HOUR).toFixed(1)} | ${p.check.fits_bed ? "yes" : "**no**"} |`);
   const grams = d.printed.reduce((s, p) => s + p.mass_kg * 1000, 0), hours = d.printed.reduce((s, p) => s + p.check.volume_cm3, 0) / PRINT_CM3_PER_HOUR;
   files["cad/print/PRINT_LIST.md"] = `# Print list — ${spec.robot_name}\n\n${d.printed.length} parts, about ${grams.toFixed(0)} g of PETG and ${hours.toFixed(1)} h of printing.\n\n` +

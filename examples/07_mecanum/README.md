@@ -6,43 +6,43 @@
 
 Interpreted as: mecanum-wheel base · lidar (base_link) · imu (base_link)
 
-**Mecanum holonomic base: pololu_37d_30to1_64cpr gearmotors, 2.728 kg, 1.33 m/s, 1.58 h on 1 x lipo_3s_2200, rpi5**
+**Mecanum holonomic base: pololu_37d_30to1_64cpr gearmotors, 2.879 kg, 1.33 m/s, 1.58 h on 1 x lipo_3s_2200, rpi5**
 
-Parts cost **$785.9** · printed structure 11 parts, 140 g · checks passed 18/18
+Parts cost **$791.65** · printed structure 15 parts, 291 g · checks passed 22/22
 
 ## What it can do
 
 | | |
 |---|--:|
-| mass kg | 2.728 |
-| loaded mass kg | 4.728 |
+| mass kg | 2.879 |
+| loaded mass kg | 4.879 |
 | top speed m s | 1.33 |
-| wheel torque nm | 0.166 |
+| wheel torque nm | 0.172 |
 | drive motor | pololu_37d_30to1_64cpr |
 | battery | 1 x lipo_3s_2200 |
-| average power w | 12.3 |
+| average power w | 12.4 |
 | runtime h | 1.58 |
-| tip angle deg | 43.8 |
+| tip angle deg | 43.7 |
 | compute | rpi5 |
 | slope deg | 10 |
 | turn rate rad s | 5.14 |
 | turn slip factor | 1 |
 | cargo kg | 2 |
-| cost usd | 845 |
-| cost breakdown | catalog parts $774, filament 0.16 kg $4, fasteners $8, fabricated/other $59 (300 x 200 x 3 mm 5052 aluminium deck, laser cut (~$44); power switch, 15 A fuse, wiring) |
+| cost usd | 852 |
+| cost breakdown | catalog parts $774, filament 0.34 kg $8, fasteners $10, fabricated/other $59 (300 x 200 x 3 mm 5052 aluminium deck, laser cut (~$44); power switch, 15 A fuse, wiring) |
 
 ## Actuators (sized from this robot's own loads)
 
 | Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
 |---|---|--:|--:|--:|--:|
-| front_left_wheel_joint | pololu_37d_30to1_64cpr | 0.166 | 0.686 / 1.373 | 4.12x | 34.558 |
-| front_right_wheel_joint | pololu_37d_30to1_64cpr | 0.166 | 0.686 / 1.373 | 4.12x | 34.558 |
-| rear_left_wheel_joint | pololu_37d_30to1_64cpr | 0.166 | 0.686 / 1.373 | 4.12x | 34.558 |
-| rear_right_wheel_joint | pololu_37d_30to1_64cpr | 0.166 | 0.686 / 1.373 | 4.12x | 34.558 |
+| front_left_wheel_joint | pololu_37d_30to1_64cpr | 0.172 | 0.686 / 1.373 | 3.99x | 34.558 |
+| front_right_wheel_joint | pololu_37d_30to1_64cpr | 0.172 | 0.686 / 1.373 | 3.99x | 34.558 |
+| rear_left_wheel_joint | pololu_37d_30to1_64cpr | 0.172 | 0.686 / 1.373 | 3.99x | 34.558 |
+| rear_right_wheel_joint | pololu_37d_30to1_64cpr | 0.172 | 0.686 / 1.373 | 3.99x | 34.558 |
 
 ## Engineering checks
 
-All 18 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
+All 22 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
 
 ## Assumptions and limits
 

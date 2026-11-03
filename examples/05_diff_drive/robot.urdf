@@ -286,9 +286,9 @@
       <geometry><mesh filename="package://diff_drive_robot/meshes/computer_tray.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.016411 -0.03036 0.085614" rpy="0 0 0"/>
-      <mass value="0.012576"/>
-      <inertia ixx="0.00000756431" ixy="-3.28405e-9" ixz="8.71260e-10" iyy="0.0000031028" iyz="1.60599e-8" izz="0.000010638"/>
+      <origin xyz="-0.016406 -0.030303 0.085596" rpy="0 0 0"/>
+      <mass value="0.014938"/>
+      <inertia ixx="0.0000102213" ixy="-2.64309e-9" ixz="8.34771e-10" iyy="0.00000448093" iyz="1.59997e-8" izz="0.0000146695"/>
     </inertial>
   </link>
   <link name="motor_driver_1">
@@ -318,9 +318,9 @@
       <geometry><mesh filename="package://diff_drive_robot/meshes/motor_driver_1_tray.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.05622 -0.0435 0.085609" rpy="0 0 0"/>
-      <mass value="0.013209"/>
-      <inertia ixx="0.00000762462" ixy="-2.10561e-16" ixz="5.57694e-15" iyy="0.00000387995" iyz="-2.18477e-15" izz="0.0000114745"/>
+      <origin xyz="0.05622 -0.0435 0.085592" rpy="0 0 0"/>
+      <mass value="0.015596"/>
+      <inertia ixx="0.0000102101" ixy="-1.70844e-19" ixz="5.56207e-15" iyy="0.00000547907" iyz="-2.22174e-15" izz="0.0000156554"/>
     </inertial>
   </link>
   <link name="battery">
@@ -382,9 +382,9 @@
       <geometry><mesh filename="package://diff_drive_robot/meshes/regulator_5v_tray.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.094595 -0.072595 0.086228" rpy="0 0 0"/>
-      <mass value="0.002"/>
-      <inertia ixx="1.10095e-7" ixy="1.53380e-8" ixz="-3.90754e-9" iyy="1.07956e-7" iyz="-3.90754e-9" izz="2.06528e-7"/>
+      <origin xyz="-0.094862 -0.072862 0.085969" rpy="0 0 0"/>
+      <mass value="0.002283"/>
+      <inertia ixx="1.61144e-7" ixy="1.05900e-8" ixz="-3.16040e-9" iyy="1.59544e-7" iyz="-3.16040e-9" izz="3.10326e-7"/>
     </inertial>
   </link>
   <link name="imu">
@@ -414,9 +414,9 @@
       <geometry><mesh filename="package://diff_drive_robot/meshes/imu_tray.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.05736 0.01981 0.086501" rpy="0 0 0"/>
-      <mass value="0.002"/>
-      <inertia ixx="1.24984e-7" ixy="-2.50377e-17" ixz="3.82792e-16" iyy="1.00000e-7" iyz="3.29115e-15" izz="2.05194e-7"/>
+      <origin xyz="0.05736 0.01981 0.086152" rpy="0 0 0"/>
+      <mass value="0.002192"/>
+      <inertia ixx="1.63463e-7" ixy="8.81638e-22" ixz="2.47960e-16" iyy="1.28810e-7" iyz="2.76182e-15" izz="2.80258e-7"/>
     </inertial>
   </link>
   <link name="electronics_enclosure">

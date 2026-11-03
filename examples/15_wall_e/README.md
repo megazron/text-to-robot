@@ -6,47 +6,47 @@
 
 Interpreted as: WALL-E character · camera (head) · camera (head)
 
-**WALL-E style tracked robot: 4.001 kg, 0.57 m/s, pan/tilt/lift head with stereo cameras, two servo arms**
+**WALL-E style tracked robot: 3.744 kg, 0.57 m/s, pan/tilt/lift head with stereo cameras, two servo arms**
 
-Parts cost **$1882.88** · printed structure 29 parts, 2460 g · checks passed 52/53
+Parts cost **$780.88** · printed structure 29 parts, 2347 g · checks passed 53/53
 
 ## What it can do
 
 | | |
 |---|--:|
-| mass kg | 4.001 |
-| loaded mass kg | 4.001 |
+| mass kg | 3.744 |
+| loaded mass kg | 3.744 |
 | top speed m s | 0.57 |
-| wheel torque nm | 0.075 |
+| wheel torque nm | 0.07 |
 | drive motor | pololu_37d_70to1_64cpr |
 | battery | 1 x lipo_3s_2200 |
 | average power w | 18.2 |
 | runtime h | 1.07 |
-| tip angle deg | 12.3 |
+| tip angle deg | 15.6 |
 | compute | rpi5 |
 | slope deg | 10 |
 | turn rate rad s | 0.99 |
 | turn slip factor | 2.41 |
-| cost usd | 1906 |
-| cost breakdown | catalog parts $1801, filament 2.83 kg $71, fasteners $19, fabricated/other $15 (power switch, 15 A fuse, wiring) |
+| cost usd | 804 |
+| cost breakdown | catalog parts $703, filament 2.70 kg $67, fasteners $18, fabricated/other $15 (power switch, 15 A fuse, wiring) |
 
 ## Actuators (sized from this robot's own loads)
 
 | Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
 |---|---|--:|--:|--:|--:|
-| neck_shoulder_pitch | dxl_xh540_w270 | 1.798 | 2.97 / 9.9 | 5.51x | 3.7 |
-| neck_base_yaw | dxl_xm430_w350 | 0.503 | 1.23 / 4.1 | 8.15x | 4.58 |
-| neck_elbow_pitch | dxl_xm430_w350 | 1.157 | 1.23 / 4.1 | 3.54x | 4.58 |
-| left_arm_shoulder_pitch | feetech_sts3215_c047 | 0.634 | 0.9807 / 2.942 | 4.64x | 4.28 |
-| left_arm_elbow_pitch | feetech_sts3215_c047 | 0.304 | 0.9807 / 2.942 | 9.68x | 4.48 |
-| right_arm_shoulder_pitch | feetech_sts3215_c047 | 0.634 | 0.9807 / 2.942 | 4.64x | 4.28 |
-| right_arm_elbow_pitch | feetech_sts3215_c047 | 0.304 | 0.9807 / 2.942 | 9.68x | 4.48 |
-| left_middle_wheel_joint | pololu_37d_70to1_64cpr | 0.075 | 0.981 / 2.648 | 13.11x | 15.708 |
-| right_middle_wheel_joint | pololu_37d_70to1_64cpr | 0.075 | 0.981 / 2.648 | 13.11x | 15.708 |
+| neck_shoulder_pitch | feetech_sts3250 | 1.036 | 1.5691 / 4.9033 | 4.73x | 6.16 |
+| neck_base_yaw | feetech_sts3215_c047 | 0.298 | 0.9807 / 2.942 | 9.87x | 4.48 |
+| neck_elbow_pitch | feetech_sts3215_c047 | 0.685 | 0.9807 / 2.942 | 4.29x | 4.48 |
+| left_arm_shoulder_pitch | feetech_sts3215_c047 | 0.638 | 0.9807 / 2.942 | 4.61x | 4.26 |
+| left_arm_elbow_pitch | feetech_sts3215_c047 | 0.307 | 0.9807 / 2.942 | 9.59x | 4.48 |
+| right_arm_shoulder_pitch | feetech_sts3215_c047 | 0.638 | 0.9807 / 2.942 | 4.61x | 4.26 |
+| right_arm_elbow_pitch | feetech_sts3215_c047 | 0.307 | 0.9807 / 2.942 | 9.59x | 4.48 |
+| left_middle_wheel_joint | pololu_37d_70to1_64cpr | 0.07 | 0.981 / 2.648 | 14.01x | 15.708 |
+| right_middle_wheel_joint | pololu_37d_70to1_64cpr | 0.07 | 0.981 / 2.648 | 14.01x | 15.708 |
 
 ## Engineering checks
 
-- ❌ **stability:tip** — CoM 48, -1, 241 mm is 52 mm inside the support polygon; tips at 12.3 deg vs 12.9 deg (10 deg slope + braking), worst pose neck_shoulder_pitch=0.30 with payload
+All 53 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
 
 ## Assumptions and limits
 
@@ -54,10 +54,6 @@ Parts cost **$1882.88** · printed structure 29 parts, 2460 g · checks passed 5
 - The film's telescoping neck is replaced by a servo-driven pitch neck (the 'lift') with pan and tilt servos above it; the binoculars are two printed eye barrels with a Raspberry Pi Camera Module 3 in each (stereo pair).
 - Arms: a shoulder and an elbow servo plus a one-servo gripper hand per side, reusing the arm designer's brackets; they are sized as mounted (pointing forward) for the hand payload.
 - The body is five printed PETG panels bolted with corner cleats on the deck; no compactor mechanism.
-
-## Prompt notes
-
-- warning: design check failed: stability:tip: CoM 48, -1, 241 mm is 52 mm inside the support polygon; tips at 12.3 deg vs 12.9 deg (10 deg slope + braking), worst pose neck_shoulder_pitch=0.30 with payload
 
 <!-- SIM -->
 ## Simulation (MuJoCo, real actuator limits)
