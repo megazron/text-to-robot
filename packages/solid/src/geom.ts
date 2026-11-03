@@ -120,10 +120,10 @@ export function cradle(a: ActuatorPlacement, wall = 3): M {
 }
 export function cradleCuts(a: ActuatorPlacement, wall = 3): M[] {
   const { min, max } = bodyBox(a.key), top = Math.min(max[2], -0.8) - 1.2, rim = 5;
+  // closed walls: the cradle is the structure that carries the joint load (no windows), with one cable slot at the bottom
   const cuts = [actuatorKeepout(a), ...screwCuts(caseHoles(a.key), a.T, wall + 1)];
-  // windows through the long side walls: shows the actuator, saves filament, lets the case breathe
-  if (max[0] - min[0] > 3 * rim && top - min[2] > 3 * rim)
-    cuts.push(box([min[0] + rim, min[1] - wall - 1, min[2] + rim], [max[0] - rim, max[1] + wall + 1, top - rim]).transform(a.T));
+  if (max[0] - min[0] > 3 * rim) cuts.push(box([min[0] + rim, max[1] - 1, min[2] + 1.5], [Math.min(max[0] - rim, min[0] + rim + 12), max[1] + wall + 1, min[2] + 9]).transform(a.T));
+  void top;
   return cuts;
 }
 /** Disc that bolts to an actuator's rotating output (horn / hub), thickness t above the output face. */
@@ -132,7 +132,8 @@ export function hornPlate(key: string, t = 4, extra = 4): M {
 }
 export function hornCuts(key: string, t = 4): M[] {
   const cuts = screwCuts(outputHoles(key), I4(), t, t);
-  cuts.push(cyl(key.startsWith("cubemars_") ? 8 : 4.6, -1, t + 1)); // centre screw head / hub boss
+  // centre screw head (M3 socket head 5.5 mm) / hub boss: a larger hole leaves sub-1 mm webs to the horn screws
+  cuts.push(cyl(key.startsWith("cubemars_") ? 8 : 3.3, -1, t + 1));
   return cuts;
 }
 

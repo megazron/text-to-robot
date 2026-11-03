@@ -25,25 +25,25 @@
       <geometry><mesh filename="package://arm_7dof/meshes/base_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.00244 1.93103e-18 0.006051" rpy="0 0 0"/>
-      <mass value="0.081359"/>
-      <inertia ixx="0.0000730808" ixy="-1.35960e-21" ixz="0.00000250664" iyy="0.0000791628" iyz="9.60058e-22" izz="0.000139991"/>
+      <origin xyz="-0.003085 -0.0000390487 0.007337" rpy="0 0 0"/>
+      <mass value="0.087399"/>
+      <inertia ixx="0.0000774887" ixy="-7.56463e-8" ixz="0.00000351847" iyy="0.000083977" iyz="2.70053e-8" izz="0.000143976"/>
     </inertial>
   </link>
   <link name="base_yaw_actuator">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://arm_7dof/meshes/feetech_sts3215_c047.stl"/></geometry>
+      <geometry><mesh filename="package://arm_7dof/meshes/dxl_xl430_w250.stl"/></geometry>
       <material name="actuator"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://arm_7dof/meshes/feetech_sts3215_c047.stl"/></geometry>
+      <geometry><mesh filename="package://arm_7dof/meshes/dxl_xl430_w250.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.012045 -3.31269e-19 -0.01871" rpy="0 0 0"/>
-      <mass value="0.055"/>
-      <inertia ixx="0.00000783597" ixy="3.06243e-22" ixz="-8.49823e-8" iyy="0.0000144597" iyz="2.80348e-22" izz="0.0000120957"/>
+      <origin xyz="-0.011774 7.11598e-20 -0.020493" rpy="0 0 0"/>
+      <mass value="0.0572"/>
+      <inertia ixx="0.00000964118" ixy="1.84434e-23" ixz="-3.38934e-7" iyy="0.0000161472" iyz="3.64393e-22" izz="0.0000140544"/>
     </inertial>
   </link>
   <link name="turret">
@@ -57,25 +57,25 @@
       <geometry><mesh filename="package://arm_7dof/meshes/turret.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="2.05666e-12 -0.005789 0.024825" rpy="0 0 0"/>
-      <mass value="0.016231"/>
-      <inertia ixx="0.00000984572" ixy="4.44349e-16" ixz="7.30707e-16" iyy="0.00000886646" iyz="4.48183e-7" izz="0.00000435539"/>
+      <origin xyz="-0.000118282 -0.00586 0.032902" rpy="0 0 0"/>
+      <mass value="0.033376"/>
+      <inertia ixx="0.0000282412" ixy="-5.08865e-8" ixz="-5.09346e-8" iyy="0.0000272892" iyz="9.87895e-7" izz="0.0000146291"/>
     </inertial>
   </link>
   <link name="shoulder_pitch_actuator">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://arm_7dof/meshes/feetech_sts3250.stl"/></geometry>
+      <geometry><mesh filename="package://arm_7dof/meshes/dxl_xh540_w270.stl"/></geometry>
       <material name="actuator"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://arm_7dof/meshes/feetech_sts3250.stl"/></geometry>
+      <geometry><mesh filename="package://arm_7dof/meshes/dxl_xh540_w270.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.012045 -3.31269e-19 -0.01871" rpy="0 0 0"/>
-      <mass value="0.0745"/>
-      <inertia ixx="0.0000106142" ixy="4.14820e-22" ixz="-1.15112e-7" iyy="0.0000195863" iyz="3.79744e-22" izz="0.0000163842"/>
+      <origin xyz="-0.015487 5.35421e-19 -0.02557" rpy="0 0 0"/>
+      <mass value="0.165"/>
+      <inertia ixx="0.0000430942" ixy="1.55265e-22" ixz="-0.00000130567" iyy="0.0000749636" iyz="-1.03089e-21" izz="0.0000621423"/>
     </inertial>
   </link>
   <link name="upper_arm">
@@ -89,25 +89,25 @@
       <geometry><mesh filename="package://arm_7dof/meshes/upper_arm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.051755 -0.007555 -0.006874" rpy="0 0 0"/>
-      <mass value="0.030284"/>
-      <inertia ixx="0.0000123999" ixy="0.00000203091" ixz="0.0000024287" iyy="0.0000189168" iyz="-0.00000143038" izz="0.0000221666"/>
+      <origin xyz="0.057256 -0.006714 -0.029874" rpy="0 0 0"/>
+      <mass value="0.075295"/>
+      <inertia ixx="0.0000579223" ixy="0.00000648959" ixz="0.00000161995" iyy="0.0000831941" iyz="5.36767e-7" izz="0.0000579751"/>
     </inertial>
   </link>
   <link name="upper_arm_roll_actuator">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://arm_7dof/meshes/feetech_sts3215_c047.stl"/></geometry>
+      <geometry><mesh filename="package://arm_7dof/meshes/dxl_xl430_w250.stl"/></geometry>
       <material name="actuator"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://arm_7dof/meshes/feetech_sts3215_c047.stl"/></geometry>
+      <geometry><mesh filename="package://arm_7dof/meshes/dxl_xl430_w250.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.012045 -3.31269e-19 -0.01871" rpy="0 0 0"/>
-      <mass value="0.055"/>
-      <inertia ixx="0.00000783597" ixy="3.06243e-22" ixz="-8.49823e-8" iyy="0.0000144597" iyz="2.80348e-22" izz="0.0000120957"/>
+      <origin xyz="-0.011774 7.11598e-20 -0.020493" rpy="0 0 0"/>
+      <mass value="0.0572"/>
+      <inertia ixx="0.00000964118" ixy="1.84434e-23" ixz="-3.38934e-7" iyy="0.0000161472" iyz="3.64393e-22" izz="0.0000140544"/>
     </inertial>
   </link>
   <link name="upper_arm_rotator">
@@ -121,25 +121,25 @@
       <geometry><mesh filename="package://arm_7dof/meshes/upper_arm_rotator.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="2.01752e-12 -0.005789 0.024825" rpy="0 0 0"/>
-      <mass value="0.016231"/>
-      <inertia ixx="0.00000984572" ixy="4.55812e-16" ixz="7.15624e-16" iyy="0.00000886646" iyz="4.48183e-7" izz="0.00000435539"/>
+      <origin xyz="-0.000150767 -0.005147 0.027281" rpy="0 0 0"/>
+      <mass value="0.022636"/>
+      <inertia ixx="0.0000128312" ixy="-2.91887e-8" ixz="-2.48489e-8" iyy="0.0000128419" iyz="5.39034e-7" izz="0.00000675129"/>
     </inertial>
   </link>
   <link name="elbow_pitch_actuator">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://arm_7dof/meshes/feetech_sts3215_c047.stl"/></geometry>
+      <geometry><mesh filename="package://arm_7dof/meshes/dxl_xm430_w350.stl"/></geometry>
       <material name="actuator"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://arm_7dof/meshes/feetech_sts3215_c047.stl"/></geometry>
+      <geometry><mesh filename="package://arm_7dof/meshes/dxl_xm430_w350.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.012045 -3.31269e-19 -0.01871" rpy="0 0 0"/>
-      <mass value="0.055"/>
-      <inertia ixx="0.00000783597" ixy="3.06243e-22" ixz="-8.49823e-8" iyy="0.0000144597" iyz="2.80348e-22" izz="0.0000120957"/>
+      <origin xyz="-0.011774 7.11598e-20 -0.020493" rpy="0 0 0"/>
+      <mass value="0.082"/>
+      <inertia ixx="0.0000138213" ixy="2.64398e-23" ixz="-4.85884e-7" iyy="0.0000231481" iyz="5.22381e-22" izz="0.0000201479"/>
     </inertial>
   </link>
   <link name="forearm">
@@ -153,25 +153,25 @@
       <geometry><mesh filename="package://arm_7dof/meshes/forearm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.051755 -0.007555 -0.006874" rpy="0 0 0"/>
-      <mass value="0.030284"/>
-      <inertia ixx="0.0000123999" ixy="0.00000203091" ixz="0.0000024287" iyy="0.0000189168" iyz="-0.00000143038" izz="0.0000221666"/>
+      <origin xyz="0.049118 -0.007001 -0.025507" rpy="0 0 0"/>
+      <mass value="0.060818"/>
+      <inertia ixx="0.0000387137" ixy="0.00000467976" ixz="1.79480e-7" iyy="0.0000511894" iyz="5.88336e-7" izz="0.000040207"/>
     </inertial>
   </link>
   <link name="forearm_roll_actuator">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://arm_7dof/meshes/feetech_sts3215_c047.stl"/></geometry>
+      <geometry><mesh filename="package://arm_7dof/meshes/dxl_xl430_w250.stl"/></geometry>
       <material name="actuator"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://arm_7dof/meshes/feetech_sts3215_c047.stl"/></geometry>
+      <geometry><mesh filename="package://arm_7dof/meshes/dxl_xl430_w250.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.012045 -3.31269e-19 -0.01871" rpy="0 0 0"/>
-      <mass value="0.055"/>
-      <inertia ixx="0.00000783597" ixy="3.06243e-22" ixz="-8.49823e-8" iyy="0.0000144597" iyz="2.80348e-22" izz="0.0000120957"/>
+      <origin xyz="-0.011774 7.11598e-20 -0.020493" rpy="0 0 0"/>
+      <mass value="0.0572"/>
+      <inertia ixx="0.00000964118" ixy="1.84434e-23" ixz="-3.38934e-7" iyy="0.0000161472" iyz="3.64393e-22" izz="0.0000140544"/>
     </inertial>
   </link>
   <link name="forearm_rotator">
@@ -185,25 +185,25 @@
       <geometry><mesh filename="package://arm_7dof/meshes/forearm_rotator.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="2.01752e-12 -0.005789 0.024825" rpy="0 0 0"/>
-      <mass value="0.016231"/>
-      <inertia ixx="0.00000984572" ixy="4.55812e-16" ixz="7.15624e-16" iyy="0.00000886646" iyz="4.48183e-7" izz="0.00000435539"/>
+      <origin xyz="-0.000150767 -0.005147 0.027281" rpy="0 0 0"/>
+      <mass value="0.022636"/>
+      <inertia ixx="0.0000128312" ixy="-2.91887e-8" ixz="-2.48489e-8" iyy="0.0000128419" iyz="5.39034e-7" izz="0.00000675129"/>
     </inertial>
   </link>
   <link name="wrist_pitch_actuator">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://arm_7dof/meshes/feetech_sts3215_c047.stl"/></geometry>
+      <geometry><mesh filename="package://arm_7dof/meshes/dxl_xl430_w250.stl"/></geometry>
       <material name="actuator"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://arm_7dof/meshes/feetech_sts3215_c047.stl"/></geometry>
+      <geometry><mesh filename="package://arm_7dof/meshes/dxl_xl430_w250.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.012045 -3.31269e-19 -0.01871" rpy="0 0 0"/>
-      <mass value="0.055"/>
-      <inertia ixx="0.00000783597" ixy="3.06243e-22" ixz="-8.49823e-8" iyy="0.0000144597" iyz="2.80348e-22" izz="0.0000120957"/>
+      <origin xyz="-0.011774 7.11598e-20 -0.020493" rpy="0 0 0"/>
+      <mass value="0.0572"/>
+      <inertia ixx="0.00000964118" ixy="1.84434e-23" ixz="-3.38934e-7" iyy="0.0000161472" iyz="3.64393e-22" izz="0.0000140544"/>
     </inertial>
   </link>
   <link name="wrist">
@@ -217,25 +217,25 @@
       <geometry><mesh filename="package://arm_7dof/meshes/wrist.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.050485 -0.007611 -0.006947" rpy="0 0 0"/>
-      <mass value="0.03006"/>
-      <inertia ixx="0.0000123491" ixy="0.00000193427" ixz="0.00000230465" iyy="0.0000181542" iyz="-0.00000141358" izz="0.0000213979"/>
+      <origin xyz="0.049118 -0.007001 -0.025507" rpy="0 0 0"/>
+      <mass value="0.060818"/>
+      <inertia ixx="0.0000387137" ixy="0.00000467976" ixz="1.79480e-7" iyy="0.0000511894" iyz="5.88336e-7" izz="0.000040207"/>
     </inertial>
   </link>
   <link name="wrist_roll_actuator">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://arm_7dof/meshes/feetech_sts3215_c047.stl"/></geometry>
+      <geometry><mesh filename="package://arm_7dof/meshes/dxl_xl430_w250.stl"/></geometry>
       <material name="actuator"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://arm_7dof/meshes/feetech_sts3215_c047.stl"/></geometry>
+      <geometry><mesh filename="package://arm_7dof/meshes/dxl_xl430_w250.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.012045 -3.31269e-19 -0.01871" rpy="0 0 0"/>
-      <mass value="0.055"/>
-      <inertia ixx="0.00000783597" ixy="3.06243e-22" ixz="-8.49823e-8" iyy="0.0000144597" iyz="2.80348e-22" izz="0.0000120957"/>
+      <origin xyz="-0.011774 7.11598e-20 -0.020493" rpy="0 0 0"/>
+      <mass value="0.0572"/>
+      <inertia ixx="0.00000964118" ixy="1.84434e-23" ixz="-3.38934e-7" iyy="0.0000161472" iyz="3.64393e-22" izz="0.0000140544"/>
     </inertial>
   </link>
   <link name="wrist_rotator">
@@ -249,25 +249,25 @@
       <geometry><mesh filename="package://arm_7dof/meshes/wrist_rotator.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.002314 -0.00602 0.038071" rpy="0 0 0"/>
-      <mass value="0.024232"/>
-      <inertia ixx="0.0000208695" ixy="0.00000114133" ixz="-0.00000261032" iyy="0.000022218" iyz="0.00000397974" izz="0.00000858904"/>
+      <origin xyz="-0.001195 -0.005257 0.039152" rpy="0 0 0"/>
+      <mass value="0.031165"/>
+      <inertia ixx="0.0000291362" ixy="0.00000182268" ixz="-0.00000437694" iyy="0.0000297016" iyz="0.00000535793" izz="0.0000123101"/>
     </inertial>
   </link>
   <link name="gripper_actuator">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://arm_7dof/meshes/feetech_sts3215_c047.stl"/></geometry>
+      <geometry><mesh filename="package://arm_7dof/meshes/dxl_xl430_w250.stl"/></geometry>
       <material name="actuator"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://arm_7dof/meshes/feetech_sts3215_c047.stl"/></geometry>
+      <geometry><mesh filename="package://arm_7dof/meshes/dxl_xl430_w250.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.012045 -3.31269e-19 -0.01871" rpy="0 0 0"/>
-      <mass value="0.055"/>
-      <inertia ixx="0.00000783597" ixy="3.06243e-22" ixz="-8.49823e-8" iyy="0.0000144597" iyz="2.80348e-22" izz="0.0000120957"/>
+      <origin xyz="-0.011774 7.11598e-20 -0.020493" rpy="0 0 0"/>
+      <mass value="0.0572"/>
+      <inertia ixx="0.00000964118" ixy="1.84434e-23" ixz="-3.38934e-7" iyy="0.0000161472" iyz="3.64393e-22" izz="0.0000140544"/>
     </inertial>
   </link>
   <link name="gripper_jaw">
@@ -281,113 +281,113 @@
       <geometry><mesh filename="package://arm_7dof/meshes/gripper_jaw.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.018816 -0.008639 0.003112" rpy="0 0 0"/>
-      <mass value="0.005178"/>
-      <inertia ixx="4.97591e-7" ixy="8.01188e-7" ixz="-4.14448e-8" iyy="0.00000227887" iyz="1.94305e-8" izz="0.00000274473"/>
+      <origin xyz="0.020553 -0.009813 0.004168" rpy="0 0 0"/>
+      <mass value="0.00849"/>
+      <inertia ixx="8.89083e-7" ixy="0.00000137367" ixz="-6.42614e-8" iyy="0.00000384983" iyz="3.17160e-8" izz="0.00000464365"/>
     </inertial>
   </link>
   <joint name="base_yaw_actuator_mount" type="fixed">
     <parent link="base_link"/>
     <child link="base_yaw_actuator"/>
-    <origin xyz="0 0 0.0481" rpy="0 0 0"/>
+    <origin xyz="0 0 0.0479" rpy="0 0 0"/>
   </joint>
   <joint name="base_yaw" type="revolute">
     <parent link="base_link"/>
     <child link="turret"/>
-    <origin xyz="0 0 0.0481" rpy="0 0 0"/>
+    <origin xyz="0 0 0.0479" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-2.97" upper="2.97" effort="2.942" velocity="4.48"/>
-    <dynamics damping="0.1249" friction="0.0588"/>
+    <limit lower="-2.97" upper="2.97" effort="1.4" velocity="4.43"/>
+    <dynamics damping="0.0469" friction="0.028"/>
   </joint>
   <joint name="shoulder_pitch_actuator_mount" type="fixed">
     <parent link="turret"/>
     <child link="shoulder_pitch_actuator"/>
-    <origin xyz="0 0.01905 0.0442" rpy="0 -1.570796 -1.570796"/>
+    <origin xyz="0 0.024 0.055" rpy="0 -1.570796 -1.570796"/>
   </joint>
   <joint name="shoulder_pitch" type="revolute">
     <parent link="turret"/>
     <child link="upper_arm"/>
-    <origin xyz="0 0.01905 0.0442" rpy="0 -1.570796 -1.570796"/>
+    <origin xyz="0 0.024 0.055" rpy="0 -1.570796 -1.570796"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-1.75" upper="1.75" effort="4.9033" velocity="4.92"/>
-    <dynamics damping="0.1249" friction="0.0981"/>
+    <limit lower="-1.75" upper="1.75" effort="9.9" velocity="3.82"/>
+    <dynamics damping="0.4848" friction="0.198"/>
   </joint>
   <joint name="upper_arm_roll_actuator_mount" type="fixed">
     <parent link="upper_arm"/>
     <child link="upper_arm_roll_actuator"/>
-    <origin xyz="0.086113 0 -0.01905" rpy="1.570796 0 1.570796"/>
+    <origin xyz="0.095855 0 -0.024" rpy="1.570796 0 1.570796"/>
   </joint>
   <joint name="upper_arm_roll" type="revolute">
     <parent link="upper_arm"/>
     <child link="upper_arm_rotator"/>
-    <origin xyz="0.086113 0 -0.01905" rpy="1.570796 0 1.570796"/>
+    <origin xyz="0.095855 0 -0.024" rpy="1.570796 0 1.570796"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-2.97" upper="2.97" effort="2.942" velocity="4.48"/>
-    <dynamics damping="0.1249" friction="0.0588"/>
+    <limit lower="-2.97" upper="2.97" effort="1.4" velocity="5.67"/>
+    <dynamics damping="0.0469" friction="0.028"/>
   </joint>
   <joint name="elbow_pitch_actuator_mount" type="fixed">
     <parent link="upper_arm_rotator"/>
     <child link="elbow_pitch_actuator"/>
-    <origin xyz="0 0.01905 0.0442" rpy="0 -1.570796 -1.570796"/>
+    <origin xyz="0 0.01895 0.04525" rpy="0 -1.570796 -1.570796"/>
   </joint>
   <joint name="elbow_pitch" type="revolute">
     <parent link="upper_arm_rotator"/>
     <child link="forearm"/>
-    <origin xyz="0 0.01905 0.0442" rpy="0 -1.570796 -1.570796"/>
+    <origin xyz="0 0.01895 0.04525" rpy="0 -1.570796 -1.570796"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-2.3" upper="2.3" effort="2.942" velocity="3.58"/>
-    <dynamics damping="0.1249" friction="0.0588"/>
+    <limit lower="-2.3" upper="2.3" effort="4.1" velocity="4.14"/>
+    <dynamics damping="0.1702" friction="0.082"/>
   </joint>
   <joint name="forearm_roll_actuator_mount" type="fixed">
     <parent link="forearm"/>
     <child link="forearm_roll_actuator"/>
-    <origin xyz="0.086113 0 -0.01905" rpy="1.570796 0 1.570796"/>
+    <origin xyz="0.08585 0 -0.01895" rpy="1.570796 0 1.570796"/>
   </joint>
   <joint name="forearm_roll" type="revolute">
     <parent link="forearm"/>
     <child link="forearm_rotator"/>
-    <origin xyz="0.086113 0 -0.01905" rpy="1.570796 0 1.570796"/>
+    <origin xyz="0.08585 0 -0.01895" rpy="1.570796 0 1.570796"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-2.97" upper="2.97" effort="2.942" velocity="4.48"/>
-    <dynamics damping="0.1249" friction="0.0588"/>
+    <limit lower="-2.97" upper="2.97" effort="1.4" velocity="5.67"/>
+    <dynamics damping="0.0469" friction="0.028"/>
   </joint>
   <joint name="wrist_pitch_actuator_mount" type="fixed">
     <parent link="forearm_rotator"/>
     <child link="wrist_pitch_actuator"/>
-    <origin xyz="0 0.01905 0.0442" rpy="0 -1.570796 -1.570796"/>
+    <origin xyz="0 0.01895 0.04525" rpy="0 -1.570796 -1.570796"/>
   </joint>
   <joint name="wrist_pitch" type="revolute">
     <parent link="forearm_rotator"/>
     <child link="wrist"/>
-    <origin xyz="0 0.01905 0.0442" rpy="0 -1.570796 -1.570796"/>
+    <origin xyz="0 0.01895 0.04525" rpy="0 -1.570796 -1.570796"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-2.3" upper="2.3" effort="2.942" velocity="4.48"/>
-    <dynamics damping="0.1249" friction="0.0588"/>
+    <limit lower="-2.3" upper="2.3" effort="1.4" velocity="4.69"/>
+    <dynamics damping="0.0469" friction="0.028"/>
   </joint>
   <joint name="wrist_roll_actuator_mount" type="fixed">
     <parent link="wrist"/>
     <child link="wrist_roll_actuator"/>
-    <origin xyz="0.08442 0 -0.01905" rpy="1.570796 0 1.570796"/>
+    <origin xyz="0.08585 0 -0.01895" rpy="1.570796 0 1.570796"/>
   </joint>
   <joint name="wrist_roll" type="revolute">
     <parent link="wrist"/>
     <child link="wrist_rotator"/>
-    <origin xyz="0.08442 0 -0.01905" rpy="1.570796 0 1.570796"/>
+    <origin xyz="0.08585 0 -0.01895" rpy="1.570796 0 1.570796"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-2.97" upper="2.97" effort="2.942" velocity="4.48"/>
-    <dynamics damping="0.1249" friction="0.0588"/>
+    <limit lower="-2.97" upper="2.97" effort="1.4" velocity="5.67"/>
+    <dynamics damping="0.0469" friction="0.028"/>
   </joint>
   <joint name="gripper_actuator_mount" type="fixed">
     <parent link="wrist_rotator"/>
     <child link="gripper_actuator"/>
-    <origin xyz="0.01905 0 0.0442" rpy="0 -1.570796 -3.141593"/>
+    <origin xyz="0.01895 0 0.04525" rpy="0 -1.570796 -3.141593"/>
   </joint>
   <joint name="gripper" type="revolute">
     <parent link="wrist_rotator"/>
     <child link="gripper_jaw"/>
-    <origin xyz="0.01905 0 0.0442" rpy="0 -1.570796 -3.141593"/>
+    <origin xyz="0.01895 0 0.04525" rpy="0 -1.570796 -3.141593"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-0.35" upper="0.464" effort="2.942" velocity="4.712"/>
-    <dynamics damping="0.1249" friction="0.0588"/>
+    <limit lower="-0.35" upper="0.464" effort="1.4" velocity="5.969"/>
+    <dynamics damping="0.0469" friction="0.028"/>
   </joint>
 </robot>

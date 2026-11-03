@@ -1,24 +1,51 @@
 {
   "robot_name": "arm_7dof",
-  "tier": "hobby",
+  "tier": "prosumer",
   "lines": [
     {
-      "category": "Actuator",
-      "name": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "qty": 7,
-      "unit_cost": 22,
-      "subtotal": 154,
-      "spec": "0.9807 N·m rated / 2.942 N·m peak, 12 V",
-      "note": "joint base_yaw; joint upper_arm_roll; joint elbow_pitch; joint forearm_roll; … · https://www.seeedstudio.com/STS3215-30KG-Serial-Servo-p-6340.html"
+      "category": "Mechanical",
+      "name": "Ball bearing 625-2Z 5x16x5 mm",
+      "qty": 3,
+      "unit_cost": 0.55,
+      "subtotal": 1.65,
+      "spec": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-625-2Z",
+      "note": "clevis bearing, joint shoulder_pitch; clevis bearing, joint elbow_pitch; clevis bearing, joint wrist_pitch · https://www.vxb.com/search?q=625-2Z"
+    },
+    {
+      "category": "Electronics",
+      "name": "ROBOTIS U2D2 USB to TTL/RS-485 interface",
+      "qty": 1,
+      "unit_cost": 32.1,
+      "subtotal": 32.1,
+      "spec": "5 V",
+      "note": "USB to actuator bus · https://www.generationrobots.com/en/400848-usb2dynamixel-robotis.html"
     },
     {
       "category": "Actuator",
-      "name": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
+      "name": "DYNAMIXEL XH540-W270-T(R)",
       "qty": 1,
-      "unit_cost": 40,
-      "subtotal": 40,
-      "spec": "1.5691 N·m rated / 4.9033 N·m peak, 12 V",
-      "note": "joint shoulder_pitch · https://openelab.io/products/feetech-sts3250-c002-servo-12v"
+      "unit_cost": 539.9,
+      "subtotal": 539.9,
+      "spec": "2.97 N·m rated / 9.9 N·m peak, 12 V",
+      "note": "joint shoulder_pitch · https://robotis.us/dynamixel-xh540-w270-t"
+    },
+    {
+      "category": "Actuator",
+      "name": "DYNAMIXEL XL430-W250-T",
+      "qty": 6,
+      "unit_cost": 44.9,
+      "subtotal": 269.4,
+      "spec": "0.42 N·m rated / 1.4 N·m peak, 11.1 V",
+      "note": "joint base_yaw; joint upper_arm_roll; joint forearm_roll; joint wrist_pitch; … · https://robotis.us/dynamixel-xl430-w250-t"
+    },
+    {
+      "category": "Actuator",
+      "name": "DYNAMIXEL XM430-W350-T(R)",
+      "qty": 1,
+      "unit_cost": 310.39,
+      "subtotal": 310.39,
+      "spec": "1.23 N·m rated / 4.1 N·m peak, 12 V",
+      "note": "joint elbow_pitch · https://www.robotshop.com/products/robotis-dynamixel-xm430-w350-t-smart-servo-actuator"
     },
     {
       "category": "Power",
@@ -30,33 +57,24 @@
       "note": "12 V actuator supply · https://www.digikey.com/en/products/result?keywords=LRS-75-12"
     },
     {
-      "category": "Electronics",
-      "name": "Waveshare Bus Servo Adapter (A)",
-      "qty": 1,
-      "unit_cost": 10.6,
-      "subtotal": 10.6,
-      "spec": "12 V",
-      "note": "USB to actuator bus · https://www.waveshare.com/bus-servo-adapter-a.htm"
-    },
-    {
       "category": "Printed structure",
       "name": "PETG filament for 9 printed parts",
       "qty": 1,
-      "unit_cost": 6.33,
-      "subtotal": 6.33,
-      "spec": "250 g of parts (+15 % supports/waste), about 22.8 h of printing",
+      "unit_cost": 10.19,
+      "subtotal": 10.19,
+      "spec": "403 g of parts (+15 % supports/waste), about 36.7 h of printing",
       "note": "base_link, turret, upper_arm, upper_arm_rotator, forearm, forearm_rotator, wrist, wrist_rotator, gripper_jaw"
     },
     {
       "category": "Fasteners",
       "name": "Screws, nuts and inserts",
-      "qty": 64,
+      "qty": 95,
       "unit_cost": 0.12,
-      "subtotal": 7.68,
-      "spec": "4x M5 x 12 socket head (base to bench); 28x M2 x 6 case screws; 32x horn screws"
+      "subtotal": 11.4,
+      "spec": "4x M5 x 12 socket head (base to bench); 28x M2.5 x 6 case screws; 60x horn screws; 3x M5 x 16 socket head + M5 washer + M5 heat-set insert (clevis bearing axle)"
     }
   ],
-  "total": 240.61,
+  "total": 1197.03,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
@@ -66,61 +84,61 @@
       "required_effort": 0,
       "effort_unit": "N·m",
       "required_torque_nm": 0,
-      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "chosen": "DYNAMIXEL XL430-W250-T",
       "margin": "99x"
     },
     {
       "joint": "shoulder_pitch",
-      "required_effort": 1.937,
+      "required_effort": 2.418,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.937,
-      "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
-      "margin": "2.53x"
+      "required_torque_nm": 2.418,
+      "chosen": "DYNAMIXEL XH540-W270-T(R)",
+      "margin": "4.09x"
     },
     {
       "joint": "upper_arm_roll",
-      "required_effort": 0.006,
+      "required_effort": 0.017,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.006,
-      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "99x"
+      "required_torque_nm": 0.017,
+      "chosen": "DYNAMIXEL XL430-W250-T",
+      "margin": "82.8x"
     },
     {
       "joint": "elbow_pitch",
-      "required_effort": 1.056,
+      "required_effort": 1.215,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.056,
-      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "2.79x"
+      "required_torque_nm": 1.215,
+      "chosen": "DYNAMIXEL XM430-W350-T(R)",
+      "margin": "3.38x"
     },
     {
       "joint": "forearm_roll",
-      "required_effort": 0.002,
+      "required_effort": 0.009,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.002,
-      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "required_torque_nm": 0.009,
+      "chosen": "DYNAMIXEL XL430-W250-T",
       "margin": "99x"
     },
     {
       "joint": "wrist_pitch",
-      "required_effort": 0.435,
+      "required_effort": 0.483,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.435,
-      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "6.76x"
+      "required_torque_nm": 0.483,
+      "chosen": "DYNAMIXEL XL430-W250-T",
+      "margin": "2.9x"
     },
     {
       "joint": "wrist_roll",
       "required_effort": 0.001,
       "effort_unit": "N·m",
       "required_torque_nm": 0.001,
-      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "chosen": "DYNAMIXEL XL430-W250-T",
       "margin": "99x"
     }
   ],
   "warnings": [],
   "notes": [
-    "7-DOF arm, 450 mm reach, 0.1 kg payload, Feetech STS serial-bus servos (12 V)",
+    "7-DOF arm, 464 mm reach, 0.1 kg payload, ROBOTIS DYNAMIXEL X-series (12 V)",
     "Sized for a 0.1 kg payload.",
     "Arm clamps or bolts to the bench through the four M5 holes in the base; it is not free-standing at full reach.",
     "Links are cantilevered from one side of each horn (as on SO-101 / Koch arms); add an idler bearing on the far side for heavy use.",

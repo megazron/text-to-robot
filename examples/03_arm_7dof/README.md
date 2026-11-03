@@ -6,35 +6,35 @@
 
 Interpreted as: 7-DOF serial arm · parallel gripper
 
-**7-DOF arm, 450 mm reach, 0.1 kg payload, Feetech STS serial-bus servos (12 V)**
+**7-DOF arm, 464 mm reach, 0.1 kg payload, ROBOTIS DYNAMIXEL X-series (12 V)**
 
-Parts cost **$240.61** · printed structure 9 parts, 250 g · checks passed 25/25
+Parts cost **$1197.03** · printed structure 9 parts, 403 g · checks passed 25/25
 
 ## What it can do
 
 | | |
 |---|--:|
-| reach m | 0.45 |
+| reach m | 0.464 |
 | payload kg | 0.1 |
-| mass kg | 0.71 |
-| actuators | Feetech STS serial-bus servos (12 V) |
-| max joint speed rad s | 3.58 |
-| grip force n | 14 |
-| holding current a | 2.34 |
-| upper arm m | 0.13 |
-| forearm m | 0.13 |
+| mass kg | 0.993 |
+| actuators | ROBOTIS DYNAMIXEL X-series (12 V) |
+| max joint speed rad s | 3.82 |
+| grip force n | 6 |
+| holding current a | 1.81 |
+| upper arm m | 0.141 |
+| forearm m | 0.131 |
 
 ## Actuators (sized from this robot's own loads)
 
 | Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
 |---|---|--:|--:|--:|--:|
-| base_yaw | feetech_sts3215_c047 | 0 | 0.9807 / 2.942 | 99x | 4.48 |
-| shoulder_pitch | feetech_sts3250 | 1.937 | 1.5691 / 4.9033 | 2.53x | 4.92 |
-| upper_arm_roll | feetech_sts3215_c047 | 0.006 | 0.9807 / 2.942 | 99x | 4.48 |
-| elbow_pitch | feetech_sts3215_c047 | 1.056 | 0.9807 / 2.942 | 2.79x | 3.58 |
-| forearm_roll | feetech_sts3215_c047 | 0.002 | 0.9807 / 2.942 | 99x | 4.48 |
-| wrist_pitch | feetech_sts3215_c047 | 0.435 | 0.9807 / 2.942 | 6.76x | 4.48 |
-| wrist_roll | feetech_sts3215_c047 | 0.001 | 0.9807 / 2.942 | 99x | 4.48 |
+| base_yaw | dxl_xl430_w250 | 0 | 0.42 / 1.4 | 99x | 4.43 |
+| shoulder_pitch | dxl_xh540_w270 | 2.418 | 2.97 / 9.9 | 4.09x | 3.82 |
+| upper_arm_roll | dxl_xl430_w250 | 0.017 | 0.42 / 1.4 | 82.8x | 5.67 |
+| elbow_pitch | dxl_xm430_w350 | 1.215 | 1.23 / 4.1 | 3.38x | 4.14 |
+| forearm_roll | dxl_xl430_w250 | 0.009 | 0.42 / 1.4 | 99x | 5.67 |
+| wrist_pitch | dxl_xl430_w250 | 0.483 | 0.42 / 1.4 | 2.9x | 4.69 |
+| wrist_roll | dxl_xl430_w250 | 0.001 | 0.42 / 1.4 | 99x | 5.67 |
 
 ## Engineering checks
 

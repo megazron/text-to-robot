@@ -13,6 +13,15 @@
       "note": "rocker pivot · https://www.vxb.com/search?q=608-2Z"
     },
     {
+      "category": "Mechanical",
+      "name": "Ball bearing 625-2Z 5x16x5 mm",
+      "qty": 3,
+      "unit_cost": 0.55,
+      "subtotal": 1.65,
+      "spec": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-625-2Z",
+      "note": "arm: clevis bearing, joint shoulder_pitch, clevis bearing, joint elbow_pitch, clevis bearing, joint wrist_pitch · https://www.vxb.com/search?q=625-2Z"
+    },
+    {
       "category": "Power",
       "name": "Pololu D36V50F5 5 V 5.5 A step-down regulator (#4091)",
       "qty": 1,
@@ -124,21 +133,21 @@
       "category": "Printed structure",
       "name": "PETG filament for 20 printed parts",
       "qty": 1,
-      "unit_cost": 15.87,
-      "subtotal": 15.87,
-      "spec": "627 g of parts (+15 % supports/waste), about 57.2 h of printing",
+      "unit_cost": 18.82,
+      "subtotal": 18.82,
+      "spec": "744 g of parts (+15 % supports/waste), about 67.8 h of printing",
       "note": "left_rocker_rear_arm, left_rocker_frame, right_rocker_rear_arm, right_rocker_frame, battery_tray, computer_tray, motor_driver_1_tray, motor_driver_2_tray, servo_bus_tray, regulator_5v_tray, depth_camera_bracket, camera_mast, arm_base_link, arm_turret, arm_upper_arm, arm_forearm, arm_forearm_rotator, arm_wrist, arm_wrist_rotator, arm_gripper_jaw"
     },
     {
       "category": "Fasteners",
       "name": "Screws, nuts and inserts",
-      "qty": 140,
+      "qty": 143,
       "unit_cost": 0.12,
-      "subtotal": 16.8,
-      "spec": "24x M3 x 8 socket head (motor face); 2x M8 x 40 shoulder bolt + spacer (rocker pivot); 4x M4 x 20 + nut (rocker rear arm to hub); 1x 20 mm hook-and-loop battery strap; 12x M3 x 8 socket head (tray to deck); 19x M2.5 x 6 screws (board to standoffs); 2x M3 x 6 (camera back); 4x M5 x 12 socket head (base to bench); 24x M2.5 x 6 case screws; 48x horn screws"
+      "subtotal": 17.16,
+      "spec": "24x M3 x 8 socket head (motor face); 2x M8 x 40 shoulder bolt + spacer (rocker pivot); 4x M4 x 20 + nut (rocker rear arm to hub); 1x 20 mm hook-and-loop battery strap; 12x M3 x 8 socket head (tray to deck); 19x M2.5 x 6 screws (board to standoffs); 2x M3 x 6 (camera back); 4x M5 x 12 socket head (base to bench); 24x M2.5 x 6 case screws; 48x horn screws; 3x M5 x 16 socket head + M5 washer + M5 heat-set insert (clevis bearing axle)"
     }
   ],
-  "total": 3811.94,
+  "total": 3816.9,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
@@ -153,80 +162,80 @@
     },
     {
       "joint": "arm_shoulder_pitch",
-      "required_effort": 2.851,
+      "required_effort": 3.116,
       "effort_unit": "N·m",
-      "required_torque_nm": 2.851,
+      "required_torque_nm": 3.116,
       "chosen": "DYNAMIXEL XH540-W270-T(R)",
-      "margin": "3.47x"
+      "margin": "3.18x"
     },
     {
       "joint": "arm_elbow_pitch",
-      "required_effort": 1.783,
+      "required_effort": 1.925,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.783,
+      "required_torque_nm": 1.925,
       "chosen": "DYNAMIXEL XH540-W270-T(R)",
-      "margin": "5.55x"
+      "margin": "5.14x"
     },
     {
       "joint": "arm_forearm_roll",
-      "required_effort": 0.75,
+      "required_effort": 0.785,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.75,
+      "required_torque_nm": 0.785,
       "chosen": "DYNAMIXEL XM430-W350-T(R)",
-      "margin": "5.47x"
+      "margin": "5.22x"
     },
     {
       "joint": "arm_wrist_pitch",
-      "required_effort": 0.75,
+      "required_effort": 0.785,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.75,
+      "required_torque_nm": 0.785,
       "chosen": "DYNAMIXEL XM430-W350-T(R)",
-      "margin": "5.47x"
+      "margin": "5.22x"
     },
     {
       "joint": "arm_wrist_roll",
-      "required_effort": 0.056,
+      "required_effort": 0.058,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.056,
+      "required_torque_nm": 0.058,
       "chosen": "DYNAMIXEL XM430-W350-T(R)",
-      "margin": "72.91x"
+      "margin": "71.09x"
     },
     {
       "joint": "left_front_wheel_joint",
-      "required_effort": 0.126,
+      "required_effort": 0.129,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.126,
+      "required_torque_nm": 0.129,
       "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
-      "margin": "5.46x"
+      "margin": "5.32x"
     },
     {
       "joint": "left_rear_wheel_joint",
-      "required_effort": 0.126,
+      "required_effort": 0.129,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.126,
+      "required_torque_nm": 0.129,
       "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
-      "margin": "5.46x"
+      "margin": "5.32x"
     },
     {
       "joint": "right_front_wheel_joint",
-      "required_effort": 0.126,
+      "required_effort": 0.129,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.126,
+      "required_torque_nm": 0.129,
       "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
-      "margin": "5.46x"
+      "margin": "5.32x"
     },
     {
       "joint": "right_rear_wheel_joint",
-      "required_effort": 0.126,
+      "required_effort": 0.129,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.126,
+      "required_torque_nm": 0.129,
       "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
-      "margin": "5.46x"
+      "margin": "5.32x"
     }
   ],
   "warnings": [],
   "notes": [
-    "4-wheel rocker-bogie rover with a 6-DOF arm: 4.477 kg, 1.24 m/s, 1.53 h, jetson_orin_nano_super",
+    "4-wheel rocker-bogie rover with a 6-DOF arm: 4.593 kg, 1.24 m/s, 1.53 h, jetson_orin_nano_super",
     "Rocker-bogie after the JPL Open Source Rover, 4 driven wheels, skid steering (the OSR's four corner-steering servos are left out; add them for less tyre scrub).",
     "A rover's differential bar links the two rockers through the body, a closed loop URDF cannot describe; the model frees the left rocker on its pivot and bolts the right rocker to the body, which keeps every wheel on the ground and the body supported on three points (body pitch follows the right rocker instead of the average).",
     "Rockers and bogies are printed in PETG; for outdoor use print them in 6 bolt-on sections from aluminium channel instead (as the OSR does).",

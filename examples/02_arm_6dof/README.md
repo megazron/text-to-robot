@@ -6,33 +6,33 @@
 
 Interpreted as: 6-DOF serial arm · parallel gripper
 
-**6-DOF arm, 450 mm reach, 0.1 kg payload, Feetech STS serial-bus servos (12 V)**
+**6-DOF arm, 420 mm reach, 0.1 kg payload, Feetech STS serial-bus servos (12 V)**
 
-Parts cost **$217.18** · printed structure 8 parts, 231 g · checks passed 22/22
+Parts cost **$222.38** · printed structure 8 parts, 358 g · checks passed 22/22
 
 ## What it can do
 
 | | |
 |---|--:|
-| reach m | 0.45 |
+| reach m | 0.42 |
 | payload kg | 0.1 |
-| mass kg | 0.636 |
+| mass kg | 0.762 |
 | actuators | Feetech STS serial-bus servos (12 V) |
-| max joint speed rad s | 3.4 |
+| max joint speed rad s | 3.32 |
 | grip force n | 14 |
-| holding current a | 2.36 |
-| upper arm m | 0.108 |
-| forearm m | 0.152 |
+| holding current a | 2.49 |
+| upper arm m | 0.093 |
+| forearm m | 0.137 |
 
 ## Actuators (sized from this robot's own loads)
 
 | Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
 |---|---|--:|--:|--:|--:|
 | base_yaw | feetech_sts3215_c047 | 0 | 0.9807 / 2.942 | 99x | 4.48 |
-| shoulder_pitch | feetech_sts3250 | 1.858 | 1.5691 / 4.9033 | 2.64x | 5.02 |
-| elbow_pitch | feetech_sts3215_c047 | 1.176 | 0.9807 / 2.942 | 2.5x | 3.4 |
-| forearm_roll | feetech_sts3215_c047 | 0.002 | 0.9807 / 2.942 | 99x | 4.48 |
-| wrist_pitch | feetech_sts3215_c047 | 0.435 | 0.9807 / 2.942 | 6.76x | 4.48 |
+| shoulder_pitch | feetech_sts3250 | 1.945 | 1.5691 / 4.9033 | 2.52x | 4.98 |
+| elbow_pitch | feetech_sts3215_c047 | 1.238 | 0.9807 / 2.942 | 2.38x | 3.32 |
+| forearm_roll | feetech_sts3215_c047 | 0.007 | 0.9807 / 2.942 | 99x | 4.48 |
+| wrist_pitch | feetech_sts3215_c047 | 0.47 | 0.9807 / 2.942 | 6.25x | 4.48 |
 | wrist_roll | feetech_sts3215_c047 | 0.001 | 0.9807 / 2.942 | 99x | 4.48 |
 
 ## Engineering checks

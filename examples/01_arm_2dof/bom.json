@@ -3,13 +3,31 @@
   "tier": "hobby",
   "lines": [
     {
+      "category": "Mechanical",
+      "name": "Ball bearing 625-2Z 5x16x5 mm",
+      "qty": 2,
+      "unit_cost": 0.55,
+      "subtotal": 1.1,
+      "spec": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-625-2Z",
+      "note": "clevis bearing, joint shoulder_pitch; clevis bearing, joint elbow_pitch · https://www.vxb.com/search?q=625-2Z"
+    },
+    {
       "category": "Actuator",
       "name": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "qty": 3,
+      "qty": 2,
       "unit_cost": 22,
-      "subtotal": 66,
+      "subtotal": 44,
       "spec": "0.9807 N·m rated / 2.942 N·m peak, 12 V",
-      "note": "joint shoulder_pitch; joint elbow_pitch; gripper · https://www.seeedstudio.com/STS3215-30KG-Serial-Servo-p-6340.html"
+      "note": "joint elbow_pitch; gripper · https://www.seeedstudio.com/STS3215-30KG-Serial-Servo-p-6340.html"
+    },
+    {
+      "category": "Actuator",
+      "name": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
+      "qty": 1,
+      "unit_cost": 40,
+      "subtotal": 40,
+      "spec": "1.5691 N·m rated / 4.9033 N·m peak, 12 V",
+      "note": "joint shoulder_pitch · https://openelab.io/products/feetech-sts3250-c002-servo-12v"
     },
     {
       "category": "Power",
@@ -33,40 +51,40 @@
       "category": "Printed structure",
       "name": "PETG filament for 4 printed parts",
       "qty": 1,
-      "unit_cost": 4.11,
-      "subtotal": 4.11,
-      "spec": "163 g of parts (+15 % supports/waste), about 14.8 h of printing",
+      "unit_cost": 9.16,
+      "subtotal": 9.16,
+      "spec": "362 g of parts (+15 % supports/waste), about 33.0 h of printing",
       "note": "base_link, upper_arm, forearm, gripper_jaw"
     },
     {
       "category": "Fasteners",
       "name": "Screws, nuts and inserts",
-      "qty": 24,
+      "qty": 26,
       "unit_cost": 0.12,
-      "subtotal": 2.88,
-      "spec": "4x M5 x 12 socket head (base to bench); 8x M2 x 6 case screws; 12x horn screws"
+      "subtotal": 3.12,
+      "spec": "4x M5 x 12 socket head (base to bench); 8x M2 x 6 case screws; 12x horn screws; 2x M5 x 16 socket head + M5 washer + M5 heat-set insert (clevis bearing axle)"
     }
   ],
-  "total": 105.59,
+  "total": 129.98,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
   "actuator_sizing": [
     {
       "joint": "shoulder_pitch",
-      "required_effort": 0.939,
+      "required_effort": 1.316,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.939,
-      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "3.13x"
+      "required_torque_nm": 1.316,
+      "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
+      "margin": "3.73x"
     },
     {
       "joint": "elbow_pitch",
-      "required_effort": 0.43,
+      "required_effort": 0.534,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.43,
+      "required_torque_nm": 0.534,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "6.83x"
+      "margin": "5.51x"
     }
   ],
   "warnings": [],

@@ -31,6 +31,14 @@ export type Kind = "Y" | "P" | "R";
 const KINDS: Record<number, Kind[]> = { 1: ["Y"], 2: ["P", "P"], 3: ["Y", "P", "P"], 4: ["Y", "P", "P", "P"], 5: ["Y", "P", "P", "P", "R"], 6: ["Y", "P", "P", "R", "P", "R"], 7: ["Y", "P", "R", "P", "R", "P", "R"] };
 const PLATE = 4; // horn plate thickness, mm
 const WALL = 3;
+// pitch joints are clevises: horn cheek + bearing cheek. The bearing (625ZZ, 5x16x5) turns on an M5 bolt that screws into
+// a heat-set insert in a boss on the back of the servo's cradle, coaxial with the output.
+const BOSS = 5, BOSS_D = 11, BEAR_D = 16.15, BEAR_W = 5, IDLER_T = 7, GAP = 1.2; // GAP holds an M5 washer
+/** z (servo frame, output +z) of the bearing cheek's inner face for a pitch actuator */
+const idlerZ = (key: string) => bodyMm(key).min[2] - WALL - BOSS - GAP;
+/** boss on the back of a pitch actuator's cradle, coaxial with its output (servo frame) */
+const bossOps = (key: string): Op[] => { const zb = bodyMm(key).min[2] - WALL;
+  return [{ op: "rod", a: [0, 0, zb + 1], b: [0, 0, zb - BOSS], r: BOSS_D / 2 }, { op: "hole", a: [0, 0, zb - BOSS - 1], b: [0, 0, zb - BOSS + 9], d: 6.4 }]; };
 
 const bodyMm = (key: string) => { const b = bboxM(key); return { min: b.min.map((x) => x * 1000) as Vec3, max: b.max.map((x) => x * 1000) as Vec3 }; };
 /** Depth of the body behind the output face (mm, positive). */
@@ -94,37 +102,68 @@ function linkOps(cur: JointPlan, nextKey: string, nextT: Mat4, nextKind: Kind | 
     const r = hornRadiusMm(cur.key) + 4;
     ops.push({ op: "hull", of: [{ op: "box", min: [o[0] - r * 0.8, o[1] - r * 0.8, o[2]], max: [o[0] + r * 0.8, o[1] + r * 0.8, o[2] + PLATE] }, { op: "box", min: [lo[0], lo[1], lo[2]], max: [hi[0], hi[1], lo[2] + WALL] }] });
   } else {
-    // pitch joint: side plate on the horn side, then a bridge into the next cradle's wall on that side
-    const s = cur.side, y0 = o[1] + s * 0.5, y1 = o[1] + s * (plateT + 0.5);
-    const [ya, yb] = s > 0 ? [y0, y1] : [y1, y0];
-    const top = Math.min(hi[2], nextKind === "P" ? hi[2] : lo[2] + (hi[2] - lo[2]) * 0.9);
-    ops.push({ op: "box", min: [o[0] - plateW / 2, ya, o[2]], max: [o[0] + plateW / 2, yb, top], r: 3 });
-    const face = s > 0 ? hi[1] : lo[1];
-    ops.push({ op: "hull", of: [
-      { op: "box", min: [Math.max(lo[0], o[0] - plateW / 2), ya, Math.max(lo[2], o[2])], max: [Math.min(hi[0], o[0] + plateW / 2), yb, top] },
-      { op: "box", min: [lo[0], s > 0 ? face - WALL : face, Math.max(lo[2], o[2])], max: [hi[0], s > 0 ? face : face + WALL, top] },
-    ] });
-    // keep clear of the previous actuator's body as this link swings
-    const span = top - o[2];
-    if (span > 120) ops.push({ op: "lighten", a: [o[0], y0, o[2] + 45], b: [o[0], y0, top - 45], r: Math.min(plateW * 0.28, 9), n: Math.max(1, Math.floor((span - 90) / 45)), axis: [0, 1, 0] });
+    // pitch joint: a clevis round the actuator (horn cheek + bearing cheek joined by a bridge outside its sweep),
+    // then a solid link into the next cradle. Built in this actuator's frame (output axis +z).
+    const Wi = invert(cur.W), nT = mul(Wi, nextT), b = bodyMm(cur.key);
+    const pN = apply(nT, [0, 0, 0]); let dx = pN[0], dy = pN[1];
+    if (Math.hypot(dx, dy) < 1) { dx = 1; dy = 0; }
+    const n = Math.hypot(dx, dy), dir: Vec3 = [dx / n, dy / n, 0];
+    const R = bodyRadius(cur.key) + 4, Wb = Math.max(10, plateT + 4), wB = plateW;
+    const zI = idlerZ(cur.key), zLo = zI - IDLER_T, zHi = plateT;
+    const at = (r: number, z: number): Vec3 => [dir[0] * r, dir[1] * r, z];
+    const rH = hornRadiusMm(cur.key) + 4, rI = BEAR_D / 2 + 3.5;
+    const bridge = (z0: number, z1: number): Op => ({ op: "beam", a: at(R + Wb / 2, z0), b: at(R + Wb / 2, z1), w: wB, h: Wb, up: dir });
+    const local: Op[] = [
+      { op: "horn", key: cur.key, t: plateT },
+      { op: "hull", of: [{ op: "rod", a: [0, 0, 0], b: [0, 0, plateT], r: rH }, bridge(0, plateT)] },          // horn cheek
+      { op: "hull", of: [{ op: "rod", a: [0, 0, zLo], b: [0, 0, zI], r: rI }, bridge(zLo, zI)] },             // bearing cheek
+      bridge(zLo, zHi),
+      { op: "hole", a: [0, 0, zI + 0.5], b: [0, 0, zI - BEAR_W], d: BEAR_D },                                     // 625ZZ seat
+      { op: "hole", a: [0, 0, zI - BEAR_W + 0.1], b: [0, 0, zLo - 1], d: 9 },                                      // lip: bolt head on the inner race
+    ];
+    ops.push({ op: "at", T: cur.W, of: local });
+    // solid link from the bridge into the next cradle
+    const nb = bodyMm(nextKey), cs: Vec3[] = [];
+    for (const x of [nb.min[0] - WALL, nb.max[0] + WALL]) for (const y of [nb.min[1] - WALL, nb.max[1] + WALL]) for (const zz of [nb.min[2] - WALL, -2]) cs.push(apply(nextT, [x, y, zz]));
+    const lo2 = [0, 1, 2].map((k) => Math.min(...cs.map((c) => c[k]))) as Vec3, hi2 = [0, 1, 2].map((k) => Math.max(...cs.map((c) => c[k]))) as Vec3;
+    ops.push({ op: "hull", of: [{ op: "at", T: cur.W, of: [bridge(zLo, zHi)] }, { op: "box", min: lo2, max: hi2 }] });
+    // truss: lightening holes through the link across the joint axis; the two side walls carry the bending
+    const a0 = apply(cur.W, at(R + Wb + 14, (zLo + zHi) / 2)), c2: Vec3 = [(lo2[0] + hi2[0]) / 2, (lo2[1] + hi2[1]) / 2, (lo2[2] + hi2[2]) / 2];
+    const toN: Vec3 = [c2[0] - a0[0], c2[1] - a0[1], c2[2] - a0[2]], dl = Math.hypot(...toN);
+    // free length: from the bridge to where the line enters the next cradle (slab test), less a margin
+    let tIn = 0;
+    for (let k = 0; k < 3; k++) if (Math.abs(toN[k]) > 1e-9) { const t1 = (lo2[k] - a0[k]) / toN[k] * dl, t2 = (hi2[k] - a0[k]) / toN[k] * dl; tIn = Math.max(tIn, Math.min(t1, t2)); }
+    const reach = tIn - 10;
+    if (reach > 20) {
+      const u: Vec3 = [toN[0] / dl, toN[1] / dl, toN[2] / dl], b0: Vec3 = [a0[0] + u[0] * reach, a0[1] + u[1] * reach, a0[2] + u[2] * reach];
+      const axisW = apply(cur.W, [0, 0, 1]), oW = apply(cur.W, [0, 0, 0]);
+      ops.push({ op: "lighten", a: a0, b: b0, r: Math.min(wB * 0.3, 10), n: Math.max(1, Math.round(reach / 26)), axis: [axisW[0] - oW[0], axisW[1] - oW[1], axisW[2] - oW[2]] });
+    }
+    // keep the next joint's own clevis free to turn: clear its horn side and the far side of its boss
+    if (nextKind === "P") {
+      const Rn = bodyRadius(nextKey) + 6;
+      ops.push({ op: "at", T: nextT, of: [{ op: "hole", a: [0, 0, -1], b: [0, 0, 60], d: 2 * Rn }, { op: "hole", a: [0, 0, idlerZ(nextKey) + 0.6], b: [0, 0, idlerZ(nextKey) - 60], d: 2 * Rn }] });
+    }
+    void lo; void hi;
   }
+  if (nextKind === "P") ops.push({ op: "at", T: nextT, of: bossOps(nextKey) });
   return ops;
 }
 
 function gripperOps(G: Mat4, gripKey: string, fingerLen: number): { fixed: Op[]; jaw: Op[]; tcp: Vec3; closeAngle: number } {
   const d = depth(gripKey), o = apply(G, [0, 0, 0]), zg = o[2], F = fingerLen;
-  const xa = o[0] + 0.5, xb = o[0] + 6.5, gap = 34, half = gap / 2; // jaw plane on the horn side; opening at q = 0
+  const xa = o[0] + 0.5, xb = o[0] + 8.5, gap = 34, half = gap / 2; // jaw plane on the horn side (8 mm jaws); opening at q = 0
   const fixed: Op[] = [
     // on top of the cradle, behind the jaw plane
     { op: "box", min: [o[0] - d - WALL, -half - 8, zg + 9], max: [o[0] - 1, -8, zg + 20], r: 2 },
     // across into the jaw plane, outside the jaw's swept horn plate
     { op: "box", min: [o[0] - 3, -half - 8, zg + 9], max: [xb, -half, zg + 24], r: 2 },
-    { op: "box", min: [xa, -half - 6, zg + 9], max: [xb, -half, zg + F], r: 2 },
+    { op: "box", min: [xa, -half - 8, zg + 9], max: [xb, -half, zg + F], r: 2 },
   ];
   const jaw: Op[] = [
     { op: "at", T: G, of: [{ op: "horn", key: gripKey, t: PLATE }] },
-    { op: "hull", of: [{ op: "box", min: [xa, -7, zg - 7], max: [xb, 7, zg + 7] }, { op: "box", min: [xa, half, zg + F * 0.45], max: [xb, half + 6, zg + F * 0.55] }] },
-    { op: "box", min: [xa, half, zg + F * 0.45], max: [xb, half + 6, zg + F], r: 2 },
+    { op: "hull", of: [{ op: "box", min: [xa, -9, zg - 9], max: [xb, 9, zg + 9] }, { op: "box", min: [xa, half, zg + F * 0.45], max: [xb, half + 8, zg + F * 0.55] }] },
+    { op: "box", min: [xa, half, zg + F * 0.45], max: [xb, half + 8, zg + F], r: 2 },
   ];
   // closing rotates the jaw about +x; find where its inner face meets the fixed finger's inner face
   let close = 0;
@@ -147,6 +186,7 @@ function buildArm(req: ArmRequest, kinds: Kind[], keys: string[], gripKey: strin
     const lo = [0, 1].map((k) => Math.min(...c.map((p) => p[k]))), hi = [0, 1].map((k) => Math.max(...c.map((p) => p[k])));
     const zlo = Math.min(...c.map((p) => p[2]));
     baseOps.push({ op: "hull", of: [{ op: "box", min: [lo[0] - 6, lo[1] - 6, 0], max: [hi[0] + 6, hi[1] + 6, 6] }, { op: "box", min: [lo[0], lo[1], zlo], max: [hi[0], hi[1], zlo + WALL] }] });
+    if (j0.kind === "P") baseOps.push({ op: "at", T: j0.W, of: bossOps(j0.key) });
     if (j0.kind === "P") baseOps.push({ op: "cutbox", min: [-100, j0.side > 0 ? j0.W[13] - 1 : -100, j0.W[14] - hornRadiusMm(j0.key) - 6], max: [100, j0.side > 0 ? 100 : j0.W[13] + 1, 400] });
   }
   for (const x of [-1, 1]) for (const y of [-1, 1]) baseOps.push({ op: "hole", a: [x * (side / 2 - 10), y * (side / 2 - 10), -1], b: [x * (side / 2 - 10), y * (side / 2 - 10), 8], d: 5.5 });
@@ -187,6 +227,10 @@ function buildArm(req: ArmRequest, kinds: Kind[], keys: string[], gripKey: strin
     A.printedLink(linkName, { name: linkName, ops: [{ op: "at", T: invert(j.W), of: ops }] }, { role: linkName, material: i % 2 ? "printed" : "printed_accent" });
     A.fastener(`${part(j.key).specs.case_screw ? "M2 x 6" : "M2.5 x 6"} case screws`, 4);
     A.fastener("horn screws", outputHolesCount(j.key));
+    if (j.kind === "P") {
+      A.buy("bearing_625zz", 1, `clevis bearing, joint ${j.name}`);
+      A.fastener("M5 x 16 socket head + M5 washer + M5 heat-set insert (clevis bearing axle)", 1);
+    }
     parent = linkName; parentW = j.W;
   });
   let tcpLink = parent, tcp: Vec3 = apply(invert(parentW), tail ? [0, 0, tail[2]] : apply(joints[joints.length - 1].W, [0, 0, PLATE + 6]));
@@ -274,7 +318,7 @@ export function designArm(req: ArmRequest): RobotSpecification {
   const hobby = (req.ladder ?? ladderFor(req.budget)) === "hobby";
   // hobby-servo arms are MeArm / EEZYbotARM class: short reach, light objects
   const micro = hobby && !!req.onlyActuators?.length && req.onlyActuators.every((k) => /sg90|mg90/.test(k));
-  const reach = (req.reachM ?? (micro ? 0.15 : hobby ? (dof >= 5 ? 0.24 : 0.2) : dof >= 5 ? 0.45 : 0.35)) * 1000;
+  const reach = (req.reachM ?? (micro ? 0.15 : hobby ? (dof >= 5 ? 0.24 : 0.2) : dof >= 5 ? 0.42 : 0.35)) * 1000;
   // gripper actuator: fingertip force at 70 mm must hold the payload with friction 0.5 on both jaws, x1.5
   const gripNeedNm = (payload * 9.81 * 1.5) / (2 * 0.5) * 0.07;
   const gripKeyFor = (l: Ladder) => { const pool = l === "hobby" ? (req.onlyActuators ?? ["hobby_sg90", "hobby_mg90s", "hobby_mg996r", "hobby_ds3218"]) : l === "feetech" ? ["feetech_sts3215_c047", "feetech_sts3250"] : l === "dynamixel12" ? ["dxl_xm430_w350", "dxl_xh540_w270"] : ["dxl_xl430_w250", "dxl_xm430_w350", "dxl_xh540_w270"]; return pool.find((k) => rating(k).rated_nm >= gripNeedNm) ?? pool[pool.length - 1]; };

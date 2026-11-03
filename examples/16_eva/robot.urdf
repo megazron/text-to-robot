@@ -654,9 +654,9 @@
       <geometry><mesh filename="package://eva/meshes/neck_mount.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.00784 2.50205e-18 0.544957" rpy="0 0 0"/>
-      <mass value="0.018299"/>
-      <inertia ixx="0.0000058492" ixy="8.86705e-22" ixz="8.64068e-7" iyy="0.00000994076" iyz="1.19819e-22" izz="0.00000957372"/>
+      <origin xyz="-0.008595 -0.00013422 0.547122" rpy="0 0 0"/>
+      <mass value="0.022478"/>
+      <inertia ixx="0.00000735522" ixy="-4.70803e-8" ixz="0.0000010587" iyy="0.0000110955" iyz="-1.19848e-8" izz="0.0000108881"/>
     </inertial>
   </link>
   <link name="head_pan_actuator">
@@ -686,9 +686,9 @@
       <geometry><mesh filename="package://eva/meshes/head.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.0000912809 -9.44440e-14 0.080193" rpy="0 0 0"/>
-      <mass value="0.240606"/>
-      <inertia ixx="0.001412" ixy="3.76492e-15" ixz="-9.21942e-8" iyy="0.001236" iyz="1.88804e-15" izz="0.001655"/>
+      <origin xyz="-0.0000912456 -9.33652e-14 0.080162" rpy="0 0 0"/>
+      <mass value="0.240699"/>
+      <inertia ixx="0.001413" ixy="3.76734e-15" ixz="-9.15274e-8" iyy="0.001237" iyz="1.90995e-15" izz="0.001655"/>
     </inertial>
   </link>
   <link name="visor">
@@ -782,9 +782,9 @@
       <geometry><mesh filename="package://eva/meshes/left_arm_base_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="4.40244e-18 -0.004577 0.016836" rpy="0 0 0"/>
-      <mass value="0.027254"/>
-      <inertia ixx="0.0000160345" ixy="-7.06001e-22" ixz="-1.53722e-21" iyy="0.0000143793" iyz="8.80504e-7" izz="0.00000944084"/>
+      <origin xyz="-0.0000953397 -0.00416 0.019199" rpy="0 0 0"/>
+      <mass value="0.031644"/>
+      <inertia ixx="0.000017964" ixy="-2.90837e-8" ixz="5.43370e-9" iyy="0.0000167686" iyz="7.81681e-7" izz="0.0000106524"/>
     </inertial>
   </link>
   <link name="left_arm_shoulder_pitch_actuator">
@@ -814,9 +814,9 @@
       <geometry><mesh filename="package://eva/meshes/left_arm_upper_arm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.06559 3.78073e-13 -0.004333" rpy="0 0 0"/>
-      <mass value="0.024823"/>
-      <inertia ixx="0.00000592108" ixy="3.54277e-16" ixz="0.00000377012" iyy="0.0000331373" iyz="-4.59848e-17" izz="0.0000317726"/>
+      <origin xyz="0.054207 0.0000479262 -0.020717" rpy="0 0 0"/>
+      <mass value="0.06295"/>
+      <inertia ixx="0.000028818" ixy="-6.36051e-8" ixz="-0.00000717925" iyy="0.0000704463" iyz="-4.66635e-8" izz="0.0000529736"/>
     </inertial>
   </link>
   <link name="left_arm_elbow_pitch_actuator">
@@ -846,9 +846,9 @@
       <geometry><mesh filename="package://eva/meshes/left_arm_tool_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.065745 -4.57924e-13 -0.005342" rpy="0 0 0"/>
-      <mass value="0.022629"/>
-      <inertia ixx="0.00000586148" ixy="-1.75552e-16" ixz="0.00000567158" iyy="0.00003041" iyz="6.19974e-17" izz="0.0000288725"/>
+      <origin xyz="0.065374 -4.49417e-13 -0.005299" rpy="0 0 0"/>
+      <mass value="0.022758"/>
+      <inertia ixx="0.00000587004" ixy="-1.62914e-16" ixz="0.00000573491" iyy="0.0000309683" iyz="6.05560e-17" izz="0.0000294243"/>
     </inertial>
   </link>
   <link name="left_arm_shoulder">
@@ -878,9 +878,9 @@
       <geometry><mesh filename="package://eva/meshes/right_arm_base_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="4.40244e-18 -0.004577 0.016836" rpy="0 0 0"/>
-      <mass value="0.027254"/>
-      <inertia ixx="0.0000160345" ixy="-7.06001e-22" ixz="-1.53722e-21" iyy="0.0000143793" iyz="8.80504e-7" izz="0.00000944084"/>
+      <origin xyz="-0.0000953397 -0.00416 0.019199" rpy="0 0 0"/>
+      <mass value="0.031644"/>
+      <inertia ixx="0.000017964" ixy="-2.90837e-8" ixz="5.43370e-9" iyy="0.0000167686" iyz="7.81681e-7" izz="0.0000106524"/>
     </inertial>
   </link>
   <link name="right_arm_shoulder_pitch_actuator">
@@ -910,9 +910,9 @@
       <geometry><mesh filename="package://eva/meshes/right_arm_upper_arm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.06559 3.78073e-13 -0.004333" rpy="0 0 0"/>
-      <mass value="0.024823"/>
-      <inertia ixx="0.00000592108" ixy="3.54277e-16" ixz="0.00000377012" iyy="0.0000331373" iyz="-4.59848e-17" izz="0.0000317726"/>
+      <origin xyz="0.054207 0.0000479262 -0.020717" rpy="0 0 0"/>
+      <mass value="0.06295"/>
+      <inertia ixx="0.000028818" ixy="-6.36051e-8" ixz="-0.00000717925" iyy="0.0000704463" iyz="-4.66635e-8" izz="0.0000529736"/>
     </inertial>
   </link>
   <link name="right_arm_elbow_pitch_actuator">
@@ -942,9 +942,9 @@
       <geometry><mesh filename="package://eva/meshes/right_arm_tool_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.065745 -4.57924e-13 -0.005342" rpy="0 0 0"/>
-      <mass value="0.022629"/>
-      <inertia ixx="0.00000586148" ixy="-1.75552e-16" ixz="0.00000567158" iyy="0.00003041" iyz="6.19974e-17" izz="0.0000288725"/>
+      <origin xyz="0.065374 -4.49417e-13 -0.005299" rpy="0 0 0"/>
+      <mass value="0.022758"/>
+      <inertia ixx="0.00000587004" ixy="-1.62914e-16" ixz="0.00000573491" iyy="0.0000309683" iyz="6.05560e-17" izz="0.0000294243"/>
     </inertial>
   </link>
   <link name="right_arm_shoulder">

@@ -3,6 +3,15 @@
   "tier": "hobby",
   "lines": [
     {
+      "category": "Mechanical",
+      "name": "Ball bearing 625-2Z 5x16x5 mm",
+      "qty": 3,
+      "unit_cost": 0.55,
+      "subtotal": 1.65,
+      "spec": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-625-2Z",
+      "note": "clevis bearing, joint shoulder_pitch; clevis bearing, joint elbow_pitch; clevis bearing, joint wrist_pitch · https://www.vxb.com/search?q=625-2Z"
+    },
+    {
       "category": "Actuator",
       "name": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
       "qty": 6,
@@ -42,21 +51,21 @@
       "category": "Printed structure",
       "name": "PETG filament for 8 printed parts",
       "qty": 1,
-      "unit_cost": 5.86,
-      "subtotal": 5.86,
-      "spec": "231 g of parts (+15 % supports/waste), about 21.1 h of printing",
+      "unit_cost": 9.05,
+      "subtotal": 9.05,
+      "spec": "358 g of parts (+15 % supports/waste), about 32.6 h of printing",
       "note": "base_link, turret, upper_arm, forearm, forearm_rotator, wrist, wrist_rotator, gripper_jaw"
     },
     {
       "category": "Fasteners",
       "name": "Screws, nuts and inserts",
-      "qty": 56,
+      "qty": 59,
       "unit_cost": 0.12,
-      "subtotal": 6.72,
-      "spec": "4x M5 x 12 socket head (base to bench); 24x M2 x 6 case screws; 28x horn screws"
+      "subtotal": 7.08,
+      "spec": "4x M5 x 12 socket head (base to bench); 24x M2 x 6 case screws; 28x horn screws; 3x M5 x 16 socket head + M5 washer + M5 heat-set insert (clevis bearing axle)"
     }
   ],
-  "total": 217.18,
+  "total": 222.38,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
@@ -71,35 +80,35 @@
     },
     {
       "joint": "shoulder_pitch",
-      "required_effort": 1.858,
+      "required_effort": 1.945,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.858,
+      "required_torque_nm": 1.945,
       "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
-      "margin": "2.64x"
+      "margin": "2.52x"
     },
     {
       "joint": "elbow_pitch",
-      "required_effort": 1.176,
+      "required_effort": 1.238,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.176,
+      "required_torque_nm": 1.238,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "2.5x"
+      "margin": "2.38x"
     },
     {
       "joint": "forearm_roll",
-      "required_effort": 0.002,
+      "required_effort": 0.007,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.002,
+      "required_torque_nm": 0.007,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
       "margin": "99x"
     },
     {
       "joint": "wrist_pitch",
-      "required_effort": 0.435,
+      "required_effort": 0.47,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.435,
+      "required_torque_nm": 0.47,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "6.76x"
+      "margin": "6.25x"
     },
     {
       "joint": "wrist_roll",
@@ -112,7 +121,7 @@
   ],
   "warnings": [],
   "notes": [
-    "6-DOF arm, 450 mm reach, 0.1 kg payload, Feetech STS serial-bus servos (12 V)",
+    "6-DOF arm, 420 mm reach, 0.1 kg payload, Feetech STS serial-bus servos (12 V)",
     "Sized for a 0.1 kg payload.",
     "Arm clamps or bolts to the bench through the four M5 holes in the base; it is not free-standing at full reach.",
     "Links are cantilevered from one side of each horn (as on SO-101 / Koch arms); add an idler bearing on the far side for heavy use.",

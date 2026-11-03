@@ -6,47 +6,47 @@
 
 Interpreted as: Baymax character · imu (base_link) · camera (head)
 
-**Baymax-style service robot: 4.907 kg, 1.01 m tall, 4WD hidden base, two 4-servo arms, pan head with camera**
+**Baymax-style service robot: 5.773 kg, 1.01 m tall, 4WD hidden base, two 4-servo arms, pan head with camera**
 
-Parts cost **$863.75** · printed structure 28 parts, 723 g · checks passed 52/52
+Parts cost **$3657.01** · printed structure 28 parts, 1246 g · checks passed 52/52
 
 ## What it can do
 
 | | |
 |---|--:|
-| mass kg | 4.907 |
-| loaded mass kg | 4.907 |
+| mass kg | 5.773 |
+| loaded mass kg | 5.773 |
 | top speed m s | 1.24 |
-| wheel torque nm | 0.138 |
+| wheel torque nm | 0.162 |
 | drive motor | pololu_37d_30to1_64cpr |
 | battery | 1 x lipo_3s_2200 |
-| average power w | 18.7 |
+| average power w | 18.8 |
 | runtime h | 1.04 |
-| tip angle deg | 16.8 |
+| tip angle deg | 14.9 |
 | compute | rpi5 |
 | slope deg | 10 |
 | turn rate rad s | 1.42 |
 | turn slip factor | 2.67 |
 | height m | 1.01 |
-| cost usd | 1026 |
-| cost breakdown | catalog parts $828, filament 0.83 kg $21, fasteners $18, fabricated/other $160 (380 x 290 x 3 mm 5052 aluminium deck, laser cut (~$64); 2020 aluminium extrusion, 0.75 m (~$9); 420 x 40 x 6 mm aluminium flat bar shoulder yoke (~$12); upper_arm fabric sleeve (in the cover kit); forearm fabric sleeve (in the cover kit); foam-filled fabric mitten on a printed wrist plate (in the cover kit); upper_arm fabric sleeve (in the cover kit); forearm fabric sleeve (in the cover kit); foam-filled fabric mitten on a printed wrist plate (in the cover kit); sewn white ripstop body cover with zip and foam lining, about 2 m^2 (~$60); power switch, 15 A fuse, wiring) |
+| cost usd | 3821 |
+| cost breakdown | catalog parts $3604, filament 1.43 kg $36, fasteners $21, fabricated/other $160 (380 x 290 x 3 mm 5052 aluminium deck, laser cut (~$64); 2020 aluminium extrusion, 0.75 m (~$9); 420 x 40 x 6 mm aluminium flat bar shoulder yoke (~$12); upper_arm fabric sleeve (in the cover kit); forearm fabric sleeve (in the cover kit); foam-filled fabric mitten on a printed wrist plate (in the cover kit); upper_arm fabric sleeve (in the cover kit); forearm fabric sleeve (in the cover kit); foam-filled fabric mitten on a printed wrist plate (in the cover kit); sewn white ripstop body cover with zip and foam lining, about 2 m^2 (~$60); power switch, 15 A fuse, wiring) |
 
 ## Actuators (sized from this robot's own loads)
 
 | Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
 |---|---|--:|--:|--:|--:|
-| left_arm_base_yaw | feetech_sts3215_c047 | 0.949 | 0.9807 / 2.942 | 3.1x | 3.48 |
-| left_arm_shoulder_pitch | feetech_sts3250 | 2.034 | 1.5691 / 4.9033 | 2.41x | 4.84 |
-| left_arm_elbow_pitch | feetech_sts3215_c047 | 1.023 | 0.9807 / 2.942 | 2.88x | 3.86 |
-| left_arm_wrist_pitch | feetech_sts3215_c047 | 0.262 | 0.9807 / 2.942 | 11.25x | 4.48 |
-| right_arm_base_yaw | feetech_sts3215_c047 | 0.949 | 0.9807 / 2.942 | 3.1x | 3.48 |
-| right_arm_shoulder_pitch | feetech_sts3250 | 2.034 | 1.5691 / 4.9033 | 2.41x | 4.84 |
-| right_arm_elbow_pitch | feetech_sts3215_c047 | 1.023 | 0.9807 / 2.942 | 2.88x | 3.86 |
-| right_arm_wrist_pitch | feetech_sts3215_c047 | 0.262 | 0.9807 / 2.942 | 11.25x | 4.48 |
-| left_front_wheel_joint | pololu_37d_30to1_64cpr | 0.138 | 0.686 / 1.373 | 4.98x | 34.558 |
-| left_rear_wheel_joint | pololu_37d_30to1_64cpr | 0.138 | 0.686 / 1.373 | 4.98x | 34.558 |
-| right_front_wheel_joint | pololu_37d_30to1_64cpr | 0.138 | 0.686 / 1.373 | 4.98x | 34.558 |
-| right_rear_wheel_joint | pololu_37d_30to1_64cpr | 0.138 | 0.686 / 1.373 | 4.98x | 34.558 |
+| left_arm_base_yaw | dxl_xm430_w350 | 1.231 | 1.23 / 4.1 | 3.33x | 3.8 |
+| left_arm_shoulder_pitch | dxl_xh540_w270 | 2.64 | 2.97 / 9.9 | 3.75x | 3.74 |
+| left_arm_elbow_pitch | dxl_xm430_w350 | 1.182 | 1.23 / 4.1 | 3.47x | 4.38 |
+| left_arm_wrist_pitch | dxl_xm430_w350 | 0.262 | 1.23 / 4.1 | 15.67x | 4.58 |
+| right_arm_base_yaw | dxl_xm430_w350 | 1.231 | 1.23 / 4.1 | 3.33x | 3.8 |
+| right_arm_shoulder_pitch | dxl_xh540_w270 | 2.64 | 2.97 / 9.9 | 3.75x | 3.74 |
+| right_arm_elbow_pitch | dxl_xm430_w350 | 1.182 | 1.23 / 4.1 | 3.47x | 4.38 |
+| right_arm_wrist_pitch | dxl_xm430_w350 | 0.262 | 1.23 / 4.1 | 15.67x | 4.58 |
+| left_front_wheel_joint | pololu_37d_30to1_64cpr | 0.162 | 0.686 / 1.373 | 4.24x | 34.558 |
+| left_rear_wheel_joint | pololu_37d_30to1_64cpr | 0.162 | 0.686 / 1.373 | 4.24x | 34.558 |
+| right_front_wheel_joint | pololu_37d_30to1_64cpr | 0.162 | 0.686 / 1.373 | 4.24x | 34.558 |
+| right_rear_wheel_joint | pololu_37d_30to1_64cpr | 0.162 | 0.686 / 1.373 | 4.24x | 34.558 |
 
 ## Engineering checks
 

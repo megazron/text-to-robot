@@ -1,12 +1,13 @@
 # Bill of Materials — rover_arm
 
-**Estimated total: $3811.94**  ·  tier: prosumer  ·  budget: $4000 ✅ within budget
+**Estimated total: $3816.9**  ·  tier: prosumer  ·  budget: $4000 ✅ within budget
 
 **Effort sizing: passes catalogue estimate; hardware verified: no.**
 
 | Category | Component | Qty | Unit $ | Subtotal $ | Spec |
 |---|---|--:|--:|--:|---|
 | Mechanical | Ball bearing 608-2Z 8x22x7 mm _(rocker pivot · https://www.vxb.com/search?q=608-2Z)_ | 2 | 0.6 | 1.2 | https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-608-2Z |
+| Mechanical | Ball bearing 625-2Z 5x16x5 mm _(arm: clevis bearing, joint shoulder_pitch, clevis bearing, joint elbow_pitch, clevis bearing, joint wrist_pitch · https://www.vxb.com/search?q=625-2Z)_ | 3 | 0.55 | 1.65 | https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-625-2Z |
 | Power | Pololu D36V50F5 5 V 5.5 A step-down regulator (#4091) _(5 V rail for the computer / USB · https://www.pololu.com/product/4091)_ | 1 | 39.95 | 39.95 | 5 V |
 | Electronics | Cytron MDD10A dual-channel 10 A DC motor driver (5-30 V) _(dual DC motor driver · https://www.cytron.io/p-10amp-5v-30v-dc-motor-driver-2-channels)_ | 2 | 21 | 42 | 12 V |
 | Electronics | ROBOTIS U2D2 USB to TTL/RS-485 interface _(arm: USB to actuator bus · https://www.generationrobots.com/en/400848-usb2dynamixel-robotis.html)_ | 1 | 32.1 | 32.1 | 5 V |
@@ -19,26 +20,26 @@
 | Sensor | Raspberry Pi Camera Module 3 (standard lens) _(camera · https://www.raspberrypi.com/products/camera-module-3/)_ | 1 | 25 | 25 | 3.3 V |
 | Electronics | Waveshare Bus Servo Adapter (A) _(servo bus adapter · https://www.waveshare.com/bus-servo-adapter-a.htm)_ | 1 | 10.6 | 10.6 | 12 V |
 | Drive | Pololu 90x10 mm wheel + 6 mm universal aluminium hub (for 37D gearmotors) _(driven wheel · https://www.pololu.com/product/1435)_ | 4 | 11.22 | 44.88 | https://www.pololu.com/file/0J161/1083-6mm-4-40-hub-dimensions.pdf |
-| Printed structure | PETG filament for 20 printed parts _(left_rocker_rear_arm, left_rocker_frame, right_rocker_rear_arm, right_rocker_frame, battery_tray, computer_tray, motor_driver_1_tray, motor_driver_2_tray, servo_bus_tray, regulator_5v_tray, depth_camera_bracket, camera_mast, arm_base_link, arm_turret, arm_upper_arm, arm_forearm, arm_forearm_rotator, arm_wrist, arm_wrist_rotator, arm_gripper_jaw)_ | 1 | 15.87 | 15.87 | 627 g of parts (+15 % supports/waste), about 57.2 h of printing |
-| Fasteners | Screws, nuts and inserts | 140 | 0.12 | 16.8 | 24x M3 x 8 socket head (motor face); 2x M8 x 40 shoulder bolt + spacer (rocker pivot); 4x M4 x 20 + nut (rocker rear arm to hub); 1x 20 mm hook-and-loop battery strap; 12x M3 x 8 socket head (tray to deck); 19x M2.5 x 6 screws (board to standoffs); 2x M3 x 6 (camera back); 4x M5 x 12 socket head (base to bench); 24x M2.5 x 6 case screws; 48x horn screws |
+| Printed structure | PETG filament for 20 printed parts _(left_rocker_rear_arm, left_rocker_frame, right_rocker_rear_arm, right_rocker_frame, battery_tray, computer_tray, motor_driver_1_tray, motor_driver_2_tray, servo_bus_tray, regulator_5v_tray, depth_camera_bracket, camera_mast, arm_base_link, arm_turret, arm_upper_arm, arm_forearm, arm_forearm_rotator, arm_wrist, arm_wrist_rotator, arm_gripper_jaw)_ | 1 | 18.82 | 18.82 | 744 g of parts (+15 % supports/waste), about 67.8 h of printing |
+| Fasteners | Screws, nuts and inserts | 143 | 0.12 | 17.16 | 24x M3 x 8 socket head (motor face); 2x M8 x 40 shoulder bolt + spacer (rocker pivot); 4x M4 x 20 + nut (rocker rear arm to hub); 1x 20 mm hook-and-loop battery strap; 12x M3 x 8 socket head (tray to deck); 19x M2.5 x 6 screws (board to standoffs); 2x M3 x 6 (camera back); 4x M5 x 12 socket head (base to bench); 24x M2.5 x 6 case screws; 48x horn screws; 3x M5 x 16 socket head + M5 washer + M5 heat-set insert (clevis bearing axle) |
 
 ## Actuator sizing
 
 | Joint | Required effort | Unit | Chosen actuator | Margin |
 |---|--:|---|---|--:|
 | arm_base_yaw | 0 | N·m | DYNAMIXEL XM430-W350-T(R) | 99x |
-| arm_shoulder_pitch | 2.851 | N·m | DYNAMIXEL XH540-W270-T(R) | 3.47x |
-| arm_elbow_pitch | 1.783 | N·m | DYNAMIXEL XH540-W270-T(R) | 5.55x |
-| arm_forearm_roll | 0.75 | N·m | DYNAMIXEL XM430-W350-T(R) | 5.47x |
-| arm_wrist_pitch | 0.75 | N·m | DYNAMIXEL XM430-W350-T(R) | 5.47x |
-| arm_wrist_roll | 0.056 | N·m | DYNAMIXEL XM430-W350-T(R) | 72.91x |
-| left_front_wheel_joint | 0.126 | N·m | Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752) | 5.46x |
-| left_rear_wheel_joint | 0.126 | N·m | Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752) | 5.46x |
-| right_front_wheel_joint | 0.126 | N·m | Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752) | 5.46x |
-| right_rear_wheel_joint | 0.126 | N·m | Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752) | 5.46x |
+| arm_shoulder_pitch | 3.116 | N·m | DYNAMIXEL XH540-W270-T(R) | 3.18x |
+| arm_elbow_pitch | 1.925 | N·m | DYNAMIXEL XH540-W270-T(R) | 5.14x |
+| arm_forearm_roll | 0.785 | N·m | DYNAMIXEL XM430-W350-T(R) | 5.22x |
+| arm_wrist_pitch | 0.785 | N·m | DYNAMIXEL XM430-W350-T(R) | 5.22x |
+| arm_wrist_roll | 0.058 | N·m | DYNAMIXEL XM430-W350-T(R) | 71.09x |
+| left_front_wheel_joint | 0.129 | N·m | Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752) | 5.32x |
+| left_rear_wheel_joint | 0.129 | N·m | Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752) | 5.32x |
+| right_front_wheel_joint | 0.129 | N·m | Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752) | 5.32x |
+| right_rear_wheel_joint | 0.129 | N·m | Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752) | 5.32x |
 
 ## Notes
-- 4-wheel rocker-bogie rover with a 6-DOF arm: 4.477 kg, 1.24 m/s, 1.53 h, jetson_orin_nano_super
+- 4-wheel rocker-bogie rover with a 6-DOF arm: 4.593 kg, 1.24 m/s, 1.53 h, jetson_orin_nano_super
 - Rocker-bogie after the JPL Open Source Rover, 4 driven wheels, skid steering (the OSR's four corner-steering servos are left out; add them for less tyre scrub).
 - A rover's differential bar links the two rockers through the body, a closed loop URDF cannot describe; the model frees the left rocker on its pivot and bolts the right rocker to the body, which keeps every wheel on the ground and the body supported on three points (body pitch follows the right rocker instead of the average).
 - Rockers and bogies are printed in PETG; for outdoor use print them in 6 bolt-on sections from aluminium channel instead (as the OSR does).

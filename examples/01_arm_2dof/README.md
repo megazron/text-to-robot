@@ -8,7 +8,7 @@ Interpreted as: 2-DOF serial arm · parallel gripper
 
 **2-DOF arm, 350 mm reach, 0.1 kg payload, Feetech STS serial-bus servos (12 V)**
 
-Parts cost **$105.59** · printed structure 4 parts, 163 g · checks passed 10/10
+Parts cost **$129.98** · printed structure 4 parts, 362 g · checks passed 10/10
 
 ## What it can do
 
@@ -16,11 +16,11 @@ Parts cost **$105.59** · printed structure 4 parts, 163 g · checks passed 10/1
 |---|--:|
 | reach m | 0.35 |
 | payload kg | 0.1 |
-| mass kg | 0.327 |
+| mass kg | 0.547 |
 | actuators | Feetech STS serial-bus servos (12 V) |
-| max joint speed rad s | 3.72 |
+| max joint speed rad s | 4.44 |
 | grip force n | 14 |
-| holding current a | 0.97 |
+| holding current a | 1.24 |
 | upper arm m | 0.144 |
 | forearm m | 0.205 |
 
@@ -28,8 +28,8 @@ Parts cost **$105.59** · printed structure 4 parts, 163 g · checks passed 10/1
 
 | Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
 |---|---|--:|--:|--:|--:|
-| shoulder_pitch | feetech_sts3215_c047 | 0.939 | 0.9807 / 2.942 | 3.13x | 3.72 |
-| elbow_pitch | feetech_sts3215_c047 | 0.43 | 0.9807 / 2.942 | 6.83x | 4.48 |
+| shoulder_pitch | feetech_sts3250 | 1.316 | 1.5691 / 4.9033 | 3.73x | 5.98 |
+| elbow_pitch | feetech_sts3215_c047 | 0.534 | 0.9807 / 2.942 | 5.51x | 4.44 |
 
 ## Engineering checks
 

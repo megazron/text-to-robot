@@ -462,9 +462,9 @@
       <geometry><mesh filename="package://wall_e/meshes/neck_base_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-3.01737e-12 -0.003753 0.017717" rpy="0 0 0"/>
-      <mass value="0.049348"/>
-      <inertia ixx="0.0000463161" ixy="4.58186e-15" ixz="-1.45169e-15" iyy="0.0000430471" iyz="0.00000375057" izz="0.000032719"/>
+      <origin xyz="-0.0000684778 -0.003397 0.021017" rpy="0 0 0"/>
+      <mass value="0.05765"/>
+      <inertia ixx="0.0000527851" ixy="-6.06094e-8" ixz="-6.81907e-11" iyy="0.0000512119" iyz="0.00000351912" izz="0.0000365455"/>
     </inertial>
   </link>
   <link name="neck_shoulder_pitch_actuator">
@@ -494,9 +494,9 @@
       <geometry><mesh filename="package://wall_e/meshes/neck_upper_arm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.100911 -0.006195 -0.006805" rpy="0 0 0"/>
-      <mass value="0.044329"/>
-      <inertia ixx="0.0000188219" ixy="0.00000719421" ixz="0.0000108607" iyy="0.0000932076" iyz="-0.00000251488" izz="0.0000958162"/>
+      <origin xyz="0.084452 -0.006569 -0.028103" rpy="0 0 0"/>
+      <mass value="0.169578"/>
+      <inertia ixx="0.0000967259" ixy="0.0000220041" ixz="-0.00000337968" iyy="0.000236923" iyz="0.0000010762" izz="0.000206374"/>
     </inertial>
   </link>
   <link name="neck_base_yaw_actuator">
@@ -526,9 +526,9 @@
       <geometry><mesh filename="package://wall_e/meshes/neck_turret.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="1.54655e-12 -0.006092 0.025824" rpy="0 0 0"/>
-      <mass value="0.017997"/>
-      <inertia ixx="0.0000115629" ixy="-1.33857e-16" ixz="6.51760e-16" iyy="0.000010904" iyz="5.55882e-7" izz="0.00000523084"/>
+      <origin xyz="-0.000150767 -0.005147 0.027281" rpy="0 0 0"/>
+      <mass value="0.022636"/>
+      <inertia ixx="0.0000128312" ixy="-2.91887e-8" ixz="-2.48489e-8" iyy="0.0000128419" iyz="5.39034e-7" izz="0.00000675129"/>
     </inertial>
   </link>
   <link name="neck_elbow_pitch_actuator">
@@ -558,9 +558,9 @@
       <geometry><mesh filename="package://wall_e/meshes/neck_tool_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.095968 6.70298e-13 -0.003559" rpy="0 0 0"/>
-      <mass value="0.028655"/>
-      <inertia ixx="0.00000665055" ixy="2.96782e-16" ixz="0.00000985371" iyy="0.0000844359" iyz="-9.07248e-17" izz="0.0000830539"/>
+      <origin xyz="0.095528 6.67215e-13 -0.003532" rpy="0 0 0"/>
+      <mass value="0.028787"/>
+      <inertia ixx="0.00000665633" ixy="2.88332e-16" ixz="0.00000992722" iyy="0.0000856482" iyz="-9.02071e-17" izz="0.0000842625"/>
     </inertial>
   </link>
   <link name="head">
@@ -622,9 +622,9 @@
       <geometry><mesh filename="package://wall_e/meshes/left_arm_base_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="2.66601e-12 -0.002771 0.014054" rpy="0 0 0"/>
-      <mass value="0.034151"/>
-      <inertia ixx="0.0000202084" ixy="-1.93023e-15" ixz="5.77902e-16" iyy="0.0000188593" iyz="0.00000155987" izz="0.0000159611"/>
+      <origin xyz="-0.0000782806 -0.002634 0.016311" rpy="0 0 0"/>
+      <mass value="0.03854"/>
+      <inertia ixx="0.0000225398" ixy="-3.36861e-8" ixz="1.41471e-8" iyy="0.0000216791" iyz="0.00000156214" izz="0.0000171441"/>
     </inertial>
   </link>
   <link name="left_arm_shoulder_pitch_actuator">
@@ -654,9 +654,9 @@
       <geometry><mesh filename="package://wall_e/meshes/left_arm_upper_arm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.054876 2.94209e-13 -0.005061" rpy="0 0 0"/>
-      <mass value="0.022581"/>
-      <inertia ixx="0.00000562747" ixy="2.25178e-16" ixz="0.00000265455" iyy="0.000023032" iyz="-3.65373e-17" izz="0.0000216476"/>
+      <origin xyz="0.047417 0.0000839214 -0.017693" rpy="0 0 0"/>
+      <mass value="0.03595"/>
+      <inertia ixx="0.0000184125" ixy="-3.28984e-8" ixz="-0.0000046314" iyy="0.0000446696" iyz="-3.75394e-8" izz="0.0000334412"/>
     </inertial>
   </link>
   <link name="left_arm_elbow_pitch_actuator">
@@ -686,9 +686,9 @@
       <geometry><mesh filename="package://wall_e/meshes/left_arm_forearm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.067187 0.001673 -0.005337" rpy="0 0 0"/>
-      <mass value="0.039587"/>
-      <inertia ixx="0.0000114274" ixy="0.0000019335" ixz="0.0000016807" iyy="0.0000413529" iyz="0.00000140274" izz="0.0000426846"/>
+      <origin xyz="0.058833 -0.003841 -0.022207" rpy="0 0 0"/>
+      <mass value="0.082391"/>
+      <inertia ixx="0.0000458773" ixy="-2.66521e-7" ixz="-0.0000120632" iyy="0.0000968434" iyz="4.69522e-7" izz="0.0000786239"/>
     </inertial>
   </link>
   <link name="left_arm_gripper_actuator">
@@ -718,9 +718,9 @@
       <geometry><mesh filename="package://wall_e/meshes/left_arm_gripper_jaw.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.018816 -0.008639 0.003112" rpy="0 0 0"/>
-      <mass value="0.005178"/>
-      <inertia ixx="4.97591e-7" ixy="8.01188e-7" ixz="-4.14448e-8" iyy="0.00000227887" iyz="1.94305e-8" izz="0.00000274473"/>
+      <origin xyz="0.020823 -0.009952 0.004177" rpy="0 0 0"/>
+      <mass value="0.008397"/>
+      <inertia ixx="8.70753e-7" ixy="0.00000134675" ixz="-6.26175e-8" iyy="0.00000379221" iyz="3.10672e-8" izz="0.00000456889"/>
     </inertial>
   </link>
   <link name="left_arm_shoulder">
@@ -750,9 +750,9 @@
       <geometry><mesh filename="package://wall_e/meshes/right_arm_base_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="2.66601e-12 -0.002771 0.014054" rpy="0 0 0"/>
-      <mass value="0.034151"/>
-      <inertia ixx="0.0000202084" ixy="-1.93023e-15" ixz="5.77902e-16" iyy="0.0000188593" iyz="0.00000155987" izz="0.0000159611"/>
+      <origin xyz="-0.0000782806 -0.002634 0.016311" rpy="0 0 0"/>
+      <mass value="0.03854"/>
+      <inertia ixx="0.0000225398" ixy="-3.36861e-8" ixz="1.41471e-8" iyy="0.0000216791" iyz="0.00000156214" izz="0.0000171441"/>
     </inertial>
   </link>
   <link name="right_arm_shoulder_pitch_actuator">
@@ -782,9 +782,9 @@
       <geometry><mesh filename="package://wall_e/meshes/right_arm_upper_arm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.054876 2.94209e-13 -0.005061" rpy="0 0 0"/>
-      <mass value="0.022581"/>
-      <inertia ixx="0.00000562747" ixy="2.25178e-16" ixz="0.00000265455" iyy="0.000023032" iyz="-3.65373e-17" izz="0.0000216476"/>
+      <origin xyz="0.047417 0.0000839214 -0.017693" rpy="0 0 0"/>
+      <mass value="0.03595"/>
+      <inertia ixx="0.0000184125" ixy="-3.28984e-8" ixz="-0.0000046314" iyy="0.0000446696" iyz="-3.75394e-8" izz="0.0000334412"/>
     </inertial>
   </link>
   <link name="right_arm_elbow_pitch_actuator">
@@ -814,9 +814,9 @@
       <geometry><mesh filename="package://wall_e/meshes/right_arm_forearm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.067187 0.001673 -0.005337" rpy="0 0 0"/>
-      <mass value="0.039587"/>
-      <inertia ixx="0.0000114274" ixy="0.0000019335" ixz="0.0000016807" iyy="0.0000413529" iyz="0.00000140274" izz="0.0000426846"/>
+      <origin xyz="0.058833 -0.003841 -0.022207" rpy="0 0 0"/>
+      <mass value="0.082391"/>
+      <inertia ixx="0.0000458773" ixy="-2.66521e-7" ixz="-0.0000120632" iyy="0.0000968434" iyz="4.69522e-7" izz="0.0000786239"/>
     </inertial>
   </link>
   <link name="right_arm_gripper_actuator">
@@ -846,9 +846,9 @@
       <geometry><mesh filename="package://wall_e/meshes/right_arm_gripper_jaw.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.018816 -0.008639 0.003112" rpy="0 0 0"/>
-      <mass value="0.005178"/>
-      <inertia ixx="4.97591e-7" ixy="8.01188e-7" ixz="-4.14448e-8" iyy="0.00000227887" iyz="1.94305e-8" izz="0.00000274473"/>
+      <origin xyz="0.020823 -0.009952 0.004177" rpy="0 0 0"/>
+      <mass value="0.008397"/>
+      <inertia ixx="8.70753e-7" ixy="0.00000134675" ixz="-6.26175e-8" iyy="0.00000379221" iyz="3.10672e-8" izz="0.00000456889"/>
     </inertial>
   </link>
   <link name="right_arm_shoulder">
@@ -1025,7 +1025,7 @@
     <child link="neck_upper_arm"/>
     <origin xyz="0 0.024 0.056" rpy="0 -1.570796 -1.570796"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-0.45" upper="0.3" effort="9.9" velocity="3.76"/>
+    <limit lower="-0.45" upper="0.3" effort="9.9" velocity="3.7"/>
     <dynamics damping="0.4848" friction="0.198"/>
   </joint>
   <joint name="neck_base_yaw_actuator_mount" type="fixed">
@@ -1084,7 +1084,7 @@
     <child link="left_arm_upper_arm"/>
     <origin xyz="0 0.01905 0.0452" rpy="0 -1.570796 -1.570796"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-1.75" upper="1.75" effort="2.942" velocity="4.4"/>
+    <limit lower="-1.75" upper="1.75" effort="2.942" velocity="4.28"/>
     <dynamics damping="0.1249" friction="0.0588"/>
   </joint>
   <joint name="left_arm_elbow_pitch_actuator_mount" type="fixed">
@@ -1133,7 +1133,7 @@
     <child link="right_arm_upper_arm"/>
     <origin xyz="0 0.01905 0.0452" rpy="0 -1.570796 -1.570796"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-1.75" upper="1.75" effort="2.942" velocity="4.4"/>
+    <limit lower="-1.75" upper="1.75" effort="2.942" velocity="4.28"/>
     <dynamics damping="0.1249" friction="0.0588"/>
   </joint>
   <joint name="right_arm_elbow_pitch_actuator_mount" type="fixed">
