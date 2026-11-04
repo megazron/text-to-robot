@@ -81,6 +81,8 @@ export class Assembly {
     const items = [...this.purchased.values()];
     return { items, cost_usd: +items.reduce((s, r) => s + part(r.key).price_usd * r.qty, 0).toFixed(2) };
   }
+  /** Purchased parts collected so far (key, quantity, uses). */
+  purchasedList(): PurchasedRecord[] { return [...this.purchased.values()].map((r) => ({ ...r, uses: [...r.uses] })); }
   fastener(spec: string, qty: number) { this.design.fasteners[spec] = (this.design.fasteners[spec] ?? 0) + qty; }
 
   /** A link whose body is a printed part. Mass from solid volume at print density. */
@@ -100,9 +102,9 @@ export class Assembly {
     return link;
   }
   /** Mount a purchased component rigidly on `parent` at T (mm, parent frame). */
-  mount(parent: string, key: string, T: Mat4, name: string, use = name): Link {
+  mount(parent: string, key: string, T: Mat4, name: string, use = name, material?: string): Link {
     const c = part(key);
-    const link: Link = { name, role: c.category, geometry: componentGeometry(key), mass: c.mass_g / 1000, material: COMPONENT_MATERIAL[c.category] ?? "metal", origin: { xyz: [0, 0, 0], rpy: [0, 0, 0] } };
+    const link: Link = { name, role: c.category, geometry: componentGeometry(key), mass: c.mass_g / 1000, material: material ?? COMPONENT_MATERIAL[c.category] ?? "metal", origin: { xyz: [0, 0, 0], rpy: [0, 0, 0] } };
     this.spec.links.push(link);
     this.fixed(`${name}_mount`, parent, name, T);
     this.buy(key, 1, use);

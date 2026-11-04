@@ -90,6 +90,17 @@ export function validateSpec(spec: RobotSpecification): ValidationResult {
     }
   }
 
+  // --- mimic joints follow a moving joint and are never chained or self-referencing ---
+  const byName = new Map(spec.joints.map((j) => [j.name, j]));
+  for (const j of spec.joints) {
+    if (!j.mimic) continue;
+    const leader = byName.get(j.mimic.joint);
+    if (j.type === "fixed") err("bad_mimic", `fixed joint '${j.name}' cannot mimic another joint`, `joints.${j.name}.mimic`);
+    if (!leader) err("bad_mimic", `joint '${j.name}' mimics missing joint '${j.mimic.joint}'`, `joints.${j.name}.mimic`);
+    else if (leader === j || leader.type === "fixed" || leader.mimic) err("bad_mimic", `joint '${j.name}' must mimic a moving, non-mimic joint (got '${leader.name}')`, `joints.${j.name}.mimic`);
+    if (!Number.isFinite(j.mimic.multiplier) || !Number.isFinite(j.mimic.offset)) err("bad_mimic", `joint '${j.name}' mimic multiplier/offset must be finite`, `joints.${j.name}.mimic`);
+  }
+
   // --- topology: single parent per child ---
   const parentCount = new Map<string, number>();
   for (const j of spec.joints) parentCount.set(j.child, (parentCount.get(j.child) ?? 0) + 1);

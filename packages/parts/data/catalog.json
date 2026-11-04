@@ -1,4 +1,94 @@
 {
+ "al_tube_20x2_1m": {
+  "key": "al_tube_20x2_1m",
+  "name": "6061-T6 aluminium round tube 20 x 2 mm, 1 m",
+  "category": "misc",
+  "mass_g": 305.4,
+  "price_usd": 13.0,
+  "supplier_url": "https://www.metalsupermarkets.com/metals/aluminum/aluminum-round-tube/",
+  "datasheet_url": "https://asm.matweb.com/search/SpecificMaterial.asp?bassnum=ma6061t6",
+  "envelope_mm": [
+   20.0,
+   20.0,
+   1000.0
+  ],
+  "holes": [],
+  "specs": {
+   "od_mm": 20.0,
+   "wall_mm": 2.0,
+   "id_mm": 16.0,
+   "length_mm": 1000.0,
+   "alloy": "6061-T6",
+   "yield_mpa": 276.0,
+   "youngs_gpa": 68.9,
+   "density_g_cm3": 2.7,
+   "no_mounting_holes": true,
+   "kg_per_m": 0.3054,
+   "mount": "cut to length, clamped in printed split sockets",
+   "uncertain": [
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -10.0,
+    -10.0,
+    0.0
+   ],
+   "max": [
+    10.0,
+    10.0,
+    1000.0
+   ]
+  },
+  "mesh_triangles": 208
+ },
+ "al_tube_25x2_1m": {
+  "key": "al_tube_25x2_1m",
+  "name": "6061-T6 aluminium round tube 25 x 2 mm, 1 m",
+  "category": "misc",
+  "mass_g": 390.2,
+  "price_usd": 16.0,
+  "supplier_url": "https://www.metalsupermarkets.com/metals/aluminum/aluminum-round-tube/",
+  "datasheet_url": "https://asm.matweb.com/search/SpecificMaterial.asp?bassnum=ma6061t6",
+  "envelope_mm": [
+   25.0,
+   25.0,
+   1000.0
+  ],
+  "holes": [],
+  "specs": {
+   "od_mm": 25.0,
+   "wall_mm": 2.0,
+   "id_mm": 21.0,
+   "length_mm": 1000.0,
+   "alloy": "6061-T6",
+   "yield_mpa": 276.0,
+   "youngs_gpa": 68.9,
+   "density_g_cm3": 2.7,
+   "no_mounting_holes": true,
+   "kg_per_m": 0.3902,
+   "mount": "cut to length, clamped in printed split sockets",
+   "uncertain": [
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -12.5,
+    -12.5,
+    0.0
+   ],
+   "max": [
+    12.5,
+    12.5,
+    1000.0
+   ]
+  },
+  "mesh_triangles": 208
+ },
  "arduino_nano_v3": {
   "key": "arduino_nano_v3",
   "name": "Arduino Nano V3 (ATmega328P)",
@@ -889,6 +979,117 @@
    ]
   },
   "mesh_triangles": 404
+ },
+ "canable2_usb_can": {
+  "key": "canable2_usb_can",
+  "name": "CANable 2.0 USB to CAN FD adapter (candleLight / slcan)",
+  "category": "motor_driver",
+  "mass_g": 6.0,
+  "price_usd": 35.0,
+  "supplier_url": "https://canable.io/",
+  "datasheet_url": "https://canable.io/getting-started.html",
+  "envelope_mm": [
+   48.0,
+   18.0,
+   9.1
+  ],
+  "holes": [],
+  "specs": {
+   "interface": "USB-C to CAN 2.0 / CAN FD, 1 Mbps",
+   "voltage_v": 5.0,
+   "no_mounting_holes": true,
+   "mount": "printed clip / heat-shrink inside the compute box",
+   "uncertain": [
+    "mass_g",
+    "envelope_mm",
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "max": [
+    48.0,
+    18.0,
+    9.1
+   ]
+  },
+  "mesh_triangles": 172
+ },
+ "coupler_5x8": {
+  "key": "coupler_5x8",
+  "name": "Aluminium flexible beam coupler 5 mm to 8 mm (D19 L25)",
+  "category": "misc",
+  "mass_g": 10.0,
+  "price_usd": 2.5,
+  "supplier_url": "https://www.robotdigg.com/product/27/Flexible-Coupler",
+  "datasheet_url": "https://www.robotdigg.com/product/27/Flexible-Coupler",
+  "envelope_mm": [
+   19.0,
+   19.0,
+   25.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 5.2,
+    "thread": null
+   },
+   {
+    "pos": [
+     0.0,
+     0.0,
+     25.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 8.2,
+    "thread": null
+   }
+  ],
+  "specs": {
+   "bore_a_mm": 5.0,
+   "bore_b_mm": 8.0,
+   "od_mm": 19.0,
+   "length_mm": 25.0,
+   "rated_torque_nm": 1.5,
+   "clamp": "2x M3 set screws per hub",
+   "uncertain": [
+    "rated_torque_nm",
+    "mass_g",
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -9.5,
+    -9.5,
+    0.0
+   ],
+   "max": [
+    9.5,
+    9.5,
+    25.0
+   ]
+  },
+  "mesh_triangles": 1140
  },
  "cubemars_ak60_6": {
   "key": "cubemars_ak60_6",
@@ -3733,6 +3934,47 @@
    ]
   },
   "mesh_triangles": 276
+ },
+ "estop_22mm_nc": {
+  "key": "estop_22mm_nc",
+  "name": "Emergency-stop switch, 40 mm red mushroom, twist release, 22 mm panel, 1 NC",
+  "category": "misc",
+  "mass_g": 60.0,
+  "price_usd": 14.0,
+  "supplier_url": "https://www.digikey.com/en/products/filter/emergency-stop-e-stop-switches/1093",
+  "datasheet_url": "https://www.iec.ch/standards/iec-60947-5-5",
+  "envelope_mm": [
+   40.0,
+   40.0,
+   70.0
+  ],
+  "holes": [],
+  "specs": {
+   "panel_cutout_mm": 22.3,
+   "contacts": "1 NC, 10 A",
+   "standard": "IEC 60947-5-5 (direct opening)",
+   "no_mounting_holes": true,
+   "mount": "22.3 mm panel hole, max panel 6 mm",
+   "role": "opens the actuator-power contactor / anti-spark switch coil",
+   "uncertain": [
+    "mass_g",
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -20.0,
+    -20.0,
+    -52.0
+   ],
+   "max": [
+    20.0,
+    20.0,
+    18.0
+   ]
+  },
+  "mesh_triangles": 532
  },
  "feetech_fe_urt1": {
   "key": "feetech_fe_urt1",
@@ -7353,6 +7595,295 @@
   },
   "mesh_triangles": 1628
  },
+ "lcd_2in_st7789": {
+  "key": "lcd_2in_st7789",
+  "name": "Waveshare 2inch IPS LCD module 240x320 (ST7789V, SPI)",
+  "category": "sensor",
+  "mass_g": 9.0,
+  "price_usd": 12.99,
+  "supplier_url": "https://www.waveshare.com/2inch-lcd-module.htm",
+  "datasheet_url": "https://www.waveshare.com/wiki/2inch_LCD_Module",
+  "envelope_mm": [
+   58.0,
+   35.0,
+   6.5
+  ],
+  "holes": [
+   {
+    "pos": [
+     2.5,
+     2.5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     55.5,
+     2.5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     2.5,
+     32.5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     55.5,
+     32.5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M2"
+   }
+  ],
+  "specs": {
+   "resolution": [
+    240,
+    320
+   ],
+   "active_area_mm": [
+    30.6,
+    40.8
+   ],
+   "voltage_v": 3.3,
+   "interface": "SPI",
+   "role": "head-up display (viewed through a 45 deg beam-splitter in the visor)",
+   "uncertain": [
+    "mass_g",
+    "hole_positions",
+    "envelope_mm"
+   ],
+   "hole_positions": [
+    [
+     2.5,
+     2.5
+    ],
+    [
+     55.5,
+     2.5
+    ],
+    [
+     2.5,
+     32.5
+    ],
+    [
+     55.5,
+     32.5
+    ]
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    0.0,
+    -2.5
+   ],
+   "max": [
+    58.0,
+    35.0,
+    4.0
+   ]
+  },
+  "mesh_triangles": 588
+ },
+ "leadnut_t8_brass": {
+  "key": "leadnut_t8_brass",
+  "name": "Tr8x8 brass flange nut (22 mm flange, 4x M3 on PCD 16)",
+  "category": "misc",
+  "mass_g": 12.0,
+  "price_usd": 2.5,
+  "supplier_url": "https://www.robotdigg.com/product/228/T8-Lead-Screw-with-Copper-Nut",
+  "datasheet_url": "https://www.robotdigg.com/product/228/T8-Lead-Screw-with-Copper-Nut",
+  "envelope_mm": [
+   22.0,
+   22.0,
+   15.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     5.656854249492381,
+     5.65685424949238,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 3.5,
+    "thread": null
+   },
+   {
+    "pos": [
+     -5.65685424949238,
+     5.656854249492381,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 3.5,
+    "thread": null
+   },
+   {
+    "pos": [
+     -5.6568542494923815,
+     -5.65685424949238,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 3.5,
+    "thread": null
+   },
+   {
+    "pos": [
+     5.656854249492379,
+     -5.6568542494923815,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 3.5,
+    "thread": null
+   },
+   {
+    "pos": [
+     0.0,
+     0.0,
+     11.5
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 8.2,
+    "thread": null
+   }
+  ],
+  "specs": {
+   "lead_mm": 8.0,
+   "flange_d_mm": 22.0,
+   "flange_t_mm": 3.5,
+   "body_d_mm": 10.2,
+   "length_mm": 15.0,
+   "hole_pcd_mm": 16.0,
+   "hole_dia_mm": 3.5,
+   "material": "brass",
+   "carriage_bore_mm": 10.6,
+   "uncertain": [
+    "mass_g",
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -11.0,
+    -11.0,
+    -3.5
+   ],
+   "max": [
+    11.0,
+    11.0,
+    11.5
+   ]
+  },
+  "mesh_triangles": 744
+ },
+ "leadscrew_t8x8_300": {
+  "key": "leadscrew_t8x8_300",
+  "name": "Lead screw Tr8x8 (P2, 4 starts) 300 mm, stainless steel",
+  "category": "misc",
+  "mass_g": 95.9,
+  "price_usd": 9.0,
+  "supplier_url": "https://www.robotdigg.com/product/228/T8-Lead-Screw-with-Copper-Nut",
+  "datasheet_url": "https://www.iso.org/standard/12719.html",
+  "envelope_mm": [
+   8.0,
+   8.0,
+   300.0
+  ],
+  "holes": [],
+  "specs": {
+   "thread": "Tr8x8 (P2)",
+   "lead_mm": 8.0,
+   "pitch_mm": 2.0,
+   "starts": 4,
+   "length_mm": 300.0,
+   "major_d_mm": 8.0,
+   "mean_d_mm": 7.0,
+   "friction_mu": 0.15,
+   "efficiency": 0.669,
+   "backdrive_efficiency": 0.557,
+   "material": "SUS303/304",
+   "no_mounting_holes": true,
+   "mount": "bottom end in a 608 bearing, top end in a 5-to-8 mm coupler on the motor shaft",
+   "note": "the common 3D-printer 'T8' screw; thread form per ISO 2904 trapezoidal; mass from a 7.2 mm equivalent solid diameter",
+   "uncertain": [
+    "friction_mu",
+    "efficiency",
+    "backdrive_efficiency",
+    "price_usd",
+    "supplier_url"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -4.0,
+    -4.0,
+    0.0
+   ],
+   "max": [
+    4.0,
+    4.0,
+    300.0
+   ]
+  },
+  "mesh_triangles": 308
+ },
  "lipo_3s_2200": {
   "key": "lipo_3s_2200",
   "name": "LiPo 3S 2200 mAh 25C, XT60 (Gens Ace G-Tech)",
@@ -7522,6 +8053,65 @@
    ]
   },
   "mesh_triangles": 172
+ },
+ "lm8uu": {
+  "key": "lm8uu",
+  "name": "Linear ball bushing LM8UU (8 x 15 x 24 mm)",
+  "category": "bearing",
+  "mass_g": 16.0,
+  "price_usd": 1.2,
+  "supplier_url": "https://www.samick.co.kr/en/product/linear-bushing",
+  "datasheet_url": "https://www.samickthk.co.kr/sub/product/linear-bushing/LM.php",
+  "envelope_mm": [
+   15.0,
+   15.0,
+   24.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     12.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dia_mm": 8.0,
+    "thread": null
+   }
+  ],
+  "specs": {
+   "bore_mm": 8.0,
+   "od_mm": 15.0,
+   "length_mm": 24.0,
+   "housing_bore_mm": 15.0,
+   "dynamic_load_n": 274.0,
+   "static_load_n": 392.0,
+   "friction_coefficient": 0.003,
+   "ring_groove_span_mm": 17.5,
+   "uncertain": [
+    "mass_g",
+    "friction_coefficient",
+    "supplier_url"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -7.5,
+    -7.5,
+    -12.0
+   ],
+   "max": [
+    7.5,
+    7.5,
+    12.0
+   ]
+  },
+  "mesh_triangles": 624
  },
  "mecanum_96mm_gobilda": {
   "key": "mecanum_96mm_gobilda",
@@ -8764,6 +9354,108 @@
   },
   "mesh_triangles": 664
  },
+ "psu_24v_lrs150": {
+  "key": "psu_24v_lrs150",
+  "name": "Mean Well LRS-150-24 enclosed PSU, 24 V 6.5 A (156 W)",
+  "category": "misc",
+  "mass_g": 530.0,
+  "price_usd": 29.0,
+  "supplier_url": "https://www.digikey.com/en/products/result?keywords=LRS-150-24",
+  "datasheet_url": "https://www.meanwell.com/Upload/PDF/LRS-150/LRS-150-SPEC.PDF",
+  "envelope_mm": [
+   159.0,
+   97.0,
+   30.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     32.0,
+     50.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     132.0,
+     50.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     32.0,
+     0.0,
+     15.0
+    ],
+    "axis": [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     132.0,
+     0.0,
+     15.0
+    ],
+    "axis": [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "voltage_v": 24.0,
+   "current_a": 6.5,
+   "power_w": 156.0,
+   "input_vac": [
+    85,
+    264
+   ],
+   "terminals": "AC L, AC N, FG, 2x -V, 2x +V (9.5 mm pitch)",
+   "uncertain": [
+    "mass_g",
+    "price_usd",
+    "hole_positions"
+   ],
+   "hole_positions": "bottom 2x M3 at x 32/132 mm"
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "max": [
+    159.0,
+    97.0,
+    30.0
+   ]
+  },
+  "mesh_triangles": 796
+ },
  "psu_48v_lrs350": {
   "key": "psu_48v_lrs350",
   "name": "Mean Well LRS-350-48 enclosed PSU, 48 V 7.3 A (350 W)",
@@ -9040,6 +9732,126 @@
    ]
   },
   "mesh_triangles": 852
+ },
+ "rod_8mm_h8_110": {
+  "key": "rod_8mm_h8_110",
+  "name": "Hardened chromed linear rod 8 mm h6, 110 mm",
+  "category": "misc",
+  "mass_g": 43.4,
+  "price_usd": 4.32,
+  "supplier_url": "https://us.misumi-ec.com/vona2/mech/M0100000000/M0101000000/M0101010000/",
+  "datasheet_url": "https://us.misumi-ec.com/vona2/mech/M0100000000/M0101000000/M0101010000/",
+  "envelope_mm": [
+   8.0,
+   8.0,
+   110.0
+  ],
+  "holes": [],
+  "specs": {
+   "d_mm": 8.0,
+   "length_mm": 110.0,
+   "tolerance": "h6",
+   "hardness": "HRC 58-62 (induction)",
+   "no_mounting_holes": true,
+   "mount": "ends clamped in printed pockets (8.0 mm, set screw)",
+   "uncertain": [
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -4.0,
+    -4.0,
+    0.0
+   ],
+   "max": [
+    4.0,
+    4.0,
+    110.0
+   ]
+  },
+  "mesh_triangles": 308
+ },
+ "rod_8mm_h8_130": {
+  "key": "rod_8mm_h8_130",
+  "name": "Hardened chromed linear rod 8 mm h6, 130 mm",
+  "category": "misc",
+  "mass_g": 51.3,
+  "price_usd": 4.56,
+  "supplier_url": "https://us.misumi-ec.com/vona2/mech/M0100000000/M0101000000/M0101010000/",
+  "datasheet_url": "https://us.misumi-ec.com/vona2/mech/M0100000000/M0101000000/M0101010000/",
+  "envelope_mm": [
+   8.0,
+   8.0,
+   130.0
+  ],
+  "holes": [],
+  "specs": {
+   "d_mm": 8.0,
+   "length_mm": 130.0,
+   "tolerance": "h6",
+   "hardness": "HRC 58-62 (induction)",
+   "no_mounting_holes": true,
+   "mount": "ends clamped in printed pockets (8.0 mm, set screw)",
+   "uncertain": [
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -4.0,
+    -4.0,
+    0.0
+   ],
+   "max": [
+    4.0,
+    4.0,
+    130.0
+   ]
+  },
+  "mesh_triangles": 308
+ },
+ "rod_8mm_h8_300": {
+  "key": "rod_8mm_h8_300",
+  "name": "Hardened chromed linear rod 8 mm h6, 300 mm",
+  "category": "misc",
+  "mass_g": 118.4,
+  "price_usd": 6.6,
+  "supplier_url": "https://us.misumi-ec.com/vona2/mech/M0100000000/M0101000000/M0101010000/",
+  "datasheet_url": "https://us.misumi-ec.com/vona2/mech/M0100000000/M0101000000/M0101010000/",
+  "envelope_mm": [
+   8.0,
+   8.0,
+   300.0
+  ],
+  "holes": [],
+  "specs": {
+   "d_mm": 8.0,
+   "length_mm": 300.0,
+   "tolerance": "h6",
+   "hardness": "HRC 58-62 (induction)",
+   "no_mounting_holes": true,
+   "mount": "ends clamped in printed pockets (8.0 mm, set screw)",
+   "uncertain": [
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -4.0,
+    -4.0,
+    0.0
+   ],
+   "max": [
+    4.0,
+    4.0,
+    300.0
+   ]
+  },
+  "mesh_triangles": 308
  },
  "rpi5": {
   "key": "rpi5",
@@ -10924,6 +11736,94 @@
    "mass_source": "computed from ISO 4762 nominal geometry"
   },
   "output_frame": null
+ },
+ "strap_50mm_velcro": {
+  "key": "strap_50mm_velcro",
+  "name": "50 mm hook-and-loop strap with D-ring buckle, 600 mm",
+  "category": "misc",
+  "mass_g": 35.0,
+  "price_usd": 4.5,
+  "supplier_url": "https://www.velcro.com/business/products/straps/",
+  "datasheet_url": "https://www.velcro.com/business/products/straps/",
+  "envelope_mm": [
+   600.0,
+   54.0,
+   7.0
+  ],
+  "holes": [],
+  "specs": {
+   "width_mm": 50.0,
+   "length_mm": 600.0,
+   "no_mounting_holes": true,
+   "mount": "threaded through slots in the printed cuffs",
+   "uncertain": [
+    "mass_g",
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    -27.0,
+    -2.0
+   ],
+   "max": [
+    600.0,
+    27.0,
+    5.0
+   ]
+  },
+  "mesh_triangles": 28
+ },
+ "tmc2209_stepstick": {
+  "key": "tmc2209_stepstick",
+  "name": "BigTreeTech TMC2209 V1.3 StepStick stepper driver (UART)",
+  "category": "motor_driver",
+  "mass_g": 5.0,
+  "price_usd": 7.0,
+  "supplier_url": "https://biqu.equipment/products/bigtreetech-tmc2209-stepper-motor-driver-for-3d-printer-board-vs-tmc2208",
+  "datasheet_url": "https://www.analog.com/media/en/technical-documentation/data-sheets/TMC2209_datasheet_rev1.09.pdf",
+  "envelope_mm": [
+   20.3,
+   15.2,
+   22.6
+  ],
+  "holes": [],
+  "specs": {
+   "voltage_v": 24.0,
+   "vm_range_v": [
+    4.75,
+    29.0
+   ],
+   "current_rms_a": 2.0,
+   "current_peak_a": 2.8,
+   "microsteps": 256,
+   "interface": "STEP/DIR + single-wire UART",
+   "pitch_mm": 2.54,
+   "row_spacing_mm": 12.7,
+   "no_mounting_holes": true,
+   "mount": "plugs into 2x8 female headers on a carrier board",
+   "uncertain": [
+    "mass_g",
+    "price_usd",
+    "row_spacing_mm"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    -0.0,
+    -11.0
+   ],
+   "max": [
+    20.3,
+    15.2,
+    11.6
+   ]
+  },
+  "mesh_triangles": 284
  },
  "usb_can_adapter": {
   "key": "usb_can_adapter",

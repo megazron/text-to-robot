@@ -326,3 +326,102 @@ CANABLE_PRO = Component(
 )
 
 COMPONENTS = [MDD10A, CANABLE_PRO, RPI5, JETSON, ESP32, RPLIDAR_C1, RPLIDAR_A1, D435I, CAM3, BNO085]
+
+# ------------------------------------------------- BigTreeTech TMC2209 V1.3 StepStick driver
+def _tmc_build(c):
+    L, W = 20.3, 15.2
+    board = pcb(L, W, 1.6, [], 0, parts=[(5.0, 15.0, 3.6, 11.6, 1.0)], bottom=[(7.0, 13.0, 4.6, 10.6, 0.9)], r=0.3)
+    sink = box(4.0, 16.0, 1.6, 13.6, 2.6 - 0.01, 11.6)            # stick-on heatsink
+    for k in range(5):
+        sink = sink - box(4.5 + k * 2.3, 5.5 + k * 2.3, 1.5, 13.7, 5.0, 11.7)
+    pins = union(*[box(0.5, L - 0.5, y - 1.27, y + 1.27, -11.0, 0.01) for y in (1.27, W - 1.27)])
+    return union(board, sink, pins)
+
+
+TMC2209 = Component(
+    key="tmc2209_stepstick", name="BigTreeTech TMC2209 V1.3 StepStick stepper driver (UART)", category="motor_driver",
+    mass_g=5.0, price_usd=7.0, supplier_url="https://biqu.equipment/products/bigtreetech-tmc2209-stepper-motor-driver-for-3d-printer-board-vs-tmc2208",
+    datasheet_url="https://www.analog.com/media/en/technical-documentation/data-sheets/TMC2209_datasheet_rev1.09.pdf",
+    envelope_mm=(20.3, 15.2, 22.6), holes=[],
+    specs={"voltage_v": 24.0, "vm_range_v": (4.75, 29.0), "current_rms_a": 2.0, "current_peak_a": 2.8,
+           "microsteps": 256, "interface": "STEP/DIR + single-wire UART", "pitch_mm": 2.54, "row_spacing_mm": 12.7,
+           "no_mounting_holes": True, "mount": "plugs into 2x8 female headers on a carrier board",
+           "uncertain": ["mass_g", "price_usd", "row_spacing_mm"]},
+    build=_tmc_build,
+)
+
+# ----------------------------------------------------- Waveshare 2inch LCD module (ST7789V)
+LCD_HOLES = [(2.5, 2.5), (55.5, 2.5), (2.5, 32.5), (55.5, 32.5)]
+
+
+def _lcd_build(c):
+    board = pcb(58.0, 35.0, 1.6, LCD_HOLES, 2.5, parts=[(6.0, 52.0, 2.5, 32.5, 2.4)], bottom=[(0.5, 6.0, 10.0, 25.0, 2.5)], r=1.0)
+    return board
+
+
+LCD2 = Component(
+    key="lcd_2in_st7789", name="Waveshare 2inch IPS LCD module 240x320 (ST7789V, SPI)", category="sensor",
+    mass_g=9.0, price_usd=12.99, supplier_url="https://www.waveshare.com/2inch-lcd-module.htm",
+    datasheet_url="https://www.waveshare.com/wiki/2inch_LCD_Module",
+    envelope_mm=(58.0, 35.0, 6.5), holes=pcb_holes(LCD_HOLES, 2.5, "M2"),
+    specs={"resolution": (240, 320), "active_area_mm": (30.6, 40.8), "voltage_v": 3.3, "interface": "SPI",
+           "role": "head-up display (viewed through a 45 deg beam-splitter in the visor)",
+           "uncertain": ["mass_g", "hole_positions", "envelope_mm"], "hole_positions": LCD_HOLES},
+    build=_lcd_build,
+)
+
+# ------------------------------------------------------------- CANable 2.0 USB to CAN-FD
+def _can_build(c):
+    return pcb(48.0, 18.0, 1.6, [], 0, parts=[(0.0, 9.0, 3.5, 14.5, 3.0), (40.0, 48.0, 2.0, 16.0, 7.5),
+                                               (16.0, 26.0, 5.0, 13.0, 1.4)], r=1.0)
+
+
+CANABLE = Component(
+    key="canable2_usb_can", name="CANable 2.0 USB to CAN FD adapter (candleLight / slcan)", category="motor_driver",
+    mass_g=6.0, price_usd=35.0, supplier_url="https://canable.io/",
+    datasheet_url="https://canable.io/getting-started.html",
+    envelope_mm=(48.0, 18.0, 9.1), holes=[],
+    specs={"interface": "USB-C to CAN 2.0 / CAN FD, 1 Mbps", "voltage_v": 5.0, "no_mounting_holes": True,
+           "mount": "printed clip / heat-shrink inside the compute box",
+           "uncertain": ["mass_g", "envelope_mm", "price_usd"]},
+    build=_can_build,
+)
+
+# -------------------------------------------------------- 22 mm latching emergency stop
+def _estop_build(c):
+    head = cyl(40.0, 0.0, 18.0) - cyl(41.0, 12.0, 14.0) + cyl(36.0, 12.0, 14.0)  # mushroom with a ring
+    bezel = cyl(30.0, -4.0, 0.01)
+    thread = cyl(22.0, -24.0, -3.99)
+    block = box(-15.0, 15.0, -12.0, 12.0, -52.0, -23.99)   # NC contact block
+    return union(head, bezel, thread, block)
+
+
+ESTOP = Component(
+    key="estop_22mm_nc", name="Emergency-stop switch, 40 mm red mushroom, twist release, 22 mm panel, 1 NC",
+    category="misc", mass_g=60.0, price_usd=14.0,
+    supplier_url="https://www.digikey.com/en/products/filter/emergency-stop-e-stop-switches/1093",
+    datasheet_url="https://www.iec.ch/standards/iec-60947-5-5",
+    envelope_mm=(40.0, 40.0, 70.0), holes=[],
+    specs={"panel_cutout_mm": 22.3, "contacts": "1 NC, 10 A", "standard": "IEC 60947-5-5 (direct opening)",
+           "no_mounting_holes": True, "mount": "22.3 mm panel hole, max panel 6 mm",
+           "role": "opens the actuator-power contactor / anti-spark switch coil",
+           "uncertain": ["mass_g", "price_usd"]},
+    build=_estop_build,
+)
+
+# --------------------------------------------------------------- 50 mm hook-and-loop strap
+def _strap_build(c):
+    return box(0.0, 600.0, -25.0, 25.0, 0.0, 3.0) + box(560.0, 600.0, -27.0, 27.0, -2.0, 5.0)  # strap + D-ring
+
+
+STRAP = Component(
+    key="strap_50mm_velcro", name="50 mm hook-and-loop strap with D-ring buckle, 600 mm", category="misc",
+    mass_g=35.0, price_usd=4.5, supplier_url="https://www.velcro.com/business/products/straps/",
+    datasheet_url="https://www.velcro.com/business/products/straps/",
+    envelope_mm=(600.0, 54.0, 7.0), holes=[],
+    specs={"width_mm": 50.0, "length_mm": 600.0, "no_mounting_holes": True,
+           "mount": "threaded through slots in the printed cuffs", "uncertain": ["mass_g", "price_usd"]},
+    build=_strap_build,
+)
+
+COMPONENTS += [TMC2209, LCD2, CANABLE, ESTOP, STRAP]

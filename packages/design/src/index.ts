@@ -27,3 +27,6 @@ export * from "./clearance.ts";
 export { designQuadruped, type LeggedRequest, type SensorKind } from "./families/legged.ts";
 export { designHexapod } from "./families/hexapod.ts";
 export { designHumanoid, designBattleMech } from "./families/humanoid.ts";
+export { designGripper, buildParallelGripper, chooseGripperServo, gripperLevels, GRIP } from "./families/gripper.ts";
+export type { DesignRequest } from "./families/common.ts";
+export { designScara } from "./families/scara.ts";

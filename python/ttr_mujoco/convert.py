@@ -64,6 +64,8 @@ def urdf_to_mjcf(urdf_path: str, floating=None, kp: float | None = None, out: st
             continue
         if joint.get("passive") == "true":
             continue  # Free roller/bearing; never synthesize a motor.
+        if joint.find("mimic") is not None:
+            continue  # follows its leader through MuJoCo's joint equality (the URDF importer adds it)
         limit = joint.find("limit")
         velocity = float(limit.get("velocity", "nan")) if limit is not None else float("nan")
         if np.isfinite(velocity) and velocity > 0: joint_velocities[joint.get("name")] = velocity
@@ -276,6 +278,11 @@ def urdf_to_mjcf(urdf_path: str, floating=None, kp: float | None = None, out: st
             # radian. Stiffen it to its own worst-case gravity torque (stable: that chain's
             # inertia grows with the same mass and lever).
             a.set("kp", f"{gravity_load[jn] / GRAVITY_SAG_RAD:.9g}")
+    # URDF <mimic> joints become MuJoCo joint equalities (the importer adds them). A gear or rack
+    # mesh is rigid: make them as stiff as the 2 ms step allows instead of the soft default.
+    for e in root.iter("equality"):
+        for c in e.findall("joint"):
+            c.set("solref", f"{2 * 0.002:.9g} 1"); c.set("solimp", "0.99 0.999 0.0001 0.5 2")
     custom = ET.SubElement(root, "custom")
     fidelity = "URDF effort limits enforced; position gains inferred; speed/thermal/electrical limits unmodelled; geometry and hardware uncalibrated"
     if armature_notes: fidelity += "; armature = rotor inertia x gear ratio^2 from the actuator record: " + "; ".join(armature_notes)
