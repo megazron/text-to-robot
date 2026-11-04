@@ -17,6 +17,9 @@ export type Ladder = keyof typeof LADDERS;
 export const DYNAMIC_FACTOR = 1.3;
 /** The worst static pose must be holdable indefinitely: static load <= rated (continuous) torque. */
 export const DUTY = 1.0;
+/** Walking legs carry their worst load only in stance (about half of each gait cycle): the motor heats with the RMS
+ *  torque over the cycle, sqrt(0.5) of the stance load. Used by the legged designers instead of DUTY. */
+export const GAIT_DUTY = Math.SQRT1_2;
 /** Slowest joint speed under load worth calling a working robot joint (rad/s). */
 export const MIN_SPEED = 1.0;
 
@@ -33,17 +36,17 @@ export function loadedSpeed(key: string, staticNm: number, inertia: number): num
   }
   return 0;
 }
-export function evaluate(key: string, staticNm: number, inertia = 0): Choice {
+export function evaluate(key: string, staticNm: number, inertia = 0, duty = DUTY): Choice {
   const r = rating(key), req = staticNm * DYNAMIC_FACTOR;
-  const ok = r.peak_nm >= req, continuous_ok = r.rated_nm >= staticNm * DUTY;
+  const ok = r.peak_nm >= req, continuous_ok = r.rated_nm >= staticNm * duty;
   const loaded_speed_rad_s = loadedSpeed(key, staticNm, inertia);
   return { key, rating: r, required_nm: +req.toFixed(3), margin: +Math.min(99, r.peak_nm / Math.max(req, 1e-6)).toFixed(2), ok, continuous_ok, speed_ok: loaded_speed_rad_s >= MIN_SPEED, loaded_speed_rad_s };
 }
 export const passes = (c: Choice) => c.ok && c.continuous_ok && c.speed_ok;
 /** Smallest actuator in the ladder that passes; the strongest one (failing) if none does. */
-export function choose(ladder: readonly string[], staticNm: number, inertia = 0): Choice {
-  for (const k of ladder) { const c = evaluate(k, staticNm, inertia); if (passes(c)) return c; }
-  return evaluate(ladder[ladder.length - 1], staticNm, inertia);
+export function choose(ladder: readonly string[], staticNm: number, inertia = 0, duty = DUTY): Choice {
+  for (const k of ladder) { const c = evaluate(k, staticNm, inertia, duty); if (passes(c)) return c; }
+  return evaluate(ladder[ladder.length - 1], staticNm, inertia, duty);
 }
 export const ladderFor = (budget?: number, need?: number): Ladder => {
   if (need !== undefined) {

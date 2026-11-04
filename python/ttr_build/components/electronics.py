@@ -301,4 +301,28 @@ MDD10A = Component(
     build=_mdd_build, build_keepout=_mdd_keepout,
 )
 
-COMPONENTS = [MDD10A, RPI5, JETSON, ESP32, RPLIDAR_C1, RPLIDAR_A1, D435I, CAM3, BNO085]
+# ------------------------------------------------- EYOU Robotics CANable PRO (USB to CAN)
+CANP_L, CANP_W = 54.0, 16.0
+
+
+def _canp_build(c):
+    return pcb(CANP_L, CANP_W, 1.6, [], 0, parts=[
+        (-1.5, 6.0, 4.0, 12.0, 3.2),            # USB-C (overhangs the edge)
+        (40.0, CANP_L + 0.5, 1.5, 14.5, 8.5),   # 4-pin screw terminal (CAN H/L, GND)
+        (14.0, 30.0, 3.0, 13.0, 1.6),           # MCU + isolated transceiver
+    ], r=1.0)
+
+
+CANABLE_PRO = Component(
+    key="usb_can_adapter", name="EYOU Robotics CANable PRO isolated USB-CAN adapter", category="motor_driver",
+    mass_g=8.0, price_usd=42.0, supplier_url="https://www.robotshop.com/products/eyou-robotics-can-usb-adapter-canable-pro",
+    datasheet_url="https://cdn.robotshop.com/media/E/EYO/RBC-Eyo-33/pdf/eyou-canable-pro-datasheet.pdf",
+    envelope_mm=(56.0, 16.0, 10.1), holes=[],
+    specs={"interface": "USB to CAN 2.0 (gs_usb / slcan), 1 Mbps, galvanically isolated", "voltage_v": 5.0,
+           "board_mm": (CANP_L, CANP_W), "mount": "no screw holes: printed clip or hook-and-loop",
+           "note": "one adapter per CAN bus; CubeMars AK actuators daisy-chain on CAN at 1 Mbps",
+           "uncertain": ["mass_g", "envelope_mm"]},
+    build=_canp_build,
+)
+
+COMPONENTS = [MDD10A, CANABLE_PRO, RPI5, JETSON, ESP32, RPLIDAR_C1, RPLIDAR_A1, D435I, CAM3, BNO085]

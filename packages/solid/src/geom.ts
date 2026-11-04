@@ -15,7 +15,7 @@ wasm.setup();
 // ---- memory: manifold objects live in WASM; track and free everything a build creates ----
 const live: M[] = [];
 const STATIC = ["cube", "cylinder", "sphere", "extrude", "revolve", "union", "difference", "intersection", "hull", "ofMesh", "compose"] as const;
-const MEMBER = ["add", "subtract", "intersect", "transform", "translate", "rotate", "scale", "mirror", "trimByPlane", "hull", "refine"] as const;
+const MEMBER = ["add", "subtract", "intersect", "transform", "translate", "rotate", "scale", "mirror", "trimByPlane", "hull", "refine", "simplify"] as const;
 for (const name of STATIC) { const fn = (wasm.Manifold as any)[name]; (wasm.Manifold as any)[name] = (...a: any[]) => { const r = fn(...a); live.push(r); return r; }; }
 for (const name of MEMBER) { const fn = (wasm.Manifold.prototype as any)[name]; (wasm.Manifold.prototype as any)[name] = function (this: M, ...a: any[]) { const r = fn.apply(this, a); live.push(r); return r; }; }
 export const Manifold = wasm.Manifold;
@@ -146,6 +146,30 @@ export function hornCuts(key: string, t = 4): M[] {
 
 // ---- mesh exchange ----
 export interface TriMesh { v: Vec3[]; f: [number, number, number][]; }
+/**
+ * Zero-area "needle" triangles (three collinear vertices) survive CSG now and then; mesh consumers that
+ * drop degenerate faces would see a hole. Split the neighbour across the needle's long edge at the middle
+ * vertex and drop the needle: same surface, no degenerate face.
+ */
+function removeNeedles(v: Vec3[], f: [number, number, number][]) {
+  const area2 = (t: [number, number, number]) => { const [a, b, c] = t.map((i) => v[i]); const u = [b[0] - a[0], b[1] - a[1], b[2] - a[2]], w = [c[0] - a[0], c[1] - a[1], c[2] - a[2]]; return Math.hypot(u[1] * w[2] - u[2] * w[1], u[2] * w[0] - u[0] * w[2], u[0] * w[1] - u[1] * w[0]); };
+  const d2 = (i: number, j: number) => (v[i][0] - v[j][0]) ** 2 + (v[i][1] - v[j][1]) ** 2 + (v[i][2] - v[j][2]) ** 2;
+  for (let pass = 0; pass < 4; pass++) {
+    let changed = false;
+    for (let t = 0; t < f.length; t++) {
+      const tri = f[t];
+      if (area2(tri) > 1e-15) continue;
+      // longest edge (a -> b) and the vertex c lying on it
+      let k = 0, best = -1; for (let e = 0; e < 3; e++) { const L = d2(tri[e], tri[(e + 1) % 3]); if (L > best) { best = L; k = e; } }
+      const a = tri[k], b = tri[(k + 1) % 3], c = tri[(k + 2) % 3];
+      const n = f.findIndex((u, i) => i !== t && [0, 1, 2].some((e) => u[e] === b && u[(e + 1) % 3] === a));
+      if (n < 0) continue;
+      const u = f[n], e = [0, 1, 2].find((x) => u[x] === b && u[(x + 1) % 3] === a)!, d = u[(e + 2) % 3];
+      f[n] = [b, c, d]; f[t] = [c, a, d]; changed = true; // replaces needle + neighbour by two proper triangles
+    }
+    if (!changed) break;
+  }
+}
 export function toMesh(m: M, scale = 0.001): TriMesh {
   const g = m.getMesh(), n = g.numProp, v: Vec3[] = [], f: [number, number, number][] = [];
   // vertices split along property seams must be re-joined, or the mesh has open edges
@@ -160,5 +184,6 @@ export function toMesh(m: M, scale = 0.001): TriMesh {
   }
   for (const [from, target] of to) remap[from] = remap[target];
   for (let i = 0; i < g.triVerts.length; i += 3) f.push([remap[g.triVerts[i]], remap[g.triVerts[i + 1]], remap[g.triVerts[i + 2]]]);
+  removeNeedles(v, f);
   return { v, f };
 }

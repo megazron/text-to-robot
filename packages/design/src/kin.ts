@@ -96,3 +96,37 @@ export function axisInertias(spec: RobotSpecification, q: Record<string, number>
   }
   return out;
 }
+/** Ancestor joints (root -> link order) of a link. */
+export function chainTo(spec: RobotSpecification, link: string): string[] {
+  const byChild = new Map(spec.joints.map((j) => [j.child, j]));
+  const out: string[] = [];
+  for (let j = byChild.get(link); j; j = byChild.get(j.parent)) out.unshift(j.name);
+  return out;
+}
+/**
+ * Joint torques (N·m about each actuated joint axis) that hold an external force F (N, world)
+ * applied at point `at` (m, link frame) of `link`, with the root held fixed: tau = J^T F.
+ * For a stance foot, F is the ground reaction; the sign is kept (positive = along the axis).
+ */
+export function contactTorques(spec: RobotSpecification, q: Record<string, number>, link: string, at: Vec3, F: Vec3): Record<string, number> {
+  const f = fk(spec, q), T = f.link[link];
+  const p = mv(T.R, at).map((x, i) => x + T.p[i]) as Vec3;
+  const jm = new Map(spec.joints.map((j) => [j.name, j]));
+  const out: Record<string, number> = {};
+  for (const name of chainTo(spec, link)) {
+    const j = jm.get(name)!;
+    if (j.type === "fixed" || j.passive) continue;
+    const { p: o, axis: a } = f.joint[name];
+    if (j.type === "prismatic") { out[name] = a[0] * F[0] + a[1] * F[1] + a[2] * F[2]; continue; }
+    const r: Vec3 = [p[0] - o[0], p[1] - o[1], p[2] - o[2]];
+    const v: Vec3 = [a[1] * r[2] - a[2] * r[1], a[2] * r[0] - a[0] * r[2], a[0] * r[1] - a[1] * r[0]]; // dp/dq = a x r
+    out[name] = v[0] * F[0] + v[1] * F[1] + v[2] * F[2];
+  }
+  return out;
+}
+/** Centre of mass of the whole robot in configuration q (world, m). */
+export function comWorld(spec: RobotSpecification, q: Record<string, number> = {}): Vec3 {
+  const f = fk(spec, q); let m = 0; const c: Vec3 = [0, 0, 0];
+  for (const l of spec.links) { const T = f.link[l.name]; if (!T) continue; const p = mv(T.R, linkCom(l)).map((x, i) => x + T.p[i]); for (let i = 0; i < 3; i++) c[i] += p[i] * l.mass; m += l.mass; }
+  return c.map((x) => x / Math.max(m, 1e-9)) as Vec3;
+}

@@ -76,6 +76,11 @@ export class Assembly {
     r.qty += qty; if (!r.uses.includes(use)) r.uses.push(use);
     this.purchased.set(key, r);
   }
+  /** Purchased parts so far and their total list price (USD). */
+  bom(): { items: PurchasedRecord[]; cost_usd: number } {
+    const items = [...this.purchased.values()];
+    return { items, cost_usd: +items.reduce((s, r) => s + part(r.key).price_usd * r.qty, 0).toFixed(2) };
+  }
   fastener(spec: string, qty: number) { this.design.fasteners[spec] = (this.design.fasteners[spec] ?? 0) + qty; }
 
   /** A link whose body is a printed part. Mass from solid volume at print density. */

@@ -23,3 +23,7 @@ export { designEva } from "./families/mobile.ts";
 export { designBaymax } from "./families/mobile.ts";
 export type { MobileRequest, MobileSensor } from "./families/mobile.ts";
 export { interference, type Overlap } from "./interference.ts";
+export * from "./clearance.ts";
+export { designQuadruped, type LeggedRequest, type SensorKind } from "./families/legged.ts";
+export { designHexapod } from "./families/hexapod.ts";
+export { designHumanoid, designBattleMech } from "./families/humanoid.ts";

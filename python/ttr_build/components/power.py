@@ -89,7 +89,30 @@ BUCK = Component(
     build=_buck_build,
 )
 
+# ------------------------------------------------- Mean Well SD-50C-12 (36-72 V in, 12 V 4.2 A)
+def _sd50_build(c):
+    case = box(0.0, 159.0, 0.0, 97.0, 0.0, 38.0)
+    case = case - box(-0.1, 14.0, 6.0, 91.0, 5.0, 38.1)                # terminal block recess
+    term = union(*[box(1.0, 13.0, 9.0 + k * 9.5, 16.5 + k * 9.5, 5.0, 24.0) for k in range(7)])
+    for x in range(40, 150, 10):                                       # top vent slots
+        case = case - box(x, x + 4.0, 15.0, 82.0, 37.0, 38.1)
+    return union(case, term)
+
+
+SD50 = Component(
+    key="dcdc_48v_12v_sd50c12", name="Mean Well SD-50C-12 enclosed DC-DC converter, 36-72 V in, 12 V 4.2 A (50 W)",
+    category="misc", mass_g=487.5, price_usd=45.0,
+    supplier_url="https://www.digikey.com/en/products/detail/mean-well-usa-inc/SD-50C-12/7706533",
+    datasheet_url="https://www.meanwell.com/Upload/PDF/SD-50/SD-50-SPEC.PDF",
+    envelope_mm=(159.0, 97.0, 38.0), holes=[],
+    specs={"voltage_v": 12.0, "current_a": 4.2, "power_w": 50.0, "input_v": (36.0, 72.0),
+           "terminals": "screw terminal block on the -X end", "note": "feeds 12 V DYNAMIXEL buses from a 12S (44.4 V) pack",
+           "uncertain": ["price_usd", "holes"]},
+    build=_sd50_build,
+)
+
 COMPONENTS = [
+    SD50,
     _lipo("lipo_3s_2200", "LiPo 3S 2200 mAh 25C, XT60 (Gens Ace G-Tech)", 3, 2200, 107.0, 33.5, 22.0, 173.5,
           27.0, 25, "XT60",
           "https://www.buddyrc.com/products/gens-ace-25c-2200mah-11-1v-3s-lipo-battery-pack-with-xt60-plug",
