@@ -89,6 +89,59 @@
   },
   "mesh_triangles": 208
  },
+ "arduino_nano_clone": {
+  "key": "arduino_nano_clone",
+  "name": "Arduino Nano compatible board (ATmega328P, CH340, USB-C)",
+  "category": "compute",
+  "mass_g": 7.0,
+  "price_usd": 3.5,
+  "supplier_url": "https://www.aliexpress.com/w/wholesale-arduino-nano-type-c-ch340.html",
+  "datasheet_url": "https://docs.arduino.cc/resources/datasheets/A000005-datasheet.pdf",
+  "envelope_mm": [
+   44.7,
+   17.8,
+   14.1
+  ],
+  "holes": [],
+  "specs": {
+   "voltage_v": 5.0,
+   "input_v": [
+    7,
+    12
+   ],
+   "mcu": "ATmega328P",
+   "pwm_pins": [
+    3,
+    5,
+    6,
+    9,
+    10,
+    11
+   ],
+   "i2c": "A4 SDA, A5 SCL",
+   "usb": "USB-C (CH340)",
+   "fqbn": "arduino:avr:nano:cpu=atmega328",
+   "mount": "printed clip around the board edges (header pins below)",
+   "no_mounting_holes": true,
+   "uncertain": [
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -1.5,
+    0.0,
+    -8.5
+   ],
+   "max": [
+    43.18,
+    17.78,
+    5.6
+   ]
+  },
+  "mesh_triangles": 200
+ },
  "arduino_nano_v3": {
   "key": "arduino_nano_v3",
   "name": "Arduino Nano V3 (ATmega328P)",
@@ -138,6 +191,115 @@
    ]
   },
   "mesh_triangles": 200
+ },
+ "arduino_uno_clone": {
+  "key": "arduino_uno_clone",
+  "name": "Arduino Uno R3 compatible board (ATmega328P, CH340 USB)",
+  "category": "compute",
+  "mass_g": 25.0,
+  "price_usd": 6.0,
+  "supplier_url": "https://www.aliexpress.com/w/wholesale-arduino-uno-r3-ch340.html",
+  "datasheet_url": "https://docs.arduino.cc/resources/datasheets/A000066-datasheet.pdf",
+  "envelope_mm": [
+   74.8,
+   53.3,
+   12.6
+  ],
+  "holes": [
+   {
+    "pos": [
+     13.97,
+     2.54,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.2,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     15.24,
+     50.8,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.2,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     66.04,
+     7.62,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.2,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     66.04,
+     35.56,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.2,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "voltage_v": 5.0,
+   "input_v": [
+    7,
+    12
+   ],
+   "mcu": "ATmega328P",
+   "pwm_pins": [
+    3,
+    5,
+    6,
+    9,
+    10,
+    11
+   ],
+   "i2c": "A4 SDA, A5 SCL",
+   "usb": "USB-B (CH340 driver)",
+   "fqbn": "arduino:avr:uno",
+   "note": "same outline and holes as the Arduino Uno R3; needs the CH340 USB driver on some PCs",
+   "uncertain": [
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -6.2,
+    0.0,
+    0.0
+   ],
+   "max": [
+    68.58,
+    53.34,
+    12.6
+   ]
+  },
+  "mesh_triangles": 698
  },
  "arduino_uno_r3": {
   "key": "arduino_uno_r3",
@@ -5844,6 +6006,127 @@
   },
   "mesh_triangles": 3152
  },
+ "hc_sr04": {
+  "key": "hc_sr04",
+  "name": "HC-SR04 ultrasonic distance sensor (2-400 cm)",
+  "category": "sensor",
+  "mass_g": 8.5,
+  "price_usd": 1.0,
+  "supplier_url": "https://www.aliexpress.com/w/wholesale-hc-sr04.html",
+  "datasheet_url": "https://cdn.sparkfun.com/datasheets/Sensors/Proximity/HCSR04.pdf",
+  "envelope_mm": [
+   45.0,
+   20.0,
+   22.1
+  ],
+  "holes": [
+   {
+    "pos": [
+     1.8,
+     1.8,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 1.8,
+    "thread": "M1.6"
+   },
+   {
+    "pos": [
+     43.2,
+     1.8,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 1.8,
+    "thread": "M1.6"
+   },
+   {
+    "pos": [
+     1.8,
+     18.2,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 1.8,
+    "thread": "M1.6"
+   },
+   {
+    "pos": [
+     43.2,
+     18.2,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 1.8,
+    "thread": "M1.6"
+   }
+  ],
+  "specs": {
+   "voltage_v": 5.0,
+   "current_ma": 15,
+   "range_cm": [
+    2,
+    400
+   ],
+   "beam_deg": 15,
+   "pins": "VCC, TRIG, ECHO, GND",
+   "transducer_d_mm": 16.0,
+   "transducer_pitch_mm": 26.0,
+   "mount": "two 16.5 mm holes in a front wall for the transducers, board held by its corner holes",
+   "uncertain": [
+    "hole_positions",
+    "price_usd"
+   ],
+   "hole_positions": [
+    [
+     1.8,
+     1.8
+    ],
+    [
+     43.2,
+     1.8
+    ],
+    [
+     1.8,
+     18.2
+    ],
+    [
+     43.2,
+     18.2
+    ]
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    0.0,
+    -8.5
+   ],
+   "max": [
+    45.0,
+    20.0,
+    13.6
+   ]
+  },
+  "mesh_triangles": 780
+ },
  "hobby_ds3218": {
   "key": "hobby_ds3218",
   "name": "DSSERVO DS3218 20 kg digital servo (metal gears) + round horn",
@@ -7597,6 +7880,128 @@
   },
   "mesh_triangles": 1628
  },
+ "l298n_module": {
+  "key": "l298n_module",
+  "name": "L298N dual H-bridge motor driver module (2 A per channel)",
+  "category": "motor_driver",
+  "mass_g": 30.0,
+  "price_usd": 2.5,
+  "supplier_url": "https://www.aliexpress.com/w/wholesale-l298n-motor-driver-module.html",
+  "datasheet_url": "https://www.st.com/resource/en/datasheet/l298.pdf",
+  "envelope_mm": [
+   43.0,
+   43.0,
+   27.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     3.0,
+     3.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.2,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     40.0,
+     3.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.2,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     3.0,
+     40.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.2,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     40.0,
+     40.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.2,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "channels": 2,
+   "current_a": 2.0,
+   "voltage_v": 12.0,
+   "input_v": [
+    5.0,
+    35.0
+   ],
+   "logic": "IN1-IN4 + ENA/ENB PWM, 5 V",
+   "voltage_drop_v": 2.0,
+   "regulator": "on-board 78M05 (5 V out when the jumper is fitted and Vin <= 12 V)",
+   "note": "bipolar bridge drops about 2 V: a 2S pack (7.4 V) gives TT motors about 5.4 V",
+   "uncertain": [
+    "price_usd",
+    "hole_positions",
+    "mass_g"
+   ],
+   "hole_positions": [
+    [
+     3.0,
+     3.0
+    ],
+    [
+     40.0,
+     3.0
+    ],
+    [
+     3.0,
+     40.0
+    ],
+    [
+     40.0,
+     40.0
+    ]
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "max": [
+    43.0,
+    43.0,
+    27.0
+   ]
+  },
+  "mesh_triangles": 620
+ },
  "lcd_2in_st7789": {
   "key": "lcd_2in_st7789",
   "name": "Waveshare 2inch IPS LCD module 240x320 (ST7789V, SPI)",
@@ -8605,6 +9010,81 @@
   },
   "output_frame": null
  },
+ "pack_2s_18650": {
+  "key": "pack_2s_18650",
+  "name": "2S 18650 pack: two 2500 mAh 20 A cells (Samsung 25R class) in a holder with switch",
+  "category": "battery",
+  "mass_g": 115.0,
+  "price_usd": 12.0,
+  "supplier_url": "https://www.aliexpress.com/w/wholesale-18650-2-slot-battery-holder-switch.html",
+  "datasheet_url": "https://www.dnkpower.com/wp-content/uploads/2019/02/SAMSUNG-INR18650-25R-Datasheet.pdf",
+  "envelope_mm": [
+   77.0,
+   41.0,
+   19.4
+  ],
+  "holes": [
+   {
+    "pos": [
+     20.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.2,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     57.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.2,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "cells": 2,
+   "capacity_mah": 2500,
+   "voltage_v": 7.4,
+   "voltage_max_v": 8.4,
+   "energy_wh": 18.5,
+   "max_current_a": 20.0,
+   "c_rating": 8,
+   "plug": "JST / bare leads",
+   "charge": "remove cells to a 18650 charger, or a 2S balance board",
+   "mount": "two M3 countersunk screws through the holder floor",
+   "uncertain": [
+    "price_usd",
+    "mass_g",
+    "holes"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    -20.5,
+    0.0
+   ],
+   "max": [
+    77.0,
+    20.5,
+    19.4
+   ]
+  },
+  "mesh_triangles": 416
+ },
  "pca9685_16ch": {
   "key": "pca9685_16ch",
   "name": "Adafruit PCA9685 16-channel 12-bit PWM/servo driver (#815)",
@@ -8689,6 +9169,128 @@
    "library": "Adafruit PWM Servo Driver Library",
    "power": "servo V+ via the screw terminal; add 470-1000 uF across V+/GND",
    "geometry_source": "Adafruit_CAD_Parts 815 (MIT)"
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "max": [
+    62.23,
+    25.4,
+    10.17
+   ]
+  },
+  "mesh_triangles": 636
+ },
+ "pca9685_clone": {
+  "key": "pca9685_clone",
+  "name": "PCA9685 16-channel PWM servo driver board (generic, I2C)",
+  "category": "motor_driver",
+  "mass_g": 9.0,
+  "price_usd": 2.5,
+  "supplier_url": "https://www.aliexpress.com/w/wholesale-pca9685-16-channel-servo-driver.html",
+  "datasheet_url": "https://www.nxp.com/docs/en/data-sheet/PCA9685.pdf",
+  "envelope_mm": [
+   62.2,
+   25.4,
+   10.2
+  ],
+  "holes": [
+   {
+    "pos": [
+     3.21,
+     3.18,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M2.5"
+   },
+   {
+    "pos": [
+     59.01,
+     3.18,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M2.5"
+   },
+   {
+    "pos": [
+     3.21,
+     22.18,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M2.5"
+   },
+   {
+    "pos": [
+     59.01,
+     22.18,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M2.5"
+   }
+  ],
+  "specs": {
+   "voltage_v": 5.0,
+   "logic_v": [
+    3.3,
+    5.0
+   ],
+   "servo_v_max": 6.0,
+   "channels": 16,
+   "pwm_bits": 12,
+   "i2c_address": "0x40",
+   "library": "Adafruit PWM Servo Driver Library",
+   "power": "servo V+ via the screw terminal; add 470-1000 uF across V+/GND",
+   "note": "clone of the Adafruit #815 layout",
+   "uncertain": [
+    "price_usd",
+    "hole_positions"
+   ],
+   "hole_positions": [
+    [
+     3.21,
+     3.18
+    ],
+    [
+     59.01,
+     3.18
+    ],
+    [
+     3.21,
+     22.18
+    ],
+    [
+     59.01,
+     22.18
+    ]
+   ]
   },
   "output_frame": null,
   "bbox_mm": {
@@ -11778,6 +12380,54 @@
   },
   "mesh_triangles": 28
  },
+ "tb6612fng_module": {
+  "key": "tb6612fng_module",
+  "name": "TB6612FNG dual DC motor driver module (1.2 A per channel)",
+  "category": "motor_driver",
+  "mass_g": 3.0,
+  "price_usd": 2.0,
+  "supplier_url": "https://www.aliexpress.com/w/wholesale-tb6612fng-motor-driver.html",
+  "datasheet_url": "https://toshiba.semicon-storage.com/info/TB6612FNG_datasheet_en_20141001.pdf",
+  "envelope_mm": [
+   20.3,
+   20.3,
+   11.3
+  ],
+  "holes": [],
+  "specs": {
+   "channels": 2,
+   "current_a": 1.2,
+   "peak_current_a": 3.2,
+   "voltage_v": 7.4,
+   "input_v": [
+    2.5,
+    13.5
+   ],
+   "logic": "AIN1/AIN2/PWMA, BIN1/BIN2/PWMB, STBY; 2.7-5.5 V",
+   "voltage_drop_v": 0.5,
+   "mount": "plugs into a printed header cradle / breadboard (no screw holes)",
+   "no_mounting_holes": true,
+   "note": "MOSFET bridge: far less loss than an L298N; the default driver for TT-motor cars",
+   "uncertain": [
+    "price_usd",
+    "envelope_mm"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    0.0,
+    -8.5
+   ],
+   "max": [
+    20.3,
+    20.3,
+    2.8
+   ]
+  },
+  "mesh_triangles": 172
+ },
  "tmc2209_stepstick": {
   "key": "tmc2209_stepstick",
   "name": "BigTreeTech TMC2209 V1.3 StepStick stepper driver (UART)",
@@ -11826,6 +12476,111 @@
    ]
   },
   "mesh_triangles": 284
+ },
+ "tt_gearmotor_1to48": {
+  "key": "tt_gearmotor_1to48",
+  "name": "TT gear motor 3-6 V, 1:48, 200 rpm (yellow, double-D shaft)",
+  "category": "actuator",
+  "mass_g": 30.6,
+  "price_usd": 1.5,
+  "supplier_url": "https://www.adafruit.com/product/3777",
+  "datasheet_url": "https://www.adafruit.com/product/3777",
+  "envelope_mm": [
+   72.0,
+   22.5,
+   36.4
+  ],
+  "holes": [
+   {
+    "pos": [
+     19.5,
+     0.0,
+     -18.8
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.2,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     33.0,
+     0.0,
+     -18.8
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.2,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "voltage_v": 6.0,
+   "voltage_range_v": [
+    3.0,
+    6.0
+   ],
+   "gear_ratio": 48,
+   "stall_torque_kgcm": 0.8,
+   "stall_torque_nm": 0.0785,
+   "rated_torque_nm": 0.0235,
+   "no_load_speed_rpm": 200,
+   "no_load_speed_rad_s": 20.944,
+   "no_load_current_a": 0.15,
+   "stall_current_a": 1.5,
+   "current_a": 1.5,
+   "shaft": "double-D 5.4 x 3.7 mm, both sides",
+   "shaft_d_mm": 5.4,
+   "driver": "TB6612FNG or L298N (DC motor, PWM + direction)",
+   "note": "rated torque taken as 30 % of stall for continuous use; plastic gears",
+   "uncertain": [
+    "rated_torque_nm",
+    "stall_current_a",
+    "hole_positions",
+    "price_usd"
+   ],
+   "hole_positions": [
+    [
+     19.5,
+     0.0
+    ],
+    [
+     33.0,
+     0.0
+    ]
+   ]
+  },
+  "output_frame": [
+   [
+    0.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "bbox_mm": {
+   "min": [
+    -11.0,
+    -11.25,
+    -27.6
+   ],
+   "max": [
+    61.0,
+    11.25,
+    8.8
+   ]
+  },
+  "mesh_triangles": 668
  },
  "usb_can_adapter": {
   "key": "usb_can_adapter",
@@ -12134,5 +12889,47 @@
    ]
   },
   "mesh_triangles": 2312
+ },
+ "ws2812_ring_12": {
+  "key": "ws2812_ring_12",
+  "name": "WS2812B RGB LED ring, 12 LEDs, 37 mm (NeoPixel-compatible)",
+  "category": "misc",
+  "mass_g": 3.0,
+  "price_usd": 2.0,
+  "supplier_url": "https://www.adafruit.com/product/1643",
+  "datasheet_url": "https://cdn-shop.adafruit.com/datasheets/WS2812B.pdf",
+  "envelope_mm": [
+   37.0,
+   37.0,
+   3.5
+  ],
+  "holes": [],
+  "specs": {
+   "voltage_v": 5.0,
+   "leds": 12,
+   "current_ma_max": 720,
+   "od_mm": 37.0,
+   "id_mm": 23.0,
+   "data": "1 pin, NeoPixel library",
+   "mount": "glued or clipped behind a diffuser",
+   "no_mounting_holes": true,
+   "uncertain": [
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "max": [
+    37.0,
+    37.0,
+    3.5
+   ]
+  },
+  "mesh_triangles": 506
  }
 }
