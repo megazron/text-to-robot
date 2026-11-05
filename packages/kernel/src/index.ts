@@ -360,8 +360,10 @@ export function exportPart(p: Program, quality: { tolerance?: number; angular?: 
   if (!mf) throw new Error("initKernel() has not finished");
   // OpenCascade's mesher occasionally leaves a surface the weld cannot close (tangent fillets, near-coincident faces):
   // retry finer, then without the finishing fillet, then on a cleaned-up shape
+  // mesh tolerance grows with the part: 0.05 mm on a servo bracket, up to 0.25 mm on a 40 cm armour shell (a 0.4 mm
+  // nozzle cannot show the difference, and the files stay small enough to ship)
   const attempts: { tol: number; ang: number; edge: boolean; clean: boolean }[] = [
-    { tol: quality.tolerance ?? 0.05, ang: quality.angular ?? 0.2, edge: true, clean: false },
+    { tol: quality.tolerance ?? 0, ang: quality.angular ?? 0.25, edge: true, clean: false },   // tol 0: scaled to the part
     { tol: 0.02, ang: 0.1, edge: true, clean: false },
     { tol: 0.05, ang: 0.2, edge: false, clean: false },
     { tol: 0.02, ang: 0.1, edge: false, clean: true },
@@ -372,7 +374,9 @@ export function exportPart(p: Program, quality: { tolerance?: number; angular?: 
       return scoped(() => {
         let s = evaluate(a.edge ? p : { ...p, edge: 0 });
         if (a.clean) { try { s = keep(s.simplify() as Shape3D); } catch { /* keep the raw shape */ } }
-        const m = s.mesh({ tolerance: a.tol, angularTolerance: a.ang });
+        const bb0 = s.boundingBox.bounds, diag = Math.hypot(bb0[1][0] - bb0[0][0], bb0[1][1] - bb0[0][1], bb0[1][2] - bb0[0][2]);
+        const tol = a.tol > 0 ? a.tol : Math.min(0.25, Math.max(0.05, diag / 1600));
+        const m = s.mesh({ tolerance: tol, angularTolerance: a.ang });
         const w = weld(m.vertices, m.triangles);
         const bb = s.boundingBox;
         return {

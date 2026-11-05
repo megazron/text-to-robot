@@ -93,7 +93,8 @@ export function linkStl(l: Link): string {
 }
 
 /** whole robot at the zero pose */
-export function assemblyStl(spec: RobotSpecification): string {
+/** The whole robot in its build pose as one binary STL (ASCII would pass JavaScript's string limit for big robots). */
+export function assemblyStl(spec: RobotSpecification): Uint8Array {
   const world = forwardKinematics(spec, {});
   const tris: Tri[] = [];
   for (const l of spec.links) {
@@ -101,7 +102,14 @@ export function assemblyStl(spec: RobotSpecification): string {
     const m = multiply(w, poseToMat(l.origin));
     for (const t of geometryTris(l.geometry)) tris.push(t.map((v) => xf(m, v)) as Tri);
   }
-  return trisToStl(safeName(spec.robot_name), tris);
+  const buf = new ArrayBuffer(84 + tris.length * 50), dv = new DataView(buf);
+  new Uint8Array(buf).set(new TextEncoder().encode(safeName(spec.robot_name).slice(0, 79)));
+  dv.setUint32(80, tris.length, true);
+  tris.forEach((t, i) => {
+    const o = 84 + i * 50, n = normal(t);
+    [...n, ...t[0], ...t[1], ...t[2]].forEach((x, k) => dv.setFloat32(o + k * 4, x, true));
+  });
+  return new Uint8Array(buf);
 }
 
 export interface PrintIssue { part: string; level: "warn" | "info"; message: string; }

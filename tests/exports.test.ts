@@ -14,11 +14,11 @@ test("STL: every primitive triangulates to a closed-ish, non-empty mesh", () => 
   assert.ok(geometryTris({ type: "sphere", radius: 0.1 }).length > 100);
   assert.ok(geometryTris({ type: "capsule", radius: 0.05, length: 0.2 }).length > 100);
 });
-test("STL: assembly is valid ASCII STL with one part file per link", () => {
+test("STL: assembly is a valid binary STL with one part file per link", () => {
   const spec = finalizeSpec(nDofArm(6));
-  const stl = assemblyStl(spec);
-  assert.ok(stl.startsWith("solid ") && stl.trim().endsWith("endsolid arm_6dof"));
-  assert.ok((stl.match(/facet normal/g) ?? []).length > 500);
+  const stl = assemblyStl(spec), n = new DataView(stl.buffer, stl.byteOffset).getUint32(80, true);
+  assert.ok(n > 500);
+  assert.equal(stl.byteLength, 84 + n * 50);
   const files = generateStlFiles(spec);
   for (const l of spec.links) assert.ok(files[`cad/stl/parts/${l.name}.stl`], `missing ${l.name}.stl`);
   assert.ok(files["cad/PRINTABILITY.md"]);
