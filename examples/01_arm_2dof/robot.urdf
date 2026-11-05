@@ -14,6 +14,9 @@
   <material name="electronics"><color rgba="0.08 0.45 0.25 1"/></material>
   <material name="rubber"><color rgba="0.07 0.07 0.08 1"/></material>
   <material name="battery"><color rgba="0.15 0.3 0.75 1"/></material>
+  <material name="armour_red"><color rgba="0.62 0.06 0.07 1"/></material>
+  <material name="armour_gold"><color rgba="0.86 0.66 0.28 1"/></material>
+  <material name="wearer"><color rgba="0.55 0.57 0.6 1"/></material>
   <link name="base_link">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -25,9 +28,9 @@
       <geometry><mesh filename="package://arm_2dof/meshes/base_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.0000353888 -0.001192 0.009021" rpy="0 0 0"/>
-      <mass value="0.085252"/>
-      <inertia ixx="0.0000861331" ixy="-3.80372e-8" ixz="3.61406e-8" iyy="0.0000851234" iyz="0.00000230213" izz="0.000136424"/>
+      <origin xyz="-0.0000353941 -0.001191 0.00902" rpy="0 0 0"/>
+      <mass value="0.085239"/>
+      <inertia ixx="0.0000861077" ixy="-3.80398e-8" ixz="3.61436e-8" iyy="0.0000850999" iyz="0.00000229901" izz="0.000136386"/>
     </inertial>
   </link>
   <link name="shoulder_pitch_actuator">
@@ -57,9 +60,9 @@
       <geometry><mesh filename="package://arm_2dof/meshes/upper_arm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.074347 0.0000258335 -0.021742" rpy="0 0 0"/>
-      <mass value="0.116785"/>
-      <inertia ixx="0.0000466862" ixy="-1.37629e-7" ixz="-0.0000148229" iyy="0.000178738" iyz="-4.97550e-8" izz="0.000153073"/>
+      <origin xyz="0.074334 0.0000258585 -0.021723" rpy="0 0 0"/>
+      <mass value="0.116672"/>
+      <inertia ixx="0.0000466257" ixy="-1.37665e-7" ixz="-0.0000148268" iyy="0.000178497" iyz="-4.96983e-8" izz="0.000152878"/>
     </inertial>
   </link>
   <link name="elbow_pitch_actuator">
@@ -89,9 +92,9 @@
       <geometry><mesh filename="package://arm_2dof/meshes/forearm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.08589 -0.001512 -0.021713" rpy="0 0 0"/>
-      <mass value="0.153931"/>
-      <inertia ixx="0.0000658365" ixy="-0.00000843461" ixz="-0.0000283175" iyy="0.000309534" iyz="3.83426e-7" izz="0.000285001"/>
+      <origin xyz="0.085861 -0.001529 -0.021732" rpy="0 0 0"/>
+      <mass value="0.153737"/>
+      <inertia ixx="0.0000657085" ixy="-0.00000835336" ixz="-0.0000281554" iyy="0.000309103" iyz="4.34843e-7" izz="0.000284613"/>
     </inertial>
   </link>
   <link name="gripper_actuator">

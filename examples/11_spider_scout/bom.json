@@ -4,253 +4,265 @@
   "tier": "hobby",
   "lines": [
     {
-      "category": "Actuator",
-      "name": "DS3218 20kg servo",
-      "qty": 18,
-      "unit_cost": 12,
-      "subtotal": 216,
-      "spec": "PWM, waterproof, metal gears (1.96 N·m)",
-      "note": "joint front_left_coxa_joint; rating duty/source unverified; joint front_left_femur_joint; rating duty/source unverified; joint front_left_tibia_joint; rating duty/source unverified; joint mid_left_coxa_joint; rating duty/source unverified; joint mid_left_femur_joint; rating duty/source unverified; joint mid_left_tibia_joint; rating duty/source unverified; joint rear_left_coxa_joint; rating duty/source unverified; joint rear_left_femur_joint; rating duty/source unverified; joint rear_left_tibia_joint; rating duty/source unverified; joint front_right_coxa_joint; rating duty/source unverified; joint front_right_femur_joint; rating duty/source unverified; joint front_right_tibia_joint; rating duty/source unverified; joint mid_right_coxa_joint; rating duty/source unverified; joint mid_right_femur_joint; rating duty/source unverified; joint mid_right_tibia_joint; rating duty/source unverified; joint rear_right_coxa_joint; rating duty/source unverified; joint rear_right_femur_joint; rating duty/source unverified; joint rear_right_tibia_joint; rating duty/source unverified"
+      "category": "Sensor",
+      "name": "Adafruit BNO085 9-DoF IMU breakout (STEMMA QT, #4754)",
+      "qty": 1,
+      "unit_cost": 29.5,
+      "subtotal": 29.5,
+      "spec": "3.3 V",
+      "note": "IMU (body attitude, at the centre) · https://www.adafruit.com/product/4754"
     },
     {
-      "category": "Sensor",
-      "name": "Slamtec RPLidar A1M8",
+      "category": "Power",
+      "name": "Pololu D36V50F5 5 V 5.5 A step-down regulator (#4091)",
       "qty": 1,
-      "unit_cost": 99,
-      "subtotal": 99,
-      "spec": "2D, 12m, 8k samples/s",
-      "note": "lidar_1"
+      "unit_cost": 39.95,
+      "subtotal": 39.95,
+      "spec": "5 V",
+      "note": "5 V regulator (sensors) · https://www.pololu.com/product/4091"
+    },
+    {
+      "category": "Actuator",
+      "name": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "qty": 12,
+      "unit_cost": 22,
+      "subtotal": 264,
+      "spec": "0.9807 N·m rated / 2.942 N·m peak, 12 V",
+      "note": "joint lf_coxa; joint lf_tibia; joint lm_coxa; joint lm_tibia; … · https://www.seeedstudio.com/STS3215-30KG-Serial-Servo-p-6340.html"
+    },
+    {
+      "category": "Actuator",
+      "name": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
+      "qty": 6,
+      "unit_cost": 40,
+      "subtotal": 240,
+      "spec": "1.5691 N·m rated / 4.9033 N·m peak, 12 V",
+      "note": "joint lf_femur; joint lm_femur; joint lr_femur; joint rr_femur; … · https://openelab.io/products/feetech-sts3250-c002-servo-12v"
     },
     {
       "category": "Compute",
-      "name": "Raspberry Pi 5 (8GB)",
+      "name": "NVIDIA Jetson Orin Nano Super Developer Kit",
       "qty": 1,
-      "unit_cost": 80,
-      "subtotal": 80,
-      "spec": "SBC, runs ROS 2"
+      "unit_cost": 249,
+      "subtotal": 249,
+      "spec": "19 V",
+      "note": "main computer · https://developer.nvidia.com/buy-jetson?product=jetson_orin_nano"
     },
     {
       "category": "Power",
-      "name": "LiPo 3S 2200mAh",
+      "name": "LiPo 3S 5000 mAh 60C, XT60 (Gens Ace G-Tech)",
       "qty": 1,
-      "unit_cost": 18,
-      "subtotal": 18,
-      "spec": "24 Wh; est. load 44 W"
+      "unit_cost": 59.99,
+      "subtotal": 59.99,
+      "spec": "11.1 V, 55.5 Wh",
+      "note": "main battery (strapped under the body plate) · https://classicrcshop.com/products/gens-ace-5000mah-3s-60c-11-1v-g-tech-lipo-battery-pack-with-xt60-plug"
     },
     {
-      "category": "Power",
-      "name": "DC-DC buck regulator (5V/10A)",
+      "category": "Sensor",
+      "name": "Raspberry Pi Camera Module 3 (standard lens)",
       "qty": 1,
-      "unit_cost": 12,
-      "subtotal": 12,
-      "spec": "logic + servo rail"
+      "unit_cost": 25,
+      "subtotal": 25,
+      "spec": "3.3 V",
+      "note": "forward camera · https://www.raspberrypi.com/products/camera-module-3/"
     },
     {
-      "category": "Power",
-      "name": "Power distribution board + fuse + switch",
+      "category": "Sensor",
+      "name": "Slamtec RPLIDAR C1 (DTOF 360 deg, 12 m)",
       "qty": 1,
-      "unit_cost": 14,
-      "subtotal": 14,
-      "spec": "wiring harness backbone"
+      "unit_cost": 79.99,
+      "subtotal": 79.99,
+      "spec": "5 V",
+      "note": "360 deg LiDAR turret · https://www.waveshare.com/rplidar-c1.htm"
     },
     {
-      "category": "Structure",
-      "name": "3D-printed frame (PLA/PETG)",
+      "category": "Electronics",
+      "name": "Waveshare Bus Servo Adapter (A)",
       "qty": 1,
-      "unit_cost": 72.37,
-      "subtotal": 72.37,
-      "spec": "~3.29 kg material @ $22/kg"
+      "unit_cost": 10.6,
+      "subtotal": 10.6,
+      "spec": "12 V",
+      "note": "USB to servo bus · https://www.waveshare.com/bus-servo-adapter-a.htm"
     },
     {
-      "category": "Structure",
-      "name": "Fastener + bearing kit",
+      "category": "Printed structure",
+      "name": "PETG filament for 20 printed parts",
       "qty": 1,
-      "unit_cost": 18,
-      "subtotal": 18,
-      "spec": "M3 screws, heat inserts, 608 bearings"
+      "unit_cost": 17.01,
+      "subtotal": 17.01,
+      "spec": "672 g of parts (+15 % supports/waste), about 61.2 h of printing",
+      "note": "base_link, top_deck, lf_coxa_link, lf_femur_link, lf_tibia_link, lm_coxa_link, lm_femur_link, lm_tibia_link, lr_coxa_link, lr_femur_link, lr_tibia_link, rr_coxa_link, rr_femur_link, rr_tibia_link, rm_coxa_link, rm_femur_link, rm_tibia_link, rf_coxa_link, rf_femur_link, rf_tibia_link"
     },
     {
-      "category": "Wiring & misc",
-      "name": "Wiring, connectors, JST/Dupont, sleeving",
-      "qty": 1,
-      "unit_cost": 52.68,
-      "subtotal": 52.68,
-      "spec": "~12% of electronics"
+      "category": "Fasteners",
+      "name": "Screws, nuts and inserts",
+      "qty": 147,
+      "unit_cost": 0.12,
+      "subtotal": 17.64,
+      "spec": "3x M3 x 12 deck pillar screws; 72x M2 x 6 case screws; 72x horn screws"
     }
   ],
-  "total": 582.05,
+  "total": 1032.68,
   "feasible": true,
-  "sizing_pass": false,
+  "sizing_pass": true,
   "hardware_verified": false,
   "actuator_sizing": [
     {
-      "joint": "front_left_coxa_joint",
-      "required_effort": 40,
+      "joint": "lf_coxa",
+      "required_effort": 0.346,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "DS3218 20kg servo",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 0.346,
+      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "margin": "8.5x"
     },
     {
-      "joint": "front_left_femur_joint",
-      "required_effort": 40,
+      "joint": "lf_femur",
+      "required_effort": 2.179,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "DS3218 20kg servo",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 2.179,
+      "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
+      "margin": "2.25x"
     },
     {
-      "joint": "front_left_tibia_joint",
-      "required_effort": 40,
+      "joint": "lf_tibia",
+      "required_effort": 1.497,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "DS3218 20kg servo",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 1.497,
+      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "margin": "1.96x"
     },
     {
-      "joint": "mid_left_coxa_joint",
-      "required_effort": 40,
+      "joint": "lm_coxa",
+      "required_effort": 0.346,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "DS3218 20kg servo",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 0.346,
+      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "margin": "8.5x"
     },
     {
-      "joint": "mid_left_femur_joint",
-      "required_effort": 40,
+      "joint": "lm_femur",
+      "required_effort": 2.182,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "DS3218 20kg servo",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 2.182,
+      "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
+      "margin": "2.25x"
     },
     {
-      "joint": "mid_left_tibia_joint",
-      "required_effort": 40,
+      "joint": "lm_tibia",
+      "required_effort": 1.502,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "DS3218 20kg servo",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 1.502,
+      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "margin": "1.96x"
     },
     {
-      "joint": "rear_left_coxa_joint",
-      "required_effort": 40,
+      "joint": "lr_coxa",
+      "required_effort": 0.329,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "DS3218 20kg servo",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 0.329,
+      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "margin": "8.93x"
     },
     {
-      "joint": "rear_left_femur_joint",
-      "required_effort": 40,
+      "joint": "lr_femur",
+      "required_effort": 2.179,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "DS3218 20kg servo",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 2.179,
+      "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
+      "margin": "2.25x"
     },
     {
-      "joint": "rear_left_tibia_joint",
-      "required_effort": 40,
+      "joint": "lr_tibia",
+      "required_effort": 1.497,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "DS3218 20kg servo",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 1.497,
+      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "margin": "1.96x"
     },
     {
-      "joint": "front_right_coxa_joint",
-      "required_effort": 40,
+      "joint": "rr_coxa",
+      "required_effort": 0.346,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "DS3218 20kg servo",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 0.346,
+      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "margin": "8.5x"
     },
     {
-      "joint": "front_right_femur_joint",
-      "required_effort": 40,
+      "joint": "rr_femur",
+      "required_effort": 2.179,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "DS3218 20kg servo",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 2.179,
+      "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
+      "margin": "2.25x"
     },
     {
-      "joint": "front_right_tibia_joint",
-      "required_effort": 40,
+      "joint": "rr_tibia",
+      "required_effort": 1.497,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "DS3218 20kg servo",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 1.497,
+      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "margin": "1.96x"
     },
     {
-      "joint": "mid_right_coxa_joint",
-      "required_effort": 40,
+      "joint": "rm_coxa",
+      "required_effort": 0.346,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "DS3218 20kg servo",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 0.346,
+      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "margin": "8.5x"
     },
     {
-      "joint": "mid_right_femur_joint",
-      "required_effort": 40,
+      "joint": "rm_femur",
+      "required_effort": 2.182,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "DS3218 20kg servo",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 2.182,
+      "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
+      "margin": "2.25x"
     },
     {
-      "joint": "mid_right_tibia_joint",
-      "required_effort": 40,
+      "joint": "rm_tibia",
+      "required_effort": 1.502,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "DS3218 20kg servo",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 1.502,
+      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "margin": "1.96x"
     },
     {
-      "joint": "rear_right_coxa_joint",
-      "required_effort": 40,
+      "joint": "rf_coxa",
+      "required_effort": 0.329,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "DS3218 20kg servo",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 0.329,
+      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "margin": "8.93x"
     },
     {
-      "joint": "rear_right_femur_joint",
-      "required_effort": 40,
+      "joint": "rf_femur",
+      "required_effort": 2.179,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "DS3218 20kg servo",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 2.179,
+      "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
+      "margin": "2.25x"
     },
     {
-      "joint": "rear_right_tibia_joint",
-      "required_effort": 40,
+      "joint": "rf_tibia",
+      "required_effort": 1.497,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "DS3218 20kg servo",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 1.497,
+      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "margin": "1.96x"
     }
   ],
-  "warnings": [
-    "Sizing uses a neutral-pose gravity proxy and declared joint effort, not a worst-case workspace or dynamic load analysis. Selection checks only approximate effort and broad motion type. Speed/torque curves, travel, voltage, feedback, mounting, thermal duty and wiring are not qualified.",
-    "Catalog values are planning estimates. Except explicitly sourced rated values, torque entries may be stall/peak ratings; continuous duty, fit and complete assemblies are unverified.",
-    "joint front_left_coxa_joint needs ~40.00 N·m; strongest in hobby tier is DS3218 20kg servo (1.96 N·m) — increase budget for a stronger actuator",
-    "joint front_left_femur_joint needs ~40.00 N·m; strongest in hobby tier is DS3218 20kg servo (1.96 N·m) — increase budget for a stronger actuator",
-    "joint front_left_tibia_joint needs ~40.00 N·m; strongest in hobby tier is DS3218 20kg servo (1.96 N·m) — increase budget for a stronger actuator",
-    "joint mid_left_coxa_joint needs ~40.00 N·m; strongest in hobby tier is DS3218 20kg servo (1.96 N·m) — increase budget for a stronger actuator",
-    "joint mid_left_femur_joint needs ~40.00 N·m; strongest in hobby tier is DS3218 20kg servo (1.96 N·m) — increase budget for a stronger actuator",
-    "joint mid_left_tibia_joint needs ~40.00 N·m; strongest in hobby tier is DS3218 20kg servo (1.96 N·m) — increase budget for a stronger actuator",
-    "joint rear_left_coxa_joint needs ~40.00 N·m; strongest in hobby tier is DS3218 20kg servo (1.96 N·m) — increase budget for a stronger actuator",
-    "joint rear_left_femur_joint needs ~40.00 N·m; strongest in hobby tier is DS3218 20kg servo (1.96 N·m) — increase budget for a stronger actuator",
-    "joint rear_left_tibia_joint needs ~40.00 N·m; strongest in hobby tier is DS3218 20kg servo (1.96 N·m) — increase budget for a stronger actuator",
-    "joint front_right_coxa_joint needs ~40.00 N·m; strongest in hobby tier is DS3218 20kg servo (1.96 N·m) — increase budget for a stronger actuator",
-    "joint front_right_femur_joint needs ~40.00 N·m; strongest in hobby tier is DS3218 20kg servo (1.96 N·m) — increase budget for a stronger actuator",
-    "joint front_right_tibia_joint needs ~40.00 N·m; strongest in hobby tier is DS3218 20kg servo (1.96 N·m) — increase budget for a stronger actuator",
-    "joint mid_right_coxa_joint needs ~40.00 N·m; strongest in hobby tier is DS3218 20kg servo (1.96 N·m) — increase budget for a stronger actuator",
-    "joint mid_right_femur_joint needs ~40.00 N·m; strongest in hobby tier is DS3218 20kg servo (1.96 N·m) — increase budget for a stronger actuator",
-    "joint mid_right_tibia_joint needs ~40.00 N·m; strongest in hobby tier is DS3218 20kg servo (1.96 N·m) — increase budget for a stronger actuator",
-    "joint rear_right_coxa_joint needs ~40.00 N·m; strongest in hobby tier is DS3218 20kg servo (1.96 N·m) — increase budget for a stronger actuator",
-    "joint rear_right_femur_joint needs ~40.00 N·m; strongest in hobby tier is DS3218 20kg servo (1.96 N·m) — increase budget for a stronger actuator",
-    "joint rear_right_tibia_joint needs ~40.00 N·m; strongest in hobby tier is DS3218 20kg servo (1.96 N·m) — increase budget for a stronger actuator"
-  ],
+  "warnings": [],
   "notes": [
-    "Tier: hobby. Prices are planning estimates (USD), not quotes. Structure assumes FDM 3D printing."
+    "Hexapod, 18 x Feetech STS3250 C002 12 V 50 kg.cm (1:345), 2.47 kg, 207 mm body, camera + lidar + imu, 40 min, $998 of parts",
+    "Sized for a 0.2 kg payload.",
+    "Joint limits trimmed to the collision-free range found by exact solid sweeps: lf_tibia [-1.20, 1.20] -> [-0.86, 1.20]; lm_tibia [-1.20, 1.20] -> [-0.90, 1.20]; lr_tibia [-1.20, 1.20] -> [-0.90, 1.20]; rr_tibia [-1.20, 1.20] -> [-0.86, 1.20]; rm_tibia [-1.20, 1.20] -> [-0.90, 1.20]; rf_tibia [-1.20, 1.20] -> [-0.90, 1.20].",
+    "Zero joint angles are the standing pose (femurs raised 20 deg, tibias near vertical); the base origin is on the coxa horn plane.",
+    "Servo loads are J^T F at the stance feet of a tripod gait (three feet carry robot + payload), ±15 % traction, over a gait envelope, x 1.3 dynamic factor; continuous duty checked at 71 % of the worst stance load (RMS over a gait cycle with half of it in stance).",
+    "Tripod gait keeps three feet down at all times: statically stable walking with open-loop position control.",
+    "Feet are moulded / TPU-printed rubber spheres pushed over the tibia tips.",
+    "The battery rides in a strapped cradle under the body plate (a 3S 5000 mAh pack is longer than the space between the coxa servos).",
+    "The body plate and the top deck each print in one piece on a 250 x 210 mm bed; the deck stands on three printed pillars screwed into the plate.",
+    "Prices are list/street prices from the linked suppliers at the time the catalog was written; check before ordering."
   ]
 }

@@ -1,6 +1,6 @@
 # Bill of Materials — baymax
 
-**Estimated total: $880.93**  ·  tier: hobby
+**Estimated total: $880.91**  ·  tier: hobby
 
 **Effort sizing: passes catalogue estimate; hardware verified: no.**
 
@@ -18,7 +18,7 @@
 | Compute | Raspberry Pi 5 (4 GB) _(on-board computer · https://www.raspberrypi.com/products/raspberry-pi-5/)_ | 1 | 110 | 110 | 5 V |
 | Electronics | Waveshare Bus Servo Adapter (A) _(servo bus adapter; left_arm: USB to actuator bus; right_arm: USB to actuator bus · https://www.waveshare.com/bus-servo-adapter-a.htm)_ | 3 | 10.6 | 31.8 | 12 V |
 | Drive | Pololu 90x10 mm wheel + 6 mm universal aluminium hub (for 37D gearmotors) _(driven wheel · https://www.pololu.com/product/1435)_ | 4 | 11.22 | 44.88 | https://www.pololu.com/file/0J161/1083-6mm-4-40-hub-dimensions.pdf |
-| Printed structure | PETG filament for 29 printed parts _(left_front_bracket, left_rear_bracket, right_front_bracket, right_rear_bracket, battery_tray, computer_tray, motor_driver_1_tray, motor_driver_2_tray, servo_bus_tray, imu_tray, regulator_5v_tray, spine_foot, left_arm_shoulder_wedge, left_arm_base_link, left_arm_turret, left_arm_upper_arm, left_arm_forearm, left_arm_tool_link, right_arm_shoulder_wedge, right_arm_base_link, right_arm_turret, right_arm_upper_arm, right_arm_forearm, right_arm_tool_link, neck_mount, head, head_dome, eyes, camera_bracket)_ | 1 | 30.98 | 30.98 | 1224 g of parts (+15 % supports/waste), about 111.6 h of printing |
+| Printed structure | PETG filament for 29 printed parts _(left_front_bracket, left_rear_bracket, right_front_bracket, right_rear_bracket, battery_tray, computer_tray, motor_driver_1_tray, motor_driver_2_tray, servo_bus_tray, imu_tray, regulator_5v_tray, spine_foot, left_arm_shoulder_wedge, left_arm_base_link, left_arm_turret, left_arm_upper_arm, left_arm_forearm, left_arm_tool_link, right_arm_shoulder_wedge, right_arm_base_link, right_arm_turret, right_arm_upper_arm, right_arm_forearm, right_arm_tool_link, neck_mount, head, head_dome, eyes, camera_bracket)_ | 1 | 30.96 | 30.96 | 1224 g of parts (+15 % supports/waste), about 111.5 h of printing |
 | Fasteners | Screws, nuts and inserts | 156 | 0.12 | 18.72 | 24x M3 x 8 socket head (motor face); 8x M3 x 10 socket head + nut (bracket to deck); 1x 20 mm hook-and-loop battery strap; 14x M3 x 8 socket head (tray to deck); 23x M2.5 x 6 screws (board to standoffs); 8x M5 x 12 socket head (base to bench); 32x M2 x 6 case screws; 36x horn screws; 6x M5 x 16 socket head + M5 washer + M5 heat-set insert (clevis bearing axle); 4x M3 x 10 (head dome to head) |
 
 ## Actuator sizing
@@ -26,11 +26,11 @@
 | Joint | Required effort | Unit | Chosen actuator | Margin |
 |---|--:|---|---|--:|
 | left_arm_base_yaw | 0.92 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 3.2x |
-| left_arm_shoulder_pitch | 1.973 | N·m | Feetech STS3250 C002 12 V 50 kg.cm (1:345) | 2.49x |
+| left_arm_shoulder_pitch | 1.972 | N·m | Feetech STS3250 C002 12 V 50 kg.cm (1:345) | 2.49x |
 | left_arm_elbow_pitch | 0.839 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 3.51x |
 | left_arm_wrist_pitch | 0.169 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 17.39x |
 | right_arm_base_yaw | 0.92 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 3.2x |
-| right_arm_shoulder_pitch | 1.973 | N·m | Feetech STS3250 C002 12 V 50 kg.cm (1:345) | 2.49x |
+| right_arm_shoulder_pitch | 1.972 | N·m | Feetech STS3250 C002 12 V 50 kg.cm (1:345) | 2.49x |
 | right_arm_elbow_pitch | 0.839 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 3.51x |
 | right_arm_wrist_pitch | 0.169 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 17.39x |
 | left_front_wheel_joint | 0.152 | N·m | Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752) | 4.52x |
@@ -39,7 +39,7 @@
 | right_rear_wheel_joint | 0.152 | N·m | Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752) | 4.52x |
 
 ## Notes
-- Baymax-style service robot: 5.407 kg, 1.01 m tall, 4WD hidden base, two 4-servo arms, pan head with camera
+- Baymax-style service robot: 5.406 kg, 1.01 m tall, 4WD hidden base, two 4-servo arms, pan head with camera
 - Baymax's inflatable vinyl body is a sewn ripstop cover with a foam-lined zip, bought or sewn, with negligible structural role; it hangs on the shoulder yoke and hides a 4WD skid-steer base. It is not inflated, so it does not cushion like the film's.
 - Structure: 2020 aluminium extrusion spine and a 6 mm aluminium shoulder yoke; arms are four servos each (shoulder yaw, shoulder pitch, elbow, wrist) splayed 25 deg so they clear the belly; the hands are printed mittens covered with the same fabric.
 - Each arm is sized as mounted to lift 0.1 kg in the mitten at full reach; the tipping check includes both arms stretched forward with that payload.

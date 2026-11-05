@@ -8,7 +8,7 @@
   {
    "name": "base_link",
    "watertight": true,
-   "volume_cm3": 272.7,
+   "volume_cm3": 272.68,
    "size_mm": [
     244.0,
     200.0,
@@ -22,7 +22,7 @@
    "fits_bed": true,
    "support_area_cm2": 0.0,
    "support_frac": 0.0,
-   "bed_contact_cm2": 454.5,
+   "bed_contact_cm2": 454.47,
    "min_wall_mm": 6.0,
    "thin_wall_frac": 0.0,
    "passed": true,
@@ -58,7 +58,7 @@
   {
    "name": "computer_tray",
    "watertight": true,
-   "volume_cm3": 16.34,
+   "volume_cm3": 16.33,
    "size_mm": [
     59.2,
     90.0,
@@ -73,7 +73,7 @@
    "support_area_cm2": 0.0,
    "support_frac": 0.0,
    "bed_contact_cm2": 53.02,
-   "min_wall_mm": 1.84,
+   "min_wall_mm": 1.83,
    "thin_wall_frac": 0.0,
    "passed": true,
    "supports": "none",
@@ -83,7 +83,7 @@
   {
    "name": "electronics_enclosure_front",
    "watertight": true,
-   "volume_cm3": 32.96,
+   "volume_cm3": 32.95,
    "size_mm": [
     127.4,
     204.3,
@@ -183,7 +183,7 @@
   {
    "name": "front_caster_post",
    "watertight": true,
-   "volume_cm3": 37.37,
+   "volume_cm3": 37.36,
    "size_mm": [
     40.0,
     40.0,
@@ -197,7 +197,7 @@
    "fits_bed": true,
    "support_area_cm2": 5.87,
    "support_frac": 0.042,
-   "bed_contact_cm2": 12.31,
+   "bed_contact_cm2": 12.3,
    "min_wall_mm": 3.08,
    "thin_wall_frac": 0.0,
    "passed": true,
@@ -222,7 +222,7 @@
    "fits_bed": true,
    "support_area_cm2": 0.0,
    "support_frac": 0.0,
-   "bed_contact_cm2": 6.56,
+   "bed_contact_cm2": 6.55,
    "min_wall_mm": 1.6,
    "thin_wall_frac": 0.0,
    "passed": true,
@@ -233,7 +233,7 @@
   {
    "name": "left_bracket",
    "watertight": true,
-   "volume_cm3": 17.07,
+   "volume_cm3": 17.05,
    "size_mm": [
     44.0,
     41.0,
@@ -247,8 +247,8 @@
    "fits_bed": true,
    "support_area_cm2": 0.89,
    "support_frac": 0.01,
-   "bed_contact_cm2": 17.29,
-   "min_wall_mm": 4.97,
+   "bed_contact_cm2": 17.26,
+   "min_wall_mm": 4.96,
    "thin_wall_frac": 0.0,
    "passed": true,
    "supports": "none",
@@ -258,7 +258,7 @@
   {
    "name": "lidar_mast",
    "watertight": true,
-   "volume_cm3": 32.6,
+   "volume_cm3": 32.59,
    "size_mm": [
     62.0,
     62.0,
@@ -283,7 +283,7 @@
   {
    "name": "motor_driver_1_tray",
    "watertight": true,
-   "volume_cm3": 17.06,
+   "volume_cm3": 17.05,
    "size_mm": [
     64.0,
     87.0,
@@ -298,7 +298,7 @@
    "support_area_cm2": 0.0,
    "support_frac": 0.0,
    "bed_contact_cm2": 55.42,
-   "min_wall_mm": 2.09,
+   "min_wall_mm": 2.08,
    "thin_wall_frac": 0.0,
    "passed": true,
    "supports": "none",
@@ -308,7 +308,7 @@
   {
    "name": "rear_caster_post",
    "watertight": true,
-   "volume_cm3": 37.37,
+   "volume_cm3": 37.36,
    "size_mm": [
     40.0,
     40.0,
@@ -322,7 +322,7 @@
    "fits_bed": true,
    "support_area_cm2": 5.87,
    "support_frac": 0.042,
-   "bed_contact_cm2": 12.31,
+   "bed_contact_cm2": 12.3,
    "min_wall_mm": 3.08,
    "thin_wall_frac": 0.0,
    "passed": true,
@@ -333,7 +333,7 @@
   {
    "name": "regulator_5v_tray",
    "watertight": true,
-   "volume_cm3": 2.5,
+   "volume_cm3": 2.49,
    "size_mm": [
     27.4,
     27.4,
@@ -347,7 +347,7 @@
    "fits_bed": true,
    "support_area_cm2": 0.0,
    "support_frac": 0.0,
-   "bed_contact_cm2": 7.25,
+   "bed_contact_cm2": 7.24,
    "min_wall_mm": 1.6,
    "thin_wall_frac": 0.0,
    "passed": true,
@@ -358,7 +358,7 @@
   {
    "name": "right_bracket",
    "watertight": true,
-   "volume_cm3": 17.07,
+   "volume_cm3": 17.05,
    "size_mm": [
     44.0,
     41.0,
@@ -372,8 +372,8 @@
    "fits_bed": true,
    "support_area_cm2": 0.89,
    "support_frac": 0.01,
-   "bed_contact_cm2": 17.29,
-   "min_wall_mm": 4.28,
+   "bed_contact_cm2": 17.26,
+   "min_wall_mm": 4.86,
    "thin_wall_frac": 0.0,
    "passed": true,
    "supports": "none",

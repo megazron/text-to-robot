@@ -14,6 +14,9 @@
   <material name="electronics"><color rgba="0.08 0.45 0.25 1"/></material>
   <material name="rubber"><color rgba="0.07 0.07 0.08 1"/></material>
   <material name="battery"><color rgba="0.15 0.3 0.75 1"/></material>
+  <material name="armour_red"><color rgba="0.62 0.06 0.07 1"/></material>
+  <material name="armour_gold"><color rgba="0.86 0.66 0.28 1"/></material>
+  <material name="wearer"><color rgba="0.55 0.57 0.6 1"/></material>
   <material name="fabric"><color rgba="0.97 0.97 0.95 1"/></material>
   <material name="visor"><color rgba="0.03 0.03 0.05 1"/></material>
   <material name="led"><color rgba="0.25 0.75 1 1"/></material>
@@ -126,9 +129,9 @@
       <geometry><mesh filename="package://rover_arm/meshes/left_rocker_rear_arm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.084347 0.052941 0.000816977" rpy="0 0 0"/>
-      <mass value="0.048167"/>
-      <inertia ixx="0.0000389985" ixy="0.0000476074" ixz="0.00000344799" iyy="0.0000739955" iyz="-0.0000032501" izz="0.000110439"/>
+      <origin xyz="-0.084401 0.052968 0.000815925" rpy="0 0 0"/>
+      <mass value="0.048103"/>
+      <inertia ixx="0.0000388589" ixy="0.0000474228" ixz="0.00000343704" iyy="0.0000737249" iyz="-0.00000324048" izz="0.000110033"/>
     </inertial>
   </link>
   <link name="left_rocker_frame">
@@ -142,9 +145,9 @@
       <geometry><mesh filename="package://rover_arm/meshes/left_rocker_frame.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.069785 0.043708 0.000413964" rpy="0 0 0"/>
-      <mass value="0.058345"/>
-      <inertia ixx="0.0000637506" ixy="-0.000085466" ixz="-0.00000507092" iyy="0.000135996" iyz="-0.00000427762" izz="0.000196744"/>
+      <origin xyz="0.069836 0.043733 0.000410573" rpy="0 0 0"/>
+      <mass value="0.058272"/>
+      <inertia ixx="0.0000635794" ixy="-0.0000852357" ixz="-0.00000506755" iyy="0.000135657" iyz="-0.00000427264" izz="0.000196237"/>
     </inertial>
   </link>
   <link name="left_rocker">
@@ -238,9 +241,9 @@
       <geometry><mesh filename="package://rover_arm/meshes/right_rocker_rear_arm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.084526 -0.052941 0.000816977" rpy="0 0 0"/>
-      <mass value="0.048167"/>
-      <inertia ixx="0.0000389985" ixy="-0.0000478845" ixz="0.00000343038" iyy="0.0000747806" iyz="0.0000032501" izz="0.000111224"/>
+      <origin xyz="-0.08458 -0.052968 0.000815925" rpy="0 0 0"/>
+      <mass value="0.048103"/>
+      <inertia ixx="0.0000388589" ixy="-0.0000476996" ixz="0.00000341944" iyy="0.0000745092" iyz="0.00000324048" izz="0.000110817"/>
     </inertial>
   </link>
   <link name="right_rocker_frame">
@@ -254,9 +257,9 @@
       <geometry><mesh filename="package://rover_arm/meshes/right_rocker_frame.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.069638 -0.043708 0.000413964" rpy="0 0 0"/>
-      <mass value="0.058345"/>
-      <inertia ixx="0.0000637506" ixy="0.0000851093" ixz="-0.00000508505" iyy="0.000134957" iyz="0.00000427762" izz="0.000195705"/>
+      <origin xyz="0.069688 -0.043733 0.000410573" rpy="0 0 0"/>
+      <mass value="0.058272"/>
+      <inertia ixx="0.0000635794" ixy="0.0000848793" ixz="-0.00000508166" iyy="0.000134619" iyz="0.00000427264" izz="0.000195199"/>
     </inertial>
   </link>
   <link name="right_rocker">
@@ -303,8 +306,8 @@
     </collision>
     <inertial>
       <origin xyz="-0.031681 -0.07275 0.118048" rpy="0 0 0"/>
-      <mass value="0.028602"/>
-      <inertia ixx="0.00000891694" ixy="6.58756e-22" ixz="-3.70711e-7" iyy="0.0000589579" iyz="-2.11827e-22" izz="0.0000668527"/>
+      <mass value="0.028601"/>
+      <inertia ixx="0.00000891694" ixy="-1.82498e-21" ixz="-3.70703e-7" iyy="0.000058956" iyz="-3.92841e-22" izz="0.0000668509"/>
     </inertial>
   </link>
   <link name="computer">
@@ -335,8 +338,8 @@
     </collision>
     <inertial>
       <origin xyz="-0.099 0.025436 0.115554" rpy="0 0 0"/>
-      <mass value="0.026624"/>
-      <inertia ixx="0.0000196864" ixy="-9.61883e-14" ixz="6.54099e-14" iyy="0.0000234105" iyz="7.03898e-9" izz="0.0000430465"/>
+      <mass value="0.026622"/>
+      <inertia ixx="0.0000196853" ixy="-8.39451e-14" ixz="5.85579e-14" iyy="0.0000234065" iyz="7.02157e-9" izz="0.0000430414"/>
     </inertial>
   </link>
   <link name="motor_driver_1">
@@ -366,9 +369,9 @@
       <geometry><mesh filename="package://rover_arm/meshes/motor_driver_1_tray.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.09351 -0.064 0.115592" rpy="0 0 0"/>
-      <mass value="0.015596"/>
-      <inertia ixx="0.00000550743" ixy="-7.04633e-19" ixz="1.85069e-14" iyy="0.000010148" iyz="4.49261e-15" izz="0.0000156217"/>
+      <origin xyz="0.09351 -0.064 0.115591" rpy="0 0 0"/>
+      <mass value="0.015594"/>
+      <inertia ixx="0.00000550644" ixy="-8.52854e-20" ixz="1.66610e-14" iyy="0.000010145" iyz="5.80419e-15" izz="0.0000156177"/>
     </inertial>
   </link>
   <link name="motor_driver_2">
@@ -398,9 +401,9 @@
       <geometry><mesh filename="package://rover_arm/meshes/motor_driver_2_tray.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.00251 0.01201 0.115592" rpy="0 0 0"/>
-      <mass value="0.015596"/>
-      <inertia ixx="0.00000550743" ixy="-4.43461e-21" ixz="-2.53339e-15" iyy="0.000010148" iyz="-8.17569e-15" izz="0.0000156217"/>
+      <origin xyz="0.00251 0.01201 0.115591" rpy="0 0 0"/>
+      <mass value="0.015594"/>
+      <inertia ixx="0.00000550644" ixy="-6.69146e-21" ixz="-2.54752e-15" iyy="0.000010145" iyz="-6.89820e-15" izz="0.0000156177"/>
     </inertial>
   </link>
   <link name="servo_bus">
@@ -431,8 +434,8 @@
     </collision>
     <inertial>
       <origin xyz="0.07602 -0.00049 0.115814" rpy="0 0 0"/>
-      <mass value="0.004547"/>
-      <inertia ixx="5.06094e-7" ixy="-8.92302e-21" ixz="-1.31254e-14" iyy="7.98724e-7" iyz="5.13247e-16" izz="0.00000128831"/>
+      <mass value="0.004544"/>
+      <inertia ixx="5.05845e-7" ixy="-9.30346e-21" ixz="-1.21572e-14" iyy="7.98126e-7" iyz="5.09918e-16" izz="0.00000128748"/>
     </inertial>
   </link>
   <link name="regulator_5v">
@@ -462,9 +465,9 @@
       <geometry><mesh filename="package://rover_arm/meshes/regulator_5v_tray.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.120168 -0.006728 0.115969" rpy="0 0 0"/>
-      <mass value="0.002283"/>
-      <inertia ixx="1.61144e-7" ixy="-1.05900e-8" ixz="-3.16041e-9" iyy="1.59544e-7" iyz="3.16040e-9" izz="3.10326e-7"/>
+      <origin xyz="0.120167 -0.006727 0.115969" rpy="0 0 0"/>
+      <mass value="0.002281"/>
+      <inertia ixx="1.61036e-7" ixy="-1.05542e-8" ixz="-3.15360e-9" iyy="1.59409e-7" iyz="3.15359e-9" izz="3.10101e-7"/>
     </inertial>
   </link>
   <link name="depth_camera_bracket">
@@ -478,9 +481,9 @@
       <geometry><mesh filename="package://rover_arm/meshes/depth_camera_bracket.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.12758 9.54849e-12 0.242643" rpy="0 0 0"/>
-      <mass value="0.024077"/>
-      <inertia ixx="0.0000195413" ixy="-1.38621e-15" ixz="-0.00000202853" iyy="0.0000137736" iyz="-3.61467e-15" izz="0.00000826456"/>
+      <origin xyz="0.12758 9.54946e-12 0.242642" rpy="0 0 0"/>
+      <mass value="0.024075"/>
+      <inertia ixx="0.0000195382" ixy="-1.38612e-15" ixz="-0.00000202804" iyy="0.0000137713" iyz="-3.61478e-15" izz="0.00000826336"/>
     </inertial>
   </link>
   <link name="depth_camera">
@@ -542,9 +545,9 @@
       <geometry><mesh filename="package://rover_arm/meshes/arm_base_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.003553 -0.000044978 0.007996" rpy="0 0 0"/>
-      <mass value="0.075877"/>
-      <inertia ixx="0.000056364" ixy="-7.40478e-8" ixz="0.00000334093" iyy="0.000062726" iyz="2.47577e-8" izz="0.000102168"/>
+      <origin xyz="-0.003553 -0.0000449833 0.007996" rpy="0 0 0"/>
+      <mass value="0.075868"/>
+      <inertia ixx="0.0000563494" ixy="-7.40464e-8" ixz="0.00000334077" iyy="0.0000627113" iyz="2.47557e-8" izz="0.00010214"/>
     </inertial>
   </link>
   <link name="arm_base_yaw_actuator">
@@ -574,9 +577,9 @@
       <geometry><mesh filename="package://rover_arm/meshes/arm_turret.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.000121814 -0.006037 0.033696" rpy="0 0 0"/>
-      <mass value="0.032408"/>
-      <inertia ixx="0.0000274733" ixy="-5.01888e-8" ixz="-5.40663e-8" iyy="0.0000265585" iyz="8.31233e-7" izz="0.0000145405"/>
+      <origin xyz="-0.000121829 -0.006034 0.033693" rpy="0 0 0"/>
+      <mass value="0.032404"/>
+      <inertia ixx="0.0000274697" ixy="-5.01991e-8" ixz="-5.40564e-8" iyy="0.0000265567" iyz="8.29424e-7" izz="0.0000145385"/>
     </inertial>
   </link>
   <link name="arm_shoulder_pitch_actuator">
@@ -606,9 +609,9 @@
       <geometry><mesh filename="package://rover_arm/meshes/arm_upper_arm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.070163 0.0000426291 -0.024477" rpy="0 0 0"/>
-      <mass value="0.092607"/>
-      <inertia ixx="0.000057725" ixy="-7.40078e-8" ixz="-0.0000135794" iyy="0.000150913" iyz="-7.59019e-8" izz="0.000117875"/>
+      <origin xyz="0.070174 0.0000427495 -0.024393" rpy="0 0 0"/>
+      <mass value="0.092346"/>
+      <inertia ixx="0.0000574528" ixy="-7.39605e-8" ixz="-0.0000135269" iyy="0.000150566" iyz="-7.55725e-8" izz="0.000117749"/>
     </inertial>
   </link>
   <link name="arm_elbow_pitch_actuator">
@@ -638,9 +641,9 @@
       <geometry><mesh filename="package://rover_arm/meshes/arm_forearm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.066214 0.00648 -0.02896" rpy="0 0 0"/>
-      <mass value="0.108968"/>
-      <inertia ixx="0.0000712227" ixy="-0.00000983823" ixz="-3.94715e-7" iyy="0.000114244" iyz="-9.49321e-7" izz="0.0000864656"/>
+      <origin xyz="0.066097 0.006326 -0.02879" rpy="0 0 0"/>
+      <mass value="0.108022"/>
+      <inertia ixx="0.0000705302" ixy="-0.00000957659" ixz="-6.25290e-7" iyy="0.000113577" iyz="-0.00000126795" izz="0.0000858534"/>
     </inertial>
   </link>
   <link name="arm_forearm_roll_actuator">
@@ -670,9 +673,9 @@
       <geometry><mesh filename="package://rover_arm/meshes/arm_forearm_rotator.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.000164254 -0.00561 0.026954" rpy="0 0 0"/>
-      <mass value="0.020778"/>
-      <inertia ixx="0.0000114476" ixy="-2.76104e-8" ixz="-2.37314e-8" iyy="0.0000115133" iyz="5.76351e-7" izz="0.00000658998"/>
+      <origin xyz="-0.000164284 -0.005607 0.02695" rpy="0 0 0"/>
+      <mass value="0.020774"/>
+      <inertia ixx="0.0000114451" ixy="-2.76214e-8" ixz="-2.37199e-8" iyy="0.000011512" iyz="5.75121e-7" izz="0.00000658877"/>
     </inertial>
   </link>
   <link name="arm_wrist_pitch_actuator">
@@ -702,9 +705,9 @@
       <geometry><mesh filename="package://rover_arm/meshes/arm_wrist.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.049273 -0.007023 -0.025602" rpy="0 0 0"/>
-      <mass value="0.060627"/>
-      <inertia ixx="0.0000385253" ixy="0.00000461371" ixz="-1.03612e-7" iyy="0.000050547" iyz="6.28687e-7" izz="0.0000397221"/>
+      <origin xyz="0.049273 -0.006959 -0.025698" rpy="0 0 0"/>
+      <mass value="0.060373"/>
+      <inertia ixx="0.000038275" ixy="0.00000459164" ixz="-5.73719e-8" iyy="0.0000503206" iyz="5.18813e-7" izz="0.0000396"/>
     </inertial>
   </link>
   <link name="arm_wrist_roll_actuator">

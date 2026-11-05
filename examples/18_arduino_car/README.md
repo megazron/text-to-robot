@@ -1,0 +1,67 @@
+# arduino car
+
+> An Arduino 4WD obstacle avoiding car with an ultrasonic sensor
+
+![simulation](simulation.gif)
+
+Interpreted as: Arduino car (4WD) · range (sensor_bracket)
+
+**Arduino car (stronger (4WD, ramps up to 10 deg)): 4WD on TT gear motors, 0.53 kg, 0.54 m/s, 99 min, $37 of parts**
+
+Parts cost **$40.88** · printed structure 2 parts, 97 g · checks passed 8/8
+
+## What it can do
+
+| | |
+|---|--:|
+| tier | stronger |
+| tier label | stronger (4WD, ramps up to 10 deg) |
+| wheels | 4 |
+| max slope deg | 10 |
+| mass kg | 0.531 |
+| top speed m s | 0.54 |
+| runtime min | 99 |
+| cost usd | 36.5 |
+| controller | Arduino Nano compatible board (ATmega328P, CH340, USB-C) |
+| length mm | 200 |
+| width mm | 166 |
+
+## Engineering checks
+
+All 8 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
+
+## Assumptions and limits
+
+- TT motor continuous torque taken as 30 % of the 0.8 kg.cm stall (Adafruit #3777 data)
+- prices are typical single-unit marketplace prices for generic modules and vary by seller
+
+## Prompt notes
+
+- conflict: "4wd" asks for a wheeled base, but a prompt builds one robot; built the Arduino car (4WD)
+- not applied: hobby servos / Arduino: only arms are designed for hobby servos so far; the Arduino car (4WD) uses its standard actuators
+- not applied: ultrasonic sensor: only cameras, depth cameras, lidars and IMUs are modelled
+
+<!-- SIM -->
+## Simulation (MuJoCo, real actuator limits)
+
+**3/3 task tests pass.** Every motor is limited to its datasheet peak torque and its torque-speed line, with the rotor inertia reflected through its gearbox; continuous loads are compared with the rated torque. The animation above is recorded from these tests.
+
+| | Test | Result |
+|---|---|---|
+| ✅ | drive straight | 2.27 m in 4.95 s, cruise speed 0.530 m/s vs claimed 0.540 m/s, heading drift -0.1 deg, lateral -0.4 cm |
+| ✅ | ramp 10deg | from standstill on a 10 deg slope (speed ramped over 2.0 s at 0.5 m/s^2): 1.51 m uphill in 4.0 s, speed 0.522 m/s of 0.540 commanded |
+| ✅ | turn in place | yaw rate 2.22 rad/s with 3.84 commanded (no-slip) (needs >= 1.92), centre moved 3.9 cm over 1.0 turn(s) (3.9 cm per turn) |
+
+_PASS means the modelled actuators (datasheet peak torque as a hard limit, a linear torque-speed line to no-load speed, reflected rotor inertia, URDF damping/friction) can produce the torques and speeds the task needs in this geometry and mass distribution, and that mean torque over the hold stays within the continuous (rated) torque. Joint control uses an ideal model-based feedforward (computed torque) through the force-limited servo for fixed-base robots and plain position servos for floating robots; a pass therefore proves torque/speed capacity, not that a given controller achieves it. Untested: thermal limits over long duty cycles (only the mean-vs-rated proxy), gearbox backlash and compliance, link and joint flexibility, encoder resolution, supply voltage sag and current limits, bus latency, controller tuning, and contact/friction values (nominal friction only)._
+<!-- /SIM -->
+
+## Files
+
+| File | What |
+|---|---|
+| `robot.urdf`, `meshes/` | URDF with real component and printed-part meshes, datasheet effort/velocity limits |
+| `BOM.md`, `bom.json` | every part to buy, with supplier links and prices |
+| `robot.cad.zip` | build package: printable STLs, print list, bought-part models, assembly order |
+| `robot.ros2.zip` | ROS 2 description package (ros2_control, MoveIt config, Gazebo launch) |
+| `robot.training.zip` | MuJoCo / RL training scaffold |
+| `simulation_report.json` | MuJoCo task tests under the real actuator limits |

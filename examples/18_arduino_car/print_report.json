@@ -1,0 +1,59 @@
+{
+ "bed_mm": [
+  250.0,
+  210.0,
+  220.0
+ ],
+ "parts": [
+  {
+   "name": "chassis",
+   "watertight": true,
+   "volume_cm3": 99.44,
+   "size_mm": [
+    200.0,
+    112.0,
+    26.7
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 1.11,
+   "support_frac": 0.002,
+   "bed_contact_cm2": 214.85,
+   "min_wall_mm": 3.0,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "sensor_bracket",
+   "watertight": true,
+   "volume_cm3": 6.92,
+   "size_mm": [
+    16.0,
+    52.0,
+    29.0
+   ],
+   "orientation": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 0.21,
+   "support_frac": 0.004,
+   "bed_contact_cm2": 10.64,
+   "min_wall_mm": 3.0,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  }
+ ]
+}

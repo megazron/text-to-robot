@@ -87,9 +87,9 @@
       "category": "Printed structure",
       "name": "PETG filament for 15 printed parts",
       "qty": 1,
-      "unit_cost": 14.54,
-      "subtotal": 14.54,
-      "spec": "575 g of parts (+15 % supports/waste), about 52.4 h of printing",
+      "unit_cost": 14.53,
+      "subtotal": 14.53,
+      "spec": "574 g of parts (+15 % supports/waste), about 52.4 h of printing",
       "note": "base_link, left_bracket, right_bracket, front_caster_post, rear_caster_post, computer_tray, motor_driver_1_tray, battery_tray, regulator_5v_tray, imu_tray, electronics_enclosure_front, electronics_enclosure_rear, electronics_lid_front, electronics_lid_rear, lidar_mast"
     },
     {
@@ -101,7 +101,7 @@
       "spec": "12x M3 x 8 socket head (motor face); 4x M3 x 10 socket head + nut (bracket to deck); 6x M3 x 6 socket head (caster); 15x M2.5 x 6 screws (board to standoffs); 10x M3 x 8 socket head (tray to deck); 1x 20 mm hook-and-loop battery strap; 8x M3 x 8 + nut (enclosure halves lap joint); 4x M3 x 10 self-tapping (enclosure lid); 4x M3 x 8 + nut (enclosure tabs to deck; drill 3.4 mm through the deck at the tabs); 4x M2.5 x 6 (lidar)"
     }
   ],
-  "total": 494.38,
+  "total": 494.37,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,

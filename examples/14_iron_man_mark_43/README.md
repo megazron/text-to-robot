@@ -1,215 +1,69 @@
-# iron_man_mark_43
+# iron man mark 43
 
-Prompt: Build me a movie-accurate wearable Iron Man Mark 43 suit from Age of Ultron with all the small polygon armour plates that open and close, repulsors, a HUD and an IMU. Budget $60000
+> Build me a movie-accurate wearable Iron Man Mark 43 suit from Age of Ultron with all the small polygon armour plates that open and close, repulsors, a HUD and an IMU. Budget $60000
 
-![Current MuJoCo simulation](simulation.gif)
+![simulation](simulation.gif)
 
-Collision model: **compound convex meshes and URDF primitives**.
+Interpreted as: Iron Man Mark 43 wearable suit · budget $60000
 
-This GIF runs gravity, pose holding and self-collision on the shipped model. It is
-not a learned policy or proof of hardware accuracy. The model's failures remain visible.
+**Iron Man Mark 43 (full wearable suit): 70 printed pieces, 4.0 kg filament, motorised faceplate, $257 incl. filament**
 
-## Download and inspect
+Parts cost **$262.98** (budget $60000: within) · printed structure 70 parts, 3747 g · checks passed 84/84
 
-- [CAD / STL / OpenSCAD](robot.cad.zip), [ROS 2 package](robot.ros2.zip), [training package](robot.training.zip), [URDF](robot.urdf), [robot JSON](robot.json), [BOM](BOM.md).
-- [Simulation report](simulation_report.json): **4/6** checks;
-  **0** initial penetration contacts.
-- Failed checks: actuator_sweep, disturbance_recovery.
-- [Physical build evidence and missing interfaces](BUILDABILITY.md), [machine-readable record](buildability_report.json). **No tested physical build is documented.**
+## What it can do
 
-## Design research
+| | |
+|---|--:|
+| tier | suit |
+| tier label | full wearable suit |
+| wearer height m | 1.75 |
+| printed pieces | 70 |
+| armour mass kg | 3.57 |
+| filament kg | 4.05 |
+| cost usd | 256.73 |
+| mass kg | 82.22 |
 
-[Public engineering sources and model-specific changes](../../references/engineering/README.md).
+## Actuators (sized from this robot's own loads)
 
-## MoveIt / ROS 2
+| Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
+|---|---|--:|--:|--:|--:|
+| faceplate | hobby_mg90s | 0.1375 | 0.1294 / 0.4314 | 3.14x | 13.09 |
 
-[Browse the generated MoveIt configuration](moveit/) (SRDF, KDL, OMPL, controllers).
-Unzip the ROS package into a workspace's `src/` directory, then:
+## Engineering checks
 
-```bash
-source /opt/ros/jazzy/setup.bash
-rosdep install --from-paths src --ignore-src -r -y
-colcon build
-source install/setup.bash
-ros2 launch iron_man_mark_43 move_group.launch.py
-```
+All 84 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
 
-The launch uses mock hardware. Planning requires a collision-free start state.
-The fixed-root planner is not a walking controller or a simulation bridge.
+## Assumptions and limits
 
-[Recorded MoveIt runtime result](moveit_report.json).
+- Joint limits trimmed to the collision-free range found by exact solid sweeps: left_elbow [-2.40, 0.00] -> [-1.82, 0.00]; left_hip [-1.90, 0.40] -> [-1.53, 0.40]; left_knee [0.00, 2.20] -> [0.00, 1.86]; right_elbow [-2.40, 0.00] -> [-1.82, 0.00]; right_hip [-1.90, 0.40] -> [-1.53, 0.40]; right_knee [0.00, 2.20] -> [0.00, 1.86].
+- padding gap 14 mm, PLA/PETG walls 3 mm, 15 % gyroid infill (shells are mostly walls)
+- filament at $22/kg, 8 % waste
+- the suit is worn armour: the wearer moves every joint; nothing powers the limbs (hobby servos cannot move a person)
+- wearer proportions from standard segment ratios scaled to the stated height; check against your own measurements before printing
 
-## Reproduce
+## Prompt notes
 
-From the repository root:
+- not applied: imu: the Iron Man Mark 43 wearable suit design has no mount for it yet
 
-```bash
-node scripts/export_examples.ts
-python scripts/audit_examples.py
-python scripts/render_example_gifs.py
-python scripts/document_examples.py
-python scripts/verify_example_artifacts.py
-```
+<!-- SIM -->
+## Simulation (MuJoCo, real actuator limits)
 
-These are procedural concept models. Masses, motors and contacts are approximate;
-manufacturing interfaces and measured dynamics remain unverified.
+**1/1 task tests pass.** Every motor is limited to its datasheet peak torque and its torque-speed line, with the rotor inertia reflected through its gearbox; continuous loads are compared with the rated torque. The animation above is recorded from these tests.
 
-## Current armour and helmet animations
+| | Test | Result |
+|---|---|---|
+| ✅ | open and hold | opens faceplate to -1.14 rad (target -1.14) and holds 1.5 s |
 
-![Armour actuator preview](articulation.gif)
-![Helmet actuator preview](helmet.gif)
+_PASS means the modelled actuators (datasheet peak torque as a hard limit, a linear torque-speed line to no-load speed, reflected rotor inertia, URDF damping/friction) can produce the torques and speeds the task needs in this geometry and mass distribution, and that mean torque over the hold stays within the continuous (rated) torque. Joint control uses an ideal model-based feedforward (computed torque) through the force-limited servo for fixed-base robots and plain position servos for floating robots; a pass therefore proves torque/speed capacity, not that a given controller achieves it. Untested: thermal limits over long duty cycles (only the mean-vs-rated proxy), gearbox backlash and compliance, link and joint flexibility, encoder resolution, supply voltage sag and current limits, bus latency, controller tuning, and contact/friction values (nominal friction only)._
+<!-- /SIM -->
 
-### Individual joint checks
+## Files
 
-![Finger articulation](hand_joints.gif)
-![Neck articulation](neck_joints.gif)
-![Chest door attachments](chest_joints.gif)
-
-These three close-ups prescribe joint positions on the exported meshes, with
-collision resolution disabled. They verify the joint tree, not actuator forces
-or safe motion. [Source-hashed articulation report](articulation_report.json).
-Each finger has three flexion joints; each thumb has two. The neck has yaw and
-pitch, and the chest inlays now move with their chest doors. Fixed trim is meant
-to move with its supporting plate, not have an independent motor.
-
-
-These two previews use a **fixed base and self-collision disabled** to show the
-actuated geometry. They do not validate donning or motion clearance. The first
-GIF and simulation report above use self-collision enabled.
-
-[MoveIt runtime result](moveit_report.json): controllers and planning scene start,
-with a collision-free neutral state. Small neck and left/right arm goals plan and
-execute through mock control; this does not validate the whole motion range or
-real motors. [Left arm](moveit_left_arm_report.json), [right arm](moveit_right_arm_report.json).
-An initial five-second right-arm request [timed out](moveit_right_arm_timeout.json)
-while other audits were running; a subsequent request succeeded. This is not a
-planning reliability benchmark. [Wearer fit](wearability_report.json)
-also fails. [Production references and downloaded design research](../../references/mark43/RESEARCH.md)
-record the sources and limitations. [Visual comparison](../../docs/MARK43_VISUAL_REVIEW.md).
-
-The current revision separates helmet seams and adds the red forehead insert,
-reshapes shoulders and boot uppers, and cuts limb-shell ends around joint motors.
-Surface-following boot/forearm trim replaces intersecting badges. Rear details
-follow their flight flaps. Internal struts have clearance at their connector ends.
-
-[Surface-contact comparison](surface_contact_comparison.json): **81 → 0**
-non-adjacent intersecting pairs at neutral. No new neutral pairs were introduced.
-This tests visual triangle surfaces with tessellated primitives; it is not a
-penetration-depth, full-containment or wearer-fit measurement.
-The chest doors have a clearance seam around the fixed sternum. The lower helmet
-shroud follows yaw while pitch moves inside it; the fixed ring keeps its mounting
-plane with 12 mm relieved from the top. The red collar plate is 8 mm lower.
-The helmet position, neck limits and 140 mm ring bore are unchanged. Its closed
-head-entry failure remains in the wearer report.
-
-Eight limb clamshells now open away from their own cuffs and outer shells over
-the original 1.4 rad travel. Each has 61 regression samples. In the standing pose,
-large openings still strike neighbouring body parts; this is not a donning sequence.
-The compound sweep has more failing poses than before the direction correction;
-clearing each panel's own cuff does not establish a safe full-body opening path.
-
-| Audit | Poses including neutral | Failing moving samples |
-|---|---:|---:|
-| [Seven selected joints](surface_contact_report.json) | 428 | 0 |
-| [Combined neck yaw/pitch grid](neck_motion_report.json) | 962 | 0 |
-| [Every limited joint, independently](all_joint_surface_report.json) | 1119 | 295 |
-| [Compound collision audit](motion_clearance_report.json) | 775 | 159 |
-
-These are different sampling grids and collision representations, not comparable
-accuracy scores. Passing the neck grid does not validate the other joints,
-continuous motion, a wearer insertion path or a physical mechanism.
-
-Reproduce the full surface sweep and combined neck check:
-
-```bash
-python scripts/audit_surface_contacts.py examples/14_iron_man_mark_43/robot.sim.urdf --all-joints --samples 13 --json /tmp/all-joints.json
-python scripts/audit_surface_contacts.py examples/14_iron_man_mark_43/robot.sim.urdf --joints neck_yaw neck_pitch --grid --samples 31 --json /tmp/neck.json
-```
-
-The main physics GIF and smoke report use the source-checked compound collision
-archive, with self-collision enabled. The old box approximation fills hollow armour
-and creates false collisions; its diagnostic remains in [clearance_report.json](clearance_report.json)
-for comparison. Compound hulls are still approximations; their errors are reported.
-
-<!-- MANUAL_NOTES -->
-
-## Model detail and audit status
-
-![Exported model rendered in MuJoCo](../../docs/img/mark43_threequarter_review.png)
-
-![Mark 43 in the web viewer](../../docs/img/web/14_iron_man_mark_43.png)
-
-The model contains **268 links, 232 mesh instances using 216 unique STL files and
-86 actuated joints**. Each finger has three articulated segments, each thumb has
-two, and the helmet has neck yaw and pitch. Chest inlays follow their opening
-doors. Thigh, shin and arm trim follows the underlying shell surface.
-
-### Visual reference
-
-Shapes are compared against [Legacy Effects' Avengers: Age of Ultron production
-references](https://www.legacyefx.com/avengersaou) and a licensed collectible
-reference. The [visual review](../../docs/MARK43_VISUAL_REVIEW.md) compares specific
-shapes with front and rear views. **This is not movie-accurate yet.** Chest
-continuity, helmet topology, rib placement, hand anatomy and exposed drive modules
-remain visible differences, and no visual accuracy percentage is claimed.
-Reference photographs are cached locally and checked against saved iterations; see
-the [reference workflow](../../references/mark43/README.md) and
-[research notes](../../references/mark43/RESEARCH.md).
-
-### Check summary
-
-| Check | Current evidence |
+| File | What |
 |---|---|
-| Closed mesh topology and mass integrals | 232/232 mesh instances pass |
-| Empty-suit smoke battery, self-collision off | 3/5; tracking and disturbance recovery fail |
-| Suit with passive mannequin, human/self-contact disabled | See [loaded physics report](mujoco_report_wearer.json); actuator tracking fails |
-| Compound-convex initial collision | Zero initial contacts; not full-range or human clearance |
-| Collision-enabled smoke battery, compound model | 4/6; actuator tracking and disturbance recovery fail |
-| Joint-range clearance | Interference remains; see the audit table above |
-| ROS 2 Jazzy / MoveIt | Zero neutral contacts; small neck and both arm goals plan and execute with mock control |
-| Wearer fit | Example measurements fail opening/clearance checks |
-| Breathing, structural strength, real hardware | Unverified |
-
-Neutral surface intersections went from **81 to 0** and native MoveIt contacts from
-**85 to 0** ([before/after evidence](surface_contact_comparison.json)). The combined
-chest/neck [coordinated path](../../docs/motion_paths/README.md) clears 121 samples;
-the knee path intersects at 45 of 51.
-
-| Previous exported geometry | Current exported geometry |
-|---|---|
-| ![Before clearance changes](../../docs/img/mark43_before_joint_clearance.png) | ![After clearance changes](../../docs/img/mark43_front_review.png) |
-
-Further reports: [physics](mujoco_report.json), [collision](clearance_report.json),
-[motion clearance](motion_clearance_report.json), [suit MoveIt](moveit_report.json),
-[arm MoveIt fixture](moveit_fixture_report.json),
-[compound-convex model](robot.convex.zip), [preliminary BOM](BOM.md).
-
-### Entry and breathing
-
-![Open panels with the example mannequin](../../docs/img/mark43_entry_review.png)
-
-Opening the panels does not establish that a person can enter. The closed pelvis
-and neck openings fail straight-insertion checks against the illustrative wearer
-dimensions, and static human-contact checks find interference in both open and
-closed poses. These are proxy checks, not a continuous donning path or tissue
-model. Measurements, separable frame interfaces, joint alignment and a manual
-release system still need design and validation.
-
-Decorative grilles and eye apertures do not establish breathable space. There is no
-measured airflow, CO2, temperature, fan-duct design or emergency breathing
-assessment; the wearer report leaves these unresolved.
-
-### Regenerate the suit
-
-```bash
-node scripts/regen_mark43_example.ts
-python3 scripts/audit_mark43.py --convex
-python3 scripts/check_mesh_assets.py --json examples/14_iron_man_mark_43/mesh_quality_report.json
-python3 scripts/render_mark43_review.py
-ttr-mujoco test examples/14_iron_man_mark_43/robot.sim.urdf --self-collision
-```
-
-Regeneration invalidates reports and download bundles tied to old geometry. The
-example audit rejects a stale compound collision archive, so run
-`audit_mark43.py --convex` before `audit_examples.py`. Character references and
-associated intellectual property belong to their respective owners.
+| `robot.urdf`, `meshes/` | URDF with real component and printed-part meshes, datasheet effort/velocity limits |
+| `BOM.md`, `bom.json` | every part to buy, with supplier links and prices |
+| `robot.cad.zip` | build package: printable STLs, print list, bought-part models, assembly order |
+| `robot.ros2.zip` | ROS 2 description package (ros2_control, MoveIt config, Gazebo launch) |
+| `robot.training.zip` | MuJoCo / RL training scaffold |
+| `simulation_report.json` | MuJoCo task tests under the real actuator limits |

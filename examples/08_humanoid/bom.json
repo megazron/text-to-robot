@@ -3,347 +3,339 @@
   "tier": "prosumer",
   "lines": [
     {
-      "category": "Actuator",
-      "name": "Unitree GO-M8010-6",
-      "qty": 27,
-      "unit_cost": 400,
-      "subtotal": 10800,
-      "spec": "integrated BLDC + planetary, RS485 (23 N·m)",
-      "note": "joint neck_joint; rating duty/source unverified; joint left_arm_joint_1; rating duty/source unverified; joint left_arm_joint_2; rating duty/source unverified; joint left_arm_joint_3; rating duty/source unverified; joint left_arm_joint_4; rating duty/source unverified; joint left_arm_joint_5; rating duty/source unverified; joint left_arm_joint_6; rating duty/source unverified; joint left_arm_joint_7; rating duty/source unverified; joint right_arm_joint_1; rating duty/source unverified; joint right_arm_joint_2; rating duty/source unverified; joint right_arm_joint_3; rating duty/source unverified; joint right_arm_joint_4; rating duty/source unverified; joint right_arm_joint_5; rating duty/source unverified; joint right_arm_joint_6; rating duty/source unverified; joint right_arm_joint_7; rating duty/source unverified; joint left_hip_yaw; rating duty/source unverified; joint left_hip_roll; rating duty/source unverified; joint left_hip_joint; rating duty/source unverified; joint left_knee_joint; rating duty/source unverified; joint left_ankle_roll; rating duty/source unverified; joint left_ankle_joint; rating duty/source unverified; joint right_hip_yaw; rating duty/source unverified; joint right_hip_roll; rating duty/source unverified; joint right_hip_joint; rating duty/source unverified; joint right_knee_joint; rating duty/source unverified; joint right_ankle_roll; rating duty/source unverified; joint right_ankle_joint; rating duty/source unverified"
+      "category": "Sensor",
+      "name": "Adafruit BNO085 9-DoF IMU breakout (STEMMA QT, #4754)",
+      "qty": 1,
+      "unit_cost": 29.5,
+      "subtotal": 29.5,
+      "spec": "3.3 V",
+      "note": "IMU (pelvis) · https://www.adafruit.com/product/4754"
+    },
+    {
+      "category": "Power",
+      "name": "Pololu D36V50F5 5 V 5.5 A step-down regulator (#4091)",
+      "qty": 2,
+      "unit_cost": 39.95,
+      "subtotal": 79.9,
+      "spec": "5 V",
+      "note": "5 V regulator (computer); 5 V regulator (arm / neck XL330 bus) · https://www.pololu.com/product/4091"
+    },
+    {
+      "category": "Electronics",
+      "name": "ROBOTIS U2D2 USB to TTL/RS-485 interface",
+      "qty": 1,
+      "unit_cost": 32.1,
+      "subtotal": 32.1,
+      "spec": "5 V",
+      "note": "USB to the arm / neck DYNAMIXEL bus · https://www.generationrobots.com/en/400848-usb2dynamixel-robotis.html"
     },
     {
       "category": "Actuator",
-      "name": "NEMA17 + lead screw",
-      "qty": 4,
-      "unit_cost": 26,
-      "subtotal": 104,
-      "spec": "lead-screw linear stage (60 N)",
-      "note": "joint left_left_finger_joint; rating duty/source unverified; joint left_right_finger_joint; rating duty/source unverified; joint right_left_finger_joint; rating duty/source unverified; joint right_right_finger_joint; rating duty/source unverified"
+      "name": "DYNAMIXEL XH540-W270-T(R)",
+      "qty": 6,
+      "unit_cost": 539.9,
+      "subtotal": 3239.4,
+      "spec": "2.97 N·m rated / 9.9 N·m peak, 12 V",
+      "note": "joint l_hip_roll; joint l_hip_pitch; joint l_knee; joint r_hip_roll; … · https://robotis.us/dynamixel-xh540-w270-t"
     },
     {
-      "category": "Motor driver",
-      "name": "TMC2209 driver",
+      "category": "Actuator",
+      "name": "DYNAMIXEL XL330-M288-T",
+      "qty": 6,
+      "unit_cost": 25.9,
+      "subtotal": 155.4,
+      "spec": "0.156 N·m rated / 0.52 N·m peak, 5 V",
+      "note": "joint l_elbow; gripper; joint r_elbow; joint neck_pan; … · https://robotis.us/dynamixel-xl330-m288-t"
+    },
+    {
+      "category": "Actuator",
+      "name": "DYNAMIXEL XL430-W250-T",
+      "qty": 6,
+      "unit_cost": 44.9,
+      "subtotal": 269.4,
+      "spec": "0.42 N·m rated / 1.4 N·m peak, 11.1 V",
+      "note": "joint l_shoulder_pitch; joint l_shoulder_roll; joint l_upper_arm_yaw; joint r_shoulder_pitch; … · https://robotis.us/dynamixel-xl430-w250-t"
+    },
+    {
+      "category": "Actuator",
+      "name": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
       "qty": 4,
-      "unit_cost": 10,
-      "subtotal": 40,
-      "spec": "driver for NEMA17 + lead screw"
+      "unit_cost": 22,
+      "subtotal": 88,
+      "spec": "0.9807 N·m rated / 2.942 N·m peak, 12 V",
+      "note": "joint l_hip_yaw; joint l_ankle_roll; joint r_hip_yaw; joint r_ankle_roll · https://www.seeedstudio.com/STS3215-30KG-Serial-Servo-p-6340.html"
+    },
+    {
+      "category": "Actuator",
+      "name": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
+      "qty": 2,
+      "unit_cost": 40,
+      "subtotal": 80,
+      "spec": "1.5691 N·m rated / 4.9033 N·m peak, 12 V",
+      "note": "joint l_ankle_pitch; joint r_ankle_pitch · https://openelab.io/products/feetech-sts3250-c002-servo-12v"
+    },
+    {
+      "category": "Power",
+      "name": "LiPo 3S 5000 mAh 60C, XT60 (Gens Ace G-Tech)",
+      "qty": 1,
+      "unit_cost": 59.99,
+      "subtotal": 59.99,
+      "spec": "11.1 V, 55.5 Wh",
+      "note": "main battery · https://classicrcshop.com/products/gens-ace-5000mah-3s-60c-11-1v-g-tech-lipo-battery-pack-with-xt60-plug"
+    },
+    {
+      "category": "Sensor",
+      "name": "Raspberry Pi Camera Module 3 (standard lens)",
+      "qty": 1,
+      "unit_cost": 25,
+      "subtotal": 25,
+      "spec": "3.3 V",
+      "note": "head camera · https://www.raspberrypi.com/products/camera-module-3/"
     },
     {
       "category": "Compute",
-      "name": "Raspberry Pi 5 (8GB)",
+      "name": "Raspberry Pi 5 (4 GB)",
       "qty": 1,
-      "unit_cost": 80,
-      "subtotal": 80,
-      "spec": "SBC, runs ROS 2"
+      "unit_cost": 110,
+      "subtotal": 110,
+      "spec": "5 V",
+      "note": "main computer · https://www.raspberrypi.com/products/raspberry-pi-5/"
     },
     {
-      "category": "Power",
-      "name": "LiPo 6S 10000mAh",
+      "category": "Electronics",
+      "name": "Waveshare Bus Servo Adapter (A)",
       "qty": 1,
-      "unit_cost": 95,
-      "subtotal": 95,
-      "spec": "222 Wh; est. load 675 W"
+      "unit_cost": 10.6,
+      "subtotal": 10.6,
+      "spec": "12 V",
+      "note": "USB to leg servo bus · https://www.waveshare.com/bus-servo-adapter-a.htm"
     },
     {
-      "category": "Power",
-      "name": "DC-DC buck regulator (5V/10A)",
+      "category": "Printed structure",
+      "name": "PETG filament for 26 printed parts",
       "qty": 1,
-      "unit_cost": 12,
-      "subtotal": 12,
-      "spec": "logic + servo rail"
+      "unit_cost": 33.34,
+      "subtotal": 33.34,
+      "spec": "1318 g of parts (+15 % supports/waste), about 120.1 h of printing",
+      "note": "base_link, torso, l_hip_yaw_link, l_hip_roll_link, l_hip_pitch_link, l_knee_link, l_ankle_pitch_link, l_ankle_roll_link, r_hip_yaw_link, r_hip_roll_link, r_hip_pitch_link, r_knee_link, r_ankle_pitch_link, r_ankle_roll_link, l_shoulder_pitch_link, l_shoulder_roll_link, l_upper_arm_yaw_link, l_elbow_link, l_gripper_jaw, r_shoulder_pitch_link, r_shoulder_roll_link, r_upper_arm_yaw_link, r_elbow_link, r_gripper_jaw, neck_pan_link, neck_tilt_link"
     },
     {
-      "category": "Power",
-      "name": "Power distribution board + fuse + switch",
-      "qty": 1,
-      "unit_cost": 14,
-      "subtotal": 14,
-      "spec": "wiring harness backbone"
-    },
-    {
-      "category": "Structure",
-      "name": "3D-printed frame (PLA/PETG)",
-      "qty": 1,
-      "unit_cost": 128.85,
-      "subtotal": 128.85,
-      "spec": "~5.86 kg material @ $22/kg"
-    },
-    {
-      "category": "Structure",
-      "name": "Fastener + bearing kit",
-      "qty": 1,
-      "unit_cost": 18,
-      "subtotal": 18,
-      "spec": "M3 screws, heat inserts, 608 bearings"
-    },
-    {
-      "category": "Wiring & misc",
-      "name": "Wiring, connectors, JST/Dupont, sleeving",
-      "qty": 1,
-      "unit_cost": 1337.4,
-      "subtotal": 1337.4,
-      "spec": "~12% of electronics"
+      "category": "Fasteners",
+      "name": "Screws, nuts and inserts",
+      "qty": 180,
+      "unit_cost": 0.12,
+      "subtotal": 21.6,
+      "spec": "4x M3 x 12 torso-to-pelvis bolts; 88x M2/M2.5 x 6 case screws; 88x horn / hub screws"
     }
   ],
-  "total": 12629.25,
+  "total": 4234.23,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
   "actuator_sizing": [
     {
-      "joint": "neck_joint",
-      "required_effort": 12.656,
+      "joint": "l_hip_yaw",
+      "required_effort": 0.403,
       "effort_unit": "N·m",
-      "required_torque_nm": 12.656,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "1.8x"
+      "required_torque_nm": 0.403,
+      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "margin": "7.29x"
     },
     {
-      "joint": "left_arm_joint_1",
-      "required_effort": 12.656,
+      "joint": "l_hip_roll",
+      "required_effort": 4.217,
       "effort_unit": "N·m",
-      "required_torque_nm": 12.656,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "1.8x"
+      "required_torque_nm": 4.217,
+      "chosen": "DYNAMIXEL XH540-W270-T(R)",
+      "margin": "2.35x"
     },
     {
-      "joint": "left_arm_joint_2",
-      "required_effort": 12.656,
+      "joint": "l_hip_pitch",
+      "required_effort": 5.425,
       "effort_unit": "N·m",
-      "required_torque_nm": 12.656,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "1.8x"
+      "required_torque_nm": 5.425,
+      "chosen": "DYNAMIXEL XH540-W270-T(R)",
+      "margin": "1.83x"
     },
     {
-      "joint": "left_arm_joint_3",
-      "required_effort": 12.656,
+      "joint": "l_knee",
+      "required_effort": 5.121,
       "effort_unit": "N·m",
-      "required_torque_nm": 12.656,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "1.8x"
+      "required_torque_nm": 5.121,
+      "chosen": "DYNAMIXEL XH540-W270-T(R)",
+      "margin": "1.93x"
     },
     {
-      "joint": "left_arm_joint_4",
-      "required_effort": 12.656,
+      "joint": "l_ankle_pitch",
+      "required_effort": 2.787,
       "effort_unit": "N·m",
-      "required_torque_nm": 12.656,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "1.8x"
+      "required_torque_nm": 2.787,
+      "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
+      "margin": "1.76x"
     },
     {
-      "joint": "left_arm_joint_5",
-      "required_effort": 12.656,
+      "joint": "l_ankle_roll",
+      "required_effort": 1.166,
       "effort_unit": "N·m",
-      "required_torque_nm": 12.656,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "1.8x"
+      "required_torque_nm": 1.166,
+      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "margin": "2.52x"
     },
     {
-      "joint": "left_arm_joint_6",
-      "required_effort": 12.656,
+      "joint": "r_hip_yaw",
+      "required_effort": 0.403,
       "effort_unit": "N·m",
-      "required_torque_nm": 12.656,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "1.8x"
+      "required_torque_nm": 0.403,
+      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "margin": "7.29x"
     },
     {
-      "joint": "left_arm_joint_7",
-      "required_effort": 12.656,
+      "joint": "r_hip_roll",
+      "required_effort": 4.217,
       "effort_unit": "N·m",
-      "required_torque_nm": 12.656,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "1.8x"
+      "required_torque_nm": 4.217,
+      "chosen": "DYNAMIXEL XH540-W270-T(R)",
+      "margin": "2.35x"
     },
     {
-      "joint": "left_left_finger_joint",
-      "required_effort": 10.125,
-      "effort_unit": "N",
-      "required_force_n": 10.125,
-      "chosen": "NEMA17 + lead screw",
-      "margin": "5.9x"
-    },
-    {
-      "joint": "left_right_finger_joint",
-      "required_effort": 10.125,
-      "effort_unit": "N",
-      "required_force_n": 10.125,
-      "chosen": "NEMA17 + lead screw",
-      "margin": "5.9x"
-    },
-    {
-      "joint": "right_arm_joint_1",
-      "required_effort": 12.656,
+      "joint": "r_hip_pitch",
+      "required_effort": 5.425,
       "effort_unit": "N·m",
-      "required_torque_nm": 12.656,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "1.8x"
+      "required_torque_nm": 5.425,
+      "chosen": "DYNAMIXEL XH540-W270-T(R)",
+      "margin": "1.83x"
     },
     {
-      "joint": "right_arm_joint_2",
-      "required_effort": 12.656,
+      "joint": "r_knee",
+      "required_effort": 5.121,
       "effort_unit": "N·m",
-      "required_torque_nm": 12.656,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "1.8x"
+      "required_torque_nm": 5.121,
+      "chosen": "DYNAMIXEL XH540-W270-T(R)",
+      "margin": "1.93x"
     },
     {
-      "joint": "right_arm_joint_3",
-      "required_effort": 12.656,
+      "joint": "r_ankle_pitch",
+      "required_effort": 2.787,
       "effort_unit": "N·m",
-      "required_torque_nm": 12.656,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "1.8x"
+      "required_torque_nm": 2.787,
+      "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
+      "margin": "1.76x"
     },
     {
-      "joint": "right_arm_joint_4",
-      "required_effort": 12.656,
+      "joint": "r_ankle_roll",
+      "required_effort": 1.166,
       "effort_unit": "N·m",
-      "required_torque_nm": 12.656,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "1.8x"
+      "required_torque_nm": 1.166,
+      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "margin": "2.52x"
     },
     {
-      "joint": "right_arm_joint_5",
-      "required_effort": 12.656,
+      "joint": "l_shoulder_pitch",
+      "required_effort": 0.381,
       "effort_unit": "N·m",
-      "required_torque_nm": 12.656,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "1.8x"
+      "required_torque_nm": 0.381,
+      "chosen": "DYNAMIXEL XL430-W250-T",
+      "margin": "3.67x"
     },
     {
-      "joint": "right_arm_joint_6",
-      "required_effort": 12.656,
+      "joint": "l_shoulder_roll",
+      "required_effort": 0.368,
       "effort_unit": "N·m",
-      "required_torque_nm": 12.656,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "1.8x"
+      "required_torque_nm": 0.368,
+      "chosen": "DYNAMIXEL XL430-W250-T",
+      "margin": "3.81x"
     },
     {
-      "joint": "right_arm_joint_7",
-      "required_effort": 12.656,
+      "joint": "l_upper_arm_yaw",
+      "required_effort": 0.216,
       "effort_unit": "N·m",
-      "required_torque_nm": 12.656,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "1.8x"
+      "required_torque_nm": 0.216,
+      "chosen": "DYNAMIXEL XL430-W250-T",
+      "margin": "6.49x"
     },
     {
-      "joint": "right_left_finger_joint",
-      "required_effort": 10.125,
-      "effort_unit": "N",
-      "required_force_n": 10.125,
-      "chosen": "NEMA17 + lead screw",
-      "margin": "5.9x"
-    },
-    {
-      "joint": "right_right_finger_joint",
-      "required_effort": 10.125,
-      "effort_unit": "N",
-      "required_force_n": 10.125,
-      "chosen": "NEMA17 + lead screw",
-      "margin": "5.9x"
-    },
-    {
-      "joint": "left_hip_yaw",
-      "required_effort": 3.038,
+      "joint": "l_elbow",
+      "required_effort": 0.033,
       "effort_unit": "N·m",
-      "required_torque_nm": 3.038,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "7.6x"
+      "required_torque_nm": 0.033,
+      "chosen": "DYNAMIXEL XL330-M288-T",
+      "margin": "15.54x"
     },
     {
-      "joint": "left_hip_roll",
-      "required_effort": 5.063,
+      "joint": "l_gripper",
+      "required_effort": 0.002,
       "effort_unit": "N·m",
-      "required_torque_nm": 5.063,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "4.5x"
+      "required_torque_nm": 0.002,
+      "chosen": "DYNAMIXEL XL330-M288-T",
+      "margin": "99x"
     },
     {
-      "joint": "left_hip_joint",
-      "required_effort": 12.656,
+      "joint": "r_shoulder_pitch",
+      "required_effort": 0.384,
       "effort_unit": "N·m",
-      "required_torque_nm": 12.656,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "1.8x"
+      "required_torque_nm": 0.384,
+      "chosen": "DYNAMIXEL XL430-W250-T",
+      "margin": "3.65x"
     },
     {
-      "joint": "left_knee_joint",
-      "required_effort": 12.656,
+      "joint": "r_shoulder_roll",
+      "required_effort": 0.37,
       "effort_unit": "N·m",
-      "required_torque_nm": 12.656,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "1.8x"
+      "required_torque_nm": 0.37,
+      "chosen": "DYNAMIXEL XL430-W250-T",
+      "margin": "3.79x"
     },
     {
-      "joint": "left_ankle_roll",
-      "required_effort": 3.038,
+      "joint": "r_upper_arm_yaw",
+      "required_effort": 0.216,
       "effort_unit": "N·m",
-      "required_torque_nm": 3.038,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "7.6x"
+      "required_torque_nm": 0.216,
+      "chosen": "DYNAMIXEL XL430-W250-T",
+      "margin": "6.49x"
     },
     {
-      "joint": "left_ankle_joint",
-      "required_effort": 12.656,
+      "joint": "r_elbow",
+      "required_effort": 0.033,
       "effort_unit": "N·m",
-      "required_torque_nm": 12.656,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "1.8x"
+      "required_torque_nm": 0.033,
+      "chosen": "DYNAMIXEL XL330-M288-T",
+      "margin": "15.54x"
     },
     {
-      "joint": "right_hip_yaw",
-      "required_effort": 3.038,
+      "joint": "r_gripper",
+      "required_effort": 0.002,
       "effort_unit": "N·m",
-      "required_torque_nm": 3.038,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "7.6x"
+      "required_torque_nm": 0.002,
+      "chosen": "DYNAMIXEL XL330-M288-T",
+      "margin": "99x"
     },
     {
-      "joint": "right_hip_roll",
-      "required_effort": 5.063,
+      "joint": "neck_pan",
+      "required_effort": 0,
       "effort_unit": "N·m",
-      "required_torque_nm": 5.063,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "4.5x"
+      "required_torque_nm": 0,
+      "chosen": "DYNAMIXEL XL330-M288-T",
+      "margin": "99x"
     },
     {
-      "joint": "right_hip_joint",
-      "required_effort": 12.656,
+      "joint": "neck_tilt",
+      "required_effort": 0.114,
       "effort_unit": "N·m",
-      "required_torque_nm": 12.656,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "1.8x"
-    },
-    {
-      "joint": "right_knee_joint",
-      "required_effort": 12.656,
-      "effort_unit": "N·m",
-      "required_torque_nm": 12.656,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "1.8x"
-    },
-    {
-      "joint": "right_ankle_roll",
-      "required_effort": 3.038,
-      "effort_unit": "N·m",
-      "required_torque_nm": 3.038,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "7.6x"
-    },
-    {
-      "joint": "right_ankle_joint",
-      "required_effort": 12.656,
-      "effort_unit": "N·m",
-      "required_torque_nm": 12.656,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "1.8x"
+      "required_torque_nm": 0.114,
+      "chosen": "DYNAMIXEL XL330-M288-T",
+      "margin": "4.55x"
     }
   ],
-  "warnings": [
-    "Sizing uses a neutral-pose gravity proxy and declared joint effort, not a worst-case workspace or dynamic load analysis. Selection checks only approximate effort and broad motion type. Speed/torque curves, travel, voltage, feedback, mounting, thermal duty and wiring are not qualified.",
-    "Catalog values are planning estimates. Except explicitly sourced rated values, torque entries may be stall/peak ratings; continuous duty, fit and complete assemblies are unverified."
-  ],
+  "warnings": [],
   "notes": [
-    "Tier: prosumer. Prices are planning estimates (USD), not quotes. Structure assumes FDM 3D printing."
+    "Humanoid, 0.653 m, 3.60 kg, 24 DOF (4-DOF arms + grippers), 44 min, $4179 of parts",
+    "Joint limits trimmed to the collision-free range found by exact solid sweeps: l_hip_roll [-0.45, 0.45] -> [-0.13, 0.45]; l_knee [-2.20, 2.20] -> [-2.04, 2.20]; l_ankle_roll [-0.50, 0.50] -> [-0.50, 0.13]; r_hip_roll [-0.45, 0.45] -> [-0.45, 0.13]; r_knee [-2.20, 2.20] -> [-2.20, 2.04]; r_ankle_roll [-0.50, 0.50] -> [-0.13, 0.50]; l_shoulder_roll [-1.60, 1.60] -> [-0.15, 1.60]; r_shoulder_roll [-1.60, 1.60] -> [-1.60, 0.15]; neck_tilt [-0.70, 0.70] -> [-0.70, 0.38].",
+    "Joint ranges are swept with the arms held 0.35 rad out to the side (the walking posture); with the arms hanging straight the hands touch the thighs when a leg abducts or a wrist turns.",
+    "Zero joint angles are the standing pose (knees bent 0.25 rad, soles flat); the base origin is on the hip-yaw output plane.",
+    "Leg loads are J^T F at the sole with the whole robot on one foot and the centre of pressure anywhere on the central 60 % of the sole, over squat / lean / step poses, ±10 % traction, x 1.3 dynamic factor; continuous duty checked at 71 % of the worst stance load (RMS over a gait cycle with half of it in stance).",
+    "Soles carry a 2 mm rubber pad (silicone / neoprene sheet, glued) as the contact patch.",
+    "Arm loads are exact gravity torques with the payload in each hand, arms stretched forward, sideways and rolled.",
+    "Small humanoid: walking needs a balance controller using the pelvis IMU (ZMP preview / RL policy); position-controlled standing is passively stable only while the COM stays over the soles.",
+    "Prices are list/street prices from the linked suppliers at the time the catalog was written; check before ordering."
   ]
 }

@@ -1,108 +1,94 @@
 {
   "robot_name": "parallel_gripper",
-  "tier": "prosumer",
+  "tier": "hobby",
   "lines": [
     {
       "category": "Actuator",
-      "name": "NEMA17 + lead screw",
+      "name": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "qty": 1,
+      "unit_cost": 22,
+      "subtotal": 22,
+      "spec": "0.9807 N·m rated / 2.942 N·m peak, 12 V",
+      "note": "gripper pinion drive · https://www.seeedstudio.com/STS3215-30KG-Serial-Servo-p-6340.html"
+    },
+    {
+      "category": "Mechanical",
+      "name": "Linear ball bushing LM8UU (8 x 15 x 24 mm)",
+      "qty": 4,
+      "unit_cost": 1.2,
+      "subtotal": 4.8,
+      "spec": "https://www.samickthk.co.kr/sub/product/linear-bushing/LM.php",
+      "note": "finger carriage bushings · https://www.samick.co.kr/en/product/linear-bushing"
+    },
+    {
+      "category": "Power",
+      "name": "Mean Well LRS-75-12 enclosed PSU, 12 V 6 A (75 W)",
+      "qty": 1,
+      "unit_cost": 22,
+      "subtotal": 22,
+      "spec": "12 V",
+      "note": "12 V servo supply (off-board) · https://www.digikey.com/en/products/result?keywords=LRS-75-12"
+    },
+    {
+      "category": "Power",
+      "name": "Hardened chromed linear rod 8 mm h6, 130 mm",
       "qty": 2,
-      "unit_cost": 26,
-      "subtotal": 52,
-      "spec": "lead-screw linear stage (60 N)",
-      "note": "joint left_finger_joint; rating duty/source unverified; joint right_finger_joint; rating duty/source unverified"
+      "unit_cost": 4.56,
+      "subtotal": 9.12,
+      "spec": "https://us.misumi-ec.com/vona2/mech/M0100000000/M0101000000/M0101010000/",
+      "note": "finger guide rods · https://us.misumi-ec.com/vona2/mech/M0100000000/M0101000000/M0101010000/"
     },
     {
-      "category": "Motor driver",
-      "name": "TMC2209 driver",
-      "qty": 2,
-      "unit_cost": 10,
-      "subtotal": 20,
-      "spec": "driver for NEMA17 + lead screw"
-    },
-    {
-      "category": "Compute",
-      "name": "Teensy 4.1",
+      "category": "Electronics",
+      "name": "Waveshare Bus Servo Adapter (A)",
       "qty": 1,
-      "unit_cost": 32,
-      "subtotal": 32,
-      "spec": "600MHz MCU, real-time control"
+      "unit_cost": 10.6,
+      "subtotal": 10.6,
+      "spec": "12 V",
+      "note": "USB to servo bus (off-board) · https://www.waveshare.com/bus-servo-adapter-a.htm"
     },
     {
-      "category": "Power",
-      "name": "LiPo 4S 5000mAh",
+      "category": "Printed structure",
+      "name": "PETG filament for 5 printed parts",
       "qty": 1,
-      "unit_cost": 40,
-      "subtotal": 40,
-      "spec": "74 Wh; est. load 12 W"
+      "unit_cost": 9.92,
+      "subtotal": 9.92,
+      "spec": "392 g of parts (+15 % supports/waste), about 35.7 h of printing",
+      "note": "base_link, gripper_body, pinion, finger_a, finger_b"
     },
     {
-      "category": "Power",
-      "name": "DC-DC buck regulator (5V/10A)",
-      "qty": 1,
-      "unit_cost": 12,
-      "subtotal": 12,
-      "spec": "logic + servo rail"
-    },
-    {
-      "category": "Power",
-      "name": "Power distribution board + fuse + switch",
-      "qty": 1,
-      "unit_cost": 14,
-      "subtotal": 14,
-      "spec": "wiring harness backbone"
-    },
-    {
-      "category": "Structure",
-      "name": "3D-printed frame (PLA/PETG)",
-      "qty": 1,
-      "unit_cost": 33.01,
-      "subtotal": 33.01,
-      "spec": "~1.50 kg material @ $22/kg"
-    },
-    {
-      "category": "Structure",
-      "name": "Fastener + bearing kit",
-      "qty": 1,
-      "unit_cost": 18,
-      "subtotal": 18,
-      "spec": "M3 screws, heat inserts, 608 bearings"
-    },
-    {
-      "category": "Wiring & misc",
-      "name": "Wiring, connectors, JST/Dupont, sleeving",
-      "qty": 1,
-      "unit_cost": 20.4,
-      "subtotal": 20.4,
-      "spec": "~12% of electronics"
+      "category": "Fasteners",
+      "name": "Screws, nuts and inserts",
+      "qty": 20,
+      "unit_cost": 0.12,
+      "subtotal": 2.4,
+      "spec": "4x M6 x 16 socket head (adapter to robot flange); 4x M4 x 10 socket head + M4 heat-set insert (housing to adapter, radial); 4x M3 x 6 set screw (rod retention); 4x servo case screws (M2 x 6); 4x horn screws"
     }
   ],
-  "total": 241.41,
+  "total": 80.84,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
   "actuator_sizing": [
     {
-      "joint": "left_finger_joint",
-      "required_effort": 32,
-      "effort_unit": "N",
-      "required_force_n": 32,
-      "chosen": "NEMA17 + lead screw",
-      "margin": "1.9x"
-    },
-    {
-      "joint": "right_finger_joint",
-      "required_effort": 32,
-      "effort_unit": "N",
-      "required_force_n": 32,
-      "chosen": "NEMA17 + lead screw",
-      "margin": "1.9x"
+      "joint": "finger_a",
+      "required_effort": 0.155,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.155,
+      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+      "margin": "6.35x"
     }
   ],
-  "warnings": [
-    "Sizing uses a neutral-pose gravity proxy and declared joint effort, not a worst-case workspace or dynamic load analysis. Selection checks only approximate effort and broad motion type. Speed/torque curves, travel, voltage, feedback, mounting, thermal duty and wiring are not qualified.",
-    "Catalog values are planning estimates. Except explicitly sourced rated values, torque entries may be stall/peak ratings; continuous duty, fit and complete assemblies are unverified."
-  ],
+  "warnings": [],
   "notes": [
-    "Tier: prosumer. Prices are planning estimates (USD), not quotes. Structure assumes FDM 3D printing."
+    "Parallel gripper: 60 mm stroke, 47 N rated squeeze per finger, Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
+    "Sized for a 0.5 kg payload.",
+    "Grip force uses the servo's rated (continuous) torque 0.9807 N·m; stall torque 2.942 N·m gives 140 N per finger for short squeezes.",
+    "Friction coefficient 0.5 between the printed pads (or TPU/rubber pads glued into the grooves) and the object; safety factor 1.5.",
+    "The fingers are coupled by the rack-and-pinion: finger_a is the actuated prismatic joint (servo torque / pitch radius), finger_b and the pinion carry a URDF <mimic> of it (MuJoCo: joint equality constraints), so one actuator drives both fingers.",
+    "Rack/pinion teeth are module 1.5 printed in PETG; grease them and expect backlash of a few tenths of a millimetre.",
+    "Servo bus adapter and 12 V supply sit off the gripper (cable through the window under the servo).",
+    "The adapter plate bolts to the robot first (heads sunk in the plate), then the housing slides over it and is fixed by four radial M4 screws.",
+    "Prices are list/street prices from the linked suppliers at the time the catalog was written; check before ordering."
   ]
 }

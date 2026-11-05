@@ -1,0 +1,238 @@
+{
+ "model": "robot.urdf",
+ "family": "arduino_arm",
+ "group": "arm",
+ "scope": "PASS means the modelled actuators (datasheet peak torque as a hard limit, a linear torque-speed line to no-load speed, reflected rotor inertia, URDF damping/friction) can produce the torques and speeds the task needs in this geometry and mass distribution, and that mean torque over the hold stays within the continuous (rated) torque. Joint control uses an ideal model-based feedforward (computed torque) through the force-limited servo for fixed-base robots and plain position servos for floating robots; a pass therefore proves torque/speed capacity, not that a given controller achieves it. Untested: thermal limits over long duty cycles (only the mean-vs-rated proxy), gearbox backlash and compliance, link and joint flexibility, encoder resolution, supply voltage sag and current limits, bus latency, controller tuning, and contact/friction values (nominal friction only).",
+ "untested": [
+  "grip: the arm has no gripper joint"
+ ],
+ "fidelity": "URDF effort limits enforced; position gains inferred; speed/thermal/electrical limits unmodelled; geometry and hardware uncalibrated; armature = rotor inertia x gear ratio^2 from the actuator record: yaw: 0.00045 kg m^2 (estimate (hobby_pwm_micro motor) x gear ratio 300^2); shoulder: 0.0192 kg m^2 (estimate (hobby_pwm motor) x gear ratio 400^2); elbow: 0.0192 kg m^2 (estimate (hobby_pwm motor) x gear ratio 400^2); claw: 0.00045 kg m^2 (estimate (hobby_pwm_micro motor) x gear ratio 300^2)",
+ "tests": {
+  "payload_hold": {
+   "pass": true,
+   "explanation": "stretched_plus: holds 0.02 kg with the arm stretched out for 3 s; worst continuous utilisation 0.76x rated at shoulder | stretched_minus: holds 0.02 kg with the arm stretched out for 3 s; worst continuous utilisation 0.76x rated at shoulder",
+   "poses": {
+    "stretched_plus": {
+     "pass": true,
+     "explanation": "holds 0.02 kg with the arm stretched out for 3 s; worst continuous utilisation 0.76x rated at shoulder",
+     "shoulder": "shoulder",
+     "shoulder_target_rad": 1.57,
+     "move_s": 2.0,
+     "hold_s": 3.0,
+     "payload_kg": 0.02,
+     "joints": {
+      "yaw": {
+       "peak_nm": 0.0047,
+       "peak_rating_nm": 0.1765,
+       "util_peak": 0.027,
+       "mean_hold_nm": 0.0,
+       "rated_nm": 0.0529,
+       "util_rated": 0.0,
+       "max_err": 0.0001,
+       "max_err_hold": 0.0,
+       "saturated_frac": 0.0
+      },
+      "shoulder": {
+       "peak_nm": 0.2729,
+       "peak_rating_nm": 1.0787,
+       "util_peak": 0.253,
+       "mean_hold_nm": 0.2466,
+       "rated_nm": 0.3236,
+       "util_rated": 0.762,
+       "max_err": 0.0029,
+       "max_err_hold": 0.0,
+       "saturated_frac": 0.0
+      },
+      "elbow": {
+       "peak_nm": 0.078,
+       "peak_rating_nm": 1.0787,
+       "util_peak": 0.072,
+       "mean_hold_nm": 0.0726,
+       "rated_nm": 0.3236,
+       "util_rated": 0.224,
+       "max_err": 0.0002,
+       "max_err_hold": 0.0,
+       "saturated_frac": 0.0
+      },
+      "claw": {
+       "peak_nm": 0.0003,
+       "peak_rating_nm": 0.1765,
+       "util_peak": 0.001,
+       "mean_hold_nm": 0.0003,
+       "rated_nm": 0.0529,
+       "util_rated": 0.005,
+       "max_err": 0.0,
+       "max_err_hold": 0.0,
+       "saturated_frac": 0.0
+      }
+     }
+    },
+    "stretched_minus": {
+     "pass": true,
+     "explanation": "holds 0.02 kg with the arm stretched out for 3 s; worst continuous utilisation 0.76x rated at shoulder",
+     "shoulder": "shoulder",
+     "shoulder_target_rad": -1.57,
+     "move_s": 2.0,
+     "hold_s": 3.0,
+     "payload_kg": 0.02,
+     "joints": {
+      "yaw": {
+       "peak_nm": 0.0047,
+       "peak_rating_nm": 0.1765,
+       "util_peak": 0.026,
+       "mean_hold_nm": 0.0,
+       "rated_nm": 0.0529,
+       "util_rated": 0.0,
+       "max_err": 0.0001,
+       "max_err_hold": 0.0,
+       "saturated_frac": 0.0
+      },
+      "shoulder": {
+       "peak_nm": 0.2735,
+       "peak_rating_nm": 1.0787,
+       "util_peak": 0.254,
+       "mean_hold_nm": 0.2466,
+       "rated_nm": 0.3236,
+       "util_rated": 0.762,
+       "max_err": 0.0029,
+       "max_err_hold": 0.0,
+       "saturated_frac": 0.0
+      },
+      "elbow": {
+       "peak_nm": 0.078,
+       "peak_rating_nm": 1.0787,
+       "util_peak": 0.072,
+       "mean_hold_nm": 0.0726,
+       "rated_nm": 0.3236,
+       "util_rated": 0.224,
+       "max_err": 0.0002,
+       "max_err_hold": 0.0,
+       "saturated_frac": 0.0
+      },
+      "claw": {
+       "peak_nm": 0.0003,
+       "peak_rating_nm": 0.1765,
+       "util_peak": 0.002,
+       "mean_hold_nm": 0.0003,
+       "rated_nm": 0.0529,
+       "util_rated": 0.005,
+       "max_err": 0.0,
+       "max_err_hold": 0.0,
+       "saturated_frac": 0.0
+      }
+     }
+    }
+   },
+   "tcp": {
+    "link": "forearm",
+    "xyz": [
+     -0.16,
+     0.022,
+     0.0355
+    ],
+    "source": "metadata.design.tcp"
+   }
+  },
+  "reach": {
+   "pass": true,
+   "explanation": "TCP 0.293 m from the shoulder axis with the payload, claimed 0.280 m (tolerance 6 mm)",
+   "achieved_m": 0.2933,
+   "claimed_m": 0.28,
+   "tcp_source": "metadata.design.tcp"
+  },
+  "speed": {
+   "pass": true,
+   "explanation": "1.47 s move at 80 % rated speed tracks within 0.1 rad; most saturated yaw (0 % of the move)",
+   "move_s": 1.475,
+   "payload_kg": 0.02,
+   "start": {
+    "shoulder": 1.57
+   },
+   "end": {
+    "yaw": 1.57,
+    "shoulder": -1.57
+   },
+   "joints": {
+    "yaw": {
+     "peak_nm": 0.0388,
+     "peak_rating_nm": 0.1765,
+     "util_peak": 0.22,
+     "mean_move_nm": 0.0186,
+     "rated_nm": 0.0529,
+     "util_rated": 0.351,
+     "max_err": 0.004,
+     "max_err_hold": 0.004,
+     "saturated_frac": 0.0,
+     "ideal_peak_nm": 0.0354,
+     "ideal_worst_vs_available": 0.216,
+     "at_speed_rad_s": 0.947,
+     "needs_nm": 0.0353,
+     "available_nm": 0.1638,
+     "peak_speed_rad_s": 1.996,
+     "rated_speed_rad_s": 10.472,
+     "err_after_0p5s": 0.0
+    },
+    "shoulder": {
+     "peak_nm": 0.5534,
+     "peak_rating_nm": 1.0787,
+     "util_peak": 0.513,
+     "mean_move_nm": 0.358,
+     "rated_nm": 0.3236,
+     "util_rated": 1.106,
+     "max_err": 0.0079,
+     "max_err_hold": 0.0079,
+     "saturated_frac": 0.0,
+     "ideal_peak_nm": 0.5205,
+     "ideal_worst_vs_available": 0.663,
+     "at_speed_rad_s": 2.886,
+     "needs_nm": 0.494,
+     "available_nm": 0.7456,
+     "peak_speed_rad_s": 3.992,
+     "rated_speed_rad_s": 4.99,
+     "err_after_0p5s": 0.0
+    },
+    "elbow": {
+     "peak_nm": 0.098,
+     "peak_rating_nm": 1.0787,
+     "util_peak": 0.091,
+     "mean_move_nm": 0.0706,
+     "rated_nm": 0.3236,
+     "util_rated": 0.218,
+     "max_err": 0.0006,
+     "max_err_hold": 0.0006,
+     "saturated_frac": 0.0,
+     "ideal_peak_nm": 0.0891,
+     "ideal_worst_vs_available": 0.083,
+     "at_speed_rad_s": 0.0,
+     "needs_nm": 0.0891,
+     "available_nm": 1.0787,
+     "peak_speed_rad_s": 0.0,
+     "rated_speed_rad_s": 6.15,
+     "err_after_0p5s": 0.0
+    },
+    "claw": {
+     "peak_nm": 0.0003,
+     "peak_rating_nm": 0.1765,
+     "util_peak": 0.002,
+     "mean_move_nm": 0.0002,
+     "rated_nm": 0.0529,
+     "util_rated": 0.004,
+     "max_err": 0.0,
+     "max_err_hold": 0.0,
+     "saturated_frac": 0.0,
+     "ideal_peak_nm": 0.0003,
+     "ideal_worst_vs_available": 0.002,
+     "at_speed_rad_s": 0.0,
+     "needs_nm": 0.0003,
+     "available_nm": 0.1765,
+     "peak_speed_rad_s": 0.0,
+     "rated_speed_rad_s": 10.472,
+     "err_after_0p5s": 0.0
+    }
+   }
+  }
+ },
+ "passed": 3,
+ "total": 3,
+ "source_urdf_sha256": "17051c5a90a31faa3efc59e0f8f4f37fb36e602515cbe07581ed351187a10d5f"
+}

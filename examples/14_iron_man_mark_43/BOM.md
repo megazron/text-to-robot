@@ -1,133 +1,32 @@
 # Bill of Materials — iron_man_mark_43
 
-**Estimated total: $38702.65**  ·  tier: research  ·  budget: $60000 ✅ within budget
+**Estimated total: $262.98**  ·  tier: hobby  ·  budget: $60000 ✅ within budget
 
-**Effort sizing: fails; hardware verified: no.**
+**Effort sizing: passes catalogue estimate; hardware verified: no.**
 
 | Category | Component | Qty | Unit $ | Subtotal $ | Spec |
 |---|---|--:|--:|--:|---|
-| Actuator | CubeMars AK80-64 _(joint trunk_flex; rating source: https://www.cubemars.com/goods.php?id=1143; joint left_hip_abduction; rating source: https://www.cubemars.com/goods.php?id=1143; joint left_hip_flexion; rating source: https://www.cubemars.com/goods.php?id=1143; joint left_knee_flexion; rating source: https://www.cubemars.com/goods.php?id=1143; joint left_ankle_flexion; rating source: https://www.cubemars.com/goods.php?id=1143; joint right_hip_abduction; rating source: https://www.cubemars.com/goods.php?id=1143; joint right_hip_flexion; rating source: https://www.cubemars.com/goods.php?id=1143; joint right_knee_flexion; rating source: https://www.cubemars.com/goods.php?id=1143; joint right_ankle_flexion; rating source: https://www.cubemars.com/goods.php?id=1143; joint left_shoulder_abduction; rating source: https://www.cubemars.com/goods.php?id=1143; joint left_shoulder_flexion; rating source: https://www.cubemars.com/goods.php?id=1143; joint left_elbow_flexion; rating source: https://www.cubemars.com/goods.php?id=1143; joint right_shoulder_abduction; rating source: https://www.cubemars.com/goods.php?id=1143; joint right_shoulder_flexion; rating source: https://www.cubemars.com/goods.php?id=1143; joint right_elbow_flexion; rating source: https://www.cubemars.com/goods.php?id=1143)_ | 15 | 700 | 10500 | AK80-64 KV80: 64:1, 48 N m rated / 120 N m peak, 98 x 61.9 mm, 850 g; mounting interfaces require vendor drawing (48 N·m) |
-| Actuator | T-Motor AK80-9 (BLDC + driver) _(joint left_wrist_flexion; rating duty/source unverified; joint right_wrist_flexion; rating duty/source unverified; joint left_chest_door_hinge; rating duty/source unverified; joint right_chest_door_hinge; rating duty/source unverified)_ | 4 | 320 | 1280 | quasi-direct-drive, CAN (18 N·m) |
-| Actuator | Dynamixel XM430-W350 _(joint helmet_crown_panel_hinge; rating duty/source unverified; joint faceplate_hinge; rating duty/source unverified; joint left_cheek_panel_hinge; rating duty/source unverified; joint right_cheek_panel_hinge; rating duty/source unverified; joint chin_guard_hinge; rating duty/source unverified; joint ab_plate_1_hinge; rating duty/source unverified; joint ab_plate_2_hinge; rating duty/source unverified; joint ab_plate_3_hinge; rating duty/source unverified; joint left_flight_flap_hinge; rating duty/source unverified; joint right_flight_flap_hinge; rating duty/source unverified; joint codpiece_hinge; rating duty/source unverified; joint left_pauldron_hinge; rating duty/source unverified; joint left_bicep_clamshell_hinge; rating duty/source unverified; joint left_elbow_cap_hinge; rating duty/source unverified; joint left_gauntlet_clamshell_hinge; rating duty/source unverified; joint left_gauntlet_hatch_hinge; rating duty/source unverified; joint left_finger_1_hinge; rating duty/source unverified; joint left_finger_1_middle_hinge; rating duty/source unverified; joint left_finger_1_distal_hinge; rating duty/source unverified; joint left_finger_2_hinge; rating duty/source unverified; joint left_finger_2_middle_hinge; rating duty/source unverified; joint left_finger_2_distal_hinge; rating duty/source unverified; joint left_finger_3_hinge; rating duty/source unverified; joint left_finger_3_middle_hinge; rating duty/source unverified; joint left_finger_3_distal_hinge; rating duty/source unverified; joint left_finger_4_hinge; rating duty/source unverified; joint left_finger_4_middle_hinge; rating duty/source unverified; joint left_finger_4_distal_hinge; rating duty/source unverified; joint left_thumb_hinge; rating duty/source unverified; joint left_thumb_distal_hinge; rating duty/source unverified; joint right_pauldron_hinge; rating duty/source unverified; joint right_bicep_clamshell_hinge; rating duty/source unverified; joint right_elbow_cap_hinge; rating duty/source unverified; joint right_gauntlet_clamshell_hinge; rating duty/source unverified; joint right_gauntlet_hatch_hinge; rating duty/source unverified; joint right_finger_1_hinge; rating duty/source unverified; joint right_finger_1_middle_hinge; rating duty/source unverified; joint right_finger_1_distal_hinge; rating duty/source unverified; joint right_finger_2_hinge; rating duty/source unverified; joint right_finger_2_middle_hinge; rating duty/source unverified; joint right_finger_2_distal_hinge; rating duty/source unverified; joint right_finger_3_hinge; rating duty/source unverified; joint right_finger_3_middle_hinge; rating duty/source unverified; joint right_finger_3_distal_hinge; rating duty/source unverified; joint right_finger_4_hinge; rating duty/source unverified; joint right_finger_4_middle_hinge; rating duty/source unverified; joint right_finger_4_distal_hinge; rating duty/source unverified; joint right_thumb_hinge; rating duty/source unverified; joint right_thumb_distal_hinge; rating duty/source unverified; joint left_hip_flap_hinge; rating duty/source unverified; joint left_thigh_clamshell_hinge; rating duty/source unverified; joint left_knee_cap_hinge; rating duty/source unverified; joint left_calf_clamshell_hinge; rating duty/source unverified; joint left_shin_guard_hinge; rating duty/source unverified; joint left_thruster_cover_hinge; rating duty/source unverified; joint left_ankle_flap_hinge; rating duty/source unverified; joint right_hip_flap_hinge; rating duty/source unverified; joint right_thigh_clamshell_hinge; rating duty/source unverified; joint right_knee_cap_hinge; rating duty/source unverified; joint right_calf_clamshell_hinge; rating duty/source unverified; joint right_shin_guard_hinge; rating duty/source unverified; joint right_thruster_cover_hinge; rating duty/source unverified; joint right_ankle_flap_hinge; rating duty/source unverified)_ | 63 | 270 | 17010 | RS485 smart servo, encoder (4.1 N·m) |
-| Actuator | Dynamixel MX-64AR _(joint neck_yaw; rating duty/source unverified; joint neck_pitch; rating duty/source unverified; joint left_lat_plate_hinge; rating duty/source unverified; joint right_lat_plate_hinge; rating duty/source unverified)_ | 4 | 300 | 1200 | RS485 smart servo (6 N·m) |
-| Sensor | Arducam IMX477 HQ _(hud_camera)_ | 1 | 50 | 50 | 12.3MP, C-mount |
-| Sensor | Bosch BNO085 _(trunk_imu)_ | 1 | 20 | 20 | 9-axis fused AHRS |
-| Sensor | Loadstar / Tekscan insole force sensor _(left_insole_force; right_insole_force)_ | 2 | 350 | 700 | calibrated plantar force |
-| Compute | NVIDIA Jetson Orin Nano | 1 | 499 | 499 | GPU SBC, perception + ROS 2 |
-| Power | Li-ion 48V 20Ah pack | 1 | 320 | 320 | 960 Wh; est. load 808 W |
-| Power | DC-DC buck regulator (5V/10A) | 1 | 12 | 12 | logic + servo rail |
-| Power | Power distribution board + fuse + switch | 1 | 14 | 14 | wiring harness backbone |
-| Structure | Aluminium frame + brackets | 1 | 3287.05 | 3287.05 | ~109.57 kg material @ $30/kg |
-| Structure | Fastener + bearing kit | 1 | 18 | 18 | M3 screws, heat inserts, 608 bearings |
-| Wiring & misc | Wiring, connectors, JST/Dupont, sleeving | 1 | 3792.6 | 3792.6 | ~12% of electronics |
+| Compute | Arduino Nano compatible board (ATmega328P, CH340, USB-C) _(Arduino Nano · https://www.aliexpress.com/w/wholesale-arduino-nano-type-c-ch340.html)_ | 1 | 3.5 | 3.5 | 5 V |
+| Power | LM2596S adjustable buck module (3 A, 43 x 21 mm) _(LM2596 5 V for servos and LEDs · https://www.amazon.com/s?k=LM2596S+buck+module)_ | 1 | 3 | 3 | 5 V |
+| Actuator | TowerPro MG90S micro servo (metal gears) + cross horn _(faceplate servo (left ear); faceplate servo (right ear, mirrored) · https://www.adafruit.com/product/1143)_ | 2 | 4 | 8 | 0.0647 N·m rated / 0.2157 N·m peak, 6 V |
+| Power | 5 mm white LED + 100 ohm resistor (eye / accent light) _(eye light · https://www.aliexpress.com/w/wholesale-5mm-white-led.html)_ | 2 | 0.1 | 0.2 | 3.2 V |
+| Power | 2S 18650 pack: two 2500 mAh 20 A cells (Samsung 25R class) in a holder with switch _(2S 18650 pack · https://www.aliexpress.com/w/wholesale-18650-2-slot-battery-holder-switch.html)_ | 1 | 12 | 12 | 7.4 V, 18.5 Wh |
+| Power | 50 mm hook-and-loop strap with D-ring buckle, 600 mm _(webbing straps closing the split shells · https://www.velcro.com/business/products/straps/)_ | 30 | 4.5 | 135 | https://www.velcro.com/business/products/straps/ |
+| Power | WS2812B RGB LED ring, 12 LEDs, 37 mm (NeoPixel-compatible) _(arc reactor ring (12 LEDs); palm repulsor ring · https://www.adafruit.com/product/1643)_ | 3 | 2 | 6 | 5 V |
+| Printed structure | PETG filament for 70 printed parts _(helmet_faceplate, helmet_cranium_1, helmet_cranium_2, helmet_cranium_3, helmet_cranium_4, helmet_cranium_5, helmet_cranium_6, helmet_cranium_7, helmet_cranium_8, chest_1, chest_2, chest_3, chest_4, chest_5, chest_6, chest_7, chest_8, chest_9, chest_10, chest_11, chest_12, chest_13, chest_14, chest_15, chest_16, chest_17, chest_18, electronics_box, left_shoulder_bell_1, left_shoulder_bell_2, left_bicep_1, left_bicep_2, left_gauntlet_1, left_gauntlet_2, left_hand_armour_1, left_hand_armour_2, left_thigh_armour_1, left_thigh_armour_2, left_thigh_armour_3, left_thigh_armour_4, left_shin_armour_1, left_shin_armour_2, left_shin_armour_3, left_shin_armour_4, left_boot_1, left_boot_2, left_boot_3, left_boot_4, right_shoulder_bell_1, right_shoulder_bell_2, right_bicep_1, right_bicep_2, right_gauntlet_1, right_gauntlet_2, right_hand_armour_1, right_hand_armour_2, right_thigh_armour_1, right_thigh_armour_2, right_thigh_armour_3, right_thigh_armour_4, right_shin_armour_1, right_shin_armour_2, right_shin_armour_3, right_shin_armour_4, right_boot_1, right_boot_2, right_boot_3, right_boot_4, belt_1, belt_2)_ | 1 | 94.8 | 94.8 | 3747 g of parts (+15 % supports/waste), about 341.5 h of printing |
+| Fasteners | Screws, nuts and inserts | 4 | 0.12 | 0.48 | 4x M2 self-tapping (servo tabs, from the servo kits) |
 
 ## Actuator sizing
 
 | Joint | Required effort | Unit | Chosen actuator | Margin |
 |---|--:|---|---|--:|
-| trunk_flex | 96 | N·m | CubeMars AK80-64 | UNDERSIZED |
-| left_hip_abduction | 96 | N·m | CubeMars AK80-64 | UNDERSIZED |
-| left_hip_flexion | 120 | N·m | CubeMars AK80-64 | UNDERSIZED |
-| left_knee_flexion | 120 | N·m | CubeMars AK80-64 | UNDERSIZED |
-| left_ankle_flexion | 80 | N·m | CubeMars AK80-64 | UNDERSIZED |
-| right_hip_abduction | 96 | N·m | CubeMars AK80-64 | UNDERSIZED |
-| right_hip_flexion | 120 | N·m | CubeMars AK80-64 | UNDERSIZED |
-| right_knee_flexion | 120 | N·m | CubeMars AK80-64 | UNDERSIZED |
-| right_ankle_flexion | 80 | N·m | CubeMars AK80-64 | UNDERSIZED |
-| left_shoulder_abduction | 48 | N·m | CubeMars AK80-64 | UNDERSIZED |
-| left_shoulder_flexion | 48 | N·m | CubeMars AK80-64 | UNDERSIZED |
-| left_elbow_flexion | 32 | N·m | CubeMars AK80-64 | 1.5x |
-| left_wrist_flexion | 12 | N·m | T-Motor AK80-9 (BLDC + driver) | 1.5x |
-| right_shoulder_abduction | 48 | N·m | CubeMars AK80-64 | UNDERSIZED |
-| right_shoulder_flexion | 48 | N·m | CubeMars AK80-64 | UNDERSIZED |
-| right_elbow_flexion | 32 | N·m | CubeMars AK80-64 | 1.5x |
-| right_wrist_flexion | 12 | N·m | T-Motor AK80-9 (BLDC + driver) | 1.5x |
-| helmet_crown_panel_hinge | 1.2 | N·m | Dynamixel XM430-W350 | 3.4x |
-| faceplate_hinge | 2 | N·m | Dynamixel XM430-W350 | 2.0x |
-| left_cheek_panel_hinge | 1.2 | N·m | Dynamixel XM430-W350 | 3.4x |
-| right_cheek_panel_hinge | 1.2 | N·m | Dynamixel XM430-W350 | 3.4x |
-| chin_guard_hinge | 1.2 | N·m | Dynamixel XM430-W350 | 3.4x |
-| neck_yaw | 3.2 | N·m | Dynamixel MX-64AR | 1.9x |
-| neck_pitch | 3.2 | N·m | Dynamixel MX-64AR | 1.9x |
-| left_chest_door_hinge | 4.8 | N·m | T-Motor AK80-9 (BLDC + driver) | 3.7x |
-| right_chest_door_hinge | 4.8 | N·m | T-Motor AK80-9 (BLDC + driver) | 3.7x |
-| ab_plate_1_hinge | 1.6 | N·m | Dynamixel XM430-W350 | 2.6x |
-| ab_plate_2_hinge | 1.6 | N·m | Dynamixel XM430-W350 | 2.6x |
-| ab_plate_3_hinge | 1.6 | N·m | Dynamixel XM430-W350 | 2.6x |
-| left_lat_plate_hinge | 3.2 | N·m | Dynamixel MX-64AR | 1.9x |
-| right_lat_plate_hinge | 3.2 | N·m | Dynamixel MX-64AR | 1.9x |
-| left_flight_flap_hinge | 1.6 | N·m | Dynamixel XM430-W350 | 2.6x |
-| right_flight_flap_hinge | 1.6 | N·m | Dynamixel XM430-W350 | 2.6x |
-| codpiece_hinge | 1.6 | N·m | Dynamixel XM430-W350 | 2.6x |
-| left_pauldron_hinge | 2.4 | N·m | Dynamixel XM430-W350 | 1.7x |
-| left_bicep_clamshell_hinge | 2.4 | N·m | Dynamixel XM430-W350 | 1.7x |
-| left_elbow_cap_hinge | 1.6 | N·m | Dynamixel XM430-W350 | 2.6x |
-| left_gauntlet_clamshell_hinge | 2.4 | N·m | Dynamixel XM430-W350 | 1.7x |
-| left_gauntlet_hatch_hinge | 1.2 | N·m | Dynamixel XM430-W350 | 3.4x |
-| left_finger_1_hinge | 0.28 | N·m | Dynamixel XM430-W350 | 14.6x |
-| left_finger_1_middle_hinge | 0.28 | N·m | Dynamixel XM430-W350 | 14.6x |
-| left_finger_1_distal_hinge | 0.28 | N·m | Dynamixel XM430-W350 | 14.6x |
-| left_finger_2_hinge | 0.28 | N·m | Dynamixel XM430-W350 | 14.6x |
-| left_finger_2_middle_hinge | 0.28 | N·m | Dynamixel XM430-W350 | 14.6x |
-| left_finger_2_distal_hinge | 0.28 | N·m | Dynamixel XM430-W350 | 14.6x |
-| left_finger_3_hinge | 0.28 | N·m | Dynamixel XM430-W350 | 14.6x |
-| left_finger_3_middle_hinge | 0.28 | N·m | Dynamixel XM430-W350 | 14.6x |
-| left_finger_3_distal_hinge | 0.28 | N·m | Dynamixel XM430-W350 | 14.6x |
-| left_finger_4_hinge | 0.28 | N·m | Dynamixel XM430-W350 | 14.6x |
-| left_finger_4_middle_hinge | 0.28 | N·m | Dynamixel XM430-W350 | 14.6x |
-| left_finger_4_distal_hinge | 0.28 | N·m | Dynamixel XM430-W350 | 14.6x |
-| left_thumb_hinge | 0.32 | N·m | Dynamixel XM430-W350 | 12.8x |
-| left_thumb_distal_hinge | 0.24 | N·m | Dynamixel XM430-W350 | 17.1x |
-| right_pauldron_hinge | 2.4 | N·m | Dynamixel XM430-W350 | 1.7x |
-| right_bicep_clamshell_hinge | 2.4 | N·m | Dynamixel XM430-W350 | 1.7x |
-| right_elbow_cap_hinge | 1.6 | N·m | Dynamixel XM430-W350 | 2.6x |
-| right_gauntlet_clamshell_hinge | 2.4 | N·m | Dynamixel XM430-W350 | 1.7x |
-| right_gauntlet_hatch_hinge | 1.2 | N·m | Dynamixel XM430-W350 | 3.4x |
-| right_finger_1_hinge | 0.28 | N·m | Dynamixel XM430-W350 | 14.6x |
-| right_finger_1_middle_hinge | 0.28 | N·m | Dynamixel XM430-W350 | 14.6x |
-| right_finger_1_distal_hinge | 0.28 | N·m | Dynamixel XM430-W350 | 14.6x |
-| right_finger_2_hinge | 0.28 | N·m | Dynamixel XM430-W350 | 14.6x |
-| right_finger_2_middle_hinge | 0.28 | N·m | Dynamixel XM430-W350 | 14.6x |
-| right_finger_2_distal_hinge | 0.28 | N·m | Dynamixel XM430-W350 | 14.6x |
-| right_finger_3_hinge | 0.28 | N·m | Dynamixel XM430-W350 | 14.6x |
-| right_finger_3_middle_hinge | 0.28 | N·m | Dynamixel XM430-W350 | 14.6x |
-| right_finger_3_distal_hinge | 0.28 | N·m | Dynamixel XM430-W350 | 14.6x |
-| right_finger_4_hinge | 0.28 | N·m | Dynamixel XM430-W350 | 14.6x |
-| right_finger_4_middle_hinge | 0.28 | N·m | Dynamixel XM430-W350 | 14.6x |
-| right_finger_4_distal_hinge | 0.28 | N·m | Dynamixel XM430-W350 | 14.6x |
-| right_thumb_hinge | 0.32 | N·m | Dynamixel XM430-W350 | 12.8x |
-| right_thumb_distal_hinge | 0.24 | N·m | Dynamixel XM430-W350 | 17.1x |
-| left_hip_flap_hinge | 1.6 | N·m | Dynamixel XM430-W350 | 2.6x |
-| left_thigh_clamshell_hinge | 2.4 | N·m | Dynamixel XM430-W350 | 1.7x |
-| left_knee_cap_hinge | 1.6 | N·m | Dynamixel XM430-W350 | 2.6x |
-| left_calf_clamshell_hinge | 2.4 | N·m | Dynamixel XM430-W350 | 1.7x |
-| left_shin_guard_hinge | 1.6 | N·m | Dynamixel XM430-W350 | 2.6x |
-| left_thruster_cover_hinge | 1.2 | N·m | Dynamixel XM430-W350 | 3.4x |
-| left_ankle_flap_hinge | 1.2 | N·m | Dynamixel XM430-W350 | 3.4x |
-| right_hip_flap_hinge | 1.6 | N·m | Dynamixel XM430-W350 | 2.6x |
-| right_thigh_clamshell_hinge | 2.4 | N·m | Dynamixel XM430-W350 | 1.7x |
-| right_knee_cap_hinge | 1.6 | N·m | Dynamixel XM430-W350 | 2.6x |
-| right_calf_clamshell_hinge | 2.4 | N·m | Dynamixel XM430-W350 | 1.7x |
-| right_shin_guard_hinge | 1.6 | N·m | Dynamixel XM430-W350 | 2.6x |
-| right_thruster_cover_hinge | 1.2 | N·m | Dynamixel XM430-W350 | 3.4x |
-| right_ankle_flap_hinge | 1.2 | N·m | Dynamixel XM430-W350 | 3.4x |
-
-## Warnings
-- ⚠️ Sizing uses a neutral-pose gravity proxy and declared joint effort, not a worst-case workspace or dynamic load analysis. Selection checks only approximate effort and broad motion type. Speed/torque curves, travel, voltage, feedback, mounting, thermal duty and wiring are not qualified.
-- ⚠️ Catalog values are planning estimates. Except explicitly sourced rated values, torque entries may be stall/peak ratings; continuous duty, fit and complete assemblies are unverified.
-- ⚠️ joint trunk_flex needs ~96.00 N·m; strongest in research tier is CubeMars AK80-64 (48 N·m) — increase budget for a stronger actuator
-- ⚠️ joint left_hip_abduction needs ~96.00 N·m; strongest in research tier is CubeMars AK80-64 (48 N·m) — increase budget for a stronger actuator
-- ⚠️ joint left_hip_flexion needs ~120.00 N·m; strongest in research tier is CubeMars AK80-64 (48 N·m) — increase budget for a stronger actuator
-- ⚠️ joint left_knee_flexion needs ~120.00 N·m; strongest in research tier is CubeMars AK80-64 (48 N·m) — increase budget for a stronger actuator
-- ⚠️ joint left_ankle_flexion needs ~80.00 N·m; strongest in research tier is CubeMars AK80-64 (48 N·m) — increase budget for a stronger actuator
-- ⚠️ joint right_hip_abduction needs ~96.00 N·m; strongest in research tier is CubeMars AK80-64 (48 N·m) — increase budget for a stronger actuator
-- ⚠️ joint right_hip_flexion needs ~120.00 N·m; strongest in research tier is CubeMars AK80-64 (48 N·m) — increase budget for a stronger actuator
-- ⚠️ joint right_knee_flexion needs ~120.00 N·m; strongest in research tier is CubeMars AK80-64 (48 N·m) — increase budget for a stronger actuator
-- ⚠️ joint right_ankle_flexion needs ~80.00 N·m; strongest in research tier is CubeMars AK80-64 (48 N·m) — increase budget for a stronger actuator
-- ⚠️ joint left_shoulder_abduction needs ~48.00 N·m; strongest in research tier is CubeMars AK80-64 (48 N·m) — increase budget for a stronger actuator
-- ⚠️ joint left_shoulder_flexion needs ~48.00 N·m; strongest in research tier is CubeMars AK80-64 (48 N·m) — increase budget for a stronger actuator
-- ⚠️ joint right_shoulder_abduction needs ~48.00 N·m; strongest in research tier is CubeMars AK80-64 (48 N·m) — increase budget for a stronger actuator
-- ⚠️ joint right_shoulder_flexion needs ~48.00 N·m; strongest in research tier is CubeMars AK80-64 (48 N·m) — increase budget for a stronger actuator
+| faceplate | 0.1375 | N·m | TowerPro MG90S micro servo (metal gears) + cross horn | 3.14x |
 
 ## Notes
-- Tier: research. Prices are planning estimates (USD), not quotes. Structure assumes machined aluminium.
+- Iron Man Mark 43 (full wearable suit): 70 printed pieces, 4.0 kg filament, motorised faceplate, $257 incl. filament
+- Joint limits trimmed to the collision-free range found by exact solid sweeps: left_elbow [-2.40, 0.00] -> [-1.82, 0.00]; left_hip [-1.90, 0.40] -> [-1.53, 0.40]; left_knee [0.00, 2.20] -> [0.00, 1.86]; right_elbow [-2.40, 0.00] -> [-1.82, 0.00]; right_hip [-1.90, 0.40] -> [-1.53, 0.40]; right_knee [0.00, 2.20] -> [0.00, 1.86].
+- padding gap 14 mm, PLA/PETG walls 3 mm, 15 % gyroid infill (shells are mostly walls)
+- filament at $22/kg, 8 % waste
+- the suit is worn armour: the wearer moves every joint; nothing powers the limbs (hobby servos cannot move a person)
+- wearer proportions from standard segment ratios scaled to the stated height; check against your own measurements before printing
+- Prices are list/street prices from the linked suppliers at the time the catalog was written; check before ordering.

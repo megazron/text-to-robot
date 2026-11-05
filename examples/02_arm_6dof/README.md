@@ -8,7 +8,7 @@ Interpreted as: 6-DOF serial arm · parallel gripper
 
 **6-DOF arm, 455 mm reach, 0.1 kg payload, ROBOTIS DYNAMIXEL X-series (12 V)**
 
-Parts cost **$1151.04** · printed structure 8 parts, 417 g · checks passed 22/22
+Parts cost **$1151.01** · printed structure 8 parts, 416 g · checks passed 22/22
 
 ## What it can do
 
@@ -16,7 +16,7 @@ Parts cost **$1151.04** · printed structure 8 parts, 417 g · checks passed 22/
 |---|--:|
 | reach m | 0.455 |
 | payload kg | 0.1 |
-| mass kg | 0.95 |
+| mass kg | 0.948 |
 | actuators | ROBOTIS DYNAMIXEL X-series (12 V) |
 | max joint speed rad s | 3.86 |
 | grip force n | 6 |
@@ -29,8 +29,8 @@ Parts cost **$1151.04** · printed structure 8 parts, 417 g · checks passed 22/
 | Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
 |---|---|--:|--:|--:|--:|
 | base_yaw | dxl_xl430_w250 | 0 | 0.42 / 1.4 | 99x | 4.49 |
-| shoulder_pitch | dxl_xh540_w270 | 2.32 | 2.97 / 9.9 | 4.27x | 3.86 |
-| elbow_pitch | dxl_xm430_w350 | 1.355 | 1.23 / 4.1 | 3.03x | 3.94 |
+| shoulder_pitch | dxl_xh540_w270 | 2.317 | 2.97 / 9.9 | 4.27x | 3.86 |
+| elbow_pitch | dxl_xm430_w350 | 1.354 | 1.23 / 4.1 | 3.03x | 3.96 |
 | forearm_roll | dxl_xl430_w250 | 0.009 | 0.42 / 1.4 | 99x | 5.67 |
 | wrist_pitch | dxl_xl430_w250 | 0.488 | 0.42 / 1.4 | 2.87x | 4.65 |
 | wrist_roll | dxl_xl430_w250 | 0.001 | 0.42 / 1.4 | 99x | 5.67 |

@@ -14,6 +14,9 @@
   <material name="electronics"><color rgba="0.08 0.45 0.25 1"/></material>
   <material name="rubber"><color rgba="0.07 0.07 0.08 1"/></material>
   <material name="battery"><color rgba="0.15 0.3 0.75 1"/></material>
+  <material name="armour_red"><color rgba="0.62 0.06 0.07 1"/></material>
+  <material name="armour_gold"><color rgba="0.86 0.66 0.28 1"/></material>
+  <material name="wearer"><color rgba="0.55 0.57 0.6 1"/></material>
   <material name="fabric"><color rgba="0.97 0.97 0.95 1"/></material>
   <material name="visor"><color rgba="0.03 0.03 0.05 1"/></material>
   <material name="led"><color rgba="0.25 0.75 1 1"/></material>
@@ -30,9 +33,9 @@
       <geometry><mesh filename="package://four_wheel_robot/meshes/base_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.0000166094 -4.12029e-18 0.0795" rpy="0 0 0"/>
-      <mass value="0.481503"/>
-      <inertia ixx="0.001582" ixy="1.61330e-19" ixz="1.42947e-21" iyy="0.003574" iyz="3.97059e-21" izz="0.005155"/>
+      <origin xyz="0.0000168982 -1.03329e-17 0.0795" rpy="0 0 0"/>
+      <mass value="0.481476"/>
+      <inertia ixx="0.001581" ixy="-9.39723e-20" ixz="6.03524e-22" iyy="0.003574" iyz="3.91879e-21" izz="0.005154"/>
     </inertial>
   </link>
   <link name="front_left_motor">
@@ -78,9 +81,9 @@
       <geometry><mesh filename="package://four_wheel_robot/meshes/front_left_bracket.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.09 0.088174 0.064266" rpy="0 0 0"/>
-      <mass value="0.01561"/>
-      <inertia ixx="0.00000578614" ixy="6.71455e-16" ixz="-1.02550e-15" iyy="0.00000593489" iyz="0.00000163541" izz="0.00000495776"/>
+      <origin xyz="0.09 0.088166 0.064283" rpy="0 0 0"/>
+      <mass value="0.015592"/>
+      <inertia ixx="0.00000577839" ixy="6.72157e-16" ixz="-1.02688e-15" iyy="0.00000592772" iyz="0.00000163258" izz="0.00000495506"/>
     </inertial>
   </link>
   <link name="front_right_motor">
@@ -126,9 +129,9 @@
       <geometry><mesh filename="package://four_wheel_robot/meshes/front_right_bracket.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.09 -0.088174 0.064266" rpy="0 0 0"/>
-      <mass value="0.01561"/>
-      <inertia ixx="0.00000578614" ixy="6.71455e-16" ixz="1.02550e-15" iyy="0.00000593489" iyz="-0.00000163541" izz="0.00000495776"/>
+      <origin xyz="0.09 -0.088166 0.064283" rpy="0 0 0"/>
+      <mass value="0.015592"/>
+      <inertia ixx="0.00000577839" ixy="6.72157e-16" ixz="1.02688e-15" iyy="0.00000592772" iyz="-0.00000163258" izz="0.00000495506"/>
     </inertial>
   </link>
   <link name="rear_left_motor">
@@ -174,9 +177,9 @@
       <geometry><mesh filename="package://four_wheel_robot/meshes/rear_left_bracket.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.09 0.088174 0.064266" rpy="0 0 0"/>
-      <mass value="0.01561"/>
-      <inertia ixx="0.00000578614" ixy="6.71454e-16" ixz="-1.02550e-15" iyy="0.00000593489" iyz="0.00000163541" izz="0.00000495776"/>
+      <origin xyz="-0.09 0.088166 0.064283" rpy="0 0 0"/>
+      <mass value="0.015592"/>
+      <inertia ixx="0.00000577839" ixy="6.72157e-16" ixz="-1.02688e-15" iyy="0.00000592772" iyz="0.00000163258" izz="0.00000495506"/>
     </inertial>
   </link>
   <link name="rear_right_motor">
@@ -222,9 +225,9 @@
       <geometry><mesh filename="package://four_wheel_robot/meshes/rear_right_bracket.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.09 -0.088174 0.064266" rpy="0 0 0"/>
-      <mass value="0.01561"/>
-      <inertia ixx="0.00000578614" ixy="6.71455e-16" ixz="1.02550e-15" iyy="0.00000593489" iyz="-0.00000163541" izz="0.00000495776"/>
+      <origin xyz="-0.09 -0.088166 0.064283" rpy="0 0 0"/>
+      <mass value="0.015592"/>
+      <inertia ixx="0.00000577839" ixy="6.72157e-16" ixz="1.02688e-15" iyy="0.00000592772" iyz="-0.00000163258" izz="0.00000495506"/>
     </inertial>
   </link>
   <link name="battery">
@@ -255,8 +258,8 @@
     </collision>
     <inertial>
       <origin xyz="-0.023761 -0.06825 0.085051" rpy="0 0 0"/>
-      <mass value="0.016461"/>
-      <inertia ixx="0.00000350696" ixy="5.97906e-22" ixz="-1.63712e-7" iyy="0.0000170792" iyz="-7.19769e-22" izz="0.0000200766"/>
+      <mass value="0.01646"/>
+      <inertia ixx="0.00000350695" ixy="1.25780e-21" ixz="-1.63706e-7" iyy="0.0000170783" iyz="-1.00334e-21" izz="0.0000200757"/>
     </inertial>
   </link>
   <link name="motor_driver_1">
@@ -286,9 +289,9 @@
       <geometry><mesh filename="package://four_wheel_robot/meshes/motor_driver_1_tray.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.07852 -0.03699 0.082592" rpy="0 0 0"/>
-      <mass value="0.015596"/>
-      <inertia ixx="0.00000550743" ixy="-1.57714e-19" ixz="-2.78390e-14" iyy="0.000010148" iyz="-3.20192e-15" izz="0.0000156217"/>
+      <origin xyz="0.07852 -0.03699 0.082591" rpy="0 0 0"/>
+      <mass value="0.015594"/>
+      <inertia ixx="0.00000550644" ixy="-6.74057e-20" ixz="-2.52405e-14" iyy="0.000010145" iyz="-4.81015e-15" izz="0.0000156177"/>
     </inertial>
   </link>
   <link name="motor_driver_2">
@@ -318,9 +321,9 @@
       <geometry><mesh filename="package://four_wheel_robot/meshes/motor_driver_2_tray.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.0935 -0.01149 0.082592" rpy="0 0 0"/>
-      <mass value="0.015596"/>
-      <inertia ixx="0.00000550743" ixy="-4.47594e-19" ixz="5.85647e-14" iyy="0.000010148" iyz="4.91942e-15" izz="0.0000156217"/>
+      <origin xyz="-0.0935 -0.01149 0.082591" rpy="0 0 0"/>
+      <mass value="0.015594"/>
+      <inertia ixx="0.00000550644" ixy="1.18216e-20" ixz="5.24278e-14" iyy="0.000010145" iyz="4.12922e-15" izz="0.0000156177"/>
     </inertial>
   </link>
   <link name="upper_deck">
@@ -334,9 +337,9 @@
       <geometry><mesh filename="package://four_wheel_robot/meshes/upper_deck.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.026 2.59701e-18 0.133" rpy="0 0 0"/>
-      <mass value="0.161678"/>
-      <inertia ixx="0.000473378" ixy="8.86198e-20" ixz="6.71738e-22" iyy="0.000745679" iyz="-1.93416e-22" izz="0.001219"/>
+      <origin xyz="-0.026 -2.35552e-18 0.133" rpy="0 0 0"/>
+      <mass value="0.161676"/>
+      <inertia ixx="0.000473363" ixy="1.83934e-20" ixz="9.77673e-22" iyy="0.000745654" iyz="4.36148e-23" izz="0.001219"/>
     </inertial>
   </link>
   <link name="pillar_1">
@@ -351,8 +354,8 @@
     </collision>
     <inertial>
       <origin xyz="-0.132 0.082 0.106" rpy="0 0 0"/>
-      <mass value="0.006715"/>
-      <inertia ixx="0.00000148385" ixy="5.54642e-24" ixz="2.23528e-23" iyy="0.00000148385" iyz="1.07450e-23" izz="1.69959e-7"/>
+      <mass value="0.00671"/>
+      <inertia ixx="0.00000148284" ixy="3.13723e-24" ixz="-3.02082e-24" iyy="0.00000148284" iyz="-7.33741e-24" izz="1.69950e-7"/>
     </inertial>
   </link>
   <link name="pillar_2">
@@ -367,8 +370,8 @@
     </collision>
     <inertial>
       <origin xyz="-0.132 -0.082 0.106" rpy="0 0 0"/>
-      <mass value="0.006715"/>
-      <inertia ixx="0.00000148385" ixy="6.27340e-24" ixz="1.64466e-23" iyy="0.00000148385" iyz="1.82930e-24" izz="1.69959e-7"/>
+      <mass value="0.00671"/>
+      <inertia ixx="0.00000148284" ixy="-1.48393e-24" ixz="-1.10449e-23" iyy="0.00000148284" iyz="7.06908e-25" izz="1.69950e-7"/>
     </inertial>
   </link>
   <link name="pillar_3">
@@ -383,8 +386,8 @@
     </collision>
     <inertial>
       <origin xyz="0.08 0.082 0.106" rpy="0 0 0"/>
-      <mass value="0.006715"/>
-      <inertia ixx="0.00000148385" ixy="-2.40276e-24" ixz="5.14167e-24" iyy="0.00000148385" iyz="-6.24676e-24" izz="1.69959e-7"/>
+      <mass value="0.00671"/>
+      <inertia ixx="0.00000148284" ixy="4.06616e-24" ixz="3.86635e-25" iyy="0.00000148284" iyz="-2.18709e-24" izz="1.69950e-7"/>
     </inertial>
   </link>
   <link name="pillar_4">
@@ -399,8 +402,8 @@
     </collision>
     <inertial>
       <origin xyz="0.08 -0.082 0.106" rpy="0 0 0"/>
-      <mass value="0.006715"/>
-      <inertia ixx="0.00000148385" ixy="3.87212e-24" ixz="6.84114e-24" iyy="0.00000148385" iyz="7.78464e-24" izz="1.69959e-7"/>
+      <mass value="0.00671"/>
+      <inertia ixx="0.00000148284" ixy="-1.66448e-24" ixz="4.14912e-24" iyy="0.00000148284" iyz="1.76987e-23" izz="1.69950e-7"/>
     </inertial>
   </link>
   <link name="computer">
@@ -430,9 +433,9 @@
       <geometry><mesh filename="package://four_wheel_robot/meshes/computer_tray.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.009293 -0.052384 0.136596" rpy="0 0 0"/>
-      <mass value="0.014938"/>
-      <inertia ixx="0.0000045039" ixy="2.64305e-9" ixz="1.59997e-8" iyy="0.0000101539" iyz="-8.34760e-10" izz="0.0000146251"/>
+      <origin xyz="-0.009292 -0.052384 0.136595" rpy="0 0 0"/>
+      <mass value="0.014936"/>
+      <inertia ixx="0.00000450311" ixy="2.63464e-9" ixz="1.59607e-8" iyy="0.0000101515" iyz="-8.32728e-10" izz="0.0000146219"/>
     </inertial>
   </link>
   <link name="imu">
@@ -462,9 +465,9 @@
       <geometry><mesh filename="package://four_wheel_robot/meshes/imu_tray.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.10119 -0.06865 0.137152" rpy="0 0 0"/>
-      <mass value="0.002192"/>
-      <inertia ixx="1.29742e-7" ixy="-2.26890e-20" ixz="3.94982e-15" iyy="1.61807e-7" iyz="1.90893e-15" izz="2.79534e-7"/>
+      <origin xyz="-0.10119 -0.06865 0.137151" rpy="0 0 0"/>
+      <mass value="0.00219"/>
+      <inertia ixx="1.29630e-7" ixy="4.19544e-20" ixz="2.85722e-15" iyy="1.61631e-7" iyz="2.75100e-15" izz="2.79266e-7"/>
     </inertial>
   </link>
   <link name="regulator_5v">
@@ -494,9 +497,9 @@
       <geometry><mesh filename="package://four_wheel_robot/meshes/regulator_5v_tray.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.051852 0.000472341 0.136969" rpy="0 0 0"/>
-      <mass value="0.002283"/>
-      <inertia ixx="1.61144e-7" ixy="-1.05900e-8" ixz="-3.16040e-9" iyy="1.59544e-7" iyz="3.16040e-9" izz="3.10326e-7"/>
+      <origin xyz="-0.051853 0.000473424 0.136969" rpy="0 0 0"/>
+      <mass value="0.002281"/>
+      <inertia ixx="1.61036e-7" ixy="-1.05543e-8" ixz="-3.15359e-9" iyy="1.59409e-7" iyz="3.15359e-9" izz="3.10101e-7"/>
     </inertial>
   </link>
   <link name="electronics_enclosure">
@@ -510,9 +513,9 @@
       <geometry><mesh filename="package://four_wheel_robot/meshes/electronics_enclosure.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.020324 -0.035411 0.150829" rpy="0 0 0"/>
-      <mass value="0.041276"/>
-      <inertia ixx="0.0000855488" ixy="-0.0000254282" ixz="9.21281e-7" iyy="0.000180804" iyz="9.04883e-8" izz="0.000258302"/>
+      <origin xyz="-0.020326 -0.035413 0.150829" rpy="0 0 0"/>
+      <mass value="0.041274"/>
+      <inertia ixx="0.0000855424" ixy="-0.0000254243" ixz="9.21687e-7" iyy="0.000180795" iyz="9.10070e-8" izz="0.000258287"/>
     </inertial>
   </link>
   <link name="electronics_lid">
@@ -526,9 +529,9 @@
       <geometry><mesh filename="package://four_wheel_robot/meshes/electronics_lid.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.018511 -0.038014 0.16883" rpy="0 0 0"/>
-      <mass value="0.037597"/>
-      <inertia ixx="0.0000430805" ixy="-0.0000145221" ixz="4.75385e-8" iyy="0.0000987367" iyz="-2.66477e-8" izz="0.000141748"/>
+      <origin xyz="-0.018512 -0.038015 0.16883" rpy="0 0 0"/>
+      <mass value="0.037596"/>
+      <inertia ixx="0.0000430778" ixy="-0.0000145186" ixz="4.74389e-8" iyy="0.000098732" iyz="-2.67224e-8" izz="0.000141741"/>
     </inertial>
   </link>
   <link name="lidar_mast">
@@ -542,9 +545,9 @@
       <geometry><mesh filename="package://four_wheel_robot/meshes/lidar_mast.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.107 0.000522801 0.141732" rpy="0 0 0"/>
-      <mass value="0.029436"/>
-      <inertia ixx="0.00000785389" ixy="7.28282e-16" ixz="1.01373e-15" iyy="0.00000825321" iyz="-4.56826e-8" izz="0.0000152669"/>
+      <origin xyz="-0.107 0.000522837 0.141731" rpy="0 0 0"/>
+      <mass value="0.029434"/>
+      <inertia ixx="0.00000785291" ixy="5.56364e-16" ixz="1.98987e-15" iyy="0.00000825223" iyz="-4.56858e-8" izz="0.0000152649"/>
     </inertial>
   </link>
   <link name="lidar">
@@ -590,9 +593,9 @@
       <geometry><mesh filename="package://four_wheel_robot/meshes/front_camera_bracket.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.136167 -0.000167438 0.105152" rpy="0 0 0"/>
+      <origin xyz="0.136166 -0.000167444 0.105153" rpy="0 0 0"/>
       <mass value="0.016096"/>
-      <inertia ixx="0.00000430445" ixy="2.19205e-8" ixz="-9.95092e-8" iyy="0.00000278472" iyz="1.57612e-8" izz="0.0000020457"/>
+      <inertia ixx="0.00000430417" ixy="2.19208e-8" ixz="-9.95575e-8" iyy="0.00000278443" iyz="1.57591e-8" izz="0.00000204569"/>
     </inertial>
   </link>
   <joint name="front_left_motor_mount" type="fixed">

@@ -1,341 +1,408 @@
 {
   "robot_name": "battle_mech",
-  "tier": "prosumer",
+  "tier": "research",
   "lines": [
     {
+      "category": "Sensor",
+      "name": "Adafruit BNO085 9-DoF IMU breakout (STEMMA QT, #4754)",
+      "qty": 1,
+      "unit_cost": 29.5,
+      "subtotal": 29.5,
+      "spec": "3.3 V",
+      "note": "IMU (pelvis) · https://www.adafruit.com/product/4754"
+    },
+    {
+      "category": "Power",
+      "name": "Pololu D36V50F5 5 V 5.5 A step-down regulator (#4091)",
+      "qty": 1,
+      "unit_cost": 39.95,
+      "subtotal": 39.95,
+      "spec": "5 V",
+      "note": "5 V regulator (sensors) · https://www.pololu.com/product/4091"
+    },
+    {
       "category": "Actuator",
-      "name": "Unitree GO-M8010-6",
-      "qty": 27,
-      "unit_cost": 400,
-      "subtotal": 10800,
-      "spec": "integrated BLDC + planetary, RS485 (23 N·m)",
-      "note": "joint neck_joint; rating duty/source unverified; joint left_arm_joint_1; rating duty/source unverified; joint left_arm_joint_2; rating duty/source unverified; joint left_arm_joint_3; rating duty/source unverified; joint left_arm_joint_4; rating duty/source unverified; joint left_arm_joint_5; rating duty/source unverified; joint left_arm_joint_6; rating duty/source unverified; joint left_arm_joint_7; rating duty/source unverified; joint right_arm_joint_1; rating duty/source unverified; joint right_arm_joint_2; rating duty/source unverified; joint right_arm_joint_3; rating duty/source unverified; joint right_arm_joint_4; rating duty/source unverified; joint right_arm_joint_5; rating duty/source unverified; joint right_arm_joint_6; rating duty/source unverified; joint right_arm_joint_7; rating duty/source unverified; joint left_hip_yaw; rating duty/source unverified; joint left_hip_roll; rating duty/source unverified; joint left_hip_joint; rating duty/source unverified; joint left_knee_joint; rating duty/source unverified; joint left_ankle_roll; rating duty/source unverified; joint left_ankle_joint; rating duty/source unverified; joint right_hip_yaw; rating duty/source unverified; joint right_hip_roll; rating duty/source unverified; joint right_hip_joint; rating duty/source unverified; joint right_knee_joint; rating duty/source unverified; joint right_ankle_roll; rating duty/source unverified; joint right_ankle_joint; rating duty/source unverified"
+      "name": "CubeMars AK60-6 V3.0 KV80",
+      "qty": 2,
+      "unit_cost": 229.9,
+      "subtotal": 459.8,
+      "spec": "3 N·m rated / 9 N·m peak, 48 V",
+      "note": "joint l_hip_yaw; joint r_hip_yaw · https://www.cubemars.com/product/ak60-6-v3-0-kv80-robotic-actuator.html"
     },
     {
-      "category": "Sensor",
-      "name": "Raspberry Pi Camera Module 3",
-      "qty": 1,
-      "unit_cost": 25,
-      "subtotal": 25,
-      "spec": "12MP, CSI",
-      "note": "hud_camera"
+      "category": "Actuator",
+      "name": "CubeMars AK70-10 KV100",
+      "qty": 6,
+      "unit_cost": 398.9,
+      "subtotal": 2393.4,
+      "spec": "8.3 N·m rated / 24.8 N·m peak, 48 V",
+      "note": "joint l_ankle_roll; joint r_ankle_roll; joint l_shoulder_pitch; joint l_shoulder_roll; … · https://www.cubemars.com/product/ak70-10-kv100-robotic-actuator.html"
     },
     {
-      "category": "Sensor",
-      "name": "Bosch BNO085",
+      "category": "Actuator",
+      "name": "CubeMars AK80-64 KV80",
+      "qty": 8,
+      "unit_cost": 889.9,
+      "subtotal": 7119.2,
+      "spec": "48 N·m rated / 120 N·m peak, 48 V",
+      "note": "joint l_hip_roll; joint l_hip_pitch; joint l_knee; joint l_ankle_pitch; … · https://www.cubemars.com/product/ak80-64-kv80-robotic-actuator.html"
+    },
+    {
+      "category": "Power",
+      "name": "Mean Well SD-50C-12 enclosed DC-DC converter, 36-72 V in, 12 V 4.2 A (50 W)",
       "qty": 1,
-      "unit_cost": 20,
-      "subtotal": 20,
-      "spec": "9-axis fused AHRS",
-      "note": "suit_imu"
+      "unit_cost": 45,
+      "subtotal": 45,
+      "spec": "12 V",
+      "note": "12 V for the DYNAMIXEL arms and the computer · https://www.digikey.com/en/products/detail/mean-well-usa-inc/SD-50C-12/7706533"
+    },
+    {
+      "category": "Electronics",
+      "name": "ROBOTIS U2D2 USB to TTL/RS-485 interface",
+      "qty": 1,
+      "unit_cost": 32.1,
+      "subtotal": 32.1,
+      "spec": "5 V",
+      "note": "USB to the arm / neck DYNAMIXEL bus · https://www.generationrobots.com/en/400848-usb2dynamixel-robotis.html"
+    },
+    {
+      "category": "Actuator",
+      "name": "DYNAMIXEL XH540-W270-T(R)",
+      "qty": 4,
+      "unit_cost": 539.9,
+      "subtotal": 2159.6,
+      "spec": "2.97 N·m rated / 9.9 N·m peak, 12 V",
+      "note": "joint l_elbow; joint l_wrist_pitch; joint r_elbow; joint r_wrist_pitch · https://robotis.us/dynamixel-xh540-w270-t"
+    },
+    {
+      "category": "Actuator",
+      "name": "DYNAMIXEL XL430-W250-T",
+      "qty": 1,
+      "unit_cost": 44.9,
+      "subtotal": 44.9,
+      "spec": "0.42 N·m rated / 1.4 N·m peak, 11.1 V",
+      "note": "joint neck_pan · https://robotis.us/dynamixel-xl430-w250-t"
+    },
+    {
+      "category": "Actuator",
+      "name": "DYNAMIXEL XM430-W350-T(R)",
+      "qty": 9,
+      "unit_cost": 310.39,
+      "subtotal": 2793.51,
+      "spec": "1.23 N·m rated / 4.1 N·m peak, 12 V",
+      "note": "joint l_upper_arm_yaw; joint l_wrist_yaw; joint l_wrist_roll; gripper; … · https://www.robotshop.com/products/robotis-dynamixel-xm430-w350-t-smart-servo-actuator"
     },
     {
       "category": "Compute",
-      "name": "Raspberry Pi 5 (8GB)",
+      "name": "NVIDIA Jetson Orin Nano Super Developer Kit",
       "qty": 1,
-      "unit_cost": 80,
-      "subtotal": 80,
-      "spec": "SBC, runs ROS 2"
+      "unit_cost": 249,
+      "subtotal": 249,
+      "spec": "19 V",
+      "note": "main computer · https://developer.nvidia.com/buy-jetson?product=jetson_orin_nano"
     },
     {
       "category": "Power",
-      "name": "LiPo 6S 10000mAh",
-      "qty": 1,
-      "unit_cost": 95,
-      "subtotal": 95,
-      "spec": "222 Wh; est. load 656 W"
+      "name": "LiPo 6S 10000 mAh 30C, EC5 (Tattu)",
+      "qty": 2,
+      "unit_cost": 216.99,
+      "subtotal": 433.98,
+      "spec": "22.2 V, 222 Wh",
+      "note": "main battery (2 in series) · https://www.buddyrc.com/products/tattu-22-2v-30c-6s-10000mah-lipo-battery-pack-with-ec5-plug-for-uav-drone"
     },
     {
-      "category": "Power",
-      "name": "DC-DC buck regulator (5V/10A)",
+      "category": "Sensor",
+      "name": "Raspberry Pi Camera Module 3 (standard lens)",
       "qty": 1,
-      "unit_cost": 12,
-      "subtotal": 12,
-      "spec": "logic + servo rail"
+      "unit_cost": 25,
+      "subtotal": 25,
+      "spec": "3.3 V",
+      "note": "head camera · https://www.raspberrypi.com/products/camera-module-3/"
     },
     {
-      "category": "Power",
-      "name": "Power distribution board + fuse + switch",
-      "qty": 1,
-      "unit_cost": 14,
-      "subtotal": 14,
-      "spec": "wiring harness backbone"
+      "category": "Electronics",
+      "name": "EYOU Robotics CANable PRO isolated USB-CAN adapter",
+      "qty": 2,
+      "unit_cost": 42,
+      "subtotal": 84,
+      "spec": "5 V",
+      "note": "USB-CAN bus (left leg); USB-CAN bus (right leg) · https://www.robotshop.com/products/eyou-robotics-can-usb-adapter-canable-pro"
     },
     {
-      "category": "Structure",
-      "name": "3D-printed frame (PLA/PETG)",
+      "category": "Printed structure",
+      "name": "PETG filament for 45 printed parts",
       "qty": 1,
-      "unit_cost": 310.04,
-      "subtotal": 310.04,
-      "spec": "~14.09 kg material @ $22/kg"
+      "unit_cost": 155.4,
+      "subtotal": 155.4,
+      "spec": "6142 g of parts (+15 % supports/waste), about 559.8 h of printing",
+      "note": "base_link, base_link_b, torso, torso_b, l_hip_yaw_link, l_hip_roll_link, l_hip_pitch_link, l_hip_pitch_link_b, l_knee_link, l_knee_link_b, l_ankle_pitch_link, l_ankle_roll_link, r_hip_yaw_link, r_hip_roll_link, r_hip_pitch_link, r_hip_pitch_link_b, r_knee_link, r_knee_link_b, r_ankle_pitch_link, r_ankle_roll_link, l_shoulder_pitch_link, l_shoulder_roll_link, l_upper_arm_yaw_link, l_elbow_link, l_wrist_yaw_link, l_wrist_pitch_link, l_wrist_roll_link, l_gripper_jaw, r_shoulder_pitch_link, r_shoulder_roll_link, r_upper_arm_yaw_link, r_elbow_link, r_wrist_yaw_link, r_wrist_pitch_link, r_wrist_roll_link, r_gripper_jaw, neck_pan_link, neck_tilt_link, torso_armour_front, l_hip_pitch_armour_front, l_knee_armour_front, l_shoulder_roll_armour_out, r_hip_pitch_armour_front, r_knee_armour_front, r_shoulder_roll_armour_out"
     },
     {
-      "category": "Structure",
-      "name": "Fastener + bearing kit",
-      "qty": 1,
-      "unit_cost": 18,
-      "subtotal": 18,
-      "spec": "M3 screws, heat inserts, 608 bearings"
-    },
-    {
-      "category": "Wiring & misc",
-      "name": "Wiring, connectors, JST/Dupont, sleeving",
-      "qty": 1,
-      "unit_cost": 1325.52,
-      "subtotal": 1325.52,
-      "spec": "~12% of electronics"
+      "category": "Fasteners",
+      "name": "Screws, nuts and inserts",
+      "qty": 324,
+      "unit_cost": 0.12,
+      "subtotal": 38.88,
+      "spec": "36x M3 x 16 split-joint bolts + nuts; 4x M3 x 12 torso-to-pelvis bolts; 96x M3 x 8 housing screws; 112x horn / hub screws; 48x M2/M2.5 x 6 case screws; 28x M3 x 10 armour screws + printed standoffs"
     }
   ],
-  "total": 12699.56,
+  "total": 16103.22,
   "feasible": true,
-  "sizing_pass": false,
+  "sizing_pass": true,
   "hardware_verified": false,
   "actuator_sizing": [
     {
-      "joint": "neck_joint",
-      "required_effort": 40,
+      "joint": "l_hip_yaw",
+      "required_effort": 4.615,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 4.615,
+      "chosen": "CubeMars AK60-6 V3.0 KV80",
+      "margin": "1.95x"
     },
     {
-      "joint": "left_arm_joint_1",
-      "required_effort": 40,
+      "joint": "l_hip_roll",
+      "required_effort": 49.094,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 49.094,
+      "chosen": "CubeMars AK80-64 KV80",
+      "margin": "2.44x"
     },
     {
-      "joint": "left_arm_joint_2",
-      "required_effort": 40,
+      "joint": "l_hip_pitch",
+      "required_effort": 62.573,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 62.573,
+      "chosen": "CubeMars AK80-64 KV80",
+      "margin": "1.92x"
     },
     {
-      "joint": "left_arm_joint_3",
-      "required_effort": 40,
+      "joint": "l_knee",
+      "required_effort": 59.883,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 59.883,
+      "chosen": "CubeMars AK80-64 KV80",
+      "margin": "2x"
     },
     {
-      "joint": "left_arm_joint_4",
-      "required_effort": 40,
+      "joint": "l_ankle_pitch",
+      "required_effort": 30.922,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 30.922,
+      "chosen": "CubeMars AK80-64 KV80",
+      "margin": "3.88x"
     },
     {
-      "joint": "left_arm_joint_5",
-      "required_effort": 40,
+      "joint": "l_ankle_roll",
+      "required_effort": 13.072,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 13.072,
+      "chosen": "CubeMars AK70-10 KV100",
+      "margin": "1.9x"
     },
     {
-      "joint": "left_arm_joint_6",
-      "required_effort": 40,
+      "joint": "r_hip_yaw",
+      "required_effort": 4.615,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 4.615,
+      "chosen": "CubeMars AK60-6 V3.0 KV80",
+      "margin": "1.95x"
     },
     {
-      "joint": "left_arm_joint_7",
-      "required_effort": 40,
+      "joint": "r_hip_roll",
+      "required_effort": 49.094,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 49.094,
+      "chosen": "CubeMars AK80-64 KV80",
+      "margin": "2.44x"
     },
     {
-      "joint": "right_arm_joint_1",
-      "required_effort": 40,
+      "joint": "r_hip_pitch",
+      "required_effort": 62.573,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 62.573,
+      "chosen": "CubeMars AK80-64 KV80",
+      "margin": "1.92x"
     },
     {
-      "joint": "right_arm_joint_2",
-      "required_effort": 40,
+      "joint": "r_knee",
+      "required_effort": 59.883,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 59.883,
+      "chosen": "CubeMars AK80-64 KV80",
+      "margin": "2x"
     },
     {
-      "joint": "right_arm_joint_3",
-      "required_effort": 40,
+      "joint": "r_ankle_pitch",
+      "required_effort": 30.922,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 30.922,
+      "chosen": "CubeMars AK80-64 KV80",
+      "margin": "3.88x"
     },
     {
-      "joint": "right_arm_joint_4",
-      "required_effort": 40,
+      "joint": "r_ankle_roll",
+      "required_effort": 13.072,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 13.072,
+      "chosen": "CubeMars AK70-10 KV100",
+      "margin": "1.9x"
     },
     {
-      "joint": "right_arm_joint_5",
-      "required_effort": 40,
+      "joint": "l_shoulder_pitch",
+      "required_effort": 7.577,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 7.577,
+      "chosen": "CubeMars AK70-10 KV100",
+      "margin": "3.27x"
     },
     {
-      "joint": "right_arm_joint_6",
-      "required_effort": 40,
+      "joint": "l_shoulder_roll",
+      "required_effort": 7.577,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 7.577,
+      "chosen": "CubeMars AK70-10 KV100",
+      "margin": "3.27x"
     },
     {
-      "joint": "right_arm_joint_7",
-      "required_effort": 40,
+      "joint": "l_upper_arm_yaw",
+      "required_effort": 0.103,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 0.103,
+      "chosen": "DYNAMIXEL XM430-W350-T(R)",
+      "margin": "39.78x"
     },
     {
-      "joint": "left_hip_yaw",
-      "required_effort": 9.6,
+      "joint": "l_elbow",
+      "required_effort": 3.488,
       "effort_unit": "N·m",
-      "required_torque_nm": 9.6,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "2.4x"
+      "required_torque_nm": 3.488,
+      "chosen": "DYNAMIXEL XH540-W270-T(R)",
+      "margin": "2.84x"
     },
     {
-      "joint": "left_hip_roll",
-      "required_effort": 16,
+      "joint": "l_wrist_yaw",
+      "required_effort": 0.124,
       "effort_unit": "N·m",
-      "required_torque_nm": 16,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 0.124,
+      "chosen": "DYNAMIXEL XM430-W350-T(R)",
+      "margin": "32.98x"
     },
     {
-      "joint": "left_hip_joint",
-      "required_effort": 40,
+      "joint": "l_wrist_pitch",
+      "required_effort": 1.879,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 1.879,
+      "chosen": "DYNAMIXEL XH540-W270-T(R)",
+      "margin": "5.27x"
     },
     {
-      "joint": "left_knee_joint",
-      "required_effort": 40,
+      "joint": "l_wrist_roll",
+      "required_effort": 0.146,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 0.146,
+      "chosen": "DYNAMIXEL XM430-W350-T(R)",
+      "margin": "28.16x"
     },
     {
-      "joint": "left_ankle_roll",
-      "required_effort": 9.6,
+      "joint": "l_gripper",
+      "required_effort": 0.006,
       "effort_unit": "N·m",
-      "required_torque_nm": 9.6,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "2.4x"
+      "required_torque_nm": 0.006,
+      "chosen": "DYNAMIXEL XM430-W350-T(R)",
+      "margin": "99x"
     },
     {
-      "joint": "left_ankle_joint",
-      "required_effort": 40,
+      "joint": "r_shoulder_pitch",
+      "required_effort": 7.567,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 7.567,
+      "chosen": "CubeMars AK70-10 KV100",
+      "margin": "3.28x"
     },
     {
-      "joint": "right_hip_yaw",
-      "required_effort": 9.6,
+      "joint": "r_shoulder_roll",
+      "required_effort": 7.566,
       "effort_unit": "N·m",
-      "required_torque_nm": 9.6,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "2.4x"
+      "required_torque_nm": 7.566,
+      "chosen": "CubeMars AK70-10 KV100",
+      "margin": "3.28x"
     },
     {
-      "joint": "right_hip_roll",
-      "required_effort": 16,
+      "joint": "r_upper_arm_yaw",
+      "required_effort": 0.104,
       "effort_unit": "N·m",
-      "required_torque_nm": 16,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 0.104,
+      "chosen": "DYNAMIXEL XM430-W350-T(R)",
+      "margin": "39.4x"
     },
     {
-      "joint": "right_hip_joint",
-      "required_effort": 40,
+      "joint": "r_elbow",
+      "required_effort": 3.485,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 3.485,
+      "chosen": "DYNAMIXEL XH540-W270-T(R)",
+      "margin": "2.84x"
     },
     {
-      "joint": "right_knee_joint",
-      "required_effort": 40,
+      "joint": "r_wrist_yaw",
+      "required_effort": 0.125,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 0.125,
+      "chosen": "DYNAMIXEL XM430-W350-T(R)",
+      "margin": "32.85x"
     },
     {
-      "joint": "right_ankle_roll",
-      "required_effort": 9.6,
+      "joint": "r_wrist_pitch",
+      "required_effort": 1.878,
       "effort_unit": "N·m",
-      "required_torque_nm": 9.6,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "2.4x"
+      "required_torque_nm": 1.878,
+      "chosen": "DYNAMIXEL XH540-W270-T(R)",
+      "margin": "5.27x"
     },
     {
-      "joint": "right_ankle_joint",
-      "required_effort": 40,
+      "joint": "r_wrist_roll",
+      "required_effort": 0.146,
       "effort_unit": "N·m",
-      "required_torque_nm": 40,
-      "chosen": "Unitree GO-M8010-6",
-      "margin": "UNDERSIZED"
+      "required_torque_nm": 0.146,
+      "chosen": "DYNAMIXEL XM430-W350-T(R)",
+      "margin": "28.16x"
+    },
+    {
+      "joint": "r_gripper",
+      "required_effort": 0.006,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.006,
+      "chosen": "DYNAMIXEL XM430-W350-T(R)",
+      "margin": "99x"
+    },
+    {
+      "joint": "neck_pan",
+      "required_effort": 0,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0,
+      "chosen": "DYNAMIXEL XL430-W250-T",
+      "margin": "99x"
+    },
+    {
+      "joint": "neck_tilt",
+      "required_effort": 0.862,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.862,
+      "chosen": "DYNAMIXEL XM430-W350-T(R)",
+      "margin": "4.76x"
     }
   ],
-  "warnings": [
-    "Sizing uses a neutral-pose gravity proxy and declared joint effort, not a worst-case workspace or dynamic load analysis. Selection checks only approximate effort and broad motion type. Speed/torque curves, travel, voltage, feedback, mounting, thermal duty and wiring are not qualified.",
-    "Catalog values are planning estimates. Except explicitly sourced rated values, torque entries may be stall/peak ratings; continuous duty, fit and complete assemblies are unverified.",
-    "joint neck_joint needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint left_arm_joint_1 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint left_arm_joint_2 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint left_arm_joint_3 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint left_arm_joint_4 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint left_arm_joint_5 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint left_arm_joint_6 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint left_arm_joint_7 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint right_arm_joint_1 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint right_arm_joint_2 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint right_arm_joint_3 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint right_arm_joint_4 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint right_arm_joint_5 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint right_arm_joint_6 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint right_arm_joint_7 needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint left_hip_roll needs ~16.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint left_hip_joint needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint left_knee_joint needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint left_ankle_joint needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint right_hip_roll needs ~16.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint right_hip_joint needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint right_knee_joint needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator",
-    "joint right_ankle_joint needs ~40.00 N·m; strongest in prosumer tier is Unitree GO-M8010-6 (23 N·m) — increase budget for a stronger actuator"
-  ],
+  "warnings": [],
   "notes": [
-    "Tier: prosumer. Prices are planning estimates (USD), not quotes. Structure assumes FDM 3D printing."
+    "Battle mech, 1.182 m, 22.41 kg, 30 DOF (7-DOF arms + grippers), 174 min, $15909 of parts",
+    "Joint limits trimmed to the collision-free range found by exact solid sweeps: l_hip_roll [-0.45, 0.45] -> [-0.07, 0.45]; l_hip_pitch [-1.60, 1.60] -> [-0.84, 1.60]; l_knee [-2.20, 2.20] -> [-2.04, 0.33]; r_hip_roll [-0.45, 0.45] -> [-0.45, 0.07]; r_hip_pitch [-1.60, 1.60] -> [-1.60, 0.84]; r_knee [-2.20, 2.20] -> [-0.33, 2.04]; l_shoulder_roll [-1.60, 1.60] -> [-0.04, 1.60]; l_elbow [-2.30, 2.30] -> [-2.30, 2.18]; l_wrist_pitch [-1.60, 1.60] -> [-1.60, 1.27]; r_shoulder_roll [-1.60, 1.60] -> [-1.60, 0.04]; r_elbow [-2.30, 2.30] -> [-2.18, 2.30]; r_wrist_pitch [-1.60, 1.60] -> [-1.27, 1.60]; neck_tilt [-0.70, 0.70] -> [-0.70, 0.57].",
+    "Joint ranges are swept with the arms held 0.35 rad out to the side (the walking posture); with the arms hanging straight the hands touch the thighs when a leg abducts or a wrist turns.",
+    "CubeMars actuators run on a 12S bus (two 6S packs in series, 44.4 V nominal) at their 48 V ratings; DYNAMIXEL arms and the computer run from the 12 V DC-DC converter.",
+    "Zero joint angles are the standing pose (knees bent 0.25 rad, soles flat); the base origin is on the hip-yaw output plane.",
+    "Leg loads are J^T F at the sole with the whole robot on one foot and the centre of pressure anywhere on the central 60 % of the sole, over squat / lean / step poses, ±10 % traction, x 1.3 dynamic factor; continuous duty checked at 71 % of the worst stance load (RMS over a gait cycle with half of it in stance).",
+    "Soles carry a 2 mm rubber pad (silicone / neoprene sheet, glued) as the contact patch.",
+    "Arm loads are exact gravity torques with the payload in each hand, arms stretched forward, sideways and rolled.",
+    "Research-grade biped: it cannot walk, or even stand reliably, without a whole-body balance controller (torque-controlled QDD legs, IMU feedback, e.g. MPC or an RL policy). Armour panels are thin cosmetic shells with no structural role; their mass is counted.",
+    "Prices are list/street prices from the linked suppliers at the time the catalog was written; check before ordering."
   ]
 }

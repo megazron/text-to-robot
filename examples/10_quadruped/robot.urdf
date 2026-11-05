@@ -3,603 +3,805 @@
      robot: quadruped
      prompt: Create a quadruped robot
 
-     26 links, 25 joints, 86 inferred values
+     36 links, 35 joints, 36 inferred values
 -->
 <robot name="quadruped">
-  <material name="base_mat"><color rgba="0.25 0.25 0.28 1"/></material>
-  <material name="link_mat"><color rgba="0.85 0.85 0.88 1"/></material>
-  <material name="gripper_mat"><color rgba="0.15 0.35 0.75 1"/></material>
-  <material name="wheel_mat"><color rgba="0.1 0.1 0.12 1"/></material>
-  <material name="sensor_mat"><color rgba="0.1 0.7 0.4 1"/></material>
-  <material name="accent_mat"><color rgba="0.9 0.55 0.1 1"/></material>
+  <material name="printed"><color rgba="0.93 0.93 0.95 1"/></material>
+  <material name="printed_accent"><color rgba="0.95 0.5 0.12 1"/></material>
+  <material name="printed_dark"><color rgba="0.22 0.23 0.26 1"/></material>
+  <material name="actuator"><color rgba="0.1 0.1 0.11 1"/></material>
+  <material name="metal"><color rgba="0.62 0.64 0.68 1"/></material>
+  <material name="electronics"><color rgba="0.08 0.45 0.25 1"/></material>
+  <material name="rubber"><color rgba="0.07 0.07 0.08 1"/></material>
+  <material name="battery"><color rgba="0.15 0.3 0.75 1"/></material>
+  <material name="armour_red"><color rgba="0.62 0.06 0.07 1"/></material>
+  <material name="armour_gold"><color rgba="0.86 0.66 0.28 1"/></material>
+  <material name="wearer"><color rgba="0.55 0.57 0.6 1"/></material>
   <link name="base_link">
     <visual>
-      <origin xyz="0 0 0.3365" rpy="0 0 0"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry><mesh filename="package://quadruped/meshes/base_link.stl"/></geometry>
-      <material name="base_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0.3365" rpy="0 0 0"/>
-      <geometry><box size="0.4 0.2 0.003"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="1.75578e-17 -3.06865e-18 0.3365" rpy="0 0 0"/>
-      <mass value="0.647709"/>
-      <inertia ixx="0.002158" ixy="-5.38246e-19" ixz="-2.95640e-21" iyy="0.00863" iyz="-6.22470e-21" izz="0.010787"/>
-    </inertial>
-  </link>
-  <link name="base_link_service_lid">
-    <visual>
-      <origin xyz="0 0 0.4335" rpy="0 0 0"/>
-      <geometry><mesh filename="package://quadruped/meshes/base_link_service_lid.stl"/></geometry>
-      <material name="base_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0.4335" rpy="0 0 0"/>
-      <geometry><box size="0.4 0.2 0.003"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="-1.14177e-17 2.02723e-18 0.4335" rpy="0 0 0"/>
-      <mass value="0.621789"/>
-      <inertia ixx="0.002155" ixy="-8.32216e-19" ixz="3.64452e-21" iyy="0.008575" iyz="8.35339e-22" izz="0.010729"/>
-    </inertial>
-  </link>
-  <link name="base_link_rear_panel">
-    <visual>
-      <origin xyz="-0.1985 0 0.385" rpy="0 0 0"/>
-      <geometry><box size="0.003 0.2 0.094"/></geometry>
-      <material name="base_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="-0.1985 0 0.385" rpy="0 0 0"/>
-      <geometry><box size="0.003 0.2 0.094"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="-0.1985 0 0.385" rpy="0 0 0"/>
-      <mass value="0.15228"/>
-      <inertia ixx="0.000619729" ixy="0" ixz="0" iyy="0.000112243" iyz="0" izz="0.000507714"/>
-    </inertial>
-  </link>
-  <link name="base_link_right_panel">
-    <visual>
-      <origin xyz="0 -0.0985 0.385" rpy="0 0 0"/>
-      <geometry><box size="0.394 0.003 0.094"/></geometry>
-      <material name="base_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 -0.0985 0.385" rpy="0 0 0"/>
-      <geometry><box size="0.394 0.003 0.094"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0 -0.0985 0.385" rpy="0 0 0"/>
-      <mass value="0.299992"/>
-      <inertia ixx="0.000221119" ixy="0" ixz="0" iyy="0.004102" iyz="0" izz="0.003881"/>
-    </inertial>
-  </link>
-  <link name="base_link_front_panel">
-    <visual>
-      <origin xyz="0.1985 0 0.385" rpy="0 0 0"/>
-      <geometry><box size="0.003 0.2 0.094"/></geometry>
-      <material name="base_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0.1985 0 0.385" rpy="0 0 0"/>
-      <geometry><box size="0.003 0.2 0.094"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0.1985 0 0.385" rpy="0 0 0"/>
-      <mass value="0.15228"/>
-      <inertia ixx="0.000619729" ixy="0" ixz="0" iyy="0.000112243" iyz="0" izz="0.000507714"/>
-    </inertial>
-  </link>
-  <link name="base_link_left_panel">
-    <visual>
-      <origin xyz="0 0.0985 0.385" rpy="0 0 0"/>
-      <geometry><box size="0.394 0.003 0.094"/></geometry>
-      <material name="base_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 0.0985 0.385" rpy="0 0 0"/>
-      <geometry><box size="0.394 0.003 0.094"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0 0.0985 0.385" rpy="0 0 0"/>
-      <mass value="0.299992"/>
-      <inertia ixx="0.000221119" ixy="0" ixz="0" iyy="0.004102" iyz="0" izz="0.003881"/>
-    </inertial>
-  </link>
-  <link name="base_link_standoff_rr">
-    <visual>
-      <origin xyz="-0.188 -0.088 0.385" rpy="0 0 0"/>
-      <geometry><mesh filename="package://quadruped/meshes/base_link_standoff_rr.stl"/></geometry>
-      <material name="base_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="-0.188 -0.088 0.385" rpy="0 0 0"/>
-      <geometry><box size="0.008 0.008 0.094"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="-0.188 -0.088 0.385" rpy="0 0 0"/>
-      <mass value="0.02"/>
-      <inertia ixx="0.0000148208" ixy="-3.50756e-24" ixz="2.49790e-23" iyy="0.0000148208" iyz="-5.04320e-24" izz="1.88361e-7"/>
-    </inertial>
-  </link>
-  <link name="base_link_standoff_rl">
-    <visual>
-      <origin xyz="-0.188 0.088 0.385" rpy="0 0 0"/>
-      <geometry><mesh filename="package://quadruped/meshes/base_link_standoff_rl.stl"/></geometry>
-      <material name="base_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="-0.188 0.088 0.385" rpy="0 0 0"/>
-      <geometry><box size="0.008 0.008 0.094"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="-0.188 0.088 0.385" rpy="0 0 0"/>
-      <mass value="0.02"/>
-      <inertia ixx="0.0000148208" ixy="-3.50756e-24" ixz="2.49790e-23" iyy="0.0000148208" iyz="-5.04320e-24" izz="1.88361e-7"/>
-    </inertial>
-  </link>
-  <link name="base_link_standoff_fr">
-    <visual>
-      <origin xyz="0.188 -0.088 0.385" rpy="0 0 0"/>
-      <geometry><mesh filename="package://quadruped/meshes/base_link_standoff_fr.stl"/></geometry>
-      <material name="base_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0.188 -0.088 0.385" rpy="0 0 0"/>
-      <geometry><box size="0.008 0.008 0.094"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0.188 -0.088 0.385" rpy="0 0 0"/>
-      <mass value="0.02"/>
-      <inertia ixx="0.0000148208" ixy="-3.50756e-24" ixz="2.49790e-23" iyy="0.0000148208" iyz="-5.04320e-24" izz="1.88361e-7"/>
-    </inertial>
-  </link>
-  <link name="base_link_standoff_fl">
-    <visual>
-      <origin xyz="0.188 0.088 0.385" rpy="0 0 0"/>
-      <geometry><mesh filename="package://quadruped/meshes/base_link_standoff_fl.stl"/></geometry>
-      <material name="base_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0.188 0.088 0.385" rpy="0 0 0"/>
-      <geometry><box size="0.008 0.008 0.094"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0.188 0.088 0.385" rpy="0 0 0"/>
-      <mass value="0.02"/>
-      <inertia ixx="0.0000148208" ixy="-3.50756e-24" ixz="2.49790e-23" iyy="0.0000148208" iyz="-5.04320e-24" izz="1.88361e-7"/>
-    </inertial>
-  </link>
-  <link name="front_left_hip">
-    <visual>
-      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <geometry><cylinder radius="0.03" length="0.05"/></geometry>
-      <material name="accent_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <geometry><cylinder radius="0.03" length="0.05"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <mass value="0.063617"/>
-      <inertia ixx="0.0000275675" ixy="0" ixz="0" iyy="0.0000275675" iyz="0" izz="0.0000286278"/>
-    </inertial>
-  </link>
-  <link name="front_left_thigh">
-    <visual>
-      <origin xyz="0 0 -0.08" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.022" length="0.16"/></geometry>
-      <material name="link_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 0 -0.08" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.022" length="0.16"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0 0 -0.08" rpy="0 0 0"/>
-      <mass value="0.109478"/>
-      <inertia ixx="0.0002468" ixy="0" ixz="0" iyy="0.0002468" iyz="0" izz="0.0000264937"/>
-    </inertial>
-  </link>
-  <link name="front_left_shin">
-    <visual>
-      <origin xyz="0 0 -0.08" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.018" length="0.16"/></geometry>
-      <material name="link_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 0 -0.08" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.018" length="0.16"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0 0 -0.08" rpy="0 0 0"/>
-      <mass value="0.073287"/>
-      <inertia ixx="0.000162282" ixy="0" ixz="0" iyy="0.000162282" iyz="0" izz="0.0000118725"/>
-    </inertial>
-  </link>
-  <link name="front_right_hip">
-    <visual>
-      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <geometry><cylinder radius="0.03" length="0.05"/></geometry>
-      <material name="accent_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <geometry><cylinder radius="0.03" length="0.05"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <mass value="0.063617"/>
-      <inertia ixx="0.0000275675" ixy="0" ixz="0" iyy="0.0000275675" iyz="0" izz="0.0000286278"/>
-    </inertial>
-  </link>
-  <link name="front_right_thigh">
-    <visual>
-      <origin xyz="0 0 -0.08" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.022" length="0.16"/></geometry>
-      <material name="link_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 0 -0.08" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.022" length="0.16"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0 0 -0.08" rpy="0 0 0"/>
-      <mass value="0.109478"/>
-      <inertia ixx="0.0002468" ixy="0" ixz="0" iyy="0.0002468" iyz="0" izz="0.0000264937"/>
-    </inertial>
-  </link>
-  <link name="front_right_shin">
-    <visual>
-      <origin xyz="0 0 -0.08" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.018" length="0.16"/></geometry>
-      <material name="link_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 0 -0.08" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.018" length="0.16"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0 0 -0.08" rpy="0 0 0"/>
-      <mass value="0.073287"/>
-      <inertia ixx="0.000162282" ixy="0" ixz="0" iyy="0.000162282" iyz="0" izz="0.0000118725"/>
-    </inertial>
-  </link>
-  <link name="rear_left_hip">
-    <visual>
-      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <geometry><cylinder radius="0.03" length="0.05"/></geometry>
-      <material name="accent_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <geometry><cylinder radius="0.03" length="0.05"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <mass value="0.063617"/>
-      <inertia ixx="0.0000275675" ixy="0" ixz="0" iyy="0.0000275675" iyz="0" izz="0.0000286278"/>
-    </inertial>
-  </link>
-  <link name="rear_left_thigh">
-    <visual>
-      <origin xyz="0 0 -0.08" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.022" length="0.16"/></geometry>
-      <material name="link_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 0 -0.08" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.022" length="0.16"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0 0 -0.08" rpy="0 0 0"/>
-      <mass value="0.109478"/>
-      <inertia ixx="0.0002468" ixy="0" ixz="0" iyy="0.0002468" iyz="0" izz="0.0000264937"/>
-    </inertial>
-  </link>
-  <link name="rear_left_shin">
-    <visual>
-      <origin xyz="0 0 -0.08" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.018" length="0.16"/></geometry>
-      <material name="link_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 0 -0.08" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.018" length="0.16"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0 0 -0.08" rpy="0 0 0"/>
-      <mass value="0.073287"/>
-      <inertia ixx="0.000162282" ixy="0" ixz="0" iyy="0.000162282" iyz="0" izz="0.0000118725"/>
-    </inertial>
-  </link>
-  <link name="rear_right_hip">
-    <visual>
-      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <geometry><cylinder radius="0.03" length="0.05"/></geometry>
-      <material name="accent_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <geometry><cylinder radius="0.03" length="0.05"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
-      <mass value="0.063617"/>
-      <inertia ixx="0.0000275675" ixy="0" ixz="0" iyy="0.0000275675" iyz="0" izz="0.0000286278"/>
-    </inertial>
-  </link>
-  <link name="rear_right_thigh">
-    <visual>
-      <origin xyz="0 0 -0.08" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.022" length="0.16"/></geometry>
-      <material name="link_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 0 -0.08" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.022" length="0.16"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0 0 -0.08" rpy="0 0 0"/>
-      <mass value="0.109478"/>
-      <inertia ixx="0.0002468" ixy="0" ixz="0" iyy="0.0002468" iyz="0" izz="0.0000264937"/>
-    </inertial>
-  </link>
-  <link name="rear_right_shin">
-    <visual>
-      <origin xyz="0 0 -0.08" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.018" length="0.16"/></geometry>
-      <material name="link_mat"/>
-    </visual>
-    <collision>
-      <origin xyz="0 0 -0.08" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.018" length="0.16"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0 0 -0.08" rpy="0 0 0"/>
-      <mass value="0.073287"/>
-      <inertia ixx="0.000162282" ixy="0" ixz="0" iyy="0.000162282" iyz="0" izz="0.0000118725"/>
-    </inertial>
-  </link>
-  <link name="front_left_foot">
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><sphere radius="0.025"/></geometry>
-      <material name="wheel_mat"/>
+      <material name="printed_dark"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><sphere radius="0.025"/></geometry>
+      <geometry><mesh filename="package://quadruped/meshes/base_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <mass value="0.045"/>
-      <inertia ixx="0.00001125" ixy="0" ixz="0" iyy="0.00001125" iyz="0" izz="0.00001125"/>
+      <origin xyz="-3.85976e-17 2.35814e-18 -0.00711" rpy="0 0 0"/>
+      <mass value="0.143374"/>
+      <inertia ixx="0.000185586" ixy="-4.55200e-7" ixz="6.47172e-20" iyy="0.000686915" iyz="9.82104e-21" izz="0.00082999"/>
     </inertial>
   </link>
-  <link name="front_right_foot">
+  <link name="battery">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><sphere radius="0.025"/></geometry>
-      <material name="wheel_mat"/>
+      <geometry><mesh filename="package://quadruped/meshes/lipo_3s_2200.stl"/></geometry>
+      <material name="battery"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><sphere radius="0.025"/></geometry>
+      <geometry><mesh filename="package://quadruped/meshes/lipo_3s_2200.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <mass value="0.045"/>
-      <inertia ixx="0.00001125" ixy="0" ixz="0" iyy="0.00001125" iyz="0" izz="0.00001125"/>
+      <origin xyz="0.053187 0.00000431129 0.011" rpy="0 0 0"/>
+      <mass value="0.1735"/>
+      <inertia ixx="0.0000231075" ixy="4.24769e-8" ixz="-1.30384e-21" iyy="0.000174522" iyz="-1.18221e-22" izz="0.000183705"/>
     </inertial>
   </link>
-  <link name="rear_left_foot">
+  <link name="top_deck">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><sphere radius="0.025"/></geometry>
-      <material name="wheel_mat"/>
+      <geometry><mesh filename="package://quadruped/meshes/top_deck.stl"/></geometry>
+      <material name="printed"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><sphere radius="0.025"/></geometry>
+      <geometry><mesh filename="package://quadruped/meshes/top_deck.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <mass value="0.045"/>
-      <inertia ixx="0.00001125" ixy="0" ixz="0" iyy="0.00001125" iyz="0" izz="0.00001125"/>
+      <origin xyz="0.006308 -0.001316 0.018631" rpy="0 0 0"/>
+      <mass value="0.065834"/>
+      <inertia ixx="0.0000508469" ixy="0.00000151087" ixz="-0.00000470686" iyy="0.00022943" iyz="2.04944e-7" izz="0.000278071"/>
     </inertial>
   </link>
-  <link name="rear_right_foot">
+  <link name="computer">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><sphere radius="0.025"/></geometry>
-      <material name="wheel_mat"/>
+      <geometry><mesh filename="package://quadruped/meshes/rpi5.stl"/></geometry>
+      <material name="electronics"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><sphere radius="0.025"/></geometry>
+      <geometry><mesh filename="package://quadruped/meshes/rpi5.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.059962 0.029623 0.00588" rpy="0 0 0"/>
+      <mass value="0.046"/>
+      <inertia ixx="0.0000141581" ixy="0.0000013483" ixz="-0.00000312605" iyy="0.0000308409" iyz="-2.80313e-7" izz="0.0000426283"/>
+    </inertial>
+  </link>
+  <link name="actuator_bus">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/waveshare_bus_servo_adapter.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/waveshare_bus_servo_adapter.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.027562 0.015038 0.003831" rpy="0 0 0"/>
+      <mass value="0.01"/>
+      <inertia ixx="9.12163e-7" ixy="6.01736e-8" ixz="-2.03984e-7" iyy="0.00000169433" iyz="6.44612e-8" izz="0.00000236615"/>
+    </inertial>
+  </link>
+  <link name="regulator_5v">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/buck_5v_5a.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/buck_5v_5a.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.012564 0.012657 0.003445" rpy="0 0 0"/>
+      <mass value="0.007"/>
+      <inertia ixx="2.56895e-7" ixy="8.14755e-9" ixz="1.85795e-9" iyy="3.06643e-7" iyz="1.94440e-9" izz="4.54796e-7"/>
+    </inertial>
+  </link>
+  <link name="imu">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/bno085_breakout.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/bno085_breakout.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.0128 0.01114 0.001089" rpy="0 0 0"/>
+      <mass value="0.0025"/>
+      <inertia ixx="1.00000e-7" ixy="-7.18056e-24" ixz="1.50030e-24" iyy="1.47883e-7" iyz="4.24673e-10" izz="2.39851e-7"/>
+    </inertial>
+  </link>
+  <link name="camera">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/rpi_camera_module_3.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/rpi_camera_module_3.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.0125 0.011417 0.001647" rpy="0 0 0"/>
+      <mass value="0.004"/>
+      <inertia ixx="1.86138e-7" ixy="-1.04163e-23" ixz="-3.30020e-24" iyy="1.45948e-7" iyz="-2.50246e-8" izz="2.84453e-7"/>
+    </inertial>
+  </link>
+  <link name="fl_hip_abduction_actuator">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/feetech_sts3215_c047.stl"/></geometry>
+      <material name="actuator"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/feetech_sts3215_c047.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.012045 -3.31269e-19 -0.01871" rpy="0 0 0"/>
+      <mass value="0.055"/>
+      <inertia ixx="0.00000783597" ixy="3.06243e-22" ixz="-8.49823e-8" iyy="0.0000144597" iyz="2.80348e-22" izz="0.0000120957"/>
+    </inertial>
+  </link>
+  <link name="fl_shoulder">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/fl_shoulder.stl"/></geometry>
+      <material name="printed_accent"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/fl_shoulder.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.01645 -0.000116958 0.025416" rpy="0 0 0"/>
+      <mass value="0.025795"/>
+      <inertia ixx="0.0000120417" ixy="1.11632e-8" ixz="-9.09541e-7" iyy="0.0000136974" iyz="-1.78481e-8" izz="0.00000774841"/>
+    </inertial>
+  </link>
+  <link name="fl_hip_pitch_actuator">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/feetech_sts3215_c047.stl"/></geometry>
+      <material name="actuator"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/feetech_sts3215_c047.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.012045 -3.31269e-19 -0.01871" rpy="0 0 0"/>
+      <mass value="0.055"/>
+      <inertia ixx="0.00000783597" ixy="3.06243e-22" ixz="-8.49823e-8" iyy="0.0000144597" iyz="2.80348e-22" izz="0.0000120957"/>
+    </inertial>
+  </link>
+  <link name="fl_thigh">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/fl_thigh.stl"/></geometry>
+      <material name="printed"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/fl_thigh.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.073928 0.00011509 -0.007805" rpy="0 0 0"/>
+      <mass value="0.026223"/>
+      <inertia ixx="0.000007027" ixy="-2.06561e-8" ixz="0.00000478891" iyy="0.00003591" iyz="-7.71931e-9" izz="0.0000347568"/>
+    </inertial>
+  </link>
+  <link name="fl_knee_actuator">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/feetech_sts3215_c047.stl"/></geometry>
+      <material name="actuator"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/feetech_sts3215_c047.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.012045 -3.31269e-19 -0.01871" rpy="0 0 0"/>
+      <mass value="0.055"/>
+      <inertia ixx="0.00000783597" ixy="3.06243e-22" ixz="-8.49823e-8" iyy="0.0000144597" iyz="2.80348e-22" izz="0.0000120957"/>
+    </inertial>
+  </link>
+  <link name="fl_shin">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/fl_shin.stl"/></geometry>
+      <material name="printed_accent"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/fl_shin.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.047751 3.76281e-7 0.003" rpy="0 0 0"/>
+      <mass value="0.013522"/>
+      <inertia ixx="5.16611e-7" ixy="-1.37679e-10" ixz="-4.79395e-17" iyy="0.0000183181" iyz="5.86387e-19" izz="0.0000187536"/>
+    </inertial>
+  </link>
+  <link name="fl_foot">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><sphere radius="0.013"/></geometry>
+      <material name="rubber"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><sphere radius="0.013"/></geometry>
     </collision>
     <inertial>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <mass value="0.045"/>
-      <inertia ixx="0.00001125" ixy="0" ixz="0" iyy="0.00001125" iyz="0" izz="0.00001125"/>
+      <mass value="0.0089"/>
+      <inertia ixx="6.01640e-7" ixy="0" ixz="0" iyy="6.01640e-7" iyz="0" izz="6.01640e-7"/>
     </inertial>
   </link>
-  <joint name="base_link_service_lid_mount" type="fixed">
+  <link name="fr_hip_abduction_actuator">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/feetech_sts3215_c047.stl"/></geometry>
+      <material name="actuator"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/feetech_sts3215_c047.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.012045 -3.31269e-19 -0.01871" rpy="0 0 0"/>
+      <mass value="0.055"/>
+      <inertia ixx="0.00000783597" ixy="3.06243e-22" ixz="-8.49823e-8" iyy="0.0000144597" iyz="2.80348e-22" izz="0.0000120957"/>
+    </inertial>
+  </link>
+  <link name="fr_shoulder">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/fr_shoulder.stl"/></geometry>
+      <material name="printed_accent"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/fr_shoulder.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.01645 -0.000116958 0.025416" rpy="0 0 0"/>
+      <mass value="0.025795"/>
+      <inertia ixx="0.0000120417" ixy="1.11632e-8" ixz="-9.09541e-7" iyy="0.0000136974" iyz="-1.78481e-8" izz="0.00000774841"/>
+    </inertial>
+  </link>
+  <link name="fr_hip_pitch_actuator">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/feetech_sts3215_c047.stl"/></geometry>
+      <material name="actuator"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/feetech_sts3215_c047.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.012045 -3.31269e-19 -0.01871" rpy="0 0 0"/>
+      <mass value="0.055"/>
+      <inertia ixx="0.00000783597" ixy="3.06243e-22" ixz="-8.49823e-8" iyy="0.0000144597" iyz="2.80348e-22" izz="0.0000120957"/>
+    </inertial>
+  </link>
+  <link name="fr_thigh">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/fr_thigh.stl"/></geometry>
+      <material name="printed"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/fr_thigh.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.073928 0.000115011 -0.007805" rpy="0 0 0"/>
+      <mass value="0.026223"/>
+      <inertia ixx="0.000007027" ixy="-2.08089e-8" ixz="0.00000478891" iyy="0.00003591" iyz="-7.69905e-9" izz="0.0000347568"/>
+    </inertial>
+  </link>
+  <link name="fr_knee_actuator">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/feetech_sts3215_c047.stl"/></geometry>
+      <material name="actuator"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/feetech_sts3215_c047.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.012045 -3.31269e-19 -0.01871" rpy="0 0 0"/>
+      <mass value="0.055"/>
+      <inertia ixx="0.00000783597" ixy="3.06243e-22" ixz="-8.49823e-8" iyy="0.0000144597" iyz="2.80348e-22" izz="0.0000120957"/>
+    </inertial>
+  </link>
+  <link name="fr_shin">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/fr_shin.stl"/></geometry>
+      <material name="printed_accent"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/fr_shin.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.047751 -3.76281e-7 0.003" rpy="0 0 0"/>
+      <mass value="0.013522"/>
+      <inertia ixx="5.16611e-7" ixy="1.37679e-10" ixz="1.57758e-17" iyy="0.0000183181" iyz="-1.86241e-18" izz="0.0000187536"/>
+    </inertial>
+  </link>
+  <link name="fr_foot">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><sphere radius="0.013"/></geometry>
+      <material name="rubber"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><sphere radius="0.013"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.0089"/>
+      <inertia ixx="6.01640e-7" ixy="0" ixz="0" iyy="6.01640e-7" iyz="0" izz="6.01640e-7"/>
+    </inertial>
+  </link>
+  <link name="rl_hip_abduction_actuator">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/feetech_sts3215_c047.stl"/></geometry>
+      <material name="actuator"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/feetech_sts3215_c047.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.012045 -3.31269e-19 -0.01871" rpy="0 0 0"/>
+      <mass value="0.055"/>
+      <inertia ixx="0.00000783597" ixy="3.06243e-22" ixz="-8.49823e-8" iyy="0.0000144597" iyz="2.80348e-22" izz="0.0000120957"/>
+    </inertial>
+  </link>
+  <link name="rl_shoulder">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/rl_shoulder.stl"/></geometry>
+      <material name="printed_accent"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/rl_shoulder.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.01645 -0.000116958 0.025416" rpy="0 0 0"/>
+      <mass value="0.025795"/>
+      <inertia ixx="0.0000120417" ixy="1.11632e-8" ixz="-9.09541e-7" iyy="0.0000136974" iyz="-1.78481e-8" izz="0.00000774841"/>
+    </inertial>
+  </link>
+  <link name="rl_hip_pitch_actuator">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/feetech_sts3215_c047.stl"/></geometry>
+      <material name="actuator"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/feetech_sts3215_c047.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.012045 -3.31269e-19 -0.01871" rpy="0 0 0"/>
+      <mass value="0.055"/>
+      <inertia ixx="0.00000783597" ixy="3.06243e-22" ixz="-8.49823e-8" iyy="0.0000144597" iyz="2.80348e-22" izz="0.0000120957"/>
+    </inertial>
+  </link>
+  <link name="rl_thigh">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/rl_thigh.stl"/></geometry>
+      <material name="printed"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/rl_thigh.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.073928 0.000115011 -0.007805" rpy="0 0 0"/>
+      <mass value="0.026223"/>
+      <inertia ixx="0.000007027" ixy="-2.08089e-8" ixz="0.00000478891" iyy="0.00003591" iyz="-7.69905e-9" izz="0.0000347568"/>
+    </inertial>
+  </link>
+  <link name="rl_knee_actuator">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/feetech_sts3215_c047.stl"/></geometry>
+      <material name="actuator"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/feetech_sts3215_c047.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.012045 -3.31269e-19 -0.01871" rpy="0 0 0"/>
+      <mass value="0.055"/>
+      <inertia ixx="0.00000783597" ixy="3.06243e-22" ixz="-8.49823e-8" iyy="0.0000144597" iyz="2.80348e-22" izz="0.0000120957"/>
+    </inertial>
+  </link>
+  <link name="rl_shin">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/rl_shin.stl"/></geometry>
+      <material name="printed_accent"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/rl_shin.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.047751 -3.76281e-7 0.003" rpy="0 0 0"/>
+      <mass value="0.013522"/>
+      <inertia ixx="5.16611e-7" ixy="1.37679e-10" ixz="1.57758e-17" iyy="0.0000183181" iyz="-1.86241e-18" izz="0.0000187536"/>
+    </inertial>
+  </link>
+  <link name="rl_foot">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><sphere radius="0.013"/></geometry>
+      <material name="rubber"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><sphere radius="0.013"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.0089"/>
+      <inertia ixx="6.01640e-7" ixy="0" ixz="0" iyy="6.01640e-7" iyz="0" izz="6.01640e-7"/>
+    </inertial>
+  </link>
+  <link name="rr_hip_abduction_actuator">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/feetech_sts3215_c047.stl"/></geometry>
+      <material name="actuator"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/feetech_sts3215_c047.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.012045 -3.31269e-19 -0.01871" rpy="0 0 0"/>
+      <mass value="0.055"/>
+      <inertia ixx="0.00000783597" ixy="3.06243e-22" ixz="-8.49823e-8" iyy="0.0000144597" iyz="2.80348e-22" izz="0.0000120957"/>
+    </inertial>
+  </link>
+  <link name="rr_shoulder">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/rr_shoulder.stl"/></geometry>
+      <material name="printed_accent"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/rr_shoulder.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.01645 -0.000116958 0.025416" rpy="0 0 0"/>
+      <mass value="0.025795"/>
+      <inertia ixx="0.0000120417" ixy="1.11632e-8" ixz="-9.09541e-7" iyy="0.0000136974" iyz="-1.78481e-8" izz="0.00000774841"/>
+    </inertial>
+  </link>
+  <link name="rr_hip_pitch_actuator">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/feetech_sts3215_c047.stl"/></geometry>
+      <material name="actuator"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/feetech_sts3215_c047.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.012045 -3.31269e-19 -0.01871" rpy="0 0 0"/>
+      <mass value="0.055"/>
+      <inertia ixx="0.00000783597" ixy="3.06243e-22" ixz="-8.49823e-8" iyy="0.0000144597" iyz="2.80348e-22" izz="0.0000120957"/>
+    </inertial>
+  </link>
+  <link name="rr_thigh">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/rr_thigh.stl"/></geometry>
+      <material name="printed"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/rr_thigh.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.073928 0.00011509 -0.007805" rpy="0 0 0"/>
+      <mass value="0.026223"/>
+      <inertia ixx="0.000007027" ixy="-2.06561e-8" ixz="0.00000478891" iyy="0.00003591" iyz="-7.71931e-9" izz="0.0000347568"/>
+    </inertial>
+  </link>
+  <link name="rr_knee_actuator">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/feetech_sts3215_c047.stl"/></geometry>
+      <material name="actuator"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/feetech_sts3215_c047.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.012045 -3.31269e-19 -0.01871" rpy="0 0 0"/>
+      <mass value="0.055"/>
+      <inertia ixx="0.00000783597" ixy="3.06243e-22" ixz="-8.49823e-8" iyy="0.0000144597" iyz="2.80348e-22" izz="0.0000120957"/>
+    </inertial>
+  </link>
+  <link name="rr_shin">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/rr_shin.stl"/></geometry>
+      <material name="printed_accent"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/rr_shin.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.047751 3.76281e-7 0.003" rpy="0 0 0"/>
+      <mass value="0.013522"/>
+      <inertia ixx="5.16611e-7" ixy="-1.37679e-10" ixz="-4.79395e-17" iyy="0.0000183181" iyz="5.86387e-19" izz="0.0000187536"/>
+    </inertial>
+  </link>
+  <link name="rr_foot">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><sphere radius="0.013"/></geometry>
+      <material name="rubber"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><sphere radius="0.013"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.0089"/>
+      <inertia ixx="6.01640e-7" ixy="0" ixz="0" iyy="6.01640e-7" iyz="0" izz="6.01640e-7"/>
+    </inertial>
+  </link>
+  <joint name="battery_mount" type="fixed">
     <parent link="base_link"/>
-    <child link="base_link_service_lid"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <dynamics damping="0.1" friction="0"/>
+    <child link="battery"/>
+    <origin xyz="-0.0475 0 -0.0155" rpy="0 0 0"/>
   </joint>
-  <joint name="base_link_rear_panel_mount" type="fixed">
+  <joint name="computer_mount" type="fixed">
+    <parent link="top_deck"/>
+    <child link="computer"/>
+    <origin xyz="-0.0966 -0.0274 0.025" rpy="0 0 0"/>
+  </joint>
+  <joint name="actuator_bus_mount" type="fixed">
+    <parent link="top_deck"/>
+    <child link="actuator_bus"/>
+    <origin xyz="-0.0006 -0.0459 0.023" rpy="0 0 0"/>
+  </joint>
+  <joint name="regulator_5v_mount" type="fixed">
+    <parent link="top_deck"/>
+    <child link="regulator_5v"/>
+    <origin xyz="-0.0006 0.006 0.023" rpy="0 0 0"/>
+  </joint>
+  <joint name="imu_mount" type="fixed">
+    <parent link="top_deck"/>
+    <child link="imu"/>
+    <origin xyz="0.0474 -0.01135 0.023" rpy="0 0 0"/>
+  </joint>
+  <joint name="camera_mount" type="fixed">
+    <parent link="top_deck"/>
+    <child link="camera"/>
+    <origin xyz="0.1056 0.0125 0.049" rpy="-1.570796 0 -1.570796"/>
+  </joint>
+  <joint name="top_deck_mount" type="fixed">
     <parent link="base_link"/>
-    <child link="base_link_rear_panel"/>
+    <child link="top_deck"/>
     <origin xyz="0 0 0" rpy="0 0 0"/>
-    <dynamics damping="0.1" friction="0"/>
   </joint>
-  <joint name="base_link_right_panel_mount" type="fixed">
+  <joint name="fl_hip_abduction_actuator_mount" type="fixed">
     <parent link="base_link"/>
-    <child link="base_link_right_panel"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <dynamics damping="0.1" friction="0"/>
+    <child link="fl_hip_abduction_actuator"/>
+    <origin xyz="0.1066 0.0367 0" rpy="1.570796 0 1.570796"/>
   </joint>
-  <joint name="base_link_front_panel_mount" type="fixed">
+  <joint name="fl_hip_abduction" type="revolute">
     <parent link="base_link"/>
-    <child link="base_link_front_panel"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <dynamics damping="0.1" friction="0"/>
+    <child link="fl_shoulder"/>
+    <origin xyz="0.1066 0.0367 0" rpy="1.570796 0 1.570796"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-0.165" upper="0.6" effort="2.942" velocity="4.712"/>
+    <dynamics damping="0.1249" friction="0.0588"/>
   </joint>
-  <joint name="base_link_left_panel_mount" type="fixed">
+  <joint name="fl_hip_pitch_actuator_mount" type="fixed">
+    <parent link="fl_shoulder"/>
+    <child link="fl_hip_pitch_actuator"/>
+    <origin xyz="-0.0127 0 0.0437" rpy="0 -1.570796 0"/>
+  </joint>
+  <joint name="fl_hip_pitch" type="revolute">
+    <parent link="fl_shoulder"/>
+    <child link="fl_thigh"/>
+    <origin xyz="-0.0127 0 0.0437" rpy="1.570796 -0.747289 -1.570796"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1.4" upper="1.4" effort="2.942" velocity="4.712"/>
+    <dynamics damping="0.1249" friction="0.0588"/>
+  </joint>
+  <joint name="fl_knee_actuator_mount" type="fixed">
+    <parent link="fl_thigh"/>
+    <child link="fl_knee_actuator"/>
+    <origin xyz="0.105 0 -0.0381" rpy="3.141593 0 0"/>
+  </joint>
+  <joint name="fl_knee" type="revolute">
+    <parent link="fl_thigh"/>
+    <child link="fl_shin"/>
+    <origin xyz="0.105 0 -0.0381" rpy="3.141593 0 -1.416737"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1.3" upper="1.3" effort="2.942" velocity="4.712"/>
+    <dynamics damping="0.1249" friction="0.0588"/>
+  </joint>
+  <joint name="fl_foot_mount" type="fixed">
+    <parent link="fl_shin"/>
+    <child link="fl_foot"/>
+    <origin xyz="0.115 0 0.003" rpy="1.570796 0 -2.240244"/>
+  </joint>
+  <joint name="fr_hip_abduction_actuator_mount" type="fixed">
     <parent link="base_link"/>
-    <child link="base_link_left_panel"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <dynamics damping="0.1" friction="0"/>
+    <child link="fr_hip_abduction_actuator"/>
+    <origin xyz="0.1066 -0.0367 0" rpy="-1.570796 0 -1.570796"/>
   </joint>
-  <joint name="base_link_standoff_rr_mount" type="fixed">
+  <joint name="fr_hip_abduction" type="revolute">
     <parent link="base_link"/>
-    <child link="base_link_standoff_rr"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <dynamics damping="0.1" friction="0"/>
+    <child link="fr_shoulder"/>
+    <origin xyz="0.1066 -0.0367 0" rpy="-1.570796 0 -1.570796"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-0.6" upper="0.165" effort="2.942" velocity="4.712"/>
+    <dynamics damping="0.1249" friction="0.0588"/>
   </joint>
-  <joint name="base_link_standoff_rl_mount" type="fixed">
+  <joint name="fr_hip_pitch_actuator_mount" type="fixed">
+    <parent link="fr_shoulder"/>
+    <child link="fr_hip_pitch_actuator"/>
+    <origin xyz="-0.0127 0 0.0437" rpy="0 -1.570796 0"/>
+  </joint>
+  <joint name="fr_hip_pitch" type="revolute">
+    <parent link="fr_shoulder"/>
+    <child link="fr_thigh"/>
+    <origin xyz="-0.0127 0 0.0437" rpy="-1.570796 -0.747289 1.570796"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1.4" upper="1.4" effort="2.942" velocity="4.712"/>
+    <dynamics damping="0.1249" friction="0.0588"/>
+  </joint>
+  <joint name="fr_knee_actuator_mount" type="fixed">
+    <parent link="fr_thigh"/>
+    <child link="fr_knee_actuator"/>
+    <origin xyz="0.105 0 -0.0381" rpy="3.141593 0 0"/>
+  </joint>
+  <joint name="fr_knee" type="revolute">
+    <parent link="fr_thigh"/>
+    <child link="fr_shin"/>
+    <origin xyz="0.105 0 -0.0381" rpy="3.141593 0 1.416737"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1.3" upper="1.3" effort="2.942" velocity="4.712"/>
+    <dynamics damping="0.1249" friction="0.0588"/>
+  </joint>
+  <joint name="fr_foot_mount" type="fixed">
+    <parent link="fr_shin"/>
+    <child link="fr_foot"/>
+    <origin xyz="0.115 0 0.003" rpy="-1.570796 0 2.240244"/>
+  </joint>
+  <joint name="rl_hip_abduction_actuator_mount" type="fixed">
     <parent link="base_link"/>
-    <child link="base_link_standoff_rl"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <dynamics damping="0.1" friction="0"/>
+    <child link="rl_hip_abduction_actuator"/>
+    <origin xyz="-0.1066 0.0367 0" rpy="-1.570796 0 1.570796"/>
   </joint>
-  <joint name="base_link_standoff_fr_mount" type="fixed">
+  <joint name="rl_hip_abduction" type="revolute">
     <parent link="base_link"/>
-    <child link="base_link_standoff_fr"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <dynamics damping="0.1" friction="0"/>
+    <child link="rl_shoulder"/>
+    <origin xyz="-0.1066 0.0367 0" rpy="-1.570796 0 1.570796"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-0.6" upper="0.165" effort="2.942" velocity="4.712"/>
+    <dynamics damping="0.1249" friction="0.0588"/>
   </joint>
-  <joint name="base_link_standoff_fl_mount" type="fixed">
+  <joint name="rl_hip_pitch_actuator_mount" type="fixed">
+    <parent link="rl_shoulder"/>
+    <child link="rl_hip_pitch_actuator"/>
+    <origin xyz="-0.0127 0 0.0437" rpy="0 -1.570796 0"/>
+  </joint>
+  <joint name="rl_hip_pitch" type="revolute">
+    <parent link="rl_shoulder"/>
+    <child link="rl_thigh"/>
+    <origin xyz="-0.0127 0 0.0437" rpy="-1.570796 -0.747289 1.570796"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1.4" upper="1.4" effort="2.942" velocity="4.712"/>
+    <dynamics damping="0.1249" friction="0.0588"/>
+  </joint>
+  <joint name="rl_knee_actuator_mount" type="fixed">
+    <parent link="rl_thigh"/>
+    <child link="rl_knee_actuator"/>
+    <origin xyz="0.105 0 -0.0381" rpy="3.141593 0 0"/>
+  </joint>
+  <joint name="rl_knee" type="revolute">
+    <parent link="rl_thigh"/>
+    <child link="rl_shin"/>
+    <origin xyz="0.105 0 -0.0381" rpy="3.141593 0 1.416737"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1.3" upper="1.3" effort="2.942" velocity="4.712"/>
+    <dynamics damping="0.1249" friction="0.0588"/>
+  </joint>
+  <joint name="rl_foot_mount" type="fixed">
+    <parent link="rl_shin"/>
+    <child link="rl_foot"/>
+    <origin xyz="0.115 0 0.003" rpy="1.570796 0 -0.901349"/>
+  </joint>
+  <joint name="rr_hip_abduction_actuator_mount" type="fixed">
     <parent link="base_link"/>
-    <child link="base_link_standoff_fl"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <dynamics damping="0.1" friction="0"/>
+    <child link="rr_hip_abduction_actuator"/>
+    <origin xyz="-0.1066 -0.0367 0" rpy="1.570796 0 -1.570796"/>
   </joint>
-  <joint name="front_left_hip_joint" type="revolute">
+  <joint name="rr_hip_abduction" type="revolute">
     <parent link="base_link"/>
-    <child link="front_left_hip"/>
-    <origin xyz="0.18 0.12 0.335" rpy="0 0 0"/>
-    <axis xyz="1 0 0"/>
-    <limit lower="-0.8" upper="0.8" effort="50" velocity="2"/>
-    <dynamics damping="0.1" friction="0"/>
+    <child link="rr_shoulder"/>
+    <origin xyz="-0.1066 -0.0367 0" rpy="1.570796 0 -1.570796"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-0.165" upper="0.6" effort="2.942" velocity="4.712"/>
+    <dynamics damping="0.1249" friction="0.0588"/>
   </joint>
-  <joint name="front_left_thigh_joint" type="revolute">
-    <parent link="front_left_hip"/>
-    <child link="front_left_thigh"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <axis xyz="0 1 0"/>
-    <limit lower="-1.6" upper="1.6" effort="50" velocity="2"/>
-    <dynamics damping="0.1" friction="0"/>
+  <joint name="rr_hip_pitch_actuator_mount" type="fixed">
+    <parent link="rr_shoulder"/>
+    <child link="rr_hip_pitch_actuator"/>
+    <origin xyz="-0.0127 0 0.0437" rpy="0 -1.570796 0"/>
   </joint>
-  <joint name="front_left_knee_joint" type="revolute">
-    <parent link="front_left_thigh"/>
-    <child link="front_left_shin"/>
-    <origin xyz="0 0 -0.16" rpy="0 0 0"/>
-    <axis xyz="0 1 0"/>
-    <limit lower="-2.4" upper="0" effort="50" velocity="2"/>
-    <dynamics damping="0.1" friction="0"/>
+  <joint name="rr_hip_pitch" type="revolute">
+    <parent link="rr_shoulder"/>
+    <child link="rr_thigh"/>
+    <origin xyz="-0.0127 0 0.0437" rpy="1.570796 -0.747289 -1.570796"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1.4" upper="1.4" effort="2.942" velocity="4.712"/>
+    <dynamics damping="0.1249" friction="0.0588"/>
   </joint>
-  <joint name="front_right_hip_joint" type="revolute">
-    <parent link="base_link"/>
-    <child link="front_right_hip"/>
-    <origin xyz="0.18 -0.12 0.335" rpy="0 0 0"/>
-    <axis xyz="1 0 0"/>
-    <limit lower="-0.8" upper="0.8" effort="50" velocity="2"/>
-    <dynamics damping="0.1" friction="0"/>
+  <joint name="rr_knee_actuator_mount" type="fixed">
+    <parent link="rr_thigh"/>
+    <child link="rr_knee_actuator"/>
+    <origin xyz="0.105 0 -0.0381" rpy="3.141593 0 0"/>
   </joint>
-  <joint name="front_right_thigh_joint" type="revolute">
-    <parent link="front_right_hip"/>
-    <child link="front_right_thigh"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <axis xyz="0 1 0"/>
-    <limit lower="-1.6" upper="1.6" effort="50" velocity="2"/>
-    <dynamics damping="0.1" friction="0"/>
+  <joint name="rr_knee" type="revolute">
+    <parent link="rr_thigh"/>
+    <child link="rr_shin"/>
+    <origin xyz="0.105 0 -0.0381" rpy="3.141593 0 -1.416737"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1.3" upper="1.3" effort="2.942" velocity="4.712"/>
+    <dynamics damping="0.1249" friction="0.0588"/>
   </joint>
-  <joint name="front_right_knee_joint" type="revolute">
-    <parent link="front_right_thigh"/>
-    <child link="front_right_shin"/>
-    <origin xyz="0 0 -0.16" rpy="0 0 0"/>
-    <axis xyz="0 1 0"/>
-    <limit lower="-2.4" upper="0" effort="50" velocity="2"/>
-    <dynamics damping="0.1" friction="0"/>
-  </joint>
-  <joint name="rear_left_hip_joint" type="revolute">
-    <parent link="base_link"/>
-    <child link="rear_left_hip"/>
-    <origin xyz="-0.18 0.12 0.335" rpy="0 0 0"/>
-    <axis xyz="1 0 0"/>
-    <limit lower="-0.8" upper="0.8" effort="50" velocity="2"/>
-    <dynamics damping="0.1" friction="0"/>
-  </joint>
-  <joint name="rear_left_thigh_joint" type="revolute">
-    <parent link="rear_left_hip"/>
-    <child link="rear_left_thigh"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <axis xyz="0 1 0"/>
-    <limit lower="-1.6" upper="1.6" effort="50" velocity="2"/>
-    <dynamics damping="0.1" friction="0"/>
-  </joint>
-  <joint name="rear_left_knee_joint" type="revolute">
-    <parent link="rear_left_thigh"/>
-    <child link="rear_left_shin"/>
-    <origin xyz="0 0 -0.16" rpy="0 0 0"/>
-    <axis xyz="0 1 0"/>
-    <limit lower="-2.4" upper="0" effort="50" velocity="2"/>
-    <dynamics damping="0.1" friction="0"/>
-  </joint>
-  <joint name="rear_right_hip_joint" type="revolute">
-    <parent link="base_link"/>
-    <child link="rear_right_hip"/>
-    <origin xyz="-0.18 -0.12 0.335" rpy="0 0 0"/>
-    <axis xyz="1 0 0"/>
-    <limit lower="-0.8" upper="0.8" effort="50" velocity="2"/>
-    <dynamics damping="0.1" friction="0"/>
-  </joint>
-  <joint name="rear_right_thigh_joint" type="revolute">
-    <parent link="rear_right_hip"/>
-    <child link="rear_right_thigh"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <axis xyz="0 1 0"/>
-    <limit lower="-1.6" upper="1.6" effort="50" velocity="2"/>
-    <dynamics damping="0.1" friction="0"/>
-  </joint>
-  <joint name="rear_right_knee_joint" type="revolute">
-    <parent link="rear_right_thigh"/>
-    <child link="rear_right_shin"/>
-    <origin xyz="0 0 -0.16" rpy="0 0 0"/>
-    <axis xyz="0 1 0"/>
-    <limit lower="-2.4" upper="0" effort="50" velocity="2"/>
-    <dynamics damping="0.1" friction="0"/>
-  </joint>
-  <joint name="front_left_foot_mount" type="fixed">
-    <parent link="front_left_shin"/>
-    <child link="front_left_foot"/>
-    <origin xyz="0 0 -0.16" rpy="0 0 0"/>
-    <dynamics damping="0.1" friction="0"/>
-  </joint>
-  <joint name="front_right_foot_mount" type="fixed">
-    <parent link="front_right_shin"/>
-    <child link="front_right_foot"/>
-    <origin xyz="0 0 -0.16" rpy="0 0 0"/>
-    <dynamics damping="0.1" friction="0"/>
-  </joint>
-  <joint name="rear_left_foot_mount" type="fixed">
-    <parent link="rear_left_shin"/>
-    <child link="rear_left_foot"/>
-    <origin xyz="0 0 -0.16" rpy="0 0 0"/>
-    <dynamics damping="0.1" friction="0"/>
-  </joint>
-  <joint name="rear_right_foot_mount" type="fixed">
-    <parent link="rear_right_shin"/>
-    <child link="rear_right_foot"/>
-    <origin xyz="0 0 -0.16" rpy="0 0 0"/>
-    <dynamics damping="0.1" friction="0"/>
+  <joint name="rr_foot_mount" type="fixed">
+    <parent link="rr_shin"/>
+    <child link="rr_foot"/>
+    <origin xyz="0.115 0 0.003" rpy="-1.570796 0 0.901349"/>
   </joint>
 </robot>

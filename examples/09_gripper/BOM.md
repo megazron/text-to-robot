@@ -1,31 +1,32 @@
 # Bill of Materials — parallel_gripper
 
-**Estimated total: $241.41**  ·  tier: prosumer
+**Estimated total: $80.84**  ·  tier: hobby
 
 **Effort sizing: passes catalogue estimate; hardware verified: no.**
 
 | Category | Component | Qty | Unit $ | Subtotal $ | Spec |
 |---|---|--:|--:|--:|---|
-| Actuator | NEMA17 + lead screw _(joint left_finger_joint; rating duty/source unverified; joint right_finger_joint; rating duty/source unverified)_ | 2 | 26 | 52 | lead-screw linear stage (60 N) |
-| Motor driver | TMC2209 driver | 2 | 10 | 20 | driver for NEMA17 + lead screw |
-| Compute | Teensy 4.1 | 1 | 32 | 32 | 600MHz MCU, real-time control |
-| Power | LiPo 4S 5000mAh | 1 | 40 | 40 | 74 Wh; est. load 12 W |
-| Power | DC-DC buck regulator (5V/10A) | 1 | 12 | 12 | logic + servo rail |
-| Power | Power distribution board + fuse + switch | 1 | 14 | 14 | wiring harness backbone |
-| Structure | 3D-printed frame (PLA/PETG) | 1 | 33.01 | 33.01 | ~1.50 kg material @ $22/kg |
-| Structure | Fastener + bearing kit | 1 | 18 | 18 | M3 screws, heat inserts, 608 bearings |
-| Wiring & misc | Wiring, connectors, JST/Dupont, sleeving | 1 | 20.4 | 20.4 | ~12% of electronics |
+| Actuator | Feetech STS3215 C047 12 V 30 kg.cm (1:345) _(gripper pinion drive · https://www.seeedstudio.com/STS3215-30KG-Serial-Servo-p-6340.html)_ | 1 | 22 | 22 | 0.9807 N·m rated / 2.942 N·m peak, 12 V |
+| Mechanical | Linear ball bushing LM8UU (8 x 15 x 24 mm) _(finger carriage bushings · https://www.samick.co.kr/en/product/linear-bushing)_ | 4 | 1.2 | 4.8 | https://www.samickthk.co.kr/sub/product/linear-bushing/LM.php |
+| Power | Mean Well LRS-75-12 enclosed PSU, 12 V 6 A (75 W) _(12 V servo supply (off-board) · https://www.digikey.com/en/products/result?keywords=LRS-75-12)_ | 1 | 22 | 22 | 12 V |
+| Power | Hardened chromed linear rod 8 mm h6, 130 mm _(finger guide rods · https://us.misumi-ec.com/vona2/mech/M0100000000/M0101000000/M0101010000/)_ | 2 | 4.56 | 9.12 | https://us.misumi-ec.com/vona2/mech/M0100000000/M0101000000/M0101010000/ |
+| Electronics | Waveshare Bus Servo Adapter (A) _(USB to servo bus (off-board) · https://www.waveshare.com/bus-servo-adapter-a.htm)_ | 1 | 10.6 | 10.6 | 12 V |
+| Printed structure | PETG filament for 5 printed parts _(base_link, gripper_body, pinion, finger_a, finger_b)_ | 1 | 9.92 | 9.92 | 392 g of parts (+15 % supports/waste), about 35.7 h of printing |
+| Fasteners | Screws, nuts and inserts | 20 | 0.12 | 2.4 | 4x M6 x 16 socket head (adapter to robot flange); 4x M4 x 10 socket head + M4 heat-set insert (housing to adapter, radial); 4x M3 x 6 set screw (rod retention); 4x servo case screws (M2 x 6); 4x horn screws |
 
 ## Actuator sizing
 
 | Joint | Required effort | Unit | Chosen actuator | Margin |
 |---|--:|---|---|--:|
-| left_finger_joint | 32 | N | NEMA17 + lead screw | 1.9x |
-| right_finger_joint | 32 | N | NEMA17 + lead screw | 1.9x |
-
-## Warnings
-- ⚠️ Sizing uses a neutral-pose gravity proxy and declared joint effort, not a worst-case workspace or dynamic load analysis. Selection checks only approximate effort and broad motion type. Speed/torque curves, travel, voltage, feedback, mounting, thermal duty and wiring are not qualified.
-- ⚠️ Catalog values are planning estimates. Except explicitly sourced rated values, torque entries may be stall/peak ratings; continuous duty, fit and complete assemblies are unverified.
+| finger_a | 0.155 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 6.35x |
 
 ## Notes
-- Tier: prosumer. Prices are planning estimates (USD), not quotes. Structure assumes FDM 3D printing.
+- Parallel gripper: 60 mm stroke, 47 N rated squeeze per finger, Feetech STS3215 C047 12 V 30 kg.cm (1:345)
+- Sized for a 0.5 kg payload.
+- Grip force uses the servo's rated (continuous) torque 0.9807 N·m; stall torque 2.942 N·m gives 140 N per finger for short squeezes.
+- Friction coefficient 0.5 between the printed pads (or TPU/rubber pads glued into the grooves) and the object; safety factor 1.5.
+- The fingers are coupled by the rack-and-pinion: finger_a is the actuated prismatic joint (servo torque / pitch radius), finger_b and the pinion carry a URDF <mimic> of it (MuJoCo: joint equality constraints), so one actuator drives both fingers.
+- Rack/pinion teeth are module 1.5 printed in PETG; grease them and expect backlash of a few tenths of a millimetre.
+- Servo bus adapter and 12 V supply sit off the gripper (cable through the window under the servo).
+- The adapter plate bolts to the robot first (heads sunk in the plate), then the housing slides over it and is fixed by four radial M4 screws.
+- Prices are list/street prices from the linked suppliers at the time the catalog was written; check before ordering.

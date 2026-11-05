@@ -4,53 +4,16 @@
  "group": "gripper",
  "scope": "PASS means the modelled actuators (datasheet peak torque as a hard limit, a linear torque-speed line to no-load speed, reflected rotor inertia, URDF damping/friction) can produce the torques and speeds the task needs in this geometry and mass distribution, and that mean torque over the hold stays within the continuous (rated) torque. Joint control uses an ideal model-based feedforward (computed torque) through the force-limited servo for fixed-base robots and plain position servos for floating robots; a pass therefore proves torque/speed capacity, not that a given controller achieves it. Untested: thermal limits over long duty cycles (only the mean-vs-rated proxy), gearbox backlash and compliance, link and joint flexibility, encoder resolution, supply voltage sag and current limits, bus latency, controller tuning, and contact/friction values (nominal friction only).",
  "untested": [],
- "fidelity": "URDF effort limits enforced; position gains inferred; speed/thermal/electrical limits unmodelled; geometry and hardware uncalibrated",
+ "fidelity": "URDF effort limits enforced; position gains inferred; speed/thermal/electrical limits unmodelled; geometry and hardware uncalibrated; armature = rotor inertia x gear ratio^2 from the actuator record: finger_a: 0.0286 kg m^2 (estimate (feetech_sts motor) x gear ratio 345^2)",
  "tests": {
   "grip": {
-   "pass": true,
-   "explanation": "holds 0.1 kg against its weight with friction 0.5: slip 0.1 mm in 3 s, clamp force 40.0 N (needs >= 1.0 N), gripper limited to its peak torque (no continuous rating known)",
-   "payload_kg": 0.1,
-   "friction": 0.5,
-   "slip_mm": 0.09,
-   "sideways_drift_mm": 5.97,
-   "clamp_force_n": 40.02,
-   "normal_force_end_n": 40.02,
-   "required_normal_n": 0.98,
-   "box_width_m": 0.03,
-   "finger_gap_m": 0.06,
-   "close_targets": {
-    "left_finger_joint": 0.0,
-    "right_finger_joint": 0.0
-   },
-   "actuator_limit": "peak torque (no rated value known)",
-   "pads": 4,
-   "joints": {
-    "left_finger_joint": {
-     "peak_nm": 40.0,
-     "peak_rating_nm": 40.0,
-     "util_peak": 1.0,
-     "mean_hold_nm": 20.0111,
-     "rated_nm": null,
-     "util_rated": null,
-     "max_err": 0.0252,
-     "max_err_hold": 0.0252,
-     "saturated_frac": 1.0
-    },
-    "right_finger_joint": {
-     "peak_nm": 40.0,
-     "peak_rating_nm": 40.0,
-     "util_peak": 1.0,
-     "mean_hold_nm": 20.0113,
-     "rated_nm": null,
-     "util_rated": null,
-     "max_err": 0.0109,
-     "max_err_hold": 0.0109,
-     "saturated_frac": 1.0
-    }
-   }
+   "pass": null,
+   "explanation": "untested: the TCP is not between two finger surfaces",
+   "gap_plus": -0.0371,
+   "gap_minus": 0.0639
   }
  },
- "passed": 1,
- "total": 1,
- "source_urdf_sha256": "709bed01a66999a5cf8c29601373eaf5375995a3add46c8d02d59cd5d3f4ce99"
+ "passed": 0,
+ "total": 0,
+ "source_urdf_sha256": "d4463fdb7cb3b2edc4a0f070171d55e223cafbf9da28c6f637f2db3bdc4a51ff"
 }

@@ -1,0 +1,1 @@
+A cheap Arduino robot arm with a claw

@@ -8,7 +8,7 @@ Interpreted as: 7-DOF serial arm · parallel gripper
 
 **7-DOF arm, 500 mm reach, 0.1 kg payload, ROBOTIS DYNAMIXEL X-series (12 V)**
 
-Parts cost **$1198.6** · printed structure 9 parts, 465 g · checks passed 25/25
+Parts cost **$1198.58** · printed structure 9 parts, 464 g · checks passed 25/25
 
 ## What it can do
 
@@ -16,7 +16,7 @@ Parts cost **$1198.6** · printed structure 9 parts, 465 g · checks passed 25/2
 |---|--:|
 | reach m | 0.5 |
 | payload kg | 0.1 |
-| mass kg | 1.055 |
+| mass kg | 1.054 |
 | actuators | ROBOTIS DYNAMIXEL X-series (12 V) |
 | max joint speed rad s | 3.62 |
 | grip force n | 6 |
@@ -29,9 +29,9 @@ Parts cost **$1198.6** · printed structure 9 parts, 465 g · checks passed 25/2
 | Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
 |---|---|--:|--:|--:|--:|
 | base_yaw | dxl_xl430_w250 | 0 | 0.42 / 1.4 | 99x | 4.17 |
-| shoulder_pitch | dxl_xh540_w270 | 2.811 | 2.97 / 9.9 | 3.52x | 3.62 |
-| upper_arm_roll | dxl_xl430_w250 | 0.019 | 0.42 / 1.4 | 75.31x | 5.67 |
-| elbow_pitch | dxl_xm430_w350 | 1.355 | 1.23 / 4.1 | 3.03x | 3.94 |
+| shoulder_pitch | dxl_xh540_w270 | 2.809 | 2.97 / 9.9 | 3.52x | 3.62 |
+| upper_arm_roll | dxl_xl430_w250 | 0.019 | 0.42 / 1.4 | 74.92x | 5.67 |
+| elbow_pitch | dxl_xm430_w350 | 1.354 | 1.23 / 4.1 | 3.03x | 3.96 |
 | forearm_roll | dxl_xl430_w250 | 0.009 | 0.42 / 1.4 | 99x | 5.67 |
 | wrist_pitch | dxl_xl430_w250 | 0.488 | 0.42 / 1.4 | 2.87x | 4.65 |
 | wrist_roll | dxl_xl430_w250 | 0.001 | 0.42 / 1.4 | 99x | 5.67 |
@@ -54,7 +54,7 @@ All 25 checks pass (torque, speed, power, stability, print-bed fit, grip). Detai
 
 | | Test | Result |
 |---|---|---|
-| ✅ | payload hold | stretched_plus: holds 0.1 kg with the arm stretched out for 3 s; worst continuous utilisation 0.90x rated at wrist_pitch | stretched_minus: holds 0.1 kg with the arm stretched out for 3 s; worst continuous utilisation 0.89x rated at wrist_pitch |
+| ✅ | payload hold | stretched_plus: holds 0.1 kg with the arm stretched out for 3 s; worst continuous utilisation 0.89x rated at wrist_pitch | stretched_minus: holds 0.1 kg with the arm stretched out for 3 s; worst continuous utilisation 0.89x rated at wrist_pitch |
 | ✅ | reach | TCP 0.500 m from the shoulder axis with the payload, claimed 0.500 m (tolerance 10 mm) |
 | ✅ | speed | 2.03 s move at 80 % rated speed tracks within 0.1 rad; most saturated wrist_roll (0 % of the move) |
 | ✅ | grip | holds 0.1 kg against its weight with friction 0.5: slip 0.1 mm in 3 s, clamp force 11.7 N (needs >= 1.0 N), gripper limited to its rated (continuous) torque |

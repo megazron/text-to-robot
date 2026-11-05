@@ -1,118 +1,186 @@
 {
  "model": "robot.urdf",
- "family": "character_walle",
+ "family": "arduino_walle",
  "group": "wheeled",
  "scope": "PASS means the modelled actuators (datasheet peak torque as a hard limit, a linear torque-speed line to no-load speed, reflected rotor inertia, URDF damping/friction) can produce the torques and speeds the task needs in this geometry and mass distribution, and that mean torque over the hold stays within the continuous (rated) torque. Joint control uses an ideal model-based feedforward (computed torque) through the force-limited servo for fixed-base robots and plain position servos for floating robots; a pass therefore proves torque/speed capacity, not that a given controller achieves it. Untested: thermal limits over long duty cycles (only the mean-vs-rated proxy), gearbox backlash and compliance, link and joint flexibility, encoder resolution, supply voltage sag and current limits, bus latency, controller tuning, and contact/friction values (nominal friction only).",
  "untested": [],
- "fidelity": "URDF effort limits enforced; position gains inferred; speed/thermal/electrical limits unmodelled; geometry and hardware uncalibrated; armature = rotor inertia x gear ratio^2 from the actuator record: left_middle_wheel_joint: 0.00735 kg m^2 (estimate (dc_gearmotor_37) x gear ratio 70^2); right_middle_wheel_joint: 0.00735 kg m^2 (estimate (dc_gearmotor_37) x gear ratio 70^2); left_arm_shoulder_pitch: 0.0286 kg m^2 (estimate (feetech_sts motor) x gear ratio 345^2); left_arm_elbow_pitch: 0.0286 kg m^2 (estimate (feetech_sts motor) x gear ratio 345^2); left_arm_gripper: 0.0286 kg m^2 (estimate (feetech_sts motor) x gear ratio 345^2); right_arm_shoulder_pitch: 0.0286 kg m^2 (estimate (feetech_sts motor) x gear ratio 345^2); right_arm_elbow_pitch: 0.0286 kg m^2 (estimate (feetech_sts motor) x gear ratio 345^2); right_arm_gripper: 0.0286 kg m^2 (estimate (feetech_sts motor) x gear ratio 345^2); neck_shoulder_pitch: 0.0286 kg m^2 (estimate (feetech_sts motor) x gear ratio 345^2); neck_base_yaw: 0.0286 kg m^2 (estimate (feetech_sts motor) x gear ratio 345^2); neck_elbow_pitch: 0.0286 kg m^2 (estimate (feetech_sts motor) x gear ratio 345^2)",
+ "fidelity": "URDF effort limits enforced; position gains inferred; speed/thermal/electrical limits unmodelled; geometry and hardware uncalibrated; armature = rotor inertia x gear ratio^2 from the actuator record: front_left_wheel_joint: 0.0023 kg m^2 (estimate (dc_gearmotor) x gear ratio 48^2); front_right_wheel_joint: 0.0023 kg m^2 (estimate (dc_gearmotor) x gear ratio 48^2); rear_left_wheel_joint: 0.0023 kg m^2 (estimate (dc_gearmotor) x gear ratio 48^2); rear_right_wheel_joint: 0.0023 kg m^2 (estimate (dc_gearmotor) x gear ratio 48^2); neck_pan: 0.00045 kg m^2 (estimate (hobby_pwm_micro motor) x gear ratio 300^2); neck_tilt: 0.00045 kg m^2 (estimate (hobby_pwm_micro motor) x gear ratio 300^2); left_arm_lift: 0.00045 kg m^2 (estimate (hobby_pwm_micro motor) x gear ratio 300^2); right_arm_lift: 0.00045 kg m^2 (estimate (hobby_pwm_micro motor) x gear ratio 300^2)",
  "tests": {
   "drive_straight": {
    "pass": true,
-   "explanation": "2.30 m in 4.68 s, cruise speed 0.557 m/s vs claimed 0.570 m/s, heading drift -0.0 deg, lateral -0.0 cm",
-   "claimed_speed_m_s": 0.57,
+   "explanation": "2.33 m in 4.71 s, cruise speed 0.583 m/s vs claimed 0.590 m/s, heading drift -0.0 deg, lateral -0.0 cm",
+   "claimed_speed_m_s": 0.59,
    "claim_key": "top_speed_m_s",
-   "commanded_m_s": 0.57,
-   "cruise_speed_m_s": 0.5574,
-   "mean_speed_m_s": 0.4927,
-   "distance_m": 2.3049,
+   "commanded_m_s": 0.59,
+   "cruise_speed_m_s": 0.5826,
+   "mean_speed_m_s": 0.4939,
+   "distance_m": 2.3264,
    "heading_drift_deg": -0.0,
    "lateral_m": -0.0,
    "wheel_radius_m": [
-    0.045,
-    0.045
+    0.0355,
+    0.0355,
+    0.0355,
+    0.0355
    ],
    "joints": {
-    "left_middle_wheel_joint": {
-     "peak_nm": 0.6403,
-     "peak_rating_nm": 2.648,
-     "util_peak": 0.242,
-     "mean_cruise_nm": 0.4717,
-     "rated_nm": 0.981,
-     "util_rated": 0.481,
-     "max_err": 0.3443,
-     "max_err_hold": 0.2798,
-     "saturated_frac": 0.0
+    "front_left_wheel_joint": {
+     "peak_nm": 0.0646,
+     "peak_rating_nm": 0.0785,
+     "util_peak": 0.824,
+     "mean_cruise_nm": 0.0078,
+     "rated_nm": 0.0235,
+     "util_rated": 0.33,
+     "max_err": 4.1287,
+     "max_err_hold": 0.2069,
+     "saturated_frac": 0.175
     },
-    "right_middle_wheel_joint": {
-     "peak_nm": 0.6404,
-     "peak_rating_nm": 2.648,
-     "util_peak": 0.242,
-     "mean_cruise_nm": 0.4717,
-     "rated_nm": 0.981,
-     "util_rated": 0.481,
-     "max_err": 0.3444,
-     "max_err_hold": 0.2798,
-     "saturated_frac": 0.0
+    "front_right_wheel_joint": {
+     "peak_nm": 0.0647,
+     "peak_rating_nm": 0.0785,
+     "util_peak": 0.824,
+     "mean_cruise_nm": 0.0078,
+     "rated_nm": 0.0235,
+     "util_rated": 0.33,
+     "max_err": 4.1287,
+     "max_err_hold": 0.2069,
+     "saturated_frac": 0.175
+    },
+    "rear_left_wheel_joint": {
+     "peak_nm": 0.0646,
+     "peak_rating_nm": 0.0785,
+     "util_peak": 0.824,
+     "mean_cruise_nm": 0.0078,
+     "rated_nm": 0.0235,
+     "util_rated": 0.33,
+     "max_err": 4.1286,
+     "max_err_hold": 0.2069,
+     "saturated_frac": 0.175
+    },
+    "rear_right_wheel_joint": {
+     "peak_nm": 0.0646,
+     "peak_rating_nm": 0.0785,
+     "util_peak": 0.824,
+     "mean_cruise_nm": 0.0078,
+     "rated_nm": 0.0235,
+     "util_rated": 0.33,
+     "max_err": 4.1286,
+     "max_err_hold": 0.2069,
+     "saturated_frac": 0.175
     }
    }
   },
   "ramp_10deg": {
    "pass": true,
-   "explanation": "from standstill on a 10 deg slope (speed ramped over 2.1 s at 0.5 m/s^2): 1.69 m uphill in 4.1 s, speed 0.553 m/s of 0.570 commanded",
+   "explanation": "from standstill on a 10 deg slope (speed ramped over 2.2 s at 0.5 m/s^2): 1.65 m uphill in 4.2 s, speed 0.569 m/s of 0.590 commanded",
    "slope_deg": 10.0,
-   "claim_key": "slope_deg",
-   "uphill_m": 1.6893,
-   "speed_m_s": 0.5534,
+   "claim_key": null,
+   "uphill_m": 1.6512,
+   "speed_m_s": 0.569,
    "joints": {
-    "left_middle_wheel_joint": {
-     "peak_nm": 0.6652,
-     "peak_rating_nm": 2.648,
-     "util_peak": 0.251,
-     "mean_climb_nm": 0.6177,
-     "rated_nm": 0.981,
-     "util_rated": 0.63,
-     "max_err": 0.3827,
-     "max_err_hold": 0.3665,
-     "saturated_frac": 0.0
+    "front_left_wheel_joint": {
+     "peak_nm": 0.0556,
+     "peak_rating_nm": 0.0785,
+     "util_peak": 0.708,
+     "mean_climb_nm": 0.0237,
+     "rated_nm": 0.0235,
+     "util_rated": 1.008,
+     "max_err": 2.7874,
+     "max_err_hold": 1.9384,
+     "saturated_frac": 0.39
     },
-    "right_middle_wheel_joint": {
-     "peak_nm": 0.6655,
-     "peak_rating_nm": 2.648,
-     "util_peak": 0.251,
-     "mean_climb_nm": 0.6179,
-     "rated_nm": 0.981,
-     "util_rated": 0.63,
-     "max_err": 0.3829,
-     "max_err_hold": 0.3665,
-     "saturated_frac": 0.0
+    "front_right_wheel_joint": {
+     "peak_nm": 0.0556,
+     "peak_rating_nm": 0.0785,
+     "util_peak": 0.708,
+     "mean_climb_nm": 0.0237,
+     "rated_nm": 0.0235,
+     "util_rated": 1.008,
+     "max_err": 2.7875,
+     "max_err_hold": 1.9384,
+     "saturated_frac": 0.39
+    },
+    "rear_left_wheel_joint": {
+     "peak_nm": 0.0555,
+     "peak_rating_nm": 0.0785,
+     "util_peak": 0.708,
+     "mean_climb_nm": 0.0237,
+     "rated_nm": 0.0235,
+     "util_rated": 1.008,
+     "max_err": 2.7872,
+     "max_err_hold": 1.9381,
+     "saturated_frac": 0.39
+    },
+    "rear_right_wheel_joint": {
+     "peak_nm": 0.0555,
+     "peak_rating_nm": 0.0785,
+     "util_peak": 0.708,
+     "mean_climb_nm": 0.0237,
+     "rated_nm": 0.0235,
+     "util_rated": 1.008,
+     "max_err": 2.7872,
+     "max_err_hold": 1.9381,
+     "saturated_frac": 0.39
     }
    }
   },
   "turn_in_place": {
-   "pass": 1.0,
-   "explanation": "yaw rate 1.00 rad/s with 2.38 commanded (no-slip), claimed 0.89 rad/s (needs >= 0.76), centre moved 6.8 cm over 1.0 turn(s) (6.8 cm per turn)",
-   "claimed_rad_s": 0.89,
-   "commanded_rad_s": 2.3795,
-   "yaw_rate_rad_s": 0.9974,
-   "drift_m": 0.0678,
-   "track_m": 0.2395,
+   "pass": 0.0,
+   "explanation": "yaw rate 1.50 rad/s with 3.78 commanded (no-slip) (needs >= 1.89), centre moved 2.4 cm over 1.0 turn(s) (2.4 cm per turn)",
+   "claimed_rad_s": null,
+   "commanded_rad_s": 3.7823,
+   "yaw_rate_rad_s": 1.4971,
+   "drift_m": 0.0237,
+   "track_m": 0.156,
    "joints": {
-    "left_middle_wheel_joint": {
-     "peak_nm": 2.0084,
-     "peak_rating_nm": 2.648,
-     "util_peak": 0.758,
-     "mean_turn_nm": 0.4421,
-     "rated_nm": 0.981,
-     "util_rated": 0.451,
-     "max_err": 1.7044,
-     "max_err_hold": 1.7044,
-     "saturated_frac": 0.011
+    "front_left_wheel_joint": {
+     "peak_nm": 0.0777,
+     "peak_rating_nm": 0.0785,
+     "util_peak": 0.99,
+     "mean_turn_nm": 0.064,
+     "rated_nm": 0.0235,
+     "util_rated": 2.722,
+     "max_err": 5.5202,
+     "max_err_hold": 5.5161,
+     "saturated_frac": 0.803
     },
-    "right_middle_wheel_joint": {
-     "peak_nm": 2.0483,
-     "peak_rating_nm": 2.648,
-     "util_peak": 0.774,
-     "mean_turn_nm": 0.4779,
-     "rated_nm": 0.981,
-     "util_rated": 0.487,
-     "max_err": 1.5955,
-     "max_err_hold": 1.5955,
-     "saturated_frac": 0.006
+    "front_right_wheel_joint": {
+     "peak_nm": 0.0769,
+     "peak_rating_nm": 0.0785,
+     "util_peak": 0.98,
+     "mean_turn_nm": 0.0353,
+     "rated_nm": 0.0235,
+     "util_rated": 1.502,
+     "max_err": 5.5748,
+     "max_err_hold": 2.0132,
+     "saturated_frac": 0.236
+    },
+    "rear_left_wheel_joint": {
+     "peak_nm": 0.0768,
+     "peak_rating_nm": 0.0785,
+     "util_peak": 0.979,
+     "mean_turn_nm": 0.0321,
+     "rated_nm": 0.0235,
+     "util_rated": 1.367,
+     "max_err": 5.3849,
+     "max_err_hold": 1.6113,
+     "saturated_frac": 0.225
+    },
+    "rear_right_wheel_joint": {
+     "peak_nm": 0.0771,
+     "peak_rating_nm": 0.0785,
+     "util_peak": 0.983,
+     "mean_turn_nm": 0.0619,
+     "rated_nm": 0.0235,
+     "util_rated": 2.636,
+     "max_err": 5.2143,
+     "max_err_hold": 4.8714,
+     "saturated_frac": 0.801
     }
    }
   }
  },
- "passed": 3,
+ "passed": 2,
  "total": 3,
- "source_urdf_sha256": "94f044188163cae7952f299238128eb58aa07b602fa68d84e120b10eca0887ae"
+ "source_urdf_sha256": "d3a192e7c2d467d170db47e98490c4ea2c20c0a26e07cb0481c33bb33e44ade8"
 }

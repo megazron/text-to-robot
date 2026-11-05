@@ -1,6 +1,6 @@
 # Bill of Materials — diff_drive_robot
 
-**Estimated total: $494.38**  ·  tier: hobby
+**Estimated total: $494.37**  ·  tier: hobby
 
 **Effort sizing: passes catalogue estimate; hardware verified: no.**
 
@@ -15,7 +15,7 @@
 | Compute | Raspberry Pi 5 (4 GB) _(on-board computer · https://www.raspberrypi.com/products/raspberry-pi-5/)_ | 1 | 110 | 110 | 5 V |
 | Sensor | Slamtec RPLIDAR C1 (DTOF 360 deg, 12 m) _(2D lidar · https://www.waveshare.com/rplidar-c1.htm)_ | 1 | 79.99 | 79.99 | 5 V |
 | Drive | Pololu 90x10 mm wheel + 6 mm universal aluminium hub (for 37D gearmotors) _(driven wheel · https://www.pololu.com/product/1435)_ | 2 | 11.22 | 22.44 | https://www.pololu.com/file/0J161/1083-6mm-4-40-hub-dimensions.pdf |
-| Printed structure | PETG filament for 15 printed parts _(base_link, left_bracket, right_bracket, front_caster_post, rear_caster_post, computer_tray, motor_driver_1_tray, battery_tray, regulator_5v_tray, imu_tray, electronics_enclosure_front, electronics_enclosure_rear, electronics_lid_front, electronics_lid_rear, lidar_mast)_ | 1 | 14.54 | 14.54 | 575 g of parts (+15 % supports/waste), about 52.4 h of printing |
+| Printed structure | PETG filament for 15 printed parts _(base_link, left_bracket, right_bracket, front_caster_post, rear_caster_post, computer_tray, motor_driver_1_tray, battery_tray, regulator_5v_tray, imu_tray, electronics_enclosure_front, electronics_enclosure_rear, electronics_lid_front, electronics_lid_rear, lidar_mast)_ | 1 | 14.53 | 14.53 | 574 g of parts (+15 % supports/waste), about 52.4 h of printing |
 | Fasteners | Screws, nuts and inserts | 68 | 0.12 | 8.16 | 12x M3 x 8 socket head (motor face); 4x M3 x 10 socket head + nut (bracket to deck); 6x M3 x 6 socket head (caster); 15x M2.5 x 6 screws (board to standoffs); 10x M3 x 8 socket head (tray to deck); 1x 20 mm hook-and-loop battery strap; 8x M3 x 8 + nut (enclosure halves lap joint); 4x M3 x 10 self-tapping (enclosure lid); 4x M3 x 8 + nut (enclosure tabs to deck; drill 3.4 mm through the deck at the tabs); 4x M2.5 x 6 (lidar) |
 
 ## Actuator sizing

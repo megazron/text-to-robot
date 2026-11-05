@@ -1,0 +1,99 @@
+{
+  "robot_name": "arduino_arm",
+  "tier": "hobby",
+  "lines": [
+    {
+      "category": "Compute",
+      "name": "Arduino Uno R3 compatible board (ATmega328P, CH340 USB)",
+      "qty": 1,
+      "unit_cost": 6,
+      "subtotal": 6,
+      "spec": "5 V",
+      "note": "controller (USB serial commands, I2C to the servo driver) · https://www.aliexpress.com/w/wholesale-arduino-uno-r3-ch340.html"
+    },
+    {
+      "category": "Actuator",
+      "name": "TowerPro MG996R standard servo (metal gears) + round horn",
+      "qty": 2,
+      "unit_cost": 6,
+      "subtotal": 12,
+      "spec": "0.3236 N·m rated / 1.0787 N·m peak, 6 V",
+      "note": "shoulder servo; elbow servo · https://www.towerpro.com.tw/product/mg996r/"
+    },
+    {
+      "category": "Actuator",
+      "name": "TowerPro SG90 micro servo (nylon gears) + cross horn",
+      "qty": 2,
+      "unit_cost": 2.5,
+      "subtotal": 5,
+      "spec": "0.0529 N·m rated / 0.1765 N·m peak, 4.8 V",
+      "note": "base yaw servo; claw servo · https://www.adafruit.com/product/169"
+    },
+    {
+      "category": "Electronics",
+      "name": "PCA9685 16-channel PWM servo driver board (generic, I2C)",
+      "qty": 1,
+      "unit_cost": 2.5,
+      "subtotal": 2.5,
+      "spec": "5 V",
+      "note": "16-channel PWM servo driver (I2C) · https://www.aliexpress.com/w/wholesale-pca9685-16-channel-servo-driver.html"
+    },
+    {
+      "category": "Power",
+      "name": "Mean Well LRS-50-5 enclosed PSU, 5 V 10 A (50 W)",
+      "qty": 1,
+      "unit_cost": 13,
+      "subtotal": 13,
+      "spec": "5 V",
+      "note": "5 V 10 A servo supply · https://www.digikey.com/en/products/result?keywords=LRS-50-5"
+    },
+    {
+      "category": "Printed structure",
+      "name": "PETG filament for 5 printed parts",
+      "qty": 1,
+      "unit_cost": 3.67,
+      "subtotal": 3.67,
+      "spec": "145 g of parts (+15 % supports/waste), about 13.2 h of printing",
+      "note": "base_link, turntable, upper_arm, forearm, claw_jaw"
+    },
+    {
+      "category": "Fasteners",
+      "name": "Screws, nuts and inserts",
+      "qty": 12,
+      "unit_cost": 0.12,
+      "subtotal": 1.44,
+      "spec": "8x M2 self-tapping (servo tabs, from the servo kits); 4x M4 screws or desk clamps (base)"
+    }
+  ],
+  "total": 43.61,
+  "feasible": true,
+  "sizing_pass": true,
+  "hardware_verified": false,
+  "actuator_sizing": [
+    {
+      "joint": "shoulder",
+      "required_effort": 0.3205,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.3205,
+      "chosen": "TowerPro MG996R standard servo (metal gears) + round horn",
+      "margin": "3.37x"
+    },
+    {
+      "joint": "elbow",
+      "required_effort": 0.0945,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.0945,
+      "chosen": "TowerPro MG996R standard servo (metal gears) + round horn",
+      "margin": "11.42x"
+    }
+  ],
+  "warnings": [],
+  "notes": [
+    "Arduino desk arm: 3 DOF + claw, 280 mm reach, 20 g payload, 0.27 kg, $39 of parts",
+    "Sized for a 0.02 kg payload.",
+    "Every joint's limits are inside its collision-free range (exact solid sweeps).",
+    "each joint runs on its servo's own output bearing (no extra bearings), as in MeArm-class kits: links are kept short so the servo holds them continuously",
+    "prices are typical single-unit marketplace prices and vary by seller",
+    "Prices are list/street prices from the linked suppliers at the time the catalog was written; check before ordering."
+  ]
+}

@@ -1,0 +1,521 @@
+{
+ "bed_mm": [
+  250.0,
+  210.0,
+  220.0
+ ],
+ "parts": [
+  {
+   "name": "base_link",
+   "watertight": true,
+   "volume_cm3": 256.28,
+   "size_mm": [
+    215.1,
+    208.8,
+    64.3
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 313.41,
+   "support_frac": 0.207,
+   "bed_contact_cm2": 23.23,
+   "min_wall_mm": 2.47,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "needed",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "lf_coxa_link",
+   "watertight": true,
+   "volume_cm3": 22.04,
+   "size_mm": [
+    53.4,
+    41.1,
+    36.8
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 18.94,
+   "support_frac": 0.119,
+   "bed_contact_cm2": 14.74,
+   "min_wall_mm": 0.2,
+   "thin_wall_frac": 0.007,
+   "passed": false,
+   "supports": "needed",
+   "problems": [
+    "walls down to 0.20 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
+   ],
+   "warnings": []
+  },
+  {
+   "name": "lf_femur_link",
+   "watertight": true,
+   "volume_cm3": 26.42,
+   "size_mm": [
+    113.2,
+    32.8,
+    40.1
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 0.31,
+   "support_frac": 0.002,
+   "bed_contact_cm2": 32.66,
+   "min_wall_mm": 2.45,
+   "thin_wall_frac": 0.003,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "lf_tibia_link",
+   "watertight": true,
+   "volume_cm3": 14.76,
+   "size_mm": [
+    174.0,
+    28.0,
+    5.0
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 0.0,
+   "support_frac": 0.0,
+   "bed_contact_cm2": 29.53,
+   "min_wall_mm": 2.18,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "lm_coxa_link",
+   "watertight": true,
+   "volume_cm3": 22.04,
+   "size_mm": [
+    53.4,
+    41.1,
+    36.8
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 18.94,
+   "support_frac": 0.119,
+   "bed_contact_cm2": 14.74,
+   "min_wall_mm": 0.2,
+   "thin_wall_frac": 0.007,
+   "passed": false,
+   "supports": "needed",
+   "problems": [
+    "walls down to 0.20 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
+   ],
+   "warnings": []
+  },
+  {
+   "name": "lm_femur_link",
+   "watertight": true,
+   "volume_cm3": 26.42,
+   "size_mm": [
+    113.2,
+    32.8,
+    40.1
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 0.31,
+   "support_frac": 0.002,
+   "bed_contact_cm2": 32.66,
+   "min_wall_mm": 2.45,
+   "thin_wall_frac": 0.003,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "lm_tibia_link",
+   "watertight": true,
+   "volume_cm3": 14.76,
+   "size_mm": [
+    174.0,
+    28.0,
+    5.0
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 0.0,
+   "support_frac": 0.0,
+   "bed_contact_cm2": 29.53,
+   "min_wall_mm": 3.67,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "lr_coxa_link",
+   "watertight": true,
+   "volume_cm3": 22.04,
+   "size_mm": [
+    53.4,
+    41.1,
+    36.8
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 18.94,
+   "support_frac": 0.119,
+   "bed_contact_cm2": 14.74,
+   "min_wall_mm": 0.2,
+   "thin_wall_frac": 0.007,
+   "passed": false,
+   "supports": "needed",
+   "problems": [
+    "walls down to 0.20 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
+   ],
+   "warnings": []
+  },
+  {
+   "name": "lr_femur_link",
+   "watertight": true,
+   "volume_cm3": 26.42,
+   "size_mm": [
+    113.2,
+    32.8,
+    40.1
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 0.31,
+   "support_frac": 0.002,
+   "bed_contact_cm2": 32.66,
+   "min_wall_mm": 2.47,
+   "thin_wall_frac": 0.003,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "lr_tibia_link",
+   "watertight": true,
+   "volume_cm3": 14.76,
+   "size_mm": [
+    174.0,
+    28.0,
+    5.0
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 0.0,
+   "support_frac": 0.0,
+   "bed_contact_cm2": 29.53,
+   "min_wall_mm": 3.67,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "rf_coxa_link",
+   "watertight": true,
+   "volume_cm3": 22.04,
+   "size_mm": [
+    53.4,
+    41.1,
+    36.8
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 18.94,
+   "support_frac": 0.119,
+   "bed_contact_cm2": 14.74,
+   "min_wall_mm": 0.2,
+   "thin_wall_frac": 0.007,
+   "passed": false,
+   "supports": "needed",
+   "problems": [
+    "walls down to 0.20 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
+   ],
+   "warnings": []
+  },
+  {
+   "name": "rf_femur_link",
+   "watertight": true,
+   "volume_cm3": 26.42,
+   "size_mm": [
+    113.2,
+    32.8,
+    40.1
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 0.31,
+   "support_frac": 0.002,
+   "bed_contact_cm2": 32.66,
+   "min_wall_mm": 2.47,
+   "thin_wall_frac": 0.003,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "rf_tibia_link",
+   "watertight": true,
+   "volume_cm3": 14.76,
+   "size_mm": [
+    174.0,
+    28.0,
+    5.0
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 0.0,
+   "support_frac": 0.0,
+   "bed_contact_cm2": 29.53,
+   "min_wall_mm": 3.67,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "rm_coxa_link",
+   "watertight": true,
+   "volume_cm3": 22.04,
+   "size_mm": [
+    53.4,
+    41.1,
+    36.8
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 18.94,
+   "support_frac": 0.119,
+   "bed_contact_cm2": 14.74,
+   "min_wall_mm": 0.2,
+   "thin_wall_frac": 0.007,
+   "passed": false,
+   "supports": "needed",
+   "problems": [
+    "walls down to 0.20 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
+   ],
+   "warnings": []
+  },
+  {
+   "name": "rm_femur_link",
+   "watertight": true,
+   "volume_cm3": 26.42,
+   "size_mm": [
+    113.2,
+    32.8,
+    40.1
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 0.31,
+   "support_frac": 0.002,
+   "bed_contact_cm2": 32.66,
+   "min_wall_mm": 2.45,
+   "thin_wall_frac": 0.003,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "rm_tibia_link",
+   "watertight": true,
+   "volume_cm3": 14.76,
+   "size_mm": [
+    174.0,
+    28.0,
+    5.0
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 0.0,
+   "support_frac": 0.0,
+   "bed_contact_cm2": 29.53,
+   "min_wall_mm": 3.67,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "rr_coxa_link",
+   "watertight": true,
+   "volume_cm3": 22.04,
+   "size_mm": [
+    53.4,
+    41.1,
+    36.8
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 18.94,
+   "support_frac": 0.119,
+   "bed_contact_cm2": 14.74,
+   "min_wall_mm": 0.2,
+   "thin_wall_frac": 0.007,
+   "passed": false,
+   "supports": "needed",
+   "problems": [
+    "walls down to 0.20 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
+   ],
+   "warnings": []
+  },
+  {
+   "name": "rr_femur_link",
+   "watertight": true,
+   "volume_cm3": 26.42,
+   "size_mm": [
+    113.2,
+    32.8,
+    40.1
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 0.31,
+   "support_frac": 0.002,
+   "bed_contact_cm2": 32.66,
+   "min_wall_mm": 2.45,
+   "thin_wall_frac": 0.003,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "rr_tibia_link",
+   "watertight": true,
+   "volume_cm3": 14.76,
+   "size_mm": [
+    174.0,
+    28.0,
+    5.0
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 0.0,
+   "support_frac": 0.0,
+   "bed_contact_cm2": 29.53,
+   "min_wall_mm": 2.18,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "top_deck",
+   "watertight": true,
+   "volume_cm3": 99.21,
+   "size_mm": [
+    129.6,
+    129.6,
+    132.7
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 127.93,
+   "support_frac": 0.203,
+   "bed_contact_cm2": 100.33,
+   "min_wall_mm": 3.0,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "needed",
+   "problems": [],
+   "warnings": []
+  }
+ ]
+}

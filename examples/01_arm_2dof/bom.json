@@ -51,8 +51,8 @@
       "category": "Printed structure",
       "name": "PETG filament for 4 printed parts",
       "qty": 1,
-      "unit_cost": 9.27,
-      "subtotal": 9.27,
+      "unit_cost": 9.26,
+      "subtotal": 9.26,
       "spec": "366 g of parts (+15 % supports/waste), about 33.4 h of printing",
       "note": "base_link, upper_arm, forearm, gripper_jaw"
     },
@@ -65,7 +65,7 @@
       "spec": "4x M5 x 12 socket head (base to bench); 8x M2 x 6 case screws; 12x horn screws; 2x M5 x 16 socket head + M5 washer + M5 heat-set insert (clevis bearing axle)"
     }
   ],
-  "total": 130.09,
+  "total": 130.08,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,

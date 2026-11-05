@@ -1,0 +1,98 @@
+{
+  "robot_name": "arduino_car",
+  "tier": "hobby",
+  "lines": [
+    {
+      "category": "Compute",
+      "name": "Arduino Nano compatible board (ATmega328P, CH340, USB-C)",
+      "qty": 1,
+      "unit_cost": 3.5,
+      "subtotal": 3.5,
+      "spec": "5 V",
+      "note": "Arduino (runs the generated sketch) · https://www.aliexpress.com/w/wholesale-arduino-nano-type-c-ch340.html"
+    },
+    {
+      "category": "Power",
+      "name": "Half-size solderless breadboard, 400 points, adhesive back",
+      "qty": 1,
+      "unit_cost": 2,
+      "subtotal": 2,
+      "spec": "https://www.adafruit.com/product/64",
+      "note": "plug-in wiring for the board and driver · https://www.adafruit.com/product/64"
+    },
+    {
+      "category": "Sensor",
+      "name": "HC-SR04 ultrasonic distance sensor (2-400 cm)",
+      "qty": 1,
+      "unit_cost": 1,
+      "subtotal": 1,
+      "spec": "5 V",
+      "note": "HC-SR04 distance sensor · https://www.aliexpress.com/w/wholesale-hc-sr04.html"
+    },
+    {
+      "category": "Power",
+      "name": "2S 18650 pack: two 2500 mAh 20 A cells (Samsung 25R class) in a holder with switch",
+      "qty": 1,
+      "unit_cost": 12,
+      "subtotal": 12,
+      "spec": "7.4 V, 18.5 Wh",
+      "note": "2S 18650 pack · https://www.aliexpress.com/w/wholesale-18650-2-slot-battery-holder-switch.html"
+    },
+    {
+      "category": "Electronics",
+      "name": "TB6612FNG dual DC motor driver module (1.2 A per channel)",
+      "qty": 2,
+      "unit_cost": 2,
+      "subtotal": 4,
+      "spec": "7.4 V",
+      "note": "TB6612FNG dual motor driver · https://www.aliexpress.com/w/wholesale-tb6612fng-motor-driver.html"
+    },
+    {
+      "category": "Actuator",
+      "name": "TT gear motor 3-6 V, 1:48, 200 rpm (yellow, double-D shaft)",
+      "qty": 4,
+      "unit_cost": 1.5,
+      "subtotal": 6,
+      "spec": "0.0235 N·m rated / 0.0785 N·m peak, 6 V",
+      "note": "drive motor · https://www.adafruit.com/product/3777"
+    },
+    {
+      "category": "Drive",
+      "name": "65 mm rubber wheel for TT gearmotors (double-D 5.3x3.7 bore)",
+      "qty": 4,
+      "unit_cost": 2,
+      "subtotal": 8,
+      "spec": "https://makerlab-electronics.com/products/65mm-yellow-wheel",
+      "note": "drive wheel · https://makerlab-electronics.com/products/65mm-yellow-wheel"
+    },
+    {
+      "category": "Printed structure",
+      "name": "PETG filament for 2 printed parts",
+      "qty": 1,
+      "unit_cost": 2.46,
+      "subtotal": 2.46,
+      "spec": "97 g of parts (+15 % supports/waste), about 8.9 h of printing",
+      "note": "chassis, sensor_bracket"
+    },
+    {
+      "category": "Fasteners",
+      "name": "Screws, nuts and inserts",
+      "qty": 16,
+      "unit_cost": 0.12,
+      "subtotal": 1.92,
+      "spec": "8x M3x25 socket head + nut (motor through-bolt); 2x M3x8 countersunk + nut (pack); 2x M3x10 + nut (sensor bracket); 4x M2x6 self-tapping (sensor)"
+    }
+  ],
+  "total": 40.88,
+  "feasible": true,
+  "sizing_pass": true,
+  "hardware_verified": false,
+  "actuator_sizing": [],
+  "warnings": [],
+  "notes": [
+    "Arduino car (stronger (4WD, ramps up to 10 deg)): 4WD on TT gear motors, 0.53 kg, 0.54 m/s, 99 min, $37 of parts",
+    "TT motor continuous torque taken as 30 % of the 0.8 kg.cm stall (Adafruit #3777 data)",
+    "prices are typical single-unit marketplace prices for generic modules and vary by seller",
+    "Prices are list/street prices from the linked suppliers at the time the catalog was written; check before ordering."
+  ]
+}

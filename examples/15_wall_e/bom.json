@@ -3,207 +3,158 @@
   "tier": "hobby",
   "lines": [
     {
-      "category": "Mechanical",
-      "name": "Ball bearing 625-2Z 5x16x5 mm",
-      "qty": 14,
-      "unit_cost": 0.55,
-      "subtotal": 7.7,
-      "spec": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-625-2Z",
-      "note": "idler wheel bearings; neck: clevis bearing, joint shoulder_pitch, clevis bearing, joint elbow_pitch; left_arm: clevis bearing, joint shoulder_pitch, clevis bearing, joint elbow_pitch; right_arm: clevis bearing, joint shoulder_pitch, clevis bearing, joint elbow_pitch · https://www.vxb.com/search?q=625-2Z"
-    },
-    {
-      "category": "Power",
-      "name": "Pololu D36V50F5 5 V 5.5 A step-down regulator (#4091)",
+      "category": "Compute",
+      "name": "Arduino Nano compatible board (ATmega328P, CH340, USB-C)",
       "qty": 1,
-      "unit_cost": 39.95,
-      "subtotal": 39.95,
+      "unit_cost": 3.5,
+      "subtotal": 3.5,
       "spec": "5 V",
-      "note": "5 V rail for the computer / USB · https://www.pololu.com/product/4091"
-    },
-    {
-      "category": "Electronics",
-      "name": "Cytron MDD10A dual-channel 10 A DC motor driver (5-30 V)",
-      "qty": 1,
-      "unit_cost": 21,
-      "subtotal": 21,
-      "spec": "12 V",
-      "note": "dual DC motor driver · https://www.cytron.io/p-10amp-5v-30v-dc-motor-driver-2-channels"
-    },
-    {
-      "category": "Actuator",
-      "name": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "qty": 8,
-      "unit_cost": 22,
-      "subtotal": 176,
-      "spec": "0.9807 N·m rated / 2.942 N·m peak, 12 V",
-      "note": "neck: joint base_yaw, joint elbow_pitch; left_arm: joint shoulder_pitch, joint elbow_pitch, gripper; right_arm: joint shoulder_pitch, joint elbow_pitch, gripper · https://www.seeedstudio.com/STS3215-30KG-Serial-Servo-p-6340.html"
-    },
-    {
-      "category": "Actuator",
-      "name": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
-      "qty": 1,
-      "unit_cost": 40,
-      "subtotal": 40,
-      "spec": "1.5691 N·m rated / 4.9033 N·m peak, 12 V",
-      "note": "neck: joint shoulder_pitch · https://openelab.io/products/feetech-sts3250-c002-servo-12v"
+      "note": "Arduino Nano (runs the generated sketch) · https://www.aliexpress.com/w/wholesale-arduino-nano-type-c-ch340.html"
     },
     {
       "category": "Power",
-      "name": "LiPo 3S 2200 mAh 25C, XT60 (Gens Ace G-Tech)",
+      "name": "Half-size solderless breadboard, 400 points, adhesive back",
       "qty": 1,
-      "unit_cost": 27,
-      "subtotal": 27,
-      "spec": "11.1 V, 24.4 Wh",
-      "note": "main battery · https://www.buddyrc.com/products/gens-ace-25c-2200mah-11-1v-3s-lipo-battery-pack-with-xt60-plug"
+      "unit_cost": 2,
+      "subtotal": 2,
+      "spec": "https://www.adafruit.com/product/64",
+      "note": "plug-in wiring: Nano + two TB6612FNG · https://www.adafruit.com/product/64"
     },
     {
-      "category": "Actuator",
-      "name": "Pololu 70:1 Metal Gearmotor 37Dx70L 12 V with 64 CPR encoder (#4754)",
-      "qty": 2,
-      "unit_cost": 60.95,
-      "subtotal": 121.9,
-      "spec": "0.981 N·m rated / 2.648 N·m peak, 12 V",
-      "note": "drive motor · https://www.pololu.com/product/4754"
+      "category": "Power",
+      "name": "LM2596S adjustable buck module (3 A, 43 x 21 mm)",
+      "qty": 1,
+      "unit_cost": 3,
+      "subtotal": 3,
+      "spec": "5 V",
+      "note": "LM2596 set to 5.0 V for the servos · https://www.amazon.com/s?k=LM2596S+buck+module"
     },
     {
       "category": "Sensor",
-      "name": "Raspberry Pi Camera Module 3 (standard lens)",
-      "qty": 2,
-      "unit_cost": 25,
-      "subtotal": 50,
-      "spec": "3.3 V",
-      "note": "camera · https://www.raspberrypi.com/products/camera-module-3/"
+      "name": "HC-SR04 ultrasonic distance sensor (2-400 cm)",
+      "qty": 1,
+      "unit_cost": 1,
+      "subtotal": 1,
+      "spec": "5 V",
+      "note": "HC-SR04 distance sensor (obstacle avoidance) · https://www.aliexpress.com/w/wholesale-hc-sr04.html"
     },
     {
-      "category": "Compute",
-      "name": "Raspberry Pi 5 (4 GB)",
+      "category": "Actuator",
+      "name": "TowerPro SG90 micro servo (nylon gears) + cross horn",
+      "qty": 4,
+      "unit_cost": 2.5,
+      "subtotal": 10,
+      "spec": "0.0529 N·m rated / 0.1765 N·m peak, 4.8 V",
+      "note": "neck pan servo; neck tilt servo; arm servo · https://www.adafruit.com/product/169"
+    },
+    {
+      "category": "Power",
+      "name": "2S 18650 pack: two 2500 mAh 20 A cells (Samsung 25R class) in a holder with switch",
       "qty": 1,
-      "unit_cost": 110,
-      "subtotal": 110,
-      "spec": "5 V",
-      "note": "on-board computer · https://www.raspberrypi.com/products/raspberry-pi-5/"
+      "unit_cost": 12,
+      "subtotal": 12,
+      "spec": "7.4 V, 18.5 Wh",
+      "note": "2S 18650 pack · https://www.aliexpress.com/w/wholesale-18650-2-slot-battery-holder-switch.html"
     },
     {
       "category": "Electronics",
-      "name": "Waveshare Bus Servo Adapter (A)",
+      "name": "PCA9685 16-channel PWM servo driver board (generic, I2C)",
+      "qty": 1,
+      "unit_cost": 2.5,
+      "subtotal": 2.5,
+      "spec": "5 V",
+      "note": "PCA9685 servo driver (I2C) · https://www.aliexpress.com/w/wholesale-pca9685-16-channel-servo-driver.html"
+    },
+    {
+      "category": "Electronics",
+      "name": "TB6612FNG dual DC motor driver module (1.2 A per channel)",
+      "qty": 2,
+      "unit_cost": 2,
+      "subtotal": 4,
+      "spec": "7.4 V",
+      "note": "TB6612FNG dual motor driver · https://www.aliexpress.com/w/wholesale-tb6612fng-motor-driver.html"
+    },
+    {
+      "category": "Actuator",
+      "name": "TT gear motor 3-6 V, 1:48, 200 rpm (yellow, double-D shaft)",
       "qty": 4,
-      "unit_cost": 10.6,
-      "subtotal": 42.4,
-      "spec": "12 V",
-      "note": "servo bus adapter; neck: USB to actuator bus; left_arm: USB to actuator bus; right_arm: USB to actuator bus · https://www.waveshare.com/bus-servo-adapter-a.htm"
+      "unit_cost": 1.5,
+      "subtotal": 6,
+      "spec": "0.0235 N·m rated / 0.0785 N·m peak, 6 V",
+      "note": "drive motor · https://www.adafruit.com/product/3777"
     },
     {
       "category": "Drive",
-      "name": "Pololu 90x10 mm wheel + 6 mm universal aluminium hub (for 37D gearmotors)",
-      "qty": 6,
-      "unit_cost": 11.22,
-      "subtotal": 67.32,
-      "spec": "https://www.pololu.com/file/0J161/1083-6mm-4-40-hub-dimensions.pdf",
-      "note": "idler wheel; driven wheel · https://www.pololu.com/product/1435"
+      "name": "65 mm rubber wheel for TT gearmotors (double-D 5.3x3.7 bore)",
+      "qty": 4,
+      "unit_cost": 2,
+      "subtotal": 8,
+      "spec": "https://makerlab-electronics.com/products/65mm-yellow-wheel",
+      "note": "track drive wheel · https://makerlab-electronics.com/products/65mm-yellow-wheel"
     },
     {
       "category": "Printed structure",
-      "name": "PETG filament for 29 printed parts",
+      "name": "PETG filament for 8 printed parts",
       "qty": 1,
-      "unit_cost": 63.02,
-      "subtotal": 63.02,
-      "spec": "2491 g of parts (+15 % supports/waste), about 227.0 h of printing",
-      "note": "base_link, left_track_frame, right_track_frame, body_left, body_right, body_back, body_front, body_top, battery_tray, motor_driver_1_tray, regulator_5v_tray, shelf, computer_tray, servo_bus_tray, neck_base_link, neck_upper_arm, neck_turret, neck_tool_link, head, left_arm_base_link, left_arm_upper_arm, left_arm_forearm, left_arm_gripper_jaw, left_arm_shoulder, right_arm_base_link, right_arm_upper_arm, right_arm_forearm, right_arm_gripper_jaw, right_arm_shoulder"
+      "unit_cost": 11.59,
+      "subtotal": 11.59,
+      "spec": "458 g of parts (+15 % supports/waste), about 41.8 h of printing",
+      "note": "body, track_left, track_right, lid, neck, head, left_arm, right_arm"
     },
     {
       "category": "Fasteners",
       "name": "Screws, nuts and inserts",
-      "qty": 152,
+      "qty": 32,
       "unit_cost": 0.12,
-      "subtotal": 18.24,
-      "spec": "4x M5 x 30 shoulder bolt (idler axle); 12x M3 x 8 socket head (motor face); 24x M3 x 10 + printed corner cleats (body panels); 1x 20 mm hook-and-loop battery strap; 10x M3 x 8 socket head (tray to deck); 15x M2.5 x 6 screws (board to standoffs); 4x M3 x 10 + printed cleats (shelf to side panels); 12x M5 x 12 socket head (base to bench); 28x M2 x 6 case screws; 36x horn screws; 6x M5 x 16 socket head + M5 washer + M5 heat-set insert (clevis bearing axle)"
+      "subtotal": 3.84,
+      "spec": "8x M3x25 socket head + nut (motor through-bolt); 4x M2x6 self-tapping (sensor); 2x M3x8 countersunk + nut (pack); 6x M2.5x6 + nut (PCA9685) / M3x6 (LM2596); 4x M3x10 self-tapping (lid); 8x M2 self-tapping (servo tabs, from the servo kits)"
     }
   ],
-  "total": 784.53,
+  "total": 67.43,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
   "actuator_sizing": [
     {
-      "joint": "neck_shoulder_pitch",
-      "required_effort": 1.285,
+      "joint": "neck_pan",
+      "required_effort": 0,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.285,
-      "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
-      "margin": "3.82x"
+      "required_torque_nm": 0,
+      "chosen": "TowerPro SG90 micro servo (nylon gears) + cross horn",
+      "margin": "176500x"
     },
     {
-      "joint": "neck_base_yaw",
-      "required_effort": 0.388,
+      "joint": "neck_tilt",
+      "required_effort": 0.039,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.388,
-      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "7.59x"
+      "required_torque_nm": 0.039,
+      "chosen": "TowerPro SG90 micro servo (nylon gears) + cross horn",
+      "margin": "4.53x"
     },
     {
-      "joint": "neck_elbow_pitch",
-      "required_effort": 0.891,
+      "joint": "left_arm_lift",
+      "required_effort": 0.0027,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.891,
-      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "3.3x"
+      "required_torque_nm": 0.0027,
+      "chosen": "TowerPro SG90 micro servo (nylon gears) + cross horn",
+      "margin": "65.2x"
     },
     {
-      "joint": "left_arm_shoulder_pitch",
-      "required_effort": 0.83,
+      "joint": "right_arm_lift",
+      "required_effort": 0.0027,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.83,
-      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "3.54x"
-    },
-    {
-      "joint": "left_arm_elbow_pitch",
-      "required_effort": 0.374,
-      "effort_unit": "N·m",
-      "required_torque_nm": 0.374,
-      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "7.87x"
-    },
-    {
-      "joint": "right_arm_shoulder_pitch",
-      "required_effort": 0.83,
-      "effort_unit": "N·m",
-      "required_torque_nm": 0.83,
-      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "3.54x"
-    },
-    {
-      "joint": "right_arm_elbow_pitch",
-      "required_effort": 0.374,
-      "effort_unit": "N·m",
-      "required_torque_nm": 0.374,
-      "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "7.87x"
-    },
-    {
-      "joint": "left_middle_wheel_joint",
-      "required_effort": 0.073,
-      "effort_unit": "N·m",
-      "required_torque_nm": 0.073,
-      "chosen": "Pololu 70:1 Metal Gearmotor 37Dx70L 12 V with 64 CPR encoder (#4754)",
-      "margin": "13.49x"
-    },
-    {
-      "joint": "right_middle_wheel_joint",
-      "required_effort": 0.073,
-      "effort_unit": "N·m",
-      "required_torque_nm": 0.073,
-      "chosen": "Pololu 70:1 Metal Gearmotor 37Dx70L 12 V with 64 CPR encoder (#4754)",
-      "margin": "13.49x"
+      "required_torque_nm": 0.0027,
+      "chosen": "TowerPro SG90 micro servo (nylon gears) + cross horn",
+      "margin": "65.2x"
     }
   ],
   "warnings": [],
   "notes": [
-    "WALL-E style tracked robot: 3.888 kg, 0.57 m/s, pan/tilt/lift head with stereo cameras, two servo arms",
-    "WALL-E's tracks are represented by three 90 mm wheels per side: the middle wheel of each side is driven by a gearmotor, the front and rear are idlers on 625 bearings. A real build wraps a printed or rubber track (or a T5 timing belt) round the three wheels, so traction and drive sizing use the full weight.",
-    "The film's telescoping neck is replaced by a servo-driven pitch neck (the 'lift') with pan and tilt servos above it; the binoculars are two printed eye barrels with a Raspberry Pi Camera Module 3 in each (stereo pair).",
-    "Arms: a shoulder and an elbow servo plus a one-servo gripper hand per side, reusing the arm designer's brackets; they are sized as mounted (pointing forward) for the hand payload.",
-    "The body is five printed PETG panels bolted with corner cleats on the deck; no compactor mechanism.",
+    "Arduino WALL-E: TPU tracks on 4 TT motors, pan/tilt binocular head, 2 servo arms, 0.95 kg, $52 of parts",
+    "Joint limits trimmed to the collision-free range found by exact solid sweeps: left_arm_lift [-1.00, 1.00] -> [-1.00, 0.35]; right_arm_lift [-1.00, 1.00] -> [-0.35, 1.00].",
+    "tracks print in TPU 95A (flexible), everything else in PETG/PLA+; the body prints open side up without supports",
+    "TT motor continuous torque taken as 30 % of the 0.8 kg.cm stall",
+    "prices are typical single-unit marketplace prices and vary by seller",
     "Prices are list/street prices from the linked suppliers at the time the catalog was written; check before ordering."
   ]
 }
