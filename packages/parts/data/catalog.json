@@ -12381,6 +12381,47 @@
   },
   "output_frame": null
  },
+ "steel_ball_12_7mm": {
+  "key": "steel_ball_12_7mm",
+  "name": "Chrome steel bearing ball 1/2 in (12.7 mm), G25",
+  "category": "wheel",
+  "mass_g": 8.4,
+  "price_usd": 0.3,
+  "supplier_url": "https://www.mcmaster.com/9292K42/",
+  "datasheet_url": "https://www.mcmaster.com/9292K42/",
+  "envelope_mm": [
+   12.7,
+   12.7,
+   12.7
+  ],
+  "holes": [],
+  "specs": {
+   "ball_d_mm": 12.7,
+   "material": "52100 chrome steel",
+   "mount": "snapped into a printed socket (lip below the equator)",
+   "no_mounting_holes": true,
+   "max_robot_mass_kg": 1.0,
+   "note": "rolls in a printed PLA/PETG socket: fine on hard floors, drags on carpet",
+   "uncertain": [
+    "price_usd",
+    "max_robot_mass_kg"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -6.35,
+    -6.35,
+    0.0
+   ],
+   "max": [
+    6.35,
+    6.35,
+    12.7
+   ]
+  },
+  "mesh_triangles": 306
+ },
  "strap_50mm_velcro": {
   "key": "strap_50mm_velcro",
   "name": "50 mm hook-and-loop strap with D-ring buckle, 600 mm",

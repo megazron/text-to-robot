@@ -3,7 +3,7 @@
 // Fusion / FreeCAD / Onshape, and print meshes welded and validated by manifold-3d (closed, one solid).
 //   await initKernel();  const { stl, step, volume_mm3 } = exportPart(program);
 import opencascade from "replicad-opencascadejs";
-import { setOC, getOC, cast, makeBox, makeCylinder, makePolygon, makeSolid, draw, type Shape3D, type AnyShape } from "replicad";
+import { setOC, getOC, cast, makeBox, makeCylinder, makePolygon, makeSolid, makeSphere, draw, type Shape3D, type AnyShape } from "replicad";
 import Manifold from "manifold-3d";
 import { part, caseHoles, outputHoles, hornRadiusMm, type Hole, type Vec3 } from "@ttr/parts";
 
@@ -20,6 +20,7 @@ export type Op =
   | { op: "cutbox"; min: Vec3; max: Vec3 }
   | { op: "lighten"; a: Vec3; b: Vec3; r: number; n: number; axis?: Vec3 }
   | { op: "revolve"; pts: [number, number][]; seg?: number }
+  | { op: "sphere"; c: Vec3; r: number; cut?: boolean }                      // ball (or a spherical socket when cut)
   | { op: "at"; T: Mat4; of: Op[] };
 /** `edge`: radius (mm) of the fillet that breaks every outer edge after the booleans (0 = sharp). */
 export interface Program { name: string; ops: Op[]; edge?: number; }
@@ -170,6 +171,7 @@ function solidOf(o: Op): { add: Shape3D[]; cut: Shape3D[] } {
     case "box": return { add: [box(o.min, o.max, o.r ?? 0)], cut: [] };
     case "hull": { const ps = o.of.map(solidOf); return { add: [hullOf(ps.flatMap((p) => p.add))], cut: ps.flatMap((p) => p.cut) }; }
     case "revolve": return { add: [revolveOutline(o.pts)], cut: [] };
+    case "sphere": { const b = keep(makeSphere(o.r) as Shape3D), s = keep(b.translate(o.c) as Shape3D); return o.cut ? { add: [], cut: [s] } : { add: [s], cut: [] }; }
     case "keepout": return { add: [], cut: [keepoutOf(o.key, o.T)] };
     // holes print about 0.15 mm small on FDM: cut them that much over size
     case "hole": return { add: [], cut: [rod(o.a, o.b, o.d / 2 + 0.075)] };

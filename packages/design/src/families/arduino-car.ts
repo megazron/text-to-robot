@@ -25,7 +25,7 @@ export interface ArduinoCarRequest {
   sensor?: "ultrasonic" | "none";
 }
 
-const MOTOR = "tt_gearmotor_1to48", WHEEL = "wheel_65mm_tt", CASTER = "ball_caster_pololu_2692", PACK = "pack_2s_18650";
+const MOTOR = "tt_gearmotor_1to48", WHEEL = "wheel_65mm_tt", BALL = "steel_ball_12_7mm", PACK = "pack_2s_18650";
 const R = 32.5;                        // wheel radius (mm)
 // axle height, plate underside (0.2 mm above the motor top: printed faces never meet a part exactly), plate thickness
 const ZC = R, ZP = ZC + 11.25 + 0.2, T = 4;
@@ -73,11 +73,13 @@ export function designArduinoCar(req: ArduinoCarRequest = {}): RobotSpecificatio
     const xs = [xa + can * 56, xa + can * 66];
     ops.push({ op: "cutbox", min: [Math.min(...xs), side > 0 ? 42 : -52, ZP - 1], max: [Math.max(...xs), side > 0 ? 52 : -42, ZT + 1] });
   }
-  // the ball's bottom is height_mm below the caster's mount face: the pillar puts that face height_mm above the ground
-  const zMount = Number(part(CASTER).specs.height_mm);
+  // ball caster (2WD): a 1/2 in steel ball snapped into a printed socket at the bottom of a pillar. The socket is
+  // 0.2 mm over the ball; its mouth (5.9 mm radius, 2.35 mm below the centre) is 0.45 mm under the ball's radius
+  const rb = Number(part(BALL).specs.ball_d_mm) / 2;
   if (!four) {
-    ops.push({ op: "rod", a: [xc, 0, zMount], b: [xc, 0, ZP + 0.5], r: 19.5 });
-    for (const h of part(CASTER).holes) ops.push({ op: "hole", a: [xc + h.pos[0], h.pos[1], zMount - 1], b: [xc + h.pos[0], h.pos[1], ZT + 1], d: 3.2 });
+    ops.push({ op: "rod", a: [xc, 0, rb - 2.35], b: [xc, 0, ZP + 0.5], r: rb + 4.2 });
+    ops.push({ op: "sphere", c: [xc, 0, rb], r: rb + 0.2, cut: true });
+    ops.push({ op: "hole", a: [xc, 0, -1], b: [xc, 0, rb], d: 2 * (rb - 0.45) });
   }
   // battery pack: two M3 countersunk screws through the plate (rear)
   const xb = x0 + 8;
@@ -101,7 +103,7 @@ export function designArduinoCar(req: ArduinoCarRequest = {}): RobotSpecificatio
     A.continuous(`${tag}_wheel_joint`, "chassis", `${tag}_wheel`, Tw, MOTOR);
     wheelJoints.push(`${tag}_wheel_joint`);
   }
-  if (!four) { A.mount("chassis", CASTER, translation([xc, 0, zMount]), "caster", "ball caster"); A.fastener("M3x25 + nut (caster)", 3); }
+  if (!four) A.mount("chassis", BALL, translation([xc, 0, 0]), "caster", "caster ball (snaps into the printed socket)", "metal");
 
   // ---------------- deck: battery, breadboard with board + driver
   A.mount("chassis", PACK, translation([xb, 0, ZT]), "battery", "2S 18650 pack");

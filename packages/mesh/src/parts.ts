@@ -5,7 +5,7 @@ import { curvedPlate, limbShell, dome, disc, ring, superArc, shelledLoft } from 
 import { torsoSide, limbInset, chestSurfacePanel, armourPanel, sculptedLimb, shoulderShell, bootShell } from "./mark43.ts";
 import { mountingPlate, armSpar } from "./mechanical.ts";
 import * as helmet from "./helmet.ts";
-import { programMesh, componentMesh } from "@ttr/solid";
+import { programMesh, componentMesh, Manifold, build } from "@ttr/solid";
 import { partFiles } from "@ttr/kernel/ready";
 
 export type Params = Record<string, number | string>;
@@ -85,7 +85,18 @@ export function buildPart(g: { part: string; params?: Params; scale?: [number, n
 /** Build a MeshGeometry recipe with precomputed mass properties (solid volume, unit-density inertia, bbox). */
 export function meshGeometry(part: string, file: string, params: Params = {}, scale?: [number, number, number]) {
   const m = buildPart({ part, params, scale });
-  const mp = massProperties(m, part === "printed"); const bb = bbox(m);
+  let mp: ReturnType<typeof massProperties>;
+  try { mp = massProperties(m, part === "printed"); }
+  catch (e) {
+    // a few datasheet CAD bodies (several touching solids) do not tessellate into one closed surface; a bought
+    // part's mass comes from its datasheet anyway, so its inertia is taken from the convex hull of its mesh
+    if (part !== "component") throw e;
+    const hull = build(() => { const g = Manifold.hull(m.v.map((p) => [p[0], p[1], p[2]] as [number, number, number])).getMesh(); const v: [number, number, number][] = [], f: [number, number, number][] = [];
+      for (let i = 0; i < g.vertProperties.length; i += g.numProp) v.push([g.vertProperties[i], g.vertProperties[i + 1], g.vertProperties[i + 2]]);
+      for (let i = 0; i < g.triVerts.length; i += 3) f.push([g.triVerts[i], g.triVerts[i + 1], g.triVerts[i + 2]]); return { v, f }; });
+    mp = massProperties(hull, true);
+  }
+  const bb = bbox(m);
   return { type: "mesh" as const, part, params, file, ...(scale ? { scale } : {}), volume: Math.max(mp.volume, 1e-9), inertia_unit: mp.inertia, bbox: bb, centroid: mp.centroid };
 }
 

@@ -32,7 +32,7 @@ export const RX = {
   omni: /omni[\s-]?(?:wheels?|directional)|holonomic/,
   fourWheel: /\b(?:four|4)[\s-]?wheel(?:ed|s)?\b|\b4wd\b|skid[\s-]?steer/,
   tracked: /\btrack(?:ed|s)\b|\btank\b|\bcrawler\b|\btreads?\b/,
-  diffDrive: /diff(?:erential)?[\s-]?drive|\b(?:two|2)[\s-]?wheel(?:ed|s)?\b|mobile\s+(?:base|robot|platform)|\brover\b|robot(?:ic)?\s+vacuum|vacuum\s+(?:cleaner|robot)|turtlebot|cleaning\s+robot|delivery\s+robot|wheeled\s+robot/,
+  diffDrive: /diff(?:erential)?[\s-]?drive|\b(?:two|2)[\s-]?wheel(?:ed|s)?\b|mobile\s+(?:base|robot|platform)|\brover\b|robot(?:ic)?\s+vacuum|vacuum\s+(?:cleaner|robot)|turtlebot|cleaning\s+robot|delivery\s+robot|wheeled\s+robot|\b(?:robot(?:ic)?\s+|rc\s+|smart\s+|arduino\s+)?cars?\b|\bbuggy\b|\bvehicle\b|line[\s-]?follow(?:er|ing)\b|obstacle[\s-]?avoid(?:er|ing|ance)\b/,
   legs: /\blegs\b|\bwalking\s+robot\b/,
   wheels: /\bwheels\b|\bwheeled\b/,
   gripper: /gripper|end[\s-]?effector|\bclaw\b|suction\s+cup/,

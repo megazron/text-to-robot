@@ -26,6 +26,8 @@ export interface ArmRequest {
   gravity?: Vec3;
   /** only these actuators may be used (e.g. the prompt named "SG90 servos"); a failing check then says what it would take */
   onlyActuators?: string[];
+  /** Arduino mode: clone boards (Uno / PCA9685 compatibles) instead of the originals */
+  cheapParts?: boolean;
 }
 export type Kind = "Y" | "P" | "R";
 const KINDS: Record<number, Kind[]> = { 1: ["Y"], 2: ["P", "P"], 3: ["Y", "P", "P"], 4: ["Y", "P", "P", "P"], 5: ["Y", "P", "P", "P", "R"], 6: ["Y", "P", "P", "R", "P", "R"], 7: ["Y", "P", "R", "P", "R", "P", "R"] };
@@ -431,12 +433,15 @@ export function designArm(req: ArmRequest): RobotSpecification {
   A.design.performance.holding_current_a = +amps.toFixed(2);
   if (ladder === "hobby") {
     // Arduino drives a PCA9685 over I2C; servos get their own 5 V rail (never the Arduino's 5 V pin)
-    A.buy("arduino_uno_r3", 1, "controller (USB serial commands, I2C to the servo driver)");
-    A.buy(bus, 1, "16-channel PWM servo driver (I2C)");
-    A.buy("psu_5v_lrs50", 1, "5 V 10 A servo supply (V+ terminal of the PCA9685)");
-    // a move can stall every servo at once for a moment: size for all stall currents
+    A.buy(req.cheapParts ? "arduino_uno_clone" : "arduino_uno_r3", 1, "controller (USB serial commands, I2C to the servo driver)");
+    A.buy(req.cheapParts ? "pca9685_clone" : bus, 1, "16-channel PWM servo driver (I2C)");
+    // a move can stall every servo at once for a moment: size for all stall currents. Micro-servo arms run
+    // from a 5 V 4 A wall adapter; bigger ones need the 10 A supply
     const stall = joints.reduce((s, j) => s + Number(part(j.key).specs.stall_current_a ?? 1), 0);
-    A.check("power:supply", stall <= 10, `all ${joints.length} servos stalled together draw ${stall.toFixed(1)} A of the 10 A 5 V supply; holding the payload draws ~${amps.toFixed(1)} A`);
+    const supplyA = stall <= 4 ? 4 : 10;
+    if (supplyA === 4) { A.buy("psu_5v4a_adapter", 1, "5 V 4 A wall adapter (V+ terminal of the PCA9685)"); A.buy("dc_jack_5521_panel", 1, "adapter socket"); }
+    else A.buy("psu_5v_lrs50", 1, "5 V 10 A servo supply (V+ terminal of the PCA9685)");
+    A.check("power:supply", stall <= supplyA, `all ${joints.length} servos stalled together draw ${stall.toFixed(1)} A of the ${supplyA} A 5 V supply; holding the payload draws ~${amps.toFixed(1)} A`);
     A.check("power:voltage", joints.every((j) => Number(part(j.key).specs.voltage_v) >= 4.8), `5 V rail is inside every servo's 4.8-6 V range (${[...new Set(joints.map((j) => part(j.key).name.split(" (")[0]))].join(", ")})`);
   } else {
     A.buy(bus, 1, "USB to actuator bus");

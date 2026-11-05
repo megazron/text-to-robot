@@ -12,7 +12,7 @@ from __future__ import annotations
 
 import math
 
-from .base import Component, Hole, box, cyl, rbox, rpm_to_rad_s, union
+from .base import Component, Hole, _b3d, box, cyl, rbox, rpm_to_rad_s, union
 from .shapes import pcb, pcb_holes
 from .arduino import UNO_HOLES, _uno_build, _uno_keepout, _nano_build, PCA_HOLES, _pca_build
 from .motors import d_shaft
@@ -203,4 +203,16 @@ BREADBOARD = Component(
            "uncertain": ["price_usd", "mass_g"]},
     build=_breadboard_build)
 
-COMPONENTS = [BREADBOARD, UNO_CLONE, NANO_CLONE, PCA_CLONE, TT_MOTOR, L298N, TB6612, HC_SR04, RING12, PACK_2S]
+# ------------------------------------------------------------------------------- caster ball
+# a 1/2 in chrome-steel bearing ball snapped into a printed socket under the chassis: the usual DIY caster
+STEEL_BALL = Component(
+    key="steel_ball_12_7mm", name="Chrome steel bearing ball 1/2 in (12.7 mm), G25", category="wheel",
+    mass_g=8.4, price_usd=0.3, supplier_url="https://www.mcmaster.com/9292K42/", datasheet_url="https://www.mcmaster.com/9292K42/",
+    envelope_mm=(12.7, 12.7, 12.7), holes=[],
+    specs={"ball_d_mm": 12.7, "material": "52100 chrome steel", "mount": "snapped into a printed socket (lip below the equator)",
+           "no_mounting_holes": True, "max_robot_mass_kg": 1.0,
+           "note": "rolls in a printed PLA/PETG socket: fine on hard floors, drags on carpet",
+           "uncertain": ["price_usd", "max_robot_mass_kg"]},
+    build=lambda c: _b3d().Pos(0, 0, 6.35) * _b3d().Sphere(6.35))
+
+COMPONENTS = [STEEL_BALL, BREADBOARD, UNO_CLONE, NANO_CLONE, PCA_CLONE, TT_MOTOR, L298N, TB6612, HC_SR04, RING12, PACK_2S]

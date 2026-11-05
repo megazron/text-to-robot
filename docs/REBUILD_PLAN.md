@@ -13,12 +13,12 @@ stronger (4WD) tiers, all checks including clearance passing.
 - [x] One `main` with all work merged (remaining remote branches are fully contained in main; deleting them needs the owner's command)
 - [x] Real CAD stack that works on the web: Replicad / OpenCascade kernel (`packages/kernel`)
 - [x] Privacy: designs built in the browser, stored on the user's device, said on the page
-- [ ] Arduino button: cheapest Arduino-compatible parts that still work
-- [ ] Price tiers to choose from (cheapest / balanced / best on Arduino), with prices
-- [ ] Honest suggestions when a budget or named components cannot do the request ("at this price only the helmet")
+- [~] Arduino button: cheapest Arduino-compatible parts that still work (generator: `arduinoOptions(prompt)`; cars done, ~$28 2WD / $37 4WD; servo arms need a micro-servo joint design; web button pending)
+- [~] Price tiers to choose from, with prices (cars: cheapest / stronger; arms: three tiers, failing until the micro-servo arm lands)
+- [~] Honest suggestions when a budget or named components cannot do the request (over-budget options marked, cheapest price stated; robot types without an Arduino version say so)
 - [ ] Use the components the user names ("with MG996R servos", "Arduino Nano")
 - [ ] Printed parts and housings that are really buildable: fillets, proper walls, screw bosses, cable paths, STEP + STL
-- [ ] Prompts read properly (sizes, counts, parts, budgets, exclusions) for every robot type
+- [~] Prompts read properly (sizes, counts, parts, budgets, exclusions) for every robot type (heights for humanoids, standalone mechs, car / buggy / line follower / obstacle avoider words fixed)
 - [ ] Every robot type rebuilt and checked: arm, car, mecanum, rover, quadruped, hexapod, humanoid, mech, SCARA, gripper
 - [ ] WALL-E rebuilt properly
 - [ ] Mark 43 rebuilt properly, in tiers from helmet to full wearable suit
