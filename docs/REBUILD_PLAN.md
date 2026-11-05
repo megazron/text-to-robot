@@ -20,7 +20,7 @@ stronger (4WD) tiers, all checks including clearance passing.
 - [ ] Printed parts and housings that are really buildable: fillets, proper walls, screw bosses, cable paths, STEP + STL
 - [~] Prompts read properly (sizes, counts, parts, budgets, exclusions) for every robot type (heights for humanoids, standalone mechs, car / buggy / line follower / obstacle avoider words fixed)
 - [ ] Every robot type rebuilt and checked: arm, car, mecanum, rover, quadruped, hexapod, humanoid, mech, SCARA, gripper
-- [ ] WALL-E rebuilt properly
+- [x] WALL-E rebuilt properly (Arduino build: printed body housing 4 TT motors, TPU tracks, pan/tilt binocular head, servo arms; all checks pass, ~$51)
 - [ ] Mark 43 rebuilt properly, in tiers from helmet to full wearable suit
 - [ ] GIFs, renders and README regenerated from the new designs (no old images left)
 - [ ] New web UI: bento card dashboard in green and black

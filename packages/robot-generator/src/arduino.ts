@@ -2,7 +2,7 @@
 // Each option is a complete, checked design; options over the stated budget are marked, and when nothing
 // can be built the result says what can.
 import type { RobotSpecification } from "@ttr/robot-schema";
-import { designArduinoCar, designArduinoArm, type ArduinoTier } from "@ttr/design";
+import { designArduinoCar, designArduinoArm, designArduinoWallE, type ArduinoTier } from "@ttr/design";
 import { part } from "@ttr/parts";
 import { normalize, parseBudget, extractMasses } from "./text.ts";
 import { chooseFamily, gripperRequest } from "./families.ts";
@@ -56,8 +56,11 @@ export function arduinoOptions(prompt: string): ArduinoResult {
       options.push(option(tier, `${tierLabel}: carries ${Math.round((payload ?? kg) * 1000)} g, ${Math.round(Number(design(s).performance.reach_m) * 100)} cm reach`, s, budget));
       if (payload !== undefined) break;   // a stated payload: one design for it
     }
+  } else if (family === "wall_e") {
+    const s = designArduinoWallE({ name: "wall_e", prompt, budget });
+    options.push(option("cheapest", "Arduino WALL-E: TPU tracks, pan/tilt eyes, servo arms", s, budget));
   } else {
-    notes.push(`An Arduino version of the ${label} is not designed yet (being rebuilt on the new CAD kernel). Arduino robots available now: cars (2WD / 4WD) and servo arms.`);
+    notes.push(`An Arduino version of the ${label} is not designed yet (being rebuilt on the new CAD kernel). Arduino robots available now: cars (2WD / 4WD), servo desk arms and WALL-E.`);
   }
   if (budget !== undefined && options.length && options.every((o) => o.over_budget))
     notes.push(`every option costs more than your $${budget} budget; the cheapest is $${Math.min(...options.map((o) => o.cost_usd)).toFixed(0)}`);

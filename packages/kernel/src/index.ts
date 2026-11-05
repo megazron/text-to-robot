@@ -9,12 +9,12 @@ import { part, caseHoles, outputHoles, hornRadiusMm, type Hole, type Vec3 } from
 
 export type Mat4 = [number, number, number, number, number, number, number, number, number, number, number, number, number, number, number, number];
 export type Op =
-  | { op: "horn"; key: string; t?: number; extra?: number }
+  | { op: "horn"; key: string; t?: number; extra?: number; channel?: number }  // channel: no screwdriver pocket above; a centre channel this tall instead
   | { op: "cradle"; key: string; T: Mat4; wall?: number }
   | { op: "beam"; a: Vec3; b: Vec3; w: number; h: number; up?: Vec3 }
   | { op: "rod"; a: Vec3; b: Vec3; r: number }
   | { op: "box"; min: Vec3; max: Vec3; r?: number }
-  | { op: "hull"; of: Op[] }
+  | { op: "hull"; of: Op[]; cut?: boolean }                                     // convex hull (subtracted when cut)
   | { op: "keepout"; key: string; T: Mat4 }
   | { op: "hole"; a: Vec3; b: Vec3; d: number }
   | { op: "cutbox"; min: Vec3; max: Vec3 }
@@ -151,8 +151,13 @@ function cradleOf(key: string, T: Mat4, wall: number): { add: Shape3D[]; cut: Sh
   if (max[0] - min[0] > 3 * rim) cut.push(transformed(box([min[0] + rim, max[1] - 1, min[2] + 1.5], [Math.min(max[0] - rim, min[0] + rim + 12), max[1] + wall + 1, min[2] + 9]), T));
   return { add: [shell], cut };
 }
-function hornOf(key: string, t: number, extra: number): { add: Shape3D[]; cut: Shape3D[] } {
+function hornOf(key: string, t: number, extra: number, channel?: number): { add: Shape3D[]; cut: Shape3D[] } {
   const holes = outputHoles(key), cut = screwCuts(holes, I4(), t, 0);
+  if (channel !== undefined) {
+    // structure stands on the plate: horn screws go in from the horn side, the spline screw through a centre channel
+    cut.push(rod([0, 0, -1], [0, 0, t + channel], 3.3));
+    return { add: [rod([0, 0, 0], [0, 0, t], hornRadiusMm(key) + extra)], cut };
+  }
   if (holes.length) {
     const rMax = Math.max(...holes.map((h) => Math.hypot(h.pos[0], h.pos[1]))), dHead = (holes[0].thread ? Number(holes[0].thread.replace(/^M/, "")) + 0.4 : holes[0].dia_mm + 0.3) * 1.9;
     cut.push(rod([0, 0, t], [0, 0, t + 60], rMax + dHead / 2 + 0.6));
@@ -164,12 +169,12 @@ function hornOf(key: string, t: number, extra: number): { add: Shape3D[]; cut: S
 // ---------------------------------------------------------------- programs
 function solidOf(o: Op): { add: Shape3D[]; cut: Shape3D[] } {
   switch (o.op) {
-    case "horn": return hornOf(o.key, o.t ?? 4, o.extra ?? 4);
+    case "horn": return hornOf(o.key, o.t ?? 4, o.extra ?? 4, o.channel);
     case "cradle": return cradleOf(o.key, o.T, o.wall ?? 3);
     case "beam": return { add: [beam(o.a, o.b, o.w, o.h, o.up)], cut: [] };
     case "rod": return { add: [rod(o.a, o.b, o.r)], cut: [] };
     case "box": return { add: [box(o.min, o.max, o.r ?? 0)], cut: [] };
-    case "hull": { const ps = o.of.map(solidOf); return { add: [hullOf(ps.flatMap((p) => p.add))], cut: ps.flatMap((p) => p.cut) }; }
+    case "hull": { const ps = o.of.map(solidOf), h = hullOf(ps.flatMap((p) => p.add)); return o.cut ? { add: [], cut: [h] } : { add: [h], cut: ps.flatMap((p) => p.cut) }; }
     case "revolve": return { add: [revolveOutline(o.pts)], cut: [] };
     case "sphere": { const b = keep(makeSphere(o.r) as Shape3D), s = keep(b.translate(o.c) as Shape3D); return o.cut ? { add: [], cut: [s] } : { add: [s], cut: [] }; }
     case "keepout": return { add: [], cut: [keepoutOf(o.key, o.T)] };

@@ -39,10 +39,10 @@ const TIERS: Record<ArduinoTier, { wheels: 2 | 4; board: string; label: string }
 };
 
 /** Motor placement: shaft along +-y at the plate edge, can towards +-x. Column-major, mm. */
-function motorT(xa: number, side: 1 | -1, canDir: 1 | -1): Mat4 {
+export function motorT(xa: number, side: 1 | -1, canDir: 1 | -1, yf = YF, zc = ZC): Mat4 {
   const X: Vec3 = [canDir, 0, 0], Z: Vec3 = [0, side, 0];
   const Y: Vec3 = [Z[1] * X[2] - Z[2] * X[1], Z[2] * X[0] - Z[0] * X[2], Z[0] * X[1] - Z[1] * X[0]];
-  return [X[0], X[1], X[2], 0, Y[0], Y[1], Y[2], 0, Z[0], Z[1], Z[2], 0, xa, side * YF, ZC, 1];
+  return [X[0], X[1], X[2], 0, Y[0], Y[1], Y[2], 0, Z[0], Z[1], Z[2], 0, xa, side * yf, zc, 1];
 }
 const motorHoles = () => part(MOTOR).holes.map((h) => h.pos[0]);
 

@@ -23,6 +23,8 @@ function linkSolid(l: Link): M | null {
     // a part may declare its solid body (e.g. a gear motor without the shaft stubs that pass through its bracket)
     const key = String(g.params!.key), c = part(key), b = (c.specs.body_mm as { min: number[]; max: number[] } | undefined) ?? c.bbox_mm!;
     // actuators: the case only; the output face and horn are where the driven link bolts on
+    // wheels are discs about their axle (component z), not their bounding box
+    if (c.category === "wheel" && !c.specs.ball_d_mm) { const r = (b.max[0] - b.min[0]) / 2; return Manifold.cylinder(b.max[2] - b.min[2], r, r, 64).translate([(b.max[0] + b.min[0]) / 2, (b.max[1] + b.min[1]) / 2, b.min[2]]); }
     const top = c.category === "actuator" ? Math.min(b.max[2], -0.8) : b.max[2];
     return box(b.min as Vec3, [b.max[0], b.max[1], top]);
   }
