@@ -8,7 +8,7 @@ import {
 export type { Mat4 } from "./geom.ts";
 
 export type Op =
-  | { op: "horn"; key: string; t?: number; extra?: number }                    // plate bolted to an actuator output at the origin (+z)
+  | { op: "horn"; key: string; t?: number; extra?: number; channel?: number } // plate bolted to an actuator output at the origin (+z); channel: no screwdriver pocket, a centre channel this tall
   | { op: "cradle"; key: string; T: Mat4; wall?: number }                      // holds an actuator by its case screws
   | { op: "beam"; a: Vec3; b: Vec3; w: number; h: number; up?: Vec3 }         // rectangular strut a->b, h along `up`
   | { op: "rod"; a: Vec3; b: Vec3; r: number }
@@ -31,7 +31,7 @@ function beam(a: Vec3, b: Vec3, w: number, h: number, up: Vec3 = [0, 0, 1]): M {
 
 function solidOf(o: Op): { add: M[]; cut: M[] } {
   switch (o.op) {
-    case "horn": return { add: [hornPlate(o.key, o.t ?? 4, o.extra ?? 4)], cut: hornCuts(o.key, o.t ?? 4) };
+    case "horn": return { add: [hornPlate(o.key, o.t ?? 4, o.extra ?? 4)], cut: hornCuts(o.key, o.t ?? 4, o.channel) };
     case "cradle": return { add: [cradle({ key: o.key, T: o.T }, o.wall ?? 3)], cut: cradleCuts({ key: o.key, T: o.T }, o.wall ?? 3) };
     case "beam": return { add: [beam(o.a, o.b, o.w, o.h, o.up)], cut: [] };
     case "rod": return { add: [rod(o.a, o.b, o.r)], cut: [] };

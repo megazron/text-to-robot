@@ -337,7 +337,9 @@ function modifyDesigned(specIn: RobotSpecification, instruction: string): ModRes
         changes.push(`~ reach ${cur.toFixed(3)} m -> ${next.toFixed(3)} m requested${lr.defaulted ? " (no amount given, used 20%)" : ""}; actuators re-sized`);
         continue;
       }
-      changes.push(`! ${seg ? seg.replace("_", " ") : "This size"} cannot be changed on this design`); continue;
+      // name what was asked for: "changing the legs is not supported" is clearer than a generic refusal
+      const what = seg ? seg.replace("_", " ") : /\b(legs?|arms?|wheels?|tracks?|body|torso|head|neck|base|hands?|feet|foot)\b/.exec(c)?.[1];
+      changes.push(what ? `! Changing the ${what} is not supported on this design (it is sized from its parts and actuators)` : "! This size cannot be changed on this design (it is sized from its parts and actuators)"); continue;
     }
     if (budget === undefined) changes.push(`? Not understood: "${c}"`);
   }

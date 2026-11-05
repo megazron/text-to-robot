@@ -33,9 +33,10 @@ const ZT = ZP + T;                     // deck top
 const YF = 56;                         // motor output face |y| (plate edge)
 const DRIVE = { slopeDeg: 10, accel: 0.5, crr: 0.03, speedFactor: 0.8, usableEnergy: 0.8 };
 
-const TIERS: Record<ArduinoTier, { wheels: 2 | 4; board: string; label: string }> = {
-  cheapest: { wheels: 2, board: "arduino_nano_clone", label: "cheapest that works" },
-  stronger: { wheels: 4, board: "arduino_nano_clone", label: "stronger (4WD)" },
+const TIERS: Record<ArduinoTier, { wheels: 2 | 4; board: string; label: string; slopeDeg: number }> = {
+  // two TT motors run over their continuous rating up a 10 deg ramp: the 2WD car is rated for floors and 5 deg ramps
+  cheapest: { wheels: 2, board: "arduino_nano_clone", label: "cheapest that works (floors, ramps up to 5 deg)", slopeDeg: 5 },
+  stronger: { wheels: 4, board: "arduino_nano_clone", label: "stronger (4WD, ramps up to 10 deg)", slopeDeg: 10 },
 };
 
 /** Motor placement: shaft along +-y at the plate edge, can towards +-x. Column-major, mm. */
@@ -103,7 +104,14 @@ export function designArduinoCar(req: ArduinoCarRequest = {}): RobotSpecificatio
     A.continuous(`${tag}_wheel_joint`, "chassis", `${tag}_wheel`, Tw, MOTOR);
     wheelJoints.push(`${tag}_wheel_joint`);
   }
-  if (!four) A.mount("chassis", BALL, translation([xc, 0, 0]), "caster", "caster ball (snaps into the printed socket)", "metal");
+  if (!four) {
+    // the ball rolls freely in its socket: two passive axles at its centre (a ball joint in URDF terms)
+    A.buy(BALL, 1, "caster ball (snaps into the printed socket)");
+    A.continuous("caster_roll", "chassis", "caster_gimbal", translation([xc, 0, rb]), null, [1, 0, 0]);
+    A.frameLink("caster_gimbal");
+    A.continuous("caster_spin", "caster_gimbal", "caster_ball", translation([0, 0, 0]), null, [0, 1, 0]);
+    A.spec.links.push({ name: "caster_ball", role: "caster", geometry: { type: "sphere", radius: rb / 1000 }, mass: part(BALL).mass_g / 1000, material: "metal", origin: { xyz: [0, 0, 0], rpy: [0, 0, 0] } });
+  }
 
   // ---------------- deck: battery, breadboard with board + driver
   A.mount("chassis", PACK, translation([xb, 0, ZT]), "battery", "2S 18650 pack");
@@ -133,12 +141,13 @@ export function designArduinoCar(req: ArduinoCarRequest = {}): RobotSpecificatio
     // HC-SR04: board z (transducers) forward, board x across the robot, board y up
     const Ts: Mat4 = [0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, x1 - 4.6, -22.5, zb, 1];
     A.mount("sensor_bracket", "hc_sr04", Ts, "ultrasonic", "HC-SR04 distance sensor");
+    A.spec.sensors.push({ name: "front_range", type: "range", parent: "ultrasonic", origin: { xyz: [0.0225, 0.01, 0.0136], rpy: [0, 0, 0] }, params: { range_m: 4, min_range_m: 0.02, beam_deg: 15 } });
     A.fastener("M2x6 self-tapping (sensor)", 4);
   }
 
   // ---------------- nothing intersects anything (bought parts as their body boxes, printed parts as solids)
   // parts that sit on a carrier by design (boards on the breadboard, sensor in its bracket, pack on the deck)
-  const carried = new Set(["controller", "motor_driver_1", "motor_driver_2", "breadboard", "battery", "ultrasonic", "caster"]);
+  const carried = new Set(["controller", "motor_driver_1", "motor_driver_2", "breadboard", "battery", "ultrasonic"]);
   const skip = new Set<string>();
   for (const j of A.spec.joints) if (j.type === "fixed" && carried.has(j.child)) skip.add(`${j.parent}|${j.child}`);
   const hits = withSolids(A.spec, (mdl) => interferences(mdl, {}, undefined, 2, skip));
@@ -147,10 +156,12 @@ export function designArduinoCar(req: ArduinoCarRequest = {}): RobotSpecificatio
   // ---------------- engineering checks
   const m = totalMass(A.spec) + payload, g = 9.81, r = R / 1000;
   const nDriven = wheelJoints.length, rt = rating(MOTOR);
-  const F = m * (g * Math.sin(DRIVE.slopeDeg * Math.PI / 180) + DRIVE.accel + DRIVE.crr * g);
-  const perWheel = (F * r) / nDriven;
-  A.check("drive:torque", perWheel <= rt.rated_nm, `${m.toFixed(2)} kg on a ${DRIVE.slopeDeg} deg slope accelerating ${DRIVE.accel} m/s^2: ${perWheel.toFixed(4)} N·m per wheel vs ${rt.rated_nm} N·m continuous (TT 1:48)`);
-  const vmax = rt.speed_rad_s * r * DRIVE.speedFactor;
+  const slope = cfg.slopeDeg, vmax = rt.speed_rad_s * r * DRIVE.speedFactor;
+  const F = m * (g * Math.sin(slope * Math.PI / 180) + DRIVE.accel + DRIVE.crr * g);
+  // + the gearbox's own loss at cruise speed (the joint damping the simulation uses)
+  const loss = (A.spec.joints.find((j) => j.name === wheelJoints[0])?.dynamics?.damping ?? 0) * (vmax / r);
+  const perWheel = (F * r) / nDriven + loss;
+  A.check("drive:torque", perWheel <= rt.rated_nm, `${m.toFixed(2)} kg on a ${slope} deg slope accelerating ${DRIVE.accel} m/s^2: ${perWheel.toFixed(4)} N·m per wheel (incl. ${loss.toFixed(4)} gearbox loss at speed) vs ${rt.rated_nm} N·m continuous (TT 1:48)`);
   A.check("drive:top_speed", vmax >= 0.3, `${vmax.toFixed(2)} m/s at 6 V (no-load ${rt.speed_rad_s} rad/s x r ${R} mm x ${DRIVE.speedFactor})`);
   const stall = Number(part(MOTOR).specs.stall_current_a), drvPeak = Number(part("tb6612fng_module").specs.peak_current_a);
   A.check("power:driver_current", stall <= drvPeak, `one TT motor per TB6612FNG channel: stall ${stall} A <= ${drvPeak} A channel peak (${part("tb6612fng_module").specs.current_a} A continuous)`);
@@ -162,7 +173,7 @@ export function designArduinoCar(req: ArduinoCarRequest = {}): RobotSpecificatio
 
   const bom = A.bom();
   if (req.budget !== undefined) A.check("budget", bom.cost_usd <= req.budget, `$${bom.cost_usd.toFixed(2)} of parts vs $${req.budget} budget`);
-  A.design.performance = { tier, tier_label: cfg.label, wheels: cfg.wheels, mass_kg: +m.toFixed(3), top_speed_m_s: +vmax.toFixed(2), runtime_min: +runtimeMin.toFixed(0),
+  A.design.performance = { tier, tier_label: cfg.label, wheels: cfg.wheels, max_slope_deg: cfg.slopeDeg, mass_kg: +m.toFixed(3), top_speed_m_s: +vmax.toFixed(2), runtime_min: +runtimeMin.toFixed(0),
     cost_usd: bom.cost_usd, controller: part(cfg.board).name, length_mm: x1 - x0, width_mm: 2 * (YF + 27) };
   A.design.assumptions.push(`TT motor continuous torque taken as 30 % of the 0.8 kg.cm stall (Adafruit #3777 data)`,
     "prices are typical single-unit marketplace prices for generic modules and vary by seller");

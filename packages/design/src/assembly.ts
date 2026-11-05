@@ -42,7 +42,8 @@ const COMPONENT_MATERIAL: Record<string, string> = { actuator: "actuator", wheel
 
 export interface PrintedRecord { name: string; link: string; program: Program; check: PrintCheck; mass_kg: number; }
 export interface PurchasedRecord { key: string; qty: number; uses: string[]; }
-export interface JointRecord { joint: string; actuator: string; required_nm: number; rated_nm: number; peak_nm: number; margin: number; speed_rad_s: number; note: string; }
+/** required / rated / peak are N·m for rotary joints; a record with unit "N" (a linear axis in joint space) is in N, and its speed in m/s */
+export interface JointRecord { joint: string; actuator: string; required_nm: number; rated_nm: number; peak_nm: number; margin: number; speed_rad_s: number; note: string; unit?: "N" | "N·m"; }
 export interface DesignRecord {
   family: string;
   summary: string;
@@ -176,7 +177,11 @@ export class Assembly {
 
 /** Viscous damping that roughly matches each actuator family's gearbox (N·m·s/rad). */
 function defaultDamping(key: string): number {
-  const r = rating(key);
+  const r = rating(key), sp = part(key).specs;
+  // DC gearmotors with a datasheet no-load current: the gearbox and brush losses take I0/Istall of the stall torque at
+  // no-load speed, modelled as viscous damping (TT motor: 10 % of stall at 200 rpm)
+  const i0 = Number(sp.no_load_current_a), is = Number(sp.stall_current_a);
+  if (i0 > 0 && is > 0 && /gearmotor|tt_/.test(key)) return +(r.peak_nm * (i0 / is) / Math.max(r.speed_rad_s, 1)).toFixed(6);
   return +(0.02 * r.peak_nm / Math.max(r.speed_rad_s, 1) * 10).toFixed(4);
 }
 function frictionOf(key: string): number { return +(rating(key).peak_nm * 0.02).toFixed(4); }

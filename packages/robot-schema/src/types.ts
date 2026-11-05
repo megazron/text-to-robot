@@ -97,7 +97,8 @@ export interface Joint {
 
 export interface Material { name: string; color: RGBA; }
 
-export type SensorType = "camera" | "depth" | "lidar" | "imu" | "force";
+/** range: an ultrasonic or IR distance sensor (e.g. HC-SR04) */
+export type SensorType = "camera" | "depth" | "lidar" | "imu" | "force" | "range";
 export interface Sensor {
   name: string;
   type: SensorType;

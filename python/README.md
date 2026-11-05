@@ -47,7 +47,7 @@ ttr-attach-enclosure examples/14_iron_man_mark_43/robot.json \
   --xyz -0.3 0 0.2 --rpy 0 -1.5707963268 0 \
   --electronics-mass-kg 0.045 --out out/attached
 # Open out/attached/robot.json with Import JSON in the web viewer.
-ttr-collision examples/14_iron_man_mark_43/robot.sim.urdf --out out/convex --tolerance-mm 2
+ttr-collision examples/14_iron_man_mark_43/robot.urdf --out out/convex --tolerance-mm 2
 ttr-mujoco convert out/convex/robot.urdf --self-collision -o out/convex/robot.mjcf.xml
 ttr-mujoco test out/convex/robot.urdf --self-collision
 # Training can use the same contact model (requires [train]):
@@ -65,8 +65,8 @@ error, and the hull cap can limit fidelity. Samples include internal hull interf
 the measured deviation is not a union-boundary Hausdorff metric. Default robot boxes
 remain available for cheap diagnostics. Neither representation certifies human fit.
 
-Regenerate evidence with `node scripts/regen_mark43_example.ts`, then
-`python scripts/audit_mark43.py --convex` and `python scripts/check_mesh_assets.py`.
+Regenerate evidence with `node scripts/build_examples.ts`, then
+`python scripts/simulate_examples.py`, `python scripts/print_audit.py` and `python scripts/check_mesh_assets.py`.
 The physics audit records failures; successful file export does not mean balance or
 hardware clearance passed. See [physical fidelity](../docs/PHYSICAL_FIDELITY.md).
 

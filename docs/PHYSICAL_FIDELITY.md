@@ -43,7 +43,7 @@ approximation. See `mesh_quality_report.json` and `scripts/check_mesh_assets.py`
 The configurable neutral stance separates legs and abducts the arms; mirrored
 abduction axes are corrected. These inferred dimensions are not a measured body fit.
 Palette and proportions were compared with [official Hot Toys photographs](https://www.sideshow.com/collectibles/marvel-iron-man-mark-xliii-hot-toys-902314).
-The authored silhouette still differs from the film suit. See the [visual comparison](MARK43_VISUAL_REVIEW.md), including current front/three-quarter/rear renders and explicit remaining mismatches.
+The armour shells are smooth lofts around the wearer: they do not yet carry the film suit's panel lines and angular chest, so the silhouette differs from the film suit.
 
 The default URDF retains inexpensive box collision proxies. The optional Python
 `ttr-collision` tool uses [CoACD](https://github.com/SarahWeiii/CoACD) to replace mesh
@@ -119,9 +119,10 @@ Mark 43" or wearable qualification is delivered by this change.
 ```bash
 npm install
 pip install -e './python[cad,geometry]'
-node scripts/regen_mark43_example.ts
-python scripts/audit_mark43.py --convex
-python scripts/check_mesh_assets.py --json examples/14_iron_man_mark_43/mesh_quality_report.json
+node scripts/build_examples.ts                 # every example, Mark 43 included, from its prompt
+MUJOCO_GL=osmesa python scripts/simulate_examples.py
+python scripts/print_audit.py
+python scripts/check_mesh_assets.py examples/14_iron_man_mark_43/robot.json
 npm test
 npm run typecheck
 python -m unittest discover -s python/tests -v

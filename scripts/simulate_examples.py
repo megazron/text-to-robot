@@ -111,7 +111,7 @@ def check(selected):
     bad = []
     known_path = ROOT / "examples/sim_known_issues.json"
     known = json.loads(known_path.read_text()) if known_path.exists() else {}
-    for ex in sorted(p for p in (ROOT / "examples").iterdir() if p.is_dir() and re.match(r"\d\d_", p.name) and p.name != "14_iron_man_mark_43"):
+    for ex in sorted(p for p in (ROOT / "examples").iterdir() if p.is_dir() and re.match(r"\d\d_", p.name)):
         if selected and ex.name not in selected: continue
         stored = json.loads((ex / "simulation_report.json").read_text())
         sha = hashlib.sha256((ex / "robot.urdf").read_bytes()).hexdigest()
@@ -130,7 +130,7 @@ def check(selected):
 
 def main(selected):
     rows = []
-    for ex in sorted(p for p in (ROOT / "examples").iterdir() if p.is_dir() and re.match(r"\d\d_", p.name) and p.name != "14_iron_man_mark_43"):  # Mark 43 has its own evidence pipeline
+    for ex in sorted(p for p in (ROOT / "examples").iterdir() if p.is_dir() and re.match(r"\d\d_", p.name)):
         if selected and ex.name not in selected:
             report = ex / "simulation_report.json"
             if report.exists(): rows.append((ex, json.loads(report.read_text())))

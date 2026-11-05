@@ -107,8 +107,10 @@ export const SENSOR_PARTS: Record<SensorType, { key: string; frame: Mat4 } | nul
   imu: { key: "bno085_breakout", frame: frame([12.8, 11.35, 2.6], [0, 0, 1], [1, 0, 0]) },
   lidar: { key: "rplidar_c1", frame: frame([0, 0, 29.8], [0, 0, 1], [1, 0, 0]) },
   force: null,
+  // HC-SR04: looks along +z out of its transducers
+  range: { key: "hc_sr04", frame: frame([22.5, 10, 13.6], [0, 0, 1], [1, 0, 0]) },
 };
-const ALIASES: [RegExp, SensorType][] = [[/depth|realsense|rgb-?d|stereo/, "depth"], [/lidar|laser|scanner/, "lidar"], [/imu|gyro|accel|orientation/, "imu"], [/cam|vision|video|hud/, "camera"], [/force|torque|load ?cell/, "force"]];
+const ALIASES: [RegExp, SensorType][] = [[/ultrasonic|sonar|hc-?sr04/, "range"], [/depth|realsense|rgb-?d|stereo/, "depth"], [/lidar|laser|scanner/, "lidar"], [/imu|gyro|accel|orientation/, "imu"], [/cam|vision|video|hud/, "camera"], [/force|torque|load ?cell/, "force"]];
 export function sensorTypes(list: string[] | undefined): SensorType[] {
   const out: SensorType[] = [];
   for (const raw of list ?? []) { const s = raw.toLowerCase(); const t = ALIASES.find(([re]) => re.test(s))?.[1]; if (t && !out.includes(t)) out.push(t); }

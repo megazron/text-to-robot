@@ -59,12 +59,12 @@ test('continuous wheels never receive limited-angle hobby servos',async()=>{
 
 test('linear actuator sizing uses newtons rather than newton metres',async()=>{
   const {readFileSync}=await import('node:fs');
-  const spec=JSON.parse(readFileSync('examples/09_gripper/robot.json','utf8'));
+  // the SCARA's lead-screw Z axis is sized in newtons at the carriage; its rotary joints in newton metres
+  const spec=JSON.parse(readFileSync('examples/04_scara/robot.json','utf8'));
   const bom=buildBom(spec);
-  for(const row of bom.actuator_sizing){
-    assert.equal(row.effort_unit,'N');assert.ok(row.required_force_n!>0);
-    assert.equal(row.required_torque_nm,undefined);
-  }
+  const z=bom.actuator_sizing.find(r=>r.joint==='z')!;
+  assert.equal(z.effort_unit,'N');assert.ok(z.required_force_n!>0);assert.equal(z.required_torque_nm,undefined);
+  const j1=bom.actuator_sizing.find(r=>r.joint==='j1')!;
+  assert.equal(j1.effort_unit,'N·m');assert.ok(j1.required_torque_nm!>0);
   assert.match(bomToMarkdown(bom),/\| N \|/);
-  assert.ok(!bom.lines.filter(l=>l.category==='Actuator').some(l=>l.spec.includes('N·m')));
 });

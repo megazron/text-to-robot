@@ -1,6 +1,6 @@
 """Verify the shipped examples match their pipeline (build_examples.ts + simulate_examples.py) before publishing.
 
-For every example except 14_iron_man_mark_43 (own evidence: mark43_reference_review.py, check_motion_paths.py):
+For every example:
   - all deliverables exist and the archives open (ROS 2 package, CAD build package, training package)
   - simulation_report.json was produced from the shipped robot.urdf (sha256) and no task test failed
   - designed robots pass every engineering check recorded in robot.json
@@ -17,7 +17,7 @@ REQUIRED = ["prompt.txt", "robot.json", "robot.urdf", "BOM.md", "bom.json", "rob
             "README.md", "simulation_report.json", "simulation.gif"]
 bad = []
 known = json.loads((root / "examples/sim_known_issues.json").read_text()) if (root / "examples/sim_known_issues.json").exists() else {}
-examples = sorted(p for p in (root / "examples").iterdir() if p.is_dir() and p.name[:2].isdigit() and p.name != "14_iron_man_mark_43")
+examples = sorted(p for p in (root / "examples").iterdir() if p.is_dir() and p.name[:2].isdigit())
 for ex in examples:
     miss = [f for f in REQUIRED if not (ex / f).exists()]
     if miss: bad.append(f"{ex.name}: missing {', '.join(miss)}"); continue

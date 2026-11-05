@@ -205,16 +205,23 @@ function build(name: string, prompt: string | undefined, p: Plan) {
   // electronics deck on the ledges: ESP32-S3 and the three drivers clamped at their board ends, servo bus adapter on standoffs
   const dz = 49;
   const deck: Op[] = [{ op: "box", min: [bx0 + 3.3, -99.7, 46], max: [bx0 + 167.7, 99.7, dz], r: 2 }];
-  for (let k = 0; k < 6; k++) deck.push({ op: "cutbox", min: [bx0 + 15, -90 + k * 30, 45], max: [bx0 + 155, -80 + k * 30, 50] });
   // boards without mounting holes sit in four corner clips (slots for the board edge), clear of connectors and pins
+  const clampBoxes: [number, number, number, number][] = [];
   const clamp = (x0: number, y0: number, L: number, W: number, zb: number, t: number) => {
-    for (const [xa, xb] of [[x0 - 4, x0 + 0.4], [x0 + L - 0.4, x0 + L + 4]]) for (const [ya, yb] of [[y0 - 1.5, y0 + 2.2], [y0 + W - 2.2, y0 + W + 1.5]]) deck.push({ op: "box", min: [xa, ya, dz - 0.1], max: [xb, yb, zb + t + 1.5] });
+    for (const [xa, xb] of [[x0 - 4, x0 + 0.4], [x0 + L - 0.4, x0 + L + 4]]) for (const [ya, yb] of [[y0 - 1.5, y0 + 2.2], [y0 + W - 2.2, y0 + W + 1.5]]) clampBoxes.push([xa, xb, ya, yb]), deck.push({ op: "box", min: [xa, ya, dz - 0.1], max: [xb, yb, zb + t + 1.5] });
     deck.push({ op: "cutbox", min: [x0 - 0.15, y0 - 0.15, zb - 0.05], max: [x0 + L + 0.15, y0 + W + 0.15, zb + t + 0.05] });
   };
   const espT = translation([bx0 + 20, -60, dz + 9]);
   clamp(bx0 + 20, -60, 62.74, 25.4, dz + 9, 1.6);
   const tmcT = [0, 1, 2].map((k) => translation([bx0 + 100, -60 + k * 22, dz + 12]));
   for (let k = 0; k < 3; k++) clamp(bx0 + 100, -60 + k * 22, 20.3, 15.2, dz + 12, 1.6);
+  // ventilation slots through the deck, except where a board clip stands (a slot under a clip leaves it floating)
+  for (let k = 0; k < 6; k++) {
+    const y0 = -90 + k * 30, y1 = -80 + k * 30;
+    let xs: [number, number][] = [[bx0 + 15, bx0 + 155]];
+    for (const [xa, xb, ya, yb] of clampBoxes) if (ya < y1 + 1 && yb > y0 - 1) xs = xs.flatMap(([a, b]) => [[a, Math.min(b, xa - 2)], [Math.max(a, xb + 2), b]] as [number, number][]).filter(([a, b]) => b - a > 6);
+    for (const [a, b] of xs) deck.push({ op: "cutbox", min: [a, y0, 45], max: [b, y1, 50] });
+  }
   const wsT = translation([bx0 + 20, 20, dz + 6]);
   for (const [hx, hy] of [[3, 3], [39, 3], [3, 30], [39, 30]]) deck.push({ op: "rod", a: [bx0 + 20 + hx, 20 + hy, dz - 0.1], b: [bx0 + 20 + hx, 20 + hy, dz + 6], r: 2.5 }, { op: "hole", a: [bx0 + 20 + hx, 20 + hy, dz - 1], b: [bx0 + 20 + hx, 20 + hy, dz + 6.1], d: 1.8 });
   A.printedLink("controller_deck", { name: "controller_deck", ops: deck }, { role: "link", material: "printed" });
@@ -302,8 +309,11 @@ function record(A: Assembly, b: ReturnType<typeof build>, p: Plan, r: ReturnType
   const sc = part("leadscrew_t8x8_300").specs, lead = Number(sc.lead_mm) / 1000, eta = Number(sc.efficiency), etaB = Number(sc.backdrive_efficiency);
   const zTorque = (zReqN * lead) / (2 * Math.PI * eta), zr = rating("nema17_42x40");
   const zm = zr.rated_nm / zTorque;
-  A.design.joints.push({ joint: "z", actuator: "nema17_42x40", required_nm: +zTorque.toFixed(3), rated_nm: zr.rated_nm, peak_nm: zr.peak_nm, margin: +zm.toFixed(2), speed_rad_s: zr.speed_rad_s,
-    note: `lifts ${zMass.toFixed(2)} kg (carriage, arms, wrist, gripper, payload) at ${TARGET.zAccel} m/s²: ${zReqN.toFixed(0)} N on a Tr8x8 screw (lead 8 mm, efficiency ${eta}) = ${zTorque.toFixed(3)} N·m motor torque` });
+  // the record is in joint space like the URDF (z is prismatic): force in N and speed in m/s at the carriage
+  const toN = (nm: number) => (2 * Math.PI * eta * nm) / lead;
+  A.design.joints.push({ joint: "z", actuator: "nema17_42x40", required_nm: +zReqN.toFixed(1), rated_nm: +toN(zr.rated_nm).toFixed(1), peak_nm: +toN(zr.peak_nm).toFixed(1), margin: +zm.toFixed(2),
+    speed_rad_s: +((zr.speed_rad_s * lead) / (2 * Math.PI)).toFixed(4), unit: "N",
+    note: `joint space (N, m/s at the carriage): lifts ${zMass.toFixed(2)} kg (carriage, arms, wrist, gripper, payload) at ${TARGET.zAccel} m/s²: ${zReqN.toFixed(0)} N on a Tr8x8 screw (lead 8 mm, efficiency ${eta}) = ${zTorque.toFixed(3)} N·m motor torque; the NEMA17's ${zr.rated_nm} N·m rated gives ${toN(zr.rated_nm).toFixed(0)} N` });
   A.check("torque:z", zm >= TARGET.stepperMargin, `needs ${zTorque.toFixed(3)} N·m at the motor, NEMA17 gives ${zr.rated_nm} N·m (${zm.toFixed(1)}x)`);
   const holdNm = (r.zStaticN * lead * etaB) / (2 * Math.PI), holdM = Number(part("nema17_42x40").specs.holding_torque_nm) * 0.5 / Math.max(holdNm, 1e-9);
   A.check("z:holding", holdM >= 3, `the 8 mm-lead screw is back-drivable (efficiency ${etaB}): the load applies ${holdNm.toFixed(3)} N·m to the motor; the energised NEMA17 at 50 % hold current gives ${(Number(part("nema17_42x40").specs.holding_torque_nm) * 0.5).toFixed(3)} N·m (${holdM.toFixed(0)}x)`);

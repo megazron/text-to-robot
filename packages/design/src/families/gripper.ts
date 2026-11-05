@@ -144,7 +144,7 @@ export function buildParallelGripper(A: Assembly, G: Mat4, servo: string, adapte
   // servo's torque and speed through the pinion); the second finger and the pinion itself mimic it.
   const pin = A.revolute(n("gripper_pinion"), n("gripper_body"), n("pinion"), servoT, servo, 0, +(S / rp).toFixed(4));
   pin.mimic = { joint: n("finger_a"), multiplier: +(1000 / rp).toFixed(6), offset: 0 };
-  A.printedLink(n("pinion"), { name: n("pinion"), ops: [{ op: "horn", key: servo, t: 4 }, ...gearOps(c.module, c.teeth, 4, 4 + c.gearT, 90)] }, { role: "gripper", material: "printed_accent" });
+  A.printedLink(n("pinion"), { name: n("pinion"), ops: [{ op: "horn", key: servo, t: 4, channel: c.gearT + 2 }, ...gearOps(c.module, c.teeth, 4, 4 + c.gearT, 90)] }, { role: "gripper", material: "printed_accent" });
   const half = rodLenFor(c) / 2;
   for (const [side, nm] of [[1, "finger_a"], [-1, "finger_b"]] as const) {
     A.printedLink(n(nm), { name: n(nm), ops: fingerOps(servo, side, c) }, { role: "gripper", material: side > 0 ? "printed_accent" : "printed" });

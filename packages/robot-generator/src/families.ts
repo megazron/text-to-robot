@@ -1,8 +1,8 @@
 // Robot-family vocabulary and template selection for the local prompt parser.
 import type { RobotSpecification } from "@ttr/robot-schema";
-import { designArm, designDiffDrive, designFourWheel, designMecanum, designRover, designWallE, designEva, designBaymax, designQuadruped, designHexapod, designHumanoid, designBattleMech, designScara, designGripper, type LeggedRequest } from "@ttr/design";
+import { designArm, designDiffDrive, designFourWheel, designMecanum, designRover, designEva, designBaymax, designArduinoWallE, designMark43Wearable, designArduinoCar, designArduinoArm, designQuadruped, designHexapod, designHumanoid, designBattleMech, designScara, designGripper, type LeggedRequest } from "@ttr/design";
 import type { SensorType } from "@ttr/robot-schema";
-import { nDofArm, scara, roverArm, wearableExosuit, ironManMark43, attachParallelGripper, attachSuctionGripper } from "@ttr/robot-templates";
+import { nDofArm, scara, roverArm, wearableExosuit, attachParallelGripper, attachSuctionGripper } from "@ttr/robot-templates";
 import { find, mentions, negates, isDirectlyNegated } from "./text.ts";
 import { armTip, replaceGripperWithSuction } from "./grippers.ts";
 
@@ -91,12 +91,16 @@ export function chooseFamily(t: string, prompt: string, dof: number | undefined,
     // a suit is WORN: build the wearable exoskeleton; "battle mech" (standalone robot) is a humanoid
     if (/\bmech\b(?!\s+suit)/.test(t) && !/iron[\s-]?man|exo|wearable|suit/.test(t)) return { family: "battle_mech", label: "humanoid battle mech", matched: m, usesDof: true, designed: true,
         build: (ctx) => designBattleMech({ name: "battle_mech", ...leggedReq(ctx), ...(dof ? { armDof: dof } : {}) }) };
-    if (/iron[\s-]?man|mark\s*(?:[ivx]+|\d+)|armou?r|movie|ultron/.test(t)) return { family: "iron_man_mark_43", label: "Iron Man Mark 43 wearable suit", matched: m,
-        build: () => ironManMark43({ prompt, ...(heightM ? { height_m: heightM } : {}) }) };
+    if (/iron[\s-]?man|mark\s*(?:[ivx]+|\d+)|armou?r|movie|ultron/.test(t)) {
+      // worn armour built body first; "helmet" alone asks for the motorised helmet, chest / gauntlet words for the lights set
+      const tier = /\bhelmet\b/.test(t) && !/\b(?:suit|armou?r|body|full)\b/.test(t) ? "helmet" as const : "suit" as const;
+      return { family: "iron_man_mark_43", label: tier === "helmet" ? "Iron Man Mark 43 motorised helmet" : "Iron Man Mark 43 wearable suit", matched: m, designed: true,
+        build: (ctx) => designMark43Wearable({ name: "iron_man_mark_43", prompt: ctx.prompt, budget: ctx.budget, tier, ...(heightM ? { heightM } : {}) }) };
+    }
     return { family: "exosuit", label: "wearable exoskeleton", matched: m,
         build: () => wearableExosuit({ prompt, styled: false, name: "exosuit", ...(heightM ? { height_m: heightM } : {}) }) };
   }
-  if ((m = hit(RX.wallE))) return { family: "wall_e", label: "WALL-E character", matched: m, designed: true, build: (ctx) => designWallE({ name: "wall_e", ...mobileReq(ctx) }) };
+  if ((m = hit(RX.wallE))) return { family: "wall_e", label: "WALL-E character", matched: m, designed: true, build: (ctx) => designArduinoWallE({ name: "wall_e", prompt: ctx.prompt, budget: ctx.budget }) };
   if ((m = hit(RX.eva))) return { family: "eva", label: "EVA character", matched: m, designed: true, build: (ctx) => designEva({ name: "eva", ...mobileReq(ctx) }) };
   if ((m = hit(RX.baymax))) return { family: "baymax", label: "Baymax character", matched: m, designed: true, build: (ctx) => designBaymax({ name: "baymax", ...mobileReq(ctx) }) };
   for (const [rx, why] of UNSUPPORTED) if (mentions(t, rx)) throw new Error(why);
@@ -125,6 +129,13 @@ export function chooseFamily(t: string, prompt: string, dof: number | undefined,
   if ((m = hit(RX.mecanum))) return { family: "mecanum", label: "mecanum-wheel base", matched: m, designed: true, build: (ctx) => designMecanum({ name: "mecanum_robot", ...mobileReq(ctx) }) };
   if ((m = hit(RX.omni))) return { family: "mecanum", label: "mecanum-wheel base", matched: m, approx: "omni-directional drive built with mecanum wheels",
       designed: true, build: (ctx) => designMecanum({ name: "mecanum_robot", ...mobileReq(ctx) }) };
+  // a car asked for on Arduino / TT motors / cheap parts: the Arduino car (4WD when four wheels are named)
+  const cheapCar = /\barduino\b|\btt\s+(?:gear\s*)?motors?\b|\bcheap(?:est)?\b|\bbudget\s+(?:car|robot)\b/.test(t);
+  if (cheapCar && (hit(RX.fourWheel) || hit(RX.diffDrive) || (hit(RX.wheels) && !mentions(t, RX.arm)))) {
+    const four = !!hit(RX.fourWheel);
+    return { family: "arduino_car", label: four ? "Arduino car (4WD)" : "Arduino car", matched: (hit(RX.fourWheel) ?? hit(RX.diffDrive) ?? hit(RX.wheels))!, designed: true,
+      build: (ctx) => designArduinoCar({ name: "arduino_car", prompt: ctx.prompt, budget: ctx.budget, tier: four ? "stronger" : "cheapest", ...(ctx.payloadKg !== undefined ? { payloadKg: ctx.payloadKg } : {}) }) };
+  }
   if ((m = hit(RX.fourWheel))) return { family: "four_wheel", label: "four-wheel skid-steer base", matched: m,
       designed: true, build: (ctx) => designFourWheel({ name: "four_wheel_robot", ...mobileReq(ctx) }) };
   if ((m = hit(RX.tracked))) return { family: "four_wheel", label: "four-wheel skid-steer base", matched: m, approx: "tracks approximated by a four-wheel skid-steer base",
@@ -147,6 +158,11 @@ export function chooseFamily(t: string, prompt: string, dof: number | undefined,
     }
     throw new Error(`Robot type not recognised. ${SUPPORTED_HINT}`);
   }
+  // an Arduino / hobby-servo arm with no joint count (or 3): the desk arm designed for hobby servos
+  if (/\barduino\b|\b(?:hobby|micro)\s+servos?\b|\bsg90\b|\bmg90s?\b|\bmg996r?\b|\bds3218\b/.test(t) && (dof === undefined || dof === 3) && g !== "suction")
+    return { family: "arduino_arm", label: "Arduino desk arm (3 DOF + claw)", matched: m ?? "arm", usesDof: true, usesGripper: true, designed: true,
+      build: (ctx) => designArduinoArm({ name: "arduino_arm", prompt: ctx.prompt, budget: ctx.budget, gripper: g !== "none",
+        servos: ctx.hobby?.only ?? ["hobby_sg90", "hobby_mg90s", "hobby_mg996r", "hobby_ds3218"], ...(ctx.payloadKg !== undefined ? { payloadKg: ctx.payloadKg } : {}) }) };
   const n = dof ?? 6;
   if (g === "suction") return { family: "serial_arm", label: `${n}-DOF serial arm`, matched: m ?? `${n} DOF`, usesDof: true, usesGripper: true, designed: true,
     build: (ctx) => {
@@ -174,7 +190,7 @@ const TASKS: [RegExp, string, string][] = [
 
 export const ARM_FAMILIES = new Set(["serial_arm", "rover_arm", "scara"]);
 /** templates with a generic structural material we may recolour (characters keep their livery) */
-export const RECOLOURABLE = new Set(["serial_arm", "rover_arm", "scara", "humanoid", "quadruped", "hexapod", "diff_drive", "four_wheel", "mecanum", "gripper"]);
+export const RECOLOURABLE = new Set(["serial_arm", "rover_arm", "scara", "humanoid", "quadruped", "hexapod", "diff_drive", "four_wheel", "mecanum", "gripper", "arduino_car", "arduino_arm"]);
 
 export function standaloneGripper(kind: "parallel" | "suction", prompt: string): RobotSpecification {
   const spec = nDofArm(0, { name: kind === "suction" ? "suction_gripper" : "parallel_gripper", prompt, gripper: "none" });

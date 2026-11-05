@@ -61,9 +61,15 @@ function readme(name: string, prompt: string, spec: RobotSpecification, bom: Bil
   return out.join("\n");
 }
 
-// 14_iron_man_mark_43 has its own pipeline and evidence (scripts/regen_mark43_example.ts); never rebuild it here
-for (const name of readdirSync("examples").filter((n) => /^\d\d_/.test(n) && n !== "14_iron_man_mark_43").sort()) {
-  if (process.env.TTR_EXAMPLE && name !== process.env.TTR_EXAMPLE) continue;
+// all examples: one child process each (a design engine run keeps CSG memory the library never returns, and the
+// biggest robots need a fresh heap)
+if (!process.env.TTR_EXAMPLE) {
+  for (const name of readdirSync("examples").filter((n) => /^\d\d_/.test(n)).sort())
+    execFileSync(process.execPath, ["--max-old-space-size=8192", "scripts/build_examples.ts"], { stdio: "inherit", env: { ...process.env, TTR_EXAMPLE: name } });
+  process.exit(0);
+}
+for (const name of readdirSync("examples").filter((n) => /^\d\d_/.test(n)).sort()) {
+  if (name !== process.env.TTR_EXAMPLE) continue;
   const dir = join("examples", name), prompt = readFileSync(join(dir, "prompt.txt"), "utf8");
   const res = await generateRobot(prompt);
   if (!res.validation.valid || !res.urdfValidation.valid) throw new Error(`invalid robot for ${name}`);

@@ -60,7 +60,7 @@ export function designMark43Wearable(req: Mark43Request = {}): RobotSpecificatio
   const shell = (link: string, base: string, ops: Op[], split: [number[], number[], number[]], material: string, strapPairs = 0) => {
     for (const [k, c] of cells(...split).entries()) {
       const name = `${base}_${k + 1}`;
-      A.cadLink(name, { name, edge: 0, ops: [...ops, ...keepOnly(c)] }, { material, role: "armour" });
+      A.cadLink(name, { name, edge: 1.0, ops: [...ops, ...keepOnly(c)] }, { material, role: "armour" });
       A.fixed(`${name}_mount`, link, name, translation([0, 0, 0]));
       pieces++;
     }
@@ -103,21 +103,23 @@ export function designMark43Wearable(req: Mark43Request = {}): RobotSpecificatio
 
   // ---------------- helmet (head frame, origin at the neck joint): cranium with ear pods + faceplate
   const helm: Sec[] = armour(headSecs.map(([z, rx, ry, cx]) => [z, rx, ry, cx] as Sec), 1);
-  helm.unshift([-25 * s, 82 * s + GAP, 72 * s + GAP, 12 * s]);
-  helm.push([248 * s, 20 * s, 18 * s]);   // shell ends at a crown opening, closed by a solid cap below
+  helm.unshift([-20 * s, helm[0][1], helm[0][2], helm[0][3]]);   // neck opening: the jaw section carried straight down, so the wall meets the opening square (no knife edge)
+  helm.push([248 * s, 20 * s, 18 * s]);   // crown
   // hinge at the temples, a little back: every forehead point is nearer the hinge than the faceplate, so it swings clear
   const earX = -15 * s, earZ = 165 * s, earY = 120 * s;     // servo output face on the outside of the ear pod (hinge outside the shell)
   const faceX = 38 * s, faceZ0 = 40 * s, faceZ1 = 175 * s;
   const Tear = (side: 1 | -1): Mat4 => place([0, 0, 1], [side, 0, 0], [0, side, 0], [earX, side * earY, earZ]);   // output points outwards (right-handed: y = z x x)
-  const cranium: Op[] = [{ op: "loft", sections: helm, t: T }, { op: "loft", sections: [[240 * s, 31 * s, 28 * s], [247 * s, 20 * s, 18 * s], [250 * s, 4, 4]] }   /* crown cap: above the head + padding, inside the shell wall */, { op: "cutbox", min: [faceX - 3, -BIG, faceZ0 - 3], max: [BIG, BIG, faceZ1 + 3] }];
+  // the shell is a true offset, closed at the crown and open at the neck
+  const cranium: Op[] = [{ op: "loft", sections: helm, t: T, open: "start", rim: 8 }, { op: "cutbox", min: [faceX - 3, -BIG, faceZ0 - 3], max: [BIG, BIG, faceZ1 + 3] }];
   for (const side of [1, -1] as const) {
     cranium.push({ op: "rod", a: [earX, side * 88 * s, earZ], b: [earX, side * (earY - 1), earZ], r: 28 });   // ear pod housing the servo
     cranium.push({ op: "cradle", key: SERVO, T: Tear(side), wall: 2.2 });
   }
   for (const z of [faceZ0 + 15, faceZ1 - 40]) for (const side of [1, -1] as const) cranium.push({ op: "cutbox", min: [-60 * s, side * 60 - 12, z], max: [-40 * s, side * 60 + 12, z + 4] });  // padding strap slots
   // faceplate: its own loft 4 mm outside the cranium so it can swing up over the forehead; arms to both servo horns
+  // a light 2.4 mm plate (6 perimeters): the two MG90S lift it with margin
   const faceSecs: Sec[] = armour(headSecs.map(([z, rx, ry, cx]) => [z, rx, ry, cx] as Sec), 10);   // a layered plate 9 mm outside the cranium: room to swing over the forehead
-  const faceOps: Op[] = [{ op: "loft", sections: faceSecs.slice(0, 4), t: T }, ...keepOnly([[faceX, -BIG, faceZ0], [BIG, BIG, faceZ1]])];
+  const faceOps: Op[] = [{ op: "loft", sections: faceSecs.slice(0, 4), t: 2.4 }, ...keepOnly([[faceX, -BIG, faceZ0], [BIG, BIG, faceZ1]])];
   for (const z of [125 * s]) for (const side of [1, -1] as const) faceOps.push({ op: "cutbox", min: [80 * s, side * 34 * s - 17 * s, z - 4 * s], max: [BIG, side * 34 * s + 17 * s, z + 4 * s] });   // eye slits
   // the faceplate link is the left servo's output frame: write it in the head frame, then map with the inverse placement
   const TL = Tear(1), inv = invertRigid(TL);
@@ -142,7 +144,7 @@ export function designMark43Wearable(req: Mark43Request = {}): RobotSpecificatio
   if (full) {
     // ---------------- chest + back (pelvis frame): one shell, arm holes, arc reactor, split in 8 printable pieces
     const torsoArm = armour(torsoSecs.slice(1, 6).map(([z, rx, ry]) => [z - hipZ, rx, ry] as Sec));
-    const chest: Op[] = [{ op: "loft", sections: torsoArm, t: T }];
+    const chest: Op[] = [{ op: "loft", sections: torsoArm, t: T, rim: 8 }];
     // armpit scoops: the chest is cut back round each arm (a cylinder along the arm, 95 mm radius)
     // (and a second scoop along the arm raised 45 deg forwards, so the arm can swing in front of the chest)
     const ryM = (a: number): Mat4 => { const c = Math.cos(a), sn = Math.sin(a); return [c, 0, -sn, 0, 0, 1, 0, 0, sn, 0, c, 0, 0, 0, 0, 1]; };
@@ -156,7 +158,7 @@ export function designMark43Wearable(req: Mark43Request = {}): RobotSpecificatio
     A.mount(`chest_${reactorPiece}`, "ws2812_ring_12", place([0, 1, 0], [0, 0, 1], [1, 0, 0], [front - T - 6, -18.5, reactorZ - 18.5]), "arc_reactor", "arc reactor ring (12 LEDs)");
     // electronics box on the back plate
     const back = -(128 * s + GAP + T), zb = 1150 * s - hipZ;
-    const boxOps: Op[] = [{ op: "box", min: [back - 50, -55, zb], max: [back + 4, 55, zb + 95], r: 8 }, { op: "cutbox", min: [back - 47, -52, zb + 3], max: [back + 1, 52, zb + 96] }];
+    const boxOps: Op[] = [{ op: "box", min: [back - 50, -55, zb], max: [back + 4, 55, zb + 95], r: 8 }, { op: "subtract", of: [{ op: "box", min: [back - 47, -52, zb + 3], max: [back + 1, 52, zb + 96], r: 5 }] }];
     A.cadLink("electronics_box", { name: "electronics_box", edge: 0.6, ops: boxOps }, { material: "armour_gold" });
     A.fixed("electronics_box_mount", "pelvis", "electronics_box", translation([0, 0, 0]));
     pieces++;
@@ -167,7 +169,7 @@ export function designMark43Wearable(req: Mark43Request = {}): RobotSpecificatio
     // ---------------- limbs
     for (const side of [1, -1] as const) {
       const L = side > 0 ? "left" : "right";
-      const arm = (secs: Sec[], extra = 0): Op[] => [{ op: "loft", sections: armour(scaleSecs(secs, s), extra), t: T }];
+      const arm = (secs: Sec[], extra = 0): Op[] => [{ op: "loft", sections: armour(scaleSecs(secs, s), extra), t: T, rim: 8 }];
       // shoulder bell and bicep cover the outside of the arm only: the inside hangs against the body (strap across)
       const lateral = side > 0 ? [-BIG, 18 * s, BIG] : [-BIG, -18 * s, BIG];
       shell(`${L}_upper_arm`, `${L}_shoulder_bell`, arm([[40, 60, 62], [-20, 66, 66], [-90, 58, 58]], 6), [[-BIG, 0, BIG], side > 0 ? lateral.slice(1) : lateral.slice(0, 2), [-BIG, BIG]], "armour_red", 1);
@@ -179,7 +181,7 @@ export function designMark43Wearable(req: Mark43Request = {}): RobotSpecificatio
       shell(`${L}_hand`, `${L}_hand_armour`, hand, [[-BIG, BIG], [-BIG, 0, BIG], [-BIG, BIG]], "armour_red", 1);
       A.mount(`${L}_hand_armour_${side > 0 ? 1 : 2}`, "ws2812_ring_12", place([1, 0, 0], [0, 0, 1], [0, -side, 0], [-18.5, -side * (14 * s + GAP + 1), -85 * s - 18.5]), `${L}_repulsor`, "palm repulsor ring");
       if (tier === "suit") {
-        const leg = (secs: Sec[]): Op[] => [{ op: "loft", sections: armour(scaleSecs(secs, s)), t: T }];
+        const leg = (secs: Sec[]): Op[] => [{ op: "loft", sections: armour(scaleSecs(secs, s)), t: T, rim: 8 }];
         // thigh armour open on the inside (thighs touch): front, outside and back, strapped across the inner thigh
         const inner = side > 0 ? [-30 * s, BIG] : [-BIG, 30 * s];
         // the front starts 60 mm lower than the sides and back, so the thigh can swing up in front of the belt

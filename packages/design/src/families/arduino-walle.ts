@@ -23,10 +23,11 @@ const BX = 85, BY = 64, Z0 = 16, Z1 = 146, WALL = 2.4, LID = 4;
 const place = (x: Vec3, y: Vec3, z: Vec3, o: Vec3): Mat4 => [x[0], x[1], x[2], 0, y[0], y[1], y[2], 0, z[0], z[1], z[2], 0, o[0], o[1], o[2], 1];
 const sb = () => part(SERVO).bbox_mm!;
 
-function lipWalls(hx: number, hy: number, t: number, z0: number, z1: number): Op[] {
+/** four locating walls just inside the body's walls, stopping short of its rounded inner corners (radius rc) */
+function lipWalls(hx: number, hy: number, t: number, z0: number, z1: number, rc = 6): Op[] {
   return [
-    { op: "box", min: [-hx, -hy, z0], max: [hx, -hy + t, z1] }, { op: "box", min: [-hx, hy - t, z0], max: [hx, hy, z1] },
-    { op: "box", min: [-hx, -hy, z0], max: [-hx + t, hy, z1] }, { op: "box", min: [hx - t, -hy, z0], max: [hx, hy, z1] },
+    { op: "box", min: [-hx + rc, -hy, z0], max: [hx - rc, -hy + t, z1] }, { op: "box", min: [-hx + rc, hy - t, z0], max: [hx - rc, hy, z1] },
+    { op: "box", min: [-hx, -hy + rc, z0], max: [-hx + t, hy - rc, z1] }, { op: "box", min: [hx - t, -hy + rc, z0], max: [hx, hy - rc, z1] },
   ];
 }
 
@@ -38,7 +39,8 @@ export function designArduinoWallE(req: ArduinoWallERequest = {}): RobotSpecific
   // ---------------- body: hollow box, motor windows + brackets, arm servo cradles, lid bosses
   const body: Op[] = [
     { op: "box", min: [-BX, -BY, Z0], max: [BX, BY, Z1], r: 8 },
-    { op: "cutbox", min: [-BX + WALL, -BY + WALL, Z0 + WALL], max: [BX - WALL, BY - WALL, Z1 + 1] },
+    // hollow with corners rounded concentric to the outside (8 - wall): square inner corners leave a 0.1 mm wall
+    { op: "subtract", of: [{ op: "box", min: [-BX + WALL, -BY + WALL, Z0 + WALL], max: [BX - WALL, BY - WALL, Z1 + 1], r: 8 - WALL }] },
   ];
   for (const { xa, can } of axles) for (const side of [1, -1] as const) {
     // window: the gearbox and motor can pass through the wall so the output face is flush with the outside
@@ -58,6 +60,10 @@ export function designArduinoWallE(req: ArduinoWallERequest = {}): RobotSpecific
     body.push({ op: "rod", a: [x, y, Z1 - 22], b: [x, y, Z1], r: 4.5 });
     body.push({ op: "hole", a: [x, y, Z1 - 15], b: [x, y, Z1 + 1], d: 2.5 });
   }
+  // HC-SR04 behind the front panel: two 16.5 mm holes for the transducers, M2 pilot holes for its corner screws
+  const zS = 60;
+  for (const bx of [9.5, 35.5]) body.push({ op: "hole", a: [BX - WALL - 1, -22.5 + bx, zS + 10], b: [BX + 1, -22.5 + bx, zS + 10], d: 16.5 });
+  for (const h of part("hc_sr04").holes) body.push({ op: "hole", a: [BX - WALL - 1, -22.5 + h.pos[0], zS + h.pos[1]], b: [BX + 1, -22.5 + h.pos[0], zS + h.pos[1]], d: 1.6 });
   // battery and electronics: screw holes through the floor
   for (const h of part(PACK).holes) body.push({ op: "hole", a: [-38.5 + h.pos[0], h.pos[1], Z0 - 1], b: [-38.5 + h.pos[0], h.pos[1], Z0 + WALL + 1], d: 3.2 });
   A.cadLink("body", { name: "body", edge: 1.0, ops: body }, { role: "base", material: "printed_accent" });
@@ -69,7 +75,9 @@ export function designArduinoWallE(req: ArduinoWallERequest = {}): RobotSpecific
     A.mount("body", MOTOR, motorT(xa, side, can, BY, ZC), `${tag}_motor`, "drive motor");
     A.fastener("M3x25 socket head + nut (motor through-bolt)", 2);
     const Tw = mul(translation([xa, side * (BY + 1), ZC]), frame([0, 0, 0], [0, side, 0], [1, 0, 0]));
-    A.mount("body", WHEEL, Tw, `${tag}_wheel`, "track drive wheel");
+    const wheel = A.mount("body", WHEEL, Tw, `${tag}_wheel`, "track drive wheel");
+    // the track rides on the wheels: in simulation each wheel touches the ground with the track's outer radius
+    wheel.collision = { type: "cylinder", radius: (R + BELT) / 1000, length: 0.026 };
     A.spec.joints.pop();
     A.continuous(`${tag}_wheel_joint`, "body", `${tag}_wheel`, Tw, MOTOR);
     wheelJoints.push(`${tag}_wheel_joint`);
@@ -81,9 +89,16 @@ export function designArduinoWallE(req: ArduinoWallERequest = {}): RobotSpecific
     // tread grooves across the straight runs (outer 1.2 mm), so the track grips without anything below the wheels
     for (let x = -XA + 6; x <= XA - 6; x += 12) for (const z of [ZC - R - BELT, ZC + R + BELT]) track.push({ op: "cutbox", min: [x - 1.5, y0 - 1, z - 1.2], max: [x + 1.5, y1 + 1, z + 1.2] });
     const name = `track_${side > 0 ? "left" : "right"}`;
-    A.cadLink(name, { name, edge: 0.4, ops: track }, { material: "rubber" });
-    A.fixed(`${name}_mount`, "body", name, translation([0, 0, 0]));
+    // the track's frame sits inside the body: its placeholder collision (the wheels model the contact) stays off the floor
+    const tl = A.cadLink(name, { name, edge: 0.4, ops: [{ op: "at", T: translation([0, 0, -80]), of: track }] }, { material: "rubber" });
+    tl.collision = { type: "sphere", radius: 0.002 };   // visual only: its contact is modelled by the wheels it wraps
+    A.fixed(`${name}_mount`, "body", name, translation([0, 0, 80]));
   }
+
+  // ---------------- front distance sensor (board z = forwards, board x across, board y up)
+  A.mount("body", "hc_sr04", place([0, 1, 0], [0, 0, 1], [1, 0, 0], [BX - WALL - 1.6, -22.5, zS]), "ultrasonic", "HC-SR04 distance sensor (obstacle avoidance)");
+  A.spec.sensors.push({ name: "front_range", type: "range", parent: "ultrasonic", origin: { xyz: [0.0225, 0.01, 0.0136], rpy: [0, 0, 0] }, params: { range_m: 4, min_range_m: 0.02, beam_deg: 15 } });
+  A.fastener("M2x6 self-tapping (sensor)", 4);
 
   // ---------------- electronics inside the body
   A.mount("body", PACK, translation([-38.5, 0, Z0 + WALL]), "battery", "2S 18650 pack");

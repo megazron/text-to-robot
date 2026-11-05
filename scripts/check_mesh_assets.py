@@ -1,4 +1,4 @@
-"""Independent STL topology and solid-integral check against generated JSON metadata."""
+"""Independent STL topology and solid-integral check of every printed part against generated JSON metadata."""
 import argparse
 import hashlib
 import json
@@ -12,7 +12,8 @@ def audit(spec_path):
     spec_path=Path(spec_path);spec=json.loads(spec_path.read_text());parts=[]
     for link in spec["links"]:
         geometry=link["geometry"]
-        if geometry["type"]!="mesh":continue
+        # printed parts are what this project generates; bought parts are datasheet CAD (some are several touching solids)
+        if geometry["type"]!="mesh" or geometry.get("part")=="component":continue
         file=spec_path.parent/"meshes"/geometry["file"];mesh=trimesh.load_mesh(file)
         expected=geometry["inertia_unit"]
         tensor=np.array([[expected["ixx"],expected["ixy"],expected["ixz"]],

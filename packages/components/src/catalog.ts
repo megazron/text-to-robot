@@ -6,7 +6,7 @@ export interface Part {
   name: string; category: string; unit_cost: number; spec: string; tiers: Tier[];
 }
 export interface Actuator extends Part { torque?: number; force_n?: number; peak_torque?: number; rating_basis?: string; source_url?: string; requires_custom_design?: boolean; kind: "servo" | "smart_servo" | "stepper" | "bldc" | "linear"; needs_driver?: string; driver_cost?: number; }
-export interface Sensor extends Part { sensor: "camera" | "depth" | "lidar" | "imu" | "force"; }
+export interface Sensor extends Part { sensor: "camera" | "depth" | "lidar" | "imu" | "force" | "range"; }
 export interface Compute extends Part { level: number; ros2: boolean; }
 
 export const ACTUATORS: Actuator[] = [

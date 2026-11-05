@@ -122,7 +122,8 @@ export function cradleCuts(a: ActuatorPlacement, wall = 3): M[] {
   const { min, max } = bodyBox(a.key), top = Math.min(max[2], -0.8) - 1.2, rim = 5;
   // closed walls: the cradle is the structure that carries the joint load (no windows), with one cable slot at the bottom
   const cuts = [actuatorKeepout(a), ...screwCuts(caseHoles(a.key), a.T, wall + 1)];
-  if (max[0] - min[0] > 3 * rim) cuts.push(box([min[0] + rim, max[1] - 1, min[2] + 1.5], [Math.min(max[0] - rim, min[0] + rim + 12), max[1] + wall + 1, min[2] + 9]).transform(a.T));
+  // cable slot out of the side: run it well past the wall, or material around the cradle leaves a skin over it
+  if (max[0] - min[0] > 3 * rim) cuts.push(box([min[0] + rim, max[1] - 1, min[2] + 1.5], [Math.min(max[0] - rim, min[0] + rim + 12), max[1] + wall + 20, min[2] + 9]).transform(a.T));
   void top;
   return cuts;
 }
@@ -130,11 +131,17 @@ export function cradleCuts(a: ActuatorPlacement, wall = 3): M[] {
 export function hornPlate(key: string, t = 4, extra = 4): M {
   return cyl(hornRadiusMm(key) + extra, 0, t);
 }
-export function hornCuts(key: string, t = 4): M[] {
+export function hornCuts(key: string, t = 4, channel?: number): M[] {
   // screw holes through the plate, then ONE round pocket above it over the whole screw circle (screwdriver access);
   // separate counterbores through thicker parts leave sub-millimetre webs between them
   const holes = outputHoles(key);
   const cuts = screwCuts(holes, I4(), t, 0);
+  if (channel !== undefined) {
+    // structure stands on the plate (a gear, a column): horn screws go in from the horn side, the spline screw
+    // through a centre channel instead of a pocket that would carve the structure away
+    cuts.push(cyl(key.startsWith("cubemars_") ? 8 : key.startsWith("hobby_") ? 2.4 : 3.3, -1, t + channel));
+    return cuts;
+  }
   if (holes.length) {
     const rMax = Math.max(...holes.map((h) => Math.hypot(h.pos[0], h.pos[1]))), dHead = (holes[0].thread ? Number(holes[0].thread.replace(/^M/, "")) + 0.4 : holes[0].dia_mm + 0.3) * 1.9;
     cuts.push(cyl(rMax + dHead / 2 + 0.6, t, t + 60));

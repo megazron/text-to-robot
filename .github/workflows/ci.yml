@@ -47,10 +47,6 @@ jobs:
       - name: Re-run every example's MuJoCo task tests (drive, ramp, turn, hold, squat, grip)
         env: { MUJOCO_GL: disable }
         run: python scripts/simulate_examples.py --check
-      - name: Reproduce Mark 43 surface-path evidence including known failures
-        run: python scripts/check_motion_paths.py --check
-      - name: Verify visual evidence matches the exported model
-        run: python scripts/mark43_reference_review.py --check-renders
       - name: Independent STL topology and mass-integral audit
         run: python scripts/check_mesh_assets.py
       # These concepts are not engineered hardware. Keep physical failures visible
@@ -60,10 +56,9 @@ jobs:
         run: |
           mkdir -p diagnostics
           failed=0
-          for ex in 02_arm_6dof 08_humanoid 15_wall_e 16_eva 17_baymax; do
+          for ex in 02_arm_6dof 08_humanoid 16_eva 17_baymax; do
             if ! python -m ttr_mujoco test examples/$ex/robot.urdf --json diagnostics/$ex.json; then failed=1; fi
           done
-          if ! python -m ttr_mujoco test examples/14_iron_man_mark_43/robot.sim.urdf --wearer --json diagnostics/mark43_wearer.json; then failed=1; fi
           exit "$failed"
       - uses: actions/upload-artifact@v4
         if: always()

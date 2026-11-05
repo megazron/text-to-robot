@@ -90,12 +90,22 @@ export function freeRange(m: ClearanceModel, joint: string, base: Record<string,
   const j = m.spec.joints.find((x) => x.name === joint)!;
   const moving = descendants(m.spec, j.child);
   const q0 = base[joint] ?? 0, res: number[] = [];
+  const hits = (q: number) => interferences(m, { ...base, [joint]: q }, moving, 2, skip).length > 0;
+  // every exact intersection costs WASM memory the CSG library never returns (~60 kB each): scan coarsely (4 steps)
+  // and bisect the first contact down to `step / 2`, instead of testing every step
+  const coarse = step * 4;
   for (const end of [lo, hi]) {
-    let reached = q0; const n = Math.max(1, Math.ceil(Math.abs(end - q0) / step));
+    let reached = q0; const n = Math.max(1, Math.ceil(Math.abs(end - q0) / coarse));
+    let blocked: number | undefined;
     for (let k = 1; k <= n; k++) {
       const q = q0 + ((end - q0) * k) / n;
-      if (interferences(m, { ...base, [joint]: q }, moving, 2, skip).length) break;
+      if (hits(q)) { blocked = q; break; }
       reached = q;
+    }
+    if (blocked !== undefined) {
+      let a = reached, b = blocked;
+      while (Math.abs(b - a) > step / 2) { const mid = (a + b) / 2; if (hits(mid)) b = mid; else a = mid; }
+      reached = a;
     }
     res.push(reached);
   }

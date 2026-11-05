@@ -10,7 +10,7 @@ interface Record_ {
   family: string; summary: string;
   purchased: { key: string; qty: number; uses: string[] }[];
   printed: { name: string; mass_kg: number; check: { volume_cm3: number; bbox_mm: number[]; fits_bed: boolean } }[];
-  joints: { joint: string; actuator: string; required_nm: number; rated_nm: number; peak_nm: number; margin: number }[];
+  joints: { joint: string; actuator: string; required_nm: number; rated_nm: number; peak_nm: number; margin: number; unit?: "N" | "N·m" }[];
   checks: { name: string; pass: boolean; detail: string }[];
   performance: Record<string, number | string>;
   assumptions: string[];
@@ -43,7 +43,8 @@ export function buildDesignedBom(spec: RobotSpecification, budget?: number, payl
   const tier: Tier = d.joints.some((j) => j.actuator.startsWith("cubemars")) ? "research" : d.joints.some((j) => j.actuator.startsWith("dxl")) ? "prosumer" : "hobby";
   return {
     robot_name: spec.robot_name, ...(budget !== undefined ? { budget } : {}), tier, lines, total, feasible: budget === undefined || total <= budget, sizing_pass: sizingPass, hardware_verified: false,
-    actuator_sizing: d.joints.map((j) => ({ joint: j.joint, required_effort: j.required_nm, effort_unit: "N·m" as const, required_torque_nm: j.required_nm, chosen: part(j.actuator).name, margin: `${j.margin}x` })),
+    actuator_sizing: d.joints.map((j) => ({ joint: j.joint, required_effort: j.required_nm, effort_unit: (j.unit ?? "N·m") as "N" | "N·m",
+      ...(j.unit === "N" ? { required_force_n: j.required_nm } : { required_torque_nm: j.required_nm }), chosen: part(j.actuator).name, margin: `${j.margin}x` })),
     warnings: [...failing.map((c) => `${c.name}: ${c.detail}`), ...(budget !== undefined && total > budget ? [`total $${total} exceeds the $${budget} budget`] : [])],
     notes: [d.summary, ...(payloadKg ?? d.performance.payload_kg ? [`Sized for a ${payloadKg ?? d.performance.payload_kg} kg payload.`] : []), ...d.assumptions,
       "Prices are list/street prices from the linked suppliers at the time the catalog was written; check before ordering."],

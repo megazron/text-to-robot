@@ -92,7 +92,7 @@ export function interpretPrompt(prompt: string): PromptResult {
   const budget = parseBudget(t);
   const masses = extractMasses(t);
   const payload = masses.find((x) => x.context === "payload");
-  const asked = choice.designed && choice.family === "serial_arm" ? designedSizes(t, choice.label, lengths, stature, { dimensions, approximations, ignored, conflicts }) : undefined;
+  const asked = choice.designed && (choice.family === "serial_arm" || choice.family === "scara") ? designedSizes(t, choice.label, lengths, stature, { dimensions, approximations, ignored, conflicts }) : undefined;
   const hobby = hobbyServos(t);
   const ctx: DesignContext = { ...(hobby ? { hobby } : {}), prompt, budget: budget.usd, payloadKg: payload ? +payload.kg.toFixed(3) : undefined, reachM: asked?.reachM, segments: asked?.segments,
     sensors: requestedSensors(t).filter((type) => !negates(t, SENSOR_WORDS.find(([, k]) => k === type)![0])),
@@ -157,7 +157,9 @@ export function interpretPrompt(prompt: string): PromptResult {
   if (!asked) applySizeDirectives(spec, t, choice.family, choice.label, lengths, stature, { dimensions, approximations, ignored, conflicts });
   if (heightM) {
     dimensions.push(`fitted to a ${heightM.toFixed(2)} m wearer`);
-    if (Math.abs(heightM - 1.75) > 0.005) approximations.push("suit proportions scaled from the 1.75 m reference; clearance and wearer-contact audits cover the reference size only");
+    if (Math.abs(heightM - 1.75) > 0.005) approximations.push(choice.family === "iron_man_mark_43"
+      ? `wearer proportions scaled from standard segment ratios to ${heightM.toFixed(2)} m; the posed clearance checks run at that size`
+      : "suit proportions scaled from the 1.75 m reference; clearance and wearer-contact audits cover the reference size only");
   }
   const sensors = choice.designed ? designedSensors(spec) : applyInlineSensors(spec, t);
   if (choice.designed) for (const type of ctx.sensors) {

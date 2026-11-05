@@ -47,12 +47,13 @@ SCOPE = ("PASS means the modelled actuators (datasheet peak torque as a hard lim
          "compliance, link and joint flexibility, encoder resolution, supply voltage sag and current limits, "
          "bus latency, controller tuning, and contact/friction values (nominal friction only).")
 
-ARM = {"arm", "scara", "manipulator", "mobile_manipulator"}
+ARM = {"arm", "scara", "manipulator", "mobile_manipulator", "arduino_arm"}
 WHEELED = {"diff_drive", "four_wheel", "mecanum", "rover", "skid_steer", "wheeled", "omni", "tracked", "ackermann", "differential",
-           "rocker_bogie", "character_walle", "character_eva", "character_baymax"}
+           "rocker_bogie", "character_walle", "character_eva", "character_baymax", "arduino_car", "arduino_walle"}
 LEGGED = {"quadruped", "hexapod", "humanoid", "biped", "legged", "battle_mech", "mech"}
 GRIPPER = {"gripper", "end_effector"}
 EXO = {"exo", "exoskeleton"}
+WEARABLE = {"wearable", "mark43"}   # worn armour: the wearer moves; only the suit's own servos (faceplate) are actuated
 
 
 # ----------------------------------------------------------------------------- helpers
@@ -993,6 +994,26 @@ def exo_tasks(xml):
     return {"wearer_support": _result(passed, why, joints=util, powered=rep["powered"], unpowered=rep["unpowered"], validation_scope=rep["validation_scope"])}
 
 
+def wearable_tasks(xml):
+    """Worn armour on a fixed wearer: every actuated joint (the faceplate) moves to the end of its range and holds."""
+    m = mujoco.MjModel.from_xml_string(xml); rig = Rig(m)
+    if not rig.acts: return generic_hold(xml, "worn armour without actuators")
+    names = [A["joint"] for A in rig.acts]
+    q0 = np.zeros(len(names))
+    # open = the end of the range away from zero (the faceplate opens to its larger travel)
+    q1 = np.array([float(m.jnt_range[A["jid"]][0] if abs(m.jnt_range[A["jid"]][0]) > abs(m.jnt_range[A["jid"]][1]) else m.jnt_range[A["jid"]][1]) * 0.95 for A in rig.acts])
+    ok = _run_traj(rig, q0, q1, 1.5, 1.5)
+    util = rig.utilisation(set(names), hold=(1.5, None))
+    reached = {A["joint"]: _r(float(rig.d.qpos[m.jnt_qposadr[A["jid"]]]), 3) for A in rig.acts}
+    short = [j for j, (A, tgt) in zip(names, zip(rig.acts, q1)) if abs(reached[j] - tgt) > 0.1]
+    sat = [j for j, u in util.items() if u["saturated_frac"] > 0.05]
+    over = [j for j, u in util.items() if u["util_rated"] is not None and u["util_rated"] > 1]
+    passed = ok and not short and not over
+    why = (f"opens {', '.join(f'{j} to {reached[j]} rad (target {_r(t, 3)})' for j, t in zip(names, q1))} and holds 1.5 s"
+           + (f"; fell short at {_names(short)}" if short else "") + (f"; over rated at {_names(over)}" if over else "") + (f"; saturated {_names(sat)}" if sat else ""))
+    return {"open_and_hold": _result(passed, why, joints=util, reached=reached)}
+
+
 # ----------------------------------------------------------------------------- entry point
 def family_of(spec, urdf_xml=""):
     design = ((spec or {}).get("metadata") or {}).get("design") or {}
@@ -1014,8 +1035,8 @@ def run_tasks(urdf_path, spec=None, verbose=True, family=None):
     family = (family or family_of(spec, urdf_xml)).lower()
     has = lambda words: family in words or any(w in family for w in words)  # design families are prefixed: mobile_diff_drive, character_walle
     group = ("arm" if family in ARM else "wheeled" if has(WHEELED) or "wheel" in family else "legged" if has(LEGGED)
-             else "gripper" if has(GRIPPER) else "exo" if has(EXO) else "unknown")
-    floating = {"arm": False, "gripper": False, "wheeled": True, "legged": True, "exo": None, "unknown": None}[group]
+             else "gripper" if has(GRIPPER) else "wearable" if has(WEARABLE) else "exo" if has(EXO) else "unknown")
+    floating = {"arm": False, "gripper": False, "wheeled": True, "legged": True, "wearable": False, "exo": None, "unknown": None}[group]
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
         xml = urdf_to_mjcf(urdf_path, floating=floating, spec=spec)
@@ -1040,6 +1061,8 @@ def run_tasks(urdf_path, spec=None, verbose=True, family=None):
         tests.update(wheeled_tasks(xml, design, family))
     elif group == "legged":
         tests.update(legged_tasks(xml, family))
+    elif group == "wearable":
+        tests.update(wearable_tasks(xml))
     elif group == "exo":
         tests.update(exo_tasks(xml))
     else:

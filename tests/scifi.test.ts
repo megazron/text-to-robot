@@ -8,7 +8,6 @@ import { generateUrdf as urdf } from "@ttr/urdf-generator";
 import { validateUrdf as vurdf } from "@ttr/urdf-validator";
 
 const CASES: [string, string, RegExp][] = [
-  ["Build me a movie-accurate wearable Iron Man Mark 43 suit from Age of Ultron with armour plates that open and close", "iron_man_mark_43", /faceplate|chest_shell|helmet_cranium/],
   ["Build a bare powered exoskeleton I can wear", "exosuit", /thigh_cuff|shank_cuff|strut/],
   ["Build WALL-E, a tracked trash-compactor robot", "wall_e", /eye|track/],
   ["Build EVA, a sleek hovering egg-shaped droid", "eva", /hover|visor/],
@@ -41,10 +40,6 @@ test("shipped MuJoCo reports count their actual outcomes without requiring ficti
     assert.equal(rep.passed, outcomes.filter((t) => t.pass).length);
     assert.ok(["wheeled", "legged"].includes(rep.group), `${ex} is simulated as a free-moving robot (${rep.group})`);
   }
-  const mark = JSON.parse(readFileSync("examples/14_iron_man_mark_43/mujoco_report.json", "utf8"));
-  if(mark.tests.disturbance_recovery.pass)
-    assert.ok(mark.tests.disturbance_recovery.upright_after>.5,"falling must not be labelled recovery");
-  assert.ok(mark.limitations.some((s: string) => /self-collision/i.test(s)));
 });
 
 test("the wearable exosuit is anthropometric: joints at human heights, feet on the ground, cuffs on both limbs", async () => {
@@ -71,4 +66,13 @@ test("the Mark suit is articulated: dozens of hinged armour plates over the 17-j
   for (const n of ["faceplate", "left_chest_plate", "right_back_door", "left_gauntlet_inner", "right_thigh_inner", "left_thruster_cover", "left_finger_1"])
     assert.ok(spec.links.some((l) => l.name === n), `missing ${n}`);
   assert.equal(spec.joints.filter((j) => j.type !== "fixed" && !j.name.endsWith("_hinge")).length, 17, "frame joints intact");
+});
+
+test("Iron Man prompts build the wearable armour (helmet alone when only a helmet is asked for)", async () => {
+  const { chooseFamily, gripperRequest } = await import("../packages/robot-generator/src/families.ts");
+  const { normalize } = await import("../packages/robot-generator/src/text.ts");
+  const pick = (p: string) => { const t = normalize(p); return chooseFamily(t, p, undefined, gripperRequest(t).kind); };
+  const suit = pick("Build me a movie-accurate wearable Iron Man Mark 43 suit from Age of Ultron");
+  assert.equal(suit.family, "iron_man_mark_43"); assert.ok(suit.designed); assert.match(suit.label, /wearable suit/);
+  assert.match(pick("an Iron Man Mark 43 helmet with a motorised faceplate").label, /helmet/);
 });

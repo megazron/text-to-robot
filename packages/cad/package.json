@@ -10,6 +10,7 @@
     "@ttr/kinematics": "*",
     "@ttr/mesh": "*",
     "@ttr/parts": "*",
-    "@ttr/components": "*"
+    "@ttr/components": "*",
+    "@ttr/kernel": "*"
   }
 }

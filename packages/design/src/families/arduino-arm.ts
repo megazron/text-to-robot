@@ -9,8 +9,8 @@ import { part, rating, hornRadiusMm, type Vec3 } from "@ttr/parts";
 import { translation, type Mat4 } from "@ttr/solid";
 import type { Op } from "@ttr/kernel";
 import { Assembly } from "../assembly.ts";
-import { gravityTorques, totalMass, type PointLoad } from "../kin.ts";
-import { DYNAMIC_FACTOR } from "../sizing.ts";
+import { gravityTorques, totalMass, axisInertias, type PointLoad } from "../kin.ts";
+import { DYNAMIC_FACTOR, MIN_SPEED, loadedSpeed } from "../sizing.ts";
 import { limitsFromGeometry } from "./legkit.ts";
 
 export interface ArduinoArmRequest {
@@ -47,7 +47,7 @@ function build(req: ArduinoArmRequest, keys: { yaw: string; shoulder: string; el
   const Ts = place([0, 0, -1], [-1, 0, 0], [0, 1, 0], [0, yo, hS]);       // servo x down, y backwards, output towards +y
   const sb = body(keys.shoulder);
   const turntable: Op[] = [
-    { op: "horn", key: keys.yaw, t: PLATE, extra: 4 },
+    { op: "horn", key: keys.yaw, t: PLATE, extra: 4, channel: hS + 30 },   // the shoulder cradle stands on it: centre channel, horn screws from below
     { op: "box", min: [-sb.max[1] - WALL, yo + sb.min[2] - WALL, 0], max: [-sb.min[1] + WALL, yo - 1, hS - sb.max[0] + 0.5], r: 0 },   // riser
     { op: "cradle", key: keys.shoulder, T: Ts, wall: WALL },
   ];
@@ -129,6 +129,13 @@ export function designArduinoArm(req: ArduinoArmRequest = {}): RobotSpecificatio
 
   // joint ranges from the geometry (nothing may collide through the range), then the checks
   limitsFromGeometry(A, ["yaw", "shoulder", "elbow"], [{ shoulder: -1.2, elbow: 1.5 }, { shoulder: 1.2, elbow: -1.5 }]);
+  // joint speed limits: the speed each servo reaches carrying its load (not its no-load speed)
+  const inertia = axisInertias(A.spec, { shoulder: 0, elbow: 0 }, [{ link: b.tcp.link, at: b.tcp.at, massKg: payload }]);
+  for (const j of ["shoulder", "elbow"] as const) {
+    const v = loadedSpeed(keys[j], worst[j] ?? 0, inertia[j] ?? 0), jt = A.spec.joints.find((x) => x.name === j)!;
+    jt.limit!.velocity = +Math.max(v, 0.05).toFixed(3);
+    A.check(`speed:${j}`, v >= MIN_SPEED, `${v.toFixed(2)} rad/s carrying the arm and payload (needs >= ${MIN_SPEED} rad/s)`);
+  }
   for (const j of ["shoulder", "elbow"] as const) {
     const k = keys[j], r = rating(k), w = worst[j] ?? 0;
     A.design.joints.push({ joint: j, actuator: k, required_nm: +(w * DYNAMIC_FACTOR).toFixed(4), rated_nm: r.rated_nm, peak_nm: r.peak_nm, margin: +(r.peak_nm / Math.max(w * DYNAMIC_FACTOR, 1e-6)).toFixed(2), speed_rad_s: r.speed_rad_s, note: `worst static ${w.toFixed(4)} N·m, arm stretched with ${payload} kg` });

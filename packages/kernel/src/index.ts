@@ -3,7 +3,7 @@
 // Fusion / FreeCAD / Onshape, and print meshes welded and validated by manifold-3d (closed, one solid).
 //   await initKernel();  const { stl, step, volume_mm3 } = exportPart(program);
 import opencascade from "replicad-opencascadejs";
-import { setOC, getOC, cast, makeBox, makeCylinder, makePolygon, makeSolid, makeSphere, makePlane, drawEllipse, draw, type Shape3D, type AnyShape } from "replicad";
+import { setOC, getOC, cast, measureShapeVolumeProperties, measureVolume, makeBox, makeCylinder, makePolygon, makeSolid, makeSphere, makePlane, drawEllipse, draw, type Shape3D, type AnyShape } from "replicad";
 import Manifold from "manifold-3d";
 import { part, caseHoles, outputHoles, hornRadiusMm, type Hole, type Vec3 } from "@ttr/parts";
 
@@ -21,7 +21,7 @@ export type Op =
   | { op: "lighten"; a: Vec3; b: Vec3; r: number; n: number; axis?: Vec3 }
   | { op: "revolve"; pts: [number, number][]; seg?: number }
   | { op: "sphere"; c: Vec3; r: number; cut?: boolean }                      // ball (or a spherical socket when cut)
-  | { op: "loft"; sections: [number, number, number, number?, number?][]; t?: number }  // ellipses [z, rx, ry, cx, cy] along +z; t: open shell of that wall
+  | { op: "loft"; sections: [number, number, number, number?, number?][]; t?: number; open?: "both" | "start" | "end"; rim?: number }  // ellipses [z, rx, ry, cx, cy] along +z; t: shell of that wall, open at both ends (or one)
   | { op: "subtract"; of: Op[] }                                              // remove the finished solid of a sub-program
   | { op: "at"; T: Mat4; of: Op[] };
 /** `edge`: radius (mm) of the fillet that breaks every outer edge after the booleans (0 = sharp). */
@@ -125,13 +125,45 @@ function loftOf(secs: [number, number, number, number?, number?][]): Shape3D {
   const [first, ...rest] = secs;
   return keep((sk(first) as any).loftWith(rest.map(sk), { ruled: false }) as Shape3D);
 }
-/** Open shell of wall t: the loft minus the same loft shrunk by t, with straight plugs opening both ends. */
-function loftShell(secs: [number, number, number, number?, number?][], t: number): Shape3D {
-  const outer = loftOf(secs), n = secs.length;
+/** Shell of wall t (a true normal offset, so the wall is t thick even where the surface is nearly flat), open at the
+ *  chosen ends. Falls back to shrinking the sections when OpenCascade cannot offset a surface. */
+function loftShell(secs: [number, number, number, number?, number?][], t: number, open: "both" | "start" | "end" = "both", rim = 0): Shape3D {
+  const shell = loftShellRaw(secs, t, open);
+  if (!(rim > 0)) return shell;
+  // rolled rim: the wall is doubled over the last `rim` mm of every open end (no knife edge where a flared shell meets
+  // its opening at a shallow angle, and a stiffer edge), without changing the outside
+  type S = [number, number, number, number?, number?];
+  const at = (a: S, b: S, z: number): S => { const u = (z - a[0]) / (b[0] - a[0]); const l = (i: number) => (a[i] ?? 0) + ((b[i] ?? 0) - (a[i] ?? 0)) * u; return [z, l(1), l(2), l(3), l(4)]; };
+  const n = secs.length, ends: [S, S][] = [];
+  if (open !== "end") ends.push([secs[0], secs[1]]);
+  if (open !== "start") ends.push([secs[n - 1], secs[n - 2]]);
+  let out = shell;
+  for (const [e, next] of ends) {
+    const dir = Math.sign(next[0] - e[0]) || 1, far = at(e, next, e[0] + dir * rim);
+    const inset = (x: S, d: number): S => [x[0], Math.max(x[1] - d, 1), Math.max(x[2] - d, 1), x[3], x[4]];
+    try {
+      const band = keep(loftOf([inset(e, 0.3), inset(far, 0.3)]).cut(loftOf([[e[0] - dir, ...inset(e, 2 * t).slice(1)] as S, [far[0] + dir, ...inset(far, 2 * t).slice(1)] as S])) as Shape3D);
+      out = safeFuse(out, band);
+    } catch { /* keep the plain edge */ }
+  }
+  return out;
+}
+function loftShellRaw(secs: [number, number, number, number?, number?][], t: number, open: "both" | "start" | "end"): Shape3D {
+  const outer = loftOf(secs), n = secs.length, z0 = secs[0][0], z1 = secs[n - 1][0];
+  try {
+    const finder = (f: any) => open === "start" ? f.inPlane("XY", z0) : open === "end" ? f.inPlane("XY", z1) : f.either([(g: any) => g.inPlane("XY", z0), (g: any) => g.inPlane("XY", z1)]);
+    const sh = keep((outer as any).shell(-t, finder) as Shape3D);
+    // OpenCascade occasionally returns an inside-out or empty offset without an error: only keep a sane shell
+    const vol = (x: Shape3D) => { const p = measureShapeVolumeProperties(x as never); try { return p.volume; } finally { (p as any).delete?.(); } };
+    const v = vol(sh), vo = vol(outer);
+    if (v > 0 && v < vo) return sh;
+  } catch { /* fall through */ }
   const shrink = ([z, rx, ry, cx, cy]: [number, number, number, number?, number?]) => [z, Math.max(rx - t, 1), Math.max(ry - t, 1), cx, cy] as [number, number, number, number?, number?];
-  const inner = secs.map(shrink), a = inner[0], b = inner[n - 1], dir = Math.sign(secs[n - 1][0] - secs[0][0]) || 1;
+  const inner = secs.map(shrink), a = inner[0], b = inner[n - 1], dir = Math.sign(z1 - z0) || 1;
   const plug = (s0: typeof a, from: number, to: number) => loftOf([[from, ...s0.slice(1)] as typeof a, [to, ...s0.slice(1)] as typeof a]);
-  const hollow = keep(keep(loftOf(inner).fuse(plug(a, a[0] - dir * 10, a[0] + dir * 0.5))).fuse(plug(b, b[0] - dir * 0.5, b[0] + dir * 10)));
+  let hollow = loftOf(inner);
+  if (open !== "end") hollow = keep(hollow.fuse(plug(a, a[0] - dir * 10, a[0] + dir * 0.5)));
+  if (open !== "start") hollow = keep(hollow.fuse(plug(b, b[0] - dir * 0.5, b[0] + dir * 10)));
   return keep(outer.cut(hollow) as Shape3D);
 }
 
@@ -169,23 +201,26 @@ function cradleOf(key: string, T: Mat4, wall: number): { add: Shape3D[]; cut: Sh
   const { min, max } = bodyBox(key), top = Math.min(max[2], -0.8) - 1.2, rim = 5;
   const shell = transformed(box([min[0] - wall, min[1] - wall, min[2] - wall], [max[0] + wall, max[1] + wall, top], wall), T);
   const cut = [keepoutOf(key, T), ...screwCuts(caseHoles(key), T, wall + 1)];
-  if (max[0] - min[0] > 3 * rim) cut.push(transformed(box([min[0] + rim, max[1] - 1, min[2] + 1.5], [Math.min(max[0] - rim, min[0] + rim + 12), max[1] + wall + 1, min[2] + 9]), T));
+  // cable slot out of the side: run it well past the wall, or material around the cradle leaves a skin over it
+  if (max[0] - min[0] > 3 * rim) cut.push(transformed(box([min[0] + rim, max[1] - 1, min[2] + 1.5], [Math.min(max[0] - rim, min[0] + rim + 12), max[1] + wall + 20, min[2] + 9]), T));
   return { add: [shell], cut };
 }
 function hornOf(key: string, t: number, extra: number, channel?: number): { add: Shape3D[]; cut: Shape3D[] } {
   const holes = outputHoles(key), cut = screwCuts(holes, I4(), t, 0);
   if (channel !== undefined) {
     // structure stands on the plate: horn screws go in from the horn side, the spline screw through a centre channel
-    cut.push(rod([0, 0, -1], [0, 0, t + channel], 3.3));
+    cut.push(rod([0, 0, -1], [0, 0, t + channel], centreHoleR(key)));
     return { add: [rod([0, 0, 0], [0, 0, t], hornRadiusMm(key) + extra)], cut };
   }
   if (holes.length) {
     const rMax = Math.max(...holes.map((h) => Math.hypot(h.pos[0], h.pos[1]))), dHead = (holes[0].thread ? Number(holes[0].thread.replace(/^M/, "")) + 0.4 : holes[0].dia_mm + 0.3) * 1.9;
     cut.push(rod([0, 0, t], [0, 0, t + 60], rMax + dHead / 2 + 0.6));
   }
-  cut.push(rod([0, 0, -1], [0, 0, t + 1], key.startsWith("cubemars_") ? 8 : 3.3));
+  cut.push(rod([0, 0, -1], [0, 0, t + 1], centreHoleR(key)));
   return { add: [rod([0, 0, 0], [0, 0, t], hornRadiusMm(key) + extra)], cut };
 }
+/** clearance for the spline screw's head: M3 socket head on bus servos, M2 / M2.5 pan head (4.5 mm) on hobby servos */
+const centreHoleR = (key: string) => (key.startsWith("cubemars_") ? 8 : key.startsWith("hobby_") ? 2.4 : 3.3);
 
 // ---------------------------------------------------------------- programs
 function solidOf(o: Op): { add: Shape3D[]; cut: Shape3D[] } {
@@ -198,7 +233,7 @@ function solidOf(o: Op): { add: Shape3D[]; cut: Shape3D[] } {
     case "hull": { const ps = o.of.map(solidOf), h = hullOf(ps.flatMap((p) => p.add)); return o.cut ? { add: [], cut: [h] } : { add: [h], cut: ps.flatMap((p) => p.cut) }; }
     case "revolve": return { add: [revolveOutline(o.pts)], cut: [] };
     case "subtract": return { add: [], cut: [evaluate({ name: "subtract", ops: o.of })] };
-    case "loft": return { add: [o.t ? loftShell(o.sections, o.t) : loftOf(o.sections)], cut: [] };
+    case "loft": return { add: [o.t ? loftShell(o.sections, o.t, o.open, o.rim) : loftOf(o.sections)], cut: [] };
     case "sphere": { const b = keep(makeSphere(o.r) as Shape3D), s = keep(b.translate(o.c) as Shape3D); return o.cut ? { add: [], cut: [s] } : { add: [s], cut: [] }; }
     case "keepout": return { add: [], cut: [keepoutOf(o.key, o.T)] };
     // holes print about 0.15 mm small on FDM: cut them that much over size
@@ -215,22 +250,65 @@ function solidOf(o: Op): { add: Shape3D[]; cut: Shape3D[] } {
     }
   }
 }
-/** Union of many solids as a balanced tree (fewer, smaller booleans than a chain). */
+// OpenCascade booleans occasionally return an inside-out or truncated solid without raising: every result is checked
+// against what a union / difference can be, and retried another way when it is impossible.
+const volOf = (x: Shape3D) => { try { return measureVolume(x as never); } catch { return Number.NaN; } };
+function safeFuse(a: Shape3D, b: Shape3D): Shape3D {
+  const va = volOf(a), vb = volOf(b), floor = Math.max(va, vb) * 0.999, ceil = (va + vb) * 1.001;
+  const ok = (r: Shape3D) => { const v = volOf(r); return Number.isFinite(v) && v >= floor && v <= ceil; };
+  const attempts: (() => Shape3D)[] = [() => a.fuse(b), () => b.fuse(a), () => a.fuse(keep(b.translate([1e-3, 1e-3, 1e-3]) as Shape3D))];
+  for (const f of attempts) { try { const r = keep(f()); if (ok(r)) return r; } catch { /* next */ } }
+  throw new Error(`union failed (${va.toFixed(0)} + ${vb.toFixed(0)} mm^3)`);
+}
+function safeCut(a: Shape3D, tools: Shape3D[]): Shape3D {
+  const try1 = (x: Shape3D, t: Shape3D) => { const vx = volOf(x), vt = volOf(t), r = keep(x.cut(t)), v = volOf(r); return Number.isFinite(v) && v >= 0 && v <= vx * 1.001 && v >= vx - vt * 1.001 - 1e-6 ? r : undefined; };
+  // all tools at once (one boolean), else one tool at a time
+  try { const r = try1(a, unionAll(tools)); if (r) return r; } catch { /* one by one */ }
+  let x = a;
+  for (const t of tools) {
+    let r: Shape3D | undefined;
+    try { r = try1(x, t); } catch { r = undefined; }
+    if (!r) { try { r = try1(x, keep(t.translate([1e-3, 1e-3, 1e-3]) as Shape3D)); } catch { r = undefined; } }
+    if (!r) throw new Error("cut failed");
+    x = r;
+  }
+  return x;
+}
+/** Union of many solids: a balanced tree (fewer, smaller booleans); when OpenCascade fails on that order, grow the
+ *  union piece by piece, always adding a piece that touches what is already built (fusing disjoint pieces first leaves a
+ *  multi-solid that later booleans can trip over). */
 function unionAll(s: Shape3D[]): Shape3D {
   if (!s.length) throw new Error("program adds no material");
-  let level = s;
-  while (level.length > 1) {
-    const next: Shape3D[] = [];
-    for (let i = 0; i < level.length; i += 2) next.push(i + 1 < level.length ? keep(level[i].fuse(level[i + 1])) : level[i]);
-    level = next;
+  try {
+    let level = s;
+    while (level.length > 1) {
+      const next: Shape3D[] = [];
+      for (let i = 0; i < level.length; i += 2) next.push(i + 1 < level.length ? safeFuse(level[i], level[i + 1]) : level[i]);
+      level = next;
+    }
+    return level[0];
+  } catch {
+    const box = (x: Shape3D) => x.boundingBox.bounds as [number[], number[]];
+    const touch = (a: [number[], number[]], b: [number[], number[]]) => [0, 1, 2].every((k) => a[0][k] <= b[1][k] + 0.01 && b[0][k] <= a[1][k] + 0.01);
+    let acc = s[0];
+    const rest = s.slice(1);
+    while (rest.length) {
+      const ab = box(acc);
+      const order = [...rest.keys()].sort((i, j) => Number(touch(box(rest[j]), ab)) - Number(touch(box(rest[i]), ab)));
+      let done = false;
+      for (const i of order) {
+        try { acc = safeFuse(acc, rest[i]); rest.splice(i, 1); done = true; break; } catch { /* try another piece */ }
+      }
+      if (!done) throw new Error(`union failed with ${rest.length} pieces left`);
+    }
+    return acc;
   }
-  return level[0];
 }
 function evaluate(p: Program): Shape3D {
   const ps = p.ops.map(solidOf);
   let s = unionAll(ps.flatMap((x) => x.add));
   const cuts = ps.flatMap((x) => x.cut);
-  if (cuts.length) s = keep(s.cut(unionAll(cuts)));
+  if (cuts.length) s = safeCut(s, cuts);
   if (p.edge) s = tryFillet(s, p.edge);
   return s;
 }

@@ -167,9 +167,9 @@ Every check below runs in CI on each push:
   free-standing bipeds are reported as untested (no roller joints / no balance controller), not as passes.
   CI re-runs them with `simulate_examples.py --check` and `scripts/verify_examples.py` checks every report was
   produced from the shipped URDF.
-- **Browser**: all 17 examples render in headless Chromium with third-party requests blocked and rendered
+- **Browser**: all 19 examples render in headless Chromium with third-party requests blocked and rendered
   triangles compared with the served STL files (`scripts/check_web.py`).
-- **Mark 43**: its own render review and joint-path evidence (`mark43_reference_review.py`, `check_motion_paths.py`).
+- **Mark 43**: built body first as worn armour; its posed checks (sit, raise arms, bend elbows, open the faceplate) run in the design engine and its faceplate servos are simulated like every other actuator.
 
 ## Limitations
 
@@ -216,7 +216,7 @@ python3 scripts/verify_examples.py                               # what CI check
 
 Further reading: [Python layer](python/README.md),
 [physical fidelity](docs/PHYSICAL_FIDELITY.md),
-[motion-path checks](docs/motion_paths/README.md),
+[rebuild plan and checklist](docs/REBUILD_PLAN.md),
 [engineering references](references/engineering/README.md),
 [changelog](CHANGELOG.md).
 
