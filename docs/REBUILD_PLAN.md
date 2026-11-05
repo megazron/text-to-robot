@@ -21,7 +21,7 @@ stronger (4WD) tiers, all checks including clearance passing.
 - [~] Prompts read properly (sizes, counts, parts, budgets, exclusions) for every robot type (heights for humanoids, standalone mechs, car / buggy / line follower / obstacle avoider words fixed)
 - [ ] Every robot type rebuilt and checked: arm, car, mecanum, rover, quadruped, hexapod, humanoid, mech, SCARA, gripper
 - [x] WALL-E rebuilt properly (Arduino build: printed body housing 4 TT motors, TPU tracks, pan/tilt binocular head, servo arms; all checks pass, ~$51)
-- [ ] Mark 43 rebuilt properly, in tiers from helmet to full wearable suit
+- [x] Mark 43 rebuilt properly, in tiers from helmet to full wearable suit (body-first wearable armour on a parametric wearer: helmet 9 pieces / $39; helmet + chest + gauntlets 44 pieces / ~$166; full suit 70 pieces, 3.9 kg filament / ~$254; faceplate on two MG90S opens 69 deg; posed checks: hips 87 deg, knees 106, shoulders 149, elbows 106, all clear)
 - [ ] GIFs, renders and README regenerated from the new designs (no old images left)
 - [ ] New web UI: bento card dashboard in green and black
 - [ ] Share button + opt-in public gallery / blog of designs people publish

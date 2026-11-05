@@ -40,3 +40,4 @@ export { designScara } from "./families/scara.ts";
 export { designArduinoCar, arduinoCarOptions, type ArduinoCarRequest, type ArduinoTier } from "./families/arduino-car.ts";
 export { designArduinoArm, type ArduinoArmRequest } from "./families/arduino-arm.ts";
 export { designArduinoWallE, type ArduinoWallERequest } from "./families/arduino-walle.ts";
+export { designMark43Wearable, type Mark43Request, type Mark43Tier } from "./families/mark43-wearable.ts";

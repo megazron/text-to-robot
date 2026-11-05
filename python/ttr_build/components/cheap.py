@@ -215,4 +215,12 @@ STEEL_BALL = Component(
            "uncertain": ["price_usd", "max_robot_mass_kg"]},
     build=lambda c: _b3d().Pos(0, 0, 6.35) * _b3d().Sphere(6.35))
 
-COMPONENTS = [STEEL_BALL, BREADBOARD, UNO_CLONE, NANO_CLONE, PCA_CLONE, TT_MOTOR, L298N, TB6612, HC_SR04, RING12, PACK_2S]
+LED5 = Component(
+    key="led_5mm_white", name="5 mm white LED + 100 ohm resistor (eye / accent light)", category="misc",
+    mass_g=0.5, price_usd=0.1, supplier_url=SEARCH.format("5mm-white-led"), datasheet_url="https://www.adafruit.com/product/754",
+    envelope_mm=(5.8, 5.8, 8.6), holes=[],
+    specs={"voltage_v": 3.2, "current_ma": 20, "mount": "pressed into a 5.1 mm hole behind a diffuser", "no_mounting_holes": True,
+           "uncertain": ["price_usd"]},
+    build=lambda c: union(cyl(5.8, 0.0, 1.0, 2.9, 2.9), cyl(5.0, 0.99, 8.6, 2.9, 2.9)))
+
+COMPONENTS = [LED5, STEEL_BALL, BREADBOARD, UNO_CLONE, NANO_CLONE, PCA_CLONE, TT_MOTOR, L298N, TB6612, HC_SR04, RING12, PACK_2S]

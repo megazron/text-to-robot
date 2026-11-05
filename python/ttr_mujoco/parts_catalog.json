@@ -8331,6 +8331,44 @@
   },
   "mesh_triangles": 308
  },
+ "led_5mm_white": {
+  "key": "led_5mm_white",
+  "name": "5 mm white LED + 100 ohm resistor (eye / accent light)",
+  "category": "misc",
+  "mass_g": 0.5,
+  "price_usd": 0.1,
+  "supplier_url": "https://www.aliexpress.com/w/wholesale-5mm-white-led.html",
+  "datasheet_url": "https://www.adafruit.com/product/754",
+  "envelope_mm": [
+   5.8,
+   5.8,
+   8.6
+  ],
+  "holes": [],
+  "specs": {
+   "voltage_v": 3.2,
+   "current_ma": 20,
+   "mount": "pressed into a 5.1 mm hole behind a diffuser",
+   "no_mounting_holes": true,
+   "uncertain": [
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "max": [
+    5.8,
+    5.8,
+    8.6
+   ]
+  },
+  "mesh_triangles": 204
+ },
  "lipo_3s_2200": {
   "key": "lipo_3s_2200",
   "name": "LiPo 3S 2200 mAh 25C, XT60 (Gens Ace G-Tech)",

@@ -3,7 +3,7 @@
 // Fusion / FreeCAD / Onshape, and print meshes welded and validated by manifold-3d (closed, one solid).
 //   await initKernel();  const { stl, step, volume_mm3 } = exportPart(program);
 import opencascade from "replicad-opencascadejs";
-import { setOC, getOC, cast, makeBox, makeCylinder, makePolygon, makeSolid, makeSphere, draw, type Shape3D, type AnyShape } from "replicad";
+import { setOC, getOC, cast, makeBox, makeCylinder, makePolygon, makeSolid, makeSphere, makePlane, drawEllipse, draw, type Shape3D, type AnyShape } from "replicad";
 import Manifold from "manifold-3d";
 import { part, caseHoles, outputHoles, hornRadiusMm, type Hole, type Vec3 } from "@ttr/parts";
 
@@ -21,6 +21,8 @@ export type Op =
   | { op: "lighten"; a: Vec3; b: Vec3; r: number; n: number; axis?: Vec3 }
   | { op: "revolve"; pts: [number, number][]; seg?: number }
   | { op: "sphere"; c: Vec3; r: number; cut?: boolean }                      // ball (or a spherical socket when cut)
+  | { op: "loft"; sections: [number, number, number, number?, number?][]; t?: number }  // ellipses [z, rx, ry, cx, cy] along +z; t: open shell of that wall
+  | { op: "subtract"; of: Op[] }                                              // remove the finished solid of a sub-program
   | { op: "at"; T: Mat4; of: Op[] };
 /** `edge`: radius (mm) of the fillet that breaks every outer edge after the booleans (0 = sharp). */
 export interface Program { name: string; ops: Op[]; edge?: number; }
@@ -114,6 +116,25 @@ function revolveOutline(pts: [number, number][]): Shape3D {
   // the XZ sketch plane maps sketch x -> world X and sketch y -> world Z; revolve about world Z
   return keep(d.close().sketchOnPlane("XZ").revolve([0, 0, 1]) as Shape3D);
 }
+/** Smooth solid through elliptical sections stacked along +z (each [z, rx, ry, cx, cy]). */
+function loftOf(secs: [number, number, number, number?, number?][]): Shape3D {
+  const sk = ([z, rx, ry, cx, cy]: [number, number, number, number?, number?]) => {
+    const e = rx >= ry ? drawEllipse(rx, ry) : drawEllipse(ry, rx).rotate(90);
+    return e.translate([cx ?? 0, cy ?? 0]).sketchOnPlane(makePlane("XY", [0, 0, z]));
+  };
+  const [first, ...rest] = secs;
+  return keep((sk(first) as any).loftWith(rest.map(sk), { ruled: false }) as Shape3D);
+}
+/** Open shell of wall t: the loft minus the same loft shrunk by t, with straight plugs opening both ends. */
+function loftShell(secs: [number, number, number, number?, number?][], t: number): Shape3D {
+  const outer = loftOf(secs), n = secs.length;
+  const shrink = ([z, rx, ry, cx, cy]: [number, number, number, number?, number?]) => [z, Math.max(rx - t, 1), Math.max(ry - t, 1), cx, cy] as [number, number, number, number?, number?];
+  const inner = secs.map(shrink), a = inner[0], b = inner[n - 1], dir = Math.sign(secs[n - 1][0] - secs[0][0]) || 1;
+  const plug = (s0: typeof a, from: number, to: number) => loftOf([[from, ...s0.slice(1)] as typeof a, [to, ...s0.slice(1)] as typeof a]);
+  const hollow = keep(keep(loftOf(inner).fuse(plug(a, a[0] - dir * 10, a[0] + dir * 0.5))).fuse(plug(b, b[0] - dir * 0.5, b[0] + dir * 10)));
+  return keep(outer.cut(hollow) as Shape3D);
+}
+
 /** Convex hull of solids as an exact convex polyhedron (coplanar facets merged). */
 function hullOf(parts: Shape3D[]): Shape3D {
   const pts: number[][] = [];
@@ -176,6 +197,8 @@ function solidOf(o: Op): { add: Shape3D[]; cut: Shape3D[] } {
     case "box": return { add: [box(o.min, o.max, o.r ?? 0)], cut: [] };
     case "hull": { const ps = o.of.map(solidOf), h = hullOf(ps.flatMap((p) => p.add)); return o.cut ? { add: [], cut: [h] } : { add: [h], cut: ps.flatMap((p) => p.cut) }; }
     case "revolve": return { add: [revolveOutline(o.pts)], cut: [] };
+    case "subtract": return { add: [], cut: [evaluate({ name: "subtract", ops: o.of })] };
+    case "loft": return { add: [o.t ? loftShell(o.sections, o.t) : loftOf(o.sections)], cut: [] };
     case "sphere": { const b = keep(makeSphere(o.r) as Shape3D), s = keep(b.translate(o.c) as Shape3D); return o.cut ? { add: [], cut: [s] } : { add: [s], cut: [] }; }
     case "keepout": return { add: [], cut: [keepoutOf(o.key, o.T)] };
     // holes print about 0.15 mm small on FDM: cut them that much over size

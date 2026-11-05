@@ -34,6 +34,9 @@ export const MATERIALS: Material[] = [
   { name: "electronics", color: [0.08, 0.45, 0.25, 1] },
   { name: "rubber", color: [0.07, 0.07, 0.08, 1] },
   { name: "battery", color: [0.15, 0.3, 0.75, 1] },
+  { name: "armour_red", color: [0.62, 0.06, 0.07, 1] },
+  { name: "armour_gold", color: [0.86, 0.66, 0.28, 1] },
+  { name: "wearer", color: [0.55, 0.57, 0.6, 1] },
 ];
 const COMPONENT_MATERIAL: Record<string, string> = { actuator: "actuator", wheel: "rubber", battery: "battery", compute: "electronics", sensor: "electronics", motor_driver: "electronics", misc: "electronics", bearing: "metal", horn: "metal" };
 
@@ -97,17 +100,18 @@ export class Assembly {
     return link;
   }
   /** A link whose body is a printed part modelled on the CAD kernel (exact solid, fillets, STEP export). */
-  cadLink(name: string, program: CadProgram, opts: { role?: string; material?: string; extraMassKg?: number } = {}): Link {
+  cadLink(name: string, program: CadProgram, opts: { role?: string; material?: string; extraMassKg?: number; printed?: boolean; massKg?: number } = {}): Link {
     const json = JSON.stringify({ ...program, name });
     const geometry = memo(`cad:${json}`, () => meshGeometry("cad", `${name}.stl`, { program: json }));
     const f = partFiles(json), size = [0, 1, 2].map((k) => f.bbox_mm.max[k] - f.bbox_mm.min[k]) as Vec3;
     const fits = [[0, 1, 2], [1, 0, 2], [0, 2, 1], [2, 0, 1], [1, 2, 0], [2, 1, 0]].some((o) => o.every((k, i) => size[k] <= [250, 210, 220][i]));
     const check: PrintCheck = { volume_cm3: +(f.volume_mm3 / 1000).toFixed(2), bbox_mm: size.map((x) => +x.toFixed(1)) as Vec3, fits_bed: fits,
       watertight: f.watertight && f.bodies === 1, min_feature_ok: f.volume_mm3 > 50, genus: f.genus };
-    const mass = geometry.volume * PRINT_DENSITY + (opts.extraMassKg ?? 0);
+    const mass = opts.massKg ?? geometry.volume * PRINT_DENSITY + (opts.extraMassKg ?? 0);
     const link: Link = { name, role: opts.role ?? "link", geometry, mass: Math.max(mass, 0.002), material: opts.material ?? "printed", origin: { xyz: [0, 0, 0], rpy: [0, 0, 0] } };
     this.spec.links.push(link);
-    this.design.printed.push({ name, link: name, program: { ...program, name } as unknown as Program, check, mass_kg: +(geometry.volume * PRINT_DENSITY).toFixed(4) });
+    // printed: false for bodies that are modelled but not made (e.g. the wearer inside a suit)
+    if (opts.printed !== false) this.design.printed.push({ name, link: name, program: { ...program, name } as unknown as Program, check, mass_kg: +(geometry.volume * PRINT_DENSITY).toFixed(4) });
     return link;
   }
   /** An empty frame link (massless anchors are avoided: URDF tools dislike them). */
