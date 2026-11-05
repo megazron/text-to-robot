@@ -364,9 +364,9 @@
       <geometry><mesh filename="package://wall_e/meshes/neck.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.0000624634 -0.001497 0.040687" rpy="0 0 0"/>
-      <mass value="0.027529"/>
-      <inertia ixx="0.0000272729" ixy="1.36755e-8" ixz="-8.20460e-8" iyy="0.0000269548" iyz="0.0000015589" izz="0.00000320487"/>
+      <origin xyz="0.0000636207 -0.001525 0.041465" rpy="0 0 0"/>
+      <mass value="0.027029"/>
+      <inertia ixx="0.0000263751" ixy="1.36278e-8" ixz="-8.07078e-8" iyy="0.0000260737" iyz="0.00000152683" izz="0.0000032114"/>
     </inertial>
   </link>
   <link name="neck_tilt_servo">
@@ -396,9 +396,9 @@
       <geometry><mesh filename="package://wall_e/meshes/head.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.043245 -0.005463 -0.012864" rpy="0 0 0"/>
-      <mass value="0.081949"/>
-      <inertia ixx="0.0000675241" ixy="-0.00000123338" ixz="-0.00000335584" iyy="0.0000715867" iyz="-5.08887e-7" izz="0.0000263643"/>
+      <origin xyz="-0.043422 -0.005485 -0.012899" rpy="0 0 0"/>
+      <mass value="0.081615"/>
+      <inertia ixx="0.0000675047" ixy="-0.00000115418" ixz="-0.00000322912" iyy="0.0000709657" iyz="-4.92875e-7" izz="0.000025745"/>
     </inertial>
   </link>
   <link name="left_arm">
@@ -412,9 +412,9 @@
       <geometry><mesh filename="package://wall_e/meshes/left_arm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-1.89080e-13 0.025016 0.002" rpy="0 0 0"/>
-      <mass value="0.008485"/>
-      <inertia ixx="0.00000775363" ixy="-4.01354e-17" ixz="2.39387e-24" iyy="6.33346e-7" iyz="-4.02897e-18" izz="0.00000836442"/>
+      <origin xyz="-9.98415e-7 0.026044 0.002251" rpy="0 0 0"/>
+      <mass value="0.00815"/>
+      <inertia ixx="0.00000753846" ixy="-2.59923e-10" ixz="1.41802e-12" iyy="6.51939e-7" iyz="5.33328e-8" izz="0.00000816375"/>
     </inertial>
   </link>
   <link name="left_arm_servo">
@@ -444,9 +444,9 @@
       <geometry><mesh filename="package://wall_e/meshes/right_arm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-1.89069e-13 -0.025016 0.002" rpy="0 0 0"/>
-      <mass value="0.008485"/>
-      <inertia ixx="0.00000775363" ixy="4.01334e-17" ixz="2.88066e-23" iyy="6.33346e-7" iyz="4.02901e-18" izz="0.00000836442"/>
+      <origin xyz="-9.98415e-7 -0.026044 0.002251" rpy="0 0 0"/>
+      <mass value="0.00815"/>
+      <inertia ixx="0.00000753846" ixy="2.59923e-10" ixz="1.41802e-12" iyy="6.51939e-7" iyz="-5.33328e-8" izz="0.00000816375"/>
     </inertial>
   </link>
   <link name="right_arm_servo">

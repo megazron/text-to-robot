@@ -220,9 +220,9 @@
       <geometry><mesh filename="package://battle_mech/meshes/torso_b.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.017012 -0.000243192 0.16185" rpy="0 0 0"/>
-      <mass value="0.981209"/>
-      <inertia ixx="0.012604" ixy="0.00000792724" ixz="0.0000656201" iyy="0.009281" iyz="-0.0000170936" izz="0.009812"/>
+      <origin xyz="0.017029 -0.000241676 0.161862" rpy="0 0 0"/>
+      <mass value="0.980897"/>
+      <inertia ixx="0.012604" ixy="0.00000800606" ixz="0.0000662308" iyy="0.009279" iyz="-0.0000170388" izz="0.00981"/>
     </inertial>
   </link>
   <link name="l_hip_yaw_actuator">

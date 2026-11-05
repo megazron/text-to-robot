@@ -1,6 +1,6 @@
 # Bill of Materials — battle_mech
 
-**Estimated total: $16103.22**  ·  tier: research
+**Estimated total: $16103.21**  ·  tier: research
 
 **Effort sizing: passes catalogue estimate; hardware verified: no.**
 
@@ -20,7 +20,7 @@
 | Power | LiPo 6S 10000 mAh 30C, EC5 (Tattu) _(main battery (2 in series) · https://www.buddyrc.com/products/tattu-22-2v-30c-6s-10000mah-lipo-battery-pack-with-ec5-plug-for-uav-drone)_ | 2 | 216.99 | 433.98 | 22.2 V, 222 Wh |
 | Sensor | Raspberry Pi Camera Module 3 (standard lens) _(head camera · https://www.raspberrypi.com/products/camera-module-3/)_ | 1 | 25 | 25 | 3.3 V |
 | Electronics | EYOU Robotics CANable PRO isolated USB-CAN adapter _(USB-CAN bus (left leg); USB-CAN bus (right leg) · https://www.robotshop.com/products/eyou-robotics-can-usb-adapter-canable-pro)_ | 2 | 42 | 84 | 5 V |
-| Printed structure | PETG filament for 45 printed parts _(base_link, base_link_b, torso, torso_b, l_hip_yaw_link, l_hip_roll_link, l_hip_pitch_link, l_hip_pitch_link_b, l_knee_link, l_knee_link_b, l_ankle_pitch_link, l_ankle_roll_link, r_hip_yaw_link, r_hip_roll_link, r_hip_pitch_link, r_hip_pitch_link_b, r_knee_link, r_knee_link_b, r_ankle_pitch_link, r_ankle_roll_link, l_shoulder_pitch_link, l_shoulder_roll_link, l_upper_arm_yaw_link, l_elbow_link, l_wrist_yaw_link, l_wrist_pitch_link, l_wrist_roll_link, l_gripper_jaw, r_shoulder_pitch_link, r_shoulder_roll_link, r_upper_arm_yaw_link, r_elbow_link, r_wrist_yaw_link, r_wrist_pitch_link, r_wrist_roll_link, r_gripper_jaw, neck_pan_link, neck_tilt_link, torso_armour_front, l_hip_pitch_armour_front, l_knee_armour_front, l_shoulder_roll_armour_out, r_hip_pitch_armour_front, r_knee_armour_front, r_shoulder_roll_armour_out)_ | 1 | 155.4 | 155.4 | 6142 g of parts (+15 % supports/waste), about 559.8 h of printing |
+| Printed structure | PETG filament for 45 printed parts _(base_link, base_link_b, torso, torso_b, l_hip_yaw_link, l_hip_roll_link, l_hip_pitch_link, l_hip_pitch_link_b, l_knee_link, l_knee_link_b, l_ankle_pitch_link, l_ankle_roll_link, r_hip_yaw_link, r_hip_roll_link, r_hip_pitch_link, r_hip_pitch_link_b, r_knee_link, r_knee_link_b, r_ankle_pitch_link, r_ankle_roll_link, l_shoulder_pitch_link, l_shoulder_roll_link, l_upper_arm_yaw_link, l_elbow_link, l_wrist_yaw_link, l_wrist_pitch_link, l_wrist_roll_link, l_gripper_jaw, r_shoulder_pitch_link, r_shoulder_roll_link, r_upper_arm_yaw_link, r_elbow_link, r_wrist_yaw_link, r_wrist_pitch_link, r_wrist_roll_link, r_gripper_jaw, neck_pan_link, neck_tilt_link, torso_armour_front, l_hip_pitch_armour_front, l_knee_armour_front, l_shoulder_roll_armour_out, r_hip_pitch_armour_front, r_knee_armour_front, r_shoulder_roll_armour_out)_ | 1 | 155.39 | 155.39 | 6142 g of parts (+15 % supports/waste), about 559.8 h of printing |
 | Fasteners | Screws, nuts and inserts | 324 | 0.12 | 38.88 | 36x M3 x 16 split-joint bolts + nuts; 4x M3 x 12 torso-to-pelvis bolts; 96x M3 x 8 housing screws; 112x horn / hub screws; 48x M2/M2.5 x 6 case screws; 28x M3 x 10 armour screws + printed standoffs |
 
 ## Actuator sizing
@@ -28,15 +28,15 @@
 | Joint | Required effort | Unit | Chosen actuator | Margin |
 |---|--:|---|---|--:|
 | l_hip_yaw | 4.615 | N·m | CubeMars AK60-6 V3.0 KV80 | 1.95x |
-| l_hip_roll | 49.094 | N·m | CubeMars AK80-64 KV80 | 2.44x |
-| l_hip_pitch | 62.573 | N·m | CubeMars AK80-64 KV80 | 1.92x |
-| l_knee | 59.883 | N·m | CubeMars AK80-64 KV80 | 2x |
+| l_hip_roll | 49.093 | N·m | CubeMars AK80-64 KV80 | 2.44x |
+| l_hip_pitch | 62.572 | N·m | CubeMars AK80-64 KV80 | 1.92x |
+| l_knee | 59.882 | N·m | CubeMars AK80-64 KV80 | 2x |
 | l_ankle_pitch | 30.922 | N·m | CubeMars AK80-64 KV80 | 3.88x |
 | l_ankle_roll | 13.072 | N·m | CubeMars AK70-10 KV100 | 1.9x |
 | r_hip_yaw | 4.615 | N·m | CubeMars AK60-6 V3.0 KV80 | 1.95x |
-| r_hip_roll | 49.094 | N·m | CubeMars AK80-64 KV80 | 2.44x |
-| r_hip_pitch | 62.573 | N·m | CubeMars AK80-64 KV80 | 1.92x |
-| r_knee | 59.883 | N·m | CubeMars AK80-64 KV80 | 2x |
+| r_hip_roll | 49.093 | N·m | CubeMars AK80-64 KV80 | 2.44x |
+| r_hip_pitch | 62.572 | N·m | CubeMars AK80-64 KV80 | 1.92x |
+| r_knee | 59.882 | N·m | CubeMars AK80-64 KV80 | 2x |
 | r_ankle_pitch | 30.922 | N·m | CubeMars AK80-64 KV80 | 3.88x |
 | r_ankle_roll | 13.072 | N·m | CubeMars AK70-10 KV100 | 1.9x |
 | l_shoulder_pitch | 7.577 | N·m | CubeMars AK70-10 KV100 | 3.27x |

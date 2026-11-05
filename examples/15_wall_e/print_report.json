@@ -33,7 +33,7 @@
   {
    "name": "head",
    "watertight": true,
-   "volume_cm3": 89.62,
+   "volume_cm3": 89.26,
    "size_mm": [
     83.5,
     50.5,
@@ -45,10 +45,10 @@
     0.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 16.81,
+   "support_area_cm2": 17.1,
    "support_frac": 0.089,
    "bed_contact_cm2": 8.32,
-   "min_wall_mm": 4.0,
+   "min_wall_mm": 1.6,
    "thin_wall_frac": 0.0,
    "passed": true,
    "supports": "needed",
@@ -58,23 +58,23 @@
   {
    "name": "left_arm",
    "watertight": true,
-   "volume_cm3": 9.28,
+   "volume_cm3": 8.91,
    "size_mm": [
-    40.9,
+    41.0,
     104.5,
-    4.0
+    4.6
    ],
    "orientation": [
     0.0,
     0.0,
-    1.0
+    -1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 0.0,
-   "support_frac": 0.0,
-   "bed_contact_cm2": 22.87,
-   "min_wall_mm": 2.26,
-   "thin_wall_frac": 0.001,
+   "support_area_cm2": 3.67,
+   "support_frac": 0.057,
+   "bed_contact_cm2": 19.2,
+   "min_wall_mm": 1.6,
+   "thin_wall_frac": 0.0,
    "passed": true,
    "supports": "none",
    "problems": [],
@@ -108,7 +108,7 @@
   {
    "name": "neck",
    "watertight": true,
-   "volume_cm3": 30.11,
+   "volume_cm3": 29.56,
    "size_mm": [
     41.0,
     41.0,
@@ -120,11 +120,11 @@
     -1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 8.9,
-   "support_frac": 0.055,
-   "bed_contact_cm2": 12.23,
-   "min_wall_mm": 2.0,
-   "thin_wall_frac": 0.003,
+   "support_area_cm2": 12.57,
+   "support_frac": 0.077,
+   "bed_contact_cm2": 8.55,
+   "min_wall_mm": 1.6,
+   "thin_wall_frac": 0.001,
    "passed": true,
    "supports": "none",
    "problems": [],
@@ -133,23 +133,23 @@
   {
    "name": "right_arm",
    "watertight": true,
-   "volume_cm3": 9.28,
+   "volume_cm3": 8.91,
    "size_mm": [
-    40.9,
+    41.0,
     104.5,
-    4.0
+    4.6
    ],
    "orientation": [
     0.0,
     0.0,
-    1.0
+    -1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 0.0,
-   "support_frac": 0.0,
-   "bed_contact_cm2": 22.87,
-   "min_wall_mm": 1.44,
-   "thin_wall_frac": 0.003,
+   "support_area_cm2": 3.67,
+   "support_frac": 0.057,
+   "bed_contact_cm2": 19.2,
+   "min_wall_mm": 1.6,
+   "thin_wall_frac": 0.001,
    "passed": true,
    "supports": "none",
    "problems": [],

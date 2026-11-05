@@ -11524,7 +11524,7 @@
   "end_effectors": [],
   "metadata": {
     "generator": "text-to-robot design engine (real components + printed structure)",
-    "created": "2026-11-05T09:29:02.820Z",
+    "created": "2026-11-05T10:09:12.027Z",
     "inferred_fields": [
       "links.arc_reactor.inertia",
       "links.base_link.inertia",

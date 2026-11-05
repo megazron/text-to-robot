@@ -60,9 +60,9 @@
       <geometry><mesh filename="package://arduino_arm/meshes/turntable.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.000109785 -0.012177 0.024201" rpy="0 0 0"/>
-      <mass value="0.030528"/>
-      <inertia ixx="0.0000228653" ixy="4.25036e-8" ixz="-9.32077e-8" iyy="0.0000224907" iyz="0.00000137193" izz="0.0000127672"/>
+      <origin xyz="0.00011321 -0.012495 0.024917" rpy="0 0 0"/>
+      <mass value="0.029604"/>
+      <inertia ixx="0.0000222246" ixy="4.14376e-8" ixz="-9.08097e-8" iyy="0.0000219428" iyz="0.0000011437" izz="0.0000125806"/>
     </inertial>
   </link>
   <link name="shoulder_servo">
@@ -92,9 +92,9 @@
       <geometry><mesh filename="package://arduino_arm/meshes/upper_arm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.100775 -0.0000956828 0.012505" rpy="0 0 0"/>
-      <mass value="0.034679"/>
-      <inertia ixx="0.0000132111" ixy="-1.48905e-7" ixz="0.0000104219" iyy="0.000101132" iyz="-8.14649e-9" izz="0.000100158"/>
+      <origin xyz="-0.102605 -0.0000974212 0.012726" rpy="0 0 0"/>
+      <mass value="0.03406"/>
+      <inertia ixx="0.0000130675" ixy="-1.42829e-7" ixz="0.00000965011" iyy="0.0000945893" iyz="-8.87929e-9" izz="0.0000936581"/>
     </inertial>
   </link>
   <link name="elbow_servo">
@@ -124,9 +124,9 @@
       <geometry><mesh filename="package://arduino_arm/meshes/forearm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.095721 0.00601 0.0096" rpy="0 0 0"/>
-      <mass value="0.025297"/>
-      <inertia ixx="0.00000696939" ixy="0.00000943417" ixz="0.0000085231" iyy="0.000090893" iyz="-0.00000129123" izz="0.0000924445"/>
+      <origin xyz="-0.098122 0.006161 0.009832" rpy="0 0 0"/>
+      <mass value="0.024678"/>
+      <inertia ixx="0.00000684171" ixy="0.00000906924" ixz="0.00000796142" iyy="0.000084976" iyz="-0.00000125597" izz="0.0000865084"/>
     </inertial>
   </link>
   <link name="claw_servo">
@@ -156,9 +156,9 @@
       <geometry><mesh filename="package://arduino_arm/meshes/claw_jaw.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.004902 0.003112 0.002" rpy="0 0 0"/>
-      <mass value="0.005326"/>
-      <inertia ixx="7.65281e-7" ixy="4.02971e-7" ixz="1.59074e-13" iyy="0.00000124177" iyz="9.18347e-14" izz="0.00000199305"/>
+      <origin xyz="-0.00525 0.003327 0.002406" rpy="0 0 0"/>
+      <mass value="0.005036"/>
+      <inertia ixx="7.71007e-7" ixy="4.01954e-7" ixz="-1.07452e-8" iyy="0.00000126761" iyz="6.80846e-9" izz="0.00000202087"/>
     </inertial>
   </link>
   <joint name="yaw_servo_mount" type="fixed">

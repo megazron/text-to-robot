@@ -2,6 +2,7 @@
 // home pose, intersected exactly with manifold-3d. Moving parts are not swept; this is the static check.
 import type { RobotSpecification } from "@ttr/robot-schema";
 import { build, Manifold, evaluate, componentMesh, type Mat4, type Program } from "@ttr/solid";
+import { partFiles } from "@ttr/kernel/ready";
 import { fk } from "./kin.ts";
 
 export interface Overlap { a: string; b: string; volume_mm3: number; min: number[]; max: number[] }
@@ -29,6 +30,11 @@ export function interference(spec: RobotSpecification, minMm3 = 20): { overlaps:
       try {
         if (g.part === "printed") m = evaluate(JSON.parse(String(g.params.program)) as Program);
         else if (g.part === "component") m = componentSolid(String(g.params.key));
+        else if (g.part === "cad") {
+          // CAD-kernel parts: their welded print mesh (metres -> mm)
+          const cm = partFiles(String(g.params.program)).mesh;
+          m = Manifold.ofMesh({ numProp: 3, vertProperties: new Float32Array(cm.v.flatMap((v) => [v[0] * 1000, v[1] * 1000, v[2] * 1000])), triVerts: new Uint32Array(cm.f.flat()) } as any);
+        }
         else continue;
       } catch { skipped.push(l.name); continue; }
       const T = f.link[l.name], R = T.R, p = T.p.map((x) => x * 1000);
@@ -36,9 +42,16 @@ export function interference(spec: RobotSpecification, minMm3 = 20): { overlaps:
       const w = m.transform(M), bb = w.boundingBox();
       solids.push({ name: l.name, m: w, lo: bb.min, hi: bb.max });
     }
+    // contacts that are the design: boards whose header pins sit in a breadboard, and a modelled wearer's own body
+    // segments meeting at the joints (people are soft)
+    const links = new Map(spec.links.map((l) => [l.name, l]));
+    const keyOf = (n: string) => { const g = links.get(n)?.geometry; return g?.type === "mesh" && g.part === "component" ? String(g.params?.key) : ""; };
+    const plugged = new Set(spec.joints.filter((j) => j.type === "fixed" && keyOf(j.parent).startsWith("breadboard")).map((j) => `${j.parent}|${j.child}`));
+    const wearer = (n: string) => links.get(n)?.role === "wearer";
     const overlaps: Overlap[] = [];
     for (let i = 0; i < solids.length; i++) for (let j = i + 1; j < solids.length; j++) {
       const a = solids[i], b = solids[j];
+      if (plugged.has(`${a.name}|${b.name}`) || plugged.has(`${b.name}|${a.name}`) || (wearer(a.name) && wearer(b.name))) continue;
       if ([0, 1, 2].some((k) => a.hi[k] < b.lo[k] || b.hi[k] < a.lo[k])) continue;
       const I = Manifold.intersection(a.m, b.m), v = I.volume();
       if (v > minMm3) { const bb = I.boundingBox(); overlaps.push({ a: a.name, b: b.name, volume_mm3: Math.round(v), min: bb.min.map(Math.round), max: bb.max.map(Math.round) }); }

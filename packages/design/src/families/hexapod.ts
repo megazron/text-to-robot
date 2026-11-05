@@ -68,7 +68,7 @@ function buildHexapod(req: LeggedRequest, cfg: HexCfg, sensors: string[]) {
   const cb = bodyMm(compute), cl = cb.max[0] - cb.min[0], cw = cb.max[1] - cb.min[1];
   const cx = -cl / 2 - cb.min[0] - 6, cy = -cw / 2 - cb.min[1], zc = zDeck + 3 + 5;
   mountAt(A, deck, compute, translation([cx, cy, zc]), "computer", "main computer");
-  for (const h of part(compute).holes.filter((h) => h.axis[2] < -0.5)) { const p = add([cx, cy, 0], [h.pos[0], h.pos[1], 0]); deckOps.push({ op: "box", min: [p[0] - 3, p[1] - 3, zDeck + 2], max: [p[0] + 3, p[1] + 3, zc], r: 2.9 }); }
+  for (const h of part(compute).holes.filter((h) => h.axis[2] < -0.5)) { const p = add([cx, cy, 0], [h.pos[0], h.pos[1], 0]); deckOps.push({ op: "box", min: [p[0] - 3, p[1] - 3, zDeck + 2], max: [p[0] + 3, p[1] + 3, zc + h.pos[2]], r: 2.9 })   /* up to the board's mounting face */; }
   let top = zc + cb.max[2];
   if (sensors.includes("lidar")) {
     // turret: four posts at the computer's corners carry a plate with the LiDAR above everything
@@ -85,7 +85,7 @@ function buildHexapod(req: LeggedRequest, cfg: HexCfg, sensors: string[]) {
   const camKey = sensors.includes("depth") ? "realsense_d435i" : "rpi_camera_module_3";
   const xf = Rd - 4;
   if (camKey === "rpi_camera_module_3") {
-    const h = 22, xb = xf + 3, Tc = frame([xb, 12.5, zDeck + h], [1, 0, 0], [0, -1, 0]);
+    const h = 28, xb = xf + 3, Tc = frame([xb, 12.5, zDeck + h], [1, 0, 0], [0, -1, 0]);   // its connector edge clears the deck top
     mountAt(A, deck, camKey, Tc, "camera", "forward camera");
     deckOps.push({ op: "box", min: [xf - 4, -14, zDeck], max: [xf - 1, 14, zDeck + h + 1], r: 1 });
     for (const [hx, hy] of [[2, 2], [23, 2], [2, 14.5], [23, 14.5]]) { const yw = 12.5 - hx, zw = zDeck + h - hy; deckOps.push({ op: "box", min: [xf - 2, yw - 2.2, zw - 2.2], max: [xb, yw + 2.2, zw + 2.2] }); }

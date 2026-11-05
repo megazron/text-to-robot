@@ -29,10 +29,10 @@
      "saturated_frac": 0.0
     },
     "lf_femur": {
-     "peak_nm": 0.4042,
+     "peak_nm": 0.4043,
      "peak_rating_nm": 4.9033,
      "util_peak": 0.082,
-     "mean_hold_nm": 0.3877,
+     "mean_hold_nm": 0.3878,
      "rated_nm": 1.5691,
      "util_rated": 0.247,
      "max_err": 0.0101,
@@ -40,7 +40,7 @@
      "saturated_frac": 0.0
     },
     "lf_tibia": {
-     "peak_nm": 0.2452,
+     "peak_nm": 0.2453,
      "peak_rating_nm": 2.942,
      "util_peak": 0.083,
      "mean_hold_nm": 0.1209,
@@ -51,7 +51,7 @@
      "saturated_frac": 0.0
     },
     "lm_coxa": {
-     "peak_nm": 0.0144,
+     "peak_nm": 0.0145,
      "peak_rating_nm": 2.942,
      "util_peak": 0.005,
      "mean_hold_nm": 0.0026,
@@ -62,7 +62,7 @@
      "saturated_frac": 0.0
     },
     "lm_femur": {
-     "peak_nm": 0.4037,
+     "peak_nm": 0.4038,
      "peak_rating_nm": 4.9033,
      "util_peak": 0.082,
      "mean_hold_nm": 0.3872,
@@ -95,7 +95,7 @@
      "saturated_frac": 0.0
     },
     "lr_femur": {
-     "peak_nm": 0.4019,
+     "peak_nm": 0.4018,
      "peak_rating_nm": 4.9033,
      "util_peak": 0.082,
      "mean_hold_nm": 0.3854,
@@ -150,7 +150,7 @@
      "saturated_frac": 0.0
     },
     "rm_coxa": {
-     "peak_nm": 0.0124,
+     "peak_nm": 0.0123,
      "peak_rating_nm": 2.942,
      "util_peak": 0.004,
      "mean_hold_nm": 0.0023,
@@ -194,7 +194,7 @@
      "saturated_frac": 0.0
     },
     "rf_femur": {
-     "peak_nm": 0.4026,
+     "peak_nm": 0.4027,
      "peak_rating_nm": 4.9033,
      "util_peak": 0.082,
      "mean_hold_nm": 0.3862,
@@ -240,10 +240,10 @@
      "saturated_frac": 0.0
     },
     "lf_femur": {
-     "peak_nm": 0.5831,
+     "peak_nm": 0.5832,
      "peak_rating_nm": 4.9033,
      "util_peak": 0.119,
-     "mean_low_nm": 0.4138,
+     "mean_low_nm": 0.4139,
      "rated_nm": 1.5691,
      "util_rated": 0.264,
      "max_err": 0.0319,
@@ -309,7 +309,7 @@
      "peak_nm": 0.5807,
      "peak_rating_nm": 4.9033,
      "util_peak": 0.118,
-     "mean_low_nm": 0.4115,
+     "mean_low_nm": 0.4114,
      "rated_nm": 1.5691,
      "util_rated": 0.262,
      "max_err": 0.0318,
@@ -405,7 +405,7 @@
      "saturated_frac": 0.0
     },
     "rf_femur": {
-     "peak_nm": 0.5815,
+     "peak_nm": 0.5816,
      "peak_rating_nm": 4.9033,
      "util_peak": 0.119,
      "mean_low_nm": 0.4123,
@@ -419,7 +419,7 @@
      "peak_nm": 0.3387,
      "peak_rating_nm": 2.942,
      "util_peak": 0.115,
-     "mean_low_nm": 0.2947,
+     "mean_low_nm": 0.2948,
      "rated_nm": 0.9807,
      "util_rated": 0.301,
      "max_err": 0.0172,
@@ -431,5 +431,5 @@
  },
  "passed": 2,
  "total": 2,
- "source_urdf_sha256": "89eb4bcab930e8e2aa6aa34e6fa8c144c1a390c92369f0911c59a5f82beaaa2e"
+ "source_urdf_sha256": "60948f8421a0d7e959130aefd0db218cd869da354e617715ef500fe04ae1bdfa"
 }

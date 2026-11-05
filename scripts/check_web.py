@@ -1,4 +1,4 @@
-"""Exercise all 17 designs in Chromium with third-party requests blocked.
+"""Exercise every example design in Chromium with third-party requests blocked.
 Developer check: pip install -r requirements-dev.txt; python -m playwright install chromium.
 TTR_CHROMIUM may select an existing Chromium executable.
 
@@ -36,10 +36,11 @@ with tempfile.TemporaryDirectory() as td:
             for folder in sorted((root/'examples').glob('[0-9][0-9]_*')):
                 prompt=(folder/'prompt.txt').read_text();spec=json.loads((folder/'robot.json').read_text());expected=spec['robot_name']
                 page.fill('#prompt',prompt)
-                with page.expect_response(lambda r:r.url.endswith('/api/robots/generate')) as request:page.click('#genbtn')
+                # designed robots take seconds to minutes (the full Mark 43 suit sizes and poses 70 armour pieces)
+                with page.expect_response(lambda r:r.url.endswith('/api/robots/generate'),timeout=900_000) as request:page.click('#genbtn')
                 assert request.value.status==200,(folder.name,request.value.text())
-                page.wait_for_function('!document.querySelector("#genbtn").disabled');page.wait_for_load_state('networkidle')
-                page.wait_for_function('window.__ttr.preview.ready')
+                page.wait_for_function('!document.querySelector("#genbtn").disabled',timeout=900_000);page.wait_for_load_state('networkidle',timeout=300_000)
+                page.wait_for_function('window.__ttr.preview.ready',timeout=300_000)
                 actual=page.evaluate('({name:window.__ttr.robot.robot_name,links:window.__ttr.robot.links.length,joints:window.__ttr.robot.joints.length})')
                 assert actual['name']==expected,(folder.name,actual)
                 assert actual['links']==len(spec['links']) and actual['joints']==len(spec['joints']),(folder.name,actual)
@@ -73,7 +74,7 @@ with tempfile.TemporaryDirectory() as td:
             fault.wait_for_function('window.__ttr.preview.ready')
             assert not fault.locator('#previewStatus').is_visible()
             fault.close();browser.close()
-        report={'scope':'Chromium generation of all 17 examples with external network blocked; shared URL reload; not physical validation',
+        report={'scope':'Chromium generation of every example with external network blocked; shared URL reload; not physical validation',
                 'external_requests':external,'page_errors':errors,'failed_responses':responses,'shared_reload_pass':True,'mesh_failure_and_retry_pass':True,'examples':rows,
                 'web_source_sha256':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in (root/'apps/web/public').glob('*') if p.is_file()}}
         report_path.write_text(json.dumps(report,indent=2)+'\n')

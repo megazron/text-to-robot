@@ -181,7 +181,7 @@ function buildBiped(req: LeggedRequest, cfg: BipedCfg, sensors: SensorKind[]) {
   const battFront = -Dt + BW + 1 + cols * (bwid + 2);
   const cx0 = -Dt + BW + 2, cTx = cx0 - cb.min[0], cTy = -(cb.max[1] + cb.min[1]) / 2;
   mountAt(A, torso, compute, translation([cTx, cTy, zShelf + 3 + 6]), "computer", "main computer");
-  for (const h of part(compute).holes.filter((h) => h.axis[2] < -0.5)) tOps.push({ op: "box", min: [cTx + h.pos[0] - 3, cTy + h.pos[1] - 3, zShelf + 2], max: [cTx + h.pos[0] + 3, cTy + h.pos[1] + 3, zShelf + 9], r: 2.9 });
+  for (const h of part(compute).holes.filter((h) => h.axis[2] < -0.5)) tOps.push({ op: "box", min: [cTx + h.pos[0] - 3, cTy + h.pos[1] - 3, zShelf + 2], max: [cTx + h.pos[0] + 3, cTy + h.pos[1] + 3, zShelf + 9 + h.pos[2]], r: 2.9 });   // up to the board's mounting face
   const regions = [
     { x0: battFront + 2, x1: Dt - BW - 1, y0: -Wt + BW + 1, y1: Wt - BW - 1, z: zT0 + BW, zMax: zShelf - 1 },
     { x0: cx0 + cb.max[0] - cb.min[0] + 3, x1: Dt - BW - 1, y0: -Wt + BW + 1, y1: Wt - BW - 1, z: zShelf + 3, zMax: zSh - (-shB.min[0]) - WALL - 2 },

@@ -1121,7 +1121,7 @@
   {
    "name": "torso_b",
    "watertight": true,
-   "volume_cm3": 1073.06,
+   "volume_cm3": 1072.72,
    "size_mm": [
     180.5,
     240.0,
@@ -1137,7 +1137,7 @@
    "support_frac": 0.171,
    "bed_contact_cm2": 433.2,
    "min_wall_mm": 0.4,
-   "thin_wall_frac": 0.068,
+   "thin_wall_frac": 0.069,
    "passed": false,
    "supports": "needed",
    "problems": [

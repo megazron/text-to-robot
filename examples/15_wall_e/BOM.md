@@ -1,6 +1,6 @@
 # Bill of Materials — wall_e
 
-**Estimated total: $67.43**  ·  tier: hobby
+**Estimated total: $67.39**  ·  tier: hobby
 
 **Effort sizing: passes catalogue estimate; hardware verified: no.**
 
@@ -16,7 +16,7 @@
 | Electronics | TB6612FNG dual DC motor driver module (1.2 A per channel) _(TB6612FNG dual motor driver · https://www.aliexpress.com/w/wholesale-tb6612fng-motor-driver.html)_ | 2 | 2 | 4 | 7.4 V |
 | Actuator | TT gear motor 3-6 V, 1:48, 200 rpm (yellow, double-D shaft) _(drive motor · https://www.adafruit.com/product/3777)_ | 4 | 1.5 | 6 | 0.0235 N·m rated / 0.0785 N·m peak, 6 V |
 | Drive | 65 mm rubber wheel for TT gearmotors (double-D 5.3x3.7 bore) _(track drive wheel · https://makerlab-electronics.com/products/65mm-yellow-wheel)_ | 4 | 2 | 8 | https://makerlab-electronics.com/products/65mm-yellow-wheel |
-| Printed structure | PETG filament for 8 printed parts _(body, track_left, track_right, lid, neck, head, left_arm, right_arm)_ | 1 | 11.59 | 11.59 | 458 g of parts (+15 % supports/waste), about 41.8 h of printing |
+| Printed structure | PETG filament for 8 printed parts _(body, track_left, track_right, lid, neck, head, left_arm, right_arm)_ | 1 | 11.55 | 11.55 | 457 g of parts (+15 % supports/waste), about 41.6 h of printing |
 | Fasteners | Screws, nuts and inserts | 32 | 0.12 | 3.84 | 8x M3x25 socket head + nut (motor through-bolt); 4x M2x6 self-tapping (sensor); 2x M3x8 countersunk + nut (pack); 6x M2.5x6 + nut (PCA9685) / M3x6 (LM2596); 4x M3x10 self-tapping (lid); 8x M2 self-tapping (servo tabs, from the servo kits) |
 
 ## Actuator sizing

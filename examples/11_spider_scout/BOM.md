@@ -1,6 +1,6 @@
 # Bill of Materials — hexapod
 
-**Estimated total: $1032.68**  ·  tier: hobby  ·  budget: $1500 ✅ within budget
+**Estimated total: $1032.69**  ·  tier: hobby  ·  budget: $1500 ✅ within budget
 
 **Effort sizing: passes catalogue estimate; hardware verified: no.**
 
@@ -15,7 +15,7 @@
 | Sensor | Raspberry Pi Camera Module 3 (standard lens) _(forward camera · https://www.raspberrypi.com/products/camera-module-3/)_ | 1 | 25 | 25 | 3.3 V |
 | Sensor | Slamtec RPLIDAR C1 (DTOF 360 deg, 12 m) _(360 deg LiDAR turret · https://www.waveshare.com/rplidar-c1.htm)_ | 1 | 79.99 | 79.99 | 5 V |
 | Electronics | Waveshare Bus Servo Adapter (A) _(USB to servo bus · https://www.waveshare.com/bus-servo-adapter-a.htm)_ | 1 | 10.6 | 10.6 | 12 V |
-| Printed structure | PETG filament for 20 printed parts _(base_link, top_deck, lf_coxa_link, lf_femur_link, lf_tibia_link, lm_coxa_link, lm_femur_link, lm_tibia_link, lr_coxa_link, lr_femur_link, lr_tibia_link, rr_coxa_link, rr_femur_link, rr_tibia_link, rm_coxa_link, rm_femur_link, rm_tibia_link, rf_coxa_link, rf_femur_link, rf_tibia_link)_ | 1 | 17.01 | 17.01 | 672 g of parts (+15 % supports/waste), about 61.2 h of printing |
+| Printed structure | PETG filament for 20 printed parts _(base_link, top_deck, lf_coxa_link, lf_femur_link, lf_tibia_link, lm_coxa_link, lm_femur_link, lm_tibia_link, lr_coxa_link, lr_femur_link, lr_tibia_link, rr_coxa_link, rr_femur_link, rr_tibia_link, rm_coxa_link, rm_femur_link, rm_tibia_link, rf_coxa_link, rf_femur_link, rf_tibia_link)_ | 1 | 17.02 | 17.02 | 673 g of parts (+15 % supports/waste), about 61.2 h of printing |
 | Fasteners | Screws, nuts and inserts | 147 | 0.12 | 17.64 | 3x M3 x 12 deck pillar screws; 72x M2 x 6 case screws; 72x horn screws |
 
 ## Actuator sizing
@@ -23,22 +23,22 @@
 | Joint | Required effort | Unit | Chosen actuator | Margin |
 |---|--:|---|---|--:|
 | lf_coxa | 0.346 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 8.5x |
-| lf_femur | 2.179 | N·m | Feetech STS3250 C002 12 V 50 kg.cm (1:345) | 2.25x |
+| lf_femur | 2.18 | N·m | Feetech STS3250 C002 12 V 50 kg.cm (1:345) | 2.25x |
 | lf_tibia | 1.497 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 1.96x |
 | lm_coxa | 0.346 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 8.5x |
 | lm_femur | 2.182 | N·m | Feetech STS3250 C002 12 V 50 kg.cm (1:345) | 2.25x |
 | lm_tibia | 1.502 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 1.96x |
 | lr_coxa | 0.329 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 8.93x |
-| lr_femur | 2.179 | N·m | Feetech STS3250 C002 12 V 50 kg.cm (1:345) | 2.25x |
+| lr_femur | 2.18 | N·m | Feetech STS3250 C002 12 V 50 kg.cm (1:345) | 2.25x |
 | lr_tibia | 1.497 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 1.96x |
 | rr_coxa | 0.346 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 8.5x |
-| rr_femur | 2.179 | N·m | Feetech STS3250 C002 12 V 50 kg.cm (1:345) | 2.25x |
+| rr_femur | 2.18 | N·m | Feetech STS3250 C002 12 V 50 kg.cm (1:345) | 2.25x |
 | rr_tibia | 1.497 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 1.96x |
 | rm_coxa | 0.346 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 8.5x |
 | rm_femur | 2.182 | N·m | Feetech STS3250 C002 12 V 50 kg.cm (1:345) | 2.25x |
 | rm_tibia | 1.502 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 1.96x |
 | rf_coxa | 0.329 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 8.93x |
-| rf_femur | 2.179 | N·m | Feetech STS3250 C002 12 V 50 kg.cm (1:345) | 2.25x |
+| rf_femur | 2.18 | N·m | Feetech STS3250 C002 12 V 50 kg.cm (1:345) | 2.25x |
 | rf_tibia | 1.497 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 1.96x |
 
 ## Notes

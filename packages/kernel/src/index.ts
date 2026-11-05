@@ -206,7 +206,16 @@ function cradleOf(key: string, T: Mat4, wall: number): { add: Shape3D[]; cut: Sh
   return { add: [shell], cut };
 }
 function hornOf(key: string, t: number, extra: number, channel?: number): { add: Shape3D[]; cut: Shape3D[] } {
-  const holes = outputHoles(key), cut = screwCuts(holes, I4(), t, 0);
+  // hobby servos ship with a plastic horn on the spline: the plate takes it in a matching pocket (cross or disc, 0.3 mm
+  // clearance) that also locates it, and stays at least 1.6 mm thick over the pocket
+  const pocket: Shape3D[] = [];
+  if (key.startsWith("hobby_")) {
+    const sp = part(key).specs, h = (part(key).bbox_mm?.max[2] ?? 0) + 0.2, r = Number(sp.horn_radius_mm ?? hornRadiusMm(key)) + 0.3;
+    t = Math.max(t, h + 1.6);
+    if (sp.horn === "cross") pocket.push(box([-r, -3.6, -1], [r, 3.6, h]), box([-3.6, -r, -1], [3.6, r, h]), rod([0, 0, -1], [0, 0, h], 4.1));
+    else pocket.push(rod([0, 0, -1], [0, 0, h], r));
+  }
+  const holes = outputHoles(key), cut = [...pocket, ...screwCuts(holes, I4(), t, 0)];
   if (channel !== undefined) {
     // structure stands on the plate: horn screws go in from the horn side, the spline screw through a centre channel
     cut.push(rod([0, 0, -1], [0, 0, t + channel], centreHoleR(key)));

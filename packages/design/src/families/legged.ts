@@ -35,7 +35,9 @@ function deckElectronics(A: Assembly, deck: Frame, d: Deck, e: Electronics, sens
   // compute at the rear of the deck on 6 mm bosses
   const c = part(e.compute), bb = bodyMm(e.compute), cl = bb.max[0] - bb.min[0], cw = bb.max[1] - bb.min[1];
   const cx0 = d.lo[0] + 6, cy0 = -cw / 2 - bb.min[1];
-  const Tc = translation([cx0 - bb.min[0], cy0, zt + 6]);
+  // the board's mounting face sits on the 6 mm bosses (it is not always the model's z = 0: the Jetson's is at -3 mm)
+  const faceZ = c.holes.find((h) => h.axis[2] < -0.5)?.pos[2] ?? 0;
+  const Tc = translation([cx0 - bb.min[0], cy0, zt + 6 - faceZ]);
   mountAt(A, cx0 + cl > 0 ? deck : rearDeck, e.compute, Tc, "computer", "main computer");
   for (const h of c.holes.filter((h) => h.axis[2] < -0.5)) { const p = add([cx0 - bb.min[0], cy0, zt], [h.pos[0], h.pos[1], 0]); ops.push({ op: "box", min: [p[0] - 3, p[1] - 3, zt - 1], max: [p[0] + 3, p[1] + 3, zt + 6], r: 2.9 }); }
   A.fastener("M2.5 x 10 board screws", 4);

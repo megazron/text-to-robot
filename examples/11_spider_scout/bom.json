@@ -88,9 +88,9 @@
       "category": "Printed structure",
       "name": "PETG filament for 20 printed parts",
       "qty": 1,
-      "unit_cost": 17.01,
-      "subtotal": 17.01,
-      "spec": "672 g of parts (+15 % supports/waste), about 61.2 h of printing",
+      "unit_cost": 17.02,
+      "subtotal": 17.02,
+      "spec": "673 g of parts (+15 % supports/waste), about 61.2 h of printing",
       "note": "base_link, top_deck, lf_coxa_link, lf_femur_link, lf_tibia_link, lm_coxa_link, lm_femur_link, lm_tibia_link, lr_coxa_link, lr_femur_link, lr_tibia_link, rr_coxa_link, rr_femur_link, rr_tibia_link, rm_coxa_link, rm_femur_link, rm_tibia_link, rf_coxa_link, rf_femur_link, rf_tibia_link"
     },
     {
@@ -102,7 +102,7 @@
       "spec": "3x M3 x 12 deck pillar screws; 72x M2 x 6 case screws; 72x horn screws"
     }
   ],
-  "total": 1032.68,
+  "total": 1032.69,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
@@ -117,9 +117,9 @@
     },
     {
       "joint": "lf_femur",
-      "required_effort": 2.179,
+      "required_effort": 2.18,
       "effort_unit": "N·m",
-      "required_torque_nm": 2.179,
+      "required_torque_nm": 2.18,
       "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
       "margin": "2.25x"
     },
@@ -165,9 +165,9 @@
     },
     {
       "joint": "lr_femur",
-      "required_effort": 2.179,
+      "required_effort": 2.18,
       "effort_unit": "N·m",
-      "required_torque_nm": 2.179,
+      "required_torque_nm": 2.18,
       "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
       "margin": "2.25x"
     },
@@ -189,9 +189,9 @@
     },
     {
       "joint": "rr_femur",
-      "required_effort": 2.179,
+      "required_effort": 2.18,
       "effort_unit": "N·m",
-      "required_torque_nm": 2.179,
+      "required_torque_nm": 2.18,
       "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
       "margin": "2.25x"
     },
@@ -237,9 +237,9 @@
     },
     {
       "joint": "rf_femur",
-      "required_effort": 2.179,
+      "required_effort": 2.18,
       "effort_unit": "N·m",
-      "required_torque_nm": 2.179,
+      "required_torque_nm": 2.18,
       "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
       "margin": "2.25x"
     },

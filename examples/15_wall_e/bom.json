@@ -96,9 +96,9 @@
       "category": "Printed structure",
       "name": "PETG filament for 8 printed parts",
       "qty": 1,
-      "unit_cost": 11.59,
-      "subtotal": 11.59,
-      "spec": "458 g of parts (+15 % supports/waste), about 41.8 h of printing",
+      "unit_cost": 11.55,
+      "subtotal": 11.55,
+      "spec": "457 g of parts (+15 % supports/waste), about 41.6 h of printing",
       "note": "body, track_left, track_right, lid, neck, head, left_arm, right_arm"
     },
     {
@@ -110,7 +110,7 @@
       "spec": "8x M3x25 socket head + nut (motor through-bolt); 4x M2x6 self-tapping (sensor); 2x M3x8 countersunk + nut (pack); 6x M2.5x6 + nut (PCA9685) / M3x6 (LM2596); 4x M3x10 self-tapping (lid); 8x M2 self-tapping (servo tabs, from the servo kits)"
     }
   ],
-  "total": 67.43,
+  "total": 67.39,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,

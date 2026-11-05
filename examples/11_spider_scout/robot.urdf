@@ -156,9 +156,9 @@
       <geometry><mesh filename="package://hexapod/meshes/top_deck.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.00153 -0.0000287057 0.051928" rpy="0 0 0"/>
-      <mass value="0.090721"/>
-      <inertia ixx="0.000208675" ixy="-1.16399e-8" ixz="0.00000758871" iyy="0.000224155" iyz="-9.44861e-9" izz="0.000229454"/>
+      <origin xyz="-0.00122 -0.0000114642 0.052041" rpy="0 0 0"/>
+      <mass value="0.090864"/>
+      <inertia ixx="0.000208587" ixy="-4.97949e-9" ixz="0.00000703706" iyy="0.000225293" iyz="-5.45906e-9" izz="0.000230197"/>
     </inertial>
   </link>
   <link name="lf_coxa_actuator">
@@ -866,7 +866,7 @@
   <joint name="camera_mount" type="fixed">
     <parent link="top_deck"/>
     <child link="camera"/>
-    <origin xyz="0.0628 0.0125 0.0648" rpy="-1.570796 0 -1.570796"/>
+    <origin xyz="0.0628 0.0125 0.0708" rpy="-1.570796 0 -1.570796"/>
   </joint>
   <joint name="top_deck_mount" type="fixed">
     <parent link="base_link"/>

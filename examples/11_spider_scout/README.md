@@ -8,7 +8,7 @@ Interpreted as: hexapod · imu (base_link) · lidar (base_link) · camera (base_
 
 **Hexapod, 18 x Feetech STS3250 C002 12 V 50 kg.cm (1:345), 2.47 kg, 207 mm body, camera + lidar + imu, 40 min, $998 of parts**
 
-Parts cost **$1032.68** (budget $1500: within) · printed structure 20 parts, 672 g · checks passed 47/47
+Parts cost **$1032.69** (budget $1500: within) · printed structure 20 parts, 673 g · checks passed 47/47
 
 ## What it can do
 
@@ -33,22 +33,22 @@ Parts cost **$1032.68** (budget $1500: within) · printed structure 20 parts, 67
 | Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
 |---|---|--:|--:|--:|--:|
 | lf_coxa | feetech_sts3215_c047 | 0.346 | 0.9807 / 2.942 | 8.5x | 4.712 |
-| lf_femur | feetech_sts3250 | 2.179 | 1.5691 / 4.9033 | 2.25x | 7.854 |
+| lf_femur | feetech_sts3250 | 2.18 | 1.5691 / 4.9033 | 2.25x | 7.854 |
 | lf_tibia | feetech_sts3215_c047 | 1.497 | 0.9807 / 2.942 | 1.96x | 4.712 |
 | lm_coxa | feetech_sts3215_c047 | 0.346 | 0.9807 / 2.942 | 8.5x | 4.712 |
 | lm_femur | feetech_sts3250 | 2.182 | 1.5691 / 4.9033 | 2.25x | 7.854 |
 | lm_tibia | feetech_sts3215_c047 | 1.502 | 0.9807 / 2.942 | 1.96x | 4.712 |
 | lr_coxa | feetech_sts3215_c047 | 0.329 | 0.9807 / 2.942 | 8.93x | 4.712 |
-| lr_femur | feetech_sts3250 | 2.179 | 1.5691 / 4.9033 | 2.25x | 7.854 |
+| lr_femur | feetech_sts3250 | 2.18 | 1.5691 / 4.9033 | 2.25x | 7.854 |
 | lr_tibia | feetech_sts3215_c047 | 1.497 | 0.9807 / 2.942 | 1.96x | 4.712 |
 | rr_coxa | feetech_sts3215_c047 | 0.346 | 0.9807 / 2.942 | 8.5x | 4.712 |
-| rr_femur | feetech_sts3250 | 2.179 | 1.5691 / 4.9033 | 2.25x | 7.854 |
+| rr_femur | feetech_sts3250 | 2.18 | 1.5691 / 4.9033 | 2.25x | 7.854 |
 | rr_tibia | feetech_sts3215_c047 | 1.497 | 0.9807 / 2.942 | 1.96x | 4.712 |
 | rm_coxa | feetech_sts3215_c047 | 0.346 | 0.9807 / 2.942 | 8.5x | 4.712 |
 | rm_femur | feetech_sts3250 | 2.182 | 1.5691 / 4.9033 | 2.25x | 7.854 |
 | rm_tibia | feetech_sts3215_c047 | 1.502 | 0.9807 / 2.942 | 1.96x | 4.712 |
 | rf_coxa | feetech_sts3215_c047 | 0.329 | 0.9807 / 2.942 | 8.93x | 4.712 |
-| rf_femur | feetech_sts3250 | 2.179 | 1.5691 / 4.9033 | 2.25x | 7.854 |
+| rf_femur | feetech_sts3250 | 2.18 | 1.5691 / 4.9033 | 2.25x | 7.854 |
 | rf_tibia | feetech_sts3215_c047 | 1.497 | 0.9807 / 2.942 | 1.96x | 4.712 |
 
 ## Engineering checks

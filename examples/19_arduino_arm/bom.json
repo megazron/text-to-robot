@@ -51,9 +51,9 @@
       "category": "Printed structure",
       "name": "PETG filament for 5 printed parts",
       "qty": 1,
-      "unit_cost": 3.67,
-      "subtotal": 3.67,
-      "spec": "145 g of parts (+15 % supports/waste), about 13.2 h of printing",
+      "unit_cost": 3.61,
+      "subtotal": 3.61,
+      "spec": "143 g of parts (+15 % supports/waste), about 13.0 h of printing",
       "note": "base_link, turntable, upper_arm, forearm, claw_jaw"
     },
     {
@@ -65,26 +65,26 @@
       "spec": "8x M2 self-tapping (servo tabs, from the servo kits); 4x M4 screws or desk clamps (base)"
     }
   ],
-  "total": 43.61,
+  "total": 43.55,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
   "actuator_sizing": [
     {
       "joint": "shoulder",
-      "required_effort": 0.3205,
+      "required_effort": 0.3186,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.3205,
+      "required_torque_nm": 0.3186,
       "chosen": "TowerPro MG996R standard servo (metal gears) + round horn",
-      "margin": "3.37x"
+      "margin": "3.39x"
     },
     {
       "joint": "elbow",
-      "required_effort": 0.0945,
+      "required_effort": 0.094,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.0945,
+      "required_torque_nm": 0.094,
       "chosen": "TowerPro MG996R standard servo (metal gears) + round horn",
-      "margin": "11.42x"
+      "margin": "11.47x"
     }
   ],
   "warnings": [],

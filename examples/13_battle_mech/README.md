@@ -8,7 +8,7 @@ Interpreted as: humanoid battle mech · imu (base_link) · camera (neck_pan_link
 
 **Battle mech, 1.182 m, 22.41 kg, 30 DOF (7-DOF arms + grippers), 174 min, $15909 of parts**
 
-Parts cost **$16103.22** · printed structure 45 parts, 6142 g · checks passed 81/81
+Parts cost **$16103.21** · printed structure 45 parts, 6142 g · checks passed 81/81
 
 ## What it can do
 
@@ -34,15 +34,15 @@ Parts cost **$16103.22** · printed structure 45 parts, 6142 g · checks passed 
 | Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
 |---|---|--:|--:|--:|--:|
 | l_hip_yaw | cubemars_ak60_6 | 4.615 | 3 / 9 | 1.95x | 51.313 |
-| l_hip_roll | cubemars_ak80_64 | 49.094 | 48 / 120 | 2.44x | 5.027 |
-| l_hip_pitch | cubemars_ak80_64 | 62.573 | 48 / 120 | 1.92x | 5.027 |
-| l_knee | cubemars_ak80_64 | 59.883 | 48 / 120 | 2x | 5.027 |
+| l_hip_roll | cubemars_ak80_64 | 49.093 | 48 / 120 | 2.44x | 5.027 |
+| l_hip_pitch | cubemars_ak80_64 | 62.572 | 48 / 120 | 1.92x | 5.027 |
+| l_knee | cubemars_ak80_64 | 59.882 | 48 / 120 | 2x | 5.027 |
 | l_ankle_pitch | cubemars_ak80_64 | 30.922 | 48 / 120 | 3.88x | 5.027 |
 | l_ankle_roll | cubemars_ak70_10 | 13.072 | 8.3 / 24.8 | 1.9x | 32.463 |
 | r_hip_yaw | cubemars_ak60_6 | 4.615 | 3 / 9 | 1.95x | 51.313 |
-| r_hip_roll | cubemars_ak80_64 | 49.094 | 48 / 120 | 2.44x | 5.027 |
-| r_hip_pitch | cubemars_ak80_64 | 62.573 | 48 / 120 | 1.92x | 5.027 |
-| r_knee | cubemars_ak80_64 | 59.883 | 48 / 120 | 2x | 5.027 |
+| r_hip_roll | cubemars_ak80_64 | 49.093 | 48 / 120 | 2.44x | 5.027 |
+| r_hip_pitch | cubemars_ak80_64 | 62.572 | 48 / 120 | 1.92x | 5.027 |
+| r_knee | cubemars_ak80_64 | 59.882 | 48 / 120 | 2x | 5.027 |
 | r_ankle_pitch | cubemars_ak80_64 | 30.922 | 48 / 120 | 3.88x | 5.027 |
 | r_ankle_roll | cubemars_ak70_10 | 13.072 | 8.3 / 24.8 | 1.9x | 32.463 |
 | l_shoulder_pitch | cubemars_ak70_10 | 7.577 | 8.3 / 24.8 | 3.27x | 32.463 |
