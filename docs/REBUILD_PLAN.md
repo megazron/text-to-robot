@@ -2,6 +2,8 @@
 
 Status: started 2026-11-05. Each step lands on `main` when its tests pass.
 
+Done: step 1 (kernel, `packages/kernel`, tests in `tests/kernel.test.ts`).
+
 ## Why
 
 - Printed parts are built by a mesh CSG engine (manifold-3d) from boxes, cylinders and hulls: no fillets,
@@ -48,3 +50,13 @@ MG90S, LED eyes) + arc reactor + repulsor gloves, $XX".
 4. Designers rebuilt on the kernel, Arduino first: desk arm, 2WD/4WD car, WALL-E, Mark 43 (helmet ->
    armour pieces -> full suit tiers, each with what it can and cannot do).
 5. Remaining designers moved to the kernel; examples, GIFs and README regenerated from the new designs.
+6. New web UI: a bento card dashboard (rounded cards, slim icon sidebar, pill badges, soft depth) in green
+   and black, with the Arduino button and the price-tier picker built in.
+
+## Privacy (kept, and said on the page)
+
+- Robots are generated in the user's browser; the static site has no server that could receive them.
+- Designs are kept in the browser's own storage. A share link carries the design after `#` in the URL,
+  which browsers never send to a server.
+- A public gallery / blog of designs is opt-in only: a design leaves the device when its owner presses
+  Publish, and can be unpublished. That needs a small storage backend, designed as its own step.
