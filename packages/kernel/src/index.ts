@@ -252,18 +252,32 @@ function binaryStl(v: Vec3[], f: [number, number, number][], name: string): Uint
 /** Build a part program into its exact solid and every file a maker needs. Call initKernel() first. */
 export function exportPart(p: Program, quality: { tolerance?: number; angular?: number } = {}): PartFiles {
   if (!mf) throw new Error("initKernel() has not finished");
-  return scoped(() => {
-    const s = evaluate(p);
-    const m = s.mesh({ tolerance: quality.tolerance ?? 0.05, angularTolerance: quality.angular ?? 0.2 });
-    const w = weld(m.vertices, m.triangles);
-    const bb = s.boundingBox;
-    const step = stepText(s);
-    return {
-      stl: binaryStl(w.v, w.f, p.name), step,
-      mesh: { v: w.v.map((x) => [x[0] / 1000, x[1] / 1000, x[2] / 1000] as Vec3), f: w.f },
-      volume_mm3: w.volume, bbox_mm: { min: [...bb.bounds[0]] as Vec3, max: [...bb.bounds[1]] as Vec3 }, bodies: w.bodies, watertight: w.watertight, genus: w.genus,
-    };
-  });
+  // OpenCascade's mesher occasionally leaves a surface the weld cannot close (tangent fillets, near-coincident faces):
+  // retry finer, then without the finishing fillet, then on a cleaned-up shape
+  const attempts: { tol: number; ang: number; edge: boolean; clean: boolean }[] = [
+    { tol: quality.tolerance ?? 0.05, ang: quality.angular ?? 0.2, edge: true, clean: false },
+    { tol: 0.02, ang: 0.1, edge: true, clean: false },
+    { tol: 0.05, ang: 0.2, edge: false, clean: false },
+    { tol: 0.02, ang: 0.1, edge: false, clean: true },
+  ];
+  let last: unknown;
+  for (const a of attempts) {
+    try {
+      return scoped(() => {
+        let s = evaluate(a.edge ? p : { ...p, edge: 0 });
+        if (a.clean) { try { s = keep(s.simplify() as Shape3D); } catch { /* keep the raw shape */ } }
+        const m = s.mesh({ tolerance: a.tol, angularTolerance: a.ang });
+        const w = weld(m.vertices, m.triangles);
+        const bb = s.boundingBox;
+        return {
+          stl: binaryStl(w.v, w.f, p.name), step: stepText(s),
+          mesh: { v: w.v.map((x) => [x[0] / 1000, x[1] / 1000, x[2] / 1000] as Vec3), f: w.f },
+          volume_mm3: w.volume, bbox_mm: { min: [...bb.bounds[0]] as Vec3, max: [...bb.bounds[1]] as Vec3 }, bodies: w.bodies, watertight: w.watertight, genus: w.genus,
+        };
+      });
+    } catch (e) { last = e; }
+  }
+  throw new Error(`part "${p.name}" could not be meshed into a closed solid: ${(last as Error)?.message ?? last}`);
 }
 function stepText(s: Shape3D): string {
   const O = oc(), writer = new O.STEPControl_Writer(), progress = new O.Message_ProgressRange();

@@ -38,3 +38,4 @@ export { designGripper, buildParallelGripper, chooseGripperServo, gripperLevels,
 export type { DesignRequest } from "./families/common.ts";
 export { designScara } from "./families/scara.ts";
 export { designArduinoCar, arduinoCarOptions, type ArduinoCarRequest, type ArduinoTier } from "./families/arduino-car.ts";
+export { designArduinoArm, type ArduinoArmRequest } from "./families/arduino-arm.ts";
