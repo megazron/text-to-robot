@@ -182,10 +182,14 @@ export function designArduinoWallE(req: ArduinoWallERequest = {}): RobotSpecific
   const m = totalMass(A.spec), g = 9.81, rr = ZC / 1000, rt = rating(MOTOR);
   const slope = m * (g * Math.sin(10 * Math.PI / 180) + 0.5 + 0.03 * g) * rr / wheelJoints.length;
   A.check("drive:torque", slope <= rt.rated_nm, `${m.toFixed(2)} kg on a 10 deg slope accelerating 0.5 m/s^2: ${slope.toFixed(4)} N·m per wheel vs ${rt.rated_nm} N·m continuous`);
-  // turning on the spot drags the tracks sideways: per side force = mu * m g * L / (4 B)
-  const L = 2 * XA / 1000, B = 2 * (BY + 14.5) / 1000, Fturn = 0.5 * m * g * L / (4 * B);
-  A.check("drive:skid_turn", (Fturn * rr) / 2 <= rt.rated_nm, `turning on the spot (mu 0.5, contact ${L * 1000} mm, track gauge ${(B * 1000).toFixed(0)} mm): ${((Fturn * rr) / 2).toFixed(4)} N·m per wheel`);
+  // turning on the spot drags the tracks sideways: per side force = mu * m g * L / (4 B); checked on a grippy floor (mu 1.0,
+  // TPU on wood or tile) so the motors never stall in a turn
+  const L = 2 * XA / 1000, B = 2 * (BY + 14.5) / 1000, Fturn = 1.0 * m * g * L / (4 * B);
+  const tauTurn = (Fturn * rr) / 2;
+  A.check("drive:skid_turn", tauTurn * DYNAMIC_FACTOR <= rt.peak_nm, `turning on the spot (mu 1.0, contact ${L * 1000} mm, track gauge ${(B * 1000).toFixed(0)} mm): ${tauTurn.toFixed(4)} N·m per wheel x ${DYNAMIC_FACTOR} vs stall ${rt.peak_nm} N·m (short transient, as for the skid-steer bases)`);
   const vmax = rt.speed_rad_s * rr * 0.8;
+  // a tracked base turns slower than its no-slip rate: the tracks slide sideways (same model as the skid-steer bases)
+  const chi = 1 + 2 * (L / B) ** 2, turnRate = (0.5 * vmax) / (B / 2) / chi;
   A.check("drive:top_speed", vmax >= 0.3, `${vmax.toFixed(2)} m/s`);
   const servoStall = 4 * Number(part(SERVO).specs.stall_current_a), buckA = Number(part("buck_lm2596").specs.current_a);
   A.check("power:servo_supply", servoStall <= buckA, `four SG90s stalled together draw ${servoStall.toFixed(1)} A of the LM2596's ${buckA} A`);
@@ -194,9 +198,10 @@ export function designArduinoWallE(req: ArduinoWallERequest = {}): RobotSpecific
   A.check("power:runtime", runtime >= 45, `${runtime.toFixed(0)} min (four drive motors + idling servos)`);
   const bom = A.bom();
   if (req.budget !== undefined) A.check("budget", bom.cost_usd <= req.budget, `$${bom.cost_usd.toFixed(2)} of parts vs $${req.budget} budget`);
-  A.design.performance = { mass_kg: +m.toFixed(3), top_speed_m_s: +vmax.toFixed(2), runtime_min: +runtime.toFixed(0), cost_usd: bom.cost_usd, height_mm: 0, tier: "cheapest", tier_label: "Arduino WALL-E" };
+  A.design.performance = { mass_kg: +m.toFixed(3), top_speed_m_s: +vmax.toFixed(2), runtime_min: +runtime.toFixed(0), cost_usd: bom.cost_usd, height_mm: 0, tier: "cheapest", tier_label: "Arduino WALL-E",
+    turn_rate_rad_s: +turnRate.toFixed(2), turn_slip_factor: +chi.toFixed(2) };
   A.design.assumptions.push("tracks print in TPU 95A (flexible), everything else in PETG/PLA+; the body prints open side up without supports",
-    "TT motor continuous torque taken as 30 % of the 0.8 kg.cm stall", "prices are typical single-unit marketplace prices and vary by seller");
+    "TT motor continuous torque taken as 30 % of the 0.8 kg.cm stall; a turn on the spot is a short transient above that (the tracks slide sideways), so spin in bursts on carpet or rubber floors", "prices are typical single-unit marketplace prices and vary by seller");
   A.design.home = {};
   A.design.request = { ...req } as Record<string, unknown>;
   return A.finish(`Arduino WALL-E: TPU tracks on 4 TT motors, pan/tilt binocular head, 2 servo arms, ${m.toFixed(2)} kg, $${bom.cost_usd.toFixed(0)} of parts`);

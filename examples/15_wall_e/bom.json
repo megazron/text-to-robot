@@ -153,7 +153,7 @@
     "Arduino WALL-E: TPU tracks on 4 TT motors, pan/tilt binocular head, 2 servo arms, 0.95 kg, $52 of parts",
     "Joint limits trimmed to the collision-free range found by exact solid sweeps: left_arm_lift [-1.00, 1.00] -> [-1.00, 0.35]; right_arm_lift [-1.00, 1.00] -> [-0.35, 1.00].",
     "tracks print in TPU 95A (flexible), everything else in PETG/PLA+; the body prints open side up without supports",
-    "TT motor continuous torque taken as 30 % of the 0.8 kg.cm stall",
+    "TT motor continuous torque taken as 30 % of the 0.8 kg.cm stall; a turn on the spot is a short transient above that (the tracks slide sideways), so spin in bursts on carpet or rubber floors",
     "prices are typical single-unit marketplace prices and vary by seller",
     "Prices are list/street prices from the linked suppliers at the time the catalog was written; check before ordering."
   ]
