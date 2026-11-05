@@ -972,6 +972,46 @@
   },
   "mesh_triangles": 620
  },
+ "breadboard_400": {
+  "key": "breadboard_400",
+  "name": "Half-size solderless breadboard, 400 points, adhesive back",
+  "category": "misc",
+  "mass_g": 30.0,
+  "price_usd": 2.0,
+  "supplier_url": "https://www.adafruit.com/product/64",
+  "datasheet_url": "https://www.adafruit.com/product/64",
+  "envelope_mm": [
+   82.5,
+   54.5,
+   8.5
+  ],
+  "holes": [],
+  "specs": {
+   "points": 400,
+   "columns": 30,
+   "mount": "self-adhesive foam back on a flat deck",
+   "no_mounting_holes": true,
+   "note": "holds an Arduino Nano and a TB6612FNG module side by side with jumper wires: no soldering",
+   "uncertain": [
+    "price_usd",
+    "mass_g"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "max": [
+    82.5,
+    54.5,
+    8.5
+   ]
+  },
+  "mesh_triangles": 172
+ },
  "buck_5v_5a": {
   "key": "buck_5v_5a",
   "name": "Pololu D36V50F5 5 V 5.5 A step-down regulator (#4091)",
@@ -12537,6 +12577,18 @@
    "current_a": 1.5,
    "shaft": "double-D 5.4 x 3.7 mm, both sides",
    "shaft_d_mm": 5.4,
+   "body_mm": {
+    "min": [
+     -11.0,
+     -11.25,
+     -18.8
+    ],
+    "max": [
+     61.0,
+     11.25,
+     0.0
+    ]
+   },
    "driver": "TB6612FNG or L298N (DC motor, PWM + direction)",
    "note": "rated torque taken as 30 % of stall for continuous use; plastic gears",
    "uncertain": [

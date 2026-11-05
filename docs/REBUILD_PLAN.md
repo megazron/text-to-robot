@@ -4,7 +4,9 @@ Status: started 2026-11-05. Each step lands on `main` when its tests pass.
 
 Done: step 1 (kernel, `packages/kernel`, tests in `tests/kernel.test.ts`); step 2 (cheap Arduino parts,
 `python/ttr_build/components/cheap.py`: Uno / Nano / PCA9685 clones, TT gear motor, L298N, TB6612FNG, HC-SR04,
-WS2812 ring, 2S 18650 pack).
+WS2812 ring, 2S 18650 pack, half breadboard). Step 3 started: the Arduino car designer
+(`packages/design/src/families/arduino-car.ts`), first designer built on the CAD kernel, cheapest (2WD) and
+stronger (4WD) tiers, all checks including clearance passing.
 
 ## Everything asked for (checklist)
 

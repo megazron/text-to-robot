@@ -5,6 +5,7 @@ import type { RobotSpecification, Link } from "@ttr/robot-schema";
 import { part } from "@ttr/parts";
 import { build, evaluate, Manifold, box, fromRt, type Manifold as M, type Program, type Mat4 } from "@ttr/solid";
 import { fk, descendants } from "./kin.ts";
+import { partFiles } from "@ttr/kernel/ready";
 
 type Vec3 = [number, number, number];
 /** Solid of a link in its own frame (mm), or null when it has no physical body worth checking. */
@@ -13,8 +14,14 @@ function linkSolid(l: Link): M | null {
   if (g.type === "sphere") return l.role === "frame" ? null : Manifold.sphere(g.radius * 1000, 32).translate(l.origin.xyz.map((x) => x * 1000) as Vec3);
   if (g.type !== "mesh") return null;
   if (g.part === "printed") return evaluate(JSON.parse(String(g.params!.program)) as Program);
+  if (g.part === "cad") {
+    // kernel parts: their welded print mesh (mm) as an exact manifold solid
+    const m = partFiles(String(g.params!.program)).mesh;
+    return Manifold.ofMesh({ numProp: 3, vertProperties: new Float32Array(m.v.flatMap((v) => [v[0] * 1000, v[1] * 1000, v[2] * 1000])), triVerts: new Uint32Array(m.f.flat()) } as never);
+  }
   if (g.part === "component") {
-    const key = String(g.params!.key), c = part(key), b = c.bbox_mm!;
+    // a part may declare its solid body (e.g. a gear motor without the shaft stubs that pass through its bracket)
+    const key = String(g.params!.key), c = part(key), b = (c.specs.body_mm as { min: number[]; max: number[] } | undefined) ?? c.bbox_mm!;
     // actuators: the case only; the output face and horn are where the driven link bolts on
     const top = c.category === "actuator" ? Math.min(b.max[2], -0.8) : b.max[2];
     return box(b.min as Vec3, [b.max[0], b.max[1], top]);

@@ -86,7 +86,8 @@ TT_MOTOR = Component(
            "rated_torque_nm": round(0.3 * 0.8 * 0.0980665, 4),
            "no_load_speed_rpm": 200, "no_load_speed_rad_s": rpm_to_rad_s(200),
            "no_load_current_a": 0.15, "stall_current_a": 1.5, "current_a": 1.5, "shaft": "double-D 5.4 x 3.7 mm, both sides",
-           "shaft_d_mm": 5.4, "driver": "TB6612FNG or L298N (DC motor, PWM + direction)",
+           "shaft_d_mm": 5.4, "body_mm": {"min": [-11.0, -11.25, -18.8], "max": [61.0, 11.25, 0.0]},
+           "driver": "TB6612FNG or L298N (DC motor, PWM + direction)",
            "note": "rated torque taken as 30 % of stall for continuous use; plastic gears",
            "uncertain": ["rated_torque_nm", "stall_current_a", "hole_positions", "price_usd"],
            "hole_positions": [(h.pos[0], h.pos[1]) for h in TT_HOLES]},
@@ -185,4 +186,21 @@ PACK_2S = Component(
            "uncertain": ["price_usd", "mass_g", "holes"]},
     build=_pack_build, build_keepout=lambda c: box(-15.0, 0.01, -8.0, 8.0, 4.0, 16.0))
 
-COMPONENTS = [UNO_CLONE, NANO_CLONE, PCA_CLONE, TT_MOTOR, L298N, TB6612, HC_SR04, RING12, PACK_2S]
+
+def _breadboard_build(c):
+    bb = rbox(0.0, 82.5, 0.0, 54.5, 0.0, 8.5, 1.0)
+    for y0 in (6.5, 29.5):                                     # two banks of 5-hole columns
+        bb = bb - box(4.0, 78.5, y0, y0 + 18.5, 7.5, 8.6)
+    return bb - box(4.0, 78.5, 26.0, 28.5, 4.0, 8.6)           # centre channel (DIP gap)
+
+
+BREADBOARD = Component(
+    key="breadboard_400", name="Half-size solderless breadboard, 400 points, adhesive back", category="misc",
+    mass_g=30.0, price_usd=2.0, supplier_url="https://www.adafruit.com/product/64", datasheet_url="https://www.adafruit.com/product/64",
+    envelope_mm=(82.5, 54.5, 8.5), holes=[],
+    specs={"points": 400, "columns": 30, "mount": "self-adhesive foam back on a flat deck", "no_mounting_holes": True,
+           "note": "holds an Arduino Nano and a TB6612FNG module side by side with jumper wires: no soldering",
+           "uncertain": ["price_usd", "mass_g"]},
+    build=_breadboard_build)
+
+COMPONENTS = [BREADBOARD, UNO_CLONE, NANO_CLONE, PCA_CLONE, TT_MOTOR, L298N, TB6612, HC_SR04, RING12, PACK_2S]

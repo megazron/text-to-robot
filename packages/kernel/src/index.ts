@@ -218,6 +218,8 @@ export interface PartFiles {
   bbox_mm: { min: Vec3; max: Vec3 };
   /** number of separate solids (a printable part is 1) and whether the weld closed the surface */
   bodies: number; watertight: boolean;
+  /** through-holes of the solid (manifold genus) */
+  genus: number;
 }
 function weld(vertices: ArrayLike<number>, triangles: ArrayLike<number>) {
   const M = mf!;
@@ -231,7 +233,7 @@ function weld(vertices: ArrayLike<number>, triangles: ArrayLike<number>) {
     for (let i = 0; i < g.triVerts.length; i += 3) f.push([g.triVerts[i], g.triVerts[i + 1], g.triVerts[i + 2]]);
     const parts = solid.decompose(), bodies = parts.length;
     for (const p of parts) p.delete();
-    return { v, f, watertight, bodies, volume: solid.volume() };
+    return { v, f, watertight, bodies, volume: solid.volume(), genus: solid.genus() };
   } finally { solid.delete(); }
 }
 function binaryStl(v: Vec3[], f: [number, number, number][], name: string): Uint8Array {
@@ -257,7 +259,7 @@ export function exportPart(p: Program, quality: { tolerance?: number; angular?: 
     return {
       stl: binaryStl(w.v, w.f, p.name), step,
       mesh: { v: w.v.map((x) => [x[0] / 1000, x[1] / 1000, x[2] / 1000] as Vec3), f: w.f },
-      volume_mm3: w.volume, bbox_mm: { min: [...bb.bounds[0]] as Vec3, max: [...bb.bounds[1]] as Vec3 }, bodies: w.bodies, watertight: w.watertight,
+      volume_mm3: w.volume, bbox_mm: { min: [...bb.bounds[0]] as Vec3, max: [...bb.bounds[1]] as Vec3 }, bodies: w.bodies, watertight: w.watertight, genus: w.genus,
     };
   });
 }
@@ -271,4 +273,16 @@ function stepText(s: Shape3D): string {
     O.FS.unlink(file);
     return text;
   } finally { progress.delete(); writer.delete(); }
+}
+
+// Designers rebuild identical parts many times (sizing loops, edits): keep the last builds by recipe.
+const built = new Map<string, PartFiles>();
+/** exportPart with a bounded cache keyed by the program JSON (results are shared: do not mutate them). */
+export function partFiles(programJson: string): PartFiles {
+  const hit = built.get(programJson);
+  if (hit) return hit;
+  const r = exportPart(JSON.parse(programJson) as Program);
+  if (built.size >= 300) built.delete(built.keys().next().value as string);
+  built.set(programJson, r);
+  return r;
 }

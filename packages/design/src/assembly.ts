@@ -5,6 +5,7 @@ import { emptySpec } from "@ttr/robot-schema";
 import { part, rating, type Vec3 } from "@ttr/parts";
 import { meshGeometry } from "@ttr/mesh";
 import { toPose, printCheck, type Mat4, type Program, type PrintCheck } from "@ttr/solid";
+import { partFiles, type Program as CadProgram } from "@ttr/kernel/ready";
 
 // Sizing loops rebuild the same parts many times: cache geometry by recipe (bounded).
 const cache = new Map<string, unknown>();
@@ -93,6 +94,20 @@ export class Assembly {
     const link: Link = { name, role: opts.role ?? "link", geometry, mass: Math.max(mass, 0.002), material: opts.material ?? "printed", origin: { xyz: [0, 0, 0], rpy: [0, 0, 0] } };
     this.spec.links.push(link);
     this.design.printed.push({ name, link: name, program, check, mass_kg: +(geometry.volume * PRINT_DENSITY).toFixed(4) });
+    return link;
+  }
+  /** A link whose body is a printed part modelled on the CAD kernel (exact solid, fillets, STEP export). */
+  cadLink(name: string, program: CadProgram, opts: { role?: string; material?: string; extraMassKg?: number } = {}): Link {
+    const json = JSON.stringify({ ...program, name });
+    const geometry = memo(`cad:${json}`, () => meshGeometry("cad", `${name}.stl`, { program: json }));
+    const f = partFiles(json), size = [0, 1, 2].map((k) => f.bbox_mm.max[k] - f.bbox_mm.min[k]) as Vec3;
+    const fits = [[0, 1, 2], [1, 0, 2], [0, 2, 1], [2, 0, 1], [1, 2, 0], [2, 1, 0]].some((o) => o.every((k, i) => size[k] <= [250, 210, 220][i]));
+    const check: PrintCheck = { volume_cm3: +(f.volume_mm3 / 1000).toFixed(2), bbox_mm: size.map((x) => +x.toFixed(1)) as Vec3, fits_bed: fits,
+      watertight: f.watertight && f.bodies === 1, min_feature_ok: f.volume_mm3 > 50, genus: f.genus };
+    const mass = geometry.volume * PRINT_DENSITY + (opts.extraMassKg ?? 0);
+    const link: Link = { name, role: opts.role ?? "link", geometry, mass: Math.max(mass, 0.002), material: opts.material ?? "printed", origin: { xyz: [0, 0, 0], rpy: [0, 0, 0] } };
+    this.spec.links.push(link);
+    this.design.printed.push({ name, link: name, program: { ...program, name } as unknown as Program, check, mass_kg: +(geometry.volume * PRINT_DENSITY).toFixed(4) });
     return link;
   }
   /** An empty frame link (massless anchors are avoided: URDF tools dislike them). */
