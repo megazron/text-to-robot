@@ -107,6 +107,7 @@ SD50 = Component(
     envelope_mm=(159.0, 97.0, 38.0), holes=[],
     specs={"voltage_v": 12.0, "current_a": 4.2, "power_w": 50.0, "input_v": (36.0, 72.0),
            "terminals": "screw terminal block on the -X end", "note": "feeds 12 V DYNAMIXEL buses from a 12S (44.4 V) pack",
+           "no_mounting_holes": True, "mount_note": "the case has tapped base holes whose positions are not modelled here: held in a printed strap cradle",
            "uncertain": ["price_usd", "holes"]},
     build=_sd50_build,
 )

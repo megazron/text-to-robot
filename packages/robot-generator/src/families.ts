@@ -1,8 +1,8 @@
 // Robot-family vocabulary and template selection for the local prompt parser.
 import type { RobotSpecification } from "@ttr/robot-schema";
-import { designArm, designDiffDrive, designFourWheel, designMecanum, designRover, designWallE, designEva, designBaymax } from "@ttr/design";
+import { designArm, designDiffDrive, designFourWheel, designMecanum, designRover, designWallE, designEva, designBaymax, designQuadruped, designHexapod, designHumanoid, designBattleMech, designScara, designGripper, type LeggedRequest } from "@ttr/design";
 import type { SensorType } from "@ttr/robot-schema";
-import { nDofArm, scara, humanoid, quadruped, hexapod, roverArm, ironManSuit, wearableExosuit, ironManMark43, attachParallelGripper, attachSuctionGripper } from "@ttr/robot-templates";
+import { nDofArm, scara, roverArm, wearableExosuit, ironManMark43, attachParallelGripper, attachSuctionGripper } from "@ttr/robot-templates";
 import { find, mentions, negates, isDirectlyNegated } from "./text.ts";
 import { armTip, replaceGripperWithSuction } from "./grippers.ts";
 
@@ -77,6 +77,11 @@ export function wheelCount(t: string): number | undefined {
 /** common inputs of every wheeled designer */
 const mobileReq = (ctx: DesignContext) => ({ prompt: ctx.prompt, budget: ctx.budget, sensors: ctx.sensors as never, ...(ctx.excludeSensors.length ? { excludeSensors: ctx.excludeSensors as never } : {}), ...(ctx.payloadKg !== undefined ? { payloadKg: ctx.payloadKg } : {}) });
 
+/** common inputs of the legged designers (they fit camera, depth, lidar and IMU parts) */
+const leggedReq = (ctx: DesignContext, heightM = ctx.heightM): LeggedRequest => ({ prompt: ctx.prompt, budget: ctx.budget,
+  sensors: ctx.sensors.filter((x) => ["camera", "depth", "lidar", "imu"].includes(x)) as LeggedRequest["sensors"],
+  ...(ctx.payloadKg !== undefined ? { payloadKg: ctx.payloadKg } : {}), ...(heightM ? { heightM } : {}) });
+
 export function chooseFamily(t: string, prompt: string, dof: number | undefined, g: GripperKind, heightM?: number, explicitGripper = false): Choice {
   // "no camera on my quadruped" negates the camera, not the quadruped: only "not a quadruped" rejects a family
   const hit = (rx: RegExp) => find(t, rx)?.text ?? [...t.matchAll(new RegExp(rx.source, "g"))].find((m) => !isDirectlyNegated(t, m.index!))?.[0];
@@ -84,8 +89,8 @@ export function chooseFamily(t: string, prompt: string, dof: number | undefined,
 
   if ((m = hit(RX.suit))) {
     // a suit is WORN: build the wearable exoskeleton; "battle mech" (standalone robot) is a humanoid
-    if (/\bmech\b(?!\s+suit)/.test(t) && !/iron[\s-]?man|exo|wearable|suit/.test(t)) return { family: "battle_mech", label: "humanoid battle mech", matched: m,
-        build: () => ironManSuit("battle_mech", prompt) };
+    if (/\bmech\b(?!\s+suit)/.test(t) && !/iron[\s-]?man|exo|wearable|suit/.test(t)) return { family: "battle_mech", label: "humanoid battle mech", matched: m, usesDof: true, designed: true,
+        build: (ctx) => designBattleMech({ name: "battle_mech", ...leggedReq(ctx), ...(dof ? { armDof: dof } : {}) }) };
     if (/iron[\s-]?man|mark\s*(?:[ivx]+|\d+)|armou?r|movie|ultron/.test(t)) return { family: "iron_man_mark_43", label: "Iron Man Mark 43 wearable suit", matched: m,
         build: () => ironManMark43({ prompt, ...(heightM ? { height_m: heightM } : {}) }) };
     return { family: "exosuit", label: "wearable exoskeleton", matched: m,
@@ -95,25 +100,28 @@ export function chooseFamily(t: string, prompt: string, dof: number | undefined,
   if ((m = hit(RX.eva))) return { family: "eva", label: "EVA character", matched: m, designed: true, build: (ctx) => designEva({ name: "eva", ...mobileReq(ctx) }) };
   if ((m = hit(RX.baymax))) return { family: "baymax", label: "Baymax character", matched: m, designed: true, build: (ctx) => designBaymax({ name: "baymax", ...mobileReq(ctx) }) };
   for (const [rx, why] of UNSUPPORTED) if (mentions(t, rx)) throw new Error(why);
-  const humanoidOf = (matched: string, approx?: string): Choice => ({ family: "humanoid", label: "humanoid", matched, approx, usesDof: true, usesGripper: true,
-    build: () => humanoid({ armDof: dof ?? 7, gripper: g !== "none", prompt }) });
+  const humanoidOf = (matched: string, approx?: string): Choice => ({ family: "humanoid", label: "humanoid", matched, approx, usesDof: true, usesGripper: true, designed: true,
+    // above ~0.9 m servo legs cannot carry the robot: full-size humanoids use the QDD (CubeMars) design
+    build: (ctx) => (ctx.heightM ?? 0) > 0.9 ? designBattleMech({ name: "humanoid_robot", ...leggedReq(ctx), ...(dof ? { armDof: dof } : {}) })
+      : designHumanoid({ name: "humanoid_robot", ...leggedReq(ctx), ...(dof ? { armDof: dof } : {}), gripper: g !== "none" }) });
   if ((m = hit(RX.humanoid))) return humanoidOf(m);
   if ((m = hit(RX.dualArm))) return humanoidOf(m, "dual-arm robot built on the humanoid template (includes legs)");
-  if ((m = hit(RX.hexapod))) return { family: "hexapod", label: "hexapod", matched: m, build: () => hexapod("hexapod", prompt) };
+  if ((m = hit(RX.hexapod))) return { family: "hexapod", label: "hexapod", matched: m, designed: true, build: (ctx) => designHexapod({ name: "hexapod", ...leggedReq(ctx) }) };
   if ((m = hit(RX.octopod))) return { family: "hexapod", label: "hexapod", matched: m, approx: "eight legs approximated by the six-legged hexapod",
-      build: () => hexapod("hexapod", prompt) };
+      designed: true, build: (ctx) => designHexapod({ name: "hexapod", ...leggedReq(ctx) }) };
   if ((m = hit(RX.roverArm))) return { family: "rover_arm", label: "mobile manipulator (wheeled rover + arm)", matched: m, usesDof: true, usesGripper: true,
     approx: mentions(t, RX.tracked) ? "tracks approximated by the wheeled rover base" : mentions(t, RX.mecanum) || mentions(t, RX.omni) ? "the arm is mounted on the wheeled rover base, not a mecanum base" : undefined,
     ...(g === "suction" ? { build: () => { const s = roverArm("rover_arm", dof ?? 6, prompt, { gripper: "parallel" }); replaceGripperWithSuction(s); return s; } }
       : { designed: true, build: (ctx: DesignContext) => designRover({ name: "rover_arm", ...mobileReq(ctx), payloadKg: undefined, wheels: wheelCount(t) ?? 6, arm: { dof: dof ?? 6, ...(ctx.payloadKg !== undefined ? { payloadKg: ctx.payloadKg } : {}) } }) }) };
-  if ((m = hit(RX.quadruped))) return { family: "quadruped", label: "quadruped", matched: m, build: () => quadruped("quadruped", prompt) };
-  if ((m = hit(RX.scara))) return { family: "scara", label: "SCARA", matched: m, usesGripper: true,
-    build: () => {
-      // a pick-and-place / sorting task needs a tool even when none is named: SCARAs usually carry a suction cup
-      const task = /\bpick(?:s|ing)?\b|\bplace\b|\bsort(?:s|ing)?\b|\bgrab(?:s|bing)?\b|\bpackag(?:e|ing)\b|\bassembl(?:e|y|ing)\b/.test(t);
-      const kind = explicitGripper ? g : task ? "suction" : "none";
-      const s = scara({ prompt }); const tip = kind !== "none" ? armTip(s) : undefined;
-      if (tip) (kind === "suction" ? attachSuctionGripper : attachParallelGripper)(s, tip.link, tip.atZ); return s; } };
+  if ((m = hit(RX.quadruped))) return { family: "quadruped", label: "quadruped", matched: m, designed: true, build: (ctx) => designQuadruped({ name: "quadruped", ...leggedReq(ctx) }) };
+  if ((m = hit(RX.scara))) {
+    const task = /\bpick(?:s|ing)?\b|\bplace\b|\bsort(?:s|ing)?\b|\bgrab(?:s|bing)?\b|\bpackag(?:e|ing)\b|\bassembl(?:e|y|ing)\b/.test(t);
+    // the designed SCARA carries a parallel gripper; a suction cup (named, or a pick task with no jaws asked for) keeps the template SCARA
+    if (g === "suction" || (task && !explicitGripper)) return { family: "scara", label: "SCARA", matched: m, usesGripper: true,
+      build: () => { const s = scara({ prompt }); const tip = armTip(s); if (tip) attachSuctionGripper(s, tip.link, tip.atZ); return s; } };
+    return { family: "scara", label: "SCARA", matched: m, usesGripper: true, designed: true,
+      build: (ctx) => designScara({ name: "scara", prompt: ctx.prompt, budget: ctx.budget, payloadKg: ctx.payloadKg, reachM: ctx.reachM, sensors: ctx.sensors }) };
+  }
   if ((m = hit(RX.mecanum))) return { family: "mecanum", label: "mecanum-wheel base", matched: m, designed: true, build: (ctx) => designMecanum({ name: "mecanum_robot", ...mobileReq(ctx) }) };
   if ((m = hit(RX.omni))) return { family: "mecanum", label: "mecanum-wheel base", matched: m, approx: "omni-directional drive built with mecanum wheels",
       designed: true, build: (ctx) => designMecanum({ name: "mecanum_robot", ...mobileReq(ctx) }) };
@@ -123,11 +131,12 @@ export function chooseFamily(t: string, prompt: string, dof: number | undefined,
       designed: true, build: (ctx) => designFourWheel({ name: "four_wheel_robot", ...mobileReq(ctx) }) };
   if ((m = hit(RX.diffDrive))) return { family: "diff_drive", label: "differential-drive base", matched: m,
       designed: true, build: (ctx) => designDiffDrive({ name: "diff_drive_robot", ...mobileReq(ctx) }) };
-  if ((m = hit(RX.legs))) return { family: "quadruped", label: "quadruped", matched: m, build: () => quadruped("quadruped", prompt) };
+  if ((m = hit(RX.legs))) return { family: "quadruped", label: "quadruped", matched: m, designed: true, build: (ctx) => designQuadruped({ name: "quadruped", ...leggedReq(ctx) }) };
   if ((m = hit(RX.wheels)) && !mentions(t, RX.arm)) return { family: "diff_drive", label: "differential-drive base", matched: m,
       designed: true, build: (ctx) => designDiffDrive({ name: "diff_drive_robot", ...mobileReq(ctx) }) };
   if ((m = hit(RX.gripper)) && !mentions(t, RX.arm)) return { family: "gripper", label: `standalone ${g === "suction" ? "suction" : "parallel"} gripper`, matched: m, usesGripper: true,
-    build: () => standaloneGripper(g === "suction" ? "suction" : "parallel", prompt) };
+    ...(g === "suction" ? { build: () => standaloneGripper("suction", prompt) }
+      : { designed: true, build: (ctx: DesignContext) => designGripper({ name: "parallel_gripper", prompt: ctx.prompt, budget: ctx.budget, payloadKg: ctx.payloadKg }) }) };
   if (mentions(t, RX.hand)) throw new Error("Dexterous robot hands are not supported yet. Try \"two-finger parallel gripper\" or a humanoid.");
   m = hit(RX.arm);
   if (!m && dof === undefined) {

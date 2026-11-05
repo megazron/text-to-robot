@@ -2726,6 +2726,8 @@
    ],
    "terminals": "screw terminal block on the -X end",
    "note": "feeds 12 V DYNAMIXEL buses from a 12S (44.4 V) pack",
+   "no_mounting_holes": true,
+   "mount_note": "the case has tapped base holes whose positions are not modelled here: held in a printed strap cradle",
    "uncertain": [
     "price_usd",
     "holes"
@@ -11846,6 +11848,7 @@
     54.0,
     16.0
    ],
+   "no_mounting_holes": true,
    "mount": "no screw holes: printed clip or hook-and-loop",
    "note": "one adapter per CAN bus; CubeMars AK actuators daisy-chain on CAN at 1 Mbps",
    "uncertain": [

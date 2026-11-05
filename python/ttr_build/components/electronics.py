@@ -319,7 +319,7 @@ CANABLE_PRO = Component(
     datasheet_url="https://cdn.robotshop.com/media/E/EYO/RBC-Eyo-33/pdf/eyou-canable-pro-datasheet.pdf",
     envelope_mm=(56.0, 16.0, 10.1), holes=[],
     specs={"interface": "USB to CAN 2.0 (gs_usb / slcan), 1 Mbps, galvanically isolated", "voltage_v": 5.0,
-           "board_mm": (CANP_L, CANP_W), "mount": "no screw holes: printed clip or hook-and-loop",
+           "board_mm": (CANP_L, CANP_W), "no_mounting_holes": True, "mount": "no screw holes: printed clip or hook-and-loop",
            "note": "one adapter per CAN bus; CubeMars AK actuators daisy-chain on CAN at 1 Mbps",
            "uncertain": ["mass_g", "envelope_mm"]},
     build=_canp_build,

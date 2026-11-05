@@ -81,15 +81,20 @@ test("contradictions produce one explicit warning per conflict", async () => {
     assert.deepEqual(read(p).conflicts, [], p);
 });
 
-test("requested overall sizes are applied when the template supports them, else reported", () => {
-  const humanoid = read("humanoid 1.5 m tall");
-  assert.ok(humanoid.dimensions.includes("height 1.50 m"), humanoid.dimensions.join());
-  assert.match(humanoid.approximations.join(), /1\.5 m: the humanoid template scaled x1\.\d\d as a whole/);
+test("requested overall sizes are design inputs where the designer takes them, else reported", () => {
+  // a stated height sizes a designed humanoid (built within 3 %); above servo size it moves to QDD legs
+  const small = read("humanoid 70 cm tall");
+  assert.ok(small.dimensions.some((d) => /^height 0\.(69|7\d) m$/.test(d)), small.dimensions.join());
+  const tall = read("humanoid 1.2 m tall");
+  assert.ok(tall.dimensions.some((d) => /^height 1\.(1[7-9]|2\d) m$/.test(d)), tall.dimensions.join());
+  assert.match(tall.approximations.join(), /quasi-direct-drive/);
+  assert.match(read("humanoid 1.5 m tall").approximations.join(), /1\.5 m: humanoids are designed .* built 1\.\d\d m tall/);
+  assert.ok(!read("battle mech 1.2 m tall").ignored.some((x) => /wearer/.test(x)), "a standalone mech is not a suit");
   const tiny = read("tiny 5 cm arm");
   assert.match(tiny.approximations.join(), /5 cm: reach 0\.\d\d m, the shortest this arm design allows/)
   assert.ok(tiny.dimensions.some((d) => /^reach 0\.\d\d m$/.test(d)), tiny.dimensions.join());
   assert.ok(reachOf("tiny 5 cm arm") <= reachOf("6 dof arm"), "the shortest feasible arm is built");
   // the default arm may already be the shortest its clevises allow: "tiny" is never longer, "large" is longer
   assert.ok(reachOf("tiny arm") <= reachOf("6 dof arm") && reachOf("large arm") > reachOf("6 dof arm"));
-  assert.match(read("a 2 m wide quadruped").ignored.join(), /width 2 m: the quadruped template can be scaled 0\.4-2\.5x \(built about 0\.\d\d m wide\)/);
+  assert.match(read("a 2 m wide quadruped").ignored.join(), /width 2 m: the quadruped is sized from its parts and load/);
 });

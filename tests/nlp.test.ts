@@ -14,16 +14,22 @@ test("prompt -> 6 DOF arm with gripper", () => {
   assert.ok(s.links.some((l) => l.role === "forearm"));
   assert.ok(s.end_effectors.length >= 1);
 });
-test("prompt -> humanoid picks humanoid template", () => {
+const familyOf = (p: string) => (finalizeSpec(parsePrompt(p)).metadata as any).design?.family;
+test("prompt -> humanoid is designed with a torso, two legs and the asked arm DOF", () => {
   const s = finalizeSpec(parsePrompt("small humanoid with a torso, head and two 7 dof arms"));
+  assert.equal((s.metadata as any).design.family, "humanoid");
+  assert.equal((s.metadata as any).design.performance.arm_dof, 7);
   assert.ok(s.links.some((l) => l.name === "torso"));
-  assert.ok(s.links.some((l) => l.name === "head"));
-  assert.ok(s.links.some((l) => l.name.startsWith("left_")) && s.links.some((l) => l.name.startsWith("right_")));
+  assert.ok(s.links.some((l) => l.name.startsWith("l_")) && s.links.some((l) => l.name.startsWith("r_")));
 });
-test("prompt -> quadruped / diff drive / scara", () => {
-  assert.ok(finalizeSpec(parsePrompt("a quadruped robot")).links.some((l) => l.name.includes("front_left")));
+test("prompt -> quadruped / hexapod / diff drive / scara / gripper / mech are designed from real parts", () => {
+  assert.equal(familyOf("a quadruped robot"), "quadruped");
+  assert.ok(finalizeSpec(parsePrompt("a quadruped robot")).links.some((l) => l.name === "fl_foot"));
+  assert.equal(familyOf("a six legged spider robot"), "hexapod");
   assert.ok(finalizeSpec(parsePrompt("differential drive robot")).links.some((l) => l.role === "wheel"));
-  assert.ok(finalizeSpec(parsePrompt("a scara robot")).links.some((l) => l.name === "spindle"));
+  assert.equal(familyOf("a scara robot"), "scara");
+  assert.equal(familyOf("a two-finger parallel gripper"), "gripper");
+  assert.equal(familyOf("a humanoid battle mech"), "mech");
 });
 test("modify: forearm 30% longer changes only the forearm", () => {
   const s = finalizeSpec(parsePrompt("6 dof arm"));

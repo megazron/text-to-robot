@@ -48,7 +48,7 @@ export function interferences(m: ClearanceModel, q: Record<string, number>, movi
 }
 function interferencesIn(m: ClearanceModel, q: Record<string, number>, moving: Set<string> | undefined, tol: number, skip: Set<string>): Interference[] {
   const f = fk(m.spec, q);
-  const placed: { name: string; s: M; lo: number[]; hi: number[] }[] = [];
+  const placed: { name: string; s0: M; M4: Mat4; s?: M; lo: number[]; hi: number[] }[] = [];
   m.names.forEach((n, i) => {
     const s0 = m.solids[i]; if (!s0) return;
     const T = f.link[n]; if (!T) return;
@@ -57,7 +57,7 @@ function interferencesIn(m: ClearanceModel, q: Record<string, number>, moving: S
       const p = [M4[0] * x + M4[4] * y + M4[8] * z + M4[12], M4[1] * x + M4[5] * y + M4[9] * z + M4[13], M4[2] * x + M4[6] * y + M4[10] * z + M4[14]];
       for (let k = 0; k < 3; k++) { lo[k] = Math.min(lo[k], p[k]); hi[k] = Math.max(hi[k], p[k]); }
     }
-    placed.push({ name: n, s: s0.transform(M4), lo, hi });
+    placed.push({ name: n, s0, M4, lo, hi });
   });
   const out: Interference[] = [];
   for (let i = 0; i < placed.length; i++) for (let j = i + 1; j < placed.length; j++) {
@@ -65,6 +65,8 @@ function interferencesIn(m: ClearanceModel, q: Record<string, number>, moving: S
     if (moving && moving.has(A.name) === moving.has(B.name)) continue;
     if (skip.has(`${A.name}|${B.name}`) || skip.has(`${B.name}|${A.name}`)) continue;
     if (A.lo.some((x, k) => x > B.hi[k] - 0.01) || B.lo.some((x, k) => x > A.hi[k] - 0.01)) continue;
+    // solids are placed lazily: most pairs are rejected by their boxes and never need the transformed copy
+    A.s ??= A.s0.transform(A.M4); B.s ??= B.s0.transform(B.M4);
     const v = A.s.intersect(B.s).volume();
     if (v > tol) out.push({ a: A.name, b: B.name, volume_mm3: +v.toFixed(1) });
   }

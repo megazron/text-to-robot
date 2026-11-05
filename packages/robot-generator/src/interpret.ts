@@ -15,6 +15,19 @@ import { dofOf } from "./spec-utils.ts";
 export { MAX_ARM_DOF } from "./families.ts";
 
 /** Requested DOF, clamped to what the serial-arm generator supports (1..12). */
+// Designers are deterministic in their request and take seconds (sizing loops, exact clearance sweeps):
+// a process keeps the last designs it built, and hands out copies (callers edit specs in place).
+const designCache = new Map<string, RobotSpecification>();
+function buildCached(choice: Choice, ctx: DesignContext): RobotSpecification {
+  if (!choice.designed) return choice.build(ctx);
+  const key = `${choice.family}|${choice.label}|${JSON.stringify(ctx)}`, hit = designCache.get(key);
+  if (hit) return structuredClone(hit);
+  const spec = choice.build(ctx);
+  if (designCache.size >= 64) designCache.delete(designCache.keys().next().value as string);
+  designCache.set(key, structuredClone(spec));
+  return spec;
+}
+
 export function extractDof(text: string): number | undefined {
   const raw = extractDofMentions(translateKeywords(normalize(text)).text)[0]?.value;
   return raw === undefined ? undefined : Math.min(MAX_ARM_DOF, Math.max(1, Math.round(raw)));
@@ -65,7 +78,9 @@ export function interpretPrompt(prompt: string): PromptResult {
   if (translation.mapped.length) approximations.push(`read non-English keywords as English: ${translation.mapped.join(", ")}`);
 
   // A stated stature fits a wearable suit to its wearer.
-  const suitish = mentions(t, RX.suit);
+  // a standalone battle mech is a robot, not something worn
+  const standaloneMech = /\bmech\b(?!\s+suit)/.test(t) && !/iron[\s-]?man|exo|wearable|suit/.test(t);
+  const suitish = mentions(t, RX.suit) && !standaloneMech;
   let heightM: number | undefined;
   const stature = suitish ? lengths.find((l) => l.context === "height" && l.metres > 1) : undefined;
   if (stature) {
@@ -82,7 +97,25 @@ export function interpretPrompt(prompt: string): PromptResult {
   const ctx: DesignContext = { ...(hobby ? { hobby } : {}), prompt, budget: budget.usd, payloadKg: payload ? +payload.kg.toFixed(3) : undefined, reachM: asked?.reachM, segments: asked?.segments,
     sensors: requestedSensors(t).filter((type) => !negates(t, SENSOR_WORDS.find(([, k]) => k === type)![0])),
     excludeSensors: SENSOR_WORDS.filter(([rx]) => negates(t, rx)).map(([, k]) => k), ...(heightM ? { heightM } : {}) };
-  const spec = choice.build(ctx);
+  // a standing robot's stated height is a design input of the humanoid / mech designers
+  const robotHeight = !suitish && choice.designed && (choice.family === "humanoid" || choice.family === "battle_mech")
+    ? lengths.find((l) => l.context === "height") : undefined;
+  let spec: RobotSpecification;
+  if (robotHeight) {
+    // the designers scale legs and torso from the height; one correction step lands the built height on the target
+    const built = (s: RobotSpecification) => (s.metadata as { design?: { performance?: { height_m?: number } } }).design?.performance?.height_m ?? 0;
+    spec = buildCached(choice, { ...ctx, heightM: robotHeight.metres });
+    const h0 = built(spec);
+    if (h0 > 0 && Math.abs(h0 - robotHeight.metres) / robotHeight.metres > 0.03) {
+      const again = buildCached(choice, { ...ctx, heightM: +(robotHeight.metres * robotHeight.metres / h0).toFixed(3) });
+      if (Math.abs(built(again) - robotHeight.metres) < Math.abs(h0 - robotHeight.metres)) spec = again;
+    }
+    const h = built(spec);
+    if (Math.abs(h - robotHeight.metres) / robotHeight.metres <= 0.03) dimensions.push(`height ${h.toFixed(2)} m`);
+    else approximations.push(`${robotHeight.raw}: humanoids are designed 0.5-0.85 m tall on servos and up to about 1.3 m on QDD actuators; built ${h.toFixed(2)} m tall`);
+    if (choice.family === "humanoid" && robotHeight.metres > 0.9) approximations.push("full-size humanoid: built on CubeMars quasi-direct-drive leg actuators (servo legs cannot carry it)");
+    lengths.splice(lengths.indexOf(robotHeight), 1);
+  } else spec = buildCached(choice, ctx);
   // record what kind of robot this is, so simulators and exporters pick the right tests and controllers
   const meta = spec.metadata as unknown as Record<string, unknown>;
   if (!meta.family && !(meta.design as { family?: string } | undefined)?.family) meta.family = choice.family;

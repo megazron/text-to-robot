@@ -37,8 +37,15 @@ const SIDES = [{ p: "l", s: 1 }, { p: "r", s: -1 }];
 const Y: Vec3 = [0, 1, 0], X: Vec3 = [1, 0, 0], Z: Vec3 = [0, 0, 1], DOWN: Vec3 = [0, 0, -1];
 
 /** World bounding box of a printed program (mm). */
+const boxCache = new Map<string, { lo: Vec3; hi: Vec3 }>();
 function worldBox(ops: Op[]): { lo: Vec3; hi: Vec3 } {
-  return build(() => { const b = evaluate({ name: "probe", ops }).boundingBox(); return { lo: [...b.min] as Vec3, hi: [...b.max] as Vec3 }; });
+  // the sizing loop rebuilds identical parts: cache their boxes by recipe
+  const key = JSON.stringify(ops), hit = boxCache.get(key);
+  if (hit) return { lo: [...hit.lo] as Vec3, hi: [...hit.hi] as Vec3 };
+  const b = build(() => { const bb = evaluate({ name: "probe", ops }).boundingBox(); return { lo: [...bb.min] as Vec3, hi: [...bb.max] as Vec3 }; });
+  if (boxCache.size > 500) boxCache.delete(boxCache.keys().next().value as string);
+  boxCache.set(key, b);
+  return { lo: [...b.lo] as Vec3, hi: [...b.hi] as Vec3 };
 }
 /** A printed part that is split into bed-sized pieces (each fixed to `parent`) when it is too big to print. */
 function printedToBed(A: Assembly, f: Frame, parent: string | null, ops: Op[], opts: { role?: string; material?: string }, maxDim = [245, 205, 215]) {
