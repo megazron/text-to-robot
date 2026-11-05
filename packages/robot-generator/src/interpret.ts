@@ -121,9 +121,11 @@ export function interpretPrompt(prompt: string): PromptResult {
   if (!meta.family && !(meta.design as { family?: string } | undefined)?.family) meta.family = choice.family;
   if (hobby) {
     if (choice.family === "serial_arm" && choice.designed) dimensions.push(`hobby servos${hobby.only ? ` (${hobby.only.map((k) => k.replace("hobby_", "").toUpperCase()).join(", ")})` : ""} on an Arduino Uno + PCA9685`);
+    else if (choice.family.startsWith("arduino_") || choice.family === "iron_man_mark_43") { /* designed around Arduino parts */ }
     else ignored.push(`hobby servos / Arduino: only arms are designed for hobby servos so far; the ${choice.label} uses its standard actuators`);
   }
   if (asked) reportDesignedReach(spec, asked, { dimensions, approximations, ignored, conflicts });
+  namedParts(t, spec, { dimensions, approximations });
   // engineering checks that fail are shown with the result, not only in the build report
   const failed = ((spec.metadata as { design?: { checks?: { name: string; pass: boolean; detail: string }[] } }).design?.checks ?? []).filter((c) => !c.pass);
   if (failed.length) {
@@ -295,4 +297,28 @@ function familyConflicts(t: string, choice: Choice): string[] {
 function isPlanar(spec: RobotSpecification): boolean {
   const f = fk(spec), axes = spec.joints.filter((j) => (j.type === "revolute" || j.type === "continuous") && j.name !== "gripper").map((j) => f.joint[j.name].axis);
   return axes.length > 0 && axes.every((a) => Math.abs(a[0] * axes[0][0] + a[1] * axes[0][1] + a[2] * axes[0][2]) > 0.999);
+}
+
+/** Boards and drivers named in the prompt: used when the design can take them, otherwise the swap is said with the reason. */
+const NAMED_PARTS: { rx: RegExp; key: string; label: string; instead: Record<string, string> }[] = [
+  { rx: /\barduino\s+nano\b|\bnano\b/, key: "arduino_nano_clone", label: "Arduino Nano",
+    instead: { arduino_uno_clone: "the Uno is kept: the board sits on the desk beside the arm, so either works and the sketch is the same" } },
+  { rx: /\barduino\s+uno\b|\buno\b/, key: "arduino_uno_clone", label: "Arduino Uno",
+    instead: { arduino_nano_clone: "an Arduino Nano is used instead: it plugs into the breadboard with the motor driver (an Uno does not), and the sketch runs unchanged on an Uno wired with jumpers" } },
+  { rx: /\bl298n?\b/, key: "l298n_module", label: "L298N",
+    instead: { tb6612fng_module: "a TB6612FNG is used instead: the L298N loses about 2 V in its bipolar bridge (TT motors on the 7.4 V pack would run slow and hot) and it does not plug into the breadboard" } },
+  { rx: /\btb6612(?:fng)?\b/, key: "tb6612fng_module", label: "TB6612FNG", instead: {} },
+  { rx: /\bpca9685\b/, key: "pca9685_clone", label: "PCA9685", instead: {} },
+  { rx: /\bhc[\s-]?sr04\b/, key: "hc_sr04", label: "HC-SR04", instead: {} },
+];
+function namedParts(t: string, spec: RobotSpecification, out: { dimensions: string[]; approximations: string[] }): void {
+  const design = (spec.metadata as { design?: { purchased?: { key: string }[] } }).design;
+  if (!design?.purchased) return;
+  const have = new Set(design.purchased.map((p) => p.key));
+  for (const n of NAMED_PARTS) {
+    if (!n.rx.test(t)) continue;
+    if (have.has(n.key)) { out.dimensions.push(`${n.label} as asked`); continue; }
+    const swap = Object.entries(n.instead).find(([k]) => have.has(k));
+    out.approximations.push(swap ? `${n.label} named: ${swap[1]}` : `${n.label} named but this design does not use one`);
+  }
 }

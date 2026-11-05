@@ -162,7 +162,7 @@ export function chooseFamily(t: string, prompt: string, dof: number | undefined,
   if (/\barduino\b|\b(?:hobby|micro)\s+servos?\b|\bsg90\b|\bmg90s?\b|\bmg996r?\b|\bds3218\b/.test(t) && (dof === undefined || dof === 3) && g !== "suction")
     return { family: "arduino_arm", label: "Arduino desk arm (3 DOF + claw)", matched: m ?? "arm", usesDof: true, usesGripper: true, designed: true,
       build: (ctx) => designArduinoArm({ name: "arduino_arm", prompt: ctx.prompt, budget: ctx.budget, gripper: g !== "none",
-        servos: ctx.hobby?.only ?? ["hobby_sg90", "hobby_mg90s", "hobby_mg996r", "hobby_ds3218"], ...(ctx.payloadKg !== undefined ? { payloadKg: ctx.payloadKg } : {}) }) };
+        servos: ctx.hobby?.only ?? ["hobby_sg90", "hobby_mg90s", "hobby_mg996r", "hobby_ds3218"], ...(/\bnano\b/.test(t) && !/\buno\b/.test(t) ? { board: "arduino_nano_clone" as const } : {}), ...(ctx.payloadKg !== undefined ? { payloadKg: ctx.payloadKg } : {}) }) };
   const n = dof ?? 6;
   if (g === "suction") return { family: "serial_arm", label: `${n}-DOF serial arm`, matched: m ?? `${n} DOF`, usesDof: true, usesGripper: true, designed: true,
     build: (ctx) => {

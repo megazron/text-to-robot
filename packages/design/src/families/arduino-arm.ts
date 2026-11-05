@@ -21,6 +21,8 @@ export interface ArduinoArmRequest {
   gripper?: boolean;
   /** upper arm and forearm pivot-to-pivot lengths (mm); searched when omitted */
   lengths?: [number, number];
+  /** controller board (default the Uno clone; the Nano drives the PCA9685 the same way over I2C) */
+  board?: "arduino_uno_clone" | "arduino_nano_clone";
 }
 
 const WALL = 2.5, PLATE = 4, EDGE = 0.6;
@@ -144,7 +146,7 @@ export function designArduinoArm(req: ArduinoArmRequest = {}): RobotSpecificatio
   // electronics: Arduino + PCA9685 on the desk next to the arm; servos on their own 5 V rail
   const servos = Object.values(keys).slice(0, req.gripper === false ? 3 : 4);
   const stall = servos.reduce((s, k) => s + Number(part(k).specs.stall_current_a ?? 1), 0), supplyA = stall <= 4 ? 4 : 10;
-  A.buy("arduino_uno_clone", 1, "controller (USB serial commands, I2C to the servo driver)");
+  A.buy(req.board ?? "arduino_uno_clone", 1, "controller (USB serial commands, I2C to the servo driver)");
   A.buy("pca9685_clone", 1, "16-channel PWM servo driver (I2C)");
   if (supplyA === 4) { A.buy("psu_5v4a_adapter", 1, "5 V 4 A servo supply"); A.buy("dc_jack_5521_panel", 1, "adapter socket"); }
   else A.buy("psu_5v_lrs50", 1, "5 V 10 A servo supply");

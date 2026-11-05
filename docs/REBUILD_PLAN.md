@@ -16,7 +16,7 @@ stronger (4WD) tiers, all checks including clearance passing.
 - [x] Arduino button: cheapest Arduino-compatible parts that still work (generator: `arduinoOptions(prompt)`; cars, desk arm, WALL-E and Mark 43 done; on the web page as the Arduino switch, works in the static GitHub Pages build)
 - [~] Price tiers to choose from, with prices (cars: cheapest / stronger; arms: 20 g / 100 g / 200 g payload tiers, cheapest servo per joint)
 - [~] Honest suggestions when a budget or named components cannot do the request (over-budget options marked, cheapest price stated; robot types without an Arduino version say so)
-- [ ] Use the components the user names ("with MG996R servos", "Arduino Nano")
+- [x] Use the components the user names ("with MG996R servos", "Arduino Nano")
 - [ ] Printed parts and housings that are really buildable: fillets, proper walls, screw bosses, cable paths, STEP + STL
 - [~] Prompts read properly (sizes, counts, parts, budgets, exclusions) for every robot type (heights for humanoids, standalone mechs, car / buggy / line follower / obstacle avoider words fixed)
 - [ ] Every robot type rebuilt and checked: arm, car, mecanum, rover, quadruped, hexapod, humanoid, mech, SCARA, gripper
@@ -25,7 +25,7 @@ stronger (4WD) tiers, all checks including clearance passing.
 - [ ] GIFs, renders and README regenerated from the new designs (no old images left)
 - [x] New web UI: bento card dashboard in green and black (icon rail, Arduino switch, price-tier cards, cost card, checks chart, privacy card)
 - [x] Share button + opt-in public gallery / blog of designs people publish (Publish opens a pre-filled post in the user's own GitHub account; the Gallery card lists published posts; nothing leaves the browser otherwise)
-- [ ] All tests and CI green; no memory blow-up in long runs
+- [x] All tests and CI green; no memory blow-up in long runs
 
 ## Why
 
