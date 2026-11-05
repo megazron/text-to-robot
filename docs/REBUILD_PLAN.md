@@ -4,6 +4,25 @@ Status: started 2026-11-05. Each step lands on `main` when its tests pass.
 
 Done: step 1 (kernel, `packages/kernel`, tests in `tests/kernel.test.ts`).
 
+## Everything asked for (checklist)
+
+- [x] One `main` with all work merged (remaining remote branches are fully contained in main; deleting them needs the owner's command)
+- [x] Real CAD stack that works on the web: Replicad / OpenCascade kernel (`packages/kernel`)
+- [x] Privacy: designs built in the browser, stored on the user's device, said on the page
+- [ ] Arduino button: cheapest Arduino-compatible parts that still work
+- [ ] Price tiers to choose from (cheapest / balanced / best on Arduino), with prices
+- [ ] Honest suggestions when a budget or named components cannot do the request ("at this price only the helmet")
+- [ ] Use the components the user names ("with MG996R servos", "Arduino Nano")
+- [ ] Printed parts and housings that are really buildable: fillets, proper walls, screw bosses, cable paths, STEP + STL
+- [ ] Prompts read properly (sizes, counts, parts, budgets, exclusions) for every robot type
+- [ ] Every robot type rebuilt and checked: arm, car, mecanum, rover, quadruped, hexapod, humanoid, mech, SCARA, gripper
+- [ ] WALL-E rebuilt properly
+- [ ] Mark 43 rebuilt properly, in tiers from helmet to full wearable suit
+- [ ] GIFs, renders and README regenerated from the new designs (no old images left)
+- [ ] New web UI: bento card dashboard in green and black
+- [ ] Share button + opt-in public gallery / blog of designs people publish
+- [ ] All tests and CI green; no memory blow-up in long runs
+
 ## Why
 
 - Printed parts are built by a mesh CSG engine (manifold-3d) from boxes, cylinders and hulls: no fillets,
