@@ -73,6 +73,9 @@ MG90S, LED eyes) + arc reactor + repulsor gloves, $XX".
 4. Designers rebuilt on the kernel, Arduino first: desk arm, 2WD/4WD car, WALL-E, Mark 43 (helmet ->
    armour pieces -> full suit tiers, each with what it can and cannot do).
 5. Remaining designers moved to the kernel; examples, GIFs and README regenerated from the new designs.
+   Status 2026-11-05: blocked by memory. With `TTR_KERNEL_ALL=1` every designer builds on the kernel and the parts come out
+   exact, but OpenCascade's WASM heap never shrinks: the 6-DOF arm's sizing loop reached 4 GB after ~30 parts and the heap
+   corrupted. Needs either a final-pass-only kernel build (sizing on the mesh engine) or a kernel worker that is recycled.
 6. New web UI: a bento card dashboard (rounded cards, slim icon sidebar, pill badges, soft depth) in green
    and black, with the Arduino button and the price-tier picker built in.
 

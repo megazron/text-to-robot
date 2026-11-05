@@ -88,9 +88,9 @@
       "category": "Printed structure",
       "name": "PETG filament for 20 printed parts",
       "qty": 1,
-      "unit_cost": 17.02,
-      "subtotal": 17.02,
-      "spec": "673 g of parts (+15 % supports/waste), about 61.2 h of printing",
+      "unit_cost": 16.95,
+      "subtotal": 16.95,
+      "spec": "670 g of parts (+15 % supports/waste), about 61.1 h of printing",
       "note": "base_link, top_deck, lf_coxa_link, lf_femur_link, lf_tibia_link, lm_coxa_link, lm_femur_link, lm_tibia_link, lr_coxa_link, lr_femur_link, lr_tibia_link, rr_coxa_link, rr_femur_link, rr_tibia_link, rm_coxa_link, rm_femur_link, rm_tibia_link, rf_coxa_link, rf_femur_link, rf_tibia_link"
     },
     {
@@ -102,7 +102,7 @@
       "spec": "3x M3 x 12 deck pillar screws; 72x M2 x 6 case screws; 72x horn screws"
     }
   ],
-  "total": 1032.69,
+  "total": 1032.62,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
@@ -113,23 +113,23 @@
       "effort_unit": "N·m",
       "required_torque_nm": 0.346,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "8.5x"
+      "margin": "8.51x"
     },
     {
       "joint": "lf_femur",
-      "required_effort": 2.18,
+      "required_effort": 2.178,
       "effort_unit": "N·m",
-      "required_torque_nm": 2.18,
+      "required_torque_nm": 2.178,
       "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
       "margin": "2.25x"
     },
     {
       "joint": "lf_tibia",
-      "required_effort": 1.497,
+      "required_effort": 1.496,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.497,
+      "required_torque_nm": 1.496,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "1.96x"
+      "margin": "1.97x"
     },
     {
       "joint": "lm_coxa",
@@ -141,17 +141,17 @@
     },
     {
       "joint": "lm_femur",
-      "required_effort": 2.182,
+      "required_effort": 2.18,
       "effort_unit": "N·m",
-      "required_torque_nm": 2.182,
+      "required_torque_nm": 2.18,
       "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
       "margin": "2.25x"
     },
     {
       "joint": "lm_tibia",
-      "required_effort": 1.502,
+      "required_effort": 1.501,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.502,
+      "required_torque_nm": 1.501,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
       "margin": "1.96x"
     },
@@ -161,23 +161,23 @@
       "effort_unit": "N·m",
       "required_torque_nm": 0.329,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "8.93x"
+      "margin": "8.94x"
     },
     {
       "joint": "lr_femur",
-      "required_effort": 2.18,
+      "required_effort": 2.178,
       "effort_unit": "N·m",
-      "required_torque_nm": 2.18,
+      "required_torque_nm": 2.178,
       "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
       "margin": "2.25x"
     },
     {
       "joint": "lr_tibia",
-      "required_effort": 1.497,
+      "required_effort": 1.496,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.497,
+      "required_torque_nm": 1.496,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "1.96x"
+      "margin": "1.97x"
     },
     {
       "joint": "rr_coxa",
@@ -185,23 +185,23 @@
       "effort_unit": "N·m",
       "required_torque_nm": 0.346,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "8.5x"
+      "margin": "8.51x"
     },
     {
       "joint": "rr_femur",
-      "required_effort": 2.18,
+      "required_effort": 2.178,
       "effort_unit": "N·m",
-      "required_torque_nm": 2.18,
+      "required_torque_nm": 2.178,
       "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
       "margin": "2.25x"
     },
     {
       "joint": "rr_tibia",
-      "required_effort": 1.497,
+      "required_effort": 1.496,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.497,
+      "required_torque_nm": 1.496,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "1.96x"
+      "margin": "1.97x"
     },
     {
       "joint": "rm_coxa",
@@ -213,17 +213,17 @@
     },
     {
       "joint": "rm_femur",
-      "required_effort": 2.182,
+      "required_effort": 2.18,
       "effort_unit": "N·m",
-      "required_torque_nm": 2.182,
+      "required_torque_nm": 2.18,
       "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
       "margin": "2.25x"
     },
     {
       "joint": "rm_tibia",
-      "required_effort": 1.502,
+      "required_effort": 1.501,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.502,
+      "required_torque_nm": 1.501,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
       "margin": "1.96x"
     },
@@ -233,23 +233,23 @@
       "effort_unit": "N·m",
       "required_torque_nm": 0.329,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "8.93x"
+      "margin": "8.94x"
     },
     {
       "joint": "rf_femur",
-      "required_effort": 2.18,
+      "required_effort": 2.178,
       "effort_unit": "N·m",
-      "required_torque_nm": 2.18,
+      "required_torque_nm": 2.178,
       "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
       "margin": "2.25x"
     },
     {
       "joint": "rf_tibia",
-      "required_effort": 1.497,
+      "required_effort": 1.496,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.497,
+      "required_torque_nm": 1.496,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "1.96x"
+      "margin": "1.97x"
     }
   ],
   "warnings": [],

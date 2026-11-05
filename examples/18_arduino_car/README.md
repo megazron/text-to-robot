@@ -38,7 +38,6 @@ All 8 checks pass (torque, speed, power, stability, print-bed fit). Details in `
 ## Prompt notes
 
 - conflict: "4wd" asks for a wheeled base, but a prompt builds one robot; built the Arduino car (4WD)
-- not applied: hobby servos / Arduino: only arms are designed for hobby servos so far; the Arduino car (4WD) uses its standard actuators
 - not applied: ultrasonic sensor: only cameras, depth cameras, lidars and IMUs are modelled
 
 <!-- SIM -->

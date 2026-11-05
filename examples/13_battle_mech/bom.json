@@ -132,9 +132,9 @@
       "category": "Printed structure",
       "name": "PETG filament for 45 printed parts",
       "qty": 1,
-      "unit_cost": 155.39,
-      "subtotal": 155.39,
-      "spec": "6142 g of parts (+15 % supports/waste), about 559.8 h of printing",
+      "unit_cost": 155.24,
+      "subtotal": 155.24,
+      "spec": "6136 g of parts (+15 % supports/waste), about 559.2 h of printing",
       "note": "base_link, base_link_b, torso, torso_b, l_hip_yaw_link, l_hip_roll_link, l_hip_pitch_link, l_hip_pitch_link_b, l_knee_link, l_knee_link_b, l_ankle_pitch_link, l_ankle_roll_link, r_hip_yaw_link, r_hip_roll_link, r_hip_pitch_link, r_hip_pitch_link_b, r_knee_link, r_knee_link_b, r_ankle_pitch_link, r_ankle_roll_link, l_shoulder_pitch_link, l_shoulder_roll_link, l_upper_arm_yaw_link, l_elbow_link, l_wrist_yaw_link, l_wrist_pitch_link, l_wrist_roll_link, l_gripper_jaw, r_shoulder_pitch_link, r_shoulder_roll_link, r_upper_arm_yaw_link, r_elbow_link, r_wrist_yaw_link, r_wrist_pitch_link, r_wrist_roll_link, r_gripper_jaw, neck_pan_link, neck_tilt_link, torso_armour_front, l_hip_pitch_armour_front, l_knee_armour_front, l_shoulder_roll_armour_out, r_hip_pitch_armour_front, r_knee_armour_front, r_shoulder_roll_armour_out"
     },
     {
@@ -146,120 +146,120 @@
       "spec": "36x M3 x 16 split-joint bolts + nuts; 4x M3 x 12 torso-to-pelvis bolts; 96x M3 x 8 housing screws; 112x horn / hub screws; 48x M2/M2.5 x 6 case screws; 28x M3 x 10 armour screws + printed standoffs"
     }
   ],
-  "total": 16103.21,
+  "total": 16103.06,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
   "actuator_sizing": [
     {
       "joint": "l_hip_yaw",
-      "required_effort": 4.615,
+      "required_effort": 4.614,
       "effort_unit": "N·m",
-      "required_torque_nm": 4.615,
+      "required_torque_nm": 4.614,
       "chosen": "CubeMars AK60-6 V3.0 KV80",
       "margin": "1.95x"
     },
     {
       "joint": "l_hip_roll",
-      "required_effort": 49.093,
+      "required_effort": 49.081,
       "effort_unit": "N·m",
-      "required_torque_nm": 49.093,
+      "required_torque_nm": 49.081,
       "chosen": "CubeMars AK80-64 KV80",
       "margin": "2.44x"
     },
     {
       "joint": "l_hip_pitch",
-      "required_effort": 62.572,
+      "required_effort": 62.557,
       "effort_unit": "N·m",
-      "required_torque_nm": 62.572,
+      "required_torque_nm": 62.557,
       "chosen": "CubeMars AK80-64 KV80",
       "margin": "1.92x"
     },
     {
       "joint": "l_knee",
-      "required_effort": 59.882,
+      "required_effort": 59.867,
       "effort_unit": "N·m",
-      "required_torque_nm": 59.882,
+      "required_torque_nm": 59.867,
       "chosen": "CubeMars AK80-64 KV80",
       "margin": "2x"
     },
     {
       "joint": "l_ankle_pitch",
-      "required_effort": 30.922,
+      "required_effort": 30.914,
       "effort_unit": "N·m",
-      "required_torque_nm": 30.922,
+      "required_torque_nm": 30.914,
       "chosen": "CubeMars AK80-64 KV80",
       "margin": "3.88x"
     },
     {
       "joint": "l_ankle_roll",
-      "required_effort": 13.072,
+      "required_effort": 13.069,
       "effort_unit": "N·m",
-      "required_torque_nm": 13.072,
+      "required_torque_nm": 13.069,
       "chosen": "CubeMars AK70-10 KV100",
       "margin": "1.9x"
     },
     {
       "joint": "r_hip_yaw",
-      "required_effort": 4.615,
+      "required_effort": 4.614,
       "effort_unit": "N·m",
-      "required_torque_nm": 4.615,
+      "required_torque_nm": 4.614,
       "chosen": "CubeMars AK60-6 V3.0 KV80",
       "margin": "1.95x"
     },
     {
       "joint": "r_hip_roll",
-      "required_effort": 49.093,
+      "required_effort": 49.081,
       "effort_unit": "N·m",
-      "required_torque_nm": 49.093,
+      "required_torque_nm": 49.081,
       "chosen": "CubeMars AK80-64 KV80",
       "margin": "2.44x"
     },
     {
       "joint": "r_hip_pitch",
-      "required_effort": 62.572,
+      "required_effort": 62.557,
       "effort_unit": "N·m",
-      "required_torque_nm": 62.572,
+      "required_torque_nm": 62.557,
       "chosen": "CubeMars AK80-64 KV80",
       "margin": "1.92x"
     },
     {
       "joint": "r_knee",
-      "required_effort": 59.882,
+      "required_effort": 59.867,
       "effort_unit": "N·m",
-      "required_torque_nm": 59.882,
+      "required_torque_nm": 59.867,
       "chosen": "CubeMars AK80-64 KV80",
       "margin": "2x"
     },
     {
       "joint": "r_ankle_pitch",
-      "required_effort": 30.922,
+      "required_effort": 30.914,
       "effort_unit": "N·m",
-      "required_torque_nm": 30.922,
+      "required_torque_nm": 30.914,
       "chosen": "CubeMars AK80-64 KV80",
       "margin": "3.88x"
     },
     {
       "joint": "r_ankle_roll",
-      "required_effort": 13.072,
+      "required_effort": 13.069,
       "effort_unit": "N·m",
-      "required_torque_nm": 13.072,
+      "required_torque_nm": 13.069,
       "chosen": "CubeMars AK70-10 KV100",
       "margin": "1.9x"
     },
     {
       "joint": "l_shoulder_pitch",
-      "required_effort": 7.577,
+      "required_effort": 7.574,
       "effort_unit": "N·m",
-      "required_torque_nm": 7.577,
+      "required_torque_nm": 7.574,
       "chosen": "CubeMars AK70-10 KV100",
       "margin": "3.27x"
     },
     {
       "joint": "l_shoulder_roll",
-      "required_effort": 7.577,
+      "required_effort": 7.574,
       "effort_unit": "N·m",
-      "required_torque_nm": 7.577,
+      "required_torque_nm": 7.574,
       "chosen": "CubeMars AK70-10 KV100",
       "margin": "3.27x"
     },
@@ -269,13 +269,13 @@
       "effort_unit": "N·m",
       "required_torque_nm": 0.103,
       "chosen": "DYNAMIXEL XM430-W350-T(R)",
-      "margin": "39.78x"
+      "margin": "39.75x"
     },
     {
       "joint": "l_elbow",
-      "required_effort": 3.488,
+      "required_effort": 3.487,
       "effort_unit": "N·m",
-      "required_torque_nm": 3.488,
+      "required_torque_nm": 3.487,
       "chosen": "DYNAMIXEL XH540-W270-T(R)",
       "margin": "2.84x"
     },
@@ -285,7 +285,7 @@
       "effort_unit": "N·m",
       "required_torque_nm": 0.124,
       "chosen": "DYNAMIXEL XM430-W350-T(R)",
-      "margin": "32.98x"
+      "margin": "32.97x"
     },
     {
       "joint": "l_wrist_pitch",
@@ -313,17 +313,17 @@
     },
     {
       "joint": "r_shoulder_pitch",
-      "required_effort": 7.567,
+      "required_effort": 7.564,
       "effort_unit": "N·m",
-      "required_torque_nm": 7.567,
+      "required_torque_nm": 7.564,
       "chosen": "CubeMars AK70-10 KV100",
       "margin": "3.28x"
     },
     {
       "joint": "r_shoulder_roll",
-      "required_effort": 7.566,
+      "required_effort": 7.564,
       "effort_unit": "N·m",
-      "required_torque_nm": 7.566,
+      "required_torque_nm": 7.564,
       "chosen": "CubeMars AK70-10 KV100",
       "margin": "3.28x"
     },
@@ -333,13 +333,13 @@
       "effort_unit": "N·m",
       "required_torque_nm": 0.104,
       "chosen": "DYNAMIXEL XM430-W350-T(R)",
-      "margin": "39.4x"
+      "margin": "39.37x"
     },
     {
       "joint": "r_elbow",
-      "required_effort": 3.485,
+      "required_effort": 3.484,
       "effort_unit": "N·m",
-      "required_torque_nm": 3.485,
+      "required_torque_nm": 3.484,
       "chosen": "DYNAMIXEL XH540-W270-T(R)",
       "margin": "2.84x"
     },
@@ -349,7 +349,7 @@
       "effort_unit": "N·m",
       "required_torque_nm": 0.125,
       "chosen": "DYNAMIXEL XM430-W350-T(R)",
-      "margin": "32.85x"
+      "margin": "32.84x"
     },
     {
       "joint": "r_wrist_pitch",
@@ -394,7 +394,7 @@
   ],
   "warnings": [],
   "notes": [
-    "Battle mech, 1.182 m, 22.41 kg, 30 DOF (7-DOF arms + grippers), 174 min, $15909 of parts",
+    "Battle mech, 1.182 m, 22.40 kg, 30 DOF (7-DOF arms + grippers), 174 min, $15909 of parts",
     "Joint limits trimmed to the collision-free range found by exact solid sweeps: l_hip_roll [-0.45, 0.45] -> [-0.07, 0.45]; l_hip_pitch [-1.60, 1.60] -> [-0.84, 1.60]; l_knee [-2.20, 2.20] -> [-2.04, 0.33]; r_hip_roll [-0.45, 0.45] -> [-0.45, 0.07]; r_hip_pitch [-1.60, 1.60] -> [-1.60, 0.84]; r_knee [-2.20, 2.20] -> [-0.33, 2.04]; l_shoulder_roll [-1.60, 1.60] -> [-0.04, 1.60]; l_elbow [-2.30, 2.30] -> [-2.30, 2.18]; l_wrist_pitch [-1.60, 1.60] -> [-1.60, 1.27]; r_shoulder_roll [-1.60, 1.60] -> [-1.60, 0.04]; r_elbow [-2.30, 2.30] -> [-2.18, 2.30]; r_wrist_pitch [-1.60, 1.60] -> [-1.27, 1.60]; neck_tilt [-0.70, 0.70] -> [-0.70, 0.57].",
     "Joint ranges are swept with the arms held 0.35 rad out to the side (the walking posture); with the arms hanging straight the hands touch the thighs when a leg abducts or a wrist turns.",
     "CubeMars actuators run on a 12S bus (two 6S packs in series, 44.4 V nominal) at their 48 V ratings; DYNAMIXEL arms and the computer run from the 12 V DC-DC converter.",

@@ -364,9 +364,9 @@
       <geometry><mesh filename="package://scara/meshes/outer_arm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.045841 -0.0000211628 0.036752" rpy="0 0 0"/>
-      <mass value="0.105642"/>
-      <inertia ixx="0.0000256425" ixy="2.31795e-7" ixz="0.0000042144" iyy="0.00024024" iyz="-3.80992e-8" izz="0.000243639"/>
+      <origin xyz="0.045814 -0.0000211706 0.036762" rpy="0 0 0"/>
+      <mass value="0.105603"/>
+      <inertia ixx="0.0000256139" ixy="2.31854e-7" ixz="0.00000414341" iyy="0.000240007" iyz="-3.81200e-8" izz="0.000243427"/>
     </inertial>
   </link>
   <link name="wrist_servo">
@@ -412,9 +412,9 @@
       <geometry><mesh filename="package://scara/meshes/gripper_body.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.001212 0.0000728028 0.054531" rpy="0 0 0"/>
-      <mass value="0.213165"/>
-      <inertia ixx="0.000375143" ixy="-1.93933e-8" ixz="-0.00000439616" iyy="0.000765593" iyz="-6.21115e-8" izz="0.00052455"/>
+      <origin xyz="-0.001217 0.0000728769 0.054567" rpy="0 0 0"/>
+      <mass value="0.212948"/>
+      <inertia ixx="0.000374871" ixy="-1.94817e-8" ixz="-0.0000044382" iyy="0.000765319" iyz="-6.15614e-8" izz="0.000524536"/>
     </inertial>
   </link>
   <link name="gripper_servo">

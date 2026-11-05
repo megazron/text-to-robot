@@ -6,16 +6,16 @@
 
 Interpreted as: EVA character · imu (base_link) · camera (head)
 
-**EVA-style companion robot: 3.369 kg, hidden diff-drive base, pan head with camera, two servo fins**
+**EVA-style companion robot: 3.368 kg, hidden diff-drive base, pan head with camera, two servo fins**
 
-Parts cost **$622.68** · printed structure 36 parts, 1777 g · checks passed 52/52
+Parts cost **$622.67** · printed structure 36 parts, 1776 g · checks passed 52/52
 
 ## What it can do
 
 | | |
 |---|--:|
-| mass kg | 3.369 |
-| loaded mass kg | 3.369 |
+| mass kg | 3.368 |
+| loaded mass kg | 3.368 |
 | top speed m s | 1.24 |
 | wheel torque nm | 0.189 |
 | drive motor | pololu_37d_30to1_64cpr |
@@ -61,7 +61,7 @@ All 52 checks pass (torque, speed, power, stability, print-bed fit). Details in 
 |---|---|---|
 | ✅ | drive straight | 3.44 m in 4.02 s, cruise speed 1.212 m/s vs claimed 1.240 m/s, heading drift -0.1 deg, lateral -0.3 cm |
 | ✅ | ramp 10deg | from standstill on a 10 deg slope (speed ramped over 4.7 s at 0.5 m/s^2): 5.13 m uphill in 6.7 s, speed 1.198 m/s of 1.240 commanded |
-| ✅ | turn in place | yaw rate 5.12 rad/s with 5.32 commanded (no-slip), claimed 5.45 rad/s (needs >= 4.63), centre moved 0.5 cm over 2.0 turn(s) (0.3 cm per turn) |
+| ✅ | turn in place | yaw rate 4.79 rad/s with 5.32 commanded (no-slip), claimed 5.45 rad/s (needs >= 4.63), centre moved 0.6 cm over 1.9 turn(s) (0.3 cm per turn) |
 
 _PASS means the modelled actuators (datasheet peak torque as a hard limit, a linear torque-speed line to no-load speed, reflected rotor inertia, URDF damping/friction) can produce the torques and speeds the task needs in this geometry and mass distribution, and that mean torque over the hold stays within the continuous (rated) torque. Joint control uses an ideal model-based feedforward (computed torque) through the force-limited servo for fixed-base robots and plain position servos for floating robots; a pass therefore proves torque/speed capacity, not that a given controller achieves it. Untested: thermal limits over long duty cycles (only the mean-vs-rated proxy), gearbox backlash and compliance, link and joint flexibility, encoder resolution, supply voltage sag and current limits, bus latency, controller tuning, and contact/friction values (nominal friction only)._
 <!-- /SIM -->

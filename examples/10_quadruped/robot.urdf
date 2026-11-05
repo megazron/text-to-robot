@@ -28,9 +28,9 @@
       <geometry><mesh filename="package://quadruped/meshes/base_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-3.85976e-17 2.35814e-18 -0.00711" rpy="0 0 0"/>
-      <mass value="0.143374"/>
-      <inertia ixx="0.000185586" ixy="-4.55200e-7" ixz="6.47172e-20" iyy="0.000686915" iyz="9.82104e-21" izz="0.00082999"/>
+      <origin xyz="2.16840e-18 1.26310e-17 -0.007118" rpy="0 0 0"/>
+      <mass value="0.143219"/>
+      <inertia ixx="0.000185476" ixy="-4.55200e-7" ixz="-1.85312e-20" iyy="0.000686211" iyz="-2.23130e-20" izz="0.00082922"/>
     </inertial>
   </link>
   <link name="battery">
@@ -172,9 +172,9 @@
       <geometry><mesh filename="package://quadruped/meshes/fl_shoulder.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.01645 -0.000116958 0.025416" rpy="0 0 0"/>
-      <mass value="0.025795"/>
-      <inertia ixx="0.0000120417" ixy="1.11632e-8" ixz="-9.09541e-7" iyy="0.0000136974" iyz="-1.78481e-8" izz="0.00000774841"/>
+      <origin xyz="0.016327 -0.000118022 0.025327" rpy="0 0 0"/>
+      <mass value="0.025563"/>
+      <inertia ixx="0.0000119641" ixy="1.15332e-8" ixz="-8.77683e-7" iyy="0.0000135902" iyz="-1.75807e-8" izz="0.00000769167"/>
     </inertial>
   </link>
   <link name="fl_hip_pitch_actuator">
@@ -204,9 +204,9 @@
       <geometry><mesh filename="package://quadruped/meshes/fl_thigh.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.073928 0.00011509 -0.007805" rpy="0 0 0"/>
-      <mass value="0.026223"/>
-      <inertia ixx="0.000007027" ixy="-2.06561e-8" ixz="0.00000478891" iyy="0.00003591" iyz="-7.71931e-9" izz="0.0000347568"/>
+      <origin xyz="0.073862 0.000115474 -0.007841" rpy="0 0 0"/>
+      <mass value="0.026136"/>
+      <inertia ixx="0.00000701085" ixy="-2.08542e-8" ixz="0.00000480774" iyy="0.0000358487" iyz="-7.82712e-9" izz="0.0000346995"/>
     </inertial>
   </link>
   <link name="fl_knee_actuator">
@@ -284,9 +284,9 @@
       <geometry><mesh filename="package://quadruped/meshes/fr_shoulder.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.01645 -0.000116958 0.025416" rpy="0 0 0"/>
-      <mass value="0.025795"/>
-      <inertia ixx="0.0000120417" ixy="1.11632e-8" ixz="-9.09541e-7" iyy="0.0000136974" iyz="-1.78481e-8" izz="0.00000774841"/>
+      <origin xyz="0.016327 -0.000118022 0.025327" rpy="0 0 0"/>
+      <mass value="0.025563"/>
+      <inertia ixx="0.0000119641" ixy="1.15332e-8" ixz="-8.77683e-7" iyy="0.0000135902" iyz="-1.75807e-8" izz="0.00000769167"/>
     </inertial>
   </link>
   <link name="fr_hip_pitch_actuator">
@@ -316,9 +316,9 @@
       <geometry><mesh filename="package://quadruped/meshes/fr_thigh.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.073928 0.000115011 -0.007805" rpy="0 0 0"/>
-      <mass value="0.026223"/>
-      <inertia ixx="0.000007027" ixy="-2.08089e-8" ixz="0.00000478891" iyy="0.00003591" iyz="-7.69905e-9" izz="0.0000347568"/>
+      <origin xyz="0.073862 0.000115395 -0.007841" rpy="0 0 0"/>
+      <mass value="0.026136"/>
+      <inertia ixx="0.00000701085" ixy="-2.10069e-8" ixz="0.00000480774" iyy="0.0000358487" iyz="-7.80679e-9" izz="0.0000346995"/>
     </inertial>
   </link>
   <link name="fr_knee_actuator">
@@ -396,9 +396,9 @@
       <geometry><mesh filename="package://quadruped/meshes/rl_shoulder.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.01645 -0.000116958 0.025416" rpy="0 0 0"/>
-      <mass value="0.025795"/>
-      <inertia ixx="0.0000120417" ixy="1.11632e-8" ixz="-9.09541e-7" iyy="0.0000136974" iyz="-1.78481e-8" izz="0.00000774841"/>
+      <origin xyz="0.016327 -0.000118022 0.025327" rpy="0 0 0"/>
+      <mass value="0.025563"/>
+      <inertia ixx="0.0000119641" ixy="1.15332e-8" ixz="-8.77683e-7" iyy="0.0000135902" iyz="-1.75807e-8" izz="0.00000769167"/>
     </inertial>
   </link>
   <link name="rl_hip_pitch_actuator">
@@ -428,9 +428,9 @@
       <geometry><mesh filename="package://quadruped/meshes/rl_thigh.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.073928 0.000115011 -0.007805" rpy="0 0 0"/>
-      <mass value="0.026223"/>
-      <inertia ixx="0.000007027" ixy="-2.08089e-8" ixz="0.00000478891" iyy="0.00003591" iyz="-7.69905e-9" izz="0.0000347568"/>
+      <origin xyz="0.073862 0.000115395 -0.007841" rpy="0 0 0"/>
+      <mass value="0.026136"/>
+      <inertia ixx="0.00000701085" ixy="-2.10069e-8" ixz="0.00000480774" iyy="0.0000358487" iyz="-7.80679e-9" izz="0.0000346995"/>
     </inertial>
   </link>
   <link name="rl_knee_actuator">
@@ -508,9 +508,9 @@
       <geometry><mesh filename="package://quadruped/meshes/rr_shoulder.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.01645 -0.000116958 0.025416" rpy="0 0 0"/>
-      <mass value="0.025795"/>
-      <inertia ixx="0.0000120417" ixy="1.11632e-8" ixz="-9.09541e-7" iyy="0.0000136974" iyz="-1.78481e-8" izz="0.00000774841"/>
+      <origin xyz="0.016327 -0.000118022 0.025327" rpy="0 0 0"/>
+      <mass value="0.025563"/>
+      <inertia ixx="0.0000119641" ixy="1.15332e-8" ixz="-8.77683e-7" iyy="0.0000135902" iyz="-1.75807e-8" izz="0.00000769167"/>
     </inertial>
   </link>
   <link name="rr_hip_pitch_actuator">
@@ -540,9 +540,9 @@
       <geometry><mesh filename="package://quadruped/meshes/rr_thigh.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.073928 0.00011509 -0.007805" rpy="0 0 0"/>
-      <mass value="0.026223"/>
-      <inertia ixx="0.000007027" ixy="-2.06561e-8" ixz="0.00000478891" iyy="0.00003591" iyz="-7.71931e-9" izz="0.0000347568"/>
+      <origin xyz="0.073862 0.000115474 -0.007841" rpy="0 0 0"/>
+      <mass value="0.026136"/>
+      <inertia ixx="0.00000701085" ixy="-2.08542e-8" ixz="0.00000480774" iyy="0.0000358487" iyz="-7.82712e-9" izz="0.0000346995"/>
     </inertial>
   </link>
   <link name="rr_knee_actuator">

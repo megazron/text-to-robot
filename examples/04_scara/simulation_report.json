@@ -31,10 +31,10 @@
        "saturated_frac": 0.0
       },
       "z": {
-       "peak_nm": 23.7793,
+       "peak_nm": 23.7768,
        "peak_rating_nm": 236.4,
        "util_peak": 0.101,
-       "mean_hold_nm": 23.7793,
+       "mean_hold_nm": 23.7768,
        "rated_nm": 157.6,
        "util_rated": 0.151,
        "max_err": 0.0,
@@ -90,14 +90,14 @@
    },
    "joints": {
     "j1": {
-     "peak_nm": 1.4926,
+     "peak_nm": 0.7685,
      "peak_rating_nm": 4.0,
-     "util_peak": 0.373,
-     "mean_move_nm": 0.1066,
+     "util_peak": 0.192,
+     "mean_move_nm": 0.1039,
      "rated_nm": 2.0,
-     "util_rated": 0.053,
-     "max_err": 0.0014,
-     "max_err_hold": 0.0014,
+     "util_rated": 0.052,
+     "max_err": 0.0015,
+     "max_err_hold": 0.0015,
      "saturated_frac": 0.0,
      "ideal_peak_nm": 0.1351,
      "ideal_worst_vs_available": 0.035,
@@ -106,34 +106,34 @@
      "available_nm": 3.8745,
      "peak_speed_rad_s": 0.636,
      "rated_speed_rad_s": 3.0,
-     "err_after_0p5s": 0.0008
+     "err_after_0p5s": 0.0006
     },
     "z": {
-     "peak_nm": 28.074,
+     "peak_nm": 28.0715,
      "peak_rating_nm": 236.4,
      "util_peak": 0.119,
-     "mean_move_nm": 27.31,
+     "mean_move_nm": 27.3075,
      "rated_nm": 157.6,
      "util_rated": 0.173,
      "max_err": 0.0001,
      "max_err_hold": 0.0001,
      "saturated_frac": 0.0,
-     "ideal_peak_nm": 28.0663,
+     "ideal_peak_nm": 28.0638,
      "ideal_worst_vs_available": 0.119,
      "at_speed_rad_s": 0.064,
-     "needs_nm": 28.0663,
+     "needs_nm": 28.0638,
      "available_nm": 236.4,
      "peak_speed_rad_s": 0.064,
      "rated_speed_rad_s": 0.08,
      "err_after_0p5s": 0.0
     },
     "j2": {
-     "peak_nm": 1.3016,
+     "peak_nm": 1.3534,
      "peak_rating_nm": 4.0,
-     "util_peak": 0.325,
-     "mean_move_nm": 0.1023,
+     "util_peak": 0.338,
+     "mean_move_nm": 0.1,
      "rated_nm": 2.0,
-     "util_rated": 0.051,
+     "util_rated": 0.05,
      "max_err": 0.0023,
      "max_err_hold": 0.0023,
      "saturated_frac": 0.0,
@@ -147,14 +147,14 @@
      "err_after_0p5s": 0.0014
     },
     "wrist_roll": {
-     "peak_nm": 0.2451,
+     "peak_nm": 0.2137,
      "peak_rating_nm": 2.942,
-     "util_peak": 0.083,
-     "mean_move_nm": 0.0991,
+     "util_peak": 0.073,
+     "mean_move_nm": 0.099,
      "rated_nm": 0.9807,
      "util_rated": 0.101,
-     "max_err": 0.0015,
-     "max_err_hold": 0.0015,
+     "max_err": 0.0014,
+     "max_err_hold": 0.0014,
      "saturated_frac": 0.0,
      "ideal_peak_nm": 0.1414,
      "ideal_worst_vs_available": 0.054,
@@ -170,11 +170,11 @@
   "grip": {
    "pass": null,
    "explanation": "untested: the TCP is not between two finger surfaces",
-   "gap_plus": 0.0682,
-   "gap_minus": -0.0734
+   "gap_plus": 0.0679,
+   "gap_minus": -0.0745
   }
  },
  "passed": 2,
  "total": 2,
- "source_urdf_sha256": "d72be002b17550cc81f29523b18825c5103ca716bca476f04544050f599a3f37"
+ "source_urdf_sha256": "e552ff07a4a2e6be4498ad4b5c8027e5ab19672dfd51142b7dc6657d483bba0a"
 }

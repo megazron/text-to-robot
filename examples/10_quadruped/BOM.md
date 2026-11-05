@@ -1,6 +1,6 @@
 # Bill of Materials — quadruped
 
-**Estimated total: $530.45**  ·  tier: hobby
+**Estimated total: $530.42**  ·  tier: hobby
 
 **Effort sizing: passes catalogue estimate; hardware verified: no.**
 
@@ -13,25 +13,25 @@
 | Sensor | Raspberry Pi Camera Module 3 (standard lens) _(forward camera · https://www.raspberrypi.com/products/camera-module-3/)_ | 1 | 25 | 25 | 3.3 V |
 | Compute | Raspberry Pi 5 (4 GB) _(main computer · https://www.raspberrypi.com/products/raspberry-pi-5/)_ | 1 | 110 | 110 | 5 V |
 | Electronics | Waveshare Bus Servo Adapter (A) _(USB to servo bus · https://www.waveshare.com/bus-servo-adapter-a.htm)_ | 1 | 10.6 | 10.6 | 12 V |
-| Printed structure | PETG filament for 14 printed parts _(base_link, top_deck, fl_shoulder, fl_thigh, fl_shin, fr_shoulder, fr_thigh, fr_shin, rl_shoulder, rl_thigh, rl_shin, rr_shoulder, rr_thigh, rr_shin)_ | 1 | 11.92 | 11.92 | 471 g of parts (+15 % supports/waste), about 43.0 h of printing |
+| Printed structure | PETG filament for 14 printed parts _(base_link, top_deck, fl_shoulder, fl_thigh, fl_shin, fr_shoulder, fr_thigh, fr_shin, rl_shoulder, rl_thigh, rl_shin, rr_shoulder, rr_thigh, rr_shin)_ | 1 | 11.89 | 11.89 | 470 g of parts (+15 % supports/waste), about 42.8 h of printing |
 | Fasteners | Screws, nuts and inserts | 104 | 0.12 | 12.48 | 4x M2.5 x 10 board screws; 4x M3 x 10 deck screws; 48x M2 x 6 case screws; 48x horn screws |
 
 ## Actuator sizing
 
 | Joint | Required effort | Unit | Chosen actuator | Margin |
 |---|--:|---|---|--:|
-| fl_hip_abduction | 0.842 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 3.5x |
-| fl_hip_pitch | 1.261 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 2.33x |
-| fl_knee | 1.261 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 2.33x |
-| fr_hip_abduction | 0.842 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 3.5x |
-| fr_hip_pitch | 1.261 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 2.33x |
-| fr_knee | 1.261 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 2.33x |
-| rl_hip_abduction | 0.842 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 3.5x |
-| rl_hip_pitch | 1.261 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 2.33x |
-| rl_knee | 1.261 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 2.33x |
-| rr_hip_abduction | 0.842 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 3.5x |
-| rr_hip_pitch | 1.261 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 2.33x |
-| rr_knee | 1.261 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 2.33x |
+| fl_hip_abduction | 0.841 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 3.5x |
+| fl_hip_pitch | 1.26 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 2.34x |
+| fl_knee | 1.26 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 2.33x |
+| fr_hip_abduction | 0.841 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 3.5x |
+| fr_hip_pitch | 1.26 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 2.34x |
+| fr_knee | 1.26 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 2.33x |
+| rl_hip_abduction | 0.841 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 3.5x |
+| rl_hip_pitch | 1.26 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 2.34x |
+| rl_knee | 1.26 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 2.33x |
+| rr_hip_abduction | 0.841 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 3.5x |
+| rr_hip_pitch | 1.26 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 2.34x |
+| rr_knee | 1.26 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 2.33x |
 
 ## Notes
 - Servo quadruped, 1.41 kg, hip height 0.18 m, 12 DOF, 33 min runtime, $506 of parts

@@ -30,8 +30,8 @@ Parts cost **$332.11** · printed structure 12 parts, 1865 g · checks passed 26
 | gripper stroke mm | 40 |
 | grip force rated n | 46.7 |
 | lowest fingertip mm | 13 |
-| cost usd | 333.12 |
-| cost breakdown | parts 278.68 USD, filament 46.64 USD (1.87 kg), fasteners ~7.80 USD |
+| cost usd | 333.11 |
+| cost breakdown | parts 278.68 USD, filament 46.63 USD (1.87 kg), fasteners ~7.80 USD |
 
 ## Actuators (sized from this robot's own loads)
 

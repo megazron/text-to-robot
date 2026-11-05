@@ -78,7 +78,7 @@ export function buildPart(g: { part: string; params?: Params; scale?: [number, n
   const gen = PARTS[g.part]; if (!gen) throw new Error(`unknown mesh part '${g.part}'`);
   // consistent outward winding for every part (renderers cull back faces); manifold CSG output is already
   // watertight and outward, and welding its near-coincident vertices would break it
-  const raw = gen(g.params ?? {}), m = g.part === "printed" ? raw : orient(raw);
+  const raw = gen(g.params ?? {}), m = g.part === "printed" || g.part === "cad" ? raw : orient(raw);
   return g.scale ? scaleMesh(m, g.scale) : m;
 }
 
@@ -86,7 +86,7 @@ export function buildPart(g: { part: string; params?: Params; scale?: [number, n
 export function meshGeometry(part: string, file: string, params: Params = {}, scale?: [number, number, number]) {
   const m = buildPart({ part, params, scale });
   let mp: ReturnType<typeof massProperties>;
-  try { mp = massProperties(m, part === "printed"); }
+  try { mp = massProperties(m, part === "printed" || part === "cad"); }
   catch (e) {
     // a few datasheet CAD bodies (several touching solids) do not tessellate into one closed surface; a bought
     // part's mass comes from its datasheet anyway, so its inertia is taken from the convex hull of its mesh

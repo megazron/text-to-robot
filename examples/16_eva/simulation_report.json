@@ -62,7 +62,7 @@
      "rated_nm": 0.686,
      "util_rated": 0.537,
      "max_err": 0.948,
-     "max_err_hold": 0.9267,
+     "max_err_hold": 0.9266,
      "saturated_frac": 0.0
     },
     "right_wheel_joint": {
@@ -80,33 +80,33 @@
   },
   "turn_in_place": {
    "pass": 1.0,
-   "explanation": "yaw rate 5.12 rad/s with 5.32 commanded (no-slip), claimed 5.45 rad/s (needs >= 4.63), centre moved 0.5 cm over 2.0 turn(s) (0.3 cm per turn)",
+   "explanation": "yaw rate 4.79 rad/s with 5.32 commanded (no-slip), claimed 5.45 rad/s (needs >= 4.63), centre moved 0.6 cm over 1.9 turn(s) (0.3 cm per turn)",
    "claimed_rad_s": 5.45,
    "commanded_rad_s": 5.3234,
-   "yaw_rate_rad_s": 5.115,
-   "drift_m": 0.0052,
+   "yaw_rate_rad_s": 4.7873,
+   "drift_m": 0.0057,
    "track_m": 0.2329,
    "joints": {
     "left_wheel_joint": {
-     "peak_nm": 0.8538,
+     "peak_nm": 0.7595,
      "peak_rating_nm": 1.373,
-     "util_peak": 0.622,
-     "mean_turn_nm": 0.1867,
+     "util_peak": 0.553,
+     "mean_turn_nm": 0.194,
      "rated_nm": 0.686,
-     "util_rated": 0.272,
-     "max_err": 2.0373,
-     "max_err_hold": 1.8328,
+     "util_rated": 0.283,
+     "max_err": 1.7507,
+     "max_err_hold": 1.4286,
      "saturated_frac": 0.0
     },
     "right_wheel_joint": {
-     "peak_nm": 0.7228,
+     "peak_nm": 0.643,
      "peak_rating_nm": 1.373,
-     "util_peak": 0.526,
-     "mean_turn_nm": 0.1743,
+     "util_peak": 0.468,
+     "mean_turn_nm": 0.1903,
      "rated_nm": 0.686,
-     "util_rated": 0.254,
-     "max_err": 1.8311,
-     "max_err_hold": 1.8311,
+     "util_rated": 0.277,
+     "max_err": 2.4987,
+     "max_err_hold": 1.5192,
      "saturated_frac": 0.0
     }
    }
@@ -114,5 +114,5 @@
  },
  "passed": 3,
  "total": 3,
- "source_urdf_sha256": "f5ce90b22c6976fb095f8a45f05c3d06c4a1e17e1b9c39b456d1faf8aa650fff"
+ "source_urdf_sha256": "51e76a054bd5437b730a78cffce95c109d9b6771d77206383ba721b7e29daed4"
 }

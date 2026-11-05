@@ -200,7 +200,11 @@ function keepoutOf(key: string, T: Mat4, c = 0.4): Shape3D {
 function cradleOf(key: string, T: Mat4, wall: number): { add: Shape3D[]; cut: Shape3D[] } {
   const { min, max } = bodyBox(key), top = Math.min(max[2], -0.8) - 1.2, rim = 5;
   const shell = transformed(box([min[0] - wall, min[1] - wall, min[2] - wall], [max[0] + wall, max[1] + wall, top], wall), T);
-  const cut = [keepoutOf(key, T), ...screwCuts(caseHoles(key), T, wall + 1)];
+  // case screws pass through the whole wall: a hole recessed into the case (the STS3250's rear M3s sit 1.7 mm inside its
+  // face) is cut that much further, or a 0.2 mm skin is left over it; holes run on 12 mm past the cradle so any structure
+  // behind it gets a clean screwdriver hole instead of a thin floor
+  const inset = (h: Hole) => { const a = h.axis, k = a.findIndex((x) => Math.abs(x) > 0.9); return k < 0 ? 0 : Math.max(0, a[k] > 0 ? max[k] - h.pos[k] : h.pos[k] - min[k]); };
+  const cut = [keepoutOf(key, T), ...caseHoles(key).flatMap((h) => screwCuts([h], T, wall + 12 + inset(h)))];
   // cable slot out of the side: run it well past the wall, or material around the cradle leaves a skin over it
   if (max[0] - min[0] > 3 * rim) cut.push(transformed(box([min[0] + rim, max[1] - 1, min[2] + 1.5], [Math.min(max[0] - rim, min[0] + rim + 12), max[1] + wall + 20, min[2] + 9]), T));
   return { add: [shell], cut };
@@ -342,7 +346,10 @@ function weld(vertices: ArrayLike<number>, triangles: ArrayLike<number>) {
   const M = mf!;
   const mesh = new M.Mesh({ numProp: 3, vertProperties: new Float32Array(vertices), triVerts: new Uint32Array(triangles) });
   mesh.merge();
-  const solid = new M.Manifold(mesh);
+  return summarise(new M.Manifold(mesh));
+}
+/** The mesh, volume and topology of a manifold solid (consumes it). */
+function summarise(solid: InstanceType<NonNullable<typeof mf>["Manifold"]>) {
   try {
     const watertight = solid.status() === "NoError" && !solid.isEmpty();
     const g = solid.getMesh(), v: Vec3[] = [], f: [number, number, number][] = [];
@@ -377,10 +384,10 @@ export function exportPart(p: Program, quality: { tolerance?: number; angular?: 
     { tol: 0.05, ang: 0.2, edge: false, clean: false },
     { tol: 0.02, ang: 0.1, edge: false, clean: true },
   ];
-  let last: unknown;
+  let last: unknown, leaky: PartFiles | undefined;
   for (const a of attempts) {
     try {
-      return scoped(() => {
+      const r = scoped(() => {
         let s = evaluate(a.edge ? p : { ...p, edge: 0 });
         if (a.clean) { try { s = keep(s.simplify() as Shape3D); } catch { /* keep the raw shape */ } }
         const bb0 = s.boundingBox.bounds, diag = Math.hypot(bb0[1][0] - bb0[0][0], bb0[1][1] - bb0[0][1], bb0[1][2] - bb0[0][2]);
@@ -394,9 +401,40 @@ export function exportPart(p: Program, quality: { tolerance?: number; angular?: 
           volume_mm3: w.volume, bbox_mm: { min: [...bb.bounds[0]] as Vec3, max: [...bb.bounds[1]] as Vec3 }, bodies: w.bodies, watertight: w.watertight, genus: w.genus,
         };
       });
+      if (r.watertight) return r;
+      leaky ??= r; last = new Error("surface not closed");
     } catch (e) { last = e; }
   }
+  // last resort: mesh every primitive on its own (always clean) and do the booleans on meshes, where coincident faces
+  // (a hull face lying on a filleted beam) are handled exactly; the STEP is still the OpenCascade solid when it builds
+  try { const r = scoped(() => meshBoolean(p)); if (r.watertight || !leaky) return r; } catch (e) { last = e; }
+  if (leaky) return leaky;   // reported as not watertight by the print check, never hidden
   throw new Error(`part "${p.name}" could not be meshed into a closed solid: ${(last as Error)?.message ?? last}`);
+}
+function meshBoolean(p: Program): PartFiles {
+  const M = mf!, ps = p.ops.map(solidOf), live: { delete(): void }[] = [];
+  const toM = (sh: Shape3D) => {
+    const b = sh.boundingBox.bounds, diag = Math.hypot(b[1][0] - b[0][0], b[1][1] - b[0][1], b[1][2] - b[0][2]);
+    const m = sh.mesh({ tolerance: Math.min(0.25, Math.max(0.03, diag / 1600)), angularTolerance: 0.2 });
+    const mesh = new M.Mesh({ numProp: 3, vertProperties: new Float32Array(m.vertices), triVerts: new Uint32Array(m.triangles) });
+    mesh.merge();
+    const x = new M.Manifold(mesh); live.push(x); return x;
+  };
+  try {
+    const adds = ps.flatMap((x) => x.add).map(toM), cuts = ps.flatMap((x) => x.cut).map(toM);
+    let solid = M.Manifold.union(adds); live.push(solid);
+    if (cuts.length) { const c = M.Manifold.union(cuts); live.push(c); solid = solid.subtract(c); }
+    if (solid.status() !== "NoError" || solid.isEmpty()) throw new Error(`mesh boolean failed: ${solid.status()}`);
+    // summarise() deletes the result: take it out of the clean-up list so it is never deleted twice (that corrupts the heap)
+    const i = live.indexOf(solid); if (i >= 0) live.splice(i, 1);
+    const w = summarise(solid);
+    let step = "";
+    try { step = stepText(evaluate({ ...p, edge: 0 })); } catch { /* mesh only */ }
+    const lo: Vec3 = [Infinity, Infinity, Infinity], hi: Vec3 = [-Infinity, -Infinity, -Infinity];
+    for (const v of w.v) for (let k = 0; k < 3; k++) { lo[k] = Math.min(lo[k], v[k]); hi[k] = Math.max(hi[k], v[k]); }
+    return { stl: binaryStl(w.v, w.f, p.name), step, mesh: { v: w.v.map((x) => [x[0] / 1000, x[1] / 1000, x[2] / 1000] as Vec3), f: w.f },
+      volume_mm3: w.volume, bbox_mm: { min: lo, max: hi }, bodies: w.bodies, watertight: w.watertight, genus: w.genus };
+  } finally { for (const x of live) x.delete(); }
 }
 function stepText(s: Shape3D): string {
   const O = oc(), writer = new O.STEPControl_Writer(), progress = new O.Message_ProgressRange();

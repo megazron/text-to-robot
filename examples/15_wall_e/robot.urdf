@@ -28,9 +28,9 @@
       <geometry><mesh filename="package://wall_e/meshes/body.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.000734429 -1.63867e-11 0.068957" rpy="0 0 0"/>
+      <origin xyz="-0.000734429 -1.63865e-11 0.068957" rpy="0 0 0"/>
       <mass value="0.18534"/>
-      <inertia ixx="0.000770454" ixy="-9.11442e-12" ixz="0.00000231013" iyy="0.001105" iyz="-1.36412e-13" izz="0.001187"/>
+      <inertia ixx="0.000770454" ixy="-9.11442e-12" ixz="0.00000231013" iyy="0.001105" iyz="-1.36413e-13" izz="0.001187"/>
     </inertial>
   </link>
   <link name="front_left_motor">
@@ -174,7 +174,7 @@
     <inertial>
       <origin xyz="0.000298804 0.0785 -0.0445" rpy="0 0 0"/>
       <mass value="0.029782"/>
-      <inertia ixx="0.0000281382" ixy="-6.65161e-13" ixz="-1.15999e-12" iyy="0.00015743" iyz="5.90361e-14" izz="0.000132896"/>
+      <inertia ixx="0.0000281382" ixy="-6.65162e-13" ixz="-1.15999e-12" iyy="0.00015743" iyz="5.90361e-14" izz="0.000132896"/>
     </inertial>
   </link>
   <link name="track_right">
@@ -332,9 +332,9 @@
       <geometry><mesh filename="package://wall_e/meshes/lid.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.000865485 -0.0000201679 0.146374" rpy="0 0 0"/>
-      <mass value="0.086813"/>
-      <inertia ixx="0.000119865" ixy="1.87780e-8" ixz="0.00000243293" iyy="0.000209363" iyz="-3.29623e-8" izz="0.000324039"/>
+      <origin xyz="0.000862029 -0.0000201722 0.14638" rpy="0 0 0"/>
+      <mass value="0.086794"/>
+      <inertia ixx="0.000119853" ixy="1.87841e-8" ixz="0.00000242527" iyy="0.000209343" iyz="-3.29720e-8" izz="0.00032403"/>
     </inertial>
   </link>
   <link name="neck_pan_servo">
@@ -364,9 +364,9 @@
       <geometry><mesh filename="package://wall_e/meshes/neck.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.0000636207 -0.001525 0.041465" rpy="0 0 0"/>
-      <mass value="0.027029"/>
-      <inertia ixx="0.0000263751" ixy="1.36278e-8" ixz="-8.07078e-8" iyy="0.0000260737" iyz="0.00000152683" izz="0.0000032114"/>
+      <origin xyz="0.0000636615 -0.001516 0.041438" rpy="0 0 0"/>
+      <mass value="0.027011"/>
+      <inertia ixx="0.0000263381" ixy="1.36439e-8" ixz="-8.07538e-8" iyy="0.0000260403" iyz="0.00000151624" izz="0.00000320767"/>
     </inertial>
   </link>
   <link name="neck_tilt_servo">

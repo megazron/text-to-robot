@@ -114,9 +114,9 @@
       "category": "Printed structure",
       "name": "PETG filament for 29 printed parts",
       "qty": 1,
-      "unit_cost": 30.96,
-      "subtotal": 30.96,
-      "spec": "1224 g of parts (+15 % supports/waste), about 111.5 h of printing",
+      "unit_cost": 30.93,
+      "subtotal": 30.93,
+      "spec": "1223 g of parts (+15 % supports/waste), about 111.4 h of printing",
       "note": "left_front_bracket, left_rear_bracket, right_front_bracket, right_rear_bracket, battery_tray, computer_tray, motor_driver_1_tray, motor_driver_2_tray, servo_bus_tray, imu_tray, regulator_5v_tray, spine_foot, left_arm_shoulder_wedge, left_arm_base_link, left_arm_turret, left_arm_upper_arm, left_arm_forearm, left_arm_tool_link, right_arm_shoulder_wedge, right_arm_base_link, right_arm_turret, right_arm_upper_arm, right_arm_forearm, right_arm_tool_link, neck_mount, head, head_dome, eyes, camera_bracket"
     },
     {
@@ -128,7 +128,7 @@
       "spec": "24x M3 x 8 socket head (motor face); 8x M3 x 10 socket head + nut (bracket to deck); 1x 20 mm hook-and-loop battery strap; 14x M3 x 8 socket head (tray to deck); 23x M2.5 x 6 screws (board to standoffs); 8x M5 x 12 socket head (base to bench); 32x M2 x 6 case screws; 36x horn screws; 6x M5 x 16 socket head + M5 washer + M5 heat-set insert (clevis bearing axle); 4x M3 x 10 (head dome to head)"
     }
   ],
-  "total": 880.91,
+  "total": 880.88,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
@@ -232,7 +232,7 @@
   ],
   "warnings": [],
   "notes": [
-    "Baymax-style service robot: 5.406 kg, 1.01 m tall, 4WD hidden base, two 4-servo arms, pan head with camera",
+    "Baymax-style service robot: 5.405 kg, 1.01 m tall, 4WD hidden base, two 4-servo arms, pan head with camera",
     "Baymax's inflatable vinyl body is a sewn ripstop cover with a foam-lined zip, bought or sewn, with negligible structural role; it hangs on the shoulder yoke and hides a 4WD skid-steer base. It is not inflated, so it does not cushion like the film's.",
     "Structure: 2020 aluminium extrusion spine and a 6 mm aluminium shoulder yoke; arms are four servos each (shoulder yaw, shoulder pitch, elbow, wrist) splayed 25 deg so they clear the belly; the hands are printed mittens covered with the same fabric.",
     "Each arm is sized as mounted to lift 0.1 kg in the mitten at full reach; the tipping check includes both arms stretched forward with that payload.",

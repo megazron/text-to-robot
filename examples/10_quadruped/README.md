@@ -8,7 +8,7 @@ Interpreted as: quadruped · imu (base_link) · camera (base_link)
 
 **Servo quadruped, 1.41 kg, hip height 0.18 m, 12 DOF, 33 min runtime, $506 of parts**
 
-Parts cost **$530.45** · printed structure 14 parts, 471 g · checks passed 32/32
+Parts cost **$530.42** · printed structure 14 parts, 470 g · checks passed 32/32
 
 ## What it can do
 
@@ -16,7 +16,7 @@ Parts cost **$530.45** · printed structure 14 parts, 471 g · checks passed 32/
 |---|--:|
 | average power w | 36 |
 | com height m | 0.145 |
-| mass kg | 1.41 |
+| mass kg | 1.409 |
 | standing height m | 0.199 |
 | hip height m | 0.18 |
 | payload kg | 0.3 |
@@ -32,18 +32,18 @@ Parts cost **$530.45** · printed structure 14 parts, 471 g · checks passed 32/
 
 | Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
 |---|---|--:|--:|--:|--:|
-| fl_hip_abduction | feetech_sts3215_c047 | 0.842 | 0.9807 / 2.942 | 3.5x | 4.712 |
-| fl_hip_pitch | feetech_sts3215_c047 | 1.261 | 0.9807 / 2.942 | 2.33x | 4.712 |
-| fl_knee | feetech_sts3215_c047 | 1.261 | 0.9807 / 2.942 | 2.33x | 4.712 |
-| fr_hip_abduction | feetech_sts3215_c047 | 0.842 | 0.9807 / 2.942 | 3.5x | 4.712 |
-| fr_hip_pitch | feetech_sts3215_c047 | 1.261 | 0.9807 / 2.942 | 2.33x | 4.712 |
-| fr_knee | feetech_sts3215_c047 | 1.261 | 0.9807 / 2.942 | 2.33x | 4.712 |
-| rl_hip_abduction | feetech_sts3215_c047 | 0.842 | 0.9807 / 2.942 | 3.5x | 4.712 |
-| rl_hip_pitch | feetech_sts3215_c047 | 1.261 | 0.9807 / 2.942 | 2.33x | 4.712 |
-| rl_knee | feetech_sts3215_c047 | 1.261 | 0.9807 / 2.942 | 2.33x | 4.712 |
-| rr_hip_abduction | feetech_sts3215_c047 | 0.842 | 0.9807 / 2.942 | 3.5x | 4.712 |
-| rr_hip_pitch | feetech_sts3215_c047 | 1.261 | 0.9807 / 2.942 | 2.33x | 4.712 |
-| rr_knee | feetech_sts3215_c047 | 1.261 | 0.9807 / 2.942 | 2.33x | 4.712 |
+| fl_hip_abduction | feetech_sts3215_c047 | 0.841 | 0.9807 / 2.942 | 3.5x | 4.712 |
+| fl_hip_pitch | feetech_sts3215_c047 | 1.26 | 0.9807 / 2.942 | 2.34x | 4.712 |
+| fl_knee | feetech_sts3215_c047 | 1.26 | 0.9807 / 2.942 | 2.33x | 4.712 |
+| fr_hip_abduction | feetech_sts3215_c047 | 0.841 | 0.9807 / 2.942 | 3.5x | 4.712 |
+| fr_hip_pitch | feetech_sts3215_c047 | 1.26 | 0.9807 / 2.942 | 2.34x | 4.712 |
+| fr_knee | feetech_sts3215_c047 | 1.26 | 0.9807 / 2.942 | 2.33x | 4.712 |
+| rl_hip_abduction | feetech_sts3215_c047 | 0.841 | 0.9807 / 2.942 | 3.5x | 4.712 |
+| rl_hip_pitch | feetech_sts3215_c047 | 1.26 | 0.9807 / 2.942 | 2.34x | 4.712 |
+| rl_knee | feetech_sts3215_c047 | 1.26 | 0.9807 / 2.942 | 2.33x | 4.712 |
+| rr_hip_abduction | feetech_sts3215_c047 | 0.841 | 0.9807 / 2.942 | 3.5x | 4.712 |
+| rr_hip_pitch | feetech_sts3215_c047 | 1.26 | 0.9807 / 2.942 | 2.34x | 4.712 |
+| rr_knee | feetech_sts3215_c047 | 1.26 | 0.9807 / 2.942 | 2.33x | 4.712 |
 
 ## Engineering checks
 

@@ -8,7 +8,7 @@ Interpreted as: Arduino desk arm (3 DOF + claw) · no gripper
 
 **Arduino desk arm: 3 DOF + claw, 280 mm reach, 20 g payload, 0.27 kg, $39 of parts**
 
-Parts cost **$43.55** · printed structure 5 parts, 143 g · checks passed 12/12
+Parts cost **$43.54** · printed structure 5 parts, 142 g · checks passed 12/12
 
 ## What it can do
 
@@ -16,7 +16,7 @@ Parts cost **$43.55** · printed structure 5 parts, 143 g · checks passed 12/12
 |---|--:|
 | reach m | 0.28 |
 | payload kg | 0.02 |
-| mass kg | 0.271 |
+| mass kg | 0.27 |
 | cost usd | 38.5 |
 | dof | 3 |
 | gripper | one-servo claw |
@@ -26,8 +26,8 @@ Parts cost **$43.55** · printed structure 5 parts, 143 g · checks passed 12/12
 
 | Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
 |---|---|--:|--:|--:|--:|
-| shoulder | hobby_mg996r | 0.3186 | 0.3236 / 1.0787 | 3.39x | 7.48 |
-| elbow | hobby_mg996r | 0.094 | 0.3236 / 1.0787 | 11.47x | 7.48 |
+| shoulder | hobby_mg996r | 0.3183 | 0.3236 / 1.0787 | 3.39x | 7.48 |
+| elbow | hobby_mg996r | 0.094 | 0.3236 / 1.0787 | 11.48x | 7.48 |
 
 ## Engineering checks
 
@@ -42,7 +42,6 @@ All 12 checks pass (torque, speed, power, stability, print-bed fit). Details in 
 ## Prompt notes
 
 - conflict: "arm" asks for a arm, but a prompt builds one robot; built the Arduino desk arm (3 DOF + claw)
-- not applied: hobby servos / Arduino: only arms are designed for hobby servos so far; the Arduino desk arm (3 DOF + claw) uses its standard actuators
 
 <!-- SIM -->
 ## Simulation (MuJoCo, real actuator limits)

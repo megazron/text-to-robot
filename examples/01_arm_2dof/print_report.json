@@ -8,7 +8,7 @@
   {
    "name": "base_link",
    "watertight": true,
-   "volume_cm3": 93.22,
+   "volume_cm3": 93.17,
    "size_mm": [
     110.0,
     110.0,
@@ -20,11 +20,11 @@
     -1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 10.66,
-   "support_frac": 0.027,
+   "support_area_cm2": 10.83,
+   "support_frac": 0.028,
    "bed_contact_cm2": 119.47,
-   "min_wall_mm": 2.27,
-   "thin_wall_frac": 0.003,
+   "min_wall_mm": 2.28,
+   "thin_wall_frac": 0.0,
    "passed": true,
    "supports": "none",
    "problems": [],
@@ -33,7 +33,7 @@
   {
    "name": "forearm",
    "watertight": true,
-   "volume_cm3": 168.13,
+   "volume_cm3": 168.09,
    "size_mm": [
     228.2,
     49.6,
@@ -47,13 +47,13 @@
    "fits_bed": true,
    "support_area_cm2": 56.52,
    "support_frac": 0.137,
-   "bed_contact_cm2": 17.83,
-   "min_wall_mm": 0.2,
+   "bed_contact_cm2": 17.3,
+   "min_wall_mm": 0.21,
    "thin_wall_frac": 0.011,
    "passed": false,
    "supports": "needed",
    "problems": [
-    "walls down to 0.20 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
+    "walls down to 0.21 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
    ],
    "warnings": []
   },
@@ -85,7 +85,7 @@
   {
    "name": "upper_arm",
    "watertight": true,
-   "volume_cm3": 127.59,
+   "volume_cm3": 127.53,
    "size_mm": [
     171.4,
     30.8,
@@ -97,11 +97,11 @@
     0.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 22.96,
-   "support_frac": 0.062,
+   "support_area_cm2": 23.21,
+   "support_frac": 0.063,
    "bed_contact_cm2": 12.04,
-   "min_wall_mm": 1.92,
-   "thin_wall_frac": 0.004,
+   "min_wall_mm": 2.0,
+   "thin_wall_frac": 0.0,
    "passed": true,
    "supports": "none",
    "problems": [],

@@ -20,10 +20,10 @@
      "payload_kg": 0.1,
      "joints": {
       "shoulder_pitch": {
-       "peak_nm": 1.0674,
+       "peak_nm": 1.0672,
        "peak_rating_nm": 4.9033,
        "util_peak": 0.218,
-       "mean_hold_nm": 1.0248,
+       "mean_hold_nm": 1.0246,
        "rated_nm": 1.5691,
        "util_rated": 0.653,
        "max_err": 0.0029,
@@ -53,10 +53,10 @@
      "payload_kg": 0.1,
      "joints": {
       "shoulder_pitch": {
-       "peak_nm": 1.0674,
+       "peak_nm": 1.0672,
        "peak_rating_nm": 4.9033,
        "util_peak": 0.218,
-       "mean_hold_nm": 1.0248,
+       "mean_hold_nm": 1.0246,
        "rated_nm": 1.5691,
        "util_rated": 0.653,
        "max_err": 0.0029,
@@ -64,7 +64,7 @@
        "saturated_frac": 0.0
       },
       "elbow_pitch": {
-       "peak_nm": 0.46,
+       "peak_nm": 0.4599,
        "peak_rating_nm": 2.942,
        "util_peak": 0.156,
        "mean_hold_nm": 0.4176,
@@ -107,19 +107,19 @@
    },
    "joints": {
     "shoulder_pitch": {
-     "peak_nm": 2.1296,
+     "peak_nm": 2.1294,
      "peak_rating_nm": 4.9033,
      "util_peak": 0.434,
-     "mean_move_nm": 1.3418,
+     "mean_move_nm": 1.3417,
      "rated_nm": 1.5691,
      "util_rated": 0.855,
      "max_err": 0.0093,
      "max_err_hold": 0.0093,
      "saturated_frac": 0.0,
-     "ideal_peak_nm": 2.0578,
+     "ideal_peak_nm": 2.0575,
      "ideal_worst_vs_available": 0.629,
      "at_speed_rad_s": 3.736,
-     "needs_nm": 1.9102,
+     "needs_nm": 1.91,
      "available_nm": 3.0377,
      "peak_speed_rad_s": 4.752,
      "rated_speed_rad_s": 5.94,
@@ -129,16 +129,16 @@
      "peak_nm": 0.5815,
      "peak_rating_nm": 2.942,
      "util_peak": 0.198,
-     "mean_move_nm": 0.4307,
+     "mean_move_nm": 0.4306,
      "rated_nm": 0.9807,
      "util_rated": 0.439,
      "max_err": 0.002,
      "max_err_hold": 0.002,
      "saturated_frac": 0.0,
-     "ideal_peak_nm": 0.568,
+     "ideal_peak_nm": 0.5679,
      "ideal_worst_vs_available": 0.193,
      "at_speed_rad_s": 0.0,
-     "needs_nm": 0.568,
+     "needs_nm": 0.5679,
      "available_nm": 2.942,
      "peak_speed_rad_s": 0.0,
      "rated_speed_rad_s": 4.42,
@@ -180,5 +180,5 @@
  },
  "passed": 4,
  "total": 4,
- "source_urdf_sha256": "e67e78c334e33a58403868865b4376406f06a27498a55ebf79c4198202ebfa6c"
+ "source_urdf_sha256": "0651c1a55b1581a5e10eef0827e1fac39641c85ea378e5213218880500f95700"
 }

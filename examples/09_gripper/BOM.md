@@ -1,6 +1,6 @@
 # Bill of Materials — parallel_gripper
 
-**Estimated total: $80.84**  ·  tier: hobby
+**Estimated total: $80.83**  ·  tier: hobby
 
 **Effort sizing: passes catalogue estimate; hardware verified: no.**
 
@@ -11,7 +11,7 @@
 | Power | Mean Well LRS-75-12 enclosed PSU, 12 V 6 A (75 W) _(12 V servo supply (off-board) · https://www.digikey.com/en/products/result?keywords=LRS-75-12)_ | 1 | 22 | 22 | 12 V |
 | Power | Hardened chromed linear rod 8 mm h6, 130 mm _(finger guide rods · https://us.misumi-ec.com/vona2/mech/M0100000000/M0101000000/M0101010000/)_ | 2 | 4.56 | 9.12 | https://us.misumi-ec.com/vona2/mech/M0100000000/M0101000000/M0101010000/ |
 | Electronics | Waveshare Bus Servo Adapter (A) _(USB to servo bus (off-board) · https://www.waveshare.com/bus-servo-adapter-a.htm)_ | 1 | 10.6 | 10.6 | 12 V |
-| Printed structure | PETG filament for 5 printed parts _(base_link, gripper_body, pinion, finger_a, finger_b)_ | 1 | 9.92 | 9.92 | 392 g of parts (+15 % supports/waste), about 35.7 h of printing |
+| Printed structure | PETG filament for 5 printed parts _(base_link, gripper_body, pinion, finger_a, finger_b)_ | 1 | 9.91 | 9.91 | 392 g of parts (+15 % supports/waste), about 35.7 h of printing |
 | Fasteners | Screws, nuts and inserts | 20 | 0.12 | 2.4 | 4x M6 x 16 socket head (adapter to robot flange); 4x M4 x 10 socket head + M4 heat-set insert (housing to adapter, radial); 4x M3 x 6 set screw (rod retention); 4x servo case screws (M2 x 6); 4x horn screws |
 
 ## Actuator sizing

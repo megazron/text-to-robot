@@ -44,9 +44,9 @@
       <geometry><mesh filename="package://parallel_gripper/meshes/gripper_body.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.00115 0.0000690919 0.053147" rpy="0 0 0"/>
-      <mass value="0.224614"/>
-      <inertia ixx="0.000392041" ixy="-1.84348e-8" ixz="-0.0000040387" iyy="0.000964156" iyz="-8.35901e-8" izz="0.000717848"/>
+      <origin xyz="-0.001155 0.0000691587 0.053179" rpy="0 0 0"/>
+      <mass value="0.224397"/>
+      <inertia ixx="0.00039179" ixy="-1.85179e-8" ixz="-0.00000407861" iyy="0.000963903" iyz="-8.30888e-8" izz="0.000717835"/>
     </inertial>
   </link>
   <link name="gripper_servo">

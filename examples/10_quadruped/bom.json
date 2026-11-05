@@ -69,9 +69,9 @@
       "category": "Printed structure",
       "name": "PETG filament for 14 printed parts",
       "qty": 1,
-      "unit_cost": 11.92,
-      "subtotal": 11.92,
-      "spec": "471 g of parts (+15 % supports/waste), about 43.0 h of printing",
+      "unit_cost": 11.89,
+      "subtotal": 11.89,
+      "spec": "470 g of parts (+15 % supports/waste), about 42.8 h of printing",
       "note": "base_link, top_deck, fl_shoulder, fl_thigh, fl_shin, fr_shoulder, fr_thigh, fr_shin, rl_shoulder, rl_thigh, rl_shin, rr_shoulder, rr_thigh, rr_shin"
     },
     {
@@ -83,104 +83,104 @@
       "spec": "4x M2.5 x 10 board screws; 4x M3 x 10 deck screws; 48x M2 x 6 case screws; 48x horn screws"
     }
   ],
-  "total": 530.45,
+  "total": 530.42,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
   "actuator_sizing": [
     {
       "joint": "fl_hip_abduction",
-      "required_effort": 0.842,
+      "required_effort": 0.841,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.842,
+      "required_torque_nm": 0.841,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
       "margin": "3.5x"
     },
     {
       "joint": "fl_hip_pitch",
-      "required_effort": 1.261,
+      "required_effort": 1.26,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.261,
+      "required_torque_nm": 1.26,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "2.33x"
+      "margin": "2.34x"
     },
     {
       "joint": "fl_knee",
-      "required_effort": 1.261,
+      "required_effort": 1.26,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.261,
+      "required_torque_nm": 1.26,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
       "margin": "2.33x"
     },
     {
       "joint": "fr_hip_abduction",
-      "required_effort": 0.842,
+      "required_effort": 0.841,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.842,
+      "required_torque_nm": 0.841,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
       "margin": "3.5x"
     },
     {
       "joint": "fr_hip_pitch",
-      "required_effort": 1.261,
+      "required_effort": 1.26,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.261,
+      "required_torque_nm": 1.26,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "2.33x"
+      "margin": "2.34x"
     },
     {
       "joint": "fr_knee",
-      "required_effort": 1.261,
+      "required_effort": 1.26,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.261,
+      "required_torque_nm": 1.26,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
       "margin": "2.33x"
     },
     {
       "joint": "rl_hip_abduction",
-      "required_effort": 0.842,
+      "required_effort": 0.841,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.842,
+      "required_torque_nm": 0.841,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
       "margin": "3.5x"
     },
     {
       "joint": "rl_hip_pitch",
-      "required_effort": 1.261,
+      "required_effort": 1.26,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.261,
+      "required_torque_nm": 1.26,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "2.33x"
+      "margin": "2.34x"
     },
     {
       "joint": "rl_knee",
-      "required_effort": 1.261,
+      "required_effort": 1.26,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.261,
+      "required_torque_nm": 1.26,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
       "margin": "2.33x"
     },
     {
       "joint": "rr_hip_abduction",
-      "required_effort": 0.842,
+      "required_effort": 0.841,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.842,
+      "required_torque_nm": 0.841,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
       "margin": "3.5x"
     },
     {
       "joint": "rr_hip_pitch",
-      "required_effort": 1.261,
+      "required_effort": 1.26,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.261,
+      "required_torque_nm": 1.26,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "2.33x"
+      "margin": "2.34x"
     },
     {
       "joint": "rr_knee",
-      "required_effort": 1.261,
+      "required_effort": 1.26,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.261,
+      "required_torque_nm": 1.26,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
       "margin": "2.33x"
     }

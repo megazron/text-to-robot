@@ -1,6 +1,6 @@
 # Bill of Materials — battle_mech
 
-**Estimated total: $16103.21**  ·  tier: research
+**Estimated total: $16103.06**  ·  tier: research
 
 **Effort sizing: passes catalogue estimate; hardware verified: no.**
 
@@ -20,38 +20,38 @@
 | Power | LiPo 6S 10000 mAh 30C, EC5 (Tattu) _(main battery (2 in series) · https://www.buddyrc.com/products/tattu-22-2v-30c-6s-10000mah-lipo-battery-pack-with-ec5-plug-for-uav-drone)_ | 2 | 216.99 | 433.98 | 22.2 V, 222 Wh |
 | Sensor | Raspberry Pi Camera Module 3 (standard lens) _(head camera · https://www.raspberrypi.com/products/camera-module-3/)_ | 1 | 25 | 25 | 3.3 V |
 | Electronics | EYOU Robotics CANable PRO isolated USB-CAN adapter _(USB-CAN bus (left leg); USB-CAN bus (right leg) · https://www.robotshop.com/products/eyou-robotics-can-usb-adapter-canable-pro)_ | 2 | 42 | 84 | 5 V |
-| Printed structure | PETG filament for 45 printed parts _(base_link, base_link_b, torso, torso_b, l_hip_yaw_link, l_hip_roll_link, l_hip_pitch_link, l_hip_pitch_link_b, l_knee_link, l_knee_link_b, l_ankle_pitch_link, l_ankle_roll_link, r_hip_yaw_link, r_hip_roll_link, r_hip_pitch_link, r_hip_pitch_link_b, r_knee_link, r_knee_link_b, r_ankle_pitch_link, r_ankle_roll_link, l_shoulder_pitch_link, l_shoulder_roll_link, l_upper_arm_yaw_link, l_elbow_link, l_wrist_yaw_link, l_wrist_pitch_link, l_wrist_roll_link, l_gripper_jaw, r_shoulder_pitch_link, r_shoulder_roll_link, r_upper_arm_yaw_link, r_elbow_link, r_wrist_yaw_link, r_wrist_pitch_link, r_wrist_roll_link, r_gripper_jaw, neck_pan_link, neck_tilt_link, torso_armour_front, l_hip_pitch_armour_front, l_knee_armour_front, l_shoulder_roll_armour_out, r_hip_pitch_armour_front, r_knee_armour_front, r_shoulder_roll_armour_out)_ | 1 | 155.39 | 155.39 | 6142 g of parts (+15 % supports/waste), about 559.8 h of printing |
+| Printed structure | PETG filament for 45 printed parts _(base_link, base_link_b, torso, torso_b, l_hip_yaw_link, l_hip_roll_link, l_hip_pitch_link, l_hip_pitch_link_b, l_knee_link, l_knee_link_b, l_ankle_pitch_link, l_ankle_roll_link, r_hip_yaw_link, r_hip_roll_link, r_hip_pitch_link, r_hip_pitch_link_b, r_knee_link, r_knee_link_b, r_ankle_pitch_link, r_ankle_roll_link, l_shoulder_pitch_link, l_shoulder_roll_link, l_upper_arm_yaw_link, l_elbow_link, l_wrist_yaw_link, l_wrist_pitch_link, l_wrist_roll_link, l_gripper_jaw, r_shoulder_pitch_link, r_shoulder_roll_link, r_upper_arm_yaw_link, r_elbow_link, r_wrist_yaw_link, r_wrist_pitch_link, r_wrist_roll_link, r_gripper_jaw, neck_pan_link, neck_tilt_link, torso_armour_front, l_hip_pitch_armour_front, l_knee_armour_front, l_shoulder_roll_armour_out, r_hip_pitch_armour_front, r_knee_armour_front, r_shoulder_roll_armour_out)_ | 1 | 155.24 | 155.24 | 6136 g of parts (+15 % supports/waste), about 559.2 h of printing |
 | Fasteners | Screws, nuts and inserts | 324 | 0.12 | 38.88 | 36x M3 x 16 split-joint bolts + nuts; 4x M3 x 12 torso-to-pelvis bolts; 96x M3 x 8 housing screws; 112x horn / hub screws; 48x M2/M2.5 x 6 case screws; 28x M3 x 10 armour screws + printed standoffs |
 
 ## Actuator sizing
 
 | Joint | Required effort | Unit | Chosen actuator | Margin |
 |---|--:|---|---|--:|
-| l_hip_yaw | 4.615 | N·m | CubeMars AK60-6 V3.0 KV80 | 1.95x |
-| l_hip_roll | 49.093 | N·m | CubeMars AK80-64 KV80 | 2.44x |
-| l_hip_pitch | 62.572 | N·m | CubeMars AK80-64 KV80 | 1.92x |
-| l_knee | 59.882 | N·m | CubeMars AK80-64 KV80 | 2x |
-| l_ankle_pitch | 30.922 | N·m | CubeMars AK80-64 KV80 | 3.88x |
-| l_ankle_roll | 13.072 | N·m | CubeMars AK70-10 KV100 | 1.9x |
-| r_hip_yaw | 4.615 | N·m | CubeMars AK60-6 V3.0 KV80 | 1.95x |
-| r_hip_roll | 49.093 | N·m | CubeMars AK80-64 KV80 | 2.44x |
-| r_hip_pitch | 62.572 | N·m | CubeMars AK80-64 KV80 | 1.92x |
-| r_knee | 59.882 | N·m | CubeMars AK80-64 KV80 | 2x |
-| r_ankle_pitch | 30.922 | N·m | CubeMars AK80-64 KV80 | 3.88x |
-| r_ankle_roll | 13.072 | N·m | CubeMars AK70-10 KV100 | 1.9x |
-| l_shoulder_pitch | 7.577 | N·m | CubeMars AK70-10 KV100 | 3.27x |
-| l_shoulder_roll | 7.577 | N·m | CubeMars AK70-10 KV100 | 3.27x |
-| l_upper_arm_yaw | 0.103 | N·m | DYNAMIXEL XM430-W350-T(R) | 39.78x |
-| l_elbow | 3.488 | N·m | DYNAMIXEL XH540-W270-T(R) | 2.84x |
-| l_wrist_yaw | 0.124 | N·m | DYNAMIXEL XM430-W350-T(R) | 32.98x |
+| l_hip_yaw | 4.614 | N·m | CubeMars AK60-6 V3.0 KV80 | 1.95x |
+| l_hip_roll | 49.081 | N·m | CubeMars AK80-64 KV80 | 2.44x |
+| l_hip_pitch | 62.557 | N·m | CubeMars AK80-64 KV80 | 1.92x |
+| l_knee | 59.867 | N·m | CubeMars AK80-64 KV80 | 2x |
+| l_ankle_pitch | 30.914 | N·m | CubeMars AK80-64 KV80 | 3.88x |
+| l_ankle_roll | 13.069 | N·m | CubeMars AK70-10 KV100 | 1.9x |
+| r_hip_yaw | 4.614 | N·m | CubeMars AK60-6 V3.0 KV80 | 1.95x |
+| r_hip_roll | 49.081 | N·m | CubeMars AK80-64 KV80 | 2.44x |
+| r_hip_pitch | 62.557 | N·m | CubeMars AK80-64 KV80 | 1.92x |
+| r_knee | 59.867 | N·m | CubeMars AK80-64 KV80 | 2x |
+| r_ankle_pitch | 30.914 | N·m | CubeMars AK80-64 KV80 | 3.88x |
+| r_ankle_roll | 13.069 | N·m | CubeMars AK70-10 KV100 | 1.9x |
+| l_shoulder_pitch | 7.574 | N·m | CubeMars AK70-10 KV100 | 3.27x |
+| l_shoulder_roll | 7.574 | N·m | CubeMars AK70-10 KV100 | 3.27x |
+| l_upper_arm_yaw | 0.103 | N·m | DYNAMIXEL XM430-W350-T(R) | 39.75x |
+| l_elbow | 3.487 | N·m | DYNAMIXEL XH540-W270-T(R) | 2.84x |
+| l_wrist_yaw | 0.124 | N·m | DYNAMIXEL XM430-W350-T(R) | 32.97x |
 | l_wrist_pitch | 1.879 | N·m | DYNAMIXEL XH540-W270-T(R) | 5.27x |
 | l_wrist_roll | 0.146 | N·m | DYNAMIXEL XM430-W350-T(R) | 28.16x |
 | l_gripper | 0.006 | N·m | DYNAMIXEL XM430-W350-T(R) | 99x |
-| r_shoulder_pitch | 7.567 | N·m | CubeMars AK70-10 KV100 | 3.28x |
-| r_shoulder_roll | 7.566 | N·m | CubeMars AK70-10 KV100 | 3.28x |
-| r_upper_arm_yaw | 0.104 | N·m | DYNAMIXEL XM430-W350-T(R) | 39.4x |
-| r_elbow | 3.485 | N·m | DYNAMIXEL XH540-W270-T(R) | 2.84x |
-| r_wrist_yaw | 0.125 | N·m | DYNAMIXEL XM430-W350-T(R) | 32.85x |
+| r_shoulder_pitch | 7.564 | N·m | CubeMars AK70-10 KV100 | 3.28x |
+| r_shoulder_roll | 7.564 | N·m | CubeMars AK70-10 KV100 | 3.28x |
+| r_upper_arm_yaw | 0.104 | N·m | DYNAMIXEL XM430-W350-T(R) | 39.37x |
+| r_elbow | 3.484 | N·m | DYNAMIXEL XH540-W270-T(R) | 2.84x |
+| r_wrist_yaw | 0.125 | N·m | DYNAMIXEL XM430-W350-T(R) | 32.84x |
 | r_wrist_pitch | 1.878 | N·m | DYNAMIXEL XH540-W270-T(R) | 5.27x |
 | r_wrist_roll | 0.146 | N·m | DYNAMIXEL XM430-W350-T(R) | 28.16x |
 | r_gripper | 0.006 | N·m | DYNAMIXEL XM430-W350-T(R) | 99x |
@@ -59,7 +59,7 @@
 | neck_tilt | 0.862 | N·m | DYNAMIXEL XM430-W350-T(R) | 4.76x |
 
 ## Notes
-- Battle mech, 1.182 m, 22.41 kg, 30 DOF (7-DOF arms + grippers), 174 min, $15909 of parts
+- Battle mech, 1.182 m, 22.40 kg, 30 DOF (7-DOF arms + grippers), 174 min, $15909 of parts
 - Joint limits trimmed to the collision-free range found by exact solid sweeps: l_hip_roll [-0.45, 0.45] -> [-0.07, 0.45]; l_hip_pitch [-1.60, 1.60] -> [-0.84, 1.60]; l_knee [-2.20, 2.20] -> [-2.04, 0.33]; r_hip_roll [-0.45, 0.45] -> [-0.45, 0.07]; r_hip_pitch [-1.60, 1.60] -> [-1.60, 0.84]; r_knee [-2.20, 2.20] -> [-0.33, 2.04]; l_shoulder_roll [-1.60, 1.60] -> [-0.04, 1.60]; l_elbow [-2.30, 2.30] -> [-2.30, 2.18]; l_wrist_pitch [-1.60, 1.60] -> [-1.60, 1.27]; r_shoulder_roll [-1.60, 1.60] -> [-1.60, 0.04]; r_elbow [-2.30, 2.30] -> [-2.18, 2.30]; r_wrist_pitch [-1.60, 1.60] -> [-1.27, 1.60]; neck_tilt [-0.70, 0.70] -> [-0.70, 0.57].
 - Joint ranges are swept with the arms held 0.35 rad out to the side (the walking posture); with the arms hanging straight the hands touch the thighs when a leg abducts or a wrist turns.
 - CubeMars actuators run on a 12S bus (two 6S packs in series, 44.4 V nominal) at their 48 V ratings; DYNAMIXEL arms and the computer run from the 12 V DC-DC converter.

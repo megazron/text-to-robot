@@ -83,7 +83,7 @@
   {
    "name": "lid",
    "watertight": true,
-   "volume_cm3": 94.94,
+   "volume_cm3": 94.92,
    "size_mm": [
     170.0,
     128.0,
@@ -95,7 +95,7 @@
     1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 11.95,
+   "support_area_cm2": 11.84,
    "support_frac": 0.021,
    "bed_contact_cm2": 202.36,
    "min_wall_mm": 2.0,
@@ -108,7 +108,7 @@
   {
    "name": "neck",
    "watertight": true,
-   "volume_cm3": 29.56,
+   "volume_cm3": 29.54,
    "size_mm": [
     41.0,
     41.0,
@@ -120,8 +120,8 @@
     -1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 12.57,
-   "support_frac": 0.077,
+   "support_area_cm2": 12.65,
+   "support_frac": 0.078,
    "bed_contact_cm2": 8.55,
    "min_wall_mm": 1.6,
    "thin_wall_frac": 0.001,

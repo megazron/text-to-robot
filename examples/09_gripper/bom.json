@@ -51,8 +51,8 @@
       "category": "Printed structure",
       "name": "PETG filament for 5 printed parts",
       "qty": 1,
-      "unit_cost": 9.92,
-      "subtotal": 9.92,
+      "unit_cost": 9.91,
+      "subtotal": 9.91,
       "spec": "392 g of parts (+15 % supports/waste), about 35.7 h of printing",
       "note": "base_link, gripper_body, pinion, finger_a, finger_b"
     },
@@ -65,7 +65,7 @@
       "spec": "4x M6 x 16 socket head (adapter to robot flange); 4x M4 x 10 socket head + M4 heat-set insert (housing to adapter, radial); 4x M3 x 6 set screw (rod retention); 4x servo case screws (M2 x 6); 4x horn screws"
     }
   ],
-  "total": 80.84,
+  "total": 80.83,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,

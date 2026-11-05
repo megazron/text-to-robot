@@ -8,7 +8,7 @@
   {
    "name": "base_link",
    "watertight": true,
-   "volume_cm3": 96.15,
+   "volume_cm3": 95.48,
    "size_mm": [
     67.5,
     152.8,
@@ -22,8 +22,8 @@
    "fits_bed": true,
    "support_area_cm2": 0.62,
    "support_frac": 0.001,
-   "bed_contact_cm2": 102.6,
-   "min_wall_mm": 2.5,
+   "bed_contact_cm2": 101.54,
+   "min_wall_mm": 2.52,
    "thin_wall_frac": 0.0,
    "passed": true,
    "supports": "none",
@@ -33,7 +33,7 @@
   {
    "name": "l_ankle_pitch_link",
    "watertight": true,
-   "volume_cm3": 40.78,
+   "volume_cm3": 40.74,
    "size_mm": [
     108.8,
     40.7,
@@ -45,11 +45,11 @@
     1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 16.36,
-   "support_frac": 0.08,
+   "support_area_cm2": 16.53,
+   "support_frac": 0.081,
    "bed_contact_cm2": 38.2,
-   "min_wall_mm": 2.03,
-   "thin_wall_frac": 0.003,
+   "min_wall_mm": 2.45,
+   "thin_wall_frac": 0.0,
    "passed": true,
    "supports": "needed",
    "problems": [],
@@ -158,7 +158,7 @@
   {
    "name": "l_hip_roll_link",
    "watertight": true,
-   "volume_cm3": 50.75,
+   "volume_cm3": 50.62,
    "size_mm": [
     140.2,
     50.6,
@@ -170,11 +170,11 @@
     0.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 35.78,
+   "support_area_cm2": 36.19,
    "support_frac": 0.102,
    "bed_contact_cm2": 2.04,
-   "min_wall_mm": 2.51,
-   "thin_wall_frac": 0.001,
+   "min_wall_mm": 2.55,
+   "thin_wall_frac": 0.0,
    "passed": true,
    "supports": "needed",
    "problems": [],
@@ -198,7 +198,7 @@
    "support_area_cm2": 2.25,
    "support_frac": 0.009,
    "bed_contact_cm2": 25.81,
-   "min_wall_mm": 2.48,
+   "min_wall_mm": 2.49,
    "thin_wall_frac": 0.001,
    "passed": true,
    "supports": "none",
@@ -208,7 +208,7 @@
   {
    "name": "l_knee_link",
    "watertight": true,
-   "volume_cm3": 40.57,
+   "volume_cm3": 40.21,
    "size_mm": [
     146.8,
     38.4,
@@ -222,7 +222,7 @@
    "fits_bed": true,
    "support_area_cm2": 0.44,
    "support_frac": 0.002,
-   "bed_contact_cm2": 48.35,
+   "bed_contact_cm2": 47.82,
    "min_wall_mm": 2.54,
    "thin_wall_frac": 0.0,
    "passed": true,
@@ -233,7 +233,7 @@
   {
    "name": "l_shoulder_pitch_link",
    "watertight": true,
-   "volume_cm3": 38.68,
+   "volume_cm3": 38.54,
    "size_mm": [
     53.5,
     38.9,
@@ -245,15 +245,17 @@
     0.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 14.25,
-   "support_frac": 0.073,
+   "support_area_cm2": 14.74,
+   "support_frac": 0.075,
    "bed_contact_cm2": 18.39,
-   "min_wall_mm": 1.4,
-   "thin_wall_frac": 0.005,
+   "min_wall_mm": 1.0,
+   "thin_wall_frac": 0.007,
    "passed": true,
    "supports": "none",
    "problems": [],
-   "warnings": []
+   "warnings": [
+    "thin wall 1.00 mm (prints with 2 perimeters; 3 recommended)"
+   ]
   },
   {
    "name": "l_shoulder_roll_link",
@@ -360,7 +362,7 @@
   {
    "name": "r_ankle_pitch_link",
    "watertight": true,
-   "volume_cm3": 40.1,
+   "volume_cm3": 40.05,
    "size_mm": [
     108.8,
     40.7,
@@ -372,11 +374,11 @@
     1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 17.26,
-   "support_frac": 0.083,
+   "support_area_cm2": 17.43,
+   "support_frac": 0.084,
    "bed_contact_cm2": 37.3,
-   "min_wall_mm": 2.0,
-   "thin_wall_frac": 0.004,
+   "min_wall_mm": 2.47,
+   "thin_wall_frac": 0.0,
    "passed": true,
    "supports": "needed",
    "problems": [],
@@ -475,7 +477,7 @@
    "support_area_cm2": 1.0,
    "support_frac": 0.003,
    "bed_contact_cm2": 63.08,
-   "min_wall_mm": 2.52,
+   "min_wall_mm": 2.51,
    "thin_wall_frac": 0.0,
    "passed": true,
    "supports": "none",
@@ -485,7 +487,7 @@
   {
    "name": "r_hip_roll_link",
    "watertight": true,
-   "volume_cm3": 51.1,
+   "volume_cm3": 50.97,
    "size_mm": [
     140.2,
     50.6,
@@ -497,8 +499,8 @@
     0.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 35.48,
-   "support_frac": 0.101,
+   "support_area_cm2": 35.88,
+   "support_frac": 0.102,
    "bed_contact_cm2": 2.04,
    "min_wall_mm": 2.54,
    "thin_wall_frac": 0.0,
@@ -525,7 +527,7 @@
    "support_area_cm2": 2.25,
    "support_frac": 0.009,
    "bed_contact_cm2": 25.81,
-   "min_wall_mm": 2.48,
+   "min_wall_mm": 2.49,
    "thin_wall_frac": 0.001,
    "passed": true,
    "supports": "none",
@@ -535,7 +537,7 @@
   {
    "name": "r_knee_link",
    "watertight": true,
-   "volume_cm3": 40.57,
+   "volume_cm3": 40.21,
    "size_mm": [
     146.8,
     38.4,
@@ -549,8 +551,8 @@
    "fits_bed": true,
    "support_area_cm2": 0.44,
    "support_frac": 0.002,
-   "bed_contact_cm2": 48.35,
-   "min_wall_mm": 2.49,
+   "bed_contact_cm2": 47.82,
+   "min_wall_mm": 2.51,
    "thin_wall_frac": 0.0,
    "passed": true,
    "supports": "none",
@@ -560,7 +562,7 @@
   {
    "name": "r_shoulder_pitch_link",
    "watertight": true,
-   "volume_cm3": 39.66,
+   "volume_cm3": 39.52,
    "size_mm": [
     53.5,
     38.9,
@@ -572,11 +574,11 @@
     0.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 12.84,
-   "support_frac": 0.067,
+   "support_area_cm2": 13.34,
+   "support_frac": 0.069,
    "bed_contact_cm2": 18.39,
-   "min_wall_mm": 2.5,
-   "thin_wall_frac": 0.0,
+   "min_wall_mm": 2.52,
+   "thin_wall_frac": 0.001,
    "passed": true,
    "supports": "none",
    "problems": [],
@@ -625,12 +627,12 @@
    "support_area_cm2": 3.05,
    "support_frac": 0.035,
    "bed_contact_cm2": 10.42,
-   "min_wall_mm": 0.65,
-   "thin_wall_frac": 0.01,
+   "min_wall_mm": 0.7,
+   "thin_wall_frac": 0.009,
    "passed": false,
    "supports": "none",
    "problems": [
-    "walls down to 0.65 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
+    "walls down to 0.70 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
    ],
    "warnings": []
   },

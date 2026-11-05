@@ -124,9 +124,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/left_thigh.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="1.67662e-17 1.44497e-17 -0.211915" rpy="0 0 0"/>
+      <origin xyz="-4.34958e-18 1.75875e-17 -0.211915" rpy="0 0 0"/>
       <mass value="9"/>
-      <inertia ixx="0.092076" ixy="-3.23798e-7" ixz="5.46399e-18" iyy="0.092963" iyz="1.32707e-18" izz="0.022956"/>
+      <inertia ixx="0.092076" ixy="-3.23798e-7" ixz="-1.49998e-18" iyy="0.092963" iyz="2.83438e-18" izz="0.022956"/>
     </inertial>
   </link>
   <link name="left_shin">
@@ -220,9 +220,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/right_thigh.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="1.67662e-17 1.44497e-17 -0.211915" rpy="0 0 0"/>
+      <origin xyz="-4.34958e-18 1.75875e-17 -0.211915" rpy="0 0 0"/>
       <mass value="9"/>
-      <inertia ixx="0.092076" ixy="-3.23798e-7" ixz="5.46399e-18" iyy="0.092963" iyz="1.32707e-18" izz="0.022956"/>
+      <inertia ixx="0.092076" ixy="-3.23798e-7" ixz="-1.49998e-18" iyy="0.092963" iyz="2.83438e-18" izz="0.022956"/>
     </inertial>
   </link>
   <link name="right_shin">
@@ -300,9 +300,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/helmet_cranium_2.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.047952 -0.070922 0.178146" rpy="0 0 0"/>
-      <mass value="0.094254"/>
-      <inertia ixx="0.000206826" ixy="0.0000741449" ixz="-0.0000158642" iyy="0.000214282" iyz="-0.0000461233" izz="0.000231776"/>
+      <origin xyz="-0.047961 -0.070918 0.17815" rpy="0 0 0"/>
+      <mass value="0.09423"/>
+      <inertia ixx="0.000206804" ixy="0.0000741303" ixz="-0.0000158786" iyy="0.000214243" iyz="-0.0000461152" izz="0.000231742"/>
     </inertial>
   </link>
   <link name="helmet_cranium_3">
@@ -332,9 +332,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/helmet_cranium_4.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.047959 0.07118 0.177922" rpy="0 0 0"/>
-      <mass value="0.09521"/>
-      <inertia ixx="0.000207853" ixy="-0.0000740964" ixz="-0.0000158473" iyy="0.000214061" iyz="0.0000466842" izz="0.000231666"/>
+      <origin xyz="-0.047972 0.071172 0.177917" rpy="0 0 0"/>
+      <mass value="0.095234"/>
+      <inertia ixx="0.000207998" ixy="-0.0000741479" ixz="-0.0000158796" iyy="0.000214188" iyz="0.0000466933" izz="0.000231819"/>
     </inertial>
   </link>
   <link name="helmet_cranium_5">
@@ -780,9 +780,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/electronics_box.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.17025 -3.85541e-17 0.271123" rpy="0 0 0"/>
+      <origin xyz="-0.17025 -1.90150e-17 0.271123" rpy="0 0 0"/>
       <mass value="0.089379"/>
-      <inertia ixx="0.000205286" ixy="5.22924e-16" ixz="1.81504e-20" iyy="0.000115145" iyz="-1.16973e-20" izz="0.000159692"/>
+      <inertia ixx="0.000205286" ixy="5.22954e-16" ixz="-2.78812e-20" iyy="0.000115145" iyz="-4.13906e-20" izz="0.000159692"/>
     </inertial>
   </link>
   <link name="battery">

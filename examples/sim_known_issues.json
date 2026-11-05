@@ -1,5 +1,8 @@
 {
   "12_mars_rover": {
-    "turn_in_place": "1.31 rad/s vs 1.40 needed: the heavier clevis arm moves the centre of mass forward and the skid-steer turn claim does not yet model load distribution; open issue"
+    "turn_in_place": "1.34 rad/s vs 1.40 needed (claim 1.65 from the skid-steer slip model): the static CoM is centred (2 mm), yet in the turn the front wheels carry about twice the scrub torque of the rear (0.52 vs 0.22 N\u00b7m) and saturate 18 % of the time; the rocker's load transfer in a turn is not modelled by the claim yet; open issue"
+  },
+  "15_wall_e": {
+    "turn_in_place": "tracked skid-steer turning on the spot: the simulated yaw rate swings between 1.33 and 1.81 rad/s across rebuilds of the same design (float-level mesh differences change which track contact patches grip), against 1.36 needed for the 1.60 rad/s claim; the turn is not robust in simulation; open issue"
   }
 }

@@ -121,7 +121,11 @@ export function cradle(a: ActuatorPlacement, wall = 3): M {
 export function cradleCuts(a: ActuatorPlacement, wall = 3): M[] {
   const { min, max } = bodyBox(a.key), top = Math.min(max[2], -0.8) - 1.2, rim = 5;
   // closed walls: the cradle is the structure that carries the joint load (no windows), with one cable slot at the bottom
-  const cuts = [actuatorKeepout(a), ...screwCuts(caseHoles(a.key), a.T, wall + 1)];
+  // case screws pass through the whole wall: a hole recessed into the case (the STS3250's rear M3s sit 1.7 mm inside its
+  // face) is cut that much further, or a 0.2 mm skin is left over it; holes run on 12 mm past the cradle so any structure
+  // behind it gets a clean screwdriver hole instead of a thin floor
+  const inset = (h: Hole) => { const k = h.axis.findIndex((x) => Math.abs(x) > 0.9); return k < 0 ? 0 : Math.max(0, h.axis[k] > 0 ? max[k] - h.pos[k] : h.pos[k] - min[k]); };
+  const cuts = [actuatorKeepout(a), ...caseHoles(a.key).flatMap((h) => screwCuts([h], a.T, wall + 12 + inset(h)))];
   // cable slot out of the side: run it well past the wall, or material around the cradle leaves a skin over it
   if (max[0] - min[0] > 3 * rim) cuts.push(box([min[0] + rim, max[1] - 1, min[2] + 1.5], [Math.min(max[0] - rim, min[0] + rim + 12), max[1] + wall + 20, min[2] + 9]).transform(a.T));
   void top;

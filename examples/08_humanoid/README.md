@@ -8,16 +8,16 @@ Interpreted as: humanoid · parallel gripper · imu (base_link) · camera (neck_
 
 **Humanoid, 0.653 m, 3.60 kg, 24 DOF (4-DOF arms + grippers), 44 min, $4179 of parts**
 
-Parts cost **$4234.23** · printed structure 26 parts, 1318 g · checks passed 56/56
+Parts cost **$4234.18** · printed structure 26 parts, 1316 g · checks passed 56/56
 
 ## What it can do
 
 | | |
 |---|--:|
-| average power w | 60.5 |
+| average power w | 60.4 |
 | com height m | 0.347 |
 | com x over sole mm | -8.9 |
-| mass kg | 3.601 |
+| mass kg | 3.599 |
 | height m | 0.653 |
 | hip height m | 0.378 |
 | dof | 24 |
@@ -33,18 +33,18 @@ Parts cost **$4234.23** · printed structure 26 parts, 1318 g · checks passed 5
 
 | Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
 |---|---|--:|--:|--:|--:|
-| l_hip_yaw | feetech_sts3215_c047 | 0.403 | 0.9807 / 2.942 | 7.29x | 4.712 |
-| l_hip_roll | dxl_xh540_w270 | 4.217 | 2.97 / 9.9 | 2.35x | 4.084 |
-| l_hip_pitch | dxl_xh540_w270 | 5.425 | 2.97 / 9.9 | 1.83x | 4.084 |
-| l_knee | dxl_xh540_w270 | 5.121 | 2.97 / 9.9 | 1.93x | 4.084 |
-| l_ankle_pitch | feetech_sts3250 | 2.787 | 1.5691 / 4.9033 | 1.76x | 7.854 |
-| l_ankle_roll | feetech_sts3215_c047 | 1.166 | 0.9807 / 2.942 | 2.52x | 4.712 |
-| r_hip_yaw | feetech_sts3215_c047 | 0.403 | 0.9807 / 2.942 | 7.29x | 4.712 |
-| r_hip_roll | dxl_xh540_w270 | 4.217 | 2.97 / 9.9 | 2.35x | 4.084 |
-| r_hip_pitch | dxl_xh540_w270 | 5.425 | 2.97 / 9.9 | 1.83x | 4.084 |
-| r_knee | dxl_xh540_w270 | 5.121 | 2.97 / 9.9 | 1.93x | 4.084 |
-| r_ankle_pitch | feetech_sts3250 | 2.787 | 1.5691 / 4.9033 | 1.76x | 7.854 |
-| r_ankle_roll | feetech_sts3215_c047 | 1.166 | 0.9807 / 2.942 | 2.52x | 4.712 |
+| l_hip_yaw | feetech_sts3215_c047 | 0.403 | 0.9807 / 2.942 | 7.3x | 4.712 |
+| l_hip_roll | dxl_xh540_w270 | 4.215 | 2.97 / 9.9 | 2.35x | 4.084 |
+| l_hip_pitch | dxl_xh540_w270 | 5.422 | 2.97 / 9.9 | 1.83x | 4.084 |
+| l_knee | dxl_xh540_w270 | 5.118 | 2.97 / 9.9 | 1.93x | 4.084 |
+| l_ankle_pitch | feetech_sts3250 | 2.786 | 1.5691 / 4.9033 | 1.76x | 7.854 |
+| l_ankle_roll | feetech_sts3215_c047 | 1.165 | 0.9807 / 2.942 | 2.53x | 4.712 |
+| r_hip_yaw | feetech_sts3215_c047 | 0.403 | 0.9807 / 2.942 | 7.3x | 4.712 |
+| r_hip_roll | dxl_xh540_w270 | 4.215 | 2.97 / 9.9 | 2.35x | 4.084 |
+| r_hip_pitch | dxl_xh540_w270 | 5.422 | 2.97 / 9.9 | 1.83x | 4.084 |
+| r_knee | dxl_xh540_w270 | 5.118 | 2.97 / 9.9 | 1.93x | 4.084 |
+| r_ankle_pitch | feetech_sts3250 | 2.786 | 1.5691 / 4.9033 | 1.76x | 7.854 |
+| r_ankle_roll | feetech_sts3215_c047 | 1.165 | 0.9807 / 2.942 | 2.53x | 4.712 |
 | l_shoulder_pitch | dxl_xl430_w250 | 0.381 | 0.42 / 1.4 | 3.67x | 5.969 |
 | l_shoulder_roll | dxl_xl430_w250 | 0.368 | 0.42 / 1.4 | 3.81x | 5.969 |
 | l_upper_arm_yaw | dxl_xl430_w250 | 0.216 | 0.42 / 1.4 | 6.49x | 5.969 |

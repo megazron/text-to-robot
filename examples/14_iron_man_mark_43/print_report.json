@@ -562,7 +562,7 @@
   {
    "name": "helmet_cranium_2",
    "watertight": true,
-   "volume_cm3": 103.08,
+   "volume_cm3": 103.05,
    "size_mm": [
     121.0,
     119.0,
@@ -574,7 +574,7 @@
     0.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 68.86,
+   "support_area_cm2": 68.98,
    "support_frac": 0.124,
    "bed_contact_cm2": 18.46,
    "min_wall_mm": 2.9,
@@ -614,7 +614,7 @@
   {
    "name": "helmet_cranium_4",
    "watertight": true,
-   "volume_cm3": 104.12,
+   "volume_cm3": 104.15,
    "size_mm": [
     121.0,
     119.0,
@@ -626,11 +626,11 @@
     0.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 68.95,
+   "support_area_cm2": 69.47,
    "support_frac": 0.126,
-   "bed_contact_cm2": 16.54,
+   "bed_contact_cm2": 17.56,
    "min_wall_mm": 2.9,
-   "thin_wall_frac": 0.001,
+   "thin_wall_frac": 0.003,
    "passed": true,
    "supports": "needed",
    "problems": [],

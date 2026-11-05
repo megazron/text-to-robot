@@ -183,10 +183,10 @@
      "saturated_frac": 0.0
     },
     "l_knee": {
-     "peak_nm": 0.229,
+     "peak_nm": 0.2289,
      "peak_rating_nm": 9.9,
      "util_peak": 0.023,
-     "mean_hold_nm": 0.1717,
+     "mean_hold_nm": 0.1716,
      "rated_nm": 2.97,
      "util_rated": 0.058,
      "max_err": 0.0043,
@@ -208,7 +208,7 @@
      "peak_nm": 0.0007,
      "peak_rating_nm": 2.942,
      "util_peak": 0.0,
-     "mean_hold_nm": 0.0006,
+     "mean_hold_nm": 0.0007,
      "rated_nm": 0.9807,
      "util_rated": 0.001,
      "max_err": 0.0,
@@ -238,7 +238,7 @@
      "saturated_frac": 0.0
     },
     "r_hip_pitch": {
-     "peak_nm": 0.0919,
+     "peak_nm": 0.0918,
      "peak_rating_nm": 9.9,
      "util_peak": 0.009,
      "mean_hold_nm": 0.0198,
@@ -249,7 +249,7 @@
      "saturated_frac": 0.0
     },
     "r_knee": {
-     "peak_nm": 0.2262,
+     "peak_nm": 0.2261,
      "peak_rating_nm": 9.9,
      "util_peak": 0.023,
      "mean_hold_nm": 0.1694,
@@ -260,7 +260,7 @@
      "saturated_frac": 0.0
     },
     "r_ankle_pitch": {
-     "peak_nm": 0.1401,
+     "peak_nm": 0.14,
      "peak_rating_nm": 4.9033,
      "util_peak": 0.029,
      "mean_hold_nm": 0.0064,
@@ -449,7 +449,7 @@
      "saturated_frac": 0.0
     },
     "l_hip_pitch": {
-     "peak_nm": 0.116,
+     "peak_nm": 0.1159,
      "peak_rating_nm": 9.9,
      "util_peak": 0.012,
      "mean_hold_nm": 0.0454,
@@ -460,7 +460,7 @@
      "saturated_frac": 0.0
     },
     "l_knee": {
-     "peak_nm": 0.1921,
+     "peak_nm": 0.192,
      "peak_rating_nm": 9.9,
      "util_peak": 0.019,
      "mean_hold_nm": 0.1042,
@@ -515,7 +515,7 @@
      "saturated_frac": 0.0
     },
     "r_hip_pitch": {
-     "peak_nm": 0.1159,
+     "peak_nm": 0.1158,
      "peak_rating_nm": 9.9,
      "util_peak": 0.012,
      "mean_hold_nm": 0.0454,
@@ -526,10 +526,10 @@
      "saturated_frac": 0.0
     },
     "r_knee": {
-     "peak_nm": 0.1919,
+     "peak_nm": 0.1918,
      "peak_rating_nm": 9.9,
      "util_peak": 0.019,
-     "mean_hold_nm": 0.1042,
+     "mean_hold_nm": 0.1041,
      "rated_nm": 2.97,
      "util_rated": 0.035,
      "max_err": 0.0026,
@@ -537,7 +537,7 @@
      "saturated_frac": 0.0
     },
     "r_ankle_pitch": {
-     "peak_nm": 0.1478,
+     "peak_nm": 0.1477,
      "peak_rating_nm": 4.9033,
      "util_peak": 0.03,
      "mean_hold_nm": 0.0599,
@@ -726,7 +726,7 @@
      "saturated_frac": 0.0
     },
     "l_hip_pitch": {
-     "peak_nm": 0.3168,
+     "peak_nm": 0.3166,
      "peak_rating_nm": 9.9,
      "util_peak": 0.032,
      "mean_hold_nm": 0.1111,
@@ -737,10 +737,10 @@
      "saturated_frac": 0.0
     },
     "l_knee": {
-     "peak_nm": 0.5066,
+     "peak_nm": 0.5063,
      "peak_rating_nm": 9.9,
      "util_peak": 0.051,
-     "mean_hold_nm": 0.2351,
+     "mean_hold_nm": 0.235,
      "rated_nm": 2.97,
      "util_rated": 0.079,
      "max_err": 0.0059,
@@ -748,7 +748,7 @@
      "saturated_frac": 0.0
     },
     "l_ankle_pitch": {
-     "peak_nm": 0.3664,
+     "peak_nm": 0.3662,
      "peak_rating_nm": 4.9033,
      "util_peak": 0.075,
      "mean_hold_nm": 0.1262,
@@ -781,10 +781,10 @@
      "saturated_frac": 0.0
     },
     "r_hip_roll": {
-     "peak_nm": 0.0019,
+     "peak_nm": 0.002,
      "peak_rating_nm": 9.9,
      "util_peak": 0.0,
-     "mean_hold_nm": 0.0019,
+     "mean_hold_nm": 0.002,
      "rated_nm": 2.97,
      "util_rated": 0.001,
      "max_err": 0.0,
@@ -803,10 +803,10 @@
      "saturated_frac": 0.0
     },
     "r_knee": {
-     "peak_nm": 0.0237,
+     "peak_nm": 0.0236,
      "peak_rating_nm": 9.9,
      "util_peak": 0.002,
-     "mean_hold_nm": 0.0217,
+     "mean_hold_nm": 0.0216,
      "rated_nm": 2.97,
      "util_rated": 0.007,
      "max_err": 0.0005,
@@ -817,7 +817,7 @@
      "peak_nm": 0.0041,
      "peak_rating_nm": 4.9033,
      "util_peak": 0.001,
-     "mean_hold_nm": 0.004,
+     "mean_hold_nm": 0.0041,
      "rated_nm": 1.5691,
      "util_rated": 0.003,
      "max_err": 0.0001,
@@ -1006,7 +1006,7 @@
      "peak_nm": 0.4664,
      "peak_rating_nm": 9.9,
      "util_peak": 0.047,
-     "mean_low_nm": 0.218,
+     "mean_low_nm": 0.2179,
      "rated_nm": 2.97,
      "util_rated": 0.073,
      "max_err": 0.0466,
@@ -1014,10 +1014,10 @@
      "saturated_frac": 0.0
     },
     "l_knee": {
-     "peak_nm": 1.7227,
+     "peak_nm": 1.7225,
      "peak_rating_nm": 9.9,
      "util_peak": 0.174,
-     "mean_low_nm": 0.6407,
+     "mean_low_nm": 0.6405,
      "rated_nm": 2.97,
      "util_rated": 0.216,
      "max_err": 0.0951,
@@ -1025,10 +1025,10 @@
      "saturated_frac": 0.0
     },
     "l_ankle_pitch": {
-     "peak_nm": 0.5641,
+     "peak_nm": 0.5639,
      "peak_rating_nm": 4.9033,
      "util_peak": 0.115,
-     "mean_low_nm": 0.422,
+     "mean_low_nm": 0.4218,
      "rated_nm": 1.5691,
      "util_rated": 0.269,
      "max_err": 0.0485,
@@ -1061,7 +1061,7 @@
      "peak_nm": 0.001,
      "peak_rating_nm": 9.9,
      "util_peak": 0.0,
-     "mean_low_nm": 0.0008,
+     "mean_low_nm": 0.0009,
      "rated_nm": 2.97,
      "util_rated": 0.0,
      "max_err": 0.0,
@@ -1069,10 +1069,10 @@
      "saturated_frac": 0.0
     },
     "r_hip_pitch": {
-     "peak_nm": 0.4673,
+     "peak_nm": 0.4674,
      "peak_rating_nm": 9.9,
      "util_peak": 0.047,
-     "mean_low_nm": 0.2181,
+     "mean_low_nm": 0.218,
      "rated_nm": 2.97,
      "util_rated": 0.073,
      "max_err": 0.0466,
@@ -1080,10 +1080,10 @@
      "saturated_frac": 0.0
     },
     "r_knee": {
-     "peak_nm": 1.7243,
+     "peak_nm": 1.7241,
      "peak_rating_nm": 9.9,
      "util_peak": 0.174,
-     "mean_low_nm": 0.6407,
+     "mean_low_nm": 0.6405,
      "rated_nm": 2.97,
      "util_rated": 0.216,
      "max_err": 0.0951,
@@ -1091,10 +1091,10 @@
      "saturated_frac": 0.0
     },
     "r_ankle_pitch": {
-     "peak_nm": 0.564,
+     "peak_nm": 0.5638,
      "peak_rating_nm": 4.9033,
      "util_peak": 0.115,
-     "mean_low_nm": 0.4218,
+     "mean_low_nm": 0.4217,
      "rated_nm": 1.5691,
      "util_rated": 0.269,
      "max_err": 0.0485,
@@ -1117,5 +1117,5 @@
  },
  "passed": 3,
  "total": 3,
- "source_urdf_sha256": "42964443bf8d5f862901ca65a8a3dba1576b8cb32ee4ce19e38af8b9b7a7b5b5"
+ "source_urdf_sha256": "4d0421ff2ae6503d054442d2b25c7ef0c4916654e1692dd064e014cf7721734e"
 }

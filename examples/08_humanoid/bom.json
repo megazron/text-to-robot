@@ -114,9 +114,9 @@
       "category": "Printed structure",
       "name": "PETG filament for 26 printed parts",
       "qty": 1,
-      "unit_cost": 33.34,
-      "subtotal": 33.34,
-      "spec": "1318 g of parts (+15 % supports/waste), about 120.1 h of printing",
+      "unit_cost": 33.29,
+      "subtotal": 33.29,
+      "spec": "1316 g of parts (+15 % supports/waste), about 119.9 h of printing",
       "note": "base_link, torso, l_hip_yaw_link, l_hip_roll_link, l_hip_pitch_link, l_knee_link, l_ankle_pitch_link, l_ankle_roll_link, r_hip_yaw_link, r_hip_roll_link, r_hip_pitch_link, r_knee_link, r_ankle_pitch_link, r_ankle_roll_link, l_shoulder_pitch_link, l_shoulder_roll_link, l_upper_arm_yaw_link, l_elbow_link, l_gripper_jaw, r_shoulder_pitch_link, r_shoulder_roll_link, r_upper_arm_yaw_link, r_elbow_link, r_gripper_jaw, neck_pan_link, neck_tilt_link"
     },
     {
@@ -128,7 +128,7 @@
       "spec": "4x M3 x 12 torso-to-pelvis bolts; 88x M2/M2.5 x 6 case screws; 88x horn / hub screws"
     }
   ],
-  "total": 4234.23,
+  "total": 4234.18,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
@@ -139,47 +139,47 @@
       "effort_unit": "N·m",
       "required_torque_nm": 0.403,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "7.29x"
+      "margin": "7.3x"
     },
     {
       "joint": "l_hip_roll",
-      "required_effort": 4.217,
+      "required_effort": 4.215,
       "effort_unit": "N·m",
-      "required_torque_nm": 4.217,
+      "required_torque_nm": 4.215,
       "chosen": "DYNAMIXEL XH540-W270-T(R)",
       "margin": "2.35x"
     },
     {
       "joint": "l_hip_pitch",
-      "required_effort": 5.425,
+      "required_effort": 5.422,
       "effort_unit": "N·m",
-      "required_torque_nm": 5.425,
+      "required_torque_nm": 5.422,
       "chosen": "DYNAMIXEL XH540-W270-T(R)",
       "margin": "1.83x"
     },
     {
       "joint": "l_knee",
-      "required_effort": 5.121,
+      "required_effort": 5.118,
       "effort_unit": "N·m",
-      "required_torque_nm": 5.121,
+      "required_torque_nm": 5.118,
       "chosen": "DYNAMIXEL XH540-W270-T(R)",
       "margin": "1.93x"
     },
     {
       "joint": "l_ankle_pitch",
-      "required_effort": 2.787,
+      "required_effort": 2.786,
       "effort_unit": "N·m",
-      "required_torque_nm": 2.787,
+      "required_torque_nm": 2.786,
       "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
       "margin": "1.76x"
     },
     {
       "joint": "l_ankle_roll",
-      "required_effort": 1.166,
+      "required_effort": 1.165,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.166,
+      "required_torque_nm": 1.165,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "2.52x"
+      "margin": "2.53x"
     },
     {
       "joint": "r_hip_yaw",
@@ -187,47 +187,47 @@
       "effort_unit": "N·m",
       "required_torque_nm": 0.403,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "7.29x"
+      "margin": "7.3x"
     },
     {
       "joint": "r_hip_roll",
-      "required_effort": 4.217,
+      "required_effort": 4.215,
       "effort_unit": "N·m",
-      "required_torque_nm": 4.217,
+      "required_torque_nm": 4.215,
       "chosen": "DYNAMIXEL XH540-W270-T(R)",
       "margin": "2.35x"
     },
     {
       "joint": "r_hip_pitch",
-      "required_effort": 5.425,
+      "required_effort": 5.422,
       "effort_unit": "N·m",
-      "required_torque_nm": 5.425,
+      "required_torque_nm": 5.422,
       "chosen": "DYNAMIXEL XH540-W270-T(R)",
       "margin": "1.83x"
     },
     {
       "joint": "r_knee",
-      "required_effort": 5.121,
+      "required_effort": 5.118,
       "effort_unit": "N·m",
-      "required_torque_nm": 5.121,
+      "required_torque_nm": 5.118,
       "chosen": "DYNAMIXEL XH540-W270-T(R)",
       "margin": "1.93x"
     },
     {
       "joint": "r_ankle_pitch",
-      "required_effort": 2.787,
+      "required_effort": 2.786,
       "effort_unit": "N·m",
-      "required_torque_nm": 2.787,
+      "required_torque_nm": 2.786,
       "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
       "margin": "1.76x"
     },
     {
       "joint": "r_ankle_roll",
-      "required_effort": 1.166,
+      "required_effort": 1.165,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.166,
+      "required_torque_nm": 1.165,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "2.52x"
+      "margin": "2.53x"
     },
     {
       "joint": "l_shoulder_pitch",

@@ -1,6 +1,6 @@
 # Bill of Materials — arm_2dof
 
-**Estimated total: $130.08**  ·  tier: hobby
+**Estimated total: $130.07**  ·  tier: hobby
 
 **Effort sizing: passes catalogue estimate; hardware verified: no.**
 
@@ -11,14 +11,14 @@
 | Actuator | Feetech STS3250 C002 12 V 50 kg.cm (1:345) _(joint shoulder_pitch · https://openelab.io/products/feetech-sts3250-c002-servo-12v)_ | 1 | 40 | 40 | 1.5691 N·m rated / 4.9033 N·m peak, 12 V |
 | Power | Mean Well LRS-75-12 enclosed PSU, 12 V 6 A (75 W) _(12 V actuator supply · https://www.digikey.com/en/products/result?keywords=LRS-75-12)_ | 1 | 22 | 22 | 12 V |
 | Electronics | Waveshare Bus Servo Adapter (A) _(USB to actuator bus · https://www.waveshare.com/bus-servo-adapter-a.htm)_ | 1 | 10.6 | 10.6 | 12 V |
-| Printed structure | PETG filament for 4 printed parts _(base_link, upper_arm, forearm, gripper_jaw)_ | 1 | 9.26 | 9.26 | 366 g of parts (+15 % supports/waste), about 33.4 h of printing |
+| Printed structure | PETG filament for 4 printed parts _(base_link, upper_arm, forearm, gripper_jaw)_ | 1 | 9.25 | 9.25 | 366 g of parts (+15 % supports/waste), about 33.3 h of printing |
 | Fasteners | Screws, nuts and inserts | 26 | 0.12 | 3.12 | 4x M5 x 12 socket head (base to bench); 8x M2 x 6 case screws; 12x horn screws; 2x M5 x 16 socket head + M5 washer + M5 heat-set insert (clevis bearing axle) |
 
 ## Actuator sizing
 
 | Joint | Required effort | Unit | Chosen actuator | Margin |
 |---|--:|---|---|--:|
-| shoulder_pitch | 1.333 | N·m | Feetech STS3250 C002 12 V 50 kg.cm (1:345) | 3.68x |
+| shoulder_pitch | 1.332 | N·m | Feetech STS3250 C002 12 V 50 kg.cm (1:345) | 3.68x |
 | elbow_pitch | 0.543 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 5.42x |
 
 ## Notes

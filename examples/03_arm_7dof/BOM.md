@@ -1,6 +1,6 @@
 # Bill of Materials — arm_7dof
 
-**Estimated total: $1198.58**  ·  tier: prosumer
+**Estimated total: $1198.55**  ·  tier: prosumer
 
 **Effort sizing: passes catalogue estimate; hardware verified: no.**
 
@@ -12,7 +12,7 @@
 | Actuator | DYNAMIXEL XL430-W250-T _(joint base_yaw; joint upper_arm_roll; joint forearm_roll; joint wrist_pitch; … · https://robotis.us/dynamixel-xl430-w250-t)_ | 6 | 44.9 | 269.4 | 0.42 N·m rated / 1.4 N·m peak, 11.1 V |
 | Actuator | DYNAMIXEL XM430-W350-T(R) _(joint elbow_pitch · https://www.robotshop.com/products/robotis-dynamixel-xm430-w350-t-smart-servo-actuator)_ | 1 | 310.39 | 310.39 | 1.23 N·m rated / 4.1 N·m peak, 12 V |
 | Power | Mean Well LRS-75-12 enclosed PSU, 12 V 6 A (75 W) _(12 V actuator supply · https://www.digikey.com/en/products/result?keywords=LRS-75-12)_ | 1 | 22 | 22 | 12 V |
-| Printed structure | PETG filament for 9 printed parts _(base_link, turret, upper_arm, upper_arm_rotator, forearm, forearm_rotator, wrist, wrist_rotator, gripper_jaw)_ | 1 | 11.74 | 11.74 | 464 g of parts (+15 % supports/waste), about 42.3 h of printing |
+| Printed structure | PETG filament for 9 printed parts _(base_link, turret, upper_arm, upper_arm_rotator, forearm, forearm_rotator, wrist, wrist_rotator, gripper_jaw)_ | 1 | 11.71 | 11.71 | 463 g of parts (+15 % supports/waste), about 42.2 h of printing |
 | Fasteners | Screws, nuts and inserts | 95 | 0.12 | 11.4 | 4x M5 x 12 socket head (base to bench); 28x M2.5 x 6 case screws; 60x horn screws; 3x M5 x 16 socket head + M5 washer + M5 heat-set insert (clevis bearing axle) |
 
 ## Actuator sizing
@@ -20,9 +20,9 @@
 | Joint | Required effort | Unit | Chosen actuator | Margin |
 |---|--:|---|---|--:|
 | base_yaw | 0 | N·m | DYNAMIXEL XL430-W250-T | 99x |
-| shoulder_pitch | 2.809 | N·m | DYNAMIXEL XH540-W270-T(R) | 3.52x |
-| upper_arm_roll | 0.019 | N·m | DYNAMIXEL XL430-W250-T | 74.92x |
-| elbow_pitch | 1.354 | N·m | DYNAMIXEL XM430-W350-T(R) | 3.03x |
+| shoulder_pitch | 2.806 | N·m | DYNAMIXEL XH540-W270-T(R) | 3.53x |
+| upper_arm_roll | 0.019 | N·m | DYNAMIXEL XL430-W250-T | 75.22x |
+| elbow_pitch | 1.353 | N·m | DYNAMIXEL XM430-W350-T(R) | 3.03x |
 | forearm_roll | 0.009 | N·m | DYNAMIXEL XL430-W250-T | 99x |
 | wrist_pitch | 0.488 | N·m | DYNAMIXEL XL430-W250-T | 2.87x |
 | wrist_roll | 0.001 | N·m | DYNAMIXEL XL430-W250-T | 99x |

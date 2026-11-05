@@ -1,6 +1,6 @@
 # Bill of Materials — rover_arm
 
-**Estimated total: $3818.98**  ·  tier: prosumer  ·  budget: $4000 ✅ within budget
+**Estimated total: $3818.96**  ·  tier: prosumer  ·  budget: $4000 ✅ within budget
 
 **Effort sizing: passes catalogue estimate; hardware verified: no.**
 
@@ -20,7 +20,7 @@
 | Sensor | Raspberry Pi Camera Module 3 (standard lens) _(camera · https://www.raspberrypi.com/products/camera-module-3/)_ | 1 | 25 | 25 | 3.3 V |
 | Electronics | Waveshare Bus Servo Adapter (A) _(servo bus adapter · https://www.waveshare.com/bus-servo-adapter-a.htm)_ | 1 | 10.6 | 10.6 | 12 V |
 | Drive | Pololu 90x10 mm wheel + 6 mm universal aluminium hub (for 37D gearmotors) _(driven wheel · https://www.pololu.com/product/1435)_ | 4 | 11.22 | 44.88 | https://www.pololu.com/file/0J161/1083-6mm-4-40-hub-dimensions.pdf |
-| Printed structure | PETG filament for 20 printed parts _(left_rocker_rear_arm, left_rocker_frame, right_rocker_rear_arm, right_rocker_frame, battery_tray, computer_tray, motor_driver_1_tray, motor_driver_2_tray, servo_bus_tray, regulator_5v_tray, depth_camera_bracket, camera_mast, arm_base_link, arm_turret, arm_upper_arm, arm_forearm, arm_forearm_rotator, arm_wrist, arm_wrist_rotator, arm_gripper_jaw)_ | 1 | 20.9 | 20.9 | 826 g of parts (+15 % supports/waste), about 75.3 h of printing |
+| Printed structure | PETG filament for 20 printed parts _(left_rocker_rear_arm, left_rocker_frame, right_rocker_rear_arm, right_rocker_frame, battery_tray, computer_tray, motor_driver_1_tray, motor_driver_2_tray, servo_bus_tray, regulator_5v_tray, depth_camera_bracket, camera_mast, arm_base_link, arm_turret, arm_upper_arm, arm_forearm, arm_forearm_rotator, arm_wrist, arm_wrist_rotator, arm_gripper_jaw)_ | 1 | 20.88 | 20.88 | 825 g of parts (+15 % supports/waste), about 75.2 h of printing |
 | Fasteners | Screws, nuts and inserts | 143 | 0.12 | 17.16 | 24x M3 x 8 socket head (motor face); 2x M8 x 40 shoulder bolt + spacer (rocker pivot); 4x M4 x 20 + nut (rocker rear arm to hub); 1x 20 mm hook-and-loop battery strap; 12x M3 x 8 socket head (tray to deck); 19x M2.5 x 6 screws (board to standoffs); 2x M3 x 6 (camera back); 4x M5 x 12 socket head (base to bench); 24x M2.5 x 6 case screws; 48x horn screws; 3x M5 x 16 socket head + M5 washer + M5 heat-set insert (clevis bearing axle) |
 
 ## Actuator sizing
@@ -28,8 +28,8 @@
 | Joint | Required effort | Unit | Chosen actuator | Margin |
 |---|--:|---|---|--:|
 | arm_base_yaw | 0 | N·m | DYNAMIXEL XM430-W350-T(R) | 99x |
-| arm_shoulder_pitch | 3.629 | N·m | DYNAMIXEL XH540-W270-T(R) | 2.73x |
-| arm_elbow_pitch | 2.118 | N·m | DYNAMIXEL XH540-W270-T(R) | 4.67x |
+| arm_shoulder_pitch | 3.626 | N·m | DYNAMIXEL XH540-W270-T(R) | 2.73x |
+| arm_elbow_pitch | 2.116 | N·m | DYNAMIXEL XH540-W270-T(R) | 4.68x |
 | arm_forearm_roll | 0.79 | N·m | DYNAMIXEL XM430-W350-T(R) | 5.19x |
 | arm_wrist_pitch | 0.79 | N·m | DYNAMIXEL XM430-W350-T(R) | 5.19x |
 | arm_wrist_roll | 0.058 | N·m | DYNAMIXEL XM430-W350-T(R) | 70.64x |
@@ -39,7 +39,7 @@
 | right_rear_wheel_joint | 0.131 | N·m | Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752) | 5.23x |
 
 ## Notes
-- 4-wheel rocker-bogie rover with a 6-DOF arm: 4.675 kg, 1.24 m/s, 1.53 h, jetson_orin_nano_super
+- 4-wheel rocker-bogie rover with a 6-DOF arm: 4.674 kg, 1.24 m/s, 1.53 h, jetson_orin_nano_super
 - Rocker-bogie after the JPL Open Source Rover, 4 driven wheels, skid steering (the OSR's four corner-steering servos are left out; add them for less tyre scrub).
 - A rover's differential bar links the two rockers through the body, a closed loop URDF cannot describe; the model frees the left rocker on its pivot and bolts the right rocker to the body, which keeps every wheel on the ground and the body supported on three points (body pitch follows the right rocker instead of the average).
 - Rockers and bogies are printed in PETG; for outdoor use print them in 6 bolt-on sections from aluminium channel instead (as the OSR does).

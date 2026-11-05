@@ -92,6 +92,9 @@ export class Assembly {
 
   /** A link whose body is a printed part. Mass from solid volume at print density. */
   printedLink(name: string, program: Program, opts: { role?: string; material?: string; extraMassKg?: number } = {}): Link {
+    // TTR_KERNEL_ALL=1 builds these on the CAD kernel too. Not the default yet: OpenCascade's WASM heap only grows, and the
+    // sizing loops of the arm/humanoid designers rebuild every link dozens of times (measured: 4 GB after ~30 arm parts)
+    if ((globalThis as { process?: { env?: Record<string, string | undefined> } }).process?.env?.TTR_KERNEL_ALL) return this.cadLink(name, program as unknown as CadProgram, opts);
     const geometry = printedGeometry({ ...program, name });
     const check = checkOf(program);
     const mass = geometry.volume * PRINT_DENSITY + (opts.extraMassKg ?? 0);

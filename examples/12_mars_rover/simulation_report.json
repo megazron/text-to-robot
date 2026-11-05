@@ -31,7 +31,7 @@
      "mean_cruise_nm": 0.2402,
      "rated_nm": 0.686,
      "util_rated": 0.35,
-     "max_err": 0.6647,
+     "max_err": 0.6646,
      "max_err_hold": 0.6047,
      "saturated_frac": 0.0
     },
@@ -75,7 +75,7 @@
    "explanation": "from standstill on a 10 deg slope (speed ramped over 4.7 s at 0.5 m/s^2): 5.16 m uphill in 6.7 s, speed 1.202 m/s of 1.240 commanded",
    "slope_deg": 10.0,
    "claim_key": "slope_deg",
-   "uphill_m": 5.1643,
+   "uphill_m": 5.1644,
    "speed_m_s": 1.2025,
    "joints": {
     "left_front_wheel_joint": {
@@ -86,18 +86,18 @@
      "rated_nm": 0.686,
      "util_rated": 0.478,
      "max_err": 0.8371,
-     "max_err_hold": 0.8246,
+     "max_err_hold": 0.8245,
      "saturated_frac": 0.0
     },
     "left_rear_wheel_joint": {
-     "peak_nm": 0.3353,
+     "peak_nm": 0.3352,
      "peak_rating_nm": 1.373,
      "util_peak": 0.244,
      "mean_climb_nm": 0.3273,
      "rated_nm": 0.686,
      "util_rated": 0.477,
      "max_err": 0.8365,
-     "max_err_hold": 0.824,
+     "max_err_hold": 0.8239,
      "saturated_frac": 0.0
     },
     "right_front_wheel_joint": {
@@ -107,8 +107,8 @@
      "mean_climb_nm": 0.3292,
      "rated_nm": 0.686,
      "util_rated": 0.48,
-     "max_err": 0.8416,
-     "max_err_hold": 0.8287,
+     "max_err": 0.8415,
+     "max_err_hold": 0.8286,
      "saturated_frac": 0.0
     },
     "right_rear_wheel_joint": {
@@ -126,61 +126,61 @@
   },
   "turn_in_place": {
    "pass": false,
-   "explanation": "yaw rate 1.34 rad/s with 4.06 commanded (no-slip), claimed 1.65 rad/s (needs >= 1.40), centre moved 2.5 cm over 1.0 turn(s) (2.5 cm per turn)",
+   "explanation": "yaw rate 1.21 rad/s with 4.06 commanded (no-slip), claimed 1.65 rad/s (needs >= 1.40), centre moved 9.4 cm over 1.0 turn(s) (9.4 cm per turn)",
    "claimed_rad_s": 1.65,
    "commanded_rad_s": 4.0638,
-   "yaw_rate_rad_s": 1.3383,
-   "drift_m": 0.0254,
+   "yaw_rate_rad_s": 1.2096,
+   "drift_m": 0.0935,
    "track_m": 0.3051,
    "joints": {
     "left_front_wheel_joint": {
-     "peak_nm": 1.208,
+     "peak_nm": 1.2527,
      "peak_rating_nm": 1.373,
-     "util_peak": 0.88,
-     "mean_turn_nm": 0.5206,
+     "util_peak": 0.912,
+     "mean_turn_nm": 0.4847,
      "rated_nm": 0.686,
-     "util_rated": 0.759,
-     "max_err": 9.8676,
-     "max_err_hold": 9.8676,
-     "saturated_frac": 0.185
+     "util_rated": 0.707,
+     "max_err": 8.2958,
+     "max_err_hold": 7.8344,
+     "saturated_frac": 0.168
     },
     "left_rear_wheel_joint": {
-     "peak_nm": 0.8063,
+     "peak_nm": 0.9003,
      "peak_rating_nm": 1.373,
-     "util_peak": 0.587,
-     "mean_turn_nm": 0.2248,
+     "util_peak": 0.656,
+     "mean_turn_nm": 0.2341,
      "rated_nm": 0.686,
-     "util_rated": 0.328,
-     "max_err": 2.2986,
-     "max_err_hold": 2.2986,
+     "util_rated": 0.341,
+     "max_err": 2.6683,
+     "max_err_hold": 2.6683,
      "saturated_frac": 0.0
     },
     "right_front_wheel_joint": {
-     "peak_nm": 1.1446,
+     "peak_nm": 1.1432,
      "peak_rating_nm": 1.373,
-     "util_peak": 0.834,
-     "mean_turn_nm": 0.2481,
+     "util_peak": 0.833,
+     "mean_turn_nm": 0.2447,
      "rated_nm": 0.686,
-     "util_rated": 0.362,
-     "max_err": 4.7362,
-     "max_err_hold": 4.7362,
-     "saturated_frac": 0.031
+     "util_rated": 0.357,
+     "max_err": 6.4541,
+     "max_err_hold": 6.4541,
+     "saturated_frac": 0.034
     },
     "right_rear_wheel_joint": {
-     "peak_nm": 1.2485,
+     "peak_nm": 1.2555,
      "peak_rating_nm": 1.373,
-     "util_peak": 0.909,
-     "mean_turn_nm": 0.4859,
+     "util_peak": 0.914,
+     "mean_turn_nm": 0.4854,
      "rated_nm": 0.686,
      "util_rated": 0.708,
-     "max_err": 8.2933,
-     "max_err_hold": 8.2933,
-     "saturated_frac": 0.182
+     "max_err": 8.7974,
+     "max_err_hold": 8.7974,
+     "saturated_frac": 0.185
     }
    }
   }
  },
  "passed": 2,
  "total": 3,
- "source_urdf_sha256": "5a2d3e487b7e6221afef6e8bf5cc1bcefc5d2952aae414b4932635fe72e3b0d5"
+ "source_urdf_sha256": "df8afcb287a53e5203fd6292a95aba7a1461a8a767ccf84ea3125d1aad740698"
 }

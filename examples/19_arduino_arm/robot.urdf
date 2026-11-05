@@ -28,9 +28,9 @@
       <geometry><mesh filename="package://arduino_arm/meshes/base_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.000168105 -0.0000349837 0.004222" rpy="0 0 0"/>
-      <mass value="0.049326"/>
-      <inertia ixx="0.0000314417" ixy="-1.76565e-8" ixz="1.54434e-7" iyy="0.0000467795" iyz="8.67528e-9" izz="0.0000750941"/>
+      <origin xyz="-0.000165048 -0.0000350057 0.004224" rpy="0 0 0"/>
+      <mass value="0.049296"/>
+      <inertia ixx="0.0000314415" ixy="-1.76612e-8" ixz="1.54804e-7" iyy="0.0000467731" iyz="8.67364e-9" izz="0.0000750879"/>
     </inertial>
   </link>
   <link name="yaw_servo">
@@ -60,9 +60,9 @@
       <geometry><mesh filename="package://arduino_arm/meshes/turntable.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.00011321 -0.012495 0.024917" rpy="0 0 0"/>
-      <mass value="0.029604"/>
-      <inertia ixx="0.0000222246" ixy="4.14376e-8" ixz="-9.08097e-8" iyy="0.0000219428" iyz="0.0000011437" izz="0.0000125806"/>
+      <origin xyz="0.000113485 -0.012448 0.02489" rpy="0 0 0"/>
+      <mass value="0.029532"/>
+      <inertia ixx="0.0000221459" ixy="4.15930e-8" ixz="-9.08980e-8" iyy="0.0000218884" iyz="0.00000112883" izz="0.0000125526"/>
     </inertial>
   </link>
   <link name="shoulder_servo">
@@ -92,9 +92,9 @@
       <geometry><mesh filename="package://arduino_arm/meshes/upper_arm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.102605 -0.0000974212 0.012726" rpy="0 0 0"/>
-      <mass value="0.03406"/>
-      <inertia ixx="0.0000130675" ixy="-1.42829e-7" ixz="0.00000965011" iyy="0.0000945893" iyz="-8.87929e-9" izz="0.0000936581"/>
+      <origin xyz="-0.10249 -0.0000978399 0.012771" rpy="0 0 0"/>
+      <mass value="0.033914"/>
+      <inertia ixx="0.0000130473" ixy="-1.43211e-7" ixz="0.00000969139" iyy="0.0000943784" iyz="-9.02938e-9" izz="0.0000934599"/>
     </inertial>
   </link>
   <link name="elbow_servo">
@@ -124,9 +124,9 @@
       <geometry><mesh filename="package://arduino_arm/meshes/forearm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.098122 0.006161 0.009832" rpy="0 0 0"/>
-      <mass value="0.024678"/>
-      <inertia ixx="0.00000684171" ixy="0.00000906924" ixz="0.00000796142" iyy="0.000084976" iyz="-0.00000125597" izz="0.0000865084"/>
+      <origin xyz="-0.098082 0.00617 0.009843" rpy="0 0 0"/>
+      <mass value="0.024641"/>
+      <inertia ixx="0.00000683814" ixy="0.00000907531" ixz="0.00000796894" iyy="0.0000849406" iyz="-0.00000125426" izz="0.0000864738"/>
     </inertial>
   </link>
   <link name="claw_servo">
@@ -197,7 +197,7 @@
     <child link="forearm"/>
     <origin xyz="-0.12 0 0.0489" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-2.1" upper="2.1" effort="1.0787" velocity="6.15"/>
+    <limit lower="-2.1" upper="2.1" effort="1.0787" velocity="6.17"/>
     <dynamics damping="0.0288" friction="0.0216"/>
   </joint>
   <joint name="claw_servo_mount" type="fixed">

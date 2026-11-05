@@ -64,7 +64,7 @@
      "mean_cruise_nm": 0.0078,
      "rated_nm": 0.0235,
      "util_rated": 0.33,
-     "max_err": 4.1276,
+     "max_err": 4.1275,
      "max_err_hold": 0.2069,
      "saturated_frac": 0.173
     }
@@ -85,8 +85,8 @@
      "mean_climb_nm": 0.0237,
      "rated_nm": 0.0235,
      "util_rated": 1.007,
-     "max_err": 2.7828,
-     "max_err_hold": 1.9329,
+     "max_err": 2.7827,
+     "max_err_hold": 1.9328,
      "saturated_frac": 0.39
     },
     "front_right_wheel_joint": {
@@ -96,11 +96,22 @@
      "mean_climb_nm": 0.0237,
      "rated_nm": 0.0235,
      "util_rated": 1.007,
-     "max_err": 2.7828,
-     "max_err_hold": 1.9329,
+     "max_err": 2.7827,
+     "max_err_hold": 1.9328,
      "saturated_frac": 0.39
     },
     "rear_left_wheel_joint": {
+     "peak_nm": 0.0555,
+     "peak_rating_nm": 0.0785,
+     "util_peak": 0.707,
+     "mean_climb_nm": 0.0237,
+     "rated_nm": 0.0235,
+     "util_rated": 1.006,
+     "max_err": 2.7824,
+     "max_err_hold": 1.9325,
+     "saturated_frac": 0.39
+    },
+    "rear_right_wheel_joint": {
      "peak_nm": 0.0555,
      "peak_rating_nm": 0.0785,
      "util_peak": 0.707,
@@ -108,79 +119,68 @@
      "rated_nm": 0.0235,
      "util_rated": 1.006,
      "max_err": 2.7825,
-     "max_err_hold": 1.9326,
-     "saturated_frac": 0.39
-    },
-    "rear_right_wheel_joint": {
-     "peak_nm": 0.0555,
-     "peak_rating_nm": 0.0785,
-     "util_peak": 0.707,
-     "mean_climb_nm": 0.0237,
-     "rated_nm": 0.0235,
-     "util_rated": 1.006,
-     "max_err": 2.7826,
-     "max_err_hold": 1.9326,
+     "max_err_hold": 1.9325,
      "saturated_frac": 0.39
     }
    }
   },
   "turn_in_place": {
-   "pass": 1.0,
-   "explanation": "yaw rate 1.81 rad/s with 3.78 commanded (no-slip), claimed 1.60 rad/s (needs >= 1.36), centre moved 1.4 cm over 1.0 turn(s) (1.4 cm per turn)",
+   "pass": false,
+   "explanation": "yaw rate 1.33 rad/s with 3.78 commanded (no-slip), claimed 1.60 rad/s (needs >= 1.36), centre moved 2.1 cm over 1.0 turn(s) (2.1 cm per turn)",
    "claimed_rad_s": 1.6,
    "commanded_rad_s": 3.7821,
-   "yaw_rate_rad_s": 1.808,
-   "drift_m": 0.0145,
+   "yaw_rate_rad_s": 1.3314,
+   "drift_m": 0.0213,
    "track_m": 0.156,
    "joints": {
     "front_left_wheel_joint": {
      "peak_nm": 0.0777,
      "peak_rating_nm": 0.0785,
      "util_peak": 0.99,
-     "mean_turn_nm": 0.0627,
+     "mean_turn_nm": 0.0612,
      "rated_nm": 0.0235,
-     "util_rated": 2.668,
-     "max_err": 6.0115,
-     "max_err_hold": 4.8825,
+     "util_rated": 2.605,
+     "max_err": 6.0112,
+     "max_err_hold": 4.5479,
      "saturated_frac": 0.803
     },
     "front_right_wheel_joint": {
      "peak_nm": 0.0769,
      "peak_rating_nm": 0.0785,
      "util_peak": 0.98,
-     "mean_turn_nm": 0.0367,
+     "mean_turn_nm": 0.0403,
      "rated_nm": 0.0235,
-     "util_rated": 1.561,
-     "max_err": 5.1561,
-     "max_err_hold": 1.8675,
-     "saturated_frac": 0.259
+     "util_rated": 1.713,
+     "max_err": 5.1559,
+     "max_err_hold": 2.6367,
+     "saturated_frac": 0.305
     },
     "rear_left_wheel_joint": {
      "peak_nm": 0.0768,
      "peak_rating_nm": 0.0785,
      "util_peak": 0.979,
-     "mean_turn_nm": 0.0339,
+     "mean_turn_nm": 0.0377,
      "rated_nm": 0.0235,
-     "util_rated": 1.441,
-     "max_err": 5.0089,
-     "max_err_hold": 1.8915,
-     "saturated_frac": 0.236
+     "util_rated": 1.602,
+     "max_err": 5.0088,
+     "max_err_hold": 2.4765,
+     "saturated_frac": 0.279
     },
     "rear_right_wheel_joint": {
      "peak_nm": 0.0771,
      "peak_rating_nm": 0.0785,
      "util_peak": 0.983,
-     "mean_turn_nm": 0.0607,
+     "mean_turn_nm": 0.0597,
      "rated_nm": 0.0235,
-     "util_rated": 2.583,
+     "util_rated": 2.539,
      "max_err": 5.6882,
-     "max_err_hold": 4.5631,
+     "max_err_hold": 4.4291,
      "saturated_frac": 0.792
     }
    }
   }
  },
- "passed": 3,
+ "passed": 2,
  "total": 3,
- "source_urdf_sha256": "833181e2f850841be55adeab7d143a5b98ebef11690598f073a731a123feafd6"
+ "source_urdf_sha256": "b7fefad5d73836d0499c187afb5ee5bcdd7c4c9ff466d201cd9a150a0195a0e7"
 }

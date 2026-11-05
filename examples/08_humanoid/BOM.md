@@ -1,6 +1,6 @@
 # Bill of Materials — humanoid_robot
 
-**Estimated total: $4234.23**  ·  tier: prosumer
+**Estimated total: $4234.18**  ·  tier: prosumer
 
 **Effort sizing: passes catalogue estimate; hardware verified: no.**
 
@@ -18,25 +18,25 @@
 | Sensor | Raspberry Pi Camera Module 3 (standard lens) _(head camera · https://www.raspberrypi.com/products/camera-module-3/)_ | 1 | 25 | 25 | 3.3 V |
 | Compute | Raspberry Pi 5 (4 GB) _(main computer · https://www.raspberrypi.com/products/raspberry-pi-5/)_ | 1 | 110 | 110 | 5 V |
 | Electronics | Waveshare Bus Servo Adapter (A) _(USB to leg servo bus · https://www.waveshare.com/bus-servo-adapter-a.htm)_ | 1 | 10.6 | 10.6 | 12 V |
-| Printed structure | PETG filament for 26 printed parts _(base_link, torso, l_hip_yaw_link, l_hip_roll_link, l_hip_pitch_link, l_knee_link, l_ankle_pitch_link, l_ankle_roll_link, r_hip_yaw_link, r_hip_roll_link, r_hip_pitch_link, r_knee_link, r_ankle_pitch_link, r_ankle_roll_link, l_shoulder_pitch_link, l_shoulder_roll_link, l_upper_arm_yaw_link, l_elbow_link, l_gripper_jaw, r_shoulder_pitch_link, r_shoulder_roll_link, r_upper_arm_yaw_link, r_elbow_link, r_gripper_jaw, neck_pan_link, neck_tilt_link)_ | 1 | 33.34 | 33.34 | 1318 g of parts (+15 % supports/waste), about 120.1 h of printing |
+| Printed structure | PETG filament for 26 printed parts _(base_link, torso, l_hip_yaw_link, l_hip_roll_link, l_hip_pitch_link, l_knee_link, l_ankle_pitch_link, l_ankle_roll_link, r_hip_yaw_link, r_hip_roll_link, r_hip_pitch_link, r_knee_link, r_ankle_pitch_link, r_ankle_roll_link, l_shoulder_pitch_link, l_shoulder_roll_link, l_upper_arm_yaw_link, l_elbow_link, l_gripper_jaw, r_shoulder_pitch_link, r_shoulder_roll_link, r_upper_arm_yaw_link, r_elbow_link, r_gripper_jaw, neck_pan_link, neck_tilt_link)_ | 1 | 33.29 | 33.29 | 1316 g of parts (+15 % supports/waste), about 119.9 h of printing |
 | Fasteners | Screws, nuts and inserts | 180 | 0.12 | 21.6 | 4x M3 x 12 torso-to-pelvis bolts; 88x M2/M2.5 x 6 case screws; 88x horn / hub screws |
 
 ## Actuator sizing
 
 | Joint | Required effort | Unit | Chosen actuator | Margin |
 |---|--:|---|---|--:|
-| l_hip_yaw | 0.403 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 7.29x |
-| l_hip_roll | 4.217 | N·m | DYNAMIXEL XH540-W270-T(R) | 2.35x |
-| l_hip_pitch | 5.425 | N·m | DYNAMIXEL XH540-W270-T(R) | 1.83x |
-| l_knee | 5.121 | N·m | DYNAMIXEL XH540-W270-T(R) | 1.93x |
-| l_ankle_pitch | 2.787 | N·m | Feetech STS3250 C002 12 V 50 kg.cm (1:345) | 1.76x |
-| l_ankle_roll | 1.166 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 2.52x |
-| r_hip_yaw | 0.403 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 7.29x |
-| r_hip_roll | 4.217 | N·m | DYNAMIXEL XH540-W270-T(R) | 2.35x |
-| r_hip_pitch | 5.425 | N·m | DYNAMIXEL XH540-W270-T(R) | 1.83x |
-| r_knee | 5.121 | N·m | DYNAMIXEL XH540-W270-T(R) | 1.93x |
-| r_ankle_pitch | 2.787 | N·m | Feetech STS3250 C002 12 V 50 kg.cm (1:345) | 1.76x |
-| r_ankle_roll | 1.166 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 2.52x |
+| l_hip_yaw | 0.403 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 7.3x |
+| l_hip_roll | 4.215 | N·m | DYNAMIXEL XH540-W270-T(R) | 2.35x |
+| l_hip_pitch | 5.422 | N·m | DYNAMIXEL XH540-W270-T(R) | 1.83x |
+| l_knee | 5.118 | N·m | DYNAMIXEL XH540-W270-T(R) | 1.93x |
+| l_ankle_pitch | 2.786 | N·m | Feetech STS3250 C002 12 V 50 kg.cm (1:345) | 1.76x |
+| l_ankle_roll | 1.165 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 2.53x |
+| r_hip_yaw | 0.403 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 7.3x |
+| r_hip_roll | 4.215 | N·m | DYNAMIXEL XH540-W270-T(R) | 2.35x |
+| r_hip_pitch | 5.422 | N·m | DYNAMIXEL XH540-W270-T(R) | 1.83x |
+| r_knee | 5.118 | N·m | DYNAMIXEL XH540-W270-T(R) | 1.93x |
+| r_ankle_pitch | 2.786 | N·m | Feetech STS3250 C002 12 V 50 kg.cm (1:345) | 1.76x |
+| r_ankle_roll | 1.165 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 2.53x |
 | l_shoulder_pitch | 0.381 | N·m | DYNAMIXEL XL430-W250-T | 3.67x |
 | l_shoulder_roll | 0.368 | N·m | DYNAMIXEL XL430-W250-T | 3.81x |
 | l_upper_arm_yaw | 0.216 | N·m | DYNAMIXEL XL430-W250-T | 6.49x |

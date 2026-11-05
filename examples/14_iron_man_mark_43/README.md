@@ -8,7 +8,7 @@ Interpreted as: Iron Man Mark 43 wearable suit · budget $60000
 
 **Iron Man Mark 43 (full wearable suit): 70 printed pieces, 4.0 kg filament, motorised faceplate, $257 incl. filament**
 
-Parts cost **$262.98** (budget $60000: within) · printed structure 70 parts, 3747 g · checks passed 84/84
+Parts cost **$262.97** (budget $60000: within) · printed structure 70 parts, 3747 g · checks passed 84/84
 
 ## What it can do
 
@@ -20,7 +20,7 @@ Parts cost **$262.98** (budget $60000: within) · printed structure 70 parts, 37
 | printed pieces | 70 |
 | armour mass kg | 3.57 |
 | filament kg | 4.05 |
-| cost usd | 256.73 |
+| cost usd | 256.72 |
 | mass kg | 82.22 |
 
 ## Actuators (sized from this robot's own loads)

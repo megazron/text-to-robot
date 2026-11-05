@@ -8,7 +8,7 @@ Interpreted as: 2-DOF serial arm · parallel gripper
 
 **2-DOF arm, 350 mm reach, 0.1 kg payload, Feetech STS serial-bus servos (12 V)**
 
-Parts cost **$130.08** · printed structure 4 parts, 366 g · checks passed 10/10
+Parts cost **$130.07** · printed structure 4 parts, 366 g · checks passed 10/10
 
 ## What it can do
 
@@ -28,7 +28,7 @@ Parts cost **$130.08** · printed structure 4 parts, 366 g · checks passed 10/1
 
 | Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
 |---|---|--:|--:|--:|--:|
-| shoulder_pitch | feetech_sts3250 | 1.333 | 1.5691 / 4.9033 | 3.68x | 5.94 |
+| shoulder_pitch | feetech_sts3250 | 1.332 | 1.5691 / 4.9033 | 3.68x | 5.94 |
 | elbow_pitch | feetech_sts3215_c047 | 0.543 | 0.9807 / 2.942 | 5.42x | 4.42 |
 
 ## Engineering checks
