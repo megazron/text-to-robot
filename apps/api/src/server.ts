@@ -4,7 +4,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join, extname, normalize } from "node:path";
 import { randomUUID } from "node:crypto";
-import { generateRobot, modifyRobot, finalizeSpec } from "@ttr/robot-generator";
+import { generateRobot, modifyRobot, finalizeSpec, arduinoOptions } from "@ttr/robot-generator";
 import { generateUrdf, generateXacro } from "@ttr/urdf-generator";
 import { validateUrdf } from "@ttr/urdf-validator";
 import { validateSpec, type RobotSpecification } from "@ttr/robot-schema";
@@ -103,6 +103,10 @@ const server = createServer(async (req, res) => {
       const result = await generateRobot(String(prompt ?? ""));
       const id = randomUUID(); remember(id, result.robot);
       return json(res, 200, { id, ...result });
+    }
+    if (req.method === "POST" && p === "/api/arduino") {
+      const { prompt } = await readBody(req);
+      return json(res, 200, arduinoOptions(String(prompt ?? "")));
     }
     if (req.method === "POST" && p === "/api/robots/modify") {
       const { robot, instruction } = await readBody(req);

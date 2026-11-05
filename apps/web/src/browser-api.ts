@@ -2,7 +2,7 @@
 // It answers the web app's /api/* requests by running the same generator packages locally,
 // so the page works with no server. Robots are kept in localStorage; share links carry the
 // robot itself (compressed) in the URL fragment because there is no server to look an id up.
-import { generateRobot, modifyRobot, finalizeSpec } from "@ttr/robot-generator";
+import { generateRobot, modifyRobot, finalizeSpec, arduinoOptions } from "@ttr/robot-generator";
 import { generateUrdf, generateXacro } from "@ttr/urdf-generator";
 import { validateUrdf } from "@ttr/urdf-validator";
 import { validateSpec, type RobotSpecification } from "@ttr/robot-schema";
@@ -56,6 +56,7 @@ async function handle(method: string, p: string, body: any): Promise<Response> {
     const id = crypto.randomUUID(); remember(id, result.robot);
     return json(200, { id, ...result });
   }
+  if (method === "POST" && p === "/api/arduino") return json(200, arduinoOptions(String(body.prompt ?? "")));
   if (method === "POST" && p === "/api/robots/modify") {
     const result = await modifyRobot(body.robot as RobotSpecification, String(body.instruction ?? ""));
     const id = crypto.randomUUID(); remember(id, result.robot);

@@ -17,7 +17,7 @@ const state = {
 // ---------------- three.js scene ----------------
 const viewport = $("#viewport");
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x0a0c0f);
+scene.background = new THREE.Color(0x070d09);
 const camera = new THREE.PerspectiveCamera(50, 1, 0.01, 100);
 camera.up.set(0, 0, 1);
 camera.position.set(0.9, -0.9, 0.7);
@@ -36,11 +36,11 @@ viewport.appendChild(renderer.domElement);
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true; controls.target.set(0, 0, 0.25);
 
-scene.add(new THREE.HemisphereLight(0xbfd4ff, 0x20242b, 0.9));
+scene.add(new THREE.HemisphereLight(0xd8ffe6, 0x0b1a10, 0.95));
 const key = new THREE.DirectionalLight(0xffffff, 1.6); key.position.set(1.5, -2, 3); scene.add(key);
-const fill = new THREE.DirectionalLight(0x88aaff, 0.4); fill.position.set(-2, 1, 1); scene.add(fill);
+const fill = new THREE.DirectionalLight(0x7dffb0, 0.35); fill.position.set(-2, 1, 1); scene.add(fill);
 
-const grid = new THREE.GridHelper(4, 40, 0x2a3340, 0x1a2028); grid.rotation.x = Math.PI / 2; scene.add(grid);
+const grid = new THREE.GridHelper(4, 40, 0x1f5a35, 0x112619); grid.rotation.x = Math.PI / 2; scene.add(grid);
 const robotGroup = new THREE.Group(); scene.add(robotGroup);
 
 function resize() {
@@ -412,21 +412,117 @@ function applyResult(res, label, diffLines) {
   state.selection = null;
   state.bom = res.bom ?? null;
   buildRobot(res.robot); renderTree(); renderSliders(); renderInspector(); renderHistory(); renderDiff(diffLines); renderBom(state.bom);
+  renderCards();
   status(checksToText(res));
 }
 
 function loadVersion(i) {
   const v = state.versions[i]; if (!v) return;
   state.version = i; state.id = v.id; state.robot = v.robot; state.urdf = v.urdf; state.xacro = v.xacro; state.jointValues = { ...(v.robot?.metadata?.design?.home ?? {}) }; state.selection = null;
-  buildRobot(v.robot); renderTree(); renderSliders(); renderInspector(); renderHistory();
+  buildRobot(v.robot); renderTree(); renderSliders(); renderInspector(); renderHistory(); renderCards();
 }
 
 async function doGenerate(prompt) {
   if (!prompt.trim()) return;
   setBusy($("#genbtn"), true);
-  try { const res = await api("/api/robots/generate", { prompt }); state.versions = []; applyResult(res, prompt.slice(0, 40)); }
+  try {
+    if (state.arduino) await doArduino(prompt);
+    else { const res = await api("/api/robots/generate", { prompt }); state.versions = []; applyResult(res, prompt.slice(0, 40)); }
+  }
   catch (e) { status("✗ " + e.message, "err"); }
-  finally { setBusy($("#genbtn"), false, "Generate Robot"); }
+  finally { setBusy($("#genbtn"), false, "Generate"); }
+}
+
+// ---------------- Arduino mode: price tiers ----------------
+async function doArduino(prompt) {
+  status("Designing Arduino versions… (each option is a complete, checked design; this takes a few seconds)");
+  const r = await api("/api/arduino", { prompt });
+  state.tiers = r.options ?? [];
+  const box = $("#tiers"); box.replaceChildren();
+  $("#tierNotes").textContent = (r.notes ?? []).join("  ·  ");
+  if (!state.tiers.length) { box.append(el("div", "hint", "No Arduino version of this robot yet.")); jump("arduino"); return; }
+  state.tiers.forEach((o, i) => {
+    const b = el("button", "tier");
+    const price = el("div", "price", "$" + Math.round(o.cost_usd)); price.append(el("small", null, o.tier));
+    const pill = el("span", "pill " + (o.failing.length ? "red" : o.over_budget ? "red" : "green"), o.failing.length ? `${o.failing.length} check${o.failing.length > 1 ? "s" : ""} fail` : o.over_budget ? "over budget" : "works");
+    b.append(price, pill, el("div", "label", o.label));
+    b.onclick = () => selectTier(i);
+    box.append(b);
+  });
+  state.versions = [];
+  await selectTier(Math.max(0, state.tiers.findIndex((o) => !o.failing.length && !o.over_budget)));
+  jump("arduino");
+}
+async function selectTier(i) {
+  const o = state.tiers?.[i]; if (!o) return;
+  document.querySelectorAll(".tier").forEach((t, k) => t.classList.toggle("sel", k === i));
+  const res = await api("/api/robots/import", { robot: o.robot });
+  applyResult({ ...res, summary: o.summary, warnings: o.failing.length ? [`failing checks: ${o.failing.join(", ")}`] : [] }, `${o.tier}: $${Math.round(o.cost_usd)}`);
+}
+
+// ---------------- summary cards: cost, stats, checks chart ----------------
+function renderCards() {
+  const r = state.robot, d = r?.metadata?.design;
+  $("#robotName").textContent = r ? r.robot_name.replace(/_/g, " ") : "";
+  const cost = d?.performance?.cost_usd ?? state.bom?.total;
+  $("#costBig").textContent = cost != null ? "$" + Number(cost).toFixed(0) : "—";
+  $("#costPill").textContent = d?.performance?.tier_label ?? (d ? "designed" : r ? "template" : "");
+  $("#costSub").textContent = d ? d.summary : r ? "Template robot (not sized from real parts)." : "Generate a robot to see what it costs to build.";
+  const stats = [];
+  if (d?.performance?.mass_kg != null) stats.push([`${Number(d.performance.mass_kg).toFixed(2)} kg`, "mass"]);
+  if (d) stats.push([String(d.printed.length), "printed parts"], [String(d.purchased.reduce((n, p) => n + p.qty, 0)), "bought parts"]);
+  else if (r) stats.push([String(r.links.length), "links"], [String(r.joints.filter((j) => j.type !== "fixed").length), "joints"]);
+  $("#statRow").replaceChildren(...stats.map(([v, k]) => { const s = el("div", "stat"); s.append(el("b", null, v), el("span", null, k)); return s; }));
+  // checks: margins per actuated joint as a lollipop chart, then every named check
+  const chart = $("#checksChart"); chart.replaceChildren();
+  const joints = d?.joints ?? [];
+  const maxM = Math.max(1.5, ...joints.map((j) => Math.min(j.margin, 6)));
+  for (const j of joints) {
+    const m = Math.min(j.margin, 6), bar = el("div", "bar" + (j.margin < 1 ? " bad" : "")), i = el("i");
+    i.style.height = `${Math.max(6, (m / maxM) * 100)}%`; bar.title = `${j.joint}: ${j.margin}x margin (${j.actuator})`; bar.append(i); chart.append(bar);
+  }
+  const checks = d?.checks ?? [], bad = checks.filter((c) => !c.pass);
+  $("#checksPill").textContent = checks.length ? (bad.length ? `${bad.length} failing` : `all ${checks.length} pass`) : "";
+  $("#checksPill").className = "pill " + (checks.length ? (bad.length ? "red" : "green") : "");
+  const list = $("#checksList"); list.replaceChildren();
+  for (const c of [...bad, ...checks.filter((x) => x.pass)].slice(0, 60)) {
+    const row = el("div", "check"); row.append(el("span", c.pass ? "ok" : "no", c.pass ? "✓" : "✗"));
+    const t = el("div"); t.append(el("b", null, c.name + " "), document.createTextNode(c.detail)); row.append(t); list.append(row);
+  }
+  if (!checks.length) list.append(el("div", "hint", r ? "Template robots carry no engineering checks: switch on Arduino or describe a designed robot." : ""));
+}
+
+// ---------------- navigation rail ----------------
+function jump(section) {
+  document.querySelectorAll(".rail-btn").forEach((b) => b.classList.toggle("active", b.dataset.jump === section));
+  document.querySelector(`[data-section="${section}"]`)?.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+// ---------------- publish (opt-in) and gallery ----------------
+const REPO = "megazron/text-to-robot";
+async function publish() {
+  if (!state.robot) return;
+  const link = STATIC ? await STATIC.shareUrl(state.robot) : `${location.origin}/r/${state.id}`;
+  const d = state.robot.metadata?.design;
+  const title = `[gallery] ${state.robot.robot_name.replace(/_/g, " ")}`;
+  const body = `${d?.summary ?? state.robot.metadata?.source_prompt ?? ""}\n\nOpen it: ${link}\n\n(Posted from the Text to Robot page. Edit or close this issue to change or remove it.)`;
+  if (link.length > 7000) { status("This design is too large for a gallery post link; download the JSON and attach it to a post instead.", "err"); return; }
+  window.open(`https://github.com/${REPO}/issues/new?title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`, "_blank", "noopener");
+}
+async function loadGallery() {
+  const box = $("#gallery"); box.replaceChildren(el("div", "empty", "Loading…"));
+  try {
+    const r = await fetch(`https://api.github.com/repos/${REPO}/issues?state=open&per_page=60`);
+    const items = (await r.json()).filter((i) => typeof i.title === "string" && i.title.startsWith("[gallery]"));
+    box.replaceChildren();
+    if (!items.length) box.append(el("div", "empty", "Nothing published yet. Press “Publish to gallery” to be the first."));
+    for (const it of items) {
+      const link = /https?:\/\/\S+#robot=[A-Za-z0-9_-]+/.exec(it.body ?? "")?.[0];
+      const a = el("a", "item"); a.href = link ?? it.html_url; a.target = "_blank"; a.rel = "noopener";
+      a.append(el("b", null, it.title.replace(/^\[gallery\]\s*/, "")), el("small", null, `by ${it.user?.login ?? "someone"} · ${new Date(it.created_at).toLocaleDateString()}`));
+      box.append(a);
+    }
+  } catch { box.replaceChildren(el("div", "empty", "Could not reach GitHub for the gallery.")); }
 }
 async function doModify(instruction) {
   if (!state.robot || !instruction.trim()) return;
@@ -469,6 +565,10 @@ document.querySelectorAll(".tab").forEach((t) => (t.onclick = () => setTab(t.dat
 document.querySelectorAll("[data-dl]").forEach((b) => (b.onclick = () => handleDownload(b.dataset.dl)));
 for (const id of ["#showCollision", "#showAxes", "#showFrames"]) $(id).onchange = () => { if (state.robot) buildRobot(state.robot); };
 $("#resetView").onclick = frameRobot;
+$("#arduinoBtn").onclick = () => { state.arduino = !state.arduino; $("#arduinoBtn").setAttribute("aria-pressed", String(state.arduino)); };
+document.querySelectorAll(".rail-btn").forEach((b) => (b.onclick = () => jump(b.dataset.jump)));
+$("#publishBtn").onclick = publish;
+$("#loadGallery").onclick = loadGallery;
 $("#importRobot").onclick = () => $("#robotFile").click();
 $("#robotFile").onchange = async (event) => {
   const file=event.target.files[0];if(!file)return;
@@ -484,10 +584,11 @@ $("#budget").oninput = () => { clearTimeout(window.__bt); window.__bt = setTimeo
 
 const EXAMPLES = [
   "Create a 6 DOF robotic arm with a parallel gripper",
-  "Create a 7 DOF robotic arm with a two-finger gripper",
-  "Create a small humanoid robot with a torso, head and two 7 DOF arms",
-  "Create a differential drive mobile robot",
+  "An obstacle avoiding robot car",
+  "WALL-E",
+  "Iron Man Mark 43 suit",
   "Create a quadruped robot",
+  "Create a small humanoid robot",
   "Create a SCARA robot",
 ];
 function initExamples() {

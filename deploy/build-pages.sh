@@ -34,6 +34,8 @@ if grep -nE '(href|src)="/[^/]' "$OUT/index.html"; then echo "root-absolute path
 
 # CSG kernel used by the design engine (printed parts are built in the browser)
 cp node_modules/manifold-3d/manifold.wasm "$OUT/manifold.wasm"
+# OpenCascade CAD kernel (exact solids, fillets, STEP export)
+cp node_modules/replicad-opencascadejs/dist/replicad_single.wasm "$OUT/replicad_single.wasm"
 
 touch "$OUT/.nojekyll"
 SHA="$(git rev-parse HEAD 2>/dev/null || echo unknown)"

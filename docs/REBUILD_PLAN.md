@@ -13,7 +13,7 @@ stronger (4WD) tiers, all checks including clearance passing.
 - [x] One `main` with all work merged (remaining remote branches are fully contained in main; deleting them needs the owner's command)
 - [x] Real CAD stack that works on the web: Replicad / OpenCascade kernel (`packages/kernel`)
 - [x] Privacy: designs built in the browser, stored on the user's device, said on the page
-- [~] Arduino button: cheapest Arduino-compatible parts that still work (generator: `arduinoOptions(prompt)`; cars done, ~$28 2WD / $37 4WD; desk arm done, $39-47 by payload; web button pending)
+- [x] Arduino button: cheapest Arduino-compatible parts that still work (generator: `arduinoOptions(prompt)`; cars, desk arm, WALL-E and Mark 43 done; on the web page as the Arduino switch, works in the static GitHub Pages build)
 - [~] Price tiers to choose from, with prices (cars: cheapest / stronger; arms: 20 g / 100 g / 200 g payload tiers, cheapest servo per joint)
 - [~] Honest suggestions when a budget or named components cannot do the request (over-budget options marked, cheapest price stated; robot types without an Arduino version say so)
 - [ ] Use the components the user names ("with MG996R servos", "Arduino Nano")
@@ -23,8 +23,8 @@ stronger (4WD) tiers, all checks including clearance passing.
 - [x] WALL-E rebuilt properly (Arduino build: printed body housing 4 TT motors, TPU tracks, pan/tilt binocular head, servo arms; all checks pass, ~$51)
 - [x] Mark 43 rebuilt properly, in tiers from helmet to full wearable suit (body-first wearable armour on a parametric wearer: helmet 9 pieces / $39; helmet + chest + gauntlets 44 pieces / ~$166; full suit 70 pieces, 3.9 kg filament / ~$254; faceplate on two MG90S opens 69 deg; posed checks: hips 87 deg, knees 106, shoulders 149, elbows 106, all clear)
 - [ ] GIFs, renders and README regenerated from the new designs (no old images left)
-- [ ] New web UI: bento card dashboard in green and black
-- [ ] Share button + opt-in public gallery / blog of designs people publish
+- [x] New web UI: bento card dashboard in green and black (icon rail, Arduino switch, price-tier cards, cost card, checks chart, privacy card)
+- [x] Share button + opt-in public gallery / blog of designs people publish (Publish opens a pre-filled post in the user's own GitHub account; the Gallery card lists published posts; nothing leaves the browser otherwise)
 - [ ] All tests and CI green; no memory blow-up in long runs
 
 ## Why
