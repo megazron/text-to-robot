@@ -1,39 +1,54 @@
-# Text to Robot
-
-Describe a robot in plain English and get a simulated, inspectable robot package:
-URDF/Xacro, a ROS 2 + MoveIt 2 package, MuJoCo model, CAD and a bill of materials.
-
-[![CI](https://github.com/megazron/text-to-robot/actions/workflows/ci.yml/badge.svg)](https://github.com/megazron/text-to-robot/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+<p align="center"><img src="docs/brand/banner.png" alt="text-to-robot" width="100%"></p>
 
 <p align="center">
-  <img src="examples/02_arm_6dof/simulation.gif" width="24%" alt="6-DOF arm in MuJoCo">
-  <img src="examples/11_spider_scout/simulation.gif" width="24%" alt="Hexapod in MuJoCo">
-  <img src="examples/15_wall_e/simulation.gif" width="24%" alt="WALL-E style robot in MuJoCo">
-  <img src="examples/14_iron_man_mark_43/simulation.gif" width="24%" alt="Mark 43 suit in MuJoCo">
+  <a href="https://megazron.github.io/text-to-robot/"><b>Try it in your browser</b></a> &nbsp;·&nbsp;
+  <a href="examples/README.md">Gallery</a> &nbsp;·&nbsp;
+  <a href="DEVELOPMENT.md">Develop</a>
+</p>
+<p align="center">
+  <a href="https://github.com/megazron/text-to-robot/actions/workflows/ci.yml"><img src="https://github.com/megazron/text-to-robot/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-39ff88.svg" alt="MIT"></a>
 </p>
 
-These and the gallery animations are MuJoCo runs of the exported models with gravity
-and self-collision enabled, not renderings of separate assets.
+Type what you want. Get a robot you can simulate, wire and print: real parts with prices, printable housings, a ROS 2 package and a physics test report.
 
-## What it does
+```text
+> an arduino car with four wheels
+Arduino car (4WD) · TT motors · HC-SR04 · $41 of parts · checks passed
+```
 
-- **Reads a prompt locally.** A rule-based parser turns text into a typed
-  `RobotSpecification`: robot family, DOF, reach, payload, sensors, gripper, budget,
-  colour and name. It warns about anything it could not apply instead of dropping it.
-- **Generates deterministic robot files.** URDF and Xacro with computed inertia and
-  collision geometry, an `ament_cmake` ROS 2 package with `ros2_control`, MoveIt 2 (SRDF,
-  KDL, OMPL) and Gazebo launch files.
-- **Builds geometry you can print or inspect.** Procedural polygon meshes (STL),
-  OpenSCAD parts, an optional CadQuery STEP enclosure backend, and a preliminary BOM
-  sized to the payload and fitted to a budget.
-- **Simulates and trains.** `ttr-mujoco` converts the URDF to MJCF, runs a physics
-  test battery, renders GIFs and trains PPO; PyBullet/Gymnasium environments are
-  exported alongside.
-- **Edits in place.** Follow-up instructions such as `make the forearm 20 cm longer and
-  add a wrist camera` modify the existing robot clause by clause.
-- **Runs entirely on your machine.** A small web viewer and HTTP API with no account,
-  API key, inference provider or third-party network requests.
+Your design stays yours. The website runs entirely in your browser, nothing is uploaded, and there is no account.
+
+| | | | |
+|:-:|:-:|:-:|:-:|
+| <img src="examples/18_arduino_car/simulation.gif" width="200"><br>Arduino car | <img src="examples/19_arduino_arm/simulation.gif" width="200"><br>Arduino arm | <img src="examples/15_wall_e/simulation.gif" width="200"><br>WALL-E | <img src="examples/02_arm_6dof/simulation.gif" width="200"><br>6-DOF arm |
+| <img src="examples/10_quadruped/simulation.gif" width="200"><br>Quadruped | <img src="examples/11_spider_scout/simulation.gif" width="200"><br>Hexapod | <img src="examples/08_humanoid/simulation.gif" width="200"><br>Humanoid | <img src="examples/12_mars_rover/simulation.gif" width="200"><br>Mars rover |
+
+Every animation above is a physics run of the exported model, not a render of a separate asset.
+
+## What you get
+
+| | |
+|---|---|
+| **Parts list** | Real components with prices and suppliers, sized to the job. |
+| **Printable parts** | STL files that fit a normal print bed, with a print report for each. |
+| **Robot files** | URDF, Xacro, ROS 2, MoveIt, MuJoCo. |
+| **Engineering checks** | Torque, speed, power, runtime, clearance and tipping, shown with the numbers. |
+| **Physics tests** | Each robot is driven through its tasks in MuJoCo. Failures are listed, not hidden. |
+
+## Arduino mode
+
+Flip the Arduino switch and the design is rebuilt around cheap, compatible parts with price tiers. If a request can't be done on a budget it says so and offers what can, like a motorised helmet instead of a powered suit. Name a part ("with MG996R servos and an Arduino Nano") and it is used, or you are told why not.
+
+## Mark 43, wearable
+
+<img src="docs/img/mark43_studio.png" width="300" align="right" alt="Mark 43 studio render">
+
+The hardest thing we could think of. A suit fitted around a person of a stated height: 151 printed shells sized for a home printer, a faceplate lifted by two servos, lit eyes, chest and palms, and joints measured by swinging real armour against real armour. It is worn, not powered: a person moves it.
+
+Fan work, not affiliated with or endorsed by the rights holders. See [NOTICE](NOTICE.md).
+
+<br clear="right">
 
 ## Quick start
 
@@ -89,136 +104,13 @@ Families: 1-12 DOF arms, SCARA, grippers, differential/four-wheel/mecanum bases,
 rover with an arm, quadruped, hexapod, humanoid, and character robots. Drones, delta and
 gantry robots, snake and marine robots and dexterous hands are refused with a reason.
 
-## Examples
+## Honest limits
 
-Seventeen checked-in examples, each with a README, ROS 2 package, CAD, MoveIt
-configuration and simulation report. Counts are MuJoCo smoke-battery checks passed.
-[Full table with failures and downloads](examples/README.md).
+- Nothing here has been built on a real bench yet. Printability is checked on geometry, not in a slicer.
+- Simulation is not proof of real-world behaviour. Two robots currently fail their turn-on-the-spot test, and those failures are listed in the [gallery](examples/README.md).
+- Some printed parts have known issues, each with its cause, in [PRINTABILITY](docs/PRINTABILITY.md).
+- The parser covers the robot families above and refuses the rest with a reason.
 
-| | | | |
-|:-:|:-:|:-:|:-:|
-| <img src="examples/01_arm_2dof/simulation.gif" width="200"><br>[2-DOF arm](examples/01_arm_2dof/) 4/5 | <img src="examples/02_arm_6dof/simulation.gif" width="200"><br>[6-DOF arm](examples/02_arm_6dof/) 4/5 | <img src="examples/03_arm_7dof/simulation.gif" width="200"><br>[7-DOF arm](examples/03_arm_7dof/) 4/5 | <img src="examples/04_scara/simulation.gif" width="200"><br>[SCARA](examples/04_scara/) 4/5 |
-| <img src="examples/05_diff_drive/simulation.gif" width="200"><br>[Diff drive](examples/05_diff_drive/) 5/6 | <img src="examples/06_four_wheel/simulation.gif" width="200"><br>[Four-wheel](examples/06_four_wheel/) 5/6 | <img src="examples/07_mecanum/simulation.gif" width="200"><br>[Mecanum](examples/07_mecanum/) 5/6 | <img src="examples/08_humanoid/simulation.gif" width="200"><br>[Humanoid](examples/08_humanoid/) 4/6 |
-| <img src="examples/09_gripper/simulation.gif" width="200"><br>[Gripper](examples/09_gripper/) 5/5 | <img src="examples/10_quadruped/simulation.gif" width="200"><br>[Quadruped](examples/10_quadruped/) 5/6 | <img src="examples/11_spider_scout/simulation.gif" width="200"><br>[Spider scout](examples/11_spider_scout/) 6/6 | <img src="examples/12_mars_rover/simulation.gif" width="200"><br>[Mars rover](examples/12_mars_rover/) 5/6 |
-| <img src="examples/13_battle_mech/simulation.gif" width="200"><br>[Battle mech](examples/13_battle_mech/) 4/6 | <img src="examples/14_iron_man_mark_43/simulation.gif" width="200"><br>[Mark 43 suit](examples/14_iron_man_mark_43/) 4/6 | <img src="examples/15_wall_e/simulation.gif" width="200"><br>[WALL-E](examples/15_wall_e/) 5/6 | <img src="examples/16_eva/simulation.gif" width="200"><br>[EVA](examples/16_eva/) 5/6 |
-| <img src="examples/17_baymax/simulation.gif" width="200"><br>[Baymax](examples/17_baymax/) 4/6 | | | |
+## Legal
 
-### Highlight: Mark 43 wearable suit
-
-<img src="examples/14_iron_man_mark_43/articulation.gif" width="320" align="right" alt="Mark 43 armour articulation">
-
-The largest example: 268 links, 216 unique STL parts and 86 actuated joints,
-including three-segment fingers, neck yaw/pitch and opening armour panels, with a
-MoveIt configuration that plans and executes small arm and neck goals through mock
-control. It is a concept model: it is not movie-accurate, wearer entry and full-range
-clearance still fail, and no hardware exists.
-[Model detail, audits and known failures](examples/14_iron_man_mark_43/README.md).
-
-<br clear="right">
-
-## How it works
-
-```mermaid
-flowchart LR
-  P[Prompt] --> N[Rule-based parser<br/>+ design templates]
-  N --> S[Typed RobotSpecification]
-  S --> V[Validate and repair<br/>topology, physics]
-  V --> G[Deterministic generators]
-  G --> U[URDF / Xacro]
-  G --> R[ROS 2 + MoveIt 2]
-  G --> M[MJCF via ttr-mujoco]
-  G --> C[STL / OpenSCAD / BOM]
-  U --> B[Validation battery<br/>URDF, MuJoCo, browser]
-```
-
-The parser is local pattern matching over a vocabulary of robot families, units and
-modifiers; no language model is included. Everything downstream consumes only the
-typed `RobotSpecification` ([packages/robot-schema](packages/robot-schema)), so that
-JSON is the extension point: any external tool or model that emits a valid
-specification gets the same generators and checks. See
-[architecture](docs/ARCHITECTURE.md) for the package layout.
-
-## What is validated
-
-Every check below runs in CI on each push:
-
-- **Node tests** (`npm test`): prompt understanding (incl. Hinglish and task-only prompts), the parts-first
-  design engine, exporters and CLI; typecheck and lint are clean.
-- **Design checks** recorded in each designed robot (servo torque held continuously within the rated torque,
-  peak torque, loaded speed, supply voltage and current, wheel torque on a 10° slope, traction, skid turning,
-  battery runtime, tipping on a slope while braking). All shipped designed examples pass all of them; a prompt
-  whose request cannot be met (e.g. SG90 servos for a long arm) is built and shown with a **warning** that names
-  the failing check.
-- **Every printed part is printable** (`scripts/print_audit.py`, [docs/PRINTABILITY.md](docs/PRINTABILITY.md)): each STL is checked in
-  its best orientation on a Prusa MK4 bed (250 x 210 x 220 mm) for a flat face to stand on, support area (faces steeper than 45 deg),
-  wall thickness (under 0.8 mm fails, 0.8-1.2 mm is a thin-wall warning) and that it is one connected, watertight solid. Parts that
-  are not printed (laser-cut aluminium decks, tube, vacuum-formed visor, sewn covers) go to `cad/fabricate/` with their own list.
-  Known open issues are listed with a reason in `examples/print_known_issues.json` and `examples/sim_known_issues.json`; CI fails on
-  anything not listed there.
-- **How the parts are built**: arm pitch joints are clevises (horn cheek + a cheek on a 625ZZ bearing riding an M5 bolt in a
-  heat-set insert on the back of the servo's cradle), servos sit in closed cradles screwed through their case holes, links are
-  truss-lightened beams; electronics on wheeled bases live in a vented printed enclosure with a screwed lid and cable slot.
-- **No two parts intersect** in any shipped designed example, checked on the exact meshes
-  (`tests/examples-interference.test.ts`).
-- **MuJoCo task tests** for every example (`scripts/simulate_examples.py`), recorded into each example's GIF:
-  arms hold their payload, reach and move at rated speed and grip; wheeled robots drive straight at their claimed
-  speed, climb a 10° ramp and turn in place at their claimed rate (speed ramped at the design acceleration);
-  legged robots stand and squat. **All 16 non-wearable examples pass; nothing fails.** Mecanum strafing and
-  free-standing bipeds are reported as untested (no roller joints / no balance controller), not as passes.
-  CI re-runs them with `simulate_examples.py --check` and `scripts/verify_examples.py` checks every report was
-  produced from the shipped URDF.
-- **Browser**: all 19 examples render in headless Chromium with third-party requests blocked and rendered
-  triangles compared with the served STL files (`scripts/check_web.py`).
-- **Mark 43**: built body first as worn armour; its posed checks (sit, raise arms, bend elbows, open the faceplate) run in the design engine and its faceplate servos are simulated like every other actuator.
-
-## Limitations
-
-- The parser covers the families and phrases above. Unsupported requests are refused
-  or reported rather than guessed, but it does not understand arbitrary language.
-- Designed robots (arms, wheeled bases, rover, WALL-E, EVA, Baymax) are built from real parts and every printed
-  part passes the printability audit except the listed known issues, but none has been physically built yet, and
-  printability is audited geometrically, not with a slicer.
-- Not yet re-engineered for printing: the Iron Man Mark 43 suit (procedural armour plates without print splits,
-  fasteners or real actuators) and the template robots (humanoid, SCARA, quadruped, hexapod, gripper, battle mech).
-- Simulation uses approximate servo gains, friction and motor dynamics, and results are recorded with MuJoCo
-  3.13.0 (CI pins it): contact behaviour differs between MuJoCo releases, most visibly for skid-steer turning.
-  Passing the task tests is not evidence of sim-to-real accuracy or a learned skill.
-- MoveIt runs have been executed with `mock_components`; Gazebo export has not had the
-  same runtime validation. The BOM is preliminary.
-
-## Website
-
-Try it at **[megazron.github.io/text-to-robot](https://megazron.github.io/text-to-robot/)**. That
-page runs the whole generator inside your browser (no server, nothing uploaded) and is rebuilt
-by the Website workflow on every push to `main` and every release. Share links carry the robot
-in the URL itself. Build it locally with `npm ci && deploy/build-pages.sh`.
-
-## Development
-
-```bash
-npm ci
-npm test && npm run typecheck && npm run lint
-pip install -e ./python                    # MuJoCo layer: convert, test, render, train
-pip install -e './python[geometry]'        # collision decomposition and surface audits
-pip install -e './python[train]'           # stable-baselines3 + torch
-pip install -e './python[cad]'             # CadQuery STEP backend (large, optional)
-python3 -m unittest discover -s python/tests -v   # modules whose deps are missing are skipped
-pip install -r requirements-dev.txt && python3 scripts/check_web.py --update-docs   # refresh browser screenshots
-```
-
-Regenerate and re-audit the examples:
-
-```bash
-node scripts/build_examples.ts                                  # every deliverable from each prompt
-MUJOCO_GL=osmesa python3 -B scripts/simulate_examples.py         # task tests, GIFs, README results, gallery
-python3 scripts/verify_examples.py                               # what CI checks
-```
-
-Further reading: [Python layer](python/README.md),
-[physical fidelity](docs/PHYSICAL_FIDELITY.md),
-[rebuild plan and checklist](docs/REBUILD_PLAN.md),
-[engineering references](references/engineering/README.md),
-[changelog](CHANGELOG.md).
-
-Code is MIT licensed; see [LICENSE](LICENSE). Character references and associated
-intellectual property belong to their respective owners.
+[MIT licence](LICENSE) for the code · [Terms](TERMS.md) · [Privacy](PRIVACY.md) · [Third-party notice](NOTICE.md). Character names belong to their owners.

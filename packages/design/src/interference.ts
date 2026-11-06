@@ -3,6 +3,7 @@
 import type { RobotSpecification } from "@ttr/robot-schema";
 import { build, Manifold, evaluate, componentMesh, type Mat4, type Program } from "@ttr/solid";
 import { partFiles } from "@ttr/kernel/ready";
+import { buildPart } from "@ttr/mesh";
 import { fk } from "./kin.ts";
 
 export interface Overlap { a: string; b: string; volume_mm3: number; min: number[]; max: number[] }
@@ -35,6 +36,10 @@ export function interference(spec: RobotSpecification, minMm3 = 20): { overlaps:
           const cm = partFiles(String(g.params.program)).mesh;
           m = Manifold.ofMesh({ numProp: 3, vertProperties: new Float32Array(cm.v.flatMap((v) => [v[0] * 1000, v[1] * 1000, v[2] * 1000])), triVerts: new Uint32Array(cm.f.flat()) } as any);
         }
+        else if (g.part === "armour") {
+          const am = buildPart({ part: "armour", params: g.params } as never);
+          m = Manifold.ofMesh({ numProp: 3, vertProperties: new Float32Array(am.v.flatMap((v) => [v[0] * 1000, v[1] * 1000, v[2] * 1000])), triVerts: new Uint32Array(am.f.flat()) } as any);
+        }
         else continue;
       } catch { skipped.push(l.name); continue; }
       const T = f.link[l.name], R = T.R, p = T.p.map((x) => x * 1000);
@@ -48,10 +53,12 @@ export function interference(spec: RobotSpecification, minMm3 = 20): { overlaps:
     const keyOf = (n: string) => { const g = links.get(n)?.geometry; return g?.type === "mesh" && g.part === "component" ? String(g.params?.key) : ""; };
     const plugged = new Set(spec.joints.filter((j) => j.type === "fixed" && keyOf(j.parent).startsWith("breadboard")).map((j) => `${j.parent}|${j.child}`));
     const wearer = (n: string) => links.get(n)?.role === "wearer";
+    // parts glued into each other by design (a design lists them): the faceplate's arms into its shell
+    const bonded = new Set(((spec.metadata as { design?: { bonded?: [string, string][] } }).design?.bonded ?? []).flatMap(([a, b]) => [`${a}|${b}`, `${b}|${a}`]));
     const overlaps: Overlap[] = [];
     for (let i = 0; i < solids.length; i++) for (let j = i + 1; j < solids.length; j++) {
       const a = solids[i], b = solids[j];
-      if (plugged.has(`${a.name}|${b.name}`) || plugged.has(`${b.name}|${a.name}`) || (wearer(a.name) && wearer(b.name))) continue;
+      if (plugged.has(`${a.name}|${b.name}`) || plugged.has(`${b.name}|${a.name}`) || (wearer(a.name) && wearer(b.name)) || bonded.has(`${a.name}|${b.name}`)) continue;
       if ([0, 1, 2].some((k) => a.hi[k] < b.lo[k] || b.hi[k] < a.lo[k])) continue;
       const I = Manifold.intersection(a.m, b.m), v = I.volume();
       if (v > minMm3) { const bb = I.boundingBox(); overlaps.push({ a: a.name, b: b.name, volume_mm3: Math.round(v), min: bb.min.map(Math.round), max: bb.max.map(Math.round) }); }

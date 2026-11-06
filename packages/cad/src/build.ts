@@ -9,7 +9,7 @@ import { assemblyStl } from "./stl.ts";
 import { partFiles } from "@ttr/kernel/ready";
 
 const PRINT_CM3_PER_HOUR = 12;
-const isPrinted = (l: Link) => l.geometry.type === "mesh" && (l.geometry.part === "printed" || l.geometry.part === "cad");
+const isPrinted = (l: Link) => l.geometry.type === "mesh" && (l.geometry.part === "printed" || l.geometry.part === "cad" || l.geometry.part === "armour");
 /** CAD-kernel parts carry exact solids: their STL comes welded from the kernel and they also get a STEP file */
 const cadProgram = (l: Link) => (l.geometry.type === "mesh" && l.geometry.part === "cad" ? String(l.geometry.params?.program) : undefined);
 const componentKey = (l: Link) => (l.geometry.type === "mesh" && l.geometry.part === "component" ? String(l.geometry.params?.key) : undefined);

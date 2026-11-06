@@ -21,10 +21,13 @@ export type Op =
   | { op: "lighten"; a: Vec3; b: Vec3; r: number; n: number; axis?: Vec3 }
   | { op: "revolve"; pts: [number, number][]; seg?: number }
   | { op: "sphere"; c: Vec3; r: number; cut?: boolean }                      // ball (or a spherical socket when cut)
+  | { op: "ploft"; sections: PSec[]; t?: number; open?: "both" | "start" | "end"; smooth?: boolean }  // polygon sections along +z, faceted (ruled) unless smooth; t: shell
   | { op: "loft"; sections: [number, number, number, number?, number?][]; t?: number; open?: "both" | "start" | "end"; rim?: number }  // ellipses [z, rx, ry, cx, cy] along +z; t: shell of that wall, open at both ends (or one)
   | { op: "subtract"; of: Op[] }                                              // remove the finished solid of a sub-program
   | { op: "at"; T: Mat4; of: Op[] };
 /** `edge`: radius (mm) of the fillet that breaks every outer edge after the booleans (0 = sharp). */
+/** A closed polygon outline at height z (counter-clockwise seen from +z, the same vertex count in every section). */
+export interface PSec { z: number; pts: [number, number][] }
 export interface Program { name: string; ops: Op[]; edge?: number; }
 
 // ---------------------------------------------------------------- initialisation
@@ -124,6 +127,41 @@ function loftOf(secs: [number, number, number, number?, number?][]): Shape3D {
   };
   const [first, ...rest] = secs;
   return keep((sk(first) as any).loftWith(rest.map(sk), { ruled: false }) as Shape3D);
+}
+/** Solid through polygon sections: flat facets between them (hard-surface armour), or a smooth skin. */
+function ploftOf(secs: PSec[], smooth = false): Shape3D {
+  const sk = (p: PSec) => { let d = draw(p.pts[0]); for (const q of p.pts.slice(1)) d = d.lineTo(q); return d.close().sketchOnPlane(makePlane("XY", [0, 0, p.z])); };
+  const [first, ...rest] = secs;
+  return keep((sk(first) as any).loftWith(rest.map(sk), { ruled: !smooth }) as Shape3D);
+}
+/** Each vertex moved inwards by d along its angle bisector (a 2-D offset of a convex-ish outline). */
+function insetPoly(pts: [number, number][], d: number): [number, number][] {
+  const n = pts.length;
+  return pts.map((p, i) => {
+    const a = pts[(i + n - 1) % n], b = pts[(i + 1) % n];
+    const e1 = [p[0] - a[0], p[1] - a[1]], e2 = [b[0] - p[0], b[1] - p[1]];
+    const l1 = Math.hypot(e1[0], e1[1]) || 1, l2 = Math.hypot(e2[0], e2[1]) || 1;
+    const n1 = [-e1[1] / l1, e1[0] / l1], n2 = [-e2[1] / l2, e2[0] / l2];   // left normals (inwards for CCW)
+    const m = [n1[0] + n2[0], n1[1] + n2[1]], ml = Math.hypot(m[0], m[1]) || 1, cos = (m[0] * n1[0] + m[1] * n1[1]) / ml;
+    const k = d / Math.max(cos, 0.35);
+    return [p[0] + (m[0] / ml) * k, p[1] + (m[1] / ml) * k] as [number, number];
+  });
+}
+function ploftShell(secs: PSec[], t: number, open: "both" | "start" | "end" = "both", smooth = false): Shape3D {
+  const outer = ploftOf(secs, smooth), n = secs.length, z0 = secs[0].z, z1 = secs[n - 1].z;
+  try {
+    const finder = (f: any) => open === "start" ? f.inPlane("XY", z0) : open === "end" ? f.inPlane("XY", z1) : f.either([(g: any) => g.inPlane("XY", z0), (g: any) => g.inPlane("XY", z1)]);
+    const sh = keep((outer as any).shell(-t, finder) as Shape3D);
+    const v = volOf(sh), vo = volOf(outer);
+    if (v > 0 && v < vo) return sh;
+  } catch { /* fall through */ }
+  // fallback: subtract the inset outline (walls t thick measured in each section's plane)
+  const inner = secs.map((p) => ({ z: p.z, pts: insetPoly(p.pts, t) })), dir = Math.sign(z1 - z0) || 1;
+  if (open !== "end") inner.unshift({ z: z0 - dir * 10, pts: inner[0].pts });
+  else inner[0] = { z: z0 + dir * t, pts: inner[0].pts };
+  if (open !== "start") inner.push({ z: z1 + dir * 10, pts: inner[inner.length - 1].pts });
+  else inner[inner.length - 1] = { z: z1 - dir * t, pts: inner[inner.length - 1].pts };
+  return keep(outer.cut(ploftOf(inner, smooth)) as Shape3D);
 }
 /** Shell of wall t (a true normal offset, so the wall is t thick even where the surface is nearly flat), open at the
  *  chosen ends. Falls back to shrinking the sections when OpenCascade cannot offset a surface. */
@@ -246,6 +284,7 @@ function solidOf(o: Op): { add: Shape3D[]; cut: Shape3D[] } {
     case "hull": { const ps = o.of.map(solidOf), h = hullOf(ps.flatMap((p) => p.add)); return o.cut ? { add: [], cut: [h] } : { add: [h], cut: ps.flatMap((p) => p.cut) }; }
     case "revolve": return { add: [revolveOutline(o.pts)], cut: [] };
     case "subtract": return { add: [], cut: [evaluate({ name: "subtract", ops: o.of })] };
+    case "ploft": return { add: [o.t ? ploftShell(o.sections, o.t, o.open, o.smooth) : ploftOf(o.sections, o.smooth)], cut: [] };
     case "loft": return { add: [o.t ? loftShell(o.sections, o.t, o.open, o.rim) : loftOf(o.sections)], cut: [] };
     case "sphere": { const b = keep(makeSphere(o.r) as Shape3D), s = keep(b.translate(o.c) as Shape3D); return o.cut ? { add: [], cut: [s] } : { add: [s], cut: [] }; }
     case "keepout": return { add: [], cut: [keepoutOf(o.key, o.T)] };

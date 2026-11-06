@@ -159,6 +159,11 @@ def urdf_to_mjcf(urdf_path: str, floating=None, kp: float | None = None, out: st
     ET.SubElement(asset, "texture", type="skybox", builtin="gradient", rgb1="0.35 0.45 0.6", rgb2="0.05 0.06 0.08", width="256", height="256")
     ET.SubElement(asset, "texture", name="grid", type="2d", builtin="checker", rgb1="0.2 0.25 0.3", rgb2="0.12 0.15 0.19", width="512", height="512")
     ET.SubElement(asset, "material", name="grid", texture="grid", texrepeat="10 10", reflectance="0.15")
+    # surface finish by material name (visual only: painted metal-look armour, glowing translucent lenses, matte undersuit)
+    LOOK = {"armour_red": dict(specular="0.8", shininess="0.9", reflectance="0.08"), "armour_gold": dict(specular="0.9", shininess="0.9", reflectance="0.1"),
+            "lens_glow": dict(emission="1", specular="0.5", shininess="0.8"), "wearer": dict(specular="0.05", shininess="0.05")}
+    for mat in root.iter("material"):
+        for k, v in LOOK.get(mat.get("name", ""), {}).items(): mat.set(k, v)
     vis = ET.SubElement(root, "visual"); ET.SubElement(vis, "headlight", diffuse="0.7 0.7 0.7", ambient="0.35 0.35 0.35"); ET.SubElement(vis, "global", offwidth="1280", offheight="720")
 
     # floor + light first in worldbody

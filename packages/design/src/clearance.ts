@@ -6,6 +6,7 @@ import { part } from "@ttr/parts";
 import { build, evaluate, Manifold, box, fromRt, type Manifold as M, type Program, type Mat4 } from "@ttr/solid";
 import { fk, descendants } from "./kin.ts";
 import { partFiles } from "@ttr/kernel/ready";
+import { buildPart } from "@ttr/mesh";
 
 type Vec3 = [number, number, number];
 /** Solid of a link in its own frame (mm), or null when it has no physical body worth checking. */
@@ -18,6 +19,10 @@ function linkSolid(l: Link): M | null {
     // kernel parts: their welded print mesh (mm) as an exact manifold solid
     const m = partFiles(String(g.params!.program)).mesh;
     return Manifold.ofMesh({ numProp: 3, vertProperties: new Float32Array(m.v.flatMap((v) => [v[0] * 1000, v[1] * 1000, v[2] * 1000])), triVerts: new Uint32Array(m.f.flat()) } as never);
+  }
+  if (g.part === "armour") {
+    const m = buildPart({ part: "armour", params: g.params } as never);
+    return Manifold.ofMesh({ numProp: 3, vertProperties: new Float32Array(m.v.flatMap((v) => [v[0] * 1000, v[1] * 1000, v[2] * 1000])), triVerts: new Uint32Array(m.f.flat()) } as any);
   }
   if (g.part === "component") {
     // a part may declare its solid body (e.g. a gear motor without the shaft stubs that pass through its bracket)

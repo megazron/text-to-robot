@@ -4,30 +4,30 @@
  "group": "wearable",
  "scope": "PASS means the modelled actuators (datasheet peak torque as a hard limit, a linear torque-speed line to no-load speed, reflected rotor inertia, URDF damping/friction) can produce the torques and speeds the task needs in this geometry and mass distribution, and that mean torque over the hold stays within the continuous (rated) torque. Joint control uses an ideal model-based feedforward (computed torque) through the force-limited servo for fixed-base robots and plain position servos for floating robots; a pass therefore proves torque/speed capacity, not that a given controller achieves it. Untested: thermal limits over long duty cycles (only the mean-vs-rated proxy), gearbox backlash and compliance, link and joint flexibility, encoder resolution, supply voltage sag and current limits, bus latency, controller tuning, and contact/friction values (nominal friction only).",
  "untested": [],
- "fidelity": "URDF effort limits enforced; position gains inferred; speed/thermal/electrical limits unmodelled; geometry and hardware uncalibrated; armature = rotor inertia x gear ratio^2 from the actuator record: faceplate: 0.00045 kg m^2 (estimate (hobby_pwm_micro motor) x gear ratio 300^2)",
+ "fidelity": "URDF effort limits enforced; position gains inferred; speed/thermal/electrical limits unmodelled; geometry and hardware uncalibrated; armature = rotor inertia x gear ratio^2 from the actuator record: faceplate: 0.0192 kg m^2 (estimate (hobby_pwm motor) x gear ratio 400^2)",
  "tests": {
   "open_and_hold": {
    "pass": true,
-   "explanation": "opens faceplate to -1.14 rad (target -1.14) and holds 1.5 s",
+   "explanation": "opens faceplate to -0.95 rad (target -0.95) and holds 1.5 s",
    "joints": {
     "faceplate": {
-     "peak_nm": 0.1366,
-     "peak_rating_nm": 0.2157,
-     "util_peak": 0.633,
-     "mean_hold_nm": 0.0831,
-     "rated_nm": 0.1294,
-     "util_rated": 0.642,
-     "max_err": 0.0002,
-     "max_err_hold": 0.0,
+     "peak_nm": 0.7536,
+     "peak_rating_nm": 1.0787,
+     "util_peak": 0.699,
+     "mean_hold_nm": 0.5037,
+     "rated_nm": 0.6472,
+     "util_rated": 0.778,
+     "max_err": 0.0063,
+     "max_err_hold": 0.0002,
      "saturated_frac": 0.0
     }
    },
    "reached": {
-    "faceplate": -1.14
+    "faceplate": -0.95
    }
   }
  },
  "passed": 1,
  "total": 1,
- "source_urdf_sha256": "4628cc7c3370c952c1bab6a1872ca5f61cb0643b1c715f5fa67adc14cd27fee6"
+ "source_urdf_sha256": "e48a39c0048000aa1f44fed6131e4623ae074a998314c73eda7f960bfd5a35c5"
 }

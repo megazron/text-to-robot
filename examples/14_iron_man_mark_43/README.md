@@ -6,9 +6,9 @@
 
 Interpreted as: Iron Man Mark 43 wearable suit · budget $60000
 
-**Iron Man Mark 43 (full wearable suit): 70 printed pieces, 4.0 kg filament, motorised faceplate, $257 incl. filament**
+**Iron Man Mark 43 (full wearable suit): 151 printed pieces, 8.5 kg filament, motorised faceplate, $322 incl. filament**
 
-Parts cost **$262.97** (budget $60000: within) · printed structure 70 parts, 3747 g · checks passed 84/84
+Parts cost **$334.36** (budget $60000: within) · printed structure 151 parts, 7833 g · checks passed 163/163
 
 ## What it can do
 
@@ -17,29 +17,29 @@ Parts cost **$262.97** (budget $60000: within) · printed structure 70 parts, 37
 | tier | suit |
 | tier label | full wearable suit |
 | wearer height m | 1.75 |
-| printed pieces | 70 |
-| armour mass kg | 3.57 |
-| filament kg | 4.05 |
-| cost usd | 256.72 |
-| mass kg | 82.22 |
+| printed pieces | 151 |
+| armour mass kg | 7.84 |
+| filament kg | 8.46 |
+| cost usd | 321.82 |
+| mass kg | 86.39 |
 
 ## Actuators (sized from this robot's own loads)
 
 | Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
 |---|---|--:|--:|--:|--:|
-| faceplate | hobby_mg90s | 0.1375 | 0.1294 / 0.4314 | 3.14x | 13.09 |
+| faceplate | hobby_mg996r | 0.7584 | 0.6472 / 2.1574 | 2.84x | 7.48 |
 
 ## Engineering checks
 
-All 84 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
+All 163 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
 
 ## Assumptions and limits
 
-- Joint limits trimmed to the collision-free range found by exact solid sweeps: left_elbow [-2.40, 0.00] -> [-1.82, 0.00]; left_hip [-1.90, 0.40] -> [-1.53, 0.40]; left_knee [0.00, 2.20] -> [0.00, 1.86]; right_elbow [-2.40, 0.00] -> [-1.82, 0.00]; right_hip [-1.90, 0.40] -> [-1.53, 0.40]; right_knee [0.00, 2.20] -> [0.00, 1.86].
-- padding gap 14 mm, PLA/PETG walls 3 mm, 15 % gyroid infill (shells are mostly walls)
+- armour shape from: body: Iron Man Mark XLII (42) by ShaggyDawg (Printables 1870572, CC0); helmet: Iron Man wearable helmet Mark 42 by Manifold3D (Printables 449081, CC BY-SA); 3 mm walls, 2 mm faceplate, 15 % gyroid infill (shells are mostly walls)
 - filament at $22/kg, 8 % waste
-- the suit is worn armour: the wearer moves every joint; nothing powers the limbs (hobby servos cannot move a person)
-- wearer proportions from standard segment ratios scaled to the stated height; check against your own measurements before printing
+- the suit is worn armour over a black undersuit: the wearer moves every joint; nothing powers the limbs (hobby servos cannot move a person)
+- the wearer is 89 cm chest at 1.75 m and the pieces scale evenly with height; check against your own measurements before printing
+- gaps at the groin, armpits and elbows are cut on purpose so the joints move; the undersuit shows through them, as on real builds
 
 ## Prompt notes
 
@@ -52,7 +52,7 @@ All 84 checks pass (torque, speed, power, stability, print-bed fit). Details in 
 
 | | Test | Result |
 |---|---|---|
-| ✅ | open and hold | opens faceplate to -1.14 rad (target -1.14) and holds 1.5 s |
+| ✅ | open and hold | opens faceplate to -0.95 rad (target -0.95) and holds 1.5 s |
 
 _PASS means the modelled actuators (datasheet peak torque as a hard limit, a linear torque-speed line to no-load speed, reflected rotor inertia, URDF damping/friction) can produce the torques and speeds the task needs in this geometry and mass distribution, and that mean torque over the hold stays within the continuous (rated) torque. Joint control uses an ideal model-based feedforward (computed torque) through the force-limited servo for fixed-base robots and plain position servos for floating robots; a pass therefore proves torque/speed capacity, not that a given controller achieves it. Untested: thermal limits over long duty cycles (only the mean-vs-rated proxy), gearbox backlash and compliance, link and joint flexibility, encoder resolution, supply voltage sag and current limits, bus latency, controller tuning, and contact/friction values (nominal friction only)._
 <!-- /SIM -->

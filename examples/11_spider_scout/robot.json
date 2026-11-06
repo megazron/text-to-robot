@@ -5997,27 +5997,36 @@
     {
       "name": "armour_red",
       "color": [
-        0.62,
-        0.06,
-        0.07,
+        0.55,
+        0.04,
+        0.05,
         1
       ]
     },
     {
       "name": "armour_gold",
       "color": [
-        0.86,
-        0.66,
-        0.28,
+        0.83,
+        0.62,
+        0.24,
+        1
+      ]
+    },
+    {
+      "name": "lens_glow",
+      "color": [
+        0.72,
+        0.93,
+        1,
         1
       ]
     },
     {
       "name": "wearer",
       "color": [
-        0.55,
-        0.57,
-        0.6,
+        0.05,
+        0.05,
+        0.06,
         1
       ]
     }
@@ -6089,7 +6098,7 @@
   "end_effectors": [],
   "metadata": {
     "generator": "text-to-robot design engine (real components + printed structure)",
-    "created": "2026-11-05T13:06:33.732Z",
+    "created": "2026-11-06T05:29:51.530Z",
     "inferred_fields": [
       "links.actuator_bus.inertia",
       "links.base_link.inertia",

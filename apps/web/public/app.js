@@ -158,7 +158,8 @@ function buildRobot(spec) {
     for(const shape of shapes) {
       const geom = makeGeom(shape);
       const color = matColor(spec, l.material, l.role === "gripper" ? 0x2a5bd0 : l.role === "wheel" ? 0x1a1a1f : l.role === "base" ? 0x3f3f46 : 0xd8d8dc);
-      const mesh = new THREE.Mesh(geom, new THREE.MeshStandardMaterial({ color, metalness: l.material?.startsWith("mk43_") ? 0.65 : 0.25, roughness: l.material?.startsWith("mk43_") ? 0.30 : 0.55, transparent: isCol, opacity: isCol ? 0.45 : 1, wireframe: isCol }));
+      const mesh = new THREE.Mesh(geom, new THREE.MeshStandardMaterial({ color, metalness: l.material?.startsWith("armour_") ? 0.7 : l.material === "wearer" ? 0 : 0.25, roughness: l.material?.startsWith("armour_") ? 0.28 : l.material === "wearer" ? 0.9 : 0.55,
+        ...(l.material === "lens_glow" ? { emissive: new THREE.Color(0x9fe8ff), emissiveIntensity: 1.2 } : {}), transparent: isCol, opacity: isCol ? 0.45 : 1, wireframe: isCol }));
       mesh.matrixAutoUpdate = false; mesh.matrix.copy(mat4(poseArr(l.origin)));
       mesh.userData.linkName = l.name;
       if (g.type === "mesh" && !isCol) {
@@ -264,7 +265,8 @@ function highlight() {
   for (const [name, group] of state.meshes) {
     const mesh = group.children[0];
     if (!mesh.material.emissive) continue;
-    mesh.material.emissive = new THREE.Color(state.selection?.kind === "link" && state.selection.name === name ? 0x0e6b3a : 0x000000);
+    const glow = mesh.material.emissiveIntensity > 1 ? 0x9fe8ff : 0x000000;   // lenses keep their light
+    mesh.material.emissive = new THREE.Color(state.selection?.kind === "link" && state.selection.name === name ? 0x0e6b3a : glow);
   }
   invalidate();
 }

@@ -14,9 +14,10 @@
   <material name="electronics"><color rgba="0.08 0.45 0.25 1"/></material>
   <material name="rubber"><color rgba="0.07 0.07 0.08 1"/></material>
   <material name="battery"><color rgba="0.15 0.3 0.75 1"/></material>
-  <material name="armour_red"><color rgba="0.62 0.06 0.07 1"/></material>
-  <material name="armour_gold"><color rgba="0.86 0.66 0.28 1"/></material>
-  <material name="wearer"><color rgba="0.55 0.57 0.6 1"/></material>
+  <material name="armour_red"><color rgba="0.55 0.04 0.05 1"/></material>
+  <material name="armour_gold"><color rgba="0.83 0.62 0.24 1"/></material>
+  <material name="lens_glow"><color rgba="0.72 0.93 1 1"/></material>
+  <material name="wearer"><color rgba="0.05 0.05 0.06 1"/></material>
   <link name="base_link">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
