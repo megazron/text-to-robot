@@ -2,10 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Text to Robot</title>
 <meta name="description" content="Describe a robot. Get a buildable robot: printable parts, real components, ROS 2." />
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%2306100a'/><path d='M28 64V40h44v24M40 40V30h20v10M38 52h6M56 52h6' stroke='%2339ff88' stroke-width='7' fill='none' stroke-linecap='round'/></svg>" />
+<meta name="theme-color" content="#000000" />
+<meta name="color-scheme" content="dark" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<link rel="icon" type="image/svg+xml" href="mark.svg" />
 <link rel="stylesheet" href="/styles.css" />
 <script type="importmap">
 { "imports": {
@@ -14,122 +18,193 @@
 }}
 </script>
 </head>
-<body>
-<nav id="rail" aria-label="Sections">
-  <div class="rail-logo" title="Text to Robot"><svg viewBox="0 0 100 100"><path d="M28 64V40h44v24M40 40V30h20v10M38 52h6M56 52h6" stroke="currentColor" stroke-width="8" fill="none" stroke-linecap="round"/></svg></div>
-  <button class="rail-btn active" data-jump="design" title="Design"><svg viewBox="0 0 24 24"><path d="M4 11.5 12 5l8 6.5V20h-5v-5H9v5H4z"/></svg></button>
-  <button class="rail-btn" data-jump="arduino" title="Arduino options"><svg viewBox="0 0 24 24"><rect x="5" y="6" width="14" height="12" rx="2"/><path d="M8 3v3M12 3v3M16 3v3M8 18v3M12 18v3M16 18v3"/></svg></button>
-  <button class="rail-btn" data-jump="checks" title="Engineering checks"><svg viewBox="0 0 24 24"><path d="M5 19V9M10 19V5M15 19v-7M20 19v-4"/></svg></button>
-  <button class="rail-btn" data-jump="build" title="Parts and build"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
-  <button class="rail-btn" data-jump="gallery" title="Gallery"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></svg></button>
-  <div class="rail-spacer"></div>
-  <button class="rail-btn" data-jump="privacy" title="Privacy"><svg viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></button>
+<body class="busy">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="mark" viewBox="0 0 256 256">
+    <rect width="256" height="256" rx="56" fill="#07110b"/>
+    <rect x="2" y="2" width="252" height="252" rx="54" fill="none" stroke="#1d3a28" stroke-width="4"/>
+    <path d="M128 62V38" stroke="#39ff88" stroke-width="10" stroke-linecap="round"/>
+    <circle cx="128" cy="32" r="10" fill="#39ff88"/>
+    <rect x="26" y="112" width="20" height="56" rx="8" fill="#39ff88"/>
+    <rect x="210" y="112" width="20" height="56" rx="8" fill="#39ff88"/>
+    <rect x="50" y="64" width="156" height="152" rx="34" fill="#0c1d13" stroke="#39ff88" stroke-width="10"/>
+    <path d="M84 112l36 28-36 28" fill="none" stroke="#39ff88" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="134" y="154" width="42" height="15" rx="7.5" fill="#39ff88"/>
+  </symbol>
+  <!-- navigation -->
+  <symbol id="i-create" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="3"/><path d="M12 3.5v3"/></symbol>
+  <symbol id="i-chip" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="3"/><path d="M9.5 3v3M14.5 3v3M9.5 18v3M14.5 18v3M3 9.5h3M3 14.5h3M18 9.5h3M18 14.5h3"/></symbol>
+  <symbol id="i-model" viewBox="0 0 24 24"><path d="M12 3.2 19.5 7.5v9L12 20.8 4.5 16.5v-9z"/><path d="M4.8 7.7 12 12l7.2-4.3M12 12v8.5"/></symbol>
+  <symbol id="i-build" viewBox="0 0 24 24"><path d="M5 20V10M10 20V5M15 20v-7M20 20v-4"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><path d="M12 15V4M8 7.5 12 3.5l4 4"/><path d="M6 11.5H5.5a2 2 0 0 0-2 2V18a2.5 2.5 0 0 0 2.5 2.5h12a2.5 2.5 0 0 0 2.5-2.5v-4.5a2 2 0 0 0-2-2H18"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="3"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3M12 14.5v2"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 4v11M7.5 11 12 15.5 16.5 11M5 20h14"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="11.5" height="11.5" rx="3"/><path d="M15.5 8.5V6.5a2.5 2.5 0 0 0-2.5-2.5H6.5A2.5 2.5 0 0 0 4 6.5V13a2.5 2.5 0 0 0 2.5 2.5h2"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 20V9M7.5 13 12 8.5l4.5 4.5M5 4h14"/></symbol>
+  <!-- robot families on the dial -->
+  <symbol id="f-arm" viewBox="0 0 24 24"><path d="M4.5 20.5h9M9 20.5v-3.5L6.5 10l7.5-4.5 4 3.5"/><circle cx="6.5" cy="10" r="1.6"/><circle cx="14" cy="5.5" r="1.6"/><path d="M18 9l2.5 1.5M18 9l-.5 3"/></symbol>
+  <symbol id="f-car" viewBox="0 0 24 24"><path d="M3.5 15.5v-3l2.5-5h12l2.5 5v3a1 1 0 0 1-1 1h-15a1 1 0 0 1-1-1z"/><path d="M3.8 12.5h16.4"/><circle cx="7.5" cy="17.5" r="2"/><circle cx="16.5" cy="17.5" r="2"/></symbol>
+  <symbol id="f-track" viewBox="0 0 24 24"><rect x="3" y="13" width="18" height="7.5" rx="3.75"/><circle cx="7.5" cy="16.75" r="1.3"/><circle cx="12" cy="16.75" r="1.3"/><circle cx="16.5" cy="16.75" r="1.3"/><rect x="7.5" y="6.5" width="9" height="6.5" rx="2"/><path d="M10 3.5 12 6.5l2-3"/></symbol>
+  <symbol id="f-quad" viewBox="0 0 24 24"><rect x="5" y="8" width="14" height="5" rx="2.5"/><path d="M7 13l-2 3.5 1.5 4M17 13l2 3.5-1.5 4M10 13l-1 3.5 1 4M14 13l1 3.5-1 4"/><path d="M19 9l2-2.5"/></symbol>
+  <symbol id="f-human" viewBox="0 0 24 24"><rect x="9" y="2.8" width="6" height="5" rx="2"/><rect x="8" y="9" width="8" height="6.5" rx="2"/><path d="M8 10.5 5 15M16 10.5l3 4.5M10 15.5V21M14 15.5V21"/></symbol>
+  <symbol id="f-scara" viewBox="0 0 24 24"><path d="M6 20.5V7.5M3 20.5h6M6 7.5h8M14 7.5h6M20 7.5v8"/><circle cx="6" cy="7.5" r="2"/><circle cx="14" cy="7.5" r="2"/><path d="M18 15.5h4"/></symbol>
+  <symbol id="f-suit" viewBox="0 0 24 24"><path d="M12 3c4.5 0 7 3 7 7.5 0 3.5-1.5 7-3.5 9.5h-7C6.5 17.5 5 14 5 10.5 5 6 7.5 3 12 3z"/><path d="M7.5 11c1.5 1 3 1 3.5 2M16.5 11c-1.5 1-3 1-3.5 2M9.5 17h5"/></symbol>
+</svg>
+
+<div id="stage">
+  <div id="aura" aria-hidden="true"></div>
+  <div id="viewport" role="group" aria-label="3D model of the robot. Drag to orbit, pinch or scroll to zoom, tap a part to inspect it."></div>
+  <div id="charge" aria-hidden="true"><i></i><i></i></div>
+</div>
+
+<header id="topbar">
+  <div class="brand"><svg class="logo" aria-hidden="true"><use href="#mark"/></svg><b>Text to Robot</b></div>
+  <span id="robotName" class="pill soft"></span>
+  <span id="mode" class="pill" title="Local rule-based prompt parser and design engine. No account, token, language model or network call.">Free</span>
+</header>
+
+<div id="viewhud" class="viewhud" role="group" aria-label="View options">
+  <label class="chip"><input type="checkbox" id="showCollision" />Collision</label>
+  <label class="chip"><input type="checkbox" id="showAxes" />Axes</label>
+  <label class="chip"><input type="checkbox" id="showFrames" />Frames</label>
+  <button id="resetView" class="chip" type="button">Reset</button>
+</div>
+<div id="previewStatus" role="status" hidden></div>
+
+<nav id="dock" aria-label="Sections">
+  <span class="dock-glow" aria-hidden="true"></span>
+  <button class="dock-btn active" data-jump="design" type="button" aria-current="page"><svg class="ico" aria-hidden="true"><use href="#i-create"/></svg><span>Create</span></button>
+  <button class="dock-btn" data-jump="arduino" type="button"><svg class="ico" aria-hidden="true"><use href="#i-chip"/></svg><span>Arduino</span></button>
+  <button class="dock-btn" data-jump="model" type="button"><svg class="ico" aria-hidden="true"><use href="#i-model"/></svg><span>Model</span></button>
+  <button class="dock-btn" data-jump="build" type="button"><svg class="ico" aria-hidden="true"><use href="#i-build"/></svg><span>Build</span></button>
+  <button class="dock-btn" data-jump="share" type="button"><svg class="ico" aria-hidden="true"><use href="#i-share"/></svg><span>Share</span></button>
 </nav>
 
-<div id="page">
-  <header id="topbar" class="card prompt-card" data-section="design">
-    <div class="brand"><b>TEXT<span class="arrow">→</span>ROBOT</b><small>Describe it. Build it.</small></div>
-    <form id="genform" class="promptrow">
-      <input id="prompt" placeholder="Describe the robot you want…  e.g. an obstacle avoiding car, a robot arm with a gripper, WALL-E, an Iron Man helmet" autocomplete="off" />
-      <button id="arduinoBtn" type="button" class="toggle" aria-pressed="false" title="Build only from cheap Arduino-compatible parts and compare price tiers"><span class="dot"></span>Arduino</button>
-      <button id="genbtn" type="submit" class="primary">Generate</button>
-    </form>
-    <span id="mode" class="pill" title="Local rule-based prompt parser and design engine. No account, token, language model or network call.">Free</span>
-    <div id="examples" class="examples"></div>
-  </header>
+<form id="genform" class="capsule">
+  <button class="arduino-tag" type="button" data-arduino hidden title="Arduino mode is on. Press to turn it off.">Arduino</button>
+  <input id="prompt" aria-label="Describe the robot you want" placeholder="Describe any robot" autocomplete="off" enterkeyhint="go" />
+  <button id="genbtn" type="submit" class="primary">Generate</button>
+</form>
 
-  <main id="bento">
-    <section class="card viewer-card">
-      <div class="card-h"><span>3D model</span><span id="robotName" class="pill soft"></span></div>
-      <div id="viewport"></div>
-      <div id="previewStatus" role="status" hidden></div>
-      <div id="viewhud" class="viewhud">
-        <label><input type="checkbox" id="showCollision" /> collision</label>
-        <label><input type="checkbox" id="showAxes" /> joint axes</label>
-        <label><input type="checkbox" id="showFrames" /> frames</label>
-        <button id="resetView" class="mini">reset view</button>
-      </div>
-      <div id="status" class="status"></div>
-    </section>
+<aside id="sheet" aria-label="Controls">
+  <button id="grabber" type="button" aria-label="Resize this panel"><i></i></button>
+  <div id="panes">
 
-    <section class="card tiers-card" data-section="arduino" id="tiersCard">
-      <div class="card-h"><span>Arduino options</span><span class="pill lime" id="tierHint">cheapest first</span></div>
-      <div id="tiers" class="tiers"><div class="hint">Switch on <b>Arduino</b> and generate: you get the cheapest version that works and stronger ones, each with its price.</div></div>
-      <div id="tierNotes" class="notes"></div>
-    </section>
-
-    <section class="card stat-card">
-      <div class="card-h"><span>Cost to build</span><span id="costPill" class="pill lime"></span></div>
-      <div class="big" id="costBig">—</div>
-      <div class="sub" id="costSub">Generate a robot to see what it costs to build.</div>
-      <div class="stat-row" id="statRow"></div>
-    </section>
-
-    <section class="card checks-card" data-section="checks">
-      <div class="card-h"><span>Engineering checks</span><span id="checksPill" class="pill"></span></div>
-      <div id="checksChart" class="chart"></div>
-      <div id="checksList" class="checks"></div>
-    </section>
-
-    <section class="card tree-card">
-      <div class="card-h"><span>Structure</span></div>
-      <div id="tree" class="tree"></div>
-      <div class="card-h sub-h"><span>Templates</span></div>
+    <section class="pane active" data-section="design" aria-labelledby="h-design">
+      <h1 class="title" id="h-design">Create</h1>
+      <p class="lede">Turn the ring to choose a body, then press the core. Or describe anything in the bar.</p>
+      <div id="familyDial" class="dial"></div>
+      <button id="arduinoBtn" class="switch-row" type="button" role="switch" aria-checked="false" data-arduino title="Build only from cheap Arduino-compatible parts and compare price tiers">
+        <svg class="ico" aria-hidden="true"><use href="#i-chip"/></svg>
+        <span class="t"><b>Arduino</b><small>Cheap compatible parts, with price tiers</small></span>
+        <span class="switch" aria-hidden="true"></span>
+      </button>
+      <h2 class="label">Try one</h2>
+      <div id="examples" class="chips rail"></div>
+      <h2 class="label">Change it</h2>
+      <form id="modform" class="field">
+        <input id="modify" aria-label="Describe a change to this robot" placeholder="Make the forearm longer" autocomplete="off" enterkeyhint="done" />
+        <button id="modbtn" type="submit" class="tonal">Modify</button>
+      </form>
+      <h2 class="label">Engine log</h2>
+      <div id="status" class="status" role="log"></div>
+      <h2 class="label">Templates</h2>
       <div id="templates" class="chips"></div>
     </section>
 
-    <section class="card tabs-card" data-section="build">
-      <div class="tabs">
-        <button class="tab active" data-tab="inspector">Inspector</button>
-        <button class="tab" data-tab="joints">Joints</button>
-        <button class="tab" data-tab="bom">Build</button>
-        <button class="tab" data-tab="history">History</button>
+    <section class="pane" data-section="arduino" id="tiersCard" aria-labelledby="h-arduino">
+      <div class="title-row"><h1 class="title" id="h-arduino">Arduino</h1><span class="pill on" id="tierHint">cheapest first</span></div>
+      <p class="lede">The cheapest version that works, and stronger ones, each a complete design with its price.</p>
+      <button class="switch-row" type="button" role="switch" aria-checked="false" data-arduino aria-label="Arduino mode">
+        <svg class="ico" aria-hidden="true"><use href="#i-chip"/></svg>
+        <span class="t"><b>Arduino mode</b><small>Then press Generate</small></span>
+        <span class="switch" aria-hidden="true"></span>
+      </button>
+      <div id="tierDial" class="dial small" hidden></div>
+      <div class="sk" aria-hidden="true"><i class="tall"></i><i class="tall"></i></div>
+      <div id="tiers" class="tiers skhide"><div class="hint">Switch on <b>Arduino</b> and generate: you get the cheapest version that works and stronger ones, each with its price.</div></div>
+      <div id="tierNotes" class="notes"></div>
+    </section>
+
+    <section class="pane" data-section="model" aria-labelledby="h-model">
+      <h1 class="title" id="h-model">Model</h1>
+      <div class="seg tabs" role="tablist" aria-label="Model views">
+        <button class="tab active" data-tab="joints" type="button" role="tab">Joints</button>
+        <button class="tab" data-tab="structure" type="button" role="tab">Structure</button>
+        <button class="tab" data-tab="inspector" type="button" role="tab">Inspector</button>
+        <button class="tab" data-tab="history" type="button" role="tab">History</button>
       </div>
-      <div id="tab-inspector" class="tabpane active"><div class="hint">Click a link or joint in the 3D view or the structure.</div></div>
-      <div id="tab-joints" class="tabpane"><div id="sliders"></div></div>
+      <div class="sk" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+      <div id="tab-joints" class="tabpane active skhide"><div id="sliders"></div></div>
+      <div id="tab-structure" class="tabpane skhide"><div id="tree" class="tree"></div></div>
+      <div id="tab-inspector" class="tabpane skhide"><div class="hint">Tap a part in the 3D view or in Structure.</div></div>
+      <div id="tab-history" class="tabpane skhide"><div id="history"></div><div id="diff" class="diff"></div></div>
+    </section>
+
+    <section class="pane" data-section="build" aria-labelledby="h-build">
+      <h1 class="title" id="h-build">Build</h1>
+      <div class="seg tabs" role="tablist" aria-label="Build views">
+        <button class="tab active" data-tab="summary" type="button" role="tab">Summary</button>
+        <button class="tab" data-tab="bom" type="button" role="tab">Parts</button>
+        <button class="tab" data-tab="files" type="button" role="tab">Files</button>
+      </div>
+      <div id="tab-summary" class="tabpane active">
+        <div class="sk" aria-hidden="true"><i class="tall"></i><i></i><i></i><i></i></div>
+        <div class="skhide">
+          <div class="tile" data-section="checks-cost">
+            <div class="tile-h"><span>Cost to build</span><span id="costPill" class="pill on"></span></div>
+            <div class="big" id="costBig">—</div>
+            <div class="sub" id="costSub">Generate a robot to see what it costs to build.</div>
+            <div class="stat-row" id="statRow"></div>
+          </div>
+          <div class="tile">
+            <div class="tile-h"><span>Engineering checks</span><span id="checksPill" class="pill"></span></div>
+            <div id="checksChart" class="chart" aria-label="Torque margin of each actuated joint"></div>
+            <div class="chart-cap">Torque margin per joint, capped at 6x. Tap a bar for its numbers.</div>
+            <div id="checksList" class="checks"></div>
+          </div>
+        </div>
+      </div>
       <div id="tab-bom" class="tabpane">
-        <div class="bomctl"><label>Budget $ <input id="budget" type="number" min="0" step="10" placeholder="any" /></label><span id="bomtotal" class="bomtotal"></span></div>
+        <div class="bomctl"><label>Budget $ <input id="budget" type="number" inputmode="decimal" min="0" step="10" placeholder="any" /></label><span id="bomtotal" class="bomtotal"></span></div>
         <div id="bom"></div>
       </div>
-      <div id="tab-history" class="tabpane"><div id="history"></div><div id="diff" class="diff"></div></div>
-    </section>
-
-    <section class="card modify-card">
-      <div class="card-h"><span>Change it</span></div>
-      <form id="modform" class="promptrow">
-        <input id="modify" placeholder="e.g. make the forearm 30% longer, add a camera to the head" autocomplete="off" />
-        <button id="modbtn" type="submit" class="primary">Modify</button>
-      </form>
-      <div class="card-h sub-h"><span>Downloads</span></div>
-      <div class="downloads">
-        <button data-dl="cad">CAD (STEP + STL)</button>
-        <button data-dl="bom">Parts list</button>
-        <button data-dl="urdf">URDF</button>
-        <button data-dl="xacro">XACRO</button>
-        <button data-dl="ros2">ROS 2 package</button>
-        <button data-dl="json">JSON</button>
-        <button data-dl="train">Train (RL)</button>
-        <button id="importRobot">Import JSON</button>
+      <div id="tab-files" class="tabpane">
+        <div class="list downloads">
+          <button data-dl="cad" type="button"><svg class="ico" aria-hidden="true"><use href="#i-down"/></svg><span class="t"><b>CAD</b><small>STEP + STL</small></span></button>
+          <button data-dl="bom" type="button"><svg class="ico" aria-hidden="true"><use href="#i-down"/></svg><span class="t"><b>Parts list</b><small>Markdown</small></span></button>
+          <button data-dl="urdf" type="button"><svg class="ico" aria-hidden="true"><use href="#i-down"/></svg><span class="t"><b>URDF</b><small>Robot description</small></span></button>
+          <button data-dl="xacro" type="button"><svg class="ico" aria-hidden="true"><use href="#i-down"/></svg><span class="t"><b>XACRO</b><small>Parameterised URDF</small></span></button>
+          <button data-dl="ros2" type="button"><svg class="ico" aria-hidden="true"><use href="#i-down"/></svg><span class="t"><b>ROS 2 package</b><small>With ros2_control</small></span></button>
+          <button data-dl="json" type="button"><svg class="ico" aria-hidden="true"><use href="#i-down"/></svg><span class="t"><b>JSON</b><small>Robot specification</small></span></button>
+          <button data-dl="train" type="button"><svg class="ico" aria-hidden="true"><use href="#i-down"/></svg><span class="t"><b>Train (RL)</b><small>MuJoCo training scaffold</small></span></button>
+          <button id="importRobot" type="button"><svg class="ico" aria-hidden="true"><use href="#i-up"/></svg><span class="t"><b>Import JSON</b><small>Open a saved robot</small></span></button>
+          <button data-dl="launch" type="button"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg><span class="t"><b>Copy launch cmd</b><small>ros2 launch</small></span></button>
+        </div>
         <input id="robotFile" type="file" accept=".json,application/json" hidden />
-        <button data-dl="launch" class="ghost">Copy launch cmd</button>
       </div>
     </section>
 
-    <section class="card privacy-card" data-section="privacy">
-      <div class="card-h"><span>Your design is yours</span><span class="pill lime">private</span></div>
-      <p class="privacy">Robots are built by code running in this tab and kept in your browser's own storage. Nothing about your design reaches our server, because there is none. A share link carries the design after the <code>#</code> in the address, which browsers never send anywhere.</p>
-      <div class="downloads">
-        <button data-dl="share" title="Copy a link that contains this robot">Copy share link</button>
-        <button id="publishBtn" title="Post this design to the public gallery from your own GitHub account">Publish to gallery</button>
+    <section class="pane" data-section="share" aria-labelledby="h-share">
+      <h1 class="title" id="h-share">Share</h1>
+      <div class="tile privacy-tile" data-section="privacy">
+        <svg class="ico lock" aria-hidden="true"><use href="#i-lock"/></svg>
+        <h2>Your design is yours</h2>
+        <p class="privacy">Robots are built by code running in this tab and kept in your browser's own storage. Nothing about your design reaches our server, because there is none. A share link carries the design after the <code>#</code> in the address, which browsers never send anywhere.</p>
       </div>
+      <button data-dl="share" class="primary wide" type="button" title="Copy a link that contains this robot"><span class="t">Share this robot</span></button>
+      <button id="publishBtn" class="tonal wide" type="button" title="Post this design to the public gallery from your own GitHub account">Publish to gallery</button>
+      <div class="title-row gallery-h" data-section="gallery"><h2 class="title sm">Gallery</h2><span class="pill soft">published by choice</span></div>
+      <p class="lede">Only designs people chose to publish. The list comes from GitHub, and only when you ask for it.</p>
+      <div id="gallery" class="gallery"><button id="loadGallery" class="tonal wide" type="button">Show published designs</button></div>
     </section>
 
-    <section class="card gallery-card" data-section="gallery">
-      <div class="card-h"><span>Gallery</span><span class="pill soft">only designs people chose to publish</span></div>
-      <div id="gallery" class="gallery"><button id="loadGallery" class="mini">Show published designs</button></div>
-    </section>
-  </main>
-</div>
+  </div>
+</aside>
+
+<div id="flash" aria-hidden="true"><b></b><i></i><i></i><u></u></div>
+<div id="scrim" aria-hidden="true"></div>
+<div id="toast" role="status" aria-live="polite"></div>
 
 <script type="module" src="/app.js"></script>
 </body>

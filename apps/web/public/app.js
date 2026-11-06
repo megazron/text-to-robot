@@ -2,8 +2,10 @@ import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { STLLoader } from "three/addons/loaders/STLLoader.js";
 import { forwardKinematics, findRoot, download, makeZip } from "./robotkit.js";
+import { Dial, Sheet, followKeyboard, haptic, popIn, transformFlash } from "./ui.js";
 
 const API = ""; // same origin
+let revealNext = null, first = true, tierDial = null;
 const STATIC = globalThis.ttrStatic; // GitHub Pages build: generator runs in this tab, see apps/web/src/browser-api.ts
 const $ = (s) => document.querySelector(s);
 const el = (t, c, txt) => { const e = document.createElement(t); if (c) e.className = c; if (txt != null) e.textContent = txt; return e; };
@@ -17,14 +19,13 @@ const state = {
 // ---------------- three.js scene ----------------
 const viewport = $("#viewport");
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x070d09);
 const camera = new THREE.PerspectiveCamera(50, 1, 0.01, 100);
 camera.up.set(0, 0, 1);
 camera.position.set(0.9, -0.9, 0.7);
 // Without WebGL (hardware acceleration off, blocked GPU) the 3D view is skipped but generation,
 // the engineering report and every download still work.
 let renderer;
-try { renderer = new THREE.WebGLRenderer({ antialias: true }); }
+try { renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); renderer.setClearColor(0x000000, 0); }
 catch {
   const canvas = document.createElement("canvas");
   renderer = { domElement: canvas, setPixelRatio() {}, setSize() {}, render() {} };
@@ -40,16 +41,34 @@ scene.add(new THREE.HemisphereLight(0xd8ffe6, 0x0b1a10, 0.95));
 const key = new THREE.DirectionalLight(0xffffff, 1.6); key.position.set(1.5, -2, 3); scene.add(key);
 const fill = new THREE.DirectionalLight(0x7dffb0, 0.35); fill.position.set(-2, 1, 1); scene.add(fill);
 
-const grid = new THREE.GridHelper(4, 40, 0x1f5a35, 0x112619); grid.rotation.x = Math.PI / 2; scene.add(grid);
+// projection pad under the robot: three soft rings, sized to the robot in frameRobot()
+const pad = new THREE.Group();
+for (const [radius, opacity] of [[1, 0.55], [0.84, 0.14]]) {
+  pad.add(new THREE.Mesh(new THREE.RingGeometry(radius - 0.008, radius, 128), new THREE.MeshBasicMaterial({ color: 0x39ff88, transparent: true, opacity, side: THREE.DoubleSide, depthWrite: false })));
+}
+scene.add(pad);
 const robotGroup = new THREE.Group(); scene.add(robotGroup);
 
 function resize() {
   const w = viewport.clientWidth, h = viewport.clientHeight;
   renderer.setSize(w, h); // updates CSS size too; without it HiDPI (DPR 2) canvases overflow the layout
-  camera.aspect = w / h; camera.updateProjectionMatrix();
+  camera.aspect = w / h; camera.updateProjectionMatrix(); invalidate();
 }
+// Draw only when something changed: an idle GPU keeps the glass panels and springs at full frame rate.
+let dirty = true;
+function invalidate() { dirty = true; }
+controls.addEventListener("change", invalidate);
 new ResizeObserver(resize).observe(viewport); resize();
-(function loop() { requestAnimationFrame(loop); controls.update(); renderer.render(scene, camera); })();
+(function loop() { requestAnimationFrame(loop); controls.update(); if (dirty) { dirty = false; renderer.render(scene, camera); } })();
+
+// The sheet's top edge decides how much room the model gets: on phones the canvas scales from its
+// top edge to stay in the visible area, using transform alone so dragging stays smooth.
+const sheet = new Sheet({ el: $("#sheet"), grabber: $("#grabber"), onMove(top) {
+  if (top == null) { viewport.style.transform = ""; return; }
+  const h = viewport.offsetHeight, room = top - viewport.offsetTop - 8;
+  const scale = Math.min(1, Math.max(0.68, room / h));
+  viewport.style.transform = `translateY(${Math.min(0, (room - h * scale) / 2)}px) scale(${scale})`;
+} });
 
 // ---------------- geometry / materials ----------------
 const stlLoader = new STLLoader(); const meshCache = new Map();
@@ -74,11 +93,11 @@ async function loadMeshInto(mesh, g, revision, robotId) {
     if (revision !== previewRevision) return;
     mesh.geometry.dispose(); mesh.geometry = geometry.clone();
     mesh.userData.meshLoaded = true;
-    preview.loaded++;
+    preview.loaded++; invalidate();
   } catch (error) {
     if (revision !== previewRevision) return;
     preview.errors.push(`${g.file}: ${error.message}`);
-    mesh.material.color.set(0xff3366); mesh.material.wireframe = true;
+    mesh.material.color.set(0xff3366); mesh.material.wireframe = true; invalidate();
   }
 }
 function showPreviewStatus() {
@@ -162,6 +181,7 @@ function buildRobot(spec) {
     renderer.render(scene, camera);
     preview.ready = preview.errors.length === 0 && preview.loaded === preview.expected;
     showPreviewStatus();
+    if (revealNext) { const strong = revealNext === "strong"; revealNext = null; reveal(strong); }
   });
 }
 
@@ -178,7 +198,7 @@ function updateFK() {
   for (const [name, group] of state.meshes) {
     const m = world.get(name); if (m) { group.matrix.copy(mat4(m)); group.matrixWorldNeedsUpdate = true; }
   }
-  drawHelpers(world);
+  drawHelpers(world); invalidate();
 }
 
 function drawHelpers(world) {
@@ -204,7 +224,8 @@ function frameRobot() {
   console.log('[frame] center', sphere.center.toArray().map(x=>+x.toFixed(2)), 'r', +sphere.radius.toFixed(3));
   const r = Math.max(0.12, sphere.radius);
   const fov = (camera.fov * Math.PI) / 180;
-  const dist = (r / Math.sin(fov / 2)) * 1.25;
+  const across = 2 * Math.atan(Math.tan(fov / 2) * camera.aspect);   // portrait phones are limited by width
+  const dist = (r / Math.sin(Math.min(fov, across) / 2)) * 1.1;
   const dir = new THREE.Vector3(1, -1.1, 0.65).normalize();
   camera.position.copy(sphere.center).addScaledVector(dir, dist);
   controls.target.copy(sphere.center);
@@ -212,11 +233,18 @@ function frameRobot() {
   camera.far = dist * 200;
   camera.updateProjectionMatrix();
   controls.update();
+  pad.position.set(sphere.center.x, sphere.center.y, bb.min.z);
+  pad.scale.setScalar(Math.max(0.08, Math.hypot(bb.max.x - bb.min.x, bb.max.y - bb.min.y) * 0.56));
+  invalidate();
 }
 
 // ---------------- selection ----------------
 const raycaster = new THREE.Raycaster(); const mouse = new THREE.Vector2();
-renderer.domElement.addEventListener("pointerdown", (e) => {
+// A tap selects; a drag only orbits.
+let tapFrom = null;
+renderer.domElement.addEventListener("pointerdown", (e) => { tapFrom = [e.clientX, e.clientY]; });
+renderer.domElement.addEventListener("pointerup", (e) => {
+  if (!tapFrom || Math.hypot(e.clientX - tapFrom[0], e.clientY - tapFrom[1]) > 8) return;
   const r = renderer.domElement.getBoundingClientRect();
   mouse.x = ((e.clientX - r.left) / r.width) * 2 - 1; mouse.y = -((e.clientY - r.top) / r.height) * 2 + 1;
   raycaster.setFromCamera(mouse, camera);
@@ -227,16 +255,18 @@ renderer.domElement.addEventListener("pointerdown", (e) => {
 function selectLink(name) {
   state.selection = { kind: "link", name };
   highlight(); renderTree(); renderInspector();
-  setTab("inspector");
+  showInspector();
 }
-function selectJoint(name) { state.selection = { kind: "joint", name }; renderTree(); renderInspector(); setTab("inspector"); }
+function selectJoint(name) { state.selection = { kind: "joint", name }; renderTree(); renderInspector(); showInspector(); }
+function showInspector() { jump("model"); setTab("inspector"); }
 
 function highlight() {
   for (const [name, group] of state.meshes) {
     const mesh = group.children[0];
     if (!mesh.material.emissive) continue;
-    mesh.material.emissive = new THREE.Color(state.selection?.kind === "link" && state.selection.name === name ? 0x2a4a7a : 0x000000);
+    mesh.material.emissive = new THREE.Color(state.selection?.kind === "link" && state.selection.name === name ? 0x0e6b3a : 0x000000);
   }
+  invalidate();
 }
 
 // ---------------- panels ----------------
@@ -273,7 +303,7 @@ function renderInspector() {
     const children = state.robot.joints.filter((j) => j.parent === l.name).map((j) => j.child).join(", ") || "—";
     pane.append(kv({
       Geometry: l.geometry.type,
-      Dimensions: l.geometry.type === "box" ? vec(l.geometry.size) : l.geometry.type === "sphere" ? "r=" + f3(l.geometry.radius) : "r=" + f3(l.geometry.radius) + " l=" + f3(l.geometry.length),
+      Dimensions: l.geometry.type === "box" ? vec(l.geometry.size) : l.geometry.type === "mesh" ? vec(l.geometry.bbox.max.map((v, i) => v - l.geometry.bbox.min[i])) : l.geometry.type === "sphere" ? "r=" + f3(l.geometry.radius) : "r=" + f3(l.geometry.radius) + " l=" + f3(l.geometry.length),
       Mass: f3(l.mass) + " kg",
       Inertia: `ixx=${f3(I.ixx)} iyy=${f3(I.iyy)} izz=${f3(I.izz)}`,
       Origin: "xyz " + vec(l.origin.xyz),
@@ -305,7 +335,7 @@ function renderSliders() {
     const lab = el("label"); lab.append(el("span", null, j.name)); const val = el("b", null, "0.00"); lab.append(val); wrap.append(lab);
     const s = document.createElement("input"); s.type = "range"; s.min = lo; s.max = hi; s.step = (hi - lo) / 200 || 0.01; s.value = state.jointValues[j.name] ?? 0;
     const unit = j.type === "prismatic" ? "m" : "";
-    const upd = () => { state.jointValues[j.name] = parseFloat(s.value); val.textContent = parseFloat(s.value).toFixed(2) + unit; updateFK(); if (state.selection?.kind === "joint" && state.selection.name === j.name) renderInspector(); };
+    const upd = () => { s.style.setProperty("--p", `${((s.value - lo) / (hi - lo || 1)) * 100}%`); state.jointValues[j.name] = parseFloat(s.value); val.textContent = parseFloat(s.value).toFixed(2) + unit; updateFK(); if (state.selection?.kind === "joint" && state.selection.name === j.name) renderInspector(); };
     s.oninput = upd; wrap.append(s);
     lab.style.cursor = "pointer"; lab.onclick = () => selectJoint(j.name);
     box.append(wrap); upd();
@@ -388,6 +418,17 @@ function renderDiff(lines) {
 function status(lines, kind) {
   const box = $("#status"); box.className = "status show" + (kind === "err" ? " err" : "");
   box.textContent = Array.isArray(lines) ? lines.join("\n") : lines;
+  if (kind === "err") toast(box.textContent, "err");
+}
+let toastTimer;
+function toast(text, kind) {
+  const t = $("#toast"); t.textContent = text; t.className = "show" + (kind === "err" ? " err" : "");
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => { t.className = ""; }, kind === "err" ? 5200 : 2400);
+}
+/** The robot steps out of the flash, centred on the model. */
+function reveal(strong) {
+  const r = viewport.getBoundingClientRect();
+  transformFlash(renderer.domElement, { x: r.left + r.width / 2, y: r.top + r.height / 2 }, strong);
 }
 function checksToText(res) {
   const out = [...(res.summary ? ["→ Interpreted as: " + res.summary] : []), ...(res.validation?.checks ?? []), ...(res.urdfValidation?.checks ?? [])];
@@ -411,6 +452,8 @@ function applyResult(res, label, diffLines) {
   state.version = state.versions.length - 1;
   state.selection = null;
   state.bom = res.bom ?? null;
+  revealNext = revealNext ?? "soft";
+  document.body.classList.remove("busy");
   buildRobot(res.robot); renderTree(); renderSliders(); renderInspector(); renderHistory(); renderDiff(diffLines); renderBom(state.bom);
   renderCards();
   status(checksToText(res));
@@ -424,13 +467,17 @@ function loadVersion(i) {
 
 async function doGenerate(prompt) {
   if (!prompt.trim()) return;
-  setBusy($("#genbtn"), true);
+  setBusy($("#genbtn"), true); document.body.classList.add("busy"); revealNext = "strong";
+  const family = FAMILIES.findIndex((f) => f.prompt === prompt);
+  if (family >= 0) familyDial.go(family, { silent: true });   // chips and the bar keep the ring honest
+  if (!first) sheet.go("peek");   // on phones, get out of the way of the reveal
+  first = false;
   try {
     if (state.arduino) await doArduino(prompt);
     else { const res = await api("/api/robots/generate", { prompt }); state.versions = []; applyResult(res, prompt.slice(0, 40)); }
   }
-  catch (e) { status("✗ " + e.message, "err"); }
-  finally { setBusy($("#genbtn"), false, "Generate"); }
+  catch (e) { revealNext = null; status("✗ " + e.message, "err"); }
+  finally { setBusy($("#genbtn"), false, "Generate"); document.body.classList.remove("busy"); }
 }
 
 // ---------------- Arduino mode: price tiers ----------------
@@ -440,9 +487,9 @@ async function doArduino(prompt) {
   state.tiers = r.options ?? [];
   const box = $("#tiers"); box.replaceChildren();
   $("#tierNotes").textContent = (r.notes ?? []).join("  ·  ");
-  if (!state.tiers.length) { box.append(el("div", "hint", "No Arduino version of this robot yet.")); jump("arduino"); return; }
+  if (!state.tiers.length) { $("#tierDial").hidden = true; box.append(el("div", "hint", "No Arduino version of this robot yet.")); jump("arduino"); return; }
   state.tiers.forEach((o, i) => {
-    const b = el("button", "tier");
+    const b = el("button", "tier"); b.type = "button"; b.style.setProperty("--k", i);
     const price = el("div", "price", "$" + Math.round(o.cost_usd)); price.append(el("small", null, o.tier));
     const pill = el("span", "pill " + (o.failing.length ? "red" : o.over_budget ? "red" : "green"), o.failing.length ? `${o.failing.length} check${o.failing.length > 1 ? "s" : ""} fail` : o.over_budget ? "over budget" : "works");
     b.append(price, pill, el("div", "label", o.label));
@@ -450,12 +497,24 @@ async function doArduino(prompt) {
     box.append(b);
   });
   state.versions = [];
-  await selectTier(Math.max(0, state.tiers.findIndex((o) => !o.failing.length && !o.over_budget)));
+  const start = Math.max(0, state.tiers.findIndex((o) => !o.failing.length && !o.over_budget));
+  // a turning ring needs at least two stops; a single option is just its card
+  $("#tierDial").hidden = state.tiers.length < 2;
+  if (state.tiers.length > 1) {
+    tierDial = new Dial($("#tierDial"), { label: "Price tier",
+      stops: state.tiers.map((o) => ({ big: "$" + Math.round(o.cost_usd), label: o.tier })),
+      coreLabel: (s) => `${s.label}, ${s.big}`,
+      onSettle: (i) => selectTier(i).catch((e) => status("✗ " + e.message, "err")),
+      onPress: (i) => selectTier(i).catch((e) => status("✗ " + e.message, "err")) });
+    tierDial.go(start, { silent: true });
+  }
+  await selectTier(start);
   jump("arduino");
 }
 async function selectTier(i) {
   const o = state.tiers?.[i]; if (!o) return;
   document.querySelectorAll(".tier").forEach((t, k) => t.classList.toggle("sel", k === i));
+  if (tierDial && tierDial.index !== i) tierDial.go(i, { silent: true });
   const res = await api("/api/robots/import", { robot: o.robot });
   applyResult({ ...res, summary: o.summary, warnings: o.failing.length ? [`failing checks: ${o.failing.join(", ")}`] : [] }, `${o.tier}: $${Math.round(o.cost_usd)}`);
 }
@@ -463,7 +522,8 @@ async function selectTier(i) {
 // ---------------- summary cards: cost, stats, checks chart ----------------
 function renderCards() {
   const r = state.robot, d = r?.metadata?.design;
-  $("#robotName").textContent = r ? r.robot_name.replace(/_/g, " ") : "";
+  $("#robotName").textContent = r ? r.robot_name.replace(/_/g, " ").replace(/^\w/, (c) => c.toUpperCase()) : "";
+  document.title = r ? `${r.robot_name.replace(/_/g, " ")} · Text to Robot` : "Text to Robot";
   const cost = d?.performance?.cost_usd ?? state.bom?.total;
   $("#costBig").textContent = cost != null ? "$" + Number(cost).toFixed(0) : "—";
   $("#costPill").textContent = d?.performance?.tier_label ?? (d ? "designed" : r ? "template" : "");
@@ -479,7 +539,7 @@ function renderCards() {
   const maxM = Math.max(1.5, ...joints.map((j) => Math.min(j.margin, 6)));
   for (const j of joints) {
     const m = Math.min(j.margin, 6), bar = el("div", "bar" + (j.margin < 1 ? " bad" : "")), i = el("i");
-    i.style.height = `${Math.max(6, (m / maxM) * 100)}%`; bar.title = `${j.joint}: ${j.margin}x margin (${j.actuator})`; bar.append(i); chart.append(bar);
+    i.style.height = `${Math.max(6, (m / maxM) * 100)}%`; bar.title = `${j.joint}: ${j.margin}x margin (${j.actuator})`; bar.onclick = () => toast(bar.title); bar.append(i); chart.append(bar);
   }
   const checks = d?.checks ?? [], bad = checks.filter((c) => !c.pass);
   $("#checksPill").textContent = checks.length ? (bad.length ? `${bad.length} failing` : `all ${checks.length} pass`) : "";
@@ -492,10 +552,21 @@ function renderCards() {
   if (!checks.length) list.append(el("div", "hint", r ? "Template robots carry no engineering checks: switch on Arduino or describe a designed robot." : ""));
 }
 
-// ---------------- navigation rail ----------------
+// ---------------- navigation ----------------
+const PANES = ["design", "arduino", "model", "build", "share"];
 function jump(section) {
-  document.querySelectorAll(".rail-btn").forEach((b) => b.classList.toggle("active", b.dataset.jump === section));
-  document.querySelector(`[data-section="${section}"]`)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  const i = PANES.indexOf(section), pane = document.querySelector(`.pane[data-section="${section}"]`);
+  if (!pane) return;
+  $("#dock").style.setProperty("--i", i);
+  document.querySelectorAll(".dock-btn").forEach((b) => {
+    const on = b.dataset.jump === section; b.classList.toggle("active", on);
+    if (on) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current");
+  });
+  sheet.atLeast("half");
+  if (pane.classList.contains("active")) return;
+  document.querySelectorAll(".pane").forEach((p) => p.classList.toggle("active", p === pane));
+  $("#panes").scrollTop = 0;
+  popIn(pane);
 }
 
 // ---------------- publish (opt-in) and gallery ----------------
@@ -518,7 +589,7 @@ async function loadGallery() {
     if (!items.length) box.append(el("div", "empty", "Nothing published yet. Press “Publish to gallery” to be the first."));
     for (const it of items) {
       const link = /https?:\/\/\S+#robot=[A-Za-z0-9_-]+/.exec(it.body ?? "")?.[0];
-      const a = el("a", "item"); a.href = link ?? it.html_url; a.target = "_blank"; a.rel = "noopener";
+      const a = el("a", "item"); a.style.animationDelay = `${box.children.length * 40}ms`; a.href = link ?? it.html_url; a.target = "_blank"; a.rel = "noopener";
       a.append(el("b", null, it.title.replace(/^\[gallery\]\s*/, "")), el("small", null, `by ${it.user?.login ?? "someone"} · ${new Date(it.created_at).toLocaleDateString()}`));
       box.append(a);
     }
@@ -526,12 +597,16 @@ async function loadGallery() {
 }
 async function doModify(instruction) {
   if (!state.robot || !instruction.trim()) return;
-  setBusy($("#modbtn"), true);
+  setBusy($("#modbtn"), true); revealNext = "soft"; sheet.go("peek");
   try { const res = await api("/api/robots/modify", { robot: state.robot, instruction }); applyResult(res, instruction.slice(0, 40), res.changes ?? res.diff?.lines); }
   catch (e) { status("✗ " + e.message, "err"); }
   finally { setBusy($("#modbtn"), false, "Modify"); }
 }
-function setBusy(btn, busy, label) { btn.disabled = busy; if (busy) btn.innerHTML = '<span class="spin">↻</span>'; else btn.textContent = label; }
+function setBusy(btn, busy, label) {
+  btn.disabled = busy; btn.setAttribute("aria-busy", String(busy));
+  if (btn.closest(".list")) return;   // list rows keep their label and pulse their icon
+  if (busy) btn.innerHTML = '<span class="spin" aria-hidden="true"></span>'; else btn.textContent = label;
+}
 
 // ---------------- downloads ----------------
 async function handleDownload(kind) {
@@ -543,30 +618,56 @@ async function handleDownload(kind) {
   if (kind === "bom") { const bom = state.bom ?? (await api("/api/robots/bom", { robot: state.robot })).bom; return download(`${name}_BOM.md`, bomMarkdown(bom), "text/markdown"); }
   if (kind === "cad") { const { files } = await api("/api/robots/cad", { robot: state.robot }); return download(`${name}_cad.zip`, makeZip(files)); }
   if (kind === "train") { const { files } = await api("/api/robots/training", { robot: state.robot }); return download(`${name}_training.zip`, makeZip(files)); }
-  if (kind === "share") { if (!state.id) return; await navigator.clipboard.writeText(STATIC ? await STATIC.shareUrl(state.robot) : `${location.origin}/r/${state.id}`); flash($("[data-dl=share]"), "link copied!"); return; }
-  if (kind === "launch") { await navigator.clipboard.writeText(`ros2 launch ${name} display.launch.py`); flash($("[data-dl=launch]"), "copied!"); return; }
+  if (kind === "share") {
+    if (!state.id) return;
+    const url = STATIC ? await STATIC.shareUrl(state.robot) : `${location.origin}/r/${state.id}`;
+    // phones get the system share sheet; everywhere else the link goes to the clipboard
+    if (navigator.share && matchMedia("(pointer: coarse)").matches) {
+      try { await navigator.share({ title: "Text to Robot", url }); } catch (e) { if (e.name !== "AbortError") throw e; }
+      return;
+    }
+    await navigator.clipboard.writeText(url); flash($("[data-dl=share]"), "Link copied"); toast("Link copied. The design travels inside it."); return;
+  }
+  if (kind === "launch") { await navigator.clipboard.writeText(`ros2 launch ${name} display.launch.py`); flash($("[data-dl=launch]"), "Copied"); return; }
   if (kind === "ros2") {
     const { files } = await api("/api/robots/export", { robot: state.robot, ros2_control: true });
     download(`${name}_ros2.zip`, makeZip(files));
   }
 }
-function flash(btn, txt) { const old = btn.textContent; btn.textContent = txt; setTimeout(() => (btn.textContent = old), 1200); }
+function flash(btn, txt) { const t = btn.querySelector(".t b") ?? btn.querySelector(".t") ?? btn, old = t.textContent; t.textContent = txt; haptic(10); setTimeout(() => (t.textContent = old), 1200); }
 
 // ---------------- tabs ----------------
 function setTab(name) {
-  document.querySelectorAll(".tab").forEach((t) => t.classList.toggle("active", t.dataset.tab === name));
-  document.querySelectorAll(".tabpane").forEach((p) => p.classList.toggle("active", p.id === "tab-" + name));
+  const pick = document.querySelector(`.tab[data-tab="${name}"]`), seg = pick.parentElement;
+  [...seg.children].forEach((t, i) => {
+    const on = t === pick; t.classList.toggle("active", on); t.setAttribute("aria-selected", String(on));
+    if (on) seg.style.setProperty("--i", i);
+    const pane = $("#tab-" + t.dataset.tab); pane.classList.toggle("active", on);
+    if (on) popIn(pane, { y: 6, duration: 260 });
+  });
 }
 
 // ---------------- wiring ----------------
 $("#genform").onsubmit = (e) => { e.preventDefault(); doGenerate($("#prompt").value); };
 $("#modform").onsubmit = (e) => { e.preventDefault(); doModify($("#modify").value); };
-document.querySelectorAll(".tab").forEach((t) => (t.onclick = () => setTab(t.dataset.tab)));
-document.querySelectorAll("[data-dl]").forEach((b) => (b.onclick = () => handleDownload(b.dataset.dl)));
+document.querySelectorAll(".seg").forEach((s) => { s.style.setProperty("--n", s.children.length); [...s.children].forEach((t) => t.setAttribute("aria-selected", String(t.classList.contains("active")))); });
+document.querySelectorAll(".tab").forEach((t) => (t.onclick = () => { haptic(6); setTab(t.dataset.tab); }));
+document.querySelectorAll("[data-dl]").forEach((b) => (b.onclick = async () => {
+  if (!state.robot) return toast("Generate a robot first.");
+  b.setAttribute("aria-busy", "true");
+  try { await handleDownload(b.dataset.dl); }
+  catch (e) { toast("✗ " + e.message, "err"); }
+  finally { b.removeAttribute("aria-busy"); }
+}));
 for (const id of ["#showCollision", "#showAxes", "#showFrames"]) $(id).onchange = () => { if (state.robot) buildRobot(state.robot); };
 $("#resetView").onclick = frameRobot;
-$("#arduinoBtn").onclick = () => { state.arduino = !state.arduino; $("#arduinoBtn").setAttribute("aria-pressed", String(state.arduino)); };
-document.querySelectorAll(".rail-btn").forEach((b) => (b.onclick = () => jump(b.dataset.jump)));
+function setArduino(on) {
+  state.arduino = on; haptic(10);
+  document.querySelectorAll("[data-arduino]").forEach((b) => { if (b.getAttribute("role") === "switch") b.setAttribute("aria-checked", String(on)); else b.hidden = !on; });
+  toast(on ? "Arduino mode on. Press Generate for price tiers." : "Arduino mode off.");
+}
+document.querySelectorAll("[data-arduino]").forEach((b) => (b.onclick = () => setArduino(!state.arduino)));
+document.querySelectorAll(".dock-btn").forEach((b) => (b.onclick = () => { haptic(6); jump(b.dataset.jump); }));
 $("#publishBtn").onclick = publish;
 $("#loadGallery").onclick = loadGallery;
 $("#importRobot").onclick = () => $("#robotFile").click();
@@ -582,6 +683,22 @@ $("#robotFile").onchange = async (event) => {
 };
 $("#budget").oninput = () => { clearTimeout(window.__bt); window.__bt = setTimeout(refreshBom, 350); };
 
+// ---------------- the dial: choose a body, press the core ----------------
+const FAMILIES = [
+  { label: "Arm", icon: "f-arm", prompt: "Create a 6 DOF robotic arm with a parallel gripper" },
+  { label: "Car", icon: "f-car", prompt: "An obstacle avoiding robot car" },
+  { label: "Tracked", icon: "f-track", prompt: "WALL-E" },
+  { label: "Quadruped", icon: "f-quad", prompt: "Create a quadruped robot" },
+  { label: "Humanoid", icon: "f-human", prompt: "Create a small humanoid robot" },
+  { label: "SCARA", icon: "f-scara", prompt: "Create a SCARA robot" },
+  { label: "Suit", icon: "f-suit", prompt: "Iron Man Mark 43 suit" },
+];
+let dialPrompt = "";   // what the dial last wrote, so it never overwrites words the user typed
+const familyDial = new Dial($("#familyDial"), { label: "Robot family", stops: FAMILIES,
+  coreLabel: (s) => `Build a ${s.label}`,
+  onChange: (i) => { const p = $("#prompt"); if (!p.value || p.value === dialPrompt) p.value = dialPrompt = FAMILIES[i].prompt; },
+  onPress: (i) => { const prompt = FAMILIES[i].prompt; $("#prompt").value = dialPrompt = prompt; doGenerate(prompt); } });
+
 const EXAMPLES = [
   "Create a 6 DOF robotic arm with a parallel gripper",
   "An obstacle avoiding robot car",
@@ -593,19 +710,22 @@ const EXAMPLES = [
 ];
 function initExamples() {
   const box = $("#examples");
-  for (const ex of EXAMPLES) { const b = el("button", null, ex); b.onclick = () => { $("#prompt").value = ex; doGenerate(ex); }; box.append(b); }
+  for (const ex of EXAMPLES) { const b = el("button", null, ex); b.type = "button"; b.onclick = () => { $("#prompt").value = ex; doGenerate(ex); }; box.append(b); }
 }
 async function initTemplates() {
   try {
     const { templates } = await (await fetch("/api/templates")).json();
     const box = $("#templates");
-    for (const t of templates) { const b = el("button", null, t.title); b.title = t.description; b.onclick = () => { $("#prompt").value = "Create a " + t.title; doGenerate("Create a " + t.title); }; box.append(b); }
+    for (const t of templates) { const b = el("button", null, t.title); b.type = "button"; b.title = t.description; b.onclick = () => { $("#prompt").value = "Create a " + t.title; doGenerate("Create a " + t.title); }; box.append(b); }
   } catch {}
 }
 async function initMode() {
   try { await (await fetch("/api/status")).json(); const badge = $("#mode"); badge.textContent = "Free · local"; badge.title = "No account, tokens or external inference"; } catch {}
 }
 
+// the icon link is relative, which on a /r/<id> share page would point inside /r/
+document.querySelector('link[rel="icon"]').href = new URL("./mark.svg", import.meta.url).href;
+followKeyboard();
 initExamples(); initTemplates(); initMode();
 (async () => {
   if (STATIC && location.hash.includes("robot=")) {
