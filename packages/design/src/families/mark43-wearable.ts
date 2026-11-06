@@ -194,6 +194,11 @@ export function designMark43Wearable(req: Mark43Request = {}): RobotSpecificatio
     "the wearer is an average adult male body at 1.75 m and the pieces scale evenly with height; check against your own measurements before printing",
     "gaps at the groin, armpits and elbows are cut on purpose so the joints move; the undersuit shows through them, as on real builds");
   A.design.request = { ...req } as Record<string, unknown>;
+  // the suit's own paint, from the reference photo: deep candy red and champagne gold (the shared palette serves every robot)
+  for (const m of A.spec.materials) {
+    if (m.name === "armour_red") m.color = [0.32, 0.02, 0.035, 1];
+    if (m.name === "armour_gold") m.color = [0.7, 0.59, 0.4, 1];
+  }
   return A.finish(`Iron Man Mark 43 (${A.design.performance.tier_label}): ${printedCount} printed pieces, ${(printedKg * 1.08).toFixed(1)} kg filament, motorised faceplate, $${cost.toFixed(0)} incl. filament`);
 }
 

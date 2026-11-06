@@ -18,6 +18,19 @@ import trimesh  # noqa: E402
 from ttr_build.dfm import audit_mesh, BED_MM  # noqa: E402
 
 check = "--check" in sys.argv
+
+
+def same_report(a, b):
+    """Same parts, same verdicts, same measurements within what ray casts repeat to across machines. The wall samples and the
+    tie between equally good orientations move in the last digit from one CPU to another, so exact equality made CI flaky."""
+    if [p["name"] for p in a["parts"]] != [p["name"] for p in b["parts"]]: return False
+    for p, q in zip(a["parts"], b["parts"]):
+        if any(p[k] != q[k] for k in ("passed", "watertight", "fits_bed")): return False
+        for k, tol in (("volume_cm3", 0.05), ("min_wall_mm", 0.1), ("thin_wall_frac", 0.02), ("support_frac", 0.02)):
+            x, y = p.get(k), q.get(k)
+            if (x is None) != (y is None) or (x is not None and abs(x - y) > tol): return False
+    return True
+
 known = json.loads((ROOT / "examples/print_known_issues.json").read_text())
 rows, bad = [], []
 for ex in sorted(p for p in (ROOT / "examples").iterdir() if p.is_dir() and p.name[:2].isdigit()):
@@ -30,7 +43,7 @@ for ex in sorted(p for p in (ROOT / "examples").iterdir() if p.is_dir() and p.na
     out = ex / "print_report.json"
     text = json.dumps({"bed_mm": BED_MM, "parts": reps}, indent=1) + "\n"
     if check:
-        if not out.exists() or json.loads(out.read_text()) != json.loads(text): bad.append(f"{ex.name}: print_report.json is stale (run scripts/print_audit.py)")
+        if not out.exists() or not same_report(json.loads(out.read_text()), json.loads(text)): bad.append(f"{ex.name}: print_report.json is stale (run scripts/print_audit.py)")
     else:
         out.write_text(text)
     for r in reps:

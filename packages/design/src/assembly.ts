@@ -34,8 +34,8 @@ export const MATERIALS: Material[] = [
   { name: "electronics", color: [0.08, 0.45, 0.25, 1] },
   { name: "rubber", color: [0.07, 0.07, 0.08, 1] },
   { name: "battery", color: [0.15, 0.3, 0.75, 1] },
-  { name: "armour_red", color: [0.32, 0.02, 0.035, 1] },
-  { name: "armour_gold", color: [0.7, 0.59, 0.4, 1] },
+  { name: "armour_red", color: [0.55, 0.04, 0.05, 1] },
+  { name: "armour_gold", color: [0.83, 0.62, 0.24, 1] },
   { name: "lens_glow", color: [0.72, 0.93, 1, 1] },
   // the wearer is drawn as the black undersuit worn under armour builds (shows through the gaps between pieces)
   { name: "wearer", color: [0.05, 0.05, 0.06, 1] },
