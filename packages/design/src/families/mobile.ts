@@ -322,7 +322,7 @@ function enclosure(b: Build, items: Item[], area: Rect, reserved: Rect[], deckTo
   walls.push({ op: "cutbox", min: [x0 - 1, (y0 + y1) / 2 - 18, deckTop - 1], max: [x0 + t + 1, (y0 + y1) / 2 + 18, deckTop + 12] });
   // edge trim and tie bar on the rear cable slot, main switch and USB window in the walls, grommets through the deck
   walls.push({ op: "box", min: [x0 + t, (y0 + y1) / 2 - 18, deckTop + 12], max: [x0 + t + 3, (y0 + y1) / 2 + 18, deckTop + 15] });
-  const fx = fixtures ? wallFixtures(b, plan, { x0, x1, y0, y1, z0: deckTop, z1: zTop, t }, boards, parent, bayName, reserved) : { cuts: [] as Op[], exits: [] as BayRecord["exits"] };
+  const fx = fixtures ? wallFixtures(b, plan, { x0, x1, y0, y1, z0: deckTop, z1: zTop, t }, boards, parent, bayName, reserved) : { cuts: [] as Op[], exits: [] as BayRecord["exits"], lidCuts: [] as Op[] };
   walls.push(...fx.cuts);
   // vent slots stop short of the cut-outs: a thin strip between the two would not print
   const near = (v: { min: Vec3; max: Vec3 }) => fx.cuts.some((c) => { const q = c as { min: Vec3; max: Vec3 }; return [0, 1].every((k) => v.max[k] > q.min[k] - 4 && v.min[k] < q.max[k] + 4); });
@@ -331,7 +331,7 @@ function enclosure(b: Build, items: Item[], area: Rect, reserved: Rect[], deckTo
   // too few free corners for lid bosses: lugs on the outside of the long walls instead
   const lugs: [number, number, number][] = bosses.length >= 3 ? [] : [[x0 + (x1 - x0) * 0.32, y0 - 3.4, -1], [x0 + (x1 - x0) * 0.32, y1 + 3.4, 1], [x0 + (x1 - x0) * 0.68, y0 - 3.4, -1], [x0 + (x1 - x0) * 0.68, y1 + 3.4, 1]];
   for (const [x, y] of lugs) walls.push({ op: "rod", a: [x, y, deckTop], b: [x, y, zTop], r: 4.5 }, { op: "hole", a: [x, y, zTop - 12], b: [x, y, zTop + 1], d: 2.6 });
-  const lid: Op[] = [{ op: "box", min: [x0, y0, zSeat], max: [x1, y1, zLid], r: 4 }, { op: "box", min: [x0 + t + 0.3, y0 + t + 0.3, zSeat - 3], max: [x1 - t - 0.3, y1 - t - 0.3, zSeat], r: 2 },
+  const lid: Op[] = [...fx.lidCuts, { op: "box", min: [x0, y0, zSeat], max: [x1, y1, zLid], r: 4 }, { op: "box", min: [x0 + t + 0.3, y0 + t + 0.3, zSeat - 3], max: [x1 - t - 0.3, y1 - t - 0.3, zSeat], r: 2 },
     { op: "cutbox", min: [x0 + t + 2.3, y0 + t + 2.3, zSeat - 4], max: [x1 - t - 2.3, y1 - t - 2.3, zSeat + 0.05] }];
   for (const [x, y] of bosses) lid.push({ op: "hole", a: [x, y, zSeat - 4], b: [x, y, zLid + 1], d: 3.4 }, { op: "hole", a: [x, y, zSeat - 4], b: [x, y, zSeat + 0.05], d: 2 * 4.5 + 1 }); // lip notched round the bosses
   for (const [x, y] of lugs) lid.push({ op: "rod", a: [x, y, zSeat], b: [x, y, zLid], r: 4.5 }, { op: "hole", a: [x, y, zSeat - 1], b: [x, y, zLid + 1], d: 3.4 });
@@ -401,12 +401,22 @@ function wallFixtures(b: Build, plan: Placement[], w: { x0: number; x1: number; 
     spots.push({ p: [x, w.y1, zc], n: [0, 1, 0], face: "y+", q: { x0: x - wide, x1: x + wide, y0: w.y1 - deep, y1: w.y1 } }, { p: [x, w.y0, zc], n: [0, -1, 0], face: "y-", q: { x0: x - wide, x1: x + wide, y0: w.y0, y1: w.y0 + deep } },
       { p: [w.x1, y, zc], n: [1, 0, 0], face: "x+", q: { x0: w.x1 - deep, x1: w.x1, y0: y - wide, y1: y + wide } }, { p: [w.x0, y, zc], n: [-1, 0, 0], face: "x-", q: { x0: w.x0, x1: w.x0 + deep, y0: y - wide, y1: y + wide } });
   }
+  const s = spots.find((c) => clearOf(c.q) && !exits.some((e) => Math.hypot(e.at[0] - c.p[0], e.at[1] - c.p[1]) < 45));
+  if (!s) {
+    // no wall has room behind it: the rocker stands in the lid over a free patch of floor
+    let at: [number, number] | null = null;
+    for (let x = w.x0 + 18; x < w.x1 - 18 && !at; x += 4) for (let y = w.y0 + 22; y < w.y1 - 22 && !at; y += 4) if (clearOf({ x0: x - 14, x1: x + 14, y0: y - 18, y1: y + 18 })) at = [x, y];
+    const [x, y] = at ?? [(w.x0 + w.x1) / 2, (w.y0 + w.y1) / 2], zl = w.z1 + 0.2 + w.t;
+    b.mount(parent, "switch_kcd4", frame([x, y, zl], [0, 0, 1], [1, 0, 0]), "main_switch", "main power switch");
+    exits.push({ id: `${bayName}.switch`, kind: "switch", face: "lid", at: [x, y, zl], normal: [0, 0, 1], hole_mm: 22, part: "main_switch" });
+    return { cuts, exits, lidCuts: [{ op: "cutbox", min: [x - 11.2, y - 15.2, w.z1 - 4], max: [x + 11.2, y + 15.2, zl + 1] }] as Op[] };
+  }
   const s = spots.find((c) => clearOf(c.q) && !exits.some((e) => Math.hypot(e.at[0] - c.p[0], e.at[1] - c.p[1]) < 45)) ?? spots[0];
   const small = b.A.design.family === "mobile_diff_drive", hw = small ? 9.7 : 15.2, hz = small ? 6.7 : 11.2, along = s.n[0] !== 0;
   cuts.push({ op: "cutbox", min: along ? [s.p[0] - w.t - 1, s.p[1] - hw, zc - hz] : [s.p[0] - hw, s.p[1] - w.t - 1, zc - hz], max: along ? [s.p[0] + w.t + 1, s.p[1] + hw, zc + hz] : [s.p[0] + hw, s.p[1] + w.t + 1, zc + hz] });
   b.mount(parent, small ? "switch_kcd1" : "switch_kcd4", frame(s.p, s.n, [0, 0, 1]), "main_switch", "main power switch");
   exits.push({ id: `${bayName}.switch`, kind: "switch", face: s.face, at: s.p, normal: s.n, hole_mm: small ? 13 : 22, part: "main_switch" });
-  return { cuts, exits };
+  return { cuts, exits, lidCuts: [] as Op[] };
 }
 /** Grommets through the deck, one each side, where motor leads go down to the drives. Holes are cut in the deck. */
 function deckGrommets(b: Build, parent: string, boards: Rect[], w: Rect, deckTop: number, bayName = "electronics_enclosure"): BayRecord["exits"] {
@@ -480,7 +490,7 @@ function wireMobile(b: Build, compute: string, battery: [string, number], sensor
     H.bought("servo_bus.usb.VBUS", pi ? "computer.usb_a.LINK" : "computer.usb_a_j6_j7.LINK", "USB", 0.05, 0.1, "SERVO_BUS_USB");
     H.spare("servo_bus.dc_in");
   }
-  finishWiring(H, { noClips: /^(base_link|deck_lid|upper_deck)$|rocker_rear_arm/ });
+  finishWiring(H, { noClips: /^(base_link|deck_lid|upper_deck|head)$|rocker_rear_arm/ });
   enclosureChecks(A);
 }
 
