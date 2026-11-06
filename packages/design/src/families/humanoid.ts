@@ -471,6 +471,17 @@ function boxBiped(A: Assembly, H: Harness, b: ReturnType<typeof buildBiped>, mec
   if (cz1 > cz0 + 10) vent += panel("chest_panel", "x", 1, -cy, cy, cz0, cz1, cutChest);
   if (xs !== null) A.mount("side_panel_left", swKey, frame([xs, Wt + 2.4, zs], [0, 1, 0], [0, 0, 1]), "main_switch", "main power switch");
   else if (ys !== null) A.mount("chest_panel", swKey, frame([Dt + 2.4, ys, zc], [1, 0, 0], [0, 0, 1]), "main_switch", "main power switch");
+  // neither panel has room: a small case on the back of the torso holds the switch, in the battery bay's height
+  const zb = (zT0 + zShelf) / 2, backCase = !mech && xs === null && ys === null;
+  if (backCase) {
+    const x = -Dt - 31;
+    A.printedLink("switch_case", { name: "switch_case", ops: [{ op: "solid", of: [{ op: "box", min: [x, -20, zb - 16], max: [-Dt + 0.2, 20, zb + 16], r: 3 }, { op: "subtract", of: [{ op: "box", min: [x + 2.4, -17.6, zb - 13.6], max: [-Dt + 1, 17.6, zb + 13.6], r: 1.5 }] }] },
+      { op: "cutbox", min: [x - 1, -15.2, zb - 11.2], max: [x + 3.4, 15.2, zb + 11.2] }] }, { material: mat });
+    A.fixed("switch_case_mount", torsos[0], "switch_case", translation([0, 0, 0]));
+    A.mount("switch_case", swKey, frame([x, 0, zb], [-1, 0, 0], [0, 0, 1]), "main_switch", "main power switch");
+    amend([{ op: "hole", a: [-Dt - 1, 0, zb], b: [-Dt + BW + 1, 0, zb], d: 9.5 }]);
+    A.fastener("M3 x 8 self-tapping (switch case to torso)", 2);
+  }
   // USB of the computer through the back; cable exits: legs down through the floor, arms out at the sides, neck up
   const cb = partBox(A, "computer"), usbY = (cb.lo[1] + cb.hi[1]) / 2, usbZ = cb.lo[2] + 12;
   amend([{ op: "cutbox", min: [-Dt - 1, usbY - 22, usbZ - 8], max: [-Dt + BW + 1, usbY + 22, usbZ + 8] }]);
@@ -485,7 +496,7 @@ function boxBiped(A: Assembly, H: Harness, b: ReturnType<typeof buildBiped>, mec
   for (const n of A.spec.links.filter((l) => /^base_link(_b)*$/.test(l.name)).map((l) => l.name)) A.amendProgram(n, [{ op: "hole", a: [floor[0], floor[1], zPel - 1], b: [floor[0], floor[1], zT0 + 1], d: 12 }]);
   registerBay(A, { name: "torso_bay", tub: torsos[0], lid: "side_panel_left", solids: [...torsos, "side_panel_left", "side_panel_right"], parent: torsos[0], T: translation([0, 0, 0]), min: [-Dt + BW, -Wt + BW, zT0 + BW - 3], max: [Dt - BW, Wt - BW, zTop - BW], parts: parts.filter((n) => { const w = partBox(A, n); return w.lo[0] > -Dt; }), screws: 8, vent_area_mm2: Math.round(vent), note: "the torso itself, closed by its panels",
     exits: [{ id: "torso_bay.legs", kind: "grommet", face: "floor" as Face, at: [floor[0], floor[1], zT0], normal: [0, 0, -1], hole_mm: 12 }, { id: "torso_bay.neck", kind: "grommet", face: "lid" as Face, at: [topX, 0, zTop], normal: [0, 0, 1], hole_mm: 9.5 },
-      ...[1, -1].map((s) => ({ id: `torso_bay.arm_${s > 0 ? "l" : "r"}`, kind: "grommet", face: (s > 0 ? "y+" : "y-") as Face, at: [sideX, s * Wt, sideZ] as Vec3, normal: [0, s, 0] as Vec3, hole_mm: 9.5 })), { id: "torso_bay.usb", kind: "usb", face: "x-" as Face, at: [-Dt, usbY, usbZ], normal: [-1, 0, 0], hole_mm: 16 }, ...(xs !== null ? [{ id: "torso_bay.switch", kind: "switch", face: "y+" as Face, at: [xs, Wt, zs] as Vec3, normal: [0, 1, 0] as Vec3, hole_mm: 22, part: "main_switch" }] : ys !== null ? [{ id: "torso_bay.switch", kind: "switch", face: "x+" as Face, at: [Dt, ys, zc] as Vec3, normal: [1, 0, 0] as Vec3, hole_mm: 22, part: "main_switch" }] : [])] }, H);
+      ...[1, -1].map((s) => ({ id: `torso_bay.arm_${s > 0 ? "l" : "r"}`, kind: "grommet", face: (s > 0 ? "y+" : "y-") as Face, at: [sideX, s * Wt, sideZ] as Vec3, normal: [0, s, 0] as Vec3, hole_mm: 9.5 })), { id: "torso_bay.usb", kind: "usb", face: "x-" as Face, at: [-Dt, usbY, usbZ], normal: [-1, 0, 0], hole_mm: 16 }, ...(xs !== null ? [{ id: "torso_bay.switch", kind: "switch", face: "y+" as Face, at: [xs, Wt, zs] as Vec3, normal: [0, 1, 0] as Vec3, hole_mm: 22, part: "main_switch" }] : ys !== null ? [{ id: "torso_bay.switch", kind: "switch", face: "x+" as Face, at: [Dt, ys, zc] as Vec3, normal: [1, 0, 0] as Vec3, hole_mm: 22, part: "main_switch" }] : backCase ? [{ id: "torso_bay.switch", kind: "switch", face: "x-" as Face, at: [-Dt - 31, 0, zb] as Vec3, normal: [-1, 0, 0] as Vec3, hole_mm: 22, part: "main_switch" }] : [])] }, H);
   // backpack boards (the mech's converters) under their own hood, with the battery switch in it
   const pack = parts.filter((n) => partBox(A, n).lo[0] <= -Dt);
   if (pack.length) hoodAround(A, H, { name: "backpack_hood", deck: torsos[0], alsoHoles: torsos.slice(1), parts: pack, z0: b.shelfZ, limit: { x0: -Dt - 225, x1: -Dt - 3, y0: -b.backY - 5, y1: b.backY + 5 }, material: "printed_dark", grommets: [{ id: "to_torso", face: "x+", u: 0 }] });

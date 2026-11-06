@@ -200,6 +200,11 @@ export function limitsFromGeometry(A: Assembly, joints: string[], combos: Record
   const report: string[] = [];
   withSolids(A.spec, (m) => {
     const home = interferences(m, {}, undefined, 2, skip);
+    // parts of one rigid body cannot meet in a pose they did not meet in at home: later sweeps skip those pairs (each exact
+    // intersection costs WASM memory that never comes back, and a compartment adds many such pairs)
+    const body = new Map<string, string>(), of = (n: string): string => { if (body.has(n)) return body.get(n)!; const j = A.spec.joints.find((x) => x.child === n), g = j && j.type === "fixed" ? of(j.parent) : n; body.set(n, g); return g; };
+    const names = A.spec.links.map((l) => l.name);
+    for (let i = 0; i < names.length; i++) for (let k = i + 1; k < names.length; k++) if (of(names[i]) === of(names[k])) skip.add(`${names[i]}|${names[k]}`);
     A.check("clearance:home", home.length === 0, home.length ? `intersecting at the home pose: ${home.map((x) => `${x.a}/${x.b} ${x.volume_mm3} mm^3`).join(", ")}` : "no printed part or component intersects another at the home pose");
     for (const name of joints) {
       const j = A.spec.joints.find((x) => x.name === name)!;

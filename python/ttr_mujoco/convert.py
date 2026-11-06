@@ -95,6 +95,7 @@ def urdf_to_mjcf(urdf_path: str, floating=None, kp: float | None = None, out: st
     # Keep fixed-link identities so source inertias can be restored per body,
     # even when the source supplied its own MuJoCo compiler configuration.
     compiler.set("fusestatic", "false")
+    compiler.set("balanceinertia", "true")
     compiler.set("discardvisual", "false" if has_meshes else "true")
     resolved = ET.tostring(imported, encoding="unicode")
     load_path = urdf_path
@@ -218,6 +219,8 @@ def urdf_to_mjcf(urdf_path: str, floating=None, kp: float | None = None, out: st
             body.remove(old)
         ET.SubElement(body, "inertial", pos=xyz, mass=f"{mass:.12g}", fullinertia=" ".join(f"{v:.12g}" for v in full))
 
+    # a flat plate sits exactly on the inertia triangle limit: six-digit URDF values can fall a hair outside it
+    (root.find("compiler") if root.find("compiler") is not None else ET.SubElement(root, "compiler")).set("balanceinertia", "true")
     # mesh assets: one meshdir + bare file names, so the MJCF can be relocated (see relativize_meshes)
     meshes = [me for a_ in root.iter("asset") for me in a_.findall("mesh") if me.get("file")]
     dirs = {os.path.dirname(me.get("file")) for me in meshes}
