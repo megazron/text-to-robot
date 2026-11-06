@@ -8,7 +8,7 @@ import { part, electrical, WIRING, type ElectricalRecord, type Vec3 } from "@ttr
 import { buildPart } from "@ttr/mesh";
 import type { Assembly } from "./assembly.ts";
 import { fk, type Fk as FK } from "./kin.ts";
-import { withSolids, type ClearanceModel } from "./clearance.ts";
+import { linkSolid } from "./clearance.ts";
 import { build, box as boxSolid, type Mat4 } from "@ttr/solid";
 
 // ------------------------------------------------------------------------------------------- records
@@ -513,17 +513,26 @@ function applyClips(A: Assembly, rec: WiringRecord) {
   const blocked = (p: Vec3, grow: number) => bodies.some(({ T, b }) => { const v = sub(p, scale(T.p as Vec3, 1000)), q = [0, 1, 2].map((k) => T.R[0][k] * v[0] + T.R[1][k] * v[1] + T.R[2][k] * v[2]); return q.every((x, k) => x > b.min[k] - grow && x < b.max[k] + grow); });
   rec.clips = rec.clips.filter((c) => !blocked(c.at_mm, Math.max(c.od_mm, 3) + 5));
   // and of every other solid at the home pose: a clip on a face pressed against another part is no clip
-  rec.clips = withSolids(A.spec, (m: ClearanceModel) => rec.clips.filter((c) => build(() => {
-    const size = Math.max(c.od_mm, 3) + 5, top = add(c.at_mm, scale(c.normal, size)), lo = [0, 1, 2].map((k) => Math.min(c.at_mm[k], top[k]) - 4) as Vec3, hi = [0, 1, 2].map((k) => Math.max(c.at_mm[k], top[k]) + 4) as Vec3;
-    // the probe stands just off the surface, so it does not count the link it stands on
-    const off = add(c.at_mm, scale(c.normal, 1.5)), probe = boxSolid(lo.map((v, k) => Math.max(v, Math.min(off[k], top[k]) - 4)) as Vec3, hi.map((v, k) => Math.min(v, Math.max(off[k], top[k]) + 4)) as Vec3);
-    for (let i = 0; i < m.names.length; i++) {
-      const s = m.solids[i], T = f.link[m.names[i]]; if (!s || !T || m.names[i] === c.link) continue;
+  // the CSG heap never shrinks and has a hard limit: only the few solids a clip might touch are built, once each
+  rec.clips = build(() => {
+    const placed = A.spec.links.flatMap((l) => {
+      const T = f.link[l.name], g = l.geometry as { bbox?: { min: number[]; max: number[] } };
+      if (!T || !isPrintedLink(l) || !g.bbox) return [];
       const M: Mat4 = [T.R[0][0], T.R[1][0], T.R[2][0], 0, T.R[0][1], T.R[1][1], T.R[2][1], 0, T.R[0][2], T.R[1][2], T.R[2][2], 0, T.p[0] * 1000, T.p[1] * 1000, T.p[2] * 1000, 1];
-      if (s.transform(M).intersect(probe).volume() > 0.5) return false;
-    }
-    return true;
-  })));
+      const lo: Vec3 = [Infinity, Infinity, Infinity], hi: Vec3 = [-Infinity, -Infinity, -Infinity];
+      for (const x of [g.bbox.min[0], g.bbox.max[0]]) for (const y of [g.bbox.min[1], g.bbox.max[1]]) for (const z of [g.bbox.min[2], g.bbox.max[2]]) for (let k = 0; k < 3; k++) { const v = M[k] * x * 1000 + M[4 + k] * y * 1000 + M[8 + k] * z * 1000 + M[12 + k]; lo[k] = Math.min(lo[k], v); hi[k] = Math.max(hi[k], v); }
+      return [{ l, M, lo, hi, w: null as ReturnType<typeof boxSolid> | null }];
+    });
+    return rec.clips.filter((c) => {
+      // the probe stands just off the surface, so it does not count the link it stands on
+      const size = Math.max(c.od_mm, 3) + 5, top = add(c.at_mm, scale(c.normal, size)), off = add(c.at_mm, scale(c.normal, 1.5));
+      const lo = [0, 1, 2].map((k) => Math.min(off[k], top[k]) - 4) as Vec3, hi = [0, 1, 2].map((k) => Math.max(off[k], top[k]) + 4) as Vec3;
+      const near = placed.filter((p) => p.l.name !== c.link && [0, 1, 2].every((k) => p.lo[k] < hi[k] && p.hi[k] > lo[k]));
+      if (!near.length) return true;
+      const probe = boxSolid(lo, hi);
+      return !near.some((p) => { p.w ??= linkSolid(p.l)!.transform(p.M); return p.w.intersect(probe).volume() > 0.5; });
+    });
+  });
   for (const c of rec.clips) {
     const T = f.link[c.link]; if (!T) continue;
     // to the link's frame (R is a rotation: its transpose inverts it)

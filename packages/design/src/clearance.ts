@@ -10,7 +10,7 @@ import { buildPart } from "@ttr/mesh";
 
 type Vec3 = [number, number, number];
 /** Solid of a link in its own frame (mm), or null when it has no physical body worth checking. */
-function linkSolid(l: Link): M | null {
+export function linkSolid(l: Link): M | null {
   const g = l.geometry;
   if (g.type === "sphere") return l.role === "frame" ? null : Manifold.sphere(g.radius * 1000, 32).translate(l.origin.xyz.map((x) => x * 1000) as Vec3);
   if (g.type !== "mesh") return null;

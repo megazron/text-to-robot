@@ -8,7 +8,7 @@ import { part, electrical, type Vec3 } from "@ttr/parts";
 import { apply, build, box as boxSolid, evaluate, invert, mul, frame, translation, type Mat4, type Op } from "@ttr/solid";
 import { Assembly } from "./assembly.ts";
 import { fk } from "./kin.ts";
-import { withSolids, type ClearanceModel } from "./clearance.ts";
+import { linkSolid } from "./clearance.ts";
 import type { Harness } from "./wiring.ts";
 
 export type Face = "x-" | "x+" | "y-" | "y+" | "floor" | "lid";
@@ -400,7 +400,10 @@ export function enclosureChecks(A: Assembly) {
   const mm = (name: string): Mat4 => { const t = f.link[name]; return [t.R[0][0], t.R[1][0], t.R[2][0], 0, t.R[0][1], t.R[1][1], t.R[2][1], 0, t.R[0][2], t.R[1][2], t.R[2][2], 0, t.p[0] * 1000, t.p[1] * 1000, t.p[2] * 1000, 1]; };
   const parts = spec.links.flatMap((l) => (l.geometry.type === "mesh" && l.geometry.part === "component" ? [{ name: l.name, key: String(l.geometry.params?.key) }] : [])).filter((p) => needsEnclosure(p.key) && !exposedOf(A).some((e) => e.name === p.name));
   const results: { name: string; pass: boolean; detail: string }[] = [];
-  withSolids(spec, (m: ClearanceModel) => {
+  // only the compartments' own solids are built: the CSG heap never shrinks and has a hard limit
+  build(() => {
+    const solidCache = new Map<string, ReturnType<typeof boxSolid> | null>();
+    const placedSolid = (n: string) => { if (!solidCache.has(n)) { const l = byName.get(n), s = l ? linkSolid(l) : null; solidCache.set(n, s ? s.transform(mm(n)) : null); } return solidCache.get(n)!; };
     for (const p of parts) {
       const bb = part(p.key).bbox_mm!, W = mm(p.name);
       const corners: Vec3[] = []; for (const x of [bb.min[0], bb.max[0]]) for (const y of [bb.min[1], bb.max[1]]) for (const z of [bb.min[2], bb.max[2]]) corners.push(apply(W, [x, y, z]));
@@ -408,11 +411,12 @@ export function enclosureChecks(A: Assembly) {
       results.push({ name: `enclosure:inside:${p.name}`, pass: !!host, detail: host ? `${part(p.key).name} is inside ${host.name}` : `${part(p.key).name} is not inside any compartment` });
       if (!host) continue;
       // clearance against the compartment's solid: the part's box grown by 0.3 mm sideways and on top must not touch the walls
-      const idx = (host.solids ?? [host.tub, host.lid]).map((n) => m.names.indexOf(n)).filter((i) => i >= 0);
+      const hostSolids = host.solids ?? [host.tub, host.lid];
       let over = 0, where = "";
+      const placedHost = hostSolids.map((n) => [n, placedSolid(n)] as const);   // outside the inner build: they are cached for the next part
       build(() => {
         const g = 0.3, b = boxSolid([bb.min[0] - g, bb.min[1] - g, bb.min[2] + 2], [bb.max[0] + g, bb.max[1] + g, bb.max[2] + g]).transform(W);
-        for (const i of idx) { const s = m.solids[i]; if (!s) continue; const w = mm(m.names[i]), x = s.transform(w).intersect(b), v = x.volume(); over += v; if (v > 1) { const q = x.boundingBox(); where += ` ${m.names[i]} [${[...q.min].map((n) => n.toFixed(0))}]-[${[...q.max].map((n) => n.toFixed(0))}]`; } }
+        for (const [n, s] of placedHost) { if (!s) continue; const v = s.intersect(b).volume(); over += v; if (v > 1) where += ` ${n}`; }
       });
       results.push({ name: `enclosure:clearance:${p.name}`, pass: over < 8, detail: over < 8 ? `0.3 mm clear of the walls and lid of ${host.name} (standoffs and locators excepted)` : `${over.toFixed(0)} mm^3 of ${host.name} inside the part's envelope:${where}` });
     }

@@ -1003,6 +1003,8 @@ export function designRover(req: MobileRequest = {}): RobotSpecification {
     const { items, compute } = electronicsFor(sensors, nW, battery, !!armReq, !!armReq);
     b.deckTop = zBody + 2;
     const bayArea = { x0: -BL / 2 + 6, x1: BL / 2 - 6, y0: -BW / 2 + 6, y1: BW / 2 - 6 };
+    // a full box: boards close up, leaving room for plugs on one side only
+    if (!packBay(items, bayArea, [])) for (const i of items) if (i.kind === "board") i.margin = [1, 1, 1, 4];
     const plan = packBay(items, bayArea, []);
     electronicsBay(b, items, bayArea, [], zBody + 2);
     // the body box is the compartment: USB window and main switch in its walls, leads out by the rocker pivots, vent slots
