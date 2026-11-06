@@ -2647,12 +2647,12 @@
    "role": "actuator",
    "voltage_v": {
     "v": {
-     "min": 24,
+     "min": 18,
      "nom": 48,
      "max": 52
     },
     "src": "estimated",
-    "note": "24/48 V rated from the product page, 52 V maximum from manual V1.0.14; that manual gives no minimum, so min = lowest rated voltage."
+    "note": "24/48 V rated from the product page, 52 V maximum from manual V1.0.14; that manual gives no minimum, so min = lowest rated voltage. Minimum taken from the AK60-6 and AK80-9 datasheets (18-52 V); this page gives 24 V and 48 V as nominal."
    },
    "current_a": {
     "v": {
@@ -2854,12 +2854,12 @@
    "role": "actuator",
    "voltage_v": {
     "v": {
-     "min": 24,
+     "min": 18,
      "nom": 48,
      "max": 52
     },
     "src": "estimated",
-    "note": "24/48 V rated from the product page, 52 V maximum from manual V1.0.14; that manual gives no minimum, so min = lowest rated voltage."
+    "note": "24/48 V rated from the product page, 52 V maximum from manual V1.0.14; that manual gives no minimum, so min = lowest rated voltage. Minimum taken from the AK60-6 and AK80-9 datasheets (18-52 V); this page gives 24 V and 48 V as nominal."
    },
    "current_a": {
     "v": {

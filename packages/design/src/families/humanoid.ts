@@ -469,14 +469,14 @@ function boxBiped(A: Assembly, H: Harness, b: ReturnType<typeof buildBiped>, mec
   const cutChest: Op[] = ys !== null ? [{ op: "cutbox", min: [Dt - 1, ys - 15.2, zc - 11.2], max: [Dt + 4, ys + 15.2, zc + 11.2] }] : [];
   let vent = panel("side_panel_left", "y", 1, wx0, wx1, wz0, wz1, cutSide) + panel("side_panel_right", "y", -1, wx0, wx1, wz0, wz1);
   if (cz1 > cz0 + 10) vent += panel("chest_panel", "x", 1, -cy, cy, cz0, cz1, cutChest);
-  if (xs !== null) A.mount("side_panel_left", swKey, frame([xs, Wt + 0, zs], [0, 1, 0], [0, 0, 1]), "main_switch", "main power switch");
-  else if (ys !== null) A.mount("chest_panel", swKey, frame([Dt, ys, zc], [1, 0, 0], [0, 0, 1]), "main_switch", "main power switch");
+  if (xs !== null) A.mount("side_panel_left", swKey, frame([xs, Wt + 2.4, zs], [0, 1, 0], [0, 0, 1]), "main_switch", "main power switch");
+  else if (ys !== null) A.mount("chest_panel", swKey, frame([Dt + 2.4, ys, zc], [1, 0, 0], [0, 0, 1]), "main_switch", "main power switch");
   // USB of the computer through the back; cable exits: legs down through the floor, arms out at the sides, neck up
   const cb = partBox(A, "computer"), usbY = (cb.lo[1] + cb.hi[1]) / 2, usbZ = cb.lo[2] + 12;
   amend([{ op: "cutbox", min: [-Dt - 1, usbY - 22, usbZ - 8], max: [-Dt + BW + 1, usbY + 22, usbZ + 8] }]);
   // the computer's heat leaves through slots in the back wall above it
   const backSlots: Op[] = [], hw = Wt - 34;
-  for (let z = usbZ + 13; z < zSh - 14 && hw > 10; z += 5.4) { backSlots.push({ op: "cutbox", min: [-Dt - 1, -hw, z], max: [-Dt + BW + 1, hw, z + 3.2] }); vent += 2 * hw * 3.2; }
+  for (let z = usbZ + 16; z < zSh - 14 && hw > 10; z += 5.4) { backSlots.push({ op: "cutbox", min: [-Dt - 1, -hw, z], max: [-Dt + BW + 1, hw, z + 3.2] }); vent += 2 * hw * 3.2; }
   amend(backSlots);
   const floor = freeSpot(A, { x0: -Dt + BW + 2, x1: Dt - BW - 2, y0: -Wt + BW + 4, y1: Wt - BW - 4 }, [zT0, zT0 + 40], [14, 14]) ?? [Dt - 16, 0];
   const topX = -Dt + BW + 9, sideZ = zShelf + 9, sideX = Dt - BW - 8;
@@ -493,7 +493,7 @@ function boxBiped(A: Assembly, H: Harness, b: ReturnType<typeof buildBiped>, mec
   if (mech && xs === null) {
     const r = (A.design.enclosures ?? []).find((x) => x.name === "backpack_hood")!, cx = r.min[0] + 45, z0 = r.max[2] + 2.8;
     hood(A, H, { name: "switch_case", deck: "backpack_hood", x0: cx - 33, x1: cx + 33, y0: -33, y1: 33, z0, z1: z0 + 60, parts: [], ventRows: 0, deckGrommets: [{ id: "down", x: cx - 22, y: 22 }], material: "printed_dark" });
-    A.amendProgram("switch_case", [{ op: "hole", a: [cx, 0, z0 + 58], b: [cx, 0, z0 + 64], d: 52.4 }]);
+    A.amendProgram("switch_case", [{ op: "cutbox", min: [cx - 26.3, -26.3, z0 + 58], max: [cx + 26.3, 26.3, z0 + 64] }]);
     A.mount("switch_case", swKey, frame([cx, 0, z0 + 62.8], [0, 0, 1], [1, 0, 0]), "main_switch", "main battery switch");
   }
   // the IMU in a little hood under the pelvis

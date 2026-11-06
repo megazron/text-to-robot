@@ -15,7 +15,7 @@ import {
   footPad, stanceTorques, recordJoints, holdCurrent, pickBattery, COMPUTE_W, addSensor, limitsFromGeometry, sum, type Frame, type Foot,
 } from "./legkit.ts";
 import { sensorsOf, keyOf, quadPower, stabilityCheck, type LeggedRequest } from "./legged.ts";
-import { hood, hoodAround, enclosureChecks, exposed, freeSpot, deckSwitch } from "../enclosure.ts";
+import { hood, hoodAround, enclosureChecks, exposed } from "../enclosure.ts";
 import { Harness, finishWiring } from "../wiring.ts";
 import { busTree, coreTree, actuatorsUnder } from "../netlist.ts";
 
@@ -139,19 +139,11 @@ function buildHexapod(req: LeggedRequest, cfg: HexCfg, sensors: string[]) {
 /** Three compartments: a hood over the computer on the top deck, a hood over the boards on the plate, a tray under the plate for the battery. */
 function boxHex(A: Assembly, H: Harness, b: ReturnType<typeof buildHexapod>) {
   hoodAround(A, H, { name: "computer_hood", deck: "top_deck", parts: ["computer"], z0: b.zDeck + 3, z1: b.zRoof, usbFor: "computer" });
-  hoodAround(A, H, { name: "board_hood", deck: "base_link", parts: ["actuator_bus", "regulator_5v", "imu"], z0: b.zPlate, limit: { x0: -15, x1: 60, y0: -80, y1: 60 } });
+  hoodAround(A, H, { name: "board_hood", deck: "base_link", parts: ["actuator_bus", "regulator_5v", "imu"], z0: b.zPlate, rocker: true, limit: { x0: -15, x1: 44, y0: -80, y1: 60 } });
   const bb = b.battB, x0 = b.bx0 + bb.min[0] - 3, x1 = b.bx0 + bb.max[0] + 3, y = b.bw + 4.4;
   // the tray hangs from the plate: bounds in the frame turned about x, so z runs downwards
   hood(A, H, { name: "battery_tray", deck: "base_link", x0, x1, y0: -y, y1: y, z0: -(b.zPlate - 4), z1: -(b.zBatt - 3), parts: ["battery"], flip: true, ventRows: 0, deckGrommets: [{ id: "up", x: x1 - 8, y: 0 }] });
-  const sw = freeSpot(A, { x0: -60, x1: 60, y0: -60, y1: 60 }, [b.zBatt - 5, b.zPlate + 32], [34, 26], [{ x0: x0 - 8, x1: x1 + 8, y0: -y - 8, y1: y + 8 }, ...[0, 120, 240].map((d) => ({ x0: 52 * Math.cos((d * Math.PI) / 180) - 8, x1: 52 * Math.cos((d * Math.PI) / 180) + 8, y0: 52 * Math.sin((d * Math.PI) / 180) - 8, y1: 52 * Math.sin((d * Math.PI) / 180) + 8 })), { x0: -18, x1: 62, y0: -64, y1: 62 }]);
-  if (sw) deckSwitch(A, "base_link", sw, b.zPlate);
-  else mountRim(A, b);
   H.scan();
-}
-/** No room on the plate: the switch stands in the top deck's rim, behind the computer hood. */
-function mountRim(A: Assembly, b: ReturnType<typeof buildHexapod>) {
-  const c = freeSpot(A, { x0: -b.Rd * 0.8, x1: b.Rd * 0.8, y0: -b.Rd * 0.8, y1: b.Rd * 0.8 }, [b.zDeck - 28, b.zDeck + 6], [34, 26], (A.design.enclosures ?? []).filter((r) => r.name === "computer_hood").map((r) => ({ x0: r.min[0] - 8, x1: r.max[0] + 8, y0: r.min[1] - 8, y1: r.max[1] + 8 })));
-  deckSwitch(A, "top_deck", c ?? [b.Rd - 22, 0], b.zDeck + 3);
 }
 function wireHex(A: Assembly, H: Harness, compute: string) {
   const named: { name: string; kind: "lidar" | "depth" | "camera" | "imu" }[] = [];
