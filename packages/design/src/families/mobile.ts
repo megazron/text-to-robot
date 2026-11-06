@@ -321,7 +321,7 @@ function enclosure(b: Build, items: Item[], area: Rect, reserved: Rect[], deckTo
   walls.push({ op: "cutbox", min: [x0 - 1, (y0 + y1) / 2 - 18, deckTop - 1], max: [x0 + t + 1, (y0 + y1) / 2 + 18, deckTop + 12] });
   // edge trim and tie bar on the rear cable slot, main switch and USB window in the walls, grommets through the deck
   walls.push({ op: "box", min: [x0 + t, (y0 + y1) / 2 - 18, deckTop + 12], max: [x0 + t + 3, (y0 + y1) / 2 + 18, deckTop + 15] });
-  const fx = fixtures ? wallFixtures(b, plan, { x0, x1, y0, y1, z0: deckTop, z1: zTop, t }, boards, parent, bayName) : { cuts: [] as Op[], exits: [] as BayRecord["exits"] };
+  const fx = fixtures ? wallFixtures(b, plan, { x0, x1, y0, y1, z0: deckTop, z1: zTop, t }, boards, parent, bayName, reserved) : { cuts: [] as Op[], exits: [] as BayRecord["exits"] };
   walls.push(...fx.cuts);
   // too few free corners for lid bosses: lugs on the outside of the long walls instead
   const lugs: [number, number, number][] = bosses.length >= 3 ? [] : [[x0 + (x1 - x0) * 0.32, y0 - 3.4, -1], [x0 + (x1 - x0) * 0.32, y1 + 3.4, 1], [x0 + (x1 - x0) * 0.68, y0 - 3.4, -1], [x0 + (x1 - x0) * 0.68, y1 + 3.4, 1]];
@@ -331,7 +331,8 @@ function enclosure(b: Build, items: Item[], area: Rect, reserved: Rect[], deckTo
   for (const [x, y] of bosses) lid.push({ op: "hole", a: [x, y, zSeat - 4], b: [x, y, zLid + 1], d: 3.4 }, { op: "hole", a: [x, y, zSeat - 4], b: [x, y, zSeat - 0.01], d: 2 * 4.5 + 1 }); // lip notched round the bosses
   for (const [x, y] of lugs) lid.push({ op: "rod", a: [x, y, zSeat], b: [x, y, zLid], r: 4.5 }, { op: "hole", a: [x, y, zSeat - 1], b: [x, y, zLid + 1], d: 3.4 });
   const ventsY = Math.max(1, Math.floor((y1 - y0 - 30) / 10)), ventHalf = Math.max(25, (x1 - x0) / 2 - 24);
-  for (let i = 0; i < ventsY; i++) { const vy = y0 + 15 + i * 10; lid.push({ op: "cutbox", min: [(x0 + x1) / 2 - ventHalf, vy, zTop - 4], max: [(x0 + x1) / 2 + ventHalf, vy + 4, zLid + 1] }); }
+  // two blocks of slots either side of the middle: a lid split there stays in one piece each side
+  for (let i = 0; i < ventsY; i++) { const vy = y0 + 15 + i * 10, xc = (x0 + x1) / 2; for (const [a, c] of [[xc - ventHalf, xc - 8], [xc + 8, xc + ventHalf]]) lid.push({ op: "cutbox", min: [a, vy, zTop - 4], max: [c, vy + 4, zLid + 1] }); }
   for (const r of reserved) {
     if (r.x1 < x0 || r.x0 > x1 || r.y1 < y0 || r.y0 > y1) continue;
     // an opening for something that stands inside (lidar mast): a wall ring round it keeps the walls one piece. The zones
@@ -346,25 +347,36 @@ function enclosure(b: Build, items: Item[], area: Rect, reserved: Rect[], deckTo
   const solids: string[] = [];
   const split = (name: string, ops: Op[], zh: number) => {
     if (fitsBed([x1 - x0 + 26, y1 - y0 + 26, zh])) { b.printed(name, parent, ops, "printed_dark"); solids.push(name); return; }
-    solids.push(`${name}_front`, `${name}_rear`);
-    const xm = (x0 + x1) / 2, lap: Op[] = [{ op: "box", min: [xm - 12, y0 + t, deckTop + 12], max: [xm + 12, y0 + t + 2.4, zTop - 6] }, { op: "box", min: [xm - 12, y1 - t - 2.4, deckTop + 12], max: [xm + 12, y1 - t, zTop - 6] }];
+    const xm = (x0 + x1) / 2, ym2 = (y0 + y1) / 2, isLid = name.endsWith("lid");
+    const lap: Op[] = [{ op: "box", min: [xm - 12, y0 + t, deckTop + 12], max: [xm + 12, y0 + t + 2.4, zTop - 6] }, { op: "box", min: [xm - 12, y1 - t - 2.4, deckTop + 12], max: [xm + 12, y1 - t, zTop - 6] }];
     const lapHoles: Op[] = [y0, y1].flatMap((yy) => [-7, 7].map((dx) => ({ op: "hole", a: [xm + dx, yy - 5, (deckTop + zTop) / 2], b: [xm + dx, yy + 5, (deckTop + zTop) / 2], d: 3.4 }) as Op));
-    b.printed(`${name}_front`, parent, [...ops, ...(name.endsWith("lid") ? [] : lap), ...(name.endsWith("lid") ? [] : lapHoles), { op: "cutbox", min: [x0 - 20, y0 - 20, deckTop - 2], max: [xm, y1 + 20, zLid + 5] }], "printed_dark");
-    b.printed(`${name}_rear`, parent, [...ops, ...(name.endsWith("lid") ? [] : lapHoles), { op: "cutbox", min: [xm, y0 - 20, deckTop - 2], max: [x1 + 20, y1 + 20, zLid + 5] }], "printed_dark");
-    b.A.fastener("M3 x 8 + nut (enclosure halves lap joint)", 4);
+    // still too wide for the bed: each half is cut again along its length, with a lap on the end walls
+    const quarters = !fitsBed([(x1 - x0) / 2 + 26, y1 - y0 + 26, zh]);
+    const lapY: Op[] = quarters ? [{ op: "box", min: [x0 + t, ym2 - 12, deckTop + 12], max: [x0 + t + 2.4, ym2 + 12, zTop - 6] }, { op: "box", min: [x1 - t - 2.4, ym2 - 12, deckTop + 12], max: [x1 - t, ym2 + 12, zTop - 6] }] : [];
+    const lapYHoles: Op[] = quarters ? [x0, x1].flatMap((xx) => [-7, 7].map((dy) => ({ op: "hole", a: [xx - 5, ym2 + dy, (deckTop + zTop) / 2], b: [xx + 5, ym2 + dy, (deckTop + zTop) / 2], d: 3.4 }) as Op)) : [];
+    const halves: [string, Op, Op[]][] = [["front", { op: "cutbox", min: [x0 - 20, y0 - 20, deckTop - 2], max: [xm, y1 + 20, zLid + 5] }, isLid ? [] : lap], ["rear", { op: "cutbox", min: [xm, y0 - 20, deckTop - 2], max: [x1 + 20, y1 + 20, zLid + 5] }, []]];
+    for (const [tag, cut, extra] of halves) {
+      const common = [...ops, ...extra, ...(isLid ? [] : lapHoles), cut];
+      if (!quarters) { b.printed(`${name}_${tag}`, parent, common, "printed_dark"); solids.push(`${name}_${tag}`); continue; }
+      for (const [side, yc] of [["left", { op: "cutbox", min: [x0 - 20, y0 - 20, deckTop - 2], max: [x1 + 20, ym2, zLid + 5] } as Op], ["right", { op: "cutbox", min: [x0 - 20, ym2, deckTop - 2], max: [x1 + 20, y1 + 20, zLid + 5] } as Op]] as const) {
+        b.printed(`${name}_${tag}_${side}`, parent, [...common, ...(isLid || side === "right" ? [] : lapY), ...(isLid ? [] : lapYHoles), yc], "printed_dark");
+        solids.push(`${name}_${tag}_${side}`);
+      }
+    }
+    b.A.fastener("M3 x 8 + nut (enclosure pieces lap joint)", quarters ? 8 : 4);
   };
   split(bayName, walls, zTop - deckTop);
   split(`${bayName.replace("enclosure", "lid")}${bayName.includes("enclosure") ? "" : "_lid"}`, lid, zLid - zTop + 3);
   b.A.fastener("M3 x 10 self-tapping (enclosure lid)", 4);
   b.A.fastener("M3 x 8 + nut (enclosure tabs to deck; drill 3.4 mm through the deck at the tabs)", 4);
-  const ym = (y0 + y1) / 2, vent = ventsX * 5 * (zTop - 8 - deckTop - 10) * 2 + ventsY * 8 * ventHalf;
+  const ym = (y0 + y1) / 2, vent = ventsX * 5 * (zTop - 8 - deckTop - 10) * 2 + ventsY * 8 * (ventHalf - 8);
   registerBay(b.A, { name: bayName, tub: solids[0], lid: solids[solids.length - 1], solids, parent, T: invert(b.w(parent)), min: [x0 + t, y0 + t, deckTop], max: [x1 - t, y1 - t, zTop], parts: plan.map((p) => p.it.name), screws: bosses.length + lugs.length, vent_area_mm2: Math.round(vent),
     exits: [...fx.exits, { id: `${bayName}.rear_slot`, kind: "slot", face: "x-" as Face, at: [x0, ym, deckTop + 6], normal: [-1, 0, 0], hole_mm: 12 }, ...deckGrommets(b, parent, boards, { x0: x0 + t, x1: x1 - t, y0: y0 + t, y1: y1 - t }, deckTop, bayName)] }, b.H);
   return zTop;
 }
 /** USB window beside the computer and the main switch in a wall where nothing stands behind it. Coordinates are world mm. */
-function wallFixtures(b: Build, plan: Placement[], w: { x0: number; x1: number; y0: number; y1: number; z0: number; z1: number; t: number }, boards: Rect[], parent: string, bayName = "electronics_enclosure") {
-  const cuts: Op[] = [], exits: BayRecord["exits"] = [], clearOf = (q: Rect) => !boards.some((bd) => bd.x1 > q.x0 && bd.x0 < q.x1 && bd.y1 > q.y0 && bd.y0 < q.y1);
+function wallFixtures(b: Build, plan: Placement[], w: { x0: number; x1: number; y0: number; y1: number; z0: number; z1: number; t: number }, boards: Rect[], parent: string, bayName = "electronics_enclosure", reserved: Rect[] = []) {
+  const cuts: Op[] = [], exits: BayRecord["exits"] = [], clearOf = (q: Rect) => ![...boards, ...reserved].some((bd) => bd.x1 > q.x0 && bd.x0 < q.x1 && bd.y1 > q.y0 && bd.y0 < q.y1);
   const zc = (w.z0 + w.z1) / 2;
   // USB: the wall nearest the computer
   const pc = plan.find((p) => part(p.it.key).category === "compute");
@@ -1115,6 +1127,8 @@ export function designWallE(req: MobileRequest = {}): RobotSpecification {
       ...(sensors.includes("depth") ? depthOnWall(b, "base_link", BL / 2, 0, z1 - 40) : [])]);
     panel("body_top", [-BL / 2, -BW / 2, z1], [BL / 2, BW / 2, z1 + t], [{ op: "hole", a: [BL / 2 - 80, 0, z1 - 1], b: [BL / 2 - 80, 0, z1 + t + 1], d: 20 }]);
     b.A.fastener("M3 x 10 + printed corner cleats (body panels)", 24);
+    const topSlots: Op[] = []; for (let k = 0; k < 13; k++) topSlots.push({ op: "cutbox", min: [-60, -60 + k * 9, z1 - 1], max: [40, -56 + k * 9, z1 + t + 1] });
+    b.A.amendProgram("body_top", b.in("body_top", topSlots));
     // electronics inside the body on the deck
     const { items, compute } = electronicsFor(sensors.filter((x) => x !== "lidar"), 2, battery, sensors.includes("depth"), true);
     // battery, motor driver and regulator on the floor; computer, IMU and servo bus on a printed shelf
@@ -1129,10 +1143,10 @@ export function designWallE(req: MobileRequest = {}): RobotSpecification {
     electronicsBay(b, high, { x0: -BL / 2 + 8, x1: BL / 2 - 8, y0: -BW / 2 + 8, y1: BW / 2 - 8 }, [], zs);
     // the body panels close the compartment: back panel holds USB, switch and vents; the top panel comes off; leads leave through the neck hole
     { const zc = (z0 + z1) / 2, ops: Op[] = [{ op: "cutbox", min: [-BL / 2 - 1, -24, zs + 8], max: [-BL / 2 + t + 1, 24, zs + 26] }, { op: "cutbox", min: [-BL / 2 - 1, 40, zc - 11.2], max: [-BL / 2 + t + 1, 70.4, zc + 11.2] }];
-      let vent = 0; for (let k = 0; k < 10; k++) { ops.push({ op: "cutbox", min: [-BL / 2 - 1, -70, z1 - 40 + k * 3.9], max: [-BL / 2 + t + 1, 70, z1 - 38.4 + k * 3.9] }); vent += 140 * 1.6; }
+      let vent = 0; for (let k = 0; k < 18; k++) { ops.push({ op: "cutbox", min: [-BL / 2 - 1, -70, z1 - 74 + k * 3.9], max: [-BL / 2 + t + 1, 70, z1 - 72.4 + k * 3.9] }); vent += 140 * 1.6; }
       b.A.amendProgram("body_back", b.in("body_back", ops));
       b.mount("body_back", "switch_kcd4", frame([-BL / 2, 55.2, zc], [-1, 0, 0], [0, 0, 1]), "main_switch", "main power switch");
-      registerBay(b.A, { name: "body_bay", tub: "body_back", lid: "body_top", solids: ["body_back", "body_top", "body_front"], parent: "base_link", T: I4(), min: [-BL / 2 + t, -BW / 2 + t, z0 - 4], max: [BL / 2 - t, BW / 2 - t, z1], parts: items.map((i) => i.name), screws: 24, vent_area_mm2: Math.round(vent), note: "the hollow body",
+      registerBay(b.A, { name: "body_bay", tub: "body_back", lid: "body_top", solids: ["body_back", "body_top", "body_front"], parent: "base_link", T: I4(), min: [-BL / 2 + t, -BW / 2 + t, z0 - 4], max: [BL / 2 - t, BW / 2 - t, z1], parts: items.map((i) => i.name), screws: 24, vent_area_mm2: Math.round(vent + 13 * 400), note: "the hollow body",
         exits: [{ id: "body_bay.neck", kind: "grommet", face: "lid", at: [BL / 2 - 80, 0, z1 + t], normal: [0, 0, 1], hole_mm: 20 }, { id: "body_bay.usb", kind: "usb", face: "x-", at: [-BL / 2, 0, zs + 17], normal: [-1, 0, 0], hole_mm: 18 }, { id: "body_bay.switch", kind: "switch", face: "x-", at: [-BL / 2, 55.2, zc], normal: [-1, 0, 0], hole_mm: 22, part: "main_switch" }] }, b.H); }
     if (sensors.includes("imu")) b.sensor("imu_frame", "imu", "imu", translation([12.8, 11.35, 2]), { rate_hz: 400 });
     if (sensors.includes("lidar")) lidarMast(b, -BL / 2 + 40, 0, z1 + t, z1 + t, "body_top");

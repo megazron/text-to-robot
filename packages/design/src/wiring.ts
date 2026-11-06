@@ -8,6 +8,8 @@ import { part, electrical, WIRING, type ElectricalRecord, type Vec3 } from "@ttr
 import { buildPart } from "@ttr/mesh";
 import type { Assembly } from "./assembly.ts";
 import { fk, type Fk as FK } from "./kin.ts";
+import { withSolids, type ClearanceModel } from "./clearance.ts";
+import { build, box as boxSolid, type Mat4 } from "@ttr/solid";
 
 // ------------------------------------------------------------------------------------------- records
 export type NetKind = "power" | "ground" | "signal" | "bus";
@@ -510,6 +512,18 @@ function applyClips(A: Assembly, rec: WiringRecord) {
   const bodies = A.spec.links.flatMap((l) => (l.geometry.type === "mesh" && l.geometry.part === "component" && part(String(l.geometry.params?.key)).bbox_mm && f.link[l.name] ? [{ T: f.link[l.name], b: part(String(l.geometry.params?.key)).bbox_mm! }] : []));
   const blocked = (p: Vec3, grow: number) => bodies.some(({ T, b }) => { const v = sub(p, scale(T.p as Vec3, 1000)), q = [0, 1, 2].map((k) => T.R[0][k] * v[0] + T.R[1][k] * v[1] + T.R[2][k] * v[2]); return q.every((x, k) => x > b.min[k] - grow && x < b.max[k] + grow); });
   rec.clips = rec.clips.filter((c) => !blocked(c.at_mm, Math.max(c.od_mm, 3) + 5));
+  // and of every other solid at the home pose: a clip on a face pressed against another part is no clip
+  rec.clips = withSolids(A.spec, (m: ClearanceModel) => rec.clips.filter((c) => build(() => {
+    const size = Math.max(c.od_mm, 3) + 5, top = add(c.at_mm, scale(c.normal, size)), lo = [0, 1, 2].map((k) => Math.min(c.at_mm[k], top[k]) - 4) as Vec3, hi = [0, 1, 2].map((k) => Math.max(c.at_mm[k], top[k]) + 4) as Vec3;
+    // the probe stands just off the surface, so it does not count the link it stands on
+    const off = add(c.at_mm, scale(c.normal, 1.5)), probe = boxSolid(lo.map((v, k) => Math.max(v, Math.min(off[k], top[k]) - 4)) as Vec3, hi.map((v, k) => Math.min(v, Math.max(off[k], top[k]) + 4)) as Vec3);
+    for (let i = 0; i < m.names.length; i++) {
+      const s = m.solids[i], T = f.link[m.names[i]]; if (!s || !T || m.names[i] === c.link) continue;
+      const M: Mat4 = [T.R[0][0], T.R[1][0], T.R[2][0], 0, T.R[0][1], T.R[1][1], T.R[2][1], 0, T.R[0][2], T.R[1][2], T.R[2][2], 0, T.p[0] * 1000, T.p[1] * 1000, T.p[2] * 1000, 1];
+      if (s.transform(M).intersect(probe).volume() > 0.5) return false;
+    }
+    return true;
+  })));
   for (const c of rec.clips) {
     const T = f.link[c.link]; if (!T) continue;
     // to the link's frame (R is a rotation: its transpose inverts it)
@@ -520,7 +534,8 @@ function applyClips(A: Assembly, rec: WiringRecord) {
     const P = (a: number, b: number, e: number): Vec3 => add(add(p, scale(w, a)), add(scale(d, b), scale(n, e)));
     const post = (a0: number, a1: number, e0: number, e1: number) => ({ op: "hull", of: [a0, a1].flatMap((a) => [-len, len].flatMap((b) => [e0, e1].map((e) => { const q = P(a, b, e); return { op: "box", min: [q[0] - 0.01, q[1] - 0.01, q[2] - 0.01], max: [q[0] + 0.01, q[1] + 0.01, q[2] + 0.01] }; }))) });
     const ops = byLink.get(c.link) ?? [];
-    ops.push(post(-half - t, -half, -0.6, h + t), post(half, half + t, -0.6, h + t), post(-half - t, half + t, h, h + t));
+    // a pad under the whole clip: its centre is on the surface, so it stays attached even on a beam narrower than the clip
+    ops.push(post(-half - t, half + t, -0.9, 0.7), post(-half - t, -half, -0.6, h + t), post(half, half + t, -0.6, h + t), post(-half - t, half + t, h, h + t));
     byLink.set(c.link, ops);
   }
   for (const [l, ops] of byLink) { try { A.amendProgram(l, ops); } catch (e) { rec.notes.push(`clips on ${l} not printed: ${(e as Error).message}`); } }
