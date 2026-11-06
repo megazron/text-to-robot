@@ -26,13 +26,14 @@ T, GAP, SEAM = 3.0, 14.0, 0.6
 BODY_CLEAR, FACES = 4.0, 10**9
 BED = (250.0, 210.0, 220.0)
 
-# ---- sculpt landmarks, in sculpt units after P = (-(y - 210), x - 212.6, z): x forward, y left, z up (height 150)
+# ---- sculpt landmarks in mm, the sculpt at true scale: x forward, y left, z up (1742 mm tall)
 def mirror(p): return (p[0], -p[1], p[2])
-FIG = {"hip_c": (1, 0, 82), "neck": (-2, 0, 129), "top": (0, 0, 150)}
+FIG = {"hip_c": (55, 0, 880), "neck": (65, 0, 1510), "top": (80, 0, 1742)}
 for side, f in (("left", lambda p: p), ("right", mirror)):
-    FIG.update({f"{side}_shoulder": f((-4, 19.5, 125)), f"{side}_elbow": f((-6.5, 23.2, 102)), f"{side}_wrist": f((-2.5, 29.2, 84)),
-                f"{side}_hand_end": f((0, 29.5, 69)), f"{side}_hip": f((1, 8.2, 82)), f"{side}_knee": f((1, 10, 47)),
-                f"{side}_ankle": f((-3, 12.8, 10)), f"{side}_toe": f((16, 12.8, 2))})
+    FIG.update({f"{side}_shoulder": f((10, 235, 1400)), f"{side}_elbow": f((-9, 357, 1120)), f"{side}_wrist": f((85, 430, 930)),
+                f"{side}_hand_end": f((115, 440, 780)), f"{side}_hip": f((55, 100, 880)), f"{side}_knee": f((55, 150, 510)),
+                f"{side}_ankle": f((10, 190, 95)), f"{side}_toe": f((165, 200, 30))})
+RADIAL = 1.10   # ONE scale across the whole body: every region keeps the sculpt's proportions (per-bone stretching made the suit look deformed)
 
 
 def fk(urdf):
@@ -91,15 +92,15 @@ def regions():
 
 
 # panels painted champagne gold (from the reference photo), boxes in sculpt units; mirrored for the right side
-GOLD = {"torso": [((-30, 9.5, 88), (30, 30, 104))],
-        "upper_arm": [((-30, -30, 100), (30, 60, 116))],
-        "thigh": [((3, -30, 52), (30, 60, 68))],
-        "forearm": [((-30, -30, 87), (30, 60, 91))]}
+GOLD = {"torso": [((-400, 92, 1040), (400, 400, 1215))],
+        "upper_arm": [((-400, -400, 1170), (400, 600, 1330))],
+        "thigh": [((70, -400, 600), (400, 600, 800))],
+        "forearm": [((-400, -400, 985), (400, 600, 1030))]}
 
 
 # (joint, moving limb, swept range rad): parts of the parent's armour in the limb's way are cut back (armpit scoops, hip
 # and knee reliefs), as an armourer trims a suit on the wearer
-SWEEP = {"torso": [(f"{s}_{j}", f"{s}_{l}", lo, hi) for s in ("left", "right") for j, l, lo, hi in (("shoulder", "upper_arm", -1.1, 0.3), ("hip", "thigh", -1.05, 0.2))],
+SWEEP = {"torso": [(f"{s}_{j}", f"{s}_{l}", lo, hi) for s in ("left", "right") for j, l, lo, hi in (("shoulder", "upper_arm", -1.02, 0.22), ("hip", "thigh", -1.02, 0.2))],
          "upper_arm": [("{s}_elbow", "{s}_forearm", -1.85, 0)], "thigh": [("{s}_knee", "{s}_shin", 0, 1.65)]}
 PARENT_BODY = {"upper_arm": ("{s}_shoulder", "pelvis", -1.1, 0.3), "thigh": ("{s}_hip", "pelvis", -1.05, 0.2), "forearm": ("{s}_elbow", "{s}_upper_arm", -1.85, 0), "shin": ("{s}_knee", "{s}_thigh", 0, 1.65)}
 RELIEF, CHILD_RELIEF, ARMOUR_CLEAR = GAP + T + 2, 8.0, 3.0
@@ -107,12 +108,12 @@ UNIFORM = ("head", "hand", "foot")                     # kept in proportion: a s
 PELVIS_SLIM = 0.94                                     # wearer torso 0.94 of the reference build: 89 cm chest at 1.75 m
 HINGE_HEAD = np.array([-5.0, 0.0, 185.0])              # faceplate pivot in the head frame: the centre of the crown's curve
 EYE = ((5.0, 1.6, 139.7), (30, 5.8, 140.8))            # eye slots (mirrored), sculpt units
-REACTOR = (0.0, 118.0, 2.7)                            # arc reactor: y, z, radius
-PALM = ((0.0, 27.2, 79.0), 2.1)                        # repulsor: centre (mirrored), radius
+REACTOR = (0.0, 1367.0, 31.0)                          # arc reactor: y, z, radius (mm)
+PALM = ((95.0, 420.0, 880.0), 25.0)                    # repulsor: centre (mirrored), radius (mm)
 FACE_T, POD_R, CROWN_T = 2.0, 28.0, 9.0
 import os as _os
 OPENING = _os.environ.get("ARMOUR_OPEN", "1") == "1"
-HELMET_Z = 126.5                                       # lower edge of the helmet, sculpt units
+HELMET_Z = 1490.0                                      # lower edge of the helmet (mm)
 FACE = ((3.0, -30, 125), (30, 30, 143.5))              # the faceplate, in sculpt units
 
 
@@ -163,19 +164,19 @@ def unmapping(fa, fb, wa, wb, radial):
     return M
 
 
-def label_field(P, W, R, names, gs=1.0):
+def label_field(P, W, R, names, gs=1.0, sculpt=False):
     """normalised distance of every point to every region's bone: d / girth"""
     D = np.stack([seg_dist(P, W[R[n][0]], W[R[n][1]]) / (R[n][3] * gs) for n in names], axis=1)
-    if gs != 1.0 and "head" in names:      # sculpt space: the helmet ends on a clean line at its lower edge, not at a bone's reach
-        h = names.index("head"); up = ((P[:, 2] > HELMET_Z) & (np.hypot(P[:, 0] + 1.0, P[:, 1]) < 8.4)) | ((P[:, 2] > 131.5) & (np.abs(P[:, 1]) < 13))
+    if sculpt and "head" in names:      # sculpt space: the helmet ends on a clean line at its lower edge, not at a bone's reach
+        h = names.index("head"); up = ((P[:, 2] > HELMET_Z) & (np.hypot(P[:, 0] - 60.0, P[:, 1]) < 100)) | ((P[:, 2] > 1540) & (np.abs(P[:, 1]) < 170))
         D[up, h] = 0.0; D[~up, h] = 9.0
     return D
 
 
-def sculpt_solid(P, faces, v=0.2):
+def sculpt_solid(P, faces, v=2.5):
     """Sealed solid of the sculpt: the surface is dilated so hairline cracks (up to 0.4 units) cannot leak, flood-filled from
     outside, and the solid eroded back. Returns the depth lookup (sculpt units, trilinear) and the inside test."""
-    m = trimesh.Trimesh(P, faces, process=False); k = math.ceil(0.4 / v)
+    m = trimesh.Trimesh(P, faces, process=False); k = 2
     lo = m.bounds[0] - (k + 4) * v; shape = np.ceil((m.bounds[1] + (k + 4) * v - lo) / v).astype(int) + 1
     occ = binary_dilation(occupancy(m, lo, shape, v), iterations=k)
     lab, _ = nd_label(~occ); solid = binary_erosion(lab != lab[0, 0, 0], iterations=k); del lab, occ
@@ -206,7 +207,7 @@ def fit_radial(depth_fig, a, b, Wa, Wb, wear, cap=1.45):
 
 def crop(P, faces, F, R, names, k):
     """faces of the sculpt in this region or next to it, decided in the sculpt's own space"""
-    c = P[faces].mean(1); D = label_field(c, F, R, names, 1 / 11.67)
+    c = P[faces].mean(1); D = label_field(c, F, R, names, 1.0, True)
     return faces[D[:, k] <= D.min(1) * 1.12 + 0.05]
 
 
@@ -237,7 +238,7 @@ def depth_grid(Pw, all_faces, faces, v, inv, inside, depth):
     ii = np.argwhere(occ)
     for c0 in range(0, len(ii), 1000000):
         j = ii[c0:c0 + 1000000]; solid[tuple(j.T)] = inside(inv(lo + j * v))
-    d = (distance_transform_edt(solid).astype(np.float32) - distance_transform_edt(~solid).astype(np.float32)) * v
+    d = (slab_edt(solid) - slab_edt(~solid)) * v
     d = gaussian_filter(d, 0.8)
     # right at the skin use the exact distance to the sculpt (no voxel terraces); the sealed solid still decides the sign
     ii = np.argwhere(np.abs(d) < 4 * v)
@@ -255,6 +256,16 @@ def depth_grid(Pw, all_faces, faces, v, inv, inside, depth):
         # exact value keeps the crisp panel lines at the skin, the sealed value takes over below it)
         e = d[t]; d[t] = np.where(np.abs(dn - e) < 12.0, np.maximum(dn, e - v - 0.6), e - v)
     return median_filter(gaussian_filter(d, 0.45), size=3), lo, v   # the median closes one-voxel slits
+
+
+def slab_edt(mask, slab=96, halo=40):
+    """Distance transform in overlapping slabs along z: only depths near the skin matter, and a whole-body grid does not fit
+    in memory. Distances beyond the halo are capped, which nothing downstream reads."""
+    out = np.empty(mask.shape, np.float32)
+    for z0 in range(0, mask.shape[2], slab):
+        a, b = max(0, z0 - halo), min(mask.shape[2], z0 + slab + halo)
+        out[:, :, z0:z0 + slab] = distance_transform_edt(mask[:, :, a:b]).astype(np.float32)[:, :, z0 - a:z0 - a + min(slab, mask.shape[2] - z0)]
+    return out
 
 
 def sample_grid(d, lo, v, pts):
@@ -280,7 +291,7 @@ def main():
     W = bones_from_wearer(jpos, head_top)
     F = {k: np.array(v, float) for k, v in FIG.items()}
     fig = trimesh.load(fig_path, force="mesh")
-    v = fig.vertices; P = np.c_[-(v[:, 1] - 210), v[:, 0] - 212.6, v[:, 2]]
+    P = np.asarray(fig.vertices, float)
     R = regions(); names = list(R)
     pieces = []
     depth_fig, inside_fig = sculpt_solid(P, fig.faces)
@@ -295,11 +306,8 @@ def main():
         cr = crop(P, fig.faces, F, R, names, k)
         mine = trimesh.sample.sample_surface_even(body[link], 8000, seed=2)[0]
         kind = name.split("_", 1)[1] if name[:4] in ("left", "righ") else name
-        radial, miss = fit_radial(depth_fig, F[a], F[b], W[a], W[b], mine, cap=1.2 if kind == "upper_arm" else 1.45)
-        rm = float(radial.mean())
-        if kind in UNIFORM:
-            rm = float(radial.max()); radial = np.array([rm, rm])
-            W[b] = W[a] + (W[b] - W[a]) / np.linalg.norm(W[b] - W[a]) * rm * np.linalg.norm(F[b] - F[a])
+        radial = np.array([RADIAL, RADIAL]); rm = RADIAL; miss = 0.0
+        if kind in UNIFORM: W[b] = W[a] + (W[b] - W[a]) / np.linalg.norm(W[b] - W[a]) * rm * np.linalg.norm(F[b] - F[a])
         Pw = mapping(F[a], F[b], W[a], W[b], radial)(P)
         inv = unmapping(F[a], F[b], W[a], W[b], radial)
         d, lo, v = depth_grid(Pw, fig.faces, cr, voxel, inv, inside_fig, depth_fig)
@@ -314,18 +322,19 @@ def main():
         for j, l, lo_, hi_ in SWEEP.get(kind, []):
             lk = l.format(s=sn); mine_arm = [p["mesh"] for p in pieces if p["link"] == lk]
             m_ = trimesh.util.concatenate(mine_arm) if mine_arm else body[lk]
+            if mine_arm and lk.endswith("upper_arm"): m_ = m_.convex_hull   # the spiky shoulder cuts a jagged edge: its hull cuts one clean scoop
             sweeps.append((j.format(s=sn), SDF(m_.vertices, m_.faces), lo_, hi_, ARMOUR_CLEAR if mine_arm else RELIEF))
         pb = PARENT_BODY.get(kind); pbody = None
         if pb: pbody = (pb[0].format(s=sn), SDF(body[pb[1].format(s=sn)].vertices, body[pb[1].format(s=sn)].faces), pb[2], pb[3])
         for c0 in range(0, len(idx), 500000):        # in chunks: a full-body grid does not fit in memory at once
             ii = idx[c0:c0 + 500000]; g = lo + ii * v; dd = d[tuple(ii.T)]; t = tuple(ii.T)
             q = inv(g)
-            D = label_field(q, F, R, names, 1 / 11.67)
+            D = label_field(q, F, R, names, 1.0, True)
             regf = (D[:, k] - np.delete(D, k, axis=1).min(1)) * girth + SEAM     # mm-ish, negative inside this region
             f = regf
             for sd in bs: f = np.maximum(f, BODY_CLEAR + sd(g))                 # never closer than BODY_CLEAR to the wearer (sdf > 0 inside the body)
             for jn, sd, lo_, hi_, rl in sweeps:                                 # the child armour's whole swing
-                for ang in np.linspace(lo_, hi_, 33):       # fine steps: a 3 mm shell must not slip between two samples
+                for ang in np.linspace(lo_, hi_, 25):       # fine steps: a 3 mm shell must not slip between two samples
                     if abs(ang) > 0.04: f = np.maximum(f, rl + sd(rotate_about(g, jpos[jn], JOINT_AXIS[jn], -ang)))
             if pbody:                                                           # and this piece's own swing against the body it hangs from
                 jn, sd, lo_, hi_ = pbody
@@ -341,7 +350,7 @@ def main():
             paint[t] = pf
             lf = np.full(len(g), 5.0, np.float32); qa = q * np.array([1, 1, 1]); ya = np.abs(q[:, 1])
             if kind == "head": lf = box_sd(np.c_[q[:, 0], ya, q[:, 2]], *EYE) * rm
-            if kind == "torso": lf = np.maximum(np.hypot(q[:, 1], q[:, 2] - REACTOR[1]) - REACTOR[2], -q[:, 0]) * rm
+            if kind == "torso": lf = np.maximum(np.hypot(q[:, 1], q[:, 2] - REACTOR[1]) - REACTOR[2], 60 - q[:, 0]) * rm
             if kind == "hand": lf = np.maximum(np.linalg.norm(qs - np.array(PALM[0]), axis=1) - PALM[1], -5) * rm
             lens[t] = lf
         # cut lines rounded: relief edges follow a smooth curve instead of the jagged outline of what swings past

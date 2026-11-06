@@ -11,13 +11,13 @@
    "explanation": "opens faceplate to -0.95 rad (target -0.95) and holds 1.5 s",
    "joints": {
     "faceplate": {
-     "peak_nm": 0.7536,
+     "peak_nm": 0.7539,
      "peak_rating_nm": 1.0787,
      "util_peak": 0.699,
      "mean_hold_nm": 0.5037,
      "rated_nm": 0.6472,
      "util_rated": 0.778,
-     "max_err": 0.0063,
+     "max_err": 0.0062,
      "max_err_hold": 0.0002,
      "saturated_frac": 0.0
     }
@@ -29,5 +29,5 @@
  },
  "passed": 1,
  "total": 1,
- "source_urdf_sha256": "e48a39c0048000aa1f44fed6131e4623ae074a998314c73eda7f960bfd5a35c5"
+ "source_urdf_sha256": "019d06edbb175a775af7cf9814892d323b9f55e0ddc87d2bb2cfca22a4b65640"
 }

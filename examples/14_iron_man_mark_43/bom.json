@@ -68,12 +68,12 @@
     },
     {
       "category": "Printed structure",
-      "name": "PETG filament for 151 printed parts",
+      "name": "PETG filament for 139 printed parts",
       "qty": 1,
-      "unit_cost": 198.18,
-      "subtotal": 198.18,
-      "spec": "7833 g of parts (+15 % supports/waste), about 713.9 h of printing",
-      "note": "ear_pod_left, ear_pod_right, faceplate_arm_left, faceplate_arm_right, eye_lens_1, eye_lens_2, helmet_back, helmet_top, helmet_faceplate_shell, helmet_chin, torso_29, torso_38, torso_1, torso_2, torso_3, torso_4, torso_5, torso_6, torso_7, torso_8, torso_9, torso_10, torso_11, torso_12, torso_13, torso_14, torso_15, torso_16, torso_17, torso_18, torso_19, torso_21, torso_22, torso_23, torso_24, torso_25, torso_26, torso_27, torso_28, torso_30, torso_31, torso_32, torso_33, torso_34, torso_35, torso_36, torso_37, torso_40, left_upper_arm_1, left_upper_arm_2, left_upper_arm_3, left_upper_arm_4, left_upper_arm_5, left_upper_arm_6, left_upper_arm_7, left_upper_arm_8, left_upper_arm_9, left_upper_arm_10, left_upper_arm_11, left_upper_arm_12, left_upper_arm_13, left_upper_arm_14, left_upper_arm_15, right_upper_arm_1, right_upper_arm_1p1, right_upper_arm_2, right_upper_arm_3, right_upper_arm_4, right_upper_arm_5, right_upper_arm_6, right_upper_arm_7, right_upper_arm_8, right_upper_arm_9, right_upper_arm_10, right_upper_arm_11, right_upper_arm_12, right_upper_arm_13, right_upper_arm_14, right_upper_arm_15, right_upper_arm_16, right_upper_arm_17, left_thigh_1, left_thigh_2, left_thigh_3, left_thigh_4, left_thigh_5, left_thigh_6, left_thigh_7, left_thigh_8, right_thigh_1, right_thigh_2, right_thigh_3, right_thigh_4, right_thigh_5, right_thigh_6, right_thigh_7, right_thigh_8, left_forearm_1, left_forearm_2, left_forearm_3, left_forearm_4, left_forearm_5, left_forearm_6, left_forearm_7, left_forearm_8, right_forearm_1, right_forearm_2, right_forearm_3, right_forearm_4, right_forearm_5, right_forearm_6, right_forearm_7, right_forearm_8, right_forearm_9, left_shin_1, left_shin_2, left_shin_3, left_shin_4, left_shin_5, left_shin_6, left_shin_7, left_shin_8, left_shin_9, left_shin_10, left_shin_11, left_shin_12, right_shin_1, right_shin_2, right_shin_3, right_shin_4, right_shin_5, right_shin_6, left_foot_1, left_foot_2, left_foot_3, right_foot_1, right_foot_2, right_foot_3, left_hand_4, left_hand_6, right_hand_4, right_hand_6, left_hand_1, left_hand_2, left_hand_3, left_hand_5, right_hand_1, right_hand_2, right_hand_3, right_hand_5, electronics_box"
+      "unit_cost": 203.58,
+      "subtotal": 203.58,
+      "spec": "8047 g of parts (+15 % supports/waste), about 733.4 h of printing",
+      "note": "ear_pod_left, ear_pod_right, faceplate_arm_left, faceplate_arm_right, eye_lens_1, eye_lens_2, helmet_back, helmet_top, helmet_faceplate_shell, helmet_chin, torso_37, torso_46, torso_1, torso_2, torso_3, torso_4, torso_5, torso_6, torso_7, torso_8, torso_9, torso_10, torso_11, torso_12, torso_13, torso_14, torso_15, torso_16, torso_17, torso_18, torso_19, torso_20, torso_21, torso_22, torso_23, torso_24, torso_25, torso_26, torso_27, torso_28, torso_29, torso_30, torso_31, torso_32, torso_33, torso_34, torso_35, torso_36, torso_38, torso_39, torso_40, torso_41, torso_42, torso_43, torso_44, torso_45, left_upper_arm_1, left_upper_arm_2, left_upper_arm_3, left_upper_arm_4, left_upper_arm_5, left_upper_arm_6, left_upper_arm_7, left_upper_arm_8, left_upper_arm_9, left_upper_arm_10, left_upper_arm_11, left_upper_arm_12, left_upper_arm_13, left_upper_arm_14, left_upper_arm_15, right_upper_arm_1, right_upper_arm_2, right_upper_arm_3, right_upper_arm_4, right_upper_arm_5, right_upper_arm_6, right_upper_arm_7, right_upper_arm_8, right_upper_arm_9, right_upper_arm_10, right_upper_arm_11, right_upper_arm_12, right_upper_arm_13, right_upper_arm_14, right_upper_arm_15, left_thigh_1, left_thigh_2, left_thigh_3, left_thigh_4, left_thigh_5, left_thigh_6, left_thigh_7, left_thigh_8, left_thigh_9, right_thigh_1, right_thigh_2, right_thigh_3, right_thigh_4, right_thigh_5, right_thigh_6, right_thigh_7, right_thigh_8, right_thigh_9, left_forearm_1, left_forearm_2, left_forearm_3, left_forearm_4, left_forearm_5, right_forearm_1, right_forearm_2, right_forearm_3, right_forearm_4, right_forearm_5, left_shin_1, left_shin_2, left_shin_3, left_shin_4, left_shin_5, left_shin_6, right_shin_1, right_shin_2, right_shin_3, right_shin_4, right_shin_5, right_shin_6, left_foot_1, left_foot_2, right_foot_1, right_foot_2, left_hand_4, right_hand_5, left_hand_1, left_hand_2, left_hand_3, right_hand_1, right_hand_2, right_hand_3, electronics_box"
     },
     {
       "category": "Fasteners",
@@ -84,7 +84,7 @@
       "spec": "4x M2 self-tapping (servo tabs, from the servo kits)"
     }
   ],
-  "total": 334.36,
+  "total": 339.76,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
@@ -100,8 +100,8 @@
   ],
   "warnings": [],
   "notes": [
-    "Iron Man Mark 43 (full wearable suit): 151 printed pieces, 8.5 kg filament, motorised faceplate, $322 incl. filament",
-    "armour shape from: body: Iron Man Mark XLII (42) by ShaggyDawg (Printables 1870572, CC0); helmet: Iron Man wearable helmet Mark 42 by Manifold3D (Printables 449081, CC BY-SA); 3 mm walls, 2 mm faceplate, 15 % gyroid infill (shells are mostly walls)",
+    "Iron Man Mark 43 (full wearable suit): 139 printed pieces, 8.7 kg filament, motorised faceplate, $327 incl. filament",
+    "armour shape from: body: \"Iron man armored suit\" by octv h (Printables 1524711, CC0, provenance unverified); helmet: Iron Man wearable helmet Mark 42 by Manifold3D (Printables 449081, CC BY-SA); 3 mm walls, 2 mm faceplate, 15 % gyroid infill (shells are mostly walls)",
     "filament at $22/kg, 8 % waste",
     "the suit is worn armour over a black undersuit: the wearer moves every joint; nothing powers the limbs (hobby servos cannot move a person)",
     "the wearer is 89 cm chest at 1.75 m and the pieces scale evenly with height; check against your own measurements before printing",

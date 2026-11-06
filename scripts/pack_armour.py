@@ -198,7 +198,7 @@ def main():
         q = np.round((v - lo) / step).astype("<u2"); ov = len(blob); blob += q.tobytes(); of = len(blob); blob += f.astype("<u2").tobytes()
         rows.append({"name": p["name"], "link": p["link"], "material": p["material"], "region": p["region"], "lo": lo.round(4).tolist(), "step": step.tolist(), "nv": len(v), "nf": len(f), "ov": ov, "of": of,
                      "volume_mm3": round(float(m.volume), 1), "centroid": m.centroid.round(2).tolist()})
-    man = {"source": "body: Iron Man Mark XLII (42) by ShaggyDawg (Printables 1870572, CC0); helmet: Iron Man wearable helmet Mark 42 by Manifold3D (Printables 449081, CC BY-SA)", "wearer_height_m": 1.75, "pieces": rows, "limits": limits, "hinge": [float(hinge[0]), float(hinge[2])],
+    man = {"source": 'body: "Iron man armored suit" by octv h (Printables 1524711, CC0, provenance unverified); helmet: Iron Man wearable helmet Mark 42 by Manifold3D (Printables 449081, CC BY-SA)', "wearer_height_m": 1.75, "pieces": rows, "limits": limits, "hinge": [float(hinge[0]), float(hinge[2])],
            "face_rear_x": float(min(m.bounds[0][0] for p, m in pcs if p["link"] == "helmet_faceplate") - jpos["neck_mount"][0]),
            "notes": ["shells made by scripts/armour_from_reference.py", "joint limits measured by sweeping each limb's armour against its parent's armour"]}
     json.dump(man, open(out + ".json", "w"), separators=(",", ":")); open(out + ".bin", "wb").write(blob)

@@ -44,7 +44,7 @@ Flip the Arduino switch and the design is rebuilt around cheap, compatible parts
 
 <img src="docs/img/mark43_studio.png" width="300" align="right" alt="Mark 43 studio render">
 
-The hardest thing we could think of. A suit fitted around a person of a stated height: 151 printed shells sized for a home printer, a faceplate lifted by two servos, lit eyes, chest and palms, and joints measured by swinging real armour against real armour. It is worn, not powered: a person moves it.
+The hardest thing we could think of. A suit fitted around a person of a stated height: 139 printed shells sized for a home printer, a faceplate lifted by two servos, lit eyes, chest and palms, and joints measured by swinging real armour against real armour. It is worn, not powered: a person moves it.
 
 Fan work, not affiliated with or endorsed by the rights holders. See [NOTICE](NOTICE.md).
 

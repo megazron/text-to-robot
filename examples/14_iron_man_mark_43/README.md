@@ -6,9 +6,9 @@
 
 Interpreted as: Iron Man Mark 43 wearable suit · budget $60000
 
-**Iron Man Mark 43 (full wearable suit): 151 printed pieces, 8.5 kg filament, motorised faceplate, $322 incl. filament**
+**Iron Man Mark 43 (full wearable suit): 139 printed pieces, 8.7 kg filament, motorised faceplate, $327 incl. filament**
 
-Parts cost **$334.36** (budget $60000: within) · printed structure 151 parts, 7833 g · checks passed 163/163
+Parts cost **$339.76** (budget $60000: within) · printed structure 139 parts, 8047 g · checks passed 151/151
 
 ## What it can do
 
@@ -17,11 +17,11 @@ Parts cost **$334.36** (budget $60000: within) · printed structure 151 parts, 7
 | tier | suit |
 | tier label | full wearable suit |
 | wearer height m | 1.75 |
-| printed pieces | 151 |
-| armour mass kg | 7.84 |
-| filament kg | 8.46 |
-| cost usd | 321.82 |
-| mass kg | 86.39 |
+| printed pieces | 139 |
+| armour mass kg | 8.05 |
+| filament kg | 8.69 |
+| cost usd | 326.89 |
+| mass kg | 86.6 |
 
 ## Actuators (sized from this robot's own loads)
 
@@ -31,11 +31,11 @@ Parts cost **$334.36** (budget $60000: within) · printed structure 151 parts, 7
 
 ## Engineering checks
 
-All 163 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
+All 151 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
 
 ## Assumptions and limits
 
-- armour shape from: body: Iron Man Mark XLII (42) by ShaggyDawg (Printables 1870572, CC0); helmet: Iron Man wearable helmet Mark 42 by Manifold3D (Printables 449081, CC BY-SA); 3 mm walls, 2 mm faceplate, 15 % gyroid infill (shells are mostly walls)
+- armour shape from: body: "Iron man armored suit" by octv h (Printables 1524711, CC0, provenance unverified); helmet: Iron Man wearable helmet Mark 42 by Manifold3D (Printables 449081, CC BY-SA); 3 mm walls, 2 mm faceplate, 15 % gyroid infill (shells are mostly walls)
 - filament at $22/kg, 8 % waste
 - the suit is worn armour over a black undersuit: the wearer moves every joint; nothing powers the limbs (hobby servos cannot move a person)
 - the wearer is 89 cm chest at 1.75 m and the pieces scale evenly with height; check against your own measurements before printing

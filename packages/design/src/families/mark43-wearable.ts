@@ -136,7 +136,7 @@ export function designMark43Wearable(req: Mark43Request = {}): RobotSpecificatio
     } else if (p.region === "torso") A.mount(p.name, "ws2812_ring_12", place([0, 1, 0], [0, 0, 1], [1, 0, 0], [c[0] - T - 13, c[1] - 18.5, c[2] - 18.5]), "arc_reactor", "arc reactor ring (12 LEDs)");
     else if (p.region.endsWith("_hand")) {
       const side = p.region.startsWith("left") ? 1 : -1;
-      A.mount(p.name, "ws2812_ring_12", place([1, 0, 0], [0, 0, 1], [0, -side, 0], [c[0] - 18.5, c[1] + side * 13, c[2] - 10]), `${p.region.split("_")[0]}_repulsor`, "palm repulsor ring");
+      A.mount(p.name, "ws2812_ring_12", place([1, 0, 0], [0, 0, 1], [0, -side, 0], [c[0] - 6, c[1] + side * 4, c[2] - 8]), `${p.region.split("_")[0]}_repulsor`, "palm repulsor ring");
     }
   }
 
