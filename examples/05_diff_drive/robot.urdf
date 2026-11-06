@@ -3,7 +3,7 @@
      robot: diff_drive_robot
      prompt: Create a differential drive mobile robot
 
-     31 links, 30 joints, 31 inferred values
+     32 links, 31 joints, 32 inferred values
 -->
 <robot name="diff_drive_robot">
   <material name="printed"><color rgba="0.93 0.93 0.95 1"/></material>
@@ -34,9 +34,9 @@
       <geometry><mesh filename="package://diff_drive_robot/meshes/base_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.00000660871 1.13200e-18 0.081" rpy="0 0 0"/>
-      <mass value="0.249343"/>
-      <inertia ixx="0.000753695" ixy="-1.25255e-19" ixz="1.52833e-21" iyy="0.001118" iyz="-1.64053e-21" izz="0.00187"/>
+      <origin xyz="0.000171506 0.0000176329 0.081" rpy="0 0 0"/>
+      <mass value="0.248566"/>
+      <inertia ixx="0.00074885" ixy="2.52482e-7" ixz="-1.80763e-21" iyy="0.001115" iyz="-1.04796e-21" izz="0.001862"/>
     </inertial>
   </link>
   <link name="left_motor">
@@ -423,6 +423,22 @@
       <inertia ixx="1.63316e-7" ixy="4.99478e-20" ixz="-5.02214e-15" iyy="1.28682e-7" iyz="8.43994e-16" izz="2.80003e-7"/>
     </inertial>
   </link>
+  <link name="main_switch">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/switch_kcd1.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://diff_drive_robot/meshes/switch_kcd1.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 -0.008005" rpy="0 0 0"/>
+      <mass value="0.008"/>
+      <inertia ixx="5.71694e-7" ixy="0" ixz="-4.69545e-24" iyy="4.41406e-7" iyz="-9.39090e-24" izz="3.66303e-7"/>
+    </inertial>
+  </link>
   <link name="electronics_enclosure_front">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -434,9 +450,9 @@
       <geometry><mesh filename="package://diff_drive_robot/meshes/electronics_enclosure_front.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.080965 -0.011096 0.100016" rpy="0 0 0"/>
-      <mass value="0.030132"/>
-      <inertia ixx="0.000164924" ixy="0.00000350092" ixz="-2.21053e-7" iyy="0.0000462337" iyz="1.99023e-8" izz="0.000205202"/>
+      <origin xyz="0.077359 -0.009956 0.100013" rpy="0 0 0"/>
+      <mass value="0.033172"/>
+      <inertia ixx="0.000192028" ixy="0.00000583095" ixz="-2.37339e-7" iyy="0.0000504003" iyz="-7.65736e-9" izz="0.000235883"/>
     </inertial>
   </link>
   <link name="electronics_enclosure_rear">
@@ -450,9 +466,9 @@
       <geometry><mesh filename="package://diff_drive_robot/meshes/electronics_enclosure_rear.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.076401 -0.005407 0.100055" rpy="0 0 0"/>
-      <mass value="0.036986"/>
-      <inertia ixx="0.000161901" ixy="-0.00000313105" ixz="2.16683e-7" iyy="0.0000451617" iyz="-4.44705e-7" izz="0.000199741"/>
+      <origin xyz="-0.074928 -0.003557 0.100058" rpy="0 0 0"/>
+      <mass value="0.039417"/>
+      <inertia ixx="0.000183763" ixy="-0.00000750068" ixz="2.35512e-7" iyy="0.0000459393" iyz="-5.42285e-7" izz="0.000221821"/>
     </inertial>
   </link>
   <link name="electronics_lid_front">
@@ -466,9 +482,9 @@
       <geometry><mesh filename="package://diff_drive_robot/meshes/electronics_lid_front.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.058297 -0.005566 0.118268" rpy="0 0 0"/>
-      <mass value="0.043891"/>
-      <inertia ixx="0.000124207" ixy="7.09820e-7" ixz="9.50401e-8" iyy="0.0000455948" iyz="1.26338e-8" izz="0.000169729"/>
+      <origin xyz="0.057562 -0.004158 0.118266" rpy="0 0 0"/>
+      <mass value="0.0362"/>
+      <inertia ixx="0.000112013" ixy="3.97283e-7" ixz="1.02451e-7" iyy="0.0000448992" iyz="4.78780e-9" izz="0.000156848"/>
     </inertial>
   </link>
   <link name="electronics_lid_rear">
@@ -482,9 +498,9 @@
       <geometry><mesh filename="package://diff_drive_robot/meshes/electronics_lid_rear.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.057688 -0.007579 0.118255" rpy="0 0 0"/>
-      <mass value="0.033329"/>
-      <inertia ixx="0.000120011" ixy="-0.00000277162" ixz="-7.98845e-8" iyy="0.0000355126" iyz="-7.71334e-10" izz="0.000155467"/>
+      <origin xyz="-0.05648 -0.005414 0.118256" rpy="0 0 0"/>
+      <mass value="0.028434"/>
+      <inertia ixx="0.000109311" ixy="-0.00000184973" ixz="-8.83251e-8" iyy="0.0000352532" iyz="-1.11954e-8" izz="0.000144513"/>
     </inertial>
   </link>
   <link name="lidar_mast">
@@ -652,6 +668,11 @@
     <parent link="base_link"/>
     <child link="imu_tray"/>
     <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="main_switch_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="main_switch"/>
+    <origin xyz="-0.060198 0.08291 0.1005" rpy="0 -1.570796 -1.570796"/>
   </joint>
   <joint name="electronics_enclosure_front_mount" type="fixed">
     <parent link="base_link"/>

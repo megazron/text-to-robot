@@ -58,7 +58,7 @@
   {
    "name": "electronics_enclosure",
    "watertight": true,
-   "volume_cm3": 45.14,
+   "volume_cm3": 49.4,
    "size_mm": [
     196.8,
     138.4,
@@ -70,11 +70,11 @@
     -1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 2.69,
-   "support_frac": 0.007,
-   "bed_contact_cm2": 19.2,
+   "support_area_cm2": 4.62,
+   "support_frac": 0.011,
+   "bed_contact_cm2": 21.55,
    "min_wall_mm": 2.4,
-   "thin_wall_frac": 0.0,
+   "thin_wall_frac": 0.003,
    "passed": true,
    "supports": "none",
    "problems": [],
@@ -83,10 +83,10 @@
   {
    "name": "electronics_lid",
    "watertight": true,
-   "volume_cm3": 41.12,
+   "volume_cm3": 36.46,
    "size_mm": [
     183.8,
-    112.4,
+    128.2,
     5.4
    ],
    "orientation": [
@@ -97,9 +97,9 @@
    "fits_bed": true,
    "support_area_cm2": 0.0,
    "support_frac": 0.0,
-   "bed_contact_cm2": 160.19,
+   "bed_contact_cm2": 143.93,
    "min_wall_mm": 2.0,
-   "thin_wall_frac": 0.0,
+   "thin_wall_frac": 0.001,
    "passed": true,
    "supports": "none",
    "problems": [],
@@ -381,6 +381,56 @@
    "warnings": []
   },
   {
+   "name": "power_bay",
+   "watertight": true,
+   "volume_cm3": 59.33,
+   "size_mm": [
+    222.8,
+    156.3,
+    33.0
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 5.09,
+   "support_frac": 0.01,
+   "bed_contact_cm2": 24.96,
+   "min_wall_mm": 1.4,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "power_bay_lid",
+   "watertight": true,
+   "volume_cm3": 50.27,
+   "size_mm": [
+    196.8,
+    146.1,
+    5.4
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 0.0,
+   "support_frac": 0.0,
+   "bed_contact_cm2": 199.0,
+   "min_wall_mm": 1.4,
+   "thin_wall_frac": 0.001,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
    "name": "rear_left_bracket",
    "watertight": true,
    "volume_cm3": 17.05,
@@ -458,7 +508,7 @@
   {
    "name": "upper_deck",
    "watertight": true,
-   "volume_cm3": 176.81,
+   "volume_cm3": 176.24,
    "size_mm": [
     236.0,
     188.0,
@@ -472,7 +522,7 @@
    "fits_bed": true,
    "support_area_cm2": 0.0,
    "support_frac": 0.0,
-   "bed_contact_cm2": 442.03,
+   "bed_contact_cm2": 440.6,
    "min_wall_mm": 4.0,
    "thin_wall_frac": 0.0,
    "passed": true,

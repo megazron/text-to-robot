@@ -3,7 +3,7 @@
      robot: four_wheel_robot
      prompt: Create a four-wheel robot
 
-     36 links, 35 joints, 36 inferred values
+     39 links, 38 joints, 39 inferred values
 -->
 <robot name="four_wheel_robot">
   <material name="printed"><color rgba="0.93 0.93 0.95 1"/></material>
@@ -34,9 +34,9 @@
       <geometry><mesh filename="package://four_wheel_robot/meshes/base_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.0000168982 -1.03329e-17 0.0795" rpy="0 0 0"/>
-      <mass value="0.481476"/>
-      <inertia ixx="0.001581" ixy="-9.39723e-20" ixz="6.03524e-22" iyy="0.003574" iyz="3.91879e-21" izz="0.005154"/>
+      <origin xyz="0.000164776 0.000100553 0.0795" rpy="0 0 0"/>
+      <mass value="0.480907"/>
+      <inertia ixx="0.001577" ixy="0.00000604948" ixz="-1.28934e-20" iyy="0.003565" iyz="-6.13166e-22" izz="0.005141"/>
     </inertial>
   </link>
   <link name="front_left_motor">
@@ -258,9 +258,9 @@
       <geometry><mesh filename="package://four_wheel_robot/meshes/battery_tray.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.023761 -0.06825 0.085051" rpy="0 0 0"/>
+      <origin xyz="-0.018761 -0.06825 0.085051" rpy="0 0 0"/>
       <mass value="0.01646"/>
-      <inertia ixx="0.00000350695" ixy="1.25780e-21" ixz="-1.63706e-7" iyy="0.0000170783" iyz="-1.00334e-21" izz="0.0000200757"/>
+      <inertia ixx="0.00000350695" ixy="6.57336e-22" ixz="-1.63706e-7" iyy="0.0000170783" iyz="-1.02340e-21" izz="0.0000200757"/>
     </inertial>
   </link>
   <link name="motor_driver_1">
@@ -290,9 +290,9 @@
       <geometry><mesh filename="package://four_wheel_robot/meshes/motor_driver_1_tray.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.07852 -0.03699 0.082591" rpy="0 0 0"/>
+      <origin xyz="-0.0935 -0.01149 0.082591" rpy="0 0 0"/>
       <mass value="0.015594"/>
-      <inertia ixx="0.00000550644" ixy="-6.74057e-20" ixz="-2.52405e-14" iyy="0.000010145" iyz="-4.81015e-15" izz="0.0000156177"/>
+      <inertia ixx="0.00000550644" ixy="1.18216e-20" ixz="5.24278e-14" iyy="0.000010145" iyz="4.12922e-15" izz="0.0000156177"/>
     </inertial>
   </link>
   <link name="motor_driver_2">
@@ -322,9 +322,41 @@
       <geometry><mesh filename="package://four_wheel_robot/meshes/motor_driver_2_tray.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.0935 -0.01149 0.082591" rpy="0 0 0"/>
+      <origin xyz="-0.000490002 -0.01149 0.082591" rpy="0 0 0"/>
       <mass value="0.015594"/>
-      <inertia ixx="0.00000550644" ixy="1.18216e-20" ixz="5.24278e-14" iyy="0.000010145" iyz="4.12922e-15" izz="0.0000156177"/>
+      <inertia ixx="0.00000550644" ixy="-4.77035e-22" ixz="-2.53897e-15" iyy="0.000010145" iyz="4.12921e-15" izz="0.0000156177"/>
+    </inertial>
+  </link>
+  <link name="power_bay">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://four_wheel_robot/meshes/power_bay.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://four_wheel_robot/meshes/power_bay.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.045245 -0.033212 0.097022" rpy="0 0 0"/>
+      <mass value="0.054253"/>
+      <inertia ixx="0.000174413" ixy="0.00000648547" ixz="8.84169e-7" iyy="0.000297614" iyz="3.60111e-7" izz="0.00046122"/>
+    </inertial>
+  </link>
+  <link name="power_bay_lid">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://four_wheel_robot/meshes/power_bay_lid.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://four_wheel_robot/meshes/power_bay_lid.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.044382 -0.027711 0.115239" rpy="0 0 0"/>
+      <mass value="0.04597"/>
+      <inertia ixx="0.0000754436" ixy="0.00000653526" ixz="2.46948e-8" iyy="0.000161198" iyz="3.13592e-8" izz="0.000236554"/>
     </inertial>
   </link>
   <link name="upper_deck">
@@ -338,9 +370,9 @@
       <geometry><mesh filename="package://four_wheel_robot/meshes/upper_deck.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.026 -2.35552e-18 0.133" rpy="0 0 0"/>
-      <mass value="0.161676"/>
-      <inertia ixx="0.000473363" ixy="1.83934e-20" ixz="9.77673e-22" iyy="0.000745654" iyz="4.36148e-23" izz="0.001219"/>
+      <origin xyz="-0.025953 0.0000491714 0.133" rpy="0 0 0"/>
+      <mass value="0.161154"/>
+      <inertia ixx="0.000472835" ixy="6.80704e-7" ixz="2.88343e-22" iyy="0.000744747" iyz="-2.34175e-22" izz="0.001217"/>
     </inertial>
   </link>
   <link name="pillar_1">
@@ -503,6 +535,22 @@
       <inertia ixx="1.61036e-7" ixy="-1.05543e-8" ixz="-3.15359e-9" iyy="1.59409e-7" iyz="3.15359e-9" izz="3.10101e-7"/>
     </inertial>
   </link>
+  <link name="main_switch">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://four_wheel_robot/meshes/switch_kcd4.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://four_wheel_robot/meshes/switch_kcd4.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-4.05398e-20 -3.52601e-19 -0.011305" rpy="0 0 0"/>
+      <mass value="0.008"/>
+      <inertia ixx="0.00000113854" ixy="-4.97311e-40" ixz="8.69383e-24" iyy="8.66712e-7" iyz="1.56687e-23" izz="9.36569e-7"/>
+    </inertial>
+  </link>
   <link name="electronics_enclosure">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -514,9 +562,9 @@
       <geometry><mesh filename="package://four_wheel_robot/meshes/electronics_enclosure.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.020326 -0.035413 0.150829" rpy="0 0 0"/>
-      <mass value="0.041274"/>
-      <inertia ixx="0.0000855424" ixy="-0.0000254243" ixz="9.21687e-7" iyy="0.000180795" iyz="9.10070e-8" izz="0.000258287"/>
+      <origin xyz="-0.02424 -0.034988 0.150793" rpy="0 0 0"/>
+      <mass value="0.045168"/>
+      <inertia ixx="0.000101206" ixy="-0.0000224663" ixz="9.50825e-7" iyy="0.00018516" iyz="3.52057e-8" izz="0.000277354"/>
     </inertial>
   </link>
   <link name="electronics_lid">
@@ -530,9 +578,9 @@
       <geometry><mesh filename="package://four_wheel_robot/meshes/electronics_lid.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.018512 -0.038015 0.16883" rpy="0 0 0"/>
-      <mass value="0.037596"/>
-      <inertia ixx="0.0000430778" ixy="-0.0000145186" ixz="4.74389e-8" iyy="0.000098732" iyz="-2.67224e-8" izz="0.000141741"/>
+      <origin xyz="-0.018652 -0.037558 0.168832" rpy="0 0 0"/>
+      <mass value="0.033343"/>
+      <inertia ixx="0.0000419081" ixy="-0.0000129699" ixz="4.99490e-8" iyy="0.0000872556" iyz="-3.03931e-8" izz="0.0001291"/>
     </inertial>
   </link>
   <link name="lidar_mast">
@@ -674,7 +722,7 @@
   <joint name="battery_mount" type="fixed">
     <parent link="base_link"/>
     <child link="battery"/>
-    <origin xyz="-0.07999 -0.06825 0.084" rpy="0 0 0"/>
+    <origin xyz="-0.07499 -0.06825 0.084" rpy="0 0 0"/>
   </joint>
   <joint name="battery_tray_mount" type="fixed">
     <parent link="base_link"/>
@@ -684,7 +732,7 @@
   <joint name="motor_driver_1_mount" type="fixed">
     <parent link="base_link"/>
     <child link="motor_driver_1"/>
-    <origin xyz="0.03602 -0.06799 0.088" rpy="0 0 0"/>
+    <origin xyz="-0.136 -0.04249 0.088" rpy="0 0 0"/>
   </joint>
   <joint name="motor_driver_1_tray_mount" type="fixed">
     <parent link="base_link"/>
@@ -694,11 +742,21 @@
   <joint name="motor_driver_2_mount" type="fixed">
     <parent link="base_link"/>
     <child link="motor_driver_2"/>
-    <origin xyz="-0.136 -0.04249 0.088" rpy="0 0 0"/>
+    <origin xyz="-0.04299 -0.04249 0.088" rpy="0 0 0"/>
   </joint>
   <joint name="motor_driver_2_tray_mount" type="fixed">
     <parent link="base_link"/>
     <child link="motor_driver_2_tray"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="power_bay_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="power_bay"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="power_bay_lid_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="power_bay_lid"/>
     <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
   <joint name="upper_deck_mount" type="fixed">
@@ -755,6 +813,11 @@
     <parent link="upper_deck"/>
     <child link="regulator_5v_tray"/>
     <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="main_switch_mount" type="fixed">
+    <parent link="upper_deck"/>
+    <child link="main_switch"/>
+    <origin xyz="0.03284 0.02301 0.1513" rpy="0 -1.570796 -1.570796"/>
   </joint>
   <joint name="electronics_enclosure_mount" type="fixed">
     <parent link="upper_deck"/>

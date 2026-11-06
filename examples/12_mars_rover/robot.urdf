@@ -3,7 +3,7 @@
      robot: rover_arm
      prompt: Design a Mars rover with four wheels and a 6 DOF sampling arm, RGB-D camera, budget $4000
 
-     47 links, 46 joints, 47 inferred values
+     50 links, 49 joints, 50 inferred values
 -->
 <robot name="rover_arm">
   <material name="printed"><color rgba="0.93 0.93 0.95 1"/></material>
@@ -34,9 +34,9 @@
       <geometry><mesh filename="package://rover_arm/meshes/base_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-1.89144e-16 -2.55404e-17 0.143091" rpy="0 0 0"/>
-      <mass value="0.910907"/>
-      <inertia ixx="0.006659" ixy="-9.14796e-18" ixz="3.76833e-18" iyy="0.012265" iyz="4.24993e-18" izz="0.016955"/>
+      <origin xyz="0.000821733 -0.000454851 0.141142" rpy="0 0 0"/>
+      <mass value="0.861392"/>
+      <inertia ixx="0.006095" ixy="0.0000245515" ixz="0.00000101272" iyy="0.011778" iyz="0.00000586232" izz="0.016058"/>
     </inertial>
   </link>
   <link name="deck_lid">
@@ -50,9 +50,9 @@
       <geometry><mesh filename="package://rover_arm/meshes/deck_lid.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-3.42828e-18 2.39422e-18 0.2135" rpy="0 0 0"/>
-      <mass value="0.544059"/>
-      <inertia ixx="0.001998" ixy="-1.54187e-19" ixz="-1.02993e-21" iyy="0.004639" iyz="8.41107e-22" izz="0.006636"/>
+      <origin xyz="0.0000424999 1.31353e-18 0.2135" rpy="0 0 0"/>
+      <mass value="0.543482"/>
+      <inertia ixx="0.001998" ixy="2.37091e-20" ixz="-5.59279e-22" iyy="0.004638" iyz="-1.35274e-21" izz="0.006635"/>
     </inertial>
   </link>
   <link name="left_front_motor">
@@ -146,9 +146,9 @@
       <geometry><mesh filename="package://rover_arm/meshes/left_rocker_frame.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.069836 0.043733 0.000410573" rpy="0 0 0"/>
-      <mass value="0.058272"/>
-      <inertia ixx="0.0000635794" ixy="-0.0000852357" ixz="-0.00000506755" iyy="0.000135657" iyz="-0.00000427264" izz="0.000196237"/>
+      <origin xyz="0.069936 0.043841 0.000357884" rpy="0 0 0"/>
+      <mass value="0.058544"/>
+      <inertia ixx="0.0000637649" ixy="-0.0000853699" ixz="-0.0000050014" iyy="0.00013582" iyz="-0.00000420159" izz="0.000196512"/>
     </inertial>
   </link>
   <link name="left_rocker">
@@ -258,9 +258,9 @@
       <geometry><mesh filename="package://rover_arm/meshes/right_rocker_frame.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.069688 -0.043733 0.000410573" rpy="0 0 0"/>
-      <mass value="0.058272"/>
-      <inertia ixx="0.0000635794" ixy="0.0000848793" ixz="-0.00000508166" iyy="0.000134619" iyz="0.00000427264" izz="0.000195199"/>
+      <origin xyz="0.069812 -0.043791 0.000360253" rpy="0 0 0"/>
+      <mass value="0.058508"/>
+      <inertia ixx="0.0000636666" ixy="0.0000849814" ixz="-0.00000499131" iyy="0.000134882" iyz="0.0000042308" izz="0.000195473"/>
     </inertial>
   </link>
   <link name="right_rocker">
@@ -407,6 +407,38 @@
       <inertia ixx="0.00000550644" ixy="-6.69146e-21" ixz="-2.54752e-15" iyy="0.000010145" iyz="-6.89820e-15" izz="0.0000156177"/>
     </inertial>
   </link>
+  <link name="io_controller">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://rover_arm/meshes/esp32_s3_devkitc1.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://rover_arm/meshes/esp32_s3_devkitc1.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.032749 0.012697 0.000771574" rpy="0 0 0"/>
+      <mass value="0.01"/>
+      <inertia ixx="6.86122e-7" ixy="-5.03720e-10" ixz="-4.56703e-8" iyy="0.00000402372" iyz="4.90523e-11" izz="0.0000045887"/>
+    </inertial>
+  </link>
+  <link name="io_controller_tray">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://rover_arm/meshes/io_controller_tray.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://rover_arm/meshes/io_controller_tray.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.08514 -0.00629 0.115936" rpy="0 0 0"/>
+      <mass value="0.005433"/>
+      <inertia ixx="3.67577e-7" ixy="2.01622e-21" ixz="3.46947e-15" iyy="0.00000179174" iyz="3.40293e-16" izz="0.00000212953"/>
+    </inertial>
+  </link>
   <link name="servo_bus">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -434,9 +466,9 @@
       <geometry><mesh filename="package://rover_arm/meshes/servo_bus_tray.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.07602 -0.00049 0.115814" rpy="0 0 0"/>
+      <origin xyz="0.07602 0.03292 0.115814" rpy="0 0 0"/>
       <mass value="0.004544"/>
-      <inertia ixx="5.05845e-7" ixy="-9.30346e-21" ixz="-1.21572e-14" iyy="7.98126e-7" iyz="5.09918e-16" izz="0.00000128748"/>
+      <inertia ixx="5.05845e-7" ixy="-3.08002e-20" ixz="-1.21572e-14" iyy="7.98126e-7" iyz="-3.35426e-15" izz="0.00000128748"/>
     </inertial>
   </link>
   <link name="regulator_5v">
@@ -466,9 +498,25 @@
       <geometry><mesh filename="package://rover_arm/meshes/regulator_5v_tray.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.120167 -0.006727 0.115969" rpy="0 0 0"/>
+      <origin xyz="0.120167 0.026683 0.115969" rpy="0 0 0"/>
       <mass value="0.002281"/>
       <inertia ixx="1.61036e-7" ixy="-1.05542e-8" ixz="-3.15360e-9" iyy="1.59409e-7" iyz="3.15359e-9" izz="3.10101e-7"/>
+    </inertial>
+  </link>
+  <link name="main_switch">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://rover_arm/meshes/switch_kcd4.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://rover_arm/meshes/switch_kcd4.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-4.05398e-20 -3.52601e-19 -0.011305" rpy="0 0 0"/>
+      <mass value="0.008"/>
+      <inertia ixx="0.00000113854" ixy="-4.97311e-40" ixz="8.69383e-24" iyy="8.66712e-7" iyz="1.56687e-23" izz="9.36569e-7"/>
     </inertial>
   </link>
   <link name="depth_camera_bracket">
@@ -482,9 +530,9 @@
       <geometry><mesh filename="package://rover_arm/meshes/depth_camera_bracket.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.12758 9.54946e-12 0.242642" rpy="0 0 0"/>
-      <mass value="0.024075"/>
-      <inertia ixx="0.0000195382" ixy="-1.38612e-15" ixz="-0.00000202804" iyy="0.0000137713" iyz="-3.61478e-15" izz="0.00000826336"/>
+      <origin xyz="0.127566 0.000234465 0.242627" rpy="0 0 0"/>
+      <mass value="0.024273"/>
+      <inertia ixx="0.0000197029" ixy="1.00103e-8" ixz="-0.0000020288" iyy="0.0000137745" iyz="1.03024e-8" izz="0.00000842787"/>
     </inertial>
   </link>
   <link name="depth_camera">
@@ -530,9 +578,9 @@
       <geometry><mesh filename="package://rover_arm/meshes/camera_mast.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.119964 3.56317e-12 0.300867" rpy="0 0 0"/>
-      <mass value="0.06386"/>
-      <inertia ixx="0.000243562" ixy="-1.06714e-15" ixz="-2.22771e-7" iyy="0.000243415" iyz="-1.25723e-15" izz="0.00000654206"/>
+      <origin xyz="-0.119886 -0.00000102578 0.300892" rpy="0 0 0"/>
+      <mass value="0.064248"/>
+      <inertia ixx="0.000243922" ixy="8.61538e-10" ixz="-2.43317e-7" iyy="0.000243837" iyz="2.37212e-10" izz="0.00000661053"/>
     </inertial>
   </link>
   <link name="arm_base_link">
@@ -602,17 +650,17 @@
   <link name="arm_upper_arm">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://rover_arm/meshes/arm_upper_arm.stl"/></geometry>
+      <geometry><mesh filename="package://rover_arm/meshes/upper_arm.stl"/></geometry>
       <material name="printed"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://rover_arm/meshes/arm_upper_arm.stl"/></geometry>
+      <geometry><mesh filename="package://rover_arm/meshes/upper_arm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.070178 0.0000428396 -0.024398" rpy="0 0 0"/>
-      <mass value="0.092152"/>
-      <inertia ixx="0.000057432" ixy="-7.39458e-8" ixz="-0.0000135277" iyy="0.000150562" iyz="-7.55924e-8" izz="0.000117727"/>
+      <origin xyz="0.070128 0.0000427382 -0.024369" rpy="0 0 0"/>
+      <mass value="0.09237"/>
+      <inertia ixx="0.0000574684" ixy="-7.41428e-8" ixz="-0.0000134707" iyy="0.000150694" iyz="-7.54766e-8" izz="0.000117827"/>
     </inertial>
   </link>
   <link name="arm_elbow_pitch_actuator">
@@ -634,17 +682,17 @@
   <link name="arm_forearm">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://rover_arm/meshes/arm_forearm.stl"/></geometry>
+      <geometry><mesh filename="package://rover_arm/meshes/forearm.stl"/></geometry>
       <material name="printed_accent"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://rover_arm/meshes/arm_forearm.stl"/></geometry>
+      <geometry><mesh filename="package://rover_arm/meshes/forearm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.066041 0.006313 -0.028778" rpy="0 0 0"/>
-      <mass value="0.107777"/>
-      <inertia ixx="0.0000703819" ixy="-0.00000954259" ixz="-6.58185e-7" iyy="0.000113318" iyz="-0.00000127555" izz="0.0000856564"/>
+      <origin xyz="0.066007 0.006315 -0.028744" rpy="0 0 0"/>
+      <mass value="0.107997"/>
+      <inertia ixx="0.0000704468" ixy="-0.00000953856" ixz="-5.95846e-7" iyy="0.000113445" iyz="-0.00000128013" izz="0.0000857228"/>
     </inertial>
   </link>
   <link name="arm_forearm_roll_actuator">
@@ -905,10 +953,20 @@
     <child link="motor_driver_2_tray"/>
     <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
+  <joint name="io_controller_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="io_controller"/>
+    <origin xyz="0.05402 -0.01899 0.126" rpy="0 0 0"/>
+  </joint>
+  <joint name="io_controller_tray_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="io_controller_tray"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
   <joint name="servo_bus_mount" type="fixed">
     <parent link="base_link"/>
     <child link="servo_bus"/>
-    <origin xyz="0.05502 -0.01699 0.121" rpy="0 0 0"/>
+    <origin xyz="0.05502 0.01642 0.121" rpy="0 0 0"/>
   </joint>
   <joint name="servo_bus_tray_mount" type="fixed">
     <parent link="base_link"/>
@@ -918,12 +976,17 @@
   <joint name="regulator_5v_mount" type="fixed">
     <parent link="base_link"/>
     <child link="regulator_5v"/>
-    <origin xyz="0.10703 -0.01899 0.121" rpy="0 0 0"/>
+    <origin xyz="0.10703 0.01442 0.121" rpy="0 0 0"/>
   </joint>
   <joint name="regulator_5v_tray_mount" type="fixed">
     <parent link="base_link"/>
     <child link="regulator_5v_tray"/>
     <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="main_switch_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="main_switch"/>
+    <origin xyz="0.112 0.105 0.163" rpy="0 -1.570796 -1.570796"/>
   </joint>
   <joint name="depth_camera_bracket_mount" type="fixed">
     <parent link="deck_lid"/>

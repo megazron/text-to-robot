@@ -58,7 +58,7 @@
   {
    "name": "electronics_enclosure_front",
    "watertight": true,
-   "volume_cm3": 37.74,
+   "volume_cm3": 39.04,
    "size_mm": [
     157.4,
     214.4,
@@ -70,10 +70,10 @@
     -1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 2.97,
-   "support_frac": 0.009,
-   "bed_contact_cm2": 15.3,
-   "min_wall_mm": 1.4,
+   "support_area_cm2": 4.0,
+   "support_frac": 0.012,
+   "bed_contact_cm2": 16.48,
+   "min_wall_mm": 2.0,
    "thin_wall_frac": 0.0,
    "passed": true,
    "supports": "none",
@@ -83,7 +83,7 @@
   {
    "name": "electronics_enclosure_rear",
    "watertight": true,
-   "volume_cm3": 46.86,
+   "volume_cm3": 50.5,
    "size_mm": [
     157.4,
     214.4,
@@ -95,9 +95,9 @@
     -1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 2.74,
+   "support_area_cm2": 2.82,
    "support_frac": 0.006,
-   "bed_contact_cm2": 18.47,
+   "bed_contact_cm2": 19.65,
    "min_wall_mm": 2.4,
    "thin_wall_frac": 0.001,
    "passed": true,
@@ -108,10 +108,10 @@
   {
    "name": "electronics_lid_front",
    "watertight": true,
-   "volume_cm3": 64.59,
+   "volume_cm3": 51.02,
    "size_mm": [
     144.4,
-    188.4,
+    204.2,
     5.4
    ],
    "orientation": [
@@ -122,7 +122,7 @@
    "fits_bed": true,
    "support_area_cm2": 0.0,
    "support_frac": 0.0,
-   "bed_contact_cm2": 256.93,
+   "bed_contact_cm2": 205.18,
    "min_wall_mm": 2.0,
    "thin_wall_frac": 0.0,
    "passed": true,
@@ -133,10 +133,10 @@
   {
    "name": "electronics_lid_rear",
    "watertight": true,
-   "volume_cm3": 52.93,
+   "volume_cm3": 42.42,
    "size_mm": [
     144.4,
-    188.4,
+    204.2,
     5.4
    ],
    "orientation": [
@@ -147,9 +147,9 @@
    "fits_bed": true,
    "support_area_cm2": 0.0,
    "support_frac": 0.0,
-   "bed_contact_cm2": 210.45,
-   "min_wall_mm": 2.0,
-   "thin_wall_frac": 0.002,
+   "bed_contact_cm2": 170.61,
+   "min_wall_mm": 1.45,
+   "thin_wall_frac": 0.005,
    "passed": true,
    "supports": "none",
    "problems": [],

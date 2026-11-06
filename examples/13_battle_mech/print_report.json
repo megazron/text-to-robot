@@ -57,7 +57,7 @@
   },
   {
    "name": "l_ankle_pitch_link",
-   "watertight": false,
+   "watertight": true,
    "volume_cm3": 103.53,
    "size_mm": [
     192.1,
@@ -73,14 +73,11 @@
    "support_area_cm2": 86.32,
    "support_frac": 0.131,
    "bed_contact_cm2": 46.42,
-   "min_wall_mm": 2.55,
+   "min_wall_mm": 2.57,
    "thin_wall_frac": 0.001,
-   "passed": false,
+   "passed": true,
    "supports": "needed",
-   "problems": [
-    "mesh is not watertight (not a closed solid)",
-    "3 separate pieces (a part must be one connected solid)"
-   ],
+   "problems": [],
    "warnings": []
   },
   {
@@ -210,7 +207,7 @@
   },
   {
    "name": "l_hip_pitch_link_b",
-   "watertight": false,
+   "watertight": true,
    "volume_cm3": 65.74,
    "size_mm": [
     137.0,
@@ -220,20 +217,17 @@
    "orientation": [
     0.0,
     0.0,
-    1.0
+    -1.0
    ],
    "fits_bed": true,
    "support_area_cm2": 0.0,
    "support_frac": 0.0,
    "bed_contact_cm2": 82.17,
-   "min_wall_mm": 4.42,
-   "thin_wall_frac": 0.001,
-   "passed": false,
+   "min_wall_mm": 3.97,
+   "thin_wall_frac": 0.0,
+   "passed": true,
    "supports": "none",
-   "problems": [
-    "mesh is not watertight (not a closed solid)",
-    "2 separate pieces (a part must be one connected solid)"
-   ],
+   "problems": [],
    "warnings": []
   },
   {
@@ -590,7 +584,7 @@
   },
   {
    "name": "r_ankle_pitch_link",
-   "watertight": false,
+   "watertight": true,
    "volume_cm3": 103.53,
    "size_mm": [
     192.1,
@@ -606,14 +600,11 @@
    "support_area_cm2": 87.01,
    "support_frac": 0.133,
    "bed_contact_cm2": 46.42,
-   "min_wall_mm": 2.6,
-   "thin_wall_frac": 0.001,
-   "passed": false,
+   "min_wall_mm": 2.58,
+   "thin_wall_frac": 0.0,
+   "passed": true,
    "supports": "needed",
-   "problems": [
-    "mesh is not watertight (not a closed solid)",
-    "3 separate pieces (a part must be one connected solid)"
-   ],
+   "problems": [],
    "warnings": []
   },
   {

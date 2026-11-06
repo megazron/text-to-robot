@@ -1,0 +1,227 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1950 1323" width="1950" height="1323" font-family="Helvetica, Arial, sans-serif" font-size="10.5">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="30" y="26" font-size="17" font-weight="700">rover_arm: wiring diagram</text>
+<line x1="30" y1="44" x2="54" y2="44" stroke="#c8102e" stroke-width="2"/><text x="60" y="48">power</text>
+<line x1="120" y1="44" x2="144" y2="44" stroke="#111111" stroke-width="2"/><text x="150" y="48">ground</text>
+<line x1="210" y1="44" x2="234" y2="44" stroke="#1f6fd1" stroke-width="2"/><text x="240" y="48">signal</text>
+<line x1="300" y1="44" x2="324" y2="44" stroke="#0a8f5b" stroke-width="2"/><text x="330" y="48">bus</text>
+<text x="30" y="66" font-weight="700" fill="#555">Source</text>
+<text x="370" y="66" font-weight="700" fill="#555">Protection</text>
+<text x="710" y="66" font-weight="700" fill="#555">Regulation</text>
+<text x="1050" y="66" font-weight="700" fill="#555">Control</text>
+<text x="1390" y="66" font-weight="700" fill="#555">Drivers</text>
+<text x="1730" y="66" font-weight="700" fill="#555">Loads</text>
+<path d="M1730 601 H1716 V353 H1254 V105 H1240" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C1 W1 DEPTH_CAMERA_USB: depth_camera.usb_c.VBUS to computer.usb_a_j6_j7.LINK</title></path>
+<path d="M1730 660 H1706 V382.5 H1264 V105 H1240" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C2 W2 MAST_CAMERA_CSI: mast_camera.csi_15.GND to computer.camera_j20.LINK</title></path>
+<path d="M1240 190 H1274 V147.5 H1016 V105 H1050" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C3 W3 IO_USB: io_controller.usb_native.VBUS to computer.usb_a_j6_j7.LINK</title></path>
+<path d="M1390 105 H1346 V154 H1284 V203 H1240" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C4 W4 GND: motor_driver_1.control.GND to io_controller.j1.G, 24 AWG</title></path>
+<path d="M1240 216 H1294 V167 H1336 V118 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C4 W5 LEFT_FRONT_MOTOR_PWM: io_controller.j1.4 to motor_driver_1.control.PWM1, 26 AWG</title></path>
+<path d="M1240 229 H1304 V180 H1326 V131 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C4 W6 LEFT_FRONT_MOTOR_DIR: io_controller.j1.5 to motor_driver_1.control.DIR1, 26 AWG</title></path>
+<path d="M1240 242 H1314 V193 H1316 V144 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C4 W7 LEFT_REAR_MOTOR_PWM: io_controller.j1.15 to motor_driver_1.control.PWM2, 26 AWG</title></path>
+<path d="M1240 255 H1324 V206 H1306 V157 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C4 W8 LEFT_REAR_MOTOR_DIR: io_controller.j1.16 to motor_driver_1.control.DIR2, 26 AWG</title></path>
+<path d="M1580 170 H1674 V137.5 H1636 V105 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C5 W9 LEFT_FRONT_MOTOR_PHASE_A: motor_driver_1.motor_1.M1A to left_front_motor.leads.Motor (red), 20 AWG</title></path>
+<path d="M1580 183 H1684 V150.5 H1626 V118 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C5 W10 LEFT_FRONT_MOTOR_PHASE_B: motor_driver_1.motor_1.M1B to left_front_motor.leads.Motor (black), 20 AWG</title></path>
+<path d="M1240 268 H1354 V199.5 H1616 V131 H1730" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C6 W11 LEFT_FRONT_MOTOR_ENC_VCC: io_controller.j1.3V3 to left_front_motor.leads.Encoder Vcc (blue), 24 AWG</title></path>
+<path d="M1240 203 H1364 V173.5 H1606 V144 H1730" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C6 W12 GND: io_controller.j1.G to left_front_motor.leads.Encoder GND (green), 24 AWG</title></path>
+<path d="M1240 281 H1254 V219 H1716 V157 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C6 W13 LEFT_FRONT_MOTOR_ENC_A: io_controller.j1.6 to left_front_motor.leads.Encoder A (yellow), 26 AWG</title></path>
+<path d="M1240 294 H1264 V232 H1706 V170 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C6 W14 LEFT_FRONT_MOTOR_ENC_B: io_controller.j1.7 to left_front_motor.leads.Encoder B (white), 26 AWG</title></path>
+<path d="M1580 196 H1614 V212.5 H1696 V229 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C7 W15 LEFT_REAR_MOTOR_PHASE_A: motor_driver_1.motor_2.M2A to left_rear_motor.leads.Motor (red), 20 AWG</title></path>
+<path d="M1580 209 H1624 V225.5 H1686 V242 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C7 W16 LEFT_REAR_MOTOR_PHASE_B: motor_driver_1.motor_2.M2B to left_rear_motor.leads.Motor (black), 20 AWG</title></path>
+<path d="M1240 268 H1294 V261.5 H1676 V255 H1730" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C8 W17 LEFT_REAR_MOTOR_ENC_VCC: io_controller.j1.3V3 to left_rear_motor.leads.Encoder Vcc (blue), 24 AWG</title></path>
+<path d="M1240 203 H1304 V235.5 H1666 V268 H1730" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C8 W18 GND: io_controller.j1.G to left_rear_motor.leads.Encoder GND (green), 24 AWG</title></path>
+<path d="M1240 307 H1314 V294 H1656 V281 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C8 W19 LEFT_REAR_MOTOR_ENC_A: io_controller.j1.17 to left_rear_motor.leads.Encoder A (yellow), 26 AWG</title></path>
+<path d="M1240 320 H1324 V307 H1646 V294 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C8 W20 LEFT_REAR_MOTOR_ENC_B: io_controller.j1.18 to left_rear_motor.leads.Encoder B (white), 26 AWG</title></path>
+<path d="M1390 294 H1296 V248.5 H1334 V203 H1240" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C9 W21 GND: motor_driver_2.control.GND to io_controller.j1.G, 24 AWG</title></path>
+<path d="M1240 333 H1344 V320 H1286 V307 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C9 W22 RIGHT_FRONT_MOTOR_PWM: io_controller.j1.8 to motor_driver_2.control.PWM1, 26 AWG</title></path>
+<path d="M1240 346 H1354 V333 H1276 V320 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C9 W23 RIGHT_FRONT_MOTOR_DIR: io_controller.j1.3 to motor_driver_2.control.DIR1, 26 AWG</title></path>
+<path d="M1240 359 H1364 V346 H1266 V333 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C9 W24 RIGHT_REAR_MOTOR_PWM: io_controller.j1.11 to motor_driver_2.control.PWM2, 26 AWG</title></path>
+<path d="M1240 372 H1254 V359 H1376 V346 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C9 W25 RIGHT_REAR_MOTOR_DIR: io_controller.j1.12 to motor_driver_2.control.DIR2, 26 AWG</title></path>
+<path d="M1580 359 H1604 V356 H1706 V353 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C10 W26 RIGHT_FRONT_MOTOR_PHASE_A: motor_driver_2.motor_1.M1A to right_front_motor.leads.Motor (red), 22 AWG</title></path>
+<path d="M1580 372 H1614 V369 H1696 V366 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C10 W27 RIGHT_FRONT_MOTOR_PHASE_B: motor_driver_2.motor_1.M1B to right_front_motor.leads.Motor (black), 22 AWG</title></path>
+<path d="M1240 268 H1284 V323.5 H1686 V379 H1730" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C11 W28 RIGHT_FRONT_MOTOR_ENC_VCC: io_controller.j1.3V3 to right_front_motor.leads.Encoder Vcc (blue), 24 AWG</title></path>
+<path d="M1240 203 H1294 V297.5 H1676 V392 H1730" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C11 W29 GND: io_controller.j1.G to right_front_motor.leads.Encoder GND (green), 24 AWG</title></path>
+<path d="M1240 385 H1304 V395 H1666 V405 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C11 W30 RIGHT_FRONT_MOTOR_ENC_A: io_controller.j1.9 to right_front_motor.leads.Encoder A (yellow), 26 AWG</title></path>
+<path d="M1240 398 H1314 V408 H1656 V418 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C11 W31 RIGHT_FRONT_MOTOR_ENC_B: io_controller.j1.10 to right_front_motor.leads.Encoder B (white), 26 AWG</title></path>
+<path d="M1580 385 H1664 V431 H1646 V477 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C12 W32 RIGHT_REAR_MOTOR_PHASE_A: motor_driver_2.motor_2.M2A to right_rear_motor.leads.Motor (red), 20 AWG</title></path>
+<path d="M1580 398 H1674 V444 H1636 V490 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C12 W33 RIGHT_REAR_MOTOR_PHASE_B: motor_driver_2.motor_2.M2B to right_rear_motor.leads.Motor (black), 20 AWG</title></path>
+<path d="M1240 268 H1344 V385.5 H1626 V503 H1730" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C13 W34 RIGHT_REAR_MOTOR_ENC_VCC: io_controller.j1.3V3 to right_rear_motor.leads.Encoder Vcc (blue), 24 AWG</title></path>
+<path d="M1240 203 H1354 V359.5 H1616 V516 H1730" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C13 W35 GND: io_controller.j1.G to right_rear_motor.leads.Encoder GND (green), 24 AWG</title></path>
+<path d="M1240 411 H1364 V470 H1606 V529 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C13 W36 RIGHT_REAR_MOTOR_ENC_A: io_controller.j1.13 to right_rear_motor.leads.Encoder A (yellow), 26 AWG</title></path>
+<path d="M1240 424 H1254 V483 H1716 V542 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C13 W37 RIGHT_REAR_MOTOR_ENC_B: io_controller.j1.14 to right_rear_motor.leads.Encoder B (white), 26 AWG</title></path>
+<path d="M1050 496 H1026 V372.5 H584 V249 H560" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C14 W38 BUS_SERVO_BUS: servo_bus.servo_bus.SIG to servo_bus_hub.levers.P1, 26 AWG</title></path>
+<path d="M560 262 H594 V490.5 H1696 V719 H1730" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C15 W39 BUS_SERVO_BUS: servo_bus_hub.levers.P2 to arm_base_yaw_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M1920 732 H1964 V768 H1686 V804 H1730" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C16 W40 VBAT: arm_base_yaw_actuator.bus_b.VDD to arm_shoulder_pitch_actuator.bus_a.VDD, 20 AWG</title></path>
+<path d="M1920 745 H1974 V781 H1676 V817 H1730" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C16 W41 GND: arm_base_yaw_actuator.bus_b.GND to arm_shoulder_pitch_actuator.bus_a.GND, 20 AWG</title></path>
+<path d="M1920 719 H1984 V774.5 H1666 V830 H1730" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C16 W42 BUS_SERVO_BUS: arm_base_yaw_actuator.bus_b.DATA to arm_shoulder_pitch_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M1920 804 H1994 V846.5 H1656 V889 H1730" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C17 W43 VBAT: arm_shoulder_pitch_actuator.bus_b.VDD to arm_elbow_pitch_actuator.bus_a.VDD, 22 AWG</title></path>
+<path d="M1920 817 H2004 V859.5 H1646 V902 H1730" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C17 W44 GND: arm_shoulder_pitch_actuator.bus_b.GND to arm_elbow_pitch_actuator.bus_a.GND, 22 AWG</title></path>
+<path d="M1920 830 H2014 V872.5 H1636 V915 H1730" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C17 W45 BUS_SERVO_BUS: arm_shoulder_pitch_actuator.bus_b.DATA to arm_elbow_pitch_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M1920 889 H2024 V931.5 H1626 V974 H1730" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C18 W46 VBAT: arm_elbow_pitch_actuator.bus_b.VDD to arm_forearm_roll_actuator.bus_a.VDD, 24 AWG</title></path>
+<path d="M1920 902 H2034 V944.5 H1616 V987 H1730" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C18 W47 GND: arm_elbow_pitch_actuator.bus_b.GND to arm_forearm_roll_actuator.bus_a.GND, 24 AWG</title></path>
+<path d="M1920 915 H2044 V957.5 H1606 V1000 H1730" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C18 W48 BUS_SERVO_BUS: arm_elbow_pitch_actuator.bus_b.DATA to arm_forearm_roll_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M1920 974 H1934 V1016.5 H1716 V1059 H1730" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C19 W49 VBAT: arm_forearm_roll_actuator.bus_b.VDD to arm_wrist_pitch_actuator.bus_a.VDD, 24 AWG</title></path>
+<path d="M1920 987 H1944 V1029.5 H1706 V1072 H1730" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C19 W50 GND: arm_forearm_roll_actuator.bus_b.GND to arm_wrist_pitch_actuator.bus_a.GND, 24 AWG</title></path>
+<path d="M1920 1000 H1954 V1042.5 H1696 V1085 H1730" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C19 W51 BUS_SERVO_BUS: arm_forearm_roll_actuator.bus_b.DATA to arm_wrist_pitch_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M1920 1144 H1964 V1186.5 H1686 V1229 H1730" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C20 W52 VBAT: arm_wrist_roll_actuator.bus_b.VDD to arm_gripper_actuator.bus_a.VDD, 24 AWG</title></path>
+<path d="M1920 1157 H1974 V1199.5 H1676 V1242 H1730" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C20 W53 GND: arm_wrist_roll_actuator.bus_b.GND to arm_gripper_actuator.bus_a.GND, 24 AWG</title></path>
+<path d="M1920 1170 H1984 V1212.5 H1666 V1255 H1730" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C20 W54 BUS_SERVO_BUS: arm_wrist_roll_actuator.bus_b.DATA to arm_gripper_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M1920 1085 H1994 V1127.5 H1656 V1170 H1730" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C21 W55 BUS_SERVO_BUS: arm_wrist_pitch_actuator.bus_b.DATA to arm_wrist_roll_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M1240 509 H1324 V307 H966 V105 H1050" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C22 W56 SERVO_BUS_USB: servo_bus.usb.VBUS to computer.usb_a_j6_j7.LINK</title></path>
+<path d="M220 105 H314 V141 H276 V177 H370" fill="none" stroke="#c8102e" stroke-width="2" opacity="0.8"><title>C23 W57 VBAT: battery.main.BAT+ to main_fuse.leads.IN, 12 AWG</title></path>
+<path d="M560 190 H664 V147.5 H266 V105 H370" fill="none" stroke="#c8102e" stroke-width="2" opacity="0.8"><title>C24 W58 VBAT: main_fuse.leads.OUT to main_switch.contacts.IN, 12 AWG</title></path>
+<path d="M220 118 H334 V219.5 H256 V321 H370" fill="none" stroke="#111111" stroke-width="2" opacity="0.8"><title>C25 W59 GND: battery.main.BAT- to star_ground.levers.P1, 12 AWG</title></path>
+<path d="M560 118 H684 V255.5 H246 V393 H370" fill="none" stroke="#c8102e" stroke-width="2" opacity="0.8"><title>C26 W60 VBAT: main_switch.contacts.OUT to splice_vbat.levers.P1, 12 AWG</title></path>
+<path d="M560 406 H574 V255.5 H696 V105 H710" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C27 W61 VBAT: splice_vbat.levers.P2 to regulator_5v.power_and_control.VIN, 22 AWG</title></path>
+<path d="M560 334 H584 V226 H686 V118 H710" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C27 W62 GND: star_ground.levers.P2 to regulator_5v.power_and_control.GND, 24 AWG</title></path>
+<path d="M560 406 H594 V262 H1016 V118 H1050" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C28 W63 VBAT: splice_vbat.levers.P2 to computer.dc_jack_j16.DC_IN, 22 AWG</title></path>
+<path d="M560 334 H604 V232.5 H1006 V131 H1050" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C28 W64 GND: star_ground.levers.P2 to computer.dc_jack_j16.GND, 22 AWG</title></path>
+<path d="M560 406 H614 V314 H1336 V222 H1390" fill="none" stroke="#c8102e" stroke-width="2" opacity="0.8"><title>C29 W65 VBAT: splice_vbat.levers.P2 to motor_driver_1.power.POWER+, 18 AWG</title></path>
+<path d="M560 334 H624 V284.5 H1326 V235 H1390" fill="none" stroke="#111111" stroke-width="2" opacity="0.8"><title>C29 W66 GND: star_ground.levers.P2 to motor_driver_1.power.POWER-, 18 AWG</title></path>
+<path d="M560 406 H634 V408.5 H1316 V411 H1390" fill="none" stroke="#c8102e" stroke-width="2" opacity="0.8"><title>C30 W67 VBAT: splice_vbat.levers.P2 to motor_driver_2.power.POWER+, 18 AWG</title></path>
+<path d="M560 334 H644 V379 H1306 V424 H1390" fill="none" stroke="#111111" stroke-width="2" opacity="0.8"><title>C30 W68 GND: star_ground.levers.P2 to motor_driver_2.power.POWER-, 18 AWG</title></path>
+<path d="M560 406 H654 V464 H956 V522 H1050" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C31 W69 VBAT: splice_vbat.levers.P2 to servo_bus.screw_in.VIN, 22 AWG</title></path>
+<path d="M560 334 H664 V434.5 H946 V535 H1050" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C31 W70 GND: star_ground.levers.P2 to servo_bus.screw_in.GND, 24 AWG</title></path>
+<path d="M560 406 H674 V569 H1616 V732 H1730" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C32 W71 VBAT: splice_vbat.levers.P2 to arm_base_yaw_actuator.bus_a.VDD, 20 AWG</title></path>
+<path d="M560 334 H684 V539.5 H1606 V745 H1730" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C32 W72 GND: star_ground.levers.P2 to arm_base_yaw_actuator.bus_a.GND, 20 AWG</title></path>
+<path d="M560 406 H574 V775 H1716 V1144 H1730" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C33 W73 VBAT: splice_vbat.levers.P2 to arm_wrist_roll_actuator.bus_a.VDD, 22 AWG</title></path>
+<path d="M560 334 H584 V745.5 H1706 V1157 H1730" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C33 W74 GND: star_ground.levers.P2 to arm_wrist_roll_actuator.bus_a.GND, 20 AWG</title></path>
+<path d="M710 118 H676 V226 H594 V334 H560" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C34 W75 GND: regulator_5v.power_and_control.GND to star_ground.levers.P2, 24 AWG</title></path>
+<path d="M900 131 H944 V284 H1006 V437 H1050" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C35 W76 5V: regulator_5v.power_and_control.VOUT to io_controller.j1.5V, 24 AWG</title></path>
+<path d="M560 334 H614 V268.5 H996 V203 H1050" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C35 W77 GND: star_ground.levers.P2 to io_controller.j1.G, 24 AWG</title></path>
+<rect x="1730" y="74" width="190" height="106" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1737" y="89" font-weight="700">left_front_motor</text>
+<text x="1737" y="108.5" fill="#333">Motor (red)</text>
+<text x="1737" y="121.5" fill="#333">Motor (black)</text>
+<text x="1737" y="134.5" fill="#333">Encoder Vcc (blue)</text>
+<text x="1737" y="147.5" fill="#333">Encoder GND (green)</text>
+<text x="1737" y="160.5" fill="#333">Encoder A (yellow)</text>
+<text x="1737" y="173.5" fill="#333">Encoder B (white)</text>
+<rect x="1730" y="198" width="190" height="106" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1737" y="213" font-weight="700">left_rear_motor</text>
+<text x="1737" y="232.5" fill="#333">Motor (red)</text>
+<text x="1737" y="245.5" fill="#333">Motor (black)</text>
+<text x="1737" y="258.5" fill="#333">Encoder Vcc (blue)</text>
+<text x="1737" y="271.5" fill="#333">Encoder GND (green)</text>
+<text x="1737" y="284.5" fill="#333">Encoder A (yellow)</text>
+<text x="1737" y="297.5" fill="#333">Encoder B (white)</text>
+<rect x="1730" y="322" width="190" height="106" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1737" y="337" font-weight="700">right_front_motor</text>
+<text x="1737" y="356.5" fill="#333">Motor (red)</text>
+<text x="1737" y="369.5" fill="#333">Motor (black)</text>
+<text x="1737" y="382.5" fill="#333">Encoder Vcc (blue)</text>
+<text x="1737" y="395.5" fill="#333">Encoder GND (green)</text>
+<text x="1737" y="408.5" fill="#333">Encoder A (yellow)</text>
+<text x="1737" y="421.5" fill="#333">Encoder B (white)</text>
+<rect x="1730" y="446" width="190" height="106" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1737" y="461" font-weight="700">right_rear_motor</text>
+<text x="1737" y="480.5" fill="#333">Motor (red)</text>
+<text x="1737" y="493.5" fill="#333">Motor (black)</text>
+<text x="1737" y="506.5" fill="#333">Encoder Vcc (blue)</text>
+<text x="1737" y="519.5" fill="#333">Encoder GND (green)</text>
+<text x="1737" y="532.5" fill="#333">Encoder A (yellow)</text>
+<text x="1737" y="545.5" fill="#333">Encoder B (white)</text>
+<rect x="30" y="74" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="37" y="89" font-weight="700">battery</text>
+<text x="37" y="108.5" fill="#333">BAT+</text>
+<text x="37" y="121.5" fill="#333">BAT-</text>
+<rect x="1050" y="74" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1057" y="89" font-weight="700">computer</text>
+<text x="1057" y="108.5" fill="#333">LINK</text>
+<text x="1057" y="121.5" fill="#333">DC_IN</text>
+<text x="1057" y="134.5" fill="#333">GND</text>
+<rect x="1390" y="74" width="190" height="171" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="89" font-weight="700">motor_driver_1</text>
+<text x="1397" y="108.5" fill="#333">GND</text>
+<text x="1397" y="121.5" fill="#333">PWM1</text>
+<text x="1397" y="134.5" fill="#333">DIR1</text>
+<text x="1397" y="147.5" fill="#333">PWM2</text>
+<text x="1397" y="160.5" fill="#333">DIR2</text>
+<text x="1397" y="173.5" fill="#333">M1A</text>
+<text x="1397" y="186.5" fill="#333">M1B</text>
+<text x="1397" y="199.5" fill="#333">M2A</text>
+<text x="1397" y="212.5" fill="#333">M2B</text>
+<text x="1397" y="225.5" fill="#333">POWER+</text>
+<text x="1397" y="238.5" fill="#333">POWER-</text>
+<rect x="1390" y="263" width="190" height="171" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="278" font-weight="700">motor_driver_2</text>
+<text x="1397" y="297.5" fill="#333">GND</text>
+<text x="1397" y="310.5" fill="#333">PWM1</text>
+<text x="1397" y="323.5" fill="#333">DIR1</text>
+<text x="1397" y="336.5" fill="#333">PWM2</text>
+<text x="1397" y="349.5" fill="#333">DIR2</text>
+<text x="1397" y="362.5" fill="#333">M1A</text>
+<text x="1397" y="375.5" fill="#333">M1B</text>
+<text x="1397" y="388.5" fill="#333">M2A</text>
+<text x="1397" y="401.5" fill="#333">M2B</text>
+<text x="1397" y="414.5" fill="#333">POWER+</text>
+<text x="1397" y="427.5" fill="#333">POWER-</text>
+<rect x="1050" y="159" width="190" height="288" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1057" y="174" font-weight="700">io_controller</text>
+<text x="1057" y="193.5" fill="#333">VBUS</text>
+<text x="1057" y="206.5" fill="#333">G</text>
+<text x="1057" y="219.5" fill="#333">4</text>
+<text x="1057" y="232.5" fill="#333">5</text>
+<text x="1057" y="245.5" fill="#333">15</text>
+<text x="1057" y="258.5" fill="#333">16</text>
+<text x="1057" y="271.5" fill="#333">3V3</text>
+<text x="1057" y="284.5" fill="#333">6</text>
+<text x="1057" y="297.5" fill="#333">7</text>
+<text x="1057" y="310.5" fill="#333">17</text>
+<text x="1057" y="323.5" fill="#333">18</text>
+<text x="1057" y="336.5" fill="#333">8</text>
+<text x="1057" y="349.5" fill="#333">3</text>
+<text x="1057" y="362.5" fill="#333">11</text>
+<text x="1057" y="375.5" fill="#333">12</text>
+<text x="1057" y="388.5" fill="#333">9</text>
+<text x="1057" y="401.5" fill="#333">10</text>
+<text x="1057" y="414.5" fill="#333">13</text>
+<text x="1057" y="427.5" fill="#333">14</text>
+<text x="1057" y="440.5" fill="#333">5V</text>
+<rect x="1050" y="465" width="190" height="80" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1057" y="480" font-weight="700">servo_bus</text>
+<text x="1057" y="499.5" fill="#333">SIG</text>
+<text x="1057" y="512.5" fill="#333">VBUS</text>
+<text x="1057" y="525.5" fill="#333">VIN</text>
+<text x="1057" y="538.5" fill="#333">GND</text>
+<rect x="710" y="74" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="717" y="89" font-weight="700">regulator_5v</text>
+<text x="717" y="108.5" fill="#333">VIN</text>
+<text x="717" y="121.5" fill="#333">GND</text>
+<text x="717" y="134.5" fill="#333">VOUT</text>
+<rect x="370" y="74" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="89" font-weight="700">main_switch</text>
+<text x="377" y="108.5" fill="#333">IN</text>
+<text x="377" y="121.5" fill="#333">OUT</text>
+<rect x="1730" y="570" width="190" height="41" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1737" y="585" font-weight="700">depth_camera</text>
+<text x="1737" y="604.5" fill="#333">VBUS</text>
+<rect x="1730" y="629" width="190" height="41" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1737" y="644" font-weight="700">mast_camera</text>
+<text x="1737" y="663.5" fill="#333">GND</text>
+<rect x="1730" y="688" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1737" y="703" font-weight="700">arm_base_yaw_actuator</text>
+<text x="1737" y="722.5" fill="#333">DATA</text>
+<text x="1737" y="735.5" fill="#333">VDD</text>
+<text x="1737" y="748.5" fill="#333">GND</text>
+<rect x="1730" y="773" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1737" y="788" font-weight="700">arm_shoulder_pitch_actuator</text>
+<text x="1737" y="807.5" fill="#333">VDD</text>
+<text x="1737" y="820.5" fill="#333">GND</text>
+<text x="1737" y="833.5" fill="#333">DATA</text>
+<rect x="1730" y="858" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1737" y="873" font-weight="700">arm_elbow_pitch_actuator</text>
+<text x="1737" y="892.5" fill="#333">VDD</text>
+<text x="1737" y="905.5" fill="#333">GND</text>
+<text x="1737" y="918.5" fill="#333">DATA</text>
+<rect x="1730" y="943" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1737" y="958" font-weight="700">arm_forearm_roll_actuator</text>
+<text x="1737" y="977.5" fill="#333">VDD</text>
+<text x="1737" y="990.5" fill="#333">GND</text>
+<text x="1737" y="1003.5" fill="#333">DATA</text>
+<rect x="1730" y="1028" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1737" y="1043" font-weight="700">arm_wrist_pitch_actuator</text>
+<text x="1737" y="1062.5" fill="#333">VDD</text>
+<text x="1737" y="1075.5" fill="#333">GND</text>
+<text x="1737" y="1088.5" fill="#333">DATA</text>
+<rect x="1730" y="1113" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1737" y="1128" font-weight="700">arm_wrist_roll_actuator</text>
+<text x="1737" y="1147.5" fill="#333">VDD</text>
+<text x="1737" y="1160.5" fill="#333">GND</text>
+<text x="1737" y="1173.5" fill="#333">DATA</text>
+<rect x="1730" y="1198" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1737" y="1213" font-weight="700">arm_gripper_actuator</text>
+<text x="1737" y="1232.5" fill="#333">VDD</text>
+<text x="1737" y="1245.5" fill="#333">GND</text>
+<text x="1737" y="1258.5" fill="#333">DATA</text>
+<rect x="370" y="146" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="161" font-weight="700">main_fuse</text>
+<text x="377" y="180.5" fill="#333">IN</text>
+<text x="377" y="193.5" fill="#333">OUT</text>
+<rect x="370" y="218" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="233" font-weight="700">servo_bus_hub</text>
+<text x="377" y="252.5" fill="#333">P1</text>
+<text x="377" y="265.5" fill="#333">P2</text>
+<rect x="370" y="290" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="305" font-weight="700">star_ground</text>
+<text x="377" y="324.5" fill="#333">P1</text>
+<text x="377" y="337.5" fill="#333">P2</text>
+<rect x="370" y="362" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="377" font-weight="700">splice_vbat</text>
+<text x="377" y="396.5" fill="#333">P1</text>
+<text x="377" y="409.5" fill="#333">P2</text>
+</svg>

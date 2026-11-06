@@ -18,7 +18,7 @@
       "unit_cost": 39.95,
       "subtotal": 39.95,
       "spec": "5 V",
-      "note": "5 V rail for the computer / USB · https://www.pololu.com/product/4091"
+      "note": "5 V rail for the computer, USB and sensors · https://www.pololu.com/product/4091"
     },
     {
       "category": "Electronics",
@@ -28,6 +28,15 @@
       "subtotal": 42,
       "spec": "12 V",
       "note": "dual DC motor driver · https://www.cytron.io/p-10amp-5v-30v-dc-motor-driver-2-channels"
+    },
+    {
+      "category": "Power",
+      "name": "Inline ATM mini blade fuse holder, 30 A class (Littelfuse FHM)",
+      "qty": 2,
+      "unit_cost": 2.5,
+      "subtotal": 5,
+      "spec": "32 V",
+      "note": "fuse holders · https://www.digikey.com/en/product-highlight/l/littelfuse-commercial-vehicle-products/fhac-fhm-series-in-line-fuse-holders"
     },
     {
       "category": "Power",
@@ -75,6 +84,24 @@
       "note": "2D lidar · https://www.waveshare.com/rplidar-c1.htm"
     },
     {
+      "category": "Power",
+      "name": "KCD4 double-pole rocker switch, 16 A 250 VAC / 20 A 125 VAC",
+      "qty": 1,
+      "unit_cost": 1,
+      "subtotal": 1,
+      "spec": "https://www.aliexpress.com/w/wholesale-kcd4-rocker-switch.html",
+      "note": "main power switch · https://www.aliexpress.com/w/wholesale-kcd4-rocker-switch.html"
+    },
+    {
+      "category": "Power",
+      "name": "WAGO 221-415 five-way lever splice",
+      "qty": 3,
+      "unit_cost": 0.8,
+      "subtotal": 2.4,
+      "spec": "450 V",
+      "note": "rail splices, the star ground and bus hubs · https://www.wago.com/global/electrical-interconnections/compact-splicing-connector/p/221-415"
+    },
+    {
       "category": "Drive",
       "name": "Pololu 90x10 mm wheel + 6 mm universal aluminium hub (for 37D gearmotors)",
       "qty": 4,
@@ -85,65 +112,227 @@
     },
     {
       "category": "Printed structure",
-      "name": "PETG filament for 19 printed parts",
+      "name": "PETG filament for 21 printed parts",
       "qty": 1,
-      "unit_cost": 11.19,
-      "subtotal": 11.19,
-      "spec": "442 g of parts (+15 % supports/waste), about 40.3 h of printing",
-      "note": "front_left_bracket, front_right_bracket, rear_left_bracket, rear_right_bracket, battery_tray, motor_driver_1_tray, motor_driver_2_tray, upper_deck, pillar_1, pillar_2, pillar_3, pillar_4, computer_tray, imu_tray, regulator_5v_tray, electronics_enclosure, electronics_lid, lidar_mast, front_camera_bracket"
+      "unit_cost": 13.71,
+      "subtotal": 13.71,
+      "spec": "542 g of parts (+15 % supports/waste), about 49.4 h of printing",
+      "note": "front_left_bracket, front_right_bracket, rear_left_bracket, rear_right_bracket, battery_tray, motor_driver_1_tray, motor_driver_2_tray, power_bay, power_bay_lid, upper_deck, pillar_1, pillar_2, pillar_3, pillar_4, computer_tray, imu_tray, regulator_5v_tray, electronics_enclosure, electronics_lid, lidar_mast, front_camera_bracket"
     },
     {
       "category": "Fasteners",
       "name": "Screws, nuts and inserts",
-      "qty": 84,
+      "qty": 92,
       "unit_cost": 0.12,
-      "subtotal": 10.08,
-      "spec": "24x M3 x 8 socket head (motor face); 8x M3 x 10 socket head + nut (bracket to deck); 1x 20 mm hook-and-loop battery strap; 12x M3 x 8 socket head (tray to deck); 19x M2.5 x 6 screws (board to standoffs); 8x M3 x 10 (pillars); 4x M3 x 10 self-tapping (enclosure lid); 4x M3 x 8 + nut (enclosure tabs to deck; drill 3.4 mm through the deck at the tabs); 4x M2.5 x 6 (lidar)"
+      "subtotal": 11.04,
+      "spec": "24x M3 x 8 socket head (motor face); 8x M3 x 10 socket head + nut (bracket to deck); 1x 20 mm hook-and-loop battery strap; 12x M3 x 8 socket head (tray to deck); 19x M2.5 x 6 screws (board to standoffs); 8x M3 x 10 self-tapping (enclosure lid); 8x M3 x 8 + nut (enclosure tabs to deck; drill 3.4 mm through the deck at the tabs); 8x M3 x 10 (pillars); 4x M2.5 x 6 (lidar)"
+    },
+    {
+      "category": "Wiring",
+      "name": "14 AWG silicone wire",
+      "qty": 0.9,
+      "unit_cost": 1.5,
+      "subtotal": 1.35,
+      "spec": "0.9 m: 2.082 mm2, rated 16 A in a bundle; 0.76 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "18 AWG silicone wire",
+      "qty": 2,
+      "unit_cost": 0.7,
+      "subtotal": 1.4,
+      "spec": "2 m: 0.823 mm2, rated 8 A in a bundle; 1.74 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "20 AWG silicone wire",
+      "qty": 2,
+      "unit_cost": 0.5,
+      "subtotal": 1,
+      "spec": "2 m: 0.519 mm2, rated 5.5 A in a bundle; 1.77 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "22 AWG silicone wire",
+      "qty": 2.7,
+      "unit_cost": 0.4,
+      "subtotal": 1.08,
+      "spec": "2.7 m: 0.327 mm2, rated 3.5 A in a bundle; 2.38 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "24 AWG silicone wire",
+      "qty": 4.5,
+      "unit_cost": 0.35,
+      "subtotal": 1.57,
+      "spec": "4.5 m: 0.205 mm2, rated 1.75 A in a bundle; 4.09 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "26 AWG silicone wire",
+      "qty": 7.3,
+      "unit_cost": 0.3,
+      "subtotal": 2.19,
+      "spec": "7.3 m: 0.128 mm2, rated 1.1 A in a bundle; 6.58 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Dupont 2.54 mm contacts",
+      "qty": 46,
+      "unit_cost": 0.02,
+      "subtotal": 0.92,
+      "spec": "46 pc: rated 3 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Dupont 2.54 mm housings",
+      "qty": 11,
+      "unit_cost": 0.02,
+      "subtotal": 0.22,
+      "spec": "11 pc: one per cable end",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Bootlace ferrule contacts",
+      "qty": 12,
+      "unit_cost": 0.03,
+      "subtotal": 0.36,
+      "spec": "12 pc: rated 17.5 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "XT60 contacts",
+      "qty": 2,
+      "unit_cost": 0.9,
+      "subtotal": 1.8,
+      "spec": "2 pc: rated 35 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "6.3 mm spade contacts",
+      "qty": 2,
+      "unit_cost": 0.08,
+      "subtotal": 0.16,
+      "spec": "2 pc: rated 15 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Heat shrink 3 mm, 2:1",
+      "qty": 2.3,
+      "unit_cost": 0.2,
+      "subtotal": 0.46,
+      "spec": "2.3 m: 31 solder joints + a boot on each cable end",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Cable tie 100 x 2.5 mm",
+      "qty": 42,
+      "unit_cost": 0.02,
+      "subtotal": 0.84,
+      "spec": "42 pc: at every clip, cable end and strain-relief anchor",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Rubber grommet, 6.4 mm panel hole, 3.2 mm bore",
+      "qty": 3,
+      "unit_cost": 0.08,
+      "subtotal": 0.24,
+      "spec": "3 pc: 9.5 mm panel hole",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "USB",
+      "qty": 1,
+      "unit_cost": 3,
+      "subtotal": 3,
+      "spec": "1 pc: lidar to computer",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "FFC",
+      "qty": 1,
+      "unit_cost": 3,
+      "subtotal": 3,
+      "spec": "1 pc: front_camera to computer",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "15 A ATM blade fuse",
+      "qty": 1,
+      "unit_cost": 0.25,
+      "subtotal": 0.25,
+      "spec": "1 pc: plus spares",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "2 A ATM blade fuse",
+      "qty": 1,
+      "unit_cost": 0.25,
+      "subtotal": 0.25,
+      "spec": "1 pc: plus spares",
+      "note": "price estimated"
     }
   ],
-  "total": 663.39,
+  "total": 695.36,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
   "actuator_sizing": [
     {
       "joint": "front_left_wheel_joint",
-      "required_effort": 0.12,
+      "required_effort": 0.123,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.12,
+      "required_torque_nm": 0.123,
       "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
-      "margin": "5.7x"
+      "margin": "5.56x"
     },
     {
       "joint": "front_right_wheel_joint",
-      "required_effort": 0.12,
+      "required_effort": 0.123,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.12,
+      "required_torque_nm": 0.123,
       "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
-      "margin": "5.7x"
+      "margin": "5.56x"
     },
     {
       "joint": "rear_left_wheel_joint",
-      "required_effort": 0.12,
+      "required_effort": 0.123,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.12,
+      "required_torque_nm": 0.123,
       "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
-      "margin": "5.7x"
+      "margin": "5.56x"
     },
     {
       "joint": "rear_right_wheel_joint",
-      "required_effort": 0.12,
+      "required_effort": 0.123,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.12,
+      "required_torque_nm": 0.123,
       "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
-      "margin": "5.7x"
+      "margin": "5.56x"
     }
   ],
   "warnings": [],
   "notes": [
-    "Four-wheel skid-steer base: pololu_37d_30to1_64cpr gearmotors, 2.292 kg, 1.24 m/s, 1.47 h on 1 x lipo_3s_2200, rpi5",
+    "Four-wheel skid-steer base: pololu_37d_30to1_64cpr gearmotors, 2.399 kg, 1.24 m/s, 1.47 h on 1 x lipo_3s_2200, rpi5",
     "Drive sized for the robot plus 2 kg cargo on a 10 deg slope accelerating at 0.5 m/s^2, rolling resistance 0.03; motors compared at their continuous (not stall) rating.",
-    "All motors and servos are 12 V parts run straight from a 3S LiPo (9.9-12.6 V); a power switch, 15 A blade fuse and XT60 wiring are budgeted as a lump sum.",
+    "All motors and servos are 12 V parts run straight from a 3S LiPo (9.9-12.6 V) through the main fuse and switch; see WIRING.md.",
     "Printed parts: PETG; brackets bolt to the deck with M3 screws and nuts; the motor face screws are the gearmotor's own six M3 holes.",
     "Skid steering: both wheels on a side get the same command; turning on the spot scrubs the tyres sideways (checked as a short-transient torque).",
     "The deck is larger than a 250 x 210 mm bed, so it is a laser-cut 3 mm aluminium plate (send-cut-send style service) rather than a print.",

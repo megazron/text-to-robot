@@ -27,7 +27,7 @@
       "unit_cost": 39.95,
       "subtotal": 39.95,
       "spec": "5 V",
-      "note": "5 V rail for the computer / USB · https://www.pololu.com/product/4091"
+      "note": "5 V rail for the computer, USB and sensors · https://www.pololu.com/product/4091"
     },
     {
       "category": "Electronics",
@@ -37,6 +37,15 @@
       "subtotal": 21,
       "spec": "12 V",
       "note": "dual DC motor driver · https://www.cytron.io/p-10amp-5v-30v-dc-motor-driver-2-channels"
+    },
+    {
+      "category": "Power",
+      "name": "Inline ATM mini blade fuse holder, 30 A class (Littelfuse FHM)",
+      "qty": 2,
+      "unit_cost": 2.5,
+      "subtotal": 5,
+      "spec": "32 V",
+      "note": "fuse holders · https://www.digikey.com/en/product-highlight/l/littelfuse-commercial-vehicle-products/fhac-fhm-series-in-line-fuse-holders"
     },
     {
       "category": "Power",
@@ -75,6 +84,24 @@
       "note": "2D lidar · https://www.waveshare.com/rplidar-c1.htm"
     },
     {
+      "category": "Power",
+      "name": "KCD1 rocker switch, SPST, 6 A 250 VAC / 10 A 125 VAC",
+      "qty": 1,
+      "unit_cost": 0.3,
+      "subtotal": 0.3,
+      "spec": "https://www.aliexpress.com/w/wholesale-kcd1-rocker-switch.html",
+      "note": "main power switch · https://www.aliexpress.com/w/wholesale-kcd1-rocker-switch.html"
+    },
+    {
+      "category": "Power",
+      "name": "WAGO 221-415 five-way lever splice",
+      "qty": 2,
+      "unit_cost": 0.8,
+      "subtotal": 1.6,
+      "spec": "450 V",
+      "note": "rail splices, the star ground and bus hubs · https://www.wago.com/global/electrical-interconnections/compact-splicing-connector/p/221-415"
+    },
+    {
       "category": "Drive",
       "name": "Pololu 90x10 mm wheel + 6 mm universal aluminium hub (for 37D gearmotors)",
       "qty": 2,
@@ -87,9 +114,9 @@
       "category": "Printed structure",
       "name": "PETG filament for 15 printed parts",
       "qty": 1,
-      "unit_cost": 14.53,
-      "subtotal": 14.53,
-      "spec": "574 g of parts (+15 % supports/waste), about 52.4 h of printing",
+      "unit_cost": 14.34,
+      "subtotal": 14.34,
+      "spec": "567 g of parts (+15 % supports/waste), about 51.6 h of printing",
       "note": "base_link, left_bracket, right_bracket, front_caster_post, rear_caster_post, computer_tray, motor_driver_1_tray, battery_tray, regulator_5v_tray, imu_tray, electronics_enclosure_front, electronics_enclosure_rear, electronics_lid_front, electronics_lid_rear, lidar_mast"
     },
     {
@@ -98,10 +125,154 @@
       "qty": 68,
       "unit_cost": 0.12,
       "subtotal": 8.16,
-      "spec": "12x M3 x 8 socket head (motor face); 4x M3 x 10 socket head + nut (bracket to deck); 6x M3 x 6 socket head (caster); 15x M2.5 x 6 screws (board to standoffs); 10x M3 x 8 socket head (tray to deck); 1x 20 mm hook-and-loop battery strap; 8x M3 x 8 + nut (enclosure halves lap joint); 4x M3 x 10 self-tapping (enclosure lid); 4x M3 x 8 + nut (enclosure tabs to deck; drill 3.4 mm through the deck at the tabs); 4x M2.5 x 6 (lidar)"
+      "spec": "12x M3 x 8 socket head (motor face); 4x M3 x 10 socket head + nut (bracket to deck); 6x M3 x 6 socket head (caster); 15x M2.5 x 6 screws (board to standoffs); 10x M3 x 8 socket head (tray to deck); 1x 20 mm hook-and-loop battery strap; 8x M3 x 8 + nut (enclosure pieces lap joint); 4x M3 x 10 self-tapping (enclosure lid); 4x M3 x 8 + nut (enclosure tabs to deck; drill 3.4 mm through the deck at the tabs); 4x M2.5 x 6 (lidar)"
+    },
+    {
+      "category": "Wiring",
+      "name": "16 AWG silicone wire",
+      "qty": 0.6,
+      "unit_cost": 1,
+      "subtotal": 0.6,
+      "spec": "0.6 m: 1.308 mm2, rated 11 A in a bundle; 0.53 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "18 AWG silicone wire",
+      "qty": 0.7,
+      "unit_cost": 0.7,
+      "subtotal": 0.49,
+      "spec": "0.7 m: 0.823 mm2, rated 8 A in a bundle; 0.61 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "22 AWG silicone wire",
+      "qty": 2.7,
+      "unit_cost": 0.4,
+      "subtotal": 1.08,
+      "spec": "2.7 m: 0.327 mm2, rated 3.5 A in a bundle; 2.37 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "24 AWG silicone wire",
+      "qty": 2.3,
+      "unit_cost": 0.35,
+      "subtotal": 0.8,
+      "spec": "2.3 m: 0.205 mm2, rated 1.75 A in a bundle; 2.06 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "26 AWG silicone wire",
+      "qty": 2.6,
+      "unit_cost": 0.3,
+      "subtotal": 0.78,
+      "spec": "2.6 m: 0.128 mm2, rated 1.1 A in a bundle; 2.33 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Dupont 2.54 mm contacts",
+      "qty": 28,
+      "unit_cost": 0.02,
+      "subtotal": 0.56,
+      "spec": "28 pc: rated 3 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Dupont 2.54 mm housings",
+      "qty": 7,
+      "unit_cost": 0.02,
+      "subtotal": 0.14,
+      "spec": "7 pc: one per cable end",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Bootlace ferrule contacts",
+      "qty": 6,
+      "unit_cost": 0.03,
+      "subtotal": 0.18,
+      "spec": "6 pc: rated 17.5 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "XT60 contacts",
+      "qty": 2,
+      "unit_cost": 0.9,
+      "subtotal": 1.8,
+      "spec": "2 pc: rated 35 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "6.3 mm spade contacts",
+      "qty": 2,
+      "unit_cost": 0.08,
+      "subtotal": 0.16,
+      "spec": "2 pc: rated 15 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Heat shrink 3 mm, 2:1",
+      "qty": 1.5,
+      "unit_cost": 0.2,
+      "subtotal": 0.3,
+      "spec": "1.5 m: 19 solder joints + a boot on each cable end",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Cable tie 100 x 2.5 mm",
+      "qty": 32,
+      "unit_cost": 0.02,
+      "subtotal": 0.64,
+      "spec": "32 pc: at every clip, cable end and strain-relief anchor",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Rubber grommet, 6.4 mm panel hole, 3.2 mm bore",
+      "qty": 2,
+      "unit_cost": 0.08,
+      "subtotal": 0.16,
+      "spec": "2 pc: 9.5 mm panel hole",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "USB",
+      "qty": 1,
+      "unit_cost": 3,
+      "subtotal": 3,
+      "spec": "1 pc: lidar to computer",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "7.5 A ATM blade fuse",
+      "qty": 1,
+      "unit_cost": 0.25,
+      "subtotal": 0.25,
+      "spec": "1 pc: plus spares",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "2 A ATM blade fuse",
+      "qty": 1,
+      "unit_cost": 0.25,
+      "subtotal": 0.25,
+      "spec": "1 pc: plus spares",
+      "note": "price estimated"
     }
   ],
-  "total": 494.37,
+  "total": 512.27,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
@@ -127,7 +298,7 @@
   "notes": [
     "Differential-drive base: pololu_37d_30to1_64cpr gearmotors, 1.489 kg, 1.24 m/s, 1.8 h on 1 x lipo_3s_2200, rpi5",
     "Drive sized for the robot plus 1 kg cargo on a 10 deg slope accelerating at 0.5 m/s^2, rolling resistance 0.03; motors compared at their continuous (not stall) rating.",
-    "All motors and servos are 12 V parts run straight from a 3S LiPo (9.9-12.6 V); a power switch, 15 A blade fuse and XT60 wiring are budgeted as a lump sum.",
+    "All motors and servos are 12 V parts run straight from a 3S LiPo (9.9-12.6 V) through the main fuse and switch; see WIRING.md.",
     "Printed parts: PETG; brackets bolt to the deck with M3 screws and nuts; the motor face screws are the gearmotor's own six M3 holes.",
     "Two ball casters (front and rear) keep the deck level; on rough floors fit only one or add the Pololu spacer set so the drive wheels never lift.",
     "Prices are list/street prices from the linked suppliers at the time the catalog was written; check before ordering."
