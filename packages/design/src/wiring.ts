@@ -530,12 +530,13 @@ function applyClips(A: Assembly, rec: WiringRecord) {
     const inv = (v: Vec3): Vec3 => [0, 1, 2].map((k) => T.R[0][k] * v[0] + T.R[1][k] * v[1] + T.R[2][k] * v[2]) as Vec3;
     const p = inv(sub(c.at_mm, scale(T.p as Vec3, 1000))), n = unit(inv(c.normal)); let d = inv(c.dir);
     d = sub(d, scale(n, dot(d, n))); d = norm(d) > 1e-6 ? unit(d) : perp(n);
-    const w = unit(cross(n, d)), half = Math.max(c.od_mm, 3) / 2 + 0.8, h = Math.max(c.od_mm, 3) + 1, t = 1.8, len = 3;
-    const P = (a: number, b: number, e: number): Vec3 => add(add(p, scale(w, a)), add(scale(d, b), scale(n, e)));
-    const post = (a0: number, a1: number, e0: number, e1: number) => ({ op: "hull", of: [a0, a1].flatMap((a) => [-len, len].flatMap((b) => [e0, e1].map((e) => { const q = P(a, b, e); return { op: "box", min: [q[0] - 0.01, q[1] - 0.01, q[2] - 0.01], max: [q[0] + 0.01, q[1] + 0.01, q[2] + 0.01] }; }))) });
+    // real boxes in the clip's own frame (x across, y along the cable, z off the surface)
+    const w = unit(cross(d, n)), half = Math.max(c.od_mm, 3) / 2 + 0.8, h = Math.max(c.od_mm, 3) + 1, t = 1.8, len = 3;
+    const Tc = [w[0], w[1], w[2], 0, d[0], d[1], d[2], 0, n[0], n[1], n[2], 0, p[0], p[1], p[2], 1];
+    const bar = (a0: number, a1: number, e0: number, e1: number) => ({ op: "box", min: [a0, -len, e0], max: [a1, len, e1] });
     const ops = byLink.get(c.link) ?? [];
     // a pad under the whole clip: its centre is on the surface, so it stays attached even on a beam narrower than the clip
-    ops.push(post(-half - t, half + t, -0.9, 0.7), post(-half - t, -half, -0.6, h + t), post(half, half + t, -0.6, h + t), post(-half - t, half + t, h, h + t));
+    ops.push({ op: "at", T: Tc, of: [bar(-half - t, half + t, -0.9, 0.7), bar(-half - t, -half, -0.6, h + t), bar(half, half + t, -0.6, h + t), bar(-half - t, half + t, h, h + t)] });
     byLink.set(c.link, ops);
   }
   for (const [l, ops] of byLink) { try { A.amendProgram(l, ops); } catch (e) { rec.notes.push(`clips on ${l} not printed: ${(e as Error).message}`); } }

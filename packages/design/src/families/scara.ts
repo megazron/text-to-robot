@@ -193,15 +193,15 @@ function build(name: string, prompt: string | undefined, p: Plan) {
   const reachOut = L1 + L2 + R - 0;
   const bx0 = -Math.ceil(reachOut + 30) - 171;
   const box: Op[] = [
-    { op: "box", min: [bx0, -103, 0], max: [bx0 + 171, 103, 75], r: 6 },
-    { op: "cutbox", min: [bx0 + 3, -100, 3], max: [bx0 + 168, 100, 80] },
+    { op: "box", min: [bx0, -103, 0], max: [bx0 + 171, 103, 86], r: 6 },
+    { op: "cutbox", min: [bx0 + 3, -100, 3], max: [bx0 + 168, 100, 91] },
     ...[-1, 1].map((s): Op => ({ op: "box", min: [bx0 + 3, s > 0 ? 96 : -100, 43], max: [bx0 + 168, s > 0 ? 100 : -96, 46] })),
   ];
   for (let k = 0; k < 8; k++) for (const s of [-1, 1]) box.push({ op: "cutbox", min: [bx0 + 22 + k * 17, s > 0 ? 99 : -104, 12], max: [bx0 + 30 + k * 17, s > 0 ? 104 : -99, 36] });
   const psu24 = translation([bx0 + 6, -99, 3]), psu12 = translation([bx0 + 6, 2, 3]);
   for (const [key, T] of [["psu_24v_lrs150", psu24], ["psu_12v_lrs75", psu12]] as const) for (const h of part(key).holes) if (h.axis[2] < -0.5) { const q = apply(T, h.pos); box.push({ op: "hole", a: [q[0], q[1], -1], b: [q[0], q[1], 4], d: 3.4 }); }
   // fused, switched mains inlet in the far wall (its body stands in the room left of the supplies), gland where the harness leaves, USB of the controller
-  box.push({ op: "cutbox", min: [bx0 - 1, -12, 25], max: [bx0 + 4, 16, 72] });
+  box.push({ op: "cutbox", min: [bx0 - 1, -31.6, 52.3], max: [bx0 + 4, 15.6, 79.7] });
   box.push({ op: "hole", a: [bx0 + 166, 40, 60], b: [bx0 + 173, 40, 60], d: 12.5 });
   box.push({ op: "cutbox", min: [bx0 + 40, -104, 52], max: [bx0 + 80, -99, 68] });
   A.printedLink("controller_box", { name: "controller_box", ops: box }, { role: "base", material: "printed_dark" });
@@ -238,14 +238,14 @@ function build(name: string, prompt: string | undefined, p: Plan) {
   A.fastener("M3 x 6 socket head (PSU bottom)", 4);
   // lid over the whole box: screws into four corner lugs, slots over the supplies
   const lugs: [number, number][] = [[bx0 + 9, -94], [bx0 + 162, -94], [bx0 + 9, 94], [bx0 + 162, 94]];
-  const lid: Op[] = [{ op: "box", min: [bx0, -103, 75.2], max: [bx0 + 171, 103, 78], r: 6 }, { op: "box", min: [bx0 + 3.4, -99.6, 72], max: [bx0 + 167.6, 99.6, 75.3], r: 3 }, { op: "cutbox", min: [bx0 + 6, -97, 71], max: [bx0 + 165, 97, 75] }];
-  for (let k = 0; k < 16; k++) lid.push({ op: "cutbox", min: [bx0 + 24, -84 + k * 11, 70], max: [bx0 + 150, -80 + k * 11, 79] });
-  for (const [x, y] of lugs) lid.push({ op: "hole", a: [x, y, 70], b: [x, y, 79], d: 3.4 });
+  const lid: Op[] = [{ op: "box", min: [bx0, -103, 86.2], max: [bx0 + 171, 103, 89], r: 6 }, { op: "box", min: [bx0 + 3.4, -99.6, 83], max: [bx0 + 167.6, 99.6, 86.3], r: 3 }, { op: "cutbox", min: [bx0 + 6, -97, 82], max: [bx0 + 165, 97, 86] }];
+  for (let k = 0; k < 16; k++) lid.push({ op: "cutbox", min: [bx0 + 24, -84 + k * 11, 81], max: [bx0 + 150, -80 + k * 11, 90] });
+  for (const [x, y] of lugs) lid.push({ op: "hole", a: [x, y, 81], b: [x, y, 90], d: 3.4 });
   A.printedLink("controller_lid", { name: "controller_lid", ops: lid }, { material: "printed_dark" });
   A.fixed("controller_lid_mount", "controller_box", "controller_lid", I4());
-  A.amendProgram("controller_box", lugs.flatMap(([x, y]): Op[] => [{ op: "box", min: [x - 5, y - 5, 60], max: [x + 5, y + 5, 75] }, { op: "hole", a: [x, y, 63], b: [x, y, 76], d: 2.6 }]));
+  A.amendProgram("controller_box", lugs.flatMap(([x, y]): Op[] => [{ op: "box", min: [x - 5, y - 5, 71], max: [x + 5, y + 5, 86] }, { op: "hole", a: [x, y, 74], b: [x, y, 87], d: 2.6 }]));
   A.fastener("M3 x 10 self-tapping (controller lid)", 4);
-  A.mount("controller_box", "iec_c14_fused_switched", frame([bx0, 2, 48.5], [-1, 0, 0], [0, 0, 1]), "mains_inlet", "fused, switched mains inlet");
+  A.mount("controller_box", "iec_c14_fused_switched", frame([bx0, -8, 66], [-1, 0, 0], [0, 0, 1]), "mains_inlet", "fused, switched mains inlet");
   A.fastener("M2 x 6 screw (bus adapter)", 4);
 
   // ---------------- sensors ----------------
@@ -304,9 +304,9 @@ function analyse(b: ReturnType<typeof build>, p: Plan) {
 /** Netlist: one supply per voltage from the inlet; three steppers on TMC2209s from the ESP32; wrist and gripper on the servo bus. */
 function wireScara(A: Assembly, H: Harness, b: ReturnType<typeof build>) {
   const x0 = b.bx0;
-  registerBay(A, { name: "controller_bay", tub: "controller_box", lid: "controller_lid", solids: ["controller_box", "controller_lid"], parent: "controller_box", T: translation([0, 0, 0]), min: [x0 + 3, -100, 3], max: [x0 + 168, 100, 75], screws: 4, vent_area_mm2: 16 * 126 * 4 + 2 * 8 * 8 * 24,
+  registerBay(A, { name: "controller_bay", tub: "controller_box", lid: "controller_lid", solids: ["controller_box", "controller_lid"], parent: "controller_box", T: translation([0, 0, 0]), min: [x0 + 3, -100, 3], max: [x0 + 168, 100, 86], screws: 4, vent_area_mm2: 16 * 126 * 4 + 2 * 8 * 8 * 24,
     parts: ["psu_24v", "psu_12v", "controller", "driver_j1", "driver_j2", "driver_z", "servo_bus"],
-    exits: [{ id: "controller_bay.harness", kind: "gland", face: "x+", at: [x0 + 171, 40, 60], normal: [1, 0, 0], hole_mm: 12.5 }, { id: "controller_bay.usb", kind: "usb", face: "y-", at: [x0 + 60, -103, 60], normal: [0, -1, 0], hole_mm: 16 }, { id: "controller_bay.mains", kind: "switch", face: "x-", at: [x0, 2, 48.5], normal: [-1, 0, 0], hole_mm: 27, part: "mains_inlet" }] }, H);
+    exits: [{ id: "controller_bay.harness", kind: "gland", face: "x+", at: [x0 + 171, 40, 60], normal: [1, 0, 0], hole_mm: 12.5 }, { id: "controller_bay.usb", kind: "usb", face: "y-", at: [x0 + 60, -103, 60], normal: [0, -1, 0], hole_mm: 16 }, { id: "controller_bay.mains", kind: "switch", face: "x-", at: [x0, -8, 66], normal: [-1, 0, 0], hole_mm: 27, part: "mains_inlet" }] }, H);
   H.mainSwitch = "mains_inlet";
   for (const [i, psu] of (["psu_24v", "psu_12v"] as const).entries()) for (const [n, a, c] of [[`MAINS_L${i}`, "L", "AC/L"], [`MAINS_N${i}`, "N", "AC/N"], [`MAINS_E${i}`, "E", "FG"]] as const) { H.net(n, "power", 230); H.wire(n, `mains_inlet.load.${a}`, `${psu}.ac_in.${c}`, { typ: 1, peak: 2 }); }
   H.notes.push("Mains side: IEC inlet to both supplies' AC terminals with insulated spades, earth wired first, lid on before plugging in. Have it checked if you are not qualified to wire mains.");
