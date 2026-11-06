@@ -7,6 +7,7 @@ import { mountingPlate, armSpar } from "./mechanical.ts";
 import * as helmet from "./helmet.ts";
 import { programMesh, componentMesh, Manifold, build } from "@ttr/solid";
 import { partFiles } from "@ttr/kernel/ready";
+import { armourMesh } from "./armourpack.ts";
 
 export type Params = Record<string, number | string>;
 type Gen = (p: Params) => Mesh;
@@ -28,6 +29,8 @@ function armourPlate(p: Params): Mesh {
 export const PARTS: Record<string, Gen> = {
   // real-component bodies (datasheet CAD) and printed parts (manifold CSG programs), see @ttr/solid
   component: p => componentMesh(str(p,"key","")),
+  // closed armour shells from the reference pipeline (packages/parts/data/mark43_pack.*)
+  armour: p => armourMesh(str(p,"piece",""), num(p,"s",1), JSON.parse(str(p,"toLink","[]")) as number[]),
   printed: p => programMesh(str(p,"program","{}")),
   // printed parts modelled as exact solids on OpenCascade (@ttr/kernel): fillets, STEP export
   cad: p => { const m = partFiles(str(p,"program","{}")).mesh; return { v: m.v.map((x) => [...x] as [number, number, number]), f: m.f.map((x) => [...x] as [number, number, number]) }; },
@@ -78,7 +81,7 @@ export function buildPart(g: { part: string; params?: Params; scale?: [number, n
   const gen = PARTS[g.part]; if (!gen) throw new Error(`unknown mesh part '${g.part}'`);
   // consistent outward winding for every part (renderers cull back faces); manifold CSG output is already
   // watertight and outward, and welding its near-coincident vertices would break it
-  const raw = gen(g.params ?? {}), m = g.part === "printed" || g.part === "cad" ? raw : orient(raw);
+  const raw = gen(g.params ?? {}), m = g.part === "printed" || g.part === "cad" || g.part === "armour" ? raw : orient(raw);
   return g.scale ? scaleMesh(m, g.scale) : m;
 }
 
@@ -86,7 +89,7 @@ export function buildPart(g: { part: string; params?: Params; scale?: [number, n
 export function meshGeometry(part: string, file: string, params: Params = {}, scale?: [number, number, number]) {
   const m = buildPart({ part, params, scale });
   let mp: ReturnType<typeof massProperties>;
-  try { mp = massProperties(m, part === "printed" || part === "cad"); }
+  try { mp = massProperties(m, part === "printed" || part === "cad" || part === "armour"); }
   catch (e) {
     // a few datasheet CAD bodies (several touching solids) do not tessellate into one closed surface; a bought
     // part's mass comes from its datasheet anyway, so its inertia is taken from the convex hull of its mesh

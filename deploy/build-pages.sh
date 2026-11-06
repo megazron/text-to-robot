@@ -17,9 +17,13 @@ for (const dir of ["ttr_cad", "ttr_mujoco"])
     if (/\.(py|json)$/.test(f)) out[`python/${dir}/${f}`] = fs.readFileSync(`python/${dir}/${f}`, "utf8");
 fs.writeFileSync("apps/web/src/.generated/python-files.json", JSON.stringify(out));'
 
-npx --yes esbuild@0.25.10 apps/web/src/browser-api.ts \
+# the engine runs in a Web Worker; the page script stays tiny
+npx --yes esbuild@0.25.10 apps/web/src/browser-engine.ts \
   --bundle --format=esm --platform=browser --target=es2022 --minify \
   --alias:node:fs=./apps/web/src/fs-shim.ts --external:node:module --external:node:url --external:node:path --external:node:crypto --external:module --external:fs --external:path \
+  --outfile="$OUT/browser-engine.js" --log-level=warning
+npx --yes esbuild@0.25.10 apps/web/src/browser-api.ts \
+  --bundle --format=esm --platform=browser --target=es2022 --minify \
   --outfile="$OUT/browser-api.js" --log-level=warning
 
 # Project pages live under /<repo>/, so make every root-absolute asset path relative and
@@ -36,6 +40,9 @@ if grep -nE '(href|src)="/[^/]' "$OUT/index.html"; then echo "root-absolute path
 cp node_modules/manifold-3d/manifold.wasm "$OUT/manifold.wasm"
 # OpenCascade CAD kernel (exact solids, fillets, STEP export)
 cp node_modules/replicad-opencascadejs/dist/replicad_single.wasm "$OUT/replicad_single.wasm"
+
+# Mark 43 armour shells (fetched on demand)
+[ -f packages/parts/data/mark43_pack.bin ] && cp packages/parts/data/mark43_pack.json packages/parts/data/mark43_pack.bin "$OUT/"
 
 touch "$OUT/.nojekyll"
 SHA="$(git rev-parse HEAD 2>/dev/null || echo unknown)"
