@@ -3,7 +3,7 @@
      robot: arm_6dof
      prompt: Create a 6 DOF robotic arm with a parallel gripper
 
-     15 links, 14 joints, 15 inferred values
+     20 links, 19 joints, 20 inferred values
 -->
 <robot name="arm_6dof">
   <material name="printed"><color rgba="0.93 0.93 0.95 1"/></material>
@@ -29,9 +29,9 @@
       <geometry><mesh filename="package://arm_6dof/meshes/base_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.003085 -0.0000390527 0.007338" rpy="0 0 0"/>
-      <mass value="0.08739"/>
-      <inertia ixx="0.0000774704" ixy="-7.56453e-8" ixz="0.00000351835" iyy="0.0000839586" iyz="2.70037e-8" izz="0.000143939"/>
+      <origin xyz="-0.003228 -0.0000413414 0.007335" rpy="0 0 0"/>
+      <mass value="0.087617"/>
+      <inertia ixx="0.0000774735" ixy="-8.67375e-8" ixz="0.00000350397" iyy="0.0000846492" iyz="2.61567e-8" izz="0.000144629"/>
     </inertial>
   </link>
   <link name="base_yaw_actuator">
@@ -125,9 +125,9 @@
       <geometry><mesh filename="package://arm_6dof/meshes/forearm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.057478 0.006547 -0.024024" rpy="0 0 0"/>
-      <mass value="0.090732"/>
-      <inertia ixx="0.0000492037" ixy="-0.00000743772" ixz="-0.00000129832" iyy="0.0000752083" iyz="-0.00000114261" izz="0.0000631575"/>
+      <origin xyz="0.057442 0.006549 -0.023994" rpy="0 0 0"/>
+      <mass value="0.090914"/>
+      <inertia ixx="0.0000492445" ixy="-0.00000743464" ixz="-0.00000125114" iyy="0.000075306" iyz="-0.0000011455" izz="0.0000632172"/>
     </inertial>
   </link>
   <link name="forearm_roll_actuator">
@@ -258,6 +258,86 @@
       <inertia ixx="0.00000130368" ixy="0.00000150594" ixz="-6.31150e-8" iyy="0.00000446521" iyz="2.92453e-8" izz="0.00000565465"/>
     </inertial>
   </link>
+  <link name="control_case">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://arm_6dof/meshes/control_case.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://arm_6dof/meshes/control_case.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.684073 -0.00465 0.01335" rpy="0 0 0"/>
+      <mass value="0.092333"/>
+      <inertia ixx="0.000235682" ixy="0.00000167132" ixz="-0.00000191617" iyy="0.000271254" iyz="-0.00000259472" izz="0.000468612"/>
+    </inertial>
+  </link>
+  <link name="control_case_lid">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://arm_6dof/meshes/control_case_lid.stl"/></geometry>
+      <material name="printed_accent"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://arm_6dof/meshes/control_case_lid.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.686343 -0.007 0.045786" rpy="0 0 0"/>
+      <mass value="0.034618"/>
+      <inertia ixx="0.0000592645" ixy="6.14859e-14" ixz="-4.83611e-15" iyy="0.0000703661" iyz="2.45976e-13" izz="0.000129546"/>
+    </inertial>
+  </link>
+  <link name="power_supply">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://arm_6dof/meshes/psu_12v_lrs75.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://arm_6dof/meshes/psu_12v_lrs75.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.050897 0.048976 0.014773" rpy="0 0 0"/>
+      <mass value="0.23"/>
+      <inertia ixx="0.000199943" ixy="0.0000048465" ixz="-0.00000138003" iyy="0.000196182" iyz="-6.45161e-7" izz="0.000362117"/>
+    </inertial>
+  </link>
+  <link name="servo_bus">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://arm_6dof/meshes/dxl_u2d2.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://arm_6dof/meshes/dxl_u2d2.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.024136 -2.94053e-19 0.007445" rpy="0 0 0"/>
+      <mass value="0.009"/>
+      <inertia ixx="4.04976e-7" ixy="-3.34116e-23" ixz="-5.80256e-11" iyy="0.00000192841" iyz="2.68507e-24" izz="0.0000020037"/>
+    </inertial>
+  </link>
+  <link name="mains_inlet">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://arm_6dof/meshes/iec_c14_fused_switched.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://arm_6dof/meshes/iec_c14_fused_switched.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 -5.92043e-19 -0.014582" rpy="0 0 0"/>
+      <mass value="0.04"/>
+      <inertia ixx="0.000011391" ixy="0" ixz="0" iyy="0.00000657584" iyz="7.81695e-23" izz="0.00000990197"/>
+    </inertial>
+  </link>
   <joint name="base_yaw_actuator_mount" type="fixed">
     <parent link="base_link"/>
     <child link="base_yaw_actuator"/>
@@ -348,5 +428,30 @@
     <axis xyz="0 0 1"/>
     <limit lower="-0.35" upper="0.464" effort="1.4" velocity="5.969"/>
     <dynamics damping="0.0469" friction="0.028"/>
+  </joint>
+  <joint name="control_case_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="control_case"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="control_case_lid_mount" type="fixed">
+    <parent link="control_case"/>
+    <child link="control_case_lid"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="power_supply_mount" type="fixed">
+    <parent link="control_case"/>
+    <child link="power_supply"/>
+    <origin xyz="-0.719343 -0.066 0.0074" rpy="0 0 0"/>
+  </joint>
+  <joint name="servo_bus_mount" type="fixed">
+    <parent link="control_case"/>
+    <child link="servo_bus"/>
+    <origin xyz="-0.747843 0.043 0.0074" rpy="0 0 0"/>
+  </joint>
+  <joint name="mains_inlet_mount" type="fixed">
+    <parent link="control_case"/>
+    <child link="mains_inlet"/>
+    <origin xyz="-0.757743 -0.0175 0.0234" rpy="0 -1.570796 0"/>
   </joint>
 </robot>

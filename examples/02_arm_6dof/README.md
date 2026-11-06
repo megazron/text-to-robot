@@ -8,7 +8,7 @@ Interpreted as: 6-DOF serial arm · parallel gripper
 
 **6-DOF arm, 455 mm reach, 0.1 kg payload, ROBOTIS DYNAMIXEL X-series (12 V)**
 
-Parts cost **$1150.99** · printed structure 8 parts, 415 g · checks passed 22/22
+Parts cost **$1168.42** · printed structure 10 parts, 542 g · checks passed 41/41
 
 ## What it can do
 
@@ -37,7 +37,7 @@ Parts cost **$1150.99** · printed structure 8 parts, 415 g · checks passed 22/
 
 ## Engineering checks
 
-All 22 checks pass (torque, speed, power, stability, print-bed fit, grip). Details in `robot.json` → `metadata.design.checks`.
+All 41 checks pass (torque, speed, power, stability, print-bed fit, grip). Details in `robot.json` → `metadata.design.checks`.
 
 ## Assumptions and limits
 
@@ -67,6 +67,7 @@ _PASS means the modelled actuators (datasheet peak torque as a hard limit, a lin
 |---|---|
 | `robot.urdf`, `meshes/` | URDF with real component and printed-part meshes, datasheet effort/velocity limits |
 | `BOM.md`, `bom.json` | every part to buy, with supplier links and prices |
+| `WIRING.md`, `wiring.svg` | power budget per rail, pin-to-pin table, cut list, slack at each joint, wiring diagram |
 | `robot.cad.zip` | build package: printable STLs, print list, bought-part models, assembly order |
 | `robot.ros2.zip` | ROS 2 description package (ros2_control, MoveIt config, Gazebo launch) |
 | `robot.training.zip` | MuJoCo / RL training scaffold |

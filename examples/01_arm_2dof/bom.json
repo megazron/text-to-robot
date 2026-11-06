@@ -31,6 +31,15 @@
     },
     {
       "category": "Power",
+      "name": "IEC C14 panel inlet with fuse drawer and rocker switch, 10 A",
+      "qty": 1,
+      "unit_cost": 3,
+      "subtotal": 3,
+      "spec": "https://www.aliexpress.com/w/wholesale-iec-c14-inlet-fuse-switch.html",
+      "note": "fused, switched mains inlet · https://www.aliexpress.com/w/wholesale-iec-c14-inlet-fuse-switch.html"
+    },
+    {
+      "category": "Power",
       "name": "Mean Well LRS-75-12 enclosed PSU, 12 V 6 A (75 W)",
       "qty": 1,
       "unit_cost": 22,
@@ -49,23 +58,122 @@
     },
     {
       "category": "Printed structure",
-      "name": "PETG filament for 4 printed parts",
+      "name": "PETG filament for 6 printed parts",
       "qty": 1,
-      "unit_cost": 9.25,
-      "subtotal": 9.25,
-      "spec": "366 g of parts (+15 % supports/waste), about 33.3 h of printing",
-      "note": "base_link, upper_arm, forearm, gripper_jaw"
+      "unit_cost": 12.76,
+      "subtotal": 12.76,
+      "spec": "504 g of parts (+15 % supports/waste), about 46.0 h of printing",
+      "note": "base_link, upper_arm, forearm, gripper_jaw, control_case, control_case_lid"
     },
     {
       "category": "Fasteners",
       "name": "Screws, nuts and inserts",
-      "qty": 26,
+      "qty": 36,
       "unit_cost": 0.12,
-      "subtotal": 3.12,
-      "spec": "4x M5 x 12 socket head (base to bench); 8x M2 x 6 case screws; 12x horn screws; 2x M5 x 16 socket head + M5 washer + M5 heat-set insert (clevis bearing axle)"
+      "subtotal": 4.32,
+      "spec": "4x M5 x 12 socket head (base to bench); 8x M2 x 6 case screws; 12x horn screws; 2x M5 x 16 socket head + M5 washer + M5 heat-set insert (clevis bearing axle); 4x M3 x 10 self-tapping (lid to compartment); 2x M3 x 6 self-tapping (Mean Well LRS-75-12 enclosed PSU, 12 V 6 A to standoffs); 4x M2 x 6 self-tapping (Waveshare Bus Servo Adapter to standoffs)"
+    },
+    {
+      "category": "Wiring",
+      "name": "22 AWG silicone wire",
+      "qty": 2.1,
+      "unit_cost": 0.4,
+      "subtotal": 0.84,
+      "spec": "2.1 m: 0.327 mm2, rated 3.5 A in a bundle; 1.89 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "24 AWG silicone wire",
+      "qty": 2.3,
+      "unit_cost": 0.35,
+      "subtotal": 0.8,
+      "spec": "2.3 m: 0.205 mm2, rated 1.75 A in a bundle; 2.06 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "26 AWG silicone wire",
+      "qty": 1.7,
+      "unit_cost": 0.3,
+      "subtotal": 0.51,
+      "spec": "1.7 m: 0.128 mm2, rated 1.1 A in a bundle; 1.50 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "6.3 mm spade contacts",
+      "qty": 3,
+      "unit_cost": 0.08,
+      "subtotal": 0.24,
+      "spec": "3 pc: rated 15 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Bootlace ferrule contacts",
+      "qty": 7,
+      "unit_cost": 0.03,
+      "subtotal": 0.21,
+      "spec": "7 pc: rated 17.5 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Molex 5264 contacts",
+      "qty": 18,
+      "unit_cost": 0.05,
+      "subtotal": 0.9,
+      "spec": "18 pc: rated 3 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Molex 5264 housings",
+      "qty": 6,
+      "unit_cost": 0.08,
+      "subtotal": 0.48,
+      "spec": "6 pc: one per cable end",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Heat shrink 3 mm, 2:1",
+      "qty": 0.3,
+      "unit_cost": 0.2,
+      "subtotal": 0.06,
+      "spec": "0.3 m: 0 solder joints + a boot on each cable end",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Cable tie 100 x 2.5 mm",
+      "qty": 10,
+      "unit_cost": 0.02,
+      "subtotal": 0.2,
+      "spec": "10 pc: at every clip, cable end and strain-relief anchor",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "PG7 cable gland",
+      "qty": 1,
+      "unit_cost": 2.97,
+      "subtotal": 2.97,
+      "spec": "1 pc: cable exit with strain relief",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Nylon braided sleeving 6 mm",
+      "qty": 0.4,
+      "unit_cost": 0.4,
+      "subtotal": 0.16,
+      "spec": "0.4 m: over every cable where it crosses a joint",
+      "note": "price estimated"
     }
   ],
-  "total": 130.07,
+  "total": 145.15,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,

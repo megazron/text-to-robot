@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1270 225" width="1270" height="225" font-family="Helvetica, Arial, sans-serif" font-size="10.5">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="30" y="26" font-size="17" font-weight="700">parallel_gripper: wiring diagram</text>
+<line x1="30" y1="44" x2="54" y2="44" stroke="#c8102e" stroke-width="2"/><text x="60" y="48">power</text>
+<line x1="120" y1="44" x2="144" y2="44" stroke="#111111" stroke-width="2"/><text x="150" y="48">ground</text>
+<line x1="210" y1="44" x2="234" y2="44" stroke="#1f6fd1" stroke-width="2"/><text x="240" y="48">signal</text>
+<line x1="300" y1="44" x2="324" y2="44" stroke="#0a8f5b" stroke-width="2"/><text x="330" y="48">bus</text>
+<text x="30" y="66" font-weight="700" fill="#555">Source</text>
+<text x="370" y="66" font-weight="700" fill="#555">Protection</text>
+<text x="710" y="66" font-weight="700" fill="#555">Control</text>
+<text x="1050" y="66" font-weight="700" fill="#555">Loads</text>
+<path d="M370 105 H356 V105 H234 V105 H220" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C1 W1 MAINS_L: mains_inlet.load.L to power_supply.ac_in.AC/L, 24 AWG</title></path>
+<path d="M370 118 H346 V118 H244 V118 H220" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C1 W2 MAINS_N: mains_inlet.load.N to power_supply.ac_in.AC/N, 24 AWG</title></path>
+<path d="M370 131 H336 V131 H254 V131 H220" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C1 W3 MAINS_E: mains_inlet.load.E to power_supply.ac_in.FG, 24 AWG</title></path>
+<path d="M900 105 H944 V105 H1006 V105 H1050" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C2 W4 BUS_SERVO_BUS: servo_bus.servo_bus.SIG to gripper_servo.bus_a.DATA, 26 AWG</title></path>
+<path d="M900 118 H954 V118 H996 V118 H1050" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C2 W5 GND: servo_bus.servo_bus.GND to gripper_servo.bus_a.GND, 24 AWG</title></path>
+<path d="M900 131 H964 V131 H986 V131 H1050" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C2 W6 VBUS: servo_bus.servo_bus.VIN to gripper_servo.bus_a.VCC, 24 AWG</title></path>
+<path d="M220 144 H294 V137.5 H636 V131 H710" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C3 W7 VBUS: power_supply.dc_out.DC OUTPUT +V to servo_bus.screw_in.VIN, 24 AWG</title></path>
+<path d="M220 157 H304 V137.5 H626 V118 H710" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C3 W8 GND: power_supply.dc_out.DC OUTPUT -V to servo_bus.screw_in.GND, 24 AWG</title></path>
+<rect x="1050" y="74" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1057" y="89" font-weight="700">gripper_servo</text>
+<text x="1057" y="108.5" fill="#333">DATA</text>
+<text x="1057" y="121.5" fill="#333">GND</text>
+<text x="1057" y="134.5" fill="#333">VCC</text>
+<rect x="30" y="74" width="190" height="93" rx="5" fill="#f4f6f8" stroke="#333"/><text x="37" y="89" font-weight="700">power_supply</text>
+<text x="37" y="108.5" fill="#333">AC/L</text>
+<text x="37" y="121.5" fill="#333">AC/N</text>
+<text x="37" y="134.5" fill="#333">FG</text>
+<text x="37" y="147.5" fill="#333">DC OUTPUT +V</text>
+<text x="37" y="160.5" fill="#333">DC OUTPUT -V</text>
+<rect x="710" y="74" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="717" y="89" font-weight="700">servo_bus</text>
+<text x="717" y="108.5" fill="#333">SIG</text>
+<text x="717" y="121.5" fill="#333">GND</text>
+<text x="717" y="134.5" fill="#333">VIN</text>
+<rect x="370" y="74" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="89" font-weight="700">mains_inlet</text>
+<text x="377" y="108.5" fill="#333">L</text>
+<text x="377" y="121.5" fill="#333">N</text>
+<text x="377" y="134.5" fill="#333">E</text>
+</svg>

@@ -12,6 +12,15 @@
       "note": "gripper pinion drive · https://www.seeedstudio.com/STS3215-30KG-Serial-Servo-p-6340.html"
     },
     {
+      "category": "Power",
+      "name": "IEC C14 panel inlet with fuse drawer and rocker switch, 10 A",
+      "qty": 1,
+      "unit_cost": 3,
+      "subtotal": 3,
+      "spec": "https://www.aliexpress.com/w/wholesale-iec-c14-inlet-fuse-switch.html",
+      "note": "fused, switched mains inlet · https://www.aliexpress.com/w/wholesale-iec-c14-inlet-fuse-switch.html"
+    },
+    {
       "category": "Mechanical",
       "name": "Linear ball bushing LM8UU (8 x 15 x 24 mm)",
       "qty": 4,
@@ -27,7 +36,7 @@
       "unit_cost": 22,
       "subtotal": 22,
       "spec": "12 V",
-      "note": "12 V servo supply (off-board) · https://www.digikey.com/en/products/result?keywords=LRS-75-12"
+      "note": "12 V servo supply · https://www.digikey.com/en/products/result?keywords=LRS-75-12"
     },
     {
       "category": "Power",
@@ -45,27 +54,108 @@
       "unit_cost": 10.6,
       "subtotal": 10.6,
       "spec": "12 V",
-      "note": "USB to servo bus (off-board) · https://www.waveshare.com/bus-servo-adapter-a.htm"
+      "note": "USB to servo bus · https://www.waveshare.com/bus-servo-adapter-a.htm"
     },
     {
       "category": "Printed structure",
-      "name": "PETG filament for 5 printed parts",
+      "name": "PETG filament for 7 printed parts",
       "qty": 1,
-      "unit_cost": 9.91,
-      "subtotal": 9.91,
-      "spec": "392 g of parts (+15 % supports/waste), about 35.7 h of printing",
-      "note": "base_link, gripper_body, pinion, finger_a, finger_b"
+      "unit_cost": 13.42,
+      "subtotal": 13.42,
+      "spec": "530 g of parts (+15 % supports/waste), about 48.3 h of printing",
+      "note": "base_link, gripper_body, pinion, finger_a, finger_b, control_case, control_case_lid"
     },
     {
       "category": "Fasteners",
       "name": "Screws, nuts and inserts",
-      "qty": 20,
+      "qty": 30,
       "unit_cost": 0.12,
-      "subtotal": 2.4,
-      "spec": "4x M6 x 16 socket head (adapter to robot flange); 4x M4 x 10 socket head + M4 heat-set insert (housing to adapter, radial); 4x M3 x 6 set screw (rod retention); 4x servo case screws (M2 x 6); 4x horn screws"
+      "subtotal": 3.6,
+      "spec": "4x M6 x 16 socket head (adapter to robot flange); 4x M4 x 10 socket head + M4 heat-set insert (housing to adapter, radial); 4x M3 x 6 set screw (rod retention); 4x servo case screws (M2 x 6); 4x horn screws; 4x M3 x 10 self-tapping (lid to compartment); 2x M3 x 6 self-tapping (Mean Well LRS-75-12 enclosed PSU, 12 V 6 A to standoffs); 4x M2 x 6 self-tapping (Waveshare Bus Servo Adapter to standoffs)"
+    },
+    {
+      "category": "Wiring",
+      "name": "24 AWG silicone wire",
+      "qty": 2.1,
+      "unit_cost": 0.35,
+      "subtotal": 0.73,
+      "spec": "2.1 m: 0.205 mm2, rated 1.75 A in a bundle; 1.89 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "26 AWG silicone wire",
+      "qty": 0.6,
+      "unit_cost": 0.3,
+      "subtotal": 0.18,
+      "spec": "0.6 m: 0.128 mm2, rated 1.1 A in a bundle; 0.47 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "6.3 mm spade contacts",
+      "qty": 3,
+      "unit_cost": 0.08,
+      "subtotal": 0.24,
+      "spec": "3 pc: rated 15 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Bootlace ferrule contacts",
+      "qty": 7,
+      "unit_cost": 0.03,
+      "subtotal": 0.21,
+      "spec": "7 pc: rated 17.5 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Molex 5264 contacts",
+      "qty": 6,
+      "unit_cost": 0.05,
+      "subtotal": 0.3,
+      "spec": "6 pc: rated 3 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Molex 5264 housings",
+      "qty": 2,
+      "unit_cost": 0.08,
+      "subtotal": 0.16,
+      "spec": "2 pc: one per cable end",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Heat shrink 3 mm, 2:1",
+      "qty": 0.2,
+      "unit_cost": 0.2,
+      "subtotal": 0.04,
+      "spec": "0.2 m: 0 solder joints + a boot on each cable end",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Cable tie 100 x 2.5 mm",
+      "qty": 6,
+      "unit_cost": 0.02,
+      "subtotal": 0.12,
+      "spec": "6 pc: at every clip, cable end and strain-relief anchor",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "PG7 cable gland",
+      "qty": 1,
+      "unit_cost": 2.97,
+      "subtotal": 2.97,
+      "spec": "1 pc: cable exit with strain relief",
+      "note": "price estimated"
     }
   ],
-  "total": 80.83,
+  "total": 93.49,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
@@ -87,7 +177,7 @@
     "Friction coefficient 0.5 between the printed pads (or TPU/rubber pads glued into the grooves) and the object; safety factor 1.5.",
     "The fingers are coupled by the rack-and-pinion: finger_a is the actuated prismatic joint (servo torque / pitch radius), finger_b and the pinion carry a URDF <mimic> of it (MuJoCo: joint equality constraints), so one actuator drives both fingers.",
     "Rack/pinion teeth are module 1.5 printed in PETG; grease them and expect backlash of a few tenths of a millimetre.",
-    "Servo bus adapter and 12 V supply sit off the gripper (cable through the window under the servo).",
+    "Servo bus adapter and 12 V supply sit in a bench control case off the gripper (cable through the window under the servo).",
     "The adapter plate bolts to the robot first (heads sunk in the plate), then the housing slides over it and is fixed by four radial M4 screws.",
     "Prices are list/street prices from the linked suppliers at the time the catalog was written; check before ordering."
   ]

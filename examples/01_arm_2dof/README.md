@@ -8,7 +8,7 @@ Interpreted as: 2-DOF serial arm · parallel gripper
 
 **2-DOF arm, 350 mm reach, 0.1 kg payload, Feetech STS serial-bus servos (12 V)**
 
-Parts cost **$130.07** · printed structure 4 parts, 366 g · checks passed 10/10
+Parts cost **$145.15** · printed structure 6 parts, 504 g · checks passed 29/29
 
 ## What it can do
 
@@ -33,7 +33,7 @@ Parts cost **$130.07** · printed structure 4 parts, 366 g · checks passed 10/1
 
 ## Engineering checks
 
-All 10 checks pass (torque, speed, power, stability, print-bed fit, grip). Details in `robot.json` → `metadata.design.checks`.
+All 29 checks pass (torque, speed, power, stability, print-bed fit, grip). Details in `robot.json` → `metadata.design.checks`.
 
 ## Assumptions and limits
 
@@ -63,6 +63,7 @@ _PASS means the modelled actuators (datasheet peak torque as a hard limit, a lin
 |---|---|
 | `robot.urdf`, `meshes/` | URDF with real component and printed-part meshes, datasheet effort/velocity limits |
 | `BOM.md`, `bom.json` | every part to buy, with supplier links and prices |
+| `WIRING.md`, `wiring.svg` | power budget per rail, pin-to-pin table, cut list, slack at each joint, wiring diagram |
 | `robot.cad.zip` | build package: printable STLs, print list, bought-part models, assembly order |
 | `robot.ros2.zip` | ROS 2 description package (ros2_control, MoveIt config, Gazebo launch) |
 | `robot.training.zip` | MuJoCo / RL training scaffold |

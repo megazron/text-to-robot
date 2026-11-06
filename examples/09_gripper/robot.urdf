@@ -3,7 +3,7 @@
      robot: parallel_gripper
      prompt: Create a two-finger parallel gripper
 
-     12 links, 11 joints, 12 inferred values
+     17 links, 16 joints, 17 inferred values
 -->
 <robot name="parallel_gripper">
   <material name="printed"><color rgba="0.93 0.93 0.95 1"/></material>
@@ -45,9 +45,9 @@
       <geometry><mesh filename="package://parallel_gripper/meshes/gripper_body.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.001155 0.0000691587 0.053179" rpy="0 0 0"/>
-      <mass value="0.224397"/>
-      <inertia ixx="0.00039179" ixy="-1.85179e-8" ixz="-0.00000407861" iyy="0.000963903" iyz="-8.30888e-8" izz="0.000717835"/>
+      <origin xyz="-0.001205 0.0000719748 0.053141" rpy="0 0 0"/>
+      <mass value="0.224581"/>
+      <inertia ixx="0.000392192" ixy="1.95523e-8" ixz="-0.00000459495" iyy="0.000964972" iyz="-5.37327e-8" izz="0.00071851"/>
     </inertial>
   </link>
   <link name="gripper_servo">
@@ -210,6 +210,86 @@
       <inertia ixx="0.0000721929" ixy="-4.36456e-24" ixz="1.52509e-23" iyy="0.0000721928" iyz="4.49499e-23" izz="4.05482e-7"/>
     </inertial>
   </link>
+  <link name="control_case">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://parallel_gripper/meshes/control_case.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://parallel_gripper/meshes/control_case.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.228996 0.013211 -0.109365" rpy="0 0 0"/>
+      <mass value="0.100052"/>
+      <inertia ixx="0.000303367" ixy="0.00000351989" ixz="-0.00000207784" iyy="0.000294768" iyz="-0.00000306657" izz="0.000557029"/>
+    </inertial>
+  </link>
+  <link name="control_case_lid">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://parallel_gripper/meshes/control_case_lid.stl"/></geometry>
+      <material name="printed_accent"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://parallel_gripper/meshes/control_case_lid.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.231 0.0105 -0.076605" rpy="0 0 0"/>
+      <mass value="0.038251"/>
+      <inertia ixx="0.0000806367" ixy="4.53275e-15" ixz="-1.04544e-12" iyy="0.0000778906" iyz="-2.81425e-13" izz="0.000158435"/>
+    </inertial>
+  </link>
+  <link name="power_supply">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://parallel_gripper/meshes/psu_12v_lrs75.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://parallel_gripper/meshes/psu_12v_lrs75.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.050897 0.048976 0.014773" rpy="0 0 0"/>
+      <mass value="0.23"/>
+      <inertia ixx="0.000199943" ixy="0.0000048465" ixz="-0.00000138003" iyy="0.000196182" iyz="-6.45161e-7" izz="0.000362117"/>
+    </inertial>
+  </link>
+  <link name="servo_bus">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://parallel_gripper/meshes/waveshare_bus_servo_adapter.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://parallel_gripper/meshes/waveshare_bus_servo_adapter.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.027562 0.015038 0.003831" rpy="0 0 0"/>
+      <mass value="0.01"/>
+      <inertia ixx="9.12163e-7" ixy="6.01736e-8" ixz="-2.03984e-7" iyy="0.00000169433" iyz="6.44612e-8" izz="0.00000236615"/>
+    </inertial>
+  </link>
+  <link name="mains_inlet">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://parallel_gripper/meshes/iec_c14_fused_switched.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://parallel_gripper/meshes/iec_c14_fused_switched.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 -5.92043e-19 -0.014582" rpy="0 0 0"/>
+      <mass value="0.04"/>
+      <inertia ixx="0.000011391" ixy="0" ixz="0" iyy="0.00000657584" iyz="7.81695e-23" izz="0.00000990197"/>
+    </inertial>
+  </link>
   <joint name="gripper_body_mount" type="fixed">
     <parent link="base_link"/>
     <child link="gripper_body"/>
@@ -275,5 +355,30 @@
     <parent link="gripper_body"/>
     <child link="gripper_rod_upper"/>
     <origin xyz="-0.065 0 0.1266" rpy="0 -1.570796 -3.141593"/>
+  </joint>
+  <joint name="control_case_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="control_case"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="control_case_lid_mount" type="fixed">
+    <parent link="control_case"/>
+    <child link="control_case_lid"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="power_supply_mount" type="fixed">
+    <parent link="control_case"/>
+    <child link="power_supply"/>
+    <origin xyz="-0.264 -0.056 -0.115" rpy="0 0 0"/>
+  </joint>
+  <joint name="servo_bus_mount" type="fixed">
+    <parent link="control_case"/>
+    <child link="servo_bus"/>
+    <origin xyz="-0.294 0.044 -0.115" rpy="0 0 0"/>
+  </joint>
+  <joint name="mains_inlet_mount" type="fixed">
+    <parent link="control_case"/>
+    <child link="mains_inlet"/>
+    <origin xyz="-0.3024 -0.0075 -0.099" rpy="0 -1.570796 0"/>
   </joint>
 </robot>

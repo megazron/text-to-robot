@@ -8,7 +8,7 @@ Interpreted as: SCARA · parallel gripper
 
 **SCARA arm: 0.30 m reach, 159 mm Z stroke, 0.5 kg payload; NEMA17 + 5.18:1 planetary on J1/J2, Tr8x8 lead-screw Z, Feetech STS3215 C047 12 V 30 kg.cm (1:345) wrist, parallel gripper**
 
-Parts cost **$332.11** · printed structure 12 parts, 1865 g · checks passed 26/26
+Parts cost **$359** · printed structure 13 parts, 1964 g · checks passed 56/56
 
 ## What it can do
 
@@ -19,7 +19,7 @@ Parts cost **$332.11** · printed structure 12 parts, 1865 g · checks passed 26
 | outer arm mm | 135 |
 | z stroke mm | 159 |
 | payload kg | 0.5 |
-| mass kg | 4.958 |
+| mass kg | 4.985 |
 | j1 range deg | 332 |
 | j2 range deg | 253 |
 | tcp speed m s | 0.9 |
@@ -30,8 +30,8 @@ Parts cost **$332.11** · printed structure 12 parts, 1865 g · checks passed 26
 | gripper stroke mm | 40 |
 | grip force rated n | 46.7 |
 | lowest fingertip mm | 13 |
-| cost usd | 333.11 |
-| cost breakdown | parts 278.68 USD, filament 46.63 USD (1.87 kg), fasteners ~7.80 USD |
+| cost usd | 360.09 |
+| cost breakdown | parts 284.08 USD, filament 49.10 USD (1.96 kg), fasteners ~8.40 USD, wiring 18.51 USD |
 
 ## Actuators (sized from this robot's own loads)
 
@@ -45,7 +45,7 @@ Parts cost **$332.11** · printed structure 12 parts, 1865 g · checks passed 26
 
 ## Engineering checks
 
-All 26 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
+All 56 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
 
 ## Assumptions and limits
 
@@ -59,7 +59,7 @@ All 26 checks pass (torque, speed, power, stability, print-bed fit). Details in 
 - Z travel starts where the fingertips are 13 mm above the table/base plate; the controller box stands outside the swept radius.
 - J2 is limited to ±127° so the gripper never swings into the column or base.
 - Steppers run open loop with sensorless homing (TMC2209 StallGuard) or end-stop switches (not modelled); the ESP32-S3 runs the kinematics and talks to the drivers over STEP/DIR + UART and to the servos over the bus adapter.
-- Controller box: open-top printed tray with an electronics deck; mains wiring needs a proper IEC inlet, fuse and earth (cable gland cut-out provided, parts not modelled).
+- Controller box: printed case with a screwed lid and an electronics deck; mains come in through a fused, switched IEC inlet, earth wired first.
 
 <!-- SIM -->
 ## Simulation (MuJoCo, real actuator limits)
@@ -81,6 +81,7 @@ _PASS means the modelled actuators (datasheet peak torque as a hard limit, a lin
 |---|---|
 | `robot.urdf`, `meshes/` | URDF with real component and printed-part meshes, datasheet effort/velocity limits |
 | `BOM.md`, `bom.json` | every part to buy, with supplier links and prices |
+| `WIRING.md`, `wiring.svg` | power budget per rail, pin-to-pin table, cut list, slack at each joint, wiring diagram |
 | `robot.cad.zip` | build package: printable STLs, print list, bought-part models, assembly order |
 | `robot.ros2.zip` | ROS 2 description package (ros2_control, MoveIt config, Gazebo launch) |
 | `robot.training.zip` | MuJoCo / RL training scaffold |

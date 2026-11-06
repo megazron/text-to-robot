@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1270 794" width="1270" height="794" font-family="Helvetica, Arial, sans-serif" font-size="10.5">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="30" y="26" font-size="17" font-weight="700">arm_7dof: wiring diagram</text>
+<line x1="30" y1="44" x2="54" y2="44" stroke="#c8102e" stroke-width="2"/><text x="60" y="48">power</text>
+<line x1="120" y1="44" x2="144" y2="44" stroke="#111111" stroke-width="2"/><text x="150" y="48">ground</text>
+<line x1="210" y1="44" x2="234" y2="44" stroke="#1f6fd1" stroke-width="2"/><text x="240" y="48">signal</text>
+<line x1="300" y1="44" x2="324" y2="44" stroke="#0a8f5b" stroke-width="2"/><text x="330" y="48">bus</text>
+<text x="30" y="66" font-weight="700" fill="#555">Source</text>
+<text x="370" y="66" font-weight="700" fill="#555">Protection</text>
+<text x="710" y="66" font-weight="700" fill="#555">Control</text>
+<text x="1050" y="66" font-weight="700" fill="#555">Loads</text>
+<path d="M370 105 H356 V105 H234 V105 H220" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C1 W1 MAINS_L: mains_inlet.load.L to power_supply.ac_in.AC/L, 24 AWG</title></path>
+<path d="M370 118 H346 V118 H244 V118 H220" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C1 W2 MAINS_N: mains_inlet.load.N to power_supply.ac_in.AC/N, 24 AWG</title></path>
+<path d="M370 131 H336 V131 H254 V131 H220" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C1 W3 MAINS_E: mains_inlet.load.E to power_supply.ac_in.FG, 24 AWG</title></path>
+<path d="M900 105 H944 V105 H1006 V105 H1050" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C2 W4 BUS_SERVO_BUS: servo_bus.ttl.DATA to base_yaw_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M900 118 H954 V118 H996 V118 H1050" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C2 W5 GND: servo_bus.ttl.GND to base_yaw_actuator.bus_a.GND, 24 AWG</title></path>
+<path d="M1240 131 H1304 V160.5 H986 V190 H1050" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C3 W6 VBUS: base_yaw_actuator.bus_b.VDD to shoulder_pitch_actuator.bus_a.VDD, 20 AWG</title></path>
+<path d="M1240 118 H1314 V160.5 H976 V203 H1050" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C3 W7 GND: base_yaw_actuator.bus_b.GND to shoulder_pitch_actuator.bus_a.GND, 20 AWG</title></path>
+<path d="M1240 105 H1324 V160.5 H966 V216 H1050" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C3 W8 BUS_SERVO_BUS: base_yaw_actuator.bus_b.DATA to shoulder_pitch_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M1240 190 H1334 V232.5 H956 V275 H1050" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C4 W9 VBUS: shoulder_pitch_actuator.bus_b.VDD to upper_arm_roll_actuator.bus_a.VDD, 22 AWG</title></path>
+<path d="M1240 203 H1344 V245.5 H946 V288 H1050" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C4 W10 GND: shoulder_pitch_actuator.bus_b.GND to upper_arm_roll_actuator.bus_a.GND, 22 AWG</title></path>
+<path d="M1240 216 H1354 V258.5 H936 V301 H1050" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C4 W11 BUS_SERVO_BUS: shoulder_pitch_actuator.bus_b.DATA to upper_arm_roll_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M1240 275 H1364 V317.5 H926 V360 H1050" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C5 W12 VBUS: upper_arm_roll_actuator.bus_b.VDD to elbow_pitch_actuator.bus_a.VDD, 22 AWG</title></path>
+<path d="M1240 288 H1254 V330.5 H1036 V373 H1050" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C5 W13 GND: upper_arm_roll_actuator.bus_b.GND to elbow_pitch_actuator.bus_a.GND, 22 AWG</title></path>
+<path d="M1240 301 H1264 V343.5 H1026 V386 H1050" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C5 W14 BUS_SERVO_BUS: upper_arm_roll_actuator.bus_b.DATA to elbow_pitch_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M1240 360 H1274 V402.5 H1016 V445 H1050" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C6 W15 VBUS: elbow_pitch_actuator.bus_b.VDD to forearm_roll_actuator.bus_a.VDD, 24 AWG</title></path>
+<path d="M1240 373 H1284 V415.5 H1006 V458 H1050" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C6 W16 GND: elbow_pitch_actuator.bus_b.GND to forearm_roll_actuator.bus_a.GND, 24 AWG</title></path>
+<path d="M1240 386 H1294 V428.5 H996 V471 H1050" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C6 W17 BUS_SERVO_BUS: elbow_pitch_actuator.bus_b.DATA to forearm_roll_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M1240 445 H1304 V487.5 H986 V530 H1050" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C7 W18 VBUS: forearm_roll_actuator.bus_b.VDD to wrist_pitch_actuator.bus_a.VDD, 24 AWG</title></path>
+<path d="M1240 458 H1314 V500.5 H976 V543 H1050" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C7 W19 GND: forearm_roll_actuator.bus_b.GND to wrist_pitch_actuator.bus_a.GND, 24 AWG</title></path>
+<path d="M1240 471 H1324 V513.5 H966 V556 H1050" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C7 W20 BUS_SERVO_BUS: forearm_roll_actuator.bus_b.DATA to wrist_pitch_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M1240 530 H1334 V572.5 H956 V615 H1050" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C8 W21 VBUS: wrist_pitch_actuator.bus_b.VDD to wrist_roll_actuator.bus_a.VDD, 24 AWG</title></path>
+<path d="M1240 543 H1344 V585.5 H946 V628 H1050" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C8 W22 GND: wrist_pitch_actuator.bus_b.GND to wrist_roll_actuator.bus_a.GND, 24 AWG</title></path>
+<path d="M1240 556 H1354 V598.5 H936 V641 H1050" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C8 W23 BUS_SERVO_BUS: wrist_pitch_actuator.bus_b.DATA to wrist_roll_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M1240 615 H1364 V657.5 H926 V700 H1050" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C9 W24 VBUS: wrist_roll_actuator.bus_b.VDD to gripper_actuator.bus_a.VDD, 24 AWG</title></path>
+<path d="M1240 628 H1254 V670.5 H1036 V713 H1050" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C9 W25 GND: wrist_roll_actuator.bus_b.GND to gripper_actuator.bus_a.GND, 24 AWG</title></path>
+<path d="M1240 641 H1264 V683.5 H1026 V726 H1050" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C9 W26 BUS_SERVO_BUS: wrist_roll_actuator.bus_b.DATA to gripper_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M220 144 H254 V137.5 H1016 V131 H1050" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C10 W27 VBUS: power_supply.dc_out.DC OUTPUT +V to base_yaw_actuator.bus_a.VDD, 20 AWG</title></path>
+<path d="M220 157 H264 V137.5 H1006 V118 H1050" fill="none" stroke="#111111" stroke-width="2" opacity="0.8"><title>C10 W28 GND: power_supply.dc_out.DC OUTPUT -V to base_yaw_actuator.bus_a.GND, 18 AWG</title></path>
+<rect x="1050" y="74" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1057" y="89" font-weight="700">base_yaw_actuator</text>
+<text x="1057" y="108.5" fill="#333">DATA</text>
+<text x="1057" y="121.5" fill="#333">GND</text>
+<text x="1057" y="134.5" fill="#333">VDD</text>
+<rect x="1050" y="159" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1057" y="174" font-weight="700">shoulder_pitch_actuator</text>
+<text x="1057" y="193.5" fill="#333">VDD</text>
+<text x="1057" y="206.5" fill="#333">GND</text>
+<text x="1057" y="219.5" fill="#333">DATA</text>
+<rect x="1050" y="244" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1057" y="259" font-weight="700">upper_arm_roll_actuator</text>
+<text x="1057" y="278.5" fill="#333">VDD</text>
+<text x="1057" y="291.5" fill="#333">GND</text>
+<text x="1057" y="304.5" fill="#333">DATA</text>
+<rect x="1050" y="329" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1057" y="344" font-weight="700">elbow_pitch_actuator</text>
+<text x="1057" y="363.5" fill="#333">VDD</text>
+<text x="1057" y="376.5" fill="#333">GND</text>
+<text x="1057" y="389.5" fill="#333">DATA</text>
+<rect x="1050" y="414" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1057" y="429" font-weight="700">forearm_roll_actuator</text>
+<text x="1057" y="448.5" fill="#333">VDD</text>
+<text x="1057" y="461.5" fill="#333">GND</text>
+<text x="1057" y="474.5" fill="#333">DATA</text>
+<rect x="1050" y="499" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1057" y="514" font-weight="700">wrist_pitch_actuator</text>
+<text x="1057" y="533.5" fill="#333">VDD</text>
+<text x="1057" y="546.5" fill="#333">GND</text>
+<text x="1057" y="559.5" fill="#333">DATA</text>
+<rect x="1050" y="584" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1057" y="599" font-weight="700">wrist_roll_actuator</text>
+<text x="1057" y="618.5" fill="#333">VDD</text>
+<text x="1057" y="631.5" fill="#333">GND</text>
+<text x="1057" y="644.5" fill="#333">DATA</text>
+<rect x="1050" y="669" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1057" y="684" font-weight="700">gripper_actuator</text>
+<text x="1057" y="703.5" fill="#333">VDD</text>
+<text x="1057" y="716.5" fill="#333">GND</text>
+<text x="1057" y="729.5" fill="#333">DATA</text>
+<rect x="30" y="74" width="190" height="93" rx="5" fill="#f4f6f8" stroke="#333"/><text x="37" y="89" font-weight="700">power_supply</text>
+<text x="37" y="108.5" fill="#333">AC/L</text>
+<text x="37" y="121.5" fill="#333">AC/N</text>
+<text x="37" y="134.5" fill="#333">FG</text>
+<text x="37" y="147.5" fill="#333">DC OUTPUT +V</text>
+<text x="37" y="160.5" fill="#333">DC OUTPUT -V</text>
+<rect x="710" y="74" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="717" y="89" font-weight="700">servo_bus</text>
+<text x="717" y="108.5" fill="#333">DATA</text>
+<text x="717" y="121.5" fill="#333">GND</text>
+<rect x="370" y="74" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="89" font-weight="700">mains_inlet</text>
+<text x="377" y="108.5" fill="#333">L</text>
+<text x="377" y="121.5" fill="#333">N</text>
+<text x="377" y="134.5" fill="#333">E</text>
+</svg>

@@ -8,7 +8,7 @@ Interpreted as: standalone parallel gripper · parallel gripper
 
 **Parallel gripper: 60 mm stroke, 47 N rated squeeze per finger, Feetech STS3215 C047 12 V 30 kg.cm (1:345)**
 
-Parts cost **$80.83** · printed structure 5 parts, 392 g · checks passed 10/10
+Parts cost **$93.49** · printed structure 7 parts, 530 g · checks passed 29/29
 
 ## What it can do
 
@@ -22,12 +22,12 @@ Parts cost **$80.83** · printed structure 5 parts, 392 g · checks passed 10/10
 | finger speed mm s | 49.5 |
 | close time s | 0.61 |
 | payload kg | 0.5 |
-| mass kg | 0.613 |
+| mass kg | 1.032 |
 | height mm | 199.1 |
 | actuator | Feetech STS3215 C047 12 V 30 kg.cm (1:345) |
 | mount | ISO 9409-1-50-4-M6 style adapter (4 x M6 on PCD 50, 31.5 mm centring recess) |
-| cost usd | 81.31 |
-| cost breakdown | parts 68.52 USD, filament 9.79 USD (0.39 kg), fasteners ~3.00 USD |
+| cost usd | 94.23 |
+| cost breakdown | parts 71.52 USD, filament 13.26 USD (0.53 kg), fasteners ~4.50 USD, wiring 4.95 USD |
 
 ## Actuators (sized from this robot's own loads)
 
@@ -37,7 +37,7 @@ Parts cost **$80.83** · printed structure 5 parts, 392 g · checks passed 10/10
 
 ## Engineering checks
 
-All 10 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
+All 29 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
 
 ## Assumptions and limits
 
@@ -45,7 +45,7 @@ All 10 checks pass (torque, speed, power, stability, print-bed fit). Details in 
 - Friction coefficient 0.5 between the printed pads (or TPU/rubber pads glued into the grooves) and the object; safety factor 1.5.
 - The fingers are coupled by the rack-and-pinion: finger_a is the actuated prismatic joint (servo torque / pitch radius), finger_b and the pinion carry a URDF <mimic> of it (MuJoCo: joint equality constraints), so one actuator drives both fingers.
 - Rack/pinion teeth are module 1.5 printed in PETG; grease them and expect backlash of a few tenths of a millimetre.
-- Servo bus adapter and 12 V supply sit off the gripper (cable through the window under the servo).
+- Servo bus adapter and 12 V supply sit in a bench control case off the gripper (cable through the window under the servo).
 - The adapter plate bolts to the robot first (heads sunk in the plate), then the housing slides over it and is fixed by four radial M4 screws.
 
 <!-- SIM -->
@@ -66,6 +66,7 @@ _PASS means the modelled actuators (datasheet peak torque as a hard limit, a lin
 |---|---|
 | `robot.urdf`, `meshes/` | URDF with real component and printed-part meshes, datasheet effort/velocity limits |
 | `BOM.md`, `bom.json` | every part to buy, with supplier links and prices |
+| `WIRING.md`, `wiring.svg` | power budget per rail, pin-to-pin table, cut list, slack at each joint, wiring diagram |
 | `robot.cad.zip` | build package: printable STLs, print list, bought-part models, assembly order |
 | `robot.ros2.zip` | ROS 2 description package (ros2_control, MoveIt config, Gazebo launch) |
 | `robot.training.zip` | MuJoCo / RL training scaffold |

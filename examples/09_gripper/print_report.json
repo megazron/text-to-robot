@@ -33,6 +33,56 @@
    ]
   },
   {
+   "name": "control_case",
+   "watertight": true,
+   "volume_cm3": 109.42,
+   "size_mm": [
+    151.7,
+    154.7,
+    44.4
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 3.43,
+   "support_frac": 0.004,
+   "bed_contact_cm2": 210.08,
+   "min_wall_mm": 2.06,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "control_case_lid",
+   "watertight": true,
+   "volume_cm3": 41.83,
+   "size_mm": [
+    151.7,
+    154.7,
+    5.8
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 0.85,
+   "support_frac": 0.002,
+   "bed_contact_cm2": 138.59,
+   "min_wall_mm": 1.78,
+   "thin_wall_frac": 0.002,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
    "name": "finger_a",
    "watertight": true,
    "volume_cm3": 77.2,
@@ -85,7 +135,7 @@
   {
    "name": "gripper_body",
    "watertight": true,
-   "volume_cm3": 245.4,
+   "volume_cm3": 245.61,
    "size_mm": [
     142.0,
     72.0,
@@ -97,10 +147,10 @@
     1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 91.86,
+   "support_area_cm2": 92.15,
    "support_frac": 0.098,
    "bed_contact_cm2": 10.64,
-   "min_wall_mm": 2.5,
+   "min_wall_mm": 2.17,
    "thin_wall_frac": 0.003,
    "passed": true,
    "supports": "needed",

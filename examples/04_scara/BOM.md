@@ -1,6 +1,6 @@
 # Bill of Materials — scara
 
-**Estimated total: $332.11**  ·  tier: hobby
+**Estimated total: $359**  ·  tier: hobby
 
 **Effort sizing: passes catalogue estimate; hardware verified: no.**
 
@@ -12,6 +12,7 @@
 | Power | Aluminium flexible beam coupler 5 mm to 8 mm (D19 L25) _(motor to lead screw · https://www.robotdigg.com/product/27/Flexible-Coupler)_ | 1 | 2.5 | 2.5 | 1.5 N·m rated / undefined N·m peak, undefined V |
 | Compute | Espressif ESP32-S3-DevKitC-1 (N8R8) _(ESP32-S3 motion controller · https://www.adafruit.com/product/5364)_ | 1 | 15 | 15 | 5 V |
 | Actuator | Feetech STS3215 C047 12 V 30 kg.cm (1:345) _(wrist roll; gripper pinion drive · https://www.seeedstudio.com/STS3215-30KG-Serial-Servo-p-6340.html)_ | 2 | 22 | 44 | 0.9807 N·m rated / 2.942 N·m peak, 12 V |
+| Power | IEC C14 panel inlet with fuse drawer and rocker switch, 10 A _(fused, switched mains inlet · https://www.aliexpress.com/w/wholesale-iec-c14-inlet-fuse-switch.html)_ | 1 | 3 | 3 | https://www.aliexpress.com/w/wholesale-iec-c14-inlet-fuse-switch.html |
 | Power | Tr8x8 brass flange nut (22 mm flange, 4x M3 on PCD 16) _(Z lead nut · https://www.robotdigg.com/product/228/T8-Lead-Screw-with-Copper-Nut)_ | 1 | 2.5 | 2.5 | https://www.robotdigg.com/product/228/T8-Lead-Screw-with-Copper-Nut |
 | Power | Lead screw Tr8x8 (P2, 4 starts) 300 mm, stainless steel _(Z lead screw · https://www.robotdigg.com/product/228/T8-Lead-Screw-with-Copper-Nut)_ | 1 | 9 | 9 | https://www.iso.org/standard/12719.html |
 | Mechanical | Linear ball bushing LM8UU (8 x 15 x 24 mm) _(Z carriage bushings; finger carriage bushings · https://www.samick.co.kr/en/product/linear-bushing)_ | 8 | 1.2 | 9.6 | https://www.samickthk.co.kr/sub/product/linear-bushing/LM.php |
@@ -22,9 +23,24 @@
 | Power | Hardened chromed linear rod 8 mm h6, 110 mm _(finger guide rods · https://us.misumi-ec.com/vona2/mech/M0100000000/M0101000000/M0101010000/)_ | 2 | 4.32 | 8.64 | https://us.misumi-ec.com/vona2/mech/M0100000000/M0101000000/M0101010000/ |
 | Power | Hardened chromed linear rod 8 mm h6, 300 mm _(Z guide rods · https://us.misumi-ec.com/vona2/mech/M0100000000/M0101000000/M0101010000/)_ | 2 | 6.6 | 13.2 | https://us.misumi-ec.com/vona2/mech/M0100000000/M0101000000/M0101010000/ |
 | Electronics | BigTreeTech TMC2209 V1.3 StepStick stepper driver (UART) _(stepper drivers (J1, J2, Z) · https://biqu.equipment/products/bigtreetech-tmc2209-stepper-motor-driver-for-3d-printer-board-vs-tmc2208)_ | 3 | 7 | 21 | 24 V |
+| Power | WAGO 221-415 five-way lever splice _(rail splices, the star ground and bus hubs · https://www.wago.com/global/electrical-interconnections/compact-splicing-connector/p/221-415)_ | 3 | 0.8 | 2.4 | 450 V |
 | Electronics | Waveshare Bus Servo Adapter (A) _(wrist + gripper servo bus · https://www.waveshare.com/bus-servo-adapter-a.htm)_ | 1 | 10.6 | 10.6 | 12 V |
-| Printed structure | PETG filament for 12 printed parts _(base_link, column, column_top, inner_arm, outer_arm, wrist_flange, gripper_body, pinion, finger_a, finger_b, controller_box, controller_deck)_ | 1 | 47.19 | 47.19 | 1865 g of parts (+15 % supports/waste), about 170.0 h of printing |
-| Fasteners | Screws, nuts and inserts | 52 | 0.12 | 6.24 | 4x M5 x 16 socket head (base to bench); 16x M3 x 8 socket head (motor face); 4x M3 x 6 set screw (rod clamps); 4x M3 x 8 socket head + heat-set insert (lead nut); 0x M6 x 16 socket head (adapter to robot flange); 4x M4 x 10 socket head + M4 heat-set insert (housing to adapter, radial); 4x M3 x 6 set screw (rod retention); 4x servo case screws (M2 x 6); 4x horn screws; 4x M3 x 6 socket head (PSU bottom); 4x M2 x 6 screw (bus adapter) |
+| Printed structure | PETG filament for 13 printed parts _(base_link, column, column_top, inner_arm, outer_arm, wrist_flange, gripper_body, pinion, finger_a, finger_b, controller_box, controller_deck, controller_lid)_ | 1 | 49.69 | 49.69 | 1964 g of parts (+15 % supports/waste), about 179.0 h of printing |
+| Fasteners | Screws, nuts and inserts | 56 | 0.12 | 6.72 | 4x M5 x 16 socket head (base to bench); 16x M3 x 8 socket head (motor face); 4x M3 x 6 set screw (rod clamps); 4x M3 x 8 socket head + heat-set insert (lead nut); 0x M6 x 16 socket head (adapter to robot flange); 4x M4 x 10 socket head + M4 heat-set insert (housing to adapter, radial); 4x M3 x 6 set screw (rod retention); 4x servo case screws (M2 x 6); 4x horn screws; 4x M3 x 6 socket head (PSU bottom); 4x M3 x 10 self-tapping (controller lid); 4x M2 x 6 screw (bus adapter) |
+| Wiring | 20 AWG silicone wire _(price estimated)_ | 10.9 | 0.5 | 5.45 | 10.9 m: 0.519 mm2, rated 5.5 A in a bundle; 9.88 m cut + 10 % waste |
+| Wiring | 22 AWG silicone wire _(price estimated)_ | 5.5 | 0.4 | 2.2 | 5.5 m: 0.327 mm2, rated 3.5 A in a bundle; 4.96 m cut + 10 % waste |
+| Wiring | 24 AWG silicone wire _(price estimated)_ | 6.8 | 0.35 | 2.38 | 6.8 m: 0.205 mm2, rated 1.75 A in a bundle; 6.15 m cut + 10 % waste |
+| Wiring | 26 AWG silicone wire _(price estimated)_ | 3.6 | 0.3 | 1.08 | 3.6 m: 0.128 mm2, rated 1.1 A in a bundle; 3.25 m cut + 10 % waste |
+| Wiring | 6.3 mm spade contacts _(price estimated)_ | 6 | 0.08 | 0.48 | 6 pc: rated 15 A per contact |
+| Wiring | Bootlace ferrule contacts _(price estimated)_ | 13 | 0.03 | 0.39 | 13 pc: rated 17.5 A per contact |
+| Wiring | Dupont 2.54 mm contacts _(price estimated)_ | 48 | 0.02 | 0.96 | 48 pc: rated 3 A per contact |
+| Wiring | Dupont 2.54 mm housings _(price estimated)_ | 13 | 0.02 | 0.26 | 13 pc: one per cable end |
+| Wiring | Molex 5264 contacts _(price estimated)_ | 12 | 0.05 | 0.6 | 12 pc: rated 3 A per contact |
+| Wiring | Molex 5264 housings _(price estimated)_ | 4 | 0.08 | 0.32 | 4 pc: one per cable end |
+| Wiring | Heat shrink 3 mm, 2:1 _(price estimated)_ | 1.3 | 0.2 | 0.26 | 1.3 m: 8 solder joints + a boot on each cable end |
+| Wiring | Cable tie 100 x 2.5 mm _(price estimated)_ | 32 | 0.02 | 0.64 | 32 pc: at every clip, cable end and strain-relief anchor |
+| Wiring | PG7 cable gland _(price estimated)_ | 1 | 2.97 | 2.97 | 1 pc: cable exit with strain relief |
+| Wiring | Nylon braided sleeving 6 mm _(price estimated)_ | 1.3 | 0.4 | 0.52 | 1.3 m: over every cable where it crosses a joint |
 
 ## Actuator sizing
 
@@ -49,5 +65,5 @@
 - Z travel starts where the fingertips are 13 mm above the table/base plate; the controller box stands outside the swept radius.
 - J2 is limited to ±127° so the gripper never swings into the column or base.
 - Steppers run open loop with sensorless homing (TMC2209 StallGuard) or end-stop switches (not modelled); the ESP32-S3 runs the kinematics and talks to the drivers over STEP/DIR + UART and to the servos over the bus adapter.
-- Controller box: open-top printed tray with an electronics deck; mains wiring needs a proper IEC inlet, fuse and earth (cable gland cut-out provided, parts not modelled).
+- Controller box: printed case with a screwed lid and an electronics deck; mains come in through a fused, switched IEC inlet, earth wired first.
 - Prices are list/street prices from the linked suppliers at the time the catalog was written; check before ordering.

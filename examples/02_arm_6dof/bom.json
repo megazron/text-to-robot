@@ -49,6 +49,15 @@
     },
     {
       "category": "Power",
+      "name": "IEC C14 panel inlet with fuse drawer and rocker switch, 10 A",
+      "qty": 1,
+      "unit_cost": 3,
+      "subtotal": 3,
+      "spec": "https://www.aliexpress.com/w/wholesale-iec-c14-inlet-fuse-switch.html",
+      "note": "fused, switched mains inlet · https://www.aliexpress.com/w/wholesale-iec-c14-inlet-fuse-switch.html"
+    },
+    {
+      "category": "Power",
       "name": "Mean Well LRS-75-12 enclosed PSU, 12 V 6 A (75 W)",
       "qty": 1,
       "unit_cost": 22,
@@ -58,23 +67,140 @@
     },
     {
       "category": "Printed structure",
-      "name": "PETG filament for 8 printed parts",
+      "name": "PETG filament for 10 printed parts",
       "qty": 1,
-      "unit_cost": 10.49,
-      "subtotal": 10.49,
-      "spec": "415 g of parts (+15 % supports/waste), about 37.8 h of printing",
-      "note": "base_link, turret, upper_arm, forearm, forearm_rotator, wrist, wrist_rotator, gripper_jaw"
+      "unit_cost": 13.71,
+      "subtotal": 13.71,
+      "spec": "542 g of parts (+15 % supports/waste), about 49.4 h of printing",
+      "note": "base_link, turret, upper_arm, forearm, forearm_rotator, wrist, wrist_rotator, gripper_jaw, control_case, control_case_lid"
     },
     {
       "category": "Fasteners",
       "name": "Screws, nuts and inserts",
-      "qty": 83,
+      "qty": 90,
       "unit_cost": 0.12,
-      "subtotal": 9.96,
-      "spec": "4x M5 x 12 socket head (base to bench); 24x M2.5 x 6 case screws; 52x horn screws; 3x M5 x 16 socket head + M5 washer + M5 heat-set insert (clevis bearing axle)"
+      "subtotal": 10.8,
+      "spec": "4x M5 x 12 socket head (base to bench); 24x M2.5 x 6 case screws; 52x horn screws; 3x M5 x 16 socket head + M5 washer + M5 heat-set insert (clevis bearing axle); 4x M3 x 10 self-tapping (lid to compartment); 2x M3 x 6 self-tapping (Mean Well LRS-75-12 enclosed PSU, 12 V 6 A to standoffs); 1x M2 x 6 self-tapping (ROBOTIS U2D2 USB to TTL/RS-485 interface to standoffs)"
+    },
+    {
+      "category": "Wiring",
+      "name": "18 AWG silicone wire",
+      "qty": 1,
+      "unit_cost": 0.7,
+      "subtotal": 0.7,
+      "spec": "1 m: 0.823 mm2, rated 8 A in a bundle; 0.83 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "20 AWG silicone wire",
+      "qty": 1.6,
+      "unit_cost": 0.5,
+      "subtotal": 0.8,
+      "spec": "1.6 m: 0.519 mm2, rated 5.5 A in a bundle; 1.39 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "22 AWG silicone wire",
+      "qty": 0.8,
+      "unit_cost": 0.4,
+      "subtotal": 0.32,
+      "spec": "0.8 m: 0.327 mm2, rated 3.5 A in a bundle; 0.65 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "24 AWG silicone wire",
+      "qty": 4.1,
+      "unit_cost": 0.35,
+      "subtotal": 1.43,
+      "spec": "4.1 m: 0.205 mm2, rated 1.75 A in a bundle; 3.69 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "26 AWG silicone wire",
+      "qty": 2.9,
+      "unit_cost": 0.3,
+      "subtotal": 0.87,
+      "spec": "2.9 m: 0.128 mm2, rated 1.1 A in a bundle; 2.62 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "6.3 mm spade contacts",
+      "qty": 3,
+      "unit_cost": 0.08,
+      "subtotal": 0.24,
+      "spec": "3 pc: rated 15 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Bootlace ferrule contacts",
+      "qty": 5,
+      "unit_cost": 0.03,
+      "subtotal": 0.15,
+      "spec": "5 pc: rated 17.5 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "JST EH 2.5 mm contacts",
+      "qty": 42,
+      "unit_cost": 0.03,
+      "subtotal": 1.26,
+      "spec": "42 pc: rated 3 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "JST EH 2.5 mm housings",
+      "qty": 15,
+      "unit_cost": 0.05,
+      "subtotal": 0.75,
+      "spec": "15 pc: one per cable end",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Heat shrink 3 mm, 2:1",
+      "qty": 0.6,
+      "unit_cost": 0.2,
+      "subtotal": 0.12,
+      "spec": "0.6 m: 0 solder joints + a boot on each cable end",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Cable tie 100 x 2.5 mm",
+      "qty": 16,
+      "unit_cost": 0.02,
+      "subtotal": 0.32,
+      "spec": "16 pc: at every clip, cable end and strain-relief anchor",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "PG7 cable gland",
+      "qty": 1,
+      "unit_cost": 2.97,
+      "subtotal": 2.97,
+      "spec": "1 pc: cable exit with strain relief",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Nylon braided sleeving 6 mm",
+      "qty": 1.1,
+      "unit_cost": 0.4,
+      "subtotal": 0.44,
+      "spec": "1.1 m: over every cable where it crosses a joint",
+      "note": "price estimated"
     }
   ],
-  "total": 1150.99,
+  "total": 1168.42,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,

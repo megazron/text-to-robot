@@ -4,15 +4,15 @@ Every printed part of every designed example, audited by `scripts/print_audit.py
 
 | Example | Printable | With supports | Thin-wall warnings | Failing |
 |---|--:|--:|--:|---|
-| 01_arm_2dof | 3/4 | 0 | 0 | forearm: walls down to 0.21 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface |
-| 02_arm_6dof | 8/8 | 0 | 1 | - |
-| 03_arm_7dof | 9/9 | 0 | 0 | - |
-| 04_scara | 12/12 | 4 | 0 | - |
+| 01_arm_2dof | 5/6 | 0 | 0 | forearm: walls down to 0.19 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface |
+| 02_arm_6dof | 10/10 | 0 | 1 | - |
+| 03_arm_7dof | 11/11 | 0 | 0 | - |
+| 04_scara | 13/13 | 5 | 0 | - |
 | 05_diff_drive | 15/15 | 0 | 1 | - |
 | 06_four_wheel | 21/21 | 0 | 0 | - |
 | 07_mecanum | 15/15 | 0 | 0 | - |
 | 08_humanoid | 23/26 | 5 | 1 | l_upper_arm_yaw_link: walls down to 0.79 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface; r_upper_arm_yaw_link: walls down to 0.70 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface; torso: walls down to 0.40 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface |
-| 09_gripper | 5/5 | 3 | 1 | - |
+| 09_gripper | 7/7 | 3 | 1 | - |
 | 10_quadruped | 14/14 | 0 | 0 | - |
 | 11_spider_scout | 20/20 | 8 | 0 | - |
 | 12_mars_rover | 21/21 | 0 | 3 | - |

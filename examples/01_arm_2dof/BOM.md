@@ -1,6 +1,6 @@
 # Bill of Materials — arm_2dof
 
-**Estimated total: $130.07**  ·  tier: hobby
+**Estimated total: $145.15**  ·  tier: hobby
 
 **Effort sizing: passes catalogue estimate; hardware verified: no.**
 
@@ -9,10 +9,22 @@
 | Mechanical | Ball bearing 625-2Z 5x16x5 mm _(clevis bearing, joint shoulder_pitch; clevis bearing, joint elbow_pitch · https://www.vxb.com/search?q=625-2Z)_ | 2 | 0.55 | 1.1 | https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-625-2Z |
 | Actuator | Feetech STS3215 C047 12 V 30 kg.cm (1:345) _(joint elbow_pitch; gripper · https://www.seeedstudio.com/STS3215-30KG-Serial-Servo-p-6340.html)_ | 2 | 22 | 44 | 0.9807 N·m rated / 2.942 N·m peak, 12 V |
 | Actuator | Feetech STS3250 C002 12 V 50 kg.cm (1:345) _(joint shoulder_pitch · https://openelab.io/products/feetech-sts3250-c002-servo-12v)_ | 1 | 40 | 40 | 1.5691 N·m rated / 4.9033 N·m peak, 12 V |
+| Power | IEC C14 panel inlet with fuse drawer and rocker switch, 10 A _(fused, switched mains inlet · https://www.aliexpress.com/w/wholesale-iec-c14-inlet-fuse-switch.html)_ | 1 | 3 | 3 | https://www.aliexpress.com/w/wholesale-iec-c14-inlet-fuse-switch.html |
 | Power | Mean Well LRS-75-12 enclosed PSU, 12 V 6 A (75 W) _(12 V actuator supply · https://www.digikey.com/en/products/result?keywords=LRS-75-12)_ | 1 | 22 | 22 | 12 V |
 | Electronics | Waveshare Bus Servo Adapter (A) _(USB to actuator bus · https://www.waveshare.com/bus-servo-adapter-a.htm)_ | 1 | 10.6 | 10.6 | 12 V |
-| Printed structure | PETG filament for 4 printed parts _(base_link, upper_arm, forearm, gripper_jaw)_ | 1 | 9.25 | 9.25 | 366 g of parts (+15 % supports/waste), about 33.3 h of printing |
-| Fasteners | Screws, nuts and inserts | 26 | 0.12 | 3.12 | 4x M5 x 12 socket head (base to bench); 8x M2 x 6 case screws; 12x horn screws; 2x M5 x 16 socket head + M5 washer + M5 heat-set insert (clevis bearing axle) |
+| Printed structure | PETG filament for 6 printed parts _(base_link, upper_arm, forearm, gripper_jaw, control_case, control_case_lid)_ | 1 | 12.76 | 12.76 | 504 g of parts (+15 % supports/waste), about 46.0 h of printing |
+| Fasteners | Screws, nuts and inserts | 36 | 0.12 | 4.32 | 4x M5 x 12 socket head (base to bench); 8x M2 x 6 case screws; 12x horn screws; 2x M5 x 16 socket head + M5 washer + M5 heat-set insert (clevis bearing axle); 4x M3 x 10 self-tapping (lid to compartment); 2x M3 x 6 self-tapping (Mean Well LRS-75-12 enclosed PSU, 12 V 6 A to standoffs); 4x M2 x 6 self-tapping (Waveshare Bus Servo Adapter to standoffs) |
+| Wiring | 22 AWG silicone wire _(price estimated)_ | 2.1 | 0.4 | 0.84 | 2.1 m: 0.327 mm2, rated 3.5 A in a bundle; 1.89 m cut + 10 % waste |
+| Wiring | 24 AWG silicone wire _(price estimated)_ | 2.3 | 0.35 | 0.8 | 2.3 m: 0.205 mm2, rated 1.75 A in a bundle; 2.06 m cut + 10 % waste |
+| Wiring | 26 AWG silicone wire _(price estimated)_ | 1.7 | 0.3 | 0.51 | 1.7 m: 0.128 mm2, rated 1.1 A in a bundle; 1.50 m cut + 10 % waste |
+| Wiring | 6.3 mm spade contacts _(price estimated)_ | 3 | 0.08 | 0.24 | 3 pc: rated 15 A per contact |
+| Wiring | Bootlace ferrule contacts _(price estimated)_ | 7 | 0.03 | 0.21 | 7 pc: rated 17.5 A per contact |
+| Wiring | Molex 5264 contacts _(price estimated)_ | 18 | 0.05 | 0.9 | 18 pc: rated 3 A per contact |
+| Wiring | Molex 5264 housings _(price estimated)_ | 6 | 0.08 | 0.48 | 6 pc: one per cable end |
+| Wiring | Heat shrink 3 mm, 2:1 _(price estimated)_ | 0.3 | 0.2 | 0.06 | 0.3 m: 0 solder joints + a boot on each cable end |
+| Wiring | Cable tie 100 x 2.5 mm _(price estimated)_ | 10 | 0.02 | 0.2 | 10 pc: at every clip, cable end and strain-relief anchor |
+| Wiring | PG7 cable gland _(price estimated)_ | 1 | 2.97 | 2.97 | 1 pc: cable exit with strain relief |
+| Wiring | Nylon braided sleeving 6 mm _(price estimated)_ | 0.4 | 0.4 | 0.16 | 0.4 m: over every cable where it crosses a joint |
 
 ## Actuator sizing
 

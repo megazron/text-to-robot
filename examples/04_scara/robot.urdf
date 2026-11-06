@@ -3,7 +3,7 @@
      robot: scara
      prompt: Create a SCARA robot
 
-     44 links, 43 joints, 44 inferred values
+     46 links, 45 joints, 46 inferred values
 -->
 <robot name="scara">
   <material name="printed"><color rgba="0.93 0.93 0.95 1"/></material>
@@ -29,9 +29,9 @@
       <geometry><mesh filename="package://scara/meshes/base_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-1.52404e-12 -3.56180e-12 0.030197" rpy="0 0 0"/>
-      <mass value="0.422102"/>
-      <inertia ixx="0.001371" ixy="5.14319e-14" ixz="6.92539e-14" iyy="0.001371" iyz="-1.12297e-15" izz="0.00146"/>
+      <origin xyz="-0.0000280144 0.0000105573 0.030218" rpy="0 0 0"/>
+      <mass value="0.422396"/>
+      <inertia ixx="0.001372" ixy="1.78767e-7" ixz="3.66719e-7" iyy="0.001372" iyz="-1.38384e-7" izz="0.001461"/>
     </inertial>
   </link>
   <link name="j1_motor">
@@ -93,9 +93,9 @@
       <geometry><mesh filename="package://scara/meshes/column.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.000124168 -0.00000972144 0.036766" rpy="0 0 0"/>
-      <mass value="0.149673"/>
-      <inertia ixx="0.000134695" ixy="1.42512e-8" ixz="2.60963e-8" iyy="0.000126929" iyz="-3.02158e-8" izz="0.000239996"/>
+      <origin xyz="-0.000123932 0.0000231468 0.036793" rpy="0 0 0"/>
+      <mass value="0.149958"/>
+      <inertia ixx="0.000134838" ixy="1.36403e-8" ixz="2.56068e-8" iyy="0.000126991" iyz="-9.84535e-8" izz="0.000240086"/>
     </inertial>
   </link>
   <link name="z_rod_right">
@@ -221,9 +221,9 @@
       <geometry><mesh filename="package://scara/meshes/inner_arm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.029171 2.53699e-12 0.034468" rpy="0 0 0"/>
-      <mass value="0.460285"/>
-      <inertia ixx="0.000362339" ixy="-1.49295e-13" ixz="-0.000190108" iyy="0.002034" iyz="-1.09068e-15" izz="0.002174"/>
+      <origin xyz="0.02924 2.53429e-12 0.034479" rpy="0 0 0"/>
+      <mass value="0.460775"/>
+      <inertia ixx="0.000362518" ixy="-1.49216e-13" ixz="-0.000190623" iyy="0.002037" iyz="-1.07770e-15" izz="0.002177"/>
     </inertial>
   </link>
   <link name="z_bushing_r1">
@@ -365,9 +365,9 @@
       <geometry><mesh filename="package://scara/meshes/outer_arm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.045814 -0.0000211706 0.036762" rpy="0 0 0"/>
-      <mass value="0.105603"/>
-      <inertia ixx="0.0000256139" ixy="2.31854e-7" ixz="0.00000414341" iyy="0.000240007" iyz="-3.81200e-8" izz="0.000243427"/>
+      <origin xyz="0.045857 -0.0000211337 0.036751" rpy="0 0 0"/>
+      <mass value="0.105787"/>
+      <inertia ixx="0.0000256237" ixy="2.31760e-7" ixz="0.00000417217" iyy="0.000240124" iyz="-3.80950e-8" izz="0.000243538"/>
     </inertial>
   </link>
   <link name="wrist_servo">
@@ -589,9 +589,9 @@
       <geometry><mesh filename="package://scara/meshes/controller_box.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.548935 0.000266432 0.024045" rpy="0 0 0"/>
-      <mass value="0.230914"/>
-      <inertia ixx="0.001332" ixy="0.00000511528" ixz="0.00000119989" iyy="0.001061" iyz="5.57477e-7" izz="0.002106"/>
+      <origin xyz="-0.548227 0.000779567 0.028094" rpy="0 0 0"/>
+      <mass value="0.248874"/>
+      <inertia ixx="0.001515" ixy="0.00000829309" ixz="-0.0000117534" iyy="0.001208" iyz="-0.00000630337" izz="0.002322"/>
     </inertial>
   </link>
   <link name="psu_24v">
@@ -605,9 +605,9 @@
       <geometry><mesh filename="package://scara/meshes/psu_24v_lrs150.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.081256 0.048759 0.014764" rpy="0 0 0"/>
-      <mass value="0.53"/>
-      <inertia ixx="0.000459347" ixy="0.0000106063" ixz="-0.00000504294" iyy="0.001114" iyz="-6.94636e-7" izz="0.001495"/>
+      <origin xyz="0.081257 0.048761 0.014764" rpy="0 0 0"/>
+      <mass value="0.42"/>
+      <inertia ixx="0.000364003" ixy="0.00000841336" ixz="-0.0000039894" iyy="0.000882674" iyz="-5.43939e-7" izz="0.001185"/>
     </inertial>
   </link>
   <link name="psu_12v">
@@ -637,9 +637,9 @@
       <geometry><mesh filename="package://scara/meshes/controller_deck.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.548699 0.000859129 0.047928" rpy="0 0 0"/>
-      <mass value="0.072582"/>
-      <inertia ixx="0.000244374" ixy="0.00000174781" ixz="-3.11730e-7" iyy="0.00017157" iyz="9.50586e-7" izz="0.000415217"/>
+      <origin xyz="-0.548704 0.001091 0.047963" rpy="0 0 0"/>
+      <mass value="0.073297"/>
+      <inertia ixx="0.000244924" ixy="0.00000183174" ixz="-3.94193e-7" iyy="0.000172286" iyz="9.27041e-7" izz="0.000416419"/>
     </inertial>
   </link>
   <link name="controller">
@@ -720,6 +720,38 @@
       <origin xyz="0.027562 0.015038 0.003831" rpy="0 0 0"/>
       <mass value="0.01"/>
       <inertia ixx="9.12163e-7" ixy="6.01736e-8" ixz="-2.03984e-7" iyy="0.00000169433" iyz="6.44612e-8" izz="0.00000236615"/>
+    </inertial>
+  </link>
+  <link name="controller_lid">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://scara/meshes/controller_lid.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://scara/meshes/controller_lid.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.54992 -0.000140089 0.087315" rpy="0 0 0"/>
+      <mass value="0.078954"/>
+      <inertia ixx="0.000311254" ixy="2.12391e-8" ixz="6.14994e-9" iyy="0.000225987" iyz="2.04869e-9" izz="0.000537037"/>
+    </inertial>
+  </link>
+  <link name="mains_inlet">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://scara/meshes/iec_c14_fused_switched.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://scara/meshes/iec_c14_fused_switched.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 -5.92043e-19 -0.014582" rpy="0 0 0"/>
+      <mass value="0.04"/>
+      <inertia ixx="0.000011391" ixy="0" ixz="0" iyy="0.00000657584" iyz="7.81695e-23" izz="0.00000990197"/>
     </inertial>
   </link>
   <joint name="j1_motor_mount" type="fixed">
@@ -959,5 +991,15 @@
     <parent link="controller_deck"/>
     <child link="servo_bus"/>
     <origin xyz="-0.615 0.02 0.055" rpy="0 0 0"/>
+  </joint>
+  <joint name="controller_lid_mount" type="fixed">
+    <parent link="controller_box"/>
+    <child link="controller_lid"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="mains_inlet_mount" type="fixed">
+    <parent link="controller_box"/>
+    <child link="mains_inlet"/>
+    <origin xyz="-0.635 -0.008 0.066" rpy="0 -1.570796 0"/>
   </joint>
 </robot>
