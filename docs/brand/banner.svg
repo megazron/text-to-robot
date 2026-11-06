@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 320" role="img" aria-label="Text to Robot">
+  <defs>
+    <radialGradient id="f" cx="0.13" cy="0.5" r="0.75"><stop offset="0" stop-color="#39ff88" stop-opacity="0.28"/><stop offset="0.45" stop-color="#39ff88" stop-opacity="0.05"/><stop offset="1" stop-color="#39ff88" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="1280" height="320" rx="28" fill="#050a07"/>
+  <rect width="1280" height="320" rx="28" fill="url(#f)"/>
+  <g transform="translate(72 64) scale(0.75)">
+    <path d="M128 62V38" stroke="#39ff88" stroke-width="10" stroke-linecap="round"/><circle cx="128" cy="32" r="10" fill="#39ff88"/>
+    <rect x="26" y="112" width="20" height="56" rx="8" fill="#39ff88"/><rect x="210" y="112" width="20" height="56" rx="8" fill="#39ff88"/>
+    <rect x="50" y="64" width="156" height="152" rx="34" fill="#0c1d13" stroke="#39ff88" stroke-width="10"/>
+    <path d="M84 112l36 28-36 28" fill="none" stroke="#39ff88" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="134" y="154" width="42" height="15" rx="7.5" fill="#39ff88"/>
+  </g>
+  <text x="300" y="168" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="84" font-weight="700" letter-spacing="-2" fill="#e9fff2">text-to-robot</text>
+  <text x="304" y="222" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="27" fill="#39ff88">&gt; describe it. get the parts, the code and the sim.</text>
+</svg>
