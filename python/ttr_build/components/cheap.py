@@ -175,7 +175,7 @@ def _pack_build(c):
 
 
 PACK_2S = Component(
-    key="pack_2s_18650", name="2S 18650 pack: two 2500 mAh 20 A cells (Samsung 25R class) in a holder with switch",
+    key="pack_2s_18650", name="2S 18650 pack: two 2500 mAh 20 A cells (Samsung 25R class) in a plain two-cell holder",
     category="battery", mass_g=115.0, price_usd=12.0, supplier_url=SEARCH.format("18650-2-slot-battery-holder-switch"),
     datasheet_url="https://www.dnkpower.com/wp-content/uploads/2019/02/SAMSUNG-INR18650-25R-Datasheet.pdf",
     envelope_mm=(77.0, 41.0, 19.4), holes=[Hole((20.0, 0.0, 0.0), (0.0, 0.0, -1.0), 3.2, "M3"), Hole((57.0, 0.0, 0.0), (0.0, 0.0, -1.0), 3.2, "M3")],

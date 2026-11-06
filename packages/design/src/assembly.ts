@@ -48,6 +48,11 @@ export interface PurchasedRecord { key: string; qty: number; uses: string[]; }
 export interface JointRecord { joint: string; actuator: string; required_nm: number; rated_nm: number; peak_nm: number; margin: number; speed_rad_s: number; note: string; unit?: "N" | "N·m"; }
 export interface DesignRecord {
   family: string;
+  /** the harness: nets, cables, rails, fuses, cut list (see wiring.ts) */
+  wiring?: import("./wiring.ts").WiringRecord;
+  /** electronics compartments (see enclosure.ts) */
+  enclosures?: import("./enclosure.ts").BayRecord[];
+  exposed?: import("./enclosure.ts").ExposedRecord[];
   summary: string;
   purchased: PurchasedRecord[];
   printed: PrintedRecord[];
@@ -133,6 +138,25 @@ export class Assembly {
     this.spec.links.push(link);
     this.design.printed.push({ name, link: name, program: { name, ops: [] } as unknown as Program, check, mass_kg: +(geometry.volume * PRINT_DENSITY).toFixed(4) });
     return link;
+  }
+  /** Add ops to a finished printed (or fabricated) link: cable clips, screw holes for a compartment bolted to it. */
+  amendProgram(name: string, ops: unknown[]) {
+    const l = this.spec.links.find((x) => x.name === name);
+    if (!l || l.geometry.type !== "mesh" || (l.geometry.part !== "printed" && l.geometry.part !== "cad")) throw new Error(`amendProgram: ${name} is not a printed link`);
+    const before = l.geometry.volume, cad = l.geometry.part === "cad", program = JSON.parse(String(l.geometry.params!.program));
+    program.ops = [...program.ops, ...ops];
+    const rec = this.design.printed.find((p) => p.name === name);
+    if (cad) {
+      const json = JSON.stringify(program), f = partFiles(json), size = [0, 1, 2].map((k) => f.bbox_mm.max[k] - f.bbox_mm.min[k]) as Vec3;
+      l.geometry = memo(`cad:${json}`, () => meshGeometry("cad", `${name}.stl`, { program: json })) as Link["geometry"];
+      if (rec) { rec.program = program; rec.check = { ...rec.check, volume_cm3: +(f.volume_mm3 / 1000).toFixed(2), bbox_mm: size.map((x) => +x.toFixed(1)) as Vec3, watertight: f.watertight && f.bodies === 1, genus: f.genus }; }
+    } else {
+      l.geometry = printedGeometry(program) as Link["geometry"];
+      if (rec) { rec.program = program; rec.check = checkOf(program); }
+    }
+    const v = (l.geometry as { volume: number }).volume;
+    l.mass = Math.max(l.mass * (v / before), 0.002);
+    if (rec) rec.mass_kg = +(v * PRINT_DENSITY).toFixed(4);
   }
   /** An empty frame link (massless anchors are avoided: URDF tools dislike them). */
   frameLink(name: string, role = "frame"): Link {

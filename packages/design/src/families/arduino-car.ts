@@ -13,6 +13,8 @@ import type { Op, Program } from "@ttr/kernel";
 import { Assembly } from "../assembly.ts";
 import { totalMass } from "../kin.ts";
 import { withSolids, interferences } from "../clearance.ts";
+import { bay, enclosureChecks, exposed, type ExitSpec } from "../enclosure.ts";
+import { Harness, finishWiring } from "../wiring.ts";
 
 export type ArduinoTier = "cheapest" | "stronger";
 export interface ArduinoCarRequest {
@@ -56,6 +58,37 @@ function bracketOps(xa: number, side: 1 | -1, canDir: 1 | -1): Op[] {
   return ops;
 }
 
+/** TB6612FNG boards: motor supply from VBAT, logic from 5V_LOGIC, six control pins each, one motor per channel. Motor current counts on the driver's feed. */
+export function wireDrivers(H: Harness, drivers: number, motors: string[]) {
+  const PINS = [["D5", "D7", "D8", "D6", "D4", "A0"], ["D9", "A1", "A2", "D10", "A3", "D2"]];
+  for (let i = 0; i < drivers; i++) {
+    const d = `motor_driver_${i + 1}`;
+    H.feed("VBAT", d, { v: "VM", g: "GND", typ: 0.01, peak: 0.01 });
+    H.feed("5V_LOGIC", d, { v: "VCC", g: "", typ: 0.002, peak: 0.002 });
+    const [pa, a1, a2, pb, b1, b2] = PINS[i];
+    H.signals("controller", d, [[pa, "PWMA"], [a1, "AIN1"], [a2, "AIN2"], [pb, "PWMB"], [b1, "BIN1"], [b2, "BIN2"]]);
+    H.net(`${d}_STBY`.toUpperCase(), "signal"); H.wire(`${d}_STBY`.toUpperCase(), "controller.5V", `${d}.STBY`);
+    for (const [k, ch] of [[0, "A"], [1, "B"]] as const) {
+      const m = motors[i * 2 + k]; if (!m) { H.spare(`${d}.motor_${ch.toLowerCase()}`); continue; }
+      const n = `${m}_PHASE`.toUpperCase(), r = H.rec(m).current_a.v, feed = H.rails.get("VBAT")!.feeds.find((x) => x.inst === d)!;
+      H.net(`${n}_1`, "signal"); H.net(`${n}_2`, "signal");
+      H.wire(`${n}_1`, `${d}.${ch}O1`, `${m}.M+`, { typ: r.typical, peak: r.peak }); H.wire(`${n}_2`, `${d}.${ch}O2`, `${m}.M-`, { typ: r.typical, peak: r.peak });
+      feed.typ += r.typical; feed.peak += r.peak;
+    }
+  }
+}
+/** The netlist: pack through fuse and switch to the motor rail and the Nano; driver logic and sensor on the Nano's 5 V. */
+function wire(H: Harness, drivers: number, ultrasonic: boolean, motors: string[]) {
+  H.mainPower("VBAT", { source: "battery", pos: "@power", neg: "@ground", sw: "main_switch", simultaneous: 2, simNote: "two motors stalling at once, the rest running" });
+  H.regulator("controller", "VBAT", "5V_LOGIC", { vin: "VIN", gin: "GND", vout: "5V", gout: "GND", volts: 5, cont: 0.2, peakLimit: 0.4 });
+  wireDrivers(H, drivers, motors);
+  H.notes.push("Board to board wires on the breadboard are jumper wires in the rows of the two pins; the cut list length is the most a jumper needs.");
+  if (ultrasonic) {
+    H.feed("5V_LOGIC", "ultrasonic", { v: "VCC", g: "GND" });
+    H.signals("controller", "ultrasonic", [["D11", "TRIG"], ["D12", "ECHO"]]);
+  }
+}
+
 export function designArduinoCar(req: ArduinoCarRequest = {}): RobotSpecification {
   const tier = req.tier ?? "cheapest", cfg = { ...TIERS[tier], ...(req.wheels ? { wheels: req.wheels } : {}) };
   const sensor = req.sensor ?? "ultrasonic", payload = req.payloadKg ?? 0;
@@ -68,12 +101,9 @@ export function designArduinoCar(req: ArduinoCarRequest = {}): RobotSpecificatio
   // ---------------- chassis: plate + motor brackets + caster pillar (prints upside down, plate on the bed)
   const ops: Op[] = [{ op: "box", min: [x0, -YF, ZP], max: [x1, YF, ZT], r: 10 }];
   for (const { xa, can } of axles) for (const side of [1, -1] as const) ops.push(...bracketOps(xa, side, can));
-  // motor leads up through the plate beside each bracket
-  // (at the motor can's end, outboard of the breadboard and battery)
-  for (const { xa, can } of axles) for (const side of [1, -1] as const) {
-    const xs = [xa + can * 56, xa + can * 66];
-    ops.push({ op: "cutbox", min: [Math.min(...xs), side > 0 ? 42 : -52, ZP - 1], max: [Math.max(...xs), side > 0 ? 52 : -42, ZT + 1] });
-  }
+  // motor leads come up through grommets in the plate, beside the breadboard and the battery
+  const leadXs = four ? [-5, 5] : [axles[0].xa + axles[0].can * 61];
+  for (const x of leadXs) for (const y of [44.5, -44.5]) ops.push({ op: "hole", a: [x, y, ZP - 1], b: [x, y, ZT + 1], d: 5 });
   // ball caster (2WD): a 1/2 in steel ball snapped into a printed socket at the bottom of a pillar. The socket is
   // 0.2 mm over the ball; its mouth (5.9 mm radius, 2.35 mm below the centre) is 0.45 mm under the ball's radius
   const rb = Number(part(BALL).specs.ball_d_mm) / 2;
@@ -82,8 +112,12 @@ export function designArduinoCar(req: ArduinoCarRequest = {}): RobotSpecificatio
     ops.push({ op: "sphere", c: [xc, 0, rb], r: rb + 0.2, cut: true });
     ops.push({ op: "hole", a: [xc, 0, -1], b: [xc, 0, rb], d: 2 * (rb - 0.45) });
   }
-  // battery pack: two M3 countersunk screws through the plate (rear)
-  const xb = x0 + 8;
+  // electronics compartment on the deck: cavity from the rear edge to just behind the sensor bracket, as wide as the deck allows
+  const FLOOR = 0, CY = 47, bx = x0 + 9, xe = x1 - 19.4, CL = xe - bx, zf = ZT + FLOOR;
+  const stackTop = 8.5 + part(cfg.board).bbox_mm!.max[2];
+  const CH = Math.max(26, Math.ceil(stackTop + 8));
+  // battery pack: two M3 countersunk screws from under the plate, through the compartment floor (rear)
+  const xb = bx + 0.8;
   for (const h of part(PACK).holes) ops.push({ op: "hole", a: [xb + h.pos[0], h.pos[1], ZP - 1], b: [xb + h.pos[0], h.pos[1], ZT + 1], d: 3.2 });
   // sensor bracket screws (front)
   for (const y of [-20, 20]) ops.push({ op: "hole", a: [x1 - 7, y, ZP - 1], b: [x1 - 7, y, ZT + 1], d: 3.2 });
@@ -113,15 +147,26 @@ export function designArduinoCar(req: ArduinoCarRequest = {}): RobotSpecificatio
     A.spec.links.push({ name: "caster_ball", role: "caster", geometry: { type: "sphere", radius: rb / 1000 }, mass: part(BALL).mass_g / 1000, material: "metal", origin: { xyz: [0, 0, 0], rpy: [0, 0, 0] } });
   }
 
-  // ---------------- deck: battery, breadboard with board + driver
-  A.mount("chassis", PACK, translation([xb, 0, ZT]), "battery", "2S 18650 pack");
-  A.fastener("M3x8 countersunk + nut (pack)", 2);
-  // breadboard turned 90 deg (its 82.5 mm length across the robot) between the pack and the sensor bracket
-  const xbb = four ? -10 : 14, Tbb: Mat4 = [0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1, 0, xbb + 54.5, -41.25, ZT, 1];
-  A.mount("chassis", "breadboard_400", Tbb, "breadboard", "plug-in wiring for the board and driver", "printed");
+  // ---------------- compartment: battery, breadboard with board + driver, main switch, all under a screwed lid
+  const H = new Harness(A);
+  const Tbay = translation([bx, -CY, zf]), W = (x: number, y: number) => [x - bx, y + CY] as const;
+  // breadboard turned 90 deg (its 82.5 mm length across the robot) at the front of the compartment
+  const xbb = xe - 1.6 - 54.5, Tbb: Mat4 = [0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1, 0, xbb + 54.5 - bx, -41.25 + CY, 0, 1];
+  const xPack = xb + 77 / 2, drivers = four ? 2 : 1;
+  // the compartment is an open frame on the deck: the deck is its floor, the motor grommets are in the deck
+  const exits: ExitSpec[] = [
+    ...leadXs.flatMap((x, i) => ([1, -1] as const).map((sd): ExitSpec => ({ id: `motor_leads_${i}_${sd > 0 ? "l" : "r"}`, face: "floor", u: W(x, 0)[0], v: W(0, sd * 44.5)[1], kind: "grommet", d: 5 }))),
+    { id: "usb", face: "y-", u: W(xbb + 54.5 - 31 - 8.9, 0)[0], v: 8.5 + 3.6, kind: "usb", w: 14, h: 9 },
+    { id: "switch", face: "y+", u: W(xPack, 0)[0], v: CH / 2, kind: "switch", w: 19.2, h: 13, part: { name: "main_switch", key: "switch_kcd1", use: "main power switch" } },
+    ...(sensor === "ultrasonic" ? [{ id: "sensor", face: "x+", u: CY, v: CH - 6, kind: "grommet", d: 6.5, noAnchor: true } as ExitSpec] : []),
+  ];
+  const rec = bay(A, { name: "electronics_bay", parent: "chassis", T: Tbay, size: [CL, 2 * CY, CH], cad: true, corner: 5, floor: FLOOR, wall: 2, lidT: 2.2, material: "printed_dark", lidMaterial: "printed_accent",
+    parts: [{ name: "battery", key: PACK, T: translation([xb - bx, CY, 0]), use: "2S 18650 pack", kind: "plain" }, { name: "breadboard", key: "breadboard_400", T: Tbb, use: "plug-in wiring for the board and driver (stuck to the deck by its adhesive back)", kind: "plain" }],
+    exits, vents: [{ face: "lid", a0: W(xbb + 6, 0)[0], a1: W(xbb + 48, 0)[0], b0: 16, b1: 2 * CY - 16 }] }, H);
+  A.fastener("M3x8 countersunk + nut (pack, through the deck)", 2);
   A.mount("breadboard", cfg.board, translation([4, 31, 8.5]), "controller", "Arduino (runs the generated sketch)");
-  const drivers = four ? 2 : 1;
   for (let i = 0; i < drivers; i++) A.mount("breadboard", "tb6612fng_module", translation([4 + i * 24, 4, 8.5]), `motor_driver_${i + 1}`, "TB6612FNG dual motor driver");
+  for (const n of ["controller", ...Array.from({ length: drivers }, (_, i) => `motor_driver_${i + 1}`)]) { H.bayOf.set(n, "electronics_bay"); rec.parts.push(n); }
 
   // ---------------- front sensor bracket (separate print, two M3 screws through the plate)
   const zb = ZT + 6;
@@ -141,13 +186,19 @@ export function designArduinoCar(req: ArduinoCarRequest = {}): RobotSpecificatio
     // HC-SR04: board z (transducers) forward, board x across the robot, board y up
     const Ts: Mat4 = [0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, x1 - 4.6, -22.5, zb, 1];
     A.mount("sensor_bracket", "hc_sr04", Ts, "ultrasonic", "HC-SR04 distance sensor");
+    exposed(A, "ultrasonic", "transducers look out through two 16.5 mm windows in the printed bracket", [45, 20]);
     A.spec.sensors.push({ name: "front_range", type: "range", parent: "ultrasonic", origin: { xyz: [0.0225, 0.01, 0.0136], rpy: [0, 0, 0] }, params: { range_m: 4, min_range_m: 0.02, beam_deg: 15 } });
     A.fastener("M2x6 self-tapping (sensor)", 4);
   }
 
+  // ---------------- harness: netlist, then routed, sized and checked against the parts as placed
+  wire(H, drivers, sensor === "ultrasonic", axles.flatMap(({ xa }) => ([1, -1] as const).map((sd) => `${xa > 0 ? "front" : xa < 0 ? "rear" : "drive"}_${sd > 0 ? "left" : "right"}_motor`)));
+  finishWiring(H);
+  enclosureChecks(A);
+
   // ---------------- nothing intersects anything (bought parts as their body boxes, printed parts as solids)
   // parts that sit on a carrier by design (boards on the breadboard, sensor in its bracket, pack on the deck)
-  const carried = new Set(["controller", "motor_driver_1", "motor_driver_2", "breadboard", "battery", "ultrasonic"]);
+  const carried = new Set(["controller", "motor_driver_1", "motor_driver_2", "breadboard", "battery", "ultrasonic", "main_switch"]);
   const skip = new Set<string>();
   for (const j of A.spec.joints) if (j.type === "fixed" && carried.has(j.child)) skip.add(`${j.parent}|${j.child}`);
   const hits = withSolids(A.spec, (mdl) => interferences(mdl, {}, undefined, 2, skip));
@@ -172,9 +223,12 @@ export function designArduinoCar(req: ArduinoCarRequest = {}): RobotSpecificatio
   A.check("power:runtime", runtimeMin >= 45, `${runtimeMin.toFixed(0)} min driving (${(motorW + logicW).toFixed(1)} W average from ${part(PACK).specs.energy_wh} Wh, ${DRIVE.usableEnergy * 100} % usable)`);
 
   const bom = A.bom();
+  bom.cost_usd = +(bom.cost_usd + (A.design.wiring?.cost_usd ?? 0)).toFixed(2);
   if (req.budget !== undefined) A.check("budget", bom.cost_usd <= req.budget, `$${bom.cost_usd.toFixed(2)} of parts vs $${req.budget} budget`);
   A.design.performance = { tier, tier_label: cfg.label, wheels: cfg.wheels, max_slope_deg: cfg.slopeDeg, mass_kg: +m.toFixed(3), top_speed_m_s: +vmax.toFixed(2), runtime_min: +runtimeMin.toFixed(0),
     cost_usd: bom.cost_usd, controller: part(cfg.board).name, length_mm: x1 - x0, width_mm: 2 * (YF + 27) };
+  // four wheels skid when turning on the spot: the same slip model as the skid-steer bases and WALL-E sets the claim
+  if (four) { const wb = 2 * axles[0].xa / 1000, track = 2 * (YF + 14) / 1000, chi = 1 + 2 * (wb / track) ** 2; A.design.performance.turn_rate_rad_s = +((0.5 * vmax) / (track / 2) / chi).toFixed(2); A.design.performance.turn_slip_factor = +chi.toFixed(2); }
   A.design.assumptions.push(`TT motor continuous torque taken as 30 % of the 0.8 kg.cm stall (Adafruit #3777 data)`,
     "prices are typical single-unit marketplace prices for generic modules and vary by seller");
   A.design.request = { ...req } as Record<string, unknown>;

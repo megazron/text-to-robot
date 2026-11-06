@@ -126,7 +126,7 @@ ADAPTER_5V4A = Component(
     build=lambda c: box(0.0, 90.0, -25.0, 25.0, 0.0, 32.0), build_keepout=None)
 
 PSU_5V_50 = _psu("psu_5v_lrs50", "Mean Well LRS-50-5 enclosed PSU, 5 V 10 A (50 W)", "LRS-50-5",
-                 99.0, 82.0, 30.0, 5.0, 10.0, 230.0, 13.0, (12.0, 87.0), 41.0,
-                 ["mass_g", "price_usd", "hole positions (from the LRS-50 outline, not the drawing)"])
+                 99.0, 82.0, 30.0, 5.0, 10.0, 230.0, 13.0, (20.5, 75.5), 40.5,
+                 ["mass_g", "price_usd"])
 
 COMPONENTS = [UNO_R3, NANO, PCA9685, LM2596, DC_JACK, ADAPTER_5V4A, PSU_5V_50]

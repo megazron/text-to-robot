@@ -17,7 +17,8 @@ stronger (4WD) tiers, all checks including clearance passing.
 - [~] Price tiers to choose from, with prices (cars: cheapest / stronger; arms: 20 g / 100 g / 200 g payload tiers, cheapest servo per joint)
 - [~] Honest suggestions when a budget or named components cannot do the request (over-budget options marked, cheapest price stated; robot types without an Arduino version say so)
 - [x] Use the components the user names ("with MG996R servos", "Arduino Nano")
-- [ ] Printed parts and housings that are really buildable: fillets, proper walls, screw bosses, cable paths, STEP + STL
+- [~] Printed parts and housings that are really buildable: fillets, proper walls, screw bosses, cable paths, STEP + STL (electronics compartments, screwed lids and cable exits done; see DESIGN_ENGINE.md)
+- [~] Wiring: netlist per robot, gauge, fuses, routed cables with slack, WIRING.md, diagram, real BOM lines (all designers except the Mark 43 suit)
 - [~] Prompts read properly (sizes, counts, parts, budgets, exclusions) for every robot type (heights for humanoids, standalone mechs, car / buggy / line follower / obstacle avoider words fixed)
 - [ ] Every robot type rebuilt and checked: arm, car, mecanum, rover, quadruped, hexapod, humanoid, mech, SCARA, gripper
 - [x] WALL-E rebuilt properly (Arduino build: printed body housing 4 TT motors, TPU tracks, pan/tilt binocular head, servo arms; all checks pass, ~$51)

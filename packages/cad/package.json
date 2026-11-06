@@ -11,6 +11,7 @@
     "@ttr/mesh": "*",
     "@ttr/parts": "*",
     "@ttr/components": "*",
+    "@ttr/design": "*",
     "@ttr/kernel": "*"
   }
 }

@@ -5,14 +5,16 @@
 // PCA9685 (servos) and two TB6612FNG drivers (one motor per channel) from a 2S 18650 pack; an LM2596 makes the servo
 // 5 V. Every printed part is an exact CAD solid (@ttr/kernel); screws are listed in the build record.
 import type { RobotSpecification } from "@ttr/robot-schema";
-import { part, rating, type Vec3 } from "@ttr/parts";
+import { part, rating, electrical, type Vec3 } from "@ttr/parts";
 import { frame, mul, translation, type Mat4 } from "@ttr/solid";
 import type { Op } from "@ttr/kernel";
 import { Assembly } from "../assembly.ts";
 import { totalMass, gravityTorques } from "../kin.ts";
 import { DYNAMIC_FACTOR } from "../sizing.ts";
 import { limitsFromGeometry } from "./legkit.ts";
-import { motorT } from "./arduino-car.ts";
+import { motorT, wireDrivers } from "./arduino-car.ts";
+import { registerBay, enclosureChecks, exposed, standoffOps } from "../enclosure.ts";
+import { Harness, finishWiring } from "../wiring.ts";
 
 export interface ArduinoWallERequest { name?: string; prompt?: string; budget?: number; }
 
@@ -22,6 +24,7 @@ const XA = 65;                                       // axles at +-XA (motor can
 const BX = 85, BY = 64, Z0 = 16, Z1 = 146, WALL = 2.4, LID = 4;
 const place = (x: Vec3, y: Vec3, z: Vec3, o: Vec3): Mat4 => [x[0], x[1], x[2], 0, y[0], y[1], y[2], 0, z[0], z[1], z[2], 0, o[0], o[1], o[2], 1];
 const sb = () => part(SERVO).bbox_mm!;
+const EXIT_X = -8, VENTS = 14;
 
 /** four locating walls just inside the body's walls, stopping short of its rounded inner corners (radius rc) */
 function lipWalls(hx: number, hy: number, t: number, z0: number, z1: number, rc = 6): Op[] {
@@ -29,6 +32,31 @@ function lipWalls(hx: number, hy: number, t: number, z0: number, z1: number, rc 
     { op: "box", min: [-hx + rc, -hy, z0], max: [hx - rc, -hy + t, z1] }, { op: "box", min: [-hx + rc, hy - t, z0], max: [hx - rc, hy, z1] },
     { op: "box", min: [-hx, -hy + rc, z0], max: [-hx + t, hy - rc, z1] }, { op: "box", min: [hx - t, -hy + rc, z0], max: [hx, hy - rc, z1] },
   ];
+}
+
+/** Electronics poses (mm). The boards sit 5 mm up on standoffs; the breadboard's end comes close to the left wall for the Nano's USB. */
+const Tbb = place([0, 1, 0], [0, 0, 1], [1, 0, 0], [-BX + WALL + 0.3, -58.3, 70]);
+const Tpca = place([0, 1, 0], [-1, 0, 0], [0, 0, 1], [70.4, -31.1, 5]), Tbuck = place([0, 1, 0], [-1, 0, 0], [0, 0, 1], [-58.8, -21.6, 5]);
+const USB_X = -BX + WALL + 0.3 + 8.5 + 3.6, USB_Z = 70 + 31 + 8.9, SW_Y = 40, SW_Z = 100;
+
+/** The netlist: pack through fuse and switch; TT motors on the drivers; the servos on their own buck 5 V through the PCA9685. */
+function wire(H: Harness, motors: string[]) {
+  H.mainPower("VBAT", { source: "battery", pos: "@power", neg: "@ground", sw: "main_switch", simultaneous: 2, simNote: "two motors stalling at once, the rest running" });
+  H.regulator("controller", "VBAT", "5V_LOGIC", { vin: "VIN", gin: "GND", vout: "5V", gout: "GND", volts: 5, cont: 0.2, peakLimit: 0.4 });
+  H.regulator("servo_regulator", "VBAT", "5V_SERVO", { vin: "IN+", gin: "IN-", vout: "OUT+", gout: "OUT-", volts: 5, efficiency: 0.85, simNote: "every servo stalled at once" });
+  wireDrivers(H, 2, motors);
+  H.notes.push("Board to board wires on the breadboard are jumper wires in the rows of the two pins; the cut list length is the most a jumper needs.");
+  H.feed("5V_SERVO", "servo_driver", { v: "v_plus.V+", g: "v_plus.GND", typ: 0.01, peak: 0.01 });
+  ["neck_pan_servo", "neck_tilt_servo", "left_arm_servo", "right_arm_servo"].forEach((s, ch) => {
+    const r = H.rec(s).current_a.v, d = H.rails.get("5V_SERVO")!.feeds[0];
+    d.typ += r.typical; d.peak += r.peak;
+    H.net(`SERVO${ch}_PWM`, "signal"); H.net(`SERVO${ch}_V`, "power", 5);
+    H.wire(`SERVO${ch}_PWM`, `servo_driver.ch${ch}.PWM${ch}`, `${s}.@pwm`); H.wire(`SERVO${ch}_V`, `servo_driver.ch${ch}.V+`, `${s}.@power`, { typ: r.typical, peak: r.peak }); H.wire("GND", `servo_driver.ch${ch}.GND`, `${s}.@ground`, { typ: r.typical, peak: r.peak });
+  });
+  H.feed("5V_LOGIC", "servo_driver", { v: "control_in.VCC", g: "control_in.GND", typ: 0.01, peak: 0.01 });
+  H.signals("controller", "servo_driver", [["A4", "SDA", "I2C_SDA"], ["A5", "SCL", "I2C_SCL"]]);
+  H.feed("5V_LOGIC", "ultrasonic", { v: "VCC", g: "GND" });
+  H.signals("controller", "ultrasonic", [["D11", "TRIG"], ["D12", "ECHO"]]);
 }
 
 export function designArduinoWallE(req: ArduinoWallERequest = {}): RobotSpecification {
@@ -64,6 +92,12 @@ export function designArduinoWallE(req: ArduinoWallERequest = {}): RobotSpecific
   const zS = 60;
   for (const bx of [9.5, 35.5]) body.push({ op: "hole", a: [BX - WALL - 1, -22.5 + bx, zS + 10], b: [BX + 1, -22.5 + bx, zS + 10], d: 16.5 });
   for (const h of part("hc_sr04").holes) body.push({ op: "hole", a: [BX - WALL - 1, -22.5 + h.pos[0], zS + h.pos[1]], b: [BX + 1, -22.5 + h.pos[0], zS + h.pos[1]], d: 1.6 });
+  // electronics on standoffs at their real hole patterns; breadboard held on the rear wall between two ledges
+  body.push({ op: "at", T: translation([0, 0, Z0 + WALL]), of: [...standoffOps("pca9685_clone", Tpca), ...standoffOps("buck_lm2596", Tbuck)] });
+  for (const z of [Tbb[14] - 2.4, Tbb[14] + 54.8]) body.push({ op: "box", min: [-BX + WALL - 0.2, Tbb[13], z], max: [-BX + WALL + 6, Tbb[13] + 82.5, z + 2.4] });
+  // USB of the Nano through the left wall, main switch in the rear wall, both above the tracks
+  body.push({ op: "cutbox", min: [USB_X - 7, -BY - 1, USB_Z - 5], max: [USB_X + 7, -BY + WALL + 1, USB_Z + 5] });
+  body.push({ op: "cutbox", min: [-BX - 1, SW_Y - 9.7, SW_Z - 6.7], max: [-BX + WALL + 1, SW_Y + 9.7, SW_Z + 6.7] });
   // battery and electronics: screw holes through the floor
   for (const h of part(PACK).holes) body.push({ op: "hole", a: [-38.5 + h.pos[0], h.pos[1], Z0 - 1], b: [-38.5 + h.pos[0], h.pos[1], Z0 + WALL + 1], d: 3.2 });
   A.cadLink("body", { name: "body", edge: 1.0, ops: body }, { role: "base", material: "printed_accent" });
@@ -99,16 +133,17 @@ export function designArduinoWallE(req: ArduinoWallERequest = {}): RobotSpecific
   A.mount("body", "hc_sr04", place([0, 1, 0], [0, 0, 1], [1, 0, 0], [BX - WALL - 1.6, -22.5, zS]), "ultrasonic", "HC-SR04 distance sensor (obstacle avoidance)");
   A.spec.sensors.push({ name: "front_range", type: "range", parent: "ultrasonic", origin: { xyz: [0.0225, 0.01, 0.0136], rpy: [0, 0, 0] }, params: { range_m: 4, min_range_m: 0.02, beam_deg: 15 } });
   A.fastener("M2x6 self-tapping (sensor)", 4);
+  exposed(A, "ultrasonic", "transducers look out through two 16.5 mm windows in the front wall", [45, 20]);
 
   // ---------------- electronics inside the body
   A.mount("body", PACK, translation([-38.5, 0, Z0 + WALL]), "battery", "2S 18650 pack");
   A.fastener("M3x8 countersunk + nut (pack)", 2);
-  const Tbb = place([0, 1, 0], [0, 0, 1], [1, 0, 0], [-BX + WALL + 0.3, -41.25, 70]);
   A.mount("body", "breadboard_400", Tbb, "breadboard", "plug-in wiring: Nano + two TB6612FNG", "printed");
   A.mount("breadboard", "arduino_nano_clone", translation([4, 31, 8.5]), "controller", "Arduino Nano (runs the generated sketch)");
   for (let i = 0; i < 2; i++) A.mount("breadboard", "tb6612fng_module", translation([4 + i * 24, 4, 8.5]), `motor_driver_${i + 1}`, "TB6612FNG dual motor driver");
-  A.mount("body", "pca9685_clone", place([0, 1, 0], [-1, 0, 0], [0, 0, 1], [70.4, -31.1, Z0 + WALL]), "servo_driver", "PCA9685 servo driver (I2C)");
-  A.mount("body", "buck_lm2596", place([0, 1, 0], [-1, 0, 0], [0, 0, 1], [-58.8, -21.6, Z0 + WALL]), "servo_regulator", "LM2596 set to 5.0 V for the servos");
+  A.mount("body", "pca9685_clone", mul(translation([0, 0, Z0 + WALL]), Tpca), "servo_driver", "PCA9685 servo driver (I2C)");
+  A.mount("body", "buck_lm2596", mul(translation([0, 0, Z0 + WALL]), Tbuck), "servo_regulator", "LM2596 set to 5.0 V for the servos");
+  A.mount("body", "switch_kcd1", frame([-BX, SW_Y, SW_Z], [-1, 0, 0], [0, 0, 1]), "main_switch", "main power switch");
   A.fastener("M2.5x6 + nut (PCA9685) / M3x6 (LM2596)", 6);
 
   // ---------------- lid with the neck pan servo hanging below it
@@ -121,6 +156,9 @@ export function designArduinoWallE(req: ArduinoWallERequest = {}): RobotSpecific
     { op: "cradle", key: SERVO, T: Tpan, wall: 2.5 },
   ];
   for (const x of [-BX + 7, BX - 7]) for (const y of [-BY + 7, BY - 7]) lid.push({ op: "hole", a: [x, y, Z1 - 6], b: [x, y, Z1 + LID + 1], d: 3.4 });
+  // neck leads leave through a grommet beside the pan servo; slots over the drivers and regulator let the heat out
+  lid.push({ op: "hole", a: [EXIT_X, 0, Z1 - 1], b: [EXIT_X, 0, Z1 + LID + 1], d: 8 });
+  for (let k = 0; k < VENTS; k++) lid.push({ op: "cutbox", min: [-72, -48 + k * 7, Z1 - 5], max: [-20, -44.8 + k * 7, Z1 + LID + 1] });
   A.cadLink("lid", { name: "lid", edge: 0.8, ops: lid }, { material: "printed_accent" });
   A.fixed("lid_mount", "body", "lid", translation([0, 0, 0]));
   A.fastener("M3x10 self-tapping (lid)", 4);
@@ -169,9 +207,19 @@ export function designArduinoWallE(req: ArduinoWallERequest = {}): RobotSpecific
   }
   A.fastener("M2 self-tapping (servo tabs, from the servo kits)", 2 * 4);
 
+  // ---------------- the body is the compartment: its lid, exits and vents on record, then the harness
+  const H = new Harness(A);
+  const inBody = ["battery", "breadboard", "controller", "motor_driver_1", "motor_driver_2", "servo_driver", "servo_regulator"];
+  registerBay(A, { name: "body_bay", tub: "body", lid: "lid", parent: "body", T: translation([0, 0, 0]), min: [-BX + WALL, -BY + WALL, Z0 + WALL], max: [BX - WALL, BY - WALL, Z1], parts: inBody, screws: 4, vent_area_mm2: Math.round(VENTS * 52 * 3.2), note: "the hollow body itself",
+    exits: [{ id: "body_bay.neck_leads", kind: "grommet", face: "lid", at: [EXIT_X, 0, Z1 + LID], normal: [0, 0, 1], hole_mm: 8 }, { id: "body_bay.usb", kind: "usb", face: "y-", at: [USB_X, -BY, USB_Z], normal: [0, -1, 0], hole_mm: 10 }, { id: "body_bay.switch", kind: "switch", face: "x-", at: [-BX, SW_Y, SW_Z], normal: [-1, 0, 0], hole_mm: 13, part: "main_switch" }] }, H);
+  for (const n of ["main_switch", "ultrasonic", "neck_pan_servo", "left_arm_servo", "right_arm_servo", ...["front_left", "front_right", "rear_left", "rear_right"].map((t) => `${t}_motor`)]) H.bayOf.set(n, "body_bay");
+  wire(H, ["front_left_motor", "front_right_motor", "rear_left_motor", "rear_right_motor"]);
+
   // ---------------- checks
   limitsFromGeometry(A, ["neck_pan", "neck_tilt", "left_arm_lift", "right_arm_lift"], [{ neck_pan: 1.2, neck_tilt: 0.6 }, { neck_pan: -1.2, neck_tilt: -0.6 }, { left_arm_lift: 0.9, right_arm_lift: -0.9 }],
     0.06, [["body", "track_left"], ["body", "track_right"]]);
+  finishWiring(H);
+  enclosureChecks(A);
   for (const j of ["neck_pan", "neck_tilt", "left_arm_lift", "right_arm_lift"]) {
     let w = 0;
     for (const q of [{}, { neck_tilt: 0.6 }, { neck_tilt: -0.6 }, { [j]: 0.9 }, { [j]: -0.9 }]) w = Math.max(w, Math.abs(gravityTorques(A.spec, q)[j] ?? 0));
@@ -191,12 +239,13 @@ export function designArduinoWallE(req: ArduinoWallERequest = {}): RobotSpecific
   // a tracked base turns slower than its no-slip rate: the tracks slide sideways (same model as the skid-steer bases)
   const chi = 1 + 2 * (L / B) ** 2, turnRate = (0.5 * vmax) / (B / 2) / chi;
   A.check("drive:top_speed", vmax >= 0.3, `${vmax.toFixed(2)} m/s`);
-  const servoStall = 4 * Number(part(SERVO).specs.stall_current_a), buckA = Number(part("buck_lm2596").specs.current_a);
-  A.check("power:servo_supply", servoStall <= buckA, `four SG90s stalled together draw ${servoStall.toFixed(1)} A of the LM2596's ${buckA} A`);
+  const servoStall = 4 * electrical(SERVO)!.current_a.v.peak, buckA = electrical("buck_lm2596")!.current_a.v.peak;
+  A.check("power:servo_supply", servoStall <= buckA, `four SG90s stalled together draw ${servoStall.toFixed(1)} A of the LM2596's ${buckA} A peak (2 A continuous)`);
   A.check("power:driver_current", Number(part(MOTOR).specs.stall_current_a) <= Number(part("tb6612fng_module").specs.peak_current_a), "one TT motor per TB6612FNG channel (stall 1.5 A <= 3.2 A peak)");
   const runtime = Number(part(PACK).specs.energy_wh) * 0.8 / (4 * 6 * 0.35 + 0.6 + 4 * 0.3) * 60;
   A.check("power:runtime", runtime >= 45, `${runtime.toFixed(0)} min (four drive motors + idling servos)`);
   const bom = A.bom();
+  bom.cost_usd = +(bom.cost_usd + (A.design.wiring?.cost_usd ?? 0)).toFixed(2);
   if (req.budget !== undefined) A.check("budget", bom.cost_usd <= req.budget, `$${bom.cost_usd.toFixed(2)} of parts vs $${req.budget} budget`);
   A.design.performance = { mass_kg: +m.toFixed(3), top_speed_m_s: +vmax.toFixed(2), runtime_min: +runtime.toFixed(0), cost_usd: bom.cost_usd, height_mm: 0, tier: "cheapest", tier_label: "Arduino WALL-E",
     turn_rate_rad_s: +turnRate.toFixed(2), turn_slip_factor: +chi.toFixed(2) };

@@ -8,11 +8,11 @@
   {
    "name": "base_link",
    "watertight": true,
-   "volume_cm3": 53.91,
+   "volume_cm3": 119.15,
    "size_mm": [
-    110.0,
-    90.0,
-    30.7
+    188.8,
+    116.0,
+    39.7
    ],
    "orientation": [
     0.0,
@@ -20,11 +20,11 @@
     -1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 0.24,
+   "support_area_cm2": 0.57,
    "support_frac": 0.001,
-   "bed_contact_cm2": 96.81,
-   "min_wall_mm": 2.04,
-   "thin_wall_frac": 0.001,
+   "bed_contact_cm2": 210.43,
+   "min_wall_mm": 2.01,
+   "thin_wall_frac": 0.0,
    "passed": true,
    "supports": "none",
    "problems": [],
@@ -56,9 +56,59 @@
    "warnings": []
   },
   {
+   "name": "console",
+   "watertight": true,
+   "volume_cm3": 54.22,
+   "size_mm": [
+    101.7,
+    105.7,
+    32.4
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 1.91,
+   "support_frac": 0.004,
+   "bed_contact_cm2": 90.78,
+   "min_wall_mm": 1.42,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "console_lid",
+   "watertight": true,
+   "volume_cm3": 25.07,
+   "size_mm": [
+    101.7,
+    105.7,
+    5.8
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 0.73,
+   "support_frac": 0.003,
+   "bed_contact_cm2": 80.2,
+   "min_wall_mm": 1.42,
+   "thin_wall_frac": 0.002,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
    "name": "forearm",
    "watertight": true,
-   "volume_cm3": 26.95,
+   "volume_cm3": 27.13,
    "size_mm": [
     193.8,
     50.2,
@@ -70,11 +120,61 @@
     -1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 9.94,
-   "support_frac": 0.054,
+   "support_area_cm2": 10.23,
+   "support_frac": 0.055,
    "bed_contact_cm2": 27.39,
-   "min_wall_mm": 2.01,
-   "thin_wall_frac": 0.001,
+   "min_wall_mm": 1.82,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "supply_case",
+   "watertight": true,
+   "volume_cm3": 80.17,
+   "size_mm": [
+    151.7,
+    103.7,
+    44.4
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 3.13,
+   "support_frac": 0.005,
+   "bed_contact_cm2": 135.94,
+   "min_wall_mm": 2.39,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "supply_case_lid",
+   "watertight": true,
+   "volume_cm3": 31.91,
+   "size_mm": [
+    151.7,
+    103.7,
+    5.8
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 0.73,
+   "support_frac": 0.002,
+   "bed_contact_cm2": 99.2,
+   "min_wall_mm": 1.39,
+   "thin_wall_frac": 0.003,
    "passed": true,
    "supports": "none",
    "problems": [],
@@ -108,7 +208,7 @@
   {
    "name": "upper_arm",
    "watertight": true,
-   "volume_cm3": 37.09,
+   "volume_cm3": 37.32,
    "size_mm": [
     180.9,
     43.5,
@@ -120,11 +220,11 @@
     -1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 9.94,
-   "support_frac": 0.035,
+   "support_area_cm2": 10.32,
+   "support_frac": 0.036,
    "bed_contact_cm2": 40.1,
-   "min_wall_mm": 1.93,
-   "thin_wall_frac": 0.003,
+   "min_wall_mm": 1.82,
+   "thin_wall_frac": 0.001,
    "passed": true,
    "supports": "none",
    "problems": [],

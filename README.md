@@ -64,7 +64,7 @@ npm run api          # web viewer and API on http://localhost:8787
 
 The CLI writes `out/arm/` with the ROS 2 package (`arm_6dof/`, including
 `urdf/arm_6dof.urdf` and `.urdf.xacro`), `arm_6dof.json`, a simulation URDF, `meshes/`,
-`cad/`, `training/` and `BOM.md`. Other commands: `modify robot.json "<instruction>"`,
+`cad/` (with `WIRING.md`: pin-to-pin table, cut list, power budget, and `wiring.svg`), `training/` and `BOM.md`. Other commands: `modify robot.json "<instruction>"`,
 `bom`, `validate` and `inspect`; run `node cli/src/index.ts --help`.
 
 ![Viewer showing a generated 6-DOF arm](docs/img/web/02_arm_6dof.png)

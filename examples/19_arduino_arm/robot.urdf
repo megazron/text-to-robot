@@ -3,7 +3,7 @@
      robot: arduino_arm
      prompt: A cheap Arduino robot arm with a claw
 
-     9 links, 8 joints, 9 inferred values
+     18 links, 17 joints, 18 inferred values
 -->
 <robot name="arduino_arm">
   <material name="printed"><color rgba="0.93 0.93 0.95 1"/></material>
@@ -29,9 +29,9 @@
       <geometry><mesh filename="package://arduino_arm/meshes/base_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.000165048 -0.0000350057 0.004224" rpy="0 0 0"/>
-      <mass value="0.049296"/>
-      <inertia ixx="0.0000314415" ixy="-1.76612e-8" ixz="1.54804e-7" iyy="0.0000467731" iyz="8.67364e-9" izz="0.0000750879"/>
+      <origin xyz="-0.032642 -0.0000157832 0.00418" rpy="0 0 0"/>
+      <mass value="0.10895"/>
+      <inertia ixx="0.000111242" ixy="3.82471e-8" ixz="-0.00000556759" iyy="0.000286842" iyz="2.41947e-8" izz="0.000390354"/>
     </inertial>
   </link>
   <link name="yaw_servo">
@@ -93,9 +93,9 @@
       <geometry><mesh filename="package://arduino_arm/meshes/upper_arm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.10249 -0.0000978399 0.012771" rpy="0 0 0"/>
-      <mass value="0.033914"/>
-      <inertia ixx="0.0000130473" ixy="-1.43211e-7" ixz="0.00000969139" iyy="0.0000943784" iyz="-9.02938e-9" izz="0.0000934599"/>
+      <origin xyz="-0.102312 -0.0000972367 0.012745" rpy="0 0 0"/>
+      <mass value="0.034125"/>
+      <inertia ixx="0.0000130548" ixy="-1.43803e-7" ixz="0.00000971707" iyy="0.000094559" iyz="-8.94257e-9" izz="0.0000936382"/>
     </inertial>
   </link>
   <link name="elbow_servo">
@@ -125,9 +125,9 @@
       <geometry><mesh filename="package://arduino_arm/meshes/forearm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.098082 0.00617 0.009843" rpy="0 0 0"/>
-      <mass value="0.024641"/>
-      <inertia ixx="0.00000683814" ixy="0.00000907531" ixz="0.00000796894" iyy="0.0000849406" iyz="-0.00000125426" izz="0.0000864738"/>
+      <origin xyz="-0.09789 0.006128 0.009828" rpy="0 0 0"/>
+      <mass value="0.02481"/>
+      <inertia ixx="0.0000068473" ixy="0.00000910443" ixz="0.00000797952" iyy="0.0000850757" iyz="-0.00000125657" izz="0.0000866153"/>
     </inertial>
   </link>
   <link name="claw_servo">
@@ -162,15 +162,159 @@
       <inertia ixx="7.71007e-7" ixy="4.01954e-7" ixz="-1.07452e-8" iyy="0.00000126761" iyz="6.80846e-9" izz="0.00000202087"/>
     </inertial>
   </link>
+  <link name="console">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://arduino_arm/meshes/console.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://arduino_arm/meshes/console.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.072328 -0.00027792 0.015664" rpy="0 0 0"/>
+      <mass value="0.049577"/>
+      <inertia ixx="0.0000699885" ixy="-7.77488e-7" ixz="-1.95616e-7" iyy="0.0000641893" iyz="1.25363e-7" izz="0.000123488"/>
+    </inertial>
+  </link>
+  <link name="console_lid">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://arduino_arm/meshes/console_lid.stl"/></geometry>
+      <material name="printed_accent"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://arduino_arm/meshes/console_lid.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.073443 -0.002032 0.038785" rpy="0 0 0"/>
+      <mass value="0.022926"/>
+      <inertia ixx="0.0000194182" ixy="-9.11708e-8" ixz="2.14095e-10" iyy="0.0000184877" iyz="1.00389e-8" izz="0.00003785"/>
+    </inertial>
+  </link>
+  <link name="controller">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://arduino_arm/meshes/arduino_uno_clone.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://arduino_arm/meshes/arduino_uno_clone.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.029571 0.027085 0.00325" rpy="0 0 0"/>
+      <mass value="0.025"/>
+      <inertia ixx="0.00000654781" ixy="-7.46977e-9" ixz="5.28521e-7" iyy="0.0000115475" iyz="-2.85107e-8" izz="0.0000176588"/>
+    </inertial>
+  </link>
+  <link name="servo_driver">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://arduino_arm/meshes/pca9685_clone.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://arduino_arm/meshes/pca9685_clone.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.030967 0.010728 0.003343" rpy="0 0 0"/>
+      <mass value="0.009"/>
+      <inertia ixx="5.04215e-7" ixy="8.05094e-9" ixz="2.98706e-9" iyy="0.00000236887" iyz="4.76428e-8" izz="0.00000270442"/>
+    </inertial>
+  </link>
+  <link name="main_switch">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://arduino_arm/meshes/switch_kcd1.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://arduino_arm/meshes/switch_kcd1.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 -0.008005" rpy="0 0 0"/>
+      <mass value="0.008"/>
+      <inertia ixx="5.71694e-7" ixy="0" ixz="-4.69545e-24" iyy="4.41406e-7" iyz="-9.39090e-24" izz="3.66303e-7"/>
+    </inertial>
+  </link>
+  <link name="supply_case">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://arduino_arm/meshes/supply_case.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://arduino_arm/meshes/supply_case.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.219513 -0.00000117224 0.014095" rpy="0 0 0"/>
+      <mass value="0.073304"/>
+      <inertia ixx="0.000113147" ixy="1.16115e-9" ixz="-8.11475e-7" iyy="0.000216112" iyz="-8.07212e-10" izz="0.000298271"/>
+    </inertial>
+  </link>
+  <link name="supply_case_lid">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://arduino_arm/meshes/supply_case_lid.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://arduino_arm/meshes/supply_case_lid.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.225855 1.93644e-12 0.045784" rpy="0 0 0"/>
+      <mass value="0.029182"/>
+      <inertia ixx="0.0000257361" ixy="6.06425e-15" ixz="3.05706e-8" iyy="0.0000579594" iyz="-2.17786e-16" izz="0.0000836243"/>
+    </inertial>
+  </link>
+  <link name="power_supply">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://arduino_arm/meshes/psu_5v_lrs50.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://arduino_arm/meshes/psu_5v_lrs50.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.05094 0.041477 0.014748" rpy="0 0 0"/>
+      <mass value="0.23"/>
+      <inertia ixx="0.000147616" ixy="0.00000484477" ixz="-0.00000171188" iyy="0.000196319" iyz="-5.67286e-7" izz="0.000309991"/>
+    </inertial>
+  </link>
+  <link name="mains_inlet">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://arduino_arm/meshes/iec_c14_fused_switched.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://arduino_arm/meshes/iec_c14_fused_switched.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 -5.92043e-19 -0.014582" rpy="0 0 0"/>
+      <mass value="0.04"/>
+      <inertia ixx="0.000011391" ixy="0" ixz="0" iyy="0.00000657584" iyz="7.81695e-23" izz="0.00000990197"/>
+    </inertial>
+  </link>
   <joint name="yaw_servo_mount" type="fixed">
     <parent link="base_link"/>
     <child link="yaw_servo"/>
-    <origin xyz="0 0 0.0327" rpy="0 0 0"/>
+    <origin xyz="0 0 0.0417" rpy="0 0 0"/>
   </joint>
   <joint name="yaw" type="revolute">
     <parent link="base_link"/>
     <child link="turntable"/>
-    <origin xyz="0 0 0.0327" rpy="0 0 0"/>
+    <origin xyz="0 0 0.0417" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
     <limit lower="-1.571" upper="1.571" effort="0.1765" velocity="10.472"/>
     <dynamics damping="0.0034" friction="0.0035"/>
@@ -213,5 +357,50 @@
     <axis xyz="0 0 1"/>
     <limit lower="-0.6" upper="0.35" effort="0.1765" velocity="10.472"/>
     <dynamics damping="0.0034" friction="0.0035"/>
+  </joint>
+  <joint name="console_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="console"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="console_lid_mount" type="fixed">
+    <parent link="console"/>
+    <child link="console_lid"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="controller_mount" type="fixed">
+    <parent link="console"/>
+    <child link="controller"/>
+    <origin xyz="-0.1099 -0.044 0.0124" rpy="0 0 0"/>
+  </joint>
+  <joint name="servo_driver_mount" type="fixed">
+    <parent link="console"/>
+    <child link="servo_driver"/>
+    <origin xyz="-0.0934 0.016 0.0124" rpy="0 0 0"/>
+  </joint>
+  <joint name="main_switch_mount" type="fixed">
+    <parent link="console"/>
+    <child link="main_switch"/>
+    <origin xyz="-0.1198 0.032 0.0224" rpy="0 -1.570796 0"/>
+  </joint>
+  <joint name="supply_case_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="supply_case"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="supply_case_lid_mount" type="fixed">
+    <parent link="supply_case"/>
+    <child link="supply_case_lid"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="power_supply_mount" type="fixed">
+    <parent link="supply_case"/>
+    <child link="power_supply"/>
+    <origin xyz="-0.254 -0.041 0.0074" rpy="0 0 0"/>
+  </joint>
+  <joint name="mains_inlet_mount" type="fixed">
+    <parent link="supply_case"/>
+    <child link="mains_inlet"/>
+    <origin xyz="-0.2924 0 0.0234" rpy="0 -1.570796 0"/>
   </joint>
 </robot>

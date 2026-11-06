@@ -7,6 +7,7 @@ import { part } from "@ttr/parts";
 import { buildBom, bomToMarkdown, designRecord } from "@ttr/components";
 import { assemblyStl } from "./stl.ts";
 import { partFiles } from "@ttr/kernel/ready";
+import { wiringMarkdown, wiringSvg, type WiringRecord } from "@ttr/design";
 
 const PRINT_CM3_PER_HOUR = 12;
 const isPrinted = (l: Link) => l.geometry.type === "mesh" && (l.geometry.part === "printed" || l.geometry.part === "cad" || l.geometry.part === "armour");
@@ -44,6 +45,8 @@ export function generateBuildPackage(spec: RobotSpecification): Record<string, s
     files[`cad/reference/${key}.stl`] = toStlBinary(buildPart(l.geometry as never), 1000);
   }
   files["cad/BOM.md"] = bomToMarkdown(buildBom(spec));
+  const wiring = (d as { wiring?: WiringRecord }).wiring;
+  if (wiring) { files["cad/WIRING.md"] = wiringMarkdown(wiring, spec.robot_name); files["cad/wiring.svg"] = wiringSvg(wiring, spec.robot_name); }
   files[`cad/${name}_assembly.stl`] = assemblyStl(spec);
   files["cad/ASSEMBLY.md"] = assemblyGuide(spec);
   files["cad/design.json"] = JSON.stringify(d, null, 2);
@@ -52,6 +55,7 @@ export function generateBuildPackage(spec: RobotSpecification): Record<string, s
     "1. **Buy** everything in `BOM.md` (supplier links included).\n" +
     "2. **Print** every STL in `print/` (see `print/PRINT_LIST.md`).\n" +
     "3. **Assemble** in the order of `ASSEMBLY.md`.\n" +
+    (wiring ? "   **Wire** from `WIRING.md` (pin-to-pin table, cut list, power budget) and `wiring.svg`.\n" : "") +
     "4. **Check** against `design.json`: each actuator's required vs rated torque, the speed it reaches loaded, battery runtime, stability and every other check the design passed.\n\n" +
     "`reference/` holds the bought parts' models (from their datasheet drawings) for your own CAD; `" + name + "_assembly.stl` is the whole robot in its build pose.\n\n" +
     "## Assumptions\n\n" + d.assumptions.map((a) => `- ${a}`).join("\n") + "\n";

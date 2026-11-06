@@ -3,7 +3,7 @@
      robot: wall_e
      prompt: Build WALL-E: a tracked trash-compactor robot with a telescoping neck, binocular eyes and two gripper arms
 
-     28 links, 27 joints, 28 inferred values
+     29 links, 28 joints, 29 inferred values
 -->
 <robot name="wall_e">
   <material name="printed"><color rgba="0.93 0.93 0.95 1"/></material>
@@ -29,9 +29,9 @@
       <geometry><mesh filename="package://wall_e/meshes/body.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.000734429 -1.63865e-11 0.068957" rpy="0 0 0"/>
-      <mass value="0.18534"/>
-      <inertia ixx="0.000770454" ixy="-9.11442e-12" ixz="0.00000231013" iyy="0.001105" iyz="-1.36413e-13" izz="0.001187"/>
+      <origin xyz="-0.00035084 -0.0000190644 0.068814" rpy="0 0 0"/>
+      <mass value="0.184717"/>
+      <inertia ixx="0.000768785" ixy="-5.56297e-7" ixz="-6.44797e-8" iyy="0.0011" iyz="-8.11026e-8" izz="0.001181"/>
     </inertial>
   </link>
   <link name="front_left_motor">
@@ -322,6 +322,22 @@
       <inertia ixx="4.24242e-7" ixy="5.78365e-8" ixz="-8.49364e-9" iyy="0.00000209196" iyz="-2.06109e-9" izz="0.00000223089"/>
     </inertial>
   </link>
+  <link name="main_switch">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://wall_e/meshes/switch_kcd1.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://wall_e/meshes/switch_kcd1.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 -0.008005" rpy="0 0 0"/>
+      <mass value="0.008"/>
+      <inertia ixx="5.71694e-7" ixy="0" ixz="-4.69545e-24" iyy="4.41406e-7" iyz="-9.39090e-24" izz="3.66303e-7"/>
+    </inertial>
+  </link>
   <link name="lid">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -333,9 +349,9 @@
       <geometry><mesh filename="package://wall_e/meshes/lid.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.000862029 -0.0000201722 0.14638" rpy="0 0 0"/>
-      <mass value="0.086794"/>
-      <inertia ixx="0.000119853" ixy="1.87841e-8" ixz="0.00000242527" iyy="0.000209343" iyz="-3.29720e-8" izz="0.00032403"/>
+      <origin xyz="0.006085 0.0000774261 0.146196" rpy="0 0 0"/>
+      <mass value="0.07795"/>
+      <inertia ixx="0.00011291" ixy="4.15183e-7" ixz="0.00000169089" iyy="0.000186215" iyz="-4.66951e-8" izz="0.000294036"/>
     </inertial>
   </link>
   <link name="neck_pan_servo">
@@ -541,7 +557,7 @@
   <joint name="breadboard_mount" type="fixed">
     <parent link="body"/>
     <child link="breadboard"/>
-    <origin xyz="-0.0823 -0.04125 0.07" rpy="1.570796 0 1.570796"/>
+    <origin xyz="-0.0823 -0.0583 0.07" rpy="1.570796 0 1.570796"/>
   </joint>
   <joint name="controller_mount" type="fixed">
     <parent link="breadboard"/>
@@ -561,12 +577,17 @@
   <joint name="servo_driver_mount" type="fixed">
     <parent link="body"/>
     <child link="servo_driver"/>
-    <origin xyz="0.0704 -0.0311 0.0184" rpy="0 0 1.570796"/>
+    <origin xyz="0.0704 -0.0311 0.0234" rpy="0 0 1.570796"/>
   </joint>
   <joint name="servo_regulator_mount" type="fixed">
     <parent link="body"/>
     <child link="servo_regulator"/>
-    <origin xyz="-0.0588 -0.0216 0.0184" rpy="0 0 1.570796"/>
+    <origin xyz="-0.0588 -0.0216 0.0234" rpy="0 0 1.570796"/>
+  </joint>
+  <joint name="main_switch_mount" type="fixed">
+    <parent link="body"/>
+    <child link="main_switch"/>
+    <origin xyz="-0.085 0.04 0.1" rpy="0 -1.570796 0"/>
   </joint>
   <joint name="lid_mount" type="fixed">
     <parent link="body"/>

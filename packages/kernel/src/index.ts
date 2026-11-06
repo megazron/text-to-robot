@@ -24,6 +24,7 @@ export type Op =
   | { op: "ploft"; sections: PSec[]; t?: number; open?: "both" | "start" | "end"; smooth?: boolean }  // polygon sections along +z, faceted (ruled) unless smooth; t: shell
   | { op: "loft"; sections: [number, number, number, number?, number?][]; t?: number; open?: "both" | "start" | "end"; rim?: number }  // ellipses [z, rx, ry, cx, cy] along +z; t: shell of that wall, open at both ends (or one)
   | { op: "subtract"; of: Op[] }                                              // remove the finished solid of a sub-program
+  | { op: "solid"; of: Op[] }                                                 // add the finished solid of a sub-program: its cuts stay inside it
   | { op: "at"; T: Mat4; of: Op[] };
 /** `edge`: radius (mm) of the fillet that breaks every outer edge after the booleans (0 = sharp). */
 /** A closed polygon outline at height z (counter-clockwise seen from +z, the same vertex count in every section). */
@@ -284,6 +285,7 @@ function solidOf(o: Op): { add: Shape3D[]; cut: Shape3D[] } {
     case "hull": { const ps = o.of.map(solidOf), h = hullOf(ps.flatMap((p) => p.add)); return o.cut ? { add: [], cut: [h] } : { add: [h], cut: ps.flatMap((p) => p.cut) }; }
     case "revolve": return { add: [revolveOutline(o.pts)], cut: [] };
     case "subtract": return { add: [], cut: [evaluate({ name: "subtract", ops: o.of })] };
+    case "solid": return { add: [evaluate({ name: "solid", ops: o.of })], cut: [] };
     case "ploft": return { add: [o.t ? ploftShell(o.sections, o.t, o.open, o.smooth) : ploftOf(o.sections, o.smooth)], cut: [] };
     case "loft": return { add: [o.t ? loftShell(o.sections, o.t, o.open, o.rim) : loftOf(o.sections)], cut: [] };
     case "sphere": { const b = keep(makeSphere(o.r) as Shape3D), s = keep(b.translate(o.c) as Shape3D); return o.cut ? { add: [], cut: [s] } : { add: [s], cut: [] }; }

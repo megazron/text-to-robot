@@ -37,11 +37,11 @@ def _psu(key, name, model, L, W, H, volts, amps, mass, price, holes_x, hole_y, u
 
 
 PSU_12V_150 = _psu("psu_12v_lrs150", "Mean Well LRS-150-12 enclosed PSU, 12 V 12.5 A (150 W)", "LRS-150-12",
-                   159.0, 97.0, 30.0, 12.0, 12.5, 500.0, 27.0, (32.0, 127.0), 48.5,
-                   ["mass_g", "price_usd", "hole positions (taken from the LRS-75 pattern scaled to the case)"])
+                   159.0, 97.0, 30.0, 12.0, 12.5, 420.0, 27.0, (24.0, 102.0), 32.0,
+                   ["price_usd"])
 PSU_48V_350 = _psu("psu_48v_lrs350", "Mean Well LRS-350-48 enclosed PSU, 48 V 7.3 A (350 W)", "LRS-350-48",
-                   215.0, 115.0, 30.0, 48.0, 7.3, 760.0, 45.0, (32.5, 182.5), 57.5,
-                   ["mass_g", "price_usd", "hole positions (from the case outline, not the drawing)"])
+                   215.0, 115.0, 30.0, 48.0, 7.3, 760.0, 45.0, (32.5, 182.5), 32.5,
+                   ["mass_g", "price_usd"])
 
 
 def _can_build(c):

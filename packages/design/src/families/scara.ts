@@ -15,6 +15,9 @@ import { frame, I4, apply, invert, translation, type Mat4, type Op } from "@ttr/
 import { Assembly } from "../assembly.ts";
 import { axisInertia, gravityTorques, totalMass, fk, descendants, linkCom, type PointLoad } from "../kin.ts";
 import { bodyMm, inFrame, rel, recordCost, mountSensors, sensorTypes, plugWindowOps, type DesignRequest } from "./common.ts";
+import { registerBay, enclosureChecks, exposed } from "../enclosure.ts";
+import { Harness, finishWiring } from "../wiring.ts";
+import { busChain } from "../netlist.ts";
 import { buildParallelGripper, chooseGripperServo, gripperLevels, GRIP, type GripCfg } from "./gripper.ts";
 
 /** A compact version of the parallel gripper for a 0.3 m arm: 40 mm opening, 50 mm fingers. */
@@ -197,7 +200,10 @@ function build(name: string, prompt: string | undefined, p: Plan) {
   for (let k = 0; k < 8; k++) for (const s of [-1, 1]) box.push({ op: "cutbox", min: [bx0 + 22 + k * 17, s > 0 ? 99 : -104, 12], max: [bx0 + 30 + k * 17, s > 0 ? 104 : -99, 36] });
   const psu24 = translation([bx0 + 6, -99, 3]), psu12 = translation([bx0 + 6, 2, 3]);
   for (const [key, T] of [["psu_24v_lrs150", psu24], ["psu_12v_lrs75", psu12]] as const) for (const h of part(key).holes) if (h.axis[2] < -0.5) { const q = apply(T, h.pos); box.push({ op: "hole", a: [q[0], q[1], -1], b: [q[0], q[1], 4], d: 3.4 }); }
-  box.push({ op: "cutbox", min: [bx0 - 1, -60, 8], max: [bx0 + 4, -20, 22] }); // mains inlet / cable gland
+  // fused, switched mains inlet in the far wall (its body stands in the room left of the supplies), gland where the harness leaves, USB of the controller
+  box.push({ op: "cutbox", min: [bx0 - 1, -12, 25], max: [bx0 + 4, 16, 72] });
+  box.push({ op: "hole", a: [bx0 + 166, 40, 60], b: [bx0 + 173, 40, 60], d: 12.5 });
+  box.push({ op: "cutbox", min: [bx0 + 40, -104, 52], max: [bx0 + 80, -99, 68] });
   A.printedLink("controller_box", { name: "controller_box", ops: box }, { role: "base", material: "printed_dark" });
   A.fixed("controller_box_mount", "base_link", "controller_box", I4());
   A.mount("controller_box", "psu_24v_lrs150", psu24, "psu_24v", "24 V stepper supply");
@@ -230,6 +236,16 @@ function build(name: string, prompt: string | undefined, p: Plan) {
   tmcT.forEach((T, k) => A.mount("controller_deck", "tmc2209_stepstick", T, `driver_${["j1", "j2", "z"][k]}`, "stepper drivers (J1, J2, Z)"));
   A.mount("controller_deck", "waveshare_bus_servo_adapter", wsT, "servo_bus", "wrist + gripper servo bus");
   A.fastener("M3 x 6 socket head (PSU bottom)", 4);
+  // lid over the whole box: screws into four corner lugs, slots over the supplies
+  const lugs: [number, number][] = [[bx0 + 9, -94], [bx0 + 162, -94], [bx0 + 9, 94], [bx0 + 162, 94]];
+  const lid: Op[] = [{ op: "box", min: [bx0, -103, 75.2], max: [bx0 + 171, 103, 78], r: 6 }, { op: "box", min: [bx0 + 3.4, -99.6, 72], max: [bx0 + 167.6, 99.6, 75.3], r: 3 }, { op: "cutbox", min: [bx0 + 6, -97, 71], max: [bx0 + 165, 97, 75] }];
+  for (let k = 0; k < 16; k++) lid.push({ op: "cutbox", min: [bx0 + 24, -84 + k * 11, 70], max: [bx0 + 150, -80 + k * 11, 79] });
+  for (const [x, y] of lugs) lid.push({ op: "hole", a: [x, y, 70], b: [x, y, 79], d: 3.4 });
+  A.printedLink("controller_lid", { name: "controller_lid", ops: lid }, { material: "printed_dark" });
+  A.fixed("controller_lid_mount", "controller_box", "controller_lid", I4());
+  A.amendProgram("controller_box", lugs.flatMap(([x, y]): Op[] => [{ op: "box", min: [x - 5, y - 5, 60], max: [x + 5, y + 5, 75] }, { op: "hole", a: [x, y, 63], b: [x, y, 76], d: 2.6 }]));
+  A.fastener("M3 x 10 self-tapping (controller lid)", 4);
+  A.mount("controller_box", "iec_c14_fused_switched", frame([bx0, 2, 48.5], [-1, 0, 0], [0, 0, 1]), "mains_inlet", "fused, switched mains inlet");
   A.fastener("M2 x 6 screw (bus adapter)", 4);
 
   // ---------------- sensors ----------------
@@ -239,7 +255,7 @@ function build(name: string, prompt: string | undefined, p: Plan) {
     imu: { link: "inner_arm", T: rel(Tz, translation([-40, -11.35, zcb0 + CARRIAGE_H + 4])), use: "IMU on the Z carriage (vibration / collision detection)" },
   });
   A.spec.root = "base_link";
-  return { A, g, frames: { T1, Tz, T2, Tw }, stroke, zcb0, zw, zf1 };
+  return { A, g, frames: { T1, Tz, T2, Tw }, stroke, zcb0, zw, zf1, bx0 };
 }
 
 /** Closest the wrist axis may come to the J1 axis: column platform radius + the gripper's swept radius, mm. */
@@ -267,6 +283,7 @@ export function designScara(req: DesignRequest = {}): RobotSpecification {
   const { A } = b;
   A.design.request = { ...req };
   record(A, b, plan, res);
+  wireScara(A, new Harness(A), b);
   recordCost(A);
   return A.finish(`SCARA arm: ${(reach / 1000).toFixed(2)} m reach, ${b.stroke} mm Z stroke, ${payload} kg payload; NEMA17 + 5.18:1 planetary on J1/J2, Tr8x8 lead-screw Z, ${part(plan.wrist).name} wrist, parallel gripper`);
 }
@@ -282,6 +299,35 @@ function analyse(b: ReturnType<typeof build>, p: Plan) {
   const wristReq = out.Jw * TARGET.wristAccel + 0.02;
   out.wristOk = rating(p.wrist).rated_nm >= wristReq * TARGET.stepperMargin;
   return out;
+}
+
+/** Netlist: one supply per voltage from the inlet; three steppers on TMC2209s from the ESP32; wrist and gripper on the servo bus. */
+function wireScara(A: Assembly, H: Harness, b: ReturnType<typeof build>) {
+  const x0 = b.bx0;
+  registerBay(A, { name: "controller_bay", tub: "controller_box", lid: "controller_lid", solids: ["controller_box", "controller_lid"], parent: "controller_box", T: translation([0, 0, 0]), min: [x0 + 3, -100, 3], max: [x0 + 168, 100, 75], screws: 4, vent_area_mm2: 16 * 126 * 4 + 2 * 8 * 8 * 24,
+    parts: ["psu_24v", "psu_12v", "controller", "driver_j1", "driver_j2", "driver_z", "servo_bus"],
+    exits: [{ id: "controller_bay.harness", kind: "gland", face: "x+", at: [x0 + 171, 40, 60], normal: [1, 0, 0], hole_mm: 12.5 }, { id: "controller_bay.usb", kind: "usb", face: "y-", at: [x0 + 60, -103, 60], normal: [0, -1, 0], hole_mm: 16 }, { id: "controller_bay.mains", kind: "switch", face: "x-", at: [x0, 2, 48.5], normal: [-1, 0, 0], hole_mm: 27, part: "mains_inlet" }] }, H);
+  H.mainSwitch = "mains_inlet";
+  for (const [i, psu] of (["psu_24v", "psu_12v"] as const).entries()) for (const [n, a, c] of [[`MAINS_L${i}`, "L", "AC/L"], [`MAINS_N${i}`, "N", "AC/N"], [`MAINS_E${i}`, "E", "FG"]] as const) { H.net(n, "power", 230); H.wire(n, `mains_inlet.load.${a}`, `${psu}.ac_in.${c}`, { typ: 1, peak: 2 }); }
+  H.notes.push("Mains side: IEC inlet to both supplies' AC terminals with insulated spades, earth wired first, lid on before plugging in. Have it checked if you are not qualified to wire mains.");
+  H.mainPower("V24", { source: "psu_24v", pos: "DC OUTPUT +V", neg: "DC OUTPUT -V", fuse: false, volts: 24, cont: 6.5, peakLimit: 7.1, simNote: "all three steppers at full current" });
+  H.rail("V12", { source: "psu_12v", out: "DC OUTPUT +V", gnd: "DC OUTPUT -V", volts: 12, cont: 6, peakLimit: 6.6, simultaneous: 1, simNote: "one servo stalled, the other running" });
+  const pins = ["4", "5", "6", "7", "15", "16", "17", "18", "8", "3", "9", "10"];
+  (["j1", "j2", "z"] as const).forEach((n, i) => {
+    const d = `driver_${n}`, m = `${n}_motor`, r = H.rec(m).current_a.v;
+    H.feed("V24", d, { v: "VM", g: "GND", typ: r.typical * 0.6, peak: r.peak });
+    H.net(`${n}_VIO`.toUpperCase(), "power", 3.3); H.wire(`${n}_VIO`.toUpperCase(), "controller.3V3", `${d}.VIO`, { typ: 0.02 });
+    H.signals("controller", d, [[pins[i * 3], "STEP", `${n}_STEP`.toUpperCase()], [pins[i * 3 + 1], "DIR", `${n}_DIR`.toUpperCase()], [pins[i * 3 + 2], "EN", `${n}_EN`.toUpperCase()]]);
+    for (const [c, pin] of [["M1A", "A (black)"], ["M1B", "A\\ (green)"], ["M2A", "B (red)"], ["M2B", "B\\ (blue)"]] as const) { const nn = `${n}_${c}`.toUpperCase(); H.net(nn, "signal"); H.wire(nn, `${d}.${c}`, `${m}.${pin}`, { typ: r.typical * 0.6, peak: r.peak }); }
+  });
+  busChain(H, { adapter: "servo_bus", servos: ["wrist_servo", "gripper_servo"], rail: "V12" });
+  H.spare("servo_bus.dc_in");
+  H.notes.push("The ESP32-S3 runs from its USB lead to the PC; its 3V3 drives the stepper drivers' logic. Ground joins through the bus and control wires.");
+  H.wire("GND", "controller.G", "driver_j1.GND", { typ: 0.02 });
+  H.spare("controller.j1.5V");
+  for (const x of A.spec.links.map((l) => l.name).filter((n) => /_sensor$/.test(n))) { H.scan(); exposed(A, x, "on its mount, wired to the host PC", [20, 20]); for (const p of H.rec(x).ports) H.spare(`${x}.${p.name}`); }
+  finishWiring(H);
+  enclosureChecks(A);
 }
 
 function record(A: Assembly, b: ReturnType<typeof build>, p: Plan, r: ReturnType<typeof analyse>) {
@@ -348,6 +394,6 @@ function record(A: Assembly, b: ReturnType<typeof build>, p: Plan, r: ReturnType
     `Z travel starts where the fingertips are ${TARGET.tableClear} mm above the table/base plate; the controller box stands outside the swept radius.`,
     `J2 is limited to ±${(A.spec.joints.find((j) => j.name === "j2")!.limit!.upper! * 180 / Math.PI).toFixed(0)}° so the gripper never swings into the column or base.`,
     "Steppers run open loop with sensorless homing (TMC2209 StallGuard) or end-stop switches (not modelled); the ESP32-S3 runs the kinematics and talks to the drivers over STEP/DIR + UART and to the servos over the bus adapter.",
-    "Controller box: open-top printed tray with an electronics deck; mains wiring needs a proper IEC inlet, fuse and earth (cable gland cut-out provided, parts not modelled).",
+    "Controller box: printed case with a screwed lid and an electronics deck; mains come in through a fused, switched IEC inlet, earth wired first.",
   );
 }

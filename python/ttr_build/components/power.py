@@ -138,7 +138,7 @@ COMPONENTS = [
 ]
 
 # ------------------------------------------------------------ Mean Well LRS-150-24 (24 V 6.5 A)
-LRS150_HOLES = ([Hole((x, 50.0, 0.0), (0.0, 0.0, -1.0), 2.5, "M3") for x in (32.0, 132.0)]
+LRS150_HOLES = ([Hole((x, 32.0, 0.0), (0.0, 0.0, -1.0), 2.5, "M3") for x in (24.0, 102.0)]
                 + [Hole((x, 0.0, 15.0), (0.0, -1.0, 0.0), 2.5, "M3") for x in (32.0, 132.0)])
 
 
@@ -163,12 +163,12 @@ def _lrs150_keepout(c):
 
 PSU24 = Component(
     key="psu_24v_lrs150", name="Mean Well LRS-150-24 enclosed PSU, 24 V 6.5 A (156 W)", category="misc",
-    mass_g=530.0, price_usd=29.0, supplier_url="https://www.digikey.com/en/products/result?keywords=LRS-150-24",
+    mass_g=420.0, price_usd=29.0, supplier_url="https://www.digikey.com/en/products/result?keywords=LRS-150-24",
     datasheet_url="https://www.meanwell.com/Upload/PDF/LRS-150/LRS-150-SPEC.PDF",
     envelope_mm=(159.0, 97.0, 30.0), holes=LRS150_HOLES,
     specs={"voltage_v": 24.0, "current_a": 6.5, "power_w": 156.0, "input_vac": (85, 264),
            "terminals": "AC L, AC N, FG, 2x -V, 2x +V (9.5 mm pitch)",
-           "uncertain": ["mass_g", "price_usd", "hole_positions"], "hole_positions": "bottom 2x M3 at x 32/132 mm"},
+           "uncertain": ["price_usd"], "hole_positions": "bottom 2x M3 at (24, 32) and (102, 32) mm per the Mean Well drawing"},
     build=_lrs150_build, build_keepout=_lrs150_keepout,
 )
 

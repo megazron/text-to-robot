@@ -18,6 +18,10 @@ import {
 } from "./legkit.ts";
 import { placeChain, bracketOps, cradleSamples, type ChainJoint, type PlacedJoint } from "./chain.ts";
 import { gripperOps } from "./arm.ts";
+import { hood, hoodAround, registerBay, enclosureChecks, exposed, worldBox as partBox, freeSpot, type Face } from "../enclosure.ts";
+import { Harness, finishWiring } from "../wiring.ts";
+import { limbBuses, canTree, coreTree, actuatorsUnder, sensorsOnComputer } from "../netlist.ts";
+const sensorsOnComputerFor = (H: Harness, s: Parameters<typeof sensorsOnComputer>[2]) => sensorsOnComputer(H, "computer", s);
 import { supportMargin, keyOf, type LeggedRequest, type SensorKind } from "./legged.ts";
 
 const LEG = ["hip_yaw", "hip_roll", "hip_pitch", "knee", "ankle_pitch", "ankle_roll"] as const;
@@ -185,7 +189,7 @@ function buildBiped(req: LeggedRequest, cfg: BipedCfg, sensors: SensorKind[]) {
   const regions = [
     { x0: battFront + 2, x1: Dt - BW - 1, y0: -Wt + BW + 1, y1: Wt - BW - 1, z: zT0 + BW, zMax: zShelf - 1 },
     { x0: cx0 + cb.max[0] - cb.min[0] + 3, x1: Dt - BW - 1, y0: -Wt + BW + 1, y1: Wt - BW - 1, z: zShelf + 3, zMax: zSh - (-shB.min[0]) - WALL - 2 },
-    { x0: -Dt - 175, x1: -Dt - 1, y0: -Wt + 5, y1: Wt - 5, z: zShelf + 3, zMax: zShelf + 60 }, // backpack shelf
+    { x0: -Dt - 215, x1: -Dt - 1, y0: -Wt + 5, y1: Wt - 5, z: zShelf + 3, zMax: zShelf + 60 }, // backpack shelf
   ];
   const items: [string, string, string][] = [[cfg.mech ? "usb_can_adapter" : "waveshare_bus_servo_adapter", "leg_bus", cfg.mech ? "USB-CAN bus (left leg)" : "USB to leg servo bus"], ["dxl_u2d2", "arm_bus", "USB to the arm / neck DYNAMIXEL bus"]];
   if (cfg.mech) items.push(["usb_can_adapter", "leg_bus_2", "USB-CAN bus (right leg)"], ...Array.from({ length: cfg.nDcdc ?? 1 }, (_, i) => ["dcdc_48v_12v_sd50c12", i ? `dcdc_12v_${i + 1}` : "dcdc_12v", "12 V for the DYNAMIXEL arms and the computer"] as [string, string, string]), ["buck_5v_5a", "regulator_5v", "5 V regulator (sensors)"]);
@@ -194,6 +198,7 @@ function buildBiped(req: LeggedRequest, cfg: BipedCfg, sensors: SensorKind[]) {
   let usedBackpack = false;
   for (const [key, name, use] of items) {
     const b = bodyMm(key), L = b.max[0] - b.min[0], Wd = b.max[1] - b.min[1], H = b.max[2] - b.min[2];
+    let placed = false;
     for (let r = 0; r < regions.length; r++) {
       const R = regions[r], c = cursor[r];
       if (H > R.zMax - R.z - 3) continue;
@@ -205,8 +210,10 @@ function buildBiped(req: LeggedRequest, cfg: BipedCfg, sensors: SensorKind[]) {
       tOps.push({ op: "box", min: [c.x + 3, c.y + 3, R.z - 0.5], max: [c.x + Wd - 3, c.y + L - 3, R.z + 3], r: 2 });
       c.y += L + 2; c.rowD = Math.max(c.rowD, Wd);
       if (r === 2) usedBackpack = true;
+      placed = true;
       break;
     }
+    if (!placed) A.check(`packaging:${name}`, false, `${part(key).name} does not fit in the torso or the backpack`);
   }
   if (usedBackpack) {
     const R = regions[2];
@@ -301,7 +308,7 @@ function buildBiped(req: LeggedRequest, cfg: BipedCfg, sensors: SensorKind[]) {
   // armour (mech): thin cosmetic panels on the torso, thighs and shins
   if (cfg.mech) armour(A);
   A.spec.root = "base_link";
-  return { A, feet, hands, legs, arms, neck, compute, zTop, Wt, Dt };
+  return { A, feet, hands, legs, arms, neck, compute, zTop, Wt, Dt, BW, zT0, zShelf, zSh, zPel, battFront, usedBackpack, shelfZ: regions[2].z, backY: regions[2].y1 };
 }
 let headCam: { key: string; T: Mat4; lens: Vec3 } | null = null;
 let pending: (() => void)[] = [];
@@ -427,6 +434,113 @@ function bipedPower(A: Assembly, torques: Record<string, number>, compute: strin
 }
 
 // ---------------------------------------------------------------- designers
+/** Screw-on panels over the torso's side and chest windows, so the torso is a closed compartment; a hood on the backpack shelf; a small hood round the pelvis IMU. */
+function boxBiped(A: Assembly, H: Harness, b: ReturnType<typeof buildBiped>, mech: boolean) {
+  const { Dt, Wt, BW, zT0, zShelf, zSh, zTop, zPel } = b, torsos = A.spec.links.filter((l) => /^torso(_b)*$/.test(l.name)).map((l) => l.name), amend = (ops: Op[]) => { for (const n of torsos) A.amendProgram(n, ops); };
+  const mat = mech ? "printed_dark" : "printed_accent";
+  const panel = (name: string, axis: "y" | "x", s: number, a0: number, a1: number, z0: number, z1: number, cut: Op[] = []) => {
+    // a plate 7 mm bigger than its window all round, four self-tapping screws, a block of vent slots
+    const pos = axis === "y" ? Wt : Dt, lo = (u: number, v: number, n: number): Vec3 => (axis === "y" ? [u, s * n, v] : [s * n, u, v]);
+    const bx = (u0: number, u1: number, v0: number, v1: number, n0: number, n1: number): { min: Vec3; max: Vec3 } => { const p = lo(u0, v0, n0), q = lo(u1, v1, n1); return { min: [Math.min(p[0], q[0]), Math.min(p[1], q[1]), Math.min(p[2], q[2])], max: [Math.max(p[0], q[0]), Math.max(p[1], q[1]), Math.max(p[2], q[2])] }; };
+    const ops: Op[] = [{ op: "box", ...bx(a0 - 7, a1 + 7, z0 - 7, z1 + 7, pos, pos + 2.4) }];
+    const screws: [number, number][] = [[a0 - 3.5, z0 - 3.5], [a1 + 3.5, z0 - 3.5], [a0 - 3.5, z1 + 3.5], [a1 + 3.5, z1 + 3.5]];
+    for (const [u, v] of screws) ops.push({ op: "hole", a: lo(u, v, pos - 1), b: lo(u, v, pos + 3.4), d: 3.4 });
+    let area = 0;
+    for (let v = z0 + 5; v < z1 - 6; v += 5.6) { ops.push({ op: "cutbox", ...bx(a0 + 8, a1 - 8, v, v + 3.2, pos - 1, pos + 3.4) }); area += (a1 - a0 - 16) * 3.2; }
+    ops.push(...cut);
+    A.printedLink(name, { name, ops }, { material: mat });
+    A.fixed(`${name}_mount`, torsos[0], name, translation([0, 0, 0]));
+    amend(screws.map(([u, v]): Op => ({ op: "hole", a: lo(u, v, pos - BW - 1), b: lo(u, v, pos + 0.5), d: 2.6 })));
+    A.fastener(`M3 x 8 self-tapping (${name})`, 4);
+    return area;
+  };
+  const wx0 = -Dt + 10, wx1 = Dt - 10, wz0 = zT0 + 10, wz1 = zShelf - 6, cy = Wt - 18, cz0 = zShelf + 12, cz1 = zSh - 30;
+  // the main switch stands in the left panel where nothing is behind it; a mech's battery switch in the backpack hood
+  const zs = (wz0 + wz1) / 2, parts = ["battery", ...["battery_2", "battery_3", "battery_4"].filter((n) => A.spec.links.some((l) => l.name === n)), "computer", "leg_bus", "arm_bus", ...["leg_bus_2", "dcdc_12v", "dcdc_12v_2", "dcdc_12v_3", "regulator_5v", "regulator_5v_arms"].filter((n) => A.spec.links.some((l) => l.name === n))];
+  // first a spot in the left panel with nothing behind it, else in the chest panel
+  const clear = (lo: Vec3, hi: Vec3) => !A.spec.links.some((l) => l.geometry.type === "mesh" && l.geometry.part === "component" && (() => { const w = partBox(A, l.name); return [0, 1, 2].every((k) => w.hi[k] > lo[k] && w.lo[k] < hi[k]); })());
+  let xs: number | null = null, ys: number | null = null;
+  const hx = mech ? 30 : 17, hd = mech ? 60 : 30;
+  for (let x = wx1 - hx; x > wx0 + hx && xs === null; x -= 4) if (clear([x - hx, Wt - hd, zs - hx + 3], [x + hx, Wt + 1, zs + hx - 3])) xs = x;
+  const zc = (cz0 + cz1) / 2;
+  if (!mech && xs === null && cz1 - cz0 > 24) for (let y = 0; Math.abs(y) < cy - 16 && ys === null; y = y <= 0 ? 4 - y : -y) if (clear([Dt - 30, y - 17, zc - 14], [Dt + 1, y + 17, zc + 14])) ys = y;
+  const swKey = mech ? "switch_battery_6006" : "switch_kcd4";
+  const cutSide: Op[] = xs === null ? [] : mech ? [{ op: "hole", a: [xs, Wt - 1, zs], b: [xs, Wt + 4, zs], d: 52.4 }] : [{ op: "cutbox", min: [xs - 15.2, Wt - 1, zs - 11.2], max: [xs + 15.2, Wt + 4, zs + 11.2] }];
+  const cutChest: Op[] = ys !== null ? [{ op: "cutbox", min: [Dt - 1, ys - 15.2, zc - 11.2], max: [Dt + 4, ys + 15.2, zc + 11.2] }] : [];
+  let vent = panel("side_panel_left", "y", 1, wx0, wx1, wz0, wz1, cutSide) + panel("side_panel_right", "y", -1, wx0, wx1, wz0, wz1);
+  if (cz1 > cz0 + 10) vent += panel("chest_panel", "x", 1, -cy, cy, cz0, cz1, cutChest);
+  if (xs !== null) A.mount("side_panel_left", swKey, frame([xs, Wt + 0, zs], [0, 1, 0], [0, 0, 1]), "main_switch", "main power switch");
+  else if (ys !== null) A.mount("chest_panel", swKey, frame([Dt, ys, zc], [1, 0, 0], [0, 0, 1]), "main_switch", "main power switch");
+  // USB of the computer through the back; cable exits: legs down through the floor, arms out at the sides, neck up
+  const cb = partBox(A, "computer"), usbY = (cb.lo[1] + cb.hi[1]) / 2, usbZ = cb.lo[2] + 12;
+  amend([{ op: "cutbox", min: [-Dt - 1, usbY - 22, usbZ - 8], max: [-Dt + BW + 1, usbY + 22, usbZ + 8] }]);
+  // the computer's heat leaves through slots in the back wall above it
+  const backSlots: Op[] = [], hw = Wt - 34;
+  for (let z = usbZ + 13; z < zSh - 14 && hw > 10; z += 5.4) { backSlots.push({ op: "cutbox", min: [-Dt - 1, -hw, z], max: [-Dt + BW + 1, hw, z + 3.2] }); vent += 2 * hw * 3.2; }
+  amend(backSlots);
+  const floor = freeSpot(A, { x0: -Dt + BW + 2, x1: Dt - BW - 2, y0: -Wt + BW + 4, y1: Wt - BW - 4 }, [zT0, zT0 + 40], [14, 14]) ?? [Dt - 16, 0];
+  const topX = -Dt + BW + 9, sideZ = zShelf + 9, sideX = Dt - BW - 8;
+  amend([{ op: "hole", a: [floor[0], floor[1], zT0 - 1], b: [floor[0], floor[1], zT0 + BW + 1], d: 12 }, { op: "hole", a: [topX, 0, zTop - BW - 1], b: [topX, 0, zTop + 1], d: 9.5 },
+    ...[1, -1].map((s): Op => ({ op: "hole", a: [sideX, s * (Wt - BW - 1), sideZ], b: [sideX, s * (Wt + 1), sideZ], d: 9.5 }))]);
+  for (const n of A.spec.links.filter((l) => /^base_link(_b)*$/.test(l.name)).map((l) => l.name)) A.amendProgram(n, [{ op: "hole", a: [floor[0], floor[1], zPel - 1], b: [floor[0], floor[1], zT0 + 1], d: 12 }]);
+  registerBay(A, { name: "torso_bay", tub: torsos[0], lid: "side_panel_left", solids: [...torsos, "side_panel_left", "side_panel_right"], parent: torsos[0], T: translation([0, 0, 0]), min: [-Dt + BW, -Wt + BW, zT0 + BW - 3], max: [Dt - BW, Wt - BW, zTop - BW], parts: parts.filter((n) => { const w = partBox(A, n); return w.lo[0] > -Dt; }), screws: 8, vent_area_mm2: Math.round(vent), note: "the torso itself, closed by its panels",
+    exits: [{ id: "torso_bay.legs", kind: "grommet", face: "floor" as Face, at: [floor[0], floor[1], zT0], normal: [0, 0, -1], hole_mm: 12 }, { id: "torso_bay.neck", kind: "grommet", face: "lid" as Face, at: [topX, 0, zTop], normal: [0, 0, 1], hole_mm: 9.5 },
+      ...[1, -1].map((s) => ({ id: `torso_bay.arm_${s > 0 ? "l" : "r"}`, kind: "grommet", face: (s > 0 ? "y+" : "y-") as Face, at: [sideX, s * Wt, sideZ] as Vec3, normal: [0, s, 0] as Vec3, hole_mm: 9.5 })), { id: "torso_bay.usb", kind: "usb", face: "x-" as Face, at: [-Dt, usbY, usbZ], normal: [-1, 0, 0], hole_mm: 16 }, ...(xs !== null ? [{ id: "torso_bay.switch", kind: "switch", face: "y+" as Face, at: [xs, Wt, zs] as Vec3, normal: [0, 1, 0] as Vec3, hole_mm: 22, part: "main_switch" }] : ys !== null ? [{ id: "torso_bay.switch", kind: "switch", face: "x+" as Face, at: [Dt, ys, zc] as Vec3, normal: [1, 0, 0] as Vec3, hole_mm: 22, part: "main_switch" }] : [])] }, H);
+  // backpack boards (the mech's converters) under their own hood, with the battery switch in it
+  const pack = parts.filter((n) => partBox(A, n).lo[0] <= -Dt);
+  if (pack.length) hoodAround(A, H, { name: "backpack_hood", deck: torsos[0], alsoHoles: torsos.slice(1), parts: pack, z0: b.shelfZ, limit: { x0: -Dt - 225, x1: -Dt - 3, y0: -b.backY - 5, y1: b.backY + 5 }, material: "printed_dark", grommets: [{ id: "to_torso", face: "x+", u: 0 }] });
+  // a mech's battery switch is big: it stands in the roof of a small case on the backpack, its body in the case
+  if (mech && xs === null) {
+    const r = (A.design.enclosures ?? []).find((x) => x.name === "backpack_hood")!, cx = r.min[0] + 45, z0 = r.max[2] + 2.8;
+    hood(A, H, { name: "switch_case", deck: "backpack_hood", x0: cx - 33, x1: cx + 33, y0: -33, y1: 33, z0, z1: z0 + 60, parts: [], ventRows: 0, deckGrommets: [{ id: "down", x: cx - 22, y: 22 }], material: "printed_dark" });
+    A.amendProgram("switch_case", [{ op: "hole", a: [cx, 0, z0 + 58], b: [cx, 0, z0 + 64], d: 52.4 }]);
+    A.mount("switch_case", swKey, frame([cx, 0, z0 + 62.8], [0, 0, 1], [1, 0, 0]), "main_switch", "main battery switch");
+  }
+  // the IMU in a little hood under the pelvis
+  const iw = partBox(A, "imu"), yy = 15;
+  hood(A, H, { name: "imu_hood", deck: A.spec.links.find((l) => /^base_link/.test(l.name))!.name, x0: iw.lo[0] - 3, x1: iw.hi[0] + 3, y0: -yy, y1: yy, z0: -zPel, z1: -(iw.lo[2] - 3), parts: ["imu"], flip: true, ventRows: 0, deckGrommets: [{ id: "up", x: iw.hi[0] - 1, y: 12, d: 5 }] });
+  H.scan();
+}
+/** Netlist of a biped: humanoid on a 3S pack with a 5 V arm rail; mech on two 6S packs in series, CAN legs, 12 V DC-DC. */
+function wireBiped(A: Assembly, H: Harness, compute: string, mech: boolean, nBatt: number) {
+  const named: { name: string; kind: "lidar" | "depth" | "camera" | "imu" }[] = [];
+  for (const [n, k] of [["lidar", "lidar"], ["depth_camera", "depth"], ["head_camera", "camera"], ["imu", "imu"]] as const) if (H.instances.has(n)) named.push({ name: n, kind: k });
+  for (const x of ["lidar", "depth_camera", "head_camera"]) if (H.instances.has(x)) exposed(A, x, x === "lidar" ? "on a mast behind the head" : "in the head, looking out through its face", [20, 20]);
+  const limb = (re: RegExp) => actuatorsUnder(H, re);
+  const legs = ["l", "r"].map((p) => limb(new RegExp(`^${p}_(hip|knee|ankle).*_actuator$`))), arms = ["l", "r"].map((p) => limb(new RegExp(`^${p}_(shoulder|upper|elbow|wrist|gripper).*_actuator$`))), neck = limb(/^neck_.*_actuator$/);
+  if (!mech) {
+    coreTree(H, { batteries: ["battery"], regulators: ["regulator_5v", "regulator_5v_arms"], compute, sensors: named, simultaneous: 6, simNote: "one leg at peak, the rest at half load" });
+    H.regulator("regulator_5v_arms", "VBAT", "5V_ARMS", { vin: "VIN", gin: "GND", vout: "VOUT", gout: "GND", volts: 5, efficiency: 0.9, simultaneous: 4, simNote: "four arm servos at peak at once" });
+    limbBuses(H, [...legs, ...arms, neck], (k) => (k.startsWith("feetech") ? { adapter: "leg_bus", rail: "VBAT" } : k.includes("xl330") ? { adapter: "arm_bus", rail: "5V_ARMS" } : { adapter: "arm_bus", rail: "VBAT" }));
+    H.spare("leg_bus.dc_in");
+    H.bought("leg_bus.usb.VBUS", compute === "rpi5" ? "computer.usb_a.LINK" : "computer.usb_a_j6_j7.LINK", "USB", 0.05, 0.1, "LEG_BUS_USB");
+  } else {
+    const packs = ["battery", "battery_2", "battery_3", "battery_4"].filter((n) => H.instances.has(n)), volts = 22.2 * 2;
+    for (const n of packs) H.spare(`${n}.balance`);
+    // two packs in series make the 12S bus; a second pair sits in parallel
+    H.net("MID_PACK", "power", 22.2); H.wire("MID_PACK", "battery.main.BAT-", "battery_2.main.BAT+", { typ: 20, peak: 60 });
+    H.mainPower("VBAT", { source: "battery", pos: "main.BAT+", neg: "battery_2.main.BAT-", fuse: true, sw: "main_switch", volts, cont: 120, peakLimit: 240, simultaneous: 4, simNote: "four leg joints at peak at once, the rest walking (15 % of rated)", range: { min: 36, nom: 44.4, max: 50.4 } });
+    H.regulator("dcdc_12v", "VBAT", "12V", { vin: "DC INPUT V+", gin: "DC INPUT V-", vout: "DC OUTPUT +V", gout: "DC OUTPUT -V", volts: 12, efficiency: 0.86, cont: 4.2 * A.spec.links.filter((l) => /^dcdc_12v/.test(l.name)).length, peakLimit: 4.4 * A.spec.links.filter((l) => /^dcdc_12v/.test(l.name)).length, simultaneous: 1, simNote: "one arm joint at peak, the rest holding (20 % of rated)" });
+    H.spare("dcdc_12v.dc_in.FG");
+    const nConv = A.spec.links.filter((l) => /^dcdc_12v/.test(l.name)).length;
+    for (let i = 2; i <= nConv; i++) { const n = `dcdc_12v_${i}`; H.feed("VBAT", n, { v: "DC INPUT V+", g: "DC INPUT V-", typ: 0.5, peak: 2 }); H.wire("12V", `${n}.DC OUTPUT +V`, "dcdc_12v.DC OUTPUT +V", { typ: 2, peak: 4.2 }); H.wire("GND", `${n}.DC OUTPUT -V`, "dcdc_12v.DC OUTPUT -V", { typ: 2, peak: 4.2 }); H.spare(`${n}.dc_in.FG`); }
+    H.regulator("regulator_5v", "12V", "5V", { vin: "VIN", gin: "GND", vout: "VOUT", gout: "GND", volts: 5, efficiency: 0.9 });
+    H.spare("regulator_5v.power_and_control.VRP", "regulator_5v.power_and_control.EN", "regulator_5v.power_and_control.PG");
+    H.feed("12V", "computer", { v: "dc_jack_j16.DC_IN", g: "dc_jack_j16.GND", typ: 1.3, peak: 2.1 });
+    // the camera and IMU on the computer; their current is inside its own feed
+    for (const s of named) void s;
+    const can = (s: string) => H.instances.get(s)!.key.startsWith("cubemars");
+    legs.forEach((l, i) => canTree(H, { adapter: i ? "leg_bus_2" : "leg_bus", motors: [...l, ...arms[i].filter(can)], rail: "VBAT", duty: 0.15 }));
+    for (const a of ["leg_bus", "leg_bus_2"]) H.bought(`${a}.usb.VBUS`, "computer.usb_a_j6_j7.LINK", "USB", 0.1, 0.5, `${a}_USB`.toUpperCase());
+    limbBuses(H, [...arms.map((a) => a.filter((s) => !can(s))), neck.filter((s) => !can(s))], () => ({ adapter: "arm_bus", rail: "12V", duty: 0.2 }));
+    sensorsOnComputerFor(H, named);
+  }
+  H.bought("arm_bus.usb.VBUS", compute === "rpi5" ? "computer.usb_a.LINK" : "computer.usb_a_j6_j7.LINK", "USB", 0.05, 0.1, "ARM_BUS_USB");
+  finishWiring(H, { noClips: /armour/ });
+  enclosureChecks(A);
+  void nBatt;
+}
+
 function designBiped(req: LeggedRequest, mech: boolean): RobotSpecification {
   // small servo humanoids (ROBOTIS OP3 class) carry 3-4 DOF arms: 7-DOF arms overload the hip and knee servos
   const armDof = Math.max(1, Math.min(7, Math.round(req.armDof ?? (mech ? 7 : 4))));
@@ -455,7 +569,7 @@ function designBiped(req: LeggedRequest, mech: boolean): RobotSpecification {
     const pw = bipedPower(built.A, torques, built.compute).total;
     batt = pickBattery(mech ? [["lipo_6s_10000", 2], ["lipo_6s_10000", 4]] : [["lipo_3s_2200", 1], ["lipo_3s_5000", 1]], pw, 20);
     const dxlA = mech ? sum(Object.entries(torques).filter(([k]) => !/hip|knee|ankle/.test(k) && keyOf(built.A, k).startsWith("dxl_")).map(([k, v]) => holdCurrent(keyOf(built.A, k), v))) : 0;
-    const nDcdc = mech ? Math.max(1, Math.ceil((dxlA + 25 / 12) / (4.2 * 0.9))) : undefined;
+    const nDcdc = mech ? Math.max(2, Math.ceil((dxlA + 25 / 12) / (4.2 * 0.9))) : undefined;
     const same = nDcdc === cfg.nDcdc && LEG.every((j) => leg[j] === cfg.leg[j]) && ARM_JOINTS[7].every((j) => arm[j] === cfg.arm[j]) && neck[0] === cfg.neck[0] && neck[1] === cfg.neck[1] && batt.key === cfg.batt && batt.n === cfg.nBatt && (grip === cfg.grip || mech);
     if (same) break;
     Object.assign(cfg, { leg, arm, neck, batt: batt.key, nBatt: batt.n, grip: mech ? cfg.grip : grip, nDcdc });
@@ -487,6 +601,8 @@ function designBiped(req: LeggedRequest, mech: boolean): RobotSpecification {
   A.design.performance.com_height_m = +(c[2] - sole0.lo[2] / 1000).toFixed(3);
   A.design.performance.com_x_over_sole_mm = +((c[0] * 1000) - (sole0.lo[0] + sole0.hi[0]) / 2).toFixed(1);
   // joint limits from geometry
+  const H = new Harness(A);
+  boxBiped(A, H, built, mech);
   const actuated = A.spec.joints.filter((j) => j.type === "revolute" && !j.name.endsWith("_gripper")).map((j) => j.name);
   const combos: Record<string, number>[] = [];
   for (const q of legPoses(A).filter((_, i) => i % 9 === 0)) combos.push(q);
@@ -497,6 +613,7 @@ function designBiped(req: LeggedRequest, mech: boolean): RobotSpecification {
   limitsFromGeometry(A, actuated, combos, 0.06, [], () => armsOut);
   A.design.assumptions.push("Joint ranges are swept with the arms held 0.35 rad out to the side (the walking posture); with the arms hanging straight the hands touch the thighs when a leg abducts or a wrist turns.");
   if (mech) A.design.assumptions.push("CubeMars actuators run on a 12S bus (two 6S packs in series, 44.4 V nominal) at their 48 V ratings; DYNAMIXEL arms and the computer run from the 12 V DC-DC converter.");
+  wireBiped(A, H, built.compute, mech, cfg.nBatt);
   const bom = A.bom();
   const footZ = built.feet[0].sole.lo[2];
   // overall height: highest point of any part's box at home above the sole

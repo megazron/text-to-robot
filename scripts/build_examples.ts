@@ -11,11 +11,12 @@ import { exportRos2Package } from "@ttr/ros2-export";
 import { exportTraining } from "@ttr/training-export";
 import { generateCadFiles } from "@ttr/cad";
 import { bomToMarkdown, type BillOfMaterials } from "@ttr/components";
+import { wiringMarkdown, wiringSvg } from "@ttr/design";
 import type { RobotSpecification } from "@ttr/robot-schema";
 
 /** Files an example folder holds; anything else left from older generators is removed. */
 const KEEP = new Set(["prompt.txt", "robot.json", "robot.urdf", "meshes", "BOM.md", "bom.json", "robot.ros2.zip", "robot.cad.zip", "robot.training.zip",
-  "README.md", "simulation_report.json", "simulation.gif", "test_report.json"]);
+  "README.md", "simulation_report.json", "simulation.gif", "test_report.json", "WIRING.md", "wiring.svg", "print_report.json"]);
 
 function zipDir(base: string, out: string) {
   // deterministic archive: sorted entries, fixed timestamps
@@ -53,6 +54,7 @@ function readme(name: string, prompt: string, spec: RobotSpecification, bom: Bil
     "| File | What |", "|---|---|",
     "| `robot.urdf`, `meshes/` | URDF with real component and printed-part meshes, datasheet effort/velocity limits |",
     "| `BOM.md`, `bom.json` | every part to buy, with supplier links and prices |",
+    ...(d?.wiring ? ["| `WIRING.md`, `wiring.svg` | power budget per rail, pin-to-pin table, cut list, slack at each joint, wiring diagram |"] : []),
     "| `robot.cad.zip` | build package: printable STLs, print list, bought-part models, assembly order |",
     "| `robot.ros2.zip` | ROS 2 description package (ros2_control, MoveIt config, Gazebo launch) |",
     "| `robot.training.zip` | MuJoCo / RL training scaffold |",
@@ -82,6 +84,8 @@ for (const name of readdirSync("examples").filter((n) => /^\d\d_/.test(n)).sort(
   for (const [file, bytes] of Object.entries(collectMeshFiles(spec))) writeFileSync(join(dir, "meshes", file), bytes);
   writeFileSync(join(dir, "BOM.md"), bomToMarkdown(res.bom));
   writeFileSync(join(dir, "bom.json"), JSON.stringify(res.bom, null, 2) + "\n");
+  const wiring = (spec.metadata as { design?: any }).design?.wiring;
+  if (wiring) { writeFileSync(join(dir, "WIRING.md"), wiringMarkdown(wiring, spec.robot_name)); writeFileSync(join(dir, "wiring.svg"), wiringSvg(wiring, spec.robot_name)); }
   writeZip(exportRos2Package(spec, { ros2_control: true }), join(dir, "robot.ros2.zip"));
   writeZip(generateCadFiles(spec), join(dir, "robot.cad.zip"));
   writeZip(exportTraining(spec), join(dir, "robot.training.zip"));

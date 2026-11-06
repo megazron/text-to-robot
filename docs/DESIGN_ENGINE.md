@@ -12,6 +12,8 @@ as built. Nothing is a placeholder box with a guessed motor.
 | `@ttr/parts` | catalog of real components (`data/catalog.json`) and their CAD meshes (`data/meshes.json`), exported from `python/ttr_build/components` by `scripts/export_parts.py` (needs build123d in `.venv`). Units: mm, g. `rating(key)` gives SI torque/speed. `caseHoles`, `outputHoles`, `hornRadiusMm`, `bboxM`. |
 | `@ttr/solid` | manifold-3d CSG kernel. Printed parts are serializable **programs** (`Op[]`): `horn` (plate bolted to an actuator output at the origin, +z), `cradle` (holds an actuator by its case screws, with windows), `beam`, `rod`, `box`, `hull`, `keepout`, `hole`, `cutbox`, `lighten`, `at` (transform a sub-program). All in mm. `printCheck` = watertight + fits a 250x210x220 bed. Frames: `frame(origin, z, xHint)`, `mul`, `invert`, `apply`. |
 | `@ttr/design` | `Assembly` (spec + engineering record), `kin` (FK, exact gravity torques), `sizing` (actuator ladders), `families/*` designers. |
+| `packages/design/src/wiring.ts` | harness: netlist in, wires out. Gauge from current, connectors from the parts' ports, fuses, main switch, star ground, power budget per rail, cables routed along the links with a slack loop at every joint. `wiring-render.ts` writes WIRING.md and `wiring.svg`, `netlist.ts` holds the shared blocks (bus chains, dual drivers, sensors on a computer, the battery power tree). |
+| `packages/design/src/enclosure.ts` | compartments: `bay` (tub + lid), `hood` (one-piece cover on a deck), `controlCase` (bench case with mains inlet), `registerBay` (a hollow body that already is one), `enclosureChecks`. |
 | `@ttr/mesh` | registers mesh parts `component` (`{key}`) and `printed` (`{program}`) so every exporter rebuilds them. |
 
 ## Component frames (from `python/ttr_build/components`)
@@ -46,6 +48,29 @@ Rules every designer follows:
    moving links stay outside the swept volume of their neighbours (see `families/arm.ts` side alternation).
 4. Joint limits come from geometry (clearance), effort/velocity from the datasheet (`Assembly.revolute`).
 5. Everything printable must pass `printCheck` (the Assembly records it automatically).
+
+## Wiring and compartments
+
+Rules every designer follows:
+
+1. **No loose electronics.** Boards, drivers, regulators and batteries go in a compartment: `bay`, `hood`, `controlCase`, or a hollow body registered with `registerBay`. Sensors that must see out are declared with `exposed(A, name, how)`.
+2. **Declare the netlist from the parts mounted.** `new Harness(A)`, then `mainPower`, `regulator`, `feed`, `wire`, `signals`, `bought`, or the blocks in `netlist.ts` (`coreTree`, `busChain`, `busTree`, `dualDriver`, `canTree`). A pin is `inst.pin` or `inst.port.pin`, by its printed name, or `inst.port.@signal`.
+3. **Finish last.** `finishWiring(H)` after the joint limits are set (slack is swept over the real limits), then `enclosureChecks(A)`, both before `A.finish`. Add `design.wiring.cost_usd` to any cost you report.
+
+Checks: `wiring:ports`, `wiring:rail:<rail>`, `wiring:voltage`, `wiring:gauge`, `wiring:connector`, `wiring:fuse`, `wiring:switch`, `wiring:ground`, `wiring:slack`; `enclosure:inside:<part>`, `enclosure:clearance:<part>`, `enclosure:lid:<bay>`, `enclosure:exits:<bay>`, `enclosure:vent:<bay>`, `enclosure:usb:<part>`, `enclosure:switch:<bay>`, `enclosure:sensor:<part>`.
+
+How the numbers are made:
+
+* Wire: ampacity at least 1.25 x typical and 0.6 x peak current, voltage drop under 3 % of the rail. Ampacity is 50 % of the PowerStream chassis column, for bundled wire; that derating is a judgement, marked estimated in `packages/parts/data/wiring.json`.
+* Main fuse: the next rating above 1.25 x running load and 0.5 x peak; wires ahead of the load are sized to the fuse; a thinner branch gets its own fuse. ANL holders above 30 A or 32 V.
+* Rail peak: all running currents plus the largest `simultaneous` peaks, stated per rail in WIRING.md.
+* Route: start, the compartment exit, a pair of anchors at each joint crossed, end. Runs follow the printed surface and put a clip about every 70 mm, except inside compartments and on fabricated plates. Length is the polyline x 1.1 + 40 mm service + joint slack + 60 mm termination.
+* Slack: the anchors are fixed on parent and child; a revolute needs sqrt(h^2 + dr^2 + (r phi)^2) at angle phi, a prismatic the straight distance. The loop is 1.15 x the extra length at the worst point of the travel plus a quarter turn at the bundle's bend radius.
+* Ventilation: 3 cm^2 of opening per watt, 10 cm^2 minimum, a natural convection rule of thumb. Batteries do not count.
+
+Known limits: routes are checked for length and slack, not for a collision-free path through every pose; cables are not simulated; clip positions are checked against bought parts and the home pose only.
+
+Parts data and what is estimated: [PARTS_DATA.md](PARTS_DATA.md).
 
 ## Checking a design
 

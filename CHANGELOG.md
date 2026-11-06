@@ -3,6 +3,16 @@
 Dated from the git history. Pull request numbers refer to
 [github.com/megazron/text-to-robot](https://github.com/megazron/text-to-robot/pulls).
 
+## 2026-11-06: Real wiring and electronics compartments
+
+- Every electrical part has dimensions and an electrical record (ports, pins, connector, voltage, typical and peak
+  current), each value marked `datasheet` with a URL or `estimated` with the reason. See `docs/PARTS_DATA.md`.
+- Wiring model: netlist per robot, gauge from current, fuses, main switch, star ground, power budget per rail, cables
+  routed along the links with a slack loop at every joint. Output: `WIRING.md`, `wiring.svg`, real BOM lines instead of
+  the 12 % guess, `wiring:*` checks.
+- Compartments: no loose electronics. Printed tubs and hoods with screwed lids, standoffs on real hole patterns, vents,
+  grommeted exits, USB and switch access, a bench control case with a fused mains inlet, `enclosure:*` checks.
+
 ## 2026-11-03: Fixes from a full audit (prompts, design engine, simulation)
 
 - Prompts: hobby-servo arms (`SG90`, `MG90S`, `MG996R`, `DS3218`, `arduino`, `hobby servo`) are designed on an

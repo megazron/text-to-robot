@@ -3,7 +3,7 @@
      robot: arduino_car
      prompt: An Arduino 4WD obstacle avoiding car with an ultrasonic sensor
 
-     16 links, 15 joints, 16 inferred values
+     19 links, 18 joints, 19 inferred values
 -->
 <robot name="arduino_car">
   <material name="printed"><color rgba="0.93 0.93 0.95 1"/></material>
@@ -29,9 +29,9 @@
       <geometry><mesh filename="package://arduino_car/meshes/chassis.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.0000304983 -3.57735e-12 0.044334" rpy="0 0 0"/>
-      <mass value="0.090927"/>
-      <inertia ixx="0.0000973526" ixy="7.32384e-15" ixz="4.48074e-9" iyy="0.000299745" iyz="-6.89928e-15" izz="0.000392453"/>
+      <origin xyz="-0.0000226652 -3.49945e-12 0.044352" rpy="0 0 0"/>
+      <mass value="0.091938"/>
+      <inertia ixx="0.0000996459" ixy="7.43887e-15" ixz="3.32992e-9" iyy="0.000298592" iyz="-6.91661e-15" izz="0.000393585"/>
     </inertial>
   </link>
   <link name="front_left_motor">
@@ -162,6 +162,38 @@
       <inertia ixx="0.000014954" ixy="-2.66343e-22" ixz="-6.07418e-16" iyy="0.0000149508" iyz="-3.24570e-22" izz="0.000026578"/>
     </inertial>
   </link>
+  <link name="electronics_bay">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://arduino_car/meshes/electronics_bay.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://arduino_car/meshes/electronics_bay.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.004697 -0.000365364 0.060963" rpy="0 0 0"/>
+      <mass value="0.029696"/>
+      <inertia ixx="0.0000566367" ixy="-0.00000151428" ixz="-3.63865e-8" iyy="0.000147388" iyz="9.81567e-9" izz="0.00020063"/>
+    </inertial>
+  </link>
+  <link name="electronics_bay_lid">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://arduino_car/meshes/electronics_bay_lid.stl"/></geometry>
+      <material name="printed_accent"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://arduino_car/meshes/electronics_bay_lid.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.009152 4.61394e-18 0.07506" rpy="0 0 0"/>
+      <mass value="0.034913"/>
+      <inertia ixx="0.0000314806" ixy="-5.15533e-21" ixz="2.62810e-8" iyy="0.0000919613" iyz="1.42576e-22" izz="0.00012338"/>
+    </inertial>
+  </link>
   <link name="battery">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -182,7 +214,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry><mesh filename="package://arduino_car/meshes/breadboard_400.stl"/></geometry>
-      <material name="printed"/>
+      <material name="electronics"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -192,6 +224,22 @@
       <origin xyz="0.04125 0.02725 0.003903" rpy="0 0 0"/>
       <mass value="0.03"/>
       <inertia ixx="0.0000079669" ixy="-1.24894e-21" ixz="-1.43274e-22" iyy="0.0000174921" iyz="5.69046e-24" izz="0.0000251433"/>
+    </inertial>
+  </link>
+  <link name="main_switch">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://arduino_car/meshes/switch_kcd1.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://arduino_car/meshes/switch_kcd1.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 -0.008005" rpy="0 0 0"/>
+      <mass value="0.008"/>
+      <inertia ixx="5.71694e-7" ixy="0" ixz="-4.69545e-24" iyy="4.41406e-7" iyz="-9.39090e-24" izz="3.66303e-7"/>
     </inertial>
   </link>
   <link name="controller">
@@ -326,15 +374,30 @@
     <limit effort="0.0785" velocity="20.944"/>
     <dynamics damping="0.000375" friction="0.0016"/>
   </joint>
-  <joint name="battery_mount" type="fixed">
+  <joint name="electronics_bay_mount" type="fixed">
     <parent link="chassis"/>
+    <child link="electronics_bay"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="electronics_bay_lid_mount" type="fixed">
+    <parent link="electronics_bay"/>
+    <child link="electronics_bay_lid"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="battery_mount" type="fixed">
+    <parent link="electronics_bay"/>
     <child link="battery"/>
-    <origin xyz="-0.092 0 0.04795" rpy="0 0 0"/>
+    <origin xyz="-0.0902 0 0.04795" rpy="0 0 0"/>
   </joint>
   <joint name="breadboard_mount" type="fixed">
-    <parent link="chassis"/>
+    <parent link="electronics_bay"/>
     <child link="breadboard"/>
-    <origin xyz="0.0445 -0.04125 0.04795" rpy="0 0 1.570796"/>
+    <origin xyz="0.079 -0.04125 0.04795" rpy="0 0 1.570796"/>
+  </joint>
+  <joint name="main_switch_mount" type="fixed">
+    <parent link="electronics_bay"/>
+    <child link="main_switch"/>
+    <origin xyz="-0.0517 0.049 0.06095" rpy="0 -1.570796 -1.570796"/>
   </joint>
   <joint name="controller_mount" type="fixed">
     <parent link="breadboard"/>

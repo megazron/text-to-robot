@@ -13,6 +13,9 @@ import { frame, translation, type Mat4, type Op } from "@ttr/solid";
 import { Assembly } from "../assembly.ts";
 import { totalMass, pointWorld, comWorld } from "../kin.ts";
 import { choose, DYNAMIC_FACTOR, GAIT_DUTY } from "../sizing.ts";
+import { hoodAround, registerBay, enclosureChecks, exposed, type Face } from "../enclosure.ts";
+import { Harness, finishWiring } from "../wiring.ts";
+import { busTree, canTree, coreTree, actuatorsUnder } from "../netlist.ts";
 import {
   PLATE, WALL, G, add, sub, scale, norm, len, bodyMm, depth, cradleCorners, aabb, reframe, originOf, plate, horn, hornR,
   joint, printed, mountAt, footPad, stanceTorques, recordJoints, holdCurrent, walkPower, bodyRadius, pickBattery, COMPUTE_W, SENSOR_W,
@@ -48,12 +51,12 @@ function deckElectronics(A: Assembly, deck: Frame, d: Deck, e: Electronics, sens
     ops.push({ op: "box", min: [x + 2, y + 2, zt - 1], max: [x + b.max[0] - b.min[0] - 2, y + b.max[1] - b.min[1] - 2, zt + 4], r: 2 });
     return b.max[0] - b.min[0];
   };
-  const wBus = small(e.bus, xFree, -(d.hi[1] - 4), "actuator_bus", e.bus === "usb_can_adapter" ? "USB-CAN bus to the actuators" : "USB to servo bus");
+  const wBus = small(e.bus, xFree, -(d.hi[1] - 13), "actuator_bus", e.bus === "usb_can_adapter" ? "USB-CAN bus to the actuators" : "USB to servo bus");
   const wBuck = small(e.buck[0], xFree, 6, "regulator_5v", "5 V regulator (computer, sensors)");
   xFree += Math.max(wBus, wBuck) + 6;
   const wImu = small("bno085_breakout", xFree, -11.35, "imu", "IMU (body attitude)");
   addSensor(A, "imu", "imu", "base_link", [(xFree + 12.8) / 1000, 0, (zt + 6) / 1000], [0, 0, 0], { model: "BNO085" });
-  xFree += wImu + 6;
+  xFree += wImu + 14;   // room for the hood's wall in front of the IMU
   // lidar: on a mast so its scan plane clears the computer and the legs
   if (sensors.includes("lidar")) {
     const key = "rplidar_c1", lb = bodyMm(key), mast = 30;
@@ -232,6 +235,30 @@ export function sensorsOf(req: LeggedRequest, dflt: SensorKind[]): SensorKind[] 
 }
 
 /** Quadruped: servo dog by default, QDD (CubeMars) when the request implies a big or load-carrying robot. */
+/** The tub under the deck holds the battery; a hood on the deck covers the computer and boards; the deck is the tub's lid. */
+function boxQuad(A: Assembly, H: Harness, b: ReturnType<typeof buildQuadruped>) {
+  const zt = b.zHi + 3, rear = A.spec.links.some((l) => l.name === "top_deck_rear");
+  const parts = ["computer", "actuator_bus", "regulator_5v", "imu"];
+  hoodAround(A, H, { name: "electronics_hood", deck: "top_deck", alsoHoles: rear ? ["top_deck_rear"] : [], parts, z0: zt, usbFor: "computer", rocker: true, limit: { x0: -b.Xb + 4, x1: b.Xb - 11, y0: -b.Wo + 6, y1: b.Wo - 6 } });
+  H.scan();
+  const side = (s: number): { id: string; kind: string; face: Face; at: Vec3; normal: Vec3; hole_mm: number } => ({ id: `body_bay.${s > 0 ? "left" : "right"}`, kind: "grommet", face: s > 0 ? "y+" : "y-", at: [0, s * b.Wo, 0], normal: [0, s, 0], hole_mm: 10 });
+  registerBay(A, { name: "body_bay", tub: "base_link", lid: "top_deck", parent: "base_link", T: translation([0, 0, 0]), min: [-b.Xb + 2, -b.Wo + 2, b.zLo - 0.5], max: [b.Xb - 2, b.Wo - 2, b.zHi], parts: ["battery"], exits: [side(1), side(-1)], screws: 4, note: "the printed tub, the deck is its lid",
+    solids: ["base_link", ...(A.spec.links.some((l) => l.name === "body_rear") ? ["body_rear"] : []), "top_deck", ...(rear ? ["top_deck_rear"] : [])] }, H);
+}
+/** Netlist: pack, fuse, switch, 5 V, computer, sensors; one bus branch per leg, each with its own feed. */
+function wireQuad(A: Assembly, H: Harness, compute: string, qdd: boolean, nBatt: number) {
+  const named: { name: string; kind: "lidar" | "depth" | "camera" | "imu" }[] = [];
+  for (const [n, k] of [["lidar", "lidar"], ["depth_camera", "depth"], ["camera", "camera"], ["imu", "imu"]] as const) if (H.instances.has(n)) named.push({ name: n, kind: k });
+  for (const x of ["lidar", "depth_camera", "camera"]) if (H.instances.has(x)) exposed(A, x, x === "lidar" ? "on a mast above the deck, scan plane clear of the hood" : "on the front edge of the deck, looking forward", [20, 20]);
+  coreTree(H, { batteries: ["battery"], regulators: ["regulator_5v"], compute, sensors: named, simultaneous: 4, simNote: "four joints at peak at once, the rest at half load" });
+  void nBatt;
+  const legs = ["fl", "fr", "rl", "rr"].map((l) => actuatorsUnder(H, new RegExp(`^${l}_.*_actuator$|^${l}_knee_actuator$`)));
+  if (qdd) { canTree(H, { adapter: "actuator_bus", motors: legs.flat(), rail: "VBAT" }); H.bought("actuator_bus.usb.VBUS", compute === "rpi5" ? "computer.usb_a.LINK" : "computer.usb_a_j6_j7.LINK", "USB", 0.1, 0.5, "CAN_USB"); }
+  else { busTree(H, { adapter: "actuator_bus", chains: legs, rail: "VBAT" }); H.spare("actuator_bus.dc_in"); H.bought("actuator_bus.usb.VBUS", compute === "rpi5" ? "computer.usb_a.LINK" : "computer.usb_a_j6_j7.LINK", "USB", 0.05, 0.1, "BUS_USB"); }
+  finishWiring(H);
+  enclosureChecks(A);
+}
+
 export function designQuadruped(req: LeggedRequest): RobotSpecification {
   const text = (req.prompt ?? "").toLowerCase();
   const big = (req.heightM ?? 0) >= 0.32 || (req.payloadKg ?? 0) >= 1.5 || /\b(big|large|heavy|cheetah|qdd|quasi.direct|spot.?size|payload|research.grade)\b/.test(text) || (req.budget ?? 0) >= 6000;
@@ -271,10 +298,14 @@ export function designQuadruped(req: LeggedRequest): RobotSpecification {
   A.check("power:regulator", (COMPUTE_W[built.compute] ?? 7) / 5 <= 5.5 * 0.9 || built.compute === "jetson_orin_nano_super", built.compute === "jetson_orin_nano_super" ? "Jetson takes the pack voltage directly (9-20 V input); the 5 V regulator feeds the sensors" : `${part(built.compute).name} draws ${((COMPUTE_W[built.compute] ?? 7) / 5).toFixed(1)} A of the 5.5 A regulator`);
   stabilityCheck(A, [{ name: "standing (4 feet)", feet: built.feet.map((f) => f.link) }], 0.03);
   A.design.assumptions.push("A trot has two diagonal feet on the ground: the COM sits on the support line, so trotting needs the dynamic balance of the gait controller; the creep gait keeps three feet down (statically stable).");
+  // compartments before the joint limits, so the limits see them
+  const H = new Harness(A);
+  boxQuad(A, H, built);
   // joint limits from exact solid sweeps
   const actuated = A.spec.joints.filter((j) => j.type === "revolute").map((j) => j.name);
   limitsFromGeometry(A, actuated, gaitCombos(["fl", "fr", "rl", "rr"]));
   if (cfg.cls === "qdd") derateSpeed(A, 24 / 48, "6S pack (24 V)");
+  wireQuad(A, H, built.compute, cfg.cls === "qdd", cfg.nBatt);
   const bom = A.bom();
   A.design.performance = {
     ...A.design.performance, mass_kg: +m.toFixed(3), standing_height_m: +((built.H + built.zHi + 3) / 1000).toFixed(3), hip_height_m: +(built.H / 1000).toFixed(3),

@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1610 454" width="1610" height="454" font-family="Helvetica, Arial, sans-serif" font-size="10.5">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="30" y="26" font-size="17" font-weight="700">arduino_arm: wiring diagram</text>
+<line x1="30" y1="44" x2="54" y2="44" stroke="#c8102e" stroke-width="2"/><text x="60" y="48">power</text>
+<line x1="120" y1="44" x2="144" y2="44" stroke="#111111" stroke-width="2"/><text x="150" y="48">ground</text>
+<line x1="210" y1="44" x2="234" y2="44" stroke="#1f6fd1" stroke-width="2"/><text x="240" y="48">signal</text>
+<line x1="300" y1="44" x2="324" y2="44" stroke="#0a8f5b" stroke-width="2"/><text x="330" y="48">bus</text>
+<text x="30" y="66" font-weight="700" fill="#555">Source</text>
+<text x="370" y="66" font-weight="700" fill="#555">Protection</text>
+<text x="710" y="66" font-weight="700" fill="#555">Control</text>
+<text x="1050" y="66" font-weight="700" fill="#555">Drivers</text>
+<text x="1390" y="66" font-weight="700" fill="#555">Loads</text>
+<path d="M370 177 H356 V141 H234 V105 H220" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C1 W1 MAINS_L: mains_inlet.load.L to power_supply.ac_in.AC/L, 24 AWG</title></path>
+<path d="M370 190 H346 V154 H244 V118 H220" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C1 W2 MAINS_N: mains_inlet.load.N to power_supply.ac_in.AC/N, 24 AWG</title></path>
+<path d="M370 203 H336 V167 H254 V131 H220" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C1 W3 MAINS_E: mains_inlet.load.E to power_supply.ac_in.FG, 24 AWG</title></path>
+<path d="M1240 105 H1284 V105 H1346 V105 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C2 W4 SERVO0_PWM: servo_driver.ch0.PWM0 to yaw_servo.servo_lead.Signal (yellow), 26 AWG</title></path>
+<path d="M1240 118 H1294 V118 H1336 V118 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C2 W5 SERVO0_V: servo_driver.ch0.V+ to yaw_servo.servo_lead.V+ (red), 24 AWG</title></path>
+<path d="M1240 131 H1304 V131 H1326 V131 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C2 W6 GND: servo_driver.ch0.GND to yaw_servo.servo_lead.GND (brown), 24 AWG</title></path>
+<path d="M1240 144 H1314 V167 H1316 V190 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C3 W7 SERVO1_PWM: servo_driver.ch1.PWM1 to shoulder_servo.servo_lead.Signal (orange), 26 AWG</title></path>
+<path d="M1240 118 H1324 V160.5 H1306 V203 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C3 W8 SERVO1_V: servo_driver.ch1.V+ to shoulder_servo.servo_lead.V+ (red), 24 AWG</title></path>
+<path d="M1240 131 H1334 V173.5 H1296 V216 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C3 W9 GND: servo_driver.ch1.GND to shoulder_servo.servo_lead.GND (brown), 24 AWG</title></path>
+<path d="M1240 157 H1344 V216 H1286 V275 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C4 W10 SERVO2_PWM: servo_driver.ch2.PWM2 to elbow_servo.servo_lead.Signal (orange), 26 AWG</title></path>
+<path d="M1240 118 H1354 V203 H1276 V288 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C4 W11 SERVO2_V: servo_driver.ch2.V+ to elbow_servo.servo_lead.V+ (red), 24 AWG</title></path>
+<path d="M1240 131 H1364 V216 H1266 V301 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C4 W12 GND: servo_driver.ch2.GND to elbow_servo.servo_lead.GND (brown), 24 AWG</title></path>
+<path d="M1240 170 H1254 V265 H1376 V360 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C5 W13 SERVO3_PWM: servo_driver.ch3.PWM3 to claw_servo.servo_lead.Signal (yellow), 26 AWG</title></path>
+<path d="M1240 118 H1264 V245.5 H1366 V373 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C5 W14 SERVO3_V: servo_driver.ch3.V+ to claw_servo.servo_lead.V+ (red), 24 AWG</title></path>
+<path d="M1240 131 H1274 V258.5 H1356 V386 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C5 W15 GND: servo_driver.ch3.GND to claw_servo.servo_lead.GND (brown), 24 AWG</title></path>
+<path d="M900 105 H944 V144 H1006 V183 H1050" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C6 W16 5V_LOGIC: controller.janalog.5V to servo_driver.control_in.VCC, 24 AWG</title></path>
+<path d="M900 118 H954 V124.5 H996 V131 H1050" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C6 W17 GND: controller.power_jack.GND to servo_driver.control_in.GND, 24 AWG</title></path>
+<path d="M900 131 H964 V163.5 H986 V196 H1050" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C6 W18 I2C_SDA: controller.janalog.A4/SDA to servo_driver.control_in.SDA, 26 AWG</title></path>
+<path d="M900 144 H974 V176.5 H976 V209 H1050" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C6 W19 I2C_SCL: controller.janalog.A5/SCL to servo_driver.control_in.SCL, 26 AWG</title></path>
+<path d="M220 144 H304 V124.5 H286 V105 H370" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C7 W20 V_SERVO: power_supply.dc_out.DC OUTPUT +V to main_switch.contacts.IN, 20 AWG</title></path>
+<path d="M560 118 H654 V118 H956 V118 H1050" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C8 W21 V_SERVO: main_switch.contacts.OUT to servo_driver.v_plus.V+, 20 AWG</title></path>
+<path d="M220 157 H324 V144 H946 V131 H1050" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C8 W22 GND: power_supply.dc_out.DC OUTPUT -V to servo_driver.v_plus.GND, 20 AWG</title></path>
+<rect x="1390" y="74" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="89" font-weight="700">yaw_servo</text>
+<text x="1397" y="108.5" fill="#333">Signal (yellow)</text>
+<text x="1397" y="121.5" fill="#333">V+ (red)</text>
+<text x="1397" y="134.5" fill="#333">GND (brown)</text>
+<rect x="1390" y="159" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="174" font-weight="700">shoulder_servo</text>
+<text x="1397" y="193.5" fill="#333">Signal (orange)</text>
+<text x="1397" y="206.5" fill="#333">V+ (red)</text>
+<text x="1397" y="219.5" fill="#333">GND (brown)</text>
+<rect x="1390" y="244" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="259" font-weight="700">elbow_servo</text>
+<text x="1397" y="278.5" fill="#333">Signal (orange)</text>
+<text x="1397" y="291.5" fill="#333">V+ (red)</text>
+<text x="1397" y="304.5" fill="#333">GND (brown)</text>
+<rect x="1390" y="329" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="344" font-weight="700">claw_servo</text>
+<text x="1397" y="363.5" fill="#333">Signal (yellow)</text>
+<text x="1397" y="376.5" fill="#333">V+ (red)</text>
+<text x="1397" y="389.5" fill="#333">GND (brown)</text>
+<rect x="710" y="74" width="190" height="80" rx="5" fill="#f4f6f8" stroke="#333"/><text x="717" y="89" font-weight="700">controller</text>
+<text x="717" y="108.5" fill="#333">5V</text>
+<text x="717" y="121.5" fill="#333">GND</text>
+<text x="717" y="134.5" fill="#333">A4/SDA</text>
+<text x="717" y="147.5" fill="#333">A5/SCL</text>
+<rect x="1050" y="74" width="190" height="145" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1057" y="89" font-weight="700">servo_driver</text>
+<text x="1057" y="108.5" fill="#333">PWM0</text>
+<text x="1057" y="121.5" fill="#333">V+</text>
+<text x="1057" y="134.5" fill="#333">GND</text>
+<text x="1057" y="147.5" fill="#333">PWM1</text>
+<text x="1057" y="160.5" fill="#333">PWM2</text>
+<text x="1057" y="173.5" fill="#333">PWM3</text>
+<text x="1057" y="186.5" fill="#333">VCC</text>
+<text x="1057" y="199.5" fill="#333">SDA</text>
+<text x="1057" y="212.5" fill="#333">SCL</text>
+<rect x="370" y="74" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="89" font-weight="700">main_switch</text>
+<text x="377" y="108.5" fill="#333">IN</text>
+<text x="377" y="121.5" fill="#333">OUT</text>
+<rect x="30" y="74" width="190" height="93" rx="5" fill="#f4f6f8" stroke="#333"/><text x="37" y="89" font-weight="700">power_supply</text>
+<text x="37" y="108.5" fill="#333">AC/L</text>
+<text x="37" y="121.5" fill="#333">AC/N</text>
+<text x="37" y="134.5" fill="#333">FG</text>
+<text x="37" y="147.5" fill="#333">DC OUTPUT +V</text>
+<text x="37" y="160.5" fill="#333">DC OUTPUT -V</text>
+<rect x="370" y="146" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="161" font-weight="700">mains_inlet</text>
+<text x="377" y="180.5" fill="#333">L</text>
+<text x="377" y="193.5" fill="#333">N</text>
+<text x="377" y="206.5" fill="#333">E</text>
+</svg>

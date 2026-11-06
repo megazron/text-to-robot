@@ -1,0 +1,191 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1950 840" width="1950" height="840" font-family="Helvetica, Arial, sans-serif" font-size="10.5">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="30" y="26" font-size="17" font-weight="700">wall_e: wiring diagram</text>
+<line x1="30" y1="44" x2="54" y2="44" stroke="#c8102e" stroke-width="2"/><text x="60" y="48">power</text>
+<line x1="120" y1="44" x2="144" y2="44" stroke="#111111" stroke-width="2"/><text x="150" y="48">ground</text>
+<line x1="210" y1="44" x2="234" y2="44" stroke="#1f6fd1" stroke-width="2"/><text x="240" y="48">signal</text>
+<line x1="300" y1="44" x2="324" y2="44" stroke="#0a8f5b" stroke-width="2"/><text x="330" y="48">bus</text>
+<text x="30" y="66" font-weight="700" fill="#555">Source</text>
+<text x="370" y="66" font-weight="700" fill="#555">Protection</text>
+<text x="710" y="66" font-weight="700" fill="#555">Regulation</text>
+<text x="1050" y="66" font-weight="700" fill="#555">Control</text>
+<text x="1390" y="66" font-weight="700" fill="#555">Drivers</text>
+<text x="1730" y="66" font-weight="700" fill="#555">Loads</text>
+<path d="M1240 105 H1254 V105 H1376 V105 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C1 W1 CONTROLLER_D5: controller.j1_digital_side.D5 to motor_driver_1.control.PWMA, 26 AWG</title></path>
+<path d="M1240 118 H1264 V118 H1366 V118 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C1 W2 CONTROLLER_D7: controller.j1_digital_side.D7 to motor_driver_1.control.AIN1, 26 AWG</title></path>
+<path d="M1240 131 H1274 V131 H1356 V131 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C1 W3 CONTROLLER_D8: controller.j1_digital_side.D8 to motor_driver_1.control.AIN2, 26 AWG</title></path>
+<path d="M1240 144 H1284 V144 H1346 V144 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C1 W4 CONTROLLER_D6: controller.j1_digital_side.D6 to motor_driver_1.control.PWMB, 26 AWG</title></path>
+<path d="M1240 157 H1294 V157 H1336 V157 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C1 W5 CONTROLLER_D4: controller.j1_digital_side.D4 to motor_driver_1.control.BIN1, 26 AWG</title></path>
+<path d="M1240 170 H1304 V170 H1326 V170 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C1 W6 CONTROLLER_A0: controller.j2_analog_side.A0 to motor_driver_1.control.BIN2, 26 AWG</title></path>
+<path d="M1240 183 H1314 V183 H1316 V183 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C1 W7 MOTOR_DRIVER_1_STBY: controller.j2_analog_side.5V to motor_driver_1.control.STBY, 26 AWG</title></path>
+<path d="M1580 196 H1664 V150.5 H1646 V105 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C2 W8 FRONT_LEFT_MOTOR_PHASE_1: motor_driver_1.motor_a.AO1 to front_left_motor.motor.M+, 26 AWG</title></path>
+<path d="M1580 209 H1674 V163.5 H1636 V118 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C2 W9 FRONT_LEFT_MOTOR_PHASE_2: motor_driver_1.motor_a.AO2 to front_left_motor.motor.M-, 26 AWG</title></path>
+<path d="M1580 222 H1684 V199.5 H1626 V177 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C3 W10 FRONT_RIGHT_MOTOR_PHASE_1: motor_driver_1.motor_b.BO1 to front_right_motor.motor.M+, 26 AWG</title></path>
+<path d="M1580 235 H1694 V212.5 H1616 V190 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C3 W11 FRONT_RIGHT_MOTOR_PHASE_2: motor_driver_1.motor_b.BO2 to front_right_motor.motor.M-, 26 AWG</title></path>
+<path d="M1240 196 H1364 V264.5 H1266 V333 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C4 W12 CONTROLLER_D9: controller.j1_digital_side.D9 to motor_driver_2.control.PWMA, 26 AWG</title></path>
+<path d="M1240 209 H1254 V277.5 H1376 V346 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C4 W13 CONTROLLER_A1: controller.j2_analog_side.A1 to motor_driver_2.control.AIN1, 26 AWG</title></path>
+<path d="M1240 222 H1264 V290.5 H1366 V359 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C4 W14 CONTROLLER_A2: controller.j2_analog_side.A2 to motor_driver_2.control.AIN2, 26 AWG</title></path>
+<path d="M1240 235 H1274 V303.5 H1356 V372 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C4 W15 CONTROLLER_D10: controller.j1_digital_side.D10/SS to motor_driver_2.control.PWMB, 26 AWG</title></path>
+<path d="M1240 248 H1284 V316.5 H1346 V385 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C4 W16 CONTROLLER_A3: controller.j2_analog_side.A3 to motor_driver_2.control.BIN1, 26 AWG</title></path>
+<path d="M1240 261 H1294 V329.5 H1336 V398 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C4 W17 CONTROLLER_D2: controller.j1_digital_side.D2 to motor_driver_2.control.BIN2, 26 AWG</title></path>
+<path d="M1240 183 H1304 V297 H1326 V411 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C4 W18 MOTOR_DRIVER_2_STBY: controller.j2_analog_side.5V to motor_driver_2.control.STBY, 26 AWG</title></path>
+<path d="M1580 424 H1654 V336.5 H1656 V249 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C5 W19 REAR_LEFT_MOTOR_PHASE_1: motor_driver_2.motor_a.AO1 to rear_left_motor.motor.M+, 26 AWG</title></path>
+<path d="M1580 437 H1664 V349.5 H1646 V262 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C5 W20 REAR_LEFT_MOTOR_PHASE_2: motor_driver_2.motor_a.AO2 to rear_left_motor.motor.M-, 26 AWG</title></path>
+<path d="M1580 450 H1674 V385.5 H1636 V321 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C6 W21 REAR_RIGHT_MOTOR_PHASE_1: motor_driver_2.motor_b.BO1 to rear_right_motor.motor.M+, 26 AWG</title></path>
+<path d="M1580 463 H1684 V398.5 H1626 V334 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C6 W22 REAR_RIGHT_MOTOR_PHASE_2: motor_driver_2.motor_b.BO2 to rear_right_motor.motor.M-, 26 AWG</title></path>
+<path d="M1580 561 H1694 V526 H1616 V491 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C7 W23 SERVO0_PWM: servo_driver.ch0.PWM0 to neck_pan_servo.servo_lead.Signal (yellow), 26 AWG</title></path>
+<path d="M1580 574 H1704 V539 H1606 V504 H1730" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C7 W24 SERVO0_V: servo_driver.ch0.V+ to neck_pan_servo.servo_lead.V+ (red), 24 AWG</title></path>
+<path d="M1580 587 H1594 V552 H1716 V517 H1730" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C7 W25 GND: servo_driver.ch0.GND to neck_pan_servo.servo_lead.GND (brown), 24 AWG</title></path>
+<path d="M1580 600 H1604 V588 H1706 V576 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C8 W26 SERVO1_PWM: servo_driver.ch1.PWM1 to neck_tilt_servo.servo_lead.Signal (yellow), 26 AWG</title></path>
+<path d="M1580 574 H1614 V581.5 H1696 V589 H1730" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C8 W27 SERVO1_V: servo_driver.ch1.V+ to neck_tilt_servo.servo_lead.V+ (red), 24 AWG</title></path>
+<path d="M1580 587 H1624 V594.5 H1686 V602 H1730" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C8 W28 GND: servo_driver.ch1.GND to neck_tilt_servo.servo_lead.GND (brown), 24 AWG</title></path>
+<path d="M1580 613 H1634 V637 H1676 V661 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C9 W29 SERVO2_PWM: servo_driver.ch2.PWM2 to left_arm_servo.servo_lead.Signal (yellow), 26 AWG</title></path>
+<path d="M1580 574 H1644 V624 H1666 V674 H1730" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C9 W30 SERVO2_V: servo_driver.ch2.V+ to left_arm_servo.servo_lead.V+ (red), 24 AWG</title></path>
+<path d="M1580 587 H1654 V637 H1656 V687 H1730" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C9 W31 GND: servo_driver.ch2.GND to left_arm_servo.servo_lead.GND (brown), 24 AWG</title></path>
+<path d="M1580 626 H1664 V686 H1646 V746 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C10 W32 SERVO3_PWM: servo_driver.ch3.PWM3 to right_arm_servo.servo_lead.Signal (yellow), 26 AWG</title></path>
+<path d="M1580 574 H1674 V666.5 H1636 V759 H1730" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C10 W33 SERVO3_V: servo_driver.ch3.V+ to right_arm_servo.servo_lead.V+ (red), 24 AWG</title></path>
+<path d="M1580 587 H1684 V679.5 H1626 V772 H1730" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C10 W34 GND: servo_driver.ch3.GND to right_arm_servo.servo_lead.GND (brown), 24 AWG</title></path>
+<path d="M1240 274 H1354 V456.5 H1276 V639 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C11 W35 I2C_SDA: controller.j2_analog_side.A4/SDA to servo_driver.control_in.SDA, 26 AWG</title></path>
+<path d="M1240 287 H1364 V469.5 H1266 V652 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C11 W36 I2C_SCL: controller.j2_analog_side.A5/SCL to servo_driver.control_in.SCL, 26 AWG</title></path>
+<path d="M1240 300 H1254 V346.5 H1716 V393 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C12 W37 CONTROLLER_D11: controller.j1_digital_side.D11/MOSI to ultrasonic.header.Trig, 26 AWG</title></path>
+<path d="M1240 313 H1264 V359.5 H1706 V406 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C12 W38 CONTROLLER_D12: controller.j1_digital_side.D12/MISO to ultrasonic.header.Echo, 26 AWG</title></path>
+<path d="M220 105 H254 V141 H336 V177 H370" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C13 W39 VBAT: battery.leads.BAT+ to main_fuse.leads.IN, 20 AWG</title></path>
+<path d="M560 190 H604 V147.5 H326 V105 H370" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C14 W40 VBAT: main_fuse.leads.OUT to main_switch.contacts.IN, 20 AWG</title></path>
+<path d="M220 118 H274 V183.5 H316 V249 H370" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C15 W41 GND: battery.leads.BAT- to star_ground.levers.P1, 20 AWG</title></path>
+<path d="M560 118 H624 V219.5 H306 V321 H370" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C16 W42 VBAT: main_switch.contacts.OUT to splice_vbat.levers.P1, 20 AWG</title></path>
+<path d="M560 334 H634 V330 H976 V326 H1050" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C17 W43 VBAT: splice_vbat.levers.P2 to controller.j2_analog_side.VIN, 22 AWG</title></path>
+<path d="M560 262 H644 V300.5 H966 V339 H1050" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C17 W44 GND: star_ground.levers.P2 to controller.j2_analog_side.GND, 24 AWG</title></path>
+<path d="M560 334 H654 V219.5 H616 V105 H710" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C18 W45 VBAT: splice_vbat.levers.P2 to servo_regulator.in.IN+, 22 AWG</title></path>
+<path d="M560 262 H664 V190 H606 V118 H710" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C18 W46 GND: star_ground.levers.P2 to servo_regulator.in.IN-, 24 AWG</title></path>
+<path d="M560 334 H674 V291 H1276 V248 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C19 W47 VBAT: splice_vbat.levers.P2 to motor_driver_1.power.VM, 22 AWG</title></path>
+<path d="M560 262 H684 V261.5 H1266 V261 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C19 W48 GND: star_ground.levers.P2 to motor_driver_1.power.GND, 22 AWG</title></path>
+<path d="M560 334 H574 V405 H1376 V476 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C20 W49 VBAT: splice_vbat.levers.P2 to motor_driver_2.power.VM, 22 AWG</title></path>
+<path d="M560 262 H584 V375.5 H1366 V489 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C20 W50 GND: star_ground.levers.P2 to motor_driver_2.power.GND, 22 AWG</title></path>
+<path d="M1050 183 H1016 V288 H594 V393 H560" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C21 W51 5V_LOGIC: controller.j2_analog_side.5V to splice_5v_logic.levers.P1, 24 AWG</title></path>
+<path d="M1050 339 H1006 V300.5 H604 V262 H560" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C21 W52 GND: controller.j2_analog_side.GND to star_ground.levers.P2, 24 AWG</title></path>
+<path d="M560 406 H614 V340 H1336 V274 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C22 W53 5V_LOGIC: splice_5v_logic.levers.P2 to motor_driver_1.power.VCC, 24 AWG</title></path>
+<path d="M560 406 H624 V454 H1326 V502 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C23 W54 5V_LOGIC: splice_5v_logic.levers.P2 to motor_driver_2.power.VCC, 24 AWG</title></path>
+<path d="M560 406 H634 V535.5 H1316 V665 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C24 W55 5V_LOGIC: splice_5v_logic.levers.P2 to servo_driver.control_in.VCC, 24 AWG</title></path>
+<path d="M560 262 H644 V424.5 H1306 V587 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C24 W56 GND: star_ground.levers.P2 to servo_driver.control_in.GND, 24 AWG</title></path>
+<path d="M560 406 H654 V412.5 H1636 V419 H1730" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C25 W57 5V_LOGIC: splice_5v_logic.levers.P2 to ultrasonic.header.Vcc, 24 AWG</title></path>
+<path d="M560 262 H664 V347 H1626 V432 H1730" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C25 W58 GND: star_ground.levers.P2 to ultrasonic.header.GND, 24 AWG</title></path>
+<path d="M710 131 H596 V196.5 H674 V262 H560" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C26 W59 GND: servo_regulator.out.OUT- to star_ground.levers.P2, 24 AWG</title></path>
+<path d="M900 144 H1024 V359 H1266 V574 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C27 W60 5V_SERVO: servo_regulator.out.OUT+ to servo_driver.v_plus.V+, 24 AWG</title></path>
+<path d="M560 262 H574 V424.5 H1376 V587 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C27 W61 GND: star_ground.levers.P2 to servo_driver.v_plus.GND, 24 AWG</title></path>
+<rect x="1730" y="74" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1737" y="89" font-weight="700">front_left_motor</text>
+<text x="1737" y="108.5" fill="#333">M+</text>
+<text x="1737" y="121.5" fill="#333">M-</text>
+<rect x="1730" y="146" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1737" y="161" font-weight="700">front_right_motor</text>
+<text x="1737" y="180.5" fill="#333">M+</text>
+<text x="1737" y="193.5" fill="#333">M-</text>
+<rect x="1730" y="218" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1737" y="233" font-weight="700">rear_left_motor</text>
+<text x="1737" y="252.5" fill="#333">M+</text>
+<text x="1737" y="265.5" fill="#333">M-</text>
+<rect x="1730" y="290" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1737" y="305" font-weight="700">rear_right_motor</text>
+<text x="1737" y="324.5" fill="#333">M+</text>
+<text x="1737" y="337.5" fill="#333">M-</text>
+<rect x="1730" y="362" width="190" height="80" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1737" y="377" font-weight="700">ultrasonic</text>
+<text x="1737" y="396.5" fill="#333">Trig</text>
+<text x="1737" y="409.5" fill="#333">Echo</text>
+<text x="1737" y="422.5" fill="#333">Vcc</text>
+<text x="1737" y="435.5" fill="#333">GND</text>
+<rect x="30" y="74" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="37" y="89" font-weight="700">battery</text>
+<text x="37" y="108.5" fill="#333">BAT+</text>
+<text x="37" y="121.5" fill="#333">BAT-</text>
+<rect x="1050" y="74" width="190" height="275" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1057" y="89" font-weight="700">controller</text>
+<text x="1057" y="108.5" fill="#333">D5</text>
+<text x="1057" y="121.5" fill="#333">D7</text>
+<text x="1057" y="134.5" fill="#333">D8</text>
+<text x="1057" y="147.5" fill="#333">D6</text>
+<text x="1057" y="160.5" fill="#333">D4</text>
+<text x="1057" y="173.5" fill="#333">A0</text>
+<text x="1057" y="186.5" fill="#333">5V</text>
+<text x="1057" y="199.5" fill="#333">D9</text>
+<text x="1057" y="212.5" fill="#333">A1</text>
+<text x="1057" y="225.5" fill="#333">A2</text>
+<text x="1057" y="238.5" fill="#333">D10/SS</text>
+<text x="1057" y="251.5" fill="#333">A3</text>
+<text x="1057" y="264.5" fill="#333">D2</text>
+<text x="1057" y="277.5" fill="#333">A4/SDA</text>
+<text x="1057" y="290.5" fill="#333">A5/SCL</text>
+<text x="1057" y="303.5" fill="#333">D11/MOSI</text>
+<text x="1057" y="316.5" fill="#333">D12/MISO</text>
+<text x="1057" y="329.5" fill="#333">VIN</text>
+<text x="1057" y="342.5" fill="#333">GND</text>
+<rect x="1390" y="74" width="190" height="210" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="89" font-weight="700">motor_driver_1</text>
+<text x="1397" y="108.5" fill="#333">PWMA</text>
+<text x="1397" y="121.5" fill="#333">AIN1</text>
+<text x="1397" y="134.5" fill="#333">AIN2</text>
+<text x="1397" y="147.5" fill="#333">PWMB</text>
+<text x="1397" y="160.5" fill="#333">BIN1</text>
+<text x="1397" y="173.5" fill="#333">BIN2</text>
+<text x="1397" y="186.5" fill="#333">STBY</text>
+<text x="1397" y="199.5" fill="#333">AO1</text>
+<text x="1397" y="212.5" fill="#333">AO2</text>
+<text x="1397" y="225.5" fill="#333">BO1</text>
+<text x="1397" y="238.5" fill="#333">BO2</text>
+<text x="1397" y="251.5" fill="#333">VM</text>
+<text x="1397" y="264.5" fill="#333">GND</text>
+<text x="1397" y="277.5" fill="#333">VCC</text>
+<rect x="1390" y="302" width="190" height="210" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="317" font-weight="700">motor_driver_2</text>
+<text x="1397" y="336.5" fill="#333">PWMA</text>
+<text x="1397" y="349.5" fill="#333">AIN1</text>
+<text x="1397" y="362.5" fill="#333">AIN2</text>
+<text x="1397" y="375.5" fill="#333">PWMB</text>
+<text x="1397" y="388.5" fill="#333">BIN1</text>
+<text x="1397" y="401.5" fill="#333">BIN2</text>
+<text x="1397" y="414.5" fill="#333">STBY</text>
+<text x="1397" y="427.5" fill="#333">AO1</text>
+<text x="1397" y="440.5" fill="#333">AO2</text>
+<text x="1397" y="453.5" fill="#333">BO1</text>
+<text x="1397" y="466.5" fill="#333">BO2</text>
+<text x="1397" y="479.5" fill="#333">VM</text>
+<text x="1397" y="492.5" fill="#333">GND</text>
+<text x="1397" y="505.5" fill="#333">VCC</text>
+<rect x="1390" y="530" width="190" height="145" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="545" font-weight="700">servo_driver</text>
+<text x="1397" y="564.5" fill="#333">PWM0</text>
+<text x="1397" y="577.5" fill="#333">V+</text>
+<text x="1397" y="590.5" fill="#333">GND</text>
+<text x="1397" y="603.5" fill="#333">PWM1</text>
+<text x="1397" y="616.5" fill="#333">PWM2</text>
+<text x="1397" y="629.5" fill="#333">PWM3</text>
+<text x="1397" y="642.5" fill="#333">SDA</text>
+<text x="1397" y="655.5" fill="#333">SCL</text>
+<text x="1397" y="668.5" fill="#333">VCC</text>
+<rect x="710" y="74" width="190" height="80" rx="5" fill="#f4f6f8" stroke="#333"/><text x="717" y="89" font-weight="700">servo_regulator</text>
+<text x="717" y="108.5" fill="#333">IN+</text>
+<text x="717" y="121.5" fill="#333">IN-</text>
+<text x="717" y="134.5" fill="#333">OUT-</text>
+<text x="717" y="147.5" fill="#333">OUT+</text>
+<rect x="370" y="74" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="89" font-weight="700">main_switch</text>
+<text x="377" y="108.5" fill="#333">IN</text>
+<text x="377" y="121.5" fill="#333">OUT</text>
+<rect x="1730" y="460" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1737" y="475" font-weight="700">neck_pan_servo</text>
+<text x="1737" y="494.5" fill="#333">Signal (yellow)</text>
+<text x="1737" y="507.5" fill="#333">V+ (red)</text>
+<text x="1737" y="520.5" fill="#333">GND (brown)</text>
+<rect x="1730" y="545" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1737" y="560" font-weight="700">neck_tilt_servo</text>
+<text x="1737" y="579.5" fill="#333">Signal (yellow)</text>
+<text x="1737" y="592.5" fill="#333">V+ (red)</text>
+<text x="1737" y="605.5" fill="#333">GND (brown)</text>
+<rect x="1730" y="630" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1737" y="645" font-weight="700">left_arm_servo</text>
+<text x="1737" y="664.5" fill="#333">Signal (yellow)</text>
+<text x="1737" y="677.5" fill="#333">V+ (red)</text>
+<text x="1737" y="690.5" fill="#333">GND (brown)</text>
+<rect x="1730" y="715" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1737" y="730" font-weight="700">right_arm_servo</text>
+<text x="1737" y="749.5" fill="#333">Signal (yellow)</text>
+<text x="1737" y="762.5" fill="#333">V+ (red)</text>
+<text x="1737" y="775.5" fill="#333">GND (brown)</text>
+<rect x="370" y="146" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="161" font-weight="700">main_fuse</text>
+<text x="377" y="180.5" fill="#333">IN</text>
+<text x="377" y="193.5" fill="#333">OUT</text>
+<rect x="370" y="218" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="233" font-weight="700">star_ground</text>
+<text x="377" y="252.5" fill="#333">P1</text>
+<text x="377" y="265.5" fill="#333">P2</text>
+<rect x="370" y="290" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="305" font-weight="700">splice_vbat</text>
+<text x="377" y="324.5" fill="#333">P1</text>
+<text x="377" y="337.5" fill="#333">P2</text>
+<rect x="370" y="362" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="377" font-weight="700">splice_5v_logic</text>
+<text x="377" y="396.5" fill="#333">P1</text>
+<text x="377" y="409.5" fill="#333">P2</text>
+</svg>

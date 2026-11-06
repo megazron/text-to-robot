@@ -5,13 +5,15 @@
 // which is why link lengths are searched down to what each servo holds continuously at full stretch.
 // Every printed part is an exact CAD solid (@ttr/kernel). Controller: Arduino Uno clone + PCA9685 clone, 5 V supply.
 import type { RobotSpecification } from "@ttr/robot-schema";
-import { part, rating, hornRadiusMm, type Vec3 } from "@ttr/parts";
+import { part, rating, electrical, hornRadiusMm, type Vec3 } from "@ttr/parts";
 import { translation, type Mat4 } from "@ttr/solid";
 import type { Op } from "@ttr/kernel";
 import { Assembly } from "../assembly.ts";
 import { gravityTorques, totalMass, axisInertias, type PointLoad } from "../kin.ts";
 import { DYNAMIC_FACTOR, MIN_SPEED, loadedSpeed } from "../sizing.ts";
 import { limitsFromGeometry } from "./legkit.ts";
+import { bay, enclosureChecks, supplyBox, type ExitSpec } from "../enclosure.ts";
+import { Harness, finishWiring } from "../wiring.ts";
 
 export interface ArduinoArmRequest {
   name?: string; prompt?: string; budget?: number;
@@ -26,6 +28,8 @@ export interface ArduinoArmRequest {
 }
 
 const WALL = 2.5, PLATE = 4, EDGE = 0.6;
+/** base plate, and the electronics console behind the yaw servo: cavity floor height, length, width, height */
+const BASE_T = 5, CON = { floor: 2.4, L: 88, Wd: 92, H: 30, x1: -29.4 };
 const body = (k: string) => part(k).bbox_mm!;
 /** servo frame placed by rotation columns (x, y, z) and origin, column-major mm */
 const place = (x: Vec3, y: Vec3, z: Vec3, o: Vec3): Mat4 => [x[0], x[1], x[2], 0, y[0], y[1], y[2], 0, z[0], z[1], z[2], 0, o[0], o[1], o[2], 1];
@@ -37,10 +41,13 @@ interface Built { spec: RobotSpecification; A: Assembly; reach: number; tcp: { l
 function build(req: ArduinoArmRequest, keys: { yaw: string; shoulder: string; elbow: string; grip: string }, L1: number, L2: number): Built {
   const A = new Assembly(req.name ?? "arduino_arm", "arduino_arm", req.prompt), gripper = req.gripper !== false;
   // ---------------- base: footed disc + yaw servo cradle (servo vertical, output up)
-  const zY = depth(keys.yaw) + WALL + 1.5;
+  // the servo stands on a riser so the console behind it (lid just under the turntable) is tall enough for the servo plugs
+  const zY = Math.max(depth(keys.yaw) + WALL + 1.5, BASE_T + CON.floor + CON.H + 2.8 + 1.5);
   const Ty = place([1, 0, 0], [0, 1, 0], [0, 0, 1], [0, 0, zY]);
-  const baseOps: Op[] = [{ op: "box", min: [-55, -45, 0], max: [55, 45, 5], r: 10 }, { op: "cradle", key: keys.yaw, T: Ty, wall: WALL }];
-  for (const x of [-45, 45]) for (const y of [-35, 35]) baseOps.push({ op: "hole", a: [x, y, -1], b: [x, y, 6], d: 4.3 });   // clamp / screw to the desk
+  const yb = body(keys.yaw), zServo = zY + yb.min[2];
+  const baseOps: Op[] = [{ op: "box", min: [-128, -58, 0], max: [55, 58, BASE_T], r: 10 },
+    { op: "box", min: [yb.min[0] - WALL, yb.min[1] - WALL, 0], max: [yb.max[0] + WALL, yb.max[1] + WALL, zServo - WALL + 0.2], r: 3 }, { op: "cradle", key: keys.yaw, T: Ty, wall: WALL }];
+  for (const x of [-118, 45]) for (const y of [-48, 48]) baseOps.push({ op: "hole", a: [x, y, -1], b: [x, y, 6], d: 4.3 });   // clamp / screw to the desk
   A.cadLink("base_link", { name: "base_link", edge: EDGE, ops: baseOps }, { role: "base", material: "printed_dark" });
   A.mount("base_link", keys.yaw, Ty, "yaw_servo", "base yaw servo");
 
@@ -101,6 +108,44 @@ function build(req: ArduinoArmRequest, keys: { yaw: string; shoulder: string; el
   return { spec: A.spec, A, reach, tcp };
 }
 
+/** The console: Uno and PCA9685 on standoffs at their real hole patterns, USB and power at the rear, leads out at the front and up by the turntable. */
+function console_(A: Assembly, req: ArduinoArmRequest, supplyA: number): Harness {
+  const H = new Harness(A), board = req.board ?? "arduino_uno_clone", uno = board === "arduino_uno_clone", { L, Wd, H: CH, floor, x1 } = CON;
+  const Tb = uno ? translation([7.5, 2, 5]) : translation([7.5, 18, 13]);
+  const exits: ExitSpec[] = [
+    { id: "usb", face: "x-", u: uno ? 2 + 38.1 : 18 + 9, v: 5 + (uno ? 7 : 3), kind: "usb", w: 14, h: 13 },
+    supplyA === 4 ? { id: "power_in", face: "x-", u: 61, v: CH / 2, kind: "jack", d: 8, part: { name: "power_jack", key: "dc_jack_5521_panel", use: "adapter socket" } } : { id: "power_in", face: "x-", u: 61, v: CH / 2, kind: "grommet", d: 8, noAnchor: true },
+    { id: "switch", face: "x-", u: 78, v: CH / 2, kind: "switch", w: 19.4, h: 13.4, part: { name: "main_switch", key: "switch_kcd1", use: "servo power switch" } },
+    { id: "yaw_lead", face: "x+", u: Wd / 2, v: 12, kind: "grommet", d: 6.5 },
+    { id: "arm_leads", face: "lid", u: L - 9, v: Wd / 2, kind: "grommet", d: 8 },
+  ];
+  bay(A, { name: "console", parent: "base_link", T: translation([x1 - L, -Wd / 2, BASE_T + floor]), size: [L, Wd, CH], cad: true, corner: 5, material: "printed_dark", lidMaterial: "printed_accent",
+    parts: [{ name: "controller", key: board, T: Tb, use: "controller (USB serial commands, I2C to the servo driver)", kind: uno ? "board" : "board" }, { name: "servo_driver", key: "pca9685_clone", T: translation([24, 62, 5]), use: "16-channel PWM servo driver (I2C)" }],
+    exits, vents: [{ face: "lid", a0: 14, a1: 70, b0: 58, b1: Wd - 8 }] }, H);
+  if (supplyA === 4) { H.part("power_supply", "psu_5v4a_adapter", { off_board: true, note: "wall adapter, plugs into the console" }); A.buy("psu_5v4a_adapter", 1, "5 V 4 A servo supply"); }
+  else supplyBox(A, H, { parent: "base_link", T: translation([-290, -45, 2.4]), key: "psu_5v_lrs50", use: "5 V 10 A servo supply", cad: true });
+  return H;
+}
+/** The netlist: adapter to jack, switch, the driver's V+ terminal, one PCA channel per servo, I2C and logic from the Uno. */
+function wireArm(H: Harness, supplyA: number, gripper: boolean) {
+  if (supplyA === 4) H.bought("power_supply.dc_out.@power", "power_jack.plug_side.+", "barrel", 0.5, 4, "ADAPTER");
+  H.spare("controller.janalog.VIN", "controller.power_jack");
+  H.mainPower("V_SERVO", { ...(supplyA === 4 ? { source: "power_jack", pos: "CENTRE", neg: "SLEEVE" } : { source: "power_supply", pos: "DC OUTPUT +V", neg: "DC OUTPUT -V" }), sw: "main_switch", fuse: false, volts: 5, cont: supplyA, peakLimit: supplyA === 4 ? 4 : 11, simNote: "every servo stalled at once" });
+  const names = ["yaw_servo", "shoulder_servo", "elbow_servo", ...(gripper ? ["claw_servo"] : [])];
+  H.feed("V_SERVO", "servo_driver", { v: "v_plus.V+", g: "v_plus.GND", typ: 0.01, peak: 0.01 });
+  names.forEach((s, ch) => {
+    const r = H.rec(s).current_a.v, d = H.rails.get("V_SERVO")!.feeds[0];
+    d.typ += r.typical; d.peak += r.peak;
+    H.net(`SERVO${ch}_PWM`, "signal"); H.net(`SERVO${ch}_V`, "power", 5);
+    H.wire(`SERVO${ch}_PWM`, `servo_driver.ch${ch}.PWM${ch}`, `${s}.@pwm`); H.wire(`SERVO${ch}_V`, `servo_driver.ch${ch}.V+`, `${s}.@power`, { typ: r.typical, peak: r.peak }); H.wire("GND", `servo_driver.ch${ch}.GND`, `${s}.@ground`, { typ: r.typical, peak: r.peak });
+    H.label(`servo_driver~${s}`.split("~").sort().join("~"), `PCA9685 channel ${ch} to ${s}`);
+  });
+  H.net("5V_LOGIC", "power", 5);
+  H.wire("5V_LOGIC", "controller.5V", "servo_driver.control_in.VCC", { typ: 0.01 }); H.wire("GND", "controller.GND", "servo_driver.control_in.GND", { typ: 0.01 });
+  H.signals("controller", "servo_driver", [["SDA", "SDA", "I2C_SDA"], ["SCL", "SCL", "I2C_SCL"]]);
+  H.notes.push("The Uno runs from its USB cable (it takes serial commands from the PC), the servos from the adapter; the two grounds join at the I2C lead.");
+}
+
 /** Desk arm on hobby servos. With `lengths` omitted the longest links (10 mm steps) that pass every check are used. */
 export function designArduinoArm(req: ArduinoArmRequest = {}): RobotSpecification {
   const pool = req.servos ?? ["hobby_sg90"], payload = req.payloadKg ?? 0.02;
@@ -129,6 +174,11 @@ export function designArduinoArm(req: ArduinoArmRequest = {}): RobotSpecificatio
   }
   const { b, worst, keys } = best!, A = b.A;
 
+  // electronics: Arduino + PCA9685 in the console behind the yaw servo; servos on their own 5 V rail
+  const servos = Object.values(keys).slice(0, req.gripper === false ? 3 : 4);
+  const stall = servos.reduce((s, k) => s + electrical(k)!.current_a.v.peak, 0), supplyA = stall <= 4 ? 4 : 10;
+  const H = console_(A, req, supplyA);
+
   // joint ranges from the geometry (nothing may collide through the range), then the checks
   limitsFromGeometry(A, ["yaw", "shoulder", "elbow"], [{ shoulder: -1.2, elbow: 1.5 }, { shoulder: 1.2, elbow: -1.5 }]);
   // joint speed limits: the speed each servo reaches carrying its load (not its no-load speed)
@@ -143,17 +193,14 @@ export function designArduinoArm(req: ArduinoArmRequest = {}): RobotSpecificatio
     A.design.joints.push({ joint: j, actuator: k, required_nm: +(w * DYNAMIC_FACTOR).toFixed(4), rated_nm: r.rated_nm, peak_nm: r.peak_nm, margin: +(r.peak_nm / Math.max(w * DYNAMIC_FACTOR, 1e-6)).toFixed(2), speed_rad_s: r.speed_rad_s, note: `worst static ${w.toFixed(4)} N·m, arm stretched with ${payload} kg` });
     A.check(`torque:${j}`, r.rated_nm >= w && r.peak_nm >= w * DYNAMIC_FACTOR, `holds ${w.toFixed(4)} N·m continuously (rated ${r.rated_nm}), peaks ${(w * DYNAMIC_FACTOR).toFixed(4)} N·m (stall ${r.peak_nm}) — ${part(k).name.split(" (")[0]}`);
   }
-  // electronics: Arduino + PCA9685 on the desk next to the arm; servos on their own 5 V rail
-  const servos = Object.values(keys).slice(0, req.gripper === false ? 3 : 4);
-  const stall = servos.reduce((s, k) => s + Number(part(k).specs.stall_current_a ?? 1), 0), supplyA = stall <= 4 ? 4 : 10;
-  A.buy(req.board ?? "arduino_uno_clone", 1, "controller (USB serial commands, I2C to the servo driver)");
-  A.buy("pca9685_clone", 1, "16-channel PWM servo driver (I2C)");
-  if (supplyA === 4) { A.buy("psu_5v4a_adapter", 1, "5 V 4 A servo supply"); A.buy("dc_jack_5521_panel", 1, "adapter socket"); }
-  else A.buy("psu_5v_lrs50", 1, "5 V 10 A servo supply");
   A.check("power:supply", stall <= supplyA, `all ${servos.length} servos stalled together draw ${stall.toFixed(1)} A of the ${supplyA} A 5 V supply`);
   A.fastener("M2 self-tapping (servo tabs, from the servo kits)", 2 * servos.length);
   A.fastener("M4 screws or desk clamps (base)", 4);
+  wireArm(H, supplyA, req.gripper !== false);
+  finishWiring(H);
+  enclosureChecks(A);
   const bom = A.bom();
+  bom.cost_usd = +(bom.cost_usd + (A.design.wiring?.cost_usd ?? 0)).toFixed(2);
   if (req.budget !== undefined) A.check("budget", bom.cost_usd <= req.budget, `$${bom.cost_usd.toFixed(2)} of parts vs $${req.budget} budget`);
   const m = totalMass(A.spec);
   A.design.performance = { reach_m: +b.reach.toFixed(3), payload_kg: payload, mass_kg: +m.toFixed(3), cost_usd: bom.cost_usd, dof: 3, gripper: req.gripper !== false ? "one-servo claw" : "none",

@@ -2,6 +2,7 @@ import type { RobotSpecification, Joint } from "@ttr/robot-schema";
 import { GRAVITY } from "@ttr/robot-schema";
 import { linkPositions } from "@ttr/kinematics";
 import { designRecord, buildDesignedBom } from "./designed.ts";
+import { WIRING } from "@ttr/parts";
 import { ACTUATORS, SENSORS, COMPUTE, POWER, STRUCTURE, type Tier, type Actuator } from "./catalog.ts";
 
 export interface BomLine { category: string; name: string; qty: number; unit_cost: number; subtotal: number; spec: string; note?: string; }
@@ -11,6 +12,8 @@ export interface BillOfMaterials {
   actuator_sizing: { joint: string; required_effort: number; effort_unit: "N" | "N·m"; required_torque_nm?: number; required_force_n?: number; chosen: string; margin: string }[];
   warnings: string[]; notes: string[];
 }
+
+const awgPrice = (awg: number) => WIRING.awg.find((w) => w.awg === awg)?.usd_per_m ?? 0.4;
 
 function tierForBudget(budget?: number): Tier {
   if (budget === undefined) return "prosumer";
@@ -123,11 +126,21 @@ function buildBomAtTier(spec: RobotSpecification, tier: Tier, budget?: number, o
   pushMerged(lines, { category: "Structure", name: tier === "research" ? "Aluminium frame + brackets" : "3D-printed frame (PLA/PETG)", qty: 1, unit_cost: structCost, subtotal: structCost, spec: `~${(mass * 1.4).toFixed(2)} kg material @ $${perKg}/kg` });
   pushMerged(lines, { category: "Structure", name: STRUCTURE.fasteners.name, qty: 1, unit_cost: STRUCTURE.fasteners.cost, subtotal: STRUCTURE.fasteners.cost, spec: STRUCTURE.fasteners.spec });
 
-  // wiring / misc (12% of electronics)
-  const arr = [...lines.values()];
-  const electronics = arr.filter((l) => ["Actuator", "Motor driver", "Sensor", "Compute", "Power"].includes(l.category)).reduce((s, l) => s + l.subtotal, 0);
-  const misc = +(electronics * 0.12).toFixed(2);
-  pushMerged(lines, { category: "Wiring & misc", name: "Wiring, connectors, JST/Dupont, sleeving", qty: 1, unit_cost: misc, subtotal: misc, spec: "~12% of electronics" });
+  // wiring: a robot without a routed harness (a template, not a designed robot) still gets real lines, measured from the
+  // robot itself: a three-conductor cable from the base to every joint and sensor, by the link distance, plus 25 % for slack
+  const root = spec.root ?? spec.links.find((l) => !spec.joints.some((j) => j.child === l.name))?.name;
+  const rootP = root ? pos[root] ?? [0, 0, 0] : [0, 0, 0];
+  const runs = [...actuated.map((j) => pos[j.child]), ...spec.sensors.map((s) => pos[s.parent])].filter(Boolean).map((p) => Math.hypot(p[0] - rootP[0], p[1] - rootP[1], p[2] - rootP[2]) * 1.25 + 0.15);
+  if (runs.length) {
+    const metres = +(runs.reduce((a, b) => a + b, 0) * 3 * 1.1).toFixed(1), wire = awgPrice(22);
+    pushMerged(lines, { category: "Wiring", name: "22 AWG silicone wire", qty: metres, unit_cost: wire, subtotal: +(metres * wire).toFixed(2), spec: `${runs.length} three-conductor runs measured from the base, +25 % slack, +10 % waste` });
+    const pins = runs.length * 6, dupont = WIRING.connectors.dupont_2_54;
+    pushMerged(lines, { category: "Wiring", name: `${dupont.name} contacts and housings`, qty: pins, unit_cost: dupont.unit_usd + (dupont.housing_usd ?? 0), subtotal: +(pins * (dupont.unit_usd + (dupont.housing_usd ?? 0))).toFixed(2), spec: "two ends per run" });
+    const ties = runs.length * 4, tie = WIRING.consumables.cable_tie_100, shrink = WIRING.consumables.heat_shrink_3;
+    pushMerged(lines, { category: "Wiring", name: tie.name, qty: ties, unit_cost: tie.unit_usd, subtotal: +(ties * tie.unit_usd).toFixed(2), spec: "four per run" });
+    const m = +(runs.length * 0.12).toFixed(1);
+    pushMerged(lines, { category: "Wiring", name: shrink.name, qty: m, unit_cost: shrink.unit_usd, subtotal: +(m * shrink.unit_usd).toFixed(2), spec: "boots on every cable end" });
+  }
 
   const finalLines = [...lines.values()];
   const total = +finalLines.reduce((s, l) => s + l.subtotal, 0).toFixed(2);

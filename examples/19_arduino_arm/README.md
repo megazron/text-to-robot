@@ -6,9 +6,9 @@
 
 Interpreted as: Arduino desk arm (3 DOF + claw) · no gripper
 
-**Arduino desk arm: 3 DOF + claw, 280 mm reach, 20 g payload, 0.27 kg, $39 of parts**
+**Arduino desk arm: 3 DOF + claw, 280 mm reach, 20 g payload, 0.82 kg, $50 of parts**
 
-Parts cost **$43.54** · printed structure 5 parts, 142 g · checks passed 12/12
+Parts cost **$63.54** · printed structure 9 parts, 377 g · checks passed 40/40
 
 ## What it can do
 
@@ -16,8 +16,8 @@ Parts cost **$43.54** · printed structure 5 parts, 142 g · checks passed 12/12
 |---|--:|
 | reach m | 0.28 |
 | payload kg | 0.02 |
-| mass kg | 0.27 |
-| cost usd | 38.5 |
+| mass kg | 0.817 |
+| cost usd | 49.91 |
 | dof | 3 |
 | gripper | one-servo claw |
 | servos | TowerPro SG90 micro servo / TowerPro MG996R standard servo |
@@ -31,7 +31,7 @@ Parts cost **$43.54** · printed structure 5 parts, 142 g · checks passed 12/12
 
 ## Engineering checks
 
-All 12 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
+All 40 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
 
 ## Assumptions and limits
 
@@ -65,6 +65,7 @@ _PASS means the modelled actuators (datasheet peak torque as a hard limit, a lin
 |---|---|
 | `robot.urdf`, `meshes/` | URDF with real component and printed-part meshes, datasheet effort/velocity limits |
 | `BOM.md`, `bom.json` | every part to buy, with supplier links and prices |
+| `WIRING.md`, `wiring.svg` | power budget per rail, pin-to-pin table, cut list, slack at each joint, wiring diagram |
 | `robot.cad.zip` | build package: printable STLs, print list, bought-part models, assembly order |
 | `robot.ros2.zip` | ROS 2 description package (ros2_control, MoveIt config, Gazebo launch) |
 | `robot.training.zip` | MuJoCo / RL training scaffold |

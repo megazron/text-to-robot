@@ -8,7 +8,7 @@
   {
    "name": "body",
    "watertight": true,
-   "volume_cm3": 202.69,
+   "volume_cm3": 202.01,
    "size_mm": [
     170.0,
     128.0,
@@ -20,11 +20,11 @@
     -1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 8.17,
-   "support_frac": 0.005,
-   "bed_contact_cm2": 214.56,
+   "support_area_cm2": 10.12,
+   "support_frac": 0.006,
+   "bed_contact_cm2": 216.87,
    "min_wall_mm": 2.39,
-   "thin_wall_frac": 0.0,
+   "thin_wall_frac": 0.001,
    "passed": true,
    "supports": "none",
    "problems": [],
@@ -83,7 +83,7 @@
   {
    "name": "lid",
    "watertight": true,
-   "volume_cm3": 94.92,
+   "volume_cm3": 85.25,
    "size_mm": [
     170.0,
     128.0,
@@ -97,7 +97,7 @@
    "fits_bed": true,
    "support_area_cm2": 11.84,
    "support_frac": 0.021,
-   "bed_contact_cm2": 202.36,
+   "bed_contact_cm2": 173.75,
    "min_wall_mm": 2.0,
    "thin_wall_frac": 0.0,
    "passed": true,

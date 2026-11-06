@@ -17,7 +17,7 @@ test("both tiers are valid robots and pass every engineering and print check", (
 });
 
 test("only cheap Arduino-ecosystem parts are bought", () => {
-  const allowed = /^(arduino_|tt_gearmotor|wheel_65mm_tt|tb6612|breadboard|hc_sr04|pack_2s_18650|steel_ball)/;
+  const allowed = /^(arduino_|tt_gearmotor|wheel_65mm_tt|tb6612|breadboard|hc_sr04|pack_2s_18650|steel_ball|switch_kcd|fuse_holder|wago_)/;
   for (const s of [cheapest, stronger]) for (const p of d(s).purchased) assert.match(p.key, allowed, p.key);
   for (const s of [cheapest, stronger]) assert.ok(d(s).performance.cost_usd < 60, String(d(s).performance.cost_usd));
 });
@@ -46,7 +46,7 @@ test("Arduino mode: car prompts give priced tiers, the cheapest first, honest ab
   assert.equal(car.options.length, 2);
   assert.ok(car.options[0].cost_usd < car.options[1].cost_usd);
   for (const o of car.options) assert.deepEqual(o.failing, [], `${o.tier}: ${o.failing}`);
-  const tight = arduinoOptions("4wd car under $30");
+  const tight = arduinoOptions(`4wd car under $${Math.round((car.options[0].cost_usd + car.options[1].cost_usd) / 2)}`);
   assert.ok(tight.options.some((o) => !o.over_budget) && tight.options.some((o) => o.over_budget));
   const none = arduinoOptions("a humanoid");
   assert.equal(none.options.length, 0);

@@ -5,6 +5,9 @@
 // URDF <mimic> (the rack-and-pinion makes the coupling exact), so one motor drives both.
 // The housing slides over a separate ISO-style adapter plate (4 x M6 on a 50 mm bolt circle)
 // and is held by four radial M4 screws, so the adapter can be bolted to the robot first.
+import { controlCase, enclosureChecks, exposed } from "../enclosure.ts";
+import { Harness, finishWiring } from "../wiring.ts";
+import { busChain } from "../netlist.ts";
 import type { RobotSpecification } from "@ttr/robot-schema";
 import { part, rating, hornRadiusMm, type Vec3 } from "@ttr/parts";
 import { frame, mul, I4, apply, translation, type Mat4, type Op } from "@ttr/solid";
@@ -203,8 +206,14 @@ export function designGripper(req: DesignRequest = {}): RobotSpecification {
     margin: +(g.holdKg / (payload * GRIP.safety)).toFixed(2), speed_rad_s: r.speed_rad_s, note: `servo torque on the pinion; squeeze force per finger = torque / (2 x ${pinionRadiusMm()} mm pitch radius). finger_a is the actuated prismatic joint; finger_b and the pinion mimic it` });
   // supply and bus
   const dxl = servo.startsWith("dxl_");
-  A.buy(dxl ? "dxl_u2d2" : "waveshare_bus_servo_adapter", 1, "USB to servo bus (off-board)");
-  A.buy("psu_12v_lrs75", 1, "12 V servo supply (off-board)");
+  const H = new Harness(A);
+  controlCase(A, H, { parent: "base_link", T: translation([-300, -60, -120]), psu: "psu_12v_lrs75", psuUse: "12 V servo supply", boards: [{ name: "servo_bus", key: dxl ? "dxl_u2d2" : "waveshare_bus_servo_adapter", use: "USB to servo bus" }] });
+  H.mainPower("VBUS", { source: "power_supply", pos: "DC OUTPUT +V", neg: "DC OUTPUT -V", fuse: false, volts: 12, cont: 6, peakLimit: 6.6 });
+  busChain(H, { adapter: "servo_bus", servos: ["gripper_servo"], rail: "VBUS" });
+  H.spare("servo_bus.dc_in");
+  for (const x of H.A.spec.links.map((l) => l.name).filter((n) => /_sensor$/.test(n))) { exposed(A, x, "on the gripper, wired to the host PC", [20, 20]); H.scan(); for (const p of H.rec(x).ports) H.spare(`${x}.${p.name}`); }
+  finishWiring(H, { noClips: /finger/ });
+  enclosureChecks(A);
   const stall = Number(part(servo).specs.stall_current_a ?? 2);
   A.check("power:supply", stall <= 6 * 0.8, `servo stall current ${stall} A vs 6 A supply`);
   const open = 2 * GRIP.stroke;
@@ -219,7 +228,7 @@ export function designGripper(req: DesignRequest = {}): RobotSpecification {
     `Friction coefficient ${GRIP.mu} between the printed pads (or TPU/rubber pads glued into the grooves) and the object; safety factor ${GRIP.safety}.`,
     "The fingers are coupled by the rack-and-pinion: finger_a is the actuated prismatic joint (servo torque / pitch radius), finger_b and the pinion carry a URDF <mimic> of it (MuJoCo: joint equality constraints), so one actuator drives both fingers.",
     "Rack/pinion teeth are module 1.5 printed in PETG; grease them and expect backlash of a few tenths of a millimetre.",
-    "Servo bus adapter and 12 V supply sit off the gripper (cable through the window under the servo).",
+    "Servo bus adapter and 12 V supply sit in a bench control case off the gripper (cable through the window under the servo).",
     "The adapter plate bolts to the robot first (heads sunk in the plate), then the housing slides over it and is fixed by four radial M4 screws.",
   );
   recordCost(A);

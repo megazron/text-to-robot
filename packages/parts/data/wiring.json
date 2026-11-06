@@ -1,0 +1,1692 @@
+{
+ "awg": [
+  {
+   "awg": 30,
+   "area_mm2": 0.051,
+   "ohm_per_m": 0.3385,
+   "ampacity_a": 0.43,
+   "chassis_free_air_a": 0.86,
+   "od_mm": 0.9,
+   "usd_per_m": 0.25,
+   "min_bend_radius_x_od": 10
+  },
+  {
+   "awg": 28,
+   "area_mm2": 0.08,
+   "ohm_per_m": 0.21287,
+   "ampacity_a": 0.7,
+   "chassis_free_air_a": 1.4,
+   "od_mm": 1.0,
+   "usd_per_m": 0.28,
+   "min_bend_radius_x_od": 10
+  },
+  {
+   "awg": 26,
+   "area_mm2": 0.128,
+   "ohm_per_m": 0.13386,
+   "ampacity_a": 1.1,
+   "chassis_free_air_a": 2.2,
+   "od_mm": 1.5,
+   "usd_per_m": 0.3,
+   "min_bend_radius_x_od": 10
+  },
+  {
+   "awg": 24,
+   "area_mm2": 0.205,
+   "ohm_per_m": 0.0842,
+   "ampacity_a": 1.75,
+   "chassis_free_air_a": 3.5,
+   "od_mm": 1.6,
+   "usd_per_m": 0.35,
+   "min_bend_radius_x_od": 10
+  },
+  {
+   "awg": 22,
+   "area_mm2": 0.327,
+   "ohm_per_m": 0.05294,
+   "ampacity_a": 3.5,
+   "chassis_free_air_a": 7,
+   "od_mm": 1.7,
+   "usd_per_m": 0.4,
+   "min_bend_radius_x_od": 10
+  },
+  {
+   "awg": 20,
+   "area_mm2": 0.519,
+   "ohm_per_m": 0.03329,
+   "ampacity_a": 5.5,
+   "chassis_free_air_a": 11,
+   "od_mm": 1.8,
+   "usd_per_m": 0.5,
+   "min_bend_radius_x_od": 10
+  },
+  {
+   "awg": 18,
+   "area_mm2": 0.823,
+   "ohm_per_m": 0.02094,
+   "ampacity_a": 8.0,
+   "chassis_free_air_a": 16,
+   "od_mm": 2.3,
+   "usd_per_m": 0.7,
+   "min_bend_radius_x_od": 10
+  },
+  {
+   "awg": 16,
+   "area_mm2": 1.308,
+   "ohm_per_m": 0.01317,
+   "ampacity_a": 11.0,
+   "chassis_free_air_a": 22,
+   "od_mm": 3.0,
+   "usd_per_m": 1.0,
+   "min_bend_radius_x_od": 10
+  },
+  {
+   "awg": 14,
+   "area_mm2": 2.082,
+   "ohm_per_m": 0.00828,
+   "ampacity_a": 16.0,
+   "chassis_free_air_a": 32,
+   "od_mm": 3.5,
+   "usd_per_m": 1.5,
+   "min_bend_radius_x_od": 10
+  },
+  {
+   "awg": 12,
+   "area_mm2": 3.308,
+   "ohm_per_m": 0.00521,
+   "ampacity_a": 20.5,
+   "chassis_free_air_a": 41,
+   "od_mm": 4.5,
+   "usd_per_m": 2.2,
+   "min_bend_radius_x_od": 10
+  },
+  {
+   "awg": 10,
+   "area_mm2": 5.261,
+   "ohm_per_m": 0.00328,
+   "ampacity_a": 27.5,
+   "chassis_free_air_a": 55,
+   "od_mm": 5.0,
+   "usd_per_m": 3.2,
+   "min_bend_radius_x_od": 10
+  },
+  {
+   "awg": 8,
+   "area_mm2": 8.37,
+   "ohm_per_m": 0.00206,
+   "ampacity_a": 36.5,
+   "od_mm": 6.8,
+   "usd_per_m": 4.5,
+   "min_bend_radius_x_od": 10
+  },
+  {
+   "awg": 6,
+   "area_mm2": 13.3,
+   "ohm_per_m": 0.0013,
+   "ampacity_a": 50,
+   "od_mm": 8.5,
+   "usd_per_m": 7.0,
+   "min_bend_radius_x_od": 10
+  },
+  {
+   "awg": 4,
+   "area_mm2": 21.2,
+   "ohm_per_m": 0.000815,
+   "ampacity_a": 70,
+   "od_mm": 10.5,
+   "usd_per_m": 10.0,
+   "min_bend_radius_x_od": 10
+  }
+ ],
+ "connectors": {
+  "dupont_2_54": {
+   "name": "Dupont 2.54 mm",
+   "current_a": 3.0,
+   "unit_usd": 0.02,
+   "housing_usd": 0.02
+  },
+  "jst_xh_2_5": {
+   "name": "JST XH 2.5 mm",
+   "current_a": 3.0,
+   "unit_usd": 0.03,
+   "housing_usd": 0.05
+  },
+  "jst_ph_2_0": {
+   "name": "JST PH 2.0 mm",
+   "current_a": 2.0,
+   "unit_usd": 0.03,
+   "housing_usd": 0.05
+  },
+  "jst_ehr_2_5": {
+   "name": "JST EH 2.5 mm",
+   "current_a": 3.0,
+   "unit_usd": 0.03,
+   "housing_usd": 0.05
+  },
+  "molex_5264": {
+   "name": "Molex 5264",
+   "current_a": 3.0,
+   "unit_usd": 0.05,
+   "housing_usd": 0.08
+  },
+  "jst_gh_1_25": {
+   "name": "JST GH 1.25 mm",
+   "current_a": 1.0,
+   "unit_usd": 0.05,
+   "housing_usd": 0.15
+  },
+  "xt30": {
+   "name": "XT30",
+   "current_a": 20.0,
+   "unit_usd": 0.6
+  },
+  "xt60": {
+   "name": "XT60",
+   "current_a": 35.0,
+   "unit_usd": 0.9
+  },
+  "xt90": {
+   "name": "XT90",
+   "current_a": 45.0,
+   "unit_usd": 1.6
+  },
+  "screw_terminal_5_08": {
+   "name": "Screw terminal 5.08",
+   "current_a": 17.5,
+   "unit_usd": 0.25
+  },
+  "ferrule": {
+   "name": "Bootlace ferrule",
+   "current_a": 17.5,
+   "unit_usd": 0.03
+  },
+  "ring_terminal_m3": {
+   "name": "M3 ring terminal",
+   "current_a": 10.0,
+   "unit_usd": 0.06
+  },
+  "spade_6_3": {
+   "name": "6.3 mm spade",
+   "current_a": 15.0,
+   "unit_usd": 0.08
+  },
+  "ring_terminal_m8": {
+   "name": "M8 ring terminal",
+   "current_a": 100,
+   "unit_usd": 0.3
+  },
+  "ec5": {
+   "name": "EC5",
+   "current_a": 120,
+   "unit_usd": 1.5
+  }
+ },
+ "fuse_ratings_a": [
+  2,
+  3,
+  4,
+  5,
+  7.5,
+  10,
+  15,
+  20,
+  25,
+  30
+ ],
+ "off_board_cable_mm": 1500,
+ "consumables": {
+  "heat_shrink_3": {
+   "name": "Heat shrink 3 mm, 2:1",
+   "unit": "m",
+   "unit_usd": 0.2
+  },
+  "cable_tie_100": {
+   "name": "Cable tie 100 x 2.5 mm",
+   "unit": "pc",
+   "unit_usd": 0.02
+  },
+  "sleeving_6": {
+   "name": "Nylon braided sleeving 6 mm",
+   "unit": "m",
+   "unit_usd": 0.4
+  },
+  "gland_pg7": {
+   "name": "PG7 cable gland",
+   "unit": "pc",
+   "unit_usd": 2.97
+  },
+  "fuse_atm": {
+   "name": "ATM blade fuse",
+   "unit": "pc",
+   "unit_usd": 0.25
+  },
+  "capacitor_1000uf": {
+   "name": "1000 uF 16 V electrolytic capacitor",
+   "unit": "pc",
+   "unit_usd": 0.2
+  },
+  "grommet_3": {
+   "name": "Rubber grommet, 3.0 mm panel hole, 1.5 mm bore",
+   "unit": "pc",
+   "unit_usd": 0.05
+  },
+  "grommet_5": {
+   "name": "Rubber grommet, 5.0 mm panel hole, 3.0 mm bore",
+   "unit": "pc",
+   "unit_usd": 0.05
+  },
+  "grommet_6_4": {
+   "name": "Rubber grommet, 6.4 mm panel hole, 3.2 mm bore",
+   "unit": "pc",
+   "unit_usd": 0.08
+  },
+  "grommet_7_9": {
+   "name": "Rubber grommet, 7.9 mm panel hole, 4.8 mm bore",
+   "unit": "pc",
+   "unit_usd": 0.08
+  },
+  "grommet_9_5": {
+   "name": "Rubber grommet, 9.5 mm panel hole, 4.8 mm bore",
+   "unit": "pc",
+   "unit_usd": 0.1
+  },
+  "grommet_6_5": {
+   "name": "Rubber grommet, 6.4 mm panel hole, 3.2 mm bore",
+   "unit": "pc",
+   "unit_usd": 0.08
+  },
+  "grommet_8": {
+   "name": "Rubber grommet, 7.9 mm panel hole, 4.8 mm bore",
+   "unit": "pc",
+   "unit_usd": 0.08
+  },
+  "fuse_anl": {
+   "name": "ANL fuse",
+   "unit": "pc",
+   "unit_usd": 6.0
+  }
+ },
+ "grommet_bore_mm": {
+  "3": 1.5,
+  "5": 3.0,
+  "6.4": 3.2,
+  "6.5": 3.2,
+  "7.9": 4.8,
+  "8": 4.8,
+  "9.5": 4.8
+ },
+ "premade_usd": {
+  "USB": 3,
+  "USB-C": 3,
+  "USB-B": 3,
+  "USB-A to USB-C": 4,
+  "FFC": 3,
+  "barrel": 0
+ },
+ "sources": {
+  "awg": [
+   {
+    "awg": 30,
+    "area_mm2": {
+     "v": 0.051,
+     "src": "datasheet",
+     "url": "https://www.powerstream.com/Wire_Size.htm",
+     "note": "computed from the published solid diameter; real stranded silicone wire area is close but not equal"
+    },
+    "ohm_per_m": {
+     "v": 0.3385,
+     "src": "datasheet",
+     "url": "https://www.powerstream.com/Wire_Size.htm",
+     "note": "solid copper table value; tinned stranded wire runs a few percent higher"
+    },
+    "ampacity_a": {
+     "v": 0.43,
+     "src": "estimated",
+     "note": "50 % of the PowerStream chassis-wiring column (0.86 A, wire in free air) for a bundled harness. Derate factor is engineering judgement, not read from a table: MIL-W-5088 / AS50881 could not be fetched. Cross-check: distributor silicone table in search results gives about 3 A at 22 AWG, 5 A at 20, 7.5 A at 18, 13-15 A at 16, 20 A at 14. Vendor RC ratings (10 A at 22 AWG, PRC) are not for bundles"
+    },
+    "chassis_free_air_a": {
+     "v": 0.86,
+     "src": "datasheet",
+     "url": "https://www.powerstream.com/Wire_Size.htm",
+     "note": "single wire in free air, 'just a rule of thumb' per PowerStream"
+    },
+    "od_mm": {
+     "v": 0.9,
+     "src": "estimated",
+     "note": "typical hobby silicone wire, from memory, not seen in a fetched page"
+    },
+    "usd_per_m": {
+     "v": 0.25,
+     "src": "estimated",
+     "note": "typical retail estimate; PRC 22 AWG listed $0.43/ft for a 3 ft cut, bulk spools are far cheaper"
+    },
+    "min_bend_radius_x_od": {
+     "v": 10,
+     "src": "estimated",
+     "note": "common guidance for repeated flexing, from memory, not seen in a fetched page"
+    }
+   },
+   {
+    "awg": 28,
+    "area_mm2": {
+     "v": 0.08,
+     "src": "datasheet",
+     "url": "https://www.powerstream.com/Wire_Size.htm",
+     "note": "computed from the published solid diameter; real stranded silicone wire area is close but not equal"
+    },
+    "ohm_per_m": {
+     "v": 0.21287,
+     "src": "datasheet",
+     "url": "https://www.powerstream.com/Wire_Size.htm",
+     "note": "solid copper table value; tinned stranded wire runs a few percent higher"
+    },
+    "ampacity_a": {
+     "v": 0.7,
+     "src": "estimated",
+     "note": "50 % of the PowerStream chassis-wiring column (1.4 A, wire in free air) for a bundled harness. Derate factor is engineering judgement, not read from a table: MIL-W-5088 / AS50881 could not be fetched. Cross-check: distributor silicone table in search results gives about 3 A at 22 AWG, 5 A at 20, 7.5 A at 18, 13-15 A at 16, 20 A at 14. Vendor RC ratings (10 A at 22 AWG, PRC) are not for bundles"
+    },
+    "chassis_free_air_a": {
+     "v": 1.4,
+     "src": "datasheet",
+     "url": "https://www.powerstream.com/Wire_Size.htm",
+     "note": "single wire in free air, 'just a rule of thumb' per PowerStream"
+    },
+    "od_mm": {
+     "v": 1.0,
+     "src": "estimated",
+     "note": "typical hobby silicone wire, from memory, not seen in a fetched page"
+    },
+    "usd_per_m": {
+     "v": 0.28,
+     "src": "estimated",
+     "note": "typical retail estimate; PRC 22 AWG listed $0.43/ft for a 3 ft cut, bulk spools are far cheaper"
+    },
+    "min_bend_radius_x_od": {
+     "v": 10,
+     "src": "estimated",
+     "note": "common guidance for repeated flexing, from memory, not seen in a fetched page"
+    }
+   },
+   {
+    "awg": 26,
+    "area_mm2": {
+     "v": 0.128,
+     "src": "datasheet",
+     "url": "https://www.powerstream.com/Wire_Size.htm",
+     "note": "computed from the published solid diameter; real stranded silicone wire area is close but not equal"
+    },
+    "ohm_per_m": {
+     "v": 0.13386,
+     "src": "datasheet",
+     "url": "https://www.powerstream.com/Wire_Size.htm",
+     "note": "solid copper table value; tinned stranded wire runs a few percent higher"
+    },
+    "ampacity_a": {
+     "v": 1.1,
+     "src": "estimated",
+     "note": "50 % of the PowerStream chassis-wiring column (2.2 A, wire in free air) for a bundled harness. Derate factor is engineering judgement, not read from a table: MIL-W-5088 / AS50881 could not be fetched. Cross-check: distributor silicone table in search results gives about 3 A at 22 AWG, 5 A at 20, 7.5 A at 18, 13-15 A at 16, 20 A at 14. Vendor RC ratings (10 A at 22 AWG, PRC) are not for bundles"
+    },
+    "chassis_free_air_a": {
+     "v": 2.2,
+     "src": "datasheet",
+     "url": "https://www.powerstream.com/Wire_Size.htm",
+     "note": "single wire in free air, 'just a rule of thumb' per PowerStream"
+    },
+    "od_mm": {
+     "v": 1.5,
+     "src": "estimated",
+     "note": "typical hobby silicone wire, from memory, not seen in a fetched page"
+    },
+    "usd_per_m": {
+     "v": 0.3,
+     "src": "estimated",
+     "note": "typical retail estimate; PRC 22 AWG listed $0.43/ft for a 3 ft cut, bulk spools are far cheaper"
+    },
+    "min_bend_radius_x_od": {
+     "v": 10,
+     "src": "estimated",
+     "note": "common guidance for repeated flexing, from memory, not seen in a fetched page"
+    }
+   },
+   {
+    "awg": 24,
+    "area_mm2": {
+     "v": 0.205,
+     "src": "datasheet",
+     "url": "https://www.powerstream.com/Wire_Size.htm",
+     "note": "computed from the published solid diameter; real stranded silicone wire area is close but not equal"
+    },
+    "ohm_per_m": {
+     "v": 0.0842,
+     "src": "datasheet",
+     "url": "https://www.powerstream.com/Wire_Size.htm",
+     "note": "solid copper table value; tinned stranded wire runs a few percent higher"
+    },
+    "ampacity_a": {
+     "v": 1.75,
+     "src": "estimated",
+     "note": "50 % of the PowerStream chassis-wiring column (3.5 A, wire in free air) for a bundled harness. Derate factor is engineering judgement, not read from a table: MIL-W-5088 / AS50881 could not be fetched. Cross-check: distributor silicone table in search results gives about 3 A at 22 AWG, 5 A at 20, 7.5 A at 18, 13-15 A at 16, 20 A at 14. Vendor RC ratings (10 A at 22 AWG, PRC) are not for bundles"
+    },
+    "chassis_free_air_a": {
+     "v": 3.5,
+     "src": "datasheet",
+     "url": "https://www.powerstream.com/Wire_Size.htm",
+     "note": "single wire in free air, 'just a rule of thumb' per PowerStream"
+    },
+    "od_mm": {
+     "v": 1.6,
+     "src": "estimated",
+     "note": "typical hobby silicone wire, from memory, not seen in a fetched page"
+    },
+    "usd_per_m": {
+     "v": 0.35,
+     "src": "estimated",
+     "note": "typical retail estimate; PRC 22 AWG listed $0.43/ft for a 3 ft cut, bulk spools are far cheaper"
+    },
+    "min_bend_radius_x_od": {
+     "v": 10,
+     "src": "estimated",
+     "note": "common guidance for repeated flexing, from memory, not seen in a fetched page"
+    }
+   },
+   {
+    "awg": 22,
+    "area_mm2": {
+     "v": 0.327,
+     "src": "datasheet",
+     "url": "https://www.powerstream.com/Wire_Size.htm",
+     "note": "computed from the published solid diameter; real stranded silicone wire area is close but not equal"
+    },
+    "ohm_per_m": {
+     "v": 0.05294,
+     "src": "datasheet",
+     "url": "https://www.powerstream.com/Wire_Size.htm",
+     "note": "solid copper table value; tinned stranded wire runs a few percent higher"
+    },
+    "ampacity_a": {
+     "v": 3.5,
+     "src": "estimated",
+     "note": "50 % of the PowerStream chassis-wiring column (7 A, wire in free air) for a bundled harness. Derate factor is engineering judgement, not read from a table: MIL-W-5088 / AS50881 could not be fetched. Cross-check: distributor silicone table in search results gives about 3 A at 22 AWG, 5 A at 20, 7.5 A at 18, 13-15 A at 16, 20 A at 14. Vendor RC ratings (10 A at 22 AWG, PRC) are not for bundles"
+    },
+    "chassis_free_air_a": {
+     "v": 7,
+     "src": "datasheet",
+     "url": "https://www.powerstream.com/Wire_Size.htm",
+     "note": "single wire in free air, 'just a rule of thumb' per PowerStream"
+    },
+    "od_mm": {
+     "v": 1.7,
+     "src": "datasheet",
+     "url": "https://www.progressiverc.com/prc-silicone-wire-22-awg.html"
+    },
+    "usd_per_m": {
+     "v": 0.4,
+     "src": "estimated",
+     "note": "typical retail estimate; PRC 22 AWG listed $0.43/ft for a 3 ft cut, bulk spools are far cheaper"
+    },
+    "min_bend_radius_x_od": {
+     "v": 10,
+     "src": "estimated",
+     "note": "common guidance for repeated flexing, from memory, not seen in a fetched page"
+    }
+   },
+   {
+    "awg": 20,
+    "area_mm2": {
+     "v": 0.519,
+     "src": "datasheet",
+     "url": "https://www.powerstream.com/Wire_Size.htm",
+     "note": "computed from the published solid diameter; real stranded silicone wire area is close but not equal"
+    },
+    "ohm_per_m": {
+     "v": 0.03329,
+     "src": "datasheet",
+     "url": "https://www.powerstream.com/Wire_Size.htm",
+     "note": "solid copper table value; tinned stranded wire runs a few percent higher"
+    },
+    "ampacity_a": {
+     "v": 5.5,
+     "src": "estimated",
+     "note": "50 % of the PowerStream chassis-wiring column (11 A, wire in free air) for a bundled harness. Derate factor is engineering judgement, not read from a table: MIL-W-5088 / AS50881 could not be fetched. Cross-check: distributor silicone table in search results gives about 3 A at 22 AWG, 5 A at 20, 7.5 A at 18, 13-15 A at 16, 20 A at 14. Vendor RC ratings (10 A at 22 AWG, PRC) are not for bundles"
+    },
+    "chassis_free_air_a": {
+     "v": 11,
+     "src": "datasheet",
+     "url": "https://www.powerstream.com/Wire_Size.htm",
+     "note": "single wire in free air, 'just a rule of thumb' per PowerStream"
+    },
+    "od_mm": {
+     "v": 1.8,
+     "src": "estimated",
+     "note": "search snippet of a vendor silicone wire listing, not fetched"
+    },
+    "usd_per_m": {
+     "v": 0.5,
+     "src": "estimated",
+     "note": "typical retail estimate; PRC 22 AWG listed $0.43/ft for a 3 ft cut, bulk spools are far cheaper"
+    },
+    "min_bend_radius_x_od": {
+     "v": 10,
+     "src": "estimated",
+     "note": "common guidance for repeated flexing, from memory, not seen in a fetched page"
+    }
+   },
+   {
+    "awg": 18,
+    "area_mm2": {
+     "v": 0.823,
+     "src": "datasheet",
+     "url": "https://www.powerstream.com/Wire_Size.htm",
+     "note": "computed from the published solid diameter; real stranded silicone wire area is close but not equal"
+    },
+    "ohm_per_m": {
+     "v": 0.02094,
+     "src": "datasheet",
+     "url": "https://www.powerstream.com/Wire_Size.htm",
+     "note": "solid copper table value; tinned stranded wire runs a few percent higher"
+    },
+    "ampacity_a": {
+     "v": 8.0,
+     "src": "estimated",
+     "note": "50 % of the PowerStream chassis-wiring column (16 A, wire in free air) for a bundled harness. Derate factor is engineering judgement, not read from a table: MIL-W-5088 / AS50881 could not be fetched. Cross-check: distributor silicone table in search results gives about 3 A at 22 AWG, 5 A at 20, 7.5 A at 18, 13-15 A at 16, 20 A at 14. Vendor RC ratings (10 A at 22 AWG, PRC) are not for bundles"
+    },
+    "chassis_free_air_a": {
+     "v": 16,
+     "src": "datasheet",
+     "url": "https://www.powerstream.com/Wire_Size.htm",
+     "note": "single wire in free air, 'just a rule of thumb' per PowerStream"
+    },
+    "od_mm": {
+     "v": 2.3,
+     "src": "estimated",
+     "note": "search snippet, datasheet-based listing, not fetched"
+    },
+    "usd_per_m": {
+     "v": 0.7,
+     "src": "estimated",
+     "note": "typical retail estimate; PRC 22 AWG listed $0.43/ft for a 3 ft cut, bulk spools are far cheaper"
+    },
+    "min_bend_radius_x_od": {
+     "v": 10,
+     "src": "estimated",
+     "note": "common guidance for repeated flexing, from memory, not seen in a fetched page"
+    }
+   },
+   {
+    "awg": 16,
+    "area_mm2": {
+     "v": 1.308,
+     "src": "datasheet",
+     "url": "https://www.powerstream.com/Wire_Size.htm",
+     "note": "computed from the published solid diameter; real stranded silicone wire area is close but not equal"
+    },
+    "ohm_per_m": {
+     "v": 0.01317,
+     "src": "datasheet",
+     "url": "https://www.powerstream.com/Wire_Size.htm",
+     "note": "solid copper table value; tinned stranded wire runs a few percent higher"
+    },
+    "ampacity_a": {
+     "v": 11.0,
+     "src": "estimated",
+     "note": "50 % of the PowerStream chassis-wiring column (22 A, wire in free air) for a bundled harness. Derate factor is engineering judgement, not read from a table: MIL-W-5088 / AS50881 could not be fetched. Cross-check: distributor silicone table in search results gives about 3 A at 22 AWG, 5 A at 20, 7.5 A at 18, 13-15 A at 16, 20 A at 14. Vendor RC ratings (10 A at 22 AWG, PRC) are not for bundles"
+    },
+    "chassis_free_air_a": {
+     "v": 22,
+     "src": "datasheet",
+     "url": "https://www.powerstream.com/Wire_Size.htm",
+     "note": "single wire in free air, 'just a rule of thumb' per PowerStream"
+    },
+    "od_mm": {
+     "v": 3.0,
+     "src": "estimated",
+     "note": "search snippet of BNTECHGO 16 AWG listing (252 x 0.08), not fetched"
+    },
+    "usd_per_m": {
+     "v": 1.0,
+     "src": "estimated",
+     "note": "typical retail estimate; PRC 22 AWG listed $0.43/ft for a 3 ft cut, bulk spools are far cheaper"
+    },
+    "min_bend_radius_x_od": {
+     "v": 10,
+     "src": "estimated",
+     "note": "common guidance for repeated flexing, from memory, not seen in a fetched page"
+    }
+   },
+   {
+    "awg": 14,
+    "area_mm2": {
+     "v": 2.082,
+     "src": "datasheet",
+     "url": "https://www.powerstream.com/Wire_Size.htm",
+     "note": "computed from the published solid diameter; real stranded silicone wire area is close but not equal"
+    },
+    "ohm_per_m": {
+     "v": 0.00828,
+     "src": "datasheet",
+     "url": "https://www.powerstream.com/Wire_Size.htm",
+     "note": "solid copper table value; tinned stranded wire runs a few percent higher"
+    },
+    "ampacity_a": {
+     "v": 16.0,
+     "src": "estimated",
+     "note": "50 % of the PowerStream chassis-wiring column (32 A, wire in free air) for a bundled harness. Derate factor is engineering judgement, not read from a table: MIL-W-5088 / AS50881 could not be fetched. Cross-check: distributor silicone table in search results gives about 3 A at 22 AWG, 5 A at 20, 7.5 A at 18, 13-15 A at 16, 20 A at 14. Vendor RC ratings (10 A at 22 AWG, PRC) are not for bundles"
+    },
+    "chassis_free_air_a": {
+     "v": 32,
+     "src": "datasheet",
+     "url": "https://www.powerstream.com/Wire_Size.htm",
+     "note": "single wire in free air, 'just a rule of thumb' per PowerStream"
+    },
+    "od_mm": {
+     "v": 3.5,
+     "src": "estimated",
+     "note": "search snippet of a vendor listing; a distributor table says 3.2"
+    },
+    "usd_per_m": {
+     "v": 1.5,
+     "src": "estimated",
+     "note": "typical retail estimate; PRC 22 AWG listed $0.43/ft for a 3 ft cut, bulk spools are far cheaper"
+    },
+    "min_bend_radius_x_od": {
+     "v": 10,
+     "src": "estimated",
+     "note": "common guidance for repeated flexing, from memory, not seen in a fetched page"
+    }
+   },
+   {
+    "awg": 12,
+    "area_mm2": {
+     "v": 3.308,
+     "src": "datasheet",
+     "url": "https://www.powerstream.com/Wire_Size.htm",
+     "note": "computed from the published solid diameter; real stranded silicone wire area is close but not equal"
+    },
+    "ohm_per_m": {
+     "v": 0.00521,
+     "src": "datasheet",
+     "url": "https://www.powerstream.com/Wire_Size.htm",
+     "note": "solid copper table value; tinned stranded wire runs a few percent higher"
+    },
+    "ampacity_a": {
+     "v": 20.5,
+     "src": "estimated",
+     "note": "50 % of the PowerStream chassis-wiring column (41 A, wire in free air) for a bundled harness. Derate factor is engineering judgement, not read from a table: MIL-W-5088 / AS50881 could not be fetched. Cross-check: distributor silicone table in search results gives about 3 A at 22 AWG, 5 A at 20, 7.5 A at 18, 13-15 A at 16, 20 A at 14. Vendor RC ratings (10 A at 22 AWG, PRC) are not for bundles"
+    },
+    "chassis_free_air_a": {
+     "v": 41,
+     "src": "datasheet",
+     "url": "https://www.powerstream.com/Wire_Size.htm",
+     "note": "single wire in free air, 'just a rule of thumb' per PowerStream"
+    },
+    "od_mm": {
+     "v": 4.5,
+     "src": "estimated",
+     "note": "search snippet of a vendor listing; LAPP part 4.2"
+    },
+    "usd_per_m": {
+     "v": 2.2,
+     "src": "estimated",
+     "note": "typical retail estimate; PRC 22 AWG listed $0.43/ft for a 3 ft cut, bulk spools are far cheaper"
+    },
+    "min_bend_radius_x_od": {
+     "v": 10,
+     "src": "estimated",
+     "note": "common guidance for repeated flexing, from memory, not seen in a fetched page"
+    }
+   },
+   {
+    "awg": 10,
+    "area_mm2": {
+     "v": 5.261,
+     "src": "datasheet",
+     "url": "https://www.powerstream.com/Wire_Size.htm",
+     "note": "computed from the published solid diameter; real stranded silicone wire area is close but not equal"
+    },
+    "ohm_per_m": {
+     "v": 0.00328,
+     "src": "datasheet",
+     "url": "https://www.powerstream.com/Wire_Size.htm",
+     "note": "solid copper table value; tinned stranded wire runs a few percent higher"
+    },
+    "ampacity_a": {
+     "v": 27.5,
+     "src": "estimated",
+     "note": "50 % of the PowerStream chassis-wiring column (55 A, wire in free air) for a bundled harness. Derate factor is engineering judgement, not read from a table: MIL-W-5088 / AS50881 could not be fetched. Cross-check: distributor silicone table in search results gives about 3 A at 22 AWG, 5 A at 20, 7.5 A at 18, 13-15 A at 16, 20 A at 14. Vendor RC ratings (10 A at 22 AWG, PRC) are not for bundles"
+    },
+    "chassis_free_air_a": {
+     "v": 55,
+     "src": "datasheet",
+     "url": "https://www.powerstream.com/Wire_Size.htm",
+     "note": "single wire in free air, 'just a rule of thumb' per PowerStream"
+    },
+    "od_mm": {
+     "v": 5.0,
+     "src": "estimated",
+     "note": "search snippet of a vendor listing; Alpha Wire 5.28"
+    },
+    "usd_per_m": {
+     "v": 3.2,
+     "src": "estimated",
+     "note": "typical retail estimate; PRC 22 AWG listed $0.43/ft for a 3 ft cut, bulk spools are far cheaper"
+    },
+    "min_bend_radius_x_od": {
+     "v": 10,
+     "src": "estimated",
+     "note": "common guidance for repeated flexing, from memory, not seen in a fetched page"
+    }
+   }
+  ],
+  "connectors": {
+   "dupont_2_54": {
+    "current_a": {
+     "v": 3.0,
+     "src": "estimated",
+     "note": "per contact. 3 A at 250 V on Multicomp Pro 2.54 mm crimp housing sheets in search results; generic Dupont has no maker, other listings say 2-4 A"
+    },
+    "mating_cycles": {
+     "v": 25,
+     "src": "estimated",
+     "note": "tin contact, 25 cycle quality class in search results; 50 for gold"
+    },
+    "wire_range": {
+     "v": "AWG 28-22",
+     "src": "estimated",
+     "note": "contact sheets in search results"
+    },
+    "unit_usd": {
+     "v": {
+      "per_housing_position": 0.02,
+      "per_crimp": 0.02
+     },
+     "src": "estimated",
+     "note": "typical retail, generic parts"
+    }
+   },
+   "jst_xh_2_5": {
+    "current_a": {
+     "v": 3.0,
+     "src": "datasheet",
+     "url": "https://www.jst-mfg.com/product/pdf/eng/eXH.pdf",
+     "note": "AC/DC at AWG 22"
+    },
+    "mating_cycles": {
+     "v": null,
+     "src": "estimated",
+     "note": "JST catalog publishes no cycle count"
+    },
+    "wire_range": {
+     "v": "AWG 30-22, insulation OD 0.9-1.9 mm",
+     "src": "datasheet",
+     "url": "https://www.jst-mfg.com/product/pdf/eng/eXH.pdf"
+    },
+    "unit_usd": {
+     "v": {
+      "per_housing": 0.05,
+      "per_crimp": 0.03
+     },
+     "src": "estimated",
+     "note": "typical retail"
+    },
+    "housing": {
+     "v": "XHP-n",
+     "src": "datasheet",
+     "url": "https://www.jst-mfg.com/product/pdf/eng/eXH.pdf"
+    },
+    "crimp": {
+     "v": "SXH-001T-P0.6",
+     "src": "datasheet",
+     "url": "https://www.jst-mfg.com/product/pdf/eng/eXH.pdf"
+    }
+   },
+   "jst_ph_2_0": {
+    "current_a": {
+     "v": 2.0,
+     "src": "datasheet",
+     "url": "https://www.jst-mfg.com/product/pdf/eng/ePH.pdf",
+     "note": "AC/DC at AWG 24"
+    },
+    "mating_cycles": {
+     "v": null,
+     "src": "estimated",
+     "note": "JST catalog publishes no cycle count"
+    },
+    "wire_range": {
+     "v": "AWG 32-24, insulation OD 0.5-1.5 mm",
+     "src": "datasheet",
+     "url": "https://www.jst-mfg.com/product/pdf/eng/ePH.pdf"
+    },
+    "unit_usd": {
+     "v": {
+      "per_housing": 0.05,
+      "per_crimp": 0.03
+     },
+     "src": "estimated",
+     "note": "typical retail"
+    },
+    "housing": {
+     "v": "PHR-n",
+     "src": "datasheet",
+     "url": "https://www.jst-mfg.com/product/pdf/eng/ePH.pdf"
+    },
+    "crimp": {
+     "v": "SPH-002T-P0.5S",
+     "src": "estimated",
+     "note": "from memory, not seen in a fetched page; catalog lists SPH-002T-P0.5L as the low force variant"
+    }
+   },
+   "jst_ehr_2_5": {
+    "current_a": {
+     "v": 3.0,
+     "src": "datasheet",
+     "url": "https://www.jst-mfg.com/product/pdf/eng/eEH.pdf",
+     "note": "AC/DC at AWG 22"
+    },
+    "mating_cycles": {
+     "v": null,
+     "src": "estimated",
+     "note": "JST catalog publishes no cycle count"
+    },
+    "wire_range": {
+     "v": "AWG 32-22, insulation OD 0.5-1.9 mm",
+     "src": "datasheet",
+     "url": "https://www.jst-mfg.com/product/pdf/eng/eEH.pdf"
+    },
+    "unit_usd": {
+     "v": {
+      "per_housing": 0.05,
+      "per_crimp": 0.03
+     },
+     "src": "estimated",
+     "note": "typical retail"
+    },
+    "housing": {
+     "v": "EHR-n",
+     "src": "datasheet",
+     "url": "https://www.jst-mfg.com/product/pdf/eng/eEH.pdf"
+    },
+    "crimp": {
+     "v": "SEH-001T-P0.6",
+     "src": "datasheet",
+     "url": "https://www.jst-mfg.com/product/pdf/eng/eEH.pdf"
+    }
+   },
+   "molex_5264": {
+    "current_a": {
+     "v": {
+      "awg22": 3.0,
+      "awg24": 2.5,
+      "awg26": 2.0,
+      "awg28": 1.5
+     },
+     "src": "datasheet",
+     "url": "https://www.rcscomponents.kiev.ua/datasheets/mx5264-n.pdf",
+     "note": "current per wire gauge, 250 V"
+    },
+    "mating_cycles": {
+     "v": null,
+     "src": "estimated",
+     "note": "Molex sheet gives no cycle count"
+    },
+    "wire_range": {
+     "v": "AWG 28-22",
+     "src": "datasheet",
+     "url": "https://www.rcscomponents.kiev.ua/datasheets/mx5264-n.pdf"
+    },
+    "unit_usd": {
+     "v": {
+      "per_housing": 0.08,
+      "per_crimp": 0.05
+     },
+     "src": "estimated",
+     "note": "typical retail"
+    },
+    "housing": {
+     "v": "50-37-50n3 (5264)",
+     "src": "datasheet",
+     "url": "https://www.rcscomponents.kiev.ua/datasheets/mx5264-n.pdf"
+    },
+    "crimp": {
+     "v": "5263 series",
+     "src": "datasheet",
+     "url": "https://www.rcscomponents.kiev.ua/datasheets/mx5264-n.pdf"
+    }
+   },
+   "jst_gh_1_25": {
+    "current_a": {
+     "v": 1.0,
+     "src": "datasheet",
+     "url": "https://www.jst-mfg.com/product/pdf/eng/eGH.pdf",
+     "note": "AC/DC at AWG 26"
+    },
+    "mating_cycles": {
+     "v": null,
+     "src": "estimated",
+     "note": "JST catalog publishes no cycle count"
+    },
+    "wire_range": {
+     "v": "AWG 30-26, insulation OD 0.76-1.0 mm",
+     "src": "datasheet",
+     "url": "https://www.jst-mfg.com/product/pdf/eng/eGH.pdf"
+    },
+    "unit_usd": {
+     "v": {
+      "per_housing": 0.15,
+      "per_crimp": 0.05
+     },
+     "src": "estimated",
+     "note": "typical retail"
+    },
+    "housing": {
+     "v": "GHR-0nV-S",
+     "src": "datasheet",
+     "url": "https://www.jst-mfg.com/product/pdf/eng/eGH.pdf"
+    },
+    "crimp": {
+     "v": "SSHL-002T-P0.2",
+     "src": "estimated",
+     "note": "from memory, not seen in a fetched page; catalog warns SSHL-003 cannot be used"
+    }
+   },
+   "xt30": {
+    "current_a": {
+     "v": 20.0,
+     "src": "datasheet",
+     "url": "https://www.rcscomponents.kiev.ua/datasheets/Amas-cat1.pdf",
+     "note": "Amass: 20 A MAX, 16 AWG, temperature rise under 85 C"
+    },
+    "mating_cycles": {
+     "v": 100,
+     "src": "datasheet",
+     "url": "https://www.rcscomponents.kiev.ua/datasheets/Amas-cat1.pdf",
+     "note": "mechanical life 100 times; retailers quote 1000"
+    },
+    "wire_range": {
+     "v": "16 AWG",
+     "src": "datasheet",
+     "url": "https://www.rcscomponents.kiev.ua/datasheets/Amas-cat1.pdf"
+    },
+    "unit_usd": {
+     "v": 0.6,
+     "src": "estimated",
+     "note": "pair, typical retail"
+    }
+   },
+   "xt60": {
+    "current_a": {
+     "v": 35.0,
+     "src": "datasheet",
+     "url": "https://www.rcscomponents.kiev.ua/datasheets/Amas-cat1.pdf",
+     "note": "Amass: 35 A MAX, 12 AWG, rise under 85 C; distributors list 30 A rated, 60 A peak"
+    },
+    "mating_cycles": {
+     "v": 100,
+     "src": "datasheet",
+     "url": "https://www.rcscomponents.kiev.ua/datasheets/Amas-cat1.pdf",
+     "note": "mechanical life 100 times; retailers quote 1000"
+    },
+    "wire_range": {
+     "v": "12 AWG",
+     "src": "datasheet",
+     "url": "https://www.rcscomponents.kiev.ua/datasheets/Amas-cat1.pdf"
+    },
+    "unit_usd": {
+     "v": 0.9,
+     "src": "estimated",
+     "note": "pair, typical retail"
+    }
+   },
+   "xt90": {
+    "current_a": {
+     "v": 45.0,
+     "src": "datasheet",
+     "url": "https://www.rcscomponents.kiev.ua/datasheets/Amas-cat1.pdf",
+     "note": "Amass XT90H: 45 A MAX, 10 AWG, rise under 85 C; XT90PW board part spec is 30 A rated, 60 A for 1 min. The name does not mean 90 A"
+    },
+    "mating_cycles": {
+     "v": 100,
+     "src": "datasheet",
+     "url": "https://www.rcscomponents.kiev.ua/datasheets/Amas-cat1.pdf",
+     "note": "mechanical life 100 times"
+    },
+    "wire_range": {
+     "v": "10 AWG",
+     "src": "datasheet",
+     "url": "https://www.rcscomponents.kiev.ua/datasheets/Amas-cat1.pdf"
+    },
+    "unit_usd": {
+     "v": 1.6,
+     "src": "estimated",
+     "note": "pair, typical retail"
+    }
+   },
+   "screw_terminal_5_08": {
+    "current_a": {
+     "v": 17.5,
+     "src": "estimated",
+     "note": "Phoenix MKDS 1.5/..-5.08 nominal per search snippet (catalog extract), not fetched; MKDS 3 is 24 A, cheap clones are less"
+    },
+    "mating_cycles": {
+     "v": null,
+     "src": "estimated",
+     "note": "not applicable, screw clamp"
+    },
+    "wire_range": {
+     "v": "AWG 26-14",
+     "src": "estimated",
+     "note": "MKDS 1.5 listings on rs-online, search snippet"
+    },
+    "unit_usd": {
+     "v": 0.25,
+     "src": "estimated",
+     "note": "per position, typical retail"
+    }
+   },
+   "ferrule": {
+    "current_a": {
+     "v": null,
+     "src": "estimated",
+     "note": "no rating of its own; carries the wire rating"
+    },
+    "mating_cycles": {
+     "v": null,
+     "src": "estimated",
+     "note": "not applicable, crimped"
+    },
+    "wire_range": {
+     "v": "0.5 mm2 (20 AWG) white, 0.75 grey, 1.0 red (DIN 46228 colours; Phoenix uses NF C 63-023 colours)",
+     "src": "estimated",
+     "note": "search snippets of Greenlee and an industrial guide, not fetched"
+    },
+    "unit_usd": {
+     "v": 0.03,
+     "src": "estimated",
+     "note": "typical retail"
+    }
+   },
+   "ring_terminal_m3": {
+    "current_a": {
+     "v": 10.0,
+     "src": "estimated",
+     "note": "typical insulated 22-16 AWG ring; no manufacturer figure reached (TE PIDG not found), from memory, not seen in a fetched page"
+    },
+    "mating_cycles": {
+     "v": null,
+     "src": "estimated",
+     "note": "not applicable, crimped"
+    },
+    "wire_range": {
+     "v": "AWG 22-16",
+     "src": "estimated",
+     "note": "from memory, not seen in a fetched page"
+    },
+    "unit_usd": {
+     "v": 0.06,
+     "src": "estimated",
+     "note": "typical retail"
+    }
+   },
+   "spade_6_3": {
+    "current_a": {
+     "v": 15.0,
+     "src": "estimated",
+     "note": "TE FASTON .250 current rating not found in fetched pages; 24 A claim unverified, conservative value used"
+    },
+    "mating_cycles": {
+     "v": null,
+     "src": "estimated",
+     "note": "not published on pages reached"
+    },
+    "wire_range": {
+     "v": "AWG 22-14 by part number; tab 6.35 x 0.81 mm",
+     "src": "estimated",
+     "note": "search snippets of TE parts"
+    },
+    "unit_usd": {
+     "v": 0.08,
+     "src": "estimated",
+     "note": "typical retail"
+    }
+   }
+  },
+  "protection": {
+   "atm_mini_blade_fuse": {
+    "ratings_a": {
+     "v": [
+      2,
+      3,
+      4,
+      5,
+      7.5,
+      10,
+      15,
+      20,
+      25,
+      30
+     ],
+     "src": "estimated",
+     "note": "Littelfuse MINI 297: 2, 5, 7.5, 20, 25, 30 A in search snippets; the others from memory"
+    },
+    "voltage_v": {
+     "v": 32,
+     "src": "estimated",
+     "note": "search snippets of element14 listings"
+    },
+    "body_mm": {
+     "v": [
+      10.9,
+      3.8,
+      8.8
+     ],
+     "src": "estimated",
+     "note": "L x W x H, search snippets of element14 and datasheets.com"
+    },
+    "unit_usd": {
+     "v": 0.25,
+     "src": "estimated",
+     "note": "typical retail"
+    }
+   },
+   "atm_inline_holder": {
+    "rating_a": {
+     "v": 30,
+     "src": "datasheet",
+     "url": "https://www.digikey.com/en/product-highlight/l/littelfuse-commercial-vehicle-products/fhac-fhm-series-in-line-fuse-holders",
+     "note": "0FHM0002ZXJ 30 A 32 V; 0FHM0001 series 20 A; 0FHM0200Z 10 A"
+    },
+    "voltage_v": {
+     "v": 32,
+     "src": "datasheet",
+     "url": "https://www.digikey.com/en/product-highlight/l/littelfuse-commercial-vehicle-products/fhac-fhm-series-in-line-fuse-holders"
+    },
+    "wire": {
+     "v": "14 AWG on 0FHM0001SXJ, per search snippet; rest vary",
+     "src": "estimated",
+     "note": "no gauge on the fetched page"
+    },
+    "body_mm": {
+     "v": [
+      41,
+      14,
+      12
+     ],
+     "src": "estimated",
+     "note": "41 mm length in a search snippet; width and height from memory"
+    },
+    "unit_usd": {
+     "v": 2.5,
+     "src": "estimated",
+     "note": "typical retail"
+    }
+   },
+   "fuse_5x20_inline_holder": {
+    "rating_a": {
+     "v": 10,
+     "src": "datasheet",
+     "url": "https://www.enika.eu/data/files/produkty/komponenty/jisteni/Littelfuse_Fuse_Holder_150 InLine_Datasheet.pdf",
+     "note": "10 A at 350 V for 5 x 20 mm fuses, 5 A for 2AG"
+    },
+    "voltage_v": {
+     "v": 350,
+     "src": "datasheet",
+     "url": "https://www.enika.eu/data/files/produkty/komponenty/jisteni/Littelfuse_Fuse_Holder_150 InLine_Datasheet.pdf",
+     "note": "if above 32 V, power off before changing the fuse"
+    },
+    "wire": {
+     "v": "16 AWG red, 330 mm, OD 0.104 in",
+     "src": "datasheet",
+     "url": "https://www.enika.eu/data/files/produkty/komponenty/jisteni/Littelfuse_Fuse_Holder_150 InLine_Datasheet.pdf"
+    },
+    "body_mm": {
+     "v": [
+      47.5,
+      11.0,
+      11.0
+     ],
+     "src": "datasheet",
+     "url": "https://www.enika.eu/data/files/produkty/komponenty/jisteni/Littelfuse_Fuse_Holder_150 InLine_Datasheet.pdf",
+     "note": "length 47.5 +/-1, diameter 11"
+    },
+    "part": {
+     "v": "Littelfuse 150 series, 01500274Z",
+     "src": "datasheet",
+     "url": "https://www.enika.eu/data/files/produkty/komponenty/jisteni/Littelfuse_Fuse_Holder_150 InLine_Datasheet.pdf"
+    },
+    "unit_usd": {
+     "v": 1.5,
+     "src": "estimated",
+     "note": "typical retail"
+    }
+   },
+   "kcd1_rocker": {
+    "rating": {
+     "v": "6 A 250 VAC, 10 A 125 VAC, SPST",
+     "src": "datasheet",
+     "url": "https://www.rcscomponents.kiev.ua/datasheets/KCD1-1-102-1.pdf",
+     "note": "Daier KCD1-102-1 spec; LCSC guide: derate DC by at least 50 %, so about 5 A at 12-30 VDC"
+    },
+    "panel_cutout_mm": {
+     "v": [
+      19.0,
+      13.0
+     ],
+     "src": "estimated",
+     "note": "not on the spec drawing; derived from body width 13 mm. Listings give 17 x 13, 18.3 x 12.8, and an LCSC guide says 21.2 x 15 which equals the flange, so treat as test-fit"
+    },
+    "body_mm": {
+     "v": [
+      21.0,
+      15.0,
+      21.6
+     ],
+     "src": "datasheet",
+     "url": "https://www.rcscomponents.kiev.ua/datasheets/KCD1-1-102-1.pdf",
+     "note": "flange 21 x 15, depth 21.6 incl. 4.8 mm tabs, body width 13"
+    },
+    "terminals": {
+     "v": "4.8 mm quick-connect tabs",
+     "src": "datasheet",
+     "url": "https://www.rcscomponents.kiev.ua/datasheets/KCD1-1-102-1.pdf"
+    },
+    "life_cycles": {
+     "v": 10000,
+     "src": "datasheet",
+     "url": "https://www.rcscomponents.kiev.ua/datasheets/KCD1-1-102-1.pdf"
+    },
+    "unit_usd": {
+     "v": 0.3,
+     "src": "estimated",
+     "note": "typical retail"
+    }
+   },
+   "kcd4_double_pole_rocker": {
+    "rating": {
+     "v": "16 A 250 VAC, 20 A 125 VAC, DPDT/DPST",
+     "src": "estimated",
+     "note": "makerselectronics listing, small reseller; no maker datasheet found, 25 A at 125 VAC on another listing"
+    },
+    "panel_cutout_mm": {
+     "v": [
+      30.0,
+      22.0
+     ],
+     "src": "estimated",
+     "note": "listings conflict: 25 x 22, 26 x 22, 30 x 21, 30 x 22; test-fit. https://makerselectronics.com/product/kcd4-rocker-switch-2-sides-250vac/"
+    },
+    "body_mm": {
+     "v": [
+      31.0,
+      25.0,
+      28.0
+     ],
+     "src": "estimated",
+     "note": "typical, no overall size published, from memory, not seen in a fetched page"
+    },
+    "unit_usd": {
+     "v": 1.0,
+     "src": "estimated",
+     "note": "typical retail; 17 EGP at the listing"
+    }
+   },
+   "master_switch_12v_60a": {
+    "exists": {
+     "v": "no common 60 A class switch from Blue Sea, Hella or Marinco found; the usual part is a 275 A class battery switch, or a 60 A panel breaker (EGIS 4701-60)",
+     "src": "estimated",
+     "note": "search results"
+    },
+    "part": {
+     "v": "Blue Sea 6006 m-Series, ON-OFF",
+     "src": "estimated",
+     "note": "search snippets; bluesea.com returned 403"
+    },
+    "rating": {
+     "v": "275 A continuous, 455 A for 1 min, 48 VDC max; a 300 A variant lists 6006200",
+     "src": "estimated",
+     "note": "retailer spec table, search snippet"
+    },
+    "studs": {
+     "v": "3/8 in-16",
+     "src": "estimated",
+     "note": "search snippet"
+    },
+    "panel_cutout_mm": {
+     "v": 52.0,
+     "src": "estimated",
+     "note": "cutout of the similar BEP panel switch (2-1/16 in); Blue Sea drawing not reached"
+    },
+    "body_mm": {
+     "v": [
+      70,
+      70,
+      60
+     ],
+     "src": "estimated",
+     "note": "approximate, from memory, not seen in a fetched page"
+    },
+    "unit_usd": {
+     "v": 35.0,
+     "src": "estimated",
+     "note": "retail about EUR 46 at nautiradar"
+    }
+   }
+  },
+  "consumables": {
+   "heat_shrink": [
+    {
+     "diameter_mm": {
+      "v": 2,
+      "src": "estimated",
+      "note": "expanded ID, common retail size"
+     },
+     "shrink_ratio": {
+      "v": "2:1",
+      "src": "estimated",
+      "note": "3M FP-301 recovers to 50 % of supplied ID, search snippet of the 3M sheet"
+     },
+     "recovered_mm": {
+      "v": 1.0,
+      "src": "estimated",
+      "note": "50 % recovery"
+     },
+     "usd_per_m": {
+      "v": 0.15,
+      "src": "estimated",
+      "note": "typical retail"
+     }
+    },
+    {
+     "diameter_mm": {
+      "v": 3,
+      "src": "estimated",
+      "note": "expanded ID, common retail size"
+     },
+     "shrink_ratio": {
+      "v": "2:1",
+      "src": "estimated",
+      "note": "3M FP-301 recovers to 50 % of supplied ID, search snippet of the 3M sheet"
+     },
+     "recovered_mm": {
+      "v": 1.5,
+      "src": "estimated",
+      "note": "50 % recovery"
+     },
+     "usd_per_m": {
+      "v": 0.2,
+      "src": "estimated",
+      "note": "typical retail"
+     }
+    },
+    {
+     "diameter_mm": {
+      "v": 5,
+      "src": "estimated",
+      "note": "expanded ID, common retail size"
+     },
+     "shrink_ratio": {
+      "v": "2:1",
+      "src": "estimated",
+      "note": "3M FP-301 recovers to 50 % of supplied ID, search snippet of the 3M sheet"
+     },
+     "recovered_mm": {
+      "v": 2.5,
+      "src": "estimated",
+      "note": "50 % recovery"
+     },
+     "usd_per_m": {
+      "v": 0.3,
+      "src": "estimated",
+      "note": "typical retail"
+     }
+    },
+    {
+     "diameter_mm": {
+      "v": 8,
+      "src": "estimated",
+      "note": "expanded ID, common retail size"
+     },
+     "shrink_ratio": {
+      "v": "2:1",
+      "src": "estimated",
+      "note": "3M FP-301 recovers to 50 % of supplied ID, search snippet of the 3M sheet"
+     },
+     "recovered_mm": {
+      "v": 4.0,
+      "src": "estimated",
+      "note": "50 % recovery"
+     },
+     "usd_per_m": {
+      "v": 0.45,
+      "src": "estimated",
+      "note": "typical retail"
+     }
+    },
+    {
+     "diameter_mm": {
+      "v": 12,
+      "src": "estimated",
+      "note": "expanded ID, common retail size"
+     },
+     "shrink_ratio": {
+      "v": "2:1",
+      "src": "estimated",
+      "note": "3M FP-301 recovers to 50 % of supplied ID, search snippet of the 3M sheet"
+     },
+     "recovered_mm": {
+      "v": 6.0,
+      "src": "estimated",
+      "note": "50 % recovery"
+     },
+     "usd_per_m": {
+      "v": 0.7,
+      "src": "estimated",
+      "note": "typical retail"
+     }
+    }
+   ],
+   "cable_tie_100x2_5": {
+    "body_mm": {
+     "v": [
+      100,
+      2.5
+     ],
+     "src": "estimated",
+     "note": "HellermannTyton T18R, search snippets of rs-online"
+    },
+    "bundle_mm_max": {
+     "v": 22,
+     "src": "estimated",
+     "note": "search snippet, T18R PA66"
+    },
+    "tensile_n": {
+     "v": 80,
+     "src": "estimated",
+     "note": "search snippet"
+    },
+    "unit_usd": {
+     "v": 0.02,
+     "src": "estimated",
+     "note": "typical retail"
+    }
+   },
+   "adhesive_cable_clip": {
+    "bundle_mm_max": {
+     "v": 6,
+     "src": "estimated",
+     "note": "typical small clip, from memory, not seen in a fetched page"
+    },
+    "unit_usd": {
+     "v": 0.1,
+     "src": "estimated",
+     "note": "typical retail"
+    }
+   },
+   "nylon_sleeving": {
+    "sizes_mm": {
+     "v": [
+      3,
+      6,
+      10,
+      13
+     ],
+     "src": "estimated",
+     "note": "common expandable PET/nylon braid sizes, from memory, not seen in a fetched page"
+    },
+    "usd_per_m": {
+     "v": 0.4,
+     "src": "estimated",
+     "note": "typical retail at 6 mm"
+    }
+   },
+   "rubber_grommets": [
+    {
+     "panel_hole_mm": {
+      "v": 3.0,
+      "src": "estimated",
+      "note": "Heyco range starts at 6.4 mm; 3 mm grommets exist only in generic kits"
+     },
+     "inner_hole_mm": {
+      "v": 1.5,
+      "src": "estimated",
+      "note": "generic kit, from memory, not seen in a fetched page"
+     },
+     "unit_usd": {
+      "v": 0.05,
+      "src": "estimated",
+      "note": "typical retail"
+     }
+    },
+    {
+     "panel_hole_mm": {
+      "v": 5.0,
+      "src": "estimated",
+      "note": "generic kit, from memory, not seen in a fetched page"
+     },
+     "inner_hole_mm": {
+      "v": 3.0,
+      "src": "estimated",
+      "note": "generic kit, from memory, not seen in a fetched page"
+     },
+     "unit_usd": {
+      "v": 0.05,
+      "src": "estimated",
+      "note": "typical retail"
+     }
+    },
+    {
+     "panel_hole_mm": {
+      "v": 6.4,
+      "src": "datasheet",
+      "url": "https://www.heyco.com/products/bushings-grommets-heycaps-plugs/tubing-caps-and-plugs/heyco-rubber-grommets-for-panels-up-to-063-16-mm-thick",
+      "note": "nearest published size to 6.5 mm; Heyco RG 250-4-2, panel 1.6 mm"
+     },
+     "inner_hole_mm": {
+      "v": 3.2,
+      "src": "datasheet",
+      "url": "https://www.heyco.com/products/bushings-grommets-heycaps-plugs/tubing-caps-and-plugs/heyco-rubber-grommets-for-panels-up-to-063-16-mm-thick"
+     },
+     "head_mm": {
+      "v": 8.7,
+      "src": "datasheet",
+      "url": "https://www.heyco.com/products/bushings-grommets-heycaps-plugs/tubing-caps-and-plugs/heyco-rubber-grommets-for-panels-up-to-063-16-mm-thick"
+     },
+     "unit_usd": {
+      "v": 0.08,
+      "src": "estimated",
+      "note": "typical retail"
+     }
+    },
+    {
+     "panel_hole_mm": {
+      "v": 7.9,
+      "src": "estimated",
+      "note": "Heyco RG 312-6-2, nearest to 8 mm, search snippet of the Heyco chart"
+     },
+     "inner_hole_mm": {
+      "v": 4.8,
+      "src": "estimated",
+      "note": "same snippet"
+     },
+     "unit_usd": {
+      "v": 0.08,
+      "src": "estimated",
+      "note": "typical retail"
+     }
+    },
+    {
+     "panel_hole_mm": {
+      "v": 9.5,
+      "src": "estimated",
+      "note": "Heyco RG 375-6-6, nearest to 10 mm, search snippet; 4.8 mm panel"
+     },
+     "inner_hole_mm": {
+      "v": 4.8,
+      "src": "estimated",
+      "note": "same snippet"
+     },
+     "unit_usd": {
+      "v": 0.1,
+      "src": "estimated",
+      "note": "typical retail"
+     }
+    }
+   ],
+   "pg7_cable_gland": {
+    "panel_hole_mm": {
+     "v": 12.5,
+     "src": "datasheet",
+     "url": "https://www.digikey.com/en/products/detail/alpha-wire/PPC7-BK080/8552688"
+    },
+    "cable_range_mm": {
+     "v": [
+      3.0,
+      6.5
+     ],
+     "src": "datasheet",
+     "url": "https://www.digikey.com/en/products/detail/alpha-wire/PPC7-BK080/8552688"
+    },
+    "thread": {
+     "v": "PG7, 8 mm thread length",
+     "src": "datasheet",
+     "url": "https://www.digikey.com/en/products/detail/alpha-wire/PPC7-BK080/8552688"
+    },
+    "ip": {
+     "v": "IP66/IP68",
+     "src": "datasheet",
+     "url": "https://www.digikey.com/en/products/detail/alpha-wire/PPC7-BK080/8552688"
+    },
+    "part": {
+     "v": "Alpha Wire PPC7-BK080",
+     "src": "datasheet",
+     "url": "https://www.digikey.com/en/products/detail/alpha-wire/PPC7-BK080/8552688"
+    },
+    "unit_usd": {
+     "v": 2.97,
+     "src": "datasheet",
+     "url": "https://www.digikey.com/en/products/detail/alpha-wire/PPC7-BK080/8552688",
+     "note": "at quantity 1; generic glands about $0.30"
+    }
+   }
+  },
+  "awg_8_6_note": {
+   "v": "AWG 8, 6 and 4 rows extended from the same table: resistance from wire area, ampacity 50 % of the chassis figure, price estimated",
+   "src": "estimated",
+   "note": "added for the 44 V mech main feed"
+  },
+  "ec5_note": {
+   "v": "EC5 rated 120 A continuous class",
+   "src": "estimated",
+   "note": "from memory, common RC hobby figure"
+  }
+ },
+ "anl_ratings_a": [
+  35,
+  40,
+  50,
+  60,
+  80,
+  100,
+  125,
+  150,
+  200
+ ]
+}

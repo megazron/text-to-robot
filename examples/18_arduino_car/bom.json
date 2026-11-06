@@ -18,7 +18,16 @@
       "unit_cost": 2,
       "subtotal": 2,
       "spec": "https://www.adafruit.com/product/64",
-      "note": "plug-in wiring for the board and driver · https://www.adafruit.com/product/64"
+      "note": "plug-in wiring for the board and driver (stuck to the deck by its adhesive back) · https://www.adafruit.com/product/64"
+    },
+    {
+      "category": "Power",
+      "name": "Inline ATM mini blade fuse holder, 30 A class (Littelfuse FHM)",
+      "qty": 2,
+      "unit_cost": 2.5,
+      "subtotal": 5,
+      "spec": "32 V",
+      "note": "fuse holders · https://www.digikey.com/en/product-highlight/l/littelfuse-commercial-vehicle-products/fhac-fhm-series-in-line-fuse-holders"
     },
     {
       "category": "Sensor",
@@ -31,12 +40,21 @@
     },
     {
       "category": "Power",
-      "name": "2S 18650 pack: two 2500 mAh 20 A cells (Samsung 25R class) in a holder with switch",
+      "name": "2S 18650 pack: two 2500 mAh 20 A cells (Samsung 25R class) in a plain two-cell holder",
       "qty": 1,
       "unit_cost": 12,
       "subtotal": 12,
       "spec": "7.4 V, 18.5 Wh",
       "note": "2S 18650 pack · https://www.aliexpress.com/w/wholesale-18650-2-slot-battery-holder-switch.html"
+    },
+    {
+      "category": "Power",
+      "name": "KCD1 rocker switch, SPST, 6 A 250 VAC / 10 A 125 VAC",
+      "qty": 1,
+      "unit_cost": 0.3,
+      "subtotal": 0.3,
+      "spec": "https://www.aliexpress.com/w/wholesale-kcd1-rocker-switch.html",
+      "note": "main power switch · https://www.aliexpress.com/w/wholesale-kcd1-rocker-switch.html"
     },
     {
       "category": "Electronics",
@@ -57,6 +75,15 @@
       "note": "drive motor · https://www.adafruit.com/product/3777"
     },
     {
+      "category": "Power",
+      "name": "WAGO 221-415 five-way lever splice",
+      "qty": 4,
+      "unit_cost": 0.8,
+      "subtotal": 3.2,
+      "spec": "450 V",
+      "note": "rail splices, the star ground and bus hubs · https://www.wago.com/global/electrical-interconnections/compact-splicing-connector/p/221-415"
+    },
+    {
       "category": "Drive",
       "name": "65 mm rubber wheel for TT gearmotors (double-D 5.3x3.7 bore)",
       "qty": 4,
@@ -67,30 +94,147 @@
     },
     {
       "category": "Printed structure",
-      "name": "PETG filament for 2 printed parts",
+      "name": "PETG filament for 4 printed parts",
       "qty": 1,
-      "unit_cost": 2.46,
-      "subtotal": 2.46,
-      "spec": "97 g of parts (+15 % supports/waste), about 8.9 h of printing",
-      "note": "chassis, sensor_bracket"
+      "unit_cost": 4.12,
+      "subtotal": 4.12,
+      "spec": "163 g of parts (+15 % supports/waste), about 14.8 h of printing",
+      "note": "chassis, electronics_bay, electronics_bay_lid, sensor_bracket"
     },
     {
       "category": "Fasteners",
       "name": "Screws, nuts and inserts",
-      "qty": 16,
+      "qty": 26,
       "unit_cost": 0.12,
-      "subtotal": 1.92,
-      "spec": "8x M3x25 socket head + nut (motor through-bolt); 2x M3x8 countersunk + nut (pack); 2x M3x10 + nut (sensor bracket); 4x M2x6 self-tapping (sensor)"
+      "subtotal": 3.12,
+      "spec": "8x M3x25 socket head + nut (motor through-bolt); 4x M3 x 10 self-tapping (lid to compartment); 4x M3 x 12 self-tapping (compartment to its base, from below); 2x M3 x 6 self-tapping (2S 18650 pack: two 2500 mAh 20 A cells to standoffs); 2x M3x8 countersunk + nut (pack, through the deck); 2x M3x10 + nut (sensor bracket); 4x M2x6 self-tapping (sensor)"
+    },
+    {
+      "category": "Wiring",
+      "name": "20 AWG silicone wire",
+      "qty": 0.5,
+      "unit_cost": 0.5,
+      "subtotal": 0.25,
+      "spec": "0.5 m: 0.519 mm2, rated 5.5 A in a bundle; 0.45 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "22 AWG silicone wire",
+      "qty": 1.4,
+      "unit_cost": 0.4,
+      "subtotal": 0.56,
+      "spec": "1.4 m: 0.327 mm2, rated 3.5 A in a bundle; 1.20 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "24 AWG silicone wire",
+      "qty": 1.2,
+      "unit_cost": 0.35,
+      "subtotal": 0.42,
+      "spec": "1.2 m: 0.205 mm2, rated 1.75 A in a bundle; 1.05 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "26 AWG silicone wire",
+      "qty": 4.6,
+      "unit_cost": 0.3,
+      "subtotal": 1.38,
+      "spec": "4.6 m: 0.128 mm2, rated 1.1 A in a bundle; 4.13 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Dupont 2.54 mm contacts",
+      "qty": 52,
+      "unit_cost": 0.02,
+      "subtotal": 1.04,
+      "spec": "52 pc: rated 3 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Dupont 2.54 mm housings",
+      "qty": 17,
+      "unit_cost": 0.02,
+      "subtotal": 0.34,
+      "spec": "17 pc: one per cable end",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "6.3 mm spade contacts",
+      "qty": 2,
+      "unit_cost": 0.08,
+      "subtotal": 0.16,
+      "spec": "2 pc: rated 15 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Heat shrink 3 mm, 2:1",
+      "qty": 1.5,
+      "unit_cost": 0.2,
+      "subtotal": 0.3,
+      "spec": "1.5 m: 12 solder joints + a boot on each cable end",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Cable tie 100 x 2.5 mm",
+      "qty": 33,
+      "unit_cost": 0.02,
+      "subtotal": 0.66,
+      "spec": "33 pc: at every clip, cable end and strain-relief anchor",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Rubber grommet, 5.0 mm panel hole, 3.0 mm bore",
+      "qty": 4,
+      "unit_cost": 0.05,
+      "subtotal": 0.2,
+      "spec": "4 pc: 5 mm panel hole",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Rubber grommet, 6.4 mm panel hole, 3.2 mm bore",
+      "qty": 1,
+      "unit_cost": 0.08,
+      "subtotal": 0.08,
+      "spec": "1 pc: 6.5 mm panel hole",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "4 A ATM blade fuse",
+      "qty": 1,
+      "unit_cost": 0.25,
+      "subtotal": 0.25,
+      "spec": "1 pc: plus spares",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "2 A ATM blade fuse",
+      "qty": 1,
+      "unit_cost": 0.25,
+      "subtotal": 0.25,
+      "spec": "1 pc: plus spares",
+      "note": "price estimated"
     }
   ],
-  "total": 40.88,
+  "total": 58.13,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
   "actuator_sizing": [],
   "warnings": [],
   "notes": [
-    "Arduino car (stronger (4WD, ramps up to 10 deg)): 4WD on TT gear motors, 0.53 kg, 0.54 m/s, 99 min, $37 of parts",
+    "Arduino car (stronger (4WD, ramps up to 10 deg)): 4WD on TT gear motors, 0.60 kg, 0.54 m/s, 99 min, $51 of parts",
     "TT motor continuous torque taken as 30 % of the 0.8 kg.cm stall (Adafruit #3777 data)",
     "prices are typical single-unit marketplace prices for generic modules and vary by seller",
     "Prices are list/street prices from the linked suppliers at the time the catalog was written; check before ordering."

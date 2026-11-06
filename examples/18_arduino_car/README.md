@@ -6,9 +6,9 @@
 
 Interpreted as: Arduino car (4WD) · range (sensor_bracket)
 
-**Arduino car (stronger (4WD, ramps up to 10 deg)): 4WD on TT gear motors, 0.53 kg, 0.54 m/s, 99 min, $37 of parts**
+**Arduino car (stronger (4WD, ramps up to 10 deg)): 4WD on TT gear motors, 0.60 kg, 0.54 m/s, 99 min, $51 of parts**
 
-Parts cost **$40.88** · printed structure 2 parts, 97 g · checks passed 8/8
+Parts cost **$58.13** · printed structure 4 parts, 163 g · checks passed 36/36
 
 ## What it can do
 
@@ -18,17 +18,19 @@ Parts cost **$40.88** · printed structure 2 parts, 97 g · checks passed 8/8
 | tier label | stronger (4WD, ramps up to 10 deg) |
 | wheels | 4 |
 | max slope deg | 10 |
-| mass kg | 0.531 |
+| mass kg | 0.605 |
 | top speed m s | 0.54 |
 | runtime min | 99 |
-| cost usd | 36.5 |
+| cost usd | 50.89 |
 | controller | Arduino Nano compatible board (ATmega328P, CH340, USB-C) |
 | length mm | 200 |
 | width mm | 166 |
+| turn rate rad s | 1.4 |
+| turn slip factor | 2.78 |
 
 ## Engineering checks
 
-All 8 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
+All 36 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
 
 ## Assumptions and limits
 
@@ -47,9 +49,9 @@ All 8 checks pass (torque, speed, power, stability, print-bed fit). Details in `
 
 | | Test | Result |
 |---|---|---|
-| ✅ | drive straight | 2.27 m in 4.95 s, cruise speed 0.530 m/s vs claimed 0.540 m/s, heading drift -0.1 deg, lateral -0.4 cm |
-| ✅ | ramp 10deg | from standstill on a 10 deg slope (speed ramped over 2.0 s at 0.5 m/s^2): 1.51 m uphill in 4.0 s, speed 0.522 m/s of 0.540 commanded |
-| ✅ | turn in place | yaw rate 2.22 rad/s with 3.84 commanded (no-slip) (needs >= 1.92), centre moved 3.9 cm over 1.0 turn(s) (3.9 cm per turn) |
+| ✅ | drive straight | 2.27 m in 4.96 s, cruise speed 0.526 m/s vs claimed 0.540 m/s, heading drift 0.2 deg, lateral 0.5 cm |
+| ✅ | ramp 10deg | from standstill on a 10 deg slope (speed ramped over 2.0 s at 0.5 m/s^2): 1.50 m uphill in 4.0 s, speed 0.522 m/s of 0.540 commanded |
+| ✅ | turn in place | yaw rate 1.91 rad/s with 3.86 commanded (no-slip), claimed 1.40 rad/s (needs >= 1.19), centre moved 2.5 cm over 1.0 turn(s) (2.5 cm per turn) |
 
 _PASS means the modelled actuators (datasheet peak torque as a hard limit, a linear torque-speed line to no-load speed, reflected rotor inertia, URDF damping/friction) can produce the torques and speeds the task needs in this geometry and mass distribution, and that mean torque over the hold stays within the continuous (rated) torque. Joint control uses an ideal model-based feedforward (computed torque) through the force-limited servo for fixed-base robots and plain position servos for floating robots; a pass therefore proves torque/speed capacity, not that a given controller achieves it. Untested: thermal limits over long duty cycles (only the mean-vs-rated proxy), gearbox backlash and compliance, link and joint flexibility, encoder resolution, supply voltage sag and current limits, bus latency, controller tuning, and contact/friction values (nominal friction only)._
 <!-- /SIM -->
@@ -60,6 +62,7 @@ _PASS means the modelled actuators (datasheet peak torque as a hard limit, a lin
 |---|---|
 | `robot.urdf`, `meshes/` | URDF with real component and printed-part meshes, datasheet effort/velocity limits |
 | `BOM.md`, `bom.json` | every part to buy, with supplier links and prices |
+| `WIRING.md`, `wiring.svg` | power budget per rail, pin-to-pin table, cut list, slack at each joint, wiring diagram |
 | `robot.cad.zip` | build package: printable STLs, print list, bought-part models, assembly order |
 | `robot.ros2.zip` | ROS 2 description package (ros2_control, MoveIt config, Gazebo launch) |
 | `robot.training.zip` | MuJoCo / RL training scaffold |

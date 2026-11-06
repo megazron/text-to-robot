@@ -15,6 +15,7 @@ interface Record_ {
   performance: Record<string, number | string>;
   assumptions: string[];
   fasteners: Record<string, number>;
+  wiring?: { bom: { item: string; qty: number; unit: string; unit_usd: number; subtotal_usd: number; spec: string; source: string }[]; total_wire_m: number };
 }
 export const designRecord = (spec: RobotSpecification) => (spec.metadata as { design?: Record_ }).design;
 
@@ -36,6 +37,8 @@ export function buildDesignedBom(spec: RobotSpecification, budget?: number, payl
     subtotal: +((grams / 1000) * FILAMENT_USD_PER_KG * 1.15).toFixed(2), spec: `${grams.toFixed(0)} g of parts (+15 % supports/waste), about ${(cm3 / PRINT_CM3_PER_HOUR).toFixed(1)} h of printing`, note: d.printed.map((p) => p.name).join(", ") });
   const nFast = Object.values(d.fasteners).reduce((a, b) => a + b, 0);
   if (nFast) lines.push({ category: "Fasteners", name: "Screws, nuts and inserts", qty: nFast, unit_cost: FASTENER_USD, subtotal: +(nFast * FASTENER_USD).toFixed(2), spec: Object.entries(d.fasteners).map(([k, v]) => `${v}x ${k}`).join("; ") });
+  // wiring: every line comes from the routed harness (wire by gauge and length, contacts, shrink, ties, grommets)
+  for (const w of d.wiring?.bom ?? []) lines.push({ category: "Wiring", name: w.item, qty: w.qty, unit_cost: w.unit_usd, subtotal: w.subtotal_usd, spec: `${w.qty} ${w.unit}: ${w.spec}`, note: `price ${w.source}` });
   const total = +lines.reduce((s, l) => s + l.subtotal, 0).toFixed(2);
   const torqueChecks = d.checks.filter((c) => c.name.startsWith("torque:"));
   const sizingPass = torqueChecks.every((c) => c.pass);

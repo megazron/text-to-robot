@@ -19,6 +19,8 @@ export type Op =
   | { op: "cutbox"; min: Vec3; max: Vec3 }
   | { op: "lighten"; a: Vec3; b: Vec3; r: number; n: number; axis?: Vec3 }    // row of lightening holes along a->b, drilled along `axis`
   | { op: "revolve"; pts: [number, number][]; seg?: number }                  // closed (radius, z) outline turned about +z (shells, domes)
+  | { op: "subtract"; of: Op[] }                                              // remove the finished solid of a sub-program
+  | { op: "solid"; of: Op[] }                                                 // add the finished solid of a sub-program: its cuts stay inside it, so walls hollowed here keep the bosses added after them
   | { op: "at"; T: Mat4; of: Op[] };                                           // sub-program placed by T (may scale)
 
 export interface Program { name: string; ops: Op[]; }
@@ -47,6 +49,8 @@ function solidOf(o: Op): { add: M[]; cut: M[] } {
     // circumscribed polygon: the hole is never smaller than its nominal diameter (bearing seats, rods, shafts)
     case "hole": return { add: [], cut: [rod(o.a, o.b, o.d / 2 / Math.cos(Math.PI / 24), 24)] };
     case "cutbox": return { add: [], cut: [box(o.min, o.max)] };
+    case "subtract": return { add: [], cut: [evaluate({ name: "subtract", ops: o.of })] };
+    case "solid": return { add: [evaluate({ name: "solid", ops: o.of })], cut: [] };
     case "at": { const parts = o.of.map(solidOf); return { add: parts.flatMap((p) => p.add.map((m) => m.transform(o.T))), cut: parts.flatMap((p) => p.cut.map((m) => m.transform(o.T))) }; }
     case "lighten": {
       const cuts: M[] = [];

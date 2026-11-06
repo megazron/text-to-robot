@@ -85,9 +85,10 @@ export function recordCost(A: Assembly): number {
   for (const r of A.purchasedList()) parts += part(r.key).price_usd * r.qty;
   const printedKg = A.design.printed.reduce((s, p) => s + p.mass_kg, 0);
   const screws = Object.values(A.design.fasteners).reduce((s, n) => s + n, 0) * 0.15;
-  const total = parts + printedKg * FILAMENT_USD_PER_KG + screws;
+  const wiring = A.design.wiring?.cost_usd ?? 0;
+  const total = parts + printedKg * FILAMENT_USD_PER_KG + screws + wiring;
   A.design.performance.cost_usd = +total.toFixed(2);
-  A.design.performance.cost_breakdown = `parts ${parts.toFixed(2)} USD, filament ${(printedKg * FILAMENT_USD_PER_KG).toFixed(2)} USD (${printedKg.toFixed(2)} kg), fasteners ~${screws.toFixed(2)} USD`;
+  A.design.performance.cost_breakdown = `parts ${parts.toFixed(2)} USD, filament ${(printedKg * FILAMENT_USD_PER_KG).toFixed(2)} USD (${printedKg.toFixed(2)} kg), fasteners ~${screws.toFixed(2)} USD, wiring ${wiring.toFixed(2)} USD`;
   return total;
 }
 export const fmt = (x: number, d = 2) => (+x.toFixed(d)).toString();

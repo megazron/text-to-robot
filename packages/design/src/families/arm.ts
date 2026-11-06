@@ -3,12 +3,15 @@
 // cradling the next actuator by its case screws. Actuators are sized from the exact
 // worst-case gravity torque of the built arm, holding the payload fully stretched out.
 import type { RobotSpecification, SensorType } from "@ttr/robot-schema";
-import { part, rating, bboxM, hornRadiusMm, type Vec3 } from "@ttr/parts";
+import { part, rating, electrical, bboxM, hornRadiusMm, type Vec3 } from "@ttr/parts";
 import { Assembly } from "../assembly.ts";
 import { frame, invert, mul, apply, I4, translation, type Mat4, type Op } from "@ttr/solid";
 export { linkOps as servoLinkOps, gripperOps as servoGripperOps };
 import { worstTorques, axisInertias, pointWorld, totalMass, type PointLoad } from "../kin.ts";
 import { LADDERS, choose, evaluate, passes, ladderFor, type Ladder, DYNAMIC_FACTOR } from "../sizing.ts";
+import { controlCase, enclosureChecks, exposed } from "../enclosure.ts";
+import { Harness, finishWiring } from "../wiring.ts";
+import { busChain, canTree, actuatorsUnder } from "../netlist.ts";
 
 export interface ArmRequest {
   name?: string; dof: number; reachM?: number; payloadKg?: number; gripper?: boolean; budget?: number; prompt?: string; ladder?: Ladder;
@@ -28,6 +31,8 @@ export interface ArmRequest {
   onlyActuators?: string[];
   /** Arduino mode: clone boards (Uno / PCA9685 compatibles) instead of the originals */
   cheapParts?: boolean;
+  /** this arm is grafted on a robot: its host brings the electronics, power and harness */
+  embedded?: boolean;
 }
 export type Kind = "Y" | "P" | "R";
 const KINDS: Record<number, Kind[]> = { 1: ["Y"], 2: ["P", "P"], 3: ["Y", "P", "P"], 4: ["Y", "P", "P", "P"], 5: ["Y", "P", "P", "P", "R"], 6: ["Y", "P", "P", "R", "P", "R"], 7: ["Y", "P", "R", "P", "R", "P", "R"] };
@@ -431,21 +436,28 @@ export function designArm(req: ArmRequest): RobotSpecification {
   const bus = LADDERS[ladder].bus;
   const amps = joints.reduce((s, j) => s + Number(part(j.key).specs.stall_current_a ?? part(j.key).specs.current_a ?? 1) * Math.min(1, (torques[j.name] ?? 0) / rating(j.key).peak_nm), 0);
   A.design.performance.holding_current_a = +amps.toFixed(2);
+  const H = new Harness(A), reachMm = reachActual * 1000;
+  const caseT = translation([-reachMm - 60 - 240, -70, 2.4]);
+  let supplyA = 6;
   if (ladder === "hobby") {
     // Arduino drives a PCA9685 over I2C; servos get their own 5 V rail (never the Arduino's 5 V pin)
-    A.buy(req.cheapParts ? "arduino_uno_clone" : "arduino_uno_r3", 1, "controller (USB serial commands, I2C to the servo driver)");
-    A.buy(req.cheapParts ? "pca9685_clone" : bus, 1, "16-channel PWM servo driver (I2C)");
     // a move can stall every servo at once for a moment: size for all stall currents. Micro-servo arms run
     // from a 5 V 4 A wall adapter; bigger ones need the 10 A supply
-    const stall = joints.reduce((s, j) => s + Number(part(j.key).specs.stall_current_a ?? 1), 0);
-    const supplyA = stall <= 4 ? 4 : 10;
-    if (supplyA === 4) { A.buy("psu_5v4a_adapter", 1, "5 V 4 A wall adapter (V+ terminal of the PCA9685)"); A.buy("dc_jack_5521_panel", 1, "adapter socket"); }
-    else A.buy("psu_5v_lrs50", 1, "5 V 10 A servo supply (V+ terminal of the PCA9685)");
+    const stall = joints.reduce((s, j) => s + electrical(j.key)!.current_a.v.peak, 0);
+    supplyA = stall <= 4 ? 4 : 10;
+    if (!req.embedded) {
+      controlCase(A, H, { parent: "base_link", T: caseT, psu: supplyA === 4 ? null : "psu_5v_lrs50", psuUse: "5 V 10 A servo supply (V+ terminal of the PCA9685)",
+        boards: [{ name: "controller", key: req.cheapParts ? "arduino_uno_clone" : "arduino_uno_r3", use: "controller (USB serial commands, I2C to the servo driver)" }, { name: "servo_driver", key: req.cheapParts ? "pca9685_clone" : bus, use: "16-channel PWM servo driver (I2C)" }] });
+      if (supplyA === 4) { H.part("power_supply", "psu_5v4a_adapter", { off_board: true, note: "wall adapter" }); A.buy("psu_5v4a_adapter", 1, "5 V 4 A wall adapter (V+ terminal of the PCA9685)"); }
+    }
     A.check("power:supply", stall <= supplyA, `all ${joints.length} servos stalled together draw ${stall.toFixed(1)} A of the ${supplyA} A 5 V supply; holding the payload draws ~${amps.toFixed(1)} A`);
     A.check("power:voltage", joints.every((j) => Number(part(j.key).specs.voltage_v) >= 4.8), `5 V rail is inside every servo's 4.8-6 V range (${[...new Set(joints.map((j) => part(j.key).name.split(" (")[0]))].join(", ")})`);
   } else {
-    A.buy(bus, 1, "USB to actuator bus");
-    if (ladder !== "cubemars") A.buy("psu_12v_lrs75", 1, "12 V actuator supply");
+    if (!req.embedded) {
+      const can = ladder === "cubemars";
+      controlCase(A, H, { parent: "base_link", T: caseT, psu: can ? "psu_48v_lrs350" : "psu_12v_lrs75", psuUse: can ? "48 V actuator supply" : "12 V actuator supply",
+        boards: [{ name: "servo_bus", key: bus, use: "USB to actuator bus" }, ...(can ? [{ name: "can_bus", key: "usb_can_adapter", use: "USB to CAN for the CubeMars actuators" }, { name: "dcdc_12v", key: "dcdc_48v_12v_sd50c12", use: "12 V for the DYNAMIXEL wrist" }] : [])] });
+    }
     if (ladder !== "cubemars") A.check("power:supply", amps <= 6 * 0.8, `holding the payload stretched out draws ~${amps.toFixed(1)} A of the 6 A supply`);
   }
   A.design.assumptions.push(
@@ -466,7 +478,46 @@ export function designArm(req: ArmRequest): RobotSpecification {
   const ready = [0.7, 1.3, -0.8]; // physical bend; a pitch actuator mounted on the other side turns the other way
   A.design.home = Object.fromEntries(pjs.slice(0, 3).map((j, k) => [j.name, +(ready[k] * sign(j)).toFixed(3)]));
   A.design.request = { ...req, dof };
+  if (!req.embedded) wireFixedArm(A, H, ladder, supplyA, gripKeyUsed(A));
   return A.finish(`${dof}-DOF arm, ${(reachActual * 1000).toFixed(0)} mm reach, ${payload} kg payload, ${LADDERS[ladder].label}`);
+}
+
+const gripKeyUsed = (A: Assembly) => A.spec.links.some((l) => l.name === "gripper_actuator");
+/** Netlist of an arm on a bench: mains supply to the actuator rail, the bus through every joint in order; a hobby arm on a PCA9685. */
+function wireFixedArm(A: Assembly, H: Harness, ladder: Ladder, supplyA: number, _grip: boolean) {
+  H.scan();
+  const actuators = actuatorsUnder(H, /_actuator$/);
+  if (ladder === "hobby") {
+    if (supplyA === 4) { H.bought("power_supply.dc_out.@power", "power_jack.plug_side.+", "barrel", 0.5, 4, "ADAPTER"); H.mainPower("V_SERVO", { source: "power_jack", pos: "CENTRE", neg: "SLEEVE", sw: "main_switch", fuse: false, volts: 5, cont: 4, peakLimit: 4, simNote: "every servo stalled at once" }); }
+    else H.mainPower("V_SERVO", { source: "power_supply", pos: "DC OUTPUT +V", neg: "DC OUTPUT -V", fuse: false, volts: 5, cont: 10, peakLimit: 11, simNote: "every servo stalled at once" });
+    H.feed("V_SERVO", "servo_driver", { v: "v_plus.V+", g: "v_plus.GND", typ: 0.01, peak: 0.01 });
+    actuators.forEach((s, ch) => {
+      const r = H.rec(s).current_a.v, d = H.rails.get("V_SERVO")!.feeds[0];
+      d.typ += r.typical; d.peak += r.peak;
+      H.net(`SERVO${ch}_PWM`, "signal"); H.net(`SERVO${ch}_V`, "power", 5);
+      H.wire(`SERVO${ch}_PWM`, `servo_driver.ch${ch}.PWM${ch}`, `${s}.@pwm`); H.wire(`SERVO${ch}_V`, `servo_driver.ch${ch}.V+`, `${s}.@power`, { typ: r.typical, peak: r.peak }); H.wire("GND", `servo_driver.ch${ch}.GND`, `${s}.@ground`, { typ: r.typical, peak: r.peak });
+    });
+    H.net("5V_LOGIC", "power", 5);
+    H.wire("5V_LOGIC", "controller.5V", "servo_driver.control_in.VCC", { typ: 0.01 }); H.wire("GND", "controller.GND", "servo_driver.control_in.GND", { typ: 0.01 });
+    H.signals("controller", "servo_driver", [["SDA", "SDA", "I2C_SDA"], ["SCL", "SCL", "I2C_SCL"]]);
+    H.spare("controller.janalog.VIN", "controller.power_jack");
+    H.notes.push("The Uno runs from its USB cable, the servos from the 5 V supply; the grounds join at the I2C lead.");
+  } else if (ladder === "cubemars") {
+    H.mainPower("V48", { source: "power_supply", pos: "DC OUTPUT +V", neg: "DC OUTPUT -V", fuse: false, volts: 48, cont: 7.3, peakLimit: 10.9, simultaneous: 2, simNote: "two joints at peak at once" });
+    H.regulator("dcdc_12v", "V48", "12V", { vin: "DC INPUT V+", gin: "DC INPUT V-", vout: "DC OUTPUT +V", gout: "DC OUTPUT -V", volts: 12, efficiency: 0.86, cont: 4.2, peakLimit: 4.4 });
+    H.spare("dcdc_12v.dc_in.FG");
+    const cube = actuators.filter((s) => H.instances.get(s)!.key.startsWith("cubemars")), dxl = actuators.filter((s) => !H.instances.get(s)!.key.startsWith("cubemars"));
+    canTree(H, { adapter: "can_bus", motors: cube, rail: "V48" });
+    if (dxl.length) busChain(H, { adapter: "servo_bus", servos: dxl, rail: "12V" });
+  } else {
+    H.mainPower("VBUS", { source: "power_supply", pos: "DC OUTPUT +V", neg: "DC OUTPUT -V", fuse: false, volts: 12, cont: 6, peakLimit: 6.6, simultaneous: 2, simNote: "two joints at peak at once, the rest at half load" });
+    busChain(H, { adapter: "servo_bus", servos: actuators, rail: "VBUS" });
+    H.spare("servo_bus.dc_in");
+  }
+  // sensors go to the host PC on their own leads
+  for (const x of ["workspace_depth", "wrist_camera", "wrist_depth", "base_imu"]) if (H.instances.has(x)) { exposed(A, x, x === "base_imu" ? "under the base plate, wired to the host PC" : "on its mount, looking at the workspace, wired to the host PC", [20, 20]); for (const p of H.rec(x).ports) H.spare(`${x}.${p.name}`); }
+  finishWiring(H);
+  enclosureChecks(A);
 }
 
 /**

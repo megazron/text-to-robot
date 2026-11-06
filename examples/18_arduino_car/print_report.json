@@ -8,7 +8,7 @@
   {
    "name": "chassis",
    "watertight": true,
-   "volume_cm3": 99.44,
+   "volume_cm3": 100.54,
    "size_mm": [
     200.0,
     112.0,
@@ -22,9 +22,59 @@
    "fits_bed": true,
    "support_area_cm2": 1.11,
    "support_frac": 0.002,
-   "bed_contact_cm2": 214.85,
+   "bed_contact_cm2": 217.6,
    "min_wall_mm": 3.0,
    "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "electronics_bay",
+   "watertight": true,
+   "volume_cm3": 32.48,
+   "size_mm": [
+    184.7,
+    107.1,
+    26.0
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 1.18,
+   "support_frac": 0.004,
+   "bed_contact_cm2": 12.75,
+   "min_wall_mm": 1.99,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "electronics_bay_lid",
+   "watertight": true,
+   "volume_cm3": 38.18,
+   "size_mm": [
+    184.7,
+    107.1,
+    5.2
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 0.87,
+   "support_frac": 0.002,
+   "bed_contact_cm2": 160.67,
+   "min_wall_mm": 1.42,
+   "thin_wall_frac": 0.001,
    "passed": true,
    "supports": "none",
    "problems": [],

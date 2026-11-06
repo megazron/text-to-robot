@@ -12,7 +12,7 @@ test("the cheapest desk arm passes every check and buys only hobby parts", () =>
   const v = validateSpec(s);
   assert.ok(v.valid, v.issues.map((i: any) => i.message).join("; "));
   for (const c of d.checks) assert.ok(c.pass, `${c.name}: ${c.detail}`);
-  for (const p of d.purchased) assert.match(p.key, /^(hobby_|arduino_|pca9685_clone|psu_5v|dc_jack)/, p.key);
+  for (const p of d.purchased) assert.match(p.key, /^(hobby_|arduino_|pca9685_clone|psu_5v|dc_jack|switch_kcd|fuse_holder|wago_|iec_)/, p.key);
   assert.ok(d.checks.some((c: any) => c.name === "clearance:home"));
 });
 

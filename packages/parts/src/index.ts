@@ -2,6 +2,8 @@
 // by scripts/export_parts.py. Library units are millimetres and grams; helpers convert to SI.
 import catalogJson from "../data/catalog.json" with { type: "json" };
 import meshesJson from "../data/meshes.json" with { type: "json" };
+import electricalJson from "../data/electrical.json" with { type: "json" };
+import wiringJson from "../data/wiring.json" with { type: "json" };
 
 export type Vec3 = [number, number, number];
 export interface Hole { pos: Vec3; axis: Vec3; dia_mm: number; thread: string | null; }
@@ -15,6 +17,32 @@ export interface Component {
   bbox_mm?: { min: Vec3; max: Vec3 };
   mesh_triangles?: number;
 }
+
+/** A fact about a part and where it comes from: `datasheet` with its URL, or `estimated` with the reason. */
+export interface Sourced<T> { v: T; src: "datasheet" | "estimated"; url?: string; note?: string; }
+export interface Pin { pin: string; name: string; signal: string; dir: string; }
+export interface Port { name: string; connector: Sourced<string>; mate: Sourced<string>; pins: Sourced<Pin[]>; }
+export interface ElectricalRecord {
+  role: string;
+  voltage_v: Sourced<{ min: number; nom: number; max: number }>;
+  current_a: Sourced<{ typical: number; peak: number }>;
+  output?: Sourced<{ voltage_v: number; current_a: number }>;
+  heat_w?: Sourced<number>;
+  ports: Port[];
+  notes?: string;
+}
+export interface PartDimensions { body_mm: Sourced<number[]>; holes?: Sourced<{ x: number; y: number; d: number; thread: string | null }[]>; no_holes?: boolean; hole_note?: string; }
+export interface PartData { dimensions: PartDimensions; electrical: ElectricalRecord; }
+export const ELECTRICAL = electricalJson as unknown as Record<string, PartData>;
+/** Electrical record of a part (ports, pins, connector, voltage, current), undefined for mechanical parts. */
+export const electrical = (key: string): ElectricalRecord | undefined => ELECTRICAL[key]?.electrical;
+export interface WireRow { awg: number; area_mm2: number; ohm_per_m: number; ampacity_a: number; od_mm: number; usd_per_m: number; min_bend_radius_x_od: number; }
+export interface ConnectorRow { name: string; current_a: number; unit_usd: number; housing_usd?: number; }
+/** Wire, connector and consumable tables for the wiring model, every value sourced in wiring.json. */
+export const WIRING = wiringJson as unknown as {
+  awg: WireRow[]; connectors: Record<string, ConnectorRow>; fuse_ratings_a: number[]; anl_ratings_a?: number[]; off_board_cable_mm: number;
+  consumables: Record<string, { name: string; unit: string; unit_usd: number; spec?: string }>; premade_usd?: Record<string, number>; sources: Record<string, unknown>;
+};
 
 export const CATALOG = catalogJson as unknown as Record<string, Component>;
 const MESHES = meshesJson as unknown as Record<string, { v: number[]; f: number[] }>;
