@@ -59,14 +59,20 @@ function buildHexapod(req: LeggedRequest, cfg: HexCfg, sensors: string[]) {
   const board = (key: string, x: number, y: number, name: string, use: string) => { const b = bodyMm(key); mountAt(A, base, key, translation([x - b.min[0], y - b.min[1], zPlate + 3]), name, use); };
   board("bno085_breakout", -12.8, -11.35, "imu", "IMU (body attitude, at the centre)");
   addSensor(A, "imu", "imu", "base_link", [0, 0, (zPlate + 5) / 1000], [0, 0, 0], { model: "BNO085" });
-  board("waveshare_bus_servo_adapter", -11, -55, "actuator_bus", "USB to servo bus");
+  board("waveshare_bus_servo_adapter", -11, -50, "actuator_bus", "USB to servo bus");
   board("buck_5v_5a", -12.7, 24, "regulator_5v", "5 V regulator (sensors)");
   // ---- top deck on three pillars: computer, LiDAR turret, camera ----
   const zDeck = zf + bF.max[1] + WALL + 6;         // above the femur cradles
   const Rd = Rf - (-bF.min[0]) - WALL - 6;          // inside the femur cradles' inner ends
   const deck: Frame = { name: "top_deck", W: translation([0, 0, 0]) };
   const deckOps: Op[] = [disc(Rd, zDeck, zDeck + 3)];
-  for (const deg of [0, 120, 240]) { const t = (deg * Math.PI) / 180, p: Vec3 = [52 * Math.cos(t), 52 * Math.sin(t), 0]; deckOps.push({ op: "box", min: [p[0] - 5, p[1] - 5, zPlate], max: [p[0] + 5, p[1] + 5, zDeck], r: 4.9 }, { op: "hole", a: [p[0], p[1], zPlate - 1], b: [p[0], p[1], zPlate + 12], d: 2.6 }); }
+  // three pillars of their own: the deck then prints flat, with the computer's bosses standing up from it
+  [0, 120, 240].forEach((deg, i) => {
+    const t = (deg * Math.PI) / 180, p: Vec3 = [52 * Math.cos(t), 52 * Math.sin(t), 0], name = `deck_pillar_${i + 1}`;
+    deckOps.push({ op: "hole", a: [p[0], p[1], zDeck - 1], b: [p[0], p[1], zDeck + 4], d: 3.4 });
+    printed(A, { name, W: base.W }, [{ op: "box", min: [p[0] - 5, p[1] - 5, zPlate], max: [p[0] + 5, p[1] + 5, zDeck], r: 4.9 }, { op: "hole", a: [p[0], p[1], zPlate - 1], b: [p[0], p[1], zPlate + 12], d: 2.6 }, { op: "hole", a: [p[0], p[1], zDeck - 12], b: [p[0], p[1], zDeck + 1], d: 2.6 }], { role: "structure", material: "printed_dark" });
+    A.fixed(`${name}_mount`, "base_link", name, translation([0, 0, 0]));
+  });
   const compute = sensors.includes("depth") || sensors.includes("lidar") ? "jetson_orin_nano_super" : "rpi5";
   const cb = bodyMm(compute), cl = cb.max[0] - cb.min[0], cw = cb.max[1] - cb.min[1];
   const cx = -cl / 2 - cb.min[0] - 6, cy = -cw / 2 - cb.min[1], zc = zDeck + 3 + 5;
@@ -139,7 +145,7 @@ function buildHexapod(req: LeggedRequest, cfg: HexCfg, sensors: string[]) {
 /** Three compartments: a hood over the computer on the top deck, a hood over the boards on the plate, a tray under the plate for the battery. */
 function boxHex(A: Assembly, H: Harness, b: ReturnType<typeof buildHexapod>) {
   hoodAround(A, H, { name: "computer_hood", deck: "top_deck", parts: ["computer"], z0: b.zDeck + 3, z1: b.zRoof, usbFor: "computer" });
-  hoodAround(A, H, { name: "board_hood", deck: "base_link", parts: ["actuator_bus", "regulator_5v", "imu"], z0: b.zPlate, rocker: true, limit: { x0: -15, x1: 44, y0: -80, y1: 60 } });
+  hoodAround(A, H, { name: "board_hood", deck: "base_link", parts: ["actuator_bus", "regulator_5v", "imu"], z0: b.zPlate, rocker: true, limit: { x0: -15, x1: 41, y0: -80, y1: 60 } });
   const bb = b.battB, x0 = b.bx0 + bb.min[0] - 3, x1 = b.bx0 + bb.max[0] + 3, y = b.bw + 4.4;
   // the tray hangs from the plate: bounds in the frame turned about x, so z runs downwards
   hood(A, H, { name: "battery_tray", deck: "base_link", x0, x1, y0: -y, y1: y, z0: -(b.zPlate - 4), z1: -(b.zBatt - 3), parts: ["battery"], flip: true, ventRows: 0, deckGrommets: [{ id: "up", x: x1 - 8, y: 0 }] });

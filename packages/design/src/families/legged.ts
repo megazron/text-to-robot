@@ -250,7 +250,7 @@ function wireQuad(A: Assembly, H: Harness, compute: string, qdd: boolean, nBatt:
   const named: { name: string; kind: "lidar" | "depth" | "camera" | "imu" }[] = [];
   for (const [n, k] of [["lidar", "lidar"], ["depth_camera", "depth"], ["camera", "camera"], ["imu", "imu"]] as const) if (H.instances.has(n)) named.push({ name: n, kind: k });
   for (const x of ["lidar", "depth_camera", "camera"]) if (H.instances.has(x)) exposed(A, x, x === "lidar" ? "on a mast above the deck, scan plane clear of the hood" : "on the front edge of the deck, looking forward", [20, 20]);
-  coreTree(H, { batteries: ["battery"], regulators: ["regulator_5v"], compute, sensors: named, simultaneous: 4, simNote: "four joints at peak at once, the rest at half load" });
+  coreTree(H, { batteries: ["battery"], regulators: ["regulator_5v"], compute, sensors: named, simultaneous: qdd ? 3 : 4, simNote: `${qdd ? "three" : "four"} joints at peak at once, the rest at half load` });
   void nBatt;
   const legs = ["fl", "fr", "rl", "rr"].map((l) => actuatorsUnder(H, new RegExp(`^${l}_.*_actuator$|^${l}_knee_actuator$`)));
   if (qdd) { canTree(H, { adapter: "actuator_bus", motors: legs.flat(), rail: "VBAT" }); H.bought("actuator_bus.usb.VBUS", compute === "rpi5" ? "computer.usb_a.LINK" : "computer.usb_a_j6_j7.LINK", "USB", 0.1, 0.5, "CAN_USB"); }
