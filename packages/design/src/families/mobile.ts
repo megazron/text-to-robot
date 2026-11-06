@@ -13,7 +13,7 @@ import { frame, invert, mul, apply, I4, translation, toPose, type Mat4, type Op 
 import { fk, linkCom, totalMass, gravityTorques, type PointLoad } from "../kin.ts";
 import { designArm, graftArm, type ArmRequest } from "./arm.ts";
 import { evaluate, DYNAMIC_FACTOR, type Ladder } from "../sizing.ts";
-import { registerBay, enclosureChecks, exposed, worldBox as partBox, type BayRecord, type Face } from "../enclosure.ts";
+import { registerBay, enclosureChecks, exposed, baysOf, worldBox as partBox, type BayRecord, type Face } from "../enclosure.ts";
 import { Harness, finishWiring } from "../wiring.ts";
 import { busTree, dualDriver, pinsOf, coreTree, actuatorsUnder } from "../netlist.ts";
 
@@ -270,7 +270,7 @@ function electronicsBay(b: Build, items: Item[], area: Rect, reserved: Rect[], d
  * the lid screws, screw tabs to the deck, and a lid with vent slots. Reserved zones it overlaps (e.g. the lidar mast)
  * pass through openings. Too big for the bed -> two halves joined by a screwed internal lap plate.
  */
-function enclosure(b: Build, items: Item[], area: Rect, reserved: Rect[], deckTop: number, clearTop: number, parent = "base_link", bayName = "electronics_enclosure", fixtures = true) {
+function enclosure(b: Build, items: Item[], area: Rect, reserved: Rect[], deckTop: number, clearTop: number, parent = "base_link", bayName = "electronics_enclosure", fixtures = true, room: { growY?: number; maxR?: number } = {}) {
   const plan = packBay(items, area, reserved); if (!plan) return;
   let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
   for (const { it, yaw, x, y } of plan) {
@@ -295,6 +295,7 @@ function enclosure(b: Build, items: Item[], area: Rect, reserved: Rect[], deckTo
     const best = opts.filter(([d, , band]) => d > 0 && d < 45 && free(band)).sort((a, c) => a[0] - c[0])[0];
     if (best) best[1]();
   }
+  if (room.growY) y1 = Math.min(y1 + room.growY, area.y1 + m + t);   // a clear strip along one wall for the main switch
   // tall enough for a double-pole rocker in the wall
   const zTop = Math.max(clearTop + 8, deckTop + 30), zSeat = zTop + 0.2, zLid = zSeat + t; // the lid sits 0.2 mm proud of the walls (assembly clearance)
   // four wall slabs (no hollowing cut, which would also remove the rings round openings inside)
@@ -313,6 +314,7 @@ function enclosure(b: Build, items: Item[], area: Rect, reserved: Rect[], deckTo
     if (tx0 !== null) tabSpots.push([tx0, y0, 0, -1]); if (tx1 !== null) tabSpots.push([tx1, y1, 0, 1]); if (ty0 !== null) tabSpots.push([x0, ty0, -1, 0]); if (ty1 !== null) tabSpots.push([x1, ty1, 1, 0]); }
   for (const [x, y, dx, dy] of tabSpots) {
     const cx = x + dx * 6, cy = y + dy * 6;
+    if (room.maxR && Math.hypot(cx, cy) + 10 > room.maxR) continue;   // inside a round skirt
     walls.push({ op: "box", min: [cx - 7, cy - 7, deckTop], max: [cx + 7, cy + 7, deckTop + 3], r: 3 }, { op: "hole", a: [cx, cy, deckTop - 1], b: [cx, cy, deckTop + 4], d: 3.4 });
   }
   // vents: slots in both long walls, a cable slot low in the rear wall
@@ -329,7 +331,8 @@ function enclosure(b: Build, items: Item[], area: Rect, reserved: Rect[], deckTo
   const kept = ventCuts.filter((v) => !near(v));
   walls.push(...kept);
   // too few free corners for lid bosses: lugs on the outside of the long walls instead
-  const lugs: [number, number, number][] = bosses.length >= 3 ? [] : [[x0 + (x1 - x0) * 0.32, y0 - 3.4, -1], [x0 + (x1 - x0) * 0.32, y1 + 3.4, 1], [x0 + (x1 - x0) * 0.68, y0 - 3.4, -1], [x0 + (x1 - x0) * 0.68, y1 + 3.4, 1]];
+  const lugs = (bosses.length >= 3 ? [] : [[x0 + (x1 - x0) * 0.32, y0 - 3.4, -1], [x0 + (x1 - x0) * 0.32, y1 + 3.4, 1], [x0 + (x1 - x0) * 0.68, y0 - 3.4, -1], [x0 + (x1 - x0) * 0.68, y1 + 3.4, 1]] as [number, number, number][])
+    .filter(([x, y]) => !fx.exits.some((e) => Math.hypot(e.at[0] - x, e.at[1] - y) < 30));
   for (const [x, y] of lugs) walls.push({ op: "rod", a: [x, y, deckTop], b: [x, y, zTop], r: 4.5 }, { op: "hole", a: [x, y, zTop - 12], b: [x, y, zTop + 1], d: 2.6 });
   const lid: Op[] = [...fx.lidCuts, { op: "box", min: [x0, y0, zSeat], max: [x1, y1, zLid], r: 4 }, { op: "box", min: [x0 + t + 0.3, y0 + t + 0.3, zSeat - 3], max: [x1 - t - 0.3, y1 - t - 0.3, zSeat], r: 2 },
     { op: "cutbox", min: [x0 + t + 2.3, y0 + t + 2.3, zSeat - 4], max: [x1 - t - 2.3, y1 - t - 2.3, zSeat + 0.05] }];
@@ -401,7 +404,9 @@ function wallFixtures(b: Build, plan: Placement[], w: { x0: number; x1: number; 
     spots.push({ p: [x, w.y1, zc], n: [0, 1, 0], face: "y+", q: { x0: x - wide, x1: x + wide, y0: w.y1 - deep, y1: w.y1 } }, { p: [x, w.y0, zc], n: [0, -1, 0], face: "y-", q: { x0: x - wide, x1: x + wide, y0: w.y0, y1: w.y0 + deep } },
       { p: [w.x1, y, zc], n: [1, 0, 0], face: "x+", q: { x0: w.x1 - deep, x1: w.x1, y0: y - wide, y1: y + wide } }, { p: [w.x0, y, zc], n: [-1, 0, 0], face: "x-", q: { x0: w.x0, x1: w.x0 + deep, y0: y - wide, y1: y + wide } });
   }
-  const s = spots.find((c) => clearOf(c.q) && !exits.some((e) => Math.hypot(e.at[0] - c.p[0], e.at[1] - c.p[1]) < 45));
+  // corner bosses stand inside the walls: keep off the corners
+  const offCorner = (c: { p: Vec3; n: Vec3 }) => (c.n[1] !== 0 ? c.p[0] - w.x0 > wide + 12 && w.x1 - c.p[0] > wide + 12 : c.p[1] - w.y0 > wide + 12 && w.y1 - c.p[1] > wide + 12);
+  const s = spots.find((c) => offCorner(c) && clearOf(c.q) && !exits.some((e) => Math.hypot(e.at[0] - c.p[0], e.at[1] - c.p[1]) < 45));
   if (!s) {
     // no wall has room behind it: the rocker stands in the lid over a free patch of floor
     let at: [number, number] | null = null;
@@ -1259,9 +1264,11 @@ export function designEva(req: MobileRequest = {}): RobotSpecification {
     const low = items.filter((i) => i.kind === "battery" || i.key === "buck_5v_5a" || i.key === "bno085_breakout" || i.key === "waveshare_bus_servo_adapter"), high = items.filter((i) => !low.includes(i));
     const lidarRes: Rect[] = sensors.includes("lidar") ? [{ x0: 14, x1: 80, y0: -33, y1: 33 }] : [];
     const lowTop = electronicsBay(b, low, { x0: -78, x1: 78, y0: -80, y1: 80 }, [{ x0: SX - 27, x1: SX + 27, y0: -27, y1: 27 }, ...lidarRes], b.deckTop);
-    const lowLid = enclosure(b, low, { x0: -78, x1: 78, y0: -80, y1: 80 }, [{ x0: SX - 27, x1: SX + 27, y0: -27, y1: 27 }, ...lidarRes], b.deckTop, lowTop) ?? lowTop + 8;
+    const lowLid = enclosure(b, low, { x0: -78, x1: 78, y0: -80, y1: 80 }, [{ x0: SX - 27, x1: SX + 27, y0: -27, y1: 27 }, ...lidarRes], b.deckTop, lowTop, "base_link", "electronics_enclosure", true, { growY: 36, maxR: 118 }) ?? lowTop + 8;
+    // the skirt's inner lip steps round the enclosure's corners
+    { const r = baysOf(b.A).find((x) => x.name === "electronics_enclosure"); if (r) for (const n of ["skirt_left_front", "skirt_left_rear", "skirt_right_front", "skirt_right_rear"]) b.A.amendProgram(n, b.in(n, [{ op: "cutbox", min: [r.min[0] - 4, r.min[1] - 4, b.deckTop - 1], max: [r.max[0] + 4, r.max[1] + 4, r.max[2] + 4] }])); }
     // lidar on the deck: it scans through the "hover" gap between the skirt and the egg
-    if (sensors.includes("lidar")) lidarMast(b, 47, 0, b.deckTop, lowLid - 8);
+    if (sensors.includes("lidar")) lidarMast(b, 47, 0, b.deckTop, lowLid + 8.6 + Number(part("rplidar_c1").specs.scan_plane_z_mm) - 7);
     if (sensors.includes("imu")) b.sensor("imu_frame", "imu", "imu", translation([12.8, 11.35, 2]), { rate_hz: 400 });
     // spine: 20 mm aluminium tube (behind the centre, leaving the deck and shelf free) from the deck to the top rib
     b.fabricated("spine", "base_link", [{ op: "rod", a: [SX, 0, b.deckTop + 5], b: [SX, 0, zEgg1 - 27], r: 10 }, { op: "hole", a: [SX, 0, b.deckTop], b: [SX, 0, zEgg1], d: 16 }],
@@ -1285,6 +1292,7 @@ export function designEva(req: MobileRequest = {}): RobotSpecification {
         { op: "cutbox", min: [-17, s * rAt(zS) - 16, zS - 5], max: [17, s * rAt(zS) + 16, zS + 7] }]; // slot for the shoulder bracket
       b.printed(`shell_${band}_${s > 0 ? "left" : "right"}`, "spine", ops);
     }
+    if (sensors.includes("lidar")) for (const n of ["shell_lower_left", "shell_lower_right"]) b.A.amendProgram(n, b.in(n, [{ op: "hole", a: [47, 0, zEgg0 - 2], b: [47, 0, zEgg0 + 26], d: 64 }]));   // the lidar's head stands in a notch in the egg's underside
     // the egg is the upper compartment: slots and a USB window in its back, leads down past the spine through a grommet in the mid rib
     { const cp = apply(b.pose("computer"), [40, 25, 0]), side = cp[1] >= 0 ? 1 : -1, cuts: Op[] = [{ op: "cutbox", min: [cp[0] - 24, side > 0 ? 70 : -300, zSeam + 10], max: [cp[0] + 24, side > 0 ? 300 : -70, zSeam + 28] }]; let vent = 0;
       for (let k = 0; k < 11; k++) { cuts.push({ op: "cutbox", min: [-300, -40, zSeam + 34 + k * 7], max: [-70, 40, zSeam + 37.2 + k * 7] }); vent += 80 * 3.2; }
