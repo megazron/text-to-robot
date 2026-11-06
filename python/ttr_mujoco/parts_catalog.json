@@ -6046,6 +6046,87 @@
   },
   "mesh_triangles": 3152
  },
+ "fuse_holder_anl": {
+  "key": "fuse_holder_anl",
+  "name": "ANL fuse holder, 58 V class, 35-300 A",
+  "category": "misc",
+  "mass_g": 60.0,
+  "price_usd": 9.0,
+  "supplier_url": "https://www.bluesea.com/products/category/62/ANL_Fuses",
+  "datasheet_url": "https://www.bluesea.com/products/category/62/ANL_Fuses",
+  "envelope_mm": [
+   90.0,
+   36.0,
+   25.0
+  ],
+  "holes": [],
+  "specs": {
+   "voltage_v": 58,
+   "current_a": 300,
+   "no_mounting_holes": true,
+   "mount": "tied into the harness",
+   "uncertain": [
+    "mass_g",
+    "price_usd",
+    "envelope_mm",
+    "voltage_v"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    -18.0,
+    0.0
+   ],
+   "max": [
+    90.0,
+    18.0,
+    25.0
+   ]
+  },
+  "mesh_triangles": 12
+ },
+ "fuse_holder_atm_inline": {
+  "key": "fuse_holder_atm_inline",
+  "name": "Inline ATM mini blade fuse holder, 30 A class (Littelfuse FHM)",
+  "category": "misc",
+  "mass_g": 12.0,
+  "price_usd": 2.5,
+  "supplier_url": "https://www.digikey.com/en/product-highlight/l/littelfuse-commercial-vehicle-products/fhac-fhm-series-in-line-fuse-holders",
+  "datasheet_url": "https://www.digikey.com/en/product-highlight/l/littelfuse-commercial-vehicle-products/fhac-fhm-series-in-line-fuse-holders",
+  "envelope_mm": [
+   41.0,
+   14.0,
+   12.0
+  ],
+  "holes": [],
+  "specs": {
+   "voltage_v": 32,
+   "current_a": 30,
+   "no_mounting_holes": true,
+   "mount": "inline in the harness, tied down in the compartment",
+   "uncertain": [
+    "mass_g",
+    "price_usd",
+    "envelope_mm"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    -7.0,
+    0.0
+   ],
+   "max": [
+    41.0,
+    7.0,
+    12.0
+   ]
+  },
+  "mesh_triangles": 12
+ },
  "hc_sr04": {
   "key": "hc_sr04",
   "name": "HC-SR04 ultrasonic distance sensor (2-400 cm)",
@@ -7718,6 +7799,62 @@
   },
   "mesh_triangles": 848
  },
+ "iec_c14_fused_switched": {
+  "key": "iec_c14_fused_switched",
+  "name": "IEC C14 panel inlet with fuse drawer and rocker switch, 10 A",
+  "category": "misc",
+  "mass_g": 40.0,
+  "price_usd": 3.0,
+  "supplier_url": "https://www.aliexpress.com/w/wholesale-iec-c14-inlet-fuse-switch.html",
+  "datasheet_url": "https://www.aliexpress.com/w/wholesale-iec-c14-inlet-fuse-switch.html",
+  "envelope_mm": [
+   30.0,
+   49.0,
+   34.0
+  ],
+  "holes": [],
+  "specs": {
+   "panel_cutout_mm": [
+    27.5,
+    47.0
+   ],
+   "rating": "10 A 250 VAC",
+   "no_mounting_holes": true,
+   "mount": "snaps into the panel cut-out",
+   "body_mm": {
+    "min": [
+     -13.7,
+     -23.4,
+     -32.0
+    ],
+    "max": [
+     13.7,
+     23.4,
+     -2.6
+    ]
+   },
+   "uncertain": [
+    "mass_g",
+    "price_usd",
+    "envelope_mm",
+    "panel_cutout_mm"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -15.0,
+    -24.5,
+    -32.0
+   ],
+   "max": [
+    15.0,
+    24.5,
+    2.5
+   ]
+  },
+  "mesh_triangles": 28
+ },
  "insert_m3": {
   "key": "insert_m3",
   "name": "Heat-set insert M3x5.7 (ruthex)",
@@ -9090,7 +9227,7 @@
  },
  "pack_2s_18650": {
   "key": "pack_2s_18650",
-  "name": "2S 18650 pack: two 2500 mAh 20 A cells (Samsung 25R class) in a holder with switch",
+  "name": "2S 18650 pack: two 2500 mAh 20 A cells (Samsung 25R class) in a plain two-cell holder",
   "category": "battery",
   "mass_g": 115.0,
   "price_usd": 12.0,
@@ -9860,7 +9997,7 @@
   "key": "psu_12v_lrs150",
   "name": "Mean Well LRS-150-12 enclosed PSU, 12 V 12.5 A (150 W)",
   "category": "misc",
-  "mass_g": 500.0,
+  "mass_g": 420.0,
   "price_usd": 27.0,
   "supplier_url": "https://www.digikey.com/en/products/result?keywords=LRS-150-12",
   "datasheet_url": "https://www.meanwell.com/Upload/PDF/LRS-150/LRS-150-SPEC.PDF",
@@ -9872,8 +10009,8 @@
   "holes": [
    {
     "pos": [
+     24.0,
      32.0,
-     48.5,
      0.0
     ],
     "axis": [
@@ -9886,8 +10023,8 @@
    },
    {
     "pos": [
-     127.0,
-     48.5,
+     102.0,
+     32.0,
      0.0
     ],
     "axis": [
@@ -9909,14 +10046,10 @@
    ],
    "terminals": "AC L, AC N, FG, -V, +V",
    "uncertain": [
-    "mass_g",
-    "price_usd",
-    "holes"
+    "price_usd"
    ],
    "uncertain_notes": [
-    "mass_g",
-    "price_usd",
-    "hole positions (taken from the LRS-75 pattern scaled to the case)"
+    "price_usd"
    ]
   },
   "output_frame": null,
@@ -10040,7 +10173,7 @@
   "key": "psu_24v_lrs150",
   "name": "Mean Well LRS-150-24 enclosed PSU, 24 V 6.5 A (156 W)",
   "category": "misc",
-  "mass_g": 530.0,
+  "mass_g": 420.0,
   "price_usd": 29.0,
   "supplier_url": "https://www.digikey.com/en/products/result?keywords=LRS-150-24",
   "datasheet_url": "https://www.meanwell.com/Upload/PDF/LRS-150/LRS-150-SPEC.PDF",
@@ -10052,8 +10185,8 @@
   "holes": [
    {
     "pos": [
+     24.0,
      32.0,
-     50.0,
      0.0
     ],
     "axis": [
@@ -10066,8 +10199,8 @@
    },
    {
     "pos": [
-     132.0,
-     50.0,
+     102.0,
+     32.0,
      0.0
     ],
     "axis": [
@@ -10117,11 +10250,9 @@
    ],
    "terminals": "AC L, AC N, FG, 2x -V, 2x +V (9.5 mm pitch)",
    "uncertain": [
-    "mass_g",
-    "price_usd",
-    "hole_positions"
+    "price_usd"
    ],
-   "hole_positions": "bottom 2x M3 at x 32/132 mm"
+   "hole_positions": "bottom 2x M3 at (24, 32) and (102, 32) mm per the Mean Well drawing"
   },
   "output_frame": null,
   "bbox_mm": {
@@ -10155,7 +10286,7 @@
    {
     "pos": [
      32.5,
-     57.5,
+     32.5,
      0.0
     ],
     "axis": [
@@ -10169,7 +10300,7 @@
    {
     "pos": [
      182.5,
-     57.5,
+     32.5,
      0.0
     ],
     "axis": [
@@ -10192,13 +10323,11 @@
    "terminals": "AC L, AC N, FG, -V, +V",
    "uncertain": [
     "mass_g",
-    "price_usd",
-    "holes"
+    "price_usd"
    ],
    "uncertain_notes": [
     "mass_g",
-    "price_usd",
-    "hole positions (from the case outline, not the drawing)"
+    "price_usd"
    ]
   },
   "output_frame": null,
@@ -10267,8 +10396,8 @@
   "holes": [
    {
     "pos": [
-     12.0,
-     41.0,
+     20.5,
+     40.5,
      0.0
     ],
     "axis": [
@@ -10281,8 +10410,8 @@
    },
    {
     "pos": [
-     87.0,
-     41.0,
+     75.5,
+     40.5,
      0.0
     ],
     "axis": [
@@ -10305,13 +10434,11 @@
    "terminals": "AC L, AC N, FG, -V, +V",
    "uncertain": [
     "mass_g",
-    "price_usd",
-    "holes"
+    "price_usd"
    ],
    "uncertain_notes": [
     "mass_g",
-    "price_usd",
-    "hole positions (from the LRS-50 outline, not the drawing)"
+    "price_usd"
    ]
   },
   "output_frame": null,
@@ -10327,7 +10454,7 @@
     30.0
    ]
   },
-  "mesh_triangles": 452
+  "mesh_triangles": 444
  },
  "realsense_d435i": {
   "key": "realsense_d435i",
@@ -12499,6 +12626,168 @@
   },
   "mesh_triangles": 28
  },
+ "switch_battery_6006": {
+  "key": "switch_battery_6006",
+  "name": "Blue Sea 6006 m-Series battery switch, ON-OFF, 48 VDC",
+  "category": "misc",
+  "mass_g": 190.0,
+  "price_usd": 35.0,
+  "supplier_url": "https://www.bluesea.com/products/6006",
+  "datasheet_url": "https://www.bluesea.com/products/6006",
+  "envelope_mm": [
+   70.0,
+   70.0,
+   60.0
+  ],
+  "holes": [],
+  "specs": {
+   "panel_cutout_mm": [
+    52.0,
+    52.0
+   ],
+   "rating": "275 A continuous, 48 VDC max",
+   "no_mounting_holes": true,
+   "mount": "panel, through a 52 mm hole",
+   "body_mm": {
+    "min": [
+     -26.0,
+     -26.0,
+     -55.0
+    ],
+    "max": [
+     26.0,
+     26.0,
+     -2.6
+    ]
+   },
+   "uncertain": [
+    "mass_g",
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -35.0,
+    -35.0,
+    -55.0
+   ],
+   "max": [
+    35.0,
+    35.0,
+    5.0
+   ]
+  },
+  "mesh_triangles": 28
+ },
+ "switch_kcd1": {
+  "key": "switch_kcd1",
+  "name": "KCD1 rocker switch, SPST, 6 A 250 VAC / 10 A 125 VAC",
+  "category": "misc",
+  "mass_g": 8.0,
+  "price_usd": 0.3,
+  "supplier_url": "https://www.aliexpress.com/w/wholesale-kcd1-rocker-switch.html",
+  "datasheet_url": "https://www.aliexpress.com/w/wholesale-kcd1-rocker-switch.html",
+  "envelope_mm": [
+   15.0,
+   21.0,
+   21.6
+  ],
+  "holes": [],
+  "specs": {
+   "panel_cutout_mm": [
+    13.0,
+    19.0
+   ],
+   "rating": "6 A 250 VAC, 10 A 125 VAC",
+   "mount": "snaps into the panel cut-out",
+   "no_mounting_holes": true,
+   "body_mm": {
+    "min": [
+     -6.5,
+     -9.5,
+     -19.1
+    ],
+    "max": [
+     6.5,
+     9.5,
+     -2.6
+    ]
+   },
+   "uncertain": [
+    "mass_g",
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -7.5,
+    -10.5,
+    -19.1
+   ],
+   "max": [
+    7.5,
+    10.5,
+    2.5
+   ]
+  },
+  "mesh_triangles": 28
+ },
+ "switch_kcd4": {
+  "key": "switch_kcd4",
+  "name": "KCD4 double-pole rocker switch, 16 A 250 VAC / 20 A 125 VAC",
+  "category": "misc",
+  "mass_g": 8.0,
+  "price_usd": 1.0,
+  "supplier_url": "https://www.aliexpress.com/w/wholesale-kcd4-rocker-switch.html",
+  "datasheet_url": "https://www.aliexpress.com/w/wholesale-kcd4-rocker-switch.html",
+  "envelope_mm": [
+   25.0,
+   31.0,
+   28.0
+  ],
+  "holes": [],
+  "specs": {
+   "panel_cutout_mm": [
+    22.0,
+    30.0
+   ],
+   "rating": "16 A 250 VAC, 20 A 125 VAC",
+   "mount": "snaps into the panel cut-out",
+   "no_mounting_holes": true,
+   "body_mm": {
+    "min": [
+     -11.0,
+     -15.0,
+     -25.5
+    ],
+    "max": [
+     11.0,
+     15.0,
+     -2.6
+    ]
+   },
+   "uncertain": [
+    "mass_g",
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -12.5,
+    -15.5,
+    -25.5
+   ],
+   "max": [
+    12.5,
+    15.5,
+    2.5
+   ]
+  },
+  "mesh_triangles": 28
+ },
  "tb6612fng_module": {
   "key": "tb6612fng_module",
   "name": "TB6612FNG dual DC motor driver module (1.2 A per channel)",
@@ -12796,6 +13085,48 @@
    ]
   },
   "mesh_triangles": 44
+ },
+ "wago_221_415": {
+  "key": "wago_221_415",
+  "name": "WAGO 221-415 five-way lever splice",
+  "category": "misc",
+  "mass_g": 4.0,
+  "price_usd": 0.8,
+  "supplier_url": "https://www.wago.com/global/electrical-interconnections/compact-splicing-connector/p/221-415",
+  "datasheet_url": "https://www.wago.com/global/electrical-interconnections/compact-splicing-connector/p/221-415",
+  "envelope_mm": [
+   20.2,
+   18.6,
+   8.5
+  ],
+  "holes": [],
+  "specs": {
+   "voltage_v": 450,
+   "current_a": 32,
+   "wire": "24-12 AWG",
+   "no_mounting_holes": true,
+   "mount": "tied to a strain-relief anchor in the compartment",
+   "uncertain": [
+    "mass_g",
+    "price_usd",
+    "envelope_mm",
+    "current_a"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    -9.3,
+    0.0
+   ],
+   "max": [
+    20.2,
+    9.3,
+    8.5
+   ]
+  },
+  "mesh_triangles": 12
  },
  "waveshare_bus_servo_adapter": {
   "key": "waveshare_bus_servo_adapter",
