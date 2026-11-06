@@ -107,6 +107,9 @@ def _min_wall(m: trimesh.Trimesh, samples: int = 1500, seed: int = 0):
 
 def audit_mesh(m: trimesh.Trimesh, name: str, max_support_frac: float = 0.30, no_support_frac: float = 0.08) -> PartReport:
     m = _units_to_mm(m)
+    # a zero-area flap left by float rounding in the STL is no material: slicers drop it, so the audit does too
+    flaps = [c for c in m.split(only_watertight=False)]
+    if len(flaps) > 1 and any(float(c.area) < 0.01 for c in flaps): m = trimesh.util.concatenate([c for c in flaps if float(c.area) >= 0.01])
     best = None
     for d in _candidates(m):
         s, bed, fits, mm = _orientation_score(m, d)

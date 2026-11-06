@@ -395,14 +395,14 @@ function wallFixtures(b: Build, plan: Placement[], w: { x0: number; x1: number; 
     exits.push({ id: `${bayName}.usb`, kind: "usb", face, at, normal: face === "x-" ? [-1, 0, 0] : face === "x+" ? [1, 0, 0] : face === "y-" ? [0, -1, 0] : [0, 1, 0], hole_mm: zh - zl });
   }
   // main switch: first spot along the walls with 30 mm of nothing behind it
-  const spots: { p: Vec3; n: Vec3; face: Face; q: Rect }[] = [], deep = b.motors.length <= 2 ? 25 : 31, wide = b.motors.length <= 2 ? 12 : 18;
+  const spots: { p: Vec3; n: Vec3; face: Face; q: Rect }[] = [], deep = b.A.design.family === "mobile_diff_drive" ? 25 : 31, wide = b.A.design.family === "mobile_diff_drive" ? 12 : 18;
   for (const f of [0.15, 0.85, 0.3, 0.7, 0.5, 0.1, 0.9, 0.2, 0.8, 0.25, 0.75, 0.35, 0.65, 0.4, 0.6, 0.45, 0.55]) {
     const x = w.x0 + (w.x1 - w.x0) * f, y = w.y0 + (w.y1 - w.y0) * f;
     spots.push({ p: [x, w.y1, zc], n: [0, 1, 0], face: "y+", q: { x0: x - wide, x1: x + wide, y0: w.y1 - deep, y1: w.y1 } }, { p: [x, w.y0, zc], n: [0, -1, 0], face: "y-", q: { x0: x - wide, x1: x + wide, y0: w.y0, y1: w.y0 + deep } },
       { p: [w.x1, y, zc], n: [1, 0, 0], face: "x+", q: { x0: w.x1 - deep, x1: w.x1, y0: y - wide, y1: y + wide } }, { p: [w.x0, y, zc], n: [-1, 0, 0], face: "x-", q: { x0: w.x0, x1: w.x0 + deep, y0: y - wide, y1: y + wide } });
   }
   const s = spots.find((c) => clearOf(c.q) && !exits.some((e) => Math.hypot(e.at[0] - c.p[0], e.at[1] - c.p[1]) < 45)) ?? spots[0];
-  const small = b.motors.length <= 2, hw = small ? 9.7 : 15.2, hz = small ? 6.7 : 11.2, along = s.n[0] !== 0;
+  const small = b.A.design.family === "mobile_diff_drive", hw = small ? 9.7 : 15.2, hz = small ? 6.7 : 11.2, along = s.n[0] !== 0;
   cuts.push({ op: "cutbox", min: along ? [s.p[0] - w.t - 1, s.p[1] - hw, zc - hz] : [s.p[0] - hw, s.p[1] - w.t - 1, zc - hz], max: along ? [s.p[0] + w.t + 1, s.p[1] + hw, zc + hz] : [s.p[0] + hw, s.p[1] + w.t + 1, zc + hz] });
   b.mount(parent, small ? "switch_kcd1" : "switch_kcd4", frame(s.p, s.n, [0, 0, 1]), "main_switch", "main power switch");
   exits.push({ id: `${bayName}.switch`, kind: "switch", face: s.face, at: s.p, normal: s.n, hole_mm: small ? 13 : 22, part: "main_switch" });
@@ -1249,15 +1249,15 @@ export function designEva(req: MobileRequest = {}): RobotSpecification {
     // battery, regulator, IMU and servo bus low on the deck; computer and motor driver on a shelf (the mid rib)
     const low = items.filter((i) => i.kind === "battery" || i.key === "buck_5v_5a" || i.key === "bno085_breakout" || i.key === "waveshare_bus_servo_adapter"), high = items.filter((i) => !low.includes(i));
     const lidarRes: Rect[] = sensors.includes("lidar") ? [{ x0: 14, x1: 80, y0: -33, y1: 33 }] : [];
-    const lowTop = electronicsBay(b, low, { x0: -78, x1: 78, y0: -80, y1: 80 }, [{ x0: SX - 34, x1: SX + 34, y0: -34, y1: 34 }, ...lidarRes], b.deckTop);
-    const lowLid = enclosure(b, low, { x0: -78, x1: 78, y0: -80, y1: 80 }, [{ x0: SX - 34, x1: SX + 34, y0: -34, y1: 34 }, ...lidarRes], b.deckTop, lowTop) ?? lowTop + 8;
+    const lowTop = electronicsBay(b, low, { x0: -78, x1: 78, y0: -80, y1: 80 }, [{ x0: SX - 27, x1: SX + 27, y0: -27, y1: 27 }, ...lidarRes], b.deckTop);
+    const lowLid = enclosure(b, low, { x0: -78, x1: 78, y0: -80, y1: 80 }, [{ x0: SX - 27, x1: SX + 27, y0: -27, y1: 27 }, ...lidarRes], b.deckTop, lowTop) ?? lowTop + 8;
     // lidar on the deck: it scans through the "hover" gap between the skirt and the egg
     if (sensors.includes("lidar")) lidarMast(b, 47, 0, b.deckTop, lowLid - 8);
     if (sensors.includes("imu")) b.sensor("imu_frame", "imu", "imu", translation([12.8, 11.35, 2]), { rate_hz: 400 });
     // spine: 20 mm aluminium tube (behind the centre, leaving the deck and shelf free) from the deck to the top rib
     b.fabricated("spine", "base_link", [{ op: "rod", a: [SX, 0, b.deckTop + 5], b: [SX, 0, zEgg1 - 27], r: 10 }, { op: "hole", a: [SX, 0, b.deckTop], b: [SX, 0, zEgg1], d: 16 }],
       { density: ALU, material: "aluminium", item: "20 x 2 mm aluminium tube, 0.45 m (~$8)", usd: 8 });
-    b.printed("spine_foot", "base_link", [{ op: "box", min: [SX - 26, -26, b.deckTop], max: [SX + 26, 26, b.deckTop + 5], r: 6 }, { op: "rod", a: [SX, 0, b.deckTop], b: [SX, 0, b.deckTop + 40], r: 14 }, { op: "hole", a: [SX, 0, b.deckTop + 4], b: [SX, 0, b.deckTop + 41], d: 20.2 }], "printed_dark");
+    b.printed("spine_foot", "base_link", [{ op: "box", min: [SX - 19.5, -19.5, b.deckTop], max: [SX + 19.5, 19.5, b.deckTop + 5], r: 6 }, { op: "rod", a: [SX, 0, b.deckTop], b: [SX, 0, b.deckTop + 40], r: 14 }, { op: "hole", a: [SX, 0, b.deckTop + 4], b: [SX, 0, b.deckTop + 41], d: 20.2 }], "printed_dark");
     const prof = eggProfile(zEgg0, zEgg1, R, zEggW, 32, 0.28, 0.25);
     const rAt = (z: number) => { for (let i = 1; i < prof.length; i++) if (prof[i][1] >= z) { const [r0, z0] = prof[i - 1], [r1, z1] = prof[i]; return r0 + ((r1 - r0) * (z - z0)) / (z1 - z0); } return prof[prof.length - 1][0]; };
     // arms stand 44 mm off the shell: room for the clevis bearing cheek on the inside of each shoulder servo
