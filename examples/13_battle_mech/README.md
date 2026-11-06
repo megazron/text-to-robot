@@ -6,18 +6,18 @@
 
 Interpreted as: humanoid battle mech · imu (base_link) · camera (neck_pan_link)
 
-**Battle mech, 1.182 m, 22.40 kg, 30 DOF (7-DOF arms + grippers), 174 min, $15909 of parts**
+**Battle mech, 1.182 m, 22.97 kg, 30 DOF (7-DOF arms + grippers), 170 min, $16183 of parts**
 
-Parts cost **$16103.06** · printed structure 45 parts, 6136 g · checks passed 81/81
+Parts cost **$16644.04** · printed structure 51 parts, 6429 g · checks passed 132/132
 
 ## What it can do
 
 | | |
 |---|--:|
-| average power w | 122.6 |
-| com height m | 0.641 |
-| com x over sole mm | -22.7 |
-| mass kg | 22.4 |
+| average power w | 125.1 |
+| com height m | 0.647 |
+| com x over sole mm | -27.7 |
+| mass kg | 22.968 |
 | height m | 1.182 |
 | hip height m | 0.74 |
 | dof | 30 |
@@ -25,26 +25,26 @@ Parts cost **$16103.06** · printed structure 45 parts, 6136 g · checks passed 
 | payload per hand kg | 0.5 |
 | leg actuators | CubeMars AK60-6 V3.0 KV80 / CubeMars AK80-64 KV80 / CubeMars AK70-10 KV100 |
 | arm actuators | CubeMars AK70-10 KV100 / DYNAMIXEL XM430-W350-T(R) / DYNAMIXEL XH540-W270-T(R) |
-| runtime min | 174 |
-| cost usd | 15908.94 |
+| runtime min | 170 |
+| cost usd | 16183.14 |
 | sensors | camera, imu |
 
 ## Actuators (sized from this robot's own loads)
 
 | Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
 |---|---|--:|--:|--:|--:|
-| l_hip_yaw | cubemars_ak60_6 | 4.614 | 3 / 9 | 1.95x | 51.313 |
-| l_hip_roll | cubemars_ak80_64 | 49.081 | 48 / 120 | 2.44x | 5.027 |
-| l_hip_pitch | cubemars_ak80_64 | 62.557 | 48 / 120 | 1.92x | 5.027 |
-| l_knee | cubemars_ak80_64 | 59.867 | 48 / 120 | 2x | 5.027 |
-| l_ankle_pitch | cubemars_ak80_64 | 30.914 | 48 / 120 | 3.88x | 5.027 |
-| l_ankle_roll | cubemars_ak70_10 | 13.069 | 8.3 / 24.8 | 1.9x | 32.463 |
-| r_hip_yaw | cubemars_ak60_6 | 4.614 | 3 / 9 | 1.95x | 51.313 |
-| r_hip_roll | cubemars_ak80_64 | 49.081 | 48 / 120 | 2.44x | 5.027 |
-| r_hip_pitch | cubemars_ak80_64 | 62.557 | 48 / 120 | 1.92x | 5.027 |
-| r_knee | cubemars_ak80_64 | 59.867 | 48 / 120 | 2x | 5.027 |
-| r_ankle_pitch | cubemars_ak80_64 | 30.914 | 48 / 120 | 3.88x | 5.027 |
-| r_ankle_roll | cubemars_ak70_10 | 13.069 | 8.3 / 24.8 | 1.9x | 32.463 |
+| l_hip_yaw | cubemars_ak60_6 | 4.726 | 3 / 9 | 1.9x | 51.313 |
+| l_hip_roll | cubemars_ak80_64 | 50.272 | 48 / 120 | 2.39x | 5.027 |
+| l_hip_pitch | cubemars_ak80_64 | 64.075 | 48 / 120 | 1.87x | 5.027 |
+| l_knee | cubemars_ak80_64 | 61.32 | 48 / 120 | 1.96x | 5.027 |
+| l_ankle_pitch | cubemars_ak80_64 | 31.664 | 48 / 120 | 3.79x | 5.027 |
+| l_ankle_roll | cubemars_ak70_10 | 13.386 | 8.3 / 24.8 | 1.85x | 32.463 |
+| r_hip_yaw | cubemars_ak60_6 | 4.726 | 3 / 9 | 1.9x | 51.313 |
+| r_hip_roll | cubemars_ak80_64 | 50.272 | 48 / 120 | 2.39x | 5.027 |
+| r_hip_pitch | cubemars_ak80_64 | 64.075 | 48 / 120 | 1.87x | 5.027 |
+| r_knee | cubemars_ak80_64 | 61.32 | 48 / 120 | 1.96x | 5.027 |
+| r_ankle_pitch | cubemars_ak80_64 | 31.664 | 48 / 120 | 3.79x | 5.027 |
+| r_ankle_roll | cubemars_ak70_10 | 13.386 | 8.3 / 24.8 | 1.85x | 32.463 |
 | l_shoulder_pitch | cubemars_ak70_10 | 7.574 | 8.3 / 24.8 | 3.27x | 32.463 |
 | l_shoulder_roll | cubemars_ak70_10 | 7.574 | 8.3 / 24.8 | 3.27x | 32.463 |
 | l_upper_arm_yaw | dxl_xm430_w350 | 0.103 | 1.23 / 4.1 | 39.75x | 4.817 |
@@ -66,7 +66,7 @@ Parts cost **$16103.06** · printed structure 45 parts, 6136 g · checks passed 
 
 ## Engineering checks
 
-All 81 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
+All 132 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
 
 ## Assumptions and limits
 
@@ -86,8 +86,8 @@ All 81 checks pass (torque, speed, power, stability, print-bed fit). Details in 
 
 | | Test | Result |
 |---|---|---|
-| ➖ | stand free | informational (no balance controller; a biped is not statically stable): base z 0.745 -> 0.740 m (creep after settling 0.3 mm), upright 1.000; worst leg joint l_knee at 0.06x rated |
-| ✅ | stand rail | on a vertical guide rail (balance removed, full weight on the legs): base z 0.745 -> 0.740 m (creep after settling 0.1 mm), upright 1.000; worst leg joint l_knee at 0.02x rated |
+| ➖ | stand free | informational (no balance controller; a biped is not statically stable): base z 0.745 -> 0.739 m (creep after settling 0.6 mm), upright 0.999; worst leg joint l_knee at 0.10x rated |
+| ✅ | stand rail | on a vertical guide rail (balance removed, full weight on the legs): base z 0.745 -> 0.740 m (creep after settling 0.1 mm), upright 1.000; worst leg joint r_knee at 0.03x rated |
 | ✅ | single leg rail | one leg (l_hip_yaw chain) carrying the full body weight on the rail, the other legs out of contact: base z 0.745 -> 0.740 m (creep after settling 0.1 mm), upright 1.000; worst leg joint l_knee at 0.06x rated |
 | ✅ | squat rail | on the rail: commanded body drop 148 mm (20 % of 741 mm leg), achieved 152 mm, back up to 152 mm above the low point, upright 1.000 |
 
@@ -100,6 +100,7 @@ _PASS means the modelled actuators (datasheet peak torque as a hard limit, a lin
 |---|---|
 | `robot.urdf`, `meshes/` | URDF with real component and printed-part meshes, datasheet effort/velocity limits |
 | `BOM.md`, `bom.json` | every part to buy, with supplier links and prices |
+| `WIRING.md`, `wiring.svg` | power budget per rail, pin-to-pin table, cut list, slack at each joint, wiring diagram |
 | `robot.cad.zip` | build package: printable STLs, print list, bought-part models, assembly order |
 | `robot.ros2.zip` | ROS 2 description package (ros2_control, MoveIt config, Gazebo launch) |
 | `robot.training.zip` | MuJoCo / RL training scaffold |

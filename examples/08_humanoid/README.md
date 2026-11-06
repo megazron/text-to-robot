@@ -6,9 +6,9 @@
 
 Interpreted as: humanoid · parallel gripper · imu (base_link) · camera (neck_pan_link)
 
-**Humanoid, 0.653 m, 3.60 kg, 24 DOF (4-DOF arms + grippers), 44 min, $4179 of parts**
+**Humanoid, 0.653 m, 3.60 kg, 24 DOF (4-DOF arms + grippers), 44 min, $4221 of parts**
 
-Parts cost **$4234.18** · printed structure 26 parts, 1316 g · checks passed 56/56
+Parts cost **$4318.9** · printed structure 30 parts, 1337 g · checks passed 94/94
 
 ## What it can do
 
@@ -26,7 +26,7 @@ Parts cost **$4234.18** · printed structure 26 parts, 1316 g · checks passed 5
 | leg actuators | Feetech STS3215 C047 12 V 30 kg.cm (1:345) / DYNAMIXEL XH540-W270-T(R) / Feetech STS3250 C002 12 V 50 kg.cm (1:345) |
 | arm actuators | DYNAMIXEL XL430-W250-T / DYNAMIXEL XL330-M288-T |
 | runtime min | 44 |
-| cost usd | 4179.29 |
+| cost usd | 4221.49 |
 | sensors | camera, imu |
 
 ## Actuators (sized from this robot's own loads)
@@ -60,11 +60,11 @@ Parts cost **$4234.18** · printed structure 26 parts, 1316 g · checks passed 5
 
 ## Engineering checks
 
-All 56 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
+All 94 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
 
 ## Assumptions and limits
 
-- Joint limits trimmed to the collision-free range found by exact solid sweeps: l_hip_roll [-0.45, 0.45] -> [-0.13, 0.45]; l_knee [-2.20, 2.20] -> [-2.04, 2.20]; l_ankle_roll [-0.50, 0.50] -> [-0.50, 0.13]; r_hip_roll [-0.45, 0.45] -> [-0.45, 0.13]; r_knee [-2.20, 2.20] -> [-2.20, 2.04]; r_ankle_roll [-0.50, 0.50] -> [-0.13, 0.50]; l_shoulder_roll [-1.60, 1.60] -> [-0.15, 1.60]; r_shoulder_roll [-1.60, 1.60] -> [-1.60, 0.15]; neck_tilt [-0.70, 0.70] -> [-0.70, 0.38].
+- Joint limits trimmed to the collision-free range found by exact solid sweeps: l_hip_roll [-0.45, 0.45] -> [-0.13, 0.45]; l_knee [-2.20, 2.20] -> [-2.04, 2.20]; l_ankle_roll [-0.50, 0.50] -> [-0.50, 0.13]; r_hip_roll [-0.45, 0.45] -> [-0.45, 0.13]; r_knee [-2.20, 2.20] -> [-2.20, 2.04]; r_ankle_roll [-0.50, 0.50] -> [-0.13, 0.50]; l_shoulder_roll [-1.60, 1.60] -> [-0.13, 1.60]; r_shoulder_roll [-1.60, 1.60] -> [-1.60, 0.13]; neck_tilt [-0.70, 0.70] -> [-0.70, 0.38].
 - Joint ranges are swept with the arms held 0.35 rad out to the side (the walking posture); with the arms hanging straight the hands touch the thighs when a leg abducts or a wrist turns.
 - Zero joint angles are the standing pose (knees bent 0.25 rad, soles flat); the base origin is on the hip-yaw output plane.
 - Leg loads are J^T F at the sole with the whole robot on one foot and the centre of pressure anywhere on the central 60 % of the sole, over squat / lean / step poses, ±10 % traction, x 1.3 dynamic factor; continuous duty checked at 71 % of the worst stance load (RMS over a gait cycle with half of it in stance).
@@ -97,6 +97,7 @@ _PASS means the modelled actuators (datasheet peak torque as a hard limit, a lin
 |---|---|
 | `robot.urdf`, `meshes/` | URDF with real component and printed-part meshes, datasheet effort/velocity limits |
 | `BOM.md`, `bom.json` | every part to buy, with supplier links and prices |
+| `WIRING.md`, `wiring.svg` | power budget per rail, pin-to-pin table, cut list, slack at each joint, wiring diagram |
 | `robot.cad.zip` | build package: printable STLs, print list, bought-part models, assembly order |
 | `robot.ros2.zip` | ROS 2 description package (ros2_control, MoveIt config, Gazebo launch) |
 | `robot.training.zip` | MuJoCo / RL training scaffold |

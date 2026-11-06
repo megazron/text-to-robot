@@ -3,7 +3,7 @@
      robot: quadruped
      prompt: Create a quadruped robot
 
-     36 links, 35 joints, 36 inferred values
+     38 links, 37 joints, 38 inferred values
 -->
 <robot name="quadruped">
   <material name="printed"><color rgba="0.93 0.93 0.95 1"/></material>
@@ -61,9 +61,9 @@
       <geometry><mesh filename="package://quadruped/meshes/top_deck.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.006308 -0.001316 0.018631" rpy="0 0 0"/>
-      <mass value="0.065834"/>
-      <inertia ixx="0.0000508469" ixy="0.00000151087" ixz="-0.00000470686" iyy="0.00022943" iyz="2.04944e-7" izz="0.000278071"/>
+      <origin xyz="0.006233 -0.000783678 0.018635" rpy="0 0 0"/>
+      <mass value="0.065584"/>
+      <inertia ixx="0.000049029" ixy="0.00000103707" ixz="-0.00000471248" iyy="0.000228755" iyz="1.18050e-7" izz="0.000275579"/>
     </inertial>
   </link>
   <link name="computer">
@@ -205,9 +205,9 @@
       <geometry><mesh filename="package://quadruped/meshes/fl_thigh.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.073862 0.000115474 -0.007841" rpy="0 0 0"/>
-      <mass value="0.026136"/>
-      <inertia ixx="0.00000701085" ixy="-2.08542e-8" ixz="0.00000480774" iyy="0.0000358487" iyz="-7.82712e-9" izz="0.0000346995"/>
+      <origin xyz="0.073731 0.000115012 -0.007809" rpy="0 0 0"/>
+      <mass value="0.02632"/>
+      <inertia ixx="0.00000701681" ixy="-2.10804e-8" ixz="0.0000048234" iyy="0.000035918" iyz="-7.77201e-9" izz="0.0000347658"/>
     </inertial>
   </link>
   <link name="fl_knee_actuator">
@@ -317,9 +317,9 @@
       <geometry><mesh filename="package://quadruped/meshes/fr_thigh.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.073862 0.000115395 -0.007841" rpy="0 0 0"/>
-      <mass value="0.026136"/>
-      <inertia ixx="0.00000701085" ixy="-2.10069e-8" ixz="0.00000480774" iyy="0.0000358487" iyz="-7.80679e-9" izz="0.0000346995"/>
+      <origin xyz="0.073731 0.00011424 -0.007809" rpy="0 0 0"/>
+      <mass value="0.02632"/>
+      <inertia ixx="0.00000701682" ixy="-2.15727e-8" ixz="0.0000048234" iyy="0.000035918" iyz="-7.66893e-9" izz="0.0000347658"/>
     </inertial>
   </link>
   <link name="fr_knee_actuator">
@@ -429,9 +429,9 @@
       <geometry><mesh filename="package://quadruped/meshes/rl_thigh.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.073862 0.000115395 -0.007841" rpy="0 0 0"/>
-      <mass value="0.026136"/>
-      <inertia ixx="0.00000701085" ixy="-2.10069e-8" ixz="0.00000480774" iyy="0.0000358487" iyz="-7.80679e-9" izz="0.0000346995"/>
+      <origin xyz="0.073731 0.00011424 -0.007809" rpy="0 0 0"/>
+      <mass value="0.02632"/>
+      <inertia ixx="0.00000701682" ixy="-2.15727e-8" ixz="0.0000048234" iyy="0.000035918" iyz="-7.66893e-9" izz="0.0000347658"/>
     </inertial>
   </link>
   <link name="rl_knee_actuator">
@@ -541,9 +541,9 @@
       <geometry><mesh filename="package://quadruped/meshes/rr_thigh.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.073862 0.000115474 -0.007841" rpy="0 0 0"/>
-      <mass value="0.026136"/>
-      <inertia ixx="0.00000701085" ixy="-2.08542e-8" ixz="0.00000480774" iyy="0.0000358487" iyz="-7.82712e-9" izz="0.0000346995"/>
+      <origin xyz="0.073731 0.000115012 -0.007809" rpy="0 0 0"/>
+      <mass value="0.02632"/>
+      <inertia ixx="0.00000701681" ixy="-2.10804e-8" ixz="0.0000048234" iyy="0.000035918" iyz="-7.77201e-9" izz="0.0000347658"/>
     </inertial>
   </link>
   <link name="rr_knee_actuator">
@@ -594,6 +594,38 @@
       <inertia ixx="6.01640e-7" ixy="0" ixz="0" iyy="6.01640e-7" iyz="0" izz="6.01640e-7"/>
     </inertial>
   </link>
+  <link name="electronics_hood">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/electronics_hood.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/electronics_hood.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.004157 -0.002617 0.044529" rpy="0 0 0"/>
+      <mass value="0.067714"/>
+      <inertia ixx="0.0000763076" ixy="-0.00000688005" ixz="-1.10182e-7" iyy="0.000303666" iyz="-9.94347e-7" izz="0.000359464"/>
+    </inertial>
+  </link>
+  <link name="main_switch">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/switch_kcd4.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://quadruped/meshes/switch_kcd4.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-4.05398e-20 -3.52601e-19 -0.011305" rpy="0 0 0"/>
+      <mass value="0.008"/>
+      <inertia ixx="0.00000113854" ixy="-4.97311e-40" ixz="8.69383e-24" iyy="8.66712e-7" iyz="1.56687e-23" izz="9.36569e-7"/>
+    </inertial>
+  </link>
   <joint name="battery_mount" type="fixed">
     <parent link="base_link"/>
     <child link="battery"/>
@@ -607,7 +639,7 @@
   <joint name="actuator_bus_mount" type="fixed">
     <parent link="top_deck"/>
     <child link="actuator_bus"/>
-    <origin xyz="-0.0006 -0.0459 0.023" rpy="0 0 0"/>
+    <origin xyz="-0.0006 -0.0369 0.023" rpy="0 0 0"/>
   </joint>
   <joint name="regulator_5v_mount" type="fixed">
     <parent link="top_deck"/>
@@ -804,5 +836,15 @@
     <parent link="rr_shin"/>
     <child link="rr_foot"/>
     <origin xyz="0.115 0 0.003" rpy="-1.570796 0 0.901349"/>
+  </joint>
+  <joint name="electronics_hood_mount" type="fixed">
+    <parent link="top_deck"/>
+    <child link="electronics_hood"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="main_switch_mount" type="fixed">
+    <parent link="electronics_hood"/>
+    <child link="main_switch"/>
+    <origin xyz="0.096 -0.02675 0.0365" rpy="1.570796 0 1.570796"/>
   </joint>
 </robot>

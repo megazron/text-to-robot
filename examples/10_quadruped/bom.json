@@ -31,6 +31,15 @@
     },
     {
       "category": "Power",
+      "name": "Inline ATM mini blade fuse holder, 30 A class (Littelfuse FHM)",
+      "qty": 7,
+      "unit_cost": 2.5,
+      "subtotal": 17.5,
+      "spec": "32 V",
+      "note": "fuse holders · https://www.digikey.com/en/product-highlight/l/littelfuse-commercial-vehicle-products/fhac-fhm-series-in-line-fuse-holders"
+    },
+    {
+      "category": "Power",
       "name": "LiPo 3S 2200 mAh 25C, XT60 (Gens Ace G-Tech)",
       "qty": 1,
       "unit_cost": 27,
@@ -57,6 +66,24 @@
       "note": "main computer · https://www.raspberrypi.com/products/raspberry-pi-5/"
     },
     {
+      "category": "Power",
+      "name": "KCD4 double-pole rocker switch, 16 A 250 VAC / 20 A 125 VAC",
+      "qty": 1,
+      "unit_cost": 1,
+      "subtotal": 1,
+      "spec": "https://www.aliexpress.com/w/wholesale-kcd4-rocker-switch.html",
+      "note": "main power switch · https://www.aliexpress.com/w/wholesale-kcd4-rocker-switch.html"
+    },
+    {
+      "category": "Power",
+      "name": "WAGO 221-415 five-way lever splice",
+      "qty": 7,
+      "unit_cost": 0.8,
+      "subtotal": 5.6,
+      "spec": "450 V",
+      "note": "rail splices, the star ground and bus hubs · https://www.wago.com/global/electrical-interconnections/compact-splicing-connector/p/221-415"
+    },
+    {
       "category": "Electronics",
       "name": "Waveshare Bus Servo Adapter (A)",
       "qty": 1,
@@ -67,23 +94,203 @@
     },
     {
       "category": "Printed structure",
-      "name": "PETG filament for 14 printed parts",
+      "name": "PETG filament for 15 printed parts",
       "qty": 1,
-      "unit_cost": 11.89,
-      "subtotal": 11.89,
-      "spec": "470 g of parts (+15 % supports/waste), about 42.8 h of printing",
-      "note": "base_link, top_deck, fl_shoulder, fl_thigh, fl_shin, fr_shoulder, fr_thigh, fr_shin, rl_shoulder, rl_thigh, rl_shin, rr_shoulder, rr_thigh, rr_shin"
+      "unit_cost": 13.61,
+      "subtotal": 13.61,
+      "spec": "538 g of parts (+15 % supports/waste), about 49.0 h of printing",
+      "note": "base_link, top_deck, fl_shoulder, fl_thigh, fl_shin, fr_shoulder, fr_thigh, fr_shin, rl_shoulder, rl_thigh, rl_shin, rr_shoulder, rr_thigh, rr_shin, electronics_hood"
     },
     {
       "category": "Fasteners",
       "name": "Screws, nuts and inserts",
-      "qty": 104,
+      "qty": 108,
       "unit_cost": 0.12,
-      "subtotal": 12.48,
-      "spec": "4x M2.5 x 10 board screws; 4x M3 x 10 deck screws; 48x M2 x 6 case screws; 48x horn screws"
+      "subtotal": 12.96,
+      "spec": "4x M2.5 x 10 board screws; 4x M3 x 10 deck screws; 48x M2 x 6 case screws; 48x horn screws; 4x M3 x 12 self-tapping (hood to deck)"
+    },
+    {
+      "category": "Wiring",
+      "name": "16 AWG silicone wire",
+      "qty": 0.7,
+      "unit_cost": 1,
+      "subtotal": 0.7,
+      "spec": "0.7 m: 1.308 mm2, rated 11 A in a bundle; 0.56 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "22 AWG silicone wire",
+      "qty": 5,
+      "unit_cost": 0.4,
+      "subtotal": 2,
+      "spec": "5 m: 0.327 mm2, rated 3.5 A in a bundle; 4.54 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "24 AWG silicone wire",
+      "qty": 3.5,
+      "unit_cost": 0.35,
+      "subtotal": 1.22,
+      "spec": "3.5 m: 0.205 mm2, rated 1.75 A in a bundle; 3.18 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "26 AWG silicone wire",
+      "qty": 3.9,
+      "unit_cost": 0.3,
+      "subtotal": 1.17,
+      "spec": "3.9 m: 0.128 mm2, rated 1.1 A in a bundle; 3.51 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Dupont 2.54 mm contacts",
+      "qty": 10,
+      "unit_cost": 0.02,
+      "subtotal": 0.2,
+      "spec": "10 pc: rated 3 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Dupont 2.54 mm housings",
+      "qty": 3,
+      "unit_cost": 0.02,
+      "subtotal": 0.06,
+      "spec": "3 pc: one per cable end",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Molex 5264 contacts",
+      "qty": 61,
+      "unit_cost": 0.05,
+      "subtotal": 3.05,
+      "spec": "61 pc: rated 3 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Molex 5264 housings",
+      "qty": 25,
+      "unit_cost": 0.08,
+      "subtotal": 2,
+      "spec": "25 pc: one per cable end",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "XT60 contacts",
+      "qty": 2,
+      "unit_cost": 0.9,
+      "subtotal": 1.8,
+      "spec": "2 pc: rated 35 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "6.3 mm spade contacts",
+      "qty": 2,
+      "unit_cost": 0.08,
+      "subtotal": 0.16,
+      "spec": "2 pc: rated 15 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Bootlace ferrule contacts",
+      "qty": 2,
+      "unit_cost": 0.03,
+      "subtotal": 0.06,
+      "spec": "2 pc: rated 17.5 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Heat shrink 3 mm, 2:1",
+      "qty": 1.9,
+      "unit_cost": 0.2,
+      "subtotal": 0.38,
+      "spec": "1.9 m: 7 solder joints + a boot on each cable end",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Cable tie 100 x 2.5 mm",
+      "qty": 38,
+      "unit_cost": 0.02,
+      "subtotal": 0.76,
+      "spec": "38 pc: at every clip, cable end and strain-relief anchor",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Rubber grommet, 6.4 mm panel hole, 3.2 mm bore",
+      "qty": 1,
+      "unit_cost": 0.08,
+      "subtotal": 0.08,
+      "spec": "1 pc: 9.5 mm panel hole",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Rubber grommet, 6.4 mm panel hole, 3.2 mm bore",
+      "qty": 2,
+      "unit_cost": 0.08,
+      "subtotal": 0.16,
+      "spec": "2 pc: 10 mm panel hole",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Nylon braided sleeving 6 mm",
+      "qty": 1.2,
+      "unit_cost": 0.4,
+      "subtotal": 0.48,
+      "spec": "1.2 m: over every cable where it crosses a joint",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "FFC",
+      "qty": 1,
+      "unit_cost": 3,
+      "subtotal": 3,
+      "spec": "1 pc: camera to computer",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "USB",
+      "qty": 1,
+      "unit_cost": 3,
+      "subtotal": 3,
+      "spec": "1 pc: actuator_bus to computer",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "7.5 A ATM blade fuse",
+      "qty": 1,
+      "unit_cost": 0.25,
+      "subtotal": 0.25,
+      "spec": "1 pc: plus spares",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "2 A ATM blade fuse",
+      "qty": 6,
+      "unit_cost": 0.25,
+      "subtotal": 1.5,
+      "spec": "6 pc: plus spares",
+      "note": "price estimated"
     }
   ],
-  "total": 530.42,
+  "total": 578.75,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
@@ -187,7 +394,7 @@
   ],
   "warnings": [],
   "notes": [
-    "Servo quadruped, 1.41 kg, hip height 0.18 m, 12 DOF, 33 min runtime, $506 of parts",
+    "Servo quadruped, 1.41 kg, hip height 0.18 m, 12 DOF, 33 min runtime, $530 of parts",
     "Sized for a 0.3 kg payload.",
     "A trot has two diagonal feet on the ground: the COM sits on the support line, so trotting needs the dynamic balance of the gait controller; the creep gait keeps three feet down (statically stable).",
     "Every joint's limits are inside its collision-free range (exact solid sweeps).",

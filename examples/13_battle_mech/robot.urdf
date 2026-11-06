@@ -3,7 +3,7 @@
      robot: battle_mech
      prompt: Create a humanoid battle mech with two 7 DOF arms, a head camera and an IMU
 
-     87 links, 86 joints, 87 inferred values
+     95 links, 94 joints, 95 inferred values
 -->
 <robot name="battle_mech">
   <material name="printed"><color rgba="0.93 0.93 0.95 1"/></material>
@@ -29,9 +29,9 @@
       <geometry><mesh filename="package://battle_mech/meshes/base_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.005591 -0.079634 0.041919" rpy="0 0 0"/>
-      <mass value="0.12272"/>
-      <inertia ixx="0.000209985" ixy="0.0000071634" ixz="0.0000053477" iyy="0.000104289" iyz="-0.0000141915" izz="0.000271553"/>
+      <origin xyz="-0.005616 -0.079754 0.041905" rpy="0 0 0"/>
+      <mass value="0.122497"/>
+      <inertia ixx="0.000208997" ixy="0.00000736121" ixz="0.0000053701" iyy="0.000104205" iyz="-0.0000140799" izz="0.00027051"/>
     </inertial>
   </link>
   <link name="base_link_b">
@@ -162,6 +162,22 @@
       <inertia ixx="0.000443807" ixy="-0.0000057843" ixz="-0.00000970313" iyy="0.001006" iyz="-3.14227e-7" izz="0.001333"/>
     </inertial>
   </link>
+  <link name="dcdc_12v_2">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://battle_mech/meshes/dcdc_48v_12v_sd50c12.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://battle_mech/meshes/dcdc_48v_12v_sd50c12.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.082995 0.048344 0.018628" rpy="0 0 0"/>
+      <mass value="0.4875"/>
+      <inertia ixx="0.000443807" ixy="-0.0000057843" ixz="-0.00000970313" iyy="0.001006" iyz="-3.14227e-7" izz="0.001333"/>
+    </inertial>
+  </link>
   <link name="regulator_5v">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -205,9 +221,9 @@
       <geometry><mesh filename="package://battle_mech/meshes/torso.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.136724 -0.002101 0.127805" rpy="0 0 0"/>
-      <mass value="0.645142"/>
-      <inertia ixx="0.004208" ixy="-0.000112205" ixz="-0.000430821" iyy="0.003715" iyz="-0.00000786821" izz="0.005298"/>
+      <origin xyz="-0.2075 -0.007481 0.115614" rpy="0 0 0"/>
+      <mass value="0.364277"/>
+      <inertia ixx="0.001519" ixy="-0.0000067699" ixz="-0.0000293404" iyy="0.00169" iyz="0.0000173462" izz="0.003161"/>
     </inertial>
   </link>
   <link name="torso_b">
@@ -221,9 +237,9 @@
       <geometry><mesh filename="package://battle_mech/meshes/torso_b.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.017035 -0.000241772 0.161841" rpy="0 0 0"/>
-      <mass value="0.980508"/>
-      <inertia ixx="0.0126" ixy="0.00000800447" ixz="0.0000658808" iyy="0.009277" iyz="-0.0000170338" izz="0.009808"/>
+      <origin xyz="-0.01118 -0.000169054 0.155235" rpy="0 0 0"/>
+      <mass value="1.312581"/>
+      <inertia ixx="0.015541" ixy="0.0000133788" ixz="-0.000702941" iyy="0.01366" iyz="-0.0000147749" izz="0.01449"/>
     </inertial>
   </link>
   <link name="l_hip_yaw_actuator">
@@ -333,9 +349,9 @@
       <geometry><mesh filename="package://battle_mech/meshes/l_hip_pitch_link_b.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.056848 -0.004144 0.004" rpy="0 0 0"/>
-      <mass value="0.06011"/>
-      <inertia ixx="0.000028374" ixy="0.0000068837" ixz="-2.70955e-16" iyy="0.0000731047" iyz="-4.17079e-18" izz="0.000100837"/>
+      <origin xyz="0.056915 -0.004124 0.003955" rpy="0 0 0"/>
+      <mass value="0.060401"/>
+      <inertia ixx="0.0000284115" ixy="0.00000686734" ixz="3.68298e-8" iyy="0.0000731881" iyz="1.09615e-8" izz="0.000100903"/>
     </inertial>
   </link>
   <link name="l_knee_actuator">
@@ -381,9 +397,9 @@
       <geometry><mesh filename="package://battle_mech/meshes/l_knee_link_b.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.054765 -0.003204 0.004" rpy="0 0 0"/>
-      <mass value="0.057216"/>
-      <inertia ixx="0.0000253878" ixy="0.00000535117" ixz="-5.24096e-15" iyy="0.000066585" iyz="1.11046e-16" izz="0.0000913625"/>
+      <origin xyz="0.054836 -0.00319 0.003962" rpy="0 0 0"/>
+      <mass value="0.057474"/>
+      <inertia ixx="0.0000254144" ixy="0.00000533815" ixz="3.45372e-8" iyy="0.0000666706" iyz="6.99637e-9" izz="0.0000914337"/>
     </inertial>
   </link>
   <link name="l_ankle_pitch_actuator">
@@ -573,9 +589,9 @@
       <geometry><mesh filename="package://battle_mech/meshes/r_hip_pitch_link_b.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.056848 0.004144 0.004" rpy="0 0 0"/>
-      <mass value="0.06011"/>
-      <inertia ixx="0.000028374" ixy="-0.0000068837" ixz="-2.87910e-16" iyy="0.0000731047" iyz="-2.23302e-17" izz="0.000100837"/>
+      <origin xyz="0.056916 0.004124 0.003955" rpy="0 0 0"/>
+      <mass value="0.060408"/>
+      <inertia ixx="0.0000284123" ixy="-0.00000686698" ixz="3.75814e-8" iyy="0.0000731899" iyz="-1.11852e-8" izz="0.000100905"/>
     </inertial>
   </link>
   <link name="r_knee_actuator">
@@ -621,9 +637,9 @@
       <geometry><mesh filename="package://battle_mech/meshes/r_knee_link_b.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.054765 0.003204 0.004" rpy="0 0 0"/>
-      <mass value="0.057216"/>
-      <inertia ixx="0.0000253878" ixy="-0.00000535117" ixz="-3.31581e-16" iyy="0.000066585" iyz="1.74978e-18" izz="0.0000913625"/>
+      <origin xyz="0.054834 0.00319 0.003963" rpy="0 0 0"/>
+      <mass value="0.057468"/>
+      <inertia ixx="0.0000254138" ixy="-0.00000533844" ixz="3.37759e-8" iyy="0.0000666686" iyz="-6.84214e-9" izz="0.0000914322"/>
     </inertial>
   </link>
   <link name="r_ankle_pitch_actuator">
@@ -989,9 +1005,9 @@
       <geometry><mesh filename="package://battle_mech/meshes/r_shoulder_pitch_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.0000414032 0.004834 0.057405" rpy="0 0 0"/>
-      <mass value="0.173127"/>
-      <inertia ixx="0.00033082" ixy="-1.07817e-7" ixz="-6.43170e-7" iyy="0.000425912" iyz="-0.0000225258" izz="0.000182841"/>
+      <origin xyz="0.0000413916 0.004802 0.05739" rpy="0 0 0"/>
+      <mass value="0.173302"/>
+      <inertia ixx="0.000331022" ixy="-1.07879e-7" ixz="-6.43198e-7" iyy="0.000425949" iyz="-0.0000226025" izz="0.000183007"/>
     </inertial>
   </link>
   <link name="r_shoulder_roll_actuator">
@@ -1277,9 +1293,9 @@
       <geometry><mesh filename="package://battle_mech/meshes/neck_tilt_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.029198 -0.071264 -0.018016" rpy="0 0 0"/>
-      <mass value="0.918037"/>
-      <inertia ixx="0.002005" ixy="0.0000116821" ixz="-0.0000118475" iyy="0.002435" iyz="-0.0000332775" izz="0.001367"/>
+      <origin xyz="-0.029193 -0.071259 -0.018014" rpy="0 0 0"/>
+      <mass value="0.918212"/>
+      <inertia ixx="0.002005" ixy="0.0000115314" ixz="-0.0000118913" iyy="0.002435" iyz="-0.0000333218" izz="0.001367"/>
     </inertial>
   </link>
   <link name="head_camera">
@@ -1410,6 +1426,118 @@
       <inertia ixx="0.000001535" ixy="-5.49409e-10" ixz="-1.05970e-16" iyy="0.00000213633" iyz="-1.47361e-17" izz="6.06640e-7"/>
     </inertial>
   </link>
+  <link name="side_panel_left">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://battle_mech/meshes/side_panel_left.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://battle_mech/meshes/side_panel_left.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="1.10856e-18 0.1212 0.08776" rpy="0 0 0"/>
+      <mass value="0.017037"/>
+      <inertia ixx="0.00000685783" ixy="5.90917e-23" ixz="3.30168e-21" iyy="0.0000585506" iyz="-7.97389e-24" izz="0.0000517091"/>
+    </inertial>
+  </link>
+  <link name="side_panel_right">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://battle_mech/meshes/side_panel_right.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://battle_mech/meshes/side_panel_right.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.000631313 -0.121157 0.087838" rpy="0 0 0"/>
+      <mass value="0.017194"/>
+      <inertia ixx="0.00000687389" ixy="-5.09077e-8" ixz="-9.29894e-8" iyy="0.0000593111" iyz="-6.38487e-9" izz="0.0000524614"/>
+    </inertial>
+  </link>
+  <link name="chest_panel">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://battle_mech/meshes/chest_panel.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://battle_mech/meshes/chest_panel.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.0942 -6.14901e-18 0.157809" rpy="0 0 0"/>
+      <mass value="0.022498"/>
+      <inertia ixx="0.000110637" ixy="-5.87224e-23" ixz="1.83626e-23" iyy="0.0000114044" iyz="5.31399e-21" izz="0.0000992545"/>
+    </inertial>
+  </link>
+  <link name="backpack_hood">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://battle_mech/meshes/backpack_hood.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://battle_mech/meshes/backpack_hood.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.21004 -0.034813 0.155313" rpy="0 0 0"/>
+      <mass value="0.136904"/>
+      <inertia ixx="0.000584869" ixy="2.52758e-8" ixz="-5.53823e-7" iyy="0.000790802" iyz="-0.00000159082" izz="0.001301"/>
+    </inertial>
+  </link>
+  <link name="switch_case">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://battle_mech/meshes/switch_case.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://battle_mech/meshes/switch_case.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.2665 6.89687e-11 0.204934" rpy="0 0 0"/>
+      <mass value="0.040394"/>
+      <inertia ixx="0.0000461651" ixy="1.87220e-13" ixz="1.28236e-12" iyy="0.000046165" iyz="5.34468e-15" izz="0.0000605806"/>
+    </inertial>
+  </link>
+  <link name="main_switch">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://battle_mech/meshes/switch_battery_6006.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://battle_mech/meshes/switch_battery_6006.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 -0.023257" rpy="0 0 0"/>
+      <mass value="0.19"/>
+      <inertia ixx="0.000109674" ixy="2.26828e-22" ixz="0" iyy="0.000109674" iyz="9.07310e-22" izz="0.0000954623"/>
+    </inertial>
+  </link>
+  <link name="imu_hood">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://battle_mech/meshes/imu_hood.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://battle_mech/meshes/imu_hood.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="2.49366e-18 -5.42101e-20 0.038403" rpy="0 0 0"/>
+      <mass value="0.006424"/>
+      <inertia ixx="0.00000106766" ixy="-5.64471e-16" ixz="-3.43471e-23" iyy="0.0000011498" iyz="7.38646e-25" izz="0.00000204321"/>
+    </inertial>
+  </link>
   <joint name="base_link_b_mount" type="fixed">
     <parent link="base_link"/>
     <child link="base_link_b"/>
@@ -1448,7 +1576,12 @@
   <joint name="dcdc_12v_mount" type="fixed">
     <parent link="torso"/>
     <child link="dcdc_12v"/>
-    <origin xyz="-0.171 -0.115 0.1235" rpy="0 0 1.570796"/>
+    <origin xyz="-0.211 -0.115 0.1235" rpy="0 0 1.570796"/>
+  </joint>
+  <joint name="dcdc_12v_2_mount" type="fixed">
+    <parent link="torso"/>
+    <child link="dcdc_12v_2"/>
+    <origin xyz="-0.112 -0.115 0.1235" rpy="0 0 1.570796"/>
   </joint>
   <joint name="regulator_5v_mount" type="fixed">
     <parent link="torso"/>
@@ -1928,6 +2061,41 @@
   <joint name="r_shoulder_roll_armour_out_mount" type="fixed">
     <parent link="r_shoulder_roll_link"/>
     <child link="r_shoulder_roll_armour_out"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="side_panel_left_mount" type="fixed">
+    <parent link="torso"/>
+    <child link="side_panel_left"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="side_panel_right_mount" type="fixed">
+    <parent link="torso"/>
+    <child link="side_panel_right"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="chest_panel_mount" type="fixed">
+    <parent link="torso"/>
+    <child link="chest_panel"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="backpack_hood_mount" type="fixed">
+    <parent link="torso"/>
+    <child link="backpack_hood"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="switch_case_mount" type="fixed">
+    <parent link="backpack_hood"/>
+    <child link="switch_case"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="main_switch_mount" type="fixed">
+    <parent link="switch_case"/>
+    <child link="main_switch"/>
+    <origin xyz="-0.2665 0 0.2341" rpy="0 0 0"/>
+  </joint>
+  <joint name="imu_hood_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="imu_hood"/>
     <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
 </robot>

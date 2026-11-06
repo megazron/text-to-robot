@@ -76,6 +76,15 @@
     },
     {
       "category": "Power",
+      "name": "Inline ATM mini blade fuse holder, 30 A class (Littelfuse FHM)",
+      "qty": 12,
+      "unit_cost": 2.5,
+      "subtotal": 30,
+      "spec": "32 V",
+      "note": "fuse holders · https://www.digikey.com/en/product-highlight/l/littelfuse-commercial-vehicle-products/fhac-fhm-series-in-line-fuse-holders"
+    },
+    {
+      "category": "Power",
       "name": "LiPo 3S 5000 mAh 60C, XT60 (Gens Ace G-Tech)",
       "qty": 1,
       "unit_cost": 59.99,
@@ -102,6 +111,24 @@
       "note": "main computer · https://www.raspberrypi.com/products/raspberry-pi-5/"
     },
     {
+      "category": "Power",
+      "name": "KCD4 double-pole rocker switch, 16 A 250 VAC / 20 A 125 VAC",
+      "qty": 1,
+      "unit_cost": 1,
+      "subtotal": 1,
+      "spec": "https://www.aliexpress.com/w/wholesale-kcd4-rocker-switch.html",
+      "note": "main power switch · https://www.aliexpress.com/w/wholesale-kcd4-rocker-switch.html"
+    },
+    {
+      "category": "Power",
+      "name": "WAGO 221-415 five-way lever splice",
+      "qty": 14,
+      "unit_cost": 0.8,
+      "subtotal": 11.2,
+      "spec": "450 V",
+      "note": "rail splices, the star ground and bus hubs · https://www.wago.com/global/electrical-interconnections/compact-splicing-connector/p/221-415"
+    },
+    {
       "category": "Electronics",
       "name": "Waveshare Bus Servo Adapter (A)",
       "qty": 1,
@@ -112,23 +139,275 @@
     },
     {
       "category": "Printed structure",
-      "name": "PETG filament for 26 printed parts",
+      "name": "PETG filament for 30 printed parts",
       "qty": 1,
-      "unit_cost": 33.29,
-      "subtotal": 33.29,
-      "spec": "1316 g of parts (+15 % supports/waste), about 119.9 h of printing",
-      "note": "base_link, torso, l_hip_yaw_link, l_hip_roll_link, l_hip_pitch_link, l_knee_link, l_ankle_pitch_link, l_ankle_roll_link, r_hip_yaw_link, r_hip_roll_link, r_hip_pitch_link, r_knee_link, r_ankle_pitch_link, r_ankle_roll_link, l_shoulder_pitch_link, l_shoulder_roll_link, l_upper_arm_yaw_link, l_elbow_link, l_gripper_jaw, r_shoulder_pitch_link, r_shoulder_roll_link, r_upper_arm_yaw_link, r_elbow_link, r_gripper_jaw, neck_pan_link, neck_tilt_link"
+      "unit_cost": 33.81,
+      "subtotal": 33.81,
+      "spec": "1337 g of parts (+15 % supports/waste), about 121.8 h of printing",
+      "note": "base_link, torso, l_hip_yaw_link, l_hip_roll_link, l_hip_pitch_link, l_knee_link, l_ankle_pitch_link, l_ankle_roll_link, r_hip_yaw_link, r_hip_roll_link, r_hip_pitch_link, r_knee_link, r_ankle_pitch_link, r_ankle_roll_link, l_shoulder_pitch_link, l_shoulder_roll_link, l_upper_arm_yaw_link, l_elbow_link, l_gripper_jaw, r_shoulder_pitch_link, r_shoulder_roll_link, r_upper_arm_yaw_link, r_elbow_link, r_gripper_jaw, neck_pan_link, neck_tilt_link, side_panel_left, side_panel_right, chest_panel, imu_hood"
     },
     {
       "category": "Fasteners",
       "name": "Screws, nuts and inserts",
-      "qty": 180,
+      "qty": 196,
       "unit_cost": 0.12,
-      "subtotal": 21.6,
-      "spec": "4x M3 x 12 torso-to-pelvis bolts; 88x M2/M2.5 x 6 case screws; 88x horn / hub screws"
+      "subtotal": 23.52,
+      "spec": "4x M3 x 12 torso-to-pelvis bolts; 88x M2/M2.5 x 6 case screws; 88x horn / hub screws; 4x M3 x 8 self-tapping (side_panel_left); 4x M3 x 8 self-tapping (side_panel_right); 4x M3 x 8 self-tapping (chest_panel); 4x M3 x 12 self-tapping (hood to deck)"
+    },
+    {
+      "category": "Wiring",
+      "name": "12 AWG silicone wire",
+      "qty": 0.7,
+      "unit_cost": 2.2,
+      "subtotal": 1.54,
+      "spec": "0.7 m: 3.308 mm2, rated 20.5 A in a bundle; 0.60 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "18 AWG silicone wire",
+      "qty": 1,
+      "unit_cost": 0.7,
+      "subtotal": 0.7,
+      "spec": "1 m: 0.823 mm2, rated 8 A in a bundle; 0.86 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "20 AWG silicone wire",
+      "qty": 2.5,
+      "unit_cost": 0.5,
+      "subtotal": 1.25,
+      "spec": "2.5 m: 0.519 mm2, rated 5.5 A in a bundle; 2.27 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "22 AWG silicone wire",
+      "qty": 7.1,
+      "unit_cost": 0.4,
+      "subtotal": 2.84,
+      "spec": "7.1 m: 0.327 mm2, rated 3.5 A in a bundle; 6.37 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "24 AWG silicone wire",
+      "qty": 11.5,
+      "unit_cost": 0.35,
+      "subtotal": 4.02,
+      "spec": "11.5 m: 0.205 mm2, rated 1.75 A in a bundle; 10.43 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "26 AWG silicone wire",
+      "qty": 9.6,
+      "unit_cost": 0.3,
+      "subtotal": 2.88,
+      "spec": "9.6 m: 0.128 mm2, rated 1.1 A in a bundle; 8.72 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Dupont 2.54 mm contacts",
+      "qty": 10,
+      "unit_cost": 0.02,
+      "subtotal": 0.2,
+      "spec": "10 pc: rated 3 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Dupont 2.54 mm housings",
+      "qty": 3,
+      "unit_cost": 0.02,
+      "subtotal": 0.06,
+      "spec": "3 pc: one per cable end",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Molex 5264 contacts",
+      "qty": 25,
+      "unit_cost": 0.05,
+      "subtotal": 1.25,
+      "spec": "25 pc: rated 3 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Molex 5264 housings",
+      "qty": 13,
+      "unit_cost": 0.08,
+      "subtotal": 1.04,
+      "spec": "13 pc: one per cable end",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "JST EH 2.5 mm contacts",
+      "qty": 90,
+      "unit_cost": 0.03,
+      "subtotal": 2.7,
+      "spec": "90 pc: rated 3 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "JST EH 2.5 mm housings",
+      "qty": 39,
+      "unit_cost": 0.05,
+      "subtotal": 1.95,
+      "spec": "39 pc: one per cable end",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "XT60 contacts",
+      "qty": 2,
+      "unit_cost": 0.9,
+      "subtotal": 1.8,
+      "spec": "2 pc: rated 35 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "6.3 mm spade contacts",
+      "qty": 2,
+      "unit_cost": 0.08,
+      "subtotal": 0.16,
+      "spec": "2 pc: rated 15 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Bootlace ferrule contacts",
+      "qty": 2,
+      "unit_cost": 0.03,
+      "subtotal": 0.06,
+      "spec": "2 pc: rated 17.5 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Heat shrink 3 mm, 2:1",
+      "qty": 3.5,
+      "unit_cost": 0.2,
+      "subtotal": 0.7,
+      "spec": "3.5 m: 11 solder joints + a boot on each cable end",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Cable tie 100 x 2.5 mm",
+      "qty": 86,
+      "unit_cost": 0.02,
+      "subtotal": 1.72,
+      "spec": "86 pc: at every clip, cable end and strain-relief anchor",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Rubber grommet, 6.4 mm panel hole, 3.2 mm bore",
+      "qty": 1,
+      "unit_cost": 0.08,
+      "subtotal": 0.08,
+      "spec": "1 pc: 12 mm panel hole",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Rubber grommet, 6.4 mm panel hole, 3.2 mm bore",
+      "qty": 3,
+      "unit_cost": 0.08,
+      "subtotal": 0.24,
+      "spec": "3 pc: 9.5 mm panel hole",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Rubber grommet, 5.0 mm panel hole, 3.0 mm bore",
+      "qty": 1,
+      "unit_cost": 0.05,
+      "subtotal": 0.05,
+      "spec": "1 pc: 5 mm panel hole",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Nylon braided sleeving 6 mm",
+      "qty": 7.1,
+      "unit_cost": 0.4,
+      "subtotal": 2.84,
+      "spec": "7.1 m: over every cable where it crosses a joint",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "FFC",
+      "qty": 1,
+      "unit_cost": 3,
+      "subtotal": 3,
+      "spec": "1 pc: head_camera to computer",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "USB",
+      "qty": 1,
+      "unit_cost": 3,
+      "subtotal": 3,
+      "spec": "1 pc: leg_bus to computer",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "USB",
+      "qty": 1,
+      "unit_cost": 3,
+      "subtotal": 3,
+      "spec": "1 pc: arm_bus to computer",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "15 A ATM blade fuse",
+      "qty": 1,
+      "unit_cost": 0.25,
+      "subtotal": 0.25,
+      "spec": "1 pc: plus spares",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "2 A ATM blade fuse",
+      "qty": 7,
+      "unit_cost": 0.25,
+      "subtotal": 1.75,
+      "spec": "7 pc: plus spares",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "3 A ATM blade fuse",
+      "qty": 2,
+      "unit_cost": 0.25,
+      "subtotal": 0.5,
+      "spec": "2 pc: plus spares",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "4 A ATM blade fuse",
+      "qty": 2,
+      "unit_cost": 0.25,
+      "subtotal": 0.5,
+      "spec": "2 pc: plus spares",
+      "note": "price estimated"
     }
   ],
-  "total": 4234.18,
+  "total": 4318.9,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
@@ -328,8 +607,8 @@
   ],
   "warnings": [],
   "notes": [
-    "Humanoid, 0.653 m, 3.60 kg, 24 DOF (4-DOF arms + grippers), 44 min, $4179 of parts",
-    "Joint limits trimmed to the collision-free range found by exact solid sweeps: l_hip_roll [-0.45, 0.45] -> [-0.13, 0.45]; l_knee [-2.20, 2.20] -> [-2.04, 2.20]; l_ankle_roll [-0.50, 0.50] -> [-0.50, 0.13]; r_hip_roll [-0.45, 0.45] -> [-0.45, 0.13]; r_knee [-2.20, 2.20] -> [-2.20, 2.04]; r_ankle_roll [-0.50, 0.50] -> [-0.13, 0.50]; l_shoulder_roll [-1.60, 1.60] -> [-0.15, 1.60]; r_shoulder_roll [-1.60, 1.60] -> [-1.60, 0.15]; neck_tilt [-0.70, 0.70] -> [-0.70, 0.38].",
+    "Humanoid, 0.653 m, 3.60 kg, 24 DOF (4-DOF arms + grippers), 44 min, $4221 of parts",
+    "Joint limits trimmed to the collision-free range found by exact solid sweeps: l_hip_roll [-0.45, 0.45] -> [-0.13, 0.45]; l_knee [-2.20, 2.20] -> [-2.04, 2.20]; l_ankle_roll [-0.50, 0.50] -> [-0.50, 0.13]; r_hip_roll [-0.45, 0.45] -> [-0.45, 0.13]; r_knee [-2.20, 2.20] -> [-2.20, 2.04]; r_ankle_roll [-0.50, 0.50] -> [-0.13, 0.50]; l_shoulder_roll [-1.60, 1.60] -> [-0.13, 1.60]; r_shoulder_roll [-1.60, 1.60] -> [-1.60, 0.13]; neck_tilt [-0.70, 0.70] -> [-0.70, 0.38].",
     "Joint ranges are swept with the arms held 0.35 rad out to the side (the walking posture); with the arms hanging straight the hands touch the thighs when a leg abducts or a wrist turns.",
     "Zero joint angles are the standing pose (knees bent 0.25 rad, soles flat); the base origin is on the hip-yaw output plane.",
     "Leg loads are J^T F at the sole with the whole robot on one foot and the centre of pressure anywhere on the central 60 % of the sole, over squat / lean / step poses, ±10 % traction, x 1.3 dynamic factor; continuous duty checked at 71 % of the worst stance load (RMS over a gait cycle with half of it in stance).",

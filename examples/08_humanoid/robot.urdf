@@ -3,7 +3,7 @@
      robot: humanoid_robot
      prompt: Create a small humanoid robot with a torso, head, two arms and two-finger grippers
 
-     60 links, 59 joints, 60 inferred values
+     65 links, 64 joints, 65 inferred values
 -->
 <robot name="humanoid_robot">
   <material name="printed"><color rgba="0.93 0.93 0.95 1"/></material>
@@ -29,9 +29,9 @@
       <geometry><mesh filename="package://humanoid_robot/meshes/base_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.009879 0.0000691127 0.036381" rpy="0 0 0"/>
-      <mass value="0.087306"/>
-      <inertia ixx="0.000226264" ixy="8.64145e-8" ixz="-0.00000161218" iyy="0.0000443329" iyz="2.13088e-8" izz="0.000244927"/>
+      <origin xyz="-0.01002 0.00019529 0.036341" rpy="0 0 0"/>
+      <mass value="0.086813"/>
+      <inertia ixx="0.000225837" ixy="-2.61173e-7" ixz="-0.0000015228" iyy="0.0000439151" iyz="-5.82101e-8" izz="0.000244136"/>
     </inertial>
   </link>
   <link name="battery">
@@ -157,9 +157,9 @@
       <geometry><mesh filename="package://humanoid_robot/meshes/torso.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.001701 -0.000363723 0.10671" rpy="0 0 0"/>
-      <mass value="0.34022"/>
-      <inertia ixx="0.001824" ixy="0.00000274061" ixz="0.00000574436" iyy="0.001032" iyz="-0.00000664979" izz="0.001599"/>
+      <origin xyz="-0.00079834 -0.000338589 0.106553" rpy="0 0 0"/>
+      <mass value="0.332298"/>
+      <inertia ixx="0.00181" ixy="0.00000232793" ixz="0.00000107029" iyy="0.00101" iyz="-0.00000597379" izz="0.001572"/>
     </inertial>
   </link>
   <link name="l_hip_yaw_actuator">
@@ -285,9 +285,9 @@
       <geometry><mesh filename="package://humanoid_robot/meshes/l_knee_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.08156 0.001199 -0.007498" rpy="0 0 0"/>
-      <mass value="0.036766"/>
-      <inertia ixx="0.0000105518" ixy="-0.00000117852" ixz="0.00000726518" iyy="0.0000576298" iyz="6.48424e-8" izz="0.0000555816"/>
+      <origin xyz="0.081447 0.001198 -0.007477" rpy="0 0 0"/>
+      <mass value="0.036944"/>
+      <inertia ixx="0.0000105571" ixy="-0.00000117976" ixz="0.00000728314" iyy="0.0000577311" iyz="6.50761e-8" izz="0.0000556803"/>
     </inertial>
   </link>
   <link name="l_ankle_pitch_actuator">
@@ -493,9 +493,9 @@
       <geometry><mesh filename="package://humanoid_robot/meshes/r_knee_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.08154 -0.001362 -0.007498" rpy="0 0 0"/>
-      <mass value="0.036766"/>
-      <inertia ixx="0.0000105712" ixy="0.0000013719" ixz="0.00000726323" iyy="0.0000575829" iyz="-8.10283e-8" izz="0.0000555541"/>
+      <origin xyz="0.081428 -0.00136 -0.007477" rpy="0 0 0"/>
+      <mass value="0.036944"/>
+      <inertia ixx="0.0000105765" ixy="0.00000137382" ixz="0.00000728117" iyy="0.0000576841" iyz="-8.13870e-8" izz="0.0000556526"/>
     </inertial>
   </link>
   <link name="r_ankle_pitch_actuator">
@@ -957,9 +957,9 @@
       <geometry><mesh filename="package://humanoid_robot/meshes/neck_tilt_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.009433 -0.046329 -0.012032" rpy="0 0 0"/>
-      <mass value="0.188258"/>
-      <inertia ixx="0.000155357" ixy="0.0000149572" ixz="5.57781e-7" iyy="0.000174796" iyz="-0.00000401249" izz="0.000130759"/>
+      <origin xyz="-0.009424 -0.046314 -0.012027" rpy="0 0 0"/>
+      <mass value="0.188436"/>
+      <inertia ixx="0.00015541" ixy="0.0000149303" ixz="5.48544e-7" iyy="0.000174819" iyz="-0.00000402825" izz="0.000130822"/>
     </inertial>
   </link>
   <link name="head_camera">
@@ -976,6 +976,86 @@
       <origin xyz="0.0125 0.011417 0.001647" rpy="0 0 0"/>
       <mass value="0.004"/>
       <inertia ixx="1.86138e-7" ixy="-1.04163e-23" ixz="-3.30020e-24" iyy="1.45948e-7" iyz="-2.50246e-8" izz="2.84453e-7"/>
+    </inertial>
+  </link>
+  <link name="side_panel_left">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://humanoid_robot/meshes/side_panel_left.stl"/></geometry>
+      <material name="printed_accent"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://humanoid_robot/meshes/side_panel_left.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-2.95695e-19 0.0912 0.064013" rpy="0 0 0"/>
+      <mass value="0.005391"/>
+      <inertia ixx="3.98823e-7" ixy="-9.60240e-24" ixz="5.45582e-23" iyy="0.00000445054" iyz="-1.23237e-24" izz="0.00000405689"/>
+    </inertial>
+  </link>
+  <link name="side_panel_right">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://humanoid_robot/meshes/side_panel_right.stl"/></geometry>
+      <material name="printed_accent"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://humanoid_robot/meshes/side_panel_right.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="9.87650e-18 -0.0912 0.064013" rpy="0 0 0"/>
+      <mass value="0.005391"/>
+      <inertia ixx="3.98823e-7" ixy="1.17837e-23" ixz="1.66311e-22" iyy="0.00000445054" iyz="1.34221e-24" izz="0.00000405689"/>
+    </inertial>
+  </link>
+  <link name="chest_panel">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://humanoid_robot/meshes/chest_panel.stl"/></geometry>
+      <material name="printed_accent"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://humanoid_robot/meshes/chest_panel.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.0512 -0.002695 0.105137" rpy="0 0 0"/>
+      <mass value="0.011409"/>
+      <inertia ixx="0.0000282303" ixy="-9.35350e-24" ixz="8.76558e-24" iyy="0.00000249708" iyz="2.26811e-8" izz="0.0000257442"/>
+    </inertial>
+  </link>
+  <link name="main_switch">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://humanoid_robot/meshes/switch_kcd4.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://humanoid_robot/meshes/switch_kcd4.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-4.05398e-20 -3.52601e-19 -0.011305" rpy="0 0 0"/>
+      <mass value="0.008"/>
+      <inertia ixx="0.00000113854" ixy="-4.97311e-40" ixz="8.69383e-24" iyy="8.66712e-7" iyz="1.56687e-23" izz="9.36569e-7"/>
+    </inertial>
+  </link>
+  <link name="imu_hood">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://humanoid_robot/meshes/imu_hood.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://humanoid_robot/meshes/imu_hood.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="7.04731e-19 3.03577e-18 0.033503" rpy="0 0 0"/>
+      <mass value="0.006424"/>
+      <inertia ixx="0.00000106766" ixy="-5.64471e-16" ixz="-5.24439e-23" iyy="0.0000011498" iyz="-5.05973e-23" izz="0.00000204321"/>
     </inertial>
   </link>
   <joint name="battery_mount" type="fixed">
@@ -1207,7 +1287,7 @@
     <child link="l_shoulder_roll_link"/>
     <origin xyz="0 0.01895 0.03895" rpy="1.570796 0 3.141593"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-0.153" upper="1.6" effort="1.4" velocity="5.969"/>
+    <limit lower="-0.134" upper="1.6" effort="1.4" velocity="5.969"/>
     <dynamics damping="0.0469" friction="0.028"/>
   </joint>
   <joint name="l_upper_arm_yaw_actuator_mount" type="fixed">
@@ -1272,7 +1352,7 @@
     <child link="r_shoulder_roll_link"/>
     <origin xyz="0 -0.01895 0.03895" rpy="-1.570796 0 3.141593"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-1.6" upper="0.153" effort="1.4" velocity="5.969"/>
+    <limit lower="-1.6" upper="0.134" effort="1.4" velocity="5.969"/>
     <dynamics damping="0.0469" friction="0.028"/>
   </joint>
   <joint name="r_upper_arm_yaw_actuator_mount" type="fixed">
@@ -1344,5 +1424,30 @@
     <parent link="neck_tilt_link"/>
     <child link="head_camera"/>
     <origin xyz="-0.012 -0.059591 -0.0005" rpy="0 1.570796 -1.570796"/>
+  </joint>
+  <joint name="side_panel_left_mount" type="fixed">
+    <parent link="torso"/>
+    <child link="side_panel_left"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="side_panel_right_mount" type="fixed">
+    <parent link="torso"/>
+    <child link="side_panel_right"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="chest_panel_mount" type="fixed">
+    <parent link="torso"/>
+    <child link="chest_panel"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="main_switch_mount" type="fixed">
+    <parent link="chest_panel"/>
+    <child link="main_switch"/>
+    <origin xyz="0.0524 0.048 0.104975" rpy="0 -1.570796 -3.141593"/>
+  </joint>
+  <joint name="imu_hood_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="imu_hood"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
 </robot>

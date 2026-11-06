@@ -3,7 +3,7 @@
      robot: hexapod
      prompt: Build a six-legged reconnaissance spider-bot with a LiDAR turret, budget $1500
 
-     51 links, 50 joints, 51 inferred values
+     58 links, 57 joints, 58 inferred values
 -->
 <robot name="hexapod">
   <material name="printed"><color rgba="0.93 0.93 0.95 1"/></material>
@@ -29,9 +29,9 @@
       <geometry><mesh filename="package://hexapod/meshes/base_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="1.58530e-12 -8.01841e-13 -0.036018" rpy="0 0 0"/>
-      <mass value="0.233039"/>
-      <inertia ixx="0.0007749" ixy="4.77864e-12" ixz="2.33751e-15" iyy="0.000791082" iyz="-1.24865e-15" izz="0.001483"/>
+      <origin xyz="-0.000112673 1.00873e-7 -0.035997" rpy="0 0 0"/>
+      <mass value="0.232336"/>
+      <inertia ixx="0.00077455" ixy="6.03065e-8" ixz="-1.85946e-7" iyy="0.000788489" iyz="1.66473e-10" izz="0.00148"/>
     </inertial>
   </link>
   <link name="battery">
@@ -98,6 +98,54 @@
       <inertia ixx="2.56895e-7" ixy="8.14755e-9" ixz="1.85795e-9" iyy="3.06643e-7" iyz="1.94440e-9" izz="4.54796e-7"/>
     </inertial>
   </link>
+  <link name="deck_pillar_1">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://hexapod/meshes/deck_pillar_1.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://hexapod/meshes/deck_pillar_1.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.051779 0.000116913 0.001177" rpy="0 0 0"/>
+      <mass value="0.006103"/>
+      <inertia ixx="0.00000344312" ixy="4.52939e-9" ixz="1.34533e-8" iyy="0.00000344925" iyz="-6.81518e-9" izz="1.00000e-7"/>
+    </inertial>
+  </link>
+  <link name="deck_pillar_2">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://hexapod/meshes/deck_pillar_2.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://hexapod/meshes/deck_pillar_2.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.025617 0.04478 0.000926376" rpy="0 0 0"/>
+      <mass value="0.006216"/>
+      <inertia ixx="0.00000343244" ixy="1.09217e-8" ixz="-3.00571e-9" iyy="0.00000344181" iyz="2.95589e-9" izz="1.08130e-7"/>
+    </inertial>
+  </link>
+  <link name="deck_pillar_3">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://hexapod/meshes/deck_pillar_3.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://hexapod/meshes/deck_pillar_3.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.026 -0.045033 0.00085" rpy="0 0 0"/>
+      <mass value="0.005908"/>
+      <inertia ixx="0.00000341887" ixy="-7.35264e-25" ixz="-1.85534e-24" iyy="0.00000341887" iyz="-2.27912e-23" izz="1.00000e-7"/>
+    </inertial>
+  </link>
   <link name="computer">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -157,9 +205,9 @@
       <geometry><mesh filename="package://hexapod/meshes/top_deck.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.00122 -0.0000114642 0.052041" rpy="0 0 0"/>
-      <mass value="0.090864"/>
-      <inertia ixx="0.000208587" ixy="-4.97949e-9" ixz="0.00000703706" iyy="0.000225293" iyz="-5.45906e-9" izz="0.000230197"/>
+      <origin xyz="0.003513 -0.000257335 0.045225" rpy="0 0 0"/>
+      <mass value="0.037106"/>
+      <inertia ixx="0.000035859" ixy="-9.08374e-8" ixz="-0.00000183211" iyy="0.0000433567" iyz="-6.23243e-9" izz="0.0000779594"/>
     </inertial>
   </link>
   <link name="lf_coxa_actuator">
@@ -834,6 +882,70 @@
       <inertia ixx="1.64000e-7" ixy="0" ixz="0" iyy="1.64000e-7" iyz="0" izz="1.64000e-7"/>
     </inertial>
   </link>
+  <link name="computer_hood">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://hexapod/meshes/computer_hood.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://hexapod/meshes/computer_hood.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.005885 0.001805 0.076432" rpy="0 0 0"/>
+      <mass value="0.055535"/>
+      <inertia ixx="0.0000893221" ixy="-9.87727e-9" ixz="3.62382e-8" iyy="0.000113638" iyz="6.10304e-7" izz="0.000175781"/>
+    </inertial>
+  </link>
+  <link name="board_hood">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://hexapod/meshes/board_hood.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://hexapod/meshes/board_hood.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.011837 0.000180961 -0.017156" rpy="0 0 0"/>
+      <mass value="0.03753"/>
+      <inertia ixx="0.000063399" ixy="-2.09875e-8" ixz="-2.81204e-7" iyy="0.000026041" iyz="-2.24840e-7" izz="0.0000776275"/>
+    </inertial>
+  </link>
+  <link name="main_switch">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://hexapod/meshes/switch_kcd4.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://hexapod/meshes/switch_kcd4.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-4.05398e-20 -3.52601e-19 -0.011305" rpy="0 0 0"/>
+      <mass value="0.008"/>
+      <inertia ixx="0.00000113854" ixy="-4.97311e-40" ixz="8.69383e-24" iyy="8.66712e-7" iyz="1.56687e-23" izz="9.36569e-7"/>
+    </inertial>
+  </link>
+  <link name="battery_tray">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://hexapod/meshes/battery_tray.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://hexapod/meshes/battery_tray.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-4.27718e-17 -4.60786e-19 -0.066297" rpy="0 0 0"/>
+      <mass value="0.053454"/>
+      <inertia ixx="0.0000290876" ixy="-3.35178e-14" ixz="2.30221e-20" iyy="0.000175604" iyz="8.00102e-21" izz="0.000194056"/>
+    </inertial>
+  </link>
   <joint name="battery_mount" type="fixed">
     <parent link="base_link"/>
     <child link="battery"/>
@@ -847,12 +959,27 @@
   <joint name="actuator_bus_mount" type="fixed">
     <parent link="base_link"/>
     <child link="actuator_bus"/>
-    <origin xyz="-0.021 -0.055 -0.0381" rpy="0 0 0"/>
+    <origin xyz="-0.011 -0.05 -0.0381" rpy="0 0 0"/>
   </joint>
   <joint name="regulator_5v_mount" type="fixed">
     <parent link="base_link"/>
     <child link="regulator_5v"/>
     <origin xyz="-0.0127 0.024 -0.0381" rpy="0 0 0"/>
+  </joint>
+  <joint name="deck_pillar_1_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="deck_pillar_1"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="deck_pillar_2_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="deck_pillar_2"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="deck_pillar_3_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="deck_pillar_3"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
   <joint name="computer_mount" type="fixed">
     <parent link="top_deck"/>
@@ -862,7 +989,7 @@
   <joint name="lidar_mount" type="fixed">
     <parent link="top_deck"/>
     <child link="lidar"/>
-    <origin xyz="0 0 0.09157" rpy="0 0 0"/>
+    <origin xyz="0 0 0.09242" rpy="0 0 0"/>
   </joint>
   <joint name="camera_mount" type="fixed">
     <parent link="top_deck"/>
@@ -910,7 +1037,7 @@
     <child link="lf_tibia_link"/>
     <origin xyz="0.085 0 -0.0381" rpy="3.141593 0 1.660796"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-0.859" upper="1.2" effort="2.942" velocity="4.712"/>
+    <limit lower="-0.802" upper="1.2" effort="2.942" velocity="4.712"/>
     <dynamics damping="0.1249" friction="0.0588"/>
   </joint>
   <joint name="lf_foot_mount" type="fixed">
@@ -1042,7 +1169,7 @@
     <child link="rr_tibia_link"/>
     <origin xyz="0.085 0 -0.0381" rpy="3.141593 0 1.660796"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-0.859" upper="1.2" effort="2.942" velocity="4.712"/>
+    <limit lower="-0.802" upper="1.2" effort="2.942" velocity="4.712"/>
     <dynamics damping="0.1249" friction="0.0588"/>
   </joint>
   <joint name="rr_foot_mount" type="fixed">
@@ -1137,5 +1264,25 @@
     <parent link="rf_tibia_link"/>
     <child link="rf_foot"/>
     <origin xyz="0.16 0 0.003" rpy="-1.570796 0.523599 1.310796"/>
+  </joint>
+  <joint name="computer_hood_mount" type="fixed">
+    <parent link="top_deck"/>
+    <child link="computer_hood"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="board_hood_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="board_hood"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="main_switch_mount" type="fixed">
+    <parent link="board_hood"/>
+    <child link="main_switch"/>
+    <origin xyz="0.0434 -0.0003 -0.0236" rpy="1.570796 0 1.570796"/>
+  </joint>
+  <joint name="battery_tray_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="battery_tray"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
 </robot>

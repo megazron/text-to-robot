@@ -1,0 +1,261 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1610 2311" width="1610" height="2311" font-family="Helvetica, Arial, sans-serif" font-size="10.5">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="30" y="26" font-size="17" font-weight="700">humanoid_robot: wiring diagram</text>
+<line x1="30" y1="44" x2="54" y2="44" stroke="#c8102e" stroke-width="2"/><text x="60" y="48">power</text>
+<line x1="120" y1="44" x2="144" y2="44" stroke="#111111" stroke-width="2"/><text x="150" y="48">ground</text>
+<line x1="210" y1="44" x2="234" y2="44" stroke="#1f6fd1" stroke-width="2"/><text x="240" y="48">signal</text>
+<line x1="300" y1="44" x2="324" y2="44" stroke="#0a8f5b" stroke-width="2"/><text x="330" y="48">bus</text>
+<text x="30" y="66" font-weight="700" fill="#555">Source</text>
+<text x="370" y="66" font-weight="700" fill="#555">Protection</text>
+<text x="710" y="66" font-weight="700" fill="#555">Regulation</text>
+<text x="1050" y="66" font-weight="700" fill="#555">Control</text>
+<text x="1390" y="66" font-weight="700" fill="#555">Loads</text>
+<path d="M1390 2243 H1376 V1174 H1254 V105 H1240" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C1 W1 HEAD_CAMERA_CSI: head_camera.csi_15.GND to computer.cam_dsi_0.GND</title></path>
+<path d="M1240 118 H1264 V111.5 H1366 V105 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C2 W2 3V3_IMU: computer.gpio40.3V3 to imu.header.VIN, 24 AWG</title></path>
+<path d="M1240 105 H1274 V111.5 H1356 V118 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C2 W3 GND: computer.gpio40.GND to imu.header.GND, 24 AWG</title></path>
+<path d="M1240 131 H1284 V131 H1346 V131 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C2 W4 I2C_SDA: computer.gpio40.GPIO2 to imu.header.SDA, 26 AWG</title></path>
+<path d="M1240 144 H1294 V144 H1336 V144 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C2 W5 I2C_SCL: computer.gpio40.GPIO3 to imu.header.SCL, 26 AWG</title></path>
+<path d="M1050 229 H986 V239 H624 V249 H560" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C3 W6 BUS_LEG_BUS: leg_bus.servo_bus.SIG to leg_bus_hub.levers.P1, 26 AWG</title></path>
+<path d="M560 262 H634 V232.5 H1316 V203 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C4 W7 BUS_LEG_BUS: leg_bus_hub.levers.P2 to l_hip_yaw_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M560 262 H644 V402.5 H1306 V543 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C5 W8 BUS_LEG_BUS: leg_bus_hub.levers.P2 to l_ankle_pitch_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M1580 556 H1674 V592 H1296 V628 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C6 W9 VBAT: l_ankle_pitch_actuator.bus_b.VCC to l_ankle_roll_actuator.bus_a.VCC, 24 AWG</title></path>
+<path d="M1580 569 H1684 V605 H1286 V641 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C6 W10 GND: l_ankle_pitch_actuator.bus_b.GND to l_ankle_roll_actuator.bus_a.GND, 24 AWG</title></path>
+<path d="M1580 543 H1694 V598.5 H1276 V654 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C6 W11 BUS_LEG_BUS: l_ankle_pitch_actuator.bus_b.DATA to l_ankle_roll_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M560 262 H684 V487.5 H1266 V713 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C7 W12 BUS_LEG_BUS: leg_bus_hub.levers.P2 to r_hip_yaw_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M560 262 H574 V657.5 H1376 V1053 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C8 W13 BUS_LEG_BUS: leg_bus_hub.levers.P2 to r_ankle_pitch_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M1580 1066 H1604 V1102 H1366 V1138 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C9 W14 VBAT: r_ankle_pitch_actuator.bus_b.VCC to r_ankle_roll_actuator.bus_a.VCC, 24 AWG</title></path>
+<path d="M1580 1079 H1614 V1115 H1356 V1151 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C9 W15 GND: r_ankle_pitch_actuator.bus_b.GND to r_ankle_roll_actuator.bus_a.GND, 24 AWG</title></path>
+<path d="M1580 1053 H1624 V1108.5 H1346 V1164 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C9 W16 BUS_LEG_BUS: r_ankle_pitch_actuator.bus_b.DATA to r_ankle_roll_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M1050 327 H996 V324 H614 V321 H560" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C10 W17 BUS_ARM_BUS: arm_bus.ttl.DATA to arm_bus_hub.levers.P1, 26 AWG</title></path>
+<path d="M1240 340 H1304 V314 H1326 V288 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C11 W18 GND: arm_bus.ttl.GND to l_hip_roll_actuator.bus_a.GND, 24 AWG</title></path>
+<path d="M560 334 H634 V317.5 H1316 V301 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C12 W19 BUS_ARM_BUS: arm_bus_hub.levers.P2 to l_hip_roll_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M1580 314 H1664 V343.5 H1306 V373 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C13 W20 VBAT: l_hip_roll_actuator.bus_b.VDD to l_hip_pitch_actuator.bus_a.VDD, 22 AWG</title></path>
+<path d="M1580 288 H1674 V337 H1296 V386 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C13 W21 GND: l_hip_roll_actuator.bus_b.GND to l_hip_pitch_actuator.bus_a.GND, 22 AWG</title></path>
+<path d="M1580 301 H1684 V350 H1286 V399 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C13 W22 BUS_ARM_BUS: l_hip_roll_actuator.bus_b.DATA to l_hip_pitch_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M1580 373 H1694 V415.5 H1276 V458 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C14 W23 VBAT: l_hip_pitch_actuator.bus_b.VDD to l_knee_actuator.bus_a.VDD, 22 AWG</title></path>
+<path d="M1580 386 H1704 V428.5 H1266 V471 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C14 W24 GND: l_hip_pitch_actuator.bus_b.GND to l_knee_actuator.bus_a.GND, 22 AWG</title></path>
+<path d="M1580 399 H1594 V441.5 H1376 V484 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C14 W25 BUS_ARM_BUS: l_hip_pitch_actuator.bus_b.DATA to l_knee_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M560 334 H584 V566 H1366 V798 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C15 W26 BUS_ARM_BUS: arm_bus_hub.levers.P2 to r_hip_roll_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M1580 811 H1614 V847 H1356 V883 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C16 W27 VBAT: r_hip_roll_actuator.bus_b.VDD to r_hip_pitch_actuator.bus_a.VDD, 22 AWG</title></path>
+<path d="M1580 824 H1624 V860 H1346 V896 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C16 W28 GND: r_hip_roll_actuator.bus_b.GND to r_hip_pitch_actuator.bus_a.GND, 22 AWG</title></path>
+<path d="M1580 798 H1634 V853.5 H1336 V909 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C16 W29 BUS_ARM_BUS: r_hip_roll_actuator.bus_b.DATA to r_hip_pitch_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M1580 883 H1644 V925.5 H1326 V968 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C17 W30 VBAT: r_hip_pitch_actuator.bus_b.VDD to r_knee_actuator.bus_a.VDD, 22 AWG</title></path>
+<path d="M1580 896 H1654 V938.5 H1316 V981 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C17 W31 GND: r_hip_pitch_actuator.bus_b.GND to r_knee_actuator.bus_a.GND, 22 AWG</title></path>
+<path d="M1580 909 H1664 V951.5 H1306 V994 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C17 W32 BUS_ARM_BUS: r_hip_pitch_actuator.bus_b.DATA to r_knee_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M560 334 H654 V778.5 H1296 V1223 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C18 W33 BUS_ARM_BUS: arm_bus_hub.levers.P2 to l_shoulder_pitch_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M1580 1236 H1684 V1272 H1286 V1308 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C19 W34 VBAT: l_shoulder_pitch_actuator.bus_b.VDD to l_shoulder_roll_actuator.bus_a.VDD, 24 AWG</title></path>
+<path d="M1580 1249 H1694 V1285 H1276 V1321 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C19 W35 GND: l_shoulder_pitch_actuator.bus_b.GND to l_shoulder_roll_actuator.bus_a.GND, 24 AWG</title></path>
+<path d="M1580 1223 H1704 V1278.5 H1266 V1334 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C19 W36 BUS_ARM_BUS: l_shoulder_pitch_actuator.bus_b.DATA to l_shoulder_roll_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M1580 1308 H1594 V1350.5 H1376 V1393 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C20 W37 VBAT: l_shoulder_roll_actuator.bus_b.VDD to l_upper_arm_yaw_actuator.bus_a.VDD, 24 AWG</title></path>
+<path d="M1580 1321 H1604 V1363.5 H1366 V1406 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C20 W38 GND: l_shoulder_roll_actuator.bus_b.GND to l_upper_arm_yaw_actuator.bus_a.GND, 24 AWG</title></path>
+<path d="M1580 1334 H1614 V1376.5 H1356 V1419 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C20 W39 BUS_ARM_BUS: l_shoulder_roll_actuator.bus_b.DATA to l_upper_arm_yaw_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M560 334 H604 V991 H1346 V1648 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C21 W40 BUS_ARM_BUS: arm_bus_hub.levers.P2 to r_shoulder_pitch_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M1580 1661 H1634 V1697 H1336 V1733 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C22 W41 VBAT: r_shoulder_pitch_actuator.bus_b.VDD to r_shoulder_roll_actuator.bus_a.VDD, 24 AWG</title></path>
+<path d="M1580 1674 H1644 V1710 H1326 V1746 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C22 W42 GND: r_shoulder_pitch_actuator.bus_b.GND to r_shoulder_roll_actuator.bus_a.GND, 24 AWG</title></path>
+<path d="M1580 1648 H1654 V1703.5 H1316 V1759 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C22 W43 BUS_ARM_BUS: r_shoulder_pitch_actuator.bus_b.DATA to r_shoulder_roll_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M1580 1733 H1664 V1775.5 H1306 V1818 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C23 W44 VBAT: r_shoulder_roll_actuator.bus_b.VDD to r_upper_arm_yaw_actuator.bus_a.VDD, 24 AWG</title></path>
+<path d="M1580 1746 H1674 V1788.5 H1296 V1831 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C23 W45 GND: r_shoulder_roll_actuator.bus_b.GND to r_upper_arm_yaw_actuator.bus_a.GND, 24 AWG</title></path>
+<path d="M1580 1759 H1684 V1801.5 H1286 V1844 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C23 W46 BUS_ARM_BUS: r_shoulder_roll_actuator.bus_b.DATA to r_upper_arm_yaw_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M560 334 H674 V906 H1276 V1478 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C24 W47 BUS_ARM_BUS: arm_bus_hub.levers.P2 to l_elbow_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M1580 1491 H1704 V1527 H1266 V1563 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C25 W48 5V_ARMS: l_elbow_actuator.bus_b.VDD to l_gripper_actuator.bus_a.VDD, 24 AWG</title></path>
+<path d="M1580 1504 H1594 V1540 H1376 V1576 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C25 W49 GND: l_elbow_actuator.bus_b.GND to l_gripper_actuator.bus_a.GND, 24 AWG</title></path>
+<path d="M1580 1478 H1604 V1533.5 H1366 V1589 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C25 W50 BUS_ARM_BUS: l_elbow_actuator.bus_b.DATA to l_gripper_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M560 334 H594 V1118.5 H1356 V1903 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C26 W51 BUS_ARM_BUS: arm_bus_hub.levers.P2 to r_elbow_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M1580 1916 H1624 V1952 H1346 V1988 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C27 W52 5V_ARMS: r_elbow_actuator.bus_b.VDD to r_gripper_actuator.bus_a.VDD, 24 AWG</title></path>
+<path d="M1580 1929 H1634 V1965 H1336 V2001 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C27 W53 GND: r_elbow_actuator.bus_b.GND to r_gripper_actuator.bus_a.GND, 24 AWG</title></path>
+<path d="M1580 1903 H1644 V1958.5 H1326 V2014 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C27 W54 BUS_ARM_BUS: r_elbow_actuator.bus_b.DATA to r_gripper_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M560 334 H634 V1203.5 H1316 V2073 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C28 W55 BUS_ARM_BUS: arm_bus_hub.levers.P2 to neck_pan_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M1580 2086 H1664 V2122 H1306 V2158 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C29 W56 5V_ARMS: neck_pan_actuator.bus_b.VDD to neck_tilt_actuator.bus_a.VDD, 24 AWG</title></path>
+<path d="M1580 2099 H1674 V2135 H1296 V2171 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C29 W57 GND: neck_pan_actuator.bus_b.GND to neck_tilt_actuator.bus_a.GND, 24 AWG</title></path>
+<path d="M1580 2073 H1684 V2128.5 H1286 V2184 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C29 W58 BUS_ARM_BUS: neck_pan_actuator.bus_b.DATA to neck_tilt_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M1240 242 H1354 V199.5 H936 V157 H1050" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C30 W59 LEG_BUS_USB: leg_bus.usb.VBUS to computer.usb_a.LINK</title></path>
+<path d="M1240 353 H1364 V255 H926 V157 H1050" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C31 W60 ARM_BUS_USB: arm_bus.usb.VBUS to computer.usb_a.LINK</title></path>
+<path d="M220 105 H234 V141 H356 V177 H370" fill="none" stroke="#c8102e" stroke-width="2" opacity="0.8"><title>C32 W61 VBAT: battery.main.BAT+ to main_fuse.leads.IN, 12 AWG</title></path>
+<path d="M560 190 H584 V147.5 H346 V105 H370" fill="none" stroke="#c8102e" stroke-width="2" opacity="0.8"><title>C33 W62 VBAT: main_fuse.leads.OUT to main_switch.contacts.IN, 12 AWG</title></path>
+<path d="M220 118 H254 V255.5 H336 V393 H370" fill="none" stroke="#111111" stroke-width="2" opacity="0.8"><title>C34 W63 GND: battery.main.BAT- to star_ground.levers.P1, 12 AWG</title></path>
+<path d="M560 118 H604 V291.5 H326 V465 H370" fill="none" stroke="#c8102e" stroke-width="2" opacity="0.8"><title>C35 W64 VBAT: main_switch.contacts.OUT to splice_vbat.levers.P1, 12 AWG</title></path>
+<path d="M560 478 H614 V291.5 H656 V105 H710" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C36 W65 VBAT: splice_vbat.levers.P2 to regulator_5v.power_and_control.VIN, 22 AWG</title></path>
+<path d="M560 406 H624 V262 H646 V118 H710" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C36 W66 GND: star_ground.levers.P2 to regulator_5v.power_and_control.GND, 24 AWG</title></path>
+<path d="M560 478 H634 V334 H636 V190 H710" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C37 W67 VBAT: splice_vbat.levers.P2 to regulator_5v_arms.power_and_control.VIN, 22 AWG</title></path>
+<path d="M560 406 H644 V304.5 H626 V203 H710" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C37 W68 GND: star_ground.levers.P2 to regulator_5v_arms.power_and_control.GND, 24 AWG</title></path>
+<path d="M560 478 H654 V366.5 H956 V255 H1050" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C38 W69 VBAT: splice_vbat.levers.P2 to leg_bus.screw_in.VIN, 22 AWG</title></path>
+<path d="M560 406 H664 V337 H946 V268 H1050" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C38 W70 GND: star_ground.levers.P2 to leg_bus.screw_in.GND, 24 AWG</title></path>
+<path d="M560 478 H674 V347 H1276 V216 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C39 W71 VBAT: splice_vbat.levers.P2 to l_hip_yaw_actuator.bus_a.VCC, 22 AWG</title></path>
+<path d="M560 406 H684 V317.5 H1266 V229 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C39 W72 GND: star_ground.levers.P2 to l_hip_yaw_actuator.bus_a.GND, 24 AWG</title></path>
+<path d="M560 478 H574 V517 H1376 V556 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C40 W73 VBAT: splice_vbat.levers.P2 to l_ankle_pitch_actuator.bus_a.VCC, 22 AWG</title></path>
+<path d="M560 406 H584 V487.5 H1366 V569 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C40 W74 GND: star_ground.levers.P2 to l_ankle_pitch_actuator.bus_a.GND, 20 AWG</title></path>
+<path d="M560 478 H594 V602 H1356 V726 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C41 W75 VBAT: splice_vbat.levers.P2 to r_hip_yaw_actuator.bus_a.VCC, 22 AWG</title></path>
+<path d="M560 406 H604 V572.5 H1346 V739 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C41 W76 GND: star_ground.levers.P2 to r_hip_yaw_actuator.bus_a.GND, 24 AWG</title></path>
+<path d="M560 478 H614 V772 H1336 V1066 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C42 W77 VBAT: splice_vbat.levers.P2 to r_ankle_pitch_actuator.bus_a.VCC, 22 AWG</title></path>
+<path d="M560 406 H624 V742.5 H1326 V1079 H1390" fill="none" stroke="#111111" stroke-width="2" opacity="0.8"><title>C42 W78 GND: star_ground.levers.P2 to r_ankle_pitch_actuator.bus_a.GND, 18 AWG</title></path>
+<path d="M560 478 H634 V396 H1316 V314 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C43 W79 VBAT: splice_vbat.levers.P2 to l_hip_roll_actuator.bus_a.VDD, 20 AWG</title></path>
+<path d="M560 406 H644 V347 H1306 V288 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C43 W80 GND: star_ground.levers.P2 to l_hip_roll_actuator.bus_a.GND, 20 AWG</title></path>
+<path d="M560 478 H654 V644.5 H1296 V811 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C44 W81 VBAT: splice_vbat.levers.P2 to r_hip_roll_actuator.bus_a.VDD, 20 AWG</title></path>
+<path d="M560 406 H664 V615 H1286 V824 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C44 W82 GND: star_ground.levers.P2 to r_hip_roll_actuator.bus_a.GND, 20 AWG</title></path>
+<path d="M560 478 H674 V857 H1276 V1236 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C45 W83 VBAT: splice_vbat.levers.P2 to l_shoulder_pitch_actuator.bus_a.VDD, 22 AWG</title></path>
+<path d="M560 406 H684 V827.5 H1266 V1249 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C45 W84 GND: star_ground.levers.P2 to l_shoulder_pitch_actuator.bus_a.GND, 24 AWG</title></path>
+<path d="M560 478 H574 V1069.5 H1376 V1661 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C46 W85 VBAT: splice_vbat.levers.P2 to r_shoulder_pitch_actuator.bus_a.VDD, 22 AWG</title></path>
+<path d="M560 406 H584 V1040 H1366 V1674 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C46 W86 GND: star_ground.levers.P2 to r_shoulder_pitch_actuator.bus_a.GND, 24 AWG</title></path>
+<path d="M710 118 H676 V262 H594 V406 H560" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C47 W87 GND: regulator_5v.power_and_control.GND to star_ground.levers.P2, 22 AWG</title></path>
+<path d="M900 131 H944 V150.5 H1006 V170 H1050" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C48 W88 5V: regulator_5v.power_and_control.VOUT to computer.gpio40.5V, 22 AWG</title></path>
+<path d="M560 406 H614 V255.5 H996 V105 H1050" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C48 W89 GND: star_ground.levers.P2 to computer.gpio40.GND, 22 AWG</title></path>
+<path d="M710 216 H646 V376.5 H624 V537 H560" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C49 W90 5V_ARMS: regulator_5v_arms.power_and_control.VOUT to splice_5v_arms.levers.P1, 22 AWG</title></path>
+<path d="M710 203 H636 V304.5 H634 V406 H560" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C49 W91 GND: regulator_5v_arms.power_and_control.GND to star_ground.levers.P2, 22 AWG</title></path>
+<path d="M560 550 H644 V1020.5 H1306 V1491 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C50 W92 5V_ARMS: splice_5v_arms.levers.P2 to l_elbow_actuator.bus_a.VDD, 24 AWG</title></path>
+<path d="M560 406 H654 V955 H1296 V1504 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C50 W93 GND: star_ground.levers.P2 to l_elbow_actuator.bus_a.GND, 24 AWG</title></path>
+<path d="M560 550 H664 V1233 H1286 V1916 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C51 W94 5V_ARMS: splice_5v_arms.levers.P2 to r_elbow_actuator.bus_a.VDD, 24 AWG</title></path>
+<path d="M560 406 H674 V1167.5 H1276 V1929 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C51 W95 GND: star_ground.levers.P2 to r_elbow_actuator.bus_a.GND, 24 AWG</title></path>
+<path d="M560 550 H684 V1318 H1266 V2086 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C52 W96 5V_ARMS: splice_5v_arms.levers.P2 to neck_pan_actuator.bus_a.VDD, 24 AWG</title></path>
+<path d="M560 406 H574 V1252.5 H1376 V2099 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C52 W97 GND: star_ground.levers.P2 to neck_pan_actuator.bus_a.GND, 24 AWG</title></path>
+<rect x="30" y="74" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="37" y="89" font-weight="700">battery</text>
+<text x="37" y="108.5" fill="#333">BAT+</text>
+<text x="37" y="121.5" fill="#333">BAT-</text>
+<rect x="1050" y="74" width="190" height="106" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1057" y="89" font-weight="700">computer</text>
+<text x="1057" y="108.5" fill="#333">GND</text>
+<text x="1057" y="121.5" fill="#333">3V3</text>
+<text x="1057" y="134.5" fill="#333">GPIO2</text>
+<text x="1057" y="147.5" fill="#333">GPIO3</text>
+<text x="1057" y="160.5" fill="#333">LINK</text>
+<text x="1057" y="173.5" fill="#333">5V</text>
+<rect x="1050" y="198" width="190" height="80" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1057" y="213" font-weight="700">leg_bus</text>
+<text x="1057" y="232.5" fill="#333">SIG</text>
+<text x="1057" y="245.5" fill="#333">VBUS</text>
+<text x="1057" y="258.5" fill="#333">VIN</text>
+<text x="1057" y="271.5" fill="#333">GND</text>
+<rect x="1050" y="296" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1057" y="311" font-weight="700">arm_bus</text>
+<text x="1057" y="330.5" fill="#333">DATA</text>
+<text x="1057" y="343.5" fill="#333">GND</text>
+<text x="1057" y="356.5" fill="#333">VBUS</text>
+<rect x="710" y="74" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="717" y="89" font-weight="700">regulator_5v</text>
+<text x="717" y="108.5" fill="#333">VIN</text>
+<text x="717" y="121.5" fill="#333">GND</text>
+<text x="717" y="134.5" fill="#333">VOUT</text>
+<rect x="710" y="159" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="717" y="174" font-weight="700">regulator_5v_arms</text>
+<text x="717" y="193.5" fill="#333">VIN</text>
+<text x="717" y="206.5" fill="#333">GND</text>
+<text x="717" y="219.5" fill="#333">VOUT</text>
+<rect x="1390" y="74" width="190" height="80" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="89" font-weight="700">imu</text>
+<text x="1397" y="108.5" fill="#333">VIN</text>
+<text x="1397" y="121.5" fill="#333">GND</text>
+<text x="1397" y="134.5" fill="#333">SDA</text>
+<text x="1397" y="147.5" fill="#333">SCL</text>
+<rect x="1390" y="172" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="187" font-weight="700">l_hip_yaw_actuator</text>
+<text x="1397" y="206.5" fill="#333">DATA</text>
+<text x="1397" y="219.5" fill="#333">VCC</text>
+<text x="1397" y="232.5" fill="#333">GND</text>
+<rect x="1390" y="257" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="272" font-weight="700">l_hip_roll_actuator</text>
+<text x="1397" y="291.5" fill="#333">GND</text>
+<text x="1397" y="304.5" fill="#333">DATA</text>
+<text x="1397" y="317.5" fill="#333">VDD</text>
+<rect x="1390" y="342" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="357" font-weight="700">l_hip_pitch_actuator</text>
+<text x="1397" y="376.5" fill="#333">VDD</text>
+<text x="1397" y="389.5" fill="#333">GND</text>
+<text x="1397" y="402.5" fill="#333">DATA</text>
+<rect x="1390" y="427" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="442" font-weight="700">l_knee_actuator</text>
+<text x="1397" y="461.5" fill="#333">VDD</text>
+<text x="1397" y="474.5" fill="#333">GND</text>
+<text x="1397" y="487.5" fill="#333">DATA</text>
+<rect x="1390" y="512" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="527" font-weight="700">l_ankle_pitch_actuator</text>
+<text x="1397" y="546.5" fill="#333">DATA</text>
+<text x="1397" y="559.5" fill="#333">VCC</text>
+<text x="1397" y="572.5" fill="#333">GND</text>
+<rect x="1390" y="597" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="612" font-weight="700">l_ankle_roll_actuator</text>
+<text x="1397" y="631.5" fill="#333">VCC</text>
+<text x="1397" y="644.5" fill="#333">GND</text>
+<text x="1397" y="657.5" fill="#333">DATA</text>
+<rect x="1390" y="682" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="697" font-weight="700">r_hip_yaw_actuator</text>
+<text x="1397" y="716.5" fill="#333">DATA</text>
+<text x="1397" y="729.5" fill="#333">VCC</text>
+<text x="1397" y="742.5" fill="#333">GND</text>
+<rect x="1390" y="767" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="782" font-weight="700">r_hip_roll_actuator</text>
+<text x="1397" y="801.5" fill="#333">DATA</text>
+<text x="1397" y="814.5" fill="#333">VDD</text>
+<text x="1397" y="827.5" fill="#333">GND</text>
+<rect x="1390" y="852" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="867" font-weight="700">r_hip_pitch_actuator</text>
+<text x="1397" y="886.5" fill="#333">VDD</text>
+<text x="1397" y="899.5" fill="#333">GND</text>
+<text x="1397" y="912.5" fill="#333">DATA</text>
+<rect x="1390" y="937" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="952" font-weight="700">r_knee_actuator</text>
+<text x="1397" y="971.5" fill="#333">VDD</text>
+<text x="1397" y="984.5" fill="#333">GND</text>
+<text x="1397" y="997.5" fill="#333">DATA</text>
+<rect x="1390" y="1022" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="1037" font-weight="700">r_ankle_pitch_actuator</text>
+<text x="1397" y="1056.5" fill="#333">DATA</text>
+<text x="1397" y="1069.5" fill="#333">VCC</text>
+<text x="1397" y="1082.5" fill="#333">GND</text>
+<rect x="1390" y="1107" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="1122" font-weight="700">r_ankle_roll_actuator</text>
+<text x="1397" y="1141.5" fill="#333">VCC</text>
+<text x="1397" y="1154.5" fill="#333">GND</text>
+<text x="1397" y="1167.5" fill="#333">DATA</text>
+<rect x="1390" y="1192" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="1207" font-weight="700">l_shoulder_pitch_actuator</text>
+<text x="1397" y="1226.5" fill="#333">DATA</text>
+<text x="1397" y="1239.5" fill="#333">VDD</text>
+<text x="1397" y="1252.5" fill="#333">GND</text>
+<rect x="1390" y="1277" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="1292" font-weight="700">l_shoulder_roll_actuator</text>
+<text x="1397" y="1311.5" fill="#333">VDD</text>
+<text x="1397" y="1324.5" fill="#333">GND</text>
+<text x="1397" y="1337.5" fill="#333">DATA</text>
+<rect x="1390" y="1362" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="1377" font-weight="700">l_upper_arm_yaw_actuator</text>
+<text x="1397" y="1396.5" fill="#333">VDD</text>
+<text x="1397" y="1409.5" fill="#333">GND</text>
+<text x="1397" y="1422.5" fill="#333">DATA</text>
+<rect x="1390" y="1447" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="1462" font-weight="700">l_elbow_actuator</text>
+<text x="1397" y="1481.5" fill="#333">DATA</text>
+<text x="1397" y="1494.5" fill="#333">VDD</text>
+<text x="1397" y="1507.5" fill="#333">GND</text>
+<rect x="1390" y="1532" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="1547" font-weight="700">l_gripper_actuator</text>
+<text x="1397" y="1566.5" fill="#333">VDD</text>
+<text x="1397" y="1579.5" fill="#333">GND</text>
+<text x="1397" y="1592.5" fill="#333">DATA</text>
+<rect x="1390" y="1617" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="1632" font-weight="700">r_shoulder_pitch_actuator</text>
+<text x="1397" y="1651.5" fill="#333">DATA</text>
+<text x="1397" y="1664.5" fill="#333">VDD</text>
+<text x="1397" y="1677.5" fill="#333">GND</text>
+<rect x="1390" y="1702" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="1717" font-weight="700">r_shoulder_roll_actuator</text>
+<text x="1397" y="1736.5" fill="#333">VDD</text>
+<text x="1397" y="1749.5" fill="#333">GND</text>
+<text x="1397" y="1762.5" fill="#333">DATA</text>
+<rect x="1390" y="1787" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="1802" font-weight="700">r_upper_arm_yaw_actuator</text>
+<text x="1397" y="1821.5" fill="#333">VDD</text>
+<text x="1397" y="1834.5" fill="#333">GND</text>
+<text x="1397" y="1847.5" fill="#333">DATA</text>
+<rect x="1390" y="1872" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="1887" font-weight="700">r_elbow_actuator</text>
+<text x="1397" y="1906.5" fill="#333">DATA</text>
+<text x="1397" y="1919.5" fill="#333">VDD</text>
+<text x="1397" y="1932.5" fill="#333">GND</text>
+<rect x="1390" y="1957" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="1972" font-weight="700">r_gripper_actuator</text>
+<text x="1397" y="1991.5" fill="#333">VDD</text>
+<text x="1397" y="2004.5" fill="#333">GND</text>
+<text x="1397" y="2017.5" fill="#333">DATA</text>
+<rect x="1390" y="2042" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="2057" font-weight="700">neck_pan_actuator</text>
+<text x="1397" y="2076.5" fill="#333">DATA</text>
+<text x="1397" y="2089.5" fill="#333">VDD</text>
+<text x="1397" y="2102.5" fill="#333">GND</text>
+<rect x="1390" y="2127" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="2142" font-weight="700">neck_tilt_actuator</text>
+<text x="1397" y="2161.5" fill="#333">VDD</text>
+<text x="1397" y="2174.5" fill="#333">GND</text>
+<text x="1397" y="2187.5" fill="#333">DATA</text>
+<rect x="1390" y="2212" width="190" height="41" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="2227" font-weight="700">head_camera</text>
+<text x="1397" y="2246.5" fill="#333">GND</text>
+<rect x="370" y="74" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="89" font-weight="700">main_switch</text>
+<text x="377" y="108.5" fill="#333">IN</text>
+<text x="377" y="121.5" fill="#333">OUT</text>
+<rect x="370" y="146" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="161" font-weight="700">main_fuse</text>
+<text x="377" y="180.5" fill="#333">IN</text>
+<text x="377" y="193.5" fill="#333">OUT</text>
+<rect x="370" y="218" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="233" font-weight="700">leg_bus_hub</text>
+<text x="377" y="252.5" fill="#333">P1</text>
+<text x="377" y="265.5" fill="#333">P2</text>
+<rect x="370" y="290" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="305" font-weight="700">arm_bus_hub</text>
+<text x="377" y="324.5" fill="#333">P1</text>
+<text x="377" y="337.5" fill="#333">P2</text>
+<rect x="370" y="362" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="377" font-weight="700">star_ground</text>
+<text x="377" y="396.5" fill="#333">P1</text>
+<text x="377" y="409.5" fill="#333">P2</text>
+<rect x="370" y="434" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="449" font-weight="700">splice_vbat</text>
+<text x="377" y="468.5" fill="#333">P1</text>
+<text x="377" y="481.5" fill="#333">P2</text>
+<rect x="370" y="506" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="521" font-weight="700">splice_5v_arms</text>
+<text x="377" y="540.5" fill="#333">P1</text>
+<text x="377" y="553.5" fill="#333">P2</text>
+</svg>

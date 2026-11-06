@@ -40,6 +40,15 @@
       "note": "joint lf_femur; joint lm_femur; joint lr_femur; joint rr_femur; … · https://openelab.io/products/feetech-sts3250-c002-servo-12v"
     },
     {
+      "category": "Power",
+      "name": "Inline ATM mini blade fuse holder, 30 A class (Littelfuse FHM)",
+      "qty": 10,
+      "unit_cost": 2.5,
+      "subtotal": 25,
+      "spec": "32 V",
+      "note": "fuse holders · https://www.digikey.com/en/product-highlight/l/littelfuse-commercial-vehicle-products/fhac-fhm-series-in-line-fuse-holders"
+    },
+    {
       "category": "Compute",
       "name": "NVIDIA Jetson Orin Nano Super Developer Kit",
       "qty": 1,
@@ -76,6 +85,24 @@
       "note": "360 deg LiDAR turret · https://www.waveshare.com/rplidar-c1.htm"
     },
     {
+      "category": "Power",
+      "name": "KCD4 double-pole rocker switch, 16 A 250 VAC / 20 A 125 VAC",
+      "qty": 1,
+      "unit_cost": 1,
+      "subtotal": 1,
+      "spec": "https://www.aliexpress.com/w/wholesale-kcd4-rocker-switch.html",
+      "note": "main power switch · https://www.aliexpress.com/w/wholesale-kcd4-rocker-switch.html"
+    },
+    {
+      "category": "Power",
+      "name": "WAGO 221-415 five-way lever splice",
+      "qty": 8,
+      "unit_cost": 0.8,
+      "subtotal": 6.4,
+      "spec": "450 V",
+      "note": "rail splices, the star ground and bus hubs · https://www.wago.com/global/electrical-interconnections/compact-splicing-connector/p/221-415"
+    },
+    {
       "category": "Electronics",
       "name": "Waveshare Bus Servo Adapter (A)",
       "qty": 1,
@@ -86,177 +113,366 @@
     },
     {
       "category": "Printed structure",
-      "name": "PETG filament for 20 printed parts",
+      "name": "PETG filament for 26 printed parts",
       "qty": 1,
-      "unit_cost": 16.95,
-      "subtotal": 16.95,
-      "spec": "670 g of parts (+15 % supports/waste), about 61.1 h of printing",
-      "note": "base_link, top_deck, lf_coxa_link, lf_femur_link, lf_tibia_link, lm_coxa_link, lm_femur_link, lm_tibia_link, lr_coxa_link, lr_femur_link, lr_tibia_link, rr_coxa_link, rr_femur_link, rr_tibia_link, rm_coxa_link, rm_femur_link, rm_tibia_link, rf_coxa_link, rf_femur_link, rf_tibia_link"
+      "unit_cost": 19.74,
+      "subtotal": 19.74,
+      "spec": "780 g of parts (+15 % supports/waste), about 71.1 h of printing",
+      "note": "base_link, deck_pillar_1, deck_pillar_2, deck_pillar_3, top_deck, lf_coxa_link, lf_femur_link, lf_tibia_link, lm_coxa_link, lm_femur_link, lm_tibia_link, lr_coxa_link, lr_femur_link, lr_tibia_link, rr_coxa_link, rr_femur_link, rr_tibia_link, rm_coxa_link, rm_femur_link, rm_tibia_link, rf_coxa_link, rf_femur_link, rf_tibia_link, computer_hood, board_hood, battery_tray"
     },
     {
       "category": "Fasteners",
       "name": "Screws, nuts and inserts",
-      "qty": 147,
+      "qty": 159,
       "unit_cost": 0.12,
-      "subtotal": 17.64,
-      "spec": "3x M3 x 12 deck pillar screws; 72x M2 x 6 case screws; 72x horn screws"
+      "subtotal": 19.08,
+      "spec": "3x M3 x 12 deck pillar screws; 72x M2 x 6 case screws; 72x horn screws; 12x M3 x 12 self-tapping (hood to deck)"
+    },
+    {
+      "category": "Wiring",
+      "name": "12 AWG silicone wire",
+      "qty": 0.6,
+      "unit_cost": 2.2,
+      "subtotal": 1.32,
+      "spec": "0.6 m: 3.308 mm2, rated 20.5 A in a bundle; 0.54 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "22 AWG silicone wire",
+      "qty": 6.6,
+      "unit_cost": 0.4,
+      "subtotal": 2.64,
+      "spec": "6.6 m: 0.327 mm2, rated 3.5 A in a bundle; 5.92 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "24 AWG silicone wire",
+      "qty": 5,
+      "unit_cost": 0.35,
+      "subtotal": 1.75,
+      "spec": "5 m: 0.205 mm2, rated 1.75 A in a bundle; 4.55 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "26 AWG silicone wire",
+      "qty": 5.6,
+      "unit_cost": 0.3,
+      "subtotal": 1.68,
+      "spec": "5.6 m: 0.128 mm2, rated 1.1 A in a bundle; 5.03 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Dupont 2.54 mm contacts",
+      "qty": 8,
+      "unit_cost": 0.02,
+      "subtotal": 0.16,
+      "spec": "8 pc: rated 3 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Dupont 2.54 mm housings",
+      "qty": 2,
+      "unit_cost": 0.02,
+      "subtotal": 0.04,
+      "spec": "2 pc: one per cable end",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Molex 5264 contacts",
+      "qty": 91,
+      "unit_cost": 0.05,
+      "subtotal": 4.55,
+      "spec": "91 pc: rated 3 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Molex 5264 housings",
+      "qty": 37,
+      "unit_cost": 0.08,
+      "subtotal": 2.96,
+      "spec": "37 pc: one per cable end",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "XT60 contacts",
+      "qty": 2,
+      "unit_cost": 0.9,
+      "subtotal": 1.8,
+      "spec": "2 pc: rated 35 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "6.3 mm spade contacts",
+      "qty": 2,
+      "unit_cost": 0.08,
+      "subtotal": 0.16,
+      "spec": "2 pc: rated 15 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Bootlace ferrule contacts",
+      "qty": 2,
+      "unit_cost": 0.03,
+      "subtotal": 0.06,
+      "spec": "2 pc: rated 17.5 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Heat shrink 3 mm, 2:1",
+      "qty": 2.5,
+      "unit_cost": 0.2,
+      "subtotal": 0.5,
+      "spec": "2.5 m: 7 solder joints + a boot on each cable end",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Cable tie 100 x 2.5 mm",
+      "qty": 56,
+      "unit_cost": 0.02,
+      "subtotal": 1.12,
+      "spec": "56 pc: at every clip, cable end and strain-relief anchor",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Rubber grommet, 6.4 mm panel hole, 3.2 mm bore",
+      "qty": 3,
+      "unit_cost": 0.08,
+      "subtotal": 0.24,
+      "spec": "3 pc: 9.5 mm panel hole",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Nylon braided sleeving 6 mm",
+      "qty": 1.8,
+      "unit_cost": 0.4,
+      "subtotal": 0.72,
+      "spec": "1.8 m: over every cable where it crosses a joint",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "USB",
+      "qty": 1,
+      "unit_cost": 3,
+      "subtotal": 3,
+      "spec": "1 pc: lidar to computer",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "FFC",
+      "qty": 1,
+      "unit_cost": 3,
+      "subtotal": 3,
+      "spec": "1 pc: camera to computer",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "USB",
+      "qty": 1,
+      "unit_cost": 3,
+      "subtotal": 3,
+      "spec": "1 pc: actuator_bus to computer",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "20 A ATM blade fuse",
+      "qty": 1,
+      "unit_cost": 0.25,
+      "subtotal": 0.25,
+      "spec": "1 pc: plus spares",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "2 A ATM blade fuse",
+      "qty": 3,
+      "unit_cost": 0.25,
+      "subtotal": 0.75,
+      "spec": "3 pc: plus spares",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "3 A ATM blade fuse",
+      "qty": 6,
+      "unit_cost": 0.25,
+      "subtotal": 1.5,
+      "spec": "6 pc: plus spares",
+      "note": "price estimated"
     }
   ],
-  "total": 1032.62,
+  "total": 1100.45,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
   "actuator_sizing": [
     {
       "joint": "lf_coxa",
-      "required_effort": 0.346,
+      "required_effort": 0.341,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.346,
+      "required_torque_nm": 0.341,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "8.51x"
+      "margin": "8.63x"
     },
     {
       "joint": "lf_femur",
-      "required_effort": 2.178,
+      "required_effort": 2.149,
       "effort_unit": "N·m",
-      "required_torque_nm": 2.178,
+      "required_torque_nm": 2.149,
       "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
-      "margin": "2.25x"
+      "margin": "2.28x"
     },
     {
       "joint": "lf_tibia",
-      "required_effort": 1.496,
+      "required_effort": 1.476,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.496,
+      "required_torque_nm": 1.476,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "1.97x"
+      "margin": "1.99x"
     },
     {
       "joint": "lm_coxa",
-      "required_effort": 0.346,
+      "required_effort": 0.341,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.346,
+      "required_torque_nm": 0.341,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "8.5x"
+      "margin": "8.62x"
     },
     {
       "joint": "lm_femur",
-      "required_effort": 2.18,
+      "required_effort": 2.151,
       "effort_unit": "N·m",
-      "required_torque_nm": 2.18,
+      "required_torque_nm": 2.151,
       "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
-      "margin": "2.25x"
+      "margin": "2.28x"
     },
     {
       "joint": "lm_tibia",
-      "required_effort": 1.501,
+      "required_effort": 1.481,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.501,
+      "required_torque_nm": 1.481,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "1.96x"
+      "margin": "1.99x"
     },
     {
       "joint": "lr_coxa",
-      "required_effort": 0.329,
+      "required_effort": 0.325,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.329,
+      "required_torque_nm": 0.325,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "8.94x"
+      "margin": "9.06x"
     },
     {
       "joint": "lr_femur",
-      "required_effort": 2.178,
+      "required_effort": 2.149,
       "effort_unit": "N·m",
-      "required_torque_nm": 2.178,
+      "required_torque_nm": 2.149,
       "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
-      "margin": "2.25x"
+      "margin": "2.28x"
     },
     {
       "joint": "lr_tibia",
-      "required_effort": 1.496,
+      "required_effort": 1.476,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.496,
+      "required_torque_nm": 1.476,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "1.97x"
+      "margin": "1.99x"
     },
     {
       "joint": "rr_coxa",
-      "required_effort": 0.346,
+      "required_effort": 0.341,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.346,
+      "required_torque_nm": 0.341,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "8.51x"
+      "margin": "8.63x"
     },
     {
       "joint": "rr_femur",
-      "required_effort": 2.178,
+      "required_effort": 2.149,
       "effort_unit": "N·m",
-      "required_torque_nm": 2.178,
+      "required_torque_nm": 2.149,
       "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
-      "margin": "2.25x"
+      "margin": "2.28x"
     },
     {
       "joint": "rr_tibia",
-      "required_effort": 1.496,
+      "required_effort": 1.476,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.496,
+      "required_torque_nm": 1.476,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "1.97x"
+      "margin": "1.99x"
     },
     {
       "joint": "rm_coxa",
-      "required_effort": 0.346,
+      "required_effort": 0.341,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.346,
+      "required_torque_nm": 0.341,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "8.5x"
+      "margin": "8.62x"
     },
     {
       "joint": "rm_femur",
-      "required_effort": 2.18,
+      "required_effort": 2.151,
       "effort_unit": "N·m",
-      "required_torque_nm": 2.18,
+      "required_torque_nm": 2.151,
       "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
-      "margin": "2.25x"
+      "margin": "2.28x"
     },
     {
       "joint": "rm_tibia",
-      "required_effort": 1.501,
+      "required_effort": 1.481,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.501,
+      "required_torque_nm": 1.481,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "1.96x"
+      "margin": "1.99x"
     },
     {
       "joint": "rf_coxa",
-      "required_effort": 0.329,
+      "required_effort": 0.325,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.329,
+      "required_torque_nm": 0.325,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "8.94x"
+      "margin": "9.06x"
     },
     {
       "joint": "rf_femur",
-      "required_effort": 2.178,
+      "required_effort": 2.149,
       "effort_unit": "N·m",
-      "required_torque_nm": 2.178,
+      "required_torque_nm": 2.149,
       "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
-      "margin": "2.25x"
+      "margin": "2.28x"
     },
     {
       "joint": "rf_tibia",
-      "required_effort": 1.496,
+      "required_effort": 1.476,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.496,
+      "required_torque_nm": 1.476,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "1.97x"
+      "margin": "1.99x"
     }
   ],
   "warnings": [],
   "notes": [
-    "Hexapod, 18 x Feetech STS3250 C002 12 V 50 kg.cm (1:345), 2.47 kg, 207 mm body, camera + lidar + imu, 40 min, $998 of parts",
+    "Hexapod, 18 x Feetech STS3250 C002 12 V 50 kg.cm (1:345), 2.43 kg, 207 mm body, camera + lidar + imu, 41 min, $1030 of parts",
     "Sized for a 0.2 kg payload.",
-    "Joint limits trimmed to the collision-free range found by exact solid sweeps: lf_tibia [-1.20, 1.20] -> [-0.86, 1.20]; lm_tibia [-1.20, 1.20] -> [-0.90, 1.20]; lr_tibia [-1.20, 1.20] -> [-0.90, 1.20]; rr_tibia [-1.20, 1.20] -> [-0.86, 1.20]; rm_tibia [-1.20, 1.20] -> [-0.90, 1.20]; rf_tibia [-1.20, 1.20] -> [-0.90, 1.20].",
+    "Joint limits trimmed to the collision-free range found by exact solid sweeps: lf_tibia [-1.20, 1.20] -> [-0.80, 1.20]; lm_tibia [-1.20, 1.20] -> [-0.90, 1.20]; lr_tibia [-1.20, 1.20] -> [-0.90, 1.20]; rr_tibia [-1.20, 1.20] -> [-0.80, 1.20]; rm_tibia [-1.20, 1.20] -> [-0.90, 1.20]; rf_tibia [-1.20, 1.20] -> [-0.90, 1.20].",
     "Zero joint angles are the standing pose (femurs raised 20 deg, tibias near vertical); the base origin is on the coxa horn plane.",
     "Servo loads are J^T F at the stance feet of a tripod gait (three feet carry robot + payload), ±15 % traction, over a gait envelope, x 1.3 dynamic factor; continuous duty checked at 71 % of the worst stance load (RMS over a gait cycle with half of it in stance).",
     "Tripod gait keeps three feet down at all times: statically stable walking with open-loop position control.",

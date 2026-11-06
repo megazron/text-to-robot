@@ -1,6 +1,6 @@
 # Bill of Materials — humanoid_robot
 
-**Estimated total: $4234.18**  ·  tier: prosumer
+**Estimated total: $4318.9**  ·  tier: prosumer
 
 **Effort sizing: passes catalogue estimate; hardware verified: no.**
 
@@ -14,12 +14,43 @@
 | Actuator | DYNAMIXEL XL430-W250-T _(joint l_shoulder_pitch; joint l_shoulder_roll; joint l_upper_arm_yaw; joint r_shoulder_pitch; … · https://robotis.us/dynamixel-xl430-w250-t)_ | 6 | 44.9 | 269.4 | 0.42 N·m rated / 1.4 N·m peak, 11.1 V |
 | Actuator | Feetech STS3215 C047 12 V 30 kg.cm (1:345) _(joint l_hip_yaw; joint l_ankle_roll; joint r_hip_yaw; joint r_ankle_roll · https://www.seeedstudio.com/STS3215-30KG-Serial-Servo-p-6340.html)_ | 4 | 22 | 88 | 0.9807 N·m rated / 2.942 N·m peak, 12 V |
 | Actuator | Feetech STS3250 C002 12 V 50 kg.cm (1:345) _(joint l_ankle_pitch; joint r_ankle_pitch · https://openelab.io/products/feetech-sts3250-c002-servo-12v)_ | 2 | 40 | 80 | 1.5691 N·m rated / 4.9033 N·m peak, 12 V |
+| Power | Inline ATM mini blade fuse holder, 30 A class (Littelfuse FHM) _(fuse holders · https://www.digikey.com/en/product-highlight/l/littelfuse-commercial-vehicle-products/fhac-fhm-series-in-line-fuse-holders)_ | 12 | 2.5 | 30 | 32 V |
 | Power | LiPo 3S 5000 mAh 60C, XT60 (Gens Ace G-Tech) _(main battery · https://classicrcshop.com/products/gens-ace-5000mah-3s-60c-11-1v-g-tech-lipo-battery-pack-with-xt60-plug)_ | 1 | 59.99 | 59.99 | 11.1 V, 55.5 Wh |
 | Sensor | Raspberry Pi Camera Module 3 (standard lens) _(head camera · https://www.raspberrypi.com/products/camera-module-3/)_ | 1 | 25 | 25 | 3.3 V |
 | Compute | Raspberry Pi 5 (4 GB) _(main computer · https://www.raspberrypi.com/products/raspberry-pi-5/)_ | 1 | 110 | 110 | 5 V |
+| Power | KCD4 double-pole rocker switch, 16 A 250 VAC / 20 A 125 VAC _(main power switch · https://www.aliexpress.com/w/wholesale-kcd4-rocker-switch.html)_ | 1 | 1 | 1 | https://www.aliexpress.com/w/wholesale-kcd4-rocker-switch.html |
+| Power | WAGO 221-415 five-way lever splice _(rail splices, the star ground and bus hubs · https://www.wago.com/global/electrical-interconnections/compact-splicing-connector/p/221-415)_ | 14 | 0.8 | 11.2 | 450 V |
 | Electronics | Waveshare Bus Servo Adapter (A) _(USB to leg servo bus · https://www.waveshare.com/bus-servo-adapter-a.htm)_ | 1 | 10.6 | 10.6 | 12 V |
-| Printed structure | PETG filament for 26 printed parts _(base_link, torso, l_hip_yaw_link, l_hip_roll_link, l_hip_pitch_link, l_knee_link, l_ankle_pitch_link, l_ankle_roll_link, r_hip_yaw_link, r_hip_roll_link, r_hip_pitch_link, r_knee_link, r_ankle_pitch_link, r_ankle_roll_link, l_shoulder_pitch_link, l_shoulder_roll_link, l_upper_arm_yaw_link, l_elbow_link, l_gripper_jaw, r_shoulder_pitch_link, r_shoulder_roll_link, r_upper_arm_yaw_link, r_elbow_link, r_gripper_jaw, neck_pan_link, neck_tilt_link)_ | 1 | 33.29 | 33.29 | 1316 g of parts (+15 % supports/waste), about 119.9 h of printing |
-| Fasteners | Screws, nuts and inserts | 180 | 0.12 | 21.6 | 4x M3 x 12 torso-to-pelvis bolts; 88x M2/M2.5 x 6 case screws; 88x horn / hub screws |
+| Printed structure | PETG filament for 30 printed parts _(base_link, torso, l_hip_yaw_link, l_hip_roll_link, l_hip_pitch_link, l_knee_link, l_ankle_pitch_link, l_ankle_roll_link, r_hip_yaw_link, r_hip_roll_link, r_hip_pitch_link, r_knee_link, r_ankle_pitch_link, r_ankle_roll_link, l_shoulder_pitch_link, l_shoulder_roll_link, l_upper_arm_yaw_link, l_elbow_link, l_gripper_jaw, r_shoulder_pitch_link, r_shoulder_roll_link, r_upper_arm_yaw_link, r_elbow_link, r_gripper_jaw, neck_pan_link, neck_tilt_link, side_panel_left, side_panel_right, chest_panel, imu_hood)_ | 1 | 33.81 | 33.81 | 1337 g of parts (+15 % supports/waste), about 121.8 h of printing |
+| Fasteners | Screws, nuts and inserts | 196 | 0.12 | 23.52 | 4x M3 x 12 torso-to-pelvis bolts; 88x M2/M2.5 x 6 case screws; 88x horn / hub screws; 4x M3 x 8 self-tapping (side_panel_left); 4x M3 x 8 self-tapping (side_panel_right); 4x M3 x 8 self-tapping (chest_panel); 4x M3 x 12 self-tapping (hood to deck) |
+| Wiring | 12 AWG silicone wire _(price estimated)_ | 0.7 | 2.2 | 1.54 | 0.7 m: 3.308 mm2, rated 20.5 A in a bundle; 0.60 m cut + 10 % waste |
+| Wiring | 18 AWG silicone wire _(price estimated)_ | 1 | 0.7 | 0.7 | 1 m: 0.823 mm2, rated 8 A in a bundle; 0.86 m cut + 10 % waste |
+| Wiring | 20 AWG silicone wire _(price estimated)_ | 2.5 | 0.5 | 1.25 | 2.5 m: 0.519 mm2, rated 5.5 A in a bundle; 2.27 m cut + 10 % waste |
+| Wiring | 22 AWG silicone wire _(price estimated)_ | 7.1 | 0.4 | 2.84 | 7.1 m: 0.327 mm2, rated 3.5 A in a bundle; 6.37 m cut + 10 % waste |
+| Wiring | 24 AWG silicone wire _(price estimated)_ | 11.5 | 0.35 | 4.02 | 11.5 m: 0.205 mm2, rated 1.75 A in a bundle; 10.43 m cut + 10 % waste |
+| Wiring | 26 AWG silicone wire _(price estimated)_ | 9.6 | 0.3 | 2.88 | 9.6 m: 0.128 mm2, rated 1.1 A in a bundle; 8.72 m cut + 10 % waste |
+| Wiring | Dupont 2.54 mm contacts _(price estimated)_ | 10 | 0.02 | 0.2 | 10 pc: rated 3 A per contact |
+| Wiring | Dupont 2.54 mm housings _(price estimated)_ | 3 | 0.02 | 0.06 | 3 pc: one per cable end |
+| Wiring | Molex 5264 contacts _(price estimated)_ | 25 | 0.05 | 1.25 | 25 pc: rated 3 A per contact |
+| Wiring | Molex 5264 housings _(price estimated)_ | 13 | 0.08 | 1.04 | 13 pc: one per cable end |
+| Wiring | JST EH 2.5 mm contacts _(price estimated)_ | 90 | 0.03 | 2.7 | 90 pc: rated 3 A per contact |
+| Wiring | JST EH 2.5 mm housings _(price estimated)_ | 39 | 0.05 | 1.95 | 39 pc: one per cable end |
+| Wiring | XT60 contacts _(price estimated)_ | 2 | 0.9 | 1.8 | 2 pc: rated 35 A per contact |
+| Wiring | 6.3 mm spade contacts _(price estimated)_ | 2 | 0.08 | 0.16 | 2 pc: rated 15 A per contact |
+| Wiring | Bootlace ferrule contacts _(price estimated)_ | 2 | 0.03 | 0.06 | 2 pc: rated 17.5 A per contact |
+| Wiring | Heat shrink 3 mm, 2:1 _(price estimated)_ | 3.5 | 0.2 | 0.7 | 3.5 m: 11 solder joints + a boot on each cable end |
+| Wiring | Cable tie 100 x 2.5 mm _(price estimated)_ | 86 | 0.02 | 1.72 | 86 pc: at every clip, cable end and strain-relief anchor |
+| Wiring | Rubber grommet, 6.4 mm panel hole, 3.2 mm bore _(price estimated)_ | 1 | 0.08 | 0.08 | 1 pc: 12 mm panel hole |
+| Wiring | Rubber grommet, 6.4 mm panel hole, 3.2 mm bore _(price estimated)_ | 3 | 0.08 | 0.24 | 3 pc: 9.5 mm panel hole |
+| Wiring | Rubber grommet, 5.0 mm panel hole, 3.0 mm bore _(price estimated)_ | 1 | 0.05 | 0.05 | 1 pc: 5 mm panel hole |
+| Wiring | Nylon braided sleeving 6 mm _(price estimated)_ | 7.1 | 0.4 | 2.84 | 7.1 m: over every cable where it crosses a joint |
+| Wiring | FFC _(price estimated)_ | 1 | 3 | 3 | 1 pc: head_camera to computer |
+| Wiring | USB _(price estimated)_ | 1 | 3 | 3 | 1 pc: leg_bus to computer |
+| Wiring | USB _(price estimated)_ | 1 | 3 | 3 | 1 pc: arm_bus to computer |
+| Wiring | 15 A ATM blade fuse _(price estimated)_ | 1 | 0.25 | 0.25 | 1 pc: plus spares |
+| Wiring | 2 A ATM blade fuse _(price estimated)_ | 7 | 0.25 | 1.75 | 7 pc: plus spares |
+| Wiring | 3 A ATM blade fuse _(price estimated)_ | 2 | 0.25 | 0.5 | 2 pc: plus spares |
+| Wiring | 4 A ATM blade fuse _(price estimated)_ | 2 | 0.25 | 0.5 | 2 pc: plus spares |
 
 ## Actuator sizing
 
@@ -51,8 +82,8 @@
 | neck_tilt | 0.114 | N·m | DYNAMIXEL XL330-M288-T | 4.55x |
 
 ## Notes
-- Humanoid, 0.653 m, 3.60 kg, 24 DOF (4-DOF arms + grippers), 44 min, $4179 of parts
-- Joint limits trimmed to the collision-free range found by exact solid sweeps: l_hip_roll [-0.45, 0.45] -> [-0.13, 0.45]; l_knee [-2.20, 2.20] -> [-2.04, 2.20]; l_ankle_roll [-0.50, 0.50] -> [-0.50, 0.13]; r_hip_roll [-0.45, 0.45] -> [-0.45, 0.13]; r_knee [-2.20, 2.20] -> [-2.20, 2.04]; r_ankle_roll [-0.50, 0.50] -> [-0.13, 0.50]; l_shoulder_roll [-1.60, 1.60] -> [-0.15, 1.60]; r_shoulder_roll [-1.60, 1.60] -> [-1.60, 0.15]; neck_tilt [-0.70, 0.70] -> [-0.70, 0.38].
+- Humanoid, 0.653 m, 3.60 kg, 24 DOF (4-DOF arms + grippers), 44 min, $4221 of parts
+- Joint limits trimmed to the collision-free range found by exact solid sweeps: l_hip_roll [-0.45, 0.45] -> [-0.13, 0.45]; l_knee [-2.20, 2.20] -> [-2.04, 2.20]; l_ankle_roll [-0.50, 0.50] -> [-0.50, 0.13]; r_hip_roll [-0.45, 0.45] -> [-0.45, 0.13]; r_knee [-2.20, 2.20] -> [-2.20, 2.04]; r_ankle_roll [-0.50, 0.50] -> [-0.13, 0.50]; l_shoulder_roll [-1.60, 1.60] -> [-0.13, 1.60]; r_shoulder_roll [-1.60, 1.60] -> [-1.60, 0.13]; neck_tilt [-0.70, 0.70] -> [-0.70, 0.38].
 - Joint ranges are swept with the arms held 0.35 rad out to the side (the walking posture); with the arms hanging straight the hands touch the thighs when a leg abducts or a wrist turns.
 - Zero joint angles are the standing pose (knees bent 0.25 rad, soles flat); the base origin is on the hip-yaw output plane.
 - Leg loads are J^T F at the sole with the whole robot on one foot and the centre of pressure anywhere on the central 60 % of the sole, over squat / lean / step poses, ±10 % traction, x 1.3 dynamic factor; continuous duty checked at 71 % of the worst stance load (RMS over a gait cycle with half of it in stance).

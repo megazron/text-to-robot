@@ -6,9 +6,9 @@
 
 Interpreted as: quadruped · imu (base_link) · camera (base_link)
 
-**Servo quadruped, 1.41 kg, hip height 0.18 m, 12 DOF, 33 min runtime, $506 of parts**
+**Servo quadruped, 1.41 kg, hip height 0.18 m, 12 DOF, 33 min runtime, $530 of parts**
 
-Parts cost **$530.42** · printed structure 14 parts, 470 g · checks passed 32/32
+Parts cost **$578.75** · printed structure 15 parts, 538 g · checks passed 62/62
 
 ## What it can do
 
@@ -24,7 +24,7 @@ Parts cost **$530.42** · printed structure 14 parts, 470 g · checks passed 32/
 | dof | 12 |
 | actuators | Feetech STS3215 C047 12 V 30 kg.cm (1:345) (abduction), Feetech STS3215 C047 12 V 30 kg.cm (1:345) (hip), Feetech STS3215 C047 12 V 30 kg.cm (1:345) (knee) |
 | runtime min | 33 |
-| cost usd | 506.05 |
+| cost usd | 530.15 |
 | stance width m | 0.13 |
 | wheelbase m | 0.301 |
 
@@ -47,7 +47,7 @@ Parts cost **$530.42** · printed structure 14 parts, 470 g · checks passed 32/
 
 ## Engineering checks
 
-All 32 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
+All 62 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
 
 ## Assumptions and limits
 
@@ -66,7 +66,7 @@ All 32 checks pass (torque, speed, power, stability, print-bed fit). Details in 
 
 | | Test | Result |
 |---|---|---|
-| ✅ | stand free | base z 0.185 -> 0.180 m (creep after settling 0.2 mm), upright 1.000; worst leg joint fr_knee at 0.23x rated |
+| ✅ | stand free | base z 0.185 -> 0.180 m (creep after settling 0.2 mm), upright 1.000; worst leg joint fr_knee at 0.25x rated |
 | ✅ | squat | free standing: commanded body drop 38 mm (20 % of 188 mm leg), achieved 38 mm, back up to 37 mm above the low point, upright 1.000 |
 
 _PASS means the modelled actuators (datasheet peak torque as a hard limit, a linear torque-speed line to no-load speed, reflected rotor inertia, URDF damping/friction) can produce the torques and speeds the task needs in this geometry and mass distribution, and that mean torque over the hold stays within the continuous (rated) torque. Joint control uses an ideal model-based feedforward (computed torque) through the force-limited servo for fixed-base robots and plain position servos for floating robots; a pass therefore proves torque/speed capacity, not that a given controller achieves it. Untested: thermal limits over long duty cycles (only the mean-vs-rated proxy), gearbox backlash and compliance, link and joint flexibility, encoder resolution, supply voltage sag and current limits, bus latency, controller tuning, and contact/friction values (nominal friction only)._
@@ -78,6 +78,7 @@ _PASS means the modelled actuators (datasheet peak torque as a hard limit, a lin
 |---|---|
 | `robot.urdf`, `meshes/` | URDF with real component and printed-part meshes, datasheet effort/velocity limits |
 | `BOM.md`, `bom.json` | every part to buy, with supplier links and prices |
+| `WIRING.md`, `wiring.svg` | power budget per rail, pin-to-pin table, cut list, slack at each joint, wiring diagram |
 | `robot.cad.zip` | build package: printable STLs, print list, bought-part models, assembly order |
 | `robot.ros2.zip` | ROS 2 description package (ros2_control, MoveIt config, Gazebo launch) |
 | `robot.training.zip` | MuJoCo / RL training scaffold |

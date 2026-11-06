@@ -8,7 +8,7 @@
   {
    "name": "base_link",
    "watertight": true,
-   "volume_cm3": 254.85,
+   "volume_cm3": 254.09,
    "size_mm": [
     215.1,
     208.8,
@@ -20,10 +20,160 @@
     1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 310.23,
-   "support_frac": 0.203,
+   "support_area_cm2": 308.38,
+   "support_frac": 0.202,
    "bed_contact_cm2": 23.23,
-   "min_wall_mm": 2.5,
+   "min_wall_mm": 2.53,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "needed",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "battery_tray",
+   "watertight": true,
+   "volume_cm3": 58.46,
+   "size_mm": [
+    184.4,
+    63.7,
+    31.0
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 1.93,
+   "support_frac": 0.004,
+   "bed_contact_cm2": 98.55,
+   "min_wall_mm": 1.32,
+   "thin_wall_frac": 0.003,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "board_hood",
+   "watertight": true,
+   "volume_cm3": 41.04,
+   "size_mm": [
+    68.4,
+    118.8,
+    37.8
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 2.47,
+   "support_frac": 0.007,
+   "bed_contact_cm2": 53.15,
+   "min_wall_mm": 1.21,
+   "thin_wall_frac": 0.005,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "computer_hood",
+   "watertight": true,
+   "volume_cm3": 60.73,
+   "size_mm": [
+    119.4,
+    111.4,
+    46.6
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 4.35,
+   "support_frac": 0.007,
+   "bed_contact_cm2": 84.78,
+   "min_wall_mm": 1.31,
+   "thin_wall_frac": 0.003,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "deck_pillar_1",
+   "watertight": true,
+   "volume_cm3": 6.67,
+   "size_mm": [
+    16.5,
+    14.2,
+    83.9
+   ],
+   "orientation": [
+    0.609,
+    0.793,
+    0.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 4.4,
+   "support_frac": 0.135,
+   "bed_contact_cm2": 3.22,
+   "min_wall_mm": 1.8,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "needed",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "deck_pillar_2",
+   "watertight": true,
+   "volume_cm3": 6.8,
+   "size_mm": [
+    19.9,
+    17.6,
+    83.9
+   ],
+   "orientation": [
+    -0.991,
+    0.131,
+    0.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 4.47,
+   "support_frac": 0.13,
+   "bed_contact_cm2": 3.39,
+   "min_wall_mm": 1.6,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "needed",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "deck_pillar_3",
+   "watertight": true,
+   "volume_cm3": 6.46,
+   "size_mm": [
+    10.0,
+    10.0,
+    83.9
+   ],
+   "orientation": [
+    -0.609,
+    -0.793,
+    0.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 2.89,
+   "support_frac": 0.096,
+   "bed_contact_cm2": 3.22,
+   "min_wall_mm": 3.67,
    "thin_wall_frac": 0.0,
    "passed": true,
    "supports": "needed",
@@ -483,25 +633,25 @@
   {
    "name": "top_deck",
    "watertight": true,
-   "volume_cm3": 99.37,
+   "volume_cm3": 40.58,
    "size_mm": [
     129.6,
     129.6,
-    132.7
+    29.0
    ],
    "orientation": [
     0.0,
     0.0,
-    1.0
+    -1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 127.93,
-   "support_frac": 0.203,
-   "bed_contact_cm2": 100.33,
+   "support_area_cm2": 0.7,
+   "support_frac": 0.002,
+   "bed_contact_cm2": 126.27,
    "min_wall_mm": 3.0,
    "thin_wall_frac": 0.0,
    "passed": true,
-   "supports": "needed",
+   "supports": "none",
    "problems": [],
    "warnings": []
   }

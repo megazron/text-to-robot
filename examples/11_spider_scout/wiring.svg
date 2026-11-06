@@ -1,0 +1,200 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1610 1860" width="1610" height="1860" font-family="Helvetica, Arial, sans-serif" font-size="10.5">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="30" y="26" font-size="17" font-weight="700">hexapod: wiring diagram</text>
+<line x1="30" y1="44" x2="54" y2="44" stroke="#c8102e" stroke-width="2"/><text x="60" y="48">power</text>
+<line x1="120" y1="44" x2="144" y2="44" stroke="#111111" stroke-width="2"/><text x="150" y="48">ground</text>
+<line x1="210" y1="44" x2="234" y2="44" stroke="#1f6fd1" stroke-width="2"/><text x="240" y="48">signal</text>
+<line x1="300" y1="44" x2="324" y2="44" stroke="#0a8f5b" stroke-width="2"/><text x="330" y="48">bus</text>
+<text x="30" y="66" font-weight="700" fill="#555">Source</text>
+<text x="370" y="66" font-weight="700" fill="#555">Protection</text>
+<text x="710" y="66" font-weight="700" fill="#555">Regulation</text>
+<text x="1050" y="66" font-weight="700" fill="#555">Control</text>
+<text x="1390" y="66" font-weight="700" fill="#555">Loads</text>
+<path d="M1390 203 H1376 V203 H1254 V203 H1240" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C1 W1 LIDAR_USB: lidar.main.VCC (red) to computer.usb_a_j6_j7.LINK</title></path>
+<path d="M1390 262 H1366 V232.5 H1264 V203 H1240" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C2 W2 CAMERA_CSI: camera.csi_15.GND to computer.camera_j20.LINK</title></path>
+<path d="M1240 216 H1274 V160.5 H1356 V105 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C3 W3 3V3_IMU: computer.expansion_j12.3V3 to imu.header.VIN, 24 AWG</title></path>
+<path d="M1240 229 H1284 V173.5 H1346 V118 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C3 W4 GND: computer.dc_jack_j16.GND to imu.header.GND, 24 AWG</title></path>
+<path d="M1240 242 H1294 V186.5 H1336 V131 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C3 W5 I2C_SDA: computer.expansion_j12.I2C1_SDA to imu.header.SDA, 26 AWG</title></path>
+<path d="M1240 255 H1304 V199.5 H1326 V144 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C3 W6 I2C_SCL: computer.expansion_j12.I2C1_SCL to imu.header.SCL, 26 AWG</title></path>
+<path d="M1050 105 H976 V177 H634 V249 H560" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C4 W7 BUS_ACTUATOR_BUS: actuator_bus.servo_bus.SIG to actuator_bus_hub.levers.P1, 26 AWG</title></path>
+<path d="M560 262 H644 V291.5 H1306 V321 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C5 W8 BUS_ACTUATOR_BUS: actuator_bus_hub.levers.P2 to lf_coxa_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M1580 334 H1674 V370 H1296 V406 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C6 W9 VBAT: lf_coxa_actuator.bus_b.VCC to lf_femur_actuator.bus_a.VCC, 22 AWG</title></path>
+<path d="M1580 347 H1684 V383 H1286 V419 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C6 W10 GND: lf_coxa_actuator.bus_b.GND to lf_femur_actuator.bus_a.GND, 22 AWG</title></path>
+<path d="M1580 321 H1694 V376.5 H1276 V432 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C6 W11 BUS_ACTUATOR_BUS: lf_coxa_actuator.bus_b.DATA to lf_femur_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M1580 406 H1704 V448.5 H1266 V491 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C7 W12 VBAT: lf_femur_actuator.bus_b.VCC to lf_tibia_actuator.bus_a.VCC, 24 AWG</title></path>
+<path d="M1580 419 H1594 V461.5 H1376 V504 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C7 W13 GND: lf_femur_actuator.bus_b.GND to lf_tibia_actuator.bus_a.GND, 24 AWG</title></path>
+<path d="M1580 432 H1604 V474.5 H1366 V517 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C7 W14 BUS_ACTUATOR_BUS: lf_femur_actuator.bus_b.DATA to lf_tibia_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M560 262 H594 V419 H1356 V576 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C8 W15 BUS_ACTUATOR_BUS: actuator_bus_hub.levers.P2 to lm_coxa_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M1580 589 H1624 V625 H1346 V661 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C9 W16 VBAT: lm_coxa_actuator.bus_b.VCC to lm_femur_actuator.bus_a.VCC, 22 AWG</title></path>
+<path d="M1580 602 H1634 V638 H1336 V674 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C9 W17 GND: lm_coxa_actuator.bus_b.GND to lm_femur_actuator.bus_a.GND, 22 AWG</title></path>
+<path d="M1580 576 H1644 V631.5 H1326 V687 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C9 W18 BUS_ACTUATOR_BUS: lm_coxa_actuator.bus_b.DATA to lm_femur_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M1580 661 H1654 V703.5 H1316 V746 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C10 W19 VBAT: lm_femur_actuator.bus_b.VCC to lm_tibia_actuator.bus_a.VCC, 24 AWG</title></path>
+<path d="M1580 674 H1664 V716.5 H1306 V759 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C10 W20 GND: lm_femur_actuator.bus_b.GND to lm_tibia_actuator.bus_a.GND, 24 AWG</title></path>
+<path d="M1580 687 H1674 V729.5 H1296 V772 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C10 W21 BUS_ACTUATOR_BUS: lm_femur_actuator.bus_b.DATA to lm_tibia_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M560 262 H664 V546.5 H1286 V831 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C11 W22 BUS_ACTUATOR_BUS: actuator_bus_hub.levers.P2 to lr_coxa_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M1580 844 H1694 V880 H1276 V916 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C12 W23 VBAT: lr_coxa_actuator.bus_b.VCC to lr_femur_actuator.bus_a.VCC, 22 AWG</title></path>
+<path d="M1580 857 H1704 V893 H1266 V929 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C12 W24 GND: lr_coxa_actuator.bus_b.GND to lr_femur_actuator.bus_a.GND, 22 AWG</title></path>
+<path d="M1580 831 H1594 V886.5 H1376 V942 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C12 W25 BUS_ACTUATOR_BUS: lr_coxa_actuator.bus_b.DATA to lr_femur_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M1580 916 H1604 V958.5 H1366 V1001 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C13 W26 VBAT: lr_femur_actuator.bus_b.VCC to lr_tibia_actuator.bus_a.VCC, 24 AWG</title></path>
+<path d="M1580 929 H1614 V971.5 H1356 V1014 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C13 W27 GND: lr_femur_actuator.bus_b.GND to lr_tibia_actuator.bus_a.GND, 24 AWG</title></path>
+<path d="M1580 942 H1624 V984.5 H1346 V1027 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C13 W28 BUS_ACTUATOR_BUS: lr_femur_actuator.bus_b.DATA to lr_tibia_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M560 262 H614 V674 H1336 V1086 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C14 W29 BUS_ACTUATOR_BUS: actuator_bus_hub.levers.P2 to rr_coxa_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M1580 1099 H1644 V1135 H1326 V1171 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C15 W30 VBAT: rr_coxa_actuator.bus_b.VCC to rr_femur_actuator.bus_a.VCC, 22 AWG</title></path>
+<path d="M1580 1112 H1654 V1148 H1316 V1184 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C15 W31 GND: rr_coxa_actuator.bus_b.GND to rr_femur_actuator.bus_a.GND, 22 AWG</title></path>
+<path d="M1580 1086 H1664 V1141.5 H1306 V1197 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C15 W32 BUS_ACTUATOR_BUS: rr_coxa_actuator.bus_b.DATA to rr_femur_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M1580 1171 H1674 V1213.5 H1296 V1256 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C16 W33 VBAT: rr_femur_actuator.bus_b.VCC to rr_tibia_actuator.bus_a.VCC, 24 AWG</title></path>
+<path d="M1580 1184 H1684 V1226.5 H1286 V1269 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C16 W34 GND: rr_femur_actuator.bus_b.GND to rr_tibia_actuator.bus_a.GND, 24 AWG</title></path>
+<path d="M1580 1197 H1694 V1239.5 H1276 V1282 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C16 W35 BUS_ACTUATOR_BUS: rr_femur_actuator.bus_b.DATA to rr_tibia_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M560 262 H684 V801.5 H1266 V1341 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C17 W36 BUS_ACTUATOR_BUS: actuator_bus_hub.levers.P2 to rm_coxa_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M1580 1354 H1594 V1390 H1376 V1426 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C18 W37 VBAT: rm_coxa_actuator.bus_b.VCC to rm_femur_actuator.bus_a.VCC, 22 AWG</title></path>
+<path d="M1580 1367 H1604 V1403 H1366 V1439 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C18 W38 GND: rm_coxa_actuator.bus_b.GND to rm_femur_actuator.bus_a.GND, 22 AWG</title></path>
+<path d="M1580 1341 H1614 V1396.5 H1356 V1452 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C18 W39 BUS_ACTUATOR_BUS: rm_coxa_actuator.bus_b.DATA to rm_femur_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M1580 1426 H1624 V1468.5 H1346 V1511 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C19 W40 VBAT: rm_femur_actuator.bus_b.VCC to rm_tibia_actuator.bus_a.VCC, 24 AWG</title></path>
+<path d="M1580 1439 H1634 V1481.5 H1336 V1524 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C19 W41 GND: rm_femur_actuator.bus_b.GND to rm_tibia_actuator.bus_a.GND, 24 AWG</title></path>
+<path d="M1580 1452 H1644 V1494.5 H1326 V1537 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C19 W42 BUS_ACTUATOR_BUS: rm_femur_actuator.bus_b.DATA to rm_tibia_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M560 262 H634 V929 H1316 V1596 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C20 W43 BUS_ACTUATOR_BUS: actuator_bus_hub.levers.P2 to rf_coxa_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M1580 1609 H1664 V1645 H1306 V1681 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C21 W44 VBAT: rf_coxa_actuator.bus_b.VCC to rf_femur_actuator.bus_a.VCC, 22 AWG</title></path>
+<path d="M1580 1622 H1674 V1658 H1296 V1694 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C21 W45 GND: rf_coxa_actuator.bus_b.GND to rf_femur_actuator.bus_a.GND, 22 AWG</title></path>
+<path d="M1580 1596 H1684 V1651.5 H1286 V1707 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C21 W46 BUS_ACTUATOR_BUS: rf_coxa_actuator.bus_b.DATA to rf_femur_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M1580 1681 H1694 V1723.5 H1276 V1766 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C22 W47 VBAT: rf_femur_actuator.bus_b.VCC to rf_tibia_actuator.bus_a.VCC, 24 AWG</title></path>
+<path d="M1580 1694 H1704 V1736.5 H1266 V1779 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C22 W48 GND: rf_femur_actuator.bus_b.GND to rf_tibia_actuator.bus_a.GND, 24 AWG</title></path>
+<path d="M1580 1707 H1594 V1749.5 H1376 V1792 H1390" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C22 W49 BUS_ACTUATOR_BUS: rf_femur_actuator.bus_b.DATA to rf_tibia_actuator.bus_a.DATA, 26 AWG</title></path>
+<path d="M1240 118 H1264 V160.5 H1026 V203 H1050" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C23 W50 BUS_USB: actuator_bus.usb.VBUS to computer.usb_a_j6_j7.LINK</title></path>
+<path d="M220 105 H254 V141 H336 V177 H370" fill="none" stroke="#c8102e" stroke-width="2" opacity="0.8"><title>C24 W51 VBAT: battery.main.BAT+ to main_fuse.leads.IN, 12 AWG</title></path>
+<path d="M560 190 H604 V147.5 H326 V105 H370" fill="none" stroke="#c8102e" stroke-width="2" opacity="0.8"><title>C25 W52 VBAT: main_fuse.leads.OUT to main_switch.contacts.IN, 12 AWG</title></path>
+<path d="M220 118 H274 V219.5 H316 V321 H370" fill="none" stroke="#111111" stroke-width="2" opacity="0.8"><title>C26 W53 GND: battery.main.BAT- to star_ground.levers.P1, 12 AWG</title></path>
+<path d="M560 118 H624 V255.5 H306 V393 H370" fill="none" stroke="#c8102e" stroke-width="2" opacity="0.8"><title>C27 W54 VBAT: main_switch.contacts.OUT to splice_vbat.levers.P1, 12 AWG</title></path>
+<path d="M560 406 H634 V255.5 H636 V105 H710" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C28 W55 VBAT: splice_vbat.levers.P2 to regulator_5v.power_and_control.VIN, 22 AWG</title></path>
+<path d="M560 334 H644 V226 H626 V118 H710" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C28 W56 GND: star_ground.levers.P2 to regulator_5v.power_and_control.GND, 24 AWG</title></path>
+<path d="M560 406 H654 V337 H956 V268 H1050" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C29 W57 VBAT: splice_vbat.levers.P2 to computer.dc_jack_j16.DC_IN, 22 AWG</title></path>
+<path d="M560 334 H664 V281.5 H946 V229 H1050" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C29 W58 GND: star_ground.levers.P2 to computer.dc_jack_j16.GND, 22 AWG</title></path>
+<path d="M560 406 H674 V268.5 H936 V131 H1050" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C30 W59 VBAT: splice_vbat.levers.P2 to actuator_bus.screw_in.VIN, 22 AWG</title></path>
+<path d="M560 334 H684 V239 H926 V144 H1050" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C30 W60 GND: star_ground.levers.P2 to actuator_bus.screw_in.GND, 24 AWG</title></path>
+<path d="M560 406 H574 V370 H1376 V334 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C31 W61 VBAT: splice_vbat.levers.P2 to lf_coxa_actuator.bus_a.VCC, 22 AWG</title></path>
+<path d="M560 334 H584 V340.5 H1366 V347 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C31 W62 GND: star_ground.levers.P2 to lf_coxa_actuator.bus_a.GND, 22 AWG</title></path>
+<path d="M560 406 H594 V497.5 H1356 V589 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C32 W63 VBAT: splice_vbat.levers.P2 to lm_coxa_actuator.bus_a.VCC, 22 AWG</title></path>
+<path d="M560 334 H604 V468 H1346 V602 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C32 W64 GND: star_ground.levers.P2 to lm_coxa_actuator.bus_a.GND, 22 AWG</title></path>
+<path d="M560 406 H614 V625 H1336 V844 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C33 W65 VBAT: splice_vbat.levers.P2 to lr_coxa_actuator.bus_a.VCC, 22 AWG</title></path>
+<path d="M560 334 H624 V595.5 H1326 V857 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C33 W66 GND: star_ground.levers.P2 to lr_coxa_actuator.bus_a.GND, 22 AWG</title></path>
+<path d="M560 406 H634 V752.5 H1316 V1099 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C34 W67 VBAT: splice_vbat.levers.P2 to rr_coxa_actuator.bus_a.VCC, 22 AWG</title></path>
+<path d="M560 334 H644 V723 H1306 V1112 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C34 W68 GND: star_ground.levers.P2 to rr_coxa_actuator.bus_a.GND, 22 AWG</title></path>
+<path d="M560 406 H654 V880 H1296 V1354 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C35 W69 VBAT: splice_vbat.levers.P2 to rm_coxa_actuator.bus_a.VCC, 22 AWG</title></path>
+<path d="M560 334 H664 V850.5 H1286 V1367 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C35 W70 GND: star_ground.levers.P2 to rm_coxa_actuator.bus_a.GND, 22 AWG</title></path>
+<path d="M560 406 H674 V1007.5 H1276 V1609 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C36 W71 VBAT: splice_vbat.levers.P2 to rf_coxa_actuator.bus_a.VCC, 22 AWG</title></path>
+<path d="M560 334 H684 V978 H1266 V1622 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C36 W72 GND: star_ground.levers.P2 to rf_coxa_actuator.bus_a.GND, 22 AWG</title></path>
+<path d="M710 118 H696 V226 H574 V334 H560" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C37 W73 GND: regulator_5v.power_and_control.GND to star_ground.levers.P2, 24 AWG</title></path>
+<rect x="30" y="74" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="37" y="89" font-weight="700">battery</text>
+<text x="37" y="108.5" fill="#333">BAT+</text>
+<text x="37" y="121.5" fill="#333">BAT-</text>
+<rect x="1390" y="74" width="190" height="80" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="89" font-weight="700">imu</text>
+<text x="1397" y="108.5" fill="#333">VIN</text>
+<text x="1397" y="121.5" fill="#333">GND</text>
+<text x="1397" y="134.5" fill="#333">SDA</text>
+<text x="1397" y="147.5" fill="#333">SCL</text>
+<rect x="1050" y="74" width="190" height="80" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1057" y="89" font-weight="700">actuator_bus</text>
+<text x="1057" y="108.5" fill="#333">SIG</text>
+<text x="1057" y="121.5" fill="#333">VBUS</text>
+<text x="1057" y="134.5" fill="#333">VIN</text>
+<text x="1057" y="147.5" fill="#333">GND</text>
+<rect x="710" y="74" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="717" y="89" font-weight="700">regulator_5v</text>
+<text x="717" y="108.5" fill="#333">VIN</text>
+<text x="717" y="121.5" fill="#333">GND</text>
+<rect x="1050" y="172" width="190" height="106" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1057" y="187" font-weight="700">computer</text>
+<text x="1057" y="206.5" fill="#333">LINK</text>
+<text x="1057" y="219.5" fill="#333">3V3</text>
+<text x="1057" y="232.5" fill="#333">GND</text>
+<text x="1057" y="245.5" fill="#333">I2C1_SDA</text>
+<text x="1057" y="258.5" fill="#333">I2C1_SCL</text>
+<text x="1057" y="271.5" fill="#333">DC_IN</text>
+<rect x="1390" y="172" width="190" height="41" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="187" font-weight="700">lidar</text>
+<text x="1397" y="206.5" fill="#333">VCC (red)</text>
+<rect x="1390" y="231" width="190" height="41" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="246" font-weight="700">camera</text>
+<text x="1397" y="265.5" fill="#333">GND</text>
+<rect x="1390" y="290" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="305" font-weight="700">lf_coxa_actuator</text>
+<text x="1397" y="324.5" fill="#333">DATA</text>
+<text x="1397" y="337.5" fill="#333">VCC</text>
+<text x="1397" y="350.5" fill="#333">GND</text>
+<rect x="1390" y="375" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="390" font-weight="700">lf_femur_actuator</text>
+<text x="1397" y="409.5" fill="#333">VCC</text>
+<text x="1397" y="422.5" fill="#333">GND</text>
+<text x="1397" y="435.5" fill="#333">DATA</text>
+<rect x="1390" y="460" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="475" font-weight="700">lf_tibia_actuator</text>
+<text x="1397" y="494.5" fill="#333">VCC</text>
+<text x="1397" y="507.5" fill="#333">GND</text>
+<text x="1397" y="520.5" fill="#333">DATA</text>
+<rect x="1390" y="545" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="560" font-weight="700">lm_coxa_actuator</text>
+<text x="1397" y="579.5" fill="#333">DATA</text>
+<text x="1397" y="592.5" fill="#333">VCC</text>
+<text x="1397" y="605.5" fill="#333">GND</text>
+<rect x="1390" y="630" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="645" font-weight="700">lm_femur_actuator</text>
+<text x="1397" y="664.5" fill="#333">VCC</text>
+<text x="1397" y="677.5" fill="#333">GND</text>
+<text x="1397" y="690.5" fill="#333">DATA</text>
+<rect x="1390" y="715" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="730" font-weight="700">lm_tibia_actuator</text>
+<text x="1397" y="749.5" fill="#333">VCC</text>
+<text x="1397" y="762.5" fill="#333">GND</text>
+<text x="1397" y="775.5" fill="#333">DATA</text>
+<rect x="1390" y="800" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="815" font-weight="700">lr_coxa_actuator</text>
+<text x="1397" y="834.5" fill="#333">DATA</text>
+<text x="1397" y="847.5" fill="#333">VCC</text>
+<text x="1397" y="860.5" fill="#333">GND</text>
+<rect x="1390" y="885" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="900" font-weight="700">lr_femur_actuator</text>
+<text x="1397" y="919.5" fill="#333">VCC</text>
+<text x="1397" y="932.5" fill="#333">GND</text>
+<text x="1397" y="945.5" fill="#333">DATA</text>
+<rect x="1390" y="970" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="985" font-weight="700">lr_tibia_actuator</text>
+<text x="1397" y="1004.5" fill="#333">VCC</text>
+<text x="1397" y="1017.5" fill="#333">GND</text>
+<text x="1397" y="1030.5" fill="#333">DATA</text>
+<rect x="1390" y="1055" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="1070" font-weight="700">rr_coxa_actuator</text>
+<text x="1397" y="1089.5" fill="#333">DATA</text>
+<text x="1397" y="1102.5" fill="#333">VCC</text>
+<text x="1397" y="1115.5" fill="#333">GND</text>
+<rect x="1390" y="1140" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="1155" font-weight="700">rr_femur_actuator</text>
+<text x="1397" y="1174.5" fill="#333">VCC</text>
+<text x="1397" y="1187.5" fill="#333">GND</text>
+<text x="1397" y="1200.5" fill="#333">DATA</text>
+<rect x="1390" y="1225" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="1240" font-weight="700">rr_tibia_actuator</text>
+<text x="1397" y="1259.5" fill="#333">VCC</text>
+<text x="1397" y="1272.5" fill="#333">GND</text>
+<text x="1397" y="1285.5" fill="#333">DATA</text>
+<rect x="1390" y="1310" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="1325" font-weight="700">rm_coxa_actuator</text>
+<text x="1397" y="1344.5" fill="#333">DATA</text>
+<text x="1397" y="1357.5" fill="#333">VCC</text>
+<text x="1397" y="1370.5" fill="#333">GND</text>
+<rect x="1390" y="1395" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="1410" font-weight="700">rm_femur_actuator</text>
+<text x="1397" y="1429.5" fill="#333">VCC</text>
+<text x="1397" y="1442.5" fill="#333">GND</text>
+<text x="1397" y="1455.5" fill="#333">DATA</text>
+<rect x="1390" y="1480" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="1495" font-weight="700">rm_tibia_actuator</text>
+<text x="1397" y="1514.5" fill="#333">VCC</text>
+<text x="1397" y="1527.5" fill="#333">GND</text>
+<text x="1397" y="1540.5" fill="#333">DATA</text>
+<rect x="1390" y="1565" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="1580" font-weight="700">rf_coxa_actuator</text>
+<text x="1397" y="1599.5" fill="#333">DATA</text>
+<text x="1397" y="1612.5" fill="#333">VCC</text>
+<text x="1397" y="1625.5" fill="#333">GND</text>
+<rect x="1390" y="1650" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="1665" font-weight="700">rf_femur_actuator</text>
+<text x="1397" y="1684.5" fill="#333">VCC</text>
+<text x="1397" y="1697.5" fill="#333">GND</text>
+<text x="1397" y="1710.5" fill="#333">DATA</text>
+<rect x="1390" y="1735" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="1750" font-weight="700">rf_tibia_actuator</text>
+<text x="1397" y="1769.5" fill="#333">VCC</text>
+<text x="1397" y="1782.5" fill="#333">GND</text>
+<text x="1397" y="1795.5" fill="#333">DATA</text>
+<rect x="370" y="74" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="89" font-weight="700">main_switch</text>
+<text x="377" y="108.5" fill="#333">IN</text>
+<text x="377" y="121.5" fill="#333">OUT</text>
+<rect x="370" y="146" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="161" font-weight="700">main_fuse</text>
+<text x="377" y="180.5" fill="#333">IN</text>
+<text x="377" y="193.5" fill="#333">OUT</text>
+<rect x="370" y="218" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="233" font-weight="700">actuator_bus_hub</text>
+<text x="377" y="252.5" fill="#333">P1</text>
+<text x="377" y="265.5" fill="#333">P2</text>
+<rect x="370" y="290" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="305" font-weight="700">star_ground</text>
+<text x="377" y="324.5" fill="#333">P1</text>
+<text x="377" y="337.5" fill="#333">P2</text>
+<rect x="370" y="362" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="377" font-weight="700">splice_vbat</text>
+<text x="377" y="396.5" fill="#333">P1</text>
+<text x="377" y="409.5" fill="#333">P2</text>
+</svg>
