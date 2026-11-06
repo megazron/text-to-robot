@@ -411,7 +411,6 @@ function wallFixtures(b: Build, plan: Placement[], w: { x0: number; x1: number; 
     exits.push({ id: `${bayName}.switch`, kind: "switch", face: "lid", at: [x, y, zl], normal: [0, 0, 1], hole_mm: 22, part: "main_switch" });
     return { cuts, exits, lidCuts: [{ op: "cutbox", min: [x - 11.2, y - 15.2, w.z1 - 4], max: [x + 11.2, y + 15.2, zl + 1] }] as Op[] };
   }
-  const s = spots.find((c) => clearOf(c.q) && !exits.some((e) => Math.hypot(e.at[0] - c.p[0], e.at[1] - c.p[1]) < 45)) ?? spots[0];
   const small = b.A.design.family === "mobile_diff_drive", hw = small ? 9.7 : 15.2, hz = small ? 6.7 : 11.2, along = s.n[0] !== 0;
   cuts.push({ op: "cutbox", min: along ? [s.p[0] - w.t - 1, s.p[1] - hw, zc - hz] : [s.p[0] - hw, s.p[1] - w.t - 1, zc - hz], max: along ? [s.p[0] + w.t + 1, s.p[1] + hw, zc + hz] : [s.p[0] + hw, s.p[1] + w.t + 1, zc + hz] });
   b.mount(parent, small ? "switch_kcd1" : "switch_kcd4", frame(s.p, s.n, [0, 0, 1]), "main_switch", "main power switch");
