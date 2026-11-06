@@ -562,9 +562,9 @@
       <geometry><mesh filename="package://four_wheel_robot/meshes/electronics_enclosure.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.02424 -0.034988 0.150793" rpy="0 0 0"/>
-      <mass value="0.045168"/>
-      <inertia ixx="0.000101206" ixy="-0.0000224663" ixz="9.50825e-7" iyy="0.00018516" iyz="3.52057e-8" izz="0.000277354"/>
+      <origin xyz="-0.024873 -0.035271 0.150803" rpy="0 0 0"/>
+      <mass value="0.042537"/>
+      <inertia ixx="0.0000911553" ixy="-0.0000244798" ixz="9.19003e-7" iyy="0.000186666" iyz="3.28885e-8" izz="0.000269365"/>
     </inertial>
   </link>
   <link name="electronics_lid">
@@ -578,9 +578,9 @@
       <geometry><mesh filename="package://four_wheel_robot/meshes/electronics_lid.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.018652 -0.037558 0.168832" rpy="0 0 0"/>
-      <mass value="0.033343"/>
-      <inertia ixx="0.0000419081" ixy="-0.0000129699" ixz="4.99490e-8" iyy="0.0000872556" iyz="-3.03931e-8" izz="0.0001291"/>
+      <origin xyz="-0.018786 -0.037587 0.168831" rpy="0 0 0"/>
+      <mass value="0.033125"/>
+      <inertia ixx="0.0000411185" ixy="-0.0000129505" ixz="5.06950e-8" iyy="0.0000871641" iyz="-3.02323e-8" izz="0.000128219"/>
     </inertial>
   </link>
   <link name="lidar_mast">
@@ -817,7 +817,7 @@
   <joint name="main_switch_mount" type="fixed">
     <parent link="upper_deck"/>
     <child link="main_switch"/>
-    <origin xyz="0.03284 0.02301 0.1513" rpy="0 -1.570796 -1.570796"/>
+    <origin xyz="0.00527 0.02301 0.1513" rpy="0 -1.570796 -1.570796"/>
   </joint>
   <joint name="electronics_enclosure_mount" type="fixed">
     <parent link="upper_deck"/>

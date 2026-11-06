@@ -105,9 +105,9 @@
       "category": "Printed structure",
       "name": "PETG filament for 15 printed parts",
       "qty": 1,
-      "unit_cost": 8.27,
-      "subtotal": 8.27,
-      "spec": "327 g of parts (+15 % supports/waste), about 29.8 h of printing",
+      "unit_cost": 8.22,
+      "subtotal": 8.22,
+      "spec": "325 g of parts (+15 % supports/waste), about 29.6 h of printing",
       "note": "front_left_bracket, front_right_bracket, rear_left_bracket, rear_right_bracket, battery_tray, computer_tray, motor_driver_1_tray, motor_driver_2_tray, imu_tray, regulator_5v_tray, electronics_enclosure_front, electronics_enclosure_rear, electronics_lid_front, electronics_lid_rear, lidar_mast"
     },
     {
@@ -272,7 +272,7 @@
       "note": "price estimated"
     }
   ],
-  "total": 816.77,
+  "total": 816.72,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
@@ -312,7 +312,7 @@
   ],
   "warnings": [],
   "notes": [
-    "Mecanum holonomic base: pololu_37d_30to1_64cpr gearmotors, 2.92 kg, 1.33 m/s, 1.58 h on 1 x lipo_3s_2200, rpi5",
+    "Mecanum holonomic base: pololu_37d_30to1_64cpr gearmotors, 2.919 kg, 1.33 m/s, 1.58 h on 1 x lipo_3s_2200, rpi5",
     "Drive sized for the robot plus 2 kg cargo on a 10 deg slope accelerating at 0.5 m/s^2, rolling resistance 0.03; motors compared at their continuous (not stall) rating.",
     "All motors and servos are 12 V parts run straight from a 3S LiPo (9.9-12.6 V) through the main fuse and switch; see WIRING.md.",
     "Printed parts: PETG; brackets bolt to the deck with M3 screws and nuts; the motor face screws are the gearmotor's own six M3 holes.",

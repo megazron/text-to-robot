@@ -3,7 +3,7 @@
      robot: baymax
      prompt: Build Baymax, an inflatable healthcare companion robot
 
-     64 links, 63 joints, 64 inferred values
+     69 links, 68 joints, 69 inferred values
 -->
 <robot name="baymax">
   <material name="printed"><color rgba="0.93 0.93 0.95 1"/></material>
@@ -34,9 +34,9 @@
       <geometry><mesh filename="package://baymax/meshes/base_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.0000174876 3.97178e-17 0.0795" rpy="0 0 0"/>
-      <mass value="0.888202"/>
-      <inertia ixx="0.006173" ixy="1.37052e-20" ixz="-7.82294e-22" iyy="0.01064" iyz="-1.47329e-21" izz="0.016811"/>
+      <origin xyz="-0.00000169886 0.0000172332 0.0795" rpy="0 0 0"/>
+      <mass value="0.887625"/>
+      <inertia ixx="0.006173" ixy="-4.51428e-7" ixz="9.07715e-21" iyy="0.010639" iyz="5.63485e-22" izz="0.016811"/>
     </inertial>
   </link>
   <link name="left_front_motor">
@@ -455,6 +455,86 @@
       <inertia ixx="1.61036e-7" ixy="-1.05542e-8" ixz="-3.15359e-9" iyy="1.59409e-7" iyz="3.15359e-9" izz="3.10101e-7"/>
     </inertial>
   </link>
+  <link name="main_switch">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://baymax/meshes/switch_kcd4.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://baymax/meshes/switch_kcd4.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-4.05398e-20 -3.52601e-19 -0.011305" rpy="0 0 0"/>
+      <mass value="0.008"/>
+      <inertia ixx="0.00000113854" ixy="-4.97311e-40" ixz="8.69383e-24" iyy="8.66712e-7" iyz="1.56687e-23" izz="9.36569e-7"/>
+    </inertial>
+  </link>
+  <link name="electronics_enclosure_front">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://baymax/meshes/electronics_enclosure_front.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://baymax/meshes/electronics_enclosure_front.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.119221 -0.077994 0.097104" rpy="0 0 0"/>
+      <mass value="0.037916"/>
+      <inertia ixx="0.000126847" ixy="6.64697e-7" ixz="6.54530e-8" iyy="0.000161477" iyz="-2.64671e-7" izz="0.000280527"/>
+    </inertial>
+  </link>
+  <link name="electronics_enclosure_rear">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://baymax/meshes/electronics_enclosure_rear.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://baymax/meshes/electronics_enclosure_rear.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.113575 -0.080066 0.097155" rpy="0 0 0"/>
+      <mass value="0.037337"/>
+      <inertia ixx="0.000130082" ixy="-0.00000505538" ixz="8.47905e-7" iyy="0.000154857" iyz="-1.77045e-7" izz="0.000277357"/>
+    </inertial>
+  </link>
+  <link name="electronics_lid_front">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://baymax/meshes/electronics_lid_front.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://baymax/meshes/electronics_lid_front.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.101442 -0.082437 0.11526" rpy="0 0 0"/>
+      <mass value="0.041271"/>
+      <inertia ixx="0.000069052" ixy="-0.00000592192" ixz="1.40373e-7" iyy="0.000133209" iyz="-3.79007e-8" izz="0.000202187"/>
+    </inertial>
+  </link>
+  <link name="electronics_lid_rear">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://baymax/meshes/electronics_lid_rear.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://baymax/meshes/electronics_lid_rear.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.102544 -0.082241 0.115256" rpy="0 0 0"/>
+      <mass value="0.041407"/>
+      <inertia ixx="0.0000695411" ixy="0.00000623253" ixz="-1.55309e-7" iyy="0.000134057" iyz="-2.61181e-8" izz="0.000203524"/>
+    </inertial>
+  </link>
   <link name="spine_foot">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -482,9 +562,9 @@
       <geometry><mesh filename="package://baymax/meshes/spine.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="7.06378e-19 -1.81798e-19 0.45" rpy="0 0 0"/>
-      <mass value="0.330221"/>
-      <inertia ixx="0.014595" ixy="1.17253e-22" ixz="3.75209e-21" iyy="0.014595" iyz="5.71405e-21" izz="0.0000220147"/>
+      <origin xyz="-0.0000486622 -0.0000355616 0.450216" rpy="0 0 0"/>
+      <mass value="0.331677"/>
+      <inertia ixx="0.014633" ixy="-1.17692e-7" ixz="5.80749e-7" iyy="0.014633" iyz="0.00000148604" izz="0.0000224105"/>
     </inertial>
   </link>
   <link name="shoulder_yoke">
@@ -586,12 +666,12 @@
   <link name="left_arm_upper_arm">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://baymax/meshes/left_arm_upper_arm.stl"/></geometry>
+      <geometry><mesh filename="package://baymax/meshes/upper_arm.stl"/></geometry>
       <material name="fabric"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://baymax/meshes/left_arm_upper_arm.stl"/></geometry>
+      <geometry><mesh filename="package://baymax/meshes/upper_arm.stl"/></geometry>
     </collision>
     <inertial>
       <origin xyz="0.085908 0.000021361 -0.021724" rpy="0 0 0"/>
@@ -618,12 +698,12 @@
   <link name="left_arm_forearm">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://baymax/meshes/left_arm_forearm.stl"/></geometry>
+      <geometry><mesh filename="package://baymax/meshes/forearm.stl"/></geometry>
       <material name="fabric"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://baymax/meshes/left_arm_forearm.stl"/></geometry>
+      <geometry><mesh filename="package://baymax/meshes/forearm.stl"/></geometry>
     </collision>
     <inertial>
       <origin xyz="0.085908 0.000021361 -0.021724" rpy="0 0 0"/>
@@ -794,12 +874,12 @@
   <link name="right_arm_upper_arm">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://baymax/meshes/right_arm_upper_arm.stl"/></geometry>
+      <geometry><mesh filename="package://baymax/meshes/upper_arm.stl"/></geometry>
       <material name="fabric"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://baymax/meshes/right_arm_upper_arm.stl"/></geometry>
+      <geometry><mesh filename="package://baymax/meshes/upper_arm.stl"/></geometry>
     </collision>
     <inertial>
       <origin xyz="0.085908 0.000021361 -0.021724" rpy="0 0 0"/>
@@ -826,12 +906,12 @@
   <link name="right_arm_forearm">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://baymax/meshes/right_arm_forearm.stl"/></geometry>
+      <geometry><mesh filename="package://baymax/meshes/forearm.stl"/></geometry>
       <material name="fabric"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://baymax/meshes/right_arm_forearm.stl"/></geometry>
+      <geometry><mesh filename="package://baymax/meshes/forearm.stl"/></geometry>
     </collision>
     <inertial>
       <origin xyz="0.085908 0.000021361 -0.021724" rpy="0 0 0"/>
@@ -1187,6 +1267,31 @@
   <joint name="regulator_5v_tray_mount" type="fixed">
     <parent link="base_link"/>
     <child link="regulator_5v_tray"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="main_switch_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="main_switch"/>
+    <origin xyz="0.133147 -0.01609 0.0975" rpy="0 -1.570796 -1.570796"/>
+  </joint>
+  <joint name="electronics_enclosure_front_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="electronics_enclosure_front"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="electronics_enclosure_rear_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="electronics_enclosure_rear"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="electronics_lid_front_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="electronics_lid_front"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="electronics_lid_rear_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="electronics_lid_rear"/>
     <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
   <joint name="spine_foot_mount" type="fixed">

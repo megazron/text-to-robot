@@ -1,6 +1,6 @@
 # Bill of Materials — mecanum_robot
 
-**Estimated total: $816.77**  ·  tier: hobby
+**Estimated total: $816.72**  ·  tier: hobby
 
 **Effort sizing: passes catalogue estimate; hardware verified: no.**
 
@@ -17,7 +17,7 @@
 | Sensor | Slamtec RPLIDAR C1 (DTOF 360 deg, 12 m) _(2D lidar · https://www.waveshare.com/rplidar-c1.htm)_ | 1 | 79.99 | 79.99 | 5 V |
 | Power | KCD4 double-pole rocker switch, 16 A 250 VAC / 20 A 125 VAC _(main power switch · https://www.aliexpress.com/w/wholesale-kcd4-rocker-switch.html)_ | 1 | 1 | 1 | https://www.aliexpress.com/w/wholesale-kcd4-rocker-switch.html |
 | Power | WAGO 221-415 five-way lever splice _(rail splices, the star ground and bus hubs · https://www.wago.com/global/electrical-interconnections/compact-splicing-connector/p/221-415)_ | 3 | 0.8 | 2.4 | 450 V |
-| Printed structure | PETG filament for 15 printed parts _(front_left_bracket, front_right_bracket, rear_left_bracket, rear_right_bracket, battery_tray, computer_tray, motor_driver_1_tray, motor_driver_2_tray, imu_tray, regulator_5v_tray, electronics_enclosure_front, electronics_enclosure_rear, electronics_lid_front, electronics_lid_rear, lidar_mast)_ | 1 | 8.27 | 8.27 | 327 g of parts (+15 % supports/waste), about 29.8 h of printing |
+| Printed structure | PETG filament for 15 printed parts _(front_left_bracket, front_right_bracket, rear_left_bracket, rear_right_bracket, battery_tray, computer_tray, motor_driver_1_tray, motor_driver_2_tray, imu_tray, regulator_5v_tray, electronics_enclosure_front, electronics_enclosure_rear, electronics_lid_front, electronics_lid_rear, lidar_mast)_ | 1 | 8.22 | 8.22 | 325 g of parts (+15 % supports/waste), about 29.6 h of printing |
 | Fasteners | Screws, nuts and inserts | 84 | 0.12 | 10.08 | 24x M3 x 8 socket head (motor face); 8x M3 x 10 socket head + nut (bracket to deck); 1x 20 mm hook-and-loop battery strap; 12x M3 x 8 socket head (tray to deck); 19x M2.5 x 6 screws (board to standoffs); 8x M3 x 8 + nut (enclosure pieces lap joint); 4x M3 x 10 self-tapping (enclosure lid); 4x M3 x 8 + nut (enclosure tabs to deck; drill 3.4 mm through the deck at the tabs); 4x M2.5 x 6 (lidar) |
 | Wiring | 14 AWG silicone wire _(price estimated)_ | 0.8 | 1.5 | 1.2 | 0.8 m: 2.082 mm2, rated 16 A in a bundle; 0.67 m cut + 10 % waste |
 | Wiring | 18 AWG silicone wire _(price estimated)_ | 1.3 | 0.7 | 0.91 | 1.3 m: 0.823 mm2, rated 8 A in a bundle; 1.11 m cut + 10 % waste |
@@ -47,7 +47,7 @@
 | rear_right_wheel_joint | 0.173 | N·m | Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752) | 3.96x |
 
 ## Notes
-- Mecanum holonomic base: pololu_37d_30to1_64cpr gearmotors, 2.92 kg, 1.33 m/s, 1.58 h on 1 x lipo_3s_2200, rpi5
+- Mecanum holonomic base: pololu_37d_30to1_64cpr gearmotors, 2.919 kg, 1.33 m/s, 1.58 h on 1 x lipo_3s_2200, rpi5
 - Drive sized for the robot plus 2 kg cargo on a 10 deg slope accelerating at 0.5 m/s^2, rolling resistance 0.03; motors compared at their continuous (not stall) rating.
 - All motors and servos are 12 V parts run straight from a 3S LiPo (9.9-12.6 V) through the main fuse and switch; see WIRING.md.
 - Printed parts: PETG; brackets bolt to the deck with M3 screws and nuts; the motor face screws are the gearmotor's own six M3 holes.

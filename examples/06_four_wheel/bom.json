@@ -114,9 +114,9 @@
       "category": "Printed structure",
       "name": "PETG filament for 21 printed parts",
       "qty": 1,
-      "unit_cost": 13.71,
-      "subtotal": 13.71,
-      "spec": "542 g of parts (+15 % supports/waste), about 49.4 h of printing",
+      "unit_cost": 13.63,
+      "subtotal": 13.63,
+      "spec": "539 g of parts (+15 % supports/waste), about 49.1 h of printing",
       "note": "front_left_bracket, front_right_bracket, rear_left_bracket, rear_right_bracket, battery_tray, motor_driver_1_tray, motor_driver_2_tray, power_bay, power_bay_lid, upper_deck, pillar_1, pillar_2, pillar_3, pillar_4, computer_tray, imu_tray, regulator_5v_tray, electronics_enclosure, electronics_lid, lidar_mast, front_camera_bracket"
     },
     {
@@ -133,16 +133,16 @@
       "qty": 0.9,
       "unit_cost": 1.5,
       "subtotal": 1.35,
-      "spec": "0.9 m: 2.082 mm2, rated 16 A in a bundle; 0.76 m cut + 10 % waste",
+      "spec": "0.9 m: 2.082 mm2, rated 16 A in a bundle; 0.73 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "18 AWG silicone wire",
-      "qty": 2,
+      "qty": 1.8,
       "unit_cost": 0.7,
-      "subtotal": 1.4,
-      "spec": "2 m: 0.823 mm2, rated 8 A in a bundle; 1.74 m cut + 10 % waste",
+      "subtotal": 1.26,
+      "spec": "1.8 m: 0.823 mm2, rated 8 A in a bundle; 1.63 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
@@ -157,10 +157,10 @@
     {
       "category": "Wiring",
       "name": "22 AWG silicone wire",
-      "qty": 2.7,
+      "qty": 2.6,
       "unit_cost": 0.4,
-      "subtotal": 1.08,
-      "spec": "2.7 m: 0.327 mm2, rated 3.5 A in a bundle; 2.38 m cut + 10 % waste",
+      "subtotal": 1.04,
+      "spec": "2.6 m: 0.327 mm2, rated 3.5 A in a bundle; 2.35 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
@@ -169,7 +169,7 @@
       "qty": 4.5,
       "unit_cost": 0.35,
       "subtotal": 1.57,
-      "spec": "4.5 m: 0.205 mm2, rated 1.75 A in a bundle; 4.09 m cut + 10 % waste",
+      "spec": "4.5 m: 0.205 mm2, rated 1.75 A in a bundle; 4.06 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
@@ -290,7 +290,7 @@
       "note": "price estimated"
     }
   ],
-  "total": 695.36,
+  "total": 695.1,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
@@ -330,7 +330,7 @@
   ],
   "warnings": [],
   "notes": [
-    "Four-wheel skid-steer base: pololu_37d_30to1_64cpr gearmotors, 2.399 kg, 1.24 m/s, 1.47 h on 1 x lipo_3s_2200, rpi5",
+    "Four-wheel skid-steer base: pololu_37d_30to1_64cpr gearmotors, 2.396 kg, 1.24 m/s, 1.47 h on 1 x lipo_3s_2200, rpi5",
     "Drive sized for the robot plus 2 kg cargo on a 10 deg slope accelerating at 0.5 m/s^2, rolling resistance 0.03; motors compared at their continuous (not stall) rating.",
     "All motors and servos are 12 V parts run straight from a 3S LiPo (9.9-12.6 V) through the main fuse and switch; see WIRING.md.",
     "Printed parts: PETG; brackets bolt to the deck with M3 screws and nuts; the motor face screws are the gearmotor's own six M3 holes.",

@@ -27,7 +27,7 @@
       "unit_cost": 39.95,
       "subtotal": 39.95,
       "spec": "5 V",
-      "note": "5 V rail for the computer / USB · https://www.pololu.com/product/4091"
+      "note": "5 V rail for the computer, USB and sensors · https://www.pololu.com/product/4091"
     },
     {
       "category": "Electronics",
@@ -55,6 +55,15 @@
       "subtotal": 80,
       "spec": "1.5691 N·m rated / 4.9033 N·m peak, 12 V",
       "note": "left_arm: joint shoulder_pitch; right_arm: joint shoulder_pitch · https://openelab.io/products/feetech-sts3250-c002-servo-12v"
+    },
+    {
+      "category": "Power",
+      "name": "Inline ATM mini blade fuse holder, 30 A class (Littelfuse FHM)",
+      "qty": 6,
+      "unit_cost": 2.5,
+      "subtotal": 15,
+      "spec": "32 V",
+      "note": "fuse holders · https://www.digikey.com/en/product-highlight/l/littelfuse-commercial-vehicle-products/fhac-fhm-series-in-line-fuse-holders"
     },
     {
       "category": "Power",
@@ -93,13 +102,31 @@
       "note": "on-board computer · https://www.raspberrypi.com/products/raspberry-pi-5/"
     },
     {
+      "category": "Power",
+      "name": "KCD4 double-pole rocker switch, 16 A 250 VAC / 20 A 125 VAC",
+      "qty": 1,
+      "unit_cost": 1,
+      "subtotal": 1,
+      "spec": "https://www.aliexpress.com/w/wholesale-kcd4-rocker-switch.html",
+      "note": "main power switch · https://www.aliexpress.com/w/wholesale-kcd4-rocker-switch.html"
+    },
+    {
+      "category": "Power",
+      "name": "WAGO 221-415 five-way lever splice",
+      "qty": 6,
+      "unit_cost": 0.8,
+      "subtotal": 4.8,
+      "spec": "450 V",
+      "note": "rail splices, the star ground and bus hubs · https://www.wago.com/global/electrical-interconnections/compact-splicing-connector/p/221-415"
+    },
+    {
       "category": "Electronics",
       "name": "Waveshare Bus Servo Adapter (A)",
-      "qty": 3,
+      "qty": 1,
       "unit_cost": 10.6,
-      "subtotal": 31.8,
+      "subtotal": 10.6,
       "spec": "12 V",
-      "note": "servo bus adapter; left_arm: USB to actuator bus; right_arm: USB to actuator bus · https://www.waveshare.com/bus-servo-adapter-a.htm"
+      "note": "servo bus adapter · https://www.waveshare.com/bus-servo-adapter-a.htm"
     },
     {
       "category": "Drive",
@@ -112,23 +139,221 @@
     },
     {
       "category": "Printed structure",
-      "name": "PETG filament for 29 printed parts",
+      "name": "PETG filament for 33 printed parts",
       "qty": 1,
-      "unit_cost": 30.93,
-      "subtotal": 30.93,
-      "spec": "1223 g of parts (+15 % supports/waste), about 111.4 h of printing",
-      "note": "left_front_bracket, left_rear_bracket, right_front_bracket, right_rear_bracket, battery_tray, computer_tray, motor_driver_1_tray, motor_driver_2_tray, servo_bus_tray, imu_tray, regulator_5v_tray, spine_foot, left_arm_shoulder_wedge, left_arm_base_link, left_arm_turret, left_arm_upper_arm, left_arm_forearm, left_arm_tool_link, right_arm_shoulder_wedge, right_arm_base_link, right_arm_turret, right_arm_upper_arm, right_arm_forearm, right_arm_tool_link, neck_mount, head, head_dome, eyes, camera_bracket"
+      "unit_cost": 34.92,
+      "subtotal": 34.92,
+      "spec": "1380 g of parts (+15 % supports/waste), about 125.8 h of printing",
+      "note": "left_front_bracket, left_rear_bracket, right_front_bracket, right_rear_bracket, battery_tray, computer_tray, motor_driver_1_tray, motor_driver_2_tray, servo_bus_tray, imu_tray, regulator_5v_tray, electronics_enclosure_front, electronics_enclosure_rear, electronics_lid_front, electronics_lid_rear, spine_foot, left_arm_shoulder_wedge, left_arm_base_link, left_arm_turret, left_arm_upper_arm, left_arm_forearm, left_arm_tool_link, right_arm_shoulder_wedge, right_arm_base_link, right_arm_turret, right_arm_upper_arm, right_arm_forearm, right_arm_tool_link, neck_mount, head, head_dome, eyes, camera_bracket"
     },
     {
       "category": "Fasteners",
       "name": "Screws, nuts and inserts",
-      "qty": 156,
+      "qty": 172,
       "unit_cost": 0.12,
-      "subtotal": 18.72,
-      "spec": "24x M3 x 8 socket head (motor face); 8x M3 x 10 socket head + nut (bracket to deck); 1x 20 mm hook-and-loop battery strap; 14x M3 x 8 socket head (tray to deck); 23x M2.5 x 6 screws (board to standoffs); 8x M5 x 12 socket head (base to bench); 32x M2 x 6 case screws; 36x horn screws; 6x M5 x 16 socket head + M5 washer + M5 heat-set insert (clevis bearing axle); 4x M3 x 10 (head dome to head)"
+      "subtotal": 20.64,
+      "spec": "24x M3 x 8 socket head (motor face); 8x M3 x 10 socket head + nut (bracket to deck); 1x 20 mm hook-and-loop battery strap; 14x M3 x 8 socket head (tray to deck); 23x M2.5 x 6 screws (board to standoffs); 8x M3 x 8 + nut (enclosure pieces lap joint); 4x M3 x 10 self-tapping (enclosure lid); 4x M3 x 8 + nut (enclosure tabs to deck; drill 3.4 mm through the deck at the tabs); 8x M5 x 12 socket head (base to bench); 32x M2 x 6 case screws; 36x horn screws; 6x M5 x 16 socket head + M5 washer + M5 heat-set insert (clevis bearing axle); 4x M3 x 10 (head dome to head)"
+    },
+    {
+      "category": "Wiring",
+      "name": "12 AWG silicone wire",
+      "qty": 0.8,
+      "unit_cost": 2.2,
+      "subtotal": 1.76,
+      "spec": "0.8 m: 3.308 mm2, rated 20.5 A in a bundle; 0.69 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "18 AWG silicone wire",
+      "qty": 5.3,
+      "unit_cost": 0.7,
+      "subtotal": 3.71,
+      "spec": "5.3 m: 0.823 mm2, rated 8 A in a bundle; 4.74 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "20 AWG silicone wire",
+      "qty": 3.1,
+      "unit_cost": 0.5,
+      "subtotal": 1.55,
+      "spec": "3.1 m: 0.519 mm2, rated 5.5 A in a bundle; 2.81 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "22 AWG silicone wire",
+      "qty": 7.7,
+      "unit_cost": 0.4,
+      "subtotal": 3.08,
+      "spec": "7.7 m: 0.327 mm2, rated 3.5 A in a bundle; 6.92 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "24 AWG silicone wire",
+      "qty": 7.2,
+      "unit_cost": 0.35,
+      "subtotal": 2.52,
+      "spec": "7.2 m: 0.205 mm2, rated 1.75 A in a bundle; 6.53 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "26 AWG silicone wire",
+      "qty": 12.3,
+      "unit_cost": 0.3,
+      "subtotal": 3.69,
+      "spec": "12.3 m: 0.128 mm2, rated 1.1 A in a bundle; 11.14 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Dupont 2.54 mm contacts",
+      "qty": 46,
+      "unit_cost": 0.02,
+      "subtotal": 0.92,
+      "spec": "46 pc: rated 3 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Dupont 2.54 mm housings",
+      "qty": 11,
+      "unit_cost": 0.02,
+      "subtotal": 0.22,
+      "spec": "11 pc: one per cable end",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Bootlace ferrule contacts",
+      "qty": 14,
+      "unit_cost": 0.03,
+      "subtotal": 0.42,
+      "spec": "14 pc: rated 17.5 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Molex 5264 contacts",
+      "qty": 46,
+      "unit_cost": 0.05,
+      "subtotal": 2.3,
+      "spec": "46 pc: rated 3 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Molex 5264 housings",
+      "qty": 19,
+      "unit_cost": 0.08,
+      "subtotal": 1.52,
+      "spec": "19 pc: one per cable end",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "XT60 contacts",
+      "qty": 2,
+      "unit_cost": 0.9,
+      "subtotal": 1.8,
+      "spec": "2 pc: rated 35 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "6.3 mm spade contacts",
+      "qty": 2,
+      "unit_cost": 0.08,
+      "subtotal": 0.16,
+      "spec": "2 pc: rated 15 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Heat shrink 3 mm, 2:1",
+      "qty": 3.1,
+      "unit_cost": 0.2,
+      "subtotal": 0.62,
+      "spec": "3.1 m: 31 solder joints + a boot on each cable end",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Cable tie 100 x 2.5 mm",
+      "qty": 66,
+      "unit_cost": 0.02,
+      "subtotal": 1.32,
+      "spec": "66 pc: at every clip, cable end and strain-relief anchor",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Rubber grommet, 6.4 mm panel hole, 3.2 mm bore",
+      "qty": 1,
+      "unit_cost": 0.08,
+      "subtotal": 0.08,
+      "spec": "1 pc: 9.5 mm panel hole",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Nylon braided sleeving 6 mm",
+      "qty": 1.2,
+      "unit_cost": 0.4,
+      "subtotal": 0.48,
+      "spec": "1.2 m: over every cable where it crosses a joint",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "FFC",
+      "qty": 1,
+      "unit_cost": 3,
+      "subtotal": 3,
+      "spec": "1 pc: head_camera to computer",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "USB",
+      "qty": 1,
+      "unit_cost": 3,
+      "subtotal": 3,
+      "spec": "1 pc: servo_bus to computer",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "15 A ATM blade fuse",
+      "qty": 1,
+      "unit_cost": 0.25,
+      "subtotal": 0.25,
+      "spec": "1 pc: plus spares",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "2 A ATM blade fuse",
+      "qty": 3,
+      "unit_cost": 0.25,
+      "subtotal": 0.75,
+      "spec": "3 pc: plus spares",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "3 A ATM blade fuse",
+      "qty": 2,
+      "unit_cost": 0.25,
+      "subtotal": 0.5,
+      "spec": "2 pc: plus spares",
+      "note": "price estimated"
     }
   ],
-  "total": 880.88,
+  "total": 920.04,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
@@ -199,40 +424,40 @@
     },
     {
       "joint": "left_front_wheel_joint",
-      "required_effort": 0.152,
+      "required_effort": 0.156,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.152,
+      "required_torque_nm": 0.156,
       "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
-      "margin": "4.52x"
+      "margin": "4.39x"
     },
     {
       "joint": "left_rear_wheel_joint",
-      "required_effort": 0.152,
+      "required_effort": 0.156,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.152,
+      "required_torque_nm": 0.156,
       "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
-      "margin": "4.52x"
+      "margin": "4.39x"
     },
     {
       "joint": "right_front_wheel_joint",
-      "required_effort": 0.152,
+      "required_effort": 0.156,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.152,
+      "required_torque_nm": 0.156,
       "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
-      "margin": "4.52x"
+      "margin": "4.39x"
     },
     {
       "joint": "right_rear_wheel_joint",
-      "required_effort": 0.152,
+      "required_effort": 0.156,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.152,
+      "required_torque_nm": 0.156,
       "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
-      "margin": "4.52x"
+      "margin": "4.39x"
     }
   ],
   "warnings": [],
   "notes": [
-    "Baymax-style service robot: 5.405 kg, 1.01 m tall, 4WD hidden base, two 4-servo arms, pan head with camera",
+    "Baymax-style service robot: 5.571 kg, 1.01 m tall, 4WD hidden base, two 4-servo arms, pan head with camera",
     "Baymax's inflatable vinyl body is a sewn ripstop cover with a foam-lined zip, bought or sewn, with negligible structural role; it hangs on the shoulder yoke and hides a 4WD skid-steer base. It is not inflated, so it does not cushion like the film's.",
     "Structure: 2020 aluminium extrusion spine and a 6 mm aluminium shoulder yoke; arms are four servos each (shoulder yaw, shoulder pitch, elbow, wrist) splayed 25 deg so they clear the belly; the hands are printed mittens covered with the same fabric.",
     "Each arm is sized as mounted to lift 0.1 kg in the mitten at full reach; the tipping check includes both arms stretched forward with that payload.",

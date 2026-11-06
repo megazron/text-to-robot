@@ -11743,7 +11743,7 @@
   ],
   "metadata": {
     "generator": "text-to-robot design engine (real components + printed structure)",
-    "created": "2026-11-06T09:57:17.373Z",
+    "created": "2026-11-06T11:49:54.632Z",
     "inferred_fields": [
       "links.arm_bus.inertia",
       "links.backpack_hood.inertia",

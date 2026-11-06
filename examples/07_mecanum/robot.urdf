@@ -450,9 +450,9 @@
       <geometry><mesh filename="package://mecanum_robot/meshes/electronics_enclosure_front.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.098359 0.003791 0.100045" rpy="0 0 0"/>
-      <mass value="0.035699"/>
-      <inertia ixx="0.000231777" ixy="-0.0000021632" ixz="-2.74993e-7" iyy="0.0000926573" iyz="-9.19315e-8" izz="0.000317155"/>
+      <origin xyz="0.100521 0.008468 0.100045" rpy="0 0 0"/>
+      <mass value="0.03415"/>
+      <inertia ixx="0.000214408" ixy="0.00000579066" ixz="-2.75853e-7" iyy="0.0000888241" iyz="-9.34259e-8" izz="0.000296251"/>
     </inertial>
   </link>
   <link name="electronics_enclosure_rear">
@@ -482,9 +482,9 @@
       <geometry><mesh filename="package://mecanum_robot/meshes/electronics_lid_front.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.074936 0.000765236 0.118279" rpy="0 0 0"/>
-      <mass value="0.046651"/>
-      <inertia ixx="0.000162129" ixy="0.00000170428" ixz="1.40937e-7" iyy="0.0000916471" iyz="-3.11690e-8" izz="0.000253697"/>
+      <origin xyz="0.074992 0.000999491 0.118278" rpy="0 0 0"/>
+      <mass value="0.046542"/>
+      <inertia ixx="0.000161037" ixy="0.00000196595" ixz="1.40619e-7" iyy="0.0000915837" iyz="-3.24945e-8" izz="0.000252542"/>
     </inertial>
   </link>
   <link name="electronics_lid_rear">

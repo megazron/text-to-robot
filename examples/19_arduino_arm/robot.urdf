@@ -29,9 +29,9 @@
       <geometry><mesh filename="package://arduino_arm/meshes/base_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.032642 -0.0000157832 0.00418" rpy="0 0 0"/>
-      <mass value="0.10895"/>
-      <inertia ixx="0.000111242" ixy="3.82471e-8" ixz="-0.00000556759" iyy="0.000286842" iyz="2.41947e-8" izz="0.000390354"/>
+      <origin xyz="-0.032668 -0.0000157789 0.00418" rpy="0 0 0"/>
+      <mass value="0.108979"/>
+      <inertia ixx="0.000111242" ixy="3.82913e-8" ixz="-0.00000556329" iyy="0.000287109" iyz="2.41940e-8" izz="0.00039062"/>
     </inertial>
   </link>
   <link name="yaw_servo">
@@ -93,9 +93,9 @@
       <geometry><mesh filename="package://arduino_arm/meshes/upper_arm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.102312 -0.0000972367 0.012745" rpy="0 0 0"/>
-      <mass value="0.034125"/>
-      <inertia ixx="0.0000130548" ixy="-1.43803e-7" ixz="0.00000971707" iyy="0.000094559" iyz="-8.94257e-9" izz="0.0000936382"/>
+      <origin xyz="-0.102294 -0.0000971774 0.01274" rpy="0 0 0"/>
+      <mass value="0.034146"/>
+      <inertia ixx="0.0000130564" ixy="-1.43861e-7" ixz="0.00000972246" iyy="0.0000945778" iyz="-8.92436e-9" izz="0.0000936555"/>
     </inertial>
   </link>
   <link name="elbow_servo">
@@ -125,9 +125,9 @@
       <geometry><mesh filename="package://arduino_arm/meshes/forearm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.09789 0.006128 0.009828" rpy="0 0 0"/>
-      <mass value="0.02481"/>
-      <inertia ixx="0.0000068473" ixy="0.00000910443" ixz="0.00000797952" iyy="0.0000850757" iyz="-0.00000125657" izz="0.0000866153"/>
+      <origin xyz="-0.097872 0.006124 0.009824" rpy="0 0 0"/>
+      <mass value="0.024826"/>
+      <inertia ixx="0.00000684845" ixy="0.00000910718" ixz="0.00000798221" iyy="0.0000850889" iyz="-0.00000125716" izz="0.0000866286"/>
     </inertial>
   </link>
   <link name="claw_servo">

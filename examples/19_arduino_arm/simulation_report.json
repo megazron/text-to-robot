@@ -33,10 +33,10 @@
        "saturated_frac": 0.0
       },
       "shoulder": {
-       "peak_nm": 0.2716,
+       "peak_nm": 0.2717,
        "peak_rating_nm": 1.0787,
        "util_peak": 0.252,
-       "mean_hold_nm": 0.2453,
+       "mean_hold_nm": 0.2454,
        "rated_nm": 0.3236,
        "util_rated": 0.758,
        "max_err": 0.0029,
@@ -88,7 +88,7 @@
        "saturated_frac": 0.0
       },
       "shoulder": {
-       "peak_nm": 0.2722,
+       "peak_nm": 0.2723,
        "peak_rating_nm": 1.0787,
        "util_peak": 0.252,
        "mean_hold_nm": 0.2454,
@@ -234,5 +234,5 @@
  },
  "passed": 3,
  "total": 3,
- "source_urdf_sha256": "5468266538c91ec15637530dd3d3f983a5b0a7f9cd381b9556c4352966ec552a"
+ "source_urdf_sha256": "229eb496d44a8248f79877d1b97fb2314eb7602c4c2be403d3cdbb8f8918271e"
 }

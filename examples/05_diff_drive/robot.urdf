@@ -466,9 +466,9 @@
       <geometry><mesh filename="package://diff_drive_robot/meshes/electronics_enclosure_rear.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.074928 -0.003557 0.100058" rpy="0 0 0"/>
-      <mass value="0.039417"/>
-      <inertia ixx="0.000183763" ixy="-0.00000750068" ixz="2.35512e-7" iyy="0.0000459393" iyz="-5.42285e-7" izz="0.000221821"/>
+      <origin xyz="-0.076184 -0.007771 0.100038" rpy="0 0 0"/>
+      <mass value="0.037877"/>
+      <inertia ixx="0.000169099" ixy="-0.00000239874" ixz="2.59546e-7" iyy="0.0000442512" iyz="-5.42760e-7" izz="0.000205769"/>
     </inertial>
   </link>
   <link name="electronics_lid_front">
@@ -498,9 +498,9 @@
       <geometry><mesh filename="package://diff_drive_robot/meshes/electronics_lid_rear.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.05648 -0.005414 0.118256" rpy="0 0 0"/>
-      <mass value="0.028434"/>
-      <inertia ixx="0.000109311" ixy="-0.00000184973" ixz="-8.83251e-8" iyy="0.0000352532" iyz="-1.11954e-8" izz="0.000144513"/>
+      <origin xyz="-0.056527 -0.005768 0.118255" rpy="0 0 0"/>
+      <mass value="0.028324"/>
+      <inertia ixx="0.000108382" ixy="-0.00000172569" ixz="-8.81310e-8" iyy="0.0000352359" iyz="-9.74253e-9" izz="0.000143566"/>
     </inertial>
   </link>
   <link name="lidar_mast">

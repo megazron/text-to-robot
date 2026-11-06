@@ -16,7 +16,7 @@ Parts cost **$63.54** · printed structure 9 parts, 377 g · checks passed 40/40
 |---|--:|
 | reach m | 0.28 |
 | payload kg | 0.02 |
-| mass kg | 0.817 |
+| mass kg | 0.818 |
 | cost usd | 49.91 |
 | dof | 3 |
 | gripper | one-servo claw |

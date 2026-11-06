@@ -2430,7 +2430,7 @@
   "end_effectors": [],
   "metadata": {
     "generator": "text-to-robot design engine (real components + printed structure)",
-    "created": "2026-11-06T05:58:46.997Z",
+    "created": "2026-11-06T11:51:03.215Z",
     "inferred_fields": [
       "links.battery.inertia",
       "links.breadboard.inertia",

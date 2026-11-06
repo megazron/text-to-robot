@@ -1,6 +1,6 @@
 # Bill of Materials — diff_drive_robot
 
-**Estimated total: $512.27**  ·  tier: hobby
+**Estimated total: $512.23**  ·  tier: hobby
 
 **Effort sizing: passes catalogue estimate; hardware verified: no.**
 
@@ -18,7 +18,7 @@
 | Power | KCD1 rocker switch, SPST, 6 A 250 VAC / 10 A 125 VAC _(main power switch · https://www.aliexpress.com/w/wholesale-kcd1-rocker-switch.html)_ | 1 | 0.3 | 0.3 | https://www.aliexpress.com/w/wholesale-kcd1-rocker-switch.html |
 | Power | WAGO 221-415 five-way lever splice _(rail splices, the star ground and bus hubs · https://www.wago.com/global/electrical-interconnections/compact-splicing-connector/p/221-415)_ | 2 | 0.8 | 1.6 | 450 V |
 | Drive | Pololu 90x10 mm wheel + 6 mm universal aluminium hub (for 37D gearmotors) _(driven wheel · https://www.pololu.com/product/1435)_ | 2 | 11.22 | 22.44 | https://www.pololu.com/file/0J161/1083-6mm-4-40-hub-dimensions.pdf |
-| Printed structure | PETG filament for 15 printed parts _(base_link, left_bracket, right_bracket, front_caster_post, rear_caster_post, computer_tray, motor_driver_1_tray, battery_tray, regulator_5v_tray, imu_tray, electronics_enclosure_front, electronics_enclosure_rear, electronics_lid_front, electronics_lid_rear, lidar_mast)_ | 1 | 14.34 | 14.34 | 567 g of parts (+15 % supports/waste), about 51.6 h of printing |
+| Printed structure | PETG filament for 15 printed parts _(base_link, left_bracket, right_bracket, front_caster_post, rear_caster_post, computer_tray, motor_driver_1_tray, battery_tray, regulator_5v_tray, imu_tray, electronics_enclosure_front, electronics_enclosure_rear, electronics_lid_front, electronics_lid_rear, lidar_mast)_ | 1 | 14.3 | 14.3 | 565 g of parts (+15 % supports/waste), about 51.5 h of printing |
 | Fasteners | Screws, nuts and inserts | 68 | 0.12 | 8.16 | 12x M3 x 8 socket head (motor face); 4x M3 x 10 socket head + nut (bracket to deck); 6x M3 x 6 socket head (caster); 15x M2.5 x 6 screws (board to standoffs); 10x M3 x 8 socket head (tray to deck); 1x 20 mm hook-and-loop battery strap; 8x M3 x 8 + nut (enclosure pieces lap joint); 4x M3 x 10 self-tapping (enclosure lid); 4x M3 x 8 + nut (enclosure tabs to deck; drill 3.4 mm through the deck at the tabs); 4x M2.5 x 6 (lidar) |
 | Wiring | 16 AWG silicone wire _(price estimated)_ | 0.6 | 1 | 0.6 | 0.6 m: 1.308 mm2, rated 11 A in a bundle; 0.53 m cut + 10 % waste |
 | Wiring | 18 AWG silicone wire _(price estimated)_ | 0.7 | 0.7 | 0.49 | 0.7 m: 0.823 mm2, rated 8 A in a bundle; 0.61 m cut + 10 % waste |
@@ -41,11 +41,11 @@
 
 | Joint | Required effort | Unit | Chosen actuator | Margin |
 |---|--:|---|---|--:|
-| left_wheel_joint | 0.14 | N·m | Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752) | 4.91x |
-| right_wheel_joint | 0.14 | N·m | Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752) | 4.91x |
+| left_wheel_joint | 0.14 | N·m | Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752) | 4.92x |
+| right_wheel_joint | 0.14 | N·m | Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752) | 4.92x |
 
 ## Notes
-- Differential-drive base: pololu_37d_30to1_64cpr gearmotors, 1.489 kg, 1.24 m/s, 1.8 h on 1 x lipo_3s_2200, rpi5
+- Differential-drive base: pololu_37d_30to1_64cpr gearmotors, 1.487 kg, 1.24 m/s, 1.8 h on 1 x lipo_3s_2200, rpi5
 - Drive sized for the robot plus 1 kg cargo on a 10 deg slope accelerating at 0.5 m/s^2, rolling resistance 0.03; motors compared at their continuous (not stall) rating.
 - All motors and servos are 12 V parts run straight from a 3S LiPo (9.9-12.6 V) through the main fuse and switch; see WIRING.md.
 - Printed parts: PETG; brackets bolt to the deck with M3 screws and nuts; the motor face screws are the gearmotor's own six M3 holes.

@@ -8083,7 +8083,7 @@
   ],
   "metadata": {
     "generator": "text-to-robot design engine (real components + printed structure)",
-    "created": "2026-11-06T09:56:07.105Z",
+    "created": "2026-11-06T11:49:07.298Z",
     "inferred_fields": [
       "links.arm_bus.inertia",
       "links.base_link.inertia",

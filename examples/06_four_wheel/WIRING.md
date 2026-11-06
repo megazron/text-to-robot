@@ -1,6 +1,6 @@
 # Wiring: four_wheel_robot
 
-22 cables, 53 conductors, 17.32 m of wire, wiring parts $20.09.
+22 cables, 53 conductors, 17.13 m of wire, wiring parts $19.91.
 
 Diagram: [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
 
@@ -8,7 +8,7 @@ Diagram: [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].p
 
 | Rail | Volts | Source | Source limit A (cont / peak) | Load A (typical / peak) | Margin (typical) | Fuse A | Worst wire drop V |
 |---|--:|---|--:|--:|--:|--:|--:|
-| VBAT | 11.1 | main_switch | 35 / 70 | 6.316 / 22.616 | 5.5x | 15 | 0.133 |
+| VBAT | 11.1 | main_switch | 35 / 70 | 6.316 / 22.616 | 5.5x | 15 | 0.126 |
 | 5V | 5 | regulator_5v | 5.5 / 8 | 1.23 / 5 | 4.5x | - | 0.056 |
 
 **VBAT loads** (peak assumes two drive motors stalling at once, the rest running):
@@ -110,12 +110,12 @@ Length is route + service loop + joint slack + termination, rounded up to 5 mm; 
 | C12 | motor_driver_2 channel 2 to rear_right_motor | 2 | 315 | 213.4 | 40 | 0 | 60 | 2-position screw terminal / 1x6 female header | power_bay.deck_right |
 | C13 | rear_right_motor encoder to computer | 4 | 280 | 177 | 40 | 0 | 60 | 40-pin header / 1x6 female header | electronics_enclosure.deck_right |
 | C14 | battery positive to main fuse | 1 | 100 | 0 | 40 | 0 | 60 | XT60 / soldered leads | - |
-| C15 | main fuse to main switch | 1 | 460 | 357.4 | 40 | 0 | 60 | soldered leads / 6.3 mm quick-connect tabs | power_bay.rear_slot |
+| C15 | main fuse to main switch | 1 | 435 | 330.6 | 40 | 0 | 60 | soldered leads / 6.3 mm quick-connect tabs | power_bay.rear_slot |
 | C16 | battery negative to star ground | 1 | 100 | 0 | 40 | 0 | 60 | XT60 / lever clamp | - |
 | C17 | main_switch to the VBAT splice | 1 | 100 | 0 | 40 | 0 | 60 | 6.3 mm quick-connect tabs / lever clamp | - |
-| C18 | VBAT to regulator_5v | 2 | 205 | 100.9 | 40 | 0 | 60 | lever clamp / 0.1 in through holes | electronics_enclosure.deck_left |
-| C19 | VBAT to motor_driver_1 | 2 | 385 | 281.6 | 40 | 0 | 60 | lever clamp / 2-position screw terminal | power_bay.rear_slot |
-| C20 | VBAT to motor_driver_2 | 2 | 485 | 381.9 | 40 | 0 | 60 | lever clamp / 2-position screw terminal | power_bay.rear_slot |
+| C18 | VBAT to regulator_5v | 2 | 180 | 78.6 | 40 | 0 | 60 | lever clamp / 0.1 in through holes | electronics_enclosure.deck_left |
+| C19 | VBAT to motor_driver_1 | 2 | 355 | 254.8 | 40 | 0 | 60 | lever clamp / 2-position screw terminal | power_bay.rear_slot |
+| C20 | VBAT to motor_driver_2 | 2 | 460 | 355.1 | 40 | 0 | 60 | lever clamp / 2-position screw terminal | power_bay.rear_slot |
 | C21 | regulator_5v to star_ground | 1 | 395 | 292.1 | 40 | 0 | 60 | 0.1 in through holes / lever clamp | electronics_enclosure.deck_right + power_bay.rear_slot |
 | C22 | 5V to computer | 2 | 180 | 77.4 | 40 | 0 | 60 | 0.1 in through holes / 40-pin header | - |
 
@@ -123,11 +123,11 @@ Length is route + service loop + joint slack + termination, rounded up to 5 mm; 
 
 | Item | Qty | Unit | Unit $ | Subtotal $ | Spec | Price source |
 |---|--:|---|--:|--:|---|---|
-| 14 AWG silicone wire | 0.9 | m | 1.5 | 1.35 | 2.082 mm2, rated 16 A in a bundle; 0.76 m cut + 10 % waste | estimated |
-| 18 AWG silicone wire | 2 | m | 0.7 | 1.40 | 0.823 mm2, rated 8 A in a bundle; 1.74 m cut + 10 % waste | estimated |
+| 14 AWG silicone wire | 0.9 | m | 1.5 | 1.35 | 2.082 mm2, rated 16 A in a bundle; 0.73 m cut + 10 % waste | estimated |
+| 18 AWG silicone wire | 1.8 | m | 0.7 | 1.26 | 0.823 mm2, rated 8 A in a bundle; 1.63 m cut + 10 % waste | estimated |
 | 20 AWG silicone wire | 2 | m | 0.5 | 1.00 | 0.519 mm2, rated 5.5 A in a bundle; 1.77 m cut + 10 % waste | estimated |
-| 22 AWG silicone wire | 2.7 | m | 0.4 | 1.08 | 0.327 mm2, rated 3.5 A in a bundle; 2.38 m cut + 10 % waste | estimated |
-| 24 AWG silicone wire | 4.5 | m | 0.35 | 1.57 | 0.205 mm2, rated 1.75 A in a bundle; 4.09 m cut + 10 % waste | estimated |
+| 22 AWG silicone wire | 2.6 | m | 0.4 | 1.04 | 0.327 mm2, rated 3.5 A in a bundle; 2.35 m cut + 10 % waste | estimated |
+| 24 AWG silicone wire | 4.5 | m | 0.35 | 1.57 | 0.205 mm2, rated 1.75 A in a bundle; 4.06 m cut + 10 % waste | estimated |
 | 26 AWG silicone wire | 7.3 | m | 0.3 | 2.19 | 0.128 mm2, rated 1.1 A in a bundle; 6.58 m cut + 10 % waste | estimated |
 | Dupont 2.54 mm contacts | 46 | pc | 0.02 | 0.92 | rated 3 A per contact | estimated |
 | Dupont 2.54 mm housings | 11 | pc | 0.02 | 0.22 | one per cable end | estimated |

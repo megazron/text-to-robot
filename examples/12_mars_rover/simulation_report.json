@@ -152,7 +152,7 @@
      "rated_nm": 0.686,
      "util_rated": 0.354,
      "max_err": 2.9355,
-     "max_err_hold": 1.9518,
+     "max_err_hold": 1.9517,
      "saturated_frac": 0.006
     },
     "right_front_wheel_joint": {
@@ -182,5 +182,5 @@
  },
  "passed": 2,
  "total": 3,
- "source_urdf_sha256": "0aa815b098b7f7561d2ea7c6476d0f54854fe3bba70d3406e56283deac26b04b"
+ "source_urdf_sha256": "dd538ca90f2dca21358dce8daa58ad67669ac31071a3c1b13bf8cbf52033a34e"
 }

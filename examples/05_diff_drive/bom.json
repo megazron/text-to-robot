@@ -114,9 +114,9 @@
       "category": "Printed structure",
       "name": "PETG filament for 15 printed parts",
       "qty": 1,
-      "unit_cost": 14.34,
-      "subtotal": 14.34,
-      "spec": "567 g of parts (+15 % supports/waste), about 51.6 h of printing",
+      "unit_cost": 14.3,
+      "subtotal": 14.3,
+      "spec": "565 g of parts (+15 % supports/waste), about 51.5 h of printing",
       "note": "base_link, left_bracket, right_bracket, front_caster_post, rear_caster_post, computer_tray, motor_driver_1_tray, battery_tray, regulator_5v_tray, imu_tray, electronics_enclosure_front, electronics_enclosure_rear, electronics_lid_front, electronics_lid_rear, lidar_mast"
     },
     {
@@ -272,7 +272,7 @@
       "note": "price estimated"
     }
   ],
-  "total": 512.27,
+  "total": 512.23,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
@@ -283,7 +283,7 @@
       "effort_unit": "N·m",
       "required_torque_nm": 0.14,
       "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
-      "margin": "4.91x"
+      "margin": "4.92x"
     },
     {
       "joint": "right_wheel_joint",
@@ -291,12 +291,12 @@
       "effort_unit": "N·m",
       "required_torque_nm": 0.14,
       "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
-      "margin": "4.91x"
+      "margin": "4.92x"
     }
   ],
   "warnings": [],
   "notes": [
-    "Differential-drive base: pololu_37d_30to1_64cpr gearmotors, 1.489 kg, 1.24 m/s, 1.8 h on 1 x lipo_3s_2200, rpi5",
+    "Differential-drive base: pololu_37d_30to1_64cpr gearmotors, 1.487 kg, 1.24 m/s, 1.8 h on 1 x lipo_3s_2200, rpi5",
     "Drive sized for the robot plus 1 kg cargo on a 10 deg slope accelerating at 0.5 m/s^2, rolling resistance 0.03; motors compared at their continuous (not stall) rating.",
     "All motors and servos are 12 V parts run straight from a 3S LiPo (9.9-12.6 V) through the main fuse and switch; see WIRING.md.",
     "Printed parts: PETG; brackets bolt to the deck with M3 screws and nuts; the motor face screws are the gearmotor's own six M3 holes.",

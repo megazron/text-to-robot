@@ -25,7 +25,7 @@
    ],
    "joints": {
     "front_left_wheel_joint": {
-     "peak_nm": 0.266,
+     "peak_nm": 0.2659,
      "peak_rating_nm": 1.373,
      "util_peak": 0.194,
      "mean_cruise_nm": 0.2416,
@@ -85,19 +85,19 @@
      "mean_climb_nm": 0.3001,
      "rated_nm": 0.686,
      "util_rated": 0.437,
-     "max_err": 0.7628,
-     "max_err_hold": 0.7554,
+     "max_err": 0.7627,
+     "max_err_hold": 0.7553,
      "saturated_frac": 0.0
     },
     "front_right_wheel_joint": {
-     "peak_nm": 0.3054,
+     "peak_nm": 0.3053,
      "peak_rating_nm": 1.373,
      "util_peak": 0.222,
      "mean_climb_nm": 0.3002,
      "rated_nm": 0.686,
      "util_rated": 0.438,
-     "max_err": 0.7632,
-     "max_err_hold": 0.7557,
+     "max_err": 0.7631,
+     "max_err_hold": 0.7556,
      "saturated_frac": 0.0
     },
     "rear_left_wheel_joint": {
@@ -107,8 +107,8 @@
      "mean_climb_nm": 0.3,
      "rated_nm": 0.686,
      "util_rated": 0.437,
-     "max_err": 0.7626,
-     "max_err_hold": 0.7551,
+     "max_err": 0.7625,
+     "max_err_hold": 0.755,
      "saturated_frac": 0.0
     },
     "rear_right_wheel_joint": {
@@ -117,65 +117,65 @@
      "util_peak": 0.222,
      "mean_climb_nm": 0.3001,
      "rated_nm": 0.686,
-     "util_rated": 0.438,
-     "max_err": 0.763,
-     "max_err_hold": 0.7555,
+     "util_rated": 0.437,
+     "max_err": 0.7629,
+     "max_err_hold": 0.7554,
      "saturated_frac": 0.0
     }
    }
   },
   "turn_in_place": {
    "pass": null,
-   "explanation": "untested: mecanum rollers are not modelled as joints (rigid wheels scrub like skid steer); measured yaw rate 4.55 rad/s with 5.00 commanded (no-slip), claimed 5.14 rad/s (needs >= 4.37), centre moved 11.4 cm over 1.8 turn(s) (6.3 cm per turn)",
+   "explanation": "untested: mecanum rollers are not modelled as joints (rigid wheels scrub like skid steer); measured yaw rate 3.81 rad/s with 5.00 commanded (no-slip), claimed 5.14 rad/s (needs >= 4.37), centre moved 8.7 cm over 1.5 turn(s) (5.7 cm per turn)",
    "claimed_rad_s": 5.14,
-   "commanded_rad_s": 5.0029,
-   "yaw_rate_rad_s": 4.5532,
-   "drift_m": 0.1143,
-   "track_m": 0.2658,
+   "commanded_rad_s": 5.0049,
+   "yaw_rate_rad_s": 3.8074,
+   "drift_m": 0.0866,
+   "track_m": 0.2657,
    "joints": {
     "front_left_wheel_joint": {
-     "peak_nm": 1.1648,
+     "peak_nm": 1.1645,
      "peak_rating_nm": 1.373,
      "util_peak": 0.848,
-     "mean_turn_nm": 0.3503,
+     "mean_turn_nm": 0.3722,
      "rated_nm": 0.686,
-     "util_rated": 0.511,
-     "max_err": 9.2438,
-     "max_err_hold": 9.1544,
-     "saturated_frac": 0.154
+     "util_rated": 0.543,
+     "max_err": 11.4603,
+     "max_err_hold": 11.4603,
+     "saturated_frac": 0.174
     },
     "front_right_wheel_joint": {
-     "peak_nm": 0.9494,
+     "peak_nm": 0.9498,
      "peak_rating_nm": 1.373,
      "util_peak": 0.692,
-     "mean_turn_nm": 0.2972,
+     "mean_turn_nm": 0.2971,
      "rated_nm": 0.686,
      "util_rated": 0.433,
-     "max_err": 6.026,
-     "max_err_hold": 5.0316,
-     "saturated_frac": 0.071
+     "max_err": 7.354,
+     "max_err_hold": 4.5452,
+     "saturated_frac": 0.074
     },
     "rear_left_wheel_joint": {
-     "peak_nm": 1.0631,
+     "peak_nm": 1.063,
      "peak_rating_nm": 1.373,
      "util_peak": 0.774,
-     "mean_turn_nm": 0.3382,
+     "mean_turn_nm": 0.3322,
      "rated_nm": 0.686,
-     "util_rated": 0.493,
-     "max_err": 5.7754,
-     "max_err_hold": 4.6747,
-     "saturated_frac": 0.12
+     "util_rated": 0.484,
+     "max_err": 7.7824,
+     "max_err_hold": 6.1164,
+     "saturated_frac": 0.1
     },
     "rear_right_wheel_joint": {
-     "peak_nm": 1.0865,
+     "peak_nm": 1.0863,
      "peak_rating_nm": 1.373,
      "util_peak": 0.791,
-     "mean_turn_nm": 0.3611,
+     "mean_turn_nm": 0.3797,
      "rated_nm": 0.686,
-     "util_rated": 0.526,
-     "max_err": 7.2161,
-     "max_err_hold": 7.2161,
-     "saturated_frac": 0.137
+     "util_rated": 0.553,
+     "max_err": 10.2177,
+     "max_err_hold": 10.2177,
+     "saturated_frac": 0.145
     }
    }
   },
@@ -186,5 +186,5 @@
  },
  "passed": 2,
  "total": 2,
- "source_urdf_sha256": "0ee49795980334ffb636dc5773c4529a199c4c5a0219c68796a545e4291bf645"
+ "source_urdf_sha256": "dc2f17de46b001898b25fafff1924bc5a1ad2b9041fd152a9b576b7bcebdfa9d"
 }
