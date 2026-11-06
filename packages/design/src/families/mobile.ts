@@ -13,7 +13,7 @@ import { frame, invert, mul, apply, I4, translation, toPose, type Mat4, type Op 
 import { fk, linkCom, totalMass, gravityTorques, type PointLoad } from "../kin.ts";
 import { designArm, graftArm, type ArmRequest } from "./arm.ts";
 import { evaluate, DYNAMIC_FACTOR, type Ladder } from "../sizing.ts";
-import { registerBay, enclosureChecks, exposed, baysOf, type BayRecord, type Face } from "../enclosure.ts";
+import { registerBay, enclosureChecks, exposed, worldBox as partBox, type BayRecord, type Face } from "../enclosure.ts";
 import { Harness, finishWiring } from "../wiring.ts";
 import { busTree, dualDriver, pinsOf, coreTree, actuatorsUnder } from "../netlist.ts";
 
@@ -332,7 +332,7 @@ function enclosure(b: Build, items: Item[], area: Rect, reserved: Rect[], deckTo
   for (const [x, y] of lugs) lid.push({ op: "rod", a: [x, y, zSeat], b: [x, y, zLid], r: 4.5 }, { op: "hole", a: [x, y, zSeat - 1], b: [x, y, zLid + 1], d: 3.4 });
   const ventsY = Math.max(1, Math.floor((y1 - y0 - 30) / 10)), ventHalf = Math.max(25, (x1 - x0) / 2 - 24);
   // two blocks of slots either side of the middle: a lid split there stays in one piece each side
-  for (let i = 0; i < ventsY; i++) { const vy = y0 + 15 + i * 10, xc = (x0 + x1) / 2; for (const [a, c] of [[xc - ventHalf, xc - 8], [xc + 8, xc + ventHalf]]) lid.push({ op: "cutbox", min: [a, vy, zTop - 4], max: [c, vy + 4, zLid + 1] }); }
+  for (let i = 0; i < ventsY; i++) { const vy = y0 + 15.37 + i * 10, xc = (x0 + x1) / 2; for (const [a, c] of [[xc - ventHalf - 0.13, xc - 7.63], [xc + 7.63, xc + ventHalf + 0.13]]) lid.push({ op: "cutbox", min: [a, vy, zTop - 4], max: [c, vy + 4, zLid + 1] }); }
   for (const r of reserved) {
     if (r.x1 < x0 || r.x0 > x1 || r.y1 < y0 || r.y0 > y1) continue;
     // an opening for something that stands inside (lidar mast): a wall ring round it keeps the walls one piece. The zones
@@ -391,10 +391,10 @@ function wallFixtures(b: Build, plan: Placement[], w: { x0: number; x1: number; 
   }
   // main switch: first spot along the walls with 30 mm of nothing behind it
   const spots: { p: Vec3; n: Vec3; face: Face; q: Rect }[] = [];
-  for (const f of [0.15, 0.85, 0.3, 0.7, 0.5]) {
+  for (const f of [0.15, 0.85, 0.3, 0.7, 0.5, 0.1, 0.9, 0.2, 0.8, 0.25, 0.75, 0.35, 0.65, 0.4, 0.6, 0.45, 0.55]) {
     const x = w.x0 + (w.x1 - w.x0) * f, y = w.y0 + (w.y1 - w.y0) * f;
-    spots.push({ p: [x, w.y1, zc], n: [0, 1, 0], face: "y+", q: { x0: x - 18, x1: x + 18, y0: w.y1 - 34, y1: w.y1 } }, { p: [x, w.y0, zc], n: [0, -1, 0], face: "y-", q: { x0: x - 18, x1: x + 18, y0: w.y0, y1: w.y0 + 34 } },
-      { p: [w.x1, y, zc], n: [1, 0, 0], face: "x+", q: { x0: w.x1 - 34, x1: w.x1, y0: y - 18, y1: y + 18 } }, { p: [w.x0, y, zc], n: [-1, 0, 0], face: "x-", q: { x0: w.x0, x1: w.x0 + 34, y0: y - 18, y1: y + 18 } });
+    spots.push({ p: [x, w.y1, zc], n: [0, 1, 0], face: "y+", q: { x0: x - 18, x1: x + 18, y0: w.y1 - 31, y1: w.y1 } }, { p: [x, w.y0, zc], n: [0, -1, 0], face: "y-", q: { x0: x - 18, x1: x + 18, y0: w.y0, y1: w.y0 + 31 } },
+      { p: [w.x1, y, zc], n: [1, 0, 0], face: "x+", q: { x0: w.x1 - 31, x1: w.x1, y0: y - 18, y1: y + 18 } }, { p: [w.x0, y, zc], n: [-1, 0, 0], face: "x-", q: { x0: w.x0, x1: w.x0 + 31, y0: y - 18, y1: y + 18 } });
   }
   const s = spots.find((c) => clearOf(c.q) && !exits.some((e) => Math.hypot(e.at[0] - c.p[0], e.at[1] - c.p[1]) < 45)) ?? spots[0];
   const hw = 15.2, hz = 11.2, along = s.n[0] !== 0;
@@ -1142,19 +1142,20 @@ export function designWallE(req: MobileRequest = {}): RobotSpecification {
     b.A.fastener("M3 x 10 + printed cleats (shelf to side panels)", 4);
     electronicsBay(b, high, { x0: -BL / 2 + 8, x1: BL / 2 - 8, y0: -BW / 2 + 8, y1: BW / 2 - 8 }, [], zs);
     // the body panels close the compartment: back panel holds USB, switch and vents; the top panel comes off; leads leave through the neck hole
-    { const zc = (z0 + z1) / 2, ops: Op[] = [{ op: "cutbox", min: [-BL / 2 - 1, -24, zs + 8], max: [-BL / 2 + t + 1, 24, zs + 26] }, { op: "cutbox", min: [-BL / 2 - 1, 40, zc - 11.2], max: [-BL / 2 + t + 1, 70.4, zc + 11.2] }];
+    { const zc = (z0 + z1) / 2, cw = partBox(b.A, "computer"), cx = (cw.lo[0] + cw.hi[0]) / 2, side = cw.lo[1] + cw.hi[1] >= 0 ? 1 : -1, ops: Op[] = [{ op: "cutbox", min: [-BL / 2 - 1, 40, zc - 11.2], max: [-BL / 2 + t + 1, 70.4, zc + 11.2] }];
+      const sideName = side > 0 ? "body_left" : "body_right"; b.A.amendProgram(sideName, b.in(sideName, [{ op: "cutbox", min: [cx - 24, side > 0 ? BW / 2 - t - 1 : -BW / 2 - 1, zs + 8], max: [cx + 24, side > 0 ? BW / 2 + 1 : -BW / 2 + t + 1, zs + 26] }]));
       let vent = 0; for (let k = 0; k < 18; k++) { ops.push({ op: "cutbox", min: [-BL / 2 - 1, -70, z1 - 74 + k * 3.9], max: [-BL / 2 + t + 1, 70, z1 - 72.4 + k * 3.9] }); vent += 140 * 1.6; }
       b.A.amendProgram("body_back", b.in("body_back", ops));
       b.mount("body_back", "switch_kcd4", frame([-BL / 2, 55.2, zc], [-1, 0, 0], [0, 0, 1]), "main_switch", "main power switch");
       registerBay(b.A, { name: "body_bay", tub: "body_back", lid: "body_top", solids: ["body_back", "body_top", "body_front"], parent: "base_link", T: I4(), min: [-BL / 2 + t, -BW / 2 + t, z0 - 4], max: [BL / 2 - t, BW / 2 - t, z1], parts: items.map((i) => i.name), screws: 24, vent_area_mm2: Math.round(vent + 13 * 400), note: "the hollow body",
-        exits: [{ id: "body_bay.neck", kind: "grommet", face: "lid", at: [BL / 2 - 80, 0, z1 + t], normal: [0, 0, 1], hole_mm: 20 }, { id: "body_bay.usb", kind: "usb", face: "x-", at: [-BL / 2, 0, zs + 17], normal: [-1, 0, 0], hole_mm: 18 }, { id: "body_bay.switch", kind: "switch", face: "x-", at: [-BL / 2, 55.2, zc], normal: [-1, 0, 0], hole_mm: 22, part: "main_switch" }] }, b.H); }
+        exits: [{ id: "body_bay.neck", kind: "grommet", face: "lid", at: [BL / 2 - 80, 0, z1 + t], normal: [0, 0, 1], hole_mm: 20 }, { id: "body_bay.usb", kind: "usb", face: side > 0 ? "y+" : "y-", at: [cx, side * BW / 2, zs + 17], normal: [0, side, 0], hole_mm: 18 }, { id: "body_bay.switch", kind: "switch", face: "x-", at: [-BL / 2, 55.2, zc], normal: [-1, 0, 0], hole_mm: 22, part: "main_switch" }] }, b.H); }
     if (sensors.includes("imu")) b.sensor("imu_frame", "imu", "imu", translation([12.8, 11.35, 2]), { rate_hz: 400 });
     if (sensors.includes("lidar")) lidarMast(b, -BL / 2 + 40, 0, z1 + t, z1 + t, "body_top");
     // neck + head: pitch neck (the lift), pan and tilt, all serial-bus servos
     // the lift: neck pitch limited to -26 / +17 deg (forward lean less) so the head stays over the body and it cannot tip on a slope
     // sized for the binocular head (~0.38 kg with both eye cameras) on the tilt flange; after the head is built as real
     // links the check carries no extra payload, so the head is counted once
-    const neck = attachArm(b, "neck", { dof: 3, kinds: ["P", "Y", "P"], gripper: false, payloadKg: 0.45, reachM: 0.16, basePlateMm: 70 }, "body_top", translation([BL / 2 - 80, 0, z1 + t]), "walle", { shoulder_pitch: [-0.45, 0.3] });
+    const neck = attachArm(b, "neck", { dof: 3, kinds: ["P", "Y", "P"], gripper: false, payloadKg: 0.45, reachM: 0.16, basePlateMm: 70 }, "body_top", translation([BL / 2 - 80, 0, z1 + t]), "walle", { shoulder_pitch: [-0.45, 0.27] });
     neck.rec.tool = { ...neck.rec.tool, payload_kg: 0 };
     // binocular head on the tilt servo's tool flange
     const Tt = b.pose(neck.rec.tool.link), tip = apply(Tt, neck.rec.tool.xyz_m.map((v) => v * 1000) as Vec3);

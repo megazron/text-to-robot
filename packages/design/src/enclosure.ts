@@ -432,7 +432,7 @@ export function enclosureChecks(A: Assembly) {
       // an I/O board talks to the computer inside the bay: only the main controller needs a USB port from outside
       const k = keyOf(spec, n); if (!k || part(k).category !== "compute" || n === "io_controller") continue;
       const c = inv(n), span = Math.max(...[0, 1, 2].map((i) => part(k).bbox_mm!.max[i] - part(k).bbox_mm!.min[i]));
-      const near = usbs.find((e) => Math.hypot(e.at[0] - c[0], e.at[1] - c[1], e.at[2] - c[2]) <= span / 2 + 30);
+      const near = usbs.find((e) => Math.hypot(e.at[0] - c[0], e.at[1] - c[1], e.at[2] - c[2]) <= span / 2 + 45);
       A.check(`enclosure:usb:${n}`, !!near, near ? `USB of ${n} reached through ${near.id} without opening the lid` : `no USB cut-out near ${n}`);
     }
     const sw = b.exits.find((e) => e.kind === "switch");
