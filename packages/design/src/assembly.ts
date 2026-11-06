@@ -34,8 +34,8 @@ export const MATERIALS: Material[] = [
   { name: "electronics", color: [0.08, 0.45, 0.25, 1] },
   { name: "rubber", color: [0.07, 0.07, 0.08, 1] },
   { name: "battery", color: [0.15, 0.3, 0.75, 1] },
-  { name: "armour_red", color: [0.55, 0.04, 0.05, 1] },
-  { name: "armour_gold", color: [0.83, 0.62, 0.24, 1] },
+  { name: "armour_red", color: [0.32, 0.02, 0.035, 1] },
+  { name: "armour_gold", color: [0.7, 0.59, 0.4, 1] },
   { name: "lens_glow", color: [0.72, 0.93, 1, 1] },
   // the wearer is drawn as the black undersuit worn under armour builds (shows through the gaps between pieces)
   { name: "wearer", color: [0.05, 0.05, 0.06, 1] },
@@ -128,15 +128,15 @@ export class Assembly {
     return link;
   }
   /** A printed armour shell from the reference pack: `toLink` is the column-major 4x4 (metres) from world to this link's frame. */
-  armourLink(name: string, piece: string, s: number, toLink: number[], opts: { material: string; role?: string }): Link {
+  armourLink(name: string, piece: string, s: number, toLink: number[], opts: { material: string; role?: string; printed?: boolean; density?: number }): Link {
     const geometry = memo(`armour:${piece}:${s}:${toLink.join()}`, () => meshGeometry("armour", `${name}.stl`, { piece, s, toLink: JSON.stringify(toLink) }));
     const bb = geometry.bbox as unknown as { min: number[]; max: number[] } | undefined;
     const size = (bb ? [0, 1, 2].map((k) => (bb.max[k] - bb.min[k]) * 1000) : [0, 0, 0]) as Vec3;
     const fits = [[0, 1, 2], [1, 0, 2], [0, 2, 1], [2, 0, 1], [1, 2, 0], [2, 1, 0]].some((o) => o.every((k, i) => size[k] <= [250, 210, 220][i]));
     const check: PrintCheck = { volume_cm3: +(geometry.volume * 1e6).toFixed(2), bbox_mm: size.map((x) => +x.toFixed(1)) as Vec3, fits_bed: fits, watertight: true, min_feature_ok: true, genus: 0 };
-    const link: Link = { name, role: opts.role ?? "armour", geometry, mass: Math.max(geometry.volume * PRINT_DENSITY, 0.002), material: opts.material, origin: { xyz: [0, 0, 0], rpy: [0, 0, 0] } };
+    const link: Link = { name, role: opts.role ?? "armour", geometry, mass: Math.max(geometry.volume * (opts.density ?? PRINT_DENSITY), 0.002), material: opts.material, origin: { xyz: [0, 0, 0], rpy: [0, 0, 0] } };
     this.spec.links.push(link);
-    this.design.printed.push({ name, link: name, program: { name, ops: [] } as unknown as Program, check, mass_kg: +(geometry.volume * PRINT_DENSITY).toFixed(4) });
+    if (opts.printed !== false) this.design.printed.push({ name, link: name, program: { name, ops: [] } as unknown as Program, check, mass_kg: +(geometry.volume * PRINT_DENSITY).toFixed(4) });
     return link;
   }
   /** Add ops to a finished printed (or fabricated) link: cable clips, screw holes for a compartment bolted to it. */

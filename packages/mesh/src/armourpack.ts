@@ -10,6 +10,8 @@ export interface ArmourPiece {
   lo: [number, number, number]; step: [number, number, number];
   nv: number; nf: number; /** byte offsets of the vertices and the indices in the binary */ ov: number; of: number;
   volume_mm3: number; centroid: [number, number, number];
+  /** a palm lens's outward direction */
+  normal?: [number, number, number];
 }
 export interface ArmourManifest {
   source: string; wearer_height_m: number;
@@ -18,6 +20,8 @@ export interface ArmourManifest {
   limits: Record<string, [number, number]>;
   /** faceplate pivot in the head frame (x, z mm) and the rear edge of the faceplate */
   hinge: [number, number]; face_rear_x: number;
+  /** wearer joint centres, world mm at the reference height */
+  joints: Record<string, [number, number, number]>;
   notes: string[];
 }
 

@@ -13,13 +13,14 @@ How a cosplay armourer builds a suit from a statue, done with signed-distance fi
   6. marching cubes on each piece's field -> closed meshes, decimated and checked manifold.
 The output JSON holds every piece in the wearer's world frame (mm, home pose) with the link it rides on.
 """
-import json, sys, math, time
+import glob, json, os, sys, math, time
 import numpy as np, trimesh
 import xml.etree.ElementTree as ET
 from pysdf import SDF
 from scipy.spatial import cKDTree
+from scipy.spatial.transform import Rotation
 from skimage.measure import marching_cubes
-from scipy.ndimage import binary_opening, median_filter, map_coordinates, binary_dilation, binary_erosion, distance_transform_edt, gaussian_filter, label as nd_label, mean as nd_mean
+from scipy.ndimage import grey_dilation, binary_opening, median_filter, map_coordinates, binary_dilation, binary_erosion, distance_transform_edt, gaussian_filter, label as nd_label, mean as nd_mean
 import manifold3d as m3d
 
 T, GAP, SEAM = 3.0, 14.0, 0.6
@@ -33,7 +34,7 @@ for side, f in (("left", lambda p: p), ("right", mirror)):
     FIG.update({f"{side}_shoulder": f((10, 235, 1400)), f"{side}_elbow": f((-9, 357, 1120)), f"{side}_wrist": f((85, 430, 930)),
                 f"{side}_hand_end": f((115, 440, 780)), f"{side}_hip": f((55, 100, 880)), f"{side}_knee": f((55, 150, 510)),
                 f"{side}_ankle": f((10, 190, 95)), f"{side}_toe": f((165, 200, 30))})
-RADIAL = 1.10   # ONE scale across the whole body: every region keeps the sculpt's proportions (per-bone stretching made the suit look deformed)
+RADIAL = 1.02   # ONE scale across the whole body: every region keeps the sculpt's proportions (per-bone stretching made the suit look deformed)
 
 
 def fk(urdf):
@@ -65,6 +66,18 @@ def fk(urdf):
         if ax is not None:
             c = j.find("child").get("link"); JOINT_AXIS[j.get("name")] = W[c][:3, :3] @ np.array([float(x) for x in ax.get("xyz").split()])
     return links, jpos, W
+
+
+def load_human(d):
+    """The anatomical wearer from scripts/human_body.py: closed segments (mm, world) and joints. Every joint turns about y."""
+    global JOINT_AXIS
+    j = {k: np.array(v, float) for k, v in json.load(open(f"{d}/joints.json")).items()}
+    jpos = {"standing": j["hip_c"], "neck_mount": j["neck"]}
+    for s_ in ("left", "right"):
+        for n in ("shoulder", "elbow", "wrist", "hip", "knee", "ankle"): jpos[f"{s_}_{n}"] = j[f"{s_}_{n}"]
+    JOINT_AXIS = {k: np.array([0.0, 1.0, 0.0]) for k in jpos}
+    body = {os.path.basename(f)[:-4]: trimesh.load(f, force="mesh") for f in glob.glob(f"{d}/*.stl")}
+    return body, jpos, j
 
 
 def bones_from_wearer(jpos, head_top):
@@ -104,6 +117,10 @@ SWEEP = {"torso": [(f"{s}_{j}", f"{s}_{l}", lo, hi) for s in ("left", "right") f
          "upper_arm": [("{s}_elbow", "{s}_forearm", -1.85, 0)], "thigh": [("{s}_knee", "{s}_shin", 0, 1.65)]}
 PARENT_BODY = {"upper_arm": ("{s}_shoulder", "pelvis", -1.1, 0.3), "thigh": ("{s}_hip", "pelvis", -1.05, 0.2), "forearm": ("{s}_elbow", "{s}_upper_arm", -1.85, 0), "shin": ("{s}_knee", "{s}_thigh", 0, 1.65)}
 RELIEF, CHILD_RELIEF, ARMOUR_CLEAR = GAP + T + 2, 8.0, 3.0
+FIT_NEED, PULL, REACH = T + BODY_CLEAR + 3.0, 24.0, 56.0            # shell skin this far outside the body (mm); how far a shell may come in, go out
+SIGMA = {"hand": 16.0, "foot": 24.0, "forearm": 30.0, "shin": 32.0, "torso": 50.0}   # how local the fit may be: small parts follow the body closer
+LIMIT = {"torso": (10.0, 30.0)}                        # the chest keeps its sculpted volume: (in, out) mm
+HAND_POSE, HAND_SCALE = (15.0, -10.0, 0.0), 1.18       # measured (roll, tilts): the rigid glove pose that best encloses the wearer's hand
 UNIFORM = ("head", "hand", "foot")                     # kept in proportion: a stretched helmet stops looking like the helmet
 PELVIS_SLIM = 0.94                                     # wearer torso 0.94 of the reference build: 89 cm chest at 1.75 m
 HINGE_HEAD = np.array([-5.0, 0.0, 185.0])              # faceplate pivot in the head frame: the centre of the crown's curve
@@ -205,6 +222,87 @@ def fit_radial(depth_fig, a, b, Wa, Wb, wear, cap=1.45):
     return r, float(bad.mean())
 
 
+class FitWarp:
+    """Refits one region's shell round the real body, the way an armourer does: a smooth height field f(t, angle) on the
+    cylinder round the bone moves the shell out where the body presses it and in where it stands off. Each cell takes the
+    tightest point it holds, so the shell only comes in as far as the whole ring allows. Being low-pass it leaves every panel
+    line and edge alone, and it fades to nothing at the bone, so the map stays one-to-one."""
+    NTH, CORE = 48, 26.0
+
+    def __init__(self, wa, wb, sym=False):
+        self.a = np.asarray(wa, float); v = np.asarray(wb, float) - self.a; self.L = float(np.linalg.norm(v)); self.u = v / self.L
+        h = np.array([1.0, 0, 0]) if abs(self.u[0]) < 0.8 else np.array([0, 0, 1.0])
+        self.e1 = h - (h @ self.u) * self.u; self.e1 /= np.linalg.norm(self.e1); self.e2 = np.cross(self.u, self.e1)
+        if self.e2[1] < 0: self.e2 = -self.e2
+        self.sym = sym; self.pull, self.reach = PULL, REACH; self.dt = 8.0; self.t0 = -0.45 * self.L
+        self.f = np.zeros((int(1.9 * self.L / self.dt) + 2, self.NTH), np.float32)
+
+    def polar(self, x):
+        q = x - self.a; t = q @ self.u; c1, c2 = q @ self.e1, q @ self.e2
+        return t, np.arctan2(c2, c1) % (2 * np.pi), np.hypot(c1, c2), c1, c2
+
+    def height(self, t, th):
+        c = np.stack([(t - self.t0) / self.dt, th / (2 * np.pi) * self.NTH - 0.5])
+        ext = np.concatenate([self.f[:, -1:], self.f, self.f[:, :1]], axis=1)       # the angle wraps
+        return map_coordinates(ext, c + np.array([[0.0], [1.0]]), order=1, mode="nearest")
+
+    def fade(self, r): x = np.clip(r / self.CORE, 0, 1); return x * x * (3 - 2 * x)
+
+    def fwd(self, x):
+        t, th, r, c1, c2 = self.polar(x); k = self.height(t, th) * self.fade(r) / np.maximum(r, 1e-6)
+        return x + np.outer(k * c1, self.e1) + np.outer(k * c2, self.e2)
+
+    def back(self, x):
+        t, th, r, c1, c2 = self.polar(x); h = self.height(t, th); r0 = r.copy()
+        for _ in range(10): r0 = np.maximum(r - h * self.fade(r0), 0.0)
+        k = (r0 - r) / np.maximum(r, 1e-6)
+        return x + np.outer(k * c1, self.e1) + np.outer(k * c2, self.e2)
+
+    def fit(self, pts, sculpt_of, depth, rm, need, sigma):
+        """Two passes: points no outward move can reach (armpit, groin, the crook of a joint: undersuit on a real suit too)
+        are found in the first and left out of the second, so they cannot drag the rest of the shell out."""
+        self.pass_(pts, sculpt_of, depth, rm, need, sigma, 8)
+        e = need - depth(sculpt_of(self.back(pts))) * rm
+        keep = e < 4.0; self.open = 1 - keep.mean(); self.f[:] = 0
+        return self.pass_(pts[keep], sculpt_of, depth, rm, need, sigma, 10)
+
+    def pass_(self, pts, sculpt_of, depth, rm, need, sigma, iters):
+        d0 = depth(sculpt_of(pts)) * rm
+        goal = np.maximum(need, d0 - self.pull)
+        t, th, r, _, _ = self.polar(pts)
+        it = np.clip(((t - self.t0) / self.dt).round().astype(int), 0, self.f.shape[0] - 1); ia = (th / (2 * np.pi) * self.NTH).astype(int) % self.NTH
+        rr = max(float(np.median(r)), 20.0); st = sigma / self.dt; sa = sigma / (2 * np.pi * rr / self.NTH)
+        sm = lambda g: gaussian_filter(g, (st, sa), mode=("nearest", "wrap"))
+        for _ in range(iters):
+            e = goal - depth(sculpt_of(self.back(pts))) * rm
+            cell = np.full(self.f.shape, -1e3, np.float32); np.maximum.at(cell, (it, ia), e.astype(np.float32))
+            # upper envelope: each cell's worst point is spread over the kernel first, so smoothing cannot shave a peak
+            cell = grey_dilation(cell, size=(2 * round(1.6 * st) + 1, 2 * round(1.6 * sa) + 1), mode="wrap")
+            has = (cell > -999).astype(np.float32); den = sm(has)
+            self.f += 0.85 * sm(np.where(has > 0, cell, 0)) / np.maximum(den, 0.02) * np.clip(den / 0.1, 0, 1)
+            self.f = np.clip(self.f, -self.pull, self.reach)
+            if self.sym: self.f = (self.f + self.f[:, ::-1]) / 2
+        return self
+
+    def mirrored(self): return _Mirror(self)
+
+
+class _Mirror:
+    """the same fit on the other side of the body"""
+    Y = np.array([1.0, -1.0, 1.0])
+    def __init__(self, w): self.w = w
+    def fwd(self, x): return self.w.fwd(x * self.Y) * self.Y
+    def back(self, x): return self.w.back(x * self.Y) * self.Y
+
+
+def fit_shell(name, kind, a, b, W, R, names, body_link, inv0, depth_fig, rm):
+    """the warp for one region, from the body surface this region covers"""
+    pts = trimesh.sample.sample_surface_even(body_link, 24000, seed=3)[0]
+    pts = pts[np.argmin(label_field(pts, W, R, names), axis=1) == names.index(name)]
+    w = FitWarp(W[a], W[b], sym=kind == "torso"); w.pull, w.reach = LIMIT.get(kind, (PULL, REACH))
+    return w.fit(pts, inv0, depth_fig, rm, FIT_NEED, SIGMA.get(kind, 34.0))
+
+
 def crop(P, faces, F, R, names, k):
     """faces of the sculpt in this region or next to it, decided in the sculpt's own space"""
     c = P[faces].mean(1); D = label_field(c, F, R, names, 1.0, True)
@@ -244,8 +342,10 @@ def depth_grid(Pw, all_faces, faces, v, inv, inside, depth):
     ii = np.argwhere(np.abs(d) < 4 * v)
     d = np.where(d >= 4 * v, d - (v + 0.6), d).astype(np.float32)   # deep voxels: the same shift back to the true skin
     m = trimesh.Trimesh(Pw, all_faces[near], process=False)
-    pts, fi = trimesh.sample.sample_surface(m, int(min(m.area / (0.4 * v) ** 2, 6e6)))
+    pts, fi = trimesh.sample.sample_surface(m, int(min(m.area / (0.3 * v) ** 2, 9e6)))
     tree = cKDTree(pts); nrm = m.face_normals[fi]
+    global SKIN
+    SKIN = (tree, pts, nrm)
     for c0 in range(0, len(ii), 1000000):
         j = ii[c0:c0 + 1000000]; t = tuple(j.T); g = lo + j * v
         dist, k = tree.query(g, workers=4)
@@ -278,22 +378,17 @@ def main():
     fig_path, urdf, out = sys.argv[1], sys.argv[2], sys.argv[3]
     voxel = float(sys.argv[sys.argv.index("--voxel") + 1]) if "--voxel" in sys.argv else 1.0
     only = sys.argv[sys.argv.index("--only") + 1].split(",") if "--only" in sys.argv else None
-    links, jpos, Wl = fk(urdf)
-    import os
-    base = os.path.dirname(os.path.abspath(urdf))
-    # wearer bodies (world, mm)
-    body = {}
-    for n, L in links.items():
-        if L["material"] == "wearer" and L["mesh"]:
-            m = trimesh.load(os.path.join(base, L["mesh"].split("/", 3)[-1] if L["mesh"].startswith("package://") else L["mesh"]), force="mesh"); m.apply_scale(1000); m.apply_transform(_mm(L["world"])); body[n] = m
-    body["pelvis"].vertices[:, :2] *= PELVIS_SLIM
+    body, jpos, _ = load_human(urdf)                 # the anatomical wearer (a directory from scripts/human_body.py)
     head_top = body["head"].bounds[1][2] + GAP + T
     W = bones_from_wearer(jpos, head_top)
     F = {k: np.array(v, float) for k, v in FIG.items()}
     fig = trimesh.load(fig_path, force="mesh")
     P = np.asarray(fig.vertices, float)
     R = regions(); names = list(R)
-    pieces = []
+    pieces = []; FITS = {}
+    for s_ in ("left", "right"):                     # the hand's own axis, from the hand itself: it does not simply carry on the forearm
+        wr = W[f"{s_}_wrist"]; u = body[f"{s_}_hand"].vertices.mean(0) - wr
+        W[f"{s_}_hand_end"] = wr + u / np.linalg.norm(u) * 170
     depth_fig, inside_fig = sculpt_solid(P, fig.faces)
     wear_pts = np.vstack([trimesh.sample.sample_surface_even(m, 6000, seed=1)[0] for m in body.values()])
     lab_w = np.argmin(label_field(wear_pts, W, R, names), axis=1)
@@ -310,6 +405,19 @@ def main():
         if kind in UNIFORM: W[b] = W[a] + (W[b] - W[a]) / np.linalg.norm(W[b] - W[a]) * rm * np.linalg.norm(F[b] - F[a])
         Pw = mapping(F[a], F[b], W[a], W[b], radial)(P)
         inv = unmapping(F[a], F[b], W[a], W[b], radial)
+        if kind == "hand":                            # the glove is posed on the real open hand as one rigid piece, then refitted
+            la, lb = F["left_wrist"], F["left_hand_end"]; u = body["left_hand"].vertices.mean(0) - W["left_wrist"]; hv = (lb - la) / np.linalg.norm(lb - la)
+            Rr = rot_between(hv, u / np.linalg.norm(u)) @ Rotation.from_rotvec(hv * np.radians(HAND_POSE[0])).as_matrix() @ Rotation.from_euler("xyz", (*HAND_POSE[1:], 0), degrees=True).as_matrix()
+            if side_ := name.startswith("right"): Rr = np.diag([1.0, -1, 1]) @ Rr @ np.diag([1.0, -1, 1])
+            rm = HAND_SCALE
+            Pw = W[a] + rm * (P - F[a]) @ Rr.T
+            inv = lambda Q, Rr=Rr, fa=F[a], wa=W[a], sc=rm: fa + ((Q - wa) @ Rr) / sc
+        if kind != "head":                            # the helmet is rigid: it is placed on the head by the packer
+            twin = FITS.get(kind) if name.startswith("right") else None
+            wp = twin.mirrored() if twin else fit_shell(name, kind, a, b, W, R, names, body[link], inv, depth_fig, rm)
+            if name.startswith("left"): FITS[kind] = wp
+            inv0 = inv; inv = lambda Q, wp=wp, inv0=inv0: inv0(wp.back(Q))
+            Pw = np.vstack([wp.fwd(Pw[c0:c0 + 500000]) for c0 in range(0, len(Pw), 500000)])
         d, lo, v = depth_grid(Pw, fig.faces, cr, voxel, inv, inside_fig, depth_fig)
         field = np.full(d.shape, 5.0, np.float32); paint = np.full(d.shape, 5.0, np.float32); lens = np.full(d.shape, 5.0, np.float32)
         idx = np.argwhere((d > -3 * v) & (d < (CROWN_T if kind == "head" else T) + 3 * v))
@@ -400,7 +508,17 @@ def main():
                         continue
                 if comp.volume < 0: comp.invert()
                 if comp.volume < (150 if col == "lens_glow" else 3000): continue   # specks: under 3 cm^3 is not worth a print
-                comp = trimesh.smoothing.filter_taubin(comp, lamb=0.5, nu=0.52, iterations=12)
+                comp = trimesh.smoothing.filter_taubin(comp, lamb=0.5, nu=0.52, iterations=4)
+                # the outer face goes back onto the sculpt itself: marching cubes leaves a crinkled surface that glossy paint
+                # shows like foil, so each outer vertex is dropped onto the tangent plane of the nearest skin point
+                tree_, pts_, nrm_ = SKIN
+                vv = np.asarray(comp.vertices, float).copy(); vn = comp.vertex_normals
+                for _ in range(2):
+                    dist, ki = tree_.query(vv, workers=4); nn = nrm_[ki]
+                    outer = (dist < 3.0) & (np.einsum("ij,ij->i", vn, nn) > 0.35)
+                    off = np.einsum("ij,ij->i", vv - pts_[ki], nn)
+                    vv[outer] -= off[outer, None] * nn[outer]
+                comp = trimesh.Trimesh(vv, comp.faces, process=False)
                 got += 1
                 face = kind == "head" and col != "armour_red"
                 pieces.append({"name": f"{'faceplate' if face else name}_{got}", "link": "helmet_faceplate" if face else link, "material": col, "region": name, "mesh": comp})

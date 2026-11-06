@@ -6,9 +6,9 @@
 
 Interpreted as: Iron Man Mark 43 wearable suit · budget $60000
 
-**Iron Man Mark 43 (full wearable suit): 139 printed pieces, 8.7 kg filament, motorised faceplate, $327 incl. filament**
+**Iron Man Mark 43 (full wearable suit): 185 printed pieces, 8.1 kg filament, motorised faceplate, $314 incl. filament**
 
-Parts cost **$339.76** (budget $60000: within) · printed structure 139 parts, 8047 g · checks passed 151/151
+Parts cost **$326.12** (budget $60000: within) · printed structure 185 parts, 7508 g · checks passed 197/197
 
 ## What it can do
 
@@ -17,28 +17,28 @@ Parts cost **$339.76** (budget $60000: within) · printed structure 139 parts, 8
 | tier | suit |
 | tier label | full wearable suit |
 | wearer height m | 1.75 |
-| printed pieces | 139 |
-| armour mass kg | 8.05 |
-| filament kg | 8.69 |
-| cost usd | 326.89 |
-| mass kg | 86.6 |
+| printed pieces | 185 |
+| armour mass kg | 7.51 |
+| filament kg | 8.11 |
+| cost usd | 314.08 |
+| mass kg | 74.71 |
 
 ## Actuators (sized from this robot's own loads)
 
 | Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
 |---|---|--:|--:|--:|--:|
-| faceplate | hobby_mg996r | 0.7584 | 0.6472 / 2.1574 | 2.84x | 7.48 |
+| faceplate | hobby_mg996r | 0.443 | 0.6472 / 2.1574 | 4.87x | 7.48 |
 
 ## Engineering checks
 
-All 151 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
+All 197 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
 
 ## Assumptions and limits
 
 - armour shape from: body: "Iron man armored suit" by octv h (Printables 1524711, CC0, provenance unverified); helmet: Iron Man wearable helmet Mark 42 by Manifold3D (Printables 449081, CC BY-SA); 3 mm walls, 2 mm faceplate, 15 % gyroid infill (shells are mostly walls)
 - filament at $22/kg, 8 % waste
 - the suit is worn armour over a black undersuit: the wearer moves every joint; nothing powers the limbs (hobby servos cannot move a person)
-- the wearer is 89 cm chest at 1.75 m and the pieces scale evenly with height; check against your own measurements before printing
+- the wearer is an average adult male body at 1.75 m and the pieces scale evenly with height; check against your own measurements before printing
 - gaps at the groin, armpits and elbows are cut on purpose so the joints move; the undersuit shows through them, as on real builds
 
 ## Prompt notes

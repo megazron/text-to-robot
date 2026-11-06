@@ -4,24 +4,26 @@
 // Studio render of the Mark 43 pack: painted-metal materials, softbox reflections, dark backdrop.
 import * as THREE from "three";
 import { RoomEnvironment } from "three/addons/RoomEnvironment.js";
+import { toCreasedNormals } from "three/addons/BufferGeometryUtils.js";
 const q = new URLSearchParams(location.search), W = +(q.get("w") ?? 1200), H = +(q.get("h") ?? 1500);
 const R = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
 R.setSize(W, H); R.toneMapping = THREE.ACESFilmicToneMapping; R.toneMappingExposure = 1.05; R.shadowMap.enabled = true; R.shadowMap.type = THREE.PCFSoftShadowMap;
 document.body.append(R.domElement);
 const S = new THREE.Scene(); S.background = new THREE.Color(0x070808);
-S.environment = new THREE.PMREMGenerator(R).fromScene(new RoomEnvironment(), 0.03).texture; S.environmentIntensity = 0.55;
+S.environment = new THREE.PMREMGenerator(R).fromScene(new RoomEnvironment(), 0.03).texture; S.environmentIntensity = 0.5;
 const M = {
-  armour_red: new THREE.MeshPhysicalMaterial({ color: 0x5c0509, metalness: 0.8, roughness: 0.3, clearcoat: 1, clearcoatRoughness: 0.08 }),
-  armour_gold: new THREE.MeshPhysicalMaterial({ color: 0xc9b083, metalness: 0.92, roughness: 0.3, clearcoat: 1, clearcoatRoughness: 0.1 }),
+  armour_red: new THREE.MeshPhysicalMaterial({ color: 0x470308, metalness: 0.6, roughness: 0.4, clearcoat: 0.8, clearcoatRoughness: 0.2 }),
+  armour_gold: new THREE.MeshPhysicalMaterial({ color: 0xb39868, metalness: 0.75, roughness: 0.4, clearcoat: 0.6, clearcoatRoughness: 0.25 }),
   lens_glow: new THREE.MeshBasicMaterial({ color: 0xf2fbff }),
+  wearer: new THREE.MeshStandardMaterial({ color: 0x0b0b0d, roughness: 0.9, metalness: 0 }),
 };
 const man = await (await fetch("/mark43_pack.json")).json(), buf = await (await fetch("/mark43_pack.bin")).arrayBuffer();
 const G = new THREE.Group(); S.add(G);
 for (const p of man.pieces) {
   const qv = new Uint16Array(buf, p.ov, p.nv * 3), f = new Uint16Array(buf, p.of, p.nf * 3), v = new Float32Array(p.nv * 3);
   for (let i = 0; i < p.nv; i++) for (let k = 0; k < 3; k++) v[i * 3 + k] = (p.lo[k] + qv[i * 3 + k] * p.step[k]) / 1000;
-  const g = new THREE.BufferGeometry(); g.setAttribute("position", new THREE.BufferAttribute(v, 3)); g.setIndex(new THREE.BufferAttribute(new Uint32Array(f), 1)); g.computeVertexNormals();
-  const m = new THREE.Mesh(g, M[p.material] ?? M.armour_red); m.castShadow = m.receiveShadow = true; G.add(m);
+  const g = new THREE.BufferGeometry(); g.setAttribute("position", new THREE.BufferAttribute(v, 3)); g.setIndex(new THREE.BufferAttribute(new Uint32Array(f), 1));
+  const m = new THREE.Mesh(toCreasedNormals(g, 0.5), M[p.material] ?? M.armour_red); m.castShadow = m.receiveShadow = true; G.add(m);
 }
 // a black undersuit silhouette behind the shells
 G.rotation.x = -Math.PI / 2;    // model z up -> scene y up

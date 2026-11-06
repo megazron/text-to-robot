@@ -158,7 +158,7 @@ function buildRobot(spec) {
     for(const shape of shapes) {
       const geom = makeGeom(shape);
       const color = matColor(spec, l.material, l.role === "gripper" ? 0x2a5bd0 : l.role === "wheel" ? 0x1a1a1f : l.role === "base" ? 0x3f3f46 : 0xd8d8dc);
-      const mesh = new THREE.Mesh(geom, new THREE.MeshStandardMaterial({ color, metalness: l.material?.startsWith("armour_") ? 0.7 : l.material === "wearer" ? 0 : 0.25, roughness: l.material?.startsWith("armour_") ? 0.28 : l.material === "wearer" ? 0.9 : 0.55,
+      const mesh = new THREE.Mesh(geom, new THREE.MeshStandardMaterial({ color, metalness: l.material?.startsWith("armour_") ? 0.6 : l.material === "wearer" ? 0 : 0.25, roughness: l.material?.startsWith("armour_") ? 0.4 : l.material === "wearer" ? 0.9 : 0.55,
         ...(l.material === "lens_glow" ? { emissive: new THREE.Color(0x9fe8ff), emissiveIntensity: 1.2 } : {}), transparent: isCol, opacity: isCol ? 0.45 : 1, wireframe: isCol }));
       mesh.matrixAutoUpdate = false; mesh.matrix.copy(mat4(poseArr(l.origin)));
       mesh.userData.linkName = l.name;

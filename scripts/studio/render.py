@@ -9,6 +9,7 @@ for f in ("three.core.js",):
     if os.path.exists(f"{R}/node_modules/three/build/{f}"): shutil.copy(f"{R}/node_modules/three/build/{f}", t)
 shutil.copy(f"{R}/node_modules/three/build/three.module.js", t)
 os.makedirs(f"{t}/addons"); shutil.copy(f"{R}/node_modules/three/examples/jsm/environments/RoomEnvironment.js", f"{t}/addons/")
+shutil.copy(f"{R}/node_modules/three/examples/jsm/utils/BufferGeometryUtils.js", f"{t}/addons/")
 for f in ("json", "bin"): shutil.copy(f"{R}/packages/parts/data/mark43_pack.{f}", t)
 os.chdir(t)
 class Q(http.server.SimpleHTTPRequestHandler):

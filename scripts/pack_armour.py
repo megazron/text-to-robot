@@ -5,7 +5,8 @@
 import json, math, os, struct, sys
 import numpy as np, trimesh
 import manifold3d as m3
-from scipy.ndimage import label as nd_label
+from scipy.ndimage import label as nd_label, binary_closing, binary_fill_holes, distance_transform_edt, gaussian_filter
+from skimage.measure import marching_cubes
 from pysdf import SDF
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import armour_from_reference as A
@@ -18,7 +19,10 @@ JOINTS = {"shoulder": ("upper_arm", "pelvis", -2.6, 0.6), "elbow": ("forearm", "
 HELMET_DIR = os.path.expanduser("~/ironman_refs/mk42_helmet_ccbysa")
 HELMET = {"back": ([14.5, -229, -284], True, "head", "armour_red"), "top": ([26, -68, -418], False, "head", "armour_red"),
           "faceplate": ([88, -389.5, 12], False, "helmet_faceplate", "armour_gold"), "chin": ([232, -4.5, -32], True, "head", "armour_gold")}
-HELMET_AT, HELMET_SCALE = np.array([14.0, 0.0, 8.0]), 1.03   # placed in the head frame, forward so the face sits behind the mask; every part still fits the bed
+HELMET_AT, HELMET_SCALE = np.array([36.0, 0.0, 28.0]), 1.14   # measured on the wearer: the smallest helmet that closes round a real skull and nose (244 mm wide)
+BACK_TILT = math.radians(14.0)                  # the part is modelled as it lies on the print bed: worn, its rear lifts to the crown and the jaw line falls to the chin
+MESH_TOL = 0.2
+WALL, SEAM_H = 3.0, 0.3                         # helmet wall; half a seam (mm)
 HEAD_CLEAR = 6.0                                # room round the head (padding)
 POD_R, COLLIDE = 28.0, 400.0
 HINGE = np.array([-20.0, 0.0, 110.0])          # head frame: at the ear
@@ -54,7 +58,7 @@ def eye_lenses(face):
         if abs(yy.mean()) < 15 or not (0.35 < frac < 0.85) or np.ptp(yy) < 25: continue
         # the slit's rim on the shell: depth of the surface round the opening
         near = face.vertices[(np.abs(face.vertices[:, 1] - yy.mean()) < np.ptp(yy) / 2 + 6) & (np.abs(face.vertices[:, 2] - zz.mean()) < np.ptp(zz) / 2 + 6)]
-        x = float(np.percentile(near[:, 0], 30)) - 3
+        x = float(np.percentile(near[:, 0], 75)) - 3
         rim = np.c_[np.full(len(ii), x), yy, zz]
         out.append(trimesh.convex.convex_hull(np.vstack([rim, rim + [2.0, 0, 0]])))
     return out
@@ -65,13 +69,31 @@ def inflated(m, by):
     c = m.bounds.mean(0); q = m.copy(); q.apply_translation(-c); q.apply_scale((m.extents + 2 * by) / m.extents); q.apply_translation(c); return q
 
 
+def helmet_cavity(parts, pitch=1.5):
+    lo = np.min([m.bounds[0] for m in parts.values()], axis=0) - 6; hi = np.max([m.bounds[1] for m in parts.values()], axis=0) + 6
+    ax = [np.arange(lo[i], hi[i] + pitch, pitch) for i in range(3)]; shape = tuple(len(a) for a in ax)
+    G = np.stack(np.meshgrid(*ax, indexing="ij"), -1).reshape(-1, 3).astype(np.float32); solid = np.zeros(len(G), bool)
+    for m in parts.values():
+        c = SDF(m.vertices, m.faces)
+        for c0 in range(0, len(G), 2000000): solid[c0:c0 + 2000000] |= c(G[c0:c0 + 2000000]) > 0
+    solid = binary_fill_holes(binary_closing(solid.reshape(shape), iterations=3))      # the seams between parts are not outer surface
+    depth = gaussian_filter(distance_transform_edt(solid).astype(np.float32) * pitch, 1.0)
+    v, f, _, _ = marching_cubes(np.pad(depth, 1), WALL, spacing=(pitch,) * 3)
+    return as_manifold(trimesh.Trimesh(v + lo - pitch, f[:, ::-1], process=True)).simplify(0.5)
+
+
 def helmet(neck, head):
     parts = {}
     for n, (t, turn, link, mat) in HELMET.items():
         m = trimesh.load(f"{HELMET_DIR}/{n}.stl", force="mesh"); m.apply_translation(t)
         if turn: m.apply_transform(trimesh.transformations.rotation_matrix(np.pi, [0, 0, 1]))
+        if n == "back": m.apply_transform(trimesh.transformations.rotation_matrix(BACK_TILT, [0, 1, 0], [109.0, 0, 60.0]))
         m.apply_scale(HELMET_SCALE); m.apply_translation(HELMET_AT); parts[n] = decimate(m, 0.2)
-    # the model's parts are solid (they print with light infill): the head gets a cavity with padding room
+    # the model's parts are solid: a wearable helmet is a thin shell, so everything deeper than WALL under the closed outer form
+    # goes (2 kg of plastic becomes a few hundred grams, and the servos can hold the faceplate up)
+    hollow = helmet_cavity(parts)
+    for k in parts: parts[k] = from_manifold(as_manifold(parts[k]) - hollow)
+    # the head gets a cavity with padding room
     cav = as_manifold(inflated(trimesh.Trimesh(head.vertices - neck, head.faces, process=False), HEAD_CLEAR))
     for k in ("top", "back", "chin"): parts[k] = from_manifold(as_manifold(parts[k]) - cav)   # (never the mask: it is the face of the suit)
     face = parts["faceplate"]
@@ -82,8 +104,8 @@ def helmet(neck, head):
         R = [[c, 0, sn, h[0] - c * h[0] - sn * h[2]], [0, 1, 0, 0], [-sn, 0, c, h[2] + sn * h[0] - c * h[2]]]
         return q.transform(R)
     best, h = 1e18, None
-    for hx in np.arange(-70, 31, 20):
-        for hz in np.arange(60, 201, 20):
+    for hx in np.arange(-10, 51, 15):                  # at the ear: further back the plate's weight hangs on too long an arm
+        for hz in np.arange(80, 201, 20):
             hh = np.array([hx, 0.0, hz]); v = sum((swung(fm, hh, a) ^ fixed[k]).volume() for a in (-0.25, -0.55, -0.85) for k in fixed)
             if v < best: best, h = v, hh
     print("hinge", h, "collision", round(best), "mm3", flush=True)
@@ -92,18 +114,28 @@ def helmet(neck, head):
         x = fixed[k]; v0 = x.volume()
         for ang in np.linspace(-0.14, -1.0, 14): x = x - swung(fm, h, ang)
         parts[k] = from_manifold(x); print("relief", k, round(v0 - x.volume()), "mm3 of", round(v0), flush=True)
-    cyl = trimesh.creation.cylinder(radius=POD_R + 0.5, height=70, sections=48)
+    # the ear disc: one round opening holds the servo in its cradle (the case hangs 10 mm below the shaft)
+    cyl = trimesh.creation.cylinder(radius=POD_R + 6, height=64, sections=64)
     for s_ in (1, -1):
-        c = cyl.copy(); c.apply_transform(trimesh.transformations.rotation_matrix(np.pi / 2, [1, 0, 0])); c.apply_translation([h[0], s_ * 125, h[2]])
-        # the servo body hangs below the pivot: a window for it and its cradle (MG996R case, 2.2 mm walls, clearance)
-        w = trimesh.creation.box(extents=[46, 80, 66]); w.apply_translation([h[0], s_ * 120, h[2] - 11])
-        for k in ("back", "top"): parts[k] = from_manifold(as_manifold(parts[k]) - as_manifold(c) - as_manifold(w))
+        c = cyl.copy(); c.apply_transform(trimesh.transformations.rotation_matrix(np.pi / 2, [1, 0, 0])); c.apply_translation([h[0], s_ * 128, h[2] - 10])
+        # inside the shell the arm's whole swing is kept clear (the outer skin is further out than this, so nothing shows)
+        arm = trimesh.creation.box(extents=[110, 20, 26]); arm.apply_translation([h[0] + 30, s_ * 96, h[2]]); am = as_manifold(arm); cut = as_manifold(c)
+        for ang in np.linspace(0, -1.0, 9): cut = cut + swung(am, h, ang)
+        for k in ("back", "top"): parts[k] = from_manifold(as_manifold(parts[k]) - cut)
     out = []
     for n, (t, turn, link, mat) in HELMET.items():
         m = parts[n]; m.apply_translation(neck)
-        bodies = sorted((b for b in as_manifold(m).decompose() if b.volume() > 2000), key=lambda b: -b.volume())
-        for i, b in enumerate(bodies):
-            out.append(({"name": f"helmet_{n}" + (f"_{i + 1}" if i else ""), "link": link, "material": mat, "region": "head"}, from_manifold(b)))
+        # bed-sized halves: down the centre line, the faceplate across the cheeks
+        whole = as_manifold(m); zc = m.bounds[0][2] + 0.32 * m.extents[2]
+        cuts = ({"a": whole.trim_by_plane([0, 0, 1], zc + SEAM_H), "b": whole.trim_by_plane([0, 0, -1], -zc + SEAM_H)} if n == "faceplate" else
+                {"l": whole.trim_by_plane([0, 1, 0], SEAM_H), "r": whole.trim_by_plane([0, -1, 0], SEAM_H)} if n != "chin" else {"": whole})
+        if n == "back":                                # worn tilted it is longer than the bed: a second seam down through the ear disc
+            xc = neck[0] + h[0]
+            cuts = {k_ + e: q.trim_by_plane([sg, 0, 0], sg * xc + SEAM_H) for k_, q in cuts.items() for e, sg in (("f", 1), ("b", -1))}
+        for half, h_ in cuts.items():
+            bodies = sorted((b for b in h_.decompose() if b.volume() > 2000), key=lambda b: -b.volume())
+            for i, b in enumerate(bodies):
+                out.append(({"name": f"helmet_{n}{'_' + half if half else ''}" + (f"_{i + 1}" if i else ""), "link": link, "material": mat, "region": "head"}, from_manifold(b)))
     for i, l in enumerate(eye_lenses(face)):
         out.append(({"name": f"eye_lens_{i + 1}", "link": "helmet_faceplate", "material": "lens_glow", "region": "head"}, l))
     return out, h, fa
@@ -116,7 +148,8 @@ def resolve(pieces, body):
     """Nothing intersects at rest: every piece is trimmed against the wearer and against every piece ranked above it."""
     rank = lambda p: next((i for i, k in enumerate(RANK) if p["region"].endswith(k)), 9)
     lens_first = sorted(pieces, key=lambda x: (rank(x[0]), x[0]["material"] != "lens_glow"))
-    bodies = [(b.bounds, as_manifold(b)) for b in body.values()]
+    # the shipped wearer is simplified: armour is cleared against that surface as well as the true one
+    bodies = [(b.bounds + np.array([[-2.0] * 3, [2.0] * 3]), as_manifold(b) + as_manifold(b).simplify(1.0)) for b in body.values()]
     hit = lambda A_, B_: (A_[0] < B_[1]).all() and (B_[0] < A_[1]).all()
     done = []
     for p, m in lens_first:
@@ -136,25 +169,21 @@ def resolve(pieces, body):
 def main():
     src, urdf, out = sys.argv[1:4]
     meta = json.load(open(src)); base = src.replace(".json", "")
-    links, jpos, _ = A.fk(urdf)
+    body, jpos, joints = A.load_human(urdf)
     pcs = []
     for p in meta:
         m = trimesh.load(f"{base}_{p['name']}.stl", force="mesh", process=True)
         if not m.is_watertight: print("not closed, dropped:", p["name"]); continue
         if m.volume < 0: m.invert()
         # one printed part is one solid: bodies that only touch become their own pieces, crumbs are dropped
-        bodies = [b for b in as_manifold(m).simplify(0.3).decompose() if b.volume() > (150 if p["material"] == "lens_glow" else 3000)]
+        bodies = [b for b in as_manifold(m).simplify(0.2).decompose() if b.volume() > (150 if p["material"] == "lens_glow" else 3000)]
         for i, b in enumerate(sorted(bodies, key=lambda x: -x.volume())):
             pcs.append(({**p, "name": p["name"] + ("" if not i else f"b{i}")}, from_manifold(b)))
     pcs = [(p, m) for p, m in pcs if p["region"] != "head"]
-    base = os.path.dirname(os.path.abspath(urdf)); body = {}
-    for n, L in links.items():
-        if L["material"] == "wearer" and L["mesh"]:
-            b = trimesh.load(os.path.join(base, L["mesh"].split("/", 3)[-1]), force="mesh"); b.apply_scale(1000); b.apply_transform(A._mm(L["world"]))
-            if n == "pelvis": b.vertices[:, :2] *= A.PELVIS_SLIM
-            body[n] = b
     hp, hinge, fa = helmet(jpos["neck_mount"], body["head"])
     pcs = resolve(hp + pcs, body)
+    # the shells are far denser than a printer needs: flat panels lose their triangles, edges stay (0.2 mm is under one layer)
+    pcs = [(p, from_manifold(as_manifold(m).simplify(MESH_TOL))) for p, m in pcs]
     by = lambda link: [m for p, m in pcs if p["link"] == link]
     limits = {}
     for side in ("left", "right"):
@@ -179,6 +208,9 @@ def main():
             limits[jn] = r; print(jn, r, flush=True)
     limits["faceplate"] = [round(fa, 3), 0]
     # STL has no vertex ids: two sheets meeting at one point would weld into a non-manifold edge, so they are parted slightly
+    # the wearer ships too, lightly reduced: he is drawn inside the suit and checked against it
+    for n, b in body.items():
+        pcs.append(({"name": f"wearer_{n}", "link": n, "material": "wearer", "region": "wearer"}, from_manifold(as_manifold(b).simplify(1.0))))
     healed = []
     for p, m in pcs:
         v = np.asarray(m.vertices, float).copy(); nrm = m.vertex_normals
@@ -187,7 +219,7 @@ def main():
             key = np.round((v - lo) / step).astype(np.int64); _, inv, cnt = np.unique(key, axis=0, return_inverse=True, return_counts=True)
             dup = cnt[inv.ravel()] > 1
             if not dup.any(): break
-            v[dup] += nrm[dup] * 0.03 + np.random.default_rng(1).normal(0, 0.012, (int(dup.sum()), 3))
+            v[dup] += nrm[dup] * -0.03 + np.random.default_rng(1).normal(0, 0.012, (int(dup.sum()), 3))
         healed.append((p, trimesh.Trimesh(v, m.faces, process=False)))
     pcs = healed
     blob = bytearray(); rows = []
@@ -198,8 +230,12 @@ def main():
         q = np.round((v - lo) / step).astype("<u2"); ov = len(blob); blob += q.tobytes(); of = len(blob); blob += f.astype("<u2").tobytes()
         rows.append({"name": p["name"], "link": p["link"], "material": p["material"], "region": p["region"], "lo": lo.round(4).tolist(), "step": step.tolist(), "nv": len(v), "nf": len(f), "ov": ov, "of": of,
                      "volume_mm3": round(float(m.volume), 1), "centroid": m.centroid.round(2).tolist()})
-    man = {"source": 'body: "Iron man armored suit" by octv h (Printables 1524711, CC0, provenance unverified); helmet: Iron Man wearable helmet Mark 42 by Manifold3D (Printables 449081, CC BY-SA)', "wearer_height_m": 1.75, "pieces": rows, "limits": limits, "hinge": [float(hinge[0]), float(hinge[2])],
-           "face_rear_x": float(min(m.bounds[0][0] for p, m in pcs if p["link"] == "helmet_faceplate") - jpos["neck_mount"][0]),
+        if p["material"] == "lens_glow" and p["region"].endswith("_hand"):       # the palm's outward direction: the plate's thin axis, away from the hand
+            c0 = v - v.mean(0); n = np.linalg.svd(c0, full_matrices=False)[2][2]
+            hc = np.mean([q.centroid for r_, q in pcs if r_["region"] == p["region"] and r_["material"] != "lens_glow"], axis=0)
+            rows[-1]["normal"] = (n if n @ (v.mean(0) - hc) > 0 else -n).round(4).tolist()
+    man = {"source": 'body: "Iron man armored suit" by octv h (Printables 1524711, CC0, provenance unverified); helmet: Iron Man wearable helmet Mark 42 by Manifold3D (Printables 449081, CC BY-SA)', "wearer_height_m": 1.75, "pieces": rows, "limits": limits, "hinge": [float(hinge[0]), float(hinge[2])], "joints": {k: [round(float(x), 2) for x in v] for k, v in jpos.items()},
+           "face_rear_x": float(min(m.bounds[0][0] for p, m in pcs if p["link"] == "helmet_faceplate" and p["material"] != "wearer") - jpos["neck_mount"][0]),
            "notes": ["shells made by scripts/armour_from_reference.py", "joint limits measured by sweeping each limb's armour against its parent's armour"]}
     json.dump(man, open(out + ".json", "w"), separators=(",", ":")); open(out + ".bin", "wb").write(blob)
     print(len(rows), "pieces", sum(r["nf"] for r in rows), "faces", len(blob) // 1000000, "MB")
