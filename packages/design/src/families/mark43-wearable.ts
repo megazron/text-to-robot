@@ -20,7 +20,7 @@ import { DYNAMIC_FACTOR } from "../sizing.ts";
 export type Mark43Tier = "helmet" | "lights" | "suit";
 export interface Mark43Request { name?: string; prompt?: string; budget?: number; heightM?: number; tier?: Mark43Tier; }
 
-const T = 3, SERVO = "hobby_mg996r", FACE_SERVO = "hobby_mg90s", FILAMENT_USD_PER_KG = 22;
+const T = 3, FACE_SERVO = "hobby_mg90s", FILAMENT_USD_PER_KG = 22;
 const place = (x: Vec3, y: Vec3, z: Vec3, o: Vec3): Mat4 => [x[0], x[1], x[2], 0, y[0], y[1], y[2], 0, z[0], z[1], z[2], 0, o[0], o[1], o[2], 1];
 const apply = (m: Mat4, p: Vec3): Vec3 => [m[0] * p[0] + m[4] * p[1] + m[8] * p[2] + m[12], m[1] * p[0] + m[5] * p[1] + m[9] * p[2] + m[13], m[2] * p[0] + m[6] * p[1] + m[10] * p[2] + m[14]];
 const I4: Mat4 = translation([0, 0, 0]);
