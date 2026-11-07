@@ -14,7 +14,7 @@ from pathlib import Path
 
 root = Path(__file__).resolve().parents[1]
 REQUIRED = ["prompt.txt", "robot.json", "robot.urdf", "BOM.md", "bom.json", "robot.ros2.zip", "robot.cad.zip", "robot.training.zip",
-            "README.md", "simulation_report.json", "simulation.gif"]
+            "README.md", "simulation_report.json", "simulation.gif", "studio.gif"]
 bad = []
 known = json.loads((root / "examples/sim_known_issues.json").read_text()) if (root / "examples/sim_known_issues.json").exists() else {}
 examples = sorted(p for p in (root / "examples").iterdir() if p.is_dir() and p.name[:2].isdigit())
