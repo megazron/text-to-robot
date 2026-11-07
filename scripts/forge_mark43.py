@@ -442,6 +442,39 @@ def export_print(out, v):
     json.dump(meta, open(f"{out}/pack.json", "w"), indent=0); print(len(meta), "pieces", flush=True)
 
 
+def export_anim(out, v):
+    """Per-link halves for the suit-up film: rear halves swing open, so each part is cut at its own bone."""
+    os.makedirs(out, exist_ok=True); man = []
+    def put(name, link, mat, m):
+        m.export(f"{out}/{name}.ply"); man.append({"file": f"{name}.ply", "link": link, "material": mat})
+    def halves(tag, link, mat, m, x0):
+        fc = m.triangles_center[:, 0]
+        for h, sel in (("f", fc >= x0), ("b", fc < x0)):
+            if sel.any(): put(f"{tag}_{h}", f"{link}:{h}", mat, m.submesh([np.nonzero(sel)[0]], append=True))
+    for k in BUILD:
+        p, _ = BUILD[k](v)
+        if k == "torso": reactor(p)
+        for i, (c, m) in enumerate(p.meshes()):
+            if k == "torso": halves(f"torso{i}", "pelvis", NAMES[c], m, 0.0)
+            elif k == "head":
+                if c in (GOLD, LENS): put(f"mask{i}", "helmet_faceplate", NAMES[c], m)
+                else: halves(f"head{i}", "head", NAMES[c], m, -20.0)
+            else:
+                x0 = float(np.mean(m.vertices[:, 0]))
+                for sd, nm in ((1, "left"), (-1, "right")):
+                    q = m.copy()
+                    if sd < 0: q.vertices = np.asarray(q.vertices) * [1, -1, 1]; q.invert()
+                    if k in ("hand", "foot"): put(f"{nm}_{k}{i}", f"{nm}_{k}", NAMES[c], q)
+                    else: halves(f"{nm}_{k}{i}", f"{nm}_{k}", NAMES[c], q, x0)
+        print(k, flush=True); del p
+    for n, p in joint_mech(v):
+        for i, (c, m) in enumerate(p.meshes()):
+            put(f"left_mech_{n}{i}", f"left_{MECH_LINK[n]}", "armour_mech", m); q = m.copy(); q.vertices = np.asarray(q.vertices) * [1, -1, 1]; q.invert(); put(f"right_mech_{n}{i}", f"right_{MECH_LINK[n]}", "armour_mech", q)
+    for i, (c, m) in enumerate(neck_waist(v).meshes()): put(f"core{i}", "pelvis", "armour_mech", m)
+    put("reactor_lens", "pelvis:f", "lens_glow", lenses()[0])
+    json.dump({"pieces": man, "joints": {k: [float(x) for x in val] for k, val in J.items()}, "chin": Z_CHIN}, open(f"{out}/anim.json", "w")); print(len(man), "objects", flush=True)
+
+
 def export_ply(items, out):
     """one binary PLY per colour, for the Blender studio"""
     by = {}
@@ -452,6 +485,7 @@ def export_ply(items, out):
 def main():
     out = sys.argv[1]; v = float(sys.argv[sys.argv.index("--voxel") + 1]) if "--voxel" in sys.argv else 2.0
     if "--print" in sys.argv: return export_print(out, v)
+    if "--anim" in sys.argv: return export_anim(out, v)
     only = sys.argv[sys.argv.index("--only") + 1].split(",") if "--only" in sys.argv else list(BUILD)
     os.makedirs(out, exist_ok=True); items = []
     for k in only:
