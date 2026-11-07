@@ -463,7 +463,7 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
       // waypoints: start, then per crossed joint its two anchors, end
       const bayA = H.bayOf.get(ia), bayB = H.bayOf.get(ib);
       const leaves = (bay?: string, other?: string) => !!bay && bay !== other;
-      const pick = (bay: string, to: Vec3) => H.exits.find((e) => e.id === H.exitOf.get(key)) ?? nearestExit(H, bay, to);
+      const pick = (bay: string, to: Vec3) => H.exits.find((e) => e.id === H.exitOf.get(key) && e.bay === bay) ?? nearestExit(H, bay, to);
       const exA = leaves(bayA, bayB) ? pick(bayA!, lb.p) : null, exB = leaves(bayB, bayA) ? pick(bayB!, la.p) : null;
       if (exA || exB) exit = [exA?.id, exB?.id].filter(Boolean).join(" + ");
       let cur = la.p, curGroup = groupOf.get(la.link)!, routed = false;

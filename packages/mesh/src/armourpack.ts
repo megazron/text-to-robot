@@ -12,9 +12,28 @@ export interface ArmourPiece {
   volume_mm3: number; centroid: [number, number, number];
   /** a palm lens's outward direction */
   normal?: [number, number, number];
-  /** made by scripts/fit_wiring.py: a cable channel or the bay's seat */
+  /** made by scripts/fit_wiring.py: a cable channel or a compartment's seat */
   wiring?: boolean;
+  /** made by scripts/fit_doors.py: a hinge, servo pod, drive arm or latch part. It holds real parts, so it keeps its size at every suit height and moves with `anchor` (world mm) */
+  hardware?: boolean; anchor?: [number, number, number];
 }
+/** A door of the suit (world mm, home pose): a revolute joint on its servo, whose output lies on the hinge line. */
+export interface ArmourDoor {
+  name: string; part: string; side: string; link: string; joint: string; parent: string; region: string;
+  /** a point on the hinge line, its direction up the suit, and the sense of opening about that direction */
+  a: [number, number, number]; up: [number, number, number]; sign: number;
+  hinges: [number, number, number][];
+  /** the drive: the servo's key, its name in the design and its pose (row-major 4x4, world mm) */
+  servo: { key: string; name: string; T: number[][] };
+  /** what the sweep found: degrees reached in the opening sequence, and alone with every other door shut, and what stopped it */
+  measured_deg: number; alone_deg: number; stopped_by: string | null; alone_stopped_by: string | null;
+  /** furthest point of the door from its hinge line */
+  reach_mm: number;
+}
+/** A latch: a sprung pawl on a servo, on `parent`, hooking a ledge on the door. */
+export interface ArmourLatch { name: string; door: string; parent: string; link: string; joint: string; region: string; key: string; T: number[][]; travel: number; room_mm: number; }
+/** Where a compartment seats: its floor's outer corner O, length along ex, width along ey, ez out of the suit; ports (u, v) in the cavity's own measure. */
+export interface ArmourBay { link: string; length_mm: number; width_mm: number; O: [number, number, number]; ex: [number, number, number]; ey: [number, number, number]; ez: [number, number, number]; ports: [number, number][]; }
 /** A cable channel on the inside of a shell: where its trough runs (world mm, home pose). */
 export interface ArmourChannel { name: string; link: string; region: string; width_mm: number; depth_mm: number; pts: [number, number, number][]; }
 export interface ArmourManifest {
@@ -28,8 +47,11 @@ export interface ArmourManifest {
   joints: Record<string, [number, number, number]>;
   notes: string[];
   channels: ArmourChannel[];
-  /** the back compartment's seat: rear face of the saddle (x), lowest cavity edge (z), cavity size and the ports through the shell (z, y), world mm */
-  bay: { rear_x: number; z0: number; length_mm: number; width_mm: number; ports: [number, number][] };
+  doors: ArmourDoor[]; latches: ArmourLatch[];
+  /** the order the doors open in, stage by stage (joint names); they close in reverse */
+  sequence: string[][];
+  /** seats of the compartments: the battery bay on the left back door, a driver bay each side of the waist */
+  bays: { back: ArmourBay; drive_left: ArmourBay; drive_right: ArmourBay };
 }
 
 let manifest: ArmourManifest | undefined, bytes: Uint8Array | undefined;

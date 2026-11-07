@@ -3,6 +3,20 @@
 Dated from the git history. Pull request numbers refer to
 [github.com/megazron/text-to-robot](https://github.com/megazron/text-to-robot/pulls).
 
+## 2026-11-07: Mark 43 opens for real
+
+- The opening is in the design now, not only in the film. The back splits on its centre line and the rear shells of the helmet, upper arms, forearms, thighs and
+  shins are twelve doors, each a revolute joint in the URDF on its own servo, opening 80 degrees on hinge lines along the flanks.
+- `scripts/fit_doors.py` makes the hardware from the finished shells: pinned hinge leaves, servo pods on the fixed halves with the output on the hinge line, drive
+  arms, and 11 sprung latches (pawl, ledge, servo). It then sweeps every door against everything else with exact intersection, in the order the suit opens; the angles it reaches
+  are the joint limits. Doors open a left and right pair at a time, forearms first, back and helmet last, right door before left on the centre seams.
+- Torque per door comes from the spec's masses and inertias with the suit 10 degrees off plumb, pin friction and an estimated cable loop, at the 5 V rail: DS3218 on the back,
+  MG996R on the limbs, MG90S on the helmet. New `door:*` checks cover range, torque, clutch and pinch force, latch strength and hand release.
+- The compartment moved off the centre split: a battery bay on the left back door with its own 5 V door regulator, and a PCA9685 in a small bay in the hollow of the waist on each
+  side, so no limb's servo lead crosses a door. The spine channel is gone; channels now run on the fixed halves and cables cross one hinge in a service loop sized from its real travel.
+- A MuJoCo test runs the whole sequence open and shut. The suit-up film is rebuilt from the built example: same meshes, same hinge lines, same limits, same order, with a lofted figure in place of the capsules.
+- Nothing has been built or tested. See "Before anyone gets inside" in the example's README.
+
 ## 2026-11-07: Mark 43 forehead and neck
 
 - The hole in the forehead is gone. The red wedge and the front of the crown now ride on the mask link and lift with it; before, they sat on the fixed

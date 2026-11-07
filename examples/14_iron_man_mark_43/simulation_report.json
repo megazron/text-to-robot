@@ -4,30 +4,488 @@
  "group": "wearable",
  "scope": "PASS means the modelled actuators (datasheet peak torque as a hard limit, a linear torque-speed line to no-load speed, reflected rotor inertia, URDF damping/friction) can produce the torques and speeds the task needs in this geometry and mass distribution, and that mean torque over the hold stays within the continuous (rated) torque. Joint control uses an ideal model-based feedforward (computed torque) through the force-limited servo for fixed-base robots and plain position servos for floating robots; a pass therefore proves torque/speed capacity, not that a given controller achieves it. Untested: thermal limits over long duty cycles (only the mean-vs-rated proxy), gearbox backlash and compliance, link and joint flexibility, encoder resolution, supply voltage sag and current limits, bus latency, controller tuning, and contact/friction values (nominal friction only).",
  "untested": [],
- "fidelity": "URDF effort limits enforced; position gains inferred; speed/thermal/electrical limits unmodelled; geometry and hardware uncalibrated; armature = rotor inertia x gear ratio^2 from the actuator record: faceplate: 0.00045 kg m^2 (estimate (hobby_pwm_micro motor) x gear ratio 300^2)",
+ "fidelity": "URDF effort limits enforced; position gains inferred; speed/thermal/electrical limits unmodelled; geometry and hardware uncalibrated; armature = rotor inertia x gear ratio^2 from the actuator record: faceplate: 0.00045 kg m^2 (estimate (hobby_pwm_micro motor) x gear ratio 300^2); helmet_door_left_hinge: 0.00045 kg m^2 (estimate (hobby_pwm_micro motor) x gear ratio 300^2); latch_helmet_left_0_pawl: 0.00045 kg m^2 (estimate (hobby_pwm_micro motor) x gear ratio 300^2); helmet_door_right_hinge: 0.00045 kg m^2 (estimate (hobby_pwm_micro motor) x gear ratio 300^2); left_forearm_door_hinge: 0.0192 kg m^2 (estimate (hobby_pwm motor) x gear ratio 400^2); latch_left_forearm_0_pawl: 0.00045 kg m^2 (estimate (hobby_pwm_micro motor) x gear ratio 300^2); left_upper_arm_door_hinge: 0.0192 kg m^2 (estimate (hobby_pwm motor) x gear ratio 400^2); latch_left_upper_arm_0_pawl: 0.00045 kg m^2 (estimate (hobby_pwm_micro motor) x gear ratio 300^2); left_shin_door_hinge: 0.0192 kg m^2 (estimate (hobby_pwm motor) x gear ratio 400^2); latch_left_shin_0_pawl: 0.00045 kg m^2 (estimate (hobby_pwm_micro motor) x gear ratio 300^2); left_thigh_door_hinge: 0.0192 kg m^2 (estimate (hobby_pwm motor) x gear ratio 400^2); latch_left_thigh_0_pawl: 0.00045 kg m^2 (estimate (hobby_pwm_micro motor) x gear ratio 300^2); right_forearm_door_hinge: 0.0192 kg m^2 (estimate (hobby_pwm motor) x gear ratio 400^2); latch_right_forearm_0_pawl: 0.00045 kg m^2 (estimate (hobby_pwm_micro motor) x gear ratio 300^2); right_upper_arm_door_hinge: 0.0192 kg m^2 (estimate (hobby_pwm motor) x gear ratio 400^2); latch_right_upper_arm_0_pawl: 0.00045 kg m^2 (estimate (hobby_pwm_micro motor) x gear ratio 300^2); right_shin_door_hinge: 0.0192 kg m^2 (estimate (hobby_pwm motor) x gear ratio 400^2); latch_right_shin_0_pawl: 0.00045 kg m^2 (estimate (hobby_pwm_micro motor) x gear ratio 300^2); right_thigh_door_hinge: 0.0192 kg m^2 (estimate (hobby_pwm motor) x gear ratio 400^2); latch_right_thigh_0_pawl: 0.00045 kg m^2 (estimate (hobby_pwm_micro motor) x gear ratio 300^2); back_door_left_hinge: 0.0192 kg m^2 (estimate (hobby_pwm motor) x gear ratio 400^2); latch_back_left_0_pawl: 0.00045 kg m^2 (estimate (hobby_pwm_micro motor) x gear ratio 300^2); latch_back_left_1_pawl: 0.00045 kg m^2 (estimate (hobby_pwm_micro motor) x gear ratio 300^2); back_door_right_hinge: 0.0192 kg m^2 (estimate (hobby_pwm motor) x gear ratio 400^2)",
  "tests": {
   "open_and_hold": {
    "pass": true,
-   "explanation": "opens faceplate to -0.95 rad (target -0.95) and holds 1.5 s",
+   "explanation": "opens faceplate to -0.95 rad (target -0.95), helmet_door_left_hinge to -1.326 rad (target -1.326), latch_helmet_left_0_pawl to 0.19 rad (target 0.19), helmet_door_right_hinge to 1.326 rad (target 1.326), left_forearm_door_hinge to -1.326 rad (target -1.326), latch_left_forearm_0_pawl to -0.19 rad (target -0.19), left_upper_arm_door_hinge to -1.326 rad (target -1.326), latch_left_upper_arm_0_pawl to -0.19 rad (target -0.19), left_shin_door_hinge to -1.326 rad (target -1.326), latch_left_shin_0_pawl to -0.19 rad (target -0.19), left_thigh_door_hinge to -1.326 rad (target -1.326), latch_left_thigh_0_pawl to -0.19 rad (target -0.19), right_forearm_door_hinge to 1.326 rad (target 1.326), latch_right_forearm_0_pawl to 0.19 rad (target 0.19), right_upper_arm_door_hinge to 1.326 rad (target 1.326), latch_right_upper_arm_0_pawl to 0.19 rad (target 0.19), right_shin_door_hinge to 1.326 rad (target 1.326), latch_right_shin_0_pawl to 0.19 rad (target 0.19), right_thigh_door_hinge to 1.326 rad (target 1.326), latch_right_thigh_0_pawl to 0.19 rad (target 0.19), back_door_left_hinge to -1.327 rad (target -1.326), latch_back_left_0_pawl to 0.19 rad (target 0.19), latch_back_left_1_pawl to 0.19 rad (target 0.19), back_door_right_hinge to 1.327 rad (target 1.326) and holds 1.5 s",
    "joints": {
     "faceplate": {
-     "peak_nm": 0.1234,
+     "peak_nm": 0.1304,
      "peak_rating_nm": 0.2157,
-     "util_peak": 0.572,
+     "util_peak": 0.605,
      "mean_hold_nm": 0.064,
      "rated_nm": 0.1294,
-     "util_rated": 0.494,
-     "max_err": 0.0052,
+     "util_rated": 0.495,
+     "max_err": 0.0045,
+     "max_err_hold": 0.0002,
+     "saturated_frac": 0.0
+    },
+    "helmet_door_left_hinge": {
+     "peak_nm": 0.0135,
+     "peak_rating_nm": 0.2157,
+     "util_peak": 0.062,
+     "mean_hold_nm": 0.0058,
+     "rated_nm": 0.055,
+     "util_rated": 0.106,
+     "max_err": 0.0032,
+     "max_err_hold": 0.0,
+     "saturated_frac": 0.0
+    },
+    "latch_helmet_left_0_pawl": {
+     "peak_nm": 0.0056,
+     "peak_rating_nm": 0.2157,
+     "util_peak": 0.026,
+     "mean_hold_nm": 0.0,
+     "rated_nm": 0.0647,
+     "util_rated": 0.001,
+     "max_err": 0.0002,
+     "max_err_hold": 0.0,
+     "saturated_frac": 0.0
+    },
+    "helmet_door_right_hinge": {
+     "peak_nm": 0.0132,
+     "peak_rating_nm": 0.2157,
+     "util_peak": 0.061,
+     "mean_hold_nm": 0.004,
+     "rated_nm": 0.055,
+     "util_rated": 0.072,
+     "max_err": 0.0026,
+     "max_err_hold": 0.0,
+     "saturated_frac": 0.0
+    },
+    "left_forearm_door_hinge": {
+     "peak_nm": 0.1475,
+     "peak_rating_nm": 1.0787,
+     "util_peak": 0.137,
+     "mean_hold_nm": 0.0227,
+     "rated_nm": 0.284,
+     "util_rated": 0.08,
+     "max_err": 0.0257,
+     "max_err_hold": 0.0002,
+     "saturated_frac": 0.0
+    },
+    "latch_left_forearm_0_pawl": {
+     "peak_nm": 0.0057,
+     "peak_rating_nm": 0.2157,
+     "util_peak": 0.027,
+     "mean_hold_nm": 0.0001,
+     "rated_nm": 0.0647,
+     "util_rated": 0.002,
+     "max_err": 0.0002,
+     "max_err_hold": 0.0,
+     "saturated_frac": 0.0
+    },
+    "left_upper_arm_door_hinge": {
+     "peak_nm": 0.1746,
+     "peak_rating_nm": 1.0787,
+     "util_peak": 0.162,
+     "mean_hold_nm": 0.0261,
+     "rated_nm": 0.284,
+     "util_rated": 0.092,
+     "max_err": 0.0261,
+     "max_err_hold": 0.0002,
+     "saturated_frac": 0.0
+    },
+    "latch_left_upper_arm_0_pawl": {
+     "peak_nm": 0.0058,
+     "peak_rating_nm": 0.2157,
+     "util_peak": 0.027,
+     "mean_hold_nm": 0.0001,
+     "rated_nm": 0.0647,
+     "util_rated": 0.002,
+     "max_err": 0.0002,
+     "max_err_hold": 0.0,
+     "saturated_frac": 0.0
+    },
+    "left_shin_door_hinge": {
+     "peak_nm": 0.1577,
+     "peak_rating_nm": 1.0787,
+     "util_peak": 0.146,
+     "mean_hold_nm": 0.0062,
+     "rated_nm": 0.284,
+     "util_rated": 0.022,
+     "max_err": 0.0261,
+     "max_err_hold": 0.0001,
+     "saturated_frac": 0.0
+    },
+    "latch_left_shin_0_pawl": {
+     "peak_nm": 0.0057,
+     "peak_rating_nm": 0.2157,
+     "util_peak": 0.026,
+     "mean_hold_nm": 0.0,
+     "rated_nm": 0.0647,
+     "util_rated": 0.0,
+     "max_err": 0.0002,
+     "max_err_hold": 0.0,
+     "saturated_frac": 0.0
+    },
+    "left_thigh_door_hinge": {
+     "peak_nm": 0.1459,
+     "peak_rating_nm": 1.0787,
+     "util_peak": 0.135,
+     "mean_hold_nm": 0.0107,
+     "rated_nm": 0.284,
+     "util_rated": 0.038,
+     "max_err": 0.0282,
+     "max_err_hold": 0.0001,
+     "saturated_frac": 0.0
+    },
+    "latch_left_thigh_0_pawl": {
+     "peak_nm": 0.0057,
+     "peak_rating_nm": 0.2157,
+     "util_peak": 0.026,
+     "mean_hold_nm": 0.0,
+     "rated_nm": 0.0647,
+     "util_rated": 0.0,
+     "max_err": 0.0002,
+     "max_err_hold": 0.0,
+     "saturated_frac": 0.0
+    },
+    "right_forearm_door_hinge": {
+     "peak_nm": 0.1475,
+     "peak_rating_nm": 1.0787,
+     "util_peak": 0.137,
+     "mean_hold_nm": 0.0227,
+     "rated_nm": 0.284,
+     "util_rated": 0.08,
+     "max_err": 0.0257,
+     "max_err_hold": 0.0002,
+     "saturated_frac": 0.0
+    },
+    "latch_right_forearm_0_pawl": {
+     "peak_nm": 0.0057,
+     "peak_rating_nm": 0.2157,
+     "util_peak": 0.027,
+     "mean_hold_nm": 0.0001,
+     "rated_nm": 0.0647,
+     "util_rated": 0.002,
+     "max_err": 0.0002,
+     "max_err_hold": 0.0,
+     "saturated_frac": 0.0
+    },
+    "right_upper_arm_door_hinge": {
+     "peak_nm": 0.1746,
+     "peak_rating_nm": 1.0787,
+     "util_peak": 0.162,
+     "mean_hold_nm": 0.026,
+     "rated_nm": 0.284,
+     "util_rated": 0.092,
+     "max_err": 0.0261,
+     "max_err_hold": 0.0002,
+     "saturated_frac": 0.0
+    },
+    "latch_right_upper_arm_0_pawl": {
+     "peak_nm": 0.0058,
+     "peak_rating_nm": 0.2157,
+     "util_peak": 0.027,
+     "mean_hold_nm": 0.0001,
+     "rated_nm": 0.0647,
+     "util_rated": 0.002,
+     "max_err": 0.0002,
+     "max_err_hold": 0.0,
+     "saturated_frac": 0.0
+    },
+    "right_shin_door_hinge": {
+     "peak_nm": 0.1577,
+     "peak_rating_nm": 1.0787,
+     "util_peak": 0.146,
+     "mean_hold_nm": 0.0062,
+     "rated_nm": 0.284,
+     "util_rated": 0.022,
+     "max_err": 0.0261,
+     "max_err_hold": 0.0001,
+     "saturated_frac": 0.0
+    },
+    "latch_right_shin_0_pawl": {
+     "peak_nm": 0.0057,
+     "peak_rating_nm": 0.2157,
+     "util_peak": 0.026,
+     "mean_hold_nm": 0.0,
+     "rated_nm": 0.0647,
+     "util_rated": 0.0,
+     "max_err": 0.0002,
+     "max_err_hold": 0.0,
+     "saturated_frac": 0.0
+    },
+    "right_thigh_door_hinge": {
+     "peak_nm": 0.146,
+     "peak_rating_nm": 1.0787,
+     "util_peak": 0.135,
+     "mean_hold_nm": 0.0107,
+     "rated_nm": 0.284,
+     "util_rated": 0.038,
+     "max_err": 0.0282,
+     "max_err_hold": 0.0001,
+     "saturated_frac": 0.0
+    },
+    "latch_right_thigh_0_pawl": {
+     "peak_nm": 0.0057,
+     "peak_rating_nm": 0.2157,
+     "util_peak": 0.026,
+     "mean_hold_nm": 0.0,
+     "rated_nm": 0.0647,
+     "util_rated": 0.0,
+     "max_err": 0.0002,
+     "max_err_hold": 0.0,
+     "saturated_frac": 0.0
+    },
+    "back_door_left_hinge": {
+     "peak_nm": 0.3451,
+     "peak_rating_nm": 2.1084,
+     "util_peak": 0.164,
+     "mean_hold_nm": 0.2337,
+     "rated_nm": 0.559,
+     "util_rated": 0.418,
+     "max_err": 0.0355,
+     "max_err_hold": 0.0009,
+     "saturated_frac": 0.0
+    },
+    "latch_back_left_0_pawl": {
+     "peak_nm": 0.0056,
+     "peak_rating_nm": 0.2157,
+     "util_peak": 0.026,
+     "mean_hold_nm": 0.0001,
+     "rated_nm": 0.0647,
+     "util_rated": 0.002,
+     "max_err": 0.0002,
+     "max_err_hold": 0.0,
+     "saturated_frac": 0.0
+    },
+    "latch_back_left_1_pawl": {
+     "peak_nm": 0.0056,
+     "peak_rating_nm": 0.2157,
+     "util_peak": 0.026,
+     "mean_hold_nm": 0.0001,
+     "rated_nm": 0.0647,
+     "util_rated": 0.001,
+     "max_err": 0.0002,
+     "max_err_hold": 0.0,
+     "saturated_frac": 0.0
+    },
+    "back_door_right_hinge": {
+     "peak_nm": 0.1389,
+     "peak_rating_nm": 2.1084,
+     "util_peak": 0.066,
+     "mean_hold_nm": 0.0856,
+     "rated_nm": 0.559,
+     "util_rated": 0.153,
+     "max_err": 0.0288,
      "max_err_hold": 0.0003,
      "saturated_frac": 0.0
     }
    },
    "reached": {
-    "faceplate": -0.95
+    "faceplate": -0.95,
+    "helmet_door_left_hinge": -1.326,
+    "latch_helmet_left_0_pawl": 0.19,
+    "helmet_door_right_hinge": 1.326,
+    "left_forearm_door_hinge": -1.326,
+    "latch_left_forearm_0_pawl": -0.19,
+    "left_upper_arm_door_hinge": -1.326,
+    "latch_left_upper_arm_0_pawl": -0.19,
+    "left_shin_door_hinge": -1.326,
+    "latch_left_shin_0_pawl": -0.19,
+    "left_thigh_door_hinge": -1.326,
+    "latch_left_thigh_0_pawl": -0.19,
+    "right_forearm_door_hinge": 1.326,
+    "latch_right_forearm_0_pawl": 0.19,
+    "right_upper_arm_door_hinge": 1.326,
+    "latch_right_upper_arm_0_pawl": 0.19,
+    "right_shin_door_hinge": 1.326,
+    "latch_right_shin_0_pawl": 0.19,
+    "right_thigh_door_hinge": 1.326,
+    "latch_right_thigh_0_pawl": 0.19,
+    "back_door_left_hinge": -1.327,
+    "latch_back_left_0_pawl": 0.19,
+    "latch_back_left_1_pawl": 0.19,
+    "back_door_right_hinge": 1.327
    }
+  },
+  "doors_open_close": {
+   "pass": true,
+   "explanation": "12 doors open in 8 stages to 78 deg or more and close again: worst lag 0.0 deg at the end of a stage, 0.04 deg from shut at the end",
+   "joints": {
+    "helmet_door_left_hinge": {
+     "peak_nm": 0.0151,
+     "peak_rating_nm": 0.2157,
+     "util_peak": 0.07,
+     "mean_hold_nm": 0.0046,
+     "rated_nm": 0.055,
+     "util_rated": 0.083,
+     "max_err": 0.0017,
+     "max_err_hold": 0.0017,
+     "saturated_frac": 0.0
+    },
+    "helmet_door_right_hinge": {
+     "peak_nm": 0.0128,
+     "peak_rating_nm": 0.2157,
+     "util_peak": 0.059,
+     "mean_hold_nm": 0.0034,
+     "rated_nm": 0.055,
+     "util_rated": 0.063,
+     "max_err": 0.0014,
+     "max_err_hold": 0.0014,
+     "saturated_frac": 0.0
+    },
+    "left_forearm_door_hinge": {
+     "peak_nm": 0.0654,
+     "peak_rating_nm": 1.0787,
+     "util_peak": 0.061,
+     "mean_hold_nm": 0.0229,
+     "rated_nm": 0.284,
+     "util_rated": 0.081,
+     "max_err": 0.0133,
+     "max_err_hold": 0.0133,
+     "saturated_frac": 0.0
+    },
+    "left_upper_arm_door_hinge": {
+     "peak_nm": 0.0893,
+     "peak_rating_nm": 1.0787,
+     "util_peak": 0.083,
+     "mean_hold_nm": 0.0215,
+     "rated_nm": 0.284,
+     "util_rated": 0.076,
+     "max_err": 0.0136,
+     "max_err_hold": 0.0136,
+     "saturated_frac": 0.0
+    },
+    "left_shin_door_hinge": {
+     "peak_nm": 0.0707,
+     "peak_rating_nm": 1.0787,
+     "util_peak": 0.066,
+     "mean_hold_nm": 0.0094,
+     "rated_nm": 0.284,
+     "util_rated": 0.033,
+     "max_err": 0.0135,
+     "max_err_hold": 0.0135,
+     "saturated_frac": 0.0
+    },
+    "left_thigh_door_hinge": {
+     "peak_nm": 0.08,
+     "peak_rating_nm": 1.0787,
+     "util_peak": 0.074,
+     "mean_hold_nm": 0.0151,
+     "rated_nm": 0.284,
+     "util_rated": 0.053,
+     "max_err": 0.0147,
+     "max_err_hold": 0.0147,
+     "saturated_frac": 0.0
+    },
+    "right_forearm_door_hinge": {
+     "peak_nm": 0.0654,
+     "peak_rating_nm": 1.0787,
+     "util_peak": 0.061,
+     "mean_hold_nm": 0.0229,
+     "rated_nm": 0.284,
+     "util_rated": 0.081,
+     "max_err": 0.0133,
+     "max_err_hold": 0.0133,
+     "saturated_frac": 0.0
+    },
+    "right_upper_arm_door_hinge": {
+     "peak_nm": 0.0892,
+     "peak_rating_nm": 1.0787,
+     "util_peak": 0.083,
+     "mean_hold_nm": 0.0215,
+     "rated_nm": 0.284,
+     "util_rated": 0.076,
+     "max_err": 0.0136,
+     "max_err_hold": 0.0136,
+     "saturated_frac": 0.0
+    },
+    "right_shin_door_hinge": {
+     "peak_nm": 0.0707,
+     "peak_rating_nm": 1.0787,
+     "util_peak": 0.066,
+     "mean_hold_nm": 0.0094,
+     "rated_nm": 0.284,
+     "util_rated": 0.033,
+     "max_err": 0.0135,
+     "max_err_hold": 0.0135,
+     "saturated_frac": 0.0
+    },
+    "right_thigh_door_hinge": {
+     "peak_nm": 0.08,
+     "peak_rating_nm": 1.0787,
+     "util_peak": 0.074,
+     "mean_hold_nm": 0.015,
+     "rated_nm": 0.284,
+     "util_rated": 0.053,
+     "max_err": 0.0147,
+     "max_err_hold": 0.0147,
+     "saturated_frac": 0.0
+    },
+    "back_door_left_hinge": {
+     "peak_nm": 0.3879,
+     "peak_rating_nm": 2.1084,
+     "util_peak": 0.184,
+     "mean_hold_nm": 0.2169,
+     "rated_nm": 0.559,
+     "util_rated": 0.388,
+     "max_err": 0.0199,
+     "max_err_hold": 0.0199,
+     "saturated_frac": 0.0
+    },
+    "back_door_right_hinge": {
+     "peak_nm": 0.2043,
+     "peak_rating_nm": 2.1084,
+     "util_peak": 0.097,
+     "mean_hold_nm": 0.0791,
+     "rated_nm": 0.559,
+     "util_rated": 0.142,
+     "max_err": 0.0155,
+     "max_err_hold": 0.0155,
+     "saturated_frac": 0.0
+    }
+   },
+   "reached": {
+    "left_forearm_door_hinge": -1.368,
+    "right_forearm_door_hinge": 1.368,
+    "left_shin_door_hinge": -1.368,
+    "right_shin_door_hinge": 1.368,
+    "left_upper_arm_door_hinge": -1.368,
+    "right_upper_arm_door_hinge": 1.368,
+    "left_thigh_door_hinge": -1.368,
+    "right_thigh_door_hinge": 1.368,
+    "back_door_right_hinge": 1.368,
+    "back_door_left_hinge": -1.369,
+    "helmet_door_right_hinge": 1.368,
+    "helmet_door_left_hinge": -1.368
+   },
+   "stages": [
+    [
+     "left_forearm_door_hinge",
+     "right_forearm_door_hinge"
+    ],
+    [
+     "left_shin_door_hinge",
+     "right_shin_door_hinge"
+    ],
+    [
+     "left_upper_arm_door_hinge",
+     "right_upper_arm_door_hinge"
+    ],
+    [
+     "left_thigh_door_hinge",
+     "right_thigh_door_hinge"
+    ],
+    [
+     "back_door_right_hinge"
+    ],
+    [
+     "back_door_left_hinge"
+    ],
+    [
+     "helmet_door_right_hinge"
+    ],
+    [
+     "helmet_door_left_hinge"
+    ]
+   ]
   }
  },
- "passed": 1,
- "total": 1,
- "source_urdf_sha256": "3701a4a161029f8a308cb1d945101ee3e16bd5b54d8db326727744fc333cc29d"
+ "passed": 2,
+ "total": 2,
+ "source_urdf_sha256": "199f0e794c6fc75f5f47ba23343d642b40546f0c7c802387b8b791ee0eaa2160"
 }

@@ -997,8 +997,42 @@ def exo_tasks(xml):
     return {"wearer_support": _result(passed, why, joints=util, powered=rep["powered"], unpowered=rep["unpowered"], validation_scope=rep["validation_scope"])}
 
 
-def wearable_tasks(xml):
-    """Worn armour on a fixed wearer: every actuated joint (the faceplate) moves to the end of its range and holds."""
+def door_sequence(xml, stages):
+    """The suit's doors in the order the sketch moves them: pawls lift, each stage opens, then everything closes in reverse and the pawls drop. Every stage must reach its
+    target with the servos inside their torque limits and come back to the shut pose."""
+    m = mujoco.MjModel.from_xml_string(xml); rig = Rig(m); names = [A["joint"] for A in rig.acts]; idx = {n: i for i, n in enumerate(names)}
+    far = lambda A: float(m.jnt_range[A["jid"]][0] if abs(m.jnt_range[A["jid"]][0]) > abs(m.jnt_range[A["jid"]][1]) else m.jnt_range[A["jid"]][1])
+    pawls = [A["joint"] for A in rig.acts if A["joint"].endswith("_pawl")]; doors = [j for st in stages for j in st]
+    q = np.zeros(len(names)); ok = True; reached = {}; worst = 0.0; settle = 0.6
+    def move(joints, target, T):
+        nonlocal q, ok, worst
+        q1 = q.copy()
+        for j in joints: q1[idx[j]] = target(rig.by_joint(j))
+        ok = _run_traj(rig, q, q1, T, settle) and ok; q = q1
+        worst = max(worst, max(abs(float(rig.d.qpos[rig.by_joint(j)["qadr"]]) - q[idx[j]]) for j in joints))
+    move(pawls, far, 0.4)
+    for st in stages:
+        move(st, lambda A: far(A) * 0.98, 3.0)
+        for j in st: reached[j] = _r(float(rig.d.qpos[rig.by_joint(j)["qadr"]]), 3)
+    for st in reversed(stages): move(st, lambda A: 0.0, 3.0)
+    move(pawls, lambda A: 0.0, 0.4)
+    util = rig.utilisation(set(doors))
+    shut = max(abs(float(rig.d.qpos[rig.by_joint(j)["qadr"]])) for j in doors + pawls)
+    over = [j for j, u in util.items() if (u.get("saturated_frac") or 0) > 0.02]
+    passed = ok and worst < 0.05 and shut < 0.02 and not over
+    why = (f"{len(doors)} doors open in {len(stages)} stages to {min(abs(v) for v in reached.values()) * 57.3:.0f} deg or more and close again: worst lag {worst * 57.3:.1f} deg at the end of a stage, {shut * 57.3:.2f} deg from shut at the end"
+           + (f"; torque limit reached at {_names(over)}" if over else ""))
+    return {"doors_open_close": _result(passed, why, joints=util, reached=reached, stages=stages)}
+
+
+def wearable_tasks(xml, design=None):
+    """Worn armour on a fixed wearer: every actuated joint (faceplate, doors, latches) moves to the end of its range and holds; a suit with doors then runs its opening sequence."""
+    seq = (design or {}).get("door_sequence")
+    extra = door_sequence(xml, seq) if seq else {}
+    return {**_open_hold(xml), **extra}
+
+
+def _open_hold(xml):
     m = mujoco.MjModel.from_xml_string(xml); rig = Rig(m)
     if not rig.acts: return generic_hold(xml, "worn armour without actuators")
     names = [A["joint"] for A in rig.acts]
@@ -1065,7 +1099,7 @@ def run_tasks(urdf_path, spec=None, verbose=True, family=None):
     elif group == "legged":
         tests.update(legged_tasks(xml, family))
     elif group == "wearable":
-        tests.update(wearable_tasks(xml))
+        tests.update(wearable_tasks(xml, design))
     elif group == "exo":
         tests.update(exo_tasks(xml))
     else:

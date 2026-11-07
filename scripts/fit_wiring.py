@@ -1,9 +1,10 @@
-"""Fits the harness into the finished armour pack, without touching the outside of the suit:
+"""Fits the harness into the finished armour pack:
 
-  - cable channels: U-section raceways that lie on the inner face of the shells, bonded with foam tape, snap lips every
-    ~50 mm. Rays from each bone find the inner surface; pieces are short enough for the bed and stop at the seams where the suit opens.
-  - the back bay's seat: a saddle whose front is the torso's back and whose rear is flat for the compartment, and the cable ports
-    through the shell behind it.
+  - cable channels: U-section raceways that lie on the inner face of the shells, bonded with foam tape, snap lips every ~50 mm. Rays from
+    each bone find the inner surface. They run on the fixed halves, which never move, and stop short of the hinges: the suit's cables cross
+    a door only in a service loop at its hinge (packages/design/src/wiring.ts sizes the loop from the door's real travel).
+  - seats for the compartments: the battery bay on the left back door, off the centre line where the doors part, and a driver bay in the
+    hollow of the waist on each side. A seat's front is the shell, its rear is flat for the compartment; cable ports go through the shell behind it.
   - the neck's measured range (the wearer turns his head; the helmet turns with him).
 
     .venv/bin/python -B scripts/fit_wiring.py packages/parts/data/mark43_pack
@@ -19,15 +20,16 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import forge_mark43 as FORGE
 
 J = FORGE.J
-# the compartment in world mm: lowest cavity edge, cavity length up the back and width across it; the wall and floor are the bay's own
-BAY = {"z0": 1100.0, "L": 112.0, "W": 104.0, "wall": 2.4}
-PORT_Z, PORT_YS, PORT_D = 1200.0, (9.0, -9.0, 27.0, -27.0), 11.0   # the cable ports through the shell (a 9.5 mm grommet in the bay floor above each); the helmet alone uses the first two
-SADDLE_MIN = 7.0                                # saddle thickness at the shell's rearmost point: what its screws bite into
-BACK_PIECE = "torso_8"                          # the lumbar panel: one piece under the whole footprint
+# the battery bay on the left back door, world mm: lowest cavity edge, length up the back, width across it, its edge off the centre line
+BAY = {"z0": 1128.0, "L": 150.0, "W": 72.0, "y0": 14.0, "wall": 2.4}
+PORT_Z, PORT_D = 1262.0, 11.0                   # the cable ports through the shell (a 9.5 mm grommet in the bay floor above each)
+PORTS = [(1262.0, 26.0), (1262.0, 42.0), (1244.0, 26.0), (1244.0, 42.0), (1262.0, 58.0), (1244.0, 58.0)]
+DRIVE = {"x0": 6.0, "z0": 1116.0, "L": 66.0, "W": 44.0, "wall": 2.4}   # a driver bay in the hollow of the waist: along the flank from x0, up from z0
+DRIVE_SLOT = (40.0, 13.0)                       # the slot its cables leave by, beside the board
+SADDLE_MIN = 7.0                                # saddle thickness at the shell's outermost point: what its screws bite into
 STEP, GAPS = 8.0, (0.8, 1.2, 1.6, 2.0, 2.4)     # sample spacing along a channel; bonding gaps to the shell to try (foam tape fills it)
 BASE_T, RAIL_T, LIP, LIP_T, LIP_EVERY = 2.0, 1.8, 2.4, 1.6, 6
 MAX_RUN = 22                                    # samples per printed piece: 180 mm, inside the bed in any orientation
-SEAM_X, SEAM_CLEAR = 8.0, 14.0                  # chest and back part here: a channel stops either side (an inline connector crosses it)
 COLLIDE = 400.0
 
 
@@ -93,17 +95,21 @@ def limb_rays(a, b, way, side):
 
 
 def paths():
-    """Every channel: name, link, region, rays, trough width, rail height. Rails run on the shells' rear halves, which stay in one piece when a limb opens; on the upper arm, the rear panel towards the body."""
-    out = [("spine", "pelvis", "torso", torso_rays([(180, 1212), (180, 1534)]), 24.0, 8.0)]
+    """Every channel: name, link, region, rays, trough width, rail height. All but one lie on fixed shells; a limb's runs on its front half, inboard of the hinge."""
+    out = [("door_left", "back_door_left", "torso", torso_rays([(166, PORT_Z), (140, PORT_Z), (112, PORT_Z)]), 24.0, 8.0),
+           ("belt", "pelvis", "torso", torso_rays([(84, 1084), (40, 1076), (0, 1076), (-40, 1076), (-84, 1084)]), 14.0, 6.0),
+           ("chest", "pelvis", "torso", torso_rays([(70, 1412), (60, 1500), (14, 1548), (0, 1500), (0, 1418)]), 14.0, 5.0),
+           ("collar", "pelvis", "torso", torso_rays([(42, 1520), (20, 1556)]), 14.0, 5.0)]
     for sd, n in ((1, "left"), (-1, "right")):
-        out.append((f"{n}_yoke", "pelvis", "torso", torso_rays([(sd * 168, 1466), (sd * 150, 1468), (sd * 124, 1472)]), 14.0, 6.0))
-        sh, el, wr = (J[k] * [1, sd, 1] for k in ("shoulder", "elbow", "wrist"))
-        Lu, Lf = np.linalg.norm(el - sh), np.linalg.norm(wr - el)
-        out.append((f"{n}_upper_arm", f"{n}_upper_arm", f"{n}_upper_arm", limb_rays(sh, el, [(130, -140), (Lu - 72, -140)], sd), 14.0, 5.0))
-        out.append((f"{n}_forearm", f"{n}_forearm", f"{n}_forearm", limb_rays(el, wr, [(40, -165), (Lf - 66, -165)], sd), 14.0, 5.0))
-        out.append((f"{n}_helmet", "head", "head", torso_rays([(sd * 170, 1604), (sd * 150, 1640), (sd * 118, 1696)], -10.0), 14.0, 5.0))
-    # the chest: round the left of the neck, past the seam, down the sternum to just above the reactor ring
-    out.append(("chest", "pelvis", "torso", torso_rays([(168, 1540), (120, 1552), (60, 1552), (14, 1548), (0, 1500), (0, 1418)]), 14.0, 5.0))
+        out.append((f"{n}_flank_low", "pelvis", "torso", torso_rays([(sd * 76, 1096), (sd * 76, 1236)]), 18.0, 7.0))
+        out.append((f"{n}_flank_high", "pelvis", "torso", torso_rays([(sd * 74, 1246), (sd * 72, 1404)]), 18.0, 7.0))
+        sh, el, wr, hp, kn, an = (J[k] * [1, sd, 1] for k in ("shoulder", "elbow", "wrist", "hip", "knee", "ankle"))
+        Lu, Lf, Lt, Ls = (np.linalg.norm(a - b) for a, b in ((el, sh), (wr, el), (kn, hp), (an, kn)))
+        out.append((f"{n}_upper_arm", f"{n}_upper_arm", f"{n}_upper_arm", limb_rays(sh, el, [(132, -48), (Lu - 44, -48)], sd), 14.0, 5.0))
+        out.append((f"{n}_forearm", f"{n}_forearm", f"{n}_forearm", limb_rays(el, wr, [(26, -48), (Lf - 36, -48)], sd), 14.0, 5.0))
+        out.append((f"{n}_thigh", f"{n}_thigh", f"{n}_thigh", limb_rays(hp, kn, [(36, 46), (Lt - 36, 46)], sd), 14.0, 5.0))
+        out.append((f"{n}_shin", f"{n}_shin", f"{n}_shin", limb_rays(kn, an, [(30, 46), (Ls - 56, 46)], sd), 14.0, 5.0))
+        out.append((f"{n}_helmet", "head", "head", torso_rays([(sd * 92, 1602), (sd * 88, 1680)], -10.0), 14.0, 5.0))
     return out
 
 
@@ -134,7 +140,7 @@ def channel(name, O, D, shell, w, h, gap):
             cut.append(slab(k, (-trough, trough, BASE_T, top - LIP_T if lip else top + 1), t0, t1))
             if lip: cut.append(slab(k, (-trough + LIP, trough - LIP, BASE_T, top + 1), t0, t1))
         return bar - m3.Manifold.batch_boolean(cut, m3.OpType.Add)
-    keep = np.abs(P[:, 0] - SEAM_X) > SEAM_CLEAR if name == "chest" else np.ones(len(P), bool)
+    keep = np.ones(len(P), bool)
     runs = []; k = 0
     while k < len(P):       # the stretches between seams, each cut into equal printable lengths
         if not keep[k]: k += 1; continue
@@ -146,27 +152,60 @@ def channel(name, O, D, shell, w, h, gap):
     return P + N * (lift + BASE_T + h / 2)[:, None], runs, piece
 
 
+def seat(shells, O, ex, ey, ez, L, W, wall, ports, port_d, slot=None):
+    """A saddle under a compartment. Cavity corner at O, length along ex, width along ey, ez out of the suit; `ports` (u, v) are drilled through it and the shell.
+    Returns the distance of the saddle's outer face from O along ez, the saddle, and the shells with their ports."""
+    M = np.c_[ex, ey, ez]; to = np.c_[M.T, -M.T @ O]; back = np.c_[M, O]; lo, hi = (-wall - 0.0, -wall), (L + wall, W + wall)
+    ls = [as_manifold(m).transform(to.tolist()) for m in shells]; hmax = -1e9
+    for x in ls:
+        v = np.asarray(x.to_mesh().vert_properties)[:, :3]; f = (v[:, 0] > lo[0]) & (v[:, 0] < hi[0]) & (v[:, 1] > lo[1]) & (v[:, 1] < hi[1])
+        if f.any(): hmax = max(hmax, float(v[f, 2].max()))
+    h = hmax + SADDLE_MIN
+    if slot: drill = lambda g: m3.Manifold.batch_boolean([m3.Manifold.cube([slot[0] + g, slot[1] + g, 80.0]).translate([u - (slot[0] + g) / 2, v - (slot[1] + g) / 2, h - 70]) for u, v in ports], m3.OpType.Add)
+    else: drill = lambda g: m3.Manifold.batch_boolean([m3.Manifold.cylinder(80.0, (port_d + g) / 2, (port_d + g) / 2, 32).translate([u, v, h - 70]) for u, v in ports], m3.OpType.Add)
+    block = m3.Manifold.cube([L + 2 * wall - 6, W + 2 * wall - 6, 42.0]).translate([-wall + 3, -wall + 3, h - 42.0]); solid = drill(1.0)
+    # everything under the shell goes, seams between its panels included: the saddle stands on the outer face and nothing of it reaches inside
+    under = [x.translate([a, b, 0.4 - t]) for x in ls for t in np.arange(0.0, 46.0, 2.4) for a, b in ((0, 0), (1.0, 0), (-1.0, 0), (0, 1.0), (0, -1.0))]
+    block = block - m3.Manifold.batch_boolean(under, m3.OpType.Add) - solid
+    best = max((c for c in block.decompose() if c.volume() > 500), key=lambda c: c.bounding_box()[5])
+    return h, from_manifold(best.transform(back.tolist())), [from_manifold((x - drill(0.0)).transform(back.tolist())) for x in ls]
+
+
 def fit(base):
     man, old = read_pack(base)
     old = [e for e in old if not e[0].get("wiring")]
     meshes = {r["name"]: m for r, m, _ in old}
-    # ---- the seat on the back
-    lumbar = meshes[BACK_PIECE]; hw = BAY["W"] / 2 + BAY["wall"]; z0, z1 = BAY["z0"] - BAY["wall"], BAY["z0"] + BAY["L"] + BAY["wall"]
-    v = lumbar.vertices; foot = (np.abs(v[:, 1]) < hw) & (v[:, 2] > z0) & (v[:, 2] < z1); xr = float(v[foot, 0].min()) - SADDLE_MIN
-    ports = [(PORT_Z, y) for y in PORT_YS]
-    drill = lambda d: m3.Manifold.batch_boolean([m3.Manifold.cylinder(70.0, d / 2, d / 2, 32).rotate([0, 90, 0]).translate([xr - 10, y, z]) for z, y in ports], m3.OpType.Add)
-    seat = m3.Manifold.cube([34.0, 2 * hw - 6, z1 - z0 - 6]).translate([xr, -hw + 3, z0 + 3]) - as_manifold(lumbar) - as_manifold(lumbar).translate([-0.4, 0, 0]) - drill(PORT_D + 1)
-    saddle = from_manifold(min((c for c in seat.decompose() if c.volume() > 500), key=lambda c: c.bounding_box()[0]))
-    back = from_manifold(as_manifold(lumbar) - drill(PORT_D))
-    print(f"saddle: rear face x={xr:.1f}, {saddle.volume / 1000:.0f} cm3, {saddle.extents.round(1)}", flush=True)
+    # ---- the seats
+    new = []; changed = {}; bays = {}
+    def seated(name, link, O, ex, ey, ez, L, W, wall, ports, port_d, depth, slot=None):
+        O, ex, ey, ez = (np.asarray(a, float) for a in (O, ex, ey, ez))
+        foot = np.array([O + ex * u + ey * v for u in (0, L) for v in (0, W)]); lo, hi = foot.min(0) - 12, foot.max(0) + 12; c = ez != 0
+        under = [r["name"] for r, m, _ in old if r["link"] == link and r["material"] in ("armour_red", "armour_gold", "armour_silver") and not r.get("hardware") and overlaps(m.bounds, np.array([np.where(c, -1e4, lo), np.where(c, 1e4, hi)]))]
+        h, saddle, cut = seat([changed.get(n, meshes[n]) for n in under], O, ex, ey, ez, L, W, wall, ports, port_d, slot)
+        for n, m in zip(under, cut): changed[n] = m
+        new.append((f"{name}_saddle", link, "armour_red", "torso", saddle)); T = np.eye(4); T[:3, :3] = np.c_[ex, ey, ez]
+        print(f"{name}: saddle face {h:.1f} from the cavity corner, {saddle.volume / 1000:.0f} cm3, {saddle.extents.round(1)}", flush=True)
+        return {"link": link, "length_mm": L, "width_mm": W, "O": (O + ez * h).round(2).tolist(), "ex": list(map(float, ex)), "ey": list(map(float, ey)), "ez": list(map(float, ez)), "ports": [[round(float(u), 2), round(float(v), 2)] for u, v in ports]}
+    # the battery bay: length up the back, width out from the centre line, floor towards the shell
+    O = np.array([-90.0, BAY["y0"], BAY["z0"]])
+    bays["back"] = seated("bay", "back_door_left", O, (0, 0, 1), (0, 1, 0), (-1, 0, 0), BAY["L"], BAY["W"], BAY["wall"], [(z - BAY["z0"], y - BAY["y0"]) for z, y in PORTS], PORT_D, 30.0)
+    for sd, n in ((1, "left"), (-1, "right")):
+        O = np.array([DRIVE["x0"], sd * 100.0, DRIVE["z0"]]); ex, ez = np.array([1.0, 0, 0]), np.array([0, float(sd), 0]); ey = np.cross(ez, ex)
+        if ey[2] < 0: O = O + np.array([0, 0, DRIVE["W"]])
+        bays[f"drive_{n}"] = seated(f"drive_{n}", "pelvis", O, ex, ey, ez, DRIVE["L"], DRIVE["W"], DRIVE["wall"], [(DRIVE["L"] / 2, 36.0)], 0.0, 16.0, DRIVE_SLOT)
+    print("seats done", flush=True)
     # ---- channels
     shell_of = {}
     for r, m, _ in old:
-        if r["material"] not in ("armour_mech", "lens_glow"): shell_of.setdefault(r["link"], []).append(m)
+        m = changed.get(r["name"], m)
+        if r["material"] not in ("armour_mech", "lens_glow") and not r.get("hardware"): shell_of.setdefault(r["link"], []).append(m)
     shell_of = {k: trimesh.util.concatenate(x) for k, x in shell_of.items()}
-    others = [(m.bounds, inflated(m, 0.2) if r["material"] != "armour_mech" else as_manifold(m)) for r, m, _ in old]
-    others.append((saddle.bounds, as_manifold(saddle)))
-    new = [("bay_saddle", "pelvis", "armour_red", "torso", saddle)]; chans = []; placed = []
+    others = [(changed.get(r["name"], m).bounds, inflated(changed.get(r["name"], m), 0.2) if r["material"] != "armour_mech" else as_manifold(m)) for r, m, _ in old]
+    for _, _, _, _, m in new: others.append((m.bounds, as_manifold(m)))
+    import fit_doors       # the servos stand where they stand: a channel keeps clear of them too
+    for key, T in [(d["servo"]["key"], d["servo"]["T"]) for d in man["doors"]] + [(l["key"], l["T"]) for l in man["latches"]]:
+        s_ = fit_doors.body_of(key, T); others.append((np.array(s_.bounding_box()).reshape(2, 3), s_))
+    chans = []; placed = []
     for name, link, region, (O, D), w, h in paths():
         # a section that would still touch a shell between its samples stands off further: cutting it would leave knife edges
         for gap in GAPS:
@@ -183,8 +222,9 @@ def fit(base):
         chans.append({"name": name, "link": link, "region": region, "width_mm": w, "depth_mm": h, "pts": P.round(1).tolist()})
         print(name, f"{len(P) * STEP:.0f} mm, {len(runs)} pieces, {gap} mm off the shell, {touched:.1f} mm3 trimmed", flush=True)
     # ---- the neck: the helmet turned about the body axis against the torso, as the other joints are measured
-    cm = m3.Manifold.compose([as_manifold(m) for r, m, _ in old if r["link"] in ("head", "helmet_faceplate") and r["material"] != "armour_mech"])
-    pm = m3.Manifold.compose([as_manifold(meshes[BACK_PIECE] if r["name"] == BACK_PIECE else m) for r, m, _ in old if r["link"] == "pelvis" and r["material"] != "armour_mech" and m.bounds[1][2] > 1400])
+    body = lambda link: {"back_door_left": "pelvis", "back_door_right": "pelvis", "helmet_door_left": "head", "helmet_door_right": "head"}.get(link, link)
+    cm = m3.Manifold.compose([as_manifold(m) for r, m, _ in old if body(r["link"]) in ("head", "helmet_faceplate") and r["material"] != "armour_mech"])
+    pm = m3.Manifold.compose([as_manifold(changed.get(r["name"], m)) for r, m, _ in old if body(r["link"]) == "pelvis" and r["material"] != "armour_mech" and m.bounds[1][2] > 1400])
     base_v = (cm ^ pm).volume(); o = J["neck"]; rng = []
     for sign in (-1, 1):
         a = 0.0
@@ -197,15 +237,16 @@ def fit(base):
     # ---- write: untouched pieces keep their bytes
     blob = bytearray(); rows = []
     for r, m, raw in old:
-        if r["name"] == BACK_PIECE:
-            lo, step, raw, q = encode(back); r = {**r, "lo": lo.round(4).tolist(), "step": step.tolist(), "nv": len(q.vertices), "nf": len(q.faces), "volume_mm3": round(float(q.volume), 1), "centroid": q.centroid.round(2).tolist()}
+        if r["name"] in changed:
+            lo, step, raw, q = encode(changed[r["name"]]); r = {**r, "lo": lo.round(4).tolist(), "step": step.tolist(), "nv": len(q.vertices), "nf": len(q.faces), "volume_mm3": round(float(q.volume), 1), "centroid": q.centroid.round(2).tolist()}
         ov = len(blob); blob += raw; rows.append({**r, "ov": ov, "of": ov + r["nv"] * 6})
     for name, link, material, region, m in new:
         lo, step, raw, q = encode(m); ov = len(blob); blob += raw
         rows.append({"name": name, "link": link, "material": material, "region": region, "wiring": True, "lo": lo.round(4).tolist(), "step": step.tolist(), "nv": len(q.vertices), "nf": len(q.faces), "ov": ov, "of": ov + len(q.vertices) * 6,
                      "volume_mm3": round(float(q.volume), 1), "centroid": q.centroid.round(2).tolist()})
-    man["pieces"] = rows; man["channels"] = chans
-    man["bay"] = {"rear_x": round(xr, 2), "z0": BAY["z0"], "length_mm": BAY["L"], "width_mm": BAY["W"], "ports": ports}
+    man["pieces"] = rows; man["channels"] = chans; man["bays"] = bays
+    b = bays["back"]; Oc, ex_, ey_, ez_ = (np.array(b[k]) for k in ("O", "ex", "ey", "ez"))
+    man["bay_box"] = {"link": b["link"], "corners": [(Oc + ex_ * u + ey_ * v + ez_ * h).round(2).tolist() for u in (-6, BAY["L"] + 6) for v in (-6, BAY["W"] + 6) for h in (0, 36.0)]}
     json.dump(man, open(base + ".json", "w"), separators=(",", ":")); open(base + ".bin", "wb").write(blob)
     print(len(rows), "pieces", sum(r["nf"] for r in rows), "faces", len(new), "new", len(blob) // 1000000, "MB")
 

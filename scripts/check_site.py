@@ -142,7 +142,7 @@ def run(browser, case):
         row["preview"] = preview
         if not preview["ready"]: row["problems"].append(f"preview incomplete: {preview['errors'][:3]}")
         robot = page.evaluate("window.__ttr.robot"); row["robot_name"] = robot["robot_name"]; row["links"] = len(robot["links"]); row["joints"] = len(robot["joints"])
-        page.screenshot(path=str(args.out / f"{case['id']}.png"))
+        page.screenshot(path=str(args.out / f"{case['id']}.png"), timeout=240000)   # software GL takes a while over the biggest models
         if case["mode"] == "prompt":
             folder = root / "examples" / case["example"]
             want, got = clean(json.loads((folder / "robot.json").read_text())), clean(robot)

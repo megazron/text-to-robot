@@ -11,6 +11,8 @@ from skimage.measure import marching_cubes
 from pysdf import SDF
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import forge_mark43 as FORGE
+import fit_doors
+base_link = fit_doors.base_link
 
 JOINTS = {"shoulder": ("upper_arm", "pelvis", -2.6, 0.6), "elbow": ("forearm", "upper_arm", -2.4, 0), "hip": ("thigh", "pelvis", -1.9, 0.4), "knee": ("shin", "thigh", 0, 2.2)}
 
@@ -50,7 +52,7 @@ def working_helmet(pcs, neck, hinge):
         c, sn = math.cos(ang), math.sin(ang); R = np.array([[c, 0, sn], [0, 1, 0], [-sn, 0, c]]); turned.append(plate.transform(np.c_[R, h - R @ h].tolist()))
     sweep = m3.Manifold.batch_boolean(turned, m3.OpType.Add); out = []; lost = 0.0
     for p, m in pcs:
-        if p["link"] != "head": out.append((p, m)); continue
+        if base_link(p["link"]) != "head": out.append((p, m)); continue
         v0 = m.volume; x = as_manifold(m) - sweep; lost += v0 - x.volume()
         for i, c_ in enumerate(sorted((c_ for c_ in x.decompose() if c_.volume() > 500), key=lambda c_: -c_.volume())):
             out.append(({**p, "name": p["name"] + ("" if not i else f"r{i}")}, from_manifold(c_)))
@@ -67,7 +69,7 @@ SWINGS = [("shoulder", "upper_arm", "pelvis", -1.04, 0.24), ("hip", "thigh", "pe
 
 def trim_neck(pcs, jpos):
     """The collar's front lip stands inside the helmet's chin: it gives way to the helmet turned as far as NECK_TURN each way. The helmet stays whole."""
-    o = np.array(jpos["neck_mount"], float); helmet = m3.Manifold.compose([as_manifold(m) for p, m in pcs if p["link"] in ("head", "helmet_faceplate")]).simplify(0.4); turned = []
+    o = np.array(jpos["neck_mount"], float); helmet = m3.Manifold.compose([as_manifold(m) for p, m in pcs if base_link(p["link"]) in ("head", "helmet_faceplate")]).simplify(0.4); turned = []
     for a in np.linspace(-NECK_TURN, NECK_TURN, int(2 * NECK_TURN / 0.04) + 1):
         c, s_ = math.cos(a), math.sin(a); R = np.array([[c, -s_, 0], [s_, c, 0], [0, 0, 1.0]]); turned.append(helmet.transform(np.c_[R, o - R @ o].tolist()))
     sweep = m3.Manifold.batch_boolean(turned, m3.OpType.Add); out = []; lost = 0.0
@@ -86,7 +88,7 @@ def trim_swings(pcs, jpos):
         for j, child, parent, lo, hi in SWINGS:
             o = jpos[f"{side}_{j}"]; cl = f"{side}_{child}"; pl = parent if parent == "pelvis" else f"{side}_{parent}"
             near = lambda m: (m.bounds[0] - 300 < o).all() and (m.bounds[1] + 300 > o).all()
-            par = m3.Manifold.compose([as_manifold(m) for p, m in pcs if p["link"] == pl and p["material"] not in ("armour_mech", "lens_glow") and near(m)]).simplify(0.4)
+            par = m3.Manifold.compose([as_manifold(m) for p, m in pcs if base_link(p["link"]) == pl and p["material"] not in ("armour_mech", "lens_glow") and near(m)]).simplify(0.4)
             turned = []
             for ang in np.linspace(lo, hi, max(12, int((hi - lo) / 0.03))):
                 c, sn = math.cos(-ang), math.sin(-ang); R = np.array([[c, 0, sn], [0, 1, 0], [-sn, 0, c]])
@@ -94,7 +96,7 @@ def trim_swings(pcs, jpos):
             sweep = m3.Manifold.batch_boolean(turned, m3.OpType.Add)
             out = []
             for p, m in pcs:
-                if p["link"] != cl or p["material"] in ("armour_mech", "lens_glow") or not near(m): out.append((p, m)); continue
+                if base_link(p["link"]) != cl or p["material"] in ("armour_mech", "lens_glow") or not near(m): out.append((p, m)); continue
                 x = as_manifold(m) - sweep
                 for i, c_ in enumerate(sorted((c_ for c_ in x.decompose() if c_.volume() > 500), key=lambda c_: -c_.volume())):
                     out.append(({**p, "name": p["name"] + ("" if not i else f"w{i}")}, from_manifold(c_)))
@@ -126,14 +128,14 @@ def resolve(pieces, body):
 
 def main():
     src, out = sys.argv[1:3]
-    meta = json.load(open(src)); base = src.replace(".json", ""); J = FORGE.J
+    meta = json.load(open(src)); src_base = src.replace(".json", ""); J = FORGE.J
     jpos = {"standing": J["hip_c"], "neck_mount": J["neck"]}
     for sd, n in ((1, "left"), (-1, "right")):
         for k in ("shoulder", "elbow", "wrist", "hip", "knee", "ankle"): jpos[f"{n}_{k}"] = J[k] * [1, sd, 1]
     joints = jpos; body = {}
     pcs = []
     for p in meta:
-        m = trimesh.load(f"{base}_{p['name']}.stl", force="mesh", process=True)
+        m = trimesh.load(f"{src_base}_{p['name']}.stl", force="mesh", process=True)
         # two bodies touching along one edge are not a closed solid until they are taken apart; a panel must never vanish quietly
         for k, sub in enumerate([m] if m.is_watertight else m.split(only_watertight=False)):
             if not sub.is_watertight: trimesh.repair.fill_holes(sub)
@@ -159,7 +161,7 @@ def main():
         for i, c_ in enumerate(sorted((c_ for c_ in x.decompose() if c_.volume() > 500), key=lambda c_: -c_.volume())):
             soft.append(({**p, "name": p["name"] + ("" if not i else f"m{i}")}, from_manifold(c_)))
     pcs = soft
-    by = lambda link: [m for p, m in pcs if p["link"] == link and p["material"] != "armour_mech"]
+    by = lambda link: [m for p, m in pcs if base_link(p["link"]) == link and p["material"] != "armour_mech"]
     limits = {}
     for side in ("left", "right"):
         for j, (child, parent, lo, hi) in JOINTS.items():
@@ -214,7 +216,11 @@ def main():
            "notes": ["shells made by scripts/forge_mark43.py", "joint limits measured by sweeping each limb's armour against its parent's armour"]}
     json.dump(man, open(out + ".json", "w"), separators=(",", ":")); open(out + ".bin", "wb").write(blob)
     print(len(rows), "pieces", sum(r["nf"] for r in rows), "faces", len(blob) // 1000000, "MB")
-    import fit_wiring; fit_wiring.fit(out)     # the harness's channels and seat are cut from the finished shells
+    # the door hardware, then the harness's channels and seats, are cut from the finished shells; the doors are measured last, with everything on them
+    shells = src_base + "_shells"; os.replace(out + ".json", shells + ".json"); os.replace(out + ".bin", shells + ".bin")
+    fit_doors.fit(shells, os.path.dirname(os.path.abspath(src)) + "/doors.json", out)
+    import fit_wiring; fit_wiring.fit(out)
+    fit_doors.measure(out); fit_doors.limb_limits(out); fit_doors.tidy(out)
 
 
 if __name__ == "__main__":

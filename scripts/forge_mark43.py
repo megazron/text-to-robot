@@ -417,6 +417,89 @@ def helmet_zones(p, wall):
     return {"mask": (s, p.d + sink, paint), "fixed": (-s, None, np.full_like(col, RED))}
 
 
+# ------------------------------------------------------------------ the doors
+# The suit opens from behind. The back splits on its centre line and every limb's rear shell swings out on a hinge along its outer flank, so
+# a person walks in and the armour closes round them. Each hinge line lies in the plane of the seam and on or just outside the shell, with all
+# of the door to one side of it: a door then cannot run into the half it hangs from, however far it opens.
+#  span: where the hinge line must clear the flank; hinges, servo, latches: stations along the same measure (mm down the bone; z on the torso and helmet)
+PROUD = 3.0                                         # the hinge line stands this far off the flank
+OPEN = math.radians(80)
+DOOR_PLAN = {
+    "torso": dict(span=(1076, 1336), hinges=(1090, 1340), servo=(1256, "hobby_ds3218"), latches=(1180, 1410), seam=0.0),
+    "head": dict(span=(1606, 1812), hinges=(1617, 1806), servo=(1680, "hobby_mg90s"), latches=(1700,), seam=-44.0),
+    "upper_arm": dict(span=(0, 300), hinges=(24, 268), servo=(150, "hobby_mg996r"), latches=(190,), seam=0.0),
+    "forearm": dict(span=(30, 280), hinges=(46, 262), servo=(120, "hobby_mg996r"), latches=(190,), seam=0.0),
+    "thigh": dict(span=(30, 430), hinges=(54, 402), servo=(214, "hobby_mg996r"), latches=(280,), seam=0.0),
+    "shin": dict(span=(30, 430), hinges=(54, 416), servo=(232, "hobby_mg996r"), latches=(300,), seam=0.0),
+}
+BONES = {"upper_arm": ("shoulder", "elbow"), "forearm": ("elbow", "wrist"), "thigh": ("hip", "knee"), "shin": ("knee", "ankle")}
+
+
+def fit_line(t, o):
+    """the line above every (t, o) with the least area under it"""
+    from scipy.optimize import linprog
+    tm = t.mean(); r = linprog([len(t), (t - tm).sum()], A_ub=-np.c_[np.ones(len(t)), t - tm], b_ub=-o, bounds=[(None, None), (None, None)])
+    return r.x[0], r.x[1], tm
+
+
+def flank(p, origin, inward, along, ts, reach=240):
+    """how far out the shell runs from `origin` + t `along`, measured along -`inward` from the far side: outermost surface at each station"""
+    out = []; w = np.arange(reach, -40, -0.5)
+    for t in ts:
+        d = sample(p, p.d, origin + along * t - np.outer(w, inward)); i = np.nonzero(d < 0)[0]
+        out.append(w[i[0]] if len(i) else np.nan)
+    return np.array(out)
+
+
+def door_frames(k, p):
+    """(side name, seam plane point, seam normal towards the fixed half, axis point at station 0, axis direction per station unit, out direction)"""
+    pl = DOOR_PLAN[k]; ts = np.arange(pl["span"][0], pl["span"][1] + 1, 6.0)
+    if k in ("torso", "head"):
+        base, up, inw = np.array([pl["seam"], 0.0, 0.0]), np.array([0.0, 0.0, 1.0]), np.array([0.0, -1.0, 0.0])
+        n = np.array([1.0, 0.0, 0.0])
+    else:
+        a, b = J[BONES[k][0]], J[BONES[k][1]]; fr = Frame(a, b); base, up, inw, n = fr.A + fr.f * pl["seam"], fr.u, -fr.l, fr.f
+    o = flank(p, base, inw, up, ts); ok = np.isfinite(o); c0, c1, tm = fit_line(ts[ok], o[ok] + PROUD)
+    at = lambda t: base + up * t - inw * (c0 + c1 * (t - tm))
+    e = at(pl["span"][1]) - at(pl["span"][0]); e /= np.linalg.norm(e)
+    return at, e, n, -inw, up, base
+
+
+def door_records(parts):
+    """every door in the suit, in world mm: its hinge line, stations and latch points. `parts` maps a part to its built field."""
+    doors = []
+    for k, p in parts.items():
+        pl = DOOR_PLAN[k]; at, e, n, out, up, base = door_frames(k, p)
+        for side, sd in (("left", 1), ("right", -1)):
+            m = np.array([1.0, sd, 1.0]); link = {"torso": f"back_door_{side}", "head": f"helmet_door_{side}"}.get(k, f"{side}_{k}_door")
+            parent = {"torso": "pelvis", "head": "head"}.get(k, f"{side}_{k}")
+            top, bot = at(pl["span"][0]) * m, at(pl["span"][1]) * m
+            axis = (top - bot) if k not in ("torso", "head") else (bot - top)     # always pointing up the suit
+            axis = axis / np.linalg.norm(axis); nn = n * m; oo = out * m
+            # opening carries the inboard edge towards the rear: `sign` is the sense of that turn about the upward axis
+            sign = 1 if np.cross(axis, -oo) @ (-nn) > 0 else -1
+            doors.append({"name": link.replace("_door", ""), "part": k, "side": side, "link": link, "joint": f"{link}_hinge", "parent": parent, "region": {"torso": "torso", "head": "head"}.get(k, f"{side}_{k}"),
+                          "a": top.round(3).tolist(), "up": axis.round(6).tolist(), "sign": sign, "normal": nn.round(6).tolist(), "out": oo.round(6).tolist(),
+                          "hinges": [(at(t) * m).round(3).tolist() for t in pl["hinges"]], "servo": {"at": (at(pl["servo"][0]) * m).round(3).tolist(), "key": pl["servo"][1]},
+                          "latch_t": [float(t) for t in pl["latches"]], "seam_up": (up * m).round(6).tolist(), "base": (base * m).round(3).tolist(), "open": OPEN})
+    return doors
+
+
+def door_zones(k, p, doors, wall):
+    """Fields for the fixed half and the doors of a part"""
+    G = p.pts(); pl = DOOR_PLAN[k]
+    if k == "torso":
+        back = G[:, 0] - pl["seam"]
+        return {"door_left": (np.maximum(back, -G[:, 1]), None, None), "door_right": (np.maximum(back, G[:, 1]), None, None), "fixed": (-back, None, None)}
+    if k == "head":
+        z = helmet_zones(p, wall); back = G[:, 0] - pl["seam"]; red = z["fixed"][2]
+        z["fixed"] = (np.maximum(z["fixed"][0], -back), None, red)
+        z["door_left"] = (np.maximum(back, -G[:, 1]), None, red); z["door_right"] = (np.maximum(back, G[:, 1]), None, red)
+        return z
+    d = next(x for x in doors if x["part"] == k and x["side"] == "left"); s = (G - np.array(d["a"])) @ np.array(d["normal"])
+    return {"door": (s, None, None), "fixed": (-s, None, None)}
+
+
 def lenses():
     """the glowing parts: reactor core, palm repulsors"""
     d = trimesh.creation.cylinder(radius=33, height=3, sections=64); d.apply_transform(trimesh.transformations.rotation_matrix(math.pi / 2, [0, 1, 0])); d.apply_translation([141, 0, 1375])
@@ -483,61 +566,116 @@ def export_print(out, v, only=None):
     os.makedirs(out, exist_ok=True); meta = []
     def put(name, link, mat, region, m):
         m.export(f"{out}/pack_{name}.stl"); meta.append({"name": name, "link": link, "material": mat, "region": region})
+    def both(name, link, mat, region, m):
+        """a limb piece and its mirror image"""
+        put(f"left_{name}", f"left_{link}", mat, f"left_{region}", m)
+        r = m.copy(); r.vertices = np.asarray(r.vertices) * [1, -1, 1]; r.invert(); put(f"right_{name}", f"right_{link}", mat, f"right_{region}", r)
+    doors = door_records({k: BUILD[k](v)[0] for k in DOOR_PLAN})
     for k in only or BUILD:
         p, _ = BUILD[k](v)
         if k == "torso": reactor(p)
         wall = MASK_WALL if k == "head" else 3.0
-        for i, (c, m, zone) in enumerate(p.printable(openings(k, p), wall=wall, zones=helmet_zones(p, wall) if k == "head" else None)):
-            if k == "torso": put(f"torso_{i}", "pelvis", NAMES[c], "torso", m); continue
-            if k == "head": put(f"helmet_{i}", "helmet_faceplate" if zone == "mask" else "head", NAMES[c], "head", m); continue
-            put(f"left_{k}_{i}", f"left_{k}", NAMES[c], f"left_{k}", m)
-            r = m.copy(); r.vertices = np.asarray(r.vertices) * [1, -1, 1]; r.invert(); put(f"right_{k}_{i}", f"right_{k}", NAMES[c], f"right_{k}", r)
+        zones = door_zones(k, p, doors, wall) if k in DOOR_PLAN else None
+        for i, (c, m, zone) in enumerate(p.printable(openings(k, p), wall=wall, zones=zones)):
+            if k == "torso": put(f"torso_{i}", {"door_left": "back_door_left", "door_right": "back_door_right"}.get(zone, "pelvis"), NAMES[c], "torso", m); continue
+            if k == "head": put(f"helmet_{i}", {"mask": "helmet_faceplate", "door_left": "helmet_door_left", "door_right": "helmet_door_right"}.get(zone, "head"), NAMES[c], "head", m); continue
+            both(f"{k}_{i}", k + ("_door" if zone == "door" else ""), NAMES[c], k, m)
         print(k, len(meta), flush=True); del p
+    json.dump(doors, open(f"{out}/doors.json", "w"), indent=0)
     if only: json.dump(meta, open(f"{out}/pack.json", "w"), indent=0); return
     for n, p in joint_mech(v):
         P = p.pts(); ax = {"shoulder": (J["shoulder"] + [0, -160, 0], J["shoulder"] + [0, 110, -14]), "elbow": (J["shoulder"], J["wrist"]), "wrist": (J["elbow"], J["hand_end"]), "hip": (J["hip"] + [0, 0, 200], J["knee"]), "knee": (J["hip"], J["ankle"]), "ankle": (J["ankle"] + [0, 0, 300], J["ankle"] + [0, 0, -120])}[n]
         r = {"shoulder": 52, "elbow": 44, "wrist": 34, "hip": 58, "knee": 54, "ankle": 42}[n]
-        for i, (c, m, zone) in enumerate(p.printable([seg_sd3(P, ax[0], ax[1]) - r], wall=2.5, cell=(400, 400, 400))):
-            put(f"left_mech_{n}_{i}", f"left_{MECH_LINK[n]}", "armour_mech", f"mech_left_{n}", m)
-            q = m.copy(); q.vertices = np.asarray(q.vertices) * [1, -1, 1]; q.invert(); put(f"right_mech_{n}_{i}", f"right_{MECH_LINK[n]}", "armour_mech", f"mech_right_{n}", q)
+        # the sleeve at a joint opens with the limb it belongs to: its rear half rides on the door
+        k = MECH_LINK[n]; d = next((x for x in doors if x["part"] == k and x["side"] == "left"), None)
+        if d: s_ = (P - np.array(d["a"])) @ np.array(d["normal"]); zones = {"door": (s_, None, None), "fixed": (-s_, None, None)}
+        else: zones = None
+        for i, (c, m, zone) in enumerate(p.printable([seg_sd3(P, ax[0], ax[1]) - r], wall=2.5, cell=(400, 400, 400), zones=zones)):
+            both(f"mech_{n}_{i}", k + ("_door" if zone == "door" else ""), "armour_mech", f"mech_{n}", m)
     put("reactor_lens", "pelvis", "lens_glow", "torso", lenses()[0])
     l = palm_lens(); put("left_palm_lens", "left_hand", "lens_glow", "left_hand", l)
     r = l.copy(); r.vertices = np.asarray(r.vertices) * [1, -1, 1]; r.invert(); put("right_palm_lens", "right_hand", "lens_glow", "right_hand", r)
     json.dump(meta, open(f"{out}/pack.json", "w"), indent=0); print(len(meta), "pieces", flush=True)
 
 
-def export_anim(out, v):
-    """Per-link halves for the suit-up film: rear halves swing open, so each part is cut at its own bone."""
-    os.makedirs(out, exist_ok=True); man = []
-    def put(name, link, mat, m):
-        m.export(f"{out}/{name}.ply"); man.append({"file": f"{name}.ply", "link": link, "material": mat})
-    def halves(tag, link, mat, m, x0):
-        fc = m.triangles_center; centre = link in ("pelvis", "head")
-        sels = (("f", fc[:, 0] >= x0), ("bL", (fc[:, 0] < x0) & (fc[:, 1] >= 0)), ("bR", (fc[:, 0] < x0) & (fc[:, 1] < 0))) if centre else (("f", fc[:, 0] >= x0), ("b", fc[:, 0] < x0))
-        for h, sel in sels:
-            if sel.any(): put(f"{tag}_{h}", f"{link}:{h}", mat, m.submesh([np.nonzero(sel)[0]], append=True))
-    for k in BUILD:
-        p, _ = BUILD[k](v)
-        if k == "torso": reactor(p)
-        for i, (c, m) in enumerate(p.meshes()):
-            if k == "torso": halves(f"torso{i}", "pelvis", NAMES[c], m, 0.0)
-            elif k == "head":
-                if c in (GOLD, LENS): put(f"mask{i}", "helmet_faceplate", NAMES[c], m)
-                else: halves(f"head{i}", "head", NAMES[c], m, -20.0)
-            else:
-                x0 = float(np.mean(m.vertices[:, 0]))
-                for sd, nm in ((1, "left"), (-1, "right")):
-                    q = m.copy()
-                    if sd < 0: q.vertices = np.asarray(q.vertices) * [1, -1, 1]; q.invert()
-                    if k in ("hand", "foot"): put(f"{nm}_{k}{i}", f"{nm}_{k}", NAMES[c], q)
-                    else: halves(f"{nm}_{k}{i}", f"{nm}_{k}", NAMES[c], q, x0)
-        print(k, flush=True); del p
-    for n, p in joint_mech(v):
-        for i, (c, m) in enumerate(p.meshes()):
-            put(f"left_mech_{n}{i}", f"left_{MECH_LINK[n]}", "armour_mech", m); q = m.copy(); q.vertices = np.asarray(q.vertices) * [1, -1, 1]; q.invert(); put(f"right_mech_{n}{i}", f"right_{MECH_LINK[n]}", "armour_mech", q)
-    for i, (c, m) in enumerate(neck_waist(v).meshes()): put(f"core{i}", "pelvis", "armour_mech", m)
-    put("reactor_lens", "pelvis:f", "lens_glow", lenses()[0])
-    json.dump({"pieces": man, "joints": {k: [float(x) for x in val] for k, val in J.items()}, "chin": Z_CHIN}, open(f"{out}/anim.json", "w")); print(len(man), "objects", flush=True)
+# ------------------------------------------------------------------ the film
+LIMBS = {"thigh": ("hip", "knee", [(-60, 66, 74, 62, 58, 2.2), (0, 80, 88, 72, 66, 2.2), (120, 74, 78, 70, 62, 2.2), (300, 58, 60, 56, 52, 2.2), (455, 46, 46, 46, 44, 2.2)]),
+         "shin": ("knee", "ankle", [(-20, 46, 46, 46, 44, 2.2), (90, 48, 62, 48, 44, 2.2), (220, 42, 52, 42, 40, 2.2), (390, 30, 32, 30, 30, 2.2), (452, 30, 34, 30, 30, 2.2)]),
+         "upper_arm": ("shoulder", "elbow", [(-70, 40, 40, 44, 44, 2.2), (-20, 54, 54, 54, 54, 2.2), (30, 54, 54, 54, 48, 2.2), (150, 46, 46, 44, 42, 2.2), (300, 36, 36, 36, 34, 2.2), (335, 32, 32, 32, 32, 2.2)]),
+         "forearm": ("elbow", "wrist", [(-20, 34, 34, 34, 32, 2.2), (70, 44, 44, 44, 42, 2.2), (190, 36, 36, 36, 34, 2.2), (285, 25, 25, 28, 26, 2.2), (300, 24, 24, 27, 26, 2.2)])}
+BODY = [(905, 62, 76, 96, 96, 2.2), (985, 82, 92, 118, 118, 2.2), (1060, 78, 80, 112, 112, 2.2), (1130, 76, 78, 106, 106, 2.2), (1260, 96, 92, 138, 138, 2.3), (1370, 110, 100, 160, 160, 2.4), (1440, 90, 92, 182, 182, 2.6), (1490, 68, 76, 176, 176, 2.6), (1530, 54, 60, 120, 120, 2.4), (1565, 50, 52, 56, 56, 2.1), (1600, 46, 48, 50, 50, 2.0)]
+HEADF = [(1590, 56, 52, 50, 50, 2.0), (1640, 84, 88, 68, 68, 2.1), (1720, 92, 100, 76, 76, 2.2), (1790, 72, 84, 66, 66, 2.1), (1826, 26, 34, 26, 26, 2.0)]
+
+
+def mesh_of(field, lo, v, shape):
+    vv, tt, _, _ = marching_cubes(np.pad(gaussian_filter(field.reshape(shape), 1.0), 1, constant_values=9.0), 0.0, spacing=(v,) * 3)
+    return trimesh.Trimesh(vv + lo - v, tt[:, ::-1], process=True)
+
+
+def figure(out, v=3.0):
+    """A person in a black undersuit, built of smooth lofted segments that overlap at the joints, one mesh each, so the film can walk it. It is drawn for the film only:
+    no part of the suit is made from it."""
+    os.makedirs(out, exist_ok=True); rec = []
+    def put(name, parent, pivot, m):
+        m.export(f"{out}/{name}.ply"); rec.append({"file": f"{name}.ply", "name": name, "parent": parent, "pivot": [float(x) for x in pivot]})
+    p = Part("body", (-150, -190, 880), (150, 190, 1620), v); P = p.pts(); put("body", None, (0, 0, 0), mesh_of(loft(P[:, 2], P[:, 0], P[:, 1], BODY), p.lo, v, p.shape))
+    p = Part("head", (-130, -100, 1570), (130, 100, 1850), v); P = p.pts(); put("head", None, (0, 0, 0), mesh_of(loft(P[:, 2], P[:, 0] - 8, P[:, 1], HEADF), p.lo, v, p.shape))
+    for sd, n in ((1, "left"), (-1, "right")):
+        for k, (a, b, table) in LIMBS.items():
+            A, B = J[a], J[b]; pp, fr, t, x, y, d = limb("p_" + k, A, B, table, v, 130)
+            m = mesh_of(d, pp.lo, v, pp.shape)
+            if sd < 0: m.vertices = np.asarray(m.vertices) * [1, -1, 1]; m.invert()
+            piv = A * [1, sd, 1]; put(f"{n}_{k}", {"thigh": None, "shin": f"{n}_thigh", "upper_arm": None, "forearm": f"{n}_upper_arm"}[k], piv, m)
+        # a hand and a boot, on the forearm and the shin
+        w, h = J["wrist"], J["hand_end"]; pp = Part("hand", np.minimum(w, h) - 90, np.maximum(w, h) + 90, v); P = pp.pts(); fr = Frame(w, h); t, x, y = fr.local(P)
+        d = loft(t, y, x, [(-20, 16, 16, 34, 34, 2.4), (70, 18, 20, 50, 50, 2.6), (120, 14, 16, 46, 46, 2.4), (185, 9, 10, 36, 36, 2.2)])
+        m = mesh_of(d, pp.lo, v, pp.shape)
+        if sd < 0: m.vertices = np.asarray(m.vertices) * [1, -1, 1]; m.invert()
+        put(f"{n}_hand", f"{n}_forearm", J["wrist"] * [1, sd, 1], m)
+        an = J["ankle"]; pp = Part("foot", (an[0] - 100, an[1] - 70, 0), (an[0] + 190, an[1] + 70, 130), v); P = pp.pts(); x, y, z = P[:, 0] - an[0], P[:, 1] - an[1], P[:, 2]
+        tb = [(-70, 74, 8, 36, 2.6), (-20, 100, 8, 42, 2.6), (40, 74, 8, 46, 2.6), (120, 40, 8, 44, 2.6), (160, 24, 8, 30, 2.4)]; T_ = np.array(tb, float); ip = [PchipInterpolator(T_[:, 0], T_[:, i]) for i in range(1, 5)]
+        xc = np.clip(x, -70, 160); top, sole, wd, ex = [g(xc) for g in ip]; zc, zh = (top + sole) / 2, (top - sole) / 2
+        d = (((np.abs(y / wd) ** ex + np.abs((z - zc) / zh) ** ex) ** (1 / ex)) - 1) * np.minimum(wd, zh); d = np.maximum(np.maximum(d, -70 - x), x - 160)
+        m = mesh_of(d, pp.lo, v, pp.shape)
+        if sd < 0: m.vertices = np.asarray(m.vertices) * [1, -1, 1]; m.invert()
+        put(f"{n}_foot", f"{n}_shin", J["ankle"] * [1, sd, 1], m)
+    return rec
+
+
+def export_anim(out, example):
+    """The film's scene, straight from the built robot: every mesh of the example's URDF, in world mm at home, grouped by the joint that moves it. Doors, pawls and the mask are the
+    design's own joints, with their measured limits and the order they open in, so the film and the CAD cannot differ. The figure is added for the film."""
+    import xml.etree.ElementTree as ET
+    os.makedirs(out, exist_ok=True); R = ET.parse(f"{example}/robot.urdf").getroot(); spec = json.load(open(f"{example}/robot.json")); design = spec["metadata"]["design"]
+    def origin(e):
+        o = e.find("origin"); M = trimesh.transformations.euler_matrix(*[float(x) for x in o.get("rpy", "0 0 0").split()], "sxyz") if o is not None else np.eye(4)
+        if o is not None: M[:3, 3] = [float(x) for x in o.get("xyz", "0 0 0").split()]
+        return M
+    kids = {}
+    for j in R.findall("joint"): kids.setdefault(j.find("parent").get("link"), []).append(j)
+    seen = {j.find("child").get("link") for js in kids.values() for j in js}; root = next(l.get("name") for l in R.findall("link") if l.get("name") not in seen)
+    W = {root: (np.eye(4), None)}; todo = [root]; groups = {}
+    while todo:
+        n = todo.pop()
+        for j in kids.get(n, []):
+            T = W[n][0] @ origin(j); c = j.find("child").get("link"); g = W[n][1]
+            if j.get("type") == "revolute" and not j.get("name").endswith(("_shoulder", "_elbow", "_hip", "_knee")) and j.get("name") != "neck":
+                ax = T[:3, :3] @ np.array([float(x) for x in j.find("axis").get("xyz").split()]); lim = j.find("limit")
+                groups[j.get("name")] = {"parent": g, "at": (T[:3, 3] * 1000).round(3).tolist(), "axis": ax.round(6).tolist(), "lower": float(lim.get("lower")), "upper": float(lim.get("upper"))}; g = j.get("name")
+            W[c] = (T, g); todo.append(c)
+    by = {}
+    for l in R.findall("link"):
+        n = l.get("name"); T, g = W[n]
+        for vis in l.findall("visual"):
+            m_ = vis.find("geometry/mesh")
+            if m_ is None: continue
+            m = trimesh.load(f"{example}/meshes/{m_.get('filename').split('meshes/')[-1]}", force="mesh"); m.apply_scale([float(x) for x in m_.get("scale", "1 1 1").split()]); m.apply_transform(T @ origin(vis)); mat = vis.find("material")
+            by.setdefault((g, mat.get("name") if mat is not None else "armour_mech"), []).append(m)
+    man = []
+    for i, ((g, mat), ms) in enumerate(by.items()):
+        m = trimesh.util.concatenate(ms); m.apply_scale(1000); m.export(f"{out}/g{i}.ply"); man.append({"file": f"g{i}.ply", "group": g, "material": mat})
+    json.dump({"pieces": man, "groups": groups, "sequence": design.get("door_sequence", []), "figure": figure(f"{out}/person"), "joints": {k: [float(x) for x in v_] for k, v_ in J.items()}}, open(f"{out}/anim.json", "w"))
+    print(len(man), "objects", len(groups), "moving groups", flush=True)
 
 
 def export_ply(items, out):
@@ -549,8 +687,9 @@ def export_ply(items, out):
 
 def main():
     out = sys.argv[1]; v = float(sys.argv[sys.argv.index("--voxel") + 1]) if "--voxel" in sys.argv else 2.0
+    if "--doors" in sys.argv: return json.dump(door_records({k: BUILD[k](v)[0] for k in DOOR_PLAN}), open(f"{out}/doors.json", "w"), indent=0)
     if "--print" in sys.argv: return export_print(out, v, sys.argv[sys.argv.index("--only") + 1].split(",") if "--only" in sys.argv else None)
-    if "--anim" in sys.argv: return export_anim(out, v)
+    if "--anim" in sys.argv: return export_anim(out, sys.argv[sys.argv.index("--anim") + 1])
     only = sys.argv[sys.argv.index("--only") + 1].split(",") if "--only" in sys.argv else list(BUILD)
     os.makedirs(out, exist_ok=True); items = []
     for k in only:
