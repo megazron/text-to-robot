@@ -448,8 +448,9 @@ def export_anim(out, v):
     def put(name, link, mat, m):
         m.export(f"{out}/{name}.ply"); man.append({"file": f"{name}.ply", "link": link, "material": mat})
     def halves(tag, link, mat, m, x0):
-        fc = m.triangles_center[:, 0]
-        for h, sel in (("f", fc >= x0), ("b", fc < x0)):
+        fc = m.triangles_center; centre = link in ("pelvis", "head")
+        sels = (("f", fc[:, 0] >= x0), ("bL", (fc[:, 0] < x0) & (fc[:, 1] >= 0)), ("bR", (fc[:, 0] < x0) & (fc[:, 1] < 0))) if centre else (("f", fc[:, 0] >= x0), ("b", fc[:, 0] < x0))
+        for h, sel in sels:
             if sel.any(): put(f"{tag}_{h}", f"{link}:{h}", mat, m.submesh([np.nonzero(sel)[0]], append=True))
     for k in BUILD:
         p, _ = BUILD[k](v)

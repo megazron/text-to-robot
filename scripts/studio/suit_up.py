@@ -1,4 +1,5 @@
-"""The suit-up film: the mask lifts, the rear halves swing open, a person in a black undersuit walks in, the armour closes, the eyes light.
+"""The suit-up film, as a real suit would do it: servos lift the mask and swing the back open from its centre line on hinges, a person in a
+black undersuit steps in from behind, the panels swing shut, the eyes light. Nothing floats: every moving panel turns about a hinge.
   blender -b -P scripts/studio/suit_up.py -- <anim-dir> <frames-dir> [samples] [width] [first] [last] [step]"""
 import bpy, json, math, os, sys
 from mathutils import Vector, Matrix, Euler
@@ -21,11 +22,19 @@ MATS = {"armour_red": paint("red", (0.26, 0.003, 0.008), 0.8, 0.26, 1.0, 0.03), 
         "armour_mech": paint("mech", (0.07, 0.07, 0.08), 1.0, 0.38), "suit": paint("undersuit", (0.004, 0.004, 0.005), 0.0, 0.72)}
 g = bpy.data.materials.new("glow"); g.use_nodes = True; nb = g.node_tree.nodes["Principled BSDF"]; nb.inputs["Emission Color"].default_value = (0.75, 0.92, 1, 1); nb.inputs["Base Color"].default_value = (1, 1, 1, 1); MATS["lens_glow"] = g
 glow = nb.inputs["Emission Strength"]
+def lined(src_):
+    """outside: the paint; inside a shell: dark machined lining"""
+    m = src_.copy(); nt = m.node_tree; out_ = nt.nodes["Material Output"]; pb = nt.nodes["Principled BSDF"]
+    geo = nt.nodes.new("ShaderNodeNewGeometry"); dk = nt.nodes.new("ShaderNodeBsdfPrincipled"); dk.inputs["Base Color"].default_value = (0.02, 0.022, 0.026, 1); dk.inputs["Metallic"].default_value = 0.9; dk.inputs["Roughness"].default_value = 0.45
+    mx = nt.nodes.new("ShaderNodeMixShader"); nt.links.new(geo.outputs["Backfacing"], mx.inputs[0]); nt.links.new(dk.outputs[0], mx.inputs[1]); nt.links.new(pb.outputs[0], mx.inputs[2]); nt.links.new(mx.outputs[0], out_.inputs["Surface"]); return m
+
+
+LINED = {k: lined(MATS[k]) for k in ("armour_red", "armour_gold", "armour_silver")}
 groups = {}
 for p in M["pieces"]:
     bpy.ops.wm.ply_import(filepath=f"{src}/{p['file']}"); o = bpy.context.selected_objects[0]; o.scale = (0.001,) * 3
     bpy.ops.object.transform_apply(scale=True); bpy.ops.object.shade_auto_smooth(angle=math.radians(38))
-    o.data.materials.clear(); o.data.materials.append(MATS[p["material"]]); groups.setdefault(p["link"], []).append(o); o["base"] = list(o.matrix_world.translation)
+    o.data.materials.clear(); o.data.materials.append(LINED.get(p["material"], MATS[p["material"]])); groups.setdefault(p["link"], []).append(o)
 
 
 def capsule(a_, b_, r):
@@ -83,10 +92,31 @@ def rot_about(o, pivot, axis, ang):
     o.matrix_world = Matrix.Translation(pivot) @ Matrix.Rotation(ang, 4, axis) @ Matrix.Translation(-pivot)
 
 
-# door swing of each rear half: hinged at the outer edge of its part, opening backwards and out
-DOORS = {"pelvis:b": ((0, 0.19, 1.2), "Z", 0.0)}
+OPEN = math.radians(82)
+def hinge_of(link):
+    """(point on the hinge line, its direction, turn sign): every rear panel hangs on its outer edge"""
+    n, h = link.split(":"); sd = 1 if (h == "bL" or n.startswith("left")) else -1
+    if n == "pelvis": return Vector((-0.03, sd * 0.15, 1.2)), Vector((0, 0, 1)), sd
+    if n == "head": return Vector((-0.02, sd * 0.098, 1.7)), Vector((0, 0, 1)), sd
+    k = n.split("_", 1)[1]; a_, b_ = {"upper_arm": ("shoulder", "elbow"), "forearm": ("elbow", "wrist"), "thigh": ("hip", "knee"), "shin": ("knee", "ankle")}[k]
+    A_ = Vector((J[a_].x, J[a_].y * sd, J[a_].z)); B_ = Vector((J[b_].x, J[b_].y * sd, J[b_].z)); u = (A_ - B_).normalized()
+    out_ = Vector((0, sd, 0)); out_ = (out_ - out_.dot(u) * u).normalized(); return (A_ + B_) / 2 + out_ * {"upper_arm": 0.06, "forearm": 0.06, "thigh": 0.09, "shin": 0.066}[k] + Vector((-0.012, 0, 0)), u, sd
+
+
+def add_hinges():
+    """steel hinge barrels with a servo at each moving panel, and the lights inside"""
+    for link in groups:
+        if ":b" not in link: continue
+        p_, u, sd = hinge_of(link); L_ = 0.2 if link.startswith(("pelvis", "head")) is False else 0.3
+        bpy.ops.mesh.primitive_cylinder_add(radius=0.009, depth=L_, vertices=24, location=p_); o = bpy.context.object; o.rotation_mode = "QUATERNION"; o.rotation_quaternion = u.to_track_quat("Z", "Y"); bpy.ops.object.shade_smooth(); o.data.materials.append(MATS["armour_silver"])
+    for loc in ((-0.03, 0, 1.32), (-0.05, 0.07, 1.16), (-0.05, -0.07, 1.16), (-0.04, 0, 1.45), (-0.02, 0.11, 0.8), (-0.02, -0.11, 0.8), (-0.02, 0.125, 0.33), (-0.02, -0.125, 0.33)):
+        l = bpy.data.lights.new("in", "POINT"); l.energy = 3.2; l.color = (0.2, 0.42, 1); l.shadow_soft_size = 0.05; o = bpy.data.objects.new("in", l); sc.collection.objects.link(o); o.location = loc; INNER.append(l)
+
+
+INNER = []
+add_hinges()
 def pose(f):
-    op = span(f, 18, 44) - span(f, 118, 146); mask = span(f, 6, 26) - span(f, 142, 168)
+    op = span(f, 20, 50) - span(f, 112, 146); mask = span(f, 6, 28) - span(f, 142, 168)
     for link, objs in groups.items():
         for o in objs:
             o.matrix_world = Matrix.Identity(4)
@@ -94,18 +124,18 @@ def pose(f):
         h = Vector((-0.006, 0, (M["chin"] + 158) / 1000))
         for o in groups["helmet_faceplate"]: rot_about(o, h, "Y", -1.0 * mask)
     for link, objs in groups.items():
-        if not link.endswith(":b"): continue
-        n = link[:-2]; sd = 1 if n.startswith("left") else -1 if n.startswith("right") else 0
-        back = Vector((-0.42 - (0.14 if n in ("pelvis", "head") else 0.0), 0.2 * sd, 0.04))
-        for o in objs: o.matrix_world = Matrix.Translation(back * op)
+        if ":b" not in link: continue
+        p_, u, sd = hinge_of(link); R = Matrix.Translation(p_) @ Matrix.Rotation(-sd * OPEN * op, 4, u) @ Matrix.Translation(-p_)
+        for o in objs: o.matrix_world = R
+    for l in INNER: l.energy = 3.2 * op
     # the person: walks in from behind, stops inside
-    wk = span(f, 40, 106); x = -2.5 * (1 - wk); root.location = Vector((x, 0, 0)); ph = (f - 40) * 0.42; amp = 0.52 * (1 - span(f, 96, 108)) * (1 if f < 108 else 0)
+    wk = span(f, 44, 108); x = -2.5 * (1 - wk); root.location = Vector((x, 0, 0)); ph = (f - 44) * 0.42; amp = 0.5 * (1 - span(f, 94, 108))
     for n, s_ in (("left", 1), ("right", -1)):
         th, sh, ua, fa = L[n]; q = math.sin(ph) * s_
         th.rotation_euler = (0, -q * amp, 0); sh.rotation_euler = (0, max(0, -math.cos(ph) * s_) * amp * 1.5, 0); ua.rotation_euler = (0, q * amp * 0.7, 0); fa.rotation_euler = (0, -0.25 * amp, 0)
     glow.default_value = 26 * (1 - span(f, 2, 12) + span(f, 160, 174))
     # camera: orbits from behind-left to the front as the armour closes
-    az = math.radians(205 - 165 * span(f, 110, 178)); d = 5.4; p = Vector((math.cos(az) * d, math.sin(az) * d - 0.2, 1.22)); co.location = p
+    az = math.radians(212 - 172 * span(f, 116, 178)); d = 5.4; p = Vector((math.cos(az) * d, math.sin(az) * d - 0.2, 1.22)); co.location = p
     co.rotation_euler = (Vector((-0.25 * (1 - span(f, 110, 170)), 0, 0.98)) - p).to_track_quat("-Z", "Y").to_euler()
     bpy.context.view_layer.update()
 
