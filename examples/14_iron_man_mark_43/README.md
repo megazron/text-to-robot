@@ -63,7 +63,11 @@ All 479 checks pass (torque, speed, power, stability, print-bed fit). Details in
 <!-- SIM -->
 ## Simulation (MuJoCo, real actuator limits)
 
+<<<<<<< HEAD
 **2/2 task tests pass.** Every motor is limited to its datasheet peak torque and its torque-speed line, with the rotor inertia reflected through its gearbox; continuous loads are compared with the rated torque. The animation below is recorded from these tests.
+=======
+**1/1 task tests pass.** Every motor is limited to its datasheet peak torque and its torque-speed line, with the rotor inertia reflected through its gearbox; continuous loads are compared with the rated torque. The animation below is recorded from these tests.
+>>>>>>> 866c2a5 (WALL-E print fixes, Mark 43 film framed on the helmet, docs)
 
 ![simulation](simulation.gif)
 
@@ -87,6 +91,7 @@ _PASS means the modelled actuators (datasheet peak torque as a hard limit, a lin
 | `robot.training.zip` | MuJoCo / RL training scaffold |
 | `simulation_report.json`, `simulation.gif` | MuJoCo task tests under the real actuator limits |
 | `studio.gif` | Cycles render of a physics motion loop: every link where MuJoCo put it, the harness on its real routes |
+<<<<<<< HEAD
 
 <!-- MANUAL_NOTES -->
 ## How it opens
@@ -129,3 +134,5 @@ All of this is a design on a computer. None of it has been printed, assembled, p
 - Check heat and breathing: the helmet has no ventilation design. A person in a closed printed shell can overheat; the helmet's mask must lift by hand, and should be tested the same way.
 - Keep fingers, hair and undersuit clear of every seam while a door moves. The doors have no sensing: nothing stops them for a person except the clutch.
 <!-- /MANUAL_NOTES -->
+=======
+>>>>>>> 866c2a5 (WALL-E print fixes, Mark 43 film framed on the helmet, docs)

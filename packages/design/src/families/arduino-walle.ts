@@ -165,7 +165,7 @@ export function designArduinoWallE(req: ArduinoWallERequest = {}): RobotSpecific
       const span = Math.sqrt(L * L - (R - R_IDLE) ** 2), sx = xa + n[0] * rr, sz = ZC + n[2] * rr, dir = (X_TOP + n[0] * (R_IDLE + BELT) - sx) * t[0] + (Z_TOP + n[2] * (R_IDLE + BELT) - sz) * t[2] > 0 ? 1 : -1;
       for (let d = 8; d < span - 4; d += 12) {
         const o: Vec3 = [sx + t[0] * dir * d, 0, sz + t[2] * dir * d];
-        track.push({ op: "at", T: place(t, [0, 1, 0], n[2] * t[0] - n[0] * t[2] > 0 ? n : [-n[0], 0, -n[2]], o), of: [{ op: "cutbox", min: [-1.5, y0 - 1, -2], max: [1.5, y1 + 1, 2] }] });
+        track.push({ op: "at", T: place(t, [0, 1, 0], n[2] * t[0] - n[0] * t[2] > 0 ? n : [-n[0], 0, -n[2]], o), of: [{ op: "cutbox", min: [-1.5, y0 - 1, -1.2], max: [1.5, y1 + 1, 1.2] }] });
       }
     }
     const name = `track_${side > 0 ? "left" : "right"}`;
@@ -285,13 +285,13 @@ export function designArduinoWallE(req: ArduinoWallERequest = {}): RobotSpecific
       { op: "hull", cut: true, of: [{ op: "box", min: [18, -6.8, -1], max: [20, 6.8, 14] }, { op: "box", min: [FORE - 26, -11.8, -1], max: [FORE - 24, 11.8, 14] }] },
       { op: "box", min: [FORE - 22, -15, 0], max: [FORE - 16, 15, 16.5] },                              // wrist collar
       { op: "cradle", key: SERVO, T: Th, wall: 2.5 },
-      { op: "box", min: [FORE + 15, -14, 1.5], max: [FORE + 22, 12, 15.5] },                             // knuckles, then two fingers
-      { op: "box", min: [FORE + 20, -14, 1.5], max: [FORE + 48, -6, 7.5], r: 2 }, { op: "box", min: [FORE + 20, 1, 1.5], max: [FORE + 48, 9, 7.5], r: 2 },
+      { op: "box", min: [FORE + 15, Math.min(f * -14, f * 12), 1.5], max: [FORE + 22, Math.max(f * -14, f * 12), 15.5] },   // knuckles, then two fingers (mirrored per side)
+      { op: "box", min: [FORE + 20, Math.min(f * -14, f * -6), 1.5], max: [FORE + 48, Math.max(f * -14, f * -6), 7.5], r: 2 }, { op: "box", min: [FORE + 20, Math.min(f * 1, f * 9), 1.5], max: [FORE + 48, Math.max(f * 1, f * 9), 7.5], r: 2 },
     ];
     A.cadLink(fore, { name: fore, edge: 0.6, ops: forearm }, { material: "walle_grey" });
     // the hazard stripes on the forearm: a dark plate with slanted slots, the grey showing through
-    const stripes: Op[] = [{ op: "box", min: [24, -10, 16], max: [FORE - 26, 10, 17.6] }];
-    for (let k = 0; k < 3; k++) stripes.push({ op: "subtract", of: [{ op: "beam", a: [28 + k * 8, -7, 17], b: [33 + k * 8, 7, 17], w: 3.4, h: 4, up: [0, 0, 1] }] });
+    const stripes: Op[] = [{ op: "box", min: [24, -11, 16], max: [FORE - 26, 11, 18] }];
+    for (let k = 0; k < 2; k++) stripes.push({ op: "subtract", of: [{ op: "beam", a: [30 + k * 8, -5, 17], b: [34 + k * 8, 5, 17], w: 3, h: 5, up: [0, 0, 1] }] });
     A.cadLink(`${lr}_arm_stripes`, { name: `${lr}_arm_stripes`, edge: 0, ops: stripes }, { material: "printed_dark" });
     A.fixed(`${lr}_arm_stripes_mount`, fore, `${lr}_arm_stripes`, translation([0, 0, 0]));
     A.revolute(`${lr}_elbow`, name, fore, Te, SERVO, -1.5, 1.5);

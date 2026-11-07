@@ -50,7 +50,14 @@ Dated from the git history. Pull request numbers refer to
   paths with feedback, gaits and squats on the free base), rendered in Cycles with the real harness routes.
 - Rover: the differential bar is modelled (the right rocker was bolted to the body), so it now passes its turn on the spot.
 - Turn test: mean yaw rate, not the rate at one instant. WALL-E's claim counts its tracks' torque limit.
-- WALL-E: yellow body with door, seams and charge gauge, smoked lenses, box-section arms. Baymax: a round belly.
+- WALL-E rebuilt against film references: triangular treads round the drive wheels and a top idler, arms with shoulder and
+  elbow servos and a gripping thumb, sad teardrop binocular eyes, grey band, hatch, name plate, weathered paint in the render.
+  A second LM2596 feeds the arm servos. Baymax: a round belly.
+- `scripts/check_motion.py`: every frame of every film, and with `--sweep` every joint across its range, intersected on the
+  exact meshes. It found the rover's arm passing through its depth camera and deck, the rocker reaching the body, the
+  Arduino claw swinging through its fixed jaw and arm wrists folding into their forearms; each is fixed in the design
+  (limits from the swept clear range) or listed with a reason in `examples/motion_known_issues.json`. Runs in CI.
+- Geometry cache keeps text, not live objects: on the site a cached part once came back with another part's inertia.
 
 ## 2026-11-06: Real wiring and electronics compartments
 

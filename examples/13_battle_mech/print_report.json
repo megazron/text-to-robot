@@ -233,22 +233,22 @@
   {
    "name": "l_hip_pitch_armour_front",
    "watertight": true,
-   "volume_cm3": 35.43,
+   "volume_cm3": 49.95,
    "size_mm": [
     245.6,
-    32.1,
+    32.6,
     57.9
    ],
    "orientation": [
-    0.12,
-    -0.993,
+    -0.12,
+    0.993,
     0.0
    ],
    "fits_bed": true,
    "support_area_cm2": 0.0,
    "support_frac": 0.0,
    "bed_contact_cm2": 138.55,
-   "min_wall_mm": 2.5,
+   "min_wall_mm": 2.49,
    "thin_wall_frac": 0.0,
    "passed": true,
    "supports": "none",
@@ -358,21 +358,21 @@
   {
    "name": "l_knee_armour_front",
    "watertight": true,
-   "volume_cm3": 22.57,
+   "volume_cm3": 32.0,
    "size_mm": [
-    157.1,
-    21.3,
+    157.9,
+    21.8,
     57.9
    ],
    "orientation": [
-    -0.12,
-    0.993,
+    0.12,
+    -0.993,
     0.0
    ],
    "fits_bed": true,
    "support_area_cm2": 0.0,
    "support_frac": 0.0,
-   "bed_contact_cm2": 88.55,
+   "bed_contact_cm2": 87.97,
    "min_wall_mm": 2.48,
    "thin_wall_frac": 0.001,
    "passed": true,
@@ -458,29 +458,29 @@
   {
    "name": "l_shoulder_roll_armour_out",
    "watertight": true,
-   "volume_cm3": 5.62,
+   "volume_cm3": 7.61,
    "size_mm": [
-    38.1,
-    2.5,
+    38.7,
+    4.1,
     60.4
    ],
    "orientation": [
     0.0,
-    1.0,
+    -1.0,
     0.0
    ],
    "fits_bed": true,
    "support_area_cm2": 0.0,
    "support_frac": 0.0,
-   "bed_contact_cm2": 22.29,
-   "min_wall_mm": 0.51,
-   "thin_wall_frac": 0.011,
-   "passed": false,
+   "bed_contact_cm2": 21.68,
+   "min_wall_mm": 0.91,
+   "thin_wall_frac": 0.007,
+   "passed": true,
    "supports": "none",
-   "problems": [
-    "walls down to 0.51 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
-   ],
-   "warnings": []
+   "problems": [],
+   "warnings": [
+    "thin wall 0.91 mm (prints with 2 perimeters; 3 recommended)"
+   ]
   },
   {
    "name": "l_shoulder_roll_link",
@@ -760,15 +760,15 @@
   {
    "name": "r_hip_pitch_armour_front",
    "watertight": true,
-   "volume_cm3": 35.43,
+   "volume_cm3": 49.95,
    "size_mm": [
     245.6,
-    32.1,
+    32.6,
     57.9
    ],
    "orientation": [
-    0.12,
-    0.993,
+    -0.12,
+    -0.993,
     0.0
    ],
    "fits_bed": true,
@@ -885,23 +885,23 @@
   {
    "name": "r_knee_armour_front",
    "watertight": true,
-   "volume_cm3": 22.57,
+   "volume_cm3": 32.0,
    "size_mm": [
-    157.1,
-    21.3,
+    157.9,
+    21.8,
     57.9
    ],
    "orientation": [
-    -0.12,
-    -0.993,
+    0.12,
+    0.993,
     -0.0
    ],
    "fits_bed": true,
    "support_area_cm2": 0.0,
    "support_frac": 0.0,
-   "bed_contact_cm2": 88.55,
-   "min_wall_mm": 2.28,
-   "thin_wall_frac": 0.001,
+   "bed_contact_cm2": 87.97,
+   "min_wall_mm": 2.29,
+   "thin_wall_frac": 0.002,
    "passed": true,
    "supports": "none",
    "problems": [],
@@ -985,27 +985,27 @@
   {
    "name": "r_shoulder_roll_armour_out",
    "watertight": true,
-   "volume_cm3": 5.62,
+   "volume_cm3": 7.61,
    "size_mm": [
-    38.1,
-    2.5,
+    38.7,
+    4.1,
     60.4
    ],
    "orientation": [
     0.0,
-    -1.0,
+    1.0,
     0.0
    ],
    "fits_bed": true,
    "support_area_cm2": 0.0,
    "support_frac": 0.0,
-   "bed_contact_cm2": 22.29,
-   "min_wall_mm": 0.35,
-   "thin_wall_frac": 0.015,
+   "bed_contact_cm2": 21.68,
+   "min_wall_mm": 0.78,
+   "thin_wall_frac": 0.012,
    "passed": false,
    "supports": "none",
    "problems": [
-    "walls down to 0.35 mm (< 0.8 mm = 2 extrusion lines) on 2% of the surface"
+    "walls down to 0.78 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
    ],
    "warnings": []
   },
@@ -1241,14 +1241,14 @@
   {
    "name": "torso_armour_front",
    "watertight": true,
-   "volume_cm3": 113.59,
+   "volume_cm3": 174.13,
    "size_mm": [
-    2.5,
+    4.1,
     228.0,
     199.8
    ],
    "orientation": [
-    1.0,
+    -1.0,
     0.0,
     0.0
    ],

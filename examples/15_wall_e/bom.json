@@ -132,9 +132,9 @@
       "category": "Printed structure",
       "name": "PETG filament for 21 printed parts",
       "qty": 1,
-      "unit_cost": 14.65,
-      "subtotal": 14.65,
-      "spec": "579 g of parts (+15 % supports/waste), about 52.8 h of printing",
+      "unit_cost": 14.7,
+      "subtotal": 14.7,
+      "spec": "581 g of parts (+15 % supports/waste), about 53.0 h of printing",
       "note": "body, front_band, charge_gauge, name_plate, track_left, left_idler, track_right, right_idler, lid, neck, head, left_lens, right_lens, left_arm, left_forearm, left_arm_stripes, left_thumb, right_arm, right_forearm, right_arm_stripes, right_thumb"
     },
     {
@@ -272,7 +272,7 @@
       "note": "price estimated"
     }
   ],
-  "total": 117.22,
+  "total": 117.27,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
@@ -315,7 +315,7 @@
       "effort_unit": "N·m",
       "required_torque_nm": 0.0308,
       "chosen": "TowerPro SG90 micro servo (nylon gears) + cross horn",
-      "margin": "5.73x"
+      "margin": "5.72x"
     },
     {
       "joint": "right_elbow",
@@ -323,7 +323,7 @@
       "effort_unit": "N·m",
       "required_torque_nm": 0.0308,
       "chosen": "TowerPro SG90 micro servo (nylon gears) + cross horn",
-      "margin": "5.73x"
+      "margin": "5.72x"
     },
     {
       "joint": "left_hand",

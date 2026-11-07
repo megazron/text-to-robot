@@ -1,6 +1,6 @@
 # Bill of Materials — wall_e
 
-**Estimated total: $117.22**  ·  tier: hobby
+**Estimated total: $117.27**  ·  tier: hobby
 
 **Effort sizing: passes catalogue estimate; hardware verified: no.**
 
@@ -20,7 +20,7 @@
 | Actuator | TT gear motor 3-6 V, 1:48, 200 rpm (yellow, double-D shaft) _(drive motor · https://www.adafruit.com/product/3777)_ | 4 | 1.5 | 6 | 0.0235 N·m rated / 0.0785 N·m peak, 6 V |
 | Power | WAGO 221-415 five-way lever splice _(rail splices, the star ground and bus hubs · https://www.wago.com/global/electrical-interconnections/compact-splicing-connector/p/221-415)_ | 8 | 0.8 | 6.4 | 450 V |
 | Drive | 65 mm rubber wheel for TT gearmotors (double-D 5.3x3.7 bore) _(track drive wheel · https://makerlab-electronics.com/products/65mm-yellow-wheel)_ | 4 | 2 | 8 | https://makerlab-electronics.com/products/65mm-yellow-wheel |
-| Printed structure | PETG filament for 21 printed parts _(body, front_band, charge_gauge, name_plate, track_left, left_idler, track_right, right_idler, lid, neck, head, left_lens, right_lens, left_arm, left_forearm, left_arm_stripes, left_thumb, right_arm, right_forearm, right_arm_stripes, right_thumb)_ | 1 | 14.65 | 14.65 | 579 g of parts (+15 % supports/waste), about 52.8 h of printing |
+| Printed structure | PETG filament for 21 printed parts _(body, front_band, charge_gauge, name_plate, track_left, left_idler, track_right, right_idler, lid, neck, head, left_lens, right_lens, left_arm, left_forearm, left_arm_stripes, left_thumb, right_arm, right_forearm, right_arm_stripes, right_thumb)_ | 1 | 14.7 | 14.7 | 581 g of parts (+15 % supports/waste), about 53.0 h of printing |
 | Fasteners | Screws, nuts and inserts | 42 | 0.12 | 5.04 | 8x M3x25 socket head + nut (motor through-bolt); 2x M4 x 45 shoulder bolt (idler pin); 4x M2x6 self-tapping (sensor); 2x M3x8 countersunk + nut (pack); 6x M2.5x6 + nut (PCA9685) / M3x6 (LM2596); 4x M3x10 self-tapping (lid); 16x M2 self-tapping (servo tabs, from the servo kits) |
 | Wiring | 20 AWG silicone wire _(price estimated)_ | 0.6 | 0.5 | 0.3 | 0.6 m: 0.519 mm2, rated 5.5 A in a bundle; 0.53 m cut + 10 % waste |
 | Wiring | 22 AWG silicone wire _(price estimated)_ | 1.6 | 0.4 | 0.64 | 1.6 m: 0.327 mm2, rated 3.5 A in a bundle; 1.38 m cut + 10 % waste |
@@ -45,8 +45,8 @@
 | neck_tilt | 0.0537 | N·m | TowerPro SG90 micro servo (nylon gears) + cross horn | 3.28x |
 | left_arm_lift | 0.0689 | N·m | TowerPro MG90S micro servo (metal gears) + cross horn | 3.13x |
 | right_arm_lift | 0.0689 | N·m | TowerPro MG90S micro servo (metal gears) + cross horn | 3.13x |
-| left_elbow | 0.0308 | N·m | TowerPro SG90 micro servo (nylon gears) + cross horn | 5.73x |
-| right_elbow | 0.0308 | N·m | TowerPro SG90 micro servo (nylon gears) + cross horn | 5.73x |
+| left_elbow | 0.0308 | N·m | TowerPro SG90 micro servo (nylon gears) + cross horn | 5.72x |
+| right_elbow | 0.0308 | N·m | TowerPro SG90 micro servo (nylon gears) + cross horn | 5.72x |
 | left_hand | 0 | N·m | TowerPro SG90 micro servo (nylon gears) + cross horn | 176500x |
 | right_hand | 0 | N·m | TowerPro SG90 micro servo (nylon gears) + cross horn | 176500x |
 

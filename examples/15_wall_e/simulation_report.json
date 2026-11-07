@@ -14,7 +14,7 @@
    "commanded_m_s": 0.59,
    "cruise_speed_m_s": 0.5818,
    "mean_speed_m_s": 0.492,
-   "distance_m": 2.3272,
+   "distance_m": 2.3271,
    "heading_drift_deg": -0.0,
    "lateral_m": -0.0,
    "wheel_radius_m": [
@@ -31,7 +31,7 @@
      "mean_cruise_nm": 0.0086,
      "rated_nm": 0.0235,
      "util_rated": 0.366,
-     "max_err": 4.3595,
+     "max_err": 4.3604,
      "max_err_hold": 0.2293,
      "saturated_frac": 0.184
     },
@@ -42,7 +42,7 @@
      "mean_cruise_nm": 0.0086,
      "rated_nm": 0.0235,
      "util_rated": 0.366,
-     "max_err": 4.3595,
+     "max_err": 4.3604,
      "max_err_hold": 0.2293,
      "saturated_frac": 0.184
     },
@@ -53,7 +53,7 @@
      "mean_cruise_nm": 0.0086,
      "rated_nm": 0.0235,
      "util_rated": 0.366,
-     "max_err": 4.3592,
+     "max_err": 4.3601,
      "max_err_hold": 0.2292,
      "saturated_frac": 0.184
     },
@@ -64,7 +64,7 @@
      "mean_cruise_nm": 0.0086,
      "rated_nm": 0.0235,
      "util_rated": 0.366,
-     "max_err": 4.3592,
+     "max_err": 4.3602,
      "max_err_hold": 0.2292,
      "saturated_frac": 0.184
     }
@@ -75,29 +75,29 @@
    "explanation": "from standstill on a 10 deg slope (speed ramped over 2.2 s at 0.5 m/s^2): 1.57 m uphill in 4.2 s, speed 0.553 m/s of 0.590 commanded",
    "slope_deg": 10.0,
    "claim_key": null,
-   "uphill_m": 1.5702,
-   "speed_m_s": 0.553,
+   "uphill_m": 1.5697,
+   "speed_m_s": 0.5528,
    "joints": {
     "front_left_wheel_joint": {
      "peak_nm": 0.0588,
      "peak_rating_nm": 0.0785,
-     "util_peak": 0.748,
+     "util_peak": 0.749,
      "mean_climb_nm": 0.0277,
      "rated_nm": 0.0235,
-     "util_rated": 1.179,
-     "max_err": 3.5311,
-     "max_err_hold": 2.8102,
+     "util_rated": 1.18,
+     "max_err": 3.5354,
+     "max_err_hold": 2.8152,
      "saturated_frac": 0.674
     },
     "front_right_wheel_joint": {
      "peak_nm": 0.0588,
      "peak_rating_nm": 0.0785,
-     "util_peak": 0.748,
+     "util_peak": 0.749,
      "mean_climb_nm": 0.0277,
      "rated_nm": 0.0235,
-     "util_rated": 1.179,
-     "max_err": 3.5312,
-     "max_err_hold": 2.8103,
+     "util_rated": 1.18,
+     "max_err": 3.5355,
+     "max_err_hold": 2.8152,
      "saturated_frac": 0.674
     },
     "rear_left_wheel_joint": {
@@ -106,81 +106,81 @@
      "util_peak": 0.748,
      "mean_climb_nm": 0.0277,
      "rated_nm": 0.0235,
-     "util_rated": 1.179,
-     "max_err": 3.5304,
-     "max_err_hold": 2.8095,
+     "util_rated": 1.18,
+     "max_err": 3.5347,
+     "max_err_hold": 2.8144,
      "saturated_frac": 0.674
     },
     "rear_right_wheel_joint": {
-     "peak_nm": 0.0587,
+     "peak_nm": 0.0588,
      "peak_rating_nm": 0.0785,
      "util_peak": 0.748,
      "mean_climb_nm": 0.0277,
      "rated_nm": 0.0235,
-     "util_rated": 1.179,
-     "max_err": 3.5305,
-     "max_err_hold": 2.8096,
+     "util_rated": 1.18,
+     "max_err": 3.5348,
+     "max_err_hold": 2.8145,
      "saturated_frac": 0.674
     }
    }
   },
   "turn_in_place": {
    "pass": 1.0,
-   "explanation": "mean yaw rate 1.27 rad/s with 3.77 commanded (no-slip), claimed 1.37 rad/s (needs >= 1.16), centre moved 8.7 cm over 1.0 turn(s) (8.7 cm per turn)",
+   "explanation": "mean yaw rate 1.31 rad/s with 3.77 commanded (no-slip), claimed 1.37 rad/s (needs >= 1.16), centre moved 7.3 cm over 1.0 turn(s) (7.3 cm per turn)",
    "claimed_rad_s": 1.37,
    "commanded_rad_s": 3.7671,
-   "yaw_rate_rad_s": 1.2651,
-   "drift_m": 0.0871,
+   "yaw_rate_rad_s": 1.3082,
+   "drift_m": 0.073,
    "track_m": 0.1566,
    "joints": {
     "front_left_wheel_joint": {
-     "peak_nm": 0.078,
+     "peak_nm": 0.0777,
      "peak_rating_nm": 0.0785,
-     "util_peak": 0.994,
-     "mean_turn_nm": 0.0675,
+     "util_peak": 0.99,
+     "mean_turn_nm": 0.067,
      "rated_nm": 0.0235,
-     "util_rated": 2.874,
-     "max_err": 6.7151,
-     "max_err_hold": 6.7151,
+     "util_rated": 2.849,
+     "max_err": 6.9134,
+     "max_err_hold": 6.3321,
      "saturated_frac": 0.803
     },
     "front_right_wheel_joint": {
-     "peak_nm": 0.0779,
+     "peak_nm": 0.0777,
      "peak_rating_nm": 0.0785,
-     "util_peak": 0.992,
-     "mean_turn_nm": 0.0505,
+     "util_peak": 0.99,
+     "mean_turn_nm": 0.0492,
      "rated_nm": 0.0235,
-     "util_rated": 2.151,
-     "max_err": 6.1664,
-     "max_err_hold": 3.4007,
-     "saturated_frac": 0.575
+     "util_rated": 2.095,
+     "max_err": 6.4336,
+     "max_err_hold": 2.3991,
+     "saturated_frac": 0.487
     },
     "rear_left_wheel_joint": {
-     "peak_nm": 0.0767,
+     "peak_nm": 0.0768,
      "peak_rating_nm": 0.0785,
-     "util_peak": 0.977,
-     "mean_turn_nm": 0.0358,
+     "util_peak": 0.978,
+     "mean_turn_nm": 0.0338,
      "rated_nm": 0.0235,
-     "util_rated": 1.522,
-     "max_err": 4.96,
-     "max_err_hold": 1.9003,
-     "saturated_frac": 0.234
+     "util_rated": 1.439,
+     "max_err": 5.05,
+     "max_err_hold": 1.8165,
+     "saturated_frac": 0.219
     },
     "rear_right_wheel_joint": {
      "peak_nm": 0.0768,
      "peak_rating_nm": 0.0785,
-     "util_peak": 0.979,
-     "mean_turn_nm": 0.0566,
+     "util_peak": 0.978,
+     "mean_turn_nm": 0.0567,
      "rated_nm": 0.0235,
-     "util_rated": 2.408,
-     "max_err": 5.2636,
-     "max_err_hold": 4.1144,
-     "saturated_frac": 0.684
+     "util_rated": 2.412,
+     "max_err": 5.1762,
+     "max_err_hold": 3.7017,
+     "saturated_frac": 0.715
     }
    }
   }
  },
  "passed": 3,
  "total": 3,
- "source_urdf_sha256": "6f3d0f8df99b74a4f6d26d317d222411a4115d694e8ce196fa9993877437e374"
+ "source_urdf_sha256": "91ee70263dd56dfcb0c5dade1ee4e71015aa0e33db4cdc228b2128a173a514e7"
 }

@@ -270,6 +270,9 @@ PLANS = {
 VIEW = {"01_arm_2dof": 75, "02_arm_6dof": 115, "03_arm_7dof": 115, "04_scara": 300, "09_gripper": 320, "19_arduino_arm": 115, "08_humanoid": 25, "13_battle_mech": 25, "16_eva": 25, "17_baymax": 25, "14_iron_man_mark_43": 20}
 
 
+FRAME = {"14_iron_man_mark_43": {"frame": r"(helmet|ear_pod|faceplate|eye_led|head$)", "el": 8}}
+
+
 def home_poses(k):
     """Link poses relative to the root link with every joint at zero: the frame the harness routes are stored in."""
     d = mujoco.MjData(k.m); mujoco.mj_kinematics(k.m, d)
@@ -288,7 +291,7 @@ def main():
     a = ap.parse_args()
     k = PLANS[a.example](a.example)
     (a.out / a.example).mkdir(parents=True, exist_ok=True)
-    k.scene = {**getattr(k, "scene", {}), **({"az": VIEW[a.example]} if a.example in VIEW else {})}
+    k.scene = {**getattr(k, "scene", {}), **({"az": VIEW[a.example]} if a.example in VIEW else {}), **FRAME.get(a.example, {})}
     (a.out / a.example / "motion.json").write_text(json.dumps({"example": a.example, "fps": FPS, "frames": k.frames, "notes": k.notes, "scene": getattr(k, "scene", {}), "home": home_poses(k), "root": k.bodies[0][1], "start": k.home}))
     p = np.array([k.frames[i][k.bodies[0][1]][:3] for i in range(len(k.frames))])
     print(a.example, len(k.frames), "frames; base travel", np.round(p.max(0) - p.min(0), 3), "seam", np.round(p[-1] - p[0], 3), k.notes)

@@ -8,7 +8,7 @@
 Geometry comes only from the URDF: every visual is placed by the pose MuJoCo reports for its link. Colours come from the URDF
 materials; the name of a material decides how the surface behaves (PLA, anodised metal, rubber, solder mask, LEDs).
 """
-import bpy, json, math, os, sys
+import bpy, json, math, os, re, sys
 import xml.etree.ElementTree as ET
 from mathutils import Euler, Matrix, Quaternion, Vector
 
@@ -237,7 +237,8 @@ def shift(f):
 
 def bounds(frame_ids, only=None):
     lo, hi = Vector((1e9,) * 3), Vector((-1e9,) * 3); PTS.clear()
-    keep = {only} if only else moving_chain()
+    rx = scene_opts.get("frame")      # a film can be framed on named parts (a helmet close-up), else on what moves
+    keep = {only} if only else ({l for _, l, *_ in items if re.match(rx, l)} if rx else moving_chain())
     for f in frame_ids:
         pose(f)
         for o, link, *_ in items:

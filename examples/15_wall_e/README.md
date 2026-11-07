@@ -8,13 +8,13 @@ Interpreted as: WALL-E character · range (body)
 
 **Arduino WALL-E: TPU tracks on 4 TT motors, pan/tilt binocular head, two-joint arms with gripping hands, 1.14 kg, $98 of parts**
 
-Parts cost **$117.22** · printed structure 21 parts, 579 g · checks passed 71/71
+Parts cost **$117.27** · printed structure 21 parts, 581 g · checks passed 71/71
 
 ## What it can do
 
 | | |
 |---|--:|
-| mass kg | 1.14 |
+| mass kg | 1.141 |
 | top speed m s | 0.59 |
 | runtime min | 87 |
 | cost usd | 97.53 |
@@ -32,8 +32,8 @@ Parts cost **$117.22** · printed structure 21 parts, 579 g · checks passed 71/
 | neck_tilt | hobby_sg90 | 0.0537 | 0.0529 / 0.1765 | 3.28x | 10.472 |
 | left_arm_lift | hobby_mg90s | 0.0689 | 0.0647 / 0.2157 | 3.13x | 13.09 |
 | right_arm_lift | hobby_mg90s | 0.0689 | 0.0647 / 0.2157 | 3.13x | 13.09 |
-| left_elbow | hobby_sg90 | 0.0308 | 0.0529 / 0.1765 | 5.73x | 10.472 |
-| right_elbow | hobby_sg90 | 0.0308 | 0.0529 / 0.1765 | 5.73x | 10.472 |
+| left_elbow | hobby_sg90 | 0.0308 | 0.0529 / 0.1765 | 5.72x | 10.472 |
+| right_elbow | hobby_sg90 | 0.0308 | 0.0529 / 0.1765 | 5.72x | 10.472 |
 | left_hand | hobby_sg90 | 0 | 0.0529 / 0.1765 | 176500x | 10.472 |
 | right_hand | hobby_sg90 | 0 | 0.0529 / 0.1765 | 176500x | 10.472 |
 
@@ -63,7 +63,7 @@ All 71 checks pass (torque, speed, power, stability, print-bed fit). Details in 
 |---|---|---|
 | ✅ | drive straight | 2.33 m in 4.73 s, cruise speed 0.582 m/s vs claimed 0.590 m/s, heading drift -0.0 deg, lateral -0.0 cm |
 | ✅ | ramp 10deg | from standstill on a 10 deg slope (speed ramped over 2.2 s at 0.5 m/s^2): 1.57 m uphill in 4.2 s, speed 0.553 m/s of 0.590 commanded |
-| ✅ | turn in place | mean yaw rate 1.27 rad/s with 3.77 commanded (no-slip), claimed 1.37 rad/s (needs >= 1.16), centre moved 8.7 cm over 1.0 turn(s) (8.7 cm per turn) |
+| ✅ | turn in place | mean yaw rate 1.31 rad/s with 3.77 commanded (no-slip), claimed 1.37 rad/s (needs >= 1.16), centre moved 7.3 cm over 1.0 turn(s) (7.3 cm per turn) |
 
 _PASS means the modelled actuators (datasheet peak torque as a hard limit, a linear torque-speed line to no-load speed, reflected rotor inertia, URDF damping/friction) can produce the torques and speeds the task needs in this geometry and mass distribution, and that mean torque over the hold stays within the continuous (rated) torque. Joint control uses an ideal model-based feedforward (computed torque) through the force-limited servo for fixed-base robots and plain position servos for floating robots; a pass therefore proves torque/speed capacity, not that a given controller achieves it. Untested: thermal limits over long duty cycles (only the mean-vs-rated proxy), gearbox backlash and compliance, link and joint flexibility, encoder resolution, supply voltage sag and current limits, bus latency, controller tuning, and contact/friction values (nominal friction only)._
 <!-- /SIM -->

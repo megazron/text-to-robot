@@ -24,7 +24,7 @@ Your design stays yours. The website runs entirely in your browser, nothing is u
 | <img src="examples/18_arduino_car/studio.gif" width="200"><br>Arduino car | <img src="examples/19_arduino_arm/studio.gif" width="200"><br>Arduino arm | <img src="examples/15_wall_e/studio.gif" width="200"><br>WALL-E | <img src="examples/02_arm_6dof/studio.gif" width="200"><br>6-DOF arm |
 | <img src="examples/10_quadruped/studio.gif" width="200"><br>Quadruped | <img src="examples/11_spider_scout/studio.gif" width="200"><br>Hexapod | <img src="examples/08_humanoid/studio.gif" width="200"><br>Humanoid | <img src="examples/12_mars_rover/studio.gif" width="200"><br>Mars rover |
 
-Every film above is the exported model itself: its URDF and meshes in a Cycles studio, moved by a MuJoCo run through its real motors. All 19 are in the [gallery](examples/README.md), and every one of them is generated on the website by a browser test in CI.
+Every film above is the exported model itself: its URDF and meshes in a Cycles studio, moved by a MuJoCo run through its real motors. All 19 are in the [gallery](examples/README.md). Every one of them is generated on the website by a browser test in CI, and every frame of every film is checked on the exact meshes for parts passing through each other.
 
 ## What you get
 

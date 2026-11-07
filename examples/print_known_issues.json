@@ -250,7 +250,17 @@
     "torso_55": "sliver left by a trim, 22% of it too thin to print: glue on a thickened copy or leave it off",
     "torso_56": "curved armour shell: prints with tree supports; thin edge left where the shell is trimmed for a joint or seam: sand or thicken after printing",
     "torso_57": "sliver left by a trim, 11% of it too thin to print: glue on a thickened copy or leave it off",
+<<<<<<< HEAD
     "torso_6": "thin edge left where the shell is trimmed for a joint or seam: sand or thicken after printing",
     "torso_9": "thin edge left where the shell is trimmed for a joint or seam: sand or thicken after printing"
+=======
+    "torso_58": "thin edge left where the shell is trimmed for a joint or seam: sand or thicken after printing",
+    "torso_59": "curved armour shell with no flat side: needs a raft and tree supports; thin edge left where the shell is trimmed for a joint or seam: sand or thicken after printing",
+    "torso_60": "curved armour shell: prints with tree supports; thin edge left where the shell is trimmed for a joint or seam: sand or thicken after printing",
+    "torso_7": "thin edge left where the shell is trimmed for a joint or seam: sand or thicken after printing"
+  },
+  "15_wall_e": {
+    "right_forearm": "0.2 mm sliver on 1 % of the surface where the hand servo's cradle meets the palm floor: the right hand's servo lies turned over relative to the left, so its asymmetric case does not mirror; open issue"
+>>>>>>> 866c2a5 (WALL-E print fixes, Mark 43 film framed on the helmet, docs)
   }
 }
