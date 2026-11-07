@@ -72,8 +72,12 @@ class Take:
         for _ in range(int(seconds * FPS)): self.step_frame(record=False)
 
 
-def arm_take(ex, keys, T, floating=False):
+def arm_take(ex, keys, T, floating=False, pin=False):
     k = Take(ex, floating)
+    if pin:   # worn armour: the wearer holds the limbs still, so the joints without a motor do not droop
+        driven = {A["jid"] for A in k.rig.acts}
+        for j in range(k.m.njnt):
+            if j not in driven: k.m.dof_damping[k.m.jnt_dofadr[j]] = 1e7
     first = {j: float(k.d.qpos[k.rig.acts[k.index[j]]["qadr"]]) for _, p in keys for j in p}
     keys = [(0.0, first), *keys, (T, first)]
     k.set(keyed(keys, 0)); k.settle(1.0)
@@ -253,6 +257,7 @@ PLANS = {
     "12_mars_rover": lambda ex: wheel_take(ex, DRIVE(0.45), 4.0, [(1.0, {"arm_base_yaw": 0.5}), (2.2, {"arm_base_yaw": -0.5, "arm_shoulder_pitch": 1.1, "arm_wrist_pitch": -1.4}), (3.2, {"arm_base_yaw": 0.0, "arm_shoulder_pitch": 0.7, "arm_wrist_pitch": -0.8})],
                                            pose={"arm_shoulder_pitch": 0.7, "arm_elbow_pitch": -1.6, "arm_wrist_pitch": -0.8}),
     "13_battle_mech": lambda ex: legged_pose_take(ex, 0.5, 4.0, [(1.2, {"l_shoulder_pitch": -0.7, "r_shoulder_pitch": -0.7, "neck_pan": 0.4}), (2.2, {"l_elbow": -1.0, "r_elbow": 1.0, "neck_pan": -0.4}), (3.2, {"neck_pan": 0.0})]),
+    "14_iron_man_mark_43": lambda ex: arm_take(ex, [(0.9, {"faceplate": -0.95}), (2.3, {}), (3.2, {"faceplate": 0.0})], 3.8, pin=True),
     "15_wall_e": lambda ex: wheel_take(ex, DRIVE(0.22), 4.0, [(1.0, {"neck_pan": 0.5, "left_arm_lift": -0.6, "right_arm_lift": 0.6}), (2.2, {"neck_pan": -0.5, "neck_tilt": -0.25}), (3.2, {"neck_pan": 0.2, "left_arm_lift": 0.1, "right_arm_lift": -0.1})]),
     "16_eva": lambda ex: wheel_take(ex, DRIVE(0.3), 4.0, [(1.0, {"head_pan": 0.5, "left_arm_shoulder_pitch": 0.5, "right_arm_shoulder_pitch": 0.5}), (2.2, {"head_pan": -0.5}), (3.2, {"head_pan": 0.0, "left_arm_shoulder_pitch": 0.0, "right_arm_shoulder_pitch": 0.0})]),
     "17_baymax": lambda ex: wheel_take(ex, DRIVE(0.3), 4.0, [(1.0, {"head_pan": 0.35}), (2.2, {"head_pan": -0.35}), (3.2, {"head_pan": 0.0})]),
@@ -262,7 +267,7 @@ PLANS = {
 
 
 # where each film is shot from (0 = dead ahead, robots face +x)
-VIEW = {"01_arm_2dof": 75, "02_arm_6dof": 115, "03_arm_7dof": 115, "04_scara": 300, "09_gripper": 320, "19_arduino_arm": 115, "08_humanoid": 25, "13_battle_mech": 25, "16_eva": 25, "17_baymax": 25}
+VIEW = {"01_arm_2dof": 75, "02_arm_6dof": 115, "03_arm_7dof": 115, "04_scara": 300, "09_gripper": 320, "19_arduino_arm": 115, "08_humanoid": 25, "13_battle_mech": 25, "16_eva": 25, "17_baymax": 25, "14_iron_man_mark_43": 20}
 
 
 def home_poses(k):
