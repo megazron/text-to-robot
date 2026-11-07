@@ -1,13 +1,13 @@
 """One example's studio film, end to end: MuJoCo motion loop, Cycles frames, then examples/<name>/studio.gif.
 
-    .venv/bin/python -B scripts/studio/film.py <example> [--samples 28] [--device CPU|GPU] [--threads 14]
+    .venv/bin/python -B scripts/studio/film.py <example> [--samples 22] [--device CPU|GPU] [--threads 14]
 
 Set BLENDER to the Blender 4.5 binary (default ~/tools/blender/blender-4.5.3-linux-x64/blender). ffmpeg makes the GIF.
 """
 import argparse, os, shutil, subprocess, sys
 from pathlib import Path
 R = Path(__file__).resolve().parents[2]
-ap = argparse.ArgumentParser(description=__doc__.splitlines()[0]); ap.add_argument("example"); ap.add_argument("--samples", type=int, default=28); ap.add_argument("--device", default="CPU")
+ap = argparse.ArgumentParser(description=__doc__.splitlines()[0]); ap.add_argument("example"); ap.add_argument("--samples", type=int, default=22); ap.add_argument("--device", default="CPU")
 ap.add_argument("--threads", type=int, default=14); ap.add_argument("--w", type=int, default=560); ap.add_argument("--h", type=int, default=350); ap.add_argument("--colors", type=int, default=176); ap.add_argument("--reuse-motion", action="store_true")
 a = ap.parse_args()
 ex, work = R / "examples" / a.example, R / "out/studio" / a.example
