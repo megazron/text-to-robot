@@ -194,6 +194,7 @@ def main():
            "notes": ["shells made by scripts/forge_mark43.py", "joint limits measured by sweeping each limb's armour against its parent's armour"]}
     json.dump(man, open(out + ".json", "w"), separators=(",", ":")); open(out + ".bin", "wb").write(blob)
     print(len(rows), "pieces", sum(r["nf"] for r in rows), "faces", len(blob) // 1000000, "MB")
+    import fit_wiring; fit_wiring.fit(out)     # the harness's channels and seat are cut from the finished shells
 
 
 if __name__ == "__main__":

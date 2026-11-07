@@ -41,7 +41,7 @@ export interface ConnectorRow { name: string; current_a: number; unit_usd: numbe
 /** Wire, connector and consumable tables for the wiring model, every value sourced in wiring.json. */
 export const WIRING = wiringJson as unknown as {
   awg: WireRow[]; connectors: Record<string, ConnectorRow>; fuse_ratings_a: number[]; anl_ratings_a?: number[]; off_board_cable_mm: number;
-  consumables: Record<string, { name: string; unit: string; unit_usd: number; spec?: string }>; premade_usd?: Record<string, number>; sources: Record<string, unknown>;
+  consumables: Record<string, { name: string; unit: string; unit_usd: number; spec?: string }>; premade_usd?: Record<string, number>; grommet_bore_mm: Record<string, number>; sources: Record<string, unknown>;
 };
 
 export const CATALOG = catalogJson as unknown as Record<string, Component>;

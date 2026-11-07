@@ -22,6 +22,8 @@ export interface CableRec {
   id: string; label: string; from: string; to: string; from_connector: string; to_connector: string; premade: string | null;
   wires: WireRec[]; od_mm: number; route_mm: number; service_mm: number; slack_mm: number; termination_mm: number; length_mm: number;
   path_mm: Vec3[]; links: string[]; joints: SlackRec[]; exit: string | null;
+  /** how much of the route lies in routed channels (only where a design declares them) */
+  channel_mm?: number;
 }
 export interface RailRec {
   name: string; voltage_v: number; source: string; continuous_a: number; peak_limit_a: number; typical_a: number; peak_a: number; simultaneous: string;
@@ -99,6 +101,14 @@ export class Harness {
   mainSwitch: string | null = null;
   fuses: FuseRec[] = [];
   optional = new Set<string>();
+  /** routed channels: link -> polylines, world mm at home. A cable that has left its bay follows them through that rigid body. */
+  channels = new Map<string, Vec3[][]>();
+  /** extra loop at a joint for movement the model does not have (a wearer's shoulder also lifts sideways): joint -> mm */
+  flex = new Map<string, number>();
+  /** where harness parts (fuse, splices, star ground) sit: with this instance. Unset, each sits by the first part wired to it. */
+  home?: string;
+  /** cable -> the bay exit it leaves by, where the nearest one would be overfilled */
+  exitOf = new Map<string, string>();
   /** lever splices a designer added by hand (bus hubs) */
   buyHub?: number;
   mainRange?: { min: number; nom: number; max: number };
@@ -141,6 +151,9 @@ export class Harness {
     this.wires.push({ net, a, b, typ: o.typ ?? 0.02, peak: o.peak ?? o.typ ?? 0.02, cable, ...(o.trunk ? { trunk: o.trunk } : {}) });
   }
   label(cable: string, text: string) { this.labels.set(cable, text); }
+  exitFor(cable: string, exit: string) { this.exitOf.set(cable, exit); }
+  /** A channel a cable can lie in, on `link`: a polyline in world mm at the home pose. */
+  channel(link: string, pts: Vec3[]) { this.channels.set(link, [...(this.channels.get(link) ?? []), pts]); }
   /** several signal wires a -> b at once: pairs of pin names */
   signals(a: string, b: string, pairs: [string, string, string?][], kind: NetKind = "signal") {
     for (const [pa, pb, netName] of pairs) { const n = netName ?? `${a}_${pa}`.toUpperCase(); this.net(n, kind); this.wire(n, `${a}.${pa}`, `${b}.${pb}`); }
@@ -234,6 +247,38 @@ export function jointSweep(j: Joint, parentAnchor: Vec3, childAnchor: Vec3, cent
   const len = (q: number) => Math.hypot(C.h - P.h, C.r - P.r, rbar * (phi0 + q));
   let need = 0; for (let i = 0; i <= 48; i++) need = Math.max(need, len(lo + ((hi - lo) * i) / 48));
   return { home: len(0), need, travel: [lo, hi] };
+}
+
+/** The channels of one rigid body as a graph: the shortest way along them, and the nearest point on them. Lines that do not share a point are joined at their closest ends. */
+class ChannelNet {
+  nodes: Vec3[] = []; adj: [number, number][][] = []; ends: number[] = [];
+  constructor(lines: Vec3[][]) {
+    const link = (a: number, b: number) => { const d = dist(this.nodes[a], this.nodes[b]); this.adj[a].push([b, d]); this.adj[b].push([a, d]); };
+    for (const line of lines) {
+      const first = this.nodes.length;
+      line.forEach((p, i) => { this.nodes.push(p); this.adj.push([]); if (i) link(first + i - 1, first + i); });
+      this.ends.push(first, this.nodes.length - 1);
+      if (!first) continue;
+      let pair: [number, number] = [0, first];
+      for (const end of [first, this.nodes.length - 1]) for (let i = 0; i < first; i++) if (dist(this.nodes[i], this.nodes[end]) < dist(this.nodes[pair[0]], this.nodes[pair[1]])) pair = [i, end];
+      link(pair[0], pair[1]);
+    }
+  }
+  nearest(p: Vec3): number { let best = 0; this.nodes.forEach((q, i) => { if (dist(q, p) < dist(this.nodes[best], p)) best = i; }); return best; }
+  /** the channel end nearest to p: where a cable leaves for a joint */
+  end(p: Vec3): Vec3 { return this.nodes[[...this.ends].sort((a, b) => dist(this.nodes[a], p) - dist(this.nodes[b], p))[0]]; }
+  /** node list of the shortest way between the nodes nearest to a and b */
+  route(a: Vec3, b: Vec3): Vec3[] {
+    const s = this.nearest(a), t = this.nearest(b), far = new Array(this.nodes.length).fill(Infinity), from = new Array(this.nodes.length).fill(-1), open = new Set(this.nodes.map((_, i) => i));
+    far[s] = 0;
+    while (open.size) {
+      let u = -1; for (const i of open) if (u < 0 || far[i] < far[u]) u = i;
+      open.delete(u); if (u === t || far[u] === Infinity) break;
+      for (const [v, d] of this.adj[u]) if (far[u] + d < far[v]) { far[v] = far[u] + d; from[v] = u; }
+    }
+    const out: Vec3[] = []; for (let i = t; i >= 0; i = from[i]) out.unshift(this.nodes[i]);
+    return out;
+  }
 }
 
 interface TriMesh { v: Vec3[]; f: [number, number, number][]; world: Vec3[]; lo: Vec3; hi: Vec3; link: string; }
@@ -371,11 +416,14 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
   const bayLinks = new Set(((A.design as { enclosures?: { tub: string; lid: string }[] }).enclosures ?? []).flatMap((b) => [b.tub, b.lid]));
   const surf = new SurfaceFinder(spec, f, (l) => groupOf.get(l) ?? l, bayLinks);
   const noClip = opts.noClips ?? /$^/;
+  const nets = new Map<string, ChannelNet>();
+  { const byGroup = new Map<string, Vec3[][]>(); for (const [l, lines] of H.channels) { const g = groupOf.get(l) ?? l; byGroup.set(g, [...(byGroup.get(g) ?? []), ...lines]); } for (const [g, lines] of byGroup) nets.set(g, new ChannelNet(lines)); }
 
   const locate = (inst: string): { link: string | null; p: Vec3 | null } => {
     const i = H.instances.get(inst)!;
     if (i.off_board) return { link: null, p: null };
     if (!i.link) { // a harness part (splice, inline fuse): it sits where the first wire that reaches it comes from
+      if (H.home) { H.bayOf.set(inst, H.bayOf.get(H.home) ?? ""); return locate(H.home); }
       return { link: null, p: null };
     }
     return { link: i.link, p: f.link[i.link] ? bodyCentre(f, i.link, i.key) : null };
@@ -406,7 +454,7 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
     if (!lb.p && !H.instances.get(ib)!.off_board) { const home = harnessHome(H, ib, groups, locate); lb = home; if (home.inst && !H.bayOf.get(ib)) H.bayOf.set(ib, H.bayOf.get(home.inst) ?? ""); }
     const offBoard = H.instances.get(ia)!.off_board || H.instances.get(ib)!.off_board;
     const path: Vec3[] = []; const joints: SlackRec[] = []; const links = new Set<string>(); let exit: string | null = null;
-    let routeMm = 0, slackMm = 0;
+    let routeMm = 0, slackMm = 0, channelMm = 0;
     const clipHere: { at: Vec3; dir: Vec3; normal: Vec3; link: string }[] = [];
     const od = bundleOd(ws);
     if (la.p && lb.p && la.link && lb.link) {
@@ -415,31 +463,38 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
       // waypoints: start, then per crossed joint its two anchors, end
       const bayA = H.bayOf.get(ia), bayB = H.bayOf.get(ib);
       const leaves = (bay?: string, other?: string) => !!bay && bay !== other;
-      const exA = leaves(bayA, bayB) ? nearestExit(H, bayA!, lb.p) : null, exB = leaves(bayB, bayA) ? nearestExit(H, bayB!, la.p) : null;
+      const pick = (bay: string, to: Vec3) => H.exits.find((e) => e.id === H.exitOf.get(key)) ?? nearestExit(H, bay, to);
+      const exA = leaves(bayA, bayB) ? pick(bayA!, lb.p) : null, exB = leaves(bayB, bayA) ? pick(bayB!, la.p) : null;
       if (exA || exB) exit = [exA?.id, exB?.id].filter(Boolean).join(" + ");
-      let cur = la.p, curGroup = groupOf.get(la.link)!;
+      let cur = la.p, curGroup = groupOf.get(la.link)!, routed = false;
       path.push(cur);
       const goTo = (p: Vec3) => {
+        // out of its bay a cable lies in the body's channels, as far as they take it towards `p`
+        const net = routed ? nets.get(curGroup) : undefined;
+        if (net) { const r = net.route(cur, p); r.forEach((q, i) => { if (i) channelMm += dist(r[i - 1], q); path.push(q); }); cur = r[r.length - 1]; }
         const s = along(curGroup, cur, p); for (let i = 1; i < s.pts.length; i++) path.push(s.pts[i]);
         clipHere.push(...s.clips); cur = p;
       };
-      if (exA) { goTo(worldExit(f, exA)); }
+      if (exA) { goTo(worldExit(f, exA)); routed = true; }
+      slackMm += [...up, ...down].reduce((n, j) => n + (j.type === "fixed" ? H.flex.get(j.name) ?? 0 : 0), 0);   // fixed in the model, not in life
       for (let i = 0; i < crossing.length; i++) {
         const j = crossing[i], c = jointWorld(f, j), ax = axisWorld(f, j);
         const target = i + 1 < crossing.length ? jointWorld(f, crossing[i + 1]) : (exB ? worldExit(f, exB) : lb.p);
         // anchors stand off the joint axis towards where the cable comes from and goes to
         const stand = Math.max(14, od * 3 + 8);
         const off = (to: Vec3) => { const v = sub(to, c), r = sub(v, scale(ax, dot(v, ax))); return norm(r) > 1 ? add(c, scale(unit(r), Math.min(stand, Math.max(norm(r) * 0.8, 6)))) : add(c, scale(perp(ax), stand)); };
-        const aIn = off(cur), aOut = off(target);
+        // where channels reach a joint, the cable leaves and rejoins them there: those are the true anchors of the loop
+        const inNet = nets.get(curGroup), outNet = nets.get(groupOf.get(j.child)!);
+        const aIn = inNet ? inNet.end(c) : off(cur), aOut = outNet ? outNet.end(c) : off(target);
         goTo(aIn);
         const s = jointSweep(j, aIn, aOut, c, ax);
         const bendR = 6 * od; // bundle bend radius; the 10 x OD table figure is for the single wire in repeated flexing
         const loop = Math.max(s.need - s.home, 0);
         // the loop itself must be at least one bend-radius arc to stay flexible
-        const provided = Math.ceil((loop * 1.15 + Math.PI * bendR * 0.5) / 5) * 5;
+        const provided = Math.ceil((loop * 1.15 + Math.PI * bendR * 0.5) / 5) * 5 + (H.flex.get(j.name) ?? 0);
         joints.push({ joint: j.name, type: j.type, travel: [r3(s.travel[0]), r3(s.travel[1])], home_mm: r1(s.home), need_mm: r1(s.need), slack_mm: provided, provided_mm: r1(s.home + provided) });
         slackMm += provided;
-        path.push(aOut); cur = aOut; curGroup = groupOf.get(j.child)!;
+        path.push(aOut); cur = aOut; curGroup = groupOf.get(j.child)!; routed = true;
         if (j.type === "continuous") unresolved.push(`${key} crosses continuous joint ${j.name}: needs a slip ring`);
       }
       if (exB) goTo(worldExit(f, exB));
@@ -465,7 +520,7 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
     const pa = H.rec(ia).ports.find((p) => p.name === ws[0].a.port)!, pb = H.rec(ib).ports.find((p) => p.name === ws[0].b.port)!;
     cables.push({ id: `C${cables.length + 1}`, label: H.labels.get(key) ?? `${ia} to ${ib}`, from: ia, to: ib, from_connector: pa.connector.v, to_connector: pb.connector.v, premade: pm,
       wires, od_mm: r1(od), route_mm: r1(routeMm), service_mm: svc, slack_mm: slackMm, termination_mm: term, length_mm: Math.ceil(length / 5) * 5,
-      path_mm: path.map((p) => p.map(r1) as Vec3), links: [...links], joints, exit });
+      path_mm: path.map((p) => p.map(r1) as Vec3), links: [...links], joints, exit, ...(channelMm ? { channel_mm: r1(channelMm) } : {}) });
     for (const c of clipHere) if (!noClip.test(c.link)) mergeClip(clips, c, od, `C${cables.length}`);
   }
   // branch fuses: a wire off the main rail thinner than the main fuse protects gets its own inline fuse

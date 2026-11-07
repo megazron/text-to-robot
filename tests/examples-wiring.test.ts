@@ -1,11 +1,11 @@
 // Every shipped example carries its harness and compartments: nets, a rail per voltage, slack at every joint a cable
-// crosses, WIRING.md and the diagram beside it. Example 14 (the wearable Mark 43 suit) has its own electronics plan.
+// crosses, WIRING.md and the diagram beside it.
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { jointSweep, needsEnclosure } from "@ttr/design";
 
-const examples = readdirSync("examples").filter((d) => /^\d\d_/.test(d) && !d.startsWith("14_")).sort();
+const examples = readdirSync("examples").filter((d) => /^\d\d_/.test(d)).sort();
 
 test("every example has its harness, compartments and outputs", () => {
   for (const ex of examples) {
@@ -51,4 +51,22 @@ test("the BOM carries the routed wire, not a percentage", () => {
     assert.ok(bom.lines.some((l: any) => l.category === "Wiring" && /AWG/.test(l.name)), `${ex}: no wire lines`);
     assert.ok(!bom.lines.some((l: any) => /% of electronics/.test(String(l.spec))), ex);
   }
+});
+
+test("the Mark 43's harness runs inside its shells: out through the bay floor, along the channels, slack at the neck, shoulders, elbows and faceplate", () => {
+  const spec = JSON.parse(readFileSync("examples/14_iron_man_mark_43/robot.json", "utf8")), d = spec.metadata.design, w = d.wiring;
+  const by = (to: string) => w.cables.find((c: any) => c.to === to), crossed = (to: string) => by(to).joints.map((j: any) => j.joint);
+  assert.deepEqual(crossed("eye_led_right"), ["neck", "faceplate"]);
+  assert.deepEqual(crossed("faceplate_servo_left"), ["neck"]);
+  assert.deepEqual(crossed("left_repulsor"), ["left_shoulder", "left_elbow"]);
+  assert.deepEqual(crossed("right_repulsor"), ["right_shoulder", "right_elbow"]);
+  assert.deepEqual(crossed("arc_reactor"), []);
+  for (const c of w.cables.filter((x: any) => x.exit)) { assert.match(c.exit, /^back_bay\.leads_/); assert.ok(c.channel_mm > 200, `${c.id} lies in the channels`); }
+  // the compartment is the only electrics outside the shell, and every electronic part is inside it
+  const bay = d.enclosures[0];
+  assert.equal(d.enclosures.length, 1);
+  for (const n of ["battery", "controller", "regulator", "regulator_lights", "main_switch"]) assert.ok(bay.parts.includes(n), n);
+  assert.ok(d.fasteners["M3 x 10 self-tapping (lid to compartment)"] >= 4);
+  const channels = spec.links.filter((l: any) => /^chan_/.test(l.name));
+  assert.ok(channels.length >= 14 && channels.every((l: any) => d.printed.some((p: any) => p.name === l.name)));
 });

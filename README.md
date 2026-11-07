@@ -44,7 +44,7 @@ Flip the Arduino switch and the design is rebuilt around cheap, compatible parts
 
 <img src="docs/img/mark43_suit_up.gif" width="300" align="right" alt="The Mark 43 opens, a person walks in, the armour closes">
 
-The hardest thing we could think of. Designed directly from reference photos of the film suit, with no body or scanned model underneath: every part is a mathematical form with plates, panel lines and bevels added to it. 327 hollow printed parts sized for a home printer, a mask that lifts on two micro servos, lit eyes, chest and palms. Joint ranges are measured by sweeping armour against armour.
+The hardest thing we could think of. Designed directly from reference photos of the film suit, with no body or scanned model underneath: every part is a mathematical form with plates, panel lines and bevels added to it. 344 printed parts sized for a home printer, a mask that lifts on two micro servos, lit eyes, chest and palms. Joint ranges are measured by sweeping armour against armour. Its electronics sit in a screwed compartment on the back, and the wiring runs out of sight in channels inside the shells.
 
 Fan work, not affiliated with or endorsed by the rights holders. See [NOTICE](NOTICE.md).
 

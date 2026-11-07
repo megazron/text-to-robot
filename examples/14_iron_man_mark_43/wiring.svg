@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1610 683" width="1610" height="683" font-family="Helvetica, Arial, sans-serif" font-size="10.5">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="30" y="26" font-size="17" font-weight="700">iron_man_mark_43: wiring diagram</text>
+<line x1="30" y1="44" x2="54" y2="44" stroke="#c8102e" stroke-width="2"/><text x="60" y="48">power</text>
+<line x1="120" y1="44" x2="144" y2="44" stroke="#111111" stroke-width="2"/><text x="150" y="48">ground</text>
+<line x1="210" y1="44" x2="234" y2="44" stroke="#1f6fd1" stroke-width="2"/><text x="240" y="48">signal</text>
+<line x1="300" y1="44" x2="324" y2="44" stroke="#0a8f5b" stroke-width="2"/><text x="330" y="48">bus</text>
+<text x="30" y="66" font-weight="700" fill="#555">Source</text>
+<text x="370" y="66" font-weight="700" fill="#555">Protection</text>
+<text x="710" y="66" font-weight="700" fill="#555">Regulation</text>
+<text x="1050" y="66" font-weight="700" fill="#555">Control</text>
+<text x="1390" y="66" font-weight="700" fill="#555">Loads</text>
+<path d="M1240 105 H1254 V105 H1376 V105 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C1 W1 FACEPLATE_LEFT_PWM: controller.j1_digital_side.D9 to faceplate_servo_left.servo_lead.Signal (orange), 26 AWG</title></path>
+<path d="M560 393 H584 V255.5 H1366 V118 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C1 W2 5V_SERVO: splice_5v_servo.levers.P2 to faceplate_servo_left.servo_lead.V+ (red), 24 AWG</title></path>
+<path d="M560 249 H594 V190 H1356 V131 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C1 W3 GND: star_ground.levers.P2 to faceplate_servo_left.servo_lead.GND (brown), 24 AWG</title></path>
+<path d="M1240 118 H1284 V154 H1346 V190 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C2 W4 FACEPLATE_RIGHT_PWM: controller.j1_digital_side.D10/SS to faceplate_servo_right.servo_lead.Signal (orange), 26 AWG</title></path>
+<path d="M560 393 H614 V298 H1336 V203 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C2 W5 5V_SERVO: splice_5v_servo.levers.P2 to faceplate_servo_right.servo_lead.V+ (red), 24 AWG</title></path>
+<path d="M560 249 H624 V232.5 H1326 V216 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C2 W6 GND: star_ground.levers.P2 to faceplate_servo_right.servo_lead.GND (brown), 24 AWG</title></path>
+<path d="M1240 131 H1314 V239 H1316 V347 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C3 W7 EYE_LED_LEFT: controller.j1_digital_side.D3 to eye_led_left.leads.ANODE, 26 AWG</title></path>
+<path d="M1240 144 H1324 V252 H1306 V360 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C3 W8 GND: controller.j2_analog_side.GND to eye_led_left.leads.CATHODE, 24 AWG</title></path>
+<path d="M1240 157 H1334 V216 H1296 V275 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C4 W9 EYE_LED_RIGHT: controller.j1_digital_side.D5 to eye_led_right.leads.ANODE, 26 AWG</title></path>
+<path d="M1240 144 H1344 V216 H1286 V288 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C4 W10 GND: controller.j2_analog_side.GND to eye_led_right.leads.CATHODE, 24 AWG</title></path>
+<path d="M1240 170 H1354 V294.5 H1276 V419 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C5 W11 ARC_REACTOR_DATA: controller.j1_digital_side.D6 to arc_reactor.pads.DIN, 26 AWG</title></path>
+<path d="M560 465 H684 V448.5 H1266 V432 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C5 W12 5V_LIGHTS: splice_5v_lights.levers.P2 to arc_reactor.pads.5V, 24 AWG</title></path>
+<path d="M560 249 H574 V347 H1376 V445 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C5 W13 GND: star_ground.levers.P2 to arc_reactor.pads.GND, 24 AWG</title></path>
+<path d="M1240 183 H1264 V343.5 H1366 V504 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C6 W14 LEFT_REPULSOR_DATA: controller.j1_digital_side.D7 to left_repulsor.pads.DIN, 26 AWG</title></path>
+<path d="M560 465 H594 V491 H1356 V517 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C6 W15 5V_LIGHTS: splice_5v_lights.levers.P2 to left_repulsor.pads.5V, 24 AWG</title></path>
+<path d="M560 249 H604 V389.5 H1346 V530 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C6 W16 GND: star_ground.levers.P2 to left_repulsor.pads.GND, 24 AWG</title></path>
+<path d="M1240 196 H1294 V392.5 H1336 V589 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C7 W17 RIGHT_REPULSOR_DATA: controller.j1_digital_side.D8 to right_repulsor.pads.DIN, 26 AWG</title></path>
+<path d="M560 465 H624 V533.5 H1326 V602 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C7 W18 5V_LIGHTS: splice_5v_lights.levers.P2 to right_repulsor.pads.5V, 24 AWG</title></path>
+<path d="M560 249 H634 V432 H1316 V615 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C7 W19 GND: star_ground.levers.P2 to right_repulsor.pads.GND, 24 AWG</title></path>
+<path d="M220 105 H304 V141 H286 V177 H370" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C8 W20 VBAT: battery.leads.BAT+ to main_fuse.leads.IN, 22 AWG</title></path>
+<path d="M560 190 H654 V147.5 H276 V105 H370" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C9 W21 VBAT: main_fuse.leads.OUT to main_switch.contacts.IN, 22 AWG</title></path>
+<path d="M220 118 H324 V190 H266 V262 H370" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C10 W22 GND: battery.leads.BAT- to star_ground.levers.P1, 22 AWG</title></path>
+<path d="M560 118 H674 V219.5 H256 V321 H370" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C11 W23 VBAT: main_switch.contacts.OUT to splice_vbat.levers.P1, 22 AWG</title></path>
+<path d="M560 334 H684 V219.5 H586 V105 H710" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C12 W24 VBAT: splice_vbat.levers.P2 to regulator.in.IN+, 24 AWG</title></path>
+<path d="M560 249 H574 V183.5 H696 V118 H710" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C12 W25 GND: star_ground.levers.P2 to regulator.in.IN-, 24 AWG</title></path>
+<path d="M560 334 H584 V271.5 H1026 V209 H1050" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C13 W26 VBAT: splice_vbat.levers.P2 to controller.j2_analog_side.VIN, 24 AWG</title></path>
+<path d="M560 249 H594 V196.5 H1016 V144 H1050" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C13 W27 GND: star_ground.levers.P2 to controller.j2_analog_side.GND, 24 AWG</title></path>
+<path d="M560 334 H604 V268.5 H666 V203 H710" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C14 W28 VBAT: splice_vbat.levers.P2 to regulator_lights.in.IN+, 24 AWG</title></path>
+<path d="M560 249 H614 V232.5 H656 V216 H710" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C14 W29 GND: star_ground.levers.P2 to regulator_lights.in.IN-, 24 AWG</title></path>
+<path d="M710 131 H646 V268.5 H624 V406 H560" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C15 W30 5V_SERVO: regulator.out.OUT+ to splice_5v_servo.levers.P1, 24 AWG</title></path>
+<path d="M710 144 H636 V196.5 H634 V249 H560" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C15 W31 GND: regulator.out.OUT- to star_ground.levers.P2, 24 AWG</title></path>
+<path d="M710 229 H626 V353.5 H644 V478 H560" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C16 W32 5V_LIGHTS: regulator_lights.out.OUT+ to splice_5v_lights.levers.P1, 24 AWG</title></path>
+<path d="M710 242 H616 V245.5 H654 V249 H560" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C16 W33 GND: regulator_lights.out.OUT- to star_ground.levers.P2, 24 AWG</title></path>
+<rect x="1390" y="74" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="89" font-weight="700">faceplate_servo_left</text>
+<text x="1397" y="108.5" fill="#333">Signal (orange)</text>
+<text x="1397" y="121.5" fill="#333">V+ (red)</text>
+<text x="1397" y="134.5" fill="#333">GND (brown)</text>
+<rect x="1390" y="159" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="174" font-weight="700">faceplate_servo_right</text>
+<text x="1397" y="193.5" fill="#333">Signal (orange)</text>
+<text x="1397" y="206.5" fill="#333">V+ (red)</text>
+<text x="1397" y="219.5" fill="#333">GND (brown)</text>
+<rect x="1390" y="244" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="259" font-weight="700">eye_led_right</text>
+<text x="1397" y="278.5" fill="#333">ANODE</text>
+<text x="1397" y="291.5" fill="#333">CATHODE</text>
+<rect x="1390" y="316" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="331" font-weight="700">eye_led_left</text>
+<text x="1397" y="350.5" fill="#333">ANODE</text>
+<text x="1397" y="363.5" fill="#333">CATHODE</text>
+<rect x="1390" y="388" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="403" font-weight="700">arc_reactor</text>
+<text x="1397" y="422.5" fill="#333">DIN</text>
+<text x="1397" y="435.5" fill="#333">5V</text>
+<text x="1397" y="448.5" fill="#333">GND</text>
+<rect x="1390" y="473" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="488" font-weight="700">left_repulsor</text>
+<text x="1397" y="507.5" fill="#333">DIN</text>
+<text x="1397" y="520.5" fill="#333">5V</text>
+<text x="1397" y="533.5" fill="#333">GND</text>
+<rect x="1390" y="558" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="573" font-weight="700">right_repulsor</text>
+<text x="1397" y="592.5" fill="#333">DIN</text>
+<text x="1397" y="605.5" fill="#333">5V</text>
+<text x="1397" y="618.5" fill="#333">GND</text>
+<rect x="30" y="74" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="37" y="89" font-weight="700">battery</text>
+<text x="37" y="108.5" fill="#333">BAT+</text>
+<text x="37" y="121.5" fill="#333">BAT-</text>
+<rect x="710" y="74" width="190" height="80" rx="5" fill="#f4f6f8" stroke="#333"/><text x="717" y="89" font-weight="700">regulator</text>
+<text x="717" y="108.5" fill="#333">IN+</text>
+<text x="717" y="121.5" fill="#333">IN-</text>
+<text x="717" y="134.5" fill="#333">OUT+</text>
+<text x="717" y="147.5" fill="#333">OUT-</text>
+<rect x="710" y="172" width="190" height="80" rx="5" fill="#f4f6f8" stroke="#333"/><text x="717" y="187" font-weight="700">regulator_lights</text>
+<text x="717" y="206.5" fill="#333">IN+</text>
+<text x="717" y="219.5" fill="#333">IN-</text>
+<text x="717" y="232.5" fill="#333">OUT+</text>
+<text x="717" y="245.5" fill="#333">OUT-</text>
+<rect x="1050" y="74" width="190" height="145" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1057" y="89" font-weight="700">controller</text>
+<text x="1057" y="108.5" fill="#333">D9</text>
+<text x="1057" y="121.5" fill="#333">D10/SS</text>
+<text x="1057" y="134.5" fill="#333">D3</text>
+<text x="1057" y="147.5" fill="#333">GND</text>
+<text x="1057" y="160.5" fill="#333">D5</text>
+<text x="1057" y="173.5" fill="#333">D6</text>
+<text x="1057" y="186.5" fill="#333">D7</text>
+<text x="1057" y="199.5" fill="#333">D8</text>
+<text x="1057" y="212.5" fill="#333">VIN</text>
+<rect x="370" y="74" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="89" font-weight="700">main_switch</text>
+<text x="377" y="108.5" fill="#333">IN</text>
+<text x="377" y="121.5" fill="#333">OUT</text>
+<rect x="370" y="146" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="161" font-weight="700">main_fuse</text>
+<text x="377" y="180.5" fill="#333">IN</text>
+<text x="377" y="193.5" fill="#333">OUT</text>
+<rect x="370" y="218" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="233" font-weight="700">star_ground</text>
+<text x="377" y="252.5" fill="#333">P2</text>
+<text x="377" y="265.5" fill="#333">P1</text>
+<rect x="370" y="290" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="305" font-weight="700">splice_vbat</text>
+<text x="377" y="324.5" fill="#333">P1</text>
+<text x="377" y="337.5" fill="#333">P2</text>
+<rect x="370" y="362" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="377" font-weight="700">splice_5v_servo</text>
+<text x="377" y="396.5" fill="#333">P2</text>
+<text x="377" y="409.5" fill="#333">P1</text>
+<rect x="370" y="434" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="449" font-weight="700">splice_5v_lights</text>
+<text x="377" y="468.5" fill="#333">P2</text>
+<text x="377" y="481.5" fill="#333">P1</text>
+</svg>

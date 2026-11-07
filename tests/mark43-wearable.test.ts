@@ -1,5 +1,5 @@
 // Wearable Mark 43: the motorised helmet fits a wearer, opens fully, prints in bed-sized pieces.
-// (The full suit takes about five minutes to build: scripts/build_examples.ts covers it.)
+// (The full suit is covered by examples-wiring.test.ts and examples-interference.test.ts on the example built from it.)
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { validateSpec } from "@ttr/robot-schema";
@@ -16,4 +16,21 @@ test("the motorised helmet passes every check and its faceplate opens at least 5
   // the suit is designed on its own: no body model inside it
   assert.ok(!s.links.some((l: any) => l.role === "wearer"));
   assert.ok(!d.printed.some((p: any) => /pelvis|head$/.test(p.name)));
+});
+
+test("the helmet alone still has its harness: a belt case, fused and switched, its leads up through the neck", () => {
+  const s = designMark43Wearable({ tier: "helmet" }), d = (s.metadata as any).design, w = d.wiring;
+  assert.deepEqual(w.rails.map((r: any) => r.name).sort(), ["5V_SERVO", "VBAT"]);
+  assert.ok(w.fuses.length === 1 && w.main_switch === "main_switch");
+  assert.ok(!s.links.some((l: any) => l.name === "regulator_lights" || l.name === "bay_saddle" || /^chan_(spine|chest)/.test(l.name)));
+  assert.ok(s.links.some((l: any) => /^chan_left_helmet/.test(l.name)), "the helmet keeps its own channels");
+  const servo = w.cables.find((c: any) => c.to === "faceplate_servo_left");
+  assert.ok(servo.joints.some((j: any) => j.joint === "neck"));
+  const eye = w.cables.find((c: any) => c.to === "eye_led_left");
+  assert.deepEqual(eye.joints.map((j: any) => j.joint), ["neck", "faceplate"]);
+});
+
+test("a taller suit keeps the ports under the compartment's grommets", () => {
+  const s = designMark43Wearable({ tier: "lights", heightM: 1.95 }), d = (s.metadata as any).design;
+  for (const c of d.checks) if (/^(wiring|enclosure):/.test(c.name)) assert.ok(c.pass, `${c.name}: ${c.detail}`);
 });

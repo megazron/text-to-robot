@@ -6,9 +6,9 @@
 
 Interpreted as: Iron Man Mark 43 wearable suit · budget $60000
 
-**Iron Man Mark 43 (full wearable suit): 327 printed pieces, 7.2 kg filament, motorised faceplate, $289 incl. filament**
+**Iron Man Mark 43 (full wearable suit): 344 printed pieces, 7.4 kg filament, motorised faceplate, $321 incl. filament**
 
-Parts cost **$299.95** (budget $60000: within) · printed structure 327 parts, 6631 g · checks passed 339/339
+Parts cost **$333.38** (budget $60000: within) · printed structure 344 parts, 6843 g · checks passed 385/385
 
 ## What it can do
 
@@ -17,11 +17,11 @@ Parts cost **$299.95** (budget $60000: within) · printed structure 327 parts, 6
 | tier | suit |
 | tier label | full wearable suit |
 | wearer height m | 1.75 |
-| printed pieces | 327 |
-| armour mass kg | 7.68 |
-| filament kg | 7.16 |
-| cost usd | 289.26 |
-| mass kg | 7.85 |
+| printed pieces | 344 |
+| armour mass kg | 7.79 |
+| filament kg | 7.39 |
+| cost usd | 320.68 |
+| mass kg | 8.08 |
 
 ## Actuators (sized from this robot's own loads)
 
@@ -31,7 +31,7 @@ Parts cost **$299.95** (budget $60000: within) · printed structure 327 parts, 6
 
 ## Engineering checks
 
-All 339 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
+All 385 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
 
 ## Assumptions and limits
 
@@ -40,6 +40,7 @@ All 339 checks pass (torque, speed, power, stability, print-bed fit). Details in
 - the suit is worn armour over a black undersuit: the wearer moves every joint; nothing powers the limbs (hobby servos cannot move a person)
 - the wearer is an average adult male body at 1.75 m and the pieces scale evenly with height; check against your own measurements before printing
 - gaps at the groin, armpits and elbows are cut on purpose so the joints move; the undersuit shows through them, as on real builds
+- cable channels are 7 to 10 mm deep on the inside of the shells: there is no body model, so their room against a real wearer is not checked; fit the suit before bonding them
 
 ## Prompt notes
 
@@ -63,6 +64,7 @@ _PASS means the modelled actuators (datasheet peak torque as a hard limit, a lin
 |---|---|
 | `robot.urdf`, `meshes/` | URDF with real component and printed-part meshes, datasheet effort/velocity limits |
 | `BOM.md`, `bom.json` | every part to buy, with supplier links and prices |
+| `WIRING.md`, `wiring.svg` | power budget per rail, pin-to-pin table, cut list, slack at each joint, wiring diagram |
 | `robot.cad.zip` | build package: printable STLs, print list, bought-part models, assembly order |
 | `robot.ros2.zip` | ROS 2 description package (ros2_control, MoveIt config, Gazebo launch) |
 | `robot.training.zip` | MuJoCo / RL training scaffold |

@@ -3,6 +3,20 @@
 Dated from the git history. Pull request numbers refer to
 [github.com/megazron/text-to-robot](https://github.com/megazron/text-to-robot/pulls).
 
+## 2026-11-07: Mark 43 housing and harness
+
+- The Mark 43 now has the same wiring model as every other robot: netlist, fuse, main switch, star ground, power budget
+  per rail, `WIRING.md`, `wiring.svg`, BOM lines, `wiring:*` and `enclosure:*` checks, in all three tiers.
+- The lumbar box is a real compartment: lid on four screws, standoffs, vents, USB and switch cut-outs, grommets in the floor
+  over ports through the shell, seated on a saddle made from the torso's own back. The helmet alone gets the same case on a belt.
+- Leads run inside the suit in printed channels bonded to the inner faces of the shells (`scripts/fit_wiring.py`): up the
+  spine to the helmet, across the yoke and down each arm, round the neck to the chest ring. Nothing new shows on the outside
+  except what is on the compartment; the shells keep their bytes, except the lumbar panel, which has four cable ports behind the compartment.
+- The neck is a joint now (the helmet turns with the wearer, range measured by sweeping it against the collar), so the
+  cables get a loop there. A second LM2596 runs the LED rings: servos stalled and rings at full white exceed one module.
+- Harness gains channels, extra loop at a joint, a chosen exit per cable and a home for harness parts. Robots that declare
+  none of these come out exactly as before.
+
 ## 2026-11-06: Real wiring and electronics compartments
 
 - Every electrical part has dimensions and an electrical record (ports, pins, connector, voltage, typical and peak

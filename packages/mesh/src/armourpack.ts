@@ -12,7 +12,11 @@ export interface ArmourPiece {
   volume_mm3: number; centroid: [number, number, number];
   /** a palm lens's outward direction */
   normal?: [number, number, number];
+  /** made by scripts/fit_wiring.py: a cable channel or the bay's seat */
+  wiring?: boolean;
 }
+/** A cable channel on the inside of a shell: where its trough runs (world mm, home pose). */
+export interface ArmourChannel { name: string; link: string; region: string; width_mm: number; depth_mm: number; pts: [number, number, number][]; }
 export interface ArmourManifest {
   source: string; wearer_height_m: number;
   pieces: ArmourPiece[];
@@ -23,6 +27,9 @@ export interface ArmourManifest {
   /** wearer joint centres, world mm at the reference height */
   joints: Record<string, [number, number, number]>;
   notes: string[];
+  channels: ArmourChannel[];
+  /** the back compartment's seat: rear face of the saddle (x), lowest cavity edge (z), cavity size and the ports through the shell (z, y), world mm */
+  bay: { rear_x: number; z0: number; length_mm: number; width_mm: number; ports: [number, number][] };
 }
 
 let manifest: ArmourManifest | undefined, bytes: Uint8Array | undefined;
