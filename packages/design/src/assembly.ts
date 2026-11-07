@@ -8,13 +8,17 @@ import { toPose, printCheck, type Mat4, type Program, type PrintCheck } from "@t
 import { partFiles, type Program as CadProgram } from "@ttr/kernel/ready";
 
 // Sizing loops rebuild the same parts many times: cache geometry by recipe (bounded).
-const cache = new Map<string, unknown>();
+// Entries are kept as JSON text, never as live objects: on the site, CI once saw a cached part come back carrying the inertia of
+// the part computed after it (dxl_u2d2 with exactly the mains inlet's numbers, its volume and centroid untouched). No code
+// writes to a cached object, so the fix is to keep nothing mutable between calls.
+const cache = new Map<string, string>();
 function memo<T>(key: string, make: () => T): T {
-  if (cache.has(key)) return structuredClone(cache.get(key)) as T;
-  const v = make();
+  const hit = cache.get(key);
+  if (hit !== undefined) return JSON.parse(hit) as T;
+  const text = JSON.stringify(make());
   if (cache.size > 400) cache.delete(cache.keys().next().value as string);
-  cache.set(key, v);
-  return structuredClone(v);
+  cache.set(key, text);
+  return JSON.parse(text) as T;
 }
 /** MeshGeometry for a printed program / a catalog component (mass properties precomputed). */
 export const printedGeometry = (p: Program) => { const program = JSON.stringify(p); return memo(`p:${program}`, () => meshGeometry("printed", `${p.name}.stl`, { program })); };

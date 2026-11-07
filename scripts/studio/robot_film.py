@@ -28,7 +28,10 @@ sc.render.threads_mode = "FIXED"; sc.render.threads = int(opt.get("threads", 14)
 cy.device = "CPU"
 if opt.get("device") == "GPU":
     prefs = bpy.context.preferences.addons["cycles"].preferences; prefs.compute_device_type = "OPTIX"; prefs.get_devices()
+    if not any(d.type == "OPTIX" for d in prefs.devices): prefs.compute_device_type = "CUDA"; prefs.get_devices()   # WSL often shows CUDA only
     for d in prefs.devices: d.use = d.type != "CPU"
+    if not any(d.use for d in prefs.devices): sys.exit("no GPU for Cycles")
+    print("rendering on", [d.name for d in prefs.devices if d.use], prefs.compute_device_type, flush=True)
     cy.device = "GPU"
 sc.render.resolution_x, sc.render.resolution_y = W, H; sc.render.resolution_percentage = 100
 sc.view_settings.view_transform = "AgX"; sc.view_settings.look = "AgX - Medium High Contrast"; sc.render.image_settings.file_format = "PNG"
