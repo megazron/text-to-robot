@@ -38,14 +38,14 @@ export function arduinoOptions(prompt: string): ArduinoResult {
   catch (e) { return { family: "unknown", label: "unknown", options: [], notes: [(e as Error).message] }; }
   const options: ArduinoOption[] = [];
 
-  if (CAR_FAMILIES.has(family) || (family === "rover_arm" && !/\barm\b/.test(t))) {
+  if (CAR_FAMILIES.has(family) || family === "arduino_car" || (family === "rover_arm" && !/\barm\b/.test(t))) {
     if (family === "mecanum") notes.push("mecanum wheels are not in the Arduino parts range: built as a TT-motor car");
     for (const tier of ["cheapest", "stronger"] as ArduinoTier[]) {
       const s = designArduinoCar({ name: "arduino_car", prompt, tier, budget, ...(payload ? { payloadKg: payload } : {}) });
       options.push(option(tier, design(s).performance.tier_label as string, s, budget));
     }
-    if (family === "four_wheel") notes.push("you asked for four wheels: the 4WD option is the 'stronger' tier");
-  } else if (family === "serial_arm") {
+    if (family === "four_wheel" || /4WD/.test(label)) notes.push("you asked for four wheels: the 4WD option is the 'stronger' tier");
+  } else if (family === "serial_arm" || family === "arduino_arm") {
     const gripper = gripperRequest(t).kind !== "none" || !/\bno\s+gripper\b/.test(t);
     if ((extractDof(prompt) ?? 3) !== 3) notes.push(`${extractDof(prompt)} DOF asked: the Arduino desk arm is 3 DOF (yaw, shoulder, elbow) + claw`);
     // every tier uses the cheapest servo that holds each joint; tiers differ in what they carry

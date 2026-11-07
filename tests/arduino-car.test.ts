@@ -48,6 +48,11 @@ test("Arduino mode: car prompts give priced tiers, the cheapest first, honest ab
   for (const o of car.options) assert.deepEqual(o.failing, [], `${o.tier}: ${o.failing}`);
   const tight = arduinoOptions(`4wd car under $${Math.round((car.options[0].cost_usd + car.options[1].cost_usd) / 2)}`);
   assert.ok(tight.options.some((o) => !o.over_budget) && tight.options.some((o) => o.over_budget));
+  // the word Arduino in the prompt must not lose the tiers: the site's example prompts say it outright
+  const named = arduinoOptions("An Arduino 4WD obstacle avoiding car with an ultrasonic sensor");
+  assert.equal(named.family, "arduino_car");
+  assert.equal(named.options.length, 2);
+  assert.match(named.notes.join(), /4WD option/);
   const none = arduinoOptions("a humanoid");
   assert.equal(none.options.length, 0);
   assert.match(none.notes.join(), /not designed yet/);

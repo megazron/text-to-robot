@@ -258,9 +258,9 @@
       <geometry><mesh filename="package://rover_arm/meshes/right_rocker_frame.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.06981 -0.04379 0.000361147" rpy="0 0 0"/>
-      <mass value="0.058504"/>
-      <inertia ixx="0.0000636651" ixy="0.0000849796" ixz="-0.00000499291" iyy="0.000134877" iyz="0.00000423155" izz="0.000195468"/>
+      <origin xyz="0.069788 -0.043844 0.000360983" rpy="0 0 0"/>
+      <mass value="0.058539"/>
+      <inertia ixx="0.0000637718" ixy="0.0000850204" ixz="-0.00000501773" iyy="0.000134783" iyz="0.00000420286" izz="0.000195488"/>
     </inertial>
   </link>
   <link name="right_rocker">
@@ -578,9 +578,9 @@
       <geometry><mesh filename="package://rover_arm/meshes/camera_mast.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.119887 -0.00000101036 0.300891" rpy="0 0 0"/>
-      <mass value="0.064242"/>
-      <inertia ixx="0.000243916" ixy="8.48249e-10" ixz="-2.43003e-7" iyy="0.000243831" iyz="2.33566e-10" izz="0.00000660947"/>
+      <origin xyz="-0.119925 -5.06681e-7 0.300969" rpy="0 0 0"/>
+      <mass value="0.064051"/>
+      <inertia ixx="0.000243786" ixy="4.25361e-10" ixz="-3.06528e-7" iyy="0.00024367" iyz="1.08790e-9" izz="0.00000657586"/>
     </inertial>
   </link>
   <link name="arm_base_link">
@@ -872,10 +872,14 @@
     <child link="left_rocker_frame"/>
     <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
-  <joint name="right_rocker_pivot" type="fixed">
+  <joint name="right_rocker_pivot" type="revolute" passive="true">
     <parent link="base_link"/>
     <child link="right_rocker"/>
     <origin xyz="0 -0.118 0.15" rpy="1.570796 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-0.35" upper="0.35" effort="1" velocity="10"/>
+    <dynamics damping="0.05" friction="0.02"/>
+    <mimic joint="left_rocker_pivot" multiplier="1" offset="0"/>
   </joint>
   <joint name="right_front_motor_mount" type="fixed">
     <parent link="right_rocker"/>
@@ -1102,6 +1106,6 @@
   <joint name="arm_mount" type="fixed">
     <parent link="deck_lid"/>
     <child link="arm_base_link"/>
-    <origin xyz="0.03 0 0.215" rpy="0 0 0"/>
+    <origin xyz="0 0 0.215" rpy="0 0 0"/>
   </joint>
 </robot>

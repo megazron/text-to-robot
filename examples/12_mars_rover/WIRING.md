@@ -1,6 +1,6 @@
 # Wiring: rover_arm
 
-35 cables, 77 conductors, 26.57 m of wire, wiring parts $35.09.
+35 cables, 77 conductors, 27.5 m of wire, wiring parts $35.82.
 
 Diagram: [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
 
@@ -8,7 +8,7 @@ Diagram: [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].p
 
 | Rail | Volts | Source | Source limit A (cont / peak) | Load A (typical / peak) | Margin (typical) | Fuse A | Worst wire drop V |
 |---|--:|---|--:|--:|--:|--:|--:|
-| VBAT | 11.1 | main_switch | 35 / 70 | 10.806 / 27.106 | 3.2x | 15 | 0.305 |
+| VBAT | 11.1 | main_switch | 35 / 70 | 10.806 / 27.106 | 3.2x | 15 | 0.311 |
 | 5V | 5 | regulator_5v | 5.5 / 8 | 0.1 / 0.5 | 55.0x | - | 0.008 |
 
 **VBAT loads** (peak assumes two drive motors stalling at once, the rest running):
@@ -69,8 +69,8 @@ Diagram: [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].p
 | C9 | W23 | RIGHT_FRONT_MOTOR_DIR | io_controller.3 | motor_driver_2.DIR1 | 26 | blue | 0.02 | 0.02 |
 | C9 | W24 | RIGHT_REAR_MOTOR_PWM | io_controller.11 | motor_driver_2.PWM2 | 26 | blue | 0.02 | 0.02 |
 | C9 | W25 | RIGHT_REAR_MOTOR_DIR | io_controller.12 | motor_driver_2.DIR2 | 26 | blue | 0.02 | 0.02 |
-| C10 | W26 | RIGHT_FRONT_MOTOR_PHASE_A | motor_driver_2.M1A | right_front_motor.Motor (red) | 22 | orange | 1.4 | 5.5 |
-| C10 | W27 | RIGHT_FRONT_MOTOR_PHASE_B | motor_driver_2.M1B | right_front_motor.Motor (black) | 22 | orange | 1.4 | 5.5 |
+| C10 | W26 | RIGHT_FRONT_MOTOR_PHASE_A | motor_driver_2.M1A | right_front_motor.Motor (red) | 20 | orange | 1.4 | 5.5 |
+| C10 | W27 | RIGHT_FRONT_MOTOR_PHASE_B | motor_driver_2.M1B | right_front_motor.Motor (black) | 20 | orange | 1.4 | 5.5 |
 | C11 | W28 | RIGHT_FRONT_MOTOR_ENC_VCC | io_controller.3V3 | right_front_motor.Encoder Vcc (blue) | 24 | red | 0.01 | 0.01 |
 | C11 | W29 | GND | io_controller.G | right_front_motor.Encoder GND (green) | 24 | black | 0.01 | 0.01 |
 | C11 | W30 | RIGHT_FRONT_MOTOR_ENC_A | io_controller.9 | right_front_motor.Encoder A (yellow) | 26 | blue | 0.02 | 0.02 |
@@ -128,8 +128,8 @@ Length is route + service loop + joint slack + termination, rounded up to 5 mm; 
 
 | Cable | What | Conductors | Length mm | Route | Service | Joint slack | Ends | Connectors | Exit |
 |---|---|--:|--:|--:|--:|--:|--:|---|---|
-| C1 | depth_camera to computer | 1 | 425 | 421.8 | 0 | 0 | 0 | USB-C | body_bay.left_rocker |
-| C2 | mast_camera to computer | 1 | 380 | 375.9 | 0 | 0 | 0 | FFC | body_bay.lid_leads |
+| C1 | depth_camera to computer | 1 | 445 | 440.5 | 0 | 0 | 0 | USB-C | body_bay.left_rocker |
+| C2 | mast_camera to computer | 1 | 345 | 341.5 | 0 | 0 | 0 | FFC | body_bay.lid_leads |
 | C3 | io_controller to computer | 1 | 210 | 208.6 | 0 | 0 | 0 | USB | - |
 | C4 | motor_driver_1 to io_controller | 5 | 170 | 65.5 | 40 | 0 | 60 | 5-pin 2.54 mm header / 22-pin male header | - |
 | C5 | motor_driver_1 channel 1 to left_front_motor | 2 | 570 | 431.7 | 40 | 35 | 60 | 2-position screw terminal / 1x6 female header | body_bay.left_rocker |
@@ -137,12 +137,12 @@ Length is route + service loop + joint slack + termination, rounded up to 5 mm; 
 | C7 | motor_driver_1 channel 2 to left_rear_motor | 2 | 585 | 449 | 40 | 35 | 60 | 2-position screw terminal / 1x6 female header | body_bay.left_rocker |
 | C8 | left_rear_motor encoder to io_controller | 4 | 535 | 388 | 40 | 45 | 60 | 22-pin male header / 1x6 female header | body_bay.left_rocker |
 | C9 | motor_driver_2 to io_controller | 5 | 195 | 94 | 40 | 0 | 60 | 5-pin 2.54 mm header / 22-pin male header | - |
-| C10 | motor_driver_2 channel 1 to right_front_motor | 2 | 420 | 317.1 | 40 | 0 | 60 | 2-position screw terminal / 1x6 female header | body_bay.right_rocker |
-| C11 | right_front_motor encoder to io_controller | 4 | 410 | 307.9 | 40 | 0 | 60 | 22-pin male header / 1x6 female header | body_bay.right_rocker |
-| C12 | motor_driver_2 channel 2 to right_rear_motor | 2 | 480 | 379.5 | 40 | 0 | 60 | 2-position screw terminal / 1x6 female header | body_bay.right_rocker |
-| C13 | right_rear_motor encoder to io_controller | 4 | 475 | 370.4 | 40 | 0 | 60 | 22-pin male header / 1x6 female header | body_bay.right_rocker |
+| C10 | motor_driver_2 channel 1 to right_front_motor | 2 | 505 | 368.7 | 40 | 35 | 60 | 2-position screw terminal / 1x6 female header | body_bay.right_rocker |
+| C11 | right_front_motor encoder to io_controller | 4 | 505 | 358.2 | 40 | 45 | 60 | 22-pin male header / 1x6 female header | body_bay.right_rocker |
+| C12 | motor_driver_2 channel 2 to right_rear_motor | 2 | 520 | 383.3 | 40 | 35 | 60 | 2-position screw terminal / 1x6 female header | body_bay.right_rocker |
+| C13 | right_rear_motor encoder to io_controller | 4 | 520 | 374.2 | 40 | 45 | 60 | 22-pin male header / 1x6 female header | body_bay.right_rocker |
 | C14 | servo_bus to servo_bus_hub | 1 | 340 | 236.4 | 40 | 0 | 60 | 3-pin 2.5 mm bus servo header (5264 class) / lever clamp | body_bay.left_rocker |
-| C15 | servo_bus_hub to arm_base_yaw_actuator | 1 | 245 | 144.1 | 40 | 0 | 60 | lever clamp / JST B3B-EH-A header | - |
+| C15 | servo_bus_hub to arm_base_yaw_actuator | 1 | 275 | 170.2 | 40 | 0 | 60 | lever clamp / JST B3B-EH-A header | - |
 | C16 | arm_base_yaw_actuator to arm_shoulder_pitch_actuator | 3 | 275 | 92.1 | 40 | 80 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
 | C17 | arm_shoulder_pitch_actuator to arm_elbow_pitch_actuator | 3 | 330 | 163.1 | 40 | 65 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
 | C18 | arm_elbow_pitch_actuator to arm_forearm_roll_actuator | 3 | 330 | 150.3 | 40 | 75 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
@@ -159,8 +159,8 @@ Length is route + service loop + joint slack + termination, rounded up to 5 mm; 
 | C29 | VBAT to motor_driver_1 | 2 | 395 | 294.7 | 40 | 0 | 60 | lever clamp / 2-position screw terminal | body_bay.left_rocker |
 | C30 | VBAT to motor_driver_2 | 2 | 320 | 216.2 | 40 | 0 | 60 | lever clamp / 2-position screw terminal | body_bay.left_rocker |
 | C31 | VBAT to servo_bus | 2 | 295 | 193.7 | 40 | 0 | 60 | lever clamp / green screw terminal | body_bay.left_rocker |
-| C32 | VBAT to arm_base_yaw_actuator | 2 | 280 | 178.2 | 40 | 0 | 60 | lever clamp / JST B3B-EH-A header | - |
-| C33 | VBAT to arm_wrist_roll_actuator | 2 | 1140 | 678.4 | 40 | 360 | 60 | lever clamp / JST B3B-EH-A header | - |
+| C32 | VBAT to arm_base_yaw_actuator | 2 | 300 | 196.6 | 40 | 0 | 60 | lever clamp / JST B3B-EH-A header | - |
+| C33 | VBAT to arm_wrist_roll_actuator | 2 | 1165 | 700.9 | 40 | 360 | 60 | lever clamp / JST B3B-EH-A header | - |
 | C34 | regulator_5v to star_ground | 1 | 310 | 209.4 | 40 | 0 | 60 | 0.1 in through holes / lever clamp | - |
 | C35 | 5V to io_controller | 2 | 155 | 53.7 | 40 | 0 | 60 | 0.1 in through holes / 22-pin male header | - |
 
@@ -174,13 +174,17 @@ Each loop is at least the extra length the joint needs at the far end of its tra
 | C6 | left_rocker_pivot | -0.35 to 0.35 | 22.2 | 28.9 | 45 |
 | C7 | left_rocker_pivot | -0.35 to 0.35 | 47.9 | 53.5 | 35 |
 | C8 | left_rocker_pivot | -0.35 to 0.35 | 57.8 | 64.5 | 45 |
+| C10 | right_rocker_pivot | -0.35 to 0.35 | 18.3 | 23.9 | 35 |
+| C11 | right_rocker_pivot | -0.35 to 0.35 | 22.1 | 28.8 | 45 |
+| C12 | right_rocker_pivot | -0.35 to 0.35 | 47.8 | 53.4 | 35 |
+| C13 | right_rocker_pivot | -0.35 to 0.35 | 57.7 | 64.4 | 45 |
 | C16 | arm_base_yaw | -2.97 to 2.97 | 23.1 | 63.5 | 80 |
 | C17 | arm_shoulder_pitch | -1.75 to 1.75 | 48.5 | 75.3 | 65 |
 | C18 | arm_elbow_pitch | -2.3 to 2.3 | 46.5 | 81.8 | 75 |
 | C19 | arm_forearm_roll | -2.97 to 2.97 | 23.1 | 63.5 | 80 |
 | C20 | arm_wrist_roll | -2.97 to 2.97 | 23.1 | 63.5 | 80 |
 | C21 | arm_wrist_pitch | -2.3 to 2.3 | 35.7 | 63.2 | 50 |
-| C33 | arm_base_yaw | -2.97 to 2.97 | 11.5 | 58.9 | 80 |
+| C33 | arm_base_yaw | -2.97 to 2.97 | 14 | 61.3 | 80 |
 | C33 | arm_shoulder_pitch | -1.75 to 1.75 | 50.1 | 78 | 60 |
 | C33 | arm_elbow_pitch | -2.3 to 2.3 | 50.1 | 86.8 | 70 |
 | C33 | arm_forearm_roll | -2.97 to 2.97 | 48.9 | 95.1 | 80 |
@@ -192,10 +196,10 @@ Each loop is at least the extra length the joint needs at the far end of its tra
 |---|--:|---|--:|--:|---|---|
 | 12 AWG silicone wire | 0.8 | m | 2.2 | 1.76 | 3.308 mm2, rated 20.5 A in a bundle; 0.72 m cut + 10 % waste | estimated |
 | 18 AWG silicone wire | 1.6 | m | 0.7 | 1.12 | 0.823 mm2, rated 8 A in a bundle; 1.43 m cut + 10 % waste | estimated |
-| 20 AWG silicone wire | 6.1 | m | 0.5 | 3.05 | 0.519 mm2, rated 5.5 A in a bundle; 5.52 m cut + 10 % waste | estimated |
-| 22 AWG silicone wire | 4.5 | m | 0.4 | 1.80 | 0.327 mm2, rated 3.5 A in a bundle; 4.06 m cut + 10 % waste | estimated |
-| 24 AWG silicone wire | 8 | m | 0.35 | 2.80 | 0.205 mm2, rated 1.75 A in a bundle; 7.19 m cut + 10 % waste | estimated |
-| 26 AWG silicone wire | 8.5 | m | 0.3 | 2.55 | 0.128 mm2, rated 1.1 A in a bundle; 7.64 m cut + 10 % waste | estimated |
+| 20 AWG silicone wire | 7.4 | m | 0.5 | 3.70 | 0.519 mm2, rated 5.5 A in a bundle; 6.67 m cut + 10 % waste | estimated |
+| 22 AWG silicone wire | 3.6 | m | 0.4 | 1.44 | 0.327 mm2, rated 3.5 A in a bundle; 3.25 m cut + 10 % waste | estimated |
+| 24 AWG silicone wire | 8.3 | m | 0.35 | 2.91 | 0.205 mm2, rated 1.75 A in a bundle; 7.47 m cut + 10 % waste | estimated |
+| 26 AWG silicone wire | 8.8 | m | 0.3 | 2.64 | 0.128 mm2, rated 1.1 A in a bundle; 7.95 m cut + 10 % waste | estimated |
 | Dupont 2.54 mm contacts | 38 | pc | 0.02 | 0.76 | rated 3 A per contact | estimated |
 | Dupont 2.54 mm housings | 9 | pc | 0.02 | 0.18 | one per cable end | estimated |
 | Bootlace ferrule contacts | 14 | pc | 0.03 | 0.42 | rated 17.5 A per contact | estimated |
@@ -208,7 +212,7 @@ Each loop is at least the extra length the joint needs at the far end of its tra
 | Heat shrink 3 mm, 2:1 | 3.1 | m | 0.2 | 0.62 | 33 solder joints + a boot on each cable end | estimated |
 | Cable tie 100 x 2.5 mm | 67 | pc | 0.02 | 1.34 | at every clip, cable end and strain-relief anchor | estimated |
 | Rubber grommet, 6.4 mm panel hole, 3.2 mm bore | 3 | pc | 0.08 | 0.24 | 9.5 mm panel hole | estimated |
-| Nylon braided sleeving 6 mm | 2.5 | m | 0.4 | 1.00 | over every cable where it crosses a joint | estimated |
+| Nylon braided sleeving 6 mm | 3.1 | m | 0.4 | 1.24 | over every cable where it crosses a joint | estimated |
 | USB-C | 1 | pc | 3 | 3.00 | depth_camera to computer | estimated |
 | FFC | 1 | pc | 3 | 3.00 | mast_camera to computer | estimated |
 | USB | 1 | pc | 3 | 3.00 | io_controller to computer | estimated |

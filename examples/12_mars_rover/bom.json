@@ -160,8 +160,8 @@
       "category": "Printed structure",
       "name": "PETG filament for 21 printed parts",
       "qty": 1,
-      "unit_cost": 21.05,
-      "subtotal": 21.05,
+      "unit_cost": 21.04,
+      "subtotal": 21.04,
       "spec": "832 g of parts (+15 % supports/waste), about 75.8 h of printing",
       "note": "left_rocker_rear_arm, left_rocker_frame, right_rocker_rear_arm, right_rocker_frame, battery_tray, computer_tray, motor_driver_1_tray, motor_driver_2_tray, io_controller_tray, servo_bus_tray, regulator_5v_tray, depth_camera_bracket, camera_mast, arm_base_link, arm_turret, arm_upper_arm, arm_forearm, arm_forearm_rotator, arm_wrist, arm_wrist_rotator, arm_gripper_jaw"
     },
@@ -194,37 +194,37 @@
     {
       "category": "Wiring",
       "name": "20 AWG silicone wire",
-      "qty": 6.1,
+      "qty": 7.4,
       "unit_cost": 0.5,
-      "subtotal": 3.05,
-      "spec": "6.1 m: 0.519 mm2, rated 5.5 A in a bundle; 5.52 m cut + 10 % waste",
+      "subtotal": 3.7,
+      "spec": "7.4 m: 0.519 mm2, rated 5.5 A in a bundle; 6.67 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "22 AWG silicone wire",
-      "qty": 4.5,
+      "qty": 3.6,
       "unit_cost": 0.4,
-      "subtotal": 1.8,
-      "spec": "4.5 m: 0.327 mm2, rated 3.5 A in a bundle; 4.06 m cut + 10 % waste",
+      "subtotal": 1.44,
+      "spec": "3.6 m: 0.327 mm2, rated 3.5 A in a bundle; 3.25 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "24 AWG silicone wire",
-      "qty": 8,
+      "qty": 8.3,
       "unit_cost": 0.35,
-      "subtotal": 2.8,
-      "spec": "8 m: 0.205 mm2, rated 1.75 A in a bundle; 7.19 m cut + 10 % waste",
+      "subtotal": 2.91,
+      "spec": "8.3 m: 0.205 mm2, rated 1.75 A in a bundle; 7.47 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "26 AWG silicone wire",
-      "qty": 8.5,
+      "qty": 8.8,
       "unit_cost": 0.3,
-      "subtotal": 2.55,
-      "spec": "8.5 m: 0.128 mm2, rated 1.1 A in a bundle; 7.64 m cut + 10 % waste",
+      "subtotal": 2.64,
+      "spec": "8.8 m: 0.128 mm2, rated 1.1 A in a bundle; 7.95 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
@@ -338,10 +338,10 @@
     {
       "category": "Wiring",
       "name": "Nylon braided sleeving 6 mm",
-      "qty": 2.5,
+      "qty": 3.1,
       "unit_cost": 0.4,
-      "subtotal": 1,
-      "spec": "2.5 m: over every cable where it crosses a joint",
+      "subtotal": 1.24,
+      "spec": "3.1 m: over every cable where it crosses a joint",
       "note": "price estimated"
     },
     {
@@ -417,7 +417,7 @@
       "note": "price estimated"
     }
   ],
-  "total": 3859.12,
+  "total": 3859.84,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
@@ -507,7 +507,7 @@
   "notes": [
     "4-wheel rocker-bogie rover with a 6-DOF arm: 4.648 kg, 1.24 m/s, 1.53 h, jetson_orin_nano_super",
     "Rocker-bogie after the JPL Open Source Rover, 4 driven wheels, skid steering (the OSR's four corner-steering servos are left out; add them for less tyre scrub).",
-    "A rover's differential bar links the two rockers through the body, a closed loop URDF cannot describe; the model frees the left rocker on its pivot and bolts the right rocker to the body, which keeps every wheel on the ground and the body supported on three points (body pitch follows the right rocker instead of the average).",
+    "The differential bar linking the two rockers through the body is modelled as a URDF mimic between the rocker pivots: a passive bar has no motor, and the model's rockers turn equally and opposite.",
     "Rockers and bogies are printed in PETG; for outdoor use print them in 6 bolt-on sections from aluminium channel instead (as the OSR does).",
     "Body: folded 2 mm aluminium box with a 3 mm lid; electronics on printed standoff plates on its floor.",
     "All motors and servos are 12 V parts run straight from a 3S LiPo; arm servos share the pack through the bus adapter.",

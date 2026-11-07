@@ -27,6 +27,17 @@ Dated from the git history. Pull request numbers refer to
 - Harness gains channels, extra loop at a joint, a chosen exit per cable and a home for harness parts. Robots that declare
   none of these come out exactly as before.
 
+## 2026-11-07: Studio films, proof from the website
+
+- `scripts/check_site.py` drives the static site in Chromium: every example prompt typed in, generated in the tab, its
+  spec, meshes, URDF and download packages compared with the shipped example, Arduino mode pressed tier by tier. Runs in CI.
+- Arduino mode no longer loses its tiers when the prompt itself says Arduino.
+- `studio.gif` for every example: a motion loop run in MuJoCo through the real actuators (pick and place from IK, drive
+  paths with feedback, gaits and squats on the free base), rendered in Cycles with the real harness routes.
+- Rover: the differential bar is modelled (the right rocker was bolted to the body), so it now passes its turn on the spot.
+- Turn test: mean yaw rate, not the rate at one instant. WALL-E's claim counts its tracks' torque limit.
+- WALL-E: yellow body with door, seams and charge gauge, smoked lenses, box-section arms. Baymax: a round belly.
+
 ## 2026-11-06: Real wiring and electronics compartments
 
 - Every electrical part has dimensions and an electrical record (ports, pins, connector, voltage, typical and peak

@@ -126,61 +126,61 @@
   },
   "turn_in_place": {
    "pass": 1.0,
-   "explanation": "yaw rate 1.98 rad/s with 3.59 commanded (no-slip), claimed 1.42 rad/s (needs >= 1.21), centre moved 6.1 cm over 1.0 turn(s) (6.1 cm per turn)",
+   "explanation": "mean yaw rate 1.95 rad/s with 3.59 commanded (no-slip), claimed 1.42 rad/s (needs >= 1.21), centre moved 4.4 cm over 1.0 turn(s) (4.4 cm per turn)",
    "claimed_rad_s": 1.42,
    "commanded_rad_s": 3.5875,
-   "yaw_rate_rad_s": 1.9768,
-   "drift_m": 0.0605,
+   "yaw_rate_rad_s": 1.9519,
+   "drift_m": 0.0436,
    "track_m": 0.3456,
    "joints": {
     "left_front_wheel_joint": {
-     "peak_nm": 1.2715,
+     "peak_nm": 1.2545,
      "peak_rating_nm": 1.373,
-     "util_peak": 0.926,
-     "mean_turn_nm": 0.3517,
+     "util_peak": 0.914,
+     "mean_turn_nm": 0.3232,
      "rated_nm": 0.686,
-     "util_rated": 0.513,
-     "max_err": 10.2997,
-     "max_err_hold": 10.2997,
-     "saturated_frac": 0.103
+     "util_rated": 0.471,
+     "max_err": 8.663,
+     "max_err_hold": 7.6274,
+     "saturated_frac": 0.097
     },
     "left_rear_wheel_joint": {
-     "peak_nm": 1.2537,
+     "peak_nm": 1.254,
      "peak_rating_nm": 1.373,
      "util_peak": 0.913,
-     "mean_turn_nm": 0.1768,
+     "mean_turn_nm": 0.1782,
      "rated_nm": 0.686,
-     "util_rated": 0.258,
-     "max_err": 8.1536,
-     "max_err_hold": 6.9854,
+     "util_rated": 0.26,
+     "max_err": 8.49,
+     "max_err_hold": 6.9609,
      "saturated_frac": 0.043
     },
     "right_front_wheel_joint": {
-     "peak_nm": 1.2336,
+     "peak_nm": 1.2338,
      "peak_rating_nm": 1.373,
-     "util_peak": 0.898,
-     "mean_turn_nm": 0.176,
+     "util_peak": 0.899,
+     "mean_turn_nm": 0.1751,
      "rated_nm": 0.686,
-     "util_rated": 0.257,
-     "max_err": 5.8796,
-     "max_err_hold": 5.8796,
-     "saturated_frac": 0.037
+     "util_rated": 0.255,
+     "max_err": 6.501,
+     "max_err_hold": 6.501,
+     "saturated_frac": 0.031
     },
     "right_rear_wheel_joint": {
-     "peak_nm": 1.2409,
+     "peak_nm": 1.2624,
      "peak_rating_nm": 1.373,
-     "util_peak": 0.904,
-     "mean_turn_nm": 0.3024,
+     "util_peak": 0.919,
+     "mean_turn_nm": 0.3409,
      "rated_nm": 0.686,
-     "util_rated": 0.441,
-     "max_err": 7.8895,
-     "max_err_hold": 6.7739,
-     "saturated_frac": 0.071
+     "util_rated": 0.497,
+     "max_err": 9.2905,
+     "max_err_hold": 9.2905,
+     "saturated_frac": 0.088
     }
    }
   }
  },
  "passed": 3,
  "total": 3,
- "source_urdf_sha256": "47d640bceff9d5d64839cc3816eba16bfe0a992a4b32d681b489ce598d87ea7a"
+ "source_urdf_sha256": "84c8d498a3936bf13075bbdcf7c77d063cdecf9086bb4faed0097a80c54c0813"
 }

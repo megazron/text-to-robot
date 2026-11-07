@@ -19,6 +19,7 @@ bad = []
 known = json.loads((root / "examples/sim_known_issues.json").read_text()) if (root / "examples/sim_known_issues.json").exists() else {}
 examples = sorted(p for p in (root / "examples").iterdir() if p.is_dir() and p.name[:2].isdigit())
 for ex in examples:
+    if (ex / "studio.gif").exists() and (ex / "studio.gif").stat().st_size > 5.5e6: bad.append(f"{ex.name}: studio.gif is over 5 MB")
     miss = [f for f in REQUIRED if not (ex / f).exists()]
     if miss: bad.append(f"{ex.name}: missing {', '.join(miss)}"); continue
     spec = json.loads((ex / "robot.json").read_text())

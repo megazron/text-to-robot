@@ -126,10 +126,10 @@
   },
   "turn_in_place": {
    "pass": null,
-   "explanation": "untested: mecanum rollers are not modelled as joints (rigid wheels scrub like skid steer); measured yaw rate 3.81 rad/s with 5.00 commanded (no-slip), claimed 5.14 rad/s (needs >= 4.37), centre moved 8.7 cm over 1.5 turn(s) (5.7 cm per turn)",
+   "explanation": "untested: mecanum rollers are not modelled as joints (rigid wheels scrub like skid steer); measured mean yaw rate 4.10 rad/s with 5.00 commanded (no-slip), claimed 5.14 rad/s (needs >= 4.37), centre moved 8.7 cm over 1.6 turn(s) (5.3 cm per turn)",
    "claimed_rad_s": 5.14,
    "commanded_rad_s": 5.0049,
-   "yaw_rate_rad_s": 3.8074,
+   "yaw_rate_rad_s": 4.1006,
    "drift_m": 0.0866,
    "track_m": 0.2657,
    "joints": {

@@ -57,13 +57,15 @@ All 50 checks pass (torque, speed, power, stability, print-bed fit). Details in 
 <!-- SIM -->
 ## Simulation (MuJoCo, real actuator limits)
 
-**2/2 task tests pass.** Every motor is limited to its datasheet peak torque and its torque-speed line, with the rotor inertia reflected through its gearbox; continuous loads are compared with the rated torque. The animation above is recorded from these tests.
+**2/2 task tests pass.** Every motor is limited to its datasheet peak torque and its torque-speed line, with the rotor inertia reflected through its gearbox; continuous loads are compared with the rated torque. The animation below is recorded from these tests.
+
+![simulation](simulation.gif)
 
 | | Test | Result |
 |---|---|---|
 | ✅ | drive straight | 3.66 m in 4.07 s, cruise speed 1.301 m/s vs claimed 1.330 m/s, heading drift -0.0 deg, lateral -0.0 cm |
 | ✅ | ramp 10deg | from standstill on a 10 deg slope (speed ramped over 5.0 s at 0.5 m/s^2): 5.78 m uphill in 7.0 s, speed 1.294 m/s of 1.330 commanded |
-| ➖ | turn in place | untested: mecanum rollers are not modelled as joints (rigid wheels scrub like skid steer); measured yaw rate 3.81 rad/s with 5.00 commanded (no-slip), claimed 5.14 rad/s (needs >= 4.37), centre moved 8.7 cm over 1.5 turn(s) (5.7 cm per turn) |
+| ➖ | turn in place | untested: mecanum rollers are not modelled as joints (rigid wheels scrub like skid steer); measured mean yaw rate 4.10 rad/s with 5.00 commanded (no-slip), claimed 5.14 rad/s (needs >= 4.37), centre moved 8.7 cm over 1.6 turn(s) (5.3 cm per turn) |
 | ➖ | strafe | untested: mecanum rollers are not modelled as joints, so a rigid wheel cannot strafe in simulation |
 
 _PASS means the modelled actuators (datasheet peak torque as a hard limit, a linear torque-speed line to no-load speed, reflected rotor inertia, URDF damping/friction) can produce the torques and speeds the task needs in this geometry and mass distribution, and that mean torque over the hold stays within the continuous (rated) torque. Joint control uses an ideal model-based feedforward (computed torque) through the force-limited servo for fixed-base robots and plain position servos for floating robots; a pass therefore proves torque/speed capacity, not that a given controller achieves it. Untested: thermal limits over long duty cycles (only the mean-vs-rated proxy), gearbox backlash and compliance, link and joint flexibility, encoder resolution, supply voltage sag and current limits, bus latency, controller tuning, and contact/friction values (nominal friction only)._

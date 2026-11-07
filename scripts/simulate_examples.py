@@ -99,7 +99,7 @@ def sim_block(rep):
     out = ["<!-- SIM -->", "## Simulation (MuJoCo, real actuator limits)", "",
            f"**{rep['passed']}/{rep['total']} task tests pass.** Every motor is limited to its datasheet peak torque and its torque-speed line, "
            "with the rotor inertia reflected through its gearbox; continuous loads are compared with the rated torque. "
-           "The animation above is recorded from these tests.", "",
+           "The animation below is recorded from these tests.", "", "![simulation](simulation.gif)", "",
            "| | Test | Result |", "|---|---|---|", *rows, ""]
     if rep.get("untested"): out += ["Not tested: " + "; ".join(rep["untested"]), ""]
     out += [f"_{rep['scope']}_", "<!-- /SIM -->"]
@@ -152,21 +152,38 @@ def main(selected):
     gallery(rows)
 
 
+def link_studio(ex):
+    """An example's README leads with its studio film once it has one; the raw recording moves down to the test results."""
+    readme = ex / "README.md"; text = readme.read_text()
+    if not (ex / "studio.gif").exists() or "![studio render]" in text: return
+    text = text.replace("![simulation](simulation.gif)", "![studio render](studio.gif)", 1)
+    if "![simulation](simulation.gif)" not in text:
+        text = text.replace("The animation above is recorded from these tests.", "The animation below is recorded from these tests.\n\n![simulation](simulation.gif)")
+    text = text.replace("| `simulation_report.json` | MuJoCo task tests under the real actuator limits |",
+                        "| `simulation_report.json`, `simulation.gif` | MuJoCo task tests under the real actuator limits |\n"
+                        "| `studio.gif` | Cycles render of a physics motion loop: every link where MuJoCo put it, the harness on its real routes |")
+    readme.write_text(text)
+
+
 def gallery(rows):
     out = ["# Examples", "", "Every example is regenerated from its prompt by `node scripts/build_examples.ts` and simulated by "
-           "`scripts/simulate_examples.py`. Each robot is built from real, purchasable parts sized from its own loads; the GIF is "
-           "recorded from its MuJoCo task tests under the real actuator limits.", "",
+           "`scripts/simulate_examples.py`, and every prompt is generated on the website by `scripts/check_site.py`. Each robot is built from real, "
+           "purchasable parts sized from its own loads. The film is a Cycles render of a motion loop run in MuJoCo through the real actuators "
+           "(`scripts/studio/film.py`); each example's README also has the raw recording of its task tests.", "",
            "| Example | Robot | Parts cost | Mass | Design checks | Simulation |", "|---|---|--:|--:|--:|--:|"]
     for ex, rep in rows:
+        link_studio(ex)
         spec = json.loads((ex / "robot.json").read_text())
         d = spec.get("metadata", {}).get("design") or {}
         bom = json.loads((ex / "bom.json").read_text()) if (ex / "bom.json").exists() else {}
         checks = d.get("checks", [])
-        out.append(f"| [{ex.name}]({ex.name}/README.md)<br><img src=\"{ex.name}/simulation.gif\" width=\"220\"> | {d.get('summary', spec['robot_name'])} | "
+        out.append(f"| [{ex.name}]({ex.name}/README.md)<br><img src=\"{ex.name}/{'studio' if (ex / 'studio.gif').exists() else 'simulation'}.gif\" width=\"220\"> | {d.get('summary', spec['robot_name'])} | "
                    f"${bom.get('total', '?')} | {d.get('performance', {}).get('mass_kg', '?')} kg | {sum(c['pass'] for c in checks)}/{len(checks)} | {rep['passed']}/{rep['total']} |")
     (ROOT / "examples" / "README.md").write_text("\n".join(out) + "\n")
 
 
 if __name__ == "__main__":
     args = set(sys.argv[1:])
-    check(args - {"--check"}) if "--check" in args else main(args)
+    if "--gallery" in args:   # just rewrite examples/README.md from the stored reports
+        gallery([(ex, json.loads((ex / "simulation_report.json").read_text())) for ex in sorted(p for p in (ROOT / "examples").iterdir() if p.is_dir() and re.match(r"\d\d_", p.name))])
+    else: check(args - {"--check"}) if "--check" in args else main(args)

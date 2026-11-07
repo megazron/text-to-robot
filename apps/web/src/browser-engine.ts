@@ -41,7 +41,8 @@ async function handle(method: string, p: string, body: any): Promise<Response> {
     if (!validation.valid) return json(400, { error: "Invalid robot specification", validation });
     for (const link of spec.links) if (link.geometry.type === "mesh") {
       if (!/^[A-Za-z0-9_][A-Za-z0-9_.-]*\.stl$/i.test(link.geometry.file)) throw new Error("Mesh filenames must be simple STL names");
-      if (!meshTopology(buildPart(link.geometry)).closed) throw new Error(`${link.name}: mesh is not a closed volume`);
+      // a catalog part comes from our own data by key, not from the imported file (the tier a design just made includes them)
+      if (link.geometry.part !== "component" && !meshTopology(buildPart(link.geometry)).closed) throw new Error(`${link.name}: mesh is not a closed volume`);
     }
     const urdf = generateUrdf(spec), urdfValidation = validateUrdf(urdf);
     if (!urdfValidation.valid) return json(400, { error: "Invalid exported URDF", urdfValidation });

@@ -678,16 +678,16 @@ def wheeled_tasks(xml, design, family):
         for A in rig.acts:
             if not A["velocity"]: hold[A["index"]] = rig.d.qpos[A["qadr"]]
         for _ in range(int(0.5 / mm.opt.timestep)): rig.step(hold)         # settle on the wheels
-        p0, y0 = _base_pose(mm, rig.d); t0 = rig.t; ok = True; min_up = 1.0
+        p0, y0 = _base_pose(mm, rig.d); t0 = rig.t; ok = True; min_up = 1.0; yaws = []
         while rig.t - t0 < seconds:
-            min_up = min(min_up, _upright(rig.d))
+            min_up = min(min_up, _upright(rig.d)); yaws.append((rig.t - t0, _base_pose(mm, rig.d)[1]))
             ref = hold.copy(); s_, _, _ = _min_jerk(rig.t - t0, ramp_s)
             for a, w in cmd_fn().items(): ref[a] = w * s_
             ok = rig.step(ref) and ok
             if not ok: break
             if stop and stop(rig.d, p0): break
         p1, y1 = _base_pose(mm, rig.d)
-        rig.min_upright = min_up
+        rig.min_upright = min_up; rig.yaws = yaws
         return rig, p0, y0, p1, y1, t0, ok
 
     # straight: the ramp distance plus 2 m at cruise
@@ -735,7 +735,10 @@ def wheeled_tasks(xml, design, family):
     wz = 0.5 * v_cmd / max(W.track / 2, 0.02)
     cmd = W.command(wz=wz, mecanum=mec)
     rig, p0, y0, p1, y1, t0, ok = run(lambda: cmd, 3.0)
-    yaw_rate = float(rig.d.qvel[5]); moved = float(np.linalg.norm(p1[:2] - p0[:2]))
+    # the mean rate once up to speed: a skid-steer base turns in stick-slip, and its yaw rate at any one instant swings by 50 %
+    ts, ys = np.array(rig.yaws).T if rig.yaws else (np.zeros(2), np.zeros(2)); ys = np.unwrap(ys); late = ts >= 1.0
+    yaw_rate = float((ys[late][-1] - ys[late][0]) / max(ts[late][-1] - ts[late][0], 1e-3)) if late.sum() > 1 else float(rig.d.qvel[5])
+    moved = float(np.linalg.norm(p1[:2] - p0[:2]))
     # drift is judged per full turn: a fast spinner makes several turns in the 3 s and should not be penalised for that
     turns = max(1.0, abs(float(np.unwrap([y0, y1])[1] - y0)) / (2 * np.pi), abs(yaw_rate) * 2.5 / (2 * np.pi))
     moved_per_turn = moved / turns
@@ -748,7 +751,7 @@ def wheeled_tasks(xml, design, family):
         # a rigid stand-in for a mecanum wheel scrubs like skid steer; the real wheel's rollers make this turn kinematic
         passed = None
     out["turn_in_place"] = _result(passed, ("untested: mecanum rollers are not modelled as joints (rigid wheels scrub like skid steer); measured " if passed is None else "")
-                                   + f"yaw rate {yaw_rate:.2f} rad/s with {wz:.2f} commanded (no-slip)" + (f", claimed {tclaim:.2f} rad/s (needs >= {need:.2f})" if tclaim else f" (needs >= {need:.2f})") + f", centre moved {moved*100:.1f} cm over {turns:.1f} turn(s) ({moved_per_turn*100:.1f} cm per turn)",
+                                   + f"mean yaw rate {yaw_rate:.2f} rad/s with {wz:.2f} commanded (no-slip)" + (f", claimed {tclaim:.2f} rad/s (needs >= {need:.2f})" if tclaim else f" (needs >= {need:.2f})") + f", centre moved {moved*100:.1f} cm over {turns:.1f} turn(s) ({moved_per_turn*100:.1f} cm per turn)",
                                    claimed_rad_s=tclaim,
                                    commanded_rad_s=_r(wz), yaw_rate_rad_s=_r(yaw_rate), drift_m=_r(moved), track_m=_r(W.track), joints=util)
     if mec:

@@ -21,10 +21,10 @@ Your design stays yours. The website runs entirely in your browser, nothing is u
 
 | | | | |
 |:-:|:-:|:-:|:-:|
-| <img src="examples/18_arduino_car/simulation.gif" width="200"><br>Arduino car | <img src="examples/19_arduino_arm/simulation.gif" width="200"><br>Arduino arm | <img src="examples/15_wall_e/simulation.gif" width="200"><br>WALL-E | <img src="examples/02_arm_6dof/simulation.gif" width="200"><br>6-DOF arm |
-| <img src="examples/10_quadruped/simulation.gif" width="200"><br>Quadruped | <img src="examples/11_spider_scout/simulation.gif" width="200"><br>Hexapod | <img src="examples/08_humanoid/simulation.gif" width="200"><br>Humanoid | <img src="examples/12_mars_rover/simulation.gif" width="200"><br>Mars rover |
+| <img src="examples/18_arduino_car/studio.gif" width="200"><br>Arduino car | <img src="examples/19_arduino_arm/studio.gif" width="200"><br>Arduino arm | <img src="examples/15_wall_e/studio.gif" width="200"><br>WALL-E | <img src="examples/02_arm_6dof/studio.gif" width="200"><br>6-DOF arm |
+| <img src="examples/10_quadruped/studio.gif" width="200"><br>Quadruped | <img src="examples/11_spider_scout/studio.gif" width="200"><br>Hexapod | <img src="examples/08_humanoid/studio.gif" width="200"><br>Humanoid | <img src="examples/12_mars_rover/studio.gif" width="200"><br>Mars rover |
 
-Every animation above is a physics run of the exported model, not a render of a separate asset.
+Every film above is the exported model itself: its URDF and meshes in a Cycles studio, moved by a MuJoCo run through its real motors. All 19 are in the [gallery](examples/README.md), and every one of them is generated on the website by a browser test in CI.
 
 ## What you get
 
@@ -107,7 +107,7 @@ gantry robots, snake and marine robots and dexterous hands are refused with a re
 ## Honest limits
 
 - Nothing here has been built on a real bench yet. Printability is checked on geometry, not in a slicer.
-- Simulation is not proof of real-world behaviour. Two robots currently fail their turn-on-the-spot test, and those failures are listed in the [gallery](examples/README.md).
+- Simulation is not proof of real-world behaviour. Every example passes the tests it has; what is not tested (mecanum strafing, free standing on the bipeds) is listed in its README.
 - Some printed parts have known issues, each with its cause, in [PRINTABILITY](docs/PRINTABILITY.md).
 - The parser covers the robot families above and refuses the rest with a reason.
 

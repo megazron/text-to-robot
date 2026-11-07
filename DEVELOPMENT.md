@@ -16,6 +16,8 @@ Regenerate and re-audit the examples:
 ```bash
 node scripts/build_examples.ts                                  # every deliverable from each prompt
 MUJOCO_GL=osmesa python3 -B scripts/simulate_examples.py         # task tests, GIFs, README results, gallery
+deploy/build-pages.sh pages-dist && python3 scripts/check_site.py   # every prompt on the real website, compared with its example
+python3 -B scripts/studio/film.py 15_wall_e                      # studio.gif: MuJoCo motion loop, Cycles frames (Blender 4.5, ffmpeg)
 python3 scripts/verify_examples.py                               # what CI checks
 ```
 

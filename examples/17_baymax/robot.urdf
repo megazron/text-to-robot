@@ -1122,9 +1122,9 @@
       <geometry><mesh filename="package://baymax/meshes/soft_cover.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="4.71759e-16 2.55311e-16 0.39426" rpy="0 0 0"/>
+      <origin xyz="-6.45408e-16 -2.91099e-16 0.391936" rpy="0 0 0"/>
       <mass value="0.55"/>
-      <inertia ixx="0.040977" ixy="2.15489e-11" ixz="1.02729e-16" iyy="0.03898" iyz="-6.82629e-18" izz="0.028753"/>
+      <inertia ixx="0.042146" ixy="-5.21647e-11" ixz="-6.43975e-17" iyy="0.039627" iyz="2.92957e-17" izz="0.033303"/>
     </inertial>
   </link>
   <joint name="left_front_motor_mount" type="fixed">

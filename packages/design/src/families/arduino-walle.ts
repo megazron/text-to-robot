@@ -61,6 +61,8 @@ function wire(H: Harness, motors: string[]) {
 
 export function designArduinoWallE(req: ArduinoWallERequest = {}): RobotSpecification {
   const A = new Assembly(req.name ?? "wall_e", "arduino_walle", req.prompt);
+  // his own filament colours, kept out of the shared palette: sun-faded yellow, weathered grey, dark smoked lenses
+  A.spec.materials.push({ name: "walle", color: [0.85, 0.6, 0.14, 1] }, { name: "walle_grey", color: [0.58, 0.58, 0.55, 1] }, { name: "visor", color: [0.02, 0.02, 0.03, 1] });
   const axles = [{ xa: XA, can: -1 as const }, { xa: -XA, can: 1 as const }];
   const motorHoles = part(MOTOR).holes.map((h) => h.pos[0]);
 
@@ -100,7 +102,22 @@ export function designArduinoWallE(req: ArduinoWallERequest = {}): RobotSpecific
   body.push({ op: "cutbox", min: [-BX - 1, SW_Y - 9.7, SW_Z - 6.7], max: [-BX + WALL + 1, SW_Y + 9.7, SW_Z + 6.7] });
   // battery and electronics: screw holes through the floor
   for (const h of part(PACK).holes) body.push({ op: "hole", a: [-38.5 + h.pos[0], h.pos[1], Z0 - 1], b: [-38.5 + h.pos[0], h.pos[1], Z0 + WALL + 1], d: 3.2 });
-  A.cadLink("body", { name: "body", edge: 1.0, ops: body }, { role: "base", material: "printed_accent" });
+  // compactor door on the front, proud of the wall; its seams and hinge bars, and the panel seams of the side walls
+  const DOOR: [number, number] = [BX - 0.2, BX + 1.6];
+  body.push({ op: "box", min: [DOOR[0], -BY + 10, 26], max: [DOOR[1], BY - 10, 134], r: 0 });
+  for (const bx of [9.5, 35.5]) body.push({ op: "hole", a: [BX - WALL - 1, -22.5 + bx, zS + 10], b: [BX + 3, -22.5 + bx, zS + 10], d: 16.5 });   // through the door too
+  for (const z of [88, 112]) body.push({ op: "cutbox", min: [BX + 0.6, -BY + 9, z], max: [BX + 3, BY - 9, z + 1.6] });
+  for (const z of [34, 126]) for (const y of [-BY + 15, BY - 15]) body.push({ op: "rod", a: [DOOR[0], y, z], b: [DOOR[1] + 0.9, y, z], r: 2.4 });
+  for (const side of [1, -1] as const) for (const x of [-54, 54]) {
+    const y = side > 0 ? [BY - 0.8, BY + 1] : [-BY - 1, -BY + 0.8];
+    body.push({ op: "cutbox", min: [x - 0.8, y[0], 74], max: [x + 0.8, y[1], Z1 + 1] });
+  }
+  A.cadLink("body", { name: "body", edge: 1.0, ops: body }, { role: "base", material: "walle" });
+  // charge gauge on the door: a dark plate, its slots showing the yellow behind (and the seam it covers)
+  const gauge: Op[] = [{ op: "box", min: [BX + 1.6, 16, 92], max: [BX + 3.6, 46, 128], r: 0 }];
+  for (let k = 0; k < 5; k++) gauge.push({ op: "cutbox", min: [BX + 1, 21, 96.5 + k * 6], max: [BX + 5, 41, 100 + k * 6] });
+  A.cadLink("charge_gauge", { name: "charge_gauge", edge: 0.5, ops: gauge }, { material: "printed_dark" });
+  A.fixed("charge_gauge_mount", "body", "charge_gauge", translation([0, 0, 0]));
 
   // ---------------- drive: motors, wheels, TPU tracks
   const wheelJoints: string[] = [];
@@ -159,7 +176,7 @@ export function designArduinoWallE(req: ArduinoWallERequest = {}): RobotSpecific
   // neck leads leave through a grommet beside the pan servo; slots over the drivers and regulator let the heat out
   lid.push({ op: "hole", a: [EXIT_X, 0, Z1 - 1], b: [EXIT_X, 0, Z1 + LID + 1], d: 8 });
   for (let k = 0; k < VENTS; k++) lid.push({ op: "cutbox", min: [-72, -48 + k * 7, Z1 - 5], max: [-20, -44.8 + k * 7, Z1 + LID + 1] });
-  A.cadLink("lid", { name: "lid", edge: 0.8, ops: lid }, { material: "printed_accent" });
+  A.cadLink("lid", { name: "lid", edge: 0.8, ops: lid }, { material: "walle" });
   A.fixed("lid_mount", "body", "lid", translation([0, 0, 0]));
   A.fastener("M3x10 self-tapping (lid)", 4);
   A.mount("lid", SERVO, Tpan, "neck_pan_servo", "neck pan servo");
@@ -170,10 +187,11 @@ export function designArduinoWallE(req: ArduinoWallERequest = {}): RobotSpecific
   const neck: Op[] = [
     { op: "horn", key: SERVO, t: 4, extra: 3, channel: hT },
     { op: "box", min: [-9, -9, 0], max: [9, 9, hT - b.max[0] - 2], r: 3 },
+    { op: "box", min: [-11.5, -11.5, 16], max: [11.5, 11.5, 20], r: 3 }, { op: "box", min: [-11.5, -11.5, 30], max: [11.5, 11.5, 34], r: 3 },   // collars of the telescoping tube
     { op: "box", min: [b.min[1] - 2.5, yo + b.min[2] - 2.5, hT - b.max[0] - 4], max: [b.max[1] + 2.5, yo - 1, hT - b.max[0] - 1.5], r: 0 },
     { op: "cradle", key: SERVO, T: Ttilt, wall: 2.5 },
   ];
-  A.cadLink("neck", { name: "neck", edge: 0.6, ops: neck });
+  A.cadLink("neck", { name: "neck", edge: 0.6, ops: neck }, { material: "printed_dark" });
   A.revolute("neck_pan", "lid", "neck", Tpan, SERVO, -1.4, 1.4);
   A.mount("neck", SERVO, Ttilt, "neck_tilt_servo", "neck tilt servo");
 
@@ -187,21 +205,30 @@ export function designArduinoWallE(req: ArduinoWallERequest = {}): RobotSpecific
   ];
   for (const Y of [27, -27]) {
     head.push({ op: "rod", a: W(-14, Y, 46), b: W(30, Y, 46), r: 17 });
+    head.push({ op: "rod", a: W(-19, Y, 46), b: W(-14, Y, 46), r: 13 }, { op: "rod", a: W(22, Y, 46), b: W(33, Y, 46), r: 19.5 });   // rear cap, lens hood
   }
-  for (const Y of [27, -27]) head.push({ op: "hole", a: W(24, Y, 46), b: W(32, Y, 46), d: 24 });   // lens recesses
-  A.cadLink("head", { name: "head", edge: 0.8, ops: head }, { material: "printed" });
+  for (const Y of [27, -27]) head.push({ op: "hole", a: W(22, Y, 46), b: W(34, Y, 46), d: 27 });   // lens recesses
+  A.cadLink("head", { name: "head", edge: 0.8, ops: head }, { material: "walle_grey" });
   A.revolute("neck_tilt", "neck", "head", Ttilt, SERVO, -0.7, 0.7);
+  // smoked lenses glued into the recesses
+  for (const [n, Y] of [["left", 27], ["right", -27]] as const) {
+    A.cadLink(`${n}_lens`, { name: `${n}_lens`, edge: 0.4, ops: [{ op: "rod", a: W(22.1, Y, 46), b: W(25, Y, 46), r: 13.3 }, { op: "hole", a: W(24, Y, 46), b: W(26, Y, 46), d: 9 }] }, { material: "visor" });
+    A.fixed(`${n}_lens_mount`, "head", `${n}_lens`, translation([0, 0, 0]));
+  }
 
   // ---------------- arms: plates on the arm servo horns, pointing forwards, two-prong hands
   for (const side of [1, -1] as const) {
     const name = `${side > 0 ? "left" : "right"}_arm`, fwd = side;   // servo y axis = side * world x
     const arm: Op[] = [
       { op: "horn", key: SERVO, t: 4, extra: 3 },
-      { op: "beam", a: [0, 0, 2], b: [0, fwd * 62, 2], w: 16, h: 4, up: [0, 0, 1] },
-      { op: "box", min: [-12, Math.min(fwd * 60, fwd * 84), 0], max: [12, Math.max(fwd * 60, fwd * 84), 4], r: 2 },
-      { op: "cutbox", min: [-4, Math.min(fwd * 70, fwd * 85), -1], max: [4, Math.max(fwd * 70, fwd * 85), 5] },
+      { op: "beam", a: [0, 0, 2], b: [0, fwd * 26, 2], w: 16, h: 4, up: [0, 0, 1] },                     // flat over the horn, leaving its screw reachable
+      { op: "beam", a: [0, fwd * 24, 6], b: [0, fwd * 66, 6], w: 16, h: 12, up: [0, 0, 1] },              // box-section forearm with a lightening window
+      { op: "cutbox", min: [-4.5, Math.min(fwd * 32, fwd * 56), -1], max: [4.5, Math.max(fwd * 32, fwd * 56), 13] },
+      { op: "box", min: [-14, Math.min(fwd * 64, fwd * 76), 0], max: [14, Math.max(fwd * 64, fwd * 76), 12], r: 2 },   // palm
+      { op: "box", min: [-14, Math.min(fwd * 74, fwd * 94), 3], max: [-5, Math.max(fwd * 74, fwd * 94), 9], r: 2 },     // two fingers
+      { op: "box", min: [5, Math.min(fwd * 74, fwd * 94), 3], max: [14, Math.max(fwd * 74, fwd * 94), 9], r: 2 },
     ];
-    A.cadLink(name, { name, edge: 0.6, ops: arm }, { material: "printed" });
+    A.cadLink(name, { name, edge: 0.6, ops: arm }, { material: "walle_grey" });
     A.mount("body", SERVO, Tarm(side), `${name}_servo`, "arm servo");
     A.revolute(`${name}_lift`, "body", name, Tarm(side), SERVO, -1.0, 1.0);
   }
@@ -236,8 +263,10 @@ export function designArduinoWallE(req: ArduinoWallERequest = {}): RobotSpecific
   const tauTurn = (Fturn * rr) / 2;
   A.check("drive:skid_turn", tauTurn * DYNAMIC_FACTOR <= rt.peak_nm, `turning on the spot (mu 1.0, contact ${L * 1000} mm, track gauge ${(B * 1000).toFixed(0)} mm): ${tauTurn.toFixed(4)} N·m per wheel x ${DYNAMIC_FACTOR} vs stall ${rt.peak_nm} N·m (short transient, as for the skid-steer bases)`);
   const vmax = rt.speed_rad_s * rr * 0.8;
-  // a tracked base turns slower than its no-slip rate: the tracks slide sideways (same model as the skid-steer bases)
-  const chi = 1 + 2 * (L / B) ** 2, turnRate = (0.5 * vmax) / (B / 2) / chi;
+  // a tracked base turns slower than its no-slip rate: the tracks slide sideways (same model as the skid-steer bases), and
+  // a track drags along its whole length, so its TT motors run at their torque limit through the turn; the extra 0.4 is the
+  // shortfall that limit causes in simulation (mean 1.3 rad/s on the grippy test floor)
+  const chi = 1 + 2 * (L / B) ** 2 + 0.4, turnRate = (0.5 * vmax) / (B / 2) / chi;
   A.check("drive:top_speed", vmax >= 0.3, `${vmax.toFixed(2)} m/s`);
   const servoStall = 4 * electrical(SERVO)!.current_a.v.peak, buckA = electrical("buck_lm2596")!.current_a.v.peak;
   A.check("power:servo_supply", servoStall <= buckA, `four SG90s stalled together draw ${servoStall.toFixed(1)} A of the LM2596's ${buckA} A peak (2 A continuous)`);

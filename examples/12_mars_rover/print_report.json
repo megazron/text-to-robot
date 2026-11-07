@@ -233,7 +233,7 @@
   {
    "name": "camera_mast",
    "watertight": true,
-   "volume_cm3": 70.26,
+   "volume_cm3": 70.05,
    "size_mm": [
     50.0,
     50.0,
@@ -245,10 +245,10 @@
     -1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 1.09,
-   "support_frac": 0.006,
+   "support_area_cm2": 0.74,
+   "support_frac": 0.004,
    "bed_contact_cm2": 24.78,
-   "min_wall_mm": 1.8,
+   "min_wall_mm": 3.97,
    "thin_wall_frac": 0.0,
    "passed": true,
    "supports": "none",
@@ -462,11 +462,11 @@
   {
    "name": "right_rocker_frame",
    "watertight": true,
-   "volume_cm3": 63.98,
+   "volume_cm3": 64.02,
    "size_mm": [
     170.0,
     138.0,
-    26.4
+    27.6
    ],
    "orientation": [
     1.0,
@@ -474,10 +474,10 @@
     0.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 9.45,
-   "support_frac": 0.048,
+   "support_area_cm2": 9.2,
+   "support_frac": 0.046,
    "bed_contact_cm2": 2.17,
-   "min_wall_mm": 1.22,
+   "min_wall_mm": 1.21,
    "thin_wall_frac": 0.005,
    "passed": true,
    "supports": "none",

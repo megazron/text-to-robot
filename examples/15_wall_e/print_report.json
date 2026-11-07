@@ -8,9 +8,9 @@
   {
    "name": "body",
    "watertight": true,
-   "volume_cm3": 202.01,
+   "volume_cm3": 219.32,
    "size_mm": [
-    170.0,
+    172.5,
     128.0,
     130.0
    ],
@@ -20,11 +20,36 @@
     -1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 10.12,
-   "support_frac": 0.006,
+   "support_area_cm2": 14.59,
+   "support_frac": 0.008,
    "bed_contact_cm2": 216.87,
-   "min_wall_mm": 2.39,
+   "min_wall_mm": 1.6,
    "thin_wall_frac": 0.001,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "charge_gauge",
+   "watertight": true,
+   "volume_cm3": 1.42,
+   "size_mm": [
+    2.0,
+    30.0,
+    36.0
+   ],
+   "orientation": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 0.0,
+   "support_frac": 0.0,
+   "bed_contact_cm2": 6.14,
+   "min_wall_mm": 2.0,
+   "thin_wall_frac": 0.0,
    "passed": true,
    "supports": "none",
    "problems": [],
@@ -33,11 +58,11 @@
   {
    "name": "head",
    "watertight": true,
-   "volume_cm3": 89.26,
+   "volume_cm3": 99.05,
    "size_mm": [
-    83.5,
-    50.5,
-    88.0
+    86.0,
+    53.5,
+    93.0
    ],
    "orientation": [
     0.0,
@@ -45,9 +70,9 @@
     0.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 17.1,
-   "support_frac": 0.089,
-   "bed_contact_cm2": 8.32,
+   "support_area_cm2": 19.5,
+   "support_frac": 0.085,
+   "bed_contact_cm2": 11.54,
    "min_wall_mm": 1.6,
    "thin_wall_frac": 0.0,
    "passed": true,
@@ -58,11 +83,11 @@
   {
    "name": "left_arm",
    "watertight": true,
-   "volume_cm3": 8.91,
+   "volume_cm3": 15.63,
    "size_mm": [
     41.0,
-    104.5,
-    4.6
+    114.5,
+    12.0
    ],
    "orientation": [
     0.0,
@@ -70,10 +95,35 @@
     -1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 3.67,
-   "support_frac": 0.057,
-   "bed_contact_cm2": 19.2,
+   "support_area_cm2": 7.19,
+   "support_frac": 0.082,
+   "bed_contact_cm2": 15.66,
    "min_wall_mm": 1.6,
+   "thin_wall_frac": 0.001,
+   "passed": true,
+   "supports": "needed",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "left_lens",
+   "watertight": true,
+   "volume_cm3": 1.53,
+   "size_mm": [
+    26.6,
+    2.9,
+    26.6
+   ],
+   "orientation": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 0.0,
+   "support_frac": 0.0,
+   "bed_contact_cm2": 5.31,
+   "min_wall_mm": 1.9,
    "thin_wall_frac": 0.0,
    "passed": true,
    "supports": "none",
@@ -108,7 +158,7 @@
   {
    "name": "neck",
    "watertight": true,
-   "volume_cm3": 29.54,
+   "volume_cm3": 31.18,
    "size_mm": [
     41.0,
     41.0,
@@ -120,24 +170,24 @@
     -1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 12.65,
-   "support_frac": 0.078,
+   "support_area_cm2": 16.75,
+   "support_frac": 0.097,
    "bed_contact_cm2": 8.55,
    "min_wall_mm": 1.6,
-   "thin_wall_frac": 0.001,
+   "thin_wall_frac": 0.0,
    "passed": true,
-   "supports": "none",
+   "supports": "needed",
    "problems": [],
    "warnings": []
   },
   {
    "name": "right_arm",
    "watertight": true,
-   "volume_cm3": 8.91,
+   "volume_cm3": 15.63,
    "size_mm": [
     41.0,
-    104.5,
-    4.6
+    114.5,
+    12.0
    ],
    "orientation": [
     0.0,
@@ -145,11 +195,36 @@
     -1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 3.67,
-   "support_frac": 0.057,
-   "bed_contact_cm2": 19.2,
+   "support_area_cm2": 7.19,
+   "support_frac": 0.082,
+   "bed_contact_cm2": 15.66,
    "min_wall_mm": 1.6,
    "thin_wall_frac": 0.001,
+   "passed": true,
+   "supports": "needed",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "right_lens",
+   "watertight": true,
+   "volume_cm3": 1.53,
+   "size_mm": [
+    26.6,
+    2.9,
+    26.6
+   ],
+   "orientation": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 0.0,
+   "support_frac": 0.0,
+   "bed_contact_cm2": 5.31,
+   "min_wall_mm": 1.9,
+   "thin_wall_frac": 0.0,
    "passed": true,
    "supports": "none",
    "problems": [],

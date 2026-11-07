@@ -45,13 +45,15 @@ All 36 checks pass (torque, speed, power, stability, print-bed fit). Details in 
 <!-- SIM -->
 ## Simulation (MuJoCo, real actuator limits)
 
-**3/3 task tests pass.** Every motor is limited to its datasheet peak torque and its torque-speed line, with the rotor inertia reflected through its gearbox; continuous loads are compared with the rated torque. The animation above is recorded from these tests.
+**3/3 task tests pass.** Every motor is limited to its datasheet peak torque and its torque-speed line, with the rotor inertia reflected through its gearbox; continuous loads are compared with the rated torque. The animation below is recorded from these tests.
+
+![simulation](simulation.gif)
 
 | | Test | Result |
 |---|---|---|
 | ✅ | drive straight | 2.27 m in 4.96 s, cruise speed 0.526 m/s vs claimed 0.540 m/s, heading drift 0.2 deg, lateral 0.5 cm |
 | ✅ | ramp 10deg | from standstill on a 10 deg slope (speed ramped over 2.0 s at 0.5 m/s^2): 1.50 m uphill in 4.0 s, speed 0.522 m/s of 0.540 commanded |
-| ✅ | turn in place | yaw rate 1.91 rad/s with 3.86 commanded (no-slip), claimed 1.40 rad/s (needs >= 1.19), centre moved 2.5 cm over 1.0 turn(s) (2.5 cm per turn) |
+| ✅ | turn in place | mean yaw rate 1.59 rad/s with 3.86 commanded (no-slip), claimed 1.40 rad/s (needs >= 1.19), centre moved 2.5 cm over 1.0 turn(s) (2.5 cm per turn) |
 
 _PASS means the modelled actuators (datasheet peak torque as a hard limit, a linear torque-speed line to no-load speed, reflected rotor inertia, URDF damping/friction) can produce the torques and speeds the task needs in this geometry and mass distribution, and that mean torque over the hold stays within the continuous (rated) torque. Joint control uses an ideal model-based feedforward (computed torque) through the force-limited servo for fixed-base robots and plain position servos for floating robots; a pass therefore proves torque/speed capacity, not that a given controller achieves it. Untested: thermal limits over long duty cycles (only the mean-vs-rated proxy), gearbox backlash and compliance, link and joint flexibility, encoder resolution, supply voltage sag and current limits, bus latency, controller tuning, and contact/friction values (nominal friction only)._
 <!-- /SIM -->

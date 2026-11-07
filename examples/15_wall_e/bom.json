@@ -121,12 +121,12 @@
     },
     {
       "category": "Printed structure",
-      "name": "PETG filament for 8 printed parts",
+      "name": "PETG filament for 11 printed parts",
       "qty": 1,
-      "unit_cost": 11.31,
-      "subtotal": 11.31,
-      "spec": "447 g of parts (+15 % supports/waste), about 40.8 h of printing",
-      "note": "body, track_left, track_right, lid, neck, head, left_arm, right_arm"
+      "unit_cost": 12.39,
+      "subtotal": 12.39,
+      "spec": "490 g of parts (+15 % supports/waste), about 44.6 h of printing",
+      "note": "body, charge_gauge, track_left, track_right, lid, neck, head, left_lens, right_lens, left_arm, right_arm"
     },
     {
       "category": "Fasteners",
@@ -157,19 +157,19 @@
     {
       "category": "Wiring",
       "name": "24 AWG silicone wire",
-      "qty": 5.4,
+      "qty": 5.6,
       "unit_cost": 0.35,
-      "subtotal": 1.89,
-      "spec": "5.4 m: 0.205 mm2, rated 1.75 A in a bundle; 4.83 m cut + 10 % waste",
+      "subtotal": 1.96,
+      "spec": "5.6 m: 0.205 mm2, rated 1.75 A in a bundle; 5.01 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "26 AWG silicone wire",
-      "qty": 6.6,
+      "qty": 6.7,
       "unit_cost": 0.3,
-      "subtotal": 1.98,
-      "spec": "6.6 m: 0.128 mm2, rated 1.1 A in a bundle; 5.93 m cut + 10 % waste",
+      "subtotal": 2.01,
+      "spec": "6.7 m: 0.128 mm2, rated 1.1 A in a bundle; 6.02 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
@@ -220,10 +220,10 @@
     {
       "category": "Wiring",
       "name": "Cable tie 100 x 2.5 mm",
-      "qty": 30,
+      "qty": 31,
       "unit_cost": 0.02,
-      "subtotal": 0.6,
-      "spec": "30 pc: at every clip, cable end and strain-relief anchor",
+      "subtotal": 0.62,
+      "spec": "31 pc: at every clip, cable end and strain-relief anchor",
       "note": "price estimated"
     },
     {
@@ -263,7 +263,7 @@
       "note": "price estimated"
     }
   ],
-  "total": 87.75,
+  "total": 88.95,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
@@ -278,33 +278,33 @@
     },
     {
       "joint": "neck_tilt",
-      "required_effort": 0.039,
+      "required_effort": 0.0461,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.039,
+      "required_torque_nm": 0.0461,
       "chosen": "TowerPro SG90 micro servo (nylon gears) + cross horn",
-      "margin": "4.53x"
+      "margin": "3.83x"
     },
     {
       "joint": "left_arm_lift",
-      "required_effort": 0.0027,
+      "required_effort": 0.0078,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.0027,
+      "required_torque_nm": 0.0078,
       "chosen": "TowerPro SG90 micro servo (nylon gears) + cross horn",
-      "margin": "65.2x"
+      "margin": "22.73x"
     },
     {
       "joint": "right_arm_lift",
-      "required_effort": 0.0027,
+      "required_effort": 0.0078,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.0027,
+      "required_torque_nm": 0.0078,
       "chosen": "TowerPro SG90 micro servo (nylon gears) + cross horn",
-      "margin": "65.2x"
+      "margin": "22.73x"
     }
   ],
   "warnings": [],
   "notes": [
-    "Arduino WALL-E: TPU tracks on 4 TT motors, pan/tilt binocular head, 2 servo arms, 0.95 kg, $73 of parts",
-    "Joint limits trimmed to the collision-free range found by exact solid sweeps: left_arm_lift [-1.00, 1.00] -> [-1.00, 0.35]; right_arm_lift [-1.00, 1.00] -> [-0.35, 1.00].",
+    "Arduino WALL-E: TPU tracks on 4 TT motors, pan/tilt binocular head, 2 servo arms, 0.99 kg, $73 of parts",
+    "Joint limits trimmed to the collision-free range found by exact solid sweeps: left_arm_lift [-1.00, 1.00] -> [-1.00, 0.33]; right_arm_lift [-1.00, 1.00] -> [-0.33, 1.00].",
     "tracks print in TPU 95A (flexible), everything else in PETG/PLA+; the body prints open side up without supports",
     "TT motor continuous torque taken as 30 % of the 0.8 kg.cm stall; a turn on the spot is a short transient above that (the tracks slide sideways), so spin in bursts on carpet or rubber floors",
     "prices are typical single-unit marketplace prices and vary by seller",

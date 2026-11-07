@@ -126,10 +126,10 @@
   },
   "turn_in_place": {
    "pass": 1.0,
-   "explanation": "yaw rate 1.91 rad/s with 3.86 commanded (no-slip), claimed 1.40 rad/s (needs >= 1.19), centre moved 2.5 cm over 1.0 turn(s) (2.5 cm per turn)",
+   "explanation": "mean yaw rate 1.59 rad/s with 3.86 commanded (no-slip), claimed 1.40 rad/s (needs >= 1.19), centre moved 2.5 cm over 1.0 turn(s) (2.5 cm per turn)",
    "claimed_rad_s": 1.4,
    "commanded_rad_s": 3.8559,
-   "yaw_rate_rad_s": 1.9149,
+   "yaw_rate_rad_s": 1.5883,
    "drift_m": 0.0248,
    "track_m": 0.14,
    "joints": {

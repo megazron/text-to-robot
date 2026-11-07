@@ -16,7 +16,7 @@ import type { RobotSpecification } from "@ttr/robot-schema";
 
 /** Files an example folder holds; anything else left from older generators is removed. */
 const KEEP = new Set(["prompt.txt", "robot.json", "robot.urdf", "meshes", "BOM.md", "bom.json", "robot.ros2.zip", "robot.cad.zip", "robot.training.zip",
-  "README.md", "simulation_report.json", "simulation.gif", "test_report.json", "WIRING.md", "wiring.svg", "print_report.json"]);
+  "README.md", "simulation_report.json", "simulation.gif", "studio.gif", "test_report.json", "WIRING.md", "wiring.svg", "print_report.json"]);
 
 function zipDir(base: string, out: string) {
   // deterministic archive: sorted entries, fixed timestamps
@@ -35,7 +35,7 @@ function readme(name: string, prompt: string, spec: RobotSpecification, bom: Bil
   const d = (spec.metadata as { design?: any }).design;
   const manual = previous.match(/<!-- MANUAL_NOTES -->[\s\S]*?<!-- \/MANUAL_NOTES -->/)?.[0];
   const sim = previous.match(/<!-- SIM -->[\s\S]*?<!-- \/SIM -->/)?.[0] ?? "<!-- SIM -->\n_Simulation results are written by `scripts/simulate_examples.py`._\n<!-- /SIM -->";
-  const out = [`# ${name.replace(/^\d\d_/, "").replace(/_/g, " ")}`, "", `> ${prompt.trim()}`, "", "![simulation](simulation.gif)", ""];
+  const out = [`# ${name.replace(/^\d\d_/, "").replace(/_/g, " ")}`, "", `> ${prompt.trim()}`, "", previous.includes("studio.gif") || existsSync(join("examples", name, "studio.gif")) ? "![studio render](studio.gif)" : "![simulation](simulation.gif)", ""];
   if (summary) out.push(`Interpreted as: ${summary}`, "");
   if (d) {
     out.push(`**${d.summary}**`, "", `Parts cost **$${bom.total}**${bom.budget ? ` (budget $${bom.budget}: ${bom.feasible ? "within" : "over"})` : ""} · printed structure ${d.printed.length} parts, ${d.printed.reduce((s: number, p: any) => s + p.mass_kg * 1000, 0).toFixed(0)} g · checks passed ${d.checks.filter((c: any) => c.pass).length}/${d.checks.length}`, "");
@@ -58,7 +58,8 @@ function readme(name: string, prompt: string, spec: RobotSpecification, bom: Bil
     "| `robot.cad.zip` | build package: printable STLs, print list, bought-part models, assembly order |",
     "| `robot.ros2.zip` | ROS 2 description package (ros2_control, MoveIt config, Gazebo launch) |",
     "| `robot.training.zip` | MuJoCo / RL training scaffold |",
-    "| `simulation_report.json` | MuJoCo task tests under the real actuator limits |", "");
+    "| `simulation_report.json`, `simulation.gif` | MuJoCo task tests under the real actuator limits |",
+    "| `studio.gif` | Cycles render of a physics motion loop: every link where MuJoCo put it, the harness on its real routes |", "");
   if (manual) out.push(manual, "");
   return out.join("\n");
 }

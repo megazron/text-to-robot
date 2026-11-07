@@ -1,6 +1,6 @@
 # Wiring: wall_e
 
-27 cables, 61 conductors, 12.39 m of wire, wiring parts $8.80.
+27 cables, 61 conductors, 12.66 m of wire, wiring parts $8.92.
 
 Diagram: [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
 
@@ -122,9 +122,9 @@ Length is route + service loop + joint slack + termination, rounded up to 5 mm; 
 | C4 | controller to motor_driver_2 | 7 | 135 | 31.9 | 40 | 0 | 60 | 15-pin 2.54 mm male header / 0.1 in header | - |
 | C5 | motor_driver_2 to rear_left_motor | 2 | 210 | 106.1 | 40 | 0 | 60 | 0.1 in header / Two factory-soldered 28 AWG leads | - |
 | C6 | motor_driver_2 to rear_right_motor | 2 | 180 | 77 | 40 | 0 | 60 | 0.1 in header / Two factory-soldered 28 AWG leads | - |
-| C7 | servo_driver to neck_pan_servo | 3 | 230 | 127.4 | 40 | 0 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | - |
+| C7 | servo_driver to neck_pan_servo | 3 | 270 | 165.6 | 40 | 0 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | - |
 | C8 | servo_driver to neck_tilt_servo | 3 | 425 | 274.7 | 40 | 50 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | body_bay.neck_leads |
-| C9 | servo_driver to left_arm_servo | 3 | 220 | 118.4 | 40 | 0 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | - |
+| C9 | servo_driver to left_arm_servo | 3 | 270 | 168.4 | 40 | 0 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | - |
 | C10 | servo_driver to right_arm_servo | 3 | 220 | 118.4 | 40 | 0 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | - |
 | C11 | controller to servo_driver | 2 | 280 | 175.4 | 40 | 0 | 60 | 15-pin 2.54 mm male header / 6-pin 0.1 in header | - |
 | C12 | controller to ultrasonic | 2 | 285 | 183.8 | 40 | 0 | 60 | 15-pin 2.54 mm male header / 4-pin 2.54 mm right-angle male header | - |
@@ -158,14 +158,14 @@ Each loop is at least the extra length the joint needs at the far end of its tra
 |---|--:|---|--:|--:|---|---|
 | 20 AWG silicone wire | 0.6 | m | 0.5 | 0.30 | 0.519 mm2, rated 5.5 A in a bundle; 0.53 m cut + 10 % waste | estimated |
 | 22 AWG silicone wire | 1.3 | m | 0.4 | 0.52 | 0.327 mm2, rated 3.5 A in a bundle; 1.11 m cut + 10 % waste | estimated |
-| 24 AWG silicone wire | 5.4 | m | 0.35 | 1.89 | 0.205 mm2, rated 1.75 A in a bundle; 4.83 m cut + 10 % waste | estimated |
-| 26 AWG silicone wire | 6.6 | m | 0.3 | 1.98 | 0.128 mm2, rated 1.1 A in a bundle; 5.93 m cut + 10 % waste | estimated |
+| 24 AWG silicone wire | 5.6 | m | 0.35 | 1.96 | 0.205 mm2, rated 1.75 A in a bundle; 5.01 m cut + 10 % waste | estimated |
+| 26 AWG silicone wire | 6.7 | m | 0.3 | 2.01 | 0.128 mm2, rated 1.1 A in a bundle; 6.02 m cut + 10 % waste | estimated |
 | Dupont 2.54 mm contacts | 70 | pc | 0.02 | 1.40 | rated 3 A per contact | estimated |
 | Dupont 2.54 mm housings | 24 | pc | 0.02 | 0.48 | one per cable end | estimated |
 | 6.3 mm spade contacts | 2 | pc | 0.08 | 0.16 | rated 15 A per contact | estimated |
 | Bootlace ferrule contacts | 2 | pc | 0.03 | 0.06 | rated 17.5 A per contact | estimated |
 | Heat shrink 3 mm, 2:1 | 2.5 | m | 0.2 | 0.50 | 29 solder joints + a boot on each cable end | estimated |
-| Cable tie 100 x 2.5 mm | 30 | pc | 0.02 | 0.60 | at every clip, cable end and strain-relief anchor | estimated |
+| Cable tie 100 x 2.5 mm | 31 | pc | 0.02 | 0.62 | at every clip, cable end and strain-relief anchor | estimated |
 | Rubber grommet, 7.9 mm panel hole, 4.8 mm bore | 1 | pc | 0.08 | 0.08 | 8 mm panel hole | estimated |
 | Nylon braided sleeving 6 mm | 0.2 | m | 0.4 | 0.08 | over every cable where it crosses a joint | estimated |
 | 4 A ATM blade fuse | 1 | pc | 0.25 | 0.25 | plus spares | estimated |

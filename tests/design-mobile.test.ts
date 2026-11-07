@@ -83,3 +83,12 @@ test("mobile designer: rover wheel count and deterministic output", () => {
   const strip = (s: RobotSpecification) => JSON.stringify({ ...s, metadata: { ...s.metadata, created: "" } });
   assert.equal(strip(designRover({ wheels: 4 })), strip(four));
 });
+
+test("rover: the differential bar links the rockers, so neither side is bolted to the body", () => {
+  const s = designRover({ prompt: "Design a Mars rover with four wheels", wheels: 4 });
+  const left = s.joints.find((j) => j.name === "left_rocker_pivot")!, right = s.joints.find((j) => j.name === "right_rocker_pivot")!;
+  assert.equal(left.type, "revolute");
+  assert.equal(right.type, "revolute");
+  assert.equal(right.mimic?.joint, "left_rocker_pivot");
+  assert.ok(validateSpec(s).valid);
+});

@@ -941,7 +941,7 @@ export function designRover(req: MobileRequest = {}): RobotSpecification {
   const name = req.name ?? (armReq ? "mars_rover_with_arm" : "mars_rover");
   const armPrefix = "arm";
   // the arm does not depend on the drive choice: size it once
-  const armMount = translation([30, 0, zBody + BH + 3]);
+  const armMount = translation([0, 0, zBody + BH + 3]);
   const armSpec = armReq ? sizeArm({ dof: armReq.dof, reachM: armReq.reachM ?? 0.35, payloadKg: payload, budget: req.budget, ladder: "feetech", basePlateMm: 100 }, I4()) : null;
   const result = sizeAndBuild((motor, battery) => {
     const b = new Build(name, "mobile_rocker_bogie", req.prompt);
@@ -955,8 +955,10 @@ export function designRover(req: MobileRequest = {}): RobotSpecification {
       const side = s > 0 ? "left" : "right";
       const rocker = `${side}_rocker`;
       const Tp = frame([pivot[0], s * 118, pivot[2]], [0, s, 0], [1, 0, 0]);
-      if (s > 0) b.passiveHinge(`${side}_rocker_pivot`, "base_link", rocker, Tp, -0.35, 0.35);
-      else { b.A.fixed(`${side}_rocker_pivot`, "base_link", rocker, b.local("base_link", Tp)); b.W.set(rocker, Tp); }
+      // the differential bar: the rockers turn opposite ways in the world (their frames are mirrored, so with equal joint
+      // angles), which keeps all the wheels loaded alike in a turn and holds the body at the mean of the two sides
+      const rockerJoint = b.passiveHinge(`${side}_rocker_pivot`, "base_link", rocker, Tp, -0.35, 0.35);
+      if (s < 0) rockerJoint.mimic = { joint: "left_rocker_pivot", multiplier: 1, offset: 0 };
       const ry0 = s > 0 ? 110 : -124.5, ry1 = s > 0 ? 124.5 : -110;
       const front = wheelStation(b, { tag: `${side}_front`, parent: rocker, x: xF, side: s, yFace, motor, wheel });
       const rOps: Op[] = [
@@ -1046,7 +1048,7 @@ export function designRover(req: MobileRequest = {}): RobotSpecification {
   wireMobile(b, compute, result.battery, sensors);
   A.design.assumptions.push(
     `Rocker-bogie after the JPL Open Source Rover, ${nW} driven wheels, skid steering (the OSR's four corner-steering servos are left out; add them for less tyre scrub).`,
-    "A rover's differential bar links the two rockers through the body, a closed loop URDF cannot describe; the model frees the left rocker on its pivot and bolts the right rocker to the body, which keeps every wheel on the ground and the body supported on three points (body pitch follows the right rocker instead of the average).",
+    "The differential bar linking the two rockers through the body is modelled as a URDF mimic between the rocker pivots: a passive bar has no motor, and the model's rockers turn equally and opposite.",
     `${nW === 6 ? "Bogies pivot freely on 608 bearings. " : ""}Rockers and bogies are printed in PETG; for outdoor use print them in 6 bolt-on sections from aluminium channel instead (as the OSR does).`,
     "Body: folded 2 mm aluminium box with a 3 mm lid; electronics on printed standoff plates on its floor.",
     "All motors and servos are 12 V parts run straight from a 3S LiPo; arm servos share the pack through the bus adapter.",
@@ -1474,8 +1476,8 @@ export function designBaymax(req: MobileRequest = {}): RobotSpecification {
     b.printed("eyes", "head", eyeOps, "visor");
     cameraModule(b, "head_camera", "head", [70, 0, hz0 + 68]);
     b.printed("camera_bracket", "head", [{ op: "box", min: [55, -16, hz0 + 46], max: [59, 16, hz0 + 86], r: 2 }, { op: "box", min: [30, -16, hz0 + 46], max: [59, 16, hz0 + 50] }, bodyCut("rpi_camera_module_3", b.W.get("head_camera")!)]);
-    // soft cover: sewn ripstop body (pear shape) zipped over the frame; negligible structure
-    const prof: [number, number][] = [[290, 60], [286, 120], [272, 220], [254, 330], [234, 460], [206, 600], [174, 720], [140, 790], [95, 840], [70, zSh + 30]];
+    // soft cover: sewn ripstop body (his round belly, tucked in at the hem over the chassis) zipped over the frame; negligible structure
+    const prof: [number, number][] = [[276, 58], [287, 110], [295, 180], [297, 260], [289, 340], [271, 420], [246, 500], [218, 590], [186, 680], [150, 760], [112, 815], [85, 848], [70, zSh + 30]];
     b.fabricated("soft_cover", "spine", [{ op: "at", T: scaleM(0.9, 1, 1), of: [{ op: "revolve", pts: shellOutline(prof, 1.5), seg: 96 }] },
       ...(scanZ ? [{ op: "cutbox", min: [-400, -400, scanZ - 10], max: [400, 400, scanZ + 10] } as Op] : []),
       ...[1, -1].map((s) => ({ op: "cutbox", min: [-62, s > 0 ? 105 : -300, 560], max: [62, s > 0 ? 300 : -105, 900] }) as Op), // armholes

@@ -2,7 +2,7 @@
 
 Writes examples/<ex>/print_report.json and docs/PRINTABILITY.md. Fails when a part fails that is not listed, with a
 reason, in examples/print_known_issues.json (so known problems stay visible and new ones cannot slip in).
-    python scripts/print_audit.py            # write reports
+    python scripts/print_audit.py [example ...]   # write reports
     python scripts/print_audit.py --check    # CI: re-audit, compare, write nothing
 """
 import io
@@ -18,6 +18,7 @@ import trimesh  # noqa: E402
 from ttr_build.dfm import audit_mesh, BED_MM  # noqa: E402
 
 check = "--check" in sys.argv
+only = {a for a in sys.argv[1:] if not a.startswith("--")}   # write just these examples' reports; the others stay as they are
 
 
 def same_report(a, b):
@@ -44,7 +45,7 @@ for ex in sorted(p for p in (ROOT / "examples").iterdir() if p.is_dir() and p.na
     text = json.dumps({"bed_mm": BED_MM, "parts": reps}, indent=1) + "\n"
     if check:
         if not out.exists() or not same_report(json.loads(out.read_text()), json.loads(text)): bad.append(f"{ex.name}: print_report.json is stale (run scripts/print_audit.py)")
-    else:
+    elif not only or ex.name in only:
         out.write_text(text)
     for r in reps:
         if not r["passed"] and r["name"] not in known.get(ex.name, {}): bad.append(f"{ex.name}/{r['name']}: {'; '.join(r['problems'])}")
