@@ -6,9 +6,9 @@
 
 Interpreted as: Iron Man Mark 43 wearable suit · budget $60000
 
-**Iron Man Mark 43 (full wearable suit): 185 printed pieces, 8.1 kg filament, motorised faceplate, $314 incl. filament**
+**Iron Man Mark 43 (full wearable suit): 327 printed pieces, 7.2 kg filament, motorised faceplate, $289 incl. filament**
 
-Parts cost **$326.12** (budget $60000: within) · printed structure 185 parts, 7508 g · checks passed 197/197
+Parts cost **$299.95** (budget $60000: within) · printed structure 327 parts, 6631 g · checks passed 339/339
 
 ## What it can do
 
@@ -17,25 +17,25 @@ Parts cost **$326.12** (budget $60000: within) · printed structure 185 parts, 7
 | tier | suit |
 | tier label | full wearable suit |
 | wearer height m | 1.75 |
-| printed pieces | 185 |
-| armour mass kg | 7.51 |
-| filament kg | 8.11 |
-| cost usd | 314.08 |
-| mass kg | 74.71 |
+| printed pieces | 327 |
+| armour mass kg | 7.68 |
+| filament kg | 7.16 |
+| cost usd | 289.26 |
+| mass kg | 7.85 |
 
 ## Actuators (sized from this robot's own loads)
 
 | Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
 |---|---|--:|--:|--:|--:|
-| faceplate | hobby_mg996r | 0.443 | 0.6472 / 2.1574 | 4.87x | 7.48 |
+| faceplate | hobby_mg90s | 0.1533 | 0.1294 / 0.4314 | 2.81x | 13.09 |
 
 ## Engineering checks
 
-All 197 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
+All 339 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
 
 ## Assumptions and limits
 
-- armour shape from: body: "Iron man armored suit" by octv h (Printables 1524711, CC0, provenance unverified); helmet: Iron Man wearable helmet Mark 42 by Manifold3D (Printables 449081, CC BY-SA); 3 mm walls, 2 mm faceplate, 15 % gyroid infill (shells are mostly walls)
+- armour shape from: suit: designed directly by scripts/forge_mark43.py from reference photos of the movie suit; 3 mm walls, 2 mm faceplate, 15 % gyroid infill (shells are mostly walls)
 - filament at $22/kg, 8 % waste
 - the suit is worn armour over a black undersuit: the wearer moves every joint; nothing powers the limbs (hobby servos cannot move a person)
 - the wearer is an average adult male body at 1.75 m and the pieces scale evenly with height; check against your own measurements before printing

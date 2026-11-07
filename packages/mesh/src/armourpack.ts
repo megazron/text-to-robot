@@ -1,4 +1,4 @@
-// Armour shells made by scripts/armour_from_reference.py: closed printable pieces in the wearer's world frame (mm, home
+// Armour shells made by scripts/forge_mark43.py: closed printable pieces in the wearer's world frame (mm, home
 // pose) kept as one quantised binary (uint16 vertices per piece's own box, uint16 triangle indices) and a JSON manifest.
 // Node reads the files on first use; the browser fetches them and hands them to setArmourPack() before designing.
 import { readFileSync } from "node:fs";

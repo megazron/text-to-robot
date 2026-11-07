@@ -13,7 +13,7 @@ test("the motorised helmet passes every check and its faceplate opens at least 5
   const fp = s.joints.find((j: any) => j.name === "faceplate")!;
   assert.ok(fp.limit!.lower! <= -0.9);
   for (const p of d.printed) assert.ok(p.check.fits_bed && p.check.watertight, p.name);
-  // the wearer is modelled but never printed or bought
-  assert.ok(s.links.some((l: any) => l.role === "wearer"));
+  // the suit is designed on its own: no body model inside it
+  assert.ok(!s.links.some((l: any) => l.role === "wearer"));
   assert.ok(!d.printed.some((p: any) => /pelvis|head$/.test(p.name)));
 });

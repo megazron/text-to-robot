@@ -4,21 +4,21 @@
  "group": "wearable",
  "scope": "PASS means the modelled actuators (datasheet peak torque as a hard limit, a linear torque-speed line to no-load speed, reflected rotor inertia, URDF damping/friction) can produce the torques and speeds the task needs in this geometry and mass distribution, and that mean torque over the hold stays within the continuous (rated) torque. Joint control uses an ideal model-based feedforward (computed torque) through the force-limited servo for fixed-base robots and plain position servos for floating robots; a pass therefore proves torque/speed capacity, not that a given controller achieves it. Untested: thermal limits over long duty cycles (only the mean-vs-rated proxy), gearbox backlash and compliance, link and joint flexibility, encoder resolution, supply voltage sag and current limits, bus latency, controller tuning, and contact/friction values (nominal friction only).",
  "untested": [],
- "fidelity": "URDF effort limits enforced; position gains inferred; speed/thermal/electrical limits unmodelled; geometry and hardware uncalibrated; armature = rotor inertia x gear ratio^2 from the actuator record: faceplate: 0.0192 kg m^2 (estimate (hobby_pwm motor) x gear ratio 400^2)",
+ "fidelity": "URDF effort limits enforced; position gains inferred; speed/thermal/electrical limits unmodelled; geometry and hardware uncalibrated; armature = rotor inertia x gear ratio^2 from the actuator record: faceplate: 0.00045 kg m^2 (estimate (hobby_pwm_micro motor) x gear ratio 300^2)",
  "tests": {
   "open_and_hold": {
    "pass": true,
    "explanation": "opens faceplate to -0.95 rad (target -0.95) and holds 1.5 s",
    "joints": {
     "faceplate": {
-     "peak_nm": 0.5027,
-     "peak_rating_nm": 1.0787,
-     "util_peak": 0.466,
-     "mean_hold_nm": 0.2838,
-     "rated_nm": 0.6472,
-     "util_rated": 0.438,
-     "max_err": 0.0058,
-     "max_err_hold": 0.0001,
+     "peak_nm": 0.1385,
+     "peak_rating_nm": 0.2157,
+     "util_peak": 0.642,
+     "mean_hold_nm": 0.0899,
+     "rated_nm": 0.1294,
+     "util_rated": 0.695,
+     "max_err": 0.0059,
+     "max_err_hold": 0.0004,
      "saturated_frac": 0.0
     }
    },
@@ -29,5 +29,5 @@
  },
  "passed": 1,
  "total": 1,
- "source_urdf_sha256": "da681c1928f86e033e62f044501dba4e63478bc49231836a342d62f57da0fcf5"
+ "source_urdf_sha256": "bbea2574d8e64b336efc4cc835b5683344ae72ef8ea9944aaf876003219d7a06"
 }

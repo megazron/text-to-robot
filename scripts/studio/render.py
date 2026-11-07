@@ -10,7 +10,7 @@ for f in ("three.core.js",):
 shutil.copy(f"{R}/node_modules/three/build/three.module.js", t)
 os.makedirs(f"{t}/addons"); shutil.copy(f"{R}/node_modules/three/examples/jsm/environments/RoomEnvironment.js", f"{t}/addons/")
 shutil.copy(f"{R}/node_modules/three/examples/jsm/utils/BufferGeometryUtils.js", f"{t}/addons/")
-for f in ("json", "bin"): shutil.copy(f"{R}/packages/parts/data/mark43_pack.{f}", t)
+for f in ("json", "bin"): shutil.copy(f"{os.environ.get('PACK_DIR', R + '/packages/parts/data')}/mark43_pack.{f}", t)
 os.chdir(t)
 class Q(http.server.SimpleHTTPRequestHandler):
     def log_message(self, *a): pass
@@ -22,5 +22,5 @@ with sync_playwright() as p:
     g = b.new_page(viewport={"width": 1200, "height": 1500}); g.on("pageerror", lambda e: print("ERR", e)); g.on("console", lambda m: print("LOG", m.text[:200]) if m.type == "error" else None)
     g.goto("http://127.0.0.1:8766/studio.html?w=1200&h=1500", timeout=60000); g.wait_for_function("window.ready", timeout=180000)
     for name, az, h, d, ly in (("front", 8, 1.15, 5.2, 1.0), ("three_quarter", 38, 1.2, 5.2, 1.0), ("back", 188, 1.2, 5.2, 1.0), ("bust", 14, 1.55, 2.5, 1.5)):
-        g.evaluate(f"shot({az},{h},{d},{ly})"); g.locator("canvas").screenshot(path=f"{out}/{name}.png"); print(name, flush=True)
+        g.evaluate(f"shot({az},{h},{d},{ly})"); g.screenshot(path=f"{out}/{name}.png", timeout=120000); print(name, flush=True)
     b.close()
