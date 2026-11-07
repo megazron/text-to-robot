@@ -254,11 +254,11 @@ PLANS = {
     "09_gripper": lambda ex: arm_take(ex, [(1.0, {"finger_a": 0.028}), (1.5, {}), (2.5, {"finger_a": 0.004}), (3.0, {})], 3.6),
     "10_quadruped": lambda ex: walk_take(ex, 0.02, 0.05, 0.02, 0.8, [["fl", "rr"], ["fr", "rl"]], duty=0.6, cycles=4),
     "11_spider_scout": lambda ex: walk_take(ex, 0.0, 0.05, 0.025, 1.0, [["lf", "lr", "rm"], ["rf", "rr", "lm"]], duty=0.6, cycles=3),
-    "12_mars_rover": lambda ex: wheel_take(ex, DRIVE(0.45), 4.0, [(1.0, {"arm_base_yaw": 0.5}), (2.2, {"arm_base_yaw": -0.5, "arm_shoulder_pitch": 1.1, "arm_wrist_pitch": -1.4}), (3.2, {"arm_base_yaw": 0.0, "arm_shoulder_pitch": 0.7, "arm_wrist_pitch": -0.8})],
-                                           pose={"arm_shoulder_pitch": 0.7, "arm_elbow_pitch": -1.6, "arm_wrist_pitch": -0.8}),
+    "12_mars_rover": lambda ex: wheel_take(ex, DRIVE(0.45), 4.0, [(1.0, {"arm_base_yaw": 0.5}), (2.2, {"arm_base_yaw": -0.5, "arm_wrist_pitch": -1.3}), (3.2, {"arm_base_yaw": 0.0, "arm_wrist_pitch": -0.9})],
+                                           pose={"arm_shoulder_pitch": 0.25, "arm_elbow_pitch": -1.5, "arm_wrist_pitch": -0.9}),
     "13_battle_mech": lambda ex: legged_pose_take(ex, 0.5, 4.0, [(1.2, {"l_shoulder_pitch": -0.7, "r_shoulder_pitch": -0.7, "neck_pan": 0.4}), (2.2, {"l_elbow": -1.0, "r_elbow": 1.0, "neck_pan": -0.4}), (3.2, {"neck_pan": 0.0})]),
     "14_iron_man_mark_43": lambda ex: arm_take(ex, [(0.9, {"faceplate": -0.95}), (2.3, {}), (3.2, {"faceplate": 0.0})], 3.8, pin=True),
-    "15_wall_e": lambda ex: wheel_take(ex, DRIVE(0.22), 4.0, [(1.0, {"neck_pan": 0.5, "left_arm_lift": -0.6, "right_arm_lift": 0.6}), (2.2, {"neck_pan": -0.5, "neck_tilt": -0.25}), (3.2, {"neck_pan": 0.2, "left_arm_lift": 0.1, "right_arm_lift": -0.1})]),
+    "15_wall_e": lambda ex: wheel_take(ex, DRIVE(0.22), 4.0, [(1.0, {"neck_pan": 0.5, "left_arm_lift": -0.5, "right_arm_lift": 0.5, "left_elbow": -0.7, "right_elbow": 0.7, "left_hand": 0.5, "right_hand": -0.5}), (2.2, {"neck_pan": -0.5, "neck_tilt": -0.25, "left_hand": 0.0, "right_hand": 0.0}), (3.2, {"neck_pan": 0.2, "left_arm_lift": 0.1, "right_arm_lift": -0.1, "left_elbow": -0.2, "right_elbow": 0.2})]),
     "16_eva": lambda ex: wheel_take(ex, DRIVE(0.3), 4.0, [(1.0, {"head_pan": 0.5, "left_arm_shoulder_pitch": 0.5, "right_arm_shoulder_pitch": 0.5}), (2.2, {"head_pan": -0.5}), (3.2, {"head_pan": 0.0, "left_arm_shoulder_pitch": 0.0, "right_arm_shoulder_pitch": 0.0})]),
     "17_baymax": lambda ex: wheel_take(ex, DRIVE(0.3), 4.0, [(1.0, {"head_pan": 0.35}), (2.2, {"head_pan": -0.35}), (3.2, {"head_pan": 0.0})]),
     "18_arduino_car": lambda ex: wheel_take(ex, DRIVE(0.3), 4.0),
@@ -289,7 +289,7 @@ def main():
     k = PLANS[a.example](a.example)
     (a.out / a.example).mkdir(parents=True, exist_ok=True)
     k.scene = {**getattr(k, "scene", {}), **({"az": VIEW[a.example]} if a.example in VIEW else {})}
-    (a.out / a.example / "motion.json").write_text(json.dumps({"example": a.example, "fps": FPS, "frames": k.frames, "notes": k.notes, "scene": getattr(k, "scene", {}), "home": home_poses(k), "root": k.bodies[0][1]}))
+    (a.out / a.example / "motion.json").write_text(json.dumps({"example": a.example, "fps": FPS, "frames": k.frames, "notes": k.notes, "scene": getattr(k, "scene", {}), "home": home_poses(k), "root": k.bodies[0][1], "start": k.home}))
     p = np.array([k.frames[i][k.bodies[0][1]][:3] for i in range(len(k.frames))])
     print(a.example, len(k.frames), "frames; base travel", np.round(p.max(0) - p.min(0), 3), "seam", np.round(p[-1] - p[0], 3), k.notes)
 

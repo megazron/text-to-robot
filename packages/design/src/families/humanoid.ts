@@ -352,6 +352,18 @@ function armour(A: Assembly) {
     else if (pn.face === "back") box = { min: [b.lo[0] - 5.5, b.lo[1] + ins, b.lo[2] + ins], max: [b.lo[0] - 3, b.hi[1] - ins, b.hi[2] - ins] };
     else box = side > 0 ? { min: [b.lo[0] + ins, b.hi[1] + 3, b.lo[2] + ins], max: [b.hi[0] - ins, b.hi[1] + 5.5, b.hi[2] - ins] } : { min: [b.lo[0] + ins, b.lo[1] - 5.5, b.lo[2] + ins], max: [b.hi[0] - ins, b.lo[1] - 3, b.hi[2] - ins] };
     const ops: Op[] = [{ op: "box", min: box.min, max: box.max, r: 4 }];
+    // a raised inner plate with a seam across it: a flat sheet reads as a sign, stepped panels read as armour
+    const k = pn.face === "out" ? 1 : 0, sgn = (pn.face === "out" ? side : pn.face === "front" ? 1 : -1), u = k === 0 ? 1 : 0, v = 2, m = 9;
+    if (box.max[u] - box.min[u] > 3 * m && box.max[v] - box.min[v] > 3 * m) {
+      const lo = [...box.min] as Vec3, hi = [...box.max] as Vec3;
+      lo[u] += m; hi[u] -= m; lo[v] += m; hi[v] -= m;
+      if (sgn > 0) { lo[k] = box.max[k] - 0.2; hi[k] = box.max[k] + 1.6; } else { hi[k] = box.min[k] + 0.2; lo[k] = box.min[k] - 1.6; }
+      ops.push({ op: "box", min: lo, max: hi, r: 0 });
+      const zc = (lo[v] + hi[v]) / 2, cutLo = [...lo] as Vec3, cutHi = [...hi] as Vec3;
+      cutLo[v] = zc - 0.8; cutHi[v] = zc + 0.8; cutLo[u] -= 1; cutHi[u] += 1;
+      if (sgn > 0) { cutLo[k] = box.max[k]; cutHi[k] += 1; } else { cutHi[k] = box.min[k]; cutLo[k] -= 1; }
+      ops.push({ op: "cutbox", min: cutLo, max: cutHi });
+    }
     // standoffs back to the link at the four corners
     const mid = (k: number) => (box.min[k] + box.max[k]) / 2;
     void mid;

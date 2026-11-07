@@ -12,7 +12,7 @@ test("Arduino WALL-E passes every check", () => {
   for (const c of d.checks) assert.ok(c.pass, `${c.name}: ${c.detail}`);
   for (const n of ["clearance:home", "drive:skid_turn", "power:servo_supply"]) assert.ok(d.checks.some((c: any) => c.name === n), n);
   assert.equal(s.joints.filter((j: any) => j.type === "continuous" && !j.passive).length, 4);
-  for (const p of d.purchased) assert.match(p.key, /^(arduino_|tt_gearmotor|wheel_65mm_tt|tb6612|breadboard|pack_2s_18650|hobby_sg90|pca9685_clone|buck_lm2596|hc_sr04|switch_kcd|fuse_holder|wago_)/, p.key);
+  for (const p of d.purchased) assert.match(p.key, /^(arduino_|tt_gearmotor|wheel_65mm_tt|tb6612|breadboard|pack_2s_18650|hobby_sg90|hobby_mg90s|pca9685_clone|buck_lm2596|hc_sr04|switch_kcd|fuse_holder|wago_)/, p.key);
 });
 
 test("Arduino mode routes WALL-E prompts to it", () => {

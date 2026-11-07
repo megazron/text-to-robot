@@ -53,7 +53,7 @@ def shader(name, base, metal=0.0, rough=0.45, coat=0.0, coat_rough=0.1, spec=0.5
 
 # Bought parts in the colours they arrive in (a URDF gives a whole category one colour, and every lidar is not solder-mask green)
 PART_LOOK = {"hobby_sg90": ("actuator", (0.07, 0.2, 0.62)), "hobby_mg90s": ("actuator", (0.08, 0.08, 0.09)), "hobby_mg996r": ("actuator", (0.05, 0.05, 0.06)), "hobby_ds3218": ("actuator", (0.05, 0.05, 0.06)),
-             "tt_gearmotor_1to48": ("actuator", (0.92, 0.68, 0.08)), "hc_sr04": ("electronics", (0.05, 0.2, 0.6)), "arduino_nano_clone": ("electronics", (0.03, 0.2, 0.55)), "arduino_uno_clone": ("electronics", (0.0, 0.42, 0.48)),
+             "tt_gearmotor_1to48": ("actuator", (0.92, 0.68, 0.08)), "hc_sr04": ("metal", (0.7, 0.71, 0.72)) if "wall_e" in exdir else ("electronics", (0.05, 0.2, 0.6)), "arduino_nano_clone": ("electronics", (0.03, 0.2, 0.55)), "arduino_uno_clone": ("electronics", (0.0, 0.42, 0.48)),
              "breadboard_400": ("printed", (0.9, 0.9, 0.86)), "pca9685_clone": ("electronics", (0.15, 0.1, 0.45)), "tb6612fng_module": ("electronics", (0.55, 0.05, 0.08)), "buck_lm2596": ("electronics", (0.05, 0.25, 0.55))}
 LOOK_BY_NAME = [("lidar", "actuator", (0.05, 0.05, 0.055)), ("realsense", "metal", (0.5, 0.52, 0.55)), ("depth", "metal", (0.5, 0.52, 0.55)), ("oak_", "metal", (0.5, 0.52, 0.55)), ("rplidar", "actuator", (0.05, 0.05, 0.055)),
                 ("ld06", "actuator", (0.05, 0.05, 0.055)), ("ld19", "actuator", (0.05, 0.05, 0.055)), ("feetech", "actuator", (0.05, 0.05, 0.055)), ("dynamixel", "actuator", (0.06, 0.06, 0.065))]
@@ -64,8 +64,32 @@ def look_of(stem):
     return next(((m, c) for key, m, c in LOOK_BY_NAME if key in stem), None)
 
 
+def weathered(name, paint, under, metal=0.0, rust=(0.22, 0.09, 0.035), wear=0.55):
+    """Old paint: rust patches and vertical streaks from noise, bare metal rubbed through on the edges (ambient occlusion seen from inside finds them)."""
+    m = bpy.data.materials.new(name); m.use_nodes = True; nt = m.node_tree; b = nt.nodes["Principled BSDF"]; L = nt.links.new
+    tc = nt.nodes.new("ShaderNodeTexCoord"); mp = nt.nodes.new("ShaderNodeMapping"); mp.inputs["Scale"].default_value = (1, 1, 0.22); L(tc.outputs["Object"], mp.inputs[0])
+    big = nt.nodes.new("ShaderNodeTexNoise"); big.inputs["Scale"].default_value = 26; big.inputs["Detail"].default_value = 9; big.inputs["Roughness"].default_value = 0.62; L(tc.outputs["Object"], big.inputs[0])
+    streak = nt.nodes.new("ShaderNodeTexNoise"); streak.inputs["Scale"].default_value = 70; streak.inputs["Detail"].default_value = 5; L(mp.outputs[0], streak.inputs[0])
+    r1 = nt.nodes.new("ShaderNodeValToRGB"); r1.color_ramp.elements[0].position = 0.52; r1.color_ramp.elements[1].position = 0.64; L(big.outputs[0], r1.inputs[0])
+    r2 = nt.nodes.new("ShaderNodeValToRGB"); r2.color_ramp.elements[0].position = 0.56; r2.color_ramp.elements[1].position = 0.7; L(streak.outputs[0], r2.inputs[0])
+    both = nt.nodes.new("ShaderNodeMath"); both.operation = "MAXIMUM"; L(r1.outputs[0], both.inputs[0]); L(r2.outputs[0], both.inputs[1])
+    ao = nt.nodes.new("ShaderNodeAmbientOcclusion"); ao.inside = True; ao.samples = 6; ao.inputs["Distance"].default_value = 0.004
+    er = nt.nodes.new("ShaderNodeValToRGB"); er.color_ramp.elements[0].position = 0.08; er.color_ramp.elements[1].position = 0.45; L(ao.outputs["AO"], er.inputs[0])
+    edge = nt.nodes.new("ShaderNodeInvert"); L(er.outputs[0], edge.inputs[1])
+    c1 = nt.nodes.new("ShaderNodeMix"); c1.data_type = "RGBA"; c1.inputs["A"].default_value = (*paint, 1); c1.inputs["B"].default_value = (*rust, 1); L(both.outputs[0], c1.inputs["Factor"])
+    c2 = nt.nodes.new("ShaderNodeMix"); c2.data_type = "RGBA"; c2.inputs["B"].default_value = (*under, 1); L(c1.outputs["Result"], c2.inputs["A"])
+    k = nt.nodes.new("ShaderNodeMath"); k.operation = "MULTIPLY"; k.inputs[1].default_value = wear; L(edge.outputs[0], k.inputs[0]); L(k.outputs[0], c2.inputs["Factor"]); L(c2.outputs["Result"], b.inputs["Base Color"])
+    ro = nt.nodes.new("ShaderNodeMapRange"); ro.inputs["To Min"].default_value = 0.42; ro.inputs["To Max"].default_value = 0.88; L(both.outputs[0], ro.inputs["Value"]); L(ro.outputs[0], b.inputs["Roughness"])
+    me = nt.nodes.new("ShaderNodeMath"); me.operation = "MAXIMUM"; me.inputs[1].default_value = metal; L(k.outputs[0], me.inputs[0]); L(me.outputs[0], b.inputs["Metallic"])
+    bv = nt.nodes.new("ShaderNodeBevel"); bv.samples = 3; bv.inputs["Radius"].default_value = 0.0009; L(bv.outputs[0], b.inputs["Normal"])
+    return m
+
+
 def material_for(name, rgba):
     c = lin(rgba); n = name.lower()
+    if n == "walle": return weathered(n, c, (0.42, 0.40, 0.37))
+    if n == "walle_grey": return weathered(n, c, (0.62, 0.6, 0.56), metal=0.55, rust=(0.2, 0.11, 0.06), wear=0.7)
+    if n == "walle_rust": return weathered(n, c, (0.4, 0.36, 0.32), metal=0.3, rust=(0.1, 0.05, 0.03))
     if n in ("lens_glow", "led"): return shader(n, c, rough=0.3, emit=(c, 9.0), bevel=0)
     if n == "visor": return shader(n, c, rough=0.06, coat=1.0, coat_rough=0.02, spec=0.8, bevel=0)
     if "armour_red" in n: return shader(n, c, metal=0.8, rough=0.26, coat=1.0, coat_rough=0.03)
@@ -228,7 +252,10 @@ span = max(size.x, size.y, size.z * 1.1, 0.12)
 S = span
 w = bpy.data.worlds.new("w"); sc.world = w; w.use_nodes = True
 w.node_tree.nodes["Background"].inputs[0].default_value = (*lin((0.055, 0.062, 0.07)), 1); w.node_tree.nodes["Background"].inputs[1].default_value = 1.0
-bpy.ops.mesh.primitive_plane_add(size=max(60 * S, 12)); fl = bpy.context.object
+# the floor sits under whatever is lowest: a gripper's bench case hangs below its model origin
+pose(0); ground = min([0.0] + [(o.matrix_world @ Vector(c)).z for o, *_ in items for c in o.bound_box])
+if ground > -0.005: ground = 0.0
+bpy.ops.mesh.primitive_plane_add(size=max(60 * S, 12), location=(0, 0, ground)); fl = bpy.context.object
 fl.data.materials.append(shader("floor", lin((0.11, 0.12, 0.135)), metal=0.0, rough=0.5, spec=0.4, bevel=0))
 cell = float(scene_opts.get("grid", 0.1 if S < 2 else 0.5)); n = int(min(max(12 * S / cell, 16), 160)); lw = max(cell * 0.012, S * 0.0012)
 verts, faces = [], []
@@ -240,7 +267,7 @@ for i in range(-n, n + 1):
         verts += r; faces.append((q, q + 1, q + 2, q + 3))
 gm = bpy.data.meshes.new("grid"); gm.from_pydata(verts, [], faces); go = bpy.data.objects.new("grid", gm); sc.collection.objects.link(go)
 gm.materials.append(shader("gridline", lin((0.16, 0.18, 0.19)), rough=0.5, bevel=0))
-go.location.xy = scene_opts.get("grid_offset", (0, 0))
+go.location = (*scene_opts.get("grid_offset", (0, 0)), ground)
 
 
 def softbox(rel, size_, power, col=(1, 1, 1)):

@@ -957,7 +957,7 @@ export function designRover(req: MobileRequest = {}): RobotSpecification {
       const Tp = frame([pivot[0], s * 118, pivot[2]], [0, s, 0], [1, 0, 0]);
       // the differential bar: the rockers turn opposite ways in the world (their frames are mirrored, so with equal joint
       // angles), which keeps all the wheels loaded alike in a turn and holds the body at the mean of the two sides
-      const rockerJoint = b.passiveHinge(`${side}_rocker_pivot`, "base_link", rocker, Tp, -0.35, 0.35);
+      const rockerJoint = b.passiveHinge(`${side}_rocker_pivot`, "base_link", rocker, Tp, -0.26, 0.26);   // past 0.29 rad the motors reach the body box
       if (s < 0) rockerJoint.mimic = { joint: "left_rocker_pivot", multiplier: 1, offset: 0 };
       const ry0 = s > 0 ? 110 : -124.5, ry1 = s > 0 ? 124.5 : -110;
       const front = wheelStation(b, { tag: `${side}_front`, parent: rocker, x: xF, side: s, yFace, motor, wheel });
