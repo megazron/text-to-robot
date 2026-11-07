@@ -223,6 +223,16 @@ def moving_chain():
 
 
 PTS = []
+FOLLOW = float(scene_opts.get("follow", 0) or 0)
+
+
+def shift(f):
+    """Where the camera has moved to by frame f when it follows the robot: the shot is framed in that moving frame."""
+    if not FOLLOW: return Vector((0, 0, 0))
+    r = motion["root"]; p, p0 = frames[f][r], frames[0][r]
+    return Vector((FOLLOW * (p[0] - p0[0]), FOLLOW * (p[1] - p0[1]), 0))
+
+
 
 
 def bounds(frame_ids, only=None):
@@ -233,17 +243,14 @@ def bounds(frame_ids, only=None):
         for o, link, *_ in items:
             if keep and link not in keep: continue
             for c in o.bound_box:
-                w = o.matrix_world @ Vector(c); lo = Vector(map(min, lo, w)); hi = Vector(map(max, hi, w)); PTS.append(w)
+                w = o.matrix_world @ Vector(c) - shift(f); lo = Vector(map(min, lo, w)); hi = Vector(map(max, hi, w)); PTS.append(w)
     return lo, hi
 
 
-all_f = list(range(0, len(frames), max(1, len(frames) // 12)))
+all_f = list(range(len(frames)))   # every frame, so nothing leaves the shot
 follow = scene_opts.get("follow", False)
-lo, hi = bounds([0] if follow else all_f)
-follow = float(follow)
-if follow:   # the camera tracks this share of the base's travel; the rest is seen as motion across the frame
-    track = [frames[f][motion["root"]][:2] for f in all_f]; t0 = track[0]; base_pts = list(PTS)
-    PTS[:] = [v + Vector(((1 - follow) * (p[0] - t0[0]), (1 - follow) * (p[1] - t0[1]), 0)) for p in track for v in base_pts]
+lo, hi = bounds(all_f)   # every frame, in the camera's own moving frame when it follows
+follow = FOLLOW
 print("lowest point of the robot", round(lo.z, 4), flush=True)
 centre, size = (lo + hi) / 2, hi - lo
 span = max(size.x, size.y, size.z * 1.1, 0.12)
