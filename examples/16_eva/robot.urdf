@@ -1342,7 +1342,7 @@
     <child link="left_arm_tool_link"/>
     <origin xyz="0.10064 0 -0.0381" rpy="3.141593 0 0"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-2.3" upper="2.3" effort="2.942" velocity="4.48"/>
+    <limit lower="-2.1" upper="2.3" effort="2.942" velocity="4.48"/>
     <dynamics damping="0.1249" friction="0.0588"/>
   </joint>
   <joint name="left_arm_mount" type="fixed">
@@ -1378,7 +1378,7 @@
     <child link="right_arm_tool_link"/>
     <origin xyz="0.10064 0 -0.0381" rpy="3.141593 0 0"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-2.3" upper="2.3" effort="2.942" velocity="4.48"/>
+    <limit lower="-2.1" upper="2.3" effort="2.942" velocity="4.48"/>
     <dynamics damping="0.1249" friction="0.0588"/>
   </joint>
   <joint name="right_arm_mount" type="fixed">

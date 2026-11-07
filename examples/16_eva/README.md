@@ -2,7 +2,7 @@
 
 > Build EVA, a sleek hovering egg-shaped droid with a visor and two floating arms
 
-![simulation](simulation.gif)
+![studio render](studio.gif)
 
 Interpreted as: EVA character · imu (base_link) · camera (head)
 
@@ -78,4 +78,5 @@ _PASS means the modelled actuators (datasheet peak torque as a hard limit, a lin
 | `robot.cad.zip` | build package: printable STLs, print list, bought-part models, assembly order |
 | `robot.ros2.zip` | ROS 2 description package (ros2_control, MoveIt config, Gazebo launch) |
 | `robot.training.zip` | MuJoCo / RL training scaffold |
-| `simulation_report.json` | MuJoCo task tests under the real actuator limits |
+| `simulation_report.json`, `simulation.gif` | MuJoCo task tests under the real actuator limits |
+| `studio.gif` | Cycles render of a physics motion loop: every link where MuJoCo put it, the harness on its real routes |

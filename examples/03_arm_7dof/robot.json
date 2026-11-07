@@ -2351,7 +2351,7 @@
         1
       ],
       "limit": {
-        "lower": -2.3,
+        "lower": -2.1,
         "upper": 2.3,
         "effort": 4.1,
         "velocity": 3.96
@@ -2463,7 +2463,7 @@
         1
       ],
       "limit": {
-        "lower": -2.3,
+        "lower": -1.7,
         "upper": 2.3,
         "effort": 1.4,
         "velocity": 4.65
@@ -2821,7 +2821,7 @@
   ],
   "metadata": {
     "generator": "text-to-robot design engine (real components + printed structure)",
-    "created": "2026-11-06T11:48:45.138Z",
+    "created": "2026-11-07T18:23:41.272Z",
     "inferred_fields": [
       "links.base_link.inertia",
       "links.base_yaw_actuator.inertia",
@@ -7260,7 +7260,7 @@
                 "joint": "elbow_pitch",
                 "type": "revolute",
                 "travel": [
-                  -2.3,
+                  -2.1,
                   2.3
                 ],
                 "home_mm": 42.3,
@@ -7463,7 +7463,7 @@
                 "joint": "wrist_pitch",
                 "type": "revolute",
                 "travel": [
-                  -2.3,
+                  -1.7,
                   2.3
                 ],
                 "home_mm": 41.7,

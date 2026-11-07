@@ -2,7 +2,7 @@
 
 > Create a small humanoid robot with a torso, head, two arms and two-finger grippers
 
-![simulation](simulation.gif)
+![studio render](studio.gif)
 
 Interpreted as: humanoid · parallel gripper · imu (base_link) · camera (neck_pan_link)
 
@@ -79,7 +79,9 @@ All 94 checks pass (torque, speed, power, stability, print-bed fit). Details in 
 <!-- SIM -->
 ## Simulation (MuJoCo, real actuator limits)
 
-**3/3 task tests pass.** Every motor is limited to its datasheet peak torque and its torque-speed line, with the rotor inertia reflected through its gearbox; continuous loads are compared with the rated torque. The animation above is recorded from these tests.
+**3/3 task tests pass.** Every motor is limited to its datasheet peak torque and its torque-speed line, with the rotor inertia reflected through its gearbox; continuous loads are compared with the rated torque. The animation below is recorded from these tests.
+
+![simulation](simulation.gif)
 
 | | Test | Result |
 |---|---|---|
@@ -101,4 +103,5 @@ _PASS means the modelled actuators (datasheet peak torque as a hard limit, a lin
 | `robot.cad.zip` | build package: printable STLs, print list, bought-part models, assembly order |
 | `robot.ros2.zip` | ROS 2 description package (ros2_control, MoveIt config, Gazebo launch) |
 | `robot.training.zip` | MuJoCo / RL training scaffold |
-| `simulation_report.json` | MuJoCo task tests under the real actuator limits |
+| `simulation_report.json`, `simulation.gif` | MuJoCo task tests under the real actuator limits |
+| `studio.gif` | Cycles render of a physics motion loop: every link where MuJoCo put it, the harness on its real routes |

@@ -58,7 +58,7 @@ jobs:
         with: { python-version: "3.11" }
       # the shipped simulation evidence is recorded with MuJoCo 3.13.0; contact behaviour (skid-steer turning most) differs
       # between releases, so the re-run check pins the same version
-      - run: pip install "./python[cad,geometry]" "mujoco==3.13.0"
+      - run: pip install "./python[cad,geometry]" "mujoco==3.13.0" manifold3d scipy
       - name: Physical fidelity and solid CAD regression tests
         run: python -m unittest discover -s python/tests -v
       - name: Examples match their pipeline (deliverables, report from the shipped URDF, no failing checks)
@@ -68,6 +68,9 @@ jobs:
       - name: Re-run every example's MuJoCo task tests (drive, ramp, turn, hold, squat, grip)
         env: { MUJOCO_GL: disable }
         run: python scripts/simulate_examples.py --check
+      - name: No two parts pass through each other in any film (every frame, exact meshes)
+        env: { MUJOCO_GL: disable }
+        run: python scripts/check_motion.py --record
       - name: Independent STL topology and mass-integral audit
         run: python scripts/check_mesh_assets.py
       # These concepts are not engineered hardware. Keep physical failures visible

@@ -7174,7 +7174,7 @@
         1
       ],
       "limit": {
-        "lower": -2.3,
+        "lower": -2.1,
         "upper": 2.3,
         "effort": 2.942,
         "velocity": 4.48
@@ -7332,7 +7332,7 @@
         1
       ],
       "limit": {
-        "lower": -2.3,
+        "lower": -2.1,
         "upper": 2.3,
         "effort": 2.942,
         "velocity": 4.48
@@ -7591,7 +7591,7 @@
   "end_effectors": [],
   "metadata": {
     "generator": "text-to-robot design engine (real components + printed structure)",
-    "created": "2026-11-06T11:50:47.989Z",
+    "created": "2026-11-07T18:24:50.890Z",
     "inferred_fields": [
       "links.base_link.inertia",
       "links.battery.inertia",

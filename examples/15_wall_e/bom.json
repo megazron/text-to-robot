@@ -23,18 +23,18 @@
     {
       "category": "Power",
       "name": "LM2596S adjustable buck module (3 A, 43 x 21 mm)",
-      "qty": 1,
+      "qty": 2,
       "unit_cost": 3,
-      "subtotal": 3,
+      "subtotal": 6,
       "spec": "5 V",
-      "note": "LM2596 set to 5.0 V for the servos · https://www.amazon.com/s?k=LM2596S+buck+module"
+      "note": "LM2596 set to 5.0 V for the neck and hand servos; LM2596 set to 5.0 V for the shoulder and elbow servos · https://www.amazon.com/s?k=LM2596S+buck+module"
     },
     {
       "category": "Power",
       "name": "Inline ATM mini blade fuse holder, 30 A class (Littelfuse FHM)",
-      "qty": 3,
+      "qty": 4,
       "unit_cost": 2.5,
-      "subtotal": 7.5,
+      "subtotal": 10,
       "spec": "32 V",
       "note": "fuse holders · https://www.digikey.com/en/product-highlight/l/littelfuse-commercial-vehicle-products/fhac-fhm-series-in-line-fuse-holders"
     },
@@ -49,12 +49,21 @@
     },
     {
       "category": "Actuator",
+      "name": "TowerPro MG90S micro servo (metal gears) + cross horn",
+      "qty": 2,
+      "unit_cost": 4,
+      "subtotal": 8,
+      "spec": "0.0647 N·m rated / 0.2157 N·m peak, 6 V",
+      "note": "shoulder servo · https://www.adafruit.com/product/1143"
+    },
+    {
+      "category": "Actuator",
       "name": "TowerPro SG90 micro servo (nylon gears) + cross horn",
-      "qty": 4,
+      "qty": 6,
       "unit_cost": 2.5,
-      "subtotal": 10,
+      "subtotal": 15,
       "spec": "0.0529 N·m rated / 0.1765 N·m peak, 4.8 V",
-      "note": "neck pan servo; neck tilt servo; arm servo · https://www.adafruit.com/product/169"
+      "note": "neck pan servo; neck tilt servo; elbow servo; hand servo · https://www.adafruit.com/product/169"
     },
     {
       "category": "Power",
@@ -104,9 +113,9 @@
     {
       "category": "Power",
       "name": "WAGO 221-415 five-way lever splice",
-      "qty": 5,
+      "qty": 8,
       "unit_cost": 0.8,
-      "subtotal": 4,
+      "subtotal": 6.4,
       "spec": "450 V",
       "note": "rail splices, the star ground and bus hubs · https://www.wago.com/global/electrical-interconnections/compact-splicing-connector/p/221-415"
     },
@@ -121,20 +130,20 @@
     },
     {
       "category": "Printed structure",
-      "name": "PETG filament for 11 printed parts",
+      "name": "PETG filament for 21 printed parts",
       "qty": 1,
-      "unit_cost": 12.39,
-      "subtotal": 12.39,
-      "spec": "490 g of parts (+15 % supports/waste), about 44.6 h of printing",
-      "note": "body, charge_gauge, track_left, track_right, lid, neck, head, left_lens, right_lens, left_arm, right_arm"
+      "unit_cost": 14.65,
+      "subtotal": 14.65,
+      "spec": "579 g of parts (+15 % supports/waste), about 52.8 h of printing",
+      "note": "body, front_band, charge_gauge, name_plate, track_left, left_idler, track_right, right_idler, lid, neck, head, left_lens, right_lens, left_arm, left_forearm, left_arm_stripes, left_thumb, right_arm, right_forearm, right_arm_stripes, right_thumb"
     },
     {
       "category": "Fasteners",
       "name": "Screws, nuts and inserts",
-      "qty": 32,
+      "qty": 42,
       "unit_cost": 0.12,
-      "subtotal": 3.84,
-      "spec": "8x M3x25 socket head + nut (motor through-bolt); 4x M2x6 self-tapping (sensor); 2x M3x8 countersunk + nut (pack); 6x M2.5x6 + nut (PCA9685) / M3x6 (LM2596); 4x M3x10 self-tapping (lid); 8x M2 self-tapping (servo tabs, from the servo kits)"
+      "subtotal": 5.04,
+      "spec": "8x M3x25 socket head + nut (motor through-bolt); 2x M4 x 45 shoulder bolt (idler pin); 4x M2x6 self-tapping (sensor); 2x M3x8 countersunk + nut (pack); 6x M2.5x6 + nut (PCA9685) / M3x6 (LM2596); 4x M3x10 self-tapping (lid); 16x M2 self-tapping (servo tabs, from the servo kits)"
     },
     {
       "category": "Wiring",
@@ -148,46 +157,46 @@
     {
       "category": "Wiring",
       "name": "22 AWG silicone wire",
-      "qty": 1.3,
+      "qty": 1.6,
       "unit_cost": 0.4,
-      "subtotal": 0.52,
-      "spec": "1.3 m: 0.327 mm2, rated 3.5 A in a bundle; 1.11 m cut + 10 % waste",
+      "subtotal": 0.64,
+      "spec": "1.6 m: 0.327 mm2, rated 3.5 A in a bundle; 1.38 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "24 AWG silicone wire",
-      "qty": 5.6,
+      "qty": 10.5,
       "unit_cost": 0.35,
-      "subtotal": 1.96,
-      "spec": "5.6 m: 0.205 mm2, rated 1.75 A in a bundle; 5.01 m cut + 10 % waste",
+      "subtotal": 3.67,
+      "spec": "10.5 m: 0.205 mm2, rated 1.75 A in a bundle; 9.47 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "26 AWG silicone wire",
-      "qty": 6.7,
+      "qty": 9,
       "unit_cost": 0.3,
-      "subtotal": 2.01,
-      "spec": "6.7 m: 0.128 mm2, rated 1.1 A in a bundle; 6.02 m cut + 10 % waste",
+      "subtotal": 2.7,
+      "spec": "9 m: 0.128 mm2, rated 1.1 A in a bundle; 8.13 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "Dupont 2.54 mm contacts",
-      "qty": 70,
+      "qty": 74,
       "unit_cost": 0.02,
-      "subtotal": 1.4,
-      "spec": "70 pc: rated 3 A per contact",
+      "subtotal": 1.48,
+      "spec": "74 pc: rated 3 A per contact",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "Dupont 2.54 mm housings",
-      "qty": 24,
+      "qty": 28,
       "unit_cost": 0.02,
-      "subtotal": 0.48,
-      "spec": "24 pc: one per cable end",
+      "subtotal": 0.56,
+      "spec": "28 pc: one per cable end",
       "note": "price estimated"
     },
     {
@@ -211,19 +220,19 @@
     {
       "category": "Wiring",
       "name": "Heat shrink 3 mm, 2:1",
-      "qty": 2.5,
+      "qty": 3.6,
       "unit_cost": 0.2,
-      "subtotal": 0.5,
-      "spec": "2.5 m: 29 solder joints + a boot on each cable end",
+      "subtotal": 0.72,
+      "spec": "3.6 m: 45 solder joints + a boot on each cable end",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "Cable tie 100 x 2.5 mm",
-      "qty": 31,
+      "qty": 47,
       "unit_cost": 0.02,
-      "subtotal": 0.62,
-      "spec": "31 pc: at every clip, cable end and strain-relief anchor",
+      "subtotal": 0.94,
+      "spec": "47 pc: at every clip, cable end and strain-relief anchor",
       "note": "price estimated"
     },
     {
@@ -238,10 +247,10 @@
     {
       "category": "Wiring",
       "name": "Nylon braided sleeving 6 mm",
-      "qty": 0.2,
+      "qty": 1.3,
       "unit_cost": 0.4,
-      "subtotal": 0.08,
-      "spec": "0.2 m: over every cable where it crosses a joint",
+      "subtotal": 0.52,
+      "spec": "1.3 m: over every cable where it crosses a joint",
       "note": "price estimated"
     },
     {
@@ -256,14 +265,14 @@
     {
       "category": "Wiring",
       "name": "2 A ATM blade fuse",
-      "qty": 2,
+      "qty": 3,
       "unit_cost": 0.25,
-      "subtotal": 0.5,
-      "spec": "2 pc: plus spares",
+      "subtotal": 0.75,
+      "spec": "3 pc: plus spares",
       "note": "price estimated"
     }
   ],
-  "total": 88.95,
+  "total": 117.22,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
@@ -278,33 +287,65 @@
     },
     {
       "joint": "neck_tilt",
-      "required_effort": 0.0461,
+      "required_effort": 0.0537,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.0461,
+      "required_torque_nm": 0.0537,
       "chosen": "TowerPro SG90 micro servo (nylon gears) + cross horn",
-      "margin": "3.83x"
+      "margin": "3.28x"
     },
     {
       "joint": "left_arm_lift",
-      "required_effort": 0.0078,
+      "required_effort": 0.0689,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.0078,
-      "chosen": "TowerPro SG90 micro servo (nylon gears) + cross horn",
-      "margin": "22.73x"
+      "required_torque_nm": 0.0689,
+      "chosen": "TowerPro MG90S micro servo (metal gears) + cross horn",
+      "margin": "3.13x"
     },
     {
       "joint": "right_arm_lift",
-      "required_effort": 0.0078,
+      "required_effort": 0.0689,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.0078,
+      "required_torque_nm": 0.0689,
+      "chosen": "TowerPro MG90S micro servo (metal gears) + cross horn",
+      "margin": "3.13x"
+    },
+    {
+      "joint": "left_elbow",
+      "required_effort": 0.0308,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.0308,
       "chosen": "TowerPro SG90 micro servo (nylon gears) + cross horn",
-      "margin": "22.73x"
+      "margin": "5.73x"
+    },
+    {
+      "joint": "right_elbow",
+      "required_effort": 0.0308,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0.0308,
+      "chosen": "TowerPro SG90 micro servo (nylon gears) + cross horn",
+      "margin": "5.73x"
+    },
+    {
+      "joint": "left_hand",
+      "required_effort": 0,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0,
+      "chosen": "TowerPro SG90 micro servo (nylon gears) + cross horn",
+      "margin": "176500x"
+    },
+    {
+      "joint": "right_hand",
+      "required_effort": 0,
+      "effort_unit": "N·m",
+      "required_torque_nm": 0,
+      "chosen": "TowerPro SG90 micro servo (nylon gears) + cross horn",
+      "margin": "176500x"
     }
   ],
   "warnings": [],
   "notes": [
-    "Arduino WALL-E: TPU tracks on 4 TT motors, pan/tilt binocular head, 2 servo arms, 0.99 kg, $73 of parts",
-    "Joint limits trimmed to the collision-free range found by exact solid sweeps: left_arm_lift [-1.00, 1.00] -> [-1.00, 0.33]; right_arm_lift [-1.00, 1.00] -> [-0.33, 1.00].",
+    "Arduino WALL-E: TPU tracks on 4 TT motors, pan/tilt binocular head, two-joint arms with gripping hands, 1.14 kg, $98 of parts",
+    "Joint limits trimmed to the collision-free range found by exact solid sweeps: left_arm_lift [-1.00, 1.00] -> [-1.00, 0.48]; right_arm_lift [-1.00, 1.00] -> [-0.48, 1.00]; left_elbow [-1.50, 1.50] -> [-1.50, 1.27]; right_elbow [-1.50, 1.50] -> [-1.27, 1.50]; left_hand [-0.60, 0.60] -> [-0.01, 0.60]; right_hand [-0.60, 0.60] -> [-0.60, 0.01].",
     "tracks print in TPU 95A (flexible), everything else in PETG/PLA+; the body prints open side up without supports",
     "TT motor continuous torque taken as 30 % of the 0.8 kg.cm stall; a turn on the spot is a short transient above that (the tracks slide sideways), so spin in bursts on carpet or rubber floors",
     "prices are typical single-unit marketplace prices and vary by seller",

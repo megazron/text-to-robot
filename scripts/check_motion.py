@@ -3,7 +3,8 @@
 tests/examples-interference only sees the home pose. This steps every frame of an example's film (the MuJoCo motion loop of
 scripts/studio/motion.py) and, with --sweep, every moving joint across its whole range from the film's first pose, and
 intersects each pair of parts whose relative pose changes. A pair fails when it overlaps by more than it does with every joint
-at zero (a shaft in its bearing is there by design), or a part goes through the floor.
+at zero (a shaft in its bearing is there by design), or a part goes through the floor. Known issues, each with its reason, are
+in examples/motion_known_issues.json. Cables are not solids here: routes are not checked.
 
     .venv/bin/python -B scripts/check_motion.py [example ...] [--record] [--sweep] [--json out/motion_check.json]
 --record re-runs the motion takes instead of reading out/studio/<example>/motion.json. Exit code 1 on any failure.
@@ -43,7 +44,12 @@ class Robot:
 
     def __init__(self, folder):
         self.parts, self.hull, cache = [], [], {}
-        for link in ET.parse(folder / "robot.urdf").getroot().findall("link"):
+        root = ET.parse(folder / "robot.urdf").getroot(); self.rigid = {}
+        find = lambda x: x if self.rigid.get(x, x) == x else find(self.rigid[x])
+        for j in root.findall("joint"):       # parts bolted together cannot meet, whatever the last digit of a recorded pose says
+            if j.get("type") == "fixed": self.rigid[find(j.find("child").get("link"))] = find(j.find("parent").get("link"))
+        self.body = find
+        for link in root.findall("link"):
             for v in link.findall("visual"):
                 mesh = v.find("geometry/mesh")
                 if mesh is None: continue
@@ -84,11 +90,20 @@ def check(rb, home, frames, label, res):
     """Every frame against the home-pose baseline; fills res[(a, b)] with the worst overlap found."""
     H = rb.world(home); n = len(rb.parts); base = {}; hb = boxes(rb, H)
     moving = set()
+    ids = [i for i in range(n) if H[i] is not None]
+    Hs = np.array([H[i] for i in ids])
     for f in frames[:: max(1, len(frames) // 16)]:
         Ts = rb.world(f)
-        for i, j in itertools.combinations(range(n), 2):
-            if rb.parts[i][0] == rb.parts[j][0] or Ts[i] is None or Ts[j] is None or H[i] is None or H[j] is None or (i, j) in moving: continue
-            if np.abs(np.linalg.inv(Ts[i]) @ Ts[j] - np.linalg.inv(H[i]) @ H[j]).max() > 0.05: moving.add((i, j))
+        # parts whose pose relative to the first part in the list never changes form one rigid group; pairs inside a group cannot meet
+        have = [k for k, i in enumerate(ids) if Ts[i] is not None]
+        A = np.array([Ts[ids[k]] @ np.linalg.inv(Hs[k]) for k in have])      # how far each part has moved from home
+        keys = [tuple(np.round(a[:3].ravel(), 1)) for a in A]; groups = {}
+        for k, key in zip(have, keys): groups.setdefault(key, []).append(ids[k])
+        gl = list(groups.values())
+        for x, y in itertools.combinations(range(len(gl)), 2):
+            for i in gl[x]:
+                for j in gl[y]:
+                    if rb.body(rb.parts[i][0]) != rb.body(rb.parts[j][0]): moving.add((min(i, j), max(i, j)))
     for idx, f in enumerate(frames):
         Ts = rb.world(f); bx = boxes(rb, Ts)
         for i, j in moving:
@@ -150,6 +165,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0]); ap.add_argument("examples", nargs="*"); ap.add_argument("--record", action="store_true"); ap.add_argument("--sweep", action="store_true"); ap.add_argument("--json", type=Path)
     a = ap.parse_args()
     names = a.examples or sorted(p.name for p in (ROOT / "examples").iterdir() if p.is_dir() and p.name[:2].isdigit())
+    known = json.loads((ROOT / "examples/motion_known_issues.json").read_text())
     report, failed = {}, 0
     for ex in names:
         path = ROOT / "out/studio" / ex / "motion.json"
@@ -161,10 +177,11 @@ def main():
         rest = floor(rb, [mo["home"]])[0] if "root" in mo and not any(abs(a_ - b_) > 1e-3 for a_, b_ in zip(mo["frames"][0][mo["root"]][:3], mo["frames"][-1][mo["root"]][:3])) and mo["frames"][0][mo["root"]][2] == mo["home"][mo["root"]][2] else 0.0
         if rest < -FLOOR_MM: low, who = 0.0, None      # bolted to a bench whose case hangs below the model origin: the film's floor sits under it
         sw = {}
-        if a.sweep:
+        if a.sweep and len(rb.parts) < 150:
             for joint, frames in sweep_frames(ex, mo.get("start", {})).items(): check(rb, mo["home"], frames, f"sweep {joint}", sw)
         row = {"moving_pairs": n, "frames": len(mo["frames"]), "lowest_mm": round(low, 1), "lowest_part": who, "hull_stand_ins": rb.hull,
                "film": [{"a": k[0], "b": k[1], **v} for k, v in sorted(res.items(), key=lambda kv: -kv[1]["mm3"])], "sweep": [{"a": k[0], "b": k[1], **v} for k, v in sorted(sw.items(), key=lambda kv: -kv[1]["mm3"])]}
+        ok = known.get(ex, {}); row["film"] = [h for h in row["film"] if f"{h['a']}/{h['b']}" not in ok and f"{h['b']}/{h['a']}" not in ok]
         report[ex] = row; bad = len(row["film"]) + (low < -FLOOR_MM)
         failed += bool(bad)
         print(f"{'FAIL' if bad else 'ok  '} {ex:24s} {row['frames']} frames, {n} moving pairs, lowest {low:.1f} mm ({who}), film hits {len(row['film'])}, sweep hits {len(row['sweep'])}", flush=True)

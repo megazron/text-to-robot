@@ -2,13 +2,13 @@
 
 > Design a Mars rover with four wheels and a 6 DOF sampling arm, RGB-D camera, budget $4000
 
-![simulation](simulation.gif)
+![studio render](studio.gif)
 
 Interpreted as: mobile manipulator (wheeled rover + arm) · parallel gripper · depth (deck_lid) · camera (deck_lid) · budget $4000
 
 **4-wheel rocker-bogie rover with a 6-DOF arm: 4.648 kg, 1.24 m/s, 1.53 h, jetson_orin_nano_super**
 
-Parts cost **$3859.84** (budget $4000: within) · printed structure 21 parts, 832 g · checks passed 74/74
+Parts cost **$3859.75** (budget $4000: within) · printed structure 21 parts, 832 g · checks passed 74/74
 
 ## What it can do
 
@@ -85,4 +85,5 @@ _PASS means the modelled actuators (datasheet peak torque as a hard limit, a lin
 | `robot.cad.zip` | build package: printable STLs, print list, bought-part models, assembly order |
 | `robot.ros2.zip` | ROS 2 description package (ros2_control, MoveIt config, Gazebo launch) |
 | `robot.training.zip` | MuJoCo / RL training scaffold |
-| `simulation_report.json` | MuJoCo task tests under the real actuator limits |
+| `simulation_report.json`, `simulation.gif` | MuJoCo task tests under the real actuator limits |
+| `studio.gif` | Cycles render of a physics motion loop: every link where MuJoCo put it, the harness on its real routes |

@@ -80,9 +80,9 @@ Each loop is at least the extra length the joint needs at the far end of its tra
 | C3 | base_yaw | -2.97 to 2.97 | 23.1 | 63.5 | 80 |
 | C4 | shoulder_pitch | -1.75 to 1.75 | 46.5 | 73.3 | 65 |
 | C5 | upper_arm_roll | -2.97 to 2.97 | 23.1 | 63.5 | 80 |
-| C6 | elbow_pitch | -2.3 to 2.3 | 42.3 | 73.9 | 70 |
+| C6 | elbow_pitch | -2.1 to 2.3 | 42.3 | 73.9 | 70 |
 | C7 | forearm_roll | -2.97 to 2.97 | 23.1 | 63.5 | 80 |
-| C8 | wrist_pitch | -2.3 to 2.3 | 41.7 | 73.3 | 70 |
+| C8 | wrist_pitch | -1.7 to 2.3 | 41.7 | 73.3 | 70 |
 | C9 | wrist_roll | -2.97 to 2.97 | 23.1 | 63.5 | 80 |
 
 ## Wiring parts to buy

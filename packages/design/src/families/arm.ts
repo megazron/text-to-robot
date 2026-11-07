@@ -69,7 +69,9 @@ function plan(kinds: Kind[], keys: string[], lengths: number[], gripKey: string 
     }
     if (kind === "P") { side = prev?.kind === "P" ? -prev.side : 1; }
     const W = kind === "P" ? frame([0, side * d / 2, z], [0, side, 0], [0, 0, 1]) : frame([0, 0, z], [0, 0, 1], [1, 0, 0]);
-    const lim: [number, number] = kind !== "P" ? [-2.97, 2.97] : i === kinds.indexOf("P") ? [-1.75, 1.75] : [-2.3, 2.3];
+    // the links meet past these angles (swept on the exact meshes by scripts/check_motion.py): an elbow bent right back, a wrist folded into the forearm
+    const pitchIndex = kinds.slice(0, i).filter((k) => k === "P").length;
+    const lim: [number, number] = kind !== "P" ? [-2.97, 2.97] : pitchIndex === 0 ? [-1.75, 1.75] : pitchIndex === 1 ? [-2.1, 2.3] : [-1.7, 2.3];
     joints.push({ kind, key, W, side, limit: lim, name: names[i] });
     prev = joints[joints.length - 1];
   });

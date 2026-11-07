@@ -256,7 +256,7 @@ PLANS = {
     "11_spider_scout": lambda ex: walk_take(ex, 0.0, 0.05, 0.025, 1.0, [["lf", "lr", "rm"], ["rf", "rr", "lm"]], duty=0.6, cycles=3),
     "12_mars_rover": lambda ex: wheel_take(ex, DRIVE(0.45), 4.0, [(1.0, {"arm_base_yaw": 0.5}), (2.2, {"arm_base_yaw": -0.5, "arm_wrist_pitch": -1.3}), (3.2, {"arm_base_yaw": 0.0, "arm_wrist_pitch": -0.9})],
                                            pose={"arm_shoulder_pitch": 0.25, "arm_elbow_pitch": -1.5, "arm_wrist_pitch": -0.9}),
-    "13_battle_mech": lambda ex: legged_pose_take(ex, 0.5, 4.0, [(1.2, {"l_shoulder_pitch": -0.7, "r_shoulder_pitch": -0.7, "neck_pan": 0.4}), (2.2, {"l_elbow": -1.0, "r_elbow": 1.0, "neck_pan": -0.4}), (3.2, {"neck_pan": 0.0})]),
+    "13_battle_mech": lambda ex: legged_pose_take(ex, 0.38, 4.0, [(1.2, {"l_shoulder_pitch": -0.7, "r_shoulder_pitch": -0.7, "neck_pan": 0.4}), (2.2, {"l_elbow": -1.0, "r_elbow": 1.0, "neck_pan": -0.4}), (3.2, {"neck_pan": 0.0})]),
     "14_iron_man_mark_43": lambda ex: arm_take(ex, [(0.9, {"faceplate": -0.95}), (2.3, {}), (3.2, {"faceplate": 0.0})], 3.8, pin=True),
     "15_wall_e": lambda ex: wheel_take(ex, DRIVE(0.22), 4.0, [(1.0, {"neck_pan": 0.5, "left_arm_lift": -0.5, "right_arm_lift": 0.5, "left_elbow": -0.7, "right_elbow": 0.7, "left_hand": 0.5, "right_hand": -0.5}), (2.2, {"neck_pan": -0.5, "neck_tilt": -0.25, "left_hand": 0.0, "right_hand": 0.0}), (3.2, {"neck_pan": 0.2, "left_arm_lift": 0.1, "right_arm_lift": -0.1, "left_elbow": -0.2, "right_elbow": 0.2})]),
     "16_eva": lambda ex: wheel_take(ex, DRIVE(0.3), 4.0, [(1.0, {"head_pan": 0.5, "left_arm_shoulder_pitch": 0.5, "right_arm_shoulder_pitch": 0.5}), (2.2, {"head_pan": -0.5}), (3.2, {"head_pan": 0.0, "left_arm_shoulder_pitch": 0.0, "right_arm_shoulder_pitch": 0.0})]),

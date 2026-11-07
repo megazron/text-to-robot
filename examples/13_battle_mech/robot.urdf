@@ -1325,9 +1325,9 @@
       <geometry><mesh filename="package://battle_mech/meshes/torso_armour_front.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.09725 -3.15233e-18 0.159385" rpy="0 0 0"/>
-      <mass value="0.103871"/>
-      <inertia ixx="0.000793247" ixy="-6.64060e-22" ixz="1.89596e-22" iyy="0.000345493" iyz="1.33769e-21" izz="0.000447862"/>
+      <origin xyz="0.097963 4.46180e-18 0.159385" rpy="0 0 0"/>
+      <mass value="0.159226"/>
+      <inertia ixx="0.00115" ixy="-1.16790e-22" ixz="-5.64782e-13" iyy="0.000499423" iyz="5.29499e-21" izz="0.000651455"/>
     </inertial>
   </link>
   <link name="l_hip_pitch_armour_front">
@@ -1341,9 +1341,9 @@
       <geometry><mesh filename="package://battle_mech/meshes/l_hip_pitch_armour_front.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.11686 -0.070718 -0.02695" rpy="0 0 0"/>
-      <mass value="0.032396"/>
-      <inertia ixx="0.0000112608" ixy="-0.00001959" ixz="5.49918e-14" iyy="0.000171365" iyz="7.79981e-15" izz="0.000164862"/>
+      <origin xyz="0.116932 -0.07131 -0.02695" rpy="0 0 0"/>
+      <mass value="0.045677"/>
+      <inertia ixx="0.0000139029" ixy="-0.0000265378" ixz="-6.30073e-14" iyy="0.000230788" iyz="-3.26777e-14" izz="0.000223404"/>
     </inertial>
   </link>
   <link name="l_knee_armour_front">
@@ -1357,9 +1357,9 @@
       <geometry><mesh filename="package://battle_mech/meshes/l_knee_armour_front.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.14136 0.052649 -0.02695" rpy="0 0 0"/>
-      <mass value="0.020637"/>
-      <inertia ixx="0.00000627853" ixy="-0.00000506105" ixz="3.00987e-15" iyy="0.0000476596" iyz="-5.81200e-16" izz="0.0000426224"/>
+      <origin xyz="0.139964 0.053089 -0.02695" rpy="0 0 0"/>
+      <mass value="0.029256"/>
+      <inertia ixx="0.00000766731" ixy="-0.00000692459" ixz="2.59216e-14" iyy="0.000064756" iyz="9.75097e-15" izz="0.0000588205"/>
     </inertial>
   </link>
   <link name="l_shoulder_roll_armour_out">
@@ -1373,9 +1373,9 @@
       <geometry><mesh filename="package://battle_mech/meshes/l_shoulder_roll_armour_out.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.08422 0.024756 -0.028188" rpy="0 0 0"/>
-      <mass value="0.005136"/>
-      <inertia ixx="0.000001535" ixy="5.49409e-10" ixz="1.27792e-15" iyy="0.00000213633" iyz="1.12713e-16" izz="6.06640e-7"/>
+      <origin xyz="0.08293 0.025292 -0.028188" rpy="0 0 0"/>
+      <mass value="0.006959"/>
+      <inertia ixx="0.00000181383" ixy="1.41941e-8" ixz="1.27419e-15" iyy="0.00000257317" iyz="-1.79881e-16" izz="7.76701e-7"/>
     </inertial>
   </link>
   <link name="r_hip_pitch_armour_front">
@@ -1389,9 +1389,9 @@
       <geometry><mesh filename="package://battle_mech/meshes/r_hip_pitch_armour_front.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.11686 0.070718 -0.02695" rpy="0 0 0"/>
-      <mass value="0.032396"/>
-      <inertia ixx="0.0000112608" ixy="0.00001959" ixz="-5.48385e-14" iyy="0.000171365" iyz="7.77948e-15" izz="0.000164862"/>
+      <origin xyz="0.116932 0.07131 -0.02695" rpy="0 0 0"/>
+      <mass value="0.045677"/>
+      <inertia ixx="0.0000139029" ixy="0.0000265378" ixz="6.59767e-14" iyy="0.000230788" iyz="-9.34008e-15" izz="0.000223404"/>
     </inertial>
   </link>
   <link name="r_knee_armour_front">
@@ -1405,9 +1405,9 @@
       <geometry><mesh filename="package://battle_mech/meshes/r_knee_armour_front.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.14136 -0.052649 -0.02695" rpy="0 0 0"/>
-      <mass value="0.020637"/>
-      <inertia ixx="0.00000627853" ixy="0.00000506105" ixz="-1.16736e-14" iyy="0.0000476596" iyz="1.36314e-15" izz="0.0000426224"/>
+      <origin xyz="0.139964 -0.053089 -0.02695" rpy="0 0 0"/>
+      <mass value="0.029256"/>
+      <inertia ixx="0.00000766731" ixy="0.00000692459" ixz="-6.06995e-14" iyy="0.000064756" iyz="-1.04079e-15" izz="0.0000588205"/>
     </inertial>
   </link>
   <link name="r_shoulder_roll_armour_out">
@@ -1421,9 +1421,9 @@
       <geometry><mesh filename="package://battle_mech/meshes/r_shoulder_roll_armour_out.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.08422 -0.024756 -0.028188" rpy="0 0 0"/>
-      <mass value="0.005136"/>
-      <inertia ixx="0.000001535" ixy="-5.49409e-10" ixz="-1.05970e-16" iyy="0.00000213633" iyz="-1.47361e-17" izz="6.06640e-7"/>
+      <origin xyz="0.08293 -0.025292 -0.028188" rpy="0 0 0"/>
+      <mass value="0.006959"/>
+      <inertia ixx="0.00000181383" ixy="-1.41941e-8" ixz="9.73691e-16" iyy="0.00000257317" iyz="3.19790e-16" izz="7.76701e-7"/>
     </inertial>
   </link>
   <link name="side_panel_left">
@@ -1657,7 +1657,7 @@
     <child link="l_knee_link"/>
     <origin xyz="0.18 0 -0.0619" rpy="3.141593 0 0.24"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-2.042" upper="0.333" effort="120" velocity="5.027"/>
+    <limit lower="-2.042" upper="0.313" effort="120" velocity="5.027"/>
     <dynamics damping="4.7742" friction="2.4"/>
   </joint>
   <joint name="l_knee_link_b_mount" type="fixed">
@@ -1750,7 +1750,7 @@
     <child link="r_knee_link"/>
     <origin xyz="0.18 0 -0.0619" rpy="3.141593 0 -0.24"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-0.333" upper="2.042" effort="120" velocity="5.027"/>
+    <limit lower="-0.313" upper="2.042" effort="120" velocity="5.027"/>
     <dynamics damping="4.7742" friction="2.4"/>
   </joint>
   <joint name="r_knee_link_b_mount" type="fixed">

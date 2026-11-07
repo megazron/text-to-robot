@@ -2,22 +2,22 @@
 
 > Create a humanoid battle mech with two 7 DOF arms, a head camera and an IMU
 
-![simulation](simulation.gif)
+![studio render](studio.gif)
 
 Interpreted as: humanoid battle mech · imu (base_link) · camera (neck_pan_link)
 
-**Battle mech, 1.182 m, 22.97 kg, 30 DOF (7-DOF arms + grippers), 170 min, $16183 of parts**
+**Battle mech, 1.182 m, 23.07 kg, 30 DOF (7-DOF arms + grippers), 170 min, $16183 of parts**
 
-Parts cost **$16644.04** · printed structure 51 parts, 6429 g · checks passed 132/132
+Parts cost **$16646.65** · printed structure 51 parts, 6532 g · checks passed 132/132
 
 ## What it can do
 
 | | |
 |---|--:|
-| average power w | 125.1 |
+| average power w | 125.6 |
 | com height m | 0.647 |
-| com x over sole mm | -27.7 |
-| mass kg | 22.968 |
+| com x over sole mm | -27.3 |
+| mass kg | 23.07 |
 | height m | 1.182 |
 | hip height m | 0.74 |
 | dof | 30 |
@@ -33,28 +33,28 @@ Parts cost **$16644.04** · printed structure 51 parts, 6429 g · checks passed 
 
 | Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
 |---|---|--:|--:|--:|--:|
-| l_hip_yaw | cubemars_ak60_6 | 4.726 | 3 / 9 | 1.9x | 51.313 |
-| l_hip_roll | cubemars_ak80_64 | 50.272 | 48 / 120 | 2.39x | 5.027 |
-| l_hip_pitch | cubemars_ak80_64 | 64.075 | 48 / 120 | 1.87x | 5.027 |
-| l_knee | cubemars_ak80_64 | 61.32 | 48 / 120 | 1.96x | 5.027 |
-| l_ankle_pitch | cubemars_ak80_64 | 31.664 | 48 / 120 | 3.79x | 5.027 |
-| l_ankle_roll | cubemars_ak70_10 | 13.386 | 8.3 / 24.8 | 1.85x | 32.463 |
-| r_hip_yaw | cubemars_ak60_6 | 4.726 | 3 / 9 | 1.9x | 51.313 |
-| r_hip_roll | cubemars_ak80_64 | 50.272 | 48 / 120 | 2.39x | 5.027 |
-| r_hip_pitch | cubemars_ak80_64 | 64.075 | 48 / 120 | 1.87x | 5.027 |
-| r_knee | cubemars_ak80_64 | 61.32 | 48 / 120 | 1.96x | 5.027 |
-| r_ankle_pitch | cubemars_ak80_64 | 31.664 | 48 / 120 | 3.79x | 5.027 |
-| r_ankle_roll | cubemars_ak70_10 | 13.386 | 8.3 / 24.8 | 1.85x | 32.463 |
-| l_shoulder_pitch | cubemars_ak70_10 | 7.574 | 8.3 / 24.8 | 3.27x | 32.463 |
-| l_shoulder_roll | cubemars_ak70_10 | 7.574 | 8.3 / 24.8 | 3.27x | 32.463 |
+| l_hip_yaw | cubemars_ak60_6 | 4.746 | 3 / 9 | 1.9x | 51.313 |
+| l_hip_roll | cubemars_ak80_64 | 50.488 | 48 / 120 | 2.38x | 5.027 |
+| l_hip_pitch | cubemars_ak80_64 | 64.349 | 48 / 120 | 1.86x | 5.027 |
+| l_knee | cubemars_ak80_64 | 61.583 | 48 / 120 | 1.95x | 5.027 |
+| l_ankle_pitch | cubemars_ak80_64 | 31.8 | 48 / 120 | 3.77x | 5.027 |
+| l_ankle_roll | cubemars_ak70_10 | 13.443 | 8.3 / 24.8 | 1.84x | 32.463 |
+| r_hip_yaw | cubemars_ak60_6 | 4.746 | 3 / 9 | 1.9x | 51.313 |
+| r_hip_roll | cubemars_ak80_64 | 50.488 | 48 / 120 | 2.38x | 5.027 |
+| r_hip_pitch | cubemars_ak80_64 | 64.349 | 48 / 120 | 1.86x | 5.027 |
+| r_knee | cubemars_ak80_64 | 61.583 | 48 / 120 | 1.95x | 5.027 |
+| r_ankle_pitch | cubemars_ak80_64 | 31.8 | 48 / 120 | 3.77x | 5.027 |
+| r_ankle_roll | cubemars_ak70_10 | 13.443 | 8.3 / 24.8 | 1.84x | 32.463 |
+| l_shoulder_pitch | cubemars_ak70_10 | 7.576 | 8.3 / 24.8 | 3.27x | 32.463 |
+| l_shoulder_roll | cubemars_ak70_10 | 7.576 | 8.3 / 24.8 | 3.27x | 32.463 |
 | l_upper_arm_yaw | dxl_xm430_w350 | 0.103 | 1.23 / 4.1 | 39.75x | 4.817 |
 | l_elbow | dxl_xh540_w270 | 3.487 | 2.97 / 9.9 | 2.84x | 4.084 |
 | l_wrist_yaw | dxl_xm430_w350 | 0.124 | 1.23 / 4.1 | 32.97x | 4.817 |
 | l_wrist_pitch | dxl_xh540_w270 | 1.879 | 2.97 / 9.9 | 5.27x | 4.084 |
 | l_wrist_roll | dxl_xm430_w350 | 0.146 | 1.23 / 4.1 | 28.16x | 4.817 |
 | l_gripper | dxl_xm430_w350 | 0.006 | 1.23 / 4.1 | 99x | 4.817 |
-| r_shoulder_pitch | cubemars_ak70_10 | 7.564 | 8.3 / 24.8 | 3.28x | 32.463 |
-| r_shoulder_roll | cubemars_ak70_10 | 7.564 | 8.3 / 24.8 | 3.28x | 32.463 |
+| r_shoulder_pitch | cubemars_ak70_10 | 7.566 | 8.3 / 24.8 | 3.28x | 32.463 |
+| r_shoulder_roll | cubemars_ak70_10 | 7.566 | 8.3 / 24.8 | 3.28x | 32.463 |
 | r_upper_arm_yaw | dxl_xm430_w350 | 0.104 | 1.23 / 4.1 | 39.37x | 4.817 |
 | r_elbow | dxl_xh540_w270 | 3.484 | 2.97 / 9.9 | 2.84x | 4.084 |
 | r_wrist_yaw | dxl_xm430_w350 | 0.125 | 1.23 / 4.1 | 32.84x | 4.817 |
@@ -70,7 +70,7 @@ All 132 checks pass (torque, speed, power, stability, print-bed fit). Details in
 
 ## Assumptions and limits
 
-- Joint limits trimmed to the collision-free range found by exact solid sweeps: l_hip_roll [-0.45, 0.45] -> [-0.07, 0.45]; l_hip_pitch [-1.60, 1.60] -> [-0.84, 1.60]; l_knee [-2.20, 2.20] -> [-2.04, 0.33]; r_hip_roll [-0.45, 0.45] -> [-0.45, 0.07]; r_hip_pitch [-1.60, 1.60] -> [-1.60, 0.84]; r_knee [-2.20, 2.20] -> [-0.33, 2.04]; l_shoulder_roll [-1.60, 1.60] -> [-0.04, 1.60]; l_elbow [-2.30, 2.30] -> [-2.30, 2.18]; l_wrist_pitch [-1.60, 1.60] -> [-1.60, 1.27]; r_shoulder_roll [-1.60, 1.60] -> [-1.60, 0.04]; r_elbow [-2.30, 2.30] -> [-2.18, 2.30]; r_wrist_pitch [-1.60, 1.60] -> [-1.27, 1.60]; neck_tilt [-0.70, 0.70] -> [-0.70, 0.57].
+- Joint limits trimmed to the collision-free range found by exact solid sweeps: l_hip_roll [-0.45, 0.45] -> [-0.07, 0.45]; l_hip_pitch [-1.60, 1.60] -> [-0.84, 1.60]; l_knee [-2.20, 2.20] -> [-2.04, 0.31]; r_hip_roll [-0.45, 0.45] -> [-0.45, 0.07]; r_hip_pitch [-1.60, 1.60] -> [-1.60, 0.84]; r_knee [-2.20, 2.20] -> [-0.31, 2.04]; l_shoulder_roll [-1.60, 1.60] -> [-0.04, 1.60]; l_elbow [-2.30, 2.30] -> [-2.30, 2.18]; l_wrist_pitch [-1.60, 1.60] -> [-1.60, 1.27]; r_shoulder_roll [-1.60, 1.60] -> [-1.60, 0.04]; r_elbow [-2.30, 2.30] -> [-2.18, 2.30]; r_wrist_pitch [-1.60, 1.60] -> [-1.27, 1.60]; neck_tilt [-0.70, 0.70] -> [-0.70, 0.57].
 - Joint ranges are swept with the arms held 0.35 rad out to the side (the walking posture); with the arms hanging straight the hands touch the thighs when a leg abducts or a wrist turns.
 - CubeMars actuators run on a 12S bus (two 6S packs in series, 44.4 V nominal) at their 48 V ratings; DYNAMIXEL arms and the computer run from the 12 V DC-DC converter.
 - Zero joint angles are the standing pose (knees bent 0.25 rad, soles flat); the base origin is on the hip-yaw output plane.
@@ -82,12 +82,14 @@ All 132 checks pass (torque, speed, power, stability, print-bed fit). Details in
 <!-- SIM -->
 ## Simulation (MuJoCo, real actuator limits)
 
-**3/3 task tests pass.** Every motor is limited to its datasheet peak torque and its torque-speed line, with the rotor inertia reflected through its gearbox; continuous loads are compared with the rated torque. The animation above is recorded from these tests.
+**3/3 task tests pass.** Every motor is limited to its datasheet peak torque and its torque-speed line, with the rotor inertia reflected through its gearbox; continuous loads are compared with the rated torque. The animation below is recorded from these tests.
+
+![simulation](simulation.gif)
 
 | | Test | Result |
 |---|---|---|
 | ➖ | stand free | informational (no balance controller; a biped is not statically stable): base z 0.745 -> 0.739 m (creep after settling 0.6 mm), upright 0.999; worst leg joint l_knee at 0.10x rated |
-| ✅ | stand rail | on a vertical guide rail (balance removed, full weight on the legs): base z 0.745 -> 0.740 m (creep after settling 0.1 mm), upright 1.000; worst leg joint r_knee at 0.03x rated |
+| ✅ | stand rail | on a vertical guide rail (balance removed, full weight on the legs): base z 0.745 -> 0.740 m (creep after settling 0.1 mm), upright 1.000; worst leg joint l_knee at 0.03x rated |
 | ✅ | single leg rail | one leg (l_hip_yaw chain) carrying the full body weight on the rail, the other legs out of contact: base z 0.745 -> 0.740 m (creep after settling 0.1 mm), upright 1.000; worst leg joint l_knee at 0.06x rated |
 | ✅ | squat rail | on the rail: commanded body drop 148 mm (20 % of 741 mm leg), achieved 152 mm, back up to 152 mm above the low point, upright 1.000 |
 
@@ -104,4 +106,5 @@ _PASS means the modelled actuators (datasheet peak torque as a hard limit, a lin
 | `robot.cad.zip` | build package: printable STLs, print list, bought-part models, assembly order |
 | `robot.ros2.zip` | ROS 2 description package (ros2_control, MoveIt config, Gazebo launch) |
 | `robot.training.zip` | MuJoCo / RL training scaffold |
-| `simulation_report.json` | MuJoCo task tests under the real actuator limits |
+| `simulation_report.json`, `simulation.gif` | MuJoCo task tests under the real actuator limits |
+| `studio.gif` | Cycles render of a physics motion loop: every link where MuJoCo put it, the harness on its real routes |

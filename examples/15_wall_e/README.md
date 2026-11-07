@@ -6,18 +6,18 @@
 
 Interpreted as: WALL-E character · range (body)
 
-**Arduino WALL-E: TPU tracks on 4 TT motors, pan/tilt binocular head, 2 servo arms, 0.99 kg, $73 of parts**
+**Arduino WALL-E: TPU tracks on 4 TT motors, pan/tilt binocular head, two-joint arms with gripping hands, 1.14 kg, $98 of parts**
 
-Parts cost **$88.95** · printed structure 11 parts, 490 g · checks passed 54/54
+Parts cost **$117.22** · printed structure 21 parts, 579 g · checks passed 71/71
 
 ## What it can do
 
 | | |
 |---|--:|
-| mass kg | 0.991 |
+| mass kg | 1.14 |
 | top speed m s | 0.59 |
 | runtime min | 87 |
-| cost usd | 72.72 |
+| cost usd | 97.53 |
 | height mm | 0 |
 | tier | cheapest |
 | tier label | Arduino WALL-E |
@@ -29,17 +29,21 @@ Parts cost **$88.95** · printed structure 11 parts, 490 g · checks passed 54/5
 | Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
 |---|---|--:|--:|--:|--:|
 | neck_pan | hobby_sg90 | 0 | 0.0529 / 0.1765 | 176500x | 10.472 |
-| neck_tilt | hobby_sg90 | 0.0461 | 0.0529 / 0.1765 | 3.83x | 10.472 |
-| left_arm_lift | hobby_sg90 | 0.0078 | 0.0529 / 0.1765 | 22.73x | 10.472 |
-| right_arm_lift | hobby_sg90 | 0.0078 | 0.0529 / 0.1765 | 22.73x | 10.472 |
+| neck_tilt | hobby_sg90 | 0.0537 | 0.0529 / 0.1765 | 3.28x | 10.472 |
+| left_arm_lift | hobby_mg90s | 0.0689 | 0.0647 / 0.2157 | 3.13x | 13.09 |
+| right_arm_lift | hobby_mg90s | 0.0689 | 0.0647 / 0.2157 | 3.13x | 13.09 |
+| left_elbow | hobby_sg90 | 0.0308 | 0.0529 / 0.1765 | 5.73x | 10.472 |
+| right_elbow | hobby_sg90 | 0.0308 | 0.0529 / 0.1765 | 5.73x | 10.472 |
+| left_hand | hobby_sg90 | 0 | 0.0529 / 0.1765 | 176500x | 10.472 |
+| right_hand | hobby_sg90 | 0 | 0.0529 / 0.1765 | 176500x | 10.472 |
 
 ## Engineering checks
 
-All 54 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
+All 71 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
 
 ## Assumptions and limits
 
-- Joint limits trimmed to the collision-free range found by exact solid sweeps: left_arm_lift [-1.00, 1.00] -> [-1.00, 0.33]; right_arm_lift [-1.00, 1.00] -> [-0.33, 1.00].
+- Joint limits trimmed to the collision-free range found by exact solid sweeps: left_arm_lift [-1.00, 1.00] -> [-1.00, 0.48]; right_arm_lift [-1.00, 1.00] -> [-0.48, 1.00]; left_elbow [-1.50, 1.50] -> [-1.50, 1.27]; right_elbow [-1.50, 1.50] -> [-1.27, 1.50]; left_hand [-0.60, 0.60] -> [-0.01, 0.60]; right_hand [-0.60, 0.60] -> [-0.60, 0.01].
 - tracks print in TPU 95A (flexible), everything else in PETG/PLA+; the body prints open side up without supports
 - TT motor continuous torque taken as 30 % of the 0.8 kg.cm stall; a turn on the spot is a short transient above that (the tracks slide sideways), so spin in bursts on carpet or rubber floors
 - prices are typical single-unit marketplace prices and vary by seller
@@ -57,9 +61,9 @@ All 54 checks pass (torque, speed, power, stability, print-bed fit). Details in 
 
 | | Test | Result |
 |---|---|---|
-| ✅ | drive straight | 2.33 m in 4.71 s, cruise speed 0.583 m/s vs claimed 0.590 m/s, heading drift -0.0 deg, lateral -0.0 cm |
-| ✅ | ramp 10deg | from standstill on a 10 deg slope (speed ramped over 2.2 s at 0.5 m/s^2): 1.64 m uphill in 4.2 s, speed 0.568 m/s of 0.590 commanded |
-| ✅ | turn in place | mean yaw rate 1.32 rad/s with 3.77 commanded (no-slip), claimed 1.37 rad/s (needs >= 1.16), centre moved 4.5 cm over 1.0 turn(s) (4.5 cm per turn) |
+| ✅ | drive straight | 2.33 m in 4.73 s, cruise speed 0.582 m/s vs claimed 0.590 m/s, heading drift -0.0 deg, lateral -0.0 cm |
+| ✅ | ramp 10deg | from standstill on a 10 deg slope (speed ramped over 2.2 s at 0.5 m/s^2): 1.57 m uphill in 4.2 s, speed 0.553 m/s of 0.590 commanded |
+| ✅ | turn in place | mean yaw rate 1.27 rad/s with 3.77 commanded (no-slip), claimed 1.37 rad/s (needs >= 1.16), centre moved 8.7 cm over 1.0 turn(s) (8.7 cm per turn) |
 
 _PASS means the modelled actuators (datasheet peak torque as a hard limit, a linear torque-speed line to no-load speed, reflected rotor inertia, URDF damping/friction) can produce the torques and speeds the task needs in this geometry and mass distribution, and that mean torque over the hold stays within the continuous (rated) torque. Joint control uses an ideal model-based feedforward (computed torque) through the force-limited servo for fixed-base robots and plain position servos for floating robots; a pass therefore proves torque/speed capacity, not that a given controller achieves it. Untested: thermal limits over long duty cycles (only the mean-vs-rated proxy), gearbox backlash and compliance, link and joint flexibility, encoder resolution, supply voltage sag and current limits, bus latency, controller tuning, and contact/friction values (nominal friction only)._
 <!-- /SIM -->

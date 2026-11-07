@@ -1,0 +1,14 @@
+{
+  "04_scara": {
+    "pinion/finger_a": "rack and pinion teeth in mesh: the printed teeth are simple trapezoids, so flanks overlap by under 80 mm^3 at some phases of the mesh (no body parts touch); open issue: involute rack",
+    "pinion/finger_b": "rack and pinion teeth in mesh: see finger_a"
+  },
+  "09_gripper": {
+    "pinion/finger_a": "rack and pinion teeth in mesh: the printed teeth are simple trapezoids, so flanks overlap by under 80 mm^3 at some phases of the mesh (no body parts touch); open issue: involute rack",
+    "pinion/finger_b": "rack and pinion teeth in mesh: see finger_a"
+  },
+  "14_iron_man_mark_43": {
+    "faceplate_arm_left/faceplate_servo_left": "the servo mesh carries its horn, which really turns with the arm screwed to it",
+    "faceplate_arm_right/faceplate_servo_right": "the servo mesh carries its horn, which really turns with the arm screwed to it"
+  }
+}

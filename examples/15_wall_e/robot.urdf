@@ -3,7 +3,7 @@
      robot: wall_e
      prompt: Build WALL-E: a tracked trash-compactor robot with a telescoping neck, binocular eyes and two gripper arms
 
-     32 links, 31 joints, 32 inferred values
+     47 links, 46 joints, 47 inferred values
 -->
 <robot name="wall_e">
   <material name="printed"><color rgba="0.93 0.93 0.95 1"/></material>
@@ -21,6 +21,7 @@
   <material name="walle"><color rgba="0.85 0.6 0.14 1"/></material>
   <material name="walle_grey"><color rgba="0.58 0.58 0.55 1"/></material>
   <material name="visor"><color rgba="0.02 0.02 0.03 1"/></material>
+  <material name="walle_rust"><color rgba="0.36 0.22 0.14 1"/></material>
   <link name="body">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -32,9 +33,25 @@
       <geometry><mesh filename="package://wall_e/meshes/body.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.006592 -0.0000175598 0.069645" rpy="0 0 0"/>
-      <mass value="0.200544"/>
-      <inertia ixx="0.000801341" ixy="-5.80747e-7" ixz="-0.0000144654" iyy="0.001227" iyz="-8.40316e-8" izz="0.001306"/>
+      <origin xyz="0.005094 -0.0000179537 0.06843" rpy="0 0 0"/>
+      <mass value="0.196144"/>
+      <inertia ixx="0.00078194" ixy="-5.75469e-7" ixz="0.00000245086" iyy="0.001182" iyz="-7.97509e-8" izz="0.001272"/>
+    </inertial>
+  </link>
+  <link name="front_band">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://wall_e/meshes/front_band.stl"/></geometry>
+      <material name="walle_grey"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://wall_e/meshes/front_band.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.085991 3.98020e-19 0.129149" rpy="0 0 0"/>
+      <mass value="0.007601"/>
+      <inertia ixx="0.0000104707" ixy="-4.99620e-24" ixz="-6.88951e-10" iyy="7.33321e-7" iyz="-1.33627e-23" izz="0.00000974241"/>
     </inertial>
   </link>
   <link name="charge_gauge">
@@ -48,9 +65,25 @@
       <geometry><mesh filename="package://wall_e/meshes/charge_gauge.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.0876 0.031 0.109873" rpy="0 0 0"/>
+      <origin xyz="0.088 0.024 0.132" rpy="0 0 0"/>
       <mass value="0.002"/>
-      <inertia ixx="4.39942e-7" ixy="6.44459e-16" ixz="5.63952e-16" iyy="2.50033e-7" iyz="-4.98129e-16" izz="1.91191e-7"/>
+      <inertia ixx="2.82498e-7" ixy="-3.14012e-16" ixz="2.65602e-16" iyy="1.00000e-7" iyz="-6.50836e-15" izz="2.06787e-7"/>
+    </inertial>
+  </link>
+  <link name="name_plate">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://wall_e/meshes/name_plate.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://wall_e/meshes/name_plate.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.0874 2.57779e-11 0.0405" rpy="0 0 0"/>
+      <mass value="0.002"/>
+      <inertia ixx="0.00000109041" ixy="3.50370e-21" ixz="-3.50323e-21" iyy="1.00000e-7" iyz="1.72712e-15" izz="0.00000106323"/>
     </inertial>
   </link>
   <link name="front_left_motor">
@@ -192,9 +225,25 @@
       <geometry><sphere radius="0.002"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.000298804 0.0785 -0.0445" rpy="0 0 0"/>
-      <mass value="0.029782"/>
-      <inertia ixx="0.0000281382" ixy="-6.65162e-13" ixz="-1.15999e-12" iyy="0.00015743" iyz="5.90361e-14" izz="0.000132896"/>
+      <origin xyz="-0.000400731 0.0785 -0.03814" rpy="0 0 0"/>
+      <mass value="0.03014"/>
+      <inertia ixx="0.0000442577" ixy="3.79437e-13" ixz="0.00000205511" iyy="0.000172983" iyz="-1.20738e-12" izz="0.000132381"/>
+    </inertial>
+  </link>
+  <link name="left_idler">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://wall_e/meshes/left_idler.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><sphere radius="0.002"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.00000121965 2.27324e-8 6.01532e-19" rpy="0 0 0"/>
+      <mass value="0.012863"/>
+      <inertia ixx="0.00000141695" ixy="-1.17879e-11" ixz="9.38282e-23" iyy="0.00000141714" iyz="-4.61837e-23" izz="0.00000180137"/>
     </inertial>
   </link>
   <link name="track_right">
@@ -208,9 +257,25 @@
       <geometry><sphere radius="0.002"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.000298804 -0.0785 -0.0445" rpy="0 0 0"/>
-      <mass value="0.029782"/>
-      <inertia ixx="0.0000281382" ixy="-6.82829e-13" ixz="-1.06930e-12" iyy="0.00015743" iyz="5.90324e-14" izz="0.000132896"/>
+      <origin xyz="-0.000400731 -0.0785 -0.03814" rpy="0 0 0"/>
+      <mass value="0.03014"/>
+      <inertia ixx="0.0000442577" ixy="3.38637e-13" ixz="0.00000205511" iyy="0.000172983" iyz="-1.21008e-12" izz="0.000132381"/>
+    </inertial>
+  </link>
+  <link name="right_idler">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://wall_e/meshes/right_idler.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><sphere radius="0.002"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.00000121965 2.27324e-8 6.01532e-19" rpy="0 0 0"/>
+      <mass value="0.012863"/>
+      <inertia ixx="0.00000141695" ixy="-1.17879e-11" ixz="9.38282e-23" iyy="0.00000141714" iyz="-4.61837e-23" izz="0.00000180137"/>
     </inertial>
   </link>
   <link name="ultrasonic">
@@ -341,6 +406,22 @@
       <inertia ixx="4.24242e-7" ixy="5.78365e-8" ixz="-8.49364e-9" iyy="0.00000209196" iyz="-2.06109e-9" izz="0.00000223089"/>
     </inertial>
   </link>
+  <link name="arm_regulator">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://wall_e/meshes/buck_lm2596.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://wall_e/meshes/buck_lm2596.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.022999 0.00999 0.004308" rpy="0 0 0"/>
+      <mass value="0.012"/>
+      <inertia ixx="4.24242e-7" ixy="5.78365e-8" ixz="-8.49364e-9" iyy="0.00000209196" iyz="-2.06109e-9" izz="0.00000223089"/>
+    </inertial>
+  </link>
   <link name="main_switch">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -361,7 +442,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry><mesh filename="package://wall_e/meshes/lid.stl"/></geometry>
-      <material name="walle"/>
+      <material name="walle_grey"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -393,7 +474,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry><mesh filename="package://wall_e/meshes/neck.stl"/></geometry>
-      <material name="printed_dark"/>
+      <material name="walle_rust"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -432,9 +513,9 @@
       <geometry><mesh filename="package://wall_e/meshes/head.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.043677 -0.005501 -0.013008" rpy="0 0 0"/>
-      <mass value="0.090571"/>
-      <inertia ixx="0.0000803626" ixy="-0.00000115757" ixz="-0.00000325202" iyy="0.0000798989" iyz="-4.94229e-7" izz="0.0000321168"/>
+      <origin xyz="-0.047119 -0.006524 -0.013112" rpy="0 0 0"/>
+      <mass value="0.092705"/>
+      <inertia ixx="0.000118709" ixy="-0.00000180114" ixz="-0.00000351716" iyy="0.00013116" iyz="-5.36944e-7" izz="0.0000522439"/>
     </inertial>
   </link>
   <link name="left_lens">
@@ -448,9 +529,9 @@
       <geometry><mesh filename="package://wall_e/meshes/left_lens.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.045999 -0.023509 0.013006" rpy="0 0 0"/>
-      <mass value="0.002"/>
-      <inertia ixx="1.00000e-7" ixy="7.61648e-14" ixz="8.53388e-12" iyy="1.82317e-7" iyz="4.78320e-13" izz="1.00000e-7"/>
+      <origin xyz="-0.044 -0.020348 0.023" rpy="0 0 0"/>
+      <mass value="0.004421"/>
+      <inertia ixx="3.64179e-7" ixy="7.06195e-14" ixz="2.64607e-13" iyy="7.09609e-7" iyz="1.23643e-11" izz="3.64184e-7"/>
     </inertial>
   </link>
   <link name="right_lens">
@@ -464,9 +545,9 @@
       <geometry><mesh filename="package://wall_e/meshes/right_lens.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.045999 -0.023509 -0.040994" rpy="0 0 0"/>
-      <mass value="0.002"/>
-      <inertia ixx="1.00000e-7" ixy="7.61652e-14" ixz="8.53389e-12" iyy="1.82316e-7" iyz="4.78327e-13" izz="1.00000e-7"/>
+      <origin xyz="-0.044 -0.020348 -0.051" rpy="0 0 0"/>
+      <mass value="0.004421"/>
+      <inertia ixx="3.64179e-7" ixy="7.06175e-14" ixz="2.64909e-13" iyy="7.09609e-7" iyz="1.23651e-11" izz="3.64184e-7"/>
     </inertial>
   </link>
   <link name="left_arm">
@@ -480,12 +561,92 @@
       <geometry><mesh filename="package://wall_e/meshes/left_arm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-1.08962e-8 0.04259 0.004919" rpy="0 0 0"/>
-      <mass value="0.014294"/>
-      <inertia ixx="0.000015052" ixy="-6.96634e-12" ixz="-3.98748e-13" iyy="0.0000011741" iyz="-6.37046e-7" izz="0.0000159337"/>
+      <origin xyz="0.00013052 0.034561 0.008413" rpy="0 0 0"/>
+      <mass value="0.013161"/>
+      <inertia ixx="0.0000111996" ixy="-1.90469e-8" ixz="1.47362e-9" iyy="0.00000196907" iyz="-0.00000140859" izz="0.0000113437"/>
     </inertial>
   </link>
   <link name="left_arm_servo">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://wall_e/meshes/hobby_mg90s.stl"/></geometry>
+      <material name="actuator"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://wall_e/meshes/hobby_mg90s.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.003799 3.70006e-19 -0.012964" rpy="0 0 0"/>
+      <mass value="0.0134"/>
+      <inertia ixx="0.00000111084" ixy="-2.12075e-23" ixz="-1.76149e-7" iyy="0.00000196517" iyz="-4.10285e-24" izz="0.0000012489"/>
+    </inertial>
+  </link>
+  <link name="left_elbow_servo">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://wall_e/meshes/hobby_sg90.stl"/></geometry>
+      <material name="actuator"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://wall_e/meshes/hobby_sg90.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.004592 -3.20885e-19 -0.015151" rpy="0 0 0"/>
+      <mass value="0.009"/>
+      <inertia ixx="6.74426e-7" ixy="7.71254e-24" ixz="-8.96092e-8" iyy="0.00000103946" iyz="2.03352e-23" izz="5.64441e-7"/>
+    </inertial>
+  </link>
+  <link name="left_forearm">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://wall_e/meshes/left_forearm.stl"/></geometry>
+      <material name="walle_grey"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://wall_e/meshes/left_forearm.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.054565 0.001151 0.006896" rpy="0 0 0"/>
+      <mass value="0.018022"/>
+      <inertia ixx="0.00000247442" ixy="-1.57859e-7" ixz="-7.12445e-7" iyy="0.0000271661" iyz="-4.23203e-8" izz="0.0000280723"/>
+    </inertial>
+  </link>
+  <link name="left_arm_stripes">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://wall_e/meshes/left_arm_stripes.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://wall_e/meshes/left_arm_stripes.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.035287 0.000135763 0.0168" rpy="0 0 0"/>
+      <mass value="0.002"/>
+      <inertia ixx="1.00000e-7" ixy="1.22865e-9" ixz="-1.00482e-25" iyy="1.00000e-7" iyz="-3.64902e-25" izz="1.79987e-7"/>
+    </inertial>
+  </link>
+  <link name="left_thumb">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://wall_e/meshes/left_thumb.stl"/></geometry>
+      <material name="walle_grey"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://wall_e/meshes/left_thumb.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.019361 0.003518 -0.002916" rpy="0 0 0"/>
+      <mass value="0.0079"/>
+      <inertia ixx="0.00000130459" ixy="-6.20455e-7" ixz="0.00000104694" iyy="0.00000459559" iyz="1.90455e-7" izz="0.0000045924"/>
+    </inertial>
+  </link>
+  <link name="left_hand_servo">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry><mesh filename="package://wall_e/meshes/hobby_sg90.stl"/></geometry>
@@ -512,12 +673,28 @@
       <geometry><mesh filename="package://wall_e/meshes/right_arm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-1.08962e-8 -0.04259 0.004919" rpy="0 0 0"/>
-      <mass value="0.014294"/>
-      <inertia ixx="0.000015052" ixy="6.96634e-12" ixz="-3.98748e-13" iyy="0.0000011741" iyz="6.37046e-7" izz="0.0000159337"/>
+      <origin xyz="-0.000130787 -0.034561 0.008413" rpy="0 0 0"/>
+      <mass value="0.013161"/>
+      <inertia ixx="0.0000111996" ixy="-1.89172e-8" ixz="-1.49527e-9" iyy="0.00000196907" iyz="0.00000140859" izz="0.0000113437"/>
     </inertial>
   </link>
   <link name="right_arm_servo">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://wall_e/meshes/hobby_mg90s.stl"/></geometry>
+      <material name="actuator"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://wall_e/meshes/hobby_mg90s.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.003799 3.70006e-19 -0.012964" rpy="0 0 0"/>
+      <mass value="0.0134"/>
+      <inertia ixx="0.00000111084" ixy="-2.12075e-23" ixz="-1.76149e-7" iyy="0.00000196517" iyz="-4.10285e-24" izz="0.0000012489"/>
+    </inertial>
+  </link>
+  <link name="right_elbow_servo">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry><mesh filename="package://wall_e/meshes/hobby_sg90.stl"/></geometry>
@@ -533,9 +710,83 @@
       <inertia ixx="6.74426e-7" ixy="7.71254e-24" ixz="-8.96092e-8" iyy="0.00000103946" iyz="2.03352e-23" izz="5.64441e-7"/>
     </inertial>
   </link>
+  <link name="right_forearm">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://wall_e/meshes/right_forearm.stl"/></geometry>
+      <material name="walle_grey"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://wall_e/meshes/right_forearm.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.054546 -0.001862 0.007086" rpy="0 0 0"/>
+      <mass value="0.018012"/>
+      <inertia ixx="0.00000244431" ixy="8.32795e-7" ixz="-7.43020e-7" iyy="0.0000271627" iyz="3.85364e-8" izz="0.0000280184"/>
+    </inertial>
+  </link>
+  <link name="right_arm_stripes">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://wall_e/meshes/right_arm_stripes.stl"/></geometry>
+      <material name="printed_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://wall_e/meshes/right_arm_stripes.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.035287 0.000135763 0.0168" rpy="0 0 0"/>
+      <mass value="0.002"/>
+      <inertia ixx="1.00000e-7" ixy="1.22865e-9" ixz="-1.00482e-25" iyy="1.00000e-7" iyz="-3.64902e-25" izz="1.79987e-7"/>
+    </inertial>
+  </link>
+  <link name="right_thumb">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://wall_e/meshes/right_thumb.stl"/></geometry>
+      <material name="walle_grey"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://wall_e/meshes/right_thumb.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.019361 -0.003518 -0.002916" rpy="0 0 0"/>
+      <mass value="0.0079"/>
+      <inertia ixx="0.00000130459" ixy="6.20455e-7" ixz="0.00000104694" iyy="0.00000459559" iyz="-1.90455e-7" izz="0.0000045924"/>
+    </inertial>
+  </link>
+  <link name="right_hand_servo">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://wall_e/meshes/hobby_sg90.stl"/></geometry>
+      <material name="actuator"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://wall_e/meshes/hobby_sg90.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.004592 -3.20885e-19 -0.015151" rpy="0 0 0"/>
+      <mass value="0.009"/>
+      <inertia ixx="6.74426e-7" ixy="7.71254e-24" ixz="-8.96092e-8" iyy="0.00000103946" iyz="2.03352e-23" izz="5.64441e-7"/>
+    </inertial>
+  </link>
+  <joint name="front_band_mount" type="fixed">
+    <parent link="body"/>
+    <child link="front_band"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
   <joint name="charge_gauge_mount" type="fixed">
     <parent link="body"/>
     <child link="charge_gauge"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="name_plate_mount" type="fixed">
+    <parent link="body"/>
+    <child link="name_plate"/>
     <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
   <joint name="front_left_motor_mount" type="fixed">
@@ -595,10 +846,26 @@
     <child link="track_left"/>
     <origin xyz="0 0 0.08" rpy="0 0 0"/>
   </joint>
+  <joint name="left_idler_joint" type="continuous" passive="true">
+    <parent link="body"/>
+    <child link="left_idler"/>
+    <origin xyz="-0.014 0.0785 0.0875" rpy="-1.570796 0 0"/>
+    <axis xyz="0 0 1"/>
+    <dynamics damping="0.00001" friction="0.0005"/>
+    <mimic joint="front_left_wheel_joint" multiplier="2.0313" offset="0"/>
+  </joint>
   <joint name="track_right_mount" type="fixed">
     <parent link="body"/>
     <child link="track_right"/>
     <origin xyz="0 0 0.08" rpy="0 0 0"/>
+  </joint>
+  <joint name="right_idler_joint" type="continuous" passive="true">
+    <parent link="body"/>
+    <child link="right_idler"/>
+    <origin xyz="-0.014 -0.0785 0.0875" rpy="1.570796 0 0"/>
+    <axis xyz="0 0 1"/>
+    <dynamics damping="0.00001" friction="0.0005"/>
+    <mimic joint="front_right_wheel_joint" multiplier="2.0313" offset="0"/>
   </joint>
   <joint name="ultrasonic_mount" type="fixed">
     <parent link="body"/>
@@ -639,6 +906,11 @@
     <parent link="body"/>
     <child link="servo_regulator"/>
     <origin xyz="-0.0588 -0.0216 0.0234" rpy="0 0 1.570796"/>
+  </joint>
+  <joint name="arm_regulator_mount" type="fixed">
+    <parent link="body"/>
+    <child link="arm_regulator"/>
+    <origin xyz="0.0776 0.0218 0.096" rpy="1.570796 0 -1.570796"/>
   </joint>
   <joint name="main_switch_mount" type="fixed">
     <parent link="body"/>
@@ -689,27 +961,89 @@
   <joint name="left_arm_servo_mount" type="fixed">
     <parent link="body"/>
     <child link="left_arm_servo"/>
-    <origin xyz="0.01 0.0645 0.112" rpy="0 -1.570796 -1.570796"/>
+    <origin xyz="0.01 0.0645 0.12" rpy="0 -1.570796 -1.570796"/>
   </joint>
   <joint name="left_arm_lift" type="revolute">
     <parent link="body"/>
     <child link="left_arm"/>
-    <origin xyz="0.01 0.0645 0.112" rpy="0 -1.570796 -1.570796"/>
+    <origin xyz="0.01 0.0645 0.12" rpy="0 -1.570796 -1.570796"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-1" upper="0.333" effort="0.1765" velocity="10.472"/>
+    <limit lower="-1" upper="0.476" effort="0.2157" velocity="13.09"/>
+    <dynamics damping="0.0033" friction="0.0043"/>
+  </joint>
+  <joint name="left_elbow_servo_mount" type="fixed">
+    <parent link="left_arm"/>
+    <child link="left_elbow_servo"/>
+    <origin xyz="0 0.056 0.031" rpy="0 0 1.570796"/>
+  </joint>
+  <joint name="left_arm_stripes_mount" type="fixed">
+    <parent link="left_forearm"/>
+    <child link="left_arm_stripes"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="left_elbow" type="revolute">
+    <parent link="left_arm"/>
+    <child link="left_forearm"/>
+    <origin xyz="0 0.056 0.031" rpy="0 0 1.570796"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1.5" upper="1.271" effort="0.1765" velocity="10.472"/>
+    <dynamics damping="0.0034" friction="0.0035"/>
+  </joint>
+  <joint name="left_hand_servo_mount" type="fixed">
+    <parent link="left_forearm"/>
+    <child link="left_hand_servo"/>
+    <origin xyz="0.074 -0.0155 0.0085" rpy="1.570796 0 0"/>
+  </joint>
+  <joint name="left_hand" type="revolute">
+    <parent link="left_forearm"/>
+    <child link="left_thumb"/>
+    <origin xyz="0.074 -0.0155 0.0085" rpy="1.570796 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-0.015" upper="0.6" effort="0.1765" velocity="10.472"/>
     <dynamics damping="0.0034" friction="0.0035"/>
   </joint>
   <joint name="right_arm_servo_mount" type="fixed">
     <parent link="body"/>
     <child link="right_arm_servo"/>
-    <origin xyz="0.01 -0.0645 0.112" rpy="0 -1.570796 1.570796"/>
+    <origin xyz="0.01 -0.0645 0.12" rpy="0 -1.570796 1.570796"/>
   </joint>
   <joint name="right_arm_lift" type="revolute">
     <parent link="body"/>
     <child link="right_arm"/>
-    <origin xyz="0.01 -0.0645 0.112" rpy="0 -1.570796 1.570796"/>
+    <origin xyz="0.01 -0.0645 0.12" rpy="0 -1.570796 1.570796"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-0.333" upper="1" effort="0.1765" velocity="10.472"/>
+    <limit lower="-0.476" upper="1" effort="0.2157" velocity="13.09"/>
+    <dynamics damping="0.0033" friction="0.0043"/>
+  </joint>
+  <joint name="right_elbow_servo_mount" type="fixed">
+    <parent link="right_arm"/>
+    <child link="right_elbow_servo"/>
+    <origin xyz="0 -0.056 0.031" rpy="0 0 -1.570796"/>
+  </joint>
+  <joint name="right_arm_stripes_mount" type="fixed">
+    <parent link="right_forearm"/>
+    <child link="right_arm_stripes"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="right_elbow" type="revolute">
+    <parent link="right_arm"/>
+    <child link="right_forearm"/>
+    <origin xyz="0 -0.056 0.031" rpy="0 0 -1.570796"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1.271" upper="1.5" effort="0.1765" velocity="10.472"/>
+    <dynamics damping="0.0034" friction="0.0035"/>
+  </joint>
+  <joint name="right_hand_servo_mount" type="fixed">
+    <parent link="right_forearm"/>
+    <child link="right_hand_servo"/>
+    <origin xyz="0.074 0.0155 0.0085" rpy="-1.570796 0 0"/>
+  </joint>
+  <joint name="right_hand" type="revolute">
+    <parent link="right_forearm"/>
+    <child link="right_thumb"/>
+    <origin xyz="0.074 0.0155 0.0085" rpy="-1.570796 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-0.6" upper="0.015" effort="0.1765" velocity="10.472"/>
     <dynamics damping="0.0034" friction="0.0035"/>
   </joint>
 </robot>

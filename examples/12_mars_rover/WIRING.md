@@ -1,6 +1,6 @@
 # Wiring: rover_arm
 
-35 cables, 77 conductors, 27.5 m of wire, wiring parts $35.82.
+35 cables, 77 conductors, 27.45 m of wire, wiring parts $35.73.
 
 Diagram: [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
 
@@ -132,20 +132,20 @@ Length is route + service loop + joint slack + termination, rounded up to 5 mm; 
 | C2 | mast_camera to computer | 1 | 345 | 341.5 | 0 | 0 | 0 | FFC | body_bay.lid_leads |
 | C3 | io_controller to computer | 1 | 210 | 208.6 | 0 | 0 | 0 | USB | - |
 | C4 | motor_driver_1 to io_controller | 5 | 170 | 65.5 | 40 | 0 | 60 | 5-pin 2.54 mm header / 22-pin male header | - |
-| C5 | motor_driver_1 channel 1 to left_front_motor | 2 | 570 | 431.7 | 40 | 35 | 60 | 2-position screw terminal / 1x6 female header | body_bay.left_rocker |
+| C5 | motor_driver_1 channel 1 to left_front_motor | 2 | 565 | 431.7 | 40 | 30 | 60 | 2-position screw terminal / 1x6 female header | body_bay.left_rocker |
 | C6 | left_front_motor encoder to io_controller | 4 | 515 | 369.3 | 40 | 45 | 60 | 22-pin male header / 1x6 female header | body_bay.left_rocker |
-| C7 | motor_driver_1 channel 2 to left_rear_motor | 2 | 585 | 449 | 40 | 35 | 60 | 2-position screw terminal / 1x6 female header | body_bay.left_rocker |
+| C7 | motor_driver_1 channel 2 to left_rear_motor | 2 | 580 | 449 | 40 | 30 | 60 | 2-position screw terminal / 1x6 female header | body_bay.left_rocker |
 | C8 | left_rear_motor encoder to io_controller | 4 | 535 | 388 | 40 | 45 | 60 | 22-pin male header / 1x6 female header | body_bay.left_rocker |
 | C9 | motor_driver_2 to io_controller | 5 | 195 | 94 | 40 | 0 | 60 | 5-pin 2.54 mm header / 22-pin male header | - |
-| C10 | motor_driver_2 channel 1 to right_front_motor | 2 | 505 | 368.7 | 40 | 35 | 60 | 2-position screw terminal / 1x6 female header | body_bay.right_rocker |
+| C10 | motor_driver_2 channel 1 to right_front_motor | 2 | 500 | 368.7 | 40 | 30 | 60 | 2-position screw terminal / 1x6 female header | body_bay.right_rocker |
 | C11 | right_front_motor encoder to io_controller | 4 | 505 | 358.2 | 40 | 45 | 60 | 22-pin male header / 1x6 female header | body_bay.right_rocker |
-| C12 | motor_driver_2 channel 2 to right_rear_motor | 2 | 520 | 383.3 | 40 | 35 | 60 | 2-position screw terminal / 1x6 female header | body_bay.right_rocker |
+| C12 | motor_driver_2 channel 2 to right_rear_motor | 2 | 515 | 383.3 | 40 | 30 | 60 | 2-position screw terminal / 1x6 female header | body_bay.right_rocker |
 | C13 | right_rear_motor encoder to io_controller | 4 | 520 | 374.2 | 40 | 45 | 60 | 22-pin male header / 1x6 female header | body_bay.right_rocker |
 | C14 | servo_bus to servo_bus_hub | 1 | 340 | 236.4 | 40 | 0 | 60 | 3-pin 2.5 mm bus servo header (5264 class) / lever clamp | body_bay.left_rocker |
 | C15 | servo_bus_hub to arm_base_yaw_actuator | 1 | 275 | 170.2 | 40 | 0 | 60 | lever clamp / JST B3B-EH-A header | - |
 | C16 | arm_base_yaw_actuator to arm_shoulder_pitch_actuator | 3 | 275 | 92.1 | 40 | 80 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
 | C17 | arm_shoulder_pitch_actuator to arm_elbow_pitch_actuator | 3 | 330 | 163.1 | 40 | 65 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
-| C18 | arm_elbow_pitch_actuator to arm_forearm_roll_actuator | 3 | 330 | 150.3 | 40 | 75 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
+| C18 | arm_elbow_pitch_actuator to arm_forearm_roll_actuator | 3 | 325 | 150.3 | 40 | 70 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
 | C19 | arm_forearm_roll_actuator to arm_wrist_pitch_actuator | 3 | 265 | 84.4 | 40 | 80 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
 | C20 | arm_wrist_roll_actuator to arm_gripper_actuator | 3 | 265 | 84.4 | 40 | 80 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
 | C21 | arm_wrist_pitch_actuator to arm_wrist_roll_actuator | 1 | 265 | 110.3 | 40 | 50 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
@@ -170,25 +170,25 @@ Each loop is at least the extra length the joint needs at the far end of its tra
 
 | Cable | Joint | Travel rad | Length at home mm | Length at full travel mm | Slack loop mm |
 |---|---|---|--:|--:|--:|
-| C5 | left_rocker_pivot | -0.35 to 0.35 | 18.4 | 24 | 35 |
-| C6 | left_rocker_pivot | -0.35 to 0.35 | 22.2 | 28.9 | 45 |
-| C7 | left_rocker_pivot | -0.35 to 0.35 | 47.9 | 53.5 | 35 |
-| C8 | left_rocker_pivot | -0.35 to 0.35 | 57.8 | 64.5 | 45 |
-| C10 | right_rocker_pivot | -0.35 to 0.35 | 18.3 | 23.9 | 35 |
-| C11 | right_rocker_pivot | -0.35 to 0.35 | 22.1 | 28.8 | 45 |
-| C12 | right_rocker_pivot | -0.35 to 0.35 | 47.8 | 53.4 | 35 |
-| C13 | right_rocker_pivot | -0.35 to 0.35 | 57.7 | 64.4 | 45 |
+| C5 | left_rocker_pivot | -0.26 to 0.26 | 18.4 | 22.5 | 30 |
+| C6 | left_rocker_pivot | -0.26 to 0.26 | 22.2 | 27.2 | 45 |
+| C7 | left_rocker_pivot | -0.26 to 0.26 | 47.9 | 52 | 30 |
+| C8 | left_rocker_pivot | -0.26 to 0.26 | 57.8 | 62.8 | 45 |
+| C10 | right_rocker_pivot | -0.26 to 0.26 | 18.3 | 22.4 | 30 |
+| C11 | right_rocker_pivot | -0.26 to 0.26 | 22.1 | 27.1 | 45 |
+| C12 | right_rocker_pivot | -0.26 to 0.26 | 47.8 | 51.9 | 30 |
+| C13 | right_rocker_pivot | -0.26 to 0.26 | 57.7 | 62.7 | 45 |
 | C16 | arm_base_yaw | -2.97 to 2.97 | 23.1 | 63.5 | 80 |
 | C17 | arm_shoulder_pitch | -1.75 to 1.75 | 48.5 | 75.3 | 65 |
-| C18 | arm_elbow_pitch | -2.3 to 2.3 | 46.5 | 81.8 | 75 |
+| C18 | arm_elbow_pitch | -2.1 to 2.3 | 46.5 | 78.7 | 70 |
 | C19 | arm_forearm_roll | -2.97 to 2.97 | 23.1 | 63.5 | 80 |
 | C20 | arm_wrist_roll | -2.97 to 2.97 | 23.1 | 63.5 | 80 |
-| C21 | arm_wrist_pitch | -2.3 to 2.3 | 35.7 | 63.2 | 50 |
+| C21 | arm_wrist_pitch | -1.7 to 2.3 | 35.7 | 63.2 | 50 |
 | C33 | arm_base_yaw | -2.97 to 2.97 | 14 | 61.3 | 80 |
 | C33 | arm_shoulder_pitch | -1.75 to 1.75 | 50.1 | 78 | 60 |
-| C33 | arm_elbow_pitch | -2.3 to 2.3 | 50.1 | 86.8 | 70 |
+| C33 | arm_elbow_pitch | -2.1 to 2.3 | 50.1 | 86.8 | 70 |
 | C33 | arm_forearm_roll | -2.97 to 2.97 | 48.9 | 95.1 | 80 |
-| C33 | arm_wrist_pitch | -2.3 to 2.3 | 47.2 | 83.9 | 70 |
+| C33 | arm_wrist_pitch | -1.7 to 2.3 | 47.2 | 83.9 | 70 |
 
 ## Wiring parts to buy
 
@@ -196,9 +196,9 @@ Each loop is at least the extra length the joint needs at the far end of its tra
 |---|--:|---|--:|--:|---|---|
 | 12 AWG silicone wire | 0.8 | m | 2.2 | 1.76 | 3.308 mm2, rated 20.5 A in a bundle; 0.72 m cut + 10 % waste | estimated |
 | 18 AWG silicone wire | 1.6 | m | 0.7 | 1.12 | 0.823 mm2, rated 8 A in a bundle; 1.43 m cut + 10 % waste | estimated |
-| 20 AWG silicone wire | 7.4 | m | 0.5 | 3.70 | 0.519 mm2, rated 5.5 A in a bundle; 6.67 m cut + 10 % waste | estimated |
+| 20 AWG silicone wire | 7.3 | m | 0.5 | 3.65 | 0.519 mm2, rated 5.5 A in a bundle; 6.64 m cut + 10 % waste | estimated |
 | 22 AWG silicone wire | 3.6 | m | 0.4 | 1.44 | 0.327 mm2, rated 3.5 A in a bundle; 3.25 m cut + 10 % waste | estimated |
-| 24 AWG silicone wire | 8.3 | m | 0.35 | 2.91 | 0.205 mm2, rated 1.75 A in a bundle; 7.47 m cut + 10 % waste | estimated |
+| 24 AWG silicone wire | 8.3 | m | 0.35 | 2.91 | 0.205 mm2, rated 1.75 A in a bundle; 7.46 m cut + 10 % waste | estimated |
 | 26 AWG silicone wire | 8.8 | m | 0.3 | 2.64 | 0.128 mm2, rated 1.1 A in a bundle; 7.95 m cut + 10 % waste | estimated |
 | Dupont 2.54 mm contacts | 38 | pc | 0.02 | 0.76 | rated 3 A per contact | estimated |
 | Dupont 2.54 mm housings | 9 | pc | 0.02 | 0.18 | one per cable end | estimated |
@@ -212,7 +212,7 @@ Each loop is at least the extra length the joint needs at the far end of its tra
 | Heat shrink 3 mm, 2:1 | 3.1 | m | 0.2 | 0.62 | 33 solder joints + a boot on each cable end | estimated |
 | Cable tie 100 x 2.5 mm | 67 | pc | 0.02 | 1.34 | at every clip, cable end and strain-relief anchor | estimated |
 | Rubber grommet, 6.4 mm panel hole, 3.2 mm bore | 3 | pc | 0.08 | 0.24 | 9.5 mm panel hole | estimated |
-| Nylon braided sleeving 6 mm | 3.1 | m | 0.4 | 1.24 | over every cable where it crosses a joint | estimated |
+| Nylon braided sleeving 6 mm | 3 | m | 0.4 | 1.20 | over every cable where it crosses a joint | estimated |
 | USB-C | 1 | pc | 3 | 3.00 | depth_camera to computer | estimated |
 | FFC | 1 | pc | 3 | 3.00 | mast_camera to computer | estimated |
 | USB | 1 | pc | 3 | 3.00 | io_controller to computer | estimated |

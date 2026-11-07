@@ -233,7 +233,7 @@
     <child link="forearm"/>
     <origin xyz="0.144165 0 -0.0381" rpy="3.141593 0 0"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-2.3" upper="2.3" effort="2.942" velocity="4.42"/>
+    <limit lower="-2.1" upper="2.3" effort="2.942" velocity="4.42"/>
     <dynamics damping="0.1249" friction="0.0588"/>
   </joint>
   <joint name="gripper_actuator_mount" type="fixed">

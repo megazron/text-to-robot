@@ -2101,7 +2101,7 @@
         1
       ],
       "limit": {
-        "lower": -2.3,
+        "lower": -2.1,
         "upper": 2.3,
         "effort": 4.1,
         "velocity": 3.96
@@ -2213,7 +2213,7 @@
         1
       ],
       "limit": {
-        "lower": -2.3,
+        "lower": -1.7,
         "upper": 2.3,
         "effort": 1.4,
         "velocity": 4.65
@@ -2571,7 +2571,7 @@
   ],
   "metadata": {
     "generator": "text-to-robot design engine (real components + printed structure)",
-    "created": "2026-11-06T11:48:38.293Z",
+    "created": "2026-11-07T18:23:12.172Z",
     "inferred_fields": [
       "links.base_link.inertia",
       "links.base_yaw_actuator.inertia",
@@ -6647,8 +6647,8 @@
                 "color": "red",
                 "typical_a": 0.8,
                 "peak_a": 1.9,
-                "length_mm": 300,
-                "drop_v": 0.058
+                "length_mm": 295,
+                "drop_v": 0.057
               },
               {
                 "id": "W13",
@@ -6660,8 +6660,8 @@
                 "color": "black",
                 "typical_a": 0.8,
                 "peak_a": 1.9,
-                "length_mm": 300,
-                "drop_v": 0.058
+                "length_mm": 295,
+                "drop_v": 0.057
               },
               {
                 "id": "W14",
@@ -6673,16 +6673,16 @@
                 "color": "yellow",
                 "typical_a": 0.02,
                 "peak_a": 0.02,
-                "length_mm": 300,
+                "length_mm": 295,
                 "drop_v": 0.002
               }
             ],
             "od_mm": 3.2,
             "route_mm": 129.6,
             "service_mm": 40,
-            "slack_mm": 70,
+            "slack_mm": 65,
             "termination_mm": 60,
-            "length_mm": 300,
+            "length_mm": 295,
             "path_mm": [
               [
                 0,
@@ -6721,13 +6721,13 @@
                 "joint": "elbow_pitch",
                 "type": "revolute",
                 "travel": [
-                  -2.3,
+                  -2.1,
                   2.3
                 ],
                 "home_mm": 42.3,
-                "need_mm": 73.9,
-                "slack_mm": 70,
-                "provided_mm": 112.3
+                "need_mm": 71.1,
+                "slack_mm": 65,
+                "provided_mm": 107.3
               }
             ],
             "exit": null
@@ -6924,7 +6924,7 @@
                 "joint": "wrist_pitch",
                 "type": "revolute",
                 "travel": [
-                  -2.3,
+                  -1.7,
                   2.3
                 ],
                 "home_mm": 41.7,
@@ -7263,7 +7263,7 @@
             "unit": "m",
             "unit_usd": 0.35,
             "subtotal_usd": 1.43,
-            "spec": "0.205 mm2, rated 1.75 A in a bundle; 3.69 m cut + 10 % waste",
+            "spec": "0.205 mm2, rated 1.75 A in a bundle; 3.68 m cut + 10 % waste",
             "source": "estimated"
           },
           {
@@ -7349,7 +7349,7 @@
           }
         ],
         "cost_usd": 10.37,
-        "total_wire_m": 9.18,
+        "total_wire_m": 9.16,
         "notes": [
           "Mains side: IEC inlet to the supply's AC terminals with insulated spades, earth wired first, case closed before plugging in. Have it checked if you are not qualified to wire mains.",
           "clips on upper_arm not printed: mass properties require a closed manifold mesh"

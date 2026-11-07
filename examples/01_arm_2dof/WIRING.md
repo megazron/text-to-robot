@@ -59,7 +59,7 @@ Each loop is at least the extra length the joint needs at the far end of its tra
 | Cable | Joint | Travel rad | Length at home mm | Length at full travel mm | Slack loop mm |
 |---|---|---|--:|--:|--:|
 | C3 | shoulder_pitch | -1.75 to 1.75 | 44.3 | 68.3 | 60 |
-| C4 | elbow_pitch | -2.3 to 2.3 | 44.2 | 75.8 | 70 |
+| C4 | elbow_pitch | -2.1 to 2.3 | 44.2 | 75.8 | 70 |
 
 ## Wiring parts to buy
 

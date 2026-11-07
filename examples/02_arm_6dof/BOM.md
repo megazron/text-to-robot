@@ -18,7 +18,7 @@
 | Wiring | 18 AWG silicone wire _(price estimated)_ | 1 | 0.7 | 0.7 | 1 m: 0.823 mm2, rated 8 A in a bundle; 0.83 m cut + 10 % waste |
 | Wiring | 20 AWG silicone wire _(price estimated)_ | 1.6 | 0.5 | 0.8 | 1.6 m: 0.519 mm2, rated 5.5 A in a bundle; 1.39 m cut + 10 % waste |
 | Wiring | 22 AWG silicone wire _(price estimated)_ | 0.8 | 0.4 | 0.32 | 0.8 m: 0.327 mm2, rated 3.5 A in a bundle; 0.65 m cut + 10 % waste |
-| Wiring | 24 AWG silicone wire _(price estimated)_ | 4.1 | 0.35 | 1.43 | 4.1 m: 0.205 mm2, rated 1.75 A in a bundle; 3.69 m cut + 10 % waste |
+| Wiring | 24 AWG silicone wire _(price estimated)_ | 4.1 | 0.35 | 1.43 | 4.1 m: 0.205 mm2, rated 1.75 A in a bundle; 3.68 m cut + 10 % waste |
 | Wiring | 26 AWG silicone wire _(price estimated)_ | 2.9 | 0.3 | 0.87 | 2.9 m: 0.128 mm2, rated 1.1 A in a bundle; 2.62 m cut + 10 % waste |
 | Wiring | 6.3 mm spade contacts _(price estimated)_ | 3 | 0.08 | 0.24 | 3 pc: rated 15 A per contact |
 | Wiring | Bootlace ferrule contacts _(price estimated)_ | 5 | 0.03 | 0.15 | 5 pc: rated 17.5 A per contact |

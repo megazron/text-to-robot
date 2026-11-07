@@ -180,10 +180,10 @@ Each loop is at least the extra length the joint needs at the far end of its tra
 | C1 | head_pan | -1.4 to 1.4 | 10.7 | 30.3 | 40 |
 | C16 | left_arm_base_yaw | -2.97 to 2.97 | 23.1 | 63.5 | 80 |
 | C17 | left_arm_shoulder_pitch | -1.75 to 1.75 | 44.3 | 68.3 | 60 |
-| C18 | left_arm_elbow_pitch | -2.3 to 2.3 | 44.3 | 75.9 | 70 |
+| C18 | left_arm_elbow_pitch | -2.1 to 2.3 | 44.3 | 75.9 | 70 |
 | C20 | right_arm_base_yaw | -2.97 to 2.97 | 23.1 | 63.5 | 80 |
 | C21 | right_arm_shoulder_pitch | -1.75 to 1.75 | 44.3 | 68.3 | 60 |
-| C22 | right_arm_elbow_pitch | -2.3 to 2.3 | 44.3 | 75.9 | 70 |
+| C22 | right_arm_elbow_pitch | -2.1 to 2.3 | 44.3 | 75.9 | 70 |
 
 ## Wiring parts to buy
 
