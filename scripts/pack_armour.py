@@ -23,7 +23,8 @@ MESH_TOL = 0.2
 WALL, SEAM_H = 3.0, 0.3                         # helmet wall; half a seam (mm)
 HEAD_CLEAR = 6.0                                # room round the head (padding)
 POD_R, COLLIDE = 28.0, 400.0
-HINGE = np.array([-6.0, 0.0, FORGE.Z_CHIN + 158.0 - 1580.0])   # from the neck: the centre of the ear disc
+HINGE = np.array([FORGE.EAR[0], 0.0, FORGE.EAR[1] - 1580.0])   # from the neck: the mask's pivot, in the ear
+NECK_TURN = 0.8                                 # rad each way the collar leaves the helmet room to turn
 
 
 def decimate(m, tol=0.3):
@@ -40,11 +41,12 @@ def from_manifold(x):
 
 
 def working_helmet(pcs, neck, hinge):
-    """The mask is the gold panels; it swings about the ear. Whatever of the fixed shell lies in its way is relieved."""
+    """The mask swings about the ear with everything ahead of its seam: gold panels, forehead wedge and front crown. Its crown is forged
+    to slide under the fixed shell (forge_mark43.helmet_zones), so what is left to relieve here is the small rest round its edges."""
     h = np.array(neck, float) + hinge
     plate = m3.Manifold.compose([as_manifold(m) for p, m in pcs if p["link"] == "helmet_faceplate"])
     turned = []
-    for ang in np.linspace(-0.08, -1.0, 16):
+    for ang in np.linspace(-0.04, -FORGE.MASK_OPEN, 32):
         c, sn = math.cos(ang), math.sin(ang); R = np.array([[c, 0, sn], [0, 1, 0], [-sn, 0, c]]); turned.append(plate.transform(np.c_[R, h - R @ h].tolist()))
     sweep = m3.Manifold.batch_boolean(turned, m3.OpType.Add); out = []; lost = 0.0
     for p, m in pcs:
@@ -61,6 +63,20 @@ RANK = ("head", "torso", "upper_arm", "thigh", "forearm", "shin", "foot", "hand"
 
 # (joint, child link, parent link, lowest, highest rad): each joint's required range
 SWINGS = [("shoulder", "upper_arm", "pelvis", -1.04, 0.24), ("hip", "thigh", "pelvis", -1.04, 0.24), ("elbow", "forearm", "upper_arm", -1.95, 0.0), ("knee", "shin", "thigh", 0.0, 1.75)]
+
+
+def trim_neck(pcs, jpos):
+    """The collar's front lip stands inside the helmet's chin: it gives way to the helmet turned as far as NECK_TURN each way. The helmet stays whole."""
+    o = np.array(jpos["neck_mount"], float); helmet = m3.Manifold.compose([as_manifold(m) for p, m in pcs if p["link"] in ("head", "helmet_faceplate")]).simplify(0.4); turned = []
+    for a in np.linspace(-NECK_TURN, NECK_TURN, int(2 * NECK_TURN / 0.04) + 1):
+        c, s_ = math.cos(a), math.sin(a); R = np.array([[c, -s_, 0], [s_, c, 0], [0, 0, 1.0]]); turned.append(helmet.transform(np.c_[R, o - R @ o].tolist()))
+    sweep = m3.Manifold.batch_boolean(turned, m3.OpType.Add); out = []; lost = 0.0
+    for p, m in pcs:
+        if p["region"] != "torso" or p["material"] == "lens_glow" or m.bounds[1][2] < 1500: out.append((p, m)); continue
+        x = as_manifold(m) - sweep; lost += m.volume - x.volume()
+        out += [({**p, "name": p["name"] + ("" if not i else f"n{i}")}, from_manifold(c_)) for i, c_ in enumerate(sorted((c_ for c_ in x.decompose() if c_.volume() > 500), key=lambda c_: -c_.volume()))]
+    print("collar relief", round(lost), "mm3", flush=True)
+    return out
 
 
 def trim_swings(pcs, jpos):
@@ -129,8 +145,8 @@ def main():
             bodies = [b for b in as_manifold(sub).simplify(0.2).decompose() if b.volume() > (150 if p["material"] == "lens_glow" else 500)]
             for i, b in enumerate(sorted(bodies, key=lambda x: -x.volume())):
                 pcs.append(({**p, "name": p["name"] + ("" if not k else f"k{k}") + ("" if not i else f"b{i}")}, from_manifold(b)))
-    hinge = HINGE; fa = -1.0
-    pcs = trim_swings(working_helmet(resolve(pcs, body), jpos["neck_mount"], hinge), jpos)
+    hinge = HINGE; fa = -FORGE.MASK_OPEN
+    pcs = trim_swings(trim_neck(working_helmet(resolve(pcs, body), jpos["neck_mount"], hinge), jpos), jpos)
     # the shells are far denser than a printer needs: flat panels lose their triangles, edges stay (0.2 mm is under one layer)
     pcs = [(p, from_manifold(as_manifold(m).simplify(MESH_TOL))) for p, m in pcs]
     # simplifying moves surfaces a little: the joint sleeves give way to the armour once more
@@ -194,7 +210,7 @@ def main():
             hc = np.mean([q.centroid for r_, q in pcs if r_["region"] == p["region"] and r_["material"] != "lens_glow"], axis=0)
             rows[-1]["normal"] = (n if n @ (v.mean(0) - hc) > 0 else -n).round(4).tolist()
     man = {"source": 'suit: designed directly by scripts/forge_mark43.py from reference photos of the movie suit', "wearer_height_m": 1.75, "pieces": rows, "limits": limits, "hinge": [float(hinge[0]), float(hinge[2])], "joints": {k: [round(float(x), 2) for x in v] for k, v in jpos.items()},
-           "face_rear_x": float(min(m.bounds[0][0] for p, m in pcs if p["link"] == "helmet_faceplate" and p["material"] != "wearer") - jpos["neck_mount"][0]),
+           "face_rear_x": float(min(m.bounds[0][0] for p, m in pcs if p["link"] == "helmet_faceplate" and p["material"] == "armour_gold") - jpos["neck_mount"][0]),
            "notes": ["shells made by scripts/forge_mark43.py", "joint limits measured by sweeping each limb's armour against its parent's armour"]}
     json.dump(man, open(out + ".json", "w"), separators=(",", ":")); open(out + ".bin", "wb").write(blob)
     print(len(rows), "pieces", sum(r["nf"] for r in rows), "faces", len(blob) // 1000000, "MB")

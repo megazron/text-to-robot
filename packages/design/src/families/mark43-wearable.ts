@@ -17,8 +17,8 @@ import { mul, translation, toPose, type Mat4, type Op as SolidOp } from "@ttr/so
 import type { Op } from "@ttr/kernel";
 import { armourManifest, type ArmourManifest } from "@ttr/mesh";
 import { Assembly } from "../assembly.ts";
-import { totalMass, gravityTorques } from "../kin.ts";
-import { DYNAMIC_FACTOR } from "../sizing.ts";
+import { totalMass, gravityTorques, descendants, fk, linkCom } from "../kin.ts";
+import { inertiaOf } from "@ttr/kinematics";
 import { bay, enclosureChecks, tieAnchor, type BayPart, type ExitSpec } from "../enclosure.ts";
 import { Harness, finishWiring, type WiringRecord } from "../wiring.ts";
 
@@ -34,6 +34,8 @@ const I4: Mat4 = translation([0, 0, 0]);
 const BAY_DEPTH = 30, BAY_FLOOR = 2.4, BAY_GAP = 0.3, GROMMET = 9.5;
 /** what the pack's capacity gives: Samsung INR18650-25R, 2.5 Ah (datasheet) */
 const PACK_AH = 2.5;
+/** what the mask's servos must cope with: the head tipped, a full lift in this time (smoothstep: peak acceleration 6 theta / t^2), and the pins' friction (estimate) */
+const HEAD_TILT = 0.35, FACE_LIFT_S = 1.5, FACE_FRICTION_NM = 0.02;
 
 const TIER_REGIONS: Record<Mark43Tier, RegExp> = { helmet: /^head$/, lights: /^(head|torso|(left|right)_(upper_arm|forearm|hand))$/, suit: /./ };
 
@@ -159,17 +161,18 @@ export function designMark43Wearable(req: Mark43Request = {}): RobotSpecificatio
   const moving = full ? ["faceplate", "neck", ...["left", "right"].flatMap((L) => [`${L}_shoulder`, `${L}_elbow`, ...(tier === "suit" ? [`${L}_hip`, `${L}_knee`] : [])])] : ["faceplate"];
   const range = (n: string) => { const j = A.spec.joints.find((x) => x.name === n)!; return [j.limit!.lower!, j.limit!.upper!]; };
   // walking, stairs, reaching forward, bending the arm: what the suit is required to allow
-  const need: Record<string, [number, number]> = { faceplate: [-0.9, 0], neck: [-0.2, 0.2], left_elbow: [-1.8, 0], right_elbow: [-1.8, 0], left_shoulder: [-1.0, 0.2], right_shoulder: [-1.0, 0.2],
+  const need: Record<string, [number, number]> = { faceplate: [-0.9, 0], neck: [-0.7, 0.7], left_elbow: [-1.8, 0], right_elbow: [-1.8, 0], left_shoulder: [-1.0, 0.2], right_shoulder: [-1.0, 0.2],
     left_hip: [-1.0, 0.2], right_hip: [-1.0, 0.2], left_knee: [0, 1.6], right_knee: [0, 1.6] };
   for (const n of moving) {
     const [lo, hi] = range(n), [nlo, nhi] = need[n] ?? [0, 0];
     A.check(`wearable:${n}`, lo <= nlo + 1e-6 && hi >= nhi - 1e-6, `moves ${(lo * 57.3).toFixed(0)} to ${(hi * 57.3).toFixed(0)} deg, measured by sweeping its armour against the armour it hangs from (needs ${(nlo * 57.3).toFixed(0)} to ${(nhi * 57.3).toFixed(0)})`);
   }
+  // the mask at every angle of its travel, with the head tipped forward or back
   let wFace = 0;
-  for (const q of [0, -0.45, -0.9]) wFace = Math.max(wFace, Math.abs(gravityTorques(A.spec, { faceplate: q }).faceplate ?? 0));
-  const r = rating(FACE_SERVO);
-  A.design.joints.push({ joint: "faceplate", actuator: FACE_SERVO, required_nm: +(wFace * DYNAMIC_FACTOR).toFixed(4), rated_nm: 2 * r.rated_nm, peak_nm: 2 * r.peak_nm, margin: +((2 * r.peak_nm) / Math.max(wFace * DYNAMIC_FACTOR, 1e-6)).toFixed(2), speed_rad_s: r.speed_rad_s, note: "two MG90S share the faceplate" });
-  A.check("torque:faceplate", 2 * r.rated_nm >= wFace, `two MG90S hold the faceplate open (${wFace.toFixed(3)} N·m vs ${(2 * r.rated_nm).toFixed(3)} N·m continuous)`);
+  for (const q of [0, -0.25, -0.5, -0.75, -1.0]) for (const lean of [-HEAD_TILT, 0, HEAD_TILT]) wFace = Math.max(wFace, Math.abs(gravityTorques(A.spec, { faceplate: q }, [], [9.81 * Math.sin(lean), 0, -9.81 * Math.cos(lean)]).faceplate ?? 0));
+  const r = rating(FACE_SERVO), iFace = swingInertia(A.spec, "faceplate"), lift = iFace * 6 * 1.0 / FACE_LIFT_S ** 2 + FACE_FRICTION_NM, peakFace = wFace + lift;
+  A.design.joints.push({ joint: "faceplate", actuator: FACE_SERVO, required_nm: +peakFace.toFixed(4), rated_nm: 2 * r.rated_nm, peak_nm: 2 * r.peak_nm, margin: +((2 * r.peak_nm) / Math.max(peakFace, 1e-6)).toFixed(2), speed_rad_s: r.speed_rad_s, note: `two MG90S share the faceplate; ${iFace.toFixed(4)} kg m2 about the ear` });
+  A.check("torque:faceplate", 2 * r.rated_nm >= wFace && 2 * r.peak_nm >= 1.5 * peakFace, `the mask with its forehead and crown: ${wFace.toFixed(3)} N·m to hold it at the worst angle with the head tipped ${(HEAD_TILT * 57.3).toFixed(0)} deg, against ${(2 * r.rated_nm).toFixed(3)} N·m continuous from two MG90S; ${peakFace.toFixed(3)} N·m to lift it in ${FACE_LIFT_S} s with friction, against ${(2 * r.peak_nm).toFixed(3)} N·m stall`);
   const wiring = finishSuitWiring(harness, full);
   enclosureChecks(A);
   const straps = full ? (tier === "suit" ? 22 : 10) : 0;
@@ -278,6 +281,19 @@ function finishSuitWiring(H: Harness, full: boolean): WiringRecord {
   const load = rec.rails.find((r) => r.name === "VBAT")!;
   H.notes.push(`Run time from the ${PACK_AH} Ah pack at the typical ${load.typical_a} A: about ${(0.8 * PACK_AH / load.typical_a).toFixed(1)} h, keeping 20 % back (estimate; lights and faceplate never all run like that for hours).`);
   return rec;
+}
+
+/** Moment of inertia (kg m2) of everything a joint carries, about its own axis, from each link's mass, centre and inertia tensor. */
+function swingInertia(spec: RobotSpecification, joint: string): number {
+  const j = spec.joints.find((x) => x.name === joint)!, f = fk(spec), { p, axis } = f.joint[joint], links = new Map(spec.links.map((l) => [l.name, l]));
+  let I = 0;
+  for (const n of descendants(spec, j.child)) {
+    const l = links.get(n)!, T = f.link[n], c = linkCom(l), w = [0, 1, 2].map((i) => T.R[i][0] * c[0] + T.R[i][1] * c[1] + T.R[i][2] * c[2] + T.p[i] - p[i]);
+    const along = w[0] * axis[0] + w[1] * axis[1] + w[2] * axis[2], r2 = w[0] ** 2 + w[1] ** 2 + w[2] ** 2 - along ** 2;
+    const t = inertiaOf(l.geometry, l.mass), a = [0, 1, 2].map((k) => T.R[0][k] * axis[0] + T.R[1][k] * axis[1] + T.R[2][k] * axis[2]);
+    I += l.mass * r2 + t.ixx * a[0] ** 2 + t.iyy * a[1] ** 2 + t.izz * a[2] ** 2 + 2 * (t.ixy * a[0] * a[1] + t.ixz * a[0] * a[2] + t.iyz * a[1] * a[2]);
+  }
+  return I;
 }
 
 function invertRigid(m: Mat4): Mat4 {

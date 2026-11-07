@@ -1,6 +1,6 @@
 # Wiring: iron_man_mark_43
 
-16 cables, 33 conductors, 26.89 m of wire, wiring parts $15.80.
+16 cables, 33 conductors, 27.53 m of wire, wiring parts $16.15.
 
 Diagram: [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
 
@@ -9,7 +9,7 @@ Diagram: [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].p
 | Rail | Volts | Source | Source limit A (cont / peak) | Load A (typical / peak) | Margin (typical) | Fuse A | Worst wire drop V |
 |---|--:|---|--:|--:|--:|--:|--:|
 | VBAT | 7.2 | main_switch | 4 / 5 | 1.062 / 3.008 | 3.8x | 2 | 0.035 |
-| 5V_SERVO | 5 | regulator | 2 / 3 | 0.5 / 1.4 | 4.0x | - | 0.067 |
+| 5V_SERVO | 5 | regulator | 2 / 3 | 0.5 / 1.4 | 4.0x | - | 0.072 |
 | 5V_LIGHTS | 5 | regulator_lights | 2 / 3 | 0.72 / 2.16 | 2.8x | - | 0.14 |
 
 **VBAT loads** (peak assumes every load on the 5 V rails at its peak, through the regulators):
@@ -85,10 +85,10 @@ Length is route + service loop + joint slack + termination, rounded up to 5 mm; 
 
 | Cable | What | Conductors | Length mm | Route | Service | Joint slack | Ends | Connectors | Exit |
 |---|---|--:|--:|--:|--:|--:|--:|---|---|
-| C1 | 5V_SERVO to faceplate_servo_left | 3 | 915 | 711.2 | 40 | 100 | 60 | 15-pin 2.54 mm male header / JR plug | back_bay.leads_1 |
-| C2 | 5V_SERVO to faceplate_servo_right | 3 | 955 | 753.4 | 40 | 100 | 60 | 15-pin 2.54 mm male header / JR plug | back_bay.leads_2 |
-| C3 | controller to eye_led_left | 2 | 1090 | 822.6 | 40 | 165 | 60 | 15-pin 2.54 mm male header / 2 axial leads | back_bay.leads_1 |
-| C4 | controller to eye_led_right | 2 | 1235 | 965.4 | 40 | 165 | 60 | 15-pin 2.54 mm male header / 2 axial leads | back_bay.leads_2 |
+| C1 | 5V_SERVO to faceplate_servo_left | 3 | 980 | 723.8 | 40 | 155 | 60 | 15-pin 2.54 mm male header / JR plug | back_bay.leads_1 |
+| C2 | 5V_SERVO to faceplate_servo_right | 3 | 1025 | 765.8 | 40 | 155 | 60 | 15-pin 2.54 mm male header / JR plug | back_bay.leads_2 |
+| C3 | controller to eye_led_left | 2 | 1150 | 822.6 | 40 | 225 | 60 | 15-pin 2.54 mm male header / 2 axial leads | back_bay.leads_1 |
+| C4 | controller to eye_led_right | 2 | 1295 | 965.5 | 40 | 225 | 60 | 15-pin 2.54 mm male header / 2 axial leads | back_bay.leads_2 |
 | C5 | 5V_LIGHTS to arc_reactor | 3 | 1045 | 944 | 40 | 0 | 60 | 15-pin 2.54 mm male header / 4 solder pads on the back | back_bay.leads_3 |
 | C6 | 5V_LIGHTS to left_repulsor | 3 | 1880 | 1298.1 | 40 | 480 | 60 | 15-pin 2.54 mm male header / 4 solder pads on the back | back_bay.leads_3 |
 | C7 | 5V_LIGHTS to right_repulsor | 3 | 1920 | 1338.7 | 40 | 480 | 60 | 15-pin 2.54 mm male header / 4 solder pads on the back | back_bay.leads_4 |
@@ -108,12 +108,12 @@ Each loop is at least the extra length the joint needs at the far end of its tra
 
 | Cable | Joint | Travel rad | Length at home mm | Length at full travel mm | Slack loop mm |
 |---|---|---|--:|--:|--:|
-| C1 | neck | -0.25 to 0.25 | 71.1 | 75.5 | 100 |
-| C2 | neck | -0.25 to 0.25 | 71.1 | 75.5 | 100 |
-| C3 | neck | -0.25 to 0.25 | 71.1 | 75.5 | 95 |
-| C3 | faceplate | -1 to 0 | 114.1 | 150 | 70 |
-| C4 | neck | -0.25 to 0.25 | 71.1 | 75.5 | 95 |
-| C4 | faceplate | -1 to 0 | 114.1 | 150 | 70 |
+| C1 | neck | -1.2 to 1.2 | 71.2 | 126 | 155 |
+| C2 | neck | -1.2 to 1.2 | 71.2 | 126 | 155 |
+| C3 | neck | -1.2 to 1.2 | 71.2 | 126 | 150 |
+| C3 | faceplate | -1 to 0 | 136.3 | 177.2 | 75 |
+| C4 | neck | -1.2 to 1.2 | 71.2 | 126 | 150 |
+| C4 | faceplate | -1 to 0 | 136.3 | 177.2 | 75 |
 | C6 | left_shoulder | -1 to 0.2 | 152.6 | 253.1 | 250 |
 | C6 | left_elbow | -1.9 to 0 | 147.5 | 282.2 | 190 |
 | C7 | right_shoulder | -1 to 0.2 | 152.9 | 253.4 | 250 |
@@ -124,15 +124,15 @@ Each loop is at least the extra length the joint needs at the far end of its tra
 | Item | Qty | Unit | Unit $ | Subtotal $ | Spec | Price source |
 |---|--:|---|--:|--:|---|---|
 | 22 AWG silicone wire | 0.8 | m | 0.4 | 0.32 | 0.327 mm2, rated 3.5 A in a bundle; 0.71 m cut + 10 % waste | estimated |
-| 24 AWG silicone wire | 18.9 | m | 0.35 | 6.61 | 0.205 mm2, rated 1.75 A in a bundle; 17.13 m cut + 10 % waste | estimated |
-| 26 AWG silicone wire | 10 | m | 0.3 | 3.00 | 0.128 mm2, rated 1.1 A in a bundle; 9.04 m cut + 10 % waste | estimated |
+| 24 AWG silicone wire | 19.3 | m | 0.35 | 6.75 | 0.205 mm2, rated 1.75 A in a bundle; 17.52 m cut + 10 % waste | estimated |
+| 26 AWG silicone wire | 10.3 | m | 0.3 | 3.09 | 0.128 mm2, rated 1.1 A in a bundle; 9.29 m cut + 10 % waste | estimated |
 | Dupont 2.54 mm contacts | 21 | pc | 0.02 | 0.42 | rated 3 A per contact | estimated |
 | Dupont 2.54 mm housings | 8 | pc | 0.02 | 0.16 | one per cable end | estimated |
 | 6.3 mm spade contacts | 2 | pc | 0.08 | 0.16 | rated 15 A per contact | estimated |
 | Heat shrink 3 mm, 2:1 | 1.9 | m | 0.2 | 0.38 | 31 solder joints + a boot on each cable end | estimated |
 | Cable tie 100 x 2.5 mm | 24 | pc | 0.02 | 0.48 | at every clip, cable end and strain-relief anchor | estimated |
 | Rubber grommet, 9.5 mm panel hole, 4.8 mm bore | 4 | pc | 0.1 | 0.40 | 9.5 mm panel hole | estimated |
-| Nylon braided sleeving 6 mm | 2.5 | m | 0.4 | 1.00 | over every cable where it crosses a joint | estimated |
+| Nylon braided sleeving 6 mm | 2.8 | m | 0.4 | 1.12 | over every cable where it crosses a joint | estimated |
 | 2 A ATM blade fuse | 1 | pc | 0.25 | 0.25 | plus spares | estimated |
 | JST XH 2.5 mm inline plug and socket, 3 way | 7 | pc | 0.28 | 1.96 | one on each lead at the neck, the shoulders and the chest seam, so helmet, arms and chest come off | estimated |
 | 1000 uF 16 V electrolytic capacitor | 3 | pc | 0.2 | 0.60 | across 5 V and GND at each ring | estimated |

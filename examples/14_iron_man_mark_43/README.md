@@ -6,9 +6,9 @@
 
 Interpreted as: Iron Man Mark 43 wearable suit · budget $60000
 
-**Iron Man Mark 43 (full wearable suit): 350 printed pieces, 7.7 kg filament, motorised faceplate, $327 incl. filament**
+**Iron Man Mark 43 (full wearable suit): 351 printed pieces, 7.7 kg filament, motorised faceplate, $327 incl. filament**
 
-Parts cost **$339.79** (budget $60000: within) · printed structure 350 parts, 7096 g · checks passed 391/391
+Parts cost **$340.21** (budget $60000: within) · printed structure 351 parts, 7099 g · checks passed 392/392
 
 ## What it can do
 
@@ -17,21 +17,21 @@ Parts cost **$339.79** (budget $60000: within) · printed structure 350 parts, 7
 | tier | suit |
 | tier label | full wearable suit |
 | wearer height m | 1.75 |
-| printed pieces | 350 |
+| printed pieces | 351 |
 | armour mass kg | 8.05 |
-| filament kg | 7.66 |
-| cost usd | 326.7 |
+| filament kg | 7.67 |
+| cost usd | 327.12 |
 | mass kg | 8.33 |
 
 ## Actuators (sized from this robot's own loads)
 
 | Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
 |---|---|--:|--:|--:|--:|
-| faceplate | hobby_mg90s | 0.1533 | 0.1294 / 0.4314 | 2.81x | 13.09 |
+| faceplate | hobby_mg90s | 0.1299 | 0.1294 / 0.4314 | 3.32x | 13.09 |
 
 ## Engineering checks
 
-All 391 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
+All 392 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
 
 ## Assumptions and limits
 

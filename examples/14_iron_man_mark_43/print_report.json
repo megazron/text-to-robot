@@ -90,13 +90,13 @@
     26.1
    ],
    "orientation": [
-    -0.029,
+    -0.03,
     0.662,
     0.749
    ],
    "fits_bed": true,
-   "support_area_cm2": 9.89,
-   "support_frac": 0.137,
+   "support_area_cm2": 9.67,
+   "support_frac": 0.133,
    "bed_contact_cm2": 2.22,
    "min_wall_mm": 1.6,
    "thin_wall_frac": 0.001,
@@ -115,22 +115,20 @@
     25.0
    ],
    "orientation": [
-    0.508,
-    0.356,
-    -0.785
+    0.829,
+    0.233,
+    0.509
    ],
    "fits_bed": true,
-   "support_area_cm2": 12.55,
-   "support_frac": 0.189,
-   "bed_contact_cm2": 1.39,
-   "min_wall_mm": 1.17,
-   "thin_wall_frac": 0.006,
+   "support_area_cm2": 15.35,
+   "support_frac": 0.23,
+   "bed_contact_cm2": 2.77,
+   "min_wall_mm": 1.6,
+   "thin_wall_frac": 0.005,
    "passed": true,
    "supports": "needed",
    "problems": [],
-   "warnings": [
-    "thin wall 1.17 mm (prints with 2 perimeters; 3 recommended)"
-   ]
+   "warnings": []
   },
   {
    "name": "chan_chest_2",
@@ -142,16 +140,16 @@
     108.8
    ],
    "orientation": [
-    0.0,
+    -0.0,
     -1.0,
-    0.0
+    -0.001
    ],
    "fits_bed": true,
    "support_area_cm2": 8.75,
-   "support_frac": 0.134,
+   "support_frac": 0.133,
    "bed_contact_cm2": 5.44,
    "min_wall_mm": 1.6,
-   "thin_wall_frac": 0.002,
+   "thin_wall_frac": 0.001,
    "passed": true,
    "supports": "needed",
    "problems": [],
@@ -212,21 +210,21 @@
    "watertight": true,
    "volume_cm3": 5.87,
    "size_mm": [
-    45.6,
-    79.6,
-    95.8
+    45.2,
+    79.7,
+    95.6
    ],
    "orientation": [
-    -0.793,
-    0.111,
-    -0.6
+    -0.775,
+    0.101,
+    -0.624
    ],
    "fits_bed": true,
-   "support_area_cm2": 10.17,
+   "support_area_cm2": 10.13,
    "support_frac": 0.15,
-   "bed_contact_cm2": 2.21,
-   "min_wall_mm": 1.58,
-   "thin_wall_frac": 0.004,
+   "bed_contact_cm2": 2.22,
+   "min_wall_mm": 1.6,
+   "thin_wall_frac": 0.001,
    "passed": true,
    "supports": "needed",
    "problems": [],
@@ -260,7 +258,7 @@
   {
    "name": "chan_left_yoke_0",
    "watertight": true,
-   "volume_cm3": 5.52,
+   "volume_cm3": 5.53,
    "size_mm": [
     35.4,
     106.5,
@@ -272,16 +270,16 @@
     -0.05
    ],
    "fits_bed": true,
-   "support_area_cm2": 0.66,
-   "support_frac": 0.01,
+   "support_area_cm2": 0.36,
+   "support_frac": 0.006,
    "bed_contact_cm2": 0.5,
-   "min_wall_mm": 1.13,
+   "min_wall_mm": 1.18,
    "thin_wall_frac": 0.006,
    "passed": true,
    "supports": "none",
    "problems": [],
    "warnings": [
-    "thin wall 1.13 mm (prints with 2 perimeters; 3 recommended)"
+    "thin wall 1.18 mm (prints with 2 perimeters; 3 recommended)"
    ]
   },
   {
@@ -337,23 +335,23 @@
   {
    "name": "chan_right_helmet_0",
    "watertight": true,
-   "volume_cm3": 5.87,
+   "volume_cm3": 5.88,
    "size_mm": [
-    45.4,
-    79.2,
-    95.9
+    45.1,
+    79.4,
+    95.8
    ],
    "orientation": [
-    -0.815,
-    -0.15,
-    -0.559
+    -0.81,
+    -0.194,
+    -0.553
    ],
    "fits_bed": true,
-   "support_area_cm2": 10.71,
-   "support_frac": 0.159,
-   "bed_contact_cm2": 2.15,
-   "min_wall_mm": 1.6,
-   "thin_wall_frac": 0.001,
+   "support_area_cm2": 11.83,
+   "support_frac": 0.174,
+   "bed_contact_cm2": 1.61,
+   "min_wall_mm": 1.59,
+   "thin_wall_frac": 0.004,
    "passed": true,
    "supports": "needed",
    "problems": [],
@@ -478,7 +476,7 @@
    "support_frac": 0.052,
    "bed_contact_cm2": 8.99,
    "min_wall_mm": 0.8,
-   "thin_wall_frac": 0.023,
+   "thin_wall_frac": 0.02,
    "passed": false,
    "supports": "none",
    "problems": [
@@ -505,21 +503,21 @@
    "support_frac": 0.052,
    "bed_contact_cm2": 8.99,
    "min_wall_mm": 0.8,
-   "thin_wall_frac": 0.023,
+   "thin_wall_frac": 0.025,
    "passed": false,
    "supports": "none",
    "problems": [
-    "walls down to 0.80 mm (< 0.8 mm = 2 extrusion lines) on 2% of the surface"
+    "walls down to 0.80 mm (< 0.8 mm = 2 extrusion lines) on 3% of the surface"
    ],
    "warnings": []
   },
   {
    "name": "faceplate_arm_left",
    "watertight": true,
-   "volume_cm3": 11.75,
+   "volume_cm3": 11.27,
    "size_mm": [
     41.0,
-    62.5,
+    59.5,
     38.0
    ],
    "orientation": [
@@ -529,9 +527,9 @@
    ],
    "fits_bed": true,
    "support_area_cm2": 2.17,
-   "support_frac": 0.034,
+   "support_frac": 0.035,
    "bed_contact_cm2": 5.2,
-   "min_wall_mm": 1.6,
+   "min_wall_mm": 1.44,
    "thin_wall_frac": 0.002,
    "passed": true,
    "supports": "none",
@@ -541,10 +539,10 @@
   {
    "name": "faceplate_arm_right",
    "watertight": true,
-   "volume_cm3": 11.75,
+   "volume_cm3": 11.27,
    "size_mm": [
     41.0,
-    62.5,
+    59.5,
     38.0
    ],
    "orientation": [
@@ -554,10 +552,10 @@
    ],
    "fits_bed": true,
    "support_area_cm2": 2.17,
-   "support_frac": 0.034,
+   "support_frac": 0.035,
    "bed_contact_cm2": 5.2,
-   "min_wall_mm": 1.6,
-   "thin_wall_frac": 0.001,
+   "min_wall_mm": 1.53,
+   "thin_wall_frac": 0.003,
    "passed": true,
    "supports": "none",
    "problems": [],
@@ -566,478 +564,258 @@
   {
    "name": "helmet_0",
    "watertight": true,
-   "volume_cm3": 43.66,
+   "volume_cm3": 2.47,
    "size_mm": [
-    121.0,
-    103.5,
-    120.1
+    11.4,
+    56.0,
+    68.6
    ],
    "orientation": [
-    -0.988,
-    -0.044,
-    -0.148
+    -1.0,
+    0.0,
+    0.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 82.25,
-   "support_frac": 0.202,
-   "bed_contact_cm2": 5.59,
-   "min_wall_mm": 0.66,
-   "thin_wall_frac": 0.013,
+   "support_area_cm2": 13.61,
+   "support_frac": 0.386,
+   "bed_contact_cm2": 1.9,
+   "min_wall_mm": 0.1,
+   "thin_wall_frac": 0.137,
    "passed": false,
    "supports": "needed",
    "problems": [
-    "walls down to 0.66 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
+    "needs supports under 13.6 cm^2 (39% of its surface) even in its best orientation",
+    "walls down to 0.10 mm (< 0.8 mm = 2 extrusion lines) on 14% of the surface"
    ],
    "warnings": []
   },
   {
    "name": "helmet_1",
    "watertight": true,
-   "volume_cm3": 47.72,
+   "volume_cm3": 6.92,
    "size_mm": [
-    127.6,
-    107.5,
-    118.6
+    61.1,
+    68.7,
+    57.4
+   ],
+   "orientation": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 9.08,
+   "support_frac": 0.128,
+   "bed_contact_cm2": 1.49,
+   "min_wall_mm": 0.2,
+   "thin_wall_frac": 0.037,
+   "passed": false,
+   "supports": "needed",
+   "problems": [
+    "walls down to 0.20 mm (< 0.8 mm = 2 extrusion lines) on 4% of the surface"
+   ],
+   "warnings": []
+  },
+  {
+   "name": "helmet_10",
+   "watertight": true,
+   "volume_cm3": 40.71,
+   "size_mm": [
+    120.9,
+    103.4,
+    120.3
+   ],
+   "orientation": [
+    -0.442,
+    -0.871,
+    -0.216
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 142.23,
+   "support_frac": 0.348,
+   "bed_contact_cm2": 4.46,
+   "min_wall_mm": 0.71,
+   "thin_wall_frac": 0.012,
+   "passed": false,
+   "supports": "needed",
+   "problems": [
+    "needs supports under 142.2 cm^2 (35% of its surface) even in its best orientation",
+    "walls down to 0.71 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
+   ],
+   "warnings": []
+  },
+  {
+   "name": "helmet_11",
+   "watertight": true,
+   "volume_cm3": 54.98,
+   "size_mm": [
+    126.9,
+    107.3,
+    138.1
    ],
    "orientation": [
     0.0,
     0.0,
-    -1.0
+    1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 11.81,
-   "support_frac": 0.026,
-   "bed_contact_cm2": 0.08,
-   "min_wall_mm": 0.19,
-   "thin_wall_frac": 0.029,
+   "support_area_cm2": 62.37,
+   "support_frac": 0.111,
+   "bed_contact_cm2": 1.14,
+   "min_wall_mm": 0.16,
+   "thin_wall_frac": 0.063,
    "passed": false,
-   "supports": "none",
+   "supports": "needed",
    "problems": [
-    "2 separate pieces (a part must be one connected solid)",
-    "walls down to 0.19 mm (< 0.8 mm = 2 extrusion lines) on 3% of the surface"
+    "walls down to 0.16 mm (< 0.8 mm = 2 extrusion lines) on 6% of the surface"
    ],
    "warnings": []
   },
   {
    "name": "helmet_12",
    "watertight": true,
-   "volume_cm3": 20.85,
+   "volume_cm3": 40.97,
    "size_mm": [
-    103.6,
-    100.3,
-    143.3
+    120.9,
+    103.4,
+    120.3
    ],
    "orientation": [
-    0.0,
-    0.0,
-    -1.0
+    -0.433,
+    0.876,
+    -0.214
    ],
    "fits_bed": true,
-   "support_area_cm2": 14.71,
-   "support_frac": 0.066,
-   "bed_contact_cm2": 2.65,
-   "min_wall_mm": 0.08,
-   "thin_wall_frac": 0.07,
+   "support_area_cm2": 141.68,
+   "support_frac": 0.347,
+   "bed_contact_cm2": 3.54,
+   "min_wall_mm": 0.63,
+   "thin_wall_frac": 0.015,
    "passed": false,
-   "supports": "none",
+   "supports": "needed",
    "problems": [
-    "walls down to 0.08 mm (< 0.8 mm = 2 extrusion lines) on 7% of the surface"
+    "needs supports under 141.7 cm^2 (35% of its surface) even in its best orientation",
+    "walls down to 0.63 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
    ],
    "warnings": []
   },
   {
    "name": "helmet_13",
    "watertight": true,
-   "volume_cm3": 0.63,
+   "volume_cm3": 54.69,
    "size_mm": [
-    25.9,
-    5.0,
-    20.1
+    126.9,
+    107.3,
+    138.1
    ],
    "orientation": [
-    0.014,
-    0.993,
-    -0.114
+    0.0,
+    0.0,
+    1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 1.84,
-   "support_frac": 0.22,
-   "bed_contact_cm2": 1.29,
-   "min_wall_mm": 0.15,
-   "thin_wall_frac": 0.067,
+   "support_area_cm2": 62.29,
+   "support_frac": 0.111,
+   "bed_contact_cm2": 1.22,
+   "min_wall_mm": 0.13,
+   "thin_wall_frac": 0.051,
    "passed": false,
    "supports": "needed",
    "problems": [
-    "walls down to 0.15 mm (< 0.8 mm = 2 extrusion lines) on 7% of the surface"
+    "walls down to 0.13 mm (< 0.8 mm = 2 extrusion lines) on 5% of the surface"
+   ],
+   "warnings": []
+  },
+  {
+   "name": "helmet_14",
+   "watertight": true,
+   "volume_cm3": 0.63,
+   "size_mm": [
+    25.9,
+    4.9,
+    20.1
+   ],
+   "orientation": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 0.12,
+   "support_frac": 0.014,
+   "bed_contact_cm2": 0.0,
+   "min_wall_mm": 0.09,
+   "thin_wall_frac": 0.07,
+   "passed": false,
+   "supports": "none",
+   "problems": [
+    "no flat face to stand on the bed",
+    "walls down to 0.09 mm (< 0.8 mm = 2 extrusion lines) on 7% of the surface"
    ],
    "warnings": []
   },
   {
    "name": "helmet_15",
    "watertight": true,
-   "volume_cm3": 5.44,
+   "volume_cm3": 19.47,
    "size_mm": [
-    56.4,
-    22.1,
-    76.9
+    100.6,
+    100.3,
+    143.3
    ],
    "orientation": [
-    0.235,
-    0.853,
-    0.467
+    -0.0,
+    0.001,
+    -1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 30.62,
-   "support_frac": 0.433,
-   "bed_contact_cm2": 2.16,
-   "min_wall_mm": 0.04,
-   "thin_wall_frac": 0.234,
+   "support_area_cm2": 13.46,
+   "support_frac": 0.064,
+   "bed_contact_cm2": 2.58,
+   "min_wall_mm": 0.17,
+   "thin_wall_frac": 0.039,
    "passed": false,
-   "supports": "needed",
+   "supports": "none",
    "problems": [
-    "needs supports under 30.6 cm^2 (43% of its surface) even in its best orientation",
-    "walls down to 0.04 mm (< 0.8 mm = 2 extrusion lines) on 23% of the surface"
+    "walls down to 0.17 mm (< 0.8 mm = 2 extrusion lines) on 4% of the surface"
    ],
    "warnings": []
   },
   {
    "name": "helmet_16",
    "watertight": true,
-   "volume_cm3": 2.18,
+   "volume_cm3": 4.94,
    "size_mm": [
-    41.6,
-    9.2,
-    47.9
+    32.4,
+    24.8,
+    118.2
    ],
    "orientation": [
-    0.013,
-    0.999,
-    -0.037
+    0.037,
+    -0.999,
+    -0.011
    ],
    "fits_bed": true,
-   "support_area_cm2": 10.05,
-   "support_frac": 0.353,
-   "bed_contact_cm2": 1.64,
-   "min_wall_mm": 0.04,
-   "thin_wall_frac": 0.103,
+   "support_area_cm2": 24.06,
+   "support_frac": 0.395,
+   "bed_contact_cm2": 1.52,
+   "min_wall_mm": 0.08,
+   "thin_wall_frac": 0.059,
    "passed": false,
    "supports": "needed",
-   "problems": [
-    "needs supports under 10.1 cm^2 (35% of its surface) even in its best orientation",
-    "walls down to 0.04 mm (< 0.8 mm = 2 extrusion lines) on 10% of the surface"
-   ],
-   "warnings": []
-  },
-  {
-   "name": "helmet_18",
-   "watertight": true,
-   "volume_cm3": 31.52,
-   "size_mm": [
-    134.0,
-    97.3,
-    95.4
-   ],
-   "orientation": [
-    -1.0,
-    0.0,
-    0.0
-   ],
-   "fits_bed": true,
-   "support_area_cm2": 11.69,
-   "support_frac": 0.044,
-   "bed_contact_cm2": 1.03,
-   "min_wall_mm": 0.09,
-   "thin_wall_frac": 0.073,
-   "passed": false,
-   "supports": "none",
-   "problems": [
-    "walls down to 0.09 mm (< 0.8 mm = 2 extrusion lines) on 7% of the surface"
-   ],
-   "warnings": []
-  },
-  {
-   "name": "helmet_19",
-   "watertight": true,
-   "volume_cm3": 21.09,
-   "size_mm": [
-    118.0,
-    98.3,
-    99.5
-   ],
-   "orientation": [
-    0.165,
-    0.983,
-    -0.082
-   ],
-   "fits_bed": true,
-   "support_area_cm2": 57.12,
-   "support_frac": 0.261,
-   "bed_contact_cm2": 4.29,
-   "min_wall_mm": 0.09,
-   "thin_wall_frac": 0.085,
-   "passed": false,
-   "supports": "needed",
-   "problems": [
-    "walls down to 0.09 mm (< 0.8 mm = 2 extrusion lines) on 9% of the surface"
-   ],
-   "warnings": []
-  },
-  {
-   "name": "helmet_2",
-   "watertight": true,
-   "volume_cm3": 0.9,
-   "size_mm": [
-    102.2,
-    80.4,
-    13.4
-   ],
-   "orientation": [
-    -1.0,
-    0.0,
-    0.0
-   ],
-   "fits_bed": true,
-   "support_area_cm2": 0.76,
-   "support_frac": 0.02,
-   "bed_contact_cm2": 0.0,
-   "min_wall_mm": 0.01,
-   "thin_wall_frac": 0.915,
-   "passed": false,
-   "supports": "none",
-   "problems": [
-    "2 separate pieces (a part must be one connected solid)",
-    "no flat face to stand on the bed",
-    "walls down to 0.01 mm (< 0.8 mm = 2 extrusion lines) on 91% of the surface"
-   ],
-   "warnings": []
-  },
-  {
-   "name": "helmet_20",
-   "watertight": true,
-   "volume_cm3": 31.66,
-   "size_mm": [
-    134.0,
-    97.3,
-    95.4
-   ],
-   "orientation": [
-    0.0,
-    0.0,
-    -1.0
-   ],
-   "fits_bed": true,
-   "support_area_cm2": 36.16,
-   "support_frac": 0.137,
-   "bed_contact_cm2": 1.1,
-   "min_wall_mm": 0.15,
-   "thin_wall_frac": 0.062,
-   "passed": false,
-   "supports": "needed",
-   "problems": [
-    "walls down to 0.15 mm (< 0.8 mm = 2 extrusion lines) on 6% of the surface"
-   ],
-   "warnings": []
-  },
-  {
-   "name": "helmet_21",
-   "watertight": true,
-   "volume_cm3": 21.0,
-   "size_mm": [
-    118.0,
-    98.3,
-    99.5
-   ],
-   "orientation": [
-    0.165,
-    0.983,
-    0.076
-   ],
-   "fits_bed": true,
-   "support_area_cm2": 57.6,
-   "support_frac": 0.263,
-   "bed_contact_cm2": 4.21,
-   "min_wall_mm": 0.07,
-   "thin_wall_frac": 0.083,
-   "passed": false,
-   "supports": "needed",
-   "problems": [
-    "walls down to 0.07 mm (< 0.8 mm = 2 extrusion lines) on 8% of the surface"
-   ],
-   "warnings": []
-  },
-  {
-   "name": "helmet_22",
-   "watertight": true,
-   "volume_cm3": 3.54,
-   "size_mm": [
-    31.5,
-    52.0,
-    72.1
-   ],
-   "orientation": [
-    1.0,
-    0.0,
-    0.0
-   ],
-   "fits_bed": true,
-   "support_area_cm2": 1.8,
-   "support_frac": 0.055,
-   "bed_contact_cm2": 0.08,
-   "min_wall_mm": 0.5,
-   "thin_wall_frac": 0.019,
-   "passed": false,
-   "supports": "none",
-   "problems": [
-    "walls down to 0.50 mm (< 0.8 mm = 2 extrusion lines) on 2% of the surface"
-   ],
-   "warnings": []
-  },
-  {
-   "name": "helmet_23",
-   "watertight": true,
-   "volume_cm3": 3.54,
-   "size_mm": [
-    31.5,
-    52.6,
-    72.1
-   ],
-   "orientation": [
-    1.0,
-    0.0,
-    0.0
-   ],
-   "fits_bed": true,
-   "support_area_cm2": 1.75,
-   "support_frac": 0.054,
-   "bed_contact_cm2": 0.08,
-   "min_wall_mm": 0.54,
-   "thin_wall_frac": 0.017,
-   "passed": false,
-   "supports": "none",
-   "problems": [
-    "walls down to 0.54 mm (< 0.8 mm = 2 extrusion lines) on 2% of the surface"
-   ],
-   "warnings": []
-  },
-  {
-   "name": "helmet_3",
-   "watertight": true,
-   "volume_cm3": 43.8,
-   "size_mm": [
-    121.1,
-    103.5,
-    120.1
-   ],
-   "orientation": [
-    -0.396,
-    0.866,
-    -0.305
-   ],
-   "fits_bed": true,
-   "support_area_cm2": 139.79,
-   "support_frac": 0.343,
-   "bed_contact_cm2": 4.08,
-   "min_wall_mm": 0.47,
-   "thin_wall_frac": 0.017,
-   "passed": false,
-   "supports": "needed",
-   "problems": [
-    "needs supports under 139.8 cm^2 (34% of its surface) even in its best orientation",
-    "walls down to 0.47 mm (< 0.8 mm = 2 extrusion lines) on 2% of the surface"
-   ],
-   "warnings": []
-  },
-  {
-   "name": "helmet_4",
-   "watertight": true,
-   "volume_cm3": 47.76,
-   "size_mm": [
-    127.6,
-    107.5,
-    118.6
-   ],
-   "orientation": [
-    0.0,
-    0.0,
-    -1.0
-   ],
-   "fits_bed": true,
-   "support_area_cm2": 12.52,
-   "support_frac": 0.028,
-   "bed_contact_cm2": 0.1,
-   "min_wall_mm": 0.1,
-   "thin_wall_frac": 0.035,
-   "passed": false,
-   "supports": "none",
-   "problems": [
-    "6 separate pieces (a part must be one connected solid)",
-    "walls down to 0.10 mm (< 0.8 mm = 2 extrusion lines) on 4% of the surface"
-   ],
-   "warnings": []
-  },
-  {
-   "name": "helmet_5",
-   "watertight": true,
-   "volume_cm3": 0.9,
-   "size_mm": [
-    102.2,
-    80.4,
-    13.4
-   ],
-   "orientation": [
-    -1.0,
-    0.0,
-    0.0
-   ],
-   "fits_bed": true,
-   "support_area_cm2": 0.76,
-   "support_frac": 0.02,
-   "bed_contact_cm2": 0.0,
-   "min_wall_mm": 0.01,
-   "thin_wall_frac": 0.93,
-   "passed": false,
-   "supports": "none",
    "problems": [
     "4 separate pieces (a part must be one connected solid)",
-    "no flat face to stand on the bed",
-    "walls down to 0.01 mm (< 0.8 mm = 2 extrusion lines) on 93% of the surface"
+    "needs supports under 24.1 cm^2 (39% of its surface) even in its best orientation",
+    "walls down to 0.08 mm (< 0.8 mm = 2 extrusion lines) on 6% of the surface"
    ],
    "warnings": []
   },
   {
-   "name": "helmet_6",
+   "name": "helmet_17",
    "watertight": true,
-   "volume_cm3": 0.63,
+   "volume_cm3": 19.51,
    "size_mm": [
-    25.9,
-    5.0,
-    20.1
-   ],
-   "orientation": [
-    -1.0,
-    0.0,
-    0.0
-   ],
-   "fits_bed": true,
-   "support_area_cm2": 0.11,
-   "support_frac": 0.014,
-   "bed_contact_cm2": 0.0,
-   "min_wall_mm": 0.08,
-   "thin_wall_frac": 0.073,
-   "passed": false,
-   "supports": "none",
-   "problems": [
-    "no flat face to stand on the bed",
-    "walls down to 0.08 mm (< 0.8 mm = 2 extrusion lines) on 7% of the surface"
-   ],
-   "warnings": []
-  },
-  {
-   "name": "helmet_7",
-   "watertight": true,
-   "volume_cm3": 20.85,
-   "size_mm": [
-    103.6,
+    100.6,
     100.3,
     143.3
    ],
@@ -1047,72 +825,318 @@
     -1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 14.94,
-   "support_frac": 0.067,
-   "bed_contact_cm2": 2.63,
-   "min_wall_mm": 0.1,
-   "thin_wall_frac": 0.068,
+   "support_area_cm2": 13.33,
+   "support_frac": 0.063,
+   "bed_contact_cm2": 2.54,
+   "min_wall_mm": 0.34,
+   "thin_wall_frac": 0.031,
    "passed": false,
    "supports": "none",
    "problems": [
-    "walls down to 0.10 mm (< 0.8 mm = 2 extrusion lines) on 7% of the surface"
+    "walls down to 0.34 mm (< 0.8 mm = 2 extrusion lines) on 3% of the surface"
+   ],
+   "warnings": []
+  },
+  {
+   "name": "helmet_18",
+   "watertight": true,
+   "volume_cm3": 0.63,
+   "size_mm": [
+    25.9,
+    4.9,
+    20.1
+   ],
+   "orientation": [
+    0.016,
+    0.994,
+    -0.111
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 1.83,
+   "support_frac": 0.218,
+   "bed_contact_cm2": 1.32,
+   "min_wall_mm": 0.11,
+   "thin_wall_frac": 0.07,
+   "passed": false,
+   "supports": "needed",
+   "problems": [
+    "walls down to 0.11 mm (< 0.8 mm = 2 extrusion lines) on 7% of the surface"
+   ],
+   "warnings": []
+  },
+  {
+   "name": "helmet_19",
+   "watertight": true,
+   "volume_cm3": 2.95,
+   "size_mm": [
+    29.6,
+    23.2,
+    92.6
+   ],
+   "orientation": [
+    0.019,
+    0.998,
+    0.059
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 13.29,
+   "support_frac": 0.384,
+   "bed_contact_cm2": 1.64,
+   "min_wall_mm": 0.23,
+   "thin_wall_frac": 0.038,
+   "passed": false,
+   "supports": "needed",
+   "problems": [
+    "needs supports under 13.3 cm^2 (38% of its surface) even in its best orientation",
+    "walls down to 0.23 mm (< 0.8 mm = 2 extrusion lines) on 4% of the surface"
+   ],
+   "warnings": []
+  },
+  {
+   "name": "helmet_19b1",
+   "watertight": true,
+   "volume_cm3": 1.97,
+   "size_mm": [
+    32.4,
+    10.1,
+    47.9
+   ],
+   "orientation": [
+    0.031,
+    0.999,
+    -0.026
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 9.37,
+   "support_frac": 0.355,
+   "bed_contact_cm2": 1.49,
+   "min_wall_mm": 0.08,
+   "thin_wall_frac": 0.087,
+   "passed": false,
+   "supports": "needed",
+   "problems": [
+    "needs supports under 9.4 cm^2 (36% of its surface) even in its best orientation",
+    "walls down to 0.08 mm (< 0.8 mm = 2 extrusion lines) on 9% of the surface"
+   ],
+   "warnings": []
+  },
+  {
+   "name": "helmet_2",
+   "watertight": true,
+   "volume_cm3": 2.5,
+   "size_mm": [
+    11.4,
+    56.0,
+    68.6
+   ],
+   "orientation": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 13.37,
+   "support_frac": 0.379,
+   "bed_contact_cm2": 2.06,
+   "min_wall_mm": 0.05,
+   "thin_wall_frac": 0.147,
+   "passed": false,
+   "supports": "needed",
+   "problems": [
+    "needs supports under 13.4 cm^2 (38% of its surface) even in its best orientation",
+    "walls down to 0.05 mm (< 0.8 mm = 2 extrusion lines) on 15% of the surface"
+   ],
+   "warnings": []
+  },
+  {
+   "name": "helmet_3",
+   "watertight": true,
+   "volume_cm3": 6.96,
+   "size_mm": [
+    61.1,
+    69.5,
+    57.4
+   ],
+   "orientation": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 8.58,
+   "support_frac": 0.121,
+   "bed_contact_cm2": 1.47,
+   "min_wall_mm": 0.34,
+   "thin_wall_frac": 0.034,
+   "passed": false,
+   "supports": "needed",
+   "problems": [
+    "walls down to 0.34 mm (< 0.8 mm = 2 extrusion lines) on 3% of the surface"
+   ],
+   "warnings": []
+  },
+  {
+   "name": "helmet_4",
+   "watertight": true,
+   "volume_cm3": 28.31,
+   "size_mm": [
+    134.0,
+    92.7,
+    99.8
+   ],
+   "orientation": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 9.97,
+   "support_frac": 0.034,
+   "bed_contact_cm2": 1.16,
+   "min_wall_mm": 0.27,
+   "thin_wall_frac": 0.029,
+   "passed": false,
+   "supports": "none",
+   "problems": [
+    "walls down to 0.27 mm (< 0.8 mm = 2 extrusion lines) on 3% of the surface"
+   ],
+   "warnings": []
+  },
+  {
+   "name": "helmet_5",
+   "watertight": true,
+   "volume_cm3": 24.1,
+   "size_mm": [
+    120.0,
+    114.1,
+    101.5
+   ],
+   "orientation": [
+    -0.017,
+    0.414,
+    -0.91
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 84.07,
+   "support_frac": 0.289,
+   "bed_contact_cm2": 2.99,
+   "min_wall_mm": 0.05,
+   "thin_wall_frac": 0.145,
+   "passed": false,
+   "supports": "needed",
+   "problems": [
+    "walls down to 0.05 mm (< 0.8 mm = 2 extrusion lines) on 14% of the surface"
+   ],
+   "warnings": []
+  },
+  {
+   "name": "helmet_6",
+   "watertight": true,
+   "volume_cm3": 28.3,
+   "size_mm": [
+    134.0,
+    92.7,
+    99.8
+   ],
+   "orientation": [
+    -0.031,
+    0.713,
+    0.7
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 120.54,
+   "support_frac": 0.407,
+   "bed_contact_cm2": 4.03,
+   "min_wall_mm": 0.11,
+   "thin_wall_frac": 0.036,
+   "passed": false,
+   "supports": "needed",
+   "problems": [
+    "needs supports under 120.5 cm^2 (41% of its surface) even in its best orientation",
+    "walls down to 0.11 mm (< 0.8 mm = 2 extrusion lines) on 4% of the surface"
+   ],
+   "warnings": []
+  },
+  {
+   "name": "helmet_7",
+   "watertight": true,
+   "volume_cm3": 24.07,
+   "size_mm": [
+    120.0,
+    114.1,
+    101.5
+   ],
+   "orientation": [
+    0.642,
+    0.558,
+    0.526
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 84.22,
+   "support_frac": 0.289,
+   "bed_contact_cm2": 2.32,
+   "min_wall_mm": 0.12,
+   "thin_wall_frac": 0.131,
+   "passed": false,
+   "supports": "needed",
+   "problems": [
+    "walls down to 0.12 mm (< 0.8 mm = 2 extrusion lines) on 13% of the surface"
    ],
    "warnings": []
   },
   {
    "name": "helmet_8",
    "watertight": true,
-   "volume_cm3": 2.21,
+   "volume_cm3": 2.87,
    "size_mm": [
-    41.6,
-    9.2,
-    47.9
+    31.5,
+    49.6,
+    69.6
    ],
    "orientation": [
-    0.057,
-    -0.998,
-    -0.037
+    1.0,
+    0.0,
+    0.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 9.49,
-   "support_frac": 0.334,
-   "bed_contact_cm2": 2.09,
-   "min_wall_mm": 0.06,
-   "thin_wall_frac": 0.093,
+   "support_area_cm2": 1.33,
+   "support_frac": 0.042,
+   "bed_contact_cm2": 0.0,
+   "min_wall_mm": 0.3,
+   "thin_wall_frac": 0.027,
    "passed": false,
-   "supports": "needed",
+   "supports": "none",
    "problems": [
-    "needs supports under 9.5 cm^2 (33% of its surface) even in its best orientation",
-    "walls down to 0.06 mm (< 0.8 mm = 2 extrusion lines) on 9% of the surface"
+    "no flat face to stand on the bed",
+    "walls down to 0.30 mm (< 0.8 mm = 2 extrusion lines) on 3% of the surface"
    ],
    "warnings": []
   },
   {
    "name": "helmet_9",
    "watertight": true,
-   "volume_cm3": 5.4,
+   "volume_cm3": 2.9,
    "size_mm": [
-    56.4,
-    22.1,
-    76.6
+    31.5,
+    49.9,
+    69.6
    ],
    "orientation": [
-    0.056,
-    -0.889,
-    0.454
+    1.0,
+    0.0,
+    0.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 30.56,
-   "support_frac": 0.431,
-   "bed_contact_cm2": 2.73,
-   "min_wall_mm": 0.04,
-   "thin_wall_frac": 0.235,
+   "support_area_cm2": 1.31,
+   "support_frac": 0.042,
+   "bed_contact_cm2": 0.0,
+   "min_wall_mm": 0.5,
+   "thin_wall_frac": 0.017,
    "passed": false,
-   "supports": "needed",
+   "supports": "none",
    "problems": [
-    "2 separate pieces (a part must be one connected solid)",
-    "needs supports under 30.6 cm^2 (43% of its surface) even in its best orientation",
-    "walls down to 0.04 mm (< 0.8 mm = 2 extrusion lines) on 24% of the surface"
+    "no flat face to stand on the bed",
+    "walls down to 0.50 mm (< 0.8 mm = 2 extrusion lines) on 2% of the surface"
    ],
    "warnings": []
   },
@@ -7829,7 +7853,7 @@
   {
    "name": "torso_15",
    "watertight": true,
-   "volume_cm3": 61.78,
+   "volume_cm3": 61.77,
    "size_mm": [
     125.8,
     111.4,
@@ -7841,15 +7865,15 @@
     0.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 24.01,
+   "support_area_cm2": 24.05,
    "support_frac": 0.059,
    "bed_contact_cm2": 1.09,
-   "min_wall_mm": 0.54,
+   "min_wall_mm": 0.45,
    "thin_wall_frac": 0.009,
    "passed": false,
    "supports": "none",
    "problems": [
-    "walls down to 0.54 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
+    "walls down to 0.45 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
    ],
    "warnings": []
   },
@@ -7991,23 +8015,23 @@
   {
    "name": "torso_20",
    "watertight": true,
-   "volume_cm3": 57.56,
+   "volume_cm3": 54.37,
    "size_mm": [
     124.5,
     123.2,
-    174.2
+    173.3
    ],
    "orientation": [
     0.0,
     0.0,
-    1.0
+    -1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 26.93,
-   "support_frac": 0.072,
-   "bed_contact_cm2": 5.3,
+   "support_area_cm2": 26.13,
+   "support_frac": 0.074,
+   "bed_contact_cm2": 5.63,
    "min_wall_mm": 0.68,
-   "thin_wall_frac": 0.007,
+   "thin_wall_frac": 0.012,
    "passed": false,
    "supports": "none",
    "problems": [
@@ -8127,27 +8151,28 @@
   {
    "name": "torso_25",
    "watertight": true,
-   "volume_cm3": 19.83,
+   "volume_cm3": 14.49,
    "size_mm": [
     69.5,
     142.8,
     48.5
    ],
    "orientation": [
-    0.001,
+    0.0,
     0.0,
     1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 2.98,
-   "support_frac": 0.019,
-   "bed_contact_cm2": 15.15,
-   "min_wall_mm": 0.38,
-   "thin_wall_frac": 0.027,
+   "support_area_cm2": 11.41,
+   "support_frac": 0.082,
+   "bed_contact_cm2": 10.29,
+   "min_wall_mm": 0.09,
+   "thin_wall_frac": 0.148,
    "passed": false,
-   "supports": "none",
+   "supports": "needed",
    "problems": [
-    "walls down to 0.38 mm (< 0.8 mm = 2 extrusion lines) on 3% of the surface"
+    "10 separate pieces (a part must be one connected solid)",
+    "walls down to 0.09 mm (< 0.8 mm = 2 extrusion lines) on 15% of the surface"
    ],
    "warnings": []
   },
@@ -8169,13 +8194,13 @@
    "support_area_cm2": 1.35,
    "support_frac": 0.004,
    "bed_contact_cm2": 1.62,
-   "min_wall_mm": 0.91,
-   "thin_wall_frac": 0.009,
+   "min_wall_mm": 1.12,
+   "thin_wall_frac": 0.008,
    "passed": true,
    "supports": "none",
    "problems": [],
    "warnings": [
-    "thin wall 0.91 mm (prints with 2 perimeters; 3 recommended)"
+    "thin wall 1.12 mm (prints with 2 perimeters; 3 recommended)"
    ]
   },
   {
@@ -8316,23 +8341,23 @@
   {
    "name": "torso_31",
    "watertight": true,
-   "volume_cm3": 57.59,
+   "volume_cm3": 54.37,
    "size_mm": [
     124.5,
     123.2,
-    174.2
+    173.0
    ],
    "orientation": [
     0.0,
     0.0,
-    1.0
+    -1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 27.49,
-   "support_frac": 0.074,
-   "bed_contact_cm2": 5.32,
-   "min_wall_mm": 1.4,
-   "thin_wall_frac": 0.004,
+   "support_area_cm2": 26.31,
+   "support_frac": 0.075,
+   "bed_contact_cm2": 5.33,
+   "min_wall_mm": 1.38,
+   "thin_wall_frac": 0.003,
    "passed": true,
    "supports": "none",
    "problems": [],
@@ -8559,7 +8584,7 @@
   {
    "name": "torso_4",
    "watertight": true,
-   "volume_cm3": 61.99,
+   "volume_cm3": 61.97,
    "size_mm": [
     125.9,
     111.4,
@@ -8574,12 +8599,12 @@
    "support_area_cm2": 24.42,
    "support_frac": 0.06,
    "bed_contact_cm2": 1.09,
-   "min_wall_mm": 0.39,
-   "thin_wall_frac": 0.011,
+   "min_wall_mm": 0.29,
+   "thin_wall_frac": 0.012,
    "passed": false,
    "supports": "none",
    "problems": [
-    "walls down to 0.39 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
+    "walls down to 0.29 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
    ],
    "warnings": []
   },

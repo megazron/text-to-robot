@@ -6,7 +6,7 @@ that form and added to the field. Surfaces come out smooth because they are math
 import json, math, os, sys
 import numpy as np, trimesh
 from scipy.interpolate import PchipInterpolator
-from scipy.ndimage import gaussian_filter
+from scipy.ndimage import gaussian_filter, maximum_filter
 from skimage.measure import marching_cubes
 
 H = 1850.0
@@ -97,13 +97,27 @@ class Part:
 
     def nonred_any(self, col): return col != RED
 
-    def printable(self, opens, wall=3.0, seam=0.3, cell=(235, 205, 215)):
-        """Hollow shell cut into bed-sized cells and per-colour panels: (colour, closed mesh). `opens` are fields, negative where the
-        suit is open to the wearer."""
-        f = np.maximum(self.d, -(self.d + wall))
-        for o in opens: f = np.maximum(f, -o.reshape(self.shape))
-        col = self.col.reshape(self.shape); ext = (np.array(self.shape) - 1) * self.v
-        nc = [max(1, math.ceil(e / c)) for e, c in zip(ext, cell)]; edges = [self.lo[i] + np.linspace(0, ext[i], nc[i] + 1) for i in range(3)]; out = []
+    def printable(self, opens, wall=3.0, seam=0.3, cell=(235, 205, 215), zones=None):
+        """Hollow shell cut into bed-sized cells and per-colour panels: (colour, closed mesh, zone). `opens` are fields, negative where the
+        suit is open to the wearer. `zones` are the moving parts of a shell: {name: (field, negative inside; own surface field or None)},
+        each cut from the rest along its field with a seam, so a panel edge is a clean surface and not a row of voxels; a zone may have its own
+        paint, so a colour that stops at the seam leaves no second, ragged cut beside it."""
+        zones = zones or {None: (None, None, None)}; out = []
+        for zone, (zf, surface, paint) in zones.items():
+            s_ = self.d if surface is None else surface
+            f = np.maximum(s_, -(s_ + wall))
+            for o in opens: f = np.maximum(f, -o.reshape(self.shape))
+            if zf is not None: f = np.maximum(f, zf.reshape(self.shape) + seam)
+            out += [(c, m, zone) for c, m in self.cells(f, seam, cell, paint, fit=zone is not None)]
+        return out
+
+    def cells(self, f, seam, cell, paint=None, fit=False):
+        col = (self.col if paint is None else paint).reshape(self.shape); ext = (np.array(self.shape) - 1) * self.v; lo = self.lo
+        if fit:     # a zone is cut to its own extent, not the whole part's
+            w = np.nonzero(f < 0)
+            if not len(w[0]): return []
+            lo = np.array([self.ax[i][w[i].min()] - self.v for i in range(3)]); ext = np.array([self.ax[i][w[i].max()] + self.v for i in range(3)]) - lo
+        nc = [max(1, math.ceil(e / c)) for e, c in zip(ext, cell)]; edges = [lo[i] + np.linspace(0, ext[i], nc[i] + 1) for i in range(3)]; out = []
         for c in (RED, GOLD, STEEL, LENS):
             m = (col == c).astype(np.float32)
             if c != RED and not m.any(): continue
@@ -330,11 +344,14 @@ HEAD = [(0, 92, 20, 40, 40, 2.2), (22, 118, 70, 72, 72, 2.4), (66, 126, 104, 86,
 def head(v):
     """The helmet, from the reference: one smooth shell, gold mask, red wedge, eyes, mouth line, ear discs, crown ridge."""
     p = Part("head", (-150, -125, Z_CHIN - 14), (150, 125, Z_CHIN + 302), v); P = p.pts()
-    p.finish(loft(P[:, 2] - Z_CHIN, P[:, 0], P[:, 1], HEAD), 0.5)
+    d = loft(P[:, 2] - Z_CHIN, P[:, 0], P[:, 1], HEAD).reshape(p.shape)
+    # the sections close fast at the crown, so the field runs steep there: a wall measured in it would be thin. Put it back in millimetres
+    g = gaussian_filter(np.linalg.norm(np.gradient(gaussian_filter(d, 2.0), v), axis=0), 4.0)
+    p.finish((d / np.maximum(g, 0.4)).ravel(), 0.5)
     Q = p.P; x = Q[:, 0]; y = np.abs(Q[:, 1]); z = Q[:, 2] - Z_CHIN; F = np.c_[y, z]; S = np.c_[x, z]; fr = x > 18
     face = lambda s: np.where(fr, s, 99.0); line = lambda a, b, dp=1.3, w=1.1: p.layer(face(seg_sd(F, a, b)), 0.0, 1.0, dp, w)
     # the mask
-    p.layer(face(poly_sd(F, [(-40, 8), (34, 8), (52, 42), (74, 72), (94, 122), (102, 178), (97, 214), (80, 262), (-40, 268)])), 3.5, 2.0, 1.8, 1.2, GOLD)
+    p.layer(np.maximum(mask_seam(Q), z - 266), 3.5, 2.0, 1.8, 1.2, GOLD)
     p.layer(face(poly_sd(F, [(-40, 280), (66, 280), (30, 208), (-40, 194)])), -3.5, 2.0, 1.6, 1.2, RED)     # forehead wedge
     # eyes: sunk, then lit
     eye = [(14, 158), (28, 168), (82, 184), (88, 174), (66, 156), (28, 150)]
@@ -353,6 +370,51 @@ def head(v):
     # the raised ridge over the crown
     p.layer(np.where(z > 220, poly_sd(np.c_[y, x], [(-30, -130), (26, -130), (34, 40), (-30, 50)]), 99.0), 2.5, 2.5, 1.2, 1.0)
     return p, []
+
+
+# The mask lifts about the ears. Everything ahead of one line up the side of the head rides on it: gold panels, eyes, the red forehead
+# wedge and the crown ahead of the hoop. Behind that line the shell stays, and the moving crown slides under it as the mask lifts.
+EAR = np.array([6.0, Z_CHIN + 158.0])     # the pivot in side view (x, z): 12 mm ahead of the ear disc, where the forehead and the back of the crown are the same distance from it
+MASK_OPEN = 1.0                                     # rad, how far the mask lifts
+WEDGE = [(-40, 281), (66, 281), (30, 208), (-40, 194)]
+MASK_SIDE = [(90, 8), (86, 50), (78, 76), (50, 122), (31, 150), (30, 190), (0, 300), (0, 340), (200, 340), (200, 8)]   # the mask from the side (x, height over the chin): every seam on the head runs through the shell, never along it
+MASK_WALL = 2.2
+NEST_GAP = 0.7                                      # air between the sliding crown and the shell over it
+
+
+def mask_seam(P):
+    """negative on the mask"""
+    return poly_sd(np.c_[P[:, 0], P[:, 2] - Z_CHIN], MASK_SIDE)
+
+
+def turned(P, ang):
+    """points carried by the mask through `ang` (negative lifts it)"""
+    c, s = math.cos(ang), math.sin(ang); q = P[:, [0, 2]] - EAR
+    return np.c_[EAR[0] + c * q[:, 0] + s * q[:, 1], P[:, 1], EAR[1] - s * q[:, 0] + c * q[:, 1]]
+
+
+def sample(p, field, Q, order=1):
+    from scipy.ndimage import map_coordinates
+    return map_coordinates(field, [(Q[:, i] - p.ax[i][0]) / p.v for i in range(3)], order=order, mode="nearest")
+
+
+def helmet_zones(p, wall):
+    """Paints the mask and its seam, then sinks whatever of the mask would run into the fixed shell over it: for each point of the
+    mask the fixed wall it passes under at any angle sets how high it may stand (the sink fades out past the end of the travel)."""
+    G = p.pts(); s = mask_seam(G); col = p.col.reshape(-1); moving = s < 0
+    F = np.c_[np.abs(G[:, 1]), G[:, 2] - Z_CHIN]; wedge = (poly_sd(F, WEDGE) < 0) & (G[:, 0] > 18); crown = G[:, 2] > Z_CHIN + 266
+    col[~moving & (col == GOLD)] = RED
+    col[moving & (col == RED) & ~wedge & ~crown] = GOLD
+    col[moving & wedge & (col == GOLD)] = RED
+    rest = p.d + wall + NEST_GAP; d = p.d.ravel(); skin = np.nonzero(moving & (np.abs(d) < 3.0))[0]; Q = G[skin]; E = np.full(len(Q), -99.0)
+    for ang in np.linspace(-0.02, -(MASK_OPEN + 0.25), 64):
+        R = turned(Q, ang); fixed = (sample(p, s.reshape(p.shape), R) >= -1.0) & (R[:, 2] > EAR[1] - 12)
+        E = np.maximum(E, np.where(fixed, sample(p, rest, R) - 14.0 * max(0.0, -ang - MASK_OPEN - 0.02), -99.0))
+    need = np.zeros(d.size, np.float32); need[skin] = np.maximum(E - d[skin], 0)
+    sink = need.reshape(p.shape); sink = gaussian_filter(maximum_filter(sink, 5), 2.5); sink *= moving.reshape(p.shape) | True
+    print("mask sunk under the fixed shell: p50/p90/max", *np.percentile(need[skin][need[skin] > 0], [50, 90, 100]).round(1), "mm", flush=True)
+    paint = col.copy(); paint[~moving & ~crown] = GOLD
+    return {"mask": (s, p.d + sink, paint), "fixed": (-s, None, np.full_like(col, RED))}
 
 
 def lenses():
@@ -417,23 +479,25 @@ def palm_lens():
     R = np.eye(4); R[:3, 0] = fr.f; R[:3, 1] = np.cross(-fr.l, fr.f); R[:3, 2] = -fr.l; R[:3, 3] = fr.A + fr.u * 76 - fr.l * 41; d.apply_transform(R); return d
 
 
-def export_print(out, v):
+def export_print(out, v, only=None):
     os.makedirs(out, exist_ok=True); meta = []
     def put(name, link, mat, region, m):
         m.export(f"{out}/pack_{name}.stl"); meta.append({"name": name, "link": link, "material": mat, "region": region})
-    for k in BUILD:
+    for k in only or BUILD:
         p, _ = BUILD[k](v)
         if k == "torso": reactor(p)
-        for i, (c, m) in enumerate(p.printable(openings(k, p), wall=2.2 if k == "head" else 3.0)):
+        wall = MASK_WALL if k == "head" else 3.0
+        for i, (c, m, zone) in enumerate(p.printable(openings(k, p), wall=wall, zones=helmet_zones(p, wall) if k == "head" else None)):
             if k == "torso": put(f"torso_{i}", "pelvis", NAMES[c], "torso", m); continue
-            if k == "head": put(f"helmet_{i}", "helmet_faceplate" if c in (GOLD, LENS) else "head", NAMES[c], "head", m); continue
+            if k == "head": put(f"helmet_{i}", "helmet_faceplate" if zone == "mask" else "head", NAMES[c], "head", m); continue
             put(f"left_{k}_{i}", f"left_{k}", NAMES[c], f"left_{k}", m)
             r = m.copy(); r.vertices = np.asarray(r.vertices) * [1, -1, 1]; r.invert(); put(f"right_{k}_{i}", f"right_{k}", NAMES[c], f"right_{k}", r)
         print(k, len(meta), flush=True); del p
+    if only: json.dump(meta, open(f"{out}/pack.json", "w"), indent=0); return
     for n, p in joint_mech(v):
         P = p.pts(); ax = {"shoulder": (J["shoulder"] + [0, -160, 0], J["shoulder"] + [0, 110, -14]), "elbow": (J["shoulder"], J["wrist"]), "wrist": (J["elbow"], J["hand_end"]), "hip": (J["hip"] + [0, 0, 200], J["knee"]), "knee": (J["hip"], J["ankle"]), "ankle": (J["ankle"] + [0, 0, 300], J["ankle"] + [0, 0, -120])}[n]
         r = {"shoulder": 52, "elbow": 44, "wrist": 34, "hip": 58, "knee": 54, "ankle": 42}[n]
-        for i, (c, m) in enumerate(p.printable([seg_sd3(P, ax[0], ax[1]) - r], wall=2.5, cell=(400, 400, 400))):
+        for i, (c, m, zone) in enumerate(p.printable([seg_sd3(P, ax[0], ax[1]) - r], wall=2.5, cell=(400, 400, 400))):
             put(f"left_mech_{n}_{i}", f"left_{MECH_LINK[n]}", "armour_mech", f"mech_left_{n}", m)
             q = m.copy(); q.vertices = np.asarray(q.vertices) * [1, -1, 1]; q.invert(); put(f"right_mech_{n}_{i}", f"right_{MECH_LINK[n]}", "armour_mech", f"mech_right_{n}", q)
     put("reactor_lens", "pelvis", "lens_glow", "torso", lenses()[0])
@@ -485,7 +549,7 @@ def export_ply(items, out):
 
 def main():
     out = sys.argv[1]; v = float(sys.argv[sys.argv.index("--voxel") + 1]) if "--voxel" in sys.argv else 2.0
-    if "--print" in sys.argv: return export_print(out, v)
+    if "--print" in sys.argv: return export_print(out, v, sys.argv[sys.argv.index("--only") + 1].split(",") if "--only" in sys.argv else None)
     if "--anim" in sys.argv: return export_anim(out, v)
     only = sys.argv[sys.argv.index("--only") + 1].split(",") if "--only" in sys.argv else list(BUILD)
     os.makedirs(out, exist_ok=True); items = []

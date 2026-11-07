@@ -3,6 +3,16 @@
 Dated from the git history. Pull request numbers refer to
 [github.com/megazron/text-to-robot](https://github.com/megazron/text-to-robot/pulls).
 
+## 2026-11-07: Mark 43 forehead and neck
+
+- The hole in the forehead is gone. The red wedge and the front of the crown now ride on the mask link and lift with it; before, they sat on the fixed
+  shell and the mask's swing cut them away. The mask's pivot moved 12 mm forward of the ear disc, where the forehead and the back of the crown are the same
+  distance from it, and the moving crown is forged to slide under the fixed shell, so almost nothing behind it is cut (0.2 cm3 instead of the whole front crown).
+- The mask's seam is now a clean line drawn from the side, through the shell rather than along it: the ragged edge down the cheek is gone.
+- The helmet's field is in true millimetres at the crown, where a 2.2 mm wall used to come out under 1 mm and break up.
+- The collar's front lip gives way to the chin: the neck turns 69 degrees each way before its range is capped, up from 14.
+- The mask's servo check now counts the head tipped 20 degrees, inertia and friction (0.106 N·m to hold against 0.129 continuous from two MG90S).
+
 ## 2026-11-07: Mark 43 housing and harness
 
 - The Mark 43 now has the same wiring model as every other robot: netlist, fuse, main switch, star ground, power budget
