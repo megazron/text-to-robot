@@ -118,13 +118,17 @@ def main():
     pcs = []
     for p in meta:
         m = trimesh.load(f"{base}_{p['name']}.stl", force="mesh", process=True)
-        if not m.is_watertight: trimesh.repair.fill_holes(m)
-        if not m.is_watertight: print("not closed, dropped:", p["name"]); continue
-        if m.volume < 0: m.invert()
-        # one printed part is one solid: bodies that only touch become their own pieces, crumbs are dropped
-        bodies = [b for b in as_manifold(m).simplify(0.2).decompose() if b.volume() > (150 if p["material"] == "lens_glow" else 500)]
-        for i, b in enumerate(sorted(bodies, key=lambda x: -x.volume())):
-            pcs.append(({**p, "name": p["name"] + ("" if not i else f"b{i}")}, from_manifold(b)))
+        # two bodies touching along one edge are not a closed solid until they are taken apart; a panel must never vanish quietly
+        for k, sub in enumerate([m] if m.is_watertight else m.split(only_watertight=False)):
+            if not sub.is_watertight: trimesh.repair.fill_holes(sub)
+            if not sub.is_watertight:
+                if sub.area > 300: raise SystemExit(f"open shell in {p['name']} ({sub.area:.0f} mm2)")
+                continue
+            if sub.volume < 0: sub.invert()
+            # one printed part is one solid: bodies that only touch become their own pieces, crumbs are dropped
+            bodies = [b for b in as_manifold(sub).simplify(0.2).decompose() if b.volume() > (150 if p["material"] == "lens_glow" else 500)]
+            for i, b in enumerate(sorted(bodies, key=lambda x: -x.volume())):
+                pcs.append(({**p, "name": p["name"] + ("" if not k else f"k{k}") + ("" if not i else f"b{i}")}, from_manifold(b)))
     hinge = HINGE; fa = -1.0
     pcs = trim_swings(working_helmet(resolve(pcs, body), jpos["neck_mount"], hinge), jpos)
     # the shells are far denser than a printer needs: flat panels lose their triangles, edges stay (0.2 mm is under one layer)
