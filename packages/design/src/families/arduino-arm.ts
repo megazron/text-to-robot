@@ -180,7 +180,8 @@ export function designArduinoArm(req: ArduinoArmRequest = {}): RobotSpecificatio
   const H = console_(A, req, supplyA);
 
   // joint ranges from the geometry (nothing may collide through the range), then the checks
-  limitsFromGeometry(A, ["yaw", "shoulder", "elbow"], [{ shoulder: -1.2, elbow: 1.5 }, { shoulder: 1.2, elbow: -1.5 }]);
+  // the claw too: closed past a few degrees its moving jaw swings into the fixed jaw's bridge (found by scripts/check_motion.py)
+  limitsFromGeometry(A, ["yaw", "shoulder", "elbow", ...(req.gripper !== false ? ["claw"] : [])], [{ shoulder: -1.2, elbow: 1.5 }, { shoulder: 1.2, elbow: -1.5 }]);
   // joint speed limits: the speed each servo reaches carrying its load (not its no-load speed)
   const inertia = axisInertias(A.spec, { shoulder: 0, elbow: 0 }, [{ link: b.tcp.link, at: b.tcp.at, massKg: payload }]);
   for (const j of ["shoulder", "elbow"] as const) {

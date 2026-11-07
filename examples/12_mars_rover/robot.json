@@ -4664,8 +4664,8 @@
       ],
       "passive": true,
       "limit": {
-        "lower": -0.26,
-        "upper": 0.26,
+        "lower": -0.24,
+        "upper": 0.24,
         "effort": 1,
         "velocity": 10
       },
@@ -4852,8 +4852,8 @@
       ],
       "passive": true,
       "limit": {
-        "lower": -0.26,
-        "upper": 0.26,
+        "lower": -0.24,
+        "upper": 0.24,
         "effort": 1,
         "velocity": 10
       },
@@ -6084,7 +6084,7 @@
   ],
   "metadata": {
     "generator": "text-to-robot design engine (real components + printed structure)",
-    "created": "2026-11-07T18:24:20.065Z",
+    "created": "2026-11-07T21:49:26.811Z",
     "inferred_fields": [
       "links.arm_base_link.inertia",
       "links.arm_base_yaw_actuator.inertia",
@@ -12819,11 +12819,11 @@
                 "joint": "left_rocker_pivot",
                 "type": "revolute",
                 "travel": [
-                  -0.26,
-                  0.26
+                  -0.24,
+                  0.24
                 ],
                 "home_mm": 18.4,
-                "need_mm": 22.5,
+                "need_mm": 22.2,
                 "slack_mm": 30,
                 "provided_mm": 48.4
               }
@@ -12951,11 +12951,11 @@
                 "joint": "left_rocker_pivot",
                 "type": "revolute",
                 "travel": [
-                  -0.26,
-                  0.26
+                  -0.24,
+                  0.24
                 ],
                 "home_mm": 22.2,
-                "need_mm": 27.2,
+                "need_mm": 26.8,
                 "slack_mm": 45,
                 "provided_mm": 67.2
               }
@@ -13062,11 +13062,11 @@
                 "joint": "left_rocker_pivot",
                 "type": "revolute",
                 "travel": [
-                  -0.26,
-                  0.26
+                  -0.24,
+                  0.24
                 ],
                 "home_mm": 47.9,
-                "need_mm": 52,
+                "need_mm": 51.7,
                 "slack_mm": 30,
                 "provided_mm": 77.9
               }
@@ -13194,11 +13194,11 @@
                 "joint": "left_rocker_pivot",
                 "type": "revolute",
                 "travel": [
-                  -0.26,
-                  0.26
+                  -0.24,
+                  0.24
                 ],
                 "home_mm": 57.8,
-                "need_mm": 62.8,
+                "need_mm": 62.4,
                 "slack_mm": 45,
                 "provided_mm": 102.8
               }
@@ -13405,11 +13405,11 @@
                 "joint": "right_rocker_pivot",
                 "type": "revolute",
                 "travel": [
-                  -0.26,
-                  0.26
+                  -0.24,
+                  0.24
                 ],
                 "home_mm": 18.3,
-                "need_mm": 22.4,
+                "need_mm": 22.1,
                 "slack_mm": 30,
                 "provided_mm": 48.3
               }
@@ -13537,11 +13537,11 @@
                 "joint": "right_rocker_pivot",
                 "type": "revolute",
                 "travel": [
-                  -0.26,
-                  0.26
+                  -0.24,
+                  0.24
                 ],
                 "home_mm": 22.1,
-                "need_mm": 27.1,
+                "need_mm": 26.7,
                 "slack_mm": 45,
                 "provided_mm": 67.1
               }
@@ -13643,11 +13643,11 @@
                 "joint": "right_rocker_pivot",
                 "type": "revolute",
                 "travel": [
-                  -0.26,
-                  0.26
+                  -0.24,
+                  0.24
                 ],
                 "home_mm": 47.8,
-                "need_mm": 51.9,
+                "need_mm": 51.6,
                 "slack_mm": 30,
                 "provided_mm": 77.8
               }
@@ -13775,11 +13775,11 @@
                 "joint": "right_rocker_pivot",
                 "type": "revolute",
                 "travel": [
-                  -0.26,
-                  0.26
+                  -0.24,
+                  0.24
                 ],
                 "home_mm": 57.7,
-                "need_mm": 62.7,
+                "need_mm": 62.3,
                 "slack_mm": 45,
                 "provided_mm": 102.7
               }

@@ -833,7 +833,7 @@
     <child link="left_rocker"/>
     <origin xyz="0 0.118 0.15" rpy="-1.570796 0 0"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-0.26" upper="0.26" effort="1" velocity="10"/>
+    <limit lower="-0.24" upper="0.24" effort="1" velocity="10"/>
     <dynamics damping="0.05" friction="0.02"/>
   </joint>
   <joint name="left_front_motor_mount" type="fixed">
@@ -877,7 +877,7 @@
     <child link="right_rocker"/>
     <origin xyz="0 -0.118 0.15" rpy="1.570796 0 0"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-0.26" upper="0.26" effort="1" velocity="10"/>
+    <limit lower="-0.24" upper="0.24" effort="1" velocity="10"/>
     <dynamics damping="0.05" friction="0.02"/>
     <mimic joint="left_rocker_pivot" multiplier="1" offset="0"/>
   </joint>

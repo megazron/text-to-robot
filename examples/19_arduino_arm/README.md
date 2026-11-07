@@ -35,7 +35,7 @@ All 40 checks pass (torque, speed, power, stability, print-bed fit). Details in 
 
 ## Assumptions and limits
 
-- Every joint's limits are inside its collision-free range (exact solid sweeps).
+- Joint limits trimmed to the collision-free range found by exact solid sweeps: claw [-0.60, 0.35] -> [0.00, 0.29].
 - each joint runs on its servo's own output bearing (no extra bearings), as in MeArm-class kits: links are kept short so the servo holds them continuously
 - prices are typical single-unit marketplace prices and vary by seller
 

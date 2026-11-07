@@ -355,7 +355,7 @@
     <child link="claw_jaw"/>
     <origin xyz="-0.12 0 0.0335" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-0.6" upper="0.35" effort="0.1765" velocity="10.472"/>
+    <limit lower="0" upper="0.29" effort="0.1765" velocity="10.472"/>
     <dynamics damping="0.0034" friction="0.0035"/>
   </joint>
   <joint name="console_mount" type="fixed">

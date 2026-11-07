@@ -57,7 +57,7 @@
       "claw": {
        "peak_nm": 0.0003,
        "peak_rating_nm": 0.1765,
-       "util_peak": 0.001,
+       "util_peak": 0.002,
        "mean_hold_nm": 0.0003,
        "rated_nm": 0.0529,
        "util_rated": 0.005,
@@ -234,5 +234,5 @@
  },
  "passed": 3,
  "total": 3,
- "source_urdf_sha256": "229eb496d44a8248f79877d1b97fb2314eb7602c4c2be403d3cdbb8f8918271e"
+ "source_urdf_sha256": "8f45bddbcdf85b3a0d144cd38c94803b620d12815ace1823980ddedf748f17ca"
 }

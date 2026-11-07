@@ -170,14 +170,14 @@ Each loop is at least the extra length the joint needs at the far end of its tra
 
 | Cable | Joint | Travel rad | Length at home mm | Length at full travel mm | Slack loop mm |
 |---|---|---|--:|--:|--:|
-| C5 | left_rocker_pivot | -0.26 to 0.26 | 18.4 | 22.5 | 30 |
-| C6 | left_rocker_pivot | -0.26 to 0.26 | 22.2 | 27.2 | 45 |
-| C7 | left_rocker_pivot | -0.26 to 0.26 | 47.9 | 52 | 30 |
-| C8 | left_rocker_pivot | -0.26 to 0.26 | 57.8 | 62.8 | 45 |
-| C10 | right_rocker_pivot | -0.26 to 0.26 | 18.3 | 22.4 | 30 |
-| C11 | right_rocker_pivot | -0.26 to 0.26 | 22.1 | 27.1 | 45 |
-| C12 | right_rocker_pivot | -0.26 to 0.26 | 47.8 | 51.9 | 30 |
-| C13 | right_rocker_pivot | -0.26 to 0.26 | 57.7 | 62.7 | 45 |
+| C5 | left_rocker_pivot | -0.24 to 0.24 | 18.4 | 22.2 | 30 |
+| C6 | left_rocker_pivot | -0.24 to 0.24 | 22.2 | 26.8 | 45 |
+| C7 | left_rocker_pivot | -0.24 to 0.24 | 47.9 | 51.7 | 30 |
+| C8 | left_rocker_pivot | -0.24 to 0.24 | 57.8 | 62.4 | 45 |
+| C10 | right_rocker_pivot | -0.24 to 0.24 | 18.3 | 22.1 | 30 |
+| C11 | right_rocker_pivot | -0.24 to 0.24 | 22.1 | 26.7 | 45 |
+| C12 | right_rocker_pivot | -0.24 to 0.24 | 47.8 | 51.6 | 30 |
+| C13 | right_rocker_pivot | -0.24 to 0.24 | 57.7 | 62.3 | 45 |
 | C16 | arm_base_yaw | -2.97 to 2.97 | 23.1 | 63.5 | 80 |
 | C17 | arm_shoulder_pitch | -1.75 to 1.75 | 48.5 | 75.3 | 65 |
 | C18 | arm_elbow_pitch | -2.1 to 2.3 | 46.5 | 78.7 | 70 |
