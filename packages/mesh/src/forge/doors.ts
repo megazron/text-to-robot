@@ -9,7 +9,7 @@ import { Rays } from "./ray.ts";
 import {
   asSolid, asMesh, scope, scopeAsync, free, compose, union, hull, cube, cylinder, place, turn, sweep, bigger, biggest, bbox, overlaps, at, meshBounds, meshVolume, type P3, type M34, type Solid,
 } from "./geo.ts";
-import { baseLink, SWINGS, type Piece, type Log, type Tick } from "./pack.ts";
+import { baseLink, SWINGS, sweptTool, type Piece, type Log, type Tick } from "./pack.ts";
 import { getPool, runAll, type Job } from "./pool.ts";
 import { answerJob } from "./jobs.ts";
 
@@ -159,15 +159,19 @@ const T44 = (M: M34) => [...M.map((row) => row.map((x) => r(x, 9))), [0, 0, 0, 1
 export async function build(pieces: Piece[], doors: DoorRecord[], tick: Tick, log: Log): Promise<{ hw: Hardware[]; recs: DoorOut[]; latches: LatchRec[] }> {
   const hw: Hardware[] = [], recs: DoorOut[] = [], latches: LatchRec[] = [], groups = (links: string[]) => new Shells(pieces, new Set(links));
   for (const d of doors) {
-    scope(() => {
+    await scopeAsync(async () => {
       const fixed = groups([d.parent]), door = groups([d.link]), e = d.up, o = d.a, sg = d.sign, open = d.open;
       const fixedHw: [string, Solid, P3][] = [], doorHw: [string, Solid, P3][] = [];
       d.hinges.forEach((c, i) => { const [lf, ld] = hinge(d, c, fixed, door); fixedHw.push([`hinge_${d.name}_${i}`, lf, c]); doorHw.push([`hinge_${d.name}_${i}_knuckle`, ld, c]); });
       const [pod, arm, keepOut, Ms] = drive(d, fixed, door);
       fixedHw.push([`pod_${d.name}`, pod, d.servo.at]); doorHw.push([`arm_${d.name}`, arm, d.servo.at]);
       // room: the fixed shell for the door's hardware through its whole swing, the door's shell for everything fixed
-      for (const [, s] of doorHw) scope(() => { fixed.cut(bigger(sweep(s, o, e, 0, sg * (open + 0.05)), AIR)); });
-      for (const [, s] of [...fixedHw, ["servo", keepOut, null] as unknown as [string, Solid, P3]]) scope(() => { door.cut(bigger(sweep(s, o, e, 0, -sg * (open + 0.05)), AIR)); });
+      // the sweeps are shared out to the pool (each one's copies in parallel), then each shell takes them
+      const swing = (a1: number) => lin(0, a1, Math.max(3, Math.floor(Math.abs(a1) / 0.05) + 1));
+      const doorTools = await Promise.all(doorHw.map(([, s]) => sweptTool(asMesh(s), o, e, swing(sg * (open + 0.05)))));
+      const fixedTools = await Promise.all([...fixedHw.map(([, s]) => s), keepOut].map((s) => sweptTool(asMesh(s), o, e, swing(-sg * (open + 0.05)))));
+      for (const t of doorTools) scope(() => { fixed.cut(bigger(asSolid(t), AIR)); });
+      for (const t of fixedTools) scope(() => { door.cut(bigger(asSolid(t), AIR)); });
       for (const [name, s, c] of fixedHw) hw.push({ name, link: d.parent, mesh: asMesh(biggest(fixed.minus(s))), anchor: c, region: d.region });
       for (const [name, s, c] of doorHw) hw.push({ name, link: d.link, mesh: asMesh(biggest(door.minus(s).subtract(bigger(keepOut, 0.2)))), anchor: c, region: d.region });
       recs.push({ ...d, servo: { ...d.servo, T: T44(Ms), name: `${d.name}_servo` } });
@@ -278,13 +282,16 @@ export async function relieveLimbs(pieces: Piece[], hw: Hardware[], jpos: Record
   for (const side of ["left", "right"]) for (const [j, child, parent, lo, hi] of SWINGS) {
     const o = jpos[`${side}_${j}`], cl = `${side}_${child}`, pl = parent === "pelvis" ? parent : `${side}_${parent}`, y: P3 = [0, 1, 0];
     const kids = new Shells(pieces, new Set(links.filter((l) => baseLink(l) === cl))), dads = new Shells(pieces, new Set(links.filter((l) => baseLink(l) === pl)));
-    for (const h of hw) scope(() => {
+    // a joint angle q turns the child by q about +y: in the child's frame the parent's hardware turns by -q
+    const jobs: [Shells, Promise<TriMesh>][] = [];
+    const arc = (a0: number, a1: number) => lin(a0, a1, Math.max(3, Math.floor(Math.abs(a1 - a0) / 0.06) + 1));
+    for (const h of hw) {
       const bl = baseLink(h.link), b = meshBounds(h.mesh), c: P3 = [(b[0][0] + b[1][0]) / 2, (b[0][1] + b[1][1]) / 2, (b[0][2] + b[1][2]) / 2];
-      if (Math.hypot(...sub(c, o)) > 420) return;
-      // a joint angle q turns the child by q about +y: in the child's frame the parent's hardware turns by -q
-      if (bl === pl) lost += kids.cut(sweep(asSolid(h.mesh), o, y, -hi, -lo, 0.06));
-      else if (bl === cl) lost += dads.cut(sweep(asSolid(h.mesh), o, y, lo, hi, 0.06));
-    });
+      if (Math.hypot(...sub(c, o)) > 420) continue;
+      if (bl === pl) jobs.push([kids, sweptTool(h.mesh, o, y, arc(-hi, -lo))]);
+      else if (bl === cl) jobs.push([dads, sweptTool(h.mesh, o, y, arc(lo, hi))]);
+    }
+    for (const [sh, t] of jobs) { const m = await t; scope(() => { lost += sh.cut(asSolid(m)); }); }
     await tick("relieve");
   }
   log(`relieved round the hardware ${Math.round(lost)} mm3`);
