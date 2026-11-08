@@ -178,19 +178,19 @@
    ],
    "orientation": [
     0.0,
-    0.0,
+    -0.0,
     -1.0
    ],
    "fits_bed": true,
    "support_area_cm2": 0.0,
    "support_frac": 0.0,
    "bed_contact_cm2": 14.56,
-   "min_wall_mm": 0.14,
-   "thin_wall_frac": 0.039,
+   "min_wall_mm": 0.01,
+   "thin_wall_frac": 0.04,
    "passed": false,
    "supports": "none",
    "problems": [
-    "walls down to 0.14 mm (< 0.8 mm = 2 extrusion lines) on 4% of the surface"
+    "walls down to 0.01 mm (< 0.8 mm = 2 extrusion lines) on 4% of the surface"
    ],
    "warnings": []
   },
@@ -293,12 +293,12 @@
    "support_area_cm2": 0.0,
    "support_frac": 0.0,
    "bed_contact_cm2": 14.54,
-   "min_wall_mm": 0.08,
-   "thin_wall_frac": 0.037,
+   "min_wall_mm": 0.14,
+   "thin_wall_frac": 0.036,
    "passed": false,
    "supports": "none",
    "problems": [
-    "walls down to 0.08 mm (< 0.8 mm = 2 extrusion lines) on 4% of the surface"
+    "walls down to 0.14 mm (< 0.8 mm = 2 extrusion lines) on 4% of the surface"
    ],
    "warnings": []
   },
@@ -432,7 +432,7 @@
   {
    "name": "chan_belt_1",
    "watertight": true,
-   "volume_cm3": 7.65,
+   "volume_cm3": 7.66,
    "size_mm": [
     78.8,
     117.6,
@@ -447,8 +447,8 @@
    "support_area_cm2": 16.61,
    "support_frac": 0.183,
    "bed_contact_cm2": 4.09,
-   "min_wall_mm": 1.59,
-   "thin_wall_frac": 0.001,
+   "min_wall_mm": 1.58,
+   "thin_wall_frac": 0.004,
    "passed": true,
    "supports": "needed",
    "problems": [],
@@ -482,7 +482,7 @@
   {
    "name": "chan_chest_1",
    "watertight": true,
-   "volume_cm3": 5.04,
+   "volume_cm3": 5.06,
    "size_mm": [
     17.7,
     102.3,
@@ -494,16 +494,16 @@
     -0.3
    ],
    "fits_bed": true,
-   "support_area_cm2": 1.16,
-   "support_frac": 0.02,
+   "support_area_cm2": 1.26,
+   "support_frac": 0.021,
    "bed_contact_cm2": 0.46,
-   "min_wall_mm": 0.83,
-   "thin_wall_frac": 0.007,
+   "min_wall_mm": 1.02,
+   "thin_wall_frac": 0.006,
    "passed": true,
    "supports": "none",
    "problems": [],
    "warnings": [
-    "thin wall 0.83 mm (prints with 2 perimeters; 3 recommended)"
+    "thin wall 1.02 mm (prints with 2 perimeters; 3 recommended)"
    ]
   },
   {
@@ -522,25 +522,25 @@
    ],
    "fits_bed": true,
    "support_area_cm2": 8.15,
-   "support_frac": 0.131,
+   "support_frac": 0.133,
    "bed_contact_cm2": 3.36,
-   "min_wall_mm": 0.56,
-   "thin_wall_frac": 0.009,
-   "passed": false,
+   "min_wall_mm": 1.02,
+   "thin_wall_frac": 0.006,
+   "passed": true,
    "supports": "needed",
-   "problems": [
-    "walls down to 0.56 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
-   ],
-   "warnings": []
+   "problems": [],
+   "warnings": [
+    "thin wall 1.02 mm (prints with 2 perimeters; 3 recommended)"
+   ]
   },
   {
    "name": "chan_collar_0",
    "watertight": true,
-   "volume_cm3": 2.05,
+   "volume_cm3": 2.03,
    "size_mm": [
-    19.4,
-    49.6,
-    46.4
+    19.9,
+    49.3,
+    46.6
    ],
    "orientation": [
     0.0,
@@ -548,16 +548,16 @@
     0.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 0.92,
-   "support_frac": 0.031,
+   "support_area_cm2": 1.19,
+   "support_frac": 0.04,
    "bed_contact_cm2": 0.0,
-   "min_wall_mm": 0.2,
+   "min_wall_mm": 0.09,
    "thin_wall_frac": 0.111,
    "passed": false,
    "supports": "none",
    "problems": [
     "no flat face to stand on the bed",
-    "walls down to 0.20 mm (< 0.8 mm = 2 extrusion lines) on 11% of the surface"
+    "walls down to 0.09 mm (< 0.8 mm = 2 extrusion lines) on 11% of the surface"
    ],
    "warnings": []
   },
@@ -576,10 +576,10 @@
     0.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 7.15,
-   "support_frac": 0.062,
+   "support_area_cm2": 6.99,
+   "support_frac": 0.06,
    "bed_contact_cm2": 0.0,
-   "min_wall_mm": 1.57,
+   "min_wall_mm": 1.54,
    "thin_wall_frac": 0.003,
    "passed": false,
    "supports": "none",
@@ -591,7 +591,7 @@
   {
    "name": "chan_left_flank_high_0",
    "watertight": true,
-   "volume_cm3": 9.76,
+   "volume_cm3": 9.78,
    "size_mm": [
     35.0,
     43.8,
@@ -603,17 +603,19 @@
     -1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 1.94,
+   "support_area_cm2": 1.96,
    "support_frac": 0.017,
    "bed_contact_cm2": 0.0,
-   "min_wall_mm": 1.39,
-   "thin_wall_frac": 0.005,
+   "min_wall_mm": 0.95,
+   "thin_wall_frac": 0.007,
    "passed": false,
    "supports": "none",
    "problems": [
     "no flat face to stand on the bed"
    ],
-   "warnings": []
+   "warnings": [
+    "thin wall 0.95 mm (prints with 2 perimeters; 3 recommended)"
+   ]
   },
   {
    "name": "chan_left_flank_low_0",
@@ -656,15 +658,15 @@
    ],
    "fits_bed": true,
    "support_area_cm2": 10.08,
-   "support_frac": 0.166,
+   "support_frac": 0.165,
    "bed_contact_cm2": 3.28,
-   "min_wall_mm": 1.08,
-   "thin_wall_frac": 0.006,
+   "min_wall_mm": 0.96,
+   "thin_wall_frac": 0.007,
    "passed": true,
    "supports": "needed",
    "problems": [],
    "warnings": [
-    "thin wall 1.08 mm (prints with 2 perimeters; 3 recommended)"
+    "thin wall 0.96 mm (prints with 2 perimeters; 3 recommended)"
    ]
   },
   {
@@ -686,11 +688,11 @@
    "support_frac": 0.12,
    "bed_contact_cm2": 2.7,
    "min_wall_mm": 0.07,
-   "thin_wall_frac": 0.026,
+   "thin_wall_frac": 0.023,
    "passed": false,
    "supports": "needed",
    "problems": [
-    "walls down to 0.07 mm (< 0.8 mm = 2 extrusion lines) on 3% of the surface"
+    "walls down to 0.07 mm (< 0.8 mm = 2 extrusion lines) on 2% of the surface"
    ],
    "warnings": []
   },
@@ -737,12 +739,12 @@
    "support_area_cm2": 5.37,
    "support_frac": 0.086,
    "bed_contact_cm2": 7.7,
-   "min_wall_mm": 0.79,
-   "thin_wall_frac": 0.011,
+   "min_wall_mm": 0.61,
+   "thin_wall_frac": 0.012,
    "passed": false,
    "supports": "needed",
    "problems": [
-    "walls down to 0.79 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
+    "walls down to 0.61 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
    ],
    "warnings": []
   },
@@ -814,10 +816,10 @@
    ],
    "fits_bed": true,
    "support_area_cm2": 8.74,
-   "support_frac": 0.119,
+   "support_frac": 0.12,
    "bed_contact_cm2": 7.22,
    "min_wall_mm": 1.6,
-   "thin_wall_frac": 0.0,
+   "thin_wall_frac": 0.001,
    "passed": true,
    "supports": "needed",
    "problems": [],
@@ -839,7 +841,7 @@
    ],
    "fits_bed": true,
    "support_area_cm2": 7.51,
-   "support_frac": 0.116,
+   "support_frac": 0.117,
    "bed_contact_cm2": 6.69,
    "min_wall_mm": 1.6,
    "thin_wall_frac": 0.001,
@@ -866,8 +868,8 @@
    "support_area_cm2": 6.43,
    "support_frac": 0.092,
    "bed_contact_cm2": 9.06,
-   "min_wall_mm": 1.6,
-   "thin_wall_frac": 0.003,
+   "min_wall_mm": 1.59,
+   "thin_wall_frac": 0.005,
    "passed": true,
    "supports": "needed",
    "problems": [],
@@ -892,7 +894,7 @@
    "support_frac": 0.057,
    "bed_contact_cm2": 7.69,
    "min_wall_mm": 0.08,
-   "thin_wall_frac": 0.018,
+   "thin_wall_frac": 0.015,
    "passed": false,
    "supports": "none",
    "problems": [
@@ -918,8 +920,8 @@
    "support_area_cm2": 22.15,
    "support_frac": 0.197,
    "bed_contact_cm2": 7.18,
-   "min_wall_mm": 1.51,
-   "thin_wall_frac": 0.002,
+   "min_wall_mm": 1.52,
+   "thin_wall_frac": 0.003,
    "passed": true,
    "supports": "needed",
    "problems": [],
@@ -935,20 +937,22 @@
     145.3
    ],
    "orientation": [
-    0.976,
-    0.218,
-    -0.006
+    -0.966,
+    -0.258,
+    -0.002
    ],
    "fits_bed": true,
-   "support_area_cm2": 14.49,
-   "support_frac": 0.137,
-   "bed_contact_cm2": 9.22,
-   "min_wall_mm": 1.56,
-   "thin_wall_frac": 0.001,
+   "support_area_cm2": 14.05,
+   "support_frac": 0.132,
+   "bed_contact_cm2": 9.67,
+   "min_wall_mm": 0.96,
+   "thin_wall_frac": 0.006,
    "passed": true,
    "supports": "needed",
    "problems": [],
-   "warnings": []
+   "warnings": [
+    "thin wall 0.96 mm (prints with 2 perimeters; 3 recommended)"
+   ]
   },
   {
    "name": "chan_right_forearm_0",
@@ -956,20 +960,20 @@
    "volume_cm3": 5.26,
    "size_mm": [
     29.7,
-    33.5,
+    33.6,
     111.8
    ],
    "orientation": [
-    0.577,
+    0.578,
     0.805,
     -0.138
    ],
    "fits_bed": true,
    "support_area_cm2": 11.41,
-   "support_frac": 0.188,
+   "support_frac": 0.187,
    "bed_contact_cm2": 4.98,
    "min_wall_mm": 1.6,
-   "thin_wall_frac": 0.004,
+   "thin_wall_frac": 0.003,
    "passed": true,
    "supports": "needed",
    "problems": [],
@@ -991,10 +995,10 @@
    ],
    "fits_bed": true,
    "support_area_cm2": 3.74,
-   "support_frac": 0.118,
+   "support_frac": 0.119,
    "bed_contact_cm2": 2.7,
    "min_wall_mm": 0.08,
-   "thin_wall_frac": 0.03,
+   "thin_wall_frac": 0.034,
    "passed": false,
    "supports": "needed",
    "problems": [
@@ -1007,9 +1011,9 @@
    "watertight": true,
    "volume_cm3": 3.72,
    "size_mm": [
-    19.8,
-    23.4,
-    77.7
+    20.0,
+    23.5,
+    77.6
    ],
    "orientation": [
     -0.996,
@@ -1017,9 +1021,9 @@
     0.085
    ],
    "fits_bed": true,
-   "support_area_cm2": 4.98,
-   "support_frac": 0.115,
-   "bed_contact_cm2": 4.35,
+   "support_area_cm2": 4.7,
+   "support_frac": 0.109,
+   "bed_contact_cm2": 4.62,
    "min_wall_mm": 1.6,
    "thin_wall_frac": 0.001,
    "passed": true,
@@ -1043,16 +1047,16 @@
    ],
    "fits_bed": true,
    "support_area_cm2": 5.36,
-   "support_frac": 0.086,
+   "support_frac": 0.085,
    "bed_contact_cm2": 7.75,
-   "min_wall_mm": 0.81,
-   "thin_wall_frac": 0.011,
-   "passed": true,
+   "min_wall_mm": 0.69,
+   "thin_wall_frac": 0.013,
+   "passed": false,
    "supports": "needed",
-   "problems": [],
-   "warnings": [
-    "thin wall 0.81 mm (prints with 2 perimeters; 3 recommended)"
-   ]
+   "problems": [
+    "walls down to 0.69 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
+   ],
+   "warnings": []
   },
   {
    "name": "chan_right_shin_1",
@@ -1070,21 +1074,21 @@
    ],
    "fits_bed": true,
    "support_area_cm2": 5.96,
-   "support_frac": 0.093,
+   "support_frac": 0.092,
    "bed_contact_cm2": 8.38,
-   "min_wall_mm": 0.55,
-   "thin_wall_frac": 0.013,
+   "min_wall_mm": 0.54,
+   "thin_wall_frac": 0.014,
    "passed": false,
    "supports": "needed",
    "problems": [
-    "walls down to 0.55 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
+    "walls down to 0.54 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
    ],
    "warnings": []
   },
   {
    "name": "chan_right_shin_2",
    "watertight": true,
-   "volume_cm3": 5.37,
+   "volume_cm3": 5.38,
    "size_mm": [
     20.8,
     18.6,
@@ -1109,21 +1113,21 @@
   {
    "name": "chan_right_thigh_0",
    "watertight": true,
-   "volume_cm3": 6.31,
+   "volume_cm3": 6.32,
    "size_mm": [
     23.2,
     22.6,
     132.6
    ],
    "orientation": [
-    0.778,
-    0.628,
-    0.003
+    0.784,
+    0.621,
+    -0.001
    ],
    "fits_bed": true,
-   "support_area_cm2": 11.13,
-   "support_frac": 0.151,
-   "bed_contact_cm2": 4.84,
+   "support_area_cm2": 9.04,
+   "support_frac": 0.123,
+   "bed_contact_cm2": 6.93,
    "min_wall_mm": 1.6,
    "thin_wall_frac": 0.001,
    "passed": true,
@@ -1134,7 +1138,7 @@
   {
    "name": "chan_right_thigh_1",
    "watertight": true,
-   "volume_cm3": 5.62,
+   "volume_cm3": 5.59,
    "size_mm": [
     18.5,
     17.7,
@@ -1147,7 +1151,7 @@
    ],
    "fits_bed": true,
    "support_area_cm2": 5.92,
-   "support_frac": 0.091,
+   "support_frac": 0.092,
    "bed_contact_cm2": 8.28,
    "min_wall_mm": 1.6,
    "thin_wall_frac": 0.001,
@@ -1570,13 +1574,13 @@
    "support_area_cm2": 71.85,
    "support_frac": 0.328,
    "bed_contact_cm2": 2.77,
-   "min_wall_mm": 0.09,
-   "thin_wall_frac": 0.115,
+   "min_wall_mm": 0.07,
+   "thin_wall_frac": 0.111,
    "passed": false,
    "supports": "needed",
    "problems": [
     "needs supports under 71.8 cm^2 (33% of its surface) even in its best orientation",
-    "walls down to 0.09 mm (< 0.8 mm = 2 extrusion lines) on 11% of the surface"
+    "walls down to 0.07 mm (< 0.8 mm = 2 extrusion lines) on 11% of the surface"
    ],
    "warnings": []
   },
@@ -1625,13 +1629,13 @@
    "support_area_cm2": 71.89,
    "support_frac": 0.329,
    "bed_contact_cm2": 2.7,
-   "min_wall_mm": 0.08,
-   "thin_wall_frac": 0.103,
+   "min_wall_mm": 0.12,
+   "thin_wall_frac": 0.101,
    "passed": false,
    "supports": "needed",
    "problems": [
     "needs supports under 71.9 cm^2 (33% of its surface) even in its best orientation",
-    "walls down to 0.08 mm (< 0.8 mm = 2 extrusion lines) on 10% of the surface"
+    "walls down to 0.12 mm (< 0.8 mm = 2 extrusion lines) on 10% of the surface"
    ],
    "warnings": []
   },
@@ -1653,13 +1657,13 @@
    "support_area_cm2": 143.51,
    "support_frac": 0.449,
    "bed_contact_cm2": 3.08,
-   "min_wall_mm": 0.43,
+   "min_wall_mm": 0.39,
    "thin_wall_frac": 0.009,
    "passed": false,
    "supports": "needed",
    "problems": [
     "needs supports under 143.5 cm^2 (45% of its surface) even in its best orientation",
-    "walls down to 0.43 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
+    "walls down to 0.39 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
    ],
    "warnings": []
   },
@@ -1706,16 +1710,16 @@
     -0.618
    ],
    "fits_bed": true,
-   "support_area_cm2": 99.0,
+   "support_area_cm2": 99.01,
    "support_frac": 0.31,
    "bed_contact_cm2": 2.76,
-   "min_wall_mm": 0.74,
-   "thin_wall_frac": 0.009,
+   "min_wall_mm": 0.56,
+   "thin_wall_frac": 0.01,
    "passed": false,
    "supports": "needed",
    "problems": [
     "needs supports under 99.0 cm^2 (31% of its surface) even in its best orientation",
-    "walls down to 0.74 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
+    "walls down to 0.56 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
    ],
    "warnings": []
   },
@@ -2335,12 +2339,12 @@
    "support_area_cm2": 0.0,
    "support_frac": 0.0,
    "bed_contact_cm2": 3.56,
-   "min_wall_mm": 0.49,
-   "thin_wall_frac": 0.023,
+   "min_wall_mm": 0.48,
+   "thin_wall_frac": 0.022,
    "passed": false,
    "supports": "none",
    "problems": [
-    "walls down to 0.49 mm (< 0.8 mm = 2 extrusion lines) on 2% of the surface"
+    "walls down to 0.48 mm (< 0.8 mm = 2 extrusion lines) on 2% of the surface"
    ],
    "warnings": []
   },
@@ -3719,7 +3723,7 @@
    "support_area_cm2": 0.0,
    "support_frac": 0.0,
    "bed_contact_cm2": 3.44,
-   "min_wall_mm": 5.06,
+   "min_wall_mm": 3.61,
    "thin_wall_frac": 0.001,
    "passed": true,
    "supports": "none",
@@ -3749,7 +3753,7 @@
    "passed": false,
    "supports": "none",
    "problems": [
-    "walls down to 0.06 mm (< 0.8 mm = 2 extrusion lines) on 6% of the surface"
+    "walls down to 0.06 mm (< 0.8 mm = 2 extrusion lines) on 5% of the surface"
    ],
    "warnings": []
   },
@@ -4024,7 +4028,7 @@
    ],
    "orientation": [
     -0.001,
-    0.003,
+    0.0,
     1.0
    ],
    "fits_bed": true,
@@ -4041,7 +4045,7 @@
   {
    "name": "latch_right_upper_arm_0_block",
    "watertight": true,
-   "volume_cm3": 7.02,
+   "volume_cm3": 7.01,
    "size_mm": [
     41.2,
     26.1,
@@ -4265,7 +4269,7 @@
    "support_frac": 0.178,
    "bed_contact_cm2": 1.15,
    "min_wall_mm": 0.01,
-   "thin_wall_frac": 0.048,
+   "thin_wall_frac": 0.047,
    "passed": false,
    "supports": "needed",
    "problems": [
@@ -4384,7 +4388,7 @@
   {
    "name": "left_forearm_6",
    "watertight": true,
-   "volume_cm3": 49.03,
+   "volume_cm3": 49.04,
    "size_mm": [
     70.8,
     137.7,
@@ -4396,15 +4400,15 @@
     -0.194
    ],
    "fits_bed": true,
-   "support_area_cm2": 87.69,
+   "support_area_cm2": 87.65,
    "support_frac": 0.25,
    "bed_contact_cm2": 4.76,
-   "min_wall_mm": 0.12,
-   "thin_wall_frac": 0.038,
+   "min_wall_mm": 0.14,
+   "thin_wall_frac": 0.032,
    "passed": false,
    "supports": "needed",
    "problems": [
-    "walls down to 0.12 mm (< 0.8 mm = 2 extrusion lines) on 4% of the surface"
+    "walls down to 0.14 mm (< 0.8 mm = 2 extrusion lines) on 3% of the surface"
    ],
    "warnings": []
   },
@@ -4478,12 +4482,12 @@
    "support_area_cm2": 1.33,
    "support_frac": 0.013,
    "bed_contact_cm2": 1.76,
-   "min_wall_mm": 0.29,
-   "thin_wall_frac": 0.021,
+   "min_wall_mm": 0.33,
+   "thin_wall_frac": 0.02,
    "passed": false,
    "supports": "none",
    "problems": [
-    "walls down to 0.29 mm (< 0.8 mm = 2 extrusion lines) on 2% of the surface"
+    "walls down to 0.33 mm (< 0.8 mm = 2 extrusion lines) on 2% of the surface"
    ],
    "warnings": []
   },
@@ -4610,12 +4614,12 @@
    "support_area_cm2": 55.2,
    "support_frac": 0.184,
    "bed_contact_cm2": 4.87,
-   "min_wall_mm": 0.51,
-   "thin_wall_frac": 0.017,
+   "min_wall_mm": 0.41,
+   "thin_wall_frac": 0.018,
    "passed": false,
    "supports": "needed",
    "problems": [
-    "walls down to 0.51 mm (< 0.8 mm = 2 extrusion lines) on 2% of the surface"
+    "walls down to 0.41 mm (< 0.8 mm = 2 extrusion lines) on 2% of the surface"
    ],
    "warnings": []
   },
@@ -4820,7 +4824,7 @@
    "support_frac": 0.22,
    "bed_contact_cm2": 14.16,
    "min_wall_mm": 0.64,
-   "thin_wall_frac": 0.02,
+   "thin_wall_frac": 0.019,
    "passed": false,
    "supports": "needed",
    "problems": [
@@ -5024,22 +5028,22 @@
     0.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 167.75,
+   "support_area_cm2": 167.62,
    "support_frac": 0.206,
    "bed_contact_cm2": 2.01,
-   "min_wall_mm": 0.06,
-   "thin_wall_frac": 0.013,
+   "min_wall_mm": 0.05,
+   "thin_wall_frac": 0.016,
    "passed": false,
    "supports": "needed",
    "problems": [
-    "walls down to 0.06 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
+    "walls down to 0.05 mm (< 0.8 mm = 2 extrusion lines) on 2% of the surface"
    ],
    "warnings": []
   },
   {
    "name": "left_shin_1",
    "watertight": true,
-   "volume_cm3": 137.98,
+   "volume_cm3": 137.99,
    "size_mm": [
     81.7,
     130.9,
@@ -5051,15 +5055,15 @@
     1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 16.1,
+   "support_area_cm2": 16.12,
    "support_frac": 0.019,
    "bed_contact_cm2": 1.56,
-   "min_wall_mm": 0.15,
-   "thin_wall_frac": 0.024,
+   "min_wall_mm": 0.31,
+   "thin_wall_frac": 0.021,
    "passed": false,
    "supports": "none",
    "problems": [
-    "walls down to 0.15 mm (< 0.8 mm = 2 extrusion lines) on 2% of the surface"
+    "walls down to 0.31 mm (< 0.8 mm = 2 extrusion lines) on 2% of the surface"
    ],
    "warnings": []
   },
@@ -5093,7 +5097,7 @@
   {
    "name": "left_shin_3",
    "watertight": true,
-   "volume_cm3": 126.99,
+   "volume_cm3": 126.88,
    "size_mm": [
     77.2,
     130.3,
@@ -5105,15 +5109,15 @@
     -1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 31.63,
+   "support_area_cm2": 31.7,
    "support_frac": 0.037,
    "bed_contact_cm2": 1.6,
-   "min_wall_mm": 0.68,
-   "thin_wall_frac": 0.009,
+   "min_wall_mm": 0.66,
+   "thin_wall_frac": 0.01,
    "passed": false,
    "supports": "none",
    "problems": [
-    "walls down to 0.68 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
+    "walls down to 0.66 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
    ],
    "warnings": []
   },
@@ -5212,10 +5216,10 @@
     -0.102
    ],
    "fits_bed": true,
-   "support_area_cm2": 169.98,
+   "support_area_cm2": 170.02,
    "support_frac": 0.198,
    "bed_contact_cm2": 26.9,
-   "min_wall_mm": 2.73,
+   "min_wall_mm": 2.66,
    "thin_wall_frac": 0.002,
    "passed": true,
    "supports": "needed",
@@ -5277,7 +5281,7 @@
   {
    "name": "left_thigh_12",
    "watertight": true,
-   "volume_cm3": 58.51,
+   "volume_cm3": 58.52,
    "size_mm": [
     103.4,
     168.9,
@@ -5289,22 +5293,22 @@
     0.998
    ],
    "fits_bed": true,
-   "support_area_cm2": 7.63,
+   "support_area_cm2": 7.62,
    "support_frac": 0.019,
-   "bed_contact_cm2": 16.06,
-   "min_wall_mm": 0.19,
-   "thin_wall_frac": 0.037,
+   "bed_contact_cm2": 16.07,
+   "min_wall_mm": 0.25,
+   "thin_wall_frac": 0.031,
    "passed": false,
    "supports": "none",
    "problems": [
-    "walls down to 0.19 mm (< 0.8 mm = 2 extrusion lines) on 4% of the surface"
+    "walls down to 0.25 mm (< 0.8 mm = 2 extrusion lines) on 3% of the surface"
    ],
    "warnings": []
   },
   {
    "name": "left_thigh_12w1",
    "watertight": true,
-   "volume_cm3": 33.48,
+   "volume_cm3": 33.5,
    "size_mm": [
     88.6,
     97.2,
@@ -5319,13 +5323,13 @@
    "support_area_cm2": 3.19,
    "support_frac": 0.014,
    "bed_contact_cm2": 14.75,
-   "min_wall_mm": 0.92,
-   "thin_wall_frac": 0.009,
+   "min_wall_mm": 0.84,
+   "thin_wall_frac": 0.011,
    "passed": true,
    "supports": "none",
    "problems": [],
    "warnings": [
-    "thin wall 0.92 mm (prints with 2 perimeters; 3 recommended)"
+    "thin wall 0.84 mm (prints with 2 perimeters; 3 recommended)"
    ]
   },
   {
@@ -5399,7 +5403,7 @@
    "support_frac": 0.128,
    "bed_contact_cm2": 11.86,
    "min_wall_mm": 0.27,
-   "thin_wall_frac": 0.028,
+   "thin_wall_frac": 0.029,
    "passed": false,
    "supports": "needed",
    "problems": [
@@ -5464,7 +5468,7 @@
   {
    "name": "left_thigh_2",
    "watertight": true,
-   "volume_cm3": 99.82,
+   "volume_cm3": 99.84,
    "size_mm": [
     103.7,
     166.7,
@@ -5476,24 +5480,24 @@
     0.997
    ],
    "fits_bed": true,
-   "support_area_cm2": 4.84,
+   "support_area_cm2": 4.82,
    "support_frac": 0.008,
    "bed_contact_cm2": 19.72,
-   "min_wall_mm": 0.99,
-   "thin_wall_frac": 0.007,
+   "min_wall_mm": 1.09,
+   "thin_wall_frac": 0.005,
    "passed": true,
    "supports": "none",
    "problems": [],
    "warnings": [
-    "thin wall 0.99 mm (prints with 2 perimeters; 3 recommended)"
+    "thin wall 1.09 mm (prints with 2 perimeters; 3 recommended)"
    ]
   },
   {
    "name": "left_thigh_2w1",
    "watertight": true,
-   "volume_cm3": 0.08,
+   "volume_cm3": 0.09,
    "size_mm": [
-    61.8,
+    61.7,
     12.3,
     11.9
    ],
@@ -5504,15 +5508,15 @@
    ],
    "fits_bed": true,
    "support_area_cm2": 0.78,
-   "support_frac": 0.05,
+   "support_frac": 0.051,
    "bed_contact_cm2": 0.0,
    "min_wall_mm": 0.0,
-   "thin_wall_frac": 0.699,
+   "thin_wall_frac": 0.736,
    "passed": false,
    "supports": "none",
    "problems": [
     "no flat face to stand on the bed",
-    "walls down to 0.00 mm (< 0.8 mm = 2 extrusion lines) on 70% of the surface"
+    "walls down to 0.00 mm (< 0.8 mm = 2 extrusion lines) on 74% of the surface"
    ],
    "warnings": []
   },
@@ -5589,7 +5593,7 @@
    "support_frac": 0.002,
    "bed_contact_cm2": 0.0,
    "min_wall_mm": 0.05,
-   "thin_wall_frac": 0.141,
+   "thin_wall_frac": 0.139,
    "passed": false,
    "supports": "none",
    "problems": [
@@ -5704,7 +5708,7 @@
   {
    "name": "left_upper_arm_0",
    "watertight": true,
-   "volume_cm3": 95.72,
+   "volume_cm3": 95.73,
    "size_mm": [
     73.7,
     124.7,
@@ -5716,15 +5720,15 @@
     0.995
    ],
    "fits_bed": true,
-   "support_area_cm2": 42.6,
+   "support_area_cm2": 42.59,
    "support_frac": 0.067,
    "bed_contact_cm2": 14.92,
    "min_wall_mm": 0.03,
-   "thin_wall_frac": 0.047,
+   "thin_wall_frac": 0.041,
    "passed": false,
    "supports": "none",
    "problems": [
-    "walls down to 0.03 mm (< 0.8 mm = 2 extrusion lines) on 5% of the surface"
+    "walls down to 0.03 mm (< 0.8 mm = 2 extrusion lines) on 4% of the surface"
    ],
    "warnings": []
   },
@@ -5743,11 +5747,11 @@
     -0.165
    ],
    "fits_bed": true,
-   "support_area_cm2": 102.14,
+   "support_area_cm2": 102.15,
    "support_frac": 0.18,
    "bed_contact_cm2": 20.37,
    "min_wall_mm": 0.02,
-   "thin_wall_frac": 0.019,
+   "thin_wall_frac": 0.017,
    "passed": false,
    "supports": "needed",
    "problems": [
@@ -5773,12 +5777,12 @@
    "support_area_cm2": 14.6,
    "support_frac": 0.158,
    "bed_contact_cm2": 3.63,
-   "min_wall_mm": 0.57,
-   "thin_wall_frac": 0.009,
+   "min_wall_mm": 0.8,
+   "thin_wall_frac": 0.007,
    "passed": false,
    "supports": "needed",
    "problems": [
-    "walls down to 0.57 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
+    "walls down to 0.80 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
    ],
    "warnings": []
   },
@@ -5813,7 +5817,7 @@
   {
    "name": "left_upper_arm_4",
    "watertight": true,
-   "volume_cm3": 97.24,
+   "volume_cm3": 97.23,
    "size_mm": [
     80.3,
     133.2,
@@ -5828,12 +5832,12 @@
    "support_area_cm2": 53.86,
    "support_frac": 0.081,
    "bed_contact_cm2": 15.22,
-   "min_wall_mm": 0.18,
-   "thin_wall_frac": 0.029,
+   "min_wall_mm": 0.07,
+   "thin_wall_frac": 0.026,
    "passed": false,
    "supports": "needed",
    "problems": [
-    "walls down to 0.18 mm (< 0.8 mm = 2 extrusion lines) on 3% of the surface"
+    "walls down to 0.07 mm (< 0.8 mm = 2 extrusion lines) on 3% of the surface"
    ],
    "warnings": []
   },
@@ -5882,14 +5886,14 @@
    "support_area_cm2": 2.05,
    "support_frac": 0.023,
    "bed_contact_cm2": 1.75,
-   "min_wall_mm": 0.59,
-   "thin_wall_frac": 0.01,
-   "passed": false,
+   "min_wall_mm": 0.84,
+   "thin_wall_frac": 0.008,
+   "passed": true,
    "supports": "none",
-   "problems": [
-    "walls down to 0.59 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
-   ],
-   "warnings": []
+   "problems": [],
+   "warnings": [
+    "thin wall 0.84 mm (prints with 2 perimeters; 3 recommended)"
+   ]
   },
   {
    "name": "left_upper_arm_7",
@@ -5990,12 +5994,12 @@
    "support_area_cm2": 0.71,
    "support_frac": 0.012,
    "bed_contact_cm2": 3.56,
-   "min_wall_mm": 0.16,
+   "min_wall_mm": 0.14,
    "thin_wall_frac": 0.043,
    "passed": false,
    "supports": "none",
    "problems": [
-    "walls down to 0.16 mm (< 0.8 mm = 2 extrusion lines) on 4% of the surface"
+    "walls down to 0.14 mm (< 0.8 mm = 2 extrusion lines) on 4% of the surface"
    ],
    "warnings": []
   },
@@ -6044,12 +6048,12 @@
    "support_area_cm2": 5.92,
    "support_frac": 0.05,
    "bed_contact_cm2": 6.91,
-   "min_wall_mm": 0.24,
-   "thin_wall_frac": 0.036,
+   "min_wall_mm": 0.26,
+   "thin_wall_frac": 0.035,
    "passed": false,
    "supports": "none",
    "problems": [
-    "walls down to 0.24 mm (< 0.8 mm = 2 extrusion lines) on 4% of the surface"
+    "walls down to 0.26 mm (< 0.8 mm = 2 extrusion lines) on 4% of the surface"
    ],
    "warnings": []
   },
@@ -6551,12 +6555,12 @@
    "support_area_cm2": 57.87,
    "support_frac": 0.165,
    "bed_contact_cm2": 4.3,
-   "min_wall_mm": 0.15,
-   "thin_wall_frac": 0.041,
+   "min_wall_mm": 0.05,
+   "thin_wall_frac": 0.04,
    "passed": false,
    "supports": "needed",
    "problems": [
-    "walls down to 0.15 mm (< 0.8 mm = 2 extrusion lines) on 4% of the surface"
+    "walls down to 0.05 mm (< 0.8 mm = 2 extrusion lines) on 4% of the surface"
    ],
    "warnings": []
   },
@@ -6683,7 +6687,7 @@
    "support_frac": 0.13,
    "bed_contact_cm2": 4.24,
    "min_wall_mm": 0.19,
-   "thin_wall_frac": 0.032,
+   "thin_wall_frac": 0.033,
    "passed": false,
    "supports": "needed",
    "problems": [
@@ -6759,7 +6763,7 @@
     0.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 55.67,
+   "support_area_cm2": 55.69,
    "support_frac": 0.186,
    "bed_contact_cm2": 1.75,
    "min_wall_mm": 0.72,
@@ -6968,11 +6972,11 @@
     0.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 47.28,
+   "support_area_cm2": 47.22,
    "support_frac": 0.17,
    "bed_contact_cm2": 1.35,
    "min_wall_mm": 0.47,
-   "thin_wall_frac": 0.021,
+   "thin_wall_frac": 0.02,
    "passed": false,
    "supports": "needed",
    "problems": [
@@ -7097,7 +7101,7 @@
     0.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 76.45,
+   "support_area_cm2": 76.47,
    "support_frac": 0.164,
    "bed_contact_cm2": 1.75,
    "min_wall_mm": 0.42,
@@ -7164,7 +7168,7 @@
   {
    "name": "right_shin_0",
    "watertight": true,
-   "volume_cm3": 130.33,
+   "volume_cm3": 130.41,
    "size_mm": [
     75.9,
     119.5,
@@ -7176,11 +7180,11 @@
     0.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 168.29,
-   "support_frac": 0.207,
+   "support_area_cm2": 168.13,
+   "support_frac": 0.206,
    "bed_contact_cm2": 2.13,
    "min_wall_mm": 0.02,
-   "thin_wall_frac": 0.019,
+   "thin_wall_frac": 0.021,
    "passed": false,
    "supports": "needed",
    "problems": [
@@ -7203,15 +7207,15 @@
     1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 15.89,
+   "support_area_cm2": 15.88,
    "support_frac": 0.019,
    "bed_contact_cm2": 1.74,
-   "min_wall_mm": 0.13,
-   "thin_wall_frac": 0.031,
+   "min_wall_mm": 0.2,
+   "thin_wall_frac": 0.027,
    "passed": false,
    "supports": "none",
    "problems": [
-    "walls down to 0.13 mm (< 0.8 mm = 2 extrusion lines) on 3% of the surface"
+    "walls down to 0.20 mm (< 0.8 mm = 2 extrusion lines) on 3% of the surface"
    ],
    "warnings": []
   },
@@ -7233,12 +7237,12 @@
    "support_area_cm2": 25.61,
    "support_frac": 0.032,
    "bed_contact_cm2": 2.08,
-   "min_wall_mm": 0.4,
+   "min_wall_mm": 0.36,
    "thin_wall_frac": 0.009,
    "passed": false,
    "supports": "none",
    "problems": [
-    "walls down to 0.40 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
+    "walls down to 0.36 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
    ],
    "warnings": []
   },
@@ -7257,17 +7261,15 @@
     -1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 31.24,
+   "support_area_cm2": 31.23,
    "support_frac": 0.036,
    "bed_contact_cm2": 1.62,
-   "min_wall_mm": 1.06,
-   "thin_wall_frac": 0.007,
+   "min_wall_mm": 1.22,
+   "thin_wall_frac": 0.005,
    "passed": true,
    "supports": "none",
    "problems": [],
-   "warnings": [
-    "thin wall 1.06 mm (prints with 2 perimeters; 3 recommended)"
-   ]
+   "warnings": []
   },
   {
    "name": "right_shin_4",
@@ -7366,7 +7368,7 @@
    "support_area_cm2": 170.46,
    "support_frac": 0.198,
    "bed_contact_cm2": 24.5,
-   "min_wall_mm": 2.66,
+   "min_wall_mm": 2.7,
    "thin_wall_frac": 0.001,
    "passed": true,
    "supports": "needed",
@@ -7440,22 +7442,22 @@
     0.998
    ],
    "fits_bed": true,
-   "support_area_cm2": 7.88,
+   "support_area_cm2": 7.83,
    "support_frac": 0.02,
    "bed_contact_cm2": 15.98,
-   "min_wall_mm": 0.21,
-   "thin_wall_frac": 0.031,
+   "min_wall_mm": 0.2,
+   "thin_wall_frac": 0.035,
    "passed": false,
    "supports": "none",
    "problems": [
-    "walls down to 0.21 mm (< 0.8 mm = 2 extrusion lines) on 3% of the surface"
+    "walls down to 0.20 mm (< 0.8 mm = 2 extrusion lines) on 3% of the surface"
    ],
    "warnings": []
   },
   {
    "name": "right_thigh_12w1",
    "watertight": true,
-   "volume_cm3": 33.52,
+   "volume_cm3": 33.53,
    "size_mm": [
     88.6,
     97.1,
@@ -7470,12 +7472,12 @@
    "support_area_cm2": 3.21,
    "support_frac": 0.014,
    "bed_contact_cm2": 14.65,
-   "min_wall_mm": 0.75,
-   "thin_wall_frac": 0.011,
+   "min_wall_mm": 0.26,
+   "thin_wall_frac": 0.016,
    "passed": false,
    "supports": "none",
    "problems": [
-    "walls down to 0.75 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
+    "walls down to 0.26 mm (< 0.8 mm = 2 extrusion lines) on 2% of the surface"
    ],
    "warnings": []
   },
@@ -7546,15 +7548,15 @@
     -0.019
    ],
    "fits_bed": true,
-   "support_area_cm2": 47.15,
-   "support_frac": 0.132,
-   "bed_contact_cm2": 10.74,
-   "min_wall_mm": 0.27,
-   "thin_wall_frac": 0.029,
+   "support_area_cm2": 47.21,
+   "support_frac": 0.133,
+   "bed_contact_cm2": 10.75,
+   "min_wall_mm": 0.18,
+   "thin_wall_frac": 0.027,
    "passed": false,
    "supports": "needed",
    "problems": [
-    "walls down to 0.27 mm (< 0.8 mm = 2 extrusion lines) on 3% of the surface"
+    "walls down to 0.18 mm (< 0.8 mm = 2 extrusion lines) on 3% of the surface"
    ],
    "warnings": []
   },
@@ -7627,16 +7629,16 @@
     0.997
    ],
    "fits_bed": true,
-   "support_area_cm2": 4.83,
+   "support_area_cm2": 4.82,
    "support_frac": 0.008,
-   "bed_contact_cm2": 19.44,
-   "min_wall_mm": 0.95,
-   "thin_wall_frac": 0.006,
+   "bed_contact_cm2": 19.57,
+   "min_wall_mm": 0.9,
+   "thin_wall_frac": 0.007,
    "passed": true,
    "supports": "none",
    "problems": [],
    "warnings": [
-    "thin wall 0.95 mm (prints with 2 perimeters; 3 recommended)"
+    "thin wall 0.90 mm (prints with 2 perimeters; 3 recommended)"
    ]
   },
   {
@@ -7645,7 +7647,7 @@
    "volume_cm3": 0.09,
    "size_mm": [
     61.3,
-    12.1,
+    12.2,
     12.0
    ],
    "orientation": [
@@ -7654,17 +7656,17 @@
     0.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 0.81,
+   "support_area_cm2": 0.83,
    "support_frac": 0.056,
    "bed_contact_cm2": 0.0,
    "min_wall_mm": 0.0,
-   "thin_wall_frac": 0.703,
+   "thin_wall_frac": 0.715,
    "passed": false,
    "supports": "none",
    "problems": [
-    "16 separate pieces (a part must be one connected solid)",
+    "17 separate pieces (a part must be one connected solid)",
     "no flat face to stand on the bed",
-    "walls down to 0.00 mm (< 0.8 mm = 2 extrusion lines) on 70% of the surface"
+    "walls down to 0.00 mm (< 0.8 mm = 2 extrusion lines) on 72% of the surface"
    ],
    "warnings": []
   },
@@ -7868,22 +7870,22 @@
     0.995
    ],
    "fits_bed": true,
-   "support_area_cm2": 42.76,
+   "support_area_cm2": 42.75,
    "support_frac": 0.067,
    "bed_contact_cm2": 15.0,
-   "min_wall_mm": 0.04,
-   "thin_wall_frac": 0.037,
+   "min_wall_mm": 0.05,
+   "thin_wall_frac": 0.035,
    "passed": false,
    "supports": "none",
    "problems": [
-    "walls down to 0.04 mm (< 0.8 mm = 2 extrusion lines) on 4% of the surface"
+    "walls down to 0.05 mm (< 0.8 mm = 2 extrusion lines) on 3% of the surface"
    ],
    "warnings": []
   },
   {
    "name": "right_upper_arm_1",
    "watertight": true,
-   "volume_cm3": 86.33,
+   "volume_cm3": 86.34,
    "size_mm": [
     63.6,
     122.1,
@@ -7895,11 +7897,11 @@
     -0.153
    ],
    "fits_bed": true,
-   "support_area_cm2": 111.21,
+   "support_area_cm2": 111.29,
    "support_frac": 0.196,
    "bed_contact_cm2": 10.76,
    "min_wall_mm": 0.03,
-   "thin_wall_frac": 0.022,
+   "thin_wall_frac": 0.024,
    "passed": false,
    "supports": "needed",
    "problems": [
@@ -7925,7 +7927,7 @@
    "support_area_cm2": 18.38,
    "support_frac": 0.199,
    "bed_contact_cm2": 3.9,
-   "min_wall_mm": 1.33,
+   "min_wall_mm": 1.4,
    "thin_wall_frac": 0.005,
    "passed": true,
    "supports": "needed",
@@ -7963,7 +7965,7 @@
   {
    "name": "right_upper_arm_4",
    "watertight": true,
-   "volume_cm3": 97.22,
+   "volume_cm3": 97.23,
    "size_mm": [
     80.3,
     133.1,
@@ -7978,19 +7980,19 @@
    "support_area_cm2": 53.95,
    "support_frac": 0.081,
    "bed_contact_cm2": 15.14,
-   "min_wall_mm": 0.24,
-   "thin_wall_frac": 0.037,
+   "min_wall_mm": 0.15,
+   "thin_wall_frac": 0.038,
    "passed": false,
    "supports": "needed",
    "problems": [
-    "walls down to 0.24 mm (< 0.8 mm = 2 extrusion lines) on 4% of the surface"
+    "walls down to 0.15 mm (< 0.8 mm = 2 extrusion lines) on 4% of the surface"
    ],
    "warnings": []
   },
   {
    "name": "right_upper_arm_5",
    "watertight": true,
-   "volume_cm3": 87.17,
+   "volume_cm3": 87.16,
    "size_mm": [
     69.9,
     136.7,
@@ -8006,7 +8008,7 @@
    "support_frac": 0.015,
    "bed_contact_cm2": 2.2,
    "min_wall_mm": 0.02,
-   "thin_wall_frac": 0.018,
+   "thin_wall_frac": 0.016,
    "passed": false,
    "supports": "none",
    "problems": [
@@ -8169,13 +8171,13 @@
    "support_area_cm2": 260.68,
    "support_frac": 0.341,
    "bed_contact_cm2": 14.63,
-   "min_wall_mm": 0.27,
-   "thin_wall_frac": 0.02,
+   "min_wall_mm": 0.24,
+   "thin_wall_frac": 0.021,
    "passed": false,
    "supports": "needed",
    "problems": [
     "needs supports under 260.7 cm^2 (34% of its surface) even in its best orientation",
-    "walls down to 0.27 mm (< 0.8 mm = 2 extrusion lines) on 2% of the surface"
+    "walls down to 0.24 mm (< 0.8 mm = 2 extrusion lines) on 2% of the surface"
    ],
    "warnings": []
   },
@@ -8329,7 +8331,7 @@
    "support_frac": 0.377,
    "bed_contact_cm2": 2.16,
    "min_wall_mm": 0.0,
-   "thin_wall_frac": 0.048,
+   "thin_wall_frac": 0.047,
    "passed": false,
    "supports": "needed",
    "problems": [
@@ -8410,13 +8412,13 @@
    "support_area_cm2": 250.85,
    "support_frac": 0.33,
    "bed_contact_cm2": 20.54,
-   "min_wall_mm": 0.62,
-   "thin_wall_frac": 0.012,
+   "min_wall_mm": 0.65,
+   "thin_wall_frac": 0.013,
    "passed": false,
    "supports": "needed",
    "problems": [
     "needs supports under 250.8 cm^2 (33% of its surface) even in its best orientation",
-    "walls down to 0.62 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
+    "walls down to 0.65 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
    ],
    "warnings": []
   },
@@ -8487,22 +8489,22 @@
     0.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 0.09,
-   "support_frac": 0.01,
-   "bed_contact_cm2": 1.87,
-   "min_wall_mm": 0.73,
-   "thin_wall_frac": 0.015,
+   "support_area_cm2": 0.12,
+   "support_frac": 0.015,
+   "bed_contact_cm2": 1.84,
+   "min_wall_mm": 0.67,
+   "thin_wall_frac": 0.017,
    "passed": false,
    "supports": "none",
    "problems": [
-    "walls down to 0.73 mm (< 0.8 mm = 2 extrusion lines) on 2% of the surface"
+    "walls down to 0.67 mm (< 0.8 mm = 2 extrusion lines) on 2% of the surface"
    ],
    "warnings": []
   },
   {
    "name": "torso_23",
    "watertight": true,
-   "volume_cm3": 86.88,
+   "volume_cm3": 86.85,
    "size_mm": [
     133.8,
     194.8,
@@ -8514,15 +8516,15 @@
     0.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 29.07,
+   "support_area_cm2": 29.06,
    "support_frac": 0.048,
    "bed_contact_cm2": 1.04,
-   "min_wall_mm": 0.52,
-   "thin_wall_frac": 0.016,
+   "min_wall_mm": 0.39,
+   "thin_wall_frac": 0.013,
    "passed": false,
    "supports": "none",
    "problems": [
-    "walls down to 0.52 mm (< 0.8 mm = 2 extrusion lines) on 2% of the surface"
+    "walls down to 0.39 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
    ],
    "warnings": []
   },
@@ -8664,7 +8666,7 @@
   {
    "name": "torso_29",
    "watertight": true,
-   "volume_cm3": 86.83,
+   "volume_cm3": 86.84,
    "size_mm": [
     133.8,
     194.8,
@@ -8679,12 +8681,12 @@
    "support_area_cm2": 28.17,
    "support_frac": 0.046,
    "bed_contact_cm2": 1.04,
-   "min_wall_mm": 0.43,
-   "thin_wall_frac": 0.018,
+   "min_wall_mm": 0.28,
+   "thin_wall_frac": 0.023,
    "passed": false,
    "supports": "none",
    "problems": [
-    "walls down to 0.43 mm (< 0.8 mm = 2 extrusion lines) on 2% of the surface"
+    "walls down to 0.28 mm (< 0.8 mm = 2 extrusion lines) on 2% of the surface"
    ],
    "warnings": []
   },
@@ -9305,16 +9307,16 @@
     -0.064
    ],
    "fits_bed": true,
-   "support_area_cm2": 26.25,
+   "support_area_cm2": 26.24,
    "support_frac": 0.305,
    "bed_contact_cm2": 1.8,
-   "min_wall_mm": 0.05,
-   "thin_wall_frac": 0.125,
+   "min_wall_mm": 0.07,
+   "thin_wall_frac": 0.126,
    "passed": false,
    "supports": "needed",
    "problems": [
     "needs supports under 26.2 cm^2 (30% of its surface) even in its best orientation",
-    "walls down to 0.05 mm (< 0.8 mm = 2 extrusion lines) on 13% of the surface"
+    "walls down to 0.07 mm (< 0.8 mm = 2 extrusion lines) on 13% of the surface"
    ],
    "warnings": []
   },
