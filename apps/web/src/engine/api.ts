@@ -117,7 +117,9 @@ export function checkRobot(input: RobotSpecification, opts: { quick?: boolean; i
     try {
       const size = [0, 1, 2].map((k) => (g.bbox.max[k] - g.bbox.min[k]) * 1000) as Vec3;
       const fits = [[0, 1, 2], [1, 0, 2], [0, 2, 1], [2, 0, 1], [1, 2, 0], [2, 1, 0]].some((o) => o.every((k, i) => size[k] <= BED_MM[i]));
-      const watertight = g.part === "cad" ? (() => { const f = partFiles(String(g.params?.program)); return f.watertight && f.bodies === 1; })() : true;
+      // the designer's own check of the same program, else the CAD kernel's (slow: it builds the exact solid)
+      const known = meta(spec).design?.printed?.find((p) => p.link === l.name && JSON.stringify(p.program) === String(g.params?.program));
+      const watertight = known ? known.check.watertight : g.part === "cad" ? (() => { const f = partFiles(String(g.params?.program)); return f.watertight && f.bodies === 1; })() : true;
       printed.push({ name: l.name, bbox_mm: size.map((x) => +x.toFixed(1)) as Vec3, fits_bed: fits, watertight, mass_kg: +(g.volume * PRINT_DENSITY).toFixed(4), volume_cm3: +(g.volume * 1e6).toFixed(2) });
       checks.push({ name: `print:${l.name}`, pass: fits && watertight, detail: `${size.map((x) => x.toFixed(0)).join(" x ")} mm${fits ? "" : ", does not fit a 250 x 210 x 220 mm bed"}${watertight ? "" : ", not one closed solid"}` });
     } catch (e) { checks.push({ name: `print:${l.name}`, pass: false, detail: (e as Error).message }); }

@@ -115,7 +115,7 @@ Families: 1-12 DOF arms, SCARA, grippers, differential, four-wheel and mecanum b
 3. **Check it.** Torque, speed, power, runtime, tipping, clearance and printability are computed and shown with their numbers. A request that cannot be met is still built, with a warning that names the failing check.
 4. **Export it.** Every output is generated from one typed `RobotSpecification`: URDF and Xacro, ROS 2 and MoveIt, MuJoCo, STL, BOM, wiring and training scaffolds.
 
-The same engine runs in the CLI, the local server and, compiled for the browser, the website. More in [Architecture](docs/ARCHITECTURE.md) and [Design engine](docs/DESIGN_ENGINE.md).
+The same engine runs in the CLI, the local server and, compiled for the browser, the website. Other web pages can load it too, from `engine/v1/engine.js` on the website: see [Engine API](docs/ENGINE_API.md). More in [Architecture](docs/ARCHITECTURE.md) and [Design engine](docs/DESIGN_ENGINE.md).
 
 ## Limits
 
