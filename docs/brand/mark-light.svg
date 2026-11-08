@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-label="text to robot">
+<defs><linearGradient id="g" gradientUnits="userSpaceOnUse" x1="0" y1="56" x2="0" y2="200"><stop offset="0" stop-color="#9dffc8"/><stop offset="1" stop-color="#22e374"/></linearGradient></defs>
+<path d="M128 0C232 0 256 24 256 128S232 256 128 256 0 232 0 128 24 0 128 0Z" fill="#f4faf6"/><path d="M128 0C232 0 256 24 256 128S232 256 128 256 0 232 0 128 24 0 128 0Z" fill="none" stroke="#0b2a18" stroke-opacity=".10" stroke-width="2"/>
+<g transform="translate(0 0) scale(1.0)">
+  <mask id="cuta" maskUnits="userSpaceOnUse" x="0" y="0" width="256" height="256"><rect width="256" height="256" fill="#fff"/><circle cx="146" cy="128" r="35" fill="#000"/></mask>
+  <path d="M74 74 146 128 74 182" fill="none" stroke="#040806" stroke-width="36" stroke-linecap="round" stroke-linejoin="round" mask="url(#cuta)"/>
+  <path d="M146 101a27 27 0 1 1 0 54a27 27 0 1 1 0-54zm0 17a10 10 0 1 0 0 20a10 10 0 1 0 0-20z" fill="#040806" fill-rule="evenodd"/>
+  <path d="M170 182h22" stroke="#0b7a3f" stroke-width="22" stroke-linecap="round"/>
+</g>
+</svg>

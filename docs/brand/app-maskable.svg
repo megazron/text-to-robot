@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-label="text to robot">
+<defs><linearGradient id="g" gradientUnits="userSpaceOnUse" x1="0" y1="56" x2="0" y2="200"><stop offset="0" stop-color="#9dffc8"/><stop offset="1" stop-color="#22e374"/></linearGradient><radialGradient id="bgq" cx=".28" cy=".18" r="1"><stop offset="0" stop-color="#11241a"/><stop offset=".6" stop-color="#050b07"/><stop offset="1" stop-color="#020403"/></radialGradient><radialGradient id="glowq" cx="0.5703125" cy="0.5" r=".42"><stop offset="0" stop-color="#39ff88" stop-opacity=".22"/><stop offset="1" stop-color="#39ff88" stop-opacity="0"/></radialGradient></defs><rect width="256" height="256" fill="url(#bgq)"/><rect width="256" height="256" fill="url(#glowq)"/><g transform="translate(25.599999999999994 25.599999999999994) scale(0.8)">
+  <mask id="cutq" maskUnits="userSpaceOnUse" x="0" y="0" width="256" height="256"><rect width="256" height="256" fill="#fff"/><circle cx="146" cy="128" r="35" fill="#000"/></mask>
+  <path d="M74 74 146 128 74 182" fill="none" stroke="url(#g)" stroke-width="36" stroke-linecap="round" stroke-linejoin="round" mask="url(#cutq)"/>
+  <path d="M146 101a27 27 0 1 1 0 54a27 27 0 1 1 0-54zm0 17a10 10 0 1 0 0 20a10 10 0 1 0 0-20z" fill="url(#g)" fill-rule="evenodd"/>
+  <path d="M170 182h22" stroke="#39ff88" stroke-width="22" stroke-linecap="round"/>
+</g>
+</svg>

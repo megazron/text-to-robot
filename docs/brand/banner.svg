@@ -1,16 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 320" role="img" aria-label="Text to Robot">
-  <defs>
-    <radialGradient id="f" cx="0.13" cy="0.5" r="0.75"><stop offset="0" stop-color="#39ff88" stop-opacity="0.28"/><stop offset="0.45" stop-color="#39ff88" stop-opacity="0.05"/><stop offset="1" stop-color="#39ff88" stop-opacity="0"/></radialGradient>
-  </defs>
-  <rect width="1280" height="320" rx="28" fill="#050a07"/>
-  <rect width="1280" height="320" rx="28" fill="url(#f)"/>
-  <g transform="translate(72 64) scale(0.75)">
-    <path d="M128 62V38" stroke="#39ff88" stroke-width="10" stroke-linecap="round"/><circle cx="128" cy="32" r="10" fill="#39ff88"/>
-    <rect x="26" y="112" width="20" height="56" rx="8" fill="#39ff88"/><rect x="210" y="112" width="20" height="56" rx="8" fill="#39ff88"/>
-    <rect x="50" y="64" width="156" height="152" rx="34" fill="#0c1d13" stroke="#39ff88" stroke-width="10"/>
-    <path d="M84 112l36 28-36 28" fill="none" stroke="#39ff88" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
-    <rect x="134" y="154" width="42" height="15" rx="7.5" fill="#39ff88"/>
-  </g>
-  <text x="300" y="168" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="84" font-weight="700" letter-spacing="-2" fill="#e9fff2">text-to-robot</text>
-  <text x="304" y="222" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="27" fill="#39ff88">&gt; describe it. get the parts, the code and the sim.</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 320" width="1280" height="320" role="img" aria-label="text to robot">
+<defs><linearGradient id="g" gradientUnits="userSpaceOnUse" x1="0" y1="56" x2="0" y2="200"><stop offset="0" stop-color="#9dffc8"/><stop offset="1" stop-color="#22e374"/></linearGradient><radialGradient id="bgb" cx=".28" cy=".18" r="1"><stop offset="0" stop-color="#11241a"/><stop offset=".6" stop-color="#050b07"/><stop offset="1" stop-color="#020403"/></radialGradient><radialGradient id="glowb" cx="0.5703125" cy="0.5" r=".42"><stop offset="0" stop-color="#39ff88" stop-opacity=".22"/><stop offset="1" stop-color="#39ff88" stop-opacity="0"/></radialGradient><radialGradient id="aura" cx=".14" cy=".5" r=".7"><stop offset="0" stop-color="#39ff88" stop-opacity=".16"/><stop offset=".5" stop-color="#39ff88" stop-opacity=".03"/><stop offset="1" stop-color="#39ff88" stop-opacity="0"/></radialGradient></defs>
+<rect width="1280" height="320" rx="28" fill="#030605"/><rect width="1280" height="320" rx="28" fill="url(#aura)"/>
+<g transform="translate(88 64) scale(.75)"><path d="M128 0C232 0 256 24 256 128S232 256 128 256 0 232 0 128 24 0 128 0Z" fill="url(#bgb)"/><path d="M128 0C232 0 256 24 256 128S232 256 128 256 0 232 0 128 24 0 128 0Z" fill="url(#glowb)"/><path d="M128 0C232 0 256 24 256 128S232 256 128 256 0 232 0 128 24 0 128 0Z" fill="none" stroke="#b9ffd6" stroke-opacity=".10" stroke-width="2"/><g transform="translate(0 0) scale(1.0)">
+  <mask id="cutb" maskUnits="userSpaceOnUse" x="0" y="0" width="256" height="256"><rect width="256" height="256" fill="#fff"/><circle cx="146" cy="128" r="35" fill="#000"/></mask>
+  <path d="M74 74 146 128 74 182" fill="none" stroke="url(#g)" stroke-width="36" stroke-linecap="round" stroke-linejoin="round" mask="url(#cutb)"/>
+  <path d="M146 101a27 27 0 1 1 0 54a27 27 0 1 1 0-54zm0 17a10 10 0 1 0 0 20a10 10 0 1 0 0-20z" fill="url(#g)" fill-rule="evenodd"/>
+  <path d="M170 182h22" stroke="#39ff88" stroke-width="22" stroke-linecap="round"/>
+</g></g>
+<g transform="translate(332 160)"><g transform="translate(0 0) scale(0.6)" fill="none" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"><path transform="translate(0 0)" d="M30 -132V-34a24 24 0 0 0 24 24h10M10 -90h50" stroke="#ecfbf1"/><path transform="translate(90 0)" d="M10 -50h80a40 40 0 1 0 -11.7 28.3" stroke="#ecfbf1"/><path transform="translate(206 0)" d="M10 -90l70 80M80 -90l-70 80" stroke="#ecfbf1"/><path transform="translate(312 0)" d="M30 -132V-34a24 24 0 0 0 24 24h10M10 -90h50" stroke="#ecfbf1"/><path transform="translate(452 0)" d="M30 -132V-34a24 24 0 0 0 24 24h10M10 -90h50" stroke="#39ff88"/><path transform="translate(542 0)" d="M50 -90a40 40 0 1 1 0 80a40 40 0 1 1 0-80z" stroke="#39ff88"/><path transform="translate(708 0)" d="M10 -10v-80M10 -50a40 40 0 0 1 40-40h6" stroke="#ecfbf1"/><path transform="translate(790 0)" d="M50 -90a40 40 0 1 1 0 80a40 40 0 1 1 0-80z" stroke="#ecfbf1"/><path transform="translate(906 0)" d="M10 -148v98M50 -90a40 40 0 1 1 0 80a40 40 0 1 1 0-80zM10 -50v40" stroke="#ecfbf1"/><path transform="translate(1022 0)" d="M50 -90a40 40 0 1 1 0 80a40 40 0 1 1 0-80z" stroke="#ecfbf1"/><path transform="translate(1138 0)" d="M30 -132V-34a24 24 0 0 0 24 24h10M10 -90h50" stroke="#ecfbf1"/></g></g>
+<text x="332" y="222" font-family="ui-sans-serif,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif" font-size="28" fill="#a3b9ab">Describe a robot. Get the parts, the files and the physics.</text>
 </svg>
