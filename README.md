@@ -1,16 +1,21 @@
-<p align="center"><img src="docs/brand/banner.png" alt="text-to-robot" width="100%"></p>
+<p align="center"><img src="docs/brand/banner.png" alt="Text to Robot" width="100%"></p>
 
 <p align="center">
-  <a href="https://megazron.github.io/text-to-robot/"><b>Try it in your browser</b></a> &nbsp;·&nbsp;
+  <a href="https://megazron.github.io/text-to-robot/"><b>Open the app</b></a> &nbsp;·&nbsp;
   <a href="examples/README.md">Gallery</a> &nbsp;·&nbsp;
-  <a href="DEVELOPMENT.md">Develop</a>
+  <a href="#quick-start">Quick start</a> &nbsp;·&nbsp;
+  <a href="DEVELOPMENT.md">Develop</a> &nbsp;·&nbsp;
+  <a href="CHANGELOG.md">Changelog</a>
 </p>
 <p align="center">
   <a href="https://github.com/megazron/text-to-robot/actions/workflows/ci.yml"><img src="https://github.com/megazron/text-to-robot/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-39ff88.svg" alt="MIT"></a>
+  <a href="https://github.com/megazron/text-to-robot/actions/workflows/site.yml"><img src="https://github.com/megazron/text-to-robot/actions/workflows/site.yml/badge.svg" alt="Website"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/licence-MIT-39ff88.svg" alt="MIT licence"></a>
 </p>
 
-Type what you want. Get a robot you can simulate, wire and print: real parts with prices, printable housings, a ROS 2 package and a physics test report.
+**Describe a robot in plain words. Get one you can simulate, wire and print.**
+
+Text to Robot turns a sentence into a robot design you can check: real parts with prices, printable housings, wiring, a ROS 2 package and a physics test report. It is free, open source and runs in your browser.
 
 ```text
 > an arduino car with four wheels
@@ -56,27 +61,24 @@ Fan work, not affiliated with or endorsed by the rights holders. See [NOTICE](NO
 
 ## Quick start
 
-Requires Node.js 22.6 or newer.
+**In the browser.** Open [megazron.github.io/text-to-robot](https://megazron.github.io/text-to-robot/), type a robot and press enter. Every download is built in the tab.
+
+**On your machine.** You need Node.js 22.6 or newer.
 
 ```bash
 git clone https://github.com/megazron/text-to-robot
 cd text-to-robot
 npm ci
 node cli/src/index.ts "a 6 DOF arm with a gripper" -o out/arm
-npm run api          # web viewer and API on http://localhost:8787
 ```
 
-The CLI writes `out/arm/` with the ROS 2 package (`arm_6dof/`, including
-`urdf/arm_6dof.urdf` and `.urdf.xacro`), `arm_6dof.json`, a simulation URDF, `meshes/`,
-`cad/` (with `WIRING.md`: pin-to-pin table, cut list, power budget, and `wiring.svg`), `training/` and `BOM.md`. Other commands: `modify robot.json "<instruction>"`,
-`bom`, `validate` and `inspect`; run `node cli/src/index.ts --help`.
+`out/arm/` now holds the ROS 2 package (`arm_6dof/`, with `urdf/arm_6dof.urdf` and `.urdf.xacro`), the spec `arm_6dof.json`, a simulation URDF, `meshes/`, `cad/` (print list, wiring table, `wiring.svg`), `training/` and `BOM.md`. The CLI also has `modify`, `bom`, `validate` and `inspect`; see `node cli/src/index.ts --help`.
 
-![Viewer showing a generated 6-DOF arm](docs/img/web/02_arm_6dof.png)
+**The app, locally.** `npm run api` serves the same web app and an HTTP API on http://localhost:8787. `docker compose up --build` does the same with persistent storage.
 
-The viewer has joint sliders, modification, version history, share links and
-downloads. `docker compose up --build` serves the same app with persistent storage.
+![The web app showing a generated 6-DOF arm](docs/img/web/02_arm_6dof.png)
 
-To simulate the generated arm in MuJoCo (Python 3.10+):
+**Simulate it.** With Python 3.10 or newer:
 
 ```bash
 python3 -m venv .venv && . .venv/bin/activate
@@ -108,13 +110,31 @@ Families: 1-12 DOF arms, SCARA, grippers, differential/four-wheel/mecanum bases,
 rover with an arm, quadruped, hexapod, humanoid, and character robots. Drones, delta and
 gantry robots, snake and marine robots and dexterous hands are refused with a reason.
 
-## Honest limits
+## How it works
 
-- Nothing here has been built on a real bench yet. Printability is checked on geometry, not in a slicer.
-- Simulation is not proof of real-world behaviour. Every example passes the tests it has; what is not tested (mecanum strafing, free standing on the bipeds) is listed in its README.
-- Some printed parts have known issues, each with its cause, in [PRINTABILITY](docs/PRINTABILITY.md).
-- The parser covers the robot families above and refuses the rest with a reason.
+1. **Read the prompt.** A local, rule-based parser picks a robot family and reads sizes, payload, budget, sensors, colour and parts. It is not a language model, so it runs offline and gives the same answer every time.
+2. **Design from parts.** The design engine picks real motors, servos, boards and batteries for the loads, then builds the structure around them: cradles, bearings, housings, an electronics bay and the wiring.
+3. **Check it.** Torque, speed, power, runtime, tipping, clearance and printability are computed and shown with their numbers. A request that cannot be met is still built, with a warning that names the failing check.
+4. **Export it.** Every output is generated from one typed `RobotSpecification`: URDF and Xacro, ROS 2 and MoveIt, MuJoCo, STL, BOM, wiring and training scaffolds.
+
+The same engine runs in the CLI, the local server and, compiled for the browser, the website. More in [Architecture](docs/ARCHITECTURE.md) and [Design engine](docs/DESIGN_ENGINE.md).
+
+## Limits
+
+- Nothing here has been built on a real bench yet. Printability is checked on the geometry, not in a slicer.
+- Simulation is not proof. Every example passes the tests it has; what is not tested (mecanum strafing, free standing on the bipeds) is listed in its README.
+- Some printed parts have known issues, each with its cause, in [Printability](docs/PRINTABILITY.md).
+- The parser covers the families above and refuses the rest with a reason.
+- On the website the Mark 43 armour is not sculpted in the tab. Its shells are made offline by `scripts/forge_mark43.py` and shipped as a pack; the website assembles the suit from that pack.
+- Prices are estimates from the parts catalogue, and about half the electrical values (pinouts, currents) are estimated rather than taken from a datasheet. Each one is marked in [Parts data](docs/PARTS_DATA.md). Check before you order or power anything.
+
+## Project
+
+- [Gallery](examples/README.md): all 19 examples with their files, checks and test results.
+- [Development](DEVELOPMENT.md): set up, run the checks, regenerate the examples.
+- [Contributing](CONTRIBUTING.md) · [Code of conduct](CODE_OF_CONDUCT.md) · [Security](SECURITY.md)
+- [Changelog](CHANGELOG.md) · [Brand](docs/brand/README.md)
 
 ## Legal
 
-[MIT licence](LICENSE) for the code · [Terms](TERMS.md) · [Privacy](PRIVACY.md) · [Third-party notice](NOTICE.md). Character names belong to their owners.
+Code under the [MIT licence](LICENSE). [Terms](TERMS.md) · [Privacy](PRIVACY.md) · [Third-party notice](NOTICE.md). Character examples are unofficial fan work; their names and designs belong to their owners.
