@@ -57,7 +57,7 @@ not establish a buildable mechanism. Remaining chin/neck motion collisions stay
 reported. Lateral rim cutaways clear the existing motor housings; the visible
 mechanical bulk and open ankle transitions still fall short of the reference.
 
-### Chest opening clearance — 2026-09-20
+### Chest opening clearance (2026-09-20)
 
 Compared the saved Legacy Effects production-torso photograph with the existing
 and regenerated torso close-ups. The original pectorals ran behind the fixed
@@ -73,7 +73,7 @@ changed. The visual result still has exposed mechanisms and simplified panel
 shapes; this correction establishes neither movie accuracy nor a wearable build.
 Neck pitch, broader articulation and wearer-fit failures remain in the reports.
 
-### Neck motion and clamshell directions — 2026-09-20
+### Neck motion and clamshell directions (2026-09-20)
 
 Compared the saved Legacy Effects torso photograph with regenerated helmet and
 front views. Kept the head position, shell proportions and joint ranges. Rejected

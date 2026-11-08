@@ -1,4 +1,4 @@
-# ttr-mujoco — the Python / MuJoCo layer
+# ttr-mujoco: the Python and MuJoCo layer
 
 The TypeScript side of text-to-robot *generates* the robot. This package is where it becomes
 a **simulated, testable, trainable** robot in **MuJoCo**.

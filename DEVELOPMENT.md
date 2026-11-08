@@ -1,34 +1,77 @@
 # Development
 
+Everything you need to work on Text to Robot: set up, run the checks CI runs, regenerate the examples and release.
+
+## Requirements
+
+- Node.js 22.6 or newer. TypeScript runs natively (type stripping), so there is no build step.
+- Python 3.10 or newer for the simulation and CAD layer. CI uses 3.11.
+- Optional: Chromium through Playwright for the browser checks, Blender 4.5 and ffmpeg for the studio films.
+
+## Set up
+
 ```bash
-npm ci
-npm test && npm run typecheck && npm run lint
-pip install -e ./python                    # MuJoCo layer: convert, test, render, train
-pip install -e './python[geometry]'        # collision decomposition and surface audits
-pip install -e './python[train]'           # stable-baselines3 + torch
-pip install -e './python[cad]'             # CadQuery STEP backend (large, optional)
-python3 -m unittest discover -s python/tests -v   # modules whose deps are missing are skipped
-pip install -r requirements-dev.txt && python3 scripts/check_web.py --update-docs   # refresh browser screenshots
+npm ci                                      # also vendors three.js for the viewer
+pip install -e ./python                     # MuJoCo layer: convert, test, render, train
+pip install -e './python[geometry]'         # collision decomposition and surface audits
+pip install -e './python[build]'            # build123d parts library
+pip install -e './python[train]'            # stable-baselines3 and torch
+pip install -e './python[cad]'              # CadQuery STEP backend (large, optional)
+pip install -r requirements-dev.txt && python -m playwright install chromium   # browser checks
 ```
 
-Regenerate and re-audit the examples:
+## Checks
+
+These are the checks CI runs. Run the first four before every pull request.
+
+| Command | What it checks |
+|---|---|
+| `npm run typecheck` | Strict TypeScript across every package |
+| `npm run lint` | Biome. Read the whole output, not the last line. |
+| `npm test` | The node test suite: prompts, design engine, exports, CLI, every example prompt against its `robot.json` |
+| `python3 scripts/check_links.py` | Every relative link and image in the Markdown files resolves |
+| `python3 -m unittest discover -s python/tests -v` | Python layer. Modules whose optional dependencies are missing are skipped. |
+| `python3 scripts/verify_examples.py` | Each example matches its pipeline and its report came from the shipped URDF |
+| `python3 scripts/print_audit.py --check` | Every printed part is printable, or listed with a reason |
+| `MUJOCO_GL=disable python3 scripts/simulate_examples.py --check` | Re-runs every example's MuJoCo task tests |
+| `MUJOCO_GL=disable python3 scripts/check_motion.py --record` | No two parts pass through each other in any film frame |
+| `python3 scripts/check_web.py` | All examples render in headless Chromium with external requests blocked |
+| `deploy/build-pages.sh pages-dist && python3 scripts/check_site.py` | Every example prompt generated on the static website and compared with the shipped example |
+
+CI pins `mujoco==3.13.0`, the version the shipped simulation evidence was recorded with. Other releases change contact behaviour, skid-steer turning most.
+
+## Regenerate the examples
+
+Never edit files under `examples/` by hand. Regenerate them:
 
 ```bash
 node scripts/build_examples.ts                                  # every deliverable from each prompt
 MUJOCO_GL=osmesa python3 -B scripts/simulate_examples.py         # task tests, GIFs, README results, gallery
-deploy/build-pages.sh pages-dist && python3 scripts/check_site.py   # every prompt on the real website, compared with its example
 python3 -B scripts/studio/film.py 15_wall_e                      # studio.gif: MuJoCo motion loop, Cycles frames (Blender 4.5, ffmpeg)
 python3 scripts/verify_examples.py                               # what CI checks
 ```
 
-Further reading: [Python layer](python/README.md),
-[physical fidelity](docs/PHYSICAL_FIDELITY.md),
-[rebuild plan and checklist](docs/REBUILD_PLAN.md),
-[engineering references](references/engineering/README.md),
-[changelog](CHANGELOG.md).
+Text between `<!-- MANUAL_NOTES -->` and `<!-- /MANUAL_NOTES -->` in an example's README survives regeneration.
+
+## Website
+
+The site in `apps/web/public` is static. `deploy/build-pages.sh` bundles the generator for the browser and the Website workflow publishes it to GitHub Pages on every push to `main`. If you change a file in `apps/web/public`, run `python3 scripts/check_web.py --update-docs` to refresh the screenshots in `docs/img/web` and the source hashes in `examples/web_validation.json`.
+
+## Brand
+
+Logo files and rules are in [docs/brand](docs/brand/README.md). `python docs/brand/build.py` rewrites the SVGs and `python docs/brand/export.py` renders the PNGs. The website's copies live in `apps/web/public/icons/` and `apps/web/public/mark.svg`.
+
+## Release
+
+1. Move the entries under **Unreleased** in [CHANGELOG.md](CHANGELOG.md) to a new version with today's date.
+2. Set that version in every `package.json` and in `python/pyproject.toml`, then run `npm install --package-lock-only`.
+3. Commit, tag `vX.Y.Z` on `main` and publish a GitHub release with the changelog entry as its notes. The website rebuilds on release.
+
+## Further reading
+
+[Architecture](docs/ARCHITECTURE.md) · [Design engine](docs/DESIGN_ENGINE.md) · [Parts data](docs/PARTS_DATA.md) · [Printability](docs/PRINTABILITY.md) · [Physical fidelity](docs/PHYSICAL_FIDELITY.md) · [Python layer](python/README.md) · [Engineering references](references/engineering/README.md) · [Rebuild plan](docs/REBUILD_PLAN.md)
 
 ## How it works
-
 
 ```mermaid
 flowchart LR
@@ -51,7 +94,6 @@ specification gets the same generators and checks. See
 [architecture](docs/ARCHITECTURE.md) for the package layout.
 
 ## What is validated
-
 
 Every check below runs in CI on each push:
 
@@ -82,4 +124,6 @@ Every check below runs in CI on each push:
   produced from the shipped URDF.
 - **Browser**: all 19 examples render in headless Chromium with third-party requests blocked and rendered
   triangles compared with the served STL files (`scripts/check_web.py`).
-- **Mark 43**: built body first as worn armour; its posed checks (sit, raise arms, bend elbows, open the faceplate) run in the design engine and its faceplate servos are simulated like every other actuator.
+- **Mark 43**: door ranges come from exact sweeps of armour against armour in the order the suit opens, `door:*` checks cover
+  range, torque, clutch, pinch force and latch strength, its faceplate and door servos are simulated like every other actuator, and a
+  MuJoCo test runs the opening sequence. Nothing has been built.

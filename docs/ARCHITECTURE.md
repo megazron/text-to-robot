@@ -70,11 +70,11 @@ there. The generated URDF is the contract between the two halves.
 
 ## Verification
 
-- `npm test` — 55 `node:test` cases across schema, kinematics, templates, URDF, NLP, CLI,
+- `npm test`: 55 `node:test` cases across schema, kinematics, templates, URDF, NLP, CLI,
   modification, BOM, CAD, MoveIt/Gazebo, training export.
-- `npm run typecheck` — strict TypeScript (`erasableSyntaxOnly`, `verbatimModuleSyntax`).
-- `scripts/physics_check.py` — loads every example URDF in PyBullet and steps it.
-- `ttr-mujoco test` — MuJoCo battery (settle, hold, sweep, disturbance) on every example; the characters' `mujoco_report.json` files are checked by the test suite.
+- `npm run typecheck`: strict TypeScript (`erasableSyntaxOnly`, `verbatimModuleSyntax`).
+- `scripts/physics_check.py`: loads every example URDF in PyBullet and steps it.
+- `ttr-mujoco test`: MuJoCo battery (settle, hold, sweep, disturbance) on every example; the characters' `mujoco_report.json` files are checked by the test suite.
 - The generated training suite has been executed end to end (demo collection → PPO/SAC →
   behaviour cloning → evaluation) on a generated arm, and the environments run for every
   robot class.
