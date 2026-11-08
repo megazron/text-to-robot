@@ -84,7 +84,8 @@ export async function forgeSuit(mf: unknown, params: ForgeParams = {}, onProgres
 
   await next("wiring");
   const limits: Record<string, [number, number]> = { faceplate: [Math.round(-MASK_OPEN * 1000) / 1000, 0] };
-  const wired = await fitWiring(all, recs, latches, limits, tick, say);
+  const w = await stageOf("wired", async () => { const wired = await fitWiring(all, recs, latches, limits, tick, say); return { wired, all, neck: limits.neck }; });
+  const wired = w.wired; all.splice(0, all.length, ...w.all); limits.neck = w.neck;
   all.push(...wired.added); lap("wired");
 
   await next("measure");

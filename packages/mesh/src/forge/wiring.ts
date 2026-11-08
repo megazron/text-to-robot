@@ -4,7 +4,7 @@
 import type { TriMesh } from "./mc.ts";
 import { J, Frame } from "./mark43.ts";
 import { Rays } from "./ray.ts";
-import { asSolid, asMesh, scope, union, hull, cube, cylinder, mat4, bbox, overlaps, inflated, biggest, meshBounds, linspace, type P3, type Solid } from "./geo.ts";
+import { asSolid, asMesh, scope, union, clipUnion, compose, hull, cube, cylinder, mat4, bbox, overlaps, inflated, biggest, meshBounds, linspace, type P3, type Solid } from "./geo.ts";
 import { baseLink, type Piece, type Log, type Tick } from "./pack.ts";
 import { bodyOf, type DoorOut, type LatchRec } from "./doors.ts";
 
@@ -126,7 +126,9 @@ function seat(shells: TriMesh[], O: P3, ex: P3, ey: P3, ez: P3, L: number, W: nu
     let block = cube([L + 2 * wall - 6, W + 2 * wall - 6, 42.0]).translate([-wall + 3, -wall + 3, h - 42.0]);
     const under: Solid[] = [];
     for (const x of ls) for (let t = 0; t < 46.0; t += 2.4) for (const [a, b] of [[0, 0], [1.0, 0], [-1.0, 0], [0, 1.0], [0, -1.0]]) under.push(x.translate([a, b, 0.4 - t]));
-    block = block.subtract(union(under)).subtract(drill(1.0));
+    // only what lies in the block matters: each copy is cut to the block's box first (the result is the same, and far quicker)
+    const bb = bbox(block), pad = 1;
+    block = block.subtract(clipUnion(under, [[bb[0][0] - pad, bb[0][1] - pad, bb[0][2] - pad], [bb[1][0] + pad, bb[1][1] + pad, bb[1][2] + pad]])).subtract(drill(1.0));
     const parts = (block.decompose() as Solid[]).filter((c) => c.volume() > 500), best = parts.reduce((a, c) => (bbox(c)[1][2] > bbox(a)[1][2] ? c : a));
     return [h, asMesh(best.transform(mat4(back))), ls.map((x) => asMesh(x.subtract(drill(0.0)).transform(mat4(back))))] as unknown as [number, TriMesh, TriMesh[]];
   }) as unknown as [number, TriMesh, TriMesh[]];
@@ -201,4 +203,4 @@ export async function fitWiring(pieces: Piece[], recs: DoorOut[], latches: Latch
   for (const u of [-6, BAY.L + 6]) for (const v of [-6, BAY.W + 6]) for (const hh of [0, 36.0]) corners.push(add(add(add(b.O, scl(b.ex, u)), scl(b.ey, v)), scl(b.ez, hh)).map((x) => r(x, 2)) as P3);
   return { channels: chans, bays, bay_box: { link: b.link, corners }, added };
 }
-const compose2 = (ms: TriMesh[]): Solid => { const xs = ms.map(asSolid); return xs.length ? (xs[0].constructor as unknown as { compose(x: Solid[]): Solid }).compose(xs) : union([]); };
+const compose2 = (ms: TriMesh[]): Solid => compose(ms.map(asSolid));
