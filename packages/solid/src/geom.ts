@@ -8,8 +8,9 @@ export type Manifold = M;
 export type Mat4 = [number, number, number, number, number, number, number, number, number, number, number, number, number, number, number, number];
 
 // In the browser build the wasm file is served next to the page (deploy/build-pages.sh copies it).
-const doc = (globalThis as { document?: { baseURI: string } }).document;
-const wasm: ManifoldToplevel = await Module(doc ? { locateFile: () => new URL("./manifold.wasm", doc.baseURI).href } : undefined);
+// a worker started from another site names the engine's address in TTR_ENGINE_BASE (its own is a blob: URL)
+const g = globalThis as { document?: { baseURI: string }; TTR_ENGINE_BASE?: string }, wasmBase = g.TTR_ENGINE_BASE ?? g.document?.baseURI;
+const wasm: ManifoldToplevel = await Module(wasmBase ? { locateFile: () => new URL("./manifold.wasm", wasmBase).href } : undefined);
 wasm.setup();
 
 // ---- memory: manifold objects live in WASM; track and free everything a build creates ----

@@ -47,6 +47,8 @@ jobs:
       - run: deploy/build-pages.sh pages-dist
       - name: Generate every example on the site, Arduino mode included
         run: python scripts/check_site.py
+      - name: The engine API loads into a page on another origin and designs, edits, checks and exports
+        run: python scripts/check_engine.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:

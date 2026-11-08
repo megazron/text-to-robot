@@ -91,7 +91,8 @@ async function handle(method: string, p: string, body: any): Promise<Response> {
 /** The Mark 43 shells are about 10 MB: fetched only when a design needs them. */
 async function loadArmour() {
   if (armourPackLoaded()) return;
-  const [m, b] = await Promise.all([fetch(new URL("mark43_pack.json", location.href)), fetch(new URL("mark43_pack.bin", location.href))]);
+  const base = (self as { TTR_ENGINE_BASE?: string }).TTR_ENGINE_BASE ?? location.href;   // set when another site started this worker
+  const [m, b] = await Promise.all([fetch(new URL("mark43_pack.json", base)), fetch(new URL("mark43_pack.bin", base))]);
   if (m.ok && b.ok) setArmourPack((await m.json()) as ArmourManifest, new Uint8Array(await b.arrayBuffer()));
 }
 async function answer(method: string, path: string, text: string): Promise<Response> {

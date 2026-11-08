@@ -55,6 +55,7 @@ expected = json.loads((example / "robot.json").read_text())
 
 SCRIPT = """async ([url, prompt]) => {
   const t0 = performance.now(), out = {};
+  try {
   const { createEngine, snapPart, applyEdits, toScene, fromScene } = await import(url);
   const engine = await createEngine();
   out.version = engine.version;
@@ -85,6 +86,7 @@ SCRIPT = """async ([url, prompt]) => {
   out.pure = applyEdits(r, [{ op: "rename", link: "servo", to: "base_servo" }]).links.some(l => l.name === "base_servo");
   out.seconds = Math.round((performance.now() - t0) / 1000);
   engine.terminate();
+  } catch (e) { out.error = String(e && e.stack || e); }
   return out;
 }"""
 
@@ -102,6 +104,7 @@ with sync_playwright() as p:
     browser.close()
 site.shutdown(); other.shutdown()
 
+if result.get("error"): sys.exit(f"FAIL: {result['error']} (after {list(result)})")
 report = {"engine": engine_url, "page_origin": other_origin, "result": result, "errors": errors}
 (args.out / "report.json").write_text(json.dumps(report, indent=2) + "\n")
 fail = []
