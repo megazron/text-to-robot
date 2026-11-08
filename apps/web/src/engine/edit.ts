@@ -140,7 +140,7 @@ export type EditOp =
   | { op: "duplicate"; link: string; offset?: Vec3; name?: string }
   | { op: "rename"; link?: string; joint?: string; to: string }
   | { op: "attach"; link: string; parent: string }
-  | { op: "joint"; child: string; parent?: string; type: JointType; axis: Vec3; at: Vec3; lower?: number; upper?: number; effort?: number; velocity?: number; name?: string }
+  | { op: "joint"; child: string; parent?: string; type: JointType; axis: Vec3; at: Vec3; lower?: number; upper?: number; effort?: number; velocity?: number; name?: string; /** the actuator link that drives it */ actuator?: string }
   | { op: "limits"; joint: string; lower?: number; upper?: number; effort?: number; velocity?: number }
   | { op: "color"; link: string; rgba: [number, number, number, number] }
   | { op: "material"; link: string; material: string }
@@ -180,8 +180,13 @@ function rebase(spec: RobotSpecification, link: string, F: M4) {
   for (const s of spec.sensors) if (s.parent === link) s.origin = matPose(mul(D, poseMat(s.origin)));
   return D;
 }
-const studioMeta = (spec: RobotSpecification) => ((spec.metadata as { studio?: StudioMeta }).studio ??= { edited: true, printed: {}, actuators: {} });
-export interface StudioMeta { edited: boolean; printed: Record<string, PrintedParams>; /** joint -> actuator link driving it */ actuators: Record<string, string>; }
+function studioMeta(spec: RobotSpecification): StudioMeta {
+  const m = spec.metadata as { studio?: StudioMeta };
+  // the bought parts the robot had as bodies before its first edit: a deleted body is not bought any more
+  m.studio ??= { edited: true, printed: {}, actuators: {}, bodies: [...new Set(spec.links.map((l) => kindOf(l).key).filter((k): k is string => !!k))].sort() };
+  return m.studio;
+}
+export interface StudioMeta { edited: boolean; printed: Record<string, PrintedParams>; /** joint -> actuator link driving it */ actuators: Record<string, string>; /** catalog keys that were bodies before the first edit */ bodies?: string[]; }
 
 function addLink(spec: RobotSpecification, l: Link, parent: string | undefined, W: M4) {
   spec.links.push(l);
@@ -198,6 +203,7 @@ function addLink(spec: RobotSpecification, l: Link, parent: string | undefined, 
  */
 export function applyEdits(input: RobotSpecification, ops: EditOp[], parts?: PartProvider): RobotSpecification {
   const spec = structuredClone(input);
+  if (ops.length) studioMeta(spec);
   for (const o of ops) {
     switch (o.op) {
       case "pose": placeLink(spec, o.link, poseMat(o.world)); break;
@@ -294,7 +300,9 @@ export function applyEdits(input: RobotSpecification, ops: EditOp[], parts?: Par
           ...(moving ? { limit: { ...(o.type !== "continuous" ? { lower, upper } : {}), effort: o.effort ?? old?.limit?.effort ?? 1, velocity: o.velocity ?? old?.limit?.velocity ?? 2 }, dynamics: old?.dynamics ?? { damping: 0.05, friction: 0.01 } } : {}),
         };
         if (old) spec.joints[spec.joints.indexOf(old)] = j; else spec.joints.push(j);
-        if (old && old.name !== j.name) { const m = studioMeta(spec); delete m.actuators[old.name]; }
+        const m = studioMeta(spec);
+        if (old && old.name !== j.name) delete m.actuators[old.name];
+        if (o.actuator && moving) { linkOf(spec, o.actuator); m.actuators[j.name] = o.actuator; } else delete m.actuators[j.name];
         break;
       }
       case "limits": {
@@ -352,5 +360,5 @@ export function applyEdits(input: RobotSpecification, ops: EditOp[], parts?: Par
 /** An empty robot to build from scratch. */
 export function emptyRobot(name = "my_robot"): RobotSpecification {
   return { robot_name: name, links: [], joints: [], materials: [], sensors: [], end_effectors: [],
-    metadata: { generator: "text-to-robot engine (built by hand)", created: new Date().toISOString(), inferred_fields: [], notes: [], studio: { edited: true, printed: {}, actuators: {} } } as RobotSpecification["metadata"] };
+    metadata: { generator: "text-to-robot engine (built by hand)", created: new Date().toISOString(), inferred_fields: [], notes: [], studio: { edited: true, printed: {}, actuators: {}, bodies: [] } } as RobotSpecification["metadata"] };
 }

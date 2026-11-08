@@ -44,3 +44,4 @@ export { designArduinoCar, arduinoCarOptions, type ArduinoCarRequest, type Ardui
 export { designArduinoArm, type ArduinoArmRequest } from "./families/arduino-arm.ts";
 export { designArduinoWallE, type ArduinoWallERequest } from "./families/arduino-walle.ts";
 export { designMark43Wearable, type Mark43Request, type Mark43Tier } from "./families/mark43-wearable.ts";
+export { busChain } from "./netlist.ts";
