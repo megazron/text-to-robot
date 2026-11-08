@@ -1,6 +1,25 @@
 {
   "name": "@ttr/kernel",
-  "version": "0.1.0",
+  "version": "0.7.0",
+  "description": "Exact B-rep CAD kernel for printed parts on OpenCascade (Replicad, WASM): fillets, STEP export, validated print meshes.",
+  "keywords": [
+    "text-to-robot",
+    "robotics",
+    "cad",
+    "opencascade",
+    "step"
+  ],
+  "homepage": "https://megazron.github.io/text-to-robot/",
+  "bugs": {
+    "url": "https://github.com/megazron/text-to-robot/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/megazron/text-to-robot.git",
+    "directory": "packages/kernel"
+  },
+  "license": "MIT",
+  "author": "megazron",
   "type": "module",
   "exports": {
     ".": "./src/index.ts",

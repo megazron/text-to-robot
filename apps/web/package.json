@@ -1,1 +1,28 @@
-{"name":"@ttr/web","version":"0.1.0","type":"module","private":true,"dependencies":{"three":"0.160.0"}}
+{
+  "name": "@ttr/web",
+  "version": "0.7.0",
+  "private": true,
+  "description": "Text to Robot web app: prompt, 3D viewer, parts, downloads. Runs the whole generator in the browser.",
+  "keywords": [
+    "text-to-robot",
+    "robotics",
+    "web",
+    "three.js",
+    "viewer"
+  ],
+  "homepage": "https://megazron.github.io/text-to-robot/",
+  "bugs": {
+    "url": "https://github.com/megazron/text-to-robot/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/megazron/text-to-robot.git",
+    "directory": "apps/web"
+  },
+  "license": "MIT",
+  "author": "megazron",
+  "type": "module",
+  "dependencies": {
+    "three": "0.160.0"
+  }
+}

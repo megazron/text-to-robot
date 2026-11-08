@@ -1,1 +1,31 @@
-{"name": "@ttr/mesh", "version": "0.1.0", "type": "module", "exports": {".": "./src/index.ts"}, "dependencies": {"earcut": "3.0.2", "@ttr/solid": "*", "@ttr/kernel": "*"}}
+{
+  "name": "@ttr/mesh",
+  "version": "0.7.0",
+  "description": "Procedural polygon mesh kernel and part registry for Text to Robot.",
+  "keywords": [
+    "text-to-robot",
+    "robotics",
+    "mesh",
+    "stl"
+  ],
+  "homepage": "https://megazron.github.io/text-to-robot/",
+  "bugs": {
+    "url": "https://github.com/megazron/text-to-robot/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/megazron/text-to-robot.git",
+    "directory": "packages/mesh"
+  },
+  "license": "MIT",
+  "author": "megazron",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "earcut": "3.0.2",
+    "@ttr/solid": "*",
+    "@ttr/kernel": "*"
+  }
+}

@@ -1,6 +1,24 @@
 {
   "name": "@ttr/api",
-  "version": "0.1.0",
+  "version": "0.7.0",
+  "description": "Local HTTP server for Text to Robot: the web app plus a JSON API for generating and sharing robots.",
+  "keywords": [
+    "text-to-robot",
+    "robotics",
+    "api",
+    "server"
+  ],
+  "homepage": "https://megazron.github.io/text-to-robot/",
+  "bugs": {
+    "url": "https://github.com/megazron/text-to-robot/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/megazron/text-to-robot.git",
+    "directory": "apps/api"
+  },
+  "license": "MIT",
+  "author": "megazron",
   "type": "module",
   "exports": {
     ".": "./src/server.ts"

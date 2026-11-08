@@ -1,2 +1,28 @@
-{ "name": "@ttr/llm-providers", "version": "0.1.0", "type": "module", "exports": { ".": "./src/index.ts" },
-  "dependencies": { "@ttr/robot-schema": "*" } }
+{
+  "name": "@ttr/llm-providers",
+  "version": "0.7.0",
+  "description": "Optional model hook for Text to Robot: the provider interface and JSON coercion. No model ships; generation is rule-based.",
+  "keywords": [
+    "text-to-robot",
+    "robotics",
+    "llm"
+  ],
+  "homepage": "https://megazron.github.io/text-to-robot/",
+  "bugs": {
+    "url": "https://github.com/megazron/text-to-robot/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/megazron/text-to-robot.git",
+    "directory": "packages/llm-providers"
+  },
+  "license": "MIT",
+  "author": "megazron",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@ttr/robot-schema": "*"
+  }
+}

@@ -4,12 +4,20 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ttr-mujoco"
-version = "0.1.0"
-description = "text-to-robot MuJoCo layer: convert, test, render and train generated URDF robots"
+version = "0.7.0"
+description = "Text to Robot Python layer: convert, simulate, render and train generated URDF robots in MuJoCo, and build printable parts"
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
+authors = [{ name = "megazron" }]
+keywords = ["robotics", "text-to-robot", "urdf", "mujoco", "simulation", "3d-printing", "ros2"]
 dependencies = ["mujoco>=3.1", "numpy>=1.24", "gymnasium>=0.29", "Pillow>=10"]
+
+[project.urls]
+Homepage = "https://megazron.github.io/text-to-robot/"
+Source = "https://github.com/megazron/text-to-robot"
+Issues = "https://github.com/megazron/text-to-robot/issues"
+Changelog = "https://github.com/megazron/text-to-robot/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
 cad = ["cadquery>=2.5,<3"]

@@ -1,6 +1,24 @@
 {
   "name": "@ttr/parts",
-  "version": "0.1.0",
+  "version": "0.7.0",
+  "description": "Purchasable components with dimensions, prices and electrical records, each value marked datasheet or estimated.",
+  "keywords": [
+    "text-to-robot",
+    "robotics",
+    "components",
+    "datasheets"
+  ],
+  "homepage": "https://megazron.github.io/text-to-robot/",
+  "bugs": {
+    "url": "https://github.com/megazron/text-to-robot/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/megazron/text-to-robot.git",
+    "directory": "packages/parts"
+  },
+  "license": "MIT",
+  "author": "megazron",
   "type": "module",
   "exports": {
     ".": "./src/index.ts",

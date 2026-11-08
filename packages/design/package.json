@@ -1,6 +1,24 @@
 {
   "name": "@ttr/design",
-  "version": "0.1.0",
+  "version": "0.7.0",
+  "description": "Parts-first design engine: sizing, assembly, enclosures, wiring, clearance and interference checks.",
+  "keywords": [
+    "text-to-robot",
+    "robotics",
+    "design",
+    "wiring"
+  ],
+  "homepage": "https://megazron.github.io/text-to-robot/",
+  "bugs": {
+    "url": "https://github.com/megazron/text-to-robot/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/megazron/text-to-robot.git",
+    "directory": "packages/design"
+  },
+  "license": "MIT",
+  "author": "megazron",
   "type": "module",
   "exports": {
     ".": "./src/index.ts"

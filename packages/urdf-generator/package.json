@@ -1,2 +1,30 @@
-{ "name": "@ttr/urdf-generator", "version": "0.1.0", "type": "module", "exports": { ".": "./src/index.ts" },
-  "dependencies": { "@ttr/robot-schema": "*", "@ttr/kinematics": "*" } }
+{
+  "name": "@ttr/urdf-generator",
+  "version": "0.7.0",
+  "description": "Deterministic URDF and Xacro generation from a RobotSpecification.",
+  "keywords": [
+    "text-to-robot",
+    "robotics",
+    "urdf",
+    "xacro"
+  ],
+  "homepage": "https://megazron.github.io/text-to-robot/",
+  "bugs": {
+    "url": "https://github.com/megazron/text-to-robot/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/megazron/text-to-robot.git",
+    "directory": "packages/urdf-generator"
+  },
+  "license": "MIT",
+  "author": "megazron",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@ttr/robot-schema": "*",
+    "@ttr/kinematics": "*"
+  }
+}

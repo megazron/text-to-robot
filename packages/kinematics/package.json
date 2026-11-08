@@ -1,1 +1,29 @@
-{ "name": "@ttr/kinematics", "version": "0.1.0", "type": "module", "exports": { ".": "./src/index.ts" }, "dependencies": { "@ttr/robot-schema": "*" } }
+{
+  "name": "@ttr/kinematics",
+  "version": "0.7.0",
+  "description": "Inertia tensors, transforms and forward kinematics for Text to Robot.",
+  "keywords": [
+    "text-to-robot",
+    "robotics",
+    "kinematics",
+    "inertia"
+  ],
+  "homepage": "https://megazron.github.io/text-to-robot/",
+  "bugs": {
+    "url": "https://github.com/megazron/text-to-robot/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/megazron/text-to-robot.git",
+    "directory": "packages/kinematics"
+  },
+  "license": "MIT",
+  "author": "megazron",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@ttr/robot-schema": "*"
+  }
+}

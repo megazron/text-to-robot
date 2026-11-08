@@ -1,6 +1,24 @@
 {
   "name": "@ttr/components",
-  "version": "0.1.0",
+  "version": "0.7.0",
+  "description": "Real-part catalogue and bill of materials sized to the loads and fitted to a budget.",
+  "keywords": [
+    "text-to-robot",
+    "robotics",
+    "bom",
+    "components"
+  ],
+  "homepage": "https://megazron.github.io/text-to-robot/",
+  "bugs": {
+    "url": "https://github.com/megazron/text-to-robot/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/megazron/text-to-robot.git",
+    "directory": "packages/components"
+  },
+  "license": "MIT",
+  "author": "megazron",
   "type": "module",
   "exports": {
     ".": "./src/index.ts"

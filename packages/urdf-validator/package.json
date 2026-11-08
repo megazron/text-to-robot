@@ -1,2 +1,29 @@
-{ "name": "@ttr/urdf-validator", "version": "0.1.0", "type": "module", "exports": { ".": "./src/index.ts" },
-  "dependencies": { "@ttr/robot-schema": "*" } }
+{
+  "name": "@ttr/urdf-validator",
+  "version": "0.7.0",
+  "description": "URDF parsing and structural validation, and URDF to RobotSpecification.",
+  "keywords": [
+    "text-to-robot",
+    "robotics",
+    "urdf",
+    "validation"
+  ],
+  "homepage": "https://megazron.github.io/text-to-robot/",
+  "bugs": {
+    "url": "https://github.com/megazron/text-to-robot/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/megazron/text-to-robot.git",
+    "directory": "packages/urdf-validator"
+  },
+  "license": "MIT",
+  "author": "megazron",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@ttr/robot-schema": "*"
+  }
+}

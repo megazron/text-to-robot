@@ -1,6 +1,25 @@
 {
   "name": "@ttr/ros2-export",
-  "version": "0.1.0",
+  "version": "0.7.0",
+  "description": "ROS 2 package export: ament_cmake package, MoveIt 2 configuration and Gazebo launch files.",
+  "keywords": [
+    "text-to-robot",
+    "robotics",
+    "ros2",
+    "moveit",
+    "gazebo"
+  ],
+  "homepage": "https://megazron.github.io/text-to-robot/",
+  "bugs": {
+    "url": "https://github.com/megazron/text-to-robot/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/megazron/text-to-robot.git",
+    "directory": "packages/ros2-export"
+  },
+  "license": "MIT",
+  "author": "megazron",
   "type": "module",
   "exports": {
     ".": "./src/index.ts"

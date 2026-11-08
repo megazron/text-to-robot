@@ -1,6 +1,31 @@
 {
   "name": "text-to-robot",
+  "version": "0.7.0",
   "private": true,
+  "description": "Describe a robot in plain words. Get one you can simulate, wire and print: real parts, printable housings, wiring, ROS 2 and a physics report.",
+  "keywords": [
+    "robotics",
+    "text-to-robot",
+    "urdf",
+    "ros2",
+    "robot-design",
+    "moveit",
+    "mujoco",
+    "3d-printing",
+    "bom",
+    "arduino",
+    "cad"
+  ],
+  "homepage": "https://megazron.github.io/text-to-robot/",
+  "bugs": {
+    "url": "https://github.com/megazron/text-to-robot/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/megazron/text-to-robot.git"
+  },
+  "license": "MIT",
+  "author": "megazron",
   "type": "module",
   "workspaces": [
     "packages/*",
