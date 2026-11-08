@@ -8,7 +8,7 @@ Interpreted as: Iron Man Mark 43 wearable suit · budget $60000
 
 **Iron Man Mark 43 (full wearable suit): 358 printed pieces, 8.6 kg filament, motorised faceplate, $528 incl. filament**
 
-Parts cost **$565.13** (budget $60000: within) · printed structure 358 parts, 7963 g · checks passed 475/475
+Parts cost **$565.24** (budget $60000: within) · printed structure 358 parts, 7962 g · checks passed 475/475
 
 ## What it can do
 
@@ -20,7 +20,7 @@ Parts cost **$565.13** (budget $60000: within) · printed structure 358 parts, 7
 | printed pieces | 358 |
 | armour mass kg | 8.89 |
 | filament kg | 8.6 |
-| cost usd | 528.03 |
+| cost usd | 528.14 |
 | mass kg | 9.99 |
 
 ## Actuators (sized from this robot's own loads)
@@ -93,11 +93,11 @@ _PASS means the modelled actuators (datasheet peak torque as a hard limit, a lin
 
 **Nothing here has been built or tested. A person inside this is a safety matter: read "Before anyone gets inside" first.**
 
-The suit opens from behind and only the servos move it. The back splits on its centre line, and the rear shells of the helmet, upper arms, forearms, thighs and shins swing out about 80 degrees on hinges along their flanks, so a person steps in and it closes round them. Every door is a revolute joint in `robot.urdf` on its own servo, whose output lies on the hinge line. `scripts/fit_doors.py` makes the hardware from the finished shells: a fixed leaf with two knuckles and a door leaf with one on an M4 pin at each hinge, a pod on the fixed half that holds the servo, an arm from the horn to the door, and a latch on the free edge.
+The suit opens from behind and only the servos move it. The back splits on its centre line, and the rear shells of the helmet, upper arms, forearms, thighs and shins swing out about 80 degrees on hinges along their flanks, so a person steps in and it closes round them. Every door is a revolute joint in `robot.urdf` on its own servo, whose output lies on the hinge line. The forge (`packages/mesh/src/forge/doors.ts`, run in the browser; `scripts/fit_doors.py` is its Python reference) makes the hardware from the finished shells: a fixed leaf with two knuckles and a door leaf with one on an M4 pin at each hinge, a pod on the fixed half that holds the servo, an arm from the horn to the door, and a latch on the free edge.
 
 Doors open a left and right pair at a time, always in this order, and close in reverse: forearm, shin, upper arm, thigh, back, helmet. On the back and the helmet the left door's pawl reaches behind the right door, so the right door moves first. The order matters: a door swept alone with its neighbours shut can be stopped by them (the `alone_deg` figures in `robot.json`), so the back doors must never be commanded before the arms and thighs are open. The order is in the design as `door_sequence`; no sketch is written for it yet.
 
-Ranges are measured by `scripts/fit_doors.py` with exact intersection, every door swept in that order against all the armour, hardware and servos. Torques come from the spec's own masses and inertias: gravity with the suit 10 degrees off plumb, hinge pin friction, an estimated 0.03 N·m for the cable loop, and a 3 s swing. Stall is read at the 5 V rail.
+Ranges are measured by the forge with exact intersection, every door swept in that order against all the armour, hardware and servos. Torques come from the spec's own masses and inertias: gravity with the suit 10 degrees off plumb, hinge pin friction, an estimated 0.03 N·m for the cable loop, and a 3 s swing. Stall is read at the 5 V rail.
 
 | Door | Servo | Range deg | Mass kg | Inertia kg m2 | Hold N·m | Peak N·m | Stall N·m | Clutch N·m | Edge force N |
 |---|---|--:|--:|--:|--:|--:|--:|--:|--:|

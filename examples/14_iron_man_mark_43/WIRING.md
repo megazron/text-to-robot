@@ -1,6 +1,6 @@
 # Wiring: iron_man_mark_43
 
-45 cables, 116 conductors, 113.66 m of wire, wiring parts $68.48.
+45 cables, 116 conductors, 113.86 m of wire, wiring parts $68.60.
 
 Diagram: [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
 
@@ -9,7 +9,7 @@ Diagram: [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].p
 | Rail | Volts | Source | Source limit A (cont / peak) | Load A (typical / peak) | Margin (typical) | Fuse A | Worst wire drop V |
 |---|--:|---|--:|--:|--:|--:|--:|
 | VBAT | 7.2 | main_switch | 6 / 10 | 2.72 / 7.935 | 2.2x | 4 | 0.063 |
-| 5V_SERVO | 5 | regulator | 2 / 3 | 0.5 / 1.4 | 4.0x | - | 0.102 |
+| 5V_SERVO | 5 | regulator | 2 / 3 | 0.5 / 1.4 | 4.0x | - | 0.101 |
 | 5V_LIGHTS | 5 | regulator_lights | 2 / 3 | 0.72 / 2.16 | 2.8x | - | 0.135 |
 | 5V_DOORS | 5 | regulator_doors | 5.5 / 8 | 2.03 / 6.03 | 2.7x | - | 0.14 |
 
@@ -180,38 +180,38 @@ Length is route + service loop + joint slack + termination, rounded up to 5 mm; 
 
 | Cable | What | Conductors | Length mm | Route | Service | Joint slack | Ends | Connectors | Exit |
 |---|---|--:|--:|--:|--:|--:|--:|---|---|
-| C1 | 5V_SERVO to faceplate_servo_left | 3 | 1285 | 901.1 | 40 | 280 | 60 | 15-pin 2.54 mm male header / JR plug | back_bay.leads_1 |
-| C2 | 5V_SERVO to faceplate_servo_right | 3 | 1440 | 1057.9 | 40 | 280 | 60 | 15-pin 2.54 mm male header / JR plug | back_bay.leads_1 |
-| C3 | controller to eye_led_left | 2 | 1385 | 952.6 | 40 | 330 | 60 | 15-pin 2.54 mm male header / 2 axial leads | back_bay.leads_2 |
-| C4 | controller to eye_led_right | 2 | 1515 | 1080.5 | 40 | 330 | 60 | 15-pin 2.54 mm male header / 2 axial leads | back_bay.leads_2 |
-| C5 | 5V_LIGHTS to arc_reactor | 3 | 880 | 636.4 | 40 | 140 | 60 | 15-pin 2.54 mm male header / 4 solder pads on the back | back_bay.leads_3 |
-| C6 | 5V_LIGHTS to left_repulsor | 3 | 1640 | 1012.2 | 40 | 525 | 60 | 15-pin 2.54 mm male header / 4 solder pads on the back | back_bay.leads_3 |
-| C7 | 5V_LIGHTS to right_repulsor | 3 | 1855 | 1263 | 40 | 490 | 60 | 15-pin 2.54 mm male header / 4 solder pads on the back | back_bay.leads_4 |
-| C8 | controller to servo_driver_left | 3 | 980 | 735.3 | 40 | 140 | 60 | 15-pin 2.54 mm male header / 6-pin 0.1 in header | back_bay.leads_4 + drive_left.leads |
+| C1 | 5V_SERVO to faceplate_servo_left | 3 | 1275 | 894.1 | 40 | 280 | 60 | 15-pin 2.54 mm male header / JR plug | back_bay.leads_1 |
+| C2 | 5V_SERVO to faceplate_servo_right | 3 | 1435 | 1051.4 | 40 | 280 | 60 | 15-pin 2.54 mm male header / JR plug | back_bay.leads_1 |
+| C3 | controller to eye_led_left | 2 | 1380 | 947.1 | 40 | 330 | 60 | 15-pin 2.54 mm male header / 2 axial leads | back_bay.leads_2 |
+| C4 | controller to eye_led_right | 2 | 1510 | 1075 | 40 | 330 | 60 | 15-pin 2.54 mm male header / 2 axial leads | back_bay.leads_2 |
+| C5 | 5V_LIGHTS to arc_reactor | 3 | 880 | 639 | 40 | 140 | 60 | 15-pin 2.54 mm male header / 4 solder pads on the back | back_bay.leads_3 |
+| C6 | 5V_LIGHTS to left_repulsor | 3 | 1640 | 1013.5 | 40 | 525 | 60 | 15-pin 2.54 mm male header / 4 solder pads on the back | back_bay.leads_3 |
+| C7 | 5V_LIGHTS to right_repulsor | 3 | 1855 | 1262.6 | 40 | 490 | 60 | 15-pin 2.54 mm male header / 4 solder pads on the back | back_bay.leads_4 |
+| C8 | controller to servo_driver_left | 3 | 980 | 736.1 | 40 | 140 | 60 | 15-pin 2.54 mm male header / 6-pin 0.1 in header | back_bay.leads_4 + drive_left.leads |
 | C9 | servo_driver_left to back_left_servo | 3 | 340 | 236.8 | 40 | 0 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR universal 3-pin 2.54 mm female | drive_left.leads |
-| C10 | servo_driver_left to helmet_left_servo | 3 | 1225 | 936 | 40 | 185 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | drive_left.leads |
-| C11 | servo_driver_left to left_upper_arm_servo | 3 | 985 | 725.9 | 40 | 155 | 60 | 3-pin 0.1 in header row (3x4 groups) / 3-pin S-type female header | drive_left.leads |
-| C12 | servo_driver_left to left_forearm_servo | 3 | 1345 | 1053.1 | 40 | 190 | 60 | 3-pin 0.1 in header row (3x4 groups) / 3-pin S-type female header | drive_left.leads |
-| C13 | servo_driver_left to left_thigh_servo | 3 | 685 | 534.8 | 40 | 50 | 60 | 3-pin 0.1 in header row (3x4 groups) / 3-pin S-type female header | drive_left.leads |
-| C14 | servo_driver_left to left_shin_servo | 3 | 1355 | 1059.6 | 40 | 195 | 60 | 3-pin 0.1 in header row (3x4 groups) / 3-pin S-type female header | drive_left.leads |
-| C15 | servo_driver_left to latch_back_left_0_servo | 3 | 795 | 569.4 | 40 | 125 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | drive_left.leads |
-| C16 | servo_driver_left to latch_back_left_1_servo | 3 | 830 | 602.1 | 40 | 125 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | drive_left.leads |
-| C17 | servo_driver_left to latch_helmet_left_0_servo | 3 | 1420 | 1056.1 | 40 | 260 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | drive_left.leads |
-| C18 | servo_driver_left to latch_left_upper_arm_0_servo | 3 | 910 | 651.1 | 40 | 155 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | drive_left.leads |
-| C19 | servo_driver_left to latch_left_forearm_0_servo | 3 | 1300 | 1007.4 | 40 | 190 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | drive_left.leads |
-| C20 | servo_driver_left to latch_left_thigh_0_servo | 3 | 835 | 684.1 | 40 | 50 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | drive_left.leads |
-| C21 | servo_driver_left to latch_left_shin_0_servo | 3 | 1465 | 1165.3 | 40 | 195 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | drive_left.leads |
-| C22 | controller to servo_driver_right | 3 | 1340 | 1097.7 | 40 | 140 | 60 | 15-pin 2.54 mm male header / 6-pin 0.1 in header | back_bay.leads_5 + drive_right.leads |
+| C10 | servo_driver_left to helmet_left_servo | 3 | 1230 | 944 | 40 | 185 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | drive_left.leads |
+| C11 | servo_driver_left to left_upper_arm_servo | 3 | 990 | 734 | 40 | 155 | 60 | 3-pin 0.1 in header row (3x4 groups) / 3-pin S-type female header | drive_left.leads |
+| C12 | servo_driver_left to left_forearm_servo | 3 | 1355 | 1061.1 | 40 | 190 | 60 | 3-pin 0.1 in header row (3x4 groups) / 3-pin S-type female header | drive_left.leads |
+| C13 | servo_driver_left to left_thigh_servo | 3 | 685 | 534.7 | 40 | 50 | 60 | 3-pin 0.1 in header row (3x4 groups) / 3-pin S-type female header | drive_left.leads |
+| C14 | servo_driver_left to left_shin_servo | 3 | 1355 | 1059.5 | 40 | 195 | 60 | 3-pin 0.1 in header row (3x4 groups) / 3-pin S-type female header | drive_left.leads |
+| C15 | servo_driver_left to latch_back_left_0_servo | 3 | 805 | 575.2 | 40 | 125 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | drive_left.leads |
+| C16 | servo_driver_left to latch_back_left_1_servo | 3 | 840 | 612.1 | 40 | 125 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | drive_left.leads |
+| C17 | servo_driver_left to latch_helmet_left_0_servo | 3 | 1425 | 1064.5 | 40 | 260 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | drive_left.leads |
+| C18 | servo_driver_left to latch_left_upper_arm_0_servo | 3 | 915 | 659.2 | 40 | 155 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | drive_left.leads |
+| C19 | servo_driver_left to latch_left_forearm_0_servo | 3 | 1310 | 1015.6 | 40 | 190 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | drive_left.leads |
+| C20 | servo_driver_left to latch_left_thigh_0_servo | 3 | 835 | 684 | 40 | 50 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | drive_left.leads |
+| C21 | servo_driver_left to latch_left_shin_0_servo | 3 | 1465 | 1165.2 | 40 | 195 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | drive_left.leads |
+| C22 | controller to servo_driver_right | 3 | 1350 | 1109 | 40 | 140 | 60 | 15-pin 2.54 mm male header / 6-pin 0.1 in header | back_bay.leads_5 + drive_right.leads |
 | C23 | servo_driver_right to back_right_servo | 3 | 285 | 184.9 | 40 | 0 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR universal 3-pin 2.54 mm female | drive_right.leads |
-| C24 | servo_driver_right to helmet_right_servo | 3 | 1725 | 1436.5 | 40 | 185 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | drive_right.leads |
+| C24 | servo_driver_right to helmet_right_servo | 3 | 1735 | 1445 | 40 | 185 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | drive_right.leads |
 | C25 | servo_driver_right to right_upper_arm_servo | 3 | 845 | 571.6 | 40 | 170 | 60 | 3-pin 0.1 in header row (3x4 groups) / 3-pin S-type female header | drive_right.leads |
 | C26 | servo_driver_right to right_forearm_servo | 3 | 1205 | 898.7 | 40 | 205 | 60 | 3-pin 0.1 in header row (3x4 groups) / 3-pin S-type female header | drive_right.leads |
-| C27 | servo_driver_right to right_thigh_servo | 3 | 730 | 578 | 40 | 50 | 60 | 3-pin 0.1 in header row (3x4 groups) / 3-pin S-type female header | drive_right.leads |
-| C28 | servo_driver_right to right_shin_servo | 3 | 1400 | 1102.8 | 40 | 195 | 60 | 3-pin 0.1 in header row (3x4 groups) / 3-pin S-type female header | drive_right.leads |
+| C27 | servo_driver_right to right_thigh_servo | 3 | 730 | 577.9 | 40 | 50 | 60 | 3-pin 0.1 in header row (3x4 groups) / 3-pin S-type female header | drive_right.leads |
+| C28 | servo_driver_right to right_shin_servo | 3 | 1400 | 1102.7 | 40 | 195 | 60 | 3-pin 0.1 in header row (3x4 groups) / 3-pin S-type female header | drive_right.leads |
 | C29 | servo_driver_right to latch_right_upper_arm_0_servo | 3 | 770 | 496.5 | 40 | 170 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | drive_right.leads |
-| C30 | servo_driver_right to latch_right_forearm_0_servo | 3 | 1160 | 853.2 | 40 | 205 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | drive_right.leads |
-| C31 | servo_driver_right to latch_right_thigh_0_servo | 3 | 880 | 727.6 | 40 | 50 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | drive_right.leads |
-| C32 | servo_driver_right to latch_right_shin_0_servo | 3 | 1505 | 1208.4 | 40 | 195 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | drive_right.leads |
+| C30 | servo_driver_right to latch_right_forearm_0_servo | 3 | 1160 | 853.3 | 40 | 205 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | drive_right.leads |
+| C31 | servo_driver_right to latch_right_thigh_0_servo | 3 | 880 | 727.4 | 40 | 50 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | drive_right.leads |
+| C32 | servo_driver_right to latch_right_shin_0_servo | 3 | 1505 | 1208.3 | 40 | 195 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | drive_right.leads |
 | C33 | battery positive to main fuse | 1 | 200 | 98.3 | 40 | 0 | 60 | flying leads / soldered leads | - |
 | C34 | main fuse to main switch | 1 | 150 | 46 | 40 | 0 | 60 | soldered leads / 4.8 mm quick-connect tabs | - |
 | C35 | battery negative to star ground | 1 | 200 | 98.3 | 40 | 0 | 60 | flying leads / lever clamp | - |
@@ -223,8 +223,8 @@ Length is route + service loop + joint slack + termination, rounded up to 5 mm; 
 | C41 | regulator to the 5V_SERVO splice | 2 | 210 | 109.1 | 40 | 0 | 60 | solder pads / lever clamp | - |
 | C42 | regulator_lights to the 5V_LIGHTS splice | 2 | 160 | 58.5 | 40 | 0 | 60 | solder pads / lever clamp | - |
 | C43 | regulator_doors to the 5V_DOORS splice | 2 | 160 | 55.8 | 40 | 0 | 60 | 0.1 in through holes / lever clamp | - |
-| C44 | 5V_DOORS to servo_driver_left | 2 | 965 | 728.7 | 40 | 135 | 60 | lever clamp / 2-position screw terminal | back_bay.leads_2 + drive_left.leads |
-| C45 | 5V_DOORS to servo_driver_right | 2 | 1335 | 1097.7 | 40 | 135 | 60 | lever clamp / 2-position screw terminal | back_bay.leads_5 + drive_right.leads |
+| C44 | 5V_DOORS to servo_driver_left | 2 | 965 | 728.9 | 40 | 135 | 60 | lever clamp / 2-position screw terminal | back_bay.leads_2 + drive_left.leads |
+| C45 | 5V_DOORS to servo_driver_right | 2 | 1345 | 1109 | 40 | 135 | 60 | lever clamp / 2-position screw terminal | back_bay.leads_5 + drive_right.leads |
 
 ## Slack at the joints
 
@@ -232,24 +232,24 @@ Each loop is at least the extra length the joint needs at the far end of its tra
 
 | Cable | Joint | Travel rad | Length at home mm | Length at full travel mm | Slack loop mm |
 |---|---|---|--:|--:|--:|
-| C1 | back_door_left_hinge | -1.396 to 0 | 0 | 93.5 | 140 |
-| C1 | neck | -1.2 to 1.2 | 358.3 | 398.1 | 140 |
-| C2 | back_door_left_hinge | -1.396 to 0 | 0 | 93.5 | 140 |
-| C2 | neck | -1.2 to 1.2 | 358.3 | 398.1 | 140 |
-| C3 | back_door_left_hinge | -1.396 to 0 | 0 | 93.5 | 135 |
-| C3 | neck | -1.2 to 1.2 | 358.3 | 398.1 | 135 |
-| C3 | faceplate | -1 to 0 | 71.2 | 99.1 | 60 |
-| C4 | back_door_left_hinge | -1.396 to 0 | 0 | 93.5 | 135 |
-| C4 | neck | -1.2 to 1.2 | 358.3 | 398.1 | 135 |
-| C4 | faceplate | -1 to 0 | 71.2 | 99.1 | 60 |
-| C5 | back_door_left_hinge | -1.396 to 0 | 0 | 93.5 | 140 |
-| C6 | back_door_left_hinge | -1.396 to 0 | 0 | 93.5 | 140 |
-| C6 | left_shoulder | -1 to 0.2 | 141.2 | 296.2 | 310 |
+| C1 | back_door_left_hinge | -1.396 to 0 | 0 | 93.7 | 140 |
+| C1 | neck | -1.2 to 1.2 | 354 | 395.1 | 140 |
+| C2 | back_door_left_hinge | -1.396 to 0 | 0 | 93.7 | 140 |
+| C2 | neck | -1.2 to 1.2 | 354 | 395.1 | 140 |
+| C3 | back_door_left_hinge | -1.396 to 0 | 0 | 93.7 | 135 |
+| C3 | neck | -1.2 to 1.2 | 354 | 395.1 | 135 |
+| C3 | faceplate | -1 to 0 | 71.1 | 99 | 60 |
+| C4 | back_door_left_hinge | -1.396 to 0 | 0 | 93.7 | 135 |
+| C4 | neck | -1.2 to 1.2 | 354 | 395.1 | 135 |
+| C4 | faceplate | -1 to 0 | 71.1 | 99 | 60 |
+| C5 | back_door_left_hinge | -1.396 to 0 | 0 | 93.7 | 140 |
+| C6 | back_door_left_hinge | -1.396 to 0 | 0 | 93.7 | 140 |
+| C6 | left_shoulder | -1 to 0.2 | 141.4 | 296.7 | 310 |
 | C6 | left_elbow | -1.95 to 0 | 73.9 | 73.9 | 35 |
-| C7 | back_door_left_hinge | -1.396 to 0 | 0 | 93.5 | 140 |
-| C7 | right_shoulder | -1 to 0.2 | 275.7 | 400.7 | 275 |
+| C7 | back_door_left_hinge | -1.396 to 0 | 0 | 93.7 | 140 |
+| C7 | right_shoulder | -1 to 0.2 | 275.5 | 399.8 | 275 |
 | C7 | right_elbow | -1.95 to 0 | 73.8 | 73.8 | 35 |
-| C8 | back_door_left_hinge | -1.396 to 0 | 0 | 93.5 | 140 |
+| C8 | back_door_left_hinge | -1.396 to 0 | 0 | 93.7 | 140 |
 | C10 | neck | -1.2 to 1.2 | 111.9 | 193.4 | 185 |
 | C11 | left_shoulder | -1 to 0.2 | 76.8 | 96.2 | 155 |
 | C12 | left_shoulder | -1 to 0.2 | 76.8 | 96.2 | 155 |
@@ -257,17 +257,17 @@ Each loop is at least the extra length the joint needs at the far end of its tra
 | C13 | left_hip | -1 to 0.2 | 143.3 | 157.3 | 50 |
 | C14 | left_hip | -1 to 0.2 | 143.3 | 157.3 | 50 |
 | C14 | left_knee | 0 to 1.75 | 83.3 | 180.2 | 145 |
-| C15 | back_door_left_hinge | -1.396 to 0 | 121.5 | 200.6 | 125 |
-| C16 | back_door_left_hinge | -1.396 to 0 | 121.5 | 200.6 | 125 |
+| C15 | back_door_left_hinge | -1.396 to 0 | 122.4 | 201.7 | 125 |
+| C16 | back_door_left_hinge | -1.396 to 0 | 122.4 | 201.7 | 125 |
 | C17 | neck | -1.2 to 1.2 | 111.9 | 193.4 | 185 |
-| C17 | helmet_door_left_hinge | -1.396 to 0 | 58.8 | 96.6 | 75 |
+| C17 | helmet_door_left_hinge | -1.396 to 0 | 59.2 | 97.1 | 75 |
 | C18 | left_shoulder | -1 to 0.2 | 76.8 | 96.2 | 155 |
 | C19 | left_shoulder | -1 to 0.2 | 76.8 | 96.2 | 155 |
 | C19 | left_elbow | -1.95 to 0 | 73.9 | 73.9 | 35 |
 | C20 | left_hip | -1 to 0.2 | 143.3 | 157.3 | 50 |
 | C21 | left_hip | -1 to 0.2 | 143.3 | 157.3 | 50 |
 | C21 | left_knee | 0 to 1.75 | 83.3 | 180.2 | 145 |
-| C22 | back_door_left_hinge | -1.396 to 0 | 0 | 93.5 | 140 |
+| C22 | back_door_left_hinge | -1.396 to 0 | 0 | 93.7 | 140 |
 | C24 | neck | -1.2 to 1.2 | 111.9 | 193.4 | 185 |
 | C25 | right_shoulder | -1 to 0.2 | 61.8 | 93.3 | 170 |
 | C26 | right_shoulder | -1 to 0.2 | 61.8 | 93.3 | 170 |
@@ -281,18 +281,18 @@ Each loop is at least the extra length the joint needs at the far end of its tra
 | C31 | right_hip | -1 to 0.2 | 143 | 157 | 50 |
 | C32 | right_hip | -1 to 0.2 | 143 | 157 | 50 |
 | C32 | right_knee | 0 to 1.75 | 83.4 | 179.9 | 145 |
-| C44 | back_door_left_hinge | -1.396 to 0 | 0 | 93.5 | 135 |
-| C45 | back_door_left_hinge | -1.396 to 0 | 0 | 93.5 | 135 |
+| C44 | back_door_left_hinge | -1.396 to 0 | 0 | 93.7 | 135 |
+| C45 | back_door_left_hinge | -1.396 to 0 | 0 | 93.7 | 135 |
 
 ## Wiring parts to buy
 
 | Item | Qty | Unit | Unit $ | Subtotal $ | Spec | Price source |
 |---|--:|---|--:|--:|---|---|
-| 18 AWG silicone wire | 3 | m | 0.7 | 2.10 | 0.823 mm2, rated 8 A in a bundle; 2.67 m cut + 10 % waste | estimated |
-| 20 AWG silicone wire | 17.1 | m | 0.5 | 8.55 | 0.519 mm2, rated 5.5 A in a bundle; 15.53 m cut + 10 % waste | estimated |
+| 18 AWG silicone wire | 3 | m | 0.7 | 2.10 | 0.823 mm2, rated 8 A in a bundle; 2.69 m cut + 10 % waste | estimated |
+| 20 AWG silicone wire | 17.2 | m | 0.5 | 8.60 | 0.519 mm2, rated 5.5 A in a bundle; 15.56 m cut + 10 % waste | estimated |
 | 22 AWG silicone wire | 5.9 | m | 0.4 | 2.36 | 0.327 mm2, rated 3.5 A in a bundle; 5.31 m cut + 10 % waste | estimated |
-| 24 AWG silicone wire | 56.7 | m | 0.35 | 19.84 | 0.205 mm2, rated 1.75 A in a bundle; 51.52 m cut + 10 % waste | estimated |
-| 26 AWG silicone wire | 42.5 | m | 0.3 | 12.75 | 0.128 mm2, rated 1.1 A in a bundle; 38.63 m cut + 10 % waste | estimated |
+| 24 AWG silicone wire | 56.8 | m | 0.35 | 19.88 | 0.205 mm2, rated 1.75 A in a bundle; 51.60 m cut + 10 % waste | estimated |
+| 26 AWG silicone wire | 42.6 | m | 0.3 | 12.78 | 0.128 mm2, rated 1.1 A in a bundle; 38.70 m cut + 10 % waste | estimated |
 | Dupont 2.54 mm contacts | 102 | pc | 0.02 | 2.04 | rated 3 A per contact | estimated |
 | Dupont 2.54 mm housings | 35 | pc | 0.02 | 0.70 | one per cable end | estimated |
 | 6.3 mm spade contacts | 2 | pc | 0.08 | 0.16 | rated 15 A per contact | estimated |
