@@ -1,5 +1,6 @@
 // Rays against triangle meshes (what trimesh.ray gives the Python reference): a bounding volume hierarchy over the triangles,
 // every hit along a ray, nearest first.
+import { hypot } from "./dmath.ts";
 import type { TriMesh } from "./mc.ts";
 
 export type P3 = [number, number, number];
@@ -69,7 +70,7 @@ export class Rays {
   normal(t: number): P3 {
     const v = this.v, p0 = this.tri[t * 3] * 3, p1 = this.tri[t * 3 + 1] * 3, p2 = this.tri[t * 3 + 2] * 3;
     const a = [v[p1] - v[p0], v[p1 + 1] - v[p0 + 1], v[p1 + 2] - v[p0 + 2]], b = [v[p2] - v[p0], v[p2 + 1] - v[p0 + 1], v[p2 + 2] - v[p0 + 2]];
-    const n: P3 = [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]], l = Math.hypot(n[0], n[1], n[2]) || 1;
+    const n: P3 = [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]], l = hypot(n[0], n[1], n[2]) || 1;
     return [n[0] / l, n[1] / l, n[2] / l];
   }
 }

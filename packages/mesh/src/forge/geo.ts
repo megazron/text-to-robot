@@ -1,5 +1,6 @@
 // Exact solids for the armour pack steps, on manifold-3d (WASM): the helpers scripts/pack_armour.py, fit_doors.py and fit_wiring.py
 // use, with WASM memory freed by scope. Every Manifold made inside scope() is deleted when it ends, unless keep() hands it out.
+import { acos, cos, hypot, sin } from "./dmath.ts";
 import type { TriMesh } from "./mc.ts";
 
 export type P3 = [number, number, number];
@@ -91,7 +92,7 @@ export const overlaps = (a: [P3, P3], b: [P3, P3]) => a[0][0] < b[1][0] && a[0][
 
 /** rotation by `ang` about the axis through o along e, as 3x4 rows */
 export function rot(o: P3, e: P3, ang: number): M34 {
-  const l = Math.hypot(e[0], e[1], e[2]), k = [e[0] / l, e[1] / l, e[2] / l], c = Math.cos(ang), s = Math.sin(ang), C = 1 - c;
+  const l = hypot(e[0], e[1], e[2]), k = [e[0] / l, e[1] / l, e[2] / l], c = cos(ang), s = sin(ang), C = 1 - c;
   const R = [[c + k[0] * k[0] * C, k[0] * k[1] * C - k[2] * s, k[0] * k[2] * C + k[1] * s], [k[1] * k[0] * C + k[2] * s, c + k[1] * k[1] * C, k[1] * k[2] * C - k[0] * s], [k[2] * k[0] * C - k[1] * s, k[2] * k[1] * C + k[0] * s, c + k[2] * k[2] * C]];
   return R.map((r, i) => [...r, o[i] - (r[0] * o[0] + r[1] * o[1] + r[2] * o[2])]);
 }
@@ -137,15 +138,15 @@ export function vertexNormals(m: TriMesh): Float64Array {
   for (let t = 0; t < m.f.length; t += 3) {
     const id = [m.f[t], m.f[t + 1], m.f[t + 2]], P = id.map((i) => [v[i * 3], v[i * 3 + 1], v[i * 3 + 2]]);
     const a = [P[1][0] - P[0][0], P[1][1] - P[0][1], P[1][2] - P[0][2]], b = [P[2][0] - P[0][0], P[2][1] - P[0][1], P[2][2] - P[0][2]];
-    const fn = [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]], fl = Math.hypot(fn[0], fn[1], fn[2]);
+    const fn = [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]], fl = hypot(fn[0], fn[1], fn[2]);
     if (!fl) continue;
     for (let q = 0; q < 3; q++) {
       const p = P[q], u = P[(q + 1) % 3], w = P[(q + 2) % 3], e1 = [u[0] - p[0], u[1] - p[1], u[2] - p[2]], e2 = [w[0] - p[0], w[1] - p[1], w[2] - p[2]];
-      const cs = (e1[0] * e2[0] + e1[1] * e2[1] + e1[2] * e2[2]) / (Math.hypot(e1[0], e1[1], e1[2]) * Math.hypot(e2[0], e2[1], e2[2]) || 1), ang = Math.acos(Math.max(-1, Math.min(1, cs)));
+      const cs = (e1[0] * e2[0] + e1[1] * e2[1] + e1[2] * e2[2]) / (hypot(e1[0], e1[1], e1[2]) * hypot(e2[0], e2[1], e2[2]) || 1), ang = acos(Math.max(-1, Math.min(1, cs)));
       for (let k = 0; k < 3; k++) n[id[q] * 3 + k] += (fn[k] / fl) * ang;
     }
   }
-  for (let i = 0; i < n.length; i += 3) { const l = Math.hypot(n[i], n[i + 1], n[i + 2]) || 1; n[i] /= l; n[i + 1] /= l; n[i + 2] /= l; }
+  for (let i = 0; i < n.length; i += 3) { const l = hypot(n[i], n[i + 1], n[i + 2]) || 1; n[i] /= l; n[i + 1] /= l; n[i + 2] /= l; }
   return n;
 }
 /** the mesh grown along its vertex normals by `by` (a clearance body, not a part) */
@@ -175,7 +176,7 @@ export function meshCentroid(m: TriMesh): P3 {
   for (let t = 0; t < f.length; t += 3) {
     const a = f[t] * 3, b = f[t + 1] * 3, d = f[t + 2] * 3;
     const u = [v[b] - v[a], v[b + 1] - v[a + 1], v[b + 2] - v[a + 2]], w = [v[d] - v[a], v[d + 1] - v[a + 1], v[d + 2] - v[a + 2]];
-    const ar = 0.5 * Math.hypot(u[1] * w[2] - u[2] * w[1], u[2] * w[0] - u[0] * w[2], u[0] * w[1] - u[1] * w[0]);
+    const ar = 0.5 * hypot(u[1] * w[2] - u[2] * w[1], u[2] * w[0] - u[0] * w[2], u[0] * w[1] - u[1] * w[0]);
     for (let k = 0; k < 3; k++) c[k] += ar * (v[a + k] + v[b + k] + v[d + k]) / 3;
     A += ar;
   }

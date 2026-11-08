@@ -1,6 +1,7 @@
 // The harness fitted into the finished armour, in the browser: a TypeScript port of scripts/fit_wiring.py. U-section cable channels on the
 // inner faces of the fixed shells, saddles that seat the battery bay (on the left back door) and the driver bays (in the hollow of the
 // waist), cable ports through the shells, and the neck's measured range.
+import { cos, exp, hypot, sin } from "./dmath.ts";
 import type { TriMesh } from "./mc.ts";
 import { J, Frame } from "./mark43.ts";
 import { Rays } from "./ray.ts";
@@ -27,11 +28,11 @@ function interp(x: number, xp: number[], fp: number[]): number {
   let lo = 0, hi = xp.length - 1; while (hi - lo > 1) { const m = (lo + hi) >> 1; if (xp[m] <= x) lo = m; else hi = m; }
   return xp[hi] === xp[lo] ? fp[lo] : fp[lo] + ((fp[hi] - fp[lo]) * (x - xp[lo])) / (xp[hi] - xp[lo]);
 }
-const cumlen = (a: number[][], sx = 1) => { const s = [0]; for (let i = 1; i < a.length; i++) s.push(s[i - 1] + Math.hypot((a[i][0] - a[i - 1][0]) * sx, a[i][1] - a[i - 1][1])); return s; };
+const cumlen = (a: number[][], sx = 1) => { const s = [0]; for (let i = 1; i < a.length; i++) s.push(s[i - 1] + hypot((a[i][0] - a[i - 1][0]) * sx, a[i][1] - a[i - 1][1])); return s; };
 /** scipy gaussian_filter1d, mode "nearest" */
 function gauss1d(a: number[], sigma: number): number[] {
   const R = Math.floor(4 * sigma + 0.5), k: number[] = []; let s = 0;
-  for (let i = -R; i <= R; i++) { const w = Math.exp((-0.5 * i * i) / (sigma * sigma)); k.push(w); s += w; }
+  for (let i = -R; i <= R; i++) { const w = exp((-0.5 * i * i) / (sigma * sigma)); k.push(w); s += w; }
   return a.map((_, i) => { let t = 0; for (let q = -R; q <= R; q++) t += (k[q + R] / s) * a[Math.min(a.length - 1, Math.max(0, i + q))]; return t; });
 }
 const maxf1d = (a: number[], size: number) => { const lo = Math.floor(size / 2), hi = size - 1 - lo; return a.map((_, i) => { let m = -Infinity; for (let q = -lo; q <= hi; q++) m = Math.max(m, a[Math.min(a.length - 1, Math.max(0, i + q))]); return m; }); };
@@ -41,14 +42,14 @@ const rint = (x: number) => { const f = Math.floor(x), d = x - f; return d > 0.5
 type Rays2 = [P3[], P3[]];
 function torsoRays(way: number[][], cx = 0): Rays2 {
   const s = cumlen(way, 2.0), u = linspace(0, s[s.length - 1], 240), th = u.map((x) => (interp(x, s, way.map((w) => w[0])) * Math.PI) / 180), z = u.map((x) => interp(x, s, way.map((w) => w[1])));
-  return [u.map((_, i) => [cx, 0, z[i]] as P3), th.map((t) => [Math.cos(t), Math.sin(t), 0] as P3)];
+  return [u.map((_, i) => [cx, 0, z[i]] as P3), th.map((t) => [cos(t), sin(t), 0] as P3)];
 }
 function limbRays(a: P3, b: P3, way: number[][], side: number): Rays2 {
   const fr = new Frame(a, b, [1, 0, 0], side), s = cumlen(way), u = linspace(0, s[s.length - 1], 200);
   const t = u.map((x) => interp(x, s, way.map((w) => w[0]))), ph = u.map((x) => (interp(x, s, way.map((w) => w[1])) * Math.PI) / 180);
-  return [t.map((x) => add(fr.A, scl(fr.u, x))), ph.map((p) => add(scl(fr.f, Math.cos(p)), scl(fr.l, Math.sin(p))))];
+  return [t.map((x) => add(fr.A, scl(fr.u, x))), ph.map((p) => add(scl(fr.f, cos(p)), scl(fr.l, sin(p))))];
 }
-const len = (a: P3, b: P3) => Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]);
+const len = (a: P3, b: P3) => hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]);
 /** every channel: name, link, region, rays, trough width, rail height */
 function paths(): [string, string, string, Rays2, number, number][] {
   const out: [string, string, string, Rays2, number, number][] = [["door_left", "back_door_left", "torso", torsoRays([[166, PORT_Z], [140, PORT_Z], [112, PORT_Z]]), 24.0, 8.0],
@@ -85,8 +86,8 @@ function channel(name: string, O: P3[], D: P3[], shell: Rays, w: number, h: numb
   const P0 = O.map((o, i) => add(o, scl(D[i], dd[i]))), s = [0]; for (let i = 1; i < P0.length; i++) s.push(s[i - 1] + len(P0[i], P0[i - 1]));
   const u: number[] = []; for (let x = 0; x < s[s.length - 1]; x += STEP) u.push(x);
   const P = u.map((x) => [0, 1, 2].map((k) => interp(x, s, P0.map((p) => p[k]))) as P3), Nn = u.map((x) => [0, 1, 2].map((k) => interp(x, s, nn[k])) as P3);
-  const T = P.map((_, i) => { const a = P[Math.max(0, i - 1)], b = P[Math.min(P.length - 1, i + 1)], g = sub3(b, a), l = Math.hypot(...g) || 1; return scl(g, 1 / l); });
-  const N = Nn.map((x, i) => { const t = T[i], dt = x[0] * t[0] + x[1] * t[1] + x[2] * t[2], y = sub3(x, scl(t, dt)), l = Math.hypot(...y) || 1; return scl(y, 1 / l); });
+  const T = P.map((_, i) => { const a = P[Math.max(0, i - 1)], b = P[Math.min(P.length - 1, i + 1)], g = sub3(b, a), l = hypot(...g) || 1; return scl(g, 1 / l); });
+  const N = Nn.map((x, i) => { const t = T[i], dt = x[0] * t[0] + x[1] * t[1] + x[2] * t[2], y = sub3(x, scl(t, dt)), l = hypot(...y) || 1; return scl(y, 1 / l); });
   const B = T.map((t, i) => cross(t, N[i]));
   let lift = P.map(() => -9.0);
   for (const a of linspace(-w / 2, w / 2, 7)) {
@@ -190,7 +191,7 @@ export async function fitWiring(pieces: Piece[], recs: DoorOut[], latches: Latch
     for (const sign of [-1, 1]) {
       let a = 0;
       while (a < 1.3) {
-        const ang = sign * (a + 0.05), c = Math.cos(ang), s = Math.sin(ang), M = [[c, -s, 0, o[0] - (c * o[0] - s * o[1])], [s, c, 0, o[1] - (s * o[0] + c * o[1])], [0, 0, 1, 0]];
+        const ang = sign * (a + 0.05), c = cos(ang), s = sin(ang), M = [[c, -s, 0, o[0] - (c * o[0] - s * o[1])], [s, c, 0, o[1] - (s * o[0] + c * o[1])], [0, 0, 1, 0]];
         const v = scope(() => cm.transform(mat4(M)).intersect(pm).volume()) as unknown as number;
         if (v - base > COLLIDE) break;
         a += 0.05;

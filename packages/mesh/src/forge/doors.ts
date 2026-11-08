@@ -2,6 +2,7 @@
 // hinges (a fixed leaf with two knuckles, a door leaf with one between them, on a steel pin), a drive (a servo pod on the fixed half with
 // its output on the hinge line, an arm to the door) and latches (a sprung pawl on a servo, hooking a ledge). Shells give way to the hardware
 // and its swing; doors open in their staged order and give way to what they meet; `measure` sweeps every door with exact intersection.
+import { cos, hypot, sin } from "./dmath.ts";
 import { CATALOG, componentMesh } from "@ttr/parts";
 import type { TriMesh } from "./mc.ts";
 import type { DoorRecord } from "./mark43.ts";
@@ -10,7 +11,7 @@ import {
   asSolid, asMesh, scope, scopeAsync, free, compose, union, hull, cube, cylinder, place, turn, sweep, sweptHull, bigger, biggest, bbox, overlaps, at, meshBounds, meshVolume, type P3, type M34, type Solid,
 } from "./geo.ts";
 import { baseLink, SWINGS, type Piece, type Log, type Tick } from "./pack.ts";
-import { getPool, runAll, type Job } from "./pool.ts";
+import { runAll, type Job } from "./pool.ts";
 import { answerJob } from "./jobs.ts";
 
 const R_BARREL = 6.0, R_SLOT = 7.5, BORE = 4.2, KNUCKLE = 5.6, FIXED_H = 19.0, POD_WALL = 2.4, POCKET = 0.3, AIR = 0.6;
@@ -25,7 +26,7 @@ const sub = (a: P3, b: P3): P3 => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
 const scl = (a: P3, s: number): P3 => [a[0] * s, a[1] * s, a[2] * s];
 const dot = (a: P3, b: P3) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
 const cross = (a: P3, b: P3): P3 => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
-const unit = (a: P3): P3 => scl(a, 1 / Math.hypot(a[0], a[1], a[2]));
+const unit = (a: P3): P3 => scl(a, 1 / hypot(a[0], a[1], a[2]));
 const range = (a: number, b: number, s: number): number[] => { const o: number[] = []; const n = Math.ceil((b - a) / s); for (let i = 0; i < n; i++) o.push(a + i * s); return o; };
 const lin = (a: number, b: number, n: number) => (n === 1 ? [a] : Array.from({ length: n }, (_, i) => a + ((b - a) * i) / (n - 1)));
 const ring = (n: number) => Array.from({ length: n }, (_, i) => (2 * Math.PI * i) / n);
@@ -83,13 +84,13 @@ const level = (out: P3, e: P3): P3 => unit(sub(out, scl(e, dot(out, e))));
 function contacts(sh: Shells, M: M34, out: P3, xs: number[], zs: number[], depth = 0.6, reach = 45.0): P3[] {
   const O: P3[] = []; for (const x of xs) for (const z of zs) O.push(add(at(M, [x, 0, z]), scl(out, 70)));
   const c = at(M, [0, 0, 0]), hs = sh.hit(O, scl(out, -1), c), res: P3[] = [];
-  hs.forEach((p, i) => { if (p && Math.hypot(...sub(p, O[i])) < 70 + reach) res.push(sub(p, scl(out, depth))); });
+  hs.forEach((p, i) => { if (p && hypot(...sub(p, O[i])) < 70 + reach) res.push(sub(p, scl(out, depth))); });
   return res;
 }
 
 function hinge(d: DoorRecord, c: P3, fixed: Shells, door: Shells): [Solid, Solid] {
   const e = d.up, out = level(d.out, e), M = frame(d.normal, e, c);
-  const rg = (h: number) => ring(16).flatMap((t) => [-h, h].map((z) => at(M, [R_BARREL * Math.cos(t), R_BARREL * Math.sin(t), z])));
+  const rg = (h: number) => ring(16).flatMap((t) => [-h, h].map((z) => at(M, [R_BARREL * cos(t), R_BARREL * sin(t), z])));
   const pf = contacts(fixed, M, out, [12, 24, 34], [-FIXED_H, 0, FIXED_H]), pd = contacts(door, M, out, [-12, -24, -34], [-KNUCKLE, KNUCKLE]);
   if (pf.length < 3 || pd.length < 2) throw new Error(`${d.name}: no shell under a hinge at ${c.map(Math.round)}`);
   const bore = cylAt(M, BORE / 2, -40, 40), slot = cylAt(M, R_SLOT, -KNUCKLE - 0.5, KNUCKLE + 0.5);
@@ -111,7 +112,7 @@ function drive(d: DoorRecord, fixed: Shells, door: Shells): [Solid, Solid, Solid
   const pod = blister.subtract(pocketOf(Ms, S)).subtract(holesOf(Ms, S, key.includes("mg90") ? 0.85 : 1.3)).subtract(boxAt(M, [-60, -60, S.tab], [60, 60, 80]));
   const z0 = S.out + 0.5, r = S.horn + 1.5, pd = contacts(door, M, out, [-r - 4, -r - 12, -r - 22], [z0, z0 + 6]);
   if (pd.length < 2) throw new Error(`${d.name}: no door under the drive arm`);
-  const rg = ring(28).flatMap((t) => [z0, z0 + 6].map((z) => at(M, [r * Math.cos(t), r * Math.sin(t), z])));
+  const rg = ring(28).flatMap((t) => [z0, z0 + 6].map((z) => at(M, [r * cos(t), r * sin(t), z])));
   const arm = hull([...rg, ...pd, ...pd.map((p) => add(p, scl(out, 2.4)))]);
   const body = hull(S.v.map((p) => at(Ms, p))), horn = cylAt(M, S.horn + 0.8, S.top - 0.5, S.out + 0.2), keepOut = body.add(horn);
   fixed.cut(bigger(keepOut, POCKET));
@@ -193,7 +194,7 @@ export async function build(pieces: Piece[], doors: DoorRecord[], tick: Tick, lo
       hw.push({ name: `${name}_ledge`, link: catcher.items[0].row.link, mesh: asMesh(biggest(L.ledge)), anchor: L.A, region: d.region });
       hw.push({ name: `${name}_pawl`, link: `${name}_pawl_link`, mesh: asMesh(L.pawl), anchor: L.A, region: d.region });
       latches.push({ name, door: d.link, parent, link: `${name}_pawl_link`, joint: `${name}_pawl`, region: d.region, key: LATCH_SERVO, a: L.A.map((x) => r(x, 3)) as P3, up: L.u.map((x) => r(x, 6)) as P3, sign: L.sign, travel: PAWL_TRAVEL,
-        T: T44(L.Ms), room_mm: r(Math.hypot(...sub(L.A, seam)) + 6 + POD_WALL, 1) });
+        T: T44(L.Ms), room_mm: r(hypot(...sub(L.A, seam)) + 6 + POD_WALL, 1) });
       log(`${name} depth ${L.depth.toFixed(1)}`);
     }));
     await tick("latches");
@@ -245,7 +246,7 @@ export async function trimStages(pieces: Piece[], hw: Hardware[], doors: DoorRec
         log(`${d.name} meets ${met.length} pieces ${Math.round((Date.now() - t0) / 1000)} s`);
         // what the door's shell meets is cut from the door; what its hardware meets is cut from the other part, since hardware cannot give way
         const hits: TriMesh[] = [], theirs = new Map<string, TriMesh[]>(), fineAngles = range(fine, d.open + 0.03, fine);
-        const lightM = asMesh(light), steelM = asMesh(steel), parts = Math.max(1, Math.min(fineAngles.length, (getPool()?.size ?? 1) * 2));
+        const lightM = asMesh(light), steelM = asMesh(steel), parts = Math.max(1, Math.min(fineAngles.length, 8));   // fixed, so the result does not depend on the pool
         for (const [link, q] of met) {
           // the angles are shared out to the pool; each answer is what overlapped, swung back, and what the hardware met
           const st = link && link in opened ? doors.find((x) => x.link === link)! : undefined, qm = asMesh(q);
@@ -282,7 +283,7 @@ export async function relieveLimbs(pieces: Piece[], hw: Hardware[], jpos: Record
     // a joint angle q turns the child by q about +y: in the child's frame the parent's hardware turns by -q
     for (const h of hw) scope(() => {
       const bl = baseLink(h.link), b = meshBounds(h.mesh), c: P3 = [(b[0][0] + b[1][0]) / 2, (b[0][1] + b[1][1]) / 2, (b[0][2] + b[1][2]) / 2];
-      if (Math.hypot(...sub(c, o)) > 420) return;
+      if (hypot(...sub(c, o)) > 420) return;
       if (bl === pl) lost += kids.cut(sweptHull(asSolid(h.mesh), o, y, -hi, -lo, 0.06));
       else if (bl === cl) lost += dads.cut(sweptHull(asSolid(h.mesh), o, y, lo, hi, 0.06));
     });
@@ -376,7 +377,7 @@ export async function measure(rows: { row: { link: string; material: string; wir
     for (const d of recs) {
       const e = d.up; let best = 0;
       const ms = asMesh(S.get(d.link)!);
-      for (let i = 0; i < ms.v.length; i += 3) { const q = sub([ms.v[i], ms.v[i + 1], ms.v[i + 2]], d.a), t = dot(q, e); best = Math.max(best, Math.hypot(q[0] - t * e[0], q[1] - t * e[1], q[2] - t * e[2])); }
+      for (let i = 0; i < ms.v.length; i += 3) { const q = sub([ms.v[i], ms.v[i + 1], ms.v[i + 2]], d.a), t = dot(q, e); best = Math.max(best, hypot(q[0] - t * e[0], q[1] - t * e[1], q[2] - t * e[2])); }
       d.reach_mm = r(best, 1);
     }
     for (const l of latches) {

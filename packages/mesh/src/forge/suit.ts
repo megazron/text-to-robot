@@ -1,6 +1,7 @@
 // The whole Mark 43 armour pack made from a prompt's parameters, in the browser or in Node: forge (fields, shells, cells), pack (overlaps,
 // mask relief, collar, swing trims), doors (hinges, drives, latches, staged trims, room for servos), harness (seats, channels, neck range),
 // measured sweeps and limits, tidy, then the pack's quantised storage. The result is what setArmourPack() takes.
+import { atan2, cos, sin } from "./dmath.ts";
 import { forgePrint, NAMES, MASK_OPEN, type ForgeParams } from "./mark43.ts";
 import { components, area, isWatertight, type TriMesh } from "./mc.ts";
 import { useManifold, solidStats } from "./geo.ts";
@@ -23,7 +24,7 @@ function thinAxis(v: Float64Array): [number, number, number] {
   const V = [[1, 0, 0], [0, 1, 0], [0, 0, 1]];
   for (let sweep = 0; sweep < 50; sweep++) for (const [p, q] of [[0, 1], [0, 2], [1, 2]]) {
     if (Math.abs(C[p][q]) < 1e-12) continue;
-    const th = 0.5 * Math.atan2(2 * C[p][q], C[q][q] - C[p][p]), c = Math.cos(th), s = Math.sin(th);
+    const th = 0.5 * atan2(2 * C[p][q], C[q][q] - C[p][p]), c = cos(th), s = sin(th);
     for (let k = 0; k < 3; k++) { const a = C[k][p], b = C[k][q]; C[k][p] = c * a - s * b; C[k][q] = s * a + c * b; }
     for (let k = 0; k < 3; k++) { const a = C[p][k], b = C[q][k]; C[p][k] = c * a - s * b; C[q][k] = s * a + c * b; }
     for (let k = 0; k < 3; k++) { const a = V[k][p], b = V[k][q]; V[k][p] = c * a - s * b; V[k][q] = s * a + c * b; }

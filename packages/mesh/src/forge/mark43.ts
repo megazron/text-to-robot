@@ -3,6 +3,7 @@
 // and bevels are polygons laid on that form and added to the field; colours are painted per voxel. A part is then hollowed to a shell,
 // opened to the wearer, split into its moving zones (the mask, the doors) and cut into bed-sized cells, one closed mesh per colour.
 //   x forward, y left, z up, mm, floor at 0.
+import { atan2, cos, exp, hypot, pow, sin } from "./dmath.ts";
 import { gauss3, gradientNorm, maxFilter3, pchip, trilinear, percentile } from "./num.ts";
 import { marchingCubes, components, fillHoles, isWatertight, signedVolume, flip, mirrorY, type TriMesh } from "./mc.ts";
 
@@ -30,7 +31,7 @@ const add = (a: V3, b: V3): V3 => [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
 const scl = (a: V3, s: number): V3 => [a[0] * s, a[1] * s, a[2] * s];
 const dot = (a: V3, b: V3) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
 const cross = (a: V3, b: V3): V3 => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
-const norm = (a: V3) => Math.hypot(a[0], a[1], a[2]);
+const norm = (a: V3) => hypot(a[0], a[1], a[2]);
 const unit = (a: V3): V3 => scl(a, 1 / norm(a));
 const vmin = (a: V3, b: V3): V3 => [Math.min(a[0], b[0]), Math.min(a[1], b[1]), Math.min(a[2], b[2])];
 const vmax = (a: V3, b: V3): V3 => [Math.max(a[0], b[0]), Math.max(a[1], b[1]), Math.max(a[2], b[2])];
@@ -45,14 +46,14 @@ export function polySd(px: number, py: number, V: number[][]): number {
   for (let i = 0; i < V.length; i++) {
     const a = V[i], b = V[(i + 1) % V.length], ex = b[0] - a[0], ey = b[1] - a[1], wx = px - a[0], wy = py - a[1];
     const t = clip((wx * ex + wy * ey) / (ex * ex + ey * ey), 0, 1);
-    d = Math.min(d, Math.hypot(wx - t * ex, wy - t * ey));
+    d = Math.min(d, hypot(wx - t * ex, wy - t * ey));
     if ((a[1] > py) !== (b[1] > py)) { const x = a[0] + ((py - a[1]) / (b[1] - a[1] + 1e-12)) * (b[0] - a[0]); if (px < x) inside = !inside; }
   }
   return inside ? -d : d;
 }
 function segSd(px: number, py: number, a: number[], b: number[]): number {
   const ex = b[0] - a[0], ey = b[1] - a[1], wx = px - a[0], wy = py - a[1], t = clip((wx * ex + wy * ey) / (ex * ex + ey * ey), 0, 1);
-  return Math.hypot(wx - t * ex, wy - t * ey);
+  return hypot(wx - t * ex, wy - t * ey);
 }
 export function segSd3(p: V3, a: V3, b: V3): number {
   const ex = b[0] - a[0], ey = b[1] - a[1], ez = b[2] - a[2], wx = p[0] - a[0], wy = p[1] - a[1], wz = p[2] - a[2];
@@ -66,7 +67,7 @@ export function lofter(table: Table, bulk = 1): (tt: number, x: number, y: numbe
   const T = table, f = [1, 2, 3, 4, 5].map((i) => pchip(T.map((r) => r[0]), T.map((r) => (i < 5 ? r[i] * bulk : r[i])))), t0 = T[0][0], t1 = T[T.length - 1][0];
   return (tt, x, y) => {
     const tc = clip(tt, t0, t1), fr = f[0](tc), bk = f[1](tc), ou = f[2](tc), inn = f[3](tc), n = f[4](tc);
-    const a = x > 0 ? fr : bk, b = y > 0 ? ou : inn, q = (Math.abs(x / a) ** n + Math.abs(y / b) ** n) ** (1 / n), d = (q - 1) * Math.min(a, b);
+    const a = x > 0 ? fr : bk, b = y > 0 ? ou : inn, q = pow(pow(Math.abs(x / a), n) + pow(Math.abs(y / b), n), 1 / n), d = (q - 1) * Math.min(a, b);
     return Math.max(Math.max(d, t0 - tt), tt - t1);
   };
 }
@@ -154,7 +155,7 @@ export class Part {
     for (let i = 0; i < nr.length; i++) {
       const p = nr[i], si = s[i];
       if (height) f[p] -= height * clip(0.5 - si / bevel, 0, 1);
-      if (groove) f[p] += groove * Math.exp(-((si / width) ** 2));
+      if (groove) f[p] += groove * exp(-((si / width) * (si / width)));
       if (colour !== undefined && si < 0) this.col[p] = colour;
     }
   }
@@ -185,7 +186,7 @@ export async function printable(p: Part, opens: Float32Array[], tick: Tick, wall
 const reflect = (i: number, n: number): number => { if (n === 1) return 0; const p = 2 * n; i %= p; if (i < 0) i += p; return i < n ? i : p - 1 - i; };
 function kernel1(sigma: number): Float64Array {
   const r = Math.floor(4 * sigma + 0.5), k = new Float64Array(2 * r + 1); let s = 0;
-  for (let i = -r; i <= r; i++) { k[i + r] = Math.exp(-0.5 * (i * i) / (sigma * sigma)); s += k[i + r]; }
+  for (let i = -r; i <= r; i++) { k[i + r] = exp(-0.5 * (i * i) / (sigma * sigma)); s += k[i + r]; }
   for (let i = 0; i < k.length; i++) k[i] /= s;
   return k;
 }
@@ -269,7 +270,7 @@ async function cells(p: Part, f: Float32Array, seam: number, cell: V3, paint: Ui
   return out;
 }
 
-const unwrap = (fr: Frame, R: number) => { const o = new Float64Array(3); return (x: number, y: number, z: number): [number, number] => { fr.into(x, y, z, o); return [Math.atan2(o[2], o[1]) * R, o[0]]; }; };
+const unwrap = (fr: Frame, R: number) => { const o = new Float64Array(3); return (x: number, y: number, z: number): [number, number] => { fr.into(x, y, z, o); return [atan2(o[2], o[1]) * R, o[0]]; }; };
 
 // ------------------------------------------------------------------ torso
 const TORSO: Table = [[888, 44, 52, 50, 50, 2.2], [925, 84, 96, 104, 104, 2.4], [985, 98, 108, 134, 134, 2.5], [1050, 94, 100, 128, 128, 2.5], [1125, 92, 94, 120, 120, 2.5],
@@ -301,7 +302,7 @@ function torso(c: Ctx): Part {
   S(F([[104, 1130], [136, 1120], [126, 1092], [102, 1096]], front), 1.5, 1.5, 1.2, 0.8, STEEL);
   S(F([[-40, 1064], [170, 1072], [170, 1058], [-40, 1050]]), -2.0, 1.5, 1.0, 0.8, STEEL);
   S(F([[-40, 1044], [84, 1040], [102, 996], [66, 930], [28, 892], [-40, 888]], front), 6.0, 3.0, 1.6, 1.2);
-  S(p.each((x, y, z) => (front(x) ? Math.hypot(Math.abs(y) - 116, z - 1010) - 20 : 99)), 3.0, 2.0, 1.2, 1.0);
+  S(p.each((x, y, z) => (front(x) ? hypot(Math.abs(y) - 116, z - 1010) - 20 : 99)), 3.0, 2.0, 1.2, 1.0);
   S(F([[-40, 1490], [30, 1490], [30, 1140], [-40, 1140]], back), -3.0, 2.5, 1.4, 1.0);
   S(F([[40, 1470], [160, 1460], [172, 1300], [104, 1226], [40, 1256]], back), 4.0, 3.0, 1.6, 1.2);
   S(F([[-40, 1040], [112, 1040], [124, 960], [60, 900], [-40, 892]], back), 3.0, 3.0, 1.4, 1.0);
@@ -310,7 +311,7 @@ function torso(c: Ctx): Part {
 
 /** recess, ring and lens at the centre of the chest */
 function reactor(c: Ctx, p: Part): void {
-  const r = (R: number) => p.each((x, y, z) => (x > 30 ? Math.hypot(y, z - 1375) - R : 99));
+  const r = (R: number) => p.each((x, y, z) => (x > 30 ? hypot(y, z - 1375) - R : 99));
   p.layer(r(58), 5.0, 2.0, 1.4, 1.0); p.layer(r(46), -7.0, 2.0, 0.0, 1.0, STEEL); p.layer(r(36), 0.0, 1.0, 1.0, 0.8);
   void c;
 }
@@ -357,7 +358,7 @@ function hand(c: Ctx): Part {
   const bones: [V3, V3, number, number][] = [];
   for (const [o, ln] of [[48, 1.0], [16, 1.1], [-16, 1.04], [-46, 0.88]]) {
     const pts: V3[] = [[118.0, 2.0, o]]; let ang = 0.28;
-    for (let s_ of [52, 36, 28]) { s_ *= ln; const q = pts[pts.length - 1]; pts.push([q[0] + Math.cos(ang) * s_, q[1] - Math.sin(ang) * s_, q[2]]); ang += 0.62; }
+    for (let s_ of [52, 36, 28]) { s_ *= ln; const q = pts[pts.length - 1]; pts.push([q[0] + cos(ang) * s_, q[1] - sin(ang) * s_, q[2]]); ang += 0.62; }
     for (let k = 0; k < 3; k++) bones.push([fr.world(pts[k]), fr.world(pts[k + 1]), [15.5, 14.0, 12.5][k], 1.2]);
   }
   const th: V3[] = [[30.0, -26.0, 56.0], [78.0, -40.0, 76.0], [120.0, -40.0, 74.0]];
@@ -408,7 +409,7 @@ function foot(c: Ctx): Part {
   const ip = [1, 2, 3, 4].map((i) => pchip(T.map((r) => r[0]), T.map((r) => (i === 3 ? r[i] * b : i === 1 ? r[i] * (1 + (b - 1) * 0.5) : r[i]))));
   p.finish(p.coarse((X, Y, Z) => {
     const x = X - an[0], y = Y - an[1], z = Z, xc = clip(x, -96, 178), top = ip[0](xc), sole = ip[1](xc), w = ip[2](xc), n = ip[3](xc);
-    const zc = (top + sole) / 2, zh = (top - sole) / 2, q = (Math.abs(y / w) ** n + Math.abs((z - zc) / zh) ** n) ** (1 / n);
+    const zc = (top + sole) / 2, zh = (top - sole) / 2, q = pow(pow(Math.abs(y / w), n) + pow(Math.abs((z - zc) / zh), n), 1 / n);
     let d = (q - 1) * Math.min(w, zh); d = Math.max(Math.max(d, -96 - x), x - 178); return Math.max(d, 2.0 - z);
   }));
   const S = (s: Float64Array, ...a: [number, number, number, number, number?]) => styled(c, p, s, ...a);
@@ -426,7 +427,7 @@ function jointMech(c: Ctx): [string, Part][] {
   return S.map(([n, a, b, r]) => {
     const p = new Part(`mech_${n}`, sub(vmin(a, b), [r + 14, r + 14, r + 14]), add(vmax(a, b), [r + 14, r + 14, r + 14]), c.v), u = unit(sub(b, a));
     const Q: V3 = [0, 0, 0];
-    p.finish(p.grid((x, y, z) => { Q[0] = x; Q[1] = y; Q[2] = z; return segSd3(Q, a, b) - r + 1.1 * Math.sin(((x - a[0]) * u[0] + (y - a[1]) * u[1] + (z - a[2]) * u[2]) * 0.9); }), 0.3); p.col.fill(STEEL);
+    p.finish(p.grid((x, y, z) => { Q[0] = x; Q[1] = y; Q[2] = z; return segSd3(Q, a, b) - r + 1.1 * sin(((x - a[0]) * u[0] + (y - a[1]) * u[1] + (z - a[2]) * u[2]) * 0.9); }), 0.3); p.col.fill(STEEL);
     return [n, p] as [string, Part];
   });
 }
@@ -455,7 +456,7 @@ function head(c: Ctx): Part {
   line([26, 206], [46, 262]); line([84, 190], [92, 214]); line([30, 150], [40, 110]); line([40, 110], [74, 72]); line([88, 172], [84, 118]); line([84, 118], [66, 74]);
   S(F([[-40, 62], [44, 66], [58, 80], [62, 74], [48, 56], [-40, 52]]), -3.0, 1.5, 1.0, 0.9);
   S(F([[-40, 46], [44, 50], [34, 14], [-40, 12]]), 2.5, 2.0, 1.4, 1.0);
-  const ear = (R: number) => p.each((x, y, z) => (Math.abs(y) > 40 ? Math.hypot(x + 6, z - Z_CHIN - 158) - R : 99));
+  const ear = (R: number) => p.each((x, y, z) => (Math.abs(y) > 40 ? hypot(x + 6, z - Z_CHIN - 158) - R : 99));
   S(ear(37), 4.0, 2.0, 1.4, 1.0); S(ear(25), -2.0, 1.5, 1.0, 0.9);
   S(p.each((x, y, z) => (Math.abs(y) > 40 && x < 60 ? polySd(x, z - Z_CHIN, [[-110, 202], [56, 214], [70, 262], [-90, 268]]) : 99)), 2.0, 2.5, 1.2, 1.0);
   S(p.each((x, y, z) => (Math.abs(y) > 40 && !fr(x) ? polySd(x, z - Z_CHIN, [[-120, 28], [6, 34], [20, 112], [-120, 120]]) : 99)), 2.0, 2.5, 1.2, 1.0);
@@ -472,7 +473,7 @@ const MASK_SIDE = [[90, 8], [86, 50], [78, 76], [50, 122], [31, 150], [30, 190],
 export const MASK_WALL = 2.2;
 const NEST_GAP = 0.7;
 
-const turned = (q: V3, ang: number): V3 => { const c = Math.cos(ang), s = Math.sin(ang), a = q[0] - EAR[0], b = q[2] - EAR[1]; return [EAR[0] + c * a + s * b, q[1], EAR[1] - s * a + c * b]; };
+const turned = (q: V3, ang: number): V3 => { const c = cos(ang), s = sin(ang), a = q[0] - EAR[0], b = q[2] - EAR[1]; return [EAR[0] + c * a + s * b, q[1], EAR[1] - s * a + c * b]; };
 const sample = (p: Part, f: Float32Array, q: V3) => trilinear(f, p.shape, (q[0] - p.ax[0][0]) / p.v, (q[1] - p.ax[1][0]) / p.v, (q[2] - p.ax[2][0]) / p.v);
 
 /** Paints the mask and its seam, then sinks whatever of the mask would run into the fixed shell over it (forge_mark43.helmet_zones). */
@@ -616,7 +617,7 @@ const MECH_LINK: Record<string, string> = { shoulder: "upper_arm", elbow: "forea
 /** a flat disc: an n-gon prism about +z, centred */
 function disc(r: number, h: number, sections: number): TriMesh {
   const v: number[] = [], f: number[] = [];
-  for (let i = 0; i < sections; i++) { const a = (2 * Math.PI * i) / sections; v.push(r * Math.cos(a), r * Math.sin(a), -h / 2, r * Math.cos(a), r * Math.sin(a), h / 2); }
+  for (let i = 0; i < sections; i++) { const a = (2 * Math.PI * i) / sections; v.push(r * cos(a), r * sin(a), -h / 2, r * cos(a), r * sin(a), h / 2); }
   v.push(0, 0, -h / 2, 0, 0, h / 2); const b = 2 * sections, t = b + 1;
   for (let i = 0; i < sections; i++) {
     const j = (i + 1) % sections, a0 = 2 * i, a1 = 2 * i + 1, b0 = 2 * j, b1 = 2 * j + 1;

@@ -1,6 +1,7 @@
 // Marching cubes on a field (negative inside) and the mesh bookkeeping the forge needs: closed components split by shared edges,
 // small holes closed, signed volume, consistent outward orientation. Vertices are shared along grid edges, so a closed field
 // gives a closed mesh without welding.
+import { hypot } from "./dmath.ts";
 import { TRI } from "./mctable.ts";
 
 /** A triangle mesh in mm: xyz per vertex, three vertex ids per triangle. */
@@ -69,7 +70,7 @@ export function area(m: TriMesh): number {
   for (let t = 0; t < f.length; t += 3) {
     const a = f[t] * 3, b = f[t + 1] * 3, c = f[t + 2] * 3;
     const ux = v[b] - v[a], uy = v[b + 1] - v[a + 1], uz = v[b + 2] - v[a + 2], wx = v[c] - v[a], wy = v[c + 1] - v[a + 1], wz = v[c + 2] - v[a + 2];
-    s += 0.5 * Math.hypot(uy * wz - uz * wy, uz * wx - ux * wz, ux * wy - uy * wx);
+    s += 0.5 * hypot(uy * wz - uz * wy, uz * wx - ux * wz, ux * wy - uy * wx);
   }
   return s;
 }

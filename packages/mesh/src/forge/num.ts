@@ -16,7 +16,7 @@ const reflectIndex = (i: number, n: number): number => {
 function kernel(sigma: number): Float64Array {
   const r = Math.floor(4 * sigma + 0.5), k = new Float64Array(2 * r + 1);
   let s = 0;
-  for (let i = -r; i <= r; i++) { const w = Math.exp(-0.5 * (i * i) / (sigma * sigma)); k[i + r] = w; s += w; }
+  for (let i = -r; i <= r; i++) { const w = exp(-0.5 * (i * i) / (sigma * sigma)); k[i + r] = w; s += w; }
   for (let i = 0; i < k.length; i++) k[i] /= s;
   return k;
 }
@@ -151,4 +151,5 @@ export function percentile(a: ArrayLike<number>, q: number): number {
   const s = Float64Array.from(a).sort(); if (!s.length) return Number.NaN;
   const r = (q / 100) * (s.length - 1), i = Math.floor(r);
   return i + 1 < s.length ? s[i] + (s[i + 1] - s[i]) * (r - i) : s[i];
-}
+}import { exp } from "./dmath.ts";
+

@@ -1,8 +1,9 @@
 // The pack steps of the forged Mark 43, in the browser: a TypeScript port of scripts/pack_armour.py. Every overlap is trimmed, the
 // mask's sweep is relieved from the helmet, the collar gives way to the turning helmet, each limb gives way to its parent across the
 // joint's range, the shells are simplified, and the pieces are quantised into the pack the designer reads (ArmourManifest + bytes).
+import { cos, log } from "./dmath.ts";
 import type { TriMesh } from "./mc.ts";
-import { getPool, runAll, type Job } from "./pool.ts";
+import { runAll, type Job } from "./pool.ts";
 import { answerJob } from "./jobs.ts";
 import { J, EAR, MASK_OPEN, type ForgedPiece } from "./mark43.ts";
 import { solidStats, asSolid, asMesh, scope, compose, boundsOf, bodies, meshBounds, meshVolume, meshCentroid, overlaps, linspace, vertexNormals, type P3 } from "./geo.ts";
@@ -64,7 +65,8 @@ export async function resolve(pieces: Piece[], tick: Tick, log: Log): Promise<Pi
 const solidOf = (ps: Piece[], pick: (p: Piece) => boolean, tol?: number) => { const c = compose(ps.filter(pick).map((p) => asSolid(p.mesh))); return tol ? c.simplify(tol) : c; };
 /** A tool swept through `angles` about the axis (o, e): the union of its turned copies, cut to `clip`. With a pool the copies are shared out. */
 export async function sweptTool(tool: TriMesh, o: P3, e: P3, angles: number[], clip?: [P3, P3]): Promise<TriMesh> {
-  const pool = getPool(), parts = pool ? Math.min(angles.length, pool.size * 2) : 1, jobs: Job[] = [];
+  // always the same eight runs, pool or not, so every machine joins the same pieces in the same order and makes the same bytes
+  const parts = Math.min(angles.length, 8), jobs: Job[] = [];
   // contiguous runs of angles: each part is a short arc, so the parts overlap little and join quickly
   for (let i = 0; i < parts; i++) jobs.push({ op: "sweep", args: { mesh: tool, o, e, angles: angles.slice(Math.floor((i * angles.length) / parts), Math.floor(((i + 1) * angles.length) / parts)), clip } });
   let got = (await runAll<TriMesh>(jobs, (j) => answerJob(j) as Promise<TriMesh>)).filter((m) => m.f.length);
@@ -156,7 +158,7 @@ export async function finishShells(pcs: Piece[], tick: Tick): Promise<Piece[]> {
 function gauss(seed: number): () => number {
   let s = seed >>> 0;
   const u = () => { s = (s + 0x6d2b79f5) >>> 0; let t = s; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
-  return () => Math.sqrt(-2 * Math.log(u() + 1e-12)) * Math.cos(2 * Math.PI * u());
+  return () => Math.sqrt(-2 * log(u() + 1e-12)) * cos(2 * Math.PI * u());
 }
 export interface Encoded { lo: P3; step: P3; raw: Uint8Array; mesh: TriMesh; }
 /** The pack's storage (uint16 per coordinate in the piece's own box, uint16 indices), with sheets that meet at a point parted so the
