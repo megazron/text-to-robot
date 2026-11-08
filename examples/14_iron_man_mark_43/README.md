@@ -6,9 +6,9 @@
 
 Interpreted as: Iron Man Mark 43 wearable suit · budget $60000
 
-**Iron Man Mark 43 (full wearable suit): 362 printed pieces, 8.6 kg filament, motorised faceplate, $528 incl. filament**
+**Iron Man Mark 43 (full wearable suit): 358 printed pieces, 8.6 kg filament, motorised faceplate, $528 incl. filament**
 
-Parts cost **$564.95** (budget $60000: within) · printed structure 362 parts, 7929 g · checks passed 479/479
+Parts cost **$565.13** (budget $60000: within) · printed structure 358 parts, 7963 g · checks passed 475/475
 
 ## What it can do
 
@@ -17,37 +17,37 @@ Parts cost **$564.95** (budget $60000: within) · printed structure 362 parts, 7
 | tier | suit |
 | tier label | full wearable suit |
 | wearer height m | 1.75 |
-| printed pieces | 362 |
-| armour mass kg | 8.85 |
-| filament kg | 8.56 |
-| cost usd | 527.9 |
-| mass kg | 9.95 |
+| printed pieces | 358 |
+| armour mass kg | 8.89 |
+| filament kg | 8.6 |
+| cost usd | 528.03 |
+| mass kg | 9.99 |
 
 ## Actuators (sized from this robot's own loads)
 
 | Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
 |---|---|--:|--:|--:|--:|
-| faceplate | hobby_mg90s | 0.13 | 0.1294 / 0.4314 | 3.32x | 13.09 |
-| back_door_left_hinge | hobby_ds3218 | 0.534 | 0.559 / 1.863 | 3.49x | 7.48 |
-| back_door_right_hinge | hobby_ds3218 | 0.212 | 0.559 / 1.863 | 8.78x | 7.48 |
+| faceplate | hobby_mg90s | 0.132 | 0.1294 / 0.4314 | 3.27x | 13.09 |
+| back_door_left_hinge | hobby_ds3218 | 0.546 | 0.559 / 1.863 | 3.41x | 7.48 |
+| back_door_right_hinge | hobby_ds3218 | 0.213 | 0.559 / 1.863 | 8.77x | 7.48 |
 | helmet_door_left_hinge | hobby_mg90s | 0.049 | 0.055 / 0.183 | 3.7x | 13.09 |
 | helmet_door_right_hinge | hobby_mg90s | 0.044 | 0.055 / 0.183 | 4.2x | 13.09 |
-| left_upper_arm_door_hinge | hobby_mg996r | 0.096 | 0.284 / 0.948 | 9.88x | 7.48 |
-| right_upper_arm_door_hinge | hobby_mg996r | 0.096 | 0.284 / 0.948 | 9.89x | 7.48 |
-| left_forearm_door_hinge | hobby_mg996r | 0.082 | 0.284 / 0.948 | 11.61x | 7.48 |
-| right_forearm_door_hinge | hobby_mg996r | 0.082 | 0.284 / 0.948 | 11.6x | 7.48 |
-| left_thigh_door_hinge | hobby_mg996r | 0.124 | 0.284 / 0.948 | 7.66x | 7.48 |
-| right_thigh_door_hinge | hobby_mg996r | 0.124 | 0.284 / 0.948 | 7.67x | 7.48 |
-| left_shin_door_hinge | hobby_mg996r | 0.073 | 0.284 / 0.948 | 13.06x | 7.48 |
-| right_shin_door_hinge | hobby_mg996r | 0.073 | 0.284 / 0.948 | 13.07x | 7.48 |
+| left_upper_arm_door_hinge | hobby_mg996r | 0.096 | 0.284 / 0.948 | 9.86x | 7.48 |
+| right_upper_arm_door_hinge | hobby_mg996r | 0.096 | 0.284 / 0.948 | 9.87x | 7.48 |
+| left_forearm_door_hinge | hobby_mg996r | 0.082 | 0.284 / 0.948 | 11.58x | 7.48 |
+| right_forearm_door_hinge | hobby_mg996r | 0.082 | 0.284 / 0.948 | 11.57x | 7.48 |
+| left_thigh_door_hinge | hobby_mg996r | 0.124 | 0.284 / 0.948 | 7.65x | 7.48 |
+| right_thigh_door_hinge | hobby_mg996r | 0.124 | 0.284 / 0.948 | 7.65x | 7.48 |
+| left_shin_door_hinge | hobby_mg996r | 0.072 | 0.284 / 0.948 | 13.08x | 7.48 |
+| right_shin_door_hinge | hobby_mg996r | 0.072 | 0.284 / 0.948 | 13.08x | 7.48 |
 
 ## Engineering checks
 
-All 479 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
+All 475 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
 
 ## Assumptions and limits
 
-- armour shape from: suit: designed directly by scripts/forge_mark43.py from reference photos of the movie suit; 3 mm walls, 2 mm faceplate, 15 % gyroid infill (shells are mostly walls)
+- armour shape from: suit: designed by the forge (packages/mesh/src/forge, a TypeScript port of scripts/forge_mark43.py) from reference photos of the movie suit; 3 mm walls, 2 mm faceplate, 15 % gyroid infill (shells are mostly walls)
 - filament at $22/kg, 8 % waste
 - the suit is worn armour over a black undersuit: the wearer moves every joint; nothing powers the limbs (hobby servos cannot move a person); the servos only open and close the doors
 - the armour is designed at 1.75 m with no body model inside it and scales evenly with the height asked for; check it against your own measurements before printing
