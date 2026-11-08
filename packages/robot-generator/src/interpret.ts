@@ -158,9 +158,9 @@ export function interpretPrompt(prompt: string): PromptResult {
 
   if (!asked) applySizeDirectives(spec, t, choice.family, choice.label, lengths, stature, { dimensions, approximations, ignored, conflicts });
   if (heightM) {
-    dimensions.push(`fitted to a ${heightM.toFixed(2)} m wearer`);
+    dimensions.push(choice.family === "iron_man_mark_43" ? `sized for a ${heightM.toFixed(2)} m wearer` : `fitted to a ${heightM.toFixed(2)} m wearer`);
     if (Math.abs(heightM - 1.75) > 0.005) approximations.push(choice.family === "iron_man_mark_43"
-      ? `wearer proportions scaled from standard segment ratios to ${heightM.toFixed(2)} m; the posed clearance checks run at that size`
+      ? `the armour is scaled as a whole from its 1.75 m design to ${heightM.toFixed(2)} m (there is no body model); joint limits and clearances were measured at 1.75 m`
       : "suit proportions scaled from the 1.75 m reference; clearance and wearer-contact audits cover the reference size only");
   }
   const sensors = choice.designed ? designedSensors(spec) : applyInlineSensors(spec, t);

@@ -50,7 +50,7 @@ Flip the Arduino switch and the design is rebuilt around cheap, compatible parts
 
 <img src="docs/img/mark43_suit_up.gif" width="300" align="right" alt="The Mark 43 opens, a person walks in, the armour closes">
 
-The hardest thing I could think of. Designed directly from reference photos of the film suit, with no body or scanned model underneath: every part is a mathematical form with plates, panel lines and bevels added to it. 362 printed parts sized for a home printer, a mask that lifts on two micro servos, lit eyes, chest and palms. Joint ranges are measured by sweeping armour against armour.
+The hardest thing I could think of. Designed directly from reference photos of the film suit, with no body or scanned model underneath: every part is a mathematical form with plates, panel lines and bevels added to it. The armour shapes, door hardware and harness seats are made offline by `scripts/forge_mark43.py` and the pack scripts; the website loads that finished pack and builds the design around it (height, tier, budget, servos, wiring, files), so a prompt does not yet change the shape of the armour itself. 362 printed parts sized for a home printer, a mask that lifts on two micro servos, lit eyes, chest and palms. Joint ranges are measured by sweeping armour against armour.
 
 It opens for real, and the film is the design: every mesh, hinge line and limit in it comes from the built example. The back splits on its centre line and the rear shells of the helmet and limbs swing out 80 degrees or more on hinges, each a revolute joint in the URDF on its own servo, with pinned hinges, servo pods, sprung latches that hold with no power, hand-release cords and a slipping clutch at each horn. Two PCA9685 boards and their own regulator drive 23 servos; the battery bay rides on one back door and its cables cross the hinge in a service loop. Door ranges are measured by exact intersection in the order the suit opens, and the sequence runs in simulation.
 
@@ -102,7 +102,7 @@ $ node cli/src/index.ts "a red 6 dof arm with 70 cm reach, a wrist camera and no
 | `2 kg payload`, `budget $1500` | actuator sizing and BOM tier |
 | `wrist camera`, `lidar on the front`, `no lidar`, `suction cup` | sensors and gripper, including negation |
 | `robot dog`, `mobile manipulator`, `mecanum`, `hexapod`, `cobot` | template family |
-| `called Atlas`, `painted blue`, `for a 1.85 m wearer` | name, colour, wearable fit |
+| `called Atlas`, `painted blue`, `for a 1.85 m wearer` | name, colour, suit size (a Mark 43 is scaled as a whole; there is no body model) |
 
 Anything it cannot apply is listed as `not applied`, and contradictions (two robot types, two joint counts, two reaches) are each flagged as `conflict:`. A small German, French and Spanish keyword list covers the common robot words (`Roboterarm mit sechs Achsen und Greifer`).
 

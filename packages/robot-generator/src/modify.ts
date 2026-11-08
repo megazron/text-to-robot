@@ -241,7 +241,7 @@ function modifyWearer(spec: RobotSpecification, c: string): { spec: RobotSpecifi
   const { spec: next } = interpretPrompt(`${stripped} for a ${h.metres.toFixed(3)} m wearer`);
   next.robot_name = spec.robot_name;
   next.metadata.source_prompt = source;
-  return { spec: next, outcome: { changes: [`~ Refitted the suit to a ${h.metres.toFixed(2)} m wearer (rebuilt from its prompt; audits cover the 1.75 m reference)`], understood: true } };
+  return { spec: next, outcome: { changes: [`~ Rebuilt the suit for a ${h.metres.toFixed(2)} m wearer (from its prompt; a Mark 43 is scaled as a whole, and audits cover the 1.75 m reference)`], understood: true } };
 }
 
 function modifyBase(spec: RobotSpecification, c: string): Outcome | undefined {

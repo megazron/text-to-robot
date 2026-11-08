@@ -13,8 +13,8 @@ test("wearable suits fit a stated stature and say what is unaudited", () => {
   const i = read("Iron Man suit for a 6 ft 2 wearer");
   assert.equal(i.family, "iron_man_mark_43");
   assert.ok(Math.abs(i.wearer_height_m! - 1.88) < 0.01);
-  // the wearable armour is designed for the stated wearer and its posed checks run at that size
-  assert.match(i.approximations.join(), /posed clearance checks run at that size/);
+  // the Mark 43 is scaled as a whole: it says so, and that its limits were measured at the 1.75 m design
+  assert.match(i.approximations.join(), /scaled as a whole .* measured at 1\.75 m/);
   assert.match(read("exoskeleton for a 2.4 m person").ignored.join(), /outside the supported/);
 });
 

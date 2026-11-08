@@ -239,7 +239,7 @@ export function designMark43Wearable(req: Mark43Request = {}): RobotSpecificatio
     wearer_height_m: +(H / 1000).toFixed(2), printed_pieces: printedCount, armour_mass_kg: +armourKg.toFixed(2), filament_kg: +(printedKg * 1.08).toFixed(2), cost_usd: +cost.toFixed(2), mass_kg: +totalMass(A.spec).toFixed(2) };
   A.design.assumptions.push(`armour shape from: ${man.source}; 3 mm walls, 2 mm faceplate, 15 % gyroid infill (shells are mostly walls)`, `filament at $${FILAMENT_USD_PER_KG}/kg, 8 % waste`,
     "the suit is worn armour over a black undersuit: the wearer moves every joint; nothing powers the limbs (hobby servos cannot move a person); the servos only open and close the doors",
-    "the wearer is an average adult male body at 1.75 m and the pieces scale evenly with height; check against your own measurements before printing",
+    "the armour is designed at 1.75 m with no body model inside it and scales evenly with the height asked for; check it against your own measurements before printing",
     "gaps at the groin, armpits and elbows are cut on purpose so the joints move; the undersuit shows through them, as on real builds",
     `cable channels are 7 to 10 mm deep on the inside of the shells and the latch servos stand up to ${Math.max(0, ...latches.map((l) => l.room_mm)).toFixed(0)} mm off them: there is no body model, so their room against a real wearer is not checked; fit the suit before bonding them`,
     "NOTHING HERE HAS BEEN BUILT OR TESTED. Door torques, the clutch setting, pawl strength and pinch force are calculations with estimated inputs; none has been measured on hardware",
