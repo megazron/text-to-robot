@@ -5,7 +5,7 @@ import { forgePrint, NAMES, MASK_OPEN, type ForgeParams } from "./mark43.ts";
 import { components, area, isWatertight, type TriMesh } from "./mc.ts";
 import { useManifold, solidStats } from "./geo.ts";
 import { intake, resolve, workingHelmet, trimNeck, trimSwings, finishShells, jointPositions, encode, measured, r2, HINGE, type Piece, type Row, type Tick } from "./pack.ts";
-import { build, trimStages, relieveLimbs, finishDoors, measure, limbLimits, tidy } from "./doors.ts";
+import { build, trimStages, relieveLimbs, finishDoors, clearHardware, measure, limbLimits, tidy } from "./doors.ts";
 import { fitWiring } from "./wiring.ts";
 import type { ArmourManifest } from "../armourpack.ts";
 
@@ -79,7 +79,8 @@ export async function forgeSuit(mf: unknown, params: ForgeParams = {}, onProgres
     finishDoors(pieces, hw, recs, latches, say);
     return { pieces, hw };
   });
-  pieces.splice(0, pieces.length, ...trimmed.pieces); hw.splice(0, hw.length, ...trimmed.hw); lap("doors fitted");
+  pieces.splice(0, pieces.length, ...trimmed.pieces); hw.splice(0, hw.length, ...trimmed.hw);
+  clearHardware(pieces, hw, say); lap("doors fitted");
   const all: Piece[] = [...pieces, ...hw.map((h) => ({ row: { name: h.name, link: h.link, material: "armour_silver", region: h.region, hardware: true, anchor: h.anchor.map(r2) as [number, number, number] } as Row, mesh: h.mesh }))];
 
   await next("wiring");

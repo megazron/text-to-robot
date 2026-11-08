@@ -4,6 +4,12 @@ All notable changes to Text to Robot. Versions follow [Semantic Versioning](http
 
 ## Unreleased
 
+- The website designs the Mark 43 armour itself. The field generator, the shell and bed-cell cutting, the pack steps (overlaps, mask relief, collar, joint swing trims), the door hardware (hinges, servo pods, drive arms, latches and their staged trims), the cable channels and bays, and the measured joint and door ranges now run in TypeScript (`packages/mesh/src/forge/`) in the page's worker, on manifold-3d with a small pool of helper workers. Nothing about the armour is fetched; a forged suit is kept in the browser.
+- Prompt words change the armour: its build (`bulky`, `sleek`, `10 % bulkier`), the pauldrons (`bigger shoulders`), the panels (`smooth panels`, `heavy plates`) and the paint (`black and gold`, `silver joints`), as well as height, tier and budget. Out-of-range values are reported as `not applied`.
+- `packages/parts/data/mark43_pack.*` is now the forge's own output for the reference suit, written by `scripts/forge_suit.ts`, a cache of what the website makes. The Python scripts (`scripts/forge_mark43.py`, `pack_armour.py`, `fit_doors.py`, `fit_wiring.py`) stay as the reference the forge is tested against (`tests/mark43-forge.test.ts`, `tests/fixtures/forge_oracle.json`).
+- Against that reference: the same door hinge lines, joint limits, door ranges, opening sequence and staged trims; total shell volume within 1 %; 386 pieces against 392, where a few slivers the reference prints apart stay joined to their neighbours. Hinge clearances are cut with each part's convex hull through its swing, slightly more generous than the reference.
+- The README heading says the Mark 43 is designed to be worn and not yet built.
+
 ## 0.7.0 (2026-11-08)
 
 A product identity and a full set of project documents.

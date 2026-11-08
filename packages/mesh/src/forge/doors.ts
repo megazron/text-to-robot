@@ -307,6 +307,23 @@ export function finishDoors(pieces: Piece[], hw: Hardware[], recs: DoorOut[], la
   for (const e of pieces) if (e.dirty) scope(() => { e.mesh = asMesh(asSolid(e.mesh).simplify(0.2)); });
 }
 
+/** Simplifying a cut shell moves its surface a little: hardware cannot give way, so each shell is cleared of the hardware it touches once more. */
+export function clearHardware(pieces: Piece[], hw: Hardware[], log: Log): void {
+  let lost = 0;
+  const hb = hw.map((h) => ({ h, b: meshBounds(h.mesh) }));
+  for (const e of pieces) {
+    if (!HARD.includes(e.row.material)) continue;
+    const b = meshBounds(e.mesh), near = hb.filter((x) => overlaps(b, x.b));
+    if (!near.length) continue;
+    scope(() => {
+      let x = asSolid(e.mesh); const v0 = x.volume();
+      for (const { h } of near) x = x.subtract(asSolid(h.mesh));
+      const v = v0 - x.volume();
+      if (v > 0.01) { lost += v; e.mesh = asMesh(biggest(x)); e.dirty = true; }
+    });
+  }
+  log(`shells cleared of the hardware once more ${lost.toFixed(1)} mm3`);
+}
 export interface Bay { link: string; corners: P3[]; }
 /** Every door swept through its range in the order the suit opens, with exact intersection against everything else, servos included. */
 export async function measure(rows: { row: { link: string; material: string; wiring?: boolean }; mesh: TriMesh }[], recs: DoorOut[], latches: LatchRec[], bayBox: Bay | undefined, limits: Record<string, [number, number]>, tick: Tick, log: Log): Promise<string[][]> {
