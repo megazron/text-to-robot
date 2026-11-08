@@ -109,7 +109,9 @@ setArmourCache({
 const helpers = Math.max(0, Math.min(4, (navigator.hardwareConcurrency || 2) - 2));
 if (helpers) setPool(workerPool(helpers, () => {
   const base = (self as { TTR_ENGINE_BASE?: string }).TTR_ENGINE_BASE ?? location.href;   // set when another site started this worker
-  const w = new Worker(new URL("./forge-worker.js", base), { type: "module" });
+  // a worker must come from its page's origin: from another site the helper boots from a blob that imports the script
+  const script = new URL("./forge-worker.js", base), same = script.origin === location.origin;
+  const w = new Worker(same ? script : URL.createObjectURL(new Blob([`await import(${JSON.stringify(script.href)});`], { type: "text/javascript" })), { type: "module" });
   w.postMessage({ wasm: new URL("./manifold.wasm", base).href });
   return { post: (m) => w.postMessage(m), on: (fn) => { w.onmessage = ({ data }) => fn(data); }, end: () => w.terminate() };
 }));
