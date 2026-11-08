@@ -10,7 +10,12 @@ export type Solid = any;
 
 let W: Wasm | undefined;
 const scopes: Solid[][] = [];
+let made = 0;
+/** solids made so far and the WASM heap in MB (a leak shows as a heap that only grows) */
+let freed = 0;
+export const solidStats = () => ({ made, live: made - freed });
 const track = <T>(x: T): T => {
+  made += Array.isArray(x) ? x.length : 1;
   const s = scopes[scopes.length - 1];
   if (s) { if (Array.isArray(x)) s.push(...x); else s.push(x); }
   return x;
@@ -20,6 +25,8 @@ export function useManifold(mod: Wasm): void {
   if (W === mod) return;
   W = mod;
   const P = mod.Manifold.prototype;
+  const del = P.delete;
+  if (!del.__counted) { const d = function (this: Solid) { freed++; return del.call(this); }; (d as unknown as { __counted: boolean }).__counted = true; P.delete = d; }
   for (const k of ["add", "subtract", "intersect", "transform", "translate", "rotate", "scale", "mirror", "simplify", "hull", "decompose", "asOriginal"]) {
     const f = P[k]; if (typeof f !== "function" || f.__tracked) continue;
     const g = function (this: Solid, ...a: unknown[]) { return track(f.apply(this, a)); }; (g as unknown as { __tracked: boolean }).__tracked = true; P[k] = g;

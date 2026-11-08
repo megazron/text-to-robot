@@ -6,6 +6,8 @@ import { TRI } from "./mctable.ts";
 /** A triangle mesh in mm: xyz per vertex, three vertex ids per triangle. */
 export interface TriMesh { v: Float64Array; f: Uint32Array; }
 
+// The table separates the corners whose bit is set where a face is ambiguous: the bit marks the outside here, so thin walls stay joined
+// across a saddle, as scikit-image's Lewiner method mostly keeps them (the shells are one voxel thick in places).
 const CORNER = [[0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0], [0, 0, 1], [1, 0, 1], [1, 1, 1], [0, 1, 1]];
 const EDGE = [[0, 1], [1, 2], [2, 3], [3, 0], [4, 5], [5, 6], [6, 7], [7, 4], [0, 4], [1, 5], [2, 6], [3, 7]];
 const TRI_EDGES = TRI.map((s) => Array.from(s, (c) => Number.parseInt(c, 16)));
@@ -13,7 +15,7 @@ const TRI_EDGES = TRI.map((s) => Array.from(s, (c) => Number.parseInt(c, 16)));
 /**
  * The surface `field == level` of a grid (C order, shape n), as if padded by one voxel of `pad` all round (scikit-image's
  * marching_cubes on numpy.pad(g, 1, constant_values=pad)). Vertex positions: origin + (index - 1) * v for padded indices,
- * i.e. origin + index * v for the unpadded grid. Triangles face out of the negative region.
+ * i.e. origin + index * v for the unpadded grid. Winding is consistent; callers orient each closed piece by its volume.
  */
 export function marchingCubes(g: Float32Array, n: [number, number, number], level: number, v: number, origin: [number, number, number], pad = 9.0): TriMesh {
   const [nx, ny, nz] = n, px = nx + 2, py = ny + 2, pz = nz + 2;
@@ -37,7 +39,7 @@ export function marchingCubes(g: Float32Array, n: [number, number, number], leve
   // a slab of values per x keeps the lookups cheap
   for (let i = 0; i < px - 1; i++) for (let j = 0; j < py - 1; j++) for (let k = 0; k < pz - 1; k++) {
     let c = 0;
-    for (let q = 0; q < 8; q++) { const o = CORNER[q], x = at(i + o[0], j + o[1], k + o[2]); val[q] = x; if (x < level) c |= 1 << q; }
+    for (let q = 0; q < 8; q++) { const o = CORNER[q], x = at(i + o[0], j + o[1], k + o[2]); val[q] = x; if (x >= level) c |= 1 << q; }
     if (c === 0 || c === 255) continue;
     const es = TRI_EDGES[c];
     const ev: number[] = [];

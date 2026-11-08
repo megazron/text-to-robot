@@ -1,0 +1,5042 @@
+{
+"pieces": [
+{
+"name": "helmet_0",
+"link": "helmet_faceplate",
+"material": "armour_red",
+"region": "head",
+"volume": 2505.5,
+"lo": [
+7.02,
+-68.85,
+1831.58
+],
+"hi": [
+63.05,
+-0.29,
+1842.98
+],
+"faces": 2652
+},
+{
+"name": "helmet_1",
+"link": "helmet_faceplate",
+"material": "armour_red",
+"region": "head",
+"volume": 6981.0,
+"lo": [
+43.24,
+-57.66,
+1769.39
+],
+"hi": [
+112.75,
+-0.29,
+1830.46
+],
+"faces": 5456
+},
+{
+"name": "helmet_2",
+"link": "helmet_faceplate",
+"material": "armour_red",
+"region": "head",
+"volume": 2532.0,
+"lo": [
+7.02,
+0.29,
+1831.58
+],
+"hi": [
+63.05,
+68.85,
+1842.98
+],
+"faces": 2652
+},
+{
+"name": "helmet_3",
+"link": "helmet_faceplate",
+"material": "armour_red",
+"region": "head",
+"volume": 6981.6,
+"lo": [
+43.24,
+0.29,
+1769.39
+],
+"hi": [
+112.75,
+57.66,
+1830.46
+],
+"faces": 5456
+},
+{
+"name": "helmet_4",
+"link": "helmet_faceplate",
+"material": "armour_gold",
+"region": "head",
+"volume": 29886.5,
+"lo": [
+35.32,
+-100.12,
+1575.59
+],
+"hi": [
+130.2,
+-0.29,
+1713.59
+],
+"faces": 22240
+},
+{
+"name": "helmet_5",
+"link": "helmet_faceplate",
+"material": "armour_gold",
+"region": "head",
+"volume": 23286.8,
+"lo": [
+11.14,
+-101.76,
+1714.41
+],
+"hi": [
+125.12,
+-0.29,
+1830.45
+],
+"faces": 20908
+},
+{
+"name": "helmet_6",
+"link": "helmet_faceplate",
+"material": "armour_gold",
+"region": "head",
+"volume": 29913.9,
+"lo": [
+35.32,
+0.29,
+1575.59
+],
+"hi": [
+130.2,
+100.12,
+1713.59
+],
+"faces": 22240
+},
+{
+"name": "helmet_7",
+"link": "helmet_faceplate",
+"material": "armour_gold",
+"region": "head",
+"volume": 23288.1,
+"lo": [
+11.14,
+0.29,
+1714.41
+],
+"hi": [
+125.12,
+101.76,
+1830.45
+],
+"faces": 20908
+},
+{
+"name": "helmet_8",
+"link": "helmet_faceplate",
+"material": "lens_glow",
+"region": "head",
+"volume": 2928.7,
+"lo": [
+69.72,
+-87.15,
+1717.24
+],
+"hi": [
+119.62,
+-17.51,
+1748.78
+],
+"faces": 2398
+},
+{
+"name": "helmet_9",
+"link": "helmet_faceplate",
+"material": "lens_glow",
+"region": "head",
+"volume": 2925.4,
+"lo": [
+69.72,
+17.51,
+1717.24
+],
+"hi": [
+119.62,
+87.15,
+1748.78
+],
+"faces": 2398
+},
+{
+"name": "helmet_10",
+"link": "head",
+"material": "armour_red",
+"region": "head",
+"volume": 30742.4,
+"lo": [
+-43.59,
+-104.22,
+1565.99
+],
+"hi": [
+100.98,
+-0.29,
+1711.58
+],
+"faces": 22346
+},
+{
+"name": "helmet_11",
+"link": "head",
+"material": "armour_red",
+"region": "head",
+"volume": 19244.8,
+"lo": [
+-43.59,
+-107.64,
+1712.41
+],
+"hi": [
+32.01,
+-30.64,
+1846.65
+],
+"faces": 14408
+},
+{
+"name": "helmet_12",
+"link": "head",
+"material": "armour_red",
+"region": "head",
+"volume": 30740.8,
+"lo": [
+-43.59,
+0.29,
+1565.99
+],
+"hi": [
+100.98,
+104.22,
+1711.58
+],
+"faces": 22346
+},
+{
+"name": "helmet_13",
+"link": "head",
+"material": "armour_red",
+"region": "head",
+"volume": 19226.7,
+"lo": [
+-43.59,
+30.64,
+1712.41
+],
+"hi": [
+32.01,
+107.64,
+1846.65
+],
+"faces": 14408
+},
+{
+"name": "helmet_14",
+"link": "helmet_door_left",
+"material": "armour_red",
+"region": "head",
+"volume": 33905.8,
+"lo": [
+-122.82,
+0.29,
+1589.3
+],
+"hi": [
+-44.41,
+98.18,
+1719.58
+],
+"faces": 24490
+},
+{
+"name": "helmet_15",
+"link": "helmet_door_left",
+"material": "armour_red",
+"region": "head",
+"volume": 38642.1,
+"lo": [
+-127.33,
+0.29,
+1720.41
+],
+"hi": [
+-44.41,
+102.13,
+1848.56
+],
+"faces": 27534
+},
+{
+"name": "helmet_16",
+"link": "helmet_door_right",
+"material": "armour_red",
+"region": "head",
+"volume": 33875.2,
+"lo": [
+-122.82,
+-98.18,
+1589.3
+],
+"hi": [
+-44.41,
+-0.29,
+1719.58
+],
+"faces": 24490
+},
+{
+"name": "helmet_17",
+"link": "helmet_door_right",
+"material": "armour_red",
+"region": "head",
+"volume": 38696.7,
+"lo": [
+-127.33,
+-102.13,
+1720.41
+],
+"hi": [
+-44.41,
+-0.29,
+1848.56
+],
+"faces": 27534
+},
+{
+"name": "torso_0",
+"link": "back_door_left",
+"material": "armour_red",
+"region": "torso",
+"volume": 58727.4,
+"lo": [
+-111.01,
+0.29,
+895.01
+],
+"hi": [
+-0.37,
+128.34,
+1056.96
+],
+"faces": 29720
+},
+{
+"name": "torso_1",
+"link": "back_door_left",
+"material": "armour_red",
+"region": "torso",
+"volume": 3795.6,
+"lo": [
+-58.29,
+0.29,
+887.99
+],
+"hi": [
+-0.44,
+35.79,
+893.12
+],
+"faces": 1904
+},
+{
+"name": "torso_2",
+"link": "back_door_left",
+"material": "armour_red",
+"region": "torso",
+"volume": 106081.2,
+"lo": [
+-104.62,
+0.29,
+1065.23
+],
+"hi": [
+-0.32,
+151.32,
+1232.71
+],
+"faces": 43618
+},
+{
+"name": "torso_3",
+"link": "back_door_left",
+"material": "armour_red",
+"region": "torso",
+"volume": 124977.5,
+"lo": [
+-123.0,
+0.29,
+1233.29
+],
+"hi": [
+-0.32,
+183.56,
+1405.21
+],
+"faces": 50062
+},
+{
+"name": "torso_4",
+"link": "back_door_left",
+"material": "armour_red",
+"region": "torso",
+"volume": 105965.2,
+"lo": [
+-123.53,
+0.29,
+1405.79
+],
+"hi": [
+-0.33,
+183.67,
+1578.01
+],
+"faces": 51426
+},
+{
+"name": "torso_5",
+"link": "back_door_left",
+"material": "armour_gold",
+"region": "torso",
+"volume": 822.9,
+"lo": [
+-47.22,
+148.29,
+1227.03
+],
+"hi": [
+-0.33,
+157.87,
+1232.71
+],
+"faces": 568
+},
+{
+"name": "torso_6",
+"link": "back_door_left",
+"material": "armour_gold",
+"region": "torso",
+"volume": 12333.8,
+"lo": [
+-85.33,
+146.22,
+1233.29
+],
+"hi": [
+-0.32,
+181.8,
+1322.28
+],
+"faces": 6466
+},
+{
+"name": "torso_7",
+"link": "back_door_left",
+"material": "armour_silver",
+"region": "torso",
+"volume": 2854.4,
+"lo": [
+-97.57,
+0.29,
+1051.22
+],
+"hi": [
+-0.43,
+124.5,
+1060.21
+],
+"faces": 2104
+},
+{
+"name": "torso_8",
+"link": "back_door_left",
+"material": "armour_silver",
+"region": "torso",
+"volume": 4104.7,
+"lo": [
+-96.77,
+0.29,
+1060.79
+],
+"hi": [
+-0.37,
+124.06,
+1070.78
+],
+"faces": 2432
+},
+{
+"name": "torso_9",
+"link": "back_door_left",
+"material": "armour_silver",
+"region": "torso",
+"volume": 12867.0,
+"lo": [
+-64.53,
+158.22,
+1237.75
+],
+"hi": [
+-0.32,
+179.44,
+1302.34
+],
+"faces": 5024
+},
+{
+"name": "torso_10",
+"link": "back_door_right",
+"material": "armour_red",
+"region": "torso",
+"volume": 58758.6,
+"lo": [
+-111.01,
+-128.34,
+895.01
+],
+"hi": [
+-0.37,
+-0.29,
+1056.96
+],
+"faces": 29720
+},
+{
+"name": "torso_11",
+"link": "back_door_right",
+"material": "armour_red",
+"region": "torso",
+"volume": 3787.0,
+"lo": [
+-58.29,
+-35.79,
+887.99
+],
+"hi": [
+-0.44,
+-0.29,
+893.12
+],
+"faces": 1904
+},
+{
+"name": "torso_12",
+"link": "back_door_right",
+"material": "armour_red",
+"region": "torso",
+"volume": 106088.6,
+"lo": [
+-104.62,
+-151.32,
+1065.23
+],
+"hi": [
+-0.32,
+-0.29,
+1232.71
+],
+"faces": 43618
+},
+{
+"name": "torso_13",
+"link": "back_door_right",
+"material": "armour_red",
+"region": "torso",
+"volume": 125020.9,
+"lo": [
+-123.0,
+-183.56,
+1233.29
+],
+"hi": [
+-0.32,
+-0.29,
+1405.21
+],
+"faces": 50062
+},
+{
+"name": "torso_14",
+"link": "back_door_right",
+"material": "armour_red",
+"region": "torso",
+"volume": 106008.2,
+"lo": [
+-123.53,
+-183.67,
+1405.79
+],
+"hi": [
+-0.33,
+-0.29,
+1578.01
+],
+"faces": 51426
+},
+{
+"name": "torso_15",
+"link": "back_door_right",
+"material": "armour_gold",
+"region": "torso",
+"volume": 826.6,
+"lo": [
+-47.22,
+-157.87,
+1227.03
+],
+"hi": [
+-0.33,
+-148.29,
+1232.71
+],
+"faces": 568
+},
+{
+"name": "torso_16",
+"link": "back_door_right",
+"material": "armour_gold",
+"region": "torso",
+"volume": 12338.0,
+"lo": [
+-85.33,
+-181.8,
+1233.29
+],
+"hi": [
+-0.32,
+-146.22,
+1322.28
+],
+"faces": 6466
+},
+{
+"name": "torso_17",
+"link": "back_door_right",
+"material": "armour_silver",
+"region": "torso",
+"volume": 2868.9,
+"lo": [
+-97.57,
+-124.5,
+1051.22
+],
+"hi": [
+-0.43,
+-0.29,
+1060.21
+],
+"faces": 2104
+},
+{
+"name": "torso_18",
+"link": "back_door_right",
+"material": "armour_silver",
+"region": "torso",
+"volume": 4139.4,
+"lo": [
+-96.77,
+-124.06,
+1060.79
+],
+"hi": [
+-0.37,
+-0.29,
+1070.78
+],
+"faces": 2432
+},
+{
+"name": "torso_19",
+"link": "back_door_right",
+"material": "armour_silver",
+"region": "torso",
+"volume": 12855.4,
+"lo": [
+-64.53,
+-179.44,
+1237.75
+],
+"hi": [
+-0.32,
+-158.22,
+1302.34
+],
+"faces": 5024
+},
+{
+"name": "torso_20",
+"link": "pelvis",
+"material": "armour_red",
+"region": "torso",
+"volume": 50991.6,
+"lo": [
+0.33,
+-128.32,
+893.03
+],
+"hi": [
+104.01,
+-0.29,
+1056.96
+],
+"faces": 26148
+},
+{
+"name": "torso_21",
+"link": "pelvis",
+"material": "armour_red",
+"region": "torso",
+"volume": 2340.7,
+"lo": [
+0.44,
+-32.58,
+887.99
+],
+"hi": [
+55.18,
+-0.29,
+896.5
+],
+"faces": 1598
+},
+{
+"name": "torso_22",
+"link": "pelvis",
+"material": "armour_red",
+"region": "torso",
+"volume": 65164.9,
+"lo": [
+0.32,
+-151.38,
+1065.05
+],
+"hi": [
+128.0,
+-0.29,
+1236.71
+],
+"faces": 34854
+},
+{
+"name": "torso_23",
+"link": "pelvis",
+"material": "armour_red",
+"region": "torso",
+"volume": 1191.9,
+"lo": [
+0.32,
+-183.65,
+1317.37
+],
+"hi": [
+4.38,
+-172.41,
+1410.14
+],
+"faces": 804
+},
+{
+"name": "torso_24",
+"link": "pelvis",
+"material": "armour_red",
+"region": "torso",
+"volume": 120120.6,
+"lo": [
+5.63,
+-195.23,
+1237.29
+],
+"hi": [
+148.37,
+-0.29,
+1411.21
+],
+"faces": 53536
+},
+{
+"name": "torso_25",
+"link": "pelvis",
+"material": "armour_red",
+"region": "torso",
+"volume": 655.8,
+"lo": [
+0.33,
+-125.26,
+1541.86
+],
+"hi": [
+4.37,
+-67.92,
+1578.01
+],
+"faces": 616
+},
+{
+"name": "torso_26",
+"link": "pelvis",
+"material": "armour_red",
+"region": "torso",
+"volume": 93402.8,
+"lo": [
+5.62,
+-195.17,
+1411.79
+],
+"hi": [
+139.43,
+-0.29,
+1586.01
+],
+"faces": 47370
+},
+{
+"name": "torso_27",
+"link": "pelvis",
+"material": "armour_red",
+"region": "torso",
+"volume": 2337.8,
+"lo": [
+0.44,
+0.29,
+887.99
+],
+"hi": [
+55.18,
+32.58,
+896.5
+],
+"faces": 1598
+},
+{
+"name": "torso_28",
+"link": "pelvis",
+"material": "armour_red",
+"region": "torso",
+"volume": 51017.7,
+"lo": [
+0.33,
+0.29,
+893.03
+],
+"hi": [
+104.01,
+128.32,
+1056.96
+],
+"faces": 26148
+},
+{
+"name": "torso_29",
+"link": "pelvis",
+"material": "armour_red",
+"region": "torso",
+"volume": 65251.9,
+"lo": [
+0.32,
+0.29,
+1065.05
+],
+"hi": [
+128.0,
+151.38,
+1236.71
+],
+"faces": 34854
+},
+{
+"name": "torso_30",
+"link": "pelvis",
+"material": "armour_red",
+"region": "torso",
+"volume": 1196.2,
+"lo": [
+0.32,
+172.41,
+1317.37
+],
+"hi": [
+4.38,
+183.65,
+1410.14
+],
+"faces": 804
+},
+{
+"name": "torso_31",
+"link": "pelvis",
+"material": "armour_red",
+"region": "torso",
+"volume": 120155.4,
+"lo": [
+5.63,
+0.29,
+1237.29
+],
+"hi": [
+148.37,
+195.23,
+1411.21
+],
+"faces": 53536
+},
+{
+"name": "torso_32",
+"link": "pelvis",
+"material": "armour_red",
+"region": "torso",
+"volume": 649.0,
+"lo": [
+0.33,
+67.92,
+1541.86
+],
+"hi": [
+4.37,
+125.26,
+1578.01
+],
+"faces": 616
+},
+{
+"name": "torso_33",
+"link": "pelvis",
+"material": "armour_red",
+"region": "torso",
+"volume": 93418.9,
+"lo": [
+5.62,
+0.29,
+1411.79
+],
+"hi": [
+139.43,
+195.17,
+1586.01
+],
+"faces": 47370
+},
+{
+"name": "torso_34",
+"link": "pelvis",
+"material": "armour_gold",
+"region": "torso",
+"volume": 1725.3,
+"lo": [
+0.37,
+-158.98,
+1227.27
+],
+"hi": [
+61.71,
+-146.39,
+1236.71
+],
+"faces": 988
+},
+{
+"name": "torso_35",
+"link": "pelvis",
+"material": "armour_gold",
+"region": "torso",
+"volume": 27443.1,
+"lo": [
+5.22,
+-145.55,
+1125.21
+],
+"hi": [
+96.52,
+-96.22,
+1212.78
+],
+"faces": 12102
+},
+{
+"name": "torso_36",
+"link": "pelvis",
+"material": "armour_gold",
+"region": "torso",
+"volume": 6227.2,
+"lo": [
+5.22,
+-129.19,
+1069.22
+],
+"hi": [
+72.08,
+-96.96,
+1094.78
+],
+"faces": 2834
+},
+{
+"name": "torso_37",
+"link": "pelvis",
+"material": "armour_gold",
+"region": "torso",
+"volume": 7391.0,
+"lo": [
+0.34,
+-181.15,
+1237.29
+],
+"hi": [
+89.55,
+-146.22,
+1322.02
+],
+"faces": 4638
+},
+{
+"name": "torso_38",
+"link": "pelvis",
+"material": "armour_gold",
+"region": "torso",
+"volume": 2460.5,
+"lo": [
+5.95,
+-187.93,
+1285.53
+],
+"hi": [
+103.62,
+-150.22,
+1326.51
+],
+"faces": 1942
+},
+{
+"name": "torso_39",
+"link": "pelvis",
+"material": "armour_gold",
+"region": "torso",
+"volume": 10808.8,
+"lo": [
+65.06,
+-145.51,
+1465.22
+],
+"hi": [
+110.54,
+-74.07,
+1543.09
+],
+"faces": 6586
+},
+{
+"name": "torso_40",
+"link": "pelvis",
+"material": "armour_gold",
+"region": "torso",
+"volume": 1733.9,
+"lo": [
+0.37,
+146.39,
+1227.27
+],
+"hi": [
+61.71,
+158.98,
+1236.71
+],
+"faces": 988
+},
+{
+"name": "torso_41",
+"link": "pelvis",
+"material": "armour_gold",
+"region": "torso",
+"volume": 27464.2,
+"lo": [
+5.22,
+96.22,
+1125.21
+],
+"hi": [
+96.52,
+145.55,
+1212.78
+],
+"faces": 12102
+},
+{
+"name": "torso_42",
+"link": "pelvis",
+"material": "armour_gold",
+"region": "torso",
+"volume": 6236.4,
+"lo": [
+5.22,
+96.96,
+1069.22
+],
+"hi": [
+72.08,
+129.19,
+1094.78
+],
+"faces": 2834
+},
+{
+"name": "torso_43",
+"link": "pelvis",
+"material": "armour_gold",
+"region": "torso",
+"volume": 7391.4,
+"lo": [
+0.34,
+146.22,
+1237.29
+],
+"hi": [
+89.55,
+181.15,
+1322.02
+],
+"faces": 4638
+},
+{
+"name": "torso_44",
+"link": "pelvis",
+"material": "armour_gold",
+"region": "torso",
+"volume": 2462.1,
+"lo": [
+5.95,
+150.22,
+1285.53
+],
+"hi": [
+103.62,
+187.93,
+1326.51
+],
+"faces": 1942
+},
+{
+"name": "torso_45",
+"link": "pelvis",
+"material": "armour_gold",
+"region": "torso",
+"volume": 10810.0,
+"lo": [
+65.06,
+74.07,
+1465.22
+],
+"hi": [
+110.54,
+145.51,
+1543.09
+],
+"faces": 6586
+},
+{
+"name": "torso_46",
+"link": "pelvis",
+"material": "armour_silver",
+"region": "torso",
+"volume": 4072.1,
+"lo": [
+0.43,
+-124.41,
+1051.22
+],
+"hi": [
+91.78,
+-0.29,
+1062.21
+],
+"faces": 2476
+},
+{
+"name": "torso_47",
+"link": "pelvis",
+"material": "armour_silver",
+"region": "torso",
+"volume": 2812.6,
+"lo": [
+0.33,
+-124.2,
+1062.79
+],
+"hi": [
+91.32,
+-0.29,
+1070.78
+],
+"faces": 2070
+},
+{
+"name": "torso_48",
+"link": "pelvis",
+"material": "armour_silver",
+"region": "torso",
+"volume": 7530.0,
+"lo": [
+5.42,
+-127.18,
+1093.22
+],
+"hi": [
+67.25,
+-102.22,
+1128.78
+],
+"faces": 3282
+},
+{
+"name": "torso_49",
+"link": "pelvis",
+"material": "armour_silver",
+"region": "torso",
+"volume": 12673.0,
+"lo": [
+0.32,
+-178.18,
+1238.42
+],
+"hi": [
+72.69,
+-158.22,
+1300.71
+],
+"faces": 5264
+},
+{
+"name": "torso_50",
+"link": "pelvis",
+"material": "armour_silver",
+"region": "torso",
+"volume": 8866.3,
+"lo": [
+129.27,
+-45.49,
+1329.58
+],
+"hi": [
+144.26,
+-0.29,
+1411.21
+],
+"faces": 4230
+},
+{
+"name": "torso_51",
+"link": "pelvis",
+"material": "armour_silver",
+"region": "torso",
+"volume": 4845.0,
+"lo": [
+69.75,
+-79.03,
+1513.57
+],
+"hi": [
+88.76,
+-0.29,
+1550.78
+],
+"faces": 2978
+},
+{
+"name": "torso_52",
+"link": "pelvis",
+"material": "armour_silver",
+"region": "torso",
+"volume": 4092.1,
+"lo": [
+0.43,
+0.29,
+1051.22
+],
+"hi": [
+91.78,
+124.41,
+1062.21
+],
+"faces": 2476
+},
+{
+"name": "torso_53",
+"link": "pelvis",
+"material": "armour_silver",
+"region": "torso",
+"volume": 2845.6,
+"lo": [
+0.33,
+0.29,
+1062.79
+],
+"hi": [
+91.32,
+124.2,
+1070.78
+],
+"faces": 2070
+},
+{
+"name": "torso_54",
+"link": "pelvis",
+"material": "armour_silver",
+"region": "torso",
+"volume": 7540.4,
+"lo": [
+5.42,
+102.22,
+1093.22
+],
+"hi": [
+67.25,
+127.18,
+1128.78
+],
+"faces": 3282
+},
+{
+"name": "torso_55",
+"link": "pelvis",
+"material": "armour_silver",
+"region": "torso",
+"volume": 12676.9,
+"lo": [
+0.32,
+158.22,
+1238.42
+],
+"hi": [
+72.69,
+178.18,
+1300.71
+],
+"faces": 5264
+},
+{
+"name": "torso_56",
+"link": "pelvis",
+"material": "armour_silver",
+"region": "torso",
+"volume": 8869.4,
+"lo": [
+129.27,
+0.29,
+1329.58
+],
+"hi": [
+144.26,
+45.49,
+1411.21
+],
+"faces": 4230
+},
+{
+"name": "torso_57",
+"link": "pelvis",
+"material": "armour_silver",
+"region": "torso",
+"volume": 4844.8,
+"lo": [
+69.75,
+0.29,
+1513.57
+],
+"hi": [
+88.76,
+79.03,
+1550.78
+],
+"faces": 2978
+},
+{
+"name": "left_upper_arm_0",
+"link": "left_upper_arm_door",
+"material": "armour_red",
+"region": "left_upper_arm",
+"volume": 104612.2,
+"lo": [
+-74.12,
+163.08,
+1379.08
+],
+"hi": [
+1.38,
+296.59,
+1563.32
+],
+"faces": 46964
+},
+{
+"name": "right_upper_arm_0",
+"link": "right_upper_arm_door",
+"material": "armour_red",
+"region": "right_upper_arm",
+"volume": 104612.2,
+"lo": [
+-74.12,
+-296.59,
+1379.08
+],
+"hi": [
+1.38,
+-163.08,
+1563.32
+],
+"faces": 46964
+},
+{
+"name": "left_upper_arm_1",
+"link": "left_upper_arm_door",
+"material": "armour_gold",
+"region": "left_upper_arm",
+"volume": 97313.0,
+"lo": [
+-66.87,
+177.38,
+1199.49
+],
+"hi": [
+-2.96,
+328.44,
+1371.68
+],
+"faces": 42142
+},
+{
+"name": "right_upper_arm_1",
+"link": "right_upper_arm_door",
+"material": "armour_gold",
+"region": "right_upper_arm",
+"volume": 97313.0,
+"lo": [
+-66.87,
+-328.44,
+1199.49
+],
+"hi": [
+-2.96,
+-177.38,
+1371.68
+],
+"faces": 42142
+},
+{
+"name": "left_upper_arm_2",
+"link": "left_upper_arm_door",
+"material": "armour_gold",
+"region": "left_upper_arm",
+"volume": 14541.3,
+"lo": [
+-66.81,
+175.94,
+1372.32
+],
+"hi": [
+-2.76,
+305.71,
+1408.79
+],
+"faces": 7038
+},
+{
+"name": "right_upper_arm_2",
+"link": "right_upper_arm_door",
+"material": "armour_gold",
+"region": "right_upper_arm",
+"volume": 14541.3,
+"lo": [
+-66.81,
+-305.71,
+1372.32
+],
+"hi": [
+-2.76,
+-175.94,
+1408.79
+],
+"faces": 7038
+},
+{
+"name": "left_upper_arm_3",
+"link": "left_upper_arm_door",
+"material": "armour_silver",
+"region": "left_upper_arm",
+"volume": 7251.2,
+"lo": [
+-54.72,
+235.15,
+1181.65
+],
+"hi": [
+-7.31,
+328.17,
+1220.78
+],
+"faces": 5052
+},
+{
+"name": "right_upper_arm_3",
+"link": "right_upper_arm_door",
+"material": "armour_silver",
+"region": "right_upper_arm",
+"volume": 7251.2,
+"lo": [
+-54.72,
+-328.17,
+1181.65
+],
+"hi": [
+-7.31,
+-235.15,
+1220.78
+],
+"faces": 5052
+},
+{
+"name": "left_upper_arm_4",
+"link": "left_upper_arm",
+"material": "armour_red",
+"region": "left_upper_arm",
+"volume": 108086.7,
+"lo": [
+-2.04,
+163.37,
+1379.05
+],
+"hi": [
+78.3,
+296.64,
+1563.12
+],
+"faces": 50082
+},
+{
+"name": "right_upper_arm_4",
+"link": "right_upper_arm",
+"material": "armour_red",
+"region": "right_upper_arm",
+"volume": 108086.7,
+"lo": [
+-2.04,
+-296.64,
+1379.05
+],
+"hi": [
+78.3,
+-163.37,
+1563.12
+],
+"faces": 50082
+},
+{
+"name": "left_upper_arm_5",
+"link": "left_upper_arm",
+"material": "armour_gold",
+"region": "left_upper_arm",
+"volume": 99344.1,
+"lo": [
+-6.61,
+177.38,
+1199.22
+],
+"hi": [
+63.26,
+328.45,
+1370.71
+],
+"faces": 45106
+},
+{
+"name": "right_upper_arm_5",
+"link": "right_upper_arm",
+"material": "armour_gold",
+"region": "right_upper_arm",
+"volume": 99344.1,
+"lo": [
+-6.61,
+-328.45,
+1199.22
+],
+"hi": [
+63.26,
+-177.38,
+1370.71
+],
+"faces": 45106
+},
+{
+"name": "left_upper_arm_6",
+"link": "left_upper_arm",
+"material": "armour_gold",
+"region": "left_upper_arm",
+"volume": 14127.3,
+"lo": [
+-2.93,
+175.94,
+1371.29
+],
+"hi": [
+61.44,
+306.16,
+1408.74
+],
+"faces": 7060
+},
+{
+"name": "right_upper_arm_6",
+"link": "right_upper_arm",
+"material": "armour_gold",
+"region": "right_upper_arm",
+"volume": 14127.3,
+"lo": [
+-2.93,
+-306.16,
+1371.29
+],
+"hi": [
+61.44,
+-175.94,
+1408.74
+],
+"faces": 7060
+},
+{
+"name": "left_upper_arm_7",
+"link": "left_upper_arm",
+"material": "armour_silver",
+"region": "left_upper_arm",
+"volume": 7207.7,
+"lo": [
+-7.08,
+235.16,
+1181.48
+],
+"hi": [
+40.84,
+328.17,
+1220.51
+],
+"faces": 5024
+},
+{
+"name": "right_upper_arm_7",
+"link": "right_upper_arm",
+"material": "armour_silver",
+"region": "right_upper_arm",
+"volume": 7207.7,
+"lo": [
+-7.08,
+-328.17,
+1181.48
+],
+"hi": [
+40.84,
+-235.16,
+1220.51
+],
+"faces": 5024
+},
+{
+"name": "left_forearm_0",
+"link": "left_forearm_door",
+"material": "armour_red",
+"region": "left_forearm",
+"volume": 43518.1,
+"lo": [
+-54.38,
+262.99,
+941.01
+],
+"hi": [
+15.54,
+385.62,
+1020.71
+],
+"faces": 20016
+},
+{
+"name": "right_forearm_0",
+"link": "right_forearm_door",
+"material": "armour_red",
+"region": "right_forearm",
+"volume": 43518.1,
+"lo": [
+-54.38,
+-385.62,
+941.01
+],
+"hi": [
+15.54,
+-262.99,
+1020.71
+],
+"faces": 20016
+},
+{
+"name": "left_forearm_1",
+"link": "left_forearm_door",
+"material": "armour_red",
+"region": "left_forearm",
+"volume": 30612.3,
+"lo": [
+-33.26,
+290.91,
+877.87
+],
+"hi": [
+22.65,
+397.96,
+954.92
+],
+"faces": 14956
+},
+{
+"name": "right_forearm_1",
+"link": "right_forearm_door",
+"material": "armour_red",
+"region": "right_forearm",
+"volume": 30612.3,
+"lo": [
+-33.26,
+-397.96,
+877.87
+],
+"hi": [
+22.65,
+-290.91,
+954.92
+],
+"faces": 14956
+},
+{
+"name": "left_forearm_2",
+"link": "left_forearm_door",
+"material": "armour_red",
+"region": "left_forearm",
+"volume": 87570.7,
+"lo": [
+-66.27,
+239.62,
+1021.29
+],
+"hi": [
+9.04,
+382.34,
+1164.79
+],
+"faces": 40338
+},
+{
+"name": "right_forearm_2",
+"link": "right_forearm_door",
+"material": "armour_red",
+"region": "right_forearm",
+"volume": 87570.7,
+"lo": [
+-66.27,
+-382.34,
+1021.29
+],
+"hi": [
+9.04,
+-239.62,
+1164.79
+],
+"faces": 40338
+},
+{
+"name": "left_forearm_3",
+"link": "left_forearm_door",
+"material": "armour_gold",
+"region": "left_forearm",
+"volume": 3250.0,
+"lo": [
+-30.95,
+292.29,
+933.26
+],
+"hi": [
+16.46,
+384.46,
+962.74
+],
+"faces": 2236
+},
+{
+"name": "right_forearm_3",
+"link": "right_forearm_door",
+"material": "armour_gold",
+"region": "right_forearm",
+"volume": 3250.0,
+"lo": [
+-30.95,
+-384.46,
+933.26
+],
+"hi": [
+16.46,
+-292.29,
+962.74
+],
+"faces": 2236
+},
+{
+"name": "left_forearm_4",
+"link": "left_forearm",
+"material": "armour_red",
+"region": "left_forearm",
+"volume": 23914.6,
+"lo": [
+7.24,
+262.38,
+943.13
+],
+"hi": [
+68.23,
+385.55,
+1022.71
+],
+"faces": 11656
+},
+{
+"name": "right_forearm_4",
+"link": "right_forearm",
+"material": "armour_red",
+"region": "right_forearm",
+"volume": 23914.6,
+"lo": [
+7.24,
+-385.55,
+943.13
+],
+"hi": [
+68.23,
+-262.38,
+1022.71
+],
+"faces": 11656
+},
+{
+"name": "left_forearm_5",
+"link": "left_forearm",
+"material": "armour_red",
+"region": "left_forearm",
+"volume": 30491.4,
+"lo": [
+17.21,
+290.71,
+879.86
+],
+"hi": [
+67.74,
+397.69,
+956.97
+],
+"faces": 14464
+},
+{
+"name": "right_forearm_5",
+"link": "right_forearm",
+"material": "armour_red",
+"region": "right_forearm",
+"volume": 30491.4,
+"lo": [
+17.21,
+-397.69,
+879.86
+],
+"hi": [
+67.74,
+-290.71,
+956.97
+],
+"faces": 14464
+},
+{
+"name": "left_forearm_6",
+"link": "left_forearm",
+"material": "armour_red",
+"region": "left_forearm",
+"volume": 72994.6,
+"lo": [
+-6.16,
+239.46,
+1023.29
+],
+"hi": [
+64.77,
+382.08,
+1166.66
+],
+"faces": 35166
+},
+{
+"name": "right_forearm_6",
+"link": "right_forearm",
+"material": "armour_red",
+"region": "right_forearm",
+"volume": 72994.6,
+"lo": [
+-6.16,
+-382.08,
+1023.29
+],
+"hi": [
+64.77,
+-239.46,
+1166.66
+],
+"faces": 35166
+},
+{
+"name": "left_forearm_7",
+"link": "left_forearm",
+"material": "armour_gold",
+"region": "left_forearm",
+"volume": 3247.2,
+"lo": [
+16.46,
+291.91,
+935.44
+],
+"hi": [
+62.99,
+384.39,
+964.78
+],
+"faces": 2192
+},
+{
+"name": "right_forearm_7",
+"link": "right_forearm",
+"material": "armour_gold",
+"region": "right_forearm",
+"volume": 3247.2,
+"lo": [
+16.46,
+-384.39,
+935.44
+],
+"hi": [
+62.99,
+-291.91,
+964.78
+],
+"faces": 2192
+},
+{
+"name": "left_forearm_8",
+"link": "left_forearm",
+"material": "armour_gold",
+"region": "left_forearm",
+"volume": 13794.8,
+"lo": [
+25.5,
+273.92,
+958.83
+],
+"hi": [
+70.94,
+385.03,
+1022.71
+],
+"faces": 7038
+},
+{
+"name": "right_forearm_8",
+"link": "right_forearm",
+"material": "armour_gold",
+"region": "right_forearm",
+"volume": 13794.8,
+"lo": [
+25.5,
+-385.03,
+958.83
+],
+"hi": [
+70.94,
+-273.92,
+1022.71
+],
+"faces": 7038
+},
+{
+"name": "left_forearm_9",
+"link": "left_forearm",
+"material": "armour_gold",
+"region": "left_forearm",
+"volume": 17556.2,
+"lo": [
+37.31,
+281.09,
+1023.29
+],
+"hi": [
+70.77,
+381.28,
+1118.68
+],
+"faces": 7886
+},
+{
+"name": "right_forearm_9",
+"link": "right_forearm",
+"material": "armour_gold",
+"region": "right_forearm",
+"volume": 17556.2,
+"lo": [
+37.31,
+-381.28,
+1023.29
+],
+"hi": [
+70.77,
+-281.09,
+1118.68
+],
+"faces": 7886
+},
+{
+"name": "left_hand_0",
+"link": "left_hand",
+"material": "armour_red",
+"region": "left_hand",
+"volume": 19082.2,
+"lo": [
+-6.31,
+308.48,
+663.47
+],
+"hi": [
+40.71,
+369.68,
+716.38
+],
+"faces": 9832
+},
+{
+"name": "right_hand_0",
+"link": "right_hand",
+"material": "armour_red",
+"region": "right_hand",
+"volume": 19082.2,
+"lo": [
+-6.31,
+-369.68,
+663.47
+],
+"hi": [
+40.71,
+-308.48,
+716.38
+],
+"faces": 9832
+},
+{
+"name": "left_hand_1",
+"link": "left_hand",
+"material": "armour_red",
+"region": "left_hand",
+"volume": 48690.9,
+"lo": [
+-30.99,
+311.98,
+716.95
+],
+"hi": [
+40.71,
+369.68,
+863.04
+],
+"faces": 19546
+},
+{
+"name": "right_hand_1",
+"link": "right_hand",
+"material": "armour_red",
+"region": "right_hand",
+"volume": 48690.9,
+"lo": [
+-30.99,
+-369.68,
+716.95
+],
+"hi": [
+40.71,
+-311.98,
+863.04
+],
+"faces": 19546
+},
+{
+"name": "left_hand_2",
+"link": "left_hand",
+"material": "armour_red",
+"region": "left_hand",
+"volume": 4801.1,
+"lo": [
+-7.59,
+370.32,
+688.68
+],
+"hi": [
+40.71,
+390.22,
+716.38
+],
+"faces": 2752
+},
+{
+"name": "right_hand_2",
+"link": "right_hand",
+"material": "armour_red",
+"region": "right_hand",
+"volume": 4801.1,
+"lo": [
+-7.59,
+-390.22,
+688.68
+],
+"hi": [
+40.71,
+-370.32,
+716.38
+],
+"faces": 2752
+},
+{
+"name": "left_hand_3",
+"link": "left_hand",
+"material": "armour_red",
+"region": "left_hand",
+"volume": 44431.0,
+"lo": [
+-30.78,
+370.32,
+716.95
+],
+"hi": [
+40.71,
+409.92,
+863.05
+],
+"faces": 18326
+},
+{
+"name": "right_hand_3",
+"link": "right_hand",
+"material": "armour_red",
+"region": "right_hand",
+"volume": 44431.0,
+"lo": [
+-30.78,
+-409.92,
+716.95
+],
+"hi": [
+40.71,
+-370.32,
+863.05
+],
+"faces": 18326
+},
+{
+"name": "left_hand_4",
+"link": "left_hand",
+"material": "armour_red",
+"region": "left_hand",
+"volume": 2200.2,
+"lo": [
+-26.58,
+370.86,
+863.62
+],
+"hi": [
+40.71,
+400.49,
+880.64
+],
+"faces": 1666
+},
+{
+"name": "right_hand_4",
+"link": "right_hand",
+"material": "armour_red",
+"region": "right_hand",
+"volume": 2200.2,
+"lo": [
+-26.58,
+-400.49,
+863.62
+],
+"hi": [
+40.71,
+-370.86,
+880.64
+],
+"faces": 1666
+},
+{
+"name": "left_hand_5",
+"link": "left_hand",
+"material": "armour_red",
+"region": "left_hand",
+"volume": 8327.9,
+"lo": [
+41.29,
+307.67,
+662.9
+],
+"hi": [
+57.46,
+369.68,
+716.38
+],
+"faces": 4480
+},
+{
+"name": "right_hand_5",
+"link": "right_hand",
+"material": "armour_red",
+"region": "right_hand",
+"volume": 8327.9,
+"lo": [
+41.29,
+-369.68,
+662.9
+],
+"hi": [
+57.46,
+-307.67,
+716.38
+],
+"faces": 4480
+},
+{
+"name": "left_hand_6",
+"link": "left_hand",
+"material": "armour_red",
+"region": "left_hand",
+"volume": 16358.3,
+"lo": [
+55.1,
+303.21,
+663.51
+],
+"hi": [
+89.64,
+369.68,
+716.38
+],
+"faces": 8140
+},
+{
+"name": "right_hand_6",
+"link": "right_hand",
+"material": "armour_red",
+"region": "right_hand",
+"volume": 16358.3,
+"lo": [
+55.1,
+-369.68,
+663.51
+],
+"hi": [
+89.64,
+-303.21,
+716.38
+],
+"faces": 8140
+},
+{
+"name": "left_hand_7",
+"link": "left_hand",
+"material": "armour_red",
+"region": "left_hand",
+"volume": 13290.1,
+"lo": [
+89.13,
+307.56,
+677.72
+],
+"hi": [
+119.74,
+369.68,
+716.38
+],
+"faces": 6648
+},
+{
+"name": "right_hand_7",
+"link": "right_hand",
+"material": "armour_red",
+"region": "right_hand",
+"volume": 13290.1,
+"lo": [
+89.13,
+-369.68,
+677.72
+],
+"hi": [
+119.74,
+-307.56,
+716.38
+],
+"faces": 6648
+},
+{
+"name": "left_hand_8",
+"link": "left_hand",
+"material": "armour_red",
+"region": "left_hand",
+"volume": 74143.5,
+"lo": [
+41.29,
+307.13,
+716.95
+],
+"hi": [
+133.1,
+369.68,
+863.05
+],
+"faces": 32832
+},
+{
+"name": "right_hand_8",
+"link": "right_hand",
+"material": "armour_red",
+"region": "right_hand",
+"volume": 74143.5,
+"lo": [
+41.29,
+-369.68,
+716.95
+],
+"hi": [
+133.1,
+-307.13,
+863.05
+],
+"faces": 32832
+},
+{
+"name": "left_hand_9",
+"link": "left_hand",
+"material": "armour_red",
+"region": "left_hand",
+"volume": 4902.6,
+"lo": [
+41.54,
+312.43,
+863.62
+],
+"hi": [
+100.53,
+369.68,
+882.9
+],
+"faces": 2626
+},
+{
+"name": "right_hand_9",
+"link": "right_hand",
+"material": "armour_red",
+"region": "right_hand",
+"volume": 4902.6,
+"lo": [
+41.54,
+-369.68,
+863.62
+],
+"hi": [
+100.53,
+-312.43,
+882.9
+],
+"faces": 2626
+},
+{
+"name": "left_hand_10",
+"link": "left_hand",
+"material": "armour_red",
+"region": "left_hand",
+"volume": 3872.4,
+"lo": [
+41.29,
+370.32,
+688.64
+],
+"hi": [
+86.85,
+388.19,
+716.38
+],
+"faces": 2288
+},
+{
+"name": "right_hand_10",
+"link": "right_hand",
+"material": "armour_red",
+"region": "right_hand",
+"volume": 3872.4,
+"lo": [
+41.29,
+-388.19,
+688.64
+],
+"hi": [
+86.85,
+-370.32,
+716.38
+],
+"faces": 2288
+},
+{
+"name": "left_hand_11",
+"link": "left_hand",
+"material": "armour_red",
+"region": "left_hand",
+"volume": 905.4,
+"lo": [
+89.15,
+370.32,
+704.42
+],
+"hi": [
+114.73,
+383.22,
+716.38
+],
+"faces": 628
+},
+{
+"name": "right_hand_11",
+"link": "right_hand",
+"material": "armour_red",
+"region": "right_hand",
+"volume": 905.4,
+"lo": [
+89.15,
+-383.22,
+704.42
+],
+"hi": [
+114.73,
+-370.32,
+716.38
+],
+"faces": 628
+},
+{
+"name": "left_hand_12",
+"link": "left_hand",
+"material": "armour_red",
+"region": "left_hand",
+"volume": 45375.5,
+"lo": [
+41.29,
+370.32,
+716.95
+],
+"hi": [
+117.22,
+409.36,
+863.05
+],
+"faces": 20522
+},
+{
+"name": "right_hand_12",
+"link": "right_hand",
+"material": "armour_red",
+"region": "right_hand",
+"volume": 45375.5,
+"lo": [
+41.29,
+-409.36,
+716.95
+],
+"hi": [
+117.22,
+-370.32,
+863.05
+],
+"faces": 20522
+},
+{
+"name": "left_hand_13",
+"link": "left_hand",
+"material": "armour_red",
+"region": "left_hand",
+"volume": 3713.1,
+"lo": [
+41.29,
+370.33,
+863.62
+],
+"hi": [
+89.02,
+400.45,
+884.5
+],
+"faces": 2138
+},
+{
+"name": "right_hand_13",
+"link": "right_hand",
+"material": "armour_red",
+"region": "right_hand",
+"volume": 3713.1,
+"lo": [
+41.29,
+-400.45,
+863.62
+],
+"hi": [
+89.02,
+-370.33,
+884.5
+],
+"faces": 2138
+},
+{
+"name": "left_hand_14",
+"link": "left_hand",
+"material": "armour_silver",
+"region": "left_hand",
+"volume": 932.9,
+"lo": [
+-27.13,
+314.47,
+857.22
+],
+"hi": [
+20.56,
+360.56,
+863.05
+],
+"faces": 712
+},
+{
+"name": "right_hand_14",
+"link": "right_hand",
+"material": "armour_silver",
+"region": "right_hand",
+"volume": 932.9,
+"lo": [
+-27.13,
+-360.56,
+857.22
+],
+"hi": [
+20.56,
+-314.47,
+863.05
+],
+"faces": 712
+},
+{
+"name": "left_hand_15",
+"link": "left_hand",
+"material": "armour_silver",
+"region": "left_hand",
+"volume": 4278.0,
+"lo": [
+-26.96,
+312.95,
+863.62
+],
+"hi": [
+40.71,
+369.68,
+875.1
+],
+"faces": 2396
+},
+{
+"name": "right_hand_15",
+"link": "right_hand",
+"material": "armour_silver",
+"region": "right_hand",
+"volume": 4278.0,
+"lo": [
+-26.96,
+-369.68,
+863.62
+],
+"hi": [
+40.71,
+-312.95,
+875.1
+],
+"faces": 2396
+},
+{
+"name": "left_hand_16",
+"link": "left_hand",
+"material": "armour_silver",
+"region": "left_hand",
+"volume": 3212.0,
+"lo": [
+-25.83,
+370.33,
+865.18
+],
+"hi": [
+40.71,
+393.02,
+888.52
+],
+"faces": 1732
+},
+{
+"name": "right_hand_16",
+"link": "right_hand",
+"material": "armour_silver",
+"region": "right_hand",
+"volume": 3212.0,
+"lo": [
+-25.83,
+-393.02,
+865.18
+],
+"hi": [
+40.71,
+-370.33,
+888.52
+],
+"faces": 1732
+},
+{
+"name": "left_hand_17",
+"link": "left_hand",
+"material": "armour_silver",
+"region": "left_hand",
+"volume": 4785.3,
+"lo": [
+41.29,
+313.16,
+865.65
+],
+"hi": [
+78.41,
+369.68,
+890.2
+],
+"faces": 2420
+},
+{
+"name": "right_hand_17",
+"link": "right_hand",
+"material": "armour_silver",
+"region": "right_hand",
+"volume": 4785.3,
+"lo": [
+41.29,
+-369.68,
+865.65
+],
+"hi": [
+78.41,
+-313.16,
+890.2
+],
+"faces": 2420
+},
+{
+"name": "left_hand_18",
+"link": "left_hand",
+"material": "armour_silver",
+"region": "left_hand",
+"volume": 1901.0,
+"lo": [
+41.29,
+370.32,
+881.22
+],
+"hi": [
+75.56,
+391.42,
+891.39
+],
+"faces": 980
+},
+{
+"name": "right_hand_18",
+"link": "right_hand",
+"material": "armour_silver",
+"region": "right_hand",
+"volume": 1901.0,
+"lo": [
+41.29,
+-391.42,
+881.22
+],
+"hi": [
+75.56,
+-370.32,
+891.39
+],
+"faces": 980
+},
+{
+"name": "left_thigh_0",
+"link": "left_thigh_door",
+"material": "armour_red",
+"region": "left_thigh",
+"volume": 84377.5,
+"lo": [
+-70.92,
+34.81,
+558.41
+],
+"hi": [
+16.82,
+180.79,
+713.05
+],
+"faces": 37512
+},
+{
+"name": "right_thigh_0",
+"link": "right_thigh_door",
+"material": "armour_red",
+"region": "right_thigh",
+"volume": 84377.5,
+"lo": [
+-70.92,
+-180.79,
+558.41
+],
+"hi": [
+16.82,
+-34.81,
+713.05
+],
+"faces": 37512
+},
+{
+"name": "left_thigh_1",
+"link": "left_thigh_door",
+"material": "armour_red",
+"region": "left_thigh",
+"volume": 142227.1,
+"lo": [
+-94.64,
+21.96,
+713.62
+],
+"hi": [
+11.08,
+187.49,
+868.38
+],
+"faces": 58136
+},
+{
+"name": "right_thigh_1",
+"link": "right_thigh_door",
+"material": "armour_red",
+"region": "right_thigh",
+"volume": 142227.1,
+"lo": [
+-94.64,
+-187.49,
+713.62
+],
+"hi": [
+11.08,
+-21.96,
+868.38
+],
+"faces": 58136
+},
+{
+"name": "left_thigh_2",
+"link": "left_thigh_door",
+"material": "armour_red",
+"region": "left_thigh",
+"volume": 158629.8,
+"lo": [
+-101.37,
+18.91,
+868.95
+],
+"hi": [
+4.93,
+188.12,
+1023.17
+],
+"faces": 63400
+},
+{
+"name": "right_thigh_2",
+"link": "right_thigh_door",
+"material": "armour_red",
+"region": "right_thigh",
+"volume": 158629.8,
+"lo": [
+-101.37,
+-188.12,
+868.95
+],
+"hi": [
+4.93,
+-18.91,
+1023.17
+],
+"faces": 63400
+},
+{
+"name": "left_thigh_3",
+"link": "left_thigh_door",
+"material": "armour_gold",
+"region": "left_thigh",
+"volume": 13887.8,
+"lo": [
+-64.76,
+38.64,
+625.22
+],
+"hi": [
+14.32,
+102.64,
+664.78
+],
+"faces": 6660
+},
+{
+"name": "right_thigh_3",
+"link": "right_thigh_door",
+"material": "armour_gold",
+"region": "right_thigh",
+"volume": 13887.8,
+"lo": [
+-64.76,
+-102.64,
+625.22
+],
+"hi": [
+14.32,
+-38.64,
+664.78
+],
+"faces": 6660
+},
+{
+"name": "left_thigh_4",
+"link": "left_thigh_door",
+"material": "armour_gold",
+"region": "left_thigh",
+"volume": 13845.1,
+"lo": [
+-64.72,
+113.22,
+627.22
+],
+"hi": [
+14.3,
+180.61,
+670.78
+],
+"faces": 6766
+},
+{
+"name": "right_thigh_4",
+"link": "right_thigh_door",
+"material": "armour_gold",
+"region": "right_thigh",
+"volume": 13845.1,
+"lo": [
+-64.72,
+-180.61,
+627.22
+],
+"hi": [
+14.3,
+-113.22,
+670.78
+],
+"faces": 6766
+},
+{
+"name": "left_thigh_5",
+"link": "left_thigh_door",
+"material": "armour_gold",
+"region": "left_thigh",
+"volume": 515.3,
+"lo": [
+1.22,
+183.24,
+788.17
+],
+"hi": [
+7.6,
+191.47,
+868.38
+],
+"faces": 646
+},
+{
+"name": "right_thigh_5",
+"link": "right_thigh_door",
+"material": "armour_gold",
+"region": "right_thigh",
+"volume": 515.3,
+"lo": [
+1.22,
+-191.47,
+788.17
+],
+"hi": [
+7.6,
+-183.24,
+868.38
+],
+"faces": 646
+},
+{
+"name": "left_thigh_6",
+"link": "left_thigh_door",
+"material": "armour_gold",
+"region": "left_thigh",
+"volume": 705.6,
+"lo": [
+-2.78,
+185.36,
+868.95
+],
+"hi": [
+5.15,
+191.72,
+924.55
+],
+"faces": 608
+},
+{
+"name": "right_thigh_6",
+"link": "right_thigh_door",
+"material": "armour_gold",
+"region": "right_thigh",
+"volume": 705.6,
+"lo": [
+-2.78,
+-191.72,
+868.95
+],
+"hi": [
+5.15,
+-185.36,
+924.55
+],
+"faces": 608
+},
+{
+"name": "left_thigh_7",
+"link": "left_thigh",
+"material": "armour_red",
+"region": "left_thigh",
+"volume": 31324.4,
+"lo": [
+11.61,
+32.23,
+665.26
+],
+"hi": [
+92.1,
+180.63,
+712.38
+],
+"faces": 14324
+},
+{
+"name": "right_thigh_7",
+"link": "right_thigh",
+"material": "armour_red",
+"region": "right_thigh",
+"volume": 31324.4,
+"lo": [
+11.61,
+-180.63,
+665.26
+],
+"hi": [
+92.1,
+-32.23,
+712.38
+],
+"faces": 14324
+},
+{
+"name": "left_thigh_8",
+"link": "left_thigh",
+"material": "armour_red",
+"region": "left_thigh",
+"volume": 20815.4,
+"lo": [
+14.95,
+45.49,
+559.59
+],
+"hi": [
+85.65,
+176.05,
+632.96
+],
+"faces": 9856
+},
+{
+"name": "right_thigh_8",
+"link": "right_thigh",
+"material": "armour_red",
+"region": "right_thigh",
+"volume": 20815.4,
+"lo": [
+14.95,
+-176.05,
+559.59
+],
+"hi": [
+85.65,
+-45.49,
+632.96
+],
+"faces": 9856
+},
+{
+"name": "left_thigh_9",
+"link": "left_thigh",
+"material": "armour_red",
+"region": "left_thigh",
+"volume": 61226.2,
+"lo": [
+5.6,
+19.19,
+712.95
+],
+"hi": [
+100.48,
+114.78,
+869.05
+],
+"faces": 26188
+},
+{
+"name": "right_thigh_9",
+"link": "right_thigh",
+"material": "armour_red",
+"region": "right_thigh",
+"volume": 61226.2,
+"lo": [
+5.6,
+-114.78,
+712.95
+],
+"hi": [
+100.48,
+-19.19,
+869.05
+],
+"faces": 26188
+},
+{
+"name": "left_thigh_10",
+"link": "left_thigh",
+"material": "armour_red",
+"region": "left_thigh",
+"volume": 5315.6,
+"lo": [
+9.38,
+167.13,
+712.95
+],
+"hi": [
+64.97,
+184.73,
+776.83
+],
+"faces": 2556
+},
+{
+"name": "right_thigh_10",
+"link": "right_thigh",
+"material": "armour_red",
+"region": "right_thigh",
+"volume": 5315.6,
+"lo": [
+9.38,
+-184.73,
+712.95
+],
+"hi": [
+64.97,
+-167.13,
+776.83
+],
+"faces": 2556
+},
+{
+"name": "left_thigh_11",
+"link": "left_thigh",
+"material": "armour_red",
+"region": "left_thigh",
+"volume": 17343.7,
+"lo": [
+29.26,
+133.26,
+783.6
+],
+"hi": [
+99.04,
+187.12,
+869.05
+],
+"faces": 7928
+},
+{
+"name": "right_thigh_11",
+"link": "right_thigh",
+"material": "armour_red",
+"region": "right_thigh",
+"volume": 17343.7,
+"lo": [
+29.26,
+-187.12,
+783.6
+],
+"hi": [
+99.04,
+-133.26,
+869.05
+],
+"faces": 7928
+},
+{
+"name": "left_thigh_12",
+"link": "left_thigh",
+"material": "armour_red",
+"region": "left_thigh",
+"volume": 114624.0,
+"lo": [
+-0.07,
+16.23,
+869.62
+],
+"hi": [
+103.39,
+187.51,
+1024.75
+],
+"faces": 48560
+},
+{
+"name": "right_thigh_12",
+"link": "right_thigh",
+"material": "armour_red",
+"region": "right_thigh",
+"volume": 114624.0,
+"lo": [
+-0.07,
+-187.51,
+869.62
+],
+"hi": [
+103.39,
+-16.23,
+1024.75
+],
+"faces": 48560
+},
+{
+"name": "left_thigh_13",
+"link": "left_thigh",
+"material": "armour_red",
+"region": "left_thigh",
+"volume": 6980.9,
+"lo": [
+29.0,
+133.1,
+869.62
+],
+"hi": [
+99.63,
+187.56,
+910.83
+],
+"faces": 3476
+},
+{
+"name": "right_thigh_13",
+"link": "right_thigh",
+"material": "armour_red",
+"region": "right_thigh",
+"volume": 6980.9,
+"lo": [
+29.0,
+-187.56,
+869.62
+],
+"hi": [
+99.63,
+-133.1,
+910.83
+],
+"faces": 3476
+},
+{
+"name": "left_thigh_14",
+"link": "left_thigh",
+"material": "armour_gold",
+"region": "left_thigh",
+"volume": 29574.0,
+"lo": [
+13.43,
+38.55,
+627.08
+],
+"hi": [
+91.42,
+180.63,
+672.78
+],
+"faces": 13374
+},
+{
+"name": "right_thigh_14",
+"link": "right_thigh",
+"material": "armour_gold",
+"region": "right_thigh",
+"volume": 29574.0,
+"lo": [
+13.43,
+-180.63,
+627.08
+],
+"hi": [
+91.42,
+-38.55,
+672.78
+],
+"faces": 13374
+},
+{
+"name": "left_thigh_15",
+"link": "left_thigh",
+"material": "armour_gold",
+"region": "left_thigh",
+"volume": 57782.7,
+"lo": [
+5.87,
+69.26,
+712.95
+],
+"hi": [
+107.06,
+191.49,
+869.05
+],
+"faces": 24146
+},
+{
+"name": "right_thigh_15",
+"link": "right_thigh",
+"material": "armour_gold",
+"region": "right_thigh",
+"volume": 57782.7,
+"lo": [
+5.87,
+-191.49,
+712.95
+],
+"hi": [
+107.06,
+-69.26,
+869.05
+],
+"faces": 24146
+},
+{
+"name": "left_thigh_16",
+"link": "left_thigh",
+"material": "armour_gold",
+"region": "left_thigh",
+"volume": 35821.0,
+"lo": [
+3.65,
+77.62,
+869.62
+],
+"hi": [
+108.33,
+191.71,
+970.63
+],
+"faces": 15914
+},
+{
+"name": "right_thigh_16",
+"link": "right_thigh",
+"material": "armour_gold",
+"region": "right_thigh",
+"volume": 35821.0,
+"lo": [
+3.65,
+-191.71,
+869.62
+],
+"hi": [
+108.33,
+-77.62,
+970.63
+],
+"faces": 15914
+},
+{
+"name": "left_thigh_17",
+"link": "left_thigh",
+"material": "armour_silver",
+"region": "left_thigh",
+"volume": 31532.6,
+"lo": [
+45.08,
+52.51,
+557.98
+],
+"hi": [
+88.3,
+170.09,
+622.78
+],
+"faces": 13556
+},
+{
+"name": "right_thigh_17",
+"link": "right_thigh",
+"material": "armour_silver",
+"region": "right_thigh",
+"volume": 31532.6,
+"lo": [
+45.08,
+-170.09,
+557.98
+],
+"hi": [
+88.3,
+-52.51,
+622.78
+],
+"faces": 13556
+},
+{
+"name": "left_shin_0",
+"link": "left_shin_door",
+"material": "armour_red",
+"region": "left_shin",
+"volume": 142930.1,
+"lo": [
+-69.24,
+62.67,
+100.79
+],
+"hi": [
+6.74,
+179.43,
+314.71
+],
+"faces": 55316
+},
+{
+"name": "right_shin_0",
+"link": "right_shin_door",
+"material": "armour_red",
+"region": "right_shin",
+"volume": 142930.1,
+"lo": [
+-69.24,
+-179.43,
+100.79
+],
+"hi": [
+6.74,
+-62.67,
+314.71
+],
+"faces": 55316
+},
+{
+"name": "left_shin_1",
+"link": "left_shin_door",
+"material": "armour_red",
+"region": "left_shin",
+"volume": 174518.3,
+"lo": [
+-73.29,
+52.07,
+315.29
+],
+"hi": [
+16.97,
+182.47,
+529.36
+],
+"faces": 66572
+},
+{
+"name": "right_shin_1",
+"link": "right_shin_door",
+"material": "armour_red",
+"region": "right_shin",
+"volume": 174518.3,
+"lo": [
+-73.29,
+-182.47,
+315.29
+],
+"hi": [
+16.97,
+-52.07,
+529.36
+],
+"faces": 66572
+},
+{
+"name": "left_shin_2",
+"link": "left_shin",
+"material": "armour_red",
+"region": "left_shin",
+"volume": 123684.9,
+"lo": [
+-2.97,
+62.87,
+98.79
+],
+"hi": [
+68.99,
+179.42,
+312.71
+],
+"faces": 50992
+},
+{
+"name": "right_shin_2",
+"link": "right_shin",
+"material": "armour_red",
+"region": "right_shin",
+"volume": 123684.9,
+"lo": [
+-2.97,
+-179.42,
+98.79
+],
+"hi": [
+68.99,
+-62.87,
+312.71
+],
+"faces": 50992
+},
+{
+"name": "left_shin_3",
+"link": "left_shin",
+"material": "armour_red",
+"region": "left_shin",
+"volume": 127307.9,
+"lo": [
+7.26,
+52.08,
+313.29
+],
+"hi": [
+84.61,
+182.48,
+527.43
+],
+"faces": 56096
+},
+{
+"name": "right_shin_3",
+"link": "right_shin",
+"material": "armour_red",
+"region": "right_shin",
+"volume": 127307.9,
+"lo": [
+7.26,
+-182.48,
+313.29
+],
+"hi": [
+84.61,
+-52.08,
+527.43
+],
+"faces": 56096
+},
+{
+"name": "left_shin_4",
+"link": "left_shin",
+"material": "armour_gold",
+"region": "left_shin",
+"volume": 8127.0,
+"lo": [
+17.18,
+51.56,
+313.29
+],
+"hi": [
+48.67,
+65.38,
+428.54
+],
+"faces": 3928
+},
+{
+"name": "right_shin_4",
+"link": "right_shin",
+"material": "armour_gold",
+"region": "right_shin",
+"volume": 8127.0,
+"lo": [
+17.18,
+-65.38,
+313.29
+],
+"hi": [
+48.67,
+-51.56,
+428.54
+],
+"faces": 3928
+},
+{
+"name": "left_shin_5",
+"link": "left_shin",
+"material": "armour_gold",
+"region": "left_shin",
+"volume": 9296.8,
+"lo": [
+17.22,
+175.01,
+313.29
+],
+"hi": [
+51.83,
+184.47,
+430.78
+],
+"faces": 4310
+},
+{
+"name": "right_shin_5",
+"link": "right_shin",
+"material": "armour_gold",
+"region": "right_shin",
+"volume": 9296.8,
+"lo": [
+17.22,
+-184.47,
+313.29
+],
+"hi": [
+51.83,
+-175.01,
+430.78
+],
+"faces": 4310
+},
+{
+"name": "left_foot_0",
+"link": "left_foot",
+"material": "armour_red",
+"region": "left_foot",
+"volume": 125209.1,
+"lo": [
+-100.01,
+63.98,
+15.03
+],
+"hi": [
+43.68,
+184.02,
+118.01
+],
+"faces": 54228
+},
+{
+"name": "right_foot_0",
+"link": "right_foot",
+"material": "armour_red",
+"region": "right_foot",
+"volume": 125209.1,
+"lo": [
+-100.01,
+-184.02,
+15.03
+],
+"hi": [
+43.68,
+-63.98,
+118.01
+],
+"faces": 54228
+},
+{
+"name": "left_foot_1",
+"link": "left_foot",
+"material": "armour_red",
+"region": "left_foot",
+"volume": 95637.0,
+"lo": [
+44.32,
+63.98,
+15.03
+],
+"hi": [
+174.01,
+184.02,
+87.23
+],
+"faces": 35684
+},
+{
+"name": "right_foot_1",
+"link": "right_foot",
+"material": "armour_red",
+"region": "right_foot",
+"volume": 95637.0,
+"lo": [
+44.32,
+-184.02,
+15.03
+],
+"hi": [
+174.01,
+-63.98,
+87.23
+],
+"faces": 35684
+},
+{
+"name": "left_foot_2",
+"link": "left_foot",
+"material": "armour_silver",
+"region": "left_foot",
+"volume": 42872.5,
+"lo": [
+-98.51,
+73.43,
+3.49
+],
+"hi": [
+43.67,
+174.57,
+14.78
+],
+"faces": 16640
+},
+{
+"name": "right_foot_2",
+"link": "right_foot",
+"material": "armour_silver",
+"region": "right_foot",
+"volume": 42872.5,
+"lo": [
+-98.51,
+-174.57,
+3.49
+],
+"hi": [
+43.67,
+-73.43,
+14.78
+],
+"faces": 16640
+},
+{
+"name": "left_foot_3",
+"link": "left_foot",
+"material": "armour_silver",
+"region": "left_foot",
+"volume": 47570.7,
+"lo": [
+44.33,
+71.02,
+3.49
+],
+"hi": [
+172.51,
+176.98,
+14.78
+],
+"faces": 16476
+},
+{
+"name": "right_foot_3",
+"link": "right_foot",
+"material": "armour_silver",
+"region": "right_foot",
+"volume": 47570.7,
+"lo": [
+44.33,
+-176.98,
+3.49
+],
+"hi": [
+172.51,
+-71.02,
+14.78
+],
+"faces": 16476
+},
+{
+"name": "left_mech_shoulder_0",
+"link": "left_upper_arm_door",
+"material": "armour_mech",
+"region": "left_mech_shoulder",
+"volume": 55124.6,
+"lo": [
+-61.11,
+129.82,
+1415.18
+],
+"hi": [
+1.21,
+262.42,
+1541.05
+],
+"faces": 42186
+},
+{
+"name": "right_mech_shoulder_0",
+"link": "right_upper_arm_door",
+"material": "armour_mech",
+"region": "right_mech_shoulder",
+"volume": 55124.6,
+"lo": [
+-61.11,
+-262.42,
+1415.18
+],
+"hi": [
+1.21,
+-129.82,
+1541.05
+],
+"faces": 42186
+},
+{
+"name": "left_mech_shoulder_1",
+"link": "left_upper_arm",
+"material": "armour_mech",
+"region": "left_mech_shoulder",
+"volume": 55285.8,
+"lo": [
+-1.42,
+129.82,
+1415.05
+],
+"hi": [
+61.11,
+262.42,
+1540.92
+],
+"faces": 42268
+},
+{
+"name": "right_mech_shoulder_1",
+"link": "right_upper_arm",
+"material": "armour_mech",
+"region": "right_mech_shoulder",
+"volume": 55285.8,
+"lo": [
+-1.42,
+-262.42,
+1415.05
+],
+"hi": [
+61.11,
+-129.82,
+1540.92
+],
+"faces": 42268
+},
+{
+"name": "left_mech_elbow_0",
+"link": "left_forearm_door",
+"material": "armour_mech",
+"region": "left_mech_elbow",
+"volume": 51552.4,
+"lo": [
+-60.27,
+227.46,
+1094.81
+],
+"hi": [
+-1.86,
+346.64,
+1247.43
+],
+"faces": 39576
+},
+{
+"name": "right_mech_elbow_0",
+"link": "right_forearm_door",
+"material": "armour_mech",
+"region": "right_mech_elbow",
+"volume": 51552.4,
+"lo": [
+-60.27,
+-346.64,
+1094.81
+],
+"hi": [
+-1.86,
+-227.46,
+1247.43
+],
+"faces": 39576
+},
+{
+"name": "left_mech_elbow_1",
+"link": "left_forearm",
+"material": "armour_mech",
+"region": "left_mech_elbow",
+"volume": 3831.3,
+"lo": [
+-14.33,
+227.04,
+1108.17
+],
+"hi": [
+17.07,
+254.91,
+1219.94
+],
+"faces": 3382
+},
+{
+"name": "right_mech_elbow_1",
+"link": "right_forearm",
+"material": "armour_mech",
+"region": "right_mech_elbow",
+"volume": 3831.3,
+"lo": [
+-14.33,
+-254.91,
+1108.17
+],
+"hi": [
+17.07,
+-227.04,
+1219.94
+],
+"faces": 3382
+},
+{
+"name": "left_mech_elbow_2",
+"link": "left_forearm",
+"material": "armour_mech",
+"region": "left_mech_elbow",
+"volume": 9943.2,
+"lo": [
+-14.38,
+311.63,
+1120.98
+],
+"hi": [
+32.97,
+346.64,
+1239.3
+],
+"faces": 8102
+},
+{
+"name": "right_mech_elbow_2",
+"link": "right_forearm",
+"material": "armour_mech",
+"region": "right_mech_elbow",
+"volume": 9943.2,
+"lo": [
+-14.38,
+-346.64,
+1120.98
+],
+"hi": [
+32.97,
+-311.63,
+1239.3
+],
+"faces": 8102
+},
+{
+"name": "left_mech_wrist_0",
+"link": "left_hand",
+"material": "armour_mech",
+"region": "left_mech_wrist",
+"volume": 34660.9,
+"lo": [
+-19.13,
+306.49,
+827.63
+],
+"hi": [
+62.84,
+396.57,
+932.24
+],
+"faces": 27392
+},
+{
+"name": "right_mech_wrist_0",
+"link": "right_hand",
+"material": "armour_mech",
+"region": "right_mech_wrist",
+"volume": 34660.9,
+"lo": [
+-19.13,
+-396.57,
+827.63
+],
+"hi": [
+62.84,
+-306.49,
+932.24
+],
+"faces": 27392
+},
+{
+"name": "left_mech_hip_0",
+"link": "left_thigh_door",
+"material": "armour_mech",
+"region": "left_mech_hip",
+"volume": 59057.3,
+"lo": [
+-67.1,
+17.06,
+927.87
+],
+"hi": [
+2.55,
+160.44,
+1082.62
+],
+"faces": 45790
+},
+{
+"name": "right_mech_hip_0",
+"link": "right_thigh_door",
+"material": "armour_mech",
+"region": "right_mech_hip",
+"volume": 59057.3,
+"lo": [
+-67.1,
+-160.44,
+927.87
+],
+"hi": [
+2.55,
+-17.06,
+1082.62
+],
+"faces": 45790
+},
+{
+"name": "left_mech_hip_1",
+"link": "left_thigh",
+"material": "armour_mech",
+"region": "left_mech_hip",
+"volume": 35658.8,
+"lo": [
+-2.5,
+17.0,
+931.86
+],
+"hi": [
+68.51,
+141.22,
+1081.37
+],
+"faces": 28046
+},
+{
+"name": "right_mech_hip_1",
+"link": "right_thigh",
+"material": "armour_mech",
+"region": "right_mech_hip",
+"volume": 35658.8,
+"lo": [
+-2.5,
+-141.22,
+931.86
+],
+"hi": [
+68.51,
+-17.0,
+1081.37
+],
+"faces": 28046
+},
+{
+"name": "left_mech_hip_2",
+"link": "left_thigh",
+"material": "armour_mech",
+"region": "left_mech_hip",
+"volume": 527.1,
+"lo": [
+1.53,
+149.02,
+961.35
+],
+"hi": [
+37.14,
+160.46,
+987.04
+],
+"faces": 720
+},
+{
+"name": "right_mech_hip_2",
+"link": "right_thigh",
+"material": "armour_mech",
+"region": "right_mech_hip",
+"volume": 527.1,
+"lo": [
+1.53,
+-160.46,
+961.35
+],
+"hi": [
+37.14,
+-149.02,
+987.04
+],
+"faces": 720
+},
+{
+"name": "left_mech_knee_0",
+"link": "left_shin_door",
+"material": "armour_mech",
+"region": "left_mech_knee",
+"volume": 11232.2,
+"lo": [
+-26.55,
+155.85,
+477.41
+],
+"hi": [
+20.48,
+175.71,
+599.34
+],
+"faces": 9030
+},
+{
+"name": "right_mech_knee_0",
+"link": "right_shin_door",
+"material": "armour_mech",
+"region": "right_mech_knee",
+"volume": 11232.2,
+"lo": [
+-26.55,
+-175.71,
+477.41
+],
+"hi": [
+20.48,
+-155.85,
+599.34
+],
+"faces": 9030
+},
+{
+"name": "left_mech_knee_1",
+"link": "left_shin_door",
+"material": "armour_mech",
+"region": "left_mech_knee",
+"volume": 4668.5,
+"lo": [
+-9.01,
+47.49,
+481.28
+],
+"hi": [
+20.41,
+58.89,
+595.19
+],
+"faces": 4036
+},
+{
+"name": "right_mech_knee_1",
+"link": "right_shin_door",
+"material": "armour_mech",
+"region": "right_mech_knee",
+"volume": 4668.5,
+"lo": [
+-9.01,
+-58.89,
+481.28
+],
+"hi": [
+20.41,
+-47.49,
+595.19
+],
+"faces": 4036
+},
+{
+"name": "left_mech_knee_2",
+"link": "left_shin_door",
+"material": "armour_mech",
+"region": "left_mech_knee",
+"volume": 549.1,
+"lo": [
+-5.45,
+155.6,
+599.39
+],
+"hi": [
+21.18,
+165.3,
+613.15
+],
+"faces": 516
+},
+{
+"name": "right_mech_knee_2",
+"link": "right_shin_door",
+"material": "armour_mech",
+"region": "right_mech_knee",
+"volume": 549.1,
+"lo": [
+-5.45,
+-165.3,
+599.39
+],
+"hi": [
+21.18,
+-155.6,
+613.15
+],
+"faces": 516
+},
+{
+"name": "left_mech_knee_3",
+"link": "left_shin",
+"material": "armour_mech",
+"region": "left_mech_knee",
+"volume": 68814.2,
+"lo": [
+15.08,
+47.75,
+460.18
+],
+"hi": [
+79.76,
+175.7,
+624.64
+],
+"faces": 52256
+},
+{
+"name": "right_mech_knee_3",
+"link": "right_shin",
+"material": "armour_mech",
+"region": "right_mech_knee",
+"volume": 68814.2,
+"lo": [
+15.08,
+-175.7,
+460.18
+],
+"hi": [
+79.76,
+-47.75,
+624.64
+],
+"faces": 52256
+},
+{
+"name": "left_mech_ankle_0",
+"link": "left_foot",
+"material": "armour_mech",
+"region": "left_mech_ankle",
+"volume": 63117.3,
+"lo": [
+-53.1,
+74.9,
+47.77
+],
+"hi": [
+45.1,
+173.1,
+142.01
+],
+"faces": 48928
+},
+{
+"name": "right_mech_ankle_0",
+"link": "right_foot",
+"material": "armour_mech",
+"region": "right_mech_ankle",
+"volume": 63117.3,
+"lo": [
+-53.1,
+-173.1,
+47.77
+],
+"hi": [
+45.1,
+-74.9,
+142.01
+],
+"faces": 48928
+},
+{
+"name": "reactor_lens",
+"link": "pelvis",
+"material": "lens_glow",
+"region": "torso",
+"volume": 10247.1,
+"lo": [
+139.5,
+-33.0,
+1342.0
+],
+"hi": [
+142.5,
+33.0,
+1408.0
+],
+"faces": 256
+},
+{
+"name": "left_palm_lens",
+"link": "left_hand",
+"material": "lens_glow",
+"region": "left_hand",
+"volume": 3790.5,
+"lo": [
+15.87,
+320.92,
+776.89
+],
+"hi": [
+59.81,
+331.99,
+820.47
+],
+"faces": 192
+},
+{
+"name": "right_palm_lens",
+"link": "right_hand",
+"material": "lens_glow",
+"region": "right_hand",
+"volume": 3790.5,
+"lo": [
+15.87,
+-331.99,
+776.89
+],
+"hi": [
+59.81,
+-320.92,
+820.47
+],
+"faces": 192
+}
+],
+"doors": [
+{
+"name": "back_left",
+"part": "torso",
+"side": "left",
+"link": "back_door_left",
+"joint": "back_door_left_hinge",
+"parent": "pelvis",
+"region": "torso",
+"a": [
+0.0,
+127.5,
+1076.0
+],
+"up": [
+0.0,
+0.236352,
+0.971668
+],
+"sign": -1,
+"normal": [
+1.0,
+0.0,
+0.0
+],
+"out": [
+-0.0,
+1.0,
+-0.0
+],
+"hinges": [
+[
+0.0,
+130.905,
+1090.0
+],
+[
+0.0,
+191.716,
+1340.0
+]
+],
+"servo": {
+"at": [
+0.0,
+171.284,
+1256.0
+],
+"key": "hobby_ds3218"
+},
+"latch_t": [
+1180.0,
+1410.0
+],
+"seam_up": [
+0.0,
+0.0,
+1.0
+],
+"base": [
+0.0,
+0.0,
+0.0
+],
+"open": 1.3962634015954636
+},
+{
+"name": "back_right",
+"part": "torso",
+"side": "right",
+"link": "back_door_right",
+"joint": "back_door_right_hinge",
+"parent": "pelvis",
+"region": "torso",
+"a": [
+0.0,
+-127.5,
+1076.0
+],
+"up": [
+0.0,
+-0.236352,
+0.971668
+],
+"sign": 1,
+"normal": [
+1.0,
+-0.0,
+0.0
+],
+"out": [
+-0.0,
+-1.0,
+-0.0
+],
+"hinges": [
+[
+0.0,
+-130.905,
+1090.0
+],
+[
+0.0,
+-191.716,
+1340.0
+]
+],
+"servo": {
+"at": [
+0.0,
+-171.284,
+1256.0
+],
+"key": "hobby_ds3218"
+},
+"latch_t": [
+1180.0,
+1410.0
+],
+"seam_up": [
+0.0,
+-0.0,
+1.0
+],
+"base": [
+0.0,
+-0.0,
+0.0
+],
+"open": 1.3962634015954636
+},
+{
+"name": "helmet_left",
+"part": "head",
+"side": "left",
+"link": "helmet_door_left",
+"joint": "helmet_door_left_hinge",
+"parent": "head",
+"region": "head",
+"a": [
+-44.0,
+90.5,
+1606.0
+],
+"up": [
+0.0,
+0.096766,
+0.995307
+],
+"sign": -1,
+"normal": [
+1.0,
+0.0,
+0.0
+],
+"out": [
+-0.0,
+1.0,
+-0.0
+],
+"hinges": [
+[
+-44.0,
+91.569,
+1617.0
+],
+[
+-44.0,
+109.944,
+1806.0
+]
+],
+"servo": {
+"at": [
+-44.0,
+97.694,
+1680.0
+],
+"key": "hobby_mg90s"
+},
+"latch_t": [
+1700.0
+],
+"seam_up": [
+0.0,
+0.0,
+1.0
+],
+"base": [
+-44.0,
+0.0,
+0.0
+],
+"open": 1.3962634015954636
+},
+{
+"name": "helmet_right",
+"part": "head",
+"side": "right",
+"link": "helmet_door_right",
+"joint": "helmet_door_right_hinge",
+"parent": "head",
+"region": "head",
+"a": [
+-44.0,
+-90.5,
+1606.0
+],
+"up": [
+0.0,
+-0.096766,
+0.995307
+],
+"sign": 1,
+"normal": [
+1.0,
+-0.0,
+0.0
+],
+"out": [
+-0.0,
+-1.0,
+-0.0
+],
+"hinges": [
+[
+-44.0,
+-91.569,
+1617.0
+],
+[
+-44.0,
+-109.944,
+1806.0
+]
+],
+"servo": {
+"at": [
+-44.0,
+-97.694,
+1680.0
+],
+"key": "hobby_mg90s"
+},
+"latch_t": [
+1700.0
+],
+"seam_up": [
+0.0,
+-0.0,
+1.0
+],
+"base": [
+-44.0,
+-0.0,
+0.0
+],
+"open": 1.3962634015954636
+},
+{
+"name": "left_upper_arm",
+"part": "upper_arm",
+"side": "left",
+"link": "left_upper_arm_door",
+"joint": "left_upper_arm_door_hinge",
+"parent": "left_upper_arm",
+"region": "left_upper_arm",
+"a": [
+0.0,
+290.306,
+1506.706
+],
+"up": [
+0.02427,
+-0.146717,
+0.988881
+],
+"sign": -1,
+"normal": [
+0.999703,
+0.00595,
+-0.023653
+],
+"out": [
+0.0,
+0.969783,
+0.24397
+],
+"hinges": [
+[
+-0.585,
+293.845,
+1482.856
+],
+[
+-6.536,
+329.821,
+1240.378
+]
+],
+"servo": {
+"at": [
+-3.658,
+312.423,
+1357.642
+],
+"key": "hobby_mg996r"
+},
+"latch_t": [
+190.0
+],
+"seam_up": [
+-0.02439,
+0.243898,
+-0.969494
+],
+"base": [
+0.0,
+208.0,
+1486.0
+],
+"open": 1.3962634015954636
+},
+{
+"name": "right_upper_arm",
+"part": "upper_arm",
+"side": "right",
+"link": "right_upper_arm_door",
+"joint": "right_upper_arm_door_hinge",
+"parent": "right_upper_arm",
+"region": "right_upper_arm",
+"a": [
+0.0,
+-290.306,
+1506.706
+],
+"up": [
+0.02427,
+0.146717,
+0.988881
+],
+"sign": 1,
+"normal": [
+0.999703,
+-0.00595,
+-0.023653
+],
+"out": [
+0.0,
+-0.969783,
+0.24397
+],
+"hinges": [
+[
+-0.585,
+-293.845,
+1482.856
+],
+[
+-6.536,
+-329.821,
+1240.378
+]
+],
+"servo": {
+"at": [
+-3.658,
+-312.423,
+1357.642
+],
+"key": "hobby_mg996r"
+},
+"latch_t": [
+190.0
+],
+"seam_up": [
+-0.02439,
+-0.243898,
+-0.969494
+],
+"base": [
+0.0,
+-208.0,
+1486.0
+],
+"open": 1.3962634015954636
+},
+{
+"name": "left_forearm",
+"part": "forearm",
+"side": "left",
+"link": "left_forearm_door",
+"joint": "left_forearm_door_hinge",
+"parent": "left_forearm",
+"region": "left_forearm",
+"a": [
+-4.765,
+369.58,
+1155.576
+],
+"up": [
+-0.107304,
+-0.118091,
+0.987188
+],
+"sign": -1,
+"normal": [
+0.994169,
+-0.023392,
+0.105265
+],
+"out": [
+0.0,
+0.976187,
+0.21693
+],
+"hinges": [
+[
+-3.04,
+371.479,
+1139.703
+],
+[
+20.252,
+397.112,
+925.421
+]
+],
+"servo": {
+"at": [
+4.94,
+380.261,
+1066.292
+],
+"key": "hobby_mg996r"
+},
+"latch_t": [
+190.0
+],
+"seam_up": [
+0.107833,
+0.215666,
+-0.970495
+],
+"base": [
+-8.0,
+288.0,
+1168.0
+],
+"open": 1.3962634015954636
+},
+{
+"name": "right_forearm",
+"part": "forearm",
+"side": "right",
+"link": "right_forearm_door",
+"joint": "right_forearm_door_hinge",
+"parent": "right_forearm",
+"region": "right_forearm",
+"a": [
+-4.765,
+-369.58,
+1155.576
+],
+"up": [
+-0.107304,
+0.118091,
+0.987188
+],
+"sign": 1,
+"normal": [
+0.994169,
+0.023392,
+0.105265
+],
+"out": [
+0.0,
+-0.976187,
+0.21693
+],
+"hinges": [
+[
+-3.04,
+-371.479,
+1139.703
+],
+[
+20.252,
+-397.112,
+925.421
+]
+],
+"servo": {
+"at": [
+4.94,
+-380.261,
+1066.292
+],
+"key": "hobby_mg996r"
+},
+"latch_t": [
+190.0
+],
+"seam_up": [
+0.107833,
+-0.215666,
+-0.970495
+],
+"base": [
+-8.0,
+-288.0,
+1168.0
+],
+"open": 1.3962634015954636
+},
+{
+"name": "left_thigh",
+"part": "thigh",
+"side": "left",
+"link": "left_thigh_door",
+"joint": "left_thigh_door_hinge",
+"parent": "left_thigh",
+"region": "left_thigh",
+"a": [
+1.147,
+200.178,
+984.598
+],
+"up": [
+-0.038103,
+0.040634,
+0.998447
+],
+"sign": -1,
+"normal": [
+0.999269,
+-0.001626,
+0.038201
+],
+"out": [
+0.0,
+0.999096,
+0.042515
+],
+"hinges": [
+[
+2.065,
+199.199,
+960.552
+],
+[
+15.371,
+185.01,
+611.888
+]
+],
+"servo": {
+"at": [
+8.182,
+192.675,
+800.247
+],
+"key": "hobby_mg996r"
+},
+"latch_t": [
+280.0
+],
+"seam_up": [
+0.038235,
+0.042484,
+-0.998365
+],
+"base": [
+0.0,
+92.0,
+1010.0
+],
+"open": 1.3962634015954636
+},
+{
+"name": "right_thigh",
+"part": "thigh",
+"side": "right",
+"link": "right_thigh_door",
+"joint": "right_thigh_door_hinge",
+"parent": "right_thigh",
+"region": "right_thigh",
+"a": [
+1.147,
+-200.178,
+984.598
+],
+"up": [
+-0.038103,
+-0.040634,
+0.998447
+],
+"sign": 1,
+"normal": [
+0.999269,
+0.001626,
+0.038201
+],
+"out": [
+0.0,
+-0.999096,
+0.042515
+],
+"hinges": [
+[
+2.065,
+-199.199,
+960.552
+],
+[
+15.371,
+-185.01,
+611.888
+]
+],
+"servo": {
+"at": [
+8.182,
+-192.675,
+800.247
+],
+"key": "hobby_mg996r"
+},
+"latch_t": [
+280.0
+],
+"seam_up": [
+0.038235,
+-0.042484,
+-0.998365
+],
+"base": [
+0.0,
+-92.0,
+1010.0
+],
+"open": 1.3962634015954636
+},
+{
+"name": "left_shin",
+"part": "shin",
+"side": "left",
+"link": "left_shin_door",
+"joint": "left_shin_door_hinge",
+"parent": "left_shin",
+"region": "left_shin",
+"a": [
+16.542,
+186.609,
+512.006
+],
+"up": [
+0.048559,
+0.013467,
+0.99873
+],
+"sign": -1,
+"normal": [
+0.998818,
+0.00129,
+-0.048581
+],
+"out": [
+0.0,
+0.999648,
+0.026539
+],
+"hinges": [
+[
+15.376,
+186.286,
+488.017
+],
+[
+-2.217,
+181.407,
+126.188
+]
+],
+"servo": {
+"at": [
+6.725,
+183.887,
+310.101
+],
+"key": "hobby_mg996r"
+},
+"latch_t": [
+300.0
+],
+"seam_up": [
+-0.048598,
+0.026508,
+-0.998467
+],
+"base": [
+18.0,
+112.0,
+540.0
+],
+"open": 1.3962634015954636
+},
+{
+"name": "right_shin",
+"part": "shin",
+"side": "right",
+"link": "right_shin_door",
+"joint": "right_shin_door_hinge",
+"parent": "right_shin",
+"region": "right_shin",
+"a": [
+16.542,
+-186.609,
+512.006
+],
+"up": [
+0.048559,
+-0.013467,
+0.99873
+],
+"sign": 1,
+"normal": [
+0.998818,
+-0.00129,
+-0.048581
+],
+"out": [
+0.0,
+-0.999648,
+0.026539
+],
+"hinges": [
+[
+15.376,
+-186.286,
+488.017
+],
+[
+-2.217,
+-181.407,
+126.188
+]
+],
+"servo": {
+"at": [
+6.725,
+-183.887,
+310.101
+],
+"key": "hobby_mg996r"
+},
+"latch_t": [
+300.0
+],
+"seam_up": [
+-0.048598,
+-0.026508,
+-0.998467
+],
+"base": [
+18.0,
+-112.0,
+540.0
+],
+"open": 1.3962634015954636
+}
+]
+}

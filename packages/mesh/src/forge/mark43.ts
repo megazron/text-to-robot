@@ -698,3 +698,5 @@ export async function forgePreview(params: ForgeParams = {}, tick: Tick = () => 
   }
   return out;
 }
+/** one part's field and paint, as forge_mark43.py's BUILD[k](v) makes it (for tests against the Python reference) */
+export const buildPart = (k: string, params: ForgeParams = {}): Part => BUILD[k](ctxOf(params));

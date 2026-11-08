@@ -25,6 +25,7 @@ ap.add_argument("--no-arduino", action="store_true", help="skip the Arduino swit
 ap.add_argument("--out", type=Path, default=root / "out/site-check")
 ap.add_argument("--update", action="store_true", help="write the tracked report examples/site_generation.json")
 ap.add_argument("--timeout", type=int, default=1800, help="seconds allowed per robot")
+ap.add_argument("--forge-timeout", type=int, default=7200, help="seconds allowed for a Mark 43, whose armour the tab forges")
 args = ap.parse_args()
 if not (args.site / "index.html").exists(): sys.exit(f"{args.site} has no index.html: run deploy/build-pages.sh first")
 args.out.mkdir(parents=True, exist_ok=True)
@@ -109,7 +110,8 @@ def press_generate(page, ms):
 
 def run(browser, case):
     """One robot in a fresh tab. Returns the row for the report."""
-    ms = args.timeout * 1000
+    # the Mark 43 is forged live in the tab (packages/mesh/src/forge): its armour takes far longer than any other robot
+    ms = (max(args.timeout, args.forge_timeout) if "mark_43" in case["id"] else args.timeout) * 1000
     row = {"case": case["id"], "prompt": case["prompt"], "mode": case["mode"], "pass": False, "problems": []}
     ctx = browser.new_context(viewport={"width": 1000, "height": 640}, accept_downloads=True)
     page = ctx.new_page(); errors, external, failed = [], [], []

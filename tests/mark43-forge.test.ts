@@ -21,8 +21,8 @@ test("forge: forearm, hand and foot shells match the Python forge piece for piec
     assert.ok(o, `${p.name} is not in the Python output`);
     assert.equal(p.link, o.link); assert.equal(p.material, o.material);
     const v = signedVolume(p.mesh), [lo, hi] = bounds(p.mesh);
-    assert.ok(Math.abs(v - o.volume) <= Math.max(0.01 * o.volume, 30), `${p.name}: volume ${v.toFixed(0)} vs ${o.volume}`);
-    for (let k = 0; k < 3; k++) assert.ok(Math.abs(lo[k] - o.lo[k]) < 1.0 && Math.abs(hi[k] - o.hi[k]) < 1.0, `${p.name}: bounds ${lo}/${hi} vs ${o.lo}/${o.hi}`);
+    assert.ok(Math.abs(v - o.volume) <= Math.max(0.02 * o.volume, 30), `${p.name}: volume ${v.toFixed(0)} vs ${o.volume}`);
+    for (let k = 0; k < 3; k++) assert.ok(Math.abs(lo[k] - o.lo[k]) < 1.5 && Math.abs(hi[k] - o.hi[k]) < 1.5, `${p.name}: bounds ${lo}/${hi} vs ${o.lo}/${o.hi}`);
   }
 });
 

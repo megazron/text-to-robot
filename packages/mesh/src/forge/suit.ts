@@ -3,8 +3,8 @@
 // measured sweeps and limits, tidy, then the pack's quantised storage. The result is what setArmourPack() takes.
 import { forgePrint, NAMES, MASK_OPEN, type ForgeParams } from "./mark43.ts";
 import { components, area, isWatertight, type TriMesh } from "./mc.ts";
-import { useManifold } from "./geo.ts";
-import { packShells, encode, measured, r2, HINGE, type Piece, type Row, type Tick } from "./pack.ts";
+import { useManifold, solidStats } from "./geo.ts";
+import { intake, resolve, workingHelmet, trimNeck, trimSwings, finishShells, jointPositions, encode, measured, r2, HINGE, type Piece, type Row, type Tick } from "./pack.ts";
 import { build, trimStages, relieveLimbs, finishDoors, measure, limbLimits, tidy } from "./doors.ts";
 import { fitWiring } from "./wiring.ts";
 import type { ArmourManifest } from "../armourpack.ts";
@@ -33,7 +33,9 @@ function thinAxis(v: Float64Array): [number, number, number] {
 }
 
 /** The armour pack for `params`. `mf` is the manifold-3d module (the kernel's). */
-export async function forgeSuit(mf: unknown, params: ForgeParams = {}, onProgress: (p: SuitProgress) => void | Promise<void> = () => {}, log: (s: string) => void = () => {}): Promise<{ manifest: ArmourManifest; bytes: Uint8Array; log: string[] }> {
+/** Somewhere to keep each finished stage, so a long run can pick up where it stopped (Node keeps them on disk). */
+export interface Checkpoints { save(stage: string, value: unknown): void | Promise<void>; load(stage: string): unknown | Promise<unknown>; }
+export async function forgeSuit(mf: unknown, params: ForgeParams = {}, onProgress: (p: SuitProgress) => void | Promise<void> = () => {}, log: (s: string) => void = () => {}, ck?: Checkpoints): Promise<{ manifest: ArmourManifest; bytes: Uint8Array; log: string[] }> {
   useManifold(mf);
   const lines: string[] = [], say = (s: string) => { lines.push(s); log(s); };
   let stage = 0, last = 0;
@@ -47,22 +49,37 @@ export async function forgeSuit(mf: unknown, params: ForgeParams = {}, onProgres
     await new Promise((r) => setTimeout(r, 0));
   };
   const next = async (name: string) => { stage = STAGES.findIndex((s) => s[0] === name); last = 0; await tick(name); };
-  const t0 = Date.now(), lap = (s: string) => say(`${s} at ${((Date.now() - t0) / 1000).toFixed(1)} s`);
+  const t0 = Date.now(), lap = (s: string) => say(`${s} at ${((Date.now() - t0) / 1000).toFixed(1)} s ${JSON.stringify(solidStats())}`);
 
+  // a stage kept by `ck` is taken from it; otherwise it runs and is kept
+  const stageOf = async <T>(name: string, run: () => Promise<T>): Promise<T> => {
+    const got = (await ck?.load(name)) as T | undefined;
+    if (got !== undefined && got !== null) { say(`${name}: from the checkpoint`); return got; }
+    const v = await run(); await ck?.save(name, v); return v;
+  };
   await next("forge");
-  const forged = await forgePrint(params, tick); for (const s of forged.log) say(s); lap("forged");
+  const forged = await stageOf("forged", () => forgePrint(params, tick)); for (const s of forged.log) say(s); lap("forged");
   await next("pack");
-  const { pieces, jpos } = await packShells(forged.pieces, tick, say); lap("packed");
+  const jpos = jointPositions();
+  const resolved = await stageOf("resolved", async () => resolve(intake(forged.pieces), tick, say));
+  const relieved = await stageOf("relieved", async () => trimNeck(workingHelmet(resolved, jpos.neck_mount, say), jpos, say));
+  const swung = await stageOf("swung", () => trimSwings(relieved, jpos, tick, say));
+  const pieces = await stageOf("packed", async () => finishShells(swung, tick)); lap("packed");
   const faceGold = pieces.filter((p) => p.row.link === "helmet_faceplate" && p.row.material === "armour_gold");
   let minX = Infinity; for (const p of faceGold) for (let i = 0; i < p.mesh.v.length; i += 3) minX = Math.min(minX, p.mesh.v[i]);
   const faceRearX = minX - jpos.neck_mount[0];
 
   await next("doors");
-  const { hw, recs, latches } = await build(pieces, forged.doors, tick, say); lap("hardware");
+  const built = await stageOf("hardware", async () => ({ ...(await build(pieces, forged.doors, tick, say)), pieces }));
+  const { hw, recs, latches } = built; pieces.splice(0, pieces.length, ...built.pieces); lap("hardware");
   await next("trims");
-  await trimStages(pieces, hw, forged.doors, latches, tick, say);
-  await relieveLimbs(pieces, hw, jpos, tick, say);
-  finishDoors(pieces, hw, recs, latches, say); lap("doors fitted");
+  const trimmed = await stageOf("doors", async () => {
+    await trimStages(pieces, hw, forged.doors, latches, tick, say);
+    await relieveLimbs(pieces, hw, jpos, tick, say);
+    finishDoors(pieces, hw, recs, latches, say);
+    return { pieces, hw };
+  });
+  pieces.splice(0, pieces.length, ...trimmed.pieces); hw.splice(0, hw.length, ...trimmed.hw); lap("doors fitted");
   const all: Piece[] = [...pieces, ...hw.map((h) => ({ row: { name: h.name, link: h.link, material: "armour_silver", region: h.region, hardware: true, anchor: h.anchor.map(r2) as [number, number, number] } as Row, mesh: h.mesh }))];
 
   await next("wiring");

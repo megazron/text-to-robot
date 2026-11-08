@@ -3,7 +3,7 @@
 // joint's range, the shells are simplified, and the pieces are quantised into the pack the designer reads (ArmourManifest + bytes).
 import type { TriMesh } from "./mc.ts";
 import { J, EAR, MASK_OPEN, type ForgedPiece } from "./mark43.ts";
-import { asSolid, asMesh, scope, compose, union, clipUnion, boundsOf, rot, place, bodies, meshBounds, meshVolume, meshCentroid, overlaps, linspace, vertexNormals, type P3 } from "./geo.ts";
+import { solidStats, asSolid, asMesh, scope, compose, union, clipUnion, boundsOf, rot, place, bodies, meshBounds, meshVolume, meshCentroid, overlaps, linspace, vertexNormals, type P3 } from "./geo.ts";
 
 export interface Row { name: string; link: string; material: string; region: string; wiring?: boolean; hardware?: boolean; anchor?: P3; normal?: P3; [k: string]: unknown; }
 export interface Piece { row: Row; mesh: TriMesh; dirty?: boolean; }
@@ -77,7 +77,8 @@ function cutAll(pieces: Piece[], pick: (p: Piece) => boolean, cut: unknown, tag:
 export function workingHelmet(pcs: Piece[], neck: P3, log: Log): Piece[] {
   const h: P3 = [neck[0] + HINGE[0], neck[1] + HINGE[1], neck[2] + HINGE[2]];
   return scope(() => {
-    const plate = solidOf(pcs, (p) => p.row.link === "helmet_faceplate");
+    // simplified as the collar's and the limbs' tools are (0.4 mm): the sweep is a clearance, not a part
+    const plate = solidOf(pcs, (p) => p.row.link === "helmet_faceplate", 0.4);
     const sweep = union(linspace(-0.04, -MASK_OPEN, 32).map((a) => place(rot(h, [0, 1, 0], a), plate)));
     const [out, lost] = cutAll(pcs, (p) => baseLink(p.row.link) === "head", sweep, "r");
     log(`helmet relief ${Math.round(lost)} mm3`);
@@ -111,7 +112,7 @@ export async function trimSwings(pcs: Piece[], jpos: Record<string, P3>, tick: T
       const n = Math.max(12, Math.floor((hi - lo) / 0.03)), sweep = clipUnion(linspace(lo, hi, n).map((a) => place(rot(o, [0, 1, 0], -a), par)), box);
       return cutAll(pcs, pick, sweep, "w")[0];
     }) as unknown as Piece[];
-    log(`trimmed ${side} ${j}`); await tick("swings");
+    log(`trimmed ${side} ${j} ${JSON.stringify(solidStats())}`); await tick("swings");
   }
   return pcs;
 }
@@ -124,6 +125,10 @@ export async function packShells(forged: ForgedPiece[], tick: Tick, log: Log): P
   pcs = workingHelmet(pcs, jpos.neck_mount, log); await tick("helmet");
   pcs = trimNeck(pcs, jpos, log); await tick("collar");
   pcs = await trimSwings(pcs, jpos, tick, log);
+  return { pieces: await finishShells(pcs, tick), jpos };
+}
+/** the shells simplified (0.2 mm is under one layer), then the joint sleeves give way to the armour once more */
+export async function finishShells(pcs: Piece[], tick: Tick): Promise<Piece[]> {
   pcs = pcs.map((p) => scope(() => ({ row: p.row, mesh: asMesh(asSolid(p.mesh).simplify(MESH_TOL)) })) as unknown as Piece);
   await tick("simplify");
   const hard = pcs.filter((p) => p.row.material !== "armour_mech").map((p) => ({ bb: meshBounds(p.mesh), p }));
@@ -137,7 +142,7 @@ export async function packShells(forged: ForgedPiece[], tick: Tick, log: Log): P
     });
   }
   await tick("sleeves");
-  return { pieces: out, jpos };
+  return out;
 }
 
 // ------------------------------------------------------------------ the pack's storage
