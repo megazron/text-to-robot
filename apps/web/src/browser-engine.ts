@@ -13,6 +13,7 @@ import { exportTraining } from "@ttr/training-export";
 import { buildPart, toStlBinary, meshTopology, setArmourSource, setArmourCache, setForgeListener, type ArmourManifest } from "@ttr/mesh";
 import { providerStatus } from "@ttr/llm-providers";
 import { engineApi } from "./engine/api.ts";
+import { setPool, workerPool } from "@ttr/mesh/forge/pool";
 
 const MAX_STORE = 50;
 const store = new Map<string, RobotSpecification>();
@@ -104,6 +105,14 @@ setArmourCache({
     catch { /* private mode or quota: the pack stays in memory only */ }
   },
 });
+// the forge shares its solid work out to helpers, each a worker with its own manifold-3d (one per spare core, at most four: each takes memory)
+const helpers = Math.max(0, Math.min(4, (navigator.hardwareConcurrency || 2) - 2));
+if (helpers) setPool(workerPool(helpers, () => {
+  const base = (self as { TTR_ENGINE_BASE?: string }).TTR_ENGINE_BASE ?? location.href;   // set when another site started this worker
+  const w = new Worker(new URL("./forge-worker.js", base), { type: "module" });
+  w.postMessage({ wasm: new URL("./manifold.wasm", base).href });
+  return { post: (m) => w.postMessage(m), on: (fn) => { w.onmessage = ({ data }) => fn(data); }, end: () => w.terminate() };
+}));
 const forgeStart = { t: 0 };
 setForgeListener((p) => { if (!forgeStart.t) forgeStart.t = Date.now(); post({ forge: { ...p, elapsed_s: Math.round((Date.now() - forgeStart.t) / 1000) } }); if (p.stage === "done") forgeStart.t = 0; },
   undefined, (parts) => post({ forgePreview: parts }, parts.flatMap((p) => [p.v.buffer, p.f.buffer])));

@@ -10,6 +10,8 @@ import {
   asSolid, asMesh, scope, scopeAsync, free, compose, union, hull, cube, cylinder, place, turn, sweep, bigger, biggest, bbox, overlaps, at, meshBounds, meshVolume, type P3, type M34, type Solid,
 } from "./geo.ts";
 import { baseLink, SWINGS, type Piece, type Log, type Tick } from "./pack.ts";
+import { getPool, runAll, type Job } from "./pool.ts";
+import { answerJob } from "./jobs.ts";
 
 const R_BARREL = 6.0, R_SLOT = 7.5, BORE = 4.2, KNUCKLE = 5.6, FIXED_H = 19.0, POD_WALL = 2.4, POCKET = 0.3, AIR = 0.6;
 export const PAWL_TRAVEL = 0.2;
@@ -241,17 +243,16 @@ export async function trimStages(pieces: Piece[], hw: Hardware[], doors: DoorRec
         }
         log(`${d.name} meets ${met.length} pieces ${Math.round((Date.now() - t0) / 1000)} s`);
         // what the door's shell meets is cut from the door; what its hardware meets is cut from the other part, since hardware cannot give way
-        const hits: TriMesh[] = [], theirs = new Map<string, TriMesh[]>();
+        const hits: TriMesh[] = [], theirs = new Map<string, TriMesh[]>(), fineAngles = range(fine, d.open + 0.03, fine);
+        const lightM = asMesh(light), steelM = asMesh(steel), parts = Math.max(1, Math.min(fineAngles.length, (getPool()?.size ?? 1) * 2));
         for (const [link, q] of met) {
-          const qb = bbox(q);
-          for (const a of range(fine, d.open + 0.03, fine)) scope(() => {
-            const c = turn(light, o, e, sg * a);
-            if (!overlaps(bbox(c), qb)) return;
-            const x = c.intersect(q);
-            if (x.volume() < 0.2) return;
-            hits.push(asMesh(turn(x, o, e, -sg * a)));
-            if (link) { const y = turn(steel, o, e, sg * a).intersect(q); if (y.volume() > 0.05) { const l = theirs.get(link) ?? []; l.push(asMesh(posed(link, y, -1))); theirs.set(link, l); } }
-          });
+          // the angles are shared out to the pool; each answer is what overlapped, swung back, and what the hardware met
+          const st = link && link in opened ? doors.find((x) => x.link === link)! : undefined, qm = asMesh(q);
+          const jobs: Job[] = Array.from({ length: parts }, (_, i) => ({ op: "trimHits", args: { light: lightM, steel: link ? steelM : undefined, q: qm, o, e, sg, angles: fineAngles.filter((_, k) => k % parts === i), unpose: st ? [st.a, st.up, -st.sign * opened[st.link]] : undefined } }));
+          for (const r of await runAll<{ hits: TriMesh[]; theirs: TriMesh[] }>(jobs, (j) => answerJob(j) as Promise<{ hits: TriMesh[]; theirs: TriMesh[] }>)) {
+            hits.push(...r.hits);
+            if (link && r.theirs.length) { const l = theirs.get(link) ?? []; l.push(...r.theirs); theirs.set(link, l); }
+          }
           await tick(`${d.name} trims`);
         }
         if (hits.length) scope(() => { const tool = bigger(union(hits.map(asSolid)), 0.6); lost = mine.cut(tool); done.push([d.link, asMesh(tool)]); });
@@ -380,24 +381,16 @@ export async function limbLimits(rows: { row: { link: string; material: string; 
   for (const p of rows) if (!["armour_mech", "lens_glow"].includes(p.row.material) || p.row.wiring) push(p.row.link.endsWith("_pawl_link") ? latches.find((l) => l.link === p.row.link)!.parent : baseLink(p.row.link), p.mesh);
   for (const d of recs) servo.push([baseLink(d.parent), d.servo.key, d.servo.T]);
   for (const l of latches) servo.push([baseLink(l.parent), l.key, l.T]);
-  const y: P3 = [0, 1, 0];
+  const y: P3 = [0, 1, 0], jobs: Job[] = [], names: string[] = [];
+  const of = (k: string): TriMesh => scope(() => asMesh(compose([...(by.get(k) ?? []).map(asSolid), ...servo.filter((s) => s[0] === k).map((s) => bodyOf(s[1], s[2]))]))) as unknown as TriMesh;
   for (const side of ["left", "right"]) for (const [j, child, parent, lo, hi] of SWINGS) {
-    const got: number[] = [];
-    scope(() => {
-      const of = (k: string) => compose([...(by.get(k) ?? []).map(asSolid), ...servo.filter((s) => s[0] === k).map((s) => bodyOf(s[1], s[2]))]);
-      const o = jpos[`${side}_${j}`], c = of(`${side}_${child}`), q = of(parent === "pelvis" ? parent : `${side}_${parent}`), base = c.intersect(q).volume();
-      for (const lim of [lo, hi]) {
-        let a = 0; const step = step0 * (lim > 0 ? 1 : -1);
-        while (Math.abs(a + step) <= Math.abs(lim) + 1e-9 && lim !== 0) {
-          const over = scope(() => turn(c, o, y, a + step).intersect(q).volume()) as unknown as number;
-          if (over - base > COLLIDE) break;
-          a += step;
-        }
-        got.push(r(a, 3));
-      }
-    });
-    const was = limits[`${side}_${j}`]; limits[`${side}_${j}`] = got as [number, number]; log(`${side}_${j} ${JSON.stringify(was)} -> ${JSON.stringify(got)}`); await tick("limits");
+    const child_ = of(`${side}_${child}`), parent_ = of(parent === "pelvis" ? parent : `${side}_${parent}`);
+    for (const lim of [lo, hi]) jobs.push({ op: "limit", args: { child: child_, parent: parent_, o: jpos[`${side}_${j}`], axis: y, lim, step: step0, collide: COLLIDE } });
+    names.push(`${side}_${j}`);
   }
+  const got = await runAll<number>(jobs, (jb) => answerJob(jb) as Promise<number>);
+  names.forEach((n, i) => { const was = limits[n]; limits[n] = [r(got[2 * i], 3), r(got[2 * i + 1], 3)]; log(`${n} ${JSON.stringify(was)} -> ${JSON.stringify(limits[n])}`); });
+  await tick("limits");
 }
 
 /** One printed part must be one solid: each piece keeps its body and drops crumbs joined to it only at a point (under CRUMB of its surface). */

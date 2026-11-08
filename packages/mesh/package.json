@@ -21,7 +21,8 @@
   "author": "megazron",
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./forge/pool": "./src/forge/pool.ts"
   },
   "dependencies": {
     "earcut": "3.0.2",

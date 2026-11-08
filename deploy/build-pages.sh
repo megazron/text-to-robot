@@ -20,8 +20,13 @@ fs.writeFileSync("apps/web/src/.generated/python-files.json", JSON.stringify(out
 # the engine runs in a Web Worker; the page script stays tiny
 npx --yes esbuild@0.25.10 apps/web/src/browser-engine.ts \
   --bundle --format=esm --platform=browser --target=es2022 --minify \
-  --alias:node:fs=./apps/web/src/fs-shim.ts --external:node:module --external:node:url --external:node:path --external:node:crypto --external:module --external:fs --external:path \
+  --alias:node:fs=./apps/web/src/fs-shim.ts --external:node:module --external:node:url --external:node:path --external:node:crypto --external:node:worker_threads --external:node:os --external:module --external:fs --external:path \
   --outfile="$OUT/browser-engine.js" --log-level=warning
+# the armour forge's helpers: each a worker with its own manifold-3d, sharing out the solid work of the Mark 43
+npx --yes esbuild@0.25.10 packages/mesh/src/forge/poolworker.ts \
+  --bundle --format=esm --platform=browser --target=es2022 --minify \
+  --external:node:worker_threads --external:node:module --external:node:url --external:node:path --external:module --external:fs --external:path \
+  --outfile="$OUT/forge-worker.js" --log-level=warning
 npx --yes esbuild@0.25.10 apps/web/src/browser-api.ts \
   --bundle --format=esm --platform=browser --target=es2022 --minify \
   --outfile="$OUT/browser-api.js" --log-level=warning

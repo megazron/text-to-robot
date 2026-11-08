@@ -62,7 +62,7 @@ export async function forgeSuit(mf: unknown, params: ForgeParams = {}, onProgres
   await next("pack");
   const jpos = jointPositions();
   const resolved = await stageOf("resolved", async () => resolve(intake(forged.pieces), tick, say));
-  const relieved = await stageOf("relieved", async () => trimNeck(workingHelmet(resolved, jpos.neck_mount, say), jpos, say));
+  const relieved = await stageOf("relieved", async () => trimNeck(await workingHelmet(resolved, jpos.neck_mount, say), jpos, say));
   const swung = await stageOf("swung", () => trimSwings(relieved, jpos, tick, say));
   const pieces = await stageOf("packed", async () => finishShells(swung, tick)); lap("packed");
   const faceGold = pieces.filter((p) => p.row.link === "helmet_faceplate" && p.row.material === "armour_gold");

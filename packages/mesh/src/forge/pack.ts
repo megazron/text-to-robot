@@ -2,8 +2,10 @@
 // mask's sweep is relieved from the helmet, the collar gives way to the turning helmet, each limb gives way to its parent across the
 // joint's range, the shells are simplified, and the pieces are quantised into the pack the designer reads (ArmourManifest + bytes).
 import type { TriMesh } from "./mc.ts";
+import { getPool, runAll, type Job } from "./pool.ts";
+import { answerJob } from "./jobs.ts";
 import { J, EAR, MASK_OPEN, type ForgedPiece } from "./mark43.ts";
-import { solidStats, asSolid, asMesh, scope, compose, union, clipUnion, boundsOf, rot, place, bodies, meshBounds, meshVolume, meshCentroid, overlaps, linspace, vertexNormals, type P3 } from "./geo.ts";
+import { solidStats, asSolid, asMesh, scope, compose, boundsOf, bodies, meshBounds, meshVolume, meshCentroid, overlaps, linspace, vertexNormals, type P3 } from "./geo.ts";
 
 export interface Row { name: string; link: string; material: string; region: string; wiring?: boolean; hardware?: boolean; anchor?: P3; normal?: P3; [k: string]: unknown; }
 export interface Piece { row: Row; mesh: TriMesh; dirty?: boolean; }
@@ -60,43 +62,48 @@ export async function resolve(pieces: Piece[], tick: Tick, log: Log): Promise<Pi
 
 /** solid of the pieces matching `pick`, simplified by `tol` if given */
 const solidOf = (ps: Piece[], pick: (p: Piece) => boolean, tol?: number) => { const c = compose(ps.filter(pick).map((p) => asSolid(p.mesh))); return tol ? c.simplify(tol) : c; };
-/** `pieces` that `pick` selects lose the solid `cut`; the rest stay as they are */
-function cutAll(pieces: Piece[], pick: (p: Piece) => boolean, cut: unknown, tag: string): [Piece[], number] {
-  const out: Piece[] = []; let lost = 0;
+/** A tool swept through `angles` about the axis (o, e): the union of its turned copies, cut to `clip`. With a pool the copies are shared out. */
+export async function sweptTool(tool: TriMesh, o: P3, e: P3, angles: number[], clip?: [P3, P3]): Promise<TriMesh> {
+  const pool = getPool(), parts = pool ? Math.min(angles.length, pool.size * 2) : 1, jobs: Job[] = [];
+  for (let i = 0; i < parts; i++) jobs.push({ op: "sweep", args: { mesh: tool, o, e, angles: angles.filter((_, k) => k % parts === i), clip } });
+  let got = (await runAll<TriMesh>(jobs, (j) => answerJob(j) as Promise<TriMesh>)).filter((m) => m.f.length);
+  // the parts are joined pairwise, a level at a time, each level shared out too
+  while (got.length > 1) {
+    const pairs: Job[] = [];
+    for (let i = 0; i + 1 < got.length; i += 2) pairs.push({ op: "union2", args: { meshes: [got[i], got[i + 1]] } });
+    got = [...(await runAll<TriMesh>(pairs, (j) => answerJob(j) as Promise<TriMesh>)), ...(got.length % 2 ? [got[got.length - 1]] : [])];
+  }
+  return got[0] ?? { v: new Float64Array(0), f: new Uint32Array(0) };
+}
+/** cutAll with the pieces shared out to the pool */
+async function cutAllPooled(pieces: Piece[], pick: (p: Piece) => boolean, tool: TriMesh, tag: string): Promise<[Piece[], number]> {
+  const chosen = pieces.filter(pick);
+  const got = await runAll<{ lost: number; bodies: TriMesh[] }>(chosen.map((p) => ({ op: "cut", args: { mesh: p.mesh, tool, keep: 500 } })), (j) => answerJob(j) as Promise<{ lost: number; bodies: TriMesh[] }>);
+  const out: Piece[] = []; let lost = 0, k = 0;
   for (const p of pieces) {
     if (!pick(p)) { out.push(p); continue; }
-    scope(() => {
-      const v0 = meshVolume(p.mesh), x = asSolid(p.mesh).subtract(cut); lost += v0 - x.volume();
-      out.push(...splitInto(p, x, 500, tag));
-    });
+    const r = got[k++]; lost += r.lost;
+    r.bodies.forEach((m, i) => out.push({ row: { ...p.row, name: p.row.name + (i ? `${tag}${i}` : "") }, mesh: m }));
   }
   return [out, lost];
 }
+const toolOf = (ps: Piece[], pick: (p: Piece) => boolean, tol?: number): TriMesh => scope(() => asMesh(solidOf(ps, pick, tol))) as unknown as TriMesh;
 
 /** The mask swings about the ear: what is left to relieve on the helmet is the rest round its edges. */
-export function workingHelmet(pcs: Piece[], neck: P3, log: Log): Piece[] {
+export async function workingHelmet(pcs: Piece[], neck: P3, log: Log): Promise<Piece[]> {
   const h: P3 = [neck[0] + HINGE[0], neck[1] + HINGE[1], neck[2] + HINGE[2]];
-  return scope(() => {
-    // simplified as the collar's and the limbs' tools are (0.4 mm): the sweep is a clearance, not a part
-    const plate = solidOf(pcs, (p) => p.row.link === "helmet_faceplate", 0.4);
-    const sweep = union(linspace(-0.04, -MASK_OPEN, 32).map((a) => place(rot(h, [0, 1, 0], a), plate)));
-    const [out, lost] = cutAll(pcs, (p) => baseLink(p.row.link) === "head", sweep, "r");
-    log(`helmet relief ${Math.round(lost)} mm3`);
-    return out;
-  }) as unknown as Piece[];
+  // simplified as the collar's and the limbs' tools are (0.4 mm): the sweep is a clearance, not a part
+  const pick = (p: Piece) => baseLink(p.row.link) === "head";
+  const tool = await sweptTool(toolOf(pcs, (p) => p.row.link === "helmet_faceplate", 0.4), h, [0, 1, 0], linspace(-0.04, -MASK_OPEN, 32), boundsOf(pcs.filter(pick).map((p) => p.mesh)));
+  const [out, lost] = await cutAllPooled(pcs, pick, tool, "r"); log(`helmet relief ${Math.round(lost)} mm3`); return out;
 }
 
 /** The collar's front lip gives way to the helmet turned NECK_TURN each way. */
-export function trimNeck(pcs: Piece[], jpos: Record<string, P3>, log: Log): Piece[] {
-  const o = jpos.neck_mount;
-  return scope(() => {
-    const helmet = solidOf(pcs, (p) => ["head", "helmet_faceplate"].includes(baseLink(p.row.link)), 0.4);
-    const pick = (p: Piece) => p.row.region === "torso" && p.row.material !== "lens_glow" && meshBounds(p.mesh)[1][2] >= 1500;
-    const n = Math.floor((2 * NECK_TURN) / 0.04) + 1, sweep = clipUnion(linspace(-NECK_TURN, NECK_TURN, n).map((a) => place(rot(o, [0, 0, 1], a), helmet)), boundsOf(pcs.filter(pick).map((p) => p.mesh)));
-    const [out, lost] = cutAll(pcs, pick, sweep, "n");
-    log(`collar relief ${Math.round(lost)} mm3`);
-    return out;
-  }) as unknown as Piece[];
+export async function trimNeck(pcs: Piece[], jpos: Record<string, P3>, log: Log): Promise<Piece[]> {
+  const o = jpos.neck_mount, pick = (p: Piece) => p.row.region === "torso" && p.row.material !== "lens_glow" && meshBounds(p.mesh)[1][2] >= 1500;
+  const n = Math.floor((2 * NECK_TURN) / 0.04) + 1;
+  const tool = await sweptTool(toolOf(pcs, (p) => ["head", "helmet_faceplate"].includes(baseLink(p.row.link)), 0.4), o, [0, 0, 1], linspace(-NECK_TURN, NECK_TURN, n), boundsOf(pcs.filter(pick).map((p) => p.mesh)));
+  const [out, lost] = await cutAllPooled(pcs, pick, tool, "n"); log(`collar relief ${Math.round(lost)} mm3`); return out;
 }
 
 /** Each limb piece near a joint loses whatever its parent would run into across the joint's whole range. */
@@ -105,13 +112,11 @@ export async function trimSwings(pcs: Piece[], jpos: Record<string, P3>, tick: T
     const o = jpos[`${side}_${j}`], cl = `${side}_${child}`, pl = parent === "pelvis" ? parent : `${side}_${parent}`;
     const near = (m: TriMesh) => { const b = meshBounds(m); return [0, 1, 2].every((k) => b[0][k] - 300 < o[k] && b[1][k] + 300 > o[k]); };
     const hard = (p: Piece) => !["armour_mech", "lens_glow"].includes(p.row.material);
-    pcs = scope(() => {
-      const par = solidOf(pcs, (p) => baseLink(p.row.link) === pl && hard(p) && near(p.mesh), 0.4);
-      // python: rotation by -ang about +y, written out as [[c, 0, s], [0, 1, 0], [-s, 0, c]] with c, s of -ang
-      const pick = (p: Piece) => baseLink(p.row.link) === cl && hard(p) && near(p.mesh), box = boundsOf(pcs.filter(pick).map((p) => p.mesh));
-      const n = Math.max(12, Math.floor((hi - lo) / 0.03)), sweep = clipUnion(linspace(lo, hi, n).map((a) => place(rot(o, [0, 1, 0], -a), par)), box);
-      return cutAll(pcs, pick, sweep, "w")[0];
-    }) as unknown as Piece[];
+    const pick = (p: Piece) => baseLink(p.row.link) === cl && hard(p) && near(p.mesh);
+    // python: rotation by -ang about +y for each ang in the range
+    const n = Math.max(12, Math.floor((hi - lo) / 0.03));
+    const tool = await sweptTool(toolOf(pcs, (p) => baseLink(p.row.link) === pl && hard(p) && near(p.mesh), 0.4), o, [0, 1, 0], linspace(lo, hi, n).map((a) => -a), boundsOf(pcs.filter(pick).map((p) => p.mesh)));
+    pcs = (await cutAllPooled(pcs, pick, tool, "w"))[0];
     log(`trimmed ${side} ${j} ${JSON.stringify(solidStats())}`); await tick("swings");
   }
   return pcs;
@@ -122,8 +127,8 @@ export async function packShells(forged: ForgedPiece[], tick: Tick, log: Log): P
   const jpos = jointPositions();
   let pcs = intake(forged); await tick("intake");
   pcs = await resolve(pcs, tick, log);
-  pcs = workingHelmet(pcs, jpos.neck_mount, log); await tick("helmet");
-  pcs = trimNeck(pcs, jpos, log); await tick("collar");
+  pcs = await workingHelmet(pcs, jpos.neck_mount, log); await tick("helmet");
+  pcs = await trimNeck(pcs, jpos, log); await tick("collar");
   pcs = await trimSwings(pcs, jpos, tick, log);
   return { pieces: await finishShells(pcs, tick), jpos };
 }
