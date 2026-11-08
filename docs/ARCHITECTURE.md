@@ -3,7 +3,7 @@
 # Architecture
 
 The web service uses **local, deterministic generation**. A prompt parser selects
-our parameterised robot designs and produces a typed `RobotSpecification`. There
+my parameterised robot designs and produces a typed `RobotSpecification`. There
 is no cloud inference, account, token or runtime dependency on external assets.
 
 ```

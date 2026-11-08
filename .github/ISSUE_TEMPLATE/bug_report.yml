@@ -4,7 +4,7 @@ labels: [bug]
 body:
   - type: markdown
     attributes:
-      value: Thanks for taking the time. A prompt we can paste and the first thing that looked wrong are the two most useful things you can give us.
+      value: Thanks for taking the time. A prompt I can paste and the first thing that looked wrong are the two most useful things you can give me.
   - type: dropdown
     id: where
     attributes:

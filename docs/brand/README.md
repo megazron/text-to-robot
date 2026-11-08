@@ -44,7 +44,7 @@ To change the logo, edit the coordinates in [build.py](build.py), run `python do
 | Forest | `#0B7A3F` | The accent on light backgrounds, where signal green has too little contrast. |
 | Paper | `#F4FAF6` | Light tile. |
 
-Green on black is the brand. Keep green to the mark and one or two accents per screen; a page washed in green stops looking like ours.
+Green on black is the brand. Keep green to the mark and one or two accents per screen; a page washed in green stops looking like Text to Robot.
 
 ## Type
 

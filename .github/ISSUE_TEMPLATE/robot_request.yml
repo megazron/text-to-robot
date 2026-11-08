@@ -4,7 +4,7 @@ labels: [robot request]
 body:
   - type: markdown
     attributes:
-      value: Tell us the robot you want and what it has to do. Drones, delta and gantry robots, snake and marine robots and dexterous hands are out of scope for now.
+      value: Tell me the robot you want and what it has to do. Drones, delta and gantry robots, snake and marine robots and dexterous hands are out of scope for now.
   - type: textarea
     id: prompt
     attributes:

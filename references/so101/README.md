@@ -85,13 +85,13 @@ Simulation STL assets include motors and assembled geometry; they are **not** a
 complete print-and-assemble kit. This repository has not built a physical SO-101.
 
 The source environment's pick-and-place task attaches a nearby cube to the tool
-when the gripper closes. We do not import that task or its assisted-grasp logic.
-Our environment retains the source's convex-mesh collision approximation and
+when the gripper closes. I do not import that task or its assisted-grasp logic.
+My environment retains the source's convex-mesh collision approximation and
 estimated servo dynamics. It adds a floor at −3 mm, gravity, lighting and an
 explicit timestep, without altering the supplied inertias or controller gains.
 There is no measured friction, backlash, temperature or real-hardware transfer
 validation. The source XML describes servo-gain assumptions and calibration offsets.
 
 The imported assets are Apache-2.0; `cache/LICENSE` and `cache/NOTICE` accompany
-all downloads. The environment and downloader in this repository are our code.
+all downloads. The environment and downloader in this repository are my code.
 This reference does not validate Mark 43, human wearability, or other generated robots.

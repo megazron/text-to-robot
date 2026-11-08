@@ -2,7 +2,7 @@
 
 # Contributing
 
-Thanks for helping. Bug reports with a prompt we can paste are as useful as code.
+Thanks for helping. Bug reports with a prompt I can paste are as useful as code.
 
 ## Ways to help
 
