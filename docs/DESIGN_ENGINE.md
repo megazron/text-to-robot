@@ -1,3 +1,5 @@
+<img src="brand/mark.png" alt="" width="56" align="right">
+
 # Design engine
 
 Robots are designed **parts first**: every joint is a real, purchasable actuator with its

@@ -1,3 +1,5 @@
+<img src="docs/brand/mark.png" alt="" width="56" align="right">
+
 # Development
 
 Everything you need to work on Text to Robot: set up, run the checks CI runs, regenerate the examples and release.

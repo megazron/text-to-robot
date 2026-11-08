@@ -1,3 +1,5 @@
+<img src="brand/mark.png" alt="" width="56" align="right">
+
 # Architecture
 
 The web service uses **local, deterministic generation**. A prompt parser selects

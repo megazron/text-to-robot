@@ -1,3 +1,5 @@
+<img src="../docs/brand/mark.png" alt="" width="56" align="right">
+
 # ttr-mujoco: the Python and MuJoCo layer
 
 The TypeScript side of text-to-robot *generates* the robot. This package is where it becomes

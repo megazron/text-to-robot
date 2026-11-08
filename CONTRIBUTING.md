@@ -1,3 +1,5 @@
+<img src="docs/brand/mark.png" alt="" width="56" align="right">
+
 # Contributing
 
 Thanks for helping. Bug reports with a prompt we can paste are as useful as code.
