@@ -10,6 +10,8 @@ jobs:
       - run: npm ci
       - run: npm run typecheck
       - run: npm run lint
+      - name: Every relative link and image in the Markdown files resolves
+        run: python3 scripts/check_links.py
       - run: npm test
       - name: Validate all examples
         run: |
