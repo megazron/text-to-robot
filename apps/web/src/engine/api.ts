@@ -75,8 +75,14 @@ function actuators(spec: RobotSpecification): Record<string, string> {
 }
 
 export interface Check { name: string; pass: boolean; detail: string; }
+export interface JointReport { joint: string; actuator: string | null; required_nm: number; rated_nm?: number; peak_nm?: number; margin: number | null; speed_rad_s?: number; ok?: boolean; note: string; }
+export interface PrintedReport { name: string; bbox_mm: Vec3; fits_bed: boolean; watertight: boolean; mass_kg: number; volume_cm3: number; }
+export interface CheckReport {
+  robot: RobotSpecification; urdf: string; valid: boolean; checks: Check[];
+  engineering: { mass_kg: number; com_m: Vec3; cost_usd: number; bom_lines: number; joints: JointReport[]; rails: NonNullable<DesignRecord["wiring"]>["rails"]; wiring_unconnected: string[]; printed: PrintedReport[]; links: number; dof: number } | null;
+}
 /** Checks and engineering numbers of a spec. Heavy parts (solids, wiring) are skipped with `quick`. */
-export function checkRobot(input: RobotSpecification, opts: { quick?: boolean; interference?: boolean; wiring?: boolean } = {}) {
+export function checkRobot(input: RobotSpecification, opts: { quick?: boolean; interference?: boolean; wiring?: boolean } = {}): CheckReport {
   const spec = structuredClone(input), checks: Check[] = [];
   if (!spec.links.length) return { robot: spec, checks: [{ name: "robot", pass: false, detail: "the robot has no parts yet" }], engineering: null, urdf: "", valid: false };
   finalizeSpec(spec);
@@ -92,7 +98,7 @@ export function checkRobot(input: RobotSpecification, opts: { quick?: boolean; i
   const poses: Record<string, number>[] = [{}];
   for (const t of [-1, -0.5, 0.5, 1]) poses.push(Object.fromEntries(moving.map((j) => [j.name, Math.max(j.limit?.lower ?? -Math.PI, Math.min(j.limit?.upper ?? Math.PI, j.type === "prismatic" ? 0 : t * Math.PI / 2))])));
   const need = worstTorques(spec, poses), inertia = axisInertias(spec, {});
-  const joints = spec.joints.filter((j) => j.type !== "fixed" && !j.passive && !j.mimic).map((j) => {
+  const joints = spec.joints.filter((j) => j.type !== "fixed" && !j.passive && !j.mimic).map((j): JointReport => {
     const key = act[j.name];
     if (!key) return { joint: j.name, actuator: null, required_nm: +(need[j.name] ?? 0).toFixed(4), margin: null, note: "no actuator drives this joint" };
     if (j.type === "continuous") { const r = rating(key); return { joint: j.name, actuator: key, required_nm: 0, rated_nm: r.rated_nm, peak_nm: r.peak_nm, margin: null, speed_rad_s: r.speed_rad_s, note: "turns freely (wheel or spinner): no holding load" }; }
@@ -104,7 +110,7 @@ export function checkRobot(input: RobotSpecification, opts: { quick?: boolean; i
     checks.push({ name: `torque:${j.joint}`, pass: !!j.ok, detail: `${j.required_nm} N·m needed (worst pose, x1.3 for acceleration) vs ${j.rated_nm} N·m rated, ${j.peak_nm} N·m peak on ${j.actuator}: ${j.margin}x margin` });
   }
   // printed parts: on the bed, one closed solid
-  const printed: { name: string; bbox_mm: Vec3; fits_bed: boolean; watertight: boolean; mass_kg: number; volume_cm3: number }[] = [];
+  const printed: PrintedReport[] = [];
   for (const l of spec.links) {
     const g = l.geometry; if (g.type !== "mesh" || (g.part !== "cad" && g.part !== "printed")) continue;
     if (opts.quick) continue;
@@ -134,7 +140,7 @@ export function checkRobot(input: RobotSpecification, opts: { quick?: boolean; i
   }
   let cost = 0, bomLines = 0;
   try { const bom = buildBom(refreshDesign(spec, checks, joints, printed, wiring?.record ?? null)); cost = bom.total; bomLines = bom.lines.length; } catch { /* template robot without parts */ }
-  const robot = meta(input).studio?.edited ? refreshDesign(spec, checks, joints, printed, wiring?.record ?? null) : input;
+  const robot: RobotSpecification = meta(input).studio?.edited ? refreshDesign(spec, checks, joints, printed, wiring?.record ?? null) : input;
   return {
     robot, urdf, valid: checks.every((c) => c.pass), checks,
     engineering: {
@@ -146,7 +152,7 @@ export function checkRobot(input: RobotSpecification, opts: { quick?: boolean; i
 }
 
 /** An edited robot's design record, rebuilt from what is in it now (bought parts, printed parts, sizing, checks, harness). */
-function refreshDesign(spec: RobotSpecification, checks: Check[], joints: ReturnType<typeof checkRobot>["engineering"] extends infer E ? E extends { joints: infer J } ? J : never : never, printed: { name: string; bbox_mm: Vec3; fits_bed: boolean; watertight: boolean; mass_kg: number; volume_cm3: number }[], wiring: DesignRecord["wiring"] | null): RobotSpecification {
+function refreshDesign(spec: RobotSpecification, checks: Check[], joints: JointReport[], printed: PrintedReport[], wiring: DesignRecord["wiring"] | null): RobotSpecification {
   const out = structuredClone(spec), m = meta(out), old = m.design;
   const linkKeys = new Map<string, string[]>();
   for (const l of out.links) { const k = kindOf(l).key; if (k && CATALOG[k]) linkKeys.set(k, [...(linkKeys.get(k) ?? []), l.name]); }
@@ -197,9 +203,9 @@ export async function engineApi(method: string, path: string, body: any): Promis
   if (method === "POST" && p === "check") return json(200, checkRobot(body.robot, body.options ?? {}));
   if (method === "POST" && p === "sweep") return json(200, { samples: sweep(body.robot, String(body.joint), Number(body.samples ?? 24)) });
   if (method === "POST" && p === "urdf") { const spec = finalizeSpec(structuredClone(body.robot)); return json(200, { urdf: generateUrdf(spec), xacro: generateXacro(spec) }); }
-  if (method === "POST" && p === "mesh") return new Response(toStlBinary(buildPart(body.geometry), 1), { headers: { "Content-Type": "model/stl" } });
+  if (method === "POST" && p === "mesh") return new Response(toStlBinary(buildPart(body.geometry), 1) as BodyInit, { headers: { "Content-Type": "model/stl" } });
   const pm = /^part\/([A-Za-z0-9_.-]+)\.stl$/.exec(p);
-  if (method === "GET" && pm && CATALOG[pm[1]]) return new Response(toStlBinary(buildPart(componentGeometry(pm[1]) as never), 1), { headers: { "Content-Type": "model/stl" } });
+  if (method === "GET" && pm && CATALOG[pm[1]]) return new Response(toStlBinary(buildPart(componentGeometry(pm[1]) as never), 1) as BodyInit, { headers: { "Content-Type": "model/stl" } });
   return json(404, { error: "unknown engine endpoint" });
 }
 /** Inertia and collision for links an edit added (finalizeSpec fills only what is missing). */

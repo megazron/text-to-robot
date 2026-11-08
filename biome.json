@@ -4,6 +4,7 @@
 		"includes": [
 			"packages/**/src/**/*.ts",
 			"apps/api/src/**/*.ts",
+			"apps/web/src/engine/**/*.ts",
 			"cli/src/**/*.ts",
 			"tests/**/*.ts",
 			"scripts/**/*.ts",

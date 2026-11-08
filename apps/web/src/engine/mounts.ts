@@ -107,7 +107,7 @@ function standoffPattern(p: PrintedParams): [number, number][] {
 }
 /** Mounting points of a printed part made from parameters (part frame). */
 export function printedMounts(p: PrintedParams): Mount[] {
-  const [x, y, z] = p.size_mm.map((v) => v / 1000), w = (p.wall_mm ?? 3) / 1000, out: Mount[] = [];
+  const [x, , z] = p.size_mm.map((v) => v / 1000), w = (p.wall_mm ?? 3) / 1000, out: Mount[] = [];
   out.push({ id: "base", kind: "base", pos: [0, 0, 0], axis: [0, 0, -1], ref: [1, 0, 0], label: "underside" });
   switch (p.shape) {
     case "plate": out.push({ id: "top", kind: "face", pos: [0, 0, z], axis: [0, 0, 1], ref: [1, 0, 0], label: "top face" }); break;

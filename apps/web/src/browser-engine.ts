@@ -12,6 +12,7 @@ import { generateCadFiles } from "@ttr/cad";
 import { exportTraining } from "@ttr/training-export";
 import { buildPart, toStlBinary, meshTopology, setArmourPack, armourPackLoaded, type ArmourManifest } from "@ttr/mesh";
 import { providerStatus } from "@ttr/llm-providers";
+import { engineApi } from "./engine/api.ts";
 
 const MAX_STORE = 50;
 const store = new Map<string, RobotSpecification>();
@@ -34,6 +35,7 @@ function encodeFiles(files: Record<string, string | Uint8Array>): Record<string,
 const json = (code: number, body: unknown) => new Response(JSON.stringify(body), { status: code, headers: { "Content-Type": "application/json" } });
 
 async function handle(method: string, p: string, body: any): Promise<Response> {
+  if (p.startsWith("/api/engine/")) return engineApi(method, p, body);   // the engine API for other pages (docs/ENGINE_API.md)
   if (method === "POST" && p === "/api/robots/import") {
     const { robot } = body;
     if (!robot || !Array.isArray(robot.links) || !Array.isArray(robot.joints)) return json(400, { error: "provide a RobotSpecification JSON" });

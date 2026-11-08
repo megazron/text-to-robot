@@ -2,7 +2,7 @@
 // to standoffs), or set it down on a surface on a grid. Pure math on mount frames: usable on an editor's page while the
 // pointer moves, with the mounts the engine reports (`partMounts`, `worldMounts`).
 import type { Pose, Vec3 } from "@ttr/robot-schema";
-import { mul, inv, matPose, unit, rotBetween, axisAngle, apply, rotate, type M4 } from "./edit.ts";
+import { mul, inv, matPose, unit, axisAngle, apply, rotate, type M4 } from "./edit.ts";
 export type MountKind = "output" | "hub" | "case" | "seat" | "board" | "standoffs" | "base" | "face";
 export interface Mount {
   id: string; kind: MountKind;
@@ -105,4 +105,3 @@ export function snapPart(mine: Mount[], targets: WorldMount[], hit: { point: Vec
 
 /** World point and axis of a mount after moving its part by world transform W (for previews). */
 export const movedMount = (m: Mount, W: M4) => ({ pos: apply(W, m.pos), axis: rotate(W, m.axis) });
-export { rotBetween };

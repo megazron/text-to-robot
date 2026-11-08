@@ -106,6 +106,8 @@ export interface Scene {
   jointOrder: string[];
   /** everything else in the spec (materials, sensors, end effectors, metadata, name, root) */
   rest: Omit<RobotSpecification, "links" | "joints">;
+  /** the spec's own key order */
+  keys: string[];
 }
 export function kindOf(l: Link): { kind: NodeKind; key?: string } {
   const g = l.geometry;
@@ -119,15 +121,16 @@ export function toScene(spec: RobotSpecification): Scene {
   const nodes: Record<string, SceneNode> = {};
   for (const l of links) nodes[l.name] = { name: l.name, ...kindOf(l), link: l, joint: null, children: [] };
   for (const j of joints) { if (nodes[j.child]) nodes[j.child].joint = j; nodes[j.parent]?.children.push(j.child); }
-  return { root: rootLink(spec) ?? null, nodes, linkOrder: links.map((l) => l.name), jointOrder: joints.map((j) => j.name), rest };
+  return { root: rootLink(spec) ?? null, nodes, linkOrder: links.map((l) => l.name), jointOrder: joints.map((j) => j.name), rest, keys: Object.keys(spec) };
 }
 export function fromScene(s: Scene): RobotSpecification {
   const links = s.linkOrder.filter((n) => s.nodes[n]).map((n) => s.nodes[n].link);
   const byName = new Map<string, Joint>();
   for (const n of Object.values(s.nodes)) if (n.joint) byName.set(n.joint.name, n.joint);
   const joints = s.jointOrder.filter((n) => byName.has(n)).map((n) => byName.get(n)!);
-  const { robot_name, root, ...more } = s.rest;
-  return { robot_name, ...(root !== undefined ? { root } : {}), links, joints, ...more } as RobotSpecification;
+  const all: Record<string, unknown> = { ...s.rest, links, joints }, out: Record<string, unknown> = {};
+  for (const k of [...s.keys, ...Object.keys(all)]) if (!(k in out) && all[k] !== undefined) out[k] = all[k];
+  return out as unknown as RobotSpecification;
 }
 
 // ------------------------------------------------------------------------------------------- edit operations

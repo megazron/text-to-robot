@@ -26,6 +26,14 @@ npx --yes esbuild@0.25.10 apps/web/src/browser-api.ts \
   --bundle --format=esm --platform=browser --target=es2022 --minify \
   --outfile="$OUT/browser-api.js" --log-level=warning
 
+# The engine API for other pages (docs/ENGINE_API.md): a versioned ES module that starts the same worker as this site
+mkdir -p "$OUT/engine/v1"
+npx --yes esbuild@0.25.10 apps/web/src/engine/client.ts \
+  --bundle --format=esm --platform=browser --target=es2022 --minify \
+  --outfile="$OUT/engine/v1/engine.js" --log-level=warning
+node scripts/engine_types.ts "$OUT/engine/v1/engine.d.ts"
+cp docs/ENGINE_API.md "$OUT/engine/v1/README.md"
+
 # Project pages live under /<repo>/, so make every root-absolute asset path relative and
 # load the in-browser API, which starts the app once the engine is ready.
 sed -i \
