@@ -1,6 +1,6 @@
 # Bill of Materials — iron_man_mark_43
 
-**Estimated total: $565.24**  ·  tier: hobby  ·  budget: $60000 ✅ within budget
+**Estimated total: $565.86**  ·  tier: hobby  ·  budget: $60000 ✅ within budget
 
 **Effort sizing: passes catalogue estimate; hardware verified: no.**
 
@@ -25,8 +25,8 @@
 | Wiring | 18 AWG silicone wire _(price estimated)_ | 3 | 0.7 | 2.1 | 3 m: 0.823 mm2, rated 8 A in a bundle; 2.69 m cut + 10 % waste |
 | Wiring | 20 AWG silicone wire _(price estimated)_ | 17.2 | 0.5 | 8.6 | 17.2 m: 0.519 mm2, rated 5.5 A in a bundle; 15.56 m cut + 10 % waste |
 | Wiring | 22 AWG silicone wire _(price estimated)_ | 5.9 | 0.4 | 2.36 | 5.9 m: 0.327 mm2, rated 3.5 A in a bundle; 5.31 m cut + 10 % waste |
-| Wiring | 24 AWG silicone wire _(price estimated)_ | 56.8 | 0.35 | 19.88 | 56.8 m: 0.205 mm2, rated 1.75 A in a bundle; 51.60 m cut + 10 % waste |
-| Wiring | 26 AWG silicone wire _(price estimated)_ | 42.6 | 0.3 | 12.78 | 42.6 m: 0.128 mm2, rated 1.1 A in a bundle; 38.70 m cut + 10 % waste |
+| Wiring | 24 AWG silicone wire _(price estimated)_ | 57.9 | 0.35 | 20.26 | 57.9 m: 0.205 mm2, rated 1.75 A in a bundle; 52.62 m cut + 10 % waste |
+| Wiring | 26 AWG silicone wire _(price estimated)_ | 43.4 | 0.3 | 13.02 | 43.4 m: 0.128 mm2, rated 1.1 A in a bundle; 39.38 m cut + 10 % waste |
 | Wiring | Dupont 2.54 mm contacts _(price estimated)_ | 102 | 0.02 | 2.04 | 102 pc: rated 3 A per contact |
 | Wiring | Dupont 2.54 mm housings _(price estimated)_ | 35 | 0.02 | 0.7 | 35 pc: one per cable end |
 | Wiring | 6.3 mm spade contacts _(price estimated)_ | 2 | 0.08 | 0.16 | 2 pc: rated 15 A per contact |
@@ -60,7 +60,7 @@
 | right_shin_door_hinge | 0.072 | N·m | TowerPro MG996R standard servo (metal gears) + round horn | 13.08x |
 
 ## Notes
-- Iron Man Mark 43 (full wearable suit): 358 printed pieces, 8.6 kg filament, motorised faceplate, $528 incl. filament
+- Iron Man Mark 43 (full wearable suit): 358 printed pieces, 8.6 kg filament, motorised faceplate, $529 incl. filament
 - armour shape from: suit: designed by the forge (packages/mesh/src/forge, a TypeScript port of scripts/forge_mark43.py) from reference photos of the movie suit; 3 mm walls, 2 mm faceplate, 15 % gyroid infill (shells are mostly walls)
 - filament at $22/kg, 8 % waste
 - the suit is worn armour over a black undersuit: the wearer moves every joint; nothing powers the limbs (hobby servos cannot move a person); the servos only open and close the doors

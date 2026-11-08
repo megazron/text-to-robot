@@ -1295,9 +1295,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/helmet_11.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.011864 -0.093644 0.203768" rpy="0 0 0"/>
+      <origin xyz="-0.011864 -0.093644 0.203766" rpy="0 0 0"/>
       <mass value="0.017434"/>
-      <inertia ixx="0.0000323293" ixy="0.00000143293" ixz="0.00000337525" iyy="0.0000341752" iyz="-0.00000842732" izz="0.0000105668"/>
+      <inertia ixx="0.0000323289" ixy="0.00000143304" ixz="0.00000337584" iyy="0.0000341755" iyz="-0.00000842709" izz="0.0000105672"/>
     </inertial>
   </link>
   <link name="helmet_12">
@@ -1327,9 +1327,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/helmet_13.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.01191 0.093593 0.203876" rpy="0 0 0"/>
-      <mass value="0.017498"/>
-      <inertia ixx="0.0000324949" ixy="-0.0000014748" ixz="0.00000343422" iyy="0.0000343131" iyz="0.00000848796" izz="0.0000106301"/>
+      <origin xyz="-0.011909 0.093594 0.203877" rpy="0 0 0"/>
+      <mass value="0.017499"/>
+      <inertia ixx="0.0000324959" ixy="-0.00000147509" ixz="0.00000343477" iyy="0.0000343152" iyz="0.00000848786" izz="0.0000106308"/>
     </inertial>
   </link>
   <link name="helmet_14">
@@ -1375,9 +1375,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/helmet_16.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.044573 -0.044093 -0.027329" rpy="0 0 0"/>
-      <mass value="0.029696"/>
-      <inertia ixx="0.0000603433" ixy="0.0000117303" ixz="-0.0000073307" iyy="0.0000532114" iyz="-0.00000455737" izz="0.0000314142"/>
+      <origin xyz="0.044573 -0.044094 -0.02733" rpy="0 0 0"/>
+      <mass value="0.029695"/>
+      <inertia ixx="0.0000603414" ixy="0.00001173" ixz="-0.00000733107" iyy="0.0000532099" iyz="-0.00000455661" izz="0.0000314134"/>
     </inertial>
   </link>
   <link name="helmet_17">
@@ -1455,9 +1455,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/torso_2.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.087804 0.078414 0.058069" rpy="0 0 0"/>
+      <origin xyz="0.087804 0.078414 0.058068" rpy="0 0 0"/>
       <mass value="0.111983"/>
-      <inertia ixx="0.000590918" ixy="-0.000142165" ixz="0.0000645207" iyy="0.000410097" iyz="0.0000894045" izz="0.000410879"/>
+      <inertia ixx="0.000590917" ixy="-0.000142165" ixz="0.000064521" iyy="0.000410097" iyz="0.0000894048" izz="0.000410879"/>
     </inertial>
   </link>
   <link name="torso_3">
@@ -1505,7 +1505,7 @@
     <inertial>
       <origin xyz="0.045159 0.014434 0.022593" rpy="0 0 0"/>
       <mass value="0.010266"/>
-      <inertia ixx="0.00000910894" ixy="-0.00000121576" ixz="0.00000210895" iyy="0.0000138861" iyz="7.15438e-7" izz="0.00000548224"/>
+      <inertia ixx="0.0000091089" ixy="-0.00000121575" ixz="0.00000210894" iyy="0.000013886" iyz="7.15428e-7" izz="0.00000548222"/>
     </inertial>
   </link>
   <link name="torso_6">
@@ -1599,9 +1599,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/torso_11.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.088086 -0.079064 0.056905" rpy="0 0 0"/>
+      <origin xyz="0.088086 -0.079064 0.056904" rpy="0 0 0"/>
       <mass value="0.113804"/>
-      <inertia ixx="0.000608031" ixy="0.000143724" ixz="0.0000668319" iyy="0.000424206" iyz="-0.000095559" izz="0.00041529"/>
+      <inertia ixx="0.000608031" ixy="0.000143724" ixz="0.0000668321" iyy="0.000424205" iyz="-0.0000955592" izz="0.000415289"/>
     </inertial>
   </link>
   <link name="torso_12">
@@ -1775,9 +1775,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/torso_22.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.002563 -0.098952 0.552252" rpy="0 0 0"/>
+      <origin xyz="0.002561 -0.098983 0.552234" rpy="0 0 0"/>
       <mass value="0.002"/>
-      <inertia ixx="7.18960e-7" ixy="-6.89815e-10" ixz="-4.04544e-10" iyy="2.54657e-7" iyz="-3.33786e-7" izz="4.67951e-7"/>
+      <inertia ixx="7.17711e-7" ixy="-5.94846e-10" ixz="-3.49297e-10" iyy="2.54426e-7" iyz="-3.33273e-7" izz="4.66926e-7"/>
     </inertial>
   </link>
   <link name="torso_23">
@@ -1791,9 +1791,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/torso_23.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.085737 -0.09692 0.474594" rpy="0 0 0"/>
-      <mass value="0.07944"/>
-      <inertia ixx="0.000446321" ixy="-0.0000474233" ixz="0.000091682" iyy="0.000294296" iyz="-0.0000695846" izz="0.000310464"/>
+      <origin xyz="0.085741 -0.096948 0.474568" rpy="0 0 0"/>
+      <mass value="0.079414"/>
+      <inertia ixx="0.000445963" ixy="-0.0000474503" ixz="0.0000916547" iyy="0.000294117" iyz="-0.0000694066" izz="0.000310274"/>
     </inertial>
   </link>
   <link name="torso_24">
@@ -1887,9 +1887,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/torso_29.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.085811 0.096867 0.474501" rpy="0 0 0"/>
-      <mass value="0.079399"/>
-      <inertia ixx="0.000445624" ixy="0.0000475872" ixz="0.0000916256" iyy="0.000293851" iyz="0.0000690469" izz="0.000310196"/>
+      <origin xyz="0.08581 0.096865 0.474506" rpy="0 0 0"/>
+      <mass value="0.079406"/>
+      <inertia ixx="0.000445655" ixy="0.0000475842" ixz="0.000091634" iyy="0.000293886" iyz="0.0000690561" izz="0.000310197"/>
     </inertial>
   </link>
   <link name="torso_30">
@@ -2287,9 +2287,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/left_upper_arm_0.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.050552 0.057065 0.1345" rpy="0 0 0"/>
-      <mass value="0.087526"/>
-      <inertia ixx="0.000317997" ixy="-0.0000278678" ixz="0.0000194669" iyy="0.000231153" iyz="-0.0000189467" izz="0.000159888"/>
+      <origin xyz="0.050551 0.057067 0.134496" rpy="0 0 0"/>
+      <mass value="0.087531"/>
+      <inertia ixx="0.000318026" ixy="-0.0000278682" ixz="0.0000194629" iyy="0.000231162" iyz="-0.0000189279" izz="0.000159911"/>
     </inertial>
   </link>
   <link name="right_upper_arm_0">
@@ -2303,9 +2303,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/right_upper_arm_0.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.050539 -0.057044 0.134447" rpy="0 0 0"/>
-      <mass value="0.08744"/>
-      <inertia ixx="0.000317679" ixy="0.0000279237" ixz="0.0000194179" iyy="0.000230934" iyz="0.0000187043" izz="0.000159895"/>
+      <origin xyz="0.050539 -0.057043 0.134443" rpy="0 0 0"/>
+      <mass value="0.087443"/>
+      <inertia ixx="0.000317706" ixy="0.0000279294" ixz="0.0000194218" iyy="0.000230962" iyz="0.0000186949" izz="0.000159898"/>
     </inertial>
   </link>
   <link name="left_upper_arm_1">
@@ -2319,9 +2319,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/left_upper_arm_1.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.041103 0.061952 -0.061194" rpy="0 0 0"/>
+      <origin xyz="0.041103 0.061953 -0.061193" rpy="0 0 0"/>
       <mass value="0.07911"/>
-      <inertia ixx="0.000277583" ixy="-0.00000143278" ixz="-0.0000182037" iyy="0.000179752" iyz="-0.00000181544" izz="0.000142556"/>
+      <inertia ixx="0.000277589" ixy="-0.000001433" ixz="-0.0000182041" iyy="0.000179757" iyz="-0.00000181801" izz="0.000142558"/>
     </inertial>
   </link>
   <link name="right_upper_arm_1">
@@ -2335,9 +2335,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/right_upper_arm_1.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.04112 -0.061887 -0.061236" rpy="0 0 0"/>
-      <mass value="0.078944"/>
-      <inertia ixx="0.000277018" ixy="0.00000158151" ixz="-0.0000180682" iyy="0.000179403" iyz="0.0000016561" izz="0.000142138"/>
+      <origin xyz="0.041119 -0.06189 -0.061235" rpy="0 0 0"/>
+      <mass value="0.078948"/>
+      <inertia ixx="0.000277033" ixy="0.00000157773" ixz="-0.0000180673" iyy="0.000179407" iyz="0.00000166072" izz="0.000142151"/>
     </inertial>
   </link>
   <link name="left_upper_arm_2">
@@ -2351,9 +2351,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/left_upper_arm_2.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.043181 0.038233 0.034886" rpy="0 0 0"/>
-      <mass value="0.012132"/>
-      <inertia ixx="0.0000130097" ixy="-0.00000546612" ixz="-6.52967e-8" iyy="0.00000536597" iyz="-3.07190e-7" izz="0.0000164567"/>
+      <origin xyz="0.043182 0.038244 0.034886" rpy="0 0 0"/>
+      <mass value="0.012134"/>
+      <inertia ixx="0.0000130192" ixy="-0.00000546728" ixz="-6.53185e-8" iyy="0.00000536613" iyz="-3.07360e-7" izz="0.0000164663"/>
     </inertial>
   </link>
   <link name="right_upper_arm_2">
@@ -2367,9 +2367,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/right_upper_arm_2.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.04317 -0.038192 0.034903" rpy="0 0 0"/>
+      <origin xyz="0.04317 -0.038193 0.034902" rpy="0 0 0"/>
       <mass value="0.012167"/>
-      <inertia ixx="0.0000130465" ixy="0.00000546571" ixz="-6.43115e-8" iyy="0.00000536733" iyz="3.08107e-7" izz="0.00001649"/>
+      <inertia ixx="0.0000130479" ixy="0.00000546587" ixz="-6.43046e-8" iyy="0.00000536736" iyz="3.08045e-7" izz="0.0000164914"/>
     </inertial>
   </link>
   <link name="left_upper_arm_3">
@@ -2415,9 +2415,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/left_upper_arm_4.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.051447 0.028606 -0.004677" rpy="0 0 0"/>
-      <mass value="0.088916"/>
-      <inertia ixx="0.000328143" ixy="0.000025074" ixz="0.0000189478" iyy="0.000233743" iyz="0.0000279792" izz="0.000181796"/>
+      <origin xyz="0.051447 0.02861 -0.004675" rpy="0 0 0"/>
+      <mass value="0.08891"/>
+      <inertia ixx="0.000328115" ixy="0.0000250732" ixz="0.0000189475" iyy="0.000233736" iyz="0.0000279911" izz="0.000181774"/>
     </inertial>
   </link>
   <link name="right_upper_arm_4">
@@ -2431,9 +2431,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/right_upper_arm_4.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.051439 -0.028641 -0.00466" rpy="0 0 0"/>
-      <mass value="0.088897"/>
-      <inertia ixx="0.000328022" ixy="-0.0000251709" ixz="0.0000189716" iyy="0.000233603" iyz="-0.0000280533" izz="0.000181769"/>
+      <origin xyz="0.05144 -0.028637 -0.004662" rpy="0 0 0"/>
+      <mass value="0.088903"/>
+      <inertia ixx="0.000328048" ixy="-0.0000251732" ixz="0.0000189725" iyy="0.000233606" iyz="-0.0000280439" izz="0.000181792"/>
     </inertial>
   </link>
   <link name="left_upper_arm_5">
@@ -2463,9 +2463,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/right_upper_arm_5.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.037859 -0.051207 -0.198779" rpy="0 0 0"/>
-      <mass value="0.079706"/>
-      <inertia ixx="0.000282705" ixy="-0.0000041252" ixz="-0.0000267956" iyy="0.000185233" iyz="-0.0000138056" izz="0.00014956"/>
+      <origin xyz="0.037859 -0.051208 -0.19878" rpy="0 0 0"/>
+      <mass value="0.079704"/>
+      <inertia ixx="0.000282698" ixy="-0.00000412657" ixz="-0.000026796" iyy="0.000185232" iyz="-0.000013805" izz="0.000149554"/>
     </inertial>
   </link>
   <link name="left_upper_arm_6">
@@ -2575,9 +2575,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/left_thigh_1.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.062244 0.090272 -0.008119" rpy="0 0 0"/>
-      <mass value="0.127196"/>
-      <inertia ixx="0.000664545" ixy="0.00000730279" ixz="-0.0000230353" iyy="0.000348591" iyz="0.00000110301" izz="0.000503356"/>
+      <origin xyz="0.062247 0.090277 -0.008121" rpy="0 0 0"/>
+      <mass value="0.127189"/>
+      <inertia ixx="0.000664482" ixy="0.00000733173" ixz="-0.0000230472" iyy="0.000348564" iyz="0.00000108135" izz="0.000503288"/>
     </inertial>
   </link>
   <link name="right_thigh_1">
@@ -2593,7 +2593,7 @@
     <inertial>
       <origin xyz="0.062276 -0.090267 -0.00802" rpy="0 0 0"/>
       <mass value="0.127031"/>
-      <inertia ixx="0.00066313" ixy="-0.00000747965" ixz="-0.0000229251" iyy="0.000347537" iyz="-8.67727e-7" izz="0.000502487"/>
+      <inertia ixx="0.000663129" ixy="-0.00000747925" ixz="-0.0000229247" iyy="0.000347536" iyz="-8.67481e-7" izz="0.000502487"/>
     </inertial>
   </link>
   <link name="left_thigh_2">
@@ -2607,9 +2607,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/left_thigh_2.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.068935 0.064925 0.137295" rpy="0 0 0"/>
-      <mass value="0.091279"/>
-      <inertia ixx="0.000374742" ixy="-0.0000654007" ixz="0.0000312895" iyy="0.000276346" iyz="0.000061983" izz="0.000261482"/>
+      <origin xyz="0.068934 0.064926 0.137309" rpy="0 0 0"/>
+      <mass value="0.091295"/>
+      <inertia ixx="0.000374835" ixy="-0.0000654032" ixz="0.0000313052" iyy="0.000276443" iyz="0.0000619699" izz="0.000261481"/>
     </inertial>
   </link>
   <link name="left_thigh_2w1">
@@ -2623,9 +2623,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/left_thigh_2w1.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.032556 0.171785 0.095672" rpy="0 0 0"/>
+      <origin xyz="0.032675 0.171772 0.095692" rpy="0 0 0"/>
       <mass value="0.002"/>
-      <inertia ixx="1.00000e-7" ixy="9.89182e-8" ixz="7.67596e-9" iyy="6.62942e-7" iyz="-1.43004e-9" izz="6.89942e-7"/>
+      <inertia ixx="1.00000e-7" ixy="9.89743e-8" ixz="7.57503e-9" iyy="6.61728e-7" iyz="-1.38273e-9" izz="6.89132e-7"/>
     </inertial>
   </link>
   <link name="right_thigh_2">
@@ -2639,9 +2639,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/right_thigh_2.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.068881 -0.064894 0.13732" rpy="0 0 0"/>
-      <mass value="0.091196"/>
-      <inertia ixx="0.000374617" ixy="0.0000655996" ixz="0.0000314852" iyy="0.000276453" iyz="-0.0000619938" izz="0.000261522"/>
+      <origin xyz="0.068884 -0.064895 0.137316" rpy="0 0 0"/>
+      <mass value="0.09119"/>
+      <inertia ixx="0.000374572" ixy="0.0000655936" ixz="0.0000314612" iyy="0.000276405" iyz="-0.0000619765" izz="0.000261499"/>
     </inertial>
   </link>
   <link name="right_thigh_2w1">
@@ -2655,9 +2655,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/right_thigh_2w1.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.031922 -0.171947 0.095457" rpy="0 0 0"/>
+      <origin xyz="0.031743 -0.171968 0.095461" rpy="0 0 0"/>
       <mass value="0.002"/>
-      <inertia ixx="1.00000e-7" ixy="-9.00667e-8" ixz="5.89098e-9" iyy="6.28147e-7" iyz="8.80920e-10" izz="6.50340e-7"/>
+      <inertia ixx="1.00000e-7" ixy="-8.99760e-8" ixz="6.25126e-9" iyy="6.24389e-7" iyz="9.26340e-10" izz="6.47061e-7"/>
     </inertial>
   </link>
   <link name="left_thigh_3">
@@ -2959,9 +2959,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/left_thigh_12.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.068 0.022301 -0.053" rpy="0 0 0"/>
-      <mass value="0.053502"/>
-      <inertia ixx="0.000258346" ixy="0.0000474314" ixz="0.0000287952" iyy="0.000166766" iyz="-0.000104768" izz="0.000192243"/>
+      <origin xyz="0.068001 0.022301 -0.05299" rpy="0 0 0"/>
+      <mass value="0.053514"/>
+      <inertia ixx="0.0002584" ixy="0.0000474391" ixz="0.0000288015" iyy="0.000166807" iyz="-0.000104783" izz="0.000192256"/>
     </inertial>
   </link>
   <link name="left_thigh_12w1">
@@ -2975,9 +2975,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/left_thigh_12w1.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.047621 -0.05378 -0.029963" rpy="0 0 0"/>
-      <mass value="0.030617"/>
-      <inertia ixx="0.0000410196" ixy="-0.00000970861" ixz="-0.00000901202" iyy="0.0000482468" iyz="-0.0000126763" izz="0.0000284306"/>
+      <origin xyz="0.047628 -0.053779 -0.029973" rpy="0 0 0"/>
+      <mass value="0.030628"/>
+      <inertia ixx="0.0000410432" ixy="-0.00000971034" ixz="-0.00000900801" iyy="0.0000482692" iyz="-0.0000126829" izz="0.0000284416"/>
     </inertial>
   </link>
   <link name="right_thigh_12">
@@ -2991,9 +2991,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/right_thigh_12.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.06805 -0.022069 -0.053216" rpy="0 0 0"/>
-      <mass value="0.053576"/>
-      <inertia ixx="0.000259517" ixy="-0.0000474286" ixz="0.0000288669" iyy="0.00016739" iyz="0.00010536" izz="0.000192731"/>
+      <origin xyz="0.068051 -0.022069 -0.053217" rpy="0 0 0"/>
+      <mass value="0.053575"/>
+      <inertia ixx="0.000259516" ixy="-0.0000474324" ixz="0.0000288708" iyy="0.000167388" iyz="0.000105361" izz="0.00019273"/>
     </inertial>
   </link>
   <link name="right_thigh_12w1">
@@ -3007,9 +3007,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/right_thigh_12w1.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.04764 0.053844 -0.030049" rpy="0 0 0"/>
-      <mass value="0.030651"/>
-      <inertia ixx="0.0000410131" ixy="0.00000967503" ixz="-0.00000896307" iyy="0.0000483166" iyz="0.0000126409" izz="0.000028348"/>
+      <origin xyz="0.047643 0.053838 -0.030046" rpy="0 0 0"/>
+      <mass value="0.030656"/>
+      <inertia ixx="0.0000410352" ixy="0.00000967942" ixz="-0.00000896597" iyy="0.0000483287" iyz="0.0000126505" izz="0.0000283619"/>
     </inertial>
   </link>
   <link name="left_thigh_13">
@@ -3089,7 +3089,7 @@
     <inertial>
       <origin xyz="0.083117 0.04488 -0.218915" rpy="0 0 0"/>
       <mass value="0.049021"/>
-      <inertia ixx="0.00014508" ixy="0.0000372591" ixz="0.00000173955" iyy="0.000117622" iyz="0.0000158982" izz="0.0000930102"/>
+      <inertia ixx="0.00014508" ixy="0.0000372592" ixz="0.00000173959" iyy="0.000117623" iyz="0.0000158982" izz="0.0000930105"/>
     </inertial>
   </link>
   <link name="right_thigh_15">
@@ -3103,9 +3103,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/right_thigh_15.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.083095 -0.044853 -0.218785" rpy="0 0 0"/>
-      <mass value="0.048837"/>
-      <inertia ixx="0.000144596" ixy="-0.0000372323" ixz="0.00000179302" iyy="0.000117188" iyz="-0.0000156853" izz="0.0000928948"/>
+      <origin xyz="0.083099 -0.04485 -0.218786" rpy="0 0 0"/>
+      <mass value="0.048834"/>
+      <inertia ixx="0.000144587" ixy="-0.000037222" ixz="0.00000178924" iyy="0.000117173" iyz="-0.000015688" izz="0.0000928733"/>
     </inertial>
   </link>
   <link name="left_thigh_16">
@@ -3217,7 +3217,7 @@
     <inertial>
       <origin xyz="0.031612 0.05176 -0.14641" rpy="0 0 0"/>
       <mass value="0.027704"/>
-      <inertia ixx="0.0000413471" ixy="-6.00928e-8" ixz="-9.29769e-7" iyy="0.0000138875" iyz="0.00000219224" izz="0.0000380312"/>
+      <inertia ixx="0.0000413471" ixy="-6.00932e-8" ixz="-9.29769e-7" iyy="0.0000138875" iyz="0.00000219224" izz="0.0000380312"/>
     </inertial>
   </link>
   <link name="right_forearm_1">
@@ -3233,7 +3233,7 @@
     <inertial>
       <origin xyz="0.031565 -0.051921 -0.146447" rpy="0 0 0"/>
       <mass value="0.027744"/>
-      <inertia ixx="0.0000414609" ixy="-5.39771e-9" ixz="-9.42515e-7" iyy="0.0000139014" iyz="-0.00000220368" izz="0.0000381534"/>
+      <inertia ixx="0.0000414609" ixy="-5.39453e-9" ixz="-9.42514e-7" iyy="0.0000139014" iyz="-0.00000220368" izz="0.0000381534"/>
     </inertial>
   </link>
   <link name="left_forearm_2">
@@ -3375,9 +3375,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/left_forearm_6.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.041859 0.028097 -0.07297" rpy="0 0 0"/>
-      <mass value="0.044835"/>
-      <inertia ixx="0.000170877" ixy="-0.00000404029" ixz="0.0000113455" iyy="0.000081646" iyz="-0.0000278387" izz="0.000120088"/>
+      <origin xyz="0.041859 0.028098 -0.072965" rpy="0 0 0"/>
+      <mass value="0.044839"/>
+      <inertia ixx="0.000170896" ixy="-0.00000404021" ixz="0.0000113462" iyy="0.0000816633" iyz="-0.0000278404" izz="0.000120089"/>
     </inertial>
   </link>
   <link name="right_forearm_6">
@@ -3391,9 +3391,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/right_forearm_6.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.041851 -0.028081 -0.073005" rpy="0 0 0"/>
-      <mass value="0.044824"/>
-      <inertia ixx="0.000170839" ixy="0.00000405486" ixz="0.0000114271" iyy="0.0000816554" iyz="0.0000277781" izz="0.000120133"/>
+      <origin xyz="0.041851 -0.028078 -0.073007" rpy="0 0 0"/>
+      <mass value="0.04482"/>
+      <inertia ixx="0.000170824" ixy="0.00000405786" ixz="0.0000114288" iyy="0.0000816475" iyz="0.0000277791" izz="0.000120124"/>
     </inertial>
   </link>
   <link name="left_forearm_7">
@@ -3471,9 +3471,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/left_forearm_9.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.073324 0.037047 -0.116194" rpy="0 0 0"/>
+      <origin xyz="0.073325 0.037046 -0.116193" rpy="0 0 0"/>
       <mass value="0.012966"/>
-      <inertia ixx="0.0000122963" ixy="5.65578e-7" ixz="6.22802e-8" iyy="0.00000576187" iyz="0.00000171578" izz="0.00000686708"/>
+      <inertia ixx="0.000012296" ixy="5.65528e-7" ixz="6.23020e-8" iyy="0.00000576181" iyz="0.00000171569" izz="0.00000686685"/>
     </inertial>
   </link>
   <link name="right_forearm_9">
@@ -3503,9 +3503,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/left_shin_0.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.042698 0.060652 -0.100049" rpy="0 0 0"/>
-      <mass value="0.119004"/>
-      <inertia ixx="0.000613006" ixy="8.22082e-7" ixz="-0.000025191" iyy="0.00047423" iyz="-0.0000350154" izz="0.000222217"/>
+      <origin xyz="0.042696 0.06065 -0.100056" rpy="0 0 0"/>
+      <mass value="0.119003"/>
+      <inertia ixx="0.000613012" ixy="8.15091e-7" ixz="-0.0000251848" iyy="0.000474221" iyz="-0.0000350318" izz="0.000222233"/>
     </inertial>
   </link>
   <link name="right_shin_0">
@@ -3519,9 +3519,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/right_shin_0.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.042614 -0.060639 -0.100285" rpy="0 0 0"/>
-      <mass value="0.119178"/>
-      <inertia ixx="0.000613311" ixy="-9.16671e-7" ixz="-0.0000249165" iyy="0.000474388" iyz="0.0000350205" izz="0.000222827"/>
+      <origin xyz="0.042631 -0.060645 -0.100234" rpy="0 0 0"/>
+      <mass value="0.119251"/>
+      <inertia ixx="0.000613867" ixy="-8.96216e-7" ixz="-0.0000250945" iyy="0.000474987" iyz="0.0000350788" izz="0.000222902"/>
     </inertial>
   </link>
   <link name="left_shin_1">
@@ -3535,9 +3535,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/left_shin_1.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.050251 0.065737 0.088054" rpy="0 0 0"/>
-      <mass value="0.126173"/>
-      <inertia ixx="0.00064399" ixy="-0.00000202272" ixz="0.0000499442" iyy="0.000437765" iyz="0.0000085663" izz="0.000367329"/>
+      <origin xyz="0.050251 0.065736 0.088055" rpy="0 0 0"/>
+      <mass value="0.126174"/>
+      <inertia ixx="0.00064401" ixy="-0.0000020229" ixz="0.0000499467" iyy="0.000437783" iyz="0.00000856824" izz="0.000367331"/>
     </inertial>
   </link>
   <link name="right_shin_1">
@@ -3551,9 +3551,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/right_shin_1.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.050284 -0.065722 0.088149" rpy="0 0 0"/>
+      <origin xyz="0.050283 -0.065722 0.088149" rpy="0 0 0"/>
       <mass value="0.126014"/>
-      <inertia ixx="0.000643532" ixy="0.00000213965" ixz="0.0000501751" iyy="0.000437413" iyz="-0.00000757982" izz="0.000366668"/>
+      <inertia ixx="0.000643538" ixy="0.00000214045" ixz="0.0000501781" iyy="0.000437418" iyz="-0.0000075858" izz="0.000366669"/>
     </inertial>
   </link>
   <link name="left_shin_2">
@@ -3569,7 +3569,7 @@
     <inertial>
       <origin xyz="0.020718 0.009367 -0.339012" rpy="0 0 0"/>
       <mass value="0.109478"/>
-      <inertia ixx="0.000595905" ixy="-4.85407e-7" ixz="-0.0000386091" iyy="0.000468741" iyz="0.0000249946" izz="0.000188714"/>
+      <inertia ixx="0.000595907" ixy="-4.85466e-7" ixz="-0.0000386094" iyy="0.000468743" iyz="0.0000249939" izz="0.000188715"/>
     </inertial>
   </link>
   <link name="right_shin_2">
@@ -3583,9 +3583,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/right_shin_2.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.02067 -0.009277 -0.33911" rpy="0 0 0"/>
-      <mass value="0.109466"/>
-      <inertia ixx="0.000595946" ixy="4.96561e-7" ixz="-0.0000384172" iyy="0.000468486" iyz="-0.000024935" izz="0.000188956"/>
+      <origin xyz="0.02067 -0.009277 -0.339111" rpy="0 0 0"/>
+      <mass value="0.109465"/>
+      <inertia ixx="0.000595936" ixy="4.96421e-7" ixz="-0.0000384158" iyy="0.000468477" iyz="-0.0000249377" izz="0.000188954"/>
     </inertial>
   </link>
   <link name="left_shin_3">
@@ -3599,9 +3599,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/left_shin_3.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.042568 0.005216 -0.110997" rpy="0 0 0"/>
-      <mass value="0.116121"/>
-      <inertia ixx="0.000663507" ixy="0.00000268342" ixz="-0.00000173858" iyy="0.000488638" iyz="0.00000377287" izz="0.000258004"/>
+      <origin xyz="0.042556 0.00522 -0.110928" rpy="0 0 0"/>
+      <mass value="0.116015"/>
+      <inertia ixx="0.000662846" ixy="0.00000267599" ixz="-0.0000018433" iyy="0.000487965" iyz="0.00000380316" izz="0.000257975"/>
     </inertial>
   </link>
   <link name="right_shin_3">
@@ -3615,9 +3615,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/right_shin_3.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.042564 -0.005179 -0.111016" rpy="0 0 0"/>
-      <mass value="0.116356"/>
-      <inertia ixx="0.000664964" ixy="-0.00000281497" ixz="-0.00000175331" iyy="0.0004898" iyz="-0.00000382085" izz="0.00025849"/>
+      <origin xyz="0.042564 -0.00518 -0.111013" rpy="0 0 0"/>
+      <mass value="0.116355"/>
+      <inertia ixx="0.000664937" ixy="-0.00000281547" ixz="-0.00000175788" iyy="0.000489772" iyz="-0.00000384493" izz="0.000258492"/>
     </inertial>
   </link>
   <link name="left_shin_4">
@@ -3887,9 +3887,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/left_hand_1.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.026169 -0.008715 -0.084815" rpy="0 0 0"/>
-      <mass value="0.042984"/>
-      <inertia ixx="0.0000736055" ixy="0.00000356529" ixz="0.0000123817" iyy="0.000080991" iyz="0.0000161105" izz="0.000031796"/>
+      <origin xyz="-0.026168 -0.008716 -0.084817" rpy="0 0 0"/>
+      <mass value="0.042982"/>
+      <inertia ixx="0.0000736027" ixy="0.00000356434" ixz="0.00001238" iyy="0.0000809876" iyz="0.0000161116" izz="0.000031794"/>
     </inertial>
   </link>
   <link name="right_hand_1">
@@ -3903,9 +3903,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/right_hand_1.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.026158 0.008726 -0.08479" rpy="0 0 0"/>
-      <mass value="0.043024"/>
-      <inertia ixx="0.0000736818" ixy="-0.00000360435" ixz="0.0000123518" iyy="0.0000810917" iyz="-0.000016116" izz="0.0000318548"/>
+      <origin xyz="-0.026157 0.008725 -0.08479" rpy="0 0 0"/>
+      <mass value="0.043023"/>
+      <inertia ixx="0.0000736815" ixy="-0.00000360469" ixz="0.000012351" iyy="0.00008109" iyz="-0.0000161153" izz="0.0000318548"/>
     </inertial>
   </link>
   <link name="left_hand_2">
@@ -3951,9 +3951,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/left_hand_3.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.023425 0.039833 -0.089171" rpy="0 0 0"/>
-      <mass value="0.040579"/>
-      <inertia ixx="0.000070697" ixy="-0.00000388959" ixz="0.00000811201" iyy="0.0000822347" iyz="-0.00000683646" izz="0.0000220754"/>
+      <origin xyz="-0.023425 0.039834 -0.089171" rpy="0 0 0"/>
+      <mass value="0.040578"/>
+      <inertia ixx="0.0000706964" ixy="-0.00000388913" ixz="0.00000811225" iyy="0.0000822341" iyz="-0.00000683619" izz="0.0000220745"/>
     </inertial>
   </link>
   <link name="right_hand_3">
@@ -3967,9 +3967,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/right_hand_3.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.023415 -0.039832 -0.089173" rpy="0 0 0"/>
-      <mass value="0.040621"/>
-      <inertia ixx="0.0000707409" ixy="0.00000389835" ixz="0.00000813766" iyy="0.0000823258" iyz="0.00000682295" izz="0.0000221238"/>
+      <origin xyz="-0.023414 -0.039833 -0.089173" rpy="0 0 0"/>
+      <mass value="0.04062"/>
+      <inertia ixx="0.0000707404" ixy="0.00000389792" ixz="0.00000813788" iyy="0.0000823253" iyz="0.00000682273" izz="0.0000221229"/>
     </inertial>
   </link>
   <link name="left_hand_4">
@@ -4111,9 +4111,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/left_hand_8.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.06794 -0.012062 -0.084707" rpy="0 0 0"/>
-      <mass value="0.066801"/>
-      <inertia ixx="0.000111577" ixy="0.00000316732" ixz="-0.00000479851" iyy="0.00012447" iyz="0.0000234836" izz="0.0000544299"/>
+      <origin xyz="0.06794 -0.012063 -0.084709" rpy="0 0 0"/>
+      <mass value="0.066799"/>
+      <inertia ixx="0.000111573" ixy="0.00000316738" ixz="-0.00000479834" iyy="0.000124467" iyz="0.0000234852" izz="0.0000544291"/>
     </inertial>
   </link>
   <link name="right_hand_8">
@@ -4127,9 +4127,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/right_hand_8.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.067954 0.012086 -0.084703" rpy="0 0 0"/>
-      <mass value="0.0667"/>
-      <inertia ixx="0.00011133" ixy="-0.00000311418" ixz="-0.00000466243" iyy="0.000124183" iyz="-0.0000234565" izz="0.0000543549"/>
+      <origin xyz="0.067954 0.012086 -0.084704" rpy="0 0 0"/>
+      <mass value="0.066699"/>
+      <inertia ixx="0.000111329" ixy="-0.00000311418" ixz="-0.00000466235" iyy="0.000124182" iyz="-0.0000234571" izz="0.0000543548"/>
     </inertial>
   </link>
   <link name="left_hand_9">
@@ -4239,9 +4239,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/left_hand_12.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.054834 0.036031 -0.094873" rpy="0 0 0"/>
-      <mass value="0.041445"/>
-      <inertia ixx="0.0000751111" ixy="0.00000329844" ixz="-0.00000126844" iyy="0.0000871134" iyz="-0.00000880253" izz="0.0000222737"/>
+      <origin xyz="0.054832 0.036032 -0.094872" rpy="0 0 0"/>
+      <mass value="0.041443"/>
+      <inertia ixx="0.0000751091" ixy="0.00000329746" ixz="-0.00000126999" iyy="0.0000871102" iyz="-0.00000880176" izz="0.0000222714"/>
     </inertial>
   </link>
   <link name="right_hand_12">
@@ -4255,9 +4255,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/right_hand_12.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.05484 -0.036036 -0.094833" rpy="0 0 0"/>
-      <mass value="0.041421"/>
-      <inertia ixx="0.0000751353" ixy="-0.00000327354" ixz="-0.00000128522" iyy="0.0000870956" iyz="0.00000881415" izz="0.0000222161"/>
+      <origin xyz="0.054839 -0.036037 -0.094832" rpy="0 0 0"/>
+      <mass value="0.041419"/>
+      <inertia ixx="0.0000751339" ixy="-0.00000327277" ixz="-0.00000128646" iyy="0.0000870931" iyz="0.00000881351" izz="0.0000222143"/>
     </inertial>
   </link>
   <link name="left_hand_13">
@@ -4465,7 +4465,7 @@
     <inertial>
       <origin xyz="0.03705 0.095373 0.136094" rpy="0 0 0"/>
       <mass value="0.062201"/>
-      <inertia ixx="0.000182284" ixy="-1.35490e-7" ixz="1.11530e-7" iyy="0.000121949" iyz="0.00000373892" izz="0.0000981721"/>
+      <inertia ixx="0.000182283" ixy="-1.35325e-7" ixz="1.11348e-7" iyy="0.000121949" iyz="0.00000373892" izz="0.000098172"/>
     </inertial>
   </link>
   <link name="right_mech_shoulder_0">
@@ -4496,8 +4496,8 @@
     </collision>
     <inertial>
       <origin xyz="0.037125 -0.010015 -0.00861" rpy="0 0 0"/>
-      <mass value="0.062535"/>
-      <inertia ixx="0.000183092" ixy="2.35444e-8" ixz="-0.00000170965" iyy="0.000123459" iyz="-2.19856e-8" izz="0.00009811"/>
+      <mass value="0.062536"/>
+      <inertia ixx="0.000183092" ixy="2.36403e-8" ixz="-0.00000170965" iyy="0.000123459" iyz="-2.20972e-8" izz="0.00009811"/>
     </inertial>
   </link>
   <link name="right_mech_shoulder_1">
@@ -4512,8 +4512,8 @@
     </collision>
     <inertial>
       <origin xyz="0.037125 0.010001 -0.008638" rpy="0 0 0"/>
-      <mass value="0.062604"/>
-      <inertia ixx="0.000183265" ixy="-4.01759e-8" ixz="-0.00000173903" iyy="0.000123589" iyz="5.06404e-8" izz="0.0000981798"/>
+      <mass value="0.062605"/>
+      <inertia ixx="0.000183265" ixy="-4.03604e-8" ixz="-0.00000173899" iyy="0.00012359" iyz="5.09186e-8" izz="0.00009818"/>
     </inertial>
   </link>
   <link name="left_mech_elbow_0">
@@ -4559,9 +4559,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/left_mech_elbow_1.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.015689 0.038989 0.033234" rpy="0 0 0"/>
+      <origin xyz="0.015689 0.038989 0.033235" rpy="0 0 0"/>
       <mass value="0.007777"/>
-      <inertia ixx="0.00000397223" ixy="3.34281e-8" ixz="7.19253e-7" iyy="0.00000453898" iyz="0.00000100145" izz="0.00000138101"/>
+      <inertia ixx="0.00000397204" ixy="3.34282e-8" ixz="7.19151e-7" iyy="0.00000453874" iyz="0.00000100145" izz="0.00000138095"/>
     </inertial>
   </link>
   <link name="left_mech_elbow_1p1">
@@ -4593,7 +4593,7 @@
     <inertial>
       <origin xyz="0.015706 -0.038981 0.033244" rpy="0 0 0"/>
       <mass value="0.007783"/>
-      <inertia ixx="0.00000398018" ixy="-3.11637e-8" ixz="7.25086e-7" iyy="0.00000454622" iyz="-0.0000010031" izz="0.00000138061"/>
+      <inertia ixx="0.00000398018" ixy="-3.11686e-8" ixz="7.25086e-7" iyy="0.00000454622" iyz="-0.00000100309" izz="0.00000138061"/>
     </inertial>
   </link>
   <link name="right_mech_elbow_1p1">
@@ -4609,7 +4609,7 @@
     <inertial>
       <origin xyz="0.019802 -0.051477 -0.022888" rpy="0 0 0"/>
       <mass value="0.003139"/>
-      <inertia ixx="3.91909e-7" ixy="-9.13718e-8" ixz="-8.62427e-8" iyy="5.95110e-7" iyz="-4.59070e-8" izz="2.90385e-7"/>
+      <inertia ixx="3.91911e-7" ixy="-9.13722e-8" ixz="-8.62434e-8" iyy="5.95112e-7" iyz="-4.59075e-8" izz="2.90386e-7"/>
     </inertial>
   </link>
   <link name="left_mech_elbow_2">
@@ -4625,7 +4625,7 @@
     <inertial>
       <origin xyz="0.008329 -0.050574 -0.003737" rpy="0 0 0"/>
       <mass value="0.004032"/>
-      <inertia ixx="0.00000287309" ixy="-5.93802e-8" ixz="2.31333e-7" iyy="0.00000284241" iyz="6.35718e-7" izz="2.83871e-7"/>
+      <inertia ixx="0.0000028731" ixy="-5.93803e-8" ixz="2.31333e-7" iyy="0.00000284241" iyz="6.35718e-7" izz="2.83871e-7"/>
     </inertial>
   </link>
   <link name="right_mech_elbow_2">
@@ -4641,7 +4641,7 @@
     <inertial>
       <origin xyz="0.00833 0.050569 -0.003759" rpy="0 0 0"/>
       <mass value="0.004021"/>
-      <inertia ixx="0.00000286411" ixy="5.92951e-8" ixz="2.31289e-7" iyy="0.0000028336" iyz="-6.33538e-7" izz="2.82919e-7"/>
+      <inertia ixx="0.0000028641" ixy="5.92950e-8" ixz="2.31288e-7" iyy="0.00000283359" iyz="-6.33536e-7" izz="2.82918e-7"/>
     </inertial>
   </link>
   <link name="left_mech_wrist_0">
@@ -4687,9 +4687,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/left_mech_hip_0.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.044161 0.110161 0.171276" rpy="0 0 0"/>
+      <origin xyz="0.044161 0.110161 0.171275" rpy="0 0 0"/>
       <mass value="0.039854"/>
-      <inertia ixx="0.0000885297" ixy="0.00000226577" ixz="-0.00000326314" iyy="0.0000323571" iyz="0.00000882401" izz="0.000080332"/>
+      <inertia ixx="0.0000885294" ixy="0.00000226575" ixz="-0.00000326311" iyy="0.0000323569" iyz="0.00000882389" izz="0.0000803319"/>
     </inertial>
   </link>
   <link name="left_mech_hip_0p1">
@@ -4705,7 +4705,7 @@
     <inertial>
       <origin xyz="0.040831 0.142202 0.238837" rpy="0 0 0"/>
       <mass value="0.025626"/>
-      <inertia ixx="0.0000388567" ixy="0.000011095" ixz="-6.67423e-7" iyy="0.000018476" iyz="0.00000106797" izz="0.0000383615"/>
+      <inertia ixx="0.0000388562" ixy="0.0000110949" ixz="-6.67620e-7" iyy="0.0000184755" iyz="0.00000106809" izz="0.0000383611"/>
     </inertial>
   </link>
   <link name="right_mech_hip_0">
@@ -4721,7 +4721,7 @@
     <inertial>
       <origin xyz="0.044144 -0.110196 0.171278" rpy="0 0 0"/>
       <mass value="0.039839"/>
-      <inertia ixx="0.0000885493" ixy="-0.00000230084" ixz="-0.00000326344" iyy="0.0000323715" iyz="-0.00000882656" izz="0.0000803505"/>
+      <inertia ixx="0.0000885494" ixy="-0.00000230085" ixz="-0.00000326345" iyy="0.0000323716" iyz="-0.00000882659" izz="0.0000803505"/>
     </inertial>
   </link>
   <link name="right_mech_hip_0p1">
@@ -4735,9 +4735,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/right_mech_hip_0p1.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.040827 -0.142177 0.238843" rpy="0 0 0"/>
-      <mass value="0.025622"/>
-      <inertia ixx="0.0000388803" ixy="-0.0000111113" ixz="-6.66915e-7" iyy="0.0000184725" iyz="-0.00000106446" izz="0.0000383963"/>
+      <origin xyz="0.040828 -0.142175 0.238843" rpy="0 0 0"/>
+      <mass value="0.025621"/>
+      <inertia ixx="0.0000388792" ixy="-0.0000111116" ixz="-6.66304e-7" iyy="0.0000184721" iyz="-0.00000106307" izz="0.0000383962"/>
     </inertial>
   </link>
   <link name="left_mech_hip_1">
@@ -4784,8 +4784,8 @@
     </collision>
     <inertial>
       <origin xyz="0.04667 0.032646 -0.031262" rpy="0 0 0"/>
-      <mass value="0.021159"/>
-      <inertia ixx="0.0000218424" ixy="0.00000770205" ixz="-0.00000372719" iyy="0.0000162888" iyz="0.00000289785" izz="0.0000199748"/>
+      <mass value="0.02116"/>
+      <inertia ixx="0.0000218428" ixy="0.00000770207" ixz="-0.0000037271" iyy="0.000016289" iyz="0.00000289764" izz="0.0000199749"/>
     </inertial>
   </link>
   <link name="right_mech_hip_1p1">
@@ -4799,9 +4799,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/right_mech_hip_1p1.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.036321 0.048732 0.032692" rpy="0 0 0"/>
+      <origin xyz="0.036321 0.048732 0.032693" rpy="0 0 0"/>
       <mass value="0.01852"/>
-      <inertia ixx="0.0000147269" ixy="0.00000698093" ixz="4.35964e-8" iyy="0.0000147061" iyz="6.42750e-7" izz="0.0000159422"/>
+      <inertia ixx="0.0000147271" ixy="0.00000698089" ixz="4.35819e-8" iyy="0.0000147063" iyz="6.42773e-7" izz="0.0000159421"/>
     </inertial>
   </link>
   <link name="left_mech_hip_2">
@@ -4929,7 +4929,7 @@
     <inertial>
       <origin xyz="0.009971 -0.135166 0.230689" rpy="0 0 0"/>
       <mass value="0.004433"/>
-      <inertia ixx="0.00000291846" ixy="-1.44474e-8" ixz="3.06587e-8" iyy="0.00000305342" iyz="1.12279e-7" izz="1.58193e-7"/>
+      <inertia ixx="0.00000291846" ixy="-1.44474e-8" ixz="3.06586e-8" iyy="0.00000305342" iyz="1.12279e-7" izz="1.58193e-7"/>
     </inertial>
   </link>
   <link name="left_mech_knee_2">
@@ -5297,7 +5297,7 @@
     <inertial>
       <origin xyz="-0.031535 0.095199 0.07633" rpy="0 0 0"/>
       <mass value="0.007886"/>
-      <inertia ixx="6.56039e-7" ixy="-3.01397e-9" ixz="-3.22909e-8" iyy="0.00000154906" iyz="-3.84232e-8" izz="0.00000134227"/>
+      <inertia ixx="6.56038e-7" ixy="-3.01397e-9" ixz="-3.22910e-8" iyy="0.00000154906" iyz="-3.84232e-8" izz="0.00000134227"/>
     </inertial>
   </link>
   <link name="hinge_helmet_left_0_knuckle">
@@ -5649,7 +5649,7 @@
     <inertial>
       <origin xyz="0.016253 0.07738 -0.02593" rpy="0 0 0"/>
       <mass value="0.010709"/>
-      <inertia ixx="0.0000017414" ixy="3.07704e-7" ixz="8.91042e-8" iyy="0.00000225476" iyz="4.02285e-7" izz="0.00000134617"/>
+      <inertia ixx="0.0000017414" ixy="3.07704e-7" ixz="8.91043e-8" iyy="0.00000225476" iyz="4.02285e-7" izz="0.00000134617"/>
     </inertial>
   </link>
   <link name="hinge_left_forearm_1">
@@ -5681,7 +5681,7 @@
     <inertial>
       <origin xyz="0.035451 0.094893 -0.136375" rpy="0 0 0"/>
       <mass value="0.017749"/>
-      <inertia ixx="0.00000300721" ixy="3.63286e-7" ixz="-6.02149e-7" iyy="0.00000728346" iyz="1.14491e-7" izz="0.0000067588"/>
+      <inertia ixx="0.00000300721" ixy="3.63286e-7" ixz="-6.02150e-7" iyy="0.00000728346" iyz="1.14491e-7" izz="0.0000067588"/>
     </inertial>
   </link>
   <link name="hinge_left_forearm_0_knuckle">
@@ -5919,9 +5919,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/arm_left_thigh.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.004944 0.000937199 0.003997" rpy="0 0 0"/>
-      <mass value="0.007748"/>
-      <inertia ixx="7.07254e-7" ixy="-1.66861e-7" ixz="5.04559e-11" iyy="0.0000014591" iyz="1.23137e-10" izz="0.00000211979"/>
+      <origin xyz="0.004944 0.000937401 0.003997" rpy="0 0 0"/>
+      <mass value="0.007749"/>
+      <inertia ixx="7.07265e-7" ixy="-1.66880e-7" ixz="5.54215e-11" iyy="0.00000145914" iyz="1.25690e-10" izz="0.00000211983"/>
     </inertial>
   </link>
   <link name="hinge_right_thigh_0">
@@ -6017,7 +6017,7 @@
     <inertial>
       <origin xyz="0.004914 -0.000923588 0.003997" rpy="0 0 0"/>
       <mass value="0.007734"/>
-      <inertia ixx="7.06423e-7" ixy="1.65179e-7" ixz="7.44292e-11" iyy="0.00000145456" iyz="-1.40913e-10" izz="0.0000021145"/>
+      <inertia ixx="7.06423e-7" ixy="1.65179e-7" ixz="7.44251e-11" iyy="0.00000145456" iyz="-1.40913e-10" izz="0.0000021145"/>
     </inertial>
   </link>
   <link name="hinge_left_shin_0">
@@ -6369,7 +6369,7 @@
     <inertial>
       <origin xyz="0.01996 0.015133 -0.214386" rpy="0 0 0"/>
       <mass value="0.006419"/>
-      <inertia ixx="5.26790e-7" ixy="-9.03506e-8" ixz="-4.92272e-8" iyy="0.00000109136" iyz="1.80693e-8" izz="0.0000011057"/>
+      <inertia ixx="5.26785e-7" ixy="-9.03562e-8" ixz="-4.92290e-8" iyy="0.00000109136" iyz="1.80678e-8" izz="0.00000110569"/>
     </inertial>
   </link>
   <link name="latch_left_upper_arm_0_ledge">
@@ -6415,9 +6415,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/latch_right_upper_arm_0_block.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.019952 -0.015141 -0.214379" rpy="0 0 0"/>
-      <mass value="0.006417"/>
-      <inertia ixx="5.26600e-7" ixy="9.06411e-8" ixz="-4.87998e-8" iyy="0.0000010925" iyz="-1.82102e-8" izz="0.00000110706"/>
+      <origin xyz="0.01995 -0.015139 -0.214371" rpy="0 0 0"/>
+      <mass value="0.00641"/>
+      <inertia ixx="5.26142e-7" ixy="9.05912e-8" ixz="-4.88659e-8" iyy="0.00000109198" iyz="-1.81289e-8" izz="0.00000110686"/>
     </inertial>
   </link>
   <link name="latch_right_upper_arm_0_ledge">
@@ -6561,7 +6561,7 @@
     <inertial>
       <origin xyz="0.038561 -0.046558 -0.301962" rpy="0 0 0"/>
       <mass value="0.006301"/>
-      <inertia ixx="4.84890e-7" ixy="-2.42726e-8" ixz="-5.80877e-8" iyy="0.00000114458" iyz="2.78793e-8" izz="0.00000109691"/>
+      <inertia ixx="4.84908e-7" ixy="-2.42618e-8" ixz="-5.81090e-8" iyy="0.00000114458" iyz="2.78938e-8" izz="0.00000109691"/>
     </inertial>
   </link>
   <link name="latch_left_thigh_0_ledge">
@@ -6609,7 +6609,7 @@
     <inertial>
       <origin xyz="0.038568 0.046547 -0.301954" rpy="0 0 0"/>
       <mass value="0.006287"/>
-      <inertia ixx="4.83383e-7" ixy="2.35086e-8" ixz="-5.73709e-8" iyy="0.00000114268" iyz="-2.82599e-8" izz="0.0000010945"/>
+      <inertia ixx="4.83404e-7" ixy="2.35020e-8" ixz="-5.73941e-8" iyy="0.00000114273" iyz="-2.82652e-8" izz="0.00000109454"/>
     </inertial>
   </link>
   <link name="latch_right_thigh_0_ledge">
@@ -6639,9 +6639,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/latch_right_thigh_0_pawl.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.012857 -0.000607873 0.007898" rpy="0 0 0"/>
+      <origin xyz="0.012857 -0.000607948 0.007898" rpy="0 0 0"/>
       <mass value="0.002828"/>
-      <inertia ixx="1.00000e-7" ixy="3.11722e-8" ixz="1.46717e-11" iyy="4.87487e-7" iyz="1.90918e-12" izz="4.97804e-7"/>
+      <inertia ixx="1.00000e-7" ixy="3.11731e-8" ixz="1.83400e-11" iyy="4.87476e-7" iyz="2.85924e-12" izz="4.97792e-7"/>
     </inertial>
   </link>
   <link name="latch_left_shin_0_block">
@@ -6801,7 +6801,7 @@
     <inertial>
       <origin xyz="0.090316 0.083246 -0.012696" rpy="0 0 0"/>
       <mass value="0.009439"/>
-      <inertia ixx="0.0000122275" ixy="-0.00000303759" ixz="6.76841e-7" iyy="0.00000271502" iyz="0.00000261022" izz="0.0000122235"/>
+      <inertia ixx="0.0000122275" ixy="-0.00000303759" ixz="6.76840e-7" iyy="0.00000271502" iyz="0.00000261021" izz="0.0000122235"/>
     </inertial>
   </link>
   <link name="chan_belt_0">
@@ -6817,7 +6817,7 @@
     <inertial>
       <origin xyz="0.062761 0.072342 0.068282" rpy="0 0 0"/>
       <mass value="0.007034"/>
-      <inertia ixx="0.00000919115" ixy="0.00000476279" ixz="2.97795e-7" iyy="0.00000338656" iyz="-3.91261e-7" izz="0.000012161"/>
+      <inertia ixx="0.00000919117" ixy="0.0000047628" ixz="2.97794e-7" iyy="0.00000338656" iyz="-3.91260e-7" izz="0.000012161"/>
     </inertial>
   </link>
   <link name="chan_belt_1">
@@ -6831,9 +6831,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/chan_belt_1.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.062467 -0.071472 0.068209" rpy="0 0 0"/>
-      <mass value="0.006999"/>
-      <inertia ixx="0.00000914348" ixy="-0.00000481418" ixz="2.93678e-7" iyy="0.00000340839" iyz="3.75381e-7" izz="0.0000121382"/>
+      <origin xyz="0.062493 -0.071409 0.068209" rpy="0 0 0"/>
+      <mass value="0.007007"/>
+      <inertia ixx="0.00000916747" ixy="-0.00000482404" ixz="2.93595e-7" iyy="0.00000341269" iyz="3.75313e-7" izz="0.0000121661"/>
     </inertial>
   </link>
   <link name="chan_chest_0">
@@ -6863,9 +6863,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/chan_chest_1.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.077858 0.060051 0.513667" rpy="0 0 0"/>
-      <mass value="0.004612"/>
-      <inertia ixx="0.00000438731" ixy="-1.90005e-7" ixz="1.32791e-7" iyy="8.75555e-7" iyz="0.00000158389" izz="0.00000362279"/>
+      <origin xyz="0.077857 0.060061 0.513662" rpy="0 0 0"/>
+      <mass value="0.004624"/>
+      <inertia ixx="0.00000438755" ixy="-1.90026e-7" ixz="1.32807e-7" iyy="8.75702e-7" iyz="0.00000158406" izz="0.00000362289"/>
     </inertial>
   </link>
   <link name="chan_chest_2">
@@ -6879,9 +6879,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/chan_chest_2.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.09332 0.002159 0.469108" rpy="0 0 0"/>
-      <mass value="0.004862"/>
-      <inertia ixx="0.00000469305" ixy="9.16967e-8" ixz="9.29728e-7" iyy="0.00000480909" iyz="-5.32080e-8" izz="4.48909e-7"/>
+      <origin xyz="0.093316 0.002152 0.469143" rpy="0 0 0"/>
+      <mass value="0.004869"/>
+      <inertia ixx="0.00000469755" ixy="9.16625e-8" ixz="9.30184e-7" iyy="0.00000481338" iyz="-5.24067e-8" izz="4.49332e-7"/>
     </inertial>
   </link>
   <link name="chan_collar_0">
@@ -6895,9 +6895,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/chan_collar_0.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.073524 0.051642 0.522568" rpy="0 0 0"/>
+      <origin xyz="0.073459 0.051496 0.522652" rpy="0 0 0"/>
       <mass value="0.002"/>
-      <inertia ixx="4.92369e-7" ixy="-3.08463e-8" ixz="4.44667e-8" iyy="2.29278e-7" iyz="1.95991e-7" izz="3.04627e-7"/>
+      <inertia ixx="4.90417e-7" ixy="-2.95238e-8" ixz="4.36406e-8" iyy="2.28912e-7" iyz="1.94784e-7" izz="3.02658e-7"/>
     </inertial>
   </link>
   <link name="chan_left_flank_low_0">
@@ -6927,9 +6927,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/chan_left_flank_high_0.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.051879 0.16864 0.312077" rpy="0 0 0"/>
-      <mass value="0.008925"/>
-      <inertia ixx="0.000017299" ixy="-3.47489e-7" ixz="-0.00000172856" iyy="0.0000168613" iyz="-0.00000363988" izz="0.00000155771"/>
+      <origin xyz="0.051889 0.168655 0.31214" rpy="0 0 0"/>
+      <mass value="0.008942"/>
+      <inertia ixx="0.0000173193" ixy="-3.48241e-7" ixz="-0.00000173165" iyy="0.0000168811" iyz="-0.00000364457" izz="0.00000155942"/>
     </inertial>
   </link>
   <link name="chan_left_upper_arm_0">
@@ -6945,7 +6945,7 @@
     <inertial>
       <origin xyz="0.032828 0.002252 -0.170168" rpy="0 0 0"/>
       <mass value="0.002835"/>
-      <inertia ixx="0.00000104503" ixy="-8.89130e-9" ixz="-5.87907e-8" iyy="9.82068e-7" iyz="2.83430e-7" izz="1.73018e-7"/>
+      <inertia ixx="0.00000104503" ixy="-8.89130e-9" ixz="-5.87908e-8" iyy="9.82068e-7" iyz="2.83430e-7" izz="1.73018e-7"/>
     </inertial>
   </link>
   <link name="chan_left_forearm_0">
@@ -6959,9 +6959,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/chan_left_forearm_0.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.047174 -0.024405 -0.084324" rpy="0 0 0"/>
-      <mass value="0.004795"/>
-      <inertia ixx="0.0000048063" ixy="-1.63075e-7" ixz="6.04126e-7" iyy="0.00000474132" iyz="8.87794e-7" izz="4.02410e-7"/>
+      <origin xyz="0.047173 -0.024406 -0.084321" rpy="0 0 0"/>
+      <mass value="0.004794"/>
+      <inertia ixx="0.00000480627" ixy="-1.63059e-7" ixz="6.04080e-7" iyy="0.00000474128" iyz="8.87778e-7" izz="4.02377e-7"/>
     </inertial>
   </link>
   <link name="chan_left_forearm_1">
@@ -6975,9 +6975,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/chan_left_forearm_1.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.054609 -0.001323 -0.170794" rpy="0 0 0"/>
+      <origin xyz="0.054609 -0.001322 -0.170796" rpy="0 0 0"/>
       <mass value="0.002357"/>
-      <inertia ixx="6.18817e-7" ixy="-2.92140e-8" ixz="2.22764e-8" iyy="5.88497e-7" iyz="1.59630e-7" izz="1.19626e-7"/>
+      <inertia ixx="6.18720e-7" ixy="-2.92083e-8" ixz="2.22624e-8" iyy="5.88410e-7" iyz="1.59597e-7" izz="1.19610e-7"/>
     </inertial>
   </link>
   <link name="chan_left_thigh_0">
@@ -6991,9 +6991,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/chan_left_thigh_0.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.069715 0.071578 -0.098118" rpy="0 0 0"/>
-      <mass value="0.005779"/>
-      <inertia ixx="0.00000854265" ixy="3.94349e-8" ixz="1.33848e-7" iyy="0.0000085653" iyz="1.69673e-7" izz="2.00029e-7"/>
+      <origin xyz="0.069715 0.071578 -0.098132" rpy="0 0 0"/>
+      <mass value="0.00578"/>
+      <inertia ixx="0.00000854728" ixy="3.94407e-8" ixz="1.33995e-7" iyy="0.00000856993" iyz="1.69611e-7" izz="2.00043e-7"/>
     </inertial>
   </link>
   <link name="chan_left_thigh_1">
@@ -7009,7 +7009,7 @@
     <inertial>
       <origin xyz="0.068972 0.071246 -0.231443" rpy="0 0 0"/>
       <mass value="0.005105"/>
-      <inertia ixx="0.00000596469" ixy="4.77145e-8" ixz="-5.81751e-8" iyy="0.00000598574" iyz="-5.10785e-8" izz="1.51534e-7"/>
+      <inertia ixx="0.00000596469" ixy="4.77144e-8" ixz="-5.81753e-8" iyy="0.00000598574" iyz="-5.10784e-8" izz="1.51534e-7"/>
     </inertial>
   </link>
   <link name="chan_left_thigh_2">
@@ -7025,7 +7025,7 @@
     <inertial>
       <origin xyz="0.062301 0.064891 -0.362163" rpy="0 0 0"/>
       <mass value="0.005541"/>
-      <inertia ixx="0.00000764037" ixy="5.09871e-8" ixz="-1.55741e-7" iyy="0.00000765895" iyz="-1.23000e-7" izz="1.67740e-7"/>
+      <inertia ixx="0.00000764037" ixy="5.09871e-8" ixz="-1.55741e-7" iyy="0.00000765896" iyz="-1.23001e-7" izz="1.67740e-7"/>
     </inertial>
   </link>
   <link name="chan_left_shin_0">
@@ -7039,9 +7039,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/chan_left_shin_0.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.040963 0.049677 -0.092924" rpy="0 0 0"/>
+      <origin xyz="0.040963 0.049677 -0.092925" rpy="0 0 0"/>
       <mass value="0.004884"/>
-      <inertia ixx="0.00000521216" ixy="4.42968e-8" ixz="-3.02434e-7" iyy="0.00000523142" iyz="6.06389e-8" izz="1.72188e-7"/>
+      <inertia ixx="0.00000521212" ixy="4.42969e-8" ixz="-3.02437e-7" iyy="0.00000523138" iyz="6.06393e-8" izz="1.72188e-7"/>
     </inertial>
   </link>
   <link name="chan_left_shin_1">
@@ -7057,7 +7057,7 @@
     <inertial>
       <origin xyz="0.030143 0.047899 -0.216024" rpy="0 0 0"/>
       <mass value="0.005041"/>
-      <inertia ixx="0.00000579639" ixy="1.63687e-8" ixz="-6.47289e-7" iyy="0.00000585538" iyz="-2.94415e-7" izz="2.33442e-7"/>
+      <inertia ixx="0.00000579639" ixy="1.63688e-8" ixz="-6.47288e-7" iyy="0.00000585538" iyz="-2.94414e-7" izz="2.33442e-7"/>
     </inertial>
   </link>
   <link name="chan_left_shin_2">
@@ -7073,7 +7073,7 @@
     <inertial>
       <origin xyz="0.017837 0.044826 -0.340558" rpy="0 0 0"/>
       <mass value="0.004908"/>
-      <inertia ixx="0.00000531094" ixy="5.20326e-8" ixz="-2.86684e-7" iyy="0.00000532641" iyz="7.90095e-8" izz="1.61121e-7"/>
+      <inertia ixx="0.00000531072" ixy="5.20309e-8" ixz="-2.86669e-7" iyy="0.00000532619" iyz="7.89834e-8" izz="1.61117e-7"/>
     </inertial>
   </link>
   <link name="chan_left_helmet_0">
@@ -7103,9 +7103,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/chan_right_flank_low_0.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.031034 -0.124255 0.15712" rpy="0 0 0"/>
-      <mass value="0.008387"/>
-      <inertia ixx="0.0000147499" ixy="1.24441e-7" ixz="-7.81068e-7" iyy="0.0000143056" iyz="0.00000309312" izz="0.00000123237"/>
+      <origin xyz="0.031036 -0.12426 0.157141" rpy="0 0 0"/>
+      <mass value="0.008383"/>
+      <inertia ixx="0.0000147353" ixy="1.24346e-7" ixz="-7.80506e-7" iyy="0.0000142918" iyz="0.00000308979" izz="0.0000012314"/>
     </inertial>
   </link>
   <link name="chan_right_flank_high_0">
@@ -7119,9 +7119,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/chan_right_flank_high_0.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.051911 -0.168559 0.312071" rpy="0 0 0"/>
+      <origin xyz="0.051911 -0.16856 0.312075" rpy="0 0 0"/>
       <mass value="0.008907"/>
-      <inertia ixx="0.000017251" ixy="3.44561e-7" ixz="-0.00000170401" iyy="0.0000167997" iyz="0.00000365756" izz="0.00000156076"/>
+      <inertia ixx="0.000017249" ixy="3.44516e-7" ixz="-0.00000170381" iyy="0.0000167978" iyz="0.00000365707" izz="0.00000156057"/>
     </inertial>
   </link>
   <link name="chan_right_upper_arm_0">
@@ -7135,9 +7135,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/chan_right_upper_arm_0.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.032695 -0.002269 -0.170179" rpy="0 0 0"/>
+      <origin xyz="0.032695 -0.002269 -0.17018" rpy="0 0 0"/>
       <mass value="0.002837"/>
-      <inertia ixx="0.00000104581" ixy="7.57220e-9" ixz="-6.46784e-8" iyy="9.82354e-7" iyz="-2.82352e-7" izz="1.73297e-7"/>
+      <inertia ixx="0.00000104581" ixy="7.57212e-9" ixz="-6.46789e-8" iyy="9.82357e-7" iyz="-2.82352e-7" izz="1.73297e-7"/>
     </inertial>
   </link>
   <link name="chan_right_forearm_0">
@@ -7151,9 +7151,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/chan_right_forearm_0.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.047243 0.024173 -0.083974" rpy="0 0 0"/>
-      <mass value="0.004809"/>
-      <inertia ixx="0.00000485728" ixy="1.60275e-7" ixz="6.32435e-7" iyy="0.00000481978" iyz="-8.62999e-7" izz="4.00172e-7"/>
+      <origin xyz="0.04724 0.024172 -0.08397" rpy="0 0 0"/>
+      <mass value="0.004808"/>
+      <inertia ixx="0.00000485756" ixy="1.60391e-7" ixz="6.32996e-7" iyy="0.00000482013" iyz="-8.63041e-7" izz="4.00319e-7"/>
     </inertial>
   </link>
   <link name="chan_right_forearm_1">
@@ -7167,9 +7167,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/chan_right_forearm_1.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.054687 0.001364 -0.17081" rpy="0 0 0"/>
-      <mass value="0.00236"/>
-      <inertia ixx="6.20453e-7" ixy="2.92437e-8" ixz="2.27083e-8" iyy="5.90759e-7" iyz="-1.59730e-7" izz="1.19587e-7"/>
+      <origin xyz="0.054687 0.001362 -0.170811" rpy="0 0 0"/>
+      <mass value="0.002359"/>
+      <inertia ixx="6.20329e-7" ixy="2.92396e-8" ixz="2.26980e-8" iyy="5.90638e-7" iyz="-1.59705e-7" izz="1.19578e-7"/>
     </inertial>
   </link>
   <link name="chan_right_thigh_0">
@@ -7183,9 +7183,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/chan_right_thigh_0.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.069753 -0.071596 -0.098101" rpy="0 0 0"/>
-      <mass value="0.005774"/>
-      <inertia ixx="0.00000853817" ixy="-3.91548e-8" ixz="1.47634e-7" iyy="0.00000856125" iyz="-1.71506e-7" izz="2.00067e-7"/>
+      <origin xyz="0.069753 -0.071598 -0.098133" rpy="0 0 0"/>
+      <mass value="0.005779"/>
+      <inertia ixx="0.00000854449" ixy="-3.92079e-8" ixz="1.47583e-7" iyy="0.00000856761" iyz="-1.71879e-7" izz="2.00252e-7"/>
     </inertial>
   </link>
   <link name="chan_right_thigh_1">
@@ -7199,9 +7199,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/chan_right_thigh_1.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.068972 -0.071311 -0.231495" rpy="0 0 0"/>
-      <mass value="0.005138"/>
-      <inertia ixx="0.0000059769" ixy="-4.80154e-8" ixz="-5.46549e-8" iyy="0.00000599652" iyz="4.51097e-8" izz="1.51542e-7"/>
+      <origin xyz="0.068973 -0.071305 -0.231434" rpy="0 0 0"/>
+      <mass value="0.005108"/>
+      <inertia ixx="0.00000597352" ixy="-4.79864e-8" ixz="-5.46150e-8" iyy="0.00000599319" iyz="4.53994e-8" izz="1.51436e-7"/>
     </inertial>
   </link>
   <link name="chan_right_thigh_2">
@@ -7231,9 +7231,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/chan_right_shin_0.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.040981 -0.049692 -0.092831" rpy="0 0 0"/>
-      <mass value="0.004894"/>
-      <inertia ixx="0.00000524275" ixy="-4.45201e-8" ixz="-3.08975e-7" iyy="0.00000526199" iyz="-6.28509e-8" izz="1.73428e-7"/>
+      <origin xyz="0.040981 -0.049692 -0.092828" rpy="0 0 0"/>
+      <mass value="0.004893"/>
+      <inertia ixx="0.00000524254" ixy="-4.45135e-8" ixz="-3.08970e-7" iyy="0.00000526177" iyz="-6.28696e-8" izz="1.73409e-7"/>
     </inertial>
   </link>
   <link name="chan_right_shin_1">
@@ -7249,7 +7249,7 @@
     <inertial>
       <origin xyz="0.03015 -0.047962 -0.215832" rpy="0 0 0"/>
       <mass value="0.005021"/>
-      <inertia ixx="0.00000574722" ixy="-1.63606e-8" ixz="-6.41118e-7" iyy="0.00000580338" iyz="2.91465e-7" izz="2.31833e-7"/>
+      <inertia ixx="0.00000574723" ixy="-1.63605e-8" ixz="-6.41119e-7" iyy="0.00000580339" iyz="2.91466e-7" izz="2.31833e-7"/>
     </inertial>
   </link>
   <link name="chan_right_shin_2">
@@ -7263,9 +7263,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/chan_right_shin_2.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.017746 -0.04509 -0.340563" rpy="0 0 0"/>
-      <mass value="0.004911"/>
-      <inertia ixx="0.00000530406" ixy="-5.37490e-8" ixz="-2.91650e-7" iyy="0.00000531102" iyz="-1.06697e-7" izz="1.62287e-7"/>
+      <origin xyz="0.017746 -0.045092 -0.340698" rpy="0 0 0"/>
+      <mass value="0.00492"/>
+      <inertia ixx="0.000005337" ixy="-5.37678e-8" ixz="-2.92291e-7" iyy="0.00000534394" iyz="-1.07325e-7" izz="1.62312e-7"/>
     </inertial>
   </link>
   <link name="chan_right_helmet_0">
@@ -7279,9 +7279,9 @@
       <geometry><mesh filename="package://iron_man_mark_43/meshes/chan_right_helmet_0.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.009805 -0.083155 0.061318" rpy="0 0 0"/>
-      <mass value="0.0034"/>
-      <inertia ixx="0.00000174422" ixy="2.97547e-8" ixz="-1.20945e-7" iyy="0.00000173713" iyz="3.68948e-7" izz="1.91173e-7"/>
+      <origin xyz="-0.009782 -0.082818 0.06139" rpy="0 0 0"/>
+      <mass value="0.003398"/>
+      <inertia ixx="0.00000174038" ixy="3.03677e-8" ixz="-1.21752e-7" iyy="0.00000173169" iyz="3.72267e-7" izz="1.93031e-7"/>
     </inertial>
   </link>
   <link name="eye_led_right">

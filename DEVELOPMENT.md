@@ -129,3 +129,8 @@ Every check below runs in CI on each push:
 - **Mark 43**: door ranges come from exact sweeps of armour against armour in the order the suit opens, `door:*` checks cover
   range, torque, clutch, pinch force and latch strength, its faceplate and door servos are simulated like every other actuator, and a
   MuJoCo test runs the opening sequence. Nothing has been built.
+- **Mark 43 forge**: the website forges the armour in its worker (`packages/mesh/src/forge/`). The same code in Node writes the shipped
+  cache, `node --max-old-space-size=4096 scripts/forge_suit.ts packages/parts/data/mark43_pack --checkpoints out/forge` (about half an
+  hour; `--checkpoints` lets a stopped run pick up after its last finished stage). `tests/mark43-forge.test.ts` checks it against the
+  Python reference (`scripts/forge_mark43.py`, summarised in `tests/fixtures/forge_oracle.json`), and the site check forges the
+  example suit live in the tab and compares every download with the example.

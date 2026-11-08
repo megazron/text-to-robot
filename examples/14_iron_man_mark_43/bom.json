@@ -176,19 +176,19 @@
     {
       "category": "Wiring",
       "name": "24 AWG silicone wire",
-      "qty": 56.8,
+      "qty": 57.9,
       "unit_cost": 0.35,
-      "subtotal": 19.88,
-      "spec": "56.8 m: 0.205 mm2, rated 1.75 A in a bundle; 51.60 m cut + 10 % waste",
+      "subtotal": 20.26,
+      "spec": "57.9 m: 0.205 mm2, rated 1.75 A in a bundle; 52.62 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "26 AWG silicone wire",
-      "qty": 42.6,
+      "qty": 43.4,
       "unit_cost": 0.3,
-      "subtotal": 12.78,
-      "spec": "42.6 m: 0.128 mm2, rated 1.1 A in a bundle; 38.70 m cut + 10 % waste",
+      "subtotal": 13.02,
+      "spec": "43.4 m: 0.128 mm2, rated 1.1 A in a bundle; 39.38 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
@@ -309,7 +309,7 @@
       "note": "price estimated"
     }
   ],
-  "total": 565.24,
+  "total": 565.86,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
@@ -421,7 +421,7 @@
   ],
   "warnings": [],
   "notes": [
-    "Iron Man Mark 43 (full wearable suit): 358 printed pieces, 8.6 kg filament, motorised faceplate, $528 incl. filament",
+    "Iron Man Mark 43 (full wearable suit): 358 printed pieces, 8.6 kg filament, motorised faceplate, $529 incl. filament",
     "armour shape from: suit: designed by the forge (packages/mesh/src/forge, a TypeScript port of scripts/forge_mark43.py) from reference photos of the movie suit; 3 mm walls, 2 mm faceplate, 15 % gyroid infill (shells are mostly walls)",
     "filament at $22/kg, 8 % waste",
     "the suit is worn armour over a black undersuit: the wearer moves every joint; nothing powers the limbs (hobby servos cannot move a person); the servos only open and close the doors",
