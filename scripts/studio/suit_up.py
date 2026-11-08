@@ -1,6 +1,8 @@
 """The suit-up film, from the real mechanism: every mesh, hinge line, joint limit and the opening order come from the built example (forge_mark43.py --anim <dir> examples/14_iron_man_mark_43),
 so what opens here is what is in the URDF. Pawls lift, the doors open stage by stage on their servos, the mask lifts, a person in a black undersuit steps in from behind, and it all closes in reverse.
-  blender -b -P scripts/studio/suit_up.py -- <anim-dir> <frames-dir> [samples] [width] [first] [last] [step]"""
+  blender -b -P scripts/studio/suit_up.py -- <anim-dir> <frames-dir> [samples] [width] [first] [last] [step]
+GIF (one palette for the whole film, so the gold keeps its colour; only changed regions are stored):
+  ffmpeg -framerate 6.25 -i frames/%04d.png -vf "scale=460:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=128:stats_mode=full[p];[b][p]paletteuse=dither=none:diff_mode=rectangle" out.gif"""
 import bpy, json, math, os, sys
 from mathutils import Vector, Matrix
 a = sys.argv[sys.argv.index("--") + 1:]; src, out = a[0], a[1]; samples = int(a[2]) if len(a) > 2 else 24; W = int(a[3]) if len(a) > 3 else 640
@@ -8,7 +10,7 @@ first = int(a[4]) if len(a) > 4 else 0; last = int(a[5]) if len(a) > 5 else 270;
 os.makedirs(out, exist_ok=True); M = json.load(open(f"{src}/anim.json"))
 bpy.ops.wm.read_factory_settings(use_empty=True)
 sc = bpy.context.scene; sc.render.engine = "CYCLES"; sc.cycles.samples = samples; sc.cycles.use_denoising = True; sc.cycles.device = "CPU"
-sc.render.resolution_x, sc.render.resolution_y = W, int(W * 1.1); sc.view_settings.view_transform = "AgX"; sc.view_settings.look = "AgX - Medium High Contrast"
+sc.render.resolution_x, sc.render.resolution_y = W, int(W * 1.1); sc.view_settings.view_transform = "AgX"; sc.view_settings.look = "AgX - Medium High Contrast"; sc.view_settings.exposure = -0.3
 
 
 def paint(name, base, metal, rough, coat=0.0, coat_rough=0.05):
@@ -18,8 +20,8 @@ def paint(name, base, metal, rough, coat=0.0, coat_rough=0.05):
     return m
 
 
-MATS = {"armour_red": paint("red", (0.26, 0.003, 0.008), 0.8, 0.26, 1.0, 0.03), "armour_gold": paint("gold", (0.62, 0.41, 0.17), 1.0, 0.33, 0.4, 0.15), "armour_silver": paint("steel", (0.55, 0.56, 0.59), 1.0, 0.3),
-        "armour_mech": paint("mech", (0.07, 0.07, 0.08), 1.0, 0.38), "suit": paint("undersuit", (0.006, 0.006, 0.007), 0.0, 0.78), "actuator": paint("servo", (0.02, 0.05, 0.16), 0.2, 0.35, 0.5, 0.2),
+MATS = {"armour_red": paint("red", (0.26, 0.003, 0.008), 0.8, 0.26, 1.0, 0.03), "armour_gold": paint("gold", (0.62, 0.41, 0.17), 1.0, 0.33, 0.4, 0.15), "armour_silver": paint("steel", (0.34, 0.35, 0.37), 1.0, 0.34),
+        "armour_mech": paint("mech", (0.07, 0.07, 0.08), 1.0, 0.38), "suit": paint("undersuit", (0.006, 0.006, 0.007), 0.0, 0.78), "actuator": paint("servo", (0.03, 0.03, 0.035), 0.3, 0.4),
         "electronics": paint("board", (0.02, 0.2, 0.1), 0.2, 0.4), "metal": paint("metal", (0.6, 0.6, 0.62), 1.0, 0.3), "battery": paint("cell", (0.05, 0.1, 0.4), 0.2, 0.4), "rubber": paint("rubber", (0.02, 0.02, 0.02), 0, 0.7), "printed_dark": paint("dark", (0.05, 0.05, 0.06), 0, 0.5)}
 MATS["suit"].node_tree.nodes["Principled BSDF"].inputs["Specular IOR Level"].default_value = 0.12
 g = bpy.data.materials.new("glow"); g.use_nodes = True; nb = g.node_tree.nodes["Principled BSDF"]; nb.inputs["Emission Color"].default_value = (0.75, 0.92, 1, 1); nb.inputs["Base Color"].default_value = (1, 1, 1, 1); MATS["lens_glow"] = g
@@ -27,9 +29,9 @@ glow = nb.inputs["Emission Strength"]
 
 
 def lined(src_):
-    """outside: the paint; inside a shell: dark machined lining"""
-    m = src_.copy(); nt = m.node_tree; out_ = nt.nodes["Material Output"]; pb = nt.nodes["Principled BSDF"]
-    geo = nt.nodes.new("ShaderNodeNewGeometry"); dk = nt.nodes.new("ShaderNodeBsdfPrincipled"); dk.inputs["Base Color"].default_value = (0.02, 0.022, 0.026, 1); dk.inputs["Metallic"].default_value = 0.9; dk.inputs["Roughness"].default_value = 0.45
+    """outside: the paint; inside a shell: the same paint, darker, so the hairline seams between printed pieces do not read as black cracks"""
+    m = src_.copy(); nt = m.node_tree; out_ = nt.nodes["Material Output"]; pb = nt.nodes["Principled BSDF"]; b0 = pb.inputs["Base Color"].default_value
+    geo = nt.nodes.new("ShaderNodeNewGeometry"); dk = nt.nodes.new("ShaderNodeBsdfPrincipled"); dk.inputs["Base Color"].default_value = (b0[0] * 0.45, b0[1] * 0.45, b0[2] * 0.45, 1); dk.inputs["Metallic"].default_value = 0.9; dk.inputs["Roughness"].default_value = 0.45
     mx = nt.nodes.new("ShaderNodeMixShader"); nt.links.new(geo.outputs["Backfacing"], mx.inputs[0]); nt.links.new(pb.outputs[0], mx.inputs[1]); nt.links.new(dk.outputs[0], mx.inputs[2]); nt.links.new(mx.outputs[0], out_.inputs["Surface"]); return m
 
 
@@ -54,7 +56,8 @@ def softbox(loc, size, power, col=(1, 1, 1)):
     o.rotation_euler = (Vector((0, 0, 1.2)) - Vector(loc)).to_track_quat("-Z", "Y").to_euler()
 
 
-softbox((3.2, -2.4, 3.0), 2.4, 520, (1, 0.95, 0.88)); softbox((3.0, 2.8, 1.8), 2.0, 240, (0.8, 0.88, 1)); softbox((-3.4, -1.4, 3.2), 2.6, 760, (0.85, 0.92, 1)); softbox((-2.4, 2.6, 2.2), 2.0, 420)
+# the studio stills' rig (scripts/studio/cycles_mark43.py), with one more box behind, since the film spends its first half there
+softbox((3.2, -2.2, 3.0), 2.4, 520, (1, 0.95, 0.88)); softbox((3.0, 2.6, 1.8), 2.0, 240, (0.8, 0.88, 1)); softbox((-3, 0.2, 3.2), 2.6, 480, (0.85, 0.92, 1)); softbox((1.4, 0, 4.2), 1.8, 220); softbox((-2.6, -2.4, 2.4), 2.0, 200)
 INNER = []
 for loc in ((-0.03, 0, 1.32), (-0.03, 0, 1.08), (-0.02, 0.12, 0.8), (-0.02, -0.12, 0.8), (-0.02, 0.13, 0.33), (-0.02, -0.13, 0.33), (-0.04, 0.26, 1.3), (-0.04, -0.26, 1.3)):
     l = bpy.data.lights.new("in", "POINT"); l.color = (0.2, 0.42, 1); l.shadow_soft_size = 0.05; o = bpy.data.objects.new("in", l); sc.collection.objects.link(o); o.location = loc; INNER.append(l)
