@@ -24,7 +24,9 @@ const track = <T>(x: T): T => {
 export function useManifold(mod: Wasm): void {
   if (W === mod) return;
   W = mod;
-  const P = mod.Manifold.prototype;
+  // results come from the instances' own prototype, not mod.Manifold.prototype: patch the one a real solid has
+  const sample = mod.Manifold.cube([1, 1, 1]), P = Object.getPrototypeOf(sample);
+  sample.delete();
   const del = P.delete;
   if (!del.__counted) { const d = function (this: Solid) { freed++; return del.call(this); }; (d as unknown as { __counted: boolean }).__counted = true; P.delete = d; }
   for (const k of ["add", "subtract", "intersect", "transform", "translate", "rotate", "scale", "mirror", "simplify", "hull", "decompose", "asOriginal"]) {
