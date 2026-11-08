@@ -135,11 +135,11 @@
   {
    "name": "left_arm_stripes",
    "watertight": true,
-   "volume_cm3": 0.54,
+   "volume_cm3": 0.93,
    "size_mm": [
     24.0,
-    20.0,
-    1.6
+    22.0,
+    2.0
    ],
    "orientation": [
     0.0,
@@ -149,14 +149,12 @@
    "fits_bed": true,
    "support_area_cm2": 0.0,
    "support_frac": 0.0,
-   "bed_contact_cm2": 3.39,
-   "min_wall_mm": 0.31,
-   "thin_wall_frac": 0.012,
-   "passed": false,
+   "bed_contact_cm2": 4.63,
+   "min_wall_mm": 2.0,
+   "thin_wall_frac": 0.0,
+   "passed": true,
    "supports": "none",
-   "problems": [
-    "walls down to 0.31 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
-   ],
+   "problems": [],
    "warnings": []
   },
   {
@@ -364,11 +362,11 @@
   {
    "name": "right_arm_stripes",
    "watertight": true,
-   "volume_cm3": 0.54,
+   "volume_cm3": 0.93,
    "size_mm": [
     24.0,
-    20.0,
-    1.6
+    22.0,
+    2.0
    ],
    "orientation": [
     0.0,
@@ -378,20 +376,18 @@
    "fits_bed": true,
    "support_area_cm2": 0.0,
    "support_frac": 0.0,
-   "bed_contact_cm2": 3.39,
-   "min_wall_mm": 0.31,
-   "thin_wall_frac": 0.012,
-   "passed": false,
+   "bed_contact_cm2": 4.63,
+   "min_wall_mm": 2.0,
+   "thin_wall_frac": 0.0,
+   "passed": true,
    "supports": "none",
-   "problems": [
-    "walls down to 0.31 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
-   ],
+   "problems": [],
    "warnings": []
   },
   {
    "name": "right_forearm",
    "watertight": true,
-   "volume_cm3": 19.7,
+   "volume_cm3": 19.71,
    "size_mm": [
     142.5,
     41.0,
@@ -403,11 +399,11 @@
     1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 33.86,
+   "support_area_cm2": 33.87,
    "support_frac": 0.198,
    "bed_contact_cm2": 11.57,
    "min_wall_mm": 0.2,
-   "thin_wall_frac": 0.007,
+   "thin_wall_frac": 0.011,
    "passed": false,
    "supports": "needed",
    "problems": [
@@ -493,7 +489,7 @@
   {
    "name": "track_left",
    "watertight": true,
-   "volume_cm3": 32.96,
+   "volume_cm3": 33.69,
    "size_mm": [
     201.0,
     27.0,
@@ -507,20 +503,18 @@
    "fits_bed": true,
    "support_area_cm2": 0.0,
    "support_frac": 0.0,
-   "bed_contact_cm2": 10.62,
-   "min_wall_mm": 0.71,
-   "thin_wall_frac": 0.063,
-   "passed": false,
+   "bed_contact_cm2": 9.9,
+   "min_wall_mm": 1.5,
+   "thin_wall_frac": 0.0,
+   "passed": true,
    "supports": "none",
-   "problems": [
-    "walls down to 0.71 mm (< 0.8 mm = 2 extrusion lines) on 6% of the surface"
-   ],
+   "problems": [],
    "warnings": []
   },
   {
    "name": "track_right",
    "watertight": true,
-   "volume_cm3": 32.96,
+   "volume_cm3": 33.69,
    "size_mm": [
     201.0,
     27.0,
@@ -534,14 +528,12 @@
    "fits_bed": true,
    "support_area_cm2": 0.0,
    "support_frac": 0.0,
-   "bed_contact_cm2": 10.62,
-   "min_wall_mm": 0.71,
-   "thin_wall_frac": 0.063,
-   "passed": false,
+   "bed_contact_cm2": 9.9,
+   "min_wall_mm": 1.5,
+   "thin_wall_frac": 0.0,
+   "passed": true,
    "supports": "none",
-   "problems": [
-    "walls down to 0.71 mm (< 0.8 mm = 2 extrusion lines) on 6% of the surface"
-   ],
+   "problems": [],
    "warnings": []
   }
  ]
