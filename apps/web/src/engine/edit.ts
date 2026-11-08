@@ -154,8 +154,8 @@ export type EditOp =
 
 /** Geometry for parts an edit adds: a catalog part by key, or a printed part from its parameters. */
 export interface PartProvider {
-  component(key: string, file: string): { geometry: Geometry; mass: number; material: string; role: string };
-  printed(params: PrintedParams, name: string): { geometry: Geometry; mass: number; material: string; role: string };
+  component(key: string, file: string): { geometry: Geometry; mass: number; material: string; role: string; color?: [number, number, number, number] };
+  printed(params: PrintedParams, name: string): { geometry: Geometry; mass: number; material: string; role: string; color?: [number, number, number, number] };
 }
 
 const NAME = /^[A-Za-z_][A-Za-z0-9_]*$/;
@@ -329,7 +329,7 @@ export function applyEdits(input: RobotSpecification, ops: EditOp[], parts?: Par
         const made = o.key ? parts.component(o.key, `${o.key}.stl`) : o.printed ? parts.printed(o.printed, name) : null;
         if (!made) throw new Error("add: give a catalog key or printed parameters");
         const l: Link = { name, role: made.role, geometry: made.geometry, mass: made.mass, material: made.material, origin: { xyz: [0, 0, 0], rpy: [0, 0, 0] } };
-        if (!spec.materials.some((m) => m.name === made.material)) spec.materials.push({ name: made.material, color: [0.75, 0.77, 0.8, 1] });
+        if (!spec.materials.some((m) => m.name === made.material)) spec.materials.push({ name: made.material, color: made.color ?? [0.75, 0.77, 0.8, 1] });
         addLink(spec, l, o.parent, poseMat(o.world));
         if (o.printed) studioMeta(spec).printed[name] = structuredClone(o.printed);
         break;

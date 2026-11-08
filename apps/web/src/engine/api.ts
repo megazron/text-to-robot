@@ -9,7 +9,7 @@ import { validateUrdf } from "@ttr/urdf-validator";
 import { CATALOG, part, rating, electrical } from "@ttr/parts";
 import { buildPart, toStlBinary, meshGeometry } from "@ttr/mesh";
 import { buildBom } from "@ttr/components";
-import { componentGeometry, PRINT_DENSITY, withSolids, interferences, worstTorques, comWorld, totalMass, evaluate, axisInertias, descendants, type DesignRecord } from "@ttr/design";
+import { componentGeometry, PRINT_DENSITY, MATERIALS, withSolids, interferences, worstTorques, comWorld, totalMass, evaluate, axisInertias, descendants, type DesignRecord } from "@ttr/design";
 import { partFiles } from "@ttr/kernel/ready";
 import { applyEdits, emptyRobot, kindOf, rootLink, worldFrames, mul, poseMat, rotate, unit, type EditOp, type PartProvider, type PrintedParams, type StudioMeta } from "./edit.ts";
 import { partMounts, printedMounts, printedProgram, worldMounts } from "./mounts.ts";
@@ -19,15 +19,17 @@ export const ENGINE_API_VERSION = "1.0.0";
 const MATERIAL: Record<string, string> = { actuator: "actuator", wheel: "rubber", battery: "battery", compute: "electronics", sensor: "electronics", motor_driver: "electronics", misc: "electronics", bearing: "metal", horn: "metal" };
 const BED_MM: Vec3 = [250, 210, 220];
 
+const colorOf = (material: string) => MATERIALS.find((m) => m.name === material)?.color;
 export const parts: PartProvider = {
   component(key) {
     const c = part(key);
-    return { geometry: componentGeometry(key) as Geometry, mass: c.mass_g / 1000, material: MATERIAL[c.category] ?? "metal", role: c.category };
+    const material = MATERIAL[c.category] ?? "metal";
+    return { geometry: componentGeometry(key) as Geometry, mass: c.mass_g / 1000, material, role: c.category, color: colorOf(material) };
   },
   printed(params, name) {
     const json = JSON.stringify(printedProgram(params, name));
     const g = meshGeometry("cad", `${name}.stl`, { program: json }) as Geometry & { volume: number };
-    return { geometry: g, mass: Math.max(g.volume * PRINT_DENSITY, 0.002), material: "printed", role: "link" };
+    return { geometry: g, mass: Math.max(g.volume * PRINT_DENSITY, 0.002), material: "printed", role: "link", color: colorOf("printed") };
   },
 };
 
