@@ -46,7 +46,7 @@ Every film above is the exported model itself: its URDF and meshes in a Cycles s
 
 Flip the Arduino switch and the design is rebuilt around cheap, compatible parts with price tiers. If a request can't be done on a budget it says so and offers what can, like a motorised helmet instead of a powered suit. Name a part ("with MG996R servos and an Arduino Nano") and it is used, or you are told why not.
 
-## Mark 43, wearable
+## Mark 43, designed to be worn, not yet built
 
 <img src="docs/img/mark43_suit_up.gif" width="300" align="right" alt="The Mark 43 opens, a person walks in, the armour closes">
 
