@@ -1,6 +1,10 @@
-# Examples
+# Gallery
+
+19 robots, each made from the one-line prompt in its README. Open one for its parts list, printable parts, wiring, ROS 2 package and test results. Nothing here has been built yet.
 
 Every example is regenerated from its prompt by `node scripts/build_examples.ts` and simulated by `scripts/simulate_examples.py`, and every prompt is generated on the website by `scripts/check_site.py`. Each robot is built from real, purchasable parts sized from its own loads. The film is a Cycles render of a motion loop run in MuJoCo through the real actuators (`scripts/studio/film.py`); each example's README also has the raw recording of its task tests.
+
+**Design checks** are the engineering checks that pass (torque, speed, power, runtime, tipping, clearance, wiring). **Simulation** is the MuJoCo task tests that pass. Parts cost is the estimated total of the bill of materials.
 
 | Example | Robot | Parts cost | Mass | Design checks | Simulation |
 |---|---|--:|--:|--:|--:|
