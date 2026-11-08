@@ -1,0 +1,37 @@
+name: Robot request
+description: A robot, family or part the generator cannot make yet.
+labels: [robot request]
+body:
+  - type: markdown
+    attributes:
+      value: Tell us the robot you want and what it has to do. Drones, delta and gantry robots, snake and marine robots and dexterous hands are out of scope for now.
+  - type: textarea
+    id: prompt
+    attributes:
+      label: The prompt you would type
+      render: text
+      placeholder: a 4 DOF arm on a linear rail that picks 200 g parts off a conveyor
+    validations:
+      required: true
+  - type: textarea
+    id: job
+    attributes:
+      label: What it has to do
+      description: Loads, reach, speed, runtime, terrain, budget. Numbers help most.
+    validations:
+      required: true
+  - type: textarea
+    id: today
+    attributes:
+      label: What you get today
+      description: Paste the share link or the warnings the app shows, if you tried it.
+  - type: textarea
+    id: parts
+    attributes:
+      label: Parts you want used
+      description: Exact part names or links (servos, motors, boards, batteries), if you have them.
+  - type: textarea
+    id: references
+    attributes:
+      label: References
+      description: Photos, drawings, papers or open hardware projects that show the robot. Only link material you are allowed to share.

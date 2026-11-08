@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Try it first
+    url: https://megazron.github.io/text-to-robot/
+    about: Most questions are answered fastest by typing the robot into the app.
+  - name: Report a security problem
+    url: https://github.com/megazron/text-to-robot/blob/main/SECURITY.md
+    about: Please do not open a public issue for security problems.

@@ -1,0 +1,59 @@
+name: Bug report
+description: Something is wrong, broken or misleading.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for taking the time. A prompt we can paste and the first thing that looked wrong are the two most useful things you can give us.
+  - type: dropdown
+    id: where
+    attributes:
+      label: Where
+      options:
+        - Website
+        - CLI
+        - Local server or API
+        - Python (ttr-mujoco, ttr_build)
+        - Generated files (URDF, ROS 2, CAD, BOM, wiring)
+        - Documentation
+    validations:
+      required: true
+  - type: textarea
+    id: prompt
+    attributes:
+      label: Prompt or share link
+      description: The exact prompt, or the share link from the app. Share links carry the whole design.
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what you expected
+      placeholder: The BOM lists a 5 V servo on a 12 V rail. I expected a 12 V servo or a regulator.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open the app
+        2. Type ...
+        3. Open the Parts tab
+  - type: input
+    id: env
+    attributes:
+      label: Browser, OS, Node or Python version
+      placeholder: Chrome 131 on Android 15 / Node 22.12 on Ubuntu 24.04
+  - type: textarea
+    id: logs
+    attributes:
+      label: Console output or error
+      render: text
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety
+      options:
+        - label: This could hurt someone who builds the design (wrong voltage, overloaded part, pinch point, battery).
