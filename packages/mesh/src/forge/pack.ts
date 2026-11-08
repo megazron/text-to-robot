@@ -65,7 +65,8 @@ const solidOf = (ps: Piece[], pick: (p: Piece) => boolean, tol?: number) => { co
 /** A tool swept through `angles` about the axis (o, e): the union of its turned copies, cut to `clip`. With a pool the copies are shared out. */
 export async function sweptTool(tool: TriMesh, o: P3, e: P3, angles: number[], clip?: [P3, P3]): Promise<TriMesh> {
   const pool = getPool(), parts = pool ? Math.min(angles.length, pool.size * 2) : 1, jobs: Job[] = [];
-  for (let i = 0; i < parts; i++) jobs.push({ op: "sweep", args: { mesh: tool, o, e, angles: angles.filter((_, k) => k % parts === i), clip } });
+  // contiguous runs of angles: each part is a short arc, so the parts overlap little and join quickly
+  for (let i = 0; i < parts; i++) jobs.push({ op: "sweep", args: { mesh: tool, o, e, angles: angles.slice(Math.floor((i * angles.length) / parts), Math.floor(((i + 1) * angles.length) / parts)), clip } });
   let got = (await runAll<TriMesh>(jobs, (j) => answerJob(j) as Promise<TriMesh>)).filter((m) => m.f.length);
   // the parts are joined pairwise, a level at a time, each level shared out too
   while (got.length > 1) {

@@ -102,6 +102,20 @@ export function sweep(x: Solid, o: P3, e: P3, a0: number, a1: number, step = 0.0
   for (let i = 0; i < n; i++) xs.push(turn(x, o, e, a0 + ((a1 - a0) * i) / (n - 1)));
   return clipUnion(xs, clip);
 }
+/**
+ * The swing of a part about the axis (o, e) from a0 to a1, as the union of convex hulls of its hull at consecutive stations (the same
+ * stations as sweep()). It contains the part's true sweep and fills the part's own hollows (bores, pockets); manifold-3d unions thirty
+ * nearly coincident copies of a hinge barrel slowly, hulls in milliseconds. Used for clearances, which are grown by an air gap anyway.
+ */
+export function sweptHull(x: Solid, o: P3, e: P3, a0: number, a1: number, step = 0.05): Solid {
+  const g = x.hull().getMesh(), v = g.vertProperties as Float32Array, P: P3[] = [];
+  for (let i = 0; i < v.length; i += g.numProp) P.push([v[i], v[i + 1], v[i + 2]]);
+  const n = Math.max(3, Math.floor(Math.abs(a1 - a0) / step) + 1), at = (a: number) => { const R = rot(o, e, a); return P.map((p) => [0, 1, 2].map((k) => R[k][0] * p[0] + R[k][1] * p[1] + R[k][2] * p[2] + R[k][3]) as P3); };
+  const hs: Solid[] = [];
+  let prev = at(a0);
+  for (let i = 1; i < n; i++) { const cur = at(a0 + ((a1 - a0) * i) / (n - 1)); hs.push(hull([...prev, ...cur])); prev = cur; }
+  return union(hs);
+}
 /** The union of solids, each first cut to `clip` when given: what is subtracted from pieces inside the box is exactly the same, and the
  *  union of the small parts is far quicker than the union of the whole copies. */
 export function clipUnion(xs: Solid[], clip?: [P3, P3]): Solid {
