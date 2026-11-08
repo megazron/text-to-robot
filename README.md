@@ -92,7 +92,8 @@ ttr-mujoco convert out/arm/arm_6dof.sim.urdf -o out/arm/arm_6dof.mjcf.xml
 
 ```text
 $ node cli/src/index.ts "a red 6 dof arm with 70 cm reach, a wrist camera and no lidar, lifting 1 kg, budget $600"
-✓ Interpreted as: 6-DOF serial arm · parallel gripper · camera (wrist_3) · reach 0.70 m · red · payload 1 kg · budget $600
+✓ Interpreted as: 6-DOF serial arm · parallel gripper · camera (wrist_rotator) · reach 0.70 m · red · payload 1 kg · budget $600
+  ! warning: design check failed: wiring:rail:V48: power_supply gives 7.3 A continuous, 10.9 A peak; loads 7.725 A typical, 42.825 A peak ...
 ```
 
 | Say | Effect |
