@@ -18,8 +18,9 @@
 Text to Robot turns a sentence into a robot design you can check: real parts with prices, printable housings, wiring, a ROS 2 package and a physics test report. It is free, open source and runs in your browser.
 
 ```text
-> an arduino car with four wheels
-Arduino car (4WD) · TT motors · HC-SR04 · $41 of parts · checks passed
+> An Arduino 4WD obstacle avoiding car with an ultrasonic sensor
+
+  4WD on TT gear motors · 0.6 kg · $58 of parts · 36/36 design checks · 3/3 simulation tests
 ```
 
 Your design stays yours. The website runs entirely in your browser, nothing is uploaded, and there is no account.
