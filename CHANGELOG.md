@@ -1,9 +1,25 @@
 # Changelog
 
-Dated from the git history. Pull request numbers refer to
-[github.com/megazron/text-to-robot](https://github.com/megazron/text-to-robot/pulls).
+All notable changes to Text to Robot. Versions follow [Semantic Versioning](https://semver.org/); while the major version is 0, a minor version can change outputs and file layouts. Releases before 0.7.0 were not tagged, so their versions are assigned here from the git history. Pull request numbers refer to [github.com/megazron/text-to-robot](https://github.com/megazron/text-to-robot/pulls).
 
-## 2026-11-07: Mark 43 opens for real
+## Unreleased
+
+## 0.7.0 (2026-11-08)
+
+A product identity and a full set of project documents.
+
+- New logo: the prompt's `>` drawn as two links with a pin joint, and the cursor beneath it. App icon, horizontal lockup, light and one colour variants, README banner, social card, favicons and app icons, with a brand guide in [docs/brand](docs/brand/README.md).
+- Website: the new logo in the header and as favicon, an app manifest with home screen icons, and Open Graph and Twitter card tags. The local server now serves `.png` and `.webmanifest` files with their types.
+- README rewritten as a product page: value line, quick start, what you get, how it works, limits.
+- New: [CONTRIBUTING](CONTRIBUTING.md), [SECURITY](SECURITY.md), [CODE_OF_CONDUCT](CODE_OF_CONDUCT.md) (Contributor Covenant 2.1), issue forms for bugs, features and robot requests, and a pull request template.
+- Every `package.json` and the Python package carry the same version, description, homepage, repository, keywords and licence.
+- CI checks that every relative link and image in the Markdown files resolves.
+
+## 0.6.0 (2026-11-07)
+
+Real wiring, a Mark 43 designed from scratch that opens on hinges, and studio films proven on the website.
+
+### Mark 43 opens for real
 
 - The opening is in the design now, not only in the film. The back splits on its centre line and the rear shells of the helmet, upper arms, forearms, thighs and
   shins are twelve doors, each a revolute joint in the URDF on its own servo, opening 80 degrees on hinge lines along the flanks.
@@ -17,7 +33,7 @@ Dated from the git history. Pull request numbers refer to
 - A MuJoCo test runs the whole sequence open and shut. The suit-up film is rebuilt from the built example: same meshes, same hinge lines, same limits, same order, with a lofted figure in place of the capsules.
 - Nothing has been built or tested. See "Before anyone gets inside" in the example's README.
 
-## 2026-11-07: Mark 43 forehead and neck
+### Mark 43 forehead and neck
 
 - The hole in the forehead is gone. The red wedge and the front of the crown now ride on the mask link and lift with it; before, they sat on the fixed
   shell and the mask's swing cut them away. The mask's pivot moved 12 mm forward of the ear disc, where the forehead and the back of the crown are the same
@@ -27,7 +43,7 @@ Dated from the git history. Pull request numbers refer to
 - The collar's front lip gives way to the chin: the neck turns 69 degrees each way before its range is capped, up from 14.
 - The mask's servo check now counts the head tipped 20 degrees, inertia and friction (0.106 N·m to hold against 0.129 continuous from two MG90S).
 
-## 2026-11-07: Mark 43 housing and harness
+### Mark 43 housing and harness
 
 - The Mark 43 now has the same wiring model as every other robot: netlist, fuse, main switch, star ground, power budget
   per rail, `WIRING.md`, `wiring.svg`, BOM lines, `wiring:*` and `enclosure:*` checks, in all three tiers.
@@ -41,7 +57,12 @@ Dated from the git history. Pull request numbers refer to
 - Harness gains channels, extra loop at a joint, a chosen exit per cable and a home for harness parts. Robots that declare
   none of these come out exactly as before.
 
-## 2026-11-07: Studio films, proof from the website
+### Mark 43 redesigned from scratch
+
+- The suit no longer sits on a human body model or a scan. `scripts/forge_mark43.py` designs every part as a mathematical form from film references, with plates, panel lines and bevels added, and `scripts/pack_armour.py` trims and measures the shells into a pack (`packages/parts/data/mark43_pack.*`).
+- New helmet. Renders and the suit-up film are made in Blender Cycles.
+
+### Studio films, proof from the website
 
 - `scripts/check_site.py` drives the static site in Chromium: every example prompt typed in, generated in the tab, its
   spec, meshes, URDF and download packages compared with the shipped example, Arduino mode pressed tier by tier. Runs in CI.
@@ -59,7 +80,7 @@ Dated from the git history. Pull request numbers refer to
   (limits from the swept clear range) or listed with a reason in `examples/motion_known_issues.json`. Runs in CI.
 - Geometry cache keeps text, not live objects: on the site a cached part once came back with another part's inertia.
 
-## 2026-11-06: Real wiring and electronics compartments
+### Real wiring and electronics compartments
 
 - Every electrical part has dimensions and an electrical record (ports, pins, connector, voltage, typical and peak
   current), each value marked `datasheet` with a URL or `estimated` with the reason. See `docs/PARTS_DATA.md`.
@@ -69,7 +90,19 @@ Dated from the git history. Pull request numbers refer to
 - Compartments: no loose electronics. Printed tubs and hoods with screwed lids, standoffs on real hole patterns, vents,
   grommeted exits, USB and switch access, a bench control case with a fused mains inlet, `enclosure:*` checks.
 
-## 2026-11-03: Fixes from a full audit (prompts, design engine, simulation)
+## 0.5.0 (2026-11-05)
+
+Real parts, printable structure, a CAD kernel and Arduino mode.
+
+- Hobby servo groundwork: open hardware references, SG90, MG90S, MG996R and DS3218 servos, Arduino Uno and Nano, PCA9685, cheap Arduino parts (TT gear motor, L298N, TB6612FNG, HC-SR04, WS2812 ring, 2S 18650 pack) and bench supplies.
+- Printable redesign: clevis pitch joints with a 625ZZ bearing on an M5 boss, closed servo cradles, truss-lightened links, printed electronics enclosures, bed fit tried in every orientation on a Prusa MK4 bed, fabricated parts listed in `cad/fabricate` with a cut list. `scripts/print_audit.py` runs in CI with known issues listed and explained.
+- CAD kernel on OpenCascade (Replicad): part programs built as exact solids with fillets, STEP export and welded, watertight print meshes.
+- Arduino mode: priced tiers per prompt, budgets marked, honest notes. Designers for an Arduino car (cheapest 2WD from $28, stronger 4WD), an Arduino desk arm and an Arduino WALL-E. Named boards and drivers are used when asked, or swapped with the reason stated.
+- Every example is a designed robot, rebuilt, re-simulated and audited. Exact-mesh clearance across every example.
+- New web UI with an Arduino switch, price tier cards, cost and checks cards, and opt-in Publish to a gallery.
+- A first wearable Mark 43 built body first, later replaced in 0.6.0.
+
+### Fixes from a full audit (2026-11-03)
 
 - Prompts: hobby-servo arms (`SG90`, `MG90S`, `MG996R`, `DS3218`, `arduino`, `hobby servo`) are designed on an
   Arduino Uno + PCA9685 with a 5 V supply; Hinglish (`jo 1 kg utha sake`, `char pahiye`, `robot kutta`); task-only
@@ -89,7 +122,21 @@ Dated from the git history. Pull request numbers refer to
 - CI moved to the new example pipeline (`verify_examples.py`, `simulate_examples.py --check`); retired stale
   evidence from the old smoke battery.
 
-## 2026-09-27: Prompt understanding
+## 0.4.0 (2026-10-20)
+
+A design engine on real components, and the website on GitHub Pages.
+
+- Design engine: a parts catalogue, CSG printed parts and load-based actuator sizing. Designers for arms, SCARA, parallel grippers, wheeled bases (differential, skid steer, mecanum, rocker-bogie rover), quadrupeds, hexapods, humanoids, a battle mech, WALL-E, EVA and Baymax.
+- Arms sized for continuous holding, loaded speed and swung inertia. URDF mimic joints end to end.
+- New example pipeline: `scripts/build_examples.ts` makes every deliverable from the prompt and `scripts/simulate_examples.py` runs the task tests, films them and writes the results.
+- The CAD download for designed robots is a build package: printable STLs, print list, bought-part models, BOM and assembly order.
+- The website is published on GitHub Pages and runs the whole generator in the browser (#16). WebGL fallback, an engineering report in the Build tab and a phone layout.
+- Parser split into focused modules; reach, link count, multilingual and contradiction handling fixed; the CLI rejects ambiguous arguments; CI runs typecheck and lint and installs from a committed lockfile (#13).
+- MuJoCo servo gains come from the URDF, and the actuator sweep tests the motors (#14). Datasheet-backed component library in `ttr_build.components`.
+
+## 0.3.0 (2026-09-27)
+
+Prompt understanding.
 
 - Every request in a prompt is now applied, approximated with a named substitute, or
   reported as not applied; each result starts with a one-line reading of the prompt.
@@ -105,7 +152,11 @@ Dated from the git history. Pull request numbers refer to
 - Sensors are mounted on the body surface (lidars on top, cameras at the front or
   wrist, IMUs inside).
 
-## 2026-09-20: Motion-path and joint audits (#10, #11, #12)
+## 0.2.0 (2026-09-20)
+
+Local generation, physical fidelity and audits.
+
+### Motion-path and joint audits (#10, #11, #12)
 
 - `scripts/audit_motion_path.py` interpolates named joints together (at most 0.02 rad /
   2 mm per step) and records the exact failing pose and link pairs. Six reproducible
@@ -114,7 +165,7 @@ Dated from the git history. Pull request numbers refer to
   joints audited (295 failing moving samples out of 1,119 poses); early chest-opening
   interference fixed.
 
-## 2026-09-19: Local generation, rendered-geometry checks, example audit (#7, #8, #9)
+### Local generation, rendered-geometry checks, example audit (#7, #8, #9)
 
 - Generation is local and deterministic. The earlier hosted-model adapters (#7) were
   removed in #8; no account, API key or inference provider is used. Three.js is vendored
@@ -138,7 +189,7 @@ Dated from the git history. Pull request numbers refer to
 - Mark 43: panel attachments, segmented fingers and neck articulation; torso, wrist, cuff
   and clamshell interference resolved; neutral surface intersections reduced from 81 to 0.
 
-## 2026-09-18: Physical fidelity and solid CAD
+### Physical fidelity and solid CAD
 
 - Closed-solid mass properties, COM and full inertia tensors preserved through MuJoCo.
 - CadQuery enclosure backend producing STEP base/lid solids from dimensioned board
@@ -146,7 +197,9 @@ Dated from the git history. Pull request numbers refer to
 - Mark 43 rebuilt in procedural polygon armour and reworked against visual references;
   MuJoCo GIF for every example.
 
-## 2026-09-17: First release
+## 0.1.0 (2026-09-17)
+
+First release.
 
 - Prompt to typed robot specification to URDF/Xacro and a ROS 2 package.
 - Budget-fitted bill of materials, CAD parts, training suite, character robots.
