@@ -106,7 +106,8 @@ setArmourCache({
   },
 });
 // the forge shares its solid work out to helpers, each a worker with its own manifold-3d (one per spare core, at most four: each takes memory)
-const helpers = Math.max(0, Math.min(4, (navigator.hardwareConcurrency || 2) - 2));
+const asked = /helpers=(\d+)/.exec((self as { name?: string }).name ?? "")?.[1];
+const helpers = asked !== undefined ? Math.min(8, Number(asked)) : Math.max(0, Math.min(4, (navigator.hardwareConcurrency || 2) - 2));
 if (helpers) setPool(workerPool(helpers, () => {
   const base = (self as { TTR_ENGINE_BASE?: string }).TTR_ENGINE_BASE ?? location.href;   // set when another site started this worker
   // a worker must come from its page's origin: from another site the helper boots from a blob that imports the script

@@ -25,6 +25,7 @@ ap.add_argument("--no-arduino", action="store_true", help="skip the Arduino swit
 ap.add_argument("--out", type=Path, default=root / "out/site-check")
 ap.add_argument("--update", action="store_true", help="write the tracked report examples/site_generation.json")
 ap.add_argument("--timeout", type=int, default=1800, help="seconds allowed per robot")
+ap.add_argument("--helpers", type=int, default=None, help="cap the armour forge's helper workers in the tab (the site's ?helpers=N)")
 ap.add_argument("--forge-timeout", type=int, default=7200, help="seconds allowed for a Mark 43, whose armour the tab forges")
 args = ap.parse_args()
 if not (args.site / "index.html").exists(): sys.exit(f"{args.site} has no index.html: run deploy/build-pages.sh first")
@@ -48,7 +49,7 @@ class Quiet(http.server.SimpleHTTPRequestHandler):
 server = http.server.ThreadingHTTPServer(("127.0.0.1", 0), functools.partial(Quiet, directory=str(args.site)))
 threading.Thread(target=server.serve_forever, daemon=True).start()
 origin = f"http://127.0.0.1:{server.server_address[1]}"
-url = f"{origin}{BASE}/"
+url = f"{origin}{BASE}/" + (f"?helpers={args.helpers}" if args.helpers is not None else "")
 
 
 def canon(data):
@@ -108,12 +109,21 @@ def press_generate(page, ms):
     page.wait_for_function("window.__started", timeout=60000); wait_idle(page, ms)
 
 
+forge_ctx = None
+
+
 def run(browser, case):
     """One robot in a fresh tab. Returns the row for the report."""
     # the Mark 43 is forged live in the tab (packages/mesh/src/forge): its armour takes far longer than any other robot
     ms = (max(args.timeout, args.forge_timeout) if "mark_43" in case["id"] else args.timeout) * 1000
     row = {"case": case["id"], "prompt": case["prompt"], "mode": case["mode"], "pass": False, "problems": []}
-    ctx = browser.new_context(viewport={"width": 1000, "height": 640}, accept_downloads=True)
+    # the Mark 43 cases share one context, as one visitor would: the suit forged for the prompt case is kept (IndexedDB) and the Arduino
+    # tiers are designed from it, instead of forging the same armour a second time
+    global forge_ctx
+    if "mark_43" in case["id"]:
+        forge_ctx = forge_ctx or browser.new_context(viewport={"width": 1000, "height": 640}, accept_downloads=True)
+        ctx = forge_ctx
+    else: ctx = browser.new_context(viewport={"width": 1000, "height": 640}, accept_downloads=True)
     page = ctx.new_page(); errors, external, failed = [], [], []
     def route(r):
         u = r.request.url
@@ -209,7 +219,8 @@ def run(browser, case):
     if external: row["problems"].append(f"external requests: {external[:2]}")
     if failed: row["problems"].append(f"failed responses: {failed[:2]}")
     row["pass"] = not row["problems"]
-    ctx.close()
+    if ctx is not forge_ctx: ctx.close()
+    else: page.close()
     return row
 
 

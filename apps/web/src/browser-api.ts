@@ -4,7 +4,9 @@
 // robot itself (compressed) in the URL fragment because there is no server to look an id up.
 const STORE_KEY = "ttr.robots";
 const realFetch = globalThis.fetch.bind(globalThis);
-const engine = new Worker(new URL("./browser-engine.js", document.baseURI), { type: "module" });
+// ?helpers=N caps the armour forge's helper workers (each one a core and its own memory); the default is one per spare core, at most four
+const helpersAsked = new URLSearchParams(location.search).get("helpers");
+const engine = new Worker(new URL("./browser-engine.js", document.baseURI), { type: "module", ...(helpersAsked ? { name: `helpers=${Number(helpersAsked)}` } : {}) });
 const waiting = new Map<number, (r: Response) => void>();
 let nextId = 1, started = false;
 const queued: unknown[] = [];
