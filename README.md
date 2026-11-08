@@ -103,13 +103,9 @@ $ node cli/src/index.ts "a red 6 dof arm with 70 cm reach, a wrist camera and no
 | `robot dog`, `mobile manipulator`, `mecanum`, `hexapod`, `cobot` | template family |
 | `called Atlas`, `painted blue`, `for a 1.85 m wearer` | name, colour, wearable fit |
 
-Anything it cannot apply is listed as `not applied`, and contradictions (two robot types,
-two joint counts, two reaches) are each flagged as `conflict:`. A small German, French and
-Spanish keyword list covers the common robot words (`Roboterarm mit sechs Achsen und Greifer`).
+Anything it cannot apply is listed as `not applied`, and contradictions (two robot types, two joint counts, two reaches) are each flagged as `conflict:`. A small German, French and Spanish keyword list covers the common robot words (`Roboterarm mit sechs Achsen und Greifer`).
 
-Families: 1-12 DOF arms, SCARA, grippers, differential/four-wheel/mecanum bases, a
-rover with an arm, quadruped, hexapod, humanoid, and character robots. Drones, delta and
-gantry robots, snake and marine robots and dexterous hands are refused with a reason.
+Families: 1-12 DOF arms, SCARA, grippers, differential, four-wheel and mecanum bases, a rover with an arm, quadruped, hexapod, humanoid and character robots. Drones, delta and gantry robots, snake and marine robots and dexterous hands are refused with a reason.
 
 ## How it works
 
