@@ -70,7 +70,7 @@ there. The generated URDF is the contract between the two halves.
 
 ## Verification
 
-- `npm test`: 55 `node:test` cases across schema, kinematics, templates, URDF, NLP, CLI,
+- `npm test`: the `node:test` suite across schema, kinematics, templates, URDF, NLP, CLI,
   modification, BOM, CAD, MoveIt/Gazebo, training export.
 - `npm run typecheck`: strict TypeScript (`erasableSyntaxOnly`, `verbatimModuleSyntax`).
 - `scripts/physics_check.py`: loads every example URDF in PyBullet and steps it.
