@@ -38,7 +38,7 @@ function remember(id: string, robot: RobotSpecification) {
   persist();
 }
 
-const MIME: Record<string, string> = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".json": "application/json", ".svg": "image/svg+xml", ".ico": "image/x-icon" };
+const MIME: Record<string, string> = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".json": "application/json", ".svg": "image/svg+xml", ".ico": "image/x-icon", ".png": "image/png", ".webmanifest": "application/manifest+json" };
 
 /** files maps may hold binary (meshes); encode those as {b64} for JSON transport */
 function encodeFiles(files: Record<string, string | Uint8Array>): Record<string, string | { b64: string }> {

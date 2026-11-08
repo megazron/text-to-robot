@@ -50,7 +50,7 @@ Green on black is the brand. Keep green to the mark and one or two accents per s
 
 The wordmark is drawn, not typeset: lowercase monoline letters with round ends and the same weight as the links in the symbol. Always use the files; never retype the name in a font to stand in for the logo.
 
-Next to the logo, set text in the system UI face (`-apple-system, "Segoe UI", Roboto, sans-serif`) and code in the system monospace. In running text the product is written **text to robot**, and the repository and package are `text-to-robot`.
+Next to the logo, set text in the system UI face (`-apple-system, "Segoe UI", Roboto, sans-serif`) and code in the system monospace. In running text the product is **Text to Robot**. The repository and the packages are `text-to-robot`. Only the drawn wordmark is lowercase.
 
 ## Clear space and size
 
