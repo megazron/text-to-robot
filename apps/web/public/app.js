@@ -422,6 +422,23 @@ function status(lines, kind) {
   box.textContent = Array.isArray(lines) ? lines.join("\n") : lines;
   if (kind === "err") toast(box.textContent, "err");
 }
+// the Mark 43 armour is forged in the page's worker from the prompt: show how far it has got
+addEventListener("ttr-forge", ({ detail: p }) => {
+  if (p.stage === "done") return;
+  const pct = Math.round(100 * p.done / (p.total || 1)), names = { forge: "shaping the shells", pack: "trimming overlaps", doors: "fitting hinges, servos and latches", trims: "clearing the doors' swing", wiring: "fitting cable channels and bays", measure: "measuring joint and door ranges", store: "storing the pieces" };
+  status(`Forging the Mark 43 armour in your browser: ${names[p.stage] ?? p.stage} (${pct} %, ${p.elapsed_s ?? 0} s). The first suit takes minutes; the page stays usable, and the result is kept for next time.`);
+});
+// while the full armour is forged, a coarse look at it (4 mm voxels, no doors or trims) stands on the pad
+addEventListener("ttr-forge-preview", ({ detail: parts }) => {
+  clearRobot();
+  const paint = { armour_red: 0x8f0808, armour_gold: 0xb88f4d, armour_silver: 0x9ea1a8, lens_glow: 0x9fe8ff };
+  for (const p of parts) {
+    const g = new THREE.BufferGeometry(); g.setAttribute("position", new THREE.BufferAttribute(p.v, 3)); g.setIndex(new THREE.BufferAttribute(p.f, 1)); g.computeVertexNormals();
+    const mesh = new THREE.Mesh(g, new THREE.MeshStandardMaterial({ color: paint[p.material] ?? 0xcccccc, metalness: 0.6, roughness: 0.4, transparent: true, opacity: 0.85 }));
+    mesh.scale.setScalar(0.001); robotGroup.add(mesh);
+  }
+  frameRobot();
+});
 let toastTimer;
 function toast(text, kind) {
   const t = $("#toast"); t.textContent = text; t.className = "show" + (kind === "err" ? " err" : "");

@@ -1,5 +1,7 @@
 // Robot-family vocabulary and template selection for the local prompt parser.
 import type { RobotSpecification } from "@ttr/robot-schema";
+import type { ArmourShape } from "@ttr/mesh";
+import type { SuitPaint } from "./suit.ts";
 import { designArm, designDiffDrive, designFourWheel, designMecanum, designRover, designEva, designBaymax, designArduinoWallE, designMark43Wearable, designArduinoCar, designArduinoArm, designQuadruped, designHexapod, designHumanoid, designBattleMech, designScara, designGripper, type LeggedRequest } from "@ttr/design";
 import type { SensorType } from "@ttr/robot-schema";
 import { nDofArm, scara, roverArm, wearableExosuit, attachParallelGripper, attachSuctionGripper } from "@ttr/robot-templates";
@@ -63,7 +65,8 @@ export function gripperRequest(t: string): { kind: GripperKind; explicit: boolea
 /** What the prompt asks for, known before the robot is designed. */
 /** "SG90 servos", "MG996R", "Arduino": an Arduino + PCA9685 hobby-servo build, optionally limited to the named servos */
 export interface HobbyServos { only?: string[] }
-export interface DesignContext { hobby?: HobbyServos; prompt: string; budget?: number; payloadKg?: number; reachM?: number; segments?: { upper_arm: number; forearm: number }; sensors: SensorType[]; /** sensor types the prompt rules out ("no lidar") */ excludeSensors: SensorType[]; heightM?: number; }
+export interface DesignContext { hobby?: HobbyServos; prompt: string; budget?: number; payloadKg?: number; reachM?: number; segments?: { upper_arm: number; forearm: number }; sensors: SensorType[]; /** sensor types the prompt rules out ("no lidar") */ excludeSensors: SensorType[]; heightM?: number;
+  /** the Mark 43's own shape (forged) and paint */ suit?: { shape: ArmourShape; paint: SuitPaint }; }
 export interface Choice { family: string; label: string; matched: string; build: (ctx: DesignContext) => RobotSpecification; usesDof?: boolean; usesGripper?: boolean; approx?: string;
   /** built by the parts-first design engine (sized from real components) rather than a fixed template */
   designed?: boolean; }
@@ -95,7 +98,7 @@ export function chooseFamily(t: string, prompt: string, dof: number | undefined,
       // worn armour built body first; "helmet" alone asks for the motorised helmet, chest / gauntlet words for the lights set
       const tier = /\bhelmet\b/.test(t) && !/\b(?:suit|armou?r|body|full)\b/.test(t) ? "helmet" as const : "suit" as const;
       return { family: "iron_man_mark_43", label: tier === "helmet" ? "Iron Man Mark 43 motorised helmet" : "Iron Man Mark 43 wearable suit", matched: m, designed: true,
-        build: (ctx) => designMark43Wearable({ name: "iron_man_mark_43", prompt: ctx.prompt, budget: ctx.budget, tier, ...(heightM ? { heightM } : {}) }) };
+        build: (ctx) => designMark43Wearable({ name: "iron_man_mark_43", prompt: ctx.prompt, budget: ctx.budget, tier, ...(heightM ? { heightM } : {}), ...(ctx.suit ? { shape: ctx.suit.shape, paint: ctx.suit.paint } : {}) }) };
     }
     return { family: "exosuit", label: "wearable exoskeleton", matched: m,
         build: () => wearableExosuit({ prompt, styled: false, name: "exosuit", ...(heightM ? { height_m: heightM } : {}) }) };

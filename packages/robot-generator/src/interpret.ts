@@ -6,6 +6,8 @@ import type { RobotSpecification, SensorType } from "@ttr/robot-schema";
 import { safeName } from "@ttr/robot-schema";
 import { fk } from "@ttr/design";
 import { normalize, find, findAll, mentions, negates, extractDofMentions, type DofMention, extractLengths, extractMasses, extractSpeeds, parseBudget, extractName, extractColour, maskNames, COLOURS } from "./text.ts";
+import { armourShape, shapeKey } from "@ttr/mesh";
+import { suitOptions } from "./suit.ts";
 import { MAX_ARM_DOF, RX, gripperRequest, chooseFamily, RECOLOURABLE, type Choice, type GripperKind, type DesignContext } from "./families.ts";
 import { translateKeywords } from "./lexicon.ts";
 import { applySizeDirectives, designedSizes, reportDesignedReach } from "./sizing.ts";
@@ -94,7 +96,14 @@ export function interpretPrompt(prompt: string): PromptResult {
   const payload = masses.find((x) => x.context === "payload");
   const asked = choice.designed && (choice.family === "serial_arm" || choice.family === "scara") ? designedSizes(t, choice.label, lengths, stature, { dimensions, approximations, ignored, conflicts }) : undefined;
   const hobby = hobbyServos(t);
-  const ctx: DesignContext = { ...(hobby ? { hobby } : {}), prompt, budget: budget.usd, payloadKg: payload ? +payload.kg.toFixed(3) : undefined, reachM: asked?.reachM, segments: asked?.segments,
+  // the Mark 43's own shape and paint: the forge makes the armour from them (generateRobot forges it before this runs)
+  const suit = choice.family === "iron_man_mark_43" ? suitOptions(t) : undefined;
+  if (suit) {
+    dimensions.push(...suit.said); ignored.push(...suit.ignored);
+    const loaded = armourShape();
+    if (shapeKey(loaded) !== shapeKey(suit.shape)) ignored.push(`armour shape (${suit.said.filter((x) => !/paint|steel parts/.test(x)).join(", ")}): not applied, the loaded armour was forged as ${shapeKey(loaded)}; generate it again to forge this one`);
+  }
+  const ctx: DesignContext = { ...(suit ? { suit: { shape: armourShape(), paint: suit.paint } } : {}), ...(hobby ? { hobby } : {}), prompt, budget: budget.usd, payloadKg: payload ? +payload.kg.toFixed(3) : undefined, reachM: asked?.reachM, segments: asked?.segments,
     sensors: requestedSensors(t).filter((type) => !negates(t, SENSOR_WORDS.find(([, k]) => k === type)![0])),
     excludeSensors: SENSOR_WORDS.filter(([rx]) => negates(t, rx)).map(([, k]) => k), ...(heightM ? { heightM } : {}) };
   // a standing robot's stated height is a design input of the humanoid / mech designers
@@ -171,7 +180,7 @@ export function interpretPrompt(prompt: string): PromptResult {
   }
   for (const x of findAll(t, UNMODELLED_SENSORS)) ignored.push(`${x.text}: only cameras, depth cameras, lidars and IMUs are modelled`);
 
-  const colour = extractColour(t);
+  const colour = suit ? undefined : extractColour(t);
   if (colour) {
     const mat = spec.materials.find((x) => x.name === (choice.designed ? "printed_accent" : "link_mat"));
     if (RECOLOURABLE.has(choice.family) && mat) mat.color = [...COLOURS[colour]];

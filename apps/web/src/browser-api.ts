@@ -18,6 +18,9 @@ engine.onmessage = ({ data }) => {
     return;
   }
   if (data.save) { try { localStorage.setItem(STORE_KEY, data.save); } catch { /* quota or private mode: memory only */ } return; }
+  // the armour forge reports while it works: the page shows it (app.js listens)
+  if (data.forgePreview) { dispatchEvent(new CustomEvent("ttr-forge-preview", { detail: data.forgePreview })); return; }
+  if (data.forge) { (globalThis as any).__ttrForge = data.forge; dispatchEvent(new CustomEvent("ttr-forge", { detail: data.forge })); return; }
   const done = waiting.get(data.id); waiting.delete(data.id);
   done?.(new Response(data.buffer, { status: data.status, headers: { "Content-Type": data.type } }));
 };

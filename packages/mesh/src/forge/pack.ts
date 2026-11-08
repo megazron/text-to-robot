@@ -3,7 +3,7 @@
 // joint's range, the shells are simplified, and the pieces are quantised into the pack the designer reads (ArmourManifest + bytes).
 import type { TriMesh } from "./mc.ts";
 import { J, EAR, MASK_OPEN, type ForgedPiece } from "./mark43.ts";
-import { asSolid, asMesh, scope, compose, union, rot, place, bodies, meshBounds, meshVolume, meshCentroid, overlaps, linspace, vertexNormals, type P3 } from "./geo.ts";
+import { asSolid, asMesh, scope, compose, union, clipUnion, boundsOf, rot, place, bodies, meshBounds, meshVolume, meshCentroid, overlaps, linspace, vertexNormals, type P3 } from "./geo.ts";
 
 export interface Row { name: string; link: string; material: string; region: string; wiring?: boolean; hardware?: boolean; anchor?: P3; normal?: P3; [k: string]: unknown; }
 export interface Piece { row: Row; mesh: TriMesh; dirty?: boolean; }
@@ -90,8 +90,9 @@ export function trimNeck(pcs: Piece[], jpos: Record<string, P3>, log: Log): Piec
   const o = jpos.neck_mount;
   return scope(() => {
     const helmet = solidOf(pcs, (p) => ["head", "helmet_faceplate"].includes(baseLink(p.row.link)), 0.4);
-    const n = Math.floor((2 * NECK_TURN) / 0.04) + 1, sweep = union(linspace(-NECK_TURN, NECK_TURN, n).map((a) => place(rot(o, [0, 0, 1], a), helmet)));
-    const [out, lost] = cutAll(pcs, (p) => p.row.region === "torso" && p.row.material !== "lens_glow" && meshBounds(p.mesh)[1][2] >= 1500, sweep, "n");
+    const pick = (p: Piece) => p.row.region === "torso" && p.row.material !== "lens_glow" && meshBounds(p.mesh)[1][2] >= 1500;
+    const n = Math.floor((2 * NECK_TURN) / 0.04) + 1, sweep = clipUnion(linspace(-NECK_TURN, NECK_TURN, n).map((a) => place(rot(o, [0, 0, 1], a), helmet)), boundsOf(pcs.filter(pick).map((p) => p.mesh)));
+    const [out, lost] = cutAll(pcs, pick, sweep, "n");
     log(`collar relief ${Math.round(lost)} mm3`);
     return out;
   }) as unknown as Piece[];
@@ -106,8 +107,9 @@ export async function trimSwings(pcs: Piece[], jpos: Record<string, P3>, tick: T
     pcs = scope(() => {
       const par = solidOf(pcs, (p) => baseLink(p.row.link) === pl && hard(p) && near(p.mesh), 0.4);
       // python: rotation by -ang about +y, written out as [[c, 0, s], [0, 1, 0], [-s, 0, c]] with c, s of -ang
-      const n = Math.max(12, Math.floor((hi - lo) / 0.03)), sweep = union(linspace(lo, hi, n).map((a) => place(rot(o, [0, 1, 0], -a), par)));
-      return cutAll(pcs, (p) => baseLink(p.row.link) === cl && hard(p) && near(p.mesh), sweep, "w")[0];
+      const pick = (p: Piece) => baseLink(p.row.link) === cl && hard(p) && near(p.mesh), box = boundsOf(pcs.filter(pick).map((p) => p.mesh));
+      const n = Math.max(12, Math.floor((hi - lo) / 0.03)), sweep = clipUnion(linspace(lo, hi, n).map((a) => place(rot(o, [0, 1, 0], -a), par)), box);
+      return cutAll(pcs, pick, sweep, "w")[0];
     }) as unknown as Piece[];
     log(`trimmed ${side} ${j}`); await tick("swings");
   }

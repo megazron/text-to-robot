@@ -36,9 +36,9 @@ function thinAxis(v: Float64Array): [number, number, number] {
 export async function forgeSuit(mf: unknown, params: ForgeParams = {}, onProgress: (p: SuitProgress) => void | Promise<void> = () => {}, log: (s: string) => void = () => {}): Promise<{ manifest: ArmourManifest; bytes: Uint8Array; log: string[] }> {
   useManifold(mf);
   const lines: string[] = [], say = (s: string) => { lines.push(s); log(s); };
-  let stage = 0, count = 0, last = 0;
+  let stage = 0, last = 0;
   const tick: Tick = async (what) => {
-    count++;
+
     const now = Date.now();
     if (now - last < 120) return;     // yield to the event loop and report at most ~8 times a second
     last = now;

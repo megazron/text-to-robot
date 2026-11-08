@@ -7,6 +7,10 @@ import type { LlmProvider } from "@ttr/llm-providers";
 import { finalizeSpec, dofCount } from "./finalize.ts";
 import { interpretPrompt, applyModification, extractBudget, extractPayload, describeInterpretation, type Interpretation } from "./nlp.ts";
 import { repair } from "./repair.ts";
+import { ensureArmourPack, DEFAULT_SHAPE, type ArmourShape } from "@ttr/mesh";
+import { normalize, mentions } from "./text.ts";
+import { RX } from "./families.ts";
+import { suitOptions } from "./suit.ts";
 import { diffSpecs, type SpecDiff } from "./diff.ts";
 
 /** Local reference/template generator; no network, account, or model token. */
@@ -75,9 +79,23 @@ function requirements(spec: RobotSpecification, text: string) {
   return { budget: extractBudget(text) ?? extractBudget(origin), payloadKg: extractPayload(text) ?? extractPayload(origin) };
 }
 
+/** A Mark 43 prompt needs its armour forged (or found) before the designer places it: the forge makes it from the prompt's shape words. */
+export async function forgeForPrompt(prompt: string): Promise<void> {
+  const t = normalize(prompt);
+  if (!mentions(t, RX.suit) || !/iron[\s-]?man|mark\s*(?:[ivx]+|\d+)|armou?r|movie|ultron/.test(t) || (/\bmech\b(?!\s+suit)/.test(t) && !/iron[\s-]?man|exo|wearable|suit/.test(t))) return;
+  await ensureArmourPack(suitOptions(t).shape);
+}
+/** the armour shape a built suit was designed with (its pack must be loaded to export its meshes) */
+export async function forgeForRobot(spec: RobotSpecification): Promise<void> {
+  const d = (spec.metadata as { design?: { family?: string; request?: { shape?: ArmourShape } } }).design;
+  if (d?.family !== "mark43_wearable") return;
+  await ensureArmourPack(d.request?.shape ?? DEFAULT_SHAPE);
+}
+
 export async function generateRobot(prompt: string, opts: GenerateOptions = {}): Promise<GenerateResult> {
   const warnings: string[] = [];
   if (!prompt || !prompt.trim()) throw new Error("empty prompt");
+  await forgeForPrompt(prompt);
   const provider = opts.provider ?? new LocalProvider();
   const { spec: raw, interpretation } = await specFromProvider(provider, prompt, warnings);
   const spec = finalizeSpec(raw);
@@ -96,6 +114,7 @@ export interface ModifyResult extends GenerateResult { diff: SpecDiff; changes: 
 
 export async function modifyRobot(prev: RobotSpecification, instruction: string, opts: GenerateOptions = {}): Promise<ModifyResult> {
   const warnings: string[] = [];
+  await forgeForRobot(prev);
   const provider = opts.provider ?? new LocalProvider();
   let changes: string[] = [];
   let next: RobotSpecification;

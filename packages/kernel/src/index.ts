@@ -47,6 +47,8 @@ export function initKernel(urls: { occt?: string; manifold?: string } = {}): Pro
   return ready;
 }
 const oc = () => getOC() as any;
+/** The manifold-3d module, loaded (the armour forge works on it). */
+export async function manifoldModule(): Promise<NonNullable<typeof mf>> { await initKernel(); return mf!; }
 
 // ---------------------------------------------------------------- memory scope
 // OpenCascade objects live in WASM memory: every shape made while building one part is deleted at the end.

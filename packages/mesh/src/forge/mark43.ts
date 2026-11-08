@@ -674,3 +674,27 @@ export async function forgePrint(params: ForgeParams = {}, tick: Tick = () => {}
   say(`${pieces.length} pieces`);
   return { pieces, doors, log };
 }
+
+/** A quick look at the suit while the full forge runs: every part's outer surface at a coarse voxel (4 mm), one mesh per colour, limbs
+ *  mirrored, no hollowing, doors or trims. It is drawn while the real pieces are made, then replaced by them. */
+export async function forgePreview(params: ForgeParams = {}, tick: Tick = () => {}): Promise<{ material: string; mesh: TriMesh }[]> {
+  const c = { ...ctxOf(params), v: 4 }, out: { material: string; mesh: TriMesh }[] = [];
+  for (const k of Object.keys(BUILD)) {
+    const p = BUILD[k](c);
+    if (k === "torso") reactor(c, p);
+    for (const col of [RED, GOLD, STEEL, LENS]) {
+      const m = new Float32Array(p.size); let any = false;
+      for (let q = 0; q < p.size; q++) if (p.col[q] === col) { m[q] = 1; any = true; }
+      if (!any && col !== RED) continue;
+      const e = gauss3(m, p.shape, 0.6), f = new Float32Array(p.size);
+      for (let q = 0; q < p.size; q++) { const ee = col === RED && p.col[q] === RED ? 1 : e[q] - 0.5; f[q] = Math.max(p.d[q], -ee * p.v * 2 + 0.3); }
+      const mesh = marchingCubes(f, p.shape, 0, p.v, [p.ax[0][0], p.ax[1][0], p.ax[2][0]]);
+      if (!mesh.f.length) continue;
+      const o = signedVolume(mesh) < 0 ? flip(mesh) : mesh;
+      out.push({ material: NAMES[col], mesh: o });
+      if (k !== "head" && k !== "torso") out.push({ material: NAMES[col], mesh: mirrorY(o) });
+    }
+    await tick(`${k} preview`);
+  }
+  return out;
+}

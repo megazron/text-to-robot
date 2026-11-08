@@ -1,7 +1,7 @@
 // The engine of the static GitHub Pages build, run in a Web Worker so designing a robot never freezes the page.
 // It answers the web app's /api/* requests with the same generator packages as apps/api/src/server.ts.
 // Workers have no localStorage: browser-api.ts hands the saved robots in and writes changes back.
-import { generateRobot, modifyRobot, finalizeSpec, arduinoOptions } from "@ttr/robot-generator";
+import { generateRobot, modifyRobot, finalizeSpec, arduinoOptions, forgeForPrompt, forgeForRobot } from "@ttr/robot-generator";
 import { generateUrdf, generateXacro } from "@ttr/urdf-generator";
 import { validateUrdf } from "@ttr/urdf-validator";
 import { validateSpec, type RobotSpecification } from "@ttr/robot-schema";
@@ -10,7 +10,7 @@ import { listTemplates } from "@ttr/robot-templates";
 import { buildBom } from "@ttr/components";
 import { generateCadFiles } from "@ttr/cad";
 import { exportTraining } from "@ttr/training-export";
-import { buildPart, toStlBinary, meshTopology, setArmourPack, armourPackLoaded, type ArmourManifest } from "@ttr/mesh";
+import { buildPart, toStlBinary, meshTopology, setArmourSource, setArmourCache, setForgeListener, type ArmourManifest } from "@ttr/mesh";
 import { providerStatus } from "@ttr/llm-providers";
 import { engineApi } from "./engine/api.ts";
 
@@ -88,19 +88,35 @@ async function handle(method: string, p: string, body: any): Promise<Response> {
   return json(404, { error: "unknown endpoint" });
 }
 
-/** The Mark 43 shells are about 10 MB: fetched only when a design needs them. */
-async function loadArmour() {
-  if (armourPackLoaded()) return;
-  const base = (self as { TTR_ENGINE_BASE?: string }).TTR_ENGINE_BASE ?? location.href;   // set when another site started this worker
-  const [m, b] = await Promise.all([fetch(new URL("mark43_pack.json", base)), fetch(new URL("mark43_pack.bin", base))]);
-  if (m.ok && b.ok) setArmourPack((await m.json()) as ArmourManifest, new Uint8Array(await b.arrayBuffer()));
-}
+// The Mark 43 armour is forged here, in this worker, from the prompt (packages/mesh/src/forge): nothing is fetched. A forged pack is kept in
+// IndexedDB, keyed by its shape and the forge's version, so the same suit opens at once next time.
+setArmourSource("forge");
+const DB = "ttr-armour", STORE = "packs";
+const db = (): Promise<IDBDatabase> => new Promise((ok, fail) => { const r = indexedDB.open(DB, 1); r.onupgradeneeded = () => r.result.createObjectStore(STORE); r.onsuccess = () => ok(r.result); r.onerror = () => fail(r.error); });
+setArmourCache({
+  async get(key) {
+    try {
+      const d = await db(); return await new Promise((ok) => { const q = d.transaction(STORE).objectStore(STORE).get(key); q.onsuccess = () => ok(q.result ? { manifest: q.result.manifest as ArmourManifest, bytes: new Uint8Array(q.result.bytes) } : undefined); q.onerror = () => ok(undefined); });
+    } catch { return undefined; }
+  },
+  async put(key, manifest, bytes) {
+    try { const d = await db(); await new Promise((ok) => { const t = d.transaction(STORE, "readwrite"); t.objectStore(STORE).put({ manifest, bytes: bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength) }, key); t.oncomplete = () => ok(undefined); t.onerror = () => ok(undefined); }); }
+    catch { /* private mode or quota: the pack stays in memory only */ }
+  },
+});
+const forgeStart = { t: 0 };
+setForgeListener((p) => { if (!forgeStart.t) forgeStart.t = Date.now(); post({ forge: { ...p, elapsed_s: Math.round((Date.now() - forgeStart.t) / 1000) } }); if (p.stage === "done") forgeStart.t = 0; },
+  undefined, (parts) => post({ forgePreview: parts }, parts.flatMap((p) => [p.v.buffer, p.f.buffer])));
+
 async function answer(method: string, path: string, text: string): Promise<Response> {
   try {
     const body = text ? JSON.parse(text) : {};
-    if (/iron|mark\s*\d|armou?r|exo|suit|helmet/i.test(text)) await loadArmour();
-    try { return await handle(method, path, body); }
-    catch (e) { if (armourPackLoaded() || !/mark43_pack/.test(String(e))) throw e; await loadArmour(); return await handle(method, path, body); }
+    // a suit's armour must be the one its robot was designed with before anything is exported from it
+    if (body.robot) await forgeForRobot(body.robot as RobotSpecification);
+    if (path === "/api/arduino" && body.prompt) await forgeForPrompt(String(body.prompt));
+    const meshMatch = /^\/api\/robots\/([^/]+)\/mesh\//.exec(path), stored = meshMatch && store.get(meshMatch[1]);
+    if (stored) await forgeForRobot(stored);
+    return await handle(method, path, body);
   } catch (e) { return json(400, { error: (e as Error).message }); }
 }
 self.onmessage = async ({ data }: MessageEvent) => {

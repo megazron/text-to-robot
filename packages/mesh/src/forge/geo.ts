@@ -5,9 +5,7 @@ import type { TriMesh } from "./mc.ts";
 export type P3 = [number, number, number];
 /** a 3x4 [R | t], rows */
 export type M34 = number[][];
-// biome-ignore lint/suspicious/noExplicitAny: the WASM module's classes
 type Wasm = any;
-// biome-ignore lint/suspicious/noExplicitAny: a manifold-3d Manifold
 export type Solid = any;
 
 let W: Wasm | undefined;
@@ -90,10 +88,23 @@ export function rot(o: P3, e: P3, ang: number): M34 {
 }
 export const turn = (x: Solid, o: P3, e: P3, ang: number): Solid => place(rot(o, e, ang), x);
 /** the solid swept through [a0, a1] about the axis (numpy.linspace with max(3, |a1 - a0| / step + 1) stations) */
-export function sweep(x: Solid, o: P3, e: P3, a0: number, a1: number, step = 0.05): Solid {
+export function sweep(x: Solid, o: P3, e: P3, a0: number, a1: number, step = 0.05, clip?: [P3, P3]): Solid {
   const n = Math.max(3, Math.floor(Math.abs(a1 - a0) / step) + 1), xs: Solid[] = [];
   for (let i = 0; i < n; i++) xs.push(turn(x, o, e, a0 + ((a1 - a0) * i) / (n - 1)));
-  return union(xs);
+  return clipUnion(xs, clip);
+}
+/** The union of solids, each first cut to `clip` when given: what is subtracted from pieces inside the box is exactly the same, and the
+ *  union of the small parts is far quicker than the union of the whole copies. */
+export function clipUnion(xs: Solid[], clip?: [P3, P3]): Solid {
+  if (!clip) return union(xs);
+  const box = cube([clip[1][0] - clip[0][0], clip[1][1] - clip[0][1], clip[1][2] - clip[0][2]]).translate(clip[0]);
+  return union(xs.filter((x) => overlaps(bbox(x), clip)).map((x) => x.intersect(box)).filter((x) => !x.isEmpty()));
+}
+/** the box round some meshes, grown by `pad` */
+export function boundsOf(ms: TriMesh[], pad = 1): [P3, P3] {
+  const lo: P3 = [Infinity, Infinity, Infinity], hi: P3 = [-Infinity, -Infinity, -Infinity];
+  for (const m of ms) { const b = meshBounds(m); for (let k = 0; k < 3; k++) { lo[k] = Math.min(lo[k], b[0][k] - pad); hi[k] = Math.max(hi[k], b[1][k] + pad); } }
+  return [lo, hi];
 }
 export const linspace = (a: number, b: number, n: number): number[] => (n === 1 ? [a] : Array.from({ length: n }, (_, i) => a + ((b - a) * i) / (n - 1)));
 

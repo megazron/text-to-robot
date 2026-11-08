@@ -54,11 +54,58 @@ export interface ArmourManifest {
   bays: { back: ArmourBay; drive_left: ArmourBay; drive_right: ArmourBay };
 }
 
+/** What a prompt may change in the armour itself (the forge's inputs; packages/mesh/src/forge/mark43.ts). */
+export interface ArmourShape { bulk: number; shoulder: number; panels: "film" | "smooth" | "heavy"; }
+export const DEFAULT_SHAPE: ArmourShape = { bulk: 1, shoulder: 1, panels: "film" };
+/** bump when the forge's output changes, so cached packs are made again */
+export const FORGE_VERSION = 1;
+export const shapeKey = (s: ArmourShape) => `v${FORGE_VERSION}|bulk ${s.bulk}|shoulder ${s.shoulder}|panels ${s.panels}`;
+const sameShape = (a: ArmourShape, b: ArmourShape) => shapeKey(a) === shapeKey(b);
+
 let manifest: ArmourManifest | undefined, bytes: Uint8Array | undefined;
 export function setArmourPack(m: ArmourManifest, b: Uint8Array): void { manifest = m; bytes = b; }
 export const armourPackLoaded = () => !!manifest;
+/** the shape the loaded pack was forged with */
+export function armourShape(): ArmourShape {
+  const p = (manifest as { params?: Partial<ArmourShape> } | undefined)?.params;
+  return { bulk: p?.bulk ?? 1, shoulder: p?.shoulder ?? 1, panels: p?.panels ?? "film" };
+}
+/** Where packs come from: "file" reads the shipped cache for the reference shape (Node), "forge" always forges (the website). */
+let source: "file" | "forge" = "file";
+export const setArmourSource = (s: "file" | "forge") => { source = s; };
+/** a store for forged packs that outlives the page (the website gives IndexedDB) */
+export interface ArmourCache { get(key: string): Promise<{ manifest: ArmourManifest; bytes: Uint8Array } | undefined>; put(key: string, manifest: ArmourManifest, bytes: Uint8Array): Promise<void>; }
+let cache: ArmourCache | undefined;
+export const setArmourCache = (c: ArmourCache | undefined) => { cache = c; };
+export interface ForgeProgress { stage: string; done: number; total: number; detail: string; }
+export interface PreviewPart { material: string; v: Float32Array; f: Uint32Array; }
+let forging: Promise<unknown> | undefined, hear: ((p: ForgeProgress) => void | Promise<void>) | undefined, say: ((s: string) => void) | undefined, look: ((parts: PreviewPart[]) => void) | undefined;
+/** who hears the forge when a caller passes no listener (the website's worker posts it to the page); `preview` gets a coarse look first */
+export const setForgeListener = (onProgress?: (p: ForgeProgress) => void | Promise<void>, log?: (s: string) => void, preview?: (parts: PreviewPart[]) => void) => { hear = onProgress; say = log; look = preview; };
+/**
+ * Makes the loaded pack the one for `shape`: the loaded one if it matches, then the shipped file (reference shape, Node only), then the
+ * cache, else the forge runs (minutes; `onProgress` hears from it). Returns where the pack came from.
+ */
+export async function ensureArmourPack(shape: ArmourShape = DEFAULT_SHAPE, onProgress?: (p: ForgeProgress) => void | Promise<void>, log?: (s: string) => void): Promise<"loaded" | "file" | "cache" | "forged"> {
+  while (forging) await forging.catch(() => {});
+  if (manifest && sameShape(armourShape(), shape)) return "loaded";
+  if (source === "file" && sameShape(shape, DEFAULT_SHAPE)) { manifest = undefined; load(); return "file"; }
+  const key = shapeKey(shape), hit = await cache?.get(key);
+  if (hit) { setArmourPack(hit.manifest, hit.bytes); return "cache"; }
+  const job = (async () => {
+    const [{ forgeSuit }, { forgePreview }, { manifoldModule }] = await Promise.all([import("./forge/suit.ts"), import("./forge/mark43.ts"), import("@ttr/kernel")]);
+    if (look) look((await forgePreview(shape)).map((p) => ({ material: p.material, v: Float32Array.from(p.mesh.v), f: p.mesh.f })));
+    const r = await forgeSuit(await manifoldModule(), { voxel: 2, ...shape }, onProgress ?? hear, log ?? say);
+    setArmourPack(r.manifest, r.bytes);
+    await cache?.put(key, r.manifest, r.bytes);
+  })();
+  forging = job;
+  try { await job; } finally { forging = undefined; }
+  return "forged";
+}
 function load(): void {
   if (manifest) return;
+  if (source === "forge") throw new Error("the Mark 43 armour has not been forged yet (ensureArmourPack)");
   const dir = new URL("../../parts/data/", import.meta.url);
   manifest = JSON.parse(String(readFileSync(new URL("mark43_pack.json", dir)))) as ArmourManifest;
   bytes = new Uint8Array(readFileSync(new URL("mark43_pack.bin", dir)) as unknown as ArrayBufferLike);
