@@ -132,3 +132,28 @@ test('mock control starts sliding fingers open without excluding opposing pad co
   const srdf=files['arm_6dof/moveit/arm_6dof.srdf'] as string;
   assert.ok(!/link1="left_finger_pad" link2="right_finger_pad"|link1="right_finger_pad" link2="left_finger_pad"/.test(srdf));
 });
+
+test("ROS 2 launch files pass robot_description as a string and the display layout needs no MoveIt", () => {
+  // Jazzy parses an untyped Command(...) parameter as YAML and refuses to start robot_state_publisher on a URDF
+  for (const spec of [nDofArm(6), diffDrive()]) {
+    const f = exportRos2Package(spec, { ros2_control: true }), pkg = spec.robot_name;
+    for (const launch of [`${pkg}/launch/display.launch.py`, `${pkg}/launch/gazebo.launch.py`]) {
+      const text = String(f[launch]);
+      assert.match(text, /ParameterValue\(Command\(\["xacro ", xacro_file\]\), value_type=str\)/, launch);
+      assert.doesNotMatch(text.replace(/ParameterValue\(Command\(\[[^\]]*\]\), value_type=str\)/g, ""), /Command\(\[/, `${launch}: an untyped Command parameter is left`);
+      assert.match(text, /from launch_ros\.parameter_descriptions import ParameterValue/);
+    }
+    const display = String(f[`${pkg}/launch/display.launch.py`]);
+    assert.match(display, /IfCondition\(LaunchConfiguration\("gui"\)\)/, "the gui argument chooses the slider window");
+    assert.match(display, /UnlessCondition\(LaunchConfiguration\("gui"\)\)/);
+    const xml = String(f[`${pkg}/package.xml`]);
+    for (const dep of ["joint_state_publisher", "joint_state_publisher_gui", "ros_gz_sim", "ros_gz_bridge"]) assert.ok(xml.includes(`<exec_depend>${dep}</exec_depend>`), dep);
+    // display.launch.py runs without move_group: its RViz layout must not load the MoveIt panel
+    const rviz = String(f[`${pkg}/rviz/${pkg}.rviz`]);
+    assert.doesNotMatch(rviz, /MotionPlanning/);
+    assert.doesNotMatch(rviz.split("Views:")[0], /rviz_default_plugins\/Orbit/, "Orbit is a view controller, not a tool");
+  }
+  const arm = exportRos2Package(nDofArm(6), { ros2_control: true });
+  assert.match(String(arm["arm_6dof/rviz/arm_6dof_moveit.rviz"]), /moveit_rviz_plugin\/MotionPlanning/);
+  assert.match(String(arm["arm_6dof/launch/move_group.launch.py"]), /rviz\/arm_6dof_moveit\.rviz/);
+});

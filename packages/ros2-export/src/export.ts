@@ -48,10 +48,12 @@ function packageXml(pkg: string): string {
   <buildtool_depend>ament_cmake</buildtool_depend>
 
   <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>joint_state_publisher</exec_depend>
   <exec_depend>joint_state_publisher_gui</exec_depend>
   <exec_depend>rviz2</exec_depend>
   <exec_depend>xacro</exec_depend>
   <exec_depend>ros_gz_sim</exec_depend>
+  <exec_depend>ros_gz_bridge</exec_depend>
   <exec_depend>moveit_configs_utils</exec_depend>
   <exec_depend>moveit_ros_move_group</exec_depend>
   <exec_depend>moveit_ros_visualization</exec_depend>
@@ -98,9 +100,10 @@ import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
-from launch.substitutions import Command, LaunchConfiguration, PathJoinSubstitution
+from launch.conditions import IfCondition, UnlessCondition
+from launch.substitutions import Command, LaunchConfiguration
 from launch_ros.actions import Node
-from launch_ros.substitutions import FindPackageShare
+from launch_ros.parameter_descriptions import ParameterValue
 
 
 def generate_launch_description():
@@ -109,12 +112,13 @@ def generate_launch_description():
     xacro_file = os.path.join(share, "urdf", pkg + ".urdf.xacro")
     rviz_file = os.path.join(share, "rviz", pkg + ".rviz")
 
+    # the expanded xacro is a string, not YAML: without value_type=str ROS 2 Jazzy refuses to start the node
     robot_description = {
-        "robot_description": Command(["xacro ", xacro_file])
+        "robot_description": ParameterValue(Command(["xacro ", xacro_file]), value_type=str)
     }
 
     return LaunchDescription([
-        DeclareLaunchArgument("gui", default_value="true"),
+        DeclareLaunchArgument("gui", default_value="true", description="joint sliders window (false: joint_state_publisher without a window)"),
         Node(package="tf2_ros", executable="static_transform_publisher", arguments=["--frame-id", "world", "--child-frame-id", "${root}"]),
         Node(
             package="robot_state_publisher",
@@ -125,7 +129,12 @@ def generate_launch_description():
         Node(
             package="joint_state_publisher_gui",
             executable="joint_state_publisher_gui",
-            condition=None,
+            condition=IfCondition(LaunchConfiguration("gui")),
+        ),
+        Node(
+            package="joint_state_publisher",
+            executable="joint_state_publisher",
+            condition=UnlessCondition(LaunchConfiguration("gui")),
         ),
         Node(
             package="rviz2",
@@ -188,11 +197,13 @@ ${joints}
 `;
 }
 
-function rvizConfig(): string {
+/** RViz layout: the robot model and its frames; the MoveIt layout adds the MotionPlanning panel (it needs move_group running). */
+export function rvizConfig(moveit = false): string {
   return `Panels:
   - Class: rviz_common/Displays
     Name: Displays
 Visualization Manager:
+  Class: ""
   Displays:
     - Class: rviz_default_plugins/Grid
       Name: Grid
@@ -205,13 +216,23 @@ Visualization Manager:
     - Class: rviz_default_plugins/TF
       Name: TF
       Enabled: true
-    - Class: moveit_rviz_plugin/MotionPlanning
+${moveit ? `    - Class: moveit_rviz_plugin/MotionPlanning
       Name: MotionPlanning
       Enabled: true
-  Global Options:
+` : ""}  Global Options:
     Fixed Frame: world
   Tools:
-    - Class: rviz_default_plugins/Orbit
+    - Class: rviz_default_plugins/Interact
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/Select
+    - Class: rviz_default_plugins/FocusCamera
+    - Class: rviz_default_plugins/Measure
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Distance: 2
+      Name: Current View
+      Target Frame: world
 `;
 }
 

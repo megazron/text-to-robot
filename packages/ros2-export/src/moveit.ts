@@ -2,7 +2,7 @@
 // validates ROS wiring; it is not a dynamics engine or a real hardware driver.
 import type {RobotSpecification,Joint} from '@ttr/robot-schema';
 import {safeName,findRoot} from '@ttr/robot-schema';
-import type {FileMap} from './export.ts';
+import {rvizConfig,type FileMap} from './export.ts';
 interface Group {name:string;joints:Joint[];base?:string;tip?:string}
 export function planningGroups(spec:RobotSpecification):Group[] {
   const {root}=findRoot(spec);if(!root)return [];
@@ -112,6 +112,7 @@ ${groups.map(g=>`${g.name}:\n  default_planner_config: RRTConnect\n  planner_con
 `;
   files[`${pkg}/moveit/ompl_planning.yaml`]=ompl;
   files[`${pkg}/config/ompl_planning.yaml`]=ompl;
+  files[`${pkg}/rviz/${pkg}_moveit.rviz`]=rvizConfig(true);
   files[`${pkg}/launch/move_group.launch.py`]=`# Fixed-root planning with mock hardware, not physical simulation.
 import os
 from ament_index_python.packages import get_package_share_directory
@@ -140,7 +141,7 @@ def generate_launch_description():
         Node(package="controller_manager", executable="ros2_control_node", parameters=[os.path.join(share,"config/controllers.yaml")], output="screen"),
         Node(package="controller_manager", executable="spawner", arguments=["joint_state_broadcaster", "joint_trajectory_controller", "--controller-manager-timeout", "60"]),
         Node(package="moveit_ros_move_group", executable="move_group", parameters=[config.to_dict()], output="screen"),
-        Node(package="rviz2", executable="rviz2", arguments=["-d", os.path.join(share,"rviz/${pkg}.rviz")], parameters=[config.to_dict()], condition=IfCondition(LaunchConfiguration("rviz"))),
+        Node(package="rviz2", executable="rviz2", arguments=["-d", os.path.join(share,"rviz/${pkg}_moveit.rviz")], parameters=[config.to_dict()], condition=IfCondition(LaunchConfiguration("rviz"))),
     ])
 `;
   files[`${pkg}/moveit/README.md`]=`# MoveIt 2 — ${pkg}
