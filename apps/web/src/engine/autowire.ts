@@ -60,7 +60,7 @@ export function autoWire(input: RobotSpecification): AutoWire {
       const b = bucks.find((x) => x.name !== (logic === "5V" ? bucks[0].name : ""));
       if (!b) throw new Error(`the ${bat.nom} V pack is above the servos' ${sv.max} V: add a buck converter for them`);
       const br = electrical(b.key)!.ports.flatMap((p) => p.pins.v), pin = (sig: string, dir: string) => br.find((x) => x.signal === sig && x.dir === dir)!.name;
-      H.regulator(b.name, "VBAT", "V_SERVO", { vin: pin("power", "power_in"), gin: br.find((x) => x.signal === "ground")!.name, vout: pin("power", "power_out"), gout: br.filter((x) => x.signal === "ground").pop()!.name, volts: Math.min(6, sv.max), simultaneous: 2 }); rail = "V_SERVO";
+      H.regulator(b.name, "VBAT", "V_SERVO", { vin: pin("power", "power_in"), gin: br.find((x) => x.signal === "ground")!.name, vout: pin("power", "power_out"), gout: br.filter((x) => x.signal === "ground").pop()!.name, volts: pca && sv.min <= 5 ? 5 : Math.min(6, sv.max), simultaneous: 2 }); rail = "V_SERVO";   // through a PCA9685 its V+ stays at 5 V, inside the board's rating
     }
     if (pca && controller) {
       H.feed(rail, pca.name, { v: "v_plus.V+", g: "v_plus.GND", typ: 0.01, peak: 0.01 });
