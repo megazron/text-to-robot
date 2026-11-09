@@ -11,9 +11,9 @@ import { buildPart, toStlBinary, meshGeometry } from "@ttr/mesh";
 import { buildBom } from "@ttr/components";
 import { componentGeometry, PRINT_DENSITY, MATERIALS, withSolids, interferences, worstTorques, comWorld, totalMass, evaluate, axisInertias, descendants, type DesignRecord } from "@ttr/design";
 import { partFiles } from "@ttr/kernel/ready";
-import { applyEdits, emptyRobot, kindOf, rootLink, worldFrames, mul, poseMat, rotate, unit, type EditOp, type PartProvider, type PrintedParams, type StudioMeta } from "./edit.ts";
+import { applyEdits, emptyRobot, kindOf, rootLink, worldFrames, mul, inv, poseMat, rotate, unit, partsBaseline, type EditOp, type PartProvider, type PrintedParams, type StudioMeta } from "./edit.ts";
 import { partMounts, printedMounts, printedProgram, worldMounts } from "./mounts.ts";
-import { autoWire } from "./autowire.ts";
+import { clearanceAtHome, autoWireCached } from "./incremental.ts";
 import { stability, type Stability } from "./stability.ts";
 
 export const ENGINE_API_VERSION = "1.0.0";
@@ -82,11 +82,11 @@ export interface JointReport { joint: string; actuator: string | null; required_
 export interface PrintedReport { name: string; bbox_mm: Vec3; fits_bed: boolean; watertight: boolean; mass_kg: number; volume_cm3: number; }
 export interface CheckReport {
   robot: RobotSpecification; urdf: string; valid: boolean; checks: Check[];
-  engineering: { mass_kg: number; com_m: Vec3; cost_usd: number; bom_lines: number; joints: JointReport[]; rails: NonNullable<DesignRecord["wiring"]>["rails"]; wiring_unconnected: string[]; printed: PrintedReport[]; stability: Stability | null; links: number; dof: number } | null;
+  engineering: { mass_kg: number; com_m: Vec3; cost_usd: number; bom_lines: number; joints: JointReport[]; rails: NonNullable<DesignRecord["wiring"]>["rails"]; wiring_unconnected: string[]; printed: PrintedReport[]; stability: Stability | null; links: number; dof: number; timing: Record<string, number> } | null;
 }
 /** Checks and engineering numbers of a spec. Heavy parts (solids, wiring) are skipped with `quick`. */
 export function checkRobot(input: RobotSpecification, opts: { quick?: boolean; interference?: boolean; wiring?: boolean } = {}): CheckReport {
-  const spec = structuredClone(input), checks: Check[] = [];
+  const spec = structuredClone(input), checks: Check[] = [], started = Date.now(), timing: Record<string, number> = {};
   if (!spec.links.length) return { robot: spec, checks: [{ name: "robot", pass: false, detail: "the robot has no parts yet" }], engineering: null, urdf: "", valid: false };
   finalizeSpec(spec);
   const v = validateSpec(spec);
@@ -135,20 +135,37 @@ export function checkRobot(input: RobotSpecification, opts: { quick?: boolean; i
       checks.push({ name: `print:${l.name}`, pass: fits && watertight, detail: `${size.map((x) => x.toFixed(0)).join(" x ")} mm${fits ? "" : ", does not fit a 250 x 210 x 220 mm bed"}${watertight ? "" : ", not one closed solid"}` });
     } catch (e) { checks.push({ name: `print:${l.name}`, pass: false, detail: (e as Error).message }); }
   }
+  // A designed robot not yet edited is as its designer made it: the designer placed, checked and wired every part.
+  const design = meta(input).design, studio = meta(input).studio, asDesigned = !!design && !studio?.edited, baseline = studio?.baseline;
   // nothing passes through anything (parts joined directly touch by design)
-  if (!opts.quick && opts.interference !== false) {
+  if (!opts.quick && opts.interference !== false && asDesigned) {
+    const own = design!.checks.find((c) => c.name === "clearance:home");
+    checks.push(own ?? { name: "clearance:home", pass: true, detail: "as designed: the designer placed every part" });
+  } else if (!opts.quick && opts.interference !== false) {
     try {
       const skip = new Set(spec.joints.flatMap((j) => [`${j.parent}|${j.child}`]));
       for (const j of spec.joints) for (const k of spec.joints) if (j.parent === k.parent && j !== k) skip.add(`${j.child}|${k.child}`);
       const bonded = meta(spec).design?.bonded ?? []; for (const [a, b] of bonded) skip.add(`${a}|${b}`);
-      const hits = withSolids(spec, (m) => interferences(m, {}, undefined, 2, skip));
-      checks.push({ name: "clearance:home", pass: !hits.length, detail: hits.length ? `intersecting: ${hits.slice(0, 8).map((h) => `${h.a}/${h.b} ${h.volume_mm3} mm^3`).join(", ")}` : "no two parts intersect" });
+      const t0 = Date.now(), run = clearanceAtHome(spec, skip, 2, baseline), hits = run.hits;
+      timing.clearance_ms = Date.now() - t0; timing.pairs_checked = run.pairs; timing.pairs_intersected = run.intersected; timing.pairs_reused = run.reused; timing.pairs_as_designed = run.as_designed;
+      const designed = run.as_designed ? ` (${run.as_designed} pairs untouched since the designer placed them)` : "";
+      checks.push({ name: "clearance:home", pass: !hits.length, detail: hits.length ? `intersecting: ${hits.slice(0, 8).map((h) => `${h.a}/${h.b} ${h.volume_mm3} mm^3`).join(", ")}${designed}` : `no two parts intersect${designed}` });
     } catch (e) { checks.push({ name: "clearance:home", pass: false, detail: `not checked: ${(e as Error).message}` }); }
   }
   // wiring and power budget
-  let wiring: ReturnType<typeof autoWire> | null = null;
+  let wiring: ReturnType<typeof autoWireCached> | null = null;
   if (!opts.quick && opts.wiring !== false) {
-    wiring = autoWire(spec);
+    const t0 = Date.now();
+    // the designer's harness stays while no electrical part was added, removed or moved
+    const now = baseline ? partsBaseline(spec) : null, isElectrical = (l: { geometry: unknown }) => { const k = kindOf(l as never).key; return !!k && !!electrical(k); };
+    // (moved together, as when the whole body moves, its cables are the same length: compare them relative to one another)
+    const elec = spec.links.filter(isElectrical).map((l) => l.name), M = (b: [string, ...number[]]) => [...(b.slice(1) as number[]), 0, 0, 0, 1];
+    const rel = (src: Record<string, [string, ...number[]]>, a: string, b: string) => mul(inv(M(src[a])), M(src[b])).slice(0, 12).map((x) => Math.round(x * 1e5)).join(",");
+    const electricalSame = !!design?.wiring && (asDesigned || (!!baseline && !!now && elec.every((n) => baseline[n] && baseline[n][0] === now[n][0] && rel(baseline, elec[0], n) === rel(now, elec[0], n))
+      && Object.keys(baseline).every((n) => spec.links.some((l) => l.name === n) || !design.wiring!.instances.some((i) => i.link === n))));
+    if (electricalSame) wiring = { record: design!.wiring!, checks: design!.checks.filter((c) => c.name.startsWith("wiring:")), unwired: design!.wiring!.unconnected ?? [] };
+    else wiring = autoWireCached(spec);
+    timing.wiring_ms = Date.now() - t0;
     for (const c of wiring.checks) checks.push(c);
   }
   let cost = 0, bomLines = 0;
@@ -159,7 +176,7 @@ export function checkRobot(input: RobotSpecification, opts: { quick?: boolean; i
     engineering: {
       mass_kg: +mass.toFixed(3), com_m: com.map((x) => +x.toFixed(4)) as Vec3, cost_usd: +cost.toFixed(2), bom_lines: bomLines,
       joints, rails: wiring?.record?.rails ?? [], wiring_unconnected: wiring?.unwired ?? [], printed, stability: stab,
-      links: spec.links.length, dof: spec.joints.filter((j) => j.type !== "fixed" && !j.passive).length,
+      links: spec.links.length, dof: spec.joints.filter((j) => j.type !== "fixed" && !j.passive).length, timing: { ...timing, total_ms: Date.now() - started },
     },
   };
 }

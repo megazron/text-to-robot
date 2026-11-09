@@ -13,6 +13,8 @@ import { snapPart, mate, patternsMatch } from "../apps/web/src/engine/snap.ts";
 import { partMounts, printedMounts, worldMounts } from "../apps/web/src/engine/mounts.ts";
 import { engineApi, parts, checkRobot } from "../apps/web/src/engine/api.ts";
 import { stability } from "../apps/web/src/engine/stability.ts";
+import { clearanceAtHome } from "../apps/web/src/engine/incremental.ts";
+import { withSolids, interferences } from "@ttr/design";
 
 const example = (name: string) => JSON.parse(readFileSync(`examples/${name}/robot.json`, "utf8")) as RobotSpecification;
 const near = (a: number[], b: number[], tol = 1e-6) => a.every((x, i) => Math.abs(x - b[i]) < tol);
@@ -158,4 +160,30 @@ test("stability: a car stands on its wheels, and falls over when its weight move
   // an arm is bolted down: reported, never failed
   const arm = checkRobot(example("02_arm_6dof"), { interference: false, wiring: false }).checks.find((c) => c.name === "stability")!;
   assert.ok(arm.pass && /bolt/.test(arm.detail));
+});
+
+test("the incremental clearance check finds what the full one finds, and an edit only intersects the pairs it changed", () => {
+  const car = applyEdits(example("18_arduino_car"), [{ op: "translate", link: "ultrasonic", by: [-0.02, 0, -0.01] }]);
+  const skip = new Set(car.joints.map((j) => `${j.parent}|${j.child}`));
+  const full = withSolids(car, (m) => interferences(m, {}, undefined, 2, skip)).map((h) => [h.a, h.b].sort().join("/")).sort();
+  const first = clearanceAtHome(car, skip);
+  assert.deepEqual(first.hits.map((h) => [h.a, h.b].sort().join("/")).sort(), full);
+  assert.ok(full.length > 0, "the moved sensor hits something");
+  const again = clearanceAtHome(car, skip);
+  assert.equal(again.intersected, 0); assert.equal(again.reused, first.pairs);
+  const moved = applyEdits(car, [{ op: "translate", link: "ultrasonic", by: [0.02, 0, 0.01] }]);
+  const third = clearanceAtHome(moved, skip);
+  assert.ok(third.intersected > 0 && third.intersected < third.pairs + 1 && third.reused > 0, JSON.stringify(third));
+});
+
+test("a designed robot keeps its designer's clearance and harness; after an edit only what changed is checked again", () => {
+  const car = example("18_arduino_car");
+  const as = checkRobot(car, { interference: true, wiring: true });
+  assert.ok(as.checks.find((c) => c.name === "clearance:home")!.pass);
+  assert.ok(as.engineering!.rails.length >= 2, "the designer's rails");
+  const moved = applyEdits(car, [{ op: "translate", link: "ultrasonic", by: [-0.02, 0, -0.01] }]);
+  const r = checkRobot(moved, { interference: true, wiring: true }), c = r.checks.find((x) => x.name === "clearance:home")!;
+  assert.equal(c.pass, false); assert.match(c.detail, /ultrasonic/); assert.match(c.detail, /untouched since the designer/);
+  assert.ok(r.engineering!.timing.pairs_as_designed > 0);
+  for (const pair of c.detail.replace(/ \(.*$/, "").replace(/^intersecting: /, "").split(", ")) assert.match(pair, /ultrasonic|sensor_bracket/, pair);
 });

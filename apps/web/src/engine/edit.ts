@@ -183,13 +183,26 @@ function rebase(spec: RobotSpecification, link: string, F: M4) {
   for (const s of spec.sensors) if (s.parent === link) s.origin = matPose(mul(D, poseMat(s.origin)));
   return D;
 }
+export function fnv(s: string): string { let h = 2166136261; for (let i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 16777619); return (h >>> 0).toString(36) + s.length.toString(36); }
+/** Identity of a link's body: what it is made of and where it sits in its own frame. */
+export function bodyHash(l: Link): string {
+  const g = l.geometry;
+  return fnv(JSON.stringify([l.role === "frame", g.type === "mesh" ? [g.part, g.params, g.scale, g.bbox] : g, l.origin]));
+}
+/** Every part as it is now: body identity and world frame (row-major, first 12 numbers, 6 decimals). */
+export function partsBaseline(spec: RobotSpecification): Record<string, [string, ...number[]]> {
+  const W = worldFrames(spec), out: Record<string, [string, ...number[]]> = {};
+  for (const l of spec.links) { const F = W.get(l.name); if (F) out[l.name] = [bodyHash(l), ...F.slice(0, 12).map((x) => +x.toFixed(6))]; }
+  return out;
+}
 function studioMeta(spec: RobotSpecification): StudioMeta {
-  const m = spec.metadata as { studio?: StudioMeta };
-  // the bought parts the robot had as bodies before its first edit: a deleted body is not bought any more
-  m.studio ??= { edited: true, printed: {}, actuators: {}, bodies: [...new Set(spec.links.map((l) => kindOf(l).key).filter((k): k is string => !!k))].sort() };
+  const m = spec.metadata as { studio?: StudioMeta; design?: unknown };
+  // the bought parts the robot had as bodies before its first edit: a deleted body is not bought any more; and a designed
+  // robot's parts as its designer placed them, so the checks only look again at what an edit changed
+  m.studio ??= { edited: true, printed: {}, actuators: {}, bodies: [...new Set(spec.links.map((l) => kindOf(l).key).filter((k): k is string => !!k))].sort(), ...(m.design && spec.links.length ? { baseline: partsBaseline(spec) } : {}) };
   return m.studio;
 }
-export interface StudioMeta { edited: boolean; printed: Record<string, PrintedParams>; /** joint -> actuator link driving it */ actuators: Record<string, string>; /** catalog keys that were bodies before the first edit */ bodies?: string[]; /** the designer's request before the first edit */ design_request?: unknown; }
+export interface StudioMeta { edited: boolean; printed: Record<string, PrintedParams>; /** joint -> actuator link driving it */ actuators: Record<string, string>; /** catalog keys that were bodies before the first edit */ bodies?: string[]; /** the designer's request before the first edit */ design_request?: unknown; /** a designed robot's parts before the first edit (see partsBaseline) */ baseline?: Record<string, [string, ...number[]]>; }
 
 function addLink(spec: RobotSpecification, l: Link, parent: string | undefined, W: M4) {
   spec.links.push(l);
