@@ -6,13 +6,13 @@ Audited on 2026-11-09 against main at 327f92a (the commit the live site was buil
 
 ## Recommendation
 
-**No-go as the live site stood (327f92a). Go once the fixes below are deployed and two blockers are cleared.**
+**No-go as the live site stood (327f92a). The fixes are now live (b60a82b, CI green on every job). One blocker is left: go once the Mark 43 one-tap forge is gated.**
 
 The live site would have lost a visitor's tab after a few dozen designs (memory), handed out ROS 2 packages whose display launch file fails on ROS 2 Jazzy, training scaffolds that crash on reset for the SCARA and the gripper, a URDF MuJoCo refuses (EVA), and it built the wrong robot or said something untrue for about one prompt in five of the harder ones. All of that is fixed on the branch and checked on the fixed build: 30 of the 31 prompts I re-ran on the fixed build now come out right (the one left is slang I did not add), 80 designs in one tab run without a failure, all 19 ROS 2 packages build and launch, all 19 training scaffolds run in MuJoCo and PyBullet, all 44 STEP files are valid solids, and every parts list adds up.
 
 Blockers before launch:
 
-1. **CI must be green on main.** It was red at 327f92a on the Mark 43 film check (3 hits); the forge owner's 8bf0877 fixes that check, and this branch is rebased on it. See [Gates](#gates) for the run after my push.
+1. ~~CI must be green on main.~~ **Cleared.** It was red at 327f92a on the Mark 43 film check (3 hits); the forge owner's 8bf0877 fixed it, and CI on b60a82b (this audit's fixes on top) passed all four jobs: test, browser, mujoco and site, the site job including both Mark 43 cases.
 2. **The Mark 43 must not start a 25 to 65 minute, up to 6 GB forge on one tap without warning.** The "Suit" stop on the dial and the "Iron Man Mark 43 suit" example chip do exactly that. Either ask first (with the real time and memory), or ship the default suit precomputed so the first one opens at once. I did not see a forge finish in this audit.
 
 Not blockers, but worth doing soon: the same memory leak in the Node API server and the `engine/v1` API (item 3 under [Bugs remaining](#bugs-remaining)), the arm designer's undersized power supplies (item 4), and the quick start's self-collision test that fails on the arm it builds (item 5).
@@ -536,7 +536,8 @@ Run on the branch before pushing, reading the full output of each:
 | `scripts/simulate_examples.py --check` | pass (EVA re-simulated for its corrected URDF, 3/3) |
 | `scripts/check_mesh_assets.py` | 396/396 |
 | static interference (`tests/examples-interference.test.ts`) | 19/19 |
-| `scripts/check_motion.py --record` | all pass except the Mark 43 (3 film hits) at 327f92a; fixed on main by 8bf0877, which this branch is rebased on: CI confirms |
+| `scripts/check_motion.py --record` | all pass except the Mark 43 (3 film hits) at 327f92a; fixed on main by 8bf0877, which this branch is rebased on |
+| CI on b60a82b (GitHub Actions run 42644014892) | test, browser, mujoco and site all pass; the site job forges both Mark 43 cases in the tab |
 | `scripts/check_engine.py` | pass (engine v1 loaded across origins, designs, checks and exports) |
 | `scripts/check_site.py`, every case except the two Mark 43 ones (each forges for over an hour headless; CI runs them) | 22/22 pass, downloads equal to the shipped examples |
 | ROS 2 Jazzy: colcon build and launch of all 19 packages | 19/19 build, display launches, arms reach move_group planning |
@@ -545,7 +546,7 @@ Run on the branch before pushing, reading the full output of each:
 
 | # | Severity | What | Where | Notes |
 |--:|---|---|---|---|
-| 1 | **High (blocker until confirmed)** | CI was red on main at 327f92a: `check_motion.py` found 3 film hits in the Mark 43 | Mark 43 example | Fixed by the forge owner in 8bf0877; confirm green CI before launch |
+| 1 | Cleared | CI was red on main at 327f92a: `check_motion.py` found 3 film hits in the Mark 43 | Mark 43 example | Fixed by the forge owner in 8bf0877; CI green on b60a82b |
 | 2 | **High** | The Mark 43 forge takes 25 minutes in Chrome on a laptop (about 65 headless here) and up to 6 GB, and the "Suit" dial stop and the "Iron Man Mark 43 suit" example chip start it with one tap, before the visitor knows | Mark 43 forge, site | The page stays usable and says so, but a first visitor on a phone or a small laptop may never see a result. I did not run a forge to the end. Suggest: ask before forging, or ship the default pack precomputed |
 | 3 | Medium | The CAD kernel leak (manifold-3d 3.5.4, about 90 kB per boolean) is fixed on the site by recycling the worker, but the Node API server (`npm run api`, `docker compose`) and pages using `engine/v1` keep one engine for their whole life and will abort after some tens of designs | `apps/api`, `apps/web/src/engine/client.ts` | Same fix applies: recycle the worker, or run designs in child processes |
 | 4 | Medium | Many ordinary arm prompts end with a failing wiring check: the designer keeps a power supply that cannot give the peak current (`6 DOF arm with 60 cm reach`, `2 kg payload`, `24 inch reach`, `0.45 m, 0.3 kg`, the README's own example) | arm designer | Honest (the warning is shown), but the robot is not buildable as designed |
