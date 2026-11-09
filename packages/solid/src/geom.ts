@@ -15,6 +15,17 @@ wasm.setup();
 
 // ---- memory: manifold objects live in WASM; track and free everything a build creates ----
 const live: M[] = [];
+// manifold-3d 3.5's Manifold.revolve builds a CrossSection from the outline and a polygon vector from that, and deletes
+// neither: every revolve leaked WASM memory that a browser tab never gets back. Same call, both freed. (Booleans keep some
+// memory too, inside the library: see apps/web/src/wasm-memory.ts.)
+{
+  const W = wasm as any;
+  const outline = (polygons: any) => (typeof polygons?._ToPolygons === "function" ? { cs: polygons, own: false } : { cs: W.CrossSection(polygons, "Positive"), own: true });
+  W.Manifold.revolve = (polygons: unknown, circularSegments = 0, revolveDegrees = 360) => {
+    const { cs, own } = outline(polygons), vec = cs._ToPolygons();
+    try { return W._Revolve(vec, circularSegments, revolveDegrees); } finally { vec.delete(); if (own) cs.delete(); }
+  };
+}
 const STATIC = ["cube", "cylinder", "sphere", "extrude", "revolve", "union", "difference", "intersection", "hull", "ofMesh", "compose"] as const;
 const MEMBER = ["add", "subtract", "intersect", "transform", "translate", "rotate", "scale", "mirror", "trimByPlane", "hull", "refine", "simplify"] as const;
 for (const name of STATIC) { const fn = (wasm.Manifold as any)[name]; (wasm.Manifold as any)[name] = (...a: any[]) => { const r = fn(...a); live.push(r); return r; }; }
@@ -22,6 +33,8 @@ for (const name of MEMBER) { const fn = (wasm.Manifold.prototype as any)[name]; 
 export const Manifold = wasm.Manifold;
 export const CrossSection = wasm.CrossSection;
 
+/** How many solids are alive outside any finished build (each holds WASM memory until it is deleted). */
+export const liveSolids = () => live.length;
 /** Run a solid-modelling build and free every intermediate solid afterwards. */
 export function build<T>(fn: () => T): T {
   const mark = live.length;
