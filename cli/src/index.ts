@@ -52,11 +52,14 @@ async function cmdGenerate(prompt: string, outDir?: string) {
     ok("Polygon mesh parts written (meshes/*.stl)");
   }
   writeFileSync(join(base, "BOM.md"), bomToMarkdown(res.bom));
-  writeFiles(base, generateCadFiles(res.robot));
+  const cad = generateCadFiles(res.robot);
+  writeFiles(base, cad);
   writeFiles(base, exportTraining(res.robot));
   ok("Bill of materials estimated ($" + res.bom.total + ")");
-  ok("CAD (OpenSCAD) parts generated");
-  ok("RL training scaffold generated (PyBullet + PPO)");
+  const has = (ext: string) => Object.keys(cad).some((f) => f.endsWith(ext));
+  ok(has(".scad") ? "Concept CAD written (cad/: OpenSCAD parts and STLs; a template robot, not sized from real parts)"
+    : `Build package written (cad/: printable STLs${has(".step") ? ", STEP solids" : ""}, print list, assembly${has("WIRING.md") ? ", wiring" : ""})`);
+  ok("Training scaffold written (training/: PyBullet gym tasks, MuJoCo tests)");
   console.log(`\nRobot written to:\n\n  ${C.c}${base}/${C.x}\n`);
   console.log(`  ${C.d}ros2 launch ${name} display.launch.py${C.x}`);
   if (!res.validation.valid || !res.urdfValidation.valid) process.exitCode = 1;
