@@ -87,9 +87,10 @@ export async function forgeForPrompt(prompt: string): Promise<void> {
 }
 /** the armour shape a built suit was designed with (its pack must be loaded to export its meshes) */
 export async function forgeForRobot(spec: RobotSpecification): Promise<void> {
-  const d = (spec.metadata as { design?: { family?: string; request?: { shape?: ArmourShape } } }).design;
+  const m = spec.metadata as { design?: { family?: string; request?: { shape?: ArmourShape } }; studio?: { design_request?: { shape?: ArmourShape } } }, d = m.design;
   if (d?.family !== "mark43_wearable") return;
-  await ensureArmourPack(d.request?.shape ?? DEFAULT_SHAPE);
+  // a suit edited in an editor keeps its designer's request aside (apps/web/src/engine/edit.ts)
+  await ensureArmourPack(d.request?.shape ?? m.studio?.design_request?.shape ?? DEFAULT_SHAPE);
 }
 
 export async function generateRobot(prompt: string, opts: GenerateOptions = {}): Promise<GenerateResult> {

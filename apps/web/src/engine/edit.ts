@@ -189,7 +189,7 @@ function studioMeta(spec: RobotSpecification): StudioMeta {
   m.studio ??= { edited: true, printed: {}, actuators: {}, bodies: [...new Set(spec.links.map((l) => kindOf(l).key).filter((k): k is string => !!k))].sort() };
   return m.studio;
 }
-export interface StudioMeta { edited: boolean; printed: Record<string, PrintedParams>; /** joint -> actuator link driving it */ actuators: Record<string, string>; /** catalog keys that were bodies before the first edit */ bodies?: string[]; }
+export interface StudioMeta { edited: boolean; printed: Record<string, PrintedParams>; /** joint -> actuator link driving it */ actuators: Record<string, string>; /** catalog keys that were bodies before the first edit */ bodies?: string[]; /** the designer's request before the first edit */ design_request?: unknown; }
 
 function addLink(spec: RobotSpecification, l: Link, parent: string | undefined, W: M4) {
   spec.links.push(l);
@@ -354,8 +354,9 @@ export function applyEdits(input: RobotSpecification, ops: EditOp[], parts?: Par
   if (ops.length) {
     studioMeta(spec).edited = true;
     const d = (spec.metadata as { design?: { request?: unknown } }).design;
-    // an edited robot is no longer what its designer made: "modify" must not re-run the designer over the edits
-    if (d) delete d.request;
+    // an edited robot is no longer what its designer made: "modify" must not re-run the designer over the edits.
+    // The request is kept aside (a suit's armour shape still decides which armour its meshes come from).
+    if (d?.request) { studioMeta(spec).design_request = d.request; delete d.request; }
   }
   return spec;
 }

@@ -47,6 +47,7 @@ test("move, rotate, duplicate, rename and delete keep a valid tree", () => {
   assert.throws(() => applyEdits(spec, [{ op: "pose", link: spec.links[0].name === child ? "x" : (spec.root ?? toScene(spec).root!), world: { xyz: [0, 0, 0], rpy: [0, 0, 0] } }]), /root/);
   assert.ok((gone.metadata as { studio?: { edited: boolean } }).studio?.edited);
   assert.equal((gone.metadata as { design?: { request?: unknown } }).design?.request, undefined);
+  assert.deepEqual((gone.metadata as { studio?: { design_request?: unknown } }).studio?.design_request, (spec.metadata as { design?: { request?: unknown } }).design?.request);
 });
 
 test("a joint re-bases the child frame onto the pivot without moving anything", () => {
