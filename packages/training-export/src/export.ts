@@ -30,6 +30,7 @@ function tasksPy(cls: RobotClass): string {
 
 function envPy(spec: RobotSpecification, cls: RobotClass): string {
   const name = safeName(spec.robot_name);
+  const hasMimic = spec.joints.some((j) => j.mimic), mimicJson = JSON.stringify(Object.fromEntries(spec.joints.filter((j) => j.mimic).map((j) => [j.name, [j.mimic!.joint, j.mimic!.multiplier ?? 1, j.mimic!.offset ?? 0]])));
   const fixed = (cls === "manipulator" || cls === "gripper") ? "True" : "False";
   const tip = spec.links.find(l=>l.name==='gripper_base')?.name ?? spec.end_effectors[0]?.attach_link ?? spec.joints.filter(j=>j.type!=='fixed'&&!/finger|thumb|wheel/.test(j.name)).at(-1)?.child ?? '';
   return `"""Gymnasium environment for ${spec.robot_name} (auto-generated). Backend: PyBullet."""
@@ -84,7 +85,20 @@ class ${cn(name)}Env(gym.Env):
             for b in range(a+1,len(infos)):
                 if group(a)==group(b) or frozenset((group(a),group(b))) in adjacent:
                     self.p.setCollisionFilterPair(self.robot,self.robot,a,b,0)
-        self.joints = [j for j in movable if self.p.getJointInfo(self.robot,j)[1].decode() not in passive_names]
+        self.joints = [j for j in movable if self.p.getJointInfo(self.robot,j)[1].decode() not in passive_names]${hasMimic ? `
+        # PyBullet does not apply URDF <mimic>: followers (the second finger, a rack pinion, a rocker) are set and driven
+        # from their leader here, and a follower does not collide with the link it is geared to
+        mimic = ${mimicJson}
+        index = {self.p.getJointInfo(self.robot,j)[1].decode(): j for j in movable}
+        self.mimic = [(index[f], index[l], m, o) for f,(l,m,o) in mimic.items() if f in index and l in index]
+        # a geared mechanism (both fingers on one rack, their bushings on shared rods) is one moving part: its links and
+        # everything welded to them do not collide with each other
+        geared = {}
+        for f,l,_,_ in self.mimic: geared.setdefault(l, {group(l)}).add(group(f))
+        for gs in geared.values():
+            for a in range(-1,len(infos)):
+                for b in range(a+1,len(infos)):
+                    if group(a) in gs and group(b) in gs: self.p.setCollisionFilterPair(self.robot,self.robot,a,b,0)` : ""}
         for j in movable: self.p.setJointMotorControl2(self.robot,j,p.VELOCITY_CONTROL,force=0)
         self.limits = []; self.efforts = []; self.velocities = []; self.continuous = []
         for j in self.joints:
@@ -125,14 +139,16 @@ class ${cn(name)}Env(gym.Env):
             for _ in range(128):
                 for j,(lo,hi),continuous in zip(self.joints,self.limits,self.continuous):
                     self.p.resetJointState(self.robot,j,0 if continuous else self.np_random.uniform(lo,hi))
-                self.p.performCollisionDetection()
+${hasMimic ? `                for f,l,m,o in self.mimic: self.p.resetJointState(self.robot,f,m*self.p.getJointState(self.robot,l)[0]+o)
+` : ""}                self.p.performCollisionDetection()
                 bad = any(c[8] < -0.001 for c in self.p.getContactPoints(bodyA=self.robot))
                 if not bad:
                     return np.array(self.p.getLinkState(self.robot,self.tip_index,computeForwardKinematics=True)[4],dtype=np.float32)
             raise ValueError("No collision-free target found in 128 joint configurations; revise the model")
         finally:
             for j,(q,dq) in zip(self.joints,initial): self.p.resetJointState(self.robot,j,q,dq)
-            self.p.performCollisionDetection()
+${hasMimic ? `            for f,l,m,o in self.mimic: self.p.resetJointState(self.robot,f,m*self.p.getJointState(self.robot,l)[0]+o)
+` : ""}            self.p.performCollisionDetection()
 
     def apply(self, action):
         action = np.asarray(action, dtype=np.float32)
@@ -144,7 +160,12 @@ class ${cn(name)}Env(gym.Env):
                 self.p.setJointMotorControl2(self.robot,j,p.VELOCITY_CONTROL,targetVelocity=float(a)*velocity,force=effort)
             else:
                 self.p.setJointMotorControl2(self.robot, j, p.POSITION_CONTROL,
-                                        targetPosition=lo + (float(a) + 1.0) * 0.5 * (hi - lo), force=effort, maxVelocity=velocity)
+                                        targetPosition=lo + (float(a) + 1.0) * 0.5 * (hi - lo), force=effort, maxVelocity=velocity)${hasMimic ? `
+        targets = {j: lo + (float(a) + 1.0) * 0.5 * (hi - lo) for a, j, (lo, hi) in zip(action, self.joints, self.limits)}
+        for f,l,m,o in self.mimic:
+            if l in targets:
+                info = self.p.getJointInfo(self.robot, f)
+                self.p.setJointMotorControl2(self.robot, f, p.POSITION_CONTROL, targetPosition=m*targets[l]+o, force=info[10] if info[10] > 0 else self.efforts[self.joints.index(l)], maxVelocity=info[11] if info[11] > 0 else 10.0)` : ""}
 
     def step(self, action):
         self.apply(action)

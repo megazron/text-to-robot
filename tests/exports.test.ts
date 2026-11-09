@@ -157,3 +157,17 @@ test("ROS 2 launch files pass robot_description as a string and the display layo
   assert.match(String(arm["arm_6dof/rviz/arm_6dof_moveit.rviz"]), /moveit_rviz_plugin\/MotionPlanning/);
   assert.match(String(arm["arm_6dof/launch/move_group.launch.py"]), /rviz\/arm_6dof_moveit\.rviz/);
 });
+
+test("training env: mimic joints are driven from their leader and a geared gripper does not collide with itself; a gripper trains on aperture", async () => {
+  const { readFileSync } = await import("node:fs");
+  // PyBullet ignores URDF <mimic>: with the second finger and the rack pinion left free, no sampled pose of the SCARA was
+  // collision-free and reset() raised "No collision-free target found"
+  const scara = JSON.parse(readFileSync("examples/04_scara/robot.json", "utf8"));
+  const env = String(exportTraining(scara)["training/robot_env.py"]);
+  assert.ok(env.includes(`mimic = {"gripper_pinion":["finger_a",95.238095,0],"finger_b":["finger_a",1,0]}`));
+  assert.match(env, /for f,l,m,o in self\.mimic: self\.p\.resetJointState/);
+  assert.match(env, /geared\.setdefault/);
+  const gripper = JSON.parse(readFileSync("examples/09_gripper/robot.json", "utf8"));
+  assert.equal(classify(gripper), "gripper", "a standalone gripper opens and closes; it cannot reach");
+  assert.equal(classify(scara), "manipulator");
+});
