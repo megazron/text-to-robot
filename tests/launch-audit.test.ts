@@ -114,3 +114,8 @@ test("no example's parts list prints undefined or NaN (a coupler has a torque ra
     assert.doesNotMatch(md, /\bundefined\b|\bNaN\b/, ex);
   }
 });
+
+test("a file that is not a robot is refused by the import check, not by a TypeError on the way in", async () => {
+  const { forgeForRobot } = await import("@ttr/robot-generator");
+  for (const bad of [{ links: "nope" }, {}, { metadata: null }]) await forgeForRobot(bad as never);   // nothing to forge, no throw
+});

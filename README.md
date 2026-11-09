@@ -15,7 +15,7 @@
 
 **Describe a robot in plain words. Get one you can simulate, wire and print.**
 
-Text to Robot turns a sentence into a robot design you can check: real parts with prices, printable housings, wiring, a ROS 2 package and a physics test report. It is free, open source and runs in your browser.
+Text to Robot turns a sentence into a robot design you can check: real parts with prices, printable housings, wiring, a ROS 2 package and the physics tests to run on it. It is free, open source and runs in your browser.
 
 ```text
 > An Arduino 4WD obstacle avoiding car with an ultrasonic sensor
@@ -40,7 +40,7 @@ Every film above is the exported model itself: its URDF and meshes in a Cycles s
 | **Printable parts** | STL files that fit a normal print bed, with a print report for each. |
 | **Robot files** | URDF, Xacro, ROS 2, MoveIt, MuJoCo. |
 | **Engineering checks** | Torque, speed, power, runtime, clearance and tipping, shown with the numbers. |
-| **Physics tests** | Each robot is driven through its tasks in MuJoCo. Failures are listed, not hidden. |
+| **Physics tests** | The MuJoCo task tests (drive, ramp, turn, hold, squat, grip) come with every robot to run on your machine; the 19 examples are run in CI and their results are in the gallery. Failures are listed, not hidden. |
 
 ## Arduino mode
 
@@ -105,7 +105,7 @@ $ node cli/src/index.ts "a red 6 dof arm with 70 cm reach, a wrist camera and no
 | `called Atlas`, `painted blue`, `for a 1.85 m wearer` | name, colour, suit size (a Mark 43 is scaled as a whole; there is no body model) |
 | `bulky`, `sleek`, `bigger shoulders`, `smooth panels`, `black and gold` | the Mark 43 armour itself: forged again with that build, pauldrons, panels or paint |
 
-Anything it cannot apply is listed as `not applied`, and contradictions (two robot types, two joint counts, two reaches) are each flagged as `conflict:`. A small German, French and Spanish keyword list covers the common robot words (`Roboterarm mit sechs Achsen und Greifer`).
+What it cannot apply is listed as `not applied`, and contradictions (two robot types, two joint counts, two reaches) are each flagged as `conflict:`. A few requests are still dropped without a note (a slope or runtime target, a second colour or budget); the [launch audit](docs/LAUNCH_AUDIT.md#bugs-remaining) lists them. A small German, French and Spanish keyword list covers the common robot words (`Roboterarm mit sechs Achsen und Greifer`).
 
 Families: 1-7 DOF arms (a larger count is built as 7 and says so), SCARA, grippers, differential, four-wheel and mecanum bases, a rover with an arm, quadruped, hexapod, humanoid and character robots. Drones, delta and gantry robots, snake and marine robots and dexterous hands are refused with a reason.
 

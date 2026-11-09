@@ -41,7 +41,11 @@ async function handle(method: string, p: string, body: any): Promise<Response> {
   if (method === "POST" && p === "/api/robots/import") {
     const { robot } = body;
     if (!robot || !Array.isArray(robot.links) || !Array.isArray(robot.joints)) return json(400, { error: "provide a RobotSpecification JSON" });
-    const spec = finalizeSpec(robot as RobotSpecification), validation = validateSpec(spec);
+    // a file that is not a robot from here (no metadata, links without geometry) is refused with a reason, not a TypeError
+    let spec: RobotSpecification;
+    try { spec = finalizeSpec(structuredClone({ ...robot, metadata: robot.metadata ?? { notes: [], inferred_fields: [] } }) as RobotSpecification); }
+    catch (e) { return json(400, { error: `This is not a robot file this site can open: ${(e as Error).message}` }); }
+    const validation = validateSpec(spec);
     if (!validation.valid) return json(400, { error: "Invalid robot specification", validation });
     for (const link of spec.links) if (link.geometry.type === "mesh") {
       if (!/^[A-Za-z0-9_][A-Za-z0-9_.-]*\.stl$/i.test(link.geometry.file)) throw new Error("Mesh filenames must be simple STL names");
