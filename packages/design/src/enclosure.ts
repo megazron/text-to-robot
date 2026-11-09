@@ -62,7 +62,8 @@ const WALL = 2.4;
 const holesDown = (key: string) => part(key).holes.filter((h) => h.axis[2] < -0.5);
 
 /** A battery's figure is at its full rated current, not in normal use: only boards count towards ventilation. */
-const heatOf = (key: string) => (part(key).category === "battery" ? 0 : electrical(key)?.heat_w?.v ?? 0);
+/** Heat a part gives off inside a compartment (W); batteries are not counted. */
+export const heatOf = (key: string) => (part(key).category === "battery" ? 0 : electrical(key)?.heat_w?.v ?? 0);
 /** Grommet sizes in the wiring table are panel holes; this picks the smallest that passes a bundle. */
 export const faceNormal = (f: Face): Vec3 => ({ "x-": [-1, 0, 0], "x+": [1, 0, 0], "y-": [0, -1, 0], "y+": [0, 1, 0], floor: [0, 0, -1], lid: [0, 0, 1] } as Record<Face, Vec3>)[f];
 

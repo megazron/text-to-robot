@@ -13,7 +13,7 @@ import { frame, invert, mul, apply, I4, translation, toPose, type Mat4, type Op 
 import { fk, linkCom, totalMass, gravityTorques, type PointLoad } from "../kin.ts";
 import { designArm, graftArm, type ArmRequest } from "./arm.ts";
 import { evaluate, DYNAMIC_FACTOR, type Ladder } from "../sizing.ts";
-import { registerBay, enclosureChecks, exposed, baysOf, worldBox as partBox, type BayRecord, type Face } from "../enclosure.ts";
+import { registerBay, enclosureChecks, exposed, baysOf, worldBox as partBox, heatOf, ventNeed, type BayRecord, type Face } from "../enclosure.ts";
 import { Harness, finishWiring } from "../wiring.ts";
 import { busTree, dualDriver, pinsOf, coreTree, actuatorsUnder } from "../netlist.ts";
 
@@ -241,6 +241,34 @@ function packBay(items: Item[], area: Rect, reserved: Rect[]): Placement[] | nul
     if (out.length === items.length) return out;
   }
   return null;
+}
+/** Deck areas of a wheeled base L x W mm: where boards may go, and the zones its sensors keep free. */
+function deckRects(L: number, W: number, sensors: MobileSensor[]): { reserved: Rect[]; area: Rect } {
+  const front = L / 2, reserved: Rect[] = [], lidarAt: [number, number] = [-L / 2 + 36, 0];
+  if (sensors.includes("lidar")) reserved.push({ x0: lidarAt[0] - 33, x1: lidarAt[0] + 33, y0: -33, y1: 33 });
+  if (sensors.includes("depth")) reserved.push({ x0: front - 50, x1: front, y0: -34, y1: 34 });
+  if (sensors.includes("camera")) reserved.push({ x0: front - 24, x1: front, y0: sensors.includes("depth") ? 46 : -20, y1: sensors.includes("depth") ? 82 : 20 });
+  // boards are packed inside the enclosure walls (2.4 mm + 3 mm air gap)
+  return { reserved, area: { x0: -L / 2 + 10, x1: L / 2 - 10, y0: -W / 2 + 10, y1: W / 2 - 10 } };
+}
+const pad = (rs: Rect[]) => rs.map((r) => ({ x0: r.x0 - 5, x1: r.x1 + 5, y0: r.y0 - 5, y1: r.y1 + 5 }));
+/** The two-deck layout (TurtleBot "waffle"): battery and drivers below, the rest on an upper deck on four pillars. */
+function upperDeck(L: number, W: number, sensors: MobileSensor[], items: Item[]) {
+  const { reserved } = deckRects(L, W, sensors), front = L / 2;
+  const ux0 = -L / 2 + 6, ux1 = front - (sensors.includes("depth") || sensors.includes("camera") ? 58 : 6), uy = W / 2 - 6;
+  const pillars: [number, number][] = [[ux0 + 12, uy - 12], [ux0 + 12, -uy + 12], [ux1 - 12, uy - 12], [ux1 - 12, -uy + 12]];
+  const low = items.filter((i) => i.kind === "battery" || i.key === "cytron_mdd10a"), high = items.filter((i) => !low.includes(i));
+  const lowRes = [...reserved.filter((_, i) => !(sensors.includes("lidar") && i === 0)), ...pillars.map(([x, y]) => ({ x0: x - 10, x1: x + 10, y0: y - 10, y1: y + 10 }))];
+  const uArea: Rect = { x0: ux0 + 10, x1: ux1 - 10, y0: -uy + 10, y1: uy - 10 };
+  const uRes: Rect[] = [...pillars.map(([x, y]) => ({ x0: x - 9, x1: x + 9, y0: y - 9, y1: y + 9 })), ...(sensors.includes("lidar") ? [{ x0: ux0 + 4, x1: ux0 + 70, y0: -33, y1: 33 }] : [])];
+  return { ux0, ux1, uy, pillars, low, high, lowRes, uArea, uRes };
+}
+/** Does everything fit on a deck this long, on one level or on two? */
+function deckLayout(L: number, W: number, sensors: MobileSensor[], items: Item[]): boolean {
+  const { reserved, area } = deckRects(L, W, sensors);
+  if (packBay(items, area, pad(reserved))) return true;
+  const u = upperDeck(L, W, sensors, items);
+  return !!packBay(u.low, area, pad(u.lowRes)) && !!packBay(u.high, u.uArea, pad(u.uRes));
 }
 /**
  * Place every item on the deck area without overlap and build its printed standoff plate or battery
@@ -843,23 +871,20 @@ function designBase(kind: BaseKind, req: MobileRequest): RobotSpecification {
     const b = new Build(name, family, req.prompt);
     const wi = wheelInfo(wheel), h = wi.r, yFace = 95;
     const zB = Math.ceil(h + MOTOR_TOP + 7);
-    const L = kind === "diff" ? 244 : 300, W = 2 * (yFace + 5);
+    const W = 2 * (yFace + 5);
+    // the deck is as short as its electronics allow: a depth camera's Jetson and a big pack may need a longer one
+    const parts = electronicsFor(sensors, kind === "diff" ? 2 : 4, battery, false, false);
+    const base = kind === "diff" ? 244 : 300, L = [base, base + 56, base + 112].find((l) => !!deckLayout(l, W, sensors, parts.items)) ?? base;
     deck(b, L, W, zB, [], kind === "diff" ? 60 : 20);
     const stations: WheelOpts[] = kind === "diff"
       ? [1, -1].map((s) => ({ tag: s > 0 ? "left" : "right", parent: "base_link", x: 0, side: s as 1 | -1, yFace, motor, wheel }))
       : [[90, 1, "front_left"], [90, -1, "front_right"], [-90, 1, "rear_left"], [-90, -1, "rear_right"]].map(([x, s, t]) => ({ tag: String(t), parent: "base_link", x: Number(x), side: Number(s) as 1 | -1, yFace, motor, wheel }));
     for (const o of stations) deckBracket(b, wheelStation(b, o), o, zB);
     if (kind === "diff") for (const [t, x] of [["front_caster", 98], ["rear_caster", -98]] as const) ballCaster(b, t, x, 0, zB);
-    const { items, compute } = electronicsFor(sensors, stations.length, battery, false, false);
+    const { items, compute } = parts;
     const top = b.deckTop;
-    const front = L / 2, reserved: Rect[] = [];
-    const lidarAt: [number, number] = [-L / 2 + 36, 0];
-    if (sensors.includes("lidar")) reserved.push({ x0: lidarAt[0] - 33, x1: lidarAt[0] + 33, y0: -33, y1: 33 });
-    if (sensors.includes("depth")) reserved.push({ x0: front - 50, x1: front, y0: -34, y1: 34 });
-    if (sensors.includes("camera")) reserved.push({ x0: front - 24, x1: front, y0: sensors.includes("depth") ? 46 : -20, y1: sensors.includes("depth") ? 82 : 20 });
-    // boards are packed inside the enclosure walls (2.4 mm + 3 mm air gap)
-    const area: Rect = { x0: -L / 2 + 10, x1: L / 2 - 10, y0: -W / 2 + 10, y1: W / 2 - 10 };
-    const pad = (rs: Rect[]) => rs.map((r) => ({ x0: r.x0 - 5, x1: r.x1 + 5, y0: r.y0 - 5, y1: r.y1 + 5 }));
+    const front = L / 2, lidarAt: [number, number] = [-L / 2 + 36, 0];
+    const { reserved, area } = deckRects(L, W, sensors);
     if (packBay(items, area, pad(reserved))) {
       const clear = electronicsBay(b, items, area, pad(reserved), top);
       const zT = enclosure(b, items, area, pad(reserved), top, clear) ?? clear + 8;
@@ -867,10 +892,7 @@ function designBase(kind: BaseKind, req: MobileRequest): RobotSpecification {
     } else {
       // too much for one deck (TurtleBot "waffle" layout): battery and drivers below, computer, IMU and
       // regulator on an upper deck on four printed pillars, the lidar on top of it
-      const ux0 = -L / 2 + 6, ux1 = front - (sensors.includes("depth") || sensors.includes("camera") ? 58 : 6), uy = W / 2 - 6;
-      const pillars: [number, number][] = [[ux0 + 12, uy - 12], [ux0 + 12, -uy + 12], [ux1 - 12, uy - 12], [ux1 - 12, -uy + 12]];
-      const low = items.filter((i) => i.kind === "battery" || i.key === "cytron_mdd10a"), high = items.filter((i) => !low.includes(i));
-      const lowRes = [...reserved.filter((_, i) => !(sensors.includes("lidar") && i === 0)), ...pillars.map(([x, y]) => ({ x0: x - 10, x1: x + 10, y0: y - 10, y1: y + 10 }))];
+      const { ux0, ux1, uy, pillars, low, high, lowRes, uArea, uRes } = upperDeck(L, W, sensors, items);
       const lowTop = electronicsBay(b, low, area, pad(lowRes), top);
       const lowLid = enclosure(b, low, area, pad(lowRes), top, lowTop, "base_link", "power_bay", false) ?? lowTop + 8;
       const zU = Math.max(lowLid + 5, top + 50);
@@ -879,8 +901,7 @@ function designBase(kind: BaseKind, req: MobileRequest): RobotSpecification {
       else b.fabricated("upper_deck", "base_link", upOps, { density: ALU, material: "aluminium", item: `${Math.round(ux1 - ux0)} x ${2 * uy} x 4 mm upper deck (aluminium, ~$25)`, usd: 25 });
       pillars.forEach(([x, y], i) => b.printed(`pillar_${i + 1}`, "base_link", [{ op: "rod", a: [x, y, top], b: [x, y, zU], r: 7 }, { op: "hole", a: [x, y, top - 1], b: [x, y, zU + 1], d: 2.8 }], "printed_dark"));
       b.A.fastener("M3 x 10 (pillars)", 8);
-      const upTop = zU + 4, uArea: Rect = { x0: ux0 + 10, x1: ux1 - 10, y0: -uy + 10, y1: uy - 10 };
-      const uRes: Rect[] = [...pillars.map(([x, y]) => ({ x0: x - 9, x1: x + 9, y0: y - 9, y1: y + 9 })), ...(sensors.includes("lidar") ? [{ x0: ux0 + 4, x1: ux0 + 70, y0: -33, y1: 33 }] : [])];
+      const upTop = zU + 4;
       const clear = electronicsBay(b, high, uArea, pad(uRes), upTop, "upper_deck");
       const zT = enclosure(b, high, uArea, pad(uRes), upTop, clear, "upper_deck") ?? clear + 8;
       if (sensors.includes("lidar")) lidarMast(b, ux0 + 37, 0, upTop, zT - 8 + 10.4, "upper_deck");
@@ -1013,8 +1034,11 @@ export function designRover(req: MobileRequest = {}): RobotSpecification {
     const boards = (plan ?? []).map(({ it, yaw, x, y }) => { const fp = footprint(it), dx = fp.max[0] - fp.min[0], dy = fp.max[1] - fp.min[1], [w, h2] = yaw ? [dy, dx] : [dx, dy]; return { x0: x, x1: x + w, y0: y, y1: y + h2 }; });
     const fx = wallFixtures(b, plan ?? [], { x0: -BL / 2, x1: BL / 2, y0: -BW / 2, y1: BW / 2, z0: zBody + 2, z1: zBody + BH, t: 2 }, boards, "base_link");
     const pivotExits: BayRecord["exits"] = ([1, -1] as const).map((s) => ({ id: `body_bay.${s > 0 ? "left" : "right"}_rocker`, kind: "grommet", face: (s > 0 ? "y+" : "y-") as Face, at: [40, s * BW / 2, zBody + 60] as Vec3, normal: [0, s, 0] as Vec3, hole_mm: 9.5 }));
+    // vent slots along both side walls, 33 mm tall; a hotter bay (a Jetson and an arm's drivers) gets taller slots, up to 6 mm under the lid
+    const slotXs = Array.from({ length: 26 }, (_, k) => -130 + k * 10).filter((x) => Math.abs(x - 40) >= 12);
+    const heat = items.reduce((h, i) => h + heatOf(i.key), 0), slotH = Math.min(BH - 61, Math.max(33, Math.ceil(ventNeed(heat) / (5 * 2 * slotXs.length))));
     const slots: Op[] = []; let ventArea = 0;
-    for (let k = 0; k < 26; k++) for (const s of [1, -1]) { const x = -130 + k * 10; if (Math.abs(x - 40) < 12) continue; slots.push({ op: "cutbox", min: [x, s > 0 ? BW / 2 - 3 : -BW / 2 - 1, zBody + 55], max: [x + 5, s > 0 ? BW / 2 + 1 : -BW / 2 + 3, zBody + 88] }); ventArea += 5 * 33; }
+    for (const x of slotXs) for (const s of [1, -1]) { slots.push({ op: "cutbox", min: [x, s > 0 ? BW / 2 - 3 : -BW / 2 - 1, zBody + 55], max: [x + 5, s > 0 ? BW / 2 + 1 : -BW / 2 + 3, zBody + 55 + slotH] }); ventArea += 5 * slotH; }
     b.A.amendProgram("base_link", [...fx.cuts, ...slots, ...pivotExits.map((e): Op => ({ op: "hole", a: [e.at[0], e.at[1] - e.normal[1] * 4, e.at[2]], b: [e.at[0], e.at[1] + e.normal[1] * 2, e.at[2]], d: 9.5 }))]);
     const lidExit: Vec3 = [-40, 0, zBody + BH + 3];
     b.A.amendProgram("deck_lid", [{ op: "hole", a: [lidExit[0], lidExit[1], zBody + BH - 2], b: [lidExit[0], lidExit[1], zBody + BH + 5], d: 9.5 }]);
