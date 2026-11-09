@@ -8,6 +8,13 @@ export function num(n: number): string {
   if (s === "-0" || s === "") s = "0";
   return s;
 }
+/** Nine significant figures, trailing zeros trimmed. */
+export function precise(n: number): string {
+  if (!Number.isFinite(n)) return "0";
+  let s = n.toPrecision(9);
+  if (!/e/i.test(s)) s = s.replace(/\.?0+$/, "");
+  return s === "-0" || s === "" ? "0" : s;
+}
 export const vec = (v: readonly number[]): string => v.map(num).join(" ");
 export function xmlEscape(s: string): string {
   return String(s).replace(/[<>&"']/g, (c) => (

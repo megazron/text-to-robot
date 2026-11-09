@@ -26,7 +26,16 @@ export function validateUrdf(xml: string): ValidationResult {
     if (!name) { err("link_no_name", "a <link> is missing a name"); continue; }
     if (linkNames.has(name)) err("dup_link", `duplicate link name '${name}'`);
     linkNames.add(name);
-    if (!findFirst(l, "inertial")) warn("no_inertial", `link '${name}' has no <inertial>`);
+    const inertial = findFirst(l, "inertial");
+    if (!inertial) warn("no_inertial", `link '${name}' has no <inertial>`);
+    else {
+      // a physical inertia: positive mass, positive principal moments that satisfy the triangle inequality (MuJoCo refuses others)
+      const mass = Number(findFirst(inertial, "mass")?.attrs.value), I = findFirst(inertial, "inertia")?.attrs ?? {};
+      const [a, b, c] = ["ixx", "iyy", "izz"].map((k) => Number(I[k]));
+      if (!(mass > 0)) err("bad_mass", `link '${name}' has mass ${findFirst(inertial, "mass")?.attrs.value}`);
+      else if (!(a > 0 && b > 0 && c > 0)) err("bad_inertia", `link '${name}' has a non-positive principal inertia (${a}, ${b}, ${c})`);
+      else if (a + b < c || a + c < b || b + c < a) err("inertia_triangle", `link '${name}' inertia breaks A + B >= C (${a}, ${b}, ${c})`);
+    }
   }
   if (links.length === 0) err("no_links", "URDF has no links");
 

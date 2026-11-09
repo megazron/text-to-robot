@@ -1,7 +1,7 @@
 // Deterministic URDF generator. Pure functions; the prompt parser never builds XML.
 import type { RobotSpecification, Link, Joint, Geometry, Material, Pose, } from "@ttr/robot-schema";
 import { inertiaOf, poseToMat } from "@ttr/kinematics";
-import { num, vec, xmlName } from "./format.ts";
+import { num, precise, vec, xmlName } from "./format.ts";
 
 const originTag = (p: Pose): string => `<origin xyz="${vec(p.xyz)}" rpy="${vec(p.rpy)}"/>`;
 
@@ -65,8 +65,11 @@ export function generateInertial(l: Link): string {
   const I = l.inertia ?? inertiaOf(l.geometry, l.mass);
   const origin = l.geometry.type === "mesh" && l.geometry.centroid
     ? offsetOrigin(l.origin, l.geometry.centroid) : l.origin;
+  // six decimals can break A + B >= C for a flat part (MuJoCo then refuses the URDF): such a link gets nine significant figures
+  const triangle = (v: number[]) => v[0] + v[1] >= v[2] && v[0] + v[2] >= v[1] && v[1] + v[2] >= v[0];
+  const diag = [I.ixx, I.iyy, I.izz], f = triangle(diag) && !triangle(diag.map((x) => Number(num(x)))) ? precise : num;
   return `<inertial>\n  ${originTag(origin)}\n  <mass value="${num(l.mass)}"/>\n` +
-    `  <inertia ixx="${num(I.ixx)}" ixy="${num(I.ixy)}" ixz="${num(I.ixz)}" iyy="${num(I.iyy)}" iyz="${num(I.iyz)}" izz="${num(I.izz)}"/>\n</inertial>`;
+    `  <inertia ixx="${f(I.ixx)}" ixy="${num(I.ixy)}" ixz="${num(I.ixz)}" iyy="${f(I.iyy)}" iyz="${num(I.iyz)}" izz="${f(I.izz)}"/>\n</inertial>`;
 }
 
 /** Translate a point expressed in the geometry frame into the link frame. */
