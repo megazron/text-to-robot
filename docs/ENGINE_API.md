@@ -28,7 +28,7 @@ Types: [`engine/v1/engine.d.ts`](https://megazron.github.io/text-to-robot/engine
 
 | Method | What it does |
 |---|---|
-| `design(prompt)` | Design a robot from a description. Same result as the website's prompt bar: `{ id, robot, urdf, xacro, summary, warnings, bom, ... }`. |
+| `design(prompt)` | Design a robot from a description. Same result as the website's prompt bar: `{ id, robot, urdf, xacro, summary, warnings, bom, ... }`. The reference Mark 43 comes ready-made; a custom Mark 43 shape (build, pauldrons, panels) is refused with a reason (HTTP 409, `forgeNeeded`) because forging it takes many minutes and gigabytes of memory, until the request is sent again with `forgeConsent: true`. |
 | `modify(robot, instruction)` | Change a robot by a description. |
 | `arduino(prompt)` | Cheap Arduino versions with their prices. |
 | `open(robot)` | Check and keep a spec from elsewhere; its `id` serves its meshes. |

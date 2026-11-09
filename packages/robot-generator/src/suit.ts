@@ -16,19 +16,31 @@ const clamp = (x: number, a: number, b: number) => Math.min(b, Math.max(a, x));
 
 export function suitOptions(t: string): SuitOptions {
   const shape: ArmourShape = { ...DEFAULT_SHAPE }, paint: SuitPaint = {}, said: string[] = [], ignored: string[] = [];
-  // build: bulkier or slimmer armour, in words or per cent
-  const pct = t.match(/\b(\d{1,2})\s*(?:%|per\s*cent|percent)\s+(bulkier|thicker|chunkier|slimmer|thinner|leaner)\b/);
-  if (pct) {
-    const p = Number(pct[1]) / 100, want = /bulk|thick|chunk/.test(pct[2]) ? 1 + p : 1 - p, got = clamp(want, 0.85, 1.2);
-    shape.bulk = +got.toFixed(2);
-    if (Math.abs(got - want) > 1e-9) ignored.push(`${pct[0]}: armour build is limited to 0.85-1.20 of the film suit; built at ${got.toFixed(2)}`);
-  } else if (/\b(?:bulk(?:y|ier)|chunk(?:y|ier)|beef(?:y|ier)|heav(?:y|ier)[\s-]+(?:armou?r|build|suit)|thick(?:er)?[\s-]+armou?r|broad(?:er)?[\s-]+build|tank(?:y|ier))\b/.test(t)) shape.bulk = 1.12;
-  else if (/\b(?:slim(?:mer)?|sleek(?:er)?|lean(?:er)?|slender|streamlined|light(?:er)?[\s-]+armou?r|thin(?:ner)?[\s-]+armou?r)\b/.test(t)) shape.bulk = 0.9;
-  if (shape.bulk !== 1) said.push(`armour build ${shape.bulk > 1 ? "bulkier" : "slimmer"} (${shape.bulk.toFixed(2)} of the film suit)`);
-  // pauldrons
-  if (/\b(?:big(?:ger)?|large(?:r)?|broad(?:er)?|wide(?:r)?|huge|massive|oversized)[\s-]+(?:shoulders?|pauldrons?|shoulder[\s-]+(?:armou?r|plates?))\b/.test(t)) shape.shoulder = 1.2;
+  // build and pauldrons: in words, or by a stated amount ("10 % bulkier", "300% bigger shoulders", "2x bigger shoulders"). The forge is made and
+  // checked for 0.85 to 1.20 of the film suit's size; an amount outside that is built at the nearest limit and says so, never quietly
+  const amount = (up: string, down: string, noun = ""): { want: number; raw: string } | undefined => {
+    const n = noun ? String.raw`[\s-]+(?:${noun})` : "";
+    const pc = t.match(new RegExp(String.raw`\b(\d+(?:\.\d+)?)\s*(?:%|per\s*cent|percent)\s+(?:(${up})|(${down}))${n}\b`));
+    if (pc) return { want: pc[2] ? 1 + Number(pc[1]) / 100 : 1 - Number(pc[1]) / 100, raw: pc[0] };
+    const x = t.match(new RegExp(String.raw`\b(\d+(?:\.\d+)?)\s*(?:x|times)\s+(?:as\s+)?(?:(${up})|(${down}))${n}\b`));
+    if (x) return { want: x[2] ? Number(x[1]) : 1 / Number(x[1]), raw: x[0] };
+    return undefined;
+  };
+  const limit = (a: { want: number; raw: string }, what: string): number => {
+    const got = clamp(a.want, 0.85, 1.2);
+    if (Math.abs(got - a.want) > 1e-9) ignored.push(`${a.raw}: asks for ${a.want.toFixed(2)} times the film suit's ${what}; the forge is made and checked for 0.85 to 1.20, so it is built at ${got.toFixed(2)}`);
+    return +got.toFixed(2);
+  };
+  const bulkBy = amount("bulkier|thicker|chunkier|heavier|bigger|larger", "slimmer|thinner|leaner|lighter|smaller");
+  if (bulkBy && !/shoulder|pauldron/.test(bulkBy.raw + t.slice(t.indexOf(bulkBy.raw) + bulkBy.raw.length, t.indexOf(bulkBy.raw) + bulkBy.raw.length + 12))) shape.bulk = limit(bulkBy, "build");
+  else if (/\b(?:bulk(?:y|ier)|chunk(?:y|ier)|beef(?:y|ier)|heav(?:y|ier)[\s-]+(?:armou?r|build|suit)|thick(?:er)?[\s-]+armou?r|broad(?:er)?[\s-]+build|tank(?:y|ier))\b/.test(t)) shape.bulk = 1.12;
+  else if (/\b(?:slim(?:mer)?|sleek(?:er)?|lean(?:er)?|slender|streamlined|light(?:er)?[\s-]+armou?r|thin(?:ner)?[\s-]+armou?r)\b/.test(t) && !/\bslim(?:mer)?[\s-]+(?:shoulders?|pauldrons?)/.test(t)) shape.bulk = 0.9;
+  if (shape.bulk !== 1) said.push(`armour build ${shape.bulk > 1 ? "bulkier" : "slimmer"}: ${shape.bulk.toFixed(2)} of the film suit`);
+  const shoulderBy = amount("bigger|larger|broader|wider", "smaller|narrower", "shoulders?|pauldrons?|shoulder[\\s-]+(?:armou?r|plates?)");
+  if (shoulderBy) shape.shoulder = limit(shoulderBy, "pauldrons");
+  else if (/\b(?:big(?:ger)?|large(?:r)?|broad(?:er)?|wide(?:r)?|huge|massive|oversized)[\s-]+(?:shoulders?|pauldrons?|shoulder[\s-]+(?:armou?r|plates?))\b/.test(t)) shape.shoulder = 1.2;
   else if (/\b(?:small(?:er)?|narrow(?:er)?|compact|slim(?:mer)?|low[\s-]+profile)[\s-]+(?:shoulders?|pauldrons?|shoulder[\s-]+(?:armou?r|plates?))\b/.test(t)) shape.shoulder = 0.85;
-  if (shape.shoulder !== 1) said.push(`pauldrons ${shape.shoulder > 1 ? "larger" : "smaller"} (${shape.shoulder.toFixed(2)})`);
+  if (shape.shoulder !== 1) said.push(`pauldrons ${shape.shoulder > 1 ? "larger" : "smaller"}: ${shape.shoulder.toFixed(2)} of the film suit's`);
   // panels
   if (/\b(?:smooth|clean|minimal|plain|simple)[\s-]+(?:panels?|panel[\s-]+lines?|armou?r|plates?|finish|look|surface)\b|\bno[\s-]+panel[\s-]+lines?\b/.test(t)) shape.panels = "smooth";
   else if (/\b(?:heavy|deep|bold|raised|chunky|pronounced)[\s-]+(?:panels?|plates?|panel[\s-]+lines?|plating)\b/.test(t)) shape.panels = "heavy";

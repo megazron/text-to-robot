@@ -419,3 +419,11 @@ body.busy .skhide{display:none}
 body.community #dock{grid-template-columns:repeat(6,1fr)}
 body.community .dock-glow{width:calc((100% - 12px)/6)}
 @media (min-width:900px){body.community #dock{grid-template-columns:none}body.community .dock-glow{width:auto}}
+/* the go-ahead for forging a custom Mark 43, and the cancel button while it forges */
+.forge-ask { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.55); display: grid; place-items: center; z-index: 1000; }
+.forge-ask-card { max-width: 30rem; margin: 1rem; padding: 1.2rem 1.4rem; background: var(--panel, #0d1a12); color: inherit; border: 1px solid var(--line, #2a4a35); border-radius: 12px; }
+.forge-ask-card h3 { margin: 0 0 0.6rem; }
+.forge-ask-buttons { display: flex; gap: 0.6rem; justify-content: flex-end; margin-top: 1rem; }
+.forge-ask-buttons button, .forge-cancel { padding: 0.45rem 0.9rem; border-radius: 8px; border: 1px solid var(--line, #2a4a35); background: transparent; color: inherit; cursor: pointer; }
+.forge-ask-buttons .primary { background: var(--accent, #39ff88); color: #04140a; border-color: transparent; }
+.forge-cancel { margin-top: 0.4rem; }

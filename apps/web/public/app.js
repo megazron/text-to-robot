@@ -543,7 +543,10 @@ function status(lines, kind) {
 addEventListener("ttr-forge", ({ detail: p }) => {
   if (p.stage === "done") return;
   const pct = Math.round(100 * p.done / (p.total || 1)), names = { forge: "shaping the shells", pack: "trimming overlaps", doors: "fitting hinges, servos and latches", trims: "clearing the doors' swing", wiring: "fitting cable channels and bays", measure: "measuring joint and door ranges", store: "storing the pieces" };
-  status(`Forging the Mark 43 armour in your browser: ${names[p.stage] ?? p.stage} (${pct} %, ${p.elapsed_s ?? 0} s). The first suit takes about 25 minutes on a fast laptop and longer on a slow one; the page stays usable, and the result is kept for next time.`);
+  status(`Forging the Mark 43 armour in your browser: ${names[p.stage] ?? p.stage} (${pct} %, ${p.elapsed_s ?? 0} s). The page stays usable, and the result is kept for next time.`);
+  const stop = Object.assign(document.createElement("button"), { type: "button", textContent: "Cancel the forge", className: "forge-cancel" });
+  stop.addEventListener("click", () => { globalThis.ttrStatic?.cancelForge(); stop.disabled = true; stop.textContent = "Cancelling..."; });
+  $("#status").append(document.createElement("br"), stop);
 });
 // while the full armour is forged, a coarse look at it (4 mm voxels, no doors or trims) stands on the pad
 addEventListener("ttr-forge-preview", ({ detail: parts }) => {
@@ -576,8 +579,33 @@ function checksToText(res) {
 // ---------------- API ----------------
 async function api(path, body) {
   const res = await fetch(API + path, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+  if (res.status === 409) {
+    // a Mark 43 shape that is not made yet: forging it takes many minutes, so ask first, and only then send the request again
+    const info = await res.json().catch(() => ({}));
+    if (info.forgeNeeded && await askToForge(info.forgeNeeded.shape)) return api(path, { ...body, forgeConsent: true });
+    throw new Error("Not forged: the reference Mark 43 opens at once; this shape is made only when you agree to the time it takes.");
+  }
   if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? `HTTP ${res.status}`);
   return res.json();
+}
+/** What forging a custom Mark 43 costs on this device, from the measured runs: 25 minutes in Chrome with four helper workers, about 2.6 times
+ *  that in a slow headless browser; up to 6 GB of memory. */
+function forgeEstimate() {
+  const cores = navigator.hardwareConcurrency || 4, helpers = Math.min(4, Math.max(0, cores - 2)), lo = Math.round((25 * 5) / (1 + helpers)), hi = Math.round(lo * 2.6);
+  const mem = navigator.deviceMemory;
+  return { lo, hi, cores, memNote: mem && mem < 8 ? ` This device reports ${mem} GB of memory, so the forge may run out of memory and stop.` : "" };
+}
+function askToForge(shape) {
+  const e = forgeEstimate(), what = [shape.bulk !== 1 ? `build ${shape.bulk}` : "", shape.shoulder !== 1 ? `pauldrons ${shape.shoulder}` : "", shape.panels !== "film" ? `${shape.panels} panels` : ""].filter(Boolean).join(", ");
+  return new Promise((done) => {
+    const box = document.createElement("div"); box.id = "forgeAsk"; box.className = "forge-ask"; box.setAttribute("role", "dialog"); box.setAttribute("aria-modal", "true");
+    box.append(h("div", { class: "forge-ask-card" }, h("h3", null, "Forge a custom Mark 43?"),
+      h("p", null, `The reference suit opens at once. This one (${what || "a custom shape"}) has to be made in your browser: about ${e.lo} to ${e.hi} minutes on this device (${e.cores} cores) and up to 6 GB of memory.${e.memNote} The page stays usable, you can cancel at any time, and the result is kept for next time.`),
+      h("div", { class: "forge-ask-buttons" }, h("button", { type: "button", "data-forge": "no" }, "Cancel"), h("button", { type: "button", "data-forge": "yes", class: "primary" }, "Forge it"))));
+    document.body.append(box);
+    box.querySelector('[data-forge="yes"]').focus();
+    box.addEventListener("click", (ev) => { const b = ev.target.closest("[data-forge]"); if (!b) return; box.remove(); done(b.dataset.forge === "yes"); });
+  });
 }
 
 function applyResult(res, label, diffLines) {

@@ -79,6 +79,8 @@ const toB64Url = (b: Uint8Array) => { let s = ""; for (const c of b) s += String
 const fromB64Url = (s: string) => Uint8Array.from(atob(s.replace(/-/g, "+").replace(/_/g, "/")), (c) => c.charCodeAt(0));
 
 (globalThis as any).ttrStatic = {
+  /** stop a Mark 43 forge that is running */
+  cancelForge() { send({ cancelForge: true }); },
   async shareUrl(robot: unknown) {
     const packed = await pipe(new TextEncoder().encode(JSON.stringify(robot)), new CompressionStream("deflate-raw"));
     return `${location.origin}${location.pathname}#robot=${toB64Url(packed)}`;
