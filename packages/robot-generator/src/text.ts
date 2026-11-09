@@ -178,7 +178,7 @@ export function extractMasses(text: string): Mass[] {
 }
 
 // ---------------- budget ----------------
-export interface Budget { usd?: number; unsupported?: string; }
+export interface Budget { usd?: number; unsupported?: string; /** a stated amount that cannot be a budget ("$0") */ invalid?: string; }
 
 const amount = (digits: string, k?: string) => {
   const v = parseFloat(digits.replace(/,/g, "")) * (k ? 1000 : 1);
@@ -197,7 +197,7 @@ export function parseBudget(text: string): Budget {
     ?? t.match(/(\d[\d,]*(?:\.\d+)?)\s*(k)?\s+budget\b/);
   const explicitUsd = /\$|\busd\b|dollars?|\bbucks\b|\bgrand\b/.test(t);
   if (other && !explicitUsd) return { unsupported: other[0].trim() };
-  if (m) return { usd: amount(m[1], m[2]) };
+  if (m) { const usd = amount(m[1], m[2]); return usd !== undefined ? { usd } : { invalid: m[0].trim() }; }
   return {};
 }
 
@@ -254,7 +254,9 @@ export function extractColour(text: string): string | undefined {
   const t = maskNames(text), names = colourWords();
   const m = t.match(new RegExp(String.raw`\b(${names})\b[\s-]+(?:(?!with|for|on|to|that|and|or)[a-z0-9-]+[\s-]+){0,3}?${ROBOT_NOUN}\b`))
     ?? t.match(new RegExp(String.raw`\b(?:painted|coloured|colored|finished in|in (?:matte|glossy|bright|dark)?)\s*(?:matte\s+|glossy\s+|bright\s+|dark\s+)?(${names})\b(?![\s-]+(?:camera|lidar|led|lights?|eyes?|visor|blocks?|objects?|boxes|balls?))`))
-    ?? t.match(new RegExp(String.raw`\bcolou?r\s*(?:[:=-]|is|of)?\s*(${names})\b|\((${names})\)|\b(?:that|which)\s+is\s+(${names})\b|,\s*(${names})\s*(?:[,;.]|$)`));
+    ?? t.match(new RegExp(String.raw`\bcolou?r\s*(?:[:=-]|is|of)?\s*(${names})\b|\((${names})\)|\b(?:that|which)\s+is\s+(${names})\b|,\s*(${names})\s*(?:[,;.]|$)`))
+    // "make it blue", "paint it red", "it should be green"
+    ?? t.match(new RegExp(String.raw`\b(?:make|paint|colou?r|turn)\s+(?:it|them|the\s+(?:robot|arm|body|shell))\s+(${names})\b|\bit\s+(?:should|must|can|will|could)\s+be\s+(${names})\b`));
   const c = m?.slice(1).find(Boolean);
   return c ? canonical(c) : undefined;
 }

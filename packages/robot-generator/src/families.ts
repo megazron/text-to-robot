@@ -29,7 +29,7 @@ export const RX = {
     String.raw`mobile\s+manipulat`,
   ].join("|")),
   quadruped: /quadruped|\b(?:four|4)[\s-]?legged\b|\b(?:four|4) legs\b|\bdog\b|robo[\s-]?dog|\blegged\b/,
-  scara: /\bscara\b/,
+  scara: /\bscara\b|selective[\s-]+compliance/,
   mecanum: /mecanum/,
   omni: /omni[\s-]?(?:wheels?|directional)|holonomic/,
   fourWheel: /\b(?:four|4)[\s-]?wheel(?:ed|s)?\b|\b4wd\b|skid[\s-]?steer/,
@@ -40,7 +40,16 @@ export const RX = {
   gripper: /gripper|end[\s-]?effector|\bclaw\b|suction\s+cup/,
   arm: /\barms?\b|manipulator|\bcobot\b|industrial\s+robot|pick[\s-](?:and|&|n)[\s-]place/,
   hand: /robot(?:ic)?\s+hand|dexterous\s+hand|\bprosthetic\b/,
+  /** a hand named as the robot or its tool: "a humanoid hand", "a five-finger robotic hand", "bionic hands" */
+  handRobot: /\b(?:humanoid|robot(?:ic)?|dexterous|bionic|prosthetic|anthropomorphic|mechanical|(?:three|four|five|3|4|5|multi)[\s-]?finger(?:ed)?)(?:\s+(?:robot(?:ic)?|dexterous|bionic|humanoid|mechanical))*\s+hands?\b/,
 };
+/** the arm a gripper or tool is meant for ("a gripper for my arm"): not a second robot */
+export const ARM_IT_FITS = /\b(?:for|to\s+fit|that\s+fits)\s+(?:my|an?|the|your|our)?\s*(?:[\w-]+\s+){0,3}?arms?\b/;
+export const HAND_REFUSAL = "Dexterous robot hands are not supported yet. Try \"two-finger parallel gripper\" or a humanoid.";
+
+/** Weapons and robots meant to hurt: refused whatever body they would have (a glue gun or a heat gun is a tool, not a weapon). */
+export const WEAPONS = /(?<!\b(?:glue|nail|spray|heat|massage|paint|staple|soldering|caulk|caulking|grease|rivet|hot[\s-]glue)\s)\b(?:guns?|rifles?|pistols?|firearms?)\b|\bweapon\w*|\bflame[\s-]?throwers?\b|\bbombs?\b|\bexplosives?\b|\bgrenades?\b|\bmissiles?\b|\btasers?\b|\b(?:kill|stab|shoot|attack|hurt|injure|harm)(?:s|ing)?\s+(?:people|humans?|someone|anyone|persons?|animals?|enemies)\b|\bto\s+(?:kill|stab)\b|\bthat\s+(?:can\s+|will\s+)?kills?\b/;
+export const WEAPON_REFUSAL = "Text to Robot does not design weapons or robots meant to hurt people or animals.";
 
 /** Families we do not generate; each says why and what to try instead. */
 export const UNSUPPORTED: [RegExp, string][] = [
@@ -57,6 +66,8 @@ export function gripperRequest(t: string): { kind: GripperKind; explicit: boolea
   const noGripper = negates(t, /gripper|end[\s-]?effector|claw|hand/) && !mentions(t, /gripper|end[\s-]?effector|claw|suction/);
   if (noGripper) return { kind: "none", explicit: true };
   if (mentions(t, /suction|vacuum\s+(?:gripper|cup|tool)|\bvacuum\b(?!\s+(?:cleaner|robot))/) && !mentions(t, /robot(?:ic)?\s+vacuum|vacuum\s+(?:cleaner|robot)/)) return { kind: "suction", explicit: true };
+  const hand = find(t, RX.handRobot);
+  if (hand) return { kind: "parallel", explicit: true, note: `"${hand.text}" approximated by a two-finger parallel gripper (dexterous hands are not designed yet)` };
   const multi = find(t, /\b(?:three|four|five|3|4|5|multi)[\s-]?finger(?:ed)?\b|dexterous/);
   if (multi) return { kind: "parallel", explicit: true, note: `"${multi.text}" gripper approximated by a two-finger parallel gripper` };
   return { kind: "parallel", explicit: mentions(t, RX.gripper) };
@@ -89,6 +100,7 @@ export function chooseFamily(t: string, prompt: string, dof: number | undefined,
   // "no camera on my quadruped" negates the camera, not the quadruped: only "not a quadruped" rejects a family
   const hit = (rx: RegExp) => find(t, rx)?.text ?? [...t.matchAll(new RegExp(rx.source, "g"))].find((m) => !isDirectlyNegated(t, m.index!))?.[0];
   let m: string | undefined;
+  if (mentions(t, WEAPONS)) throw new Error(WEAPON_REFUSAL);
 
   if ((m = hit(RX.suit))) {
     // a suit is WORN: build the wearable exoskeleton; "battle mech" (standalone robot) is a humanoid
@@ -103,10 +115,20 @@ export function chooseFamily(t: string, prompt: string, dof: number | undefined,
     return { family: "exosuit", label: "wearable exoskeleton", matched: m,
         build: () => wearableExosuit({ prompt, styled: false, name: "exosuit", ...(heightM ? { height_m: heightM } : {}) }) };
   }
-  if ((m = hit(RX.wallE))) return { family: "wall_e", label: "WALL-E character", matched: m, designed: true, build: (ctx) => designArduinoWallE({ name: "wall_e", prompt: ctx.prompt, budget: ctx.budget }) };
+  // "EVA from Wall-E": the film names where EVA comes from; the robot asked for is EVA
+  const wallEIsTheFilm = /\b(?:from|in|of)\s+(?:the\s+)?(?:(?:movie|film|pixar)\s+)?wall[\s-]?e\b/.test(t) && !!hit(RX.eva);
+  if (!wallEIsTheFilm && (m = hit(RX.wallE))) return { family: "wall_e", label: "WALL-E character", matched: m, designed: true, build: (ctx) => designArduinoWallE({ name: "wall_e", prompt: ctx.prompt, budget: ctx.budget }) };
   if ((m = hit(RX.eva))) return { family: "eva", label: "EVA character", matched: m, designed: true, build: (ctx) => designEva({ name: "eva", ...mobileReq(ctx) }) };
   if ((m = hit(RX.baymax))) return { family: "baymax", label: "Baymax character", matched: m, designed: true, build: (ctx) => designBaymax({ name: "baymax", ...mobileReq(ctx) }) };
   for (const [rx, why] of UNSUPPORTED) if (mentions(t, rx)) throw new Error(why);
+  // a hand is the robot asked for ("a humanoid hand"), or a part of one ("a humanoid with robotic hands", "an arm with a robot hand"):
+  // without the hand words, whatever robot is left is the one to build; nothing left means a hand alone, which is refused
+  const hand = find(t, RX.handRobot);
+  if (hand) {
+    const rest = `${t.slice(0, hand.index)} ${t.slice(hand.index + hand.text.length)}`.replace(/\s+/g, " ").trim();
+    try { return chooseFamily(rest, prompt, dof, g, heightM, explicitGripper); }
+    catch (e) { if (/not recognised/.test((e as Error).message)) throw new Error(HAND_REFUSAL); throw e; }
+  }
   const humanoidOf = (matched: string, approx?: string): Choice => ({ family: "humanoid", label: "humanoid", matched, approx, usesDof: true, usesGripper: true, designed: true,
     // above ~0.9 m servo legs cannot carry the robot: full-size humanoids use the QDD (CubeMars) design
     build: (ctx) => (ctx.heightM ?? 0) > 0.9 ? designBattleMech({ name: "humanoid_robot", ...leggedReq(ctx), ...(dof ? { armDof: dof } : {}) })
@@ -122,7 +144,8 @@ export function chooseFamily(t: string, prompt: string, dof: number | undefined,
       : { designed: true, build: (ctx: DesignContext) => designRover({ name: "rover_arm", ...mobileReq(ctx), payloadKg: undefined, wheels: wheelCount(t) ?? 6, arm: { dof: dof ?? 6, ...(ctx.payloadKg !== undefined ? { payloadKg: ctx.payloadKg } : {}) } }) }) };
   if ((m = hit(RX.quadruped))) return { family: "quadruped", label: "quadruped", matched: m, designed: true, build: (ctx) => designQuadruped({ name: "quadruped", ...leggedReq(ctx) }) };
   if ((m = hit(RX.scara))) {
-    const task = /\bpick(?:s|ing)?\b|\bplace\b|\bsort(?:s|ing)?\b|\bgrab(?:s|bing)?\b|\bpackag(?:e|ing)\b|\bassembl(?:e|y|ing)\b/.test(t);
+    // "selective compliance assembly robot arm" is the name, not an assembly task
+    const task = /\bpick(?:s|ing)?\b|\bplace\b|\bsort(?:s|ing)?\b|\bgrab(?:s|bing)?\b|\bpackag(?:e|ing)\b|\bassembl(?:e|y|ing)\b/.test(t.replace(/selective[\s-]+compliance[\s-]+(?:assembly|articulated)\b/g, "scara"));
     // the designed SCARA carries a parallel gripper; a suction cup (named, or a pick task with no jaws asked for) keeps the template SCARA
     if (g === "suction" || (task && !explicitGripper)) return { family: "scara", label: "SCARA", matched: m, usesGripper: true,
       build: () => { const s = scara({ prompt }); const tip = armTip(s); if (tip) attachSuctionGripper(s, tip.link, tip.atZ); return s; } };
@@ -144,14 +167,17 @@ export function chooseFamily(t: string, prompt: string, dof: number | undefined,
   if ((m = hit(RX.tracked))) return { family: "four_wheel", label: "four-wheel skid-steer base", matched: m, approx: "tracks approximated by a four-wheel skid-steer base",
       designed: true, build: (ctx) => designFourWheel({ name: "four_wheel_robot", ...mobileReq(ctx) }) };
   if ((m = hit(RX.diffDrive))) return { family: "diff_drive", label: "differential-drive base", matched: m,
+      // the rocker-bogie rover is designed carrying an arm; a rover asked for without one is the wheeled base, and says so
+      ...(/\b(?:mars|planetary|lunar|moon|rocker[\s-]?bogie)\b/.test(t) ? { approx: "a rover without an arm is built as a differential-drive base (the rocker-bogie rover is designed with an arm: ask for \"a Mars rover with an arm\")" } : {}),
       designed: true, build: (ctx) => designDiffDrive({ name: "diff_drive_robot", ...mobileReq(ctx) }) };
   if ((m = hit(RX.legs))) return { family: "quadruped", label: "quadruped", matched: m, designed: true, build: (ctx) => designQuadruped({ name: "quadruped", ...leggedReq(ctx) }) };
   if ((m = hit(RX.wheels)) && !mentions(t, RX.arm)) return { family: "diff_drive", label: "differential-drive base", matched: m,
       designed: true, build: (ctx) => designDiffDrive({ name: "diff_drive_robot", ...mobileReq(ctx) }) };
-  if ((m = hit(RX.gripper)) && !mentions(t, RX.arm)) return { family: "gripper", label: `standalone ${g === "suction" ? "suction" : "parallel"} gripper`, matched: m, usesGripper: true,
+  // "a gripper for my arm" asks for the gripper: the arm it goes on is not the robot to build
+  if ((m = hit(RX.gripper)) && !mentions(t.replace(ARM_IT_FITS, " "), RX.arm)) return { family: "gripper", label: `standalone ${g === "suction" ? "suction" : "parallel"} gripper`, matched: m, usesGripper: true,
     ...(g === "suction" ? { build: () => standaloneGripper("suction", prompt) }
       : { designed: true, build: (ctx: DesignContext) => designGripper({ name: "parallel_gripper", prompt: ctx.prompt, budget: ctx.budget, payloadKg: ctx.payloadKg }) }) };
-  if (mentions(t, RX.hand)) throw new Error("Dexterous robot hands are not supported yet. Try \"two-finger parallel gripper\" or a humanoid.");
+  if (mentions(t, RX.hand)) throw new Error(HAND_REFUSAL);
   m = hit(RX.arm);
   if (!m && dof === undefined) {
     // only a task was described: pick the robot type that does it, and say why

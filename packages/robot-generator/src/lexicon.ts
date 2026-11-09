@@ -28,6 +28,8 @@ const CONTENT: Record<string, string> = {
   haath: "arm", hath: "arm", haathon: "arms", pahiye: "wheels", pahiya: "wheel", pahiyon: "wheels", kutta: "dog", kutte: "dog",
   pakadne: "gripping", pakad: "grip", pakdne: "gripping", chalne: "walking", chalta: "walking", chalti: "walking", ghoomne: "driving",
   insaan: "human", insan: "human", aankh: "camera", aankhen: "cameras", chahiye: "", banao: "make", bana: "make",
+  // a robot dog in each language
+  hund: "dog", chien: "dog", perro: "dog",
 };
 
 /** Multi-word phrases, matched before single words (accent-free). */
@@ -76,7 +78,7 @@ export interface Translation { text: string; /** "greifer -> gripper" for each m
 export function translateKeywords(text: string): Translation {
   const plain = stripAccents(text);
   const mapped: string[] = [];
-  const note = (from: string, to: string) => { const n = `${from} -> ${to}`; if (from !== to && !mapped.includes(n)) mapped.push(n); };
+  const note = (from: string, to: string) => { const n = to ? `${from} -> ${to}` : `${from} (no English word needed)`; if (from !== to && !mapped.includes(n)) mapped.push(n); };
   let out = plain;
   for (const [rx, to] of PHRASES) out = out.replace(rx, (m, ...g) => { const r = to.replace("$1", typeof g[0] === "string" ? g[0] : ""); note(m, r); return r; });
   let foreign = mapped.length > 0;
@@ -93,6 +95,33 @@ export function translateKeywords(text: string): Translation {
     if (to === undefined || to === w) return w;
     note(w, to);
     return to;
+  });
+  return { text: out, mapped };
+}
+
+/** Robot-type words a typo is corrected to ("quadrupad" -> "quadruped"); short words are left alone. */
+const TYPO_TARGETS = ["quadruped", "hexapod", "humanoid", "mecanum", "gripper", "manipulator", "differential", "exoskeleton", "robotic", "omnidirectional"];
+/** Edit distance with adjacent swaps counted once (Damerau, optimal string alignment). */
+function distance(a: string, b: string): number {
+  const d = Array.from({ length: a.length + 1 }, (_, i) => [i, ...Array(b.length).fill(0)]);
+  for (let j = 1; j <= b.length; j++) d[0][j] = j;
+  for (let i = 1; i <= a.length; i++) for (let j = 1; j <= b.length; j++) {
+    d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    if (i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) d[i][j] = Math.min(d[i][j], d[i - 2][j - 2] + 1);
+  }
+  return d[a.length][b.length];
+}
+/** Read a few emoji as words, and correct a misspelt robot-type word: one slip in a word of up to 7 letters, two in a longer one. Each one is reported. */
+const EMOJI: [RegExp, string][] = [[/🐕|🐶|🦮|🐩/gu, "robot dog"], [/🚗|🚙|🏎️?|🚕/gu, "car"], [/🕷️?|🕸️?|🐜/gu, "spider"], [/🦾/gu, "robot arm"], [/🦿/gu, "legs"], [/🤏|🦞|🦀/gu, "gripper"]];
+export function correctTypos(text: string): Translation {
+  const mapped: string[] = [];
+  for (const [rx, to] of EMOJI) text = text.replace(rx, (e) => { mapped.push(`${e} -> ${to}`); return ` ${to} `; });
+  const out = text.replace(/[a-z]{5,}/g, (w) => {
+    if (TYPO_TARGETS.some((t) => w.includes(t))) return w;   // "hexapods", "grippers": already the word
+    const best = TYPO_TARGETS.map((t) => ({ t, d: distance(w, t) })).sort((x, y) => x.d - y.d)[0];
+    if (best.d === 0 || best.d > (best.t.length <= 7 ? 1 : 2) || Math.abs(best.t.length - w.length) > 2) return w;
+    mapped.push(`${w} -> ${best.t}`);
+    return best.t;
   });
   return { text: out, mapped };
 }

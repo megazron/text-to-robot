@@ -3,8 +3,8 @@
 // can be built the result says what can.
 import type { RobotSpecification } from "@ttr/robot-schema";
 import { designArduinoCar, designArduinoArm, designArduinoWallE, designMark43Wearable, type ArduinoTier } from "@ttr/design";
-import { part } from "@ttr/parts";
-import { normalize, parseBudget, extractMasses } from "./text.ts";
+import { buildBom } from "@ttr/components";
+import { normalize, parseBudget, extractMasses, extractLengths } from "./text.ts";
 import { chooseFamily, gripperRequest } from "./families.ts";
 import { extractDof } from "./interpret.ts";
 
@@ -20,8 +20,9 @@ export interface ArduinoResult { family: string; label: string; options: Arduino
 
 const CAR_FAMILIES = new Set(["diff_drive", "four_wheel", "mecanum"]);
 const design = (s: RobotSpecification) => (s.metadata as { design?: { summary: string; checks: { name: string; pass: boolean }[]; performance: Record<string, unknown>; purchased: { key: string; qty: number }[] } }).design!;
-/** parts cost of a design from its purchase list */
-const costOf = (s: RobotSpecification) => design(s).purchased.reduce((sum, p) => sum + part(p.key).price_usd * p.qty, 0);
+/** what the design costs to build: the bill of materials total (bought parts, filament, fasteners and wiring), the same
+ *  number the parts list shows; the bought parts alone left a tier card about a quarter cheaper than the design it opens */
+const costOf = (s: RobotSpecification) => buildBom(s).total;
 
 function option(tier: string, label: string, robot: RobotSpecification, budget?: number): ArduinoOption {
   const d = design(robot), cost = costOf(robot);
@@ -51,11 +52,16 @@ export function arduinoOptions(prompt: string): ArduinoResult {
     // every tier uses the cheapest servo that holds each joint; tiers differ in what they carry
     const pool = ["hobby_sg90", "hobby_mg90s", "hobby_mg996r", "hobby_ds3218"];
     const tiers: [string, string, number][] = [["cheapest", "cheapest that works", 0.02], ["stronger", "stronger", 0.1], ["best", "best on Arduino", 0.2]];
+    const reach = extractLengths(t).find((l) => l.context === "reach");
     for (const [tier, tierLabel, kg] of tiers) {
       const s = designArduinoArm({ name: "arduino_arm", prompt, budget, servos: pool, gripper, payloadKg: payload ?? kg });
-      options.push(option(tier, `${tierLabel}: carries ${Math.round((payload ?? kg) * 1000)} g, ${Math.round(Number(design(s).performance.reach_m) * 100)} cm reach`, s, budget));
+      // a tier that fails a check is not "the cheapest that works": its card says what it tried
+      const o = option(tier, "", s, budget), said = o.failing.length ? (tier === "cheapest" ? "cheapest tried" : `${tierLabel} tried`) : tierLabel;
+      o.label = `${said}: carries ${Math.round((payload ?? kg) * 1000)} g, ${Math.round(Number(design(s).performance.reach_m) * 100)} cm reach`;
+      options.push(o);
       if (payload !== undefined) break;   // a stated payload: one design for it
     }
+    if (reach) notes.push(`${reach.raw} reach asked: the Arduino desk arm's reach is set by its hobby servos and the load (${options.map((o) => `${Math.round(Number(design(o.robot).performance.reach_m) * 100)} cm`).join(", ")} here)`);
   } else if (family === "iron_man_mark_43" || family === "exosuit") {
     // wearable armour in three sizes of ambition; a powered suit is not buildable from hobby parts
     if (/\b(?:powered|motori[sz]ed\s+(?:suit|limbs|joints)|exoskeleton|strength|lift(?:s|ing)?\s+heavy|fly|flight)\b/.test(t))

@@ -37,11 +37,6 @@ All 36 checks pass (torque, speed, power, stability, print-bed fit). Details in 
 - TT motor continuous torque taken as 30 % of the 0.8 kg.cm stall (Adafruit #3777 data)
 - prices are typical single-unit marketplace prices for generic modules and vary by seller
 
-## Prompt notes
-
-- conflict: "4wd" asks for a wheeled base, but a prompt builds one robot; built the Arduino car (4WD)
-- not applied: ultrasonic sensor: only cameras, depth cameras, lidars and IMUs are modelled
-
 <!-- SIM -->
 ## Simulation (MuJoCo, real actuator limits)
 

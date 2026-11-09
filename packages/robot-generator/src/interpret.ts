@@ -8,15 +8,15 @@ import { fk } from "@ttr/design";
 import { normalize, find, findAll, mentions, negates, extractDofMentions, type DofMention, extractLengths, extractMasses, extractSpeeds, parseBudget, extractName, extractColour, maskNames, COLOURS } from "./text.ts";
 import { armourShape, shapeKey } from "@ttr/mesh";
 import { suitOptions } from "./suit.ts";
-import { MAX_ARM_DOF, RX, gripperRequest, chooseFamily, RECOLOURABLE, type Choice, type GripperKind, type DesignContext } from "./families.ts";
-import { translateKeywords } from "./lexicon.ts";
+import { MAX_ARM_DOF, RX, ARM_IT_FITS, SUPPORTED_HINT, wheelCount, gripperRequest, chooseFamily, RECOLOURABLE, type Choice, type GripperKind, type DesignContext } from "./families.ts";
+import { translateKeywords, correctTypos } from "./lexicon.ts";
 import { applySizeDirectives, designedSizes, reportDesignedReach } from "./sizing.ts";
 import { applyInlineSensors, requestedSensors, sensorCount, SENSOR_WORDS, UNMODELLED_SENSORS } from "./sensors.ts";
 import { dofOf } from "./spec-utils.ts";
 
 export { MAX_ARM_DOF } from "./families.ts";
 
-/** Requested DOF, clamped to what the serial-arm generator supports (1..12). */
+/** Requested DOF, clamped to what the serial-arm designer supports (1 to MAX_ARM_DOF). */
 // Designers are deterministic in their request and take seconds (sizing loops, exact clearance sweeps):
 // a process keeps the last designs it built, and hands out copies (callers edit specs in place).
 const designCache = new Map<string, RobotSpecification>();
@@ -42,7 +42,8 @@ export interface Interpretation {
   /** the words that selected the template */
   matched: string;
   dof: number;
-  gripper?: GripperKind;
+  /** the tool that was built: a one-servo claw is reported as a claw, not as jaws */
+  gripper?: GripperKind | "claw";
   sensors: { type: SensorType; mount: string }[];
   dimensions: string[];
   name?: string;
@@ -68,8 +69,8 @@ export function interpretPrompt(prompt: string): PromptResult {
   if (!normalize(prompt)) throw new Error("empty prompt");
   // names and quoted text ("named Tiny", "called 'Unit 50'") never describe the robot's features
   // basic German/French/Spanish keywords are mapped onto the English vocabulary first
-  const translation = translateKeywords(maskNames(prompt));
-  const t = translation.text;
+  const translation = translateKeywords(maskNames(prompt)), typos = correctTypos(translation.text);
+  const t = typos.text;
   const dofMentions = extractDofMentions(t);
   const rawDof = dofMentions[0]?.value;
   const dof = rawDof === undefined ? undefined : Math.min(MAX_ARM_DOF, Math.max(1, Math.round(rawDof)));
@@ -78,6 +79,7 @@ export function interpretPrompt(prompt: string): PromptResult {
   const lengths = extractLengths(t);
   const ignored: string[] = [], approximations: string[] = [], dimensions: string[] = [], conflicts: string[] = [], warnings: string[] = [];
   if (translation.mapped.length) approximations.push(`read non-English keywords as English: ${translation.mapped.join(", ")}`);
+  if (typos.mapped.length) approximations.push(`read misspelt words and emoji as: ${typos.mapped.join(", ")}`);
 
   // A stated stature fits a wearable suit to its wearer.
   // a standalone battle mech is a robot, not something worn
@@ -90,7 +92,14 @@ export function interpretPrompt(prompt: string): PromptResult {
     else ignored.push(`wearer height ${stature.raw} is outside the supported 1.50–2.05 m range; fitted to 1.75 m`);
   }
 
-  const choice = chooseFamily(t, prompt, dof, g, heightM, grip.explicit);
+  let choice: Choice;
+  try { choice = chooseFamily(t, prompt, dof, g, heightM, grip.explicit); }
+  catch (e) {
+    // a prompt in another script (Hindi, Urdu, Chinese...) is not read at all: say that, rather than only "not recognised"
+    if (/not recognised/.test((e as Error).message) && /[^\p{Script=Latin}\p{N}\p{P}\p{S}\s]/u.test(prompt) && !/[a-z]{3,}/.test(t))
+      throw new Error(`This prompt is in a language the parser does not read yet: it reads English, with common German, French, Spanish and romanised Hindi robot words. ${SUPPORTED_HINT}`);
+    throw e;
+  }
   const budget = parseBudget(t);
   const masses = extractMasses(t);
   const payload = masses.find((x) => x.context === "payload");
@@ -143,6 +152,8 @@ export function interpretPrompt(prompt: string): PromptResult {
     warnings.push(`design check failed: ${failed.slice(0, 4).map((c) => `${c.name}: ${c.detail.split(" — ")[0]}`).join("; ")}${failed.length > 4 ? ` and ${failed.length - 4} more` : ""}${hint}`);
   }
   if (choice.approx) approximations.push(choice.approx);
+  // a template is a shape, not a design: say so where the result is shown, not only in the build report
+  if (!choice.designed) approximations.push(`the ${choice.label} is a template robot: not designed from real parts (no actuator sizing, wiring or print checks; the parts list is a rough estimate)`);
   if (grip.note && choice.usesGripper) approximations.push(grip.note);
 
   if (rawDof !== undefined) {
@@ -178,7 +189,9 @@ export function interpretPrompt(prompt: string): PromptResult {
     if (!mounted) ignored.push(`${type}: the ${choice.label} design has no mount for it yet`);
     else if (wanted > mounted) ignored.push(`${wanted} ${type}s: the ${choice.label} design mounts ${mounted}`);
   }
-  for (const x of findAll(t, UNMODELLED_SENSORS)) ignored.push(`${x.text}: only cameras, depth cameras, lidars and IMUs are modelled`);
+  // an ultrasonic ranger the design itself carries (the Arduino car, WALL-E) is applied, not ignored
+  const ranger = spec.sensors.some((x) => x.type === "range");
+  for (const x of findAll(t, UNMODELLED_SENSORS)) if (!(ranger && /ultrasonic|sonar|proximity/.test(x.text))) ignored.push(`${x.text}: only cameras, depth cameras, lidars, IMUs and (on the Arduino designs) ultrasonic rangers are modelled`);
 
   const colour = suit ? undefined : extractColour(t);
   if (colour) {
@@ -188,6 +201,12 @@ export function interpretPrompt(prompt: string): PromptResult {
   }
 
   if (budget.unsupported) ignored.push(`budget "${budget.unsupported}": only US-dollar budgets are supported`);
+  if (budget.invalid) ignored.push(`budget "${budget.invalid}": a budget must be more than $0; built without one`);
+  // "-5 kg payload": a load cannot be negative, so the number is not used as one
+  if (payload && /-\s*$/.test(t.slice(0, t.indexOf(payload.raw)))) ignored.push(`payload -${payload.raw}: a payload cannot be negative; sized for ${payload.raw}`);
+  // "a rover with 6 wheels" on a base that has another number of wheels
+  const wheelsAsked = wheelCount(t), wheelsBuilt = spec.joints.filter((j) => (j.type === "continuous" || j.type === "revolute") && /wheel/.test(j.name) && !/steer/.test(j.name)).length;
+  if (wheelsAsked !== undefined && wheelsBuilt > 0 && wheelsAsked !== wheelsBuilt) ignored.push(`${wheelsAsked} wheels: the ${choice.label} has ${wheelsBuilt}`);
   let payloadKg: number | undefined;
   if (payload) {
     if (spec.end_effectors.length || choice.designed) payloadKg = +payload.kg.toFixed(3); // designed bases carry it as cargo
@@ -205,7 +224,7 @@ export function interpretPrompt(prompt: string): PromptResult {
   const interpretation: Interpretation = {
     family: choice.family, label: choice.label, matched: choice.matched, dof: dofOf(spec),
     // report the tool that was actually built (a pick-and-place SCARA gets a suction cup without asking)
-    ...(choice.usesGripper ? { gripper: !spec.end_effectors.length ? "none" as GripperKind : /suction/.test(spec.end_effectors[0].type) ? "suction" as GripperKind : g === "none" ? "parallel" as GripperKind : g } : {}),
+    ...(choice.usesGripper ? { gripper: builtTool(spec, g) } : {}),
     sensors, dimensions, ...(name ? { name: spec.robot_name } : {}),
     ...(colour && !ignored.some((i) => i.startsWith("colour")) ? { colour } : {}),
     ...(budget.usd !== undefined ? { budget_usd: budget.usd } : {}),
@@ -214,6 +233,15 @@ export function interpretPrompt(prompt: string): PromptResult {
     approximations, ignored, conflicts, ...(warnings.length ? { warnings } : {}),
   };
   return { spec, interpretation };
+}
+
+/** The tool the built robot carries: its end effector, else the design's own record (the Arduino arm's one-servo claw). */
+function builtTool(spec: RobotSpecification, asked: GripperKind): GripperKind | "claw" {
+  const ee = spec.end_effectors[0];
+  if (ee) return /suction/.test(ee.type) ? "suction" : asked === "none" ? "parallel" : asked;
+  const designed = (spec.metadata as { design?: { performance?: { gripper?: unknown } } }).design?.performance?.gripper;
+  if (typeof designed === "string" && designed !== "none") return /claw/.test(designed) ? "claw" : /suction/.test(designed) ? "suction" : "parallel";
+  return "none";
 }
 
 /** Deterministic NL -> RobotSpecification (local generation). */
@@ -234,7 +262,8 @@ export function hobbyServos(t: string): { only?: string[] } | undefined {
 export function describeInterpretation(i: Interpretation): string {
   const parts = [i.label];
   if (i.name) parts.push(`named ${i.name}`);
-  if (i.gripper && i.gripper !== "none") parts.push(`${i.gripper} gripper`);
+  // a standalone gripper's label already names it; a claw is not a gripper with jaws
+  if (i.gripper && i.gripper !== "none" && i.family !== "gripper" && !(i.gripper === "claw" && /claw/.test(i.label))) parts.push(i.gripper === "claw" ? "one-servo claw" : `${i.gripper} gripper`);
   if (i.gripper === "none") parts.push("no gripper");
   for (const s of i.sensors) parts.push(`${s.type} (${s.mount})`);
   parts.push(...i.dimensions);
@@ -249,7 +278,8 @@ function limbDofs(spec: RobotSpecification): Set<number> {
   const groups = new Map<string, number>();
   for (const j of spec.joints) {
     if (j.type === "fixed" || j.passive) continue;
-    const side = j.name.match(/^((?:(?:front|rear|back|middle|mid|left|right)_)+)/)?.[1];
+    // "front_left_", "left_", and the short leg prefixes of the legged designs ("lf_", "rm_", "fl_")
+    const side = j.name.match(/^((?:(?:front|rear|back|middle|mid|left|right)_)+|(?:[lr][fmr]|[fbr][lr])_)/)?.[1];
     if (!side) continue;
     const limb = side + (/arm|shoulder|elbow|wrist|finger|thumb/.test(j.name) ? "arm" : /hip|knee|ankle|leg|coxa|femur|tibia/.test(j.name) ? "leg" : "other");
     groups.set(limb, (groups.get(limb) ?? 0) + 1);
@@ -272,9 +302,9 @@ const OTHER_TYPES: { rx: RegExp; what: string; fits: string[] }[] = [
   { rx: RX.hexapod, what: "hexapod", fits: ["hexapod"] },
   { rx: RX.scara, what: "SCARA", fits: ["scara"] },
   { rx: new RegExp([RX.wheels.source, RX.diffDrive.source, RX.fourWheel.source, RX.mecanum.source, RX.omni.source, RX.tracked.source].join("|")),
-    what: "wheeled base", fits: ["diff_drive", "four_wheel", "mecanum", "rover_arm"] },
+    what: "wheeled base", fits: ["diff_drive", "four_wheel", "mecanum", "rover_arm", "arduino_car"] },
   // legged bases already report an arm as not applied
-  { rx: RX.arm, what: "arm", fits: ["serial_arm", "rover_arm", "scara", "humanoid", "quadruped", "hexapod"] },
+  { rx: RX.arm, what: "arm", fits: ["serial_arm", "rover_arm", "scara", "humanoid", "quadruped", "hexapod", "arduino_arm"] },
 ];
 /** Characters and suits are themed designs; their keywords overlap by design. */
 const THEMED = new Set(["wall_e", "eva", "baymax", "iron_man_mark_43", "exosuit", "battle_mech"]);
@@ -288,7 +318,7 @@ function familyConflicts(t: string, choice: Choice): string[] {
     (h.text + (t.slice(h.index + h.text.length).match(/^\s+(?:rover|robot|base|platform|chassis|vehicle)\b/)?.[0] ?? "")).trim();
   const out: string[] = [];
   for (const o of OTHER_TYPES) {
-    const hit = find(t, o.rx);
+    const hit = find(o.what === "arm" && choice.family === "gripper" ? t.replace(ARM_IT_FITS, (x) => " ".repeat(x.length)) : t, o.rx);
     if (hit && !o.fits.includes(choice.family)) out.push(`"${phrase(hit)}" asks for a ${o.what}, but a prompt builds one robot; built the ${choice.label}`);
   }
   if (choice.family === "rover_arm") {
@@ -309,10 +339,11 @@ function isPlanar(spec: RobotSpecification): boolean {
 }
 
 /** Boards and drivers named in the prompt: used when the design can take them, otherwise the swap is said with the reason. */
-const NAMED_PARTS: { rx: RegExp; key: string; label: string; instead: Record<string, string> }[] = [
+const UNO_KEPT = "the Uno is kept: the board sits on the desk beside the arm, so either works and the sketch is the same";
+const NAMED_PARTS: { rx: RegExp; key: string | string[]; label: string; instead: Record<string, string> }[] = [
   { rx: /\barduino\s+nano\b|\bnano\b/, key: "arduino_nano_clone", label: "Arduino Nano",
-    instead: { arduino_uno_clone: "the Uno is kept: the board sits on the desk beside the arm, so either works and the sketch is the same" } },
-  { rx: /\barduino\s+uno\b|\buno\b/, key: "arduino_uno_clone", label: "Arduino Uno",
+    instead: { arduino_uno_clone: UNO_KEPT, arduino_uno_r3: UNO_KEPT } },
+  { rx: /\barduino\s+uno\b|\buno\b/, key: ["arduino_uno_clone", "arduino_uno_r3"], label: "Arduino Uno",
     instead: { arduino_nano_clone: "an Arduino Nano is used instead: it plugs into the breadboard with the motor driver (an Uno does not), and the sketch runs unchanged on an Uno wired with jumpers" } },
   { rx: /\bl298n?\b/, key: "l298n_module", label: "L298N",
     instead: { tb6612fng_module: "a TB6612FNG is used instead: the L298N loses about 2 V in its bipolar bridge (TT motors on the 7.4 V pack would run slow and hot) and it does not plug into the breadboard" } },
@@ -326,7 +357,7 @@ function namedParts(t: string, spec: RobotSpecification, out: { dimensions: stri
   const have = new Set(design.purchased.map((p) => p.key));
   for (const n of NAMED_PARTS) {
     if (!n.rx.test(t)) continue;
-    if (have.has(n.key)) { out.dimensions.push(`${n.label} as asked`); continue; }
+    if ([n.key].flat().some((k) => have.has(k))) { out.dimensions.push(`${n.label} as asked`); continue; }
     const swap = Object.entries(n.instead).find(([k]) => have.has(k));
     out.approximations.push(swap ? `${n.label} named: ${swap[1]}` : `${n.label} named but this design does not use one`);
   }

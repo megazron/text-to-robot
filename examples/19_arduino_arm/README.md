@@ -4,7 +4,7 @@
 
 ![studio render](studio.gif)
 
-Interpreted as: Arduino desk arm (3 DOF + claw) · no gripper
+Interpreted as: Arduino desk arm (3 DOF + claw)
 
 **Arduino desk arm: 3 DOF + claw, 280 mm reach, 20 g payload, 0.82 kg, $50 of parts**
 
@@ -38,10 +38,6 @@ All 40 checks pass (torque, speed, power, stability, print-bed fit). Details in 
 - Joint limits trimmed to the collision-free range found by exact solid sweeps: claw [-0.60, 0.35] -> [0.00, 0.29].
 - each joint runs on its servo's own output bearing (no extra bearings), as in MeArm-class kits: links are kept short so the servo holds them continuously
 - prices are typical single-unit marketplace prices and vary by seller
-
-## Prompt notes
-
-- conflict: "arm" asks for a arm, but a prompt builds one robot; built the Arduino desk arm (3 DOF + claw)
 
 <!-- SIM -->
 ## Simulation (MuJoCo, real actuator limits)

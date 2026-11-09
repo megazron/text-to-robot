@@ -4,7 +4,7 @@
 
 ![studio render](studio.gif)
 
-Interpreted as: standalone parallel gripper · parallel gripper
+Interpreted as: standalone parallel gripper
 
 **Parallel gripper: 60 mm stroke, 47 N rated squeeze per finger, Feetech STS3215 C047 12 V 30 kg.cm (1:345)**
 

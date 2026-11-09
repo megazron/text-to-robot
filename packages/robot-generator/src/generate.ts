@@ -9,7 +9,7 @@ import { interpretPrompt, applyModification, extractBudget, extractPayload, desc
 import { repair } from "./repair.ts";
 import { ensureArmourPack, DEFAULT_SHAPE, type ArmourShape } from "@ttr/mesh";
 import { normalize, mentions } from "./text.ts";
-import { RX } from "./families.ts";
+import { RX, WEAPONS } from "./families.ts";
 import { suitOptions } from "./suit.ts";
 import { diffSpecs, type SpecDiff } from "./diff.ts";
 
@@ -82,6 +82,7 @@ function requirements(spec: RobotSpecification, text: string) {
 /** A Mark 43 prompt needs its armour forged (or found) before the designer places it: the forge makes it from the prompt's shape words. */
 export async function forgeForPrompt(prompt: string): Promise<void> {
   const t = normalize(prompt);
+  if (mentions(t, WEAPONS)) return;   // refused by the parser: nothing to forge
   if (!mentions(t, RX.suit) || !/iron[\s-]?man|mark\s*(?:[ivx]+|\d+)|armou?r|movie|ultron/.test(t) || (/\bmech\b(?!\s+suit)/.test(t) && !/iron[\s-]?man|exo|wearable|suit/.test(t))) return;
   await ensureArmourPack(suitOptions(t).shape);
 }
