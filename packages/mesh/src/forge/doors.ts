@@ -324,6 +324,21 @@ export function clearHardware(pieces: Piece[], hw: Hardware[], log: Log): void {
     });
   }
   log(`shells cleared of the hardware once more ${lost.toFixed(1)} mm3`);
+  // the joint sleeves are cloth and give way to everything hard, after the shells' last change (the film check counts them)
+  let cloth = 0;
+  const hard = [...pieces.filter((e) => HARD.includes(e.row.material)).map((e) => ({ m: e.mesh, b: meshBounds(e.mesh) })), ...hb.map((x) => ({ m: x.h.mesh, b: x.b }))];
+  for (const e of pieces) {
+    if (e.row.material !== "armour_mech" || e.row.wiring) continue;
+    const b = meshBounds(e.mesh), near = hard.filter((x) => overlaps(b, x.b));
+    if (!near.length) continue;
+    scope(() => {
+      let x = asSolid(e.mesh); const v0 = x.volume();
+      for (const n of near) x = x.subtract(asSolid(n.m));
+      const v = v0 - x.volume();
+      if (v > 0.01 && !x.isEmpty()) { cloth += v; e.mesh = asMesh(biggest(x)); e.dirty = true; }
+    });
+  }
+  log(`sleeves cleared of the shells once more ${cloth.toFixed(1)} mm3`);
 }
 export interface Bay { link: string; corners: P3[]; }
 /** Every door swept through its range in the order the suit opens, with exact intersection against everything else, servos included. */

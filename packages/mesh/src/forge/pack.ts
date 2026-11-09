@@ -95,9 +95,10 @@ const toolOf = (ps: Piece[], pick: (p: Piece) => boolean, tol?: number): TriMesh
 /** The mask swings about the ear: what is left to relieve on the helmet is the rest round its edges. */
 export async function workingHelmet(pcs: Piece[], neck: P3, log: Log): Promise<Piece[]> {
   const h: P3 = [neck[0] + HINGE[0], neck[1] + HINGE[1], neck[2] + HINGE[2]];
-  // simplified as the collar's and the limbs' tools are (0.4 mm): the sweep is a clearance, not a part
+  // the mask itself, not simplified, at 97 stations (0.01 rad, about 1.4 mm at the crown, under its 2.2 mm wall): the reference's 32
+  // left the wall's edge rubbing the crown between stations in the film check
   const pick = (p: Piece) => baseLink(p.row.link) === "head";
-  const tool = await sweptTool(toolOf(pcs, (p) => p.row.link === "helmet_faceplate", 0.4), h, [0, 1, 0], linspace(-0.04, -MASK_OPEN, 32), boundsOf(pcs.filter(pick).map((p) => p.mesh)));
+  const tool = await sweptTool(toolOf(pcs, (p) => p.row.link === "helmet_faceplate"), h, [0, 1, 0], linspace(-0.04, -MASK_OPEN, 97), boundsOf(pcs.filter(pick).map((p) => p.mesh)));
   const [out, lost] = await cutAllPooled(pcs, pick, tool, "r"); log(`helmet relief ${Math.round(lost)} mm3`); return out;
 }
 
