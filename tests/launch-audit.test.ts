@@ -105,3 +105,12 @@ test("a colour asked for after a verb is applied: 'make it blue', 'it should be 
   assert.equal(read("a 6 dof arm, please make it blue").colour, "blue");
   assert.equal(read("a quadruped, it should be green").colour, "green");
 });
+
+test("no example's parts list prints undefined or NaN (a coupler has a torque rating but no peak or voltage)", async () => {
+  const { readdirSync, readFileSync } = await import("node:fs");
+  const { bomToMarkdown } = await import("@ttr/components");
+  for (const ex of readdirSync("examples").filter((n) => /^\d\d_/.test(n))) {
+    const md = bomToMarkdown(buildBom(JSON.parse(readFileSync(`examples/${ex}/robot.json`, "utf8"))));
+    assert.doesNotMatch(md, /\bundefined\b|\bNaN\b/, ex);
+  }
+});
