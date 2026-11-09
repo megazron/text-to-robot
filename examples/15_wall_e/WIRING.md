@@ -2,7 +2,7 @@
 
 37 cables, 77 conductors, 19.51 m of wire, wiring parts $12.83.
 
-Diagram: [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
+Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), [breadboard.svg](breadboard.svg) (every wire in its colour, pin to pin) and the cable diagram [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
 
 ## Power budget
 
@@ -197,6 +197,75 @@ Each loop is at least the extra length the joint needs at the far end of its tra
 | C14 | right_arm_lift | -0.476 to 1 | 29.6 | 36.2 | 25 |
 | C36 | left_arm_lift | -1 to 0.476 | 33.7 | 41.3 | 35 |
 | C37 | right_arm_lift | -0.476 to 1 | 33.7 | 41.3 | 35 |
+
+## Electrical calculations
+
+Computed from the power budget above and the parts' catalog and electrical records. Sources are listed at the end of this section.
+
+### Battery runtime
+
+Usable energy is 80 % of the pack's rated energy (stop at about 3.5 V a cell under load). Runtime = usable Wh / (rail volts x current).
+
+| Battery | Rated Wh | mAh | Rail | Typical A | Runtime at typical | Peak A | Runtime at peak | Peak C-rate | Pack limit A |
+|---|--:|--:|---|--:|--:|--:|--:|--:|--:|
+| battery (2S 18650 pack: two 2500 mAh 20 A cells) | 18.5 | 2500 | VBAT 7.2 V | 3.041 | 41 min | 7.441 | 17 min | 2.9 C | 20 |
+
+### Regulator heat
+
+Heat = power in - power out. A switching converter's input comes from the budget above; an on-board linear regulator drops the difference in volts times the load current.
+
+| Regulator | Type | In | Out | Load A (typical / peak) | Power in W | Power out W | Heat W (typical / peak) | Efficiency | Rated heat W | OK |
+|---|---|---|---|--:|--:|--:|--:|--:|--:|:-:|
+| controller | linear | VBAT 7.2 V | 5V_LOGIC 5 V | 0.029 / 0.029 | 0.209 | 0.145 | 0.064 / 0.064 | 69 % | 0.13 | yes |
+| servo_regulator | switching | VBAT 7.2 V | 5V_SERVO 5 V | 0.81 / 2.61 | 4.766 | 4.05 | 0.716 / 2.3 | 85 % | 2.5 | yes |
+| arm_regulator | switching | VBAT 7.2 V | 5V_ARMS 5 V | 0.9 / 2.7 | 5.292 | 4.5 | 0.792 / 2.383 | 85 % | 2.5 | yes |
+- controller: on-board linear regulator: (Vin - Vout) x Iout.
+- servo_regulator: input from the VBAT budget at the converter efficiency the budget assumes; the part is rated for about 2.5 W of heat.
+- arm_regulator: input from the VBAT budget at the converter efficiency the budget assumes; the part is rated for about 2.5 W of heat.
+
+### Logic levels
+
+Every checked signal is read correctly by the pin it drives.
+
+A driver's high level is its I/O supply; the receiver needs it above its input threshold and below its input limit.
+
+| Net | Driver | Receiver | High V | Threshold V | Input limit V | Result |
+|---|---|---|--:|--:|--:|---|
+| CONTROLLER_D10 | A1 D10/SS | U3 PWMB | 5 | 2 | 5.7 | ok |
+| CONTROLLER_D11 | A1 D11/MOSI | U1 Trig | 5 | 2 | 5.5 | ok |
+| CONTROLLER_D12 | U1 Echo | A1 D12/MISO | 5 | 3 | 5.5 | ok |
+| CONTROLLER_D2 | A1 D2 | U3 BIN2 | 5 | 2 | 5.7 | ok |
+| CONTROLLER_D4 | A1 D4 | U2 BIN1 | 5 | 2 | 5.7 | ok |
+| CONTROLLER_D5 | A1 D5 | U2 PWMA | 5 | 2 | 5.7 | ok |
+| CONTROLLER_D6 | A1 D6 | U2 PWMB | 5 | 2 | 5.7 | ok |
+| CONTROLLER_D7 | A1 D7 | U2 AIN1 | 5 | 2 | 5.7 | ok |
+| CONTROLLER_D8 | A1 D8 | U2 AIN2 | 5 | 2 | 5.7 | ok |
+| CONTROLLER_D9 | A1 D9 | U3 PWMA | 5 | 2 | 5.7 | ok |
+| I2C_SCL | A1 A5/SCL | U4 SCL | 5 | 3.5 | 5.5 | ok |
+| I2C_SDA | A1 A4/SDA | U4 SDA | 5 | 3.5 | 5.5 | ok |
+| I2C_SDA | U4 SDA | A1 A4/SDA | 5 | 3 | 5.5 | ok |
+| SERVO0_PWM | U4 PWM0 | M5 Signal | 5 | 2 | 6 | ok |
+| SERVO1_PWM | U4 PWM1 | M6 Signal | 5 | 2 | 6 | ok |
+| SERVO2_PWM | U4 PWM2 | M9 Signal | 5 | 2 | 6 | ok |
+| SERVO3_PWM | U4 PWM3 | M12 Signal | 5 | 2 | 6 | ok |
+| SERVO4_PWM | U4 PWM4 | M7 Signal | 5 | 2 | 6 | ok |
+| SERVO5_PWM | U4 PWM5 | M10 Signal | 5 | 2 | 6 | ok |
+| SERVO6_PWM | U4 PWM6 | M8 Signal | 5 | 2 | 6 | ok |
+| SERVO7_PWM | U4 PWM7 | M11 Signal | 5 | 2 | 6 | ok |
+
+### Sources
+
+| Input | Source |
+|---|---|
+| 2S 18650 pack: two 2500 mAh 20 A cells (Samsung 25R class) in a plain two-cell holder capacity and energy | [datasheet](https://www.dnkpower.com/wp-content/uploads/2019/02/SAMSUNG-INR18650-25R-Datasheet.pdf) |
+| Arduino Nano compatible board (ATmega328P, CH340, USB-C) heat | estimated: 5 V x 25 mA typical; more when fed from VIN |
+| LM2596S adjustable buck module (3 A, 43 x 21 mm) heat | estimated: 10 W out at about 80 %; TI: 73 % at 12 V in, 3 V out, 3 A |
+| Arduino Nano compatible board (ATmega328P, CH340, USB-C) logic levels | [datasheet](https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-7810-Automotive-Microcontrollers-ATmega328P_Datasheet.pdf): ATmega328P at VCC 5 V: VIH min 0.6 VCC = 3.0 V, pins to VCC + 0.5 V. Outputs swing to VCC at light load. |
+| TB6612FNG dual DC motor driver module (1.2 A per channel) logic levels | [datasheet](https://cdn-shop.adafruit.com/datasheets/TB6612FNG_datasheet_en_20121101.pdf): Control inputs: VIH 2 V min, up to VCC + 0.2 V (Toshiba electrical characteristics); 3.3 V and 5 V hosts both drive it. |
+| HC-SR04 ultrasonic distance sensor (2-400 cm) logic levels | [estimated](https://cdn.sparkfun.com/datasheets/Sensors/Proximity/HCSR04.pdf): 5 V TTL module: Echo drives 5 V. The trigger threshold is not published; TTL 2 V assumed. |
+| PCA9685 16-channel PWM servo driver board (generic, I2C) logic levels | [datasheet](https://www.nxp.com/docs/en/data-sheet/PCA9685.pdf): VIH 0.7 VDD on SCL/SDA; inputs are 5.5 V tolerant; LED outputs are totem pole to VDD. |
+| TowerPro SG90 micro servo (nylon gears) + cross horn logic levels | [estimated](http://www.ee.ic.ac.uk/pcheung/teaching/DE1_EE/stores/sg90_datasheet.pdf): Pulse input of an analogue servo: no threshold published; 3.3 V and 5 V pulses both work in practice, 2 V assumed. |
+| TowerPro MG90S micro servo (metal gears) + cross horn logic levels | estimated: Pulse input of a hobby servo: no threshold published; 2 V assumed. |
 
 ## Wiring parts to buy
 

@@ -2,7 +2,7 @@
 
 5 cables, 14 conductors, 5.46 m of wire, wiring parts $7.37.
 
-Diagram: [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
+Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), [breadboard.svg](breadboard.svg) (every wire in its colour, pin to pin) and the cable diagram [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
 
 ## Power budget
 
@@ -60,6 +60,55 @@ Each loop is at least the extra length the joint needs at the far end of its tra
 |---|---|---|--:|--:|--:|
 | C3 | shoulder_pitch | -1.75 to 1.75 | 44.3 | 68.3 | 60 |
 | C4 | elbow_pitch | -2.1 to 2.3 | 44.2 | 75.8 | 70 |
+
+## Electrical calculations
+
+Computed from the power budget above and the parts' catalog and electrical records. Sources are listed at the end of this section.
+
+### Mains supply
+
+| Supply | Rail | Rated A | Typical A | Peak A | Load at typical |
+|---|---|--:|--:|--:|--:|
+| power_supply (Mean Well LRS-75-12 enclosed PSU, 12 V 6 A) | VBUS 12 V | 6 | 1.55 | 5.1 | 25.83 % |
+
+### Logic levels
+
+Every checked signal is read correctly by the pin it drives.
+
+A driver's high level is its I/O supply; the receiver needs it above its input threshold and below its input limit.
+
+| Net | Driver | Receiver | High V | Threshold V | Input limit V | Result |
+|---|---|---|--:|--:|--:|---|
+| BUS_SERVO_BUS | M2 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M2 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M2 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M2 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M2 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M2 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M3 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M3 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M3 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U1 SIG | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U1 SIG | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U1 SIG | M3 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U1 SIG | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U1 SIG | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M1 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M1 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M1 DATA | M3 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M1 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M1 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M1 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M1 DATA | M3 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M1 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
+
+Not checked (no logic levels in the parts data): Feetech STS3215 C047 12 V 30 kg.cm (1:345), Feetech STS3250 C002 12 V 50 kg.cm (1:345), Waveshare Bus Servo Adapter (A).
+
+### Sources
+
+| Input | Source |
+|---|---|
+| Mean Well LRS-75-12 enclosed PSU, 12 V 6 A (75 W) output | [datasheet](https://www.meanwell.com/Upload/PDF/LRS-75/LRS-75-SPEC.PDF) |
 
 ## Wiring parts to buy
 

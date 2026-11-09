@@ -32,6 +32,9 @@ export interface PrintedShape { shape: PrintedParams["shape"]; label: string; de
 export interface Catalog { parts: CatalogPart[]; printed: PrintedShape[]; }
 /** Files of an export: text, or bytes. */
 export type Files = Record<string, string | Uint8Array>;
+export interface SchematicNode { name: string; nets: string[]; kind: string; voltage_v?: number; drawn: string; pins: { id: string; ref: string; num: string; members: string[] }[]; }
+export interface Schematic { svg: string; pdf: Uint8Array; size: string; netlist: { robot: string; parts: { ref: string; inst: string; key: string; value: string }[]; nodes: SchematicNode[]; empty_nets: string[]; splices: string[] }; layout: string[]; electrical: { runtime: unknown[]; supplies: unknown[]; regulators: unknown[]; logic: { net: string; from: string; to: string; voh: number | null; vih: number | null; max_in: number | null; verdict: string; advice: string }[]; unchecked: string[]; sources: unknown[] }; }
+export interface Breadboard { svg: string; layout: string[]; unrouted: string[]; }
 export interface ForgeProgress { stage: string; [k: string]: unknown; }
 
 export interface Engine {
@@ -68,6 +71,14 @@ export interface Engine {
   /** Binary STL of a mesh link of a robot the engine designed or opened, by its id. */
   robotMesh(id: string, file: string): Promise<ArrayBuffer>;
   templates(): Promise<{ id: string; title: string; description: string }[]>;
+  /**
+   * Schematic of the robot's wiring: KiCad-style symbols, reference designators, power symbols, net labels and a title
+   * block (`svg`, and `pdf` bytes), the netlist it draws, layout problems (empty when nothing overlaps) and the electrical
+   * calculations (battery runtime, regulator heat, logic levels).
+   */
+  schematic(robot: RobotSpecification): Promise<Schematic>;
+  /** Picture wiring diagram: every wire of the harness in its colour, pin to pin, on drawings of the parts. */
+  breadboard(robot: RobotSpecification): Promise<Breadboard>;
   /** A zip archive of export files. */
   zip(files: Files): Blob;
   terminate(): void;
@@ -141,6 +152,8 @@ export async function createEngine(opts: { base?: string | URL; onProgress?: (p:
     mesh: (geometry) => bytes("POST", "/api/engine/mesh", { geometry }),
     robotMesh: (id, file) => bytes("GET", `/api/robots/${encodeURIComponent(id)}/mesh/${encodeURIComponent(file)}`),
     templates: async () => (await json<{ templates: never }>("GET", "/api/templates")).templates,
+    schematic: async (robot) => { const r = await json<Omit<Schematic, "pdf"> & { pdf: { b64: string } }>("POST", "/api/engine/schematic", { robot }); return { ...r, pdf: Uint8Array.from(atob(r.pdf.b64), (c) => c.charCodeAt(0)) }; },
+    breadboard: (robot) => json("POST", "/api/engine/breadboard", { robot }),
     zip: (f) => makeZip(f) as Blob,
     terminate: () => worker.terminate(),
   };

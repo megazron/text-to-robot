@@ -473,14 +473,14 @@ function applyResult(res, label, diffLines) {
   revealNext = revealNext ?? "soft";
   document.body.classList.remove("busy");
   buildRobot(res.robot); renderTree(); renderSliders(); renderInspector(); renderHistory(); renderDiff(diffLines); renderBom(state.bom);
-  renderCards();
+  renderCards(); refreshCircuit();
   status(checksToText(res));
 }
 
 function loadVersion(i) {
   const v = state.versions[i]; if (!v) return;
   state.version = i; state.id = v.id; state.robot = v.robot; state.urdf = v.urdf; state.xacro = v.xacro; state.jointValues = { ...(v.robot?.metadata?.design?.home ?? {}) }; state.selection = null;
-  buildRobot(v.robot); renderTree(); renderSliders(); renderInspector(); renderHistory(); renderCards();
+  buildRobot(v.robot); renderTree(); renderSliders(); renderInspector(); renderHistory(); renderCards(); refreshCircuit();
 }
 
 async function doGenerate(prompt) {
@@ -644,6 +644,8 @@ async function handleDownload(kind) {
   if (kind === "json") return download(`${name}.json`, JSON.stringify(state.robot, null, 2), "application/json");
   if (kind === "bom") { const bom = state.bom ?? (await api("/api/robots/bom", { robot: state.robot })).bom; return download(`${name}_BOM.md`, bomMarkdown(bom), "text/markdown"); }
   if (kind === "cad") { const { files } = await api("/api/robots/cad", { robot: state.robot }); return download(`${name}_cad.zip`, makeZip(files)); }
+  if (kind === "schematic") { const r = await circuits("schematic"); return download(`${name}_schematic.zip`, makeZip({ [`${name}_schematic.pdf`]: Uint8Array.from(atob(r.pdf.b64), (c) => c.charCodeAt(0)), [`${name}_schematic.svg`]: r.svg })); }
+  if (kind === "breadboard") { const r = await circuits("breadboard"); return download(`${name}_breadboard.svg`, r.svg, "image/svg+xml"); }
   if (kind === "train") { const { files } = await api("/api/robots/training", { robot: state.robot }); return download(`${name}_training.zip`, makeZip(files)); }
   if (kind === "share") {
     if (!state.id) return;
@@ -663,6 +665,53 @@ async function handleDownload(kind) {
 }
 function flash(btn, txt) { const t = btn.querySelector(".t b") ?? btn.querySelector(".t") ?? btn, old = t.textContent; t.textContent = txt; haptic(10); setTimeout(() => (t.textContent = old), 1200); }
 
+// ---------------- circuit: schematic, breadboard view, cable diagram, electrical numbers ----------------
+// drawn in the engine worker from the robot's wiring record when the tab is first opened, then kept for this robot
+async function circuits(which) {
+  const c = state.circuits?.robot === state.robot ? state.circuits : (state.circuits = { robot: state.robot });
+  const path = { schematic: "/api/engine/schematic", breadboard: "/api/engine/breadboard", wiring: "/api/engine/wiring" }[which];
+  c[which] ??= api(path, { robot: state.robot });
+  return c[which];
+}
+/** a new robot redraws the open circuit view */
+function refreshCircuit() { if ($("#tab-circuit").classList.contains("active")) showCircuit(document.querySelector(".seg.circ .tab.active").dataset.tab.slice(5)); }
+function svgUrl(svg) { return URL.createObjectURL(new Blob([svg], { type: "image/svg+xml" })); }
+async function showCircuit(which) {
+  if (!state.robot) return;
+  const box = document.querySelector(`.circview[data-view="${which}"]`), robot = state.robot;
+  if (box._robot === robot && box.firstChild) return;
+  box._robot = robot;
+  box.replaceChildren(el("div", "hint", which === "breadboard" ? "Laying out every wire..." : "Drawing..."));
+  $("#circNote").hidden = true;
+  try {
+    const r = await circuits(which);
+    if (robot !== state.robot) return;
+    const url = svgUrl(r.svg), img = el("img", "circimg");
+    img.src = url; img.alt = `${robot.robot_name} ${which}`;
+    img.onclick = () => box.classList.toggle("zoom");
+    const bar = el("div", "circbar");
+    const open = el("a", "tonal", "Open full size"); open.href = url; open.target = "_blank"; open.rel = "noopener";
+    bar.append(open, el("span", "hint", which === "schematic" ? `Tap to zoom. ${r.size} sheet, ${r.netlist.parts.length} parts, ${r.netlist.nodes.length} nets.` : "Tap to zoom."));
+    box.replaceChildren(bar, el("div", "circscroll"));
+    box.lastChild.append(img);
+    if (which === "schematic") renderElectrical(r.electrical);
+  } catch (e) { box.replaceChildren(el("div", "hint", "✗ " + e.message)); }
+}
+function renderElectrical(e) {
+  const out = $("#circElectrical"); out.replaceChildren();
+  const rows = [];
+  for (const r of e.runtime) rows.push([`Battery ${r.battery}`, `${fmtMin(r.typical_min)} at ${r.typical_a} A typical, ${fmtMin(r.peak_min)} at ${r.peak_a} A peak (${r.c_rate_peak} C)`]);
+  for (const s of e.supplies) rows.push([`Supply ${s.supply}`, `${s.load_pct} % loaded at ${s.typical_a} A typical of ${s.rating_a} A`]);
+  for (const r of e.regulators) rows.push([`${r.kind === "linear" ? "Linear" : "Switching"} ${r.regulator}`, `${r.loss_typ_w} W heat typical, ${r.loss_peak_w} W peak, ${r.from} to ${r.to}${r.ok ? "" : " (too hot)"}`]);
+  const bad = e.logic.filter((l) => l.verdict === "over_voltage" || l.verdict === "too_low"), marg = e.logic.filter((l) => l.verdict === "marginal");
+  rows.push(["Logic levels", bad.length ? `${bad.length} signal${bad.length > 1 ? "s" : ""} need a level shifter` : marg.length ? `${marg.length} with little margin, none out of range` : `${e.logic.filter((l) => l.verdict === "ok").length} signals checked, all read correctly`]);
+  out.append(el("div", "panel-h", "Electrical"), kvRows(rows));
+  for (const l of [...bad, ...marg]) out.append(el("div", "hint", `${l.net}: ${l.from} to ${l.to}: ${l.advice}`));
+  if (e.unchecked.length) out.append(el("div", "hint", `Not checked (no logic data): ${e.unchecked.join(", ")}`));
+}
+const fmtMin = (m) => (m == null || !Number.isFinite(m) ? "-" : m >= 120 ? `${(m / 60).toFixed(1)} h` : `${Math.round(m)} min`);
+function kvRows(rows) { const d = el("div", "kv"); for (const [k, v] of rows) d.append(el("div", "k", k), el("div", "v", v)); return d; }
+
 // ---------------- tabs ----------------
 function setTab(name) {
   const pick = document.querySelector(`.tab[data-tab="${name}"]`), seg = pick.parentElement;
@@ -672,6 +721,8 @@ function setTab(name) {
     const pane = $("#tab-" + t.dataset.tab); pane.classList.toggle("active", on);
     if (on) popIn(pane, { y: 6, duration: 260 });
   });
+  if (name === "circuit") showCircuit(document.querySelector(".seg.circ .tab.active").dataset.tab.slice(5));
+  else if (name.startsWith("circ-")) showCircuit(name.slice(5));
 }
 
 // ---------------- wiring ----------------

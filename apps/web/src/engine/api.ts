@@ -9,6 +9,7 @@ import { validateUrdf } from "@ttr/urdf-validator";
 import { CATALOG, part, rating, electrical } from "@ttr/parts";
 import { buildPart, toStlBinary, meshGeometry } from "@ttr/mesh";
 import { buildBom } from "@ttr/components";
+import { schematic, breadboard, electricalReport, layoutProblems, wiringSvg, wiringMarkdown, type WiringRecord } from "@ttr/design";
 import { componentGeometry, PRINT_DENSITY, MATERIALS, withSolids, interferences, worstTorques, comWorld, totalMass, evaluate, axisInertias, descendants, type DesignRecord } from "@ttr/design";
 import { partFiles } from "@ttr/kernel/ready";
 import { applyEdits, emptyRobot, kindOf, rootLink, worldFrames, mul, inv, poseMat, rotate, unit, partsBaseline, type EditOp, type PartProvider, type PrintedParams, type StudioMeta } from "./edit.ts";
@@ -216,6 +217,26 @@ export function sweep(spec: RobotSpecification, joint: string, samples = 24) {
   return withSolids(spec, (m) => Array.from({ length: n + 1 }, (_, i) => lo + ((hi - lo) * i) / n).map((q) => ({ q: +q.toFixed(4), hits: interferences(m, { [joint]: q }, movingSet, 2, skip) })));
 }
 
+/** The robot's wiring record: the designer's, or for a robot built or edited by hand, the automatic wiring. */
+function wiringOf(input: RobotSpecification): WiringRecord {
+  const own = meta(input).design?.wiring as WiringRecord | undefined;
+  if (own && !meta(input).studio?.edited) return own;
+  const spec = finalizeSpec(structuredClone(input)), rec = autoWire(spec).record as WiringRecord | null;
+  if (!rec || !rec.cables?.length) throw new Error("this robot has no wiring to draw: add a battery or supply, a controller and something to power");
+  return rec;
+}
+/** Schematic (SVG, PDF, the netlist it draws, layout check) and the electrical calculations. */
+export function schematicOf(robot: RobotSpecification) {
+  const w = wiringOf(robot), r = schematic(w, robot.robot_name);
+  let pdf = ""; for (let i = 0; i < r.pdf.length; i += 0x8000) pdf += String.fromCharCode(...r.pdf.subarray(i, i + 0x8000));
+  return { svg: r.svg, pdf: { b64: btoa(pdf) }, size: r.size, netlist: r.netlist, layout: layoutProblems(r.doc), electrical: electricalReport(w, r.model) };
+}
+/** Picture wiring diagram (SVG) with its layout check. */
+export function breadboardOf(robot: RobotSpecification) {
+  const r = breadboard(wiringOf(robot), robot.robot_name);
+  return { svg: r.svg, layout: layoutProblems(r.doc), unrouted: r.unrouted };
+}
+
 const json = (code: number, body: unknown) => new Response(JSON.stringify(body), { status: code, headers: { "Content-Type": "application/json" } });
 /** /api/engine/* requests. */
 export async function engineApi(method: string, path: string, body: any): Promise<Response> {
@@ -231,6 +252,9 @@ export async function engineApi(method: string, path: string, body: any): Promis
   if (method === "POST" && p === "mounts") return json(200, { mounts: worldMounts(body.robot) });
   if (method === "POST" && p === "printed-mounts") return json(200, { mounts: printedMounts(body.params) });
   if (method === "POST" && p === "check") return json(200, checkRobot(body.robot, body.options ?? {}));
+  if (method === "POST" && p === "schematic") { try { return json(200, schematicOf(body.robot)); } catch (e) { return json(422, { error: (e as Error).message }); } }
+  if (method === "POST" && p === "wiring") { try { const w = wiringOf(body.robot); return json(200, { svg: wiringSvg(w, body.robot.robot_name), markdown: wiringMarkdown(w, body.robot.robot_name) }); } catch (e) { return json(422, { error: (e as Error).message }); } }
+  if (method === "POST" && p === "breadboard") { try { return json(200, breadboardOf(body.robot)); } catch (e) { return json(422, { error: (e as Error).message }); } }
   if (method === "POST" && p === "sweep") return json(200, { samples: sweep(body.robot, String(body.joint), Number(body.samples ?? 24)) });
   if (method === "POST" && p === "urdf") { const spec = finalizeSpec(structuredClone(body.robot)); return json(200, { urdf: generateUrdf(spec), xacro: generateXacro(spec) }); }
   if (method === "POST" && p === "mesh") return new Response(toStlBinary(buildPart(body.geometry), 1) as BodyInit, { headers: { "Content-Type": "model/stl" } });

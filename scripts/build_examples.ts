@@ -11,12 +11,12 @@ import { exportRos2Package } from "@ttr/ros2-export";
 import { exportTraining } from "@ttr/training-export";
 import { generateCadFiles } from "@ttr/cad";
 import { bomToMarkdown, type BillOfMaterials } from "@ttr/components";
-import { wiringMarkdown, wiringSvg } from "@ttr/design";
+import { circuitFiles } from "@ttr/design";
 import type { RobotSpecification } from "@ttr/robot-schema";
 
 /** Files an example folder holds; anything else left from older generators is removed. */
 const KEEP = new Set(["prompt.txt", "robot.json", "robot.urdf", "meshes", "BOM.md", "bom.json", "robot.ros2.zip", "robot.cad.zip", "robot.training.zip",
-  "README.md", "simulation_report.json", "simulation.gif", "studio.gif", "test_report.json", "WIRING.md", "wiring.svg", "print_report.json"]);
+  "README.md", "simulation_report.json", "simulation.gif", "studio.gif", "test_report.json", "WIRING.md", "wiring.svg", "schematic.svg", "schematic.pdf", "breadboard.svg", "print_report.json"]);
 
 function zipDir(base: string, out: string) {
   // deterministic archive: sorted entries, fixed timestamps
@@ -30,6 +30,8 @@ function writeZip(files: Record<string, string | Uint8Array>, out: string) {
   } finally { rmSync(stage, { recursive: true, force: true }); }
 }
 
+const WIRING_ROW = "| `WIRING.md`, `wiring.svg` | power budget per rail, battery runtime, regulator heat, logic levels, pin-to-pin table, cut list, slack at each joint, cable diagram |";
+const CIRCUIT_ROW = "| `schematic.svg`, `schematic.pdf`, `breadboard.svg` | schematic with reference designators, power symbols and net labels; picture view with every wire in its colour |";
 const fmt = (v: unknown) => (typeof v === "number" ? String(+v.toFixed(3)) : String(v));
 function readme(name: string, prompt: string, spec: RobotSpecification, bom: BillOfMaterials, summary: string | undefined, warnings: string[], previous: string): string {
   const d = (spec.metadata as { design?: any }).design;
@@ -54,7 +56,7 @@ function readme(name: string, prompt: string, spec: RobotSpecification, bom: Bil
     "| File | What |", "|---|---|",
     "| `robot.urdf`, `meshes/` | URDF with real component and printed-part meshes, datasheet effort/velocity limits |",
     "| `BOM.md`, `bom.json` | every part to buy, with supplier links and prices |",
-    ...(d?.wiring ? ["| `WIRING.md`, `wiring.svg` | power budget per rail, pin-to-pin table, cut list, slack at each joint, wiring diagram |"] : []),
+    ...(d?.wiring ? [WIRING_ROW, CIRCUIT_ROW] : []),
     "| `robot.cad.zip` | build package: printable STLs, print list, bought-part models, assembly order |",
     "| `robot.ros2.zip` | ROS 2 description package (ros2_control, MoveIt config, Gazebo launch) |",
     "| `robot.training.zip` | MuJoCo / RL training scaffold |",
@@ -86,7 +88,7 @@ for (const name of readdirSync("examples").filter((n) => /^\d\d_/.test(n)).sort(
   writeFileSync(join(dir, "BOM.md"), bomToMarkdown(res.bom));
   writeFileSync(join(dir, "bom.json"), JSON.stringify(res.bom, null, 2) + "\n");
   const wiring = (spec.metadata as { design?: any }).design?.wiring;
-  if (wiring) { writeFileSync(join(dir, "WIRING.md"), wiringMarkdown(wiring, spec.robot_name)); writeFileSync(join(dir, "wiring.svg"), wiringSvg(wiring, spec.robot_name)); }
+  if (wiring) for (const [f, c] of Object.entries(circuitFiles(wiring, spec.robot_name))) writeFileSync(join(dir, f), c);
   writeZip(exportRos2Package(spec, { ros2_control: true }), join(dir, "robot.ros2.zip"));
   writeZip(generateCadFiles(spec), join(dir, "robot.cad.zip"));
   writeZip(exportTraining(spec), join(dir, "robot.training.zip"));

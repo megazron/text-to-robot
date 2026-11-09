@@ -2,7 +2,7 @@
 
 26 cables, 52 conductors, 20.59 m of wire, wiring parts $23.55.
 
-Diagram: [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
+Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), [breadboard.svg](breadboard.svg) (every wire in its colour, pin to pin) and the cable diagram [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
 
 ## Power budget
 
@@ -138,6 +138,75 @@ Each loop is at least the extra length the joint needs at the far end of its tra
 | C1 | head_pan | -2.6 to 2.6 | 43.6 | 80 | 60 |
 | C11 | left_arm_shoulder_pitch | -1.1 to 1.1 | 44.3 | 59.3 | 50 |
 | C13 | right_arm_shoulder_pitch | -1.1 to 1.1 | 44.3 | 59.3 | 50 |
+
+## Electrical calculations
+
+Computed from the power budget above and the parts' catalog and electrical records. Sources are listed at the end of this section.
+
+### Battery runtime
+
+Usable energy is 80 % of the pack's rated energy (stop at about 3.5 V a cell under load). Runtime = usable Wh / (rail volts x current).
+
+| Battery | Rated Wh | mAh | Rail | Typical A | Runtime at typical | Peak A | Runtime at peak | Peak C-rate | Pack limit A |
+|---|--:|--:|---|--:|--:|--:|--:|--:|--:|
+| battery (LiPo 3S 2200 mAh 25C, XT60) | 24.4 | 2200 | VBAT 11.1 V | 5.651 | 19 min | 16.051 | 7 min | 7.3 C | 55 |
+
+### Regulator heat
+
+Heat = power in - power out. A switching converter's input comes from the budget above; an on-board linear regulator drops the difference in volts times the load current.
+
+| Regulator | Type | In | Out | Load A (typical / peak) | Power in W | Power out W | Heat W (typical / peak) | Efficiency | Rated heat W | OK |
+|---|---|---|---|--:|--:|--:|--:|--:|--:|:-:|
+| regulator_5v | switching | VBAT 11.1 V | 5V 5 V | 1 / 5 | 5.561 | 5 | 0.561 / 2.783 | 90 % | 3 | yes |
+- regulator_5v: input from the VBAT budget at the converter efficiency the budget assumes; the part is rated for about 3 W of heat.
+
+### Logic levels
+
+Every checked signal is read correctly by the pin it drives.
+
+A driver's high level is its I/O supply; the receiver needs it above its input threshold and below its input limit.
+
+| Net | Driver | Receiver | High V | Threshold V | Input limit V | Result |
+|---|---|---|--:|--:|--:|---|
+| BUS_SERVO_BUS | M3 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M5 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M4 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M4 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M7 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M6 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M6 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U1 SIG | M3 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U1 SIG | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U1 SIG | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U1 SIG | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U1 SIG | M7 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U1 SIG | M6 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U1 SIG | M6 DATA | - | - | - | not checked: no published logic levels for one side |
+| I2C_SCL | A1 GPIO3 | U2 SCL | 3.3 | 2.3 | 5.5 | ok |
+| I2C_SCL | U2 SCL | A1 GPIO3 | 3.3 | 2.15 | 3.6 | ok |
+| I2C_SDA | A1 GPIO2 | U2 SDA | 3.3 | 2.3 | 5.5 | ok |
+| I2C_SDA | U2 SDA | A1 GPIO2 | 3.3 | 2.15 | 3.6 | ok |
+| LEFT_MOTOR_DIR | A1 GPIO13 | U4 DIR1 | 3.3 | 2 | 5.5 | ok |
+| LEFT_MOTOR_ENC_A | M1 Encoder A | A1 GPIO18 | 3.3 | 2.15 | 3.6 | ok |
+| LEFT_MOTOR_ENC_B | M1 Encoder B | A1 GPIO19 | 3.3 | 2.15 | 3.6 | ok |
+| LEFT_MOTOR_PWM | A1 GPIO12 | U4 PWM1 | 3.3 | 2 | 5.5 | ok |
+| RIGHT_MOTOR_DIR | A1 GPIO6 | U4 DIR2 | 3.3 | 2 | 5.5 | ok |
+| RIGHT_MOTOR_ENC_A | M2 Encoder A | A1 GPIO16 | 3.3 | 2.15 | 3.6 | ok |
+| RIGHT_MOTOR_ENC_B | M2 Encoder B | A1 GPIO20 | 3.3 | 2.15 | 3.6 | ok |
+| RIGHT_MOTOR_PWM | A1 GPIO5 | U4 PWM2 | 3.3 | 2 | 5.5 | ok |
+
+Not checked (no logic levels in the parts data): Feetech STS3215 C047 12 V 30 kg.cm (1:345), Waveshare Bus Servo Adapter (A).
+
+### Sources
+
+| Input | Source |
+|---|---|
+| LiPo 3S 2200 mAh 25C, XT60 (Gens Ace G-Tech) capacity and energy | [datasheet](https://www.buddyrc.com/products/gens-ace-25c-2200mah-11-1v-3s-lipo-battery-pack-with-xt60-plug) |
+| Pololu D36V50F5 5 V 5.5 A step-down regulator (#4091) heat | estimated: 27.5 W out at about 90 % (Pololu range 80-95 %) |
+| Raspberry Pi 5 (4 GB) logic levels | [estimated](https://www.raspberrypi.com/documentation/computers/raspberry-pi.html): The documentation gives 3.3 V GPIO, not 5 V tolerant. RP1 input thresholds are not published; 0.65 x 3.3 V assumed (common CMOS figure). |
+| Adafruit BNO085 9-DoF IMU breakout (STEMMA QT, #4754) logic levels | [estimated](https://learn.adafruit.com/adafruit-9-dof-orientation-imu-fusion-breakout-bno085): 3.3 V sensor on a breakout with a regulator and level shifting for 3-5 V hosts (Adafruit guide); thresholds assumed. |
+| Cytron MDD10A dual-channel 10 A DC motor driver (5-30 V) logic levels | [estimated](https://www.cytron.io/p-10amp-5v-30v-dc-motor-driver-2-channels): Cytron states 3.3 V and 5 V logic inputs; the 2 V threshold is assumed from that, not published. |
+| Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752) logic levels | [datasheet](https://www.pololu.com/product/4751): Hall encoder outputs swing to the encoder Vcc (3.5-20 V), so they match the host when fed from its own logic supply. |
 
 ## Wiring parts to buy
 

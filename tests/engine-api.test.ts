@@ -146,6 +146,16 @@ test("the /api/engine endpoints answer like the client expects", async () => {
   const u = (await get("POST", "/api/engine/urdf", { robot: ed.robot })).body;
   assert.ok(validateUrdf(u.urdf).valid && /<robot/.test(u.xacro));
   assert.equal((await get("POST", "/api/engine/edit", { robot: spec, ops: [{ op: "delete", link: "nope" }] }).catch((e) => ({ status: 500, body: String(e) }))).status, 500);
+  // circuits: the designed car's own wiring record, and an edited car wired automatically
+  const sch = (await get("POST", "/api/engine/schematic", { robot: spec })).body;
+  assert.ok(sch.svg.startsWith("<svg") && sch.netlist.nodes.length > 10 && sch.netlist.parts.some((p: { ref: string }) => p.ref === "A1"));
+  assert.deepEqual(sch.layout, []);
+  assert.equal(Buffer.from(sch.pdf.b64, "base64").subarray(0, 5).toString(), "%PDF-");
+  assert.ok(sch.electrical.runtime.length === 1 && sch.electrical.logic.length >= 10);
+  const bb = (await get("POST", "/api/engine/breadboard", { robot: spec })).body;
+  assert.ok(bb.svg.includes('class="wire"') && !bb.layout.length && !bb.unrouted.length);
+  const edited = await get("POST", "/api/engine/schematic", { robot: ed.robot });
+  assert.ok(edited.status === 200 ? edited.body.svg.startsWith("<svg") : typeof edited.body.error === "string", JSON.stringify(edited.body).slice(0, 200));
   assert.equal((await get("GET", "/api/engine/nothing")).status, 404);
 });
 

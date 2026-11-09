@@ -2,7 +2,7 @@
 
 37 cables, 73 conductors, 16.04 m of wire, wiring parts $31.20.
 
-Diagram: [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
+Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), [breadboard.svg](breadboard.svg) (every wire in its colour, pin to pin) and the cable diagram [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
 
 ## Power budget
 
@@ -185,6 +185,543 @@ Each loop is at least the extra length the joint needs at the far end of its tra
 | C19 | rm_femur | -1.2 to 1.2 | 39.5 | 55.9 | 50 |
 | C21 | rf_coxa | -0.6 to 0.6 | 14 | 18.6 | 40 |
 | C22 | rf_femur | -1.2 to 1.2 | 39.5 | 55.9 | 50 |
+
+## Electrical calculations
+
+Computed from the power budget above and the parts' catalog and electrical records. Sources are listed at the end of this section.
+
+### Battery runtime
+
+Usable energy is 80 % of the pack's rated energy (stop at about 3.5 V a cell under load). Runtime = usable Wh / (rail volts x current).
+
+| Battery | Rated Wh | mAh | Rail | Typical A | Runtime at typical | Peak A | Runtime at peak | Peak C-rate | Pack limit A |
+|---|--:|--:|---|--:|--:|--:|--:|--:|--:|
+| battery (LiPo 3S 5000 mAh 60C, XT60) | 55.5 | 5000 | VBAT 11.1 V | 10.916 | 22 min | 32.216 | 7 min | 6.44 C | 300 |
+
+### Regulator heat
+
+Heat = power in - power out. A switching converter's input comes from the budget above; an on-board linear regulator drops the difference in volts times the load current.
+
+| Regulator | Type | In | Out | Load A (typical / peak) | Power in W | Power out W | Heat W (typical / peak) | Efficiency | Rated heat W | OK |
+|---|---|---|---|--:|--:|--:|--:|--:|--:|:-:|
+| regulator_5v | switching | VBAT 11.1 V | 5V 5 V | 0 / 0 | 0 | 0 | 0 / 0 | - | 3 | yes |
+- regulator_5v: input from the VBAT budget at the converter efficiency the budget assumes; the part is rated for about 3 W of heat.
+
+### Logic levels
+
+Every checked signal is read correctly by the pin it drives.
+
+A driver's high level is its I/O supply; the receiver needs it above its input threshold and below its input limit.
+
+| Net | Driver | Receiver | High V | Threshold V | Input limit V | Result |
+|---|---|---|--:|--:|--:|---|
+| BUS_ACTUATOR_BUS | U2 SIG | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U2 SIG | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U2 SIG | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U2 SIG | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U2 SIG | M3 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U2 SIG | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U2 SIG | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U2 SIG | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U2 SIG | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U2 SIG | M6 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U2 SIG | M7 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U2 SIG | M7 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U2 SIG | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U2 SIG | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U2 SIG | M9 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U2 SIG | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U2 SIG | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U2 SIG | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U2 SIG | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U2 SIG | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U2 SIG | M13 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U2 SIG | M13 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U2 SIG | M14 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U2 SIG | M14 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U2 SIG | M15 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U2 SIG | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U2 SIG | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U2 SIG | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U2 SIG | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U2 SIG | M12 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M1 DATA | U2 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M1 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M1 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M1 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M1 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M1 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M1 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M1 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M1 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M1 DATA | M14 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M1 DATA | M14 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M1 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M1 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M1 DATA | U2 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M1 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M1 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M1 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M1 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M1 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M1 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M1 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M1 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M1 DATA | M14 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M1 DATA | M14 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M1 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M1 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M2 DATA | U2 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M2 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M2 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M2 DATA | M3 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M2 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M2 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M2 DATA | M6 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M2 DATA | M7 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M2 DATA | M7 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M2 DATA | M9 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M2 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M2 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M2 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M2 DATA | M13 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M2 DATA | M13 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M2 DATA | M15 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M2 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M2 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M2 DATA | M12 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M2 DATA | U2 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M2 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M2 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M2 DATA | M3 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M2 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M2 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M2 DATA | M6 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M2 DATA | M7 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M2 DATA | M7 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M2 DATA | M9 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M2 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M2 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M2 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M2 DATA | M13 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M2 DATA | M13 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M2 DATA | M15 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M2 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M2 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M2 DATA | M12 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M3 DATA | U2 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M3 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M3 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M3 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M3 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M3 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M3 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M3 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M3 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M3 DATA | M14 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M3 DATA | M14 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M3 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M3 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M4 DATA | U2 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M4 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M4 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M4 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M4 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M4 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M4 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M4 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M4 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M4 DATA | M14 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M4 DATA | M14 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M4 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M4 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M4 DATA | U2 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M4 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M4 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M4 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M4 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M4 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M4 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M4 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M4 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M4 DATA | M14 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M4 DATA | M14 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M4 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M4 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M5 DATA | U2 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M5 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M5 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M5 DATA | M3 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M5 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M5 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M5 DATA | M6 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M5 DATA | M7 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M5 DATA | M7 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M5 DATA | M9 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M5 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M5 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M5 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M5 DATA | M13 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M5 DATA | M13 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M5 DATA | M15 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M5 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M5 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M5 DATA | M12 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M5 DATA | U2 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M5 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M5 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M5 DATA | M3 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M5 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M5 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M5 DATA | M6 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M5 DATA | M7 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M5 DATA | M7 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M5 DATA | M9 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M5 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M5 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M5 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M5 DATA | M13 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M5 DATA | M13 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M5 DATA | M15 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M5 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M5 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M5 DATA | M12 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M6 DATA | U2 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M6 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M6 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M6 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M6 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M6 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M6 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M6 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M6 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M6 DATA | M14 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M6 DATA | M14 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M6 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M6 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M7 DATA | U2 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M7 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M7 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M7 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M7 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M7 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M7 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M7 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M7 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M7 DATA | M14 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M7 DATA | M14 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M7 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M7 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M7 DATA | U2 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M7 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M7 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M7 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M7 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M7 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M7 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M7 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M7 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M7 DATA | M14 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M7 DATA | M14 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M7 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M7 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M8 DATA | U2 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M8 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M8 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M8 DATA | M3 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M8 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M8 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M8 DATA | M6 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M8 DATA | M7 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M8 DATA | M7 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M8 DATA | M9 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M8 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M8 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M8 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M8 DATA | M13 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M8 DATA | M13 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M8 DATA | M15 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M8 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M8 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M8 DATA | M12 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M8 DATA | U2 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M8 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M8 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M8 DATA | M3 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M8 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M8 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M8 DATA | M6 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M8 DATA | M7 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M8 DATA | M7 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M8 DATA | M9 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M8 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M8 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M8 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M8 DATA | M13 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M8 DATA | M13 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M8 DATA | M15 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M8 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M8 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M8 DATA | M12 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M9 DATA | U2 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M9 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M9 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M9 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M9 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M9 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M9 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M9 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M9 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M9 DATA | M14 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M9 DATA | M14 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M9 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M9 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M16 DATA | U2 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M16 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M16 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M16 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M16 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M16 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M16 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M16 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M16 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M16 DATA | M14 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M16 DATA | M14 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M16 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M16 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M16 DATA | U2 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M16 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M16 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M16 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M16 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M16 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M16 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M16 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M16 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M16 DATA | M14 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M16 DATA | M14 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M16 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M16 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M17 DATA | U2 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M17 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M17 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M17 DATA | M3 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M17 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M17 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M17 DATA | M6 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M17 DATA | M7 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M17 DATA | M7 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M17 DATA | M9 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M17 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M17 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M17 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M17 DATA | M13 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M17 DATA | M13 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M17 DATA | M15 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M17 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M17 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M17 DATA | M12 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M17 DATA | U2 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M17 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M17 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M17 DATA | M3 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M17 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M17 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M17 DATA | M6 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M17 DATA | M7 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M17 DATA | M7 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M17 DATA | M9 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M17 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M17 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M17 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M17 DATA | M13 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M17 DATA | M13 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M17 DATA | M15 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M17 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M17 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M17 DATA | M12 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M18 DATA | U2 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M18 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M18 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M18 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M18 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M18 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M18 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M18 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M18 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M18 DATA | M14 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M18 DATA | M14 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M18 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M18 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M13 DATA | U2 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M13 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M13 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M13 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M13 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M13 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M13 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M13 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M13 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M13 DATA | M14 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M13 DATA | M14 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M13 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M13 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M13 DATA | U2 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M13 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M13 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M13 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M13 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M13 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M13 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M13 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M13 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M13 DATA | M14 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M13 DATA | M14 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M13 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M13 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M14 DATA | U2 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M14 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M14 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M14 DATA | M3 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M14 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M14 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M14 DATA | M6 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M14 DATA | M7 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M14 DATA | M7 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M14 DATA | M9 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M14 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M14 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M14 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M14 DATA | M13 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M14 DATA | M13 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M14 DATA | M15 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M14 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M14 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M14 DATA | M12 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M14 DATA | U2 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M14 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M14 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M14 DATA | M3 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M14 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M14 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M14 DATA | M6 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M14 DATA | M7 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M14 DATA | M7 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M14 DATA | M9 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M14 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M14 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M14 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M14 DATA | M13 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M14 DATA | M13 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M14 DATA | M15 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M14 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M14 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M14 DATA | M12 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M15 DATA | U2 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M15 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M15 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M15 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M15 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M15 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M15 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M15 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M15 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M15 DATA | M14 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M15 DATA | M14 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M15 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M15 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M10 DATA | U2 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M10 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M10 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M10 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M10 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M10 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M10 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M10 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M10 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M10 DATA | M14 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M10 DATA | M14 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M10 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M10 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M10 DATA | U2 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M10 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M10 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M10 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M10 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M10 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M10 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M10 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M10 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M10 DATA | M14 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M10 DATA | M14 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M10 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M10 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M11 DATA | U2 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M11 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M11 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M11 DATA | M3 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M11 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M11 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M11 DATA | M6 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M11 DATA | M7 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M11 DATA | M7 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M11 DATA | M9 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M11 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M11 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M11 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M11 DATA | M13 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M11 DATA | M13 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M11 DATA | M15 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M11 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M11 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M11 DATA | M12 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M11 DATA | U2 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M11 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M11 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M11 DATA | M3 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M11 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M11 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M11 DATA | M6 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M11 DATA | M7 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M11 DATA | M7 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M11 DATA | M9 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M11 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M11 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M11 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M11 DATA | M13 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M11 DATA | M13 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M11 DATA | M15 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M11 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M11 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M11 DATA | M12 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M12 DATA | U2 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M12 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M12 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M12 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M12 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M12 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M12 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M12 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M12 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M12 DATA | M14 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M12 DATA | M14 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M12 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M12 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| I2C_SCL | A1 I2C1_SCL | U1 SCL | 3.3 | 2.3 | 5.5 | ok |
+| I2C_SCL | U1 SCL | A1 I2C1_SCL | 3.3 | 2.3 | 3.6 | ok |
+| I2C_SDA | A1 I2C1_SDA | U1 SDA | 3.3 | 2.3 | 5.5 | ok |
+| I2C_SDA | U1 SDA | A1 I2C1_SDA | 3.3 | 2.3 | 3.6 | ok |
+
+Not checked (no logic levels in the parts data): Feetech STS3215 C047 12 V 30 kg.cm (1:345), Feetech STS3250 C002 12 V 50 kg.cm (1:345), Waveshare Bus Servo Adapter (A).
+
+### Sources
+
+| Input | Source |
+|---|---|
+| LiPo 3S 5000 mAh 60C, XT60 (Gens Ace G-Tech) capacity and energy | [datasheet](https://classicrcshop.com/products/gens-ace-5000mah-3s-60c-11-1v-g-tech-lipo-battery-pack-with-xt60-plug) |
+| Pololu D36V50F5 5 V 5.5 A step-down regulator (#4091) heat | estimated: 27.5 W out at about 90 % (Pololu range 80-95 %) |
+| NVIDIA Jetson Orin Nano Super Developer Kit logic levels | [estimated](https://developer.nvidia.com/embedded/learn/jetson-orin-nano-devkit-user-guide/hardware_spec.html): 40-pin header is 3.3 V logic (developer kit guide), not 5 V tolerant. Threshold 0.7 x 3.3 V assumed. |
+| Adafruit BNO085 9-DoF IMU breakout (STEMMA QT, #4754) logic levels | [estimated](https://learn.adafruit.com/adafruit-9-dof-orientation-imu-fusion-breakout-bno085): 3.3 V sensor on a breakout with a regulator and level shifting for 3-5 V hosts (Adafruit guide); thresholds assumed. |
 
 ## Wiring parts to buy
 

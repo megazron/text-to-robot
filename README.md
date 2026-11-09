@@ -39,6 +39,7 @@ Every film above is the exported model itself: its URDF and meshes in a Cycles s
 | **Parts list** | Real components with prices and suppliers, sized to the job. |
 | **Printable parts** | STL files that fit a normal print bed, with a print report for each. |
 | **Robot files** | URDF, Xacro, ROS 2, MoveIt, MuJoCo. |
+| **Wiring and circuits** | A schematic in KiCad style (reference designators, numbered pins, power symbols with each rail's voltage, net labels, title block; SVG and PDF), a picture view with every wire in its colour, and `WIRING.md`: power budget, fuses, wire gauges and drop, battery runtime, regulator heat and a 3.3 V / 5 V logic-level check. See the [Arduino car's schematic](examples/18_arduino_car/schematic.svg) and [breadboard view](examples/18_arduino_car/breadboard.svg). |
 | **Engineering checks** | Torque, speed, power, runtime, clearance and tipping, shown with the numbers. |
 | **Physics tests** | The MuJoCo task tests (drive, ramp, turn, hold, squat, grip) come with every robot to run on your machine; the 19 examples are run in CI and their results are in the gallery. Failures are listed, not hidden. |
 
@@ -73,7 +74,7 @@ npm ci
 node cli/src/index.ts "a 6 DOF arm with a gripper" -o out/arm
 ```
 
-`out/arm/` now holds the ROS 2 package (`arm_6dof/`, with `urdf/arm_6dof.urdf` and `.urdf.xacro`), the spec `arm_6dof.json`, a simulation URDF, `meshes/`, `cad/` (print list, wiring table, `wiring.svg`), `training/` and `BOM.md`. The CLI also has `modify`, `bom`, `validate` and `inspect`; see `node cli/src/index.ts --help`.
+`out/arm/` now holds the ROS 2 package (`arm_6dof/`, with `urdf/arm_6dof.urdf` and `.urdf.xacro`), the spec `arm_6dof.json`, a simulation URDF, `meshes/`, `cad/` (print list, wiring table, `wiring.svg`, `schematic.svg` and `.pdf`, `breadboard.svg`), `training/` and `BOM.md`. The CLI also has `modify`, `bom`, `validate` and `inspect`; see `node cli/src/index.ts --help`.
 
 **The app, locally.** `npm run api` serves the same web app and an HTTP API on http://localhost:8787. `docker compose up --build` does the same with persistent storage.
 

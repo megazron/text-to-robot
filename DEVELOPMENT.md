@@ -48,6 +48,7 @@ Never edit files under `examples/` by hand. Regenerate them:
 
 ```bash
 node scripts/build_examples.ts                                  # every deliverable from each prompt
+node scripts/export_circuits.ts                                 # only WIRING.md, schematic and breadboard view from the shipped robot.json
 MUJOCO_GL=osmesa python3 -B scripts/simulate_examples.py         # task tests, GIFs, README results, gallery
 python3 -B scripts/studio/film.py 15_wall_e                      # studio.gif: MuJoCo motion loop, Cycles frames (Blender 4.5, ffmpeg)
 python3 scripts/verify_examples.py                               # what CI checks

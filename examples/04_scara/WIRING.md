@@ -2,7 +2,7 @@
 
 17 cables, 48 conductors, 24.24 m of wire, wiring parts $18.51.
 
-Diagram: [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
+Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), [breadboard.svg](breadboard.svg) (every wire in its colour, pin to pin) and the cable diagram [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
 
 ## Power budget
 
@@ -120,6 +120,52 @@ Each loop is at least the extra length the joint needs at the far end of its tra
 | C9 | z | 0 to 0.159 | 22.7 | 22.7 | 35 |
 | C9 | j2 | -2.208 to 2.208 | 55.7 | 94.9 | 80 |
 | C10 | wrist_roll | -3 to 3 | 0 | 30 | 70 |
+
+## Electrical calculations
+
+Computed from the power budget above and the parts' catalog and electrical records. Sources are listed at the end of this section.
+
+### Mains supply
+
+| Supply | Rail | Rated A | Typical A | Peak A | Load at typical |
+|---|---|--:|--:|--:|--:|
+| psu_24v (Mean Well LRS-150-24 enclosed PSU, 24 V 6.5 A) | V24 24 V | 6.5 | 3.216 | 5.36 | 49.48 % |
+| psu_12v (Mean Well LRS-75-12 enclosed PSU, 12 V 6 A) | V24 24 V | 6 | 3.216 | 5.36 | 53.6 % |
+
+### Logic levels
+
+Every checked signal is read correctly by the pin it drives.
+
+A driver's high level is its I/O supply; the receiver needs it above its input threshold and below its input limit.
+
+| Net | Driver | Receiver | High V | Threshold V | Input limit V | Result |
+|---|---|---|--:|--:|--:|---|
+| BUS_SERVO_BUS | M5 DATA | U4 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U4 SIG | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U4 SIG | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U4 SIG | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M4 DATA | U4 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M4 DATA | U4 SIG | - | - | - | not checked: no published logic levels for one side |
+| J1_DIR | A1 5 | U1 DIR | 3.3 | 2.31 | 5.5 | ok |
+| J1_EN | A1 6 | U1 EN | 3.3 | 2.31 | 5.5 | ok |
+| J1_STEP | A1 4 | U1 STEP | 3.3 | 2.31 | 5.5 | ok |
+| J2_DIR | A1 15 | U2 DIR | 3.3 | 2.31 | 5.5 | ok |
+| J2_EN | A1 16 | U2 EN | 3.3 | 2.31 | 5.5 | ok |
+| J2_STEP | A1 7 | U2 STEP | 3.3 | 2.31 | 5.5 | ok |
+| Z_DIR | A1 18 | U3 DIR | 3.3 | 2.31 | 5.5 | ok |
+| Z_EN | A1 8 | U3 EN | 3.3 | 2.31 | 5.5 | ok |
+| Z_STEP | A1 17 | U3 STEP | 3.3 | 2.31 | 5.5 | ok |
+
+Not checked (no logic levels in the parts data): Feetech STS3215 C047 12 V 30 kg.cm (1:345), Waveshare Bus Servo Adapter (A).
+
+### Sources
+
+| Input | Source |
+|---|---|
+| Mean Well LRS-150-24 enclosed PSU, 24 V 6.5 A (156 W) output | [datasheet](https://www.meanwell.com/Upload/PDF/LRS-150/LRS-150-SPEC.PDF) |
+| Mean Well LRS-75-12 enclosed PSU, 12 V 6 A (75 W) output | [datasheet](https://www.meanwell.com/Upload/PDF/LRS-75/LRS-75-SPEC.PDF) |
+| Espressif ESP32-S3-DevKitC-1 (N8R8) logic levels | [datasheet](https://www.espressif.com/sites/default/files/documentation/esp32-s3_datasheet_en.pdf): VDD 3.3 V: VIH min 0.75 VDD, inputs to VDD + 0.3 V; not 5 V tolerant. |
+| BigTreeTech TMC2209 V1.3 StepStick stepper driver (UART) logic levels | [estimated](https://www.analog.com/media/en/technical-documentation/data-sheets/TMC2209_datasheet_rev1.09.pdf): Digital inputs referenced to VCC_IO (3.3 V or 5 V); 0.7 VCC_IO threshold assumed for the Schmitt inputs. |
 
 ## Wiring parts to buy
 

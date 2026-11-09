@@ -2,7 +2,7 @@
 
 45 cables, 116 conductors, 115.56 m of wire, wiring parts $69.22.
 
-Diagram: [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
+Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), [breadboard.svg](breadboard.svg) (every wire in its colour, pin to pin) and the cable diagram [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
 
 ## Power budget
 
@@ -283,6 +283,88 @@ Each loop is at least the extra length the joint needs at the far end of its tra
 | C32 | right_knee | 0 to 1.75 | 83.4 | 179.9 | 145 |
 | C44 | back_door_left_hinge | -1.396 to 0 | 0 | 93.7 | 135 |
 | C45 | back_door_left_hinge | -1.396 to 0 | 0 | 93.7 | 135 |
+
+## Electrical calculations
+
+Computed from the power budget above and the parts' catalog and electrical records. Sources are listed at the end of this section.
+
+### Battery runtime
+
+Usable energy is 80 % of the pack's rated energy (stop at about 3.5 V a cell under load). Runtime = usable Wh / (rail volts x current).
+
+| Battery | Rated Wh | mAh | Rail | Typical A | Runtime at typical | Peak A | Runtime at peak | Peak C-rate | Pack limit A |
+|---|--:|--:|---|--:|--:|--:|--:|--:|--:|
+| battery (2S 18650 pack: two 2500 mAh 20 A cells) | 18.5 | 2500 | VBAT 7.2 V | 2.72 | 45 min | 7.935 | 16 min | 3.09 C | 20 |
+
+### Regulator heat
+
+Heat = power in - power out. A switching converter's input comes from the budget above; an on-board linear regulator drops the difference in volts times the load current.
+
+| Regulator | Type | In | Out | Load A (typical / peak) | Power in W | Power out W | Heat W (typical / peak) | Efficiency | Rated heat W | OK |
+|---|---|---|---|--:|--:|--:|--:|--:|--:|:-:|
+| regulator | switching | VBAT 7.2 V | 5V_SERVO 5 V | 0.5 / 1.4 | 2.938 | 2.5 | 0.438 / 1.237 | 85 % | 2.5 | yes |
+| regulator_lights | switching | VBAT 7.2 V | 5V_LIGHTS 5 V | 0.72 / 2.16 | 4.234 | 3.6 | 0.634 / 1.908 | 85 % | 2.5 | yes |
+| regulator_doors | switching | VBAT 7.2 V | 5V_DOORS 5 V | 2.03 / 6.03 | 11.938 | 10.15 | 1.788 / 5.317 | 85 % | 3 | yes |
+- regulator: input from the VBAT budget at the converter efficiency the budget assumes; the part is rated for about 2.5 W of heat.
+- regulator_lights: input from the VBAT budget at the converter efficiency the budget assumes; the part is rated for about 2.5 W of heat.
+- regulator_doors: input from the VBAT budget at the converter efficiency the budget assumes; the part is rated for about 3 W of heat.
+
+### Logic levels
+
+Every checked signal is read correctly by the pin it drives.
+
+A driver's high level is its I/O supply; the receiver needs it above its input threshold and below its input limit.
+
+| Net | Driver | Receiver | High V | Threshold V | Input limit V | Result |
+|---|---|---|--:|--:|--:|---|
+| ARC_REACTOR_DATA | A1 D6 | U1 DIN | 5 | 3.5 | 5.5 | ok |
+| BACK_LEFT_SERVO_PWM | U7 PWM0 | M3 Signal | 5 | 2 | 6.8 | ok |
+| BACK_RIGHT_SERVO_PWM | U8 PWM0 | M4 Signal | 5 | 2 | 6.8 | ok |
+| FACEPLATE_LEFT_PWM | A1 D9 | M1 Signal | 5 | 2 | 6 | ok |
+| FACEPLATE_RIGHT_PWM | A1 D10/SS | M2 Signal | 5 | 2 | 6 | ok |
+| HELMET_LEFT_SERVO_PWM | U7 PWM1 | M5 Signal | 5 | 2 | 6 | ok |
+| HELMET_RIGHT_SERVO_PWM | U8 PWM1 | M6 Signal | 5 | 2 | 6 | ok |
+| I2C_SCL_LEFT | A1 A5/SCL | U7 SCL | 5 | 3.5 | 5.5 | ok |
+| I2C_SCL_LEFT | A1 A5/SCL | U8 SCL | 5 | 3.5 | 5.5 | ok |
+| I2C_SDA_LEFT | A1 A4/SDA | U7 SDA | 5 | 3.5 | 5.5 | ok |
+| I2C_SDA_LEFT | A1 A4/SDA | U8 SDA | 5 | 3.5 | 5.5 | ok |
+| I2C_SDA_LEFT | U7 SDA | A1 A4/SDA | 5 | 3 | 5.5 | ok |
+| I2C_SDA_LEFT | U8 SDA | A1 A4/SDA | 5 | 3 | 5.5 | ok |
+| LATCH_BACK_LEFT_0_SERVO_PWM | U7 PWM6 | M15 Signal | 5 | 2 | 6 | ok |
+| LATCH_BACK_LEFT_1_SERVO_PWM | U7 PWM7 | M16 Signal | 5 | 2 | 6 | ok |
+| LATCH_HELMET_LEFT_0_SERVO_PWM | U7 PWM8 | M17 Signal | 5 | 2 | 6 | ok |
+| LATCH_LEFT_FOREARM_0_SERVO_PWM | U7 PWM10 | M20 Signal | 5 | 2 | 6 | ok |
+| LATCH_LEFT_SHIN_0_SERVO_PWM | U7 PWM12 | M24 Signal | 5 | 2 | 6 | ok |
+| LATCH_LEFT_THIGH_0_SERVO_PWM | U7 PWM11 | M22 Signal | 5 | 2 | 6 | ok |
+| LATCH_LEFT_UPPER_ARM_0_SERVO_PWM | U7 PWM9 | M18 Signal | 5 | 2 | 6 | ok |
+| LATCH_RIGHT_FOREARM_0_SERVO_PWM | U8 PWM7 | M21 Signal | 5 | 2 | 6 | ok |
+| LATCH_RIGHT_SHIN_0_SERVO_PWM | U8 PWM9 | M25 Signal | 5 | 2 | 6 | ok |
+| LATCH_RIGHT_THIGH_0_SERVO_PWM | U8 PWM8 | M23 Signal | 5 | 2 | 6 | ok |
+| LATCH_RIGHT_UPPER_ARM_0_SERVO_PWM | U8 PWM6 | M19 Signal | 5 | 2 | 6 | ok |
+| LEFT_FOREARM_SERVO_PWM | U7 PWM3 | M9 Signal | 5 | 2 | 7.2 | ok |
+| LEFT_REPULSOR_DATA | A1 D7 | U2 DIN | 5 | 3.5 | 5.5 | ok |
+| LEFT_SHIN_SERVO_PWM | U7 PWM5 | M13 Signal | 5 | 2 | 7.2 | ok |
+| LEFT_THIGH_SERVO_PWM | U7 PWM4 | M11 Signal | 5 | 2 | 7.2 | ok |
+| LEFT_UPPER_ARM_SERVO_PWM | U7 PWM2 | M7 Signal | 5 | 2 | 7.2 | ok |
+| RIGHT_FOREARM_SERVO_PWM | U8 PWM3 | M10 Signal | 5 | 2 | 7.2 | ok |
+| RIGHT_REPULSOR_DATA | A1 D8 | U3 DIN | 5 | 3.5 | 5.5 | ok |
+| RIGHT_SHIN_SERVO_PWM | U8 PWM5 | M14 Signal | 5 | 2 | 7.2 | ok |
+| RIGHT_THIGH_SERVO_PWM | U8 PWM4 | M12 Signal | 5 | 2 | 7.2 | ok |
+| RIGHT_UPPER_ARM_SERVO_PWM | U8 PWM2 | M8 Signal | 5 | 2 | 7.2 | ok |
+
+### Sources
+
+| Input | Source |
+|---|---|
+| 2S 18650 pack: two 2500 mAh 20 A cells (Samsung 25R class) in a plain two-cell holder capacity and energy | [datasheet](https://www.dnkpower.com/wp-content/uploads/2019/02/SAMSUNG-INR18650-25R-Datasheet.pdf) |
+| LM2596S adjustable buck module (3 A, 43 x 21 mm) heat | estimated: 10 W out at about 80 %; TI: 73 % at 12 V in, 3 V out, 3 A |
+| Pololu D36V50F5 5 V 5.5 A step-down regulator (#4091) heat | estimated: 27.5 W out at about 90 % (Pololu range 80-95 %) |
+| Arduino Nano compatible board (ATmega328P, CH340, USB-C) logic levels | [datasheet](https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-7810-Automotive-Microcontrollers-ATmega328P_Datasheet.pdf): ATmega328P at VCC 5 V: VIH min 0.6 VCC = 3.0 V, pins to VCC + 0.5 V. Outputs swing to VCC at light load. |
+| WS2812B RGB LED ring, 12 LEDs, 37 mm (NeoPixel-compatible) logic levels | [datasheet](https://cdn-shop.adafruit.com/datasheets/WS2812B.pdf): DIN high level 0.7 VDD; at 5 V that is 3.5 V, above a 3.3 V host's output. |
+| PCA9685 16-channel PWM servo driver board (generic, I2C) logic levels | [datasheet](https://www.nxp.com/docs/en/data-sheet/PCA9685.pdf): VIH 0.7 VDD on SCL/SDA; inputs are 5.5 V tolerant; LED outputs are totem pole to VDD. |
+| DSSERVO DS3218 20 kg digital servo (metal gears) + round horn logic levels | estimated: Pulse input of a hobby servo: no threshold published; 2 V assumed. |
+| TowerPro MG90S micro servo (metal gears) + cross horn logic levels | estimated: Pulse input of a hobby servo: no threshold published; 2 V assumed. |
+| TowerPro MG996R standard servo (metal gears) + round horn logic levels | estimated: Pulse input of a hobby servo: no threshold published; 2 V assumed. |
 
 ## Wiring parts to buy
 

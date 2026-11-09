@@ -28,6 +28,11 @@ export interface ElectricalRecord {
   current_a: Sourced<{ typical: number; peak: number }>;
   output?: Sourced<{ voltage_v: number; current_a: number }>;
   heat_w?: Sourced<number>;
+  /**
+   * Logic levels of the signal pins: the output high level (`io_v`, or the voltage on `supply_pin`), the input high
+   * threshold (`vih_v`, or `vih_frac` of the output level) and the highest voltage an input takes.
+   */
+  logic?: Sourced<{ io_v?: number; supply_pin?: string; vih_v?: number; vih_frac?: number; max_in_v: number }>;
   ports: Port[];
   notes?: string;
 }

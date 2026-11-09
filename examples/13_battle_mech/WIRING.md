@@ -2,7 +2,7 @@
 
 74 cables, 140 conductors, 74.59 m of wire, wiring parts $256.48.
 
-Diagram: [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
+Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), [breadboard.svg](breadboard.svg) (every wire in its colour, pin to pin) and the cable diagram [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
 
 ## Power budget
 
@@ -393,6 +393,437 @@ Each loop is at least the extra length the joint needs at the far end of its tra
 | C71 | l_shoulder_roll | -0.04 to 1.6 | 25.1 | 50.6 | 55 |
 | C72 | r_shoulder_pitch | -3 to 3 | 39.4 | 87.3 | 85 |
 | C72 | r_shoulder_roll | -1.6 to 0.04 | 25.1 | 50.6 | 55 |
+
+## Electrical calculations
+
+Computed from the power budget above and the parts' catalog and electrical records. Sources are listed at the end of this section.
+
+### Battery runtime
+
+Usable energy is 80 % of the pack's rated energy (stop at about 3.5 V a cell under load). Runtime = usable Wh / (rail volts x current).
+
+| Battery | Rated Wh | mAh | Rail | Typical A | Runtime at typical | Peak A | Runtime at peak | Peak C-rate | Pack limit A |
+|---|--:|--:|---|--:|--:|--:|--:|--:|--:|
+| battery (LiPo 6S 10000 mAh 30C, EC5) | 222 | 10000 | VBAT 44.4 V | 17.73 | 27 min | 106.21 | 5 min | 10.62 C | 300 |
+| battery_2 (LiPo 6S 10000 mAh 30C, EC5) | 222 | 10000 | VBAT 44.4 V | 17.73 | 27 min | 106.21 | 5 min | 10.62 C | 300 |
+
+### Regulator heat
+
+Heat = power in - power out. A switching converter's input comes from the budget above; an on-board linear regulator drops the difference in volts times the load current.
+
+| Regulator | Type | In | Out | Load A (typical / peak) | Power in W | Power out W | Heat W (typical / peak) | Efficiency | Rated heat W | OK |
+|---|---|---|---|--:|--:|--:|--:|--:|--:|:-:|
+| dcdc_12v | switching | VBAT 44.4 V | 12V 12 V | 3.85 / 8.45 | 53.724 | 46.2 | 7.524 / 16.526 | 86 % | 14.2 | yes |
+| regulator_5v | switching | 12V 12 V | 5V 5 V | 0 / 0 | 0 | 0 | 0 / 0 | - | 3 | yes |
+- dcdc_12v: input from the VBAT budget at the converter efficiency the budget assumes; the part is rated for about 14.2 W of heat.
+- regulator_5v: input from the 12V budget at the converter efficiency the budget assumes; the part is rated for about 3 W of heat.
+
+### Logic levels
+
+Every checked signal is read correctly by the pin it drives.
+
+A driver's high level is its I/O supply; the receiver needs it above its input threshold and below its input limit.
+
+| Net | Driver | Receiver | High V | Threshold V | Input limit V | Result |
+|---|---|---|--:|--:|--:|---|
+| BUS_ARM_BUS | U2 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | U2 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | U2 DATA | M20 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | U2 DATA | M15 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | U2 DATA | M15 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | U2 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | U2 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | U2 DATA | M19 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | U2 DATA | M19 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | U2 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | U2 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | U2 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | U2 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | U2 DATA | M30 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | U2 DATA | M24 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | U2 DATA | M24 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | U2 DATA | M28 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | U2 DATA | M23 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | U2 DATA | M23 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | U2 DATA | M26 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | U2 DATA | M26 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | U2 DATA | M27 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | U2 DATA | M27 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | U2 DATA | M25 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | U2 DATA | M25 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M16 DATA | U2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M16 DATA | M20 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M16 DATA | M15 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M16 DATA | M15 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M16 DATA | M19 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M16 DATA | M19 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M16 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M16 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M16 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M16 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M16 DATA | M30 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M16 DATA | M28 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M16 DATA | M23 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M16 DATA | M23 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M16 DATA | M27 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M16 DATA | M27 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M16 DATA | M25 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M16 DATA | M25 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M16 DATA | U2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M16 DATA | M20 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M16 DATA | M15 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M16 DATA | M15 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M16 DATA | M19 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M16 DATA | M19 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M16 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M16 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M16 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M16 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M16 DATA | M30 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M16 DATA | M28 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M16 DATA | M23 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M16 DATA | M23 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M16 DATA | M27 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M16 DATA | M27 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M16 DATA | M25 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M16 DATA | M25 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M20 DATA | U2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M20 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M20 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M20 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M20 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M20 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M20 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M20 DATA | M24 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M20 DATA | M24 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M20 DATA | M26 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M20 DATA | M26 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M15 DATA | U2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M15 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M15 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M15 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M15 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M15 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M15 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M15 DATA | M24 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M15 DATA | M24 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M15 DATA | M26 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M15 DATA | M26 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M15 DATA | U2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M15 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M15 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M15 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M15 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M15 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M15 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M15 DATA | M24 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M15 DATA | M24 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M15 DATA | M26 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M15 DATA | M26 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M18 DATA | U2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M18 DATA | M20 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M18 DATA | M15 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M18 DATA | M15 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M18 DATA | M19 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M18 DATA | M19 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M18 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M18 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M18 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M18 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M18 DATA | M30 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M18 DATA | M28 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M18 DATA | M23 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M18 DATA | M23 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M18 DATA | M27 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M18 DATA | M27 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M18 DATA | M25 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M18 DATA | M25 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M18 DATA | U2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M18 DATA | M20 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M18 DATA | M15 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M18 DATA | M15 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M18 DATA | M19 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M18 DATA | M19 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M18 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M18 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M18 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M18 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M18 DATA | M30 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M18 DATA | M28 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M18 DATA | M23 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M18 DATA | M23 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M18 DATA | M27 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M18 DATA | M27 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M18 DATA | M25 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M18 DATA | M25 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M19 DATA | U2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M19 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M19 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M19 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M19 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M19 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M19 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M19 DATA | M24 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M19 DATA | M24 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M19 DATA | M26 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M19 DATA | M26 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M19 DATA | U2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M19 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M19 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M19 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M19 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M19 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M19 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M19 DATA | M24 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M19 DATA | M24 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M19 DATA | M26 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M19 DATA | M26 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M17 DATA | U2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M17 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M17 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M17 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M17 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M17 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M17 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M17 DATA | M24 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M17 DATA | M24 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M17 DATA | M26 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M17 DATA | M26 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M17 DATA | U2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M17 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M17 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M17 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M17 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M17 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M17 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M17 DATA | M24 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M17 DATA | M24 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M17 DATA | M26 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M17 DATA | M26 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | U2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M20 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M15 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M15 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M19 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M19 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M30 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M24 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M24 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M28 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M23 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M23 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M26 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M26 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M27 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M27 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M25 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M25 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | U2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M20 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M15 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M15 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M19 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M19 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M30 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M24 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M24 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M28 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M23 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M23 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M26 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M26 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M27 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M27 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M25 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M29 DATA | M25 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M30 DATA | U2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M30 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M30 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M30 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M30 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M30 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M30 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M30 DATA | M24 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M30 DATA | M24 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M30 DATA | M26 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M30 DATA | M26 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M24 DATA | U2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M24 DATA | M20 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M24 DATA | M15 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M24 DATA | M15 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M24 DATA | M19 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M24 DATA | M19 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M24 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M24 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M24 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M24 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M24 DATA | M30 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M24 DATA | M28 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M24 DATA | M23 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M24 DATA | M23 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M24 DATA | M27 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M24 DATA | M27 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M24 DATA | M25 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M24 DATA | M25 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M24 DATA | U2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M24 DATA | M20 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M24 DATA | M15 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M24 DATA | M15 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M24 DATA | M19 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M24 DATA | M19 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M24 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M24 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M24 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M24 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M24 DATA | M30 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M24 DATA | M28 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M24 DATA | M23 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M24 DATA | M23 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M24 DATA | M27 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M24 DATA | M27 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M24 DATA | M25 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M24 DATA | M25 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M28 DATA | U2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M28 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M28 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M28 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M28 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M28 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M28 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M28 DATA | M24 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M28 DATA | M24 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M28 DATA | M26 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M28 DATA | M26 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M23 DATA | U2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M23 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M23 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M23 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M23 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M23 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M23 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M23 DATA | M24 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M23 DATA | M24 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M23 DATA | M26 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M23 DATA | M26 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M23 DATA | U2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M23 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M23 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M23 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M23 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M23 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M23 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M23 DATA | M24 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M23 DATA | M24 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M23 DATA | M26 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M23 DATA | M26 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M26 DATA | U2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M26 DATA | M20 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M26 DATA | M15 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M26 DATA | M15 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M26 DATA | M19 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M26 DATA | M19 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M26 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M26 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M26 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M26 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M26 DATA | M30 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M26 DATA | M28 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M26 DATA | M23 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M26 DATA | M23 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M26 DATA | M27 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M26 DATA | M27 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M26 DATA | M25 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M26 DATA | M25 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M26 DATA | U2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M26 DATA | M20 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M26 DATA | M15 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M26 DATA | M15 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M26 DATA | M19 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M26 DATA | M19 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M26 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M26 DATA | M17 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M26 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M26 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M26 DATA | M30 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M26 DATA | M28 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M26 DATA | M23 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M26 DATA | M23 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M26 DATA | M27 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M26 DATA | M27 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M26 DATA | M25 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M26 DATA | M25 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M27 DATA | U2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M27 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M27 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M27 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M27 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M27 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M27 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M27 DATA | M24 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M27 DATA | M24 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M27 DATA | M26 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M27 DATA | M26 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M27 DATA | U2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M27 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M27 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M27 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M27 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M27 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M27 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M27 DATA | M24 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M27 DATA | M24 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M27 DATA | M26 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M27 DATA | M26 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M25 DATA | U2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M25 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M25 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M25 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M25 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M25 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M25 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M25 DATA | M24 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M25 DATA | M24 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M25 DATA | M26 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M25 DATA | M26 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M25 DATA | U2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M25 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M25 DATA | M16 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M25 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M25 DATA | M18 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M25 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M25 DATA | M29 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M25 DATA | M24 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M25 DATA | M24 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M25 DATA | M26 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ARM_BUS | M25 DATA | M26 DATA | - | - | - | not checked: no published logic levels for one side |
+| I2C_SCL | A1 I2C1_SCL | U7 SCL | 3.3 | 2.3 | 5.5 | ok |
+| I2C_SCL | U7 SCL | A1 I2C1_SCL | 3.3 | 2.3 | 3.6 | ok |
+| I2C_SDA | A1 I2C1_SDA | U7 SDA | 3.3 | 2.3 | 5.5 | ok |
+| I2C_SDA | U7 SDA | A1 I2C1_SDA | 3.3 | 2.3 | 3.6 | ok |
+
+Not checked (no logic levels in the parts data): DYNAMIXEL XH540-W270-T(R), DYNAMIXEL XL430-W250-T, DYNAMIXEL XM430-W350-T(R), ROBOTIS U2D2 USB to TTL/RS-485 interface.
+
+### Sources
+
+| Input | Source |
+|---|---|
+| LiPo 6S 10000 mAh 30C, EC5 (Tattu) capacity and energy | [datasheet](https://www.buddyrc.com/products/tattu-22-2v-30c-6s-10000mah-lipo-battery-pack-with-ec5-plug-for-uav-drone) |
+| Mean Well SD-50C-12 enclosed DC-DC converter, 36-72 V in, 12 V 4.2 A (50 W) heat | estimated: 50.4 W x (1/0.78 - 1), 78 % typ for SD-50C-12 |
+| Pololu D36V50F5 5 V 5.5 A step-down regulator (#4091) heat | estimated: 27.5 W out at about 90 % (Pololu range 80-95 %) |
+| NVIDIA Jetson Orin Nano Super Developer Kit logic levels | [estimated](https://developer.nvidia.com/embedded/learn/jetson-orin-nano-devkit-user-guide/hardware_spec.html): 40-pin header is 3.3 V logic (developer kit guide), not 5 V tolerant. Threshold 0.7 x 3.3 V assumed. |
+| Adafruit BNO085 9-DoF IMU breakout (STEMMA QT, #4754) logic levels | [estimated](https://learn.adafruit.com/adafruit-9-dof-orientation-imu-fusion-breakout-bno085): 3.3 V sensor on a breakout with a regulator and level shifting for 3-5 V hosts (Adafruit guide); thresholds assumed. |
 
 ## Wiring parts to buy
 

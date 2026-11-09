@@ -3,7 +3,7 @@
 Serves the static build (deploy/build-pages.sh) under /text-to-robot/ with the headers GitHub Pages sends
 (Access-Control-Allow-Origin: *), serves a blank page from a second origin, and in Chromium imports the engine across
 origins and calls it: version, catalog with mounts, a design from an example prompt (compared with the shipped example),
-edits, checks, URDF, the ROS 2 package and an empty robot built by hand.
+its schematic and breadboard view, edits, checks, URDF, the ROS 2 package and an empty robot built by hand.
 
     deploy/build-pages.sh pages-dist
     python scripts/check_engine.py            (report in out/engine-check/report.json)
@@ -64,6 +64,9 @@ SCRIPT = """async ([url, prompt]) => {
   const d = await engine.design(prompt);
   out.design = { name: d.robot.robot_name, links: d.robot.links.length, joints: d.robot.joints.length };
   out.roundTrip = JSON.stringify(fromScene(toScene(d.robot))) === JSON.stringify(d.robot);
+  const sch = await engine.schematic(d.robot), bb = await engine.breadboard(d.robot);
+  out.schematic = { svg: sch.svg.startsWith("<svg") && sch.svg.includes('class="pin"'), pdf: String.fromCharCode(...sch.pdf.slice(0, 5)), layout: sch.layout, nodes: sch.netlist.nodes.length, logic: sch.electrical.logic.length };
+  out.breadboard = { svg: bb.svg.startsWith("<svg") && bb.svg.includes('class="wire"'), layout: bb.layout, unrouted: bb.unrouted.length };
   const moved = await engine.edit(d.robot, [{ op: "translate", link: "ultrasonic", by: [0.002, 0, 0] }]);
   out.edited = moved.robot.metadata.studio?.edited === true && moved.mounts.length > 0;
   const q = await engine.check(moved.robot, { interference: false, wiring: false });
@@ -113,6 +116,9 @@ if result["parts"] < 80 or result["withMounts"] != result["parts"] or result["pr
 if result["design"] != {"name": expected["robot_name"], "links": len(expected["links"]), "joints": len(expected["joints"])}: fail.append(f"design differs from the example: {result['design']}")
 for k in ["roundTrip", "edited", "urdf", "pure"]:
     if not result[k]: fail.append(k)
+sch, bb = result.get("schematic", {}), result.get("breadboard", {})
+if not sch.get("svg") or sch.get("pdf") != "%PDF-" or sch.get("layout") or sch.get("nodes", 0) < 5: fail.append("schematic")
+if not bb.get("svg") or bb.get("layout") or bb.get("unrouted"): fail.append("breadboard")
 if result["ros2"] < 10 or result["zip"] < 10000: fail.append("ros2 export")
 if not (result["handBuilt"]["links"] == 2 and result["handBuilt"]["spec"] and result["handBuilt"]["urdf"]): fail.append(f"hand built: {result['handBuilt']}")
 if result["partMesh"] < 10: fail.append("part mesh")

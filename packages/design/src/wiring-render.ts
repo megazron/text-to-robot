@@ -1,6 +1,9 @@
 // WIRING.md and the wiring diagram SVG, both straight from a design's wiring record.
 import { part, electrical } from "@ttr/parts";
 import type { WiringRecord, CableRec } from "./wiring.ts";
+import { electricalReport, electricalMarkdown } from "./circuit/electrical.ts";
+import { schematic } from "./circuit/schematic.ts";
+import { breadboard } from "./circuit/breadboard.ts";
 
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const short = (t: string) => t.split(".").filter((_, i) => i !== 1).join(".");
@@ -9,7 +12,7 @@ const conn = (c: CableRec) => (c.premade ? c.premade : `${c.from_connector.split
 /** WIRING.md: power budget, pin-to-pin table, cut list, joints, fuses, what to buy. */
 export function wiringMarkdown(w: WiringRecord, robot: string): string {
   const o: string[] = [`# Wiring: ${robot}`, "", `${w.cables.length} cables, ${w.cables.reduce((s, c) => s + c.wires.length, 0)} conductors, ${w.total_wire_m} m of wire, wiring parts $${w.cost_usd.toFixed(2)}.`, ""];
-  o.push("Diagram: [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.", "");
+  o.push("Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), [breadboard.svg](breadboard.svg) (every wire in its colour, pin to pin) and the cable diagram [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.", "");
   o.push("## Power budget", "", "| Rail | Volts | Source | Source limit A (cont / peak) | Load A (typical / peak) | Margin (typical) | Fuse A | Worst wire drop V |", "|---|--:|---|--:|--:|--:|--:|--:|");
   for (const r of w.rails) o.push(`| ${r.name} | ${r.voltage_v} | ${r.source} | ${r.continuous_a} / ${r.peak_limit_a} | ${r.typical_a} / ${r.peak_a} | ${r.typical_a > 0 ? (r.continuous_a / r.typical_a).toFixed(1) : "-"}x | ${r.fuse_a ?? "-"} | ${r.worst_drop_v} |`);
   o.push("");
@@ -29,6 +32,7 @@ export function wiringMarkdown(w: WiringRecord, robot: string): string {
     o.push("", "## Slack at the joints", "", "Each loop is at least the extra length the joint needs at the far end of its travel, swept over its real limits.", "", "| Cable | Joint | Travel rad | Length at home mm | Length at full travel mm | Slack loop mm |", "|---|---|---|--:|--:|--:|");
     for (const { c, j } of js) o.push(`| ${c.id} | ${j.joint} | ${j.travel[0]} to ${j.travel[1]} | ${j.home_mm} | ${j.need_mm} | ${j.slack_mm} |`);
   }
+  o.push("", electricalMarkdown(electricalReport(w)).trimEnd());
   o.push("", "## Wiring parts to buy", "", "| Item | Qty | Unit | Unit $ | Subtotal $ | Spec | Price source |", "|---|--:|---|--:|--:|---|---|");
   for (const b of w.bom) o.push(`| ${b.item} | ${b.qty} | ${b.unit} | ${b.unit_usd} | ${b.subtotal_usd.toFixed(2)} | ${b.spec} | ${b.source} |`);
   o.push("", "## Data sources", "");
@@ -77,4 +81,10 @@ export function wiringSvg(w: WiringRecord, robot: string): string {
   }
   out.push("</svg>");
   return out.join("\n") + "\n";
+}
+
+/** Every wiring deliverable of a robot: WIRING.md, the cable diagram, the schematic (SVG and PDF) and the breadboard view. */
+export function circuitFiles(w: WiringRecord, robot: string): Record<string, string | Uint8Array> {
+  const sch = schematic(w, robot), bb = breadboard(w, robot);
+  return { "WIRING.md": wiringMarkdown(w, robot), "wiring.svg": wiringSvg(w, robot), "schematic.svg": sch.svg, "schematic.pdf": sch.pdf, "breadboard.svg": bb.svg };
 }

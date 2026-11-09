@@ -41,6 +41,8 @@ Types: [`engine/v1/engine.d.ts`](https://megazron.github.io/text-to-robot/engine
 | `empty(name)` | An empty robot to build by hand. |
 | `partMesh(key)`, `mesh(geometry)`, `robotMesh(id, file)` | Binary STL of a catalog part, of any link geometry, or of a mesh of a robot the engine designed. |
 | `templates()` | The template robots. |
+| `schematic(robot)` | The robot's schematic, drawn from its wiring record: KiCad-style symbols with numbered and named pins, reference designators, power and ground symbols with each rail's voltage, net labels, routed wires and a title block. Returns `{ svg, pdf, size, netlist, layout, electrical }`: `pdf` is the same sheet as bytes, `netlist` lists every conductor with its pins, `layout` lists overlaps (empty when the drawing is clean) and `electrical` holds the battery runtime, regulator heat and logic-level checks. A robot without a design record is wired automatically first. |
+| `breadboard(robot)` | A picture wiring diagram: drawings of the parts with labelled pins and every wire of the harness in its colour, pin to pin. Returns `{ svg, layout, unrouted }`. |
 | `zip(files)` | A zip archive of a file map. |
 
 The module also exports the pure functions behind editing, for use on the page without a round trip to the worker: `applyEdits`, `toScene` and `fromScene` (the spec as a tree of parts and joints; an unedited spec round-trips exactly), `worldFrames`, `snapPart` and `mate` (placing a part on a matching mount or on a surface grid), and the transform helpers.

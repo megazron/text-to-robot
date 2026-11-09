@@ -2,7 +2,7 @@
 
 Serves the static GitHub Pages build (deploy/build-pages.sh, the same files users get) under /text-to-robot/ and drives it
 in Chromium with third-party requests blocked: types each prompt.txt into the prompt bar, presses Generate, waits for the
-3D preview, then presses the download buttons. Each robot gets a fresh tab, so a design that needs a cold engine is timed
+3D preview, opens the Circuit tab (schematic and breadboard view), then presses the download buttons. Each robot gets a fresh tab, so a design that needs a cold engine is timed
 with one. Arduino cases flip the Arduino switch first and check the price tiers.
 
     deploy/build-pages.sh pages-dist
@@ -35,7 +35,8 @@ BASE = "/text-to-robot"
 # with the honest budget fallback, not a powered suit). `example` is the folder one of the tiers must equal, if any.
 ARDUINO = [("arduino_18_car", "18_arduino_car", True), ("arduino_19_arm", "19_arduino_arm", False), ("arduino_15_wall_e", "15_wall_e", True), ("arduino_14_mark_43", "14_iron_man_mark_43", False)]
 ARDUINO_TEXT = [("arduino_readme_car", "an arduino car with four wheels")]
-DOWNLOADS = {"urdf": "robot.urdf", "json": "robot.json", "bom": None, "xacro": None, "cad": "robot.cad.zip", "ros2": "robot.ros2.zip", "train": "robot.training.zip"}
+DOWNLOADS = {"urdf": "robot.urdf", "json": "robot.json", "bom": None, "xacro": None, "cad": "robot.cad.zip", "ros2": "robot.ros2.zip", "train": "robot.training.zip",
+             "schematic": "schematic", "breadboard": "breadboard.svg"}
 
 
 class Quiet(http.server.SimpleHTTPRequestHandler):
@@ -192,6 +193,17 @@ def run(browser, case):
                 row["tier_robots"].append({"tier": tiers[i][:60], "robot": shown["r"]["robot_name"], "links": len(shown["r"]["links"]), "preview_ready": shown["ready"], "same_as_example": same})
                 if not shown["ready"]: row["problems"].append(f"tier {i} preview: {shown['errors']}")
             if case.get("must_match") and not any(x["same_as_example"] for x in row["tier_robots"]): row["problems"].append("no tier equals the shipped example")
+        if case["mode"] == "prompt":
+            # the Circuit tab draws the schematic and the breadboard view in the tab
+            t = time.time()
+            page.evaluate('document.querySelector(".tab[data-tab=circuit]").click()')
+            for view in ["schematic", "breadboard"]:
+                if view != "schematic": page.evaluate(f'document.querySelector(".tab[data-tab=circ-{view}]").click()')
+                page.wait_for_function(f'(()=>{{const b=document.querySelector(".circview[data-view={view}]");const i=b&&b.querySelector("img.circimg");return (i&&i.complete&&i.naturalWidth>0)||(b&&b.textContent.includes("\u2717"))}})()', timeout=ms)
+                shown = page.evaluate(f'(()=>{{const i=document.querySelector(".circview[data-view={view}] img.circimg");return i?i.naturalWidth:0}})()')
+                if not shown: row["problems"].append(f"Circuit tab: no {view}: " + page.evaluate(f'document.querySelector(".circview[data-view={view}]").textContent')[:200])
+            row["circuit_s"] = round(time.time() - t, 1)
+            page.screenshot(path=str(args.out / f"{case['id']}.circuit.png"), timeout=240000)
         if not args.no_downloads:
             row["downloads"] = {}
             for kind, target in DOWNLOADS.items():
@@ -205,6 +217,12 @@ def run(browser, case):
                         if d["differs"]: (args.out / f"{case['id']}.{kind}.zip").write_bytes(data)
                         d["same_as_example"] = not d["differs"]
                     elif kind == "urdf": d["same_as_example"] = canon(data) == canon(want.read_bytes())
+                    elif kind == "schematic":
+                        # a zip of the sheet as PDF and SVG: both equal the example's
+                        with zipfile.ZipFile(io.BytesIO(data)) as z:
+                            got = {n.rsplit("_schematic.", 1)[-1]: z.read(n) for n in z.namelist()}
+                        d["same_as_example"] = got.get("svg") == (want.parent / "schematic.svg").read_bytes() and got.get("pdf") == (want.parent / "schematic.pdf").read_bytes()
+                    elif target.endswith(".svg"): d["same_as_example"] = data == want.read_bytes()
                     else: d["same_as_example"] = None
                 row["downloads"][kind] = d
                 if not len(data): row["problems"].append(f"{kind} download is empty")

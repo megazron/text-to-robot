@@ -2,7 +2,7 @@
 
 8 cables, 22 conductors, 7.01 m of wire, wiring parts $8.11.
 
-Diagram: [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
+Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), [breadboard.svg](breadboard.svg) (every wire in its colour, pin to pin) and the cable diagram [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
 
 ## Power budget
 
@@ -75,6 +75,42 @@ Each loop is at least the extra length the joint needs at the far end of its tra
 | C5 | yaw | -1.571 to 1.571 | 23.7 | 45.9 | 60 |
 | C5 | shoulder | -1.571 to 1.571 | 55.7 | 83.6 | 65 |
 | C5 | elbow | -2.1 to 2.1 | 55.7 | 93 | 75 |
+
+## Electrical calculations
+
+Computed from the power budget above and the parts' catalog and electrical records. Sources are listed at the end of this section.
+
+### Mains supply
+
+| Supply | Rail | Rated A | Typical A | Peak A | Load at typical |
+|---|---|--:|--:|--:|--:|
+| power_supply (Mean Well LRS-50-5 enclosed PSU, 5 V 10 A) | V_SERVO 5 V | 10 | 2.21 | 6.31 | 22.1 % |
+
+### Logic levels
+
+Every checked signal is read correctly by the pin it drives.
+
+A driver's high level is its I/O supply; the receiver needs it above its input threshold and below its input limit.
+
+| Net | Driver | Receiver | High V | Threshold V | Input limit V | Result |
+|---|---|---|--:|--:|--:|---|
+| I2C_SCL | A1 A5/SCL | U1 SCL | 5 | 3.5 | 5.5 | ok |
+| I2C_SDA | A1 A4/SDA | U1 SDA | 5 | 3.5 | 5.5 | ok |
+| I2C_SDA | U1 SDA | A1 A4/SDA | 5 | 3 | 5.5 | ok |
+| SERVO0_PWM | U1 PWM0 | M1 Signal | 5 | 2 | 6 | ok |
+| SERVO1_PWM | U1 PWM1 | M2 Signal | 5 | 2 | 7.2 | ok |
+| SERVO2_PWM | U1 PWM2 | M3 Signal | 5 | 2 | 7.2 | ok |
+| SERVO3_PWM | U1 PWM3 | M4 Signal | 5 | 2 | 6 | ok |
+
+### Sources
+
+| Input | Source |
+|---|---|
+| Mean Well LRS-50-5 enclosed PSU, 5 V 10 A (50 W) output | [datasheet](https://www.meanwell.com/Upload/PDF/LRS-50/LRS-50-SPEC.PDF) |
+| Arduino Uno R3 compatible board (ATmega328P, CH340 USB) logic levels | [datasheet](https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-7810-Automotive-Microcontrollers-ATmega328P_Datasheet.pdf): ATmega328P at VCC 5 V: VIH min 0.6 VCC = 3.0 V, pins to VCC + 0.5 V. |
+| PCA9685 16-channel PWM servo driver board (generic, I2C) logic levels | [datasheet](https://www.nxp.com/docs/en/data-sheet/PCA9685.pdf): VIH 0.7 VDD on SCL/SDA; inputs are 5.5 V tolerant; LED outputs are totem pole to VDD. |
+| TowerPro SG90 micro servo (nylon gears) + cross horn logic levels | [estimated](http://www.ee.ic.ac.uk/pcheung/teaching/DE1_EE/stores/sg90_datasheet.pdf): Pulse input of an analogue servo: no threshold published; 3.3 V and 5 V pulses both work in practice, 2 V assumed. |
+| TowerPro MG996R standard servo (metal gears) + round horn logic levels | estimated: Pulse input of a hobby servo: no threshold published; 2 V assumed. |
 
 ## Wiring parts to buy
 

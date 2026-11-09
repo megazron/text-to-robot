@@ -66,6 +66,16 @@
     "src": "estimated",
     "note": "5 V x 25 mA typical; more when fed from VIN"
    },
+   "logic": {
+    "v": {
+     "io_v": 5.0,
+     "vih_v": 3.0,
+     "max_in_v": 5.5
+    },
+    "src": "datasheet",
+    "url": "https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-7810-Automotive-Microcontrollers-ATmega328P_Datasheet.pdf",
+    "note": "ATmega328P at VCC 5 V: VIH min 0.6 VCC = 3.0 V, pins to VCC + 0.5 V. Outputs swing to VCC at light load."
+   },
    "ports": [
     {
      "name": "usb",
@@ -456,6 +466,16 @@
     "src": "estimated",
     "note": "5 V x 25 mA typical; more when fed from VIN"
    },
+   "logic": {
+    "v": {
+     "io_v": 5.0,
+     "vih_v": 3.0,
+     "max_in_v": 5.5
+    },
+    "src": "datasheet",
+    "url": "https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-7810-Automotive-Microcontrollers-ATmega328P_Datasheet.pdf",
+    "note": "ATmega328P at VCC 5 V: VIH min 0.6 VCC = 3.0 V, pins to VCC + 0.5 V."
+   },
    "ports": [
     {
      "name": "usb",
@@ -844,6 +864,16 @@
     "v": 0.25,
     "src": "estimated",
     "note": "5 V x 50 mA typical; regulator adds more when fed from VIN"
+   },
+   "logic": {
+    "v": {
+     "io_v": 5.0,
+     "vih_v": 3.0,
+     "max_in_v": 5.5
+    },
+    "src": "datasheet",
+    "url": "https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-7810-Automotive-Microcontrollers-ATmega328P_Datasheet.pdf",
+    "note": "ATmega328P at VCC 5 V: VIH min 0.6 VCC = 3.0 V, pins to VCC + 0.5 V."
    },
    "ports": [
     {
@@ -1279,6 +1309,16 @@
     "v": 0.25,
     "src": "estimated",
     "note": "5 V x 50 mA typical; regulator adds more when fed from VIN"
+   },
+   "logic": {
+    "v": {
+     "io_v": 5.0,
+     "vih_v": 3.0,
+     "max_in_v": 5.5
+    },
+    "src": "datasheet",
+    "url": "https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-7810-Automotive-Microcontrollers-ATmega328P_Datasheet.pdf",
+    "note": "ATmega328P at VCC 5 V: VIH min 0.6 VCC = 3.0 V, pins to VCC + 0.5 V."
    },
    "ports": [
     {
@@ -1717,6 +1757,16 @@
     "v": 0.04,
     "src": "estimated",
     "note": "Chip 35-46 mW from the BNO085 power table"
+   },
+   "logic": {
+    "v": {
+     "io_v": 3.3,
+     "vih_v": 2.3,
+     "max_in_v": 5.5
+    },
+    "src": "estimated",
+    "url": "https://learn.adafruit.com/adafruit-9-dof-orientation-imu-fusion-breakout-bno085",
+    "note": "3.3 V sensor on a breakout with a regulator and level shifting for 3-5 V hosts (Adafruit guide); thresholds assumed."
    },
    "ports": [
     {
@@ -3241,6 +3291,16 @@
     "src": "estimated",
     "note": "MOSFET bridge, no published Rds; guess for 2 x 5 A"
    },
+   "logic": {
+    "v": {
+     "io_v": 5.0,
+     "vih_v": 2.0,
+     "max_in_v": 5.5
+    },
+    "src": "estimated",
+    "url": "https://www.cytron.io/p-10amp-5v-30v-dc-motor-driver-2-channels",
+    "note": "Cytron states 3.3 V and 5 V logic inputs; the 2 V threshold is assumed from that, not published."
+   },
    "ports": [
     {
      "name": "power",
@@ -4417,6 +4477,16 @@
     "v": 0.5,
     "src": "estimated",
     "note": "5 V x about 100 mA"
+   },
+   "logic": {
+    "v": {
+     "io_v": 3.3,
+     "vih_v": 2.475,
+     "max_in_v": 3.6
+    },
+    "src": "datasheet",
+    "url": "https://www.espressif.com/sites/default/files/documentation/esp32-s3_datasheet_en.pdf",
+    "note": "VDD 3.3 V: VIH min 0.75 VDD, inputs to VDD + 0.3 V; not 5 V tolerant."
    },
    "ports": [
     {
@@ -6529,6 +6599,16 @@
     "src": "estimated",
     "note": "5 V x 15 mA"
    },
+   "logic": {
+    "v": {
+     "io_v": 5.0,
+     "vih_v": 2.0,
+     "max_in_v": 5.5
+    },
+    "src": "estimated",
+    "url": "https://cdn.sparkfun.com/datasheets/Sensors/Proximity/HCSR04.pdf",
+    "note": "5 V TTL module: Echo drives 5 V. The trigger threshold is not published; TTL 2 V assumed."
+   },
    "ports": [
     {
      "name": "header",
@@ -6644,6 +6724,15 @@
     "src": "estimated",
     "note": "Half of typical electrical power, rule of thumb."
    },
+   "logic": {
+    "v": {
+     "io_v": 5.0,
+     "vih_v": 2.0,
+     "max_in_v": 6.8
+    },
+    "src": "estimated",
+    "note": "Pulse input of a hobby servo: no threshold published; 2 V assumed."
+   },
    "ports": [
     {
      "name": "servo_lead",
@@ -6740,6 +6829,15 @@
     "v": 1,
     "src": "estimated",
     "note": "Half of typical electrical power, rule of thumb."
+   },
+   "logic": {
+    "v": {
+     "io_v": 5.0,
+     "vih_v": 2.0,
+     "max_in_v": 6.0
+    },
+    "src": "estimated",
+    "note": "Pulse input of a hobby servo: no threshold published; 2 V assumed."
    },
    "ports": [
     {
@@ -6850,6 +6948,15 @@
     "src": "estimated",
     "note": "Half of typical electrical power, rule of thumb."
    },
+   "logic": {
+    "v": {
+     "io_v": 5.0,
+     "vih_v": 2.0,
+     "max_in_v": 7.2
+    },
+    "src": "estimated",
+    "note": "Pulse input of a hobby servo: no threshold published; 2 V assumed."
+   },
    "ports": [
     {
      "name": "servo_lead",
@@ -6946,6 +7053,16 @@
     "v": 1,
     "src": "estimated",
     "note": "Half of typical electrical power, rule of thumb."
+   },
+   "logic": {
+    "v": {
+     "io_v": 5.0,
+     "vih_v": 2.0,
+     "max_in_v": 6.0
+    },
+    "src": "estimated",
+    "url": "http://www.ee.ic.ac.uk/pcheung/teaching/DE1_EE/stores/sg90_datasheet.pdf",
+    "note": "Pulse input of an analogue servo: no threshold published; 3.3 V and 5 V pulses both work in practice, 2 V assumed."
    },
    "ports": [
     {
@@ -7178,6 +7295,16 @@
     "v": 15,
     "src": "estimated",
     "note": "NVIDIA datasheet gives the 7-25 W range; 15 W taken as a working figure"
+   },
+   "logic": {
+    "v": {
+     "io_v": 3.3,
+     "vih_v": 2.3,
+     "max_in_v": 3.6
+    },
+    "src": "estimated",
+    "url": "https://developer.nvidia.com/embedded/learn/jetson-orin-nano-devkit-user-guide/hardware_spec.html",
+    "note": "40-pin header is 3.3 V logic (developer kit guide), not 5 V tolerant. Threshold 0.7 x 3.3 V assumed."
    },
    "ports": [
     {
@@ -7890,6 +8017,16 @@
     "src": "estimated",
     "note": "catalog 2 V bridge drop x 1 A x 2 channels; Handson limit 20 W at 75 C, components101 25 W"
    },
+   "logic": {
+    "v": {
+     "io_v": 5.0,
+     "vih_v": 2.3,
+     "max_in_v": 7.0
+    },
+    "src": "datasheet",
+    "url": "https://www.st.com/resource/en/datasheet/l298.pdf",
+    "note": "L298 input high 2.3 V min, up to VSS (5 V logic supply on the module)."
+   },
    "ports": [
     {
      "name": "power",
@@ -8155,6 +8292,15 @@
     "v": 0.15,
     "src": "estimated",
     "note": "3.3 V x 46 mA"
+   },
+   "logic": {
+    "v": {
+     "io_v": 3.3,
+     "vih_v": 2.31,
+     "max_in_v": 3.6
+    },
+    "src": "estimated",
+    "note": "ST7789 interface is 3.3 V logic (0.7 VDDI); a 5 V host needs a level shifter unless the module has one."
    },
    "ports": [
     {
@@ -9290,6 +9436,16 @@
     "src": "estimated",
     "note": "logic only; servo current bypasses the chip"
    },
+   "logic": {
+    "v": {
+     "supply_pin": "VCC",
+     "vih_frac": 0.7,
+     "max_in_v": 5.5
+    },
+    "src": "datasheet",
+    "url": "https://www.nxp.com/docs/en/data-sheet/PCA9685.pdf",
+    "note": "VIH 0.7 VDD on SCL/SDA; inputs are 5.5 V tolerant; LED outputs are totem pole to VDD."
+   },
    "ports": [
     {
      "name": "control_in",
@@ -10107,6 +10263,16 @@
     "src": "estimated",
     "note": "logic only; servo current bypasses the chip"
    },
+   "logic": {
+    "v": {
+     "supply_pin": "VCC",
+     "vih_frac": 0.7,
+     "max_in_v": 5.5
+    },
+    "src": "datasheet",
+    "url": "https://www.nxp.com/docs/en/data-sheet/PCA9685.pdf",
+    "note": "VIH 0.7 VDD on SCL/SDA; inputs are 5.5 V tolerant; LED outputs are totem pole to VDD."
+   },
    "ports": [
     {
      "name": "control_in",
@@ -10890,6 +11056,16 @@
     "src": "estimated",
     "note": "Copper loss at about 25 % of stall."
    },
+   "logic": {
+    "v": {
+     "supply_pin": "Encoder Vcc (blue)",
+     "vih_v": 0,
+     "max_in_v": 20
+    },
+    "src": "datasheet",
+    "url": "https://www.pololu.com/product/4751",
+    "note": "Hall encoder outputs swing to the encoder Vcc (3.5-20 V), so they match the host when fed from its own logic supply."
+   },
    "ports": [
     {
      "name": "leads",
@@ -10992,6 +11168,16 @@
     "src": "estimated",
     "note": "Copper loss at about 25 % of stall."
    },
+   "logic": {
+    "v": {
+     "supply_pin": "Encoder Vcc (blue)",
+     "vih_v": 0,
+     "max_in_v": 20
+    },
+    "src": "datasheet",
+    "url": "https://www.pololu.com/product/4752",
+    "note": "Hall encoder outputs swing to the encoder Vcc (3.5-20 V)."
+   },
    "ports": [
     {
      "name": "leads",
@@ -11093,6 +11279,16 @@
     "v": 5,
     "src": "estimated",
     "note": "Copper loss at about 25 % of stall."
+   },
+   "logic": {
+    "v": {
+     "supply_pin": "Encoder Vcc (blue)",
+     "vih_v": 0,
+     "max_in_v": 20
+    },
+    "src": "datasheet",
+    "url": "https://www.pololu.com/product/4753",
+    "note": "Hall encoder outputs swing to the encoder Vcc (3.5-20 V)."
    },
    "ports": [
     {
@@ -12241,6 +12437,16 @@
     "v": 6,
     "src": "estimated",
     "note": "third-party measurements: about 8.8 W full CPU load, about 3 W idle"
+   },
+   "logic": {
+    "v": {
+     "io_v": 3.3,
+     "vih_v": 2.15,
+     "max_in_v": 3.6
+    },
+    "src": "estimated",
+    "url": "https://www.raspberrypi.com/documentation/computers/raspberry-pi.html",
+    "note": "The documentation gives 3.3 V GPIO, not 5 V tolerant. RP1 input thresholds are not published; 0.65 x 3.3 V assumed (common CMOS figure)."
    },
    "ports": [
     {
@@ -14036,6 +14242,16 @@
     "src": "estimated",
     "note": "Vsat(U+L) 0.5 V at 1 A from Toshiba: 0.5 W per channel at 1 A, both channels"
    },
+   "logic": {
+    "v": {
+     "supply_pin": "VCC",
+     "vih_v": 2.0,
+     "max_in_v": 5.7
+    },
+    "src": "datasheet",
+    "url": "https://cdn-shop.adafruit.com/datasheets/TB6612FNG_datasheet_en_20121101.pdf",
+    "note": "Control inputs: VIH 2 V min, up to VCC + 0.2 V (Toshiba electrical characteristics); 3.3 V and 5 V hosts both drive it."
+   },
    "ports": [
     {
      "name": "power",
@@ -14253,6 +14469,16 @@
     "v": 2.0,
     "src": "estimated",
     "note": "chip internal regulator 0.3 W at 24 V (reprap wiki) plus output stage; guess at 1.5 A RMS"
+   },
+   "logic": {
+    "v": {
+     "supply_pin": "VIO",
+     "vih_frac": 0.7,
+     "max_in_v": 5.5
+    },
+    "src": "estimated",
+    "url": "https://www.analog.com/media/en/technical-documentation/data-sheets/TMC2209_datasheet_rev1.09.pdf",
+    "note": "Digital inputs referenced to VCC_IO (3.3 V or 5 V); 0.7 VCC_IO threshold assumed for the Schmitt inputs."
    },
    "ports": [
     {
@@ -15166,6 +15392,16 @@
     "v": 1.2,
     "src": "estimated",
     "note": "5 V x 0.24 A"
+   },
+   "logic": {
+    "v": {
+     "supply_pin": "5V",
+     "vih_frac": 0.7,
+     "max_in_v": 5.5
+    },
+    "src": "datasheet",
+    "url": "https://cdn-shop.adafruit.com/datasheets/WS2812B.pdf",
+    "note": "DIN high level 0.7 VDD; at 5 V that is 3.5 V, above a 3.3 V host's output."
    },
    "ports": [
     {

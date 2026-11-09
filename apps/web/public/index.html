@@ -158,6 +158,7 @@
       <div class="seg tabs" role="tablist" aria-label="Build views">
         <button class="tab active" data-tab="summary" type="button" role="tab">Summary</button>
         <button class="tab" data-tab="bom" type="button" role="tab">Parts</button>
+        <button class="tab" data-tab="circuit" type="button" role="tab">Circuit</button>
         <button class="tab" data-tab="files" type="button" role="tab">Files</button>
       </div>
       <div id="tab-summary" class="tabpane active">
@@ -181,9 +182,23 @@
         <div class="bomctl"><label>Budget $ <input id="budget" type="number" inputmode="decimal" min="0" step="10" placeholder="any" /></label><span id="bomtotal" class="bomtotal"></span></div>
         <div id="bom"></div>
       </div>
+      <div id="tab-circuit" class="tabpane">
+        <div class="seg tabs circ" role="tablist" aria-label="Circuit views">
+          <button class="tab active" data-tab="circ-schematic" type="button" role="tab">Schematic</button>
+          <button class="tab" data-tab="circ-breadboard" type="button" role="tab">Breadboard</button>
+          <button class="tab" data-tab="circ-wiring" type="button" role="tab">Wiring</button>
+        </div>
+        <div id="circNote" class="hint">Generate a robot to see its circuit.</div>
+        <div id="tab-circ-schematic" class="tabpane active"><div class="circview" data-view="schematic"></div></div>
+        <div id="tab-circ-breadboard" class="tabpane"><div class="circview" data-view="breadboard"></div></div>
+        <div id="tab-circ-wiring" class="tabpane"><div class="circview" data-view="wiring"></div></div>
+        <div id="circElectrical" class="circcalc"></div>
+      </div>
       <div id="tab-files" class="tabpane">
         <div class="list downloads">
           <button data-dl="cad" type="button"><svg class="ico" aria-hidden="true"><use href="#i-down"/></svg><span class="t"><b>CAD</b><small>STEP + STL</small></span></button>
+          <button data-dl="schematic" type="button"><svg class="ico" aria-hidden="true"><use href="#i-down"/></svg><span class="t"><b>Schematic</b><small>PDF + SVG</small></span></button>
+          <button data-dl="breadboard" type="button"><svg class="ico" aria-hidden="true"><use href="#i-down"/></svg><span class="t"><b>Breadboard view</b><small>Every wire in colour, SVG</small></span></button>
           <button data-dl="bom" type="button"><svg class="ico" aria-hidden="true"><use href="#i-down"/></svg><span class="t"><b>Parts list</b><small>Markdown</small></span></button>
           <button data-dl="urdf" type="button"><svg class="ico" aria-hidden="true"><use href="#i-down"/></svg><span class="t"><b>URDF</b><small>Robot description</small></span></button>
           <button data-dl="xacro" type="button"><svg class="ico" aria-hidden="true"><use href="#i-down"/></svg><span class="t"><b>XACRO</b><small>Parameterised URDF</small></span></button>

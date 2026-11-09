@@ -2,7 +2,7 @@
 
 28 cables, 54 conductors, 11.78 m of wire, wiring parts $22.03.
 
-Diagram: [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
+Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), [breadboard.svg](breadboard.svg) (every wire in its colour, pin to pin) and the cable diagram [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
 
 ## Power budget
 
@@ -148,6 +148,91 @@ Each loop is at least the extra length the joint needs at the far end of its tra
 | C12 | rl_hip_pitch | -1.4 to 1.4 | 33.1 | 52.2 | 55 |
 | C14 | rr_hip_abduction | -0.165 to 0.6 | 25.4 | 30.2 | 40 |
 | C15 | rr_hip_pitch | -1.4 to 1.4 | 33.1 | 52.2 | 55 |
+
+## Electrical calculations
+
+Computed from the power budget above and the parts' catalog and electrical records. Sources are listed at the end of this section.
+
+### Battery runtime
+
+Usable energy is 80 % of the pack's rated energy (stop at about 3.5 V a cell under load). Runtime = usable Wh / (rail volts x current).
+
+| Battery | Rated Wh | mAh | Rail | Typical A | Runtime at typical | Peak A | Runtime at peak | Peak C-rate | Pack limit A |
+|---|--:|--:|---|--:|--:|--:|--:|--:|--:|
+| battery (LiPo 3S 2200 mAh 25C, XT60) | 24.4 | 2200 | VBAT 11.1 V | 5.951 | 18 min | 14.951 | 7 min | 6.8 C | 55 |
+
+### Regulator heat
+
+Heat = power in - power out. A switching converter's input comes from the budget above; an on-board linear regulator drops the difference in volts times the load current.
+
+| Regulator | Type | In | Out | Load A (typical / peak) | Power in W | Power out W | Heat W (typical / peak) | Efficiency | Rated heat W | OK |
+|---|---|---|---|--:|--:|--:|--:|--:|--:|:-:|
+| regulator_5v | switching | VBAT 11.1 V | 5V 5 V | 1 / 5 | 5.561 | 5 | 0.561 / 2.783 | 90 % | 3 | yes |
+- regulator_5v: input from the VBAT budget at the converter efficiency the budget assumes; the part is rated for about 3 W of heat.
+
+### Logic levels
+
+Every checked signal is read correctly by the pin it drives.
+
+A driver's high level is its I/O supply; the receiver needs it above its input threshold and below its input limit.
+
+| Net | Driver | Receiver | High V | Threshold V | Input limit V | Result |
+|---|---|---|--:|--:|--:|---|
+| BUS_ACTUATOR_BUS | U1 SIG | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U1 SIG | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U1 SIG | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U1 SIG | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U1 SIG | M3 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U1 SIG | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U1 SIG | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U1 SIG | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U1 SIG | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U1 SIG | M6 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U1 SIG | M7 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U1 SIG | M7 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U1 SIG | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U1 SIG | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U1 SIG | M9 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U1 SIG | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U1 SIG | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U1 SIG | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U1 SIG | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | U1 SIG | M12 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M1 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M1 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M2 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M2 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M3 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M4 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M4 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M5 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M5 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M6 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M7 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M7 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M8 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M8 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M9 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M10 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M10 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M11 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M11 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_ACTUATOR_BUS | M12 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
+| I2C_SCL | A1 GPIO3 | U3 SCL | 3.3 | 2.3 | 5.5 | ok |
+| I2C_SCL | U3 SCL | A1 GPIO3 | 3.3 | 2.15 | 3.6 | ok |
+| I2C_SDA | A1 GPIO2 | U3 SDA | 3.3 | 2.3 | 5.5 | ok |
+| I2C_SDA | U3 SDA | A1 GPIO2 | 3.3 | 2.15 | 3.6 | ok |
+
+Not checked (no logic levels in the parts data): Feetech STS3215 C047 12 V 30 kg.cm (1:345), Waveshare Bus Servo Adapter (A).
+
+### Sources
+
+| Input | Source |
+|---|---|
+| LiPo 3S 2200 mAh 25C, XT60 (Gens Ace G-Tech) capacity and energy | [datasheet](https://www.buddyrc.com/products/gens-ace-25c-2200mah-11-1v-3s-lipo-battery-pack-with-xt60-plug) |
+| Pololu D36V50F5 5 V 5.5 A step-down regulator (#4091) heat | estimated: 27.5 W out at about 90 % (Pololu range 80-95 %) |
+| Raspberry Pi 5 (4 GB) logic levels | [estimated](https://www.raspberrypi.com/documentation/computers/raspberry-pi.html): The documentation gives 3.3 V GPIO, not 5 V tolerant. RP1 input thresholds are not published; 0.65 x 3.3 V assumed (common CMOS figure). |
+| Adafruit BNO085 9-DoF IMU breakout (STEMMA QT, #4754) logic levels | [estimated](https://learn.adafruit.com/adafruit-9-dof-orientation-imu-fusion-breakout-bno085): 3.3 V sensor on a breakout with a regulator and level shifting for 3-5 V hosts (Adafruit guide); thresholds assumed. |
 
 ## Wiring parts to buy
 

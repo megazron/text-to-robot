@@ -337,3 +337,11 @@ body.busy .skhide{display:none}
   #charge i{animation:none}
 }
 @media (forced-colors:active){.seg::before,.dock-glow{forced-color-adjust:none;background:Highlight}}
+/* circuit views: drawings on white paper, tap to zoom, scroll when zoomed */
+.circview{margin-top:4px}
+.circbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.circbar a.tonal{display:inline-flex;align-items:center;min-height:36px;padding:0 14px;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none}
+.circscroll{border-radius:var(--r-lg);background:#fff;overflow:auto;max-height:70vh}
+.circimg{display:block;width:100%;height:auto;cursor:zoom-in}
+.circview.zoom .circimg{width:320%;max-width:none;cursor:zoom-out}
+.circcalc{margin-top:12px}
