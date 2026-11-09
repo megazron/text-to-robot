@@ -35,7 +35,7 @@
       "qty": 1,
       "unit_cost": 2.5,
       "subtotal": 2.5,
-      "spec": "1.5 N·m rated / undefined N·m peak, undefined V",
+      "spec": "1.5 N·m rated",
       "note": "motor to lead screw · https://www.robotdigg.com/product/27/Flexible-Coupler"
     },
     {

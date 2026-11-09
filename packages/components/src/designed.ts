@@ -56,7 +56,11 @@ export function buildDesignedBom(spec: RobotSpecification, budget?: number, payl
 
 function specLine(key: string): string {
   const s = part(key).specs;
-  if (s.rated_torque_nm) return `${s.rated_torque_nm} N·m rated / ${s.peak_torque_nm ?? s.stall_torque_nm} N·m peak, ${s.voltage_v} V`;
+  // a coupler or a brake has a torque rating but no peak or voltage: only the figures the part has
+  if (s.rated_torque_nm) {
+    const peak = s.peak_torque_nm ?? s.stall_torque_nm;
+    return `${s.rated_torque_nm} N·m rated${peak !== undefined ? ` / ${peak} N·m peak` : ""}${s.voltage_v !== undefined ? `, ${s.voltage_v} V` : ""}`;
+  }
   if (s.energy_wh) return `${s.voltage_v} V, ${s.energy_wh} Wh`;
   if (s.voltage_v) return `${s.voltage_v} V`;
   return part(key).datasheet_url;

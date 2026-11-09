@@ -9,7 +9,7 @@
 | Mechanical | Ball bearing 608-2Z 8x22x7 mm _(lead screw bottom bearing · https://www.vxb.com/search?q=608-2Z)_ | 1 | 0.6 | 0.6 | https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-608-2Z |
 | Mechanical | Ball bearing 61806-2Z (6806ZZ) 30x42x7 mm _(J2 output bearings · https://www.vxb.com/search?q=61806-2Z)_ | 2 | 2.5 | 5 | https://www.qualitybearingsonline.ca/61806-timken-thin-section-30x42x7mm/ |
 | Mechanical | Ball bearing 61808-2RZ (6808 thin section) 40x52x7 mm _(J1 output bearings · https://www.vxb.com/search?q=61808-2RZ)_ | 2 | 3.5 | 7 | https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-61808-2RZ |
-| Power | Aluminium flexible beam coupler 5 mm to 8 mm (D19 L25) _(motor to lead screw · https://www.robotdigg.com/product/27/Flexible-Coupler)_ | 1 | 2.5 | 2.5 | 1.5 N·m rated / undefined N·m peak, undefined V |
+| Power | Aluminium flexible beam coupler 5 mm to 8 mm (D19 L25) _(motor to lead screw · https://www.robotdigg.com/product/27/Flexible-Coupler)_ | 1 | 2.5 | 2.5 | 1.5 N·m rated |
 | Compute | Espressif ESP32-S3-DevKitC-1 (N8R8) _(ESP32-S3 motion controller · https://www.adafruit.com/product/5364)_ | 1 | 15 | 15 | 5 V |
 | Actuator | Feetech STS3215 C047 12 V 30 kg.cm (1:345) _(wrist roll; gripper pinion drive · https://www.seeedstudio.com/STS3215-30KG-Serial-Servo-p-6340.html)_ | 2 | 22 | 44 | 0.9807 N·m rated / 2.942 N·m peak, 12 V |
 | Power | IEC C14 panel inlet with fuse drawer and rocker switch, 10 A _(fused, switched mains inlet · https://www.aliexpress.com/w/wholesale-iec-c14-inlet-fuse-switch.html)_ | 1 | 3 | 3 | https://www.aliexpress.com/w/wholesale-iec-c14-inlet-fuse-switch.html |
