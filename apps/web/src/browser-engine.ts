@@ -1,6 +1,7 @@
 // The engine of the static GitHub Pages build, run in a Web Worker so designing a robot never freezes the page.
 // It answers the web app's /api/* requests with the same generator packages as apps/api/src/server.ts.
 // Workers have no localStorage: browser-api.ts hands the saved robots in and writes changes back.
+import { wasmPeakMb } from "./wasm-memory.ts";   // first: it watches the kernels' memories from the moment they load
 import { generateRobot, modifyRobot, finalizeSpec, arduinoOptions, forgeForPrompt, forgeForRobot } from "@ttr/robot-generator";
 import { generateUrdf, generateXacro } from "@ttr/urdf-generator";
 import { validateUrdf } from "@ttr/urdf-validator";
@@ -134,6 +135,6 @@ async function answer(method: string, path: string, text: string): Promise<Respo
 self.onmessage = async ({ data }: MessageEvent) => {
   if (data.robots) { for (const [k, v] of JSON.parse(data.robots)) store.set(k, v); return; }
   const r = await answer(data.method, data.path, data.body), buffer = await r.arrayBuffer();
-  post({ id: data.id, status: r.status, type: r.headers.get("Content-Type") ?? "application/json", buffer }, [buffer]);
+  post({ id: data.id, status: r.status, type: r.headers.get("Content-Type") ?? "application/json", buffer, wasm_mb: wasmPeakMb() }, [buffer]);
 };
 post({ ready: true });

@@ -222,7 +222,6 @@ function frameRobot() {
   const bb = new THREE.Box3().setFromObject(robotGroup);
   if (bb.isEmpty()) return;
   const sphere = bb.getBoundingSphere(new THREE.Sphere());
-  console.log('[frame] center', sphere.center.toArray().map(x=>+x.toFixed(2)), 'r', +sphere.radius.toFixed(3));
   const r = Math.max(0.12, sphere.radius);
   const fov = (camera.fov * Math.PI) / 180;
   const across = 2 * Math.atan(Math.tan(fov / 2) * camera.aspect);   // portrait phones are limited by width
@@ -384,8 +383,8 @@ function renderDesign(d) {
   const sec = el("div", "design");
   const perf = Object.entries(d.performance ?? {}).map(([k, v]) => `<tr><td>${esc(k.replace(/_/g, " "))}</td><td class="n">${esc(v)}</td></tr>`).join("");
   const joints = (d.joints ?? []).map((j) => `<tr><td>${esc(j.joint)}</td><td>${esc(j.actuator)}</td><td class="n">${j.required_nm}</td><td class="n">${j.rated_nm} / ${j.peak_nm}</td><td class="n">${j.margin}x</td><td class="n">${j.speed_rad_s}</td></tr>`).join("");
-  const checks = (d.checks ?? []).map((c) => `<li class="${c.pass ? "ok" : "bad"}">${c.pass ? "✓" : "✗"} <b>${esc(c.name)}</b> — ${esc(c.detail)}</li>`).join("");
-  const printed = (d.printed ?? []).map((p) => `<li>${esc(p.name)}: ${p.check.bbox_mm.join(" × ")} mm, ${Math.round(p.mass_kg * 1000)} g${p.check.fits_bed ? "" : " — <b>too big for the bed</b>"}</li>`).join("");
+  const checks = (d.checks ?? []).map((c) => `<li class="${c.pass ? "ok" : "bad"}">${c.pass ? "✓" : "✗"} <b>${esc(c.name)}</b>: ${esc(c.detail)}</li>`).join("");
+  const printed = (d.printed ?? []).map((p) => `<li>${esc(p.name)}: ${p.check.bbox_mm.join(" × ")} mm, ${Math.round(p.mass_kg * 1000)} g${p.check.fits_bed ? "" : ": <b>too big for the bed</b>"}</li>`).join("");
   sec.innerHTML = `<div class="panel-h">Engineering</div><div class="hint">${esc(d.summary)}</div>
     <table class="bomtable"><tbody>${perf}</tbody></table>
     ${joints ? `<div class="panel-h">Actuator sizing</div><table class="bomtable"><thead><tr><th>Joint</th><th>Actuator</th><th>Peak need N·m</th><th>Rated / peak</th><th>Margin</th><th>rad/s loaded</th></tr></thead><tbody>${joints}</tbody></table>` : ""}
@@ -401,7 +400,7 @@ async function refreshBom() {
   catch { /* keep last */ }
 }
 function bomMarkdown(bom) {
-  let md = `# Bill of Materials — ${bom.robot_name}\n\n**Total: $${bom.total}** · tier ${bom.tier}` + (bom.budget != null ? ` · budget $${bom.budget} ${bom.feasible ? "(within)" : "(OVER)"}` : "") + "\n\n| Category | Component | Qty | Unit $ | Subtotal $ | Spec |\n|---|---|--:|--:|--:|---|\n";
+  let md = `# Bill of materials: ${bom.robot_name}\n\n**Total: $${bom.total}** · tier ${bom.tier}` + (bom.budget != null ? ` · budget $${bom.budget} ${bom.feasible ? "(within)" : "(OVER)"}` : "") + "\n\n| Category | Component | Qty | Unit $ | Subtotal $ | Spec |\n|---|---|--:|--:|--:|---|\n";
   for (const l of bom.lines) md += `| ${l.category} | ${l.name}${l.note ? " ("+l.note+")" : ""} | ${l.qty} | ${l.unit_cost} | ${l.subtotal} | ${l.spec} |\n`;
   return md;
 }
@@ -426,7 +425,7 @@ function status(lines, kind) {
 addEventListener("ttr-forge", ({ detail: p }) => {
   if (p.stage === "done") return;
   const pct = Math.round(100 * p.done / (p.total || 1)), names = { forge: "shaping the shells", pack: "trimming overlaps", doors: "fitting hinges, servos and latches", trims: "clearing the doors' swing", wiring: "fitting cable channels and bays", measure: "measuring joint and door ranges", store: "storing the pieces" };
-  status(`Forging the Mark 43 armour in your browser: ${names[p.stage] ?? p.stage} (${pct} %, ${p.elapsed_s ?? 0} s). The first suit takes minutes; the page stays usable, and the result is kept for next time.`);
+  status(`Forging the Mark 43 armour in your browser: ${names[p.stage] ?? p.stage} (${pct} %, ${p.elapsed_s ?? 0} s). The first suit takes about 25 minutes on a fast laptop and longer on a slow one; the page stays usable, and the result is kept for next time.`);
 });
 // while the full armour is forged, a coarse look at it (4 mm voxels, no doors or trims) stands on the pad
 addEventListener("ttr-forge-preview", ({ detail: parts }) => {
@@ -485,7 +484,7 @@ function loadVersion(i) {
 }
 
 async function doGenerate(prompt) {
-  if (!prompt.trim()) return;
+  if (!prompt.trim()) { toast("Describe a robot first, for example \"a 6 DOF arm with a gripper\"."); $("#prompt").focus(); return; }
   setBusy($("#genbtn"), true); document.body.classList.add("busy"); revealNext = "strong";
   const family = FAMILIES.findIndex((f) => f.prompt === prompt);
   if (family >= 0) familyDial.go(family, { silent: true });   // chips and the bar keep the ring honest
@@ -501,12 +500,16 @@ async function doGenerate(prompt) {
 
 // ---------------- Arduino mode: price tiers ----------------
 async function doArduino(prompt) {
-  status("Designing Arduino versions… (each option is a complete, checked design; this takes a few seconds)");
+  status("Designing Arduino versions… (each option is a complete, checked design: a car takes under a minute, an arm with its exact printed parts a few minutes)");
   const r = await api("/api/arduino", { prompt });
   state.tiers = r.options ?? [];
   const box = $("#tiers"); box.replaceChildren();
   $("#tierNotes").textContent = (r.notes ?? []).join("  ·  ");
-  if (!state.tiers.length) { $("#tierDial").hidden = true; box.append(el("div", "hint", "No Arduino version of this robot yet.")); jump("arduino"); return; }
+  if (!state.tiers.length) {
+    $("#tierDial").hidden = true; box.append(el("div", "hint", "No Arduino version of this robot yet."));
+    // the log must not keep saying "Designing..." once the answer is in
+    status(["✗ No Arduino version of this robot: nothing was designed.", ...(r.notes ?? [])], "err"); jump("arduino"); return;
+  }
   state.tiers.forEach((o, i) => {
     const b = el("button", "tier"); b.type = "button"; b.style.setProperty("--k", i);
     const price = el("div", "price", "$" + Math.round(o.cost_usd)); price.append(el("small", null, o.tier));
@@ -542,8 +545,13 @@ async function selectTier(i) {
 function renderCards() {
   const r = state.robot, d = r?.metadata?.design;
   $("#robotName").textContent = r ? r.robot_name.replace(/_/g, " ").replace(/^\w/, (c) => c.toUpperCase()) : "";
+  // what the CAD download holds for this robot: exact STEP solids only for parts modelled on the CAD kernel
+  const printedNames = new Set((d?.printed ?? []).map((p) => p.name));
+  const step = !!r?.links.some((l) => l.geometry.type === "mesh" && l.geometry.part === "cad" && printedNames.has(l.name));
+  $("[data-dl=cad] small").textContent = !r ? "STEP + STL" : !d ? "OpenSCAD + STL" : step ? "STEP + STL" : "STL";
   document.title = r ? `${r.robot_name.replace(/_/g, " ")} · Text to Robot` : "Text to Robot";
-  const cost = d?.performance?.cost_usd ?? state.bom?.total;
+  // the parts list total (bought parts, filament, fasteners, wiring), so the summary, the parts list and the tier cards agree
+  const cost = state.bom?.total ?? d?.performance?.cost_usd;
   $("#costBig").textContent = cost != null ? "$" + Number(cost).toFixed(0) : "—";
   $("#costPill").textContent = d?.performance?.tier_label ?? (d ? "designed" : r ? "template" : "");
   $("#costSub").textContent = d ? d.summary : r ? "Template robot (not sized from real parts)." : "Generate a robot to see what it costs to build.";
@@ -735,7 +743,10 @@ async function initTemplates() {
   try {
     const { templates } = await (await fetch("/api/templates")).json();
     const box = $("#templates");
-    for (const t of templates) { const b = el("button", null, t.title); b.type = "button"; b.title = t.description; b.onclick = () => { $("#prompt").value = "Create a " + t.title; doGenerate("Create a " + t.title); }; box.append(b); }
+    for (const t of templates) {
+      const prompt = `Create ${/^[aeiou]/i.test(t.title) ? "an" : "a"} ${t.title}`;
+      const b = el("button", null, t.title); b.type = "button"; b.title = t.description; b.onclick = () => { $("#prompt").value = prompt; doGenerate(prompt); }; box.append(b);
+    }
   } catch {}
 }
 async function initMode() {

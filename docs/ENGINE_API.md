@@ -33,7 +33,7 @@ Types: [`engine/v1/engine.d.ts`](https://megazron.github.io/text-to-robot/engine
 | `check(robot, { quick, interference, wiring })` | Spec and URDF validity, torque margin per joint, stability (centre of mass over the footprint, the slope it tips at), print bed fit, clearance between parts, automatic wiring with the power budget per rail; `engineering` holds mass, centre of mass, cost and those numbers. For an edited robot, `robot` comes back with its design record rebuilt. |
 | `sweep(robot, joint, samples)` | Parts that collide over one joint's travel, per sample. |
 | `urdf(robot)` | URDF and xacro. |
-| `ros2(robot)`, `cad(robot)`, `training(robot)` | The ROS 2 package, the CAD files (STEP and STL) and the MuJoCo training scaffold, as file maps. |
+| `ros2(robot)`, `cad(robot)`, `training(robot)` | The ROS 2 package, the CAD files (STL, with STEP for the parts modelled on the CAD kernel) and the training scaffold (PyBullet tasks and MuJoCo tests), as file maps. |
 | `bom(robot, budget)` | Bill of materials. |
 | `catalog()` | Every purchasable part (dimensions, mass, price, supplier, rating, electrical ports) with its mounting points, and the parametric printed parts. |
 | `edit(robot, ops)` | Apply edit operations; returns the new spec and every mount in world coordinates. |
