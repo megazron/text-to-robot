@@ -12,6 +12,7 @@ import { toScene, fromScene, applyEdits, emptyRobot, worldFrames, poseMat, mul, 
 import { snapPart, mate, patternsMatch } from "../apps/web/src/engine/snap.ts";
 import { partMounts, printedMounts, worldMounts } from "../apps/web/src/engine/mounts.ts";
 import { engineApi, parts, checkRobot } from "../apps/web/src/engine/api.ts";
+import { stability } from "../apps/web/src/engine/stability.ts";
 
 const example = (name: string) => JSON.parse(readFileSync(`examples/${name}/robot.json`, "utf8")) as RobotSpecification;
 const near = (a: number[], b: number[], tol = 1e-6) => a.every((x, i) => Math.abs(x - b[i]) < tol);
@@ -143,4 +144,17 @@ test("the /api/engine endpoints answer like the client expects", async () => {
   assert.ok(validateUrdf(u.urdf).valid && /<robot/.test(u.xacro));
   assert.equal((await get("POST", "/api/engine/edit", { robot: spec, ops: [{ op: "delete", link: "nope" }] }).catch((e) => ({ status: 500, body: String(e) }))).status, 500);
   assert.equal((await get("GET", "/api/engine/nothing")).status, 404);
+});
+
+test("stability: a car stands on its wheels, and falls over when its weight moves past them", () => {
+  const car = example("18_arduino_car"), s = stability(car)!;
+  assert.ok(s.free_standing && s.margin_mm > 20 && s.tip_deg > 10 && s.support.length >= 3, JSON.stringify(s));
+  const heavy = applyEdits(car, [{ op: "translate", link: "battery", by: [0, 0.6, 0] }]);
+  heavy.links.find((l) => l.name === "battery")!.mass = 2;
+  const f = stability(heavy)!;
+  assert.ok(f.margin_mm < 0, JSON.stringify(f));
+  assert.equal(checkRobot(heavy, { interference: false, wiring: false }).checks.find((c) => c.name === "stability")!.pass, false);
+  // an arm is bolted down: reported, never failed
+  const arm = checkRobot(example("02_arm_6dof"), { interference: false, wiring: false }).checks.find((c) => c.name === "stability")!;
+  assert.ok(arm.pass && /bolt/.test(arm.detail));
 });

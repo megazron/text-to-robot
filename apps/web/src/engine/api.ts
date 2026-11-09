@@ -14,6 +14,7 @@ import { partFiles } from "@ttr/kernel/ready";
 import { applyEdits, emptyRobot, kindOf, rootLink, worldFrames, mul, poseMat, rotate, unit, type EditOp, type PartProvider, type PrintedParams, type StudioMeta } from "./edit.ts";
 import { partMounts, printedMounts, printedProgram, worldMounts } from "./mounts.ts";
 import { autoWire } from "./autowire.ts";
+import { stability, type Stability } from "./stability.ts";
 
 export const ENGINE_API_VERSION = "1.0.0";
 const MATERIAL: Record<string, string> = { actuator: "actuator", wheel: "rubber", battery: "battery", compute: "electronics", sensor: "electronics", motor_driver: "electronics", misc: "electronics", bearing: "metal", horn: "metal" };
@@ -81,7 +82,7 @@ export interface JointReport { joint: string; actuator: string | null; required_
 export interface PrintedReport { name: string; bbox_mm: Vec3; fits_bed: boolean; watertight: boolean; mass_kg: number; volume_cm3: number; }
 export interface CheckReport {
   robot: RobotSpecification; urdf: string; valid: boolean; checks: Check[];
-  engineering: { mass_kg: number; com_m: Vec3; cost_usd: number; bom_lines: number; joints: JointReport[]; rails: NonNullable<DesignRecord["wiring"]>["rails"]; wiring_unconnected: string[]; printed: PrintedReport[]; links: number; dof: number } | null;
+  engineering: { mass_kg: number; com_m: Vec3; cost_usd: number; bom_lines: number; joints: JointReport[]; rails: NonNullable<DesignRecord["wiring"]>["rails"]; wiring_unconnected: string[]; printed: PrintedReport[]; stability: Stability | null; links: number; dof: number } | null;
 }
 /** Checks and engineering numbers of a spec. Heavy parts (solids, wiring) are skipped with `quick`. */
 export function checkRobot(input: RobotSpecification, opts: { quick?: boolean; interference?: boolean; wiring?: boolean } = {}): CheckReport {
@@ -100,6 +101,14 @@ export function checkRobot(input: RobotSpecification, opts: { quick?: boolean; i
   const poses: Record<string, number>[] = [{}];
   for (const t of [-1, -0.5, 0.5, 1]) poses.push(Object.fromEntries(moving.map((j) => [j.name, Math.max(j.limit?.lower ?? -Math.PI, Math.min(j.limit?.upper ?? Math.PI, j.type === "prismatic" ? 0 : t * Math.PI / 2))])));
   const need = worstTorques(spec, poses), inertia = axisInertias(spec, {});
+  // tipping, at the zero pose and the same poses (a robot built on a ground plane at z = 0 stands on its lowest parts)
+  const stab = stability(spec, poses);
+  if (stab) {
+    const where = `centre of mass ${Math.abs(stab.margin_mm).toFixed(0)} mm ${stab.margin_mm >= 0 ? "inside" : "outside"} the footprint`;
+    if (stab.free_standing) checks.push({ name: "stability", pass: stab.margin_mm > 0 && stab.tip_deg >= 5, detail: stab.margin_mm > 0 ? `${where}: it tips at a ${stab.tip_deg} deg slope (5 deg needed)` : `${where}: it falls over${Object.keys(stab.worst_pose).length ? " when its joints move" : ""}` });
+    else if (/mark43|exo|suit/.test(meta(spec).design?.family ?? "")) checks.push({ name: "stability", pass: true, detail: "worn: the wearer balances it" });
+    else checks.push({ name: "stability", pass: true, detail: `a fixed machine: bolt its base down. Standing free, ${where}${stab.margin_mm > 0 ? `, tipping at ${stab.tip_deg} deg` : ""}` });
+  }
   const joints = spec.joints.filter((j) => j.type !== "fixed" && !j.passive && !j.mimic).map((j): JointReport => {
     const key = act[j.name];
     if (!key) return { joint: j.name, actuator: null, required_nm: +(need[j.name] ?? 0).toFixed(4), margin: null, note: "no actuator drives this joint" };
@@ -149,7 +158,7 @@ export function checkRobot(input: RobotSpecification, opts: { quick?: boolean; i
     robot, urdf, valid: checks.every((c) => c.pass), checks,
     engineering: {
       mass_kg: +mass.toFixed(3), com_m: com.map((x) => +x.toFixed(4)) as Vec3, cost_usd: +cost.toFixed(2), bom_lines: bomLines,
-      joints, rails: wiring?.record?.rails ?? [], wiring_unconnected: wiring?.unwired ?? [], printed,
+      joints, rails: wiring?.record?.rails ?? [], wiring_unconnected: wiring?.unwired ?? [], printed, stability: stab,
       links: spec.links.length, dof: spec.joints.filter((j) => j.type !== "fixed" && !j.passive).length,
     },
   };

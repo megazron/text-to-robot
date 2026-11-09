@@ -30,7 +30,7 @@ Types: [`engine/v1/engine.d.ts`](https://megazron.github.io/text-to-robot/engine
 | `modify(robot, instruction)` | Change a robot by a description. |
 | `arduino(prompt)` | Cheap Arduino versions with their prices. |
 | `open(robot)` | Check and keep a spec from elsewhere; its `id` serves its meshes. |
-| `check(robot, { quick, interference, wiring })` | Spec and URDF validity, torque margin per joint, print bed fit, clearance between parts, automatic wiring with the power budget per rail; `engineering` holds mass, centre of mass, cost and those numbers. For an edited robot, `robot` comes back with its design record rebuilt. |
+| `check(robot, { quick, interference, wiring })` | Spec and URDF validity, torque margin per joint, stability (centre of mass over the footprint, the slope it tips at), print bed fit, clearance between parts, automatic wiring with the power budget per rail; `engineering` holds mass, centre of mass, cost and those numbers. For an edited robot, `robot` comes back with its design record rebuilt. |
 | `sweep(robot, joint, samples)` | Parts that collide over one joint's travel, per sample. |
 | `urdf(robot)` | URDF and xacro. |
 | `ros2(robot)`, `cad(robot)`, `training(robot)` | The ROS 2 package, the CAD files (STEP and STL) and the MuJoCo training scaffold, as file maps. |
