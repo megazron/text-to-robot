@@ -14,6 +14,8 @@ const el = (t, c, txt) => { const e = document.createElement(t); if (c) e.classN
 const state = {
   robot: null, urdf: "", xacro: "", jointValues: {},
   versions: [], version: -1, selection: null, meshes: new Map(), axisHelpers: [], frameHelpers: [], bom: null, id: null,
+  /** how this robot was made, if from the prompt bar: { p: prompt, a?: Arduino tiers, t?: tier, m?: [changes] }; a gallery link replays it */
+  recipe: null,
 };
 
 // ---------------- three.js scene ----------------
@@ -466,7 +468,7 @@ function applyResult(res, label, diffLines) {
   state.robot = res.robot; state.urdf = res.urdf; state.xacro = res.xacro; state.id = res.id ?? state.id;
   if (state.id && !STATIC) history.replaceState(null, "", `/r/${state.id}`);
   state.jointValues = { ...(res.robot?.metadata?.design?.home ?? {}) }; // designed robots open in their ready pose
-  state.versions.push({ id: state.id, label, robot: res.robot, urdf: res.urdf, xacro: res.xacro });
+  state.versions.push({ id: state.id, label, robot: res.robot, urdf: res.urdf, xacro: res.xacro, recipe: state.recipe && structuredClone(state.recipe) });
   state.version = state.versions.length - 1;
   state.selection = null;
   state.bom = res.bom ?? null;
@@ -479,7 +481,7 @@ function applyResult(res, label, diffLines) {
 
 function loadVersion(i) {
   const v = state.versions[i]; if (!v) return;
-  state.version = i; state.id = v.id; state.robot = v.robot; state.urdf = v.urdf; state.xacro = v.xacro; state.jointValues = { ...(v.robot?.metadata?.design?.home ?? {}) }; state.selection = null;
+  state.version = i; state.id = v.id; state.robot = v.robot; state.recipe = v.recipe ?? null; state.urdf = v.urdf; state.xacro = v.xacro; state.jointValues = { ...(v.robot?.metadata?.design?.home ?? {}) }; state.selection = null;
   buildRobot(v.robot); renderTree(); renderSliders(); renderInspector(); renderHistory(); renderCards(); refreshCircuit();
 }
 
@@ -492,7 +494,7 @@ async function doGenerate(prompt) {
   first = false;
   try {
     if (state.arduino) await doArduino(prompt);
-    else { const res = await api("/api/robots/generate", { prompt }); state.versions = []; applyResult(res, prompt.slice(0, 40)); }
+    else { const res = await api("/api/robots/generate", { prompt }); state.versions = []; state.recipe = { p: prompt }; applyResult(res, prompt.slice(0, 40)); }
   }
   catch (e) { revealNext = null; status("✗ " + e.message, "err"); }
   finally { setBusy($("#genbtn"), false, "Generate"); document.body.classList.remove("busy"); }
@@ -501,7 +503,7 @@ async function doGenerate(prompt) {
 // ---------------- Arduino mode: price tiers ----------------
 async function doArduino(prompt) {
   status("Designing Arduino versions… (each option is a complete, checked design: a car takes under a minute, an arm with its exact printed parts a few minutes)");
-  const r = await api("/api/arduino", { prompt });
+  const r = await api("/api/arduino", { prompt }); state.tierPrompt = prompt;
   state.tiers = r.options ?? [];
   const box = $("#tiers"); box.replaceChildren();
   $("#tierNotes").textContent = (r.notes ?? []).join("  ·  ");
@@ -538,6 +540,7 @@ async function selectTier(i) {
   document.querySelectorAll(".tier").forEach((t, k) => t.classList.toggle("sel", k === i));
   if (tierDial && tierDial.index !== i) tierDial.go(i, { silent: true });
   const res = await api("/api/robots/import", { robot: o.robot });
+  state.recipe = { p: state.tierPrompt, a: 1, t: i };
   applyResult({ ...res, summary: o.summary, warnings: o.failing.length ? [`failing checks: ${o.failing.join(", ")}`] : [] }, `${o.tier}: $${Math.round(o.cost_usd)}`);
 }
 
@@ -597,14 +600,19 @@ function jump(section) {
 }
 
 // ---------------- publish (opt-in) and gallery ----------------
+const b64url = (s) => btoa(String.fromCharCode(...new TextEncoder().encode(s))).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+const fromB64url = (s) => new TextDecoder().decode(Uint8Array.from(atob(s.replace(/-/g, "+").replace(/_/g, "/")), (c) => c.charCodeAt(0)));
 const REPO = "megazron/text-to-robot";
 async function publish() {
   if (!state.robot) return;
-  const link = STATIC ? await STATIC.shareUrl(state.robot) : `${location.origin}/r/${state.id}`;
+  let link = STATIC ? await STATIC.shareUrl(state.robot) : `${location.origin}/r/${state.id}`, replay = false;
+  // a designed robot is about 22,000 characters as a link, more than a GitHub issue form takes: post how it was made instead
+  // (its prompt, Arduino tier and changes), which the design engine rebuilds the same way
+  if (link.length > 7000 && state.recipe) { link = `${location.origin}${location.pathname}#make=${b64url(JSON.stringify(state.recipe))}`; replay = true; }
   const d = state.robot.metadata?.design;
   const title = `[gallery] ${state.robot.robot_name.replace(/_/g, " ")}`;
-  const body = `${d?.summary ?? state.robot.metadata?.source_prompt ?? ""}\n\nOpen it: ${link}\n\n(Posted from the Text to Robot page. Edit or close this issue to change or remove it.)`;
-  if (link.length > 7000) { status("This design is too large for a gallery post link; download the JSON and attach it to a post instead.", "err"); return; }
+  const body = `${d?.summary ?? state.robot.metadata?.source_prompt ?? ""}\n\nOpen it: ${link}\n\n${replay ? "(The link rebuilds the robot from its prompt and changes with the site's design engine.) " : ""}(Posted from the Text to Robot page. Edit or close this issue to change or remove it.)`;
+  if (link.length > 7000) { status("This robot was opened from a file, so it has no prompt to post and is too large for a gallery post link; download the JSON and attach it to a post instead.", "err"); return; }
   window.open(`https://github.com/${REPO}/issues/new?title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`, "_blank", "noopener");
 }
 async function loadGallery() {
@@ -615,7 +623,7 @@ async function loadGallery() {
     box.replaceChildren();
     if (!items.length) box.append(el("div", "empty", "Nothing published yet. Press “Publish to gallery” to be the first."));
     for (const it of items) {
-      const link = /https?:\/\/\S+#robot=[A-Za-z0-9_-]+/.exec(it.body ?? "")?.[0];
+      const link = /https?:\/\/\S+#(?:robot|make)=[A-Za-z0-9_-]+/.exec(it.body ?? "")?.[0];
       const a = el("a", "item"); a.style.animationDelay = `${box.children.length * 40}ms`; a.href = link ?? it.html_url; a.target = "_blank"; a.rel = "noopener";
       a.append(el("b", null, it.title.replace(/^\[gallery\]\s*/, "")), el("small", null, `by ${it.user?.login ?? "someone"} · ${new Date(it.created_at).toLocaleDateString()}`));
       box.append(a);
@@ -625,7 +633,7 @@ async function loadGallery() {
 async function doModify(instruction) {
   if (!state.robot || !instruction.trim()) return;
   setBusy($("#modbtn"), true); revealNext = "soft"; sheet.go("peek");
-  try { const res = await api("/api/robots/modify", { robot: state.robot, instruction }); applyResult(res, instruction.slice(0, 40), res.changes ?? res.diff?.lines); }
+  try { const res = await api("/api/robots/modify", { robot: state.robot, instruction }); state.recipe = state.recipe && { ...state.recipe, m: [...(state.recipe.m ?? []), instruction] }; applyResult(res, instruction.slice(0, 40), res.changes ?? res.diff?.lines); }
   catch (e) { status("✗ " + e.message, "err"); }
   finally { setBusy($("#modbtn"), false, "Modify"); }
 }
@@ -755,7 +763,7 @@ $("#robotFile").onchange = async (event) => {
   try {
     if(file.size>3_900_000)throw new Error("Robot JSON must be smaller than 3.9 MB");
     const robot=JSON.parse(await file.text());
-    const result=await api("/api/robots/import",{robot});applyResult(result,`Imported ${file.name}`);
+    const result=await api("/api/robots/import",{robot});state.recipe=null;applyResult(result,`Imported ${file.name}`);
   }catch(error){status("✗ "+error.message,"err");}
   finally {setBusy(button,false,"Import JSON");event.target.value="";}
 };
@@ -809,6 +817,20 @@ document.querySelector('link[rel="icon"]').href = new URL("./mark.svg", import.m
 followKeyboard();
 initExamples(); initTemplates(); initMode();
 (async () => {
+  const make = /[#&]make=([A-Za-z0-9_-]+)/.exec(location.hash)?.[1];
+  if (make) {
+    // a gallery link: replay how the robot was made
+    try {
+      const r = JSON.parse(fromB64url(make)); history.replaceState(null, "", location.pathname);
+      if (typeof r.p !== "string") throw new Error("no prompt");
+      $("#prompt").value = r.p;
+      if (r.a && !state.arduino) setArduino(true);
+      await doGenerate(r.p);
+      if (r.a && Number.isInteger(r.t) && r.t !== state.recipe?.t) await selectTier(r.t);
+      for (const m of r.m ?? []) await doModify(String(m));
+      return;
+    } catch { status("\u2717 gallery link is damaged; generating a default", "err"); }
+  }
   if (STATIC && location.hash.includes("robot=")) {
     try { const robot = await STATIC.sharedRobot(); history.replaceState(null, "", location.pathname); applyResult(await api("/api/robots/import", { robot }), "shared robot"); return; }
     catch { status("\u2717 shared robot link is damaged; generating a default", "err"); }

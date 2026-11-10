@@ -119,3 +119,12 @@ test("a file that is not a robot is refused by the import check, not by a TypeEr
   const { forgeForRobot } = await import("@ttr/robot-generator");
   for (const bad of [{ links: "nope" }, {}, { metadata: null }]) await forgeForRobot(bad as never);   // nothing to forge, no throw
 });
+
+test("an arm whose peak current is more than the 75 W supply gives is designed on the 150 W supply, and its rails pass", () => {
+  const { spec } = interpretPrompt("6 dof arm 0.45m reach 0.3kg payload");
+  const d = (spec.metadata as { design?: { checks?: { name: string; pass: boolean }[]; purchased?: { key: string }[] } }).design!;
+  assert.ok(d.purchased!.some((p) => p.key === "psu_12v_lrs150"), "the bigger supply is bought");
+  assert.deepEqual(d.checks!.filter((c) => !c.pass && c.name.startsWith("wiring:rail")).map((c) => c.name), []);
+  const plain = (interpretPrompt("Create a 6 DOF robotic arm with a parallel gripper").spec.metadata as { design?: { purchased?: { key: string }[] } }).design!;
+  assert.ok(!plain.purchased!.some((p) => p.key === "psu_12v_lrs150"), "an arm that fits the 75 W supply keeps it");
+});
