@@ -167,14 +167,15 @@ function boxHex(A: Assembly, H: Harness, b: ReturnType<typeof buildHexapod>) {
   const hb = hoodAround(A, H, { name: "board_hood", deck: "base_link", parts: ["actuator_bus", "regulator_5v", "imu"], z0: b.zPlate, z1: tallest + 26, rocker: true, noDeckHole: true, limit: { x0: -15, x1: 41, y0: -80, y1: 60 },
     grommets: [{ id: "usb", face: "y-", u: -6 }, { id: "legs_left", face: "y+", u: 16 }, { id: "legs_right", face: "y-", u: 16 }, { id: "power", face: "x+", u: 34 }] });
   // the inline fuse rides on the plate between the tray's lead hole and the hood, tied along its lead
-  H.spot.set("main_fuse", { by: "battery", at: [66, 16, b.zPlate + 8], free: true });
+  // (its IN end towards the tray's lead hole, its OUT end towards the hood's power grommet)
+  H.spot.set("main_fuse", { by: "battery", at: [66, 16, b.zPlate + 8], free: true, turned: true });
   H.spot.set("star_ground", { by: "actuator_bus", at: [10, -30, tallest + 14] });
   for (const s of [1, -1]) { const y = s > 0 ? hb.max[1] + 12 : hb.min[1] - 12; A.amendProgram("base_link", [{ op: "hole", a: [16, y, b.zPlate - 6], b: [16, y, b.zPlate + 1], d: 12 }]); }
   for (const c of ["computer~lidar", "camera~computer", "actuator_bus~computer"]) H.exitOf.set(c, "computer_hood.usb");
   for (const n of ["lf", "lm", "lr", "rr", "rm", "rf"]) for (const c of [`actuator_bus_hub~${n}_coxa_actuator`, `VBAT~${n}_coxa_actuator`]) H.exitOf.set(c, `board_hood.legs_${n[0] === "l" ? "left" : "right"}`);
   const bb = b.battB, x0 = b.bx0 + bb.min[0] - 3, x1 = b.bx0 + bb.max[0] + LEAD_ROOM, y = b.bw + 4.4;
   // the tray hangs from the plate: bounds in the frame turned about x, so z runs downwards
-  hood(A, H, { name: "battery_tray", deck: "base_link", x0, x1, y0: -y, y1: y, z0: -(b.zPlate - 4), z1: -(b.zBatt - 3), parts: ["battery"], flip: true, ventRows: 0, deckGrommets: [{ id: "up", x: x1 - 8, y: 0 }] });
+  hood(A, H, { name: "battery_tray", deck: "base_link", x0, x1, y0: -y, y1: y, z0: -(b.zPlate - 4), z1: -(b.zBatt - 3), parts: ["battery"], flip: true, ventRows: 0, deckGrommets: [{ id: "up", x: x1 - 8, y: 16 }] });   // under the fuse's IN end
   H.scan();
 }
 function wireHex(A: Assembly, H: Harness, compute: string) {
