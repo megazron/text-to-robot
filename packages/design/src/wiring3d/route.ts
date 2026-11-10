@@ -148,7 +148,7 @@ export class Router {
     const S = add(e.p, scale(e.out, conn));
     for (let t = 2; t <= conn; t += 1) if (!own(add(e.p, scale(e.out, t)))) { problems.push(`${what}: its connector (${Math.round(conn)} mm) meets ${this.nameAt(add(e.p, scale(e.out, t)))} ${Math.round(t)} mm from the pin`); return { S, V: S }; }
     // a quarter more than the radius: a turn a little over a right angle still rounds fully
-    for (const k of [1.25, 1, 0.75, 0.5]) {
+    for (const k of [1.25, 1.1, 1, 0.75, 0.5]) {
       const V = add(S, scale(e.out, R * k)); let ok = g.at(V) === 0;
       for (let t = 0; ok && t <= R * k; t += 1) if (!own(add(S, scale(e.out, t)))) ok = false;
       if (ok) { if (k < 1) problems.push(`${what}: ${Math.round(R * k)} mm for the first bend, the wire wants ${R.toFixed(1)} mm`); return { S, V }; }
@@ -206,6 +206,10 @@ export class Router {
     });
     if (ends.some((e) => !e)) return { trunk: [], trunkOn: [], wires: [], anchors: [], problems: [`${c.key}: an end has no place`] };
     const E = ends as NonNullable<(typeof ends)[number]>[];
+    // two pins facing each other on one line (a pack's lead straight into the fuse): the wire runs straight between the
+    // connectors and turns nowhere, so their lead-outs meet half way
+    if (n === 1) { const x = E[0], u = x.a.out, d = sub(x.lb.S, x.la.S), along = dot(d, u), lat = len(sub(d, scale(u, along)));
+      if (dot(u, x.b.out) < -0.995 && along > 1 && lat < 1.5 && dot(sub(x.lb.V, x.la.V), u) < 0 && g.line(x.la.S, x.lb.S, 1) >= 0) { const m = lerp(x.la.S, x.lb.S, 0.5); x.la.V = m; x.lb.V = m; } }
     const ga = E[0].a.group, gb = E[0].b.group;
     // clearance asked of the search: the bundle's half width and a bend radius beside it, so a path round an edge leaves the
     // room its corners need to be rounded; it settles for less, down to the wire's own width, where there is not that much
@@ -289,11 +293,28 @@ export class Router {
       let ring = n > 1 && !tight ? Math.max(od * 0.6, c.od / 2 - od / 2) : 0;
       if (ring && hole < 1e9) ring = Math.max(0, Math.min(ring, hole / 2 - od / 2 - 0.4));
       const tryRing = (r: number): { pts: V3[]; on: string[] } | null => {
-        const Ti = offsetRoute(T.pts, r, (k / Math.max(1, n)) * Math.PI * 2);
+        let Ti = offsetRoute(T.pts, r, (k / Math.max(1, n)) * Math.PI * 2), Ton = T.on;
+        // a wire leaves the bundle where it passes nearest its pin's lead-out (a pin behind the bundle's end would have the
+        // wire run on past it and turn back): within the last stretch on the same body, clear of the holes it passes
+        if (n > 1) for (const end of [0, 1] as const) {
+          const V = end ? e.lb.V : e.la.V, idx = (j: number) => (end ? Ti.length - 1 - j : j);
+          let bestD = dist(V, Ti[idx(0)]), cut = -1, at: V3 | null = null, run = 0;
+          for (let j = 1; j < Ti.length && run < 120; j++) {
+            const p0 = Ti[idx(j - 1)], p1 = Ti[idx(j)];
+            if (Ton[idx(j)] !== Ton[idx(0)] || fixed.has(T.pts[idx(j)]) || fixed.has(T.pts[idx(j - 1)])) break;
+            const ab = sub(p1, p0), tt = Math.max(0, Math.min(1, dot(sub(V, p0), ab) / (dot(ab, ab) || 1))), q = lerp(p0, p1, tt), d = dist(V, q);
+            if (d < bestD - 2 && g.line(V, q, 1, end ? boxB : boxA) >= 0) { bestD = d; cut = j; at = q; }
+            run += len(ab);
+          }
+          if (cut > 0 && at) {
+            if (end) { Ti = [...Ti.slice(0, Ti.length - cut), at]; Ton = [...Ton.slice(0, Ton.length - cut), Ton[Ton.length - cut]]; }
+            else { Ti = [at, ...Ti.slice(cut)]; Ton = [Ton[cut - 1], ...Ton.slice(cut)]; }
+          }
+        }
         const la = n === 1 ? [e.la.V] : this.connect(e.la.V, Ti[0], needW, boxA), lb = n === 1 ? [e.lb.V] : this.connect(e.lb.V, Ti[Ti.length - 1], needW, boxB);
         if (!la || !lb) return null;
         const pts: V3[] = [e.a.p, e.la.S, ...la.slice(0, n === 1 ? 0 : -1), ...Ti, ...lb.slice(0, n === 1 ? 0 : -1).reverse(), e.lb.S, e.b.p];
-        const o: string[] = [ga, ga, ...la.slice(0, n === 1 ? 0 : -1).map(() => ga), ...T.on, ...lb.slice(0, n === 1 ? 0 : -1).map(() => gb), gb, gb];
+        const o: string[] = [ga, ga, ...la.slice(0, n === 1 ? 0 : -1).map(() => ga), ...Ton, ...lb.slice(0, n === 1 ? 0 : -1).map(() => gb), gb, gb];
         return { pts, on: o };
       };
       let w = tryRing(ring), bad = w ? this.finishWire(w, e.R, e, pierced, fixed, needW) : null;
@@ -386,6 +407,9 @@ export class Router {
         for (const [v, sIdx, nx] of [[2, 1, 3], [n - 3, n - 2, n - 4]] as const) {
           if (nx <= 2 || nx >= n - 3 || (k !== Math.min(v, nx) && k + 1 !== v) || fixedAt(P, nx) || O[nx] !== O[v]) continue;
           const dir = unit(sub(Q[v], Q[sIdx])), back = dot(sub(Q[nx], Q[v]), dir);
+          // or the leg from the lead-out on is too short for its two corners: the point goes further out along that leg
+          { const L0 = dist(Q[v], Q[nx]), need = ((wantAt(v) + wantAt(nx)) / 0.98) + 0.5;
+            if (L0 > 0.5 && need > L0 && need < 3 * L0 + 30) { const m = r1(add(Q[v], scale(sub(Q[nx], Q[v]), need / L0))); if (g.at(m) === 0 && g.line(Q[v], m, 1) >= 0 && g.line(m, Q[nx + (nx > v ? 1 : -1)], 1) >= 0) cands.push({ pts: Q.map((p, j) => (j === nx ? m : p)), on: O }); } }
           if (back >= 0) continue;
           const m = r1(add(Q[nx], scale(dir, -back + 0.5)));
           if (g.at(m) === 0 && g.line(Q[v], m, 1) >= 0 && g.line(m, Q[nx + (nx > v ? 1 : -1)], 1) >= 0) cands.push({ pts: Q.map((p, j) => (j === nx ? m : p)), on: O });
