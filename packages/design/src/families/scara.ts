@@ -99,6 +99,8 @@ function build(name: string, prompt: string | undefined, p: Plan) {
     ...housingCuts(p.j1, T1, b1, [0, 0, 0], zf1, 1),
   ];
   for (const [ax, ay] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) base.push({ op: "cutbox", min: [ax ? (ax > 0 ? tower - 9 : -tower - 1) : -15, ay ? (ay > 0 ? tower - 9 : -tower - 1) : -15, BASE_T + 14], max: [ax ? (ax > 0 ? tower + 1 : -tower + 9) : 15, ay ? (ay > 0 ? tower + 1 : -tower + 9) : 15, zf1 - 14] });
+  // the J1 motor's cable leaves its +x side by the rear cap, below the window: a notch through the tower wall and the foot round it
+  base.push({ op: "cutbox", min: [tower - 9, -9, BASE_T + 4], max: [60, 9, BASE_T + 14.01] });
   for (const x of [-1, 1]) for (const y of [-1, 1]) base.push({ op: "hole", a: [x * 75, y * 75, -1], b: [x * 75, y * 75, BASE_T + 1], d: 5.5 }, { op: "hole", a: [x * 75, y * 75, BASE_T - 0.01], b: [x * 75, y * 75, BASE_T + 6], d: 10 });
   A.printedLink("base_link", { name: "base_link", ops: base }, { role: "base", material: "printed_dark" });
   A.fastener("M5 x 16 socket head (base to bench)", 4);
@@ -190,63 +192,69 @@ function build(name: string, prompt: string | undefined, p: Plan) {
   A.spec.end_effectors.push({ name: "gripper", type: "parallel_gripper", attach_link: "gripper_body" });
 
   // ---------------- controller box, outside the reach ----------------
+  // Floor: the two supplies, their terminal ends 62 mm from the wall that carries the mains inlet (the room the spades,
+  // the ferrules and the first bends of the mains and DC wires take). Above them an electronics deck that stops short of
+  // that wiring well: the ESP32-S3 on one breadboard, the three StepSticks on another (their pins point down: jumpers
+  // plug into the tie points beside them), the servo bus adapter on standoffs. The lid leaves the jumpers room to bend.
   const reachOut = L1 + L2 + R - 0;
-  const bx0 = -Math.ceil(reachOut + 30) - 171;
+  const BL = 230, BH = 92, WELL = 62;
+  const bx0 = -Math.ceil(reachOut + 30) - BL;
+  const glandY = -70, glandZ = 70;
   const box: Op[] = [
-    { op: "box", min: [bx0, -103, 0], max: [bx0 + 171, 103, 86], r: 6 },
-    { op: "cutbox", min: [bx0 + 3, -100, 3], max: [bx0 + 168, 100, 91] },
-    ...[-1, 1].map((s): Op => ({ op: "box", min: [bx0 + 3, s > 0 ? 96 : -100, 43], max: [bx0 + 168, s > 0 ? 100 : -96, 46] })),
+    { op: "box", min: [bx0, -103, 0], max: [bx0 + BL, 103, BH], r: 6 },
+    { op: "cutbox", min: [bx0 + 3, -100, 3], max: [bx0 + BL - 3, 100, BH + 5] },
+    ...[-1, 1].map((s): Op => ({ op: "box", min: [bx0 + 3 + WELL, s > 0 ? 96 : -100, 43], max: [bx0 + BL - 3, s > 0 ? 100 : -96, 46] })),
+    { op: "box", min: [bx0 + BL - 7, -100, 43], max: [bx0 + BL - 3, 100, 46] },
   ];
-  for (let k = 0; k < 8; k++) for (const s of [-1, 1]) box.push({ op: "cutbox", min: [bx0 + 22 + k * 17, s > 0 ? 99 : -104, 12], max: [bx0 + 30 + k * 17, s > 0 ? 104 : -99, 36] });
-  const psu24 = translation([bx0 + 6, -99, 3]), psu12 = translation([bx0 + 6, 2, 3]);
+  for (let k = 0; k < 8; k++) for (const s of [-1, 1]) box.push({ op: "cutbox", min: [bx0 + 3 + WELL + 12 + k * 17, s > 0 ? 99 : -104, 12], max: [bx0 + 3 + WELL + 20 + k * 17, s > 0 ? 104 : -99, 36] });
+  const psu24 = translation([bx0 + 3 + WELL, -99, 3]), psu12 = translation([bx0 + 3 + WELL, 2, 3]);
   for (const [key, T] of [["psu_24v_lrs150", psu24], ["psu_12v_lrs75", psu12]] as const) for (const h of part(key).holes) if (h.axis[2] < -0.5) { const q = apply(T, h.pos); box.push({ op: "hole", a: [q[0], q[1], -1], b: [q[0], q[1], 4], d: 3.4 }); }
-  // fused, switched mains inlet in the far wall (its body stands in the room left of the supplies), gland where the harness leaves, USB of the controller
+  // electronics deck on the ledges
+  const dz = 49, dx0 = bx0 + 3 + WELL;
+  const deck: Op[] = [{ op: "box", min: [dx0, -99.7, 46], max: [bx0 + BL - 3.3, 99.7, dz], r: 2 }];
+  // breadboard A turned so the ESP32's USB end faces the y+ wall; breadboard B along x; both stuck down by their adhesive backs.
+  // The deck over the 24 V supply stays free at the well end: the lever splices of the supply rails are tied down there
+  const bbA = frame([dx0 + 8, 97, dz], [0, 0, 1], [0, -1, 0]), bbB = translation([dx0 + 76, 20, dz]);
+  const espOn = translation([1.5, 14.55, 8.5]), tmcOn = [0, 1, 2].map((k) => translation([4 + k * 26, 19.65, 8.5]));
+  const wsT = translation([dx0 + 109, -45, dz + 6]);
+  const kept: [number, number, number, number][] = [[dx0 + 6, dx0 + 64.5, 12.5, 99], [dx0 + 74, dx0 + 160.5, 18, 76.5], [dx0 + 107, dx0 + 153, -47, -10]];   // under the breadboards and the adapter: no slots
+  // ventilation slots through the deck, except under a breadboard (its adhesive back needs the surface) and the adapter's standoffs
+  for (let k = 0; k < 6; k++) {
+    const y0 = -90 + k * 30, y1 = -80 + k * 30;
+    let xs: [number, number][] = [[dx0 + 8, bx0 + BL - 12]];
+    for (const [xa, xb, ya, yb] of kept) if (ya < y1 + 1 && yb > y0 - 1) xs = xs.flatMap(([a, b]) => [[a, Math.min(b, xa - 2)], [Math.max(a, xb + 2), b]] as [number, number][]).filter(([a, b]) => b - a > 6);
+    for (const [a, b] of xs) deck.push({ op: "cutbox", min: [a, y0, 45], max: [b, y1, 50] });
+  }
+  for (const [hx, hy] of [[3, 3], [39, 3], [3, 30], [39, 30]]) { const q = apply(wsT, [hx, hy, 0]); deck.push({ op: "rod", a: [q[0], q[1], dz - 0.1], b: [q[0], q[1], dz + 6], r: 2.5 }, { op: "hole", a: [q[0], q[1], dz - 1], b: [q[0], q[1], dz + 6.1], d: 1.8 }); }
+  // fused, switched mains inlet in the far wall, over the wiring well; gland where the harness leaves; USB of the controller
   box.push({ op: "cutbox", min: [bx0 - 1, -31.6, 52.3], max: [bx0 + 4, 15.6, 79.7] });
-  box.push({ op: "hole", a: [bx0 + 166, 40, 60], b: [bx0 + 173, 40, 60], d: 12.5 });
-  box.push({ op: "cutbox", min: [bx0 + 40, -104, 52], max: [bx0 + 80, -99, 68] });
+  box.push({ op: "hole", a: [bx0 + BL - 5, glandY, glandZ], b: [bx0 + BL + 2, glandY, glandZ], d: 12.5 });
+  const usbX = apply(bbA, apply(espOn, [0, 12.7, 0]))[0];
+  box.push({ op: "cutbox", min: [usbX - 16, 99, dz + 8.5 + 3], max: [usbX + 16, 104, dz + 8.5 + 17] });
   A.printedLink("controller_box", { name: "controller_box", ops: box }, { role: "base", material: "printed_dark" });
   A.fixed("controller_box_mount", "base_link", "controller_box", I4());
   A.mount("controller_box", "psu_24v_lrs150", psu24, "psu_24v", "24 V stepper supply");
   A.mount("controller_box", "psu_12v_lrs75", psu12, "psu_12v", "12 V servo supply");
-  // electronics deck on the ledges: ESP32-S3 and the three drivers clamped at their board ends, servo bus adapter on standoffs
-  const dz = 49;
-  const deck: Op[] = [{ op: "box", min: [bx0 + 3.3, -99.7, 46], max: [bx0 + 167.7, 99.7, dz], r: 2 }];
-  // boards without mounting holes sit in four corner clips (slots for the board edge), clear of connectors and pins
-  const clampBoxes: [number, number, number, number][] = [];
-  const clamp = (x0: number, y0: number, L: number, W: number, zb: number, t: number) => {
-    for (const [xa, xb] of [[x0 - 4, x0 + 0.4], [x0 + L - 0.4, x0 + L + 4]]) for (const [ya, yb] of [[y0 - 1.5, y0 + 2.2], [y0 + W - 2.2, y0 + W + 1.5]]) clampBoxes.push([xa, xb, ya, yb]), deck.push({ op: "box", min: [xa, ya, dz - 0.1], max: [xb, yb, zb + t + 1.5] });
-    deck.push({ op: "cutbox", min: [x0 - 0.15, y0 - 0.15, zb - 0.05], max: [x0 + L + 0.15, y0 + W + 0.15, zb + t + 0.05] });
-  };
-  const espT = translation([bx0 + 20, -60, dz + 9]);
-  clamp(bx0 + 20, -60, 62.74, 25.4, dz + 9, 1.6);
-  const tmcT = [0, 1, 2].map((k) => translation([bx0 + 100, -60 + k * 22, dz + 12]));
-  for (let k = 0; k < 3; k++) clamp(bx0 + 100, -60 + k * 22, 20.3, 15.2, dz + 12, 1.6);
-  // ventilation slots through the deck, except where a board clip stands (a slot under a clip leaves it floating)
-  for (let k = 0; k < 6; k++) {
-    const y0 = -90 + k * 30, y1 = -80 + k * 30;
-    let xs: [number, number][] = [[bx0 + 15, bx0 + 155]];
-    for (const [xa, xb, ya, yb] of clampBoxes) if (ya < y1 + 1 && yb > y0 - 1) xs = xs.flatMap(([a, b]) => [[a, Math.min(b, xa - 2)], [Math.max(a, xb + 2), b]] as [number, number][]).filter(([a, b]) => b - a > 6);
-    for (const [a, b] of xs) deck.push({ op: "cutbox", min: [a, y0, 45], max: [b, y1, 50] });
-  }
-  const wsT = translation([bx0 + 20, 20, dz + 6]);
-  for (const [hx, hy] of [[3, 3], [39, 3], [3, 30], [39, 30]]) deck.push({ op: "rod", a: [bx0 + 20 + hx, 20 + hy, dz - 0.1], b: [bx0 + 20 + hx, 20 + hy, dz + 6], r: 2.5 }, { op: "hole", a: [bx0 + 20 + hx, 20 + hy, dz - 1], b: [bx0 + 20 + hx, 20 + hy, dz + 6.1], d: 1.8 });
   A.printedLink("controller_deck", { name: "controller_deck", ops: deck }, { role: "link", material: "printed" });
   A.fixed("controller_deck_mount", "controller_box", "controller_deck", I4());
-  A.mount("controller_deck", "esp32_s3_devkitc1", espT, "controller", "ESP32-S3 motion controller");
-  tmcT.forEach((T, k) => A.mount("controller_deck", "tmc2209_stepstick", T, `driver_${["j1", "j2", "z"][k]}`, "stepper drivers (J1, J2, Z)"));
+  A.mount("controller_deck", "breadboard_400", bbA, "breadboard_controller", "plug-in wiring for the ESP32-S3 (stuck to the deck by its adhesive back)");
+  A.mount("controller_deck", "breadboard_400", bbB, "breadboard_drivers", "plug-in wiring for the three stepper drivers (stuck to the deck by its adhesive back)");
+  A.mount("breadboard_controller", "esp32_s3_devkitc1", espOn, "controller", "ESP32-S3 motion controller");
+  tmcOn.forEach((T, k) => A.mount("breadboard_drivers", "tmc2209_stepstick", T, `driver_${["j1", "j2", "z"][k]}`, "stepper drivers (J1, J2, Z)"));
   A.mount("controller_deck", "waveshare_bus_servo_adapter", wsT, "servo_bus", "wrist + gripper servo bus");
   A.fastener("M3 x 6 socket head (PSU bottom)", 4);
-  // lid over the whole box: screws into four corner lugs, slots over the supplies
-  const lugs: [number, number][] = [[bx0 + 9, -94], [bx0 + 162, -94], [bx0 + 9, 94], [bx0 + 162, 94]];
-  const lid: Op[] = [{ op: "box", min: [bx0, -103, 86.2], max: [bx0 + 171, 103, 89], r: 6 }, { op: "box", min: [bx0 + 3.4, -99.6, 83], max: [bx0 + 167.6, 99.6, 86.3], r: 3 }, { op: "cutbox", min: [bx0 + 6, -97, 82], max: [bx0 + 165, 97, 86] }];
-  for (let k = 0; k < 16; k++) lid.push({ op: "cutbox", min: [bx0 + 24, -84 + k * 11, 81], max: [bx0 + 150, -80 + k * 11, 90] });
-  for (const [x, y] of lugs) lid.push({ op: "hole", a: [x, y, 81], b: [x, y, 90], d: 3.4 });
+  // lid over the whole box: screws into four corner lugs, slots over the deck
+  const lugs: [number, number][] = [[bx0 + 9, -94], [bx0 + BL - 9, -94], [bx0 + 9, 94], [bx0 + BL - 9, 94]];
+  const lid: Op[] = [{ op: "box", min: [bx0, -103, BH + 0.2], max: [bx0 + BL, 103, BH + 3], r: 6 }, { op: "box", min: [bx0 + 3.4, -99.6, BH - 3], max: [bx0 + BL - 3.4, 99.6, BH + 0.3], r: 3 }, { op: "cutbox", min: [bx0 + 6, -97, BH - 4], max: [bx0 + BL - 6, 97, BH] }];
+  for (let k = 0; k < 16; k++) lid.push({ op: "cutbox", min: [dx0 + 12, -84 + k * 11, BH - 5], max: [dx0 + 138, -80 + k * 11, BH + 4] });
+  for (const [x, y] of lugs) lid.push({ op: "hole", a: [x, y, BH - 5], b: [x, y, BH + 4], d: 3.4 });
   A.printedLink("controller_lid", { name: "controller_lid", ops: lid }, { material: "printed_dark" });
   A.fixed("controller_lid_mount", "controller_box", "controller_lid", I4());
-  A.amendProgram("controller_box", lugs.flatMap(([x, y]): Op[] => [{ op: "box", min: [x - 5, y - 5, 71], max: [x + 5, y + 5, 86] }, { op: "hole", a: [x, y, 74], b: [x, y, 87], d: 2.6 }]));
+  A.amendProgram("controller_box", lugs.flatMap(([x, y]): Op[] => [{ op: "box", min: [x - 5, y - 5, BH - 15], max: [x + 5, y + 5, BH] }, { op: "hole", a: [x, y, BH - 12], b: [x, y, BH + 1], d: 2.6 }]));
   A.fastener("M3 x 10 self-tapping (controller lid)", 4);
   A.mount("controller_box", "iec_c14_fused_switched", frame([bx0, -8, 66], [-1, 0, 0], [0, 0, 1]), "mains_inlet", "fused, switched mains inlet");
   A.fastener("M2 x 6 screw (bus adapter)", 4);
+  const ctl = { BL, BH, glandY, glandZ, usbX: usbX - bx0, usbZ: dz + 8.5 + 10 };
 
   // ---------------- sensors ----------------
   mountSensors(A, p.sensors, {
@@ -255,7 +263,7 @@ function build(name: string, prompt: string | undefined, p: Plan) {
     imu: { link: "inner_arm", T: rel(Tz, translation([-40, -11.35, zcb0 + CARRIAGE_H + 4])), use: "IMU on the Z carriage (vibration / collision detection)" },
   });
   A.spec.root = "base_link";
-  return { A, g, frames: { T1, Tz, T2, Tw }, stroke, zcb0, zw, zf1, bx0 };
+  return { A, g, frames: { T1, Tz, T2, Tw }, stroke, zcb0, zw, zf1, bx0, ctl };
 }
 
 /** Closest the wrist axis may come to the J1 axis: column platform radius + the gripper's swept radius, mm. */
@@ -303,10 +311,10 @@ function analyse(b: ReturnType<typeof build>, p: Plan) {
 
 /** Netlist: one supply per voltage from the inlet; three steppers on TMC2209s from the ESP32; wrist and gripper on the servo bus. */
 function wireScara(A: Assembly, H: Harness, b: ReturnType<typeof build>) {
-  const x0 = b.bx0;
-  registerBay(A, { name: "controller_bay", tub: "controller_box", lid: "controller_lid", solids: ["controller_box", "controller_lid"], parent: "controller_box", T: translation([0, 0, 0]), min: [x0 + 3, -100, 3], max: [x0 + 168, 100, 86], screws: 4, vent_area_mm2: 16 * 126 * 4 + 2 * 8 * 8 * 24,
-    parts: ["psu_24v", "psu_12v", "controller", "driver_j1", "driver_j2", "driver_z", "servo_bus"],
-    exits: [{ id: "controller_bay.harness", kind: "gland", face: "x+", at: [x0 + 171, 40, 60], normal: [1, 0, 0], hole_mm: 12.5 }, { id: "controller_bay.usb", kind: "usb", face: "y-", at: [x0 + 60, -103, 60], normal: [0, -1, 0], hole_mm: 16 }, { id: "controller_bay.mains", kind: "switch", face: "x-", at: [x0, -8, 66], normal: [-1, 0, 0], hole_mm: 27, part: "mains_inlet" }] }, H);
+  const x0 = b.bx0, c = b.ctl;
+  registerBay(A, { name: "controller_bay", tub: "controller_box", lid: "controller_lid", solids: ["controller_box", "controller_lid"], parent: "controller_box", T: translation([0, 0, 0]), min: [x0 + 3, -100, 3], max: [x0 + c.BL - 3, 100, c.BH], screws: 4, vent_area_mm2: 16 * 126 * 4 + 2 * 8 * 8 * 24,
+    parts: ["psu_24v", "psu_12v", "breadboard_controller", "breadboard_drivers", "controller", "driver_j1", "driver_j2", "driver_z", "servo_bus", "mains_inlet"],
+    exits: [{ id: "controller_bay.harness", kind: "gland", face: "x+", at: [x0 + c.BL, c.glandY, c.glandZ], normal: [1, 0, 0], hole_mm: 12.5 }, { id: "controller_bay.usb", kind: "usb", face: "y+", at: [x0 + c.usbX, 103, c.usbZ], normal: [0, 1, 0], hole_mm: 16 }, { id: "controller_bay.mains", kind: "switch", face: "x-", at: [x0, -8, 66], normal: [-1, 0, 0], hole_mm: 27, part: "mains_inlet" }] }, H);
   H.mainSwitch = "mains_inlet";
   for (const [i, psu] of (["psu_24v", "psu_12v"] as const).entries()) for (const [n, a, c] of [[`MAINS_L${i}`, "L", "AC/L"], [`MAINS_N${i}`, "N", "AC/N"], [`MAINS_E${i}`, "E", "FG"]] as const) { H.net(n, "power", 230); H.wire(n, `mains_inlet.load.${a}`, `${psu}.ac_in.${c}`, { typ: 1, peak: 2 }); }
   H.notes.push("Mains side: IEC inlet to both supplies' AC terminals with insulated spades, earth wired first, lid on before plugging in. Have it checked if you are not qualified to wire mains.");
@@ -395,5 +403,6 @@ function record(A: Assembly, b: ReturnType<typeof build>, p: Plan, r: ReturnType
     `J2 is limited to ±${(A.spec.joints.find((j) => j.name === "j2")!.limit!.upper! * 180 / Math.PI).toFixed(0)}° so the gripper never swings into the column or base.`,
     "Steppers run open loop with sensorless homing (TMC2209 StallGuard) or end-stop switches (not modelled); the ESP32-S3 runs the kinematics and talks to the drivers over STEP/DIR + UART and to the servos over the bus adapter.",
     "Controller box: printed case with a screwed lid and an electronics deck; mains come in through a fused, switched IEC inlet, earth wired first.",
+    "The ESP32-S3 and the three TMC2209 StepSticks plug into two solderless breadboards on the deck and are wired with jumpers. Breadboard contacts are meant for about 1 A: the drivers are set to the motors' run current (60 % of the phase current, about 1 to 1.2 A), and a soldered StepStick carrier is the step up for continuous duty.",
   );
 }
