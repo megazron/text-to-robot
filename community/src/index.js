@@ -48,21 +48,25 @@ const turnstile = (request, env, token, action) => verifyTurnstile(token, env.TU
 // and D1 is read once per version and data centre, not once per visitor.
 async function feedVersion(env) { return (await env.RATE.get("feed:version")) ?? "0"; }
 async function bumpFeed(env) { await env.RATE.put("feed:version", String(Date.now())); }
-async function cached(request, env, ttl, make) {
+async function cached(request, env, ttl, make, browserTtl = 0) {
   const cache = globalThis.caches?.default;
   if (!cache) return make();
   const u = new URL(request.url);
   u.searchParams.set("__v", await feedVersion(env));
   const key = new Request(u.toString(), { method: "GET" });
-  const hit = await cache.match(key);
-  if (hit) return hit;
-  const res = await make();
-  if (res.status === 200) {
-    const store = new Response(res.clone().body, res);
-    store.headers.set("Cache-Control", `public, max-age=${ttl}`);
-    await cache.put(key, store);
+  let res = await cache.match(key);
+  if (!res) {
+    res = await make();
+    if (res.status === 200) {
+      const store = new Response(res.clone().body, res);
+      store.headers.set("Cache-Control", `public, max-age=${ttl}`);
+      await cache.put(key, store);
+    }
   }
-  return res;
+  // the edge keeps it for `ttl`; a browser keeps the feed not at all (a deleted post must be gone on the next look)
+  const out = new Response(res.body, res);
+  out.headers.set("Cache-Control", browserTtl && res.status === 200 ? `public, max-age=${browserTtl}` : "no-store");
+  return out;
 }
 
 // ---------------------------------------------------------------- settings
@@ -273,7 +277,7 @@ async function route(request, env) {
       return json({ posts: out.rows.map((r) => publicPost(r, base)), next: out.next });
     });
   }
-  if (id && parts[2] === "thumb" && m === "GET") return isAdmin(request, env) ? thumb(env, id, true) : cached(request, env, 600, () => thumb(env, id, false));
+  if (id && parts[2] === "thumb" && m === "GET") return isAdmin(request, env) ? thumb(env, id, true) : cached(request, env, 600, () => thumb(env, id, false), 600);
   if (id && parts[2] === "report" && m === "POST") return reportPost(request, env, id);
   if (id && !parts[2] && m === "GET") {
     return cached(request, env, 60, async () => {

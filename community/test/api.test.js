@@ -189,6 +189,13 @@ describe("community API", () => {
     assert.match(csp, /require-trusted-types-for 'script'/);
   });
 
+  test("the feed is never kept by a browser, even when the edge cache answers; pictures are", async () => {
+    for (let i = 0; i < 3; i++) assert.equal((await w.api("/posts")).headers.get("Cache-Control"), "no-store");
+    const id = (await w.api("/posts")).data.posts[0].id;
+    for (let i = 0; i < 2; i++) assert.equal((await w.api(`/posts/${id}`)).headers.get("Cache-Control"), "no-store");
+    for (let i = 0; i < 2; i++) assert.equal((await w.api(`/posts/${id}/thumb`)).headers.get("Cache-Control"), "public, max-age=600");
+  });
+
   test("CORS: the Pages origin and localhost only", async () => {
     const pages = await w.api("/posts", { headers: { Origin: "https://megazron.github.io" } });
     assert.equal(pages.headers.get("Access-Control-Allow-Origin"), "https://megazron.github.io");

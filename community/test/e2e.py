@@ -239,6 +239,10 @@ try:
 
         # the server goes away: the site still works and says so
         stop_worker()
+        for _ in range(60):
+            try: urllib.request.urlopen(API + "/", timeout=2); time.sleep(0.5)
+            except Exception: break
+        else: raise AssertionError("the Worker is still answering after it was stopped")
         page.goto(URL)
         wait_robot(page)
         page.click('.dock-btn[data-jump="community"]')
