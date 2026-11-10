@@ -345,7 +345,8 @@ export function freeSpot(A: Assembly, area: { x0: number; x1: number; y0: number
   const boxes = A.spec.links.filter((l) => l.geometry.type === "mesh" && l.geometry.part === "component" && part(String(l.geometry.params?.key)).bbox_mm).map((l) => worldBox(A, l.name)).filter((b) => b.hi[2] > z[0] && b.lo[2] < z[1]);
   const clear = (x: number, y: number) => !boxes.some((b) => b.hi[0] > x - size[0] / 2 && b.lo[0] < x + size[0] / 2 && b.hi[1] > y - size[1] / 2 && b.lo[1] < y + size[1] / 2) && !extra.some((r) => r.x1 > x - size[0] / 2 && r.x0 < x + size[0] / 2 && r.y1 > y - size[1] / 2 && r.y0 < y + size[1] / 2);
   const cx = near?.[0] ?? (area.x0 + area.x1) / 2, cy = near?.[1] ?? (area.y0 + area.y1) / 2, pts: [number, number][] = [];
-  for (let x = area.x0 + size[0] / 2; x <= area.x1 - size[0] / 2; x += 4) for (let y = area.y0 + size[1] / 2; y <= area.y1 - size[1] / 2; y += 4) pts.push([x, y]);
+  const step = near ? 2 : 4;   // asked for near a point: looked for more finely
+  for (let x = area.x0 + size[0] / 2; x <= area.x1 - size[0] / 2; x += step) for (let y = area.y0 + size[1] / 2; y <= area.y1 - size[1] / 2; y += step) pts.push([x, y]);
   return pts.sort((a, b) => Math.hypot(a[0] - cx, a[1] - cy) - Math.hypot(b[0] - cx, b[1] - cy)).find(([x, y]) => clear(x, y)) ?? null;
 }
 /** The battery switch a robot whose running current is past a rocker's 16 A gets (Blue Sea 6006: 70 mm face, 60 mm deep). */
