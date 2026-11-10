@@ -500,6 +500,17 @@ function lidGrommets(b: Build, lowName: string, highName: string) {
     b.H.exits.push({ id: ex.id, link: lid, at: apply(invert(b.w(lid)), ex.at), normal: ex.normal, panel_hole_mm: ex.hole_mm, bay: lowName, kind: "grommet" });
   }
 }
+/** A motor's leads (power and encoder) come up into the compartment by the deck grommet on the motor's own side. */
+function motorLeadExits(b: Build) {
+  const H = b.H, f = fk(b.A.spec), yOf = (n: string) => (f.link[n] ? f.link[n].p[1] * 1000 : 0);
+  for (const w of H.wires) {
+    if (H.exitOf.has(w.cable) || H.viaOf.has(w.cable)) continue;
+    const m = [w.a.inst, w.b.inst].find((n) => /_motor$/.test(n)), o = m === w.a.inst ? w.b.inst : w.a.inst, bay = o ? baysOf(b.A).find((r) => r.name === H.bayOf.get(o)) : undefined;
+    if (!m || !bay || H.bayOf.get(m)) continue;
+    const g = bay.exits.filter((e) => e.face === "floor").sort((p, q) => Math.abs(p.at[1] - yOf(m)) - Math.abs(q.at[1] - yOf(m)))[0];
+    if (g) H.exitFor(w.cable, g.id);
+  }
+}
 /**
  * Two decks: a cable between the two compartments drops through an upper deck grommet and the lid grommet under it; a
  * motor lead comes up into the lower compartment by the deck grommet on its own side.
@@ -529,7 +540,9 @@ function twoDeckExits(b: Build) {
 }
 /** Grommets through the deck, one each side, where motor leads go down to the drives. Holes are cut in the deck. */
 function deckGrommets(b: Build, parent: string, boards: Rect[], w: Rect, deckTop: number, bayName = "electronics_enclosure"): BayRecord["exits"] {
-  const out: BayRecord["exits"] = [], taken = (x: number, y: number) => boards.some((q) => x > q.x0 - 7 && x < q.x1 + 7 && y > q.y0 - 7 && y < q.y1 + 7);
+  // nor over a part just under the deck (a motor's can): the leads need room to turn under the hole too
+  const under = b.A.spec.links.filter((l) => l.geometry.type === "mesh" && l.geometry.part === "component" && part(String(l.geometry.params?.key)).bbox_mm).map((l) => partBox(b.A, l.name)).filter((q) => q.hi[2] < deckTop + 0.5 && q.hi[2] > deckTop - 45);
+  const out: BayRecord["exits"] = [], taken = (x: number, y: number) => boards.some((q) => x > q.x0 - 7 && x < q.x1 + 7 && y > q.y0 - 7 && y < q.y1 + 7) || under.some((q) => x > q.lo[0] - 10 && x < q.hi[0] + 10 && y > q.lo[1] - 10 && y < q.hi[1] + 10);
   for (const side of [1, -1]) {
     let at: Vec3 | null = null;
     for (let dy = 8; dy < (w.y1 - w.y0) / 2 && !at; dy += 6) for (let dx = 0; dx < (w.x1 - w.x0) / 2 - 8 && !at; dx += 6) for (const sx of [1, -1]) {
@@ -603,6 +616,7 @@ function wireMobile(b: Build, compute: string, battery: [string, number], sensor
     H.spare("servo_bus.dc_in");
   }
   twoDeckExits(b);
+  motorLeadExits(b);
   finishWiring(H, { noClips: /^(base_link|deck_lid|upper_deck|head)$|rocker_rear_arm/ });
   enclosureChecks(A);
 }
@@ -620,18 +634,28 @@ function seatMainFuse(b: Build, battery: string) {
   const e: Vec3 = [T.R[0][0], T.R[1][0], 0], w = [0, 1, 2].map((i) => T.R[i][0] * bb.max[0] + T.R[i][1] * ((bb.min[1] + bb.max[1]) / 2) + T.R[i][2] * ((bb.min[2] + bb.max[2]) / 2) + T.p[i] * 1000) as Vec3;
   const sideA: Vec3 = [-e[1], e[0], 0], c = baysOf(b.A).find((r) => r.parts.includes(battery));
   const mid: Vec3 = c ? [0, 1, 2].map((i) => (c.min[i] + c.max[i]) / 2) as Vec3 : [0, 0, 0];
-  const toMid = b.packRoom ? 1 : (mid[0] - w[0]) * sideA[0] + (mid[1] - w[1]) * sideA[1] >= 0 ? 1 : -1;
   // beside the pack: its half width, a bend diameter of the lead less the fuse's half width, so the lead's U has its radius
   const half = (bb.max[1] - bb.min[1]) / 2, off = half + 24 - (fb.max[1] - fb.min[1]) / 2 + 2, L = fb.max[0] - fb.min[0];
+  // on the side towards the middle of the compartment, or the other side where a part stands there
+  const parts3 = b.A.spec.links.filter((l) => l.geometry.type === "mesh" && l.geometry.part === "component" && part(String(l.geometry.params?.key)).bbox_mm).map((l) => partBox(b.A, l.name));
+  const fw0 = (fb.max[1] - fb.min[1]) / 2, fh0 = (fb.max[2] - fb.min[2]) / 2;
+  const boxAt = (p: Vec3, hl: number): [Vec3, Vec3] => [[p[0] - Math.abs(e[0]) * hl - Math.abs(e[1]) * fw0 - 2, p[1] - Math.abs(e[1]) * hl - Math.abs(e[0]) * fw0 - 2, p[2] - fh0 - 2], [p[0] + Math.abs(e[0]) * hl + Math.abs(e[1]) * fw0 + 2, p[1] + Math.abs(e[1]) * hl + Math.abs(e[0]) * fw0 + 2, p[2] + fh0 + 2]];
+  const free = ([lo, hi]: [Vec3, Vec3]) => !parts3.some((q) => [0, 1, 2].every((k) => q.hi[k] > lo[k] && q.lo[k] < hi[k])) && !b.keepOut.some((q) => q.x1 > lo[0] && q.x0 < hi[0] && q.y1 > lo[1] && q.y0 < hi[1]) && (!c || [lo, hi].every((q) => [0, 1].every((k) => q[k] >= c.min[k] && q[k] <= c.max[k])));
+  const sideAt = (sg: number): Vec3 => [w[0] - e[0] * L / 2 + sideA[0] * sg * off, w[1] - e[1] * L / 2 + sideA[1] * sg * off, w[2]];
+  let toMid = b.packRoom ? 1 : (mid[0] - w[0]) * sideA[0] + (mid[1] - w[1]) * sideA[1] >= 0 ? 1 : -1;
+  if (!b.packRoom && !free(boxAt(sideAt(toMid), L / 2)) && free(boxAt(sideAt(-toMid), L / 2))) toMid = -toMid;
   let at: Vec3 = [w[0] - e[0] * L / 2 + sideA[0] * toMid * off, w[1] - e[1] * L / 2 + sideA[1] * toMid * off, w[2]];
   // its IN end (body -x) towards the pack's lead end: body x along -e
   let turn = Math.abs(e[0]) > 0.5 ? (e[0] > 0 ? 2 : 0) : (e[1] > 0 ? 3 : 1);
   // or straight on from the positive lead (its pin 2 mm to the side of the pack's middle), when there is room: the lead
   // runs straight into the fuse, which leaves its far end the same way
-  { const gap = 3 + 3 + 3, sAt: Vec3 = [w[0] + e[0] * (gap + L / 2) - sideA[0] * 2, w[1] + e[1] * (gap + L / 2) - sideA[1] * 2, w[2]];
+  // (clear of the room the router keeps in front of the pack's pins: its plug and 12 mm)
+  { const gap = 3 + 12 + 2, sAt: Vec3 = [w[0] + e[0] * (gap + L / 2) - sideA[0] * 2, w[1] + e[1] * (gap + L / 2) - sideA[1] * 2, w[2]];
     const fw = (fb.max[1] - fb.min[1]) / 2, fh = (fb.max[2] - fb.min[2]) / 2, lo: Vec3 = [Math.min(sAt[0] - Math.abs(e[0]) * L / 2 - Math.abs(e[1]) * fw, 1e9) - 2, sAt[1] - Math.abs(e[1]) * L / 2 - Math.abs(e[0]) * fw - 2, sAt[2] - fh - 2], hi: Vec3 = [sAt[0] + Math.abs(e[0]) * L / 2 + Math.abs(e[1]) * fw + 2, sAt[1] + Math.abs(e[1]) * L / 2 + Math.abs(e[0]) * fw + 2, sAt[2] + fh + 2];
     const boxes = b.A.spec.links.filter((l) => l.geometry.type === "mesh" && l.geometry.part === "component" && part(String(l.geometry.params?.key)).bbox_mm).map((l) => partBox(b.A, l.name));
-    const inside = !c || [lo, hi].every((q) => [0, 1].every((k) => q[k] >= c.min[k] + 3 && q[k] <= c.max[k] - 3));
+    // the far end's lead and its first bend stay inside the compartment too
+    const reach = L / 2 + 3 + 17.5 + 3, tip: Vec3 = [sAt[0] + e[0] * reach, sAt[1] + e[1] * reach, sAt[2]];
+    const inside = !c || [lo, hi, tip].every((q) => [0, 1].every((k) => q[k] >= c.min[k] + 3 && q[k] <= c.max[k] - 3));
     if (inside && !boxes.some((q) => [0, 1, 2].every((k) => q.hi[k] > lo[k] && q.lo[k] < hi[k])) && !b.keepOut.some((q) => q.x1 > lo[0] && q.x0 < hi[0] && q.y1 > lo[1] && q.y0 < hi[1])) {
       at = sAt; turn = Math.abs(e[0]) > 0.5 ? (e[0] > 0 ? 0 : 2) : (e[1] > 0 ? 1 : 3);
     } }
@@ -640,7 +664,7 @@ function seatMainFuse(b: Build, battery: string) {
   // the star ground on top of the fuse, its first lever at the same end: the pack's negative lead runs beside the positive
   // (the star ground and the rail splices are added when the harness is finished: their seats wait for them)
   const sb = part("wago_221_415").bbox_mm!, Ls = sb.max[0] - sb.min[0];
-  const backAlong = at[0] !== w[0] + e[0] * (9 + L / 2) - sideA[0] * 2 || at[1] !== w[1] + e[1] * (9 + L / 2) - sideA[1] * 2;
+  const backAlong = at[0] !== w[0] + e[0] * (17 + L / 2) - sideA[0] * 2 || at[1] !== w[1] + e[1] * (17 + L / 2) - sideA[1] * 2;
   H.seat("star_ground", [w[0] - e[0] * Ls / 2 + sideA[0] * toMid * off, w[1] - e[1] * Ls / 2 + sideA[1] * toMid * off, w[2] + (backAlong ? (fb.max[2] - fb.min[2]) / 2 + (sb.max[2] - sb.min[2]) / 2 + 2 : 0)], turn);
 }
 /**
