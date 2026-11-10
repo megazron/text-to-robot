@@ -391,3 +391,8 @@ body.busy .skhide{display:none}
 .tobuy li{font-size:13px;margin:2px 0}
 .parts .field{min-width:0}.parts .field input{box-sizing:border-box;min-width:0}
 .pcard img.noimg{visibility:hidden}
+/* ---------- community board (community.css styles the board itself) ---------- */
+.dock-btn[hidden],[data-cm][hidden],[data-gallery][hidden]{display:none}
+body.community #dock{grid-template-columns:repeat(6,1fr)}
+body.community .dock-glow{width:calc((100% - 12px)/6)}
+@media (min-width:900px){body.community #dock{grid-template-columns:none}body.community .dock-glow{width:auto}}

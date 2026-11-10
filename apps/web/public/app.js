@@ -700,7 +700,7 @@ function renderCards() {
 }
 
 // ---------------- navigation ----------------
-const PANES = ["design", "arduino", "model", "build", "share"];
+const PANES = ["design", "arduino", "model", "build", "share", "community"];
 function jump(section) {
   const i = PANES.indexOf(section), pane = document.querySelector(`.pane[data-section="${section}"]`);
   if (!pane) return;
@@ -714,6 +714,38 @@ function jump(section) {
   document.querySelectorAll(".pane").forEach((p) => p.classList.toggle("active", p === pane));
   $("#panes").scrollTop = 0;
   popIn(pane);
+}
+
+// ---------------- community board (community.js) ----------------
+// Hidden unless community.json names a server. Nothing is sent until the person presses "Post publicly" in the share
+// form, and the feed is read only when the Community tab is opened.
+async function initCommunity() {
+  const cm = await import("./community.js");
+  const cfg = await cm.loadConfig();
+  if (!cfg) return;
+  const board = cm.createBoard(cfg, { product: "text-to-robot" });
+  document.body.classList.add("community");
+  document.querySelectorAll("[data-cm]").forEach((x) => { x.hidden = false; });
+  document.querySelectorAll("[data-gallery]").forEach((x) => { x.hidden = true; });
+  let feed;
+  $('.dock-btn[data-jump="community"]').addEventListener("click", () => { if (feed) feed.reload(); else feed = board.feed($("#communityFeed")); });
+  $("#shareBlog").onclick = async () => {
+    if (!state.robot) return;
+    try {
+      // how it was made (prompt, Arduino tier, changes) when there is a recipe, else the whole design as a share link
+      const recipe = state.recipe?.p ? `make=${cm.b64url(JSON.stringify(state.recipe))}`
+        : /#(robot=[A-Za-z0-9_-]+)/.exec(STATIC ? await STATIC.shareUrl(state.robot) : "")?.[1];
+      if (!recipe) { status("✗ This design cannot be shared from here.", "err"); return; }
+      await board.share({ title: state.robot.robot_name.replace(/_/g, " "), recipe, snapshot: () => {
+        renderer.render(scene, camera);
+        // only the part of the view not under the docked panel
+        const c = renderer.domElement, r = c.getBoundingClientRect(), panel = $("#sheet").getBoundingClientRect();
+        const w = panel.left > r.left + r.width * 0.4 && panel.left < r.right ? panel.left - r.left : r.width;
+        return { canvas: c, crop: { x: 0, y: 0, w, h: r.height } };
+      } });
+    } catch (e) { status(`✗ ${e.message}`, "err"); }
+  };
+  board.deleteFromLink();
 }
 
 // ---------------- publish (opt-in) and gallery ----------------
@@ -880,6 +912,7 @@ document.querySelectorAll("[data-arduino]").forEach((b) => (b.onclick = () => se
 document.querySelectorAll(".dock-btn").forEach((b) => (b.onclick = () => { haptic(6); jump(b.dataset.jump); }));
 $("#publishBtn").onclick = publish;
 $("#loadGallery").onclick = loadGallery;
+initCommunity().catch(() => {});
 $("#importRobot").onclick = () => $("#robotFile").click();
 $("#robotFile").onchange = async (event) => {
   const file=event.target.files[0];if(!file)return;

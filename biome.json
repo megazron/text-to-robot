@@ -8,7 +8,9 @@
 			"cli/src/**/*.ts",
 			"tests/**/*.ts",
 			"scripts/**/*.ts",
-			"apps/web/public/*.js"
+			"apps/web/public/*.js",
+			"community/src/**/*.js",
+			"community/test/**/*.js"
 		]
 	},
 	"formatter": { "enabled": false },

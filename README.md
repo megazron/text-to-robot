@@ -137,10 +137,11 @@ The same engine runs in the CLI, the local server and, compiled for the browser,
 ## Project
 
 - [Gallery](examples/README.md): all 19 examples with their files, checks and test results.
+- [Community blog](docs/COMMUNITY.md): post a design you made, anonymously or with a display name, no account. Opt-in only; its small server is in [`community/`](community/).
 - [Development](DEVELOPMENT.md): set up, run the checks, regenerate the examples.
 - [Contributing](CONTRIBUTING.md) · [Code of conduct](CODE_OF_CONDUCT.md) · [Security](SECURITY.md)
 - [Changelog](CHANGELOG.md) · [Brand](docs/brand/README.md)
 
 ## Legal
 
-Code under the [MIT licence](LICENSE). [Terms](TERMS.md) · [Privacy](PRIVACY.md) · [Third-party notice](NOTICE.md). Character examples are unofficial fan work; their names and designs belong to their owners.
+Code under the [MIT licence](LICENSE). [Terms](TERMS.md) · [Privacy](PRIVACY.md) · [Content policy](docs/CONTENT_POLICY.md) · [Third-party notice](NOTICE.md). Character examples are unofficial fan work; their names and designs belong to their owners.

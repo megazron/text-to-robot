@@ -1,0 +1,23 @@
+# The community board's Worker. community/DEPLOY.md has the steps that create the database and the KV namespace and
+# replace the two placeholder ids below. Secrets (ADMIN_TOKEN, TURNSTILE_SECRET) are set with `wrangler secret put`
+# and are never written in this file.
+name = "ttr-community"
+main = "src/index.js"
+compatibility_date = "2025-09-01"
+workers_dev = true
+
+[vars]
+# the sites that may call this API from a browser (localhost and 127.0.0.1 on any port are always allowed)
+ALLOWED_ORIGINS = "https://megazron.github.io"
+# where a Turnstile token must have been made (checked against siteverify's hostname; empty = not checked)
+TURNSTILE_HOSTNAMES = "megazron.github.io"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "ttr-community"
+database_id = "00000000-0000-0000-0000-000000000000"
+migrations_dir = "migrations"
+
+[[kv_namespaces]]
+binding = "RATE"
+id = "00000000000000000000000000000000"
