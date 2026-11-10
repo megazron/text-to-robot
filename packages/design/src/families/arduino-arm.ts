@@ -29,7 +29,9 @@ export interface ArduinoArmRequest {
 
 const WALL = 2.5, PLATE = 4, EDGE = 0.6;
 /** base plate, and the electronics console behind the yaw servo: cavity floor height, length, width, height */
-const BASE_T = 5, CON = { floor: 2.4, L: 88, Wd: 92, H: 30, x1: -29.4 };
+// (the lid stands over the Uno's sockets by a jumper's housing, its first bend and the bundle it joins; the PCA9685's
+// V+ terminal has room for its wire's ferrule and first bend before the side wall)
+const BASE_T = 5, CON = { floor: 2.4, L: 88, Wd: 106, H: 41, x1: -29.4 };
 const body = (k: string) => part(k).bbox_mm!;
 /** servo frame placed by rotation columns (x, y, z) and origin, column-major mm */
 const place = (x: Vec3, y: Vec3, z: Vec3, o: Vec3): Mat4 => [x[0], x[1], x[2], 0, y[0], y[1], y[2], 0, z[0], z[1], z[2], 0, o[0], o[1], o[2], 1];
@@ -115,19 +117,22 @@ function console_(A: Assembly, req: ArduinoArmRequest, supplyA: number): Harness
   const exits: ExitSpec[] = [
     { id: "usb", face: "x-", u: uno ? 2 + 38.1 : 18 + 9, v: 5 + (uno ? 7 : 3), kind: "usb", w: 14, h: 13 },
     supplyA === 4 ? { id: "power_in", face: "x-", u: 61, v: CH / 2, kind: "jack", d: 8, part: { name: "power_jack", key: "dc_jack_5521_panel", use: "adapter socket" } } : { id: "power_in", face: "x-", u: 61, v: CH / 2, kind: "grommet", d: 8, noAnchor: true },
-    { id: "switch", face: "x-", u: 78, v: CH / 2, kind: "switch", w: 19.4, h: 13.4, part: { name: "main_switch", key: "switch_kcd1", use: "servo power switch" } },
-    { id: "yaw_lead", face: "x+", u: Wd / 2, v: 12, kind: "grommet", d: 6.5 },
+    // the switch in the side wall by the rear corner: nothing stands behind it there, its leads turn over the Uno
+    { id: "switch", face: "y+", u: 12, v: CH / 2, kind: "switch", w: 19.4, h: 13.4, part: { name: "main_switch", key: "switch_kcd1", use: "servo power switch" } },
+    // the yaw servo's lead leaves its cradle by the slot low in the cradle's +y wall: the grommet faces past that wall, far
+    // enough to the side for the lead to turn into the slot
+    { id: "yaw_lead", face: "x+", u: Wd / 2 + 32, v: 22, kind: "grommet", d: 6.5 },
     { id: "arm_leads", face: "lid", u: L - 9, v: Wd / 2, kind: "grommet", d: 8 },
   ];
   bay(A, { name: "console", parent: "base_link", T: translation([x1 - L, -Wd / 2, BASE_T + floor]), size: [L, Wd, CH], cad: true, corner: 5, material: "printed_dark", lidMaterial: "printed_accent",
     parts: [{ name: "controller", key: board, T: Tb, use: "controller (USB serial commands, I2C to the servo driver)", kind: uno ? "board" : "board" }, { name: "servo_driver", key: "pca9685_clone", T: translation([24, 62, 5]), use: "16-channel PWM servo driver (I2C)" }],
     exits, vents: [{ face: "lid", a0: 14, a1: 70, b0: 58, b1: Wd - 8 }] }, H);
   if (supplyA === 4) { H.part("power_supply", "psu_5v4a_adapter", { off_board: true, note: "wall adapter, plugs into the console" }); A.buy("psu_5v4a_adapter", 1, "5 V 4 A servo supply"); }
-  else supplyBox(A, H, { parent: "base_link", T: translation([-290, -45, 2.4]), key: "psu_5v_lrs50", use: "5 V 10 A servo supply", cad: true });
+  else supplyBox(A, H, { parent: "base_link", T: translation([-322, -45, 2.4]), key: "psu_5v_lrs50", use: "5 V 10 A servo supply", cad: true });
   return H;
 }
 /** The netlist: adapter to jack, switch, the driver's V+ terminal, one PCA channel per servo, I2C and logic from the Uno. */
-function wireArm(H: Harness, supplyA: number, gripper: boolean) {
+function wireArm(H: Harness, supplyA: number, gripper: boolean, uno: boolean) {
   if (supplyA === 4) H.bought("power_supply.dc_out.@power", "power_jack.plug_side.+", "barrel", 0.5, 4, "ADAPTER");
   H.spare("controller.janalog.VIN", "controller.power_jack");
   H.mainPower("V_SERVO", { ...(supplyA === 4 ? { source: "power_jack", pos: "CENTRE", neg: "SLEEVE" } : { source: "power_supply", pos: "DC OUTPUT +V", neg: "DC OUTPUT -V" }), sw: "main_switch", fuse: false, volts: 5, cont: supplyA, peakLimit: supplyA === 4 ? 4 : 11, simNote: "every servo stalled at once" });
@@ -141,7 +146,8 @@ function wireArm(H: Harness, supplyA: number, gripper: boolean) {
     H.label(`servo_driver~${s}`.split("~").sort().join("~"), `PCA9685 channel ${ch} to ${s}`);
   });
   H.net("5V_LOGIC", "power", 5);
-  H.wire("5V_LOGIC", "controller.5V", "servo_driver.control_in.VCC", { typ: 0.01 }); H.wire("GND", "controller.GND", "servo_driver.control_in.GND", { typ: 0.01 });
+  // the logic supply and ground from the power header (a bare GND would name the DC jack's)
+  H.wire("5V_LOGIC", uno ? "controller.janalog.5V" : "controller.5V", "servo_driver.control_in.VCC", { typ: 0.01 }); H.wire("GND", uno ? "controller.janalog.GND" : "controller.GND", "servo_driver.control_in.GND", { typ: 0.01 });
   H.signals("controller", "servo_driver", [["SDA", "SDA", "I2C_SDA"], ["SCL", "SCL", "I2C_SCL"]]);
   H.notes.push("The Uno runs from its USB cable (it takes serial commands from the PC), the servos from the adapter; the two grounds join at the I2C lead.");
 }
@@ -197,7 +203,7 @@ export function designArduinoArm(req: ArduinoArmRequest = {}): RobotSpecificatio
   A.check("power:supply", stall <= supplyA, `all ${servos.length} servos stalled together draw ${stall.toFixed(1)} A of the ${supplyA} A 5 V supply`);
   A.fastener("M2 self-tapping (servo tabs, from the servo kits)", 2 * servos.length);
   A.fastener("M4 screws or desk clamps (base)", 4);
-  wireArm(H, supplyA, req.gripper !== false);
+  wireArm(H, supplyA, req.gripper !== false, (req.board ?? "arduino_uno_clone") === "arduino_uno_clone");
   finishWiring(H);
   enclosureChecks(A);
   const bom = A.bom();
