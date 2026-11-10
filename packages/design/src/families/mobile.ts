@@ -69,6 +69,8 @@ class Build {
   servoJoints: string[] = [];
   motors: string[] = [];
   deckTop = 0;
+  /** printed rings standing in a compartment (round a lidar mast), world mm, for seating harness parts clear of them */
+  keepOut: { x0: number; x1: number; y0: number; y1: number; z0: number; z1: number }[] = [];
   H: Harness;
   constructor(name: string, family: string, prompt?: string) {
     this.A = new Assembly(name, family, prompt);
@@ -389,6 +391,7 @@ function enclosure(b: Build, items: Item[], area: Rect, reserved: Rect[], deckTo
     // were padded by 5 mm for packing, so the ring (inside that pad) never touches a board.
     const q = { x0: r.x0 + 5, x1: r.x1 - 5, y0: r.y0 + 5, y1: r.y1 - 5 };
     walls.push({ op: "box", min: [Math.max(x0, q.x0 - 2 - t), Math.max(y0, q.y0 - 2 - t), deckTop], max: [Math.min(x1, q.x1 + 2 + t), Math.min(y1, q.y1 + 2 + t), zTop], r: 2 });
+    b.keepOut.push({ x0: Math.max(x0, q.x0 - 2 - t), y0: Math.max(y0, q.y0 - 2 - t), z0: deckTop, x1: Math.min(x1, q.x1 + 2 + t), y1: Math.min(y1, q.y1 + 2 + t), z1: zTop });
     const cut: Op = { op: "cutbox", min: [q.x0 - 2, q.y0 - 2, deckTop - 1], max: [q.x1 + 2, q.y1 + 2, zLid + 1] };
     walls.push(cut); lid.push(cut);
     // round a lidar mast (reserved zone `room.mast`): a window low in the ring's -y wall, where the lidar's cable exit is,
@@ -462,7 +465,10 @@ function wallFixtures(b: Build, plan: Placement[], w: { x0: number; x1: number; 
     return { cuts, exits, lidCuts: [{ op: "cutbox", min: [x - 11.2, y - 15.2, w.z1 - 4], max: [x + 11.2, y + 15.2, zl + 1] }] as Op[] };
   }
   const small = b.A.design.family === "mobile_diff_drive", hw = small ? 9.7 : 15.2, hz = small ? 6.7 : 11.2, along = s.n[0] !== 0;
-  cuts.push({ op: "cutbox", min: along ? [s.p[0] - w.t - 1, s.p[1] - hw, zc - hz] : [s.p[0] - hw, s.p[1] - w.t - 1, zc - hz], max: along ? [s.p[0] + w.t + 1, s.p[1] + hw, zc + hz] : [s.p[0] + hw, s.p[1] + w.t + 1, zc + hz] });
+  // the small rocker stands high in the wall: its leads run off over the boards and the pack (their bend radius has room
+  // there) instead of into whatever stands on the deck in front of it
+  if (small) s.p = [s.p[0], s.p[1], w.z1 - 9]; const zc2 = s.p[2];
+  cuts.push({ op: "cutbox", min: along ? [s.p[0] - w.t - 1, s.p[1] - hw, zc2 - hz] : [s.p[0] - hw, s.p[1] - w.t - 1, zc2 - hz], max: along ? [s.p[0] + w.t + 1, s.p[1] + hw, zc2 + hz] : [s.p[0] + hw, s.p[1] + w.t + 1, zc2 + hz] });
   b.mount(parent, small ? "switch_kcd1" : "switch_kcd4", frame(s.p, s.n, [0, 0, 1]), "main_switch", "main power switch");
   exits.push({ id: `${bayName}.switch`, kind: "switch", face: s.face, at: s.p, normal: s.n, hole_mm: small ? 13 : 22, part: "main_switch" });
   return { cuts, exits, lidCuts: [] as Op[] };
@@ -525,6 +531,8 @@ function wireMobile(b: Build, compute: string, battery: [string, number], sensor
   if (H.instances.has("right_eye_camera")) { H.bought("right_eye_camera.csi_15.GND", compute === "rpi5" ? "computer.cam_dsi_1.GND" : "computer.camera_j21.LINK", "FFC", 0.2, 0.25, "RIGHT_EYE_CSI"); exposed(A, "right_eye_camera", "behind the eye lens", [20, 20]); }
   for (const x of ["lidar", "depth_camera", "front_camera", "mast_camera", "head_camera", "left_eye_camera"]) if (H.instances.has(x)) exposed(A, x, x === "lidar" ? "on its mast above the enclosure, scan plane clear" : "on its bracket, looking out past the deck", [20, 20]);
   coreTree(H, { batteries: battery[1] > 1 ? Array.from({ length: battery[1] }, (_, i) => `battery_${i + 1}`) : ["battery"], regulators: ["regulator_5v"], compute, sensors: named, simultaneous: 2, simNote: "two drive motors stalling at once, the rest running" });
+  seatMainFuse(b, battery[1] > 1 ? "battery_1" : "battery");
+  seatRailSplice(b);
   const pi = compute === "rpi5", ctrl = pi ? "computer" : "io_controller";
   if (!pi) {
     H.feed("5V", "io_controller", { v: "5V", g: "G", typ: 0.1, peak: 0.5 });
@@ -542,6 +550,58 @@ function wireMobile(b: Build, compute: string, battery: [string, number], sensor
   }
   finishWiring(H, { noClips: /^(base_link|deck_lid|upper_deck|head)$|rocker_rear_arm/ });
   enclosureChecks(A);
+}
+
+/**
+ * The main fuse lies beside the pack, back along it from its lead end, on the side towards the middle of the compartment:
+ * the pack's positive lead leaves its end, turns twice through its bend radius and runs straight into the fuse, which
+ * leaves its other end towards the switch. (Left to itself the fuse goes to the nearest free spot, often round a corner
+ * the 12 AWG lead cannot take.)
+ */
+function seatMainFuse(b: Build, battery: string) {
+  const H = b.H, fi = H.instances.get("main_fuse"); if (!fi || !H.instances.get(battery)) return;
+  const f = fk(b.A.spec), T = f.link[battery]; if (!T) return;
+  const bb = part(H.instances.get(battery)!.key).bbox_mm!, fb = part(fi.key).bbox_mm!;
+  const e: Vec3 = [T.R[0][0], T.R[1][0], 0], w = [0, 1, 2].map((i) => T.R[i][0] * bb.max[0] + T.R[i][1] * ((bb.min[1] + bb.max[1]) / 2) + T.R[i][2] * ((bb.min[2] + bb.max[2]) / 2) + T.p[i] * 1000) as Vec3;
+  const sideA: Vec3 = [-e[1], e[0], 0], c = baysOf(b.A).find((r) => r.parts.includes(battery));
+  const mid: Vec3 = c ? [0, 1, 2].map((i) => (c.min[i] + c.max[i]) / 2) as Vec3 : [0, 0, 0];
+  const toMid = (mid[0] - w[0]) * sideA[0] + (mid[1] - w[1]) * sideA[1] >= 0 ? 1 : -1;
+  // beside the pack: its half width, a bend diameter of the lead less the fuse's half width, so the lead's U has its radius
+  const half = (bb.max[1] - bb.min[1]) / 2, off = half + 24 - (fb.max[1] - fb.min[1]) / 2 + 2, L = fb.max[0] - fb.min[0];
+  const at: Vec3 = [w[0] - e[0] * L / 2 + sideA[0] * toMid * off, w[1] - e[1] * L / 2 + sideA[1] * toMid * off, w[2]];
+  // its IN end (body -x) towards the pack's lead end: body x along -e
+  const turn = Math.abs(e[0]) > 0.5 ? (e[0] > 0 ? 2 : 0) : (e[1] > 0 ? 3 : 1);
+  H.seat("main_fuse", at, turn);
+  // the star ground on top of the fuse, its first lever at the same end: the pack's negative lead runs beside the positive
+  // (the star ground and the rail splices are added when the harness is finished: their seats wait for them)
+  const sb = part("wago_221_415").bbox_mm!, Ls = sb.max[0] - sb.min[0];
+  H.seat("star_ground", [w[0] - e[0] * Ls / 2 + sideA[0] * toMid * off, w[1] - e[1] * Ls / 2 + sideA[1] * toMid * off, w[2] + (fb.max[2] - fb.min[2]) / 2 + (sb.max[2] - sb.min[2]) / 2 + 2], turn);
+}
+/**
+ * The main rail's splice where the switch's output lead reaches it with no tight turn: straight on from the tab, or after
+ * one quarter turn either side, its first lever facing the lead. The first spot clear of every bought part and printed ring.
+ */
+function seatRailSplice(b: Build) {
+  const H = b.H, sw = b.A.spec.links.find((l) => l.name === "main_switch"); if (!sw) return;
+  const f = fk(b.A.spec), T = f.link.main_switch, key = String((sw.geometry as { params?: { key?: string } }).params?.key), m = partModel(key), pa = pinOf(m, "contacts", "OUT"); if (!T || !pa) return;
+  const p = [0, 1, 2].map((i) => T.R[i][0] * pa.at[0] + T.R[i][1] * pa.at[1] + T.R[i][2] * pa.at[2] + T.p[i] * 1000) as Vec3, o = [0, 1, 2].map((i) => T.R[i][0] * pa.out[0] + T.R[i][1] * pa.out[1] + T.R[i][2] * pa.out[2]) as Vec3;
+  if (Math.abs(o[2]) > 0.5) return;
+  const bb = part("wago_221_415").bbox_mm!, L = bb.max[0] - bb.min[0], Wd = bb.max[1] - bb.min[1], Hh = bb.max[2] - bb.min[2], lever = (Wd / 5) * 0.5, R = 12;
+  const boxes = b.A.spec.links.filter((l) => l.name !== "main_switch" && l.geometry.type === "mesh" && l.geometry.part === "component" && part(String(l.geometry.params?.key)).bbox_mm).map((l) => partBox(b.A, l.name));
+  const clear = (c: Vec3, d: Vec3) => {
+    const hx = Math.abs(d[0]) > 0.5 ? L / 2 : Wd / 2, hy = Math.abs(d[0]) > 0.5 ? Wd / 2 : L / 2, lo: Vec3 = [c[0] - hx - 2, c[1] - hy - 2, c[2] - Hh / 2 - 2], hi: Vec3 = [c[0] + hx + 2, c[1] + hy + 2, c[2] + Hh / 2 + 2];
+    return !boxes.some((q) => [0, 1, 2].every((k) => q.hi[k] > lo[k] && q.lo[k] < hi[k])) && !b.keepOut.some((q) => q.x1 > lo[0] && q.x0 < hi[0] && q.y1 > lo[1] && q.y0 < hi[1] && q.z1 > lo[2] && q.z0 < hi[2]);
+  };
+  const turnOf = (d: Vec3) => (Math.abs(d[0]) > 0.5 ? (d[0] > 0 ? 0 : 2) : (d[1] > 0 ? 1 : 3));
+  // body x along d (its levers face back up the lead), the lever row along the body's y: P1 at its -y end
+  const seatAt = (S: Vec3, d: Vec3): Vec3 => { const q: Vec3 = [-d[1], d[0], 0]; return [S[0] + d[0] * L / 2 + q[0] * (Wd / 2 - lever), S[1] + d[1] * L / 2 + q[1] * (Wd / 2 - lever), S[2] + 1]; };   // the levers are 1 mm under the body's middle
+  const tab = connectorLen("tab"), lev = connectorLen("lever"), V: Vec3 = [p[0] + o[0] * (tab + 1.25 * R), p[1] + o[1] * (tab + 1.25 * R), p[2]];
+  // the lever's own lead-out (its ferrule and 1.25 R) ends a bend radius past the switch's: the turn there has its room
+  const k = lev + 1.25 * R + R + 2;
+  const cands: { S: Vec3; d: Vec3 }[] = [{ S: [V[0] + o[0] * k, V[1] + o[1] * k, p[2]], d: o }];
+  for (const sg of [1, -1]) { const d: Vec3 = [-o[1] * sg, o[0] * sg, 0]; cands.push({ S: [V[0] + d[0] * k, V[1] + d[1] * k, p[2]], d }); }
+  const pick = cands.map((c) => ({ ...c, at: seatAt(c.S, c.d) })).find((c) => clear(c.at, c.d)) ?? { ...cands[0], at: seatAt(cands[0].S, cands[0].d) };
+  H.seat("splice_vbat", pick.at, turnOf(pick.d));
 }
 
 /** Compute + power electronics for a 3S robot. */
