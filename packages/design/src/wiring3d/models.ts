@@ -201,9 +201,13 @@ function generic(key: string, ports: Port[], bb: { min: V3; max: V3 }, b: Builde
       if (/^feetech_sts/.test(key)) lead(p, (i, n) => [-14 + (i - (n - 1) / 2) * 2.5, side * 4.5, z0], [0, 0, -1], "jst");
       else if (/^dxl_/.test(key)) lead(p, (i, n) => [x0, side * 5.5 + (i - (n - 1) / 2) * 2.5 * 0, z0 + 6.5 + (i - (n - 1) / 2) * 2.5], [-1, 0, 0], "jst");
       else if (servo) lead(p, (i, n) => [x0 + 11 + (i - (n - 1) / 2) * 2.54, y1, z0 + 5.2], [0, 1, 0], "lead");
-      else lead(p, (i, n) => [x0 + 2, cy + (i - (n - 1) / 2) * 3, z1 - 3], [0, 0, 1], "lead");
+      else {
+        // a motor's leads leave its rear: the end of the body furthest from the output (the origin), pointing away from it
+        const ext: [number, number, number][] = [[0, -1, -x0], [0, 1, x1], [1, -1, -y0], [1, 1, y1], [2, -1, -z0], [2, 1, z1]], [ax, sg] = ext.sort((a, b) => b[2] - a[2])[0];
+        const c: V3 = [(x0 + x1) / 2, cy, cz], out: V3 = [0, 0, 0]; out[ax] = sg; const across = ax === 1 ? 0 : 1;
+        lead(p, (i, n) => { const at: V3 = [...c]; at[ax] = sg > 0 ? [x1, y1, z1][ax] : [x0, y0, z0][ax]; at[across] += (i - (n - 1) / 2) * 3; return at; }, out, "lead");
+      }
     });
-    if (!servo) for (const p of ports) p.pins.v.forEach((_, i, a) => { const yy = cy + (i - (a.length - 1) / 2) * 3; b.box("copper", [x0 + 1, yy - 0.6, z1 - 4], [x0 + 3, yy + 0.6, z1 - 1]); });
   } else if (role === "psu" || /psu|lrs/.test(key)) {
     b.box("silver", [x0, y0, z0], [x1, y1, z1]);
     // the terminal block is at the -x end of the case: the designs leave the room for its wires there (controlCase)

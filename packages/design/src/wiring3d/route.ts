@@ -38,7 +38,7 @@ const dist = (a: V3, b: V3) => len(sub(a, b));
 export class Router {
   spec: RobotSpecification; f: Fk; grid: Grid; groups: Record<string, string> = {};
   placed = new Map<string, Placed>(); bays = new Map<string, Box>(); skipped: string[] = [];
-  private nextId = 2; private dirty = true;
+  private nextId = 2; private dirty = true; private kept = new Set<number>();
   constructor(spec: RobotSpecification, f: Fk, opts: { bays?: { name: string; link: string; T: number[]; min: V3; max: V3 }[]; voxel_mm?: number } = {}) {
     this.spec = spec; this.f = f;
     const parentJ = new Map(spec.joints.map((j) => [j.child, j]));
@@ -79,6 +79,8 @@ export class Router {
     for (let b = n; b >= -n; b--) { let row = ""; for (let a = -n; a <= n; a++) { const q = [ci, cj, ck]; q[u] += a; q[v] += b; const o = g.inb(q[0], q[1], q[2]) ? g.occ[g.id(q[0], q[1], q[2])] : 0; row += a === 0 && b === 0 ? "+" : o === 0 ? "." : o === 1 ? "#" : String.fromCharCode(97 + ((o - 2) % 26)); } rows.push(row); }
     return rows.join("\n");
   }
+  /** what blocks a point: a bought part by name, else a printed part */
+  nameAt(p: V3): string { const o = this.grid.at(p); for (const [n, pl] of this.placed) if (pl.id === o) return n; return o === 1 ? "a printed part" : "a part"; }
   private ready() { if (this.dirty) { this.grid.finish(); this.dirty = false; } }
   /** a part riding a link under another name (a part carried in a bay with no link of its own is placed like a harness part) */
   alias(inst: string, link: string, key: string) { const p = this.placed.get(link); if (p && !this.placed.has(inst)) this.placed.set(inst, { ...p, model: partModel(key) }); }
@@ -98,6 +100,9 @@ export class Router {
       const T = frame(q);
       if (near && g.dist(q) > Math.ceil(half / g.s) + 2) return false;
       if (!g.boxFree(T.R, scale(T.p as V3, 1000), bb.min, bb.max, 1)) return false;
+      // not in front of anyone's pins: the corners, edge middles and centre of the body against the kept cells
+      if (this.kept.size) { const h = [0, 1, 2].map((a) => (bb.max[a] - bb.min[a]) / 2 + 1.5), st = [0, 1, 2].map((a) => Math.max(1, Math.ceil((2 * h[a]) / g.s)));
+        for (let a = 0; a <= st[0]; a++) for (let b = 0; b <= st[1]; b++) for (let cc = 0; cc <= st[2]; cc++) { const l: V3 = [c[0] - h[0] + (2 * h[0] * a) / st[0], c[1] - h[1] + (2 * h[1] * b) / st[1], c[2] - h[2] + (2 * h[2] * cc) / st[2]]; if (this.kept.has(this.cellOf(apply(T, l)))) return false; } }
       for (const [port, pin] of pins) {
         const pa = pinOf(model, port, pin); if (!pa) continue;
         const w = pinWorld(T, pa), n = connectorLen(pa.kind) + 8;
@@ -114,6 +119,16 @@ export class Router {
     return at;
   }
 
+  /** Keep the space in front of a part's pins free of harness parts: the connector and the first bend of every wire to come. */
+  reserve(inst: string, pins: [string, string][]) {
+    const pl = this.placed.get(inst); if (!pl) return;
+    for (const [port, pin] of pins) {
+      const pa = pinOf(pl.model, port, pin); if (!pa) continue;
+      const w = pinWorld(pl.world, pa), n = connectorLen(pa.kind) + 12;
+      for (let t = 0; t <= n; t += this.grid.s / 2) this.kept.add(this.cellOf(add(w.p, scale(w.out, t))));
+    }
+  }
+  private cellOf(p: V3) { const [i, j, k] = this.grid.ix(p); return this.grid.inb(i, j, k) ? this.grid.id(i, j, k) : -1; }
   private pin(inst: string, port: string, pin: string): { p: V3; out: V3; kind: PinAt["kind"]; id: number; group: string } | null {
     const pl = this.placed.get(inst); if (!pl) return null;
     const pa = pinOf(pl.model, port, pin); if (!pa) return null;
@@ -126,12 +141,12 @@ export class Router {
     // a pin inside its own part's body box (a header between taller components): straight out until it is clear of the box
     for (let t = conn; t < conn + 40; t += 1) if (g.at(add(e.p, scale(e.out, t))) !== e.id) { conn = t; break; }
     const S = add(e.p, scale(e.out, conn));
-    for (let t = 2; t <= conn; t += 1) if (!own(add(e.p, scale(e.out, t)))) { problems.push(`${what}: its connector (${Math.round(conn)} mm) meets a solid ${Math.round(t)} mm from the pin`); return { S, V: S }; }
+    for (let t = 2; t <= conn; t += 1) if (!own(add(e.p, scale(e.out, t)))) { problems.push(`${what}: its connector (${Math.round(conn)} mm) meets ${this.nameAt(add(e.p, scale(e.out, t)))} ${Math.round(t)} mm from the pin`); return { S, V: S }; }
     // a quarter more than the radius: a turn a little over a right angle still rounds fully
     for (const k of [1.25, 1, 0.75, 0.5]) {
       const V = add(S, scale(e.out, R * k)); let ok = g.at(V) === 0;
       for (let t = 0; ok && t <= R * k; t += 1) if (!own(add(S, scale(e.out, t)))) ok = false;
-      if (ok) { if (k < 1.25) problems.push(`${what}: ${Math.round(R * k)} mm for the first bend, the wire wants ${R.toFixed(1)} mm`); return { S, V }; }
+      if (ok) { if (k < 1) problems.push(`${what}: ${Math.round(R * k)} mm for the first bend, the wire wants ${R.toFixed(1)} mm`); return { S, V }; }
     }
     problems.push(`${what}: no room for a bend beyond the connector`);
     return { S, V: S };

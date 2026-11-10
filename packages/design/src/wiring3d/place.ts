@@ -47,8 +47,10 @@ export function pinOf(m: PartModel, port: string, pin: string): PinAt | null {
   const pa = m.pins.get(`${port}.${pin}`) ?? [...m.pins.values()][0];
   if (!pa) return null;
   if (pa.kind === "header" && pa.out[2] < -0.9) {
-    const bb = bodyBox(m)!, c = lerp(bb.min, bb.max, 0.5), dx = pa.at[0] - c[0], dy = pa.at[1] - c[1];
-    const ax = Math.abs(dx) / (bb.max[0] - bb.min[0]) > Math.abs(dy) / (bb.max[1] - bb.min[1]) ? 0 : 1, sgn = (ax === 0 ? dx : dy) >= 0 ? 1 : -1;
+    // the free tie points of a pin's row lie square to the header: outwards across the row the pin stands in
+    const bb = bodyBox(m)!, c = lerp(bb.min, bb.max, 0.5), row = [...m.pins.values()].filter((q) => q.kind === "header" && q.out[2] < -0.9 && (Math.abs(q.at[0] - pa.at[0]) < 0.1 || Math.abs(q.at[1] - pa.at[1]) < 0.1));
+    const alongX = row.filter((q) => Math.abs(q.at[1] - pa.at[1]) < 0.1).length >= row.filter((q) => Math.abs(q.at[0] - pa.at[0]) < 0.1).length;
+    const ax = alongX ? 1 : 0, sgn = pa.at[ax] - c[ax] >= 0 ? 1 : -1;
     const at: V3 = [pa.at[0], pa.at[1], 0]; at[ax] = (sgn > 0 ? bb.max[ax] : bb.min[ax]) + sgn * 3.81;
     return { at, out: [0, 0, 1], kind: "socket" };
   }
