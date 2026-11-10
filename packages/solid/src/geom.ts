@@ -76,7 +76,8 @@ export function toPose(m: Mat4): { xyz: Vec3; rpy: Vec3 } {
   const r20 = m[2], r21 = m[6], r22 = m[10], r10 = m[1], r00 = m[0];
   const pitch = Math.asin(Math.max(-1, Math.min(1, -r20)));
   let roll: number, yaw: number;
-  if (Math.abs(Math.cos(pitch)) > 1e-9) { roll = Math.atan2(r21, r22); yaw = Math.atan2(r10, r00); }
+  // near +-90 deg pitch roll and yaw are one rotation; below 1e-6 the general formula reads float noise
+  if (Math.abs(Math.cos(pitch)) > 1e-6) { roll = Math.atan2(r21, r22); yaw = Math.atan2(r10, r00); }
   else { roll = 0; yaw = Math.atan2(-m[4], m[5]); }
   const c = (x: number) => (Math.abs(x) < 1e-12 ? 0 : +x.toFixed(9));
   return { xyz: [c(m[12] / 1000), c(m[13] / 1000), c(m[14] / 1000)], rpy: [c(roll), c(pitch), c(yaw)] };

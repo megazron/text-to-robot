@@ -30,6 +30,21 @@ export function linkSolid(l: Link): M | null {
     // actuators: the case only; the output face and horn are where the driven link bolts on
     // wheels are discs about their axle (component z), not their bounding box
     if ((c.category === "wheel" && !c.specs.ball_d_mm) || (c.specs.od_mm && c.specs.id_mm)) { const r = (b.max[0] - b.min[0]) / 2; return Manifold.cylinder(b.max[2] - b.min[2], r, r, 64).translate([(b.max[0] + b.min[0]) / 2, (b.max[1] + b.min[1]) / 2, b.min[2]]); }
+    // round bought parts (rods, lead screws, bearings, bushings, couplers, lead nuts, pulleys, tubes) are cylinders about z,
+    // with their bores: a rod runs through its bushing, a screw through its nut and into its coupler, as built
+    if (/^(?:rod_|leadscrew_|bearing_|lm8uu|coupler_|leadnut_|cf_tube_|gt2_pulley|gt2_idler)/.test(key) && Math.abs((b.max[0] - b.min[0]) - (b.max[1] - b.min[1])) < 0.5) {
+      const r = (b.max[0] - b.min[0]) / 2, cx = (b.max[0] + b.min[0]) / 2, cy = (b.max[1] + b.min[1]) / 2, z0 = b.min[2], z1 = b.max[2];
+      // a stepped part (a lead nut: flange and body) gives its profile as (radius, z0, z1) steps
+      const prof = c.specs.round_profile_mm as [number, number, number][] | undefined;
+      let solid = prof ? prof.map(([rr, a, e]) => Manifold.cylinder(e - a, rr, rr, 64).translate([cx, cy, a])).reduce((x, y) => x.add(y)) : Manifold.cylinder(z1 - z0, r, r, 64).translate([cx, cy, z0]);
+      const bores = c.holes.filter((h) => Math.hypot(h.pos[0] - cx, h.pos[1] - cy) < 0.5 && Math.abs(h.axis[2]) > 0.9 && h.dia_mm < 1.8 * r);
+      for (const h of bores) {
+        // one bore runs through; two (a coupler's motor and screw bores) each reach the middle from their own end
+        const [a, e] = bores.length === 1 ? [z0 - 1, z1 + 1] : h.pos[2] - z0 < z1 - h.pos[2] ? [z0 - 1, (z0 + z1) / 2] : [(z0 + z1) / 2, z1 + 1];
+        solid = solid.subtract(Manifold.cylinder(e - a, h.dia_mm / 2, h.dia_mm / 2, 48).translate([cx, cy, a]));
+      }
+      return solid;
+    }
     const top = c.category === "actuator" ? Math.min(b.max[2], -0.8) : b.max[2];
     return box(b.min as Vec3, [b.max[0], b.max[1], top]);
   }

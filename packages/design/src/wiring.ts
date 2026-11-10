@@ -99,6 +99,8 @@ export class Harness {
   /** instance -> bay name, for routing through a bay's cable exits */
   bayOf = new Map<string, string>();
   mainSwitch: string | null = null;
+  /** no switch by design: the battery plug is the switch (drones, ROVs); says how it is broken */
+  plugSwitch: string | null = null;
   fuses: FuseRec[] = [];
   optional = new Set<string>();
   /** routed channels: link -> polylines, world mm at home. A cable that has left its bay follows them through that rigid body. */
@@ -705,7 +707,8 @@ function checks(H: Harness, rec: WiringRecord) {
     A.check("wiring:fuse", !!fuse || !H.main.fuse, fuse ? `${fuse.rating_a} A main fuse on the battery positive, ${rec.fuses.length - 1} branch fuses; every wire off that rail is rated above the fuse ahead of it` : "no fuse: supply is current limited");
     // a mains inlet's switch breaks the supply's input, not this rail: its rating is against the mains side
     const onMains = rec.main_switch === "mains_inlet", sw = rec.main_switch ? H.rec(rec.main_switch).current_a.v.typical : 0, draw = rec.rails.find((r) => r.name === H.main!.rail)!.typical_a;
-    A.check("wiring:switch", !!rec.main_switch && (onMains || draw <= sw), onMains ? "main switch in the fused mains inlet" : rec.main_switch ? `main switch ${rec.main_switch} (${sw} A) in the positive feed, running load ${draw} A` : "no main switch");
+    if (H.plugSwitch && !rec.main_switch) A.check("wiring:switch", true, H.plugSwitch);
+    else A.check("wiring:switch", !!rec.main_switch && (onMains || draw <= sw), onMains ? "main switch in the fused mains inlet" : rec.main_switch ? `main switch ${rec.main_switch} (${sw} A) in the positive feed, running load ${draw} A` : "no main switch");
   }
   // common ground: one connected net joining every ground pin in use; pins of one part with the same role are tied inside it
   const parent = new Map<string, string>(), find = (x: string): string => { const p = parent.get(x) ?? x; if (p === x) return x; const r = find(p); parent.set(x, r); return r; }, join = (a: string, b: string) => parent.set(find(a), find(b));
