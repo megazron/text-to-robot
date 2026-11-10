@@ -122,7 +122,7 @@ export class Harness {
   seats = new Map<string, { at: Vec3; turn: number }>();
   seat(inst: string, at: Vec3, turn = 0) { this.seats.set(inst, { at, turn }); }
   /** cable -> the bay exit it leaves by, where the nearest one would be overfilled */
-  exitOf = new Map<string, string>();
+  exitOf = new Map<string, string[]>();
   /** lever splices a designer added by hand (bus hubs) */
   buyHub?: number;
   mainRange?: { min: number; nom: number; max: number };
@@ -165,7 +165,8 @@ export class Harness {
     this.wires.push({ net, a, b, typ: o.typ ?? 0.02, peak: o.peak ?? o.typ ?? 0.02, cable, ...(o.trunk ? { trunk: o.trunk } : {}) });
   }
   label(cable: string, text: string) { this.labels.set(cable, text); }
-  exitFor(cable: string, exit: string) { this.exitOf.set(cable, exit); }
+  /** the exits a cable leaves its bays by: one per bay it leaves (the others go by the nearest) */
+  exitFor(cable: string, ...exits: string[]) { this.exitOf.set(cable, exits); }
   /** A channel a cable can lie in, on `link`: a polyline in world mm at the home pose. */
   channel(link: string, pts: Vec3[]) { this.channels.set(link, [...(this.channels.get(link) ?? []), pts]); }
   /** several signal wires a -> b at once: pairs of pin names */
@@ -504,7 +505,7 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
       const crossing = [...up, ...down].filter((j) => j.type !== "fixed");
       const bayA = H.bayOf.get(ia) || undefined, bayB = H.bayOf.get(ib) || undefined;
       const leaves = (bay?: string, other?: string) => !!bay && bay !== other;
-      const pick = (bay: string, to: Vec3) => H.exits.find((e) => e.id === H.exitOf.get(key) && e.bay === bay) ?? nearestExit(H, bay, to);
+      const pick = (bay: string, to: Vec3) => H.exits.find((e) => !!H.exitOf.get(key)?.includes(e.id) && e.bay === bay) ?? nearestExit(H, bay, to);
       const exA = leaves(bayA, bayB) ? pick(bayA!, lb.p ?? la.p!) : null, exB = leaves(bayB, bayA) ? pick(bayB!, la.p ?? lb.p!) : null;
       const exitAt = (e: ExitDecl | null) => (e ? { id: e.id, at: worldExit(f, e), n: unit(rotateBy(f, e.link, e.normal)), hole_mm: e.panel_hole_mm } : null);
       const od = bundleOd(ws), straight = dist(la.p ?? [0, 0, 0], lb.p ?? [0, 0, 0]);
@@ -551,7 +552,7 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
       // waypoints: start, then per crossed joint its two anchors, end
       const bayA = H.bayOf.get(ia), bayB = H.bayOf.get(ib);
       const leaves = (bay?: string, other?: string) => !!bay && bay !== other;
-      const pick = (bay: string, to: Vec3) => H.exits.find((e) => e.id === H.exitOf.get(key) && e.bay === bay) ?? nearestExit(H, bay, to);
+      const pick = (bay: string, to: Vec3) => H.exits.find((e) => !!H.exitOf.get(key)?.includes(e.id) && e.bay === bay) ?? nearestExit(H, bay, to);
       const exA = leaves(bayA, bayB) ? pick(bayA!, lb.p) : null, exB = leaves(bayB, bayA) ? pick(bayB!, la.p) : null;
       if (exA || exB) exit = [exA?.id, exB?.id].filter(Boolean).join(" + ");
       let cur = la.p, curGroup = groupOf.get(la.link)!, routed = false;
