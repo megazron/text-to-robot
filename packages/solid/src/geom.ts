@@ -142,6 +142,9 @@ export function cradleCuts(a: ActuatorPlacement, wall = 3): M[] {
   const cuts = [actuatorKeepout(a), ...caseHoles(a.key).flatMap((h) => screwCuts([h], a.T, wall + 12 + inset(h)))];
   // cable slot out of the side: run it well past the wall, or material around the cradle leaves a skin over it
   if (max[0] - min[0] > 3 * rim) cuts.push(box([min[0] + rim, max[1] - 1, min[2] + 1.5], [Math.min(max[0] - rim, min[0] + rim + 12), max[1] + wall + 20, min[2] + 9]).transform(a.T));
+  // bus servos plug in where their sockets are: a window through the cradle there, with room for the plug (as plugWindowOps)
+  if (a.key.startsWith("feetech_sts")) cuts.push(box([-18.5, -10, min[2] - 8], [-9.5, 10, min[2] + 6]).transform(a.T));
+  if (a.key.startsWith("dxl_")) cuts.push(box([min[0] - 8, -11, min[2] + 0.5], [min[0] + 0.5, 11, min[2] + 12]).transform(a.T));
   void top;
   return cuts;
 }

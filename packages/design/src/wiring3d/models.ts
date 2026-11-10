@@ -193,12 +193,22 @@ function generic(key: string, ports: Port[], bb: { min: V3; max: V3 }, b: Builde
   } else if (role === "actuator") {
     // the motor body comes from its datasheet CAD (drawn by the robot view); its leads leave at the back
     const servo = /sg90|mg90|mg996|ds3218|sts|dxl|feetech|xl|xm|xh/.test(key);
-    for (const p of ports) lead(p, (i, n) => servo ? [(x0 + x1) / 2 + (i - (n - 1) / 2) * 2.54, y1, z0 + 6] : [x0 + 2, cy + (i - (n - 1) / 2) * 3, z1 - 3], servo ? [0, 1, 0] : [0, 0, 1], servo ? "jst" : "lead");
+    // bus servos: two sockets side by side where the catalog says they are (Feetech STS under the case, Dynamixel X on
+    // the end face away from the output: the faces the cradles' plug windows open, see plugWindowOps). A hobby servo's
+    // fixed lead is drawn from the cable slot every cradle has (low on its +y wall), where it comes out of the print.
+    ports.forEach((p, k) => {
+      const side = (k - (ports.length - 1) / 2) * 2;
+      if (/^feetech_sts/.test(key)) lead(p, (i, n) => [-14 + (i - (n - 1) / 2) * 2.5, side * 4.5, z0], [0, 0, -1], "jst");
+      else if (/^dxl_/.test(key)) lead(p, (i, n) => [x0, side * 5.5 + (i - (n - 1) / 2) * 2.5 * 0, z0 + 6.5 + (i - (n - 1) / 2) * 2.5], [-1, 0, 0], "jst");
+      else if (servo) lead(p, (i, n) => [x0 + 11 + (i - (n - 1) / 2) * 2.54, y1, z0 + 5.2], [0, 1, 0], "lead");
+      else lead(p, (i, n) => [x0 + 2, cy + (i - (n - 1) / 2) * 3, z1 - 3], [0, 0, 1], "lead");
+    });
     if (!servo) for (const p of ports) p.pins.v.forEach((_, i, a) => { const yy = cy + (i - (a.length - 1) / 2) * 3; b.box("copper", [x0 + 1, yy - 0.6, z1 - 4], [x0 + 3, yy + 0.6, z1 - 1]); });
   } else if (role === "psu" || /psu|lrs/.test(key)) {
     b.box("silver", [x0, y0, z0], [x1, y1, z1]);
-    b.box("plastic_black", [x1 - 12, y0 + 2, z0 + 2], [x1, y1 - 2, z0 + 14]);        // terminal block
-    let k = 0; for (const p of ports) for (const x of p.pins.v) { const yy = y0 + 6 + (k++) * 9.5; set(p.name, x.name, [x1, Math.min(yy, y1 - 4), z0 + 8], [1, 0, 0], "terminal"); }
+    // the terminal block is at the -x end of the case: the designs leave the room for its wires there (controlCase)
+    b.box("plastic_black", [x0, y0 + 2, z0 + 2], [x0 + 12, y1 - 2, z0 + 14]);
+    let k = 0; for (const p of ports) for (const x of p.pins.v) { const yy = y0 + 6 + (k++) * 9.5; set(p.name, x.name, [x0, Math.min(yy, y1 - 4), z0 + 8], [-1, 0, 0], "terminal"); }
   } else if (role === "controller" || role === "driver" || role === "regulator" || role === "sensor" || role === "adapter" || role === "indicator") {
     const pcb = pcbColour(key), t = 1.6, top = Math.min(z1, z0 + t);
     b.box(pcb, [x0, y0, z0], [x1, y1, top]);

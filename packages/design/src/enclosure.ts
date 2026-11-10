@@ -301,14 +301,14 @@ export function hood(A: Assembly, H: Harness | undefined, o: { name: string; dec
  * wall adapter) and the control boards in one printed case, USB windows in the long wall, a gland where the harness leaves.
  */
 export function controlCase(A: Assembly, H: Harness, o: { parent: string; T: Mat4; psu: string | null; psuUse?: string; boards: { name: string; key: string; use: string }[]; cad?: boolean }) {
-  const inPsu = !!o.psu, pb = inPsu ? part(o.psu!).bbox_mm! : null, L = inPsu ? 36 + pb!.max[0] + 3 : 26 + o.boards.reduce((s, b) => s + part(b.key).bbox_mm!.max[0] + 6, 0);
+  const PSU_X = 68, inPsu = !!o.psu, pb = inPsu ? part(o.psu!).bbox_mm! : null, L = inPsu ? PSU_X + pb!.max[0] + 3 : 26 + o.boards.reduce((s, b) => s + part(b.key).bbox_mm!.max[0] + 6, 0);
   const sizes = o.boards.map((b) => { const q = part(b.key).bbox_mm!; return { l: q.max[0] - q.min[0], w: q.max[1] - q.min[1], h: q.max[2] - q.min[2], q }; });
   // boards in a row along the long wall, behind the supply
   const yB = inPsu ? pb!.max[1] + 7 : 3, bw = Math.max(...sizes.map((s) => s.w), 0), Wd = yB + bw + 4;
   const rowL = sizes.reduce((s, b) => s + b.l + 6, 6), L2 = Math.max(L, rowL + 6);
   const Hh = Math.max(inPsu ? pb!.max[2] + 12 : 0, Math.max(...sizes.map((s) => s.h), 0) + 5 + 14, 36);
   const parts: BayPart[] = [], exits: ExitSpec[] = [];
-  if (inPsu) parts.push({ name: "power_supply", key: o.psu!, T: translation([36, 4, 5]), use: o.psuUse ?? "bench supply" });
+  if (inPsu) parts.push({ name: "power_supply", key: o.psu!, T: translation([PSU_X, 4, 5]), use: o.psuUse ?? "bench supply" });
   let x = 6;
   o.boards.forEach((b, i) => {
     const s = sizes[i]; parts.push({ name: b.name, key: b.key, T: translation([x - s.q.min[0], yB - s.q.min[1], 5]), use: b.use });

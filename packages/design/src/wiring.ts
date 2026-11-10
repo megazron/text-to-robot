@@ -10,13 +10,22 @@ import type { Assembly } from "./assembly.ts";
 import { fk, type Fk as FK } from "./kin.ts";
 import { linkSolid } from "./clearance.ts";
 import { build, box as boxSolid, type Mat4 } from "@ttr/solid";
+import { Router, roundWire } from "./wiring3d/route.ts";
+import { wireSize } from "./wiring3d/place.ts";
 
 // ------------------------------------------------------------------------------------------- records
 export type NetKind = "power" | "ground" | "signal" | "bus";
 export interface WireEnd { inst: string; port: string; pin: string; }
-export interface InstanceRec { name: string; key: string; link: string | null; off_board?: boolean; note?: string; }
+export interface InstanceRec {
+  name: string; key: string; link: string | null; off_board?: boolean; note?: string;
+  /** a harness part with no link of its own (splice, inline fuse, star ground): its body centre in the world at the home pose (mm) and the rigid body it is tied to */
+  at_mm?: Vec3; on?: string;
+}
 export interface NetRec { name: string; kind: NetKind; voltage_v?: number; pins: string[]; }
-export interface WireRec { id: string; net: string; kind: NetKind; from: string; to: string; awg: number | null; color: string; typical_a: number; peak_a: number; length_mm: number; drop_v?: number; }
+export interface WireRec { id: string; net: string; kind: NetKind; from: string; to: string; awg: number | null; color: string; typical_a: number; peak_a: number; length_mm: number; drop_v?: number;
+  /** the wire as laid by the router: corner points pin to pin in the world at the home pose (mm), the rigid body each rides (run lengths) and the radius its corners are rounded to */
+  pts?: Vec3[]; on?: [string, number][]; bend_mm?: number;
+}
 export interface SlackRec { joint: string; type: string; travel: [number, number]; home_mm: number; need_mm: number; slack_mm: number; provided_mm: number; }
 export interface CableRec {
   id: string; label: string; from: string; to: string; from_connector: string; to_connector: string; premade: string | null;
@@ -31,7 +40,7 @@ export interface RailRec {
 }
 export interface FuseRec { id: string; rating_a: number; protects: string; wire_awg: number; holder: string; }
 export interface WiringBomLine { item: string; qty: number; unit: string; unit_usd: number; subtotal_usd: number; spec: string; source: string; }
-export interface ClipRec { link: string; at_mm: Vec3; dir: Vec3; normal: Vec3; od_mm: number; cables: string[]; }
+export interface ClipRec { link: string; at_mm: Vec3; dir: Vec3; normal: Vec3; od_mm: number; cables: string[]; /** how far the cable's centre stands off the surface the clip is printed on */ gap_mm?: number; }
 export interface WiringRecord {
   instances: InstanceRec[]; nets: NetRec[]; cables: CableRec[]; rails: RailRec[]; fuses: FuseRec[]; main_switch: string | null; clips: ClipRec[];
   bom: WiringBomLine[]; cost_usd: number; total_wire_m: number; notes: string[]; unconnected: string[]; estimated_inputs: string[];
@@ -347,6 +356,8 @@ export interface WireOptions {
   tortuosity?: number;
   /** skip printing clips on these links (fabricated plates, tracks) */
   noClips?: RegExp;
+  /** "legacy": straight runs between waypoints, as before the router (kept for the Mark 43, whose cables lie in fitted channels) */
+  router?: "legacy";
 }
 
 /** Everything after the declarations: emits rail wires, sizes, routes, checks; stores design.wiring. */
@@ -446,6 +457,30 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
 
   const cables: CableRec[] = []; const clips: ClipRec[] = []; let cid = 0;
   const unresolved: string[] = [];
+  // ---- the router: every solid of the robot at home as a grid, the parts and their pins in it (the Mark 43's cables lie
+  // in the channels its armour was fitted with instead: see the legacy branch below)
+  const routed = !H.channels.size && opts.router !== "legacy", tRoute = Date.now();
+  const R = routed ? new Router(spec, f, { bays: baysOfDesign(A).map((b) => ({ name: b.name, link: b.tub, T: b.T as number[], min: b.min, max: b.max })) }) : null;
+  const routeProblems: string[] = [];
+  const pinsOf = (inst: string) => { const out: [string, string][] = []; for (const w of H.wires) for (const e of [w.a, w.b]) if (e.inst === inst && !out.some((x) => x[0] === e.port && x[1] === e.pin)) out.push([e.port, e.pin]); return out; };
+  if (R) for (const i of H.instances.values()) {
+    if (i.off_board) continue;
+    const own = i.link ? spec.links.find((l) => l.name === i.link) : undefined;
+    if (own && own.geometry.type === "mesh" && own.geometry.part === "component" && String(own.geometry.params?.key) === i.key) { R.alias(i.name, i.link!, i.key); continue; }
+    // a harness part (splice, inline fuse, star ground): beside the part it serves, in that part's compartment
+    const home: { link: string | null; p: Vec3 | null; inst?: string } = i.link && f.link[i.link] ? { link: i.link, p: own && own.geometry.type === "mesh" && own.geometry.part === "component" ? bodyCentre(f, i.link, String(own.geometry.params?.key)) : worldOf(f, i.link, [0, 0, 0]), inst: [...H.instances.values()].find((x) => x.link === i.link && x.name !== i.name)?.name } : H.home ? { ...locate(H.home), inst: H.home } : harnessHome(H, i.name, groups, locate);
+    if (!home.p || !home.link) continue;
+    if (home.inst && !H.bayOf.get(i.name)) H.bayOf.set(i.name, H.bayOf.get(home.inst) ?? "");
+    const g = groupOf.get(home.link) ?? home.link, at = R.placeHarness(i.name, i.key, home.p, g, pinsOf(i.name), H.bayOf.get(i.name) || undefined);
+    if (at) { i.at_mm = at.map(r1) as Vec3; i.on = g; } else routeProblems.push(`${i.name}: no free place beside ${home.inst ?? home.link}`);
+  }
+  const awgOf = (w: WireDecl, lengthMm: number, pm: string | null) => {
+    const n = H.nets.get(w.net)!, volts = n.kind === "power" ? n.voltage_v ?? 5 : 5;
+    // wires ahead of the main fuse's load must carry the fuse's rating: the fuse protects them
+    const design = Math.max(w.typ * 1.25, w.peak * 0.6, w.trunk === "main" ? mainFuse / 2 : 0);   // the fuse protects against the free-air rating, twice the bundled figure
+    const maxDrop = Math.max(volts * 0.03, 0.1), minG = n.kind === "power" || n.kind === "ground" ? 24 : 26;
+    return pm ? null : gaugeFor(design, lengthMm, maxDrop, minG);
+  };
   for (const [key, ws] of groups) {
     const ia = ws[0].a.inst, ib = ws[0].b.inst;
     let la = locate(ia), lb = locate(ib);
@@ -453,10 +488,52 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
     if (!la.p && !H.instances.get(ia)!.off_board) { const home = harnessHome(H, ia, groups, locate); la = home; if (home.inst && !H.bayOf.get(ia)) H.bayOf.set(ia, H.bayOf.get(home.inst) ?? ""); }
     if (!lb.p && !H.instances.get(ib)!.off_board) { const home = harnessHome(H, ib, groups, locate); lb = home; if (home.inst && !H.bayOf.get(ib)) H.bayOf.set(ib, H.bayOf.get(home.inst) ?? ""); }
     const offBoard = H.instances.get(ia)!.off_board || H.instances.get(ib)!.off_board;
+    const pm = H.premade.get(key) ?? null;
+    const svc = pm ? 0 : serviceMm, term = pm ? 0 : termMm * 2;
+    let geom: { path: Vec3[]; joints: SlackRec[]; links: Set<string>; exit: string | null; routeMm: number; slackMm: number; channelMm: number; clipHere: ClipAt[]; wires?: { pts: Vec3[]; on: string[]; drawn_mm: number; bend_mm: number }[]; awg?: (number | null)[] };
+    if (R && R.placed.has(ia) && R.placed.has(ib) && la.link && lb.link) {
+      const { up, down } = treePath(spec, R.placed.get(ia)!.link, R.placed.get(ib)!.link);
+      const crossing = [...up, ...down].filter((j) => j.type !== "fixed");
+      const bayA = H.bayOf.get(ia) || undefined, bayB = H.bayOf.get(ib) || undefined;
+      const leaves = (bay?: string, other?: string) => !!bay && bay !== other;
+      const pick = (bay: string, to: Vec3) => H.exits.find((e) => e.id === H.exitOf.get(key) && e.bay === bay) ?? nearestExit(H, bay, to);
+      const exA = leaves(bayA, bayB) ? pick(bayA!, lb.p ?? la.p!) : null, exB = leaves(bayB, bayA) ? pick(bayB!, la.p ?? lb.p!) : null;
+      const exitAt = (e: ExitDecl | null) => (e ? { id: e.id, at: worldExit(f, e), n: unit(rotateBy(f, e.link, e.normal)), hole_mm: e.panel_hole_mm } : null);
+      const od = bundleOd(ws), straight = dist(la.p ?? [0, 0, 0], lb.p ?? [0, 0, 0]);
+      const slackOf = (anchors: { joint: string; aIn: Vec3; aOut: Vec3 }[]) => {
+        const joints: SlackRec[] = []; let slackMm = [...up, ...down].reduce((n, j) => n + (j.type === "fixed" ? H.flex.get(j.name) ?? 0 : 0), 0);   // fixed in the model, not in life
+        for (const a of anchors) {
+          const j = crossing.find((x) => x.name === a.joint)!, sw = jointSweep(j, a.aIn, a.aOut, jointWorld(f, j), axisWorld(f, j));
+          const bendR = 6 * od; // bundle bend radius; the 10 x OD table figure is for the single wire in repeated flexing
+          const loop = Math.max(sw.need - sw.home, 0);
+          // the loop itself must be at least one bend-radius arc to stay flexible
+          const provided = Math.ceil((loop * 1.15 + Math.PI * bendR * 0.5) / 5) * 5 + (H.flex.get(j.name) ?? 0);
+          joints.push({ joint: j.name, type: j.type, travel: [r3(sw.travel[0]), r3(sw.travel[1])], home_mm: r1(sw.home), need_mm: r1(sw.need), slack_mm: provided, provided_mm: r1(sw.home + provided) });
+          slackMm += provided;
+        }
+        return { joints, slackMm };
+      };
+      // the gauge sets the bend radius and the routed length sets the gauge: route with a first guess, and again if the true length wants thicker wire
+      let awg = ws.map((w) => awgOf(w, straight * 1.4 + svc + term, pm)?.awg ?? null);
+      let out = R.cable({ key, a: ia, b: ib, od, crossing, exitA: exitAt(exA), exitB: exitAt(exB), bayA, bayB, wires: ws.map((w, i) => ({ from: [w.a.port, w.a.pin], to: [w.b.port, w.b.pin], awg: awg[i] })) });
+      let sl = slackOf(out.anchors);
+      const final = ws.map((w, i) => awgOf(w, Math.ceil(((out.wires[i]?.drawn_mm ?? straight) + svc + sl.slackMm + term) / 5) * 5, pm)?.awg ?? null);
+      if (final.some((x, i) => x !== null && awg[i] !== null && x < awg[i]!)) {
+        awg = final.map((x, i) => (x !== null && awg[i] !== null ? Math.min(x, awg[i]!) : x));
+        out = R.cable({ key, a: ia, b: ib, od, crossing, exitA: exitAt(exA), exitB: exitAt(exB), bayA, bayB, wires: ws.map((w, i) => ({ from: [w.a.port, w.a.pin], to: [w.b.port, w.b.pin], awg: awg[i] })) });
+        sl = slackOf(out.anchors);
+      }
+      routeProblems.push(...out.problems);
+      for (const j of crossing) if (j.type === "continuous") unresolved.push(`${key} crosses continuous joint ${j.name}: needs a slip ring`);
+      const links = new Set<string>(); for (const l of [la.link, lb.link, ...crossing.flatMap((j) => [j.parent, j.child])]) links.add(l);
+      geom = { path: out.trunk as Vec3[], joints: sl.joints, links, exit: [exA?.id, exB?.id].filter(Boolean).join(" + ") || null, routeMm: Math.max(0, ...out.wires.map((w) => w.drawn_mm)), slackMm: sl.slackMm, channelMm: 0,
+        clipHere: clipsAlong(surf, R, out.trunk as Vec3[], out.trunkOn), wires: out.wires.map((w, i) => ({ pts: w.pts as Vec3[], on: w.on, drawn_mm: w.drawn_mm, bend_mm: wireSize(awg[i]).bend })), awg };
+    } else {
+      const od = bundleOd(ws);
+      if (R && !offBoard) routeProblems.push(`${key}: ${!R.placed.has(ia) ? ia : ib} has no place, its cable is not laid`);
     const path: Vec3[] = []; const joints: SlackRec[] = []; const links = new Set<string>(); let exit: string | null = null;
     let routeMm = 0, slackMm = 0, channelMm = 0;
     const clipHere: { at: Vec3; dir: Vec3; normal: Vec3; link: string }[] = [];
-    const od = bundleOd(ws);
     if (la.p && lb.p && la.link && lb.link) {
       const { up, down } = treePath(spec, la.link, lb.link);
       const crossing = [...up, ...down].filter((j) => j.type !== "fixed");
@@ -504,24 +581,35 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
     } else if (offBoard) {
       routeMm = WIRING.off_board_cable_mm; if (la.p) path.push(la.p); if (lb.p) path.push(lb.p);
     }
-    routeMm = routeMm * tort;
-    const pm = H.premade.get(key) ?? null;
-    const svc = pm ? 0 : serviceMm, term = pm ? 0 : termMm * 2;
-    const length = routeMm + svc + slackMm + term;
+      geom = { path, joints, links, exit, routeMm: routeMm * tort, slackMm, channelMm, clipHere };
+    }
+    const od = bundleOd(ws), { path, joints, links, exit, routeMm, slackMm, channelMm, clipHere } = geom;
+    const lengthOf = (i: number) => (geom.wires ? geom.wires[i].drawn_mm : routeMm) + svc + slackMm + term;
     const wires: WireRec[] = ws.map((w, i) => {
       const n = H.nets.get(w.net)!, sig = H.rec(w.a.inst).ports.find((p) => p.name === w.a.port)?.pins.v.find((p) => p.name === w.a.pin)?.signal ?? "digital";
-      const volts = n.kind === "power" ? n.voltage_v ?? 5 : n.kind === "ground" ? 5 : 5;
-      // wires ahead of the main fuse's load must carry the fuse's rating: the fuse protects them
-      const design = Math.max(w.typ * 1.25, w.peak * 0.6, w.trunk === "main" ? mainFuse / 2 : 0);   // the fuse protects against the free-air rating, twice the bundled figure
-      const maxDrop = Math.max(volts * 0.03, 0.1), minG = n.kind === "power" || n.kind === "ground" ? 24 : 26;
-      const g = pm ? null : gaugeFor(design, length, maxDrop, minG);
-      return { id: `W${++cid}`, net: w.net, kind: n.kind, from: tname(w.a), to: tname(w.b), awg: g?.awg ?? null, color: COLOR[n.kind === "power" || n.kind === "ground" ? n.kind : sig] ?? "white", typical_a: r3(w.typ), peak_a: r3(w.peak), length_mm: Math.ceil(length / 5) * 5, ...(g ? { drop_v: r3(g.drop_v) } : {}) };
+      const cut = Math.ceil(lengthOf(i) / 5) * 5;
+      let g = awgOf(w, cut, pm);
+      // a routed wire keeps the gauge its bends were laid for when the final length would allow a thinner one
+      if (g && geom.awg?.[i] != null && geom.awg[i]! < g.awg) { const row = awgRow(geom.awg[i]!), nn = H.nets.get(w.net)!; void nn; g = { awg: row.awg, drop_v: Math.max(w.typ * 1.25, w.peak * 0.6, w.trunk === "main" ? mainFuse / 2 : 0) * row.ohm_per_m * 2 * (cut / 1000) }; }
+      const gw = geom.wires?.[i];
+      return { id: `W${++cid}`, net: w.net, kind: n.kind, from: tname(w.a), to: tname(w.b), awg: g?.awg ?? null, color: COLOR[n.kind === "power" || n.kind === "ground" ? n.kind : sig] ?? "white", typical_a: r3(w.typ), peak_a: r3(w.peak), length_mm: cut, ...(g ? { drop_v: r3(g.drop_v) } : {}),
+        ...(gw ? { pts: gw.pts, on: runs(gw.on), bend_mm: r1(gw.bend_mm) } : {}) };
     });
+    const length = Math.max(...wires.map((w) => w.length_mm));
     const pa = H.rec(ia).ports.find((p) => p.name === ws[0].a.port)!, pb = H.rec(ib).ports.find((p) => p.name === ws[0].b.port)!;
     cables.push({ id: `C${cables.length + 1}`, label: H.labels.get(key) ?? `${ia} to ${ib}`, from: ia, to: ib, from_connector: pa.connector.v, to_connector: pb.connector.v, premade: pm,
-      wires, od_mm: r1(od), route_mm: r1(routeMm), service_mm: svc, slack_mm: slackMm, termination_mm: term, length_mm: Math.ceil(length / 5) * 5,
+      wires, od_mm: r1(od), route_mm: r1(routeMm), service_mm: svc, slack_mm: slackMm, termination_mm: term, length_mm: length,
       path_mm: path.map((p) => p.map(r1) as Vec3), links: [...links], joints, exit, ...(channelMm ? { channel_mm: r1(channelMm) } : {}) });
-    for (const c of clipHere) if (!noClip.test(c.link)) mergeClip(clips, c, od, `C${cables.length}`);
+    if (geom.wires) { for (const c of clipHere) if (!noClip.test(c.link)) addClip(clips, c, od, `C${cables.length}`); }
+    else for (const c of clipHere) if (!noClip.test(c.link)) mergeClip(clips, c, od, `C${cables.length}`);
+    void offBoard;
+  }
+  if (R) {
+    dropClipsInTheWay(clips, cables);
+    for (const sl of (globalThis as { TTR_ROUTE_SLICE?: [number, number, number, number, number][] }).TTR_ROUTE_SLICE ?? []) console.error(`slice at ${sl.slice(0, 3)} normal ${sl[3]}\n${R.slice(sl.slice(0, 3) as Vec3, sl[3], sl[4])}`);
+    if ((globalThis as { TTR_ROUTE_DEBUG?: boolean }).TTR_ROUTE_DEBUG) console.error(`route: grid ${R.grid.nx}x${R.grid.ny}x${R.grid.nz} @ ${R.grid.s} mm, ${Date.now() - tRoute} ms\n  ${routeProblems.join("\n  ")}`);
+    const detail = routeProblems.length ? `${routeProblems.slice(0, 6).join("; ")}${routeProblems.length > 6 ? ` and ${routeProblems.length - 6} more` : ""}` : `every wire is laid through free space at the home pose: none passes through a part, corners are no tighter than each wire's bend radius, walls are crossed only at their exits`;
+    A.check("wiring:route", !routeProblems.length, detail);
   }
   // branch fuses: a wire off the main rail thinner than the main fuse protects gets its own inline fuse
   if (H.main?.fuse) {
@@ -545,6 +633,57 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
   return rec;
 }
 
+type ClipAt = { at: Vec3; dir: Vec3; normal: Vec3; link: string; gap?: number };
+const baysOfDesign = (A: Assembly) => ((A.design as { enclosures?: { name: string; tub: string; lid: string; T: number[]; min: Vec3; max: Vec3 }[] }).enclosures ?? []);
+const rotateBy = (f: FK, link: string, v: Vec3): Vec3 => { const T = f.link[link]; return [0, 1, 2].map((i) => T.R[i][0] * v[0] + T.R[i][1] * v[1] + T.R[i][2] * v[2]) as Vec3; };
+/** run lengths of the body each point of a wire rides */
+const runs = (on: string[]): [string, number][] => { const out: [string, number][] = []; for (const l of on) { if (out.length && out[out.length - 1][0] === l) out[out.length - 1][1]++; else out.push([l, 1]); } return out; };
+export const unruns = (on: [string, number][]): string[] => on.flatMap(([l, n]) => Array.from({ length: n }, () => l));
+/**
+ * Clip points along a routed cable, about every 70 mm outside the compartments: where the cable lies within 10 mm of a
+ * printed face of the body it rides, square off that face (so a bridge standing on the face closes over it).
+ */
+function clipsAlong(surf: SurfaceFinder, R: Router, trunk: Vec3[], on: string[]): ClipAt[] {
+  const out: ClipAt[] = [], inBay = (p: Vec3) => [...R.bays.values()].some((b) => [0, 1, 2].every((k) => p[k] >= b.min[k] && p[k] <= b.max[k]));
+  const acc = [0]; for (let i = 1; i < trunk.length; i++) acc.push(acc[i - 1] + dist(trunk[i], trunk[i - 1]));
+  const at = (d: number): { p: Vec3; dir: Vec3; on: string } | null => { for (let i = 1; i < trunk.length; i++) if (acc[i] >= d && acc[i] > acc[i - 1]) { if (on[i] !== on[i - 1]) return null; const t = (d - acc[i - 1]) / (acc[i] - acc[i - 1]); return { p: add(trunk[i - 1], scale(sub(trunk[i], trunk[i - 1]), t)), dir: unit(sub(trunk[i], trunk[i - 1])), on: on[i] }; } return null; };
+  const L = acc[acc.length - 1];
+  for (let d = 35; d < L - 20; d += 70) {
+    for (const shift of [0, 8, -8, 16, -16, 24, -24]) {
+      const q = at(d + shift); if (!q || inBay(q.p)) continue;
+      const s = surf.nearest(q.on, q.p); if (!s || s.d > 10 || s.d < 0.8) continue;
+      if (dot(unit(sub(q.p, s.at)), s.normal) < 0.94 || Math.abs(dot(q.dir, s.normal)) > 0.5) continue;
+      out.push({ at: s.at, dir: q.dir, normal: s.normal, link: s.link, gap: s.d }); break;
+    }
+  }
+  return out;
+}
+/** a clip for one cable; a cable passing a clip that is already there (within its window) shares it */
+function addClip(list: ClipRec[], c: ClipAt, od: number, cable: string) {
+  const near = list.find((x) => x.link === c.link && dist(x.at_mm, c.at) < 18);
+  if (near) return;
+  list.push({ link: c.link, at_mm: c.at.map(r1) as Vec3, dir: c.dir, normal: c.normal, od_mm: r1(od), cables: [cable], ...(c.gap !== undefined ? { gap_mm: r1(c.gap) } : {}) });
+}
+/** the bridge of a clip: half width of its window, height of the window's top, wall, half length (mm) */
+const clipSize = (c: ClipRec) => { const o = Math.max(c.od_mm, 3); return { half: o / 2 + 0.8, h: c.gap_mm !== undefined ? c.gap_mm + o / 2 + 1 : o + 1, t: 1.8, len: 3 }; };
+/** A clip stands where one cable was laid; any wire that would pass through its legs or its top instead of its window takes it away. */
+function dropClipsInTheWay(clips: ClipRec[], cables: CableRec[]) {
+  const lines = cables.flatMap((c) => c.wires.flatMap((w) => (w.pts && w.on ? [roundWire(w.pts, unruns(w.on), w.bend_mm ?? 5).pts as Vec3[]] : [])));
+  const keep = clips.filter((c) => {
+    const { half, h, t, len } = clipSize(c), n = unit(c.normal); let d = sub(c.dir, scale(n, dot(c.dir, n))); d = norm(d) > 1e-6 ? unit(d) : perp(n); const w = unit(cross(d, n)), m = 1.2;
+    for (const P of lines) for (let i = 1; i < P.length; i++) {
+      const steps = Math.max(1, Math.ceil(dist(P[i], P[i - 1]) / 1.5));
+      for (let q = 0; q <= steps; q++) {
+        const v = sub(add(P[i - 1], scale(sub(P[i], P[i - 1]), q / steps)), c.at_mm), x = dot(v, w), y = dot(v, d), z = dot(v, n);
+        if (Math.abs(y) > len + m || Math.abs(x) > half + t + m || z < -0.9 - m || z > h + t + m) continue;
+        if (Math.abs(x) < half - 0.4 && z > 0.7 + 0.4 && z < h - 0.4) continue;   // through the window
+        return false;
+      }
+    }
+    return true;
+  });
+  clips.length = 0; clips.push(...keep);
+}
 const perp = (a: Vec3): Vec3 => unit(Math.abs(a[2]) < 0.9 ? cross(a, [0, 0, 1]) : cross(a, [1, 0, 0]));
 function bundleOd(ws: WireDecl[]) { const d = 1.5; return ws.length <= 1 ? d : d * Math.sqrt(ws.length) * 1.25; }
 function nearestExit(H: Harness, bay: string, to: Vec3): ExitDecl | null { const list = H.exits.filter((e) => e.bay === bay); if (!list.length) return null; return [...list].sort((a, b) => dist(a.at, to) - dist(b.at, to))[0]; }
@@ -595,7 +734,7 @@ function applyClips(A: Assembly, rec: WiringRecord) {
     const p = inv(sub(c.at_mm, scale(T.p as Vec3, 1000))), n = unit(inv(c.normal)); let d = inv(c.dir);
     d = sub(d, scale(n, dot(d, n))); d = norm(d) > 1e-6 ? unit(d) : perp(n);
     // real boxes in the clip's own frame (x across, y along the cable, z off the surface)
-    const w = unit(cross(d, n)), half = Math.max(c.od_mm, 3) / 2 + 0.8, h = Math.max(c.od_mm, 3) + 1, t = 1.8, len = 3;
+    const w = unit(cross(d, n)), { half, h, t, len } = clipSize(c);
     const Tc = [w[0], w[1], w[2], 0, d[0], d[1], d[2], 0, n[0], n[1], n[2], 0, p[0], p[1], p[2], 1];
     const bar = (a0: number, a1: number, e0: number, e1: number) => ({ op: "box", min: [a0, -len, e0], max: [a1, len, e1] });
     const ops = byLink.get(c.link) ?? [];
