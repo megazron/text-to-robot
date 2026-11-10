@@ -414,6 +414,12 @@ export class Router {
           const m = r1(add(Q[nx], scale(dir, -back + 0.5)));
           if (g.at(m) === 0 && g.line(Q[v], m, 1) >= 0 && g.line(m, Q[nx + (nx > v ? 1 : -1)], 1) >= 0) cands.push({ pts: Q.map((p, j) => (j === nx ? m : p)), on: O });
         }
+        // the two lead-outs face away from each other close by (a short wire between neighbours): both run on further
+        // before the wire turns, which opens the loop between them
+        if (k === 2 && k + 1 === n - 3 && O[2] === O[3]) for (const ext of [R, 2 * R]) {
+          const da = unit(sub(Q[2], Q[1])), db = unit(sub(Q[3], Q[4])), ma = r1(add(Q[2], scale(da, ext))), mb = r1(add(Q[3], scale(db, ext)));
+          if (g.at(ma) === 0 && g.at(mb) === 0 && g.line(Q[2], ma, 1) >= 0 && g.line(ma, mb, 1) >= 0 && g.line(mb, Q[3], 1) >= 0) cands.push({ pts: [...Q.slice(0, 3), ma, mb, ...Q.slice(3)], on: [...O.slice(0, 3), O[2], O[3], ...O.slice(3)] });
+        }
         for (const c of cands) { const t = test(c); if (t.hits <= best.hits && (!t.tight || t.tight > best.tight + 0.05)) { best = t; P = c; took = true; break; } }
         if (took) break;
       }
