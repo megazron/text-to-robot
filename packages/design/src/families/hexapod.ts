@@ -155,7 +155,7 @@ function buildHexapod(req: LeggedRequest, cfg: HexCfg, sensors: string[]) {
 /** Three compartments: a hood over the computer on the top deck, a hood over the boards on the plate, a tray under the plate for the battery. */
 function boxHex(A: Assembly, H: Harness, b: ReturnType<typeof buildHexapod>) {
   // the computer fills its hood: a 14 mm strip on its connector side takes the hole down to the plate beside the ports
-  hoodAround(A, H, { name: "computer_hood", deck: "top_deck", parts: ["computer"], z0: b.zDeck + 3, z1: b.zRoof, usbFor: "computer", extend: { "y-": 14 } });
+  hoodAround(A, H, { name: "computer_hood", deck: "top_deck", parts: ["computer"], z0: b.zDeck + 3, z1: b.zRoof, usbFor: "computer", usbFace: "y-", extend: { "y-": 14 } });
   // the coxa servos plug in under the plate (their sockets are under the case): each side's leg cables leave the hood by a
   // grommet low in its side wall and go down through a hole in the plate just outside it, clear of the battery tray; the
   // hood's floor hole opens into the tray under it (the battery's leads come up through it); the USB lead to the
