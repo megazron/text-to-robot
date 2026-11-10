@@ -260,6 +260,7 @@ function boxQuad(A: Assembly, H: Harness, b: ReturnType<typeof buildQuadruped>, 
   const hood = hoodAround(A, H, { name: "electronics_hood", z1, grommets, deck: "top_deck", alsoHoles: rear ? ["top_deck_rear"] : [], parts, z0: zt, usbFor: "computer", rocker: qdd ? { key: BATTERY_SWITCH } : true, below: b.zHi - b.zLo, near: [b.Xb * 0.5 - b.leadRoom * 0.8, b.Wo * 0.6], room: qdd ? 44 : 20, rockerAtHole: true, limit: { x0: -b.Xb + 4, x1: b.Xb - 11, y0: -b.Wo + 6, y1: b.Wo - 6 } });
   // the harness in the tub: the inline fuse in the channel beside the pack on the deck hole's side, far enough behind the
   // hole for the lead to straighten out of the fuse and turn up through it; the star ground in the other channel
+  if (cam) { H.exitOf.set("camera~computer", "electronics_hood.camera"); H.kept.add("electronics_hood.camera"); }
   const hole = hood.exits.find((e) => e.id === "electronics_hood.deck")?.at;
   if (hole) {
     const s = hole[1] >= 0 ? 1 : -1, yc = s * (b.Wo - 15), fb = part("fuse_holder_atm_inline").bbox_mm!, fuseHalf = (fb.max[0] - fb.min[0]) / 2;
