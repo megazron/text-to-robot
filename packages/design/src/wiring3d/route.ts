@@ -185,15 +185,15 @@ export class Router {
   private pierce(e: ExitAt, need: number, bay: Box | undefined, run: number, toIn?: V3, toOut?: V3): { inner: V3; outer: V3 } | null {
     const g = this.grid;
     // the first free point each side of the wall, then on along the axis while it stays free, up to `run`: room to turn on to
-    // the hole's line. Where the cable comes from (or goes to) a point beside that stretch, it turns off level with it
-    // instead of running on past it and back
+    // the hole's line. Where the cable comes from (or goes to) a known point, it runs on along the axis until it is level
+    // with it and turns off there: one corner, not one short of it and another right after
     const along = (sgn: number, box?: Box, to?: V3) => {
       const want = to ? sgn * dot(sub(to, e.at), e.n) : Infinity;
       // (not past the point it is going to: there it settles for less clearance)
       for (const n of [need, 1]) for (let t = 2; t <= (n === need ? Math.min(40, want) : 40); t += 1) {
         const q = add(e.at, scale(e.n, sgn * t)); if (g.dist(q) < n || (box && !inBox(box, q, -g.s))) continue;
         let best = q;
-        for (let u = 1; u <= run && t + u <= want + 0.5; u += 1) { const q2 = add(q, scale(e.n, sgn * u)); if (g.dist(q2) < n || (box && !inBox(box, q2, -g.s))) break; best = q2; }
+        for (let u = 1; u <= (Number.isFinite(want) ? Math.max(run, want) : run) && t + u <= want + 0.5; u += 1) { const q2 = add(q, scale(e.n, sgn * u)); if (g.dist(q2) < n || (box && !inBox(box, q2, -g.s))) break; best = q2; }
         return best;
       }
       return null;
