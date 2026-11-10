@@ -522,20 +522,23 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
         return { joints, slackMm };
       };
       // the gauge sets the bend radius and the routed length sets the gauge: route with a first guess, and again if the true length wants thicker wire
+      // the router lays every wire of a cable from part a to part b: a wire declared the other way round is turned for it,
+      // and its laid points are turned back so they run from its own first end
+      const flip = (w: WireDecl) => w.a.inst !== ia;
       let awg = ws.map((w) => awgOf(w, straight * 1.4 + svc + term, pm)?.awg ?? null);
-      let out = R.cable({ key, a: ia, b: ib, od, crossing, exitA: exitAt(exA), exitB: exitAt(exB), bayA, bayB, wires: ws.map((w, i) => ({ from: [w.a.port, w.a.pin], to: [w.b.port, w.b.pin], awg: awg[i] })) });
+      let out = R.cable({ key, a: ia, b: ib, od, crossing, exitA: exitAt(exA), exitB: exitAt(exB), bayA, bayB, wires: ws.map((w, i) => (flip(w) ? { from: [w.b.port, w.b.pin], to: [w.a.port, w.a.pin], awg: awg[i] } : { from: [w.a.port, w.a.pin], to: [w.b.port, w.b.pin], awg: awg[i] })) });
       let sl = slackOf(out.anchors);
       const final = ws.map((w, i) => awgOf(w, Math.ceil(((out.wires[i]?.drawn_mm ?? straight) + svc + sl.slackMm + term) / 5) * 5, pm)?.awg ?? null);
       if (final.some((x, i) => x !== null && awg[i] !== null && x < awg[i]!)) {
         awg = final.map((x, i) => (x !== null && awg[i] !== null ? Math.min(x, awg[i]!) : x));
-        out = R.cable({ key, a: ia, b: ib, od, crossing, exitA: exitAt(exA), exitB: exitAt(exB), bayA, bayB, wires: ws.map((w, i) => ({ from: [w.a.port, w.a.pin], to: [w.b.port, w.b.pin], awg: awg[i] })) });
+        out = R.cable({ key, a: ia, b: ib, od, crossing, exitA: exitAt(exA), exitB: exitAt(exB), bayA, bayB, wires: ws.map((w, i) => (flip(w) ? { from: [w.b.port, w.b.pin], to: [w.a.port, w.a.pin], awg: awg[i] } : { from: [w.a.port, w.a.pin], to: [w.b.port, w.b.pin], awg: awg[i] })) });
         sl = slackOf(out.anchors);
       }
       routeProblems.push(...out.problems);
       for (const j of crossing) if (j.type === "continuous") unresolved.push(`${key} crosses continuous joint ${j.name}: needs a slip ring`);
       const links = new Set<string>(); for (const l of [la.link, lb.link, ...crossing.flatMap((j) => [j.parent, j.child])]) links.add(l);
       geom = { path: out.trunk as Vec3[], joints: sl.joints, links, exit: [exA?.id, exB?.id].filter(Boolean).join(" + ") || null, routeMm: Math.max(0, ...out.wires.map((w) => w.drawn_mm)), slackMm: sl.slackMm, channelMm: 0,
-        clipHere: clipsAlong(surf, R, out.trunk as Vec3[], out.trunkOn), wires: out.wires.map((w, i) => ({ pts: w.pts as Vec3[], on: w.on, drawn_mm: w.drawn_mm, bend_mm: wireSize(awg[i]).bend })), awg };
+        clipHere: clipsAlong(surf, R, out.trunk as Vec3[], out.trunkOn), wires: out.wires.map((w, i) => ({ pts: flip(ws[i]) ? [...w.pts].reverse() as Vec3[] : w.pts as Vec3[], on: flip(ws[i]) ? [...w.on].reverse() : w.on, drawn_mm: w.drawn_mm, bend_mm: wireSize(awg[i]).bend })), awg };
     } else {
       const od = bundleOd(ws);
       if (R && !offBoard) routeProblems.push(`${key}: ${!R.placed.has(ia) ? ia : ib} has no place, its cable is not laid`);
