@@ -66,6 +66,8 @@ export class Router {
       if (b) this.grid.addBox(T.R, scale(T.p as V3, 1000), b.min, b.max, id);
       if (model) this.placed.set(link, { link, world: T, model, id, harness: false });
     }
+    // the floor (or the desk a bench robot stands on) at z = 0: no cable runs under it
+    { const g = this.grid, k1 = Math.min(g.nz, Math.max(0, Math.ceil(-g.o[2] / g.s - 0.5))); for (let k = 0; k < k1; k++) for (let j = 0; j < g.ny; j++) for (let i = 0; i < g.nx; i++) { const n = g.id(i, j, k); if (!g.occ[n]) g.occ[n] = 1; } }
     for (const b of opts.bays ?? []) {
       const T = f.link[b.link]; if (!T) continue;
       const M = b.T, inLink = (p: V3): V3 => [M[0] * p[0] + M[4] * p[1] + M[8] * p[2] + M[12], M[1] * p[0] + M[5] * p[1] + M[9] * p[2] + M[13], M[2] * p[0] + M[6] * p[1] + M[10] * p[2] + M[14]];
