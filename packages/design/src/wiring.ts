@@ -118,8 +118,8 @@ export class Harness {
   flex = new Map<string, number>();
   /** where harness parts (fuse, splices, star ground) sit: with this instance. Unset, each sits by the first part wired to it. */
   home?: string;
-  /** a harness part the design gives its place: in the compartment of part `by`, as near `at` as it fits (world mm at the home pose); `free`: in no compartment (an inline fuse tied along its lead) */
-  spot = new Map<string, { by: string; at: Vec3; free?: boolean }>();
+  /** a harness part the design gives its place: in the compartment of part `by`, as near `at` as it fits (world mm at the home pose); `free`: in no compartment (an inline fuse tied along its lead); `turned`: half a turn about the body's z, as the leads come */
+  spot = new Map<string, { by: string; at: Vec3; free?: boolean; turned?: boolean }>();
   /** cable -> the bay exit it leaves by, where the nearest one would be overfilled */
   exitOf = new Map<string, string>();
   /** exits kept for the cables exitOf sends through them (a ribbon slot): no other cable takes one as its nearest */
@@ -483,7 +483,7 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
     const g = groupOf.get(home.link) ?? home.link, at = R.placeHarness(i.name, i.key, home.p, g, pinsOf(i.name), H.bayOf.get(i.name) || undefined, (port, pin) => {
       for (const ws of groups.values()) for (const w of ws) for (const [me, other] of [[w.a, w.b], [w.b, w.a]]) if (me.inst === i.name && me.port === port && me.pin === pin && other.inst !== i.name) { const q = R.pinAt(other.inst, other.port, other.pin); if (q) return q; }
       return null;
-    }, !!spot);
+    }, !!spot, spot?.turned);
     if (at) { i.at_mm = at.at.map(r1) as Vec3; i.on = g; if (at.turned) i.turned = true; else delete i.turned; R.reserve(i.name, pinsOf(i.name)); } else routeProblems.push(`${i.name}: no free place beside ${home.inst ?? home.link}`);
   }
   const awgOf = (w: WireDecl, lengthMm: number, pm: string | null) => {
@@ -520,7 +520,9 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
         if (exA && exB) { if (opensInto(exB, bayA)) exA = null; else if (opensInto(exA, bayB)) exB = null; }
         return { up, down, crossing, bayA, bayB, exA, exB };
       };
-      const { up, down, crossing, bayA, bayB, exA, exB } = between(ia, ib, la.p, lb.p);
+      // (where the router put a part: a harness part's own place, not the part it was placed beside)
+      const placedAt = (x: string, p: Vec3 | null): Vec3 | null => { const pl = R.placed.get(x); return pl ? (pl.world.p.map((v) => v * 1000) as Vec3) : p; };
+      const { up, down, crossing, bayA, bayB, exA, exB } = between(ia, ib, placedAt(ia, la.p), placedAt(ib, lb.p));
       const exitAt = (e: ExitDecl | null) => (e ? { id: e.id, at: worldExit(f, e), n: unit(rotateBy(f, e.link, e.normal)), hole_mm: e.panel_hole_mm } : null);
       const od = bundleOd(ws), straight = dist(la.p ?? [0, 0, 0], lb.p ?? [0, 0, 0]);
       const slackOf = (anchors: { joint: string; aIn: Vec3; aOut: Vec3 }[]) => {

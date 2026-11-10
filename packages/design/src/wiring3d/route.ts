@@ -89,7 +89,7 @@ export class Router {
    * Put a harness part down beside `home` (world mm) on rigid body `group`: the nearest spot where its body is clear, the
    * pins in use have room for their connectors, and something is close by to tie it to. Returns its body centre.
    */
-  placeHarness(inst: string, key: string, home: V3, group: string, pins: [string, string][], bay?: string, partner?: (port: string, pin: string) => V3 | null, given = false): { at: V3; turned: boolean } | null {
+  placeHarness(inst: string, key: string, home: V3, group: string, pins: [string, string][], bay?: string, partner?: (port: string, pin: string) => V3 | null, given = false, turn?: boolean): { at: V3; turned: boolean } | null {
     const model = partModel(key), bb = bodyBox(model), L = this.f.link[group];
     if (!bb || !L) return null;
     this.ready();
@@ -103,7 +103,8 @@ export class Router {
     let least = 1;
     const facing = (T: Tf) => { let sum = 0, n = 0; least = 1; for (const [port, pin] of pins) { const pa = pinOf(model, port, pin), to = partner?.(port, pin); if (!pa || !to) continue; const w = pinWorld(T, pa), d = sub(to, w.p); if (len(d) < 1) continue; const k = dot(w.out, unit(d)); sum += k; least = Math.min(least, k); n++; } return n ? sum / n : 0; };
     const outs = pins.map(([port, pin]) => pinOf(model, port, pin)?.out).filter((o): o is V3 => !!o), twoEnded = outs.length > 1 && len(outs.reduce((a, o) => add(a, o), [0, 0, 0] as V3)) / outs.length < 0.5;
-    const turned = !!partner && facing(frameOf(Rt, home)) > facing(frameOf(L.R, home)) + 0.2;
+    // (or the way the design says: it knows which way the leads come round)
+    const turned = turn ?? (!!partner && facing(frameOf(Rt, home)) > facing(frameOf(L.R, home)) + 0.2);
     const frame = (q: V3): Tf => frameOf(turned ? Rt : L.R, q);
     const fits = (q: V3, near: boolean, face = false) => {
       const T = frame(q);
