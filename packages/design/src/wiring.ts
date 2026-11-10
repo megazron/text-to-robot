@@ -486,6 +486,19 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
     const g = groupOf.get(home.link) ?? home.link, at = R.placeHarness(i.name, i.key, seat?.at ?? home.p, g, pinsOf(i.name), H.bayOf.get(i.name) || undefined, seat?.turn);
     if (at) { i.at_mm = at.map(r1) as Vec3; i.on = g; if (seat?.turn) i.turn = seat.turn; R.reserve(i.name, pinsOf(i.name)); } else routeProblems.push(`${i.name}: no free place beside ${home.inst ?? home.link}`);
   }
+  // a cable is the wires between two parts; a feed's cable also carries the return from the star ground. Where the star
+  // ground (or any third part) is in another compartment than the cable's own end, that wire runs on its own
+  if (R) for (const [key, ws] of [...groups]) {
+    const ia = ws[0].a.inst, bayOfEnd = (w: WireDecl) => { const near = w.a.inst === ws[0].b.inst ? w.b.inst : w.a.inst; return H.bayOf.get(near) ?? ""; };   // its end on the cable's a side
+    const home = bayOfEnd(ws[0]), apart = ws.filter((w) => bayOfEnd(w) !== home && w.a.inst !== ia && w.b.inst !== ia);
+    if (!apart.length) continue;
+    groups.set(key, ws.filter((w) => !apart.includes(w)));
+    for (const w of apart) {
+      const other = w.a.inst === ws[0].b.inst ? w.b.inst : w.a.inst, k2 = `${key}/${other}`;
+      groups.set(k2, [...(groups.get(k2) ?? []), w]);
+      for (const m of [H.exitOf, H.viaOf, H.labels] as Map<string, unknown>[]) if (m.has(key) && !m.has(k2)) m.set(k2, m.get(key));
+    }
+  }
   const awgOf = (w: WireDecl, lengthMm: number, pm: string | null) => {
     const n = H.nets.get(w.net)!, volts = n.kind === "power" ? n.voltage_v ?? 5 : 5;
     // wires ahead of the main fuse's load must carry the fuse's rating: the fuse protects them
