@@ -141,13 +141,31 @@ with sync_playwright() as pw:
                 rec(view, "Share link opens the same robot in a new tab", same, p2.evaluate("document.querySelector('#status').textContent")[:100])
             except Exception as e: rec(view, "Share link opens", False, e)
             p2.close()
+        # a robot opened from a file has no prompt to post: publish one made in the prompt bar, with a change
+        p.click(".dock-btn[data-jump=design]"); gen(p, "Create a 2 DOF robotic arm")
+        p.fill("#modify", "make the forearm longer"); p.evaluate("window.__was=__ttr.robot"); p.click("#modbtn")
+        p.wait_for_function("__ttr.robot!==window.__was && !document.querySelector('#modbtn').disabled", timeout=600000)
+        p.click(".dock-btn[data-jump=share]"); time.sleep(0.3)
         try:
             with ctx.expect_page(timeout=15000) as pi: p.click("#publishBtn")
             pop = pi.value
             try: pop.wait_for_url(re.compile(r"github\.com"), timeout=20000)
             except Exception: pass
             rec(view, "Publish to gallery (opens a GitHub issue form)", "github.com/megazron/text-to-robot/issues/new" in pop.url or "github.com/login" in pop.url, pop.url[:160])
+            # the posted link must rebuild the same robot
+            from urllib.parse import unquote
+            body = unquote(pop.url.split("body=")[-1]) if "body=" in pop.url else unquote(pop.url)
+            m = re.search(r"Open it: (\S+)", body)
             pop.close()
+            if m:
+                p3 = ctx.new_page(); p3.goto(m.group(1))
+                try:
+                    p3.wait_for_function("window.__ttr?.robot?.links.length>0 && !document.querySelector('#genbtn').disabled && window.__ttr.robot.robot_name", timeout=600000)
+                    p3.wait_for_function("!document.querySelector('#modbtn').disabled", timeout=600000)
+                    same = p3.evaluate("JSON.stringify(__ttr.robot.links.map(l=>l.name))") == p.evaluate("JSON.stringify(__ttr.robot.links.map(l=>l.name))")
+                    rec(view, "Gallery link rebuilds the same robot", same, m.group(1)[:120])
+                except Exception as e: rec(view, "Gallery link rebuilds the same robot", False, e)
+                p3.close()
         except Exception as e: rec(view, "Publish to gallery (opens a GitHub issue form)", False, "no window opened; the log says: " + p.evaluate("document.querySelector('#status').textContent")[:160])
         p.click("#loadGallery"); time.sleep(5)
         rec(view, "Show published designs (GitHub API)", True, p.evaluate("document.querySelector('#gallery').textContent")[:160])

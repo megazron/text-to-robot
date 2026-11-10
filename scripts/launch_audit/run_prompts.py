@@ -62,6 +62,11 @@ def gen(page, prompt, arduino, timeout_s):
     deadline = t + timeout_s; forge = None
     while time.time() < deadline:
         if page.evaluate("window.__done"): break
+        if page.evaluate("!!document.querySelector('#forgeAsk')?.open"):
+            # the site asks before forging the Mark 43: record the question, answer "Not now"
+            text = page.evaluate("document.querySelector('#forgeAsk').textContent.replace(/\\s+/g,' ').trim()")
+            page.click("#forgeAsk button[value=cancel]"); page.wait_for_function("window.__done", timeout=60000)
+            return {"forge": {"asked": True, "first_progress_s": round(time.time() - t, 1), "text": text[:300]}, "s": round(time.time() - t, 1), "last": page.evaluate(STATUS)[:300]}
         st = page.evaluate(STATUS)
         if "Forging the Mark 43" in st and not forge: forge = {"first_progress_s": round(time.time() - t, 1), "text": st[:300]}
         if forge and time.time() - t > forge["first_progress_s"] + 60: return {"forge": forge, "s": round(time.time() - t, 1), "last": page.evaluate(STATUS)[:300]}
