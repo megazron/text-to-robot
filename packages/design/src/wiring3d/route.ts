@@ -336,7 +336,8 @@ export class Router {
         const seg = dist(F.pts[i], F.pts[i - 1]), m = Math.max(1, Math.ceil(seg));
         for (let q = 0; q < m; q++) {
           const p = lerp(F.pts[i - 1], F.pts[i], (q + 0.5) / m), d = along + (seg * (q + 0.5)) / m, o = g.at(p);
-          if (!o || (d < 25 && o === e.a.id) || (d > L - 25 && o === e.b.id)) continue;
+          // the first 2 mm are the pin itself, standing in what it plugs into (a jumper in a breadboard's tie point): leadOut tests the connector from there on
+          if (!o || d < 2 || d > L - 2 || (d < 25 && o === e.a.id) || (d > L - 25 && o === e.b.id)) continue;
           if (pierced.some(([a, b]) => { const ab = sub(b, a), t = dot(sub(p, a), ab) / (dot(ab, ab) || 1); return t > -0.05 && t < 1.05 && dist(p, lerp(a, b, Math.max(0, Math.min(1, t)))) < 3.5; })) continue;
           hits += seg / m;
         }
