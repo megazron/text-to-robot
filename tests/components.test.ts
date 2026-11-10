@@ -22,7 +22,7 @@ test("BOM flags an impossible budget as infeasible", () => {
   const spec = finalizeSpec(nDofArm(7));
   const bom = buildBom(spec, 10);
   assert.equal(bom.feasible, false);
-  assert.ok(bomToMarkdown(bom).includes("Bill of Materials"));
+  assert.ok(bomToMarkdown(bom).includes("# Bill of materials: "));
 });
 test("CAD generates a module per link + assembly", () => {
   const spec = finalizeSpec(nDofArm(6));

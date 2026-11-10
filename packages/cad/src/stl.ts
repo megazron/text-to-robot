@@ -127,8 +127,8 @@ export function printabilityReport(spec: RobotSpecification, buildVolumeMm = 220
     const mm = dims.map((d) => +(d * 1000).toFixed(1)) as [number, number, number];
     const fits = Math.max(...mm) <= buildVolumeMm;
     parts.push({ name: l.name, bbox_mm: mm, fits });
-    if (!fits) issues.push({ part: l.name, level: "warn", message: `longest dimension ${Math.max(...mm)} mm exceeds the ${buildVolumeMm} mm build volume — split the part or print diagonally` });
-    if (Math.min(...mm) < 3) issues.push({ part: l.name, level: "warn", message: `thinnest dimension ${Math.min(...mm)} mm is below 3 mm — fragile on FDM; thicken or print in resin/metal` });
+    if (!fits) issues.push({ part: l.name, level: "warn", message: `longest dimension ${Math.max(...mm)} mm exceeds the ${buildVolumeMm} mm build volume: split the part or print diagonally` });
+    if (Math.min(...mm) < 3) issues.push({ part: l.name, level: "warn", message: `thinnest dimension ${Math.min(...mm)} mm is below 3 mm, fragile on FDM; thicken or print in resin/metal` });
     if (g.type === "sphere") issues.push({ part: l.name, level: "info", message: "sphere needs supports or a flat-cut base to print" });
   }
   if (!issues.length) issues.push({ part: "*", level: "info", message: "all parts fit the build volume with no thin features" });
@@ -141,7 +141,7 @@ export function generateStlFiles(spec: RobotSpecification): Record<string, strin
   files[`cad/stl/${name}_assembly.stl`] = assemblyStl(spec);
   for (const l of spec.links) files[`cad/stl/parts/${safeName(l.name)}.stl`] = linkStl(l);
   const rep = printabilityReport(spec);
-  files[`cad/PRINTABILITY.md`] = `# Printability — ${spec.robot_name}\n\nBuild volume assumed: ${rep.build_volume_mm} mm cube (typical desktop FDM).\n\n| Part | Bounding box (mm) | Fits |\n|---|---|:-:|\n` +
+  files[`cad/PRINTABILITY.md`] = `# Printability: ${spec.robot_name}\n\nBuild volume assumed: ${rep.build_volume_mm} mm cube (typical desktop FDM).\n\n| Part | Bounding box (mm) | Fits |\n|---|---|:-:|\n` +
     rep.parts.map((p) => `| ${p.name} | ${p.bbox_mm.join(" × ")} | ${p.fits ? "✅" : "❌"} |`).join("\n") +
     `\n\n## Notes\n` + rep.issues.map((i) => `- ${i.level === "warn" ? "⚠️" : "ℹ️"} **${i.part}**: ${i.message}`).join("\n") + "\n";
   return files;

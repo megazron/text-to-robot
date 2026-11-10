@@ -61,7 +61,7 @@ def generate_launch_description():
                   arguments=["/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock"], output="screen")
     return LaunchDescription([gz, rsp, spawn, bridge])
 `;
-  files[`${pkg}/worlds/README.md`] = `# Gazebo — ${spec.robot_name}
+  files[`${pkg}/worlds/README.md`] = `# Gazebo: ${spec.robot_name}
 
 \`\`\`bash
 sudo apt install ros-\${ROS_DISTRO}-ros-gz

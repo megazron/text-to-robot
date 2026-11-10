@@ -100,7 +100,7 @@ function modifyLengths(spec: RobotSpecification, c: string): Outcome | undefined
     const before = model.reach;
     const r = setReach(spec, target);
     if (!r.ok) return { changes: [`! Cannot set reach: ${r.message}`], understood: true };
-    changes.push(`~ reach ${before.toFixed(3)}m -> ${reachModel(spec)!.reach.toFixed(3)}m (${model.scalable.join(", ")} rescaled)${req.defaulted ? " — no amount given, used 20%" : ""}`);
+    changes.push(`~ reach ${before.toFixed(3)}m -> ${reachModel(spec)!.reach.toFixed(3)}m (${model.scalable.join(", ")} rescaled)${req.defaulted ? ": no amount given, used 20%" : ""}`);
     return { changes, understood: true };
   }
   const names = explicit.length ? explicit.flatMap(([, roles]) => linksByRoles(spec, roles)) : linksByRoles(spec, ["upper_arm", "forearm"]);
@@ -350,7 +350,7 @@ function modifyDesigned(specIn: RobotSpecification, instruction: string): ModRes
     spec.materials = structuredClone(specIn.materials);
     const was = new Map(record.joints.map((j) => [j.joint, j.actuator]));
     for (const j of designOf(spec)!.joints) { const before = was.get(j.joint); if (before && before !== j.actuator) changes.push(`~ ${j.joint}: ${before} -> ${j.actuator} (load ${j.required_nm} N·m)`); }
-    for (const ck of designOf(spec)!.checks.filter((x) => !x.pass)) changes.push(`! check failed: ${ck.name} — ${ck.detail}`);
+    for (const ck of designOf(spec)!.checks.filter((x) => !x.pass)) changes.push(`! check failed: ${ck.name}: ${ck.detail}`);
     for (const t of (req.sensors as string[] | undefined) ?? []) if (!spec.sensors.some((x) => x.type === t)) {
       const i = changes.findIndex((x) => x.startsWith(`+ Added ${t}`));
       if (i >= 0) changes[i] = `! ${t}: this ${record.family} design has no mount for it`;

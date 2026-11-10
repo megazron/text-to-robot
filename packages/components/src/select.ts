@@ -89,7 +89,7 @@ function buildBomAtTier(spec: RobotSpecification, tier: Tier, budget?: number, o
     if (!a) { warnings.push(`no actuator found for joint ${j.name}`); continue; }
     const unit=j.type === "prismatic" ? "N" : "N·m";
     const rated=capacity(a),met = rated >= req * 1.5;
-    if (!met) warnings.push(`joint ${j.name} needs ~${req.toFixed(2)} ${unit}; strongest in ${tier} tier is ${a.name} (${rated} ${unit}) — increase budget for a stronger actuator`);
+    if (!met) warnings.push(`joint ${j.name} needs ~${req.toFixed(2)} ${unit}; strongest in ${tier} tier is ${a.name} (${rated} ${unit}); increase the budget for a stronger actuator`);
     sizing.push({ joint: j.name, required_effort:+req.toFixed(3),effort_unit:unit, ...(j.type === "prismatic" ? {required_force_n:+req.toFixed(3)} : {required_torque_nm:+req.toFixed(3)}), chosen: a.name, margin: met ? `${(rated / (req || 1e-3)).toFixed(1)}x` : "UNDERSIZED" });
     pushMerged(lines, { category: "Actuator", name: a.name, qty: 1, unit_cost: a.unit_cost, subtotal: a.unit_cost, spec: `${a.spec} (${rated} ${unit})`, note: `joint ${j.name}${a.source_url ? "; rating source: "+a.source_url : "; rating duty/source unverified"}` });
     if (a.needs_driver) pushMerged(lines, { category: "Motor driver", name: a.needs_driver, qty: 1, unit_cost: a.driver_cost ?? 0, subtotal: a.driver_cost ?? 0, spec: `driver for ${a.name}` });
@@ -167,7 +167,7 @@ export function buildBom(spec: RobotSpecification, budget?: number, opts: BomOpt
 
 export function bomToMarkdown(bom: BillOfMaterials): string {
   const out: string[] = [];
-  out.push(`# Bill of Materials — ${bom.robot_name}`);
+  out.push(`# Bill of materials: ${bom.robot_name}`);
   out.push(``, `**Estimated total: $${bom.total}**  ·  tier: ${bom.tier}` + (bom.budget ? `  ·  budget: $${bom.budget} ` + (bom.feasible ? "✅ within budget" : "❌ over budget") : ""), ``);
   out.push(`**Effort sizing: ${bom.sizing_pass ? "passes catalogue estimate" : "fails"}; hardware verified: no.**`, ``);
   out.push(`| Category | Component | Qty | Unit $ | Subtotal $ | Spec |`, `|---|---|--:|--:|--:|---|`);

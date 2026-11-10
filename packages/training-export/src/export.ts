@@ -390,7 +390,7 @@ export function exportTraining(spec: RobotSpecification): FileMap {
   const mujocoSource=hasMeshes?"collision/robot.urdf":`../${name}.urdf`;
   const collisionPreparation=hasMeshes?`python -m ttr_mujoco.collision ../${name}.urdf --out collision\n`:"";
   const tip = spec.links.find(l=>l.name==="gripper_base")?.name ?? spec.end_effectors[0]?.attach_link ?? spec.links.find(l=>l.role?.startsWith("wrist"))?.name ?? "YOUR_TOOL_LINK";
-  const taskList = TASKS[cls].map((t) => `  - \`${t.id}\` — ${t.title}`).join("\n");
+  const taskList = TASKS[cls].map((t) => `  - \`${t.id}\`: ${t.title}`).join("\n");
   const files: FileMap = {};
   files[`training/${name}.urdf`] = generateUrdf(spec, { meshPrefix: "meshes/" });   // relative paths: PyBullet/MuJoCo resolve next to the URDF
   for (const l of spec.links) { const g = l.geometry; if (g.type === "mesh" && !files[`training/meshes/${g.file}`]) files[`training/meshes/${g.file}`] = toStlBinary(buildPart(g), 1); }
@@ -452,7 +452,7 @@ pip install -r requirements.txt
 ${taskList}
 
 ## MuJoCo (recommended)
-See \`mujoco/README.md\` — the same URDF converted to an actuated MuJoCo scene, with a test battery, renderer and PPO trainer.
+See \`mujoco/README.md\`: the same URDF converted to an actuated MuJoCo scene, with a test battery, renderer and PPO trainer.
 
 ## Reinforcement learning in PyBullet (PPO / SAC)
 \`\`\`bash

@@ -78,9 +78,9 @@ export function generateCadFiles(spec: RobotSpecification): CadFiles {
   files["cad/hardware/example_enclosure.json"] = readFileSync(new URL("../../../python/ttr_cad/example_enclosure.json", import.meta.url), "utf8");
   files["cad/hardware/requirements.txt"] = "cadquery>=2.5,<3\n";
   files[`cad/README.md`] =
-    `# CAD — ${spec.robot_name}\n\nTwo deliverables, both in millimetres:\n\n` +
-    `- **STL (concept geometry)** — \`stl/${name}_assembly.stl\` and one mesh per link in \`stl/parts/\`. See \`PRINTABILITY.md\`. Assembly STL is a visualization, not a mechanically assembled printable part.\n` +
-    `- **OpenSCAD** — \`${name}.scad\` (assembly) and \`parts/*.scad\`; primitives are parametric, recipe meshes are imported.\n\n` +
+    `# CAD: ${spec.robot_name}\n\nTwo deliverables, both in millimetres:\n\n` +
+    `- **STL (concept geometry)**: \`stl/${name}_assembly.stl\` and one mesh per link in \`stl/parts/\`. See \`PRINTABILITY.md\`. Assembly STL is a visualization, not a mechanically assembled printable part.\n` +
+    `- **OpenSCAD**: \`${name}.scad\` (assembly) and \`parts/*.scad\`; primitives are parametric, recipe meshes are imported.\n\n` +
     `Hardware fit, fasteners, cable routing, material strength and moving-part clearances are not validated by this export. Bounding-box printability is not a manufacturing approval.\n\n` +
     `## Dimensioned electronics housing (optional Python backend)\n\n` +
     `Edit \`hardware/example_enclosure.json\` using your PCB envelope, hole coordinates and material density. Its defaults are synthetic, not a real vendor part.\n\n` +

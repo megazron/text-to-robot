@@ -144,7 +144,7 @@ def generate_launch_description():
         Node(package="rviz2", executable="rviz2", arguments=["-d", os.path.join(share,"rviz/${pkg}_moveit.rviz")], parameters=[config.to_dict()], condition=IfCondition(LaunchConfiguration("rviz"))),
     ])
 `;
-  files[`${pkg}/moveit/README.md`]=`# MoveIt 2 — ${pkg}
+  files[`${pkg}/moveit/README.md`]=`# MoveIt 2: ${pkg}
 
 Groups: ${groups.map(g=>`${g.name} (${g.joints.length} joints)`).join(', ')}.
 Armour hinges are separate from arm/leg planning chains. Underactuated chains use

@@ -31,11 +31,11 @@ export function generateBuildPackage(spec: RobotSpecification): Record<string, s
     else files[`cad/print/${safeName(l.name)}.stl`] = toStlBinary(buildPart(l.geometry as never), 1000);
   }
   for (const l of fabricated) files[`cad/fabricate/${safeName(l.name)}.stl`] = toStlBinary(buildPart(l.geometry as never), 1000);
-  if (fabricated.length) files["cad/fabricate/FABRICATE.md"] = `# Fabricated parts — ${spec.robot_name}\n\nNot printed: made from sheet, tube or fabric (see BOM.md for the exact item and cost). Each STL is the finished shape; plates are 2D-cut from it (export the top face as DXF for laser or waterjet cutting).\n\n| Part | Material | Mass (g) |\n|---|---|--:|\n` +
+  if (fabricated.length) files["cad/fabricate/FABRICATE.md"] = `# Fabricated parts: ${spec.robot_name}\n\nNot printed: made from sheet, tube or fabric (see BOM.md for the exact item and cost). Each STL is the finished shape; plates are 2D-cut from it (export the top face as DXF for laser or waterjet cutting).\n\n| Part | Material | Mass (g) |\n|---|---|--:|\n` +
     fabricated.map((l) => `| ${l.name} | ${l.material ?? "?"} | ${(l.mass * 1000).toFixed(0)} |`).join("\n") + "\n";
   const rows = d.printed.map((p) => `| ${p.name} | ${p.check.bbox_mm.join(" × ")} | ${(p.mass_kg * 1000).toFixed(0)} | ${(p.check.volume_cm3 / PRINT_CM3_PER_HOUR).toFixed(1)} | ${p.check.fits_bed ? "yes" : "**no**"} |`);
   const grams = d.printed.reduce((s, p) => s + p.mass_kg * 1000, 0), hours = d.printed.reduce((s, p) => s + p.check.volume_cm3, 0) / PRINT_CM3_PER_HOUR;
-  files["cad/print/PRINT_LIST.md"] = `# Print list — ${spec.robot_name}\n\n${d.printed.length} parts, about ${grams.toFixed(0)} g of PETG and ${hours.toFixed(1)} h of printing.\n\n` +
+  files["cad/print/PRINT_LIST.md"] = `# Print list: ${spec.robot_name}\n\n${d.printed.length} parts, about ${grams.toFixed(0)} g of PETG and ${hours.toFixed(1)} h of printing.\n\n` +
     (printed.some(cadProgram) ? "Exact solids of these parts are in `cad/step/` (STEP AP214, millimetres): open them in Fusion, FreeCAD or Onshape to edit.\n\n" : "") +
     "Settings the masses assume: PETG, 0.4 mm nozzle, 0.2 mm layers, 4 perimeters, 30 % gyroid infill. Print each part flat on its largest face; holes are sized for M2/M2.5/M3 screws (clearance +0.4 mm).\n\n" +
     "| Part | Size (mm) | Mass (g) | Time (h) | Fits a 250 × 210 × 220 bed |\n|---|---|--:|--:|:-:|\n" + rows.join("\n") + "\n";
@@ -51,7 +51,7 @@ export function generateBuildPackage(spec: RobotSpecification): Record<string, s
   files["cad/ASSEMBLY.md"] = assemblyGuide(spec);
   files["cad/design.json"] = JSON.stringify(d, null, 2);
   files["cad/robot.json"] = JSON.stringify(spec, null, 2);
-  files["cad/README.md"] = `# Build package — ${spec.robot_name}\n\n${d.summary}\n\n` +
+  files["cad/README.md"] = `# Build package: ${spec.robot_name}\n\n${d.summary}\n\n` +
     "1. **Buy** everything in `BOM.md` (supplier links included).\n" +
     "2. **Print** every STL in `print/` (see `print/PRINT_LIST.md`).\n" +
     "3. **Assemble** in the order of `ASSEMBLY.md`.\n" +
@@ -64,7 +64,7 @@ export function generateBuildPackage(spec: RobotSpecification): Record<string, s
 
 /** Root-first build order: every mounted part, every joint, with the screws the design counted. */
 function assemblyGuide(spec: RobotSpecification): string {
-  const d = designRecord(spec)!, out: string[] = [`# Assembly — ${spec.robot_name}`, ""];
+  const d = designRecord(spec)!, out: string[] = [`# Assembly: ${spec.robot_name}`, ""];
   const children = new Map<string, typeof spec.joints>();
   for (const j of spec.joints) children.set(j.parent, [...(children.get(j.parent) ?? []), j]);
   const links = new Map(spec.links.map((l) => [l.name, l]));

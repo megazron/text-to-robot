@@ -48,7 +48,7 @@ function readme(name: string, prompt: string, spec: RobotSpecification, bom: Bil
       out.push("");
     }
     const failing = d.checks.filter((c: any) => !c.pass);
-    out.push("## Engineering checks", "", failing.length ? failing.map((c: any) => `- ❌ **${c.name}** — ${c.detail}`).join("\n") : `All ${d.checks.length} checks pass (torque, speed, power, stability, print-bed fit${d.family === "arm" ? ", grip" : ""}). Details in \`robot.json\` → \`metadata.design.checks\`.`, "");
+    out.push("## Engineering checks", "", failing.length ? failing.map((c: any) => `- ❌ **${c.name}**: ${c.detail}`).join("\n") : `All ${d.checks.length} checks pass (torque, speed, power, stability, print-bed fit${d.family === "arm" ? ", grip" : ""}). Details in \`robot.json\` → \`metadata.design.checks\`.`, "");
     out.push("## Assumptions and limits", "", ...d.assumptions.map((a: string) => `- ${a}`), "");
   }
   if (warnings.length) out.push("## Prompt notes", "", ...warnings.map((w) => `- ${w}`), "");
