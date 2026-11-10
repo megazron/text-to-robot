@@ -17,7 +17,7 @@ import { registerBay, enclosureChecks, exposed, baysOf, worldBox as partBox, hea
 import { Harness, finishWiring } from "../wiring.ts";
 import { busTree, dualDriver, pinsOf, coreTree, actuatorsUnder } from "../netlist.ts";
 import { partModel } from "../wiring3d/models.ts";
-import { pinOf, connectorLen } from "../wiring3d/place.ts";
+import { pinOf, connectorLen, applyInv } from "../wiring3d/place.ts";
 
 export type MobileSensor = "camera" | "depth" | "lidar" | "imu";
 export interface MobileRequest {
@@ -1219,10 +1219,13 @@ export function designRover(req: MobileRequest = {}): RobotSpecification {
     const slots: Op[] = []; let ventArea = 0;
     for (const x of slotXs) for (const s of [1, -1]) { slots.push({ op: "cutbox", min: [x, s > 0 ? BW / 2 - 3 : -BW / 2 - 1, zBody + 55], max: [x + 5, s > 0 ? BW / 2 + 1 : -BW / 2 + 3, zBody + 55 + slotH] }); ventArea += 5 * slotH; }
     b.A.amendProgram("base_link", [...fx.cuts, ...slots, ...pivotExits.map((e): Op => ({ op: "hole", a: [e.at[0], e.at[1] - e.normal[1] * 4, e.at[2]], b: [e.at[0], e.at[1] + e.normal[1] * 2, e.at[2]], d: 9.5 }))]);
-    const lidExit: Vec3 = [-40, 0, zBody + BH + 3];
-    b.A.amendProgram("deck_lid", [{ op: "hole", a: [lidExit[0], lidExit[1], zBody + BH - 2], b: [lidExit[0], lidExit[1], zBody + BH + 5], d: 9.5 }]);
+    // the arm's bus and power leads up through the lid into its pedestal (which gets the same hole); the mast camera's
+    // ribbon down through a hole by the mast's foot
+    const lidExit: Vec3 = [-40, 0, zBody + BH + 3], mastExit: Vec3 = [-BL / 2 + 72, 0, zBody + BH + 3];
+    b.A.amendProgram("deck_lid", [lidExit, ...(sensors.includes("camera") ? [mastExit] : [])].map((p): Op => ({ op: "hole", a: [p[0], p[1], zBody + BH - 2], b: [p[0], p[1], zBody + BH + 5], d: 9.5 })));
     registerBay(b.A, { name: "body_bay", tub: "base_link", lid: "deck_lid", parent: "base_link", T: I4(), min: [-BL / 2 + 2, -BW / 2 + 2, zBody + 2], max: [BL / 2 - 2, BW / 2 - 2, zBody + BH], parts: items.map((i) => i.name), screws: 8, vent_area_mm2: ventArea, note: "the folded aluminium body box",
-      exits: [...fx.exits.map((e) => ({ ...e, id: e.id.replace("electronics_enclosure", "body_bay") })), ...pivotExits, { id: "body_bay.lid_leads", kind: "grommet", face: "lid", at: lidExit, normal: [0, 0, 1], hole_mm: 9.5 }] }, b.H);
+      exits: [...fx.exits.map((e) => ({ ...e, id: e.id.replace("electronics_enclosure", "body_bay") })), ...pivotExits, { id: "body_bay.lid_leads", kind: "grommet", face: "lid", at: lidExit, normal: [0, 0, 1], hole_mm: 9.5 },
+        ...(sensors.includes("camera") ? [{ id: "body_bay.mast_leads", kind: "grommet", face: "lid" as Face, at: mastExit, normal: [0, 0, 1] as Vec3, hole_mm: 9.5 }] : [])] }, b.H);
     b.A.fastener("M3 x 8 countersunk (body lid)", 8);
     // sensors on the lid: depth camera at the front, camera on a mast, lidar behind the arm
     const reservedX = BL / 2;
@@ -1238,6 +1241,10 @@ export function designRover(req: MobileRequest = {}): RobotSpecification {
     if (armSpec) {
       const n0 = b.A.spec.joints.length;
       const g = graftArm(b.A, armSpec, "deck_lid", b.local("deck_lid", armMount), armPrefix);
+      // the lid's lead hole goes on up through the floor of the arm's pedestal
+      const pb = `${armPrefix}_base_link`;
+      const Tpb = fk(b.A.spec).link[pb];
+      if (Tpb) b.A.amendProgram(pb, [{ op: "hole", a: applyInv(Tpb, [lidExit[0], lidExit[1], zBody + BH]), b: applyInv(Tpb, [lidExit[0], lidExit[1], zBody + BH + 14]), d: 9.5 }]);
       b.A.design.checks = b.A.design.checks.filter((c) => !c.name.startsWith(`${armPrefix}:torque:`));
       const joints = b.A.spec.joints.slice(n0).filter((j) => j.type !== "fixed").map((j) => j.name);
       b.servoJoints.push(...joints);
