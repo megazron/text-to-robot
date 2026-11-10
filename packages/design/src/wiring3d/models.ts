@@ -23,7 +23,7 @@ export const FOOTPRINT_SOURCES: Record<string, string> = {
   esp32s3: "Espressif ESP32-S3-DevKitC-1 user guide: two 22-pin rows 22.86 mm apart, module at the far end",
   hc_sr04: "HC-SR04 module: 45 x 20 mm board, two 16 mm transducers 24 mm apart, 4-pin header centred on the long edge",
   tmc2209: "BigTreeTech TMC2209 V1.3 / Watterott SilentStepStick pin configuration (learn.watterott.com/silentstepstick/pinconfig/tmc2209): 20.3 x 15.2 mm, two rows of 8 pins 12.7 mm apart, pins down; EN opposite VM, DIR opposite GND (the StepStick pinout); DIAG and INDEX on a 2-pin header at the board end, VREF a pad on top",
-  pololu_d36v50: "Pololu D36V50Fx regulator: 25.4 x 25.4 mm, through holes on the 0.1 in grid in two 1 x 6 strips",
+  pololu_d36v50: "Pololu D36V50Fx regulator: 25.4 x 25.4 mm, through holes on the 0.1 in grid in two 1 x 6 strips; the board is screwed down on its M2 holes (catalog), so the header strip that ships with it is soldered pins-up and the jumpers plug on from above",
   generic: "catalog body box; pins on the face the part's leads leave (no datasheet pin map in the catalog)",
 };
 
@@ -158,7 +158,7 @@ export function partModel(key: string): PartModel {
     b.box("plastic_grey", [6, 6, T], [17, 17, T + 7]);                              // inductor
     b.box("ic", [3, 18.5, T], [9, 22.5, T + 1]);
     const port = e!.ports[0];
-    port.pins.v.forEach((x, i) => { const left = i < Math.ceil(port.pins.v.length / 2), k = left ? i : i - Math.ceil(port.pins.v.length / 2), xx = left ? 1.27 : 24.13, yy = 6.35 + k * P; headerPin(b, xx, yy, 0, -1); set(port.name, x.name, [xx, yy, -8.5], [0, 0, -1], "header"); });
+    port.pins.v.forEach((x, i) => { const left = i < Math.ceil(port.pins.v.length / 2), k = left ? i : i - Math.ceil(port.pins.v.length / 2), xx = left ? 1.27 : 24.13, yy = 6.35 + k * P; headerPin(b, xx, yy, T, 1); set(port.name, x.name, [xx, yy, T + 8.5], [0, 0, 1], "header"); });
   } else {
     detailed = false;
     // a Raspberry Pi camera board: its 15-way 1 mm FFC socket lies on the lens side along the edge away from the lens,
