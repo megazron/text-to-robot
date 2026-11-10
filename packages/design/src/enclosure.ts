@@ -413,11 +413,13 @@ export function tieAnchor(at: Vec3, h = 7): Op[] {
   return [{ op: "box", min: [at[0] - 5, at[1] - 2, -0.2], max: [at[0] - 3, at[1] + 2, z] }, { op: "box", min: [at[0] + 3, at[1] - 2, -0.2], max: [at[0] + 5, at[1] + 2, z] }, { op: "box", min: [at[0] - 5, at[1] - 2, z - 1.6], max: [at[0] + 5, at[1] + 2, z] }];
 }
 /** Register a hollow body that already is a compartment (a character's shell, a robot's torso). */
+/** a direction in a bay's frame, in its parent's (a tray hung upside down under a plate turns its exits' normals too) */
+const dirOf = (T: Mat4, n: Vec3): Vec3 => { const a = apply(T, n), o = apply(T, [0, 0, 0]); return [a[0] - o[0], a[1] - o[1], a[2] - o[2]]; };
 export function registerBay(A: Assembly, r: Omit<BayRecord, "vent_area_mm2" | "heat_w" | "screws"> & { screws: number; vent_area_mm2?: number; heat_w?: number }, H?: Harness) {
   const heat = r.heat_w ?? r.parts.reduce((h, n) => { const k = keyOf(A.spec, n); return h + (k ? heatOf(k) : 0); }, 0);
   const rec: BayRecord = { ...r, vent_area_mm2: r.vent_area_mm2 ?? 0, heat_w: +heat.toFixed(1) };
   baysOf(A).push(rec);
-  if (H) { for (const p of r.parts) H.bayOf.set(p, r.name); for (const e of r.exits) if (e.kind === "grommet" || e.kind === "gland" || e.kind === "slot" || e.kind === "usb") H.exits.push({ id: e.id, link: r.tub, at: apply(r.T, e.at), normal: e.normal, panel_hole_mm: e.hole_mm, bay: r.name, kind: e.kind });
+  if (H) { for (const p of r.parts) H.bayOf.set(p, r.name); for (const e of r.exits) if (e.kind === "grommet" || e.kind === "gland" || e.kind === "slot" || e.kind === "usb") H.exits.push({ id: e.id, link: r.tub, at: apply(r.T, e.at), normal: dirOf(r.T, e.normal), panel_hole_mm: e.hole_mm, bay: r.name, kind: e.kind });
     // a USB cut-out passes the cables a design sends through it (Harness.exitOf), never one by default
     for (const e of r.exits) if (e.kind === "usb") H.kept.add(e.id); }
   return rec;
