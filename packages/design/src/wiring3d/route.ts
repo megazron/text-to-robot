@@ -230,6 +230,11 @@ export class Router {
     // clearance asked of the search: the bundle's half width and a bend radius beside it, so a path round an edge leaves the
     // room its corners need to be rounded; it settles for less, down to the wire's own width, where there is not that much
     const Rmax = Math.max(...E.map((x) => x.R)), ringNeed = 1 + Math.ceil((c.od / 2 + 0.5) / s), needT = 1 + Math.ceil((c.od / 2 + Rmax) / s), needW = 1 + Math.ceil(Rmax / s);
+    // a plug that stands out through its compartment's wall (a USB plug in the wall's cut-out) leaves the compartment
+    // itself: that end is laid as outside it, with no exit to pass
+    const outside = (box: Box | undefined, pts: V3[]) => !!box && pts.every((p) => !inBox(box, p));
+    if (outside(c.bayA ? this.bays.get(c.bayA) : undefined, E.map((e) => e.la.V))) c = { ...c, bayA: undefined, exitA: null };
+    if (outside(c.bayB ? this.bays.get(c.bayB) : undefined, E.map((e) => e.lb.V))) c = { ...c, bayB: undefined, exitB: null };
     const boxA = c.bayA ? this.bays.get(c.bayA) : undefined, boxB = c.bayB ? this.bays.get(c.bayB) : undefined;
     const sameBay = !!c.bayA && c.bayA === c.bayB;
     const centroid = (ps: V3[]) => scale(ps.reduce((a, p) => add(a, p), [0, 0, 0] as V3), 1 / ps.length);
