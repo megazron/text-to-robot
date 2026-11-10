@@ -372,7 +372,12 @@ export class Router {
       const A = pts[i - 1], B = pts[i], C = pts[i + 1], u = unit(sub(A, B)), v = unit(sub(C, B)), la = dist(A, B), lc = dist(B, C);
       if (la < 0.3 || lc < 0.3 || dot(u, v) < 0.2) continue;   // turns of up to about 100 degrees round as they are
       const rigid = i === 2 || i === pts.length - 3;   // the leg behind it is the connector's lead-out
-      const cut = Math.min(2.2 * R, la / 2, lc / 2);
+      // the cut leaves two corners of half the turn each: the chord between them must hold both their tangents, and each leg
+      // what is left for its new corner and for the corner at its far end (half the leg, or all but the tangents if that is more);
+      // the tangents are taken a little long, as the drawn arcs are (roundWire) and for the 0.1 mm the stored corners are rounded to
+      const turn = Math.acos(Math.max(-1, Math.min(1, -dot(u, v)))), Rf = R * 1.06, t4 = Rf * Math.tan(turn / 4), want = (1.03 * t4) / Math.max(0.05, Math.cos(turn / 2));
+      const tangent = (k: number) => { if (k <= 0 || k >= pts.length - 1) return 0; const a = unit(sub(pts[k], pts[k - 1])), b = unit(sub(pts[k + 1], pts[k])); return Rf * Math.tan(Math.min(Math.acos(Math.max(-1, Math.min(1, dot(a, b)))), 2.6) / 2); };
+      const cut = Math.min(Math.max(2.2 * R, want), Math.max(la / 2, la - tangent(i - 1) - t4), Math.max(lc / 2, lc - tangent(i + 1) - t4));
       if (!rigid && cut >= R) {
         const p1 = r1(add(B, scale(u, cut))), p2 = r1(add(B, scale(v, cut)));
         if (g.line(p1, p2, 1) >= 0) { pts.splice(i, 1, p1, p2); on.splice(i, 1, on[i], on[i]); i++; continue; }
