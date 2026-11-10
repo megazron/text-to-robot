@@ -433,7 +433,16 @@ export function createMotion(ctx) {
     M.drag = null; controls.enabled = true; ghost.visible = false; dash.visible = false;
     clearTint(); syncSliders();
     if (d.kind === "body" && d.far) walkTo(d.far);
-    M.lastDrag = { kind: d.kind, link: d.link ?? null, target: d.lastTarget ? [d.lastTarget.x, d.lastTarget.y, d.lastTarget.z] : null, result: d.result ?? null };
+    const done = () => { M.lastDrag = { kind: d.kind, link: d.link ?? null, target: d.lastTarget ? [d.lastTarget.x, d.lastTarget.y, d.lastTarget.z] : null, result: d.result ?? null }; };
+    // the pose kept is the answer for where the pointer was let go, solved to the end (the solves while dragging are short
+    // and the last of them may still be on its way)
+    if (d.kind === "ik" && d.lastTarget) settle(d).then(done, done); else done();
+  }
+  async function settle(d) {
+    const t = toMotion(d.lastTarget), q = M.orient && !d.foot ? { quat: [d.rot0.x, d.rot0.y, d.rot0.z, d.rot0.w] } : {};
+    const r = await eng("/api/engine/ik", { link: d.link, target: { xyz: [t.x, t.y, t.z], ...q }, options: { seed: { ...d.good }, base: baseNow(), restarts: 0, iterations: 200, collision: true, joints: d.joints, orientation: !!q.quat } });
+    if (M.drag || r.collisions?.length) return;
+    Object.assign(state.jointValues, r.values); d.result = r; syncSliders();
   }
   function groundPoint(e) { const r = rayAt(e), p = new THREE.Vector3(); return r.intersectPlane(new THREE.Plane(new THREE.Vector3(0, 0, 1), -(M.kin?.ground_z ?? 0)), p) ? p : null; }
   function atLimit(names) { for (const n of names) { const j = state.robot.joints.find((x) => x.name === n); if (j) tintBelow(j.child, AMBER); } }

@@ -180,8 +180,9 @@ def motion_case(browser, case):
             tip = page.evaluate("__ttr.motion.tipScreen(0)")
             on = page.evaluate(f"(()=>{{const e=document.elementFromPoint({tip['x']},{tip['y']});return e&&e.tagName}})()")
             if on != "CANVAS": row["problems"].append(f"{profile}: the tool tip is under {on}, not in the open 3D view")
+            page.evaluate("__ttr.motion.lastDrag = null")
             drag(page, tip["x"], tip["y"], -40, -30, touch=(profile == "phone"))
-            page.wait_for_timeout(1200)
+            page.wait_for_function("__ttr.motion.lastDrag", timeout=60000)
             res = page.evaluate("(()=>{const d=__ttr.motion.lastDrag;return d&&{kind:d.kind,reached:d.result?.reached,error_mm:d.result?.error_mm,values:d.result?.values,target:d.target}})()")
             row[f"{profile}_drag"] = res
             if not res or res["kind"] != "ik": row["problems"].append(f"{profile}: dragging the tool tip did not start an IK drag: {res}")
