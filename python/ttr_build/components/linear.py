@@ -79,7 +79,7 @@ T8_NUT = Component(
     supplier_url="https://www.robotdigg.com/product/228/T8-Lead-Screw-with-Copper-Nut",
     datasheet_url="https://www.robotdigg.com/product/228/T8-Lead-Screw-with-Copper-Nut",
     envelope_mm=(22.0, 22.0, 15.0), holes=NUT_HOLES + [Hole((0.0, 0.0, 11.5), (0.0, 0.0, 1.0), 8.2, None)],
-    specs={"lead_mm": 8.0, "flange_d_mm": 22.0, "flange_t_mm": 3.5, "body_d_mm": 10.2, "length_mm": 15.0,
+    specs={"round_profile_mm": [[11.0, -3.5, 0.0], [5.1, 0.0, 11.5]], "lead_mm": 8.0, "flange_d_mm": 22.0, "flange_t_mm": 3.5, "body_d_mm": 10.2, "length_mm": 15.0,
            "hole_pcd_mm": 16.0, "hole_dia_mm": 3.5, "material": "brass",
            "carriage_bore_mm": 10.6, "uncertain": ["mass_g", "price_usd"]},
     build=_nut_build, build_keepout=_nut_keepout,

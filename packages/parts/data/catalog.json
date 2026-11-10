@@ -9517,6 +9517,18 @@
    }
   ],
   "specs": {
+   "round_profile_mm": [
+    [
+     11.0,
+     -3.5,
+     0.0
+    ],
+    [
+     5.1,
+     0.0,
+     11.5
+    ]
+   ],
    "lead_mm": 8.0,
    "flange_d_mm": 22.0,
    "flange_t_mm": 3.5,
@@ -15572,5 +15584,1623 @@
    ]
   },
   "mesh_triangles": 506
+ },
+ "ball_joint_m3": {
+  "key": "ball_joint_m3",
+  "name": "M3 ball-joint rod end (aluminium ball stud, nylon socket), one",
+  "category": "misc",
+  "mass_g": 1.8,
+  "price_usd": 0.8,
+  "supplier_url": "https://www.aliexpress.com/w/wholesale-m3-ball-joint-rod-end.html",
+  "datasheet_url": "https://www.igus.com/product/igubal-rod-end",
+  "envelope_mm": [
+   9.0,
+   9.0,
+   20.0
+  ],
+  "holes": [],
+  "specs": {
+   "thread": "M3",
+   "max_angle_deg": 30.0,
+   "static_load_n": 150.0,
+   "no_mounting_holes": true,
+   "uncertain": [
+    "static_load_n",
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -4.5,
+    -4.5,
+    0.0
+   ],
+   "max": [
+    4.5,
+    4.5,
+    20.0
+   ]
+  },
+  "mesh_triangles": 204
+ },
+ "ballast_200g": {
+  "key": "ballast_200g",
+  "name": "Stainless ballast weight 200 g (trim)",
+  "category": "misc",
+  "mass_g": 200.0,
+  "price_usd": 8.0,
+  "supplier_url": "https://bluerobotics.com/store/rov/rov-accessories/ballast-weight/",
+  "datasheet_url": "https://bluerobotics.com/store/rov/rov-accessories/ballast-weight/",
+  "envelope_mm": [
+   60.0,
+   25.0,
+   17.0
+  ],
+  "holes": [],
+  "specs": {
+   "volume_cm3": 25.3,
+   "no_mounting_holes": true,
+   "mount": "bolted under the frame",
+   "uncertain": [
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "max": [
+    60.0,
+    25.0,
+    17.0
+   ]
+  },
+  "mesh_triangles": 124
+ },
+ "basic_esc_30a": {
+  "key": "basic_esc_30a",
+  "name": "Blue Robotics Basic ESC 30 A (7-26 V, PWM input)",
+  "category": "motor_driver",
+  "mass_g": 16.0,
+  "price_usd": 36.0,
+  "supplier_url": "https://bluerobotics.com/store/thrusters/speed-controllers/besc30-r3/",
+  "datasheet_url": "https://bluerobotics.com/store/thrusters/speed-controllers/besc30-r3/",
+  "envelope_mm": [
+   40.0,
+   22.0,
+   8.0
+  ],
+  "holes": [],
+  "specs": {
+   "voltage_v": 16.0,
+   "input_v": [
+    7,
+    26
+   ],
+   "current_a": 30.0,
+   "input": "RC PWM 1100-1900 us, bidirectional",
+   "mount": "zip-tied to the electronics tray",
+   "no_mounting_holes": true
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "max": [
+    40.0,
+    22.0,
+    8.0
+   ]
+  },
+  "mesh_triangles": 124
+ },
+ "bldc_2207_1750kv": {
+  "key": "bldc_2207_1750kv",
+  "name": "2207 brushless motor 1750 KV for 5 in props, 4S (e.g. iFlight XING2 2207)",
+  "category": "actuator",
+  "mass_g": 33.5,
+  "price_usd": 19.0,
+  "supplier_url": "https://shop.iflight.com/xing2-2207-unibell-fpv-motor-pro1504",
+  "datasheet_url": "https://shop.iflight.com/xing2-2207-unibell-fpv-motor-pro1504",
+  "envelope_mm": [
+   35.75,
+   27.5,
+   32.5
+  ],
+  "holes": [
+   {
+    "pos": [
+     8,
+     8,
+     -18.5
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.0,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -8,
+     8,
+     -18.5
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.0,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     8,
+     -8,
+     -18.5
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.0,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     -8,
+     -8,
+     -18.5
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.0,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "kv": 1750,
+   "voltage_v": 14.8,
+   "cells": "4S-6S",
+   "max_current_a": 40.0,
+   "shaft_d_mm": 5.0,
+   "prop_shaft": "M5",
+   "hole_pattern_mm": [
+    16.0,
+    16.0
+   ],
+   "rated_torque_nm": 0.06,
+   "peak_torque_nm": 0.2,
+   "stall_torque_nm": 0.2,
+   "no_load_speed_rad_s": 2712.2,
+   "gear_ratio": 1,
+   "rotor_inertia_kgm2": 1.6e-06,
+   "thrust_table": [
+    [
+     0.25,
+     190,
+     2.4
+    ],
+    [
+     0.5,
+     560,
+     8.8
+    ],
+    [
+     0.75,
+     930,
+     19.5
+    ],
+    [
+     1.0,
+     1230,
+     33.0
+    ]
+   ],
+   "thrust_prop": "prop_5x4_3x3",
+   "uncertain": [
+    "thrust_table",
+    "rated_torque_nm",
+    "rotor_inertia_kgm2",
+    "price_usd"
+   ],
+   "uncertain_notes": [
+    "thrust_table: read off typical 2207 1750-1800 KV test charts for 5 in tri-blades on 4S, not a test of this motor"
+   ]
+  },
+  "output_frame": [
+   [
+    0.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "bbox_mm": {
+   "min": [
+    -13.75,
+    -13.75,
+    -18.5
+   ],
+   "max": [
+    22.0,
+    13.75,
+    14.0
+   ]
+  },
+  "mesh_triangles": 1560
+ },
+ "blower_5015_12v": {
+  "key": "blower_5015_12v",
+  "name": "5015 centrifugal blower fan, 12 V 0.15 A",
+  "category": "misc",
+  "mass_g": 22.0,
+  "price_usd": 4.0,
+  "supplier_url": "https://www.aliexpress.com/w/wholesale-5015-blower-12v.html",
+  "datasheet_url": "https://www.aliexpress.com/w/wholesale-5015-blower-12v.html",
+  "envelope_mm": [
+   50.0,
+   62.0,
+   15.0
+  ],
+  "holes": [],
+  "specs": {
+   "voltage_v": 12.0,
+   "airflow_cfm": 4.5,
+   "static_pressure_pa": 250,
+   "max_current_a": 0.15,
+   "no_mounting_holes": true,
+   "mount": "clamped in a printed duct",
+   "note": "a hobby vacuum: picks up dust and crumbs, not grit",
+   "uncertain": [
+    "airflow_cfm",
+    "static_pressure_pa",
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "max": [
+    50.0,
+    62.0,
+    15.0
+   ]
+  },
+  "mesh_triangles": 124
+ },
+ "brush_roller_120": {
+  "key": "brush_roller_120",
+  "name": "Nylon bristle roller brush, 120 mm long, 50 mm diameter, 6 mm bore",
+  "category": "misc",
+  "mass_g": 55.0,
+  "price_usd": 6.0,
+  "supplier_url": "https://www.aliexpress.com/w/wholesale-nylon-roller-brush-6mm-shaft.html",
+  "datasheet_url": "https://www.aliexpress.com/w/wholesale-nylon-roller-brush-6mm-shaft.html",
+  "envelope_mm": [
+   50.0,
+   50.0,
+   120.0
+  ],
+  "holes": [],
+  "specs": {
+   "length_mm": 120.0,
+   "diameter_mm": 50.0,
+   "bore_mm": 6.0,
+   "no_mounting_holes": true,
+   "uncertain": [
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -25.0,
+    -25.0,
+    0.0
+   ],
+   "max": [
+    25.0,
+    25.0,
+    120.0
+   ]
+  },
+  "mesh_triangles": 208
+ },
+ "buoyancy_foam_1l": {
+  "key": "buoyancy_foam_1l",
+  "name": "Subsea buoyancy foam block, R-3318 urethane, about 1 L (cut to shape)",
+  "category": "misc",
+  "mass_g": 310.0,
+  "price_usd": 40.0,
+  "supplier_url": "https://bluerobotics.com/store/rov/rov-accessories/subsea-buoyancy-foam-r-3318-r1/",
+  "datasheet_url": "https://bluerobotics.com/store/rov/rov-accessories/subsea-buoyancy-foam-r-3318-r1/",
+  "envelope_mm": [
+   200.0,
+   100.0,
+   50.0
+  ],
+  "holes": [],
+  "specs": {
+   "density_kg_m3": 310.0,
+   "volume_l": 1.0,
+   "depth_rating_m": 300,
+   "no_mounting_holes": true,
+   "uncertain": [
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "max": [
+    200.0,
+    100.0,
+    50.0
+   ]
+  },
+  "mesh_triangles": 124
+ },
+ "cf_tube_6x4_1m": {
+  "key": "cf_tube_6x4_1m",
+  "name": "Carbon fibre tube 6 x 4 mm, pultruded, 1 m",
+  "category": "misc",
+  "mass_g": 25.0,
+  "price_usd": 6.0,
+  "supplier_url": "https://www.aliexpress.com/w/wholesale-carbon-fiber-tube-6x4mm.html",
+  "datasheet_url": "https://www.aliexpress.com/w/wholesale-carbon-fiber-tube-6x4mm.html",
+  "envelope_mm": [
+   6.0,
+   6.0,
+   1000.0
+  ],
+  "holes": [],
+  "specs": {
+   "od_mm": 6.0,
+   "id_mm": 4.0,
+   "length_mm": 1000.0,
+   "kg_per_m": 0.025,
+   "youngs_gpa": 110.0,
+   "no_mounting_holes": true,
+   "mount": "glued into the rod ends",
+   "uncertain": [
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -3.0,
+    -3.0,
+    0.0
+   ],
+   "max": [
+    3.0,
+    3.0,
+    1000.0
+   ]
+  },
+  "mesh_triangles": 208
+ },
+ "elrs_receiver_nano": {
+  "key": "elrs_receiver_nano",
+  "name": "ExpressLRS 2.4 GHz nano receiver with T antenna (e.g. RadioMaster RP1)",
+  "category": "misc",
+  "mass_g": 1.5,
+  "price_usd": 16.0,
+  "supplier_url": "https://www.radiomasterrc.com/products/rp1-expresslrs-2-4ghz-nano-receiver",
+  "datasheet_url": "https://www.radiomasterrc.com/products/rp1-expresslrs-2-4ghz-nano-receiver",
+  "envelope_mm": [
+   18.0,
+   11.0,
+   4.0
+  ],
+  "holes": [],
+  "specs": {
+   "voltage_v": 5.0,
+   "interface": "UART (CRSF)",
+   "range": "kilometres line of sight with a matching transmitter",
+   "mount": "heat-shrink, taped inside the canopy; antenna out through a hole",
+   "no_mounting_holes": true,
+   "uncertain": [
+    "mass_g"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "max": [
+    18.0,
+    11.0,
+    4.0
+   ]
+  },
+  "mesh_triangles": 124
+ },
+ "endstop_microswitch": {
+  "key": "endstop_microswitch",
+  "name": "Mechanical end stop, microswitch on a small board, 3-pin",
+  "category": "sensor",
+  "mass_g": 3.0,
+  "price_usd": 1.0,
+  "supplier_url": "https://www.aliexpress.com/w/wholesale-mechanical-endstop-3d-printer.html",
+  "datasheet_url": "https://www.aliexpress.com/w/wholesale-mechanical-endstop-3d-printer.html",
+  "envelope_mm": [
+   40.0,
+   16.0,
+   7.6
+  ],
+  "holes": [
+   {
+    "pos": [
+     5.0,
+     3.5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.0,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     24.0,
+     3.5,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.0,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "voltage_v": 5.0,
+   "travel_mm": 1.0,
+   "uncertain": [
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "max": [
+    40.0,
+    16.0,
+    7.6
+   ]
+  },
+  "mesh_triangles": 372
+ },
+ "esc_4in1_45a": {
+  "key": "esc_4in1_45a",
+  "name": "4-in-1 BLHeli_S ESC 45 A per motor, 3-6S, 30.5 mm mount (e.g. SpeedyBee BLS 50A)",
+  "category": "motor_driver",
+  "mass_g": 13.0,
+  "price_usd": 45.0,
+  "supplier_url": "https://www.speedybee.com/speedybee-bls-50a-30x30-4-in-1-esc/",
+  "datasheet_url": "https://www.speedybee.com/speedybee-bls-50a-30x30-4-in-1-esc/",
+  "envelope_mm": [
+   41.0,
+   41.0,
+   5.8
+  ],
+  "holes": [
+   {
+    "pos": [
+     5.25,
+     5.25,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 4.0,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     35.75,
+     5.25,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 4.0,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     5.25,
+     35.75,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 4.0,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     35.75,
+     35.75,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 4.0,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "voltage_v": 14.8,
+   "cells": "3-6S",
+   "current_a": 45.0,
+   "burst_current_a": 55.0,
+   "protocol": "DShot600",
+   "mount": "30.5 x 30.5 mm, M3 on silicone grommets (4 mm holes)",
+   "uncertain": [
+    "mass_g",
+    "current_a"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max": [
+    41.0,
+    41.0,
+    4.8
+   ]
+  },
+  "mesh_triangles": 588
+ },
+ "fc_f405_30x30": {
+  "key": "fc_f405_30x30",
+  "name": "F405 flight controller, BMI270 IMU, OSD, barometer, 30.5 mm mount (e.g. SpeedyBee F405 V4)",
+  "category": "compute",
+  "mass_g": 9.0,
+  "price_usd": 40.0,
+  "supplier_url": "https://www.speedybee.com/speedybee-f405-v4-bls-55a-30x30-fc-esc-stack/",
+  "datasheet_url": "https://www.speedybee.com/speedybee-f405-v4-bls-55a-30x30-fc-esc-stack/",
+  "envelope_mm": [
+   41.0,
+   38.5,
+   4.8
+  ],
+  "holes": [
+   {
+    "pos": [
+     5.25,
+     3.75,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 4.0,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     35.75,
+     3.75,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 4.0,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     5.25,
+     34.25,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 4.0,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     35.75,
+     34.25,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 4.0,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "voltage_v": 5.0,
+   "input_v": [
+    7,
+    26
+   ],
+   "mcu": "STM32F405",
+   "imu": "BMI270",
+   "firmware": "Betaflight / INAV / ArduPilot",
+   "bec": "5 V 2 A, 9 V 2 A",
+   "uncertain": [
+    "mass_g"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    -0.5,
+    0.0
+   ],
+   "max": [
+    41.0,
+    38.0,
+    4.8
+   ]
+  },
+  "mesh_triangles": 618
+ },
+ "fpv_camera_micro": {
+  "key": "fpv_camera_micro",
+  "name": "Micro analog FPV camera, 19 mm, 1/1.8 in sensor (e.g. Caddx Ratel 2)",
+  "category": "sensor",
+  "mass_g": 5.9,
+  "price_usd": 30.0,
+  "supplier_url": "https://caddxfpv.com/products/caddxfpv-ratel-2-starlight-hdr-fpv-camera",
+  "datasheet_url": "https://caddxfpv.com/products/caddxfpv-ratel-2-starlight-hdr-fpv-camera",
+  "envelope_mm": [
+   19.0,
+   19.0,
+   22.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     9.5,
+     0.0,
+     -7.0
+    ],
+    "axis": [
+     1.0,
+     0.0,
+     0.0
+    ],
+    "dia_mm": 2.0,
+    "thread": "M2"
+   },
+   {
+    "pos": [
+     -9.5,
+     0.0,
+     -7.0
+    ],
+    "axis": [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    "dia_mm": 2.0,
+    "thread": "M2"
+   }
+  ],
+  "specs": {
+   "voltage_v": 5.0,
+   "input_v": [
+    5,
+    40
+   ],
+   "fov_deg": [
+    165,
+    120
+   ],
+   "output": "analog CVBS (live video, not recorded stills)",
+   "mount": "side M2 screws in a printed cradle, tilt adjustable",
+   "uncertain": [
+    "price_usd"
+   ]
+  },
+  "output_frame": [
+   [
+    0.0,
+    0.0,
+    8.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "bbox_mm": {
+   "min": [
+    -9.5,
+    -9.5,
+    -14.0
+   ],
+   "max": [
+    9.5,
+    9.5,
+    8.0
+   ]
+  },
+  "mesh_triangles": 436
+ },
+ "gt2_belt_6mm_2m": {
+  "key": "gt2_belt_6mm_2m",
+  "name": "GT2 timing belt, 6 mm wide, glass-fibre reinforced, 2 m",
+  "category": "misc",
+  "mass_g": 20.0,
+  "price_usd": 4.0,
+  "supplier_url": "https://www.aliexpress.com/w/wholesale-gt2-belt-6mm-2m.html",
+  "datasheet_url": "https://www.gates.com/us/en/power-transmission/synchronous-belts.html",
+  "envelope_mm": [
+   70.0,
+   70.0,
+   6.0
+  ],
+  "holes": [],
+  "specs": {
+   "width_mm": 6.0,
+   "length_mm": 2000.0,
+   "working_tension_n": 30.0,
+   "no_mounting_holes": true,
+   "shown_as": "a coil",
+   "uncertain": [
+    "price_usd",
+    "working_tension_n"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -35.0,
+    -35.0,
+    0.0
+   ],
+   "max": [
+    35.0,
+    35.0,
+    6.0
+   ]
+  },
+  "mesh_triangles": 208
+ },
+ "gt2_idler_20t_3mm": {
+  "key": "gt2_idler_20t_3mm",
+  "name": "GT2 toothless idler, 20 T size, 3 mm bore (with bearings)",
+  "category": "misc",
+  "mass_g": 5.0,
+  "price_usd": 1.5,
+  "supplier_url": "https://www.aliexpress.com/w/wholesale-gt2-idler-20t-3mm.html",
+  "datasheet_url": "https://www.aliexpress.com/w/wholesale-gt2-idler-20t-3mm.html",
+  "envelope_mm": [
+   18.0,
+   18.0,
+   9.0
+  ],
+  "holes": [],
+  "specs": {
+   "bore_mm": 3.0,
+   "no_mounting_holes": true,
+   "uncertain": [
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -9.0,
+    -9.0,
+    0.0
+   ],
+   "max": [
+    9.0,
+    9.0,
+    9.0
+   ]
+  },
+  "mesh_triangles": 416
+ },
+ "gt2_pulley_20t_5mm": {
+  "key": "gt2_pulley_20t_5mm",
+  "name": "GT2 timing pulley, 20 teeth, 5 mm bore, 6 mm belt",
+  "category": "misc",
+  "mass_g": 8.0,
+  "price_usd": 2.0,
+  "supplier_url": "https://www.aliexpress.com/w/wholesale-gt2-pulley-20t-5mm.html",
+  "datasheet_url": "https://www.gates.com/us/en/power-transmission/synchronous-belts.html",
+  "envelope_mm": [
+   16.0,
+   16.0,
+   16.0
+  ],
+  "holes": [],
+  "specs": {
+   "teeth": 20,
+   "pitch_mm": 2.0,
+   "pitch_diameter_mm": 12.73,
+   "bore_mm": 5.0,
+   "mm_per_rev": 40.0,
+   "no_mounting_holes": true,
+   "uncertain": [
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -8.0,
+    -8.0,
+    0.0
+   ],
+   "max": [
+    8.0,
+    8.0,
+    16.0
+   ]
+  },
+  "mesh_triangles": 416
+ },
+ "leadscrew_t8x8_150": {
+  "key": "leadscrew_t8x8_150",
+  "name": "Lead screw Tr8x8 (P2, 4 starts) 150 mm, stainless steel",
+  "category": "misc",
+  "mass_g": 47.9,
+  "price_usd": 7.0,
+  "supplier_url": "https://www.robotdigg.com/product/228/T8-Lead-Screw-with-Copper-Nut",
+  "datasheet_url": "https://www.iso.org/standard/12719.html",
+  "envelope_mm": [
+   8.0,
+   8.0,
+   150.0
+  ],
+  "holes": [],
+  "specs": {
+   "thread": "Tr8x8 (P2)",
+   "lead_mm": 8.0,
+   "pitch_mm": 2.0,
+   "starts": 4,
+   "length_mm": 150.0,
+   "major_d_mm": 8.0,
+   "mean_d_mm": 7.0,
+   "friction_mu": 0.15,
+   "efficiency": 0.669,
+   "backdrive_efficiency": 0.557,
+   "no_mounting_holes": true,
+   "mount": "top end in a 5-to-8 mm coupler on the motor shaft",
+   "uncertain": [
+    "friction_mu",
+    "efficiency",
+    "backdrive_efficiency",
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -4.0,
+    -4.0,
+    0.0
+   ],
+   "max": [
+    4.0,
+    4.0,
+    150.0
+   ]
+  },
+  "mesh_triangles": 308
+ },
+ "lipo_4s_1500": {
+  "key": "lipo_4s_1500",
+  "name": "LiPo 4S 1500 mAh 100C, XT60 (e.g. CNHL Black Series)",
+  "category": "battery",
+  "mass_g": 190.0,
+  "price_usd": 32.0,
+  "supplier_url": "https://chinahobbyline.com/products/cnhl-black-series-1500mah-14-8v-4s-100c-lipo-battery-with-xt60-plug",
+  "datasheet_url": "https://chinahobbyline.com/products/cnhl-black-series-1500mah-14-8v-4s-100c-lipo-battery-with-xt60-plug",
+  "envelope_mm": [
+   86.0,
+   35.0,
+   36.0
+  ],
+  "holes": [],
+  "specs": {
+   "cells": 4,
+   "capacity_mah": 1500,
+   "voltage_v": 14.8,
+   "voltage_max_v": 16.8,
+   "energy_wh": 22.2,
+   "c_rating": 100,
+   "max_current_a": 150.0,
+   "plug": "XT60",
+   "mount": "hook-and-loop strap / printed cradle; never screw into a pack",
+   "uncertain": [
+    "envelope_mm",
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -12.0,
+    -17.5,
+    0.0
+   ],
+   "max": [
+    74.0,
+    17.5,
+    36.0
+   ]
+  },
+  "mesh_triangles": 172
+ },
+ "max98357a_amp": {
+  "key": "max98357a_amp",
+  "name": "MAX98357A I2S 3 W class-D amplifier breakout",
+  "category": "motor_driver",
+  "mass_g": 2.0,
+  "price_usd": 6.0,
+  "supplier_url": "https://www.adafruit.com/product/3006",
+  "datasheet_url": "https://www.analog.com/media/en/technical-documentation/data-sheets/MAX98357A-MAX98357B.pdf",
+  "envelope_mm": [
+   19.4,
+   17.8,
+   2.6
+  ],
+  "holes": [],
+  "specs": {
+   "voltage_v": 5.0,
+   "output_w": 3.2,
+   "interface": "I2S",
+   "no_mounting_holes": true,
+   "mount": "pins in the breadboard / taped",
+   "uncertain": [
+    "mass_g"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "max": [
+    19.4,
+    17.8,
+    2.6
+   ]
+  },
+  "mesh_triangles": 140
+ },
+ "mist_nozzle_brass": {
+  "key": "mist_nozzle_brass",
+  "name": "Brass misting / spray nozzle with 5 mm barb adapter",
+  "category": "misc",
+  "mass_g": 8.0,
+  "price_usd": 2.0,
+  "supplier_url": "https://www.aliexpress.com/w/wholesale-brass-misting-nozzle-barb.html",
+  "datasheet_url": "https://www.aliexpress.com/w/wholesale-brass-misting-nozzle-barb.html",
+  "envelope_mm": [
+   12.0,
+   12.0,
+   30.0
+  ],
+  "holes": [],
+  "specs": {
+   "orifice_mm": 0.5,
+   "spray_angle_deg": 60,
+   "no_mounting_holes": true,
+   "mount": "pressed into a printed clip",
+   "uncertain": [
+    "price_usd"
+   ]
+  },
+  "output_frame": [
+   [
+    0.0,
+    0.0,
+    30.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "bbox_mm": {
+   "min": [
+    -6.0,
+    -6.0,
+    0.0
+   ],
+   "max": [
+    6.0,
+    6.0,
+    30.0
+   ]
+  },
+  "mesh_triangles": 204
+ },
+ "mosfet_switch_module": {
+  "key": "mosfet_switch_module",
+  "name": "Low-side MOSFET switch module, logic level (e.g. AOD4184 board), 5-36 V 15 A",
+  "category": "motor_driver",
+  "mass_g": 4.0,
+  "price_usd": 2.0,
+  "supplier_url": "https://www.aliexpress.com/w/wholesale-aod4184-mosfet-module.html",
+  "datasheet_url": "https://www.aliexpress.com/w/wholesale-aod4184-mosfet-module.html",
+  "envelope_mm": [
+   34.0,
+   17.0,
+   10.6
+  ],
+  "holes": [
+   {
+    "pos": [
+     3.0,
+     3.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.0,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     31.0,
+     3.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 3.0,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "voltage_v": 12.0,
+   "input_v": [
+    5,
+    36
+   ],
+   "current_a": 15.0,
+   "logic": "3.3-5 V PWM",
+   "flyback": "on-board diode",
+   "uncertain": [
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "max": [
+    34.0,
+    17.0,
+    10.6
+   ]
+  },
+  "mesh_triangles": 388
+ },
+ "penetrator_m10": {
+  "key": "penetrator_m10",
+  "name": "M10 cable penetrator for 6 mm cable, potted (Blue Robotics)",
+  "category": "misc",
+  "mass_g": 4.0,
+  "price_usd": 4.0,
+  "supplier_url": "https://bluerobotics.com/store/cables-connectors/penetrators/penetrator-vp/",
+  "datasheet_url": "https://bluerobotics.com/store/cables-connectors/penetrators/penetrator-vp/",
+  "envelope_mm": [
+   14.0,
+   14.0,
+   22.0
+  ],
+  "holes": [],
+  "specs": {
+   "thread": "M10 x 1.5",
+   "cable_od_mm": 6.0,
+   "no_mounting_holes": true
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -7.0,
+    -7.0,
+    -12.0
+   ],
+   "max": [
+    7.0,
+    7.0,
+    10.0
+   ]
+  },
+  "mesh_triangles": 308
+ },
+ "prop_5x4_3x3": {
+  "key": "prop_5x4_3x3",
+  "name": "5 x 4.3 x 3 tri-blade propeller, M5 hub (HQProp 5043 V1S), one",
+  "category": "misc",
+  "mass_g": 4.3,
+  "price_usd": 1.0,
+  "supplier_url": "https://www.hqprop.com/hq-durable-prop-5x43x3v1s-2cw2ccw-poly-carbonate-p0081.html",
+  "datasheet_url": "https://www.hqprop.com/hq-durable-prop-5x43x3v1s-2cw2ccw-poly-carbonate-p0081.html",
+  "envelope_mm": [
+   100.9,
+   116.4,
+   7.0
+  ],
+  "holes": [],
+  "specs": {
+   "diameter_mm": 127.0,
+   "pitch_in": 4.3,
+   "blades": 3,
+   "bore_mm": 5.0,
+   "material": "polycarbonate",
+   "sold_as": "sets of 2 CW + 2 CCW",
+   "no_mounting_holes": true,
+   "uncertain": [
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -37.38,
+    -58.24,
+    0.0
+   ],
+   "max": [
+    63.5,
+    58.24,
+    7.0
+   ]
+  },
+  "mesh_triangles": 332
+ },
+ "pump_12v_diaphragm": {
+  "key": "pump_12v_diaphragm",
+  "name": "12 V diaphragm water pump, R385, about 1.5 L/min, 5 mm barbs",
+  "category": "misc",
+  "mass_g": 75.0,
+  "price_usd": 6.0,
+  "supplier_url": "https://www.aliexpress.com/w/wholesale-r385-12v-diaphragm-pump.html",
+  "datasheet_url": "https://www.aliexpress.com/w/wholesale-r385-12v-diaphragm-pump.html",
+  "envelope_mm": [
+   34.0,
+   28.0,
+   66.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     -6.0,
+     0.0,
+     -38.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M2.5"
+   },
+   {
+    "pos": [
+     6.0,
+     0.0,
+     -38.0
+    ],
+    "axis": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "dia_mm": 2.5,
+    "thread": "M2.5"
+   }
+  ],
+  "specs": {
+   "voltage_v": 12.0,
+   "flow_l_min": 1.5,
+   "head_m": 2.0,
+   "barb_mm": 5.0,
+   "self_priming": true,
+   "max_current_a": 0.8,
+   "uncertain": [
+    "flow_l_min",
+    "head_m",
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -17.0,
+    -14.0,
+    -38.0
+   ],
+   "max": [
+    17.0,
+    14.0,
+    28.0
+   ]
+  },
+  "mesh_triangles": 644
+ },
+ "silicone_tube_5mm_2m": {
+  "key": "silicone_tube_5mm_2m",
+  "name": "Food-grade silicone tube 5 x 8 mm, 2 m",
+  "category": "misc",
+  "mass_g": 60.0,
+  "price_usd": 4.0,
+  "supplier_url": "https://www.aliexpress.com/w/wholesale-silicone-tube-5x8mm.html",
+  "datasheet_url": "https://www.aliexpress.com/w/wholesale-silicone-tube-5x8mm.html",
+  "envelope_mm": [
+   120.0,
+   120.0,
+   10.0
+  ],
+  "holes": [],
+  "specs": {
+   "id_mm": 5.0,
+   "od_mm": 8.0,
+   "length_mm": 2000.0,
+   "no_mounting_holes": true,
+   "shown_as": "a coil",
+   "uncertain": [
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -60.0,
+    -60.0,
+    0.0
+   ],
+   "max": [
+    60.0,
+    60.0,
+    10.0
+   ]
+  },
+  "mesh_triangles": 208
+ },
+ "speaker_40mm_3w": {
+  "key": "speaker_40mm_3w",
+  "name": "40 mm 4 ohm 3 W speaker",
+  "category": "misc",
+  "mass_g": 18.0,
+  "price_usd": 3.0,
+  "supplier_url": "https://www.adafruit.com/product/3968",
+  "datasheet_url": "https://www.adafruit.com/product/3968",
+  "envelope_mm": [
+   40.0,
+   40.0,
+   18.0
+  ],
+  "holes": [],
+  "specs": {
+   "impedance_ohm": 4.0,
+   "power_w": 3.0,
+   "no_mounting_holes": true,
+   "mount": "behind a printed grille, clamped by its rim",
+   "uncertain": [
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -20.0,
+    -20.0,
+    -15.0
+   ],
+   "max": [
+    20.0,
+    20.0,
+    3.0
+   ]
+  },
+  "mesh_triangles": 204
+ },
+ "t200_thruster": {
+  "key": "t200_thruster",
+  "name": "Blue Robotics T200 underwater thruster (7-20 V)",
+  "category": "actuator",
+  "mass_g": 344.0,
+  "price_usd": 200.0,
+  "supplier_url": "https://bluerobotics.com/store/thrusters/t100-t200-thrusters/t200-thruster-r2-rp/",
+  "datasheet_url": "https://bluerobotics.com/store/thrusters/t100-t200-thrusters/t200-thruster-r2-rp/",
+  "envelope_mm": [
+   100.0,
+   110.0,
+   95.0
+  ],
+  "holes": [
+   {
+    "pos": [
+     -9.5,
+     -60.0,
+     -70.0
+    ],
+    "axis": [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    "dia_mm": 3.0,
+    "thread": "M3"
+   },
+   {
+    "pos": [
+     9.5,
+     -60.0,
+     -70.0
+    ],
+    "axis": [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    "dia_mm": 3.0,
+    "thread": "M3"
+   }
+  ],
+  "specs": {
+   "voltage_v": 16.0,
+   "input_v": [
+    7,
+    20
+   ],
+   "max_thrust_fwd_kgf": 5.25,
+   "max_thrust_rev_kgf": 4.1,
+   "max_current_a": 24.0,
+   "mass_in_water_g": 156.0,
+   "thrust_at_12v_fwd_kgf": 3.71,
+   "current_at_12v_a": 17.0,
+   "rated_torque_nm": 0.3,
+   "peak_torque_nm": 0.6,
+   "stall_torque_nm": 0.6,
+   "no_load_speed_rad_s": 380.0,
+   "gear_ratio": 1,
+   "mount": "two M3 screws in the mounting foot (19 mm apart)",
+   "uncertain": [
+    "rated_torque_nm",
+    "peak_torque_nm",
+    "no_load_speed_rad_s",
+    "holes"
+   ]
+  },
+  "output_frame": [
+   [
+    0.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "bbox_mm": {
+   "min": [
+    -50.0,
+    -60.0,
+    -95.0
+   ],
+   "max": [
+    50.0,
+    50.0,
+    0.0
+   ]
+  },
+  "mesh_triangles": 740
+ },
+ "tether_cat5_25m": {
+  "key": "tether_cat5_25m",
+  "name": "Neutrally buoyant tether, 25 m, 2 twisted pairs (Fathom slim style)",
+  "category": "misc",
+  "mass_g": 520.0,
+  "price_usd": 45.0,
+  "supplier_url": "https://bluerobotics.com/store/cables-connectors/cables/fathom-slim-tether/",
+  "datasheet_url": "https://bluerobotics.com/store/cables-connectors/cables/fathom-slim-tether/",
+  "envelope_mm": [
+   150.0,
+   150.0,
+   40.0
+  ],
+  "holes": [],
+  "specs": {
+   "length_m": 25.0,
+   "od_mm": 4.0,
+   "pairs": 2,
+   "no_mounting_holes": true,
+   "note": "coiled on the surface; strain-relieved at the hull penetrator",
+   "uncertain": [
+    "price_usd",
+    "mass_g"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -75.0,
+    -75.0,
+    0.0
+   ],
+   "max": [
+    75.0,
+    75.0,
+    40.0
+   ]
+  },
+  "mesh_triangles": 208
+ },
+ "water_bottle_1l": {
+  "key": "water_bottle_1l",
+  "name": "1 L HDPE wide-neck bottle (water tank), with a drilled cap",
+  "category": "misc",
+  "mass_g": 45.0,
+  "price_usd": 3.0,
+  "supplier_url": "https://www.aliexpress.com/w/wholesale-1l-hdpe-wide-mouth-bottle.html",
+  "datasheet_url": "https://www.aliexpress.com/w/wholesale-1l-hdpe-wide-mouth-bottle.html",
+  "envelope_mm": [
+   90.0,
+   90.0,
+   190.0
+  ],
+  "holes": [],
+  "specs": {
+   "volume_l": 1.0,
+   "no_mounting_holes": true,
+   "mount": "printed cradle and a strap",
+   "uncertain": [
+    "price_usd",
+    "envelope_mm"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -45.0,
+    -45.0,
+    0.0
+   ],
+   "max": [
+    45.0,
+    45.0,
+    190.0
+   ]
+  },
+  "mesh_triangles": 412
+ },
+ "wte_4in_300": {
+  "key": "wte_4in_300",
+  "name": "Blue Robotics 4 in watertight enclosure, 298 mm acrylic tube, aluminium end caps (rated 100 m)",
+  "category": "misc",
+  "mass_g": 1450.0,
+  "price_usd": 285.0,
+  "supplier_url": "https://bluerobotics.com/store/watertight-enclosures/4-series/wte4-asm-r1/",
+  "datasheet_url": "https://bluerobotics.com/store/watertight-enclosures/4-series/wte4-asm-r1/",
+  "envelope_mm": [
+   114.0,
+   114.0,
+   322.0
+  ],
+  "holes": [],
+  "specs": {
+   "inner_d_mm": 101.6,
+   "inner_length_mm": 298.0,
+   "displaced_volume_l": 3.29,
+   "depth_rating_m": 100,
+   "penetrator_holes": 10,
+   "sealing": "double O-ring flanges, vent plug for the final seal",
+   "mount": "printed clamp rings round the tube",
+   "od_mm": 114.0,
+   "id_mm": 101.6,
+   "no_mounting_holes": true,
+   "uncertain": [
+    "mass_g",
+    "price_usd"
+   ]
+  },
+  "output_frame": null,
+  "bbox_mm": {
+   "min": [
+    -57.0,
+    -57.0,
+    -12.0
+   ],
+   "max": [
+    57.0,
+    57.0,
+    310.0
+   ]
+  },
+  "mesh_triangles": 200
  }
 }
