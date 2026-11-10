@@ -1,6 +1,8 @@
 """Generate a representative set on the site and press every download button; save the files for validation."""
 import functools, http.server, json, os, sys, threading, time, pathlib
 from playwright.sync_api import sync_playwright
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), ".."))
+import pw_csp; pw_csp.install()   # the site has no unsafe-eval: wait_for_function polls with evaluate instead
 root = pathlib.Path(__file__).resolve().parents[2]; site = root / os.environ.get("SITE", "pages-dist"); out = root / "out/audit/files"; out.mkdir(parents=True, exist_ok=True)
 BASE = "/text-to-robot"
 CASES = [("arm6", "Create a 6 DOF robotic arm with a parallel gripper", False), ("arm2", "Create a 2 DOF robotic arm", False), ("arm7", "Create a 7 DOF robotic arm with a two-finger gripper", False),

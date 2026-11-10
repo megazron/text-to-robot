@@ -1,6 +1,8 @@
 """Press every control on the site, on a desktop and a phone viewport; record what happened, console errors and failed requests."""
 import functools, http.server, json, sys, threading, time, pathlib, re
 from playwright.sync_api import sync_playwright
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), ".."))
+import pw_csp; pw_csp.install()   # the site has no unsafe-eval: wait_for_function polls with evaluate instead
 root = pathlib.Path(__file__).resolve().parents[2]; site = root / (sys.argv[1] if len(sys.argv) > 1 else "pages-dist"); out = root / "out/audit"; out.mkdir(parents=True, exist_ok=True)
 BASE = "/text-to-robot"
 class Q(http.server.SimpleHTTPRequestHandler):

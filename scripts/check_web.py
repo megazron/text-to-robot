@@ -9,6 +9,7 @@ examples/web_validation.json instead.
 import argparse,hashlib,json,os,subprocess,tempfile
 from pathlib import Path
 from playwright.sync_api import sync_playwright
+import pw_csp; pw_csp.install()   # the site has no unsafe-eval: wait_for_function polls with evaluate instead
 root=Path(__file__).resolve().parents[1]
 ap=argparse.ArgumentParser(description=__doc__.splitlines()[0])
 ap.add_argument('--update-docs',action='store_true',help='write screenshots to docs/img/web and the report to examples/web_validation.json (tracked files)')

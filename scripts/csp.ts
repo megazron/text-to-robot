@@ -3,6 +3,7 @@
 // and the community board's origins from apps/web/public/community.json, so nobody edits the hashes by hand.
 //   node scripts/csp.ts --write <index.html>   rewrite the meta tag in place (deploy/build-pages.sh runs it on the build)
 //   node scripts/csp.ts --check <index.html>   exit 1 when the meta tag is stale (tests/security.test.ts runs it)
+//   add --community <community.json> to take the board's api origin and Turnstile setting from another file
 // docs/SECURITY_AUDIT.md explains each directive.
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
@@ -11,8 +12,8 @@ import { dirname, join } from "node:path";
 const TURNSTILE = "https://challenges.cloudflare.com";
 
 /** The community board's API origin and whether Turnstile is used, from community.json beside the page (both optional). */
-export function communityConfig(htmlPath: string): { api: string | null; turnstile: boolean } {
-  const file = join(dirname(htmlPath), "community.json");
+export function communityConfig(htmlPath: string, configPath?: string): { api: string | null; turnstile: boolean } {
+  const file = configPath ?? join(dirname(htmlPath), "community.json");
   if (!existsSync(file)) return { api: null, turnstile: false };
   const c = JSON.parse(readFileSync(file, "utf8")) as { api?: string; turnstileSiteKey?: string };
   let api: string | null = null;
@@ -62,9 +63,11 @@ export function withPolicy(html: string, community: { api: string | null; turnst
 }
 
 if (import.meta.main ?? process.argv[1]?.endsWith("csp.ts")) {
-  const [mode, file] = process.argv.slice(2);
+  // --community <file> reads the board's settings from another file (a local Worker for an e2e run) instead of the page's community.json
+  const argv = process.argv.slice(2), at = argv.indexOf("--community"), config = at >= 0 ? argv.splice(at, 2)[1] : undefined;
+  const [mode, file] = argv;
   if (!file || (mode !== "--write" && mode !== "--check")) { console.error("usage: node scripts/csp.ts --write|--check <index.html>"); process.exit(2); }
-  const html = readFileSync(file, "utf8"), next = withPolicy(html, communityConfig(file));
+  const html = readFileSync(file, "utf8"), next = withPolicy(html, communityConfig(file, config));
   if (mode === "--write") { if (next !== html) writeFileSync(file, next); console.log(`CSP written to ${file}`); }
   else if (next !== html) { console.error(`${file}: Content-Security-Policy meta is stale; run node scripts/csp.ts --write ${file}`); process.exit(1); }
 }

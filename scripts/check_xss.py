@@ -11,6 +11,7 @@ violation. docs/SECURITY_AUDIT.md lists the findings these payloads come from.
 import argparse, base64, copy, functools, http.server, json, os, sys, threading, zlib
 from pathlib import Path
 from playwright.sync_api import sync_playwright
+import pw_csp; pw_csp.install()   # the site has no unsafe-eval: wait_for_function polls with evaluate instead
 
 root = Path(__file__).resolve().parents[1]
 ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])

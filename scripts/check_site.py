@@ -15,6 +15,7 @@ Exit code 1 if any robot fails to generate, differs from its example, or logs a 
 import argparse, base64, functools, hashlib, http.server, io, json, os, re, struct, sys, threading, time, zipfile
 from pathlib import Path
 from playwright.sync_api import sync_playwright
+import pw_csp; pw_csp.install()   # the site has no unsafe-eval: wait_for_function polls with evaluate instead
 
 root = Path(__file__).resolve().parents[1]
 ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
