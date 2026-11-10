@@ -161,6 +161,10 @@ export function partModel(key: string): PartModel {
     port.pins.v.forEach((x, i) => { const left = i < Math.ceil(port.pins.v.length / 2), k = left ? i : i - Math.ceil(port.pins.v.length / 2), xx = left ? 1.27 : 24.13, yy = 6.35 + k * P; headerPin(b, xx, yy, 0, -1); set(port.name, x.name, [xx, yy, -8.5], [0, 0, -1], "header"); });
   } else {
     detailed = false;
+    // a Raspberry Pi camera board: its 15-way 1 mm FFC socket lies on the lens side along the edge away from the lens,
+    // the ribbon leaving in the board's plane over that edge (Raspberry Pi camera module product photos; the catalog
+    // puts the lens at y = 14.4 mm of the 23.86 mm board, so the socket edge is y = 0)
+    if (/^rpi_camera_module/.test(key)) for (const p of e?.ports ?? []) if (/csi/.test(p.name)) p.pins.v.forEach((x, i) => set(p.name, x.name, [(bb.min[0] + bb.max[0]) / 2 + (i - (p.pins.v.length - 1) / 2) * 1.0, bb.min[1], 1.2], [0, -1, 0], "plug"));
     generic(key, e?.ports ?? [], bb, b, set);
   }
   // any pin still without a place: on the body's -x face, in order (never left out of the drawing)
