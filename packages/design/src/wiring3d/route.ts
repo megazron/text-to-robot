@@ -166,7 +166,11 @@ export class Router {
       const a2 = g.dist(a) >= n ? a : g.nearest(a, n, 16, within, (q) => g.line(a, q, 1, within) >= 0), b2 = g.dist(b) >= n ? b : g.nearest(b, n, 16, within, (q) => g.line(b, q, 1, within) >= 0);
       if (!a2 || !b2) continue;
       const p = g.path(a2, b2, n, within); if (!p) continue;
-      return dedupe([a, ...p, b]);
+      // the search starts and ends at the nearest cube with the clearance: where the line past that cube is clear, the short hop to it goes
+      const out = dedupe([a, ...p, b]);
+      if (out.length > 2 && dist(out[out.length - 2], b) < 8 && g.line(out[out.length - 3], b, 1, within) >= 0) out.splice(out.length - 2, 1);
+      if (out.length > 2 && dist(out[1], a) < 8 && g.line(a, out[2], 1, within) >= 0) out.splice(1, 1);
+      return out;
     }
     return null;
   }
@@ -285,7 +289,8 @@ export class Router {
         return { pts, on: o };
       };
       let w = tryRing(ring), bad = w ? this.finishWire(w, e.R, e, pierced, fixed, needW) : null;
-      if ((!w || bad!.hits) && ring) { const w2 = tryRing(0), b2 = w2 ? this.finishWire(w2, e.R, e, pierced, fixed, needW) : null; if (w2 && (!w || b2!.hits < bad!.hits)) { w = w2; bad = b2; } }
+      // its place in the bundle gives it a hit or a bend too tight (a hop beside a hole): it lies on the centreline instead where that is better
+      if ((!w || bad!.hits || bad!.tight) && ring) { const w2 = tryRing(0), b2 = w2 ? this.finishWire(w2, e.R, e, pierced, fixed, needW) : null; if (w2 && (!w || b2!.hits < bad!.hits || (b2!.hits === bad!.hits && !b2!.tight && bad!.tight))) { w = w2; bad = b2; } }
       if (!w) { problems.push(`${c.key}: wire ${k + 1} has no free way from its pin to the cable`); const pts = [e.a.p, e.la.S, ...T.pts, e.lb.S, e.b.p].map(r1); return { pts, on: [ga, ga, ...T.on, gb, gb], drawn_mm: polyLen(pts) }; }
       if (bad!.hits) problems.push(`${c.key}: wire ${k + 1} passes ${bad!.hits} mm through a solid`);
       if (bad!.tight) problems.push(`${c.key}: wire ${k + 1} has a bend of ${bad!.tight.toFixed(1)} mm, under its ${e.R.toFixed(1)} mm`);
