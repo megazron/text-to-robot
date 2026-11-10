@@ -167,6 +167,9 @@ export class Harness {
   label(cable: string, text: string) { this.labels.set(cable, text); }
   /** the exits a cable leaves its bays by: one per bay it leaves (the others go by the nearest) */
   exitFor(cable: string, ...exits: string[]) { this.exitOf.set(cable, exits); }
+  /** cable -> compartments it passes through, each in by one exit and out by another */
+  viaOf = new Map<string, { bay: string; enter: string; leave: string }[]>();
+  via(cable: string, bay: string, enter: string, leave: string) { this.viaOf.set(cable, [...(this.viaOf.get(cable) ?? []), { bay, enter, leave }]); }
   /** A channel a cable can lie in, on `link`: a polyline in world mm at the home pose. */
   channel(link: string, pts: Vec3[]) { this.channels.set(link, [...(this.channels.get(link) ?? []), pts]); }
   /** several signal wires a -> b at once: pairs of pin names */
@@ -508,6 +511,7 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
       const pick = (bay: string, to: Vec3) => H.exits.find((e) => !!H.exitOf.get(key)?.includes(e.id) && e.bay === bay) ?? nearestExit(H, bay, to);
       const exA = leaves(bayA, bayB) ? pick(bayA!, lb.p ?? la.p!) : null, exB = leaves(bayB, bayA) ? pick(bayB!, la.p ?? lb.p!) : null;
       const exitAt = (e: ExitDecl | null) => (e ? { id: e.id, at: worldExit(f, e), n: unit(rotateBy(f, e.link, e.normal)), hole_mm: e.panel_hole_mm } : null);
+      const via = (H.viaOf.get(key) ?? []).flatMap((v) => { const en = H.exits.find((e) => e.id === v.enter), lv = H.exits.find((e) => e.id === v.leave); return en && lv ? [{ bay: v.bay, enter: exitAt(en)!, leave: exitAt(lv)! }] : []; });
       const od = bundleOd(ws), straight = dist(la.p ?? [0, 0, 0], lb.p ?? [0, 0, 0]);
       const slackOf = (anchors: { joint: string; aIn: Vec3; aOut: Vec3 }[]) => {
         const joints: SlackRec[] = []; let slackMm = [...up, ...down].reduce((n, j) => n + (j.type === "fixed" ? H.flex.get(j.name) ?? 0 : 0), 0);   // fixed in the model, not in life
@@ -527,12 +531,12 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
       // and its laid points are turned back so they run from its own first end
       const flip = (w: WireDecl) => w.a.inst === ib && w.b.inst !== ib;
       let awg = ws.map((w) => awgOf(w, straight * 1.4 + svc + term, pm)?.awg ?? null);
-      let out = R.cable({ key, a: ia, b: ib, od, crossing, exitA: exitAt(exA), exitB: exitAt(exB), bayA, bayB, wires: ws.map((w, i) => (flip(w) ? { from: [w.b.port, w.b.pin], to: [w.a.port, w.a.pin], awg: awg[i], ai: w.b.inst, bi: w.a.inst } : { from: [w.a.port, w.a.pin], to: [w.b.port, w.b.pin], awg: awg[i], ai: w.a.inst, bi: w.b.inst })) });
+      let out = R.cable({ key, a: ia, b: ib, od, crossing, exitA: exitAt(exA), exitB: exitAt(exB), bayA, bayB, via, wires: ws.map((w, i) => (flip(w) ? { from: [w.b.port, w.b.pin], to: [w.a.port, w.a.pin], awg: awg[i], ai: w.b.inst, bi: w.a.inst } : { from: [w.a.port, w.a.pin], to: [w.b.port, w.b.pin], awg: awg[i], ai: w.a.inst, bi: w.b.inst })) });
       let sl = slackOf(out.anchors);
       const final = ws.map((w, i) => awgOf(w, Math.ceil(((out.wires[i]?.drawn_mm ?? straight) + svc + sl.slackMm + term) / 5) * 5, pm)?.awg ?? null);
       if (final.some((x, i) => x !== null && awg[i] !== null && x < awg[i]!)) {
         awg = final.map((x, i) => (x !== null && awg[i] !== null ? Math.min(x, awg[i]!) : x));
-        out = R.cable({ key, a: ia, b: ib, od, crossing, exitA: exitAt(exA), exitB: exitAt(exB), bayA, bayB, wires: ws.map((w, i) => (flip(w) ? { from: [w.b.port, w.b.pin], to: [w.a.port, w.a.pin], awg: awg[i], ai: w.b.inst, bi: w.a.inst } : { from: [w.a.port, w.a.pin], to: [w.b.port, w.b.pin], awg: awg[i], ai: w.a.inst, bi: w.b.inst })) });
+        out = R.cable({ key, a: ia, b: ib, od, crossing, exitA: exitAt(exA), exitB: exitAt(exB), bayA, bayB, via, wires: ws.map((w, i) => (flip(w) ? { from: [w.b.port, w.b.pin], to: [w.a.port, w.a.pin], awg: awg[i], ai: w.b.inst, bi: w.a.inst } : { from: [w.a.port, w.a.pin], to: [w.b.port, w.b.pin], awg: awg[i], ai: w.a.inst, bi: w.b.inst })) });
         sl = slackOf(out.anchors);
       }
       routeProblems.push(...out.problems);

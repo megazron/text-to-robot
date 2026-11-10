@@ -25,6 +25,8 @@ export interface CableIn {
   /** the moving joints between the two parts, in order from a to b */
   crossing: Joint[];
   exitA: ExitAt | null; exitB: ExitAt | null; bayA?: string; bayB?: string;
+  /** compartments the cable passes through on its way, after leaving a's: in by one exit, out by another (before any joint) */
+  via?: { bay: string; enter: ExitAt; leave: ExitAt }[];
 }
 export interface WireOut { pts: V3[]; on: string[]; drawn_mm: number; }
 export interface CableOut {
@@ -223,15 +225,20 @@ export class Router {
       for (let i = 1; i < p.length; i++) { trunk.push(p[i]); pinned.push(pin && i === p.length - 1); if (g.dist(p[i]) < ringNeed) tight = true; }
       cur = to;
     };
-    const through = (e: ExitAt, outward: boolean) => {
-      const pr = this.pierce(e, needT, outward ? boxA : boxB, 1.6 * Math.max(...E.map((x) => x.R)));
+    const through = (e: ExitAt, outward: boolean, box = outward ? boxA : boxB, approach = outward ? within : undefined) => {
+      const pr = this.pierce(e, needT, box, 1.6 * Math.max(...E.map((x) => x.R)));
       if (!pr) { problems.push(`${c.key}: exit ${e.id} is blocked`); return; }
-      const [first, second] = outward ? [pr.inner, pr.outer] : [pr.outer, pr.inner];
-      go(first, outward ? within : undefined, `to exit ${e.id}`, true);
+      let [first, second] = outward ? [pr.inner, pr.outer] : [pr.outer, pr.inner];
+      // coming in on the hole's own line, nearer the wall than its outer point (out of one hole straight into the next, a
+      // lid under a deck): straight on, not out to that point and back
+      if (!outward) { const d = sub(cur, e.at), t = dot(d, e.n); if (t > 0 && t < dot(sub(pr.outer, e.at), e.n) && len(sub(d, scale(e.n, t))) < 1) first = cur; }
+      if (first !== cur) go(first, approach, `to exit ${e.id}`, true);
       trunk.push(second); pinned.push(true); pierced.push([first, second]); cur = second;
     };
     if (c.exitA && !sameBay) { through(c.exitA, true); within = undefined; }
     else if (!sameBay) within = undefined;
+    // through a compartment on the way: in at one exit, across inside it, out at another
+    for (const v of sameBay ? [] : c.via ?? []) { const box = this.bays.get(v.bay); through(v.enter, false, box, undefined); through(v.leave, true, box, box); within = undefined; }
     const centres: V3[] = [];
     for (let q = 0; q < c.crossing.length; q++) {
       const j = c.crossing[q], jw = this.f.joint[j.name], cen = scale(jw.p as V3, 1000), ax = unit(jw.axis as V3);
@@ -275,7 +282,7 @@ export class Router {
     }
     const fixed = new Set<V3>([...pierced.flat()]);
     // ---- each wire: out of its pin, on to its place in the bundle, off again to its pin
-    const hole = Math.min(...[c.exitA, c.exitB].filter((e): e is ExitAt => !!e && !sameBay).map((e) => e.hole_mm), 1e9);
+    const hole = Math.min(...[c.exitA, c.exitB, ...(c.via ?? []).flatMap((v) => [v.enter, v.leave])].filter((e): e is ExitAt => !!e && !sameBay).map((e) => e.hole_mm), 1e9);
     const T = { pts: T0, on };
     const wires: WireOut[] = E.map((e, k) => {
       const od = wireSize(c.wires[k].awg).od;
