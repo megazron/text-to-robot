@@ -64,13 +64,12 @@ function buildHexapod(req: LeggedRequest, cfg: HexCfg, sensors: string[]) {
   for (const deg of PILLARS) { const t = (deg * Math.PI) / 180; bodyOps.push({ op: "hole", a: [52 * Math.cos(t), 52 * Math.sin(t), zPlate - 6], b: [52 * Math.cos(t), 52 * Math.sin(t), zPlate + 1], d: 3.4 }); }
   printed(A, base, bodyOps, { role: "base", material: "printed_dark" });
   mountAt(A, base, cfg.batt, translation([bx0, 0, zBatt]), "battery", "main battery (strapped under the body plate)");
-  // small boards on the plate in a row along x, over the battery tray: the servo bus adapter, the IMU near the middle,
-  // the 5 V regulator; the hood over them runs on to the plate's +x rim, where the pack's leads come up out of the tray
+  // small boards on the plate in a row along x, over the battery tray: the 5 V regulator, the servo bus adapter, the IMU; the hood over them runs on to the plate's +x rim, where the pack's leads come up out of the tray
   const board = (key: string, x: number, y: number, name: string, use: string) => { const b = bodyMm(key); mountAt(A, base, key, translation([x - b.min[0], y - b.min[1], zPlate + 3]), name, use); };
-  board("waveshare_bus_servo_adapter", -40, -16.5, "actuator_bus", "USB to servo bus");
-  board("bno085_breakout", 5, -11.35, "imu", "IMU (body attitude, near the centre)");
-  addSensor(A, "imu", "imu", "base_link", [0.0178, 0, (zPlate + 5) / 1000], [0, 0, 0], { model: "BNO085" });
-  board("buck_5v_5a", 33, -12.7, "regulator_5v", "5 V regulator (sensors)");
+  board("buck_5v_5a", -40, -12.7, "regulator_5v", "5 V regulator (sensors)");
+  board("waveshare_bus_servo_adapter", -12, -16.5, "actuator_bus", "USB to servo bus");
+  board("bno085_breakout", 33, -11.35, "imu", "IMU (body attitude)");
+  addSensor(A, "imu", "imu", "base_link", [0.0458, 0, (zPlate + 5) / 1000], [0, 0, 0], { model: "BNO085" });
   // ---- top deck on three pillars: computer, LiDAR turret, camera ----
   const zDeck = zf + bF.max[1] + WALL + 6;         // above the femur cradles
   const Rd = Rf - (-bF.min[0]) - WALL - 6;          // inside the femur cradles' inner ends
@@ -165,17 +164,19 @@ function boxHex(A: Assembly, H: Harness, b: ReturnType<typeof buildHexapod>) {
   // leave by a grommet low in the hood's side wall and go down through a hole in the plate just outside it, clear of the
   // tray. The computer's leads (USB, power, the IMU's jumpers) come in by a grommet in the -y wall under its hood's hole.
   const tallest = Math.max(...["actuator_bus", "regulator_5v", "imu"].map((n) => worldBox(A, n).hi[2]));
-  const hb = hoodAround(A, H, { name: "board_hood", deck: "base_link", parts: ["actuator_bus", "regulator_5v", "imu"], z0: b.zPlate, z1: Math.min(tallest + 30, -2), rocker: true, noDeckHole: true,
+  const hb = hoodAround(A, H, { name: "board_hood", deck: "base_link", parts: ["actuator_bus", "regulator_5v", "imu"], z0: b.zPlate, z1: Math.min(tallest + 30, -2), rocker: true, rockerAt: 6.5, noDeckHole: true,
     limit: { x0: -43, x1: 97, y0: -22, y1: 22 }, extend: { "x+": 12, "y-": 4, "y+": 4 },
     grommets: [{ id: "usb", face: "y-", u: -24 }, { id: "legs_left", face: "y+", u: 16 }, { id: "legs_right", face: "y-", u: 16 }] });
-  H.spot.set("main_fuse", { by: "actuator_bus", at: [50, 15, tallest + 21], turned: true });
-  H.spot.set("star_ground", { by: "actuator_bus", at: [-20, 15, tallest + 21] });
+  // the pack's leads come up at the +x end beside the switch (which stands off the middle for them) and run back along
+  // the -y side: the fuse lies in line with them over the IMU, the star ground further back
+  H.spot.set("main_fuse", { by: "actuator_bus", at: [52, -15, tallest + 21], turned: true });
+  H.spot.set("star_ground", { by: "actuator_bus", at: [5, -15, tallest + 21] });
   for (const s of [1, -1]) { const y = s > 0 ? hb.max[1] + 12 : hb.min[1] - 12; A.amendProgram("base_link", [{ op: "hole", a: [16, y, b.zPlate - 6], b: [16, y, b.zPlate + 1], d: 12 }]); }
   for (const c of ["computer~lidar", "camera~computer", "actuator_bus~computer"]) H.exitOf.set(c, "computer_hood.usb");
   for (const n of ["lf", "lm", "lr", "rr", "rm", "rf"]) for (const c of [`actuator_bus_hub~${n}_coxa_actuator`, `VBAT~${n}_coxa_actuator`]) H.exitOf.set(c, `board_hood.legs_${n[0] === "l" ? "left" : "right"}`);
   const bb = b.battB, x0 = b.bx0 + bb.min[0] - 3, x1 = b.bx0 + bb.max[0] + LEAD_ROOM, y = b.bw + 4.4;
   // the tray hangs from the plate: bounds in the frame turned about x, so z runs downwards
-  hood(A, H, { name: "battery_tray", deck: "base_link", x0, x1, y0: -y, y1: y, z0: -(b.zPlate - 4), z1: -(b.zBatt - 3), parts: ["battery"], flip: true, ventRows: 0, deckGrommets: [{ id: "up", x: x1 - 6, y: 12 }] });   // where the leads have turned up (inside the board hood)
+  hood(A, H, { name: "battery_tray", deck: "base_link", x0, x1, y0: -y, y1: y, z0: -(b.zPlate - 4), z1: -(b.zBatt - 3), parts: ["battery"], flip: true, ventRows: 0, deckGrommets: [{ id: "up", x: x1 - 6, y: 15 }] });   // where the leads have turned up (inside the board hood)
   H.scan();
 }
 function wireHex(A: Assembly, H: Harness, compute: string) {
