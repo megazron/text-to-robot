@@ -46,7 +46,10 @@ function buildHexapod(req: LeggedRequest, cfg: HexCfg, sensors: string[]) {
   const coxaW: Record<string, Mat4> = {};
   for (const L of LEGS6) {
     const t = (L.deg * Math.PI) / 180, u: Vec3 = [Math.cos(t), Math.sin(t), 0], tg: Vec3 = [-Math.sin(t), Math.cos(t), 0];
-    coxaW[L.n] = frame(scale(u, Rc), [0, 0, 1], tg);
+    // the case lies along the rim, the way that puts its sockets (under the case, towards its far end) furthest from the
+    // body's x axis: under the plate the battery tray runs along x, and the plugs then come down beside it, not on to it
+    const far = (x: Vec3) => Math.abs(Rc * u[1] - 14 * x[1]);
+    coxaW[L.n] = frame(scale(u, Rc), [0, 0, 1], far(tg) >= far(scale(tg, -1)) ? tg : scale(tg, -1));
     bodyOps.push({ op: "cradle", key: KC, T: coxaW[L.n], wall: WALL });
   }
   // battery under the plate (belly cradle: two side rails + strap slots), wiring holes
