@@ -142,7 +142,8 @@ try:
         name = wait_robot(page)
         step(f"designed a robot: {name}")
         expect(page.locator('.dock-btn[data-jump="community"]')).to_be_visible()
-        assert page.locator("#publishBtn").is_hidden(), "the GitHub gallery button gives way to the community board"
+        hidden = lambda sel: page.evaluate("s => document.querySelector(s).hidden", sel)
+        assert hidden("#publishBtn") and not hidden("#shareBlog"), "the GitHub gallery button gives way to the community board"
 
         # nothing was sent before the button: the server has no posts and the page made no request to it
         assert api("/posts")[1]["posts"] == [] and to_api == [], to_api
@@ -257,8 +258,8 @@ try:
         config["api"] = ""
         page.goto(URL)
         wait_robot(page)
-        assert page.locator('.dock-btn[data-jump="community"]').is_hidden() and page.locator("#shareBlog").is_hidden()
-        assert page.locator("#publishBtn").is_visible()
+        assert hidden('.dock-btn[data-jump="community"]') and hidden("#shareBlog") and not hidden("#publishBtn")
+        assert page.locator('.dock-btn[data-jump="community"]').is_hidden()
         step("with community.json empty the feature is hidden")
         assert not errors, errors
         browser.close()
