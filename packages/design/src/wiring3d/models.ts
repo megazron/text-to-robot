@@ -165,6 +165,9 @@ export function partModel(key: string): PartModel {
     // the ribbon leaving in the board's plane over that edge (Raspberry Pi camera module product photos; the catalog
     // puts the lens at y = 14.4 mm of the 23.86 mm board, so the socket edge is y = 0). The ribbon is laid as one flat
     // cable: every conductor's pin is drawn at the middle of the socket, where the ribbon's centreline leaves it
+    // RPLIDAR C1: its cable leaves the middle of one side of the base, 4 mm up, as a flying lead to an XH2.54-5P plug
+    // (SLAMTEC RPLIDAR C1 datasheet v1.0, figure 4-1; the catalog box's 4 mm overhang on -y is that cable boss)
+    if (/^rplidar_c1/.test(key)) for (const p of e?.ports ?? []) for (const x of p.pins.v) set(p.name, x.name, [0, bb.min[1], 4], [0, -1, 0], "lead");
     if (/^rpi_camera_module/.test(key)) for (const p of e?.ports ?? []) if (/csi/.test(p.name)) p.pins.v.forEach((x) => set(p.name, x.name, [(bb.min[0] + bb.max[0]) / 2, bb.min[1], 1.2], [0, -1, 0], "plug"));
     generic(key, e?.ports ?? [], bb, b, set);
   }
