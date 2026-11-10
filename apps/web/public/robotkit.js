@@ -31,7 +31,7 @@ export function forwardKinematics(spec, values={}){
   const kids=new Map(); for(const j of spec.joints){ if(!kids.has(j.parent)) kids.set(j.parent,[]); kids.get(j.parent).push(j); }
   const stack=[root]; const seen=new Set();
   while(stack.length){ const par=stack.pop(); if(seen.has(par)) continue; seen.add(par); const pw=world.get(par);
-    for(const j of (kids.get(par)||[])){ const v=values[j.name]??0; world.set(j.child, multiply(multiply(pw, poseToMat(j.origin)), jointMotion(j,v))); stack.push(j.child); } }
+    for(const j of (kids.get(par)||[])){ const v=values[j.name]??(j.mimic ? (j.mimic.multiplier??1)*(values[j.mimic.joint]??0)+(j.mimic.offset??0) : 0); world.set(j.child, multiply(multiply(pw, poseToMat(j.origin)), jointMotion(j,v))); stack.push(j.child); } }
   return world;
 }
 

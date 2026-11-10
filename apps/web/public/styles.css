@@ -69,6 +69,27 @@ body.busy #charge{opacity:1}
 .chip input{position:absolute;opacity:0;width:1px;height:1px}
 .chip:has(input:checked){color:var(--on-green);background:var(--green);border-color:transparent}
 .chip:has(input:focus-visible){outline:2px solid var(--green);outline-offset:2px}
+/* motion: the bar under the view toolbar, the live joint label, pose tools in the Joints tab */
+.chip.on{color:var(--on-green);background:var(--green);border-color:transparent}
+.motionbar{position:fixed;z-index:20;top:calc(var(--sat) + 108px);left:50%;transform:translateX(-50%);width:min(560px,calc(100vw - 28px));padding:8px 10px 6px;background:var(--glass-2);border:1px solid var(--line2);border-radius:var(--r-lg);display:flex;flex-direction:column;gap:4px}
+.motionbar[hidden]{display:none}
+.mrow,.ptools{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.motionbar select,.mbtn{min-height:36px;padding:0 12px;border-radius:999px;background:var(--tile-2);border:1px solid var(--line);color:var(--ink);font-size:13px;font-weight:600}
+.motionbar select{flex:1 1 120px;min-width:0}
+#motionSpeed{flex:0 0 auto}
+.mbtn.primary{background:var(--green);color:var(--on-green);border-color:transparent;min-width:72px}
+.mbtn[aria-pressed=true]{background:var(--red);color:#2a0007}
+.mtog{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--mute)}
+#motionTime{width:100%;accent-color:var(--green)}
+.mstat{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--mute);min-height:16px}
+.mwarn{color:var(--red);font-weight:700;text-align:right}
+.jointlabel{position:fixed;z-index:19;transform:translateX(-50%);pointer-events:none;padding:4px 10px;border-radius:999px;background:rgba(6,17,10,.82);border:1px solid var(--line2);font:600 12px ui-monospace,monospace;color:var(--ink);white-space:nowrap}
+.jointlabel[hidden]{display:none}
+.jointlabel.bad{border-color:var(--red)}
+.jointlabel b.bad{color:var(--red);margin-left:8px}
+#posebar .ptools{margin:4px 0 8px}
+#posebar .chips{margin-bottom:6px}
+body.posing #viewport canvas{cursor:grab}
 #previewStatus{position:fixed;z-index:21;top:calc(var(--sat) + 108px);left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;max-width:calc(100vw - 28px);padding:6px 8px 6px 14px;min-height:44px;background:var(--glass-2);border:1px solid var(--line2);border-radius:999px;font-size:13px;color:var(--amber)}
 #previewStatus[hidden]{display:none}
 #previewStatus button{min-height:36px;padding:0 14px;border-radius:999px;background:var(--amber);color:#1c1300;font-weight:700;flex:none}
@@ -306,6 +327,7 @@ body.busy .skhide{display:none}
   .viewhud{left:auto;right:calc(var(--sheet-w) + 36px);top:72px;flex-direction:column;align-items:stretch}
   .chip{min-height:40px}
   #previewStatus{left:calc((100% - var(--sheet-w))/2 + 40px);top:76px}
+  .motionbar{left:calc((100% - var(--sheet-w))/2 + 40px);top:auto;bottom:96px;width:min(600px,calc(100vw - var(--sheet-w) - 190px))}
   #dock{left:18px;top:50%;bottom:auto;width:72px;height:auto;transform:translateY(-50%);grid-template-columns:none;grid-auto-rows:64px;padding:6px;border-radius:40px}
   .dock-glow{left:6px;right:6px;top:6px;bottom:auto;width:auto;height:64px;border-radius:32px;transform:translateY(calc(var(--i,0)*100%))}
   .dock-btn{border-radius:30px}
@@ -325,6 +347,7 @@ body.busy .skhide{display:none}
   .dial{--d:216px}
   #tiersCard:has(#tierDial:not([hidden])) :is(.lede,.switch-row){display:none}
   #robotName{position:fixed;top:calc(var(--sat) + 108px);left:50%;transform:translateX(-50%);max-width:70vw;pointer-events:none}
+  .motionbar{top:calc(var(--sat) + 146px)}
 }
 @media (max-width:899px) and (max-height:700px){.dial{--d:200px}}
 @media (max-width:359px){#mode{display:none}.dock-btn{font-size:10px}.capsule .primary{min-width:92px;padding:0 14px}}

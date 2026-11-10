@@ -52,6 +52,9 @@ Types: [`engine/v1/engine.d.ts`](https://megazron.github.io/text-to-robot/engine
 | `searchParts(query, limit)` | Catalog parts matching a model, a name or a category word, for a parts picker. Added in 1.1. |
 | `fromParts(inventory, { design, limit, budget, prompt })` | Build from my parts. `inventory` is text, `[{ key, qty }]`, `{ key: qty }` or a parsed inventory. Returns `{ inventory, options, designs, cannot?, notes }`: up to `limit` (3) options best first, each with `uses` and `buys` per part, a `headline` ("uses 6/7 of your parts, needs +$20 (1x 2S 18650 pack, ...)"), the `honesty` notes (what the user's own parts cannot do safely, with numbers, and the fix the option takes) and a `thumbnail`; `designs` holds the options asked for by `design` ("top" by default, "all", "none" or an option id): `{ robot, bom, failing, shopping, to_buy_usd }`, where every BOM line carries `have` and `buy`. With no option, `cannot` says why and what to add. Added in 1.1. |
 | `firmware(robot)` | The program of a robot built from a parts list: an Arduino sketch (AVR and ESP32 boards) or a Python script (Raspberry Pi), with the pins its harness assigned. Returns `{ name, language, code, fqbn, libraries }`. Added in 1.1. |
+| `motions(robot)` | The motions a robot has: its joint tour, its purpose demo and, for a wearable, human motion. See [Motions](#motions). |
+| `motion(robot, name, { fps, collision, to, files })` | A motion sampled at `fps` (30), with its limit, speed, torque and self-collision checks; `files: true` adds its CSV, ROS 2 JointTrajectory and BVH. |
+| `ik(robot, link, target, options)` | Inverse kinematics: joint values that bring a point on `link` to a world pose, and whether they reach it. |
 | `zip(files)` | A zip archive of a file map. |
 
 The module also exports the pure functions behind editing, for use on the page without a round trip to the worker: `applyEdits`, `toScene` and `fromScene` (the spec as a tree of parts and joints; an unedited spec round-trips exactly), `worldFrames`, `snapPart` and `mate` (placing a part on a matching mount or on a surface grid), and the transform helpers.
@@ -98,6 +101,61 @@ Catalog entries carry what a viewer needs to paint the regions of a part's one m
 - **Pin what you load.** `/engine/v1/` changes when I fix or extend it. To freeze a version, copy a build to your own site, or load it through an import map with an `integrity` entry for `engine.js` (and keep in mind the worker files it loads are not covered by that hash).
 - **What the engine can reach.** It runs in a worker in your page's origin: it sees only what you pass it, stores the Mark 43 cache in your origin's IndexedDB, and makes no network request except fetching its own files from `base`. It never reads this site's storage.
 - **Treat robots as data.** Names in a robot must be plain identifiers (letters, digits, `_`); a robot with other names is refused before any file is generated, so a hostile spec cannot write quotes, markup or `../` into a URDF, a Python script or a zip path. Text inside a robot (notes, design summaries) is still untrusted: show it with `textContent`, never `innerHTML`.
+
+## Motions
+
+`motions(robot)` lists what a robot can show, each as `{ name, title, description, kind, moves_base, default }`. I choose them from what the joints are for, not from the family name, so a robot nobody has designed before still gets the right ones:
+
+| A robot with | gets | named |
+|---|---|---|
+| any joints | a joint tour: each joint through its full limits, one after another, then all together | `tour` |
+| a tool point or a gripper on a chain of joints | pick and place: reach, close the gripper on a block, lift, carry, put it down | `pick_place` |
+| finger joints | open and close | `grip` |
+| two or more driven wheels | forward, reverse and a turn on the spot (and a strafe for mecanum wheels), wheels turning at the ground speed | `drive` |
+| three or more legs | a trot (four legs), a tripod gait (six) or a wave gait, feet planted while they carry the body | `gait` |
+| two legs | a slow step cycle, the body shifting over the planted foot | `step` |
+| shoulders and elbows | a wave | `wave` |
+| limbs the wearer moves and servo doors (a wearable suit) | suit-up, the doors on their own, and human motion: `idle`, `walk`, `look`, `wave`, `squat`, `punch`, `arms_up`, `hover` | `suit_up`, `doors`, ... |
+
+The one marked `default` is the robot's purpose demo; a robot with nothing else gets the tour.
+
+`motion(robot, name, options)` returns a trajectory: `t` (seconds), `q[frame][column]` for the joints in `joints` (every joint that is not fixed and not a mimic joint), `base` (the root's pose `[x, y, z, qx, qy, qz, qw]` per frame, with the floor at z = 0, when the whole robot moves), `focus` (the joint a tour is moving), `props` (the block a gripper carries, its table, the wearer of a suit), `segments` (labelled stretches), and the checks:
+
+- `limits`: position, speed and torque. Each move is timed from the actuator's rated speed (with headroom) and from its spare torque against the inertia it turns; `torque_ok` adds gravity and inertia against the actuator's peak for joints whose load hangs free.
+- `collisions`: every frame, every pair of parts that move relative to each other, on the parts' real solids as distance grids; `frames[k]` is true where something collides, `pairs` says what, when and how deep, `floor` lists parts below the floor. Overlap parts already have with every joint at zero (a shaft in its bearing) is not counted. A part whose mesh is not in the tab yet (the Mark 43 armour before it is forged) is listed in `skipped`. Pass `collision: false` to skip the check.
+- `clamped`: where a motion wanted a joint past its limit and was held at it (human motion on a suit: "beyond the suit's range of motion").
+- `measures`: for a gait the largest drift of a planted foot (`stance_drift_mm`), stride, cycle and speed; for a drive the gap between a wheel's roll and its hub's travel (`wheel_speed_error_mm`).
+
+`to: [dx, dy]` makes a gait walk that far (metres, robot frame) instead of its demo path. With `files: true` the answer also carries `files`: `<name>.csv` (`time_s` and one column per joint), `<name>_base.csv` (the root's path, when it moves), `<name>.yaml` (a ROS 2 `trajectory_msgs/JointTrajectory` of the motor-driven joints that move) and, for a body with shoulders, hips and knees, `<name>.bvh` (z up, x forward, centimetres).
+
+The ROS 2 package (`ros2(robot)`) carries the default motion and the tour in `motions/`, with `scripts/replay_motion.py`: `ros2 launch <pkg> display.launch.py motion:=tour` replays one in RViz, and `--controller /joint_trajectory_controller` sends it to Gazebo or the robot. The training scaffold (`training(robot)`) carries them in `reference_motions/` with a small loader for imitation.
+
+Human motion is real motion capture: the Quaternius Universal Animation Library (CC0), turned into anatomical angles by `scripts/human_clips.py` and put onto whatever joints a robot has for each movement, clamped to their limits. A movement the robot has no joint for is named in `warnings`.
+
+```js
+const list = await engine.motions(robot);                       // [{ name: "pick_place", default: true, ... }, ...]
+const m = await engine.motion(robot, "pick_place", { files: true });
+m.collisions.colliding_frames;                                  // 0
+m.files["pick_place.yaml"];                                     // trajectory_msgs/JointTrajectory
+```
+
+## Inverse kinematics
+
+`ik(robot, link, target, options)` solves by damped least squares on the URDF chain to `link`, within the joint limits, from several starting poses. `target` is `{ xyz }` in metres (world, the root at the origin), with `rpy` or `quat` for an orientation; `options`:
+
+| Option | Default | |
+|---|---|---|
+| `point` | the robot's tool point when `link` carries it, else the link origin | the point on the link to bring to `xyz` (link frame) |
+| `seed` | the design's home pose | joint values to start from (and to stay near) |
+| `joints` | every motor-driven joint on the chain (and a wearable's limb joints) | the joints it may move |
+| `base` | at the origin | the root's pose `[x, y, z, qx, qy, qz, qw]` |
+| `orientation` | `false` | match `rpy` or `quat` too |
+| `restarts`, `iterations` | 8, 150 | more starting poses find more of the workspace |
+| `collision` | `false` | also check the pose for self-collision (`collisions`) |
+
+The answer is `{ values, reached, error_mm, error_deg, position, at_limit, collisions }`: `reached` is true within 0.5 mm and 0.5 degrees; when it is false, `values` is the closest pose found and `position` where the point ended up. `at_limit` names the joints the answer leaves at a limit.
+
+The website uses the same solver to drag a robot into a pose (Move in the 3D view): the tool tip, a hand or a foot follows the pointer, any other part turns the joint above it, a legged body leans with its feet planted and walks when dragged further than it can lean, and a wheeled robot drives towards where it is held.
 
 ## Versions
 

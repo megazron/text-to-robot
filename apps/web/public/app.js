@@ -5,6 +5,7 @@ import { forwardKinematics, findRoot, download, makeZipDeflated } from "./robotk
 import { Dial, Sheet, followKeyboard, haptic, popIn, transformFlash } from "./ui.js";
 import { h, safeHttpUrl, safeJsonParse, MAX_PROMPT_CHARS, MAX_ROBOT_BYTES } from "./safe.js";
 import { createElectronics } from "./electronics3d.js";
+import { createMotion } from "./motion.js";
 
 // Clickjacking guard: GitHub Pages cannot send frame-ancestors or X-Frame-Options, so a page that frames this site gets
 // a link to open it in its own tab instead of a working (and invisible-overlay-able) copy.
@@ -69,7 +70,8 @@ let dirty = true;
 function invalidate() { dirty = true; }
 controls.addEventListener("change", invalidate);
 new ResizeObserver(resize).observe(viewport); resize();
-(function loop() { requestAnimationFrame(loop); controls.update(); if (dirty) { dirty = false; renderer.render(scene, camera); } })();
+let motionUI = null;   // motion.js: playback, posing, recording
+(function loop() { requestAnimationFrame(loop); controls.update(); if (motionUI?.tick(performance.now())) dirty = true; if (dirty) { dirty = false; renderer.render(scene, camera); } })();
 
 // The sheet's top edge decides how much room the model gets: on phones the canvas scales from its
 // top edge to stay in the visible area, using transform alone so dragging stays smooth.
@@ -342,6 +344,7 @@ function markCircuitNet() {
   }
 }
 
+motionUI = createMotion({ scene, camera, controls, renderer, robotGroup, state, api, updateFK, invalidate, renderSliders, toast, el, $, highlight });
 
 function selectLink(name) {
   state.selection = { kind: "link", name };
@@ -417,7 +420,8 @@ function renderInspector() {
 function renderSliders() {
   const box = $("#sliders"); box.replaceChildren();
   if (!state.robot) return;
-  const actuated = state.robot.joints.filter((j) => j.type !== "fixed" && !j.passive);
+  // mimic joints follow their leader; a wearable's limbs are passive (the wearer moves them) but they are posed here too
+  const actuated = state.robot.joints.filter((j) => j.type !== "fixed" && !j.mimic && (!j.passive || /shoulder|elbow|hip|knee|neck/.test(j.name) && state.robot.metadata?.design?.doors));
   if (!actuated.length) { box.append(el("div", "hint", "This robot has no actuated joints.")); return; }
   for (const j of actuated) {
     const cont = j.type === "continuous";
@@ -587,6 +591,7 @@ function applyResult(res, label, diffLines) {
   revealNext = revealNext ?? "soft";
   document.body.classList.remove("busy");
   buildRobot(res.robot); renderTree(); renderSliders(); renderInspector(); renderHistory(); renderDiff(diffLines); renderBom(state.bom);
+  motionUI.robotChanged();
   renderCards(); refreshCircuit();
   status(checksToText(res));
 }
@@ -595,6 +600,7 @@ function loadVersion(i) {
   const v = state.versions[i]; if (!v) return;
   state.version = i; state.id = v.id; state.robot = v.robot; state.recipe = v.recipe ?? null; state.urdf = v.urdf; state.xacro = v.xacro; state.jointValues = { ...(v.robot?.metadata?.design?.home ?? {}) }; state.selection = null;
   buildRobot(v.robot); renderTree(); renderSliders(); renderInspector(); renderHistory(); renderCards(); refreshCircuit();
+  motionUI.robotChanged();
 }
 
 async function doGenerate(prompt) {
@@ -1112,4 +1118,4 @@ initExamples(); initTemplates(); initMode();
   }
   doGenerate("Create a 6 DOF robotic arm with a parallel gripper");
 })();
-window.__ttr = { get preview() { return { ...preview, parts: [...state.meshes].filter(([name]) => state.robot.links.find(l => l.name === name)?.geometry.type === 'mesh').map(([name, group]) => ({ name, loaded: !!group.children[0].userData.meshLoaded, triangles: group.children[0].geometry.getAttribute('position').count / 3 })) }; }, camera, controls, frameRobot, get robot(){return state.robot} };
+window.__ttr = { get motion() { return window.__ttrMotion; }, robotGroup, renderer, get preview() { return { ...preview, parts: [...state.meshes].filter(([name]) => state.robot.links.find(l => l.name === name)?.geometry.type === 'mesh').map(([name, group]) => ({ name, loaded: !!group.children[0].userData.meshLoaded, triangles: group.children[0].geometry.getAttribute('position').count / 3 })) }; }, camera, controls, frameRobot, get robot(){return state.robot} };

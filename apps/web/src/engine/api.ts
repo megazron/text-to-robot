@@ -16,6 +16,7 @@ import { applyEdits, emptyRobot, kindOf, rootLink, worldFrames, mul, inv, poseMa
 import { partMounts, printedMounts, printedProgram, worldMounts } from "./mounts.ts";
 import { clearanceAtHome, autoWireCached } from "./incremental.ts";
 import { stability, type Stability } from "./stability.ts";
+import { motionApi } from "./motion.ts";
 
 export const ENGINE_API_VERSION = "1.1.0";
 const MATERIAL: Record<string, string> = { actuator: "actuator", wheel: "rubber", battery: "battery", compute: "electronics", sensor: "electronics", motor_driver: "electronics", misc: "electronics", bearing: "metal", horn: "metal" };
@@ -309,6 +310,7 @@ export async function engineApi(method: string, path: string, body: any): Promis
   if (method === "POST" && p === "electronics3d") { try { return json(200, electronics3dOf(body.robot, body.options ?? {})); } catch (e) { return json(422, { error: (e as Error).message }); } }
   if (method === "POST" && p === "breadboard") { try { return json(200, breadboardOf(body.robot)); } catch (e) { return json(422, { error: (e as Error).message }); } }
   if (method === "POST" && p === "clearance") return json(200, { hits: clearanceOf(body.robot, String(body.link)) });
+  if (method === "POST" && (p.startsWith("motion") || p === "ik" || p === "body-ik" || p === "pose-collisions")) { const r = motionApi(p, body); if (r) return r; }
   if (method === "POST" && p === "sweep") return json(200, { samples: sweep(body.robot, String(body.joint), Number(body.samples ?? 24)) });
   if (method === "POST" && p === "urdf") { const spec = finalizeSpec(structuredClone(body.robot)); return json(200, { urdf: generateUrdf(spec), xacro: generateXacro(spec) }); }
   if (method === "POST" && p === "mesh") return new Response(toStlBinary(buildPart(body.geometry), 1) as BodyInit, { headers: { "Content-Type": "model/stl" } });

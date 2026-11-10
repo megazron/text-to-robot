@@ -100,6 +100,14 @@ SCRIPT = """async ([url, prompt]) => {
   const inv = await engine.parseInventory("I have an Arduino Uno, 2 TT gear motors, an L298N, an HC-SR04, 4 AA batteries and a servo SG90");
   const fp = await engine.fromParts(inv, { design: "none" });
   out.parts_mode = { items: inv.items.length, options: fp.options.map(o => o.id), headline: fp.options[0]?.headline ?? "", search: (await engine.searchParts("l298n"))[0]?.key };
+  // motions: the car's list, its drive with the collision check and files, and an IK solve on a 4 DOF arm
+  const ml = await engine.motions(d.robot);
+  const drive = await engine.motion(d.robot, ml.find(m => m.default).name, { files: true });
+  out.motions = { list: ml.map(m => m.name), def: ml.find(m => m.default).name, frames: drive.t.length, moves: !!drive.base, checked: !!drive.collisions?.checked, colliding: drive.collisions?.colliding_frames, files: Object.keys(drive.files || {}) };
+  const arm = await engine.design("a 4 DOF arm with a gripper"), tips = (await engine.motions(arm.robot)) && arm.robot.metadata.design.tcp;
+  const home = await engine.ik(arm.robot, tips.link, { xyz: [0, 0, 0] }, { iterations: 0, restarts: 0 }), p = home.position;
+  const reach = await engine.ik(arm.robot, tips.link, { xyz: [p[0] - 0.02, p[1] + 0.01, p[2] - 0.02] }), far = await engine.ik(arm.robot, tips.link, { xyz: [3, 0, 0] });
+  out.ik = { reached: reach.reached, error_mm: reach.error_mm, joints: Object.keys(reach.values).length, farReached: far.reached, farError: far.error_mm };
   engine.terminate();
   // a 1 MB kernel limit: the worker is replaced after every design, and a robot designed earlier still serves its meshes
   const small = await createEngine({ recycleMb: 1 });
@@ -149,6 +157,9 @@ if result["ros2"] < 10 or result["zip"] < 10000: fail.append("ros2 export")
 if not (result["handBuilt"]["links"] == 2 and result["handBuilt"]["spec"] and result["handBuilt"]["urdf"]): fail.append(f"hand built: {result['handBuilt']}")
 if result["partMesh"] < 10: fail.append("part mesh")
 if not (result["recycle"]["recycles"] >= 2 and result["recycle"]["meshTriangles"] > 10): fail.append(f"worker recycling: {result['recycle']}")
+mo = result["motions"]
+if mo["def"] != "drive" or "tour" not in mo["list"] or mo["frames"] < 100 or not mo["moves"] or not mo["checked"] or mo["colliding"] != 0 or not any(f.endswith(".csv") for f in mo["files"]): fail.append(f"motions: {mo}")
+if not result["ik"]["reached"] or result["ik"]["error_mm"] > 1 or result["ik"]["farReached"] or result["ik"]["farError"] < 1000: fail.append(f"ik: {result['ik']}")
 if errors: fail.append(f"page errors: {errors[:5]}")
 print(json.dumps(result, indent=1))
 if fail: sys.exit("FAIL: " + "; ".join(fail))

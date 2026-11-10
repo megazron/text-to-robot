@@ -73,6 +73,8 @@ export function armourShape(): ArmourShape {
 /** Where packs come from: "file" reads the shipped cache for the reference shape (Node), "forge" always forges (the website). */
 let source: "file" | "forge" = "file";
 export const setArmourSource = (s: "file" | "forge") => { source = s; };
+/** can armour meshes be built now without forging (the pack is loaded, or Node reads the shipped one) */
+export const armourAvailable = () => !!manifest || source === "file";
 /** a store for forged packs that outlives the page (the website gives IndexedDB) */
 export interface ArmourCache { get(key: string): Promise<{ manifest: ArmourManifest; bytes: Uint8Array } | undefined>; put(key: string, manifest: ArmourManifest, bytes: Uint8Array): Promise<void>; }
 let cache: ArmourCache | undefined;

@@ -22,7 +22,8 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
-    "./forge/pool": "./src/forge/pool.ts"
+    "./forge/pool": "./src/forge/pool.ts",
+    "./dmath": "./src/forge/dmath.ts"
   },
   "dependencies": {
     "earcut": "3.0.2",
