@@ -368,12 +368,15 @@ export function hoodAround(A: Assembly, H: Harness, o: { name: string; deck: str
   /** more cable holes through the deck, each at the free spot nearest its point (cables to parts under the deck on that side) */
   deckHoles?: { id: string; near: [number, number]; area?: { x0: number; x1: number; y0: number; y1: number } }[];
   /** no cable hole through the deck where nothing stands (what is under the deck there leaves no way through) */
-  noDeckHole?: boolean }) {
+  noDeckHole?: boolean;
+  /** extra room on some sides, past the parts (a strip for the deck's cable hole where the parts fill the hood) */
+  extend?: { "x-"?: number; "x+"?: number; "y-"?: number; "y+"?: number } }) {
   const pad = o.pad ?? 3.5, bs = o.parts.map((n) => worldBox(A, n));
   let x0 = Math.min(...bs.map((b) => b.lo[0])) - pad, x1 = Math.max(...bs.map((b) => b.hi[0])) + pad, y0 = Math.min(...bs.map((b) => b.lo[1])) - pad, y1 = Math.max(...bs.map((b) => b.hi[1])) + pad;
   const big = typeof o.rocker === "object" && o.rocker.key === BATTERY_SWITCH, rockerKey = typeof o.rocker === "object" ? o.rocker.key : undefined;
   // room for the switch body behind the end wall (a battery switch's body stands over the boards instead: see z1)
   if (o.rocker && !big) x1 += 30;
+  x0 -= o.extend?.["x-"] ?? 0; x1 += o.extend?.["x+"] ?? 0; y0 -= o.extend?.["y-"] ?? 0; y1 += o.extend?.["y+"] ?? 0;
   if (o.limit) { x0 = Math.max(x0, o.limit.x0); x1 = Math.min(x1, o.limit.x1); y0 = Math.max(y0, o.limit.y0); y1 = Math.min(y1, o.limit.y1); }
   // an upright rocker needs 34 mm of wall, a battery switch's 70 mm face 72
   // a battery switch's 60 mm body lies over the boards: its 70 mm face starts 2 mm above the tallest of them
