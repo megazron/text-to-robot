@@ -145,7 +145,11 @@ function buildHexapod(req: LeggedRequest, cfg: HexCfg, sensors: string[]) {
 /** Three compartments: a hood over the computer on the top deck, a hood over the boards on the plate, a tray under the plate for the battery. */
 function boxHex(A: Assembly, H: Harness, b: ReturnType<typeof buildHexapod>) {
   hoodAround(A, H, { name: "computer_hood", deck: "top_deck", parts: ["computer"], z0: b.zDeck + 3, z1: b.zRoof, usbFor: "computer" });
-  hoodAround(A, H, { name: "board_hood", deck: "base_link", parts: ["actuator_bus", "regulator_5v", "imu"], z0: b.zPlate, rocker: true, limit: { x0: -15, x1: 41, y0: -80, y1: 60 } });
+  // the coxa servos plug in under the plate (their sockets are under the case): each side's leg cables go down through a
+  // hole in the plate beside the battery tray, the USB lead to the computer leaves by a grommet in the hood's -y wall
+  const side = (s: number) => ({ id: s > 0 ? "legs_left" : "legs_right", near: [13, s * 45] as [number, number], area: { x0: -11, x1: 37, y0: s > 0 ? b.bw + 10 : -49, y1: s > 0 ? 49 : -b.bw - 10 } });
+  hoodAround(A, H, { name: "board_hood", deck: "base_link", parts: ["actuator_bus", "regulator_5v", "imu"], z0: b.zPlate, rocker: true, below: 10, limit: { x0: -15, x1: 41, y0: -80, y1: 60 }, deckHoles: [side(1), side(-1)], grommets: [{ id: "usb", face: "y-", u: -6 }] });
+  for (const c of ["computer~lidar", "camera~computer", "actuator_bus~computer"]) H.exitOf.set(c, "computer_hood.usb");
   const bb = b.battB, x0 = b.bx0 + bb.min[0] - 3, x1 = b.bx0 + bb.max[0] + 3, y = b.bw + 4.4;
   // the tray hangs from the plate: bounds in the frame turned about x, so z runs downwards
   hood(A, H, { name: "battery_tray", deck: "base_link", x0, x1, y0: -y, y1: y, z0: -(b.zPlate - 4), z1: -(b.zBatt - 3), parts: ["battery"], flip: true, ventRows: 0, deckGrommets: [{ id: "up", x: x1 - 8, y: 0 }] });
