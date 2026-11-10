@@ -69,6 +69,8 @@ class Build {
   servoJoints: string[] = [];
   motors: string[] = [];
   deckTop = 0;
+  /** the pack has room beside it (Item.room) for its fuse and star ground: they go there */
+  packRoom = false;
   /** printed rings standing in a compartment (round a lidar mast), world mm, for seating harness parts clear of them */
   keepOut: { x0: number; x1: number; y0: number; y1: number; z0: number; z1: number }[] = [];
   H: Harness;
@@ -207,13 +209,16 @@ function ballCaster(b: Build, tag: string, x: number, y: number, deckBottom: num
 }
 
 // --------------------------------------------------------------------------- electronics bay
-interface Item { key: string; name: string; use: string; yawOk?: boolean; kind: "board" | "battery"; margin?: [number, number, number, number] }
+interface Item { key: string; name: string; use: string; yawOk?: boolean; kind: "board" | "battery"; margin?: [number, number, number, number];
+  /** room kept beside the part for the harness parts that serve it (a pack's fuse and star ground): [-x, +x, -y, +y] beyond the margin */
+  room?: [number, number, number, number] }
 interface Rect { x0: number; x1: number; y0: number; y1: number }
 const overlaps = (a: Rect, c: Rect) => a.x0 < c.x1 && c.x0 < a.x1 && a.y0 < c.y1 && c.y0 < a.y1;
 
 /** Footprint (component frame, mm) of an item including plugs / leads / tool access: [-x, +x, -y, +y] margins. */
-function footprint(it: Item) {
+function footprint(it: Item, hard = false) {
   const bb = part(it.key).bbox_mm!;
+  if (it.room && !hard) { const f = footprint(it, true), r = it.room; return { min: [f.min[0] - r[0], f.min[1] - r[2]], max: [f.max[0] + r[1], f.max[1] + r[3]] }; }
   // a battery's leads and plug leave its +x end: room there for the plug and the first bend of a 12 AWG lead
   const m = it.margin ?? (it.kind === "battery" ? [5, 30, 5, 5] : [4, 4, 4, 4]);
   return { min: [bb.min[0] - m[0], bb.min[1] - m[2]], max: [bb.max[0] + m[1], bb.max[1] + m[3]] };
@@ -314,7 +319,7 @@ function electronicsBay(b: Build, items: Item[], area: Rect, reserved: Rect[], d
  * the lid screws, screw tabs to the deck, and a lid with vent slots. Reserved zones it overlaps (e.g. the lidar mast)
  * pass through openings. Too big for the bed -> two halves joined by a screwed internal lap plate.
  */
-function enclosure(b: Build, items: Item[], area: Rect, reserved: Rect[], deckTop: number, clearTop: number, parent = "base_link", bayName = "electronics_enclosure", fixtures = true, room: { growY?: number; maxR?: number; mast?: number } = {}) {
+function enclosure(b: Build, items: Item[], area: Rect, reserved: Rect[], deckTop: number, clearTop: number, parent = "base_link", bayName = "electronics_enclosure", fixtures: boolean | { usb?: boolean; sw?: boolean } = true, room: { growY?: number; maxR?: number; mast?: number } = {}) {
   const plan = packBay(items, area, reserved); if (!plan) return;
   let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
   for (const { it, yaw, x, y } of plan) {
@@ -368,7 +373,10 @@ function enclosure(b: Build, items: Item[], area: Rect, reserved: Rect[], deckTo
   walls.push({ op: "cutbox", min: [x0 - 1, (y0 + y1) / 2 - 18, deckTop - 1], max: [x0 + t + 1, (y0 + y1) / 2 + 18, deckTop + 12] });
   // edge trim and tie bar on the rear cable slot, main switch and USB window in the walls, grommets through the deck
   walls.push({ op: "box", min: [x0 + t, (y0 + y1) / 2 - 18, deckTop + 12], max: [x0 + t + 3, (y0 + y1) / 2 + 18, deckTop + 15] });
-  const fx = fixtures ? wallFixtures(b, plan, { x0, x1, y0, y1, z0: deckTop, z1: zTop, t }, boards, parent, bayName, reserved) : { cuts: [] as Op[], exits: [] as BayRecord["exits"], lidCuts: [] as Op[] };
+  // the switch may stand over a pack's harness room (its leads run into it), not over the parts themselves
+  const hard = plan.map(({ it, yaw, x, y }) => { const fp = footprint(it), fh = footprint(it, true), [ox, oy] = [fh.min[0] - fp.min[0], fh.min[1] - fp.min[1]], [dx, dy] = [fh.max[0] - fh.min[0], fh.max[1] - fh.min[1]], fx2 = fp.max[0] - fp.min[0];
+    return yaw ? { x0: x + (fp.max[1] - fh.max[1]), x1: x + (fp.max[1] - fh.max[1]) + dy, y0: y + ox, y1: y + ox + dx } : { x0: x + ox, x1: x + ox + dx, y0: y + oy, y1: y + oy + dy }; void fx2; });
+  const fx = fixtures ? wallFixtures(b, plan, { x0, x1, y0, y1, z0: deckTop, z1: zTop, t }, hard, parent, bayName, reserved, fixtures === true ? {} : fixtures) : { cuts: [] as Op[], exits: [] as BayRecord["exits"], lidCuts: [] as Op[] };
   walls.push(...fx.cuts);
   // vent slots stop short of the cut-outs: a thin strip between the two would not print
   const near = (v: { min: Vec3; max: Vec3 }) => fx.cuts.some((c) => { const q = c as { min: Vec3; max: Vec3 }; return [0, 1].every((k) => v.max[k] > q.min[k] - 4 && v.min[k] < q.max[k] + 4); });
@@ -431,11 +439,11 @@ function enclosure(b: Build, items: Item[], area: Rect, reserved: Rect[], deckTo
   return zTop;
 }
 /** USB window beside the computer and the main switch in a wall where nothing stands behind it. Coordinates are world mm. */
-function wallFixtures(b: Build, plan: Placement[], w: { x0: number; x1: number; y0: number; y1: number; z0: number; z1: number; t: number }, boards: Rect[], parent: string, bayName = "electronics_enclosure", reserved: Rect[] = []) {
+function wallFixtures(b: Build, plan: Placement[], w: { x0: number; x1: number; y0: number; y1: number; z0: number; z1: number; t: number }, boards: Rect[], parent: string, bayName = "electronics_enclosure", reserved: Rect[] = [], only: { usb?: boolean; sw?: boolean } = {}) {
   const cuts: Op[] = [], exits: BayRecord["exits"] = [], clearOf = (q: Rect) => ![...boards, ...reserved].some((bd) => bd.x1 > q.x0 && bd.x0 < q.x1 && bd.y1 > q.y0 && bd.y0 < q.y1);
   const zc = (w.z0 + w.z1) / 2;
   // USB: the wall nearest the computer
-  const pc = plan.find((p) => part(p.it.key).category === "compute");
+  const pc = only.usb === false ? undefined : plan.find((p) => part(p.it.key).category === "compute");
   if (pc) {
     const f = footprint(pc.it), dx = f.max[0] - f.min[0], dy = f.max[1] - f.min[1], [sx, sy] = pc.yaw ? [dy, dx] : [dx, dy], cx = pc.x + sx / 2, cy = pc.y + sy / 2;
     const opts: [number, Face][] = [[cx - w.x0, "x-"], [w.x1 - cx, "x+"], [cy - w.y0, "y-"], [w.y1 - cy, "y+"]];
@@ -445,8 +453,10 @@ function wallFixtures(b: Build, plan: Placement[], w: { x0: number; x1: number; 
     else cuts.push({ op: "cutbox", min: [cx - half, at[1] - w.t - 1, zl], max: [cx + half, at[1] + w.t + 1, zh] });
     exits.push({ id: `${bayName}.usb`, kind: "usb", face, at, normal: face === "x-" ? [-1, 0, 0] : face === "x+" ? [1, 0, 0] : face === "y-" ? [0, -1, 0] : [0, 1, 0], hole_mm: zh - zl });
   }
-  // main switch: first spot along the walls with 30 mm of nothing behind it
-  const spots: { p: Vec3; n: Vec3; face: Face; q: Rect }[] = [], deep = b.A.design.family === "mobile_diff_drive" ? 25 : 31, wide = b.A.design.family === "mobile_diff_drive" ? 12 : 18;
+  if (only.sw === false) return { cuts, exits, lidCuts: [] as Op[] };
+  // main switch: first spot along the walls with nothing behind it (the big rocker: its 25.5 mm body, the tabs' ferrules
+  // and the first bend of its 10 AWG leads; the small one stands high in its wall instead, see below)
+  const spots: { p: Vec3; n: Vec3; face: Face; q: Rect }[] = [], deep = b.A.design.family === "mobile_diff_drive" ? 25 : 50, wide = b.A.design.family === "mobile_diff_drive" ? 12 : 18;
   for (const f of [0.15, 0.85, 0.3, 0.7, 0.5, 0.1, 0.9, 0.2, 0.8, 0.25, 0.75, 0.35, 0.65, 0.4, 0.6, 0.45, 0.55]) {
     const x = w.x0 + (w.x1 - w.x0) * f, y = w.y0 + (w.y1 - w.y0) * f;
     spots.push({ p: [x, w.y1, zc], n: [0, 1, 0], face: "y+", q: { x0: x - wide, x1: x + wide, y0: w.y1 - deep, y1: w.y1 } }, { p: [x, w.y0, zc], n: [0, -1, 0], face: "y-", q: { x0: x - wide, x1: x + wide, y0: w.y0, y1: w.y0 + deep } },
@@ -497,6 +507,8 @@ function lidGrommets(b: Build, lowName: string, highName: string) {
 function twoDeckExits(b: Build) {
   const H = b.H, bays = baysOf(b.A), lo = bays.find((r) => r.name === "power_bay"), hi = bays.find((r) => r.name === "electronics_enclosure");
   if (!lo || !hi) return;
+  // the harness parts: the fuse and the star ground by the pack below, the rail splices by the switch and the regulator above
+  for (const [n, bay] of [["main_fuse", lo.name], ["star_ground", lo.name], ["splice_vbat", lo.name], ["splice_5v", hi.name]]) H.bayOf.set(n, bay);
   const pairs = lo.exits.filter((e) => e.face === "lid").map((e) => [hi.exits.find((u) => u.face === "floor" && Math.hypot(u.at[0] - e.at[0], u.at[1] - e.at[1]) < 1)?.id, e.id]).filter((p): p is [string, string] => !!p[0]);
   const floor = lo.exits.filter((e) => e.face === "floor");
   const yOf = (n: string) => { const T = fk(b.A.spec).link[n]; return T ? T.p[1] * 1000 : 0; };
@@ -608,7 +620,7 @@ function seatMainFuse(b: Build, battery: string) {
   const e: Vec3 = [T.R[0][0], T.R[1][0], 0], w = [0, 1, 2].map((i) => T.R[i][0] * bb.max[0] + T.R[i][1] * ((bb.min[1] + bb.max[1]) / 2) + T.R[i][2] * ((bb.min[2] + bb.max[2]) / 2) + T.p[i] * 1000) as Vec3;
   const sideA: Vec3 = [-e[1], e[0], 0], c = baysOf(b.A).find((r) => r.parts.includes(battery));
   const mid: Vec3 = c ? [0, 1, 2].map((i) => (c.min[i] + c.max[i]) / 2) as Vec3 : [0, 0, 0];
-  const toMid = (mid[0] - w[0]) * sideA[0] + (mid[1] - w[1]) * sideA[1] >= 0 ? 1 : -1;
+  const toMid = b.packRoom ? 1 : (mid[0] - w[0]) * sideA[0] + (mid[1] - w[1]) * sideA[1] >= 0 ? 1 : -1;
   // beside the pack: its half width, a bend diameter of the lead less the fuse's half width, so the lead's U has its radius
   const half = (bb.max[1] - bb.min[1]) / 2, off = half + 24 - (fb.max[1] - fb.min[1]) / 2 + 2, L = fb.max[0] - fb.min[0];
   const at: Vec3 = [w[0] - e[0] * L / 2 + sideA[0] * toMid * off, w[1] - e[1] * L / 2 + sideA[1] * toMid * off, w[2]];
@@ -995,7 +1007,11 @@ function designBase(kind: BaseKind, req: MobileRequest): RobotSpecification {
     const W = 2 * (yFace + 5);
     // the deck is as short as its electronics allow: a depth camera's Jetson and a big pack may need a longer one
     const parts = electronicsFor(sensors, kind === "diff" ? 2 : 4, battery, false, false);
-    const base = kind === "diff" ? 244 : 300, L = [base, base + 56, base + 112].find((l) => !!deckLayout(l, W, sensors, parts.items)) ?? base;
+    // one deck where a longer deck takes everything (two decks leave the fuse, the switch and the cables between them no
+    // room to turn); two decks only when no length does
+    const base = kind === "diff" ? 244 : 300, lengths = [base, base + 56, base + 112], { reserved: _r, area: _a } = deckRects(base, W, sensors);
+    void _r; void _a;
+    const L = lengths.find((l) => { const d = deckRects(l, W, sensors); return !!packBay(parts.items, d.area, pad(d.reserved)); }) ?? lengths.find((l) => !!deckLayout(l, W, sensors, parts.items)) ?? base;
     deck(b, L, W, zB, [], kind === "diff" ? 60 : 20);
     const stations: WheelOpts[] = kind === "diff"
       ? [1, -1].map((s) => ({ tag: s > 0 ? "left" : "right", parent: "base_link", x: 0, side: s as 1 | -1, yFace, motor, wheel }))
@@ -1016,8 +1032,10 @@ function designBase(kind: BaseKind, req: MobileRequest): RobotSpecification {
       // regulator on an upper deck on four printed pillars, the lidar on top of it
       const { ux0, ux1, uy, pillars, low, high, lowRes, uArea, uRes } = upperDeck(L, W, sensors, items);
       const lowTop = electronicsBay(b, low, area, pad(lowRes), top);
-      const lowLid = enclosure(b, low, area, pad(lowRes), top, lowTop, "base_link", "power_bay", false) ?? lowTop + 8;
-      const zU = Math.max(lowLid + 5, top + 50);
+      // the main switch is in the lower compartment's wall, by the pack and its fuse; the computer's USB in the upper one
+      const lowLid = enclosure(b, low, area, pad(lowRes), top, lowTop, "base_link", "power_bay", { usb: false }) ?? lowTop + 8;
+      // the cables between the decks turn in the gap over the lower lid: 20 mm of it
+      const zU = Math.max(lowLid + 2.6 + 20, top + 50);
       const upOps: Op[] = [{ op: "box", min: [ux0, -uy, zU], max: [ux1, uy, zU + 4], r: 12 }, ...pillars.map(([x, y]) => ({ op: "hole", a: [x, y, zU - 1], b: [x, y, zU + 5], d: 3.4 }) as Op)];
       if (fitsBed([ux1 - ux0, 2 * uy, 4])) b.printed("upper_deck", "base_link", upOps, "printed_dark");
       else b.fabricated("upper_deck", "base_link", upOps, { density: ALU, material: "aluminium", item: `${Math.round(ux1 - ux0)} x ${2 * uy} x 4 mm upper deck (aluminium, ~$25)`, usd: 25 });
@@ -1025,7 +1043,7 @@ function designBase(kind: BaseKind, req: MobileRequest): RobotSpecification {
       b.A.fastener("M3 x 10 (pillars)", 8);
       const upTop = zU + 4;
       const clear = electronicsBay(b, high, uArea, pad(uRes), upTop, "upper_deck");
-      const zT = enclosure(b, high, uArea, pad(uRes), upTop, clear, "upper_deck", "electronics_enclosure", true, { mast: sensors.includes("lidar") ? uRes.length - 1 : undefined }) ?? clear + 8;
+      const zT = enclosure(b, high, uArea, pad(uRes), upTop, clear, "upper_deck", "electronics_enclosure", { sw: false }, { mast: sensors.includes("lidar") ? uRes.length - 1 : undefined }) ?? clear + 8;
       if (sensors.includes("lidar")) { lidarMast(b, ux0 + 37, 0, upTop, zT - 8 + 10.4, "upper_deck"); b.H.bayOf.set("lidar", "electronics_enclosure"); }
       lidGrommets(b, "power_bay", "electronics_enclosure");
     }
