@@ -353,3 +353,9 @@ body.busy .skhide{display:none}
 /* security: classes that replace inline style attributes (the page CSP has no style-src unsafe-inline) */
 .mute{color:var(--mute)}.mute.small{font-size:11px}.sprite{position:absolute}
 .framed{padding:24px;font-size:16px}
+/* 3D electronics view: mode buttons, rail filter, hover card */
+.chipgroup { display: inline-flex; gap: 4px; }
+.chip.viewmode.active { background: rgba(57, 255, 136, 0.22); border-color: rgba(57, 255, 136, 0.7); }
+.wiretip { position: fixed; z-index: 30; pointer-events: none; max-width: 280px; padding: 8px 10px; border-radius: 10px; font: 12px/1.35 system-ui, sans-serif;
+  background: rgba(8, 18, 12, 0.92); color: #e8fff1; border: 1px solid rgba(57, 255, 136, 0.45); box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4); }
+.wiretip b { color: #7dffb0; }

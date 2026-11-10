@@ -37,7 +37,7 @@ BASE = "/text-to-robot"
 ARDUINO = [("arduino_18_car", "18_arduino_car", True), ("arduino_19_arm", "19_arduino_arm", False), ("arduino_15_wall_e", "15_wall_e", True), ("arduino_14_mark_43", "14_iron_man_mark_43", False)]
 ARDUINO_TEXT = [("arduino_readme_car", "an arduino car with four wheels")]
 DOWNLOADS = {"urdf": "robot.urdf", "json": "robot.json", "bom": None, "xacro": None, "cad": "robot.cad.zip", "ros2": "robot.ros2.zip", "train": "robot.training.zip",
-             "schematic": "schematic", "breadboard": "breadboard.svg"}
+             "schematic": "schematic", "breadboard": "breadboard.svg", "wiring3d": None}
 
 
 class Quiet(http.server.SimpleHTTPRequestHandler):
@@ -207,6 +207,19 @@ def run(browser, case):
                 if not shown: row["problems"].append(f"Circuit tab: no {view}: " + page.evaluate(f'document.querySelector(".circview[data-view={view}]").textContent')[:200])
             row["circuit_s"] = round(time.time() - t, 1)
             page.screenshot(path=str(args.out / f"{case['id']}.circuit.png"), timeout=240000)
+        if case["mode"] == "prompt":
+            # the electronics and harness in 3D: the engine's parts and wires for this robot, with the harness checks
+            t = time.time()
+            e3 = page.evaluate("""async()=>{const r=await fetch('/api/engine/electronics3d',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({robot:__ttr.robot,options:{checks:true}})});
+              if(!r.ok)return {error:(await r.json()).error};const d=await r.json();return {parts:d.parts.length,wires:d.wires.length,notes:d.notes,through:d.checks.through.length,bend:d.checks.bend.length,length:d.checks.length.length,samples:d.checks.checked.samples,skipped:d.checks.checked.skipped.length}}""")
+            row["electronics3d"] = {**e3, "seconds": round(time.time() - t, 1)}
+            if e3.get("error") or not e3.get("wires") or e3.get("notes"): row["problems"].append(f"electronics3d: {e3}")
+            if case["example"] in ("18_arduino_car", "08_humanoid"):
+                page.evaluate('document.querySelector(".tab[data-tab=circuit]")?.click()')
+                page.evaluate('document.querySelector(".viewmode[data-mode=electronics]").click()')
+                page.wait_for_function("document.querySelector('.viewmode[data-mode=electronics]').classList.contains('active') && !document.querySelector('#railFilter').hidden", timeout=ms)
+                page.screenshot(path=str(args.out / f"{case['id']}.electronics.png"), timeout=240000)
+                page.evaluate('document.querySelector(".viewmode[data-mode=robot]").click()')
         if not args.no_downloads:
             row["downloads"] = {}
             for kind, target in DOWNLOADS.items():

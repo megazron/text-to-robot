@@ -7,7 +7,7 @@ import { part } from "@ttr/parts";
 import { buildBom, bomToMarkdown, designRecord } from "@ttr/components";
 import { assemblyStl } from "./stl.ts";
 import { partFiles } from "@ttr/kernel/ready";
-import { circuitFiles, type WiringRecord } from "@ttr/design";
+import { circuitFiles, wiring3d, electronicsGlb, type WiringRecord } from "@ttr/design";
 
 const PRINT_CM3_PER_HOUR = 12;
 const isPrinted = (l: Link) => l.geometry.type === "mesh" && (l.geometry.part === "printed" || l.geometry.part === "cad" || l.geometry.part === "armour");
@@ -47,6 +47,8 @@ export function generateBuildPackage(spec: RobotSpecification): Record<string, s
   files["cad/BOM.md"] = bomToMarkdown(buildBom(spec));
   const wiring = (d as { wiring?: WiringRecord }).wiring;
   if (wiring) for (const [f, c] of Object.entries(circuitFiles(wiring, spec.robot_name))) files[`cad/${f}`] = c;
+  // the electronics and every wire in 3D at the home pose, a body per part and per wire (glTF binary)
+  if (wiring) files["cad/electronics.glb"] = electronicsGlb(spec, wiring3d(spec, wiring));
   files[`cad/${name}_assembly.stl`] = assemblyStl(spec);
   files["cad/ASSEMBLY.md"] = assemblyGuide(spec);
   files["cad/design.json"] = JSON.stringify(d, null, 2);
@@ -55,7 +57,7 @@ export function generateBuildPackage(spec: RobotSpecification): Record<string, s
     "1. **Buy** everything in `BOM.md` (supplier links included).\n" +
     "2. **Print** every STL in `print/` (see `print/PRINT_LIST.md`).\n" +
     "3. **Assemble** in the order of `ASSEMBLY.md`.\n" +
-    (wiring ? "   **Wire** from `WIRING.md` (pin-to-pin table, cut list, power budget, battery runtime, regulator heat, logic levels), `schematic.svg` / `schematic.pdf` and the picture view `breadboard.svg`.\n" : "") +
+    (wiring ? "   **Wire** from `WIRING.md` (pin-to-pin table, cut list, power budget, battery runtime, regulator heat, logic levels), `schematic.svg` / `schematic.pdf` the picture view `breadboard.svg` and the harness in 3D `electronics.glb`.\n" : "") +
     "4. **Check** against `design.json`: each actuator's required vs rated torque, the speed it reaches loaded, battery runtime, stability and every other check the design passed.\n\n" +
     "`reference/` holds the bought parts' models (from their datasheet drawings) for your own CAD; `" + name + "_assembly.stl` is the whole robot in its build pose.\n\n" +
     "## Assumptions\n\n" + d.assumptions.map((a) => `- ${a}`).join("\n") + "\n";

@@ -8,9 +8,9 @@ import { readdirSync, readFileSync, writeFileSync, mkdtempSync, rmSync, existsSy
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { execFileSync } from "node:child_process";
-import { circuitFiles, layoutProblems, schematic, breadboard } from "@ttr/design";
+import { circuitFiles, layoutProblems, schematic, breadboard, wiring3d, electronicsGlb } from "@ttr/design";
 
-const WIRE_LINE = "   **Wire** from `WIRING.md` (pin-to-pin table, cut list, power budget, battery runtime, regulator heat, logic levels), `schematic.svg` / `schematic.pdf` and the picture view `breadboard.svg`.";
+const WIRE_LINE = "   **Wire** from `WIRING.md` (pin-to-pin table, cut list, power budget, battery runtime, regulator heat, logic levels), `schematic.svg` / `schematic.pdf` the picture view `breadboard.svg` and the harness in 3D `electronics.glb`.";
 const ROWS = ["| `WIRING.md`, `wiring.svg` | power budget per rail, battery runtime, regulator heat, logic levels, pin-to-pin table, cut list, slack at each joint, cable diagram |",
   "| `schematic.svg`, `schematic.pdf`, `breadboard.svg` | schematic with reference designators, power symbols and net labels; picture view with every wire in its colour |"];
 // replace or add entries of a deterministic zip (sorted entries, fixed timestamps), keeping every other entry's bytes
@@ -39,6 +39,7 @@ for (const name of readdirSync("examples").filter((n) => /^\d\d_/.test(n)).sort(
     const stage = mkdtempSync(join(tmpdir(), "ttr-cad-"));
     try {
       for (const [f, c] of Object.entries(files)) { mkdirSync(join(stage, "cad"), { recursive: true }); writeFileSync(join(stage, "cad", f), c); }
+      writeFileSync(join(stage, "cad", "electronics.glb"), electronicsGlb(spec, wiring3d(spec, w)));   // in the package only, not the folder
       const readme = execFileSync("python3", ["-c", "import sys,zipfile;print(zipfile.ZipFile(sys.argv[1]).read('cad/README.md').decode(),end='')", zip], { encoding: "utf8" });
       writeFileSync(join(stage, "cad/README.md"), readme.replace(/^ {3}\*\*Wire\*\* from .*$/m, WIRE_LINE));
       execFileSync("python3", ["-c", PATCH, zip, stage]);

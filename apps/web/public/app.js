@@ -4,6 +4,7 @@ import { STLLoader } from "three/addons/loaders/STLLoader.js";
 import { forwardKinematics, findRoot, download, makeZipDeflated } from "./robotkit.js";
 import { Dial, Sheet, followKeyboard, haptic, popIn, transformFlash } from "./ui.js";
 import { h, safeHttpUrl, safeJsonParse, MAX_PROMPT_CHARS, MAX_ROBOT_BYTES } from "./safe.js";
+import { createElectronics } from "./electronics3d.js";
 
 // Clickjacking guard: GitHub Pages cannot send frame-ancestors or X-Frame-Options, so a page that frames this site gets
 // a link to open it in its own tab instead of a working (and invisible-overlay-able) copy.
@@ -184,6 +185,7 @@ function buildRobot(spec) {
   updateFK();
   frameRobot();
   showPreviewStatus();
+  resetElectronics();
   Promise.all(pending).then(() => {
     if (revision !== previewRevision) return;
     frameRobot();
@@ -208,7 +210,7 @@ function updateFK() {
   for (const [name, group] of state.meshes) {
     const m = world.get(name); if (m) { group.matrix.copy(mat4(m)); group.matrixWorldNeedsUpdate = true; }
   }
-  drawHelpers(world); invalidate();
+  drawHelpers(world); electronics?.update(); invalidate();
 }
 
 function drawHelpers(world) {
@@ -257,9 +259,89 @@ renderer.domElement.addEventListener("pointerup", (e) => {
   const r = renderer.domElement.getBoundingClientRect();
   mouse.x = ((e.clientX - r.left) / r.width) * 2 - 1; mouse.y = -((e.clientY - r.top) / r.height) * 2 + 1;
   raycaster.setFromCamera(mouse, camera);
-  const hits = raycaster.intersectObjects(robotGroup.children, true).filter((h) => h.object.userData.linkName);
+  const ex = electronics?.pick(raycaster);
+  if (ex?.wire) { focusNet(focusedNet === ex.wire.net ? null : ex.wire.net); return; }
+  const hits = raycaster.intersectObjects(robotGroup.children, true).filter((h) => h.object.userData.linkName && h.object.visible);
   if (hits.length) selectLink(hits[0].object.userData.linkName);
 });
+
+// ---------------- electronics and harness in 3D ----------------
+// the engine's electronics3d answer for this robot, drawn on the robot's links; Robot keeps it hidden
+let electronics = null, electronicsFor = null, viewMode = "robot", focusedNet = null;
+async function setViewMode(m) {
+  viewMode = m;
+  for (const b of document.querySelectorAll(".viewmode")) { const on = b.dataset.mode === m; b.classList.toggle("active", on); b.setAttribute("aria-pressed", String(on)); }
+  if (m !== "robot" && state.robot && electronicsFor !== state.robot) {
+    const robot = state.robot;
+    try {
+      const data = await api("/api/engine/electronics3d", { robot });
+      if (robot !== state.robot) return;
+      electronics?.dispose(); electronics = createElectronics(THREE, { root: robotGroup, links: state.meshes, data, robotMeshes: () => state.meshes }); electronicsFor = robot;
+      const sel = $("#railFilter"); sel.replaceChildren(el("option", "", "All wires")); sel.options[0].value = "all";
+      for (const r of data.rails) { const o = el("option", "", `${r.name} ${+r.voltage_v.toFixed(2)} V`); o.value = r.name; sel.append(o); }
+      for (const [v, t] of [["signal", "Signals and buses"], ["ground", "Ground"]]) { const o = el("option", "", t); o.value = v; sel.append(o); }
+    } catch (e) { toast(`Electronics view: ${e.message}`, "err"); return; }
+  }
+  $("#railFilter").hidden = m === "robot" || !electronics;
+  electronics?.setMode(m); electronics?.update(true);
+  // the first time the electronics show for this robot, the camera moves in on them
+  if (m !== "robot" && electronics && !electronics.framed) { electronics.framed = true; frameOn(electronics.bounds()); }
+  invalidate();
+}
+function frameOn(box) {
+  if (box.isEmpty()) return;
+  robotGroup.updateMatrixWorld(true);
+  const b = box.clone().applyMatrix4(robotGroup.matrixWorld), c = b.getCenter(new THREE.Vector3()), r = Math.max(0.05, b.getSize(new THREE.Vector3()).length() / 2);
+  const dir = camera.position.clone().sub(controls.target).normalize(), d = r / Math.sin((camera.fov * Math.PI) / 360) * 1.05;
+  controls.target.copy(c); camera.position.copy(c).addScaledVector(dir, d); controls.update(); invalidate();
+}
+for (const b of document.querySelectorAll(".viewmode")) b.addEventListener("click", () => setViewMode(b.dataset.mode));
+$("#railFilter").addEventListener("change", (e) => { electronics?.setFilter(e.target.value); invalidate(); });
+/** a new robot: the electronics view is rebuilt when it is next shown */
+function resetElectronics() { electronics?.dispose(); electronics = null; electronicsFor = null; focusedNet = null; if (viewMode !== "robot") setViewMode(viewMode); }
+// hover: what the wire or pin under the pointer carries
+renderer.domElement.addEventListener("pointermove", (e) => {
+  const tip = $("#wireTip");
+  if (!electronics || viewMode === "robot" || e.buttons) { tip.hidden = true; return; }
+  const r = renderer.domElement.getBoundingClientRect();
+  mouse.x = ((e.clientX - r.left) / r.width) * 2 - 1; mouse.y = -((e.clientY - r.top) / r.height) * 2 + 1;
+  raycaster.setFromCamera(mouse, camera);
+  const hit = electronics.pick(raycaster);
+  if (!hit || hit.type === "part") { tip.hidden = !hit; if (hit) { tip.replaceChildren(el("b", "", hit.inst), document.createTextNode(` ${hit.key}`)); tip.style.left = `${e.clientX + 14}px`; tip.style.top = `${e.clientY + 14}px`; } return; }
+  const w = hit.wire, pin = hit.type === "pin" ? hit.pin : null;
+  tip.replaceChildren(el("b", "", w.net), el("div", "", pin ? `pin ${pin}` : `${w.from} to ${w.to}`),
+    el("div", "", `${w.typical_a} A typical, ${w.peak_a} A peak${w.awg ? `, ${w.awg} AWG` : ""}, ${w.color}`), el("div", "", `${w.id}, cut ${w.cut_mm} mm`));
+  tip.style.left = `${e.clientX + 14}px`; tip.style.top = `${e.clientY + 14}px`; tip.hidden = false;
+});
+renderer.domElement.addEventListener("pointerleave", () => { $("#wireTip").hidden = true; });
+/** one net lit end to end in 3D, and in the schematic and breadboard view when they are open */
+function focusNet(net) {
+  focusedNet = net; electronics?.highlight(net); markCircuitNet(); invalidate();
+}
+function markCircuitNet() {
+  // the drawings are images (the page's policy allows no markup from strings): the focused net is lit by redrawing the
+  // image from the engine's SVG with the stroke of that net's wires, pins and conductors recoloured
+  const ws = focusedNet && electronics ? electronics.data.wires.filter((w) => w.net === focusedNet) : [];
+  const ids = new Set(ws.flatMap((w) => [w.id, w.id.replace(/[ab]$/, "")])), terms = new Set(ws.flatMap((w) => [w.from, w.to]));
+  for (const box of document.querySelectorAll(".circview")) {
+    const img = box.querySelector("img.circimg"); if (!img || !box._svg) continue;
+    let svg = box._svg;
+    if (ws.length) {
+      const attr = (tag, name) => new RegExp(`\\s${name}="([^"]*)"`).exec(tag)?.[1];
+      const nodes = new Set(); for (const m of svg.matchAll(/<[a-z]+\b[^>]*\sdata-pin="[^"]*"[^>]*>/g)) if (terms.has(attr(m[0], "data-pin")) && attr(m[0], "data-node")) nodes.add(attr(m[0], "data-node"));
+      svg = svg.replace(/<(path|line|polyline)\b[^>]*>/g, (tag) => {
+        const lit = ids.has(attr(tag, "data-wire")) || terms.has(attr(tag, "data-pin")) || (attr(tag, "data-node") && nodes.has(attr(tag, "data-node")) && !attr(tag, "data-wire"));
+        if (!lit) return tag;
+        const t = tag.replace(/\sstroke="[^"]*"/, "").replace(/\sstroke-width="[^"]*"/, "");
+        return t.replace(/^<(\w+)/, '<$1 stroke="#ff2d95" stroke-width="5"');
+      });
+    }
+    if (box._lit === (ws.length ? focusedNet : null)) continue;
+    box._lit = ws.length ? focusedNet : null;
+    const old = img.src; img.src = svgUrl(svg); if (old.startsWith("blob:") && old !== box.querySelector("a.tonal")?.href) URL.revokeObjectURL(old);
+  }
+}
+
 
 function selectLink(name) {
   state.selection = { kind: "link", name };
@@ -664,6 +746,7 @@ async function handleDownload(kind) {
   if (kind === "bom") { const bom = state.bom ?? (await api("/api/robots/bom", { robot: state.robot })).bom; return download(`${name}_BOM.md`, bomMarkdown(bom), "text/markdown"); }
   if (kind === "cad") { const { files } = await api("/api/robots/cad", { robot: state.robot }); return download(`${name}_cad.zip`, await makeZipDeflated(files)); }
   if (kind === "schematic") { const r = await circuits("schematic"); return download(`${name}_schematic.zip`, await makeZipDeflated({ [`${name}_schematic.pdf`]: Uint8Array.from(atob(r.pdf.b64), (c) => c.charCodeAt(0)), [`${name}_schematic.svg`]: r.svg })); }
+  if (kind === "wiring3d") { const res = await fetch(API + "/api/engine/electronics-glb", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ robot: state.robot }) }); if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? `HTTP ${res.status}`); return download(`${name}_electronics.glb`, new Blob([await res.arrayBuffer()], { type: "model/gltf-binary" })); }
   if (kind === "breadboard") { const r = await circuits("breadboard"); return download(`${name}_breadboard.svg`, r.svg, "image/svg+xml"); }
   if (kind === "train") { const { files } = await api("/api/robots/training", { robot: state.robot }); return download(`${name}_training.zip`, await makeZipDeflated(files)); }
   if (kind === "share") {
@@ -708,11 +791,12 @@ async function showCircuit(which) {
     const url = svgUrl(r.svg), img = el("img", "circimg");
     img.src = url; img.alt = `${robot.robot_name} ${which}`;
     img.onclick = () => box.classList.toggle("zoom");
+    box._svg = r.svg;
     const bar = el("div", "circbar");
     const open = el("a", "tonal", "Open full size"); open.href = url; open.target = "_blank"; open.rel = "noopener";
     bar.append(open, el("span", "hint", which === "schematic" ? `Tap to zoom. ${r.size} sheet, ${r.netlist.parts.length} parts, ${r.netlist.nodes.length} nets.` : "Tap to zoom."));
     box.replaceChildren(bar, el("div", "circscroll"));
-    box.lastChild.append(img);
+    box.lastChild.append(img); box._lit = null; markCircuitNet();
     if (which === "schematic") renderElectrical(r.electrical);
   } catch (e) { box.replaceChildren(el("div", "hint", "✗ " + e.message)); }
 }

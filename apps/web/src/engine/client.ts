@@ -35,6 +35,23 @@ export type Files = Record<string, string | Uint8Array>;
 export interface SchematicNode { name: string; nets: string[]; kind: string; voltage_v?: number; drawn: string; pins: { id: string; ref: string; num: string; members: string[] }[]; }
 export interface Schematic { svg: string; pdf: Uint8Array; size: string; netlist: { robot: string; parts: { ref: string; inst: string; key: string; value: string }[]; nodes: SchematicNode[]; empty_nets: string[]; splices: string[] }; layout: string[]; electrical: { runtime: unknown[]; supplies: unknown[]; regulators: unknown[]; logic: { net: string; from: string; to: string; voh: number | null; vih: number | null; max_in: number | null; verdict: string; advice: string }[]; unchecked: string[]; sources: unknown[] }; }
 export interface Breadboard { svg: string; layout: string[]; unrouted: string[]; }
+type V3 = [number, number, number];
+/** A part's 3D model in its own frame (mm): meshes per material, silkscreen labels, and each pin's place and lead direction (`port.pin`). */
+export interface ElectronicsModel { meshes: { mat: string; v: number[]; f: number[] }[]; labels: { text: string; at: V3; w: number; h: number; normal: V3; up: V3; color: string }[]; pins: Record<string, { at: V3; out: V3; kind: string }>; source: string; detailed: boolean; /** stands in for the part's catalog body (false: a motor keeps its datasheet CAD) */ replaces: boolean; }
+/** One wire: its centreline as points in the frames of the links it rides (mm), so it follows the joints. */
+export interface Wire3D { id: string; cable: string; net: string; kind: string; color: string; awg: number | null; od_mm: number; from: string; to: string; typical_a: number; peak_a: number; cut_mm: number; pts: { link: string; p: V3 }[]; ends: [string, string]; min_bend_mm: number; flex_bend_mm: number; }
+export interface HarnessCheck { through: { wire: string; link: string; at: V3; run_mm: number }[]; bend: { wire: string; radius_mm: number; min_mm: number }[]; length: { wire: string; drawn_mm: number; allowance_mm: number; cut_mm: number }[]; checked: { wires: number; samples: number; solids: number; skipped: string[] }; }
+export interface Electronics3D {
+  robot: string; rails: { name: string; voltage_v: number }[];
+  /** per catalog key */
+  models: Record<string, ElectronicsModel>;
+  /** each part: its catalog key, the link it rides and its frame in that link (row-major 4x4, mm); harness parts (splices, inline fuses) included */
+  parts: { inst: string; key: string; link: string; T: number[]; harness: boolean }[];
+  wires: Wire3D[];
+  /** link -> the rigid body it moves with */
+  groups: Record<string, string>;
+  notes: string[]; checks?: HarnessCheck;
+}
 export interface ForgeProgress { stage: string; [k: string]: unknown; }
 
 export interface Engine {
@@ -81,6 +98,14 @@ export interface Engine {
   schematic(robot: RobotSpecification): Promise<Schematic>;
   /** Picture wiring diagram: every wire of the harness in its colour, pin to pin, on drawings of the parts. */
   breadboard(robot: RobotSpecification): Promise<Breadboard>;
+  /**
+   * The electronics and harness in 3D: part models with their pins, where each part sits, and every wire's centreline on
+   * the links it rides (pose them with your link matrices and the harness follows the joints). With `checks: true`,
+   * also the harness checks at the home pose (wires through solids, bend radius, cut length).
+   */
+  electronics3d(robot: RobotSpecification, options?: { checks?: boolean }): Promise<Electronics3D>;
+  /** The electronics and harness at the home pose as one binary glTF (metres, Y up): a node per part and per wire. */
+  electronicsGlb(robot: RobotSpecification): Promise<ArrayBuffer>;
   /** A zip archive of export files. */
   zip(files: Files): Blob;
   /** How many times the engine's worker was replaced (its CAD kernel memory was full, or it aborted). */
@@ -182,6 +207,8 @@ export async function createEngine(opts: { base?: string | URL; onProgress?: (p:
     templates: async () => (await json<{ templates: never }>("GET", "/api/templates")).templates,
     schematic: async (robot) => { const r = await json<Omit<Schematic, "pdf"> & { pdf: { b64: string } }>("POST", "/api/engine/schematic", { robot }); return { ...r, pdf: Uint8Array.from(atob(r.pdf.b64), (c) => c.charCodeAt(0)) }; },
     breadboard: (robot) => json("POST", "/api/engine/breadboard", { robot }),
+    electronicsGlb: (robot) => bytes("POST", "/api/engine/electronics-glb", { robot }),
+    electronics3d: (robot, options) => json("POST", "/api/engine/electronics3d", { robot, options: options ?? {} }),
     zip: (f) => makeZip(f) as Blob,
     get recycles() { return recycles; },
     terminate: () => worker.terminate(),

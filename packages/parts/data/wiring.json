@@ -8,7 +8,8 @@
    "chassis_free_air_a": 0.86,
    "od_mm": 0.9,
    "usd_per_m": 0.25,
-   "min_bend_radius_x_od": 10
+   "min_bend_radius_x_od": 10,
+   "static_bend_radius_x_od": 3
   },
   {
    "awg": 28,
@@ -18,7 +19,8 @@
    "chassis_free_air_a": 1.4,
    "od_mm": 1.0,
    "usd_per_m": 0.28,
-   "min_bend_radius_x_od": 10
+   "min_bend_radius_x_od": 10,
+   "static_bend_radius_x_od": 3
   },
   {
    "awg": 26,
@@ -28,7 +30,8 @@
    "chassis_free_air_a": 2.2,
    "od_mm": 1.5,
    "usd_per_m": 0.3,
-   "min_bend_radius_x_od": 10
+   "min_bend_radius_x_od": 10,
+   "static_bend_radius_x_od": 3
   },
   {
    "awg": 24,
@@ -38,7 +41,8 @@
    "chassis_free_air_a": 3.5,
    "od_mm": 1.6,
    "usd_per_m": 0.35,
-   "min_bend_radius_x_od": 10
+   "min_bend_radius_x_od": 10,
+   "static_bend_radius_x_od": 3
   },
   {
    "awg": 22,
@@ -48,7 +52,8 @@
    "chassis_free_air_a": 7,
    "od_mm": 1.7,
    "usd_per_m": 0.4,
-   "min_bend_radius_x_od": 10
+   "min_bend_radius_x_od": 10,
+   "static_bend_radius_x_od": 3
   },
   {
    "awg": 20,
@@ -58,7 +63,8 @@
    "chassis_free_air_a": 11,
    "od_mm": 1.8,
    "usd_per_m": 0.5,
-   "min_bend_radius_x_od": 10
+   "min_bend_radius_x_od": 10,
+   "static_bend_radius_x_od": 3
   },
   {
    "awg": 18,
@@ -68,7 +74,8 @@
    "chassis_free_air_a": 16,
    "od_mm": 2.3,
    "usd_per_m": 0.7,
-   "min_bend_radius_x_od": 10
+   "min_bend_radius_x_od": 10,
+   "static_bend_radius_x_od": 3
   },
   {
    "awg": 16,
@@ -78,7 +85,8 @@
    "chassis_free_air_a": 22,
    "od_mm": 3.0,
    "usd_per_m": 1.0,
-   "min_bend_radius_x_od": 10
+   "min_bend_radius_x_od": 10,
+   "static_bend_radius_x_od": 3
   },
   {
    "awg": 14,
@@ -88,7 +96,8 @@
    "chassis_free_air_a": 32,
    "od_mm": 3.5,
    "usd_per_m": 1.5,
-   "min_bend_radius_x_od": 10
+   "min_bend_radius_x_od": 10,
+   "static_bend_radius_x_od": 3
   },
   {
    "awg": 12,
@@ -98,7 +107,8 @@
    "chassis_free_air_a": 41,
    "od_mm": 4.5,
    "usd_per_m": 2.2,
-   "min_bend_radius_x_od": 10
+   "min_bend_radius_x_od": 10,
+   "static_bend_radius_x_od": 3
   },
   {
    "awg": 10,
@@ -108,7 +118,8 @@
    "chassis_free_air_a": 55,
    "od_mm": 5.0,
    "usd_per_m": 3.2,
-   "min_bend_radius_x_od": 10
+   "min_bend_radius_x_od": 10,
+   "static_bend_radius_x_od": 3
   },
   {
    "awg": 8,
@@ -117,7 +128,8 @@
    "ampacity_a": 36.5,
    "od_mm": 6.8,
    "usd_per_m": 4.5,
-   "min_bend_radius_x_od": 10
+   "min_bend_radius_x_od": 10,
+   "static_bend_radius_x_od": 3
   },
   {
    "awg": 6,
@@ -126,7 +138,8 @@
    "ampacity_a": 50,
    "od_mm": 8.5,
    "usd_per_m": 7.0,
-   "min_bend_radius_x_od": 10
+   "min_bend_radius_x_od": 10,
+   "static_bend_radius_x_od": 3
   },
   {
    "awg": 4,
@@ -135,7 +148,8 @@
    "ampacity_a": 70,
    "od_mm": 10.5,
    "usd_per_m": 10.0,
-   "min_bend_radius_x_od": 10
+   "min_bend_radius_x_od": 10,
+   "static_bend_radius_x_od": 3
   }
  ],
  "connectors": {
@@ -364,6 +378,11 @@
      "v": 10,
      "src": "estimated",
      "note": "common guidance for repeated flexing, from memory, not seen in a fetched page"
+    },
+    "static_bend_radius_x_od": {
+     "v": 3,
+     "src": "estimated",
+     "note": "fixed installation, wire not flexed in use: the IET On-Site Guide gives 3 x overall diameter for PVC-insulated cables up to 10 mm, from memory, not seen in a fetched page; the 10 x figure applies where the wire flexes (across a joint)"
     }
    },
    {
@@ -405,6 +424,11 @@
      "v": 10,
      "src": "estimated",
      "note": "common guidance for repeated flexing, from memory, not seen in a fetched page"
+    },
+    "static_bend_radius_x_od": {
+     "v": 3,
+     "src": "estimated",
+     "note": "fixed installation, wire not flexed in use: the IET On-Site Guide gives 3 x overall diameter for PVC-insulated cables up to 10 mm, from memory, not seen in a fetched page; the 10 x figure applies where the wire flexes (across a joint)"
     }
    },
    {
@@ -446,6 +470,11 @@
      "v": 10,
      "src": "estimated",
      "note": "common guidance for repeated flexing, from memory, not seen in a fetched page"
+    },
+    "static_bend_radius_x_od": {
+     "v": 3,
+     "src": "estimated",
+     "note": "fixed installation, wire not flexed in use: the IET On-Site Guide gives 3 x overall diameter for PVC-insulated cables up to 10 mm, from memory, not seen in a fetched page; the 10 x figure applies where the wire flexes (across a joint)"
     }
    },
    {
@@ -487,6 +516,11 @@
      "v": 10,
      "src": "estimated",
      "note": "common guidance for repeated flexing, from memory, not seen in a fetched page"
+    },
+    "static_bend_radius_x_od": {
+     "v": 3,
+     "src": "estimated",
+     "note": "fixed installation, wire not flexed in use: the IET On-Site Guide gives 3 x overall diameter for PVC-insulated cables up to 10 mm, from memory, not seen in a fetched page; the 10 x figure applies where the wire flexes (across a joint)"
     }
    },
    {
@@ -528,6 +562,11 @@
      "v": 10,
      "src": "estimated",
      "note": "common guidance for repeated flexing, from memory, not seen in a fetched page"
+    },
+    "static_bend_radius_x_od": {
+     "v": 3,
+     "src": "estimated",
+     "note": "fixed installation, wire not flexed in use: the IET On-Site Guide gives 3 x overall diameter for PVC-insulated cables up to 10 mm, from memory, not seen in a fetched page; the 10 x figure applies where the wire flexes (across a joint)"
     }
    },
    {
@@ -569,6 +608,11 @@
      "v": 10,
      "src": "estimated",
      "note": "common guidance for repeated flexing, from memory, not seen in a fetched page"
+    },
+    "static_bend_radius_x_od": {
+     "v": 3,
+     "src": "estimated",
+     "note": "fixed installation, wire not flexed in use: the IET On-Site Guide gives 3 x overall diameter for PVC-insulated cables up to 10 mm, from memory, not seen in a fetched page; the 10 x figure applies where the wire flexes (across a joint)"
     }
    },
    {
@@ -610,6 +654,11 @@
      "v": 10,
      "src": "estimated",
      "note": "common guidance for repeated flexing, from memory, not seen in a fetched page"
+    },
+    "static_bend_radius_x_od": {
+     "v": 3,
+     "src": "estimated",
+     "note": "fixed installation, wire not flexed in use: the IET On-Site Guide gives 3 x overall diameter for PVC-insulated cables up to 10 mm, from memory, not seen in a fetched page; the 10 x figure applies where the wire flexes (across a joint)"
     }
    },
    {
@@ -651,6 +700,11 @@
      "v": 10,
      "src": "estimated",
      "note": "common guidance for repeated flexing, from memory, not seen in a fetched page"
+    },
+    "static_bend_radius_x_od": {
+     "v": 3,
+     "src": "estimated",
+     "note": "fixed installation, wire not flexed in use: the IET On-Site Guide gives 3 x overall diameter for PVC-insulated cables up to 10 mm, from memory, not seen in a fetched page; the 10 x figure applies where the wire flexes (across a joint)"
     }
    },
    {
@@ -692,6 +746,11 @@
      "v": 10,
      "src": "estimated",
      "note": "common guidance for repeated flexing, from memory, not seen in a fetched page"
+    },
+    "static_bend_radius_x_od": {
+     "v": 3,
+     "src": "estimated",
+     "note": "fixed installation, wire not flexed in use: the IET On-Site Guide gives 3 x overall diameter for PVC-insulated cables up to 10 mm, from memory, not seen in a fetched page; the 10 x figure applies where the wire flexes (across a joint)"
     }
    },
    {
@@ -733,6 +792,11 @@
      "v": 10,
      "src": "estimated",
      "note": "common guidance for repeated flexing, from memory, not seen in a fetched page"
+    },
+    "static_bend_radius_x_od": {
+     "v": 3,
+     "src": "estimated",
+     "note": "fixed installation, wire not flexed in use: the IET On-Site Guide gives 3 x overall diameter for PVC-insulated cables up to 10 mm, from memory, not seen in a fetched page; the 10 x figure applies where the wire flexes (across a joint)"
     }
    },
    {
@@ -774,6 +838,11 @@
      "v": 10,
      "src": "estimated",
      "note": "common guidance for repeated flexing, from memory, not seen in a fetched page"
+    },
+    "static_bend_radius_x_od": {
+     "v": 3,
+     "src": "estimated",
+     "note": "fixed installation, wire not flexed in use: the IET On-Site Guide gives 3 x overall diameter for PVC-insulated cables up to 10 mm, from memory, not seen in a fetched page; the 10 x figure applies where the wire flexes (across a joint)"
     }
    }
   ],

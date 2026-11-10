@@ -9,7 +9,7 @@ import { validateUrdf } from "@ttr/urdf-validator";
 import { CATALOG, part, rating, electrical, hornRadiusMm } from "@ttr/parts";
 import { buildPart, toStlBinary, meshGeometry } from "@ttr/mesh";
 import { buildBom } from "@ttr/components";
-import { schematic, breadboard, electricalReport, layoutProblems, wiringSvg, wiringMarkdown, type WiringRecord } from "@ttr/design";
+import { schematic, breadboard, electricalReport, layoutProblems, wiringSvg, wiringMarkdown, wiring3d, checkHarness, electronicsGlb, type WiringRecord } from "@ttr/design";
 import { componentGeometry, PRINT_DENSITY, MATERIALS, withSolids, interferences, worstTorques, comWorld, totalMass, evaluate, axisInertias, descendants, type DesignRecord } from "@ttr/design";
 import { partFiles } from "@ttr/kernel/ready";
 import { applyEdits, emptyRobot, kindOf, rootLink, worldFrames, mul, inv, poseMat, rotate, unit, partsBaseline, type EditOp, type PartProvider, type PrintedParams, type StudioMeta } from "./edit.ts";
@@ -259,6 +259,19 @@ export function breadboardOf(robot: RobotSpecification) {
   return { svg: r.svg, layout: layoutProblems(r.doc), unrouted: r.unrouted };
 }
 
+/**
+ * The electronics and harness in 3D: each part's model (per catalog key: meshes per material in mm, silkscreen labels,
+ * pins), where each part sits (its link and its frame in that link), every wire's centreline on the links it rides (so
+ * a viewer poses it with the links' matrices), and, with `checks`, the harness checks at the home pose.
+ */
+export function electronics3dOf(robot: RobotSpecification, opts: { checks?: boolean } = {}) {
+  const w = wiringOf(robot), spec = finalizeSpec(structuredClone(robot)), h = wiring3d(spec, w);
+  const models: Record<string, unknown> = {};
+  for (const p of h.parts) if (!models[p.key]) models[p.key] = { meshes: p.model.meshes, labels: p.model.labels, pins: Object.fromEntries(p.model.pins), source: p.model.source, detailed: p.model.detailed, replaces: p.model.replaces };
+  const rails = w.rails.map((r) => ({ name: r.name, voltage_v: r.voltage_v }));
+  return { robot: h.robot, rails, models, parts: h.parts.map(({ model: _m, ...p }) => p), wires: h.wires, groups: h.groups, notes: h.notes, ...(opts.checks ? { checks: checkHarness(spec, w, h) } : {}) };
+}
+
 const json = (code: number, body: unknown) => new Response(JSON.stringify(body), { status: code, headers: { "Content-Type": "application/json" } });
 /** /api/engine/* requests. */
 export async function engineApi(method: string, path: string, body: any): Promise<Response> {
@@ -276,6 +289,8 @@ export async function engineApi(method: string, path: string, body: any): Promis
   if (method === "POST" && p === "check") return json(200, checkRobot(body.robot, body.options ?? {}));
   if (method === "POST" && p === "schematic") { try { return json(200, schematicOf(body.robot)); } catch (e) { return json(422, { error: (e as Error).message }); } }
   if (method === "POST" && p === "wiring") { try { const w = wiringOf(body.robot); return json(200, { svg: wiringSvg(w, body.robot.robot_name), markdown: wiringMarkdown(w, body.robot.robot_name) }); } catch (e) { return json(422, { error: (e as Error).message }); } }
+  if (method === "POST" && p === "electronics-glb") { try { const spec = finalizeSpec(structuredClone(body.robot)); return new Response(electronicsGlb(spec, wiring3d(spec, wiringOf(body.robot))) as BodyInit, { headers: { "Content-Type": "model/gltf-binary" } }); } catch (e) { return json(422, { error: (e as Error).message }); } }
+  if (method === "POST" && p === "electronics3d") { try { return json(200, electronics3dOf(body.robot, body.options ?? {})); } catch (e) { return json(422, { error: (e as Error).message }); } }
   if (method === "POST" && p === "breadboard") { try { return json(200, breadboardOf(body.robot)); } catch (e) { return json(422, { error: (e as Error).message }); } }
   if (method === "POST" && p === "clearance") return json(200, { hits: clearanceOf(body.robot, String(body.link)) });
   if (method === "POST" && p === "sweep") return json(200, { samples: sweep(body.robot, String(body.joint), Number(body.samples ?? 24)) });

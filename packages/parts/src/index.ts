@@ -41,7 +41,7 @@ export interface PartData { dimensions: PartDimensions; electrical: ElectricalRe
 export const ELECTRICAL = electricalJson as unknown as Record<string, PartData>;
 /** Electrical record of a part (ports, pins, connector, voltage, current), undefined for mechanical parts. */
 export const electrical = (key: string): ElectricalRecord | undefined => ELECTRICAL[key]?.electrical;
-export interface WireRow { awg: number; area_mm2: number; ohm_per_m: number; ampacity_a: number; od_mm: number; usd_per_m: number; min_bend_radius_x_od: number; }
+export interface WireRow { awg: number; area_mm2: number; ohm_per_m: number; ampacity_a: number; od_mm: number; usd_per_m: number; min_bend_radius_x_od: number; static_bend_radius_x_od: number; }
 export interface ConnectorRow { name: string; current_a: number; unit_usd: number; housing_usd?: number; }
 /** Wire, connector and consumable tables for the wiring model, every value sourced in wiring.json. */
 export const WIRING = wiringJson as unknown as {

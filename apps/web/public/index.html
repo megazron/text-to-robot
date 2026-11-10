@@ -76,7 +76,14 @@
   <label class="chip"><input type="checkbox" id="showAxes" />Axes</label>
   <label class="chip"><input type="checkbox" id="showFrames" />Frames</label>
   <button id="resetView" class="chip" type="button">Reset</button>
+  <span class="chipgroup" role="group" aria-label="What the 3D view shows">
+    <button class="chip viewmode active" data-mode="robot" type="button" aria-pressed="true">Robot</button>
+    <button class="chip viewmode" data-mode="electronics" type="button" aria-pressed="false">Electronics</button>
+    <button class="chip viewmode" data-mode="exploded" type="button" aria-pressed="false">Exploded</button>
+  </span>
+  <select id="railFilter" class="chip" aria-label="Show wires of" hidden><option value="all">All wires</option></select>
 </div>
+<div id="wireTip" class="wiretip" role="status" hidden></div>
 <div id="previewStatus" role="status" hidden></div>
 
 <nav id="dock" aria-label="Sections">
@@ -193,6 +200,7 @@
       <div id="tab-files" class="tabpane">
         <div class="list downloads">
           <button data-dl="cad" type="button"><svg class="ico" aria-hidden="true"><use href="#i-down"/></svg><span class="t"><b>CAD</b><small>STEP + STL</small></span></button>
+          <button data-dl="wiring3d" type="button"><svg class="ico" aria-hidden="true"><use href="#i-down"/></svg><span class="t"><b>Wiring 3D</b><small>GLB, parts and wires</small></span></button>
           <button data-dl="schematic" type="button"><svg class="ico" aria-hidden="true"><use href="#i-down"/></svg><span class="t"><b>Schematic</b><small>PDF + SVG</small></span></button>
           <button data-dl="breadboard" type="button"><svg class="ico" aria-hidden="true"><use href="#i-down"/></svg><span class="t"><b>Breadboard view</b><small>Every wire in colour, SVG</small></span></button>
           <button data-dl="bom" type="button"><svg class="ico" aria-hidden="true"><use href="#i-down"/></svg><span class="t"><b>Parts list</b><small>Markdown</small></span></button>

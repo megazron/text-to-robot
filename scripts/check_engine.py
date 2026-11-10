@@ -74,6 +74,8 @@ SCRIPT = """async ([url, prompt]) => {
   const sch = await engine.schematic(d.robot), bb = await engine.breadboard(d.robot);
   out.schematic = { svg: sch.svg.startsWith("<svg") && sch.svg.includes('class="pin"'), pdf: String.fromCharCode(...sch.pdf.slice(0, 5)), layout: sch.layout, nodes: sch.netlist.nodes.length, logic: sch.electrical.logic.length };
   out.breadboard = { svg: bb.svg.startsWith("<svg") && bb.svg.includes('class="wire"'), layout: bb.layout, unrouted: bb.unrouted.length };
+  const e3 = await engine.electronics3d(d.robot), glb = new Uint8Array(await engine.electronicsGlb(d.robot));
+  out.electronics3d = { parts: e3.parts.length, wires: e3.wires.length, models: Object.keys(e3.models).length, linked: e3.wires.every((w) => w.pts.every((q) => d.robot.links.some((l) => l.name === q.link))), glb: String.fromCharCode(...glb.slice(0, 4)), notes: e3.notes };
   const moved = await engine.edit(d.robot, [{ op: "translate", link: "ultrasonic", by: [0.002, 0, 0] }]);
   out.edited = moved.robot.metadata.studio?.edited === true && moved.mounts.length > 0;
   const q = await engine.check(moved.robot, { interference: false, wiring: false });
@@ -135,6 +137,8 @@ for k in ["roundTrip", "edited", "urdf", "pure"]:
 sch, bb = result.get("schematic", {}), result.get("breadboard", {})
 if not sch.get("svg") or sch.get("pdf") != "%PDF-" or sch.get("layout") or sch.get("nodes", 0) < 5: fail.append("schematic")
 if not bb.get("svg") or bb.get("layout") or bb.get("unrouted"): fail.append("breadboard")
+e3 = result.get("electronics3d", {})
+if e3.get("parts", 0) < 3 or e3.get("wires", 0) < 3 or not e3.get("linked") or e3.get("glb") != "glTF" or e3.get("notes"): fail.append("electronics3d")
 if result["ros2"] < 10 or result["zip"] < 10000: fail.append("ros2 export")
 if not (result["handBuilt"]["links"] == 2 and result["handBuilt"]["spec"] and result["handBuilt"]["urdf"]): fail.append(f"hand built: {result['handBuilt']}")
 if result["partMesh"] < 10: fail.append("part mesh")
