@@ -9,7 +9,7 @@
    "od_mm": 0.9,
    "usd_per_m": 0.25,
    "min_bend_radius_x_od": 10,
-   "static_bend_radius_x_od": 3
+   "static_bend_radius_x_od": 4
   },
   {
    "awg": 28,
@@ -20,7 +20,7 @@
    "od_mm": 1.0,
    "usd_per_m": 0.28,
    "min_bend_radius_x_od": 10,
-   "static_bend_radius_x_od": 3
+   "static_bend_radius_x_od": 4
   },
   {
    "awg": 26,
@@ -31,7 +31,7 @@
    "od_mm": 1.5,
    "usd_per_m": 0.3,
    "min_bend_radius_x_od": 10,
-   "static_bend_radius_x_od": 3
+   "static_bend_radius_x_od": 4
   },
   {
    "awg": 24,
@@ -42,7 +42,7 @@
    "od_mm": 1.6,
    "usd_per_m": 0.35,
    "min_bend_radius_x_od": 10,
-   "static_bend_radius_x_od": 3
+   "static_bend_radius_x_od": 4
   },
   {
    "awg": 22,
@@ -53,7 +53,7 @@
    "od_mm": 1.7,
    "usd_per_m": 0.4,
    "min_bend_radius_x_od": 10,
-   "static_bend_radius_x_od": 3
+   "static_bend_radius_x_od": 4
   },
   {
    "awg": 20,
@@ -64,7 +64,7 @@
    "od_mm": 1.8,
    "usd_per_m": 0.5,
    "min_bend_radius_x_od": 10,
-   "static_bend_radius_x_od": 3
+   "static_bend_radius_x_od": 4
   },
   {
    "awg": 18,
@@ -75,7 +75,7 @@
    "od_mm": 2.3,
    "usd_per_m": 0.7,
    "min_bend_radius_x_od": 10,
-   "static_bend_radius_x_od": 3
+   "static_bend_radius_x_od": 4
   },
   {
    "awg": 16,
@@ -86,7 +86,7 @@
    "od_mm": 3.0,
    "usd_per_m": 1.0,
    "min_bend_radius_x_od": 10,
-   "static_bend_radius_x_od": 3
+   "static_bend_radius_x_od": 4
   },
   {
    "awg": 14,
@@ -97,7 +97,7 @@
    "od_mm": 3.5,
    "usd_per_m": 1.5,
    "min_bend_radius_x_od": 10,
-   "static_bend_radius_x_od": 3
+   "static_bend_radius_x_od": 4
   },
   {
    "awg": 12,
@@ -108,7 +108,7 @@
    "od_mm": 4.5,
    "usd_per_m": 2.2,
    "min_bend_radius_x_od": 10,
-   "static_bend_radius_x_od": 3
+   "static_bend_radius_x_od": 4
   },
   {
    "awg": 10,
@@ -119,7 +119,7 @@
    "od_mm": 5.0,
    "usd_per_m": 3.2,
    "min_bend_radius_x_od": 10,
-   "static_bend_radius_x_od": 3
+   "static_bend_radius_x_od": 4
   },
   {
    "awg": 8,
@@ -129,7 +129,7 @@
    "od_mm": 6.8,
    "usd_per_m": 4.5,
    "min_bend_radius_x_od": 10,
-   "static_bend_radius_x_od": 3
+   "static_bend_radius_x_od": 4
   },
   {
    "awg": 6,
@@ -139,7 +139,7 @@
    "od_mm": 8.5,
    "usd_per_m": 7.0,
    "min_bend_radius_x_od": 10,
-   "static_bend_radius_x_od": 3
+   "static_bend_radius_x_od": 5
   },
   {
    "awg": 4,
@@ -149,7 +149,7 @@
    "od_mm": 10.5,
    "usd_per_m": 10.0,
    "min_bend_radius_x_od": 10,
-   "static_bend_radius_x_od": 3
+   "static_bend_radius_x_od": 5
   }
  ],
  "connectors": {
@@ -380,9 +380,10 @@
      "note": "common guidance for repeated flexing, from memory, not seen in a fetched page"
     },
     "static_bend_radius_x_od": {
-     "v": 3,
-     "src": "estimated",
-     "note": "fixed installation, wire not flexed in use: the IET On-Site Guide gives 3 x overall diameter for PVC-insulated cables up to 10 mm, from memory, not seen in a fetched page; the 10 x figure applies where the wire flexes (across a joint)"
+     "v": 4,
+     "src": "datasheet",
+     "url": "https://www.farnell.com/datasheets/2340432.pdf",
+     "note": "LAPP data sheet DB4520001EN for H07V-K single-core hook-up wire (fine-stranded copper, PVC): minimum bending radius at intended use 4 x outer diameter up to 8 mm OD, 5 x from 8 to 12 mm, 6 x above. Used for every fixed run of the harness. The silicone wire in the bill of materials is more flexible than PVC wire, so this is on the safe side for it"
     }
    },
    {
@@ -426,9 +427,10 @@
      "note": "common guidance for repeated flexing, from memory, not seen in a fetched page"
     },
     "static_bend_radius_x_od": {
-     "v": 3,
-     "src": "estimated",
-     "note": "fixed installation, wire not flexed in use: the IET On-Site Guide gives 3 x overall diameter for PVC-insulated cables up to 10 mm, from memory, not seen in a fetched page; the 10 x figure applies where the wire flexes (across a joint)"
+     "v": 4,
+     "src": "datasheet",
+     "url": "https://www.farnell.com/datasheets/2340432.pdf",
+     "note": "LAPP data sheet DB4520001EN for H07V-K single-core hook-up wire (fine-stranded copper, PVC): minimum bending radius at intended use 4 x outer diameter up to 8 mm OD, 5 x from 8 to 12 mm, 6 x above. Used for every fixed run of the harness. The silicone wire in the bill of materials is more flexible than PVC wire, so this is on the safe side for it"
     }
    },
    {
@@ -472,9 +474,10 @@
      "note": "common guidance for repeated flexing, from memory, not seen in a fetched page"
     },
     "static_bend_radius_x_od": {
-     "v": 3,
-     "src": "estimated",
-     "note": "fixed installation, wire not flexed in use: the IET On-Site Guide gives 3 x overall diameter for PVC-insulated cables up to 10 mm, from memory, not seen in a fetched page; the 10 x figure applies where the wire flexes (across a joint)"
+     "v": 4,
+     "src": "datasheet",
+     "url": "https://www.farnell.com/datasheets/2340432.pdf",
+     "note": "LAPP data sheet DB4520001EN for H07V-K single-core hook-up wire (fine-stranded copper, PVC): minimum bending radius at intended use 4 x outer diameter up to 8 mm OD, 5 x from 8 to 12 mm, 6 x above. Used for every fixed run of the harness. The silicone wire in the bill of materials is more flexible than PVC wire, so this is on the safe side for it"
     }
    },
    {
@@ -518,9 +521,10 @@
      "note": "common guidance for repeated flexing, from memory, not seen in a fetched page"
     },
     "static_bend_radius_x_od": {
-     "v": 3,
-     "src": "estimated",
-     "note": "fixed installation, wire not flexed in use: the IET On-Site Guide gives 3 x overall diameter for PVC-insulated cables up to 10 mm, from memory, not seen in a fetched page; the 10 x figure applies where the wire flexes (across a joint)"
+     "v": 4,
+     "src": "datasheet",
+     "url": "https://www.farnell.com/datasheets/2340432.pdf",
+     "note": "LAPP data sheet DB4520001EN for H07V-K single-core hook-up wire (fine-stranded copper, PVC): minimum bending radius at intended use 4 x outer diameter up to 8 mm OD, 5 x from 8 to 12 mm, 6 x above. Used for every fixed run of the harness. The silicone wire in the bill of materials is more flexible than PVC wire, so this is on the safe side for it"
     }
    },
    {
@@ -564,9 +568,10 @@
      "note": "common guidance for repeated flexing, from memory, not seen in a fetched page"
     },
     "static_bend_radius_x_od": {
-     "v": 3,
-     "src": "estimated",
-     "note": "fixed installation, wire not flexed in use: the IET On-Site Guide gives 3 x overall diameter for PVC-insulated cables up to 10 mm, from memory, not seen in a fetched page; the 10 x figure applies where the wire flexes (across a joint)"
+     "v": 4,
+     "src": "datasheet",
+     "url": "https://www.farnell.com/datasheets/2340432.pdf",
+     "note": "LAPP data sheet DB4520001EN for H07V-K single-core hook-up wire (fine-stranded copper, PVC): minimum bending radius at intended use 4 x outer diameter up to 8 mm OD, 5 x from 8 to 12 mm, 6 x above. Used for every fixed run of the harness. The silicone wire in the bill of materials is more flexible than PVC wire, so this is on the safe side for it"
     }
    },
    {
@@ -610,9 +615,10 @@
      "note": "common guidance for repeated flexing, from memory, not seen in a fetched page"
     },
     "static_bend_radius_x_od": {
-     "v": 3,
-     "src": "estimated",
-     "note": "fixed installation, wire not flexed in use: the IET On-Site Guide gives 3 x overall diameter for PVC-insulated cables up to 10 mm, from memory, not seen in a fetched page; the 10 x figure applies where the wire flexes (across a joint)"
+     "v": 4,
+     "src": "datasheet",
+     "url": "https://www.farnell.com/datasheets/2340432.pdf",
+     "note": "LAPP data sheet DB4520001EN for H07V-K single-core hook-up wire (fine-stranded copper, PVC): minimum bending radius at intended use 4 x outer diameter up to 8 mm OD, 5 x from 8 to 12 mm, 6 x above. Used for every fixed run of the harness. The silicone wire in the bill of materials is more flexible than PVC wire, so this is on the safe side for it"
     }
    },
    {
@@ -656,9 +662,10 @@
      "note": "common guidance for repeated flexing, from memory, not seen in a fetched page"
     },
     "static_bend_radius_x_od": {
-     "v": 3,
-     "src": "estimated",
-     "note": "fixed installation, wire not flexed in use: the IET On-Site Guide gives 3 x overall diameter for PVC-insulated cables up to 10 mm, from memory, not seen in a fetched page; the 10 x figure applies where the wire flexes (across a joint)"
+     "v": 4,
+     "src": "datasheet",
+     "url": "https://www.farnell.com/datasheets/2340432.pdf",
+     "note": "LAPP data sheet DB4520001EN for H07V-K single-core hook-up wire (fine-stranded copper, PVC): minimum bending radius at intended use 4 x outer diameter up to 8 mm OD, 5 x from 8 to 12 mm, 6 x above. Used for every fixed run of the harness. The silicone wire in the bill of materials is more flexible than PVC wire, so this is on the safe side for it"
     }
    },
    {
@@ -702,9 +709,10 @@
      "note": "common guidance for repeated flexing, from memory, not seen in a fetched page"
     },
     "static_bend_radius_x_od": {
-     "v": 3,
-     "src": "estimated",
-     "note": "fixed installation, wire not flexed in use: the IET On-Site Guide gives 3 x overall diameter for PVC-insulated cables up to 10 mm, from memory, not seen in a fetched page; the 10 x figure applies where the wire flexes (across a joint)"
+     "v": 4,
+     "src": "datasheet",
+     "url": "https://www.farnell.com/datasheets/2340432.pdf",
+     "note": "LAPP data sheet DB4520001EN for H07V-K single-core hook-up wire (fine-stranded copper, PVC): minimum bending radius at intended use 4 x outer diameter up to 8 mm OD, 5 x from 8 to 12 mm, 6 x above. Used for every fixed run of the harness. The silicone wire in the bill of materials is more flexible than PVC wire, so this is on the safe side for it"
     }
    },
    {
@@ -748,9 +756,10 @@
      "note": "common guidance for repeated flexing, from memory, not seen in a fetched page"
     },
     "static_bend_radius_x_od": {
-     "v": 3,
-     "src": "estimated",
-     "note": "fixed installation, wire not flexed in use: the IET On-Site Guide gives 3 x overall diameter for PVC-insulated cables up to 10 mm, from memory, not seen in a fetched page; the 10 x figure applies where the wire flexes (across a joint)"
+     "v": 4,
+     "src": "datasheet",
+     "url": "https://www.farnell.com/datasheets/2340432.pdf",
+     "note": "LAPP data sheet DB4520001EN for H07V-K single-core hook-up wire (fine-stranded copper, PVC): minimum bending radius at intended use 4 x outer diameter up to 8 mm OD, 5 x from 8 to 12 mm, 6 x above. Used for every fixed run of the harness. The silicone wire in the bill of materials is more flexible than PVC wire, so this is on the safe side for it"
     }
    },
    {
@@ -794,9 +803,10 @@
      "note": "common guidance for repeated flexing, from memory, not seen in a fetched page"
     },
     "static_bend_radius_x_od": {
-     "v": 3,
-     "src": "estimated",
-     "note": "fixed installation, wire not flexed in use: the IET On-Site Guide gives 3 x overall diameter for PVC-insulated cables up to 10 mm, from memory, not seen in a fetched page; the 10 x figure applies where the wire flexes (across a joint)"
+     "v": 4,
+     "src": "datasheet",
+     "url": "https://www.farnell.com/datasheets/2340432.pdf",
+     "note": "LAPP data sheet DB4520001EN for H07V-K single-core hook-up wire (fine-stranded copper, PVC): minimum bending radius at intended use 4 x outer diameter up to 8 mm OD, 5 x from 8 to 12 mm, 6 x above. Used for every fixed run of the harness. The silicone wire in the bill of materials is more flexible than PVC wire, so this is on the safe side for it"
     }
    },
    {
@@ -840,9 +850,10 @@
      "note": "common guidance for repeated flexing, from memory, not seen in a fetched page"
     },
     "static_bend_radius_x_od": {
-     "v": 3,
-     "src": "estimated",
-     "note": "fixed installation, wire not flexed in use: the IET On-Site Guide gives 3 x overall diameter for PVC-insulated cables up to 10 mm, from memory, not seen in a fetched page; the 10 x figure applies where the wire flexes (across a joint)"
+     "v": 4,
+     "src": "datasheet",
+     "url": "https://www.farnell.com/datasheets/2340432.pdf",
+     "note": "LAPP data sheet DB4520001EN for H07V-K single-core hook-up wire (fine-stranded copper, PVC): minimum bending radius at intended use 4 x outer diameter up to 8 mm OD, 5 x from 8 to 12 mm, 6 x above. Used for every fixed run of the harness. The silicone wire in the bill of materials is more flexible than PVC wire, so this is on the safe side for it"
     }
    }
   ],

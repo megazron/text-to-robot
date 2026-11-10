@@ -176,7 +176,7 @@ export class Grid {
    * The cheapest way from a to b through cubes with clearance `need` (a and b are free points), as cube centres pulled
    * straight. `within` keeps it inside a box (a compartment). Null if there is none inside the search region.
    */
-  path(a: V3, b: V3, need: number, within?: Box, limit = 400000): V3[] | null {
+  path(a: V3, b: V3, need: number, within?: Box, limit = 150000): V3[] | null {
     const direct = this.line(a, b, need, within);
     if (direct >= 0 && direct < 40) return [a, b];
     const s = this.s, A = this.ix(a), B = this.ix(b);

@@ -127,10 +127,11 @@ export class Router {
     for (let t = conn; t < conn + 40; t += 1) if (g.at(add(e.p, scale(e.out, t))) !== e.id) { conn = t; break; }
     const S = add(e.p, scale(e.out, conn));
     for (let t = 2; t <= conn; t += 1) if (!own(add(e.p, scale(e.out, t)))) { problems.push(`${what}: its connector (${Math.round(conn)} mm) meets a solid ${Math.round(t)} mm from the pin`); return { S, V: S }; }
-    for (const k of [1, 0.75, 0.5]) {
+    // a quarter more than the radius: a turn a little over a right angle still rounds fully
+    for (const k of [1.25, 1, 0.75, 0.5]) {
       const V = add(S, scale(e.out, R * k)); let ok = g.at(V) === 0;
       for (let t = 0; ok && t <= R * k; t += 1) if (!own(add(S, scale(e.out, t)))) ok = false;
-      if (ok) { if (k < 1) problems.push(`${what}: ${Math.round(R * k)} mm for the first bend, the wire wants ${R.toFixed(1)} mm`); return { S, V }; }
+      if (ok) { if (k < 1.25) problems.push(`${what}: ${Math.round(R * k)} mm for the first bend, the wire wants ${R.toFixed(1)} mm`); return { S, V }; }
     }
     problems.push(`${what}: no room for a bend beyond the connector`);
     return { S, V: S };
@@ -153,9 +154,19 @@ export class Router {
     return null;
   }
   /** through a wall exit: a free point on the hole's axis on each side */
-  private pierce(e: ExitAt, need: number): { inner: V3; outer: V3 } | null {
-    const g = this.grid, along = (sgn: number) => { for (const n of [need, 1]) for (let t = 2; t <= 36; t += 1) { const q = add(e.at, scale(e.n, sgn * t)); if (g.dist(q) >= n) return q; } return null; };
-    const inner = along(-1), outer = along(1);
+  private pierce(e: ExitAt, need: number, bay: Box | undefined, run: number): { inner: V3; outer: V3 } | null {
+    const g = this.grid;
+    // the first free point each side of the wall, then on along the axis while it stays free, up to `run`: room to turn on to the hole's line
+    const along = (sgn: number, box?: Box) => {
+      for (const n of [need, 1]) for (let t = 2; t <= 40; t += 1) {
+        const q = add(e.at, scale(e.n, sgn * t)); if (g.dist(q) < n || (box && !inBox(box, q, -g.s))) continue;
+        let best = q;
+        for (let u = 1; u <= run; u += 1) { const q2 = add(q, scale(e.n, sgn * u)); if (g.dist(q2) < n || (box && !inBox(box, q2, -g.s))) break; best = q2; }
+        return best;
+      }
+      return null;
+    };
+    const inner = along(-1, bay), outer = along(1);
     return inner && outer ? { inner, outer } : null;
   }
 
@@ -172,7 +183,9 @@ export class Router {
     if (ends.some((e) => !e)) return { trunk: [], trunkOn: [], wires: [], anchors: [], problems: [`${c.key}: an end has no place`] };
     const E = ends as NonNullable<(typeof ends)[number]>[];
     const ga = E[0].a.group, gb = E[0].b.group;
-    const needT = 1 + Math.ceil((c.od / 2 + 0.5) / s), needW = 1 + Math.ceil(1 / s);
+    // clearance asked of the search: the bundle's half width and a bend radius beside it, so a path round an edge leaves the
+    // room its corners need to be rounded; it settles for less, down to the wire's own width, where there is not that much
+    const Rmax = Math.max(...E.map((x) => x.R)), ringNeed = 1 + Math.ceil((c.od / 2 + 0.5) / s), needT = 1 + Math.ceil((c.od / 2 + Rmax) / s), needW = 1 + Math.ceil(Rmax / s);
     const boxA = c.bayA ? this.bays.get(c.bayA) : undefined, boxB = c.bayB ? this.bays.get(c.bayB) : undefined;
     const sameBay = !!c.bayA && c.bayA === c.bayB;
     const centroid = (ps: V3[]) => scale(ps.reduce((a, p) => add(a, p), [0, 0, 0] as V3), 1 / ps.length);
@@ -185,11 +198,11 @@ export class Router {
     const go = (to: V3, w: Box | undefined, what: string, pin: boolean) => {
       const p = this.connect(cur, to, needT, w);
       if (!p) { problems.push(`${c.key}: no free way ${what} (${cur.map(Math.round)} to ${to.map(Math.round)}${w ? `, inside ${w.min.map(Math.round)}..${w.max.map(Math.round)}` : ""})`); trunk.push(to); pinned.push(pin); cur = to; return; }
-      for (let i = 1; i < p.length; i++) { trunk.push(p[i]); pinned.push(pin && i === p.length - 1); if (g.dist(p[i]) < needT) tight = true; }
+      for (let i = 1; i < p.length; i++) { trunk.push(p[i]); pinned.push(pin && i === p.length - 1); if (g.dist(p[i]) < ringNeed) tight = true; }
       cur = to;
     };
     const through = (e: ExitAt, outward: boolean) => {
-      const pr = this.pierce(e, needT);
+      const pr = this.pierce(e, needT, outward ? boxA : boxB, 1.6 * Math.max(...E.map((x) => x.R)));
       if (!pr) { problems.push(`${c.key}: exit ${e.id} is blocked`); return; }
       const [first, second] = outward ? [pr.inner, pr.outer] : [pr.outer, pr.inner];
       go(first, outward ? within : undefined, `to exit ${e.id}`, true);
@@ -214,7 +227,7 @@ export class Router {
     const T0: V3[] = [];
     for (let i = 0, from = 0; i < trunk.length; i++) if (i > from && pinned[i]) {
       const isPierce = pierced.some(([p1, p2]) => p1 === trunk[from] && p2 === trunk[i]);
-      const seg = isPierce ? [trunk[from], trunk[i]] : g.pull(dedupe(trunk.slice(from, i + 1)), tight ? 1 : needT, from === 0 && boxA && (sameBay || c.exitA) ? boxA : undefined);
+      const seg = isPierce ? [trunk[from], trunk[i]] : g.pull(dedupe(trunk.slice(from, i + 1)), tight ? 1 : ringNeed, from === 0 && boxA && (sameBay || c.exitA) ? boxA : undefined);
       T0.push(...(T0.length ? seg.slice(1) : seg)); from = i;
     }
     if (!T0.length) T0.push(...trunk);
@@ -280,6 +293,24 @@ export class Router {
       if (same && run.length > 2) { const end = from <= 2 || i >= w.pts.length - 3; seg = g.pull(dedupe(run), end ? 1 : need); if (!end && seg.length >= run.length) seg = g.pull(dedupe(run), 1); }
       for (let k = pulled.length ? 1 : 0; k < seg.length; k++) { pulled.push(seg[k]); pon.push(k === seg.length - 1 ? w.on[i] : w.on[from]); }
       from = i;
+    }
+    // a point that leaves a leg too short to round (a hop on to the bundle beside a connector) goes, where the line past it is clear
+    for (let changed = true; changed; ) {
+      changed = false;
+      for (let i = 3; i < pulled.length - 3; i++) {
+        if (pon[i - 1] !== pon[i] || pon[i + 1] !== pon[i] || pierced.some(([a, b]) => dist(pulled[i], a) < 4 || dist(pulled[i], b) < 4)) continue;
+        if (Math.min(dist(pulled[i], pulled[i - 1]), dist(pulled[i], pulled[i + 1])) > 1.3 * R) continue;
+        if (g.line(pulled[i - 1], pulled[i + 1], 1) >= 0) { pulled.splice(i, 1); pon.splice(i, 1); changed = true; i--; continue; }
+        // beside a lead-out: join the run further back instead, where the line to the lead-out is clear
+        const first = i === 3, last = i === pulled.length - 4;
+        if (!first && !last) continue;
+        const V = pulled[first ? i - 1 : i + 1], far = pulled[first ? i + 1 : i - 1], leg = dist(pulled[i], far);
+        for (const back of [4 * R, 6 * R, 2.5 * R]) {
+          if (back > leg * 0.8) continue;
+          const q = lerp(pulled[i], far, back / leg);
+          if (g.line(V, q, 1) >= 0 && dist(V, q) > 1.3 * R) { pulled[i] = q; changed = true; break; }
+        }
+      }
     }
     let P = dedupeOn(pulled.map(r1), pon);
     P = this.soften(P, R);

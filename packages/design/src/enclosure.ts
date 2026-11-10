@@ -301,7 +301,7 @@ export function hood(A: Assembly, H: Harness | undefined, o: { name: string; dec
  * wall adapter) and the control boards in one printed case, USB windows in the long wall, a gland where the harness leaves.
  */
 export function controlCase(A: Assembly, H: Harness, o: { parent: string; T: Mat4; psu: string | null; psuUse?: string; boards: { name: string; key: string; use: string }[]; cad?: boolean }) {
-  const PSU_X = 68, inPsu = !!o.psu, pb = inPsu ? part(o.psu!).bbox_mm! : null, L = inPsu ? PSU_X + pb!.max[0] + 3 : 26 + o.boards.reduce((s, b) => s + part(b.key).bbox_mm!.max[0] + 6, 0);
+  const PSU_X = 68, inPsu = !!o.psu, pb = inPsu ? part(o.psu!).bbox_mm! : null, L = inPsu ? PSU_X + pb!.max[0] + 24 : 26 + o.boards.reduce((s, b) => s + part(b.key).bbox_mm!.max[0] + 6, 0);
   const sizes = o.boards.map((b) => { const q = part(b.key).bbox_mm!; return { l: q.max[0] - q.min[0], w: q.max[1] - q.min[1], h: q.max[2] - q.min[2], q }; });
   // boards in a row along the long wall, behind the supply
   const yB = inPsu ? pb!.max[1] + 7 : 3, bw = Math.max(...sizes.map((s) => s.w), 0), Wd = yB + bw + 4;
