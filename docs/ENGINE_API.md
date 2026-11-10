@@ -78,10 +78,10 @@ A mount is a frame on a part: `pos` (metres), `axis` (out of the part), `ref` (a
 - **Content Security Policy.** The worker is started from a `blob:` bootstrap, and a blob worker runs under the page's own policy. The strictest policy that runs the engine, tested in CI by `scripts/check_engine.py`, is:
 
   ```
-  script-src 'self' https://megazron.github.io 'wasm-unsafe-eval' 'unsafe-eval'; worker-src blob:; connect-src https://megazron.github.io
+  script-src 'self' https://megazron.github.io/text-to-robot/ 'unsafe-eval'; worker-src blob:; connect-src https://megazron.github.io/text-to-robot/
   ```
 
-  `'wasm-unsafe-eval'` compiles the CAD kernels. `'unsafe-eval'` is needed because the kernels' Emscripten glue (manifold-3d, OpenCascade) builds its call wrappers with `new Function` from C++ type signatures when it starts; nothing the engine is given is ever evaluated. If your page cannot allow `'unsafe-eval'`, serve the engine from your own origin (a local build, `deploy/build-pages.sh`) so the worker loads as a same-origin script with its own policy.
+  `'unsafe-eval'` is needed because the kernels' Emscripten glue (manifold-3d, OpenCascade) builds its call wrappers with `new Function` from C++ type signatures when it starts; nothing the engine is given is ever evaluated. It also covers compiling the WebAssembly, so `'wasm-unsafe-eval'` is not needed on top. `worker-src blob:` covers the bootstrap and the forge's helper workers. If your page cannot allow `'unsafe-eval'`, serve the engine from your own origin (a local build, `deploy/build-pages.sh`) so the worker loads as a same-origin script with its own policy.
 - **Pin what you load.** `/engine/v1/` changes when I fix or extend it. To freeze a version, copy a build to your own site, or load it through an import map with an `integrity` entry for `engine.js` (and keep in mind the worker files it loads are not covered by that hash).
 - **What the engine can reach.** It runs in a worker in your page's origin: it sees only what you pass it, stores the Mark 43 cache in your origin's IndexedDB, and makes no network request except fetching its own files from `base`. It never reads this site's storage.
 - **Treat robots as data.** Names in a robot must be plain identifiers (letters, digits, `_`); a robot with other names is refused before any file is generated, so a hostile spec cannot write quotes, markup or `../` into a URDF, a Python script or a zip path. Text inside a robot (notes, design summaries) is still untrusted: show it with `textContent`, never `innerHTML`.

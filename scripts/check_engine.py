@@ -43,7 +43,7 @@ class Other(http.server.BaseHTTPRequestHandler):
         self.end_headers(); self.wfile.write(body)
 
 
-EMBEDDER_CSP = ("default-src 'none'; script-src 'self' {site} 'wasm-unsafe-eval' 'unsafe-eval'; worker-src blob:; connect-src {site}; "
+EMBEDDER_CSP = ("default-src 'none'; script-src 'self' {site} 'unsafe-eval'; worker-src blob:; connect-src {site}; "
                 "object-src 'none'; base-uri 'none'; form-action 'none'")
 
 
