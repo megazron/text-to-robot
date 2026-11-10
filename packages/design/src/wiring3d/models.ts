@@ -213,6 +213,13 @@ function generic(key: string, ports: Port[], bb: { min: V3; max: V3 }, b: Builde
     // the terminal block is at the -x end of the case: the designs leave the room for its wires there (controlCase)
     b.box("plastic_black", [x0, y0 + 2, z0 + 2], [x0 + 12, y1 - 2, z0 + 14]);
     let k = 0; for (const p of ports) for (const x of p.pins.v) { const yy = y0 + 6 + (k++) * 9.5; set(p.name, x.name, [x0, Math.min(yy, y1 - 4), z0 + 8], [-1, 0, 0], "terminal"); }
+  } else if (/^rplidar_c1/.test(key)) {
+    // RPLIDAR C1: the XH2.54 socket sits low in the cable exit on the -y side of the base (the catalog box runs 4 mm further
+    // out on -y than the 27.8 mm half body for it: electrical.json body note), the plug goes in horizontally
+    b.box("plastic_black", [x0, y0 + 4, z0], [x1, y1, z0 + 20]);
+    b.cyl("plastic_black", [0, 0, z0 + 20], [0, 0, z1], 22, 32);
+    b.box("plastic_black", [-6, y0, z0 + 1], [6, y0 + 4, z0 + 9]);
+    for (const p of ports) lead(p, (i, n) => [(i - (n - 1) / 2) * 2.5, y0, z0 + 5], [0, -1, 0], "jst");
   } else if (role === "controller" || role === "driver" || role === "regulator" || role === "sensor" || role === "adapter" || role === "indicator") {
     const pcb = pcbColour(key), t = 1.6, top = Math.min(z1, z0 + t);
     b.box(pcb, [x0, y0, z0], [x1, y1, top]);
