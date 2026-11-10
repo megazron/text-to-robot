@@ -81,6 +81,8 @@ export interface Engine {
   breadboard(robot: RobotSpecification): Promise<Breadboard>;
   /** A zip archive of export files. */
   zip(files: Files): Blob;
+  /** How many times the engine's worker was replaced (its CAD kernel memory was full, or it aborted). */
+  readonly recycles: number;
   terminate(): void;
 }
 
@@ -94,32 +96,55 @@ function files(f: Record<string, string | { b64: string }>): Files {
 
 /**
  * Start the engine. `base` is the site the engine is served from (default: the site this module came from).
- * `onProgress` hears long jobs (the armour forge).
+ * `onProgress` hears long jobs (the armour forge). `recycleMb` (default 1800) is the CAD kernel memory at which the worker is
+ * replaced between requests.
  */
-export async function createEngine(opts: { base?: string | URL; onProgress?: (p: ForgeProgress) => void } = {}): Promise<Engine> {
+export async function createEngine(opts: { base?: string | URL; onProgress?: (p: ForgeProgress) => void; recycleMb?: number } = {}): Promise<Engine> {
   const base = new URL(opts.base ?? new URL("../../", import.meta.url));
   const script = new URL("browser-engine.js", base);
   const sameOrigin = typeof location !== "undefined" && script.origin === location.origin;
   // a worker must come from the page's own origin: across origins a blob bootstrap imports the engine (CORS)
-  const boot = sameOrigin ? script : URL.createObjectURL(new Blob([`self.TTR_ENGINE_BASE=${JSON.stringify(base.href)};await import(${JSON.stringify(script.href)});`], { type: "text/javascript" }));
-  const worker = new Worker(boot, { type: "module", name: "text-to-robot engine" });
-  const waiting = new Map<number, { ok: (r: Reply) => void; fail: (e: Error) => void }>();
-  let next = 1;
-  await new Promise<void>((ok, fail) => {
-    worker.onerror = (e) => fail(new Error(`the engine did not start: ${e.message || "blocked or out of memory"}`));
-    worker.onmessage = ({ data }) => { if (data.ready) ok(); };
-  });
-  if (!sameOrigin) URL.revokeObjectURL(boot as string);
-  worker.onmessage = ({ data }) => {
-    if (data.forge) { opts.onProgress?.(data.forge); return; }
-    if (data.save || data.forgePreview || data.ready) return;
-    const w = waiting.get(data.id); waiting.delete(data.id);
-    w?.ok({ status: data.status, type: data.type, buffer: data.buffer });
+  // a worker must come from the page's own origin: across origins a blob bootstrap imports the engine (CORS)
+  const boot = sameOrigin ? script.href : URL.createObjectURL(new Blob([`self.TTR_ENGINE_BASE=${JSON.stringify(base.href)};await import(${JSON.stringify(script.href)});`], { type: "text/javascript" }));
+  // The CAD kernel keeps memory after every design (manifold-3d 3.5.4, see wasm-memory.ts) and aborts at 4 GB: past 1.8 GB the
+  // worker is replaced while nothing is waiting, and a request whose kernel aborted goes once more to a fresh worker. The
+  // robots it holds (for robotMesh) are handed to the new one.
+  const RECYCLE_MB = opts.recycleMb ?? 1800, KERNEL_DIED = /Aborted\(|out of bounds|RuntimeError|unreachable|memory access/i;
+  interface Pending { msg: { id: number; method: string; path: string; body: string }; ok: (r: Reply) => void; fail: (e: Error) => void; retried: boolean }
+  const waiting = new Map<number, Pending>();
+  let next = 1, worker!: Worker, robots = "[]", failedStarts = 0, ready!: Promise<void>, recycles = 0;
+  const start = () => {
+    worker = new Worker(boot, { type: "module", name: "text-to-robot engine" });
+    const w = worker;
+    ready = new Promise<void>((ok, fail) => {
+      w.onerror = (e) => { if (++failedStarts > 1) fail(new Error(`the engine did not start: ${e.message || "blocked or out of memory"}`)); else { restart(); ok(); } };
+      w.onmessage = ({ data }) => { if (data.ready) { failedStarts = 0; w.postMessage({ robots }); ok(); w.onmessage = onMessage; w.onerror = () => { if (w === worker) restart(); }; } };
+    });
   };
-  worker.onerror = (e) => { for (const w of waiting.values()) w.fail(new Error(`the engine stopped: ${e.message || "out of memory?"}`)); waiting.clear(); };
+  const onMessage = ({ data }: MessageEvent) => {
+    if (data.forge) { opts.onProgress?.(data.forge); return; }
+    if (data.save) { robots = data.save; return; }
+    if (data.forgePreview || data.ready) return;
+    const p = waiting.get(data.id); if (!p) return;
+    if (data.status >= 400 && !p.retried && KERNEL_DIED.test(dec.decode(data.buffer))) { restart(); return; }
+    waiting.delete(data.id);
+    p.ok({ status: data.status, type: data.type, buffer: data.buffer });
+    if (data.wasm_mb > RECYCLE_MB && waiting.size === 0) { recycles++; const old = worker; start(); old.terminate(); }
+  };
+  // a request waits for a worker that has started; if that worker is replaced meanwhile it goes to the new one
+  const send = async (p: Pending) => { for (;;) { const r = ready, w = worker; await r; if (w === worker) { w.postMessage(p.msg); return; } } };
+  const restart = () => {
+    recycles++; const old = worker; start(); old.terminate();
+    for (const [id, p] of [...waiting]) {
+      if (p.retried) { waiting.delete(id); p.fail(new Error("the engine ran out of memory twice on this request")); }
+      else { p.retried = true; void send(p); }
+    }
+  };
+  start();
+  await ready;
   const call = (method: string, path: string, body?: unknown) => new Promise<Reply>((ok, fail) => {
-    const id = next++; waiting.set(id, { ok, fail });
-    worker.postMessage({ id, method, path, body: body === undefined ? "" : JSON.stringify(body) });
+    const id = next++, p = { msg: { id, method, path, body: body === undefined ? "" : JSON.stringify(body) }, ok, fail, retried: false };
+    waiting.set(id, p); void send(p);
   });
   const json = async <T>(method: string, path: string, body?: unknown): Promise<T> => {
     const r = await call(method, path, body), text = dec.decode(r.buffer);
@@ -155,6 +180,7 @@ export async function createEngine(opts: { base?: string | URL; onProgress?: (p:
     schematic: async (robot) => { const r = await json<Omit<Schematic, "pdf"> & { pdf: { b64: string } }>("POST", "/api/engine/schematic", { robot }); return { ...r, pdf: Uint8Array.from(atob(r.pdf.b64), (c) => c.charCodeAt(0)) }; },
     breadboard: (robot) => json("POST", "/api/engine/breadboard", { robot }),
     zip: (f) => makeZip(f) as Blob,
+    get recycles() { return recycles; },
     terminate: () => worker.terminate(),
   };
 }

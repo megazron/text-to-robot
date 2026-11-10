@@ -87,8 +87,15 @@ SCRIPT = """async ([url, prompt]) => {
   const hb = await engine.check(r, { interference: false, wiring: false });
   out.handBuilt = { links: hb.robot.links.length, spec: hb.checks.find(c => c.name === "spec").pass, urdf: hb.checks.find(c => c.name === "urdf").pass };
   out.pure = applyEdits(r, [{ op: "rename", link: "servo", to: "base_servo" }]).links.some(l => l.name === "base_servo");
-  out.seconds = Math.round((performance.now() - t0) / 1000);
   engine.terminate();
+  // a 1 MB kernel limit: the worker is replaced after every design, and a robot designed earlier still serves its meshes
+  const small = await createEngine({ recycleMb: 1 });
+  const a = await small.design("a 2 DOF arm"), b = await small.design("a SCARA robot");
+  const file = a.robot.links.find(l => l.geometry.type === "mesh").geometry.file;
+  const again = await small.robotMesh(a.id, file);
+  out.recycle = { recycles: small.recycles, second: b.robot.robot_name, meshTriangles: new DataView(again).getUint32(80, true) };
+  small.terminate();
+  out.seconds = Math.round((performance.now() - t0) / 1000);
   } catch (e) { out.error = String(e && e.stack || e); }
   return out;
 }"""
@@ -122,6 +129,7 @@ if not bb.get("svg") or bb.get("layout") or bb.get("unrouted"): fail.append("bre
 if result["ros2"] < 10 or result["zip"] < 10000: fail.append("ros2 export")
 if not (result["handBuilt"]["links"] == 2 and result["handBuilt"]["spec"] and result["handBuilt"]["urdf"]): fail.append(f"hand built: {result['handBuilt']}")
 if result["partMesh"] < 10: fail.append("part mesh")
+if not (result["recycle"]["recycles"] >= 2 and result["recycle"]["meshTriangles"] > 10): fail.append(f"worker recycling: {result['recycle']}")
 if errors: fail.append(f"page errors: {errors[:5]}")
 print(json.dumps(result, indent=1))
 if fail: sys.exit("FAIL: " + "; ".join(fail))
