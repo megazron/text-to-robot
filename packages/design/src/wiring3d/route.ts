@@ -355,7 +355,7 @@ export class Router {
       from = i;
     }
     // a point that leaves a leg too short to round (a hop on to the bundle beside a connector) goes, where the line past it is clear
-    for (let changed = true; changed; ) {
+    for (let changed = true, passes = 0; changed && passes < 4 * pulled.length; passes++) {
       changed = false;
       for (let i = 3; i < pulled.length - 3; i++) {
         if (pon[i - 1] !== pon[i] || pon[i + 1] !== pon[i] || pierced.some(([a, b]) => dist(pulled[i], a) < 4 || dist(pulled[i], b) < 4)) continue;
@@ -368,10 +368,16 @@ export class Router {
         const first = i === 3, last = i === pulled.length - 4;
         if (!first && !last) continue;
         const V = pulled[first ? i - 1 : i + 1], far = pulled[first ? i + 1 : i - 1], leg = dist(pulled[i], far);
+        let moved = false;
         for (const back of [4 * R, 6 * R, 2.5 * R]) {
           if (back > leg * 0.8) continue;
           const q = lerp(pulled[i], far, back / leg);
-          if (g.line(V, q, 1) >= 0 && dist(V, q) > Math.max(1.3 * R, dist(V, pulled[i]) + 0.5)) { pulled[i] = q; changed = true; break; }
+          if (g.line(V, q, 1) >= 0 && dist(V, q) > Math.max(1.3 * R, dist(V, pulled[i]) + 0.5)) { pulled[i] = q; changed = moved = true; break; }
+        }
+        // or straight on out of the connector a little further, and turn there for the run
+        if (!moved) {
+          const S = pulled[first ? i - 2 : i + 2], dir = unit(sub(V, S));
+          for (const k of [2.5 * R, 4 * R, 6 * R]) { const q = add(V, scale(dir, k)); if (dist(q, pulled[i]) > 0.5 && g.at(q) === 0 && g.line(V, q, 1) >= 0 && g.line(q, far, 1) >= 0) { pulled[i] = r1(q); changed = true; break; } }
         }
       }
     }
@@ -430,16 +436,20 @@ export class Router {
         const p1 = r1(add(B, scale(u, cut))), p2 = r1(add(B, scale(v, cut)));
         if (g.line(p1, p2, 1) >= 0) { pts.splice(i, 1, p1, p2); on.splice(i, 1, on[i], on[i]); i++; continue; }
       }
-      // sideways: a step of two radii square to the way it came, then on
+      // sideways: a step square to the way it came (two radii and a little: its two corners, each a little over a right
+      // angle, round fully), then on
       const fixed = i === 2 ? u : i === pts.length - 3 ? v : u, other = fixed === u ? v : u, far = fixed === u ? C : A;
       let w = sub(other, scale(fixed, dot(other, fixed)));
       const cands: V3[] = len(w) > 0.05 ? [unit(w)] : [];
       const p0 = perp(fixed); cands.push(p0, scale(p0, -1), cross(fixed, p0), scale(cross(fixed, p0), -1));
       for (const dir of cands) {
-        w = dir; const q = r1(add(B, scale(w, 2 * R)));
+        w = dir; const q = r1(add(B, scale(w, 2.3 * R)));
         if (g.line(B, q, 1) < 0 || g.line(q, far, 1) < 0) continue;
         if (dot(unit(sub(far, q)), scale(w, -1)) > 0.2) continue;
         if (fixed === u) { pts.splice(i + 1, 0, q); on.splice(i + 1, 0, on[i]); } else { pts.splice(i, 0, q); on.splice(i, 0, on[i]); }
+        // the point it was going to, now just past the step, goes where the line past it is clear (else two corners crowd)
+        const at = fixed === u ? i + 2 : i - 1, past = fixed === u ? i + 3 : i - 2, qi = fixed === u ? i + 1 : i;
+        if (past > 0 && past < pts.length - 1 && on[at] === on[qi] && on[past] === on[qi] && dist(pts[at], q) < 2 * R && g.line(q, pts[past], 1) >= 0) { pts.splice(at, 1); on.splice(at, 1); if (at < qi) i--; }
         i++; break;
       }
     }
