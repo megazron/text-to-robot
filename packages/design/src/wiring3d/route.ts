@@ -329,7 +329,10 @@ export class Router {
       changed = false;
       for (let i = 3; i < pulled.length - 3; i++) {
         if (pon[i - 1] !== pon[i] || pon[i + 1] !== pon[i] || pierced.some(([a, b]) => dist(pulled[i], a) < 4 || dist(pulled[i], b) < 4)) continue;
-        if (Math.min(dist(pulled[i], pulled[i - 1]), dist(pulled[i], pulled[i + 1])) > 1.3 * R) continue;
+        // a leg is too short when the corners at its two ends together want more of it than it has (R tan(turn / 2) each)
+        const tq = (k: number) => { if (k <= 0 || k >= pulled.length - 1) return 0; const u = unit(sub(pulled[k], pulled[k - 1])), v = unit(sub(pulled[k + 1], pulled[k])); return Math.tan(Math.acos(Math.max(-1, Math.min(1, dot(u, v)))) / 2); };
+        const short = (k: number) => dist(pulled[k], pulled[k + 1]) < R * 1.02 * (Math.min(tq(k), 4) + Math.min(tq(k + 1), 4));
+        if (Math.min(dist(pulled[i], pulled[i - 1]), dist(pulled[i], pulled[i + 1])) > 1.3 * R && !short(i - 1) && !short(i)) continue;
         if (g.line(pulled[i - 1], pulled[i + 1], 1) >= 0) { pulled.splice(i, 1); pon.splice(i, 1); changed = true; i--; continue; }
         // beside a lead-out: join the run further back instead, where the line to the lead-out is clear
         const first = i === 3, last = i === pulled.length - 4;
@@ -361,6 +364,37 @@ export class Router {
       return { hits: Math.round(hits), tight: F.tight, drawn: L, F };
     };
     let best = test(P);
+    // a leg too short for the corners at its two ends: drop one of them, or meet the legs beyond in one corner, where the
+    // straight lines that leaves are clear; kept when the tightest bend gets wider and nothing more is hit
+    const fixedAt = (Q: { pts: V3[] }, k: number) => k <= 2 || k >= Q.pts.length - 3 || fixed.has(Q.pts[k]) || pierced.some(([a, b]) => dist(Q.pts[k], a) < 4 || dist(Q.pts[k], b) < 4);
+    for (let pass = 0; pass < 10 && best.tight; pass++) {
+      const Q = P.pts, O = P.on, n = Q.length, wantAt = (k: number) => { if (k <= 0 || k >= n - 1 || O[k - 1] !== O[k] || O[k + 1] !== O[k]) return 0; const a = unit(sub(Q[k - 1], Q[k])), c = unit(sub(Q[k + 1], Q[k])), th = Math.acos(Math.max(-1, Math.min(1, dot(a, c)))); return th > Math.PI - 0.02 ? 0 : (R * 1.02) / Math.tan(th / 2); };
+      const bad: [number, number][] = [];
+      for (let k = 0; k + 1 < n; k++) { const need = wantAt(k) + wantAt(k + 1); if (need > 0) { const r = (dist(Q[k], Q[k + 1]) * 0.98) / need; if (r < 1) bad.push([k, r]); } }
+      bad.sort((x, y) => x[1] - y[1]);
+      let took = false;
+      for (const [k] of bad) {
+        const cands: { pts: V3[]; on: string[] }[] = [];
+        for (const q of [k, k + 1]) if (!fixedAt(P, q) && O[q - 1] === O[q] && O[q + 1] === O[q] && g.line(Q[q - 1], Q[q + 1], 1) >= 0) cands.push({ pts: Q.filter((_, j) => j !== q), on: O.filter((_, j) => j !== q) });
+        if (k >= 1 && k + 2 < n && !fixedAt(P, k) && !fixedAt(P, k + 1) && O[k - 1] === O[k] && O[k + 2] === O[k]) {
+          // the nearest points of the two outer legs' lines
+          const d1 = unit(sub(Q[k], Q[k - 1])), d2 = unit(sub(Q[k + 1], Q[k + 2])), w0 = sub(Q[k - 1], Q[k + 2]), bb = dot(d1, d2), den = 1 - bb * bb;
+          if (den > 1e-3) { const s1 = (bb * dot(d2, w0) - dot(d1, w0)) / den, s2 = (dot(d2, w0) - bb * dot(d1, w0)) / den;
+            if (s1 > 0 && s2 > 0) { const m = r1(lerp(add(Q[k - 1], scale(d1, s1)), add(Q[k + 2], scale(d2, s2)), 0.5)); if (g.line(Q[k - 1], m, 1) >= 0 && g.line(m, Q[k + 2], 1) >= 0) cands.push({ pts: [...Q.slice(0, k), m, ...Q.slice(k + 2)], on: [...O.slice(0, k), O[k], ...O.slice(k + 2)] }); } }
+        }
+        // the turn at a lead-out's end is over a right angle: the point after it moves out of the way back along the lead
+        for (const [v, sIdx, nx] of [[2, 1, 3], [n - 3, n - 2, n - 4]] as const) {
+          if (nx <= 2 || nx >= n - 3 || (k !== Math.min(v, nx) && k + 1 !== v) || fixedAt(P, nx) || O[nx] !== O[v]) continue;
+          const dir = unit(sub(Q[v], Q[sIdx])), back = dot(sub(Q[nx], Q[v]), dir);
+          if (back >= 0) continue;
+          const m = r1(add(Q[nx], scale(dir, -back + 0.5)));
+          if (g.at(m) === 0 && g.line(Q[v], m, 1) >= 0 && g.line(m, Q[nx + (nx > v ? 1 : -1)], 1) >= 0) cands.push({ pts: Q.map((p, j) => (j === nx ? m : p)), on: O });
+        }
+        for (const c of cands) { const t = test(c); if (t.hits <= best.hits && (!t.tight || t.tight > best.tight + 0.05)) { best = t; P = c; took = true; break; } }
+        if (took) break;
+      }
+      if (!took) break;
+    }
     // a rounded corner that cuts into a solid: move the corner out by what the rounding took off, and test again
     for (let pass = 0; pass < 3 && best.hits; pass++) {
       const Q = { pts: P.pts.map((p) => [...p] as V3), on: P.on }; let moved = false;
@@ -388,8 +422,11 @@ export class Router {
       const A = pts[i - 1], B = pts[i], C = pts[i + 1], u = unit(sub(A, B)), v = unit(sub(C, B)), la = dist(A, B), lc = dist(B, C);
       if (la < 0.3 || lc < 0.3 || dot(u, v) < 0.2) continue;   // turns of up to about 100 degrees round as they are
       const rigid = i === 2 || i === pts.length - 3;   // the leg behind it is the connector's lead-out
-      const cut = Math.min(2.2 * R, la / 2, lc / 2);
-      if (!rigid && cut >= R) {
+      // cut back c along each leg: the two new corners turn half as much each and share a middle leg 2 c cos(turn / 2)
+      // long, which must hold both their roundings (2 R tan(turn / 4)): c >= R tan(turn / 4) / cos(turn / 2), with a margin
+      const th = Math.acos(Math.max(-1, Math.min(1, -dot(u, v)))), want = Math.max(2.2 * R, (1.15 * R * Math.tan(th / 4)) / Math.max(0.05, Math.cos(th / 2)));
+      const cut = Math.min(want, la / 2, lc / 2);
+      if (!rigid && cut >= want - 1e-6) {
         const p1 = r1(add(B, scale(u, cut))), p2 = r1(add(B, scale(v, cut)));
         if (g.line(p1, p2, 1) >= 0) { pts.splice(i, 1, p1, p2); on.splice(i, 1, on[i], on[i]); i++; continue; }
       }
