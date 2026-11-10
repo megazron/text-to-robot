@@ -137,7 +137,7 @@ export function partModel(key: string): PartModel {
     b.box("pcb_blue", [0, 0, 0], [45, 20, T]);
     for (const cx of [10.5, 34.5]) { b.cyl("silver", [cx, 10, T], [cx, 10, T + 12], 8, 24); b.cyl("plastic_black", [cx, 10, T + 12], [cx, 10, T + 12.05], 6.5, 24, true); }
     b.box("silver", [19, 13, T], [26, 16.5, T + 3]);                               // crystal
-    ["Vcc", "Trig", "Echo", "Gnd"].forEach((n, i) => { const xx = 18.69 + i * P; b.box("header", [xx - 1.27, -2.5, -2.54], [xx + 1.27, 0, 0]); b.pin("gold", [xx, 1, -1.27], [xx, -8.5, -1.27]); byName(n, [xx, -8.5, -1.27], [0, -1, 0], "header"); });
+    ["Vcc", "Trig", "Echo", "GND"].forEach((n, i) => { const xx = 18.69 + i * P; b.box("header", [xx - 1.27, -2.5, -2.54], [xx + 1.27, 0, 0]); b.pin("gold", [xx, 1, -1.27], [xx, -8.5, -1.27]); byName(n, [xx, -8.5, -1.27], [0, -1, 0], "header"); });
     b.label("HC-SR04", [22.5, 3, T + 0.02], 10, 2);
   } else if (/^buck_5v|pololu_d36/.test(key)) {
     source = FOOTPRINT_SOURCES.pololu_d36v50;
