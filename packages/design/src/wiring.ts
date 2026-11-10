@@ -524,14 +524,14 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
       // the gauge sets the bend radius and the routed length sets the gauge: route with a first guess, and again if the true length wants thicker wire
       // the router lays every wire of a cable from part a to part b: a wire declared the other way round is turned for it,
       // and its laid points are turned back so they run from its own first end
-      const flip = (w: WireDecl) => w.a.inst !== ia;
+      const flip = (w: WireDecl) => w.a.inst === ib && w.b.inst !== ib;
       let awg = ws.map((w) => awgOf(w, straight * 1.4 + svc + term, pm)?.awg ?? null);
-      let out = R.cable({ key, a: ia, b: ib, od, crossing, exitA: exitAt(exA), exitB: exitAt(exB), bayA, bayB, wires: ws.map((w, i) => (flip(w) ? { from: [w.b.port, w.b.pin], to: [w.a.port, w.a.pin], awg: awg[i] } : { from: [w.a.port, w.a.pin], to: [w.b.port, w.b.pin], awg: awg[i] })) });
+      let out = R.cable({ key, a: ia, b: ib, od, crossing, exitA: exitAt(exA), exitB: exitAt(exB), bayA, bayB, wires: ws.map((w, i) => (flip(w) ? { from: [w.b.port, w.b.pin], to: [w.a.port, w.a.pin], awg: awg[i], ai: w.b.inst, bi: w.a.inst } : { from: [w.a.port, w.a.pin], to: [w.b.port, w.b.pin], awg: awg[i], ai: w.a.inst, bi: w.b.inst })) });
       let sl = slackOf(out.anchors);
       const final = ws.map((w, i) => awgOf(w, Math.ceil(((out.wires[i]?.drawn_mm ?? straight) + svc + sl.slackMm + term) / 5) * 5, pm)?.awg ?? null);
       if (final.some((x, i) => x !== null && awg[i] !== null && x < awg[i]!)) {
         awg = final.map((x, i) => (x !== null && awg[i] !== null ? Math.min(x, awg[i]!) : x));
-        out = R.cable({ key, a: ia, b: ib, od, crossing, exitA: exitAt(exA), exitB: exitAt(exB), bayA, bayB, wires: ws.map((w, i) => (flip(w) ? { from: [w.b.port, w.b.pin], to: [w.a.port, w.a.pin], awg: awg[i] } : { from: [w.a.port, w.a.pin], to: [w.b.port, w.b.pin], awg: awg[i] })) });
+        out = R.cable({ key, a: ia, b: ib, od, crossing, exitA: exitAt(exA), exitB: exitAt(exB), bayA, bayB, wires: ws.map((w, i) => (flip(w) ? { from: [w.b.port, w.b.pin], to: [w.a.port, w.a.pin], awg: awg[i], ai: w.b.inst, bi: w.a.inst } : { from: [w.a.port, w.a.pin], to: [w.b.port, w.b.pin], awg: awg[i], ai: w.a.inst, bi: w.b.inst })) });
         sl = slackOf(out.anchors);
       }
       routeProblems.push(...out.problems);

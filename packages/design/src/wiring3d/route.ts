@@ -20,7 +20,8 @@ import { add, sub, scale, dot, cross, len, unit, lerp, perp, type V3 } from "./g
 export interface ExitAt { id: string; at: V3; n: V3; hole_mm: number; }
 export interface CableIn {
   key: string; a: string; b: string; od: number;
-  wires: { from: [string, string]; to: [string, string]; awg: number | null }[];
+  /** `ai` / `bi`: the part a wire's end is on when it is not `a` / `b` (a return from the star ground in a feed's cable) */
+  wires: { from: [string, string]; to: [string, string]; awg: number | null; ai?: string; bi?: string }[];
   /** the moving joints between the two parts, in order from a to b */
   crossing: Joint[];
   exitA: ExitAt | null; exitB: ExitAt | null; bayA?: string; bayB?: string;
@@ -196,10 +197,10 @@ export class Router {
     this.ready();
     const g = this.grid, s = g.s, problems: string[] = [], n = c.wires.length;
     const ends = c.wires.map((w, i) => {
-      const a = this.pin(c.a, w.from[0], w.from[1]), b = this.pin(c.b, w.to[0], w.to[1]);
+      const a = this.pin(w.ai ?? c.a, w.from[0], w.from[1]), b = this.pin(w.bi ?? c.b, w.to[0], w.to[1]);
       if (!a || !b) return null;
       const R = wireSize(w.awg).bend;
-      return { a, b, R, la: this.leadOut(a, R, problems, `${c.a}.${w.from[1]}`), lb: this.leadOut(b, R, problems, `${c.b}.${w.to[1]}`), i };
+      return { a, b, R, la: this.leadOut(a, R, problems, `${w.ai ?? c.a}.${w.from[1]}`), lb: this.leadOut(b, R, problems, `${w.bi ?? c.b}.${w.to[1]}`), i };
     });
     if (ends.some((e) => !e)) return { trunk: [], trunkOn: [], wires: [], anchors: [], problems: [`${c.key}: an end has no place`] };
     const E = ends as NonNullable<(typeof ends)[number]>[];
