@@ -166,7 +166,7 @@ function boxHex(A: Assembly, H: Harness, b: ReturnType<typeof buildHexapod>) {
   // servos plug in under the plate (their sockets are under the case): each side's leg cables leave by a grommet in the
   // hood's side wall over the boards and go down through a hole in the plate just outside it, clear of the tray. The computer's leads
   // (USB, power, the IMU's jumpers) come in by a grommet in the -y wall under its hood's hole.
-  const lead = 12, zLead = -5;   // the pack's leads: across at y = 12, level at z = -5
+  const lead = 12, zLead = -2;   // the pack's leads run across at y = 12 and level with the switch's IN tab (3 mm over its middle)
   const hb = hoodAround(A, H, { name: "board_hood", deck: "base_link", parts: ["actuator_bus", "regulator_5v", "imu"], z0: b.zPlate, z1: 31, rocker: true, rockerFace: "x-", rockerAt: lead, noDeckHole: true,
     limit: { x0: -43, x1: 52, y0: -34, y1: 34 }, extend: { "x+": 40, "y+": 3 },
     grommets: [{ id: "usb", face: "y-", u: -24, z: -15 }, { id: "legs_left", face: "y+", u: 0, z: -15 }, { id: "legs_right", face: "y-", u: 0, z: -15 }, { id: "power", face: "x+", u: lead, z: zLead }] });
@@ -180,7 +180,7 @@ function boxHex(A: Assembly, H: Harness, b: ReturnType<typeof buildHexapod>) {
   for (const c of ["main_feed_a", "main_return"]) H.exitOf.set(c, "board_hood.power");
   const bb = b.battB, x0 = b.bx0 + bb.min[0] - 3, x1 = b.bx0 + bb.max[0] + LEAD_ROOM, y = b.bw + 4.4;
   // the tray hangs from the plate: bounds in the frame turned about x, so z runs downwards
-  hood(A, H, { name: "battery_tray", deck: "base_link", x0, x1, y0: -y, y1: y, z0: -(b.zPlate - 4), z1: -(b.zBatt - 3), parts: ["battery"], flip: true, ventRows: 0, deckGrommets: [{ id: "up", x: x1 - 6, y: 12 }] });   // under the leads' run   // where the leads have turned up (inside the board hood)
+  hood(A, H, { name: "battery_tray", deck: "base_link", x0, x1, y0: -y, y1: y, z0: -(b.zPlate - 4), z1: -(b.zBatt - 3), parts: ["battery"], flip: true, ventRows: 0, deckGrommets: [{ id: "up", x: x1 - 6, y: -12 }] });   // tray frame turned about x: world y = +12, under the leads' run   // where the leads have turned up (inside the board hood)
   H.scan();
 }
 function wireHex(A: Assembly, H: Harness, compute: string) {
