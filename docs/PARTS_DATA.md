@@ -2,32 +2,40 @@
 
 Every electrical part has dimensions and an electrical record in `packages/parts/data/electrical.json`: ports with pin names, connector, voltage, typical and peak current, signal types. Each value says where it comes from: `datasheet` with a URL, or `estimated` with the reason. `tests/parts-electrical.test.ts` fails if a part or a mark is missing. A value seen only in a search snippet or remembered is `estimated`.
 
-506 of 1056 values are from a datasheet or a manufacturer or reputable vendor page; the rest are estimated. Treat estimated pinouts as a reason to check the part in your hand before powering it.
+565 of 1364 values are from a datasheet or a manufacturer or reputable vendor page; the rest are estimated. Treat estimated pinouts as a reason to check the part in your hand before powering it.
 
 | Part | Values from a datasheet | Voltage | Current | Pins | Connector | Body size | Holes |
 |---|--:|---|---|---|---|---|---|
-| arduino_nano_clone | 0/17 | estimated | estimated | estimated | estimated | estimated | estimated |
-| arduino_nano_v3 | 3/17 | datasheet | estimated | estimated | datasheet | datasheet | estimated |
-| arduino_uno_clone | 2/20 | estimated | estimated | estimated | estimated | estimated | estimated |
-| arduino_uno_r3 | 7/20 | datasheet | estimated | estimated | datasheet | datasheet | estimated |
-| bno085_breakout | 9/14 | datasheet | datasheet | datasheet | datasheet | datasheet | estimated |
+| arduino_mega_clone | 1/27 | estimated | estimated | estimated | estimated | estimated | estimated |
+| arduino_nano_clone | 1/18 | estimated | estimated | estimated | estimated | estimated | estimated |
+| arduino_nano_v3 | 4/18 | datasheet | estimated | estimated | datasheet | datasheet | estimated |
+| arduino_uno_clone | 3/21 | estimated | estimated | estimated | estimated | estimated | estimated |
+| arduino_uno_r3 | 8/21 | datasheet | estimated | estimated | datasheet | datasheet | estimated |
+| battery_9v_pp3 | 2/9 | datasheet | estimated | estimated | estimated | datasheet | estimated |
+| battery_holder_4aa | 1/9 | datasheet | estimated | estimated | estimated | estimated | estimated |
+| battery_holder_6aa | 1/9 | datasheet | estimated | estimated | estimated | estimated | estimated |
+| bno085_breakout | 9/15 | datasheet | datasheet | datasheet | datasheet | datasheet | estimated |
 | breadboard_400 | 5/11 | estimated | estimated | estimated | estimated | datasheet | datasheet |
 | buck_5v_5a | 6/9 | datasheet | datasheet | datasheet | datasheet | datasheet | estimated |
 | buck_lm2596 | 4/12 | datasheet | datasheet | estimated | estimated | datasheet | estimated |
+| buzzer_active_5v | 0/9 | estimated | estimated | estimated | estimated | estimated | estimated |
 | canable2_usb_can | 1/11 | estimated | estimated | estimated | estimated | estimated | estimated |
 | cubemars_ak60_6 | 9/11 | datasheet | datasheet | datasheet | datasheet | datasheet | estimated |
 | cubemars_ak70_10 | 11/14 | estimated | datasheet | datasheet | datasheet | datasheet | estimated |
 | cubemars_ak80_64 | 11/14 | estimated | datasheet | datasheet | datasheet | datasheet | estimated |
 | cubemars_ak80_9 | 9/11 | datasheet | datasheet | datasheet | datasheet | datasheet | estimated |
-| cytron_mdd10a | 0/18 | estimated | estimated | estimated | estimated | estimated | estimated |
+| cytron_mdd10a | 0/19 | estimated | estimated | estimated | estimated | estimated | estimated |
 | dc_jack_5521_panel | 3/11 | estimated | estimated | estimated | datasheet | estimated | estimated |
 | dcdc_48v_12v_sd50c12 | 9/12 | datasheet | datasheet | datasheet | datasheet | datasheet | datasheet |
+| drv8833_module | 7/19 | datasheet | datasheet | estimated | estimated | estimated | estimated |
 | dxl_u2d2 | 9/17 | estimated | estimated | estimated | datasheet | datasheet | estimated |
 | dxl_xh540_w270 | 8/11 | datasheet | estimated | datasheet | datasheet | datasheet | estimated |
 | dxl_xl330_m288 | 8/11 | datasheet | estimated | datasheet | datasheet | datasheet | estimated |
 | dxl_xl430_w250 | 8/11 | datasheet | estimated | datasheet | datasheet | datasheet | estimated |
 | dxl_xm430_w350 | 8/11 | datasheet | estimated | datasheet | datasheet | datasheet | estimated |
-| esp32_s3_devkitc1 | 9/17 | estimated | datasheet | estimated | datasheet | datasheet | datasheet |
+| esp32_cam | 1/12 | estimated | estimated | estimated | estimated | estimated | estimated |
+| esp32_devkit_v1 | 2/15 | estimated | datasheet | estimated | estimated | estimated | estimated |
+| esp32_s3_devkitc1 | 10/18 | estimated | datasheet | estimated | datasheet | datasheet | datasheet |
 | estop_22mm_nc | 6/8 | datasheet | datasheet | datasheet | datasheet | datasheet | estimated |
 | feetech_fe_urt1 | 22/29 | datasheet | datasheet | estimated | datasheet | datasheet | estimated |
 | feetech_sts3215_c001 | 6/11 | datasheet | estimated | datasheet | datasheet | datasheet | estimated |
@@ -38,29 +46,38 @@ Every electrical part has dimensions and an electrical record in `packages/parts
 | feetech_sts3250 | 4/11 | datasheet | estimated | datasheet | estimated | datasheet | estimated |
 | fuse_holder_anl | 0/8 | estimated | estimated | estimated | estimated | estimated | estimated |
 | fuse_holder_atm_inline | 2/8 | datasheet | datasheet | estimated | estimated | estimated | estimated |
-| hc_sr04 | 4/8 | datasheet | datasheet | datasheet | estimated | datasheet | estimated |
-| hobby_ds3218 | 0/8 | estimated | estimated | estimated | estimated | estimated | estimated |
-| hobby_mg90s | 2/8 | estimated | estimated | estimated | datasheet | datasheet | estimated |
-| hobby_mg996r | 4/8 | datasheet | datasheet | estimated | datasheet | datasheet | estimated |
-| hobby_sg90 | 4/8 | datasheet | estimated | datasheet | datasheet | datasheet | estimated |
+| hc05_bluetooth | 0/9 | estimated | estimated | estimated | estimated | estimated | estimated |
+| hc_sr04 | 4/9 | datasheet | datasheet | datasheet | estimated | datasheet | estimated |
+| hobby_ds3218 | 0/9 | estimated | estimated | estimated | estimated | estimated | estimated |
+| hobby_mg90s | 2/9 | estimated | estimated | estimated | datasheet | datasheet | estimated |
+| hobby_mg995 | 3/9 | datasheet | estimated | estimated | datasheet | datasheet | estimated |
+| hobby_mg996r | 4/9 | datasheet | datasheet | estimated | datasheet | datasheet | estimated |
+| hobby_sg90 | 4/9 | datasheet | estimated | datasheet | datasheet | datasheet | estimated |
 | iec_c14_fused_switched | 0/11 | estimated | estimated | estimated | estimated | estimated | estimated |
-| jetson_orin_nano_super | 19/38 | datasheet | estimated | datasheet | datasheet | datasheet | estimated |
-| l298n_module | 15/21 | datasheet | datasheet | datasheet | datasheet | datasheet | estimated |
-| lcd_2in_st7789 | 6/8 | datasheet | datasheet | datasheet | datasheet | datasheet | estimated |
+| ir_obstacle_fc51 | 0/9 | estimated | estimated | estimated | estimated | estimated | estimated |
+| jetson_orin_nano_super | 19/39 | datasheet | estimated | datasheet | datasheet | datasheet | estimated |
+| l298n_module | 16/22 | datasheet | datasheet | datasheet | datasheet | datasheet | estimated |
+| l9110s_module | 5/16 | datasheet | datasheet | estimated | estimated | estimated | estimated |
+| lcd_2in_st7789 | 6/9 | datasheet | datasheet | datasheet | datasheet | datasheet | estimated |
 | led_5mm_white | 3/8 | datasheet | datasheet | estimated | estimated | estimated | datasheet |
+| line_sensor_3ch | 0/9 | estimated | estimated | estimated | estimated | estimated | estimated |
 | lipo_3s_2200 | 0/12 | estimated | estimated | estimated | estimated | estimated | estimated |
 | lipo_3s_5000 | 3/12 | estimated | datasheet | estimated | datasheet | datasheet | estimated |
 | lipo_4s_5000 | 4/12 | estimated | datasheet | estimated | datasheet | datasheet | estimated |
 | lipo_6s_10000 | 4/12 | estimated | datasheet | estimated | datasheet | datasheet | estimated |
+| mpu6050_gy521 | 0/9 | estimated | estimated | estimated | estimated | estimated | estimated |
 | n20_gearmotor_100to1 | 1/8 | estimated | estimated | estimated | datasheet | estimated | estimated |
 | nema17_42x40 | 4/8 | estimated | datasheet | datasheet | datasheet | datasheet | estimated |
 | nema17_42x40_pg5 | 4/8 | estimated | datasheet | datasheet | datasheet | datasheet | estimated |
+| oled_ssd1306_128x64 | 0/9 | estimated | estimated | estimated | estimated | estimated | estimated |
 | pack_2s_18650 | 3/9 | datasheet | datasheet | estimated | estimated | estimated | estimated |
-| pca9685_16ch | 42/63 | datasheet | datasheet | datasheet | datasheet | datasheet | estimated |
-| pca9685_clone | 41/63 | datasheet | datasheet | datasheet | datasheet | estimated | estimated |
-| pololu_37d_30to1_64cpr | 3/8 | estimated | estimated | datasheet | datasheet | datasheet | estimated |
-| pololu_37d_50to1_64cpr | 3/8 | estimated | estimated | datasheet | datasheet | datasheet | estimated |
-| pololu_37d_70to1_64cpr | 3/8 | estimated | estimated | datasheet | datasheet | datasheet | estimated |
+| pca9685_16ch | 43/64 | datasheet | datasheet | datasheet | datasheet | datasheet | estimated |
+| pca9685_clone | 42/64 | datasheet | datasheet | datasheet | datasheet | estimated | estimated |
+| pir_hc_sr501 | 0/9 | estimated | estimated | estimated | estimated | estimated | estimated |
+| pololu_37d_30to1_64cpr | 4/9 | estimated | estimated | datasheet | datasheet | datasheet | estimated |
+| pololu_37d_50to1_64cpr | 4/9 | estimated | estimated | datasheet | datasheet | datasheet | estimated |
+| pololu_37d_70to1_64cpr | 4/9 | estimated | estimated | datasheet | datasheet | datasheet | estimated |
+| powerbank_5v_2a | 4/9 | estimated | datasheet | estimated | datasheet | datasheet | estimated |
 | psu_12v_lrs150 | 9/12 | datasheet | datasheet | datasheet | datasheet | datasheet | datasheet |
 | psu_12v_lrs75 | 9/12 | datasheet | datasheet | datasheet | datasheet | datasheet | datasheet |
 | psu_24v_lrs150 | 9/12 | datasheet | datasheet | datasheet | datasheet | datasheet | datasheet |
@@ -68,21 +85,27 @@ Every electrical part has dimensions and an electrical record in `packages/parts
 | psu_5v4a_adapter | 8/12 | datasheet | datasheet | datasheet | datasheet | datasheet | estimated |
 | psu_5v_lrs50 | 9/12 | datasheet | datasheet | datasheet | datasheet | datasheet | datasheet |
 | realsense_d435i | 5/11 | estimated | datasheet | estimated | datasheet | datasheet | estimated |
-| rpi5 | 14/41 | estimated | datasheet | estimated | datasheet | datasheet | datasheet |
+| rpi4_4gb | 8/24 | estimated | estimated | estimated | datasheet | datasheet | datasheet |
+| rpi5 | 14/42 | estimated | datasheet | estimated | datasheet | datasheet | datasheet |
 | rpi_camera_module_3 | 6/11 | datasheet | estimated | datasheet | estimated | datasheet | datasheet |
+| rpi_zero_2w | 6/21 | estimated | estimated | estimated | datasheet | datasheet | datasheet |
 | rplidar_a1m8 | 10/14 | datasheet | datasheet | datasheet | datasheet | datasheet | estimated |
 | rplidar_c1 | 5/8 | datasheet | datasheet | datasheet | datasheet | datasheet | estimated |
+| stepper_28byj48 | 1/8 | datasheet | estimated | estimated | estimated | estimated | estimated |
 | switch_battery_6006 | 0/8 | estimated | estimated | estimated | estimated | estimated | estimated |
 | switch_kcd1 | 1/8 | estimated | estimated | estimated | estimated | datasheet | estimated |
 | switch_kcd4 | 0/8 | estimated | estimated | estimated | estimated | estimated | estimated |
-| tb6612fng_module | 11/18 | datasheet | datasheet | datasheet | datasheet | estimated | estimated |
-| tmc2209_stepstick | 7/15 | datasheet | estimated | datasheet | datasheet | estimated | estimated |
+| tb6612fng_module | 12/19 | datasheet | datasheet | datasheet | datasheet | estimated | estimated |
+| tcrt5000_module | 0/9 | estimated | estimated | estimated | estimated | estimated | estimated |
+| tmc2209_stepstick | 7/16 | datasheet | estimated | datasheet | datasheet | estimated | estimated |
 | tt_gearmotor_1to48 | 4/8 | datasheet | estimated | estimated | datasheet | datasheet | estimated |
+| uln2003_module | 3/16 | estimated | datasheet | estimated | estimated | estimated | estimated |
 | usb_can_adapter | 3/11 | estimated | estimated | estimated | datasheet | estimated | estimated |
 | usb_can_canable2 | 1/11 | estimated | estimated | estimated | estimated | estimated | estimated |
+| vl53l0x_breakout | 1/9 | estimated | datasheet | estimated | estimated | estimated | estimated |
 | wago_221_415 | 0/8 | estimated | estimated | estimated | estimated | estimated | estimated |
 | waveshare_bus_servo_adapter | 7/20 | datasheet | estimated | estimated | datasheet | estimated | datasheet |
-| ws2812_ring_12 | 4/8 | datasheet | datasheet | datasheet | estimated | datasheet | estimated |
+| ws2812_ring_12 | 5/9 | datasheet | datasheet | datasheet | estimated | datasheet | estimated |
 
 ## Where the sources disagree with the catalog
 

@@ -16,7 +16,7 @@ import type { Mount, WorldMount } from "./snap.ts";
 // @ts-expect-error: plain JavaScript module without types
 import { makeZip } from "../../public/robotkit.js";
 
-export const API_VERSION = "1.0.0";
+export const API_VERSION = "1.1.0";
 export type { RobotSpecification, EditOp, PrintedParams, Mount, WorldMount };
 export { applyEdits, toScene, fromScene, worldFrames, rootLink, subtree, parentJoint, kindOf, poseMat, matPose, mul, inv, apply, emptyRobot, freeName, type Scene, type SceneNode } from "./edit.ts";
 export { snapPart, mate, mountFrame, compatible, patternsMatch, MATES, type Snap } from "./snap.ts";
@@ -53,6 +53,11 @@ export interface Electronics3D {
   notes: string[]; checks?: HarnessCheck;
 }
 export interface ForgeProgress { stage: string; [k: string]: unknown; }
+export interface InventoryItem { key: string; qty: number; name: string; raw: string; match: string; assumed?: string; note?: string; }
+export interface Inventory { items: InventoryItem[]; extras: { what: string; qty: number; raw: string; note: string }[]; unknown: { raw: string; qty: number; suggestions: { key: string; name: string; score: number }[] }[]; notes: string[]; }
+export interface PartsOption { id: string; kind: string; label: string; blurb: string; uses: Record<string, number>; buys: Record<string, number>; used_count: number; inventory_count: number; extra_usd: number; headline: string; honesty: string[]; score: number; thumbnail: string; [k: string]: unknown; }
+export interface PartsDesign { option: PartsOption; robot: RobotSpecification; bom: unknown; failing: string[]; shopping: { key: string | null; name: string; qty: number; unit_usd: number; subtotal_usd: number; url: string | null; why: string }[]; to_buy_usd: number; summary: string; }
+export interface FromPartsResult { inventory: Inventory; options: PartsOption[]; designs: Record<string, PartsDesign>; cannot?: { reason: string; add: { key: string; qty: number; usd: number }[]; then: string }; notes: string[]; }
 
 export interface Engine {
   readonly version: string;
@@ -106,6 +111,17 @@ export interface Engine {
   electronics3d(robot: RobotSpecification, options?: { checks?: boolean }): Promise<Electronics3D>;
   /** The electronics and harness at the home pose as one binary glTF (metres, Y up): a node per part and per wire. */
   electronicsGlb(robot: RobotSpecification): Promise<ArrayBuffer>;
+  /** Read a parts list ("I have an Arduino Uno, 2 TT motors, an L298N ..."): catalog parts with quantities, extras, not recognised lines with suggestions. (1.1) */
+  parseInventory(text: string): Promise<Inventory>;
+  /** Search the parts catalog for a parts picker. (1.1) */
+  searchParts(query: string, limit?: number): Promise<{ key: string; name: string; category: string; price_usd: number }[]>;
+  /**
+   * Build from my parts: the robots a parts list can build, best first (how much of the list each uses, what it needs on
+   * top), with the designs asked for (`design`: "top" by default, "all", "none" or an option id). (1.1)
+   */
+  fromParts(inventory: string | { key: string; qty?: number }[] | Record<string, number> | Inventory, options?: { design?: string; limit?: number; budget?: number; prompt?: string }): Promise<FromPartsResult>;
+  /** The Arduino sketch (or Pi script) of a robot built from a parts list, with its pin assignments. (1.1) */
+  firmware(robot: RobotSpecification): Promise<{ name: string; language: "arduino" | "python"; code: string; fqbn: string; libraries: string[] }>;
   /** A zip archive of export files. */
   zip(files: Files): Blob;
   /** How many times the engine's worker was replaced (its CAD kernel memory was full, or it aborted). */
@@ -209,6 +225,10 @@ export async function createEngine(opts: { base?: string | URL; onProgress?: (p:
     breadboard: (robot) => json("POST", "/api/engine/breadboard", { robot }),
     electronicsGlb: (robot) => bytes("POST", "/api/engine/electronics-glb", { robot }),
     electronics3d: (robot, options) => json("POST", "/api/engine/electronics3d", { robot, options: options ?? {} }),
+    parseInventory: (text) => json("POST", "/api/engine/parse-inventory", { text }),
+    searchParts: async (query, limit) => (await json<{ parts: never }>("POST", "/api/engine/parts-search", { query, limit })).parts,
+    fromParts: (inventory, options) => json("POST", "/api/engine/from-parts", { inventory, options }),
+    firmware: (robot) => json("POST", "/api/engine/firmware", { robot }),
     zip: (f) => makeZip(f) as Blob,
     get recycles() { return recycles; },
     terminate: () => worker.terminate(),

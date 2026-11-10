@@ -3,13 +3,13 @@
 // the checks and engineering numbers of any spec (designed, edited or built from nothing), URDF and xacro, and meshes.
 import type { RobotSpecification, Geometry, Vec3 } from "@ttr/robot-schema";
 import { validateSpec } from "@ttr/robot-schema";
-import { finalizeSpec } from "@ttr/robot-generator";
+import { finalizeSpec, parseInventory, searchParts, fromParts, type FromPartsOptions } from "@ttr/robot-generator";
 import { generateUrdf, generateXacro } from "@ttr/urdf-generator";
 import { validateUrdf } from "@ttr/urdf-validator";
 import { CATALOG, part, rating, electrical, hornRadiusMm } from "@ttr/parts";
 import { buildPart, toStlBinary, meshGeometry } from "@ttr/mesh";
 import { buildBom } from "@ttr/components";
-import { schematic, breadboard, electricalReport, layoutProblems, wiringSvg, wiringMarkdown, wiring3d, checkHarness, electronicsGlb, type WiringRecord } from "@ttr/design";
+import { schematic, breadboard, electricalReport, layoutProblems, wiringSvg, wiringMarkdown, wiring3d, checkHarness, electronicsGlb, firmwareFor, type WiringRecord } from "@ttr/design";
 import { componentGeometry, PRINT_DENSITY, MATERIALS, withSolids, interferences, worstTorques, comWorld, totalMass, evaluate, axisInertias, descendants, type DesignRecord } from "@ttr/design";
 import { partFiles } from "@ttr/kernel/ready";
 import { applyEdits, emptyRobot, kindOf, rootLink, worldFrames, mul, inv, poseMat, rotate, unit, partsBaseline, type EditOp, type PartProvider, type PrintedParams, type StudioMeta } from "./edit.ts";
@@ -17,7 +17,7 @@ import { partMounts, printedMounts, printedProgram, worldMounts } from "./mounts
 import { clearanceAtHome, autoWireCached } from "./incremental.ts";
 import { stability, type Stability } from "./stability.ts";
 
-export const ENGINE_API_VERSION = "1.0.0";
+export const ENGINE_API_VERSION = "1.1.0";
 const MATERIAL: Record<string, string> = { actuator: "actuator", wheel: "rubber", battery: "battery", compute: "electronics", sensor: "electronics", motor_driver: "electronics", misc: "electronics", bearing: "metal", horn: "metal" };
 const BED_MM: Vec3 = [250, 210, 220];
 
@@ -312,6 +312,14 @@ export async function engineApi(method: string, path: string, body: any): Promis
   if (method === "POST" && p === "sweep") return json(200, { samples: sweep(body.robot, String(body.joint), Number(body.samples ?? 24)) });
   if (method === "POST" && p === "urdf") { const spec = finalizeSpec(structuredClone(body.robot)); return json(200, { urdf: generateUrdf(spec), xacro: generateXacro(spec) }); }
   if (method === "POST" && p === "mesh") return new Response(toStlBinary(buildPart(body.geometry), 1) as BodyInit, { headers: { "Content-Type": "model/stl" } });
+  // build from my parts (1.1): read a parts list, rank what it builds, design an option, the sketch for a design
+  if (method === "POST" && p === "parse-inventory") return json(200, parseInventory(String(body.text ?? "")));
+  if (method === "POST" && p === "parts-search") return json(200, { parts: searchParts(String(body.query ?? ""), Number(body.limit ?? 12)) });
+  if (method === "POST" && p === "from-parts") {
+    if (body.inventory === undefined || body.inventory === null) return json(400, { error: "provide an inventory: a parts list as text, [{ key, qty }] or { key: qty }" });
+    return json(200, fromParts(body.inventory, (body.options ?? {}) as FromPartsOptions));
+  }
+  if (method === "POST" && p === "firmware") { const f = firmwareFor(body.robot); return f ? json(200, f) : json(404, { error: "this robot has no generated program (only robots built from a parts list carry their pin plan)" }); }
   const pm = /^part\/([A-Za-z0-9_.-]+)\.stl$/.exec(p);
   if (method === "GET" && pm && CATALOG[pm[1]]) return new Response(toStlBinary(buildPart(componentGeometry(pm[1]) as never), 1) as BodyInit, { headers: { "Content-Type": "model/stl" } });
   return json(404, { error: "unknown engine endpoint" });

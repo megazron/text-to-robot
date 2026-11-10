@@ -132,12 +132,21 @@ test("a robot built by hand has a valid URDF, a sized joint and the same exports
   assert.match(generateXacro(report.robot), /<robot/);
 });
 
+const spec0 = () => example("18_arduino_car");
 test("the /api/engine endpoints answer like the client expects", async () => {
   const get = async (method: string, path: string, body: unknown = {}) => { const r = await engineApi(method, path, body); return { status: r.status, body: r.headers.get("Content-Type")?.includes("json") ? await r.json() : await r.arrayBuffer() }; };
-  assert.equal((await get("GET", "/api/engine/version")).body.api, "1.0.0");
+  assert.equal((await get("GET", "/api/engine/version")).body.api, "1.1.0");
   const cat = (await get("GET", "/api/engine/catalog")).body;
   assert.ok(cat.parts.length > 80 && cat.parts.every((p: { mounts: unknown[] }) => p.mounts.length >= 1) && cat.printed.length >= 6);
   assert.ok(cat.parts.find((p: { key: string }) => p.key === "hobby_sg90").rating.range_deg === 180);
+  // build from my parts (1.1)
+  const inv = (await get("POST", "/api/engine/parse-inventory", { text: "mere paas 2 motor aur ek Arduino hai" })).body;
+  assert.deepEqual(inv.items.map((i: { key: string; qty: number }) => [i.key, i.qty]), [["tt_gearmotor_1to48", 2], ["arduino_uno_clone", 1]]);
+  const fp = (await get("POST", "/api/engine/from-parts", { inventory: { tt_gearmotor_1to48: 2, arduino_uno_clone: 1, hc_sr04: 1 }, options: { design: "none" } })).body;
+  assert.equal(fp.options[0].kind, "obstacle_car"); assert.match(fp.options[0].headline, /^uses 4\/4 of your parts/);
+  assert.equal((await get("POST", "/api/engine/from-parts", {})).status, 400);
+  assert.equal((await get("POST", "/api/engine/parts-search", { query: "sg90" })).body.parts[0].key, "hobby_sg90");
+  assert.equal((await get("POST", "/api/engine/firmware", { robot: spec0() })).status, 404, "a stock design carries no pin plan");
   const stl = (await get("GET", "/api/engine/part/hobby_sg90.stl")).body as ArrayBuffer;
   assert.ok(new DataView(stl).getUint32(80, true) > 10);
   const spec = example("18_arduino_car");

@@ -96,6 +96,10 @@ SCRIPT = """async ([url, prompt]) => {
   const hb = await engine.check(r, { interference: false, wiring: false });
   out.handBuilt = { links: hb.robot.links.length, spec: hb.checks.find(c => c.name === "spec").pass, urdf: hb.checks.find(c => c.name === "urdf").pass };
   out.pure = applyEdits(r, [{ op: "rename", link: "servo", to: "base_servo" }]).links.some(l => l.name === "base_servo");
+  // build from my parts (1.1): read a list and rank what it builds (no design: the site check designs one)
+  const inv = await engine.parseInventory("I have an Arduino Uno, 2 TT gear motors, an L298N, an HC-SR04, 4 AA batteries and a servo SG90");
+  const fp = await engine.fromParts(inv, { design: "none" });
+  out.parts_mode = { items: inv.items.length, options: fp.options.map(o => o.id), headline: fp.options[0]?.headline ?? "", search: (await engine.searchParts("l298n"))[0]?.key };
   engine.terminate();
   // a 1 MB kernel limit: the worker is replaced after every design, and a robot designed earlier still serves its meshes
   const small = await createEngine({ recycleMb: 1 });
@@ -129,7 +133,7 @@ if result.get("error"): sys.exit(f"FAIL: {result['error']} (after {list(result)}
 report = {"engine": engine_url, "page_origin": other_origin, "result": result, "errors": errors}
 (args.out / "report.json").write_text(json.dumps(report, indent=2) + "\n")
 fail = []
-if result["version"] != "1.0.0": fail.append("version")
+if result["version"] != "1.1.0": fail.append("version")
 if result["parts"] < 80 or result["withMounts"] != result["parts"] or result["printed"] < 6: fail.append("catalog")
 if result["design"] != {"name": expected["robot_name"], "links": len(expected["links"]), "joints": len(expected["joints"])}: fail.append(f"design differs from the example: {result['design']}")
 for k in ["roundTrip", "edited", "urdf", "pure"]:
@@ -139,6 +143,8 @@ if not sch.get("svg") or sch.get("pdf") != "%PDF-" or sch.get("layout") or sch.g
 if not bb.get("svg") or bb.get("layout") or bb.get("unrouted"): fail.append("breadboard")
 e3 = result.get("electronics3d", {})
 if e3.get("parts", 0) < 3 or e3.get("wires", 0) < 3 or not e3.get("linked") or e3.get("glb") != "glTF" or e3.get("notes"): fail.append("electronics3d")
+pm = result.get("parts_mode", {})
+if pm.get("items") != 6 or not pm.get("options") or not pm.get("headline", "").startswith("uses ") or pm.get("search") != "l298n_module": fail.append(f"parts mode: {pm}")
 if result["ros2"] < 10 or result["zip"] < 10000: fail.append("ros2 export")
 if not (result["handBuilt"]["links"] == 2 and result["handBuilt"]["spec"] and result["handBuilt"]["urdf"]): fail.append(f"hand built: {result['handBuilt']}")
 if result["partMesh"] < 10: fail.append("part mesh")

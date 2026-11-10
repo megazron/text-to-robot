@@ -3,7 +3,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { CATALOG, ELECTRICAL, WIRING, electrical, type Sourced } from "@ttr/parts";
 
-const ELECTRICAL_MISC = /^(breadboard_|buck_|dc_jack|dcdc_|estop|fuse_holder|iec_|led_|psu_|switch_|wago_|ws2812)/;
+const ELECTRICAL_MISC = /^(breadboard_|buck_|buzzer_|dc_jack|dcdc_|estop|fuse_holder|iec_|led_|psu_|switch_|wago_|ws2812)/;
 const parts = Object.values(CATALOG).filter((c) => ["actuator", "compute", "sensor", "motor_driver", "battery"].includes(c.category) || ELECTRICAL_MISC.test(c.key));
 const SIGNALS = new Set(["ground", "power", "pwm", "digital", "analog", "i2c_sda", "i2c_scl", "uart_tx", "uart_rx", "ttl_half_duplex", "rs485_a", "rs485_b", "can_h", "can_l", "usb", "csi", "spi", "motor_phase", "encoder", "one_wire_led", "mains"]);
 function sourced(key: string, what: string, s: Sourced<unknown> | undefined) {

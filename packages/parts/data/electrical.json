@@ -1,4 +1,824 @@
 {
+ "arduino_mega_clone": {
+  "dimensions": {
+   "body_mm": {
+    "v": [
+     101.6,
+     53.3,
+     12.6
+    ],
+    "src": "estimated",
+    "note": "Mega 2560 R3 outline 4.0 x 2.1 in; clones follow it, catalog height includes the USB-B socket"
+   },
+   "holes": {
+    "v": [
+     {
+      "x": 13.97,
+      "y": 2.54,
+      "d": 3.2,
+      "thread": "M3"
+     },
+     {
+      "x": 15.24,
+      "y": 50.8,
+      "d": 3.2,
+      "thread": "M3"
+     },
+     {
+      "x": 66.04,
+      "y": 7.62,
+      "d": 3.2,
+      "thread": "M3"
+     },
+     {
+      "x": 66.04,
+      "y": 35.56,
+      "d": 3.2,
+      "thread": "M3"
+     },
+     {
+      "x": 90.17,
+      "y": 50.8,
+      "d": 3.2,
+      "thread": "M3"
+     },
+     {
+      "x": 96.52,
+      "y": 2.54,
+      "d": 3.2,
+      "thread": "M3"
+     }
+    ],
+    "src": "estimated",
+    "note": "Arduino Mega 2560 R3 board outline (550/100, 600/2000, 2600/300, 2600/1400, 3550/2000, 3800/100 mil), from memory of the Arduino design files; the datasheet figure was not read here"
+   },
+   "hole_note": "origin = PCB corner on the USB/jack edge, x along the long side. The four Uno holes plus two at the far end."
+  },
+  "electrical": {
+   "role": "controller",
+   "voltage_v": {
+    "v": {
+     "min": 7,
+     "nom": 9,
+     "max": 12
+    },
+    "src": "estimated",
+    "url": "https://docs.arduino.cc/resources/datasheets/A000067-datasheet.pdf",
+    "note": "Mega 2560 recommended input 7-12 V (Arduino); clone regulators vary, so 20 V should not be assumed"
+   },
+   "current_a": {
+    "v": {
+     "typical": 0.07,
+     "peak": 0.5
+    },
+    "src": "estimated",
+    "note": "board alone about 70 mA (ATmega2560 + CH340 + LEDs); 0.5 A is the USB polyfuse"
+   },
+   "heat_w": {
+    "v": 0.35,
+    "src": "estimated",
+    "note": "5 V x 70 mA typical; regulator adds more when fed from VIN"
+   },
+   "logic": {
+    "v": {
+     "io_v": 5.0,
+     "vih_v": 3.0,
+     "max_in_v": 5.5
+    },
+    "src": "datasheet",
+    "url": "https://ww1.microchip.com/downloads/en/devicedoc/atmel-2549-8-bit-avr-microcontroller-atmega640-1280-1281-2560-2561_datasheet.pdf",
+    "note": "ATmega2560 at VCC 5 V: VIH min 0.6 VCC = 3.0 V, pins to VCC + 0.5 V."
+   },
+   "ports": [
+    {
+     "name": "usb",
+     "connector": {
+      "v": "USB-B receptacle on the short edge (CH340 bridge)",
+      "src": "estimated",
+      "note": "from catalog; varies per seller"
+     },
+     "mate": {
+      "v": "USB A-to-B cable",
+      "src": "estimated",
+      "note": "from memory"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "VBUS",
+        "signal": "power",
+        "dir": "power_in"
+       },
+       {
+        "pin": "2",
+        "name": "D-",
+        "signal": "usb",
+        "dir": "bidir"
+       },
+       {
+        "pin": "3",
+        "name": "D+",
+        "signal": "usb",
+        "dir": "bidir"
+       },
+       {
+        "pin": "5",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       }
+      ],
+      "src": "estimated",
+      "note": "standard USB pin assignment, from memory"
+     }
+    },
+    {
+     "name": "power_jack",
+     "connector": {
+      "v": "Power jack 2.1 x 5.5 mm",
+      "src": "estimated",
+      "note": "assumed same as Mega 2560 R3"
+     },
+     "mate": {
+      "v": "5.5 x 2.1 mm barrel plug, centre positive",
+      "src": "estimated",
+      "note": "polarity from memory"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "tip",
+        "name": "VIN",
+        "signal": "power",
+        "dir": "power_in"
+       },
+       {
+        "pin": "sleeve",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       }
+      ],
+      "src": "estimated",
+      "note": "from memory"
+     }
+    },
+    {
+     "name": "jpower",
+     "connector": {
+      "v": "8-pin female 2.54 mm socket header (power)",
+      "src": "estimated",
+      "note": "Uno R3 / Mega R3 layout"
+     },
+     "mate": {
+      "v": "2.54 mm male pin or Dupont jumper",
+      "src": "estimated",
+      "note": "from memory"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "NC",
+        "signal": "digital",
+        "dir": "in"
+       },
+       {
+        "pin": "2",
+        "name": "IOREF",
+        "signal": "power",
+        "dir": "power_out"
+       },
+       {
+        "pin": "3",
+        "name": "RESET",
+        "signal": "digital",
+        "dir": "in"
+       },
+       {
+        "pin": "4",
+        "name": "3V3",
+        "signal": "power",
+        "dir": "power_out"
+       },
+       {
+        "pin": "5",
+        "name": "5V",
+        "signal": "power",
+        "dir": "power_out"
+       },
+       {
+        "pin": "6",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "7",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "8",
+        "name": "VIN",
+        "signal": "power",
+        "dir": "power_in"
+       }
+      ],
+      "src": "estimated",
+      "url": "https://docs.arduino.cc/resources/datasheets/A000067-datasheet.pdf",
+      "note": "R3 power header, same as the Uno"
+     }
+    },
+    {
+     "name": "janalog",
+     "connector": {
+      "v": "2 x 8-pin female 2.54 mm socket headers (A0-A7, A8-A15)",
+      "src": "estimated",
+      "note": "Mega R3 layout"
+     },
+     "mate": {
+      "v": "2.54 mm male pin or Dupont jumper",
+      "src": "estimated",
+      "note": "from memory"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "A0",
+        "signal": "analog",
+        "dir": "in"
+       },
+       {
+        "pin": "2",
+        "name": "A1",
+        "signal": "analog",
+        "dir": "in"
+       },
+       {
+        "pin": "3",
+        "name": "A2",
+        "signal": "analog",
+        "dir": "in"
+       },
+       {
+        "pin": "4",
+        "name": "A3",
+        "signal": "analog",
+        "dir": "in"
+       },
+       {
+        "pin": "5",
+        "name": "A4",
+        "signal": "analog",
+        "dir": "in"
+       },
+       {
+        "pin": "6",
+        "name": "A5",
+        "signal": "analog",
+        "dir": "in"
+       },
+       {
+        "pin": "7",
+        "name": "A6",
+        "signal": "analog",
+        "dir": "in"
+       },
+       {
+        "pin": "8",
+        "name": "A7",
+        "signal": "analog",
+        "dir": "in"
+       },
+       {
+        "pin": "9",
+        "name": "A8",
+        "signal": "analog",
+        "dir": "in"
+       },
+       {
+        "pin": "10",
+        "name": "A9",
+        "signal": "analog",
+        "dir": "in"
+       },
+       {
+        "pin": "11",
+        "name": "A10",
+        "signal": "analog",
+        "dir": "in"
+       },
+       {
+        "pin": "12",
+        "name": "A11",
+        "signal": "analog",
+        "dir": "in"
+       },
+       {
+        "pin": "13",
+        "name": "A12",
+        "signal": "analog",
+        "dir": "in"
+       },
+       {
+        "pin": "14",
+        "name": "A13",
+        "signal": "analog",
+        "dir": "in"
+       },
+       {
+        "pin": "15",
+        "name": "A14",
+        "signal": "analog",
+        "dir": "in"
+       },
+       {
+        "pin": "16",
+        "name": "A15",
+        "signal": "analog",
+        "dir": "in"
+       }
+      ],
+      "src": "estimated",
+      "url": "https://docs.arduino.cc/resources/datasheets/A000067-datasheet.pdf",
+      "note": "Mega R3 analog headers"
+     }
+    },
+    {
+     "name": "jdigital",
+     "connector": {
+      "v": "female 2.54 mm socket headers along the top edge (D0-D21, AREF, SDA, SCL)",
+      "src": "estimated",
+      "note": "Mega R3 layout"
+     },
+     "mate": {
+      "v": "2.54 mm male pin or Dupont jumper",
+      "src": "estimated",
+      "note": "from memory"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "D0",
+        "signal": "uart_rx",
+        "dir": "in"
+       },
+       {
+        "pin": "2",
+        "name": "D1",
+        "signal": "uart_tx",
+        "dir": "out"
+       },
+       {
+        "pin": "3",
+        "name": "D2",
+        "signal": "pwm",
+        "dir": "bidir"
+       },
+       {
+        "pin": "4",
+        "name": "D3",
+        "signal": "pwm",
+        "dir": "bidir"
+       },
+       {
+        "pin": "5",
+        "name": "D4",
+        "signal": "pwm",
+        "dir": "bidir"
+       },
+       {
+        "pin": "6",
+        "name": "D5",
+        "signal": "pwm",
+        "dir": "bidir"
+       },
+       {
+        "pin": "7",
+        "name": "D6",
+        "signal": "pwm",
+        "dir": "bidir"
+       },
+       {
+        "pin": "8",
+        "name": "D7",
+        "signal": "pwm",
+        "dir": "bidir"
+       },
+       {
+        "pin": "9",
+        "name": "D8",
+        "signal": "pwm",
+        "dir": "bidir"
+       },
+       {
+        "pin": "10",
+        "name": "D9",
+        "signal": "pwm",
+        "dir": "bidir"
+       },
+       {
+        "pin": "11",
+        "name": "D10",
+        "signal": "pwm",
+        "dir": "bidir"
+       },
+       {
+        "pin": "12",
+        "name": "D11",
+        "signal": "pwm",
+        "dir": "bidir"
+       },
+       {
+        "pin": "13",
+        "name": "D12",
+        "signal": "pwm",
+        "dir": "bidir"
+       },
+       {
+        "pin": "14",
+        "name": "D13",
+        "signal": "pwm",
+        "dir": "bidir"
+       },
+       {
+        "pin": "15",
+        "name": "D14",
+        "signal": "uart_tx",
+        "dir": "out"
+       },
+       {
+        "pin": "16",
+        "name": "D15",
+        "signal": "uart_rx",
+        "dir": "in"
+       },
+       {
+        "pin": "17",
+        "name": "D16",
+        "signal": "uart_tx",
+        "dir": "out"
+       },
+       {
+        "pin": "18",
+        "name": "D17",
+        "signal": "uart_rx",
+        "dir": "in"
+       },
+       {
+        "pin": "19",
+        "name": "D18",
+        "signal": "uart_tx",
+        "dir": "out"
+       },
+       {
+        "pin": "20",
+        "name": "D19",
+        "signal": "uart_rx",
+        "dir": "in"
+       },
+       {
+        "pin": "21",
+        "name": "D20",
+        "signal": "i2c_sda",
+        "dir": "bidir"
+       },
+       {
+        "pin": "22",
+        "name": "D21",
+        "signal": "i2c_scl",
+        "dir": "bidir"
+       },
+       {
+        "pin": "23",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "24",
+        "name": "AREF",
+        "signal": "analog",
+        "dir": "in"
+       },
+       {
+        "pin": "25",
+        "name": "SDA",
+        "signal": "i2c_sda",
+        "dir": "bidir"
+       },
+       {
+        "pin": "26",
+        "name": "SCL",
+        "signal": "i2c_scl",
+        "dir": "bidir"
+       }
+      ],
+      "src": "estimated",
+      "url": "https://docs.arduino.cc/resources/datasheets/A000067-datasheet.pdf",
+      "note": "D0-D13 and the communication header D14-D21; SDA/SCL by AREF are the same bus as D20/D21"
+     }
+    },
+    {
+     "name": "jdouble",
+     "connector": {
+      "v": "2 x 18 female 2.54 mm socket header at the far end (5V, D22-D53, GND)",
+      "src": "estimated",
+      "note": "Mega R3 layout"
+     },
+     "mate": {
+      "v": "2.54 mm male pin, Dupont or ribbon",
+      "src": "estimated",
+      "note": "from memory"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "5V",
+        "signal": "power",
+        "dir": "power_out"
+       },
+       {
+        "pin": "2",
+        "name": "5V",
+        "signal": "power",
+        "dir": "power_out"
+       },
+       {
+        "pin": "3",
+        "name": "D22",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "4",
+        "name": "D23",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "5",
+        "name": "D24",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "6",
+        "name": "D25",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "7",
+        "name": "D26",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "8",
+        "name": "D27",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "9",
+        "name": "D28",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "10",
+        "name": "D29",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "11",
+        "name": "D30",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "12",
+        "name": "D31",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "13",
+        "name": "D32",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "14",
+        "name": "D33",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "15",
+        "name": "D34",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "16",
+        "name": "D35",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "17",
+        "name": "D36",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "18",
+        "name": "D37",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "19",
+        "name": "D38",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "20",
+        "name": "D39",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "21",
+        "name": "D40",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "22",
+        "name": "D41",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "23",
+        "name": "D42",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "24",
+        "name": "D43",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "25",
+        "name": "D44",
+        "signal": "pwm",
+        "dir": "bidir"
+       },
+       {
+        "pin": "26",
+        "name": "D45",
+        "signal": "pwm",
+        "dir": "bidir"
+       },
+       {
+        "pin": "27",
+        "name": "D46",
+        "signal": "pwm",
+        "dir": "bidir"
+       },
+       {
+        "pin": "28",
+        "name": "D47",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "29",
+        "name": "D48",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "30",
+        "name": "D49",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "31",
+        "name": "D50",
+        "signal": "spi",
+        "dir": "bidir"
+       },
+       {
+        "pin": "32",
+        "name": "D51",
+        "signal": "spi",
+        "dir": "bidir"
+       },
+       {
+        "pin": "33",
+        "name": "D52",
+        "signal": "spi",
+        "dir": "bidir"
+       },
+       {
+        "pin": "34",
+        "name": "D53",
+        "signal": "spi",
+        "dir": "bidir"
+       },
+       {
+        "pin": "35",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "36",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       }
+      ],
+      "src": "estimated",
+      "url": "https://docs.arduino.cc/resources/datasheets/A000067-datasheet.pdf",
+      "note": "Mega R3 double header; D50-D53 are SPI (MISO, MOSI, SCK, SS)"
+     }
+    },
+    {
+     "name": "icsp",
+     "connector": {
+      "v": "2x3 pin header, 2.54 mm (ICSP)",
+      "src": "estimated",
+      "note": "Uno / Mega layout"
+     },
+     "mate": {
+      "v": "2x3 female ISP cable",
+      "src": "estimated",
+      "note": "from memory"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "MISO",
+        "signal": "spi",
+        "dir": "bidir"
+       },
+       {
+        "pin": "2",
+        "name": "5V",
+        "signal": "power",
+        "dir": "power_out"
+       },
+       {
+        "pin": "3",
+        "name": "SCK",
+        "signal": "spi",
+        "dir": "bidir"
+       },
+       {
+        "pin": "4",
+        "name": "MOSI",
+        "signal": "spi",
+        "dir": "bidir"
+       },
+       {
+        "pin": "5",
+        "name": "RESET",
+        "signal": "digital",
+        "dir": "in"
+       },
+       {
+        "pin": "6",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       }
+      ],
+      "src": "estimated",
+      "note": "standard AVR ICSP pinout"
+     }
+    }
+   ],
+   "notes": "Generic clone of the Mega 2560 R3, CH340 USB (driver needed on some PCs). PWM on D2-D13 and D44-D46; 16 analog inputs; four UARTs (Serial on D0/D1 shares the USB). I2C on D20/D21 (also SDA/SCL by AREF). SPI on D50-D53 and ICSP. 5 V logic. DC current per I/O pin 20 mA. Do not power servos from the 5V pin."
+  }
+ },
  "arduino_nano_clone": {
   "dimensions": {
    "body_mm": {
@@ -1689,6 +2509,297 @@
    "notes": "DC current per I/O pin 20 mA, 3.3 V pin 50 mA (store tech specs). 5 V logic. A4/A5 and the SDA/SCL pins are the same bus. Do not power servos from the 5V pin."
   }
  },
+ "battery_9v_pp3": {
+  "dimensions": {
+   "body_mm": {
+    "v": [
+     48.5,
+     26.5,
+     17.5
+    ],
+    "src": "datasheet",
+    "url": "https://data.energizer.com/pdfs/522.pdf",
+    "note": "IEC 6LR61 outline; the snap clip adds about 8 mm at the terminal end"
+   },
+   "holes": {
+    "v": [],
+    "src": "estimated",
+    "note": "a battery has no holes: held by a printed clip or strap"
+   },
+   "hole_note": "No holes: printed clip or hook-and-loop strap."
+  },
+  "electrical": {
+   "role": "battery",
+   "voltage_v": {
+    "v": {
+     "min": 4.8,
+     "nom": 9.0,
+     "max": 9.6
+    },
+    "src": "datasheet",
+    "url": "https://data.energizer.com/pdfs/522.pdf",
+    "note": "9.0 V nominal; the datasheet tests discharge to 4.8 V. 9.6 V fresh open circuit is typical, not on the sheet"
+   },
+   "current_a": {
+    "v": {
+     "typical": 0.1,
+     "peak": 0.5
+    },
+    "src": "estimated",
+    "url": "https://data.energizer.com/pdfs/522.pdf",
+    "note": "the 522 sheet shows capacity collapsing above about 100 mA; 6 small cells in series give about 1.5-2 Ohm"
+   },
+   "output": {
+    "v": {
+     "voltage_v": 7.2,
+     "current_a": 0.1
+    },
+    "src": "estimated",
+    "note": "average voltage over a 100 mA discharge"
+   },
+   "heat_w": {
+    "v": 0.02,
+    "src": "estimated",
+    "note": "1.7 Ohm x (0.1 A)^2"
+   },
+   "ports": [
+    {
+     "name": "leads",
+     "connector": {
+      "v": "9 V snap clip with red / black flying leads, about 150 mm",
+      "src": "estimated",
+      "note": "typical clip"
+     },
+     "mate": {
+      "v": "solder or screw terminal",
+      "src": "estimated",
+      "note": "flying leads"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "+",
+        "name": "BAT+",
+        "signal": "power",
+        "dir": "power_out"
+       },
+       {
+        "pin": "-",
+        "name": "BAT-",
+        "signal": "ground",
+        "dir": "power_out"
+       }
+      ],
+      "src": "estimated",
+      "note": "red positive on the clip"
+     }
+    }
+   ],
+   "notes": "About 550 mAh at light loads, about 4 Wh. Good for an Arduino with sensors (tens of mA); a motor or servo pulls it down below the board's VIN minimum within seconds. Disposable: plan a door or clip to change it."
+  }
+ },
+ "battery_holder_4aa": {
+  "dimensions": {
+   "body_mm": {
+    "v": [
+     58.0,
+     63.8,
+     16.0
+    ],
+    "src": "estimated",
+    "note": "typical flat 4 x AA holder with cells fitted; sellers vary by 1-2 mm"
+   },
+   "holes": {
+    "v": [
+     {
+      "x": 17.4,
+      "y": 31.9,
+      "d": 3.2,
+      "thread": "M3"
+     },
+     {
+      "x": 40.6,
+      "y": 31.9,
+      "d": 3.2,
+      "thread": "M3"
+     }
+    ],
+    "src": "estimated",
+    "note": "catalog pattern on the holder centreline; sellers publish no hole data and many holders have none"
+   },
+   "hole_note": "origin = holder corner at the lead end, x along the cells"
+  },
+  "electrical": {
+   "role": "battery",
+   "voltage_v": {
+    "v": {
+     "min": 4.0,
+     "nom": 6.0,
+     "max": 6.4
+    },
+    "src": "datasheet",
+    "url": "https://data.energizer.com/pdfs/alkaline_appman.pdf",
+    "note": "4 alkaline cells in series: 1.5 V nominal, about 1.6 V fresh open circuit, 1.0 V per cell is the usual end point"
+   },
+   "current_a": {
+    "v": {
+     "typical": 0.5,
+     "peak": 2.0
+    },
+    "src": "estimated",
+    "url": "https://data.energizer.com/pdfs/alkaline_appman.pdf",
+    "note": "Energizer gives about 150-300 mOhm effective resistance per fresh AA (alkaline application manual): 2 A sags each cell by about 0.4 V and drains capacity fast, so 0.5 A is the comfortable continuous load"
+   },
+   "output": {
+    "v": {
+     "voltage_v": 5.0,
+     "current_a": 0.5
+    },
+    "src": "estimated",
+    "note": "average cell voltage about 1.25 V under a 0.5 A load"
+   },
+   "heat_w": {
+    "v": 0.2,
+    "src": "estimated",
+    "note": "4 x 0.2 Ohm x (0.5 A)^2"
+   },
+   "ports": [
+    {
+     "name": "leads",
+     "connector": {
+      "v": "flying leads, red + / black -, about 150 mm, tinned ends",
+      "src": "estimated",
+      "note": "typical listing"
+     },
+     "mate": {
+      "v": "solder or screw terminal",
+      "src": "estimated",
+      "note": "flying leads"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "+",
+        "name": "BAT+",
+        "signal": "power",
+        "dir": "power_out"
+       },
+       {
+        "pin": "-",
+        "name": "BAT-",
+        "signal": "ground",
+        "dir": "power_out"
+       }
+      ],
+      "src": "estimated",
+      "note": "red positive per listing"
+     }
+    }
+   ],
+   "notes": "Energy 10 Wh is the effective figure at 0.5 A (4 x 1.25 V x 2.0 Ah); an AA gives about 2500 mAh at 0.1 A (Energizer) but less at robot currents. Voltage falls steadily through the discharge: a 5 V logic rail needs a regulator or buck-boost, not the raw pack. NiMH cells (1.2 V) give 4.8 V and handle 2 A far better."
+  }
+ },
+ "battery_holder_6aa": {
+  "dimensions": {
+   "body_mm": {
+    "v": [
+     58.0,
+     94.4,
+     16.0
+    ],
+    "src": "estimated",
+    "note": "typical flat 6 x AA holder with cells fitted; sellers vary by 1-2 mm"
+   },
+   "holes": {
+    "v": [
+     {
+      "x": 17.4,
+      "y": 47.2,
+      "d": 3.2,
+      "thread": "M3"
+     },
+     {
+      "x": 40.6,
+      "y": 47.2,
+      "d": 3.2,
+      "thread": "M3"
+     }
+    ],
+    "src": "estimated",
+    "note": "catalog pattern on the holder centreline; sellers publish no hole data and many holders have none"
+   },
+   "hole_note": "origin = holder corner at the lead end, x along the cells"
+  },
+  "electrical": {
+   "role": "battery",
+   "voltage_v": {
+    "v": {
+     "min": 6.0,
+     "nom": 9.0,
+     "max": 9.6
+    },
+    "src": "datasheet",
+    "url": "https://data.energizer.com/pdfs/alkaline_appman.pdf",
+    "note": "6 alkaline cells in series: 1.5 V nominal, about 1.6 V fresh open circuit, 1.0 V per cell is the usual end point"
+   },
+   "current_a": {
+    "v": {
+     "typical": 0.5,
+     "peak": 2.0
+    },
+    "src": "estimated",
+    "url": "https://data.energizer.com/pdfs/alkaline_appman.pdf",
+    "note": "Energizer gives about 150-300 mOhm effective resistance per fresh AA (alkaline application manual): 2 A sags each cell by about 0.4 V and drains capacity fast, so 0.5 A is the comfortable continuous load"
+   },
+   "output": {
+    "v": {
+     "voltage_v": 7.5,
+     "current_a": 0.5
+    },
+    "src": "estimated",
+    "note": "average cell voltage about 1.25 V under a 0.5 A load"
+   },
+   "heat_w": {
+    "v": 0.3,
+    "src": "estimated",
+    "note": "6 x 0.2 Ohm x (0.5 A)^2"
+   },
+   "ports": [
+    {
+     "name": "leads",
+     "connector": {
+      "v": "flying leads, red + / black -, about 150 mm, tinned ends",
+      "src": "estimated",
+      "note": "typical listing"
+     },
+     "mate": {
+      "v": "solder or screw terminal",
+      "src": "estimated",
+      "note": "flying leads"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "+",
+        "name": "BAT+",
+        "signal": "power",
+        "dir": "power_out"
+       },
+       {
+        "pin": "-",
+        "name": "BAT-",
+        "signal": "ground",
+        "dir": "power_out"
+       }
+      ],
+      "src": "estimated",
+      "note": "red positive per listing"
+     }
+    }
+   ],
+   "notes": "Energy 15 Wh is the effective figure at 0.5 A (6 x 1.25 V x 2.0 Ah); an AA gives about 2500 mAh at 0.1 A (Energizer) but less at robot currents. Voltage falls steadily through the discharge: a 5 V logic rail needs a regulator or buck-boost, not the raw pack. NiMH cells (1.2 V) give 7.2 V and handle 2 A far better."
+  }
+ },
  "bno085_breakout": {
   "dimensions": {
    "body_mm": {
@@ -2326,6 +3437,108 @@
     }
    ],
    "notes": "Trim pot must be set before connecting a load; output is unregulated above the set point until adjusted. 150 kHz per TI, AZ sheet says 125 kHz. Clones with fake ICs are common."
+  }
+ },
+ "buzzer_active_5v": {
+  "dimensions": {
+   "body_mm": {
+    "v": [
+     32.0,
+     13.0,
+     11.1
+    ],
+    "src": "estimated",
+    "note": "generic 3-pin module; catalog adds the right-angle pins"
+   },
+   "holes": {
+    "v": [
+     {
+      "x": 8.5,
+      "y": 6.5,
+      "d": 3.0,
+      "thread": "M3"
+     }
+    ],
+    "src": "estimated",
+    "note": "one M3 hole; position varies per seller"
+   },
+   "hole_note": "origin = board corner at the header end"
+  },
+  "electrical": {
+   "role": "indicator",
+   "voltage_v": {
+    "v": {
+     "min": 3.3,
+     "nom": 5.0,
+     "max": 5.5
+    },
+    "src": "estimated",
+    "url": "https://components101.com/misc/buzzer-pinout-working-datasheet",
+    "note": "5 V active buzzer; sounds quieter at 3.3 V"
+   },
+   "current_a": {
+    "v": {
+     "typical": 0.03,
+     "peak": 0.04
+    },
+    "src": "estimated",
+    "url": "https://components101.com/misc/buzzer-pinout-working-datasheet",
+    "note": "active buzzer about 25-30 mA at 5 V (components101 lists under 30 mA)"
+   },
+   "heat_w": {
+    "v": 0.15,
+    "src": "estimated",
+    "note": "5 V x 30 mA"
+   },
+   "logic": {
+    "v": {
+     "io_v": 5.0,
+     "vih_v": 2.0,
+     "max_in_v": 5.5
+    },
+    "src": "estimated",
+    "note": "transistor base through a resistor: 3.3 V and 5 V hosts drive it"
+   },
+   "ports": [
+    {
+     "name": "header",
+     "connector": {
+      "v": "3-pin 2.54 mm male header (VCC I/O GND)",
+      "src": "estimated",
+      "note": "from memory; varies per seller"
+     },
+     "mate": {
+      "v": "Dupont 2.54 mm female jumpers",
+      "src": "estimated",
+      "note": "from memory"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "VCC",
+        "signal": "power",
+        "dir": "power_in"
+       },
+       {
+        "pin": "2",
+        "name": "I/O",
+        "signal": "digital",
+        "dir": "in"
+       },
+       {
+        "pin": "3",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       }
+      ],
+      "src": "estimated",
+      "note": "silk on the common module"
+     }
+    }
+   ],
+   "notes": "Active buzzer: a steady level makes the tone, no PWM needed. Most of these boards use a PNP transistor, so I/O low = sound; some are active high. Leave I/O driven at boot or it may beep."
   }
  },
  "canable2_usb_can": {
@@ -3703,6 +4916,224 @@
    "notes": "Weight 0.43 kg. Adjust 11-16 V. Isolated, I/P-O/P 1.5 kVAC. Derate from 45-50 C. Working -10 to +60 C. Hiccup overload and overvoltage (16.8-20 V)."
   }
  },
+ "drv8833_module": {
+  "dimensions": {
+   "body_mm": {
+    "v": [
+     18.5,
+     16.5,
+     11.3
+    ],
+    "src": "estimated",
+    "note": "generic purple DRV8833 board; catalog height includes the header pins"
+   },
+   "holes": {
+    "v": [],
+    "src": "estimated",
+    "note": "sold as a header-pin module; no holes on the common board"
+   },
+   "hole_note": "No holes: header cradle or breadboard."
+  },
+  "electrical": {
+   "role": "driver",
+   "voltage_v": {
+    "v": {
+     "min": 2.7,
+     "nom": 7.4,
+     "max": 10.8
+    },
+    "src": "datasheet",
+    "url": "https://www.ti.com/lit/ds/symlink/drv8833.pdf",
+    "note": "VM operating range; absolute max 11.8 V. nom is the catalog value"
+   },
+   "current_a": {
+    "v": {
+     "typical": 1.5,
+     "peak": 2.0
+    },
+    "src": "datasheet",
+    "url": "https://www.ti.com/lit/ds/symlink/drv8833.pdf",
+    "note": "per H-bridge: 1.5 A RMS, 2 A peak at 25 C with good PCB cooling (TI); a small module runs hotter, 1 A is safer"
+   },
+   "output": {
+    "v": {
+     "voltage_v": 7.0,
+     "current_a": 1.0
+    },
+    "src": "datasheet",
+    "url": "https://www.ti.com/lit/ds/symlink/drv8833.pdf",
+    "note": "VM minus 0.36 Ohm x 1 A (HS + LS Rds(on) typical)"
+   },
+   "heat_w": {
+    "v": 0.72,
+    "src": "datasheet",
+    "url": "https://www.ti.com/lit/ds/symlink/drv8833.pdf",
+    "note": "0.36 Ohm x (1 A)^2 x 2 channels"
+   },
+   "logic": {
+    "v": {
+     "io_v": 3.3,
+     "vih_v": 2.0,
+     "max_in_v": 5.75
+    },
+    "src": "datasheet",
+    "url": "https://www.ti.com/lit/ds/symlink/drv8833.pdf",
+    "note": "logic inputs VIH 2 V min (at VM 5 V), up to 5.75 V; internal pull-downs"
+   },
+   "ports": [
+    {
+     "name": "power",
+     "connector": {
+      "v": "2-pin 2.54 mm male header (VM GND)",
+      "src": "estimated",
+      "note": "from memory; varies per seller"
+     },
+     "mate": {
+      "v": "Dupont 2.54 mm female jumpers",
+      "src": "estimated",
+      "note": "from memory"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "VM",
+        "signal": "power",
+        "dir": "power_in"
+       },
+       {
+        "pin": "2",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       }
+      ],
+      "src": "estimated",
+      "note": "pin names from the TI datasheet; module silk may read VCC"
+     }
+    },
+    {
+     "name": "control",
+     "connector": {
+      "v": "5-pin 2.54 mm male header (AIN1 AIN2 BIN1 BIN2 EEP)",
+      "src": "estimated",
+      "note": "from memory; varies per seller"
+     },
+     "mate": {
+      "v": "Dupont 2.54 mm female jumpers",
+      "src": "estimated",
+      "note": "from memory"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "AIN1",
+        "signal": "pwm",
+        "dir": "in"
+       },
+       {
+        "pin": "2",
+        "name": "AIN2",
+        "signal": "pwm",
+        "dir": "in"
+       },
+       {
+        "pin": "3",
+        "name": "BIN1",
+        "signal": "pwm",
+        "dir": "in"
+       },
+       {
+        "pin": "4",
+        "name": "BIN2",
+        "signal": "pwm",
+        "dir": "in"
+       },
+       {
+        "pin": "5",
+        "name": "EEP",
+        "signal": "digital",
+        "dir": "in"
+       },
+       {
+        "pin": "6",
+        "name": "ULT",
+        "signal": "digital",
+        "dir": "out"
+       }
+      ],
+      "src": "estimated",
+      "url": "https://www.ti.com/lit/ds/symlink/drv8833.pdf",
+      "note": "TI names AIN1..BIN2; the purple board prints EEP for nSLEEP and ULT for nFAULT (open drain)"
+     }
+    },
+    {
+     "name": "motor_a",
+     "connector": {
+      "v": "2-pin 2.54 mm male header (AOUT1 AOUT2)",
+      "src": "estimated",
+      "note": "from memory; varies per seller"
+     },
+     "mate": {
+      "v": "solder or Dupont",
+      "src": "estimated",
+      "note": "follows the connector"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "AOUT1",
+        "signal": "motor_phase",
+        "dir": "out"
+       },
+       {
+        "pin": "2",
+        "name": "AOUT2",
+        "signal": "motor_phase",
+        "dir": "out"
+       }
+      ],
+      "src": "datasheet",
+      "url": "https://www.ti.com/lit/ds/symlink/drv8833.pdf"
+     }
+    },
+    {
+     "name": "motor_b",
+     "connector": {
+      "v": "2-pin 2.54 mm male header (BOUT1 BOUT2)",
+      "src": "estimated",
+      "note": "from memory; varies per seller"
+     },
+     "mate": {
+      "v": "solder or Dupont",
+      "src": "estimated",
+      "note": "follows the connector"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "BOUT1",
+        "signal": "motor_phase",
+        "dir": "out"
+       },
+       {
+        "pin": "2",
+        "name": "BOUT2",
+        "signal": "motor_phase",
+        "dir": "out"
+       }
+      ],
+      "src": "datasheet",
+      "url": "https://www.ti.com/lit/ds/symlink/drv8833.pdf"
+     }
+    }
+   ],
+   "notes": "EEP is nSLEEP: high (or the board's pull-up jumper) enables the bridges, low sleeps them. PWM one IN with the other low for forward, swap for reverse, both high brakes. No logic supply pin: logic is powered from VM. 10.8 V maximum: 2S Li-ion or 4-6 AA, not 3S."
+  }
+ },
  "dxl_u2d2": {
   "dimensions": {
    "body_mm": {
@@ -4430,6 +5861,521 @@
     }
    ],
    "notes": "Standby 40 mA (e-Manual). Two bus ports wired in parallel for daisy chain, so the whole chain's current passes through the first port. Ports listed are the -T (TTL) variant. Stall 2.1 A at 11.1 V, 2.7 A at 14.8 V. -R variant (RS-485), not the default ports above: JST B4B-EH-A header, EHR-04 housing, SEH-001T-P0.6 crimps; pins 1 GND, 2 VDD, 3 DATA+, 4 DATA-. -T and -R are not harness compatible."
+  }
+ },
+ "esp32_cam": {
+  "dimensions": {
+   "body_mm": {
+    "v": [
+     40.5,
+     27.0,
+     4.5
+    ],
+    "src": "estimated",
+    "url": "https://docs.ai-thinker.com/en/esp32-cam",
+    "note": "AI-Thinker ESP32-CAM 27 x 40.5 x 4.5 mm (maker spec, not read here); catalog height includes the camera and header pins"
+   },
+   "holes": {
+    "v": [],
+    "src": "estimated",
+    "note": "no mounting holes on the ESP32-CAM"
+   },
+   "hole_note": "No holes: header sockets or a printed slot."
+  },
+  "electrical": {
+   "role": "controller",
+   "voltage_v": {
+    "v": {
+     "min": 4.75,
+     "nom": 5.0,
+     "max": 5.25
+    },
+    "src": "estimated",
+    "url": "https://docs.ai-thinker.com/en/esp32-cam",
+    "note": "5 V on the 5V pin to the on-board AMS1117-3.3; brown-outs below about 4.75 V with Wi-Fi and the camera on"
+   },
+   "current_a": {
+    "v": {
+     "typical": 0.18,
+     "peak": 0.5
+    },
+    "src": "estimated",
+    "url": "https://docs.ai-thinker.com/en/esp32-cam",
+    "note": "maker spec about 180 mA at 5 V flash off, 310 mA with the flash LED; Wi-Fi TX bursts on top: use a 5 V supply good for 500 mA or more"
+   },
+   "heat_w": {
+    "v": 0.9,
+    "src": "estimated",
+    "note": "5 V x 180 mA"
+   },
+   "logic": {
+    "v": {
+     "io_v": 3.3,
+     "vih_v": 2.475,
+     "max_in_v": 3.6
+    },
+    "src": "datasheet",
+    "url": "https://documentation.espressif.com/esp32_datasheet_en.pdf",
+    "note": "ESP32 at VDD 3.3 V: VIH min 0.75 VDD, inputs to VDD + 0.3 V; not 5 V tolerant."
+   },
+   "ports": [
+    {
+     "name": "header_5v",
+     "connector": {
+      "v": "8-pin 2.54 mm male header (5V side)",
+      "src": "estimated",
+      "note": "from memory; varies per seller"
+     },
+     "mate": {
+      "v": "2.54 mm female socket or Dupont",
+      "src": "estimated",
+      "note": "from memory"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "5V",
+        "signal": "power",
+        "dir": "power_in"
+       },
+       {
+        "pin": "2",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "3",
+        "name": "GPIO12",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "4",
+        "name": "GPIO13",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "5",
+        "name": "GPIO15",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "6",
+        "name": "GPIO14",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "7",
+        "name": "GPIO2",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "8",
+        "name": "GPIO4",
+        "signal": "digital",
+        "dir": "bidir"
+       }
+      ],
+      "src": "estimated",
+      "url": "https://randomnerdtutorials.com/esp32-cam-ai-thinker-pinout/",
+      "note": "AI-Thinker pinout, from memory: 5V, GND, IO12, IO13, IO15, IO14, IO2, IO4"
+     }
+    },
+    {
+     "name": "header_3v3",
+     "connector": {
+      "v": "8-pin 2.54 mm male header (3V3 side)",
+      "src": "estimated",
+      "note": "from memory; varies per seller"
+     },
+     "mate": {
+      "v": "2.54 mm female socket or Dupont",
+      "src": "estimated",
+      "note": "from memory"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "3V3",
+        "signal": "power",
+        "dir": "power_out"
+       },
+       {
+        "pin": "2",
+        "name": "GPIO16",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "3",
+        "name": "GPIO0",
+        "signal": "digital",
+        "dir": "in"
+       },
+       {
+        "pin": "4",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "5",
+        "name": "VCC",
+        "signal": "power",
+        "dir": "power_out"
+       },
+       {
+        "pin": "6",
+        "name": "U0R",
+        "signal": "uart_rx",
+        "dir": "in"
+       },
+       {
+        "pin": "7",
+        "name": "U0T",
+        "signal": "uart_tx",
+        "dir": "out"
+       },
+       {
+        "pin": "8",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       }
+      ],
+      "src": "estimated",
+      "url": "https://randomnerdtutorials.com/esp32-cam-ai-thinker-pinout/",
+      "note": "AI-Thinker pinout, from memory: 3V3, IO16, IO0, GND, VCC, U0R, U0T, GND; VCC outputs 3.3 V or 5 V by a solder jumper"
+     }
+    }
+   ],
+   "notes": "No USB: flash through U0R/U0T with a 3.3 V USB-UART adapter or the ESP32-CAM-MB board, GPIO0 to GND at reset. GPIO4 is the bright flash LED; GPIO2/4/12/13/14/15 are the microSD bus (GPIO12 low at boot). GPIO16 is used by the PSRAM on most boards. Few free pins: one servo or a UART link is typical."
+  }
+ },
+ "esp32_devkit_v1": {
+  "dimensions": {
+   "body_mm": {
+    "v": [
+     51.5,
+     28.3,
+     13.2
+    ],
+    "src": "estimated",
+    "note": "DOIT DevKit V1 30-pin is about 51.5 x 28.3 mm; clones vary by about 1 mm"
+   },
+   "holes": {
+    "v": [],
+    "src": "estimated",
+    "note": "the common 30-pin DOIT layout has no mounting holes"
+   },
+   "hole_note": "No holes: header sockets or an edge clamp."
+  },
+  "electrical": {
+   "role": "controller",
+   "voltage_v": {
+    "v": {
+     "min": 4.5,
+     "nom": 5.0,
+     "max": 12.0
+    },
+    "src": "estimated",
+    "note": "VIN through the AMS1117-3.3 (about 1.1 V dropout, 15 V absolute); above 9 V it runs hot at Wi-Fi currents. USB gives 5 V."
+   },
+   "current_a": {
+    "v": {
+     "typical": 0.08,
+     "peak": 0.5
+    },
+    "src": "datasheet",
+    "url": "https://documentation.espressif.com/esp32-wroom-32_datasheet_en.pdf",
+    "note": "the module needs a supply of at least 500 mA (Espressif); about 80 mA average with Wi-Fi connected, 240 mA Wi-Fi TX bursts"
+   },
+   "heat_w": {
+    "v": 0.5,
+    "src": "estimated",
+    "note": "5 V x 80 mA plus the linear regulator loss"
+   },
+   "logic": {
+    "v": {
+     "io_v": 3.3,
+     "vih_v": 2.475,
+     "max_in_v": 3.6
+    },
+    "src": "datasheet",
+    "url": "https://documentation.espressif.com/esp32_datasheet_en.pdf",
+    "note": "VDD 3.3 V: VIH min 0.75 VDD, inputs to VDD + 0.3 V; not 5 V tolerant."
+   },
+   "ports": [
+    {
+     "name": "usb",
+     "connector": {
+      "v": "micro-USB (CP2102 or CH340 USB-UART bridge)",
+      "src": "estimated",
+      "note": "varies per seller"
+     },
+     "mate": {
+      "v": "micro-USB data cable",
+      "src": "estimated",
+      "note": "from memory"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "VBUS",
+        "signal": "power",
+        "dir": "power_in"
+       },
+       {
+        "pin": "2",
+        "name": "D-",
+        "signal": "usb",
+        "dir": "bidir"
+       },
+       {
+        "pin": "3",
+        "name": "D+",
+        "signal": "usb",
+        "dir": "bidir"
+       },
+       {
+        "pin": "5",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       }
+      ],
+      "src": "estimated",
+      "note": "standard micro-USB pin assignment, from memory"
+     }
+    },
+    {
+     "name": "header_left",
+     "connector": {
+      "v": "15-pin 2.54 mm male header (EN side)",
+      "src": "estimated",
+      "note": "from memory; varies per seller"
+     },
+     "mate": {
+      "v": "2.54 mm female socket or Dupont",
+      "src": "estimated",
+      "note": "from memory"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "EN",
+        "signal": "digital",
+        "dir": "in"
+       },
+       {
+        "pin": "2",
+        "name": "GPIO36",
+        "signal": "analog",
+        "dir": "in"
+       },
+       {
+        "pin": "3",
+        "name": "GPIO39",
+        "signal": "analog",
+        "dir": "in"
+       },
+       {
+        "pin": "4",
+        "name": "GPIO34",
+        "signal": "analog",
+        "dir": "in"
+       },
+       {
+        "pin": "5",
+        "name": "GPIO35",
+        "signal": "analog",
+        "dir": "in"
+       },
+       {
+        "pin": "6",
+        "name": "GPIO32",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "7",
+        "name": "GPIO33",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "8",
+        "name": "GPIO25",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "9",
+        "name": "GPIO26",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "10",
+        "name": "GPIO27",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "11",
+        "name": "GPIO14",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "12",
+        "name": "GPIO12",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "13",
+        "name": "GPIO13",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "14",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "15",
+        "name": "VIN",
+        "signal": "power",
+        "dir": "power_in"
+       }
+      ],
+      "src": "estimated",
+      "note": "DOIT DevKit V1 30-pin layout, antenna up, top view: EN to VIN down the left row; silk prints D34, VP (GPIO36), VN (GPIO39), TX0, RX0 etc."
+     }
+    },
+    {
+     "name": "header_right",
+     "connector": {
+      "v": "15-pin 2.54 mm male header (3V3 side)",
+      "src": "estimated",
+      "note": "from memory; varies per seller"
+     },
+     "mate": {
+      "v": "2.54 mm female socket or Dupont",
+      "src": "estimated",
+      "note": "from memory"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "GPIO23",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "2",
+        "name": "GPIO22",
+        "signal": "i2c_scl",
+        "dir": "bidir"
+       },
+       {
+        "pin": "3",
+        "name": "GPIO1",
+        "signal": "uart_tx",
+        "dir": "out"
+       },
+       {
+        "pin": "4",
+        "name": "GPIO3",
+        "signal": "uart_rx",
+        "dir": "in"
+       },
+       {
+        "pin": "5",
+        "name": "GPIO21",
+        "signal": "i2c_sda",
+        "dir": "bidir"
+       },
+       {
+        "pin": "6",
+        "name": "GPIO19",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "7",
+        "name": "GPIO18",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "8",
+        "name": "GPIO5",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "9",
+        "name": "GPIO17",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "10",
+        "name": "GPIO16",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "11",
+        "name": "GPIO4",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "12",
+        "name": "GPIO2",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "13",
+        "name": "GPIO15",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "14",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "15",
+        "name": "3V3",
+        "signal": "power",
+        "dir": "power_out"
+       }
+      ],
+      "src": "estimated",
+      "note": "DOIT DevKit V1 30-pin layout, D23 at the antenna end to 3V3 at the USB end"
+     }
+    }
+   ],
+   "notes": "3.3 V GPIO, not 5 V tolerant: divide 5 V sensor outputs (HC-SR04 echo). GPIO34-39 are input only, no pull-ups. Strapping pins GPIO0, 2, 12, 15: keep GPIO12 low at boot. GPIO1/3 are the USB serial. ADC2 pins stop working while Wi-Fi is on: use GPIO32-39 for analog. LEDC PWM on any output pin. Blue LED on GPIO2."
   }
  },
  "esp32_s3_devkitc1": {
@@ -6529,6 +8475,119 @@
    ]
   }
  },
+ "hc05_bluetooth": {
+  "dimensions": {
+   "body_mm": {
+    "v": [
+     37.3,
+     15.5,
+     3.8
+    ],
+    "src": "estimated",
+    "note": "ZS-040 base board with the HC-05 (27 x 12.7 mm) on top; pins add 6 mm at one end"
+   },
+   "holes": {
+    "v": [],
+    "src": "estimated",
+    "note": "no mounting holes on the ZS-040 board"
+   },
+   "hole_note": "No holes: heat-shrink or a printed clip."
+  },
+  "electrical": {
+   "role": "radio",
+   "voltage_v": {
+    "v": {
+     "min": 3.6,
+     "nom": 5.0,
+     "max": 6.0
+    },
+    "src": "estimated",
+    "url": "https://components101.com/sites/default/files/component_datasheet/HC-05%20Datasheet.pdf",
+    "note": "breakout regulator input range per listings; the module itself is 3.3 V"
+   },
+   "current_a": {
+    "v": {
+     "typical": 0.01,
+     "peak": 0.04
+    },
+    "src": "estimated",
+    "note": "about 30-40 mA while pairing, about 8-10 mA connected (listings)"
+   },
+   "heat_w": {
+    "v": 0.05,
+    "src": "estimated",
+    "note": "5 V x 10 mA"
+   },
+   "logic": {
+    "v": {
+     "io_v": 3.3,
+     "vih_v": 2.0,
+     "max_in_v": 3.6
+    },
+    "src": "estimated",
+    "url": "https://components101.com/sites/default/files/component_datasheet/HC-05%20Datasheet.pdf",
+    "note": "HC-05 I/O is 1.8-3.6 V (iTead datasheet); RXD on the ZS-040 has no level shifter on most boards"
+   },
+   "ports": [
+    {
+     "name": "header",
+     "connector": {
+      "v": "6-pin 2.54 mm male header (STATE RXD TXD GND VCC EN)",
+      "src": "estimated",
+      "note": "from memory; varies per seller"
+     },
+     "mate": {
+      "v": "Dupont 2.54 mm female jumpers",
+      "src": "estimated",
+      "note": "from memory"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "STATE",
+        "signal": "digital",
+        "dir": "out"
+       },
+       {
+        "pin": "2",
+        "name": "RXD",
+        "signal": "uart_rx",
+        "dir": "in"
+       },
+       {
+        "pin": "3",
+        "name": "TXD",
+        "signal": "uart_tx",
+        "dir": "out"
+       },
+       {
+        "pin": "4",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "5",
+        "name": "VCC",
+        "signal": "power",
+        "dir": "power_in"
+       },
+       {
+        "pin": "6",
+        "name": "EN",
+        "signal": "digital",
+        "dir": "in"
+       }
+      ],
+      "src": "estimated",
+      "note": "ZS-040 silk"
+     }
+    }
+   ],
+   "notes": "Wire the host TX to RXD through a divider (1k from TX, 2k to GND) on a 5 V board; TXD (3.3 V) reads fine on 5 V inputs. Data mode 9600 baud by default, AT mode 38400 baud with EN (KEY) high at power-up. STATE high when connected. Default PIN 1234."
+  }
+ },
  "hc_sr04": {
   "dimensions": {
    "body_mm": {
@@ -6881,6 +8940,125 @@
    "notes": "Idle about 10 mA (catalog value, not sourced). PWM signal, no bus: one signal channel per servo."
   }
  },
+ "hobby_mg995": {
+  "dimensions": {
+   "body_mm": {
+    "v": [
+     40.7,
+     19.7,
+     42.9
+    ],
+    "src": "datasheet",
+    "url": "https://www.electronicoscaldas.com/datasheet/MG995_Tower-Pro.pdf"
+   },
+   "hole_note": "Holes not repeated: no published hole drawing was read for this part, so the catalog list is unverified.",
+   "holes": {
+    "v": [
+     {
+      "x": 15.35,
+      "y": 5.0,
+      "d": 4.4,
+      "thread": "M3"
+     },
+     {
+      "x": 15.35,
+      "y": -5.0,
+      "d": 4.4,
+      "thread": "M3"
+     },
+     {
+      "x": -34.15,
+      "y": 5.0,
+      "d": 4.4,
+      "thread": "M3"
+     },
+     {
+      "x": -34.15,
+      "y": -5.0,
+      "d": 4.4,
+      "thread": "M3"
+     }
+    ],
+    "src": "estimated",
+    "note": "Holes not repeated: no published hole drawing was read for this part, so the catalog list is unverified."
+   }
+  },
+  "electrical": {
+   "role": "actuator",
+   "voltage_v": {
+    "v": {
+     "min": 4.8,
+     "nom": 6.0,
+     "max": 7.2
+    },
+    "src": "datasheet",
+    "url": "https://www.electronicoscaldas.com/datasheet/MG995_Tower-Pro.pdf",
+    "note": "operating voltage 4.8-7.2 V"
+   },
+   "current_a": {
+    "v": {
+     "typical": 0.5,
+     "peak": 1.5
+    },
+    "src": "estimated",
+    "note": "no stall current on the datasheet; 1.2-1.5 A is the commonly measured stall, 1.5 A kept for supply sizing. Typical about a third."
+   },
+   "heat_w": {
+    "v": 1.5,
+    "src": "estimated",
+    "note": "Half of typical electrical power, rule of thumb."
+   },
+   "logic": {
+    "v": {
+     "io_v": 5.0,
+     "vih_v": 2.0,
+     "max_in_v": 7.2
+    },
+    "src": "estimated",
+    "note": "Pulse input of a hobby servo: no threshold published; 2 V assumed."
+   },
+   "ports": [
+    {
+     "name": "servo_lead",
+     "connector": {
+      "v": "3-pin S-type female header, about 30 cm lead",
+      "src": "datasheet",
+      "url": "https://www.electronicoscaldas.com/datasheet/MG995_Tower-Pro.pdf"
+     },
+     "mate": {
+      "v": "2.54 mm 3-pin male header (Dupont/JR)",
+      "src": "estimated",
+      "note": "Standard mate for a JR female plug."
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "GND (brown)",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "2",
+        "name": "V+ (red)",
+        "signal": "power",
+        "dir": "power_in"
+       },
+       {
+        "pin": "3",
+        "name": "Signal (yellow)",
+        "signal": "pwm",
+        "dir": "in"
+       }
+      ],
+      "src": "estimated",
+      "note": "Usual TowerPro colours (brown, red, orange or yellow); the datasheet does not give them."
+     }
+    }
+   ],
+   "notes": "Stall 8.5 kg.cm at 4.8 V, 10 kg.cm at 6 V, 0.20 / 0.16 s per 60 deg (datasheet). Same body as the MG996R. The datasheet says about 120 deg of travel at standard pulses. PWM signal, no bus: one signal channel per servo."
+  }
+ },
  "hobby_mg996r": {
   "dimensions": {
    "body_mm": {
@@ -7225,6 +9403,108 @@
     }
    ],
    "notes": "Mains. Crimped and insulated spades only, earth to the supply's FG terminal first."
+  }
+ },
+ "ir_obstacle_fc51": {
+  "dimensions": {
+   "body_mm": {
+    "v": [
+     31.0,
+     14.0,
+     6.8
+    ],
+    "src": "estimated",
+    "note": "catalog; FC-51 boards about 31 x 14 mm plus the LEDs and header"
+   },
+   "holes": {
+    "v": [
+     {
+      "x": 14.0,
+      "y": 7.0,
+      "d": 3.0,
+      "thread": "M3"
+     }
+    ],
+    "src": "estimated",
+    "note": "single M3 hole; position varies per seller"
+   },
+   "hole_note": "origin = board corner at the header end; LEDs look along +X"
+  },
+  "electrical": {
+   "role": "sensor",
+   "voltage_v": {
+    "v": {
+     "min": 3.3,
+     "nom": 5.0,
+     "max": 5.5
+    },
+    "src": "estimated",
+    "url": "https://components101.com/sensors/ir-sensor-module",
+    "note": "seller range 3.3-5 V"
+   },
+   "current_a": {
+    "v": {
+     "typical": 0.023,
+     "peak": 0.04
+    },
+    "src": "estimated",
+    "url": "https://components101.com/sensors/ir-sensor-module",
+    "note": "23 mA at 5 V commonly listed; IR LED plus indicator LEDs"
+   },
+   "heat_w": {
+    "v": 0.12,
+    "src": "estimated",
+    "note": "5 V x 23 mA"
+   },
+   "logic": {
+    "v": {
+     "io_v": 5.0,
+     "max_in_v": 5.5
+    },
+    "src": "estimated",
+    "note": "LM393 output pulled up to VCC"
+   },
+   "ports": [
+    {
+     "name": "header",
+     "connector": {
+      "v": "3-pin 2.54 mm male header (VCC GND OUT)",
+      "src": "estimated",
+      "note": "from memory; varies per seller"
+     },
+     "mate": {
+      "v": "Dupont 2.54 mm female jumpers",
+      "src": "estimated",
+      "note": "from memory"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "VCC",
+        "signal": "power",
+        "dir": "power_in"
+       },
+       {
+        "pin": "2",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "3",
+        "name": "OUT",
+        "signal": "digital",
+        "dir": "out"
+       }
+      ],
+      "src": "estimated",
+      "url": "https://components101.com/sensors/ir-sensor-module",
+      "note": "silk on the FC-51 board"
+     }
+    }
+   ],
+   "notes": "OUT goes low when an obstacle is inside the set range (2-30 cm, trimmer). Black objects and sunlight shorten the range. Point it slightly down to see table edges."
   }
  },
  "jetson_orin_nano_super": {
@@ -8223,6 +10503,207 @@
    "notes": "Logic draw 0-36 mA. 5V Enable jumper on and Vin <= 12 V: on-board 78M05 makes 5 V and the +5V terminal is an output. Vin > 12 V: remove the jumper and feed 5 V in. Remove A/B Enable jumpers to PWM ENA/ENB. Common ground with the controller."
   }
  },
+ "l9110s_module": {
+  "dimensions": {
+   "body_mm": {
+    "v": [
+     29.2,
+     23.0,
+     11.6
+    ],
+    "src": "estimated",
+    "note": "generic L9110S module, board plus screw terminals; catalog 20.1 mm height adds the header pins below"
+   },
+   "holes": {
+    "v": [
+     {
+      "x": 18.5,
+      "y": 2.5,
+      "d": 3.0,
+      "thread": "M3"
+     },
+     {
+      "x": 18.5,
+      "y": 20.5,
+      "d": 3.0,
+      "thread": "M3"
+     }
+    ],
+    "src": "estimated",
+    "note": "two M3 holes per the catalog; boards vary per seller"
+   },
+   "hole_note": "origin = board corner at the header end; screw terminals on the far edge"
+  },
+  "electrical": {
+   "role": "driver",
+   "voltage_v": {
+    "v": {
+     "min": 2.5,
+     "nom": 6.0,
+     "max": 12.0
+    },
+    "src": "datasheet",
+    "url": "https://www.elecrow.com/download/datasheet-l9110.pdf",
+    "note": "supply range 2.5-12 V, 6 V typical"
+   },
+   "current_a": {
+    "v": {
+     "typical": 0.8,
+     "peak": 1.5
+    },
+    "src": "datasheet",
+    "url": "https://www.elecrow.com/download/datasheet-l9110.pdf",
+    "note": "750-850 mA continuous per channel, 1.5-2.0 A peak"
+   },
+   "output": {
+    "v": {
+     "voltage_v": 7.15,
+     "current_a": 0.75
+    },
+    "src": "datasheet",
+    "url": "https://www.elecrow.com/download/datasheet-l9110.pdf",
+    "note": "at VCC 9 V, 750 mA: VHout 7.6 V, VLout 0.45 V"
+   },
+   "heat_w": {
+    "v": 2.8,
+    "src": "datasheet",
+    "url": "https://www.elecrow.com/download/datasheet-l9110.pdf",
+    "note": "1.85 V lost at 750 mA, two channels"
+   },
+   "logic": {
+    "v": {
+     "io_v": 5.0,
+     "vih_v": 2.5,
+     "max_in_v": 9.0
+    },
+    "src": "datasheet",
+    "url": "https://www.elecrow.com/download/datasheet-l9110.pdf",
+    "note": "input high 2.5 V min, 9 V max (at VCC 9 V): 3.3 V hosts drive it"
+   },
+   "ports": [
+    {
+     "name": "header",
+     "connector": {
+      "v": "6-pin 2.54 mm male header (B-1A B-1B GND VCC A-1A A-1B)",
+      "src": "estimated",
+      "note": "from memory; varies per seller"
+     },
+     "mate": {
+      "v": "Dupont 2.54 mm female jumpers",
+      "src": "estimated",
+      "note": "from memory"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "B-1A",
+        "signal": "pwm",
+        "dir": "in"
+       },
+       {
+        "pin": "2",
+        "name": "B-1B",
+        "signal": "digital",
+        "dir": "in"
+       },
+       {
+        "pin": "3",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "4",
+        "name": "VCC",
+        "signal": "power",
+        "dir": "power_in"
+       },
+       {
+        "pin": "5",
+        "name": "A-1A",
+        "signal": "pwm",
+        "dir": "in"
+       },
+       {
+        "pin": "6",
+        "name": "A-1B",
+        "signal": "digital",
+        "dir": "in"
+       }
+      ],
+      "src": "estimated",
+      "note": "module silk (some boards print B-IA / A-IA)"
+     }
+    },
+    {
+     "name": "motor_a",
+     "connector": {
+      "v": "2-position screw terminal",
+      "src": "estimated",
+      "note": "from memory"
+     },
+     "mate": {
+      "v": "screw terminal, bare wire or ferrule",
+      "src": "estimated",
+      "note": "follows the connector"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "MOTOR_A1",
+        "signal": "motor_phase",
+        "dir": "out"
+       },
+       {
+        "pin": "2",
+        "name": "MOTOR_A2",
+        "signal": "motor_phase",
+        "dir": "out"
+       }
+      ],
+      "src": "estimated",
+      "url": "https://www.elecrow.com/download/datasheet-l9110.pdf",
+      "note": "L9110 OA/OB of chip A; terminal unmarked on most boards"
+     }
+    },
+    {
+     "name": "motor_b",
+     "connector": {
+      "v": "2-position screw terminal",
+      "src": "estimated",
+      "note": "from memory"
+     },
+     "mate": {
+      "v": "screw terminal, bare wire or ferrule",
+      "src": "estimated",
+      "note": "follows the connector"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "MOTOR_B1",
+        "signal": "motor_phase",
+        "dir": "out"
+       },
+       {
+        "pin": "2",
+        "name": "MOTOR_B2",
+        "signal": "motor_phase",
+        "dir": "out"
+       }
+      ],
+      "src": "estimated",
+      "url": "https://www.elecrow.com/download/datasheet-l9110.pdf",
+      "note": "L9110 OA/OB of chip B; terminal unmarked on most boards"
+     }
+    }
+   ],
+   "notes": "Truth table: IA high IB low forward, IA low IB high reverse, both low stop, both high stop. PWM A-1A (or B-1A) with the other input as direction; reverse inverts the PWM duty. Motor supply and logic share VCC. Loses about 1.85 V at 750 mA."
+  }
+ },
  "lcd_2in_st7789": {
   "dimensions": {
    "body_mm": {
@@ -8455,6 +10936,124 @@
     }
    ],
    "notes": "Polarity matters. With the catalog 100 ohm resistor: (5 - 3.0) / 100 = 20 mA at 5 V, at the limit, and about 3 mA at 3.3 V. An AVR pin at 20 mA is at its stated limit; ESP32 and Pi pins need a transistor or a bigger resistor."
+  }
+ },
+ "line_sensor_3ch": {
+  "dimensions": {
+   "body_mm": {
+    "v": [
+     50.0,
+     20.0,
+     17.1
+    ],
+    "src": "estimated",
+    "note": "catalog; 3-way tracking boards vary per seller (about 40-60 mm long)"
+   },
+   "holes": {
+    "v": [
+     {
+      "x": 4.0,
+      "y": 16.0,
+      "d": 3.0,
+      "thread": "M3"
+     },
+     {
+      "x": 46.0,
+      "y": 16.0,
+      "d": 3.0,
+      "thread": "M3"
+     }
+    ],
+    "src": "estimated",
+    "note": "two M3 holes at the ends, positions vary per seller"
+   },
+   "hole_note": "origin = board corner; sensors along the y = 0 edge underneath"
+  },
+  "electrical": {
+   "role": "sensor",
+   "voltage_v": {
+    "v": {
+     "min": 3.3,
+     "nom": 5.0,
+     "max": 5.5
+    },
+    "src": "estimated",
+    "note": "seller range 3.3-5 V"
+   },
+   "current_a": {
+    "v": {
+     "typical": 0.06,
+     "peak": 0.08
+    },
+    "src": "estimated",
+    "url": "https://www.vishay.com/docs/83760/tcrt5000.pdf",
+    "note": "three IR LEDs at about 18 mA each plus indicator LEDs"
+   },
+   "heat_w": {
+    "v": 0.3,
+    "src": "estimated",
+    "note": "5 V x 60 mA"
+   },
+   "logic": {
+    "v": {
+     "io_v": 5.0,
+     "max_in_v": 5.5
+    },
+    "src": "estimated",
+    "note": "comparator outputs pulled up to VCC"
+   },
+   "ports": [
+    {
+     "name": "header",
+     "connector": {
+      "v": "5-pin 2.54 mm male header (VCC GND L C R)",
+      "src": "estimated",
+      "note": "from memory; varies per seller"
+     },
+     "mate": {
+      "v": "Dupont 2.54 mm female jumpers",
+      "src": "estimated",
+      "note": "from memory"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "VCC",
+        "signal": "power",
+        "dir": "power_in"
+       },
+       {
+        "pin": "2",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "3",
+        "name": "L",
+        "signal": "digital",
+        "dir": "out"
+       },
+       {
+        "pin": "4",
+        "name": "C",
+        "signal": "digital",
+        "dir": "out"
+       },
+       {
+        "pin": "5",
+        "name": "R",
+        "signal": "digital",
+        "dir": "out"
+       }
+      ],
+      "src": "estimated",
+      "note": "silk on the common 5-pin board; order varies per seller"
+     }
+    }
+   ],
+   "notes": "Each output low over white, high over a black line (some boards invert: check the indicator LEDs). Sensor pitch about 13 mm suits a 15-20 mm tape line. Mount 2-10 mm above the floor."
   }
  },
  "lipo_3s_2200": {
@@ -9000,6 +11599,144 @@
    "notes": "30C / 60C burst, 1350 g +/-20 g, 10 AWG discharge wire 150 mm, EC5 rating itself not sourced."
   }
  },
+ "mpu6050_gy521": {
+  "dimensions": {
+   "body_mm": {
+    "v": [
+     21.0,
+     16.0,
+     1.6
+    ],
+    "src": "estimated",
+    "note": "GY-521 boards are about 21 x 16 mm; catalog height includes the header pins"
+   },
+   "holes": {
+    "v": [
+     {
+      "x": 2.5,
+      "y": 13.5,
+      "d": 3.0,
+      "thread": "M3"
+     },
+     {
+      "x": 18.5,
+      "y": 13.5,
+      "d": 3.0,
+      "thread": "M3"
+     }
+    ],
+    "src": "estimated",
+    "note": "two holes on the edge away from the header; positions vary per seller"
+   },
+   "hole_note": "origin = board corner at the header end, header along the y = 0 edge"
+  },
+  "electrical": {
+   "role": "sensor",
+   "voltage_v": {
+    "v": {
+     "min": 3.3,
+     "nom": 5.0,
+     "max": 5.5
+    },
+    "src": "estimated",
+    "url": "https://invensense.tdk.com/wp-content/uploads/2015/02/MPU-6000-Datasheet1.pdf",
+    "note": "on-board 3.3 V LDO; the MPU-6050 itself runs at 2.375-3.46 V (TDK)"
+   },
+   "current_a": {
+    "v": {
+     "typical": 0.005,
+     "peak": 0.01
+    },
+    "src": "estimated",
+    "url": "https://invensense.tdk.com/wp-content/uploads/2015/02/MPU-6000-Datasheet1.pdf",
+    "note": "3.9 mA gyro + accel (TDK datasheet) plus the power LED and LDO"
+   },
+   "heat_w": {
+    "v": 0.025,
+    "src": "estimated",
+    "note": "5 V x 5 mA"
+   },
+   "logic": {
+    "v": {
+     "io_v": 3.3,
+     "vih_v": 2.3,
+     "max_in_v": 5.5
+    },
+    "src": "estimated",
+    "note": "SDA/SCL pulled up to 3.3 V on the board; 5 V hosts read 3.3 V high reliably on I2C. VIH 0.7 VDD."
+   },
+   "ports": [
+    {
+     "name": "header",
+     "connector": {
+      "v": "8-pin 2.54 mm male header",
+      "src": "estimated",
+      "note": "from memory; varies per seller"
+     },
+     "mate": {
+      "v": "Dupont 2.54 mm female jumpers",
+      "src": "estimated",
+      "note": "from memory"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "VCC",
+        "signal": "power",
+        "dir": "power_in"
+       },
+       {
+        "pin": "2",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "3",
+        "name": "SCL",
+        "signal": "i2c_scl",
+        "dir": "bidir"
+       },
+       {
+        "pin": "4",
+        "name": "SDA",
+        "signal": "i2c_sda",
+        "dir": "bidir"
+       },
+       {
+        "pin": "5",
+        "name": "XDA",
+        "signal": "i2c_sda",
+        "dir": "bidir"
+       },
+       {
+        "pin": "6",
+        "name": "XCL",
+        "signal": "i2c_scl",
+        "dir": "bidir"
+       },
+       {
+        "pin": "7",
+        "name": "AD0",
+        "signal": "digital",
+        "dir": "in"
+       },
+       {
+        "pin": "8",
+        "name": "INT",
+        "signal": "digital",
+        "dir": "out"
+       }
+      ],
+      "src": "estimated",
+      "note": "GY-521 silk, header order VCC GND SCL SDA XDA XCL AD0 INT"
+     }
+    }
+   ],
+   "notes": "I2C 0x68, 0x69 with AD0 high. XDA/XCL are the auxiliary bus for an external magnetometer; leave them open. INT is a data-ready interrupt. No magnetometer: heading drifts."
+  }
+ },
  "n20_gearmotor_100to1": {
   "dimensions": {
    "body_mm": {
@@ -9256,6 +11993,131 @@
     }
    ],
    "notes": "Current is per phase, set at the driver. Phases: black/green = A, red/blue = B. The StepperOnline page disagrees with the drawing on several values (1.8 ohm, 3.2 mH, 0.52 N.m, backlash <=3 deg, 3/5 N.m gearbox, 520 g); the catalog follows the drawing."
+  }
+ },
+ "oled_ssd1306_128x64": {
+  "dimensions": {
+   "body_mm": {
+    "v": [
+     27.3,
+     27.8,
+     3.7
+    ],
+    "src": "estimated",
+    "note": "generic 0.96 in module; catalog height includes the header pins"
+   },
+   "holes": {
+    "v": [
+     {
+      "x": 2.0,
+      "y": 2.0,
+      "d": 2.0,
+      "thread": "M2"
+     },
+     {
+      "x": 25.3,
+      "y": 2.0,
+      "d": 2.0,
+      "thread": "M2"
+     },
+     {
+      "x": 2.0,
+      "y": 25.8,
+      "d": 2.0,
+      "thread": "M2"
+     },
+     {
+      "x": 25.3,
+      "y": 25.8,
+      "d": 2.0,
+      "thread": "M2"
+     }
+    ],
+    "src": "estimated",
+    "note": "four corner holes, positions vary per seller"
+   },
+   "hole_note": "origin = board corner; header along the far (y max) edge"
+  },
+  "electrical": {
+   "role": "indicator",
+   "voltage_v": {
+    "v": {
+     "min": 3.3,
+     "nom": 5.0,
+     "max": 5.5
+    },
+    "src": "estimated",
+    "url": "https://cdn-shop.adafruit.com/datasheets/SSD1306.pdf",
+    "note": "module has a 3.3 V regulator and charge pump; SSD1306 logic is 1.65-3.3 V"
+   },
+   "current_a": {
+    "v": {
+     "typical": 0.01,
+     "peak": 0.03
+    },
+    "src": "estimated",
+    "note": "about 10 mA with half the pixels lit, 20-30 mA all white"
+   },
+   "heat_w": {
+    "v": 0.05,
+    "src": "estimated",
+    "note": "5 V x 10 mA"
+   },
+   "logic": {
+    "v": {
+     "io_v": 3.3,
+     "vih_v": 2.3,
+     "max_in_v": 5.5
+    },
+    "src": "estimated",
+    "note": "I2C pulled up to the module's 3.3 V; 5 V hosts work on most boards"
+   },
+   "ports": [
+    {
+     "name": "header",
+     "connector": {
+      "v": "4-pin 2.54 mm male header (GND VCC SCL SDA)",
+      "src": "estimated",
+      "note": "from memory; varies per seller"
+     },
+     "mate": {
+      "v": "Dupont 2.54 mm female jumpers",
+      "src": "estimated",
+      "note": "from memory"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "2",
+        "name": "VCC",
+        "signal": "power",
+        "dir": "power_in"
+       },
+       {
+        "pin": "3",
+        "name": "SCL",
+        "signal": "i2c_scl",
+        "dir": "bidir"
+       },
+       {
+        "pin": "4",
+        "name": "SDA",
+        "signal": "i2c_sda",
+        "dir": "bidir"
+       }
+      ],
+      "src": "estimated",
+      "note": "silk on the common 4-pin board; some sellers swap GND and VCC: check before powering"
+     }
+    }
+   ],
+   "notes": "I2C 0x3C (0x3D by moving a resistor). Write only. Burn-in shows after weeks of a static image: dim or move it."
   }
  },
  "pack_2s_18650": {
@@ -11014,6 +13876,114 @@
    "notes": "220 ohm in series with every PWM pin. VCC sets logic level and the 10k I2C pullups. V+ does not power the chip; connecting V+ to VCC by mistake can damage the board at high V+. Default address 0x40, six address jumpers, up to 62 boards. Add 470-1000 uF across V+/GND for servo loads (catalog note; capacitor advice not on the fetched page). All 16 outputs share one PWM frequency. Generic clones may omit the reverse polarity FET."
   }
  },
+ "pir_hc_sr501": {
+  "dimensions": {
+   "body_mm": {
+    "v": [
+     32.2,
+     24.3,
+     24.0
+    ],
+    "src": "estimated",
+    "note": "listed board 32 x 24 mm, about 24 mm with the dome; catalog height measures dome to header tips"
+   },
+   "holes": {
+    "v": [
+     {
+      "x": 2.1,
+      "y": 12.15,
+      "d": 2.0,
+      "thread": "M2"
+     },
+     {
+      "x": 30.1,
+      "y": 12.15,
+      "d": 2.0,
+      "thread": "M2"
+     }
+    ],
+    "src": "estimated",
+    "note": "two holes 28 mm apart on the long axis (listings)"
+   },
+   "hole_note": "origin = board corner; dome on +Z, pins and trimmers below"
+  },
+  "electrical": {
+   "role": "sensor",
+   "voltage_v": {
+    "v": {
+     "min": 4.5,
+     "nom": 5.0,
+     "max": 20.0
+    },
+    "src": "estimated",
+    "url": "https://cdn-learn.adafruit.com/downloads/pdf/pir-passive-infrared-proximity-motion-sensor.pdf",
+    "note": "listed 4.5-20 V (on-board 3.3 V regulator)"
+   },
+   "current_a": {
+    "v": {
+     "typical": 6.5e-05,
+     "peak": 0.002
+    },
+    "src": "estimated",
+    "note": "quiescent under 65 uA per listings; peak covers the output and start-up"
+   },
+   "heat_w": {
+    "v": 0.001,
+    "src": "estimated",
+    "note": "5 V x 65 uA"
+   },
+   "logic": {
+    "v": {
+     "io_v": 3.3,
+     "max_in_v": 3.3
+    },
+    "src": "estimated",
+    "url": "https://cdn-learn.adafruit.com/downloads/pdf/pir-passive-infrared-proximity-motion-sensor.pdf",
+    "note": "OUT is 3.3 V high from the BISS0001 behind the regulator: reads as high on 5 V and 3.3 V hosts"
+   },
+   "ports": [
+    {
+     "name": "header",
+     "connector": {
+      "v": "3-pin 2.54 mm male header (VCC OUT GND)",
+      "src": "estimated",
+      "note": "from memory; varies per seller"
+     },
+     "mate": {
+      "v": "Dupont 2.54 mm female jumpers",
+      "src": "estimated",
+      "note": "from memory"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "VCC",
+        "signal": "power",
+        "dir": "power_in"
+       },
+       {
+        "pin": "2",
+        "name": "OUT",
+        "signal": "digital",
+        "dir": "out"
+       },
+       {
+        "pin": "3",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       }
+      ],
+      "src": "estimated",
+      "url": "https://cdn-learn.adafruit.com/downloads/pdf/pir-passive-infrared-proximity-motion-sensor.pdf",
+      "note": "pin order under the dome; check the silk under the lens"
+     }
+    }
+   ],
+   "notes": "About 60 s warm-up after power-on, during which OUT toggles. Range about 3-7 m (sensitivity trimmer), delay 0.5-200 s (time trimmer), jumper H = retriggering. Sees moving warm bodies only, not distance."
+  }
+ },
  "pololu_37d_30to1_64cpr": {
   "dimensions": {
    "body_mm": {
@@ -11348,6 +14318,94 @@
     }
    ],
    "notes": "One six-wire lead serves two destinations: red/black to the motor driver, green/blue/yellow/white to the controller. Encoder Vcc 3.5-20 V, up to 10 mA; A/B outputs swing to encoder Vcc, so use a 3.3 V Vcc with 3.3 V logic (inferred). Pin numbers follow Pololu's listing order, so wire by colour rather than header position. Keep motor current off the encoder ground. Pololu warns units stall before the extrapolated figures."
+  }
+ },
+ "powerbank_5v_2a": {
+  "dimensions": {
+   "body_mm": {
+    "v": [
+     149.0,
+     68.0,
+     14.0
+    ],
+    "src": "datasheet",
+    "url": "https://www.anker.com/products/a1229",
+    "note": "5.87 x 2.68 x 0.55 in, Anker 313 PowerCore 10K; other 10000 mAh banks are similar"
+   },
+   "holes": {
+    "v": [],
+    "src": "estimated",
+    "note": "power banks have no mounting holes"
+   },
+   "hole_note": "No holes: strap or cradle."
+  },
+  "electrical": {
+   "role": "battery",
+   "voltage_v": {
+    "v": {
+     "min": 4.75,
+     "nom": 5.0,
+     "max": 5.25
+    },
+    "src": "estimated",
+    "note": "USB 5 V within the USB 2.0 tolerance; boost converter output, flat until the bank cuts out"
+   },
+   "current_a": {
+    "v": {
+     "typical": 1.0,
+     "peak": 2.1
+    },
+    "src": "datasheet",
+    "url": "https://www.anker.com/products/a1229",
+    "note": "Anker rates the USB-A port up to 2.4 A; 2.1 A kept as the generic per-port rating, 1 A typical draw assumed"
+   },
+   "output": {
+    "v": {
+     "voltage_v": 5.0,
+     "current_a": 2.1
+    },
+    "src": "datasheet",
+    "url": "https://www.anker.com/products/a1229"
+   },
+   "heat_w": {
+    "v": 0.8,
+    "src": "estimated",
+    "note": "about 15 % boost loss at 5 W"
+   },
+   "ports": [
+    {
+     "name": "usb_a",
+     "connector": {
+      "v": "USB-A receptacle, 5 V",
+      "src": "datasheet",
+      "url": "https://www.anker.com/products/a1229"
+     },
+     "mate": {
+      "v": "USB-A plug: USB cable, or a USB-A breakout / cut cable to screw terminals",
+      "src": "estimated",
+      "note": "from memory"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "VBUS",
+        "signal": "power",
+        "dir": "power_out"
+       },
+       {
+        "pin": "4",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_out"
+       }
+      ],
+      "src": "estimated",
+      "note": "USB-A pins 1 and 4 (standard); D+/D- left open"
+     }
+    }
+   ],
+   "notes": "10000 mAh at 3.6-3.7 V is 36-37 Wh in the cells; about 85 % (31 Wh) reaches the USB port. Many banks switch off when the load drops below about 50-100 mA: an idle robot can lose power. Use the bank's trickle / always-on mode or a small dummy load. Has its own charger and protection."
   }
  },
  "psu_12v_lrs150": {
@@ -12366,6 +15424,580 @@
     }
    ],
    "notes": "One cable carries power and data. A USB 2 port limits streams and may not supply 0.7 A. Screws: M3 torque 0.4 Nm, catalog says 3 mm max insertion."
+  }
+ },
+ "rpi4_4gb": {
+  "dimensions": {
+   "body_mm": {
+    "v": [
+     85,
+     56,
+     null
+    ],
+    "src": "datasheet",
+    "url": "https://datasheets.raspberrypi.com/rpi4/raspberry-pi-4-mechanical-drawing.pdf",
+    "note": "PCB outline; catalog 87 x 58.5 x 19.1 includes connector overhang and the microSD socket"
+   },
+   "holes": {
+    "v": [
+     {
+      "x": 3.5,
+      "y": 3.5,
+      "d": 2.7,
+      "thread": "M2.5"
+     },
+     {
+      "x": 61.5,
+      "y": 3.5,
+      "d": 2.7,
+      "thread": "M2.5"
+     },
+     {
+      "x": 3.5,
+      "y": 52.5,
+      "d": 2.7,
+      "thread": "M2.5"
+     },
+     {
+      "x": 61.5,
+      "y": 52.5,
+      "d": 2.7,
+      "thread": "M2.5"
+     }
+    ],
+    "src": "datasheet",
+    "url": "https://datasheets.raspberrypi.com/rpi4/raspberry-pi-4-mechanical-drawing.pdf",
+    "note": "58 x 49 mm pitch, 3.5 mm from the edges, d 2.7 (same as every B-size Pi). M2.5 screws."
+   },
+   "hole_note": "58 x 49 mm pitch, 3.5 mm from the corner edges. Power edge: USB-C, 2x micro HDMI, AV jack; the far edge has 2x USB 2, 2x USB 3 and Ethernet (Ethernet at the GPIO corner, swapped against the Pi 5)."
+  },
+  "electrical": {
+   "role": "controller",
+   "voltage_v": {
+    "v": {
+     "min": 4.75,
+     "nom": 5,
+     "max": 5.25
+    },
+    "src": "estimated",
+    "url": "https://datasheets.raspberrypi.com/rpi4/raspberry-pi-4-product-brief.pdf",
+    "note": "5 V via USB-C is published (product brief); tolerance is not, so the USB norm is used"
+   },
+   "current_a": {
+    "v": {
+     "typical": 0.6,
+     "peak": 3.0
+    },
+    "src": "estimated",
+    "url": "https://www.raspberrypi.com/documentation/computers/raspberry-pi.html",
+    "note": "Raspberry Pi power-supply table: 3.0 A recommended PSU, 1.2 A for USB peripherals, 600 mA typical bare-board active current (read from the documentation source)"
+   },
+   "heat_w": {
+    "v": 4.0,
+    "src": "estimated",
+    "note": "about 3 W idle, 6-7 W at full CPU load (third-party measurements)"
+   },
+   "logic": {
+    "v": {
+     "io_v": 3.3,
+     "vih_v": 2.15,
+     "max_in_v": 3.6
+    },
+    "src": "estimated",
+    "url": "https://www.raspberrypi.com/documentation/computers/raspberry-pi.html",
+    "note": "3.3 V GPIO, not 5 V tolerant (documentation). Input thresholds not published; 0.65 x 3.3 V assumed."
+   },
+   "ports": [
+    {
+     "name": "power_usbc",
+     "connector": {
+      "v": "USB-C, 5 V / 3 A",
+      "src": "datasheet",
+      "url": "https://datasheets.raspberrypi.com/rpi4/raspberry-pi-4-product-brief.pdf"
+     },
+     "mate": {
+      "v": "USB-C supply, 5 V 3 A (official 15.3 W supply)",
+      "src": "estimated",
+      "note": "Raspberry Pi recommends its own supply"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "VBUS",
+        "name": "VBUS",
+        "signal": "power",
+        "dir": "power_in"
+       },
+       {
+        "pin": "GND",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "CC1",
+        "name": "CC1",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "CC2",
+        "name": "CC2",
+        "signal": "digital",
+        "dir": "bidir"
+       }
+      ],
+      "src": "estimated",
+      "note": "standard USB-C, from memory"
+     }
+    },
+    {
+     "name": "gpio40",
+     "connector": {
+      "v": "40-pin header, 2x20, 2.54 mm",
+      "src": "datasheet",
+      "url": "https://datasheets.raspberrypi.com/rpi4/raspberry-pi-4-product-brief.pdf"
+     },
+     "mate": {
+      "v": "2x20 female socket, HAT or Dupont",
+      "src": "estimated",
+      "note": "from memory"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "3V3",
+        "signal": "power",
+        "dir": "power_out"
+       },
+       {
+        "pin": "2",
+        "name": "5V",
+        "signal": "power",
+        "dir": "power_out"
+       },
+       {
+        "pin": "3",
+        "name": "GPIO2",
+        "signal": "i2c_sda",
+        "dir": "bidir"
+       },
+       {
+        "pin": "4",
+        "name": "5V",
+        "signal": "power",
+        "dir": "power_out"
+       },
+       {
+        "pin": "5",
+        "name": "GPIO3",
+        "signal": "i2c_scl",
+        "dir": "bidir"
+       },
+       {
+        "pin": "6",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "7",
+        "name": "GPIO4",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "8",
+        "name": "GPIO14",
+        "signal": "uart_tx",
+        "dir": "out"
+       },
+       {
+        "pin": "9",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "10",
+        "name": "GPIO15",
+        "signal": "uart_rx",
+        "dir": "in"
+       },
+       {
+        "pin": "11",
+        "name": "GPIO17",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "12",
+        "name": "GPIO18",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "13",
+        "name": "GPIO27",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "14",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "15",
+        "name": "GPIO22",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "16",
+        "name": "GPIO23",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "17",
+        "name": "3V3",
+        "signal": "power",
+        "dir": "power_out"
+       },
+       {
+        "pin": "18",
+        "name": "GPIO24",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "19",
+        "name": "GPIO10",
+        "signal": "spi",
+        "dir": "bidir"
+       },
+       {
+        "pin": "20",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "21",
+        "name": "GPIO9",
+        "signal": "spi",
+        "dir": "bidir"
+       },
+       {
+        "pin": "22",
+        "name": "GPIO25",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "23",
+        "name": "GPIO11",
+        "signal": "spi",
+        "dir": "bidir"
+       },
+       {
+        "pin": "24",
+        "name": "GPIO8",
+        "signal": "spi",
+        "dir": "bidir"
+       },
+       {
+        "pin": "25",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "26",
+        "name": "GPIO7",
+        "signal": "spi",
+        "dir": "bidir"
+       },
+       {
+        "pin": "27",
+        "name": "GPIO0",
+        "signal": "i2c_sda",
+        "dir": "bidir"
+       },
+       {
+        "pin": "28",
+        "name": "GPIO1",
+        "signal": "i2c_scl",
+        "dir": "bidir"
+       },
+       {
+        "pin": "29",
+        "name": "GPIO5",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "30",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "31",
+        "name": "GPIO6",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "32",
+        "name": "GPIO12",
+        "signal": "pwm",
+        "dir": "bidir"
+       },
+       {
+        "pin": "33",
+        "name": "GPIO13",
+        "signal": "pwm",
+        "dir": "bidir"
+       },
+       {
+        "pin": "34",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "35",
+        "name": "GPIO19",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "36",
+        "name": "GPIO16",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "37",
+        "name": "GPIO26",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "38",
+        "name": "GPIO20",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "39",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "40",
+        "name": "GPIO21",
+        "signal": "digital",
+        "dir": "bidir"
+       }
+      ],
+      "src": "datasheet",
+      "url": "https://pinout.xyz/",
+      "note": "Pimoroni-backed reference; power and ground pin numbers checked against the Raspberry Pi docs. GPIO0/1 (pins 27/28) reserved for HAT EEPROM."
+     }
+    },
+    {
+     "name": "csi",
+     "connector": {
+      "v": "15-pin 1 mm MIPI CSI-2 camera FPC connector (2-lane)",
+      "src": "estimated",
+      "url": "https://datasheets.raspberrypi.com/rpi4/raspberry-pi-4-product-brief.pdf",
+      "note": "product brief gives a 2-lane MIPI CSI camera port; the 15-pin 1 mm FPC is from memory"
+     },
+     "mate": {
+      "v": "15-way 1 mm FFC (Camera Module 1/2/3 standard cable)",
+      "src": "estimated",
+      "note": "from memory"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "2",
+        "name": "CAM_DN0",
+        "signal": "csi",
+        "dir": "in"
+       },
+       {
+        "pin": "3",
+        "name": "CAM_DP0",
+        "signal": "csi",
+        "dir": "in"
+       },
+       {
+        "pin": "4",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "5",
+        "name": "CAM_DN1",
+        "signal": "csi",
+        "dir": "in"
+       },
+       {
+        "pin": "6",
+        "name": "CAM_DP1",
+        "signal": "csi",
+        "dir": "in"
+       },
+       {
+        "pin": "7",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "8",
+        "name": "CAM_CN",
+        "signal": "csi",
+        "dir": "in"
+       },
+       {
+        "pin": "9",
+        "name": "CAM_CP",
+        "signal": "csi",
+        "dir": "in"
+       },
+       {
+        "pin": "10",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "11",
+        "name": "CAM_IO0",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "12",
+        "name": "CAM_IO1",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "13",
+        "name": "SCL",
+        "signal": "i2c_scl",
+        "dir": "bidir"
+       },
+       {
+        "pin": "14",
+        "name": "SDA",
+        "signal": "i2c_sda",
+        "dir": "bidir"
+       },
+       {
+        "pin": "15",
+        "name": "3V3",
+        "signal": "power",
+        "dir": "power_out"
+       }
+      ],
+      "src": "estimated",
+      "note": "standard Raspberry Pi 15-pin camera pinout, from memory"
+     }
+    },
+    {
+     "name": "usb_a",
+     "connector": {
+      "v": "4x USB-A (2x USB 3.0, 2x USB 2.0)",
+      "src": "datasheet",
+      "url": "https://datasheets.raspberrypi.com/rpi4/raspberry-pi-4-product-brief.pdf"
+     },
+     "mate": {
+      "v": "USB-A plug",
+      "src": "estimated",
+      "note": "follows the connector"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "LINK",
+        "signal": "usb",
+        "dir": "bidir"
+       }
+      ],
+      "src": "estimated",
+      "note": "data link only; 1.2 A shared VBUS budget"
+     }
+    },
+    {
+     "name": "ethernet",
+     "connector": {
+      "v": "RJ45, Gigabit",
+      "src": "datasheet",
+      "url": "https://datasheets.raspberrypi.com/rpi4/raspberry-pi-4-product-brief.pdf"
+     },
+     "mate": {
+      "v": "RJ45 Cat5e patch cable",
+      "src": "estimated",
+      "note": "follows the connector"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "LINK",
+        "signal": "digital",
+        "dir": "bidir"
+       }
+      ],
+      "src": "estimated",
+      "note": "network link"
+     }
+    },
+    {
+     "name": "micro_hdmi",
+     "connector": {
+      "v": "2x micro HDMI",
+      "src": "datasheet",
+      "url": "https://datasheets.raspberrypi.com/rpi4/raspberry-pi-4-product-brief.pdf"
+     },
+     "mate": {
+      "v": "micro-HDMI to HDMI cable",
+      "src": "estimated",
+      "note": "follows the connector"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "LINK",
+        "signal": "digital",
+        "dir": "bidir"
+       }
+      ],
+      "src": "estimated",
+      "note": "video link"
+     }
+    }
+   ],
+   "notes": "3.3 V GPIO, never 5 V on a GPIO pin. Same 40-pin header names as the Pi 5. 15-pin camera connector takes the standard camera cable. Below about 4.63 V the board throttles and shows the under-voltage warning: power it from a 5 V 3 A supply or a buck sized for 3 A."
   }
  },
  "rpi5": {
@@ -13636,6 +17268,604 @@
    "notes": "Two-lane camera. Pi 5 needs the 22-to-15 way cable, the cable from older Pi kits does not fit. Jetson Orin Nano also uses 22-pin connectors but the IMX708 needs driver support there (from memory)."
   }
  },
+ "rpi_zero_2w": {
+  "dimensions": {
+   "body_mm": {
+    "v": [
+     65,
+     30,
+     null
+    ],
+    "src": "datasheet",
+    "url": "https://datasheets.raspberrypi.com/rpizero2/raspberry-pi-zero-2-w-mechanical-drawing.pdf",
+    "note": "PCB outline; catalog height includes connectors and the microSD socket"
+   },
+   "holes": {
+    "v": [
+     {
+      "x": 3.5,
+      "y": 3.5,
+      "d": 2.75,
+      "thread": "M2.5"
+     },
+     {
+      "x": 61.5,
+      "y": 3.5,
+      "d": 2.75,
+      "thread": "M2.5"
+     },
+     {
+      "x": 3.5,
+      "y": 26.5,
+      "d": 2.75,
+      "thread": "M2.5"
+     },
+     {
+      "x": 61.5,
+      "y": 26.5,
+      "d": 2.75,
+      "thread": "M2.5"
+     }
+    ],
+    "src": "datasheet",
+    "url": "https://datasheets.raspberrypi.com/rpizero2/raspberry-pi-zero-2-w-mechanical-drawing.pdf",
+    "note": "58 x 23 mm pitch, 3.5 mm from the edges"
+   },
+   "hole_note": "58 x 23 mm pitch, 3.5 mm from the corner edges; GPIO footprint along the far long edge."
+  },
+  "electrical": {
+   "role": "controller",
+   "voltage_v": {
+    "v": {
+     "min": 4.75,
+     "nom": 5,
+     "max": 5.25
+    },
+    "src": "estimated",
+    "url": "https://datasheets.raspberrypi.com/rpizero2/raspberry-pi-zero-2-w-product-brief.pdf",
+    "note": "5 V via micro-USB (product brief); USB tolerance used"
+   },
+   "current_a": {
+    "v": {
+     "typical": 0.35,
+     "peak": 2.5
+    },
+    "src": "estimated",
+    "url": "https://www.raspberrypi.com/documentation/computers/raspberry-pi.html",
+    "note": "product brief: 5 V 2.5 A supply; the documentation table gives 2 A recommended and 350 mA typical bare-board active current"
+   },
+   "heat_w": {
+    "v": 1.75,
+    "src": "estimated",
+    "note": "5 V x 350 mA"
+   },
+   "logic": {
+    "v": {
+     "io_v": 3.3,
+     "vih_v": 2.15,
+     "max_in_v": 3.6
+    },
+    "src": "estimated",
+    "url": "https://www.raspberrypi.com/documentation/computers/raspberry-pi.html",
+    "note": "3.3 V GPIO, not 5 V tolerant (documentation). Input thresholds not published; 0.65 x 3.3 V assumed."
+   },
+   "ports": [
+    {
+     "name": "power_microusb",
+     "connector": {
+      "v": "micro-USB (PWR IN)",
+      "src": "datasheet",
+      "url": "https://datasheets.raspberrypi.com/rpizero2/raspberry-pi-zero-2-w-product-brief.pdf"
+     },
+     "mate": {
+      "v": "micro-USB supply, 5 V 2.5 A",
+      "src": "estimated",
+      "note": "product brief"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "VBUS",
+        "signal": "power",
+        "dir": "power_in"
+       },
+       {
+        "pin": "5",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       }
+      ],
+      "src": "estimated",
+      "note": "power-only micro-USB, standard pin numbers"
+     }
+    },
+    {
+     "name": "usb_otg",
+     "connector": {
+      "v": "micro-USB OTG (USB)",
+      "src": "datasheet",
+      "url": "https://datasheets.raspberrypi.com/rpizero2/raspberry-pi-zero-2-w-product-brief.pdf"
+     },
+     "mate": {
+      "v": "micro-USB OTG adapter or cable",
+      "src": "estimated",
+      "note": "from memory"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "VBUS",
+        "signal": "power",
+        "dir": "power_out"
+       },
+       {
+        "pin": "2",
+        "name": "D-",
+        "signal": "usb",
+        "dir": "bidir"
+       },
+       {
+        "pin": "3",
+        "name": "D+",
+        "signal": "usb",
+        "dir": "bidir"
+       },
+       {
+        "pin": "5",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       }
+      ],
+      "src": "estimated",
+      "note": "standard micro-USB, from memory; the Zero supplies VBUS to devices"
+     }
+    },
+    {
+     "name": "gpio40",
+     "connector": {
+      "v": "40-pin 2x20 2.54 mm footprint, header not fitted (solder one, or buy the Zero 2 WH)",
+      "src": "estimated",
+      "url": "https://datasheets.raspberrypi.com/rpizero2/raspberry-pi-zero-2-w-product-brief.pdf",
+      "note": "product brief: HAT-compatible 40-pin I/O header footprint"
+     },
+     "mate": {
+      "v": "2x20 female socket, HAT or Dupont",
+      "src": "estimated",
+      "note": "from memory"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "3V3",
+        "signal": "power",
+        "dir": "power_out"
+       },
+       {
+        "pin": "2",
+        "name": "5V",
+        "signal": "power",
+        "dir": "power_out"
+       },
+       {
+        "pin": "3",
+        "name": "GPIO2",
+        "signal": "i2c_sda",
+        "dir": "bidir"
+       },
+       {
+        "pin": "4",
+        "name": "5V",
+        "signal": "power",
+        "dir": "power_out"
+       },
+       {
+        "pin": "5",
+        "name": "GPIO3",
+        "signal": "i2c_scl",
+        "dir": "bidir"
+       },
+       {
+        "pin": "6",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "7",
+        "name": "GPIO4",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "8",
+        "name": "GPIO14",
+        "signal": "uart_tx",
+        "dir": "out"
+       },
+       {
+        "pin": "9",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "10",
+        "name": "GPIO15",
+        "signal": "uart_rx",
+        "dir": "in"
+       },
+       {
+        "pin": "11",
+        "name": "GPIO17",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "12",
+        "name": "GPIO18",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "13",
+        "name": "GPIO27",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "14",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "15",
+        "name": "GPIO22",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "16",
+        "name": "GPIO23",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "17",
+        "name": "3V3",
+        "signal": "power",
+        "dir": "power_out"
+       },
+       {
+        "pin": "18",
+        "name": "GPIO24",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "19",
+        "name": "GPIO10",
+        "signal": "spi",
+        "dir": "bidir"
+       },
+       {
+        "pin": "20",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "21",
+        "name": "GPIO9",
+        "signal": "spi",
+        "dir": "bidir"
+       },
+       {
+        "pin": "22",
+        "name": "GPIO25",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "23",
+        "name": "GPIO11",
+        "signal": "spi",
+        "dir": "bidir"
+       },
+       {
+        "pin": "24",
+        "name": "GPIO8",
+        "signal": "spi",
+        "dir": "bidir"
+       },
+       {
+        "pin": "25",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "26",
+        "name": "GPIO7",
+        "signal": "spi",
+        "dir": "bidir"
+       },
+       {
+        "pin": "27",
+        "name": "GPIO0",
+        "signal": "i2c_sda",
+        "dir": "bidir"
+       },
+       {
+        "pin": "28",
+        "name": "GPIO1",
+        "signal": "i2c_scl",
+        "dir": "bidir"
+       },
+       {
+        "pin": "29",
+        "name": "GPIO5",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "30",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "31",
+        "name": "GPIO6",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "32",
+        "name": "GPIO12",
+        "signal": "pwm",
+        "dir": "bidir"
+       },
+       {
+        "pin": "33",
+        "name": "GPIO13",
+        "signal": "pwm",
+        "dir": "bidir"
+       },
+       {
+        "pin": "34",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "35",
+        "name": "GPIO19",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "36",
+        "name": "GPIO16",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "37",
+        "name": "GPIO26",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "38",
+        "name": "GPIO20",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "39",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "40",
+        "name": "GPIO21",
+        "signal": "digital",
+        "dir": "bidir"
+       }
+      ],
+      "src": "datasheet",
+      "url": "https://pinout.xyz/",
+      "note": "Pimoroni-backed reference; power and ground pin numbers checked against the Raspberry Pi docs. GPIO0/1 (pins 27/28) reserved for HAT EEPROM."
+     }
+    },
+    {
+     "name": "csi",
+     "connector": {
+      "v": "mini CSI-2 camera connector (22-pin, 0.5 mm)",
+      "src": "estimated",
+      "url": "https://datasheets.raspberrypi.com/rpizero2/raspberry-pi-zero-2-w-product-brief.pdf",
+      "note": "product brief lists a CSI-2 camera connector; pin count and pitch from memory"
+     },
+     "mate": {
+      "v": "22-way 0.5 mm FFC; a Zero camera cable for 15-pin cameras",
+      "src": "estimated",
+      "note": "from memory"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "2",
+        "name": "CAM_DN0",
+        "signal": "csi",
+        "dir": "in"
+       },
+       {
+        "pin": "3",
+        "name": "CAM_DP0",
+        "signal": "csi",
+        "dir": "in"
+       },
+       {
+        "pin": "4",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "5",
+        "name": "CAM_DN1",
+        "signal": "csi",
+        "dir": "in"
+       },
+       {
+        "pin": "6",
+        "name": "CAM_DP1",
+        "signal": "csi",
+        "dir": "in"
+       },
+       {
+        "pin": "7",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "8",
+        "name": "CAM_CN",
+        "signal": "csi",
+        "dir": "in"
+       },
+       {
+        "pin": "9",
+        "name": "CAM_CP",
+        "signal": "csi",
+        "dir": "in"
+       },
+       {
+        "pin": "10",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "11",
+        "name": "CAM_DN2",
+        "signal": "csi",
+        "dir": "in"
+       },
+       {
+        "pin": "12",
+        "name": "CAM_DP2",
+        "signal": "csi",
+        "dir": "in"
+       },
+       {
+        "pin": "13",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "14",
+        "name": "CAM_DN3",
+        "signal": "csi",
+        "dir": "in"
+       },
+       {
+        "pin": "15",
+        "name": "CAM_DP3",
+        "signal": "csi",
+        "dir": "in"
+       },
+       {
+        "pin": "16",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "17",
+        "name": "CAM_IO0",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "18",
+        "name": "CAM_IO1",
+        "signal": "digital",
+        "dir": "bidir"
+       },
+       {
+        "pin": "19",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "20",
+        "name": "SCL",
+        "signal": "i2c_scl",
+        "dir": "bidir"
+       },
+       {
+        "pin": "21",
+        "name": "SDA",
+        "signal": "i2c_sda",
+        "dir": "bidir"
+       },
+       {
+        "pin": "22",
+        "name": "3V3",
+        "signal": "power",
+        "dir": "power_out"
+       }
+      ],
+      "src": "estimated",
+      "note": "same 22-pin pinout as the Pi 5 camera connectors, two data lanes used"
+     }
+    },
+    {
+     "name": "mini_hdmi",
+     "connector": {
+      "v": "mini HDMI",
+      "src": "datasheet",
+      "url": "https://datasheets.raspberrypi.com/rpizero2/raspberry-pi-zero-2-w-product-brief.pdf"
+     },
+     "mate": {
+      "v": "mini-HDMI to HDMI cable",
+      "src": "estimated",
+      "note": "follows the connector"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "LINK",
+        "signal": "digital",
+        "dir": "bidir"
+       }
+      ],
+      "src": "estimated",
+      "note": "video link"
+     }
+    }
+   ],
+   "notes": "Quad-core 1 GHz RP3A0, 512 MB, 2.4 GHz Wi-Fi + Bluetooth 4.2. 3.3 V GPIO, same 40-pin names as the larger Pis. Power through PWR IN (the outer micro-USB) or 5 V on header pins 2/4. One USB port only: use a hub for more."
+  }
+ },
  "rplidar_a1m8": {
   "dimensions": {
    "body_mm": {
@@ -13953,6 +18183,118 @@
     }
    ],
    "notes": "3.3 V TTL UART, 460800 8N1, input high min 2.4 V, 3.5 V max, so a 5 V host needs level shifting. One 5 V feed for core and motor. Motor follows the scan command, no separate control. Size the 5 V rail for 0.8 A at start."
+  }
+ },
+ "stepper_28byj48": {
+  "dimensions": {
+   "body_mm": {
+    "v": [
+     35.0,
+     42.0,
+     29.0
+    ],
+    "src": "estimated",
+    "note": "catalog: d28 x 19 mm can, 42 mm across the ears, shaft 10 mm above the face; matches common drawings"
+   },
+   "holes": {
+    "v": [
+     {
+      "x": -8.0,
+      "y": 17.5,
+      "d": 4.2,
+      "thread": "M4"
+     },
+     {
+      "x": -8.0,
+      "y": -17.5,
+      "d": 4.2,
+      "thread": "M4"
+     }
+    ],
+    "src": "estimated",
+    "note": "two ear holes 35 mm apart (common drawings); M3 screws also fit"
+   },
+   "hole_note": "Component frame: shaft axis at the origin, motor can centred 8 mm off the shaft at x = -8"
+  },
+  "electrical": {
+   "role": "actuator",
+   "voltage_v": {
+    "v": {
+     "min": 4.5,
+     "nom": 5.0,
+     "max": 5.5
+    },
+    "src": "datasheet",
+    "url": "https://components101.com/sites/default/files/component_datasheet/28byj48-step-motor-datasheet.pdf",
+    "note": "rated 5 V DC; the 12 V version is a different coil"
+   },
+   "current_a": {
+    "v": {
+     "typical": 0.2,
+     "peak": 0.24
+    },
+    "src": "estimated",
+    "url": "https://components101.com/sites/default/files/component_datasheet/28byj48-step-motor-datasheet.pdf",
+    "note": "50 Ohm coils at 5 V = 100 mA each; full-step drive has two coils on (200 mA), 0.24 A allows for low-resistance batches"
+   },
+   "heat_w": {
+    "v": 1.0,
+    "src": "estimated",
+    "note": "two coils x 5 V x 0.1 A, all heat"
+   },
+   "ports": [
+    {
+     "name": "motor_lead",
+     "connector": {
+      "v": "5-pin JST XH plug on a 25 cm lead",
+      "src": "estimated",
+      "note": "from memory"
+     },
+     "mate": {
+      "v": "ULN2003 board socket (JST XH 5-pin)",
+      "src": "estimated",
+      "note": "matching socket on uln2003_module"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "A",
+        "signal": "motor_phase",
+        "dir": "in"
+       },
+       {
+        "pin": "2",
+        "name": "B",
+        "signal": "motor_phase",
+        "dir": "in"
+       },
+       {
+        "pin": "3",
+        "name": "C",
+        "signal": "motor_phase",
+        "dir": "in"
+       },
+       {
+        "pin": "4",
+        "name": "D",
+        "signal": "motor_phase",
+        "dir": "in"
+       },
+       {
+        "pin": "5",
+        "name": "COM",
+        "signal": "power",
+        "dir": "power_in"
+       }
+      ],
+      "src": "estimated",
+      "url": "https://components101.com/sites/default/files/component_datasheet/28byj48-step-motor-datasheet.pdf",
+      "note": "wire order blue A, pink B, yellow C, orange D, red COM (+5 V), as on the plug"
+     }
+    }
+   ],
+   "notes": "Unipolar: COM to +5 V, A-D switched to ground in sequence by a ULN2003. 2048 full steps (4096 half steps) per output turn with the nominal 1:64 gear (exact ratio about 63.68). Pull-in 300 gf.cm, self-positioning torque over 34.3 mN.m. About 15 rpm at most; draws current while holding."
   }
  },
  "switch_battery_6006": {
@@ -14419,6 +18761,113 @@
    "notes": "ICC 1.1 mA typ at 3 V, 1.5 mA at 5.5 V, 1 uA standby (Toshiba). STBY has a 200 k pulldown on the chip: pull high to run (Adafruit's board adds a 10k pull-up, the clone may not). PWM up to 100 kHz. Common clone header order, from memory: VM VCC GND AO1 AO2 BO2 BO1 GND / PWMA AIN2 AIN1 STBY BIN1 BIN2 PWMB GND."
   }
  },
+ "tcrt5000_module": {
+  "dimensions": {
+   "body_mm": {
+    "v": [
+     32.0,
+     14.0,
+     1.6
+    ],
+    "src": "estimated",
+    "note": "generic module about 32 x 14 mm board, sellers vary; catalog 38 x 14 x 13.1 adds the right-angle pins, trimmer and the TCRT5000 below"
+   },
+   "holes": {
+    "v": [
+     {
+      "x": 14.0,
+      "y": 7.0,
+      "d": 3.0,
+      "thread": "M3"
+     }
+    ],
+    "src": "estimated",
+    "note": "single M3 hole near the middle; position varies per seller"
+   },
+   "hole_note": "origin = board corner at the header end; the TCRT5000 sits under the far end"
+  },
+  "electrical": {
+   "role": "sensor",
+   "voltage_v": {
+    "v": {
+     "min": 3.3,
+     "nom": 5.0,
+     "max": 5.5
+    },
+    "src": "estimated",
+    "url": "https://www.ti.com/lit/ds/symlink/lm393.pdf",
+    "note": "seller range 3.3-5 V; LM393 runs from 2-36 V, the IR LED resistor sets the current"
+   },
+   "current_a": {
+    "v": {
+     "typical": 0.02,
+     "peak": 0.03
+    },
+    "src": "estimated",
+    "url": "https://www.vishay.com/docs/83760/tcrt5000.pdf",
+    "note": "IR LED about 15-20 mA through its series resistor (TCRT5000 max 60 mA), plus indicator LEDs"
+   },
+   "heat_w": {
+    "v": 0.1,
+    "src": "estimated",
+    "note": "5 V x 20 mA"
+   },
+   "logic": {
+    "v": {
+     "io_v": 5.0,
+     "max_in_v": 5.5
+    },
+    "src": "estimated",
+    "note": "DO is the LM393 open collector with a 10k pull-up to VCC: high = VCC, so use 3.3 V VCC on a 3.3 V host"
+   },
+   "ports": [
+    {
+     "name": "header",
+     "connector": {
+      "v": "4-pin 2.54 mm male header (VCC GND DO AO)",
+      "src": "estimated",
+      "note": "from memory; varies per seller"
+     },
+     "mate": {
+      "v": "Dupont 2.54 mm female jumpers",
+      "src": "estimated",
+      "note": "from memory"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "VCC",
+        "signal": "power",
+        "dir": "power_in"
+       },
+       {
+        "pin": "2",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "3",
+        "name": "DO",
+        "signal": "digital",
+        "dir": "out"
+       },
+       {
+        "pin": "4",
+        "name": "AO",
+        "signal": "analog",
+        "dir": "out"
+       }
+      ],
+      "src": "estimated",
+      "note": "silk on the common 4-pin board; order varies"
+     }
+    }
+   ],
+   "notes": "DO goes low over a reflective (white) surface and high over black or nothing, threshold by the trimmer. Best at 2.5 mm, usable to about 10-15 mm above the floor. Sunlight blinds it: shade the sensor."
+  }
+ },
  "tmc2209_stepstick": {
   "no_holes": true,
   "dimensions": {
@@ -14738,6 +19187,222 @@
    "notes": "No connector on the motor itself: it has solder tabs. Adafruit 3777 (the catalog supplier) ships with leads already soldered on, while generic TT motors ship with bare tabs, so the harness needs a soldered lead for those. No encoder. Needs a driver such as TB6612 or DRV8833. Stall 1.1 A at 3 V, 1.2 A at 4.5 V."
   }
  },
+ "uln2003_module": {
+  "dimensions": {
+   "body_mm": {
+    "v": [
+     35.0,
+     32.0,
+     10.1
+    ],
+    "src": "estimated",
+    "note": "generic ULN2003 stepper board, about 35 x 32 mm"
+   },
+   "holes": {
+    "v": [
+     {
+      "x": 2.75,
+      "y": 2.75,
+      "d": 3.0,
+      "thread": "M3"
+     },
+     {
+      "x": 32.25,
+      "y": 2.75,
+      "d": 3.0,
+      "thread": "M3"
+     },
+     {
+      "x": 2.75,
+      "y": 29.25,
+      "d": 3.0,
+      "thread": "M3"
+     },
+     {
+      "x": 32.25,
+      "y": 29.25,
+      "d": 3.0,
+      "thread": "M3"
+     }
+    ],
+    "src": "estimated",
+    "note": "four corner holes, positions vary per seller"
+   },
+   "hole_note": "origin = board corner; IN header on the -X edge, motor socket on the +Y edge"
+  },
+  "electrical": {
+   "role": "driver",
+   "voltage_v": {
+    "v": {
+     "min": 5.0,
+     "nom": 5.0,
+     "max": 12.0
+    },
+    "src": "estimated",
+    "url": "https://www.ti.com/lit/ds/symlink/uln2003a.pdf",
+    "note": "board supply 5-12 V per listings; it must match the motor (5 V for the 28BYJ-48 5 V)"
+   },
+   "current_a": {
+    "v": {
+     "typical": 0.2,
+     "peak": 0.5
+    },
+    "src": "datasheet",
+    "url": "https://www.ti.com/lit/ds/symlink/uln2003a.pdf",
+    "note": "ULN2003A 500 mA per output rated; 28BYJ-48 draws about 100 mA per coil, two on at once"
+   },
+   "output": {
+    "v": {
+     "voltage_v": 5.0,
+     "current_a": 0.2
+    },
+    "src": "estimated",
+    "note": "outputs sink the coils; COM carries the motor supply"
+   },
+   "heat_w": {
+    "v": 0.18,
+    "src": "datasheet",
+    "url": "https://www.ti.com/lit/ds/symlink/uln2003a.pdf",
+    "note": "VCE(sat) about 0.9 V x 0.1 A x 2 coils"
+   },
+   "logic": {
+    "v": {
+     "io_v": 5.0,
+     "vih_v": 2.7,
+     "max_in_v": 30.0
+    },
+    "src": "datasheet",
+    "url": "https://www.ti.com/lit/ds/symlink/uln2003a.pdf",
+    "note": "ULN2003A input on 2.7 kOhm base resistor: 3.3 V and 5 V hosts both drive it"
+   },
+   "ports": [
+    {
+     "name": "control",
+     "connector": {
+      "v": "4-pin 2.54 mm male header (IN1-IN4)",
+      "src": "estimated",
+      "note": "from memory; varies per seller"
+     },
+     "mate": {
+      "v": "Dupont 2.54 mm female jumpers",
+      "src": "estimated",
+      "note": "from memory"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "IN1",
+        "signal": "digital",
+        "dir": "in"
+       },
+       {
+        "pin": "2",
+        "name": "IN2",
+        "signal": "digital",
+        "dir": "in"
+       },
+       {
+        "pin": "3",
+        "name": "IN3",
+        "signal": "digital",
+        "dir": "in"
+       },
+       {
+        "pin": "4",
+        "name": "IN4",
+        "signal": "digital",
+        "dir": "in"
+       }
+      ],
+      "src": "estimated",
+      "note": "board silk"
+     }
+    },
+    {
+     "name": "power",
+     "connector": {
+      "v": "2-pin 2.54 mm male header (- +) with an on/off jumper",
+      "src": "estimated",
+      "note": "from memory; varies per seller"
+     },
+     "mate": {
+      "v": "Dupont 2.54 mm female jumpers",
+      "src": "estimated",
+      "note": "from memory"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "-",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "+",
+        "name": "VCC",
+        "signal": "power",
+        "dir": "power_in"
+       }
+      ],
+      "src": "estimated",
+      "note": "board silk - / +"
+     }
+    },
+    {
+     "name": "motor",
+     "connector": {
+      "v": "5-pin JST XH socket, 2.5 mm",
+      "src": "estimated",
+      "note": "from memory"
+     },
+     "mate": {
+      "v": "28BYJ-48 5-pin JST XH plug",
+      "src": "estimated",
+      "note": "the motor's own plug"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "A",
+        "signal": "motor_phase",
+        "dir": "out"
+       },
+       {
+        "pin": "2",
+        "name": "B",
+        "signal": "motor_phase",
+        "dir": "out"
+       },
+       {
+        "pin": "3",
+        "name": "C",
+        "signal": "motor_phase",
+        "dir": "out"
+       },
+       {
+        "pin": "4",
+        "name": "D",
+        "signal": "motor_phase",
+        "dir": "out"
+       },
+       {
+        "pin": "5",
+        "name": "COM",
+        "signal": "power",
+        "dir": "power_out"
+       }
+      ],
+      "src": "estimated",
+      "note": "socket order blue, pink, yellow, orange, red; IN1-IN4 switch A-D (LEDs A-D), COM is VCC"
+     }
+    }
+   ],
+   "notes": "IN1 drives A (blue), IN2 B (pink), IN3 C (yellow), IN4 D (orange); the Arduino Stepper library needs the order IN1, IN3, IN2, IN4. Remove the jumper to cut motor power. Diodes for the coils are inside the ULN2003."
+  }
+ },
  "usb_can_adapter": {
   "no_holes": true,
   "dimensions": {
@@ -14997,6 +19662,132 @@
     }
    ],
    "notes": "Connect GND to the bus, the guide says the bus will not work without it. 5V pin is an output only; leave it open unless powering a target. Onboard 120 ohm termination is on a switch; disable it if the bus is already terminated. Not isolated. This key and its twin describe one product with different envelopes."
+  }
+ },
+ "vl53l0x_breakout": {
+  "dimensions": {
+   "body_mm": {
+    "v": [
+     25.0,
+     10.7,
+     1.6
+    ],
+    "src": "estimated",
+    "note": "GY-530 board; catalog height includes the header pins"
+   },
+   "holes": {
+    "v": [
+     {
+      "x": 2.5,
+      "y": 5.35,
+      "d": 2.2,
+      "thread": "M2"
+     },
+     {
+      "x": 22.5,
+      "y": 5.35,
+      "d": 2.2,
+      "thread": "M2"
+     }
+    ],
+    "src": "estimated",
+    "note": "two small holes at the ends; positions vary per seller"
+   },
+   "hole_note": "origin = board corner; sensor faces +Z in the middle of the board"
+  },
+  "electrical": {
+   "role": "sensor",
+   "voltage_v": {
+    "v": {
+     "min": 2.8,
+     "nom": 5.0,
+     "max": 5.5
+    },
+    "src": "estimated",
+    "url": "https://www.pololu.com/file/0J1187/VL53L0X.pdf",
+    "note": "the VL53L0X runs at 2.6-3.5 V (ST); the GY-530 adds a 2.8 V LDO and level shifting"
+   },
+   "current_a": {
+    "v": {
+     "typical": 0.019,
+     "peak": 0.04
+    },
+    "src": "datasheet",
+    "url": "https://www.pololu.com/file/0J1187/VL53L0X.pdf",
+    "note": "19 mA average while ranging, VCSEL peaks reach 40 mA (ST)"
+   },
+   "heat_w": {
+    "v": 0.1,
+    "src": "estimated",
+    "note": "5 V x 19 mA"
+   },
+   "logic": {
+    "v": {
+     "io_v": 2.8,
+     "vih_v": 2.0,
+     "max_in_v": 5.5
+    },
+    "src": "estimated",
+    "note": "level-shifted I2C on the GY-530; thresholds assumed"
+   },
+   "ports": [
+    {
+     "name": "header",
+     "connector": {
+      "v": "6-pin 2.54 mm male header",
+      "src": "estimated",
+      "note": "from memory; varies per seller"
+     },
+     "mate": {
+      "v": "Dupont 2.54 mm female jumpers",
+      "src": "estimated",
+      "note": "from memory"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "VIN",
+        "signal": "power",
+        "dir": "power_in"
+       },
+       {
+        "pin": "2",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "3",
+        "name": "SCL",
+        "signal": "i2c_scl",
+        "dir": "bidir"
+       },
+       {
+        "pin": "4",
+        "name": "SDA",
+        "signal": "i2c_sda",
+        "dir": "bidir"
+       },
+       {
+        "pin": "5",
+        "name": "GPIO1",
+        "signal": "digital",
+        "dir": "out"
+       },
+       {
+        "pin": "6",
+        "name": "XSHUT",
+        "signal": "digital",
+        "dir": "in"
+       }
+      ],
+      "src": "estimated",
+      "note": "GY-530 silk"
+     }
+    }
+   ],
+   "notes": "I2C address 0x29. Several on one bus: hold all but one in XSHUT low and give each a new address at start-up. 25 deg field of view, up to about 1.2 m indoors (2 m in long-range mode). Keep the window clear; a cover needs IR-transparent material and crosstalk calibration."
   }
  },
  "wago_221_415": {
