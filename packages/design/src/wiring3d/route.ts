@@ -89,15 +89,22 @@ export class Router {
    * Put a harness part down beside `home` (world mm) on rigid body `group`: the nearest spot where its body is clear, the
    * pins in use have room for their connectors, and something is close by to tie it to. Returns its body centre.
    */
-  placeHarness(inst: string, key: string, home: V3, group: string, pins: [string, string][], bay?: string): V3 | null {
+  placeHarness(inst: string, key: string, home: V3, group: string, pins: [string, string][], bay?: string, partner?: (port: string, pin: string) => V3 | null): { at: V3; turned: boolean } | null {
     const model = partModel(key), bb = bodyBox(model), L = this.f.link[group];
     if (!bb || !L) return null;
     this.ready();
     const c = lerp(bb.min, bb.max, 0.5), within = bay ? this.bays.get(bay) : undefined, g = this.grid;
     const half = Math.max(bb.max[0] - bb.min[0], bb.max[1] - bb.min[1], bb.max[2] - bb.min[2]) / 2;
-    const frame = (q: V3): Tf => ({ R: L.R, p: scale(sub(q, rotate({ R: L.R, p: [0, 0, 0] }, c)), 0.001) as V3 });
-    const fits = (q: V3, near: boolean) => {
+    // the part lies with the body's axes, or turned half a turn about the body's z: whichever way its pins face the pins
+    // they are wired to (a wire that has to come round to a pin facing away from it needs a U-turn it may have no room for)
+    const Rt = L.R.map((r) => [-r[0], -r[1], r[2]]);
+    const frameOf = (R: number[][], q: V3): Tf => ({ R, p: scale(sub(q, rotate({ R, p: [0, 0, 0] }, c)), 0.001) as V3 });
+    const facing = (T: Tf) => { let sum = 0, n = 0; for (const [port, pin] of pins) { const pa = pinOf(model, port, pin), to = partner?.(port, pin); if (!pa || !to) continue; const w = pinWorld(T, pa), d = sub(to, w.p); if (len(d) < 1) continue; sum += dot(w.out, unit(d)); n++; } return n ? sum / n : 0; };
+    const turned = !!partner && facing(frameOf(Rt, home)) > facing(frameOf(L.R, home)) + 0.2;
+    const frame = (q: V3): Tf => frameOf(turned ? Rt : L.R, q);
+    const fits = (q: V3, near: boolean, face = false) => {
       const T = frame(q);
+      if (face && facing(T) < 0.3) return false;
       if (near && g.dist(q) > Math.ceil(half / g.s) + 2) return false;
       if (!g.boxFree(T.R, scale(T.p as V3, 1000), bb.min, bb.max, 1)) return false;
       // not in front of anyone's pins: the corners, edge middles and centre of the body against the kept cells
@@ -110,14 +117,16 @@ export class Router {
       }
       return true;
     };
-    const at = g.nearest(home, 1, 90, within, (q) => fits(q, true)) ?? g.nearest(home, 1, 140, within, (q) => fits(q, false)) ?? (within ? g.nearest(home, 1, 140, undefined, (q) => fits(q, false)) : null);
+    const at = (partner ? g.nearest(home, 1, 90, within, (q) => fits(q, true, true)) : null) ?? g.nearest(home, 1, 90, within, (q) => fits(q, true)) ?? g.nearest(home, 1, 140, within, (q) => fits(q, false)) ?? (within ? g.nearest(home, 1, 140, undefined, (q) => fits(q, false)) : null);
     if (!at) return null;
     const T = frame(at), id = Math.min(255, this.nextId++);
     g.addBox(T.R, scale(T.p as V3, 1000), bb.min, bb.max, id);
     this.placed.set(inst, { link: group, world: T, model, id, harness: true });
     this.dirty = true;
-    return at;
+    return { at, turned };
   }
+  /** where a placed part's pin is in the world, or null */
+  pinAt(inst: string, port: string, pin: string): V3 | null { return this.pin(inst, port, pin)?.p ?? null; }
 
   /** Keep the space in front of a part's pins free of harness parts: the connector and the first bend of every wire to come. */
   reserve(inst: string, pins: [string, string][]) {

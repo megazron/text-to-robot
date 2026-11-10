@@ -20,6 +20,8 @@ export interface InstanceRec {
   name: string; key: string; link: string | null; off_board?: boolean; note?: string;
   /** a harness part with no link of its own (splice, inline fuse, star ground): its body centre in the world at the home pose (mm) and the rigid body it is tied to */
   at_mm?: Vec3; on?: string;
+  /** it lies turned half a turn about that body's z, so its pins face the parts it is wired to */
+  turned?: boolean;
 }
 export interface NetRec { name: string; kind: NetKind; voltage_v?: number; pins: string[]; }
 export interface WireRec { id: string; net: string; kind: NetKind; from: string; to: string; awg: number | null; color: string; typical_a: number; peak_a: number; length_mm: number; drop_v?: number;
@@ -473,8 +475,11 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
     const home: { link: string | null; p: Vec3 | null; inst?: string } = i.link && f.link[i.link] ? { link: i.link, p: own && own.geometry.type === "mesh" && own.geometry.part === "component" ? bodyCentre(f, i.link, String(own.geometry.params?.key)) : worldOf(f, i.link, [0, 0, 0]), inst: [...H.instances.values()].find((x) => x.link === i.link && x.name !== i.name)?.name } : H.home ? { ...locate(H.home), inst: H.home } : harnessHome(H, i.name, groups, locate);
     if (!home.p || !home.link) continue;
     if (home.inst && !H.bayOf.get(i.name)) H.bayOf.set(i.name, H.bayOf.get(home.inst) ?? "");
-    const g = groupOf.get(home.link) ?? home.link, at = R.placeHarness(i.name, i.key, home.p, g, pinsOf(i.name), H.bayOf.get(i.name) || undefined);
-    if (at) { i.at_mm = at.map(r1) as Vec3; i.on = g; R.reserve(i.name, pinsOf(i.name)); } else routeProblems.push(`${i.name}: no free place beside ${home.inst ?? home.link}`);
+    const g = groupOf.get(home.link) ?? home.link, at = R.placeHarness(i.name, i.key, home.p, g, pinsOf(i.name), H.bayOf.get(i.name) || undefined, (port, pin) => {
+      for (const ws of groups.values()) for (const w of ws) for (const [me, other] of [[w.a, w.b], [w.b, w.a]]) if (me.inst === i.name && me.port === port && me.pin === pin && other.inst !== i.name) { const q = R.pinAt(other.inst, other.port, other.pin); if (q) return q; }
+      return null;
+    });
+    if (at) { i.at_mm = at.at.map(r1) as Vec3; i.on = g; if (at.turned) i.turned = true; else delete i.turned; R.reserve(i.name, pinsOf(i.name)); } else routeProblems.push(`${i.name}: no free place beside ${home.inst ?? home.link}`);
   }
   const awgOf = (w: WireDecl, lengthMm: number, pm: string | null) => {
     const n = H.nets.get(w.net)!, volts = n.kind === "power" ? n.voltage_v ?? 5 : 5;
@@ -499,7 +504,10 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
       const bayA = H.bayOf.get(ia) || undefined, bayB = H.bayOf.get(ib) || undefined;
       const leaves = (bay?: string, other?: string) => !!bay && bay !== other;
       const pick = (bay: string, to: Vec3) => H.exits.find((e) => e.id === H.exitOf.get(key) && e.bay === bay) ?? nearestExit(H, bay, to);
-      const exA = leaves(bayA, bayB) ? pick(bayA!, lb.p ?? la.p!) : null, exB = leaves(bayB, bayA) ? pick(bayB!, la.p ?? lb.p!) : null;
+      let exA = leaves(bayA, bayB) ? pick(bayA!, lb.p ?? la.p!) : null, exB = leaves(bayB, bayA) ? pick(bayB!, la.p ?? lb.p!) : null;
+      // a hole that opens into the other compartment (a deck grommet between a hood and the tub under it) is the one wall between the two
+      const opensInto = (e: ExitDecl | null, bay?: string) => { const b = bay ? R.bays.get(bay) : undefined; if (!e || !b) return false; const p = worldExit(f, e); return p.every((x, k) => x > b.min[k] - 6 && x < b.max[k] + 6); };
+      if (exA && exB) { if (opensInto(exB, bayA)) exA = null; else if (opensInto(exA, bayB)) exB = null; }
       const exitAt = (e: ExitDecl | null) => (e ? { id: e.id, at: worldExit(f, e), n: unit(rotateBy(f, e.link, e.normal)), hole_mm: e.panel_hole_mm } : null);
       const od = bundleOd(ws), straight = dist(la.p ?? [0, 0, 0], lb.p ?? [0, 0, 0]);
       const slackOf = (anchors: { joint: string; aIn: Vec3; aOut: Vec3 }[]) => {

@@ -109,8 +109,9 @@ export function wiring3d(spec: RobotSpecification, record?: WiringRecord | null)
     } else if (harnessAt.has(i.name)) {
       const at = harnessAt.get(i.name)!, g = laid.get(i.name) ?? nearestGroup(at), L = f.link[g];
       // the part's body centred on its spot, axes as the body's
-      const m = model(i.key), c = centre(m), local = sub(applyInv(L, at), c);
-      const T: Tf = { R: L.R, p: [0, 0, 0] }, inLink: Tf = { R: I3.R, p: scale(local, 0.001) as V3 };
+      // (turned half a turn about the body's z where the record says so)
+      const Rl = i.turned ? [[-1, 0, 0], [0, -1, 0], [0, 0, 1]] : I3.R, m = model(i.key), c0 = centre(m), c: V3 = i.turned ? [-c0[0], -c0[1], c0[2]] : c0, local = sub(applyInv(L, at), c);
+      const T: Tf = { R: i.turned ? L.R.map((r) => [-r[0], -r[1], r[2]]) : L.R, p: [0, 0, 0] }, inLink: Tf = { R: Rl, p: scale(local, 0.001) as V3 };
       placeOf.set(i.name, { link: g, T: inLink, world: { R: T.R, p: add(L.p as V3, scale([0, 1, 2].map((r) => L.R[r][0] * local[0] + L.R[r][1] * local[1] + L.R[r][2] * local[2]) as V3, 0.001)) } });
       parts.push({ inst: i.name, key: i.key, link: g, T: mat(inLink), harness: true, model: m });
     } else if (!i.off_board) notes.push(`${i.name}: no place in the routes, not drawn`);
