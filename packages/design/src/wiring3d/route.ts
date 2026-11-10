@@ -189,7 +189,8 @@ export class Router {
     // instead of running on past it and back
     const along = (sgn: number, box?: Box, to?: V3) => {
       const want = to ? sgn * dot(sub(to, e.at), e.n) : Infinity;
-      for (const n of [need, 1]) for (let t = 2; t <= 40; t += 1) {
+      // (not past the point it is going to: there it settles for less clearance)
+      for (const n of [need, 1]) for (let t = 2; t <= (n === need ? Math.min(40, want) : 40); t += 1) {
         const q = add(e.at, scale(e.n, sgn * t)); if (g.dist(q) < n || (box && !inBox(box, q, -g.s))) continue;
         let best = q;
         for (let u = 1; u <= run && t + u <= want + 0.5; u += 1) { const q2 = add(q, scale(e.n, sgn * u)); if (g.dist(q2) < n || (box && !inBox(box, q2, -g.s))) break; best = q2; }
