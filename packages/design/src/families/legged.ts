@@ -233,7 +233,7 @@ function buildQuadruped(req: LeggedRequest, cfg: QuadCfg, sensors: SensorKind[])
     feet.push({ link: `${L.n}_foot`, leg: L.n });
   }
   A.spec.root = "base_link";
-  return { A, feet, H, h, a, b, Xh, Yl, Xb, Wo, zHi, zLo, compute };
+  return { A, feet, H, h, a, b, Xh, Yl, Xb, Wo, zHi, zLo, compute, leadRoom };
 }
 const lerp3 = (p: Vec3, q: Vec3, t: number): Vec3 => add(p, scale(sub(q, p), t));
 
@@ -246,7 +246,15 @@ export function sensorsOf(req: LeggedRequest, dflt: SensorKind[]): SensorKind[] 
 function boxQuad(A: Assembly, H: Harness, b: ReturnType<typeof buildQuadruped>, qdd = false) {
   const zt = b.zHi + 3, rear = A.spec.links.some((l) => l.name === "top_deck_rear");
   const parts = ["computer", "actuator_bus", "regulator_5v", "imu"];
-  hoodAround(A, H, { name: "electronics_hood", deck: "top_deck", alsoHoles: rear ? ["top_deck_rear"] : [], parts, z0: zt, usbFor: "computer", rocker: qdd ? { key: BATTERY_SWITCH } : true, below: b.zHi - b.zLo, near: [b.Xb * 0.5, b.Wo * 0.6], limit: { x0: -b.Xb + 4, x1: b.Xb - 11, y0: -b.Wo + 6, y1: b.Wo - 6 } });
+  const hood = hoodAround(A, H, { name: "electronics_hood", deck: "top_deck", alsoHoles: rear ? ["top_deck_rear"] : [], parts, z0: zt, usbFor: "computer", rocker: qdd ? { key: BATTERY_SWITCH } : true, below: b.zHi - b.zLo, near: [b.Xb * 0.5 - b.leadRoom / 2, b.Wo * 0.6], room: qdd ? 56 : 28, rockerAtHole: true, limit: { x0: -b.Xb + 4, x1: b.Xb - 11, y0: -b.Wo + 6, y1: b.Wo - 6 } });
+  // the harness in the tub: the inline fuse in the channel beside the pack on the deck hole's side, far enough behind the
+  // hole for the lead to straighten out of the fuse and turn up through it; the star ground in the other channel
+  const hole = hood.exits.find((e) => e.id === "electronics_hood.deck")?.at;
+  if (hole) {
+    const s = hole[1] >= 0 ? 1 : -1, yc = s * (b.Wo - 15), fb = part("fuse_holder_atm_inline").bbox_mm!, fuseHalf = (fb.max[0] - fb.min[0]) / 2;
+    H.spot.set("main_fuse", { by: "battery", at: [hole[0] - fuseHalf - b.leadRoom - 6, yc, 0] });
+    H.spot.set("star_ground", { by: "battery", at: [0, -yc, 0] });
+  }
   H.scan();
   const side = (s: number): { id: string; kind: string; face: Face; at: Vec3; normal: Vec3; hole_mm: number } => ({ id: `body_bay.${s > 0 ? "left" : "right"}`, kind: "grommet", face: s > 0 ? "y+" : "y-", at: [0, s * b.Wo, 0], normal: [0, s, 0], hole_mm: 10 });
   registerBay(A, { name: "body_bay", tub: "base_link", lid: "top_deck", parent: "base_link", T: translation([0, 0, 0]), min: [-b.Xb + 2, -b.Wo + 2, b.zLo - 0.5], max: [b.Xb - 2, b.Wo - 2, b.zHi], parts: ["battery"], exits: [side(1), side(-1)], screws: 4, note: "the printed tub, the deck is its lid",
