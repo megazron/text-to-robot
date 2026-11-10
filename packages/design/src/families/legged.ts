@@ -254,7 +254,10 @@ function boxQuad(A: Assembly, H: Harness, b: ReturnType<typeof buildQuadruped>, 
   // the hood stands high enough over the boards for a wire up out of a top terminal to turn under it and run along
   // (connector, first bend and the run's own room: about 8 mm more than a hood just over the parts)
   const z1 = Math.max(...parts.map((n) => worldBox(A, n).hi[2])) + 15;
-  const hood = hoodAround(A, H, { name: "electronics_hood", z1, deck: "top_deck", alsoHoles: rear ? ["top_deck_rear"] : [], parts, z0: zt, usbFor: "computer", rocker: qdd ? { key: BATTERY_SWITCH } : true, below: b.zHi - b.zLo, near: [b.Xb * 0.5 - b.leadRoom * 0.8, b.Wo * 0.6], room: qdd ? 44 : 20, rockerAtHole: true, limit: { x0: -b.Xb + 4, x1: b.Xb - 11, y0: -b.Wo + 6, y1: b.Wo - 6 } });
+  // the camera's flat ribbon comes in through a slot in the hood's front wall, near its top, in line with the camera
+  const cam = A.spec.links.some((l) => l.name === "camera") ? worldBox(A, "camera") : null;
+  const grommets = cam ? [{ id: "camera", face: "x+" as Face, u: (cam.lo[1] + cam.hi[1]) / 2, w: 18, h: 3, z: z1 - 6 }] : undefined;
+  const hood = hoodAround(A, H, { name: "electronics_hood", z1, grommets, deck: "top_deck", alsoHoles: rear ? ["top_deck_rear"] : [], parts, z0: zt, usbFor: "computer", rocker: qdd ? { key: BATTERY_SWITCH } : true, below: b.zHi - b.zLo, near: [b.Xb * 0.5 - b.leadRoom * 0.8, b.Wo * 0.6], room: qdd ? 44 : 20, rockerAtHole: true, limit: { x0: -b.Xb + 4, x1: b.Xb - 11, y0: -b.Wo + 6, y1: b.Wo - 6 } });
   // the harness in the tub: the inline fuse in the channel beside the pack on the deck hole's side, far enough behind the
   // hole for the lead to straighten out of the fuse and turn up through it; the star ground in the other channel
   const hole = hood.exits.find((e) => e.id === "electronics_hood.deck")?.at;
