@@ -1,6 +1,6 @@
 // Arduino car: the cheapest robot that really drives. TT gear motors bolted to printed brackets under a
 // filleted chassis plate, 65 mm wheels, a ball caster on a printed pillar (2WD), a 2S 18650 pack, an Arduino
-// on a half breadboard with a TB6612FNG driver (plug-in wiring, no soldering), an HC-SR04 in a printed front
+// on a half breadboard with a TB6612FNG driver (plug-in wiring, no soldering; the 4WD has a second breadboard for its second driver), an HC-SR04 in a printed front
 // bracket. Every printed part is an exact CAD solid (@ttr/kernel): STEP for CAD tools, STL for the slicer.
 //
 // Tiers: cheapest (2WD + ball caster) and stronger (4WD: twice the drive torque, climbs and pushes more).
@@ -129,7 +129,7 @@ export function designArduinoCar(req: ArduinoCarRequest = {}): RobotSpecificatio
   // the leads from under the deck come up through grommets in the free floor: the left and the right motors' (beside
   // the motors' rear ends, a turn and a straight run inboard of them) and the sensor's
   const xLead = four ? 0 : axles[0].xa + axles[0].can * 61 + 11;
-  const holes: { id: string; x: number; y: number }[] = four ? [{ id: "motor_leads_l", x: xLead, y: -14 }, { id: "motor_leads_r", x: xLead, y: -28 }] : [{ id: "motor_leads_l", x: xLead, y: 28 }, { id: "motor_leads_r", x: xLead, y: -28 }];
+  const holes: { id: string; x: number; y: number }[] = four ? [{ id: "motor_leads_l", x: xLead, y: -14 }, { id: "motor_leads_r", x: xLead, y: -28 }] : [{ id: "motor_leads_l", x: xLead, y: 26 }, { id: "motor_leads_r", x: xLead, y: -26 }];
   if (sensor === "ultrasonic") holes.push(four ? { id: "sensor", x: xe - 6, y: 38 } : { id: "sensor", x: xe - 7, y: -20 });
   const GD = 6.5;
   for (const h of holes) ops.push({ op: "hole", a: [h.x, h.y, ZP - 1], b: [h.x, h.y, ZT + 1], d: GD });
@@ -236,8 +236,8 @@ export function designArduinoCar(req: ArduinoCarRequest = {}): RobotSpecificatio
     const xLane = xe - tab - 15;
     H.seat("main_fuse", [xPin + 16, yPos + 40.5, lie(15)], 1);
     H.seat("splice_vbat", [xLane + 7.4, 6, lie(8.5)], 3);
-    H.seat("star_ground", [xPin + 43, yPos + 13.5, lie(8.5)]);
-    H.seat("splice_5v_logic", [xPin + 43, yPos + 13.5, lie(8.5) + 10.5]);   // tied on top of the star ground's splice
+    H.seat("star_ground", [xPin + 52, -CY + 12, lie(8.5)]);
+    H.seat("splice_5v_logic", [xPin + 52, -CY + 12, lie(8.5) + 10.5]);   // tied on top of the star ground's splice
   }
   const motors = axles.flatMap(({ xa }) => ([1, -1] as const).map((sd) => `${xa > 0 ? "front" : xa < 0 ? "rear" : "drive"}_${sd > 0 ? "left" : "right"}_motor`));
   wire(H, drivers, sensor === "ultrasonic", motors);
