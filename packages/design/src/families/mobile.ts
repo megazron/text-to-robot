@@ -286,12 +286,12 @@ function deckLayout(L: number, W: number, sensors: MobileSensor[], items: Item[]
  */
 /**
  * Room a board's plugs want above its own frame (mm): the highest pin that is wired from above, its connector, the wire's
- * first bend (1.25 x the largest bend radius in use, 8 mm) and the wire's own width with a little air, so the lid over
- * it leaves the turn its radius. -Infinity when nothing plugs in from above.
+ * first bend (1.25 x the largest bend radius in use, 8 mm) and the half width of the bundle it joins there with its
+ * own bend radius of air under the lid. -Infinity when nothing plugs in from above.
  */
 function plugRoom(key: string): number {
   let top = -Infinity; const m = partModel(key);
-  for (const k of m.pins.keys()) { const [port, ...pin] = k.split("."); const pa = pinOf(m, port, pin.join(".")); if (pa && pa.out[2] > 0.9) top = Math.max(top, pa.at[2] + connectorLen(pa.kind) + 10 + 3); }
+  for (const k of m.pins.keys()) { const [port, ...pin] = k.split("."); const pa = pinOf(m, port, pin.join(".")); if (pa && pa.out[2] > 0.9) top = Math.max(top, pa.at[2] + connectorLen(pa.kind) + 10 + 8); }
   return top;
 }
 function electronicsBay(b: Build, items: Item[], area: Rect, reserved: Rect[], deckTop: number, parent = "base_link"): number {
@@ -641,11 +641,14 @@ function seatRailSplice(b: Build) {
   const f = fk(b.A.spec), T = f.link.main_switch, key = String((sw.geometry as { params?: { key?: string } }).params?.key), m = partModel(key), pa = pinOf(m, "contacts", "OUT"); if (!T || !pa) return;
   const p = [0, 1, 2].map((i) => T.R[i][0] * pa.at[0] + T.R[i][1] * pa.at[1] + T.R[i][2] * pa.at[2] + T.p[i] * 1000) as Vec3, o = [0, 1, 2].map((i) => T.R[i][0] * pa.out[0] + T.R[i][1] * pa.out[1] + T.R[i][2] * pa.out[2]) as Vec3;
   if (Math.abs(o[2]) > 0.5) return;
-  const bb = part("wago_221_415").bbox_mm!, L = bb.max[0] - bb.min[0], Wd = bb.max[1] - bb.min[1], Hh = bb.max[2] - bb.min[2], lever = (Wd / 5) * 0.5, R = 12;
+  // the main leads' bend radius: the heaviest gauge the router may pick for them (10 AWG)
+  const bb = part("wago_221_415").bbox_mm!, L = bb.max[0] - bb.min[0], Wd = bb.max[1] - bb.min[1], Hh = bb.max[2] - bb.min[2], lever = (Wd / 5) * 0.5, R = 14;
   const boxes = b.A.spec.links.filter((l) => l.name !== "main_switch" && l.geometry.type === "mesh" && l.geometry.part === "component" && part(String(l.geometry.params?.key)).bbox_mm).map((l) => partBox(b.A, l.name));
+  const bay = baysOf(b.A).find((r) => r.exits.some((e) => e.part === "main_switch")), inv = bay ? invert(mul(b.w(bay.parent), bay.T as Mat4)) : null;
+  const inBay = (lo: Vec3, hi: Vec3) => !bay || !inv || [lo, hi].every((q) => { const l = apply(inv, q); return [0, 1, 2].every((k) => l[k] >= bay.min[k] - 0.5 && l[k] <= bay.max[k] + 0.5); });
   const clear = (c: Vec3, d: Vec3) => {
     const hx = Math.abs(d[0]) > 0.5 ? L / 2 : Wd / 2, hy = Math.abs(d[0]) > 0.5 ? Wd / 2 : L / 2, lo: Vec3 = [c[0] - hx - 2, c[1] - hy - 2, c[2] - Hh / 2 - 2], hi: Vec3 = [c[0] + hx + 2, c[1] + hy + 2, c[2] + Hh / 2 + 2];
-    return !boxes.some((q) => [0, 1, 2].every((k) => q.hi[k] > lo[k] && q.lo[k] < hi[k])) && !b.keepOut.some((q) => q.x1 > lo[0] && q.x0 < hi[0] && q.y1 > lo[1] && q.y0 < hi[1] && q.z1 > lo[2] && q.z0 < hi[2]);
+    return inBay(lo, hi) && !boxes.some((q) => [0, 1, 2].every((k) => q.hi[k] > lo[k] && q.lo[k] < hi[k])) && !b.keepOut.some((q) => q.x1 > lo[0] && q.x0 < hi[0] && q.y1 > lo[1] && q.y0 < hi[1] && q.z1 > lo[2] && q.z0 < hi[2]);
   };
   const turnOf = (d: Vec3) => (Math.abs(d[0]) > 0.5 ? (d[0] > 0 ? 0 : 2) : (d[1] > 0 ? 1 : 3));
   // body x along d (its levers face back up the lead), the lever row along the body's y: P1 at its -y end
