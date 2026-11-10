@@ -13,7 +13,7 @@ import { frame, translation, type Mat4, type Op } from "@ttr/solid";
 import { Assembly } from "../assembly.ts";
 import { totalMass, pointWorld, comWorld } from "../kin.ts";
 import { choose, DYNAMIC_FACTOR, GAIT_DUTY } from "../sizing.ts";
-import { hoodAround, BATTERY_SWITCH, registerBay, enclosureChecks, exposed, type Face } from "../enclosure.ts";
+import { hoodAround, worldBox, BATTERY_SWITCH, registerBay, enclosureChecks, exposed, type Face } from "../enclosure.ts";
 import { Harness, finishWiring } from "../wiring.ts";
 import { busTree, canTree, coreTree, actuatorsUnder } from "../netlist.ts";
 import {
@@ -251,7 +251,10 @@ export function sensorsOf(req: LeggedRequest, dflt: SensorKind[]): SensorKind[] 
 function boxQuad(A: Assembly, H: Harness, b: ReturnType<typeof buildQuadruped>, qdd = false) {
   const zt = b.zHi + 3, rear = A.spec.links.some((l) => l.name === "top_deck_rear");
   const parts = ["computer", "actuator_bus", "regulator_5v", "imu"];
-  const hood = hoodAround(A, H, { name: "electronics_hood", deck: "top_deck", alsoHoles: rear ? ["top_deck_rear"] : [], parts, z0: zt, usbFor: "computer", rocker: qdd ? { key: BATTERY_SWITCH } : true, below: b.zHi - b.zLo, near: [b.Xb * 0.5 - b.leadRoom * 0.8, b.Wo * 0.6], room: qdd ? 44 : 20, rockerAtHole: true, limit: { x0: -b.Xb + 4, x1: b.Xb - 11, y0: -b.Wo + 6, y1: b.Wo - 6 } });
+  // the hood stands high enough over the boards for a wire up out of a top terminal to turn under it and run along
+  // (connector, first bend and the run's own room: about 8 mm more than a hood just over the parts)
+  const z1 = Math.max(...parts.map((n) => worldBox(A, n).hi[2])) + 15;
+  const hood = hoodAround(A, H, { name: "electronics_hood", z1, deck: "top_deck", alsoHoles: rear ? ["top_deck_rear"] : [], parts, z0: zt, usbFor: "computer", rocker: qdd ? { key: BATTERY_SWITCH } : true, below: b.zHi - b.zLo, near: [b.Xb * 0.5 - b.leadRoom * 0.8, b.Wo * 0.6], room: qdd ? 44 : 20, rockerAtHole: true, limit: { x0: -b.Xb + 4, x1: b.Xb - 11, y0: -b.Wo + 6, y1: b.Wo - 6 } });
   // the harness in the tub: the inline fuse in the channel beside the pack on the deck hole's side, far enough behind the
   // hole for the lead to straighten out of the fuse and turn up through it; the star ground in the other channel
   const hole = hood.exits.find((e) => e.id === "electronics_hood.deck")?.at;
@@ -262,9 +265,9 @@ function boxQuad(A: Assembly, H: Harness, b: ReturnType<typeof buildQuadruped>, 
     // the splice of the switched rail lies in the hood behind the hole, its levers towards the switch: the lead from the
     // switch runs straight to it over the hole, the branches leave it forwards and turn down through the hole
     const sw = hood.exits.find((e) => e.id === "electronics_hood.switch")?.at;
-    if (sw) H.spot.set("splice_vbat", { by: "main_switch", at: [hole[0] - 36, hole[1], sw[2] + 9] });
+    if (sw) H.spot.set("splice_vbat", { by: "main_switch", at: [hole[0] - 36, hole[1], zt + 8] });
     // the bus hub beside it, towards the middle of the hood
-    if (sw) H.spot.set("actuator_bus_hub", { by: "actuator_bus", at: [hole[0] - 36, hole[1] - s * 24, sw[2] + 9] });
+    if (sw) H.spot.set("actuator_bus_hub", { by: "actuator_bus", at: [hole[0] - 36, hole[1] - s * 24, zt + 8] });
   }
   H.scan();
   const side = (s: number, sx: number): { id: string; kind: string; face: Face; at: Vec3; normal: Vec3; hole_mm: number } => ({ id: `body_bay.${sx > 0 ? "front" : "rear"}_${s > 0 ? "left" : "right"}`, kind: "grommet", face: s > 0 ? "y+" : "y-", at: [sx * b.xg, s * b.Wo, sx * s * 4.5], normal: [0, s, 0], hole_mm: 10 });
