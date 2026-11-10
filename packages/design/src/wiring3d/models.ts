@@ -22,6 +22,7 @@ export const FOOTPRINT_SOURCES: Record<string, string> = {
   tb6612: "SparkFun TB6612FNG breakout (ROB-14450): 20.3 x 20.3 mm, two rows of 8 pins 17.78 mm apart",
   esp32s3: "Espressif ESP32-S3-DevKitC-1 user guide: two 22-pin rows 22.86 mm apart, module at the far end",
   hc_sr04: "HC-SR04 module: 45 x 20 mm board, two 16 mm transducers 24 mm apart, 4-pin header centred on the long edge",
+  tmc2209: "BigTreeTech TMC2209 V1.3 / Watterott SilentStepStick pin configuration (learn.watterott.com/silentstepstick/pinconfig/tmc2209): 20.3 x 15.2 mm, two rows of 8 pins 12.7 mm apart, pins down; EN opposite VM, DIR opposite GND (the StepStick pinout); DIAG and INDEX on a 2-pin header at the board end, VREF a pad on top",
   pololu_d36v50: "Pololu D36V50Fx regulator: 25.4 x 25.4 mm, through holes on the 0.1 in grid in two 1 x 6 strips",
   generic: "catalog body box; pins on the face the part's leads leave (no datasheet pin map in the catalog)",
 };
@@ -124,6 +125,17 @@ export function partModel(key: string): PartModel {
     left.forEach((n, i) => { const yy = 19.05 - i * P; headerPin(b, 1.27, yy, 0, -1); byName(n, [1.27, yy, -8.5], [0, 0, -1], "header"); });
     right.forEach((n, i) => { const yy = 19.05 - i * P; headerPin(b, 19.05, yy, 0, -1); if (!(n === "GND" && i === 7)) byName(n, [19.05, yy, -8.5], [0, 0, -1], "header"); });
     b.label("TB6612FNG", [10.16, 16, T + 0.02], 10, 1.6);
+  } else if (key === "tmc2209_stepstick") {
+    source = FOOTPRINT_SOURCES.tmc2209;
+    b.box("pcb_black", [0, 0, 0], [20.3, 15.2, T]);
+    b.box("ic", [7.6, 5.1, T], [12.7, 10.1, T + 0.9]);
+    b.box("silver", [5.6, 3.1, T + 0.9], [14.7, 12.1, T + 10]);                    // stick-on heatsink
+    // the StepStick pinout, both rows from the EN / VM end; the second pin of the UART pair and CLK are not in the record
+    const logic = ["EN", "MS1", "MS2", "PDN_UART", "SPREAD", "", "STEP", "DIR"], power = ["VM", "GND", "M2B", "M2A", "M1A", "M1B", "VIO", ""];
+    logic.forEach((n, i) => { const xx = 1.27 + i * P; headerPin(b, xx, 13.97, 0, -1); if (n) byName(n, [xx, 13.97, -8.5], [0, 0, -1], "header"); });
+    power.forEach((n, i) => { const xx = 1.27 + i * P; headerPin(b, xx, 1.27, 0, -1); if (n) byName(n, [xx, 1.27, -8.5], [0, 0, -1], "header"); });
+    ["DIAG", "INDEX"].forEach((n, i) => { const yy = 6.35 + i * P; headerPin(b, 19.05, yy, T, 1); byName(n, [19.05, yy, T + 8.5], [0, 0, 1], "header"); });
+    byName("VREF", [3.2, 7.6, T], [0, 0, 1], "pad");
   } else if (key === "esp32_s3_devkitc1") {
     source = FOOTPRINT_SOURCES.esp32s3;
     b.box("pcb_black", [0, 0, 0], [63.24, 25.4, T]);
@@ -204,7 +216,13 @@ function generic(key: string, ports: Port[], bb: { min: V3; max: V3 }, b: Builde
       else if (dxlPlug(key)) { const q = dxlPlug(key)!, sg = side < 0 ? -1 : 1; lead(p, (i, n) => [q.x + (i - (n - 1) / 2) * 2.5, sg * (y1 - 10), q.z], [0, sg, 0], "jst"); }
       else if (/^dxl_/.test(key)) lead(p, (i, n) => [x0, side * 5.5 + (i - (n - 1) / 2) * 2.5 * 0, z0 + 6.5 + (i - (n - 1) / 2) * 2.5], [-1, 0, 0], "jst");
       else if (servo) lead(p, (i, n) => [x0 + 11 + (i - (n - 1) / 2) * 2.54, y1, z0 + 5.2], [0, 1, 0], "lead");
-      else {
+      else if (/side face/.test(String(part(key).specs.connector ?? "")) || /^nema17/.test(key)) {
+        // a NEMA17's cable leaves a side face by the rear cap (catalog specs.connector of the bare motor; the geared one
+        // is the same frame): the side its body box bulges on
+        const sides: [number, number, number][] = [[0, -1, -x0], [0, 1, x1], [1, -1, -y0], [1, 1, y1]], [ax, sg] = sides.sort((a, b) => b[2] - a[2])[0];
+        const out: V3 = [0, 0, 0]; out[ax] = sg;
+        lead(p, (i, n) => { const at: V3 = [0, 0, z0 + 8]; at[ax] = sg > 0 ? [x1, y1][ax] : [x0, y0][ax]; at[1 - ax] = (i - (n - 1) / 2) * 3; return at; }, out, "lead");
+      } else {
         // a motor's leads leave its rear: the end of the body furthest from the output (the origin), pointing away from it
         const ext: [number, number, number][] = [[0, -1, -x0], [0, 1, x1], [1, -1, -y0], [1, 1, y1], [2, -1, -z0], [2, 1, z1]], [ax, sg] = ext.sort((a, b) => b[2] - a[2])[0];
         const c: V3 = [(x0 + x1) / 2, cy, cz], out: V3 = [0, 0, 0]; out[ax] = sg; const across = ax === 1 ? 0 : 1;
