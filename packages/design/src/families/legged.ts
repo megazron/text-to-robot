@@ -113,9 +113,11 @@ function buildQuadruped(req: LeggedRequest, cfg: QuadCfg, sensors: SensorKind[])
   const Wo = Ya + bA.max[0] + WALL;                               // body half width (outer)
   const zHalf = Math.max(bA.max[1] + WALL, (battB.max[2] + 4) / 2 + BW); // tub half height
   const battLen = battB.max[0] - battB.min[0];
-  // the pack's leads leave its +x end: room there for the plug and the leads' first bend (1.25 x their bend radius), the
-  // pack pushed towards the other end, where 2 mm is enough
-  const leadRoom = qdd ? 40 : 22;
+  // the pack lies with its leads to the rear (-x): room there for the plug and the leads' first bend (1.25 x their bend
+  // radius), the pack pushed towards the front, where 2 mm is enough. From the rear the positive lead comes round into the
+  // channel beside the pack, runs forward through the inline fuse and up through the deck to the switch at the front of
+  // the hood, without doubling back
+  const leadRoom = qdd ? 44 : 28;
   const Xa = Math.max(battLen / 2 + (leadRoom + 2) / 2 + dA + WALL, 95);            // abduction output face
   const Xb = Xa - 2;                                              // body end = cradle rim
   const Xh = Xa + PLATE + 1.5 + (-bH.min[0]) + WALL;             // hip axis
@@ -141,8 +143,9 @@ function buildQuadruped(req: LeggedRequest, cfg: QuadCfg, sensors: SensorKind[])
   }
   // battery fence on the floor
   const endGap = Xa - dA - WALL - battLen / 2;                     // room at each end of a centred pack
-  const bx0 = -(battB.max[0] + battB.min[0]) / 2 - Math.max(0, Math.min(endGap - 2, leadRoom - endGap)), bw = (battB.max[1] - battB.min[1]) / 2;
-  for (const s of [-1, 1]) tub.push({ op: "box", min: [bx0 + battB.min[0] + 12, s > 0 ? bw + 0.5 : -bw - 3.5, zLo - 0.5], max: [bx0 + battB.max[0] - 12, s > 0 ? bw + 3.5 : -bw - 0.5, zLo + 6] });
+  const bcx = Math.max(0, Math.min(endGap - 2, leadRoom - endGap)), bw = (battB.max[1] - battB.min[1]) / 2;   // the pack's centre
+  const battT = frame([bcx + (battB.max[0] + battB.min[0]) / 2, (battB.max[1] + battB.min[1]) / 2, zLo + 0.5], [0, 0, 1], [-1, 0, 0]);
+  for (const s of [-1, 1]) tub.push({ op: "box", min: [bcx - battLen / 2 + 12, s > 0 ? bw + 0.5 : -bw - 3.5, zLo - 0.5], max: [bcx + battLen / 2 - 12, s > 0 ? bw + 3.5 : -bw - 0.5, zLo + 6] });
   for (const s of [-1, 1]) tub.push({ op: "hole", a: [s * Xb * 0.5, 0, zLo - BW - 1], b: [s * Xb * 0.5, 0, zLo + 1], d: 14 }, { op: "hole", a: [0, s * Wo + s, 0], b: [0, s * Wo - s * 8, 0], d: 10 });
   // split long bodies into two halves that bolt together (printer bed)
   const halves = 2 * Xb > 240;
@@ -157,7 +160,7 @@ function buildQuadruped(req: LeggedRequest, cfg: QuadCfg, sensors: SensorKind[])
     A.fastener("M3 x 16 body split bolts + nuts", 8);
   } else printed(A, base, tub, { role: "base", material: "printed_dark" });
   // electronics inside the tub
-  mountAt(A, base, cfg.batt, translation([bx0, 0, zLo + 0.5]), "battery", "main battery");
+  mountAt(A, base, cfg.batt, battT, "battery", "main battery");
   if (cfg.nBatt > 1) A.buy(cfg.batt, cfg.nBatt - 1, "main battery (series)");
   const buckKey = "buck_5v_5a";
   const busKey = qdd ? "usb_can_adapter" : "waveshare_bus_servo_adapter";
@@ -243,7 +246,7 @@ export function sensorsOf(req: LeggedRequest, dflt: SensorKind[]): SensorKind[] 
 function boxQuad(A: Assembly, H: Harness, b: ReturnType<typeof buildQuadruped>, qdd = false) {
   const zt = b.zHi + 3, rear = A.spec.links.some((l) => l.name === "top_deck_rear");
   const parts = ["computer", "actuator_bus", "regulator_5v", "imu"];
-  hoodAround(A, H, { name: "electronics_hood", deck: "top_deck", alsoHoles: rear ? ["top_deck_rear"] : [], parts, z0: zt, usbFor: "computer", rocker: qdd ? { key: BATTERY_SWITCH } : true, below: b.zHi - b.zLo, limit: { x0: -b.Xb + 4, x1: b.Xb - 11, y0: -b.Wo + 6, y1: b.Wo - 6 } });
+  hoodAround(A, H, { name: "electronics_hood", deck: "top_deck", alsoHoles: rear ? ["top_deck_rear"] : [], parts, z0: zt, usbFor: "computer", rocker: qdd ? { key: BATTERY_SWITCH } : true, below: b.zHi - b.zLo, near: [b.Xb * 0.5, b.Wo * 0.6], limit: { x0: -b.Xb + 4, x1: b.Xb - 11, y0: -b.Wo + 6, y1: b.Wo - 6 } });
   H.scan();
   const side = (s: number): { id: string; kind: string; face: Face; at: Vec3; normal: Vec3; hole_mm: number } => ({ id: `body_bay.${s > 0 ? "left" : "right"}`, kind: "grommet", face: s > 0 ? "y+" : "y-", at: [0, s * b.Wo, 0], normal: [0, s, 0], hole_mm: 10 });
   registerBay(A, { name: "body_bay", tub: "base_link", lid: "top_deck", parent: "base_link", T: translation([0, 0, 0]), min: [-b.Xb + 2, -b.Wo + 2, b.zLo - 0.5], max: [b.Xb - 2, b.Wo - 2, b.zHi], parts: ["battery"], exits: [side(1), side(-1)], screws: 4, note: "the printed tub, the deck is its lid",
