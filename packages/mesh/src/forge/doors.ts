@@ -8,7 +8,7 @@ import type { TriMesh } from "./mc.ts";
 import type { DoorRecord } from "./mark43.ts";
 import { Rays } from "./ray.ts";
 import {
-  asSolid, asMesh, scope, scopeAsync, free, compose, union, hull, cube, cylinder, place, turn, sweep, sweptHull, bigger, biggest, bbox, overlaps, at, meshBounds, meshVolume, type P3, type M34, type Solid,
+  rot, asSolid, asMesh, scope, scopeAsync, free, compose, union, hull, cube, cylinder, place, turn, sweep, sweptHull, bigger, biggest, bbox, overlaps, at, meshBounds, meshVolume, type P3, type M34, type Solid,
 } from "./geo.ts";
 import { baseLink, SWINGS, type Piece, type Log, type Tick } from "./pack.ts";
 import { runAll, type Job } from "./pool.ts";
@@ -224,25 +224,34 @@ export async function trimStages(pieces: Piece[], hw: Hardware[], doors: DoorRec
         const mine = new Shells(pieces, new Set([d.link]));
         const light = (compose([...mine.items.map((x) => asSolid(x.mesh)), ...(hwBy.get(d.link) ?? []).map((h) => asSolid(h.mesh))]).simplify(0.3));
         const bb = bbox(sweep(light.simplify(2.0), o, e, 0, sg * d.open, 0.2));
-        const posed = (link: string, x: Solid, way = 1): Solid => { if (!(link in opened)) return x; const st = doors.find((q) => q.link === link)!; return turn(x, st.a, st.up, way * st.sign * opened[link]); };
-        const met: [string | null, Solid][] = [], steel = compose((hwBy.get(d.link) ?? []).map((h) => asSolid(h.mesh)));
-        const angles = range(0.06, d.open + 0.03, 0.08), turned = angles.map((a) => turn(light, o, e, sg * a)), tbb = turned.map(bbox);
-        for (const [link, es] of solids) {
-          if (link === d.link) continue;
-          for (const x of es) {
-            const q = posed(link, asSolid(x.mesh).simplify(0.3)), qb = bbox(q);
-            if (!overlaps(qb, bb)) continue;
-            for (let i = 0; i < angles.length; i++) if (overlaps(tbb[i], qb) && scope(() => turned[i].intersect(q).volume()) > 0.05) { met.push([link, q]); break; }
-          }
-          await tick(`${d.name} meets`);
-        }
-        // hardware and servos on other parts stand where they stand: the door's shell gives way to them, pawls lifted as they are before a door moves
+        const angles = range(0.06, d.open + 0.03, 0.08);
+        // the coarse pass: which pieces and parts the door meets on its way. A piece whose box (grown past the 0.3 mm simplification) stays clear
+        // of the swing's box is skipped at once; the rest are tried on the pool, each helper making the door's light shell the same way as here
+        type Q = { link: string | null; mesh: TriMesh; simplify?: number; turns: [P3, P3, number][] };
+        const poseTurn = (link: string): [P3, P3, number][] => { if (!(link in opened)) return []; const st = doors.find((q) => q.link === link)!; return [[st.a, st.up, st.sign * opened[link]]]; };
+        const grownBox = (m: TriMesh, turns: [P3, P3, number][]): [P3, P3] => {
+          const [lo, hi] = meshBounds(m); let pts: P3[] = []; for (const x of [lo[0] - 1, hi[0] + 1]) for (const y of [lo[1] - 1, hi[1] + 1]) for (const z of [lo[2] - 1, hi[2] + 1]) pts.push([x, y, z]);
+          for (const t of turns) { const R = rot(t[0], t[1], t[2]); pts = pts.map((p) => at(R, p)); }
+          return [[0, 1, 2].map((c) => Math.min(...pts.map((p) => p[c]))) as P3, [0, 1, 2].map((c) => Math.max(...pts.map((p) => p[c]))) as P3];
+        };
+        const qs: Q[] = [];
+        for (const [link, es] of solids) { if (link === d.link) continue; for (const x of es) { const turns = poseTurn(link); if (overlaps(grownBox(x.mesh, turns), bb)) qs.push({ link, mesh: x.mesh, simplify: 0.3, turns }); } }
         for (const h of hw) {
           if (h.link === d.link || ride.get(h.link) === d.link) continue;
-          let q = asSolid(h.mesh); const lf = lifted.get(h.link); if (lf) q = turn(q, ...lf);
-          q = posed(ride.get(h.link) ?? h.link, q); const qb = bbox(q);
-          if (overlaps(qb, bb) && turned.some((c, i) => overlaps(tbb[i], qb) && scope(() => c.intersect(q).volume()) > 0.05)) met.push([null, q]);
+          const lf = lifted.get(h.link), turns = [...(lf ? [lf] : []), ...poseTurn(ride.get(h.link) ?? h.link)];
+          if (overlaps(grownBox(h.mesh, turns), bb)) qs.push({ link: null, mesh: h.mesh, turns });
         }
+        const lightParts = [...mine.items.map((x) => x.mesh), ...(hwBy.get(d.link) ?? []).map((h) => h.mesh)], chunk = Math.max(1, Math.ceil(qs.length / 8)), jobs: Job[] = [];
+        for (let c0 = 0; c0 < qs.length; c0 += chunk) jobs.push({ op: "meets", args: { lightParts, qs: qs.slice(c0, c0 + chunk), first: c0, bb, o, e, sg, angles } });
+        const hitIdx = new Set((await runAll<number[]>(jobs, (jb) => answerJob(jb) as Promise<number[]>)).flat());
+        const met: [string | null, Solid][] = [], steel = compose((hwBy.get(d.link) ?? []).map((h) => asSolid(h.mesh)));
+        qs.forEach((q, k) => {
+          if (!hitIdx.has(k)) return;
+          let x = asSolid(q.mesh); if (q.simplify) x = x.simplify(q.simplify);
+          for (const t of q.turns) x = turn(x, t[0], t[1], t[2]);
+          met.push([q.link, x]);
+        });
+        await tick(`${d.name} meets`);
         log(`${d.name} meets ${met.length} pieces ${Math.round((Date.now() - t0) / 1000)} s`);
         // what the door's shell meets is cut from the door; what its hardware meets is cut from the other part, since hardware cannot give way
         const hits: TriMesh[] = [], theirs = new Map<string, TriMesh[]>(), fineAngles = range(fine, d.open + 0.03, fine);
@@ -341,48 +350,68 @@ export function clearHardware(pieces: Piece[], hw: Hardware[], log: Log): void {
   log(`sleeves cleared of the shells once more ${cloth.toFixed(1)} mm3`);
 }
 export interface Bay { link: string; corners: P3[]; }
+/** a solid as the measuring step makes it */
+export type Part = { mesh?: TriMesh; servo?: [string, number[][]]; hull?: P3[] };
+export const makePart = (p: Part): Solid => (p.mesh ? asSolid(p.mesh) : p.servo ? bodyOf(p.servo[0], p.servo[1]) : hull(p.hull!));
 /** Every door swept through its range in the order the suit opens, with exact intersection against everything else, servos included. */
 export async function measure(rows: { row: { link: string; material: string; wiring?: boolean }; mesh: TriMesh }[], recs: DoorOut[], latches: LatchRec[], bayBox: Bay | undefined, limits: Record<string, [number, number]>, tick: Tick, log: Log): Promise<string[][]> {
   const solid = new Map<string, Solid[]>(), push = (k: string, s: Solid) => { const l = solid.get(k) ?? []; l.push(s); solid.set(k, l); };
   const all: Solid[] = [];
   try {
-    for (const p of rows) if (p.row.material !== "lens_glow" && (p.row.material !== "armour_mech" || p.row.wiring)) push(p.row.link, asSolid(p.mesh));
-    for (const d of recs) push(d.parent, bodyOf(d.servo.key, d.servo.T));
-    for (const l of latches) push(l.parent, bodyOf(l.key, l.T));
-    if (bayBox) push(bayBox.link, hull(bayBox.corners));
+    // each part also as a recipe a helper can make again exactly: a mesh, a servo body, or a hull of points
+    const recipe = new Map<string, Part[]>(), note = (k: string, r: Part) => { const l = recipe.get(k) ?? []; l.push(r); recipe.set(k, l); };
+    for (const p of rows) if (p.row.material !== "lens_glow" && (p.row.material !== "armour_mech" || p.row.wiring)) { push(p.row.link, asSolid(p.mesh)); note(p.row.link, { mesh: p.mesh }); }
+    for (const d of recs) { push(d.parent, bodyOf(d.servo.key, d.servo.T)); note(d.parent, { servo: [d.servo.key, d.servo.T] }); }
+    for (const l of latches) { push(l.parent, bodyOf(l.key, l.T)); note(l.parent, { servo: [l.key, l.T] }); }
+    if (bayBox) { push(bayBox.link, hull(bayBox.corners)); note(bayBox.link, { hull: bayBox.corners }); }
+    // every link's mesh before any turn: the helpers start from these (see clear below)
+    const M = recipe;
     for (const l of latches) solid.set(l.link, (solid.get(l.link) ?? []).map((s) => turn(s, l.a, l.up, l.sign * l.travel)));
     const S = new Map<string, Solid>(); for (const [k, v] of solid) S.set(k, compose(v));
     for (const x of S.values()) all.push(x);
     const ride = new Map(latches.map((l) => [l.link, l.parent])), byDoor = new Map(recs.map((d) => [d.link, d]));
-    const pose = (link: string, opened: Record<string, number>): Solid => { const s = S.get(link)!, p = ride.get(link) ?? link; if (p in opened) { const d = byDoor.get(p)!; return turn(s, d.a, d.up, d.sign * opened[p]); } return s; };
+    // each link's solid as a mesh once; a door's sweep is tested in runs of angles shared out to the pool, and the first angle that meets
+    // anything is the same one the one-by-one loop finds
+    // the meshes go out untransformed with their turns, so a helper composes the same transforms the solids here carry
+    const lift = new Map(latches.map((l) => [l.link, [l.a, l.up, l.sign * l.travel] as [P3, P3, number]]));
+    const MB = new Map<string, [P3, P3]>(); for (const [k, x] of S) MB.set(k, bbox(x));
+    type Turn = [P3, P3, number];
+    // inner: the pawl's lift, applied to each part as it is composed (as S was made); outer: the pose of the door it rides on
+    const poseOf = (link: string, opened: Record<string, number>): { inner?: Turn; outer?: Turn } => {
+      const p = ride.get(link) ?? link, d = p in opened ? byDoor.get(p) : undefined;
+      return { ...(lift.has(link) ? { inner: lift.get(link)! } : {}), ...(d ? { outer: [d.a, d.up, d.sign * opened[p]] as Turn } : {}) };
+    };
+    const posedBox = (link: string, opened: Record<string, number>): [P3, P3] => scope(() => { const p = ride.get(link) ?? link; if (!(p in opened)) return MB.get(link)!; const d = byDoor.get(p)!; return bbox(turn(S.get(link)!, d.a, d.up, d.sign * opened[p])); }) as unknown as [P3, P3];
     const clear = async (d: DoorOut, opened: Record<string, number>): Promise<[number, [string, number] | null]> => {
-      const mine = [...S.keys()].filter((k) => k === d.link || ride.get(k) === d.link), step = (2 * Math.PI) / 180;
-      let a = 0, hit: [string, number] | null = null;
-      while (a + step <= d.open + 1e-6) {
-        scope(() => {
-          for (const k of mine) {
-            const t = turn(S.get(k)!, d.a, d.up, d.sign * (a + step)), bb = bbox(t);
-            for (const o of S.keys()) {
-              if (mine.includes(o)) continue;
-              const q = pose(o, opened);
-              if (overlaps(bb, bbox(q))) { const v = t.intersect(q).volume(); if (v > TOUCH) { hit = [o, r(v, 1)]; break; } }
-            }
-            if (hit) break;
-          }
-        });
-        if (hit) break;
-        a += step; await tick(`${d.name} sweep`);
-      }
-      return [a, hit];
+      const keys = [...S.keys()], mine = keys.filter((k) => k === d.link || ride.get(k) === d.link), step = (2 * Math.PI) / 180;
+      const before: number[] = [], tested: number[] = [];
+      for (let a = 0; a + step <= d.open + 1e-6; a += step) { before.push(a); tested.push(a + step); }
+      const final = tested.length ? before[before.length - 1] + step : 0;
+      if (!tested.length) return [0, null];
+      // only what the door's turned boxes can reach can stop it
+      const reach: [P3, P3] = [[Infinity, Infinity, Infinity], [-Infinity, -Infinity, -Infinity]];
+      for (const k of mine) { const [lo, hi] = MB.get(k)!; for (const t of tested) { const R = rot(d.a, d.up, d.sign * t); for (const x of [lo[0], hi[0]]) for (const y of [lo[1], hi[1]]) for (const z of [lo[2], hi[2]]) { const q = at(R, [x, y, z]); for (let c = 0; c < 3; c++) { reach[0][c] = Math.min(reach[0][c], q[c]); reach[1][c] = Math.max(reach[1][c], q[c]); } } } }
+      const others = keys.filter((o) => !mine.includes(o) && overlaps(posedBox(o, opened), reach)).map((o) => ({ name: o, mesh: M.get(o)!, ...poseOf(o, opened) }));
+      const parts = Math.min(tested.length, 8), jobs: Job[] = [];
+      for (let i = 0; i < parts; i++) { const a0 = Math.floor((i * tested.length) / parts), a1 = Math.floor(((i + 1) * tested.length) / parts); jobs.push({ op: "clear", args: { mine: mine.map((k) => ({ mesh: M.get(k)!, ...poseOf(k, {}) })), others, a: d.a, up: d.up, sign: d.sign, angles: tested.slice(a0, a1), first: a0, touch: TOUCH } }); }
+      const got = await runAll<{ k: number; hit: [string, number] | null }>(jobs, (j) => answerJob(j) as Promise<{ k: number; hit: [string, number] | null }>);
+      const first = got.filter((g) => g.k >= 0).sort((x, y) => x.k - y.k)[0];
+      await tick(`${d.name} sweep`);
+      return first ? [before[first.k], first.hit ? [first.hit[0], r(first.hit[1], 1)] : null] : [final, null];
     };
     const opened: Record<string, number> = {}, res: Record<string, number> = {}, order: string[][] = [];
+    // alone: every door with all the others shut, independent of the sequence, all at once
+    const alone = new Map((await Promise.all(recs.map(async (d) => [d.link, await clear(d, {})] as const))));
     for (const stage of STAGES) {
       const moving = recs.filter((d) => stage.includes(d.part)), centre = stage[0] === "torso" || stage[0] === "head";
       if (centre) moving.sort((x, y) => Number(x.side !== "right") - Number(y.side !== "right"));
       if (centre) for (const d of moving) order.push([d.joint]); else order.push(moving.map((d) => d.joint));
+      // the doors of a limb stage move together and each sees the suit as the last stage left it; on a centre seam the second waits for the first
+      const results = new Map<string, [number, [string, number] | null]>();
+      if (centre) for (const d of moving) { const x = await clear(d, opened); results.set(d.link, x); opened[d.link] = x[0]; }
+      else for (const [k, x] of await Promise.all(moving.map(async (d) => [d.link, await clear(d, opened)] as const))) results.set(k, x);
       for (const d of moving) {
-        const [a, hit] = await clear(d, opened), [solo, shit] = await clear(d, {});
-        if (centre) opened[d.link] = a;
+        const [a, hit] = results.get(d.link)!, [solo, shit] = alone.get(d.link)!;
         res[d.link] = a; limits[d.joint] = d.sign > 0 ? [0, r(a, 3)] : [r(-a, 3), 0];
         d.measured_deg = r((a * 180) / Math.PI, 1); d.stopped_by = hit ? hit[0] : null; d.alone_deg = r((solo * 180) / Math.PI, 1); d.alone_stopped_by = shit ? shit[0] : null;
         log(`${d.joint} ${d.measured_deg} ${JSON.stringify(hit)} alone ${d.alone_deg} ${JSON.stringify(shit)}`);

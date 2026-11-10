@@ -5,6 +5,7 @@
 //   x forward, y left, z up, mm, floor at 0.
 import { atan2, cos, exp, hypot, pow, sin } from "./dmath.ts";
 import { gauss3, gradientNorm, maxFilter3, pchip, trilinear, percentile } from "./num.ts";
+import { getPool } from "./pool.ts";
 import { marchingCubes, components, fillHoles, isWatertight, signedVolume, flip, mirrorY, type TriMesh } from "./mc.ts";
 
 export type V3 = [number, number, number];
@@ -419,12 +420,12 @@ function foot(c: Ctx): Part {
 }
 
 /** The dark machinery between the plates: ribbed steel at every joint, so no gap ever shows through. */
-function jointMech(c: Ctx): [string, Part][] {
+function jointMech(c: Ctx, only?: string): [string, Part][] {
   const lerp = (a: V3, b: V3, t: number): V3 => add(a, scl(sub(b, a), t));
   const S: [string, V3, V3, number][] = [["shoulder", add(J.shoulder, [0, -46, -6]), add(J.shoulder, [0, 24, -10]), 60], ["elbow", lerp(J.elbow, J.shoulder, 0.1), lerp(J.elbow, J.wrist, 0.09), 52],
     ["wrist", lerp(J.wrist, J.elbow, 0.07), lerp(J.wrist, J.hand_end, 0.1), 40], ["hip", add(J.hip, [0, -8, 26]), lerp(J.hip, J.knee, 0.08), 66],
     ["knee", lerp(J.knee, J.hip, 0.07), lerp(J.knee, J.ankle, 0.07), 62], ["ankle", add(J.ankle, [0, 0, 30]), add(J.ankle, [0, 0, -18]), 48]];
-  return S.map(([n, a, b, r]) => {
+  return S.filter(([n]) => !only || n === only).map(([n, a, b, r]) => {
     const p = new Part(`mech_${n}`, sub(vmin(a, b), [r + 14, r + 14, r + 14]), add(vmax(a, b), [r + 14, r + 14, r + 14]), c.v), u = unit(sub(b, a));
     const Q: V3 = [0, 0, 0];
     p.finish(p.grid((x, y, z) => { Q[0] = x; Q[1] = y; Q[2] = z; return segSd3(Q, a, b) - r + 1.1 * sin(((x - a[0]) * u[0] + (y - a[1]) * u[1] + (z - a[2]) * u[2]) * 0.9); }), 0.3); p.col.fill(STEEL);
@@ -636,36 +637,50 @@ export interface ForgedPiece { name: string; link: string; material: string; reg
 export interface Forged { pieces: ForgedPiece[]; doors: DoorRecord[]; log: string[]; }
 
 /** Every printed shell of the suit as forge_mark43.py --print writes it (pack.json + pack_<name>.stl), in the same order. */
+/** One body part forged on its own (a pool job): its shells with their zones, its doors' records, its log lines. */
+export async function forgeOnePart(k: string, params: ForgeParams = {}, tick: Tick = () => {}): Promise<{ shells: Shell[]; doors: DoorRecord[]; log: string[] }> {
+  const c = ctxOf(params), log: string[] = [], p = BUILD[k](c); await tick(`${k} field`);
+  // each door's hinge line comes from its part's field, before the reactor is set in the chest (it lies far from the flanks)
+  const doors = k in DOOR_PLAN ? doorRecords({ [k]: p }) : [];
+  if (k === "torso") reactor(c, p);
+  const wall = k === "head" ? MASK_WALL : 3.0, zones = k in DOOR_PLAN ? doorZones(k, p, doors, wall, (x) => log.push(x)) : undefined;
+  return { shells: await printable(p, openings(k, p), tick, wall, 0.3, [235, 205, 215], zones), doors, log };
+}
+const MECH_AXIS: Record<string, [V3, V3, number]> = { shoulder: [add(J.shoulder, [0, -160, 0]), add(J.shoulder, [0, 110, -14]), 52], elbow: [J.shoulder, J.wrist, 44], wrist: [J.elbow, J.hand_end, 34],
+  hip: [add(J.hip, [0, 0, 200]), J.knee, 58], knee: [J.hip, J.ankle, 54], ankle: [add(J.ankle, [0, 0, 300]), add(J.ankle, [0, 0, -120]), 42] };
+/** One joint sleeve forged on its own (a pool job), split by its limb's left door if it has one. */
+export async function forgeOneMech(n: string, params: ForgeParams = {}, d?: DoorRecord, tick: Tick = () => {}): Promise<Shell[]> {
+  const c = ctxOf(params), p = jointMech(c, n)[0][1], [a, b, r] = MECH_AXIS[n];
+  const sd = (x: number, y: number, z: number) => (d ? (x - d.a[0]) * d.normal[0] + (y - d.a[1]) * d.normal[1] + (z - d.a[2]) * d.normal[2] : 0);
+  const zones = d ? { door: () => ({ field: p.grid(sd), surface: null, paint: null }), fixed: () => ({ field: p.grid((x, y, z) => -sd(x, y, z)), surface: null, paint: null }) } : undefined;
+  return printable(p, [p.grid((x, y, z) => segSd3([x, y, z], a, b) - r)], tick, 2.5, 0.3, [400, 400, 400], zones);
+}
+
+/** Every printed shell of the suit as forge_mark43.py --print writes it (pack.json + pack_<name>.stl), in the same order. The parts are
+ *  independent, so they are forged at once on the pool (the order they are put together in, and so every name, stays the same). */
 export async function forgePrint(params: ForgeParams = {}, tick: Tick = () => {}, only?: string[]): Promise<Forged> {
-  const c = ctxOf(params), log: string[] = [], say = (s: string) => { log.push(s); };
+  const log: string[] = [], say = (s: string) => { log.push(s); };
   const pieces: ForgedPiece[] = [];
   const put = (name: string, link: string, material: string, region: string, mesh: TriMesh) => { pieces.push({ name, link, material, region, mesh }); };
   const both = (name: string, link: string, mat: string, region: string, m: TriMesh) => { put(`left_${name}`, `left_${link}`, mat, `left_${region}`, m); put(`right_${name}`, `right_${link}`, mat, `right_${region}`, mirrorY(m)); };
-  // each door's hinge line comes from its part's field, before the reactor is set in the chest (it lies far from the flanks)
+  const parts = only ?? Object.keys(BUILD);
+  const got = await runParts<{ shells: Shell[]; doors: DoorRecord[]; log: string[] }>(parts.map((k) => ({ op: "forgePart", args: { k, params } })), (j) => forgeOnePart(j.args.k as string, params, tick));
   const doors: DoorRecord[] = [];
-  for (const k of only ?? Object.keys(BUILD)) {
-    const p = BUILD[k](c); await tick(`${k} field`);
-    if (k in DOOR_PLAN) doors.push(...doorRecords({ [k]: p }));
-    if (k === "torso") reactor(c, p);
-    const wall = k === "head" ? MASK_WALL : 3.0, zones = k in DOOR_PLAN ? doorZones(k, p, doors, wall, say) : undefined;
-    const shells = await printable(p, openings(k, p), tick, wall, 0.3, [235, 205, 215], zones);
-    shells.forEach((s, i) => {
-      if (k === "torso") return put(`torso_${i}`, s.zone === "door_left" ? "back_door_left" : s.zone === "door_right" ? "back_door_right" : "pelvis", NAMES[s.colour], "torso", s.mesh);
-      if (k === "head") return put(`helmet_${i}`, s.zone === "mask" ? "helmet_faceplate" : s.zone === "door_left" ? "helmet_door_left" : s.zone === "door_right" ? "helmet_door_right" : "head", NAMES[s.colour], "head", s.mesh);
-      both(`${k}_${i}`, k + (s.zone === "door" ? "_door" : ""), NAMES[s.colour], k, s.mesh);
+  parts.forEach((k, i) => {
+    const r = got[i]; doors.push(...r.doors); log.push(...r.log);
+    r.shells.forEach((s, q) => {
+      if (k === "torso") return put(`torso_${q}`, s.zone === "door_left" ? "back_door_left" : s.zone === "door_right" ? "back_door_right" : "pelvis", NAMES[s.colour], "torso", s.mesh);
+      if (k === "head") return put(`helmet_${q}`, s.zone === "mask" ? "helmet_faceplate" : s.zone === "door_left" ? "helmet_door_left" : s.zone === "door_right" ? "helmet_door_right" : "head", NAMES[s.colour], "head", s.mesh);
+      both(`${k}_${q}`, k + (s.zone === "door" ? "_door" : ""), NAMES[s.colour], k, s.mesh);
     });
     say(`${k} ${pieces.length}`);
-  }
+  });
+  await tick("parts");
   const order = Object.keys(DOOR_PLAN); doors.sort((a, b) => order.indexOf(a.part) - order.indexOf(b.part));
   if (!only) {
-    for (const [n, p] of jointMech(c)) {
-      const ax: Record<string, [V3, V3]> = { shoulder: [add(J.shoulder, [0, -160, 0]), add(J.shoulder, [0, 110, -14])], elbow: [J.shoulder, J.wrist], wrist: [J.elbow, J.hand_end], hip: [add(J.hip, [0, 0, 200]), J.knee], knee: [J.hip, J.ankle], ankle: [add(J.ankle, [0, 0, 300]), add(J.ankle, [0, 0, -120])] };
-      const r = { shoulder: 52, elbow: 44, wrist: 34, hip: 58, knee: 54, ankle: 42 }[n]!, k = MECH_LINK[n], d = doors.find((x) => x.part === k && x.side === "left");
-      const sd = (x: number, y: number, z: number) => (d ? (x - d.a[0]) * d.normal[0] + (y - d.a[1]) * d.normal[1] + (z - d.a[2]) * d.normal[2] : 0);
-      const zones = d ? { door: () => ({ field: p.grid(sd), surface: null, paint: null }), fixed: () => ({ field: p.grid((x, y, z) => -sd(x, y, z)), surface: null, paint: null }) } : undefined;
-      const shells = await printable(p, [p.grid((x, y, z) => segSd3([x, y, z], ax[n][0], ax[n][1]) - r)], tick, 2.5, 0.3, [400, 400, 400], zones);
-      shells.forEach((s, i) => both(`mech_${n}_${i}`, k + (s.zone === "door" ? "_door" : ""), "armour_mech", `mech_${n}`, s.mesh));
-    }
+    const names = Object.keys(MECH_AXIS), door = (n: string) => doors.find((x) => x.part === MECH_LINK[n] && x.side === "left");
+    const mech = await runParts<Shell[]>(names.map((n) => ({ op: "forgeMech", args: { n, params, d: door(n) } })), (j) => forgeOneMech(j.args.n as string, params, door(j.args.n as string), tick));
+    names.forEach((n, i) => mech[i].forEach((s, q) => both(`mech_${n}_${q}`, MECH_LINK[n] + (s.zone === "door" ? "_door" : ""), "armour_mech", `mech_${n}`, s.mesh)));
     // the glowing parts: reactor core, palm repulsors
     put("reactor_lens", "pelvis", "lens_glow", "torso", placed(disc(33, 3, 64), [[0, 0, 1, 141], [0, 1, 0, 0], [-1, 0, 0, 1375]]));
     const fr = new Frame(J.wrist, J.hand_end), z = scl(fr.l, -1), y = cross(z, fr.f), o = sub(add(fr.A, scl(fr.u, 76)), scl(fr.l, 41));
@@ -674,6 +689,12 @@ export async function forgePrint(params: ForgeParams = {}, tick: Tick = () => {}
   }
   say(`${pieces.length} pieces`);
   return { pieces, doors, log };
+}
+/** jobs on the pool when there is one, else here one after another */
+async function runParts<T>(jobs: { op: string; args: Record<string, unknown> }[], local: (j: { op: string; args: Record<string, unknown> }) => Promise<T>): Promise<T[]> {
+  const pool = getPool();
+  if (!pool) { const out: T[] = []; for (const j of jobs) out.push(await local(j)); return out; }
+  return Promise.all(jobs.map((j) => pool.run<T>(j)));
 }
 
 /** A quick look at the suit while the full forge runs: every part's outer surface at a coarse voxel (4 mm), one mesh per colour, limbs
