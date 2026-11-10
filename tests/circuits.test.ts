@@ -123,6 +123,10 @@ test("a 5 V echo into a 3.3 V pin and a 3.3 V host on a 5 V LED ring are both ca
   assert.equal(led.vih, 3.5);
 });
 
+test("the circuit code runs in a browser worker: no Node globals", () => {
+  for (const f of readdirSync("packages/design/src/circuit")) assert.doesNotMatch(readFileSync(`packages/design/src/circuit/${f}`, "utf8"), /\bprocess\.|\bBuffer\.|require\(/, f);
+});
+
 test("every logic-level record is sourced and names a real supply pin", () => {
   for (const [k, d] of Object.entries(ELECTRICAL)) {
     const L = d.electrical.logic as Sourced<{ supply_pin?: string; io_v?: number; max_in_v: number }> | undefined; if (!L) continue;

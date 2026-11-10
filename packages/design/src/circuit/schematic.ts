@@ -128,7 +128,6 @@ function annBox(m: CircuitModel, x: SymPin, at: Pt, out: Heading, mode: Mode): B
 export function schematic(w: WiringRecord, robot: string): SchematicResult {
   // first try compact (no room kept for labels on wired pins); if a wire then falls back to labels, lay out again with room
   const a = layoutOnce(w, robot, false);
-  if (process.env.TTR_DEBUG) console.log("compact unrouted", a.unrouted);
   return a.unrouted.length ? layoutOnce(w, robot, true) : a;
 }
 function layoutOnce(w: WiringRecord, robot: string, roomy: boolean): SchematicResult {
@@ -244,7 +243,7 @@ function layoutOnce(w: WiringRecord, robot: string, roomy: boolean): SchematicRe
       const tracks = list.reduce((a, s) => a + s.pins.filter((x) => { const pt = partner(s, x); return pt && pt.s.col === c + 1; }).length, 0);
       colX.push(snap(cx + L));
       for (const s of list) s.x = snap(cx + L);
-      cx = snap(cx + L + wmax + 60 + tracks * G); if (process.env.TTR_DEBUG) console.log("col", c, { L, wmax, tracks, cx });
+      cx = snap(cx + L + wmax + 60 + tracks * G);
     }
     // vertical: controllers first, then each column lined up with the pins it wires to
     const orderC = [1, 2, 3, ...Array.from({ length: Math.max(0, ncol - 4) }, (_, i) => 4 + i), 0].filter((c) => c < ncol);
