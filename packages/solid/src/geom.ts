@@ -137,10 +137,13 @@ export function cradle(a: ActuatorPlacement, wall = 3): M {
  * length from the motor end, the cable leaving sideways (ROBOTIS e-manual, X-series, the figures "cable assembly" and
  * "wiring through back case"). x along the body and z in the servo frame; null for any other actuator.
  */
-export function dxlPlug(key: string): { x: number; z: number } | null {
-  if (!/^dxl_x.(430|540)/.test(key)) return null;
+export function dxlPlug(key: string): { x: number; z: number; inset: number } | null {
   const { min, max } = bodyBox(key);
-  return { x: min[0] + 0.437 * (max[0] - min[0]), z: min[2] + 5 };
+  if (/^dxl_x.(430|540)/.test(key)) return { x: min[0] + 0.437 * (max[0] - min[0]), z: min[2] + 5, inset: 10 };
+  // XL330: also one in each side face, in the half away from the horn and towards the front (ROBOTIS e-manual XL330
+  // product photo; the drawing is behind a login: about +-4 mm), the 20 mm case leaving the header 6 mm deep
+  if (/^dxl_xl330/.test(key)) return { x: min[0] + 0.4 * (max[0] - min[0]), z: min[2] + 0.7 * (max[2] - min[2]), inset: 6 };
+  return null;
 }
 export function cradleCuts(a: ActuatorPlacement, wall = 3): M[] {
   const { min, max } = bodyBox(a.key), top = Math.min(max[2], -0.8) - 1.2, rim = 5;
@@ -155,7 +158,7 @@ export function cradleCuts(a: ActuatorPlacement, wall = 3): M[] {
   // bus servos plug in where their sockets are: a window through the cradle there, with room for the plug (as plugWindowOps)
   if (a.key.startsWith("feetech_sts")) cuts.push(box([-20, -10, min[2] - 8], [-8, 10, min[2] + 6]).transform(a.T));
   const slot = dxlPlug(a.key);
-  if (slot) cuts.push(box([slot.x - 7, min[1] - wall - 11, min[2] + 0.5], [slot.x + 7, max[1] + wall + 11, min[2] + 10]).transform(a.T));
+  if (slot) cuts.push(box([slot.x - 7, min[1] - wall - 11, slot.z - 4.5], [slot.x + 7, max[1] + wall + 11, slot.z + 5]).transform(a.T));
   else if (a.key.startsWith("dxl_")) cuts.push(box([min[0] - 8, -11, min[2] + 0.5], [min[0] + 0.5, 11, min[2] + 12]).transform(a.T));
   void top;
   return cuts;

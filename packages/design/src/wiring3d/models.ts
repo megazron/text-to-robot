@@ -221,7 +221,7 @@ function generic(key: string, ports: Port[], bb: { min: V3; max: V3 }, b: Builde
     ports.forEach((p, k) => {
       const side = (k - (ports.length - 1) / 2) * 2;
       if (/^feetech_sts/.test(key)) lead(p, (i, n) => [-14 + (i - (n - 1) / 2) * 2.5, side * 4.5, z0], [0, 0, -1], "jst");
-      else if (dxlPlug(key)) { const q = dxlPlug(key)!, sg = side < 0 ? -1 : 1; lead(p, (i, n) => [q.x + (i - (n - 1) / 2) * 2.5, sg * (y1 - 10), q.z], [0, sg, 0], "jst"); }
+      else if (dxlPlug(key)) { const q = dxlPlug(key)!, sg = side < 0 ? -1 : 1; lead(p, (i, n) => [q.x + (i - (n - 1) / 2) * 2.5, sg * (y1 - q.inset), q.z], [0, sg, 0], "jst"); }
       else if (/^dxl_/.test(key)) lead(p, (i, n) => [x0, side * 5.5 + (i - (n - 1) / 2) * 2.5 * 0, z0 + 6.5 + (i - (n - 1) / 2) * 2.5], [-1, 0, 0], "jst");
       else if (servo) lead(p, (i, n) => [x0 + 11 + (i - (n - 1) / 2) * 2.54, y1, z0 + 5.2], [0, 1, 0], "lead");
       else if (/side face/.test(String(part(key).specs.connector ?? "")) || /^nema17/.test(key)) {
