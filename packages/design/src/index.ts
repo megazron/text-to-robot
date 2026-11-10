@@ -12,6 +12,7 @@ import * as _humanoid from "./families/humanoid.ts";
 import * as _scara from "./families/scara.ts";
 import * as _gripper from "./families/gripper.ts";
 import * as _drone from "./families/drone.ts";
+import * as _rov from "./families/rov.ts";
 /** Designer per record family: edits re-run the designer with an updated request. */
 export const DESIGNERS: Record<string, (req: any) => RobotSpecification> = {
   arm: _arm,
@@ -20,6 +21,7 @@ export const DESIGNERS: Record<string, (req: any) => RobotSpecification> = {
   quadruped: _legged.designQuadruped, hexapod: _hexapod.designHexapod, humanoid: _humanoid.designHumanoid, mech: _humanoid.designBattleMech,
   scara: _scara.designScara, gripper: _gripper.designGripper,
   drone_quad: _drone.designDrone,
+  rov_underwater: _rov.designRov,
 };
 /** The record a designed robot carries (undefined for template robots). */
 export const designOf = (spec: RobotSpecification) => (spec.metadata as { design?: import("./assembly.ts").DesignRecord }).design;
@@ -55,3 +57,4 @@ export { designServoWalker, type WalkerRequest } from "./families/servo-walker.t
 export { boardProfile, driverProfile, regulatorFor, BOARDS, DRIVERS, type FirmwareRecord } from "./families/parts-pins.ts";
 export { firmwareFor, pinTable, type FirmwareFile } from "./firmware.ts";
 export { designDrone, motorAt, throttleFor, type DroneRequest } from "./families/drone.ts";
+export { designRov } from "./families/rov.ts";
