@@ -67,7 +67,8 @@ function buildHexapod(req: LeggedRequest, cfg: HexCfg, sensors: string[]) {
   board("bno085_breakout", -12.8, -11.35, "imu", "IMU (body attitude, at the centre)");
   addSensor(A, "imu", "imu", "base_link", [0, 0, (zPlate + 5) / 1000], [0, 0, 0], { model: "BNO085" });
   board("waveshare_bus_servo_adapter", -11, -50, "actuator_bus", "USB to servo bus");
-  board("buck_5v_5a", -12.7, 24, "regulator_5v", "5 V regulator (sensors)");
+  // its header points down: the jumpers go to the tie points beside its two pin rows (3.8 mm out), clear of the hood wall
+  board("buck_5v_5a", 3, 24, "regulator_5v", "5 V regulator (sensors)");
   // ---- top deck on three pillars: computer, LiDAR turret, camera ----
   const zDeck = zf + bF.max[1] + WALL + 6;         // above the femur cradles
   const Rd = Rf - (-bF.min[0]) - WALL - 6;          // inside the femur cradles' inner ends
