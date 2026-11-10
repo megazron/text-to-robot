@@ -23,6 +23,8 @@ const LEGS6 = [
   { n: "lf", deg: 30 }, { n: "lm", deg: 90 }, { n: "lr", deg: 150 },
   { n: "rr", deg: -150 }, { n: "rm", deg: -90 }, { n: "rf", deg: -30 },
 ];
+/** room the battery tray leaves at the pack's lead end: the XT60 (3 mm of rigid plug) and the first bend of 12 AWG (1.25 x 18 mm) */
+const LEAD_ROOM = 26;
 const TRIPODS = [["lf_foot", "rm_foot", "lr_foot"], ["rf_foot", "lm_foot", "rr_foot"]];
 interface HexCfg { keys: { coxa: string; femur: string; tibia: string }; Lf: number; Lt: number; footR: number; batt: string; extraKg: number; }
 
@@ -48,7 +50,9 @@ function buildHexapod(req: LeggedRequest, cfg: HexCfg, sensors: string[]) {
     bodyOps.push({ op: "cradle", key: KC, T: coxaW[L.n], wall: WALL });
   }
   // battery under the plate (belly cradle: two side rails + strap slots), wiring holes
-  const battB = bodyMm(cfg.batt), bw = (battB.max[1] - battB.min[1]) / 2, bx0 = -(battB.max[0] + battB.min[0]) / 2, bh = battB.max[2];
+  // the pack's leads leave its +x end: the tray leaves them their plug and first bend there (LEAD_ROOM), so the pack sits
+  // that much towards -x
+  const battB = bodyMm(cfg.batt), bw = (battB.max[1] - battB.min[1]) / 2, bx0 = -(battB.max[0] + battB.min[0]) / 2 - (LEAD_ROOM - 3) / 2, bh = battB.max[2];
   const zBatt = zPlate - 4 - 0.5 - bh;
   for (const s of [-1, 1]) bodyOps.push({ op: "box", min: [bx0 + battB.min[0] + 14, s > 0 ? bw + 0.5 : -bw - 3.5, zBatt + 4], max: [bx0 + battB.max[0] - 14, s > 0 ? bw + 3.5 : -bw - 0.5, zPlate - 3.5] });
   for (const x of [-35, 35]) bodyOps.push({ op: "cutbox", min: [x - 10, -bw - 8, zPlate - 5], max: [x + 10, -bw - 4, zPlate + 1] }, { op: "cutbox", min: [x - 10, bw + 4, zPlate - 5], max: [x + 10, bw + 8, zPlate + 1] });
@@ -79,7 +83,9 @@ function buildHexapod(req: LeggedRequest, cfg: HexCfg, sensors: string[]) {
   mountAt(A, deck, compute, translation([cx, cy, zc]), "computer", "main computer");
   for (const h of part(compute).holes.filter((h) => h.axis[2] < -0.5)) { const p = add([cx, cy, 0], [h.pos[0], h.pos[1], 0]); deckOps.push({ op: "box", min: [p[0] - 3, p[1] - 3, zDeck + 2], max: [p[0] + 3, p[1] + 3, zc + h.pos[2]], r: 2.9 })   /* up to the board's mounting face */; }
   let top = zc + cb.max[2];
-  const zRoof = top + 7;                            // underside of the computer hood's roof
+  // underside of the computer hood's roof: over its tallest part, room for the jumpers on its header to come up out of
+  // its box and turn (connector 10 mm is in the box; the first bend, 1.25 x 6.4 mm, and the wire above it)
+  const zRoof = top + 15;
   if (sensors.includes("lidar")) {
     // the computer's hood is the turret: the LiDAR stands on its roof, above everything
     const key = "rplidar_c1", lb = bodyMm(key), zT = zRoof + 2.8 - 3 + 0.05;
@@ -150,7 +156,7 @@ function boxHex(A: Assembly, H: Harness, b: ReturnType<typeof buildHexapod>) {
   const side = (s: number) => ({ id: s > 0 ? "legs_left" : "legs_right", near: [13, s * 45] as [number, number], area: { x0: -11, x1: 37, y0: s > 0 ? b.bw + 10 : -49, y1: s > 0 ? 49 : -b.bw - 10 } });
   hoodAround(A, H, { name: "board_hood", deck: "base_link", parts: ["actuator_bus", "regulator_5v", "imu"], z0: b.zPlate, rocker: true, below: 10, limit: { x0: -15, x1: 41, y0: -80, y1: 60 }, deckHoles: [side(1), side(-1)], grommets: [{ id: "usb", face: "y-", u: -6 }] });
   for (const c of ["computer~lidar", "camera~computer", "actuator_bus~computer"]) H.exitOf.set(c, "computer_hood.usb");
-  const bb = b.battB, x0 = b.bx0 + bb.min[0] - 3, x1 = b.bx0 + bb.max[0] + 3, y = b.bw + 4.4;
+  const bb = b.battB, x0 = b.bx0 + bb.min[0] - 3, x1 = b.bx0 + bb.max[0] + LEAD_ROOM, y = b.bw + 4.4;
   // the tray hangs from the plate: bounds in the frame turned about x, so z runs downwards
   hood(A, H, { name: "battery_tray", deck: "base_link", x0, x1, y0: -y, y1: y, z0: -(b.zPlate - 4), z1: -(b.zBatt - 3), parts: ["battery"], flip: true, ventRows: 0, deckGrommets: [{ id: "up", x: x1 - 8, y: 0 }] });
   H.scan();
