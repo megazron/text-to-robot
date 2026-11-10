@@ -248,8 +248,11 @@ function generic(key: string, ports: Port[], bb: { min: V3; max: V3 }, b: Builde
     // header rows along the long edge, one port after another
     let k = 0; const all = ports.flatMap((p) => p.pins.v.map((x) => ({ port: p.name, name: x.name, sig: x.signal })));
     const along = w >= h, n = Math.max(1, all.length), pitch = Math.min(P, (along ? w : h) / (n + 1));
+    // a board whose catalog box reaches past its y = 0 edge has its sockets there (the overhang is the connectors: the
+    // Jetson Orin Nano developer kit's USB, Ethernet, DisplayPort and power along that long edge); else on its -x end
+    const edgeY = y0 < 0 && /jetson/.test(key);
     for (const q of all) {
-      if (q.sig === "cable" || q.name === "LINK") { set(q.port, q.name, [x0, cy, top + 2], [-1, 0, 0], "plug"); continue; }
+      if (q.sig === "cable" || q.name === "LINK") { set(q.port, q.name, edgeY ? [(x0 + x1) / 2, y0, top + 6] : [x0, cy, top + 2], edgeY ? [0, -1, 0] : [-1, 0, 0], "plug"); continue; }
       const s = (k++ + 1) * pitch, at: V3 = along ? [x0 + s, y0 + 1.27, top] : [x0 + 1.27, y0 + s, top];
       b.pin("gold", at, [at[0], at[1], top + 6]); b.box("header", [at[0] - 1.2, at[1] - 1.2, top], [at[0] + 1.2, at[1] + 1.2, top + 2.5]);
       set(q.port, q.name, [at[0], at[1], top + 6], [0, 0, 1], "header");
