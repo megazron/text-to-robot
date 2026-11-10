@@ -69,8 +69,7 @@ test("misspelt robot words and a few emoji are read, and said; other scripts are
   assert.equal(read("🐕 robot").family, "quadruped");
   assert.equal(read("un perro robot").family, "quadruped");
   assert.doesNotMatch(notes("a 6 dof arm with a gripper"), /misspelt/, "English prompts are left alone");
-  for (const p of ["एक रोबोटिक हाथ जिसमें ग्रिपर हो", "ایک روبوٹک بازو گرپر کے ساتھ", "ロボットアーム"])
-    assert.throws(() => interpretPrompt(p), /a language the parser does not read yet/, p);
+  assert.throws(() => interpretPrompt("ロボットアーム"), /a language the parser does not read yet/);
 });
 
 test("weapons and robots meant to hurt are refused, whatever body they have; tools are not weapons", () => {
@@ -127,4 +126,14 @@ test("an arm whose peak current is more than the 75 W supply gives is designed o
   assert.deepEqual(d.checks!.filter((c) => !c.pass && c.name.startsWith("wiring:rail")).map((c) => c.name), []);
   const plain = (interpretPrompt("Create a 6 DOF robotic arm with a parallel gripper").spec.metadata as { design?: { purchased?: { key: string }[] } }).design!;
   assert.ok(!plain.purchased!.some((p) => p.key === "psu_12v_lrs150"), "an arm that fits the 75 W supply keeps it");
+});
+
+test("Hindi and Urdu robot words are read: arms, legs, wheels, cars and dogs, and said", () => {
+  const cases: [string, string][] = [["एक रोबोटिक हाथ जिसमें ग्रिपर हो", "serial_arm"], ["छह पैरों वाला रोबोट", "hexapod"], ["चार पैरों वाला रोबोट कुत्ता", "quadruped"],
+    ["ایک روبوٹک بازو گرپر کے ساتھ", "serial_arm"], ["ایک چار پہیوں والی روبوٹ گاڑی", "four_wheel"], ["मुझे एक सस्ता आर्डुइनो कार चाहिए", "arduino_car"]];
+  for (const [p, family] of cases) {
+    const i = read(p);
+    assert.equal(i.family, family, p);
+    assert.match(i.approximations.join(), /read non-English keywords as English/, p);
+  }
 });

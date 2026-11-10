@@ -97,7 +97,7 @@ export function interpretPrompt(prompt: string): PromptResult {
   catch (e) {
     // a prompt in another script (Hindi, Urdu, Chinese...) is not read at all: say that, rather than only "not recognised"
     if (/not recognised/.test((e as Error).message) && /[^\p{Script=Latin}\p{N}\p{P}\p{S}\s]/u.test(prompt) && !/[a-z]{3,}/.test(t))
-      throw new Error(`This prompt is in a language the parser does not read yet: it reads English, with common German, French, Spanish and romanised Hindi robot words. ${SUPPORTED_HINT}`);
+      throw new Error(`This prompt is in a language the parser does not read yet: it reads English, with common German, French, Spanish, Hindi and Urdu robot words. ${SUPPORTED_HINT}`);
     throw e;
   }
   const budget = parseBudget(t);

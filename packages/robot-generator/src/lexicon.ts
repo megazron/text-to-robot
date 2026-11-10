@@ -32,6 +32,25 @@ const CONTENT: Record<string, string> = {
   hund: "dog", chien: "dog", perro: "dog",
 };
 
+/** Hindi (Devanagari) and Urdu (Perso-Arabic) robot words, matched as whole words before anything else. Longer forms first. */
+const SCRIPT: [string, string][] = [
+  // Hindi
+  ["रोबोटिक", "robotic"], ["रोबोट", "robot"], ["मानवाकार", "humanoid"], ["इंसान जैसा", "humanoid"], ["इंसान", "human"],
+  ["हाथ", "arm"], ["बांह", "arm"], ["भुजा", "arm"], ["ग्रिपर", "gripper"], ["पकड़ने वाला", "gripper"], ["पंजा", "claw"],
+  ["पहियों", "wheels"], ["पहिये", "wheels"], ["पहिए", "wheels"], ["पहिया", "wheel"], ["पैरों", "legs"], ["पैर", "legs"], ["टांगें", "legs"], ["टांगों", "legs"],
+  ["कुत्ता", "dog"], ["मकड़ी", "spider"], ["कैमरा", "camera"], ["लिडार", "lidar"], ["गाड़ी", "car"], ["कार", "car"], ["सर्वो", "servo"],
+  ["आर्डुइनो", "arduino"], ["अर्डुइनो", "arduino"], ["सस्ता", "cheap"], ["सस्ती", "cheap"],
+  ["एक", "a"], ["दो", "two"], ["तीन", "three"], ["चार", "four"], ["पांच", "five"], ["छह", "six"], ["छः", "six"], ["सात", "seven"],
+  ["जिसमें", "with"], ["के साथ", "with"], ["और", "and"], ["बिना", "without"], ["बनाओ", "make"], ["बनाइए", "make"],
+  ["वाला", ""], ["वाली", ""], ["वाले", ""], ["हो", ""], ["चाहिए", ""], ["मुझे", ""], ["का", ""], ["की", ""], ["के", ""],
+  // Urdu
+  ["روبوٹک", "robotic"], ["روبوٹ", "robot"], ["بازو", "arm"], ["ہاتھ", "arm"], ["گرپر", "gripper"], ["پنجہ", "claw"],
+  ["پہیوں", "wheels"], ["پہیے", "wheels"], ["پہیہ", "wheel"], ["ٹانگوں", "legs"], ["ٹانگیں", "legs"], ["پاؤں", "legs"],
+  ["کتا", "dog"], ["مکڑی", "spider"], ["کیمرہ", "camera"], ["گاڑی", "car"], ["کار", "car"], ["سستا", "cheap"], ["سستی", "cheap"], ["آرڈوینو", "arduino"],
+  ["ایک", "a"], ["دو", "two"], ["تین", "three"], ["چار", "four"], ["پانچ", "five"], ["چھ", "six"], ["سات", "seven"],
+  ["کے ساتھ", "with"], ["اور", "and"], ["بغیر", "without"], ["بناؤ", "make"],
+  ["والا", ""], ["والی", ""], ["والے", ""], ["چاہیے", ""], ["مجھے", ""], ["کا", ""], ["کی", ""], ["کے", ""],
+];
 /** Multi-word phrases, matched before single words (accent-free). */
 const PHRASES: [RegExp, string][] = [
   [/\bdegres? de liberte\b/g, "degrees of freedom"],
@@ -76,9 +95,13 @@ export interface Translation { text: string; /** "greifer -> gripper" for each m
 
 /** Map German/French/Spanish robot keywords onto English. English prompts come back unchanged. */
 export function translateKeywords(text: string): Translation {
-  const plain = stripAccents(text);
   const mapped: string[] = [];
   const note = (from: string, to: string) => { const n = to ? `${from} -> ${to}` : `${from} (no English word needed)`; if (from !== to && !mapped.includes(n)) mapped.push(n); };
+  // Devanagari and Urdu words first (before accents are stripped: combining vowel signs are part of these words)
+  let scripted = text;
+  if (/[\u0900-\u097F\u0600-\u06FF]/.test(text)) for (const [w, to] of SCRIPT)
+    scripted = scripted.replace(new RegExp(`(^|[^\\p{L}\\p{M}])${w}(?=$|[^\\p{L}\\p{M}])`, "gu"), (_m, pre) => { note(w, to); return `${pre} ${to} `; });
+  const plain = stripAccents(scripted).replace(/[ \t]{2,}/g, " ").trim();
   let out = plain;
   for (const [rx, to] of PHRASES) out = out.replace(rx, (m, ...g) => { const r = to.replace("$1", typeof g[0] === "string" ? g[0] : ""); note(m, r); return r; });
   let foreign = mapped.length > 0;

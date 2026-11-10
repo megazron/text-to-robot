@@ -106,7 +106,7 @@ $ node cli/src/index.ts "a red 6 dof arm with 70 cm reach, a wrist camera and no
 | `called Atlas`, `painted blue`, `for a 1.85 m wearer` | name, colour, suit size (a Mark 43 is scaled as a whole; there is no body model) |
 | `bulky`, `sleek`, `bigger shoulders`, `smooth panels`, `black and gold` | the Mark 43 armour itself: forged again with that build, pauldrons, panels or paint |
 
-What it cannot apply is listed as `not applied`, and contradictions (two robot types, two joint counts, two reaches) are each flagged as `conflict:`. A few requests are still dropped without a note (a slope or runtime target, a second colour or budget); the [launch audit](docs/LAUNCH_AUDIT.md#bugs-remaining) lists them. A small German, French and Spanish keyword list covers the common robot words (`Roboterarm mit sechs Achsen und Greifer`).
+What it cannot apply is listed as `not applied`, and contradictions (two robot types, two joint counts, two reaches) are each flagged as `conflict:`. A few requests are still dropped without a note (a slope or runtime target, a second colour or budget); the [launch audit](docs/LAUNCH_AUDIT.md#bugs-remaining) lists them. A small German, French, Spanish, Hindi and Urdu keyword list (romanised Hindi too) covers the common robot words (`Roboterarm mit sechs Achsen und Greifer`, `छह पैरों वाला रोबोट`, `ایک روبوٹک بازو گرپر کے ساتھ`).
 
 Families: 1-7 DOF arms (a larger count is built as 7 and says so), SCARA, grippers, differential, four-wheel and mecanum bases, a rover with an arm, quadruped, hexapod, humanoid and character robots. Drones, delta and gantry robots, snake and marine robots and dexterous hands are refused with a reason.
 
