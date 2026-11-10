@@ -6,7 +6,7 @@ import { validateSpec } from "@ttr/robot-schema";
 import { finalizeSpec } from "@ttr/robot-generator";
 import { generateUrdf, generateXacro } from "@ttr/urdf-generator";
 import { validateUrdf } from "@ttr/urdf-validator";
-import { CATALOG, part, rating, electrical } from "@ttr/parts";
+import { CATALOG, part, rating, electrical, hornRadiusMm } from "@ttr/parts";
 import { buildPart, toStlBinary, meshGeometry } from "@ttr/mesh";
 import { buildBom } from "@ttr/components";
 import { schematic, breadboard, electricalReport, layoutProblems, wiringSvg, wiringMarkdown, type WiringRecord } from "@ttr/design";
@@ -42,6 +42,10 @@ export function catalog() {
     const e = electrical(c.key);
     return { key: c.key, name: c.name, category: c.category, mass_g: c.mass_g, price_usd: c.price_usd, supplier_url: c.supplier_url, datasheet_url: c.datasheet_url,
       envelope_mm: c.envelope_mm, bbox_mm: c.bbox_mm ?? null, mounts: partMounts(c.key),
+      // what a viewer needs to tell the regions of the part's one mesh apart (mm, part frame)
+      ...(c.category === "actuator" ? { horn_radius_mm: hornRadiusMm(c.key) } : {}),
+      ...(Array.isArray(c.specs.case_mm) && c.bbox_mm ? { case_top_mm: +(c.bbox_mm.min[2] + Number((c.specs.case_mm as number[])[2])).toFixed(2) } : {}),
+      ...(c.specs.body_mm ? { body_mm: c.specs.body_mm as { min: number[]; max: number[] } } : {}),
       ...(r ? { rating: { rated_nm: r.rated_nm, peak_nm: r.peak_nm, speed_rad_s: r.speed_rad_s, voltage_v: r.voltage_v, range_deg: Number(c.specs.range_deg) || null, continuous: !/hobby_|feetech|dxl_/.test(c.key) || Number(c.specs.range_deg) >= 360 } } : {}),
       ...(e ? { electrical: { role: e.role, voltage_v: e.voltage_v.v, current_a: e.current_a.v, ports: e.ports.map((p) => p.name) } } : {}) };
   });
@@ -144,9 +148,7 @@ export function checkRobot(input: RobotSpecification, opts: { quick?: boolean; i
     checks.push(own ?? { name: "clearance:home", pass: true, detail: "as designed: the designer placed every part" });
   } else if (!opts.quick && opts.interference !== false) {
     try {
-      const skip = new Set(spec.joints.flatMap((j) => [`${j.parent}|${j.child}`]));
-      for (const j of spec.joints) for (const k of spec.joints) if (j.parent === k.parent && j !== k) skip.add(`${j.child}|${k.child}`);
-      const bonded = meta(spec).design?.bonded ?? []; for (const [a, b] of bonded) skip.add(`${a}|${b}`);
+      const skip = joinedByDesign(spec);
       const t0 = Date.now(), run = clearanceAtHome(spec, skip, 2, baseline), hits = run.hits;
       timing.clearance_ms = Date.now() - t0; timing.pairs_checked = run.pairs; timing.pairs_intersected = run.intersected; timing.pairs_reused = run.reused; timing.pairs_as_designed = run.as_designed;
       const designed = run.as_designed ? ` (${run.as_designed} pairs untouched since the designer placed them)` : "";
@@ -208,6 +210,26 @@ function refreshDesign(spec: RobotSpecification, checks: Check[], joints: JointR
   return out;
 }
 
+/**
+ * Pairs the clearance check leaves out: parts the designer bonded, and parts the designer joined directly (they touch
+ * or nest by design). A part placed by hand is checked against everything, the part it is attached to included: set
+ * down on a surface or mated to a mount it touches without entering, and anything else is a part inside another.
+ */
+function joinedByDesign(spec: RobotSpecification): Set<string> {
+  const skip = new Set<string>(), base = meta(spec).studio?.baseline, designed = (n: string) => !!base && n in base;
+  for (const j of spec.joints) if (designed(j.parent) && designed(j.child)) skip.add(`${j.parent}|${j.child}`);
+  for (const j of spec.joints) for (const k of spec.joints) if (j.parent === k.parent && j !== k && designed(j.child) && designed(k.child)) skip.add(`${j.child}|${k.child}`);
+  for (const [a, b] of meta(spec).design?.bonded ?? []) skip.add(`${a}|${b}`);
+  return skip;
+}
+/** Parts that `link` intersects where it is now (mm^3 each), the part it is attached to included: for checking a placement. */
+export function clearanceOf(input: RobotSpecification, link: string): { a: string; b: string; volume_mm3: number }[] {
+  const spec = finalizeSpec(structuredClone(input));
+  if (!spec.links.some((l) => l.name === link)) throw new Error(`no part '${link}'`);
+  const skip = joinedByDesign(spec); for (const k of [...skip]) if (k.split("|").includes(link)) skip.delete(k);
+  return clearanceAtHome(spec, skip, 2, meta(spec).studio?.baseline).hits.filter((h) => h.a === link || h.b === link).map((h) => (h.a === link ? h : { a: h.b, b: h.a, volume_mm3: h.volume_mm3 }));
+}
+
 /** Collisions over a joint's travel: the samples (joint value) where parts it moves hit others, with the pairs. */
 export function sweep(spec: RobotSpecification, joint: string, samples = 24) {
   const j = spec.joints.find((x) => x.name === joint); if (!j) throw new Error(`no joint '${joint}'`);
@@ -255,6 +277,7 @@ export async function engineApi(method: string, path: string, body: any): Promis
   if (method === "POST" && p === "schematic") { try { return json(200, schematicOf(body.robot)); } catch (e) { return json(422, { error: (e as Error).message }); } }
   if (method === "POST" && p === "wiring") { try { const w = wiringOf(body.robot); return json(200, { svg: wiringSvg(w, body.robot.robot_name), markdown: wiringMarkdown(w, body.robot.robot_name) }); } catch (e) { return json(422, { error: (e as Error).message }); } }
   if (method === "POST" && p === "breadboard") { try { return json(200, breadboardOf(body.robot)); } catch (e) { return json(422, { error: (e as Error).message }); } }
+  if (method === "POST" && p === "clearance") return json(200, { hits: clearanceOf(body.robot, String(body.link)) });
   if (method === "POST" && p === "sweep") return json(200, { samples: sweep(body.robot, String(body.joint), Number(body.samples ?? 24)) });
   if (method === "POST" && p === "urdf") { const spec = finalizeSpec(structuredClone(body.robot)); return json(200, { urdf: generateUrdf(spec), xacro: generateXacro(spec) }); }
   if (method === "POST" && p === "mesh") return new Response(toStlBinary(buildPart(body.geometry), 1) as BodyInit, { headers: { "Content-Type": "model/stl" } });

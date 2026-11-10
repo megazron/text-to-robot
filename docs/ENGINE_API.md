@@ -31,6 +31,7 @@ Types: [`engine/v1/engine.d.ts`](https://megazron.github.io/text-to-robot/engine
 | `arduino(prompt)` | Cheap Arduino versions with their prices. |
 | `open(robot)` | Check and keep a spec from elsewhere; its `id` serves its meshes. |
 | `check(robot, { quick, interference, wiring })` | Spec and URDF validity, torque margin per joint, stability (centre of mass over the footprint, the slope it tips at), print bed fit, clearance between parts, automatic wiring with the power budget per rail; `engineering` holds mass, centre of mass, cost and those numbers. For an edited robot, `robot` comes back with its design record rebuilt. |
+| `clearance(robot, link)` | Parts that one part intersects where it is now (mm^3 each), the part it is attached to included. For checking a placement before keeping it. |
 | `sweep(robot, joint, samples)` | Parts that collide over one joint's travel, per sample. |
 | `urdf(robot)` | URDF and xacro. |
 | `ros2(robot)`, `cad(robot)`, `training(robot)` | The ROS 2 package, the CAD files (STL, with STEP for the parts modelled on the CAD kernel) and the training scaffold (PyBullet tasks and MuJoCo tests), as file maps. |
@@ -71,7 +72,11 @@ An edited robot carries `metadata.studio` (`edited: true`, printed part paramete
 
 ## Mounting points
 
-A mount is a frame on a part: `pos` (metres), `axis` (out of the part), `ref` (across it) and a `kind`. Kinds that mate: `output` with `hub` (a shaft or horn and a wheel hub or a printed link's horn coupling; mating them offers a joint), `case` with `seat` (a servo in a printed bracket made for it), `board` with `standoffs` (matching hole patterns), and `base` or `board` on any `face`. Mounts come from the catalog: an actuator's output frame, its case holes, a board's mounting holes (the electrical record's drawing where the catalog has none), a wheel's bore. Every part also has a `base` under its body for placing it on a surface.
+A mount is a frame on a part: `pos` (metres), `axis` (out of the part), `ref` (across it) and a `kind`. Kinds that mate: `output` with `hub` (a shaft or horn and a wheel hub or a printed link's horn coupling; mating them offers a joint), `case` with `seat` (a servo in a printed bracket made for it), `board` with `standoffs` (matching hole patterns), and `base` or `board` on any `face`. Mounts come from the catalog: an actuator's output frame, its case holes, a board's mounting holes (the electrical record's drawing where the catalog has none), a wheel's bore. Every part also has a `base` for placing it on a surface: its lowest face, so a part set down touches the surface and none of it is inside (a gearmotor whose shaft runs through its body lies on its side). A servo held by its tabs belongs in a printed servo bracket (`servo_bracket`), which screws to the surface.
+
+The `clearance:home` check of `check(robot)` covers every part placed by hand against every other, the part it is attached to included; only pairs the designer joined and nobody moved since are taken as designed. `clearance(robot, link)` answers the same for one part, for checking a placement before keeping it.
+
+Catalog entries carry what a viewer needs to paint the regions of a part's one mesh: `horn_radius_mm` (actuators), `case_top_mm` (servos with a case size) and `body_mm` (a motor's body without its shaft).
 
 ## Security
 

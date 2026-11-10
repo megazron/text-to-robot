@@ -11,7 +11,7 @@ import { generateXacro } from "@ttr/urdf-generator";
 import { toScene, fromScene, applyEdits, emptyRobot, worldFrames, poseMat, mul, apply, matPose, type EditOp } from "../apps/web/src/engine/edit.ts";
 import { snapPart, mate, patternsMatch } from "../apps/web/src/engine/snap.ts";
 import { partMounts, printedMounts, worldMounts } from "../apps/web/src/engine/mounts.ts";
-import { engineApi, parts, checkRobot } from "../apps/web/src/engine/api.ts";
+import { engineApi, parts, checkRobot, clearanceOf, catalog as engineCatalog } from "../apps/web/src/engine/api.ts";
 import { stability } from "../apps/web/src/engine/stability.ts";
 import { clearanceAtHome } from "../apps/web/src/engine/incremental.ts";
 import { withSolids, interferences } from "@ttr/design";
@@ -196,4 +196,27 @@ test("a designed robot keeps its designer's clearance and harness; after an edit
   assert.equal(c.pass, false); assert.match(c.detail, /ultrasonic/); assert.match(c.detail, /untouched since the designer/);
   assert.ok(r.engineering!.timing.pairs_as_designed > 0);
   for (const pair of c.detail.replace(/ \(.*$/, "").replace(/^intersecting: /, "").split(", ")) assert.match(pair, /ultrasonic|sensor_bracket/, pair);
+});
+
+test("every catalog part set down on a plate touches it and none of it is inside; a part pushed into another fails the check", () => {
+  const plate = { shape: "plate", size_mm: [120, 80, 4], fillet_mm: 0.8, hole_mm: 3.2, holes: 4 } as const;
+  const base = applyEdits(emptyRobot("t"), [{ op: "add", printed: plate, world: { xyz: [0, 0, 0], rpy: [0, 0, 0] }, name: "plate" } as EditOp], parts);
+  const top = { point: [0, 0, 0.004] as [number, number, number], normal: [0, 0, 1] as [number, number, number], link: "plate" };
+  for (const c of engineCatalog()) {
+    const s = snapPart(partMounts(c.key), worldMounts(base), top), W = poseMat(s.world), b = c.bbox_mm!;
+    let lo = Infinity;
+    for (const x of [b.min[0], b.max[0]]) for (const y of [b.min[1], b.max[1]]) for (const z of [b.min[2], b.max[2]]) lo = Math.min(lo, apply(W, [x / 1000, y / 1000, z / 1000])[2]);
+    assert.ok(Math.abs(lo - 0.004) < 2e-5, `${c.key}: its lowest point is ${((lo - 0.004) * 1000).toFixed(2)} mm from the plate's top`);
+  }
+  // a servo on the plate: the clearance check covers the part it is attached to, and passes
+  const s = snapPart(partMounts("hobby_mg996r"), worldMounts(base), top);
+  const on = applyEdits(base, [{ op: "add", key: "hobby_mg996r", parent: "plate", world: s.world, name: "servo" } as EditOp], parts);
+  assert.deepEqual(clearanceOf(on, "servo"), []);
+  assert.ok(checkRobot(on, { wiring: false }).checks.find((c) => c.name === "clearance:home")!.pass);
+  // the same servo 20 mm down, inside the plate: found, and the robot's check fails
+  const sunk = applyEdits(base, [{ op: "add", key: "hobby_mg996r", parent: "plate", world: { xyz: [s.world.xyz[0], s.world.xyz[1], s.world.xyz[2] - 0.02], rpy: s.world.rpy }, name: "servo" } as EditOp], parts);
+  const hits = clearanceOf(sunk, "servo");
+  assert.ok(hits.length === 1 && hits[0].b === "plate" && hits[0].volume_mm3 > 1000, JSON.stringify(hits));
+  const check = checkRobot(sunk, { wiring: false }).checks.find((c) => c.name === "clearance:home")!;
+  assert.ok(!check.pass && /servo/.test(check.detail), check.detail);
 });

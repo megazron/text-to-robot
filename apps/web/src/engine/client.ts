@@ -27,7 +27,7 @@ export interface JointReport { joint: string; actuator: string | null; required_
 export interface RailReport { name: string; voltage_v: number; source: string; continuous_a: number; peak_limit_a: number; typical_a: number; peak_a: number; ok: boolean; [k: string]: unknown; }
 export interface Engineering { mass_kg: number; com_m: [number, number, number]; cost_usd: number; bom_lines: number; joints: JointReport[]; rails: RailReport[]; wiring_unconnected: string[]; printed: { name: string; bbox_mm: number[]; fits_bed: boolean; watertight: boolean; mass_kg: number; volume_cm3: number }[]; stability: { margin_mm: number; tip_deg: number; com_m: [number, number, number]; support: [number, number][]; ground_z: number; worst_pose: Record<string, number>; free_standing: boolean } | null; links: number; dof: number; }
 export interface CheckReport { robot: RobotSpecification; urdf: string; valid: boolean; checks: Check[]; engineering: Engineering | null; }
-export interface CatalogPart { key: string; name: string; category: string; mass_g: number; price_usd: number; supplier_url: string; datasheet_url: string; envelope_mm: number[]; bbox_mm: { min: number[]; max: number[] } | null; mounts: Mount[]; rating?: { rated_nm: number; peak_nm: number; speed_rad_s: number; voltage_v: number; range_deg: number | null; continuous: boolean }; electrical?: { role: string; voltage_v: { min: number; nom: number; max: number }; current_a: { typical: number; peak: number }; ports: string[] }; }
+export interface CatalogPart { key: string; name: string; category: string; mass_g: number; price_usd: number; supplier_url: string; datasheet_url: string; /** for viewers: the horn radius, the top of a servo case, a motor body without its shaft (mm, part frame) */ horn_radius_mm?: number; case_top_mm?: number; body_mm?: { min: number[]; max: number[] }; envelope_mm: number[]; bbox_mm: { min: number[]; max: number[] } | null; mounts: Mount[]; rating?: { rated_nm: number; peak_nm: number; speed_rad_s: number; voltage_v: number; range_deg: number | null; continuous: boolean }; electrical?: { role: string; voltage_v: { min: number; nom: number; max: number }; current_a: { typical: number; peak: number }; ports: string[] }; }
 export interface PrintedShape { shape: PrintedParams["shape"]; label: string; defaults: PrintedParams; mounts: Mount[]; }
 export interface Catalog { parts: CatalogPart[]; printed: PrintedShape[]; }
 /** Files of an export: text, or bytes. */
@@ -50,6 +50,8 @@ export interface Engine {
   /** Checks and engineering numbers: spec, URDF, torque margins, print bed, clearance, wiring and power per rail. */
   check(robot: RobotSpecification, options?: { quick?: boolean; interference?: boolean; wiring?: boolean }): Promise<CheckReport>;
   /** Collisions over one joint's travel. */
+  /** Parts that `link` intersects where it is (mm^3), the part it is attached to included: check a placement before keeping it. */
+  clearance(robot: RobotSpecification, link: string): Promise<{ a: string; b: string; volume_mm3: number }[]>;
   sweep(robot: RobotSpecification, joint: string, samples?: number): Promise<{ q: number; hits: { a: string; b: string; volume_mm3: number }[] }[]>;
   urdf(robot: RobotSpecification): Promise<{ urdf: string; xacro: string }>;
   ros2(robot: RobotSpecification, options?: { ros2_control?: boolean }): Promise<Files>;
@@ -162,6 +164,7 @@ export async function createEngine(opts: { base?: string | URL; onProgress?: (p:
     arduino: (prompt) => json("POST", "/api/arduino", { prompt }),
     open: (robot) => json("POST", "/api/robots/import", { robot }),
     check: (robot, options) => json("POST", "/api/engine/check", { robot, options }),
+    clearance: async (robot, link) => (await json<{ hits: never }>("POST", "/api/engine/clearance", { robot, link })).hits,
     sweep: async (robot, joint, samples) => (await json<{ samples: never }>("POST", "/api/engine/sweep", { robot, joint, samples })).samples,
     urdf: (robot) => json("POST", "/api/engine/urdf", { robot }),
     ros2: async (robot, o) => files((await json<{ files: never }>("POST", "/api/robots/export", { robot, ros2_control: o?.ros2_control ?? true })).files),

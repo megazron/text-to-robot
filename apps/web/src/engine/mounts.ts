@@ -2,8 +2,9 @@
 // in metres, the axis pointing out of the part, a reference direction across it) and a kind; two mounts of matching kinds
 // mate face to face (see snap.ts). Parts are described from the catalog's own data: an actuator's output frame, the
 // holes on its case, a board's mounting holes (the electrical record's drawing where the catalog has none), a wheel's
-// bore. Every part also has a base (the underside of its body) for plain surface placement.
-import { part, CATALOG, ELECTRICAL, caseHoles, type Vec3 } from "@ttr/parts";
+// bore. Every part also has a base for plain surface placement: its lowest face, so that set down on a surface it
+// touches it and nothing of it is inside (a servo's tabs are screwed down in a servo bracket, not through the surface).
+import { part, CATALOG, ELECTRICAL, type Vec3 } from "@ttr/parts";
 import type { RobotSpecification } from "@ttr/robot-schema";
 import type { PrintedParams } from "./edit.ts";
 import { worldFrames, poseMat, mul, apply, rotate, kindOf } from "./edit.ts";
@@ -33,8 +34,10 @@ export function partMounts(key: string): Mount[] {
     out.push({ id: "output", kind: "output", pos: mm(p), axis, ref: perp(axis), label: c.category === "actuator" && /hobby|feetech|dxl/.test(key) ? "servo horn" : "shaft" });
     // the case: the servo's own frame, facing the way its output does, sits in a seat made for it
     out.push({ id: "case", kind: "case", pos: [0, 0, 0], axis, ref: perp(axis), label: "servo case", fits: key });
-    const under = caseHoles(key).filter((h) => h.axis[2] < -0.5);
-    if (under.length) out.push({ id: "base", kind: "base", pos: [centre[0] / 1000, centre[1] / 1000, Math.min(...under.map((h) => h.pos[2])) / 1000], axis: [0, 0, -1], ref: [1, 0, 0], label: "case screws" });
+    // a gearmotor whose shaft runs through its body (the TT motor's two ends) lies on its side, the shaft level
+    const body = c.specs.body_mm as { min: number[]; max: number[] } | undefined;
+    if (body && Math.abs(axis[2]) > 0.9 && b.min[2] < body.min[2] - 0.5 && b.max[2] > body.max[2] + 0.5)
+      out.push({ id: "base", kind: "base", pos: mm([(body.min[0] + body.max[0]) / 2, body.min[1], (body.min[2] + body.max[2]) / 2]), axis: [0, -1, 0], ref: [1, 0, 0], label: "side of the gearbox" });
   }
   if (c.category === "wheel" || c.category === "horn" || key.startsWith("coupler")) {
     const bore = c.holes.find((h) => Math.hypot(h.pos[0], h.pos[1]) < 0.5) ?? (c.category === "wheel" && !c.specs.ball_d_mm ? { pos: [0, 0, b.min[2]], axis: [0, 0, -1] } : undefined);
