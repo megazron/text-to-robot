@@ -16,6 +16,8 @@ import { evaluate, DYNAMIC_FACTOR, type Ladder } from "../sizing.ts";
 import { registerBay, enclosureChecks, exposed, baysOf, worldBox as partBox, heatOf, ventNeed, type BayRecord, type Face } from "../enclosure.ts";
 import { Harness, finishWiring } from "../wiring.ts";
 import { busTree, dualDriver, pinsOf, coreTree, actuatorsUnder } from "../netlist.ts";
+import { partModel } from "../wiring3d/models.ts";
+import { pinOf, connectorLen } from "../wiring3d/place.ts";
 
 export type MobileSensor = "camera" | "depth" | "lidar" | "imu";
 export interface MobileRequest {
@@ -210,7 +212,8 @@ const overlaps = (a: Rect, c: Rect) => a.x0 < c.x1 && c.x0 < a.x1 && a.y0 < c.y1
 /** Footprint (component frame, mm) of an item including plugs / leads / tool access: [-x, +x, -y, +y] margins. */
 function footprint(it: Item) {
   const bb = part(it.key).bbox_mm!;
-  const m = it.margin ?? (it.kind === "battery" ? [30, 5, 5, 5] : [4, 4, 4, 4]);
+  // a battery's leads and plug leave its +x end: room there for the plug and the first bend of a 12 AWG lead
+  const m = it.margin ?? (it.kind === "battery" ? [5, 30, 5, 5] : [4, 4, 4, 4]);
   return { min: [bb.min[0] - m[0], bb.min[1] - m[2]], max: [bb.max[0] + m[1], bb.max[1] + m[3]] };
 }
 /**
@@ -274,6 +277,16 @@ function deckLayout(L: number, W: number, sensors: MobileSensor[], items: Item[]
  * Place every item on the deck area without overlap and build its printed standoff plate or battery
  * tray. Returns the highest point reached above the deck.
  */
+/**
+ * Room a board's plugs want above its own frame (mm): the highest pin that is wired from above, its connector, the wire's
+ * first bend (1.25 x the largest bend radius in use, 8 mm) and the wire's own width with a little air, so the lid over
+ * it leaves the turn its radius. -Infinity when nothing plugs in from above.
+ */
+function plugRoom(key: string): number {
+  let top = -Infinity; const m = partModel(key);
+  for (const k of m.pins.keys()) { const [port, ...pin] = k.split("."); const pa = pinOf(m, port, pin.join(".")); if (pa && pa.out[2] > 0.9) top = Math.max(top, pa.at[2] + connectorLen(pa.kind) + 10 + 3); }
+  return top;
+}
 function electronicsBay(b: Build, items: Item[], area: Rect, reserved: Rect[], deckTop: number, parent = "base_link"): number {
   const plan = packBay(items, area, reserved);
   if (!plan) throw new Error(`electronics bay: ${items.map((i) => i.key).join(", ")} do not fit on ${JSON.stringify(area)}`);
@@ -286,7 +299,8 @@ function electronicsBay(b: Build, items: Item[], area: Rect, reserved: Rect[], d
     const z = it.kind === "battery" ? deckTop + 3 : Math.max(deckTop + 7 - holeZ, deckTop + 3.5 - part(it.key).bbox_mm!.min[2]);
     const T = at(rotZ(yaw), [x - fpMin[0], y - fpMin[1], z]);
     b.mount(parent, it.key, T, it.name, it.use);
-    top = Math.max(top, z + part(it.key).bbox_mm!.max[2]);
+    // the lid stands 8 mm over what this returns: a plug and its wire's first bend need that much less
+    top = Math.max(top, z + part(it.key).bbox_mm!.max[2], z + plugRoom(it.key) - 8);
     b.printed(`${it.name}_tray`, parent, it.kind === "battery" ? batteryTray(it.key, T) : standoffPlate(it.key, T, deckTop), "printed_dark");
     b.A.fastener(it.kind === "battery" ? "20 mm hook-and-loop battery strap" : "M2.5 x 6 screws (board to standoffs)", it.kind === "battery" ? 1 : part(it.key).holes.length);
     b.A.fastener("M3 x 8 socket head (tray to deck)", 2);
@@ -298,7 +312,7 @@ function electronicsBay(b: Build, items: Item[], area: Rect, reserved: Rect[], d
  * the lid screws, screw tabs to the deck, and a lid with vent slots. Reserved zones it overlaps (e.g. the lidar mast)
  * pass through openings. Too big for the bed -> two halves joined by a screwed internal lap plate.
  */
-function enclosure(b: Build, items: Item[], area: Rect, reserved: Rect[], deckTop: number, clearTop: number, parent = "base_link", bayName = "electronics_enclosure", fixtures = true, room: { growY?: number; maxR?: number } = {}) {
+function enclosure(b: Build, items: Item[], area: Rect, reserved: Rect[], deckTop: number, clearTop: number, parent = "base_link", bayName = "electronics_enclosure", fixtures = true, room: { growY?: number; maxR?: number; mast?: number } = {}) {
   const plan = packBay(items, area, reserved); if (!plan) return;
   let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
   for (const { it, yaw, x, y } of plan) {
@@ -377,6 +391,9 @@ function enclosure(b: Build, items: Item[], area: Rect, reserved: Rect[], deckTo
     walls.push({ op: "box", min: [Math.max(x0, q.x0 - 2 - t), Math.max(y0, q.y0 - 2 - t), deckTop], max: [Math.min(x1, q.x1 + 2 + t), Math.min(y1, q.y1 + 2 + t), zTop], r: 2 });
     const cut: Op = { op: "cutbox", min: [q.x0 - 2, q.y0 - 2, deckTop - 1], max: [q.x1 + 2, q.y1 + 2, zLid + 1] };
     walls.push(cut); lid.push(cut);
+    // round a lidar mast (reserved zone `room.mast`): a window low in the ring's -y wall, where the lidar's cable exit is,
+    // so its plug and lead pass into the compartment
+    if (room.mast !== undefined && reserved[room.mast] === r) { const cx = (q.x0 + q.x1) / 2; walls.push({ op: "cutbox", min: [cx - 9, q.y0 - 2 - t - 1, deckTop + 2], max: [cx + 9, q.y0 - 1, zTop - 3] }); }
     // the lid's locating lip steps over the ring
     lid.push({ op: "cutbox", min: [q.x0 - 2 - t - 0.5, q.y0 - 2 - t - 0.5, zSeat - 4], max: [q.x1 + 2 + t + 0.5, q.y1 + 2 + t + 0.5, zSeat + 0.05] });
   }
@@ -486,10 +503,11 @@ const bodyCut = (key: string, T: Mat4, c = 0.5): Op => { const bb = part(key).bb
 function batteryTray(key: string, T: Mat4): Op[] {
   const c = part(key), L = c.bbox_mm!.max[0], W = c.bbox_mm!.max[1] * 2, H = c.bbox_mm!.max[2];
   const loc: Op[] = [
-    { op: "box", min: [0, -W / 2 - 3, -3], max: [L + 3, W / 2 + 3, 0] },
+    { op: "box", min: [-3.6, -W / 2 - 3, -3], max: [L + 3, W / 2 + 3, 0] },
     { op: "box", min: [L * 0.1, -W / 2 - 3.6, -0.1], max: [L * 0.9, -W / 2 - 0.6, H * 0.5] },
     { op: "box", min: [L * 0.1, W / 2 + 0.6, -0.1], max: [L * 0.9, W / 2 + 3.6, H * 0.5] },
-    { op: "box", min: [L + 0.6, -W / 4, -0.1], max: [L + 3.6, W / 4, H * 0.6] },
+    // the end stop is at the -x end: the leads leave the +x end
+    { op: "box", min: [-3.6, -W / 4, -0.1], max: [-0.6, W / 4, H * 0.6] },
     { op: "cutbox", min: [L * 0.45, -W / 2 - 5, -4], max: [L * 0.45 + 22, W / 2 + 5, -1.5] }, // strap channel
     { op: "hole", a: [L * 0.2, 0, -4], b: [L * 0.2, 0, 1], d: 3.4 }, { op: "hole", a: [L * 0.8, 0, -4], b: [L * 0.8, 0, 1], d: 3.4 },
   ];
@@ -532,7 +550,7 @@ function electronicsFor(sensors: MobileSensor[], motors: number, battery: [strin
   const items: Item[] = [];
   for (let i = 0; i < battery[1]; i++) items.push({ key: battery[0], name: battery[1] > 1 ? `battery_${i + 1}` : "battery", use: "main battery", kind: "battery", yawOk: true });
   items.push({ key: compute, name: "computer", use: "on-board computer", kind: "board", margin: compute === "rpi5" ? [16, 20, 3, 8] : [5, 5, 26, 5] });
-  for (let i = 0; i < Math.ceil(motors / 2); i++) items.push({ key: "cytron_mdd10a", name: `motor_driver_${i + 1}`, use: "dual DC motor driver", kind: "board", margin: [4, 4, 4, 10] });
+  for (let i = 0; i < Math.ceil(motors / 2); i++) items.push({ key: "cytron_mdd10a", name: `motor_driver_${i + 1}`, use: "dual DC motor driver", kind: "board", margin: [4, 4, 4, 20] });   // +y: its screw terminals, the wire's ferrule and first bend
   items.push({ key: "buck_5v_5a", name: "regulator_5v", use: "5 V rail for the computer, USB and sensors", kind: "board" });
   // a Jetson's header cannot drive anything (about 20 uA through its level shifters): an ESP32-S3 runs the motors and encoders over USB
   if (compute !== "rpi5") items.push({ key: "esp32_s3_devkitc1", name: "io_controller", use: "motor and encoder I/O for the computer", kind: "board" });
@@ -887,8 +905,9 @@ function designBase(kind: BaseKind, req: MobileRequest): RobotSpecification {
     const { reserved, area } = deckRects(L, W, sensors);
     if (packBay(items, area, pad(reserved))) {
       const clear = electronicsBay(b, items, area, pad(reserved), top);
-      const zT = enclosure(b, items, area, pad(reserved), top, clear) ?? clear + 8;
-      if (sensors.includes("lidar")) lidarMast(b, lidarAt[0], lidarAt[1], top, zT - 8 + 10.4);
+      const zT = enclosure(b, items, area, pad(reserved), top, clear, "base_link", "electronics_enclosure", true, { mast: sensors.includes("lidar") ? 0 : undefined }) ?? clear + 8;
+      // the lidar stands in a ring inside the compartment: its lead stays inside, through the ring's window
+      if (sensors.includes("lidar")) { lidarMast(b, lidarAt[0], lidarAt[1], top, zT - 8 + 10.4); b.H.bayOf.set("lidar", "electronics_enclosure"); }
     } else {
       // too much for one deck (TurtleBot "waffle" layout): battery and drivers below, computer, IMU and
       // regulator on an upper deck on four printed pillars, the lidar on top of it
