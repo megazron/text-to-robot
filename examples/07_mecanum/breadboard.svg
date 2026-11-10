@@ -105,256 +105,256 @@
 <polyline points="353.92,80 377.92,80" fill="none" stroke="#915310" stroke-width="5.6" stroke-linejoin="round" stroke-linecap="round"/>
 <polyline points="353.92,80 377.92,80" stroke="#f28a1a" stroke-width="4" fill="none" stroke-linejoin="round" stroke-linecap="round" data-g="head"/>
 <text x="383.92" y="84" font-size="10" fill="#333333" data-g="head">orange</text>
-<rect x="1570" y="410" width="230" height="160" rx="8" fill="#b9bcc0" stroke="#7d8084" stroke-width="1.4" data-g="P:front_left_motor"/>
-<rect x="1708.09" y="459.6" width="85.91" height="92.8" rx="4" fill="#8e9195" stroke="#5f6266" stroke-width="1.2" data-g="P:front_left_motor"/>
-<circle cx="1669.03" cy="506" r="6" fill="#ffffff" stroke="#666" stroke-width="1" data-g="P:front_left_motor"/>
-<text x="1685" y="428" font-size="9" text-anchor="middle" font-weight="700" fill="#111111" data-g="P:front_left_motor">Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with...</text>
-<text x="1685" y="440" font-size="8" text-anchor="middle" fill="#111111" data-g="P:front_left_motor">front_left_motor</text>
-<rect x="1570" y="457" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:front_left_motor"/>
-<text x="1579" y="463" font-size="8" fill="#111111" data-g="P:front_left_motor">Motor</text>
-<rect x="1570" y="477" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:front_left_motor"/>
-<text x="1579" y="483" font-size="8" fill="#111111" data-g="P:front_left_motor">Motor</text>
-<rect x="1570" y="497" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:front_left_motor"/>
-<text x="1579" y="503" font-size="8" fill="#111111" data-g="P:front_left_motor">Encoder Vcc</text>
-<rect x="1570" y="517" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:front_left_motor"/>
-<text x="1579" y="523" font-size="8" fill="#111111" data-g="P:front_left_motor">Encoder GND</text>
-<rect x="1570" y="537" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:front_left_motor"/>
-<text x="1579" y="543" font-size="8" fill="#111111" data-g="P:front_left_motor">Encoder A</text>
-<rect x="1570" y="557" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:front_left_motor"/>
-<text x="1579" y="563" font-size="8" fill="#111111" data-g="P:front_left_motor">Encoder B</text>
-<rect x="1570" y="650" width="230" height="160" rx="8" fill="#b9bcc0" stroke="#7d8084" stroke-width="1.4" data-g="P:front_right_motor"/>
-<rect x="1708.09" y="699.6" width="85.91" height="92.8" rx="4" fill="#8e9195" stroke="#5f6266" stroke-width="1.2" data-g="P:front_right_motor"/>
-<circle cx="1669.03" cy="746" r="6" fill="#ffffff" stroke="#666" stroke-width="1" data-g="P:front_right_motor"/>
-<text x="1685" y="668" font-size="9" text-anchor="middle" font-weight="700" fill="#111111" data-g="P:front_right_motor">Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with...</text>
-<text x="1685" y="680" font-size="8" text-anchor="middle" fill="#111111" data-g="P:front_right_motor">front_right_motor</text>
-<rect x="1570" y="697" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:front_right_motor"/>
-<text x="1579" y="703" font-size="8" fill="#111111" data-g="P:front_right_motor">Motor</text>
-<rect x="1570" y="717" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:front_right_motor"/>
-<text x="1579" y="723" font-size="8" fill="#111111" data-g="P:front_right_motor">Motor</text>
-<rect x="1570" y="737" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:front_right_motor"/>
-<text x="1579" y="743" font-size="8" fill="#111111" data-g="P:front_right_motor">Encoder Vcc</text>
-<rect x="1570" y="757" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:front_right_motor"/>
-<text x="1579" y="763" font-size="8" fill="#111111" data-g="P:front_right_motor">Encoder GND</text>
-<rect x="1570" y="777" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:front_right_motor"/>
-<text x="1579" y="783" font-size="8" fill="#111111" data-g="P:front_right_motor">Encoder A</text>
-<rect x="1570" y="797" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:front_right_motor"/>
-<text x="1579" y="803" font-size="8" fill="#111111" data-g="P:front_right_motor">Encoder B</text>
-<rect x="1570" y="890" width="230" height="160" rx="8" fill="#b9bcc0" stroke="#7d8084" stroke-width="1.4" data-g="P:rear_left_motor"/>
-<rect x="1708.09" y="939.6" width="85.91" height="92.8" rx="4" fill="#8e9195" stroke="#5f6266" stroke-width="1.2" data-g="P:rear_left_motor"/>
-<circle cx="1669.03" cy="986" r="6" fill="#ffffff" stroke="#666" stroke-width="1" data-g="P:rear_left_motor"/>
-<text x="1685" y="908" font-size="9" text-anchor="middle" font-weight="700" fill="#111111" data-g="P:rear_left_motor">Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with...</text>
-<text x="1685" y="920" font-size="8" text-anchor="middle" fill="#111111" data-g="P:rear_left_motor">rear_left_motor</text>
-<rect x="1570" y="937" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:rear_left_motor"/>
-<text x="1579" y="943" font-size="8" fill="#111111" data-g="P:rear_left_motor">Motor</text>
-<rect x="1570" y="957" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:rear_left_motor"/>
-<text x="1579" y="963" font-size="8" fill="#111111" data-g="P:rear_left_motor">Motor</text>
-<rect x="1570" y="977" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:rear_left_motor"/>
-<text x="1579" y="983" font-size="8" fill="#111111" data-g="P:rear_left_motor">Encoder Vcc</text>
-<rect x="1570" y="997" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:rear_left_motor"/>
-<text x="1579" y="1003" font-size="8" fill="#111111" data-g="P:rear_left_motor">Encoder GND</text>
-<rect x="1570" y="1017" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:rear_left_motor"/>
-<text x="1579" y="1023" font-size="8" fill="#111111" data-g="P:rear_left_motor">Encoder A</text>
-<rect x="1570" y="1037" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:rear_left_motor"/>
-<text x="1579" y="1043" font-size="8" fill="#111111" data-g="P:rear_left_motor">Encoder B</text>
-<rect x="1570" y="1130" width="230" height="160" rx="8" fill="#b9bcc0" stroke="#7d8084" stroke-width="1.4" data-g="P:rear_right_motor"/>
-<rect x="1708.09" y="1179.6" width="85.91" height="92.8" rx="4" fill="#8e9195" stroke="#5f6266" stroke-width="1.2" data-g="P:rear_right_motor"/>
-<circle cx="1669.03" cy="1226" r="6" fill="#ffffff" stroke="#666" stroke-width="1" data-g="P:rear_right_motor"/>
-<text x="1685" y="1148" font-size="9" text-anchor="middle" font-weight="700" fill="#111111" data-g="P:rear_right_motor">Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with...</text>
-<text x="1685" y="1160" font-size="8" text-anchor="middle" fill="#111111" data-g="P:rear_right_motor">rear_right_motor</text>
-<rect x="1570" y="1177" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:rear_right_motor"/>
-<text x="1579" y="1183" font-size="8" fill="#111111" data-g="P:rear_right_motor">Motor</text>
-<rect x="1570" y="1197" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:rear_right_motor"/>
-<text x="1579" y="1203" font-size="8" fill="#111111" data-g="P:rear_right_motor">Motor</text>
-<rect x="1570" y="1217" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:rear_right_motor"/>
-<text x="1579" y="1223" font-size="8" fill="#111111" data-g="P:rear_right_motor">Encoder Vcc</text>
-<rect x="1570" y="1237" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:rear_right_motor"/>
-<text x="1579" y="1243" font-size="8" fill="#111111" data-g="P:rear_right_motor">Encoder GND</text>
-<rect x="1570" y="1257" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:rear_right_motor"/>
-<text x="1579" y="1263" font-size="8" fill="#111111" data-g="P:rear_right_motor">Encoder A</text>
-<rect x="1570" y="1277" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:rear_right_motor"/>
-<text x="1579" y="1283" font-size="8" fill="#111111" data-g="P:rear_right_motor">Encoder B</text>
-<rect x="60" y="150" width="150" height="80" rx="6" fill="#c7c9cc" stroke="#8a8d90" stroke-width="1.2" data-g="P:battery"/>
-<rect x="66" y="156" width="138" height="68" rx="4" fill="#2a5fa5" data-g="P:battery"/>
-<text x="135" y="130" font-size="9" text-anchor="middle" font-weight="700" fill="#333333" data-g="P:battery">LiPo 3S 2200 mAh 25C</text>
-<text x="135" y="142" font-size="8" text-anchor="middle" fill="#555555" data-g="P:battery">battery</text>
-<rect x="204" y="177" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:battery"/>
-<text x="201" y="183" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:battery">BAT+</text>
-<rect x="204" y="197" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:battery"/>
-<text x="201" y="203" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:battery">BAT-</text>
-<rect x="420" y="430" width="200" height="410" rx="6" fill="#2e8b4a" stroke="#1c532c" stroke-width="1.4" data-g="P:computer"/>
-<circle cx="427" cy="437" r="3" fill="#d9d4c3" stroke="#1c532c" stroke-width="0.8" data-g="P:computer"/>
-<circle cx="613" cy="437" r="3" fill="#d9d4c3" stroke="#1c532c" stroke-width="0.8" data-g="P:computer"/>
-<circle cx="427" cy="833" r="3" fill="#d9d4c3" stroke="#1c532c" stroke-width="0.8" data-g="P:computer"/>
-<circle cx="613" cy="833" r="3" fill="#d9d4c3" stroke="#1c532c" stroke-width="0.8" data-g="P:computer"/>
-<rect x="493.78" y="649.89" width="48" height="32" rx="2" fill="#1b1b1b" data-g="P:computer"/>
-<text x="520" y="477.78" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:computer">Raspberry Pi 5</text>
-<text x="520" y="489.78" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:computer">computer</text>
-<rect x="420" y="647" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer"/>
-<text x="429" y="653" font-size="8" fill="#ffffff" data-g="P:computer">LINK</text>
-<rect x="614" y="507" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer"/>
-<text x="611" y="513" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:computer">3V3</text>
-<rect x="507" y="430" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer"/>
-<text x="513" y="439" font-size="8" text-anchor="end" fill="#ffffff" transform="rotate(-90 513 439)" data-g="P:computer">GND</text>
-<rect x="420" y="667" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer"/>
-<text x="429" y="673" font-size="8" fill="#ffffff" data-g="P:computer">GPIO2</text>
-<rect x="420" y="687" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer"/>
-<text x="429" y="693" font-size="8" fill="#ffffff" data-g="P:computer">GPIO3</text>
-<rect x="614" y="527" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer"/>
-<text x="611" y="533" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:computer">GPIO12</text>
-<rect x="614" y="547" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer"/>
-<text x="611" y="553" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:computer">GPIO13</text>
-<rect x="614" y="567" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer"/>
-<text x="611" y="573" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:computer">GPIO5</text>
-<rect x="614" y="587" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer"/>
-<text x="611" y="593" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:computer">GPIO6</text>
-<rect x="614" y="607" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer"/>
-<text x="611" y="613" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:computer">GPIO18</text>
-<rect x="614" y="627" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer"/>
-<text x="611" y="633" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:computer">GPIO19</text>
-<rect x="614" y="647" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer"/>
-<text x="611" y="653" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:computer">GPIO16</text>
-<rect x="614" y="667" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer"/>
-<text x="611" y="673" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:computer">GPIO20</text>
-<rect x="614" y="687" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer"/>
-<text x="611" y="693" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:computer">GPIO21</text>
-<rect x="614" y="707" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer"/>
-<text x="611" y="713" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:computer">GPIO26</text>
-<rect x="614" y="727" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer"/>
-<text x="611" y="733" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:computer">GPIO22</text>
-<rect x="614" y="747" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer"/>
-<text x="611" y="753" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:computer">GPIO23</text>
-<rect x="614" y="767" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer"/>
-<text x="611" y="773" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:computer">GPIO17</text>
-<rect x="614" y="787" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer"/>
-<text x="611" y="793" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:computer">GPIO27</text>
-<rect x="614" y="807" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer"/>
-<text x="611" y="813" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:computer">GPIO24</text>
-<rect x="614" y="827" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer"/>
-<text x="611" y="833" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:computer">GPIO25</text>
-<rect x="527" y="430" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer"/>
-<text x="533" y="439" font-size="8" text-anchor="end" fill="#ffffff" transform="rotate(-90 533 439)" data-g="P:computer">5V</text>
-<rect x="1000" y="430" width="230" height="180" rx="6" fill="#b52020" stroke="#6d1313" stroke-width="1.4" data-g="P:motor_driver_1"/>
-<circle cx="1007" cy="437" r="3" fill="#d9d4c3" stroke="#6d1313" stroke-width="0.8" data-g="P:motor_driver_1"/>
-<circle cx="1223" cy="437" r="3" fill="#d9d4c3" stroke="#6d1313" stroke-width="0.8" data-g="P:motor_driver_1"/>
-<circle cx="1007" cy="603" r="3" fill="#d9d4c3" stroke="#6d1313" stroke-width="0.8" data-g="P:motor_driver_1"/>
-<circle cx="1223" cy="603" r="3" fill="#d9d4c3" stroke="#6d1313" stroke-width="0.8" data-g="P:motor_driver_1"/>
-<rect x="1106.78" y="550.45" width="24" height="18" rx="1.5" fill="#1b1b1b" data-g="P:motor_driver_1"/>
-<text x="1115" y="494.9" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:motor_driver_1">Cytron MDD10A dual-channel 10 A DC motor driv...</text>
-<text x="1115" y="506.9" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:motor_driver_1">motor_driver_1</text>
-<rect x="1000" y="517" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_1"/>
-<text x="1009" y="523" font-size="8" fill="#ffffff" data-g="P:motor_driver_1">GND</text>
-<rect x="1000" y="537" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_1"/>
-<text x="1009" y="543" font-size="8" fill="#ffffff" data-g="P:motor_driver_1">PWM1</text>
-<rect x="1000" y="557" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_1"/>
-<text x="1009" y="563" font-size="8" fill="#ffffff" data-g="P:motor_driver_1">DIR1</text>
-<rect x="1000" y="577" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_1"/>
-<text x="1009" y="583" font-size="8" fill="#ffffff" data-g="P:motor_driver_1">PWM2</text>
-<rect x="1000" y="597" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_1"/>
-<text x="1009" y="603" font-size="8" fill="#ffffff" data-g="P:motor_driver_1">DIR2</text>
-<rect x="1224" y="527" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_1"/>
-<text x="1221" y="533" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:motor_driver_1">M1A</text>
-<rect x="1224" y="547" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_1"/>
-<text x="1221" y="553" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:motor_driver_1">M1B</text>
-<rect x="1224" y="567" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_1"/>
-<text x="1221" y="573" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:motor_driver_1">M2A</text>
-<rect x="1224" y="587" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_1"/>
-<text x="1221" y="593" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:motor_driver_1">M2B</text>
-<rect x="1107" y="430" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_1"/>
-<text x="1113" y="439" font-size="8" text-anchor="end" fill="#ffffff" transform="rotate(-90 1113 439)" data-g="P:motor_driver_1">POWER+</text>
-<rect x="1127" y="430" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_1"/>
-<text x="1133" y="439" font-size="8" text-anchor="end" fill="#ffffff" transform="rotate(-90 1133 439)" data-g="P:motor_driver_1">POWER-</text>
-<rect x="1000" y="710" width="230" height="180" rx="6" fill="#b52020" stroke="#6d1313" stroke-width="1.4" data-g="P:motor_driver_2"/>
-<circle cx="1007" cy="717" r="3" fill="#d9d4c3" stroke="#6d1313" stroke-width="0.8" data-g="P:motor_driver_2"/>
-<circle cx="1223" cy="717" r="3" fill="#d9d4c3" stroke="#6d1313" stroke-width="0.8" data-g="P:motor_driver_2"/>
-<circle cx="1007" cy="883" r="3" fill="#d9d4c3" stroke="#6d1313" stroke-width="0.8" data-g="P:motor_driver_2"/>
-<circle cx="1223" cy="883" r="3" fill="#d9d4c3" stroke="#6d1313" stroke-width="0.8" data-g="P:motor_driver_2"/>
-<rect x="1106.78" y="830.45" width="24" height="18" rx="1.5" fill="#1b1b1b" data-g="P:motor_driver_2"/>
-<text x="1115" y="774.9" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:motor_driver_2">Cytron MDD10A dual-channel 10 A DC motor driv...</text>
-<text x="1115" y="786.9" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:motor_driver_2">motor_driver_2</text>
-<rect x="1000" y="797" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_2"/>
-<text x="1009" y="803" font-size="8" fill="#ffffff" data-g="P:motor_driver_2">GND</text>
-<rect x="1000" y="817" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_2"/>
-<text x="1009" y="823" font-size="8" fill="#ffffff" data-g="P:motor_driver_2">PWM1</text>
-<rect x="1000" y="837" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_2"/>
-<text x="1009" y="843" font-size="8" fill="#ffffff" data-g="P:motor_driver_2">DIR1</text>
-<rect x="1000" y="857" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_2"/>
-<text x="1009" y="863" font-size="8" fill="#ffffff" data-g="P:motor_driver_2">PWM2</text>
-<rect x="1000" y="877" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_2"/>
-<text x="1009" y="883" font-size="8" fill="#ffffff" data-g="P:motor_driver_2">DIR2</text>
-<rect x="1224" y="807" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_2"/>
-<text x="1221" y="813" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:motor_driver_2">M1A</text>
-<rect x="1224" y="827" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_2"/>
-<text x="1221" y="833" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:motor_driver_2">M1B</text>
-<rect x="1224" y="847" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_2"/>
-<text x="1221" y="853" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:motor_driver_2">M2A</text>
-<rect x="1224" y="867" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_2"/>
-<text x="1221" y="873" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:motor_driver_2">M2B</text>
-<rect x="1107" y="710" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_2"/>
-<text x="1113" y="719" font-size="8" text-anchor="end" fill="#ffffff" transform="rotate(-90 1113 719)" data-g="P:motor_driver_2">POWER+</text>
-<rect x="1127" y="710" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_2"/>
-<text x="1133" y="719" font-size="8" text-anchor="end" fill="#ffffff" transform="rotate(-90 1133 719)" data-g="P:motor_driver_2">POWER-</text>
-<rect x="60" y="410" width="190" height="120" rx="6" fill="#5b2a86" stroke="#371950" stroke-width="1.4" data-g="P:imu"/>
-<circle cx="67" cy="417" r="3" fill="#d9d4c3" stroke="#371950" stroke-width="0.8" data-g="P:imu"/>
-<circle cx="243" cy="417" r="3" fill="#d9d4c3" stroke="#371950" stroke-width="0.8" data-g="P:imu"/>
-<circle cx="67" cy="523" r="3" fill="#d9d4c3" stroke="#371950" stroke-width="0.8" data-g="P:imu"/>
-<circle cx="243" cy="523" r="3" fill="#d9d4c3" stroke="#371950" stroke-width="0.8" data-g="P:imu"/>
-<rect x="128.11" y="477" width="24" height="18" rx="1.5" fill="#1b1b1b" data-g="P:imu"/>
-<text x="155" y="428" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:imu">Adafruit BNO085 9-DoF IMU breakout</text>
-<text x="155" y="440" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:imu">imu</text>
-<rect x="244" y="457" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:imu"/>
-<text x="241" y="463" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:imu">VIN</text>
-<rect x="244" y="477" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:imu"/>
-<text x="241" y="483" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:imu">GND</text>
-<rect x="244" y="497" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:imu"/>
-<text x="241" y="503" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:imu">SDA</text>
-<rect x="244" y="517" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:imu"/>
-<text x="241" y="523" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:imu">SCL</text>
-<rect x="1050" y="150" width="230" height="120" rx="6" fill="#1f5fbf" stroke="#133973" stroke-width="1.4" data-g="P:regulator_5v"/>
-<circle cx="1057" cy="157" r="3" fill="#d9d4c3" stroke="#133973" stroke-width="0.8" data-g="P:regulator_5v"/>
-<circle cx="1273" cy="157" r="3" fill="#d9d4c3" stroke="#133973" stroke-width="0.8" data-g="P:regulator_5v"/>
-<circle cx="1057" cy="263" r="3" fill="#d9d4c3" stroke="#133973" stroke-width="0.8" data-g="P:regulator_5v"/>
-<circle cx="1273" cy="263" r="3" fill="#d9d4c3" stroke="#133973" stroke-width="0.8" data-g="P:regulator_5v"/>
-<rect x="1136.78" y="196.89" width="22" height="22" rx="3" fill="#3b3b3b" data-g="P:regulator_5v"/>
-<circle cx="1176.78" cy="208.89" r="9" fill="#222222" stroke="#888" stroke-width="1" data-g="P:regulator_5v"/>
-<rect x="1161.78" y="190.89" width="8" height="8" fill="#2f6fd0" stroke="#ffffff" stroke-width="0.6" data-g="P:regulator_5v"/>
-<text x="1165" y="168" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:regulator_5v">Pololu D36V50F5 5 V 5.5 A step-down regulator</text>
-<text x="1165" y="180" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:regulator_5v">regulator_5v</text>
-<rect x="1050" y="207" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:regulator_5v"/>
-<text x="1059" y="213" font-size="8" fill="#ffffff" data-g="P:regulator_5v">VIN</text>
-<rect x="1274" y="207" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:regulator_5v"/>
-<text x="1271" y="213" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:regulator_5v">GND</text>
-<rect x="1167" y="264" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:regulator_5v"/>
-<text x="1173" y="261" font-size="8" fill="#ffffff" transform="rotate(-90 1173 261)" data-g="P:regulator_5v">VOUT</text>
-<rect x="540" y="150" width="170" height="60" rx="4" fill="#1e1e1e" data-g="P:main_switch"/>
-<rect x="582.5" y="162" width="85" height="27" rx="3" fill="#d7263d" stroke="#8d1424" stroke-width="1" data-g="P:main_switch"/>
-<text x="625" y="177" font-size="10" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:main_switch">I</text>
-<text x="625" y="130" font-size="9" text-anchor="middle" font-weight="700" fill="#333333" data-g="P:main_switch">KCD4 double-pole rocker switch</text>
-<text x="625" y="142" font-size="8" text-anchor="middle" fill="#555555" data-g="P:main_switch">main_switch</text>
-<rect x="540" y="177" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:main_switch"/>
-<rect x="704" y="177" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:main_switch"/>
-<rect x="100" y="610" width="120" height="80" rx="10" fill="#3a3a3a" stroke="#111" stroke-width="1.2" data-g="P:lidar"/>
-<circle cx="160" cy="654" r="24" fill="#1b1b1b" stroke="#666" stroke-width="2" data-g="P:lidar"/>
-<text x="160" y="628" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:lidar">Slamtec RPLIDAR C1</text>
-<text x="160" y="640" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:lidar">lidar</text>
-<rect x="214" y="667" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:lidar"/>
-<text x="211" y="673" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:lidar">VCC</text>
-<rect x="290" y="154" width="170" height="52" rx="26" fill="#1e1e1e" data-g="P:main_fuse"/>
-<rect x="363" y="150" width="24" height="60" rx="3" fill="#1f6fd1" stroke="#13437d" stroke-width="1" data-g="P:main_fuse"/>
-<text x="375" y="183" font-size="8" text-anchor="middle" font-weight="700" fill="#111111" data-g="P:main_fuse">15A</text>
-<text x="375" y="130" font-size="9" text-anchor="middle" font-weight="700" fill="#333333" data-g="P:main_fuse">Inline ATM mini blade fuse holder</text>
-<text x="375" y="142" font-size="8" text-anchor="middle" fill="#555555" data-g="P:main_fuse">main_fuse</text>
-<rect x="290" y="177" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:main_fuse"/>
-<rect x="454" y="177" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:main_fuse"/>
-<rect x="1370" y="150" width="180" height="80" rx="4" fill="#d9dde2" stroke="#9aa0a6" stroke-width="1.2" data-g="P:star_ground"/>
-<rect x="1376" y="154" width="30.6" height="10" rx="2" fill="#f28a1a" data-g="P:star_ground"/>
-<rect x="1409.6" y="154" width="30.6" height="10" rx="2" fill="#f28a1a" data-g="P:star_ground"/>
-<rect x="1443.2" y="154" width="30.6" height="10" rx="2" fill="#f28a1a" data-g="P:star_ground"/>
-<rect x="1476.8" y="154" width="30.6" height="10" rx="2" fill="#f28a1a" data-g="P:star_ground"/>
-<rect x="1510.4" y="154" width="30.6" height="10" rx="2" fill="#f28a1a" data-g="P:star_ground"/>
-<text x="1460" y="130" font-size="9" text-anchor="middle" font-weight="700" fill="#333333" data-g="P:star_ground">WAGO 221-415 five-way lever splice</text>
-<text x="1460" y="142" font-size="8" text-anchor="middle" fill="#555555" data-g="P:star_ground">star_ground</text>
-<rect x="1370" y="177" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:star_ground"/>
-<rect x="1370" y="197" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:star_ground"/>
+<rect x="1570" y="410" width="230" height="160" rx="8" fill="#b9bcc0" stroke="#7d8084" stroke-width="1.4" data-g="P:front_left_motor" data-ref="M1"/>
+<rect x="1708.09" y="459.6" width="85.91" height="92.8" rx="4" fill="#8e9195" stroke="#5f6266" stroke-width="1.2" data-g="P:front_left_motor" data-ref="M1"/>
+<circle cx="1669.03" cy="506" r="6" fill="#ffffff" stroke="#666" stroke-width="1" data-g="P:front_left_motor" data-ref="M1"/>
+<text x="1685" y="428" font-size="9" text-anchor="middle" font-weight="700" fill="#111111" data-g="P:front_left_motor" data-ref="M1">Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with...</text>
+<text x="1685" y="440" font-size="8" text-anchor="middle" fill="#111111" data-g="P:front_left_motor" data-ref="M1">M1 · front_left_motor</text>
+<rect x="1570" y="457" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:front_left_motor" data-ref="M1"/>
+<text x="1579" y="463" font-size="8" fill="#111111" data-g="P:front_left_motor" data-ref="M1">Motor</text>
+<rect x="1570" y="477" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:front_left_motor" data-ref="M1"/>
+<text x="1579" y="483" font-size="8" fill="#111111" data-g="P:front_left_motor" data-ref="M1">Motor</text>
+<rect x="1570" y="497" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:front_left_motor" data-ref="M1"/>
+<text x="1579" y="503" font-size="8" fill="#111111" data-g="P:front_left_motor" data-ref="M1">Encoder Vcc</text>
+<rect x="1570" y="517" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:front_left_motor" data-ref="M1"/>
+<text x="1579" y="523" font-size="8" fill="#111111" data-g="P:front_left_motor" data-ref="M1">Encoder GND</text>
+<rect x="1570" y="537" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:front_left_motor" data-ref="M1"/>
+<text x="1579" y="543" font-size="8" fill="#111111" data-g="P:front_left_motor" data-ref="M1">Encoder A</text>
+<rect x="1570" y="557" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:front_left_motor" data-ref="M1"/>
+<text x="1579" y="563" font-size="8" fill="#111111" data-g="P:front_left_motor" data-ref="M1">Encoder B</text>
+<rect x="1570" y="650" width="230" height="160" rx="8" fill="#b9bcc0" stroke="#7d8084" stroke-width="1.4" data-g="P:front_right_motor" data-ref="M2"/>
+<rect x="1708.09" y="699.6" width="85.91" height="92.8" rx="4" fill="#8e9195" stroke="#5f6266" stroke-width="1.2" data-g="P:front_right_motor" data-ref="M2"/>
+<circle cx="1669.03" cy="746" r="6" fill="#ffffff" stroke="#666" stroke-width="1" data-g="P:front_right_motor" data-ref="M2"/>
+<text x="1685" y="668" font-size="9" text-anchor="middle" font-weight="700" fill="#111111" data-g="P:front_right_motor" data-ref="M2">Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with...</text>
+<text x="1685" y="680" font-size="8" text-anchor="middle" fill="#111111" data-g="P:front_right_motor" data-ref="M2">M2 · front_right_motor</text>
+<rect x="1570" y="697" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:front_right_motor" data-ref="M2"/>
+<text x="1579" y="703" font-size="8" fill="#111111" data-g="P:front_right_motor" data-ref="M2">Motor</text>
+<rect x="1570" y="717" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:front_right_motor" data-ref="M2"/>
+<text x="1579" y="723" font-size="8" fill="#111111" data-g="P:front_right_motor" data-ref="M2">Motor</text>
+<rect x="1570" y="737" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:front_right_motor" data-ref="M2"/>
+<text x="1579" y="743" font-size="8" fill="#111111" data-g="P:front_right_motor" data-ref="M2">Encoder Vcc</text>
+<rect x="1570" y="757" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:front_right_motor" data-ref="M2"/>
+<text x="1579" y="763" font-size="8" fill="#111111" data-g="P:front_right_motor" data-ref="M2">Encoder GND</text>
+<rect x="1570" y="777" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:front_right_motor" data-ref="M2"/>
+<text x="1579" y="783" font-size="8" fill="#111111" data-g="P:front_right_motor" data-ref="M2">Encoder A</text>
+<rect x="1570" y="797" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:front_right_motor" data-ref="M2"/>
+<text x="1579" y="803" font-size="8" fill="#111111" data-g="P:front_right_motor" data-ref="M2">Encoder B</text>
+<rect x="1570" y="890" width="230" height="160" rx="8" fill="#b9bcc0" stroke="#7d8084" stroke-width="1.4" data-g="P:rear_left_motor" data-ref="M3"/>
+<rect x="1708.09" y="939.6" width="85.91" height="92.8" rx="4" fill="#8e9195" stroke="#5f6266" stroke-width="1.2" data-g="P:rear_left_motor" data-ref="M3"/>
+<circle cx="1669.03" cy="986" r="6" fill="#ffffff" stroke="#666" stroke-width="1" data-g="P:rear_left_motor" data-ref="M3"/>
+<text x="1685" y="908" font-size="9" text-anchor="middle" font-weight="700" fill="#111111" data-g="P:rear_left_motor" data-ref="M3">Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with...</text>
+<text x="1685" y="920" font-size="8" text-anchor="middle" fill="#111111" data-g="P:rear_left_motor" data-ref="M3">M3 · rear_left_motor</text>
+<rect x="1570" y="937" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:rear_left_motor" data-ref="M3"/>
+<text x="1579" y="943" font-size="8" fill="#111111" data-g="P:rear_left_motor" data-ref="M3">Motor</text>
+<rect x="1570" y="957" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:rear_left_motor" data-ref="M3"/>
+<text x="1579" y="963" font-size="8" fill="#111111" data-g="P:rear_left_motor" data-ref="M3">Motor</text>
+<rect x="1570" y="977" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:rear_left_motor" data-ref="M3"/>
+<text x="1579" y="983" font-size="8" fill="#111111" data-g="P:rear_left_motor" data-ref="M3">Encoder Vcc</text>
+<rect x="1570" y="997" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:rear_left_motor" data-ref="M3"/>
+<text x="1579" y="1003" font-size="8" fill="#111111" data-g="P:rear_left_motor" data-ref="M3">Encoder GND</text>
+<rect x="1570" y="1017" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:rear_left_motor" data-ref="M3"/>
+<text x="1579" y="1023" font-size="8" fill="#111111" data-g="P:rear_left_motor" data-ref="M3">Encoder A</text>
+<rect x="1570" y="1037" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:rear_left_motor" data-ref="M3"/>
+<text x="1579" y="1043" font-size="8" fill="#111111" data-g="P:rear_left_motor" data-ref="M3">Encoder B</text>
+<rect x="1570" y="1130" width="230" height="160" rx="8" fill="#b9bcc0" stroke="#7d8084" stroke-width="1.4" data-g="P:rear_right_motor" data-ref="M4"/>
+<rect x="1708.09" y="1179.6" width="85.91" height="92.8" rx="4" fill="#8e9195" stroke="#5f6266" stroke-width="1.2" data-g="P:rear_right_motor" data-ref="M4"/>
+<circle cx="1669.03" cy="1226" r="6" fill="#ffffff" stroke="#666" stroke-width="1" data-g="P:rear_right_motor" data-ref="M4"/>
+<text x="1685" y="1148" font-size="9" text-anchor="middle" font-weight="700" fill="#111111" data-g="P:rear_right_motor" data-ref="M4">Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with...</text>
+<text x="1685" y="1160" font-size="8" text-anchor="middle" fill="#111111" data-g="P:rear_right_motor" data-ref="M4">M4 · rear_right_motor</text>
+<rect x="1570" y="1177" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:rear_right_motor" data-ref="M4"/>
+<text x="1579" y="1183" font-size="8" fill="#111111" data-g="P:rear_right_motor" data-ref="M4">Motor</text>
+<rect x="1570" y="1197" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:rear_right_motor" data-ref="M4"/>
+<text x="1579" y="1203" font-size="8" fill="#111111" data-g="P:rear_right_motor" data-ref="M4">Motor</text>
+<rect x="1570" y="1217" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:rear_right_motor" data-ref="M4"/>
+<text x="1579" y="1223" font-size="8" fill="#111111" data-g="P:rear_right_motor" data-ref="M4">Encoder Vcc</text>
+<rect x="1570" y="1237" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:rear_right_motor" data-ref="M4"/>
+<text x="1579" y="1243" font-size="8" fill="#111111" data-g="P:rear_right_motor" data-ref="M4">Encoder GND</text>
+<rect x="1570" y="1257" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:rear_right_motor" data-ref="M4"/>
+<text x="1579" y="1263" font-size="8" fill="#111111" data-g="P:rear_right_motor" data-ref="M4">Encoder A</text>
+<rect x="1570" y="1277" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:rear_right_motor" data-ref="M4"/>
+<text x="1579" y="1283" font-size="8" fill="#111111" data-g="P:rear_right_motor" data-ref="M4">Encoder B</text>
+<rect x="60" y="150" width="150" height="80" rx="6" fill="#c7c9cc" stroke="#8a8d90" stroke-width="1.2" data-g="P:battery" data-ref="BT1"/>
+<rect x="66" y="156" width="138" height="68" rx="4" fill="#2a5fa5" data-g="P:battery" data-ref="BT1"/>
+<text x="135" y="130" font-size="9" text-anchor="middle" font-weight="700" fill="#333333" data-g="P:battery" data-ref="BT1">LiPo 3S 2200 mAh 25C</text>
+<text x="135" y="142" font-size="8" text-anchor="middle" fill="#555555" data-g="P:battery" data-ref="BT1">BT1 · battery</text>
+<rect x="204" y="177" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:battery" data-ref="BT1"/>
+<text x="201" y="183" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:battery" data-ref="BT1">BAT+</text>
+<rect x="204" y="197" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:battery" data-ref="BT1"/>
+<text x="201" y="203" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:battery" data-ref="BT1">BAT-</text>
+<rect x="420" y="430" width="200" height="410" rx="6" fill="#2e8b4a" stroke="#1c532c" stroke-width="1.4" data-g="P:computer" data-ref="A1"/>
+<circle cx="427" cy="437" r="3" fill="#d9d4c3" stroke="#1c532c" stroke-width="0.8" data-g="P:computer" data-ref="A1"/>
+<circle cx="613" cy="437" r="3" fill="#d9d4c3" stroke="#1c532c" stroke-width="0.8" data-g="P:computer" data-ref="A1"/>
+<circle cx="427" cy="833" r="3" fill="#d9d4c3" stroke="#1c532c" stroke-width="0.8" data-g="P:computer" data-ref="A1"/>
+<circle cx="613" cy="833" r="3" fill="#d9d4c3" stroke="#1c532c" stroke-width="0.8" data-g="P:computer" data-ref="A1"/>
+<rect x="493.78" y="649.89" width="48" height="32" rx="2" fill="#1b1b1b" data-g="P:computer" data-ref="A1"/>
+<text x="520" y="477.78" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:computer" data-ref="A1">Raspberry Pi 5</text>
+<text x="520" y="489.78" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:computer" data-ref="A1">A1 · computer</text>
+<rect x="420" y="647" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer" data-ref="A1"/>
+<text x="429" y="653" font-size="8" fill="#ffffff" data-g="P:computer" data-ref="A1">LINK</text>
+<rect x="614" y="507" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer" data-ref="A1"/>
+<text x="611" y="513" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:computer" data-ref="A1">3V3</text>
+<rect x="507" y="430" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer" data-ref="A1"/>
+<text x="513" y="439" font-size="8" text-anchor="end" fill="#ffffff" transform="rotate(-90 513 439)" data-g="P:computer" data-ref="A1">GND</text>
+<rect x="420" y="667" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer" data-ref="A1"/>
+<text x="429" y="673" font-size="8" fill="#ffffff" data-g="P:computer" data-ref="A1">GPIO2</text>
+<rect x="420" y="687" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer" data-ref="A1"/>
+<text x="429" y="693" font-size="8" fill="#ffffff" data-g="P:computer" data-ref="A1">GPIO3</text>
+<rect x="614" y="527" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer" data-ref="A1"/>
+<text x="611" y="533" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:computer" data-ref="A1">GPIO12</text>
+<rect x="614" y="547" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer" data-ref="A1"/>
+<text x="611" y="553" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:computer" data-ref="A1">GPIO13</text>
+<rect x="614" y="567" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer" data-ref="A1"/>
+<text x="611" y="573" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:computer" data-ref="A1">GPIO5</text>
+<rect x="614" y="587" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer" data-ref="A1"/>
+<text x="611" y="593" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:computer" data-ref="A1">GPIO6</text>
+<rect x="614" y="607" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer" data-ref="A1"/>
+<text x="611" y="613" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:computer" data-ref="A1">GPIO18</text>
+<rect x="614" y="627" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer" data-ref="A1"/>
+<text x="611" y="633" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:computer" data-ref="A1">GPIO19</text>
+<rect x="614" y="647" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer" data-ref="A1"/>
+<text x="611" y="653" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:computer" data-ref="A1">GPIO16</text>
+<rect x="614" y="667" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer" data-ref="A1"/>
+<text x="611" y="673" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:computer" data-ref="A1">GPIO20</text>
+<rect x="614" y="687" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer" data-ref="A1"/>
+<text x="611" y="693" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:computer" data-ref="A1">GPIO21</text>
+<rect x="614" y="707" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer" data-ref="A1"/>
+<text x="611" y="713" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:computer" data-ref="A1">GPIO26</text>
+<rect x="614" y="727" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer" data-ref="A1"/>
+<text x="611" y="733" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:computer" data-ref="A1">GPIO22</text>
+<rect x="614" y="747" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer" data-ref="A1"/>
+<text x="611" y="753" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:computer" data-ref="A1">GPIO23</text>
+<rect x="614" y="767" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer" data-ref="A1"/>
+<text x="611" y="773" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:computer" data-ref="A1">GPIO17</text>
+<rect x="614" y="787" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer" data-ref="A1"/>
+<text x="611" y="793" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:computer" data-ref="A1">GPIO27</text>
+<rect x="614" y="807" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer" data-ref="A1"/>
+<text x="611" y="813" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:computer" data-ref="A1">GPIO24</text>
+<rect x="614" y="827" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer" data-ref="A1"/>
+<text x="611" y="833" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:computer" data-ref="A1">GPIO25</text>
+<rect x="527" y="430" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:computer" data-ref="A1"/>
+<text x="533" y="439" font-size="8" text-anchor="end" fill="#ffffff" transform="rotate(-90 533 439)" data-g="P:computer" data-ref="A1">5V</text>
+<rect x="1000" y="430" width="230" height="180" rx="6" fill="#b52020" stroke="#6d1313" stroke-width="1.4" data-g="P:motor_driver_1" data-ref="U3"/>
+<circle cx="1007" cy="437" r="3" fill="#d9d4c3" stroke="#6d1313" stroke-width="0.8" data-g="P:motor_driver_1" data-ref="U3"/>
+<circle cx="1223" cy="437" r="3" fill="#d9d4c3" stroke="#6d1313" stroke-width="0.8" data-g="P:motor_driver_1" data-ref="U3"/>
+<circle cx="1007" cy="603" r="3" fill="#d9d4c3" stroke="#6d1313" stroke-width="0.8" data-g="P:motor_driver_1" data-ref="U3"/>
+<circle cx="1223" cy="603" r="3" fill="#d9d4c3" stroke="#6d1313" stroke-width="0.8" data-g="P:motor_driver_1" data-ref="U3"/>
+<rect x="1106.78" y="550.45" width="24" height="18" rx="1.5" fill="#1b1b1b" data-g="P:motor_driver_1" data-ref="U3"/>
+<text x="1115" y="494.9" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:motor_driver_1" data-ref="U3">Cytron MDD10A dual-channel 10 A DC motor driv...</text>
+<text x="1115" y="506.9" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:motor_driver_1" data-ref="U3">U3 · motor_driver_1</text>
+<rect x="1000" y="517" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_1" data-ref="U3"/>
+<text x="1009" y="523" font-size="8" fill="#ffffff" data-g="P:motor_driver_1" data-ref="U3">GND</text>
+<rect x="1000" y="537" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_1" data-ref="U3"/>
+<text x="1009" y="543" font-size="8" fill="#ffffff" data-g="P:motor_driver_1" data-ref="U3">PWM1</text>
+<rect x="1000" y="557" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_1" data-ref="U3"/>
+<text x="1009" y="563" font-size="8" fill="#ffffff" data-g="P:motor_driver_1" data-ref="U3">DIR1</text>
+<rect x="1000" y="577" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_1" data-ref="U3"/>
+<text x="1009" y="583" font-size="8" fill="#ffffff" data-g="P:motor_driver_1" data-ref="U3">PWM2</text>
+<rect x="1000" y="597" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_1" data-ref="U3"/>
+<text x="1009" y="603" font-size="8" fill="#ffffff" data-g="P:motor_driver_1" data-ref="U3">DIR2</text>
+<rect x="1224" y="527" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_1" data-ref="U3"/>
+<text x="1221" y="533" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:motor_driver_1" data-ref="U3">M1A</text>
+<rect x="1224" y="547" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_1" data-ref="U3"/>
+<text x="1221" y="553" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:motor_driver_1" data-ref="U3">M1B</text>
+<rect x="1224" y="567" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_1" data-ref="U3"/>
+<text x="1221" y="573" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:motor_driver_1" data-ref="U3">M2A</text>
+<rect x="1224" y="587" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_1" data-ref="U3"/>
+<text x="1221" y="593" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:motor_driver_1" data-ref="U3">M2B</text>
+<rect x="1107" y="430" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_1" data-ref="U3"/>
+<text x="1113" y="439" font-size="8" text-anchor="end" fill="#ffffff" transform="rotate(-90 1113 439)" data-g="P:motor_driver_1" data-ref="U3">POWER+</text>
+<rect x="1127" y="430" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_1" data-ref="U3"/>
+<text x="1133" y="439" font-size="8" text-anchor="end" fill="#ffffff" transform="rotate(-90 1133 439)" data-g="P:motor_driver_1" data-ref="U3">POWER-</text>
+<rect x="1000" y="710" width="230" height="180" rx="6" fill="#b52020" stroke="#6d1313" stroke-width="1.4" data-g="P:motor_driver_2" data-ref="U4"/>
+<circle cx="1007" cy="717" r="3" fill="#d9d4c3" stroke="#6d1313" stroke-width="0.8" data-g="P:motor_driver_2" data-ref="U4"/>
+<circle cx="1223" cy="717" r="3" fill="#d9d4c3" stroke="#6d1313" stroke-width="0.8" data-g="P:motor_driver_2" data-ref="U4"/>
+<circle cx="1007" cy="883" r="3" fill="#d9d4c3" stroke="#6d1313" stroke-width="0.8" data-g="P:motor_driver_2" data-ref="U4"/>
+<circle cx="1223" cy="883" r="3" fill="#d9d4c3" stroke="#6d1313" stroke-width="0.8" data-g="P:motor_driver_2" data-ref="U4"/>
+<rect x="1106.78" y="830.45" width="24" height="18" rx="1.5" fill="#1b1b1b" data-g="P:motor_driver_2" data-ref="U4"/>
+<text x="1115" y="774.9" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:motor_driver_2" data-ref="U4">Cytron MDD10A dual-channel 10 A DC motor driv...</text>
+<text x="1115" y="786.9" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:motor_driver_2" data-ref="U4">U4 · motor_driver_2</text>
+<rect x="1000" y="797" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_2" data-ref="U4"/>
+<text x="1009" y="803" font-size="8" fill="#ffffff" data-g="P:motor_driver_2" data-ref="U4">GND</text>
+<rect x="1000" y="817" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_2" data-ref="U4"/>
+<text x="1009" y="823" font-size="8" fill="#ffffff" data-g="P:motor_driver_2" data-ref="U4">PWM1</text>
+<rect x="1000" y="837" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_2" data-ref="U4"/>
+<text x="1009" y="843" font-size="8" fill="#ffffff" data-g="P:motor_driver_2" data-ref="U4">DIR1</text>
+<rect x="1000" y="857" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_2" data-ref="U4"/>
+<text x="1009" y="863" font-size="8" fill="#ffffff" data-g="P:motor_driver_2" data-ref="U4">PWM2</text>
+<rect x="1000" y="877" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_2" data-ref="U4"/>
+<text x="1009" y="883" font-size="8" fill="#ffffff" data-g="P:motor_driver_2" data-ref="U4">DIR2</text>
+<rect x="1224" y="807" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_2" data-ref="U4"/>
+<text x="1221" y="813" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:motor_driver_2" data-ref="U4">M1A</text>
+<rect x="1224" y="827" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_2" data-ref="U4"/>
+<text x="1221" y="833" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:motor_driver_2" data-ref="U4">M1B</text>
+<rect x="1224" y="847" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_2" data-ref="U4"/>
+<text x="1221" y="853" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:motor_driver_2" data-ref="U4">M2A</text>
+<rect x="1224" y="867" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_2" data-ref="U4"/>
+<text x="1221" y="873" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:motor_driver_2" data-ref="U4">M2B</text>
+<rect x="1107" y="710" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_2" data-ref="U4"/>
+<text x="1113" y="719" font-size="8" text-anchor="end" fill="#ffffff" transform="rotate(-90 1113 719)" data-g="P:motor_driver_2" data-ref="U4">POWER+</text>
+<rect x="1127" y="710" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:motor_driver_2" data-ref="U4"/>
+<text x="1133" y="719" font-size="8" text-anchor="end" fill="#ffffff" transform="rotate(-90 1133 719)" data-g="P:motor_driver_2" data-ref="U4">POWER-</text>
+<rect x="60" y="410" width="190" height="120" rx="6" fill="#5b2a86" stroke="#371950" stroke-width="1.4" data-g="P:imu" data-ref="U1"/>
+<circle cx="67" cy="417" r="3" fill="#d9d4c3" stroke="#371950" stroke-width="0.8" data-g="P:imu" data-ref="U1"/>
+<circle cx="243" cy="417" r="3" fill="#d9d4c3" stroke="#371950" stroke-width="0.8" data-g="P:imu" data-ref="U1"/>
+<circle cx="67" cy="523" r="3" fill="#d9d4c3" stroke="#371950" stroke-width="0.8" data-g="P:imu" data-ref="U1"/>
+<circle cx="243" cy="523" r="3" fill="#d9d4c3" stroke="#371950" stroke-width="0.8" data-g="P:imu" data-ref="U1"/>
+<rect x="128.11" y="477" width="24" height="18" rx="1.5" fill="#1b1b1b" data-g="P:imu" data-ref="U1"/>
+<text x="155" y="428" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:imu" data-ref="U1">Adafruit BNO085 9-DoF IMU breakout</text>
+<text x="155" y="440" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:imu" data-ref="U1">U1 · imu</text>
+<rect x="244" y="457" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:imu" data-ref="U1"/>
+<text x="241" y="463" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:imu" data-ref="U1">VIN</text>
+<rect x="244" y="477" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:imu" data-ref="U1"/>
+<text x="241" y="483" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:imu" data-ref="U1">GND</text>
+<rect x="244" y="497" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:imu" data-ref="U1"/>
+<text x="241" y="503" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:imu" data-ref="U1">SDA</text>
+<rect x="244" y="517" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:imu" data-ref="U1"/>
+<text x="241" y="523" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:imu" data-ref="U1">SCL</text>
+<rect x="1300" y="150" width="230" height="120" rx="6" fill="#1f5fbf" stroke="#133973" stroke-width="1.4" data-g="P:regulator_5v" data-ref="U5"/>
+<circle cx="1307" cy="157" r="3" fill="#d9d4c3" stroke="#133973" stroke-width="0.8" data-g="P:regulator_5v" data-ref="U5"/>
+<circle cx="1523" cy="157" r="3" fill="#d9d4c3" stroke="#133973" stroke-width="0.8" data-g="P:regulator_5v" data-ref="U5"/>
+<circle cx="1307" cy="263" r="3" fill="#d9d4c3" stroke="#133973" stroke-width="0.8" data-g="P:regulator_5v" data-ref="U5"/>
+<circle cx="1523" cy="263" r="3" fill="#d9d4c3" stroke="#133973" stroke-width="0.8" data-g="P:regulator_5v" data-ref="U5"/>
+<rect x="1386.78" y="196.89" width="22" height="22" rx="3" fill="#3b3b3b" data-g="P:regulator_5v" data-ref="U5"/>
+<circle cx="1426.78" cy="208.89" r="9" fill="#222222" stroke="#888" stroke-width="1" data-g="P:regulator_5v" data-ref="U5"/>
+<rect x="1411.78" y="190.89" width="8" height="8" fill="#2f6fd0" stroke="#ffffff" stroke-width="0.6" data-g="P:regulator_5v" data-ref="U5"/>
+<text x="1415" y="168" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:regulator_5v" data-ref="U5">Pololu D36V50F5 5 V 5.5 A step-down regulator</text>
+<text x="1415" y="180" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:regulator_5v" data-ref="U5">U5 · regulator_5v</text>
+<rect x="1300" y="207" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:regulator_5v" data-ref="U5"/>
+<text x="1309" y="213" font-size="8" fill="#ffffff" data-g="P:regulator_5v" data-ref="U5">VIN</text>
+<rect x="1524" y="207" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:regulator_5v" data-ref="U5"/>
+<text x="1521" y="213" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:regulator_5v" data-ref="U5">GND</text>
+<rect x="1417" y="264" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:regulator_5v" data-ref="U5"/>
+<text x="1423" y="261" font-size="8" fill="#ffffff" transform="rotate(-90 1423 261)" data-g="P:regulator_5v" data-ref="U5">VOUT</text>
+<rect x="540" y="150" width="170" height="60" rx="4" fill="#1e1e1e" data-g="P:main_switch" data-ref="SW1"/>
+<rect x="582.5" y="162" width="85" height="27" rx="3" fill="#d7263d" stroke="#8d1424" stroke-width="1" data-g="P:main_switch" data-ref="SW1"/>
+<text x="625" y="177" font-size="10" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:main_switch" data-ref="SW1">I</text>
+<text x="625" y="130" font-size="9" text-anchor="middle" font-weight="700" fill="#333333" data-g="P:main_switch" data-ref="SW1">KCD4 double-pole rocker switch</text>
+<text x="625" y="142" font-size="8" text-anchor="middle" fill="#555555" data-g="P:main_switch" data-ref="SW1">SW1 · main_switch</text>
+<rect x="540" y="177" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:main_switch" data-ref="SW1"/>
+<rect x="704" y="177" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:main_switch" data-ref="SW1"/>
+<rect x="100" y="610" width="120" height="80" rx="10" fill="#3a3a3a" stroke="#111" stroke-width="1.2" data-g="P:lidar" data-ref="U2"/>
+<circle cx="145.56" cy="666" r="15" fill="#1b1b1b" stroke="#666" stroke-width="2" data-g="P:lidar" data-ref="U2"/>
+<text x="160" y="628" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:lidar" data-ref="U2">Slamtec RPLIDAR C1</text>
+<text x="160" y="640" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:lidar" data-ref="U2">U2 · lidar</text>
+<rect x="214" y="667" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:lidar" data-ref="U2"/>
+<text x="211" y="673" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:lidar" data-ref="U2">VCC</text>
+<rect x="290" y="154" width="170" height="52" rx="26" fill="#1e1e1e" data-g="P:main_fuse" data-ref="F1"/>
+<rect x="363" y="150" width="24" height="60" rx="3" fill="#1f6fd1" stroke="#13437d" stroke-width="1" data-g="P:main_fuse" data-ref="F1"/>
+<text x="375" y="183" font-size="8" text-anchor="middle" font-weight="700" fill="#111111" data-g="P:main_fuse" data-ref="F1">15A</text>
+<text x="375" y="130" font-size="9" text-anchor="middle" font-weight="700" fill="#333333" data-g="P:main_fuse" data-ref="F1">Inline ATM mini blade fuse holder</text>
+<text x="375" y="142" font-size="8" text-anchor="middle" fill="#555555" data-g="P:main_fuse" data-ref="F1">F1 · main_fuse</text>
+<rect x="290" y="177" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:main_fuse" data-ref="F1"/>
+<rect x="454" y="177" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:main_fuse" data-ref="F1"/>
+<rect x="1620" y="150" width="180" height="80" rx="4" fill="#d9dde2" stroke="#9aa0a6" stroke-width="1.2" data-g="P:star_ground"/>
+<rect x="1626" y="154" width="30.6" height="10" rx="2" fill="#f28a1a" data-g="P:star_ground"/>
+<rect x="1659.6" y="154" width="30.6" height="10" rx="2" fill="#f28a1a" data-g="P:star_ground"/>
+<rect x="1693.2" y="154" width="30.6" height="10" rx="2" fill="#f28a1a" data-g="P:star_ground"/>
+<rect x="1726.8" y="154" width="30.6" height="10" rx="2" fill="#f28a1a" data-g="P:star_ground"/>
+<rect x="1760.4" y="154" width="30.6" height="10" rx="2" fill="#f28a1a" data-g="P:star_ground"/>
+<text x="1710" y="130" font-size="9" text-anchor="middle" font-weight="700" fill="#333333" data-g="P:star_ground">WAGO 221-415 five-way lever splice</text>
+<text x="1710" y="142" font-size="8" text-anchor="middle" fill="#555555" data-g="P:star_ground">star_ground</text>
+<rect x="1620" y="177" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:star_ground"/>
+<rect x="1620" y="197" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:star_ground"/>
 <rect x="790" y="150" width="180" height="60" rx="4" fill="#d9dde2" stroke="#9aa0a6" stroke-width="1.2" data-g="P:splice_vbat"/>
 <rect x="796" y="154" width="30.6" height="10" rx="2" fill="#f28a1a" data-g="P:splice_vbat"/>
 <rect x="829.6" y="154" width="30.6" height="10" rx="2" fill="#f28a1a" data-g="P:splice_vbat"/>
@@ -365,6 +365,13 @@
 <text x="880" y="142" font-size="8" text-anchor="middle" fill="#555555" data-g="P:splice_vbat">splice_vbat</text>
 <rect x="790" y="177" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:splice_vbat"/>
 <rect x="964" y="177" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:splice_vbat"/>
+<rect x="1050" y="154" width="170" height="52" rx="26" fill="#1e1e1e" data-g="P:branch_fuse_regulator_5v" data-ref="F2"/>
+<rect x="1123" y="150" width="24" height="60" rx="3" fill="#9e9e9e" stroke="#5f5f5f" stroke-width="1" data-g="P:branch_fuse_regulator_5v" data-ref="F2"/>
+<text x="1135" y="183" font-size="8" text-anchor="middle" font-weight="700" fill="#111111" data-g="P:branch_fuse_regulator_5v" data-ref="F2">2A</text>
+<text x="1135" y="130" font-size="9" text-anchor="middle" font-weight="700" fill="#333333" data-g="P:branch_fuse_regulator_5v" data-ref="F2">Inline ATM mini blade fuse holder</text>
+<text x="1135" y="142" font-size="8" text-anchor="middle" fill="#555555" data-g="P:branch_fuse_regulator_5v" data-ref="F2">F2 · branch_fuse_regulator_5v</text>
+<rect x="1050" y="177" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:branch_fuse_regulator_5v" data-ref="F2"/>
+<rect x="1214" y="177" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:branch_fuse_regulator_5v" data-ref="F2"/>
 <line x1="1570" y1="460" x2="1560" y2="460" stroke="#b8962e" stroke-width="3" stroke-linecap="butt" class="pin" data-pin="front_left_motor.leads.Motor (red)" data-node="N0" data-sym="front_left_motor"><title>front_left_motor leads Motor (red)</title></line>
 <line x1="1570" y1="480" x2="1560" y2="480" stroke="#b8962e" stroke-width="3" stroke-linecap="butt" class="pin" data-pin="front_left_motor.leads.Motor (black)" data-node="N1" data-sym="front_left_motor"><title>front_left_motor leads Motor (black)</title></line>
 <line x1="1570" y1="500" x2="1560" y2="500" stroke="#b8962e" stroke-width="3" stroke-linecap="butt" class="pin" data-pin="front_left_motor.leads.Encoder Vcc (blue)" data-node="N2" data-sym="front_left_motor"><title>front_left_motor leads Encoder Vcc (blue)</title></line>
@@ -439,54 +446,56 @@
 <line x1="250" y1="480" x2="260" y2="480" stroke="#b8962e" stroke-width="3" stroke-linecap="butt" class="pin" data-pin="imu.header.GND" data-node="N3" data-sym="imu"><title>imu header GND</title></line>
 <line x1="250" y1="500" x2="260" y2="500" stroke="#b8962e" stroke-width="3" stroke-linecap="butt" class="pin" data-pin="imu.header.SDA" data-node="N20" data-sym="imu"><title>imu header SDA</title></line>
 <line x1="250" y1="520" x2="260" y2="520" stroke="#b8962e" stroke-width="3" stroke-linecap="butt" class="pin" data-pin="imu.header.SCL" data-node="N21" data-sym="imu"><title>imu header SCL</title></line>
-<line x1="1050" y1="210" x2="1040" y2="210" stroke="#b8962e" stroke-width="3" stroke-linecap="butt" class="pin" data-pin="regulator_5v.power_and_control.VIN" data-node="N31" data-sym="regulator_5v"><title>regulator_5v power_and_control VIN</title></line>
-<line x1="1280" y1="210" x2="1290" y2="210" stroke="#b8962e" stroke-width="3" stroke-linecap="butt" class="pin" data-pin="regulator_5v.power_and_control.GND" data-node="N3" data-sym="regulator_5v"><title>regulator_5v power_and_control GND</title></line>
-<line x1="1170" y1="270" x2="1170" y2="280" stroke="#b8962e" stroke-width="3" stroke-linecap="butt" class="pin" data-pin="regulator_5v.power_and_control.VOUT" data-node="N30" data-sym="regulator_5v"><title>regulator_5v power_and_control VOUT</title></line>
-<line x1="540" y1="180" x2="530" y2="180" stroke="#b8962e" stroke-width="3" stroke-linecap="butt" class="pin" data-pin="main_switch.contacts.IN" data-node="N32" data-sym="main_switch"><title>main_switch contacts IN</title></line>
+<line x1="1300" y1="210" x2="1290" y2="210" stroke="#b8962e" stroke-width="3" stroke-linecap="butt" class="pin" data-pin="regulator_5v.power_and_control.VIN" data-node="N32" data-sym="regulator_5v"><title>regulator_5v power_and_control VIN</title></line>
+<line x1="1530" y1="210" x2="1540" y2="210" stroke="#b8962e" stroke-width="3" stroke-linecap="butt" class="pin" data-pin="regulator_5v.power_and_control.GND" data-node="N3" data-sym="regulator_5v"><title>regulator_5v power_and_control GND</title></line>
+<line x1="1420" y1="270" x2="1420" y2="280" stroke="#b8962e" stroke-width="3" stroke-linecap="butt" class="pin" data-pin="regulator_5v.power_and_control.VOUT" data-node="N30" data-sym="regulator_5v"><title>regulator_5v power_and_control VOUT</title></line>
+<line x1="540" y1="180" x2="530" y2="180" stroke="#b8962e" stroke-width="3" stroke-linecap="butt" class="pin" data-pin="main_switch.contacts.IN" data-node="N33" data-sym="main_switch"><title>main_switch contacts IN</title></line>
 <line x1="710" y1="180" x2="720" y2="180" stroke="#b8962e" stroke-width="3" stroke-linecap="butt" class="pin" data-pin="main_switch.contacts.OUT" data-node="N31" data-sym="main_switch"><title>main_switch contacts OUT</title></line>
 <line x1="220" y1="670" x2="230" y2="670" stroke="#b8962e" stroke-width="3" stroke-linecap="butt" class="pin" data-pin="lidar.main.VCC (red)" data-node="N19" data-sym="lidar"><title>lidar main VCC (red)</title></line>
 <line x1="290" y1="180" x2="280" y2="180" stroke="#b8962e" stroke-width="3" stroke-linecap="butt" class="pin" data-pin="main_fuse.leads.IN" data-node="N18" data-sym="main_fuse"><title>main_fuse leads IN</title></line>
-<line x1="460" y1="180" x2="470" y2="180" stroke="#b8962e" stroke-width="3" stroke-linecap="butt" class="pin" data-pin="main_fuse.leads.OUT" data-node="N32" data-sym="main_fuse"><title>main_fuse leads OUT</title></line>
-<line x1="1370" y1="180" x2="1360" y2="180" stroke="#b8962e" stroke-width="3" stroke-linecap="butt" class="pin" data-pin="star_ground.levers.P1" data-node="N3" data-sym="star_ground"><title>star_ground levers P1</title></line>
-<line x1="1370" y1="200" x2="1360" y2="200" stroke="#b8962e" stroke-width="3" stroke-linecap="butt" class="pin" data-pin="star_ground.levers.P2" data-node="N3" data-sym="star_ground"><title>star_ground levers P2</title></line>
+<line x1="460" y1="180" x2="470" y2="180" stroke="#b8962e" stroke-width="3" stroke-linecap="butt" class="pin" data-pin="main_fuse.leads.OUT" data-node="N33" data-sym="main_fuse"><title>main_fuse leads OUT</title></line>
+<line x1="1620" y1="180" x2="1610" y2="180" stroke="#b8962e" stroke-width="3" stroke-linecap="butt" class="pin" data-pin="star_ground.levers.P1" data-node="N3" data-sym="star_ground"><title>star_ground levers P1</title></line>
+<line x1="1620" y1="200" x2="1610" y2="200" stroke="#b8962e" stroke-width="3" stroke-linecap="butt" class="pin" data-pin="star_ground.levers.P2" data-node="N3" data-sym="star_ground"><title>star_ground levers P2</title></line>
 <line x1="790" y1="180" x2="780" y2="180" stroke="#b8962e" stroke-width="3" stroke-linecap="butt" class="pin" data-pin="splice_vbat.levers.P1" data-node="N31" data-sym="splice_vbat"><title>splice_vbat levers P1</title></line>
 <line x1="970" y1="180" x2="980" y2="180" stroke="#b8962e" stroke-width="3" stroke-linecap="butt" class="pin" data-pin="splice_vbat.levers.P2" data-node="N31" data-sym="splice_vbat"><title>splice_vbat levers P2</title></line>
+<line x1="1050" y1="180" x2="1040" y2="180" stroke="#b8962e" stroke-width="3" stroke-linecap="butt" class="pin" data-pin="branch_fuse_regulator_5v.leads.IN" data-node="N31" data-sym="branch_fuse_regulator_5v"><title>branch_fuse_regulator_5v leads IN</title></line>
+<line x1="1220" y1="180" x2="1230" y2="180" stroke="#b8962e" stroke-width="3" stroke-linecap="butt" class="pin" data-pin="branch_fuse_regulator_5v.leads.OUT" data-node="N32" data-sym="branch_fuse_regulator_5v"><title>branch_fuse_regulator_5v leads OUT</title></line>
 <path d="M510 420L510 415C510 412.5 507.5 410 505 410L296 410C293 410 290 413 290 416L290 474C290 477 287 480 284 480L260 480" fill="none" stroke="#000000" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
 <path d="M510 420L510 415C510 412.5 507.5 410 505 410L296 410C293 410 290 413 290 416L290 474C290 477 287 480 284 480L260 480" stroke="#262626" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N3" data-wire="W3"><title>W3 GND: computer.gpio40.GND to imu.header.GND, 24 AWG</title></path>
 <path d="M990 520L666 520C663 520 660 517 660 514L660 396C660 393 657 390 654 390L516 390C513 390 510 393 510 396L510 420" fill="none" stroke="#000000" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
 <path d="M990 520L666 520C663 520 660 517 660 514L660 396C660 393 657 390 654 390L516 390C513 390 510 393 510 396L510 420" stroke="#262626" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N3" data-wire="W6"><title>W6 GND: motor_driver_1.control.GND to computer.gpio40.GND, 24 AWG</title></path>
 <path d="M990 800L666 800C663 800 660 797 660 794L660 396C660 393 657 390 654 390L516 390C513 390 510 393 510 396L510 420" fill="none" stroke="#000000" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
 <path d="M990 800L666 800C663 800 660 797 660 794L660 396C660 393 657 390 654 390L516 390C513 390 510 393 510 396L510 420" stroke="#262626" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N3" data-wire="W23"><title>W23 GND: motor_driver_2.control.GND to computer.gpio40.GND, 24 AWG</title></path>
-<path d="M1360 200L1306 200C1303 200 1300 203 1300 206L1300 384C1300 387 1297 390 1294 390L516 390C513 390 510 393 510 396L510 420" fill="none" stroke="#000000" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
-<path d="M1360 200L1306 200C1303 200 1300 203 1300 206L1300 384C1300 387 1297 390 1294 390L516 390C513 390 510 393 510 396L510 420" stroke="#262626" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N3" data-wire="W52"><title>W52 GND: star_ground.levers.P2 to computer.gpio40.GND, 22 AWG</title></path>
 <path d="M510 420L510 396C510 393 513 390 516 390L1524 390C1527 390 1530 393 1530 396L1530 514C1530 517 1533 520 1536 520L1560 520" fill="none" stroke="#000000" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
 <path d="M510 420L510 396C510 393 513 390 516 390L1524 390C1527 390 1530 393 1530 396L1530 514C1530 517 1533 520 1536 520L1560 520" stroke="#262626" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N3" data-wire="W14"><title>W14 GND: computer.gpio40.GND to front_left_motor.leads.Encoder GND (green), 24 AWG</title></path>
+<path d="M1610 200L1556 200C1553 200 1550 203 1550 206L1550 384C1550 387 1547 390 1544 390L516 390C513 390 510 393 510 396L510 420" fill="none" stroke="#000000" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M1610 200L1556 200C1553 200 1550 203 1550 206L1550 384C1550 387 1547 390 1544 390L516 390C513 390 510 393 510 396L510 420" stroke="#262626" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N3" data-wire="W52"><title>W52 GND: star_ground.levers.P2 to computer.gpio40.GND, 22 AWG</title></path>
 <path d="M510 420L510 396C510 393 513 390 516 390L1524 390C1527 390 1530 393 1530 396L1530 754C1530 757 1533 760 1536 760L1560 760" fill="none" stroke="#000000" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
 <path d="M510 420L510 396C510 393 513 390 516 390L1524 390C1527 390 1530 393 1530 396L1530 754C1530 757 1533 760 1536 760L1560 760" stroke="#262626" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N3" data-wire="W20"><title>W20 GND: computer.gpio40.GND to front_right_motor.leads.Encoder GND (green), 24 AWG</title></path>
 <path d="M510 420L510 396C510 393 513 390 516 390L1524 390C1527 390 1530 393 1530 396L1530 994C1530 997 1533 1000 1536 1000L1560 1000" fill="none" stroke="#000000" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
 <path d="M510 420L510 396C510 393 513 390 516 390L1524 390C1527 390 1530 393 1530 396L1530 994C1530 997 1533 1000 1536 1000L1560 1000" stroke="#262626" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N3" data-wire="W31"><title>W31 GND: computer.gpio40.GND to rear_left_motor.leads.Encoder GND (green), 24 AWG</title></path>
 <path d="M510 420L510 396C510 393 513 390 516 390L1524 390C1527 390 1530 393 1530 396L1530 1234C1530 1237 1533 1240 1536 1240L1560 1240" fill="none" stroke="#000000" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
 <path d="M510 420L510 396C510 393 513 390 516 390L1524 390C1527 390 1530 393 1530 396L1530 1234C1530 1237 1533 1240 1536 1240L1560 1240" stroke="#262626" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N3" data-wire="W37"><title>W37 GND: computer.gpio40.GND to rear_right_motor.leads.Encoder GND (green), 24 AWG</title></path>
-<path d="M1360 200L1305 200C1302.5 200 1300 202.5 1300 205L1300 205C1300 207.5 1297.5 210 1295 210L1290 210" fill="none" stroke="#000000" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
-<path d="M1360 200L1305 200C1302.5 200 1300 202.5 1300 205L1300 205C1300 207.5 1297.5 210 1295 210L1290 210" stroke="#262626" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N3" data-wire="W45"><title>W45 GND: star_ground.levers.P2 to regulator_5v.power_and_control.GND, 24 AWG</title></path>
-<path d="M1290 210L1345 210C1347.5 210 1350 207.5 1350 205L1350 205C1350 202.5 1352.5 200 1355 200L1360 200" fill="none" stroke="#000000" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
-<path d="M1290 210L1345 210C1347.5 210 1350 207.5 1350 205L1350 205C1350 202.5 1352.5 200 1355 200L1360 200" stroke="#262626" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N3" data-wire="W50"><title>W50 GND: regulator_5v.power_and_control.GND to star_ground.levers.P2, 22 AWG</title></path>
+<path d="M1610 200L1555 200C1552.5 200 1550 202.5 1550 205L1550 205C1550 207.5 1547.5 210 1545 210L1540 210" fill="none" stroke="#000000" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M1610 200L1555 200C1552.5 200 1550 202.5 1550 205L1550 205C1550 207.5 1547.5 210 1545 210L1540 210" stroke="#262626" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N3" data-wire="W45"><title>W45 GND: star_ground.levers.P2 to regulator_5v.power_and_control.GND, 24 AWG</title></path>
+<path d="M1540 210L1595 210C1597.5 210 1600 207.5 1600 205L1600 205C1600 202.5 1602.5 200 1605 200L1610 200" fill="none" stroke="#000000" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M1540 210L1595 210C1597.5 210 1600 207.5 1600 205L1600 205C1600 202.5 1602.5 200 1605 200L1610 200" stroke="#262626" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N3" data-wire="W50"><title>W50 GND: regulator_5v.power_and_control.GND to star_ground.levers.P2, 22 AWG</title></path>
 <path d="M630 510L635 510C637.5 510 640 507.5 640 505L640 386C640 383 637 380 634 380L276 380C273 380 270 383 270 386L270 455C270 457.5 267.5 460 265 460L260 460" fill="none" stroke="#811725" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
 <path d="M630 510L635 510C637.5 510 640 507.5 640 505L640 386C640 383 637 380 634 380L276 380C273 380 270 383 270 386L270 455C270 457.5 267.5 460 265 460L260 460" stroke="#d7263d" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N2" data-wire="W2"><title>W2 3V3_IMU: computer.gpio40.3V3 to imu.header.VIN, 24 AWG</title></path>
-<path d="M1360 200L1306 200C1303 200 1300 203 1300 206L1300 404C1300 407 1297 410 1294 410L1135 410C1132.5 410 1130 412.5 1130 415L1130 420" fill="none" stroke="#000000" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
-<path d="M1360 200L1306 200C1303 200 1300 203 1300 206L1300 404C1300 407 1297 410 1294 410L1135 410C1132.5 410 1130 412.5 1130 415L1130 420" stroke="#262626" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N3" data-wire="W47"><title>W47 GND: star_ground.levers.P2 to motor_driver_1.power.POWER-, 18 AWG</title></path>
-<path d="M1360 200L1306 200C1303 200 1300 203 1300 206L1300 684C1300 687 1297 690 1294 690L1135 690C1132.5 690 1130 692.5 1130 695L1130 700" fill="none" stroke="#000000" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
-<path d="M1360 200L1306 200C1303 200 1300 203 1300 206L1300 684C1300 687 1297 690 1294 690L1135 690C1132.5 690 1130 692.5 1130 695L1130 700" stroke="#262626" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N3" data-wire="W49"><title>W49 GND: star_ground.levers.P2 to motor_driver_2.power.POWER-, 18 AWG</title></path>
-<path d="M630 510L644 510C647 510 650 507 650 504L650 386C650 383 653 380 656 380L1514 380C1517 380 1520 383 1520 386L1520 494C1520 497 1523 500 1526 500L1560 500" fill="none" stroke="#811725" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
-<path d="M630 510L644 510C647 510 650 507 650 504L650 386C650 383 653 380 656 380L1514 380C1517 380 1520 383 1520 386L1520 494C1520 497 1523 500 1526 500L1560 500" stroke="#d7263d" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N2" data-wire="W13"><title>W13 FRONT_LEFT_MOTOR_ENC_VCC: computer.gpio40.3V3 to front_left_motor.leads.Encoder Vcc (blue), 24 AWG</title></path>
+<path d="M1610 200L1556 200C1553 200 1550 203 1550 206L1550 404C1550 407 1547 410 1544 410L1135 410C1132.5 410 1130 412.5 1130 415L1130 420" fill="none" stroke="#000000" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M1610 200L1556 200C1553 200 1550 203 1550 206L1550 404C1550 407 1547 410 1544 410L1135 410C1132.5 410 1130 412.5 1130 415L1130 420" stroke="#262626" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N3" data-wire="W47"><title>W47 GND: star_ground.levers.P2 to motor_driver_1.power.POWER-, 18 AWG</title></path>
+<path d="M630 510L954 510C957 510 960 513 960 516L960 624C960 627 963 630 966 630L1514 630C1517 630 1520 627 1520 624L1520 506C1520 503 1523 500 1526 500L1560 500" fill="none" stroke="#811725" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M630 510L954 510C957 510 960 513 960 516L960 624C960 627 963 630 966 630L1514 630C1517 630 1520 627 1520 624L1520 506C1520 503 1523 500 1526 500L1560 500" stroke="#d7263d" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N2" data-wire="W13"><title>W13 FRONT_LEFT_MOTOR_ENC_VCC: computer.gpio40.3V3 to front_left_motor.leads.Encoder Vcc (blue), 24 AWG</title></path>
+<path d="M1610 200L1556 200C1553 200 1550 203 1550 206L1550 444C1550 447 1547 450 1544 450L1276 450C1273 450 1270 453 1270 456L1270 684C1270 687 1267 690 1264 690L1135 690C1132.5 690 1130 692.5 1130 695L1130 700" fill="none" stroke="#000000" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M1610 200L1556 200C1553 200 1550 203 1550 206L1550 444C1550 447 1547 450 1544 450L1276 450C1273 450 1270 453 1270 456L1270 684C1270 687 1267 690 1264 690L1135 690C1132.5 690 1130 692.5 1130 695L1130 700" stroke="#262626" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N3" data-wire="W49"><title>W49 GND: star_ground.levers.P2 to motor_driver_2.power.POWER-, 18 AWG</title></path>
 <path d="M630 510L954 510C957 510 960 513 960 516L960 664C960 667 963 670 966 670L1514 670C1517 670 1520 673 1520 676L1520 734C1520 737 1523 740 1526 740L1560 740" fill="none" stroke="#811725" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
 <path d="M630 510L954 510C957 510 960 513 960 516L960 664C960 667 963 670 966 670L1514 670C1517 670 1520 673 1520 676L1520 734C1520 737 1523 740 1526 740L1560 740" stroke="#d7263d" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N2" data-wire="W19"><title>W19 FRONT_RIGHT_MOTOR_ENC_VCC: computer.gpio40.3V3 to front_right_motor.leads.Encoder Vcc (blue), 24 AWG</title></path>
 <path d="M630 510L954 510C957 510 960 513 960 516L960 974C960 977 963 980 966 980L1560 980" fill="none" stroke="#811725" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
 <path d="M630 510L954 510C957 510 960 513 960 516L960 974C960 977 963 980 966 980L1560 980" stroke="#d7263d" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N2" data-wire="W30"><title>W30 REAR_LEFT_MOTOR_ENC_VCC: computer.gpio40.3V3 to rear_left_motor.leads.Encoder Vcc (blue), 24 AWG</title></path>
 <path d="M630 510L954 510C957 510 960 513 960 516L960 1214C960 1217 963 1220 966 1220L1560 1220" fill="none" stroke="#811725" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
 <path d="M630 510L954 510C957 510 960 513 960 516L960 1214C960 1217 963 1220 966 1220L1560 1220" stroke="#d7263d" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N2" data-wire="W36"><title>W36 REAR_RIGHT_MOTOR_ENC_VCC: computer.gpio40.3V3 to rear_right_motor.leads.Encoder Vcc (blue), 24 AWG</title></path>
-<path d="M980 180L1024 180C1027 180 1030 183 1030 186L1030 205C1030 207.5 1032.5 210 1035 210L1040 210" fill="none" stroke="#811725" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
-<path d="M980 180L1024 180C1027 180 1030 183 1030 186L1030 205C1030 207.5 1032.5 210 1035 210L1040 210" stroke="#d7263d" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N31" data-wire="W44"><title>W44 VBAT: splice_vbat.levers.P2 to regulator_5v.power_and_control.VIN, 22 AWG</title></path>
+<path d="M980 180L1040 180" fill="none" stroke="#811725" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M980 180L1040 180" stroke="#d7263d" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N31" data-wire="W44a"><title>W44a VBAT: splice_vbat.levers.P2 to branch_fuse_regulator_5v.leads.IN, 22 AWG</title></path>
 <path d="M980 180L1024 180C1027 180 1030 183 1030 186L1030 404C1030 407 1033 410 1036 410L1105 410C1107.5 410 1110 412.5 1110 415L1110 420" fill="none" stroke="#811725" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
 <path d="M980 180L1024 180C1027 180 1030 183 1030 186L1030 404C1030 407 1033 410 1036 410L1105 410C1107.5 410 1110 412.5 1110 415L1110 420" stroke="#d7263d" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N31" data-wire="W46"><title>W46 VBAT: splice_vbat.levers.P2 to motor_driver_1.power.POWER+, 18 AWG</title></path>
 <path d="M980 180L985 180C987.5 180 990 182.5 990 185L990 404C990 407 987 410 984 410L956 410C953 410 950 413 950 416L950 684C950 687 953 690 956 690L1105 690C1107.5 690 1110 692.5 1110 695L1110 700" fill="none" stroke="#811725" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
@@ -494,9 +503,11 @@
 <path d="M220 180L280 180" fill="none" stroke="#811725" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
 <path d="M220 180L280 180" stroke="#d7263d" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N18" data-wire="W40"><title>W40 VBAT: battery.main.BAT+ to main_fuse.leads.IN, 14 AWG</title></path>
 <path d="M470 180L530 180" fill="none" stroke="#811725" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
-<path d="M470 180L530 180" stroke="#d7263d" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N32" data-wire="W41"><title>W41 VBAT: main_fuse.leads.OUT to main_switch.contacts.IN, 14 AWG</title></path>
+<path d="M470 180L530 180" stroke="#d7263d" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N33" data-wire="W41"><title>W41 VBAT: main_fuse.leads.OUT to main_switch.contacts.IN, 14 AWG</title></path>
 <path d="M720 180L780 180" fill="none" stroke="#811725" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
 <path d="M720 180L780 180" stroke="#d7263d" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N31" data-wire="W43"><title>W43 VBAT: main_switch.contacts.OUT to splice_vbat.levers.P1, 14 AWG</title></path>
+<path d="M1230 180L1274 180C1277 180 1280 183 1280 186L1280 205C1280 207.5 1282.5 210 1285 210L1290 210" fill="none" stroke="#811725" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M1230 180L1274 180C1277 180 1280 183 1280 186L1280 205C1280 207.5 1282.5 210 1285 210L1290 210" stroke="#d7263d" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N32" data-wire="W44b"><title>W44b VBAT: branch_fuse_regulator_5v.leads.OUT to regulator_5v.power_and_control.VIN, 22 AWG</title></path>
 <path d="M230 670L374 670C377 670 380 667 380 664L380 656C380 653 383 650 386 650L410 650" fill="none" stroke="#545454" stroke-width="7.6" stroke-linejoin="round" stroke-linecap="round"/>
 <path d="M230 670L374 670C377 670 380 667 380 664L380 656C380 653 383 650 386 650L410 650" stroke="#8c8c8c" stroke-width="6" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N19" data-wire="W1"><title>W1 LIDAR_USB: lidar.main.VCC (red) to computer.usb_a.LINK (USB)</title></path>
 <path d="M410 670L395 670C392.5 670 390 667.5 390 665L390 665C390 662.5 387.5 660 385 660L296 660C293 660 290 657 290 654L290 506C290 503 287 500 284 500L260 500" fill="none" stroke="#13437d" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
@@ -535,54 +546,54 @@
 <path d="M1240 850L1504 850C1507 850 1510 853 1510 856L1510 1174C1510 1177 1513 1180 1516 1180L1560 1180" stroke="#f28a1a" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N14" data-wire="W34"><title>W34 REAR_RIGHT_MOTOR_PHASE_A: motor_driver_2.motor_2.M2A to rear_right_motor.leads.Motor (red), 22 AWG</title></path>
 <path d="M1240 870L1494 870C1497 870 1500 873 1500 876L1500 1194C1500 1197 1503 1200 1506 1200L1560 1200" fill="none" stroke="#915310" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
 <path d="M1240 870L1494 870C1497 870 1500 873 1500 876L1500 1194C1500 1197 1503 1200 1506 1200L1560 1200" stroke="#f28a1a" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N15" data-wire="W35"><title>W35 REAR_RIGHT_MOTOR_PHASE_B: motor_driver_2.motor_2.M2B to rear_right_motor.leads.Motor (black), 22 AWG</title></path>
-<path d="M1170 280L1170 364C1170 367 1167 370 1164 370L536 370C533 370 530 373 530 376L530 420" fill="none" stroke="#811725" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
-<path d="M1170 280L1170 364C1170 367 1167 370 1164 370L536 370C533 370 530 373 530 376L530 420" stroke="#d7263d" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N30" data-wire="W51"><title>W51 5V: regulator_5v.power_and_control.VOUT to computer.gpio40.5V, 22 AWG</title></path>
-<path d="M630 610L974 610C977 610 980 613 980 616L980 624C980 627 983 630 986 630L1514 630C1517 630 1520 627 1520 624L1520 546C1520 543 1523 540 1526 540L1560 540" fill="none" stroke="#13437d" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
-<path d="M630 610L974 610C977 610 980 613 980 616L980 624C980 627 983 630 986 630L1514 630C1517 630 1520 627 1520 624L1520 546C1520 543 1523 540 1526 540L1560 540" stroke="#1f6fd1" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N4" data-wire="W15"><title>W15 FRONT_LEFT_MOTOR_ENC_A: computer.gpio40.GPIO18 to front_left_motor.leads.Encoder A (yellow), 26 AWG</title></path>
-<path d="M630 630L965 630C967.5 630 970 632.5 970 635L970 635C970 637.5 972.5 640 975 640L1534 640C1537 640 1540 637 1540 634L1540 566C1540 563 1543 560 1546 560L1560 560" fill="none" stroke="#13437d" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
-<path d="M630 630L965 630C967.5 630 970 632.5 970 635L970 635C970 637.5 972.5 640 975 640L1534 640C1537 640 1540 637 1540 634L1540 566C1540 563 1543 560 1546 560L1560 560" stroke="#1f6fd1" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N5" data-wire="W16"><title>W16 FRONT_LEFT_MOTOR_ENC_B: computer.gpio40.GPIO19 to front_left_motor.leads.Encoder B (white), 26 AWG</title></path>
-<path d="M630 650L1494 650C1497 650 1500 653 1500 656L1500 774C1500 777 1503 780 1506 780L1560 780" fill="none" stroke="#13437d" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
-<path d="M630 650L1494 650C1497 650 1500 653 1500 656L1500 774C1500 777 1503 780 1506 780L1560 780" stroke="#1f6fd1" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N8" data-wire="W21"><title>W21 FRONT_RIGHT_MOTOR_ENC_A: computer.gpio40.GPIO16 to front_right_motor.leads.Encoder A (yellow), 26 AWG</title></path>
-<path d="M630 670L935 670C937.5 670 940 667.5 940 665L940 665C940 662.5 942.5 660 945 660L1484 660C1487 660 1490 663 1490 666L1490 794C1490 797 1493 800 1496 800L1560 800" fill="none" stroke="#13437d" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
-<path d="M630 670L935 670C937.5 670 940 667.5 940 665L940 665C940 662.5 942.5 660 945 660L1484 660C1487 660 1490 663 1490 666L1490 794C1490 797 1493 800 1496 800L1560 800" stroke="#1f6fd1" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N9" data-wire="W22"><title>W22 FRONT_RIGHT_MOTOR_ENC_B: computer.gpio40.GPIO20 to front_right_motor.leads.Encoder B (white), 26 AWG</title></path>
-<path d="M220 200L244 200C247 200 250 197 250 194L250 116C250 113 253 110 256 110L1344 110C1347 110 1350 113 1350 116L1350 175C1350 177.5 1352.5 180 1355 180L1360 180" fill="none" stroke="#000000" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
-<path d="M220 200L244 200C247 200 250 197 250 194L250 116C250 113 253 110 256 110L1344 110C1347 110 1350 113 1350 116L1350 175C1350 177.5 1352.5 180 1355 180L1360 180" stroke="#262626" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N3" data-wire="W42"><title>W42 GND: battery.main.BAT- to star_ground.levers.P1, 14 AWG</title></path>
-<path d="M630 770L894 770C897 770 900 773 900 776L900 1014C900 1017 903 1020 906 1020L1560 1020" fill="none" stroke="#13437d" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
-<path d="M630 770L894 770C897 770 900 773 900 776L900 1014C900 1017 903 1020 906 1020L1560 1020" stroke="#1f6fd1" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N12" data-wire="W32"><title>W32 REAR_LEFT_MOTOR_ENC_A: computer.gpio40.GPIO17 to rear_left_motor.leads.Encoder A (yellow), 26 AWG</title></path>
-<path d="M630 790L884 790C887 790 890 793 890 796L890 1034C890 1037 893 1040 896 1040L1560 1040" fill="none" stroke="#13437d" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
-<path d="M630 790L884 790C887 790 890 793 890 796L890 1034C890 1037 893 1040 896 1040L1560 1040" stroke="#1f6fd1" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N13" data-wire="W33"><title>W33 REAR_LEFT_MOTOR_ENC_B: computer.gpio40.GPIO27 to rear_left_motor.leads.Encoder B (white), 26 AWG</title></path>
-<path d="M630 810L874 810C877 810 880 813 880 816L880 1254C880 1257 883 1260 886 1260L1560 1260" fill="none" stroke="#13437d" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
-<path d="M630 810L874 810C877 810 880 813 880 816L880 1254C880 1257 883 1260 886 1260L1560 1260" stroke="#1f6fd1" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N16" data-wire="W38"><title>W38 REAR_RIGHT_MOTOR_ENC_A: computer.gpio40.GPIO24 to rear_right_motor.leads.Encoder A (yellow), 26 AWG</title></path>
-<path d="M630 830L864 830C867 830 870 833 870 836L870 1274C870 1277 873 1280 876 1280L1560 1280" fill="none" stroke="#13437d" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
-<path d="M630 830L864 830C867 830 870 833 870 836L870 1274C870 1277 873 1280 876 1280L1560 1280" stroke="#1f6fd1" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N17" data-wire="W39"><title>W39 REAR_RIGHT_MOTOR_ENC_B: computer.gpio40.GPIO25 to rear_right_motor.leads.Encoder B (white), 26 AWG</title></path>
+<path d="M630 610L934 610C937 610 940 613 940 616L940 634C940 637 943 640 946 640L1484 640C1487 640 1490 637 1490 634L1490 546C1490 543 1493 540 1496 540L1560 540" fill="none" stroke="#13437d" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M630 610L934 610C937 610 940 613 940 616L940 634C940 637 943 640 946 640L1484 640C1487 640 1490 637 1490 634L1490 546C1490 543 1493 540 1496 540L1560 540" stroke="#1f6fd1" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N4" data-wire="W15"><title>W15 FRONT_LEFT_MOTOR_ENC_A: computer.gpio40.GPIO18 to front_left_motor.leads.Encoder A (yellow), 26 AWG</title></path>
+<path d="M630 630L924 630C927 630 930 633 930 636L930 644C930 647 933 650 936 650L1534 650C1537 650 1540 647 1540 644L1540 566C1540 563 1543 560 1546 560L1560 560" fill="none" stroke="#13437d" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M630 630L924 630C927 630 930 633 930 636L930 644C930 647 933 650 936 650L1534 650C1537 650 1540 647 1540 644L1540 566C1540 563 1543 560 1546 560L1560 560" stroke="#1f6fd1" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N5" data-wire="W16"><title>W16 FRONT_LEFT_MOTOR_ENC_B: computer.gpio40.GPIO19 to front_left_motor.leads.Encoder B (white), 26 AWG</title></path>
+<path d="M1420 280L1420 364C1420 367 1417 370 1414 370L536 370C533 370 530 373 530 376L530 420" fill="none" stroke="#811725" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M1420 280L1420 364C1420 367 1417 370 1414 370L536 370C533 370 530 373 530 376L530 420" stroke="#d7263d" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N30" data-wire="W51"><title>W51 5V: regulator_5v.power_and_control.VOUT to computer.gpio40.5V, 22 AWG</title></path>
+<path d="M630 650L915 650C917.5 650 920 652.5 920 655L920 655C920 657.5 922.5 660 925 660L1494 660C1497 660 1500 663 1500 666L1500 774C1500 777 1503 780 1506 780L1560 780" fill="none" stroke="#13437d" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M630 650L915 650C917.5 650 920 652.5 920 655L920 655C920 657.5 922.5 660 925 660L1494 660C1497 660 1500 663 1500 666L1500 774C1500 777 1503 780 1506 780L1560 780" stroke="#1f6fd1" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N8" data-wire="W21"><title>W21 FRONT_RIGHT_MOTOR_ENC_A: computer.gpio40.GPIO16 to front_right_motor.leads.Encoder A (yellow), 26 AWG</title></path>
+<path d="M630 670L894 670C897 670 900 673 900 676L900 904C900 907 903 910 906 910L1534 910C1537 910 1540 907 1540 904L1540 806C1540 803 1543 800 1546 800L1560 800" fill="none" stroke="#13437d" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M630 670L894 670C897 670 900 673 900 676L900 904C900 907 903 910 906 910L1534 910C1537 910 1540 907 1540 904L1540 806C1540 803 1543 800 1546 800L1560 800" stroke="#1f6fd1" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N9" data-wire="W22"><title>W22 FRONT_RIGHT_MOTOR_ENC_B: computer.gpio40.GPIO20 to front_right_motor.leads.Encoder B (white), 26 AWG</title></path>
+<path d="M630 770L884 770C887 770 890 773 890 776L890 1014C890 1017 893 1020 896 1020L1560 1020" fill="none" stroke="#13437d" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M630 770L884 770C887 770 890 773 890 776L890 1014C890 1017 893 1020 896 1020L1560 1020" stroke="#1f6fd1" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N12" data-wire="W32"><title>W32 REAR_LEFT_MOTOR_ENC_A: computer.gpio40.GPIO17 to rear_left_motor.leads.Encoder A (yellow), 26 AWG</title></path>
+<path d="M630 790L874 790C877 790 880 793 880 796L880 1034C880 1037 883 1040 886 1040L1560 1040" fill="none" stroke="#13437d" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M630 790L874 790C877 790 880 793 880 796L880 1034C880 1037 883 1040 886 1040L1560 1040" stroke="#1f6fd1" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N13" data-wire="W33"><title>W33 REAR_LEFT_MOTOR_ENC_B: computer.gpio40.GPIO27 to rear_left_motor.leads.Encoder B (white), 26 AWG</title></path>
+<path d="M630 810L864 810C867 810 870 813 870 816L870 1254C870 1257 873 1260 876 1260L1560 1260" fill="none" stroke="#13437d" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M630 810L864 810C867 810 870 813 870 816L870 1254C870 1257 873 1260 876 1260L1560 1260" stroke="#1f6fd1" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N16" data-wire="W38"><title>W38 REAR_RIGHT_MOTOR_ENC_A: computer.gpio40.GPIO24 to rear_right_motor.leads.Encoder A (yellow), 26 AWG</title></path>
+<path d="M630 830L854 830C857 830 860 833 860 836L860 1274C860 1277 863 1280 866 1280L1560 1280" fill="none" stroke="#13437d" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M630 830L854 830C857 830 860 833 860 836L860 1274C860 1277 863 1280 866 1280L1560 1280" stroke="#1f6fd1" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N17" data-wire="W39"><title>W39 REAR_RIGHT_MOTOR_ENC_B: computer.gpio40.GPIO25 to rear_right_motor.leads.Encoder B (white), 26 AWG</title></path>
+<path d="M220 200L244 200C247 200 250 197 250 194L250 116C250 113 253 110 256 110L1594 110C1597 110 1600 113 1600 116L1600 175C1600 177.5 1602.5 180 1605 180L1610 180" fill="none" stroke="#000000" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M220 200L244 200C247 200 250 197 250 194L250 116C250 113 253 110 256 110L1594 110C1597 110 1600 113 1600 116L1600 175C1600 177.5 1602.5 180 1605 180L1610 180" stroke="#262626" stroke-width="3.4" fill="none" stroke-linejoin="round" stroke-linecap="round" class="wire" data-node="N3" data-wire="W42"><title>W42 GND: battery.main.BAT- to star_ground.levers.P1, 14 AWG</title></path>
 <circle cx="510" cy="420" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="260" cy="480" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="990" cy="520" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="510" cy="420" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="990" cy="800" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="510" cy="420" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
-<circle cx="1360" cy="200" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
-<circle cx="510" cy="420" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="510" cy="420" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="1560" cy="520" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
+<circle cx="1610" cy="200" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
+<circle cx="510" cy="420" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="510" cy="420" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="1560" cy="760" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="510" cy="420" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="1560" cy="1000" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="510" cy="420" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="1560" cy="1240" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
-<circle cx="1360" cy="200" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
-<circle cx="1290" cy="210" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
-<circle cx="1290" cy="210" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
-<circle cx="1360" cy="200" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
+<circle cx="1610" cy="200" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
+<circle cx="1540" cy="210" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
+<circle cx="1540" cy="210" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
+<circle cx="1610" cy="200" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="630" cy="510" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="260" cy="460" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
-<circle cx="1360" cy="200" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
+<circle cx="1610" cy="200" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="1130" cy="420" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
-<circle cx="1360" cy="200" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
-<circle cx="1130" cy="700" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="630" cy="510" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="1560" cy="500" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
+<circle cx="1610" cy="200" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
+<circle cx="1130" cy="700" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="630" cy="510" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="1560" cy="740" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="630" cy="510" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
@@ -590,7 +601,7 @@
 <circle cx="630" cy="510" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="1560" cy="1220" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="980" cy="180" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
-<circle cx="1040" cy="210" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
+<circle cx="1040" cy="180" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="980" cy="180" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="1110" cy="420" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="980" cy="180" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
@@ -601,6 +612,8 @@
 <circle cx="530" cy="180" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="720" cy="180" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="780" cy="180" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
+<circle cx="1230" cy="180" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
+<circle cx="1290" cy="210" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="230" cy="670" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="410" cy="650" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="410" cy="670" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
@@ -639,18 +652,16 @@
 <circle cx="1560" cy="1180" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="1240" cy="870" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="1560" cy="1200" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
-<circle cx="1170" cy="280" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
-<circle cx="530" cy="420" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="630" cy="610" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="1560" cy="540" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="630" cy="630" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="1560" cy="560" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
+<circle cx="1420" cy="280" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
+<circle cx="530" cy="420" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="630" cy="650" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="1560" cy="780" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="630" cy="670" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="1560" cy="800" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
-<circle cx="220" cy="200" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
-<circle cx="1360" cy="180" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="630" cy="770" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="1560" cy="1020" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="630" cy="790" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
@@ -659,4 +670,6 @@
 <circle cx="1560" cy="1260" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="630" cy="830" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 <circle cx="1560" cy="1280" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
+<circle cx="220" cy="200" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
+<circle cx="1610" cy="180" r="2.6" fill="#c9c9c9" stroke="#555555" stroke-width="0.8" class="end"/>
 </svg>

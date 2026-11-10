@@ -97,10 +97,10 @@ A driver's high level is its I/O supply; the receiver needs it above its input t
 | I2C_SCL | A1 A5/SCL | U1 SCL | 5 | 3.5 | 5.5 | ok |
 | I2C_SDA | A1 A4/SDA | U1 SDA | 5 | 3.5 | 5.5 | ok |
 | I2C_SDA | U1 SDA | A1 A4/SDA | 5 | 3 | 5.5 | ok |
-| SERVO0_PWM | U1 PWM0 | M1 Signal | 5 | 2 | 6 | ok |
-| SERVO1_PWM | U1 PWM1 | M2 Signal | 5 | 2 | 7.2 | ok |
-| SERVO2_PWM | U1 PWM2 | M3 Signal | 5 | 2 | 7.2 | ok |
-| SERVO3_PWM | U1 PWM3 | M4 Signal | 5 | 2 | 6 | ok |
+| SERVO0_PWM | U1 PWM0 | M4 Signal | 5 | 2 | 6 | ok |
+| SERVO1_PWM | U1 PWM1 | M3 Signal | 5 | 2 | 7.2 | ok |
+| SERVO2_PWM | U1 PWM2 | M2 Signal | 5 | 2 | 7.2 | ok |
+| SERVO3_PWM | U1 PWM3 | M1 Signal | 5 | 2 | 6 | ok |
 
 ### Sources
 

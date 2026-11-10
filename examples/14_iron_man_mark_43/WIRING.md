@@ -318,10 +318,10 @@ A driver's high level is its I/O supply; the receiver needs it above its input t
 | Net | Driver | Receiver | High V | Threshold V | Input limit V | Result |
 |---|---|---|--:|--:|--:|---|
 | ARC_REACTOR_DATA | A1 D6 | U1 DIN | 5 | 3.5 | 5.5 | ok |
-| BACK_LEFT_SERVO_PWM | U7 PWM0 | M3 Signal | 5 | 2 | 6.8 | ok |
-| BACK_RIGHT_SERVO_PWM | U8 PWM0 | M4 Signal | 5 | 2 | 6.8 | ok |
-| FACEPLATE_LEFT_PWM | A1 D9 | M1 Signal | 5 | 2 | 6 | ok |
-| FACEPLATE_RIGHT_PWM | A1 D10/SS | M2 Signal | 5 | 2 | 6 | ok |
+| BACK_LEFT_SERVO_PWM | U7 PWM0 | M1 Signal | 5 | 2 | 6.8 | ok |
+| BACK_RIGHT_SERVO_PWM | U8 PWM0 | M2 Signal | 5 | 2 | 6.8 | ok |
+| FACEPLATE_LEFT_PWM | A1 D9 | M3 Signal | 5 | 2 | 6 | ok |
+| FACEPLATE_RIGHT_PWM | A1 D10/SS | M4 Signal | 5 | 2 | 6 | ok |
 | HELMET_LEFT_SERVO_PWM | U7 PWM1 | M5 Signal | 5 | 2 | 6 | ok |
 | HELMET_RIGHT_SERVO_PWM | U8 PWM1 | M6 Signal | 5 | 2 | 6 | ok |
 | I2C_SCL_LEFT | A1 A5/SCL | U7 SCL | 5 | 3.5 | 5.5 | ok |
@@ -330,27 +330,27 @@ A driver's high level is its I/O supply; the receiver needs it above its input t
 | I2C_SDA_LEFT | A1 A4/SDA | U8 SDA | 5 | 3.5 | 5.5 | ok |
 | I2C_SDA_LEFT | U7 SDA | A1 A4/SDA | 5 | 3 | 5.5 | ok |
 | I2C_SDA_LEFT | U8 SDA | A1 A4/SDA | 5 | 3 | 5.5 | ok |
-| LATCH_BACK_LEFT_0_SERVO_PWM | U7 PWM6 | M15 Signal | 5 | 2 | 6 | ok |
-| LATCH_BACK_LEFT_1_SERVO_PWM | U7 PWM7 | M16 Signal | 5 | 2 | 6 | ok |
-| LATCH_HELMET_LEFT_0_SERVO_PWM | U7 PWM8 | M17 Signal | 5 | 2 | 6 | ok |
-| LATCH_LEFT_FOREARM_0_SERVO_PWM | U7 PWM10 | M20 Signal | 5 | 2 | 6 | ok |
-| LATCH_LEFT_SHIN_0_SERVO_PWM | U7 PWM12 | M24 Signal | 5 | 2 | 6 | ok |
-| LATCH_LEFT_THIGH_0_SERVO_PWM | U7 PWM11 | M22 Signal | 5 | 2 | 6 | ok |
-| LATCH_LEFT_UPPER_ARM_0_SERVO_PWM | U7 PWM9 | M18 Signal | 5 | 2 | 6 | ok |
-| LATCH_RIGHT_FOREARM_0_SERVO_PWM | U8 PWM7 | M21 Signal | 5 | 2 | 6 | ok |
-| LATCH_RIGHT_SHIN_0_SERVO_PWM | U8 PWM9 | M25 Signal | 5 | 2 | 6 | ok |
-| LATCH_RIGHT_THIGH_0_SERVO_PWM | U8 PWM8 | M23 Signal | 5 | 2 | 6 | ok |
-| LATCH_RIGHT_UPPER_ARM_0_SERVO_PWM | U8 PWM6 | M19 Signal | 5 | 2 | 6 | ok |
-| LEFT_FOREARM_SERVO_PWM | U7 PWM3 | M9 Signal | 5 | 2 | 7.2 | ok |
+| LATCH_BACK_LEFT_0_SERVO_PWM | U7 PWM6 | M7 Signal | 5 | 2 | 6 | ok |
+| LATCH_BACK_LEFT_1_SERVO_PWM | U7 PWM7 | M8 Signal | 5 | 2 | 6 | ok |
+| LATCH_HELMET_LEFT_0_SERVO_PWM | U7 PWM8 | M9 Signal | 5 | 2 | 6 | ok |
+| LATCH_LEFT_FOREARM_0_SERVO_PWM | U7 PWM10 | M10 Signal | 5 | 2 | 6 | ok |
+| LATCH_LEFT_SHIN_0_SERVO_PWM | U7 PWM12 | M11 Signal | 5 | 2 | 6 | ok |
+| LATCH_LEFT_THIGH_0_SERVO_PWM | U7 PWM11 | M12 Signal | 5 | 2 | 6 | ok |
+| LATCH_LEFT_UPPER_ARM_0_SERVO_PWM | U7 PWM9 | M13 Signal | 5 | 2 | 6 | ok |
+| LATCH_RIGHT_FOREARM_0_SERVO_PWM | U8 PWM7 | M14 Signal | 5 | 2 | 6 | ok |
+| LATCH_RIGHT_SHIN_0_SERVO_PWM | U8 PWM9 | M15 Signal | 5 | 2 | 6 | ok |
+| LATCH_RIGHT_THIGH_0_SERVO_PWM | U8 PWM8 | M16 Signal | 5 | 2 | 6 | ok |
+| LATCH_RIGHT_UPPER_ARM_0_SERVO_PWM | U8 PWM6 | M17 Signal | 5 | 2 | 6 | ok |
+| LEFT_FOREARM_SERVO_PWM | U7 PWM3 | M18 Signal | 5 | 2 | 7.2 | ok |
 | LEFT_REPULSOR_DATA | A1 D7 | U2 DIN | 5 | 3.5 | 5.5 | ok |
-| LEFT_SHIN_SERVO_PWM | U7 PWM5 | M13 Signal | 5 | 2 | 7.2 | ok |
-| LEFT_THIGH_SERVO_PWM | U7 PWM4 | M11 Signal | 5 | 2 | 7.2 | ok |
-| LEFT_UPPER_ARM_SERVO_PWM | U7 PWM2 | M7 Signal | 5 | 2 | 7.2 | ok |
-| RIGHT_FOREARM_SERVO_PWM | U8 PWM3 | M10 Signal | 5 | 2 | 7.2 | ok |
-| RIGHT_REPULSOR_DATA | A1 D8 | U3 DIN | 5 | 3.5 | 5.5 | ok |
-| RIGHT_SHIN_SERVO_PWM | U8 PWM5 | M14 Signal | 5 | 2 | 7.2 | ok |
-| RIGHT_THIGH_SERVO_PWM | U8 PWM4 | M12 Signal | 5 | 2 | 7.2 | ok |
-| RIGHT_UPPER_ARM_SERVO_PWM | U8 PWM2 | M8 Signal | 5 | 2 | 7.2 | ok |
+| LEFT_SHIN_SERVO_PWM | U7 PWM5 | M19 Signal | 5 | 2 | 7.2 | ok |
+| LEFT_THIGH_SERVO_PWM | U7 PWM4 | M20 Signal | 5 | 2 | 7.2 | ok |
+| LEFT_UPPER_ARM_SERVO_PWM | U7 PWM2 | M21 Signal | 5 | 2 | 7.2 | ok |
+| RIGHT_FOREARM_SERVO_PWM | U8 PWM3 | M22 Signal | 5 | 2 | 7.2 | ok |
+| RIGHT_REPULSOR_DATA | A1 D8 | U6 DIN | 5 | 3.5 | 5.5 | ok |
+| RIGHT_SHIN_SERVO_PWM | U8 PWM5 | M23 Signal | 5 | 2 | 7.2 | ok |
+| RIGHT_THIGH_SERVO_PWM | U8 PWM4 | M24 Signal | 5 | 2 | 7.2 | ok |
+| RIGHT_UPPER_ARM_SERVO_PWM | U8 PWM2 | M25 Signal | 5 | 2 | 7.2 | ok |
 
 ### Sources
 

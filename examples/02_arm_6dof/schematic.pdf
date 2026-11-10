@@ -9,7 +9,7 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 2339 1654] /Resources << /Font << /F1 5 0 R /F2 6 0 R >> >> /Contents 4 0 R >>
 endobj
 4 0 obj
-<< /Length 26145 >>
+<< /Length 26956 >>
 stream
 1 J 1 j
 0 0 2339 1654 re
@@ -86,6 +86,7 @@ BT 0.52 0 0 rg /F1 7 Tf 1 0 0 1 2321.28 132.79 Tm (G) Tj ET
 0.52 0 0 RG 1.6 w
 B
 BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 1078 1198 Tm (M1) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1096.34 1198 Tm (\267 base_yaw_actuator) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1078 1184 Tm (DYNAMIXEL XL430-W250-T) Tj ET
 1221 1194 m
 1221 1187.92 1216.08 1183 1210 1183 c
@@ -127,7 +128,8 @@ BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1201 1140.8 Tm (DATA) Tj ET
 1 1 0.76 rg
 0.52 0 0 RG 1.6 w
 B
-BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 1078 948 Tm (M2) Tj ET
+BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 1078 948 Tm (M5) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1096.34 948 Tm (\267 shoulder_pitch_actuator) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1078 934 Tm (DYNAMIXEL XH540-W270-T\(R\)) Tj ET
 1241 944 m
 1241 937.92 1236.08 933 1230 933 c
@@ -169,7 +171,8 @@ BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1221 890.8 Tm (DATA) Tj ET
 1 1 0.76 rg
 0.52 0 0 RG 1.6 w
 B
-BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 1078 698 Tm (M3) Tj ET
+BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 1078 698 Tm (M2) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1096.34 698 Tm (\267 elbow_pitch_actuator) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1078 684 Tm (DYNAMIXEL XM430-W350-T\(R\)) Tj ET
 1241 694 m
 1241 687.92 1236.08 683 1230 683 c
@@ -211,7 +214,8 @@ BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1221 640.8 Tm (DATA) Tj ET
 1 1 0.76 rg
 0.52 0 0 RG 1.6 w
 B
-BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 1078 448 Tm (M4) Tj ET
+BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 1078 448 Tm (M3) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1096.34 448 Tm (\267 forearm_roll_actuator) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1078 434 Tm (DYNAMIXEL XL430-W250-T) Tj ET
 1221 444 m
 1221 437.92 1216.08 433 1210 433 c
@@ -253,7 +257,8 @@ BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1201 390.8 Tm (DATA) Tj ET
 1 1 0.76 rg
 0.52 0 0 RG 1.6 w
 B
-BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 1558 1198 Tm (M5) Tj ET
+BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 1558 1198 Tm (M6) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1576.34 1198 Tm (\267 wrist_pitch_actuator) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1558 1184 Tm (DYNAMIXEL XL430-W250-T) Tj ET
 1701 1194 m
 1701 1187.92 1696.08 1183 1690 1183 c
@@ -295,7 +300,8 @@ BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1555 1140.8 Tm (DATA) Tj ET
 1 1 0.76 rg
 0.52 0 0 RG 1.6 w
 B
-BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 1558 948 Tm (M6) Tj ET
+BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 1558 948 Tm (M7) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1576.34 948 Tm (\267 wrist_roll_actuator) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1558 934 Tm (DYNAMIXEL XL430-W250-T) Tj ET
 1701 944 m
 1701 937.92 1696.08 933 1690 933 c
@@ -337,7 +343,8 @@ BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1555 890.8 Tm (DATA) Tj ET
 1 1 0.76 rg
 0.52 0 0 RG 1.6 w
 B
-BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 1558 698 Tm (M7) Tj ET
+BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 1558 698 Tm (M4) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1576.34 698 Tm (\267 gripper_actuator) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1558 684 Tm (DYNAMIXEL XL430-W250-T) Tj ET
 1701 694 m
 1701 687.92 1696.08 683 1690 683 c
@@ -371,6 +378,7 @@ BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1555 660.8 Tm (DATA) Tj ET
 0.52 0 0 RG 1.6 w
 B
 BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 1058 1478 Tm (PS1) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1081.85 1478 Tm (\267 power_supply) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1058 1464 Tm (Mean Well LRS-75-12 enclosed PSU) Tj ET
 1218 1465 24 18 re
 1 1 1 rg
@@ -399,6 +407,7 @@ BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1178.74 1440.8 Tm (DC OUTPUT +V) Tj ET
 0.52 0 0 RG 1.6 w
 B
 BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 658 1258 Tm (U1) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 675.12 1258 Tm (\267 servo_bus) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 658 1244 Tm (ROBOTIS U2D2 USB to TTL/RS-485 interface) Tj ET
 851 1243 18 22 re
 1 1 1 rg
@@ -426,6 +435,7 @@ BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 851 1220.8 Tm (DATA) Tj ET
 0.52 0 0 RG 1.6 w
 B
 BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 628 1468 Tm (J1) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 643.29 1468 Tm (\267 mains_inlet) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 628 1454 Tm (IEC C14 panel inlet with fuse drawer and rocker switch) Tj ET
 861 1453 18 22 re
 1 1 1 rg
@@ -856,11 +866,11 @@ xref
 0000000058 00000 n 
 0000000115 00000 n 
 0000000253 00000 n 
-0000026451 00000 n 
-0000026548 00000 n 
-0000026650 00000 n 
+0000027262 00000 n 
+0000027359 00000 n 
+0000027461 00000 n 
 trailer
 << /Size 8 /Root 1 0 R /Info 7 0 R >>
 startxref
-26726
+27537
 %%EOF

@@ -9,7 +9,7 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 1654 1169] /Resources << /Font << /F1 5 0 R /F2 6 0 R >> >> /Contents 4 0 R >>
 endobj
 4 0 obj
-<< /Length 14942 >>
+<< /Length 15412 >>
 stream
 1 J 1 j
 0 0 1654 1169 re
@@ -69,7 +69,8 @@ BT 0.52 0 0 rg /F1 7 Tf 1 0 0 1 1636.67 130.4 Tm (E) Tj ET
 1 1 0.76 rg
 0.52 0 0 RG 1.6 w
 B
-BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 768 703 Tm (M1) Tj ET
+BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 768 703 Tm (M3) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 786.34 703 Tm (\267 shoulder_pitch_actuator) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 768 689 Tm (Feetech STS3250 C002 12 V 50 kg.cm) Tj ET
 961 699 m
 961 692.92 956.08 688 950 688 c
@@ -111,7 +112,8 @@ BT 0 0.39 0.39 rg /F1 9 Tf 0 1 -1 0 893.2 614 Tm 0 0 Td (GND) Tj ET
 1 1 0.76 rg
 0.52 0 0 RG 1.6 w
 B
-BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 768 453 Tm (M2) Tj ET
+BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 768 453 Tm (M1) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 786.34 453 Tm (\267 elbow_pitch_actuator) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 768 439 Tm (Feetech STS3215 C047 12 V 30 kg.cm) Tj ET
 961 449 m
 961 442.92 956.08 438 950 438 c
@@ -153,7 +155,8 @@ BT 0 0.39 0.39 rg /F1 9 Tf 0 1 -1 0 893.2 364 Tm 0 0 Td (GND) Tj ET
 1 1 0.76 rg
 0.52 0 0 RG 1.6 w
 B
-BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 1158 703 Tm (M3) Tj ET
+BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 1158 703 Tm (M2) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1176.34 703 Tm (\267 gripper_actuator) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1158 689 Tm (Feetech STS3215 C047 12 V 30 kg.cm) Tj ET
 1351 699 m
 1351 692.92 1346.08 688 1340 688 c
@@ -187,6 +190,7 @@ BT 0 0.39 0.39 rg /F1 9 Tf 0 1 -1 0 1273.2 614 Tm 0 0 Td (GND) Tj ET
 0.52 0 0 RG 1.6 w
 B
 BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 728 983 Tm (PS1) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 751.85 983 Tm (\267 power_supply) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 728 969 Tm (Mean Well LRS-75-12 enclosed PSU) Tj ET
 888 970 24 18 re
 1 1 1 rg
@@ -215,6 +219,7 @@ BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 848.74 945.8 Tm (DC OUTPUT +V) Tj ET
 0.52 0 0 RG 1.6 w
 B
 BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 298 703 Tm (U1) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 315.12 703 Tm (\267 servo_bus) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 298 689 Tm (Waveshare Bus Servo Adapter) Tj ET
 431 688 18 22 re
 1 1 1 rg
@@ -247,6 +252,7 @@ BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 439.49 665.8 Tm (SIG) Tj ET
 0.52 0 0 RG 1.6 w
 B
 BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 298 973 Tm (J1) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 313.29 973 Tm (\267 mains_inlet) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 298 959 Tm (IEC C14 panel inlet with fuse drawer and rocker switch) Tj ET
 531 958 18 22 re
 1 1 1 rg
@@ -498,11 +504,11 @@ xref
 0000000058 00000 n 
 0000000115 00000 n 
 0000000253 00000 n 
-0000015248 00000 n 
-0000015345 00000 n 
-0000015447 00000 n 
+0000015718 00000 n 
+0000015815 00000 n 
+0000015917 00000 n 
 trailer
 << /Size 8 /Root 1 0 R /Info 7 0 R >>
 startxref
-15523
+15993
 %%EOF

@@ -214,144 +214,144 @@ A driver's high level is its I/O supply; the receiver needs it above its input t
 
 | Net | Driver | Receiver | High V | Threshold V | Input limit V | Result |
 |---|---|---|--:|--:|--:|---|
-| BUS_SERVO_BUS | M13 DATA | M6 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M13 DATA | M6 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M13 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M13 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M13 DATA | U3 SIG | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M5 DATA | M6 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M5 DATA | M6 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M1 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M1 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M1 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M1 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M1 DATA | U6 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M2 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M2 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M2 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M2 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M2 DATA | U6 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M2 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M2 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M2 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M2 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M2 DATA | U6 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M3 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M3 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M3 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M3 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M3 DATA | U6 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M3 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M3 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M3 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M3 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M3 DATA | U6 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M4 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M4 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M4 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M4 DATA | M3 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M4 DATA | M3 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M4 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M4 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M4 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M4 DATA | M9 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M4 DATA | M9 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M4 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M4 DATA | U6 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M4 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M4 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M4 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M4 DATA | M3 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M4 DATA | M3 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M4 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M4 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M4 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M4 DATA | M9 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M4 DATA | M9 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M4 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M4 DATA | U6 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M5 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M5 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
 | BUS_SERVO_BUS | M5 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
 | BUS_SERVO_BUS | M5 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M5 DATA | U3 SIG | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M5 DATA | M6 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M5 DATA | M6 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M5 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M5 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M5 DATA | U3 SIG | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M7 DATA | M6 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M7 DATA | M6 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M7 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M7 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M7 DATA | U3 SIG | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M7 DATA | M6 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M7 DATA | M6 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M7 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M7 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M7 DATA | U3 SIG | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M6 DATA | M13 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M6 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M6 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M6 DATA | M7 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M6 DATA | M7 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M6 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M6 DATA | M9 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M6 DATA | M9 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M6 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M6 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M6 DATA | M12 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M6 DATA | U3 SIG | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M6 DATA | M13 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M6 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M6 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M6 DATA | M7 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M6 DATA | M7 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M6 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M6 DATA | M9 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M6 DATA | M9 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M6 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M6 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M6 DATA | M12 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M6 DATA | U3 SIG | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M8 DATA | M6 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M8 DATA | M6 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M5 DATA | U6 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M8 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M8 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
 | BUS_SERVO_BUS | M8 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
 | BUS_SERVO_BUS | M8 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M8 DATA | U3 SIG | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M9 DATA | M6 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M9 DATA | M6 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M8 DATA | U6 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M8 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M8 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M8 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M8 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M8 DATA | U6 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M9 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M9 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
 | BUS_SERVO_BUS | M9 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
 | BUS_SERVO_BUS | M9 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M9 DATA | U3 SIG | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M9 DATA | M6 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M9 DATA | M6 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M9 DATA | U6 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M9 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M9 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
 | BUS_SERVO_BUS | M9 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
 | BUS_SERVO_BUS | M9 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M9 DATA | U3 SIG | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M11 DATA | M6 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M11 DATA | M6 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M11 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M11 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M11 DATA | U3 SIG | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M11 DATA | M6 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M11 DATA | M6 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M11 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M11 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M11 DATA | U3 SIG | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M10 DATA | M13 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M9 DATA | U6 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M10 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M10 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M10 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M10 DATA | M3 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M10 DATA | M3 DATA | - | - | - | not checked: no published logic levels for one side |
 | BUS_SERVO_BUS | M10 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M10 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M10 DATA | M7 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M10 DATA | M7 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M10 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
 | BUS_SERVO_BUS | M10 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
 | BUS_SERVO_BUS | M10 DATA | M9 DATA | - | - | - | not checked: no published logic levels for one side |
 | BUS_SERVO_BUS | M10 DATA | M9 DATA | - | - | - | not checked: no published logic levels for one side |
 | BUS_SERVO_BUS | M10 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M10 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M10 DATA | M12 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M10 DATA | U3 SIG | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M10 DATA | M13 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M10 DATA | U6 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M10 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M10 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M10 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M10 DATA | M3 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M10 DATA | M3 DATA | - | - | - | not checked: no published logic levels for one side |
 | BUS_SERVO_BUS | M10 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M10 DATA | M5 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M10 DATA | M7 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M10 DATA | M7 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M10 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
 | BUS_SERVO_BUS | M10 DATA | M8 DATA | - | - | - | not checked: no published logic levels for one side |
 | BUS_SERVO_BUS | M10 DATA | M9 DATA | - | - | - | not checked: no published logic levels for one side |
 | BUS_SERVO_BUS | M10 DATA | M9 DATA | - | - | - | not checked: no published logic levels for one side |
 | BUS_SERVO_BUS | M10 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M10 DATA | M11 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M10 DATA | M12 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M10 DATA | U3 SIG | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M12 DATA | M6 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M12 DATA | M6 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M12 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M12 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M12 DATA | U3 SIG | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | U3 SIG | M13 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | U3 SIG | M5 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | U3 SIG | M5 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | U3 SIG | M7 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | U3 SIG | M7 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | U3 SIG | M6 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | U3 SIG | M6 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | U3 SIG | M8 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | U3 SIG | M9 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | U3 SIG | M9 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | U3 SIG | M11 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | U3 SIG | M11 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | U3 SIG | M10 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | U3 SIG | M10 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | U3 SIG | M12 DATA | - | - | - | not checked: no published logic levels for one side |
-| I2C_SCL | A1 GPIO3 | U4 SCL | 3.3 | 2.3 | 5.5 | ok |
-| I2C_SCL | U4 SCL | A1 GPIO3 | 3.3 | 2.15 | 3.6 | ok |
-| I2C_SDA | A1 GPIO2 | U4 SDA | 3.3 | 2.3 | 5.5 | ok |
-| I2C_SDA | U4 SDA | A1 GPIO2 | 3.3 | 2.15 | 3.6 | ok |
-| LEFT_FRONT_MOTOR_DIR | A1 GPIO13 | U1 DIR1 | 3.3 | 2 | 5.5 | ok |
-| LEFT_FRONT_MOTOR_ENC_A | M1 Encoder A | A1 GPIO18 | 3.3 | 2.15 | 3.6 | ok |
-| LEFT_FRONT_MOTOR_ENC_B | M1 Encoder B | A1 GPIO19 | 3.3 | 2.15 | 3.6 | ok |
-| LEFT_FRONT_MOTOR_PWM | A1 GPIO12 | U1 PWM1 | 3.3 | 2 | 5.5 | ok |
-| LEFT_REAR_MOTOR_DIR | A1 GPIO6 | U1 DIR2 | 3.3 | 2 | 5.5 | ok |
-| LEFT_REAR_MOTOR_ENC_A | M2 Encoder A | A1 GPIO16 | 3.3 | 2.15 | 3.6 | ok |
-| LEFT_REAR_MOTOR_ENC_B | M2 Encoder B | A1 GPIO20 | 3.3 | 2.15 | 3.6 | ok |
-| LEFT_REAR_MOTOR_PWM | A1 GPIO5 | U1 PWM2 | 3.3 | 2 | 5.5 | ok |
-| RIGHT_FRONT_MOTOR_DIR | A1 GPIO26 | U2 DIR1 | 3.3 | 2 | 5.5 | ok |
-| RIGHT_FRONT_MOTOR_ENC_A | M3 Encoder A | A1 GPIO17 | 3.3 | 2.15 | 3.6 | ok |
-| RIGHT_FRONT_MOTOR_ENC_B | M3 Encoder B | A1 GPIO27 | 3.3 | 2.15 | 3.6 | ok |
-| RIGHT_FRONT_MOTOR_PWM | A1 GPIO21 | U2 PWM1 | 3.3 | 2 | 5.5 | ok |
-| RIGHT_REAR_MOTOR_DIR | A1 GPIO23 | U2 DIR2 | 3.3 | 2 | 5.5 | ok |
-| RIGHT_REAR_MOTOR_ENC_A | M4 Encoder A | A1 GPIO24 | 3.3 | 2.15 | 3.6 | ok |
-| RIGHT_REAR_MOTOR_ENC_B | M4 Encoder B | A1 GPIO25 | 3.3 | 2.15 | 3.6 | ok |
-| RIGHT_REAR_MOTOR_PWM | A1 GPIO22 | U2 PWM2 | 3.3 | 2 | 5.5 | ok |
+| BUS_SERVO_BUS | M10 DATA | U6 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M11 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M11 DATA | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M11 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M11 DATA | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M11 DATA | U6 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U6 SIG | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U6 SIG | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U6 SIG | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U6 SIG | M3 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U6 SIG | M3 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U6 SIG | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U6 SIG | M4 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U6 SIG | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U6 SIG | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U6 SIG | M8 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U6 SIG | M9 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U6 SIG | M9 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U6 SIG | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U6 SIG | M10 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U6 SIG | M11 DATA | - | - | - | not checked: no published logic levels for one side |
+| I2C_SCL | A1 GPIO3 | U2 SCL | 3.3 | 2.3 | 5.5 | ok |
+| I2C_SCL | U2 SCL | A1 GPIO3 | 3.3 | 2.15 | 3.6 | ok |
+| I2C_SDA | A1 GPIO2 | U2 SDA | 3.3 | 2.3 | 5.5 | ok |
+| I2C_SDA | U2 SDA | A1 GPIO2 | 3.3 | 2.15 | 3.6 | ok |
+| LEFT_FRONT_MOTOR_DIR | A1 GPIO13 | U3 DIR1 | 3.3 | 2 | 5.5 | ok |
+| LEFT_FRONT_MOTOR_ENC_A | M6 Encoder A | A1 GPIO18 | 3.3 | 2.15 | 3.6 | ok |
+| LEFT_FRONT_MOTOR_ENC_B | M6 Encoder B | A1 GPIO19 | 3.3 | 2.15 | 3.6 | ok |
+| LEFT_FRONT_MOTOR_PWM | A1 GPIO12 | U3 PWM1 | 3.3 | 2 | 5.5 | ok |
+| LEFT_REAR_MOTOR_DIR | A1 GPIO6 | U3 DIR2 | 3.3 | 2 | 5.5 | ok |
+| LEFT_REAR_MOTOR_ENC_A | M7 Encoder A | A1 GPIO16 | 3.3 | 2.15 | 3.6 | ok |
+| LEFT_REAR_MOTOR_ENC_B | M7 Encoder B | A1 GPIO20 | 3.3 | 2.15 | 3.6 | ok |
+| LEFT_REAR_MOTOR_PWM | A1 GPIO5 | U3 PWM2 | 3.3 | 2 | 5.5 | ok |
+| RIGHT_FRONT_MOTOR_DIR | A1 GPIO26 | U4 DIR1 | 3.3 | 2 | 5.5 | ok |
+| RIGHT_FRONT_MOTOR_ENC_A | M12 Encoder A | A1 GPIO17 | 3.3 | 2.15 | 3.6 | ok |
+| RIGHT_FRONT_MOTOR_ENC_B | M12 Encoder B | A1 GPIO27 | 3.3 | 2.15 | 3.6 | ok |
+| RIGHT_FRONT_MOTOR_PWM | A1 GPIO21 | U4 PWM1 | 3.3 | 2 | 5.5 | ok |
+| RIGHT_REAR_MOTOR_DIR | A1 GPIO23 | U4 DIR2 | 3.3 | 2 | 5.5 | ok |
+| RIGHT_REAR_MOTOR_ENC_A | M13 Encoder A | A1 GPIO24 | 3.3 | 2.15 | 3.6 | ok |
+| RIGHT_REAR_MOTOR_ENC_B | M13 Encoder B | A1 GPIO25 | 3.3 | 2.15 | 3.6 | ok |
+| RIGHT_REAR_MOTOR_PWM | A1 GPIO22 | U4 PWM2 | 3.3 | 2 | 5.5 | ok |
 
 Not checked (no logic levels in the parts data): Feetech STS3215 C047 12 V 30 kg.cm (1:345), Feetech STS3250 C002 12 V 50 kg.cm (1:345), Waveshare Bus Servo Adapter (A).
 

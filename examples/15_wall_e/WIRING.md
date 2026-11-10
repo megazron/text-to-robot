@@ -232,8 +232,8 @@ A driver's high level is its I/O supply; the receiver needs it above its input t
 | Net | Driver | Receiver | High V | Threshold V | Input limit V | Result |
 |---|---|---|--:|--:|--:|---|
 | CONTROLLER_D10 | A1 D10/SS | U3 PWMB | 5 | 2 | 5.7 | ok |
-| CONTROLLER_D11 | A1 D11/MOSI | U1 Trig | 5 | 2 | 5.5 | ok |
-| CONTROLLER_D12 | U1 Echo | A1 D12/MISO | 5 | 3 | 5.5 | ok |
+| CONTROLLER_D11 | A1 D11/MOSI | U6 Trig | 5 | 2 | 5.5 | ok |
+| CONTROLLER_D12 | U6 Echo | A1 D12/MISO | 5 | 3 | 5.5 | ok |
 | CONTROLLER_D2 | A1 D2 | U3 BIN2 | 5 | 2 | 5.7 | ok |
 | CONTROLLER_D4 | A1 D4 | U2 BIN1 | 5 | 2 | 5.7 | ok |
 | CONTROLLER_D5 | A1 D5 | U2 PWMA | 5 | 2 | 5.7 | ok |
@@ -244,13 +244,13 @@ A driver's high level is its I/O supply; the receiver needs it above its input t
 | I2C_SCL | A1 A5/SCL | U4 SCL | 5 | 3.5 | 5.5 | ok |
 | I2C_SDA | A1 A4/SDA | U4 SDA | 5 | 3.5 | 5.5 | ok |
 | I2C_SDA | U4 SDA | A1 A4/SDA | 5 | 3 | 5.5 | ok |
-| SERVO0_PWM | U4 PWM0 | M5 Signal | 5 | 2 | 6 | ok |
-| SERVO1_PWM | U4 PWM1 | M6 Signal | 5 | 2 | 6 | ok |
-| SERVO2_PWM | U4 PWM2 | M9 Signal | 5 | 2 | 6 | ok |
+| SERVO0_PWM | U4 PWM0 | M6 Signal | 5 | 2 | 6 | ok |
+| SERVO1_PWM | U4 PWM1 | M7 Signal | 5 | 2 | 6 | ok |
+| SERVO2_PWM | U4 PWM2 | M5 Signal | 5 | 2 | 6 | ok |
 | SERVO3_PWM | U4 PWM3 | M12 Signal | 5 | 2 | 6 | ok |
-| SERVO4_PWM | U4 PWM4 | M7 Signal | 5 | 2 | 6 | ok |
+| SERVO4_PWM | U4 PWM4 | M3 Signal | 5 | 2 | 6 | ok |
 | SERVO5_PWM | U4 PWM5 | M10 Signal | 5 | 2 | 6 | ok |
-| SERVO6_PWM | U4 PWM6 | M8 Signal | 5 | 2 | 6 | ok |
+| SERVO6_PWM | U4 PWM6 | M4 Signal | 5 | 2 | 6 | ok |
 | SERVO7_PWM | U4 PWM7 | M11 Signal | 5 | 2 | 6 | ok |
 
 ### Sources

@@ -4,7 +4,7 @@
 import { electrical } from "@ttr/parts";
 import type { WiringRecord, WireRec } from "../wiring.ts";
 import { Doc, textWidth, textBox, type Pt, type Box, union } from "./draw.ts";
-import { symbolKind, shortName, shortPin, type Side } from "./model.ts";
+import { symbolKind, shortName, shortPin, buildModel, withBranchFuses, fuseIdOf, type Side } from "./model.ts";
 import { Router, type Heading } from "./route.ts";
 
 const G = 10, PITCH = 20, LEG = 10;
@@ -14,24 +14,26 @@ const snap = (v: number) => Math.round(v / G) * G;
 const up = (v: number) => Math.ceil(v / G) * G;
 
 interface BPin { term: string; name: string; side: Side; off: number; }
-interface BPart { inst: string; key: string; role: string; kind: string; title: string; pins: BPin[]; col: number; x: number; y: number; w: number; h: number; }
+interface BPart { ref: string; inst: string; key: string; role: string; kind: string; title: string; pins: BPin[]; col: number; x: number; y: number; w: number; h: number; }
 export interface BreadboardResult { svg: string; pdf: Uint8Array; doc: Doc; unrouted: string[]; }
 
 const isBand = (role: string) => ["battery", "psu", "switch", "protection", "regulator", "splice"].includes(role);
 const colOf = (role: string) => (isBand(role) ? -1 : role === "sensor" || role === "indicator" ? 0 : role === "controller" ? 1 : role === "actuator" ? 3 : 2);
 
-export function breadboard(w: WiringRecord, robot: string): BreadboardResult {
+export function breadboard(rec: WiringRecord, robot: string): BreadboardResult {
+  // branch fuses as parts in their leads; designators as in the schematic, so the two views cross-reference
+  const w = withBranchFuses(rec), refs = new Map(buildModel(w, robot).parts.map((p) => [p.inst, p.ref]));
   // a sheet near A-paper proportions first; if a wire will not lay, more room, then the long single strip of parts
   let best: BreadboardResult | null = null;
   for (const [wrap, spread] of [["aspect", 1], ["aspect", 1.5], ["tall", 1], ["tall", 1.5], ["tall", 2]] as const) {
-    const r = attempt(w, robot, spread, wrap);
+    const r = attempt(w, robot, spread, wrap, refs);
     if (!best || r.unrouted.length < best.unrouted.length) best = r;
     if (!r.unrouted.length) break;
   }
   return best!;
 }
 
-function attempt(w: WiringRecord, robot: string, spread: number, wrap: "aspect" | "tall"): BreadboardResult {
+function attempt(w: WiringRecord, robot: string, spread: number, wrap: "aspect" | "tall", refs: Map<string, string>): BreadboardResult {
   const keyOf = new Map(w.instances.map((i) => [i.name, i.key]));
   const roleOf = (i: string) => electrical(keyOf.get(i)!)?.role ?? "load";
   const wires: WireRec[] = w.cables.flatMap((c) => (c.premade ? c.wires.map((x) => ({ ...x, color: "grey", premade: c.premade })) : c.wires));
@@ -48,7 +50,7 @@ function attempt(w: WiringRecord, robot: string, spread: number, wrap: "aspect" 
     const ts = terms.get(i.name); if (!ts) continue;
     const e = electrical(i.key)!; if (e.role === "carrier") continue;
     const kind = e.role === "splice" ? "splice" : symbolKind(i.key, e.role);
-    parts.set(i.name, { inst: i.name, key: i.key, role: e.role, kind, title: shortName(i.key), pins: ts.map((t) => ({ term: t, name: shortPin(t.split(".")[2]), side: "left" as Side, off: 0 })), col: colOf(e.role), x: 0, y: 0, w: 0, h: 0 });
+    parts.set(i.name, { ref: refs.get(i.name) ?? "", inst: i.name, key: i.key, role: e.role, kind, title: shortName(i.key), pins: ts.map((t) => ({ term: t, name: shortPin(t.split(".")[2]), side: "left" as Side, off: 0 })), col: colOf(e.role), x: 0, y: 0, w: 0, h: 0 });
   }
   const list = [...parts.values()];
   const partnerOf = (t: string) => wires.filter((x) => x.from === t || x.to === t).map((x) => (x.from === t ? x.to : x.from).split(".")[0]);
@@ -79,7 +81,8 @@ function attempt(w: WiringRecord, robot: string, spread: number, wrap: "aspect" 
     const lw = Math.max(0, ...by("left").map((x) => textWidth(x.name, 8))), rw = Math.max(0, ...by("right").map((x) => textWidth(x.name, 8)));
     const tn = Math.max(0, ...by("top").map((x) => textWidth(x.name, 8))), bn = Math.max(0, ...by("bottom").map((x) => textWidth(x.name, 8)));
     const [mw, mh] = MIN[p.kind] ?? [100, 70];
-    const titleW = Math.min(textWidth(p.title, 9, true), 200) + 24;
+    // the caption (designator and name) is never cut: inside a big part, or over a small one with 20 to spare each side
+    const titleW = Math.max(Math.min(textWidth(p.title, 9, true), 200), textWidth(capName(p), 8) - (BIG.has(p.kind) ? 0 : 40)) + 24;
     const across = Math.max(by("top").length, by("bottom").length) * PITCH + 20;
     p.w = up(Math.max(mw, lw + rw + (BIG.has(p.kind) ? 90 : 50), across + lw + rw + 20, titleW));
     const rows = Math.max(by("left").length, by("right").length);
@@ -149,7 +152,7 @@ function attempt(w: WiringRecord, robot: string, spread: number, wrap: "aspect" 
   }
   R.block({ x: 20, y: 20, w: Math.max(lx, 700), h: 80 });
   // captions over the small parts of the power row
-  for (const p of list) if (["fuse", "switch", "splice", "led", "battery", "inlet"].includes(p.kind)) { const cw = Math.max(textWidth(p.title, 9, true), textWidth(p.inst, 8)) + 8, mw = Math.min(cw, Math.max(p.w + 40, 120) + 8); R.block({ x: p.x + p.w / 2 - mw / 2, y: p.y - 34, w: mw, h: 32 }); }
+  for (const p of list) if (["fuse", "switch", "splice", "led", "battery", "inlet"].includes(p.kind)) { const cw = Math.max(textWidth(p.title, 9, true), textWidth(capName(p), 8)) + 8, mw = Math.min(cw, Math.max(p.w + 40, 120) + 8); R.block({ x: p.x + p.w / 2 - mw / 2, y: p.y - 34, w: mw, h: 32 }); }
   const pinOf = (t: string) => { const p = parts.get(t.split(".")[0])!; return { p, x: p.pins.find((q) => q.term === t)! }; };
   // pins with several wires fan out first, then short wires before long ones
   const load = new Map<string, number>(); for (const x2 of wires) for (const t of [x2.from, x2.to]) load.set(t, (load.get(t) ?? 0) + 1);
@@ -180,6 +183,8 @@ function attempt(w: WiringRecord, robot: string, spread: number, wrap: "aspect" 
   return { svg: doc.svg({ title, desc: "Generated by Text to Robot from the robot's wiring record (design.wiring). Each wire carries data-wire, its colour is the wire colour in WIRING.md." }), pdf: doc.pdf({ title }), doc, unrouted };
 }
 
+/** the caption under a part's title: its schematic designator and its name in the design */
+const capName = (p: BPart) => (p.ref ? `${p.ref} · ${p.inst}` : p.inst);
 function shade(hex: string): string { const v = hex.replace("#", "").match(/../g)!.map((h) => Math.round(parseInt(h, 16) * 0.6)); return `#${v.map((c) => c.toString(16).padStart(2, "0")).join("")}`; }
 const PCB: Record<string, [string, string]> = {
   arduino: ["#0f7c8c", "#ffffff"], rpi: ["#2e8b4a", "#ffffff"], jetson: ["#2a2a2a", "#e6e6e6"], esp32: ["#1f1f1f", "#ffffff"], tb6612: ["#c0392b", "#ffffff"], pca9685: ["#1f4fa0", "#ffffff"],
@@ -190,7 +195,7 @@ function pcbFor(key: string): [string, string] { for (const [k, v] of Object.ent
 const FUSE_COL: [number, string][] = [[2, "#9e9e9e"], [3, "#8e44ad"], [4, "#f48fb1"], [5, "#d2b48c"], [7.5, "#8b5a2b"], [10, "#d7263d"], [15, "#1f6fd1"], [20, "#f2c200"], [25, "#eeeeee"], [30, "#2a9d3a"]];
 
 function drawPart(doc: Doc, p: BPart, w: WiringRecord) {
-  const { x, y } = p, W = p.w, H = p.h, g = `P:${p.inst}`, d = { g };
+  const { x, y } = p, W = p.w, H = p.h, g = `P:${p.inst}`, d = { g, ...(p.ref ? { ref: p.ref } : {}) };
   const k = p.kind, key = p.key;
   const T = (tx: number, ty: number, s: string, size: number, fill: string, o: { bold?: boolean; anchor?: "start" | "middle" | "end"; rot?: 0 | -90 } = {}) => doc.text(tx, ty, s, size, { fill, data: d, ...o });
   let ink = "#ffffff", body = "#333333";
@@ -201,8 +206,8 @@ function drawPart(doc: Doc, p: BPart, w: WiringRecord) {
   const roomy = fb.w >= 40 && fb.h >= 26;
   if (k === "board" || k === "ic" || k === "regulator" || k === "sensor" || k === "module") {
     const [c, t] = pcbFor(key); body = c; ink = t;
-    if (/realsense/.test(key)) { body = "#7d8288"; doc.rect(x, y, W, H, { rx: 14, fill: body, stroke: "#4a4d50", sw: 1.4, data: d }); for (let i = 0; i < 3; i++) doc.circle(x + W * (0.3 + i * 0.2), y + H * 0.55, 7, { fill: "#1b1b1b", stroke: "#444", sw: 1, data: d }); }
-    else if (/rplidar/.test(key)) { body = "#2b2b2b"; doc.rect(x, y, W, H, { rx: 10, fill: "#3a3a3a", stroke: "#111", sw: 1.2, data: d }); doc.circle(x + W / 2, y + H / 2 + 4, Math.min(W, H) * 0.3, { fill: "#1b1b1b", stroke: "#666", sw: 2, data: d }); }
+    if (/realsense/.test(key)) { body = "#7d8288"; doc.rect(x, y, W, H, { rx: 14, fill: body, stroke: "#4a4d50", sw: 1.4, data: d }); if (roomy) for (let i = 0; i < 3; i++) doc.circle(fb.x + fb.w * (0.3 + i * 0.2), fb.y + fb.h / 2, Math.min(7, fb.h / 2 - 2), { fill: "#1b1b1b", stroke: "#444", sw: 1, data: d }); }
+    else if (/rplidar/.test(key)) { body = "#2b2b2b"; doc.rect(x, y, W, H, { rx: 10, fill: "#3a3a3a", stroke: "#111", sw: 1.2, data: d }); if (roomy) doc.circle(fb.x + fb.w / 2, fb.y + fb.h / 2, Math.max(4, Math.min(fb.w, fb.h) / 2 - 3), { fill: "#1b1b1b", stroke: "#666", sw: 2, data: d }); }
     else {
       doc.rect(x, y, W, H, { rx: 6, fill: body, stroke: shade(body), sw: 1.4, data: d });
       for (const [hx, hy] of [[x + 7, y + 7], [x + W - 7, y + 7], [x + 7, y + H - 7], [x + W - 7, y + H - 7]]) doc.circle(hx, hy, 3, { fill: "#d9d4c3", stroke: shade(body), sw: 0.8, data: d });
@@ -236,7 +241,7 @@ function drawPart(doc: Doc, p: BPart, w: WiringRecord) {
     else { body = "#2a5fa5"; doc.rect(x, y, W, H, { rx: 6, fill: "#c7c9cc", stroke: "#8a8d90", sw: 1.2, data: d }); doc.rect(x + 6, y + 6, W - 12, H - 12, { rx: 4, fill: body, data: d }); }
   } else if (k === "switch") { body = "#1e1e1e"; doc.rect(x, y, W, H, { rx: 4, fill: body, data: d }); doc.rect(x + W * 0.25, y + H * 0.2, W * 0.5, H * 0.45, { rx: 3, fill: "#d7263d", stroke: "#8d1424", sw: 1, data: d }); doc.text(x + W / 2, y + H * 0.35 + 6, "I", 10, { anchor: "middle", fill: "#ffffff", bold: true, data: d }); }
   else if (k === "fuse") {
-    const rating = w.fuses[0]?.rating_a ?? 5, col = (FUSE_COL.find(([a]) => a >= rating) ?? FUSE_COL[FUSE_COL.length - 1])[1];
+    const rating = w.fuses.find((f) => f.id === fuseIdOf(w, p.inst))?.rating_a ?? w.fuses[0]?.rating_a ?? 5, col = (FUSE_COL.find(([a]) => a >= rating) ?? FUSE_COL[FUSE_COL.length - 1])[1];
     body = "#1e1e1e"; doc.rect(x, y + 4, W, H - 8, { rx: (H - 8) / 2, fill: body, data: d }); doc.rect(x + W / 2 - 12, y, 24, H, { rx: 3, fill: col, stroke: shade(col), sw: 1, data: d }); doc.text(x + W / 2, y + H / 2 + 3, `${rating}A`, 8, { anchor: "middle", bold: true, fill: "#111111", data: d });
   } else if (k === "inlet") { body = "#1e1e1e"; doc.rect(x, y, W, H, { rx: 6, fill: body, data: d }); doc.path([["M", x + W * 0.25, y + H * 0.3], ["L", x + W * 0.75, y + H * 0.3], ["L", x + W * 0.75, y + H * 0.6], ["L", x + W * 0.62, y + H * 0.75], ["L", x + W * 0.38, y + H * 0.75], ["L", x + W * 0.25, y + H * 0.6], ["Z"]], { fill: "#444", stroke: "#777", sw: 1, data: d }); }
   else if (k === "psu") { body = "#b9bcc0"; doc.rect(x, y, W, H, { rx: 3, fill: body, stroke: "#7d8084", sw: 1.4, data: d }); if (roomy) for (let i = 0; i < 6; i++) doc.line(fb.x + 4 + i * ((fb.w - 8) / 5), fb.y + 4, fb.x + 4 + i * ((fb.w - 8) / 5), fb.y + fb.h - 4, "#8e9195", 2, { data: d }); ink = "#111111"; }
@@ -247,7 +252,7 @@ function drawPart(doc: Doc, p: BPart, w: WiringRecord) {
   let t = p.title; const max = capInside ? W - 16 : Math.max(W + 40, 120); while (t.length > 4 && textWidth(t, 9, true) > max) t = t.slice(0, -2);
   if (t !== p.title) t = `${t.trim()}...`;
   // the part's name in the design under its title: which motor is which
-  let n = p.inst; while (n.length > 4 && textWidth(n, 8) > max) n = n.slice(0, -1);
+  let n = capName(p); while (n.length > 4 && textWidth(n, 8) > max) n = n.slice(0, -1);
   if (!capInside) { T(x + W / 2, y - 20, t, 9, "#333333", { bold: true, anchor: "middle" }); T(x + W / 2, y - 8, n, 8, "#555555", { anchor: "middle" }); }
   else { T(x + W / 2, y + tz + 18, t, 9, ink, { bold: true, anchor: "middle" }); T(x + W / 2, y + tz + 30, n, 8, ink, { anchor: "middle" }); }
   // pins: a gold pad on the edge, the name beside it on the part

@@ -4,12 +4,14 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync, readdirSync, existsSync } from "node:fs";
-import { schematic, breadboard, layoutProblems, netlistFromSvg, electricalReport, wiringMarkdown, USABLE, WIRE_HEX, type WiringRecord } from "@ttr/design";
+import { schematic, breadboard, withBranchFuses, layoutProblems, netlistFromSvg, electricalReport, wiringMarkdown, USABLE, WIRE_HEX, type WiringRecord } from "@ttr/design";
 import { Doc } from "../packages/design/src/circuit/draw.ts";
 import { ELECTRICAL, electrical, type Sourced } from "@ttr/parts";
 
 const examples = readdirSync("examples").filter((d) => /^\d\d_/.test(d)).sort();
 const wiringOf = (ex: string): { w: WiringRecord; name: string } => { const s = JSON.parse(readFileSync(`examples/${ex}/robot.json`, "utf8")); return { w: s.metadata.design.wiring, name: s.robot_name }; };
+/** designators drawn in an SVG: data-ref on a symbol (schematic) or a part (breadboard) */
+const refsIn = (svg: string) => new Set([...svg.matchAll(/data-ref="([A-Z]+\d+)"/g)].map((m) => m[1]));
 
 /**
  * The conductors a wiring record defines, worked out here independently of the drawing code: the record's wires joined
@@ -36,7 +38,9 @@ function tagged(w: WiringRecord): { pins: string[]; nets: Set<string> }[] {
 
 for (const ex of examples) {
   test(`${ex}: schematic is clean and draws exactly the record's netlist`, () => {
-    const { w, name } = wiringOf(ex), r = schematic(w, name);
+    const { w: rec, name } = wiringOf(ex), r = schematic(rec, name);
+    // a branch fuse is a part in series in its lead: the drawing's conductors are those of the record with it in place
+    const w = withBranchFuses(rec);
     assert.deepEqual(layoutProblems(r.doc), [], `${ex}: layout`);
     // connectivity from the drawing alone (pin ends, wires, junction dots, labels and power symbols) equals the record
     assert.deepEqual(netlistFromSvg(r.svg), conductors(w), `${ex}: netlist read back from schematic.svg`);
@@ -52,6 +56,27 @@ for (const ex of examples) {
     // reference designators are unique and every part is on the sheet once
     const refs = r.netlist.parts.map((p) => p.ref);
     assert.equal(new Set(refs).size, refs.length, `${ex}: duplicate reference designators`);
+    // every fuse of the record is a symbol, under its record id
+    const fuses = rec.fuses.map((f) => f.id).sort();
+    assert.deepEqual([...refsIn(r.svg)].filter((x) => /^F\d+$/.test(x)).sort(), fuses, `${ex}: fuse symbols`);
+    assert.equal(fuses.length, rec.fuses.filter((f) => /^branch /.test(f.protects)).length + (rec.fuses.some((f) => f.id === "F1") ? 1 : 0), `${ex}: fuses are the main fuse and branch fuses`);
+    // a branch fuse sits in its lead: IN on the main rail, OUT a conductor of its own that reaches the part it protects
+    // (and, through a servo's linked power pins, the rest of a daisy chain behind it)
+    const main = rec.rails.find((x) => x.fuse_a != null)?.name;
+    for (const f of rec.fuses.filter((x) => /^branch /.test(x.protects))) {
+      const part = r.netlist.parts.find((p) => p.ref === f.id)!, target = f.protects.slice(7);
+      const nodeOf = (end: string) => r.netlist.nodes.find((n) => n.pins.some((q) => q.id.startsWith(`${part.inst}.`) && q.id.endsWith(`.${end}`)))!;
+      const a = nodeOf("IN"), b = nodeOf("OUT");
+      assert.ok(a && b && a !== b, `${ex}: ${f.id} is not in series`);
+      assert.ok(a.nets.includes(main!), `${ex}: ${f.id} IN is not on ${main}`);
+      assert.ok(b.pins.some((q) => q.id.split(".")[0] === target), `${ex}: ${f.id} OUT does not reach ${target}`);
+    }
+    // designators follow instance names within each prefix, so they do not move when the layout does
+    const byPre = new Map<string, { n: number; inst: string }[]>();
+    for (const p of r.netlist.parts) { const [, pre, n] = p.ref.match(/^([A-Z]+)(\d+)$/)!; if (pre !== "F") byPre.set(pre, [...(byPre.get(pre) ?? []), { n: +n, inst: p.inst }]); }
+    for (const [pre, xs] of byPre) { const byN = [...xs].sort((a, b) => a.n - b.n).map((x) => x.inst), byName = [...xs].map((x) => x.inst).sort((a, b) => a.localeCompare(b, "en", { numeric: true })); assert.deepEqual(byN, byName, `${ex}: ${pre} designators not in instance-name order`); }
+    // the instance name is shown beside each designator
+    for (const p of r.netlist.parts) assert.ok(r.svg.includes(`>· ${p.inst}<`) || r.svg.includes(`>${p.inst}<`), `${ex}: ${p.ref} without its name ${p.inst}`);
     // a rail's power symbol carries its voltage
     for (const rail of w.rails) if (r.netlist.nodes.some((n) => n.name === rail.name && n.drawn === "power")) assert.ok(r.svg.includes(`>${rail.name} ${+rail.voltage_v.toFixed(2)}V<`) || (/^\+?\d+V\d*$/.test(rail.name) && r.svg.includes(`>${rail.name}<`)), `${ex}: ${rail.name} power symbol without its voltage`);
     assert.match(r.svg, /Title:/); assert.match(r.svg, /Rev: [0-9a-f]{8}/);
@@ -59,16 +84,19 @@ for (const ex of examples) {
     assert.equal(readFileSync(`examples/${ex}/schematic.svg`, "utf8"), r.svg, `${ex}: schematic.svg is stale: node scripts/export_circuits.ts`);
   });
   test(`${ex}: breadboard view is clean and draws every wire once in its colour`, () => {
-    const { w, name } = wiringOf(ex), r = breadboard(w, name);
+    const { w: rec, name } = wiringOf(ex), r = breadboard(rec, name), w = withBranchFuses(rec), sch = schematic(rec, name);
+    // the same fuses as the schematic, and every part labelled with its schematic designator and name
+    assert.deepEqual([...refsIn(r.svg)].filter((x) => /^F\d+$/.test(x)).sort(), rec.fuses.map((f) => f.id).sort(), `${ex}: fuse parts`);
+    for (const p of sch.netlist.parts) assert.ok(r.svg.includes(`data-g="P:${p.inst}" data-ref="${p.ref}"`) && r.svg.includes(`>${p.ref} · ${p.inst}<`), `${ex}: breadboard part ${p.inst} is not labelled ${p.ref}`);
     assert.deepEqual(r.unrouted, [], `${ex}: wires the router could not lay`);
     assert.deepEqual(layoutProblems(r.doc), [], `${ex}: layout`);
-    const drawn = [...r.svg.matchAll(/<path[^>]*stroke="(#[0-9a-f]{6})"[^>]*class="wire"[^>]*data-wire="(W\d+)"/g)].map((m) => [m[2], m[1]]);
+    const drawn = [...r.svg.matchAll(/<path[^>]*stroke="(#[0-9a-f]{6})"[^>]*class="wire"[^>]*data-wire="(W\d+[ab]?)"/g)].map((m) => [m[2], m[1]]);
     const wires = w.cables.flatMap((c) => c.wires.map((x) => ({ ...x, premade: c.premade })));
     assert.equal(drawn.length, wires.length, `${ex}: ${drawn.length} wires drawn, the record has ${wires.length}`);
     for (const [id, hex] of drawn) { const x = wires.find((q) => q.id === id)!; assert.equal(hex, WIRE_HEX[x.premade ? "grey" : x.color], `${ex}: ${id} is ${x.color}`); }
     assert.equal(readFileSync(`examples/${ex}/breadboard.svg`, "utf8"), r.svg, `${ex}: breadboard.svg is stale: node scripts/export_circuits.ts`);
     assert.ok(existsSync(`examples/${ex}/schematic.pdf`));
-    assert.equal(readFileSync(`examples/${ex}/WIRING.md`, "utf8"), wiringMarkdown(w, name), `${ex}: WIRING.md is stale`);
+    assert.equal(readFileSync(`examples/${ex}/WIRING.md`, "utf8"), wiringMarkdown(rec, name), `${ex}: WIRING.md is stale`);
   });
 }
 

@@ -168,32 +168,32 @@ A driver's high level is its I/O supply; the receiver needs it above its input t
 
 | Net | Driver | Receiver | High V | Threshold V | Input limit V | Result |
 |---|---|---|--:|--:|--:|---|
-| BUS_SERVO_BUS | M3 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M5 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M4 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M4 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M7 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M6 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M6 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | U1 SIG | M3 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | U1 SIG | M5 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | U1 SIG | M4 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | U1 SIG | M4 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | U1 SIG | M7 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | U1 SIG | M6 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | U1 SIG | M6 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M1 DATA | U5 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M2 DATA | U5 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M3 DATA | U5 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M3 DATA | U5 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M5 DATA | U5 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M6 DATA | U5 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M6 DATA | U5 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U5 SIG | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U5 SIG | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U5 SIG | M3 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U5 SIG | M3 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U5 SIG | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U5 SIG | M6 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U5 SIG | M6 DATA | - | - | - | not checked: no published logic levels for one side |
 | I2C_SCL | A1 GPIO3 | U2 SCL | 3.3 | 2.3 | 5.5 | ok |
 | I2C_SCL | U2 SCL | A1 GPIO3 | 3.3 | 2.15 | 3.6 | ok |
 | I2C_SDA | A1 GPIO2 | U2 SDA | 3.3 | 2.3 | 5.5 | ok |
 | I2C_SDA | U2 SDA | A1 GPIO2 | 3.3 | 2.15 | 3.6 | ok |
-| LEFT_MOTOR_DIR | A1 GPIO13 | U4 DIR1 | 3.3 | 2 | 5.5 | ok |
-| LEFT_MOTOR_ENC_A | M1 Encoder A | A1 GPIO18 | 3.3 | 2.15 | 3.6 | ok |
-| LEFT_MOTOR_ENC_B | M1 Encoder B | A1 GPIO19 | 3.3 | 2.15 | 3.6 | ok |
-| LEFT_MOTOR_PWM | A1 GPIO12 | U4 PWM1 | 3.3 | 2 | 5.5 | ok |
-| RIGHT_MOTOR_DIR | A1 GPIO6 | U4 DIR2 | 3.3 | 2 | 5.5 | ok |
-| RIGHT_MOTOR_ENC_A | M2 Encoder A | A1 GPIO16 | 3.3 | 2.15 | 3.6 | ok |
-| RIGHT_MOTOR_ENC_B | M2 Encoder B | A1 GPIO20 | 3.3 | 2.15 | 3.6 | ok |
-| RIGHT_MOTOR_PWM | A1 GPIO5 | U4 PWM2 | 3.3 | 2 | 5.5 | ok |
+| LEFT_MOTOR_DIR | A1 GPIO13 | U3 DIR1 | 3.3 | 2 | 5.5 | ok |
+| LEFT_MOTOR_ENC_A | M4 Encoder A | A1 GPIO18 | 3.3 | 2.15 | 3.6 | ok |
+| LEFT_MOTOR_ENC_B | M4 Encoder B | A1 GPIO19 | 3.3 | 2.15 | 3.6 | ok |
+| LEFT_MOTOR_PWM | A1 GPIO12 | U3 PWM1 | 3.3 | 2 | 5.5 | ok |
+| RIGHT_MOTOR_DIR | A1 GPIO6 | U3 DIR2 | 3.3 | 2 | 5.5 | ok |
+| RIGHT_MOTOR_ENC_A | M7 Encoder A | A1 GPIO16 | 3.3 | 2.15 | 3.6 | ok |
+| RIGHT_MOTOR_ENC_B | M7 Encoder B | A1 GPIO20 | 3.3 | 2.15 | 3.6 | ok |
+| RIGHT_MOTOR_PWM | A1 GPIO5 | U3 PWM2 | 3.3 | 2 | 5.5 | ok |
 
 Not checked (no logic levels in the parts data): Feetech STS3215 C047 12 V 30 kg.cm (1:345), Waveshare Bus Servo Adapter (A).
 

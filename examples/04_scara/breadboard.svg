@@ -95,253 +95,253 @@
 <polyline points="293.82,80 317.82,80" fill="none" stroke="#a88600" stroke-width="5.6" stroke-linejoin="round" stroke-linecap="round"/>
 <polyline points="293.82,80 317.82,80" stroke="#f2c200" stroke-width="4" fill="none" stroke-linejoin="round" stroke-linecap="round" data-g="head"/>
 <text x="323.82" y="84" font-size="10" fill="#333333" data-g="head">yellow</text>
-<rect x="1050" y="470" width="220" height="120" rx="6" fill="#2b2b2b" stroke="#000" stroke-width="1.4" data-g="P:j1_motor"/>
-<rect x="1075.56" y="508" width="188.44" height="76" rx="4" fill="#b9bcc0" data-g="P:j1_motor"/>
-<circle cx="1169.78" cy="546" r="10" fill="#2b2b2b" data-g="P:j1_motor"/>
-<text x="1160" y="488" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:j1_motor">NEMA17 stepper + 5.18:1 planetary gearbox</text>
-<text x="1160" y="500" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:j1_motor">j1_motor</text>
-<rect x="1050" y="517" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:j1_motor"/>
-<text x="1059" y="523" font-size="8" fill="#ffffff" data-g="P:j1_motor">A</text>
-<rect x="1050" y="537" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:j1_motor"/>
-<text x="1059" y="543" font-size="8" fill="#ffffff" data-g="P:j1_motor">A\</text>
-<rect x="1050" y="557" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:j1_motor"/>
-<text x="1059" y="563" font-size="8" fill="#ffffff" data-g="P:j1_motor">B</text>
-<rect x="1050" y="577" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:j1_motor"/>
-<text x="1059" y="583" font-size="8" fill="#ffffff" data-g="P:j1_motor">B\</text>
-<rect x="1080" y="670" width="160" height="120" rx="6" fill="#2b2b2b" stroke="#000" stroke-width="1.4" data-g="P:z_motor"/>
-<rect x="1105.56" y="708" width="128.44" height="76" rx="4" fill="#b9bcc0" data-g="P:z_motor"/>
-<circle cx="1169.78" cy="746" r="10" fill="#2b2b2b" data-g="P:z_motor"/>
-<text x="1160" y="688" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:z_motor">NEMA17 stepper 42x42x40 mm</text>
-<text x="1160" y="700" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:z_motor">z_motor</text>
-<rect x="1080" y="717" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:z_motor"/>
-<text x="1089" y="723" font-size="8" fill="#ffffff" data-g="P:z_motor">A</text>
-<rect x="1080" y="737" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:z_motor"/>
-<text x="1089" y="743" font-size="8" fill="#ffffff" data-g="P:z_motor">A\</text>
-<rect x="1080" y="757" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:z_motor"/>
-<text x="1089" y="763" font-size="8" fill="#ffffff" data-g="P:z_motor">B</text>
-<rect x="1080" y="777" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:z_motor"/>
-<text x="1089" y="783" font-size="8" fill="#ffffff" data-g="P:z_motor">B\</text>
-<rect x="1050" y="870" width="220" height="120" rx="6" fill="#2b2b2b" stroke="#000" stroke-width="1.4" data-g="P:j2_motor"/>
-<rect x="1075.56" y="908" width="188.44" height="76" rx="4" fill="#b9bcc0" data-g="P:j2_motor"/>
-<circle cx="1169.78" cy="946" r="10" fill="#2b2b2b" data-g="P:j2_motor"/>
-<text x="1160" y="888" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:j2_motor">NEMA17 stepper + 5.18:1 planetary gearbox</text>
-<text x="1160" y="900" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:j2_motor">j2_motor</text>
-<rect x="1050" y="917" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:j2_motor"/>
-<text x="1059" y="923" font-size="8" fill="#ffffff" data-g="P:j2_motor">A</text>
-<rect x="1050" y="937" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:j2_motor"/>
-<text x="1059" y="943" font-size="8" fill="#ffffff" data-g="P:j2_motor">A\</text>
-<rect x="1050" y="957" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:j2_motor"/>
-<text x="1059" y="963" font-size="8" fill="#ffffff" data-g="P:j2_motor">B</text>
-<rect x="1050" y="977" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:j2_motor"/>
-<text x="1059" y="983" font-size="8" fill="#ffffff" data-g="P:j2_motor">B\</text>
-<rect x="1070" y="1070" width="190" height="160" rx="5" fill="#222222" stroke="#141414" stroke-width="1.4" data-g="P:wrist_servo"/>
-<circle cx="1236" cy="1166" r="10" fill="#f4f4f4" stroke="#999" stroke-width="1" data-g="P:wrist_servo"/>
-<rect x="1220" y="1163" width="32" height="6" rx="3" fill="#f4f4f4" stroke="#999" stroke-width="0.8" data-g="P:wrist_servo"/>
-<text x="1165" y="1088" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:wrist_servo">Feetech STS3215 C047 12 V 30 kg.cm</text>
-<text x="1165" y="1100" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:wrist_servo">wrist_servo</text>
-<rect x="1070" y="1117" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:wrist_servo"/>
-<text x="1079" y="1123" font-size="8" fill="#ffffff" data-g="P:wrist_servo">DATA</text>
-<rect x="1070" y="1137" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:wrist_servo"/>
-<text x="1079" y="1143" font-size="8" fill="#ffffff" data-g="P:wrist_servo">GND</text>
-<rect x="1070" y="1157" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:wrist_servo"/>
-<text x="1079" y="1163" font-size="8" fill="#ffffff" data-g="P:wrist_servo">VCC</text>
-<rect x="1070" y="1177" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:wrist_servo"/>
-<text x="1079" y="1183" font-size="8" fill="#ffffff" data-g="P:wrist_servo">VCC</text>
-<rect x="1070" y="1197" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:wrist_servo"/>
-<text x="1079" y="1203" font-size="8" fill="#ffffff" data-g="P:wrist_servo">GND</text>
-<rect x="1070" y="1217" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:wrist_servo"/>
-<text x="1079" y="1223" font-size="8" fill="#ffffff" data-g="P:wrist_servo">DATA</text>
-<rect x="1070" y="1310" width="190" height="100" rx="5" fill="#222222" stroke="#141414" stroke-width="1.4" data-g="P:gripper_servo"/>
-<circle cx="1236" cy="1376" r="10" fill="#f4f4f4" stroke="#999" stroke-width="1" data-g="P:gripper_servo"/>
-<rect x="1220" y="1373" width="32" height="6" rx="3" fill="#f4f4f4" stroke="#999" stroke-width="0.8" data-g="P:gripper_servo"/>
-<text x="1165" y="1328" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:gripper_servo">Feetech STS3215 C047 12 V 30 kg.cm</text>
-<text x="1165" y="1340" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:gripper_servo">gripper_servo</text>
-<rect x="1070" y="1357" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:gripper_servo"/>
-<text x="1079" y="1363" font-size="8" fill="#ffffff" data-g="P:gripper_servo">VCC</text>
-<rect x="1070" y="1377" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:gripper_servo"/>
-<text x="1079" y="1383" font-size="8" fill="#ffffff" data-g="P:gripper_servo">GND</text>
-<rect x="1070" y="1397" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:gripper_servo"/>
-<text x="1079" y="1403" font-size="8" fill="#ffffff" data-g="P:gripper_servo">DATA</text>
-<rect x="60" y="150" width="190" height="140" rx="3" fill="#b9bcc0" stroke="#7d8084" stroke-width="1.4" data-g="P:psu_24v"/>
-<line x1="70" y1="192" x2="70" y2="280" stroke="#8e9195" stroke-width="2" data-g="P:psu_24v"/>
-<line x1="89.82" y1="192" x2="89.82" y2="280" stroke="#8e9195" stroke-width="2" data-g="P:psu_24v"/>
-<line x1="109.64" y1="192" x2="109.64" y2="280" stroke="#8e9195" stroke-width="2" data-g="P:psu_24v"/>
-<line x1="129.46" y1="192" x2="129.46" y2="280" stroke="#8e9195" stroke-width="2" data-g="P:psu_24v"/>
-<line x1="149.28" y1="192" x2="149.28" y2="280" stroke="#8e9195" stroke-width="2" data-g="P:psu_24v"/>
-<line x1="169.1" y1="192" x2="169.1" y2="280" stroke="#8e9195" stroke-width="2" data-g="P:psu_24v"/>
-<text x="155" y="168" font-size="9" text-anchor="middle" font-weight="700" fill="#111111" data-g="P:psu_24v">Mean Well LRS-150-24 enclosed PSU</text>
-<text x="155" y="180" font-size="8" text-anchor="middle" fill="#111111" data-g="P:psu_24v">psu_24v</text>
-<rect x="244" y="197" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:psu_24v"/>
-<text x="241" y="203" font-size="8" text-anchor="end" fill="#111111" data-g="P:psu_24v">AC/L</text>
-<rect x="244" y="217" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:psu_24v"/>
-<text x="241" y="223" font-size="8" text-anchor="end" fill="#111111" data-g="P:psu_24v">AC/N</text>
-<rect x="244" y="237" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:psu_24v"/>
-<text x="241" y="243" font-size="8" text-anchor="end" fill="#111111" data-g="P:psu_24v">FG</text>
-<rect x="244" y="257" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:psu_24v"/>
-<text x="241" y="263" font-size="8" text-anchor="end" fill="#111111" data-g="P:psu_24v">DC OUTPUT -V</text>
-<rect x="244" y="277" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:psu_24v"/>
-<text x="241" y="283" font-size="8" text-anchor="end" fill="#111111" data-g="P:psu_24v">DC OUTPUT +V</text>
-<rect x="680" y="150" width="180" height="170" rx="3" fill="#b9bcc0" stroke="#7d8084" stroke-width="1.4" data-g="P:psu_12v"/>
-<line x1="721.11" y1="192" x2="721.11" y2="239.1" stroke="#8e9195" stroke-width="2" data-g="P:psu_12v"/>
-<line x1="733.11" y1="192" x2="733.11" y2="239.1" stroke="#8e9195" stroke-width="2" data-g="P:psu_12v"/>
-<line x1="745.11" y1="192" x2="745.11" y2="239.1" stroke="#8e9195" stroke-width="2" data-g="P:psu_12v"/>
-<line x1="757.11" y1="192" x2="757.11" y2="239.1" stroke="#8e9195" stroke-width="2" data-g="P:psu_12v"/>
-<line x1="769.11" y1="192" x2="769.11" y2="239.1" stroke="#8e9195" stroke-width="2" data-g="P:psu_12v"/>
-<line x1="781.11" y1="192" x2="781.11" y2="239.1" stroke="#8e9195" stroke-width="2" data-g="P:psu_12v"/>
-<text x="770" y="168" font-size="9" text-anchor="middle" font-weight="700" fill="#111111" data-g="P:psu_12v">Mean Well LRS-75-12 enclosed PSU</text>
-<text x="770" y="180" font-size="8" text-anchor="middle" fill="#111111" data-g="P:psu_12v">psu_12v</text>
-<rect x="680" y="197" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:psu_12v"/>
-<text x="689" y="203" font-size="8" fill="#111111" data-g="P:psu_12v">AC/L</text>
-<rect x="680" y="217" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:psu_12v"/>
-<text x="689" y="223" font-size="8" fill="#111111" data-g="P:psu_12v">AC/N</text>
-<rect x="680" y="237" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:psu_12v"/>
-<text x="689" y="243" font-size="8" fill="#111111" data-g="P:psu_12v">FG</text>
-<rect x="854" y="217" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:psu_12v"/>
-<text x="851" y="223" font-size="8" text-anchor="end" fill="#111111" data-g="P:psu_12v">DC OUTPUT -V</text>
-<rect x="767" y="314" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:psu_12v"/>
-<text x="773" y="311" font-size="8" fill="#111111" transform="rotate(-90 773 311)" data-g="P:psu_12v">DC OUTPUT +V</text>
-<rect x="60" y="470" width="200" height="260" rx="6" fill="#1f1f1f" stroke="#131313" stroke-width="1.4" data-g="P:controller"/>
-<circle cx="67" cy="477" r="3" fill="#d9d4c3" stroke="#131313" stroke-width="0.8" data-g="P:controller"/>
-<circle cx="253" cy="477" r="3" fill="#d9d4c3" stroke="#131313" stroke-width="0.8" data-g="P:controller"/>
-<circle cx="67" cy="723" r="3" fill="#d9d4c3" stroke="#131313" stroke-width="0.8" data-g="P:controller"/>
-<circle cx="253" cy="723" r="3" fill="#d9d4c3" stroke="#131313" stroke-width="0.8" data-g="P:controller"/>
-<rect x="122.88" y="600" width="48" height="32" rx="2" fill="#1b1b1b" data-g="P:controller"/>
-<text x="160" y="488" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:controller">Espressif ESP32-S3-DevKitC-1</text>
-<text x="160" y="500" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:controller">controller</text>
-<rect x="254" y="517" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:controller"/>
-<text x="251" y="523" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:controller">3V3</text>
-<rect x="254" y="537" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:controller"/>
-<text x="251" y="543" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:controller">4</text>
-<rect x="254" y="557" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:controller"/>
-<text x="251" y="563" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:controller">5</text>
-<rect x="254" y="577" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:controller"/>
-<text x="251" y="583" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:controller">6</text>
-<rect x="254" y="597" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:controller"/>
-<text x="251" y="603" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:controller">G</text>
-<rect x="254" y="617" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:controller"/>
-<text x="251" y="623" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:controller">7</text>
-<rect x="254" y="637" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:controller"/>
-<text x="251" y="643" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:controller">15</text>
-<rect x="254" y="657" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:controller"/>
-<text x="251" y="663" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:controller">16</text>
-<rect x="254" y="677" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:controller"/>
-<text x="251" y="683" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:controller">17</text>
-<rect x="254" y="697" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:controller"/>
-<text x="251" y="703" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:controller">18</text>
-<rect x="254" y="717" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:controller"/>
-<text x="251" y="723" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:controller">8</text>
-<rect x="530" y="490" width="230" height="150" rx="6" fill="#6a2c91" stroke="#401a57" stroke-width="1.4" data-g="P:driver_j1"/>
-<circle cx="537" cy="497" r="3" fill="#d9d4c3" stroke="#401a57" stroke-width="0.8" data-g="P:driver_j1"/>
-<circle cx="753" cy="497" r="3" fill="#d9d4c3" stroke="#401a57" stroke-width="0.8" data-g="P:driver_j1"/>
-<circle cx="537" cy="633" r="3" fill="#d9d4c3" stroke="#401a57" stroke-width="0.8" data-g="P:driver_j1"/>
-<circle cx="753" cy="633" r="3" fill="#d9d4c3" stroke="#401a57" stroke-width="0.8" data-g="P:driver_j1"/>
-<rect x="635.22" y="586.89" width="24" height="18" rx="1.5" fill="#1b1b1b" data-g="P:driver_j1"/>
-<text x="645" y="537.78" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:driver_j1">BigTreeTech TMC2209 V1.3 StepStick stepper dr...</text>
-<text x="645" y="549.78" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:driver_j1">driver_j1</text>
-<rect x="530" y="567" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_j1"/>
-<text x="539" y="573" font-size="8" fill="#ffffff" data-g="P:driver_j1">VIO</text>
-<rect x="530" y="587" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_j1"/>
-<text x="539" y="593" font-size="8" fill="#ffffff" data-g="P:driver_j1">STEP</text>
-<rect x="530" y="607" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_j1"/>
-<text x="539" y="613" font-size="8" fill="#ffffff" data-g="P:driver_j1">DIR</text>
-<rect x="530" y="627" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_j1"/>
-<text x="539" y="633" font-size="8" fill="#ffffff" data-g="P:driver_j1">EN</text>
-<rect x="637" y="490" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_j1"/>
-<text x="643" y="499" font-size="8" text-anchor="end" fill="#ffffff" transform="rotate(-90 643 499)" data-g="P:driver_j1">GND</text>
-<rect x="754" y="567" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_j1"/>
-<text x="751" y="573" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:driver_j1">M1A</text>
-<rect x="754" y="587" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_j1"/>
-<text x="751" y="593" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:driver_j1">M1B</text>
-<rect x="754" y="607" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_j1"/>
-<text x="751" y="613" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:driver_j1">M2A</text>
-<rect x="754" y="627" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_j1"/>
-<text x="751" y="633" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:driver_j1">M2B</text>
-<rect x="657" y="490" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_j1"/>
-<text x="663" y="499" font-size="8" text-anchor="end" fill="#ffffff" transform="rotate(-90 663 499)" data-g="P:driver_j1">VM</text>
-<rect x="530" y="740" width="230" height="150" rx="6" fill="#6a2c91" stroke="#401a57" stroke-width="1.4" data-g="P:driver_j2"/>
-<circle cx="537" cy="747" r="3" fill="#d9d4c3" stroke="#401a57" stroke-width="0.8" data-g="P:driver_j2"/>
-<circle cx="753" cy="747" r="3" fill="#d9d4c3" stroke="#401a57" stroke-width="0.8" data-g="P:driver_j2"/>
-<circle cx="537" cy="883" r="3" fill="#d9d4c3" stroke="#401a57" stroke-width="0.8" data-g="P:driver_j2"/>
-<circle cx="753" cy="883" r="3" fill="#d9d4c3" stroke="#401a57" stroke-width="0.8" data-g="P:driver_j2"/>
-<rect x="635.22" y="836.89" width="24" height="18" rx="1.5" fill="#1b1b1b" data-g="P:driver_j2"/>
-<text x="645" y="787.78" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:driver_j2">BigTreeTech TMC2209 V1.3 StepStick stepper dr...</text>
-<text x="645" y="799.78" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:driver_j2">driver_j2</text>
-<rect x="530" y="817" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_j2"/>
-<text x="539" y="823" font-size="8" fill="#ffffff" data-g="P:driver_j2">VIO</text>
-<rect x="530" y="837" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_j2"/>
-<text x="539" y="843" font-size="8" fill="#ffffff" data-g="P:driver_j2">STEP</text>
-<rect x="530" y="857" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_j2"/>
-<text x="539" y="863" font-size="8" fill="#ffffff" data-g="P:driver_j2">DIR</text>
-<rect x="530" y="877" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_j2"/>
-<text x="539" y="883" font-size="8" fill="#ffffff" data-g="P:driver_j2">EN</text>
-<rect x="754" y="817" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_j2"/>
-<text x="751" y="823" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:driver_j2">M1A</text>
-<rect x="754" y="837" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_j2"/>
-<text x="751" y="843" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:driver_j2">M1B</text>
-<rect x="754" y="857" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_j2"/>
-<text x="751" y="863" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:driver_j2">M2A</text>
-<rect x="754" y="877" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_j2"/>
-<text x="751" y="883" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:driver_j2">M2B</text>
-<rect x="637" y="740" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_j2"/>
-<text x="643" y="749" font-size="8" text-anchor="end" fill="#ffffff" transform="rotate(-90 643 749)" data-g="P:driver_j2">VM</text>
-<rect x="657" y="740" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_j2"/>
-<text x="663" y="749" font-size="8" text-anchor="end" fill="#ffffff" transform="rotate(-90 663 749)" data-g="P:driver_j2">GND</text>
-<rect x="530" y="990" width="230" height="150" rx="6" fill="#6a2c91" stroke="#401a57" stroke-width="1.4" data-g="P:driver_z"/>
-<circle cx="537" cy="997" r="3" fill="#d9d4c3" stroke="#401a57" stroke-width="0.8" data-g="P:driver_z"/>
-<circle cx="753" cy="997" r="3" fill="#d9d4c3" stroke="#401a57" stroke-width="0.8" data-g="P:driver_z"/>
-<circle cx="537" cy="1133" r="3" fill="#d9d4c3" stroke="#401a57" stroke-width="0.8" data-g="P:driver_z"/>
-<circle cx="753" cy="1133" r="3" fill="#d9d4c3" stroke="#401a57" stroke-width="0.8" data-g="P:driver_z"/>
-<rect x="635.22" y="1086.89" width="24" height="18" rx="1.5" fill="#1b1b1b" data-g="P:driver_z"/>
-<text x="645" y="1037.78" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:driver_z">BigTreeTech TMC2209 V1.3 StepStick stepper dr...</text>
-<text x="645" y="1049.78" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:driver_z">driver_z</text>
-<rect x="530" y="1067" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_z"/>
-<text x="539" y="1073" font-size="8" fill="#ffffff" data-g="P:driver_z">VIO</text>
-<rect x="530" y="1087" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_z"/>
-<text x="539" y="1093" font-size="8" fill="#ffffff" data-g="P:driver_z">STEP</text>
-<rect x="530" y="1107" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_z"/>
-<text x="539" y="1113" font-size="8" fill="#ffffff" data-g="P:driver_z">DIR</text>
-<rect x="530" y="1127" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_z"/>
-<text x="539" y="1133" font-size="8" fill="#ffffff" data-g="P:driver_z">EN</text>
-<rect x="754" y="1067" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_z"/>
-<text x="751" y="1073" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:driver_z">M1A</text>
-<rect x="754" y="1087" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_z"/>
-<text x="751" y="1093" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:driver_z">M1B</text>
-<rect x="754" y="1107" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_z"/>
-<text x="751" y="1113" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:driver_z">M2A</text>
-<rect x="754" y="1127" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_z"/>
-<text x="751" y="1133" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:driver_z">M2B</text>
-<rect x="637" y="990" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_z"/>
-<text x="643" y="999" font-size="8" text-anchor="end" fill="#ffffff" transform="rotate(-90 643 999)" data-g="P:driver_z">VM</text>
-<rect x="657" y="990" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_z"/>
-<text x="663" y="999" font-size="8" text-anchor="end" fill="#ffffff" transform="rotate(-90 663 999)" data-g="P:driver_z">GND</text>
-<rect x="570" y="1240" width="160" height="130" rx="6" fill="#1a5fb4" stroke="#10396c" stroke-width="1.4" data-g="P:servo_bus"/>
-<circle cx="577" cy="1247" r="3" fill="#d9d4c3" stroke="#10396c" stroke-width="0.8" data-g="P:servo_bus"/>
-<circle cx="723" cy="1247" r="3" fill="#d9d4c3" stroke="#10396c" stroke-width="0.8" data-g="P:servo_bus"/>
-<circle cx="577" cy="1363" r="3" fill="#d9d4c3" stroke="#10396c" stroke-width="0.8" data-g="P:servo_bus"/>
-<circle cx="723" cy="1363" r="3" fill="#d9d4c3" stroke="#10396c" stroke-width="0.8" data-g="P:servo_bus"/>
-<rect x="623.11" y="1326.89" width="24" height="18" rx="1.5" fill="#1b1b1b" data-g="P:servo_bus"/>
-<text x="650" y="1287.78" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:servo_bus">Waveshare Bus Servo Adapter</text>
-<text x="650" y="1299.78" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:servo_bus">servo_bus</text>
-<rect x="724" y="1317" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_bus"/>
-<text x="721" y="1323" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:servo_bus">SIG</text>
-<rect x="724" y="1337" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_bus"/>
-<text x="721" y="1343" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:servo_bus">GND</text>
-<rect x="724" y="1357" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_bus"/>
-<text x="721" y="1363" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:servo_bus">VIN</text>
-<rect x="637" y="1240" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_bus"/>
-<text x="643" y="1249" font-size="8" text-anchor="end" fill="#ffffff" transform="rotate(-90 643 1249)" data-g="P:servo_bus">VIN</text>
-<rect x="657" y="1240" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_bus"/>
-<text x="663" y="1249" font-size="8" text-anchor="end" fill="#ffffff" transform="rotate(-90 663 1249)" data-g="P:servo_bus">GND</text>
-<rect x="360" y="150" width="230" height="100" rx="6" fill="#1e1e1e" data-g="P:mains_inlet"/>
-<path d="M417.5 180L532.5 180L532.5 210L502.6 225L447.4 225L417.5 210Z" fill="#444" stroke="#777" stroke-width="1" stroke-linejoin="round" data-g="P:mains_inlet"/>
-<text x="475" y="130" font-size="9" text-anchor="middle" font-weight="700" fill="#333333" data-g="P:mains_inlet">IEC C14 panel inlet with fuse drawer and rocker switch</text>
-<text x="475" y="142" font-size="8" text-anchor="middle" fill="#555555" data-g="P:mains_inlet">mains_inlet</text>
-<rect x="584" y="177" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:mains_inlet"/>
-<text x="581" y="183" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:mains_inlet">L</text>
-<rect x="584" y="197" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:mains_inlet"/>
-<text x="581" y="203" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:mains_inlet">N</text>
-<rect x="584" y="217" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:mains_inlet"/>
-<text x="581" y="223" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:mains_inlet">E</text>
+<rect x="1050" y="470" width="220" height="120" rx="6" fill="#2b2b2b" stroke="#000" stroke-width="1.4" data-g="P:j1_motor" data-ref="M2"/>
+<rect x="1075.56" y="508" width="188.44" height="76" rx="4" fill="#b9bcc0" data-g="P:j1_motor" data-ref="M2"/>
+<circle cx="1169.78" cy="546" r="10" fill="#2b2b2b" data-g="P:j1_motor" data-ref="M2"/>
+<text x="1160" y="488" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:j1_motor" data-ref="M2">NEMA17 stepper + 5.18:1 planetary gearbox</text>
+<text x="1160" y="500" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:j1_motor" data-ref="M2">M2 · j1_motor</text>
+<rect x="1050" y="517" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:j1_motor" data-ref="M2"/>
+<text x="1059" y="523" font-size="8" fill="#ffffff" data-g="P:j1_motor" data-ref="M2">A</text>
+<rect x="1050" y="537" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:j1_motor" data-ref="M2"/>
+<text x="1059" y="543" font-size="8" fill="#ffffff" data-g="P:j1_motor" data-ref="M2">A\</text>
+<rect x="1050" y="557" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:j1_motor" data-ref="M2"/>
+<text x="1059" y="563" font-size="8" fill="#ffffff" data-g="P:j1_motor" data-ref="M2">B</text>
+<rect x="1050" y="577" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:j1_motor" data-ref="M2"/>
+<text x="1059" y="583" font-size="8" fill="#ffffff" data-g="P:j1_motor" data-ref="M2">B\</text>
+<rect x="1080" y="670" width="160" height="120" rx="6" fill="#2b2b2b" stroke="#000" stroke-width="1.4" data-g="P:z_motor" data-ref="M5"/>
+<rect x="1105.56" y="708" width="128.44" height="76" rx="4" fill="#b9bcc0" data-g="P:z_motor" data-ref="M5"/>
+<circle cx="1169.78" cy="746" r="10" fill="#2b2b2b" data-g="P:z_motor" data-ref="M5"/>
+<text x="1160" y="688" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:z_motor" data-ref="M5">NEMA17 stepper 42x42x40 mm</text>
+<text x="1160" y="700" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:z_motor" data-ref="M5">M5 · z_motor</text>
+<rect x="1080" y="717" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:z_motor" data-ref="M5"/>
+<text x="1089" y="723" font-size="8" fill="#ffffff" data-g="P:z_motor" data-ref="M5">A</text>
+<rect x="1080" y="737" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:z_motor" data-ref="M5"/>
+<text x="1089" y="743" font-size="8" fill="#ffffff" data-g="P:z_motor" data-ref="M5">A\</text>
+<rect x="1080" y="757" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:z_motor" data-ref="M5"/>
+<text x="1089" y="763" font-size="8" fill="#ffffff" data-g="P:z_motor" data-ref="M5">B</text>
+<rect x="1080" y="777" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:z_motor" data-ref="M5"/>
+<text x="1089" y="783" font-size="8" fill="#ffffff" data-g="P:z_motor" data-ref="M5">B\</text>
+<rect x="1050" y="870" width="220" height="120" rx="6" fill="#2b2b2b" stroke="#000" stroke-width="1.4" data-g="P:j2_motor" data-ref="M3"/>
+<rect x="1075.56" y="908" width="188.44" height="76" rx="4" fill="#b9bcc0" data-g="P:j2_motor" data-ref="M3"/>
+<circle cx="1169.78" cy="946" r="10" fill="#2b2b2b" data-g="P:j2_motor" data-ref="M3"/>
+<text x="1160" y="888" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:j2_motor" data-ref="M3">NEMA17 stepper + 5.18:1 planetary gearbox</text>
+<text x="1160" y="900" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:j2_motor" data-ref="M3">M3 · j2_motor</text>
+<rect x="1050" y="917" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:j2_motor" data-ref="M3"/>
+<text x="1059" y="923" font-size="8" fill="#ffffff" data-g="P:j2_motor" data-ref="M3">A</text>
+<rect x="1050" y="937" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:j2_motor" data-ref="M3"/>
+<text x="1059" y="943" font-size="8" fill="#ffffff" data-g="P:j2_motor" data-ref="M3">A\</text>
+<rect x="1050" y="957" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:j2_motor" data-ref="M3"/>
+<text x="1059" y="963" font-size="8" fill="#ffffff" data-g="P:j2_motor" data-ref="M3">B</text>
+<rect x="1050" y="977" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:j2_motor" data-ref="M3"/>
+<text x="1059" y="983" font-size="8" fill="#ffffff" data-g="P:j2_motor" data-ref="M3">B\</text>
+<rect x="1070" y="1070" width="190" height="160" rx="5" fill="#222222" stroke="#141414" stroke-width="1.4" data-g="P:wrist_servo" data-ref="M4"/>
+<circle cx="1236" cy="1166" r="10" fill="#f4f4f4" stroke="#999" stroke-width="1" data-g="P:wrist_servo" data-ref="M4"/>
+<rect x="1220" y="1163" width="32" height="6" rx="3" fill="#f4f4f4" stroke="#999" stroke-width="0.8" data-g="P:wrist_servo" data-ref="M4"/>
+<text x="1165" y="1088" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:wrist_servo" data-ref="M4">Feetech STS3215 C047 12 V 30 kg.cm</text>
+<text x="1165" y="1100" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:wrist_servo" data-ref="M4">M4 · wrist_servo</text>
+<rect x="1070" y="1117" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:wrist_servo" data-ref="M4"/>
+<text x="1079" y="1123" font-size="8" fill="#ffffff" data-g="P:wrist_servo" data-ref="M4">DATA</text>
+<rect x="1070" y="1137" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:wrist_servo" data-ref="M4"/>
+<text x="1079" y="1143" font-size="8" fill="#ffffff" data-g="P:wrist_servo" data-ref="M4">GND</text>
+<rect x="1070" y="1157" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:wrist_servo" data-ref="M4"/>
+<text x="1079" y="1163" font-size="8" fill="#ffffff" data-g="P:wrist_servo" data-ref="M4">VCC</text>
+<rect x="1070" y="1177" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:wrist_servo" data-ref="M4"/>
+<text x="1079" y="1183" font-size="8" fill="#ffffff" data-g="P:wrist_servo" data-ref="M4">VCC</text>
+<rect x="1070" y="1197" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:wrist_servo" data-ref="M4"/>
+<text x="1079" y="1203" font-size="8" fill="#ffffff" data-g="P:wrist_servo" data-ref="M4">GND</text>
+<rect x="1070" y="1217" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:wrist_servo" data-ref="M4"/>
+<text x="1079" y="1223" font-size="8" fill="#ffffff" data-g="P:wrist_servo" data-ref="M4">DATA</text>
+<rect x="1070" y="1310" width="190" height="100" rx="5" fill="#222222" stroke="#141414" stroke-width="1.4" data-g="P:gripper_servo" data-ref="M1"/>
+<circle cx="1236" cy="1376" r="10" fill="#f4f4f4" stroke="#999" stroke-width="1" data-g="P:gripper_servo" data-ref="M1"/>
+<rect x="1220" y="1373" width="32" height="6" rx="3" fill="#f4f4f4" stroke="#999" stroke-width="0.8" data-g="P:gripper_servo" data-ref="M1"/>
+<text x="1165" y="1328" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:gripper_servo" data-ref="M1">Feetech STS3215 C047 12 V 30 kg.cm</text>
+<text x="1165" y="1340" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:gripper_servo" data-ref="M1">M1 · gripper_servo</text>
+<rect x="1070" y="1357" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:gripper_servo" data-ref="M1"/>
+<text x="1079" y="1363" font-size="8" fill="#ffffff" data-g="P:gripper_servo" data-ref="M1">VCC</text>
+<rect x="1070" y="1377" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:gripper_servo" data-ref="M1"/>
+<text x="1079" y="1383" font-size="8" fill="#ffffff" data-g="P:gripper_servo" data-ref="M1">GND</text>
+<rect x="1070" y="1397" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:gripper_servo" data-ref="M1"/>
+<text x="1079" y="1403" font-size="8" fill="#ffffff" data-g="P:gripper_servo" data-ref="M1">DATA</text>
+<rect x="60" y="150" width="190" height="140" rx="3" fill="#b9bcc0" stroke="#7d8084" stroke-width="1.4" data-g="P:psu_24v" data-ref="PS2"/>
+<line x1="70" y1="192" x2="70" y2="280" stroke="#8e9195" stroke-width="2" data-g="P:psu_24v" data-ref="PS2"/>
+<line x1="89.82" y1="192" x2="89.82" y2="280" stroke="#8e9195" stroke-width="2" data-g="P:psu_24v" data-ref="PS2"/>
+<line x1="109.64" y1="192" x2="109.64" y2="280" stroke="#8e9195" stroke-width="2" data-g="P:psu_24v" data-ref="PS2"/>
+<line x1="129.46" y1="192" x2="129.46" y2="280" stroke="#8e9195" stroke-width="2" data-g="P:psu_24v" data-ref="PS2"/>
+<line x1="149.28" y1="192" x2="149.28" y2="280" stroke="#8e9195" stroke-width="2" data-g="P:psu_24v" data-ref="PS2"/>
+<line x1="169.1" y1="192" x2="169.1" y2="280" stroke="#8e9195" stroke-width="2" data-g="P:psu_24v" data-ref="PS2"/>
+<text x="155" y="168" font-size="9" text-anchor="middle" font-weight="700" fill="#111111" data-g="P:psu_24v" data-ref="PS2">Mean Well LRS-150-24 enclosed PSU</text>
+<text x="155" y="180" font-size="8" text-anchor="middle" fill="#111111" data-g="P:psu_24v" data-ref="PS2">PS2 · psu_24v</text>
+<rect x="244" y="197" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:psu_24v" data-ref="PS2"/>
+<text x="241" y="203" font-size="8" text-anchor="end" fill="#111111" data-g="P:psu_24v" data-ref="PS2">AC/L</text>
+<rect x="244" y="217" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:psu_24v" data-ref="PS2"/>
+<text x="241" y="223" font-size="8" text-anchor="end" fill="#111111" data-g="P:psu_24v" data-ref="PS2">AC/N</text>
+<rect x="244" y="237" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:psu_24v" data-ref="PS2"/>
+<text x="241" y="243" font-size="8" text-anchor="end" fill="#111111" data-g="P:psu_24v" data-ref="PS2">FG</text>
+<rect x="244" y="257" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:psu_24v" data-ref="PS2"/>
+<text x="241" y="263" font-size="8" text-anchor="end" fill="#111111" data-g="P:psu_24v" data-ref="PS2">DC OUTPUT -V</text>
+<rect x="244" y="277" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:psu_24v" data-ref="PS2"/>
+<text x="241" y="283" font-size="8" text-anchor="end" fill="#111111" data-g="P:psu_24v" data-ref="PS2">DC OUTPUT +V</text>
+<rect x="680" y="150" width="180" height="170" rx="3" fill="#b9bcc0" stroke="#7d8084" stroke-width="1.4" data-g="P:psu_12v" data-ref="PS1"/>
+<line x1="721.11" y1="192" x2="721.11" y2="239.1" stroke="#8e9195" stroke-width="2" data-g="P:psu_12v" data-ref="PS1"/>
+<line x1="733.11" y1="192" x2="733.11" y2="239.1" stroke="#8e9195" stroke-width="2" data-g="P:psu_12v" data-ref="PS1"/>
+<line x1="745.11" y1="192" x2="745.11" y2="239.1" stroke="#8e9195" stroke-width="2" data-g="P:psu_12v" data-ref="PS1"/>
+<line x1="757.11" y1="192" x2="757.11" y2="239.1" stroke="#8e9195" stroke-width="2" data-g="P:psu_12v" data-ref="PS1"/>
+<line x1="769.11" y1="192" x2="769.11" y2="239.1" stroke="#8e9195" stroke-width="2" data-g="P:psu_12v" data-ref="PS1"/>
+<line x1="781.11" y1="192" x2="781.11" y2="239.1" stroke="#8e9195" stroke-width="2" data-g="P:psu_12v" data-ref="PS1"/>
+<text x="770" y="168" font-size="9" text-anchor="middle" font-weight="700" fill="#111111" data-g="P:psu_12v" data-ref="PS1">Mean Well LRS-75-12 enclosed PSU</text>
+<text x="770" y="180" font-size="8" text-anchor="middle" fill="#111111" data-g="P:psu_12v" data-ref="PS1">PS1 · psu_12v</text>
+<rect x="680" y="197" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:psu_12v" data-ref="PS1"/>
+<text x="689" y="203" font-size="8" fill="#111111" data-g="P:psu_12v" data-ref="PS1">AC/L</text>
+<rect x="680" y="217" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:psu_12v" data-ref="PS1"/>
+<text x="689" y="223" font-size="8" fill="#111111" data-g="P:psu_12v" data-ref="PS1">AC/N</text>
+<rect x="680" y="237" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:psu_12v" data-ref="PS1"/>
+<text x="689" y="243" font-size="8" fill="#111111" data-g="P:psu_12v" data-ref="PS1">FG</text>
+<rect x="854" y="217" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:psu_12v" data-ref="PS1"/>
+<text x="851" y="223" font-size="8" text-anchor="end" fill="#111111" data-g="P:psu_12v" data-ref="PS1">DC OUTPUT -V</text>
+<rect x="767" y="314" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:psu_12v" data-ref="PS1"/>
+<text x="773" y="311" font-size="8" fill="#111111" transform="rotate(-90 773 311)" data-g="P:psu_12v" data-ref="PS1">DC OUTPUT +V</text>
+<rect x="60" y="470" width="200" height="260" rx="6" fill="#1f1f1f" stroke="#131313" stroke-width="1.4" data-g="P:controller" data-ref="A1"/>
+<circle cx="67" cy="477" r="3" fill="#d9d4c3" stroke="#131313" stroke-width="0.8" data-g="P:controller" data-ref="A1"/>
+<circle cx="253" cy="477" r="3" fill="#d9d4c3" stroke="#131313" stroke-width="0.8" data-g="P:controller" data-ref="A1"/>
+<circle cx="67" cy="723" r="3" fill="#d9d4c3" stroke="#131313" stroke-width="0.8" data-g="P:controller" data-ref="A1"/>
+<circle cx="253" cy="723" r="3" fill="#d9d4c3" stroke="#131313" stroke-width="0.8" data-g="P:controller" data-ref="A1"/>
+<rect x="122.88" y="600" width="48" height="32" rx="2" fill="#1b1b1b" data-g="P:controller" data-ref="A1"/>
+<text x="160" y="488" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:controller" data-ref="A1">Espressif ESP32-S3-DevKitC-1</text>
+<text x="160" y="500" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:controller" data-ref="A1">A1 · controller</text>
+<rect x="254" y="517" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:controller" data-ref="A1"/>
+<text x="251" y="523" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:controller" data-ref="A1">3V3</text>
+<rect x="254" y="537" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:controller" data-ref="A1"/>
+<text x="251" y="543" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:controller" data-ref="A1">4</text>
+<rect x="254" y="557" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:controller" data-ref="A1"/>
+<text x="251" y="563" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:controller" data-ref="A1">5</text>
+<rect x="254" y="577" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:controller" data-ref="A1"/>
+<text x="251" y="583" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:controller" data-ref="A1">6</text>
+<rect x="254" y="597" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:controller" data-ref="A1"/>
+<text x="251" y="603" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:controller" data-ref="A1">G</text>
+<rect x="254" y="617" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:controller" data-ref="A1"/>
+<text x="251" y="623" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:controller" data-ref="A1">7</text>
+<rect x="254" y="637" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:controller" data-ref="A1"/>
+<text x="251" y="643" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:controller" data-ref="A1">15</text>
+<rect x="254" y="657" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:controller" data-ref="A1"/>
+<text x="251" y="663" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:controller" data-ref="A1">16</text>
+<rect x="254" y="677" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:controller" data-ref="A1"/>
+<text x="251" y="683" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:controller" data-ref="A1">17</text>
+<rect x="254" y="697" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:controller" data-ref="A1"/>
+<text x="251" y="703" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:controller" data-ref="A1">18</text>
+<rect x="254" y="717" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:controller" data-ref="A1"/>
+<text x="251" y="723" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:controller" data-ref="A1">8</text>
+<rect x="530" y="490" width="230" height="150" rx="6" fill="#6a2c91" stroke="#401a57" stroke-width="1.4" data-g="P:driver_j1" data-ref="U1"/>
+<circle cx="537" cy="497" r="3" fill="#d9d4c3" stroke="#401a57" stroke-width="0.8" data-g="P:driver_j1" data-ref="U1"/>
+<circle cx="753" cy="497" r="3" fill="#d9d4c3" stroke="#401a57" stroke-width="0.8" data-g="P:driver_j1" data-ref="U1"/>
+<circle cx="537" cy="633" r="3" fill="#d9d4c3" stroke="#401a57" stroke-width="0.8" data-g="P:driver_j1" data-ref="U1"/>
+<circle cx="753" cy="633" r="3" fill="#d9d4c3" stroke="#401a57" stroke-width="0.8" data-g="P:driver_j1" data-ref="U1"/>
+<rect x="635.22" y="586.89" width="24" height="18" rx="1.5" fill="#1b1b1b" data-g="P:driver_j1" data-ref="U1"/>
+<text x="645" y="537.78" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:driver_j1" data-ref="U1">BigTreeTech TMC2209 V1.3 StepStick stepper dr...</text>
+<text x="645" y="549.78" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:driver_j1" data-ref="U1">U1 · driver_j1</text>
+<rect x="530" y="567" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_j1" data-ref="U1"/>
+<text x="539" y="573" font-size="8" fill="#ffffff" data-g="P:driver_j1" data-ref="U1">VIO</text>
+<rect x="530" y="587" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_j1" data-ref="U1"/>
+<text x="539" y="593" font-size="8" fill="#ffffff" data-g="P:driver_j1" data-ref="U1">STEP</text>
+<rect x="530" y="607" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_j1" data-ref="U1"/>
+<text x="539" y="613" font-size="8" fill="#ffffff" data-g="P:driver_j1" data-ref="U1">DIR</text>
+<rect x="530" y="627" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_j1" data-ref="U1"/>
+<text x="539" y="633" font-size="8" fill="#ffffff" data-g="P:driver_j1" data-ref="U1">EN</text>
+<rect x="637" y="490" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_j1" data-ref="U1"/>
+<text x="643" y="499" font-size="8" text-anchor="end" fill="#ffffff" transform="rotate(-90 643 499)" data-g="P:driver_j1" data-ref="U1">GND</text>
+<rect x="754" y="567" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_j1" data-ref="U1"/>
+<text x="751" y="573" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:driver_j1" data-ref="U1">M1A</text>
+<rect x="754" y="587" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_j1" data-ref="U1"/>
+<text x="751" y="593" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:driver_j1" data-ref="U1">M1B</text>
+<rect x="754" y="607" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_j1" data-ref="U1"/>
+<text x="751" y="613" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:driver_j1" data-ref="U1">M2A</text>
+<rect x="754" y="627" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_j1" data-ref="U1"/>
+<text x="751" y="633" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:driver_j1" data-ref="U1">M2B</text>
+<rect x="657" y="490" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_j1" data-ref="U1"/>
+<text x="663" y="499" font-size="8" text-anchor="end" fill="#ffffff" transform="rotate(-90 663 499)" data-g="P:driver_j1" data-ref="U1">VM</text>
+<rect x="530" y="740" width="230" height="150" rx="6" fill="#6a2c91" stroke="#401a57" stroke-width="1.4" data-g="P:driver_j2" data-ref="U2"/>
+<circle cx="537" cy="747" r="3" fill="#d9d4c3" stroke="#401a57" stroke-width="0.8" data-g="P:driver_j2" data-ref="U2"/>
+<circle cx="753" cy="747" r="3" fill="#d9d4c3" stroke="#401a57" stroke-width="0.8" data-g="P:driver_j2" data-ref="U2"/>
+<circle cx="537" cy="883" r="3" fill="#d9d4c3" stroke="#401a57" stroke-width="0.8" data-g="P:driver_j2" data-ref="U2"/>
+<circle cx="753" cy="883" r="3" fill="#d9d4c3" stroke="#401a57" stroke-width="0.8" data-g="P:driver_j2" data-ref="U2"/>
+<rect x="635.22" y="836.89" width="24" height="18" rx="1.5" fill="#1b1b1b" data-g="P:driver_j2" data-ref="U2"/>
+<text x="645" y="787.78" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:driver_j2" data-ref="U2">BigTreeTech TMC2209 V1.3 StepStick stepper dr...</text>
+<text x="645" y="799.78" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:driver_j2" data-ref="U2">U2 · driver_j2</text>
+<rect x="530" y="817" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_j2" data-ref="U2"/>
+<text x="539" y="823" font-size="8" fill="#ffffff" data-g="P:driver_j2" data-ref="U2">VIO</text>
+<rect x="530" y="837" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_j2" data-ref="U2"/>
+<text x="539" y="843" font-size="8" fill="#ffffff" data-g="P:driver_j2" data-ref="U2">STEP</text>
+<rect x="530" y="857" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_j2" data-ref="U2"/>
+<text x="539" y="863" font-size="8" fill="#ffffff" data-g="P:driver_j2" data-ref="U2">DIR</text>
+<rect x="530" y="877" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_j2" data-ref="U2"/>
+<text x="539" y="883" font-size="8" fill="#ffffff" data-g="P:driver_j2" data-ref="U2">EN</text>
+<rect x="754" y="817" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_j2" data-ref="U2"/>
+<text x="751" y="823" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:driver_j2" data-ref="U2">M1A</text>
+<rect x="754" y="837" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_j2" data-ref="U2"/>
+<text x="751" y="843" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:driver_j2" data-ref="U2">M1B</text>
+<rect x="754" y="857" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_j2" data-ref="U2"/>
+<text x="751" y="863" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:driver_j2" data-ref="U2">M2A</text>
+<rect x="754" y="877" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_j2" data-ref="U2"/>
+<text x="751" y="883" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:driver_j2" data-ref="U2">M2B</text>
+<rect x="637" y="740" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_j2" data-ref="U2"/>
+<text x="643" y="749" font-size="8" text-anchor="end" fill="#ffffff" transform="rotate(-90 643 749)" data-g="P:driver_j2" data-ref="U2">VM</text>
+<rect x="657" y="740" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_j2" data-ref="U2"/>
+<text x="663" y="749" font-size="8" text-anchor="end" fill="#ffffff" transform="rotate(-90 663 749)" data-g="P:driver_j2" data-ref="U2">GND</text>
+<rect x="530" y="990" width="230" height="150" rx="6" fill="#6a2c91" stroke="#401a57" stroke-width="1.4" data-g="P:driver_z" data-ref="U3"/>
+<circle cx="537" cy="997" r="3" fill="#d9d4c3" stroke="#401a57" stroke-width="0.8" data-g="P:driver_z" data-ref="U3"/>
+<circle cx="753" cy="997" r="3" fill="#d9d4c3" stroke="#401a57" stroke-width="0.8" data-g="P:driver_z" data-ref="U3"/>
+<circle cx="537" cy="1133" r="3" fill="#d9d4c3" stroke="#401a57" stroke-width="0.8" data-g="P:driver_z" data-ref="U3"/>
+<circle cx="753" cy="1133" r="3" fill="#d9d4c3" stroke="#401a57" stroke-width="0.8" data-g="P:driver_z" data-ref="U3"/>
+<rect x="635.22" y="1086.89" width="24" height="18" rx="1.5" fill="#1b1b1b" data-g="P:driver_z" data-ref="U3"/>
+<text x="645" y="1037.78" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:driver_z" data-ref="U3">BigTreeTech TMC2209 V1.3 StepStick stepper dr...</text>
+<text x="645" y="1049.78" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:driver_z" data-ref="U3">U3 · driver_z</text>
+<rect x="530" y="1067" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_z" data-ref="U3"/>
+<text x="539" y="1073" font-size="8" fill="#ffffff" data-g="P:driver_z" data-ref="U3">VIO</text>
+<rect x="530" y="1087" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_z" data-ref="U3"/>
+<text x="539" y="1093" font-size="8" fill="#ffffff" data-g="P:driver_z" data-ref="U3">STEP</text>
+<rect x="530" y="1107" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_z" data-ref="U3"/>
+<text x="539" y="1113" font-size="8" fill="#ffffff" data-g="P:driver_z" data-ref="U3">DIR</text>
+<rect x="530" y="1127" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_z" data-ref="U3"/>
+<text x="539" y="1133" font-size="8" fill="#ffffff" data-g="P:driver_z" data-ref="U3">EN</text>
+<rect x="754" y="1067" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_z" data-ref="U3"/>
+<text x="751" y="1073" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:driver_z" data-ref="U3">M1A</text>
+<rect x="754" y="1087" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_z" data-ref="U3"/>
+<text x="751" y="1093" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:driver_z" data-ref="U3">M1B</text>
+<rect x="754" y="1107" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_z" data-ref="U3"/>
+<text x="751" y="1113" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:driver_z" data-ref="U3">M2A</text>
+<rect x="754" y="1127" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_z" data-ref="U3"/>
+<text x="751" y="1133" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:driver_z" data-ref="U3">M2B</text>
+<rect x="637" y="990" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_z" data-ref="U3"/>
+<text x="643" y="999" font-size="8" text-anchor="end" fill="#ffffff" transform="rotate(-90 643 999)" data-g="P:driver_z" data-ref="U3">VM</text>
+<rect x="657" y="990" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:driver_z" data-ref="U3"/>
+<text x="663" y="999" font-size="8" text-anchor="end" fill="#ffffff" transform="rotate(-90 663 999)" data-g="P:driver_z" data-ref="U3">GND</text>
+<rect x="570" y="1240" width="160" height="130" rx="6" fill="#1a5fb4" stroke="#10396c" stroke-width="1.4" data-g="P:servo_bus" data-ref="U4"/>
+<circle cx="577" cy="1247" r="3" fill="#d9d4c3" stroke="#10396c" stroke-width="0.8" data-g="P:servo_bus" data-ref="U4"/>
+<circle cx="723" cy="1247" r="3" fill="#d9d4c3" stroke="#10396c" stroke-width="0.8" data-g="P:servo_bus" data-ref="U4"/>
+<circle cx="577" cy="1363" r="3" fill="#d9d4c3" stroke="#10396c" stroke-width="0.8" data-g="P:servo_bus" data-ref="U4"/>
+<circle cx="723" cy="1363" r="3" fill="#d9d4c3" stroke="#10396c" stroke-width="0.8" data-g="P:servo_bus" data-ref="U4"/>
+<rect x="623.11" y="1326.89" width="24" height="18" rx="1.5" fill="#1b1b1b" data-g="P:servo_bus" data-ref="U4"/>
+<text x="650" y="1287.78" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:servo_bus" data-ref="U4">Waveshare Bus Servo Adapter</text>
+<text x="650" y="1299.78" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:servo_bus" data-ref="U4">U4 · servo_bus</text>
+<rect x="724" y="1317" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_bus" data-ref="U4"/>
+<text x="721" y="1323" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:servo_bus" data-ref="U4">SIG</text>
+<rect x="724" y="1337" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_bus" data-ref="U4"/>
+<text x="721" y="1343" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:servo_bus" data-ref="U4">GND</text>
+<rect x="724" y="1357" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_bus" data-ref="U4"/>
+<text x="721" y="1363" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:servo_bus" data-ref="U4">VIN</text>
+<rect x="637" y="1240" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_bus" data-ref="U4"/>
+<text x="643" y="1249" font-size="8" text-anchor="end" fill="#ffffff" transform="rotate(-90 643 1249)" data-g="P:servo_bus" data-ref="U4">VIN</text>
+<rect x="657" y="1240" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_bus" data-ref="U4"/>
+<text x="663" y="1249" font-size="8" text-anchor="end" fill="#ffffff" transform="rotate(-90 663 1249)" data-g="P:servo_bus" data-ref="U4">GND</text>
+<rect x="360" y="150" width="230" height="100" rx="6" fill="#1e1e1e" data-g="P:mains_inlet" data-ref="J1"/>
+<path d="M417.5 180L532.5 180L532.5 210L502.6 225L447.4 225L417.5 210Z" fill="#444" stroke="#777" stroke-width="1" stroke-linejoin="round" data-g="P:mains_inlet" data-ref="J1"/>
+<text x="475" y="130" font-size="9" text-anchor="middle" font-weight="700" fill="#333333" data-g="P:mains_inlet" data-ref="J1">IEC C14 panel inlet with fuse drawer and rocker switch</text>
+<text x="475" y="142" font-size="8" text-anchor="middle" fill="#555555" data-g="P:mains_inlet" data-ref="J1">J1 · mains_inlet</text>
+<rect x="584" y="177" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:mains_inlet" data-ref="J1"/>
+<text x="581" y="183" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:mains_inlet" data-ref="J1">L</text>
+<rect x="584" y="197" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:mains_inlet" data-ref="J1"/>
+<text x="581" y="203" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:mains_inlet" data-ref="J1">N</text>
+<rect x="584" y="217" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:mains_inlet" data-ref="J1"/>
+<text x="581" y="223" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:mains_inlet" data-ref="J1">E</text>
 <rect x="970" y="150" width="180" height="80" rx="4" fill="#d9dde2" stroke="#9aa0a6" stroke-width="1.2" data-g="P:star_ground"/>
 <rect x="976" y="154" width="30.6" height="10" rx="2" fill="#f28a1a" data-g="P:star_ground"/>
 <rect x="1009.6" y="154" width="30.6" height="10" rx="2" fill="#f28a1a" data-g="P:star_ground"/>

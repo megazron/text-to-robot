@@ -148,26 +148,26 @@ A driver's high level is its I/O supply; the receiver needs it above its input t
 
 | Net | Driver | Receiver | High V | Threshold V | Input limit V | Result |
 |---|---|---|--:|--:|--:|---|
-| FRONT_LEFT_MOTOR_DIR | A1 GPIO13 | U1 DIR1 | 3.3 | 2 | 5.5 | ok |
+| FRONT_LEFT_MOTOR_DIR | A1 GPIO13 | U4 DIR1 | 3.3 | 2 | 5.5 | ok |
 | FRONT_LEFT_MOTOR_ENC_A | M1 Encoder A | A1 GPIO18 | 3.3 | 2.15 | 3.6 | ok |
 | FRONT_LEFT_MOTOR_ENC_B | M1 Encoder B | A1 GPIO19 | 3.3 | 2.15 | 3.6 | ok |
-| FRONT_LEFT_MOTOR_PWM | A1 GPIO12 | U1 PWM1 | 3.3 | 2 | 5.5 | ok |
-| FRONT_RIGHT_MOTOR_DIR | A1 GPIO6 | U1 DIR2 | 3.3 | 2 | 5.5 | ok |
+| FRONT_LEFT_MOTOR_PWM | A1 GPIO12 | U4 PWM1 | 3.3 | 2 | 5.5 | ok |
+| FRONT_RIGHT_MOTOR_DIR | A1 GPIO6 | U4 DIR2 | 3.3 | 2 | 5.5 | ok |
 | FRONT_RIGHT_MOTOR_ENC_A | M2 Encoder A | A1 GPIO16 | 3.3 | 2.15 | 3.6 | ok |
 | FRONT_RIGHT_MOTOR_ENC_B | M2 Encoder B | A1 GPIO20 | 3.3 | 2.15 | 3.6 | ok |
-| FRONT_RIGHT_MOTOR_PWM | A1 GPIO5 | U1 PWM2 | 3.3 | 2 | 5.5 | ok |
-| I2C_SCL | A1 GPIO3 | U3 SCL | 3.3 | 2.3 | 5.5 | ok |
-| I2C_SCL | U3 SCL | A1 GPIO3 | 3.3 | 2.15 | 3.6 | ok |
-| I2C_SDA | A1 GPIO2 | U3 SDA | 3.3 | 2.3 | 5.5 | ok |
-| I2C_SDA | U3 SDA | A1 GPIO2 | 3.3 | 2.15 | 3.6 | ok |
-| REAR_LEFT_MOTOR_DIR | A1 GPIO26 | U2 DIR1 | 3.3 | 2 | 5.5 | ok |
+| FRONT_RIGHT_MOTOR_PWM | A1 GPIO5 | U4 PWM2 | 3.3 | 2 | 5.5 | ok |
+| I2C_SCL | A1 GPIO3 | U2 SCL | 3.3 | 2.3 | 5.5 | ok |
+| I2C_SCL | U2 SCL | A1 GPIO3 | 3.3 | 2.15 | 3.6 | ok |
+| I2C_SDA | A1 GPIO2 | U2 SDA | 3.3 | 2.3 | 5.5 | ok |
+| I2C_SDA | U2 SDA | A1 GPIO2 | 3.3 | 2.15 | 3.6 | ok |
+| REAR_LEFT_MOTOR_DIR | A1 GPIO26 | U5 DIR1 | 3.3 | 2 | 5.5 | ok |
 | REAR_LEFT_MOTOR_ENC_A | M3 Encoder A | A1 GPIO17 | 3.3 | 2.15 | 3.6 | ok |
 | REAR_LEFT_MOTOR_ENC_B | M3 Encoder B | A1 GPIO27 | 3.3 | 2.15 | 3.6 | ok |
-| REAR_LEFT_MOTOR_PWM | A1 GPIO21 | U2 PWM1 | 3.3 | 2 | 5.5 | ok |
-| REAR_RIGHT_MOTOR_DIR | A1 GPIO23 | U2 DIR2 | 3.3 | 2 | 5.5 | ok |
+| REAR_LEFT_MOTOR_PWM | A1 GPIO21 | U5 PWM1 | 3.3 | 2 | 5.5 | ok |
+| REAR_RIGHT_MOTOR_DIR | A1 GPIO23 | U5 DIR2 | 3.3 | 2 | 5.5 | ok |
 | REAR_RIGHT_MOTOR_ENC_A | M4 Encoder A | A1 GPIO24 | 3.3 | 2.15 | 3.6 | ok |
 | REAR_RIGHT_MOTOR_ENC_B | M4 Encoder B | A1 GPIO25 | 3.3 | 2.15 | 3.6 | ok |
-| REAR_RIGHT_MOTOR_PWM | A1 GPIO22 | U2 PWM2 | 3.3 | 2 | 5.5 | ok |
+| REAR_RIGHT_MOTOR_PWM | A1 GPIO22 | U5 PWM2 | 3.3 | 2 | 5.5 | ok |
 
 ### Sources
 

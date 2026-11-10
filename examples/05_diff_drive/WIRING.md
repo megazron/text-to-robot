@@ -120,18 +120,18 @@ A driver's high level is its I/O supply; the receiver needs it above its input t
 
 | Net | Driver | Receiver | High V | Threshold V | Input limit V | Result |
 |---|---|---|--:|--:|--:|---|
-| I2C_SCL | A1 GPIO3 | U3 SCL | 3.3 | 2.3 | 5.5 | ok |
-| I2C_SCL | U3 SCL | A1 GPIO3 | 3.3 | 2.15 | 3.6 | ok |
-| I2C_SDA | A1 GPIO2 | U3 SDA | 3.3 | 2.3 | 5.5 | ok |
-| I2C_SDA | U3 SDA | A1 GPIO2 | 3.3 | 2.15 | 3.6 | ok |
-| LEFT_MOTOR_DIR | A1 GPIO13 | U1 DIR1 | 3.3 | 2 | 5.5 | ok |
+| I2C_SCL | A1 GPIO3 | U1 SCL | 3.3 | 2.3 | 5.5 | ok |
+| I2C_SCL | U1 SCL | A1 GPIO3 | 3.3 | 2.15 | 3.6 | ok |
+| I2C_SDA | A1 GPIO2 | U1 SDA | 3.3 | 2.3 | 5.5 | ok |
+| I2C_SDA | U1 SDA | A1 GPIO2 | 3.3 | 2.15 | 3.6 | ok |
+| LEFT_MOTOR_DIR | A1 GPIO13 | U3 DIR1 | 3.3 | 2 | 5.5 | ok |
 | LEFT_MOTOR_ENC_A | M1 Encoder A | A1 GPIO18 | 3.3 | 2.15 | 3.6 | ok |
 | LEFT_MOTOR_ENC_B | M1 Encoder B | A1 GPIO19 | 3.3 | 2.15 | 3.6 | ok |
-| LEFT_MOTOR_PWM | A1 GPIO12 | U1 PWM1 | 3.3 | 2 | 5.5 | ok |
-| RIGHT_MOTOR_DIR | A1 GPIO6 | U1 DIR2 | 3.3 | 2 | 5.5 | ok |
+| LEFT_MOTOR_PWM | A1 GPIO12 | U3 PWM1 | 3.3 | 2 | 5.5 | ok |
+| RIGHT_MOTOR_DIR | A1 GPIO6 | U3 DIR2 | 3.3 | 2 | 5.5 | ok |
 | RIGHT_MOTOR_ENC_A | M2 Encoder A | A1 GPIO16 | 3.3 | 2.15 | 3.6 | ok |
 | RIGHT_MOTOR_ENC_B | M2 Encoder B | A1 GPIO20 | 3.3 | 2.15 | 3.6 | ok |
-| RIGHT_MOTOR_PWM | A1 GPIO5 | U1 PWM2 | 3.3 | 2 | 5.5 | ok |
+| RIGHT_MOTOR_PWM | A1 GPIO5 | U3 PWM2 | 3.3 | 2 | 5.5 | ok |
 
 ### Sources
 

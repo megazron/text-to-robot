@@ -5,7 +5,7 @@
 //   a ground symbol; anything else meets by net label (the same name is the same conductor, as in KiCad).
 import type { WiringRecord } from "../wiring.ts";
 import { Doc, textWidth, textBox, type Box, type Pt, union } from "./draw.ts";
-import { buildModel, type CircuitModel, type CPart, type CPin, type CNode, type Side } from "./model.ts";
+import { buildModel, withBranchFuses, fuseIdOf, type CircuitModel, type CPart, type CPin, type CNode, type Side } from "./model.ts";
 import { Router, type Heading } from "./route.ts";
 
 const G = 10, PITCH = 20, STUB = 30, HEAD = 40;
@@ -70,7 +70,7 @@ function sizeSym(m: CircuitModel, s: Sym) {
   }
   const L = by("left"), R = by("right"), T = by("top"), B = by("bottom");
   const wName = (xs: SymPin[]) => Math.max(0, ...xs.map((x) => textWidth(pinLabel(x.pin), F.pin)));
-  const head = Math.max(textWidth(p.ref + "  ", F.ref, true) + textWidth("U99", F.ref, true), textWidth(p.value, F.value)) + 16 + 28;
+  const head = Math.max(textWidth(`${p.ref} `, F.ref, true) + textWidth(`· ${p.inst}`, F.value), textWidth(p.value, F.value)) + 16 + 28;
   // top and bottom pins: grouped by node, flags of neighbouring groups must not touch
   const place = (xs: SymPin[]) => {
     xs.sort((a, b) => (m.nodeOf.get(a.pin.id)?.name ?? "~").localeCompare(m.nodeOf.get(b.pin.id)?.name ?? "~") || a.pin.id.localeCompare(b.pin.id));
@@ -125,14 +125,15 @@ function annBox(m: CircuitModel, x: SymPin, at: Pt, out: Heading, mode: Mode): B
 }
 
 // ------------------------------------------------------------------------------------------- the layout
-export function schematic(w: WiringRecord, robot: string): SchematicResult {
+export function schematic(rec: WiringRecord, robot: string): SchematicResult {
+  const w = withBranchFuses(rec);
   // first try compact (no room kept for labels on wired pins); if a wire then falls back to labels, lay out again with room
   const a = layoutOnce(w, robot, false);
   return a.unrouted.length ? layoutOnce(w, robot, true) : a;
 }
 function layoutOnce(w: WiringRecord, robot: string, roomy: boolean): SchematicResult {
   const m = buildModel(w, robot);
-  for (const p of m.parts) if (p.kind === "fuse") { const f = w.fuses.find((x) => x.id === "F1"); if (f && p.inst === "main_fuse") p.note = `${f.rating_a} A`; }
+  for (const p of m.parts) if (p.kind === "fuse") { const f = w.fuses.find((x) => x.id === fuseIdOf(w, p.inst)); if (f) p.note = `${f.rating_a} A`; }
   const col = new Map<string, number>(m.parts.map((p) => [p.inst, colOf(p)]));
   // columns that are empty disappear; a column far taller than the rest wraps into several
   let syms = m.parts.map((p) => makeSym(m, p, col));
@@ -214,28 +215,10 @@ function layoutOnce(w: WiringRecord, robot: string, roomy: boolean): SchematicRe
   let bandBottom = 0, colX: number[] = [];
   const layout = () => {
     for (const s of syms) extents(s);
-    // the power band: chain order from each source, then the regulators
-    const band = syms.filter((s) => s.col === -1), orderB: Sym[] = [];
-    const next = (s: Sym) => { for (const x of s.pins) { const pt = partner(s, x); if (pt && pt.s.col === -1 && !orderB.includes(pt.s)) return pt.s; } return null; };
-    const starts = [...band.filter((s) => s.part.kind === "inlet" || s.part.kind === "battery"), ...band.filter((s) => s.part.kind === "psu")];
-    for (const st of starts) { if (orderB.includes(st)) continue; let c: Sym | null = st; while (c && !orderB.includes(c)) { orderB.push(c); c = next(c); } }
-    for (const s of band) if (!orderB.includes(s)) orderB.push(s);
-    let x = 60, top = bandY;
-    const rowY = snap(bandY + Math.max(0, ...orderB.map((s) => s.ext.t)) + 40);
-    for (const s of orderB) {
-      x = snap(x + s.ext.l);
-      s.x = x;
-      // line the band up on its first left pin (or the battery's + pin end)
-      const first = s.pins.find((p) => p.side === "left") ?? s.pins.find((p) => p.side === "top");
-      s.y = s.part.kind === "battery" ? rowY + STUB + 20 : snap(rowY - (first && first.side === "left" ? first.off : HEAD));
-      x = s.x + s.w + s.ext.r + 70 + 10 * s.pins.filter((p) => partner(s, p)).length;
-      top = Math.max(top, s.y + s.h + s.ext.b);
-    }
-    bandBottom = band.length ? top + 50 : 40;
+    let cx = 60;
     // columns
     const ncol = Math.max(0, ...syms.map((s) => s.col + 1));
     colX = [];
-    let cx = 60;
     for (let c = 0; c < ncol; c++) {
       const list = syms.filter((s) => s.col === c);
       const L = Math.max(0, ...list.map((s) => s.ext.l)), wmax = Math.max(0, ...list.map((s) => s.w + s.ext.r));
@@ -245,6 +228,29 @@ function layoutOnce(w: WiringRecord, robot: string, roomy: boolean): SchematicRe
       for (const s of list) s.x = snap(cx + L);
       cx = snap(cx + L + wmax + 60 + tracks * G);
     }
+    // the power band: chain order from each source, then the regulators
+    const band = syms.filter((s) => s.col === -1), orderB: Sym[] = [];
+    const next = (s: Sym) => { for (const x of s.pins) { const pt = partner(s, x); if (pt && pt.s.col === -1 && !orderB.includes(pt.s)) return pt.s; } return null; };
+    const starts = [...band.filter((s) => s.part.kind === "inlet" || s.part.kind === "battery"), ...band.filter((s) => s.part.kind === "psu")];
+    for (const st of starts) { if (orderB.includes(st)) continue; let c: Sym | null = st; while (c && !orderB.includes(c)) { orderB.push(c); c = next(c); } }
+    for (const s of band) if (!orderB.includes(s)) orderB.push(s);
+    let x = 60, top = bandY;
+    const extT = Math.max(0, ...orderB.map((s) => s.ext.t));
+    let rowY = snap(bandY + extT + 40);
+    // a long band (many branch fuses) wraps at the width of the columns below; only at a part with no wire to its
+    // neighbours, so a wired chain is never split
+    const limit = Math.max(1400, cx);
+    for (const s of orderB) {
+      if (x > 60 && x + s.ext.l + s.w + s.ext.r > limit && !s.pins.some((p) => partner(s, p))) { x = 60; rowY = snap(top + extT + 50); }
+      x = snap(x + s.ext.l);
+      s.x = x;
+      // line the band up on its first left pin (or the battery's + pin end)
+      const first = s.pins.find((p) => p.side === "left") ?? s.pins.find((p) => p.side === "top");
+      s.y = s.part.kind === "battery" ? rowY + STUB + 20 : snap(rowY - (first && first.side === "left" ? first.off : HEAD));
+      x = s.x + s.w + s.ext.r + 70 + 10 * s.pins.filter((p) => partner(s, p)).length;
+      top = Math.max(top, s.y + s.h + s.ext.b);
+    }
+    bandBottom = band.length ? top + 50 : 40;
     // vertical: controllers first, then each column lined up with the pins it wires to
     const orderC = [1, 2, 3, ...Array.from({ length: Math.max(0, ncol - 4) }, (_, i) => 4 + i), 0].filter((c) => c < ncol);
     const placed = new Set<Sym>();
@@ -280,13 +286,7 @@ function layoutOnce(w: WiringRecord, robot: string, roomy: boolean): SchematicRe
     }
   };
   layout(); orderPins(); layout(); orderPins(); layout();
-  // reference designators read left to right, top to bottom
-  {
-    const pre = (r: string) => r.replace(/\d+$/, "");
-    const byPre = new Map<string, Sym[]>();
-    for (const s of syms) byPre.set(pre(s.part.ref), [...(byPre.get(pre(s.part.ref)) ?? []), s]);
-    for (const list of byPre.values()) { list.sort((a, b) => (a.col === -1 ? -1 : a.col) - (b.col === -1 ? -1 : b.col) || a.y - b.y || a.x - b.x); list.forEach((s, i) => (s.part.ref = `${pre(s.part.ref)}${i + 1}`)); }
-  }
+  // reference designators stay as the model gave them (by instance name): the breadboard view uses the same ones
   // ---- sheet
   const content = union(syms.map((s) => ({ x: s.x - s.ext.l, y: s.y - s.ext.t, w: s.w + s.ext.l + s.ext.r, h: s.h + s.ext.t + s.ext.b })));
   const notes = notesBlock(w, m);
@@ -382,8 +382,8 @@ function reserveBox(R: Router, b: Box, id: number) {
 function glyphTexts(s: Sym) {
   const p = s.part, k = p.kind;
   const T = (x: number, y: number, str: string, size: number, o: { bold?: boolean; anchor?: "start" | "middle" | "end"; fill?: string } = {}) => ({ t: "text" as const, x, y, s: str, size, ...o });
-  if (k === "fuse" || k === "switch") return [T(s.x + s.w / 2, s.y - 14, `${p.ref}${p.note ? `  ${p.note}` : ""}`, F.ref, { bold: true, anchor: "middle", fill: C.ref }), T(s.x + s.w / 2, s.y + s.h + 14, p.value, F.value, { anchor: "middle", fill: C.ref })];
-  if (k === "battery") return [T(s.x + s.w + 8, s.y + 26, p.ref, F.ref, { bold: true, fill: C.ref }), T(s.x + s.w + 8, s.y + 40, p.value, F.value, { fill: C.ref })];
+  if (k === "fuse" || k === "switch") return [T(s.x + s.w / 2, s.y - 14, `${p.ref}${p.note ? `  ${p.note}` : ""}`, F.ref, { bold: true, anchor: "middle", fill: C.ref }), T(s.x + s.w / 2, s.y + s.h + 14, p.value, F.value, { anchor: "middle", fill: C.ref }), T(s.x + s.w / 2, s.y + s.h + 26, p.inst, F.value, { anchor: "middle", fill: C.ref })];
+  if (k === "battery") return [T(s.x + s.w + 8, s.y + 26, p.ref, F.ref, { bold: true, fill: C.ref }), T(s.x + s.w + 8, s.y + 40, p.value, F.value, { fill: C.ref }), T(s.x + s.w + 8, s.y + 52, p.inst, F.value, { fill: C.ref })];
   return [];
 }
 function drawSym(doc: Doc, m: CircuitModel, s: Sym) {
@@ -408,6 +408,8 @@ function drawSym(doc: Doc, m: CircuitModel, s: Sym) {
   } else {
     doc.rect(s.x, s.y, s.w, s.h, { fill: C.fill, stroke: C.body, sw: 1.6, cls: "sym body", data: d });
     doc.text(s.x + 8, s.y + 16, p.ref, F.ref, { bold: true, fill: C.ref, data: { g: gid } });
+    // the part's name in the design beside its designator: the same name labels it in the breadboard view
+    doc.text(s.x + 8 + textWidth(`${p.ref} `, F.ref, true), s.y + 16, `· ${p.inst}`, F.value, { fill: C.ref, data: { g: gid } });
     doc.text(s.x + 8, s.y + 30, p.value, F.value, { fill: C.ref, data: { g: gid }, title: p.inst });
     glyph(doc, s, gid);
   }

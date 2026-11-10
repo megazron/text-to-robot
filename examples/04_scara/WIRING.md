@@ -140,8 +140,8 @@ A driver's high level is its I/O supply; the receiver needs it above its input t
 
 | Net | Driver | Receiver | High V | Threshold V | Input limit V | Result |
 |---|---|---|--:|--:|--:|---|
-| BUS_SERVO_BUS | M5 DATA | U4 SIG | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | U4 SIG | M5 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M1 DATA | U4 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U4 SIG | M1 DATA | - | - | - | not checked: no published logic levels for one side |
 | BUS_SERVO_BUS | U4 SIG | M4 DATA | - | - | - | not checked: no published logic levels for one side |
 | BUS_SERVO_BUS | U4 SIG | M4 DATA | - | - | - | not checked: no published logic levels for one side |
 | BUS_SERVO_BUS | M4 DATA | U4 SIG | - | - | - | not checked: no published logic levels for one side |

@@ -9,7 +9,7 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 3307 2339] /Resources << /Font << /F1 5 0 R /F2 6 0 R >> >> /Contents 4 0 R >>
 endobj
 4 0 obj
-<< /Length 37486 >>
+<< /Length 38443 >>
 stream
 1 J 1 j
 0 0 3307 2339 re
@@ -109,7 +109,8 @@ BT 0.52 0 0 rg /F1 7 Tf 1 0 0 1 3291.03 145.22 Tm (I) Tj ET
 1 1 0.76 rg
 0.52 0 0 RG 1.6 w
 B
-BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 1808 1653 Tm (M1) Tj ET
+BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 1808 1653 Tm (M2) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1826.34 1653 Tm (\267 j1_motor) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1808 1639 Tm (NEMA17 stepper + 5.18:1 planetary gearbox) Tj ET
 2021 1649 m
 2021 1642.92 2016.08 1638 2010 1638 c
@@ -137,7 +138,8 @@ BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1805 1555.8 Tm (B\\) Tj ET
 1 1 0.76 rg
 0.52 0 0 RG 1.6 w
 B
-BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 1808 993 Tm (M3) Tj ET
+BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 1808 993 Tm (M5) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1826.34 993 Tm (\267 z_motor) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1808 979 Tm (NEMA17 stepper 42x42x40 mm) Tj ET
 1971 989 m
 1971 982.92 1966.08 978 1960 978 c
@@ -165,7 +167,8 @@ BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1805 895.8 Tm (B\\) Tj ET
 1 1 0.76 rg
 0.52 0 0 RG 1.6 w
 B
-BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 1808 1323 Tm (M2) Tj ET
+BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 1808 1323 Tm (M3) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1826.34 1323 Tm (\267 j2_motor) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1808 1309 Tm (NEMA17 stepper + 5.18:1 planetary gearbox) Tj ET
 2021 1319 m
 2021 1312.92 2016.08 1308 2010 1308 c
@@ -194,6 +197,7 @@ BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1805 1225.8 Tm (B\\) Tj ET
 0.52 0 0 RG 1.6 w
 B
 BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 2218 1653 Tm (M4) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 2236.34 1653 Tm (\267 wrist_servo) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 2218 1639 Tm (Feetech STS3215 C047 12 V 30 kg.cm) Tj ET
 2411 1649 m
 2411 1642.92 2406.08 1638 2400 1638 c
@@ -235,7 +239,8 @@ BT 0 0.39 0.39 rg /F1 9 Tf 0 1 -1 0 2343.2 1564 Tm 0 0 Td (GND) Tj ET
 1 1 0.76 rg
 0.52 0 0 RG 1.6 w
 B
-BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 2218 1403 Tm (M5) Tj ET
+BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 2218 1403 Tm (M1) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 2236.34 1403 Tm (\267 gripper_servo) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 2218 1389 Tm (Feetech STS3215 C047 12 V 30 kg.cm) Tj ET
 2411 1399 m
 2411 1392.92 2406.08 1388 2400 1388 c
@@ -268,7 +273,8 @@ BT 0 0.39 0.39 rg /F1 9 Tf 0 1 -1 0 2333.2 1314 Tm 0 0 Td (GND) Tj ET
 1 1 0.76 rg
 0.52 0 0 RG 1.6 w
 B
-BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 1458 1943 Tm (PS1) Tj ET
+BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 1458 1943 Tm (PS2) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1481.85 1943 Tm (\267 psu_24v) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1458 1929 Tm (Mean Well LRS-150-24 enclosed PSU) Tj ET
 1618 1930 24 18 re
 1 1 1 rg
@@ -296,7 +302,8 @@ BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1578.74 1905.8 Tm (DC OUTPUT +V) Tj ET
 1 1 0.76 rg
 0.52 0 0 RG 1.6 w
 B
-BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 1918 1943 Tm (PS2) Tj ET
+BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 1918 1943 Tm (PS1) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1941.85 1943 Tm (\267 psu_12v) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1918 1929 Tm (Mean Well LRS-75-12 enclosed PSU) Tj ET
 2078 1930 24 18 re
 1 1 1 rg
@@ -325,6 +332,7 @@ BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 2038.74 1905.8 Tm (DC OUTPUT +V) Tj ET
 0.52 0 0 RG 1.6 w
 B
 BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 918 1383 Tm (A1) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 935.12 1383 Tm (\267 controller) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 918 1369 Tm (Espressif ESP32-S3-DevKitC-1) Tj ET
 1051 1368 18 22 re
 1 1 1 rg
@@ -402,6 +410,7 @@ BT 0 0.39 0.39 rg /F1 9 Tf 0 1 -1 0 1003.2 1154 Tm 0 0 Td (G) Tj ET
 0.52 0 0 RG 1.6 w
 B
 BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 1298 1653 Tm (U1) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1315.12 1653 Tm (\267 driver_j1) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1298 1639 Tm (BigTreeTech TMC2209 V1.3 StepStick stepper driver) Tj ET
 1521 1638 18 22 re
 1 1 1 rg
@@ -454,6 +463,7 @@ BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1295 1495.8 Tm (VREF) Tj ET
 0.52 0 0 RG 1.6 w
 B
 BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 1298 1323 Tm (U2) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1315.12 1323 Tm (\267 driver_j2) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1298 1309 Tm (BigTreeTech TMC2209 V1.3 StepStick stepper driver) Tj ET
 1521 1308 18 22 re
 1 1 1 rg
@@ -506,6 +516,7 @@ BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1295 1165.8 Tm (VREF) Tj ET
 0.52 0 0 RG 1.6 w
 B
 BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 1298 993 Tm (U3) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1315.12 993 Tm (\267 driver_z) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1298 979 Tm (BigTreeTech TMC2209 V1.3 StepStick stepper driver) Tj ET
 1521 978 18 22 re
 1 1 1 rg
@@ -558,6 +569,7 @@ BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1295 835.8 Tm (VREF) Tj ET
 0.52 0 0 RG 1.6 w
 B
 BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 1298 663 Tm (U4) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1315.12 663 Tm (\267 servo_bus) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1298 649 Tm (Waveshare Bus Servo Adapter) Tj ET
 1431 648 18 22 re
 1 1 1 rg
@@ -590,6 +602,7 @@ BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1439.49 625.8 Tm (SIG) Tj ET
 0.52 0 0 RG 1.6 w
 B
 BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 888 1933 Tm (J1) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 903.29 1933 Tm (\267 mains_inlet) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 888 1919 Tm (IEC C14 panel inlet with fuse drawer and rocker switch) Tj ET
 1121 1918 18 22 re
 1 1 1 rg
@@ -959,8 +972,8 @@ S
 0.52 0 0 RG 0.8 w
 B
 BT 0 0 0 rg /F2 9 Tf 1 0 0 1 40 96 Tm (Power rails) Tj ET
-BT 0 0 0 rg /F1 9 Tf 1 0 0 1 40 82 Tm (V24  24 V from PS1: load 3.216 A typical, 5.36 A peak; source 6.5 A cont, 7.1 A peak) Tj ET
-BT 0 0 0 rg /F1 9 Tf 1 0 0 1 40 68 Tm (V12  12 V from PS2: load 0.9 A typical, 3.15 A peak; source 6 A cont, 6.6 A peak) Tj ET
+BT 0 0 0 rg /F1 9 Tf 1 0 0 1 40 82 Tm (V24  24 V from PS2: load 3.216 A typical, 5.36 A peak; source 6.5 A cont, 7.1 A peak) Tj ET
+BT 0 0 0 rg /F1 9 Tf 1 0 0 1 40 68 Tm (V12  12 V from PS1: load 0.9 A typical, 3.15 A peak; source 6 A cont, 6.6 A peak) Tj ET
 BT 0 0 0 rg /F1 9 Tf 1 0 0 1 40 54 Tm (Lever splices \(star_ground, splice_v24\) are junctions of their nets.) Tj ET
 BT 0 0 0 rg /F1 9 Tf 1 0 0 1 40 40 Tm (Same net label or power symbol = same conductor. X = pin not connected.) Tj ET
 2867 20 420 110 re
@@ -1002,11 +1015,11 @@ xref
 0000000058 00000 n 
 0000000115 00000 n 
 0000000253 00000 n 
-0000037792 00000 n 
-0000037889 00000 n 
-0000037991 00000 n 
+0000038749 00000 n 
+0000038846 00000 n 
+0000038948 00000 n 
 trailer
 << /Size 8 /Root 1 0 R /Info 7 0 R >>
 startxref
-38064
+39021
 %%EOF

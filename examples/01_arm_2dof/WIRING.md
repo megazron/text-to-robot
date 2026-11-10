@@ -79,28 +79,28 @@ A driver's high level is its I/O supply; the receiver needs it above its input t
 
 | Net | Driver | Receiver | High V | Threshold V | Input limit V | Result |
 |---|---|---|--:|--:|--:|---|
+| BUS_SERVO_BUS | M1 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M1 DATA | M3 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M1 DATA | M3 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M1 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M1 DATA | M3 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M1 DATA | M3 DATA | - | - | - | not checked: no published logic levels for one side |
 | BUS_SERVO_BUS | M2 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M2 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M2 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M2 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M2 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M2 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M2 DATA | M3 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M2 DATA | M3 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U1 SIG | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U1 SIG | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U1 SIG | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U1 SIG | M3 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | U1 SIG | M3 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M3 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M3 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M3 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
 | BUS_SERVO_BUS | M3 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
 | BUS_SERVO_BUS | M3 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
 | BUS_SERVO_BUS | M3 DATA | M1 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | U1 SIG | M2 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | U1 SIG | M2 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | U1 SIG | M3 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | U1 SIG | M1 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | U1 SIG | M1 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M1 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M1 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M1 DATA | M3 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M1 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M1 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M1 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M1 DATA | M3 DATA | - | - | - | not checked: no published logic levels for one side |
-| BUS_SERVO_BUS | M1 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M3 DATA | M2 DATA | - | - | - | not checked: no published logic levels for one side |
+| BUS_SERVO_BUS | M3 DATA | U1 SIG | - | - | - | not checked: no published logic levels for one side |
 
 Not checked (no logic levels in the parts data): Feetech STS3215 C047 12 V 30 kg.cm (1:345), Feetech STS3250 C002 12 V 50 kg.cm (1:345), Waveshare Bus Servo Adapter (A).
 

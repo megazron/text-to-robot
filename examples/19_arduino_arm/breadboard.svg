@@ -74,146 +74,146 @@
 <polyline points="227.57,80 251.57,80" fill="none" stroke="#13437d" stroke-width="5.6" stroke-linejoin="round" stroke-linecap="round"/>
 <polyline points="227.57,80 251.57,80" stroke="#1f6fd1" stroke-width="4" fill="none" stroke-linejoin="round" stroke-linecap="round" data-g="head"/>
 <text x="257.57" y="84" font-size="10" fill="#333333" data-g="head">blue</text>
-<rect x="820" y="470" width="150" height="100" rx="5" fill="#3a7bd5" stroke="#234a80" stroke-width="1.4" data-g="P:yaw_servo"/>
-<circle cx="946" cy="536" r="10" fill="#f4f4f4" stroke="#999" stroke-width="1" data-g="P:yaw_servo"/>
-<rect x="930" y="533" width="32" height="6" rx="3" fill="#f4f4f4" stroke="#999" stroke-width="0.8" data-g="P:yaw_servo"/>
-<text x="895" y="488" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:yaw_servo">TowerPro SG90 micro servo</text>
-<text x="895" y="500" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:yaw_servo">yaw_servo</text>
-<rect x="820" y="517" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:yaw_servo"/>
-<text x="829" y="523" font-size="8" fill="#ffffff" data-g="P:yaw_servo">Signal</text>
-<rect x="820" y="537" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:yaw_servo"/>
-<text x="829" y="543" font-size="8" fill="#ffffff" data-g="P:yaw_servo">V+</text>
-<rect x="820" y="557" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:yaw_servo"/>
-<text x="829" y="563" font-size="8" fill="#ffffff" data-g="P:yaw_servo">GND</text>
-<rect x="800" y="650" width="180" height="100" rx="5" fill="#222222" stroke="#141414" stroke-width="1.4" data-g="P:shoulder_servo"/>
-<circle cx="956" cy="716" r="10" fill="#f4f4f4" stroke="#999" stroke-width="1" data-g="P:shoulder_servo"/>
-<rect x="940" y="713" width="32" height="6" rx="3" fill="#f4f4f4" stroke="#999" stroke-width="0.8" data-g="P:shoulder_servo"/>
-<text x="890" y="668" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:shoulder_servo">TowerPro MG996R standard servo</text>
-<text x="890" y="680" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:shoulder_servo">shoulder_servo</text>
-<rect x="800" y="697" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:shoulder_servo"/>
-<text x="809" y="703" font-size="8" fill="#ffffff" data-g="P:shoulder_servo">Signal</text>
-<rect x="800" y="717" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:shoulder_servo"/>
-<text x="809" y="723" font-size="8" fill="#ffffff" data-g="P:shoulder_servo">V+</text>
-<rect x="800" y="737" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:shoulder_servo"/>
-<text x="809" y="743" font-size="8" fill="#ffffff" data-g="P:shoulder_servo">GND</text>
-<rect x="800" y="830" width="180" height="100" rx="5" fill="#222222" stroke="#141414" stroke-width="1.4" data-g="P:elbow_servo"/>
-<circle cx="956" cy="896" r="10" fill="#f4f4f4" stroke="#999" stroke-width="1" data-g="P:elbow_servo"/>
-<rect x="940" y="893" width="32" height="6" rx="3" fill="#f4f4f4" stroke="#999" stroke-width="0.8" data-g="P:elbow_servo"/>
-<text x="890" y="848" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:elbow_servo">TowerPro MG996R standard servo</text>
-<text x="890" y="860" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:elbow_servo">elbow_servo</text>
-<rect x="800" y="877" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:elbow_servo"/>
-<text x="809" y="883" font-size="8" fill="#ffffff" data-g="P:elbow_servo">Signal</text>
-<rect x="800" y="897" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:elbow_servo"/>
-<text x="809" y="903" font-size="8" fill="#ffffff" data-g="P:elbow_servo">V+</text>
-<rect x="800" y="917" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:elbow_servo"/>
-<text x="809" y="923" font-size="8" fill="#ffffff" data-g="P:elbow_servo">GND</text>
-<rect x="820" y="1010" width="150" height="100" rx="5" fill="#3a7bd5" stroke="#234a80" stroke-width="1.4" data-g="P:claw_servo"/>
-<circle cx="946" cy="1076" r="10" fill="#f4f4f4" stroke="#999" stroke-width="1" data-g="P:claw_servo"/>
-<rect x="930" y="1073" width="32" height="6" rx="3" fill="#f4f4f4" stroke="#999" stroke-width="0.8" data-g="P:claw_servo"/>
-<text x="895" y="1028" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:claw_servo">TowerPro SG90 micro servo</text>
-<text x="895" y="1040" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:claw_servo">claw_servo</text>
-<rect x="820" y="1057" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:claw_servo"/>
-<text x="829" y="1063" font-size="8" fill="#ffffff" data-g="P:claw_servo">Signal</text>
-<rect x="820" y="1077" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:claw_servo"/>
-<text x="829" y="1083" font-size="8" fill="#ffffff" data-g="P:claw_servo">V+</text>
-<rect x="820" y="1097" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:claw_servo"/>
-<text x="829" y="1103" font-size="8" fill="#ffffff" data-g="P:claw_servo">GND</text>
-<rect x="60" y="470" width="200" height="140" rx="6" fill="#0f7c8c" stroke="#094a54" stroke-width="1.4" data-g="P:controller"/>
-<circle cx="67" cy="477" r="3" fill="#d9d4c3" stroke="#094a54" stroke-width="0.8" data-g="P:controller"/>
-<circle cx="253" cy="477" r="3" fill="#d9d4c3" stroke="#094a54" stroke-width="0.8" data-g="P:controller"/>
-<circle cx="67" cy="603" r="3" fill="#d9d4c3" stroke="#094a54" stroke-width="0.8" data-g="P:controller"/>
-<circle cx="253" cy="603" r="3" fill="#d9d4c3" stroke="#094a54" stroke-width="0.8" data-g="P:controller"/>
-<rect x="115.77" y="540" width="48" height="32" rx="2" fill="#1b1b1b" data-g="P:controller"/>
-<text x="160" y="488" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:controller">Arduino Uno R3 compatible board</text>
-<text x="160" y="500" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:controller">controller</text>
-<rect x="254" y="527" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:controller"/>
-<text x="251" y="533" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:controller">5V</text>
-<rect x="254" y="547" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:controller"/>
-<text x="251" y="553" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:controller">GND</text>
-<rect x="254" y="567" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:controller"/>
-<text x="251" y="573" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:controller">A4/SDA</text>
-<rect x="254" y="587" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:controller"/>
-<text x="251" y="593" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:controller">A5/SCL</text>
-<rect x="380" y="490" width="220" height="310" rx="6" fill="#1f4fa0" stroke="#132f60" stroke-width="1.4" data-g="P:servo_driver"/>
-<circle cx="387" cy="497" r="3" fill="#d9d4c3" stroke="#132f60" stroke-width="0.8" data-g="P:servo_driver"/>
-<circle cx="593" cy="497" r="3" fill="#d9d4c3" stroke="#132f60" stroke-width="0.8" data-g="P:servo_driver"/>
-<circle cx="387" cy="793" r="3" fill="#d9d4c3" stroke="#132f60" stroke-width="0.8" data-g="P:servo_driver"/>
-<circle cx="593" cy="793" r="3" fill="#d9d4c3" stroke="#132f60" stroke-width="0.8" data-g="P:servo_driver"/>
-<rect x="474.89" y="666.89" width="24" height="18" rx="1.5" fill="#1b1b1b" data-g="P:servo_driver"/>
-<text x="490" y="537.78" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:servo_driver">PCA9685 16-channel PWM servo driver board</text>
-<text x="490" y="549.78" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:servo_driver">servo_driver</text>
-<rect x="594" y="567" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_driver"/>
-<text x="591" y="573" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:servo_driver">PWM0</text>
-<rect x="594" y="587" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_driver"/>
-<text x="591" y="593" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:servo_driver">V+</text>
-<rect x="594" y="607" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_driver"/>
-<text x="591" y="613" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:servo_driver">GND</text>
-<rect x="594" y="627" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_driver"/>
-<text x="591" y="633" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:servo_driver">PWM1</text>
-<rect x="594" y="647" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_driver"/>
-<text x="591" y="653" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:servo_driver">V+</text>
-<rect x="594" y="667" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_driver"/>
-<text x="591" y="673" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:servo_driver">GND</text>
-<rect x="594" y="687" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_driver"/>
-<text x="591" y="693" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:servo_driver">PWM2</text>
-<rect x="594" y="707" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_driver"/>
-<text x="591" y="713" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:servo_driver">V+</text>
-<rect x="594" y="727" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_driver"/>
-<text x="591" y="733" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:servo_driver">GND</text>
-<rect x="594" y="747" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_driver"/>
-<text x="591" y="753" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:servo_driver">PWM3</text>
-<rect x="594" y="767" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_driver"/>
-<text x="591" y="773" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:servo_driver">V+</text>
-<rect x="594" y="787" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_driver"/>
-<text x="591" y="793" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:servo_driver">GND</text>
-<rect x="380" y="647" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_driver"/>
-<text x="389" y="653" font-size="8" fill="#ffffff" data-g="P:servo_driver">VCC</text>
-<rect x="380" y="667" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_driver"/>
-<text x="389" y="673" font-size="8" fill="#ffffff" data-g="P:servo_driver">GND</text>
-<rect x="380" y="687" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_driver"/>
-<text x="389" y="693" font-size="8" fill="#ffffff" data-g="P:servo_driver">SDA</text>
-<rect x="380" y="707" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_driver"/>
-<text x="389" y="713" font-size="8" fill="#ffffff" data-g="P:servo_driver">SCL</text>
-<rect x="477" y="490" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_driver"/>
-<text x="483" y="499" font-size="8" text-anchor="end" fill="#ffffff" transform="rotate(-90 483 499)" data-g="P:servo_driver">V+</text>
-<rect x="497" y="490" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_driver"/>
-<text x="503" y="499" font-size="8" text-anchor="end" fill="#ffffff" transform="rotate(-90 503 499)" data-g="P:servo_driver">GND</text>
-<rect x="670" y="150" width="110" height="60" rx="4" fill="#1e1e1e" data-g="P:main_switch"/>
-<rect x="697.5" y="162" width="55" height="27" rx="3" fill="#d7263d" stroke="#8d1424" stroke-width="1" data-g="P:main_switch"/>
-<text x="725" y="177" font-size="10" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:main_switch">I</text>
-<text x="725" y="130" font-size="9" text-anchor="middle" font-weight="700" fill="#333333" data-g="P:main_switch">KCD1 rocker switch</text>
-<text x="725" y="142" font-size="8" text-anchor="middle" fill="#555555" data-g="P:main_switch">main_switch</text>
-<rect x="670" y="167" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:main_switch"/>
-<rect x="727" y="204" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:main_switch"/>
-<rect x="60" y="150" width="180" height="190" rx="3" fill="#b9bcc0" stroke="#7d8084" stroke-width="1.4" data-g="P:power_supply"/>
-<line x1="70" y1="192" x2="70" y2="261.11" stroke="#8e9195" stroke-width="2" data-g="P:power_supply"/>
-<line x1="87.82" y1="192" x2="87.82" y2="261.11" stroke="#8e9195" stroke-width="2" data-g="P:power_supply"/>
-<line x1="105.64" y1="192" x2="105.64" y2="261.11" stroke="#8e9195" stroke-width="2" data-g="P:power_supply"/>
-<line x1="123.46" y1="192" x2="123.46" y2="261.11" stroke="#8e9195" stroke-width="2" data-g="P:power_supply"/>
-<line x1="141.28" y1="192" x2="141.28" y2="261.11" stroke="#8e9195" stroke-width="2" data-g="P:power_supply"/>
-<line x1="159.1" y1="192" x2="159.1" y2="261.11" stroke="#8e9195" stroke-width="2" data-g="P:power_supply"/>
-<text x="150" y="168" font-size="9" text-anchor="middle" font-weight="700" fill="#111111" data-g="P:power_supply">Mean Well LRS-50-5 enclosed PSU</text>
-<text x="150" y="180" font-size="8" text-anchor="middle" fill="#111111" data-g="P:power_supply">power_supply</text>
-<rect x="234" y="197" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:power_supply"/>
-<text x="231" y="203" font-size="8" text-anchor="end" fill="#111111" data-g="P:power_supply">AC/L</text>
-<rect x="234" y="217" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:power_supply"/>
-<text x="231" y="223" font-size="8" text-anchor="end" fill="#111111" data-g="P:power_supply">AC/N</text>
-<rect x="234" y="237" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:power_supply"/>
-<text x="231" y="243" font-size="8" text-anchor="end" fill="#111111" data-g="P:power_supply">FG</text>
-<rect x="234" y="257" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:power_supply"/>
-<text x="231" y="263" font-size="8" text-anchor="end" fill="#111111" data-g="P:power_supply">DC OUTPUT +V</text>
-<rect x="147" y="334" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:power_supply"/>
-<text x="153" y="331" font-size="8" fill="#111111" transform="rotate(-90 153 331)" data-g="P:power_supply">DC OUTPUT -V</text>
-<rect x="350" y="150" width="230" height="100" rx="6" fill="#1e1e1e" data-g="P:mains_inlet"/>
-<path d="M407.5 180L522.5 180L522.5 210L492.6 225L437.4 225L407.5 210Z" fill="#444" stroke="#777" stroke-width="1" stroke-linejoin="round" data-g="P:mains_inlet"/>
-<text x="465" y="130" font-size="9" text-anchor="middle" font-weight="700" fill="#333333" data-g="P:mains_inlet">IEC C14 panel inlet with fuse drawer and rocker switch</text>
-<text x="465" y="142" font-size="8" text-anchor="middle" fill="#555555" data-g="P:mains_inlet">mains_inlet</text>
-<rect x="350" y="177" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:mains_inlet"/>
-<text x="359" y="183" font-size="8" fill="#ffffff" data-g="P:mains_inlet">L</text>
-<rect x="350" y="197" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:mains_inlet"/>
-<text x="359" y="203" font-size="8" fill="#ffffff" data-g="P:mains_inlet">N</text>
-<rect x="350" y="217" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:mains_inlet"/>
-<text x="359" y="223" font-size="8" fill="#ffffff" data-g="P:mains_inlet">E</text>
+<rect x="820" y="470" width="150" height="100" rx="5" fill="#3a7bd5" stroke="#234a80" stroke-width="1.4" data-g="P:yaw_servo" data-ref="M4"/>
+<circle cx="946" cy="536" r="10" fill="#f4f4f4" stroke="#999" stroke-width="1" data-g="P:yaw_servo" data-ref="M4"/>
+<rect x="930" y="533" width="32" height="6" rx="3" fill="#f4f4f4" stroke="#999" stroke-width="0.8" data-g="P:yaw_servo" data-ref="M4"/>
+<text x="895" y="488" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:yaw_servo" data-ref="M4">TowerPro SG90 micro servo</text>
+<text x="895" y="500" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:yaw_servo" data-ref="M4">M4 · yaw_servo</text>
+<rect x="820" y="517" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:yaw_servo" data-ref="M4"/>
+<text x="829" y="523" font-size="8" fill="#ffffff" data-g="P:yaw_servo" data-ref="M4">Signal</text>
+<rect x="820" y="537" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:yaw_servo" data-ref="M4"/>
+<text x="829" y="543" font-size="8" fill="#ffffff" data-g="P:yaw_servo" data-ref="M4">V+</text>
+<rect x="820" y="557" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:yaw_servo" data-ref="M4"/>
+<text x="829" y="563" font-size="8" fill="#ffffff" data-g="P:yaw_servo" data-ref="M4">GND</text>
+<rect x="800" y="650" width="180" height="100" rx="5" fill="#222222" stroke="#141414" stroke-width="1.4" data-g="P:shoulder_servo" data-ref="M3"/>
+<circle cx="956" cy="716" r="10" fill="#f4f4f4" stroke="#999" stroke-width="1" data-g="P:shoulder_servo" data-ref="M3"/>
+<rect x="940" y="713" width="32" height="6" rx="3" fill="#f4f4f4" stroke="#999" stroke-width="0.8" data-g="P:shoulder_servo" data-ref="M3"/>
+<text x="890" y="668" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:shoulder_servo" data-ref="M3">TowerPro MG996R standard servo</text>
+<text x="890" y="680" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:shoulder_servo" data-ref="M3">M3 · shoulder_servo</text>
+<rect x="800" y="697" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:shoulder_servo" data-ref="M3"/>
+<text x="809" y="703" font-size="8" fill="#ffffff" data-g="P:shoulder_servo" data-ref="M3">Signal</text>
+<rect x="800" y="717" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:shoulder_servo" data-ref="M3"/>
+<text x="809" y="723" font-size="8" fill="#ffffff" data-g="P:shoulder_servo" data-ref="M3">V+</text>
+<rect x="800" y="737" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:shoulder_servo" data-ref="M3"/>
+<text x="809" y="743" font-size="8" fill="#ffffff" data-g="P:shoulder_servo" data-ref="M3">GND</text>
+<rect x="800" y="830" width="180" height="100" rx="5" fill="#222222" stroke="#141414" stroke-width="1.4" data-g="P:elbow_servo" data-ref="M2"/>
+<circle cx="956" cy="896" r="10" fill="#f4f4f4" stroke="#999" stroke-width="1" data-g="P:elbow_servo" data-ref="M2"/>
+<rect x="940" y="893" width="32" height="6" rx="3" fill="#f4f4f4" stroke="#999" stroke-width="0.8" data-g="P:elbow_servo" data-ref="M2"/>
+<text x="890" y="848" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:elbow_servo" data-ref="M2">TowerPro MG996R standard servo</text>
+<text x="890" y="860" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:elbow_servo" data-ref="M2">M2 · elbow_servo</text>
+<rect x="800" y="877" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:elbow_servo" data-ref="M2"/>
+<text x="809" y="883" font-size="8" fill="#ffffff" data-g="P:elbow_servo" data-ref="M2">Signal</text>
+<rect x="800" y="897" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:elbow_servo" data-ref="M2"/>
+<text x="809" y="903" font-size="8" fill="#ffffff" data-g="P:elbow_servo" data-ref="M2">V+</text>
+<rect x="800" y="917" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:elbow_servo" data-ref="M2"/>
+<text x="809" y="923" font-size="8" fill="#ffffff" data-g="P:elbow_servo" data-ref="M2">GND</text>
+<rect x="820" y="1010" width="150" height="100" rx="5" fill="#3a7bd5" stroke="#234a80" stroke-width="1.4" data-g="P:claw_servo" data-ref="M1"/>
+<circle cx="946" cy="1076" r="10" fill="#f4f4f4" stroke="#999" stroke-width="1" data-g="P:claw_servo" data-ref="M1"/>
+<rect x="930" y="1073" width="32" height="6" rx="3" fill="#f4f4f4" stroke="#999" stroke-width="0.8" data-g="P:claw_servo" data-ref="M1"/>
+<text x="895" y="1028" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:claw_servo" data-ref="M1">TowerPro SG90 micro servo</text>
+<text x="895" y="1040" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:claw_servo" data-ref="M1">M1 · claw_servo</text>
+<rect x="820" y="1057" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:claw_servo" data-ref="M1"/>
+<text x="829" y="1063" font-size="8" fill="#ffffff" data-g="P:claw_servo" data-ref="M1">Signal</text>
+<rect x="820" y="1077" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:claw_servo" data-ref="M1"/>
+<text x="829" y="1083" font-size="8" fill="#ffffff" data-g="P:claw_servo" data-ref="M1">V+</text>
+<rect x="820" y="1097" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:claw_servo" data-ref="M1"/>
+<text x="829" y="1103" font-size="8" fill="#ffffff" data-g="P:claw_servo" data-ref="M1">GND</text>
+<rect x="60" y="470" width="200" height="140" rx="6" fill="#0f7c8c" stroke="#094a54" stroke-width="1.4" data-g="P:controller" data-ref="A1"/>
+<circle cx="67" cy="477" r="3" fill="#d9d4c3" stroke="#094a54" stroke-width="0.8" data-g="P:controller" data-ref="A1"/>
+<circle cx="253" cy="477" r="3" fill="#d9d4c3" stroke="#094a54" stroke-width="0.8" data-g="P:controller" data-ref="A1"/>
+<circle cx="67" cy="603" r="3" fill="#d9d4c3" stroke="#094a54" stroke-width="0.8" data-g="P:controller" data-ref="A1"/>
+<circle cx="253" cy="603" r="3" fill="#d9d4c3" stroke="#094a54" stroke-width="0.8" data-g="P:controller" data-ref="A1"/>
+<rect x="115.77" y="540" width="48" height="32" rx="2" fill="#1b1b1b" data-g="P:controller" data-ref="A1"/>
+<text x="160" y="488" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:controller" data-ref="A1">Arduino Uno R3 compatible board</text>
+<text x="160" y="500" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:controller" data-ref="A1">A1 · controller</text>
+<rect x="254" y="527" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:controller" data-ref="A1"/>
+<text x="251" y="533" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:controller" data-ref="A1">5V</text>
+<rect x="254" y="547" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:controller" data-ref="A1"/>
+<text x="251" y="553" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:controller" data-ref="A1">GND</text>
+<rect x="254" y="567" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:controller" data-ref="A1"/>
+<text x="251" y="573" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:controller" data-ref="A1">A4/SDA</text>
+<rect x="254" y="587" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:controller" data-ref="A1"/>
+<text x="251" y="593" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:controller" data-ref="A1">A5/SCL</text>
+<rect x="380" y="490" width="220" height="310" rx="6" fill="#1f4fa0" stroke="#132f60" stroke-width="1.4" data-g="P:servo_driver" data-ref="U1"/>
+<circle cx="387" cy="497" r="3" fill="#d9d4c3" stroke="#132f60" stroke-width="0.8" data-g="P:servo_driver" data-ref="U1"/>
+<circle cx="593" cy="497" r="3" fill="#d9d4c3" stroke="#132f60" stroke-width="0.8" data-g="P:servo_driver" data-ref="U1"/>
+<circle cx="387" cy="793" r="3" fill="#d9d4c3" stroke="#132f60" stroke-width="0.8" data-g="P:servo_driver" data-ref="U1"/>
+<circle cx="593" cy="793" r="3" fill="#d9d4c3" stroke="#132f60" stroke-width="0.8" data-g="P:servo_driver" data-ref="U1"/>
+<rect x="474.89" y="666.89" width="24" height="18" rx="1.5" fill="#1b1b1b" data-g="P:servo_driver" data-ref="U1"/>
+<text x="490" y="537.78" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:servo_driver" data-ref="U1">PCA9685 16-channel PWM servo driver board</text>
+<text x="490" y="549.78" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:servo_driver" data-ref="U1">U1 · servo_driver</text>
+<rect x="594" y="567" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_driver" data-ref="U1"/>
+<text x="591" y="573" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:servo_driver" data-ref="U1">PWM0</text>
+<rect x="594" y="587" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_driver" data-ref="U1"/>
+<text x="591" y="593" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:servo_driver" data-ref="U1">V+</text>
+<rect x="594" y="607" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_driver" data-ref="U1"/>
+<text x="591" y="613" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:servo_driver" data-ref="U1">GND</text>
+<rect x="594" y="627" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_driver" data-ref="U1"/>
+<text x="591" y="633" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:servo_driver" data-ref="U1">PWM1</text>
+<rect x="594" y="647" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_driver" data-ref="U1"/>
+<text x="591" y="653" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:servo_driver" data-ref="U1">V+</text>
+<rect x="594" y="667" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_driver" data-ref="U1"/>
+<text x="591" y="673" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:servo_driver" data-ref="U1">GND</text>
+<rect x="594" y="687" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_driver" data-ref="U1"/>
+<text x="591" y="693" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:servo_driver" data-ref="U1">PWM2</text>
+<rect x="594" y="707" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_driver" data-ref="U1"/>
+<text x="591" y="713" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:servo_driver" data-ref="U1">V+</text>
+<rect x="594" y="727" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_driver" data-ref="U1"/>
+<text x="591" y="733" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:servo_driver" data-ref="U1">GND</text>
+<rect x="594" y="747" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_driver" data-ref="U1"/>
+<text x="591" y="753" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:servo_driver" data-ref="U1">PWM3</text>
+<rect x="594" y="767" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_driver" data-ref="U1"/>
+<text x="591" y="773" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:servo_driver" data-ref="U1">V+</text>
+<rect x="594" y="787" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_driver" data-ref="U1"/>
+<text x="591" y="793" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:servo_driver" data-ref="U1">GND</text>
+<rect x="380" y="647" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_driver" data-ref="U1"/>
+<text x="389" y="653" font-size="8" fill="#ffffff" data-g="P:servo_driver" data-ref="U1">VCC</text>
+<rect x="380" y="667" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_driver" data-ref="U1"/>
+<text x="389" y="673" font-size="8" fill="#ffffff" data-g="P:servo_driver" data-ref="U1">GND</text>
+<rect x="380" y="687" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_driver" data-ref="U1"/>
+<text x="389" y="693" font-size="8" fill="#ffffff" data-g="P:servo_driver" data-ref="U1">SDA</text>
+<rect x="380" y="707" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_driver" data-ref="U1"/>
+<text x="389" y="713" font-size="8" fill="#ffffff" data-g="P:servo_driver" data-ref="U1">SCL</text>
+<rect x="477" y="490" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_driver" data-ref="U1"/>
+<text x="483" y="499" font-size="8" text-anchor="end" fill="#ffffff" transform="rotate(-90 483 499)" data-g="P:servo_driver" data-ref="U1">V+</text>
+<rect x="497" y="490" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_driver" data-ref="U1"/>
+<text x="503" y="499" font-size="8" text-anchor="end" fill="#ffffff" transform="rotate(-90 503 499)" data-g="P:servo_driver" data-ref="U1">GND</text>
+<rect x="670" y="150" width="110" height="60" rx="4" fill="#1e1e1e" data-g="P:main_switch" data-ref="SW1"/>
+<rect x="697.5" y="162" width="55" height="27" rx="3" fill="#d7263d" stroke="#8d1424" stroke-width="1" data-g="P:main_switch" data-ref="SW1"/>
+<text x="725" y="177" font-size="10" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:main_switch" data-ref="SW1">I</text>
+<text x="725" y="130" font-size="9" text-anchor="middle" font-weight="700" fill="#333333" data-g="P:main_switch" data-ref="SW1">KCD1 rocker switch</text>
+<text x="725" y="142" font-size="8" text-anchor="middle" fill="#555555" data-g="P:main_switch" data-ref="SW1">SW1 · main_switch</text>
+<rect x="670" y="167" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:main_switch" data-ref="SW1"/>
+<rect x="727" y="204" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:main_switch" data-ref="SW1"/>
+<rect x="60" y="150" width="180" height="190" rx="3" fill="#b9bcc0" stroke="#7d8084" stroke-width="1.4" data-g="P:power_supply" data-ref="PS1"/>
+<line x1="70" y1="192" x2="70" y2="261.11" stroke="#8e9195" stroke-width="2" data-g="P:power_supply" data-ref="PS1"/>
+<line x1="87.82" y1="192" x2="87.82" y2="261.11" stroke="#8e9195" stroke-width="2" data-g="P:power_supply" data-ref="PS1"/>
+<line x1="105.64" y1="192" x2="105.64" y2="261.11" stroke="#8e9195" stroke-width="2" data-g="P:power_supply" data-ref="PS1"/>
+<line x1="123.46" y1="192" x2="123.46" y2="261.11" stroke="#8e9195" stroke-width="2" data-g="P:power_supply" data-ref="PS1"/>
+<line x1="141.28" y1="192" x2="141.28" y2="261.11" stroke="#8e9195" stroke-width="2" data-g="P:power_supply" data-ref="PS1"/>
+<line x1="159.1" y1="192" x2="159.1" y2="261.11" stroke="#8e9195" stroke-width="2" data-g="P:power_supply" data-ref="PS1"/>
+<text x="150" y="168" font-size="9" text-anchor="middle" font-weight="700" fill="#111111" data-g="P:power_supply" data-ref="PS1">Mean Well LRS-50-5 enclosed PSU</text>
+<text x="150" y="180" font-size="8" text-anchor="middle" fill="#111111" data-g="P:power_supply" data-ref="PS1">PS1 · power_supply</text>
+<rect x="234" y="197" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:power_supply" data-ref="PS1"/>
+<text x="231" y="203" font-size="8" text-anchor="end" fill="#111111" data-g="P:power_supply" data-ref="PS1">AC/L</text>
+<rect x="234" y="217" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:power_supply" data-ref="PS1"/>
+<text x="231" y="223" font-size="8" text-anchor="end" fill="#111111" data-g="P:power_supply" data-ref="PS1">AC/N</text>
+<rect x="234" y="237" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:power_supply" data-ref="PS1"/>
+<text x="231" y="243" font-size="8" text-anchor="end" fill="#111111" data-g="P:power_supply" data-ref="PS1">FG</text>
+<rect x="234" y="257" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:power_supply" data-ref="PS1"/>
+<text x="231" y="263" font-size="8" text-anchor="end" fill="#111111" data-g="P:power_supply" data-ref="PS1">DC OUTPUT +V</text>
+<rect x="147" y="334" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:power_supply" data-ref="PS1"/>
+<text x="153" y="331" font-size="8" fill="#111111" transform="rotate(-90 153 331)" data-g="P:power_supply" data-ref="PS1">DC OUTPUT -V</text>
+<rect x="350" y="150" width="230" height="100" rx="6" fill="#1e1e1e" data-g="P:mains_inlet" data-ref="J1"/>
+<path d="M407.5 180L522.5 180L522.5 210L492.6 225L437.4 225L407.5 210Z" fill="#444" stroke="#777" stroke-width="1" stroke-linejoin="round" data-g="P:mains_inlet" data-ref="J1"/>
+<text x="465" y="130" font-size="9" text-anchor="middle" font-weight="700" fill="#333333" data-g="P:mains_inlet" data-ref="J1">IEC C14 panel inlet with fuse drawer and rocker switch</text>
+<text x="465" y="142" font-size="8" text-anchor="middle" fill="#555555" data-g="P:mains_inlet" data-ref="J1">J1 · mains_inlet</text>
+<rect x="350" y="177" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:mains_inlet" data-ref="J1"/>
+<text x="359" y="183" font-size="8" fill="#ffffff" data-g="P:mains_inlet" data-ref="J1">L</text>
+<rect x="350" y="197" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:mains_inlet" data-ref="J1"/>
+<text x="359" y="203" font-size="8" fill="#ffffff" data-g="P:mains_inlet" data-ref="J1">N</text>
+<rect x="350" y="217" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:mains_inlet" data-ref="J1"/>
+<text x="359" y="223" font-size="8" fill="#ffffff" data-g="P:mains_inlet" data-ref="J1">E</text>
 <line x1="820" y1="520" x2="810" y2="520" stroke="#b8962e" stroke-width="3" stroke-linecap="butt" class="pin" data-pin="yaw_servo.servo_lead.Signal (yellow)" data-node="N0" data-sym="yaw_servo"><title>yaw_servo servo_lead Signal (yellow)</title></line>
 <line x1="820" y1="540" x2="810" y2="540" stroke="#b8962e" stroke-width="3" stroke-linecap="butt" class="pin" data-pin="yaw_servo.servo_lead.V+ (red)" data-node="N1" data-sym="yaw_servo"><title>yaw_servo servo_lead V+ (red)</title></line>
 <line x1="820" y1="560" x2="810" y2="560" stroke="#b8962e" stroke-width="3" stroke-linecap="butt" class="pin" data-pin="yaw_servo.servo_lead.GND (brown)" data-node="N2" data-sym="yaw_servo"><title>yaw_servo servo_lead GND (brown)</title></line>

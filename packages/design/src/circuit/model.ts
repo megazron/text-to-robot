@@ -4,7 +4,7 @@
 // two DATA pins, a board's GND pins), and pins two nets share. A bought lead (USB, camera FFC) is a cable node between
 // two whole ports.
 import { electrical, part, type Pin } from "@ttr/parts";
-import type { WiringRecord, NetKind } from "../wiring.ts";
+import type { WiringRecord, NetKind, WireRec } from "../wiring.ts";
 
 export type Side = "left" | "right" | "top" | "bottom";
 export type SymbolKind = "battery" | "psu" | "inlet" | "switch" | "fuse" | "regulator" | "board" | "ic" | "motor" | "servo" | "stepper" | "sensor" | "led" | "module";
@@ -39,6 +39,47 @@ export function symbolKind(key: string, role: string): SymbolKind {
 }
 /** Short value text: the catalog name up to its first bracket or comma. */
 export function shortName(key: string) { const n = part(key).name; return n.split(/ \(|, /)[0].replace(/\s+/g, " ").trim(); }
+
+/** The fuse each fuse part stands for: the main fuse is F1, a branch fuse carries its id in its note. */
+export function fuseIdOf(w: WiringRecord, inst: string): string | undefined {
+  const i = w.instances.find((x) => x.name === inst);
+  if (!i) return undefined;
+  const m = i.note?.match(/^(F\d+):/);
+  if (m) return m[1];
+  return inst === "main_fuse" && w.fuses.some((f) => f.id === "F1") ? "F1" : undefined;
+}
+
+/**
+ * The record lists a branch fuse (F2...) by what it protects but draws it as no part: it sits inline in the lead from
+ * the main rail's splice to that part. This returns the record with each branch fuse as a part of its own and its lead
+ * cut in two at the fuse (splice to fuse IN, fuse OUT on to the part), so a drawing shows it where it really is.
+ * The lead is found by the rule that fused it: a main-rail wire from a splice to the protected part.
+ */
+export function withBranchFuses(w: WiringRecord): WiringRecord {
+  const main = w.rails.find((r) => r.fuse_a != null)?.name;
+  const branch = w.fuses.filter((f) => /^branch /.test(f.protects));
+  if (!main || !branch.length || w.instances.some((i) => /^F\d+:/.test(i.note ?? ""))) return w;
+  const volts = w.rails.find((x) => x.name === main)!.voltage_v;
+  const r: WiringRecord = structuredClone(w), claimed = new Set<string>(), names = new Set(r.instances.map((i) => i.name));
+  for (const f of branch) {
+    const target = f.protects.slice(7);
+    const leads = r.cables.flatMap((c) => c.premade ? [] : c.wires.map((x) => ({ c, x }))).filter(({ x }) => x.net === main && x.from.startsWith("splice_") && x.to.split(".")[0] === target && !claimed.has(x.id));
+    const hit = leads.find(({ x }) => x.awg === f.wire_awg) ?? leads[0];
+    if (!hit) continue;
+    claimed.add(hit.x.id);
+    let name = `branch_fuse_${target}`;
+    for (let k = 2; names.has(name); k++) name = `branch_fuse_${target}_${k}`;
+    names.add(name);
+    r.instances.push({ name, key: f.rating_a > 30 || volts > 32 ? "fuse_holder_anl" : "fuse_holder_atm_inline", link: null, note: `${f.id}: ${f.rating_a} A branch fuse, inline in the lead to ${target}` });
+    const port = electrical(r.instances[r.instances.length - 1].key)!.ports[0].name;
+    const inT = `${name}.${port}.IN`, outT = `${name}.${port}.OUT`, near = Math.min(50, Math.round(hit.x.length_mm / 3));
+    const a: WireRec = { ...hit.x, id: `${hit.x.id}a`, to: inT, length_mm: near }, b: WireRec = { ...hit.x, id: `${hit.x.id}b`, from: outT, length_mm: hit.x.length_mm - near };
+    hit.c.wires.splice(hit.c.wires.indexOf(hit.x), 1, a, b);
+    const net = r.nets.find((n) => n.name === main);
+    if (net) net.pins.push(inT, outT);
+  }
+  return r;
+}
 
 export function buildModel(w: WiringRecord, robot: string): CircuitModel {
   const inst = new Map(w.instances.map((i) => [i.name, i]));
@@ -105,9 +146,17 @@ export function buildModel(w: WiringRecord, robot: string): CircuitModel {
     }
     parts.push(p);
   }
-  // reference designators: by kind prefix, in record order
-  const count = new Map<string, number>();
-  for (const p of parts) { const pre = PREFIX[p.kind]; const k = (count.get(pre) ?? 0) + 1; count.set(pre, k); p.ref = `${pre}${k}`; }
+  // reference designators: a fuse keeps its record id (F1 main, F2... branches); the rest by kind prefix in instance-name
+  // order, so the same part has the same designator in the schematic, the breadboard view and every rebuild
+  const count = new Map<string, number>(), fuseIds = new Set<string>();
+  for (const p of parts) if (p.kind === "fuse") { const id = fuseIdOf(w, p.inst); if (id) { p.ref = id; fuseIds.add(id); } }
+  const byInst = [...parts].sort((a, b) => a.inst.localeCompare(b.inst, "en", { numeric: true }));
+  for (const p of byInst) {
+    if (p.ref) continue;
+    const pre = PREFIX[p.kind]; let k = (count.get(pre) ?? 0) + 1;
+    while (pre === "F" && fuseIds.has(`F${k}`)) k++;
+    count.set(pre, k); p.ref = `${pre}${k}`;
+  }
   // ---- node records
   const nodes: CNode[] = [], nodeOf = new Map<string, CNode>();
   const netOf = new Map<string, string[]>();
@@ -130,6 +179,7 @@ export function buildModel(w: WiringRecord, robot: string): CircuitModel {
     const a = pick(b.ends[0][0], b.ends[0][1]), c = pick(b.ends[1][0], b.ends[1][1]);
     nodes.push({ id: "", name: b.net, nets: [b.net], kind: "cable", pins: [a.id, c.id], cable: b.cable });
   }
+  const pv0 = new Map(parts.map((p) => [p.inst, p]));
   // names: a rail keeps its own; a net split by a fuse or switch in series keeps its name on the side with most pins
   const taken = new Set<string>();
   const named = nodes.filter((x) => x.name).sort((a, b) => b.pins.length - a.pins.length);
@@ -138,7 +188,9 @@ export function buildModel(w: WiringRecord, robot: string): CircuitModel {
   for (const x of [...nodes].sort((a, b) => b.pins.length - a.pins.length)) {
     if (x.name) continue;
     const cands = [x.kind === "ground" && x.nets.includes("GND") ? "GND" : "", x.kind === "power" ? voltName(x) : "", ...x.nets.filter((n) => !taken.has(n))].filter(Boolean);
-    let name = cands.find((c) => !taken.has(c)) ?? `${x.nets[0] ?? "NET"}`;
+    // the far side of a branch fuse: the rail through that fuse
+    const fused = x.pins.map((t) => pv0.get(t.split(".")[0])).find((q) => q?.kind === "fuse" && /^F\d+$/.test(q.ref) && x.pins.some((t) => t.startsWith(`${q.inst}.`) && t.endsWith(".OUT")) && q.inst !== "main_fuse");
+    let name = fused && x.kind === "power" ? `${x.nets[0] ?? "NET"}_${fused.ref}` : cands.find((c) => !taken.has(c)) ?? `${x.nets[0] ?? "NET"}`;
     for (let k = 2; taken.has(name); k++) name = `${x.nets[0] ?? "NET"}_${k}`;
     x.name = name; taken.add(name);
   }

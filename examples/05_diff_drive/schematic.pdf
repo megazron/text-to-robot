@@ -9,7 +9,7 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 2339 1654] /Resources << /Font << /F1 5 0 R /F2 6 0 R >> >> /Contents 4 0 R >>
 endobj
 4 0 obj
-<< /Length 25961 >>
+<< /Length 27193 >>
 stream
 1 J 1 j
 0 0 2339 1654 re
@@ -86,6 +86,7 @@ BT 0.52 0 0 rg /F1 7 Tf 1 0 0 1 2321.28 132.79 Tm (G) Tj ET
 0.52 0 0 RG 1.6 w
 B
 BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 1678 948 Tm (M1) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1696.34 948 Tm (\267 left_motor) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1678 934 Tm (Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder) Tj ET
 1971 944 m
 1971 937.92 1966.08 933 1960 933 c
@@ -120,6 +121,7 @@ BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1675 850.8 Tm (Encoder B) Tj ET
 0.52 0 0 RG 1.6 w
 B
 BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 1678 628 Tm (M2) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1696.34 628 Tm (\267 right_motor) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1678 614 Tm (Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder) Tj ET
 1971 624 m
 1971 617.92 1966.08 613 1960 613 c
@@ -154,6 +156,7 @@ BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1675 530.8 Tm (Encoder B) Tj ET
 0.52 0 0 RG 1.6 w
 B
 BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 708 1028 Tm (A1) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 725.12 1028 Tm (\267 computer) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 708 1014 Tm (Raspberry Pi 5) Tj ET
 821 1013 18 22 re
 1 1 1 rg
@@ -267,7 +270,8 @@ BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 705 950.8 Tm (USB_A) Tj ET
 1 1 0.76 rg
 0.52 0 0 RG 1.6 w
 B
-BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 1138 948 Tm (U4) Tj ET
+BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 1138 948 Tm (U3) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1155.12 948 Tm (\267 motor_driver_1) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1138 934 Tm (Cytron MDD10A dual-channel 10 A DC motor driver) Tj ET
 1361 933 18 22 re
 1 1 1 rg
@@ -314,38 +318,41 @@ n
 BT 0.52 0 0 rg /F2 10 Tf 1 0 0 1 382 1242 Tm (+) Tj ET
 BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 398 1228 Tm (BT1) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 398 1214 Tm (LiPo 3S 2200 mAh 25C) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 398 1202 Tm (battery) Tj ET
 0.52 0 0 RG 1.2 w 370 1254 m 370 1284 l S
 0.52 0 0 RG 1.2 w 370 1194 m 370 1164 l S
-1120 1244 240 110 re
+1060 1244 240 110 re
 1 1 0.76 rg
 0.52 0 0 RG 1.6 w
 B
-BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 1128 1338 Tm (U1) Tj ET
-BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1128 1324 Tm (Pololu D36V50F5 5 V 5.5 A step-down regulator) Tj ET
-1328 1325 24 18 re
+BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 1068 1338 Tm (U4) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1085.12 1338 Tm (\267 regulator_5v) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1068 1324 Tm (Pololu D36V50F5 5 V 5.5 A step-down regulator) Tj ET
+1268 1325 24 18 re
 1 1 1 rg
 0.52 0 0 RG 1.1 w
 B
-0.52 0 0 RG 0.8 w 1328 1325 m 1352 1343 l S
-BT 0.52 0 0 rg /F1 8 Tf 1 0 0 1 1331.66 1335 Tm (=) Tj ET
-BT 0.52 0 0 rg /F1 8 Tf 1 0 0 1 1343.66 1327 Tm (=) Tj ET
-0.52 0 0 RG 1.2 w 1120 1304 m 1090 1304 l S
-BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1125 1300.8 Tm (VIN) Tj ET
-0.52 0 0 RG 1.2 w 1360 1284 m 1390 1284 l S
-BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1336.5 1280.8 Tm (VRP) Tj ET
-0.52 0 0 RG 1.2 w 1240 1244 m 1240 1214 l S
-BT 0 0.39 0.39 rg /F1 9 Tf 0 1 -1 0 1243.2 1249 Tm 0 0 Td (GND) Tj ET
-0.52 0 0 RG 1.2 w 1360 1304 m 1390 1304 l S
-BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1330 1300.8 Tm (VOUT) Tj ET
-0.52 0 0 RG 1.2 w 1120 1284 m 1090 1284 l S
-BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1125 1280.8 Tm (EN) Tj ET
-0.52 0 0 RG 1.2 w 1120 1264 m 1090 1264 l S
-BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1125 1260.8 Tm (PG) Tj ET
+0.52 0 0 RG 0.8 w 1268 1325 m 1292 1343 l S
+BT 0.52 0 0 rg /F1 8 Tf 1 0 0 1 1271.66 1335 Tm (=) Tj ET
+BT 0.52 0 0 rg /F1 8 Tf 1 0 0 1 1283.66 1327 Tm (=) Tj ET
+0.52 0 0 RG 1.2 w 1060 1304 m 1030 1304 l S
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1065 1300.8 Tm (VIN) Tj ET
+0.52 0 0 RG 1.2 w 1300 1284 m 1330 1284 l S
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1276.5 1280.8 Tm (VRP) Tj ET
+0.52 0 0 RG 1.2 w 1180 1244 m 1180 1214 l S
+BT 0 0.39 0.39 rg /F1 9 Tf 0 1 -1 0 1183.2 1249 Tm 0 0 Td (GND) Tj ET
+0.52 0 0 RG 1.2 w 1300 1304 m 1330 1304 l S
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1270 1300.8 Tm (VOUT) Tj ET
+0.52 0 0 RG 1.2 w 1060 1284 m 1030 1284 l S
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1065 1280.8 Tm (EN) Tj ET
+0.52 0 0 RG 1.2 w 1060 1264 m 1030 1264 l S
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1065 1260.8 Tm (PG) Tj ET
 350 944 200 100 re
 1 1 0.76 rg
 0.52 0 0 RG 1.6 w
 B
-BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 358 1028 Tm (U2) Tj ET
+BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 358 1028 Tm (U1) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 375.12 1028 Tm (\267 imu) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 358 1014 Tm (Adafruit BNO085 9-DoF IMU breakout) Tj ET
 539 1024 m
 539 1019.03 534.97 1015 530 1015 c
@@ -397,13 +404,15 @@ B
 0.52 0 0 RG 1.4 w 857 1304 m 860 1304 l S
 BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 828.08 1328 Tm (SW1) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 800.49 1280 Tm (KCD1 rocker switch) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 815.25 1268 Tm (main_switch) Tj ET
 0.52 0 0 RG 1.2 w 820 1304 m 800 1304 l S
 0.52 0 0 RG 1.2 w 860 1304 m 880 1304 l S
 350 794 140 70 re
 1 1 0.76 rg
 0.52 0 0 RG 1.6 w
 B
-BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 358 848 Tm (U3) Tj ET
+BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 358 848 Tm (U2) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 375.12 848 Tm (\267 lidar) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 358 834 Tm (Slamtec RPLIDAR C1) Tj ET
 479 844 m
 479 839.03 474.97 835 470 835 c
@@ -432,8 +441,19 @@ B
 0.52 0 0 RG 1.2 w 620 1304 m 660 1304 l S
 BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 617.38 1328 Tm (F1  7.5 A) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 573.22 1280 Tm (Inline ATM mini blade fuse holder) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 619.24 1268 Tm (main_fuse) Tj ET
 0.52 0 0 RG 1.2 w 620 1304 m 600 1304 l S
 0.52 0 0 RG 1.2 w 660 1304 m 680 1304 l S
+1524 1298 32 12 re
+1 1 0.76 rg
+0.52 0 0 RG 1.5 w
+B
+0.52 0 0 RG 1.2 w 1520 1304 m 1560 1304 l S
+BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 1521.97 1328 Tm (F2  2 A) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1473.22 1280 Tm (Inline ATM mini blade fuse holder) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 1487.72 1268 Tm (branch_fuse_regulator_5v) Tj ET
+0.52 0 0 RG 1.2 w 1520 1304 m 1500 1304 l S
+0.52 0 0 RG 1.2 w 1560 1304 m 1580 1304 l S
 1250 784 m
 1270 784 l
 0 0.52 0 RG 1.4 w
@@ -597,22 +617,19 @@ BT 0.52 0 0 rg /F2 9 Tf 1 0 0 1 1234.74 1006 Tm (VBAT 11.1V) Tj ET
 0.52 0 0 RG 1.4 w 361 1159 m 379 1159 l S
 0.52 0 0 RG 1.4 w 364 1156 m 376 1156 l S
 0.52 0 0 RG 1.4 w 367 1153 m 373 1153 l S
-0.52 0 0 RG 1.2 w 1090 1304 m 1082 1304 l S
-0.52 0 0 RG 1.6 w 1082 1310 m 1082 1298 l S
-BT 0.52 0 0 rg /F2 9 Tf 1 0 0 1 1027.48 1300.8 Tm (VBAT 11.1V) Tj ET
-0 0 0.78 RG 1.2 w 1386 1288 m 1394 1280 l S
-0 0 0.78 RG 1.2 w 1386 1280 m 1394 1288 l S
-0.52 0 0 RG 1.2 w 1240 1214 m 1240 1209 l S
-0.52 0 0 RG 1.4 w 1231 1209 m 1249 1209 l S
-0.52 0 0 RG 1.4 w 1234 1206 m 1246 1206 l S
-0.52 0 0 RG 1.4 w 1237 1203 m 1243 1203 l S
-0.52 0 0 RG 1.2 w 1390 1304 m 1398 1304 l S
-0.52 0 0 RG 1.6 w 1398 1310 m 1398 1298 l S
-BT 0.52 0 0 rg /F2 9 Tf 1 0 0 1 1402 1300.8 Tm (5V) Tj ET
-0 0 0.78 RG 1.2 w 1086 1288 m 1094 1280 l S
-0 0 0.78 RG 1.2 w 1086 1280 m 1094 1288 l S
-0 0 0.78 RG 1.2 w 1086 1268 m 1094 1260 l S
-0 0 0.78 RG 1.2 w 1086 1260 m 1094 1268 l S
+0 0 0.78 RG 1.2 w 1326 1288 m 1334 1280 l S
+0 0 0.78 RG 1.2 w 1326 1280 m 1334 1288 l S
+0.52 0 0 RG 1.2 w 1180 1214 m 1180 1209 l S
+0.52 0 0 RG 1.4 w 1171 1209 m 1189 1209 l S
+0.52 0 0 RG 1.4 w 1174 1206 m 1186 1206 l S
+0.52 0 0 RG 1.4 w 1177 1203 m 1183 1203 l S
+0.52 0 0 RG 1.2 w 1330 1304 m 1338 1304 l S
+0.52 0 0 RG 1.6 w 1338 1310 m 1338 1298 l S
+BT 0.52 0 0 rg /F2 9 Tf 1 0 0 1 1342 1300.8 Tm (5V) Tj ET
+0 0 0.78 RG 1.2 w 1026 1288 m 1034 1280 l S
+0 0 0.78 RG 1.2 w 1026 1280 m 1034 1288 l S
+0 0 0.78 RG 1.2 w 1026 1268 m 1034 1260 l S
+0 0 0.78 RG 1.2 w 1026 1260 m 1034 1268 l S
 0.52 0 0 RG 1.2 w 440 1074 m 440 1082 l S
 0.52 0 0 RG 1.6 w 433 1082 m 447 1082 l S
 BT 0.52 0 0 rg /F2 9 Tf 1 0 0 1 429.37 1086 Tm (+3V3) Tj ET
@@ -623,6 +640,9 @@ BT 0.52 0 0 rg /F2 9 Tf 1 0 0 1 429.37 1086 Tm (+3V3) Tj ET
 0.52 0 0 RG 1.2 w 880 1304 m 888 1304 l S
 0.52 0 0 RG 1.6 w 888 1310 m 888 1298 l S
 BT 0.52 0 0 rg /F2 9 Tf 1 0 0 1 892 1300.8 Tm (VBAT 11.1V) Tj ET
+0.52 0 0 RG 1.2 w 1500 1304 m 1492 1304 l S
+0.52 0 0 RG 1.6 w 1492 1310 m 1492 1298 l S
+BT 0.52 0 0 rg /F2 9 Tf 1 0 0 1 1437.48 1300.8 Tm (VBAT 11.1V) Tj ET
 1420 874 m
 1520 874 l
 1520 594 l
@@ -648,6 +668,14 @@ S
 S
 680 1304 m
 800 1304 l
+0 0.52 0 RG 1.4 w
+S
+1580 1304 m
+1590 1304 l
+1590 1374 l
+1020 1374 l
+1020 1304 l
+1030 1304 l
 0 0.52 0 RG 1.4 w
 S
 670 994 m
@@ -688,7 +716,7 @@ S
 B
 BT 0 0 0 rg /F2 9 Tf 1 0 0 1 40 124 Tm (Power rails) Tj ET
 BT 0 0 0 rg /F1 9 Tf 1 0 0 1 40 110 Tm (VBAT  11.1 V from SW1: load 3.366 A typical, 13.503 A peak; source 35 A cont, 70 A peak; fuse 7.5 A) Tj ET
-BT 0 0 0 rg /F1 9 Tf 1 0 0 1 40 96 Tm (5V  5 V from U1: load 1.03 A typical, 5 A peak; source 5.5 A cont, 8 A peak) Tj ET
+BT 0 0 0 rg /F1 9 Tf 1 0 0 1 40 96 Tm (5V  5 V from U4: load 1.03 A typical, 5 A peak; source 5.5 A cont, 8 A peak) Tj ET
 BT 0 0 0 rg /F1 9 Tf 1 0 0 1 40 82 Tm (Fuses: F1 7.5 A \(everything on VBAT\), F2 2 A \(branch regulator_5v\). Branch fuses sit inline in the lead they protect.) Tj ET
 BT 0 0 0 rg /F1 9 Tf 1 0 0 1 40 68 Tm (Lever splices \(star_ground, splice_vbat\) are junctions of their nets.) Tj ET
 BT 0 0 0 rg /F1 9 Tf 1 0 0 1 40 54 Tm (Same net label or power symbol = same conductor. X = pin not connected.) Tj ET
@@ -707,9 +735,9 @@ BT 0.52 0 0 rg /F2 10 Tf 1 0 0 1 1905 115 Tm (Text to Robot) Tj ET
 BT 0.52 0 0 rg /F1 8 Tf 1 0 0 1 2209.85 115 Tm (generated from design.wiring) Tj ET
 BT 0.52 0 0 rg /F1 7 Tf 1 0 0 1 1905 98 Tm (Title:) Tj ET
 BT 0 0 0 rg /F2 13 Tf 1 0 0 1 1905 83 Tm (diff_drive_robot: schematic) Tj ET
-BT 0 0 0 rg /F1 9 Tf 1 0 0 1 1905 63 Tm (12 parts, 22 nets, 33 wires, 2 rails) Tj ET
+BT 0 0 0 rg /F1 9 Tf 1 0 0 1 1905 63 Tm (13 parts, 22 nets, 34 wires, 2 rails) Tj ET
 BT 0 0 0 rg /F1 9 Tf 1 0 0 1 1905 44 Tm (Size: A2) Tj ET
-BT 0 0 0 rg /F1 9 Tf 1 0 0 1 2115 44 Tm (Rev: 844c7305) Tj ET
+BT 0 0 0 rg /F1 9 Tf 1 0 0 1 2115 44 Tm (Rev: e83aa240) Tj ET
 BT 0 0 0 rg /F1 9 Tf 1 0 0 1 2215 44 Tm (Sheet 1 / 1) Tj ET
 BT 0 0 0 rg /F1 9 Tf 1 0 0 1 1905 26 Tm (File: schematic.svg) Tj ET
 BT 0 0 0 rg /F1 9 Tf 1 0 0 1 2115 26 Tm (KiCad symbol style) Tj ET
@@ -732,11 +760,11 @@ xref
 0000000058 00000 n 
 0000000115 00000 n 
 0000000253 00000 n 
-0000026267 00000 n 
-0000026364 00000 n 
-0000026466 00000 n 
+0000027499 00000 n 
+0000027596 00000 n 
+0000027698 00000 n 
 trailer
 << /Size 8 /Root 1 0 R /Info 7 0 R >>
 startxref
-26550
+27782
 %%EOF

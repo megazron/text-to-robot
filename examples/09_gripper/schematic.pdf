@@ -9,7 +9,7 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 1169 827] /Resources << /Font << /F1 5 0 R /F2 6 0 R >> >> /Contents 4 0 R >>
 endobj
 4 0 obj
-<< /Length 8671 >>
+<< /Length 8968 >>
 stream
 1 J 1 j
 0 0 1169 827 re
@@ -54,6 +54,7 @@ BT 0.52 0 0 rg /F1 7 Tf 1 0 0 1 1151.47 148.67 Tm (C) Tj ET
 0.52 0 0 RG 1.6 w
 B
 BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 508 411 Tm (M1) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 526.34 411 Tm (\267 gripper_servo) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 508 397 Tm (Feetech STS3215 C047 12 V 30 kg.cm) Tj ET
 701 407 m
 701 400.92 696.08 396 690 396 c
@@ -87,6 +88,7 @@ BT 0 0.39 0.39 rg /F1 9 Tf 0 1 -1 0 623.2 322 Tm 0 0 Td (GND) Tj ET
 0.52 0 0 RG 1.6 w
 B
 BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 638 691 Tm (PS1) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 661.85 691 Tm (\267 power_supply) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 638 677 Tm (Mean Well LRS-75-12 enclosed PSU) Tj ET
 798 678 24 18 re
 1 1 1 rg
@@ -115,6 +117,7 @@ BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 758.74 653.8 Tm (DC OUTPUT +V) Tj ET
 0.52 0 0 RG 1.6 w
 B
 BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 208 411 Tm (U1) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 225.12 411 Tm (\267 servo_bus) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 208 397 Tm (Waveshare Bus Servo Adapter) Tj ET
 341 396 18 22 re
 1 1 1 rg
@@ -147,6 +150,7 @@ BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 349.49 373.8 Tm (SIG) Tj ET
 0.52 0 0 RG 1.6 w
 B
 BT 0 0.39 0.39 rg /F2 11 Tf 1 0 0 1 208 681 Tm (J1) Tj ET
+BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 223.29 681 Tm (\267 mains_inlet) Tj ET
 BT 0 0.39 0.39 rg /F1 9 Tf 1 0 0 1 208 667 Tm (IEC C14 panel inlet with fuse drawer and rocker switch) Tj ET
 441 666 18 22 re
 1 1 1 rg
@@ -280,11 +284,11 @@ xref
 0000000058 00000 n 
 0000000115 00000 n 
 0000000252 00000 n 
-0000008975 00000 n 
-0000009072 00000 n 
-0000009174 00000 n 
+0000009272 00000 n 
+0000009369 00000 n 
+0000009471 00000 n 
 trailer
 << /Size 8 /Root 1 0 R /Info 7 0 R >>
 startxref
-9258
+9555
 %%EOF

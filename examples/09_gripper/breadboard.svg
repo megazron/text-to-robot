@@ -54,64 +54,64 @@
 <polyline points="160.23,80 184.23,80" fill="none" stroke="#000000" stroke-width="5.6" stroke-linejoin="round" stroke-linecap="round"/>
 <polyline points="160.23,80 184.23,80" stroke="#262626" stroke-width="4" fill="none" stroke-linejoin="round" stroke-linecap="round" data-g="head"/>
 <text x="190.23" y="84" font-size="10" fill="#333333" data-g="head">black</text>
-<rect x="330" y="450" width="190" height="100" rx="5" fill="#222222" stroke="#141414" stroke-width="1.4" data-g="P:gripper_servo"/>
-<circle cx="496" cy="516" r="10" fill="#f4f4f4" stroke="#999" stroke-width="1" data-g="P:gripper_servo"/>
-<rect x="480" y="513" width="32" height="6" rx="3" fill="#f4f4f4" stroke="#999" stroke-width="0.8" data-g="P:gripper_servo"/>
-<text x="425" y="468" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:gripper_servo">Feetech STS3215 C047 12 V 30 kg.cm</text>
-<text x="425" y="480" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:gripper_servo">gripper_servo</text>
-<rect x="330" y="497" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:gripper_servo"/>
-<text x="339" y="503" font-size="8" fill="#ffffff" data-g="P:gripper_servo">DATA</text>
-<rect x="330" y="517" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:gripper_servo"/>
-<text x="339" y="523" font-size="8" fill="#ffffff" data-g="P:gripper_servo">GND</text>
-<rect x="330" y="537" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:gripper_servo"/>
-<text x="339" y="543" font-size="8" fill="#ffffff" data-g="P:gripper_servo">VCC</text>
-<rect x="60" y="150" width="180" height="170" rx="3" fill="#b9bcc0" stroke="#7d8084" stroke-width="1.4" data-g="P:power_supply"/>
-<line x1="70" y1="192" x2="70" y2="239.1" stroke="#8e9195" stroke-width="2" data-g="P:power_supply"/>
-<line x1="95.78" y1="192" x2="95.78" y2="239.1" stroke="#8e9195" stroke-width="2" data-g="P:power_supply"/>
-<line x1="121.56" y1="192" x2="121.56" y2="239.1" stroke="#8e9195" stroke-width="2" data-g="P:power_supply"/>
-<line x1="147.33" y1="192" x2="147.33" y2="239.1" stroke="#8e9195" stroke-width="2" data-g="P:power_supply"/>
-<line x1="173.11" y1="192" x2="173.11" y2="239.1" stroke="#8e9195" stroke-width="2" data-g="P:power_supply"/>
-<line x1="198.89" y1="192" x2="198.89" y2="239.1" stroke="#8e9195" stroke-width="2" data-g="P:power_supply"/>
-<text x="150" y="168" font-size="9" text-anchor="middle" font-weight="700" fill="#111111" data-g="P:power_supply">Mean Well LRS-75-12 enclosed PSU</text>
-<text x="150" y="180" font-size="8" text-anchor="middle" fill="#111111" data-g="P:power_supply">power_supply</text>
-<rect x="234" y="197" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:power_supply"/>
-<text x="231" y="203" font-size="8" text-anchor="end" fill="#111111" data-g="P:power_supply">AC/L</text>
-<rect x="234" y="217" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:power_supply"/>
-<text x="231" y="223" font-size="8" text-anchor="end" fill="#111111" data-g="P:power_supply">AC/N</text>
-<rect x="234" y="237" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:power_supply"/>
-<text x="231" y="243" font-size="8" text-anchor="end" fill="#111111" data-g="P:power_supply">FG</text>
-<rect x="137" y="314" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:power_supply"/>
-<text x="143" y="311" font-size="8" fill="#111111" transform="rotate(-90 143 311)" data-g="P:power_supply">DC OUTPUT +V</text>
-<rect x="157" y="314" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:power_supply"/>
-<text x="163" y="311" font-size="8" fill="#111111" transform="rotate(-90 163 311)" data-g="P:power_supply">DC OUTPUT -V</text>
-<rect x="60" y="470" width="160" height="130" rx="6" fill="#1a5fb4" stroke="#10396c" stroke-width="1.4" data-g="P:servo_bus"/>
-<circle cx="67" cy="477" r="3" fill="#d9d4c3" stroke="#10396c" stroke-width="0.8" data-g="P:servo_bus"/>
-<circle cx="213" cy="477" r="3" fill="#d9d4c3" stroke="#10396c" stroke-width="0.8" data-g="P:servo_bus"/>
-<circle cx="67" cy="593" r="3" fill="#d9d4c3" stroke="#10396c" stroke-width="0.8" data-g="P:servo_bus"/>
-<circle cx="213" cy="593" r="3" fill="#d9d4c3" stroke="#10396c" stroke-width="0.8" data-g="P:servo_bus"/>
-<rect x="113.11" y="556.89" width="24" height="18" rx="1.5" fill="#1b1b1b" data-g="P:servo_bus"/>
-<text x="140" y="517.78" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:servo_bus">Waveshare Bus Servo Adapter</text>
-<text x="140" y="529.78" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:servo_bus">servo_bus</text>
-<rect x="214" y="547" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_bus"/>
-<text x="211" y="553" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:servo_bus">SIG</text>
-<rect x="214" y="567" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_bus"/>
-<text x="211" y="573" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:servo_bus">GND</text>
-<rect x="214" y="587" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_bus"/>
-<text x="211" y="593" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:servo_bus">VIN</text>
-<rect x="127" y="470" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_bus"/>
-<text x="133" y="479" font-size="8" text-anchor="end" fill="#ffffff" transform="rotate(-90 133 479)" data-g="P:servo_bus">VIN</text>
-<rect x="147" y="470" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_bus"/>
-<text x="153" y="479" font-size="8" text-anchor="end" fill="#ffffff" transform="rotate(-90 153 479)" data-g="P:servo_bus">GND</text>
-<rect x="350" y="150" width="230" height="100" rx="6" fill="#1e1e1e" data-g="P:mains_inlet"/>
-<path d="M407.5 180L522.5 180L522.5 210L492.6 225L437.4 225L407.5 210Z" fill="#444" stroke="#777" stroke-width="1" stroke-linejoin="round" data-g="P:mains_inlet"/>
-<text x="465" y="130" font-size="9" text-anchor="middle" font-weight="700" fill="#333333" data-g="P:mains_inlet">IEC C14 panel inlet with fuse drawer and rocker switch</text>
-<text x="465" y="142" font-size="8" text-anchor="middle" fill="#555555" data-g="P:mains_inlet">mains_inlet</text>
-<rect x="350" y="177" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:mains_inlet"/>
-<text x="359" y="183" font-size="8" fill="#ffffff" data-g="P:mains_inlet">L</text>
-<rect x="350" y="197" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:mains_inlet"/>
-<text x="359" y="203" font-size="8" fill="#ffffff" data-g="P:mains_inlet">N</text>
-<rect x="350" y="217" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:mains_inlet"/>
-<text x="359" y="223" font-size="8" fill="#ffffff" data-g="P:mains_inlet">E</text>
+<rect x="330" y="450" width="190" height="100" rx="5" fill="#222222" stroke="#141414" stroke-width="1.4" data-g="P:gripper_servo" data-ref="M1"/>
+<circle cx="496" cy="516" r="10" fill="#f4f4f4" stroke="#999" stroke-width="1" data-g="P:gripper_servo" data-ref="M1"/>
+<rect x="480" y="513" width="32" height="6" rx="3" fill="#f4f4f4" stroke="#999" stroke-width="0.8" data-g="P:gripper_servo" data-ref="M1"/>
+<text x="425" y="468" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:gripper_servo" data-ref="M1">Feetech STS3215 C047 12 V 30 kg.cm</text>
+<text x="425" y="480" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:gripper_servo" data-ref="M1">M1 · gripper_servo</text>
+<rect x="330" y="497" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:gripper_servo" data-ref="M1"/>
+<text x="339" y="503" font-size="8" fill="#ffffff" data-g="P:gripper_servo" data-ref="M1">DATA</text>
+<rect x="330" y="517" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:gripper_servo" data-ref="M1"/>
+<text x="339" y="523" font-size="8" fill="#ffffff" data-g="P:gripper_servo" data-ref="M1">GND</text>
+<rect x="330" y="537" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:gripper_servo" data-ref="M1"/>
+<text x="339" y="543" font-size="8" fill="#ffffff" data-g="P:gripper_servo" data-ref="M1">VCC</text>
+<rect x="60" y="150" width="180" height="170" rx="3" fill="#b9bcc0" stroke="#7d8084" stroke-width="1.4" data-g="P:power_supply" data-ref="PS1"/>
+<line x1="70" y1="192" x2="70" y2="239.1" stroke="#8e9195" stroke-width="2" data-g="P:power_supply" data-ref="PS1"/>
+<line x1="95.78" y1="192" x2="95.78" y2="239.1" stroke="#8e9195" stroke-width="2" data-g="P:power_supply" data-ref="PS1"/>
+<line x1="121.56" y1="192" x2="121.56" y2="239.1" stroke="#8e9195" stroke-width="2" data-g="P:power_supply" data-ref="PS1"/>
+<line x1="147.33" y1="192" x2="147.33" y2="239.1" stroke="#8e9195" stroke-width="2" data-g="P:power_supply" data-ref="PS1"/>
+<line x1="173.11" y1="192" x2="173.11" y2="239.1" stroke="#8e9195" stroke-width="2" data-g="P:power_supply" data-ref="PS1"/>
+<line x1="198.89" y1="192" x2="198.89" y2="239.1" stroke="#8e9195" stroke-width="2" data-g="P:power_supply" data-ref="PS1"/>
+<text x="150" y="168" font-size="9" text-anchor="middle" font-weight="700" fill="#111111" data-g="P:power_supply" data-ref="PS1">Mean Well LRS-75-12 enclosed PSU</text>
+<text x="150" y="180" font-size="8" text-anchor="middle" fill="#111111" data-g="P:power_supply" data-ref="PS1">PS1 · power_supply</text>
+<rect x="234" y="197" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:power_supply" data-ref="PS1"/>
+<text x="231" y="203" font-size="8" text-anchor="end" fill="#111111" data-g="P:power_supply" data-ref="PS1">AC/L</text>
+<rect x="234" y="217" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:power_supply" data-ref="PS1"/>
+<text x="231" y="223" font-size="8" text-anchor="end" fill="#111111" data-g="P:power_supply" data-ref="PS1">AC/N</text>
+<rect x="234" y="237" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:power_supply" data-ref="PS1"/>
+<text x="231" y="243" font-size="8" text-anchor="end" fill="#111111" data-g="P:power_supply" data-ref="PS1">FG</text>
+<rect x="137" y="314" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:power_supply" data-ref="PS1"/>
+<text x="143" y="311" font-size="8" fill="#111111" transform="rotate(-90 143 311)" data-g="P:power_supply" data-ref="PS1">DC OUTPUT +V</text>
+<rect x="157" y="314" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:power_supply" data-ref="PS1"/>
+<text x="163" y="311" font-size="8" fill="#111111" transform="rotate(-90 163 311)" data-g="P:power_supply" data-ref="PS1">DC OUTPUT -V</text>
+<rect x="60" y="470" width="160" height="130" rx="6" fill="#1a5fb4" stroke="#10396c" stroke-width="1.4" data-g="P:servo_bus" data-ref="U1"/>
+<circle cx="67" cy="477" r="3" fill="#d9d4c3" stroke="#10396c" stroke-width="0.8" data-g="P:servo_bus" data-ref="U1"/>
+<circle cx="213" cy="477" r="3" fill="#d9d4c3" stroke="#10396c" stroke-width="0.8" data-g="P:servo_bus" data-ref="U1"/>
+<circle cx="67" cy="593" r="3" fill="#d9d4c3" stroke="#10396c" stroke-width="0.8" data-g="P:servo_bus" data-ref="U1"/>
+<circle cx="213" cy="593" r="3" fill="#d9d4c3" stroke="#10396c" stroke-width="0.8" data-g="P:servo_bus" data-ref="U1"/>
+<rect x="113.11" y="556.89" width="24" height="18" rx="1.5" fill="#1b1b1b" data-g="P:servo_bus" data-ref="U1"/>
+<text x="140" y="517.78" font-size="9" text-anchor="middle" font-weight="700" fill="#ffffff" data-g="P:servo_bus" data-ref="U1">Waveshare Bus Servo Adapter</text>
+<text x="140" y="529.78" font-size="8" text-anchor="middle" fill="#ffffff" data-g="P:servo_bus" data-ref="U1">U1 · servo_bus</text>
+<rect x="214" y="547" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_bus" data-ref="U1"/>
+<text x="211" y="553" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:servo_bus" data-ref="U1">SIG</text>
+<rect x="214" y="567" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_bus" data-ref="U1"/>
+<text x="211" y="573" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:servo_bus" data-ref="U1">GND</text>
+<rect x="214" y="587" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_bus" data-ref="U1"/>
+<text x="211" y="593" font-size="8" text-anchor="end" fill="#ffffff" data-g="P:servo_bus" data-ref="U1">VIN</text>
+<rect x="127" y="470" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_bus" data-ref="U1"/>
+<text x="133" y="479" font-size="8" text-anchor="end" fill="#ffffff" transform="rotate(-90 133 479)" data-g="P:servo_bus" data-ref="U1">VIN</text>
+<rect x="147" y="470" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:servo_bus" data-ref="U1"/>
+<text x="153" y="479" font-size="8" text-anchor="end" fill="#ffffff" transform="rotate(-90 153 479)" data-g="P:servo_bus" data-ref="U1">GND</text>
+<rect x="350" y="150" width="230" height="100" rx="6" fill="#1e1e1e" data-g="P:mains_inlet" data-ref="J1"/>
+<path d="M407.5 180L522.5 180L522.5 210L492.6 225L437.4 225L407.5 210Z" fill="#444" stroke="#777" stroke-width="1" stroke-linejoin="round" data-g="P:mains_inlet" data-ref="J1"/>
+<text x="465" y="130" font-size="9" text-anchor="middle" font-weight="700" fill="#333333" data-g="P:mains_inlet" data-ref="J1">IEC C14 panel inlet with fuse drawer and rocker switch</text>
+<text x="465" y="142" font-size="8" text-anchor="middle" fill="#555555" data-g="P:mains_inlet" data-ref="J1">J1 · mains_inlet</text>
+<rect x="350" y="177" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:mains_inlet" data-ref="J1"/>
+<text x="359" y="183" font-size="8" fill="#ffffff" data-g="P:mains_inlet" data-ref="J1">L</text>
+<rect x="350" y="197" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:mains_inlet" data-ref="J1"/>
+<text x="359" y="203" font-size="8" fill="#ffffff" data-g="P:mains_inlet" data-ref="J1">N</text>
+<rect x="350" y="217" width="6" height="6" fill="#d4af37" stroke="#8a6d1a" stroke-width="0.6" data-g="P:mains_inlet" data-ref="J1"/>
+<text x="359" y="223" font-size="8" fill="#ffffff" data-g="P:mains_inlet" data-ref="J1">E</text>
 <line x1="330" y1="500" x2="320" y2="500" stroke="#b8962e" stroke-width="3" stroke-linecap="butt" class="pin" data-pin="gripper_servo.bus_a.DATA" data-node="N0" data-sym="gripper_servo"><title>gripper_servo bus_a DATA</title></line>
 <line x1="330" y1="520" x2="320" y2="520" stroke="#b8962e" stroke-width="3" stroke-linecap="butt" class="pin" data-pin="gripper_servo.bus_a.GND" data-node="N1" data-sym="gripper_servo"><title>gripper_servo bus_a GND</title></line>
 <line x1="330" y1="540" x2="320" y2="540" stroke="#b8962e" stroke-width="3" stroke-linecap="butt" class="pin" data-pin="gripper_servo.bus_a.VCC" data-node="N2" data-sym="gripper_servo"><title>gripper_servo bus_a VCC</title></line>
