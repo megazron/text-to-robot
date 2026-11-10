@@ -236,6 +236,11 @@ export class Router {
       const pr = this.pierce(e, needT, outward ? boxA : boxB, 1.6 * Math.max(...E.map((x) => x.R)), outward ? cur : JB, outward ? (c.crossing.length ? undefined : JB) : cur);
       if (!pr) { problems.push(`${c.key}: exit ${e.id} is blocked`); return; }
       const [first, second] = outward ? [pr.inner, pr.outer] : [pr.outer, pr.inner];
+      // the run already stands on the hole's axis just short of its first point: straight on through from where it is
+      // (a hop of a few mm on to that point is a kink no wire can follow)
+      const offAxis = (p: V3) => { const v = sub(p, e.at); return len(sub(v, scale(e.n, dot(v, e.n)))); };
+      const Rm = Math.max(...E.map((x) => x.R));
+      if (outward && dist(cur, first) < 1.5 * Rm && offAxis(cur) < 2 && g.line(cur, second, 1) >= 0) { trunk.push(second); pinned.push(true); pierced.push([cur, second]); cur = second; return; }
       go(first, outward ? within : undefined, `to exit ${e.id}`, true);
       trunk.push(second); pinned.push(true); pierced.push([first, second]); cur = second;
     };
@@ -292,7 +297,16 @@ export class Router {
       if (ring && hole < 1e9) ring = Math.max(0, Math.min(ring, hole / 2 - od / 2 - 0.4));
       const tryRing = (r: number): { pts: V3[]; on: string[] } | null => {
         const Ti = offsetRoute(T.pts, r, (k / Math.max(1, n)) * Math.PI * 2);
-        const la = n === 1 ? [e.la.V] : this.connect(e.la.V, Ti[0], needW, boxA), lb = n === 1 ? [e.lb.V] : this.connect(e.lb.V, Ti[Ti.length - 1], needW, boxB);
+        // a wire whose first bend is right by the bundle's end joins it further along its first leg, where a whole bend fits
+        // between (else it would turn on to the bundle and along it in less than its radius)
+        if (n > 1) for (const [V, i0, i1] of [[e.la.V, 0, 1], [e.lb.V, Ti.length - 1, Ti.length - 2]] as [V3, number, number][]) {
+          if (Ti.length < 3 || T.on[i0] !== T.on[i1] || dist(V, Ti[i0]) >= 2 * e.R) continue;
+          const L = dist(Ti[i0], Ti[i1]);
+          for (let t = 1; t < L - 2 * e.R; t += 1) { const q = lerp(Ti[i0], Ti[i1], t / L); if (dist(V, q) >= 2 * e.R && g.line(V, q, 1) >= 0) { Ti[i0] = q; break; } }
+        }
+        // on to its place in the bundle: straight where that line is free, else round what is in the way
+        const join = (V: V3, to: V3, box?: Box) => (g.line(V, to, 1, box) >= 0 ? [V, to] : this.connect(V, to, needW, box));
+        const la = n === 1 ? [e.la.V] : join(e.la.V, Ti[0], boxA), lb = n === 1 ? [e.lb.V] : join(e.lb.V, Ti[Ti.length - 1], boxB);
         if (!la || !lb) return null;
         const pts: V3[] = [e.a.p, e.la.S, ...la.slice(0, n === 1 ? 0 : -1), ...Ti, ...lb.slice(0, n === 1 ? 0 : -1).reverse(), e.lb.S, e.b.p];
         const o: string[] = [ga, ga, ...la.slice(0, n === 1 ? 0 : -1).map(() => ga), ...T.on, ...lb.slice(0, n === 1 ? 0 : -1).map(() => gb), gb, gb];
