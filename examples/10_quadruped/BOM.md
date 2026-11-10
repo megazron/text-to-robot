@@ -1,4 +1,4 @@
-# Bill of Materials — quadruped
+# Bill of materials: quadruped
 
 **Estimated total: $578.75**  ·  tier: hobby
 

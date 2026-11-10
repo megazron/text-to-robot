@@ -1,4 +1,4 @@
-# Bill of Materials — parallel_gripper
+# Bill of materials: parallel_gripper
 
 **Estimated total: $93.49**  ·  tier: hobby
 
@@ -8,7 +8,7 @@
 |---|---|--:|--:|--:|---|
 | Actuator | Feetech STS3215 C047 12 V 30 kg.cm (1:345) _(gripper pinion drive · https://www.seeedstudio.com/STS3215-30KG-Serial-Servo-p-6340.html)_ | 1 | 22 | 22 | 0.9807 N·m rated / 2.942 N·m peak, 12 V |
 | Power | IEC C14 panel inlet with fuse drawer and rocker switch, 10 A _(fused, switched mains inlet · https://www.aliexpress.com/w/wholesale-iec-c14-inlet-fuse-switch.html)_ | 1 | 3 | 3 | https://www.aliexpress.com/w/wholesale-iec-c14-inlet-fuse-switch.html |
-| Mechanical | Linear ball bushing LM8UU (8 x 15 x 24 mm) _(finger carriage bushings · https://www.samick.co.kr/en/product/linear-bushing)_ | 4 | 1.2 | 4.8 | https://www.samickthk.co.kr/sub/product/linear-bushing/LM.php |
+| Mechanical | Linear ball bushing LM8UU (8 x 15 x 24 mm) _(finger carriage bushings · https://www.aliexpress.com/w/wholesale-lm8uu.html)_ | 4 | 1.2 | 4.8 | https://www.samickthk.co.kr/en/ |
 | Power | Mean Well LRS-75-12 enclosed PSU, 12 V 6 A (75 W) _(12 V servo supply · https://www.digikey.com/en/products/result?keywords=LRS-75-12)_ | 1 | 22 | 22 | 12 V |
 | Power | Hardened chromed linear rod 8 mm h6, 130 mm _(finger guide rods · https://us.misumi-ec.com/vona2/mech/M0100000000/M0101000000/M0101010000/)_ | 2 | 4.56 | 9.12 | https://us.misumi-ec.com/vona2/mech/M0100000000/M0101000000/M0101010000/ |
 | Electronics | Waveshare Bus Servo Adapter (A) _(USB to servo bus · https://www.waveshare.com/bus-servo-adapter-a.htm)_ | 1 | 10.6 | 10.6 | 12 V |

@@ -1,4 +1,4 @@
-# Bill of Materials — arm_2dof
+# Bill of materials: arm_2dof
 
 **Estimated total: $145.15**  ·  tier: hobby
 

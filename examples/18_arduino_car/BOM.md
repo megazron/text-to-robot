@@ -1,4 +1,4 @@
-# Bill of Materials — arduino_car
+# Bill of materials: arduino_car
 
 **Estimated total: $58.13**  ·  tier: hobby
 

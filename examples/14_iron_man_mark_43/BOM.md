@@ -1,4 +1,4 @@
-# Bill of Materials — iron_man_mark_43
+# Bill of materials: iron_man_mark_43
 
 **Estimated total: $565.86**  ·  tier: hobby  ·  budget: $60000 ✅ within budget
 
@@ -16,7 +16,7 @@
 | Power | 5 mm white LED + 100 ohm resistor (eye / accent light) _(eye light · https://www.aliexpress.com/w/wholesale-5mm-white-led.html)_ | 2 | 0.1 | 0.2 | 3.2 V |
 | Power | 2S 18650 pack: two 2500 mAh 20 A cells (Samsung 25R class) in a plain two-cell holder _(2S 18650 pack · https://www.aliexpress.com/w/wholesale-18650-2-slot-battery-holder-switch.html)_ | 1 | 12 | 12 | 7.4 V, 18.5 Wh |
 | Electronics | PCA9685 16-channel PWM servo driver board (generic, I2C) _(16-channel servo driver for the doors and latches (I2C) · https://www.aliexpress.com/w/wholesale-pca9685-16-channel-servo-driver.html)_ | 2 | 2.5 | 5 | 5 V |
-| Power | 50 mm hook-and-loop strap with D-ring buckle, 600 mm _(backup strap over each door, undone by hand · https://www.velcro.com/business/products/straps/)_ | 10 | 4.5 | 45 | https://www.velcro.com/business/products/straps/ |
+| Power | 50 mm hook-and-loop strap with D-ring buckle, 600 mm _(backup strap over each door, undone by hand · https://www.aliexpress.com/w/wholesale-50mm-hook-and-loop-strap-d-ring.html)_ | 10 | 4.5 | 45 | https://www.velcro.com/business/products/ |
 | Power | KCD1 rocker switch, SPST, 6 A 250 VAC / 10 A 125 VAC _(main power switch · https://www.aliexpress.com/w/wholesale-kcd1-rocker-switch.html)_ | 1 | 0.3 | 0.3 | https://www.aliexpress.com/w/wholesale-kcd1-rocker-switch.html |
 | Power | WAGO 221-415 five-way lever splice _(rail splices, the star ground and bus hubs · https://www.wago.com/global/electrical-interconnections/compact-splicing-connector/p/221-415)_ | 8 | 0.8 | 6.4 | 450 V |
 | Power | WS2812B RGB LED ring, 12 LEDs, 37 mm (NeoPixel-compatible) _(arc reactor ring (12 LEDs); palm repulsor ring · https://www.adafruit.com/product/1643)_ | 3 | 2 | 6 | 5 V |

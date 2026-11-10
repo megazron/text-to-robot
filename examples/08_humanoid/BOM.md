@@ -1,4 +1,4 @@
-# Bill of Materials — humanoid_robot
+# Bill of materials: humanoid_robot
 
 **Estimated total: $4318.9**  ·  tier: prosumer
 

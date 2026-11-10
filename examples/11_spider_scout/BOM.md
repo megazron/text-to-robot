@@ -1,4 +1,4 @@
-# Bill of Materials — hexapod
+# Bill of materials: hexapod
 
 **Estimated total: $1100.45**  ·  tier: hobby  ·  budget: $1500 ✅ within budget
 

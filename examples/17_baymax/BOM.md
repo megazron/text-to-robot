@@ -1,4 +1,4 @@
-# Bill of Materials — baymax
+# Bill of materials: baymax
 
 **Estimated total: $920.04**  ·  tier: hobby
 

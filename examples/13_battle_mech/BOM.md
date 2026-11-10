@@ -1,4 +1,4 @@
-# Bill of Materials — battle_mech
+# Bill of materials: battle_mech
 
 **Estimated total: $16646.65**  ·  tier: research
 

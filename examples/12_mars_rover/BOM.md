@@ -1,4 +1,4 @@
-# Bill of Materials — rover_arm
+# Bill of materials: rover_arm
 
 **Estimated total: $3859.75**  ·  tier: prosumer  ·  budget: $4000 ✅ within budget
 

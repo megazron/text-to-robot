@@ -1,4 +1,4 @@
-# Bill of Materials — wall_e
+# Bill of materials: wall_e
 
 **Estimated total: $117.27**  ·  tier: hobby
 

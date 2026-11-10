@@ -1,4 +1,4 @@
-# Bill of Materials — diff_drive_robot
+# Bill of materials: diff_drive_robot
 
 **Estimated total: $512.23**  ·  tier: hobby
 

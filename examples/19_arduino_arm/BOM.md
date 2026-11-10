@@ -1,4 +1,4 @@
-# Bill of Materials — arduino_arm
+# Bill of materials: arduino_arm
 
 **Estimated total: $63.54**  ·  tier: hobby
 

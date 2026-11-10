@@ -1,4 +1,4 @@
-# Bill of Materials — mecanum_robot
+# Bill of materials: mecanum_robot
 
 **Estimated total: $816.72**  ·  tier: hobby
 

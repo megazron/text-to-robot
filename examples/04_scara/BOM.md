@@ -1,4 +1,4 @@
-# Bill of Materials — scara
+# Bill of materials: scara
 
 **Estimated total: $359**  ·  tier: hobby
 
@@ -15,7 +15,7 @@
 | Power | IEC C14 panel inlet with fuse drawer and rocker switch, 10 A _(fused, switched mains inlet · https://www.aliexpress.com/w/wholesale-iec-c14-inlet-fuse-switch.html)_ | 1 | 3 | 3 | https://www.aliexpress.com/w/wholesale-iec-c14-inlet-fuse-switch.html |
 | Power | Tr8x8 brass flange nut (22 mm flange, 4x M3 on PCD 16) _(Z lead nut · https://www.robotdigg.com/product/228/T8-Lead-Screw-with-Copper-Nut)_ | 1 | 2.5 | 2.5 | https://www.robotdigg.com/product/228/T8-Lead-Screw-with-Copper-Nut |
 | Power | Lead screw Tr8x8 (P2, 4 starts) 300 mm, stainless steel _(Z lead screw · https://www.robotdigg.com/product/228/T8-Lead-Screw-with-Copper-Nut)_ | 1 | 9 | 9 | https://www.iso.org/standard/12719.html |
-| Mechanical | Linear ball bushing LM8UU (8 x 15 x 24 mm) _(Z carriage bushings; finger carriage bushings · https://www.samick.co.kr/en/product/linear-bushing)_ | 8 | 1.2 | 9.6 | https://www.samickthk.co.kr/sub/product/linear-bushing/LM.php |
+| Mechanical | Linear ball bushing LM8UU (8 x 15 x 24 mm) _(Z carriage bushings; finger carriage bushings · https://www.aliexpress.com/w/wholesale-lm8uu.html)_ | 8 | 1.2 | 9.6 | https://www.samickthk.co.kr/en/ |
 | Actuator | NEMA17 stepper 42x42x40 mm, 0.45 N.m (StepperOnline 17HS16-2004S1) _(Z drive · https://www.stepperonline.co.uk/nema-17-bipolar-45ncm-64oz-in-2a-42x42x40mm-4-wires-w-1m-cable-connector-17hs16-2004s1.html)_ | 1 | 9.5 | 9.5 | 0.3 N·m rated / 0.45 N·m peak, 24 V |
 | Actuator | NEMA17 stepper + 5.18:1 planetary gearbox (StepperOnline 17HS19-1684S-PG5) _(J1 drive; J2 drive · https://www.stepperonline.co.uk/nema-17-stepper-motor-bipolar-l-48mm-w-gear-ratio-5-1-planetary-gearbox-17hs19-1684s-pg5.html)_ | 2 | 34.77 | 69.54 | 2 N·m rated / 4 N·m peak, 24 V |
 | Power | Mean Well LRS-75-12 enclosed PSU, 12 V 6 A (75 W) _(12 V servo supply · https://www.digikey.com/en/products/result?keywords=LRS-75-12)_ | 1 | 22 | 22 | 12 V |

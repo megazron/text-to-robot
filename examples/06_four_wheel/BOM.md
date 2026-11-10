@@ -1,4 +1,4 @@
-# Bill of Materials — four_wheel_robot
+# Bill of materials: four_wheel_robot
 
 **Estimated total: $695.1**  ·  tier: hobby
 

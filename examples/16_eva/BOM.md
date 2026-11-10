@@ -1,4 +1,4 @@
-# Bill of Materials — eva
+# Bill of materials: eva
 
 **Estimated total: $649.04**  ·  tier: hobby
 

@@ -1,4 +1,4 @@
-# Bill of Materials — arm_7dof
+# Bill of materials: arm_7dof
 
 **Estimated total: $1216.73**  ·  tier: prosumer
 
