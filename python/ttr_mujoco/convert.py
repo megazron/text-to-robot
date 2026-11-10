@@ -242,6 +242,18 @@ def urdf_to_mjcf(urdf_path: str, floating=None, kp: float | None = None, out: st
             for g in geoms:
                 if g.get("group", "0") == "0": g.set("group", "3")
 
+    # A servo's output horn is bolted to the link it drives (<joint>_actuator turns <joint>'s child): the two always touch at
+    # the horn, by design. With self-collision on, that contact pinned the arm's base yaw against its turret (the quick
+    # start's actuator_sweep failed "contact-limited"); exclude exactly those pairs, every other pair stays checked.
+    if self_collision:
+        bodies = {b.get("name") for b in root.iter("body")}
+        pairs = [(f"{j.get('name')}_actuator", j.find("child").get("link")) for j in source.findall("joint")
+                 if j.get("type") != "fixed" and j.find("child") is not None]
+        pairs = [(a, b) for a, b in pairs if a in bodies and b in bodies]
+        if pairs:
+            contact = root.find("contact")
+            if contact is None: contact = ET.SubElement(root, "contact")
+            for a, b in pairs: ET.SubElement(contact, "exclude", body1=a, body2=b)
     # real actuators: reflected rotor inertia on the joint (URDF has no field for it)
     ratings = joint_actuators(load_spec(spec)) if spec is not None else {}
     armature_notes = []

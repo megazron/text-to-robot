@@ -82,3 +82,22 @@ class ActuatorSweepTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class HornContactTests(unittest.TestCase):
+    """A servo's horn is bolted to the link it drives: with self-collision on, only that pair is excluded."""
+
+    def test_driving_actuator_and_driven_link_do_not_collide_other_pairs_do(self):
+        box = '<box size="0.04 0.04 0.04"/>'
+        src = ('<robot name="arm">' + link("base_link", 2, '<box size="0.2 0.2 0.02"/>')
+               + link("yaw_actuator", 0.1, box, "0 0 0.03") + link("turret", 0.2, box, "0 0 0.07") + link("bracket", 0.1, box, "0.1 0 0.03")
+               + '<joint name="yaw_actuator_mount" type="fixed"><parent link="base_link"/><child link="yaw_actuator"/></joint>'
+               + '<joint name="bracket_mount" type="fixed"><parent link="base_link"/><child link="bracket"/></joint>'
+               + joint("yaw", "revolute", "base_link", "turret", "0 0 0", "0 0 1", 'lower="-1" upper="1" effort="2" velocity="3"')
+               + '</robot>')
+        xml = convert(src, floating=False, self_collision=True)
+        model = mujoco.MjModel.from_xml_string(xml)
+        pairs = {tuple(sorted((model.body(int(model.exclude_signature[i] >> 16)).name, model.body(int(model.exclude_signature[i] & 0xFFFF)).name))) for i in range(model.nexclude)}
+        self.assertIn(("turret", "yaw_actuator"), pairs)
+        self.assertNotIn(("bracket", "turret"), pairs)
+        self.assertEqual(model.nexclude, 1)
