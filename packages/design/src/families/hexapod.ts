@@ -15,7 +15,7 @@ import {
   footPad, stanceTorques, recordJoints, holdCurrent, pickBattery, COMPUTE_W, addSensor, limitsFromGeometry, sum, type Frame, type Foot,
 } from "./legkit.ts";
 import { sensorsOf, keyOf, quadPower, stabilityCheck, type LeggedRequest } from "./legged.ts";
-import { hood, hoodAround, enclosureChecks, exposed } from "../enclosure.ts";
+import { hood, hoodAround, worldBox, enclosureChecks, exposed } from "../enclosure.ts";
 import { Harness, finishWiring } from "../wiring.ts";
 import { busTree, coreTree, actuatorsUnder } from "../netlist.ts";
 
@@ -151,11 +151,21 @@ function buildHexapod(req: LeggedRequest, cfg: HexCfg, sensors: string[]) {
 /** Three compartments: a hood over the computer on the top deck, a hood over the boards on the plate, a tray under the plate for the battery. */
 function boxHex(A: Assembly, H: Harness, b: ReturnType<typeof buildHexapod>) {
   hoodAround(A, H, { name: "computer_hood", deck: "top_deck", parts: ["computer"], z0: b.zDeck + 3, z1: b.zRoof, usbFor: "computer" });
-  // the coxa servos plug in under the plate (their sockets are under the case): each side's leg cables go down through a
-  // hole in the plate beside the battery tray, the USB lead to the computer leaves by a grommet in the hood's -y wall
-  const side = (s: number) => ({ id: s > 0 ? "legs_left" : "legs_right", near: [13, s * 45] as [number, number], area: { x0: -11, x1: 37, y0: s > 0 ? b.bw + 10 : -49, y1: s > 0 ? 49 : -b.bw - 10 } });
-  hoodAround(A, H, { name: "board_hood", deck: "base_link", parts: ["actuator_bus", "regulator_5v", "imu"], z0: b.zPlate, rocker: true, below: 10, limit: { x0: -15, x1: 41, y0: -80, y1: 60 }, deckHoles: [side(1), side(-1)], grommets: [{ id: "usb", face: "y-", u: -6 }] });
+  // the coxa servos plug in under the plate (their sockets are under the case): each side's leg cables leave the hood by a
+  // grommet low in its side wall and go down through a hole in the plate just outside it, clear of the battery tray; the
+  // hood's floor hole opens into the tray under it (the battery's leads come up through it); the USB lead to the
+  // computer leaves by a grommet in the -y wall
+  // The pack fills the tray under the plate (a hole through the plate over it would lead nowhere): its leads come up out
+  // of the tray's end and into the hood by a grommet in its +x wall beside the switch; the main fuse and the star ground
+  // ride in the hood, which stands high enough to take them over the boards
+  const tallest = Math.max(...["actuator_bus", "regulator_5v", "imu"].map((n) => worldBox(A, n).hi[2]));
+  const hb = hoodAround(A, H, { name: "board_hood", deck: "base_link", parts: ["actuator_bus", "regulator_5v", "imu"], z0: b.zPlate, z1: tallest + 26, rocker: true, noDeckHole: true, limit: { x0: -15, x1: 41, y0: -80, y1: 60 },
+    grommets: [{ id: "usb", face: "y-", u: -6 }, { id: "legs_left", face: "y+", u: 16 }, { id: "legs_right", face: "y-", u: 16 }, { id: "power", face: "x+", u: 34 }] });
+  H.spot.set("main_fuse", { by: "actuator_bus", at: [10, 30, tallest + 14] });
+  H.spot.set("star_ground", { by: "actuator_bus", at: [10, -30, tallest + 14] });
+  for (const s of [1, -1]) { const y = s > 0 ? hb.max[1] + 12 : hb.min[1] - 12; A.amendProgram("base_link", [{ op: "hole", a: [16, y, b.zPlate - 6], b: [16, y, b.zPlate + 1], d: 12 }]); }
   for (const c of ["computer~lidar", "camera~computer", "actuator_bus~computer"]) H.exitOf.set(c, "computer_hood.usb");
+  for (const n of ["lf", "lm", "lr", "rr", "rm", "rf"]) for (const c of [`actuator_bus_hub~${n}_coxa_actuator`, `VBAT~${n}_coxa_actuator`]) H.exitOf.set(c, `board_hood.legs_${n[0] === "l" ? "left" : "right"}`);
   const bb = b.battB, x0 = b.bx0 + bb.min[0] - 3, x1 = b.bx0 + bb.max[0] + LEAD_ROOM, y = b.bw + 4.4;
   // the tray hangs from the plate: bounds in the frame turned about x, so z runs downwards
   hood(A, H, { name: "battery_tray", deck: "base_link", x0, x1, y0: -y, y1: y, z0: -(b.zPlate - 4), z1: -(b.zBatt - 3), parts: ["battery"], flip: true, ventRows: 0, deckGrommets: [{ id: "up", x: x1 - 8, y: 0 }] });
