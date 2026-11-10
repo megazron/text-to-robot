@@ -2,4 +2,4 @@
 # Browser checks: python scripts/check_web.py and scripts/check_site.py  (then: python -m playwright install chromium)
 playwright==1.63.0
 # Logo build: python docs/brand/build.py
-fonttools==4.65.0
+fonttools==4.68.0
