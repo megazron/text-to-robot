@@ -257,13 +257,13 @@ A driver's high level is its I/O supply; the receiver needs it above its input t
 
 | Input | Source |
 |---|---|
-| 2S 18650 pack: two 2500 mAh 20 A cells (Samsung 25R class) in a plain two-cell holder capacity and energy | [datasheet](https://www.dnkpower.com/wp-content/uploads/2019/02/SAMSUNG-INR18650-25R-Datasheet.pdf) |
+| 2S 18650 pack: two 2500 mAh 20 A cells (Samsung 25R class) in a plain two-cell holder capacity and energy | [datasheet](https://lygte-info.dk/review/batteries2012/Samsung%20INR18650-25R%202500mAh%20(Green)%20UK.html) |
 | Arduino Nano compatible board (ATmega328P, CH340, USB-C) heat | estimated: 5 V x 25 mA typical; more when fed from VIN |
 | LM2596S adjustable buck module (3 A, 43 x 21 mm) heat | estimated: 10 W out at about 80 %; TI: 73 % at 12 V in, 3 V out, 3 A |
 | Arduino Nano compatible board (ATmega328P, CH340, USB-C) logic levels | [datasheet](https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-7810-Automotive-Microcontrollers-ATmega328P_Datasheet.pdf): ATmega328P at VCC 5 V: VIH min 0.6 VCC = 3.0 V, pins to VCC + 0.5 V. Outputs swing to VCC at light load. |
 | TB6612FNG dual DC motor driver module (1.2 A per channel) logic levels | [datasheet](https://cdn-shop.adafruit.com/datasheets/TB6612FNG_datasheet_en_20121101.pdf): Control inputs: VIH 2 V min, up to VCC + 0.2 V (Toshiba electrical characteristics); 3.3 V and 5 V hosts both drive it. |
 | HC-SR04 ultrasonic distance sensor (2-400 cm) logic levels | [estimated](https://cdn.sparkfun.com/datasheets/Sensors/Proximity/HCSR04.pdf): 5 V TTL module: Echo drives 5 V. The trigger threshold is not published; TTL 2 V assumed. |
-| PCA9685 16-channel PWM servo driver board (generic, I2C) logic levels | [datasheet](https://www.nxp.com/docs/en/data-sheet/PCA9685.pdf): VIH 0.7 VDD on SCL/SDA; inputs are 5.5 V tolerant; LED outputs are totem pole to VDD. |
+| PCA9685 16-channel PWM servo driver board (generic, I2C) logic levels | [datasheet](https://cdn-shop.adafruit.com/datasheets/PCA9685.pdf): VIH 0.7 VDD on SCL/SDA; inputs are 5.5 V tolerant; LED outputs are totem pole to VDD. |
 | TowerPro SG90 micro servo (nylon gears) + cross horn logic levels | [estimated](http://www.ee.ic.ac.uk/pcheung/teaching/DE1_EE/stores/sg90_datasheet.pdf): Pulse input of an analogue servo: no threshold published; 3.3 V and 5 V pulses both work in practice, 2 V assumed. |
 | TowerPro MG90S micro servo (metal gears) + cross horn logic levels | estimated: Pulse input of a hobby servo: no threshold published; 2 V assumed. |
 
@@ -298,7 +298,7 @@ A driver's high level is its I/O supply; the receiver needs it above its input t
 | TowerPro MG90S micro servo | estimated | estimated | estimated | [datasheet](https://www.towerpro.com.tw/product/mg90s-3/) |
 | TowerPro SG90 micro servo | [datasheet](https://docs.m5stack.com/en/accessory/SG90_Servo) | estimated | [datasheet](https://docs.m5stack.com/en/accessory/SG90_Servo) | [datasheet](https://www.towerpro.com.tw/product/sg90-7/) |
 | 2S 18650 pack: two 2500 mAh 20 A cells | [datasheet](https://www.akkuman.de/shop/mediafiles/PDF/18650%20Lithium/samsung%20inr18650-25r%2036v%202550mah%208c%2020a.pdf) | [datasheet](https://www.akkuman.de/shop/mediafiles/PDF/18650%20Lithium/samsung%20inr18650-25r%2036v%202550mah%208c%2020a.pdf) | estimated | estimated |
-| PCA9685 16-channel PWM servo driver board | [datasheet](https://learn.adafruit.com/16-channel-pwm-servo-driver/pinouts) | [datasheet](https://www.nxp.com/docs/en/data-sheet/PCA9685.pdf) | [datasheet](https://learn.adafruit.com/16-channel-pwm-servo-driver/pinouts) | [datasheet](https://learn.adafruit.com/16-channel-pwm-servo-driver/pinouts) |
+| PCA9685 16-channel PWM servo driver board | [datasheet](https://learn.adafruit.com/16-channel-pwm-servo-driver/pinouts) | [datasheet](https://cdn-shop.adafruit.com/datasheets/PCA9685.pdf) | [datasheet](https://learn.adafruit.com/16-channel-pwm-servo-driver/pinouts) | [datasheet](https://learn.adafruit.com/16-channel-pwm-servo-driver/pinouts) |
 | KCD1 rocker switch, SPST, 6 A 250 VAC / 10 A 125 VAC | estimated | estimated | estimated | estimated |
 | TB6612FNG dual DC motor driver module | [datasheet](https://cdn-shop.adafruit.com/datasheets/TB6612FNG_datasheet_en_20121101.pdf) | [datasheet](https://cdn-shop.adafruit.com/datasheets/TB6612FNG_datasheet_en_20121101.pdf) | [datasheet](https://learn.sparkfun.com/tutorials/tb6612fng-hookup-guide/all) | [datasheet](https://learn.sparkfun.com/tutorials/tb6612fng-hookup-guide/all) |
 | TT gear motor 3-6 V, 1:48, 200 rpm | [datasheet](https://www.adafruit.com/product/3777) | estimated | estimated | [datasheet](https://www.adafruit.com/product/3777) |

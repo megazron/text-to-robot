@@ -118,8 +118,8 @@ def _lm8_keepout(c: Component):
 
 LM8UU = Component(
     key="lm8uu", name="Linear ball bushing LM8UU (8 x 15 x 24 mm)", category="bearing", mass_g=16.0, price_usd=1.2,
-    supplier_url="https://www.samick.co.kr/en/product/linear-bushing",
-    datasheet_url="https://www.samickthk.co.kr/sub/product/linear-bushing/LM.php",
+    supplier_url="https://www.aliexpress.com/w/wholesale-lm8uu.html",
+    datasheet_url="https://www.samickthk.co.kr/en/",
     envelope_mm=(15.0, 15.0, 24.0), holes=[Hole((0.0, 0.0, 12.0), (0.0, 0.0, 1.0), 8.0, None)],
     specs={"bore_mm": 8.0, "od_mm": 15.0, "length_mm": 24.0, "housing_bore_mm": 15.0,
            "dynamic_load_n": 274.0, "static_load_n": 392.0, "friction_coefficient": 0.003,
@@ -161,7 +161,7 @@ def _tube(od: float, wall: float, price: float) -> Component:
     return Component(
         key=f"al_tube_{int(od)}x{int(wall)}_1m", name=f"6061-T6 aluminium round tube {od:g} x {wall:g} mm, 1 m",
         category="misc", mass_g=round(mass, 1), price_usd=price,
-        supplier_url="https://www.metalsupermarkets.com/metals/aluminum/aluminum-round-tube/",
+        supplier_url="https://www.metalsupermarkets.com/metals/aluminum/",
         datasheet_url="https://asm.matweb.com/search/SpecificMaterial.asp?bassnum=ma6061t6",
         envelope_mm=(od, od, L), holes=[],
         specs={"od_mm": od, "wall_mm": wall, "id_mm": idia, "length_mm": L, "alloy": "6061-T6",

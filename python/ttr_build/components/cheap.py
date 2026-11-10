@@ -46,7 +46,7 @@ NANO_CLONE = Component(
 PCA_CLONE = Component(
     key="pca9685_clone", name="PCA9685 16-channel PWM servo driver board (generic, I2C)", category="motor_driver",
     mass_g=9.0, price_usd=2.5, supplier_url=SEARCH.format("pca9685-16-channel-servo-driver"),
-    datasheet_url="https://www.nxp.com/docs/en/data-sheet/PCA9685.pdf",
+    datasheet_url="https://cdn-shop.adafruit.com/datasheets/PCA9685.pdf",
     envelope_mm=(62.2, 25.4, 10.2), holes=pcb_holes(PCA_HOLES, 2.5, "M2.5"),
     specs={"voltage_v": 5.0, "logic_v": (3.3, 5.0), "servo_v_max": 6.0, "channels": 16, "pwm_bits": 12,
            "i2c_address": "0x40", "library": "Adafruit PWM Servo Driver Library",
@@ -177,7 +177,7 @@ def _pack_build(c):
 PACK_2S = Component(
     key="pack_2s_18650", name="2S 18650 pack: two 2500 mAh 20 A cells (Samsung 25R class) in a plain two-cell holder",
     category="battery", mass_g=115.0, price_usd=12.0, supplier_url=SEARCH.format("18650-2-slot-battery-holder-switch"),
-    datasheet_url="https://www.dnkpower.com/wp-content/uploads/2019/02/SAMSUNG-INR18650-25R-Datasheet.pdf",
+    datasheet_url="https://lygte-info.dk/review/batteries2012/Samsung%20INR18650-25R%202500mAh%20(Green)%20UK.html",
     envelope_mm=(77.0, 41.0, 19.4), holes=[Hole((20.0, 0.0, 0.0), (0.0, 0.0, -1.0), 3.2, "M3"), Hole((57.0, 0.0, 0.0), (0.0, 0.0, -1.0), 3.2, "M3")],
     specs={"cells": 2, "capacity_mah": 2500, "voltage_v": 7.4, "voltage_max_v": 8.4, "energy_wh": 18.5,
            "max_current_a": 20.0, "c_rating": 8, "plug": "JST / bare leads",

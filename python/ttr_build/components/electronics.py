@@ -416,8 +416,8 @@ def _strap_build(c):
 
 STRAP = Component(
     key="strap_50mm_velcro", name="50 mm hook-and-loop strap with D-ring buckle, 600 mm", category="misc",
-    mass_g=35.0, price_usd=4.5, supplier_url="https://www.velcro.com/business/products/straps/",
-    datasheet_url="https://www.velcro.com/business/products/straps/",
+    mass_g=35.0, price_usd=4.5, supplier_url="https://www.aliexpress.com/w/wholesale-50mm-hook-and-loop-strap-d-ring.html",
+    datasheet_url="https://www.velcro.com/business/products/",
     envelope_mm=(600.0, 54.0, 7.0), holes=[],
     specs={"width_mm": 50.0, "length_mm": 600.0, "no_mounting_holes": True,
            "mount": "threaded through slots in the printed cuffs", "uncertain": ["mass_g", "price_usd"]},

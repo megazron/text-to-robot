@@ -9419,7 +9419,7 @@
      "peak": 0.4
     },
     "src": "datasheet",
-    "url": "https://www.nxp.com/docs/en/data-sheet/PCA9685.pdf",
+    "url": "https://cdn-shop.adafruit.com/datasheets/PCA9685.pdf",
     "note": "typical is an assumption, about 10 mA chip draw; peak 16 ch x 25 mA sink is the NXP per-output limit. Servo current goes through V+, not this rating"
    },
    "output": {
@@ -10246,7 +10246,7 @@
      "peak": 0.4
     },
     "src": "datasheet",
-    "url": "https://www.nxp.com/docs/en/data-sheet/PCA9685.pdf",
+    "url": "https://cdn-shop.adafruit.com/datasheets/PCA9685.pdf",
     "note": "typical is an assumption, about 10 mA chip draw; peak 16 ch x 25 mA sink is the NXP per-output limit. Servo current goes through V+, not this rating"
    },
    "output": {

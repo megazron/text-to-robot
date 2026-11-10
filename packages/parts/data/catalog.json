@@ -5,7 +5,7 @@
   "category": "misc",
   "mass_g": 305.4,
   "price_usd": 13.0,
-  "supplier_url": "https://www.metalsupermarkets.com/metals/aluminum/aluminum-round-tube/",
+  "supplier_url": "https://www.metalsupermarkets.com/metals/aluminum/",
   "datasheet_url": "https://asm.matweb.com/search/SpecificMaterial.asp?bassnum=ma6061t6",
   "envelope_mm": [
    20.0,
@@ -50,7 +50,7 @@
   "category": "misc",
   "mass_g": 390.2,
   "price_usd": 16.0,
-  "supplier_url": "https://www.metalsupermarkets.com/metals/aluminum/aluminum-round-tube/",
+  "supplier_url": "https://www.metalsupermarkets.com/metals/aluminum/",
   "datasheet_url": "https://asm.matweb.com/search/SpecificMaterial.asp?bassnum=ma6061t6",
   "envelope_mm": [
    25.0,
@@ -9232,7 +9232,7 @@
   "mass_g": 115.0,
   "price_usd": 12.0,
   "supplier_url": "https://www.aliexpress.com/w/wholesale-18650-2-slot-battery-holder-switch.html",
-  "datasheet_url": "https://www.dnkpower.com/wp-content/uploads/2019/02/SAMSUNG-INR18650-25R-Datasheet.pdf",
+  "datasheet_url": "https://lygte-info.dk/review/batteries2012/Samsung%20INR18650-25R%202500mAh%20(Green)%20UK.html",
   "envelope_mm": [
    77.0,
    41.0,
@@ -9407,7 +9407,7 @@
   "mass_g": 9.0,
   "price_usd": 2.5,
   "supplier_url": "https://www.aliexpress.com/w/wholesale-pca9685-16-channel-servo-driver.html",
-  "datasheet_url": "https://www.nxp.com/docs/en/data-sheet/PCA9685.pdf",
+  "datasheet_url": "https://cdn-shop.adafruit.com/datasheets/PCA9685.pdf",
   "envelope_mm": [
    62.2,
    25.4,
