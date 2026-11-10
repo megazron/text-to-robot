@@ -177,6 +177,13 @@ export class Router {
       const a2 = g.dist(a) >= n ? a : g.nearest(a, n, 16, within, (q) => g.line(a, q, 1, within) >= 0), b2 = g.dist(b) >= n ? b : g.nearest(b, n, 16, within, (q) => g.line(b, q, 1, within) >= 0);
       if (!a2 || !b2) continue;
       const p = g.path(a2, b2, n, within); if (!p) continue;
+      // a long way round for the sake of room: a much shorter way with less room (through a hole made for it) wins
+      const L = polyLen(p), direct = dist(a2, b2);
+      if (n > 2 && L > 2 * direct + 20) {
+        const a3 = g.dist(a) >= 2 ? a : g.nearest(a, 2, 16, within, (q) => g.line(a, q, 1, within) >= 0), b3 = g.dist(b) >= 2 ? b : g.nearest(b, 2, 16, within, (q) => g.line(b, q, 1, within) >= 0);
+        const q = a3 && b3 ? g.path(a3, b3, 2, within) : null;
+        if (q && polyLen(q) < 0.6 * L) return dedupe([a, ...q, b]);
+      }
       return dedupe([a, ...p, b]);
     }
     return null;
