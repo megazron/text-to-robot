@@ -39,7 +39,7 @@ export interface GripperBuild {
 /** Heights (mm, adapter frame: z = 0 at the robot face, +z towards the fingers). */
 export function gripperLevels(servo: string, c: GripCfg = GRIP) {
   const b = bodyMm(servo), AT = c.adapterT;
-  const floor = AT + 16;                               // cradle floor on two end supports: room for the bus plug + cable below
+  const floor = AT + 22;                               // cradle floor on two end supports: room below for the bus plug (10 mm) and the cable's first bend (8 mm)
   const zs = floor + WALL + -b.min[2];                 // servo output (horn) face
   const zr0 = zs + 4, zr1 = zr0 + c.gearT;         // pinion teeth / racks
   const zc0 = zr1 + 1, rod1 = zc0 + 10.5, rod2 = rod1 + 36, zc1 = rod2 + 10.5; // carriages and rods (stacked in z)
