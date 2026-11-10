@@ -166,7 +166,8 @@ function boxHex(A: Assembly, H: Harness, b: ReturnType<typeof buildHexapod>) {
   const tallest = Math.max(...["actuator_bus", "regulator_5v", "imu"].map((n) => worldBox(A, n).hi[2]));
   const hb = hoodAround(A, H, { name: "board_hood", deck: "base_link", parts: ["actuator_bus", "regulator_5v", "imu"], z0: b.zPlate, z1: tallest + 26, rocker: true, noDeckHole: true, limit: { x0: -15, x1: 41, y0: -80, y1: 60 },
     grommets: [{ id: "usb", face: "y-", u: -6 }, { id: "legs_left", face: "y+", u: 16 }, { id: "legs_right", face: "y-", u: 16 }, { id: "power", face: "x+", u: 34 }] });
-  H.spot.set("main_fuse", { by: "actuator_bus", at: [10, 30, tallest + 14] });
+  // the inline fuse rides on the plate between the tray's lead hole and the hood, tied along its lead
+  H.spot.set("main_fuse", { by: "battery", at: [66, 16, b.zPlate + 8], free: true });
   H.spot.set("star_ground", { by: "actuator_bus", at: [10, -30, tallest + 14] });
   for (const s of [1, -1]) { const y = s > 0 ? hb.max[1] + 12 : hb.min[1] - 12; A.amendProgram("base_link", [{ op: "hole", a: [16, y, b.zPlate - 6], b: [16, y, b.zPlate + 1], d: 12 }]); }
   for (const c of ["computer~lidar", "camera~computer", "actuator_bus~computer"]) H.exitOf.set(c, "computer_hood.usb");
