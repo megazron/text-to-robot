@@ -388,7 +388,8 @@ export function registerBay(A: Assembly, r: Omit<BayRecord, "vent_area_mm2" | "h
   const heat = r.heat_w ?? r.parts.reduce((h, n) => { const k = keyOf(A.spec, n); return h + (k ? heatOf(k) : 0); }, 0);
   const rec: BayRecord = { ...r, vent_area_mm2: r.vent_area_mm2 ?? 0, heat_w: +heat.toFixed(1) };
   baysOf(A).push(rec);
-  if (H) { for (const p of r.parts) H.bayOf.set(p, r.name); for (const e of r.exits) if (e.kind === "grommet" || e.kind === "gland" || e.kind === "slot") H.exits.push({ id: e.id, link: r.tub, at: apply(r.T, e.at), normal: e.normal, panel_hole_mm: e.hole_mm, bay: r.name, kind: e.kind }); }
+  if (H) { for (const p of r.parts) H.bayOf.set(p, r.name); for (const e of r.exits) if (e.part) H.bayOf.set(e.part, r.name);   // a panel part (the main switch) is wired inside, as in bay()
+    for (const e of r.exits) if (e.kind === "grommet" || e.kind === "gland" || e.kind === "slot") H.exits.push({ id: e.id, link: r.tub, at: apply(r.T, e.at), normal: e.normal, panel_hole_mm: e.hole_mm, bay: r.name, kind: e.kind }); }
   return rec;
 }
 const keyOf = (spec: RobotSpecification, name: string) => { const l = spec.links.find((x) => x.name === name); return l?.geometry.type === "mesh" && l.geometry.part === "component" ? String(l.geometry.params?.key) : undefined; };
