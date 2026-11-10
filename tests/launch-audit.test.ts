@@ -137,3 +137,11 @@ test("Hindi and Urdu robot words are read: arms, legs, wheels, cars and dogs, an
     assert.match(i.approximations.join(), /read non-English keywords as English/, p);
   }
 });
+
+test("a big (QDD) quadruped switches its 19 A on a battery switch, and passes every check of its own", async () => {
+  const { generateRobot } = await import("@ttr/robot-generator");
+  const r = await generateRobot("Build a big quadruped robot");
+  const d = (r.robot.metadata as { design?: { checks?: { name: string; pass: boolean; detail: string }[]; purchased?: { key: string }[] } }).design!;
+  assert.ok(d.purchased!.some((p) => p.key === "switch_battery_6006"), "the battery switch is bought");
+  assert.deepEqual(d.checks!.filter((c) => !c.pass).map((c) => `${c.name}: ${c.detail}`), []);
+});

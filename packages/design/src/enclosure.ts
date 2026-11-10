@@ -248,7 +248,7 @@ export function supplyBox(A: Assembly, H: Harness, o: { parent: string; T: Mat4;
  * A hood over parts already mounted on a deck: walls and roof in one printed part, screwed down at four tabs, so the hood
  * itself is the removable lid and the deck is the compartment's floor. Bounds are in the deck link's frame.
  */
-export function hood(A: Assembly, H: Harness | undefined, o: { name: string; deck: string; x0: number; x1: number; y0: number; y1: number; z0: number; z1: number; parts: string[]; usb?: { face: Face; u: number }; grommets?: { id: string; face: Face; u: number; d?: number }[]; deckGrommets?: { id: string; x: number; y: number; d?: number }[]; material?: string; ventRows?: number; cad?: boolean; flip?: boolean; wallVents?: boolean; rocker?: { face: "x+" | "x-"; u: number } }): BayRecord {
+export function hood(A: Assembly, H: Harness | undefined, o: { name: string; deck: string; x0: number; x1: number; y0: number; y1: number; z0: number; z1: number; parts: string[]; usb?: { face: Face; u: number }; grommets?: { id: string; face: Face; u: number; d?: number }[]; deckGrommets?: { id: string; x: number; y: number; d?: number }[]; material?: string; ventRows?: number; cad?: boolean; flip?: boolean; wallVents?: boolean; rocker?: { face: "x+" | "x-"; u: number; key?: string } }): BayRecord {
   const { x0, x1, y0, y1, z0, z1 } = o, t = WALL, top = 2.8, rc = 5;
   // flip: the hood hangs under the deck (turned 180 deg about x; bounds are given in that turned frame)
   const Tf: Mat4 = o.flip ? [1, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1] : translation([0, 0, 0]);
@@ -275,8 +275,11 @@ export function hood(A: Assembly, H: Harness | undefined, o: { name: string; dec
   }
   if (o.rocker) {
     const x = o.rocker.face === "x+" ? x1 : x0, n = o.rocker.face === "x+" ? 1 : -1, zc = (z0 + z1) / 2;
-    ops.push({ op: "cutbox", min: [Math.min(x, x + n * (t + 1)) - 1, o.rocker.u - 11.2, zc - 15.2], max: [Math.max(x, x + n * (t + 1)) + 1, o.rocker.u + 11.2, zc + 15.2] });
-    exits.push({ id: `${o.name}.switch`, kind: "switch", face: o.rocker.face, at: [x + n * t, o.rocker.u, zc], normal: [n, 0, 0], hole_mm: 22, part: "main_switch" });
+    // a battery switch (a high-current robot) stands in a round 52.4 mm hole; a rocker in a 30.4 x 22.4 mm window
+    const round = o.rocker.key === BATTERY_SWITCH;
+    ops.push(round ? { op: "hole", a: [x - n * 2, o.rocker.u, zc], b: [x + n * (t + 2), o.rocker.u, zc], d: 52.4 }
+      : { op: "cutbox", min: [Math.min(x, x + n * (t + 1)) - 1, o.rocker.u - 11.2, zc - 15.2], max: [Math.max(x, x + n * (t + 1)) + 1, o.rocker.u + 11.2, zc + 15.2] });
+    exits.push({ id: `${o.name}.switch`, kind: "switch", face: o.rocker.face, at: [x + n * t, o.rocker.u, zc], normal: [n, 0, 0], hole_mm: round ? 52.4 : 22, part: "main_switch" });
   }
   const dHoles: Op[] = [];
   for (const g of o.deckGrommets ?? []) {
@@ -290,7 +293,7 @@ export function hood(A: Assembly, H: Harness | undefined, o: { name: string; dec
   A.fixed(`${o.name}_mount`, o.deck, o.name, translation([0, 0, 0]));
   A.amendProgram(o.deck, [{ op: "at", T: Tf, of: [...tabs.map(([x, y]): Op => ({ op: "hole", a: [x, y, z0 - 8], b: [x, y, z0 + 0.5], d: PILOT.M3 })), ...dHoles] }]);
   A.fastener("M3 x 12 self-tapping (hood to deck)", 4);
-  if (o.rocker) { const n = o.rocker.face === "x+" ? 1 : -1; A.mount(o.name, "switch_kcd4", frame([(n > 0 ? x1 : x0) + n * t, o.rocker.u, (z0 + z1) / 2], [n, 0, 0], [0, 1, 0]), "main_switch", "main power switch"); }
+  if (o.rocker) { const n = o.rocker.face === "x+" ? 1 : -1; A.mount(o.name, o.rocker.key ?? "switch_kcd4", frame([(n > 0 ? x1 : x0) + n * t, o.rocker.u, (z0 + z1) / 2], [n, 0, 0], [0, 1, 0]), "main_switch", "main power switch"); }
   return registerBay(A, { name: o.name, tub: o.deck, lid: o.name, parent: o.deck, T: Tf, min: [x0, y0, z0], max: [x1, y1, z1], parts: o.parts, exits, screws: 4, vent_area_mm2: Math.round(area), solids: [o.name] }, H);
 }
 /**
@@ -342,21 +345,27 @@ export function freeSpot(A: Assembly, area: { x0: number; x1: number; y0: number
   for (let x = area.x0 + size[0] / 2; x <= area.x1 - size[0] / 2; x += 4) for (let y = area.y0 + size[1] / 2; y <= area.y1 - size[1] / 2; y += 4) pts.push([x, y]);
   return pts.sort((a, b) => Math.hypot(a[0] - cx, a[1] - cy) - Math.hypot(b[0] - cx, b[1] - cy)).find(([x, y]) => clear(x, y)) ?? null;
 }
-/** Where along the end wall a rocker's 26 mm body has nothing behind it. */
-const rockerU = (bs: { lo: Vec3; hi: Vec3 }[], x1: number, y0: number, y1: number) => { const free = (u: number) => !bs.some((b) => b.hi[0] > x1 - 29 && b.hi[1] > u - 13 && b.lo[1] < u + 13); for (let d = 0; d < (y1 - y0) / 2 - 13; d += 3) for (const u of [(y0 + y1) / 2 + d, (y0 + y1) / 2 - d]) if (free(u)) return u; return (y0 + y1) / 2; };
+/** The battery switch a robot whose running current is past a rocker's 16 A gets (Blue Sea 6006: 70 mm face, 60 mm deep). */
+export const BATTERY_SWITCH = "switch_battery_6006";
+/** Where along the end wall a switch's body (half width h, depth dp) has nothing behind it. */
+const rockerU = (bs: { lo: Vec3; hi: Vec3 }[], x1: number, y0: number, y1: number, h = 13, dp = 29) => { const free = (u: number) => !bs.some((b) => b.hi[0] > x1 - dp && b.hi[1] > u - h && b.lo[1] < u + h); for (let d = 0; d < (y1 - y0) / 2 - h; d += 3) for (const u of [(y0 + y1) / 2 + d, (y0 + y1) / 2 - d]) if (free(u)) return u; return (y0 + y1) / 2; };
 /** A hood sized round parts already on a deck, with a grommet through the deck where nothing stands. Returns its record. */
-export function hoodAround(A: Assembly, H: Harness, o: { name: string; deck: string; alsoHoles?: string[]; parts: string[]; z0: number; pad?: number; limit?: { x0: number; x1: number; y0: number; y1: number }; material?: string; usbFor?: string; z1?: number; grommets?: { id: string; face: Face; u: number; d?: number }[]; rocker?: boolean }) {
+export function hoodAround(A: Assembly, H: Harness, o: { name: string; deck: string; alsoHoles?: string[]; parts: string[]; z0: number; pad?: number; limit?: { x0: number; x1: number; y0: number; y1: number }; material?: string; usbFor?: string; z1?: number; grommets?: { id: string; face: Face; u: number; d?: number }[]; rocker?: boolean | { key: string } }) {
   const pad = o.pad ?? 3.5, bs = o.parts.map((n) => worldBox(A, n));
   let x0 = Math.min(...bs.map((b) => b.lo[0])) - pad, x1 = Math.max(...bs.map((b) => b.hi[0])) + pad, y0 = Math.min(...bs.map((b) => b.lo[1])) - pad, y1 = Math.max(...bs.map((b) => b.hi[1])) + pad;
-  if (o.rocker) x1 += 30;   // room for the switch body behind the end wall
+  const big = typeof o.rocker === "object" && o.rocker.key === BATTERY_SWITCH, rockerKey = typeof o.rocker === "object" ? o.rocker.key : undefined;
+  // room for the switch body behind the end wall (a battery switch's body stands over the boards instead: see z1)
+  if (o.rocker && !big) x1 += 30;
   if (o.limit) { x0 = Math.max(x0, o.limit.x0); x1 = Math.min(x1, o.limit.x1); y0 = Math.max(y0, o.limit.y0); y1 = Math.min(y1, o.limit.y1); }
-  // an upright rocker needs 34 mm of wall
-  const z1 = Math.max(o.z1 ?? Math.max(...bs.map((b) => b.hi[2])) + 7, o.rocker ? o.z0 + 35 : 0);
+  // an upright rocker needs 34 mm of wall, a battery switch's 70 mm face 72
+  // a battery switch's 60 mm body lies over the boards: its 70 mm face starts 2 mm above the tallest of them
+  const tallest = Math.max(...bs.map((b) => b.hi[2]));
+  const z1 = Math.max(o.z1 ?? tallest + 7, o.rocker ? o.z0 + (big ? 72 : 35) : 0, big ? tallest + 2 + 70 + 2 : 0);
   const heat = o.parts.reduce((h, n) => h + heatOf(keyOf(A.spec, n)!), 0), roof = (x1 - x0 - 20) * 3.2 * Math.max(2, Math.floor((y1 - y0 - 16) / 7));
   const g = freeSpot(A, { x0: x0 + 4, x1: x1 - 4, y0: y0 + 4, y1: y1 - 4 }, [o.z0, z1], [11, 11]) ?? [(x0 + x1) / 2, y1 - 6];
   let usb: { face: Face; u: number } | undefined;
   if (o.usbFor) { const b = worldBox(A, o.usbFor), cx = (b.lo[0] + b.hi[0]) / 2, cy = (b.lo[1] + b.hi[1]) / 2; const opts: [number, Face, number][] = [[cx - x0, "x-", cy], [x1 - cx, "x+", cy], [cy - y0, "y-", cx], [y1 - cy, "y+", cx]]; const s = opts.sort((a, c) => a[0] - c[0])[0]; usb = { face: s[1], u: s[2] }; }
-  const rec = hood(A, H, { name: o.name, deck: o.deck, x0, x1, y0, y1, z0: o.z0, z1, parts: o.parts, usb, grommets: o.grommets, deckGrommets: [{ id: "deck", x: g[0], y: g[1] }], material: o.material, wallVents: roof < ventNeed(heat), ...(o.rocker ? { rocker: { face: "x+" as const, u: rockerU(bs, x1, y0, y1) } } : {}) });
+  const rec = hood(A, H, { name: o.name, deck: o.deck, x0, x1, y0, y1, z0: o.z0, z1, parts: o.parts, usb, grommets: o.grommets, deckGrommets: [{ id: "deck", x: g[0], y: g[1] }], material: o.material, wallVents: roof < ventNeed(heat), ...(o.rocker ? { rocker: { face: "x+" as const, u: big ? (y0 + y1) / 2 : rockerU(bs, x1, y0, y1), key: rockerKey } } : {}) });
   for (const n of o.alsoHoles ?? []) A.amendProgram(n, [{ op: "hole", a: [g[0], g[1], o.z0 - 12], b: [g[0], g[1], o.z0 + 1], d: 9.5 }]);
   return rec;
 }

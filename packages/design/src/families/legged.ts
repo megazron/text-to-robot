@@ -13,7 +13,7 @@ import { frame, translation, type Mat4, type Op } from "@ttr/solid";
 import { Assembly } from "../assembly.ts";
 import { totalMass, pointWorld, comWorld } from "../kin.ts";
 import { choose, DYNAMIC_FACTOR, GAIT_DUTY } from "../sizing.ts";
-import { hoodAround, registerBay, enclosureChecks, exposed, type Face } from "../enclosure.ts";
+import { hoodAround, BATTERY_SWITCH, registerBay, enclosureChecks, exposed, type Face } from "../enclosure.ts";
 import { Harness, finishWiring } from "../wiring.ts";
 import { busTree, canTree, coreTree, actuatorsUnder } from "../netlist.ts";
 import {
@@ -236,10 +236,10 @@ export function sensorsOf(req: LeggedRequest, dflt: SensorKind[]): SensorKind[] 
 
 /** Quadruped: servo dog by default, QDD (CubeMars) when the request implies a big or load-carrying robot. */
 /** The tub under the deck holds the battery; a hood on the deck covers the computer and boards; the deck is the tub's lid. */
-function boxQuad(A: Assembly, H: Harness, b: ReturnType<typeof buildQuadruped>) {
+function boxQuad(A: Assembly, H: Harness, b: ReturnType<typeof buildQuadruped>, qdd = false) {
   const zt = b.zHi + 3, rear = A.spec.links.some((l) => l.name === "top_deck_rear");
   const parts = ["computer", "actuator_bus", "regulator_5v", "imu"];
-  hoodAround(A, H, { name: "electronics_hood", deck: "top_deck", alsoHoles: rear ? ["top_deck_rear"] : [], parts, z0: zt, usbFor: "computer", rocker: true, limit: { x0: -b.Xb + 4, x1: b.Xb - 11, y0: -b.Wo + 6, y1: b.Wo - 6 } });
+  hoodAround(A, H, { name: "electronics_hood", deck: "top_deck", alsoHoles: rear ? ["top_deck_rear"] : [], parts, z0: zt, usbFor: "computer", rocker: qdd ? { key: BATTERY_SWITCH } : true, limit: { x0: -b.Xb + 4, x1: b.Xb - 11, y0: -b.Wo + 6, y1: b.Wo - 6 } });
   H.scan();
   const side = (s: number): { id: string; kind: string; face: Face; at: Vec3; normal: Vec3; hole_mm: number } => ({ id: `body_bay.${s > 0 ? "left" : "right"}`, kind: "grommet", face: s > 0 ? "y+" : "y-", at: [0, s * b.Wo, 0], normal: [0, s, 0], hole_mm: 10 });
   registerBay(A, { name: "body_bay", tub: "base_link", lid: "top_deck", parent: "base_link", T: translation([0, 0, 0]), min: [-b.Xb + 2, -b.Wo + 2, b.zLo - 0.5], max: [b.Xb - 2, b.Wo - 2, b.zHi], parts: ["battery"], exits: [side(1), side(-1)], screws: 4, note: "the printed tub, the deck is its lid",
@@ -300,7 +300,7 @@ export function designQuadruped(req: LeggedRequest): RobotSpecification {
   A.design.assumptions.push("A trot has two diagonal feet on the ground: the COM sits on the support line, so trotting needs the dynamic balance of the gait controller; the creep gait keeps three feet down (statically stable).");
   // compartments before the joint limits, so the limits see them
   const H = new Harness(A);
-  boxQuad(A, H, built);
+  boxQuad(A, H, built, cfg.cls === "qdd");
   // joint limits from exact solid sweeps
   const actuated = A.spec.joints.filter((j) => j.type === "revolute").map((j) => j.name);
   limitsFromGeometry(A, actuated, gaitCombos(["fl", "fr", "rl", "rr"]));
