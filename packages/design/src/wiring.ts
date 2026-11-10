@@ -118,8 +118,8 @@ export class Harness {
   flex = new Map<string, number>();
   /** where harness parts (fuse, splices, star ground) sit: with this instance. Unset, each sits by the first part wired to it. */
   home?: string;
-  /** a harness part the design gives its place: in the compartment of part `by`, as near `at` as it fits (world mm at the home pose) */
-  spot = new Map<string, { by: string; at: Vec3 }>();
+  /** a harness part the design gives its place: in the compartment of part `by`, as near `at` as it fits (world mm at the home pose); `free`: in no compartment (an inline fuse tied along its lead) */
+  spot = new Map<string, { by: string; at: Vec3; free?: boolean }>();
   /** cable -> the bay exit it leaves by, where the nearest one would be overfilled */
   exitOf = new Map<string, string>();
   /** exits kept for the cables exitOf sends through them (a ribbon slot): no other cable takes one as its nearest */
@@ -479,7 +479,7 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
     const spot = H.spot.get(i.name);
     const home: { link: string | null; p: Vec3 | null; inst?: string } = spot && locate(spot.by).link ? { link: locate(spot.by).link, p: spot.at, inst: spot.by } : i.link && f.link[i.link] ? { link: i.link, p: own && own.geometry.type === "mesh" && own.geometry.part === "component" ? bodyCentre(f, i.link, String(own.geometry.params?.key)) : worldOf(f, i.link, [0, 0, 0]), inst: [...H.instances.values()].find((x) => x.link === i.link && x.name !== i.name)?.name } : H.home ? { ...locate(H.home), inst: H.home } : harnessHome(H, i.name, groups, locate);
     if (!home.p || !home.link) continue;
-    if (home.inst && !H.bayOf.get(i.name)) H.bayOf.set(i.name, H.bayOf.get(home.inst) ?? "");
+    if (home.inst && !H.bayOf.get(i.name) && !spot?.free) H.bayOf.set(i.name, H.bayOf.get(home.inst) ?? "");
     const g = groupOf.get(home.link) ?? home.link, at = R.placeHarness(i.name, i.key, home.p, g, pinsOf(i.name), H.bayOf.get(i.name) || undefined, (port, pin) => {
       for (const ws of groups.values()) for (const w of ws) for (const [me, other] of [[w.a, w.b], [w.b, w.a]]) if (me.inst === i.name && me.port === port && me.pin === pin && other.inst !== i.name) { const q = R.pinAt(other.inst, other.port, other.pin); if (q) return q; }
       return null;
@@ -497,8 +497,8 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
     const ia = ws[0].a.inst, ib = ws[0].b.inst;
     let la = locate(ia), lb = locate(ib);
     // harness parts ride next to whatever they connect to
-    if (!la.p && !H.instances.get(ia)!.off_board) { const home = harnessHome(H, ia, groups, locate); la = home; if (home.inst && !H.bayOf.get(ia)) H.bayOf.set(ia, H.bayOf.get(home.inst) ?? ""); }
-    if (!lb.p && !H.instances.get(ib)!.off_board) { const home = harnessHome(H, ib, groups, locate); lb = home; if (home.inst && !H.bayOf.get(ib)) H.bayOf.set(ib, H.bayOf.get(home.inst) ?? ""); }
+    if (!la.p && !H.instances.get(ia)!.off_board) { const home = harnessHome(H, ia, groups, locate); la = home; if (home.inst && !H.bayOf.get(ia) && !H.spot.get(ia)?.free) H.bayOf.set(ia, H.bayOf.get(home.inst) ?? ""); }
+    if (!lb.p && !H.instances.get(ib)!.off_board) { const home = harnessHome(H, ib, groups, locate); lb = home; if (home.inst && !H.bayOf.get(ib) && !H.spot.get(ib)?.free) H.bayOf.set(ib, H.bayOf.get(home.inst) ?? ""); }
     const offBoard = H.instances.get(ia)!.off_board || H.instances.get(ib)!.off_board;
     const pm = H.premade.get(key) ?? null;
     const svc = pm ? 0 : serviceMm, term = pm ? 0 : termMm * 2;
