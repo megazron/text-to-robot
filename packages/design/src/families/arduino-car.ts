@@ -235,9 +235,9 @@ export function designArduinoCar(req: ArduinoCarRequest = {}): RobotSpecificatio
   } else {
     const xLane = xe - tab - 15;
     H.seat("main_fuse", [xPin + 16, yPos + 40.5, lie(15)], 1);
-    H.seat("splice_vbat", [xLane + 7.4, 4, lie(8.5)], 3);
-    H.seat("star_ground", [xPin + 43, yPos + 11.5, lie(8.5)]);
-    H.seat("splice_5v_logic", [xPin + 31, -CY + 11, lie(8.5)]);
+    H.seat("splice_vbat", [xLane + 7.4, 6, lie(8.5)], 3);
+    H.seat("star_ground", [xPin + 43, yPos + 13.5, lie(8.5)]);
+    H.seat("splice_5v_logic", [xPin + 43, yPos + 13.5, lie(8.5) + 10.5]);   // tied on top of the star ground's splice
   }
   const motors = axles.flatMap(({ xa }) => ([1, -1] as const).map((sd) => `${xa > 0 ? "front" : xa < 0 ? "rear" : "drive"}_${sd > 0 ? "left" : "right"}_motor`));
   wire(H, drivers, sensor === "ultrasonic", motors);
