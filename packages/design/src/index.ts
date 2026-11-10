@@ -15,6 +15,7 @@ import * as _drone from "./families/drone.ts";
 import * as _gantry from "./families/gantry.ts";
 import * as _rov from "./families/rov.ts";
 import * as _snake from "./families/snake.ts";
+import * as _delta from "./families/delta.ts";
 /** Designer per record family: edits re-run the designer with an updated request. */
 export const DESIGNERS: Record<string, (req: any) => RobotSpecification> = {
   arm: _arm,
@@ -26,6 +27,7 @@ export const DESIGNERS: Record<string, (req: any) => RobotSpecification> = {
   rov_underwater: _rov.designRov,
   gantry_xyz: _gantry.designGantry,
   snake: _snake.designSnake,
+  delta_parallel: _delta.designDelta,
 };
 /** The record a designed robot carries (undefined for template robots). */
 export const designOf = (spec: RobotSpecification) => (spec.metadata as { design?: import("./assembly.ts").DesignRecord }).design;
@@ -64,3 +66,4 @@ export { designDrone, motorAt, throttleFor, type DroneRequest } from "./families
 export { designGantry, type GantryRequest } from "./families/gantry.ts";
 export { designRov } from "./families/rov.ts";
 export { designSnake, type SnakeRequest } from "./families/snake.ts";
+export { designDelta, deltaIk, deltaHome } from "./families/delta.ts";
