@@ -111,7 +111,8 @@ function buildQuadruped(req: LeggedRequest, cfg: QuadCfg, sensors: SensorKind[])
   // ---- body layout ----
   const Ya = -bA.min[0] + 1.5;                                    // abduction axis: case reaches the mid-plane
   const Wo = Ya + bA.max[0] + WALL;                               // body half width (outer)
-  const zHalf = Math.max(bA.max[1] + WALL, (battB.max[2] + 4) / 2 + BW); // tub half height
+  // tub half height: over the pack the cables that come down through the deck turn and cross to the far side (a bend radius and the cable)
+  const zHalf = Math.max(bA.max[1] + WALL, (battB.max[2] + 4 + (qdd ? 24 : 12)) / 2 + BW);
   const battLen = battB.max[0] - battB.min[0];
   // the pack lies with its leads to the rear (-x): room there for the plug and the leads' first bend (1.25 x their bend
   // radius), the pack pushed towards the front, where 2 mm is enough. From the rear the positive lead comes round into the
