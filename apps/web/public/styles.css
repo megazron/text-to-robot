@@ -428,3 +428,10 @@ body.community .dock-glow{width:calc((100% - 12px)/6)}
 .forge-ask-buttons button, .forge-cancel { padding: 0.45rem 0.9rem; border-radius: 8px; border: 1px solid var(--line, #2a4a35); background: transparent; color: inherit; cursor: pointer; }
 .forge-ask-buttons .primary { background: var(--accent, #39ff88); color: #04140a; border-color: transparent; }
 .forge-cancel { margin-top: 0.4rem; }
+/* how it reads: the sentence model and a bring-your-own-key model */
+.field-group { margin: 8px 0 4px; border-radius: 14px; padding: 6px 12px; background: var(--tile); }
+.field-group summary { cursor: pointer; padding: 6px 0; font-weight: 600; }
+.field-group summary small { font-weight: 400; opacity: .7; margin-left: 6px; }
+.field-group label { display: grid; gap: 4px; margin: 8px 0; font-size: .9em; }
+.field-group label.check { display: flex; align-items: center; gap: 8px; }
+.field-group input:not([type=checkbox]), .field-group select { font: inherit; padding: 8px 10px; border-radius: 10px; border: 1px solid rgba(127,127,127,.35); background: transparent; color: inherit; }

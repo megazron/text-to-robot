@@ -2,7 +2,8 @@
 // It answers the web app's /api/* requests with the same generator packages as apps/api/src/server.ts.
 // Workers have no localStorage: browser-api.ts hands the saved robots in and writes changes back.
 import { wasmPeakMb } from "./wasm-memory.ts";   // first: it watches the kernels' memories from the moment they load
-import { generateRobot, modifyRobot, finalizeSpec, arduinoOptions, forgeForPrompt, forgeForRobot } from "@ttr/robot-generator";
+import { generateRobot, modifyRobot, finalizeSpec, arduinoOptions, forgeForPrompt, forgeForRobot, registerEmbedder, PLAN_SCHEMA } from "@ttr/robot-generator";
+import type { LlmProvider } from "@ttr/llm-providers";
 import { generateUrdf, generateXacro } from "@ttr/urdf-generator";
 import { validateUrdf } from "@ttr/urdf-validator";
 import { validateSpec, type RobotSpecification } from "@ttr/robot-schema";
@@ -61,7 +62,8 @@ async function handle(method: string, p: string, body: any): Promise<Response> {
       warnings: ["Imported geometry and structure checked; hardware fit and dynamic performance remain unverified."] });
   }
   if (method === "POST" && p === "/api/robots/generate") {
-    const result = await generateRobot(String(body.prompt ?? ""));
+    const provider = await modelProvider();
+    const result = await generateRobot(String(body.prompt ?? ""), provider ? { provider } : {});
     const id = crypto.randomUUID(); remember(id, result.robot);
     return json(200, { id, ...result });
   }
@@ -158,10 +160,32 @@ async function answer(method: string, path: string, text: string): Promise<Respo
     return json(400, { error: (e as Error).message });
   }
 }
+// ---- reading settings from the page: the sentence model and a bring-your-own-key model, both off unless switched on.
+// Each lives in its own file, imported only when it is first used, so the site itself downloads neither.
+interface Reading { embeddings?: boolean; model?: { kind: "anthropic" | "openai"; key: string; baseUrl?: string; model?: string } | null }
+let reading: Reading = {}, provider: { key: string; p: LlmProvider } | undefined, embedderOn = false;
+const sibling = (f: string) => new URL(`./${f}`, (self as { TTR_ENGINE_BASE?: string }).TTR_ENGINE_BASE ?? location.href).href;
+async function modelProvider(): Promise<LlmProvider | undefined> {
+  const m = reading.model; if (!m || (!m.key && m.kind === "anthropic")) return undefined;
+  const k = JSON.stringify(m);
+  if (provider?.key !== k) { const mod = await import(/* @vite-ignore */ sibling("byok.js")); provider = { key: k, p: mod.makeProvider(m, PLAN_SCHEMA) }; }
+  return provider.p;
+}
+async function applyReading(r: Reading) {
+  reading = r;
+  if (!!r.embeddings === embedderOn) return;
+  embedderOn = !!r.embeddings;
+  if (!embedderOn) { registerEmbedder(undefined); return; }
+  try {
+    const mod = await import(/* @vite-ignore */ sibling("embed.js"));
+    registerEmbedder(mod.createEmbedder((p: { status: string; file?: string; progress?: number }) => post({ reading: p })));
+  } catch (e) { embedderOn = false; post({ reading: { status: "error", error: (e as Error).message } }); }
+}
 self.onmessage = async ({ data }: MessageEvent) => {
   // the visitor stopped a forge: it throws at its next step, and the helpers' jobs end now
   if (data.cancelForge) { cancelForge(); getPool()?.abort?.(); return; }
   if (data.robots) { for (const [k, v] of safeJsonParse(data.robots, 256 * 1024 * 1024)) store.set(k, v); return; }
+  if (data.reading) { await applyReading(data.reading); return; }
   const r = await answer(data.method, data.path, data.body), buffer = await r.arrayBuffer();
   post({ id: data.id, status: r.status, type: r.headers.get("Content-Type") ?? "application/json", buffer, wasm_mb: wasmPeakMb() }, [buffer]);
 };

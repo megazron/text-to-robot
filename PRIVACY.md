@@ -10,6 +10,13 @@ The website at megazron.github.io/text-to-robot runs in your browser. Your promp
 - Publish opens a GitHub issue from your own account, and only if you confirm it. That design is then public.
 - The gallery reads public issues from GitHub only when you ask for it.
 
+## Reading options
+
+Both are off until you switch them on in **Create > How it reads**.
+
+- **Smarter reading** downloads a small sentence model once from Hugging Face (huggingface.co, cdn.jsdelivr.net for its runtime). Your prompts are read by that model in your browser; they are not sent anywhere.
+- **Your own model** sends each prompt you design to the provider you chose (Anthropic, or the OpenAI-compatible address you typed), with your key. The key is kept in this browser only: for this tab, or on this device if you tick *Remember on this device*. It is never put in a design, a share link, a download or a post. What that provider keeps is under its own policy.
+
 ## The community blog
 
 Nothing is posted unless you press **Share on the blog** and then **Post publicly**. Nothing is sent in the background.

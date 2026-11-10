@@ -26,9 +26,11 @@ function startEngine() {
     if (data.ready) {
       started = true; failedStarts = 0;
       engine.postMessage({ robots });
+      engine.postMessage({ reading: readingSettings() });
       for (const m of queued.splice(0)) engine.postMessage(m);
       return;
     }
+    if (data.reading) { dispatchEvent(new CustomEvent("ttr-reading", { detail: data.reading })); return; }
     if (data.save) { robots = data.save; try { localStorage.setItem(STORE_KEY, data.save); } catch { /* quota or private mode: this tab keeps them */ } return; }
     // the armour forge reports while it works: the page shows it (app.js listens)
     if (data.forgePreview) { dispatchEvent(new CustomEvent("ttr-forge-preview", { detail: data.forgePreview })); return; }
@@ -62,6 +64,22 @@ function restartEngine() {
 }
 startEngine();
 (globalThis as any).ttrEngineRecycles = () => recycles;
+
+// Reading settings (app.js edits them): the sentence model on or off, and a bring-your-own-key model. The key is kept in
+// sessionStorage, or in localStorage if the visitor asks this device to remember it; it goes to the engine worker in this
+// tab and from there only to the provider chosen. It is never put in a robot, a share link or a download.
+const READING_KEY = "ttr.reading";
+function readingSettings() {
+  try { return JSON.parse(sessionStorage.getItem(READING_KEY) ?? localStorage.getItem(READING_KEY) ?? "{}"); } catch { return {}; }
+}
+(globalThis as any).ttrReading = {
+  get: readingSettings,
+  set(r: { embeddings?: boolean; model?: unknown; remember?: boolean }) {
+    const text = JSON.stringify(r);
+    try { if (r.remember) { localStorage.setItem(READING_KEY, text); sessionStorage.removeItem(READING_KEY); } else { sessionStorage.setItem(READING_KEY, text); localStorage.removeItem(READING_KEY); } } catch { /* private mode: this tab only */ }
+    send({ reading: r });
+  },
+};
 
 globalThis.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
   const url = new URL(input instanceof Request ? input.url : String(input), location.href);

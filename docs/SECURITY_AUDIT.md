@@ -91,6 +91,7 @@ Severity is what an attacker gets, assuming they can send a link or a file.
 | `style-src` | `'self'` | no inline `style=""` attributes remain (styles set through `element.style` are allowed) |
 | `img-src` | `'self' data: blob:` (+ community API) | icons, schematic previews, post thumbnails |
 | `connect-src` | `'self' https://api.github.com` (+ community API, Turnstile) | the gallery list; `/api/*` is answered in the tab |
+| (engine worker) | no policy of its own (GitHub Pages sends no headers) | it reaches out only when the visitor switches a reading option on: Hugging Face and jsDelivr for the sentence model, the chosen model provider with the visitor's key; `scripts/check_reading.py` proves nothing leaves the site with both off |
 | `worker-src` | `'self'` | the engine and forge workers are same-origin files; no `blob:` needed on the site |
 | `frame-src` | `'none'` (Turnstile when the board is on) | |
 | `object-src`, `base-uri`, `form-action` | `'none'` | |

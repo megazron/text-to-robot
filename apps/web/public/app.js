@@ -570,7 +570,7 @@ function reveal(strong) {
   transformFlash(renderer.domElement, { x: r.left + r.width / 2, y: r.top + r.height / 2 }, strong);
 }
 function checksToText(res) {
-  const out = [...(res.summary ? ["→ Interpreted as: " + res.summary] : []), ...(res.validation?.checks ?? []), ...(res.urdfValidation?.checks ?? [])];
+  const out = [...(res.designedBy ? ["◆ Designed by: " + res.designedBy] : []), ...(res.summary ? ["→ Interpreted as: " + res.summary] : []), ...(res.validation?.checks ?? []), ...(res.urdfValidation?.checks ?? [])];
   for (const w of res.warnings ?? []) out.push("⚠ " + w);
   for (const r of res.repairs ?? []) out.push("↻ " + r);
   return out;
@@ -1148,3 +1148,34 @@ initExamples(); initTemplates(); initMode();
   doGenerate("Create a 6 DOF robotic arm with a parallel gripper");
 })();
 window.__ttr = { get motion() { return window.__ttrMotion; }, robotGroup, renderer, get preview() { return { ...preview, parts: [...state.meshes].filter(([name]) => state.robot.links.find(l => l.name === name)?.geometry.type === 'mesh').map(([name, group]) => ({ name, loaded: !!group.children[0].userData.meshLoaded, triangles: group.children[0].geometry.getAttribute('position').count / 3 })) }; }, camera, controls, frameRobot, get robot(){return state.robot} };
+
+// ---------------- how it reads: the sentence model and a bring-your-own-key model (website only) ----------------
+// The settings live in this browser (apps/web/src/browser-api.ts); the key never leaves it except to the provider chosen.
+if (globalThis.ttrReading) {
+  const R = globalThis.ttrReading, cur = { embeddings: false, model: null, remember: false, ...R.get() };
+  $("#readingBox").hidden = false;
+  const kindSel = $("#byokKind"), key = $("#byokKey"), base = $("#byokBase"), model = $("#byokModel"), remember = $("#byokRemember");
+  const show = () => {
+    $("#embedBtn").setAttribute("aria-checked", String(!!cur.embeddings));
+    const k = cur.model?.kind ?? "";
+    kindSel.value = k; key.value = cur.model?.key ?? ""; base.value = cur.model?.baseUrl ?? ""; model.value = cur.model?.model ?? ""; remember.checked = !!cur.remember;
+    $("#byokBaseRow").hidden = k !== "openai";
+    model.placeholder = k === "openai" ? "gpt-4o-mini" : "claude-opus-5-5";
+    $("#byokState").textContent = k ? `${k === "anthropic" ? "Anthropic" : "OpenAI-compatible"}${cur.model?.key || k === "openai" ? "" : " (no key yet)"}` : "off";
+  };
+  const save = () => { R.set(cur); show(); };
+  $("#embedBtn").onclick = () => { cur.embeddings = !cur.embeddings; save(); if (cur.embeddings) $("#embedSub").textContent = "Loading when a prompt needs it…"; };
+  const readModel = () => {
+    const k = kindSel.value;
+    cur.model = k ? { kind: k, key: key.value.trim(), ...(k === "openai" && base.value.trim() ? { baseUrl: base.value.trim() } : {}), ...(model.value.trim() ? { model: model.value.trim() } : {}) } : null;
+    cur.remember = remember.checked; save();
+  };
+  for (const e of [kindSel, key, base, model, remember]) e.onchange = readModel;
+  addEventListener("ttr-reading", ({ detail: p }) => {
+    const sub = $("#embedSub");
+    if (p.status === "error") { sub.textContent = `Could not load the sentence model (${p.error}); the word table reads instead`; return; }
+    if (p.status === "progress" && p.progress != null) sub.textContent = `Downloading the sentence model… ${Math.round(p.progress)} % (${p.file ?? ""})`;
+    if (p.status === "ready") sub.textContent = "Sentence model ready (cached in this browser)";
+  });
+  show();
+}

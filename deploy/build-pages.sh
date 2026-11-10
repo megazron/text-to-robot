@@ -27,6 +27,15 @@ npx --no-install esbuild packages/mesh/src/forge/poolworker.ts \
   --bundle --format=esm --platform=browser --target=es2022 --minify \
   --external:node:worker_threads --external:node:module --external:node:url --external:node:path --external:module --external:fs --external:path \
   --outfile="$OUT/forge-worker.js" --log-level=warning
+# reading options, each loaded by the worker only when the visitor switches it on: a bring-your-own-key model (the
+# Anthropic SDK and an OpenAI-compatible call) and the sentence-embedding model's runtime (the weights come from Hugging Face)
+npx --no-install esbuild apps/web/src/byok.ts \
+  --bundle --format=esm --platform=browser --target=es2022 --minify \
+  --outfile="$OUT/byok.js" --log-level=warning
+npx --no-install esbuild apps/web/src/embedder.ts \
+  --bundle --format=esm --platform=browser --target=es2022 --minify \
+  --external:onnxruntime-node --external:sharp --external:node:* \
+  --outfile="$OUT/embed.js" --log-level=warning
 npx --no-install esbuild apps/web/src/browser-api.ts \
   --bundle --format=esm --platform=browser --target=es2022 --minify \
   --outfile="$OUT/browser-api.js" --log-level=warning
