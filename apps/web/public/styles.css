@@ -345,3 +345,8 @@ body.busy .skhide{display:none}
 .circimg{display:block;width:100%;height:auto;cursor:zoom-in}
 .circview.zoom .circimg{width:320%;max-width:none;cursor:zoom-out}
 .circcalc{margin-top:12px}
+
+/* links to the source, licence, terms, privacy and notices, at the foot of the Share pane */
+.site-links { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 18px 0 6px; font-size: 13px; }
+.site-links a { color: var(--mute); text-decoration: underline; text-underline-offset: 2px; }
+.site-links a:hover, .site-links a:focus-visible { color: inherit; }

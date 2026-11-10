@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { STLLoader } from "three/addons/loaders/STLLoader.js";
-import { forwardKinematics, findRoot, download, makeZip } from "./robotkit.js";
+import { forwardKinematics, findRoot, download, makeZipDeflated } from "./robotkit.js";
 import { Dial, Sheet, followKeyboard, haptic, popIn, transformFlash } from "./ui.js";
 
 const API = ""; // same origin
@@ -651,10 +651,10 @@ async function handleDownload(kind) {
   if (kind === "xacro") return download(`${name}.urdf.xacro`, state.xacro, "application/xml");
   if (kind === "json") return download(`${name}.json`, JSON.stringify(state.robot, null, 2), "application/json");
   if (kind === "bom") { const bom = state.bom ?? (await api("/api/robots/bom", { robot: state.robot })).bom; return download(`${name}_BOM.md`, bomMarkdown(bom), "text/markdown"); }
-  if (kind === "cad") { const { files } = await api("/api/robots/cad", { robot: state.robot }); return download(`${name}_cad.zip`, makeZip(files)); }
-  if (kind === "schematic") { const r = await circuits("schematic"); return download(`${name}_schematic.zip`, makeZip({ [`${name}_schematic.pdf`]: Uint8Array.from(atob(r.pdf.b64), (c) => c.charCodeAt(0)), [`${name}_schematic.svg`]: r.svg })); }
+  if (kind === "cad") { const { files } = await api("/api/robots/cad", { robot: state.robot }); return download(`${name}_cad.zip`, await makeZipDeflated(files)); }
+  if (kind === "schematic") { const r = await circuits("schematic"); return download(`${name}_schematic.zip`, await makeZipDeflated({ [`${name}_schematic.pdf`]: Uint8Array.from(atob(r.pdf.b64), (c) => c.charCodeAt(0)), [`${name}_schematic.svg`]: r.svg })); }
   if (kind === "breadboard") { const r = await circuits("breadboard"); return download(`${name}_breadboard.svg`, r.svg, "image/svg+xml"); }
-  if (kind === "train") { const { files } = await api("/api/robots/training", { robot: state.robot }); return download(`${name}_training.zip`, makeZip(files)); }
+  if (kind === "train") { const { files } = await api("/api/robots/training", { robot: state.robot }); return download(`${name}_training.zip`, await makeZipDeflated(files)); }
   if (kind === "share") {
     if (!state.id) return;
     const url = STATIC ? await STATIC.shareUrl(state.robot) : `${location.origin}/r/${state.id}`;
@@ -668,7 +668,7 @@ async function handleDownload(kind) {
   if (kind === "launch") { await navigator.clipboard.writeText(`ros2 launch ${name} display.launch.py`); flash($("[data-dl=launch]"), "Copied"); return; }
   if (kind === "ros2") {
     const { files } = await api("/api/robots/export", { robot: state.robot, ros2_control: true });
-    download(`${name}_ros2.zip`, makeZip(files));
+    download(`${name}_ros2.zip`, await makeZipDeflated(files));
   }
 }
 function flash(btn, txt) { const t = btn.querySelector(".t b") ?? btn.querySelector(".t") ?? btn, old = t.textContent; t.textContent = txt; haptic(10); setTimeout(() => (t.textContent = old), 1200); }

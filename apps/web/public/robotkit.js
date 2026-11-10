@@ -35,7 +35,8 @@ export function forwardKinematics(spec, values={}){
 }
 
 // --- minimal store-only ZIP (no compression) for the ROS 2 package download ---
-function crc32(bytes){ let c=~0; for(let i=0;i<bytes.length;i++){ c^=bytes[i]; for(let k=0;k<8;k++) c=(c>>>1)^(0xEDB88320 & -(c&1)); } return ~c>>>0; }
+const CRC_TABLE=(()=>{ const t=new Uint32Array(256); for(let n=0;n<256;n++){ let c=n; for(let k=0;k<8;k++) c=(c>>>1)^(0xEDB88320 & -(c&1)); t[n]=c>>>0; } return t; })();
+function crc32(bytes){ let c=~0; for(let i=0;i<bytes.length;i++) c=CRC_TABLE[(c^bytes[i])&255]^(c>>>8); return ~c>>>0; }
 export function makeZip(files){ // files: {path: string}
   const enc=new TextEncoder(); const chunks=[]; const central=[]; let offset=0;
   const u16=n=>[n&255,(n>>8)&255]; const u32=n=>[n&255,(n>>8)&255,(n>>16)&255,(n>>24)&255];
@@ -52,6 +53,25 @@ export function makeZip(files){ // files: {path: string}
   const end=new Uint8Array([...u32(0x06054b50),...u16(0),...u16(0),...u16(central.length),...u16(central.length),...u32(cdSize),...u32(offset),...u16(0)]);
   const blobParts=[...chunks, ...cd, end];
   return new Blob(blobParts, {type:'application/zip'});
+}
+
+/** The same archive with every file deflated (zip method 8): a third of the size or less for STL, STEP and text. */
+export async function makeZipDeflated(files){
+  const enc=new TextEncoder(); const chunks=[]; const central=[]; let offset=0;
+  const u16=n=>[n&255,(n>>8)&255]; const u32=n=>[n&255,(n>>8)&255,(n>>16)&255,(n>>24)&255];
+  const toBytes=(c)=> c instanceof Uint8Array ? c : (c && typeof c==='object' && c.b64) ? Uint8Array.from(atob(c.b64), ch=>ch.charCodeAt(0)) : enc.encode(String(c));
+  const deflate=async(d)=>new Uint8Array(await new Response(new Blob([d]).stream().pipeThrough(new CompressionStream('deflate-raw'))).arrayBuffer());
+  const DOS_DATE=0x21;   // 1980-01-01, a valid date (0 is not)
+  for(const [path, content] of Object.entries(files)){
+    const name=enc.encode(path); const data=toBytes(content); const crc=crc32(data); const packed=await deflate(data);
+    const local=[...u32(0x04034b50),...u16(20),...u16(0),...u16(8),...u16(0),...u16(DOS_DATE),...u32(crc),...u32(packed.length),...u32(data.length),...u16(name.length),...u16(0)];
+    chunks.push(new Uint8Array(local), name, packed);
+    central.push(new Uint8Array([...u32(0x02014b50),...u16(20),...u16(20),...u16(0),...u16(8),...u16(0),...u16(DOS_DATE),...u32(crc),...u32(packed.length),...u32(data.length),...u16(name.length),...u16(0),...u16(0),...u16(0),...u16(0),...u32(0),...u32(offset),...name]));
+    offset += local.length + name.length + packed.length;
+  }
+  const cdSize=central.reduce((s,c)=>s+c.length,0);
+  const end=new Uint8Array([...u32(0x06054b50),...u16(0),...u16(0),...u16(central.length),...u16(central.length),...u32(cdSize),...u32(offset),...u16(0)]);
+  return new Blob([...chunks, ...central, end], {type:'application/zip'});
 }
 
 export function download(name, content, type='text/plain'){
