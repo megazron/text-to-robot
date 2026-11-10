@@ -266,12 +266,13 @@ function boxQuad(A: Assembly, H: Harness, b: ReturnType<typeof buildQuadruped>, 
     const s = hole[1] >= 0 ? 1 : -1, yc = s * (b.Wo - 15), fb = part("fuse_holder_atm_inline").bbox_mm!, fuseHalf = (fb.max[0] - fb.min[0]) / 2;
     H.spot.set("main_fuse", { by: "battery", at: [hole[0] - fuseHalf - b.leadRoom - 10, yc, 0] });
     H.spot.set("star_ground", { by: "battery", at: [0, -yc, 0] });
-    // the splice of the switched rail lies in the hood behind the hole, its levers towards the switch: the lead from the
-    // switch runs straight to it over the hole, the branches leave it forwards and turn down through the hole
+    // the splice of the switched rail lies in the hood behind the hole and behind the terminals it feeds there (the bus
+    // adapter's and the regulator's), its levers forward: every lead leaves it forwards, none has to turn back over it
     const sw = hood.exits.find((e) => e.id === "electronics_hood.switch")?.at;
-    if (sw) H.spot.set("splice_vbat", { by: "main_switch", at: [hole[0] - 36, hole[1], zt + 8] });
-    // the bus hub beside it, towards the middle of the hood
-    if (sw) H.spot.set("actuator_bus_hub", { by: "actuator_bus", at: [hole[0] - 36, hole[1] - s * 24, zt + 8] });
+    const fed = ["actuator_bus", "regulator_5v"].map((n) => worldBox(A, n).lo[0]);
+    if (sw) H.spot.set("splice_vbat", { by: "main_switch", at: [Math.min(hole[0] - 36, ...fed) - 22, hole[1], zt + 8] });
+    // the bus hub beside the hole, towards the middle of the hood and clear of the computer's USB ports
+    if (sw) H.spot.set("actuator_bus_hub", { by: "actuator_bus", at: [hole[0] - 10, hole[1] - s * 24, zt + 8] });
   }
   H.scan();
   const side = (s: number, sx: number): { id: string; kind: string; face: Face; at: Vec3; normal: Vec3; hole_mm: number } => ({ id: `body_bay.${sx > 0 ? "front" : "rear"}_${s > 0 ? "left" : "right"}`, kind: "grommet", face: s > 0 ? "y+" : "y-", at: [sx * b.xg, s * b.Wo, sx * s * 4.5], normal: [0, s, 0], hole_mm: 10 });

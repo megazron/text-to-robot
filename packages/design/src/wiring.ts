@@ -643,6 +643,7 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
   if (R) {
     dropClipsInTheWay(clips, cables);
     for (const sl of (globalThis as { TTR_ROUTE_SLICE?: [number, number, number, number, number][] }).TTR_ROUTE_SLICE ?? []) console.error(`slice at ${sl.slice(0, 3)} normal ${sl[3]}\n${R.slice(sl.slice(0, 3) as Vec3, sl[3], sl[4])}`);
+    if ((globalThis as { TTR_ROUTE_DEBUG?: boolean }).TTR_ROUTE_DEBUG && process.env.PARTS) console.error([...R.placed.values()].map((p) => `${String.fromCharCode(97 + ((p.id - 2) % 26))}=${[...R.placed.entries()].find(([, q]) => q === p)![0]}`).join(" "));
     if ((globalThis as { TTR_ROUTE_DEBUG?: boolean }).TTR_ROUTE_DEBUG) console.error(`route: grid ${R.grid.nx}x${R.grid.ny}x${R.grid.nz} @ ${R.grid.s} mm, ${Date.now() - tRoute} ms\n  ${routeProblems.join("\n  ")}`);
     const detail = routeProblems.length ? `${routeProblems.slice(0, 6).join("; ")}${routeProblems.length > 6 ? ` and ${routeProblems.length - 6} more` : ""}` : `every wire is laid through free space at the home pose: none passes through a part, corners are no tighter than each wire's bend radius, walls are crossed only at their exits`;
     A.check("wiring:route", !routeProblems.length, detail);
