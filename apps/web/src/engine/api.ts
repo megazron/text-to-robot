@@ -221,7 +221,7 @@ export function sweep(spec: RobotSpecification, joint: string, samples = 24) {
 function wiringOf(input: RobotSpecification): WiringRecord {
   const own = meta(input).design?.wiring as WiringRecord | undefined;
   if (own && !meta(input).studio?.edited) return own;
-  const spec = finalizeSpec(structuredClone(input)), rec = autoWire(spec).record as WiringRecord | null;
+  const spec = finalizeSpec(structuredClone(input)), rec = autoWireCached(spec).record as WiringRecord | null;
   if (!rec || !rec.cables?.length) throw new Error("this robot has no wiring to draw: add a battery or supply, a controller and something to power");
   return rec;
 }
