@@ -4,17 +4,13 @@ import { existsSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join, extname, normalize } from "node:path";
 import { randomUUID } from "node:crypto";
-import { generateRobot, modifyRobot, finalizeSpec, arduinoOptions } from "@ttr/robot-generator";
 import { generateUrdf, generateXacro } from "@ttr/urdf-generator";
 import { validateUrdf } from "@ttr/urdf-validator";
 import { validateSpec, type RobotSpecification } from "@ttr/robot-schema";
-import { exportRos2Package } from "@ttr/ros2-export";
 import { listTemplates } from "@ttr/robot-templates";
 import { buildBom } from "@ttr/components";
-import { generateCadFiles } from "@ttr/cad";
-import { exportTraining } from "@ttr/training-export";
-import { buildPart, toStlBinary, meshTopology } from "@ttr/mesh";
 import { providerStatus } from "@ttr/llm-providers";
+import { EnginePool, EngineError } from "./pool.ts";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const WEB_ROOT = join(__dirname, "..", "..", "web", "public");
@@ -22,6 +18,9 @@ const PORT = Number(process.env.PORT ?? 8787);
 const DATA_DIR = process.env.TTR_DATA_DIR ?? join(__dirname, "..", "..", "..", "data");
 const STORE_FILE = join(DATA_DIR, "robots.json");
 const store = new Map<string, RobotSpecification>();
+// designing, exporting and meshing run in a worker thread that is replaced before its CAD kernel runs out of memory
+const engine = new EnginePool();
+
 try { if (existsSync(STORE_FILE)) for (const [k, v] of Object.entries(JSON.parse(readFileSync(STORE_FILE, "utf8")))) store.set(k, v as RobotSpecification); } catch { /* start empty */ }
 let persistTimer: NodeJS.Timeout | null = null;
 function persist() {
@@ -82,40 +81,24 @@ const server = createServer(async (req, res) => {
 
   try {
     if (req.method === "POST" && p === "/api/robots/import") {
-      try {
-        const { robot } = await readBody(req);
-        if(!robot || !Array.isArray(robot.links) || !Array.isArray(robot.joints)) return json(res,400,{error:"provide a RobotSpecification JSON"});
-        // a file that is not a robot from here (no metadata, links without geometry) is refused with a reason, not a TypeError
-        let spec:RobotSpecification;
-        try{spec=finalizeSpec(structuredClone({...robot,metadata:robot.metadata??{notes:[],inferred_fields:[]}}) as RobotSpecification);}
-        catch(e){return json(res,400,{error:`This is not a robot file this site can open: ${(e as Error).message}`});}
-        const validation=validateSpec(spec);
-        if(!validation.valid)return json(res,400,{error:"Invalid robot specification",validation});
-        for(const link of spec.links)if(link.geometry.type==="mesh"){
-          if(!/^[A-Za-z0-9_][A-Za-z0-9_.-]*\.stl$/i.test(link.geometry.file))throw new Error("Mesh filenames must be simple STL names");
-          // a catalog part comes from our own data by key, not from the imported file
-          if(link.geometry.part!=="component"&&!meshTopology(buildPart(link.geometry)).closed)throw new Error(`${link.name}: mesh is not a closed volume`);
-        }
-        const urdf=generateUrdf(spec),urdfValidation=validateUrdf(urdf);
-        if(!urdfValidation.valid)return json(res,400,{error:"Invalid exported URDF",urdfValidation});
-        const id=randomUUID();remember(id,spec);
-        return json(res,200,{id,robot:spec,urdf,xacro:generateXacro(spec),validation,urdfValidation,bom:buildBom(spec),
-          warnings:["Imported geometry and structure checked; hardware fit and dynamic performance remain unverified."]});
-      }catch(error){return json(res,400,{error:error instanceof Error ? error.message : "Invalid robot JSON"});}
+      const { robot } = await readBody(req);
+      const result = await engine.call<{ robot: RobotSpecification }>("import", { robot });
+      const id = randomUUID(); remember(id, result.robot);
+      return json(res, 200, { id, ...result });
     }
     if (req.method === "POST" && p === "/api/robots/generate") {
       const { prompt } = await readBody(req);
-      const result = await generateRobot(String(prompt ?? ""));
+      const result = await engine.call<{ robot: RobotSpecification }>("generate", { prompt });
       const id = randomUUID(); remember(id, result.robot);
       return json(res, 200, { id, ...result });
     }
     if (req.method === "POST" && p === "/api/arduino") {
       const { prompt } = await readBody(req);
-      return json(res, 200, arduinoOptions(String(prompt ?? "")));
+      return json(res, 200, await engine.call("arduino", { prompt }));
     }
     if (req.method === "POST" && p === "/api/robots/modify") {
       const { robot, instruction } = await readBody(req);
-      const result = await modifyRobot(robot as RobotSpecification, String(instruction ?? ""));
+      const result = await engine.call<{ robot: RobotSpecification }>("modify", { robot, instruction });
       const id = randomUUID(); remember(id, result.robot);
       return json(res, 200, { id, ...result });
     }
@@ -131,25 +114,25 @@ const server = createServer(async (req, res) => {
     }
     if (req.method === "POST" && p === "/api/robots/cad") {
       const { robot } = await readBody(req);
-      return json(res, 200, { files: encodeFiles(generateCadFiles(robot as RobotSpecification)) });
+      return json(res, 200, { files: encodeFiles(await engine.call("cad", { robot })) });
     }
     if (req.method === "POST" && p === "/api/robots/training") {
       const { robot } = await readBody(req);
-      return json(res, 200, { files: encodeFiles(exportTraining(robot as RobotSpecification)) });
+      return json(res, 200, { files: encodeFiles(await engine.call("training", { robot })) });
     }
     if (req.method === "POST" && p === "/api/robots/export") {
       const { robot, ros2_control } = await readBody(req);
-      return json(res, 200, { files: encodeFiles(exportRos2Package(robot as RobotSpecification, { ros2_control: !!ros2_control })) });
+      return json(res, 200, { files: encodeFiles(await engine.call("export", { robot, ros2_control })) });
     }
     if (req.method === "GET" && p === "/api/templates") return json(res, 200, { templates: listTemplates().map((t) => ({ id: t.id, title: t.title, description: t.description })) });
-    if (req.method === "GET" && p === "/api/status") return json(res, 200, providerStatus());
+    if (req.method === "GET" && p === "/api/status") return json(res, 200, { ...providerStatus(), engine: { recycles: engine.recycles, wasm_mb: engine.wasmMb } });
     // polygon mesh part of a stored robot: regenerated deterministically from its recipe
     const meshMatch = p.match(/^\/api\/robots\/([0-9a-f-]+)\/mesh\/([A-Za-z0-9_.-]+)$/i);
     if (req.method === "GET" && meshMatch) {
       const robot = store.get(meshMatch[1]); if (!robot) return json(res, 404, { error: "not found" });
       const link = robot.links.find((l) => l.geometry.type === "mesh" && l.geometry.file === meshMatch[2]);
       if (!link || link.geometry.type !== "mesh") return json(res, 404, { error: "no such mesh" });
-      const stl = toStlBinary(buildPart(link.geometry), 1);
+      const stl = await engine.call<Uint8Array>("mesh", { robot, geometry: link.geometry });
       res.writeHead(200, { "Content-Type": "model/stl", "Cache-Control": "public, max-age=31536000, immutable", "Access-Control-Allow-Origin": "*" });
       return res.end(Buffer.from(stl));
     }
@@ -166,7 +149,7 @@ const server = createServer(async (req, res) => {
     if (req.method === "GET") { if (await serveStatic(req, res)) return; }
     return json(res, 404, { error: "not found" });
   } catch (e) {
-    return json(res, 400, { error: (e as Error).message });
+    return json(res, e instanceof EngineError ? e.status : 400, { error: (e as Error).message, ...(e instanceof EngineError ? e.extra : {}) });
   }
 });
 

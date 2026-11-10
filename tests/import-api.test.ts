@@ -34,3 +34,31 @@ test('imported CAD tessellation survives API storage, STL streaming and download
     rmSync(directory,{recursive:true,force:true});
   }
 });
+
+test('the API server replaces its engine worker when the CAD kernel memory is full and keeps answering, meshes included',async()=>{
+  const directory=mkdtempSync(join(tmpdir(),'ttr-recycle-'));
+  // a 1 MB threshold: every design fills it, so every answer is followed by a fresh worker
+  const child=spawn(process.execPath,[resolve('apps/api/src/server.ts')],{env:{...process.env,PORT:'0',TTR_DATA_DIR:directory,TTR_RECYCLE_MB:'1'},stdio:['ignore','pipe','pipe']});
+  try{
+    const port=await new Promise<string>((resolve,reject)=>{
+      const timer=setTimeout(()=>reject(new Error('API startup timed out')),10000);
+      child.once('exit',()=>{clearTimeout(timer);reject(new Error('API exited'))});
+      child.stdout.on('data',(data)=>{const m=String(data).match(/localhost:(\d+)/);if(m){clearTimeout(timer);resolve(m[1]);}});
+    });
+    const api=`http://127.0.0.1:${port}`,post=(path:string,body:unknown)=>fetch(api+path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+    const ids:string[]=[];
+    for(const prompt of ['a 2 DOF arm','a SCARA robot','a differential drive robot']){
+      const r=await post('/api/robots/generate',{prompt});const j=await r.json() as any;
+      assert.equal(r.status,200,JSON.stringify(j).slice(0,300));ids.push(j.id);
+      const mesh=j.robot.links.find((l:any)=>l.geometry.type==='mesh');
+      const stl=await fetch(`${api}/api/robots/${j.id}/mesh/${mesh.geometry.file}`);assert.equal(stl.status,200);assert.ok((await stl.arrayBuffer()).byteLength>84);
+    }
+    const status=await (await fetch(api+'/api/status')).json() as any;
+    assert.ok(status.engine.recycles>=3,`recycled ${status.engine.recycles} times`);
+    const refused=await post('/api/robots/generate',{prompt:'a robot fish'});assert.equal(refused.status,400);
+    assert.match((await refused.json() as any).error,/not recognised/);
+  }finally{
+    if(child.exitCode===null && child.signalCode===null){const exited=new Promise<void>(resolve=>child.once('exit',()=>resolve()));child.kill();await exited;}
+    rmSync(directory,{recursive:true,force:true});
+  }
+});
