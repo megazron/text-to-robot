@@ -5,7 +5,7 @@
 import type { RobotSpecification, SensorType } from "@ttr/robot-schema";
 import { part, rating, electrical, bboxM, hornRadiusMm, type Vec3 } from "@ttr/parts";
 import { Assembly } from "../assembly.ts";
-import { frame, invert, mul, apply, I4, translation, type Mat4, type Op } from "@ttr/solid";
+import { frame, invert, mul, apply, I4, translation, dxlPlug, type Mat4, type Op } from "@ttr/solid";
 export { linkOps as servoLinkOps, gripperOps as servoGripperOps };
 import { worstTorques, axisInertias, pointWorld, totalMass, type PointLoad } from "../kin.ts";
 import { LADDERS, choose, evaluate, passes, ladderFor, type Ladder, DYNAMIC_FACTOR } from "../sizing.ts";
@@ -157,6 +157,9 @@ function linkOps(cur: JointPlan, nextKey: string, nextT: Mat4, nextKind: Kind | 
     }
     // the gripper jaw's horn plate turns in front of the gripper servo: keep that disc clear
     if (nextKind === "G") ops.push({ op: "at", T: nextT, of: [{ op: "hole", a: [0, 0, -2.0], b: [0, 0, 10], d: 2 * Math.hypot(14, 13) + 2 }] }); // from the cradle top: no skin left
+    // a DYNAMIXEL plugs in through the sides of its back case: the slots run on out through the link that tapers in round the cradle
+    const slot = dxlPlug(nextKey);
+    if (slot) ops.push({ op: "at", T: nextT, of: [{ op: "cutbox", min: [slot.x - 7, -60, nb.min[2] + 0.5], max: [slot.x + 7, 60, nb.min[2] + 10] }] });
     void lo; void hi;
   }
   if (nextKind === "P") ops.push({ op: "at", T: nextT, of: bossOps(nextKey) });
