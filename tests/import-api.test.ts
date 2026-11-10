@@ -7,15 +7,26 @@ import {join,resolve} from 'node:path';
 import {nDofArm} from '@ttr/robot-templates';
 import {buildPart,massProperties,bbox} from '@ttr/mesh';
 
+/** The server's port once it listens and answers /api/status: polled, with room for a loaded machine (2 minutes). */
+async function apiReady(child:ReturnType<typeof spawn>,limitMs=120000):Promise<string>{
+  const t0=Date.now();
+  const port=await new Promise<string>((resolve,reject)=>{
+    const timer=setTimeout(()=>reject(new Error(`API did not listen within ${limitMs/1000} s`)),limitMs);
+    child.once('exit',(code)=>{clearTimeout(timer);reject(new Error(`API exited (${code})`))});
+    child.stdout!.on('data',(data)=>{const m=String(data).match(/localhost:(\d+)/);if(m){clearTimeout(timer);resolve(m[1]);}});
+  });
+  for(;;){
+    try{if((await fetch(`http://127.0.0.1:${port}/api/status`)).ok)return port;}catch{/* not answering yet */}
+    if(Date.now()-t0>limitMs)throw new Error(`API did not answer /api/status within ${limitMs/1000} s`);
+    await new Promise((r)=>setTimeout(r,250));
+  }
+}
+
 test('imported CAD tessellation survives API storage, STL streaming and downloads',async()=>{
   const directory=mkdtempSync(join(tmpdir(),'ttr-import-'));
   const child=spawn(process.execPath,[resolve('apps/api/src/server.ts')],{env:{...process.env,PORT:'0',TTR_DATA_DIR:directory},stdio:['ignore','pipe','pipe']});
   try{
-    const port=await new Promise<string>((resolve,reject)=>{
-      const timer=setTimeout(()=>reject(new Error('API startup timed out')),10000);
-      child.once('exit',()=>{clearTimeout(timer);reject(new Error('API exited'))});
-      child.stdout.on('data',(data)=>{const m=String(data).match(/localhost:(\d+)/);if(m){clearTimeout(timer);resolve(m[1]);}});
-    });
+    const port=await apiReady(child);
     const api=`http://127.0.0.1:${port}`;
     const spec=nDofArm(2);const mesh=buildPart({part:'ring',params:{outer:.04,inner:.03,height:.02}}),props=massProperties(mesh);
     spec.links[0].geometry={type:'mesh',part:'indexed_mesh',file:'cad_fixture.stl',vertices:mesh.v,triangles:mesh.f,volume:props.volume,centroid:props.centroid,inertia_unit:props.inertia,bbox:bbox(mesh)};
@@ -40,11 +51,7 @@ test('the API server replaces its engine worker when the CAD kernel memory is fu
   // a 1 MB threshold: every design fills it, so every answer is followed by a fresh worker
   const child=spawn(process.execPath,[resolve('apps/api/src/server.ts')],{env:{...process.env,PORT:'0',TTR_DATA_DIR:directory,TTR_RECYCLE_MB:'1'},stdio:['ignore','pipe','pipe']});
   try{
-    const port=await new Promise<string>((resolve,reject)=>{
-      const timer=setTimeout(()=>reject(new Error('API startup timed out')),10000);
-      child.once('exit',()=>{clearTimeout(timer);reject(new Error('API exited'))});
-      child.stdout.on('data',(data)=>{const m=String(data).match(/localhost:(\d+)/);if(m){clearTimeout(timer);resolve(m[1]);}});
-    });
+    const port=await apiReady(child);
     const api=`http://127.0.0.1:${port}`,post=(path:string,body:unknown)=>fetch(api+path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
     const ids:string[]=[];
     for(const prompt of ['a 2 DOF arm','a SCARA robot','a differential drive robot']){
