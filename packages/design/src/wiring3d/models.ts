@@ -4,6 +4,7 @@
 //   board's datasheet or reference design, sources below). Every other part is drawn from its catalog body box with a
 //   look for its kind (cells, motor can, lever splice, blade fuse holder...) and its pins on the face its leads leave.
 import { electrical, part } from "@ttr/parts";
+import { dxlPlug } from "@ttr/solid";
 import { Builder, type Model, type V3, type Mat } from "./geom.ts";
 
 /** where a pin is and which way a wire leaves it */
@@ -193,12 +194,14 @@ function generic(key: string, ports: Port[], bb: { min: V3; max: V3 }, b: Builde
   } else if (role === "actuator") {
     // the motor body comes from its datasheet CAD (drawn by the robot view); its leads leave at the back
     const servo = /sg90|mg90|mg996|ds3218|sts|dxl|feetech|xl|xm|xh/.test(key);
-    // bus servos: two sockets side by side where the catalog says they are (Feetech STS under the case, Dynamixel X on
-    // the end face away from the output: the faces the cradles' plug windows open, see plugWindowOps). A hobby servo's
+    // bus servos: two sockets where the maker puts them. Feetech STS: side by side under the case. DYNAMIXEL X430 / X540:
+    // one in each long side of the back case (dxlPlug); the plug sits inside the case, so the pin is drawn 10 mm in and
+    // the wire is free to bend where it leaves the slot. These are the faces the cradles' plug windows open. A hobby servo's
     // fixed lead is drawn from the cable slot every cradle has (low on its +y wall), where it comes out of the print.
     ports.forEach((p, k) => {
       const side = (k - (ports.length - 1) / 2) * 2;
       if (/^feetech_sts/.test(key)) lead(p, (i, n) => [-14 + (i - (n - 1) / 2) * 2.5, side * 4.5, z0], [0, 0, -1], "jst");
+      else if (dxlPlug(key)) { const q = dxlPlug(key)!, sg = side < 0 ? -1 : 1; lead(p, (i, n) => [q.x + (i - (n - 1) / 2) * 2.5, sg * (y1 - 10), q.z], [0, sg, 0], "jst"); }
       else if (/^dxl_/.test(key)) lead(p, (i, n) => [x0, side * 5.5 + (i - (n - 1) / 2) * 2.5 * 0, z0 + 6.5 + (i - (n - 1) / 2) * 2.5], [-1, 0, 0], "jst");
       else if (servo) lead(p, (i, n) => [x0 + 11 + (i - (n - 1) / 2) * 2.54, y1, z0 + 5.2], [0, 1, 0], "lead");
       else {

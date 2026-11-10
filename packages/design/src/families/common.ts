@@ -2,7 +2,7 @@
 // faceted armour shells, aluminium tube links, bill-of-materials cost.
 import type { Link, SensorType } from "@ttr/robot-schema";
 import { part, type Vec3 } from "@ttr/parts";
-import { frame, mul, invert, apply, toPose, type Mat4, type Op } from "@ttr/solid";
+import { frame, mul, invert, apply, toPose, dxlPlug, type Mat4, type Op } from "@ttr/solid";
 import type { Assembly } from "../assembly.ts";
 
 export const bodyMm = (key: string) => { const b = part(key).bbox_mm!; return { min: [...b.min] as Vec3, max: [...b.max] as Vec3 }; };
@@ -140,6 +140,8 @@ export function mountSensors(A: Assembly, requested: string[] | undefined, slots
 export function plugWindowOps(key: string, T: Mat4): Op[] {
   const b = bodyMm(key);
   if (key.startsWith("feetech_sts")) return [at(T, [{ op: "cutbox", min: [-18.5, -10, b.min[2] - 8], max: [-9.5, 10, b.min[2] + 6] }])];   // plugs on the bottom face
+  const slot = dxlPlug(key);
+  if (slot) return [at(T, [{ op: "cutbox", min: [slot.x - 7, b.min[1] - 14, b.min[2] + 0.5], max: [slot.x + 7, b.max[1] + 14, b.min[2] + 10] }])];   // a plug in each long side of the back case
   if (key.startsWith("dxl_")) return [at(T, [{ op: "cutbox", min: [b.min[0] - 8, -11, b.min[2] + 0.5], max: [b.min[0] + 0.5, 11, b.min[2] + 12] }])]; // plugs on the far end face
   return [];
 }

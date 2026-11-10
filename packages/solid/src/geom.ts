@@ -132,6 +132,16 @@ export function cradle(a: ActuatorPlacement, wall = 3): M {
   const shell = roundedBox([min[0] - wall, min[1] - wall, min[2] - wall], [max[0] + wall, max[1] + wall, top], wall);
   return shell.transform(a.T);
 }
+/**
+ * Where a DYNAMIXEL X430 / X540 takes its two bus plugs: a slot in each long side of its back case, 44 % of the body
+ * length from the motor end, the cable leaving sideways (ROBOTIS e-manual, X-series, the figures "cable assembly" and
+ * "wiring through back case"). x along the body and z in the servo frame; null for any other actuator.
+ */
+export function dxlPlug(key: string): { x: number; z: number } | null {
+  if (!/^dxl_x.(430|540)/.test(key)) return null;
+  const { min, max } = bodyBox(key);
+  return { x: min[0] + 0.437 * (max[0] - min[0]), z: min[2] + 5 };
+}
 export function cradleCuts(a: ActuatorPlacement, wall = 3): M[] {
   const { min, max } = bodyBox(a.key), top = Math.min(max[2], -0.8) - 1.2, rim = 5;
   // closed walls: the cradle is the structure that carries the joint load (no windows), with one cable slot at the bottom
@@ -144,7 +154,9 @@ export function cradleCuts(a: ActuatorPlacement, wall = 3): M[] {
   if (max[0] - min[0] > 3 * rim) cuts.push(box([min[0] + rim, max[1] - 1, min[2] + 1.5], [Math.min(max[0] - rim, min[0] + rim + 12), max[1] + wall + 20, min[2] + 9]).transform(a.T));
   // bus servos plug in where their sockets are: a window through the cradle there, with room for the plug (as plugWindowOps)
   if (a.key.startsWith("feetech_sts")) cuts.push(box([-18.5, -10, min[2] - 8], [-9.5, 10, min[2] + 6]).transform(a.T));
-  if (a.key.startsWith("dxl_")) cuts.push(box([min[0] - 8, -11, min[2] + 0.5], [min[0] + 0.5, 11, min[2] + 12]).transform(a.T));
+  const slot = dxlPlug(a.key);
+  if (slot) cuts.push(box([slot.x - 7, min[1] - wall - 11, min[2] + 0.5], [slot.x + 7, max[1] + wall + 11, min[2] + 10]).transform(a.T));
+  else if (a.key.startsWith("dxl_")) cuts.push(box([min[0] - 8, -11, min[2] + 0.5], [min[0] + 0.5, 11, min[2] + 12]).transform(a.T));
   void top;
   return cuts;
 }
