@@ -147,7 +147,11 @@ function buildQuadruped(req: LeggedRequest, cfg: QuadCfg, sensors: SensorKind[])
   const bcx = Math.max(0, Math.min(endGap - 2, leadRoom - endGap)), bw = (battB.max[1] - battB.min[1]) / 2;   // the pack's centre
   const battT = frame([bcx + (battB.max[0] + battB.min[0]) / 2, (battB.max[1] + battB.min[1]) / 2, zLo + 0.5], [0, 0, 1], [-1, 0, 0]);
   for (const s of [-1, 1]) tub.push({ op: "box", min: [bcx - battLen / 2 + 12, s > 0 ? bw + 0.5 : -bw - 3.5, zLo - 0.5], max: [bcx + battLen / 2 - 12, s > 0 ? bw + 3.5 : -bw - 0.5, zLo + 6] });
-  for (const s of [-1, 1]) tub.push({ op: "hole", a: [s * Xb * 0.5, 0, zLo - BW - 1], b: [s * Xb * 0.5, 0, zLo + 1], d: 14 }, { op: "hole", a: [0, s * Wo + s, 0], b: [0, s * Wo - s * 8, 0], d: 10 });
+  // drain holes in the floor; a grommet in each side wall level with where the plugs of each abduction actuator have
+  // turned (10 mm plug and 1.25 bend radii in from the case) and level with its out-going socket (4.5 mm off the case's
+  // middle: the cable runs straight across to it), where its leg's
+  // cable leaves the tub for the hip
+  for (const s of [-1, 1]) tub.push({ op: "hole", a: [s * Xb * 0.5, 0, zLo - BW - 1], b: [s * Xb * 0.5, 0, zLo + 1], d: 14 }, ...[-1, 1].map((sx): Op => ({ op: "hole", a: [sx * (Xa - dA - 20), s * Wo + s, sx * s * 4.5], b: [sx * (Xa - dA - 20), s * Wo - s * 8, sx * s * 4.5], d: 10 })));
   // split long bodies into two halves that bolt together (printer bed)
   const halves = 2 * Xb > 240;
   if (halves) {
@@ -234,7 +238,7 @@ function buildQuadruped(req: LeggedRequest, cfg: QuadCfg, sensors: SensorKind[])
     feet.push({ link: `${L.n}_foot`, leg: L.n });
   }
   A.spec.root = "base_link";
-  return { A, feet, H, h, a, b, Xh, Yl, Xb, Wo, zHi, zLo, compute, leadRoom };
+  return { A, feet, H, h, a, b, Xh, Yl, Xb, Wo, zHi, zLo, compute, leadRoom, xg: Xa - dA - 20 };
 }
 const lerp3 = (p: Vec3, q: Vec3, t: number): Vec3 => add(p, scale(sub(q, p), t));
 
@@ -263,8 +267,10 @@ function boxQuad(A: Assembly, H: Harness, b: ReturnType<typeof buildQuadruped>, 
     if (sw) H.spot.set("actuator_bus_hub", { by: "actuator_bus", at: [hole[0] - 36, hole[1] - s * 24, sw[2] + 9] });
   }
   H.scan();
-  const side = (s: number): { id: string; kind: string; face: Face; at: Vec3; normal: Vec3; hole_mm: number } => ({ id: `body_bay.${s > 0 ? "left" : "right"}`, kind: "grommet", face: s > 0 ? "y+" : "y-", at: [0, s * b.Wo, 0], normal: [0, s, 0], hole_mm: 10 });
-  registerBay(A, { name: "body_bay", tub: "base_link", lid: "top_deck", parent: "base_link", T: translation([0, 0, 0]), min: [-b.Xb + 2, -b.Wo + 2, b.zLo - 0.5], max: [b.Xb - 2, b.Wo - 2, b.zHi], parts: ["battery"], exits: [side(1), side(-1)], screws: 4, note: "the printed tub, the deck is its lid",
+  const side = (s: number, sx: number): { id: string; kind: string; face: Face; at: Vec3; normal: Vec3; hole_mm: number } => ({ id: `body_bay.${sx > 0 ? "front" : "rear"}_${s > 0 ? "left" : "right"}`, kind: "grommet", face: s > 0 ? "y+" : "y-", at: [sx * b.xg, s * b.Wo, sx * s * 4.5], normal: [0, s, 0], hole_mm: 10 });
+  // the abduction actuators stand in the tub's cradles: their cables leave by the side grommets
+  for (const n of ["fl", "fr", "rl", "rr"]) H.bayOf.set(`${n}_hip_abduction_actuator`, "body_bay");
+  registerBay(A, { name: "body_bay", tub: "base_link", lid: "top_deck", parent: "base_link", T: translation([0, 0, 0]), min: [-b.Xb + 2, -b.Wo + 2, b.zLo - 0.5], max: [b.Xb - 2, b.Wo - 2, b.zHi], parts: ["battery"], exits: [side(1, 1), side(-1, 1), side(1, -1), side(-1, -1)], screws: 4, note: "the printed tub, the deck is its lid",
     solids: ["base_link", ...(A.spec.links.some((l) => l.name === "body_rear") ? ["body_rear"] : []), "top_deck", ...(rear ? ["top_deck_rear"] : [])] }, H);
 }
 /** Netlist: pack, fuse, switch, 5 V, computer, sensors; one bus branch per leg, each with its own feed. */
