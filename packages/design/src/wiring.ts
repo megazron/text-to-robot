@@ -118,6 +118,8 @@ export class Harness {
   flex = new Map<string, number>();
   /** where harness parts (fuse, splices, star ground) sit: with this instance. Unset, each sits by the first part wired to it. */
   home?: string;
+  /** a harness part the design gives its place: in the compartment of part `by`, as near `at` as it fits (world mm at the home pose) */
+  spot = new Map<string, { by: string; at: Vec3 }>();
   /** cable -> the bay exit it leaves by, where the nearest one would be overfilled */
   exitOf = new Map<string, string>();
   /** lever splices a designer added by hand (bus hubs) */
@@ -472,7 +474,8 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
     if (own && own.geometry.type === "mesh" && own.geometry.part === "component" && String(own.geometry.params?.key) === i.key) { if (!pass) { R.alias(i.name, i.link!, i.key); R.reserve(i.name, pinsOf(i.name)); } continue; }
     if (!pass) continue;
     // a harness part (splice, inline fuse, star ground): beside the part it serves, in that part's compartment
-    const home: { link: string | null; p: Vec3 | null; inst?: string } = i.link && f.link[i.link] ? { link: i.link, p: own && own.geometry.type === "mesh" && own.geometry.part === "component" ? bodyCentre(f, i.link, String(own.geometry.params?.key)) : worldOf(f, i.link, [0, 0, 0]), inst: [...H.instances.values()].find((x) => x.link === i.link && x.name !== i.name)?.name } : H.home ? { ...locate(H.home), inst: H.home } : harnessHome(H, i.name, groups, locate);
+    const spot = H.spot.get(i.name);
+    const home: { link: string | null; p: Vec3 | null; inst?: string } = spot && locate(spot.by).link ? { link: locate(spot.by).link, p: spot.at, inst: spot.by } : i.link && f.link[i.link] ? { link: i.link, p: own && own.geometry.type === "mesh" && own.geometry.part === "component" ? bodyCentre(f, i.link, String(own.geometry.params?.key)) : worldOf(f, i.link, [0, 0, 0]), inst: [...H.instances.values()].find((x) => x.link === i.link && x.name !== i.name)?.name } : H.home ? { ...locate(H.home), inst: H.home } : harnessHome(H, i.name, groups, locate);
     if (!home.p || !home.link) continue;
     if (home.inst && !H.bayOf.get(i.name)) H.bayOf.set(i.name, H.bayOf.get(home.inst) ?? "");
     const g = groupOf.get(home.link) ?? home.link, at = R.placeHarness(i.name, i.key, home.p, g, pinsOf(i.name), H.bayOf.get(i.name) || undefined, (port, pin) => {

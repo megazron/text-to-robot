@@ -99,12 +99,15 @@ export class Router {
     // they are wired to (a wire that has to come round to a pin facing away from it needs a U-turn it may have no room for)
     const Rt = L.R.map((r) => [-r[0], -r[1], r[2]]);
     const frameOf = (R: number[][], q: V3): Tf => ({ R, p: scale(sub(q, rotate({ R, p: [0, 0, 0] }, c)), 0.001) as V3 });
-    const facing = (T: Tf) => { let sum = 0, n = 0; for (const [port, pin] of pins) { const pa = pinOf(model, port, pin), to = partner?.(port, pin); if (!pa || !to) continue; const w = pinWorld(T, pa), d = sub(to, w.p); if (len(d) < 1) continue; sum += dot(w.out, unit(d)); n++; } return n ? sum / n : 0; };
+    // (the mean over its pins; `least` is the worst of them, which counts for a part with a lead at each end)
+    let least = 1;
+    const facing = (T: Tf) => { let sum = 0, n = 0; least = 1; for (const [port, pin] of pins) { const pa = pinOf(model, port, pin), to = partner?.(port, pin); if (!pa || !to) continue; const w = pinWorld(T, pa), d = sub(to, w.p); if (len(d) < 1) continue; const k = dot(w.out, unit(d)); sum += k; least = Math.min(least, k); n++; } return n ? sum / n : 0; };
+    const outs = pins.map(([port, pin]) => pinOf(model, port, pin)?.out).filter((o): o is V3 => !!o), twoEnded = outs.length > 1 && len(outs.reduce((a, o) => add(a, o), [0, 0, 0] as V3)) / outs.length < 0.5;
     const turned = !!partner && facing(frameOf(Rt, home)) > facing(frameOf(L.R, home)) + 0.2;
     const frame = (q: V3): Tf => frameOf(turned ? Rt : L.R, q);
     const fits = (q: V3, near: boolean, face = false) => {
       const T = frame(q);
-      if (face && facing(T) < 0.3) return false;
+      if (face && (facing(T) < 0.3 || (twoEnded && least < 0.5))) return false;
       if (near && g.dist(q) > Math.ceil(half / g.s) + 2) return false;
       if (!g.boxFree(T.R, scale(T.p as V3, 1000), bb.min, bb.max, 1)) return false;
       // not in front of anyone's pins: the corners, edge middles and centre of the body against the kept cells
