@@ -72,6 +72,6 @@ test("modify: DOF, colour and name", () => {
 
 test("modify: unsupported requests are reported per clause", () => {
   const { changes } = applyModification(arm(), "make it lighter and add a camera");
-  assert.ok(changes.includes('? Not understood: "make it lighter"'));
+  assert.ok(changes.some((c) => c.startsWith('? Not understood: "make it lighter". Try: ')));
   assert.ok(changes.some((c) => c.includes("camera sensor")));
 });

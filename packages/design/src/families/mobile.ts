@@ -26,7 +26,7 @@ export interface MobileRequest {
   /** sensor types the prompt rules out ("no lidar"): dropped from the defaults */
   excludeSensors?: string[];
   wheels?: number;
-  arm?: { dof: number; reachM?: number; payloadKg?: number };
+  arm?: { dof: number; reachM?: number; payloadKg?: number; gripper?: boolean };
 }
 
 // ---------------------------------------------------------------- requirements and constants
@@ -963,7 +963,7 @@ export function designRover(req: MobileRequest = {}): RobotSpecification {
   const armPrefix = "arm";
   // the arm does not depend on the drive choice: size it once
   const armMount = translation([0, 0, zBody + BH + 3]);
-  const armSpec = armReq ? sizeArm({ dof: armReq.dof, reachM: armReq.reachM ?? 0.35, payloadKg: payload, budget: req.budget, ladder: "feetech", basePlateMm: 100 }, I4()) : null;
+  const armSpec = armReq ? sizeArm({ dof: armReq.dof, reachM: armReq.reachM ?? 0.35, payloadKg: payload, budget: req.budget, ladder: "feetech", basePlateMm: 100, ...(armReq.gripper === false ? { gripper: false } : {}) }, I4()) : null;
   const result = sizeAndBuild((motor, battery) => {
     const b = new Build(name, "mobile_rocker_bogie", req.prompt);
     // body: folded 2 mm aluminium box (open top) with a 3 mm lid that carries arm and sensors

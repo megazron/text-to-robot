@@ -8,7 +8,7 @@ import { MAX_ARM_DOF, chooseFamily, RECOLOURABLE } from "./families.ts";
 import { interpretPrompt } from "./interpret.ts";
 import { translateKeywords } from "./lexicon.ts";
 import { scaleLinkLength, describeLen, reachModel, setReach } from "./sizing.ts";
-import { addSensor, removeSensor, SENSOR_WORDS, cameraHit, locationOf, countOf } from "./sensors.ts";
+import { addSensor, removeSensor, SENSOR_WORDS, UNMODELLED_SENSORS, cameraHit, locationOf, countOf } from "./sensors.ts";
 import { swapGrippers, replaceGripperWithSuction, removeGripper, armTip } from "./grippers.ts";
 import { geometryLength, linksByRoles } from "./spec-utils.ts";
 import { DESIGNERS, designOf } from "@ttr/design";
@@ -29,6 +29,14 @@ const TARGETS: [RegExp, string[]][] = [
   [/\bshoulders?\b/, ["shoulder"]],
 ];
 const LEGS = /\blegs?\b|\bthighs?\b|\bshins?\b|\bcalf\b|\bcalves\b/;
+
+/** What the modify box can do, said whenever a clause matches nothing (never a bare "not understood"). */
+export const MODIFY_HINT = 'Try: "add a gripper" or "remove the gripper", "add a camera" (or lidar, depth camera, IMU), "make it 5 DOF", "make the arm longer", "paint it blue", "rename it scout", "budget $800" or "carry 1 kg".';
+const notUnderstood = (c: string) => `? Not understood: "${c}". ${MODIFY_HINT}`;
+/** Family names as people say them, for the reasons the modify box gives. */
+const LABEL: Record<string, string> = { arm: "arm", mobile_diff_drive: "differential-drive base", mobile_skid_steer: "four-wheel base", mobile_mecanum: "mecanum base", mobile_rocker_bogie: "rover",
+  character_walle: "WALL-E", character_eva: "EVA", character_baymax: "Baymax", quadruped: "quadruped", hexapod: "hexapod", humanoid: "humanoid", mech: "battle mech", scara: "SCARA arm", gripper: "gripper" };
+const WHEELS_OF: Record<string, number> = { mobile_diff_drive: 2, mobile_skid_steer: 4, mobile_mecanum: 4 };
 
 /** Relative or absolute length request inside one clause. */
 function lengthRequest(c: string): { factor?: number; deltaM?: number; absoluteM?: number; defaulted?: boolean } | undefined {
@@ -270,7 +278,7 @@ function modifyDesigned(specIn: RobotSpecification, instruction: string): ModRes
   const req: Record<string, any> = structuredClone(record.request);
   const changes: string[] = [];
   let name = specIn.robot_name, colour: string | undefined, redesign = false;
-  const perf = record.performance;
+  const perf = record.performance, label = LABEL[record.family] ?? record.family.replace(/_/g, " ");
   for (const c of splitClauses(instruction)) {
     const verb = c.match(VERB)?.[1]?.replace(/\s+/g, " ") ?? "";
     const body = c.slice(verb.length).trim();
@@ -291,16 +299,27 @@ function modifyDesigned(specIn: RobotSpecification, instruction: string): ModRes
     if (payload) { req.payloadKg = +payload.kg.toFixed(3); redesign = true; changes.push(`~ payload ${payload.raw}: actuators re-sized for it`); continue; }
     // DOF
     const rel = rest.match(/\b(add|remove|drop|delete)\s+(an?|one|two|three|four|five|six|\d+)\s+(?:more\s+|extra\s+)?(?:joints?|axes|axis|dof|degrees?\s+of\s+freedom)\b/);
-    const rawDof = rel ? undefined : extractDofRaw(rest);
-    if ((rel || rawDof !== undefined) && "dof" in req) {
-      const cur = Number(req.dof), want = rawDof ?? cur + (COUNT[rel![2]] ?? parseInt(rel![2], 10)) * (/^(?:remove|drop|delete)$/.test(rel![1]) ? -1 : 1);
-      const target = Math.min(MAX_ARM_DOF, Math.max(1, want));
-      if (target === cur) changes.push(`! The arm already has ${cur} DOF`);
-      else { req.dof = target; if (name === `arm_${cur}dof`) name = `arm_${target}dof`; redesign = true; changes.push(`~ Redesigned as a ${target}-DOF arm (was ${cur}-DOF)${want !== target ? ` (${want} requested; supported range 1–${MAX_ARM_DOF})` : ""}`); }
+    const more = rel ? undefined : /\b(?:more|extra|additional|another)\s+(?:joints?|axes|axis|dof|degrees?\s+of\s+freedom)\b/.test(rest) ? 1 : /\b(?:fewer|less)\s+(?:joints?|axes|dof|degrees?\s+of\s+freedom)\b/.test(rest) ? -1 : undefined;
+    const rawDof = rel || more ? undefined : extractDofRaw(rest);
+    if (rel || more || rawDof !== undefined) {
+      // where this design keeps its arm's joint count: an arm's own request, a rover's arm, a humanoid's arms (each)
+      const holder: Record<string, any> | undefined = "dof" in req ? req : req.arm && typeof req.arm === "object" ? req.arm : undefined;
+      const key = holder ? "dof" : record.family === "humanoid" || record.family === "mech" ? "armDof" : undefined;
+      if (!key) {
+        changes.push(`! The ${label} has a fixed joint layout, so its DOF cannot change${/^mobile_|^character_/.test(record.family) ? '; for a base with an arm try "a mobile manipulator with a 5 DOF arm"' : /quadruped|hexapod/.test(record.family) ? "; each leg has its three joints" : ""}`);
+        continue;
+      }
+      const box = holder ?? req, cur = Number(box[key] ?? (record.family === "mech" ? 7 : 4)), want = rawDof ?? (more ? cur + more : cur + (COUNT[rel![2]] ?? parseInt(rel![2], 10)) * (/^(?:remove|drop|delete)$/.test(rel![1]) ? -1 : 1));
+      const target = Math.min(MAX_ARM_DOF, Math.max(1, want)), each = key === "armDof" ? " (each arm)" : "";
+      if (target === cur) changes.push(`! The arm already has ${cur} DOF${each}`);
+      else { box[key] = target; if (name === `arm_${cur}dof`) name = `arm_${target}dof`; redesign = true; changes.push(`~ Redesigned with a ${target}-DOF arm${each} (was ${cur}-DOF)${want !== target ? ` (${want} requested; supported range 1–${MAX_ARM_DOF})` : ""}`); }
       continue;
     }
     // sensors
     const types = sensorTypesIn(rest);
+    if (!types.length && (ADD_VERB.test(verb) || REMOVE_VERB.test(verb)) && UNMODELLED_SENSORS.test(rest)) {
+      changes.push(`! ${rest.match(UNMODELLED_SENSORS)![0].replace(/\s+sensors?$/, "").replace(/^\w/, (x) => x.toUpperCase())} sensors are not in the parts library yet; a camera, depth camera, lidar or IMU can be added`); continue;
+    }
     if (types.length && (ADD_VERB.test(verb) || REMOVE_VERB.test(verb))) {
       const have = new Set<string>((req.sensors as string[] | undefined) ?? []);
       for (const t of types) {
@@ -310,10 +329,38 @@ function modifyDesigned(specIn: RobotSpecification, instruction: string): ModRes
       req.sensors = [...have]; redesign = true; continue;
     }
     // gripper
-    if (/gripper|end[\s-]?effector|\bclaw\b|two[\s-]?finger|parallel\s+jaw/.test(rest) && "gripper" in req) {
-      if (/suction|vacuum/.test(rest)) { changes.push("! Suction cups are not in the parts library yet; the two-finger servo gripper is available"); continue; }
-      if (REMOVE_VERB.test(verb)) { if (req.gripper === false) changes.push("! No gripper to remove"); else { req.gripper = false; redesign = true; changes.push("- Removed gripper (wrist re-sized)"); } continue; }
-      if (ADD_VERB.test(verb)) { if (req.gripper !== false) changes.push("! This robot already has a gripper"); else { req.gripper = true; redesign = true; changes.push("+ Added servo gripper (wrist re-sized)"); } continue; }
+    if (/gripper|end[\s-]?effector|\bclaw\b|two[\s-]?finger|parallel\s+jaw|suction|vacuum/.test(rest)) {
+      // the gripper sits on this design's own arm, a rover's arm, or a humanoid's hands
+      const holder: Record<string, any> | undefined = "gripper" in req || "dof" in req || record.family === "humanoid" || record.family === "mech" ? req : req.arm && typeof req.arm === "object" ? req.arm : undefined;
+      if (record.family === "gripper") { changes.push("! This robot is itself a gripper; for an arm that carries one ask for \"a 6 DOF arm with a gripper\""); continue; }
+      if (!holder) { changes.push(`! The ${label} has no arm to hold a gripper; for a base with an arm try "a mobile manipulator with a gripper", or "a 6 DOF arm with a gripper"`); continue; }
+      if (/suction|vacuum/.test(rest) && !REMOVE_VERB.test(verb)) { changes.push("! Suction cups are not in the parts library yet for designed robots; the two-finger servo gripper is available (\"add a gripper\")"); continue; }
+      const has = holder.gripper !== false;
+      if (REMOVE_VERB.test(verb)) { if (!has) changes.push("! No gripper to remove"); else { holder.gripper = false; redesign = true; changes.push("- Removed gripper (wrist re-sized)"); } continue; }
+      if (ADD_VERB.test(verb) || /^(?:replace|swap|change|convert|make|give)$/.test(verb)) {
+        if (has) changes.push("! This robot already has a two-finger gripper; \"remove the gripper\" takes it off");
+        else { holder.gripper = true; redesign = true; changes.push("+ Added servo gripper (wrist re-sized)"); }
+        continue;
+      }
+    }
+    // wheels and legs: counts that come with the design
+    if (/\bwheels?\b|\btracks?\b/.test(rest) && (ADD_VERB.test(verb) || REMOVE_VERB.test(verb) || /\b(?:more|fewer|less|\d+|two|four|six|eight)\s+wheels?\b/.test(rest))) {
+      const n = Number(rest.match(/\b(\d+)\s+wheels?\b/)?.[1] ?? COUNT[rest.match(/\b(two|four|six)\s+wheels?\b/)?.[1] ?? ""] ?? NaN);
+      if (record.family === "mobile_rocker_bogie") {
+        const cur = Number(req.wheels ?? 6) >= 6 ? 6 : 4, want = n === 4 || n === 6 ? n : REMOVE_VERB.test(verb) || /\b(?:fewer|less)\b/.test(rest) ? 4 : 6;
+        if (want === cur) changes.push(`! The rover already has ${cur} wheels (4 or 6 are supported)`);
+        else { req.wheels = want; redesign = true; changes.push(`~ ${want} wheels (was ${cur}); drive re-sized`); }
+        continue;
+      }
+      if (WHEELS_OF[record.family]) { changes.push(`! The ${label} has ${WHEELS_OF[record.family]} wheels by design; for another layout ask for "a four-wheel robot", "a mecanum robot" or "a six-wheel rover"`); continue; }
+      changes.push(`! The ${label} has no wheels to change; for a wheeled robot ask for "a four-wheel robot" or "a mobile manipulator"`); continue;
+    }
+    if (LEGS.test(rest) && (ADD_VERB.test(verb) || REMOVE_VERB.test(verb) || /\b(?:more|fewer|less|\d+|two|four|six|eight)\s+legs?\b/.test(rest)) && !lengthRequest(rest)) {
+      const legs = record.family === "quadruped" ? 4 : record.family === "hexapod" ? 6 : record.family === "humanoid" || record.family === "mech" ? 2 : 0;
+      changes.push(legs ? `! The ${label} has ${legs} legs by design; ${legs === 6 ? 'for four legs ask for "a quadruped"' : legs === 4 ? 'for six legs ask for "a hexapod"' : 'for a four- or six-legged walker ask for "a quadruped" or "a hexapod"'}` : `! The ${label} has no legs; for a walking robot ask for "a quadruped" or "a hexapod"`); continue;
+    }
+    if (/\bbatter(?:y|ies)\b|\bruntime\b|\bpack\b/.test(rest)) {
+      changes.push(`! The battery is chosen by the designer from the robot's own loads${perf.runtime_h ? ` (it runs ${perf.runtime_h} h now)` : ""}; it cannot be picked by hand yet. A higher payload ("carry 1 kg") or budget re-sizes it`); continue;
     }
     // lengths / reach
     const lr = lengthRequest(rest);
@@ -331,6 +378,13 @@ function modifyDesigned(specIn: RobotSpecification, instruction: string): ModRes
         }
         continue;
       }
+      if (req.arm && typeof req.arm === "object" && /\barms?\b|\breach\b/.test(rest)) {
+        const cur = Number(req.arm.reachM ?? 0.35), next = lr.absoluteM ?? (lr.deltaM !== undefined ? cur + lr.deltaM : cur * lr.factor!);
+        if (!(next >= 0.12 && next <= 0.8)) { changes.push(`! arm reach ${next.toFixed(3)} m is outside 0.12–0.8 m for a rover arm; unchanged`); continue; }
+        req.arm.reachM = +next.toFixed(4); redesign = true;
+        changes.push(`~ arm reach ${cur.toFixed(3)} m -> ${next.toFixed(3)} m${lr.defaulted ? " (no amount given, used 20%)" : ""}; arm actuators re-sized`);
+        continue;
+      }
       if (typeof perf.reach_m === "number" && !seg) {
         const cur = Number(perf.reach_m), next = lr.absoluteM ?? (lr.deltaM !== undefined ? cur + lr.deltaM : cur * lr.factor!);
         req.reachM = +next.toFixed(4); delete req.segments; redesign = true;
@@ -341,7 +395,7 @@ function modifyDesigned(specIn: RobotSpecification, instruction: string): ModRes
       const what = seg ? seg.replace("_", " ") : /\b(legs?|arms?|wheels?|tracks?|body|torso|head|neck|base|hands?|feet|foot)\b/.exec(c)?.[1];
       changes.push(what ? `! Changing the ${what} is not supported on this design (it is sized from its parts and actuators)` : "! This size cannot be changed on this design (it is sized from its parts and actuators)"); continue;
     }
-    if (budget === undefined) changes.push(`? Not understood: "${c}"`);
+    if (budget === undefined) changes.push(notUnderstood(c));
   }
   let spec = specIn;
   if (redesign) {
@@ -424,7 +478,7 @@ export function applyModification(specIn: RobotSpecification, instruction: strin
     }
     outcome ??= modifyLengths(spec, rest);
     if (outcome) changes.push(...outcome.changes);
-    else if (budget === undefined) changes.push(`? Not understood: "${c}"`);
+    else if (budget === undefined) changes.push(notUnderstood(c));
   }
 
   if (!changes.length) changes.push(`(no structural change matched "${instruction}")`);
