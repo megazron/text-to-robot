@@ -296,7 +296,14 @@ export class Router {
           if (d < bd - 1e-6) { bd = d; bi = i; bt = t; }
         }
         if (bi < 0) { for (let i = start; i < T0.length; i++) on[i] = next; body = next; continue; }
-        const seg = dist(T0[bi], T0[bi - 1]), e = Math.min(0.5, seg / 4) / (seg || 1), t = Math.max(e, Math.min(1 - e, bt));
+        // the crossing is straight at home: the corners at the ends of its segment are rounded inside one body each, so it
+        // keeps clear of them by their tangents (where the segment is long enough), not just where the run comes nearest
+        const seg = dist(T0[bi], T0[bi - 1]), e = Math.min(0.5, seg / 4) / (seg || 1);
+        // (at the trunk's ends the corner is the one on to the wires' first bends)
+        const Va = centroid(E.map((x) => dist(x.la.V, JA) < 1 ? x.la.S : x.la.V)), Vb = centroid(E.map((x) => dist(x.lb.V, JB) < 1 ? x.lb.S : x.lb.V)), at = (k: number) => (k < 0 ? Va : k >= T0.length ? Vb : T0[k]);
+        const tanAt = (k: number) => { if (dist(at(k - 1), at(k)) < 0.5 || dist(at(k + 1), at(k)) < 0.5) return 0; const a = unit(sub(at(k), at(k - 1))), b = unit(sub(at(k + 1), at(k))); return 1.1 * Rmax * Math.tan(Math.min(Math.acos(Math.max(-1, Math.min(1, dot(a, b)))), 2.6) / 2); };
+        const lo = Math.min(0.5, (tanAt(bi - 1) + 0.5) / (seg || 1)), hi = Math.max(0.5, 1 - (tanAt(bi) + 0.5) / (seg || 1));
+        const t = Math.max(e, Math.min(1 - e, Math.max(lo, Math.min(hi, bt))));
         const x0 = lerp(T0[bi - 1], T0[bi], t - e), x1 = lerp(T0[bi - 1], T0[bi], t + e);
         T0.splice(bi, 0, x0, x1); on.splice(bi, 0, body, next);
         for (let i = bi + 1; i < T0.length; i++) on[i] = next;
