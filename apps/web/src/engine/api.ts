@@ -148,7 +148,7 @@ export function checkRobot(input: RobotSpecification, opts: { quick?: boolean; i
     checks.push(own ?? { name: "clearance:home", pass: true, detail: "as designed: the designer placed every part" });
   } else if (!opts.quick && opts.interference !== false) {
     try {
-      const skip = joinedByDesign(spec);
+      const skip = joinedByDesign(spec); for (const k of onItsStandoffs(spec)) skip.add(k);
       const t0 = Date.now(), run = clearanceAtHome(spec, skip, 2, baseline), hits = run.hits;
       timing.clearance_ms = Date.now() - t0; timing.pairs_checked = run.pairs; timing.pairs_intersected = run.intersected; timing.pairs_reused = run.reused; timing.pairs_as_designed = run.as_designed;
       const designed = run.as_designed ? ` (${run.as_designed} pairs untouched since the designer placed them)` : "";
@@ -222,11 +222,27 @@ function joinedByDesign(spec: RobotSpecification): Set<string> {
   for (const [a, b] of meta(spec).design?.bonded ?? []) skip.add(`${a}|${b}`);
   return skip;
 }
+/**
+ * A board on the standoff plate made for it, its holes on the posts: the posts meet the board's underside inside the box
+ * that stands for the board in this check (the box reaches down to its pins), and the posts are made tall enough for
+ * what hangs under it (standoffTop). That pair fits by construction.
+ */
+function onItsStandoffs(spec: RobotSpecification): Set<string> {
+  const out = new Set<string>(), printed = meta(spec).studio?.printed ?? {}, M = worldMounts(spec);
+  for (const j of spec.joints) {
+    const p = printed[j.parent], child = spec.links.find((l) => l.name === j.child);
+    if (p?.shape !== "standoff_plate" || !p.key || !child || kindOf(child).key !== p.key) continue;
+    const s = M.find((m) => m.link === j.parent && m.kind === "standoffs"), b = M.find((m) => m.link === j.child && m.kind === "board");
+    if (s && b && Math.hypot(s.pos[0] - b.pos[0], s.pos[1] - b.pos[1], s.pos[2] - b.pos[2]) < 2e-4 && s.axis[0] * b.axis[0] + s.axis[1] * b.axis[1] + s.axis[2] * b.axis[2] < -0.99) out.add(`${j.parent}|${j.child}`);
+  }
+  return out;
+}
 /** Parts that `link` intersects where it is now (mm^3 each), the part it is attached to included: for checking a placement. */
 export function clearanceOf(input: RobotSpecification, link: string): { a: string; b: string; volume_mm3: number }[] {
   const spec = finalizeSpec(structuredClone(input));
   if (!spec.links.some((l) => l.name === link)) throw new Error(`no part '${link}'`);
   const skip = joinedByDesign(spec); for (const k of [...skip]) if (k.split("|").includes(link)) skip.delete(k);
+  for (const k of onItsStandoffs(spec)) skip.add(k);
   return clearanceAtHome(spec, skip, 2, meta(spec).studio?.baseline).hits.filter((h) => h.a === link || h.b === link).map((h) => (h.a === link ? h : { a: h.b, b: h.a, volume_mm3: h.volume_mm3 }));
 }
 

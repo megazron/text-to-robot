@@ -51,6 +51,9 @@ export function partMounts(key: string): Mount[] {
       out.push({ id: "board", kind: "board", pos: mm([cx, cy, z]), axis: [0, 0, -1], ref: [1, 0, 0], holes: holes.map((h) => [(h.pos[0] - cx) / 1000, (h.pos[1] - cy) / 1000]), fits: key, label: `${holes.length} mounting holes` });
     }
   }
+  // long stock (a tube, a rod, a rail standing a metre tall in its own frame) lies down
+  const dx = b.max[0] - b.min[0], dy = b.max[1] - b.min[1], dz = b.max[2] - b.min[2];
+  if (!out.length && dz > 4 * Math.max(dx, dy)) out.push({ id: "base", kind: "base", pos: mm([(b.min[0] + b.max[0]) / 2, b.min[1], (b.min[2] + b.max[2]) / 2]), axis: [0, -1, 0], ref: [0, 0, 1], label: "side" });
   if (!out.some((m) => m.kind === "base")) out.push({ id: "base", kind: "base", pos: mm(centre), axis: [0, 0, -1], ref: [1, 0, 0], label: "underside" });
   cache.set(key, out);
   return out;
@@ -90,7 +93,8 @@ export function printedProgram(p: PrintedParams, name: string): { name: string; 
     }
     case "standoff_plate": {
       ops.push({ op: "box", min: [-x / 2, -y / 2, 0], max: [x / 2, y / 2, w], r: Math.min(6, x / 4, y / 4) });
-      for (const [hx, hy] of standoffPattern(p)) { ops.push({ op: "rod", a: [hx * 1000, hy * 1000, 0], b: [hx * 1000, hy * 1000, z], r: 3 }); ops.push({ op: "hole", a: [hx * 1000, hy * 1000, w], b: [hx * 1000, hy * 1000, z + 1], d: 2.5 }); }
+      const top = standoffTop(p);
+      for (const [hx, hy] of standoffPattern(p)) { ops.push({ op: "rod", a: [hx * 1000, hy * 1000, 0], b: [hx * 1000, hy * 1000, top], r: 3 }); ops.push({ op: "hole", a: [hx * 1000, hy * 1000, w], b: [hx * 1000, hy * 1000, top + 1], d: 2.5 }); }
       break;
     }
     case "servo_bracket": {
@@ -102,6 +106,16 @@ export function printedProgram(p: PrintedParams, name: string): { name: string; 
     default: throw new Error(`unknown printed shape '${(p as { shape: string }).shape}'`);
   }
   return { name, ops, ...(f > 0 ? { edge: +f.toFixed(2) } : {}) };
+}
+/**
+ * Height (mm) of a standoff plate's posts above its underside: the height asked for, or more when the board it is made
+ * for hangs lower than that under its mounting holes (a Nano's header pins, a sensor's body): 1.5 mm clear of the floor.
+ */
+export function standoffTop(p: PrintedParams): number {
+  const z = Math.max(2, Math.min(400, p.size_mm[2])), w = Math.max(1.2, p.wall_mm ?? 3);
+  if (!p.key || !CATALOG[p.key]) return z;
+  const m = partMounts(p.key).find((x) => x.kind === "board"), b = part(p.key).bbox_mm;
+  return m && b ? Math.max(z, +(w + (m.pos[2] * 1000 - b.min[2]) + 1.5).toFixed(2)) : z;
 }
 /** Board hole pattern a standoff plate carries (metres, centred). */
 function standoffPattern(p: PrintedParams): [number, number][] {
@@ -121,7 +135,7 @@ export function printedMounts(p: PrintedParams): Mount[] {
       out.push({ id: "top", kind: "face", pos: p.shape === "beam" ? [x / 2, 0, z] : [0, 0, z], axis: [0, 0, 1], ref: [1, 0, 0], label: "top face" });
       if (p.shape === "beam") out.push({ id: "end", kind: "face", pos: [x - Math.max((p.hole_mm ?? 3.2) / 1000, 0.004), 0, z], axis: [0, 0, 1], ref: [1, 0, 0], label: "far end" });
       break;
-    case "standoff_plate": out.push({ id: "standoffs", kind: "standoffs", pos: [0, 0, z], axis: [0, 0, 1], ref: [1, 0, 0], holes: standoffPattern(p), ...(p.key ? { fits: p.key } : {}), label: p.key ? `standoffs for ${part(p.key).name}` : "standoffs" }); break;
+    case "standoff_plate": out.push({ id: "standoffs", kind: "standoffs", pos: [0, 0, standoffTop(p) / 1000], axis: [0, 0, 1], ref: [1, 0, 0], holes: standoffPattern(p), ...(p.key ? { fits: p.key } : {}), label: p.key ? `standoffs for ${part(p.key).name}` : "standoffs" }); break;
     case "servo_bracket": { const bb = part(p.key!).bbox_mm!; out.push({ id: "seat", kind: "seat", pos: [-(bb.min[0] + bb.max[0]) / 2000, -(bb.min[1] + bb.max[1]) / 2000, (-bb.min[2]) / 1000 + w], axis: [0, 0, -1], ref: [1, 0, 0], fits: p.key, label: `seat for ${part(p.key!).name}` }); break; }
   }
   return out;

@@ -8,7 +8,7 @@ import type { RobotSpecification } from "@ttr/robot-schema";
 import { validateUrdf } from "@ttr/urdf-validator";
 import { exportRos2Package } from "@ttr/ros2-export";
 import { generateXacro } from "@ttr/urdf-generator";
-import { toScene, fromScene, applyEdits, emptyRobot, worldFrames, poseMat, mul, apply, matPose, type EditOp } from "../apps/web/src/engine/edit.ts";
+import { toScene, fromScene, applyEdits, emptyRobot, worldFrames, poseMat, mul, apply, matPose, type EditOp, type PrintedParams } from "../apps/web/src/engine/edit.ts";
 import { snapPart, mate, patternsMatch } from "../apps/web/src/engine/snap.ts";
 import { partMounts, printedMounts, worldMounts } from "../apps/web/src/engine/mounts.ts";
 import { engineApi, parts, checkRobot, clearanceOf, catalog as engineCatalog } from "../apps/web/src/engine/api.ts";
@@ -219,4 +219,24 @@ test("every catalog part set down on a plate touches it and none of it is inside
   assert.ok(hits.length === 1 && hits[0].b === "plate" && hits[0].volume_mm3 > 1000, JSON.stringify(hits));
   const check = checkRobot(sunk, { wiring: false }).checks.find((c) => c.name === "clearance:home")!;
   assert.ok(!check.pass && /servo/.test(check.detail), check.detail);
+});
+
+test("every board on the standoff plate made for it clears the plate and the surface under it (posts as tall as its pins need)", () => {
+  const plate = { shape: "plate", size_mm: [160, 120, 4], fillet_mm: 0.8, hole_mm: 3.2, holes: 4 } as const;
+  const base = applyEdits(emptyRobot("t"), [{ op: "add", printed: plate, world: { xyz: [0, 0, 0], rpy: [0, 0, 0] }, name: "plate" } as EditOp], parts);
+  const top = { point: [0, 0, 0.004] as [number, number, number], normal: [0, 0, 1] as [number, number, number], link: "plate" };
+  let n = 0;
+  for (const c of engineCatalog()) {
+    if (!c.mounts.some((m) => m.kind === "board")) continue;
+    const params: PrintedParams = { shape: "standoff_plate", size_mm: [80, 60, 8], wall_mm: 3, fillet_mm: 0.6, key: c.key };
+    const s1 = snapPart(printedMounts(params), worldMounts(base), top);
+    let spec = applyEdits(base, [{ op: "add", printed: params, parent: "plate", world: s1.world, name: "bp" } as EditOp], parts);
+    const st = worldMounts(spec).find((m) => m.link === "bp" && m.kind === "standoffs")!;
+    const s2 = snapPart(partMounts(c.key), worldMounts(spec).filter((m) => m.link === "bp"), { point: st.pos, normal: [0, 0, 1], link: "bp" });
+    assert.equal(s2.how, "mate", c.key);
+    spec = applyEdits(spec, [{ op: "add", key: c.key, parent: "bp", world: s2.world, name: "board" } as EditOp], parts);
+    assert.deepEqual(clearanceOf(spec, "board"), [], c.key);
+    n++;
+  }
+  assert.ok(n >= 10, `${n} boards`);
 });
