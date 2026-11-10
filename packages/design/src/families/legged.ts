@@ -246,14 +246,20 @@ export function sensorsOf(req: LeggedRequest, dflt: SensorKind[]): SensorKind[] 
 function boxQuad(A: Assembly, H: Harness, b: ReturnType<typeof buildQuadruped>, qdd = false) {
   const zt = b.zHi + 3, rear = A.spec.links.some((l) => l.name === "top_deck_rear");
   const parts = ["computer", "actuator_bus", "regulator_5v", "imu"];
-  const hood = hoodAround(A, H, { name: "electronics_hood", deck: "top_deck", alsoHoles: rear ? ["top_deck_rear"] : [], parts, z0: zt, usbFor: "computer", rocker: qdd ? { key: BATTERY_SWITCH } : true, below: b.zHi - b.zLo, near: [b.Xb * 0.5 - b.leadRoom / 2, b.Wo * 0.6], room: qdd ? 56 : 28, rockerAtHole: true, limit: { x0: -b.Xb + 4, x1: b.Xb - 11, y0: -b.Wo + 6, y1: b.Wo - 6 } });
+  const hood = hoodAround(A, H, { name: "electronics_hood", deck: "top_deck", alsoHoles: rear ? ["top_deck_rear"] : [], parts, z0: zt, usbFor: "computer", rocker: qdd ? { key: BATTERY_SWITCH } : true, below: b.zHi - b.zLo, near: [b.Xb * 0.5 - b.leadRoom * 0.8, b.Wo * 0.6], room: qdd ? 44 : 20, rockerAtHole: true, limit: { x0: -b.Xb + 4, x1: b.Xb - 11, y0: -b.Wo + 6, y1: b.Wo - 6 } });
   // the harness in the tub: the inline fuse in the channel beside the pack on the deck hole's side, far enough behind the
   // hole for the lead to straighten out of the fuse and turn up through it; the star ground in the other channel
   const hole = hood.exits.find((e) => e.id === "electronics_hood.deck")?.at;
   if (hole) {
     const s = hole[1] >= 0 ? 1 : -1, yc = s * (b.Wo - 15), fb = part("fuse_holder_atm_inline").bbox_mm!, fuseHalf = (fb.max[0] - fb.min[0]) / 2;
-    H.spot.set("main_fuse", { by: "battery", at: [hole[0] - fuseHalf - b.leadRoom - 6, yc, 0] });
+    H.spot.set("main_fuse", { by: "battery", at: [hole[0] - fuseHalf - b.leadRoom - 10, yc, 0] });
     H.spot.set("star_ground", { by: "battery", at: [0, -yc, 0] });
+    // the splice of the switched rail lies in the hood behind the hole, its levers towards the switch: the lead from the
+    // switch runs straight to it over the hole, the branches leave it forwards and turn down through the hole
+    const sw = hood.exits.find((e) => e.id === "electronics_hood.switch")?.at;
+    if (sw) H.spot.set("splice_vbat", { by: "main_switch", at: [hole[0] - 36, hole[1], sw[2] + 9] });
+    // the bus hub beside it, towards the middle of the hood
+    if (sw) H.spot.set("actuator_bus_hub", { by: "actuator_bus", at: [hole[0] - 36, hole[1] - s * 24, sw[2] + 9] });
   }
   H.scan();
   const side = (s: number): { id: string; kind: string; face: Face; at: Vec3; normal: Vec3; hole_mm: number } => ({ id: `body_bay.${s > 0 ? "left" : "right"}`, kind: "grommet", face: s > 0 ? "y+" : "y-", at: [0, s * b.Wo, 0], normal: [0, s, 0], hole_mm: 10 });
