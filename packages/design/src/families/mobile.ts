@@ -515,11 +515,9 @@ function motorLeadExits(b: Build) {
  * Two decks: a cable between the two compartments drops through an upper deck grommet and the lid grommet under it; a
  * motor lead comes up into the lower compartment by the deck grommet on its own side.
  */
-function twoDeckExits(b: Build) {
-  const H = b.H, bays = baysOf(b.A), lo = bays.find((r) => r.name === "power_bay"), hi = bays.find((r) => r.name === "electronics_enclosure");
-  if (!lo || !hi) return;
-  // the harness parts: the fuse and the star ground by the pack below, the rail splices by the switch and the regulator above
-  for (const [n, bay] of [["main_fuse", lo.name], ["star_ground", lo.name], ["splice_vbat", lo.name], ["splice_5v", hi.name]]) H.bayOf.set(n, bay);
+function twoDeckExits(b: Build, lowName = "power_bay", highName = "electronics_enclosure") {
+  const H = b.H, bays = baysOf(b.A), lo = bays.find((r) => r.name === lowName), hi = bays.find((r) => r.name === highName);
+  if (!lo || !hi || !lo.exits.some((e) => e.face === "lid" && e.id.includes(".lid_"))) return;
   const pairs = lo.exits.filter((e) => e.face === "lid").map((e) => [hi.exits.find((u) => u.face === "floor" && Math.hypot(u.at[0] - e.at[0], u.at[1] - e.at[1]) < 1)?.id, e.id]).filter((p): p is [string, string] => !!p[0]);
   const floor = lo.exits.filter((e) => e.face === "floor");
   const yOf = (n: string) => { const T = fk(b.A.spec).link[n]; return T ? T.p[1] * 1000 : 0; };
@@ -616,6 +614,7 @@ function wireMobile(b: Build, compute: string, battery: [string, number], sensor
     H.spare("servo_bus.dc_in");
   }
   twoDeckExits(b);
+  twoDeckExits(b, "electronics_enclosure", "egg_bay");
   motorLeadExits(b);
   finishWiring(H, { noClips: /^(base_link|deck_lid|upper_deck|head)$|rocker_rear_arm/ });
   enclosureChecks(A);
@@ -1474,6 +1473,8 @@ export function designEva(req: MobileRequest = {}): RobotSpecification {
     b.A.fastener("M3 x 8 (skirt arcs to the deck edge)", 8);
     // electronics on the deck under the egg
     const { items, compute } = electronicsFor(sensors.filter((x) => x !== "lidar" && x !== "depth"), 2, battery, false, true);
+    // the spine deck is a fixed size: the driver keeps the room it had on its terminal side (its leads turn up off the deck)
+    for (const it of items) if (it.key === "cytron_mdd10a") it.margin = [4, 4, 4, 10];
     // battery, regulator, IMU and servo bus low on the deck; computer and motor driver on a shelf (the mid rib)
     const low = items.filter((i) => i.kind === "battery" || i.key === "buck_5v_5a" || i.key === "bno085_breakout" || i.key === "waveshare_bus_servo_adapter"), high = items.filter((i) => !low.includes(i));
     const lidarRes: Rect[] = sensors.includes("lidar") ? [{ x0: 14, x1: 80, y0: -33, y1: 33 }] : [];
@@ -1498,6 +1499,11 @@ export function designEva(req: MobileRequest = {}): RobotSpecification {
         { op: "cutbox", min: [-300, s > 0 ? -300 : 0, zr - 20], max: [300, s > 0 ? 0 : 300, zr + 10] }, ...(nm === "rib_top" ? [{ op: "lighten", a: [-rr * 0.55, s * rr * 0.4, zr], b: [rr * 0.55, s * rr * 0.4, zr], r: rr * 0.18, n: 2 } as Op] : [])]);
     }
     electronicsBay(b, high, { x0: -86, x1: 86, y0: -74, y1: 74 }, [{ x0: SX - 18, x1: SX + 18, y0: -18, y1: 18 }], zSeam + 3, "spine");
+    // the leads' hole through the shelf beside the spine, where no board stands over it (its plugs and a bend of room)
+    // (and where nothing in the compartment under the egg stands under it either: the leads drop on through its lid)
+    const shelfBoxes = [...high, ...low].map((i) => partBox(b.A, i.name)), lowBay = baysOf(b.A).find((r) => r.name === "electronics_enclosure");
+    const overLow = (x: number, y: number) => !lowBay || (x > lowBay.min[0] + 10 && x < lowBay.max[0] - 10 && y > lowBay.min[1] + 10 && y < lowBay.max[1] - 10);
+    const downAt: [number, number] = (() => { for (const r of [26, 30, 34, 38, 42, 46, 50]) for (let k = 0; k < 24; k++) { const a = (k * Math.PI) / 12, x = SX + r * Math.cos(a), y = r * Math.sin(a); if (!shelfBoxes.some((q) => x > q.lo[0] - 12 && x < q.hi[0] + 12 && y > q.lo[1] - 12 && y < q.hi[1] + 12) && !b.keepOut.some((q) => x > q.x0 - 10 && x < q.x1 + 10 && y > q.y0 - 10 && y < q.y1 + 10) && overLow(x, y)) return [x, y]; } return [SX + 26, 0]; })();
     // egg shell: two bands x two halves, each fits the bed
     const shell = shellOutline(prof, tShell);
     for (const [za, zb, band] of [[zEgg0 - 1, zSeam, "lower"], [zSeam, zEgg1 + 1, "upper"]] as const) for (const s of [1, -1]) {
@@ -1506,14 +1512,18 @@ export function designEva(req: MobileRequest = {}): RobotSpecification {
         { op: "cutbox", min: [-17, s * rAt(zS) - 16, zS - 5], max: [17, s * rAt(zS) + 16, zS + 7] }]; // slot for the shoulder bracket
       b.printed(`shell_${band}_${s > 0 ? "left" : "right"}`, "spine", ops);
     }
-    if (sensors.includes("lidar")) for (const n of ["shell_lower_left", "shell_lower_right"]) b.A.amendProgram(n, b.in(n, [{ op: "hole", a: [47, 0, zEgg0 - 2], b: [47, 0, zEgg0 + 26], d: 64 }]));   // the lidar's head stands in a notch in the egg's underside
+    if (sensors.includes("lidar")) for (const n of ["shell_lower_left", "shell_lower_right"]) b.A.amendProgram(n, b.in(n, [{ op: "hole", a: [47, 0, zEgg0 - 2], b: [47, 0, zEgg0 + 26], d: 64 }]));
+    // the leads from the shelf pass the egg's underside by a hole under the shelf's (the spine fills its own)
+    for (const n of ["shell_lower_left", "shell_lower_right"]) b.A.amendProgram(n, b.in(n, [{ op: "hole", a: [downAt[0], downAt[1], zEgg0 - 5], b: [downAt[0], downAt[1], zEgg0 + 70], d: 12 }]));   // the lidar's head stands in a notch in the egg's underside
     // the egg is the upper compartment: slots and a USB window in its back, leads down past the spine through a grommet in the mid rib
     { const cp = apply(b.pose("computer"), [40, 25, 0]), side = cp[1] >= 0 ? 1 : -1, cuts: Op[] = [{ op: "cutbox", min: [cp[0] - 24, side > 0 ? 70 : -300, zSeam + 10], max: [cp[0] + 24, side > 0 ? 300 : -70, zSeam + 28] }]; let vent = 0;
       for (let k = 0; k < 11; k++) { cuts.push({ op: "cutbox", min: [-300, -40, zSeam + 34 + k * 7], max: [-70, 40, zSeam + 37.2 + k * 7] }); vent += 80 * 3.2; }
       for (const n of ["shell_upper_left", "shell_upper_right"]) b.A.amendProgram(n, b.in(n, cuts));
-      for (const n of ["rib_mid_left", "rib_mid_right"]) b.A.amendProgram(n, b.in(n, [{ op: "hole", a: [SX + 26, 0, zSeam - 6], b: [SX + 26, 0, zSeam + 6], d: 12 }]));
+      for (const n of ["rib_mid_left", "rib_mid_right"]) b.A.amendProgram(n, b.in(n, [{ op: "hole", a: [downAt[0], downAt[1], zSeam - 6], b: [downAt[0], downAt[1], zSeam + 6], d: 12 }]));
       registerBay(b.A, { name: "egg_bay", tub: "spine", lid: "shell_upper_left", solids: ["shell_upper_left", "shell_upper_right"], parent: "spine", T: I4(), min: [-100, -100, zSeam], max: [100, 100, zEgg1], parts: high.map((i) => i.name), screws: 8, vent_area_mm2: Math.round(vent), note: "the printed egg shell",
-        exits: [{ id: "egg_bay.down", kind: "grommet", face: "floor", at: [SX + 26, 0, zSeam], normal: [0, 0, -1], hole_mm: 12 }, { id: "egg_bay.usb", kind: "usb", face: side > 0 ? "y+" : "y-", at: [cp[0], side * 100, zSeam + 19], normal: [0, side, 0], hole_mm: 18 }] }, b.H); }
+        exits: [{ id: "egg_bay.down", kind: "grommet", face: "floor", at: [downAt[0], downAt[1], zSeam], normal: [0, 0, -1], hole_mm: 12 }, { id: "egg_bay.usb", kind: "usb", face: side > 0 ? "y+" : "y-", at: [cp[0], side * 100, zSeam + 19], normal: [0, side, 0], hole_mm: 18 }] }, b.H); }
+    // the leads from the egg drop through the lower compartment's lid under the rib's hole, and on through it
+    lidGrommets(b, "electronics_enclosure", "egg_bay");
     b.A.fastener("M3 x 8 + heat-set inserts (shell to ribs)", 16);
     b.A.buy("insert_m3", 16, "shell to ribs");
     // head: pan servo on top of the spine, egg-shaped head with a dark visor and the camera behind it
