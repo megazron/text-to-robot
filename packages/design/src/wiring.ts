@@ -502,15 +502,23 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
     const svc = pm ? 0 : serviceMm, term = pm ? 0 : termMm * 2;
     let geom: { path: Vec3[]; joints: SlackRec[]; links: Set<string>; exit: string | null; routeMm: number; slackMm: number; channelMm: number; clipHere: ClipAt[]; wires?: { pts: Vec3[]; on: string[]; drawn_mm: number; bend_mm: number }[]; awg?: (number | null)[] };
     if (R && R.placed.has(ia) && R.placed.has(ib) && la.link && lb.link) {
-      const { up, down } = treePath(spec, R.placed.get(ia)!.link, R.placed.get(ib)!.link);
-      const crossing = [...up, ...down].filter((j) => j.type !== "fixed");
-      const bayA = H.bayOf.get(ia) || undefined, bayB = H.bayOf.get(ib) || undefined;
       const leaves = (bay?: string, other?: string) => !!bay && bay !== other;
       const pick = (bay: string, to: Vec3) => H.exits.find((e) => e.id === H.exitOf.get(key) && e.bay === bay) ?? nearestExit(H, bay, to);
-      let exA = leaves(bayA, bayB) ? pick(bayA!, lb.p ?? la.p!) : null, exB = leaves(bayB, bayA) ? pick(bayB!, la.p ?? lb.p!) : null;
       // a hole that opens into the other compartment (a deck grommet between a hood and the tub under it) is the one wall between the two
       const opensInto = (e: ExitDecl | null, bay?: string) => { const b = bay ? R.bays.get(bay) : undefined; if (!e || !b) return false; const p = worldExit(f, e); return p.every((x, k) => x > b.min[k] - 6 && x < b.max[k] + 6); };
-      if (exA && exB) { if (opensInto(exB, bayA)) exA = null; else if (opensInto(exA, bayB)) exB = null; }
+      /** the joints between two parts, their compartments and the exits a run between them takes */
+      const between = (xa: string, xb: string, pa: Vec3 | null, pb: Vec3 | null) => {
+        const { up, down } = treePath(spec, R.placed.get(xa)!.link, R.placed.get(xb)!.link);
+        const crossing = [...up, ...down].filter((j) => j.type !== "fixed");
+        let bayA = H.bayOf.get(xa) || undefined, bayB = H.bayOf.get(xb) || undefined;
+        // a part of no compartment whose pin is inside the other end's compartment (a servo in a cradle of the tub) is reached inside it
+        const inside = (bay: string | undefined, p: Vec3 | null) => { const b = bay ? R.bays.get(bay) : undefined; return !!b && !!p && p.every((x, k) => x > b.min[k] && x < b.max[k]); };
+        if (!bayB && inside(bayA, pb)) bayB = bayA; else if (!bayA && inside(bayB, pa)) bayA = bayB;
+        let exA = leaves(bayA, bayB) ? pick(bayA!, pb ?? pa!) : null, exB = leaves(bayB, bayA) ? pick(bayB!, pa ?? pb!) : null;
+        if (exA && exB) { if (opensInto(exB, bayA)) exA = null; else if (opensInto(exA, bayB)) exB = null; }
+        return { up, down, crossing, bayA, bayB, exA, exB };
+      };
+      const { up, down, crossing, bayA, bayB, exA, exB } = between(ia, ib, la.p, lb.p);
       const exitAt = (e: ExitDecl | null) => (e ? { id: e.id, at: worldExit(f, e), n: unit(rotateBy(f, e.link, e.normal)), hole_mm: e.panel_hole_mm } : null);
       const od = bundleOd(ws), straight = dist(la.p ?? [0, 0, 0], lb.p ?? [0, 0, 0]);
       const slackOf = (anchors: { joint: string; aIn: Vec3; aOut: Vec3 }[]) => {
@@ -536,6 +544,19 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
         out = R.cable({ key, a: ia, b: ib, od, crossing, exitA: exitAt(exA), exitB: exitAt(exB), bayA, bayB, wires: ws.map((w, i) => ({ from: [w.a.port, w.a.pin], to: [w.b.port, w.b.pin], awg: awg[i] })) });
         sl = slackOf(out.anchors);
       }
+      // a wire of the cable that ends on another part (the return of a feed pair, from the star ground) is laid from its own
+      // part: through its own compartment's exit, then with the cable to the far end
+      const own = new Map<string, number[]>();
+      ws.forEach((w, i) => { if (w.a.inst !== ia || w.b.inst !== ib) { const k = `${w.a.inst}|${w.b.inst}`; own.set(k, [...(own.get(k) ?? []), i]); } });
+      for (const [k, idx] of own) {
+        const [xa, xb] = k.split("|");
+        if (!R.placed.has(xa) || !R.placed.has(xb)) { routeProblems.push(`${key}: ${!R.placed.has(xa) ? xa : xb} has no place, its wire is not laid`); continue; }
+        const sub = ws.filter((_, i) => idx.includes(i)), e = between(xa, xb, R.pinAt(xa, sub[0].a.port, sub[0].a.pin), R.pinAt(xb, sub[0].b.port, sub[0].b.pin));
+        const o2 = R.cable({ key: `${key} (${xa})`, a: xa, b: xb, od: bundleOd(sub), crossing: e.crossing, exitA: exitAt(e.exA), exitB: exitAt(e.exB), bayA: e.bayA, bayB: e.bayB, wires: sub.map((w) => ({ from: [w.a.port, w.a.pin], to: [w.b.port, w.b.pin], awg: awg[ws.indexOf(w)] })) });
+        routeProblems.push(...o2.problems.map((x) => x.replace(/wire (\d+)/, (_, n) => `wire ${idx[+n - 1] + 1}`)));
+        idx.forEach((i, q) => { out.wires[i] = o2.wires[q]; });
+      }
+      out.problems = out.problems.filter((x) => { const m = /wire (\d+)/.exec(x); return !m || !own.size || ![...own.values()].flat().includes(+m[1] - 1); });
       routeProblems.push(...out.problems);
       for (const j of crossing) if (j.type === "continuous") unresolved.push(`${key} crosses continuous joint ${j.name}: needs a slip ring`);
       const links = new Set<string>(); for (const l of [la.link, lb.link, ...crossing.flatMap((j) => [j.parent, j.child])]) links.add(l);
