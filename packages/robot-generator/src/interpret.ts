@@ -13,6 +13,11 @@ import { translateKeywords, correctTypos } from "./lexicon.ts";
 import { applySizeDirectives, designedSizes, reportDesignedReach } from "./sizing.ts";
 import { applyInlineSensors, requestedSensors, sensorCount, SENSOR_WORDS, UNMODELLED_SENSORS } from "./sensors.ts";
 import { dofOf } from "./spec-utils.ts";
+import { triage, PromptRefusal } from "./triage.ts";
+import { translateScripts } from "./multilingual.ts";
+import { readNamed } from "./reading.ts";
+import { TOOL_WORDS, type ToolKind } from "./tools.ts";
+import { toolPlan } from "./tool-plan.ts";
 
 export { MAX_ARM_DOF } from "./families.ts";
 
@@ -57,6 +62,10 @@ export interface Interpretation {
   conflicts: string[];
   /** engineering checks the designed robot fails (it was built, but would not work as asked) */
   warnings?: string[];
+  /** which path designed the robot: "rules" (keyword rules), "knowledge table", "similarity (...)", or a model provider */
+  path: string;
+  /** task tools asked for or implied by the task, and whether each was built */
+  tools?: { kind: ToolKind; label: string; built: boolean; note?: string }[];
 }
 
 export interface PromptResult { spec: RobotSpecification; interpretation: Interpretation; }
@@ -65,12 +74,17 @@ export interface PromptResult { spec: RobotSpecification; interpretation: Interp
 const designedSensors = (spec: RobotSpecification) => spec.sensors.map((x) => ({ type: x.type, mount: spec.joints.find((j) => j.child === x.parent)?.parent ?? x.parent }));
 
 /** Deterministic NL -> RobotSpecification plus a record of how each request was handled. */
-export function interpretPrompt(prompt: string): PromptResult {
-  if (!normalize(prompt)) throw new Error("empty prompt");
+export interface InterpretOptions { /** a knowledge entry chosen beforehand by a sentence-embedding model (similarity.ts) */ knowledgeHint?: string; }
+export function interpretPrompt(original: string, opts: InterpretOptions = {}): PromptResult {
+  // markup, instructions to the parser and over-long text are removed first (and said); harmful and impossible requests stop here
+  const tri = triage(original), prompt = tri.text;
   // names and quoted text ("named Tiny", "called 'Unit 50'") never describe the robot's features
-  // basic German/French/Spanish keywords are mapped onto the English vocabulary first
-  const translation = translateKeywords(maskNames(prompt)), typos = correctTypos(translation.text);
-  const t = typos.text;
+  // robot words in other scripts, then basic German/French/Spanish/Hinglish keywords, are mapped onto the English vocabulary first
+  const scripts = translateScripts(maskNames(prompt));
+  const translation = translateKeywords(scripts.text), typos = correctTypos(translation.text);
+  // a named or fictional robot ("R2-D2", "Spot") is read as its body plan
+  const named = readNamed(normalize(typos.text));
+  const t = named.text;
   const dofMentions = extractDofMentions(t);
   const rawDof = dofMentions[0]?.value;
   const dof = rawDof === undefined ? undefined : Math.min(MAX_ARM_DOF, Math.max(1, Math.round(rawDof)));
@@ -78,7 +92,10 @@ export function interpretPrompt(prompt: string): PromptResult {
   const g = grip.kind;
   const lengths = extractLengths(t);
   const ignored: string[] = [], approximations: string[] = [], dimensions: string[] = [], conflicts: string[] = [], warnings: string[] = [];
-  if (translation.mapped.length) approximations.push(`read non-English keywords as English: ${translation.mapped.join(", ")}`);
+  approximations.push(...tri.notes);
+  if (tri.impossible) conflicts.push(tri.impossible);
+  if (scripts.mapped.length || translation.mapped.length) approximations.push(`read non-English keywords as English: ${[...scripts.mapped, ...translation.mapped].join(", ")}`);
+  if (named.note) approximations.push(named.note);
   if (typos.mapped.length) approximations.push(`read misspelt words and emoji as: ${typos.mapped.join(", ")}`);
 
   // A stated stature fits a wearable suit to its wearer.
@@ -93,12 +110,15 @@ export function interpretPrompt(prompt: string): PromptResult {
   }
 
   let choice: Choice;
-  try { choice = chooseFamily(t, prompt, dof, g, heightM, grip.explicit); }
+  try { choice = chooseFamily(t, prompt, dof, g, heightM, grip.explicit, opts.knowledgeHint); }
   catch (e) {
-    // a prompt in another script (Hindi, Urdu, Chinese...) is not read at all: say that, rather than only "not recognised"
-    if (/not recognised/.test((e as Error).message) && /[^\p{Script=Latin}\p{N}\p{P}\p{S}\s]/u.test(prompt) && !/[a-z]{3,}/.test(t))
-      throw new Error(`This prompt is in a language the parser does not read yet: it reads English, with common German, French, Spanish, Hindi and Urdu robot words. ${SUPPORTED_HINT}`);
-    throw e;
+    if (e instanceof PromptRefusal || !/not recognised/.test((e as Error).message)) throw e;
+    // a prompt in another script (Hindi, Urdu, Chinese...) whose words are not in the list: say that, rather than only "not recognised"
+    if (/[^\p{Script=Latin}\p{N}\p{P}\p{S}\s]/u.test(prompt) && !/[a-z]{3,}/.test(t))
+      throw new PromptRefusal("not_understood", `This prompt is in a language the parser does not read yet: it reads English, with common robot words in Hindi, Urdu, Arabic, Japanese, Chinese, German, French and Spanish, and romanised Hindi. ${SUPPORTED_HINT}`);
+    // "a robot the size of the moon": the impossible part is the whole request
+    if (tri.impossible) throw new PromptRefusal("impossible", `${tri.impossible.replace(/;[^;]*$/, "")}. ${tri.nearest ?? ""}`.trim());
+    throw new PromptRefusal("not_understood", notUnderstood(t));
   }
   const budget = parseBudget(t);
   const masses = extractMasses(t);
@@ -113,7 +133,7 @@ export function interpretPrompt(prompt: string): PromptResult {
     if (shapeKey(loaded) !== shapeKey(suit.shape)) ignored.push(`armour shape (${suit.said.filter((x) => !/paint|steel parts/.test(x)).join(", ")}): not applied, the loaded armour was forged as ${shapeKey(loaded)}; generate it again to forge this one`);
   }
   const ctx: DesignContext = { ...(suit ? { suit: { shape: armourShape(), paint: suit.paint } } : {}), ...(hobby ? { hobby } : {}), prompt, budget: budget.usd, payloadKg: payload ? +payload.kg.toFixed(3) : undefined, reachM: asked?.reachM, segments: asked?.segments,
-    sensors: requestedSensors(t).filter((type) => !negates(t, SENSOR_WORDS.find(([, k]) => k === type)![0])),
+    sensors: requestedSensors(choice.sensorWords ? `${t} ; ${choice.sensorWords}` : t).filter((type) => !negates(t, SENSOR_WORDS.find(([, k]) => k === type)![0])),
     excludeSensors: SENSOR_WORDS.filter(([rx]) => negates(t, rx)).map(([, k]) => k), ...(heightM ? { heightM } : {}) };
   // a standing robot's stated height is a design input of the humanoid / mech designers
   const robotHeight = !suitish && choice.designed && (choice.family === "humanoid" || choice.family === "battle_mech")
@@ -165,8 +185,8 @@ export function interpretPrompt(prompt: string): PromptResult {
   if (grip.explicit && !choice.usesGripper && !["wall_e", "eva", "baymax", "iron_man_mark_43", "exosuit", "battle_mech"].includes(choice.family))
     ignored.push(`gripper: the ${choice.label} template has no arm (try "mobile manipulator")`);
   if (g === "suction" && choice.family === "humanoid") ignored.push("suction gripper: humanoid hands use two-finger grippers");
-  if ((choice.family === "quadruped" || choice.family === "hexapod") && mentions(t, /\b(?:arms?|manipulator)\b/))
-    ignored.push(`arm: an arm on a legged base is not supported yet (try "mobile manipulator" for a wheeled base with an arm)`);
+  if (choice.family === "hexapod" && mentions(t, /\b(?:arms?|manipulator)\b/))
+    ignored.push(`arm: an arm on the hexapod is not designed (a quadruped carries one: "a robot dog with an arm")`);
 
   conflicts.push(...dofConflicts(dofMentions, choice), ...familyConflicts(t, choice));
   if (choice.family === "serial_arm" && mentions(t, /\bplanar\b/) && !isPlanar(spec))
@@ -219,7 +239,13 @@ export function interpretPrompt(prompt: string): PromptResult {
       : `mass ${x.raw}: target robot mass is not adjustable; masses follow geometry and materials`);
   }
 
-  spec.metadata.source_prompt = prompt;
+  // task tools (pump and hose, brush, camera mast...): built where a tool module fits the robot, said where not
+  const toolKinds = [...new Set<ToolKind>([...(choice.tools ?? []), ...TOOL_WORDS.filter(([rx]) => mentions(t, rx)).map(([, k]) => k)])];
+  const tools = toolKinds.length ? toolPlan(spec, toolKinds, choice) : [];
+  for (const x of tools) if (!x.built) ignored.push(`${x.label}: ${x.note}`); else dimensions.push(x.label);
+  conflicts.push(...sizeConflicts(t, payload?.kg));
+  // the prompt as typed, unless markup or over-long text was removed from it
+  spec.metadata.source_prompt = tri.notes.length ? prompt : original;
   spec.metadata.notes.push(`Interpreted locally: type inferred, DOF=${dofOf(spec)}, gripper=${g}.`);
   const interpretation: Interpretation = {
     family: choice.family, label: choice.label, matched: choice.matched, dof: dofOf(spec),
@@ -231,7 +257,10 @@ export function interpretPrompt(prompt: string): PromptResult {
     ...(payloadKg !== undefined ? { payload_kg: payloadKg } : {}),
     ...(heightM ? { wearer_height_m: heightM } : {}),
     approximations, ignored, conflicts, ...(warnings.length ? { warnings } : {}),
+    path: choice.path ?? "rules", ...(tools.length ? { tools } : {}),
   };
+  // a robot read by the rules carries nothing new (the shipped examples stay byte-identical); any other path is recorded with it
+  if (interpretation.path !== "rules" || named.entry) (spec.metadata as unknown as Record<string, unknown>).understood = { path: interpretation.path, ...(choice.knowledge ? { knowledge: choice.knowledge } : {}), ...(named.entry ? { named: named.entry.id } : {}) };
   return { spec, interpretation };
 }
 
@@ -242,6 +271,26 @@ function builtTool(spec: RobotSpecification, asked: GripperKind): GripperKind | 
   const designed = (spec.metadata as { design?: { performance?: { gripper?: unknown } } }).design?.performance?.gripper;
   if (typeof designed === "string" && designed !== "none") return /claw/.test(designed) ? "claw" : /suction/.test(designed) ? "suction" : "parallel";
   return "none";
+}
+
+/** The explanation for a prompt with no robot, task or object in it: what was read, and what to try. */
+function notUnderstood(t: string): string {
+  const words = t.match(/[a-z]{2,}/g) ?? [];
+  const lead = !words.length ? "I could not find any words in this prompt (only symbols, numbers or emoji I do not know)."
+    : words.every((w) => !/[aeiouy]/.test(w) || w.length > 14) || /(.)\1{3,}/.test(t) ? "This does not read as words I know (it looks like random letters)."
+    : "I could not find a robot type, a task or an object in this prompt.";
+  return `Robot type not recognised. ${lead} Describe the robot, or what it should do, for example "a robot that waters my plants", "something to clean solar panels" or "a 6 DOF arm with a gripper". ${SUPPORTED_HINT}`;
+}
+
+/** "a tiny robot that lifts 100 kg": a size word and a payload that cannot both hold. The payload wins, and that is said. */
+function sizeConflicts(t: string, payloadKg?: number): string[] {
+  const small = t.match(/\b(?:tiny|miniature|mini|micro|pocket[\s-]?sized?|palm[\s-]?sized?|small|little|desk(?:top)?[\s-]?sized?)\b/);
+  if (small && payloadKg !== undefined && payloadKg >= (/(?:tiny|mini|micro|pocket|palm)/.test(small[0]) ? 2 : 10))
+    return [`"${small[0]}" and a ${payloadKg} kg payload cannot both hold: motors that carry ${payloadKg} kg are not ${small[0]}. The payload was sized for; the robot is as big as that load needs`];
+  const big = t.match(/\b(?:huge|giant|enormous|massive|life[\s-]?sized?|full[\s-]?sized?)\b/);
+  const light = t.match(/\b(?:light(?:weight)?|feather[\s-]?light|weighs?\s+(?:almost\s+)?nothing)\b/);
+  if (big && light) return [`"${big[0]}" and "${light[0]}" pull in opposite directions; the robot was built at the size asked, with the mass its parts have`];
+  return [];
 }
 
 /** Deterministic NL -> RobotSpecification (local generation). */
@@ -361,4 +410,24 @@ function namedParts(t: string, spec: RobotSpecification, out: { dimensions: stri
     const swap = Object.entries(n.instead).find(([k]) => have.has(k));
     out.approximations.push(swap ? `${n.label} named: ${swap[1]}` : `${n.label} named but this design does not use one`);
   }
+}
+
+/** What a prompt would build, without designing it (fast): the family, the path that chose it and the tools. Throws PromptRefusal like interpretPrompt. */
+export function understandPrompt(original: string, opts: InterpretOptions = {}): { family: string; label: string; path: string; matched: string; approx?: string; tools: ToolKind[]; notes: string[]; text: string; designed: boolean } {
+  const tri = triage(original);
+  const scripts = translateScripts(maskNames(tri.text));
+  const translation = translateKeywords(scripts.text), typos = correctTypos(translation.text);
+  const named = readNamed(normalize(typos.text)), t = named.text;
+  const rawDof = extractDofMentions(t)[0]?.value, dof = rawDof === undefined ? undefined : Math.min(MAX_ARM_DOF, Math.max(1, Math.round(rawDof)));
+  const grip = gripperRequest(t);
+  let c: Choice;
+  try { c = chooseFamily(t, tri.text, dof, grip.kind, undefined, grip.explicit, opts.knowledgeHint); }
+  catch (e) {
+    if (e instanceof PromptRefusal || !/not recognised/.test((e as Error).message)) throw e;
+    if (tri.impossible) throw new PromptRefusal("impossible", `${tri.impossible.replace(/;[^;]*$/, "")}. ${tri.nearest ?? ""}`.trim());
+    throw new PromptRefusal("not_understood", notUnderstood(t));
+  }
+  const tools = [...new Set<ToolKind>([...(c.tools ?? []), ...TOOL_WORDS.filter(([rx]) => mentions(t, rx)).map(([, k]) => k)])];
+  return { family: c.family, label: c.label, path: c.path ?? "rules", matched: c.matched, ...(c.approx ? { approx: c.approx } : {}), tools, text: t, designed: !!c.designed,
+    notes: [...tri.notes, ...(tri.impossible ? [tri.impossible] : []), ...scripts.mapped, ...translation.mapped, ...typos.mapped, ...(named.note ? [named.note] : [])] };
 }

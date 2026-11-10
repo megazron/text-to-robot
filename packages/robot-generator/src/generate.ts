@@ -12,6 +12,9 @@ import { normalize, mentions } from "./text.ts";
 import { RX, WEAPONS } from "./families.ts";
 import { suitOptions } from "./suit.ts";
 import { diffSpecs, type SpecDiff } from "./diff.ts";
+import { PromptRefusal, triage } from "./triage.ts";
+import { nearestEntry, activeEmbedder } from "./similarity.ts";
+import { planFromModel, PLAN_SYSTEM_PROMPT } from "./plan.ts";
 
 /** Local reference/template generator; no network, account, or model token. */
 export class LocalProvider implements LlmProvider {
@@ -39,6 +42,8 @@ export interface GenerateResult {
   interpretation?: Interpretation;
   /** one-line summary of `interpretation` */
   summary?: string;
+  /** which path designed the robot, in words: the rule parser, the knowledge table, a similarity match or a model */
+  designedBy: string;
 }
 
 export interface GenerateOptions { provider?: LlmProvider; }
@@ -58,15 +63,42 @@ function repairLoop(spec: RobotSpecification): { validation: ValidationResult; r
   return { validation, repairs };
 }
 
-async function specFromProvider(provider: LlmProvider, prompt: string, warnings: string[]): Promise<{ spec: RobotSpecification; interpretation?: Interpretation }> {
-  if (provider instanceof LocalProvider) return interpretPrompt(prompt);
-  try {
-    return { spec: await provider.generateSpec(prompt) };
-  } catch (e) {
-    warnings.push(`provider '${provider.name}' failed (${(e as Error).message}); using local generation`);
-    return interpretPrompt(prompt);
+/** The local parser; a prompt it cannot place is tried once more with the closest knowledge entry by the registered sentence-embedding model. */
+async function localInterpret(prompt: string): Promise<{ spec: RobotSpecification; interpretation?: Interpretation }> {
+  try { return interpretPrompt(prompt); }
+  catch (e) {
+    if (!(e instanceof PromptRefusal) || e.kind !== "not_understood" || activeEmbedder().name === "built-in word table") throw e;
+    const hit = await nearestEntry(prompt);
+    if (!hit) throw e;
+    const r = interpretPrompt(prompt, { knowledgeHint: hit.entry.id });
+    r.interpretation.path = `similarity (${hit.by}, ${hit.score})`;
+    return r;
   }
 }
+
+async function specFromProvider(provider: LlmProvider, prompt: string, warnings: string[]): Promise<{ spec: RobotSpecification; interpretation?: Interpretation }> {
+  if (provider instanceof LocalProvider) return localInterpret(prompt);
+  // harmful and impossible requests are refused before any text leaves the page
+  interpretTriage(prompt);
+  try {
+    // a model that writes a body plan: the plan is checked field by field, then designed from real parts like any prompt
+    if (provider.generatePlan) {
+      const raw = await provider.generatePlan(prompt, PLAN_SYSTEM_PROMPT);
+      const plan = planFromModel(raw);
+      const r = interpretPrompt(plan.prompt);
+      r.spec.metadata.source_prompt = prompt;
+      r.interpretation.path = `model (${provider.name})`;
+      r.interpretation.approximations.unshift(`the model read the prompt as: "${plan.prompt}"`, ...plan.notes);
+      return r;
+    }
+    return { spec: await provider.generateSpec(prompt) };
+  } catch (e) {
+    if (e instanceof PromptRefusal && e.kind !== "not_understood") throw e;
+    warnings.push(`provider '${provider.name}' failed (${(e as Error).message}); designed by the local parser instead`);
+    return localInterpret(prompt);
+  }
+}
+const interpretTriage = (prompt: string) => triage(prompt);
 
 function interpretationWarnings(i: Interpretation | undefined): string[] {
   if (!i) return [];
@@ -97,7 +129,7 @@ export async function forgeForRobot(spec: RobotSpecification): Promise<void> {
 
 export async function generateRobot(prompt: string, opts: GenerateOptions = {}): Promise<GenerateResult> {
   const warnings: string[] = [];
-  if (!prompt || !prompt.trim()) throw new Error("empty prompt");
+  if (!prompt || !prompt.trim()) throw new PromptRefusal("empty", "The prompt is empty. Describe a robot, or what it should do, for example \"a robot that waters my plants\" or \"a 6 DOF arm with a gripper\".");
   await forgeForPrompt(prompt);
   const provider = opts.provider ?? new LocalProvider();
   const { spec: raw, interpretation } = await specFromProvider(provider, prompt, warnings);
@@ -109,8 +141,17 @@ export async function generateRobot(prompt: string, opts: GenerateOptions = {}):
   const urdfValidation = validateUrdf(urdf);
   const { budget, payloadKg } = requirements(spec, prompt);
   const bom = buildBom(spec, budget, { payloadKg: interpretation ? interpretation.payload_kg : payloadKg });
-  return { robot: spec, urdf, xacro, validation, urdfValidation, warnings, repairs, provider: provider.name, dof: dofCount(spec), bom,
+  return { robot: spec, urdf, xacro, validation, urdfValidation, warnings, repairs, provider: provider.name, dof: dofCount(spec), bom, designedBy: designedBy(interpretation, provider),
     ...(interpretation ? { interpretation, summary: describeInterpretation(interpretation) } : {}) };
+}
+
+/** The path that designed the robot, said plainly on the result. */
+export function designedBy(i: Interpretation | undefined, provider: LlmProvider): string {
+  if (!i) return `the ${provider.name} model wrote the robot file directly (checked and repaired locally; not sized from real parts)`;
+  if (i.path.startsWith("model")) return `${i.path.replace(/^model \((.*)\)$/, "the $1 model")} wrote a body plan; the local design engine built it from real parts`;
+  if (i.path === "knowledge table") return "the local task and object table chose the body plan; the local design engine built it";
+  if (i.path.startsWith("similarity")) return `the closest task by meaning (${i.path.replace(/^similarity \((.*)\)$/, "$1")}) chose the body plan; the local design engine built it`;
+  return "the local rule parser read the robot type; the local design engine built it";
 }
 
 export interface ModifyResult extends GenerateResult { diff: SpecDiff; changes: string[]; }
@@ -138,5 +179,5 @@ export async function modifyRobot(prev: RobotSpecification, instruction: string,
   for (const c of changes) if (/^[?!]/.test(c)) warnings.push(c.replace(/^[?!]\s*/, ""));
   const { budget, payloadKg } = requirements(next, instruction);
   const bom = buildBom(next, budget, { payloadKg: next.end_effectors.length ? payloadKg : undefined });
-  return { robot: next, urdf, xacro, validation, urdfValidation, warnings, repairs, provider: provider.name, dof: dofCount(next), diff, changes, bom };
+  return { robot: next, urdf, xacro, validation, urdfValidation, warnings, repairs, provider: provider.name, dof: dofCount(next), diff, changes, bom, designedBy: provider instanceof LocalProvider ? "the local edit engine changed the robot" : `the ${provider.name} model changed the robot file (checked and repaired locally)` };
 }

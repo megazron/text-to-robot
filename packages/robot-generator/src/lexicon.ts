@@ -135,7 +135,8 @@ function distance(a: string, b: string): number {
   return d[a.length][b.length];
 }
 /** Read a few emoji as words, and correct a misspelt robot-type word: one slip in a word of up to 7 letters, two in a longer one. Each one is reported. */
-const EMOJI: [RegExp, string][] = [[/🐕|🐶|🦮|🐩/gu, "robot dog"], [/🚗|🚙|🏎️?|🚕/gu, "car"], [/🕷️?|🕸️?|🐜/gu, "spider"], [/🦾/gu, "robot arm"], [/🦿/gu, "legs"], [/🤏|🦞|🦀/gu, "gripper"]];
+const EMOJI: [RegExp, string][] = [[/🐕|🐶|🦮|🐩/gu, "robot dog"], [/🚗|🚙|🏎️?|🚕/gu, "car"], [/🕷️?|🕸️?|🐜/gu, "spider"], [/🦾/gu, "robot arm"], [/🦿/gu, "legs"], [/🤏|🦞|🦀/gu, "gripper"], [/🤖/gu, "robot"], [/🚁|🛸|🛩️?|✈️?/gu, "drone"], [/🐍/gu, "snake robot"], [/🐟|🐠|🐡|🦈|🐙|🐬|🐳|🤿/gu, "underwater"],
+  [/🌱|🪴|🌻|🌷|🌿|🌵|🍅/gu, "plants"], [/💧|🚿|💦/gu, "water"], [/🧹|🧽|🧼/gu, "cleaning"], [/📷|📸|🎥|📹/gu, "camera"], [/🐈|🐱/gu, "cat"], [/🖐️?|✋|🤚/gu, "robot hand"], [/🚜/gu, "tractor"], [/☀️?🔋?|🔆/gu, "solar panels"]];
 export function correctTypos(text: string): Translation {
   const mapped: string[] = [];
   for (const [rx, to] of EMOJI) text = text.replace(rx, (e) => { mapped.push(`${e} -> ${to}`); return ` ${to} `; });

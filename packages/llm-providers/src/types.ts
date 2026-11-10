@@ -9,6 +9,8 @@ export interface LlmProvider {
   generateSpec(prompt: string): Promise<RobotSpecification>;
   /** modify an existing spec */
   modifySpec(spec: RobotSpecification, instruction: string): Promise<RobotSpecification>;
+  /** optional: a body plan (untrusted JSON) that the local design engine builds from real parts; preferred over generateSpec */
+  generatePlan?(prompt: string, system: string): Promise<unknown>;
 }
 
 /** Suggested instruction text for a bring-your-own model provider; not used by the shipped code. */

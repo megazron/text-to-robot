@@ -2,7 +2,7 @@
 // design engine's CSG library keeps a little WASM memory per robot, so the suite is split across processes).
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { interpretPrompt, parsePrompt, } from "@ttr/robot-generator";
+import { interpretPrompt, parsePrompt, understandPrompt } from "@ttr/robot-generator";
 import { isNegated } from "../packages/robot-generator/src/text.ts";
 
 const read = (prompt: string) => interpretPrompt(prompt).interpretation;
@@ -20,9 +20,11 @@ test("negated sensors and grippers are not added", () => {
 
 
 test("words inside other words do not select robots", () => {
-  assert.throws(() => parsePrompt("a farming robot"), /not recognised/);
-  assert.throws(() => parsePrompt("a robot alarm"), /not recognised/);
-  assert.throws(() => parsePrompt("a hotdog stand"), /not recognised/);
+  // "farming" is not "arm", "alarm" is not "arm", "hotdog" is not "dog": each is read as the task or object it is
+  const farming = interpretPrompt("a farming robot").interpretation;
+  assert.equal(farming.path, "knowledge table"); assert.match(farming.approximations.join(), /"farming" is a task/);
+  assert.match(interpretPrompt("a robot alarm").interpretation.approximations.join(), /alarm/);
+  assert.notEqual(interpretPrompt("a hotdog stand").interpretation.family, "quadruped");
   assert.equal(parsePrompt("6 dof arm with maximum reach").sensors.length, 0, "'maximum' is not an IMU");
 });
 
@@ -48,11 +50,11 @@ test("families: synonyms and approximations are explicit", () => {
 });
 
 
-test("unsupported robot types explain themselves", () => {
-  assert.throws(() => parsePrompt("quadcopter drone"), /Aerial/);
-  assert.throws(() => parsePrompt("a delta robot"), /Parallel-kinematics/);
-  assert.throws(() => parsePrompt("gantry robot"), /gantry/);
-  assert.throws(() => parsePrompt("robotic hand"), /hands/);
+test("drones, ROVs, snakes, gantries, deltas and hands are robot types of their own; nonsense still explains itself", () => {
+  for (const [p, f] of [["quadcopter drone", "drone"], ["a delta robot", "delta"], ["gantry robot", "gantry"], ["robotic hand", "hand"], ["an underwater rov", "rov"], ["a snake robot with 10 segments", "snake"],
+    ["a pen plotter", "gantry"], ["a robot dog with an arm", "quadruped_arm"], ["spot with a 5 dof arm", "quadruped_arm"]] as const)
+    assert.equal(understandPrompt(p).family, f, p);
+  assert.match(understandPrompt("a stewart platform").approx ?? "", /Stewart platform .* delta/);
   assert.throws(() => parsePrompt("asdf qwerty"), /not recognised.*Try an arm/);
 });
 
