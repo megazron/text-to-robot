@@ -481,7 +481,7 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
     const g = groupOf.get(home.link) ?? home.link, at = R.placeHarness(i.name, i.key, home.p, g, pinsOf(i.name), H.bayOf.get(i.name) || undefined, (port, pin) => {
       for (const ws of groups.values()) for (const w of ws) for (const [me, other] of [[w.a, w.b], [w.b, w.a]]) if (me.inst === i.name && me.port === port && me.pin === pin && other.inst !== i.name) { const q = R.pinAt(other.inst, other.port, other.pin); if (q) return q; }
       return null;
-    });
+    }, !!spot);
     if (at) { i.at_mm = at.at.map(r1) as Vec3; i.on = g; if (at.turned) i.turned = true; else delete i.turned; R.reserve(i.name, pinsOf(i.name)); } else routeProblems.push(`${i.name}: no free place beside ${home.inst ?? home.link}`);
   }
   const awgOf = (w: WireDecl, lengthMm: number, pm: string | null) => {

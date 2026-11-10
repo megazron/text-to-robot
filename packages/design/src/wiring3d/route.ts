@@ -89,7 +89,7 @@ export class Router {
    * Put a harness part down beside `home` (world mm) on rigid body `group`: the nearest spot where its body is clear, the
    * pins in use have room for their connectors, and something is close by to tie it to. Returns its body centre.
    */
-  placeHarness(inst: string, key: string, home: V3, group: string, pins: [string, string][], bay?: string, partner?: (port: string, pin: string) => V3 | null): { at: V3; turned: boolean } | null {
+  placeHarness(inst: string, key: string, home: V3, group: string, pins: [string, string][], bay?: string, partner?: (port: string, pin: string) => V3 | null, given = false): { at: V3; turned: boolean } | null {
     const model = partModel(key), bb = bodyBox(model), L = this.f.link[group];
     if (!bb || !L) return null;
     this.ready();
@@ -120,7 +120,8 @@ export class Router {
       }
       return true;
     };
-    const at = (partner ? g.nearest(home, 1, 90, within, (q) => fits(q, true, true)) : null) ?? g.nearest(home, 1, 90, within, (q) => fits(q, true)) ?? g.nearest(home, 1, 140, within, (q) => fits(q, false)) ?? (within ? g.nearest(home, 1, 140, undefined, (q) => fits(q, false)) : null);
+    // (`given`: the design chose `home` itself, so the nearest place that fits is taken as it is)
+    const at = (partner && !given ? g.nearest(home, 1, 90, within, (q) => fits(q, true, true)) : null) ?? g.nearest(home, 1, 90, within, (q) => fits(q, true)) ?? g.nearest(home, 1, 140, within, (q) => fits(q, false)) ?? (within ? g.nearest(home, 1, 140, undefined, (q) => fits(q, false)) : null);
     if (!at) return null;
     const T = frame(at), id = Math.min(255, this.nextId++);
     g.addBox(T.R, scale(T.p as V3, 1000), bb.min, bb.max, id);
@@ -181,19 +182,22 @@ export class Router {
     return null;
   }
   /** through a wall exit: a free point on the hole's axis on each side */
-  private pierce(e: ExitAt, need: number, bay: Box | undefined, run: number): { inner: V3; outer: V3 } | null {
+  private pierce(e: ExitAt, need: number, bay: Box | undefined, run: number, toIn?: V3, toOut?: V3): { inner: V3; outer: V3 } | null {
     const g = this.grid;
-    // the first free point each side of the wall, then on along the axis while it stays free, up to `run`: room to turn on to the hole's line
-    const along = (sgn: number, box?: Box) => {
+    // the first free point each side of the wall, then on along the axis while it stays free, up to `run`: room to turn on to
+    // the hole's line. Where the cable comes from (or goes to) a point beside that stretch, it turns off level with it
+    // instead of running on past it and back
+    const along = (sgn: number, box?: Box, to?: V3) => {
+      const want = to ? sgn * dot(sub(to, e.at), e.n) : Infinity;
       for (const n of [need, 1]) for (let t = 2; t <= 40; t += 1) {
         const q = add(e.at, scale(e.n, sgn * t)); if (g.dist(q) < n || (box && !inBox(box, q, -g.s))) continue;
         let best = q;
-        for (let u = 1; u <= run; u += 1) { const q2 = add(q, scale(e.n, sgn * u)); if (g.dist(q2) < n || (box && !inBox(box, q2, -g.s))) break; best = q2; }
+        for (let u = 1; u <= run && t + u <= want + 0.5; u += 1) { const q2 = add(q, scale(e.n, sgn * u)); if (g.dist(q2) < n || (box && !inBox(box, q2, -g.s))) break; best = q2; }
         return best;
       }
       return null;
     };
-    const inner = along(-1, bay), outer = along(1);
+    const inner = along(-1, bay, toIn), outer = along(1, undefined, toOut);
     return inner && outer ? { inner, outer } : null;
   }
 
@@ -229,7 +233,7 @@ export class Router {
       cur = to;
     };
     const through = (e: ExitAt, outward: boolean) => {
-      const pr = this.pierce(e, needT, outward ? boxA : boxB, 1.6 * Math.max(...E.map((x) => x.R)));
+      const pr = this.pierce(e, needT, outward ? boxA : boxB, 1.6 * Math.max(...E.map((x) => x.R)), outward ? cur : JB, outward ? (c.crossing.length ? undefined : JB) : cur);
       if (!pr) { problems.push(`${c.key}: exit ${e.id} is blocked`); return; }
       const [first, second] = outward ? [pr.inner, pr.outer] : [pr.outer, pr.inner];
       go(first, outward ? within : undefined, `to exit ${e.id}`, true);
