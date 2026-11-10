@@ -246,6 +246,15 @@ export class Router {
     const boxA = c.bayA ? this.bays.get(c.bayA) : undefined, boxB = c.bayB ? this.bays.get(c.bayB) : undefined;
     const sameBay = !!c.bayA && c.bayA === c.bayB;
     const centroid = (ps: V3[]) => scale(ps.reduce((a, p) => add(a, p), [0, 0, 0] as V3), 1 / ps.length);
+    // two pins facing each other on one line, nothing between and no wall or joint to pass: the wire runs straight across
+    // (each end's room for a first bend is not wanted where there is no bend)
+    if (n === 1 && !c.crossing.length && (sameBay || (!c.exitA && !c.exitB))) {
+      const e0 = E[0], Sa = e0.la.S, Sb = e0.lb.S, d = sub(Sb, Sa), L = len(d);
+      if (L > 1 && dot(unit(d), e0.a.out) > Math.cos(0.17) && dot(unit(d), e0.b.out) < -Math.cos(0.17) && g.line(Sa, Sb, 1) >= 0 && !problems.some((x) => !/first bend|no room for a bend/.test(x))) {
+        const pts = [e0.a.p, Sa, Sb, e0.b.p].map(r1), on = [ga, ga, gb, gb], F = roundWire(pts, on, e0.R);
+        if (!F.tight) return { trunk: [Sa, Sb].map(r1), trunkOn: [ga, gb], wires: [{ pts, on, drawn_mm: polyLen(F.pts) }], anchors: [], problems: problems.filter((x) => !/first bend|no room for a bend/.test(x)) };
+      }
+    }
     // where the bundle starts and ends: over the middle of its pins
     const JA = n === 1 ? E[0].la.V : this.snap(centroid(E.map((e) => e.la.V)), needT, boxA) ?? E[0].la.V;
     const JB = n === 1 ? E[0].lb.V : this.snap(centroid(E.map((e) => e.lb.V)), needT, boxB) ?? E[0].lb.V;
