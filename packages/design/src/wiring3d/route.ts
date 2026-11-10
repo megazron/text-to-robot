@@ -89,13 +89,15 @@ export class Router {
    * Put a harness part down beside `home` (world mm) on rigid body `group`: the nearest spot where its body is clear, the
    * pins in use have room for their connectors, and something is close by to tie it to. Returns its body centre.
    */
-  placeHarness(inst: string, key: string, home: V3, group: string, pins: [string, string][], bay?: string): V3 | null {
+  placeHarness(inst: string, key: string, home: V3, group: string, pins: [string, string][], bay?: string, turn = 0): V3 | null {
     const model = partModel(key), bb = bodyBox(model), L = this.f.link[group];
     if (!bb || !L) return null;
+    // `turn`: quarter turns about the body's z, where the designer laid the part another way round than the body's axes
+    const q4 = ((turn % 4) + 4) % 4, cs = [1, 0, -1, 0][q4], sn = [0, 1, 0, -1][q4], R = L.R.map((r) => [r[0] * cs + r[1] * sn, r[1] * cs - r[0] * sn, r[2]]);
     this.ready();
     const c = lerp(bb.min, bb.max, 0.5), within = bay ? this.bays.get(bay) : undefined, g = this.grid;
     const half = Math.max(bb.max[0] - bb.min[0], bb.max[1] - bb.min[1], bb.max[2] - bb.min[2]) / 2;
-    const frame = (q: V3): Tf => ({ R: L.R, p: scale(sub(q, rotate({ R: L.R, p: [0, 0, 0] }, c)), 0.001) as V3 });
+    const frame = (q: V3): Tf => ({ R, p: scale(sub(q, rotate({ R, p: [0, 0, 0] }, c)), 0.001) as V3 });
     const fits = (q: V3, near: boolean) => {
       const T = frame(q);
       if (near && g.dist(q) > Math.ceil(half / g.s) + 2) return false;

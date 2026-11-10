@@ -20,6 +20,8 @@ export interface InstanceRec {
   name: string; key: string; link: string | null; off_board?: boolean; note?: string;
   /** a harness part with no link of its own (splice, inline fuse, star ground): its body centre in the world at the home pose (mm) and the rigid body it is tied to */
   at_mm?: Vec3; on?: string;
+  /** quarter turns about z it is laid at, against the axes of the body it is tied to (absent: none) */
+  turn?: number;
 }
 export interface NetRec { name: string; kind: NetKind; voltage_v?: number; pins: string[]; }
 export interface WireRec { id: string; net: string; kind: NetKind; from: string; to: string; awg: number | null; color: string; typical_a: number; peak_a: number; length_mm: number; drop_v?: number;
@@ -116,6 +118,9 @@ export class Harness {
   flex = new Map<string, number>();
   /** where harness parts (fuse, splices, star ground) sit: with this instance. Unset, each sits by the first part wired to it. */
   home?: string;
+  /** harness parts the designer laid down: the spot (world mm at home; the router takes the nearest free place to it) and quarter turns about z */
+  seats = new Map<string, { at: Vec3; turn: number }>();
+  seat(inst: string, at: Vec3, turn = 0) { this.seats.set(inst, { at, turn }); }
   /** cable -> the bay exit it leaves by, where the nearest one would be overfilled */
   exitOf = new Map<string, string>();
   /** lever splices a designer added by hand (bus hubs) */
@@ -473,8 +478,9 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
     const home: { link: string | null; p: Vec3 | null; inst?: string } = i.link && f.link[i.link] ? { link: i.link, p: own && own.geometry.type === "mesh" && own.geometry.part === "component" ? bodyCentre(f, i.link, String(own.geometry.params?.key)) : worldOf(f, i.link, [0, 0, 0]), inst: [...H.instances.values()].find((x) => x.link === i.link && x.name !== i.name)?.name } : H.home ? { ...locate(H.home), inst: H.home } : harnessHome(H, i.name, groups, locate);
     if (!home.p || !home.link) continue;
     if (home.inst && !H.bayOf.get(i.name)) H.bayOf.set(i.name, H.bayOf.get(home.inst) ?? "");
-    const g = groupOf.get(home.link) ?? home.link, at = R.placeHarness(i.name, i.key, home.p, g, pinsOf(i.name), H.bayOf.get(i.name) || undefined);
-    if (at) { i.at_mm = at.map(r1) as Vec3; i.on = g; R.reserve(i.name, pinsOf(i.name)); } else routeProblems.push(`${i.name}: no free place beside ${home.inst ?? home.link}`);
+    const seat = H.seats.get(i.name);
+    const g = groupOf.get(home.link) ?? home.link, at = R.placeHarness(i.name, i.key, seat?.at ?? home.p, g, pinsOf(i.name), H.bayOf.get(i.name) || undefined, seat?.turn);
+    if (at) { i.at_mm = at.map(r1) as Vec3; i.on = g; if (seat?.turn) i.turn = seat.turn; R.reserve(i.name, pinsOf(i.name)); } else routeProblems.push(`${i.name}: no free place beside ${home.inst ?? home.link}`);
   }
   const awgOf = (w: WireDecl, lengthMm: number, pm: string | null) => {
     const n = H.nets.get(w.net)!, volts = n.kind === "power" ? n.voltage_v ?? 5 : 5;
