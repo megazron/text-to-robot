@@ -145,7 +145,9 @@ export function partModel(key: string): PartModel {
     b.box("plastic_grey", [6, 6, T], [17, 17, T + 7]);                              // inductor
     b.box("ic", [3, 18.5, T], [9, 22.5, T + 1]);
     const port = e!.ports[0];
-    port.pins.v.forEach((x, i) => { const left = i < Math.ceil(port.pins.v.length / 2), k = left ? i : i - Math.ceil(port.pins.v.length / 2), xx = left ? 1.27 : 24.13, yy = 6.35 + k * P; headerPin(b, xx, yy, 0, -1); set(port.name, x.name, [xx, yy, -8.5], [0, 0, -1], "header"); });
+    // the two 1 x 6 strips come loose with the board (electrical.json): on standoffs they are soldered pointing up, so the
+    // jumpers plug in from above (pointing down they would stand on the plate under the board)
+    port.pins.v.forEach((x, i) => { const left = i < Math.ceil(port.pins.v.length / 2), k = left ? i : i - Math.ceil(port.pins.v.length / 2), xx = left ? 1.27 : 24.13, yy = 6.35 + k * P; headerPin(b, xx, yy, T, 1); set(port.name, x.name, [xx, yy, T + 8.5], [0, 0, 1], "header"); });
   } else {
     detailed = false;
     generic(key, e?.ports ?? [], bb, b, set);
