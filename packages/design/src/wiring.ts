@@ -122,6 +122,8 @@ export class Harness {
   spot = new Map<string, { by: string; at: Vec3 }>();
   /** cable -> the bay exit it leaves by, where the nearest one would be overfilled */
   exitOf = new Map<string, string>();
+  /** exits kept for the cables exitOf sends through them (a ribbon slot): no other cable takes one as its nearest */
+  kept = new Set<string>();
   /** lever splices a designer added by hand (bus hubs) */
   buyHub?: number;
   mainRange?: { min: number; nom: number; max: number };
@@ -720,7 +722,7 @@ function dropClipsInTheWay(clips: ClipRec[], cables: CableRec[]) {
 }
 const perp = (a: Vec3): Vec3 => unit(Math.abs(a[2]) < 0.9 ? cross(a, [0, 0, 1]) : cross(a, [1, 0, 0]));
 function bundleOd(ws: WireDecl[]) { const d = 1.5; return ws.length <= 1 ? d : d * Math.sqrt(ws.length) * 1.25; }
-function nearestExit(H: Harness, bay: string, to: Vec3): ExitDecl | null { const list = H.exits.filter((e) => e.bay === bay); if (!list.length) return null; return [...list].sort((a, b) => dist(a.at, to) - dist(b.at, to))[0]; }
+function nearestExit(H: Harness, bay: string, to: Vec3): ExitDecl | null { const list = H.exits.filter((e) => e.bay === bay && !H.kept.has(e.id)); if (!list.length) return null; return [...list].sort((a, b) => dist(a.at, to) - dist(b.at, to))[0]; }
 function worldExit(f: FK, e: ExitDecl): Vec3 { return worldOf(f, e.link, e.at); }
 function harnessHome(H: Harness, inst: string, groups: Map<string, WireDecl[]>, locate: (i: string) => { link: string | null; p: Vec3 | null }, seen: Set<string> = new Set([inst])): { link: string | null; p: Vec3 | null; inst?: string } {
   for (const ws of groups.values()) for (const w of ws) for (const [me, other] of [[w.a.inst, w.b.inst], [w.b.inst, w.a.inst]]) if (me === inst && other !== inst) { const l = locate(other); if (l.p) return { ...l, inst: other }; }
