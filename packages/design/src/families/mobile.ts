@@ -216,7 +216,7 @@ interface Rect { x0: number; x1: number; y0: number; y1: number }
 const overlaps = (a: Rect, c: Rect) => a.x0 < c.x1 && c.x0 < a.x1 && a.y0 < c.y1 && c.y0 < a.y1;
 
 /** Footprint (component frame, mm) of an item including plugs / leads / tool access: [-x, +x, -y, +y] margins. */
-function footprint(it: Item, hard = false) {
+function footprint(it: Item, hard = false): { min: number[]; max: number[] } {
   const bb = part(it.key).bbox_mm!;
   if (it.room && !hard) { const f = footprint(it, true), r = it.room; return { min: [f.min[0] - r[0], f.min[1] - r[2]], max: [f.max[0] + r[1], f.max[1] + r[3]] }; }
   // a battery's leads and plug leave its +x end: room there for the plug and the first bend of a 12 AWG lead
