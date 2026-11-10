@@ -118,3 +118,12 @@ test(`${PARTS_PROMPTS.length} inventory prompts each rank the robot they should,
     for (const o of r.options) { assert.ok(o.used_count > 0 && o.used_count <= o.inventory_count, o.id); assert.ok(o.extra_usd >= 0); }
   }
 });
+
+test("a parts list with standard servos or steppers is offered the hand or the pen plotter, built from their own lists", () => {
+  const hand = rankOptions(parseInventory("5 MG996R servos, an Arduino Nano and a PCA9685")).find((o) => o.kind === "robot_hand");
+  assert.ok(hand, "five MG996R offer the five-finger hand");
+  assert.equal(hand.uses.hobby_mg996r, 5);
+  const plot = rankOptions(parseInventory("3 NEMA 17 stepper motors and 3 TMC2209 drivers")).find((o) => o.kind === "pen_plotter");
+  assert.ok(plot, "three NEMA17 offer the pen plotter");
+  assert.equal(plot.uses.nema17_42x40, 3);
+});
