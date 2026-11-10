@@ -18,22 +18,22 @@ for (const dir of ["ttr_cad", "ttr_mujoco"])
 fs.writeFileSync("apps/web/src/.generated/python-files.json", JSON.stringify(out));'
 
 # the engine runs in a Web Worker; the page script stays tiny
-npx --yes esbuild@0.25.10 apps/web/src/browser-engine.ts \
+npx --no-install esbuild apps/web/src/browser-engine.ts \
   --bundle --format=esm --platform=browser --target=es2022 --minify \
   --alias:node:fs=./apps/web/src/fs-shim.ts --external:node:module --external:node:url --external:node:path --external:node:crypto --external:node:worker_threads --external:node:os --external:module --external:fs --external:path \
   --outfile="$OUT/browser-engine.js" --log-level=warning
 # the armour forge's helpers: each a worker with its own manifold-3d, sharing out the solid work of the Mark 43
-npx --yes esbuild@0.25.10 packages/mesh/src/forge/poolworker.ts \
+npx --no-install esbuild packages/mesh/src/forge/poolworker.ts \
   --bundle --format=esm --platform=browser --target=es2022 --minify \
   --external:node:worker_threads --external:node:module --external:node:url --external:node:path --external:module --external:fs --external:path \
   --outfile="$OUT/forge-worker.js" --log-level=warning
-npx --yes esbuild@0.25.10 apps/web/src/browser-api.ts \
+npx --no-install esbuild apps/web/src/browser-api.ts \
   --bundle --format=esm --platform=browser --target=es2022 --minify \
   --outfile="$OUT/browser-api.js" --log-level=warning
 
 # The engine API for other pages (docs/ENGINE_API.md): a versioned ES module that starts the same worker as this site
 mkdir -p "$OUT/engine/v1"
-npx --yes esbuild@0.25.10 apps/web/src/engine/client.ts \
+npx --no-install esbuild apps/web/src/engine/client.ts \
   --bundle --format=esm --platform=browser --target=es2022 --minify \
   --outfile="$OUT/engine/v1/engine.js" --log-level=warning
 node scripts/engine_types.ts "$OUT/engine/v1/engine.d.ts"
@@ -48,6 +48,8 @@ sed -i \
   "$OUT/index.html"
 grep -q 'src="./browser-api.js"' "$OUT/index.html" || { echo "index.html layout changed; update deploy/build-pages.sh" >&2; exit 1; }
 if grep -nE '(href|src)="/[^/]' "$OUT/index.html"; then echo "root-absolute path left in index.html" >&2; exit 1; fi
+# the import map changed above, so its hash in the Content-Security-Policy meta tag is recomputed (scripts/csp.ts)
+node scripts/csp.ts --write "$OUT/index.html"
 
 # CSG kernel used by the design engine (printed parts are built in the browser)
 cp node_modules/manifold-3d/manifold.wasm "$OUT/manifold.wasm"

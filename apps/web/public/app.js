@@ -3,7 +3,14 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { STLLoader } from "three/addons/loaders/STLLoader.js";
 import { forwardKinematics, findRoot, download, makeZipDeflated } from "./robotkit.js";
 import { Dial, Sheet, followKeyboard, haptic, popIn, transformFlash } from "./ui.js";
+import { h, safeHttpUrl, safeJsonParse, MAX_PROMPT_CHARS, MAX_ROBOT_BYTES } from "./safe.js";
 
+// Clickjacking guard: GitHub Pages cannot send frame-ancestors or X-Frame-Options, so a page that frames this site gets
+// a link to open it in its own tab instead of a working (and invisible-overlay-able) copy.
+if (window.top !== window.self) {
+  document.body.replaceChildren(h("p", { class: "framed" }, h("a", { href: location.href, target: "_blank", rel: "noopener" }, "Open Text to Robot in its own tab")));
+  throw new Error("Text to Robot does not run inside a frame");
+}
 const API = ""; // same origin
 let revealNext = null, first = true, tierDial = null;
 const STATIC = globalThis.ttrStatic; // GitHub Pages build: generator runs in this tab, see apps/web/src/browser-api.ts
@@ -274,7 +281,7 @@ function highlight() {
 
 // ---------------- panels ----------------
 function renderTree() {
-  const box = $("#tree"); box.innerHTML = "";
+  const box = $("#tree"); box.replaceChildren();
   if (!state.robot) return;
   const root = findRoot(state.robot);
   const kids = new Map(); for (const j of state.robot.joints) { if (!kids.has(j.parent)) kids.set(j.parent, []); kids.get(j.parent).push(j); }
@@ -296,7 +303,7 @@ const f3 = (n) => (typeof n === "number" ? n.toFixed(3) : n);
 const vec = (v) => "[" + v.map(f3).join(", ") + "]";
 
 function renderInspector() {
-  const pane = $("#tab-inspector"); pane.innerHTML = "";
+  const pane = $("#tab-inspector"); pane.replaceChildren();
   if (!state.selection) { pane.append(el("div", "hint", "Click a link or joint in the 3D view or tree.")); return; }
   if (state.selection.kind === "link") {
     const l = state.robot.links.find((x) => x.name === state.selection.name); if (!l) return;
@@ -326,7 +333,7 @@ function renderInspector() {
 }
 
 function renderSliders() {
-  const box = $("#sliders"); box.innerHTML = "";
+  const box = $("#sliders"); box.replaceChildren();
   if (!state.robot) return;
   const actuated = state.robot.joints.filter((j) => j.type !== "fixed" && !j.passive);
   if (!actuated.length) { box.append(el("div", "hint", "This robot has no actuated joints.")); return; }
@@ -346,7 +353,7 @@ function renderSliders() {
 }
 
 function renderHistory() {
-  const box = $("#history"); box.innerHTML = "";
+  const box = $("#history"); box.replaceChildren();
   state.versions.forEach((v, i) => {
     const card = el("div", "ver" + (i === state.version ? " sel" : ""));
     card.append(el("b", null, `v${i + 1}`), el("small", null, v.label));
@@ -356,43 +363,43 @@ function renderHistory() {
 }
 
 function renderBom(bom) {
-  const box = $("#bom"); box.innerHTML = "";
+  const box = $("#bom"); box.replaceChildren();
   const totalEl = $("#bomtotal");
   if (!bom) { totalEl.textContent = ""; return; }
   const over = bom.budget != null && !bom.feasible;
   totalEl.textContent = "$" + bom.total + (bom.budget != null ? (bom.feasible ? " ✓ within" : " ✗ over") : "");
   totalEl.className = "bomtotal " + (bom.budget == null ? "" : over ? "over" : "ok");
-  const tbl = el("table", "bomtable");
-  tbl.innerHTML = "<thead><tr><th>Component</th><th>Qty</th><th>Unit</th><th>Total</th></tr></thead>";
-  const tb = el("tbody");
+  // built from elements, never from HTML strings: every value here can come from an imported file or a share link
+  const tb = h("tbody");
   for (const l of bom.lines) {
-    const tr = el("tr");
-    const url = (l.note ?? "").match(/https?:\/\/\S+$/)?.[0], note = url ? l.note.slice(0, -url.length).replace(/\s*·\s*$/, "") : l.note;
-    tr.innerHTML = `<td><div class="bomcat">${esc(l.category)}</div>${url ? link(url, esc(l.name)) : esc(l.name)}${note ? ` · <span style="color:var(--mute)">${esc(note)}</span>` : ""}<div style="color:var(--mute);font-size:11px">${esc(l.spec)}</div></td><td class="n">${l.qty}</td><td class="n">$${l.unit_cost}</td><td class="n">$${l.subtotal}</td>`;
-    tb.append(tr);
+    const raw = String(l.note ?? ""), url = safeHttpUrl(raw.match(/https?:\/\/\S+$/)?.[0]), note = url ? raw.slice(0, raw.lastIndexOf("http")).replace(/\s*·\s*$/, "") : raw;
+    tb.append(h("tr", null,
+      h("td", null, h("div", { class: "bomcat" }, l.category), url ? h("a", { href: url, target: "_blank", rel: "noopener noreferrer" }, l.name) : String(l.name),
+        note ? [" · ", h("span", { class: "mute" }, note)] : null, h("div", { class: "mute small" }, l.spec)),
+      h("td", { class: "n" }, l.qty), h("td", { class: "n" }, `$${l.unit_cost}`), h("td", { class: "n" }, `$${l.subtotal}`)));
   }
-  tbl.append(tb); box.append(tbl);
+  box.append(h("table", { class: "bomtable" }, h("thead", null, h("tr", null, ["Component", "Qty", "Unit", "Total"].map((t) => h("th", null, t)))), tb));
   box.append(el("div", "hint", `Tier: ${bom.tier}. Street prices from the linked suppliers; check before ordering.`));
   for (const w of bom.warnings ?? []) box.append(el("div", "bomwarn", "⚠ " + w));
   renderDesign(state.robot?.metadata?.design);
 }
-const link = (url, text) => `<a href="${encodeURI(url)}" target="_blank" rel="noopener">${text}</a>`;
-const esc = (x) => String(x).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 /** Engineering record of a designed robot: what it can do, how each motor was sized, every check. */
 function renderDesign(d) {
   const box = $("#bom");
   if (!d) return;
-  const sec = el("div", "design");
-  const perf = Object.entries(d.performance ?? {}).map(([k, v]) => `<tr><td>${esc(k.replace(/_/g, " "))}</td><td class="n">${esc(v)}</td></tr>`).join("");
-  const joints = (d.joints ?? []).map((j) => `<tr><td>${esc(j.joint)}</td><td>${esc(j.actuator)}</td><td class="n">${j.required_nm}</td><td class="n">${j.rated_nm} / ${j.peak_nm}</td><td class="n">${j.margin}x</td><td class="n">${j.speed_rad_s}</td></tr>`).join("");
-  const checks = (d.checks ?? []).map((c) => `<li class="${c.pass ? "ok" : "bad"}">${c.pass ? "✓" : "✗"} <b>${esc(c.name)}</b>: ${esc(c.detail)}</li>`).join("");
-  const printed = (d.printed ?? []).map((p) => `<li>${esc(p.name)}: ${p.check.bbox_mm.join(" × ")} mm, ${Math.round(p.mass_kg * 1000)} g${p.check.fits_bed ? "" : ": <b>too big for the bed</b>"}</li>`).join("");
-  sec.innerHTML = `<div class="panel-h">Engineering</div><div class="hint">${esc(d.summary)}</div>
-    <table class="bomtable"><tbody>${perf}</tbody></table>
-    ${joints ? `<div class="panel-h">Actuator sizing</div><table class="bomtable"><thead><tr><th>Joint</th><th>Actuator</th><th>Peak need N·m</th><th>Rated / peak</th><th>Margin</th><th>rad/s loaded</th></tr></thead><tbody>${joints}</tbody></table>` : ""}
-    <div class="panel-h">Checks</div><ul class="checks">${checks}</ul>
-    <div class="panel-h">Printed parts (${d.printed?.length ?? 0})</div><ul class="checks">${printed}</ul>
-    ${(d.assumptions ?? []).length ? `<div class="panel-h">Assumptions</div><ul class="checks">${d.assumptions.map((a) => `<li>${esc(a)}</li>`).join("")}</ul>` : ""}`;
+  const list = (items) => h("ul", { class: "checks" }, items);
+  const arr = (x) => (Array.isArray(x) ? x : []);
+  const joints = arr(d.joints).map((j) => h("tr", null, h("td", null, j.joint), h("td", null, j.actuator), h("td", { class: "n" }, j.required_nm), h("td", { class: "n" }, `${j.rated_nm} / ${j.peak_nm}`), h("td", { class: "n" }, `${j.margin}x`), h("td", { class: "n" }, j.speed_rad_s)));
+  const sec = h("div", { class: "design" },
+    h("div", { class: "panel-h" }, "Engineering"), h("div", { class: "hint" }, d.summary),
+    h("table", { class: "bomtable" }, h("tbody", null, Object.entries(d.performance ?? {}).map(([k, v]) => h("tr", null, h("td", null, k.replace(/_/g, " ")), h("td", { class: "n" }, typeof v === "object" ? JSON.stringify(v) : v))))),
+    joints.length ? [h("div", { class: "panel-h" }, "Actuator sizing"), h("table", { class: "bomtable" },
+      h("thead", null, h("tr", null, ["Joint", "Actuator", "Peak need N·m", "Rated / peak", "Margin", "rad/s loaded"].map((t) => h("th", null, t)))), h("tbody", null, joints))] : null,
+    h("div", { class: "panel-h" }, "Checks"),
+    list(arr(d.checks).map((c) => h("li", { class: c.pass ? "ok" : "bad" }, c.pass ? "✓ " : "✗ ", h("b", null, c.name), ": ", c.detail))),
+    h("div", { class: "panel-h" }, `Printed parts (${arr(d.printed).length})`),
+    list(arr(d.printed).map((p) => h("li", null, `${p.name}: ${arr(p.check?.bbox_mm).join(" × ")} mm, ${Math.round(p.mass_kg * 1000)} g`, p.check?.fits_bed ? null : [": ", h("b", null, "too big for the bed")]))),
+    arr(d.assumptions).length ? [h("div", { class: "panel-h" }, "Assumptions"), list(arr(d.assumptions).map((x) => h("li", null, x)))] : null);
   box.append(sec);
 }
 async function refreshBom() {
@@ -408,7 +415,7 @@ function bomMarkdown(bom) {
 }
 
 function renderDiff(lines) {
-  const box = $("#diff"); box.innerHTML = "";
+  const box = $("#diff"); box.replaceChildren();
   if (!lines || !lines.length) return;
   box.append(el("div", null, "ROBOT CHANGES"));
   for (const ln of lines) {
@@ -487,6 +494,7 @@ function loadVersion(i) {
 
 async function doGenerate(prompt) {
   if (!prompt.trim()) { toast("Describe a robot first, for example \"a 6 DOF arm with a gripper\"."); $("#prompt").focus(); return; }
+  if (prompt.length > MAX_PROMPT_CHARS) { toast(`Keep the description under ${MAX_PROMPT_CHARS} characters.`, "err"); return; }
   setBusy($("#genbtn"), true); document.body.classList.add("busy"); revealNext = "strong";
   const family = FAMILIES.findIndex((f) => f.prompt === prompt);
   if (family >= 0) familyDial.go(family, { silent: true });   // chips and the bar keep the ring honest
@@ -623,8 +631,10 @@ async function loadGallery() {
     box.replaceChildren();
     if (!items.length) box.append(el("div", "empty", "Nothing published yet. Press “Publish to gallery” to be the first."));
     for (const it of items) {
-      const link = /https?:\/\/\S+#(?:robot|make)=[A-Za-z0-9_-]+/.exec(it.body ?? "")?.[0];
-      const a = el("a", "item"); a.style.animationDelay = `${box.children.length * 40}ms`; a.href = link ?? it.html_url; a.target = "_blank"; a.rel = "noopener";
+      // a post links back to this site only: an issue body cannot send visitors to a look-alike page
+      const found = /https:\/\/\S+#(?:robot|make)=[A-Za-z0-9_-]+/.exec(it.body ?? "")?.[0], here = `${location.origin}${location.pathname}`;
+      const link = found?.startsWith(`${here}#`) ? found : null;
+      const a = el("a", "item"); a.style.animationDelay = `${box.children.length * 40}ms`; a.href = link ?? (String(safeHttpUrl(it.html_url)).startsWith(`https://github.com/${REPO}/issues/`) ? it.html_url : `https://github.com/${REPO}/issues`); a.target = "_blank"; a.rel = "noopener";
       a.append(el("b", null, it.title.replace(/^\[gallery\]\s*/, "")), el("small", null, `by ${it.user?.login ?? "someone"} · ${new Date(it.created_at).toLocaleDateString()}`));
       box.append(a);
     }
@@ -632,6 +642,7 @@ async function loadGallery() {
 }
 async function doModify(instruction) {
   if (!state.robot || !instruction.trim()) return;
+  if (instruction.length > MAX_PROMPT_CHARS) { toast(`Keep the change under ${MAX_PROMPT_CHARS} characters.`, "err"); return; }
   setBusy($("#modbtn"), true); revealNext = "soft"; sheet.go("peek");
   try { const res = await api("/api/robots/modify", { robot: state.robot, instruction }); state.recipe = state.recipe && { ...state.recipe, m: [...(state.recipe.m ?? []), instruction] }; applyResult(res, instruction.slice(0, 40), res.changes ?? res.diff?.lines); }
   catch (e) { status("✗ " + e.message, "err"); }
@@ -640,7 +651,7 @@ async function doModify(instruction) {
 function setBusy(btn, busy, label) {
   btn.disabled = busy; btn.setAttribute("aria-busy", String(busy));
   if (btn.closest(".list")) return;   // list rows keep their label and pulse their icon
-  if (busy) btn.innerHTML = '<span class="spin" aria-hidden="true"></span>'; else btn.textContent = label;
+  if (busy) btn.replaceChildren(h("span", { class: "spin", "aria-hidden": "true" })); else btn.textContent = label;
 }
 
 // ---------------- downloads ----------------
@@ -761,8 +772,8 @@ $("#robotFile").onchange = async (event) => {
   const file=event.target.files[0];if(!file)return;
   const button=$("#importRobot");setBusy(button,true);
   try {
-    if(file.size>3_900_000)throw new Error("Robot JSON must be smaller than 3.9 MB");
-    const robot=JSON.parse(await file.text());
+    if(file.size>MAX_ROBOT_BYTES)throw new Error(`Robot JSON must be smaller than ${MAX_ROBOT_BYTES/1048576} MB`);
+    const robot=safeJsonParse(await file.text());
     const result=await api("/api/robots/import",{robot});state.recipe=null;applyResult(result,`Imported ${file.name}`);
   }catch(error){status("✗ "+error.message,"err");}
   finally {setBusy(button,false,"Import JSON");event.target.value="";}
@@ -821,8 +832,11 @@ initExamples(); initTemplates(); initMode();
   if (make) {
     // a gallery link: replay how the robot was made
     try {
-      const r = JSON.parse(fromB64url(make)); history.replaceState(null, "", location.pathname);
-      if (typeof r.p !== "string") throw new Error("no prompt");
+      // anyone can send this link: the recipe is size-capped, prototype keys are dropped and every field is type-checked
+      if (make.length > 64 * 1024) throw new Error("too long");
+      const r = safeJsonParse(fromB64url(make)); history.replaceState(null, "", location.pathname);
+      if (typeof r.p !== "string" || r.p.length > MAX_PROMPT_CHARS) throw new Error("no prompt");
+      if (r.m !== undefined && !(Array.isArray(r.m) && r.m.length <= 100)) throw new Error("bad changes");
       $("#prompt").value = r.p;
       if (r.a && !state.arduino) setArduino(true);
       await doGenerate(r.p);

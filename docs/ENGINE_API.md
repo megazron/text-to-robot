@@ -18,7 +18,7 @@ Types: [`engine/v1/engine.d.ts`](https://megazron.github.io/text-to-robot/engine
 ## Loading
 
 - `engine.js` is an ES module. Import it from the published site, or from a local build (`deploy/build-pages.sh pages-dist`, then serve `pages-dist/`).
-- `createEngine({ base })` starts the worker from `base` (default: the site `engine.js` came from). From another origin I start it through a small same-origin bootstrap that imports the worker with CORS; GitHub Pages sends `Access-Control-Allow-Origin: *`, so this works from any page. A page with a Content Security Policy needs `worker-src blob:` and `script-src` for the engine's site.
+- `createEngine({ base })` starts the worker from `base` (default: the site `engine.js` came from). From another origin I start it through a small same-origin bootstrap that imports the worker with CORS; GitHub Pages sends `Access-Control-Allow-Origin: *`, so this works from any page. A page with a Content Security Policy needs the directives under [Security](#security).
 - The first call waits for the CAD kernels (OpenCascade and manifold, about 12 MB of WebAssembly, cached by the browser).
 - `onProgress` hears long jobs, such as forging the Mark 43 armour.
 
@@ -72,6 +72,19 @@ An edited robot carries `metadata.studio` (`edited: true`, printed part paramete
 ## Mounting points
 
 A mount is a frame on a part: `pos` (metres), `axis` (out of the part), `ref` (across it) and a `kind`. Kinds that mate: `output` with `hub` (a shaft or horn and a wheel hub or a printed link's horn coupling; mating them offers a joint), `case` with `seat` (a servo in a printed bracket made for it), `board` with `standoffs` (matching hole patterns), and `base` or `board` on any `face`. Mounts come from the catalog: an actuator's output frame, its case holes, a board's mounting holes (the electrical record's drawing where the catalog has none), a wheel's bore. Every part also has a `base` under its body for placing it on a surface.
+
+## Security
+
+- **Content Security Policy.** The worker is started from a `blob:` bootstrap, and a blob worker runs under the page's own policy. The strictest policy that runs the engine, tested in CI by `scripts/check_engine.py`, is:
+
+  ```
+  script-src 'self' https://megazron.github.io 'wasm-unsafe-eval' 'unsafe-eval'; worker-src blob:; connect-src https://megazron.github.io
+  ```
+
+  `'wasm-unsafe-eval'` compiles the CAD kernels. `'unsafe-eval'` is needed because the kernels' Emscripten glue (manifold-3d, OpenCascade) builds its call wrappers with `new Function` from C++ type signatures when it starts; nothing the engine is given is ever evaluated. If your page cannot allow `'unsafe-eval'`, serve the engine from your own origin (a local build, `deploy/build-pages.sh`) so the worker loads as a same-origin script with its own policy.
+- **Pin what you load.** `/engine/v1/` changes when I fix or extend it. To freeze a version, copy a build to your own site, or load it through an import map with an `integrity` entry for `engine.js` (and keep in mind the worker files it loads are not covered by that hash).
+- **What the engine can reach.** It runs in a worker in your page's origin: it sees only what you pass it, stores the Mark 43 cache in your origin's IndexedDB, and makes no network request except fetching its own files from `base`. It never reads this site's storage.
+- **Treat robots as data.** Names in a robot must be plain identifiers (letters, digits, `_`); a robot with other names is refused before any file is generated, so a hostile spec cannot write quotes, markup or `../` into a URDF, a Python script or a zip path. Text inside a robot (notes, design summaries) is still untrusted: show it with `textContent`, never `innerHTML`.
 
 ## Versions
 

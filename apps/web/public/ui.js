@@ -42,7 +42,7 @@ export class Dial {
     this.nodes = stops.map((s, i) => {
       const n = document.createElement("span"); n.className = "dial-stop"; n.dataset.i = i;
       n.style.setProperty("--a", `${i * this.step}deg`);
-      n.innerHTML = s.icon ? `<svg class="ico" aria-hidden="true"><use href="#${s.icon}"/></svg>` : "<i></i>";
+      n.append(s.icon ? icon(s.icon) : document.createElement("i"));
       this.ring.append(n); return n;
     });
     const part = (c) => { const n = document.createElement("i"); n.className = c; return n; };
@@ -62,7 +62,7 @@ export class Dial {
   face() {
     const s = this.stops[this.index];
     this.coreFace.replaceChildren();
-    if (s.icon) this.coreFace.insertAdjacentHTML("beforeend", `<svg class="ico" aria-hidden="true"><use href="#${s.icon}"/></svg>`);
+    if (s.icon) this.coreFace.append(icon(s.icon));
     if (s.big) { const b = document.createElement("b"); b.textContent = s.big; this.coreFace.append(b); }
     const t = document.createElement("span"); t.textContent = s.label; this.coreFace.append(t);
     this.core.setAttribute("aria-label", this.coreLabel?.(s) ?? s.label);
@@ -219,4 +219,11 @@ export function transformFlash(canvas, centre, strong = true) {
   }
   canvas.animate([{ opacity: 0, transform: "scale(.72)" }, { opacity: 1, transform: "scale(1.035)", offset: 0.62 }, { opacity: 1, transform: "scale(1)" }], { duration: 760, easing: out });
   haptic(strong ? 24 : 10);
+}
+
+/** <svg class="ico"><use href="#id"/></svg>, built as elements (no HTML strings under the page's Trusted Types CSP). */
+function icon(id) {
+  const NS = "http://www.w3.org/2000/svg", svg = document.createElementNS(NS, "svg"), use = document.createElementNS(NS, "use");
+  svg.setAttribute("class", "ico"); svg.setAttribute("aria-hidden", "true"); use.setAttribute("href", `#${String(id).replace(/[^\w-]/g, "")}`);
+  svg.append(use); return svg;
 }

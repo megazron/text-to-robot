@@ -2,6 +2,8 @@
 // answered by the same generator packages, running in a Web Worker (browser-engine.ts), so the page stays smooth while a
 // robot is designed and opens before the CAD kernels have loaded. Robots are kept in localStorage; share links carry the
 // robot itself (compressed) in the URL fragment because there is no server to look an id up.
+// @ts-expect-error: plain JavaScript module without types (apps/web/public/safe.js, shared with app.js)
+import { inflateCapped, safeJsonParse, scriptUrl, MAX_HASH_CHARS } from "../public/safe.js";
 const STORE_KEY = "ttr.robots";
 const realFetch = globalThis.fetch.bind(globalThis);
 // ?helpers=N caps the armour forge's helper workers (each one a core and its own memory); the default is one per spare core, at most four
@@ -19,7 +21,7 @@ const send = (m: unknown) => { if (started) engine.postMessage(m); else queued.p
 
 function startEngine() {
   started = false;
-  engine = new Worker(new URL("./browser-engine.js", document.baseURI), { type: "module", ...(helpersAsked ? { name: `helpers=${Number(helpersAsked)}` } : {}) });
+  engine = new Worker(scriptUrl(new URL("./browser-engine.js", document.baseURI)), { type: "module", ...(helpersAsked ? { name: `helpers=${Number(helpersAsked)}` } : {}) });
   engine.onmessage = async ({ data }) => {
     if (data.ready) {
       started = true; failedStarts = 0;
@@ -82,9 +84,11 @@ const fromB64Url = (s: string) => Uint8Array.from(atob(s.replace(/-/g, "+").repl
     return `${location.origin}${location.pathname}#robot=${toB64Url(packed)}`;
   },
   async sharedRobot(): Promise<unknown | null> {
+    // the fragment is attacker-chosen (anyone can send a link): its length, its unpacked size and its keys are all capped
+    if (location.hash.length > MAX_HASH_CHARS) throw new Error("the shared link is too long");
     const m = /[#&]robot=([A-Za-z0-9_-]+)/.exec(location.hash);
     if (!m) return null;
-    return JSON.parse(new TextDecoder().decode(await pipe(fromB64Url(m[1]), new DecompressionStream("deflate-raw"))));
+    return safeJsonParse(new TextDecoder().decode(await inflateCapped(fromB64Url(m[1]), "deflate-raw")));
   },
 };
 

@@ -37,7 +37,14 @@ class Other(http.server.BaseHTTPRequestHandler):
     def log_message(self, *a): pass
     def do_GET(self):
         body = b"<!DOCTYPE html><title>another site</title><p>another site</p>"
-        self.send_response(200); self.send_header("Content-Type", "text/html"); self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body)
+        self.send_response(200); self.send_header("Content-Type", "text/html"); self.send_header("Content-Length", str(len(body)))
+        # the strictest policy an embedding site can keep and still run the engine (docs/ENGINE_API.md, "Content-Security-Policy")
+        self.send_header("Content-Security-Policy", EMBEDDER_CSP.format(site=site_origin))
+        self.end_headers(); self.wfile.write(body)
+
+
+EMBEDDER_CSP = ("default-src 'none'; script-src 'self' {site} 'wasm-unsafe-eval' 'unsafe-eval'; worker-src blob:; connect-src {site}; "
+                "object-src 'none'; base-uri 'none'; form-action 'none'")
 
 
 def serve(handler):
@@ -106,6 +113,8 @@ with sync_playwright() as p:
     if os.getenv("TTR_CHROMIUM"): opts["executable_path"] = os.environ["TTR_CHROMIUM"]
     browser = p.chromium.launch(**opts)
     page = browser.new_page()
+    page.add_init_script("addEventListener('securitypolicyviolation', (e) => console.error(`CSP violation: ${e.violatedDirective} blocked ${e.blockedURI || 'inline'}`))")
+    page.on("worker", lambda w: w.on("console", lambda m: errors.append("worker: " + m.text) if m.type == "error" else None))
     page.on("pageerror", lambda e: errors.append(str(e)))
     page.on("console", lambda m: errors.append(m.text) if m.type == "error" else None)
     page.route("**/*", lambda r: r.continue_() if r.request.url.startswith((site_origin, other_origin, "blob:", "data:")) else (errors.append("external: " + r.request.url), r.abort()))

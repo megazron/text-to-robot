@@ -15,6 +15,8 @@ import { buildPart, toStlBinary, meshTopology, setArmourSource, setArmourCache, 
 import { providerStatus } from "@ttr/llm-providers";
 import { engineApi } from "./engine/api.ts";
 import { setPool, workerPool } from "@ttr/mesh/forge/pool";
+// @ts-expect-error: plain JavaScript module without types
+import { safeJsonParse, MAX_PROMPT_CHARS } from "../public/safe.js";
 
 const MAX_STORE = 50;
 const store = new Map<string, RobotSpecification>();
@@ -127,7 +129,12 @@ setForgeListener((p) => { if (!forgeStart.t) forgeStart.t = Date.now(); post({ f
 
 async function answer(method: string, path: string, text: string): Promise<Response> {
   try {
-    const body = text ? JSON.parse(text) : {};
+    // __proto__ / constructor / prototype keys are dropped: request bodies carry robots from files and share links
+    const body = text ? safeJsonParse(text, 64 * 1024 * 1024) : {};
+    // a robot whose names are not plain identifiers is refused before any generator writes them into a file
+    // the parser's time grows faster than the text (about 7 s for 4,000 characters of repeated words); share links replay prompts
+    for (const k of ["prompt", "instruction"]) if (typeof body[k] === "string" && body[k].length > MAX_PROMPT_CHARS) return json(400, { error: `the ${k} is longer than ${MAX_PROMPT_CHARS} characters` });
+    if (body.robot) { const bad = validateSpec(body.robot).issues.find((i) => /^bad_(robot|joint|link|material)_name$/.test(i.code)); if (bad) return json(400, { error: bad.message }); }
     // a suit's armour must be the one its robot was designed with before anything is exported from it
     if (body.robot) await forgeForRobot(body.robot as RobotSpecification);
     if (path === "/api/arduino" && body.prompt) await forgeForPrompt(String(body.prompt));
@@ -137,7 +144,7 @@ async function answer(method: string, path: string, text: string): Promise<Respo
   } catch (e) { return json(400, { error: (e as Error).message }); }
 }
 self.onmessage = async ({ data }: MessageEvent) => {
-  if (data.robots) { for (const [k, v] of JSON.parse(data.robots)) store.set(k, v); return; }
+  if (data.robots) { for (const [k, v] of safeJsonParse(data.robots, 256 * 1024 * 1024)) store.set(k, v); return; }
   const r = await answer(data.method, data.path, data.body), buffer = await r.arrayBuffer();
   post({ id: data.id, status: r.status, type: r.headers.get("Content-Type") ?? "application/json", buffer, wasm_mb: wasmPeakMb() }, [buffer]);
 };

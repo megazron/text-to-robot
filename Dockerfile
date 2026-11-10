@@ -3,6 +3,7 @@ WORKDIR /app
 COPY . .
 RUN npm ci --omit=dev
 ENV PORT=8787
+ENV HOST=0.0.0.0
 ENV TTR_DATA_DIR=/data
 VOLUME ["/data"]
 EXPOSE 8787

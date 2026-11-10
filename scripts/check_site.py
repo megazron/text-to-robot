@@ -131,6 +131,8 @@ def run(browser, case):
         if u.startswith(origin) or u.startswith("data:") or u.startswith("blob:"): r.continue_()
         else: external.append(u); r.abort()
     page.route("**/*", route)
+    # every Content-Security-Policy or Trusted Types violation is a page error (the policy is in index.html, scripts/csp.ts)
+    page.add_init_script("addEventListener('securitypolicyviolation', (e) => console.error(`CSP violation: ${e.violatedDirective} blocked ${e.blockedURI || 'inline'}`))")
     page.on("pageerror", lambda e: errors.append(str(e)))
     page.on("console", lambda m: errors.append(m.text[:300]) if m.type == "error" else None)
     page.on("response", lambda r: failed.append(f"{r.status} {r.url}") if r.status >= 400 else None)

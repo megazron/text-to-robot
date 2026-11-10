@@ -15,6 +15,12 @@ import { EnginePool, EngineError } from "./pool.ts";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const WEB_ROOT = join(__dirname, "..", "..", "web", "public");
 const PORT = Number(process.env.PORT ?? 8787);
+// Loopback only unless asked (HOST=0.0.0.0 in the Docker image): the API runs whatever a request asks of the generator.
+const HOST = process.env.HOST ?? "127.0.0.1";
+// Browsers on other sites may call this API only from origins listed in TTR_CORS_ORIGINS (comma separated); the web UI is same-origin.
+const CORS = new Set((process.env.TTR_CORS_ORIGINS ?? "").split(",").map((s) => s.trim()).filter(Boolean));
+const SECURITY_HEADERS = { "X-Content-Type-Options": "nosniff", "Referrer-Policy": "strict-origin-when-cross-origin", "X-Frame-Options": "DENY", "Cross-Origin-Opener-Policy": "same-origin" };
+const originOf = new WeakMap<ServerResponse, string | undefined>();
 const DATA_DIR = process.env.TTR_DATA_DIR ?? join(__dirname, "..", "..", "..", "data");
 const STORE_FILE = join(DATA_DIR, "robots.json");
 const store = new Map<string, RobotSpecification>();
@@ -47,15 +53,16 @@ function encodeFiles(files: Record<string, string | Uint8Array>): Record<string,
 }
 function json(res: ServerResponse, code: number, body: unknown) {
   const s = JSON.stringify(body);
-  res.writeHead(code, { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Headers": "Content-Type", "Access-Control-Allow-Methods": "GET,POST,OPTIONS" });
+  const o = originOf.get(res), cors = o && CORS.has(o) ? { "Access-Control-Allow-Origin": o, "Access-Control-Allow-Headers": "Content-Type", "Access-Control-Allow-Methods": "GET,POST,OPTIONS", Vary: "Origin" } : {};
+  res.writeHead(code, { "Content-Type": "application/json", ...SECURITY_HEADERS, ...cors });
   res.end(s);
 }
 
 function readBody(req: IncomingMessage): Promise<any> {
   return new Promise((resolve, reject) => {
     let data = ""; let size = 0;
-    req.on("data", (c) => { size += c.length; if (size > 4_000_000) { reject(new Error("payload too large")); req.destroy(); } data += c; });
-    req.on("end", () => { try { resolve(data ? JSON.parse(data) : {}); } catch { reject(new Error("invalid JSON body")); } });
+    req.on("data", (c) => { size += c.length; if (size > 9_000_000) { reject(new Error("payload too large")); req.destroy(); } data += c; });
+    req.on("end", () => { try { resolve(data ? JSON.parse(data, (k, v) => (k === "__proto__" || k === "constructor" || k === "prototype" ? undefined : v)) : {}); } catch { reject(new Error("invalid JSON body")); } });
     req.on("error", reject);
   });
 }
@@ -68,13 +75,19 @@ async function serveStatic(req: IncomingMessage, res: ServerResponse): Promise<b
   if (!file.startsWith(WEB_ROOT)) { json(res, 403, { error: "forbidden" }); return true; }
   try {
     const buf = await readFile(file);
-    res.writeHead(200, { "Content-Type": MIME[extname(file)] ?? "application/octet-stream" });
+    res.writeHead(200, { "Content-Type": MIME[extname(file)] ?? "application/octet-stream", ...SECURITY_HEADERS });
     res.end(buf);
     return true;
   } catch { return false; }
 }
 
 const server = createServer(async (req, res) => {
+  const requestOrigin = req.headers.origin; originOf.set(res, requestOrigin);
+  // DNS rebinding: a page on evil.example resolved to 127.0.0.1 sends Host: evil.example; only local names (or the bound host) are served
+  const host = String(req.headers.host ?? "").replace(/:\d+$/, "").replace(/^\[|\]$/g, "");
+  if (HOST === "127.0.0.1" && !["localhost", "127.0.0.1", "::1"].includes(host)) { json(res, 421, { error: "this server answers on localhost only" }); return; }
+  // a cross-site POST from a page that is not allowed is refused before anything runs (the browser would only hide the answer)
+  if (req.method !== "GET" && requestOrigin && !CORS.has(requestOrigin) && requestOrigin !== `http://${req.headers.host}`) { json(res, 403, { error: "cross-origin requests are not allowed (set TTR_CORS_ORIGINS)" }); return; }
   const url = new URL(req.url ?? "/", `http://localhost:${PORT}`);
   const p = url.pathname;
   if (req.method === "OPTIONS") { json(res, 204, {}); return; }
@@ -153,7 +166,7 @@ const server = createServer(async (req, res) => {
   }
 });
 
-server.listen(PORT, () => {
+server.listen(PORT, HOST, () => {
   const st = providerStatus();
   const address=server.address();const port=address && typeof address!=="string" ? address.port : PORT;
   console.log(`text-to-robot API on http://localhost:${port}  (generation: ${st.mode}, no external inference)`);

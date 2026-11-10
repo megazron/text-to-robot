@@ -350,3 +350,6 @@ body.busy .skhide{display:none}
 .site-links { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 18px 0 6px; font-size: 13px; }
 .site-links a { color: var(--mute); text-decoration: underline; text-underline-offset: 2px; }
 .site-links a:hover, .site-links a:focus-visible { color: inherit; }
+/* security: classes that replace inline style attributes (the page CSP has no style-src unsafe-inline) */
+.mute{color:var(--mute)}.mute.small{font-size:11px}.sprite{position:absolute}
+.framed{padding:24px;font-size:16px}
