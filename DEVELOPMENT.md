@@ -62,7 +62,7 @@ The site in `apps/web/public` is static. `deploy/build-pages.sh` bundles the gen
 
 ## Brand
 
-Logo files and rules are in [docs/brand](docs/brand/README.md). `python docs/brand/build.py` rewrites the SVGs and `python docs/brand/export.py` renders the PNGs. The website's copies live in `apps/web/public/icons/` and `apps/web/public/mark.svg`.
+Logo files and rules are in [docs/brand](docs/brand/README.md). `python docs/brand/build.py` rewrites the SVGs and `python docs/brand/export.py` renders the PNGs. The website's copies live in `apps/web/public/icons/` and `apps/web/public/mark.svg`, and the header mark in `apps/web/public/index.html` is mark.svg inlined.
 
 ## Release
 

@@ -1,4 +1,4 @@
-<p align="center"><img src="docs/brand/banner.png" alt="Text to Robot" width="100%"></p>
+<p align="center"><picture><source media="(prefers-color-scheme: light)" srcset="docs/brand/banner-light.png"><img src="docs/brand/banner.png" alt="Text to Robot" width="100%"></picture></p>
 
 <p align="center">
   <a href="https://megazron.github.io/text-to-robot/"><b>Open the app</b></a> &nbsp;·&nbsp;
@@ -10,7 +10,7 @@
 <p align="center">
   <a href="https://github.com/megazron/text-to-robot/actions/workflows/ci.yml"><img src="https://github.com/megazron/text-to-robot/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <a href="https://github.com/megazron/text-to-robot/actions/workflows/site.yml"><img src="https://github.com/megazron/text-to-robot/actions/workflows/site.yml/badge.svg" alt="Website"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/licence-MIT-39ff88.svg" alt="MIT licence"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/licence-MIT-3dfa46.svg" alt="MIT licence"></a>
 </p>
 
 **Describe a robot in plain words. Get one you can simulate, wire and print.**

@@ -1,14 +1,21 @@
-"""Render the brand SVGs to PNG with headless Chromium (pip install playwright; playwright install chromium)."""
-import pathlib, sys
+"""Render the brand SVGs to PNG with headless Chromium (pip install playwright; playwright install chromium).
+
+    python docs/brand/export.py [folder]
+"""
+import pathlib
+import sys
+
 from playwright.sync_api import sync_playwright
+
 D = pathlib.Path(sys.argv[1]) if len(sys.argv) > 1 else pathlib.Path(__file__).parent
-JOBS = [  # svg, png, css width, css height, device scale
+JOBS = [  # svg, png, css width (None: from the aspect ratio), css height, device scale
     ("mark.svg", "mark.png", 512, 512, 1), ("mark-light.svg", "mark-light.png", 512, 512, 1),
     ("glyph.svg", "glyph.png", 512, 512, 1),
     ("mark-mono-black.svg", "mark-mono-black.png", 512, 512, 1), ("mark-mono-white.svg", "mark-mono-white.png", 512, 512, 1),
-    ("lockup.svg", "lockup.png", None, 128, 2), ("lockup-light.svg", "lockup-light.png", None, 128, 2),
-    ("banner.svg", "banner.png", 1280, 320, 2), ("social.svg", "social.png", 1280, 640, 1),
-    ("favicon-small.svg", "favicon-16.png", 16, 16, 1), ("mark.svg", "favicon-32.png", 32, 32, 1),
+    ("lockup.svg", "lockup.png", None, 160, 2), ("lockup-light.svg", "lockup-light.png", None, 160, 2),
+    ("banner.svg", "banner.png", 1280, 320, 1), ("banner-light.svg", "banner-light.png", 1280, 320, 1),
+    ("social.svg", "social.png", 1280, 640, 1), ("family.svg", "family.png", 1280, 640, 1),
+    ("favicon-small.svg", "favicon-16.png", 16, 16, 1), ("favicon-32.svg", "favicon-32.png", 32, 32, 1),
     ("app-square.svg", "apple-touch-icon.png", 180, 180, 1), ("mark.svg", "icon-192.png", 192, 192, 1),
     ("mark.svg", "icon-512.png", 512, 512, 1), ("app-maskable.svg", "icon-maskable-512.png", 512, 512, 1),
 ]
