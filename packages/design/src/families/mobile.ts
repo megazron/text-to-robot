@@ -623,14 +623,25 @@ function seatMainFuse(b: Build, battery: string) {
   const toMid = b.packRoom ? 1 : (mid[0] - w[0]) * sideA[0] + (mid[1] - w[1]) * sideA[1] >= 0 ? 1 : -1;
   // beside the pack: its half width, a bend diameter of the lead less the fuse's half width, so the lead's U has its radius
   const half = (bb.max[1] - bb.min[1]) / 2, off = half + 24 - (fb.max[1] - fb.min[1]) / 2 + 2, L = fb.max[0] - fb.min[0];
-  const at: Vec3 = [w[0] - e[0] * L / 2 + sideA[0] * toMid * off, w[1] - e[1] * L / 2 + sideA[1] * toMid * off, w[2]];
+  let at: Vec3 = [w[0] - e[0] * L / 2 + sideA[0] * toMid * off, w[1] - e[1] * L / 2 + sideA[1] * toMid * off, w[2]];
   // its IN end (body -x) towards the pack's lead end: body x along -e
-  const turn = Math.abs(e[0]) > 0.5 ? (e[0] > 0 ? 2 : 0) : (e[1] > 0 ? 3 : 1);
+  let turn = Math.abs(e[0]) > 0.5 ? (e[0] > 0 ? 2 : 0) : (e[1] > 0 ? 3 : 1);
+  // or straight on from the positive lead (its pin 2 mm to the side of the pack's middle), when there is room: the lead
+  // runs straight into the fuse, which leaves its far end the same way
+  { const gap = 3 + 3 + 3, sAt: Vec3 = [w[0] + e[0] * (gap + L / 2) - sideA[0] * 2, w[1] + e[1] * (gap + L / 2) - sideA[1] * 2, w[2]];
+    const fw = (fb.max[1] - fb.min[1]) / 2, fh = (fb.max[2] - fb.min[2]) / 2, lo: Vec3 = [Math.min(sAt[0] - Math.abs(e[0]) * L / 2 - Math.abs(e[1]) * fw, 1e9) - 2, sAt[1] - Math.abs(e[1]) * L / 2 - Math.abs(e[0]) * fw - 2, sAt[2] - fh - 2], hi: Vec3 = [sAt[0] + Math.abs(e[0]) * L / 2 + Math.abs(e[1]) * fw + 2, sAt[1] + Math.abs(e[1]) * L / 2 + Math.abs(e[0]) * fw + 2, sAt[2] + fh + 2];
+    const boxes = b.A.spec.links.filter((l) => l.geometry.type === "mesh" && l.geometry.part === "component" && part(String(l.geometry.params?.key)).bbox_mm).map((l) => partBox(b.A, l.name));
+    const inside = !c || [lo, hi].every((q) => [0, 1].every((k) => q[k] >= c.min[k] + 3 && q[k] <= c.max[k] - 3));
+    if (inside && !boxes.some((q) => [0, 1, 2].every((k) => q.hi[k] > lo[k] && q.lo[k] < hi[k])) && !b.keepOut.some((q) => q.x1 > lo[0] && q.x0 < hi[0] && q.y1 > lo[1] && q.y0 < hi[1])) {
+      at = sAt; turn = Math.abs(e[0]) > 0.5 ? (e[0] > 0 ? 0 : 2) : (e[1] > 0 ? 1 : 3);
+    } }
   H.seat("main_fuse", at, turn);
+  turn = Math.abs(e[0]) > 0.5 ? (e[0] > 0 ? 2 : 0) : (e[1] > 0 ? 3 : 1);
   // the star ground on top of the fuse, its first lever at the same end: the pack's negative lead runs beside the positive
   // (the star ground and the rail splices are added when the harness is finished: their seats wait for them)
   const sb = part("wago_221_415").bbox_mm!, Ls = sb.max[0] - sb.min[0];
-  H.seat("star_ground", [w[0] - e[0] * Ls / 2 + sideA[0] * toMid * off, w[1] - e[1] * Ls / 2 + sideA[1] * toMid * off, w[2] + (fb.max[2] - fb.min[2]) / 2 + (sb.max[2] - sb.min[2]) / 2 + 2], turn);
+  const backAlong = at[0] !== w[0] + e[0] * (9 + L / 2) - sideA[0] * 2 || at[1] !== w[1] + e[1] * (9 + L / 2) - sideA[1] * 2;
+  H.seat("star_ground", [w[0] - e[0] * Ls / 2 + sideA[0] * toMid * off, w[1] - e[1] * Ls / 2 + sideA[1] * toMid * off, w[2] + (backAlong ? (fb.max[2] - fb.min[2]) / 2 + (sb.max[2] - sb.min[2]) / 2 + 2 : 0)], turn);
 }
 /**
  * The main rail's splice where the switch's output lead reaches it with no tight turn: straight on from the tab, or after
