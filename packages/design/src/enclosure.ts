@@ -248,7 +248,7 @@ export function supplyBox(A: Assembly, H: Harness, o: { parent: string; T: Mat4;
  * A hood over parts already mounted on a deck: walls and roof in one printed part, screwed down at four tabs, so the hood
  * itself is the removable lid and the deck is the compartment's floor. Bounds are in the deck link's frame.
  */
-export function hood(A: Assembly, H: Harness | undefined, o: { name: string; deck: string; x0: number; x1: number; y0: number; y1: number; z0: number; z1: number; parts: string[]; usb?: { face: Face; u: number }; grommets?: { id: string; face: Face; u: number; d?: number }[]; deckGrommets?: { id: string; x: number; y: number; d?: number }[]; material?: string; ventRows?: number; cad?: boolean; flip?: boolean; wallVents?: boolean; rocker?: { face: "x+" | "x-"; u: number; key?: string } }): BayRecord {
+export function hood(A: Assembly, H: Harness | undefined, o: { name: string; deck: string; x0: number; x1: number; y0: number; y1: number; z0: number; z1: number; parts: string[]; usb?: { face: Face; u: number }; grommets?: { id: string; face: Face; u: number; d?: number; w?: number; h?: number; z?: number }[]; deckGrommets?: { id: string; x: number; y: number; d?: number }[]; material?: string; ventRows?: number; cad?: boolean; flip?: boolean; wallVents?: boolean; rocker?: { face: "x+" | "x-"; u: number; key?: string } }): BayRecord {
   const { x0, x1, y0, y1, z0, z1 } = o, t = WALL, top = 2.8, rc = 5;
   // flip: the hood hangs under the deck (turned 180 deg about x; bounds are given in that turned frame)
   const Tf: Mat4 = o.flip ? [1, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1] : translation([0, 0, 0]);
@@ -269,9 +269,11 @@ export function hood(A: Assembly, H: Harness | undefined, o: { name: string; dec
     exits.push({ id: `${o.name}.usb`, kind: "usb", face: f, at: p, normal: faceNormal(f), hole_mm: 18 });
   }
   for (const g of o.grommets ?? []) {
-    const d = g.d ?? 9.5, p = pt(g.face, g.u, z0 + 10), n = faceNormal(g.face);
-    ops.push({ op: "hole", a: [p[0] - n[0] * 5, p[1] - n[1] * 5, p[2]], b: [p[0] + n[0] * 3, p[1] + n[1] * 3, p[2]], d });
-    exits.push({ id: `${o.name}.${g.id}`, kind: "grommet", face: g.face, at: p, normal: n, hole_mm: d });
+    const d = g.d ?? 9.5, p = pt(g.face, g.u, g.z ?? z0 + 10), n = faceNormal(g.face);
+    // a slot (w along the wall, h high) for a flat ribbon, else a round grommet
+    if (g.w) { const hw = g.w / 2, hh = (g.h ?? 3) / 2; ops.push({ op: "cutbox", min: g.face[0] === "x" ? [p[0] - t - 1, p[1] - hw, p[2] - hh] : [p[0] - hw, p[1] - t - 1, p[2] - hh], max: g.face[0] === "x" ? [p[0] + t + 1, p[1] + hw, p[2] + hh] : [p[0] + hw, p[1] + t + 1, p[2] + hh] }); }
+    else ops.push({ op: "hole", a: [p[0] - n[0] * 5, p[1] - n[1] * 5, p[2]], b: [p[0] + n[0] * 3, p[1] + n[1] * 3, p[2]], d });
+    exits.push({ id: `${o.name}.${g.id}`, kind: g.w ? "slot" : "grommet", face: g.face, at: p, normal: n, hole_mm: g.w ? g.h ?? 3 : d });
   }
   if (o.rocker) {
     const x = o.rocker.face === "x+" ? x1 : x0, n = o.rocker.face === "x+" ? 1 : -1, zc = (z0 + z1) / 2;
@@ -354,7 +356,7 @@ export const BATTERY_SWITCH = "switch_battery_6006";
 /** Where along the end wall a switch's body (half width h, depth dp) has nothing behind it. */
 const rockerU = (bs: { lo: Vec3; hi: Vec3 }[], x1: number, y0: number, y1: number, h = 13, dp = 29, want = (y0 + y1) / 2) => { const free = (u: number) => u - h >= y0 + 3 && u + h <= y1 - 3 && !bs.some((b) => b.hi[0] > x1 - dp && b.hi[1] > u - h && b.lo[1] < u + h); for (let d = 0; d < y1 - y0; d += 3) for (const u of [want + d, want - d]) if (free(u)) return u; return (y0 + y1) / 2; };
 /** A hood sized round parts already on a deck, with a grommet through the deck where nothing stands. Returns its record. */
-export function hoodAround(A: Assembly, H: Harness, o: { name: string; deck: string; alsoHoles?: string[]; parts: string[]; z0: number; pad?: number; limit?: { x0: number; x1: number; y0: number; y1: number }; material?: string; usbFor?: string; z1?: number; grommets?: { id: string; face: Face; u: number; d?: number }[]; rocker?: boolean | { key: string };
+export function hoodAround(A: Assembly, H: Harness, o: { name: string; deck: string; alsoHoles?: string[]; parts: string[]; z0: number; pad?: number; limit?: { x0: number; x1: number; y0: number; y1: number }; material?: string; usbFor?: string; z1?: number; grommets?: { id: string; face: Face; u: number; d?: number; w?: number; h?: number; z?: number }[]; rocker?: boolean | { key: string };
   /** the deck's cable hole also stays clear of every bought part this far under the deck (a pack in the tub below: a cable coming through needs room to turn) */
   below?: number;
   /** where the deck's cable hole is wanted: the free spot nearest this point is taken (default: nearest the middle of the hood) */
