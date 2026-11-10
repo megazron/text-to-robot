@@ -204,8 +204,18 @@ export class Router {
     return inner && outer ? { inner, outer } : null;
   }
 
-  /** Lay one cable. `awg` per wire gives the bend radius; call again if the gauges change. */
+  /**
+   * Lay one cable. `awg` per wire gives the bend radius; call again if the gauges change. Through a wall exit the run is
+   * laid both ways (turning off the hole's axis level with where it comes from, and after the plain run) and the way with
+   * fewer problems is kept.
+   */
   cable(c: CableIn): CableOut {
+    const a = this.cableOnce(c, true);
+    if (!a.problems.length || (!c.exitA && !c.exitB)) return a;
+    const b = this.cableOnce(c, false);
+    return b.problems.length < a.problems.length ? b : a;
+  }
+  private cableOnce(c: CableIn, level: boolean): CableOut {
     this.ready();
     const g = this.grid, s = g.s, problems: string[] = [], n = c.wires.length;
     const ends = c.wires.map((w, i) => {
@@ -236,7 +246,7 @@ export class Router {
       cur = to;
     };
     const through = (e: ExitAt, outward: boolean) => {
-      const pr = this.pierce(e, needT, outward ? boxA : boxB, 1.6 * Math.max(...E.map((x) => x.R)), outward ? cur : JB, outward ? undefined : cur);
+      const pr = this.pierce(e, needT, outward ? boxA : boxB, 1.6 * Math.max(...E.map((x) => x.R)), level ? (outward ? cur : JB) : undefined, outward ? undefined : cur);
       if (!pr) { problems.push(`${c.key}: exit ${e.id} is blocked`); return; }
       const [first, second] = outward ? [pr.inner, pr.outer] : [pr.outer, pr.inner];
       // the run already stands on the hole's axis just short of its first point: straight on through from where it is
@@ -298,11 +308,11 @@ export class Router {
       const od = wireSize(c.wires[k].awg).od;
       let ring = n > 1 && !tight ? Math.max(od * 0.6, c.od / 2 - od / 2) : 0;
       if (ring && hole < 1e9) ring = Math.max(0, Math.min(ring, hole / 2 - od / 2 - 0.4));
-      const tryRing = (r: number): { pts: V3[]; on: string[] } | null => {
+      const tryRing = (r: number, further = true): { pts: V3[]; on: string[] } | null => {
         const Ti = offsetRoute(T.pts, r, (k / Math.max(1, n)) * Math.PI * 2);
         // a wire whose first bend is right by the bundle's end joins it further along its first leg, where a whole bend fits
         // between (else it would turn on to the bundle and along it in less than its radius)
-        if (n > 1) for (const [V, i0, i1] of [[e.la.V, 0, 1], [e.lb.V, Ti.length - 1, Ti.length - 2]] as [V3, number, number][]) {
+        if (further && n > 1) for (const [V, i0, i1] of [[e.la.V, 0, 1], [e.lb.V, Ti.length - 1, Ti.length - 2]] as [V3, number, number][]) {
           if (Ti.length < 3 || T.on[i0] !== T.on[i1] || dist(V, Ti[i0]) >= 2 * e.R) continue;
           const L = dist(Ti[i0], Ti[i1]);
           for (let t = 1; t < L - 2 * e.R; t += 1) { const q = lerp(Ti[i0], Ti[i1], t / L); if (dist(V, q) >= 2 * e.R && g.line(V, q, 1) >= 0) { Ti[i0] = q; break; } }
@@ -316,6 +326,8 @@ export class Router {
         return { pts, on: o };
       };
       let w = tryRing(ring), bad = w ? this.finishWire(w, e.R, e, pierced, fixed, needW) : null;
+      // joining further along is not always the better shape: where the wire still has a tight bend, the plain join is tried
+      if (w && bad!.tight && n > 1) { const w3 = tryRing(ring, false), b3 = w3 ? this.finishWire(w3, e.R, e, pierced, fixed, needW) : null; if (w3 && b3!.hits <= bad!.hits && (!b3!.tight || b3!.tight > bad!.tight)) { w = w3; bad = b3; } }
       if ((!w || bad!.hits) && ring) { const w2 = tryRing(0), b2 = w2 ? this.finishWire(w2, e.R, e, pierced, fixed, needW) : null; if (w2 && (!w || b2!.hits < bad!.hits)) { w = w2; bad = b2; } }
       if (!w) { problems.push(`${c.key}: wire ${k + 1} has no free way from its pin to the cable`); const pts = [e.a.p, e.la.S, ...T.pts, e.lb.S, e.b.p].map(r1); return { pts, on: [ga, ga, ...T.on, gb, gb], drawn_mm: polyLen(pts) }; }
       if (bad!.hits) problems.push(`${c.key}: wire ${k + 1} passes ${bad!.hits} mm through a solid`);
