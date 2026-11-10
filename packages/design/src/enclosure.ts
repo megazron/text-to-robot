@@ -360,7 +360,7 @@ export function hoodAround(A: Assembly, H: Harness, o: { name: string; deck: str
   // an upright rocker needs 34 mm of wall, a battery switch's 70 mm face 72
   // a battery switch's 60 mm body lies over the boards: its 70 mm face starts 2 mm above the tallest of them
   const tallest = Math.max(...bs.map((b) => b.hi[2]));
-  const z1 = Math.max(o.z1 ?? tallest + 7, o.rocker ? o.z0 + (big ? 72 : 35) : 0, big ? tallest + 2 + 70 + 2 : 0);
+  const z1 = Math.max(o.z1 ?? tallest + 7, o.rocker ? o.z0 + (big ? 72 : 35) : 0, big ? tallest + 2 + 70 + 2 : -Infinity);   // -Infinity, not 0: a hood can hang below its plate (z < 0)
   const heat = o.parts.reduce((h, n) => h + heatOf(keyOf(A.spec, n)!), 0), roof = (x1 - x0 - 20) * 3.2 * Math.max(2, Math.floor((y1 - y0 - 16) / 7));
   const g = freeSpot(A, { x0: x0 + 4, x1: x1 - 4, y0: y0 + 4, y1: y1 - 4 }, [o.z0, z1], [11, 11]) ?? [(x0 + x1) / 2, y1 - 6];
   let usb: { face: Face; u: number } | undefined;
