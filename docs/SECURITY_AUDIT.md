@@ -37,7 +37,7 @@ Severity is what an attacker gets, assuming they can send a link or a file.
 *Fix:* a strict policy in a `<meta http-equiv>` written by `scripts/csp.ts` (see "Hardening"), plus `<meta name="referrer">`.
 
 **M2. Share-link decompression bomb.** `browser-api.ts:87` inflated the `#robot=` fragment with no limit. About 70 KB of deflate data unpacks to 64 MB; a link at the URL length limit unpacks to gigabytes and kills the tab before anything is checked.
-*Fix:* `inflateCapped()` stops at 8 MB and aborts the stream; the fragment itself is capped at 2 MB.
+*Fix:* `inflateCapped()` stops at 8 MB and aborts the stream; the fragment itself is capped at 2 MB. The `#make=` gallery links that replay a prompt (added by the launch audit) are capped at 64 KB, parsed with `safeJsonParse()`, and must hold a prompt within the 2,000-character limit and at most 100 changes.
 *Proof:* `tests/security.test.ts` (64 MB bomb refused in well under a second) and the bomb case in `scripts/check_xss.py`.
 
 **M3. The local server listened on every interface and allowed every origin.** `apps/api/src/server.ts:173` called `listen(PORT)` (all interfaces) and every answer carried `Access-Control-Allow-Origin: *` (`:51`).
@@ -62,7 +62,7 @@ Severity is what an attacker gets, assuming they can send a link or a file.
 **L3. Archive paths and download names.** `robotkit.js:44` wrote entry names as given and `:59` used the robot name as the download name. Today every entry name comes from the generators, but nothing stopped a `../` entry (zip slip on extraction) or a name with folders.
 *Fix:* `safeZipPath()` refuses `..`, drive letters and control characters and strips leading slashes in `makeZip`; `safeFileName()` for downloads. *Proof:* `tests/security.test.ts`.
 
-**L4. Prompt size.** A prompt had no length limit. I found no catastrophic regex backtracking (20,000 characters of repeated words, digits, brackets and markup each parse in about the time of a normal prompt; the cost is the design, about 1.5 s), but a share link that replays a prompt should not be able to make the worker chew on megabytes.
+**L4. Prompt size.** A prompt had no length limit. I found no catastrophic regex backtracking: 2,000 characters of repeated words, numbers, brackets, quotes, dashes and markup, and 20,000 characters of repeated words, each take about as long as a normal prompt (the cost is the design, about 1.5 s; profiling shows the time in the CAD kernel, not in the parser), but a share link that replays a prompt should not be able to make the worker chew on megabytes.
 *Fix:* prompts and change requests are capped at 2,000 characters in the page and in the worker. *Proof:* `tests/security.test.ts` ("the prompt parser stays fast ...").
 
 **L5. HTML string sinks for icons.** `ui.js:45` and `:65` used `innerHTML`/`insertAdjacentHTML` with constant icon ids. Not exploitable, but incompatible with Trusted Types; both now build SVG elements.
