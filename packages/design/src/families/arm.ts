@@ -33,6 +33,8 @@ export interface ArmRequest {
   cheapParts?: boolean;
   /** this arm is grafted on a robot: its host brings the electronics, power and harness */
   embedded?: boolean;
+  /** the 12 V bench supply of a serial-bus arm (default the 75 W one; designArm moves up to 150 W when the peak needs it) */
+  supply12?: "psu_12v_lrs75" | "psu_12v_lrs150";
 }
 export type Kind = "Y" | "P" | "R";
 const KINDS: Record<number, Kind[]> = { 1: ["Y"], 2: ["P", "P"], 3: ["Y", "P", "P"], 4: ["Y", "P", "P", "P"], 5: ["Y", "P", "P", "P", "R"], 6: ["Y", "P", "P", "R", "P", "R"], 7: ["Y", "P", "R", "P", "R", "P", "R"] };
@@ -325,7 +327,14 @@ const outputHolesCount = (key: string) => part(key).holes.filter((h) => Math.abs
 let lastTorques: Record<string, number> = {};
 
 /** Design an arm: choose lengths from the reach, size every actuator from the built arm's real loads. */
+/** Design the arm; a serial-bus arm whose 12 V supply cannot give its peak current is designed again on the 150 W supply. */
 export function designArm(req: ArmRequest): RobotSpecification {
+  const spec = designArmOn(req);
+  const failsRail = (s: RobotSpecification) => (s.metadata as { design?: { checks?: { name: string; pass: boolean }[] } }).design?.checks?.some((c) => c.name === "wiring:rail:VBUS" && !c.pass);
+  if (req.supply12 || req.embedded || !failsRail(spec)) return spec;
+  return designArmOn({ ...req, supply12: "psu_12v_lrs150" });
+}
+function designArmOn(req: ArmRequest): RobotSpecification {
   const kinds = req.kinds ?? KINDS[Math.max(1, Math.min(7, Math.round(req.dof)))];
   const dof = kinds.length, payload = req.payloadKg ?? (req.ladder === "hobby" ? (req.onlyActuators?.every((k) => /sg90|mg90/.test(k)) ? 0.02 : 0.05) : 0.1); // desktop class: what a ~$150 servo arm holds stretched out continuously
   const hobby = (req.ladder ?? ladderFor(req.budget)) === "hobby";
@@ -457,10 +466,11 @@ export function designArm(req: ArmRequest): RobotSpecification {
   } else {
     if (!req.embedded) {
       const can = ladder === "cubemars";
-      controlCase(A, H, { parent: "base_link", T: caseT, psu: can ? "psu_48v_lrs350" : "psu_12v_lrs75", psuUse: can ? "48 V actuator supply" : "12 V actuator supply",
+      controlCase(A, H, { parent: "base_link", T: caseT, psu: can ? "psu_48v_lrs350" : (req.supply12 ?? "psu_12v_lrs75"), psuUse: can ? "48 V actuator supply" : "12 V actuator supply",
         boards: [{ name: "servo_bus", key: bus, use: "USB to actuator bus" }, ...(can ? [{ name: "can_bus", key: "usb_can_adapter", use: "USB to CAN for the CubeMars actuators" }, { name: "dcdc_12v", key: "dcdc_48v_12v_sd50c12", use: "12 V for the DYNAMIXEL wrist" }] : [])] });
     }
-    if (ladder !== "cubemars") A.check("power:supply", amps <= 6 * 0.8, `holding the payload stretched out draws ~${amps.toFixed(1)} A of the 6 A supply`);
+    const supplyCont = Number(part(req.supply12 ?? "psu_12v_lrs75").specs.current_a);
+    if (ladder !== "cubemars") A.check("power:supply", amps <= supplyCont * 0.8, `holding the payload stretched out draws ~${amps.toFixed(1)} A of the ${supplyCont} A supply`);
   }
   A.design.assumptions.push(
     "Arm clamps or bolts to the bench through the four M5 holes in the base; it is not free-standing at full reach.",
@@ -480,13 +490,13 @@ export function designArm(req: ArmRequest): RobotSpecification {
   const ready = [0.7, 1.3, -0.8]; // physical bend; a pitch actuator mounted on the other side turns the other way
   A.design.home = Object.fromEntries(pjs.slice(0, 3).map((j, k) => [j.name, +(ready[k] * sign(j)).toFixed(3)]));
   A.design.request = { ...req, dof };
-  if (!req.embedded) wireFixedArm(A, H, ladder, supplyA, gripKeyUsed(A));
+  if (!req.embedded) wireFixedArm(A, H, ladder, supplyA, gripKeyUsed(A), req.supply12 ?? "psu_12v_lrs75");
   return A.finish(`${dof}-DOF arm, ${(reachActual * 1000).toFixed(0)} mm reach, ${payload} kg payload, ${LADDERS[ladder].label}`);
 }
 
 const gripKeyUsed = (A: Assembly) => A.spec.links.some((l) => l.name === "gripper_actuator");
 /** Netlist of an arm on a bench: mains supply to the actuator rail, the bus through every joint in order; a hobby arm on a PCA9685. */
-function wireFixedArm(A: Assembly, H: Harness, ladder: Ladder, supplyA: number, _grip: boolean) {
+function wireFixedArm(A: Assembly, H: Harness, ladder: Ladder, supplyA: number, _grip: boolean, supply12: string) {
   H.scan();
   const actuators = actuatorsUnder(H, /_actuator$/);
   if (ladder === "hobby") {
@@ -512,7 +522,9 @@ function wireFixedArm(A: Assembly, H: Harness, ladder: Ladder, supplyA: number, 
     canTree(H, { adapter: "can_bus", motors: cube, rail: "V48" });
     if (dxl.length) busChain(H, { adapter: "servo_bus", servos: dxl, rail: "12V" });
   } else {
-    H.mainPower("VBUS", { source: "power_supply", pos: "DC OUTPUT +V", neg: "DC OUTPUT -V", fuse: false, volts: 12, cont: 6, peakLimit: 6.6, simultaneous: 2, simNote: "two joints at peak at once, the rest at half load" });
+    // the supply's own datasheet rating: 6 A / 6.6 A for the LRS-75, 12.5 A / 13.75 A for the LRS-150
+    const out = electrical(supply12)!.current_a.v;
+    H.mainPower("VBUS", { source: "power_supply", pos: "DC OUTPUT +V", neg: "DC OUTPUT -V", fuse: false, volts: 12, cont: supply12 === "psu_12v_lrs75" ? 6 : out.typical, peakLimit: supply12 === "psu_12v_lrs75" ? 6.6 : out.peak, simultaneous: 2, simNote: "two joints at peak at once, the rest at half load" });
     busChain(H, { adapter: "servo_bus", servos: actuators, rail: "VBUS" });
     H.spare("servo_bus.dc_in");
   }
