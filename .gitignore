@@ -38,3 +38,4 @@ __pycache__/
 # local scratch (QA screenshots, test builds)
 .cache/
 out/
+MUJOCO_LOG.TXT

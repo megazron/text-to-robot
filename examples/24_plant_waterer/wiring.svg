@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1950 421" width="1950" height="421" font-family="Helvetica, Arial, sans-serif" font-size="10.5">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="30" y="26" font-size="17" font-weight="700">diff_drive_robot: wiring diagram</text>
+<line x1="30" y1="44" x2="54" y2="44" stroke="#c8102e" stroke-width="2"/><text x="60" y="48">power</text>
+<line x1="120" y1="44" x2="144" y2="44" stroke="#111111" stroke-width="2"/><text x="150" y="48">ground</text>
+<line x1="210" y1="44" x2="234" y2="44" stroke="#1f6fd1" stroke-width="2"/><text x="240" y="48">signal</text>
+<line x1="300" y1="44" x2="324" y2="44" stroke="#0a8f5b" stroke-width="2"/><text x="330" y="48">bus</text>
+<text x="30" y="66" font-weight="700" fill="#555">Source</text>
+<text x="370" y="66" font-weight="700" fill="#555">Protection</text>
+<text x="710" y="66" font-weight="700" fill="#555">Regulation</text>
+<text x="1050" y="66" font-weight="700" fill="#555">Control</text>
+<text x="1390" y="66" font-weight="700" fill="#555">Drivers</text>
+<text x="1730" y="66" font-weight="700" fill="#555">Loads</text>
+<path d="M1730 353 H1716 V229 H1254 V105 H1240" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C1 W1 FRONT_CAMERA_CSI: front_camera.csi_15.GND to computer.cam_dsi_0.GND</title></path>
+<path d="M1390 105 H1366 V105 H1264 V105 H1240" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C2 W2 GND: motor_driver_1.control.GND to computer.gpio40.GND, 24 AWG</title></path>
+<path d="M1240 118 H1274 V118 H1356 V118 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C2 W3 LEFT_MOTOR_PWM: computer.gpio40.GPIO12 to motor_driver_1.control.PWM1, 26 AWG</title></path>
+<path d="M1240 131 H1284 V131 H1346 V131 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C2 W4 LEFT_MOTOR_DIR: computer.gpio40.GPIO13 to motor_driver_1.control.DIR1, 26 AWG</title></path>
+<path d="M1240 144 H1294 V144 H1336 V144 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C2 W5 RIGHT_MOTOR_PWM: computer.gpio40.GPIO5 to motor_driver_1.control.PWM2, 26 AWG</title></path>
+<path d="M1240 157 H1304 V157 H1326 V157 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C2 W6 RIGHT_MOTOR_DIR: computer.gpio40.GPIO6 to motor_driver_1.control.DIR2, 26 AWG</title></path>
+<path d="M1580 170 H1654 V137.5 H1656 V105 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C3 W7 LEFT_MOTOR_PHASE_A: motor_driver_1.motor_1.M1A to left_motor.leads.Motor (red), 22 AWG</title></path>
+<path d="M1580 183 H1664 V150.5 H1646 V118 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C3 W8 LEFT_MOTOR_PHASE_B: motor_driver_1.motor_1.M1B to left_motor.leads.Motor (black), 22 AWG</title></path>
+<path d="M1240 170 H1334 V150.5 H1636 V131 H1730" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C4 W9 LEFT_MOTOR_ENC_VCC: computer.gpio40.3V3 to left_motor.leads.Encoder Vcc (blue), 24 AWG</title></path>
+<path d="M1240 105 H1344 V124.5 H1626 V144 H1730" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C4 W10 GND: computer.gpio40.GND to left_motor.leads.Encoder GND (green), 24 AWG</title></path>
+<path d="M1240 183 H1354 V170 H1616 V157 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C4 W11 LEFT_MOTOR_ENC_A: computer.gpio40.GPIO18 to left_motor.leads.Encoder A (yellow), 26 AWG</title></path>
+<path d="M1240 196 H1364 V183 H1606 V170 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C4 W12 LEFT_MOTOR_ENC_B: computer.gpio40.GPIO19 to left_motor.leads.Encoder B (white), 26 AWG</title></path>
+<path d="M1580 196 H1594 V212.5 H1716 V229 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C5 W13 RIGHT_MOTOR_PHASE_A: motor_driver_1.motor_2.M2A to right_motor.leads.Motor (red), 22 AWG</title></path>
+<path d="M1580 209 H1604 V225.5 H1706 V242 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C5 W14 RIGHT_MOTOR_PHASE_B: motor_driver_1.motor_2.M2B to right_motor.leads.Motor (black), 22 AWG</title></path>
+<path d="M1240 170 H1274 V212.5 H1696 V255 H1730" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C6 W15 RIGHT_MOTOR_ENC_VCC: computer.gpio40.3V3 to right_motor.leads.Encoder Vcc (blue), 24 AWG</title></path>
+<path d="M1240 105 H1284 V186.5 H1686 V268 H1730" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C6 W16 GND: computer.gpio40.GND to right_motor.leads.Encoder GND (green), 24 AWG</title></path>
+<path d="M1240 209 H1294 V245 H1676 V281 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C6 W17 RIGHT_MOTOR_ENC_A: computer.gpio40.GPIO16 to right_motor.leads.Encoder A (yellow), 26 AWG</title></path>
+<path d="M1240 222 H1304 V258 H1666 V294 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C6 W18 RIGHT_MOTOR_ENC_B: computer.gpio40.GPIO20 to right_motor.leads.Encoder B (white), 26 AWG</title></path>
+<path d="M220 105 H294 V141 H296 V177 H370" fill="none" stroke="#c8102e" stroke-width="2" opacity="0.8"><title>C7 W19 VBAT: battery.main.BAT+ to main_fuse.leads.IN, 16 AWG</title></path>
+<path d="M560 190 H644 V147.5 H286 V105 H370" fill="none" stroke="#c8102e" stroke-width="2" opacity="0.8"><title>C8 W20 VBAT: main_fuse.leads.OUT to main_switch.contacts.IN, 16 AWG</title></path>
+<path d="M220 118 H314 V183.5 H276 V249 H370" fill="none" stroke="#111111" stroke-width="2" opacity="0.8"><title>C9 W21 GND: battery.main.BAT- to star_ground.levers.P1, 16 AWG</title></path>
+<path d="M560 118 H664 V219.5 H266 V321 H370" fill="none" stroke="#c8102e" stroke-width="2" opacity="0.8"><title>C10 W22 VBAT: main_switch.contacts.OUT to splice_vbat.levers.P1, 16 AWG</title></path>
+<path d="M560 334 H674 V219.5 H596 V105 H710" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C11 W23 VBAT: splice_vbat.levers.P2 to regulator_5v.power_and_control.VIN, 22 AWG</title></path>
+<path d="M560 262 H684 V190 H586 V118 H710" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C11 W24 GND: star_ground.levers.P2 to regulator_5v.power_and_control.GND, 24 AWG</title></path>
+<path d="M560 334 H574 V278 H1376 V222 H1390" fill="none" stroke="#c8102e" stroke-width="2" opacity="0.8"><title>C12 W25 VBAT: splice_vbat.levers.P2 to motor_driver_1.power.POWER+, 18 AWG</title></path>
+<path d="M560 262 H584 V248.5 H1366 V235 H1390" fill="none" stroke="#111111" stroke-width="2" opacity="0.8"><title>C12 W26 GND: star_ground.levers.P2 to motor_driver_1.power.POWER-, 18 AWG</title></path>
+<path d="M710 118 H676 V190 H594 V262 H560" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C13 W27 GND: regulator_5v.power_and_control.GND to star_ground.levers.P2, 22 AWG</title></path>
+<path d="M900 131 H944 V183 H1006 V235 H1050" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C14 W28 5V: regulator_5v.power_and_control.VOUT to computer.gpio40.5V, 22 AWG</title></path>
+<path d="M560 262 H614 V183.5 H996 V105 H1050" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C14 W29 GND: star_ground.levers.P2 to computer.gpio40.GND, 22 AWG</title></path>
+<rect x="1730" y="74" width="190" height="106" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1737" y="89" font-weight="700">left_motor</text>
+<text x="1737" y="108.5" fill="#333">Motor (red)</text>
+<text x="1737" y="121.5" fill="#333">Motor (black)</text>
+<text x="1737" y="134.5" fill="#333">Encoder Vcc (blue)</text>
+<text x="1737" y="147.5" fill="#333">Encoder GND (green)</text>
+<text x="1737" y="160.5" fill="#333">Encoder A (yellow)</text>
+<text x="1737" y="173.5" fill="#333">Encoder B (white)</text>
+<rect x="1730" y="198" width="190" height="106" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1737" y="213" font-weight="700">right_motor</text>
+<text x="1737" y="232.5" fill="#333">Motor (red)</text>
+<text x="1737" y="245.5" fill="#333">Motor (black)</text>
+<text x="1737" y="258.5" fill="#333">Encoder Vcc (blue)</text>
+<text x="1737" y="271.5" fill="#333">Encoder GND (green)</text>
+<text x="1737" y="284.5" fill="#333">Encoder A (yellow)</text>
+<text x="1737" y="297.5" fill="#333">Encoder B (white)</text>
+<rect x="30" y="74" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="37" y="89" font-weight="700">battery</text>
+<text x="37" y="108.5" fill="#333">BAT+</text>
+<text x="37" y="121.5" fill="#333">BAT-</text>
+<rect x="1050" y="74" width="190" height="171" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1057" y="89" font-weight="700">computer</text>
+<text x="1057" y="108.5" fill="#333">GND</text>
+<text x="1057" y="121.5" fill="#333">GPIO12</text>
+<text x="1057" y="134.5" fill="#333">GPIO13</text>
+<text x="1057" y="147.5" fill="#333">GPIO5</text>
+<text x="1057" y="160.5" fill="#333">GPIO6</text>
+<text x="1057" y="173.5" fill="#333">3V3</text>
+<text x="1057" y="186.5" fill="#333">GPIO18</text>
+<text x="1057" y="199.5" fill="#333">GPIO19</text>
+<text x="1057" y="212.5" fill="#333">GPIO16</text>
+<text x="1057" y="225.5" fill="#333">GPIO20</text>
+<text x="1057" y="238.5" fill="#333">5V</text>
+<rect x="1390" y="74" width="190" height="171" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="89" font-weight="700">motor_driver_1</text>
+<text x="1397" y="108.5" fill="#333">GND</text>
+<text x="1397" y="121.5" fill="#333">PWM1</text>
+<text x="1397" y="134.5" fill="#333">DIR1</text>
+<text x="1397" y="147.5" fill="#333">PWM2</text>
+<text x="1397" y="160.5" fill="#333">DIR2</text>
+<text x="1397" y="173.5" fill="#333">M1A</text>
+<text x="1397" y="186.5" fill="#333">M1B</text>
+<text x="1397" y="199.5" fill="#333">M2A</text>
+<text x="1397" y="212.5" fill="#333">M2B</text>
+<text x="1397" y="225.5" fill="#333">POWER+</text>
+<text x="1397" y="238.5" fill="#333">POWER-</text>
+<rect x="710" y="74" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="717" y="89" font-weight="700">regulator_5v</text>
+<text x="717" y="108.5" fill="#333">VIN</text>
+<text x="717" y="121.5" fill="#333">GND</text>
+<text x="717" y="134.5" fill="#333">VOUT</text>
+<rect x="370" y="74" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="89" font-weight="700">main_switch</text>
+<text x="377" y="108.5" fill="#333">IN</text>
+<text x="377" y="121.5" fill="#333">OUT</text>
+<rect x="1730" y="322" width="190" height="41" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1737" y="337" font-weight="700">front_camera</text>
+<text x="1737" y="356.5" fill="#333">GND</text>
+<rect x="370" y="146" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="161" font-weight="700">main_fuse</text>
+<text x="377" y="180.5" fill="#333">IN</text>
+<text x="377" y="193.5" fill="#333">OUT</text>
+<rect x="370" y="218" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="233" font-weight="700">star_ground</text>
+<text x="377" y="252.5" fill="#333">P1</text>
+<text x="377" y="265.5" fill="#333">P2</text>
+<rect x="370" y="290" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="305" font-weight="700">splice_vbat</text>
+<text x="377" y="324.5" fill="#333">P1</text>
+<text x="377" y="337.5" fill="#333">P2</text>
+</svg>

@@ -1,0 +1,154 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1610 663" width="1610" height="663" font-family="Helvetica, Arial, sans-serif" font-size="10.5">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="30" y="26" font-size="17" font-weight="700">cartesian_gantry: wiring diagram</text>
+<line x1="30" y1="44" x2="54" y2="44" stroke="#c8102e" stroke-width="2"/><text x="60" y="48">power</text>
+<line x1="120" y1="44" x2="144" y2="44" stroke="#111111" stroke-width="2"/><text x="150" y="48">ground</text>
+<line x1="210" y1="44" x2="234" y2="44" stroke="#1f6fd1" stroke-width="2"/><text x="240" y="48">signal</text>
+<line x1="300" y1="44" x2="324" y2="44" stroke="#0a8f5b" stroke-width="2"/><text x="330" y="48">bus</text>
+<text x="30" y="66" font-weight="700" fill="#555">Source</text>
+<text x="370" y="66" font-weight="700" fill="#555">Protection</text>
+<text x="710" y="66" font-weight="700" fill="#555">Control</text>
+<text x="1050" y="66" font-weight="700" fill="#555">Drivers</text>
+<text x="1390" y="66" font-weight="700" fill="#555">Loads</text>
+<path d="M370 105 H356 V105 H234 V105 H220" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C1 W1 MAINS_L: mains_inlet.load.L to power_supply.ac_in.AC/L, 24 AWG</title></path>
+<path d="M370 118 H346 V118 H244 V118 H220" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C1 W2 MAINS_N: mains_inlet.load.N to power_supply.ac_in.AC/N, 24 AWG</title></path>
+<path d="M370 131 H336 V131 H254 V131 H220" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C1 W3 MAINS_E: mains_inlet.load.E to power_supply.ac_in.FG, 24 AWG</title></path>
+<path d="M900 105 H944 V105 H1006 V105 H1050" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C2 W4 X_VIO: controller.j1.3V3 to driver_x.power.VIO, 24 AWG</title></path>
+<path d="M900 118 H954 V118 H996 V118 H1050" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C2 W5 X_STEP: controller.j1.4 to driver_x.control.STEP, 26 AWG</title></path>
+<path d="M900 131 H964 V131 H986 V131 H1050" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C2 W6 X_DIR: controller.j1.5 to driver_x.control.DIR, 26 AWG</title></path>
+<path d="M900 144 H974 V144 H976 V144 H1050" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C2 W7 X_EN: controller.j1.6 to driver_x.control.EN, 26 AWG</title></path>
+<path d="M900 157 H984 V157 H966 V157 H1050" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C2 W8 GND: controller.j1.G to driver_x.power.GND, 24 AWG</title></path>
+<path d="M1240 170 H1334 V229 H1296 V288 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C3 W9 X_M1A: driver_x.motor.M1A to x_motor.motor.A (black), 24 AWG</title></path>
+<path d="M1240 183 H1344 V242 H1286 V301 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C3 W10 X_M1B: driver_x.motor.M1B to x_motor.motor.A\ (green), 24 AWG</title></path>
+<path d="M1240 196 H1354 V255 H1276 V314 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C3 W11 X_M2A: driver_x.motor.M2A to x_motor.motor.B (red), 24 AWG</title></path>
+<path d="M1240 209 H1364 V268 H1266 V327 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C3 W12 X_M2B: driver_x.motor.M2B to x_motor.motor.B\ (blue), 24 AWG</title></path>
+<path d="M1390 386 H1376 V278 H914 V170 H900" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C4 W13 X_HOME: x_endstop.main.SIG to controller.j1.10, 26 AWG</title></path>
+<path d="M900 105 H924 V193 H1026 V281 H1050" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C5 W14 Y_VIO: controller.j1.3V3 to driver_y.power.VIO, 24 AWG</title></path>
+<path d="M900 183 H934 V238.5 H1016 V294 H1050" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C5 W15 Y_STEP: controller.j1.7 to driver_y.control.STEP, 26 AWG</title></path>
+<path d="M900 196 H944 V251.5 H1006 V307 H1050" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C5 W16 Y_DIR: controller.j1.15 to driver_y.control.DIR, 26 AWG</title></path>
+<path d="M900 209 H954 V264.5 H996 V320 H1050" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C5 W17 Y_EN: controller.j1.16 to driver_y.control.EN, 26 AWG</title></path>
+<path d="M1240 333 H1304 V219 H1326 V105 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C6 W18 Y_M1A: driver_y.motor.M1A to y_motor.motor.A (black), 24 AWG</title></path>
+<path d="M1240 346 H1314 V232 H1316 V118 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C6 W19 Y_M1B: driver_y.motor.M1B to y_motor.motor.A\ (green), 24 AWG</title></path>
+<path d="M1240 359 H1324 V245 H1306 V131 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C6 W20 Y_M2A: driver_y.motor.M2A to y_motor.motor.B (red), 24 AWG</title></path>
+<path d="M1240 372 H1334 V258 H1296 V144 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C6 W21 Y_M2B: driver_y.motor.M2B to y_motor.motor.B\ (blue), 24 AWG</title></path>
+<path d="M1390 203 H1286 V212.5 H1004 V222 H900" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C7 W22 Y_HOME: y_endstop.main.SIG to controller.j1.11, 26 AWG</title></path>
+<path d="M900 105 H1014 V281 H936 V457 H1050" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C8 W23 Z_VIO: controller.j1.3V3 to driver_z.power.VIO, 24 AWG</title></path>
+<path d="M900 235 H1024 V352.5 H926 V470 H1050" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C8 W24 Z_STEP: controller.j1.17 to driver_z.control.STEP, 26 AWG</title></path>
+<path d="M900 248 H914 V365.5 H1036 V483 H1050" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C8 W25 Z_DIR: controller.j1.18 to driver_z.control.DIR, 26 AWG</title></path>
+<path d="M900 261 H924 V378.5 H1026 V496 H1050" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C8 W26 Z_EN: controller.j1.8 to driver_z.control.EN, 26 AWG</title></path>
+<path d="M1240 509 H1274 V490 H1356 V471 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C9 W27 Z_M1A: driver_z.motor.M1A to z_motor.motor.A (black), 22 AWG</title></path>
+<path d="M1240 522 H1284 V503 H1346 V484 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C9 W28 Z_M1B: driver_z.motor.M1B to z_motor.motor.A\ (green), 22 AWG</title></path>
+<path d="M1240 535 H1294 V516 H1336 V497 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C9 W29 Z_M2A: driver_z.motor.M2A to z_motor.motor.B (red), 22 AWG</title></path>
+<path d="M1240 548 H1304 V529 H1326 V510 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C9 W30 Z_M2B: driver_z.motor.M2B to z_motor.motor.B\ (blue), 22 AWG</title></path>
+<path d="M1390 569 H1316 V421.5 H974 V274 H900" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C10 W31 Z_HOME: z_endstop.main.SIG to controller.j1.12, 26 AWG</title></path>
+<path d="M220 144 H304 V167 H286 V190 H370" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C11 W32 GND: power_supply.dc_out.DC OUTPUT -V to star_ground.levers.P1, 20 AWG</title></path>
+<path d="M220 157 H314 V209.5 H276 V262 H370" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C12 W33 V24: power_supply.dc_out.DC OUTPUT +V to splice_v24.levers.P1, 20 AWG</title></path>
+<path d="M560 275 H664 V248.5 H946 V222 H1050" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C13 W34 V24: splice_v24.levers.P2 to driver_x.power.VM, 24 AWG</title></path>
+<path d="M560 203 H674 V180 H936 V157 H1050" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C13 W35 GND: star_ground.levers.P2 to driver_x.power.GND, 24 AWG</title></path>
+<path d="M560 275 H684 V330 H926 V385 H1050" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C14 W36 V24: splice_v24.levers.P2 to driver_y.power.VM, 24 AWG</title></path>
+<path d="M560 203 H574 V300.5 H1036 V398 H1050" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C14 W37 GND: star_ground.levers.P2 to driver_y.power.GND, 24 AWG</title></path>
+<path d="M560 275 H584 V418 H1026 V561 H1050" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C15 W38 V24: splice_v24.levers.P2 to driver_z.power.VM, 24 AWG</title></path>
+<path d="M560 203 H594 V388.5 H1016 V574 H1050" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C15 W39 GND: star_ground.levers.P2 to driver_z.power.GND, 24 AWG</title></path>
+<path d="M710 105 H666 V219.5 H604 V334 H560" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C16 W40 3V3: controller.j1.3V3 to splice_3v3.levers.P1, 24 AWG</title></path>
+<path d="M710 157 H656 V180 H614 V203 H560" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C16 W41 GND: controller.j1.G to star_ground.levers.P2, 24 AWG</title></path>
+<path d="M560 347 H624 V373 H1326 V399 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C17 W42 3V3: splice_3v3.levers.P2 to x_endstop.main.VCC, 24 AWG</title></path>
+<path d="M560 203 H634 V307.5 H1316 V412 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C17 W43 GND: star_ground.levers.P2 to x_endstop.main.GND, 24 AWG</title></path>
+<path d="M560 347 H644 V281.5 H1306 V216 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C18 W44 3V3: splice_3v3.levers.P2 to y_endstop.main.VCC, 24 AWG</title></path>
+<path d="M560 203 H654 V216 H1296 V229 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C18 W45 GND: star_ground.levers.P2 to y_endstop.main.GND, 24 AWG</title></path>
+<path d="M560 347 H664 V464.5 H1286 V582 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C19 W46 3V3: splice_3v3.levers.P2 to z_endstop.main.VCC, 24 AWG</title></path>
+<path d="M560 203 H674 V399 H1276 V595 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C19 W47 GND: star_ground.levers.P2 to z_endstop.main.GND, 24 AWG</title></path>
+<rect x="1390" y="74" width="190" height="80" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="89" font-weight="700">y_motor</text>
+<text x="1397" y="108.5" fill="#333">A (black)</text>
+<text x="1397" y="121.5" fill="#333">A\ (green)</text>
+<text x="1397" y="134.5" fill="#333">B (red)</text>
+<text x="1397" y="147.5" fill="#333">B\ (blue)</text>
+<rect x="1390" y="172" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="187" font-weight="700">y_endstop</text>
+<text x="1397" y="206.5" fill="#333">SIG</text>
+<text x="1397" y="219.5" fill="#333">VCC</text>
+<text x="1397" y="232.5" fill="#333">GND</text>
+<rect x="1390" y="257" width="190" height="80" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="272" font-weight="700">x_motor</text>
+<text x="1397" y="291.5" fill="#333">A (black)</text>
+<text x="1397" y="304.5" fill="#333">A\ (green)</text>
+<text x="1397" y="317.5" fill="#333">B (red)</text>
+<text x="1397" y="330.5" fill="#333">B\ (blue)</text>
+<rect x="1390" y="355" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="370" font-weight="700">x_endstop</text>
+<text x="1397" y="389.5" fill="#333">SIG</text>
+<text x="1397" y="402.5" fill="#333">VCC</text>
+<text x="1397" y="415.5" fill="#333">GND</text>
+<rect x="1390" y="440" width="190" height="80" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="455" font-weight="700">z_motor</text>
+<text x="1397" y="474.5" fill="#333">A (black)</text>
+<text x="1397" y="487.5" fill="#333">A\ (green)</text>
+<text x="1397" y="500.5" fill="#333">B (red)</text>
+<text x="1397" y="513.5" fill="#333">B\ (blue)</text>
+<rect x="1390" y="538" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="553" font-weight="700">z_endstop</text>
+<text x="1397" y="572.5" fill="#333">SIG</text>
+<text x="1397" y="585.5" fill="#333">VCC</text>
+<text x="1397" y="598.5" fill="#333">GND</text>
+<rect x="30" y="74" width="190" height="93" rx="5" fill="#f4f6f8" stroke="#333"/><text x="37" y="89" font-weight="700">power_supply</text>
+<text x="37" y="108.5" fill="#333">AC/L</text>
+<text x="37" y="121.5" fill="#333">AC/N</text>
+<text x="37" y="134.5" fill="#333">FG</text>
+<text x="37" y="147.5" fill="#333">DC OUTPUT -V</text>
+<text x="37" y="160.5" fill="#333">DC OUTPUT +V</text>
+<rect x="710" y="74" width="190" height="210" rx="5" fill="#f4f6f8" stroke="#333"/><text x="717" y="89" font-weight="700">controller</text>
+<text x="717" y="108.5" fill="#333">3V3</text>
+<text x="717" y="121.5" fill="#333">4</text>
+<text x="717" y="134.5" fill="#333">5</text>
+<text x="717" y="147.5" fill="#333">6</text>
+<text x="717" y="160.5" fill="#333">G</text>
+<text x="717" y="173.5" fill="#333">10</text>
+<text x="717" y="186.5" fill="#333">7</text>
+<text x="717" y="199.5" fill="#333">15</text>
+<text x="717" y="212.5" fill="#333">16</text>
+<text x="717" y="225.5" fill="#333">11</text>
+<text x="717" y="238.5" fill="#333">17</text>
+<text x="717" y="251.5" fill="#333">18</text>
+<text x="717" y="264.5" fill="#333">8</text>
+<text x="717" y="277.5" fill="#333">12</text>
+<rect x="1050" y="74" width="190" height="158" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1057" y="89" font-weight="700">driver_x</text>
+<text x="1057" y="108.5" fill="#333">VIO</text>
+<text x="1057" y="121.5" fill="#333">STEP</text>
+<text x="1057" y="134.5" fill="#333">DIR</text>
+<text x="1057" y="147.5" fill="#333">EN</text>
+<text x="1057" y="160.5" fill="#333">GND</text>
+<text x="1057" y="173.5" fill="#333">M1A</text>
+<text x="1057" y="186.5" fill="#333">M1B</text>
+<text x="1057" y="199.5" fill="#333">M2A</text>
+<text x="1057" y="212.5" fill="#333">M2B</text>
+<text x="1057" y="225.5" fill="#333">VM</text>
+<rect x="1050" y="250" width="190" height="158" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1057" y="265" font-weight="700">driver_y</text>
+<text x="1057" y="284.5" fill="#333">VIO</text>
+<text x="1057" y="297.5" fill="#333">STEP</text>
+<text x="1057" y="310.5" fill="#333">DIR</text>
+<text x="1057" y="323.5" fill="#333">EN</text>
+<text x="1057" y="336.5" fill="#333">M1A</text>
+<text x="1057" y="349.5" fill="#333">M1B</text>
+<text x="1057" y="362.5" fill="#333">M2A</text>
+<text x="1057" y="375.5" fill="#333">M2B</text>
+<text x="1057" y="388.5" fill="#333">VM</text>
+<text x="1057" y="401.5" fill="#333">GND</text>
+<rect x="1050" y="426" width="190" height="158" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1057" y="441" font-weight="700">driver_z</text>
+<text x="1057" y="460.5" fill="#333">VIO</text>
+<text x="1057" y="473.5" fill="#333">STEP</text>
+<text x="1057" y="486.5" fill="#333">DIR</text>
+<text x="1057" y="499.5" fill="#333">EN</text>
+<text x="1057" y="512.5" fill="#333">M1A</text>
+<text x="1057" y="525.5" fill="#333">M1B</text>
+<text x="1057" y="538.5" fill="#333">M2A</text>
+<text x="1057" y="551.5" fill="#333">M2B</text>
+<text x="1057" y="564.5" fill="#333">VM</text>
+<text x="1057" y="577.5" fill="#333">GND</text>
+<rect x="370" y="74" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="89" font-weight="700">mains_inlet</text>
+<text x="377" y="108.5" fill="#333">L</text>
+<text x="377" y="121.5" fill="#333">N</text>
+<text x="377" y="134.5" fill="#333">E</text>
+<rect x="370" y="159" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="174" font-weight="700">star_ground</text>
+<text x="377" y="193.5" fill="#333">P1</text>
+<text x="377" y="206.5" fill="#333">P2</text>
+<rect x="370" y="231" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="246" font-weight="700">splice_v24</text>
+<text x="377" y="265.5" fill="#333">P1</text>
+<text x="377" y="278.5" fill="#333">P2</text>
+<rect x="370" y="303" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="318" font-weight="700">splice_3v3</text>
+<text x="377" y="337.5" fill="#333">P1</text>
+<text x="377" y="350.5" fill="#333">P2</text>
+</svg>

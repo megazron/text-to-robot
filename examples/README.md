@@ -1,6 +1,6 @@
 # Gallery
 
-19 robots, each made from the one-line prompt in its README. Open one for its parts list, printable parts, wiring, ROS 2 package and test results. Nothing here has been built yet.
+24 robots, each made from the one-line prompt in its README. Open one for its parts list, printable parts, wiring, ROS 2 package and test results. Nothing here has been built yet.
 
 Every example is regenerated from its prompt by `node scripts/build_examples.ts` and simulated by `scripts/simulate_examples.py`, and every prompt is generated on the website by `scripts/check_site.py`. Each robot is built from real, purchasable parts sized from its own loads. The film is a Cycles render of a motion loop run in MuJoCo through the real actuators (`scripts/studio/film.py`); each example's README also has the raw recording of its task tests.
 
@@ -27,3 +27,8 @@ Every example is regenerated from its prompt by `node scripts/build_examples.ts`
 | [17_baymax](17_baymax/README.md)<br><img src="17_baymax/studio.gif" width="220"> | Baymax-style service robot: 5.571 kg, 1.01 m tall, 4WD hidden base, two 4-servo arms, pan head with camera | $919.89 | 5.571 kg | 87/87 | 3/3 |
 | [18_arduino_car](18_arduino_car/README.md)<br><img src="18_arduino_car/studio.gif" width="220"> | Arduino car (stronger (4WD, ramps up to 10 deg)): 4WD on TT gear motors, 0.60 kg, 0.54 m/s, 99 min, $51 of parts | $58.13 | 0.605 kg | 36/36 | 3/3 |
 | [19_arduino_arm](19_arduino_arm/README.md)<br><img src="19_arduino_arm/studio.gif" width="220"> | Arduino desk arm: 3 DOF + claw, 280 mm reach, 20 g payload, 0.82 kg, $50 of parts | $63.54 | 0.818 kg | 40/40 | 3/3 |
+| [20_quadcopter](20_quadcopter/README.md)<br><img src="20_quadcopter/studio.gif" width="220"> | Quadcopter, 5 in props on 2207 motors: 0.47 kg take-off, thrust-to-weight 6.6, hover at 15 % throttle, about 10 min | $269.6 | 0.467 kg | 34/34 | 3/3 |
+| [21_underwater_rov](21_underwater_rov/README.md)<br><img src="21_underwater_rov/studio.gif" width="220"> | Tethered ROV: 4 in sealed hull, 4 x T200 (surge, yaw, heave, roll), 6.1 kg, 239 g net lift, about 1.7 m/s, 18 min | $1820.43 | 6.07 kg | 55/55 | 4/4 |
+| [22_pen_plotter](22_pen_plotter/README.md)<br><img src="22_pen_plotter/studio.gif" width="220"> | Cartesian XYZ robot on three lead-screw modules: 183 x 183 x 23 mm, 158 N per axis, 80 mm/s, pen holder | $234.23 | 3.47 kg | 48/48 | 3/3 |
+| [23_robot_hand](23_robot_hand/README.md)<br><img src="23_robot_hand/studio.gif" width="220"> | Five-finger tendon hand: 5 MG996R flexion servos in the forearm, an MG90S thumb swing, 16 joints, squeezes about 10 N, holds about 1.17 kg | $87.6 | 1.161 kg | 49/49 | 7/7 |
+| [24_plant_waterer](24_plant_waterer/README.md)<br><img src="24_plant_waterer/studio.gif" width="220"> | Differential-drive base: pololu_37d_30to1_64cpr gearmotors, 1.336 kg, 1.24 m/s, 1.83 h on 1 x lipo_3s_2200, rpi5 | $423.76 | 1.336 kg | 44/44 | 3/3 |

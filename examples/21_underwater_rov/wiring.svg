@@ -1,0 +1,149 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1950 812" width="1950" height="812" font-family="Helvetica, Arial, sans-serif" font-size="10.5">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="30" y="26" font-size="17" font-weight="700">underwater_rov: wiring diagram</text>
+<line x1="30" y1="44" x2="54" y2="44" stroke="#c8102e" stroke-width="2"/><text x="60" y="48">power</text>
+<line x1="120" y1="44" x2="144" y2="44" stroke="#111111" stroke-width="2"/><text x="150" y="48">ground</text>
+<line x1="210" y1="44" x2="234" y2="44" stroke="#1f6fd1" stroke-width="2"/><text x="240" y="48">signal</text>
+<line x1="300" y1="44" x2="324" y2="44" stroke="#0a8f5b" stroke-width="2"/><text x="330" y="48">bus</text>
+<text x="30" y="66" font-weight="700" fill="#555">Source</text>
+<text x="370" y="66" font-weight="700" fill="#555">Protection</text>
+<text x="710" y="66" font-weight="700" fill="#555">Regulation</text>
+<text x="1050" y="66" font-weight="700" fill="#555">Control</text>
+<text x="1390" y="66" font-weight="700" fill="#555">Drivers</text>
+<text x="1730" y="66" font-weight="700" fill="#555">Loads</text>
+<path d="M1240 105 H1254 V105 H1376 V105 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C1 W1 I2C_SDA: controller.gpio40.GPIO2 to pwm_driver.control_in.SDA, 26 AWG</title></path>
+<path d="M1240 118 H1264 V118 H1366 V118 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C1 W2 I2C_SCL: controller.gpio40.GPIO3 to pwm_driver.control_in.SCL, 26 AWG</title></path>
+<path d="M1240 105 H1274 V105 H1696 V105 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C2 W3 I2C_SDA: controller.gpio40.GPIO2 to imu.header.SDA, 26 AWG</title></path>
+<path d="M1240 118 H1284 V118 H1686 V118 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C2 W4 I2C_SCL: controller.gpio40.GPIO3 to imu.header.SCL, 26 AWG</title></path>
+<path d="M1580 131 H1634 V193 H1336 V255 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C3 W5 ESC1_PWM: pwm_driver.ch0.PWM0 to esc_1.signal.PWM, 26 AWG</title></path>
+<path d="M1580 144 H1644 V206 H1326 V268 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C3 W6 GND: pwm_driver.ch0.GND to esc_1.signal.GND_SIG, 24 AWG</title></path>
+<path d="M1580 281 H1654 V271.5 H1656 V262 H1730" fill="none" stroke="#1f6fd1" stroke-width="2" opacity="0.8"><title>C4 W7 THRUSTER_LEFT_A: esc_1.motor.A to thruster_left.phases.A, 16 AWG</title></path>
+<path d="M1580 294 H1664 V284.5 H1646 V275 H1730" fill="none" stroke="#1f6fd1" stroke-width="2" opacity="0.8"><title>C4 W8 THRUSTER_LEFT_B: esc_1.motor.B to thruster_left.phases.B, 16 AWG</title></path>
+<path d="M1580 307 H1674 V297.5 H1636 V288 H1730" fill="none" stroke="#1f6fd1" stroke-width="2" opacity="0.8"><title>C4 W9 THRUSTER_LEFT_C: esc_1.motor.C to thruster_left.phases.C, 16 AWG</title></path>
+<path d="M1580 157 H1684 V274.5 H1286 V392 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C5 W10 ESC2_PWM: pwm_driver.ch1.PWM1 to esc_2.signal.PWM, 26 AWG</title></path>
+<path d="M1580 144 H1694 V274.5 H1276 V405 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C5 W11 GND: pwm_driver.ch1.GND to esc_2.signal.GND_SIG, 24 AWG</title></path>
+<path d="M1580 418 H1704 V382.5 H1606 V347 H1730" fill="none" stroke="#1f6fd1" stroke-width="2" opacity="0.8"><title>C6 W12 THRUSTER_RIGHT_A: esc_2.motor.A to thruster_right.phases.A, 16 AWG</title></path>
+<path d="M1580 431 H1594 V395.5 H1716 V360 H1730" fill="none" stroke="#1f6fd1" stroke-width="2" opacity="0.8"><title>C6 W13 THRUSTER_RIGHT_B: esc_2.motor.B to thruster_right.phases.B, 16 AWG</title></path>
+<path d="M1580 444 H1604 V408.5 H1706 V373 H1730" fill="none" stroke="#1f6fd1" stroke-width="2" opacity="0.8"><title>C6 W14 THRUSTER_RIGHT_C: esc_2.motor.C to thruster_right.phases.C, 16 AWG</title></path>
+<path d="M1580 170 H1614 V349.5 H1356 V529 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C7 W15 ESC3_PWM: pwm_driver.ch2.PWM2 to esc_3.signal.PWM, 26 AWG</title></path>
+<path d="M1580 144 H1624 V343 H1346 V542 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C7 W16 GND: pwm_driver.ch2.GND to esc_3.signal.GND_SIG, 24 AWG</title></path>
+<path d="M1580 555 H1634 V493.5 H1676 V432 H1730" fill="none" stroke="#1f6fd1" stroke-width="2" opacity="0.8"><title>C8 W17 THRUSTER_VERT_LEFT_A: esc_3.motor.A to thruster_vert_left.phases.A, 16 AWG</title></path>
+<path d="M1580 568 H1644 V506.5 H1666 V445 H1730" fill="none" stroke="#1f6fd1" stroke-width="2" opacity="0.8"><title>C8 W18 THRUSTER_VERT_LEFT_B: esc_3.motor.B to thruster_vert_left.phases.B, 16 AWG</title></path>
+<path d="M1580 581 H1654 V519.5 H1656 V458 H1730" fill="none" stroke="#1f6fd1" stroke-width="2" opacity="0.8"><title>C8 W19 THRUSTER_VERT_LEFT_C: esc_3.motor.C to thruster_vert_left.phases.C, 16 AWG</title></path>
+<path d="M1580 183 H1664 V424.5 H1306 V666 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C9 W20 ESC4_PWM: pwm_driver.ch3.PWM3 to esc_4.signal.PWM, 26 AWG</title></path>
+<path d="M1580 144 H1674 V411.5 H1296 V679 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C9 W21 GND: pwm_driver.ch3.GND to esc_4.signal.GND_SIG, 24 AWG</title></path>
+<path d="M1580 692 H1684 V604.5 H1626 V517 H1730" fill="none" stroke="#1f6fd1" stroke-width="2" opacity="0.8"><title>C10 W22 THRUSTER_VERT_RIGHT_A: esc_4.motor.A to thruster_vert_right.phases.A, 16 AWG</title></path>
+<path d="M1580 705 H1694 V617.5 H1616 V530 H1730" fill="none" stroke="#1f6fd1" stroke-width="2" opacity="0.8"><title>C10 W23 THRUSTER_VERT_RIGHT_B: esc_4.motor.B to thruster_vert_right.phases.B, 16 AWG</title></path>
+<path d="M1580 718 H1704 V630.5 H1606 V543 H1730" fill="none" stroke="#1f6fd1" stroke-width="2" opacity="0.8"><title>C10 W24 THRUSTER_VERT_RIGHT_C: esc_4.motor.C to thruster_vert_right.phases.C, 16 AWG</title></path>
+<path d="M1730 203 H1716 V167 H1254 V131 H1240" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C11 W25 CAMERA_CONTROLLER_LINK: camera.csi_15.CAM_DN0 to controller.cam_dsi_0.CAM_DN0</title></path>
+<path d="M220 105 H244 V105 H346 V105 H370" fill="none" stroke="#c8102e" stroke-width="2" opacity="0.8"><title>C12 W26 VBAT: battery.main.BAT+ to main_fuse.leads.IN, 4 AWG</title></path>
+<path d="M220 118 H254 V147.5 H336 V177 H370" fill="none" stroke="#111111" stroke-width="2" opacity="0.8"><title>C13 W27 GND: battery.main.BAT- to star_ground.levers.P1, 4 AWG</title></path>
+<path d="M560 118 H604 V183.5 H326 V249 H370" fill="none" stroke="#c8102e" stroke-width="2" opacity="0.8"><title>C14 W28 VBAT: main_fuse.leads.OUT to splice_vbat.levers.P1, 4 AWG</title></path>
+<path d="M560 262 H614 V183.5 H656 V105 H710" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C15 W29 VBAT: splice_vbat.levers.P2 to regulator.power_and_control.VIN, 22 AWG</title></path>
+<path d="M560 190 H624 V154 H646 V118 H710" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C15 W30 GND: star_ground.levers.P2 to regulator.power_and_control.GND, 24 AWG</title></path>
+<path d="M560 262 H634 V291 H1316 V320 H1390" fill="none" stroke="#c8102e" stroke-width="2" opacity="0.8"><title>C16 W31 VBAT: splice_vbat.levers.P2 to esc_1.power.VBAT+, 14 AWG</title></path>
+<path d="M560 190 H644 V261.5 H1306 V333 H1390" fill="none" stroke="#111111" stroke-width="2" opacity="0.8"><title>C16 W32 GND: star_ground.levers.P2 to esc_1.power.GND, 14 AWG</title></path>
+<path d="M560 262 H654 V359.5 H1296 V457 H1390" fill="none" stroke="#c8102e" stroke-width="2" opacity="0.8"><title>C17 W33 VBAT: splice_vbat.levers.P2 to esc_2.power.VBAT+, 14 AWG</title></path>
+<path d="M560 190 H664 V330 H1286 V470 H1390" fill="none" stroke="#111111" stroke-width="2" opacity="0.8"><title>C17 W34 GND: star_ground.levers.P2 to esc_2.power.GND, 14 AWG</title></path>
+<path d="M560 262 H674 V428 H1276 V594 H1390" fill="none" stroke="#c8102e" stroke-width="2" opacity="0.8"><title>C18 W35 VBAT: splice_vbat.levers.P2 to esc_3.power.VBAT+, 14 AWG</title></path>
+<path d="M560 190 H684 V398.5 H1266 V607 H1390" fill="none" stroke="#111111" stroke-width="2" opacity="0.8"><title>C18 W36 GND: star_ground.levers.P2 to esc_3.power.GND, 14 AWG</title></path>
+<path d="M560 262 H574 V496.5 H1376 V731 H1390" fill="none" stroke="#c8102e" stroke-width="2" opacity="0.8"><title>C19 W37 VBAT: splice_vbat.levers.P2 to esc_4.power.VBAT+, 14 AWG</title></path>
+<path d="M560 190 H584 V467 H1366 V744 H1390" fill="none" stroke="#111111" stroke-width="2" opacity="0.8"><title>C19 W38 GND: star_ground.levers.P2 to esc_4.power.GND, 14 AWG</title></path>
+<path d="M710 131 H676 V226 H594 V321 H560" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C20 W39 5V: regulator.power_and_control.VOUT to splice_5v.levers.P1, 22 AWG</title></path>
+<path d="M710 118 H666 V154 H604 V190 H560" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C20 W40 GND: regulator.power_and_control.GND to star_ground.levers.P2, 22 AWG</title></path>
+<path d="M560 334 H614 V239 H996 V144 H1050" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C21 W41 5V: splice_5v.levers.P2 to controller.power_usbc.VBUS, 22 AWG</title></path>
+<path d="M560 190 H624 V173.5 H986 V157 H1050" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C21 W42 GND: star_ground.levers.P2 to controller.power_usbc.GND, 22 AWG</title></path>
+<path d="M560 334 H634 V265 H1316 V196 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C22 W43 5V: splice_5v.levers.P2 to pwm_driver.control_in.VCC, 24 AWG</title></path>
+<path d="M560 190 H644 V167 H1306 V144 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C22 W44 GND: star_ground.levers.P2 to pwm_driver.control_in.GND, 24 AWG</title></path>
+<path d="M560 334 H654 V232.5 H1636 V131 H1730" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C23 W45 5V: splice_5v.levers.P2 to imu.header.VIN, 24 AWG</title></path>
+<path d="M560 190 H664 V167 H1626 V144 H1730" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C23 W46 GND: star_ground.levers.P2 to imu.header.GND, 24 AWG</title></path>
+<rect x="30" y="74" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="37" y="89" font-weight="700">battery</text>
+<text x="37" y="108.5" fill="#333">BAT+</text>
+<text x="37" y="121.5" fill="#333">BAT-</text>
+<rect x="1050" y="74" width="190" height="93" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1057" y="89" font-weight="700">controller</text>
+<text x="1057" y="108.5" fill="#333">GPIO2</text>
+<text x="1057" y="121.5" fill="#333">GPIO3</text>
+<text x="1057" y="134.5" fill="#333">CAM_DN0</text>
+<text x="1057" y="147.5" fill="#333">VBUS</text>
+<text x="1057" y="160.5" fill="#333">GND</text>
+<rect x="1390" y="74" width="190" height="132" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="89" font-weight="700">pwm_driver</text>
+<text x="1397" y="108.5" fill="#333">SDA</text>
+<text x="1397" y="121.5" fill="#333">SCL</text>
+<text x="1397" y="134.5" fill="#333">PWM0</text>
+<text x="1397" y="147.5" fill="#333">GND</text>
+<text x="1397" y="160.5" fill="#333">PWM1</text>
+<text x="1397" y="173.5" fill="#333">PWM2</text>
+<text x="1397" y="186.5" fill="#333">PWM3</text>
+<text x="1397" y="199.5" fill="#333">VCC</text>
+<rect x="710" y="74" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="717" y="89" font-weight="700">regulator</text>
+<text x="717" y="108.5" fill="#333">VIN</text>
+<text x="717" y="121.5" fill="#333">GND</text>
+<text x="717" y="134.5" fill="#333">VOUT</text>
+<rect x="1730" y="74" width="190" height="80" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1737" y="89" font-weight="700">imu</text>
+<text x="1737" y="108.5" fill="#333">SDA</text>
+<text x="1737" y="121.5" fill="#333">SCL</text>
+<text x="1737" y="134.5" fill="#333">VIN</text>
+<text x="1737" y="147.5" fill="#333">GND</text>
+<rect x="1390" y="224" width="190" height="119" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="239" font-weight="700">esc_1</text>
+<text x="1397" y="258.5" fill="#333">PWM</text>
+<text x="1397" y="271.5" fill="#333">GND_SIG</text>
+<text x="1397" y="284.5" fill="#333">A</text>
+<text x="1397" y="297.5" fill="#333">B</text>
+<text x="1397" y="310.5" fill="#333">C</text>
+<text x="1397" y="323.5" fill="#333">VBAT+</text>
+<text x="1397" y="336.5" fill="#333">GND</text>
+<rect x="1390" y="361" width="190" height="119" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="376" font-weight="700">esc_2</text>
+<text x="1397" y="395.5" fill="#333">PWM</text>
+<text x="1397" y="408.5" fill="#333">GND_SIG</text>
+<text x="1397" y="421.5" fill="#333">A</text>
+<text x="1397" y="434.5" fill="#333">B</text>
+<text x="1397" y="447.5" fill="#333">C</text>
+<text x="1397" y="460.5" fill="#333">VBAT+</text>
+<text x="1397" y="473.5" fill="#333">GND</text>
+<rect x="1390" y="498" width="190" height="119" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="513" font-weight="700">esc_3</text>
+<text x="1397" y="532.5" fill="#333">PWM</text>
+<text x="1397" y="545.5" fill="#333">GND_SIG</text>
+<text x="1397" y="558.5" fill="#333">A</text>
+<text x="1397" y="571.5" fill="#333">B</text>
+<text x="1397" y="584.5" fill="#333">C</text>
+<text x="1397" y="597.5" fill="#333">VBAT+</text>
+<text x="1397" y="610.5" fill="#333">GND</text>
+<rect x="1390" y="635" width="190" height="119" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="650" font-weight="700">esc_4</text>
+<text x="1397" y="669.5" fill="#333">PWM</text>
+<text x="1397" y="682.5" fill="#333">GND_SIG</text>
+<text x="1397" y="695.5" fill="#333">A</text>
+<text x="1397" y="708.5" fill="#333">B</text>
+<text x="1397" y="721.5" fill="#333">C</text>
+<text x="1397" y="734.5" fill="#333">VBAT+</text>
+<text x="1397" y="747.5" fill="#333">GND</text>
+<rect x="1730" y="172" width="190" height="41" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1737" y="187" font-weight="700">camera</text>
+<text x="1737" y="206.5" fill="#333">CAM_DN0</text>
+<rect x="1730" y="231" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1737" y="246" font-weight="700">thruster_left</text>
+<text x="1737" y="265.5" fill="#333">A</text>
+<text x="1737" y="278.5" fill="#333">B</text>
+<text x="1737" y="291.5" fill="#333">C</text>
+<rect x="1730" y="316" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1737" y="331" font-weight="700">thruster_right</text>
+<text x="1737" y="350.5" fill="#333">A</text>
+<text x="1737" y="363.5" fill="#333">B</text>
+<text x="1737" y="376.5" fill="#333">C</text>
+<rect x="1730" y="401" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1737" y="416" font-weight="700">thruster_vert_left</text>
+<text x="1737" y="435.5" fill="#333">A</text>
+<text x="1737" y="448.5" fill="#333">B</text>
+<text x="1737" y="461.5" fill="#333">C</text>
+<rect x="1730" y="486" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1737" y="501" font-weight="700">thruster_vert_right</text>
+<text x="1737" y="520.5" fill="#333">A</text>
+<text x="1737" y="533.5" fill="#333">B</text>
+<text x="1737" y="546.5" fill="#333">C</text>
+<rect x="370" y="74" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="89" font-weight="700">main_fuse</text>
+<text x="377" y="108.5" fill="#333">IN</text>
+<text x="377" y="121.5" fill="#333">OUT</text>
+<rect x="370" y="146" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="161" font-weight="700">star_ground</text>
+<text x="377" y="180.5" fill="#333">P1</text>
+<text x="377" y="193.5" fill="#333">P2</text>
+<rect x="370" y="218" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="233" font-weight="700">splice_vbat</text>
+<text x="377" y="252.5" fill="#333">P1</text>
+<text x="377" y="265.5" fill="#333">P2</text>
+<rect x="370" y="290" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="305" font-weight="700">splice_5v</text>
+<text x="377" y="324.5" fill="#333">P1</text>
+<text x="377" y="337.5" fill="#333">P2</text>
+</svg>

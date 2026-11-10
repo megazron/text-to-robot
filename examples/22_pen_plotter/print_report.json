@@ -1,0 +1,363 @@
+{
+ "bed_mm": [
+  250.0,
+  210.0,
+  220.0
+ ],
+ "parts": [
+  {
+   "name": "control_case",
+   "watertight": true,
+   "volume_cm3": 146.56,
+   "size_mm": [
+    211.7,
+    150.1,
+    44.4
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 4.13,
+   "support_frac": 0.003,
+   "bed_contact_cm2": 288.23,
+   "min_wall_mm": 2.38,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "control_case_lid",
+   "watertight": true,
+   "volume_cm3": 54.64,
+   "size_mm": [
+    211.7,
+    150.1,
+    5.8
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 0.85,
+   "support_frac": 0.001,
+   "bed_contact_cm2": 182.18,
+   "min_wall_mm": 1.48,
+   "thin_wall_frac": 0.004,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "pen_holder",
+   "watertight": true,
+   "volume_cm3": 20.64,
+   "size_mm": [
+    22.0,
+    60.0,
+    60.0
+   ],
+   "orientation": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 3.68,
+   "support_frac": 0.04,
+   "bed_contact_cm2": 23.21,
+   "min_wall_mm": 1.74,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "x_adapter",
+   "watertight": true,
+   "volume_cm3": 20.72,
+   "size_mm": [
+    4.0,
+    75.0,
+    70.0
+   ],
+   "orientation": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 0.0,
+   "support_frac": 0.0,
+   "bed_contact_cm2": 51.81,
+   "min_wall_mm": 4.0,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "x_module_carriage",
+   "watertight": true,
+   "volume_cm3": 142.15,
+   "size_mm": [
+    32.0,
+    76.0,
+    70.0
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 6.06,
+   "support_frac": 0.021,
+   "bed_contact_cm2": 22.07,
+   "min_wall_mm": 0.9,
+   "thin_wall_frac": 0.029,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": [
+    "thin wall 0.90 mm (prints with 2 perimeters; 3 recommended)"
+   ]
+  },
+  {
+   "name": "x_module_end_a",
+   "watertight": true,
+   "volume_cm3": 42.04,
+   "size_mm": [
+    44.0,
+    16.0,
+    72.0
+   ],
+   "orientation": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 0.46,
+   "support_frac": 0.004,
+   "bed_contact_cm2": 27.06,
+   "min_wall_mm": 4.07,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "x_module_end_b",
+   "watertight": true,
+   "volume_cm3": 79.75,
+   "size_mm": [
+    44.0,
+    27.0,
+    72.0
+   ],
+   "orientation": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 1.57,
+   "support_frac": 0.011,
+   "bed_contact_cm2": 29.69,
+   "min_wall_mm": 4.45,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "y_module_carriage",
+   "watertight": true,
+   "volume_cm3": 142.15,
+   "size_mm": [
+    32.0,
+    76.0,
+    70.0
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 6.06,
+   "support_frac": 0.021,
+   "bed_contact_cm2": 22.07,
+   "min_wall_mm": 0.9,
+   "thin_wall_frac": 0.029,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": [
+    "thin wall 0.90 mm (prints with 2 perimeters; 3 recommended)"
+   ]
+  },
+  {
+   "name": "y_module_end_a",
+   "watertight": true,
+   "volume_cm3": 42.04,
+   "size_mm": [
+    72.0,
+    16.0,
+    44.0
+   ],
+   "orientation": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 0.46,
+   "support_frac": 0.004,
+   "bed_contact_cm2": 27.06,
+   "min_wall_mm": 4.73,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "y_module_end_b",
+   "watertight": true,
+   "volume_cm3": 79.75,
+   "size_mm": [
+    72.0,
+    27.0,
+    44.0
+   ],
+   "orientation": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 1.57,
+   "support_frac": 0.011,
+   "bed_contact_cm2": 29.69,
+   "min_wall_mm": 3.91,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "z_bracket",
+   "watertight": true,
+   "volume_cm3": 70.18,
+   "size_mm": [
+    180.0,
+    76.0,
+    70.0
+   ],
+   "orientation": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 2.26,
+   "support_frac": 0.006,
+   "bed_contact_cm2": 120.71,
+   "min_wall_mm": 2.87,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "z_module_carriage",
+   "watertight": true,
+   "volume_cm3": 68.31,
+   "size_mm": [
+    32.0,
+    76.0,
+    34.0
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 3.74,
+   "support_frac": 0.022,
+   "bed_contact_cm2": 22.07,
+   "min_wall_mm": 1.66,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "z_module_end_a",
+   "watertight": true,
+   "volume_cm3": 42.04,
+   "size_mm": [
+    16.0,
+    44.0,
+    72.0
+   ],
+   "orientation": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 0.46,
+   "support_frac": 0.004,
+   "bed_contact_cm2": 27.06,
+   "min_wall_mm": 3.69,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "z_module_end_b",
+   "watertight": true,
+   "volume_cm3": 141.37,
+   "size_mm": [
+    47.0,
+    44.0,
+    72.0
+   ],
+   "orientation": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 1.57,
+   "support_frac": 0.008,
+   "bed_contact_cm2": 29.69,
+   "min_wall_mm": 4.12,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  }
+ ]
+}

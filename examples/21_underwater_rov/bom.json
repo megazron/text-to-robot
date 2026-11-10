@@ -1,0 +1,343 @@
+{
+  "robot_name": "underwater_rov",
+  "tier": "hobby",
+  "lines": [
+    {
+      "category": "Power",
+      "name": "6061-T6 aluminium round tube 20 x 2 mm, 1 m",
+      "qty": 2,
+      "unit_cost": 13,
+      "subtotal": 26,
+      "spec": "https://asm.matweb.com/search/SpecificMaterial.asp?bassnum=ma6061t6",
+      "note": "frame tubes (1.62 m cut) · https://www.metalsupermarkets.com/metals/aluminum/"
+    },
+    {
+      "category": "Power",
+      "name": "Stainless ballast weight 200 g (trim)",
+      "qty": 5,
+      "unit_cost": 8,
+      "subtotal": 40,
+      "spec": "https://bluerobotics.com/store/rov/rov-accessories/ballast-weight/",
+      "note": "trim ballast (bolted under the skid) · https://bluerobotics.com/store/rov/rov-accessories/ballast-weight/"
+    },
+    {
+      "category": "Electronics",
+      "name": "Blue Robotics Basic ESC 30 A (7-26 V, PWM input)",
+      "qty": 4,
+      "unit_cost": 36,
+      "subtotal": 144,
+      "spec": "16 V",
+      "note": "thruster ESC 1 (hangs under the tray); thruster ESC 2 (hangs under the tray); thruster ESC 3 (hangs under the tray); thruster ESC 4 (hangs under the tray) · https://bluerobotics.com/store/thrusters/speed-controllers/besc30-r3/"
+    },
+    {
+      "category": "Sensor",
+      "name": "Adafruit BNO085 9-DoF IMU breakout (STEMMA QT, #4754)",
+      "qty": 1,
+      "unit_cost": 29.5,
+      "subtotal": 29.5,
+      "spec": "3.3 V",
+      "note": "IMU (attitude for stabilisation) · https://www.adafruit.com/product/4754"
+    },
+    {
+      "category": "Power",
+      "name": "Pololu D36V50F5 5 V 5.5 A step-down regulator (#4091)",
+      "qty": 1,
+      "unit_cost": 39.95,
+      "subtotal": 39.95,
+      "spec": "5 V",
+      "note": "5 V 5 A for the Pi · https://www.pololu.com/product/4091"
+    },
+    {
+      "category": "Power",
+      "name": "Subsea buoyancy foam block, R-3318 urethane, about 1 L (cut to shape)",
+      "qty": 1,
+      "unit_cost": 40,
+      "subtotal": 40,
+      "spec": "https://bluerobotics.com/store/rov/rov-accessories/subsea-buoyancy-foam-r-3318-r1/",
+      "note": "buoyancy foam (strapped to the top tubes) · https://bluerobotics.com/store/rov/rov-accessories/subsea-buoyancy-foam-r-3318-r1/"
+    },
+    {
+      "category": "Power",
+      "name": "ANL fuse holder, 58 V class, 35-300 A",
+      "qty": 1,
+      "unit_cost": 9,
+      "subtotal": 9,
+      "spec": "58 V",
+      "note": "fuse holders · https://www.bluesea.com/products/category/62/ANL_Fuses"
+    },
+    {
+      "category": "Power",
+      "name": "Inline ATM mini blade fuse holder, 30 A class (Littelfuse FHM)",
+      "qty": 5,
+      "unit_cost": 2.5,
+      "subtotal": 12.5,
+      "spec": "32 V",
+      "note": "fuse holders · https://www.digikey.com/en/product-highlight/l/littelfuse-commercial-vehicle-products/fhac-fhm-series-in-line-fuse-holders"
+    },
+    {
+      "category": "Power",
+      "name": "LiPo 4S 5000 mAh 60C, XT90 (Gens Ace G-Tech)",
+      "qty": 1,
+      "unit_cost": 57,
+      "subtotal": 57,
+      "spec": "14.8 V, 74 Wh",
+      "note": "4S 5000 mAh pack (strapped to the tray) · https://www.unmannedtechshop.co.uk/de/products/gens-ace-g-tech-5000mah-14-8v-4s-60c-lipo-battery-pack-xt90"
+    },
+    {
+      "category": "Electronics",
+      "name": "PCA9685 16-channel PWM servo driver board (generic, I2C)",
+      "qty": 1,
+      "unit_cost": 2.5,
+      "subtotal": 2.5,
+      "spec": "5 V",
+      "note": "PCA9685: PWM to the four ESCs (hangs under the tray) · https://www.aliexpress.com/w/wholesale-pca9685-16-channel-servo-driver.html"
+    },
+    {
+      "category": "Power",
+      "name": "M10 cable penetrator for 6 mm cable, potted (Blue Robotics)",
+      "qty": 6,
+      "unit_cost": 4,
+      "subtotal": 24,
+      "spec": "https://bluerobotics.com/store/cables-connectors/penetrators/penetrator-vp/",
+      "note": "four thruster cables, the tether and a vent plug through the rear end cap · https://bluerobotics.com/store/cables-connectors/penetrators/penetrator-vp/"
+    },
+    {
+      "category": "Sensor",
+      "name": "Raspberry Pi Camera Module 3 (standard lens)",
+      "qty": 1,
+      "unit_cost": 25,
+      "subtotal": 25,
+      "spec": "3.3 V",
+      "note": "forward camera behind the clear end cap · https://www.raspberrypi.com/products/camera-module-3/"
+    },
+    {
+      "category": "Compute",
+      "name": "Raspberry Pi 5 (4 GB)",
+      "qty": 1,
+      "unit_cost": 110,
+      "subtotal": 110,
+      "spec": "5 V",
+      "note": "Raspberry Pi 5 (vehicle computer, Ethernet to the surface) · https://www.raspberrypi.com/products/raspberry-pi-5/"
+    },
+    {
+      "category": "Power",
+      "name": "50 mm hook-and-loop strap with D-ring buckle, 600 mm",
+      "qty": 1,
+      "unit_cost": 4.5,
+      "subtotal": 4.5,
+      "spec": "https://www.velcro.com/business/products/",
+      "note": "battery strap · https://www.aliexpress.com/w/wholesale-50mm-hook-and-loop-strap-d-ring.html"
+    },
+    {
+      "category": "Actuator",
+      "name": "Blue Robotics T200 underwater thruster (7-20 V)",
+      "qty": 4,
+      "unit_cost": 200,
+      "subtotal": 800,
+      "spec": "0.3 N·m rated / 0.6 N·m peak, 16 V",
+      "note": "thruster · https://bluerobotics.com/store/thrusters/t100-t200-thrusters/t200-thruster-r2-rp/"
+    },
+    {
+      "category": "Power",
+      "name": "Neutrally buoyant tether, 25 m, 2 twisted pairs (Fathom slim style)",
+      "qty": 2,
+      "unit_cost": 45,
+      "subtotal": 90,
+      "spec": "https://bluerobotics.com/store/cables-connectors/cables/fathom-slim-tether/",
+      "note": "tether (coiled at the surface; its weight is carried there); tether to the surface laptop (Ethernet) · https://bluerobotics.com/store/cables-connectors/cables/fathom-slim-tether/"
+    },
+    {
+      "category": "Power",
+      "name": "WAGO 221-415 five-way lever splice",
+      "qty": 6,
+      "unit_cost": 0.8,
+      "subtotal": 4.8,
+      "spec": "450 V",
+      "note": "rail splices, the star ground and bus hubs · https://www.wago.com/global/electrical-interconnections/compact-splicing-connector/p/221-415"
+    },
+    {
+      "category": "Power",
+      "name": "Blue Robotics 4 in watertight enclosure, 298 mm acrylic tube, aluminium end caps (rated 100 m)",
+      "qty": 1,
+      "unit_cost": 285,
+      "subtotal": 285,
+      "spec": "https://bluerobotics.com/store/watertight-enclosures/4-series/wte4-asm-r1/",
+      "note": "watertight electronics hull · https://bluerobotics.com/store/watertight-enclosures/4-series/wte4-asm-r1/"
+    },
+    {
+      "category": "Printed structure",
+      "name": "PETG filament for 12 printed parts",
+      "qty": 1,
+      "unit_cost": 22.11,
+      "subtotal": 22.11,
+      "spec": "874 g of parts (+15 % supports/waste), about 79.7 h of printing",
+      "note": "base_link, skid_fore, bow_frame, stern_frame, saddle_fore, saddle_aft, hull_tray_aft, hull_tray_fore, thruster_left_post, thruster_right_post, thruster_vert_left_post, thruster_vert_right_post"
+    },
+    {
+      "category": "Fasteners",
+      "name": "Screws, nuts and inserts",
+      "qty": 44,
+      "unit_cost": 0.12,
+      "subtotal": 5.28,
+      "spec": "2x M3 x 20 + nut (skid halves, through the joining lugs); 16x M4 x 25 + nyloc (tube sockets, through the tube); 2x M3 x 20 + nut (tray halves); 16x M2.5 x 6 self-tapping (boards to tray); 8x M3 x 12 (thruster foot to post)"
+    },
+    {
+      "category": "Wiring",
+      "name": "4 AWG silicone wire",
+      "qty": 0.6,
+      "unit_cost": 10,
+      "subtotal": 6,
+      "spec": "0.6 m: 21.2 mm2, rated 70 A in a bundle; 0.52 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "14 AWG silicone wire",
+      "qty": 2.7,
+      "unit_cost": 1.5,
+      "subtotal": 4.05,
+      "spec": "2.7 m: 2.082 mm2, rated 16 A in a bundle; 2.45 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "16 AWG silicone wire",
+      "qty": 6.2,
+      "unit_cost": 1,
+      "subtotal": 6.2,
+      "spec": "6.2 m: 1.308 mm2, rated 11 A in a bundle; 5.63 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "22 AWG silicone wire",
+      "qty": 0.8,
+      "unit_cost": 0.4,
+      "subtotal": 0.32,
+      "spec": "0.8 m: 0.327 mm2, rated 3.5 A in a bundle; 0.65 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "24 AWG silicone wire",
+      "qty": 2,
+      "unit_cost": 0.35,
+      "subtotal": 0.7,
+      "spec": "2 m: 0.205 mm2, rated 1.75 A in a bundle; 1.76 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "26 AWG silicone wire",
+      "qty": 1.8,
+      "unit_cost": 0.3,
+      "subtotal": 0.54,
+      "spec": "1.8 m: 0.128 mm2, rated 1.1 A in a bundle; 1.63 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Dupont 2.54 mm contacts",
+      "qty": 28,
+      "unit_cost": 0.02,
+      "subtotal": 0.56,
+      "spec": "28 pc: rated 3 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Dupont 2.54 mm housings",
+      "qty": 14,
+      "unit_cost": 0.02,
+      "subtotal": 0.28,
+      "spec": "14 pc: one per cable end",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "XT90 contacts",
+      "qty": 2,
+      "unit_cost": 1.6,
+      "subtotal": 3.2,
+      "spec": "2 pc: rated 45 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Heat shrink 3 mm, 2:1",
+      "qty": 2.6,
+      "unit_cost": 0.2,
+      "subtotal": 0.52,
+      "spec": "2.6 m: 38 solder joints + a boot on each cable end",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Cable tie 100 x 2.5 mm",
+      "qty": 41,
+      "unit_cost": 0.02,
+      "subtotal": 0.82,
+      "spec": "41 pc: at every clip, cable end and strain-relief anchor",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "PG7 cable gland",
+      "qty": 5,
+      "unit_cost": 2.97,
+      "subtotal": 14.85,
+      "spec": "5 pc: cable exit with strain relief",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "camera FFC, 200 mm (Pi 5 22-pin to 15-pin)",
+      "qty": 1,
+      "unit_cost": 4,
+      "subtotal": 4,
+      "spec": "1 pc: camera to controller",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "50 A ANL fuse",
+      "qty": 1,
+      "unit_cost": 6,
+      "subtotal": 6,
+      "spec": "1 pc: plus spares",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "2 A ATM blade fuse",
+      "qty": 1,
+      "unit_cost": 0.25,
+      "subtotal": 0.25,
+      "spec": "1 pc: plus spares",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "15 A ATM blade fuse",
+      "qty": 4,
+      "unit_cost": 0.25,
+      "subtotal": 1,
+      "spec": "4 pc: plus spares",
+      "note": "price estimated"
+    }
+  ],
+  "total": 1820.43,
+  "feasible": true,
+  "sizing_pass": true,
+  "hardware_verified": false,
+  "actuator_sizing": [],
+  "warnings": [],
+  "notes": [
+    "Tethered ROV: 4 in sealed hull, 4 x T200 (surge, yaw, heave, roll), 6.1 kg, 239 g net lift, about 1.7 m/s, 18 min",
+    "Seal the hull with fresh, greased O-rings and pull a vacuum through the vent plug (it must hold 10 minutes) before every dive; a flooded hull destroys the electronics.",
+    "Thrust is the maker's bollard figure interpolated to 14.8 V; drag uses Cd 1.0 on a 25 x 25 cm frontal area (a guess for an open frame) and leaves out the tether's drag.",
+    "Trim (foam and ballast) is computed for fresh water; in sea water it floats about 2.5 % more, so add one ballast weight.",
+    "The printed frame parts flood: they carry no pressure. PETG is fine in water; avoid PLA, which slowly swells.",
+    "Prices are list/street prices from the linked suppliers at the time the catalog was written; check before ordering."
+  ]
+}

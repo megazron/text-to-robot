@@ -42,7 +42,7 @@ Every film above is the exported model itself: its URDF and meshes in a Cycles s
 | **Wiring and circuits** | A schematic in KiCad style (reference designators, numbered pins, power symbols with each rail's voltage, net labels, title block; SVG and PDF), a picture view with every wire in its colour, and `WIRING.md`: power budget, fuses, wire gauges and drop, battery runtime, regulator heat and a 3.3 V / 5 V logic-level check. See the [Arduino car's schematic](examples/18_arduino_car/schematic.svg) and [breadboard view](examples/18_arduino_car/breadboard.svg). |
 | **Engineering checks** | Torque, speed, power, runtime, clearance and tipping, shown with the numbers. |
 | **Motion** | Every robot moves in the 3D view: a tour of its joints and a demo of what it is for (pick and place, a drive, a gait, a step cycle, suit-up), checked for collisions on every frame. Drag it into a pose, record a clip, download it as a GIF, a video, a joint CSV or a ROS 2 trajectory. See [Motions](docs/ENGINE_API.md#motions). |
-| **Physics tests** | The MuJoCo task tests (drive, ramp, turn, hold, squat, grip) come with every robot to run on your machine; the 19 examples are run in CI and their results are in the gallery. Failures are listed, not hidden. |
+| **Physics tests** | The MuJoCo task tests (drive, ramp, turn, hold, squat, grip) come with every robot to run on your machine; the 24 examples are run in CI and their results are in the gallery. Failures are listed, not hidden. |
 
 ## Arduino mode
 
@@ -115,7 +115,11 @@ $ node cli/src/index.ts "a red 6 dof arm with 70 cm reach, a wrist camera and no
 
 What it cannot apply is listed as `not applied`, and contradictions (two robot types, two joint counts, two reaches) are each flagged as `conflict:`. A few requests are still dropped without a note (a slope or runtime target, a second colour or budget); the [launch audit](docs/LAUNCH_AUDIT.md#bugs-remaining) lists them. A small German, French, Spanish, Hindi and Urdu keyword list (romanised Hindi too) covers the common robot words (`Roboterarm mit sechs Achsen und Greifer`, `छह पैरों वाला रोबोट`, `ایک روبوٹک بازو گرپر کے ساتھ`).
 
-Families: 1-7 DOF arms (a larger count is built as 7 and says so), SCARA, grippers, differential, four-wheel and mecanum bases, a rover with an arm, quadruped, hexapod, humanoid and character robots. Drones, delta and gantry robots, snake and marine robots and dexterous hands are refused with a reason.
+Families: 1-7 DOF arms (a larger count is built as 7 and says so), SCARA, grippers, differential, four-wheel and mecanum bases, a rover with an arm, quadruped (with or without an arm on its back), hexapod, humanoid, character robots, a 5 in quadcopter, a tethered underwater ROV, a snake robot, a Cartesian gantry (pen plotter or tool plate), a delta robot and a five-finger tendon hand. Each new family is sized from real parts like the others: thrust against weight for the drone, buoyancy and trim for the ROV, screw thrust and rod sag for the gantry, loop closures and ball-joint angles for the delta, tendon force for the hand.
+
+Prompts that name no robot type are read in three steps, and the result says which one was used: the rules above; a knowledge table of tasks, objects, animals and named robots (`a robot that waters my plants`, `a toaster`, `a robot fish`, `R2-D2` read as its body plan); and, when no keyword matches, the closest table entry by meaning. Markup and scripts are removed before reading, harmful requests are refused, impossible ones are explained, and words in Hindi, Urdu, Japanese and Chinese are read for the common robot terms.
+
+On the website two reading options are off until switched on, in **Create > How it reads**. **Smarter reading** downloads a small sentence model once (all-MiniLM-L6-v2, about 30 MB from Hugging Face, then cached) and uses it when the word table cannot place a prompt. **Your own model** takes an Anthropic key (`claude-opus-5-5` by default) or any OpenAI-compatible endpoint: the model writes a body plan as JSON, and the page checks it field by field and builds it from real parts like any other prompt. The key stays in that browser (this tab, or this device if *Remember on this device* is ticked) and goes only to the provider chosen; if the model fails, refuses or returns something unusable, the local parser designs the robot and the log says so. Every result starts with a *Designed by* line that names the path. [docs/OPEN_PROMPTS.md](docs/OPEN_PROMPTS.md) has how 396 open prompts are answered.
 
 ## How it works
 
@@ -137,7 +141,7 @@ The same engine runs in the CLI, the local server and, compiled for the browser,
 
 ## Project
 
-- [Gallery](examples/README.md): all 19 examples with their files, checks and test results.
+- [Gallery](examples/README.md): all 24 examples with their files, checks and test results.
 - [Community blog](docs/COMMUNITY.md): post a design you made, anonymously or with a display name, no account. Opt-in only; its small server is in [`community/`](community/).
 - [Development](DEVELOPMENT.md): set up, run the checks, regenerate the examples.
 - [Contributing](CONTRIBUTING.md) · [Code of conduct](CODE_OF_CONDUCT.md) · [Security](SECURITY.md)

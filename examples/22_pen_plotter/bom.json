@@ -1,0 +1,325 @@
+{
+  "robot_name": "cartesian_gantry",
+  "tier": "hobby",
+  "lines": [
+    {
+      "category": "Mechanical",
+      "name": "Ball bearing 608-2Z 8x22x7 mm",
+      "qty": 3,
+      "unit_cost": 0.6,
+      "subtotal": 1.8,
+      "spec": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-608-2Z",
+      "note": "lead screw end bearing · https://www.vxb.com/search?q=608-2Z"
+    },
+    {
+      "category": "Power",
+      "name": "Aluminium flexible beam coupler 5 mm to 8 mm (D19 L25)",
+      "qty": 3,
+      "unit_cost": 2.5,
+      "subtotal": 7.5,
+      "spec": "1.5 N·m rated",
+      "note": "motor to lead screw · https://www.robotdigg.com/product/27/Flexible-Coupler"
+    },
+    {
+      "category": "Sensor",
+      "name": "Mechanical end stop, microswitch on a small board, 3-pin",
+      "qty": 3,
+      "unit_cost": 1,
+      "subtotal": 3,
+      "spec": "5 V",
+      "note": "y home switch; x home switch; z home switch · https://www.aliexpress.com/w/wholesale-mechanical-endstop-3d-printer.html"
+    },
+    {
+      "category": "Compute",
+      "name": "Espressif ESP32-S3-DevKitC-1 (N8R8)",
+      "qty": 1,
+      "unit_cost": 15,
+      "subtotal": 15,
+      "spec": "5 V",
+      "note": "ESP32-S3 motion controller (runs the generated firmware) · https://www.adafruit.com/product/5364"
+    },
+    {
+      "category": "Power",
+      "name": "IEC C14 panel inlet with fuse drawer and rocker switch, 10 A",
+      "qty": 1,
+      "unit_cost": 3,
+      "subtotal": 3,
+      "spec": "https://www.aliexpress.com/w/wholesale-iec-c14-inlet-fuse-switch.html",
+      "note": "fused, switched mains inlet · https://www.aliexpress.com/w/wholesale-iec-c14-inlet-fuse-switch.html"
+    },
+    {
+      "category": "Power",
+      "name": "Tr8x8 brass flange nut (22 mm flange, 4x M3 on PCD 16)",
+      "qty": 3,
+      "unit_cost": 2.5,
+      "subtotal": 7.5,
+      "spec": "https://www.robotdigg.com/product/228/T8-Lead-Screw-with-Copper-Nut",
+      "note": "y lead nut; x lead nut; z lead nut · https://www.robotdigg.com/product/228/T8-Lead-Screw-with-Copper-Nut"
+    },
+    {
+      "category": "Power",
+      "name": "Lead screw Tr8x8 (P2, 4 starts) 150 mm, stainless steel",
+      "qty": 1,
+      "unit_cost": 7,
+      "subtotal": 7,
+      "spec": "https://www.iso.org/standard/12719.html",
+      "note": "z lead screw · https://www.robotdigg.com/product/228/T8-Lead-Screw-with-Copper-Nut"
+    },
+    {
+      "category": "Power",
+      "name": "Lead screw Tr8x8 (P2, 4 starts) 300 mm, stainless steel",
+      "qty": 2,
+      "unit_cost": 9,
+      "subtotal": 18,
+      "spec": "https://www.iso.org/standard/12719.html",
+      "note": "y lead screw; x lead screw · https://www.robotdigg.com/product/228/T8-Lead-Screw-with-Copper-Nut"
+    },
+    {
+      "category": "Mechanical",
+      "name": "Linear ball bushing LM8UU (8 x 15 x 24 mm)",
+      "qty": 10,
+      "unit_cost": 1.2,
+      "subtotal": 12,
+      "spec": "https://www.samickthk.co.kr/en/",
+      "note": "y carriage bushings; x carriage bushings; z carriage bushings · https://www.aliexpress.com/w/wholesale-lm8uu.html"
+    },
+    {
+      "category": "Actuator",
+      "name": "NEMA17 stepper 42x42x40 mm, 0.45 N.m (StepperOnline 17HS16-2004S1)",
+      "qty": 3,
+      "unit_cost": 9.5,
+      "subtotal": 28.5,
+      "spec": "0.3 N·m rated / 0.45 N·m peak, 24 V",
+      "note": "y axis motor; x axis motor; z axis motor · https://www.stepperonline.co.uk/nema-17-bipolar-45ncm-64oz-in-2a-42x42x40mm-4-wires-w-1m-cable-connector-17hs16-2004s1.html"
+    },
+    {
+      "category": "Power",
+      "name": "Mean Well LRS-150-24 enclosed PSU, 24 V 6.5 A (156 W)",
+      "qty": 1,
+      "unit_cost": 29,
+      "subtotal": 29,
+      "spec": "24 V",
+      "note": "24 V stepper supply · https://www.digikey.com/en/products/result?keywords=LRS-150-24"
+    },
+    {
+      "category": "Power",
+      "name": "Hardened chromed linear rod 8 mm h6, 130 mm",
+      "qty": 2,
+      "unit_cost": 4.56,
+      "subtotal": 9.12,
+      "spec": "https://us.misumi-ec.com/vona2/mech/M0100000000/M0101000000/M0101010000/",
+      "note": "z guide rods · https://us.misumi-ec.com/vona2/mech/M0100000000/M0101000000/M0101010000/"
+    },
+    {
+      "category": "Power",
+      "name": "Hardened chromed linear rod 8 mm h6, 300 mm",
+      "qty": 4,
+      "unit_cost": 6.6,
+      "subtotal": 26.4,
+      "spec": "https://us.misumi-ec.com/vona2/mech/M0100000000/M0101000000/M0101010000/",
+      "note": "y guide rods; x guide rods · https://us.misumi-ec.com/vona2/mech/M0100000000/M0101000000/M0101010000/"
+    },
+    {
+      "category": "Electronics",
+      "name": "BigTreeTech TMC2209 V1.3 StepStick stepper driver (UART)",
+      "qty": 3,
+      "unit_cost": 7,
+      "subtotal": 21,
+      "spec": "24 V",
+      "note": "X stepper driver; Y stepper driver; Z stepper driver · https://biqu.equipment/products/bigtreetech-tmc2209-stepper-motor-driver-for-3d-printer-board-vs-tmc2208"
+    },
+    {
+      "category": "Power",
+      "name": "WAGO 221-415 five-way lever splice",
+      "qty": 4,
+      "unit_cost": 0.8,
+      "subtotal": 3.2,
+      "spec": "450 V",
+      "note": "rail splices, the star ground and bus hubs · https://www.wago.com/global/electrical-interconnections/compact-splicing-connector/p/221-415"
+    },
+    {
+      "category": "Printed structure",
+      "name": "PETG filament for 14 printed parts",
+      "qty": 1,
+      "unit_cost": 25.27,
+      "subtotal": 25.27,
+      "spec": "999 g of parts (+15 % supports/waste), about 91.0 h of printing",
+      "note": "y_module_end_a, y_module_end_b, y_module_carriage, x_adapter, x_module_end_a, x_module_end_b, x_module_carriage, z_bracket, z_module_end_a, z_module_end_b, z_module_carriage, pen_holder, control_case, control_case_lid"
+    },
+    {
+      "category": "Fasteners",
+      "name": "Screws, nuts and inserts",
+      "qty": 27,
+      "unit_cost": 0.12,
+      "subtotal": 3.24,
+      "spec": "12x M3 x 12 self-tapping (lead nut); 4x M4 x 12 socket head (adapter to Y carriage); 4x M4 x 12 socket head (Z bracket to X carriage); 1x M3 x 10 thumb screw (pen clamp); 4x M3 x 10 self-tapping (lid to compartment); 2x M3 x 6 self-tapping (Mean Well LRS-150-24 enclosed PSU, 24 V 6.5 A to standoffs)"
+    },
+    {
+      "category": "Wiring",
+      "name": "20 AWG silicone wire",
+      "qty": 0.3,
+      "unit_cost": 0.5,
+      "subtotal": 0.15,
+      "spec": "0.3 m: 0.519 mm2, rated 5.5 A in a bundle; 0.20 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "22 AWG silicone wire",
+      "qty": 3.5,
+      "unit_cost": 0.4,
+      "subtotal": 1.4,
+      "spec": "3.5 m: 0.327 mm2, rated 3.5 A in a bundle; 3.16 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "24 AWG silicone wire",
+      "qty": 11.8,
+      "unit_cost": 0.35,
+      "subtotal": 4.13,
+      "spec": "11.8 m: 0.205 mm2, rated 1.75 A in a bundle; 10.64 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "26 AWG silicone wire",
+      "qty": 4.1,
+      "unit_cost": 0.3,
+      "subtotal": 1.23,
+      "spec": "4.1 m: 0.128 mm2, rated 1.1 A in a bundle; 3.67 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "6.3 mm spade contacts",
+      "qty": 3,
+      "unit_cost": 0.08,
+      "subtotal": 0.24,
+      "spec": "3 pc: rated 15 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Bootlace ferrule contacts",
+      "qty": 5,
+      "unit_cost": 0.03,
+      "subtotal": 0.15,
+      "spec": "5 pc: rated 17.5 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Dupont 2.54 mm contacts",
+      "qty": 61,
+      "unit_cost": 0.02,
+      "subtotal": 1.22,
+      "spec": "61 pc: rated 3 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Dupont 2.54 mm housings",
+      "qty": 19,
+      "unit_cost": 0.02,
+      "subtotal": 0.38,
+      "spec": "19 pc: one per cable end",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "JST XH 2.5 mm contacts",
+      "qty": 9,
+      "unit_cost": 0.03,
+      "subtotal": 0.27,
+      "spec": "9 pc: rated 3 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "JST XH 2.5 mm housings",
+      "qty": 6,
+      "unit_cost": 0.05,
+      "subtotal": 0.3,
+      "spec": "6 pc: one per cable end",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Heat shrink 3 mm, 2:1",
+      "qty": 1.2,
+      "unit_cost": 0.2,
+      "subtotal": 0.24,
+      "spec": "1.2 m: 0 solder joints + a boot on each cable end",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Cable tie 100 x 2.5 mm",
+      "qty": 27,
+      "unit_cost": 0.02,
+      "subtotal": 0.54,
+      "spec": "27 pc: at every clip, cable end and strain-relief anchor",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "PG7 cable gland",
+      "qty": 1,
+      "unit_cost": 2.97,
+      "subtotal": 2.97,
+      "spec": "1 pc: cable exit with strain relief",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Nylon braided sleeving 6 mm",
+      "qty": 1.2,
+      "unit_cost": 0.4,
+      "subtotal": 0.48,
+      "spec": "1.2 m: over every cable where it crosses a joint",
+      "note": "price estimated"
+    }
+  ],
+  "total": 234.23,
+  "feasible": true,
+  "sizing_pass": true,
+  "hardware_verified": false,
+  "actuator_sizing": [
+    {
+      "joint": "x_axis",
+      "required_effort": 4.2,
+      "effort_unit": "N",
+      "required_force_n": 4.2,
+      "chosen": "NEMA17 stepper 42x42x40 mm, 0.45 N.m (StepperOnline 17HS16-2004S1)",
+      "margin": "37.19x"
+    },
+    {
+      "joint": "y_axis",
+      "required_effort": 5.2,
+      "effort_unit": "N",
+      "required_force_n": 5.2,
+      "chosen": "NEMA17 stepper 42x42x40 mm, 0.45 N.m (StepperOnline 17HS16-2004S1)",
+      "margin": "30.12x"
+    },
+    {
+      "joint": "z_axis",
+      "required_effort": 6.5,
+      "effort_unit": "N",
+      "required_force_n": 6.5,
+      "chosen": "NEMA17 stepper 42x42x40 mm, 0.45 N.m (StepperOnline 17HS16-2004S1)",
+      "margin": "24.19x"
+    }
+  ],
+  "warnings": [],
+  "notes": [
+    "Cartesian XYZ robot on three lead-screw modules: 183 x 183 x 23 mm, 158 N per axis, 80 mm/s, pen holder",
+    "Sized for a 0.2 kg payload.",
+    "The three modules are the same design at two lengths; the frame is screwed to a flat board (12 mm plywood or MDF, about 450 x 350 mm, not in the parts list).",
+    "Lead screws are plain Tr8x8 with brass nuts: cheap and quiet, with some backlash; anti-backlash nuts are a drop-in upgrade.",
+    "Clearance is checked with every rod, lead screw, bearing, bushing, coupler and lead nut as its round body with its bore, so each rod through its bushings and each screw through its nut is checked as built; no pair is left out.",
+    "Speeds and thrust use the NEMA17's rated torque; at high step rates a stepper's torque falls, so the firmware limits speed to the checked value.",
+    "The pen clamp takes pens and markers up to 12 mm; Z lifts the pen between strokes.",
+    "Prices are list/street prices from the linked suppliers at the time the catalog was written; check before ordering."
+  ]
+}

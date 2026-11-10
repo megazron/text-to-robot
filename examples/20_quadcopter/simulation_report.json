@@ -1,0 +1,35 @@
+{
+ "model": "robot.urdf",
+ "family": "drone_quad",
+ "group": "aerial",
+ "scope": "PASS means the modelled actuators (datasheet peak torque as a hard limit, a linear torque-speed line to no-load speed, reflected rotor inertia, URDF damping/friction) can produce the torques and speeds the task needs in this geometry and mass distribution, and that mean torque over the hold stays within the continuous (rated) torque. Joint control uses an ideal model-based feedforward (computed torque) through the force-limited servo for fixed-base robots and plain position servos for floating robots; a pass therefore proves torque/speed capacity, not that a given controller achieves it. Untested: thermal limits over long duty cycles (only the mean-vs-rated proxy), gearbox backlash and compliance, link and joint flexibility, encoder resolution, supply voltage sag and current limits, bus latency, controller tuning, and contact/friction values (nominal friction only).",
+ "untested": [
+  "aerodynamics: each rotor is its static thrust curve applied at the hub (no drag, ground effect, prop wash or battery sag); stabilisation is an ideal cascaded PD on the true state, standing in for the flight controller"
+ ],
+ "fidelity": "URDF effort limits enforced; position gains inferred; speed/thermal/electrical limits unmodelled; geometry and hardware uncalibrated; armature = rotor inertia x gear ratio^2 from the actuator record: front_left_rotor: 1.6e-06 kg m^2 (datasheet x gear ratio 1^2); rear_left_rotor: 1.6e-06 kg m^2 (datasheet x gear ratio 1^2); rear_right_rotor: 1.6e-06 kg m^2 (datasheet x gear ratio 1^2); front_right_rotor: 1.6e-06 kg m^2 (datasheet x gear ratio 1^2)",
+ "tests": {
+  "hover": {
+   "pass": true,
+   "explanation": "lifts off and holds 0.8 m for 3 s: height within 17 mm, tilt under 0.0 deg, rotors at 15 % of full thrust on average (1.15 N each for 0.467 kg; design record says 1.15 N), peak 15 %",
+   "mean_thrust_fraction": 0.151,
+   "peak_thrust_fraction": 0.153,
+   "height_error_m": 0.0173,
+   "tilt_deg": 0.0,
+   "mass_kg": 0.4671
+  },
+  "thrust_to_weight": {
+   "pass": true,
+   "explanation": "full throttle from hover climbs at 45.1 m/s^2: thrust-to-weight 5.60 (design record 6.63); 2.0 is the least that flies with control margin",
+   "thrust_to_weight": 5.597,
+   "climb_accel_m_s2": 45.1
+  },
+  "attitude_recovery": {
+   "pass": true,
+   "explanation": "released 15 deg tilted, it is level to 0.1 deg after 1 s (attitude control within the rotors' thrust range)",
+   "tilt_after_1s_deg": 0.11
+  }
+ },
+ "passed": 3,
+ "total": 3,
+ "source_urdf_sha256": "2780ed95e416dd5c3fae6c451992d1eed86ea5407f314cd784fb5fed6dccbff5"
+}

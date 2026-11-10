@@ -242,6 +242,47 @@ def legged_pose_take(ex, lower, T, arms, rail=False):
 
 
 DRIVE = lambda s, yaw=0.8: [(0, 0, 0), (1.1, s, 0), (2.2, 0, 0), (3.1, 0, yaw), (4.0, 0, 0)]
+def hover_take(ex, height=0.45, T=4.0):
+    """A multirotor lifts off, hovers and turns a little on the same thrust model and flight controller the task tests fly
+    (tasks.Hover), its props spinning on their velocity servos. Stepped here directly: the thrusts are site forces, not joints."""
+    k = Take(ex, True)
+    m, pos, spin, thr, fmax = tasks._thrust_rig(k.xml, k.design)
+    d = mujoco.MjData(m); mujoco.mj_forward(m, d)
+    k.m, k.d = m, d; k.bodies = [(b, m.body(b).name) for b in range(1, m.nbody)]
+    ctl = tasks.Hover(m, pos, spin, thr, fmax)
+    names = {r["joint"]: r.get("spin", 1) for r in k.design.get("rotors", [])}
+    rotors = [(a, names[m.joint(int(m.actuator_trnid[a, 0])).name]) for a in range(m.nu) if a not in thr and m.actuator_trntype[a] == mujoco.mjtTrn.mjTRN_JOINT and m.joint(int(m.actuator_trnid[a, 0])).name in names]
+    sub = max(1, round(1 / FPS / m.opt.timestep))
+    for _ in range(int(T * FPS)):
+        for _ in range(sub):
+            t = d.time
+            z = height * smooth(t / 1.4) if t < T - 0.9 else height * (1 - smooth((t - (T - 0.9)) / 0.9))
+            yaw = 0.5 * math.sin(2 * math.pi * min(1.0, max(0.0, (t - 1.4) / 2.0)))
+            for a, sgn in rotors: d.ctrl[a] = sgn * 120.0 * min(1.0, t / 0.5)   # rad/s: a visible spin, not the real 2700
+            ctl.apply(d, ctl.thrusts(d, z, yaw))
+            mujoco.mj_step(m, d)
+            if not np.all(np.isfinite(d.qpos)): raise RuntimeError("simulation diverged")
+        k.frames.append({n: [round(float(x), 5) for x in (*d.xpos[b], *d.xquat[b])] for b, n in k.bodies})
+    return k
+
+
+def swim_take(ex, T=4.0):
+    """The ROV in the task tests' water model (tasks.Water): it holds depth, drives ahead, turns and comes back level."""
+    k = Take(ex, True)
+    W = tasks.Water(k.xml, k.design); W.release(0.5)
+    k.m, k.d = W.m, W.d; k.bodies = [(b, W.m.body(b).name) for b in range(1, W.m.nbody)]
+    sub = max(1, round(1 / FPS / W.m.opt.timestep))
+    for _ in range(int(1.5 / W.m.opt.timestep)): W.step(W.hold(0.5))   # settled at depth before the film starts
+    t0 = W.d.time
+    for _ in range(int(T * FPS)):
+        for _ in range(sub):
+            t = W.d.time - t0
+            surge = 0.35 * smooth(t / 0.6) * (1 - smooth((t - 1.6) / 0.6)); yaw = 0.25 * smooth((t - 2.0) / 0.4) * (1 - smooth((t - 3.0) / 0.5))
+            if not W.step(W.hold(0.5 + 0.08 * math.sin(2 * math.pi * t / T), surge=surge, yaw_rate=yaw)): raise RuntimeError("simulation diverged")
+        k.frames.append({n: [round(float(x), 5) for x in (*W.d.xpos[b], *W.d.xquat[b])] for b, n in k.bodies})
+    return k
+
+
 PLANS = {
     "01_arm_2dof": lambda ex: arm_take(ex, [(0.8, {"shoulder_pitch": 1.2, "elbow_pitch": -0.9, "gripper": 0.46}), (1.3, {}), (1.6, {"gripper": 0.0}), (2.6, {"shoulder_pitch": 0.2, "elbow_pitch": -1.7}), (3.2, {}), (3.5, {"gripper": 0.46}), (3.7, {})], 4.2),
     "02_arm_6dof": lambda ex: pick_take(ex, 0.27, 0.07, 0.07, 0.7, (0.46, 0.05)),
@@ -262,12 +303,17 @@ PLANS = {
     "16_eva": lambda ex: wheel_take(ex, DRIVE(0.3), 4.0, [(1.0, {"head_pan": 0.5, "left_arm_shoulder_pitch": 0.5, "right_arm_shoulder_pitch": 0.5}), (2.2, {"head_pan": -0.5}), (3.2, {"head_pan": 0.0, "left_arm_shoulder_pitch": 0.0, "right_arm_shoulder_pitch": 0.0})]),
     "17_baymax": lambda ex: wheel_take(ex, DRIVE(0.3), 4.0, [(1.0, {"head_pan": 0.35}), (2.2, {"head_pan": -0.35}), (3.2, {"head_pan": 0.0})]),
     "18_arduino_car": lambda ex: wheel_take(ex, DRIVE(0.3), 4.0),
+    "20_quadcopter": lambda ex: hover_take(ex),
+    "21_underwater_rov": lambda ex: swim_take(ex),
+    "22_pen_plotter": lambda ex: arm_take(ex, [(0.6, {"z_axis": 0.012}), (1.2, {"x_axis": 0.12}), (1.9, {"y_axis": 0.12}), (2.6, {"x_axis": 0.03}), (3.3, {"y_axis": 0.03}), (3.7, {"z_axis": 0.0})], 4.2),
+    "23_robot_hand": lambda ex: arm_take(ex, [(0.8, {"thumb_swing": 0.6}), (1.4, {"index_mcp": 1.1, "middle_mcp": 1.1, "ring_mcp": 1.1, "little_mcp": 1.1, "thumb_mcp": 0.5}), (2.3, {}), (2.9, {"index_mcp": 0.0, "middle_mcp": 1.1, "thumb_mcp": 0.0}), (3.5, {"middle_mcp": 0.0, "ring_mcp": 0.0, "little_mcp": 0.0, "thumb_swing": 0.0})], 4.2),
+    "24_plant_waterer": lambda ex: wheel_take(ex, DRIVE(0.35), 4.0),
     "19_arduino_arm": lambda ex: arm_take(ex, [(0.8, {"yaw": 0.8, "shoulder": 0.9, "elbow": 0.9, "claw": 0.35}), (1.3, {}), (1.6, {"claw": -0.02}), (2.5, {"yaw": -0.8, "shoulder": 0.3, "elbow": 1.3}), (3.1, {"shoulder": 0.9, "elbow": 0.9}), (3.4, {"claw": 0.35}), (3.6, {})], 4.2),
 }
 
 
 # where each film is shot from (0 = dead ahead, robots face +x)
-VIEW = {"01_arm_2dof": 75, "02_arm_6dof": 115, "03_arm_7dof": 115, "04_scara": 300, "09_gripper": 320, "19_arduino_arm": 115, "08_humanoid": 25, "13_battle_mech": 25, "16_eva": 25, "17_baymax": 25, "14_iron_man_mark_43": 20}
+VIEW = {"22_pen_plotter": 300, "23_robot_hand": 300, "01_arm_2dof": 75, "02_arm_6dof": 115, "03_arm_7dof": 115, "04_scara": 300, "09_gripper": 320, "19_arduino_arm": 115, "08_humanoid": 25, "13_battle_mech": 25, "16_eva": 25, "17_baymax": 25, "14_iron_man_mark_43": 20}
 
 
 FRAME = {"14_iron_man_mark_43": {"frame": r"(helmet|ear_pod|faceplate|eye_led|head$)", "el": 8}}

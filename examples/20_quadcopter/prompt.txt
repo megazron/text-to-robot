@@ -1,0 +1,1 @@
+A quadcopter drone with a camera for aerial photos of my garden
