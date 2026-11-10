@@ -427,7 +427,7 @@ function enclosure(b: Build, items: Item[], area: Rect, reserved: Rect[], deckTo
   b.A.fastener("M3 x 8 + nut (enclosure tabs to deck; drill 3.4 mm through the deck at the tabs)", 4);
   const ym = (y0 + y1) / 2, vent = kept.length * 5 * (zTop - 8 - deckTop - 10) + ventsY * 8 * (ventHalf - 8);
   registerBay(b.A, { name: bayName, tub: solids[0], lid: solids[solids.length - 1], solids, parent, T: invert(b.w(parent)), min: [x0 + t, y0 + t, deckTop], max: [x1 - t, y1 - t, zTop], parts: plan.map((p) => p.it.name), screws: bosses.length + lugs.length, vent_area_mm2: Math.round(vent),
-    exits: [...fx.exits, { id: `${bayName}.rear_slot`, kind: "slot", face: "x-" as Face, at: [x0, ym, deckTop + 6], normal: [-1, 0, 0], hole_mm: 12 }, ...deckGrommets(b, parent, boards, { x0: x0 + t, x1: x1 - t, y0: y0 + t, y1: y1 - t }, deckTop, bayName)] }, b.H);
+    exits: [...fx.exits, { id: `${bayName}.rear_slot`, kind: "slot", face: "x-" as Face, at: [x0, ym, deckTop + 6], normal: [-1, 0, 0], hole_mm: 12 }, ...deckGrommets(b, parent, [...boards, ...reserved], { x0: x0 + t, x1: x1 - t, y0: y0 + t, y1: y1 - t }, deckTop, bayName)] }, b.H);
   return zTop;
 }
 /** USB window beside the computer and the main switch in a wall where nothing stands behind it. Coordinates are world mm. */
@@ -472,6 +472,48 @@ function wallFixtures(b: Build, plan: Placement[], w: { x0: number; x1: number; 
   b.mount(parent, small ? "switch_kcd1" : "switch_kcd4", frame(s.p, s.n, [0, 0, 1]), "main_switch", "main power switch");
   exits.push({ id: `${bayName}.switch`, kind: "switch", face: s.face, at: s.p, normal: s.n, hole_mm: small ? 13 : 22, part: "main_switch" });
   return { cuts, exits, lidCuts: [] as Op[] };
+}
+/**
+ * Two decks: under each grommet in the upper deck a grommet in the lower compartment's lid, so a cable from a board up
+ * there drops straight into the compartment below (round by its rear slot it would have to leave the robot's outline).
+ */
+function lidGrommets(b: Build, lowName: string, highName: string) {
+  const bays = baysOf(b.A), lo = bays.find((r) => r.name === lowName), hi = bays.find((r) => r.name === highName); if (!lo || !hi) return;
+  const lid = lo.solids?.[lo.solids.length - 1] ?? lo.lid, zLid = lo.max[2] + 0.2 + 2.4;
+  for (const e of hi.exits) {
+    if (e.face !== "floor") continue;
+    const [x, y] = e.at;
+    if (x < lo.min[0] + 8 || x > lo.max[0] - 8 || y < lo.min[1] + 8 || y > lo.max[1] - 8) continue;
+    b.A.amendProgram(lid, b.in(lid, [{ op: "hole", a: [x, y, lo.max[2] - 4], b: [x, y, zLid + 1], d: e.hole_mm }]));
+    const ex = { id: `${lowName}.lid_${e.id.split(".").pop()}`, kind: "grommet", face: "lid" as Face, at: [x, y, zLid] as Vec3, normal: [0, 0, 1] as Vec3, hole_mm: e.hole_mm };
+    lo.exits.push(ex);
+    b.H.exits.push({ id: ex.id, link: lid, at: apply(invert(b.w(lid)), ex.at), normal: ex.normal, panel_hole_mm: ex.hole_mm, bay: lowName, kind: "grommet" });
+  }
+}
+/**
+ * Two decks: a cable between the two compartments drops through an upper deck grommet and the lid grommet under it; a
+ * motor lead comes up into the lower compartment by the deck grommet on its own side.
+ */
+function twoDeckExits(b: Build) {
+  const H = b.H, bays = baysOf(b.A), lo = bays.find((r) => r.name === "power_bay"), hi = bays.find((r) => r.name === "electronics_enclosure");
+  if (!lo || !hi) return;
+  const pairs = lo.exits.filter((e) => e.face === "lid").map((e) => [hi.exits.find((u) => u.face === "floor" && Math.hypot(u.at[0] - e.at[0], u.at[1] - e.at[1]) < 1)?.id, e.id]).filter((p): p is [string, string] => !!p[0]);
+  const floor = lo.exits.filter((e) => e.face === "floor");
+  const yOf = (n: string) => { const T = fk(b.A.spec).link[n]; return T ? T.p[1] * 1000 : 0; };
+  const motor = (n: string) => /_motor$/.test(n);
+  for (const w of H.wires) {
+    const ba = H.bayOf.get(w.a.inst), bb = H.bayOf.get(w.b.inst);
+    if (pairs.length && ((ba === lo.name && bb === hi.name) || (ba === hi.name && bb === lo.name))) H.exitFor(w.cable, ...pairs[0]);
+    else if (floor.length && (motor(w.a.inst) || motor(w.b.inst)) && (ba === lo.name || bb === lo.name)) {
+      const m = motor(w.a.inst) ? w.a.inst : w.b.inst, side = floor.sort((p, q) => Math.abs(p.at[1] - yOf(m)) - Math.abs(q.at[1] - yOf(m)))[0];
+      H.exitFor(w.cable, side.id);
+    } else if (pairs.length && floor.length && (motor(w.a.inst) || motor(w.b.inst)) && (ba === hi.name || bb === hi.name)) {
+      // an encoder lead: up through the lower compartment (in by the deck grommet on its side, out by the lid) to the upper
+      const m = motor(w.a.inst) ? w.a.inst : w.b.inst, side = floor.sort((p, q) => Math.abs(p.at[1] - yOf(m)) - Math.abs(q.at[1] - yOf(m)))[0];
+      H.exitFor(w.cable, pairs[0][0]);
+      if (!H.viaOf.has(w.cable)) H.via(w.cable, lo.name, ...((motor(w.a.inst) ? [side.id, pairs[0][1]] : [pairs[0][1], side.id]) as [string, string]));
+    }
+  }
 }
 /** Grommets through the deck, one each side, where motor leads go down to the drives. Holes are cut in the deck. */
 function deckGrommets(b: Build, parent: string, boards: Rect[], w: Rect, deckTop: number, bayName = "electronics_enclosure"): BayRecord["exits"] {
@@ -548,6 +590,7 @@ function wireMobile(b: Build, compute: string, battery: [string, number], sensor
     H.bought("servo_bus.usb.VBUS", pi ? "computer.usb_a.LINK" : "computer.usb_a_j6_j7.LINK", "USB", 0.05, 0.1, "SERVO_BUS_USB");
     H.spare("servo_bus.dc_in");
   }
+  twoDeckExits(b);
   finishWiring(H, { noClips: /^(base_link|deck_lid|upper_deck|head)$|rocker_rear_arm/ });
   enclosureChecks(A);
 }
@@ -982,8 +1025,9 @@ function designBase(kind: BaseKind, req: MobileRequest): RobotSpecification {
       b.A.fastener("M3 x 10 (pillars)", 8);
       const upTop = zU + 4;
       const clear = electronicsBay(b, high, uArea, pad(uRes), upTop, "upper_deck");
-      const zT = enclosure(b, high, uArea, pad(uRes), upTop, clear, "upper_deck") ?? clear + 8;
-      if (sensors.includes("lidar")) lidarMast(b, ux0 + 37, 0, upTop, zT - 8 + 10.4, "upper_deck");
+      const zT = enclosure(b, high, uArea, pad(uRes), upTop, clear, "upper_deck", "electronics_enclosure", true, { mast: sensors.includes("lidar") ? uRes.length - 1 : undefined }) ?? clear + 8;
+      if (sensors.includes("lidar")) { lidarMast(b, ux0 + 37, 0, upTop, zT - 8 + 10.4, "upper_deck"); b.H.bayOf.set("lidar", "electronics_enclosure"); }
+      lidGrommets(b, "power_bay", "electronics_enclosure");
     }
     if (sensors.includes("depth")) depthCamera(b, front - 14, 0, top + 40, top);
     if (sensors.includes("camera")) {
