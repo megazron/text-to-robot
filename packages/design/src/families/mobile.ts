@@ -1508,7 +1508,7 @@ export function designEva(req: MobileRequest = {}): RobotSpecification {
     const shell = shellOutline(prof, tShell);
     for (const [za, zb, band] of [[zEgg0 - 1, zSeam, "lower"], [zSeam, zEgg1 + 1, "upper"]] as const) for (const s of [1, -1]) {
       const ops: Op[] = [{ op: "revolve", pts: shell, seg: 96 }, { op: "cutbox", min: [-300, -300, -10], max: [300, 300, za] }, { op: "cutbox", min: [-300, -300, zb], max: [300, 300, 900] },
-        { op: "cutbox", min: [-300, s > 0 ? -300 : 0, 0], max: [300, s > 0 ? 0 : 300, 900] }, { op: "hole", a: [SX, 0, 0], b: [SX, 0, 900], d: 22 }, { op: "cutbox", min: [-40, -26, zEgg1 - 45], max: [26, 26, 900] }, // spine hole, neck opening
+        { op: "cutbox", min: [-300, s > 0 ? -300 : 0, 0], max: [300, s > 0 ? 0 : 300, 900] }, { op: "hole", a: [SX, 0, 0], b: [SX, 0, 900], d: 22 }, { op: "cutbox", min: [-40, -26, zEgg1 - 45], max: [26, 26, 900] }, { op: "cutbox", min: [-12, 20, zEgg1 - 45], max: [12, 46, 900] }, // spine hole, neck opening (and its notch for the head's ribbon)
         { op: "cutbox", min: [-17, s * rAt(zS) - 16, zS - 5], max: [17, s * rAt(zS) + 16, zS + 7] }]; // slot for the shoulder bracket
       b.printed(`shell_${band}_${s > 0 ? "left" : "right"}`, "spine", ops);
     }
@@ -1520,8 +1520,11 @@ export function designEva(req: MobileRequest = {}): RobotSpecification {
       for (let k = 0; k < 11; k++) { cuts.push({ op: "cutbox", min: [-300, -40, zSeam + 34 + k * 7], max: [-70, 40, zSeam + 37.2 + k * 7] }); vent += 80 * 3.2; }
       for (const n of ["shell_upper_left", "shell_upper_right"]) b.A.amendProgram(n, b.in(n, cuts));
       for (const n of ["rib_mid_left", "rib_mid_right"]) b.A.amendProgram(n, b.in(n, [{ op: "hole", a: [downAt[0], downAt[1], zSeam - 6], b: [downAt[0], downAt[1], zSeam + 6], d: 12 }]));
+      // the head's ribbon passes the top rib by a slot under the neck opening's notch
+      for (const n of ["rib_top_left", "rib_top_right"]) b.A.amendProgram(n, b.in(n, [{ op: "cutbox", min: [-11, 22, zEgg1 - 50], max: [11, 44, zEgg1 - 20] }]));
       registerBay(b.A, { name: "egg_bay", tub: "spine", lid: "shell_upper_left", solids: ["shell_upper_left", "shell_upper_right"], parent: "spine", T: I4(), min: [-100, -100, zSeam], max: [100, 100, zEgg1], parts: high.map((i) => i.name), screws: 8, vent_area_mm2: Math.round(vent), note: "the printed egg shell",
-        exits: [{ id: "egg_bay.down", kind: "grommet", face: "floor", at: [downAt[0], downAt[1], zSeam], normal: [0, 0, -1], hole_mm: 12 }, { id: "egg_bay.usb", kind: "usb", face: side > 0 ? "y+" : "y-", at: [cp[0], side * 100, zSeam + 19], normal: [0, side, 0], hole_mm: 18 }] }, b.H); }
+        // (and up through the neck opening in the egg's top, beside the pan mount, for the head's leads)
+        exits: [{ id: "egg_bay.down", kind: "grommet", face: "floor", at: [downAt[0], downAt[1], zSeam], normal: [0, 0, -1], hole_mm: 12 }, { id: "egg_bay.neck", kind: "slot", face: "lid", at: [0, 33, zEgg1 - 20], normal: [0, 0, 1], hole_mm: 18 }, { id: "egg_bay.usb", kind: "usb", face: side > 0 ? "y+" : "y-", at: [cp[0], side * 100, zSeam + 19], normal: [0, side, 0], hole_mm: 18 }] }, b.H); }
     // the leads from the egg drop through the lower compartment's lid under the rib's hole, and on through it
     lidGrommets(b, "electronics_enclosure", "egg_bay");
     b.A.fastener("M3 x 8 + heat-set inserts (shell to ribs)", 16);
@@ -1534,6 +1537,11 @@ export function designEva(req: MobileRequest = {}): RobotSpecification {
     b.printed("neck_mount", "spine", [{ op: "cradle", key: panKey, T: Tpan, wall: 3 }, { op: "rod", a: [0, 0, zEgg1 - 26.9], b: [0, 0, zP - 40], r: 15 },
       { op: "box", min: [-24, -24, zEgg1 - 26.9], max: [24, 24, zEgg1 - 23], r: 5 }], "printed");
     b.mount("spine", panKey, Tpan, "head_pan_actuator", "head pan");
+    // a Feetech's two sockets are under its case: a window down through the mount and the top rib under them, the bus lead
+    // drops through it into the egg (the pan actuator is wired inside the egg's compartment)
+    if (/^feetech_sts/.test(panKey)) { const zb = zP + part(panKey).bbox_mm!.min[2], win: Op = { op: "cutbox", min: [-24, -12, zEgg1 - 50], max: [-4, 12, zb + 4] };
+      for (const n of ["neck_mount", "rib_top_left", "rib_top_right"]) b.A.amendProgram(n, b.in(n, [win]));
+      b.H.bayOf.set("head_pan_actuator", "egg_bay"); }
     b.servo("head_pan", "spine", "head", Tpan, panKey, -2.6, 2.6);
     const hz0 = zTop + 20, HR = 112, HH = 150;
     const headProf: [number, number][] = [];
@@ -1543,7 +1551,10 @@ export function designEva(req: MobileRequest = {}): RobotSpecification {
     const dz = hz0 + 40, depthWindow: Op[] = sensors.includes("depth") ? [{ op: "cutbox", min: [40, -47, dz - 15], max: [140, 47, dz + 15] }] : [];
     const headOps: Op[] = [{ op: "at", T: scaleX, of: [{ op: "revolve", pts: shellOutline(headProf, 2.4), seg: 96 }] },
       { op: "horn", key: panKey, t: 4 } as Op, { op: "rod", a: [0, 0, zP], b: [0, 0, hz0 + 3], r: 14 }, { op: "hole", a: [0, 0, zP + 3], b: [0, 0, hz0 + 4], d: 9 },
-      { op: "hole", a: [70, 0, hz0 + 70], b: [120, 0, hz0 + 70], d: 12 }, ...depthWindow];
+      { op: "hole", a: [70, 0, hz0 + 70], b: [120, 0, hz0 + 70], d: 12 }, ...depthWindow,
+      // the camera's ribbon (16 mm wide) leaves the head by a slot in its underside beside the pan axis, down into the neck
+      // opening of the egg (the hole along the axis is for the horn screw)
+      { op: "cutbox", min: [-11, 22, hz0 - 6], max: [11, 44, hz0 + 10] }];
     headOps[1] = { op: "at", T: Tpan, of: [{ op: "horn", key: panKey, t: 4 }] };
     b.A.printedLink("head", { name: "head", ops: b.in("head", headOps) }, { role: "head", material: "printed" });
     b.A.fastener("horn screws", 4);
