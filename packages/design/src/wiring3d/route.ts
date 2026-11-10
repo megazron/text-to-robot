@@ -344,7 +344,10 @@ export class Router {
       changed = false;
       for (let i = 3; i < pulled.length - 3; i++) {
         if (pon[i - 1] !== pon[i] || pon[i + 1] !== pon[i] || pierced.some(([a, b]) => dist(pulled[i], a) < 4 || dist(pulled[i], b) < 4)) continue;
-        if (Math.min(dist(pulled[i], pulled[i - 1]), dist(pulled[i], pulled[i + 1])) > 1.3 * R) continue;
+        // too short: under 1.3 radii, or not holding the tangents of the two corners at its ends
+        const tg = (q: number) => { if (q <= 0 || q >= pulled.length - 1) return 0; const a = unit(sub(pulled[q], pulled[q - 1])), b = unit(sub(pulled[q + 1], pulled[q])); return 1.03 * R * Math.tan(Math.min(Math.acos(Math.max(-1, Math.min(1, dot(a, b)))), 2.6) / 2); };
+        const short = dist(pulled[i], pulled[i - 1]) < tg(i) + tg(i - 1) || dist(pulled[i], pulled[i + 1]) < tg(i) + tg(i + 1);
+        if (!short && Math.min(dist(pulled[i], pulled[i - 1]), dist(pulled[i], pulled[i + 1])) > 1.3 * R) continue;
         if (g.line(pulled[i - 1], pulled[i + 1], 1) >= 0) { pulled.splice(i, 1); pon.splice(i, 1); changed = true; i--; continue; }
         // beside a lead-out: join the run further back instead, where the line to the lead-out is clear
         const first = i === 3, last = i === pulled.length - 4;
@@ -353,7 +356,7 @@ export class Router {
         for (const back of [4 * R, 6 * R, 2.5 * R]) {
           if (back > leg * 0.8) continue;
           const q = lerp(pulled[i], far, back / leg);
-          if (g.line(V, q, 1) >= 0 && dist(V, q) > 1.3 * R) { pulled[i] = q; changed = true; break; }
+          if (g.line(V, q, 1) >= 0 && dist(V, q) > Math.max(1.3 * R, dist(V, pulled[i]) + 0.5)) { pulled[i] = q; changed = true; break; }
         }
       }
     }
