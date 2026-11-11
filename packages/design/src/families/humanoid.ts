@@ -161,6 +161,9 @@ function buildBiped(req: LeggedRequest, cfg: BipedCfg, sensors: SensorKind[]) {
     { op: "box", min: [Dt - BW, -Wt, zT0], max: [Dt, Wt, zTop] },                         // chest
     { op: "box", min: [-Dt, -Wt, zTop - BW], max: [Dt, Wt, zTop] },                       // shoulder bar / top
     { op: "box", min: [-Dt, -Wt, zShelf], max: [Dt, Wt, zShelf + 3] },                    // electronics shelf
+    // cable passes through the shelf along both side walls, past the computer: the boards and hubs under it reach the
+    // arm and neck exits above it
+    ...[1, -1].map((s): Op => ({ op: "cutbox", min: [-24, s > 0 ? Wt - BW - 15 : -Wt + BW + 1, zShelf - 1], max: [24, s > 0 ? Wt - BW - 1 : -Wt + BW + 15, zShelf + 4] })),
     { op: "box", min: [-Dt, Wt - BW, zT0], max: [Dt, Wt, zTop] }, { op: "box", min: [-Dt, -Wt, zT0], max: [Dt, -Wt + BW, zTop] },
     { op: "cutbox", min: [-Dt + 10, -Wt - 1, zT0 + 10], max: [Dt - 10, Wt + 1, zShelf - 6] }, // side windows: battery access
     { op: "cutbox", min: [Dt - BW - 1, -Wt + 18, zShelf + 12], max: [Dt + 1, Wt - 18, zSh - 30] }, // chest window: ports
