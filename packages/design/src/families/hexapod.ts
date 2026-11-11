@@ -175,7 +175,8 @@ function boxHex(A: Assembly, H: Harness, b: ReturnType<typeof buildHexapod>) {
   // the star ground over the fuse, turned so the pack's negative lead runs straight on into it; the rail's splice past
   // the switch's OUT tab on the -y side, its levers facing back the way the lead comes and most branches go
   H.spot.set("star_ground", { by: "actuator_bus", at: [7, lead, zLead + 16], turned: true });
-  H.spot.set("splice_vbat", { by: "actuator_bus", at: [37, -12, -7] });
+  // (its first lever level with the OUT tab and 2.3 bend radii towards -y: the lead turns once each way)
+  H.spot.set("splice_vbat", { by: "actuator_bus", at: [41, lead - 42 + 7.4, zLead - 5] });
   for (const s of [1, -1]) { const y = s > 0 ? hb.max[1] + 12 : hb.min[1] - 12; A.amendProgram("base_link", [{ op: "hole", a: [0, y, b.zPlate - 6], b: [0, y, b.zPlate + 1], d: 12 }]); }
   for (const c of ["computer~lidar", "camera~computer", "actuator_bus~computer"]) H.exitOf.set(c, "computer_hood.usb");
   for (const n of ["lf", "lm", "lr", "rr", "rm", "rf"]) for (const c of [`actuator_bus_hub~${n}_coxa_actuator`, `VBAT~${n}_coxa_actuator`]) H.exitOf.set(c, `board_hood.legs_${n[0] === "l" ? "left" : "right"}`);
