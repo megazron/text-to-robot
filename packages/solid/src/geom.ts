@@ -157,6 +157,9 @@ export function cradleCuts(a: ActuatorPlacement, wall = 3): M[] {
   if (max[0] - min[0] > 3 * rim) cuts.push(box([min[0] + rim, max[1] - 1, min[2] + 1.5], [Math.min(max[0] - rim, min[0] + rim + 12), max[1] + wall + 20, min[2] + 9]).transform(a.T));
   // bus servos plug in where their sockets are: a window through the cradle there, with room for the plug (as plugWindowOps)
   if (a.key.startsWith("feetech_sts")) cuts.push(box([-20, -10, min[2] - 20], [-8, 10, min[2] + 6]).transform(a.T));   // through whatever lies on that face: the plug (10 mm) and its first bend
+  // a CubeMars AK's connectors (XT30 power + CAN, the UART) are on its back cover: a window through the cradle's floor
+  // there, inside the screw circle, and on through whatever lies behind it, for the plugs and their first bends
+  if (a.key.startsWith("cubemars_")) cuts.push(box([-15, -15, min[2] - 30], [15, 15, min[2] + 1]).transform(a.T));
   const slot = dxlPlug(a.key);
   if (slot) cuts.push(box([slot.x - 7, min[1] - wall - 30, slot.z - 4.5], [slot.x + 7, max[1] + wall + 30, slot.z + 5]).transform(a.T));   // on out through any bracket round the cradle: the plug and its first bend, then a way out
   else if (a.key.startsWith("dxl_")) cuts.push(box([min[0] - 8, -11, min[2] + 0.5], [min[0] + 0.5, 11, min[2] + 12]).transform(a.T));
