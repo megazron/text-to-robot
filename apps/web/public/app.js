@@ -598,13 +598,14 @@ function forgeEstimate() {
 function askToForge(shape) {
   const e = forgeEstimate(), what = [shape.bulk !== 1 ? `build ${shape.bulk}` : "", shape.shoulder !== 1 ? `pauldrons ${shape.shoulder}` : "", shape.panels !== "film" ? `${shape.panels} panels` : ""].filter(Boolean).join(", ");
   return new Promise((done) => {
-    const box = document.createElement("div"); box.id = "forgeAsk"; box.className = "forge-ask"; box.setAttribute("role", "dialog"); box.setAttribute("aria-modal", "true");
-    box.append(h("div", { class: "forge-ask-card" }, h("h3", null, "Forge a custom Mark 43?"),
-      h("p", null, `The reference suit opens at once. This one (${what || "a custom shape"}) has to be made in your browser: about ${e.lo} to ${e.hi} minutes on this device (${e.cores} cores) and up to 6 GB of memory.${e.memNote} The page stays usable, you can cancel at any time, and the result is kept for next time.`),
-      h("div", { class: "forge-ask-buttons" }, h("button", { type: "button", "data-forge": "no" }, "Cancel"), h("button", { type: "button", "data-forge": "yes", class: "primary" }, "Forge it"))));
+    // a native modal dialog: focus stays inside it, and Escape is the same as Cancel
+    const box = h("dialog", { id: "forgeAsk", class: "forge-ask", "aria-labelledby": "forgeAskTitle" },
+      h("form", { method: "dialog", class: "forge-ask-card" }, h("h3", { id: "forgeAskTitle" }, "Forge a custom Mark 43?"),
+        h("p", null, `The reference suit opens at once. This one (${what || "a custom shape"}) has to be made in your browser: about ${e.lo} to ${e.hi} minutes on this device (${e.cores} cores) and up to 6 GB of memory.${e.memNote} The page stays usable, you can cancel at any time, and the result is kept for next time.`),
+        h("div", { class: "forge-ask-buttons" }, h("button", { value: "cancel" }, "Cancel"), h("button", { value: "forge", class: "primary", autofocus: "" }, "Forge it"))));
+    box.addEventListener("close", () => { const yes = box.returnValue === "forge"; box.remove(); done(yes); });
     document.body.append(box);
-    box.querySelector('[data-forge="yes"]').focus();
-    box.addEventListener("click", (ev) => { const b = ev.target.closest("[data-forge]"); if (!b) return; box.remove(); done(b.dataset.forge === "yes"); });
+    box.showModal();
   });
 }
 

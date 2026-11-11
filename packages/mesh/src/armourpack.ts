@@ -84,11 +84,7 @@ export interface PreviewPart { material: string; v: Float32Array; f: Uint32Array
 let forging: Promise<unknown> | undefined, hear: ((p: ForgeProgress) => void | Promise<void>) | undefined, say: ((s: string) => void) | undefined, look: ((parts: PreviewPart[]) => void) | undefined;
 /** who hears the forge when a caller passes no listener (the website's worker posts it to the page); `preview` gets a coarse look first */
 export const setForgeListener = (onProgress?: (p: ForgeProgress) => void | Promise<void>, log?: (s: string) => void, preview?: (parts: PreviewPart[]) => void) => { hear = onProgress; say = log; look = preview; };
-/**
- * Makes the loaded pack the one for `shape`: the loaded one if it matches, then the shipped file (reference shape, Node only), then the
- * cache, else the forge runs (minutes; `onProgress` hears from it). Returns where the pack came from.
- */
-/** The site serves the reference suit ready-made (the shipped pack): `fetchPrebuilt` returns it, or undefined when it cannot. */
+/** The site serves the reference suit ready-made (the shipped pack): the function given here returns it, or undefined when it cannot. */
 let prebuilt: (() => Promise<{ manifest: ArmourManifest; bytes: Uint8Array } | undefined>) | undefined;
 export const setPrebuilt = (f: typeof prebuilt) => { prebuilt = f; };
 /** Thrown instead of forging when the forge needs the visitor's go-ahead (setForgeGate): its shape says which suit would be made. */
