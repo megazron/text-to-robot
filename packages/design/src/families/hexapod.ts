@@ -172,8 +172,10 @@ function boxHex(A: Assembly, H: Harness, b: ReturnType<typeof buildHexapod>) {
     grommets: [{ id: "usb", face: "y-", u: -24, z: -15 }, { id: "legs_left", face: "y+", u: 0, z: -15 }, { id: "legs_right", face: "y-", u: 0, z: -15 }, { id: "power", face: "x+", u: lead, z: zLead }] });
   const fb = part("fuse_holder_atm_inline").bbox_mm!;
   H.spot.set("main_fuse", { by: "actuator_bus", at: [hb.max[0] - 4 - (fb.max[0] - fb.min[0]) / 2, lead, zLead], turned: true });
-  H.spot.set("star_ground", { by: "actuator_bus", at: [30, 26, zLead + 14] });
-  H.spot.set("splice_vbat", { by: "actuator_bus", at: [-10, 26, zLead + 14] });
+  // the star ground over the fuse, turned so the pack's negative lead runs straight on into it; the rail's splice past
+  // the switch's OUT tab on the -y side, its levers facing back the way the lead comes and most branches go
+  H.spot.set("star_ground", { by: "actuator_bus", at: [7, lead, zLead + 16], turned: true });
+  H.spot.set("splice_vbat", { by: "actuator_bus", at: [37, -12, -7] });
   for (const s of [1, -1]) { const y = s > 0 ? hb.max[1] + 12 : hb.min[1] - 12; A.amendProgram("base_link", [{ op: "hole", a: [0, y, b.zPlate - 6], b: [0, y, b.zPlate + 1], d: 12 }]); }
   for (const c of ["computer~lidar", "camera~computer", "actuator_bus~computer"]) H.exitOf.set(c, "computer_hood.usb");
   for (const n of ["lf", "lm", "lr", "rr", "rm", "rf"]) for (const c of [`actuator_bus_hub~${n}_coxa_actuator`, `VBAT~${n}_coxa_actuator`]) H.exitOf.set(c, `board_hood.legs_${n[0] === "l" ? "left" : "right"}`);
