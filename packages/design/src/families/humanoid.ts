@@ -154,8 +154,9 @@ function buildBiped(req: LeggedRequest, cfg: BipedCfg, sensors: SensorKind[]) {
   // the torso floor stands a plenum over the pelvis: the hip yaw actuators' sockets face up (their case is above the
   // horn), and their plugs (10 mm) and the cables' first bends need that room before the cables run off to the floor's
   // cable hole or out past the pelvis's edge down to the legs; the torso's walls carry it down to the pelvis
-  const PLEN = cfg.mech ? 30 : 22, zSk = zPel + BW + 3;
-  const zT0 = zSk + PLEN, zShelf = Math.max(zT0 + bh * (cfg.nBatt > 2 ? 2 : 1) + 6, zT0 + BW + 3 + boardH + 21 + 1);
+  const PLEN = 22, zSk = zPel + BW + 3;
+  // (a mech's converters ride in its backpack, its torso keeps the packs' height)
+  const zT0 = zSk + PLEN, zShelf = Math.max(zT0 + bh * (cfg.nBatt > 2 ? 2 : 1) + 6, cfg.mech ? 0 : zT0 + BW + 3 + boardH + 21 + 1);
   const zSh = zShelf + 3 + 6 + (cb.max[2] - cb.min[2]) + 6 + (-shB.min[0]) + WALL; // shoulder axis: shoulder case hangs down to just above the computer
   const zTop = zSh + shB.max[0] + WALL + 3;
   const torso: Frame = { name: "torso", W: translation([0, 0, 0]) };
@@ -199,7 +200,7 @@ function buildBiped(req: LeggedRequest, cfg: BipedCfg, sensors: SensorKind[]) {
   const regions = [
     { x0: battFront + 2, x1: Dt - BW - 1, y0: -Wt + BW + 1, y1: Wt - BW - 1, z: zT0 + BW, zMax: zShelf - 1 },
     { x0: cx0 + cb.max[0] - cb.min[0] + 3, x1: Dt - BW - 1, y0: -Wt + BW + 1, y1: Wt - BW - 1, z: zShelf + 3, zMax: zSh - (-shB.min[0]) - WALL - 2 },
-    { x0: -Dt - 215, x1: -Dt - 1, y0: -Wt + 5, y1: Wt - 5, z: zShelf + 3, zMax: zShelf + 60 }, // backpack shelf
+    { x0: -Dt - 215, x1: -Dt - 1, y0: -Wt + 5, y1: Wt - 5, z: zShelf + 3, zMax: zShelf + 85 }, // backpack shelf (its hood stands over the boards' jumpers)
   ];
   const items: [string, string, string][] = [[cfg.mech ? "usb_can_adapter" : "waveshare_bus_servo_adapter", "leg_bus", cfg.mech ? "USB-CAN bus (left leg)" : "USB to leg servo bus"], ["dxl_u2d2", "arm_bus", "USB to the arm / neck DYNAMIXEL bus"]];
   if (cfg.mech) items.push(["usb_can_adapter", "leg_bus_2", "USB-CAN bus (right leg)"], ...Array.from({ length: cfg.nDcdc ?? 1 }, (_, i) => ["dcdc_48v_12v_sd50c12", i ? `dcdc_12v_${i + 1}` : "dcdc_12v", "12 V for the DYNAMIXEL arms and the computer"] as [string, string, string]), ["buck_5v_5a", "regulator_5v", "5 V regulator (sensors)"]);
@@ -321,7 +322,7 @@ function buildBiped(req: LeggedRequest, cfg: BipedCfg, sensors: SensorKind[]) {
   addSensor(A, headCam!.key === "realsense_d435i" ? "depth" : "camera", headCam!.key === "realsense_d435i" ? "head_depth_camera" : "head_camera", head.name,
     apply(invert(head.W), headCam!.lens).map((x) => x / 1000) as Vec3, [0, 0, 0], { model: part(headCam!.key).name });
   // armour (mech): thin cosmetic panels on the torso, thighs and shins
-  if (cfg.mech) armour(A);
+  if (cfg.mech) armour(A, zT0);
   A.spec.root = "base_link";
   return { A, feet, hands, legs, arms, neck, compute, zTop, Wt, Dt, BW, zT0, zShelf, zSh, zPel, battFront, usedBackpack, shelfZ: regions[2].z, backY: regions[2].y1 };
 }
@@ -335,7 +336,7 @@ const flushQueue = () => { const p = pending; pending = []; p.forEach((f) => f()
  * printed standoffs. No structural role (mass counted). Each panel is cut back around the swept body of the
  * actuator that drives its link, so it never touches the parent while the joint moves.
  */
-function armour(A: Assembly) {
+function armour(A: Assembly, torsoFloor: number) {
   const panels: { on: string; face: "front" | "back" | "out" }[] = [
     { on: "torso", face: "front" },
     ...["l", "r"].flatMap((p) => [{ on: `${p}_hip_pitch_link`, face: "front" as const }, { on: `${p}_knee_link`, face: "front" as const }, { on: `${p}_shoulder_roll_link`, face: "out" as const }]),
@@ -361,6 +362,8 @@ function armour(A: Assembly) {
         const p = apply(T, [x, y, z]); for (let k = 0; k < 3; k++) { b.lo[k] = Math.min(b.lo[k], p[k]); b.hi[k] = Math.max(b.hi[k], p[k]); }
       }
     }
+    // (the torso's panel covers the torso from its floor up, not the cable plenum under it)
+    if (pn.on === "torso") b.lo[2] = Math.max(b.lo[2], torsoFloor);
     const side = pn.on.startsWith("r_") ? -1 : 1, ins = 6;
     let box: { min: Vec3; max: Vec3 };
     if (pn.face === "front") box = { min: [b.hi[0] + 3, b.lo[1] + ins, b.lo[2] + ins], max: [b.hi[0] + 5.5, b.hi[1] - ins, b.hi[2] - ins] };
@@ -529,7 +532,7 @@ function boxBiped(A: Assembly, H: Harness, b: ReturnType<typeof buildBiped>, mec
       ...[1, -1].map((s) => ({ id: `torso_bay.arm_${s > 0 ? "l" : "r"}`, kind: "grommet", face: (s > 0 ? "y+" : "y-") as Face, at: [sideX, s * Wt, sideZ] as Vec3, normal: [0, s, 0] as Vec3, hole_mm: 9.5 })), { id: "torso_bay.usb", kind: "usb", face: "x-" as Face, at: [-Dt, usbY, usbZ], normal: [-1, 0, 0], hole_mm: 16 }, ...(xs !== null ? [{ id: "torso_bay.switch", kind: "switch", face: "y+" as Face, at: [xs, Wt, zs] as Vec3, normal: [0, 1, 0] as Vec3, hole_mm: 22, part: "main_switch" }] : ys !== null ? [{ id: "torso_bay.switch", kind: "switch", face: "x+" as Face, at: [Dt, ys, zc] as Vec3, normal: [1, 0, 0] as Vec3, hole_mm: 22, part: "main_switch" }] : backCase ? [{ id: "torso_bay.switch", kind: "switch", face: "x-" as Face, at: [-Dt - 31, 0, zb] as Vec3, normal: [-1, 0, 0] as Vec3, hole_mm: 22, part: "main_switch" }] : [])] }, H);
   // backpack boards (the mech's converters) under their own hood, with the battery switch in it
   const pack = parts.filter((n) => partBox(A, n).lo[0] <= -Dt);
-  if (pack.length) hoodAround(A, H, { name: "backpack_hood", deck: torsos[0], alsoHoles: torsos.slice(1), parts: pack, z0: b.shelfZ, limit: { x0: -Dt - 225, x1: -Dt - 3, y0: -b.backY - 5, y1: b.backY + 5 }, material: "printed_dark", grommets: [{ id: "to_torso", face: "x+", u: 0 }] });
+  if (pack.length) hoodAround(A, H, { name: "backpack_hood", deck: torsos[0], alsoHoles: torsos.slice(1), parts: pack, z0: b.shelfZ, z1: Math.max(...pack.map((n) => partBox(A, n).hi[2])) + 24, limit: { x0: -Dt - 225, x1: -Dt - 3, y0: -b.backY - 5, y1: b.backY + 5 }, material: "printed_dark", grommets: [{ id: "to_torso", face: "x+", u: 0 }] });
   // a mech's battery switch is big: it stands in the roof of a small case on the backpack, its body in the case
   if (mech && xs === null) {
     const r = (A.design.enclosures ?? []).find((x) => x.name === "backpack_hood")!, cx = r.min[0] + 45, z0 = r.max[2] + 2.8;
