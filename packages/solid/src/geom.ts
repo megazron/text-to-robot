@@ -158,7 +158,7 @@ export function cradleCuts(a: ActuatorPlacement, wall = 3): M[] {
   // bus servos plug in where their sockets are: a window through the cradle there, with room for the plug (as plugWindowOps)
   if (a.key.startsWith("feetech_sts")) cuts.push(box([-20, -10, min[2] - 20], [-8, 10, min[2] + 6]).transform(a.T));   // through whatever lies on that face: the plug (10 mm) and its first bend
   const slot = dxlPlug(a.key);
-  if (slot) cuts.push(box([slot.x - 7, min[1] - wall - 11, slot.z - 4.5], [slot.x + 7, max[1] + wall + 11, slot.z + 5]).transform(a.T));
+  if (slot) cuts.push(box([slot.x - 7, min[1] - wall - 30, slot.z - 4.5], [slot.x + 7, max[1] + wall + 30, slot.z + 5]).transform(a.T));   // on out through any bracket round the cradle: the plug and its first bend, then a way out
   else if (a.key.startsWith("dxl_")) cuts.push(box([min[0] - 8, -11, min[2] + 0.5], [min[0] + 0.5, 11, min[2] + 12]).transform(a.T));
   void top;
   return cuts;
