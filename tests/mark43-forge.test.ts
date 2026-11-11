@@ -45,6 +45,7 @@ test("forge: armour words in a prompt reach the forge and the paint", () => {
   assert.equal(big.shape.shoulder, 1.2);
   assert.match(big.ignored.join(), /asks for 4\.00 times .* built at 1\.20/);
   assert.equal(t("iron man with 15% smaller shoulders").shape.shoulder, 0.85);
+  assert.equal(t("iron man mark 43 with tiny shoulders").shape.shoulder, 0.85);
   assert.equal(t("iron man armour with bigger shoulders").shape.shoulder, 1.2);
   assert.equal(t("iron man armour with smooth panels").shape.panels, "smooth");
   assert.equal(t("iron man armour with heavy plates").shape.panels, "heavy");

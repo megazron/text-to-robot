@@ -39,7 +39,7 @@ export function suitOptions(t: string): SuitOptions {
   const shoulderBy = amount("bigger|larger|broader|wider", "smaller|narrower", "shoulders?|pauldrons?|shoulder[\\s-]+(?:armou?r|plates?)");
   if (shoulderBy) shape.shoulder = limit(shoulderBy, "pauldrons");
   else if (/\b(?:big(?:ger)?|large(?:r)?|broad(?:er)?|wide(?:r)?|huge|massive|oversized)[\s-]+(?:shoulders?|pauldrons?|shoulder[\s-]+(?:armou?r|plates?))\b/.test(t)) shape.shoulder = 1.2;
-  else if (/\b(?:small(?:er)?|narrow(?:er)?|compact|slim(?:mer)?|low[\s-]+profile)[\s-]+(?:shoulders?|pauldrons?|shoulder[\s-]+(?:armou?r|plates?))\b/.test(t)) shape.shoulder = 0.85;
+  else if (/\b(?:small(?:er)?|tiny|tinier|little|narrow(?:er)?|compact|slim(?:mer)?|low[\s-]+profile)[\s-]+(?:shoulders?|pauldrons?|shoulder[\s-]+(?:armou?r|plates?))\b/.test(t)) shape.shoulder = 0.85;
   if (shape.shoulder !== 1) said.push(`pauldrons ${shape.shoulder > 1 ? "larger" : "smaller"}: ${shape.shoulder.toFixed(2)} of the film suit's`);
   // panels
   if (/\b(?:smooth|clean|minimal|plain|simple)[\s-]+(?:panels?|panel[\s-]+lines?|armou?r|plates?|finish|look|surface)\b|\bno[\s-]+panel[\s-]+lines?\b/.test(t)) shape.panels = "smooth";
