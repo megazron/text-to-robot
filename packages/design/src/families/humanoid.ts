@@ -539,6 +539,8 @@ function boxBiped(A: Assembly, H: Harness, b: ReturnType<typeof buildBiped>, mec
     hood(A, H, { name: "switch_case", deck: "backpack_hood", x0: cx - 33, x1: cx + 33, y0: -33, y1: 33, z0, z1: z0 + 60, parts: [], ventRows: 0, deckGrommets: [{ id: "down", x: cx - 22, y: 22 }], material: "printed_dark" });
     A.amendProgram("switch_case", [{ op: "cutbox", min: [cx - 26.3, -26.3, z0 + 58], max: [cx + 26.3, 26.3, z0 + 64] }]);
     A.mount("switch_case", swKey, frame([cx, 0, z0 + 62.8], [0, 0, 1], [1, 0, 0]), "main_switch", "main battery switch");
+    // its terminals are inside the case: its leads, and the splices beside it, leave by the case's hole down into the backpack
+    H.bayOf.set("main_switch", "switch_case");
   }
   // the IMU in a little hood under the pelvis
   const iw = partBox(A, "imu"), yy = 15;
