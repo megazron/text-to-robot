@@ -311,7 +311,7 @@ function buildBiped(req: LeggedRequest, cfg: BipedCfg, sensors: SensorKind[]) {
       ops.push({ op: "box", min: [ox - 4, c[1] - 13.5, oz - 25], max: [ox - 1 + 0.5, c[1] + 13.5, oz + 1] });
       // the camera's ribbon leaves its top edge (latch 3 mm, first bend 1.25 x 5 mm) and runs back out of the head over
       // the camera: a channel to the back of the head, where it goes down past the neck to the torso
-      ops.push({ op: "cutbox", min: [c[0] + R - 1, c[1] - 10, oz + 1], max: [ox + 3, c[1] + 10, oz + 16] });
+      ops.push({ op: "cutbox", min: [c[0] + R - 1, c[1] - 10, oz - 1], max: [ox + 8, c[1] + 10, oz + 16] });
       headCam = { key: "rpi_camera_module_3", T: frame([ox + 2.2, c[1] + 12.5, oz], X, [0, -1, 0]), lens: [ox + 2.2 + 9.1, c[1], oz - 14.4] };
     }
     return { ops, dir: X };
