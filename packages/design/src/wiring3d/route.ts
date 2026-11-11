@@ -363,7 +363,7 @@ export class Router {
       if (w && bad!.tight && n > 1) { const w3 = tryRing(ring, false), b3 = w3 ? this.finishWire(w3, e.R, e, pierced, fixed, needW) : null; if (w3 && b3!.hits <= bad!.hits && (!b3!.tight || b3!.tight > bad!.tight)) { w = w3; bad = b3; } }
       if ((!w || bad!.hits) && ring) { const w2 = tryRing(0), b2 = w2 ? this.finishWire(w2, e.R, e, pierced, fixed, needW) : null; if (w2 && (!w || b2!.hits < bad!.hits)) { w = w2; bad = b2; } }
       if (!w) { problems.push(`${c.key}: wire ${k + 1} has no free way from its pin to the cable`); const pts = [e.a.p, e.la.S, ...T.pts, e.lb.S, e.b.p].map(r1); return { pts, on: [ga, ga, ...T.on, gb, gb], drawn_mm: polyLen(pts) }; }
-      if (bad!.hits) problems.push(`${c.key}: wire ${k + 1} passes ${bad!.hits} mm through a solid`);
+      if (bad!.hits) problems.push(`${c.key}: wire ${k + 1} passes ${bad!.hits} mm through a solid (from ${bad!.at})`);
       if (bad!.tight) problems.push(`${c.key}: wire ${k + 1} has a bend of ${bad!.tight.toFixed(1)} mm, under its ${e.R.toFixed(1)} mm`);
       return { pts: bad!.pts, on: bad!.on, drawn_mm: bad!.drawn };
     });
@@ -374,7 +374,7 @@ export class Router {
    * Round a wire's corners and test the rounded line: returns the corner points as stored (0.1 mm), how many mm of it
    * are inside something and its tightest bend if one is under the radius.
    */
-  private finishWire(w: { pts: V3[]; on: string[] }, R: number, e: { a: { id: number; kind: PinAt["kind"] }; b: { id: number; kind: PinAt["kind"] } }, pierced: [V3, V3][], fixed: Set<V3>, need: number): { pts: V3[]; on: string[]; hits: number; tight: number; drawn: number } {
+  private finishWire(w: { pts: V3[]; on: string[] }, R: number, e: { a: { id: number; kind: PinAt["kind"] }; b: { id: number; kind: PinAt["kind"] } }, pierced: [V3, V3][], fixed: Set<V3>, need: number): { pts: V3[]; on: string[]; hits: number; tight: number; drawn: number; at: string } {
     const g = this.grid;
     // pull the wire straight between the points it must keep: its lead-outs, the holes it passes, the places it changes body
     const keep = w.pts.map((p, i) => i <= 2 || i >= w.pts.length - 3 || fixed.has(p) || (i > 0 && w.on[i] !== w.on[i - 1]) || (i + 1 < w.pts.length && w.on[i] !== w.on[i + 1]) || pierced.some(([a, b]) => dist(p, a) < 4 || dist(p, b) < 4));
@@ -416,20 +416,23 @@ export class Router {
     }
     let P = dedupeOn(pulled.map(r1), pon);
     P = this.soften(P, R);
+    // a part's own body is let off over the wire's first 25 mm, or over its connector where that runs on up out of the
+    // part's box (a header among taller components) and a cell for the grid's rounding
+    const endA = Math.max(25, dist(w.pts[0], w.pts[1]) + g.s), endB = Math.max(25, dist(w.pts[w.pts.length - 1], w.pts[w.pts.length - 2]) + g.s);
     const test = (Q: { pts: V3[]; on: string[] }) => {
       const F = roundWire(Q.pts, Q.on, R), L = polyLen(F.pts);
-      let hits = 0, along = 0;
+      let hits = 0, along = 0, at: V3 | null = null;
       for (let i = 1; i < F.pts.length; i++) {
         const seg = dist(F.pts[i], F.pts[i - 1]), m = Math.max(1, Math.ceil(seg));
         for (let q = 0; q < m; q++) {
           const p = lerp(F.pts[i - 1], F.pts[i], (q + 0.5) / m), d = along + (seg * (q + 0.5)) / m, o = g.at(p);
-          if (!o || (d < 25 && o === e.a.id) || (d > L - 25 && o === e.b.id)) continue;
+          if (!o || (d < endA && o === e.a.id) || (d > L - endB && o === e.b.id)) continue;
           if (pierced.some(([a, b]) => { const ab = sub(b, a), t = dot(sub(p, a), ab) / (dot(ab, ab) || 1); return t > -0.05 && t < 1.05 && dist(p, lerp(a, b, Math.max(0, Math.min(1, t)))) < 3.5; })) continue;
-          hits += seg / m;
+          hits += seg / m; at ??= p;
         }
         along += seg;
       }
-      return { hits: Math.round(hits), tight: F.tight, drawn: L, F };
+      return { hits: Math.round(hits), tight: F.tight, drawn: L, F, at };
     };
     let best = test(P);
     // a rounded corner that cuts into a solid: move the corner out by what the rounding took off, and test again
@@ -446,7 +449,7 @@ export class Router {
       if (!moved) break;
       const t = test(Q); if (t.hits < best.hits) { best = t; P = Q; } else break;
     }
-    return { pts: P.pts, on: P.on, hits: best.hits, tight: best.tight, drawn: best.drawn };
+    return { pts: P.pts, on: P.on, hits: best.hits, tight: best.tight, drawn: best.drawn, at: best.at ? `${best.at.map(Math.round)}, ${this.nameAt(best.at)}` : "" };
   }
   /**
    * A corner that turns back on itself cannot be rounded to the bend radius inside its legs. Where there is room, it is
