@@ -536,6 +536,25 @@ function twoDeckExits(b: Build, lowName = "power_bay", highName = "electronics_e
     }
   }
 }
+/**
+ * A grommet in a compartment's lid for the leads going up (to a spine, a yoke, a head): nearest `near` (world xy), clear of
+ * the printed rings and of every part under the lid by a plug and a bend. Cut in every piece of the lid; on record.
+ */
+function lidHole(b: Build, bayName: string, near: [number, number], d = 12) {
+  const r = baysOf(b.A).find((x) => x.name === bayName); if (!r) return null;
+  const parts3 = b.A.spec.links.filter((l) => l.geometry.type === "mesh" && l.geometry.part === "component" && part(String(l.geometry.params?.key)).bbox_mm).map((l) => partBox(b.A, l.name));
+  const ok = (x: number, y: number) => x > r.min[0] + 10 && x < r.max[0] - 10 && y > r.min[1] + 10 && y < r.max[1] - 10 && !b.keepOut.some((q) => x > q.x0 - 10 && x < q.x1 + 10 && y > q.y0 - 10 && y < q.y1 + 10) && !parts3.some((q) => q.hi[2] > r.min[2] && q.lo[2] < r.max[2] && x > q.lo[0] - 14 && x < q.hi[0] + 14 && y > q.lo[1] - 14 && y < q.hi[1] + 14);
+  let at: [number, number] | null = null;
+  for (let rr = 0; rr < 200 && !at; rr += 4) for (let k = 0; k < Math.max(1, Math.round(rr / 2)) && !at; k++) { const a = (2 * Math.PI * k) / Math.max(1, Math.round(rr / 2)), x = near[0] + rr * Math.cos(a), y = near[1] + rr * Math.sin(a); if (ok(x, y)) at = [x, y]; }
+  if (!at) return null;
+  const lids = (r.solids ?? [r.lid]).filter((n) => /lid/.test(n)), zLid = r.max[2] + 0.2 + 2.4;
+  for (const n of lids.length ? lids : [r.lid]) b.A.amendProgram(n, b.in(n, [{ op: "hole", a: [at[0], at[1], r.max[2] - 4], b: [at[0], at[1], zLid + 1], d }]));
+  const lid = lids.find((n) => { const T = fk(b.A.spec).link[n]; return !!T; }) ?? r.lid;
+  const ex = { id: `${bayName}.lid_up`, kind: "grommet", face: "lid" as Face, at: [at[0], at[1], zLid] as Vec3, normal: [0, 0, 1] as Vec3, hole_mm: d };
+  r.exits.push(ex);
+  b.H.exits.push({ id: ex.id, link: lid, at: apply(invert(b.w(lid)), ex.at), normal: ex.normal, panel_hole_mm: d, bay: bayName, kind: "grommet" });
+  return at;
+}
 /** Grommets through the deck, one each side, where motor leads go down to the drives. Holes are cut in the deck. */
 function deckGrommets(b: Build, parent: string, boards: Rect[], w: Rect, deckTop: number, bayName = "electronics_enclosure"): BayRecord["exits"] {
   // nor over a part just under the deck (a motor's can): the leads need room to turn under the hole too
@@ -1619,6 +1638,8 @@ export function designBaymax(req: MobileRequest = {}): RobotSpecification {
     const lowTop = electronicsBay(b, items, { x0: -186, x1: 186, y0: -141, y1: 141 }, [{ x0: -36, x1: 36, y0: -36, y1: 36 }, ...lidarRes], ch.top);
     const bayTop = enclosure(b, items, { x0: -186, x1: 186, y0: -141, y1: 141 }, [{ x0: -36, x1: 36, y0: -36, y1: 36 }, ...lidarRes], ch.top, lowTop) ?? lowTop + 8;
     const scanZ = sensors.includes("lidar") ? lidarMast(b, 143, 0, ch.top, bayTop - 8) : 0;
+    // the leads up the spine to the yoke and the head leave the compartment by a grommet in its lid beside the spine
+    lidHole(b, "electronics_enclosure", [0, 0]);
     if (sensors.includes("imu")) b.sensor("imu_frame", "imu", "imu", translation([12.8, 11.35, 2]), { rate_hz: 400 });
     // spine: 2020 aluminium extrusion up to the shoulder yoke
     b.printed("spine_foot", "base_link", [{ op: "box", min: [-28, -28, ch.top], max: [28, 28, ch.top + 5], r: 6 }, { op: "box", min: [-14, -14, ch.top], max: [14, 14, ch.top + 40], r: 3 }, { op: "cutbox", min: [-10.2, -10.2, ch.top + 5], max: [10.2, 10.2, ch.top + 41] }], "printed_dark");
@@ -1663,13 +1684,18 @@ export function designBaymax(req: MobileRequest = {}): RobotSpecification {
     const Tpan = frame([0, 0, zSh + 46], [0, 0, 1], [1, 0, 0]);
     b.printed("neck_mount", "shoulder_yoke", [{ op: "cradle", key: panKey, T: Tpan, wall: 3 }, { op: "box", min: [-26, -24, zSh], max: [26, 24, zSh + 6], r: 4 }], "printed");
     b.mount("shoulder_yoke", panKey, Tpan, "head_pan_actuator", "head pan");
+    // a Feetech's sockets are under its case: a window down through the mount (and the yoke) under them for its lead
+    if (/^feetech_sts/.test(panKey)) { const zb = zSh + 46 + part(panKey).bbox_mm!.min[2], win: Op = { op: "cutbox", min: [-24, -12, zSh - 30], max: [-4, 12, zb + 4] };
+      for (const n of ["neck_mount", "shoulder_yoke"]) { try { b.A.amendProgram(n, b.in(n, [win])); } catch { /* a fabricated yoke: its window is cut by hand, see the assumptions */ } } }
     b.servo("head_pan", "shoulder_yoke", "head", Tpan, panKey, -1.4, 1.4);
     const hz0 = zSh + 60, HR = 108, HH = 132;
     const headProf: [number, number][] = [];
     for (let i = 0; i <= 24; i++) { const a = -Math.PI / 2 + (Math.PI * i) / 24; headProf.push([HR * Math.cos(a), hz0 + HH / 2 + (HH / 2) * Math.sin(a)]); }
     const sx = mul(translation([0, 0, 0]), scaleM(0.78, 1, 1));
     const head: Op[] = [{ op: "at", T: sx, of: [{ op: "revolve", pts: shellOutline(headProf, 2.4), seg: 96 }] }, { op: "at", T: Tpan, of: [{ op: "horn", key: panKey, t: 4 }] },
-      { op: "rod", a: [0, 0, zSh + 50], b: [0, 0, hz0 + 3], r: 14 }, { op: "hole", a: [0, 0, zSh + 49], b: [0, 0, hz0 + 4], d: 9 }, { op: "hole", a: [60, 0, hz0 + 68], b: [100, 0, hz0 + 68], d: 12 }];
+      { op: "rod", a: [0, 0, zSh + 50], b: [0, 0, hz0 + 3], r: 14 }, { op: "hole", a: [0, 0, zSh + 49], b: [0, 0, hz0 + 4], d: 9 }, { op: "hole", a: [60, 0, hz0 + 68], b: [100, 0, hz0 + 68], d: 12 },
+      // the camera's ribbon leaves the head by a slot in its underside beside the pan axis (the axis hole is the horn screw's)
+      { op: "cutbox", min: [-11, 22, hz0 - 6], max: [11, 44, hz0 + 10] }];
     // eyes and the line between them: black decal inlays following the head's surface
     const surfX = (y: number, dz: number) => 0.78 * Math.sqrt(HR * HR * (1 - (dz / (HH / 2)) ** 2) - y * y);
     const eyeOps: Op[] = [];
