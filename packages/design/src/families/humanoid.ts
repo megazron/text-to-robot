@@ -148,7 +148,10 @@ function buildBiped(req: LeggedRequest, cfg: BipedCfg, sensors: SensorKind[]) {
   const cb = bodyMm(compute), shKey = cfg.arm.shoulder_pitch, shB = bodyMm(shKey), dSh = depth(shKey);
   const Wt = Math.max(bl / 2 + BW + 4, Yh + 25, (cb.max[0] - cb.min[0]) / 2 + BW + 4, dSh + 22);
   const Dt = Math.max((Math.min(cfg.nBatt, 2) * (bwid + 2) + 36 + 2 * BW + 4) / 2, (cb.max[0] - cb.min[0]) / 2 + BW + 3, -shB.min[1] + WALL + BW, 34);
-  const zT0 = zPel + BW + 3, zShelf = zT0 + bh * (cfg.nBatt > 2 ? 2 : 1) + 6;
+  // the shelf stands over the packs, and high enough over the boards in front of them for their jumpers to plug on from
+  // above (Dupont housing 10 mm, first bend 1.25 x 6.4 mm)
+  const boardH = Math.max(...["waveshare_bus_servo_adapter", "dxl_u2d2", "buck_5v_5a", ...(cfg.mech ? ["usb_can_adapter", "dcdc_48v_12v_sd50c12"] : [])].map((k) => bodyMm(k).max[2] - bodyMm(k).min[2]));
+  const zT0 = zPel + BW + 3, zShelf = Math.max(zT0 + bh * (cfg.nBatt > 2 ? 2 : 1) + 6, zT0 + BW + 3 + boardH + 21 + 1);
   const zSh = zShelf + 3 + 6 + (cb.max[2] - cb.min[2]) + 6 + (-shB.min[0]) + WALL; // shoulder axis: shoulder case hangs down to just above the computer
   const zTop = zSh + shB.max[0] + WALL + 3;
   const torso: Frame = { name: "torso", W: translation([0, 0, 0]) };
@@ -201,7 +204,8 @@ function buildBiped(req: LeggedRequest, cfg: BipedCfg, sensors: SensorKind[]) {
     let placed = false;
     for (let r = 0; r < regions.length; r++) {
       const R = regions[r], c = cursor[r];
-      if (H > R.zMax - R.z - 3) continue;
+      // a board's jumpers plug on from above: over its top the Dupont housing (10 mm) and the first bend (1.25 x 6.4 mm)
+      if (H + 3 + 18 > R.zMax - R.z) continue;
       // boards lie with their length along y, packed in rows front to back
       if (c.y + L > R.y1) { c.y = R.y0; c.x += c.rowD + 2; c.rowD = 0; }
       if (c.x + Wd > R.x1 || c.y + L > R.y1) continue;
