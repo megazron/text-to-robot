@@ -180,7 +180,7 @@ function boxHex(A: Assembly, H: Harness, b: ReturnType<typeof buildHexapod>) {
   for (const c of ["main_feed_a", "main_return"]) H.exitOf.set(c, "board_hood.power");
   const bb = b.battB, x0 = b.bx0 + bb.min[0] - 3, x1 = b.bx0 + bb.max[0] + LEAD_ROOM, y = b.bw + 4.4;
   // the tray hangs from the plate: bounds in the frame turned about x, so z runs downwards
-  hood(A, H, { name: "battery_tray", deck: "base_link", x0, x1, y0: -y, y1: y, z0: -(b.zPlate - 4), z1: -(b.zBatt - 3), parts: ["battery"], flip: true, ventRows: 0, deckGrommets: [{ id: "up", x: x1 - 6, y: -12 }] });   // tray frame turned about x: world y = +12, under the leads' run   // where the leads have turned up (inside the board hood)
+  hood(A, H, { name: "battery_tray", deck: "base_link", x0, x1, y0: -y, y1: y, z0: -(b.zPlate - 4), z1: -(b.zBatt - 3), parts: ["battery"], flip: true, ventRows: 0, deckGrommets: [{ id: "up", x: x1 - 6, y: 0 }] });   // straight over the pack's leads   // where the leads have turned up (inside the board hood)
   H.scan();
 }
 function wireHex(A: Assembly, H: Harness, compute: string) {
