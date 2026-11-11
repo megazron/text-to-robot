@@ -151,20 +151,24 @@ function buildBiped(req: LeggedRequest, cfg: BipedCfg, sensors: SensorKind[]) {
   // the shelf stands over the packs, and high enough over the boards in front of them for their jumpers to plug on from
   // above (Dupont housing 10 mm, first bend 1.25 x 6.4 mm)
   const boardH = Math.max(...["waveshare_bus_servo_adapter", "dxl_u2d2", "buck_5v_5a", ...(cfg.mech ? ["usb_can_adapter", "dcdc_48v_12v_sd50c12"] : [])].map((k) => bodyMm(k).max[2] - bodyMm(k).min[2]));
-  const zT0 = zPel + BW + 3, zShelf = Math.max(zT0 + bh * (cfg.nBatt > 2 ? 2 : 1) + 6, zT0 + BW + 3 + boardH + 21 + 1);
+  // the torso floor stands a plenum over the pelvis: the hip yaw actuators' sockets face up (their case is above the
+  // horn), and their plugs (10 mm) and the cables' first bends need that room before the cables run off to the floor's
+  // cable hole or out past the pelvis's edge down to the legs; the torso's walls carry it down to the pelvis
+  const PLEN = cfg.mech ? 30 : 22, zSk = zPel + BW + 3;
+  const zT0 = zSk + PLEN, zShelf = Math.max(zT0 + bh * (cfg.nBatt > 2 ? 2 : 1) + 6, zT0 + BW + 3 + boardH + 21 + 1);
   const zSh = zShelf + 3 + 6 + (cb.max[2] - cb.min[2]) + 6 + (-shB.min[0]) + WALL; // shoulder axis: shoulder case hangs down to just above the computer
   const zTop = zSh + shB.max[0] + WALL + 3;
   const torso: Frame = { name: "torso", W: translation([0, 0, 0]) };
   const tOps: Op[] = [
     { op: "box", min: [-Dt, -Wt, zT0], max: [Dt, Wt, zT0 + BW], r: 6 },                  // floor (bolts to the pelvis)
-    { op: "box", min: [-Dt, -Wt, zT0], max: [-Dt + BW, Wt, zTop] },                       // back
-    { op: "box", min: [Dt - BW, -Wt, zT0], max: [Dt, Wt, zTop] },                         // chest
+    { op: "box", min: [-Dt, -Wt, zSk], max: [-Dt + BW, Wt, zTop] },                       // back
+    { op: "box", min: [Dt - BW, -Wt, zSk], max: [Dt, Wt, zTop] },                         // chest
     { op: "box", min: [-Dt, -Wt, zTop - BW], max: [Dt, Wt, zTop] },                       // shoulder bar / top
     { op: "box", min: [-Dt, -Wt, zShelf], max: [Dt, Wt, zShelf + 3] },                    // electronics shelf
     // cable passes through the shelf along both side walls, past the computer: the boards and hubs under it reach the
     // arm and neck exits above it
     ...[1, -1].map((s): Op => ({ op: "cutbox", min: [-24, s > 0 ? Wt - BW - 15 : -Wt + BW + 1, zShelf - 1], max: [24, s > 0 ? Wt - BW - 1 : -Wt + BW + 15, zShelf + 4] })),
-    { op: "box", min: [-Dt, Wt - BW, zT0], max: [Dt, Wt, zTop] }, { op: "box", min: [-Dt, -Wt, zT0], max: [Dt, -Wt + BW, zTop] },
+    { op: "box", min: [-Dt, Wt - BW, zSk], max: [Dt, Wt, zTop] }, { op: "box", min: [-Dt, -Wt, zSk], max: [Dt, -Wt + BW, zTop] },
     { op: "cutbox", min: [-Dt + 10, -Wt - 1, zT0 + 10], max: [Dt - 10, Wt + 1, zShelf - 6] }, // side windows: battery access
     { op: "cutbox", min: [Dt - BW - 1, -Wt + 18, zShelf + 12], max: [Dt + 1, Wt - 18, zSh - 30] }, // chest window: ports
   ];
@@ -228,8 +232,9 @@ function buildBiped(req: LeggedRequest, cfg: BipedCfg, sensors: SensorKind[]) {
       { op: "hull", of: [{ op: "box", min: [-Dt - 2, R.y0, R.z - 50], max: [-Dt + 1, R.y1, R.z - 47] }, { op: "box", min: [-Dt - 30, R.y0, R.z - BW], max: [-Dt + 1, R.y1, R.z] }] });
   }
   // IMU under the pelvis plate between the hip yaw actuators (closest point to the floating base)
-  mountAt(A, base, "bno085_breakout", translation([-12.8, -11.35, zPel - 6]), "imu", "IMU (pelvis)");
-  addSensor(A, "imu", "imu", "base_link", [0, 0, (zPel - 4) / 1000], [0, 0, 0], { model: "BNO085" });
+  // (hung 30 mm below the plate: its header points up, and its jumpers need the Dupont housing and a bend under the plate)
+  mountAt(A, base, "bno085_breakout", translation([-12.8, -11.35, zPel - 30]), "imu", "IMU (pelvis)");
+  addSensor(A, "imu", "imu", "base_link", [0, 0, (zPel - 28) / 1000], [0, 0, 0], { model: "BNO085" });
   // lidar on a mast behind the head
   if (sensors.includes("lidar")) {
     const key = "rplidar_c1", lb = bodyMm(key), zl = zTop + 120;
@@ -304,6 +309,9 @@ function buildBiped(req: LeggedRequest, cfg: BipedCfg, sensors: SensorKind[]) {
       const oz = c[2] + 12, ox = front - 12;
       ops.push({ op: "cutbox", min: [ox - 1, c[1] - 13.5, oz - 25], max: [front + 1, c[1] + 13.5, oz + 1] });
       ops.push({ op: "box", min: [ox - 4, c[1] - 13.5, oz - 25], max: [ox - 1 + 0.5, c[1] + 13.5, oz + 1] });
+      // the camera's ribbon leaves its top edge (latch 3 mm, first bend 1.25 x 5 mm) and runs back out of the head over
+      // the camera: a channel to the back of the head, where it goes down past the neck to the torso
+      ops.push({ op: "cutbox", min: [c[0] + R - 1, c[1] - 10, oz + 1], max: [ox + 3, c[1] + 10, oz + 16] });
       headCam = { key: "rpi_camera_module_3", T: frame([ox + 2.2, c[1] + 12.5, oz], X, [0, -1, 0]), lens: [ox + 2.2 + 9.1, c[1], oz - 14.4] };
     }
     return { ops, dir: X };
@@ -513,8 +521,11 @@ function boxBiped(A: Assembly, H: Harness, b: ReturnType<typeof buildBiped>, mec
   amend([{ op: "hole", a: [floor[0], floor[1], zT0 - 1], b: [floor[0], floor[1], zT0 + BW + 1], d: 12 }, { op: "hole", a: [topX, 0, zTop - BW - 1], b: [topX, 0, zTop + 1], d: 9.5 },
     ...[1, -1].map((s): Op => ({ op: "hole", a: [sideX, s * (Wt - BW - 1), sideZ], b: [sideX, s * (Wt + 1), sideZ], d: 9.5 }))]);
   for (const n of A.spec.links.filter((l) => /^base_link(_b)*$/.test(l.name)).map((l) => l.name)) A.amendProgram(n, [{ op: "hole", a: [floor[0], floor[1], zPel - 1], b: [floor[0], floor[1], zT0 + 1], d: 12 }]);
+  // the IMU's leads come up past the front of the pelvis into the torso by a floor hole in front of the boards
+  const imuHole: Vec3 = [Dt - BW - 6, 0, zT0];
+  amend([{ op: "hole", a: [imuHole[0], imuHole[1], zT0 - 1], b: [imuHole[0], imuHole[1], zT0 + BW + 1], d: 9.5 }]);
   registerBay(A, { name: "torso_bay", tub: torsos[0], lid: "side_panel_left", solids: [...torsos, "side_panel_left", "side_panel_right"], parent: torsos[0], T: translation([0, 0, 0]), min: [-Dt + BW, -Wt + BW, zT0 + BW - 3], max: [Dt - BW, Wt - BW, zTop - BW], parts: parts.filter((n) => { const w = partBox(A, n); return w.lo[0] > -Dt; }), screws: 8, vent_area_mm2: Math.round(vent), note: "the torso itself, closed by its panels",
-    exits: [{ id: "torso_bay.legs", kind: "grommet", face: "floor" as Face, at: [floor[0], floor[1], zT0], normal: [0, 0, -1], hole_mm: 12 }, { id: "torso_bay.neck", kind: "grommet", face: "lid" as Face, at: [topX, 0, zTop], normal: [0, 0, 1], hole_mm: 9.5 },
+    exits: [{ id: "torso_bay.legs", kind: "grommet", face: "floor" as Face, at: [floor[0], floor[1], zT0], normal: [0, 0, -1], hole_mm: 12 }, { id: "torso_bay.imu", kind: "grommet", face: "floor" as Face, at: imuHole, normal: [0, 0, -1], hole_mm: 9.5 }, { id: "torso_bay.neck", kind: "grommet", face: "lid" as Face, at: [topX, 0, zTop], normal: [0, 0, 1], hole_mm: 9.5 },
       ...[1, -1].map((s) => ({ id: `torso_bay.arm_${s > 0 ? "l" : "r"}`, kind: "grommet", face: (s > 0 ? "y+" : "y-") as Face, at: [sideX, s * Wt, sideZ] as Vec3, normal: [0, s, 0] as Vec3, hole_mm: 9.5 })), { id: "torso_bay.usb", kind: "usb", face: "x-" as Face, at: [-Dt, usbY, usbZ], normal: [-1, 0, 0], hole_mm: 16 }, ...(xs !== null ? [{ id: "torso_bay.switch", kind: "switch", face: "y+" as Face, at: [xs, Wt, zs] as Vec3, normal: [0, 1, 0] as Vec3, hole_mm: 22, part: "main_switch" }] : ys !== null ? [{ id: "torso_bay.switch", kind: "switch", face: "x+" as Face, at: [Dt, ys, zc] as Vec3, normal: [1, 0, 0] as Vec3, hole_mm: 22, part: "main_switch" }] : backCase ? [{ id: "torso_bay.switch", kind: "switch", face: "x-" as Face, at: [-Dt - 31, 0, zb] as Vec3, normal: [-1, 0, 0] as Vec3, hole_mm: 22, part: "main_switch" }] : [])] }, H);
   // backpack boards (the mech's converters) under their own hood, with the battery switch in it
   const pack = parts.filter((n) => partBox(A, n).lo[0] <= -Dt);
@@ -528,7 +539,9 @@ function boxBiped(A: Assembly, H: Harness, b: ReturnType<typeof buildBiped>, mec
   }
   // the IMU in a little hood under the pelvis
   const iw = partBox(A, "imu"), yy = 15;
-  hood(A, H, { name: "imu_hood", deck: A.spec.links.find((l) => /^base_link/.test(l.name))!.name, x0: iw.lo[0] - 3, x1: iw.hi[0] + 3, y0: -yy, y1: yy, z0: -zPel, z1: -(iw.lo[2] - 3), parts: ["imu"], flip: true, ventRows: 0, deckGrommets: [{ id: "up", x: iw.hi[0] - 1, y: 12, d: 5 }] });
+  hood(A, H, { name: "imu_hood", deck: A.spec.links.find((l) => /^base_link/.test(l.name))!.name, x0: iw.lo[0] - 3, x1: iw.hi[0] + 3, y0: -yy, y1: yy, z0: -zPel, z1: -(iw.lo[2] - 3), parts: ["imu"], flip: true, ventRows: 0, grommets: [{ id: "out", face: "x+", u: 0 }] });
+  // (its leads leave the little hood forwards and go up into the torso by the floor hole in front of the boards)
+  H.exitOf.set("computer~imu", "torso_bay.imu");
   H.scan();
 }
 /** Netlist of a biped: humanoid on a 3S pack with a 5 V arm rail; mech on two 6S packs in series, CAN legs, 12 V DC-DC. */
