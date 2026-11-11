@@ -275,8 +275,12 @@ export class Router {
       // (a hop of a few mm on to that point is a kink no wire can follow)
       const offAxis = (p: V3) => { const v = sub(p, e.at); return len(sub(v, scale(e.n, dot(v, e.n)))); };
       const Rm = Math.max(...E.map((x) => x.R));
-      if (outward && dist(cur, first) < 1.5 * Rm && offAxis(cur) < 2 && g.line(cur, second, 1) >= 0) { trunk.push(second); pinned.push(true); pierced.push([cur, second]); cur = second; return; }
+      // (within the hole's own opening, less the cable's half width: a USB cut-out or a slot passes a run a little off its axis)
+      const inHole = (p: V3) => offAxis(p) < Math.max(2, e.hole_mm / 2 - c.od / 2 - 1);
+      if (outward && dist(cur, first) < 1.5 * Rm && inHole(cur) && g.line(cur, second, 1) >= 0) { trunk.push(second); pinned.push(true); pierced.push([cur, second]); cur = second; return; }
       go(first, outward ? within : undefined, `to exit ${e.id}`, true);
+      // coming in, the same for the part's end just inside the hole: straight on to it from outside
+      if (!outward && dist(JB, second) < 1.5 * Rm && inHole(JB) && g.line(first, JB, 1) >= 0) { trunk.push(JB); pinned.push(true); pierced.push([first, JB]); cur = JB; return; }
       trunk.push(second); pinned.push(true); pierced.push([first, second]); cur = second;
     };
     if (c.exitA && !sameBay) { through(c.exitA, true); within = undefined; }
