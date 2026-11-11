@@ -1672,6 +1672,14 @@ export function designBaymax(req: MobileRequest = {}): RobotSpecification {
       // check carries only the object in the hand, so their mass is not counted twice
       const arm = attachArm(b, prefix, { dof: 4, kinds: ["Y", "P", "P", "P"], gripper: false, payloadKg: payload + 0.18, reachM: 0.34, basePlateMm: 70 }, "shoulder_yoke", T, "fabric");
       arm.rec.tool = { ...arm.rec.tool, payload_kg: payload };
+      // the arm hangs from the yoke, so a Feetech base servo's sockets (under its case) face up into the arm's base plate,
+      // the wedge and the yoke: its plug window runs on through all three and out of the wedge's side, where its leads
+      // turn down (in the yoke, a notch in the bar's edge)
+      const baseKey = b.A.design.joints.find((j) => j.joint === `${prefix}_base_yaw`)?.actuator;
+      if (baseKey && /^feetech_sts/.test(baseKey)) {
+        const zb = part(baseKey).bbox_mm!.min[2], win: Op = { op: "at", T: b.pose(`${prefix}_base_yaw_actuator`), of: [{ op: "cutbox", min: [-48, -10, zb - 30], max: [-8, 10, zb + 6] }] };
+        for (const n of [`${prefix}_base_link`, `${prefix}_shoulder_wedge`, "shoulder_yoke"]) { b.W.set(n, b.pose(n)); try { b.A.amendProgram(n, b.in(n, [win])); } catch { /* a fabricated yoke: its notch is cut by hand, see the assumptions */ } }
+      }
       // fabric sleeves over the upper arm and forearm (Baymax's soft limbs) and a foam mitten on the wrist
       const jp = fk(b.A.spec).joint, c0 = apply(T, [0, 0, 0]);
       const along = (j: string) => { const p = jp[`${prefix}_${j}`].p.map((v) => v * 1000); return (p[0] - c0[0]) * z[0] + (p[1] - c0[1]) * z[1] + (p[2] - c0[2]) * z[2]; };
