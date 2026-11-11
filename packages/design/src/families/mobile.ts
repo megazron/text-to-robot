@@ -507,7 +507,8 @@ function motorLeadExits(b: Build) {
     if (H.exitOf.has(w.cable) || H.viaOf.has(w.cable)) continue;
     const m = [w.a.inst, w.b.inst].find((n) => /_motor$/.test(n)), o = m === w.a.inst ? w.b.inst : w.a.inst, bay = o ? baysOf(b.A).find((r) => r.name === H.bayOf.get(o)) : undefined;
     if (!m || !bay || H.bayOf.get(m)) continue;
-    const g = bay.exits.filter((e) => e.face === "floor").sort((p, q) => Math.abs(p.at[1] - yOf(m)) - Math.abs(q.at[1] - yOf(m)))[0];
+    // its own grommet if it has one, else the one on its side
+    const g = bay.exits.find((e) => e.id === `${bay.name}.deck_${m}`) ?? bay.exits.filter((e) => e.face === "floor" && !/_motor$/.test(e.id)).sort((p, q) => Math.abs(p.at[1] - yOf(m)) - Math.abs(q.at[1] - yOf(m)))[0];
     if (g) H.exitFor(w.cable, g.id);
   }
 }
@@ -569,6 +570,19 @@ function deckGrommets(b: Build, parent: string, boards: Rect[], w: Rect, deckTop
     if (!at) continue;
     b.A.amendProgram(parent, b.in(parent, [{ op: "hole", a: [at[0], at[1], deckTop - 8], b: [at[0], at[1], deckTop + 1], d: 9.5 }]));
     out.push({ id: `${bayName}.deck_${side > 0 ? "left" : "right"}`, kind: "grommet", face: "floor", at, normal: [0, 0, -1], hole_mm: 9.5 });
+  }
+  // a motor whose leads end under the compartment gets a grommet of its own there, a bend's run on from where they leave
+  // it (else its leads cross under the deck to the side's grommet)
+  const f = fk(b.A.spec);
+  for (const l of b.A.spec.links) {
+    if (!/_motor$/.test(l.name) || l.geometry.type !== "mesh" || l.geometry.part !== "component" || !f.link[l.name]) continue;
+    const m = partModel(String(l.geometry.params?.key)), pa = [...m.pins.values()][0], T = f.link[l.name]; if (!pa) continue;
+    const pw = [0, 1, 2].map((i) => T.R[i][0] * pa.at[0] + T.R[i][1] * pa.at[1] + T.R[i][2] * pa.at[2] + T.p[i] * 1000), ow = [0, 1, 2].map((i) => T.R[i][0] * pa.out[0] + T.R[i][1] * pa.out[1] + T.R[i][2] * pa.out[2]);
+    let at: Vec3 | null = null;
+    for (const run of [16, 22, 28, 36, 46]) { const x = pw[0] + ow[0] * run, y = pw[1] + ow[1] * run; if (x > w.x0 + 8 && x < w.x1 - 8 && y > w.y0 + 8 && y < w.y1 - 8 && !taken(x, y) && !out.some((e) => Math.hypot(e.at[0] - x, e.at[1] - y) < 14)) { at = [x, y, deckTop]; break; } }
+    if (!at) continue;
+    b.A.amendProgram(parent, b.in(parent, [{ op: "hole", a: [at[0], at[1], deckTop - 8], b: [at[0], at[1], deckTop + 1], d: 9.5 }]));
+    out.push({ id: `${bayName}.deck_${l.name}`, kind: "grommet", face: "floor", at, normal: [0, 0, -1], hole_mm: 9.5 });
   }
   return out;
 }
