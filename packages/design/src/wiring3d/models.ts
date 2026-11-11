@@ -180,7 +180,7 @@ export function partModel(key: string): PartModel {
   return { ...b.done(), pins, source, detailed, replaces };
 }
 
-type Port = { name: string; connector?: { v: string }; pins: { v: { pin: string; name: string; signal: string }[] } };
+type Port = { name: string; connector?: { v: string }; mate?: { v: string }; pins: { v: { pin: string; name: string; signal: string }[] } };
 /** a part without a datasheet pin map: its body by kind, its pins where its leads really leave */
 function generic(key: string, ports: Port[], bb: { min: V3; max: V3 }, b: Builder, set: (port: string, name: string, at: V3, out: V3, kind: PinAt["kind"]) => void) {
   const [x0, y0, z0] = bb.min, [x1, y1, z1] = bb.max, cy = (y0 + y1) / 2, cz = (z0 + z1) / 2, role = electrical(key)?.role ?? "";
@@ -265,12 +265,16 @@ function generic(key: string, ports: Port[], bb: { min: V3; max: V3 }, b: Builde
         set(p.name, x.name, at, alongT ? [0, 1, 0] : [1, 0, 0], "terminal");
       } }
     // header rows along the long edge, one port after another
-    let k = 0; const all = ports.filter((p) => !terms.includes(p)).flatMap((p) => p.pins.v.map((x) => ({ port: p.name, name: x.name, sig: x.signal })));
+    let k = 0; const all = ports.filter((p) => !terms.includes(p)).flatMap((p) => p.pins.v.map((x) => ({ port: p.name, name: x.name, sig: x.signal, jack: /DC power jack|barrel/i.test(`${p.connector?.v ?? ""} ${p.mate?.v ?? ""}`) })));
     const along = w >= h, n = Math.max(1, all.length), pitch = Math.min(P, (along ? w : h) / (n + 1));
     // a board whose catalog box reaches past its y = 0 edge has its sockets there (the overhang is the connectors: the
     // Jetson Orin Nano developer kit's USB, Ethernet, DisplayPort and power along that long edge); else on its -x end
     const edgeY = y0 < 0 && /jetson/.test(key);
     for (const q of all) {
+      // a barrel jack among the edge sockets takes its plug square to that edge: on the Jetson Orin Nano developer kit the DC
+      // jack (J16) is at the end of the socket row (carrier board specification, rear panel; its place along the edge is
+      // read from the product photos, about 10 mm in); every pin of the jack is the one plug
+      if (q.jack && edgeY) { set(q.port, q.name, [x0 + 10, y0, top + 6], [0, -1, 0], "plug"); continue; }
       if (q.sig === "cable" || q.name === "LINK") { set(q.port, q.name, edgeY ? [(x0 + x1) / 2, y0, top + 6] : [x0, cy, top + 2], edgeY ? [0, -1, 0] : [-1, 0, 0], "plug"); continue; }
       const s = (k++ + 1) * pitch, at: V3 = along ? [x0 + s, y0 + 1.27, top] : [x0 + 1.27, y0 + s, top];
       b.pin("gold", at, [at[0], at[1], top + 6]); b.box("header", [at[0] - 1.2, at[1] - 1.2, top], [at[0] + 1.2, at[1] + 1.2, top + 2.5]);
