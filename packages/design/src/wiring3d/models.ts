@@ -150,7 +150,7 @@ export function partModel(key: string): PartModel {
     b.box("pcb_blue", [0, 0, 0], [45, 20, T]);
     for (const cx of [10.5, 34.5]) { b.cyl("silver", [cx, 10, T], [cx, 10, T + 12], 8, 24); b.cyl("plastic_black", [cx, 10, T + 12], [cx, 10, T + 12.05], 6.5, 24, true); }
     b.box("silver", [19, 13, T], [26, 16.5, T + 3]);                               // crystal
-    ["Vcc", "Trig", "Echo", "Gnd"].forEach((n, i) => { const xx = 18.69 + i * P; b.box("header", [xx - 1.27, -2.5, -2.54], [xx + 1.27, 0, 0]); b.pin("gold", [xx, 1, -1.27], [xx, -8.5, -1.27]); byName(n, [xx, -8.5, -1.27], [0, -1, 0], "header"); });
+    ["Vcc", "Trig", "Echo", "GND"].forEach((n, i) => { const xx = 18.69 + i * P; b.box("header", [xx - 1.27, -2.5, -2.54], [xx + 1.27, 0, 0]); b.pin("gold", [xx, 1, -1.27], [xx, -8.5, -1.27]); byName(n, [xx, -8.5, -1.27], [0, -1, 0], "header"); });
     b.label("HC-SR04", [22.5, 3, T + 0.02], 10, 2);
   } else if (/^buck_5v|pololu_d36/.test(key)) {
     source = FOOTPRINT_SOURCES.pololu_d36v50;
@@ -158,6 +158,8 @@ export function partModel(key: string): PartModel {
     b.box("plastic_grey", [6, 6, T], [17, 17, T + 7]);                              // inductor
     b.box("ic", [3, 18.5, T], [9, 22.5, T + 1]);
     const port = e!.ports[0];
+    // the two 1 x 6 strips come loose with the board (electrical.json): on standoffs they are soldered pointing up, so the
+    // jumpers plug in from above (pointing down they would stand on the plate under the board)
     port.pins.v.forEach((x, i) => { const left = i < Math.ceil(port.pins.v.length / 2), k = left ? i : i - Math.ceil(port.pins.v.length / 2), xx = left ? 1.27 : 24.13, yy = 6.35 + k * P; headerPin(b, xx, yy, T, 1); set(port.name, x.name, [xx, yy, T + 8.5], [0, 0, 1], "header"); });
   } else {
     detailed = false;
@@ -178,7 +180,7 @@ export function partModel(key: string): PartModel {
   return { ...b.done(), pins, source, detailed, replaces };
 }
 
-type Port = { name: string; pins: { v: { pin: string; name: string; signal: string }[] } };
+type Port = { name: string; connector?: { v: string }; pins: { v: { pin: string; name: string; signal: string }[] } };
 /** a part without a datasheet pin map: its body by kind, its pins where its leads really leave */
 function generic(key: string, ports: Port[], bb: { min: V3; max: V3 }, b: Builder, set: (port: string, name: string, at: V3, out: V3, kind: PinAt["kind"]) => void) {
   const [x0, y0, z0] = bb.min, [x1, y1, z1] = bb.max, cy = (y0 + y1) / 2, cz = (z0 + z1) / 2, role = electrical(key)?.role ?? "";
@@ -242,14 +244,28 @@ function generic(key: string, ports: Port[], bb: { min: V3; max: V3 }, b: Builde
     // the terminal block is at the -x end of the case: the designs leave the room for its wires there (controlCase)
     b.box("plastic_black", [x0, y0 + 2, z0 + 2], [x0 + 12, y1 - 2, z0 + 14]);
     let k = 0; for (const p of ports) for (const x of p.pins.v) { const yy = y0 + 6 + (k++) * 9.5; set(p.name, x.name, [x0, Math.min(yy, y1 - 4), z0 + 8], [-1, 0, 0], "terminal"); }
+  } else if (/^rplidar_c1/.test(key)) {
+    // RPLIDAR C1 body: base, scanning head, the cable boss on -y (its lead's pins are set above)
+    b.box("plastic_black", [x0, y0 + 4, z0], [x1, y1, z0 + 20]);
+    b.cyl("plastic_black", [0, 0, z0 + 20], [0, 0, z1], 22, 32);
+    b.box("plastic_black", [-6, y0, z0 + 1], [6, y0 + 4, z0 + 9]);
   } else if (role === "controller" || role === "driver" || role === "regulator" || role === "sensor" || role === "adapter" || role === "indicator") {
     const pcb = pcbColour(key), t = 1.6, top = Math.min(z1, z0 + t);
     b.box(pcb, [x0, y0, z0], [x1, y1, top]);
     const w = x1 - x0, h = y1 - y0;
     b.box("ic", [x0 + w * 0.35, y0 + h * 0.3, top], [x0 + w * 0.65, y0 + h * 0.7, top + 1.2]);
     if (z1 - top > 4) b.box("plastic_black", [x0 + w * 0.1, y0 + h * 0.15, top], [x0 + w * 0.25, y0 + h * 0.45, Math.min(z1, top + 6)]);
+    // screw terminals along the other long edge, the wire going in sideways (a terminal block takes its wire square to the
+    // board edge, at the height of its clamp)
+    const terms = ports.filter((p) => /screw terminal/i.test(p.connector?.v ?? ""));
+    { const tp = 5.08, nT = terms.reduce((n, p) => n + p.pins.v.length, 0), alongT = w >= h, span = alongT ? w : h, start = (span - nT * tp) / 2 + tp / 2; let q = 0;
+      for (const p of terms) for (const x of p.pins.v) {
+        const s = start + q++ * tp, at: V3 = alongT ? [x0 + s, y1, top + 5] : [x1, y0 + s, top + 5];
+        b.box("plastic_blue", alongT ? [at[0] - tp / 2 + 0.2, y1 - 7.5, top] : [x1 - 7.5, at[1] - tp / 2 + 0.2, top], alongT ? [at[0] + tp / 2 - 0.2, y1, top + 10] : [x1, at[1] + tp / 2 - 0.2, top + 10]);
+        set(p.name, x.name, at, alongT ? [0, 1, 0] : [1, 0, 0], "terminal");
+      } }
     // header rows along the long edge, one port after another
-    let k = 0; const all = ports.flatMap((p) => p.pins.v.map((x) => ({ port: p.name, name: x.name, sig: x.signal })));
+    let k = 0; const all = ports.filter((p) => !terms.includes(p)).flatMap((p) => p.pins.v.map((x) => ({ port: p.name, name: x.name, sig: x.signal })));
     const along = w >= h, n = Math.max(1, all.length), pitch = Math.min(P, (along ? w : h) / (n + 1));
     // a board whose catalog box reaches past its y = 0 edge has its sockets there (the overhang is the connectors: the
     // Jetson Orin Nano developer kit's USB, Ethernet, DisplayPort and power along that long edge); else on its -x end

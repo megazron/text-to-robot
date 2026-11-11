@@ -20,10 +20,13 @@ import { add, sub, scale, dot, cross, len, unit, lerp, perp, type V3 } from "./g
 export interface ExitAt { id: string; at: V3; n: V3; hole_mm: number; }
 export interface CableIn {
   key: string; a: string; b: string; od: number;
-  wires: { from: [string, string]; to: [string, string]; awg: number | null }[];
+  /** `ai` / `bi`: the part a wire's end is on when it is not `a` / `b` (a return from the star ground in a feed's cable) */
+  wires: { from: [string, string]; to: [string, string]; awg: number | null; ai?: string; bi?: string }[];
   /** the moving joints between the two parts, in order from a to b */
   crossing: Joint[];
   exitA: ExitAt | null; exitB: ExitAt | null; bayA?: string; bayB?: string;
+  /** compartments the cable passes through on its way, after leaving a's: in by one exit, out by another (before any joint) */
+  via?: { bay: string; enter: ExitAt; leave: ExitAt }[];
 }
 export interface WireOut { pts: V3[]; on: string[]; drawn_mm: number; }
 export interface CableOut {
@@ -63,6 +66,8 @@ export class Router {
       if (b) this.grid.addBox(T.R, scale(T.p as V3, 1000), b.min, b.max, id);
       if (model) this.placed.set(link, { link, world: T, model, id, harness: false });
     }
+    // the floor (or the desk a bench robot stands on) at z = 0: no cable runs under it
+    { const g = this.grid, k1 = Math.min(g.nz, Math.max(0, Math.ceil(-g.o[2] / g.s - 0.5))); for (let k = 0; k < k1; k++) for (let j = 0; j < g.ny; j++) for (let i = 0; i < g.nx; i++) { const n = g.id(i, j, k); if (!g.occ[n]) g.occ[n] = 1; } }
     for (const b of opts.bays ?? []) {
       const T = f.link[b.link]; if (!T) continue;
       const M = b.T, inLink = (p: V3): V3 => [M[0] * p[0] + M[4] * p[1] + M[8] * p[2] + M[12], M[1] * p[0] + M[5] * p[1] + M[9] * p[2] + M[13], M[2] * p[0] + M[6] * p[1] + M[10] * p[2] + M[14]];
@@ -89,23 +94,23 @@ export class Router {
    * Put a harness part down beside `home` (world mm) on rigid body `group`: the nearest spot where its body is clear, the
    * pins in use have room for their connectors, and something is close by to tie it to. Returns its body centre.
    */
-  placeHarness(inst: string, key: string, home: V3, group: string, pins: [string, string][], bay?: string, partner?: (port: string, pin: string) => V3 | null, given = false, turn?: boolean): { at: V3; turned: boolean } | null {
+  placeHarness(inst: string, key: string, home: V3, group: string, pins: [string, string][], bay?: string, partner?: (port: string, pin: string) => V3 | null, given = false, turn?: number): { at: V3; turn: number } | null {
     const model = partModel(key), bb = bodyBox(model), L = this.f.link[group];
     if (!bb || !L) return null;
     this.ready();
     const c = lerp(bb.min, bb.max, 0.5), within = bay ? this.bays.get(bay) : undefined, g = this.grid;
     const half = Math.max(bb.max[0] - bb.min[0], bb.max[1] - bb.min[1], bb.max[2] - bb.min[2]) / 2;
-    // the part lies with the body's axes, or turned half a turn about the body's z: whichever way its pins face the pins
-    // they are wired to (a wire that has to come round to a pin facing away from it needs a U-turn it may have no room for)
-    const Rt = L.R.map((r) => [-r[0], -r[1], r[2]]);
+    // the part lies with the body's axes turned `turn` quarter turns about the body's z where the design says so; else with
+    // the body's axes or half a turn round, whichever way its pins face the pins they are wired to (a wire that has to come
+    // round to a pin facing away from it needs a U-turn it may have no room for)
+    const Rq = (n: number) => { const q4 = ((n % 4) + 4) % 4, cs = [1, 0, -1, 0][q4], sn = [0, 1, 0, -1][q4]; return L.R.map((r) => [r[0] * cs + r[1] * sn, r[1] * cs - r[0] * sn, r[2]]); };
     const frameOf = (R: number[][], q: V3): Tf => ({ R, p: scale(sub(q, rotate({ R, p: [0, 0, 0] }, c)), 0.001) as V3 });
     // (the mean over its pins; `least` is the worst of them, which counts for a part with a lead at each end)
     let least = 1;
     const facing = (T: Tf) => { let sum = 0, n = 0; least = 1; for (const [port, pin] of pins) { const pa = pinOf(model, port, pin), to = partner?.(port, pin); if (!pa || !to) continue; const w = pinWorld(T, pa), d = sub(to, w.p); if (len(d) < 1) continue; const k = dot(w.out, unit(d)); sum += k; least = Math.min(least, k); n++; } return n ? sum / n : 0; };
     const outs = pins.map(([port, pin]) => pinOf(model, port, pin)?.out).filter((o): o is V3 => !!o), twoEnded = outs.length > 1 && len(outs.reduce((a, o) => add(a, o), [0, 0, 0] as V3)) / outs.length < 0.5;
-    // (or the way the design says: it knows which way the leads come round)
-    const turned = turn ?? (!!partner && facing(frameOf(Rt, home)) > facing(frameOf(L.R, home)) + 0.2);
-    const frame = (q: V3): Tf => frameOf(turned ? Rt : L.R, q);
+    const qt = turn ?? (!!partner && facing(frameOf(Rq(2), home)) > facing(frameOf(L.R, home)) + 0.2 ? 2 : 0), Rp = Rq(qt);
+    const frame = (p: V3): Tf => frameOf(Rp, p);
     const fits = (q: V3, near: boolean, face = false) => {
       const T = frame(q);
       if (face && (facing(T) < 0.3 || (twoEnded && least < 0.5))) return false;
@@ -128,7 +133,7 @@ export class Router {
     g.addBox(T.R, scale(T.p as V3, 1000), bb.min, bb.max, id);
     this.placed.set(inst, { link: group, world: T, model, id, harness: true });
     this.dirty = true;
-    return { at, turned };
+    return { at, turn: ((qt % 4) + 4) % 4 };
   }
   /** where a placed part's pin is in the world, or null */
   pinAt(inst: string, port: string, pin: string): V3 | null { return this.pin(inst, port, pin)?.p ?? null; }
@@ -157,7 +162,7 @@ export class Router {
     const S = add(e.p, scale(e.out, conn));
     for (let t = 2; t <= conn; t += 1) if (!own(add(e.p, scale(e.out, t)))) { problems.push(`${what}: its connector (${Math.round(conn)} mm) meets ${this.nameAt(add(e.p, scale(e.out, t)))} ${Math.round(t)} mm from the pin`); return { S, V: S }; }
     // a quarter more than the radius: a turn a little over a right angle still rounds fully
-    for (const k of [1.25, 1, 0.75, 0.5]) {
+    for (const k of [1.25, 1.1, 1, 0.75, 0.5]) {
       const V = add(S, scale(e.out, R * k)); let ok = g.at(V) === 0;
       for (let t = 0; ok && t <= R * k; t += 1) if (!own(add(S, scale(e.out, t)))) ok = false;
       if (ok) { if (k < 1) problems.push(`${what}: ${Math.round(R * k)} mm for the first bend, the wire wants ${R.toFixed(1)} mm`); return { S, V }; }
@@ -180,12 +185,17 @@ export class Router {
       const p = g.path(a2, b2, n, within); if (!p) continue;
       // a long way round for the sake of room: a much shorter way with less room (through a hole made for it) wins
       const L = polyLen(p), direct = dist(a2, b2);
+      let pp = p;
       if (n > 2 && L > 2 * direct + 20) {
         const a3 = g.dist(a) >= 2 ? a : g.nearest(a, 2, 16, within, (q) => g.line(a, q, 1, within) >= 0), b3 = g.dist(b) >= 2 ? b : g.nearest(b, 2, 16, within, (q) => g.line(b, q, 1, within) >= 0);
         const q = a3 && b3 ? g.path(a3, b3, 2, within) : null;
-        if (q && polyLen(q) < 0.6 * L) return dedupe([a, ...q, b]);
+        if (q && polyLen(q) < 0.6 * L) pp = q;
       }
-      return dedupe([a, ...p, b]);
+      // the search starts and ends at the nearest cube with the clearance: where the line past that cube is clear, the short hop to it goes
+      const out = dedupe([a, ...pp, b]);
+      if (out.length > 2 && dist(out[out.length - 2], b) < 8 && g.line(out[out.length - 3], b, 1, within) >= 0) out.splice(out.length - 2, 1);
+      if (out.length > 2 && dist(out[1], a) < 8 && g.line(a, out[2], 1, within) >= 0) out.splice(1, 1);
+      return out;
     }
     return null;
   }
@@ -227,13 +237,17 @@ export class Router {
     this.ready();
     const g = this.grid, s = g.s, problems: string[] = [], n = c.wires.length;
     const ends = c.wires.map((w, i) => {
-      const a = this.pin(c.a, w.from[0], w.from[1]), b = this.pin(c.b, w.to[0], w.to[1]);
+      const a = this.pin(w.ai ?? c.a, w.from[0], w.from[1]), b = this.pin(w.bi ?? c.b, w.to[0], w.to[1]);
       if (!a || !b) return null;
       const R = wireSize(w.awg).bend;
-      return { a, b, R, la: this.leadOut(a, R, problems, `${c.a}.${w.from[1]}`), lb: this.leadOut(b, R, problems, `${c.b}.${w.to[1]}`), i };
+      return { a, b, R, la: this.leadOut(a, R, problems, `${w.ai ?? c.a}.${w.from[1]}`), lb: this.leadOut(b, R, problems, `${w.bi ?? c.b}.${w.to[1]}`), i };
     });
     if (ends.some((e) => !e)) return { trunk: [], trunkOn: [], wires: [], anchors: [], problems: [`${c.key}: an end has no place`] };
     const E = ends as NonNullable<(typeof ends)[number]>[];
+    // two pins facing each other on one line (a pack's lead straight into the fuse): the wire runs straight between the
+    // connectors and turns nowhere, so their lead-outs meet half way
+    if (n === 1) { const x = E[0], u = x.a.out, d = sub(x.lb.S, x.la.S), along = dot(d, u), lat = len(sub(d, scale(u, along)));
+      if (dot(u, x.b.out) < -0.995 && along > 1 && lat < 1.5 && dot(sub(x.lb.V, x.la.V), u) < 0 && g.line(x.la.S, x.lb.S, 1) >= 0) { const m = lerp(x.la.S, x.lb.S, 0.5); x.la.V = m; x.lb.V = m; } }
     const ga = E[0].a.group, gb = E[0].b.group;
     // clearance asked of the search: the bundle's half width and a bend radius beside it, so a path round an edge leaves the
     // room its corners need to be rounded; it settles for less, down to the wire's own width, where there is not that much
@@ -267,10 +281,12 @@ export class Router {
       for (let i = 1; i < p.length; i++) { trunk.push(p[i]); pinned.push(pin && i === p.length - 1); if (g.dist(p[i]) < ringNeed) tight = true; }
       cur = to;
     };
-    const through = (e: ExitAt, outward: boolean) => {
-      const pr = this.pierce(e, needT, outward ? boxA : boxB, 1.6 * Math.max(...E.map((x) => x.R)), level ? (outward ? cur : JB) : undefined, outward ? undefined : cur);
+    // (`box`: the compartment the hole's inner side is in; `approach`: the box the run to it stays in; `inTo`: where the run
+    // goes on to inside, when it is the cable's end)
+    const through = (e: ExitAt, outward: boolean, box = outward ? boxA : boxB, approach = outward ? within : undefined, inTo: V3 | undefined = outward ? undefined : JB) => {
+      const pr = this.pierce(e, needT, box, 1.6 * Math.max(...E.map((x) => x.R)), level ? (outward ? cur : inTo) : undefined, outward ? undefined : cur);
       if (!pr) { problems.push(`${c.key}: exit ${e.id} is blocked`); return; }
-      const [first, second] = outward ? [pr.inner, pr.outer] : [pr.outer, pr.inner];
+      let [first, second] = outward ? [pr.inner, pr.outer] : [pr.outer, pr.inner];
       // the run already stands on the hole's axis just short of its first point: straight on through from where it is
       // (a hop of a few mm on to that point is a kink no wire can follow)
       const offAxis = (p: V3) => { const v = sub(p, e.at); return len(sub(v, scale(e.n, dot(v, e.n)))); };
@@ -278,13 +294,18 @@ export class Router {
       // (within the hole's own opening, less the cable's half width: a USB cut-out or a slot passes a run a little off its axis)
       const inHole = (p: V3) => offAxis(p) < Math.max(2, e.hole_mm / 2 - c.od / 2 - 1);
       if (outward && dist(cur, first) < 1.5 * Rm && inHole(cur) && g.line(cur, second, 1) >= 0) { trunk.push(second); pinned.push(true); pierced.push([cur, second]); cur = second; return; }
-      go(first, outward ? within : undefined, `to exit ${e.id}`, true);
+      // coming in on the hole's own line, nearer the wall than its outer point (out of one hole straight into the next, a
+      // lid under a deck): straight on, not out to that point and back
+      if (!outward) { const d = sub(cur, e.at), t = dot(d, e.n); if (t > 0 && t < dot(sub(pr.outer, e.at), e.n) && len(sub(d, scale(e.n, t))) < 1) first = cur; }
+      if (first !== cur) go(first, approach, `to exit ${e.id}`, true);
       // coming in, the same for the part's end just inside the hole: straight on to it from outside
-      if (!outward && dist(JB, second) < 1.5 * Rm && inHole(JB) && g.line(first, JB, 1) >= 0) { trunk.push(JB); pinned.push(true); pierced.push([first, JB]); cur = JB; return; }
+      if (!outward && inTo && dist(inTo, second) < 1.5 * Rm && inHole(inTo) && g.line(first, inTo, 1) >= 0) { trunk.push(inTo); pinned.push(true); pierced.push([first, inTo]); cur = inTo; return; }
       trunk.push(second); pinned.push(true); pierced.push([first, second]); cur = second;
     };
     if (c.exitA && !sameBay) { through(c.exitA, true); within = undefined; }
     else if (!sameBay) within = undefined;
+    // through a compartment on the way: in at one exit, across inside it, out at another
+    for (const v of sameBay ? [] : c.via ?? []) { const box = this.bays.get(v.bay); through(v.enter, false, box, undefined, undefined); through(v.leave, true, box, box); within = undefined; }
     const centres: V3[] = [];
     for (let q = 0; q < c.crossing.length; q++) {
       const j = c.crossing[q], jw = this.f.joint[j.name], cen = scale(jw.p as V3, 1000), ax = unit(jw.axis as V3);
@@ -335,18 +356,35 @@ export class Router {
     }
     const fixed = new Set<V3>([...pierced.flat()]);
     // ---- each wire: out of its pin, on to its place in the bundle, off again to its pin
-    const hole = Math.min(...[c.exitA, c.exitB].filter((e): e is ExitAt => !!e && !sameBay).map((e) => e.hole_mm), 1e9);
+    const hole = Math.min(...[c.exitA, c.exitB, ...(c.via ?? []).flatMap((v) => [v.enter, v.leave])].filter((e): e is ExitAt => !!e && !sameBay).map((e) => e.hole_mm), 1e9);
     const T = { pts: T0, on };
     const wires: WireOut[] = E.map((e, k) => {
       const od = wireSize(c.wires[k].awg).od;
       let ring = n > 1 && !tight ? Math.max(od * 0.6, c.od / 2 - od / 2) : 0;
       if (ring && hole < 1e9) ring = Math.max(0, Math.min(ring, hole / 2 - od / 2 - 0.4));
       const tryRing = (r: number, further = true): { pts: V3[]; on: string[] } | null => {
-        const Ti = offsetRoute(T.pts, r, (k / Math.max(1, n)) * Math.PI * 2);
+        let Ti = offsetRoute(T.pts, r, (k / Math.max(1, n)) * Math.PI * 2), Ton = T.on;
+        // a wire leaves the bundle where it passes nearest its pin's lead-out (a pin behind the bundle's end would have the
+        // wire run on past it and turn back): within the last stretch on the same body, clear of the holes it passes
+        if (n > 1) for (const end of [0, 1] as const) {
+          const V = end ? e.lb.V : e.la.V, idx = (j: number) => (end ? Ti.length - 1 - j : j);
+          let bestD = dist(V, Ti[idx(0)]), cut = -1, at: V3 | null = null, run = 0;
+          for (let j = 1; j < Ti.length && run < 120; j++) {
+            const p0 = Ti[idx(j - 1)], p1 = Ti[idx(j)];
+            if (Ton[idx(j)] !== Ton[idx(0)] || fixed.has(T.pts[idx(j)]) || fixed.has(T.pts[idx(j - 1)])) break;
+            const ab = sub(p1, p0), tt = Math.max(0, Math.min(1, dot(sub(V, p0), ab) / (dot(ab, ab) || 1))), q = lerp(p0, p1, tt), d = dist(V, q);
+            if (d < bestD - 2 && g.line(V, q, 1, end ? boxB : boxA) >= 0) { bestD = d; cut = j; at = q; }
+            run += len(ab);
+          }
+          if (cut > 0 && at) {
+            if (end) { Ti = [...Ti.slice(0, Ti.length - cut), at]; Ton = [...Ton.slice(0, Ton.length - cut), Ton[Ton.length - cut]]; }
+            else { Ti = [at, ...Ti.slice(cut)]; Ton = [Ton[cut - 1], ...Ton.slice(cut)]; }
+          }
+        }
         // a wire whose first bend is right by the bundle's end joins it further along its first leg, where a whole bend fits
         // between (else it would turn on to the bundle and along it in less than its radius)
         if (further && n > 1) for (const [V, i0, i1] of [[e.la.V, 0, 1], [e.lb.V, Ti.length - 1, Ti.length - 2]] as [V3, number, number][]) {
-          if (Ti.length < 3 || T.on[i0] !== T.on[i1] || dist(V, Ti[i0]) >= 2 * e.R) continue;
+          if (Ti.length < 3 || Ton[i0] !== Ton[i1] || dist(V, Ti[i0]) >= 2 * e.R) continue;
           const L = dist(Ti[i0], Ti[i1]);
           for (let t = 1; t < L - 2 * e.R; t += 1) { const q = lerp(Ti[i0], Ti[i1], t / L); if (dist(V, q) >= 2 * e.R && g.line(V, q, 1) >= 0) { Ti[i0] = q; break; } }
         }
@@ -355,13 +393,14 @@ export class Router {
         const la = n === 1 ? [e.la.V] : join(e.la.V, Ti[0], boxA), lb = n === 1 ? [e.lb.V] : join(e.lb.V, Ti[Ti.length - 1], boxB);
         if (!la || !lb) return null;
         const pts: V3[] = [e.a.p, e.la.S, ...la.slice(0, n === 1 ? 0 : -1), ...Ti, ...lb.slice(0, n === 1 ? 0 : -1).reverse(), e.lb.S, e.b.p];
-        const o: string[] = [ga, ga, ...la.slice(0, n === 1 ? 0 : -1).map(() => ga), ...T.on, ...lb.slice(0, n === 1 ? 0 : -1).map(() => gb), gb, gb];
+        const o: string[] = [ga, ga, ...la.slice(0, n === 1 ? 0 : -1).map(() => ga), ...Ton, ...lb.slice(0, n === 1 ? 0 : -1).map(() => gb), gb, gb];
         return { pts, on: o };
       };
       let w = tryRing(ring), bad = w ? this.finishWire(w, e.R, e, pierced, fixed, needW) : null;
       // joining further along is not always the better shape: where the wire still has a tight bend, the plain join is tried
       if (w && bad!.tight && n > 1) { const w3 = tryRing(ring, false), b3 = w3 ? this.finishWire(w3, e.R, e, pierced, fixed, needW) : null; if (w3 && b3!.hits <= bad!.hits && (!b3!.tight || b3!.tight > bad!.tight)) { w = w3; bad = b3; } }
-      if ((!w || bad!.hits) && ring) { const w2 = tryRing(0), b2 = w2 ? this.finishWire(w2, e.R, e, pierced, fixed, needW) : null; if (w2 && (!w || b2!.hits < bad!.hits)) { w = w2; bad = b2; } }
+      // its place in the bundle gives it a hit or a bend too tight (a hop beside a hole): it lies on the centreline instead where that is better
+      if ((!w || bad!.hits || bad!.tight) && ring) { const w2 = tryRing(0), b2 = w2 ? this.finishWire(w2, e.R, e, pierced, fixed, needW) : null; if (w2 && (!w || b2!.hits < bad!.hits || (b2!.hits === bad!.hits && !b2!.tight && bad!.tight))) { w = w2; bad = b2; } }
       if (!w) { problems.push(`${c.key}: wire ${k + 1} has no free way from its pin to the cable`); const pts = [e.a.p, e.la.S, ...T.pts, e.lb.S, e.b.p].map(r1); return { pts, on: [ga, ga, ...T.on, gb, gb], drawn_mm: polyLen(pts) }; }
       if (bad!.hits) problems.push(`${c.key}: wire ${k + 1} passes ${bad!.hits} mm through a solid (from ${bad!.at})`);
       if (bad!.tight) problems.push(`${c.key}: wire ${k + 1} has a bend of ${bad!.tight.toFixed(1)} mm, under its ${e.R.toFixed(1)} mm`);
@@ -426,7 +465,8 @@ export class Router {
         const seg = dist(F.pts[i], F.pts[i - 1]), m = Math.max(1, Math.ceil(seg));
         for (let q = 0; q < m; q++) {
           const p = lerp(F.pts[i - 1], F.pts[i], (q + 0.5) / m), d = along + (seg * (q + 0.5)) / m, o = g.at(p);
-          if (!o || (d < endA && o === e.a.id) || (d > L - endB && o === e.b.id)) continue;
+          // the first 2 mm are the pin itself, standing in what it plugs into (a jumper in a breadboard's tie point): leadOut tests the connector from there on
+          if (!o || d < 2 || d > L - 2 || (d < endA && o === e.a.id) || (d > L - endB && o === e.b.id)) continue;
           if (pierced.some(([a, b]) => { const ab = sub(b, a), t = dot(sub(p, a), ab) / (dot(ab, ab) || 1); return t > -0.05 && t < 1.05 && dist(p, lerp(a, b, Math.max(0, Math.min(1, t)))) < 3.5; })) continue;
           hits += seg / m; at ??= p;
         }
@@ -435,6 +475,46 @@ export class Router {
       return { hits: Math.round(hits), tight: F.tight, drawn: L, F, at };
     };
     let best = test(P);
+    // a leg too short for the corners at its two ends: drop one of them, or meet the legs beyond in one corner, where the
+    // straight lines that leaves are clear; kept when the tightest bend gets wider and nothing more is hit
+    const fixedAt = (Q: { pts: V3[] }, k: number) => k <= 2 || k >= Q.pts.length - 3 || fixed.has(Q.pts[k]) || pierced.some(([a, b]) => dist(Q.pts[k], a) < 4 || dist(Q.pts[k], b) < 4);
+    for (let pass = 0; pass < 10 && best.tight; pass++) {
+      const Q = P.pts, O = P.on, n = Q.length, wantAt = (k: number) => { if (k <= 0 || k >= n - 1 || O[k - 1] !== O[k] || O[k + 1] !== O[k]) return 0; const a = unit(sub(Q[k - 1], Q[k])), c = unit(sub(Q[k + 1], Q[k])), th = Math.acos(Math.max(-1, Math.min(1, dot(a, c)))); return th > Math.PI - 0.02 ? 0 : (R * 1.02) / Math.tan(th / 2); };
+      const bad: [number, number][] = [];
+      for (let k = 0; k + 1 < n; k++) { const need = wantAt(k) + wantAt(k + 1); if (need > 0) { const r = (dist(Q[k], Q[k + 1]) * 0.98) / need; if (r < 1) bad.push([k, r]); } }
+      bad.sort((x, y) => x[1] - y[1]);
+      let took = false;
+      for (const [k] of bad) {
+        const cands: { pts: V3[]; on: string[] }[] = [];
+        for (const q of [k, k + 1]) if (!fixedAt(P, q) && O[q - 1] === O[q] && O[q + 1] === O[q] && g.line(Q[q - 1], Q[q + 1], 1) >= 0) cands.push({ pts: Q.filter((_, j) => j !== q), on: O.filter((_, j) => j !== q) });
+        if (k >= 1 && k + 2 < n && !fixedAt(P, k) && !fixedAt(P, k + 1) && O[k - 1] === O[k] && O[k + 2] === O[k]) {
+          // the nearest points of the two outer legs' lines
+          const d1 = unit(sub(Q[k], Q[k - 1])), d2 = unit(sub(Q[k + 1], Q[k + 2])), w0 = sub(Q[k - 1], Q[k + 2]), bb = dot(d1, d2), den = 1 - bb * bb;
+          if (den > 1e-3) { const s1 = (bb * dot(d2, w0) - dot(d1, w0)) / den, s2 = (dot(d2, w0) - bb * dot(d1, w0)) / den;
+            if (s1 > 0 && s2 > 0) { const m = r1(lerp(add(Q[k - 1], scale(d1, s1)), add(Q[k + 2], scale(d2, s2)), 0.5)); if (g.line(Q[k - 1], m, 1) >= 0 && g.line(m, Q[k + 2], 1) >= 0) cands.push({ pts: [...Q.slice(0, k), m, ...Q.slice(k + 2)], on: [...O.slice(0, k), O[k], ...O.slice(k + 2)] }); } }
+        }
+        // the turn at a lead-out's end is over a right angle: the point after it moves out of the way back along the lead
+        for (const [v, sIdx, nx] of [[2, 1, 3], [n - 3, n - 2, n - 4]] as const) {
+          if (nx <= 2 || nx >= n - 3 || (k !== Math.min(v, nx) && k + 1 !== v) || fixedAt(P, nx) || O[nx] !== O[v]) continue;
+          const dir = unit(sub(Q[v], Q[sIdx])), back = dot(sub(Q[nx], Q[v]), dir);
+          // or the leg from the lead-out on is too short for its two corners: the point goes further out along that leg
+          { const L0 = dist(Q[v], Q[nx]), need = ((wantAt(v) + wantAt(nx)) / 0.98) + 0.5;
+            if (L0 > 0.5 && need > L0 && need < 3 * L0 + 30) { const m = r1(add(Q[v], scale(sub(Q[nx], Q[v]), need / L0))); if (g.at(m) === 0 && g.line(Q[v], m, 1) >= 0 && g.line(m, Q[nx + (nx > v ? 1 : -1)], 1) >= 0) cands.push({ pts: Q.map((p, j) => (j === nx ? m : p)), on: O }); } }
+          if (back >= 0) continue;
+          const m = r1(add(Q[nx], scale(dir, -back + 0.5)));
+          if (g.at(m) === 0 && g.line(Q[v], m, 1) >= 0 && g.line(m, Q[nx + (nx > v ? 1 : -1)], 1) >= 0) cands.push({ pts: Q.map((p, j) => (j === nx ? m : p)), on: O });
+        }
+        // the two lead-outs face away from each other close by (a short wire between neighbours): both run on further
+        // before the wire turns, which opens the loop between them
+        if (k === 2 && k + 1 === n - 3 && O[2] === O[3]) for (const ext of [R, 2 * R]) {
+          const da = unit(sub(Q[2], Q[1])), db = unit(sub(Q[3], Q[4])), ma = r1(add(Q[2], scale(da, ext))), mb = r1(add(Q[3], scale(db, ext)));
+          if (g.at(ma) === 0 && g.at(mb) === 0 && g.line(Q[2], ma, 1) >= 0 && g.line(ma, mb, 1) >= 0 && g.line(mb, Q[3], 1) >= 0) cands.push({ pts: [...Q.slice(0, 3), ma, mb, ...Q.slice(3)], on: [...O.slice(0, 3), O[2], O[3], ...O.slice(3)] });
+        }
+        for (const c of cands) { const t = test(c); if (t.hits <= best.hits && (!t.tight || t.tight > best.tight + 0.05)) { best = t; P = c; took = true; break; } }
+        if (took) break;
+      }
+      if (!took) break;
+    }
     // a rounded corner that cuts into a solid: move the corner out by what the rounding took off, and test again
     for (let pass = 0; pass < 3 && best.hits; pass++) {
       const Q = { pts: P.pts.map((p) => [...p] as V3), on: P.on }; let moved = false;

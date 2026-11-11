@@ -232,13 +232,15 @@ export function bay(A: Assembly, o: BayOpts, H?: Harness): BayRecord {
  * Returns the wiring names; the caller wires the DC side.
  */
 export function supplyBox(A: Assembly, H: Harness, o: { parent: string; T: Mat4; key: string; name?: string; use: string; cad?: boolean }) {
-  const name = o.name ?? "supply_case", psu = part(o.key).bbox_mm!, L = 36 + psu.max[0] + 3, Wd = psu.max[1] + 8, Hh = psu.max[2] + 12;
-  const Tp = translation([36, 4, 5]);
+  // the supply 68 mm in from the inlet wall, as in controlCase: the inlet's spade leads and the DC leads turn between the
+  // inlet's body and the supply's terminal block; the DC gland is in the same wall, beside the inlet
+  const PSU_X = 68, name = o.name ?? "supply_case", psu = part(o.key).bbox_mm!, L = PSU_X + psu.max[0] + 3, Wd = psu.max[1] + 8, Hh = psu.max[2] + 12;
+  const Tp = translation([PSU_X, 4, 5]);
   bay(A, { name, parent: o.parent, T: o.T, size: [L, Wd, Hh], cad: o.cad, corner: 5, bolted: false, material: "printed_dark", lidMaterial: "printed_dark",
     parts: [{ name: "power_supply", key: o.key, T: Tp, use: o.use }],
-    exits: [{ id: "mains", face: "x-", u: Wd / 2, v: Hh / 2, kind: "switch", w: 47, h: 27.5, part: { name: "mains_inlet", key: "iec_c14_fused_switched", use: "fused, switched mains inlet" } },
-      { id: "dc_out", face: "x+", u: Wd / 2, v: Hh - 11, kind: "gland", d: 12.5, noAnchor: true }],
-    vents: [{ face: "lid", a0: 44, a1: L - 8, b0: 8, b1: Wd - 8 }, { face: "y-", a0: 8, a1: Hh - 6, b0: 44, b1: L - 8 }, { face: "y+", a0: 8, a1: Hh - 6, b0: 44, b1: L - 8 }] }, H);
+    exits: [{ id: "mains", face: "x-", u: Wd / 2 + 10, v: Hh / 2, kind: "switch", w: 47, h: 27.5, part: { name: "mains_inlet", key: "iec_c14_fused_switched", use: "fused, switched mains inlet" } },
+      { id: "dc_out", face: "x-", u: 13, v: Hh / 2, kind: "gland", d: 12.5, noAnchor: true }],
+    vents: [{ face: "lid", a0: PSU_X + 8, a1: L - 8, b0: 8, b1: Wd - 8 }, { face: "y-", a0: 8, a1: Hh - 6, b0: PSU_X + 8, b1: L - 8 }, { face: "y+", a0: 8, a1: Hh - 6, b0: PSU_X + 8, b1: L - 8 }] }, H);
   for (const [n, a, b] of [["MAINS_L", "L", "AC/L"], ["MAINS_N", "N", "AC/N"], ["MAINS_E", "E", "FG"]] as const) { H.net(n, "power", 230); H.wire(n, `mains_inlet.load.${a}`, `power_supply.ac_in.${b}`, { typ: 1, peak: 2 }); }
   H.label("mains_inlet~power_supply", "mains inlet to the supply (crimped, insulated spades; earth first)");
   H.notes.push("Mains side: IEC inlet to the supply's AC terminals with insulated spades and ferrules, earth wired first, case closed before plugging in. Have it checked if you are not qualified to wire mains.");
@@ -419,7 +421,8 @@ export function registerBay(A: Assembly, r: Omit<BayRecord, "vent_area_mm2" | "h
   const heat = r.heat_w ?? r.parts.reduce((h, n) => { const k = keyOf(A.spec, n); return h + (k ? heatOf(k) : 0); }, 0);
   const rec: BayRecord = { ...r, vent_area_mm2: r.vent_area_mm2 ?? 0, heat_w: +heat.toFixed(1) };
   baysOf(A).push(rec);
-  if (H) { for (const p of r.parts) H.bayOf.set(p, r.name); for (const e of r.exits) if (e.kind === "grommet" || e.kind === "gland" || e.kind === "slot" || e.kind === "usb") H.exits.push({ id: e.id, link: r.tub, at: apply(r.T, e.at), normal: dirOf(r.T, e.normal), panel_hole_mm: e.hole_mm, bay: r.name, kind: e.kind });
+  if (H) { for (const p of r.parts) H.bayOf.set(p, r.name); for (const e of r.exits) if (e.part) H.bayOf.set(e.part, r.name);   // a panel part (the main switch) is wired inside, as in bay()
+    for (const e of r.exits) if (e.kind === "grommet" || e.kind === "gland" || e.kind === "slot" || e.kind === "usb") H.exits.push({ id: e.id, link: r.tub, at: apply(r.T, e.at), normal: dirOf(r.T, e.normal), panel_hole_mm: e.hole_mm, bay: r.name, kind: e.kind });
     // a USB cut-out passes the cables a design sends through it (Harness.exitOf), never one by default
     for (const e of r.exits) if (e.kind === "usb") H.kept.add(e.id); }
   return rec;

@@ -23,7 +23,7 @@ const R = 32.5, BELT = 3, ZC = R + BELT;            // wheel radius, track thick
 const SHOULDER = "hobby_mg90s", UPPER = 56, FORE = 74, ELBOW_Z = 31;   // arm: metal-gear shoulders; upper arm, forearm to the palm; elbow servo output height
 const HAND_X = 15.5, THUMB_L = 44;                    // hand servo output across the palm, thumb length
 const X_TOP = -14, Z_TOP = ZC + 52, R_IDLE = 16;      // top idler: the third corner of the triangular track
-const XA = 65;                                       // axles at +-XA (motor cans meet 8 mm apart in the middle)
+const XA = 67;                                       // axles at +-XA (the motor cans' ends 12 mm apart in the middle: each pair of leads has its connector and first bend)
 const BX = 85, BY = 64, Z0 = 16, Z1 = 146, WALL = 2.4, LID = 4;
 const place = (x: Vec3, y: Vec3, z: Vec3, o: Vec3): Mat4 => [x[0], x[1], x[2], 0, y[0], y[1], y[2], 0, z[0], z[1], z[2], 0, o[0], o[1], o[2], 1];
 const sb = () => part(SERVO).bbox_mm!;
@@ -39,8 +39,16 @@ function lipWalls(hx: number, hy: number, t: number, z0: number, z1: number, rc 
 
 /** Electronics poses (mm). The boards sit 5 mm up on standoffs; the breadboard's end comes close to the left wall for the Nano's USB. */
 const Tbb = place([0, 1, 0], [0, 0, 1], [1, 0, 0], [-BX + WALL + 0.3, -58.3, 70]);
-const Tpca = place([0, 1, 0], [-1, 0, 0], [0, 0, 1], [70.4, -31.1, 5]), Tbuck = place([0, 1, 0], [-1, 0, 0], [0, 0, 1], [-58.8, -21.6, 5]), Tbuck2 = place([0, -1, 0], [0, 0, 1], [-1, 0, 0], [BX - WALL - 5, 21.8, 96 - Z0 - WALL]);   // the arm regulator stands on the front wall, above the sensor
-const USB_X = -BX + WALL + 0.3 + 8.5 + 3.6, USB_Z = 70 + 31 + 8.9, SW_Y = 40, SW_Z = 100;
+// one half breadboard holds the Nano (15 columns) and one driver (8): the second driver has a board of its own, standing
+// on end on the left wall behind the arm servo, above the motors, between two ledges
+const Tbb2 = place([0, 0, -1], [1, 0, 0], [0, -1, 0], [-62, BY - WALL - 0.3, 133]);
+const BBD = part("breadboard_400").bbox_mm!.max, COL = (c: number) => 4 + 2.54 * (c - 1);
+// the Nano straddles the centre channel in rows d and h, its USB end at column 1; a driver across the channel in rows c and h
+const NANO = { x: COL(2) - 3.81, y: BBD[1] / 2 - 6.35 - 1.27 };
+const tbT = (c0: number): Mat4 => [0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1, 0, COL(c0 + 7) + 1.27, BBD[1] / 2 - 10.16, BBD[2], 1];
+// the PCA9685 well forward of the pack: its V+ terminal faces the pack's leads, both need their room
+const Tpca = place([0, 1, 0], [-1, 0, 0], [0, 0, 1], [80.4, -31.1, 5]), Tbuck = place([0, 1, 0], [-1, 0, 0], [0, 0, 1], [-58.8, -21.6, 5]), Tbuck2 = place([0, -1, 0], [0, 0, 1], [-1, 0, 0], [BX - WALL - 5, 21.8, 96 - Z0 - WALL]);   // the arm regulator stands on the front wall, above the sensor
+const USB_X = -BX + WALL + 0.3 + 8.5 + 3.6, USB_Z = Tbb[14] + NANO.y + 8.9, SW_Y = 40, SW_Z = 100;
 
 /** The netlist: pack through fuse and switch; TT motors on the drivers; the servos on their own buck 5 V through the PCA9685. */
 function wire(H: Harness, motors: string[]) {
@@ -93,7 +101,8 @@ export function designArduinoWallE(req: ArduinoWallERequest = {}): RobotSpecific
     body.push({ op: "hole", a: [xa, side * (BY - 25), ZC], b: [xa, side * (BY - 16), ZC], d: 8 });
   }
   // arm servos: inside the side walls, output through the wall, body pointing up
-  const Tarm = (side: 1 | -1): Mat4 => place([0, 0, 1], [side, 0, 0], [0, side, 0], [10, side * (BY + 0.5), 120]);
+  // (3 mm higher than the top of the tracks' longer upper run needs: the arms hang clear of it)
+  const Tarm = (side: 1 | -1): Mat4 => place([0, 0, 1], [side, 0, 0], [0, side, 0], [10, side * (BY + 0.5), 123]);
   for (const side of [1, -1] as const) body.push({ op: "cradle", key: SHOULDER, T: Tarm(side), wall: 2.5 });
   // lid bosses in the corners (M3 self-tapping from the lid)
   for (const x of [-BX + 7, BX - 7]) for (const y of [-BY + 7, BY - 7]) {
@@ -107,6 +116,7 @@ export function designArduinoWallE(req: ArduinoWallERequest = {}): RobotSpecific
   // electronics on standoffs at their real hole patterns; breadboard held on the rear wall between two ledges
   body.push({ op: "at", T: translation([0, 0, Z0 + WALL]), of: [...standoffOps("pca9685_clone", Tpca), ...standoffOps("buck_lm2596", Tbuck), ...standoffOps("buck_lm2596", Tbuck2)] });
   for (const z of [Tbb[14] - 2.4, Tbb[14] + 54.8]) body.push({ op: "box", min: [-BX + WALL - 0.2, Tbb[13], z], max: [-BX + WALL + 6, Tbb[13] + 82.5, z + 2.4] });
+  for (const x of [Tbb2[12] - 2.4, Tbb2[12] + 54.5]) body.push({ op: "box", min: [x, BY - WALL - 6, Tbb2[14] - 82.5], max: [x + 2.4, BY - WALL + 0.2, Tbb2[14]] });
   // USB of the Nano through the left wall, main switch in the rear wall, both above the tracks
   body.push({ op: "cutbox", min: [USB_X - 7, -BY - 1, USB_Z - 5], max: [USB_X + 7, -BY + WALL + 1, USB_Z + 5] });
   body.push({ op: "cutbox", min: [-BX - 1, SW_Y - 9.7, SW_Z - 6.7], max: [-BX + WALL + 1, SW_Y + 9.7, SW_Z + 6.7] });
@@ -193,9 +203,11 @@ export function designArduinoWallE(req: ArduinoWallERequest = {}): RobotSpecific
   // ---------------- electronics inside the body
   A.mount("body", PACK, translation([-38.5, 0, Z0 + WALL]), "battery", "2S 18650 pack");
   A.fastener("M3x8 countersunk + nut (pack)", 2);
-  A.mount("body", "breadboard_400", Tbb, "breadboard", "plug-in wiring: Nano + two TB6612FNG", "printed");
-  A.mount("breadboard", "arduino_nano_clone", translation([4, 31, 8.5]), "controller", "Arduino Nano (runs the generated sketch)");
-  for (let i = 0; i < 2; i++) A.mount("breadboard", "tb6612fng_module", translation([4 + i * 24, 4, 8.5]), `motor_driver_${i + 1}`, "TB6612FNG dual motor driver");
+  A.mount("body", "breadboard_400", Tbb, "breadboard", "plug-in wiring: Nano + the front TB6612FNG", "printed");
+  A.mount("body", "breadboard_400", Tbb2, "breadboard_2", "plug-in wiring: the rear TB6612FNG", "printed");
+  A.mount("breadboard", "arduino_nano_clone", translation([NANO.x, NANO.y, BBD[2]]), "controller", "Arduino Nano (runs the generated sketch)");
+  A.mount("breadboard", "tb6612fng_module", tbT(19), "motor_driver_1", "TB6612FNG dual motor driver");
+  A.mount("breadboard_2", "tb6612fng_module", tbT(12), "motor_driver_2", "TB6612FNG dual motor driver");
   A.mount("body", "pca9685_clone", mul(translation([0, 0, Z0 + WALL]), Tpca), "servo_driver", "PCA9685 servo driver (I2C)");
   A.mount("body", "buck_lm2596", mul(translation([0, 0, Z0 + WALL]), Tbuck), "servo_regulator", "LM2596 set to 5.0 V for the neck and hand servos");
   A.mount("body", "buck_lm2596", mul(translation([0, 0, Z0 + WALL]), Tbuck2), "arm_regulator", "LM2596 set to 5.0 V for the shoulder and elbow servos");
@@ -309,11 +321,14 @@ export function designArduinoWallE(req: ArduinoWallERequest = {}): RobotSpecific
 
   // ---------------- the body is the compartment: its lid, exits and vents on record, then the harness
   const H = new Harness(A);
-  const inBody = ["battery", "breadboard", "controller", "motor_driver_1", "motor_driver_2", "servo_driver", "servo_regulator", "arm_regulator"];
+  const inBody = ["battery", "breadboard", "breadboard_2", "controller", "motor_driver_1", "motor_driver_2", "servo_driver", "servo_regulator", "arm_regulator"];
   registerBay(A, { name: "body_bay", tub: "body", lid: "lid", parent: "body", T: translation([0, 0, 0]), min: [-BX + WALL, -BY + WALL, Z0 + WALL], max: [BX - WALL, BY - WALL, Z1], parts: inBody, screws: 4, vent_area_mm2: Math.round(VENTS * 52 * 3.2), note: "the hollow body itself",
     exits: [{ id: "body_bay.neck_leads", kind: "grommet", face: "lid", at: [EXIT_X, 0, Z1 + LID], normal: [0, 0, 1], hole_mm: 8 }, { id: "body_bay.usb", kind: "usb", face: "y-", at: [USB_X, -BY, USB_Z], normal: [0, -1, 0], hole_mm: 10 }, { id: "body_bay.switch", kind: "switch", face: "x-", at: [-BX, SW_Y, SW_Z], normal: [-1, 0, 0], hole_mm: 13, part: "main_switch" }] }, H);
   for (const n of ["main_switch", "ultrasonic", "neck_pan_servo", "left_arm_servo", "right_arm_servo", ...["front_left", "front_right", "rear_left", "rear_right"].map((t) => `${t}_motor`)]) H.bayOf.set(n, "body_bay");
   wire(H, ["front_left_motor", "front_right_motor", "rear_left_motor", "rear_right_motor"]);
+  // the main rail's splice a quarter turn on from the switch's output tab (straight on stands the second breadboard): its
+  // first lever faces the 18 AWG lead, which turns once with its radius
+  H.seat("splice_vbat", [-43.5, 8.7, SW_Z + 1], 3);
 
   // ---------------- checks
   limitsFromGeometry(A, ["neck_pan", "neck_tilt", "left_arm_lift", "right_arm_lift", "left_elbow", "right_elbow", "left_hand", "right_hand"], [{ neck_pan: 1.2, neck_tilt: 0.6 }, { neck_pan: -1.2, neck_tilt: -0.6 }, { left_arm_lift: -0.8, right_arm_lift: 0.8 }, { left_hand: 0.5, right_hand: -0.5 }],

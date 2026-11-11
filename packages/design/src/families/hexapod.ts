@@ -15,7 +15,7 @@ import {
   footPad, stanceTorques, recordJoints, holdCurrent, pickBattery, COMPUTE_W, addSensor, limitsFromGeometry, sum, type Frame, type Foot,
 } from "./legkit.ts";
 import { sensorsOf, keyOf, quadPower, stabilityCheck, type LeggedRequest } from "./legged.ts";
-import { hood, hoodAround, worldBox, enclosureChecks, exposed } from "../enclosure.ts";
+import { hood, hoodAround, enclosureChecks, exposed } from "../enclosure.ts";
 import { Harness, finishWiring } from "../wiring.ts";
 import { busTree, coreTree, actuatorsUnder } from "../netlist.ts";
 

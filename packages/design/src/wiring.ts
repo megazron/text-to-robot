@@ -20,7 +20,9 @@ export interface InstanceRec {
   name: string; key: string; link: string | null; off_board?: boolean; note?: string;
   /** a harness part with no link of its own (splice, inline fuse, star ground): its body centre in the world at the home pose (mm) and the rigid body it is tied to */
   at_mm?: Vec3; on?: string;
-  /** it lies turned half a turn about that body's z, so its pins face the parts it is wired to */
+  /** quarter turns about z it is laid at, against the axes of the body it is tied to, so its pins face the parts it is wired to (absent: none) */
+  turn?: number;
+  /** (records written before `turn`: half a turn) */
   turned?: boolean;
 }
 export interface NetRec { name: string; kind: NetKind; voltage_v?: number; pins: string[]; }
@@ -118,10 +120,18 @@ export class Harness {
   flex = new Map<string, number>();
   /** where harness parts (fuse, splices, star ground) sit: with this instance. Unset, each sits by the first part wired to it. */
   home?: string;
-  /** a harness part the design gives its place: in the compartment of part `by`, as near `at` as it fits (world mm at the home pose); `free`: in no compartment (an inline fuse tied along its lead); `turned`: half a turn about the body's z, as the leads come */
-  spot = new Map<string, { by: string; at: Vec3; free?: boolean; turned?: boolean }>();
-  /** cable -> the bay exit it leaves by, where the nearest one would be overfilled */
-  exitOf = new Map<string, string>();
+  /**
+   * a harness part the design gives its place: as near `at` as it fits (world mm at the home pose), in the compartment of
+   * part `by` (absent: of the part it would sit by anyway); `free`: in no compartment (an inline fuse tied along its lead);
+   * `turn`: quarter turns about the body's z, as the leads come (`turned`: half a turn)
+   */
+  spot = new Map<string, { by?: string; at: Vec3; free?: boolean; turned?: boolean; turn?: number }>();
+  /** the place and quarter turns of a harness part, the design's own (see spot) */
+  seat(inst: string, at: Vec3, turn = 0) { this.spot.set(inst, { at, turn }); }
+  /** cable -> the bay exit(s) it leaves by (one per bay it leaves), where the nearest one would be overfilled */
+  exitOf = new Map<string, string | string[]>();
+  /** the exits named for a cable (exitOf), as a list */
+  exitsOf(cable: string): string[] { const x = this.exitOf.get(cable); return x === undefined ? [] : Array.isArray(x) ? x : [x]; }
   /** exits kept for the cables exitOf sends through them (a ribbon slot): no other cable takes one as its nearest */
   kept = new Set<string>();
   /** lever splices a designer added by hand (bus hubs) */
@@ -166,7 +176,11 @@ export class Harness {
     this.wires.push({ net, a, b, typ: o.typ ?? 0.02, peak: o.peak ?? o.typ ?? 0.02, cable, ...(o.trunk ? { trunk: o.trunk } : {}) });
   }
   label(cable: string, text: string) { this.labels.set(cable, text); }
-  exitFor(cable: string, exit: string) { this.exitOf.set(cable, exit); }
+  /** the exits a cable leaves its bays by: one per bay it leaves (the others go by the nearest) */
+  exitFor(cable: string, ...exits: string[]) { this.exitOf.set(cable, exits); }
+  /** cable -> compartments it passes through, each in by one exit and out by another */
+  viaOf = new Map<string, { bay: string; enter: string; leave: string }[]>();
+  via(cable: string, bay: string, enter: string, leave: string) { this.viaOf.set(cable, [...(this.viaOf.get(cable) ?? []), { bay, enter, leave }]); }
   /** A channel a cable can lie in, on `link`: a polyline in world mm at the home pose. */
   channel(link: string, pts: Vec3[]) { this.channels.set(link, [...(this.channels.get(link) ?? []), pts]); }
   /** several signal wires a -> b at once: pairs of pin names */
@@ -477,14 +491,28 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
     if (!pass) continue;
     // a harness part (splice, inline fuse, star ground): beside the part it serves, in that part's compartment
     const spot = H.spot.get(i.name);
-    const home: { link: string | null; p: Vec3 | null; inst?: string } = spot && locate(spot.by).link ? { link: locate(spot.by).link, p: spot.at, inst: spot.by } : i.link && f.link[i.link] ? { link: i.link, p: own && own.geometry.type === "mesh" && own.geometry.part === "component" ? bodyCentre(f, i.link, String(own.geometry.params?.key)) : worldOf(f, i.link, [0, 0, 0]), inst: [...H.instances.values()].find((x) => x.link === i.link && x.name !== i.name)?.name } : H.home ? { ...locate(H.home), inst: H.home } : harnessHome(H, i.name, groups, locate);
+    const home: { link: string | null; p: Vec3 | null; inst?: string } = spot?.by && locate(spot.by).link ? { link: locate(spot.by).link, p: spot.at, inst: spot.by } : i.link && f.link[i.link] ? { link: i.link, p: own && own.geometry.type === "mesh" && own.geometry.part === "component" ? bodyCentre(f, i.link, String(own.geometry.params?.key)) : worldOf(f, i.link, [0, 0, 0]), inst: [...H.instances.values()].find((x) => x.link === i.link && x.name !== i.name)?.name } : H.home ? { ...locate(H.home), inst: H.home } : harnessHome(H, i.name, groups, locate);
+    if (spot && !spot.by && home.p) home.p = spot.at;
     if (!home.p || !home.link) continue;
     if (home.inst && !H.bayOf.get(i.name) && !spot?.free) H.bayOf.set(i.name, H.bayOf.get(home.inst) ?? "");
     const g = groupOf.get(home.link) ?? home.link, at = R.placeHarness(i.name, i.key, home.p, g, pinsOf(i.name), H.bayOf.get(i.name) || undefined, (port, pin) => {
       for (const ws of groups.values()) for (const w of ws) for (const [me, other] of [[w.a, w.b], [w.b, w.a]]) if (me.inst === i.name && me.port === port && me.pin === pin && other.inst !== i.name) { const q = R.pinAt(other.inst, other.port, other.pin); if (q) return q; }
       return null;
-    }, !!spot, spot?.turned);
-    if (at) { i.at_mm = at.at.map(r1) as Vec3; i.on = g; if (at.turned) i.turned = true; else delete i.turned; R.reserve(i.name, pinsOf(i.name)); } else routeProblems.push(`${i.name}: no free place beside ${home.inst ?? home.link}`);
+    }, !!spot, spot ? (spot.turn ?? (spot.turned ? 2 : undefined)) : undefined);
+    if (at) { i.at_mm = at.at.map(r1) as Vec3; i.on = g; delete i.turned; if (at.turn) i.turn = at.turn; else delete i.turn; R.reserve(i.name, pinsOf(i.name)); } else routeProblems.push(`${i.name}: no free place beside ${home.inst ?? home.link}`);
+  }
+  // a cable is the wires between two parts; a feed's cable also carries the return from the star ground. Where the star
+  // ground (or any third part) is in another compartment than the cable's own end, that wire runs on its own
+  if (R) for (const [key, ws] of [...groups]) {
+    const ia = ws[0].a.inst, bayOfEnd = (w: WireDecl) => { const near = w.a.inst === ws[0].b.inst ? w.b.inst : w.a.inst; return H.bayOf.get(near) ?? ""; };   // its end on the cable's a side
+    const home = bayOfEnd(ws[0]), apart = ws.filter((w) => bayOfEnd(w) !== home && w.a.inst !== ia && w.b.inst !== ia);
+    if (!apart.length) continue;
+    groups.set(key, ws.filter((w) => !apart.includes(w)));
+    for (const w of apart) {
+      const other = w.a.inst === ws[0].b.inst ? w.b.inst : w.a.inst, k2 = `${key}/${other}`;
+      groups.set(k2, [...(groups.get(k2) ?? []), w]);
+      for (const m of [H.exitOf, H.viaOf, H.labels] as Map<string, unknown>[]) if (m.has(key) && !m.has(k2)) m.set(k2, m.get(key));
+    }
   }
   const awgOf = (w: WireDecl, lengthMm: number, pm: string | null) => {
     const n = H.nets.get(w.net)!, volts = n.kind === "power" ? n.voltage_v ?? 5 : 5;
@@ -505,7 +533,7 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
     let geom: { path: Vec3[]; joints: SlackRec[]; links: Set<string>; exit: string | null; routeMm: number; slackMm: number; channelMm: number; clipHere: ClipAt[]; wires?: { pts: Vec3[]; on: string[]; drawn_mm: number; bend_mm: number }[]; awg?: (number | null)[] };
     if (R && R.placed.has(ia) && R.placed.has(ib) && la.link && lb.link) {
       const leaves = (bay?: string, other?: string) => !!bay && bay !== other;
-      const pick = (bay: string, to: Vec3) => H.exits.find((e) => e.id === H.exitOf.get(key) && e.bay === bay) ?? nearestExit(H, bay, to);
+      const pick = (bay: string, to: Vec3) => H.exits.find((e) => H.exitsOf(key).includes(e.id) && e.bay === bay) ?? nearestExit(H, bay, to);
       // a hole that opens into the other compartment (a deck grommet between a hood and the tub under it) is the one wall between the two
       const opensInto = (e: ExitDecl | null, bay?: string) => { const b = bay ? R.bays.get(bay) : undefined; if (!e || !b) return false; const p = worldExit(f, e); return p.every((x, k) => x > b.min[k] - 6 && x < b.max[k] + 6); };
       /** the joints between two parts, their compartments and the exits a run between them takes */
@@ -524,6 +552,7 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
       const placedAt = (x: string, p: Vec3 | null): Vec3 | null => { const pl = R.placed.get(x); return pl ? (pl.world.p.map((v) => v * 1000) as Vec3) : p; };
       const { up, down, crossing, bayA, bayB, exA, exB } = between(ia, ib, placedAt(ia, la.p), placedAt(ib, lb.p));
       const exitAt = (e: ExitDecl | null) => (e ? { id: e.id, at: worldExit(f, e), n: unit(rotateBy(f, e.link, e.normal)), hole_mm: e.panel_hole_mm } : null);
+      const via = (H.viaOf.get(key) ?? []).flatMap((v) => { const en = H.exits.find((e) => e.id === v.enter), lv = H.exits.find((e) => e.id === v.leave); return en && lv ? [{ bay: v.bay, enter: exitAt(en)!, leave: exitAt(lv)! }] : []; });
       const od = bundleOd(ws), straight = dist(la.p ?? [0, 0, 0], lb.p ?? [0, 0, 0]);
       const slackOf = (anchors: { joint: string; aIn: Vec3; aOut: Vec3 }[]) => {
         const joints: SlackRec[] = []; let slackMm = [...up, ...down].reduce((n, j) => n + (j.type === "fixed" ? H.flex.get(j.name) ?? 0 : 0), 0);   // fixed in the model, not in life
@@ -539,19 +568,23 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
         return { joints, slackMm };
       };
       // the gauge sets the bend radius and the routed length sets the gauge: route with a first guess, and again if the true length wants thicker wire
+      // the router lays every wire of a cable from part a to part b: a wire declared the other way round is turned for it,
+      // and its laid points are turned back so they run from its own first end
+      const flip = (w: WireDecl) => w.a.inst === ib && w.b.inst !== ib;
       let awg = ws.map((w) => awgOf(w, straight * 1.4 + svc + term, pm)?.awg ?? null);
-      let out = R.cable({ key, a: ia, b: ib, od, crossing, exitA: exitAt(exA), exitB: exitAt(exB), bayA, bayB, wires: ws.map((w, i) => ({ from: [w.a.port, w.a.pin], to: [w.b.port, w.b.pin], awg: awg[i] })) });
+      let out = R.cable({ key, a: ia, b: ib, od, crossing, exitA: exitAt(exA), exitB: exitAt(exB), bayA, bayB, via, wires: ws.map((w, i) => (flip(w) ? { from: [w.b.port, w.b.pin], to: [w.a.port, w.a.pin], awg: awg[i], ai: w.b.inst, bi: w.a.inst } : { from: [w.a.port, w.a.pin], to: [w.b.port, w.b.pin], awg: awg[i], ai: w.a.inst, bi: w.b.inst })) });
       let sl = slackOf(out.anchors);
       const final = ws.map((w, i) => awgOf(w, Math.ceil(((out.wires[i]?.drawn_mm ?? straight) + svc + sl.slackMm + term) / 5) * 5, pm)?.awg ?? null);
       if (final.some((x, i) => x !== null && awg[i] !== null && x < awg[i]!)) {
         awg = final.map((x, i) => (x !== null && awg[i] !== null ? Math.min(x, awg[i]!) : x));
-        out = R.cable({ key, a: ia, b: ib, od, crossing, exitA: exitAt(exA), exitB: exitAt(exB), bayA, bayB, wires: ws.map((w, i) => ({ from: [w.a.port, w.a.pin], to: [w.b.port, w.b.pin], awg: awg[i] })) });
+        out = R.cable({ key, a: ia, b: ib, od, crossing, exitA: exitAt(exA), exitB: exitAt(exB), bayA, bayB, via, wires: ws.map((w, i) => (flip(w) ? { from: [w.b.port, w.b.pin], to: [w.a.port, w.a.pin], awg: awg[i], ai: w.b.inst, bi: w.a.inst } : { from: [w.a.port, w.a.pin], to: [w.b.port, w.b.pin], awg: awg[i], ai: w.a.inst, bi: w.b.inst })) });
         sl = slackOf(out.anchors);
       }
       // a wire of the cable that ends on another part (the return of a feed pair, from the star ground) is laid from its own
       // part: through its own compartment's exit, then with the cable to the far end
       const own = new Map<string, number[]>();
-      ws.forEach((w, i) => { if (w.a.inst !== ia || w.b.inst !== ib) { const k = `${w.a.inst}|${w.b.inst}`; own.set(k, [...(own.get(k) ?? []), i]); } });
+      // (a wire merely declared the other way round stays in the bundle: it is laid turned, see flip)
+      ws.forEach((w, i) => { if (!(w.a.inst === ia && w.b.inst === ib) && !flip(w)) { const k = `${w.a.inst}|${w.b.inst}`; own.set(k, [...(own.get(k) ?? []), i]); } });
       for (const [k, idx] of own) {
         const [xa, xb] = k.split("|");
         if (!R.placed.has(xa) || !R.placed.has(xb)) { routeProblems.push(`${key}: ${!R.placed.has(xa) ? xa : xb} has no place, its wire is not laid`); continue; }
@@ -565,7 +598,7 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
       for (const j of crossing) if (j.type === "continuous") unresolved.push(`${key} crosses continuous joint ${j.name}: needs a slip ring`);
       const links = new Set<string>(); for (const l of [la.link, lb.link, ...crossing.flatMap((j) => [j.parent, j.child])]) links.add(l);
       geom = { path: out.trunk as Vec3[], joints: sl.joints, links, exit: [exA?.id, exB?.id].filter(Boolean).join(" + ") || null, routeMm: Math.max(0, ...out.wires.map((w) => w.drawn_mm)), slackMm: sl.slackMm, channelMm: 0,
-        clipHere: clipsAlong(surf, R, out.trunk as Vec3[], out.trunkOn), wires: out.wires.map((w, i) => ({ pts: w.pts as Vec3[], on: w.on, drawn_mm: w.drawn_mm, bend_mm: wireSize(awg[i]).bend })), awg };
+        clipHere: clipsAlong(surf, R, out.trunk as Vec3[], out.trunkOn), wires: out.wires.map((w, i) => ({ pts: flip(ws[i]) ? [...w.pts].reverse() as Vec3[] : w.pts as Vec3[], on: flip(ws[i]) ? [...w.on].reverse() : w.on, drawn_mm: w.drawn_mm, bend_mm: wireSize(awg[i]).bend })), awg };
     } else {
       const od = bundleOd(ws);
       if (R && !offBoard) routeProblems.push(`${key}: ${!R.placed.has(ia) ? ia : ib} has no place, its cable is not laid`);
@@ -578,7 +611,7 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
       // waypoints: start, then per crossed joint its two anchors, end
       const bayA = H.bayOf.get(ia), bayB = H.bayOf.get(ib);
       const leaves = (bay?: string, other?: string) => !!bay && bay !== other;
-      const pick = (bay: string, to: Vec3) => H.exits.find((e) => e.id === H.exitOf.get(key) && e.bay === bay) ?? nearestExit(H, bay, to);
+      const pick = (bay: string, to: Vec3) => H.exits.find((e) => H.exitsOf(key).includes(e.id) && e.bay === bay) ?? nearestExit(H, bay, to);
       const exA = leaves(bayA, bayB) ? pick(bayA!, lb.p) : null, exB = leaves(bayB, bayA) ? pick(bayB!, la.p) : null;
       if (exA || exB) exit = [exA?.id, exB?.id].filter(Boolean).join(" + ");
       let cur = la.p, curGroup = groupOf.get(la.link)!, routed = false;
