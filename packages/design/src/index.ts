@@ -43,7 +43,7 @@ export { designBaymax } from "./families/mobile.ts";
 export type { MobileRequest, MobileSensor } from "./families/mobile.ts";
 export { interference, type Overlap } from "./interference.ts";
 export * from "./clearance.ts";
-export { Harness, finishWiring, gaugeFor, fuseFor, connectorFamily, jointSweep, type WiringRecord, type CableRec, type RailRec } from "./wiring.ts";
+export { Harness, finishWiring, setDefaultRouter, gaugeFor, fuseFor, connectorFamily, jointSweep, type WiringRecord, type CableRec, type RailRec } from "./wiring.ts";
 export { wiringMarkdown, wiringSvg, circuitFiles } from "./wiring-render.ts";
 export * from "./circuit/index.ts";
 export * from "./wiring3d/index.ts";

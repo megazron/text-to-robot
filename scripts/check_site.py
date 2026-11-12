@@ -258,11 +258,23 @@ def run(browser, case):
             row["tiers"] = tiers; row["notes"] = page.evaluate('document.querySelector("#tierNotes").textContent')[:300]
             if not tiers: row["problems"].append("Arduino mode returned no tiers: " + page.evaluate('document.querySelector("#tiers").textContent')[:200])
         page.wait_for_function("window.__ttr.preview.ready || window.__ttr.preview.errors.length>0", timeout=ms)
-        row["preview_s"] = round(time.time() - t, 1)
+        row["preview_s"] = round(time.time() - t, 1)   # the robot on screen (its wires as straight runs until the 3D harness is laid)
+        # then the 3D harness: the engine designs the robot again with every wire laid through free space and the page swaps it in
+        page.wait_for_function("window.__ttr.routing !== 'running'", timeout=ms)
+        page.wait_for_function("window.__ttr.preview.ready || window.__ttr.preview.errors.length>0", timeout=ms)
+        row["routed_s"] = round(time.time() - t, 1)
         preview = page.evaluate("(()=>{const p=window.__ttr.preview;return {ready:p.ready,expected:p.expected,loaded:p.loaded,errors:p.errors,triangles:p.parts.reduce((s,x)=>s+x.triangles,0)}})()")
         row["preview"] = preview
         if not preview["ready"]: row["problems"].append(f"preview incomplete: {preview['errors'][:3]}")
         robot = page.evaluate("window.__ttr.robot"); row["robot_name"] = robot["robot_name"]; row["links"] = len(robot["links"]); row["joints"] = len(robot["joints"])
+        # wires the router could only lay through a part are said plainly: an amber row in the engineering checks and an amber
+        # pill, exactly when the wiring record has them
+        through = (((robot.get("metadata") or {}).get("design") or {}).get("wiring") or {}).get("route", {}).get("through", 0)
+        shown = page.evaluate('({row: !!document.querySelector("#checksList .route-through"), pill: document.querySelector("#checksPill").className, text: document.querySelector("#checksPill").textContent})')
+        row["route_through"] = {"record": through, "shown": shown}
+        if through and not (shown["row"] and "amber" in shown["pill"].split() + (["amber"] if "failing" in shown["text"] else []) and "through parts" in shown["text"]):
+            row["problems"].append(f"{through} wire runs through parts are not shown in the checks: {shown}")
+        if not through and shown["row"]: row["problems"].append("the checks show wires through parts that the record does not have")
         page.screenshot(path=str(args.out / f"{case['id']}.png"), timeout=240000)   # software GL takes a while over the biggest models
         if case["mode"] == "prompt":
             folder = root / "examples" / case["example"]

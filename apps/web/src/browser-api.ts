@@ -81,11 +81,33 @@ function readingSettings() {
   },
 };
 
+// The 3D harness of a robot already on screen (generate with route: true) is laid in a worker of its own, so the next
+// robot never waits behind it: one pass at a time, a newer one ends the older (terminate stops it mid-route), and the
+// worker ends when it answers, its kernels' memory with it. The routed robot is handed to the engine above, which serves
+// its meshes and keeps the saved robots; this worker's own store is thrown away.
+let router: Worker | null = null, routing: { id: number; done: (r: Response) => void } | null = null;
+const jsonResponse = (status: number, body: unknown) => new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json" } });
+function routeRequest(msg: { id: number; method: string; path: string; body: string }, done: (r: Response) => void) {
+  if (routing) { routing.done(jsonResponse(410, { error: "superseded" })); routing = null; }
+  router?.terminate();
+  const w = new Worker(scriptUrl(new URL("./browser-engine.js", document.baseURI)), { type: "module" }); router = w; routing = { id: msg.id, done };
+  const finish = (r: Response) => { if (routing?.id !== msg.id) return; routing = null; router = null; w.terminate(); done(r); };
+  w.onmessage = async ({ data }) => {
+    if (data.ready) { w.postMessage({ robots: "[]" }); w.postMessage({ reading: readingSettings() }); w.postMessage(msg); return; }
+    if (data.id !== msg.id) return;   // its store, forge and reading messages are not this page's
+    const r = new Response(data.buffer, { status: data.status, headers: { "Content-Type": data.type } });
+    if (r.ok) { try { const j = await r.clone().json(); if (j.id && j.robot) send({ adopt: { id: j.id, robot: j.robot } }); } catch { /* answered as it is */ } }
+    finish(r);
+  };
+  w.onerror = (e) => finish(jsonResponse(500, { error: `The wiring worker stopped: ${e.message || "out of memory?"}` }));
+}
+
 globalThis.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
   const url = new URL(input instanceof Request ? input.url : String(input), location.href);
   if (url.origin !== location.origin || !url.pathname.startsWith("/api/")) return realFetch(input, init);
   const method = (init?.method ?? (input instanceof Request ? input.method : "GET")).toUpperCase();
   const id = nextId++, body = typeof init?.body === "string" ? init.body : "", msg = { id, method, path: url.pathname, body };
+  if (method === "POST" && url.pathname === "/api/robots/generate" && /"route":true/.test(body)) return new Promise<Response>((resolve) => routeRequest(msg, resolve));
   return new Promise<Response>((resolve) => { waiting.set(id, { msg, done: resolve, retried: false }); send(msg); });
 };
 

@@ -54,6 +54,8 @@ export interface WiringRecord {
    * first bend). Absent when the wires follow declared channels. The exact check is checkHarness.
    */
   route?: { through: number; through_mm: number; first: string[]; notes: string[] };
+  /** how the cables were laid: through free space ("3d"), in a design's fitted channels, or as straight runs ("legacy") */
+  laid?: "3d" | "channels" | "legacy";
 }
 
 // ------------------------------------------------------------------------------------------- helpers
@@ -389,6 +391,13 @@ export interface WireOptions {
 }
 
 /** Everything after the declarations: emits rail wires, sizes, routes, checks; stores design.wiring. */
+/**
+ * How finishWiring lays cables when a design does not say: "3d" (the router, every wire through free space) or "legacy"
+ * (straight runs between waypoints, in a fraction of the time). The website designs a robot first with "legacy" to show it
+ * at once, then again with "3d" for its harness.
+ */
+let defaultRouter: "3d" | "legacy" = "3d";
+export function setDefaultRouter(mode: "3d" | "legacy") { defaultRouter = mode; }
 export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
   const A = H.A, spec = A.spec, f = fk(spec);
   const termMm = opts.terminationMm ?? 30, serviceMm = opts.serviceMm ?? 40, tort = opts.tortuosity ?? 1.1;
@@ -487,7 +496,7 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
   const unresolved: string[] = [];
   // ---- the router: every solid of the robot at home as a grid, the parts and their pins in it (the Mark 43's cables lie
   // in the channels its armour was fitted with instead: see the legacy branch below)
-  const routed = !H.channels.size && opts.router !== "legacy", tRoute = Date.now();
+  const routed = !H.channels.size && (opts.router ?? (defaultRouter === "legacy" ? "legacy" : undefined)) !== "legacy", tRoute = Date.now();
   const R = routed ? new Router(spec, f, { bays: baysOfDesign(A).map((b) => ({ name: b.name, link: b.tub, T: b.T as number[], min: b.min, max: b.max })) }) : null;
   const routeProblems: string[] = [];
   const pinsOf = (inst: string) => { const out: [string, string][] = []; for (const w of H.wires) for (const e of [w.a, w.b]) if (e.inst === inst && !out.some((x) => x[0] === e.port && x[1] === e.pin)) out.push([e.port, e.pin]); return out; };
@@ -711,6 +720,7 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
   // the route as the router lays it: the runs it could only lay through a solid part, and what it could not do as it
   // wanted. (The exact harness check on the laid wires, examples/harness_check.json, is the judge; the tests hold the
   // examples to it. Running it here would rebuild every printed part's solid once more for each design.)
+  rec.laid = R ? "3d" : H.channels.size ? "channels" : "legacy";
   if (R) {
     const through = routeProblems.map((p) => /^(.*?): wire (\d+) passes (\d+) mm through a solid \(from ([-\d.,]+), (.*)\)$/.exec(p)).filter((m): m is RegExpExecArray => !!m);
     const notes = routeProblems.filter((p) => !/passes \d+ mm through a solid/.test(p));

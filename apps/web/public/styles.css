@@ -58,6 +58,7 @@ body.busy #charge{opacity:1}
 .pill:empty{display:none}
 .pill.on,.pill.green{background:var(--green-soft);color:var(--green);border-color:rgba(57,255,136,.32)}
 .pill.red{background:rgba(255,133,145,.14);color:var(--red);border-color:rgba(255,133,145,.35)}
+.pill.amber{background:rgba(255,201,94,.14);color:var(--amber);border-color:rgba(255,201,94,.35)}
 .pill.soft{background:transparent}
 #robotName{background:rgba(0,0,0,.55);color:var(--ink);display:block;min-height:0;line-height:24px;flex:0 1 auto;min-width:0}
 
@@ -232,6 +233,9 @@ body.busy #familyDial .dial-face{animation:thrum 1s ease-in-out infinite alterna
 .check b{color:var(--ink);font-weight:600}
 .check .ok,.checks .ok{color:var(--green)}
 .check .no,.checks .bad{color:var(--red)}
+.check .warn{color:var(--amber)}
+.routing-note{margin-top:8px;color:var(--amber);font-size:13px}
+.check.route-through{color:var(--amber)}
 
 /* ---------- model ---------- */
 .tree{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;overflow-x:auto}

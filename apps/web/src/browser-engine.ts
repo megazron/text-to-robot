@@ -15,6 +15,7 @@ import { exportTraining } from "@ttr/training-export";
 import { buildPart, toStlBinary, meshTopology, setArmourSource, setArmourCache, setForgeListener, setPrebuilt, setForgeGate, cancelForge, ForgeNeedsConsent, type ArmourManifest } from "@ttr/mesh";
 import { providerStatus } from "@ttr/llm-providers";
 import { engineApi } from "./engine/api.ts";
+import { setDefaultRouter } from "@ttr/design";
 import { setPool, getPool, workerPool } from "@ttr/mesh/forge/pool";
 // @ts-expect-error: plain JavaScript module without types
 import { safeJsonParse, MAX_PROMPT_CHARS } from "../public/safe.js";
@@ -63,9 +64,17 @@ async function handle(method: string, p: string, body: any): Promise<Response> {
   }
   if (method === "POST" && p === "/api/robots/generate") {
     const provider = await modelProvider();
-    const result = await generateRobot(String(body.prompt ?? ""), provider ? { provider } : {});
+    // the robot first, its wires laid as straight runs; the page asks again with route: true for the 3D harness (every
+    // wire through free space), which takes much longer on the big robots, and swaps it in when it comes
+    // (a model of the visitor's own may answer twice differently: with one, the robot is designed once, harness and all)
+    const quick = body.route !== true && !provider;
+    setDefaultRouter(quick ? "legacy" : "3d");
+    let result: Awaited<ReturnType<typeof generateRobot>>;
+    try { result = await generateRobot(String(body.prompt ?? ""), provider ? { provider } : {}); } finally { setDefaultRouter("3d"); }
     const id = crypto.randomUUID(); remember(id, result.robot);
-    return json(200, { id, ...result });
+    // (only a harness laid as straight runs has a 3D one to come: one in fitted channels is final)
+    const wired = (result.robot.metadata as { design?: { wiring?: { laid?: string } } } | undefined)?.design?.wiring?.laid === "legacy";
+    return json(200, { id, ...result, ...(quick && wired ? { routing: "pending" } : {}) });
   }
   if (method === "POST" && p === "/api/arduino") return json(200, arduinoOptions(String(body.prompt ?? "")));
   if (method === "POST" && p === "/api/robots/modify") {
@@ -185,6 +194,8 @@ self.onmessage = async ({ data }: MessageEvent) => {
   // the visitor stopped a forge: it throws at its next step, and the helpers' jobs end now
   if (data.cancelForge) { cancelForge(); getPool()?.abort?.(); return; }
   if (data.robots) { for (const [k, v] of safeJsonParse(data.robots, 256 * 1024 * 1024)) store.set(k, v); return; }
+  // a robot whose harness the wiring worker laid (browser-api.ts): kept here, where its meshes are served from
+  if (data.adopt) { remember(String(data.adopt.id), data.adopt.robot as RobotSpecification); return; }
   if (data.reading) { await applyReading(data.reading); return; }
   const r = await answer(data.method, data.path, data.body), buffer = await r.arrayBuffer();
   post({ id: data.id, status: r.status, type: r.headers.get("Content-Type") ?? "application/json", buffer, wasm_mb: wasmPeakMb() }, [buffer]);

@@ -582,8 +582,14 @@ function reveal(strong) {
   const r = viewport.getBoundingClientRect();
   transformFlash(renderer.domElement, { x: r.left + r.width / 2, y: r.top + r.height / 2 }, strong);
 }
+/** Wire runs the router could only lay through a solid part (the wiring record's route), as a visitor reads it; null if none. */
+function routeThrough(d) {
+  const r = d?.wiring?.route; if (!r || !r.through) return null;
+  return { text: `${r.through} wire run${r.through === 1 ? "" : "s"} pass${r.through === 1 ? "es" : ""} through parts`, detail: `(${r.through_mm} mm in all${r.first?.length ? `; first: ${r.first.slice(0, 2).join("; ")}` : ""}). Lay those wires round the parts by hand.` };
+}
 function checksToText(res) {
   const out = [...(res.designedBy ? ["◆ Designed by: " + res.designedBy] : []), ...(res.summary ? ["→ Interpreted as: " + res.summary] : []), ...(res.validation?.checks ?? []), ...(res.urdfValidation?.checks ?? [])];
+  const through = routeThrough(res.robot?.metadata?.design); if (through) out.push(`⚠ Wiring: ${through.text} ${through.detail}`);
   for (const w of res.warnings ?? []) out.push("⚠ " + w);
   for (const r of res.repairs ?? []) out.push("↻ " + r);
   return out;
@@ -656,10 +662,27 @@ async function doGenerate(prompt) {
   try {
     if (looksLikeParts(prompt)) await doPartsPrompt(prompt);
     else if (state.arduino) await doArduino(prompt);
-    else { const res = await api("/api/robots/generate", { prompt }); state.versions = []; state.recipe = { p: prompt }; applyResult(res, prompt.slice(0, 40)); }
+    else { const res = await api("/api/robots/generate", { prompt }); state.versions = []; state.recipe = { p: prompt }; applyResult(res, prompt.slice(0, 40)); if (res.routing === "pending") routeWires(prompt, res); }
   }
   catch (e) { revealNext = null; status("✗ " + e.message, "err"); }
   finally { setBusy($("#genbtn"), false, "Generate"); document.body.classList.remove("busy"); }
+}
+
+// ---------------- the 3D harness, laid after the robot is on screen ----------------
+// The robot comes back first with its wires as straight runs; the engine then designs it again with every wire laid
+// through free space, which takes a while on the big robots. That version replaces the first in place, unless the visitor
+// has moved on to another robot or changed this one.
+let routing = "idle", routeSeq = 0;
+async function routeWires(prompt, first) {
+  const mine = ++routeSeq; routing = "running"; const shown = state.robot, label = state.versions.at(-1)?.label ?? prompt.slice(0, 40);
+  $("#routingNote").hidden = false;
+  try {
+    const res = await api("/api/robots/generate", { prompt, route: true });
+    if (state.robot !== shown) return;   // a newer robot or an edit: the routed one is not this anymore
+    state.versions.pop(); revealNext = null;
+    applyResult(res, label);
+  } catch (e) { if (e.message !== "superseded" && mine === routeSeq) status([...checksToText(first), "⚠ Wiring: the 3D harness could not be laid: " + e.message]); }
+  finally { if (mine === routeSeq) { routing = "done"; $("#routingNote").hidden = true; } }   // (an older robot's pass says nothing about this one)
 }
 
 // ---------------- Arduino mode: price tiers ----------------
@@ -737,10 +760,12 @@ function renderCards() {
     const m = Math.min(j.margin, 6), bar = el("div", "bar" + (j.margin < 1 ? " bad" : "")), i = el("i");
     i.style.height = `${Math.max(6, (m / maxM) * 100)}%`; bar.title = `${j.joint}: ${j.margin}x margin (${j.actuator})`; bar.onclick = () => toast(bar.title); bar.append(i); chart.append(bar);
   }
-  const checks = d?.checks ?? [], bad = checks.filter((c) => !c.pass);
-  $("#checksPill").textContent = checks.length ? (bad.length ? `${bad.length} failing` : `all ${checks.length} pass`) : "";
-  $("#checksPill").className = "pill " + (checks.length ? (bad.length ? "red" : "green") : "");
+  const checks = d?.checks ?? [], bad = checks.filter((c) => !c.pass), through = routeThrough(d);
+  $("#checksPill").textContent = checks.length ? (bad.length ? `${bad.length} failing` : `all ${checks.length} pass`) + (through ? ` · ${through.text}` : "") : "";
+  $("#checksPill").className = "pill " + (checks.length ? (bad.length ? "red" : through ? "amber" : "green") : "");
   const list = $("#checksList"); list.replaceChildren();
+  // wires the router could only lay through a part: said first, in amber (the wiring record carries the same)
+  if (through) { const row = el("div", "check route-through"); row.append(el("span", "warn", "⚠")); const t = el("div"); t.append(el("b", null, through.text + " "), document.createTextNode(through.detail)); row.append(t); list.append(row); }
   for (const c of [...bad, ...checks.filter((x) => x.pass)].slice(0, 60)) {
     const row = el("div", "check"); row.append(el("span", c.pass ? "ok" : "no", c.pass ? "✓" : "✗"));
     const t = el("div"); t.append(el("b", null, c.name + " "), document.createTextNode(c.detail)); row.append(t); list.append(row);
@@ -1166,7 +1191,7 @@ initExamples(); initTemplates(); initMode();
   }
   doGenerate("Create a 6 DOF robotic arm with a parallel gripper");
 })();
-window.__ttr = { get motion() { return window.__ttrMotion; }, robotGroup, renderer, get preview() { return { ...preview, parts: [...state.meshes].filter(([name]) => state.robot.links.find(l => l.name === name)?.geometry.type === 'mesh').map(([name, group]) => ({ name, loaded: !!group.children[0].userData.meshLoaded, triangles: group.children[0].geometry.getAttribute('position').count / 3 })) }; }, camera, controls, frameRobot, get robot(){return state.robot},
+window.__ttr = { get routing() { return routing; }, get motion() { return window.__ttrMotion; }, robotGroup, renderer, get preview() { return { ...preview, parts: [...state.meshes].filter(([name]) => state.robot.links.find(l => l.name === name)?.geometry.type === 'mesh').map(([name, group]) => ({ name, loaded: !!group.children[0].userData.meshLoaded, triangles: group.children[0].geometry.getAttribute('position').count / 3 })) }; }, camera, controls, frameRobot, get robot(){return state.robot},
   // the Run tab's board as it runs, for the browser tests (scripts/check_sim.py)
   get sim() { return sim ? { running: sim.running, pose: sim.pose, shipped: sim.shipped, ms: sim.board?.ms ?? 0, motors: sim.board?.motors() ?? [], servos: sim.board?.servos() ?? [], sensor: sim.board ? { ...sim.board.sensor } : null, joints: { ...state.jointValues } } : null; } };
 
