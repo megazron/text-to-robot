@@ -9,7 +9,7 @@ import { validateUrdf } from "@ttr/urdf-validator";
 import { CATALOG, part, rating, electrical, hornRadiusMm } from "@ttr/parts";
 import { buildPart, toStlBinary, meshGeometry } from "@ttr/mesh";
 import { buildBom } from "@ttr/components";
-import { schematic, breadboard, electricalReport, layoutProblems, wiringSvg, wiringMarkdown, wiring3d, checkHarness, electronicsGlb, firmwareFor, type WiringRecord } from "@ttr/design";
+import { schematic, breadboard, electricalReport, layoutProblems, wiringSvg, wiringMarkdown, wiring3d, checkHarness, electronicsGlb, firmwareFor, arduinoFirmware, type FirmwareFile, type ArduinoFirmware, type WiringRecord } from "@ttr/design";
 import { componentGeometry, PRINT_DENSITY, MATERIALS, withSolids, interferences, worstTorques, comWorld, totalMass, evaluate, axisInertias, descendants, type DesignRecord } from "@ttr/design";
 import { partFiles } from "@ttr/kernel/ready";
 import { applyEdits, emptyRobot, kindOf, rootLink, worldFrames, mul, inv, poseMat, rotate, unit, partsBaseline, type EditOp, type PartProvider, type PrintedParams, type StudioMeta } from "./edit.ts";
@@ -18,7 +18,7 @@ import { clearanceAtHome, autoWireCached } from "./incremental.ts";
 import { stability, type Stability } from "./stability.ts";
 import { motionApi } from "./motion.ts";
 
-export const ENGINE_API_VERSION = "1.1.0";
+export const ENGINE_API_VERSION = "1.2.0";
 const MATERIAL: Record<string, string> = { actuator: "actuator", wheel: "rubber", battery: "battery", compute: "electronics", sensor: "electronics", motor_driver: "electronics", misc: "electronics", bearing: "metal", horn: "metal" };
 const BED_MM: Vec3 = [250, 210, 220];
 
@@ -276,6 +276,22 @@ export function breadboardOf(robot: RobotSpecification) {
   return { svg: r.svg, layout: layoutProblems(r.doc), unrouted: r.unrouted };
 }
 
+/** A robot's program: the sketch or script of a robot built from a parts list, else the sketch written from the wiring of an Arduino robot. */
+export type ProgramFile = FirmwareFile & Partial<Omit<ArduinoFirmware, "libraries">>;
+/**
+ * The program of a robot. A robot built from a parts list carries its own pin plan (an Arduino sketch for AVR and ESP32
+ * boards, a Python script for a Pi). Any other robot with an Arduino-class board (Uno, Nano) gets a sketch whose every pin
+ * is a wire of its wiring record (the designer's, or the automatic wiring of a robot built by hand), with what it drives.
+ * null: no such board, nothing wired, or a family I ship no sketch for (the wearable Mark 43).
+ */
+export function firmwareOf(robot: RobotSpecification): ProgramFile | null {
+  const f = firmwareFor(robot); if (f) return f;
+  let w: WiringRecord;
+  try { w = wiringOf(robot); } catch { return null; }
+  const a = arduinoFirmware(robot, w); if (!a) return null;
+  return { name: a.sketch.split("/").pop()!, language: "arduino", code: a.files[a.sketch], fqbn: a.board.fqbn, ...a };
+}
+
 /**
  * The electronics and harness in 3D: each part's model (per catalog key: meshes per material in mm, silkscreen labels,
  * pins), where each part sits (its link and its frame in that link), every wire's centreline on the links it rides (so
@@ -321,7 +337,7 @@ export async function engineApi(method: string, path: string, body: any): Promis
     if (body.inventory === undefined || body.inventory === null) return json(400, { error: "provide an inventory: a parts list as text, [{ key, qty }] or { key: qty }" });
     return json(200, fromParts(body.inventory, (body.options ?? {}) as FromPartsOptions));
   }
-  if (method === "POST" && p === "firmware") { const f = firmwareFor(body.robot); return f ? json(200, f) : json(404, { error: "this robot has no generated program (only robots built from a parts list carry their pin plan)" }); }
+  if (method === "POST" && p === "firmware") { const f = firmwareOf(body.robot); return f ? json(200, f) : json(404, { error: "this robot has no generated program: it has no Arduino-class board or Raspberry Pi wired, or it is the Mark 43, whose door sequence I do not script" }); }
   const pm = /^part\/([A-Za-z0-9_.-]+)\.stl$/.exec(p);
   if (method === "GET" && pm && CATALOG[pm[1]]) return new Response(toStlBinary(buildPart(componentGeometry(pm[1]) as never), 1) as BodyInit, { headers: { "Content-Type": "model/stl" } });
   return json(404, { error: "unknown engine endpoint" });

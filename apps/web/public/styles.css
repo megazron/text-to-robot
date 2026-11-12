@@ -281,6 +281,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border:0;border-radiu
 /* ---------- files, share, gallery ---------- */
 .list{border-radius:var(--r-lg);background:var(--tile);overflow:hidden}
 .list button{position:relative;display:flex;align-items:center;gap:14px;width:100%;min-height:60px;padding:8px 18px;text-align:left;transition:background-color .15s}
+.list button[hidden]{display:none}
 .list button:hover{background:var(--tile)}
 .list button:active{background:var(--tile-2)}
 .list button+button::before{content:"";position:absolute;left:56px;right:0;top:0;height:1px;background:var(--line)}

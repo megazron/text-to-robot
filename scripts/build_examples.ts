@@ -11,12 +11,12 @@ import { exportRos2Package } from "@ttr/ros2-export";
 import { exportTraining } from "@ttr/training-export";
 import { generateCadFiles } from "@ttr/cad";
 import { bomToMarkdown, type BillOfMaterials } from "@ttr/components";
-import { circuitFiles } from "@ttr/design";
+import { circuitFiles, arduinoFirmware } from "@ttr/design";
 import type { RobotSpecification } from "@ttr/robot-schema";
 
 /** Files an example folder holds; anything else left from older generators is removed. */
 const KEEP = new Set(["prompt.txt", "robot.json", "robot.urdf", "meshes", "BOM.md", "bom.json", "robot.ros2.zip", "robot.cad.zip", "robot.training.zip",
-  "README.md", "simulation_report.json", "simulation.gif", "studio.gif", "test_report.json", "WIRING.md", "wiring.svg", "schematic.svg", "schematic.pdf", "breadboard.svg", "print_report.json"]);
+  "README.md", "simulation_report.json", "simulation.gif", "studio.gif", "test_report.json", "WIRING.md", "wiring.svg", "schematic.svg", "schematic.pdf", "breadboard.svg", "print_report.json", "firmware"]);
 
 function zipDir(base: string, out: string) {
   // deterministic archive: sorted entries, fixed timestamps
@@ -32,6 +32,7 @@ function writeZip(files: Record<string, string | Uint8Array>, out: string) {
 
 const WIRING_ROW = "| `WIRING.md`, `wiring.svg` | power budget per rail, battery runtime, regulator heat, logic levels, pin-to-pin table, cut list, slack at each joint, cable diagram |";
 const CIRCUIT_ROW = "| `schematic.svg`, `schematic.pdf`, `breadboard.svg` | schematic with reference designators, power symbols and net labels; picture view with every wire in its colour |";
+const FIRMWARE_ROW = "| `firmware/` | Arduino sketch written from the wiring record (every pin is a wire of `WIRING.md`), with the flashing steps and pin map in `firmware/README.md` |";
 const fmt = (v: unknown) => (typeof v === "number" ? String(+v.toFixed(3)) : String(v));
 function readme(name: string, prompt: string, spec: RobotSpecification, bom: BillOfMaterials, summary: string | undefined, warnings: string[], previous: string): string {
   const d = (spec.metadata as { design?: any }).design;
@@ -57,6 +58,7 @@ function readme(name: string, prompt: string, spec: RobotSpecification, bom: Bil
     "| `robot.urdf`, `meshes/` | URDF with real component and printed-part meshes, datasheet effort/velocity limits |",
     "| `BOM.md`, `bom.json` | every part to buy, with supplier links and prices |",
     ...(d?.wiring ? [WIRING_ROW, CIRCUIT_ROW] : []),
+    ...(arduinoFirmware(spec) ? [FIRMWARE_ROW] : []),
     "| `robot.cad.zip` | build package: printable STLs, print list, bought-part models, assembly order |",
     "| `robot.ros2.zip` | ROS 2 description package (ros2_control, MoveIt config, Gazebo launch) |",
     "| `robot.training.zip` | MuJoCo / RL training scaffold |",
@@ -89,6 +91,9 @@ for (const name of readdirSync("examples").filter((n) => /^\d\d_/.test(n)).sort(
   writeFileSync(join(dir, "bom.json"), JSON.stringify(res.bom, null, 2) + "\n");
   const wiring = (spec.metadata as { design?: any }).design?.wiring;
   if (wiring) for (const [f, c] of Object.entries(circuitFiles(wiring, spec.robot_name))) writeFileSync(join(dir, f), c);
+  // the Arduino sketch, in a folder of its own name as the IDE wants (scripts/export_firmware.ts writes the same)
+  rmSync(join(dir, "firmware"), { recursive: true, force: true });
+  for (const [f, c] of Object.entries(arduinoFirmware(spec)?.files ?? {})) { mkdirSync(dirname(join(dir, "firmware", f)), { recursive: true }); writeFileSync(join(dir, "firmware", f), c); }
   writeZip(exportRos2Package(spec, { ros2_control: true }), join(dir, "robot.ros2.zip"));
   writeZip(generateCadFiles(spec), join(dir, "robot.cad.zip"));
   writeZip(exportTraining(spec), join(dir, "robot.training.zip"));

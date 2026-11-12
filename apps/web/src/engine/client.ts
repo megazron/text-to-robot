@@ -16,7 +16,7 @@ import type { Mount, WorldMount } from "./snap.ts";
 // @ts-expect-error: plain JavaScript module without types
 import { makeZip } from "../../public/robotkit.js";
 
-export const API_VERSION = "1.1.0";
+export const API_VERSION = "1.2.0";
 export type { RobotSpecification, EditOp, PrintedParams, Mount, WorldMount };
 export { applyEdits, toScene, fromScene, worldFrames, rootLink, subtree, parentJoint, kindOf, poseMat, matPose, mul, inv, apply, emptyRobot, freeName, type Scene, type SceneNode } from "./edit.ts";
 export { snapPart, mate, mountFrame, compatible, patternsMatch, MATES, type Snap } from "./snap.ts";
@@ -35,6 +35,33 @@ export type Files = Record<string, string | Uint8Array>;
 export interface SchematicNode { name: string; nets: string[]; kind: string; voltage_v?: number; drawn: string; pins: { id: string; ref: string; num: string; members: string[] }[]; }
 export interface Schematic { svg: string; pdf: Uint8Array; size: string; netlist: { robot: string; parts: { ref: string; inst: string; key: string; value: string }[]; nodes: SchematicNode[]; empty_nets: string[]; splices: string[] }; layout: string[]; electrical: { runtime: unknown[]; supplies: unknown[]; regulators: unknown[]; logic: { net: string; from: string; to: string; voh: number | null; vih: number | null; max_in: number | null; verdict: string; advice: string }[]; unchecked: string[]; sources: unknown[] }; }
 export interface Breadboard { svg: string; layout: string[]; unrouted: string[]; }
+/** A board pin the sketch uses, with the wires of the wiring record that end on it. */
+export interface FirmwarePin { pin: string; number: number; mode: "pwm" | "output" | "input" | "i2c" | "servo" | "unused"; drives: string; wires: { id: string; net: string; from: string; to: string }[]; }
+/** A servo in the sketch: its output (PCA9685 board and channel, or a board pin), catalog pulse range, the joint it turns and that joint's range and home in degrees. */
+export interface FirmwareServo { name: string; key: string; via: { board: number; channel: number } | { pin: number }; pulse_us: [number, number]; range_deg: number; joint: string | null; lower_deg: number; upper_deg: number; home_deg: number; max_dps: number | null; cut_from?: [number, number]; }
+export interface FirmwareMotor { name: string; key: string; driver: string; driver_key: string; channel: string; pwm: number; pwm_is_pwm: boolean; in1: number; in2: number; side: "left" | "right" | null; forward: 1 | -1; }
+/** A robot's program; the optional fields come with a sketch written from the wiring record. */
+export type Program = { name: string; language: "arduino" | "python"; code: string; fqbn: string; libraries: string[] } & Partial<Omit<Firmware, "libraries">>;
+/** What a sketch written from the wiring record drives. */
+export interface Firmware {
+  /** `<name>/<name>.ino` (the sketch, in a folder of its own name as the Arduino IDE wants) and `README.md` (flashing steps, pin map) */
+  files: Record<string, string>;
+  /** the sketch's path in `files` */
+  sketch: string;
+  board: { instance: string; key: string; name: string; fqbn: string; mcu: string; pwm_pins: number[] };
+  pins: FirmwarePin[];
+  /** Library Manager names of what the sketch includes */
+  libraries: string[];
+  /** what is wired but not driven, and what to check on the bench */
+  notes: string[];
+  behaviour: string; serial_baud: number;
+  motors: FirmwareMotor[]; servos: FirmwareServo[]; servo_drivers: { name: string; key: string; address: number }[];
+  range_sensor: { name: string; key: string; trig: number; echo: number; range_cm: [number, number] } | null;
+  /** highest motor PWM duty the sketch writes, 0..255 */
+  pwm_max: number;
+  /** the pose sequence, joint angles in degrees in the order of `servos` */
+  poses: { name: string; angles_deg: number[] }[];
+}
 type V3 = [number, number, number];
 /** A part's 3D model in its own frame (mm): meshes per material, silkscreen labels, and each pin's place and lead direction (`port.pin`). */
 export interface ElectronicsModel { meshes: { mat: string; v: number[]; f: number[] }[]; labels: { text: string; at: V3; w: number; h: number; normal: V3; up: V3; color: string }[]; pins: Record<string, { at: V3; out: V3; kind: string }>; source: string; detailed: boolean; /** stands in for the part's catalog body (false: a motor keeps its datasheet CAD) */ replaces: boolean; }
@@ -120,8 +147,14 @@ export interface Engine {
    * top), with the designs asked for (`design`: "top" by default, "all", "none" or an option id). (1.1)
    */
   fromParts(inventory: string | { key: string; qty?: number }[] | Record<string, number> | Inventory, options?: { design?: string; limit?: number; budget?: number; prompt?: string }): Promise<FromPartsResult>;
-  /** The Arduino sketch (or Pi script) of a robot built from a parts list, with its pin assignments. (1.1) */
-  firmware(robot: RobotSpecification): Promise<{ name: string; language: "arduino" | "python"; code: string; fqbn: string; libraries: string[] }>;
+  /**
+   * The program of a robot (1.1): the Arduino sketch (or Pi script) of a robot built from a parts list, with its pin
+   * assignments; for any other robot with an Arduino-class board (Uno, Nano), a sketch whose every pin is a wire of its
+   * wiring record (motor driver, servo and range sensor code, a simple behaviour, serial reports), with the sketch folder
+   * and flashing steps in `files` and what it drives in the other fields. Rejects when the robot has none (no such board,
+   * or the wearable Mark 43, whose door sequence is not written).
+   */
+  firmware(robot: RobotSpecification): Promise<Program>;
   /** The motions a robot has: the joint tour, its purpose demo (picked from what its joints are for), human motion for a wearable. */
   motions(robot: RobotSpecification): Promise<MotionInfo[]>;
   /** A motion sampled at `fps` (default 30), checked against the joint limits, speeds and torques and, unless `collision: false`, for self-collision on every frame. `files: true` adds its CSV, ROS 2 JointTrajectory YAML and BVH. */

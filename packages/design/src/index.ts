@@ -47,6 +47,7 @@ export { Harness, finishWiring, gaugeFor, fuseFor, connectorFamily, jointSweep, 
 export { wiringMarkdown, wiringSvg, circuitFiles } from "./wiring-render.ts";
 export * from "./circuit/index.ts";
 export * from "./wiring3d/index.ts";
+export * from "./arduino/index.ts";
 export { bay, enclosureChecks, needsEnclosure, registerBay, exposed, type BayRecord } from "./enclosure.ts";
 export { designQuadruped, type LeggedRequest, type SensorKind } from "./families/legged.ts";
 export { designHexapod } from "./families/hexapod.ts";

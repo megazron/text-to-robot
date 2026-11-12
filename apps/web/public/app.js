@@ -701,7 +701,8 @@ function renderCards() {
   const printedNames = new Set((d?.printed ?? []).map((p) => p.name));
   const step = !!r?.links.some((l) => l.geometry.type === "mesh" && l.geometry.part === "cad" && printedNames.has(l.name));
   $("[data-dl=cad] small").textContent = !r ? "STEP + STL" : !d ? "OpenSCAD + STL" : step ? "STEP + STL" : "STL";
-  $("[data-dl=sketch]").hidden = !d?.firmware;
+  // a program for a robot built from a parts list, or for any robot wired to an Arduino-class board (the suit has none: its door sequence is not written)
+  $("[data-dl=sketch]").hidden = !d?.firmware && (!d?.wiring?.instances?.some((i) => /^arduino_/.test(i.key)) || d.family === "mark43_wearable");
   $("[data-dl=sketch] b").textContent = d?.firmware?.language === "python" ? "Pi script" : "Arduino sketch";
   $("[data-dl=shopping]").hidden = !r?.metadata?.inventory;
   document.title = r ? `${r.robot_name.replace(/_/g, " ")} · Text to Robot` : "Text to Robot";
@@ -842,7 +843,8 @@ async function handleDownload(kind) {
   if (kind === "schematic") { const r = await circuits("schematic"); return download(`${name}_schematic.zip`, await makeZipDeflated({ [`${name}_schematic.pdf`]: Uint8Array.from(atob(r.pdf.b64), (c) => c.charCodeAt(0)), [`${name}_schematic.svg`]: r.svg })); }
   if (kind === "wiring3d") { const res = await fetch(API + "/api/engine/electronics-glb", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ robot: state.robot }) }); if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? `HTTP ${res.status}`); return download(`${name}_electronics.glb`, new Blob([await res.arrayBuffer()], { type: "model/gltf-binary" })); }
   if (kind === "breadboard") { const r = await circuits("breadboard"); return download(`${name}_breadboard.svg`, r.svg, "image/svg+xml"); }
-  if (kind === "sketch") { const f = await api("/api/engine/firmware", { robot: state.robot }); return download(f.name, f.code, "text/plain"); }
+  // a sketch written from the wiring comes with its flashing steps and pin map: the folder as the IDE wants it, zipped
+  if (kind === "sketch") { const f = await api("/api/engine/firmware", { robot: state.robot }); return f.files ? download(`${name}_firmware.zip`, await makeZipDeflated(f.files)) : download(f.name, f.code, "text/plain"); }
   if (kind === "shopping") { const bom = state.bom ?? (await api("/api/robots/bom", { robot: state.robot })).bom; return download(`${name}_still_to_buy.md`, shoppingMarkdown(bom), "text/markdown"); }
   if (kind === "train") { const { files } = await api("/api/robots/training", { robot: state.robot }); return download(`${name}_training.zip`, await makeZipDeflated(files)); }
   if (kind === "share") {

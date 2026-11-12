@@ -65,6 +65,7 @@ _PASS means the modelled actuators (datasheet peak torque as a hard limit, a lin
 | `BOM.md`, `bom.json` | every part to buy, with supplier links and prices |
 | `WIRING.md`, `wiring.svg` | power budget per rail, battery runtime, regulator heat, logic levels, pin-to-pin table, cut list, slack at each joint, cable diagram |
 | `schematic.svg`, `schematic.pdf`, `breadboard.svg` | schematic with reference designators, power symbols and net labels; picture view with every wire in its colour |
+| `firmware/` | Arduino sketch written from the wiring record (every pin is a wire of `WIRING.md`), with the flashing steps and pin map in `firmware/README.md` |
 | `robot.cad.zip` | build package: printable STLs, print list, bought-part models, assembly order |
 | `robot.ros2.zip` | ROS 2 description package (ros2_control, MoveIt config, Gazebo launch) |
 | `robot.training.zip` | MuJoCo / RL training scaffold |
