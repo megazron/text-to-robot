@@ -310,7 +310,10 @@ export function hood(A: Assembly, H: Harness | undefined, o: { name: string; dec
  * wall adapter) and the control boards in one printed case, USB windows in the long wall, a gland where the harness leaves.
  */
 export function controlCase(A: Assembly, H: Harness, o: { parent: string; T: Mat4; psu: string | null; psuUse?: string; boards: { name: string; key: string; use: string }[]; cad?: boolean }) {
-  const PSU_X = 68, inPsu = !!o.psu, pb = inPsu ? part(o.psu!).bbox_mm! : null, L = inPsu ? PSU_X + pb!.max[0] + 24 : 26 + o.boards.reduce((s, b) => s + part(b.key).bbox_mm!.max[0] + 6, 0);
+  // the supply 68 mm in from the inlet wall (the spade and DC leads turn there), less where a long supply would make the case
+  // longer than the 250 mm bed (its walls, lid lip and corners add about 14 mm), never under 36 mm
+  const inPsu = !!o.psu, pb = inPsu ? part(o.psu!).bbox_mm! : null, PSU_X = inPsu ? Math.max(36, Math.min(68, 236 - 24 - pb!.max[0])) : 68;
+  const L = inPsu ? PSU_X + pb!.max[0] + 24 : 26 + o.boards.reduce((s, b) => s + part(b.key).bbox_mm!.max[0] + 6, 0);
   const sizes = o.boards.map((b) => { const q = part(b.key).bbox_mm!; return { l: q.max[0] - q.min[0], w: q.max[1] - q.min[1], h: q.max[2] - q.min[2], q }; });
   // boards in a row along the long wall, behind the supply
   // header-pin boards drop between corner locators that stand 3 mm proud of them: they need that much more room behind the supply

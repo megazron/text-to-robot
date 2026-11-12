@@ -131,6 +131,11 @@ const THROUGH_KNOWN: Record<string, { most: number; why: string }> = {
   "08_humanoid": { most: 1, why: "the leg bus terminal block stands 3 mm from the battery; room for it moves boards into the backpack and overloads the hips" },
   "13_battle_mech": { most: 88, why: "the backpack power chain (converters, switch case) and the CAN bus boards beside the second battery need another layout pass" },
   "14_iron_man_mark_43": { most: 377, why: "its wiring was routed before the 3D router and the stricter check; left to the Mark 43 rebuild" },
+  // families added after the router work, laid out before it (each better than it was: 90, 63, 162 and 53 under this check)
+  "20_quadcopter": { most: 48, why: "the ESCs stacked on the flight controller leave their motor leads no room to the canopy's lead holes" },
+  "21_underwater_rov": { most: 60, why: "the leads to the thrusters cross the hull's fore tray; it needs pass-throughs" },
+  "22_pen_plotter": { most: 31, why: "the case's wires cross the 150 W supply; the case needs its boards beside the supply, not over it" },
+  "23_robot_hand": { most: 14, why: "the finger servos' leads leave through the base plate where it has no holes" },
 };
 test("no example has a wire through a solid part, but the known ones, each with its reason", () => {
   for (const ex of examples) {
