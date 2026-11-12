@@ -20,8 +20,8 @@
 <path d="M1240 118 H1324 V160.5 H1306 V203 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C3 W8 SERVO1_V: servo_driver.ch1.V+ to shoulder_servo.servo_lead.V+ (red), 24 AWG</title></path>
 <path d="M1240 131 H1334 V173.5 H1296 V216 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C3 W9 GND: servo_driver.ch1.GND to shoulder_servo.servo_lead.GND (brown), 24 AWG</title></path>
 <path d="M1240 157 H1344 V216 H1286 V275 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C4 W10 SERVO2_PWM: servo_driver.ch2.PWM2 to elbow_servo.servo_lead.Signal (orange), 26 AWG</title></path>
-<path d="M1240 118 H1354 V203 H1276 V288 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C4 W11 SERVO2_V: servo_driver.ch2.V+ to elbow_servo.servo_lead.V+ (red), 24 AWG</title></path>
-<path d="M1240 131 H1364 V216 H1266 V301 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C4 W12 GND: servo_driver.ch2.GND to elbow_servo.servo_lead.GND (brown), 24 AWG</title></path>
+<path d="M1240 118 H1354 V203 H1276 V288 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C4 W11 SERVO2_V: servo_driver.ch2.V+ to elbow_servo.servo_lead.V+ (red), 22 AWG</title></path>
+<path d="M1240 131 H1364 V216 H1266 V301 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C4 W12 GND: servo_driver.ch2.GND to elbow_servo.servo_lead.GND (brown), 22 AWG</title></path>
 <path d="M1240 170 H1254 V265 H1376 V360 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C5 W13 SERVO3_PWM: servo_driver.ch3.PWM3 to claw_servo.servo_lead.Signal (yellow), 26 AWG</title></path>
 <path d="M1240 118 H1264 V245.5 H1366 V373 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C5 W14 SERVO3_V: servo_driver.ch3.V+ to claw_servo.servo_lead.V+ (red), 24 AWG</title></path>
 <path d="M1240 131 H1274 V258.5 H1356 V386 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C5 W15 GND: servo_driver.ch3.GND to claw_servo.servo_lead.GND (brown), 24 AWG</title></path>

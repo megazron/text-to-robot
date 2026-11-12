@@ -2295,7 +2295,7 @@
   "end_effectors": [],
   "metadata": {
     "generator": "text-to-robot design engine (real components + printed structure)",
-    "created": "2026-11-12T20:37:18.794Z",
+    "created": "2026-11-12T22:58:13.486Z",
     "inferred_fields": [
       "links.base_link.inertia",
       "links.claw_jaw.inertia",
@@ -5113,7 +5113,7 @@
         "reach_m": 0.28,
         "payload_kg": 0.02,
         "mass_kg": 0.866,
-        "cost_usd": 50.63,
+        "cost_usd": 50.69,
         "dof": 3,
         "gripper": "one-servo claw",
         "servos": "TowerPro SG90 micro servo / TowerPro MG996R standard servo"
@@ -6436,12 +6436,12 @@
                 "kind": "power",
                 "from": "servo_driver.ch2.V+",
                 "to": "elbow_servo.servo_lead.V+ (red)",
-                "awg": 24,
+                "awg": 22,
                 "color": "red",
                 "typical_a": 0.9,
                 "peak_a": 2.5,
                 "length_mm": 540,
-                "drop_v": 0.136,
+                "drop_v": 0.086,
                 "pts": [
                   [
                     -79.4,
@@ -6531,12 +6531,12 @@
                 "kind": "ground",
                 "from": "servo_driver.ch2.GND",
                 "to": "elbow_servo.servo_lead.GND (brown)",
-                "awg": 24,
+                "awg": 22,
                 "color": "black",
                 "typical_a": 0.9,
                 "peak_a": 2.5,
                 "length_mm": 540,
-                "drop_v": 0.136,
+                "drop_v": 0.086,
                 "pts": [
                   [
                     -79.4,
@@ -7857,12 +7857,21 @@
             "source": "estimated"
           },
           {
+            "item": "22 AWG silicone wire",
+            "qty": 1.2,
+            "unit": "m",
+            "unit_usd": 0.4,
+            "subtotal_usd": 0.48,
+            "spec": "0.327 mm2, rated 3.5 A in a bundle; 1.08 m cut + 10 % waste",
+            "source": "estimated"
+          },
+          {
             "item": "24 AWG silicone wire",
-            "qty": 5.2,
+            "qty": 4,
             "unit": "m",
             "unit_usd": 0.35,
-            "subtotal_usd": 1.82,
-            "spec": "0.205 mm2, rated 1.75 A in a bundle; 4.67 m cut + 10 % waste",
+            "subtotal_usd": 1.4,
+            "spec": "0.205 mm2, rated 1.75 A in a bundle; 3.59 m cut + 10 % waste",
             "source": "estimated"
           },
           {
@@ -7965,11 +7974,12 @@
             "source": "estimated"
           }
         ],
-        "cost_usd": 8.83,
+        "cost_usd": 8.89,
         "total_wire_m": 8.32,
         "notes": [
           "Mains side: IEC inlet to the supply's AC terminals with insulated spades and ferrules, earth wired first, case closed before plugging in. Have it checked if you are not qualified to wire mains.",
-          "The Uno runs from its USB cable (it takes serial commands from the PC), the servos from the adapter; the two grounds join at the I2C lead."
+          "The Uno runs from its USB cable (it takes serial commands from the PC), the servos from the adapter; the two grounds join at the I2C lead.",
+          "At the typical load the drops of the wires on the way added up to put elbow_servo under the minimum supply of its record, so W11 (SERVO2_V) is 22 AWG, not 24, W12 (GND) is 22 AWG, not 24."
         ],
         "unconnected": [],
         "estimated_inputs": [],

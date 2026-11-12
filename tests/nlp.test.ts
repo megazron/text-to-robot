@@ -2,6 +2,11 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { parsePrompt, applyModification, extractDof, finalizeSpec, } from "@ttr/robot-generator";
 import { validateSpec } from "@ttr/robot-schema";
+import { setDefaultRouter } from "@ttr/design";
+
+// These tests check how prompts are read, not the harness the 3D router lays (tests/wiring3d and the example tests check
+// that), so their designs lay wires as straight runs, as the website's first pass does.
+setDefaultRouter("legacy");
 
 test("extractDof parses digits and words", () => {
   assert.equal(extractDof("6 dof arm"), 6);

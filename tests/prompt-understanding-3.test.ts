@@ -21,6 +21,11 @@ test("modify keeps the original budget and payload for the BOM", async () => {
 
 // ---------------- sensor mounting ----------------
 import { bodyEnvelope } from "../packages/robot-generator/src/nlp.ts";
+import { setDefaultRouter } from "@ttr/design";
+
+// These tests check how prompts are read, not the harness the 3D router lays (tests/wiring3d and the example tests check
+// that), so their designs lay wires as straight runs, as the website's first pass does.
+setDefaultRouter("legacy");
 
 
 test("inline sensors sit on the outer surface, never inside the body", () => {

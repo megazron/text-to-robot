@@ -102,11 +102,20 @@
     },
     {
       "category": "Wiring",
+      "name": "22 AWG silicone wire",
+      "qty": 1.2,
+      "unit_cost": 0.4,
+      "subtotal": 0.48,
+      "spec": "1.2 m: 0.327 mm2, rated 3.5 A in a bundle; 1.08 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
       "name": "24 AWG silicone wire",
-      "qty": 5.2,
+      "qty": 4,
       "unit_cost": 0.35,
-      "subtotal": 1.82,
-      "spec": "5.2 m: 0.205 mm2, rated 1.75 A in a bundle; 4.67 m cut + 10 % waste",
+      "subtotal": 1.4,
+      "spec": "4 m: 0.205 mm2, rated 1.75 A in a bundle; 3.59 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
@@ -209,7 +218,7 @@
       "note": "price estimated"
     }
   ],
-  "total": 65.49,
+  "total": 65.55,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,

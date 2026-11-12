@@ -3,6 +3,13 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { interpretPrompt, describeInterpretation, arduinoOptions, understandPrompt } from "@ttr/robot-generator";
 import { buildBom } from "@ttr/components";
+import { setDefaultRouter } from "@ttr/design";
+
+// Most of these tests check how a prompt is read; the harness the 3D router lays is checked by tests/wiring3d and the example
+// tests. So the designs here lay their wires as straight runs, as the website's first pass does, and the tests that check a
+// whole design's checks lay the 3D harness (in3d).
+setDefaultRouter("legacy");
+const in3d = async <T>(fn: () => T | Promise<T>): Promise<T> => { setDefaultRouter("3d"); try { return await fn(); } finally { setDefaultRouter("legacy"); } };
 
 const read = (prompt: string) => interpretPrompt(prompt).interpretation;
 const notes = (prompt: string) => { const i = read(prompt); return [...i.ignored, ...i.approximations, ...i.conflicts].join(" | "); };
@@ -54,8 +61,8 @@ test("numbers that cannot be applied are said: wheels, a $0 budget, a negative p
   assert.match(notes("a quadruped with 4 DOF legs"), /4 DOF: the quadruped template has fixed kinematics/);
 });
 
-test("the default mobile manipulator passes its design checks (body bay vents sized from the heat inside)", () => {
-  const { spec } = interpretPrompt("a mobile manipulator");
+test("the default mobile manipulator passes its design checks (body bay vents sized from the heat inside)", async () => {
+  const { spec } = await in3d(() => interpretPrompt("a mobile manipulator"));
   const failed = ((spec.metadata as { design?: { checks?: { name: string; pass: boolean }[] } }).design?.checks ?? []).filter((c) => !c.pass).map((c) => c.name);
   assert.deepEqual(failed, []);
 });
@@ -125,8 +132,8 @@ test("a file that is not a robot is refused by the import check, not by a TypeEr
   for (const bad of [{ links: "nope" }, {}, { metadata: null }]) await forgeForRobot(bad as never);   // nothing to forge, no throw
 });
 
-test("an arm whose peak current is more than the 75 W supply gives is designed on the 150 W supply, and its rails pass", () => {
-  const { spec } = interpretPrompt("6 dof arm 0.45m reach 0.3kg payload");
+test("an arm whose peak current is more than the 75 W supply gives is designed on the 150 W supply, and its rails pass", async () => {
+  const { spec } = await in3d(() => interpretPrompt("6 dof arm 0.45m reach 0.3kg payload"));
   const d = (spec.metadata as { design?: { checks?: { name: string; pass: boolean }[]; purchased?: { key: string }[] } }).design!;
   assert.ok(d.purchased!.some((p) => p.key === "psu_12v_lrs150"), "the bigger supply is bought");
   assert.deepEqual(d.checks!.filter((c) => !c.pass && c.name.startsWith("wiring:rail")).map((c) => c.name), []);
@@ -146,7 +153,7 @@ test("Hindi and Urdu robot words are read: arms, legs, wheels, cars and dogs, an
 
 test("a big (QDD) quadruped switches its 19 A on a battery switch, and passes every check of its own", async () => {
   const { generateRobot } = await import("@ttr/robot-generator");
-  const r = await generateRobot("Build a big quadruped robot");
+  const r = await in3d(() => generateRobot("Build a big quadruped robot"));
   const d = (r.robot.metadata as { design?: { checks?: { name: string; pass: boolean; detail: string }[]; purchased?: { key: string }[] } }).design!;
   assert.ok(d.purchased!.some((p) => p.key === "switch_battery_6006"), "the battery switch is bought");
   assert.deepEqual(d.checks!.filter((c) => !c.pass).map((c) => `${c.name}: ${c.detail}`), []);

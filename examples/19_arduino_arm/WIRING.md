@@ -1,6 +1,6 @@
 # Wiring: arduino_arm
 
-9 cables, 22 conductors, 8.32 m of wire, wiring parts $8.83.
+9 cables, 22 conductors, 8.32 m of wire, wiring parts $8.89.
 
 Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), [breadboard.svg](breadboard.svg) (every wire in its colour, pin to pin) and the cable diagram [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
 
@@ -35,8 +35,8 @@ Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), 
 | C3 | W8 | SERVO1_V | servo_driver.V+ | shoulder_servo.V+ (red) | 24 | red | 0.9 | 2.5 |
 | C3 | W9 | GND | servo_driver.GND | shoulder_servo.GND (brown) | 24 | black | 0.9 | 2.5 |
 | C4 | W10 | SERVO2_PWM | servo_driver.PWM2 | elbow_servo.Signal (orange) | 26 | yellow | 0.02 | 0.02 |
-| C4 | W11 | SERVO2_V | servo_driver.V+ | elbow_servo.V+ (red) | 24 | red | 0.9 | 2.5 |
-| C4 | W12 | GND | servo_driver.GND | elbow_servo.GND (brown) | 24 | black | 0.9 | 2.5 |
+| C4 | W11 | SERVO2_V | servo_driver.V+ | elbow_servo.V+ (red) | 22 | red | 0.9 | 2.5 |
+| C4 | W12 | GND | servo_driver.GND | elbow_servo.GND (brown) | 22 | black | 0.9 | 2.5 |
 | C5 | W13 | SERVO3_PWM | servo_driver.PWM3 | claw_servo.Signal (yellow) | 26 | yellow | 0.02 | 0.02 |
 | C5 | W14 | SERVO3_V | servo_driver.V+ | claw_servo.V+ (red) | 24 | red | 0.2 | 0.65 |
 | C5 | W15 | GND | servo_driver.GND | claw_servo.GND (brown) | 24 | black | 0.2 | 0.65 |
@@ -119,7 +119,8 @@ A driver's high level is its I/O supply; the receiver needs it above its input t
 |---|--:|---|--:|--:|---|---|
 | 18 AWG silicone wire | 0.7 | m | 0.7 | 0.49 | 0.823 mm2, rated 8 A in a bundle; 0.59 m cut + 10 % waste | estimated |
 | 20 AWG silicone wire | 0.8 | m | 0.5 | 0.40 | 0.519 mm2, rated 5.5 A in a bundle; 0.71 m cut + 10 % waste | estimated |
-| 24 AWG silicone wire | 5.2 | m | 0.35 | 1.82 | 0.205 mm2, rated 1.75 A in a bundle; 4.67 m cut + 10 % waste | estimated |
+| 22 AWG silicone wire | 1.2 | m | 0.4 | 0.48 | 0.327 mm2, rated 3.5 A in a bundle; 1.08 m cut + 10 % waste | estimated |
+| 24 AWG silicone wire | 4 | m | 0.35 | 1.40 | 0.205 mm2, rated 1.75 A in a bundle; 3.59 m cut + 10 % waste | estimated |
 | 26 AWG silicone wire | 2.6 | m | 0.3 | 0.78 | 0.128 mm2, rated 1.1 A in a bundle; 2.31 m cut + 10 % waste | estimated |
 | 6.3 mm spade contacts | 5 | pc | 0.08 | 0.40 | rated 15 A per contact | estimated |
 | Bootlace ferrule contacts | 7 | pc | 0.03 | 0.21 | rated 17.5 A per contact | estimated |
@@ -148,3 +149,4 @@ A driver's high level is its I/O supply; the receiver needs it above its input t
 
 - Mains side: IEC inlet to the supply's AC terminals with insulated spades and ferrules, earth wired first, case closed before plugging in. Have it checked if you are not qualified to wire mains.
 - The Uno runs from its USB cable (it takes serial commands from the PC), the servos from the adapter; the two grounds join at the I2C lead.
+- At the typical load the drops of the wires on the way added up to put elbow_servo under the minimum supply of its record, so W11 (SERVO2_V) is 22 AWG, not 24, W12 (GND) is 22 AWG, not 24.

@@ -5,6 +5,11 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { generateRobot, interpretPrompt } from "@ttr/robot-generator";
 import { reachModel } from "../packages/robot-generator/src/sizing.ts";
+import { setDefaultRouter } from "@ttr/design";
+
+// These tests check how prompts are read, not the harness the 3D router lays (tests/wiring3d and the example tests check
+// that), so their designs lay wires as straight runs, as the website's first pass does.
+setDefaultRouter("legacy");
 
 const read = (prompt: string) => interpretPrompt(prompt).interpretation;
 const _reachOf = (prompt: string) => reachModel(interpretPrompt(prompt).spec)!.reach;

@@ -1,6 +1,6 @@
 # Bill of materials: arduino_arm
 
-**Estimated total: $65.49**  ·  tier: hobby
+**Estimated total: $65.55**  ·  tier: hobby
 
 **Effort sizing: passes catalogue estimate; hardware verified: no.**
 
@@ -17,7 +17,8 @@
 | Fasteners | Screws, nuts and inserts | 34 | 0.12 | 4.08 | 8x M3 x 10 self-tapping (lid to compartment); 4x M3 x 12 self-tapping (compartment to its base, from below); 4x M3 x 6 self-tapping (Arduino Uno R3 compatible board to standoffs); 4x M2.5 x 6 self-tapping (PCA9685 16-channel PWM servo driver board to standoffs); 2x M3 x 6 self-tapping (Mean Well LRS-50-5 enclosed PSU, 5 V 10 A to standoffs); 8x M2 self-tapping (servo tabs, from the servo kits); 4x M4 screws or desk clamps (base) |
 | Wiring | 18 AWG silicone wire _(price estimated)_ | 0.7 | 0.7 | 0.49 | 0.7 m: 0.823 mm2, rated 8 A in a bundle; 0.59 m cut + 10 % waste |
 | Wiring | 20 AWG silicone wire _(price estimated)_ | 0.8 | 0.5 | 0.4 | 0.8 m: 0.519 mm2, rated 5.5 A in a bundle; 0.71 m cut + 10 % waste |
-| Wiring | 24 AWG silicone wire _(price estimated)_ | 5.2 | 0.35 | 1.82 | 5.2 m: 0.205 mm2, rated 1.75 A in a bundle; 4.67 m cut + 10 % waste |
+| Wiring | 22 AWG silicone wire _(price estimated)_ | 1.2 | 0.4 | 0.48 | 1.2 m: 0.327 mm2, rated 3.5 A in a bundle; 1.08 m cut + 10 % waste |
+| Wiring | 24 AWG silicone wire _(price estimated)_ | 4 | 0.35 | 1.4 | 4 m: 0.205 mm2, rated 1.75 A in a bundle; 3.59 m cut + 10 % waste |
 | Wiring | 26 AWG silicone wire _(price estimated)_ | 2.6 | 0.3 | 0.78 | 2.6 m: 0.128 mm2, rated 1.1 A in a bundle; 2.31 m cut + 10 % waste |
 | Wiring | 6.3 mm spade contacts _(price estimated)_ | 5 | 0.08 | 0.4 | 5 pc: rated 15 A per contact |
 | Wiring | Bootlace ferrule contacts _(price estimated)_ | 7 | 0.03 | 0.21 | 7 pc: rated 17.5 A per contact |

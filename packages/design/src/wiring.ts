@@ -12,6 +12,7 @@ import { linkSolid } from "./clearance.ts";
 import { build, box as boxSolid, type Mat4 } from "@ttr/solid";
 import { Router, roundWire } from "./wiring3d/route.ts";
 import { wireSize } from "./wiring3d/place.ts";
+import { simulate } from "./esim/robot.ts";
 
 // ------------------------------------------------------------------------------------------- records
 export type NetKind = "power" | "ground" | "signal" | "bus";
@@ -712,6 +713,7 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
   }
   const rec = summarise(H, cables, clips, railTotals);
   if (H.main?.fuse) rec.rails.find((r) => r.name === H.main!.rail)!.fuse_a = mainFuse;
+  thickenForDrop(rec);
   buyHarness(H, rec, leverCount);
   for (const u of unresolved) rec.notes.push(u);
   applyClips(A, rec);
@@ -840,6 +842,50 @@ function applyClips(A: Assembly, rec: WiringRecord) {
     byLink.set(c.link, ops);
   }
   for (const [l, ops] of byLink) { try { A.amendProgram(l, ops); } catch (e) { rec.notes.push(`clips on ${l} not printed: ${(e as Error).message}`); } }
+}
+/**
+ * Each wire's gauge holds its own drop under 3 %, but a load at the end of a feed, a board and a branch adds those drops up
+ * and can get less than the minimum of its record. Here the record is solved as a circuit at the typical load (esim): while a
+ * load is under its minimum and thicker wires would bring it back (a supply or regulator that cannot hold its rail is not a
+ * wiring problem and is left as it is), the cable whose power and ground wires, one size thicker (2 AWG), raise the worst
+ * shortfall most is thickened, as the branch fuses above thicken theirs; its route stays as it was laid. Each change is said
+ * in the record's notes.
+ */
+export function thickenForDrop(rec: WiringRecord) {
+  type Res = ReturnType<typeof simulate>;
+  const supply = rec.cables.flatMap((c) => (c.premade ? [] : c.wires.filter((w) => (w.kind === "power" || w.kind === "ground") && w.awg !== null).map((w) => ({ c, w }))));
+  if (!supply.length) return;
+  const solve = (): Res | null => { try { const r = simulate({ robot_name: "wiring" } as RobotSpecification, rec, {}); return r.converged ? r : null; } catch { return null; } };
+  const short = (r: Res) => Object.entries(r.parts).filter(([, p]) => p.state === "brown_out" && p.min_v !== null && p.supply_v !== null && p.supply_v < p.min_v).map(([n, p]) => ({ n, gap: p.min_v! - p.supply_v! }));
+  const thickest = WIRING.awg[WIRING.awg.length - 1].awg;
+  const shift = (ws: { w: WireRec }[], d: number) => { for (const { w } of ws) w.awg = w.awg! + d; };
+  let r = solve(); if (!r) return;
+  const low = short(r); if (!low.length) return;
+  // the loads thicker wires can help: those inside their range with every supply wire four sizes thicker
+  const room = supply.filter(({ w }) => w.awg! - 4 >= thickest);
+  shift(room, -4); const all = solve(); shift(room, 4);
+  if (!all) return;
+  const fixable = new Set(low.map((x) => x.n).filter((n) => !short(all).some((y) => y.n === n)));
+  if (!fixable.size) return;
+  const worst = (res: Res) => Math.max(0, ...short(res).filter((x) => fixable.has(x.n)).map((x) => x.gap));
+  const byCable = new Map<CableRec, { w: WireRec }[]>(); for (const x of supply) byCable.set(x.c, [...(byCable.get(x.c) ?? []), x]);
+  const was = new Map(supply.map(({ w }) => [w, w.awg!]));
+  for (let step = 0; step < 12 && worst(r) > 0; step++) {
+    const now = worst(r);
+    let best: { ws: { w: WireRec }[]; gain: number } | null = null;
+    for (const ws of byCable.values()) {
+      if (ws.some(({ w }) => w.awg! - 2 < thickest)) continue;
+      shift(ws, -2); const t = solve(); shift(ws, 2);
+      const gain = t ? now - worst(t) : 0;
+      if (gain > 1e-6 && (!best || gain > best.gain)) best = { ws, gain };
+    }
+    if (!best) break;
+    shift(best.ws, -2); r = solve()!;
+  }
+  const changed = [...was].filter(([w, awg]) => w.awg !== awg);
+  for (const [w, awg] of changed) if (w.drop_v !== undefined) w.drop_v = r3((w.drop_v * awgRow(w.awg!).ohm_per_m) / awgRow(awg).ohm_per_m);
+  if (changed.length) rec.notes.push(`At the typical load the drops of the wires on the way added up to put ${[...fixable].join(", ")} under the minimum supply of ${fixable.size > 1 ? "their records" : "its record"}, so ${changed.map(([w, awg]) => `${w.id} (${w.net}) is ${w.awg} AWG, not ${awg}`).join(", ")}${worst(r) > 0 ? "; that is still not enough" : ""}.`);
+  for (const R of rec.rails) R.worst_drop_v = r3(Math.max(0, ...rec.cables.flatMap((c) => c.wires.filter((w) => w.net === R.name).map((w) => w.drop_v ?? 0))));
 }
 const WASTE = 1.1;
 const CONSUMABLE = (id: string) => { const c = WIRING.consumables[id]; if (!c) throw new Error(`no consumable ${id}`); return c; };

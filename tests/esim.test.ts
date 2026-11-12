@@ -230,9 +230,9 @@ test("Arduino car: stalled motors, shorts, an open wire and a low battery", () =
   const s5 = run("18_arduino_car", { faults: [{ kind: "short", rail: "5V_LOGIC" }] });
   assert.equal(s5.regulators.controller.state, "limit"); near(s5.regulators.controller.iout, 0.4, 1e-9, "limit current");
   assert.ok(s5.trips.length === 0 && has(s5, "regulator_limit", "controller") && s5.parts.ultrasonic.state === "unpowered" && s5.parts.motor_driver_1.state === "brown_out");
-  // a short on the battery rail after the switch: 7.5 V over 91 milliohm of pack, wire, fuse and switch = 83 A, 20 x the fuse: gone in under 10 ms
+  // a short on the battery rail after the switch: 7.5 V over 92 milliohm of pack, wire, fuse and switch (the routed feed wires are longer than straight runs) = 82 A, 20 x the fuse: gone in under 10 ms
   const sb = run("18_arduino_car", { faults: [{ kind: "short", rail: "VBAT" }] });
-  assert.equal(sb.trips[0].fuse, "F1"); near(sb.trips[0].current_a, 82.6, 1, "short-circuit current"); assert.ok(sb.trips[0].opens_s[1] < 0.01);
+  assert.equal(sb.trips[0].fuse, "F1"); near(sb.trips[0].current_a, 81.6, 1, "short-circuit current"); assert.ok(sb.trips[0].opens_s[1] < 0.01);
   assert.ok(has(sb.before_trip ? { ...sb, events: sb.before_trip.events } : sb, "battery_overcurrent", "battery"));
   // the Nano's supply wire off: it and its 5 V rail are dead, the motors keep their supply
   const op = run("18_arduino_car", { faults: [{ kind: "open", wire: "W29" }] });
@@ -250,8 +250,8 @@ test("Arduino car: stalled motors, shorts, an open wire and a low battery", () =
 test("Arduino car in time: the battery short opens the main fuse within the datasheet window", () => {
   const r = run("18_arduino_car", { faults: [{ kind: "short", rail: "VBAT" }], transient: { t_end_s: 0.1, dt_s: 0.001 } }), t = r.transient!;
   assert.ok(t.ok && t.t_s.length === 101); near(t.t_fault_s, 0.01, 1e-12, "fault time");
-  // before the fault the rail is at its typical 7.35 V; at the fault 83 A flows; the fuse opens 3 to 8 ms later; then nothing
-  near(t.rails.VBAT.source_v[5]!, 7.35, 0.02, "before"); near(t.sources.battery.current_a[10], 82.6, 1, "short current");
+  // before the fault the rail is at its typical 7.35 V; at the fault 82 A flows; the fuse opens 3 to 8 ms later; then nothing
+  near(t.rails.VBAT.source_v[5]!, 7.35, 0.02, "before"); near(t.sources.battery.current_a[10], 81.6, 1, "short current");
   const blown = t.fuses.F1.blown_at_s!; assert.ok(blown - 0.01 >= 0.002 && blown - 0.01 <= 0.009, `opened ${blown - 0.01} s after the short`);
   near(t.sources.battery.current_a[100], 0, 1e-6, "after"); assert.ok(t.events.some((e) => e.kind === "fuse_blown" && e.t_s === blown));
 });
@@ -266,9 +266,9 @@ test("diff drive, arm and humanoid: what each fault trips", () => {
   near(ds.parts.left_motor.motor!.stall_ohm, 12 / 5.5, 1e-9, "winding = 12 V / 5.5 A");
   assert.ok(ds.trips.length === 0 && ds.fuses.F1.load_pct > 125 && ds.fuses.F1.load_pct < 135 && has(ds, "fuse_overload") && has(ds, "switch_overcurrent", "main_switch"));
   assert.ok(ds.parts.computer.state === "ok" && ds.regulators.regulator_5v.state === "regulating");
-  // arm, every servo locked on the 5 V supply: 5.2 A, inside the supply's limit, but every servo is under its 4.8 V minimum
+  // arm, every servo locked on the 5 V supply: 5.1 A, inside the supply's limit, but every servo is under its 4.8 V minimum
   const a = run("19_arduino_arm", { scenario: "stall" });
-  near(a.sources.power_supply.current_a, 5.17, 0.05, "stall draw"); assert.equal(a.sources.power_supply.state, "voltage");
+  near(a.sources.power_supply.current_a, 5.10, 0.05, "stall draw"); assert.equal(a.sources.power_supply.state, "voltage");
   for (const s of ["yaw_servo", "shoulder_servo", "elbow_servo", "claw_servo"]) assert.ok(a.parts[s].supply_v! < 4.8 && a.parts[s].state === "brown_out", `${s} at ${a.parts[s].supply_v}`);
   assert.equal(a.parts.controller.state, "external");
   // arm, servo rail shorted: no fuse on a mains supply; it goes into its 11 A limit

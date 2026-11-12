@@ -1,32 +1,32 @@
 {
   "note": "Compiled examples for the simulator in the Run tab: scripts/compile_firmware.py --site. Keys are the SHA-256 of each sketch's text.",
   "sketches": {
-    "4593b411d17113921f517e6c1cbeaddcd512372c86022a57cc2712b311c1d775": {
+    "7ec1ab0dd3e71c9884deb8b811b5689621852cb5d85ef8ce159ea77ad73b752f": {
       "example": "15_wall_e",
       "sketch": "wall_e.ino",
       "hex": "firmware/15_wall_e.hex",
       "fqbn": "arduino:avr:nano:cpu=atmega328",
       "flash_bytes": 11508,
       "core": "arduino:avr 1.8.8",
-      "hex_sha256": "b167bfd860460d208e484a88e5650f9b788b4a70824daf22a5cb9c73d968c3d2"
+      "hex_sha256": "644ef2874cc0f39b63ce4e2b442e78e8e5e1a2b1d80e276c3dd582f3f553de14"
     },
-    "6c64cdb68f58b225c5af29a5712951d6832fba36a9868ea95c936fc9dafb0f46": {
+    "237981c28b26ac3b17ead39ffd0bcdfacd156a72c3ffd2a5f83ae90138ae87c6": {
       "example": "18_arduino_car",
       "sketch": "arduino_car.ino",
       "hex": "firmware/18_arduino_car.hex",
       "fqbn": "arduino:avr:nano:cpu=atmega328",
       "flash_bytes": 4136,
       "core": "arduino:avr 1.8.8",
-      "hex_sha256": "595f3b0c3fecec324e882e89f3e4c533f81bac83f3d11c6adee29666891916e0"
+      "hex_sha256": "a014406df581f9b8c48809a09d4e02e026b98122b6b5c2be7b24f2e5de04efbb"
     },
-    "b3ebec28622294c7b970b54cc8626f0ff135900e84ad98c053a6f3375529466a": {
+    "233f20d28ab9af445cf075b9cdef607ff616c85e0d7a333082132bdfa302e07b": {
       "example": "19_arduino_arm",
       "sketch": "arduino_arm.ino",
       "hex": "firmware/19_arduino_arm.hex",
       "fqbn": "arduino:avr:uno",
       "flash_bytes": 9484,
       "core": "arduino:avr 1.8.8",
-      "hex_sha256": "69aca3e1219cadd22ef3c2619ccd8d27021aaaa4d122c524e06ef9e761403726"
+      "hex_sha256": "ecc13a6828ce7ef1aa9bbbb2cfa0cbe55f5a4b0fd4760287199dbb5d97eb041e"
     },
     "5a525a27d6df7bd6c1e17495e9e7e6f70b8ab92b79f3b7b857f6636341e1bb84": {
       "example": "23_robot_hand",
