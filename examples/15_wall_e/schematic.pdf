@@ -1517,7 +1517,7 @@ BT 0.52 0 0 rg /F2 10 Tf 1 0 0 1 2873 115 Tm (Text to Robot) Tj ET
 BT 0.52 0 0 rg /F1 8 Tf 1 0 0 1 3177.85 115 Tm (generated from design.wiring) Tj ET
 BT 0.52 0 0 rg /F1 7 Tf 1 0 0 1 2873 98 Tm (Title:) Tj ET
 BT 0 0 0 rg /F2 13 Tf 1 0 0 1 2873 83 Tm (wall_e: schematic) Tj ET
-BT 0 0 0 rg /F1 9 Tf 1 0 0 1 2873 63 Tm (30 parts, 43 nets, 80 wires, 4 rails) Tj ET
+BT 0 0 0 rg /F1 9 Tf 1 0 0 1 2873 63 Tm (31 parts, 43 nets, 80 wires, 4 rails) Tj ET
 BT 0 0 0 rg /F1 9 Tf 1 0 0 1 2873 44 Tm (Size: A1) Tj ET
 BT 0 0 0 rg /F1 9 Tf 1 0 0 1 3083 44 Tm (Rev: 41db31a6) Tj ET
 BT 0 0 0 rg /F1 9 Tf 1 0 0 1 3183 44 Tm (Sheet 1 / 1) Tj ET

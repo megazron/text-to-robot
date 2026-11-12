@@ -34,9 +34,9 @@
       <geometry><mesh filename="package://mecanum_robot/meshes/base_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.0000193312 -0.0000548449 0.0825" rpy="0 0 0"/>
-      <mass value="0.480321"/>
-      <inertia ixx="0.001577" ixy="0.00000204551" ixz="5.22848e-21" iyy="0.003573" iyz="7.87016e-22" izz="0.005149"/>
+      <origin xyz="0.000131772 -0.0000408471 0.0825" rpy="0 0 0"/>
+      <mass value="0.480328"/>
+      <inertia ixx="0.001576" ixy="0.00000455192" ixz="-1.58681e-21" iyy="0.003565" iyz="1.48843e-21" izz="0.00514"/>
     </inertial>
   </link>
   <link name="front_left_motor">
@@ -258,9 +258,9 @@
       <geometry><mesh filename="package://mecanum_robot/meshes/battery_tray.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.041771 -0.06825 0.088051" rpy="0 0 0"/>
-      <mass value="0.01646"/>
-      <inertia ixx="0.00000350695" ixy="-1.42002e-22" ixz="-1.63706e-7" iyy="0.0000170783" iyz="-1.13092e-21" izz="0.0000200757"/>
+      <origin xyz="-0.05424 -0.026854 0.087813" rpy="0 0 0"/>
+      <mass value="0.018149"/>
+      <inertia ixx="0.0000235104" ixy="-1.46803e-13" ixz="-3.89070e-14" iyy="0.00000373795" iyz="1.83078e-8" izz="0.0000267163"/>
     </inertial>
   </link>
   <link name="computer">
@@ -290,9 +290,9 @@
       <geometry><mesh filename="package://mecanum_robot/meshes/computer_tray.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.073708 -0.058384 0.085595" rpy="0 0 0"/>
+      <origin xyz="0.004104 -0.030302 0.085595" rpy="0 0 0"/>
       <mass value="0.014936"/>
-      <inertia ixx="0.00000450311" ixy="2.63464e-9" ixz="1.59607e-8" iyy="0.0000101515" iyz="-8.32729e-10" izz="0.0000146219"/>
+      <inertia ixx="0.00001022" ixy="-2.63465e-9" ixz="8.32734e-10" iyy="0.00000447974" iyz="1.59607e-8" izz="0.0000146671"/>
     </inertial>
   </link>
   <link name="motor_driver_1">
@@ -322,9 +322,9 @@
       <geometry><mesh filename="package://mecanum_robot/meshes/motor_driver_1_tray.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.02949 0.01321 0.085591" rpy="0 0 0"/>
+      <origin xyz="0.08673 -0.0435 0.085591" rpy="0 0 0"/>
       <mass value="0.015594"/>
-      <inertia ixx="0.00000550644" ixy="4.30616e-20" ixz="-9.25169e-15" iyy="0.000010145" iyz="-4.06078e-15" izz="0.0000156177"/>
+      <inertia ixx="0.0000102081" ixy="-4.18070e-19" ixz="-1.36799e-14" iyy="0.00000547759" iyz="-2.21306e-15" izz="0.000015652"/>
     </inertial>
   </link>
   <link name="motor_driver_2">
@@ -354,9 +354,9 @@
       <geometry><mesh filename="package://mecanum_robot/meshes/motor_driver_2_tray.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.06352 0.01321 0.085591" rpy="0 0 0"/>
+      <origin xyz="0.08223 0.03801 0.085591" rpy="0 0 0"/>
       <mass value="0.015594"/>
-      <inertia ixx="0.00000550644" ixy="5.36877e-21" ixz="-1.69013e-14" iyy="0.000010145" iyz="-4.06078e-15" izz="0.0000156177"/>
+      <inertia ixx="0.00000550644" ixy="-1.90957e-19" ixz="-2.04931e-14" iyy="0.000010145" iyz="1.78668e-16" izz="0.0000156177"/>
     </inertial>
   </link>
   <link name="imu">
@@ -386,9 +386,9 @@
       <geometry><mesh filename="package://mecanum_robot/meshes/imu_tray.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.1232 0.05336 0.086151" rpy="0 0 0"/>
+      <origin xyz="-0.12465 -0.0732 0.086151" rpy="0 0 0"/>
       <mass value="0.00219"/>
-      <inertia ixx="1.29630e-7" ixy="1.92476e-20" ixz="-1.80395e-15" iyy="1.61631e-7" iyz="-3.19172e-16" izz="2.79265e-7"/>
+      <inertia ixx="1.63316e-7" ixy="1.12735e-20" ixz="-8.70448e-15" iyy="1.28682e-7" iyz="-1.46528e-15" izz="2.80003e-7"/>
     </inertial>
   </link>
   <link name="regulator_5v">
@@ -418,9 +418,9 @@
       <geometry><mesh filename="package://mecanum_robot/meshes/regulator_5v_tray.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.089253 0.070483 0.085969" rpy="0 0 0"/>
+      <origin xyz="-0.015343 0.051147 0.085969" rpy="0 0 0"/>
       <mass value="0.002281"/>
-      <inertia ixx="1.61036e-7" ixy="-1.05542e-8" ixz="-3.15359e-9" iyy="1.59409e-7" iyz="3.15359e-9" izz="3.10101e-7"/>
+      <inertia ixx="1.61036e-7" ixy="1.05543e-8" ixz="-3.15359e-9" iyy="1.59409e-7" iyz="-3.15359e-9" izz="3.10101e-7"/>
     </inertial>
   </link>
   <link name="main_switch">
@@ -450,9 +450,9 @@
       <geometry><mesh filename="package://mecanum_robot/meshes/electronics_enclosure_front.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.100521 0.008468 0.100045" rpy="0 0 0"/>
-      <mass value="0.03415"/>
-      <inertia ixx="0.000214408" ixy="0.00000579066" ixz="-2.75853e-7" iyy="0.0000888241" iyz="-9.34259e-8" izz="0.000296251"/>
+      <origin xyz="0.092249 -0.004202 0.106234" rpy="0 0 0"/>
+      <mass value="0.049239"/>
+      <inertia ixx="0.000330426" ixy="0.000010248" ixz="2.91765e-7" iyy="0.000114653" iyz="7.68790e-7" izz="0.000426843"/>
     </inertial>
   </link>
   <link name="electronics_enclosure_rear">
@@ -466,9 +466,9 @@
       <geometry><mesh filename="package://mecanum_robot/meshes/electronics_enclosure_rear.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.095939 0.001758 0.100081" rpy="0 0 0"/>
-      <mass value="0.046175"/>
-      <inertia ixx="0.000255983" ixy="0.00000472768" ixz="3.92017e-7" iyy="0.0000835157" iyz="-4.58365e-7" izz="0.000330366"/>
+      <origin xyz="-0.09741 0.003305 0.106178" rpy="0 0 0"/>
+      <mass value="0.059191"/>
+      <inertia ixx="0.000336435" ixy="0.00000722025" ixz="2.09365e-7" iyy="0.000107536" iyz="-3.25077e-7" izz="0.000421911"/>
     </inertial>
   </link>
   <link name="electronics_lid_front">
@@ -482,9 +482,9 @@
       <geometry><mesh filename="package://mecanum_robot/meshes/electronics_lid_front.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.074992 0.000999491 0.118278" rpy="0 0 0"/>
-      <mass value="0.046542"/>
-      <inertia ixx="0.000161037" ixy="0.00000196595" ixz="1.40619e-7" iyy="0.0000915837" iyz="-3.24945e-8" izz="0.000252542"/>
+      <origin xyz="0.067914 0.001988 0.130378" rpy="0 0 0"/>
+      <mass value="0.045743"/>
+      <inertia ixx="0.000161048" ixy="7.29964e-7" ixz="1.37572e-7" iyy="0.0000842332" iyz="1.31294e-9" izz="0.000245204"/>
     </inertial>
   </link>
   <link name="electronics_lid_rear">
@@ -498,9 +498,9 @@
       <geometry><mesh filename="package://mecanum_robot/meshes/electronics_lid_rear.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.068661 0.00105 0.118279" rpy="0 0 0"/>
-      <mass value="0.03879"/>
-      <inertia ixx="0.000158859" ixy="-0.0000012499" ixz="-1.13121e-7" iyy="0.0000728567" iyz="-3.19036e-8" izz="0.00023165"/>
+      <origin xyz="-0.071189 0.00209 0.130378" rpy="0 0 0"/>
+      <mass value="0.037882"/>
+      <inertia ixx="0.000157825" ixy="-0.00000101022" ixz="-1.09865e-7" iyy="0.0000670792" iyz="-3.28846e-8" izz="0.00022484"/>
     </inertial>
   </link>
   <link name="lidar_mast">
@@ -514,9 +514,9 @@
       <geometry><mesh filename="package://mecanum_robot/meshes/lidar_mast.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.114 0.000516348 0.090964" rpy="0 0 0"/>
-      <mass value="0.029804"/>
-      <inertia ixx="0.00000792368" ixy="1.60767e-15" ixz="6.51745e-15" iyy="0.0000083229" iyz="-4.82641e-8" izz="0.0000153246"/>
+      <origin xyz="-0.114 0.000375405 0.097719" rpy="0 0 0"/>
+      <mass value="0.040994"/>
+      <inertia ixx="0.0000113057" ixy="4.35725e-15" ixz="2.91280e-14" iyy="0.0000117027" iyz="-1.30519e-7" izz="0.0000171279"/>
     </inertial>
   </link>
   <link name="lidar">
@@ -610,7 +610,7 @@
   <joint name="battery_mount" type="fixed">
     <parent link="base_link"/>
     <child link="battery"/>
-    <origin xyz="-0.098 -0.06825 0.087" rpy="0 0 0"/>
+    <origin xyz="-0.05424 -0.073 0.087" rpy="0 0 1.570796"/>
   </joint>
   <joint name="battery_tray_mount" type="fixed">
     <parent link="base_link"/>
@@ -620,7 +620,7 @@
   <joint name="computer_mount" type="fixed">
     <parent link="base_link"/>
     <child link="computer"/>
-    <origin xyz="0.03001 -0.0858 0.091" rpy="0 0 0"/>
+    <origin xyz="0.03152 -0.074 0.091" rpy="0 0 1.570796"/>
   </joint>
   <joint name="computer_tray_mount" type="fixed">
     <parent link="base_link"/>
@@ -630,7 +630,7 @@
   <joint name="motor_driver_1_mount" type="fixed">
     <parent link="base_link"/>
     <child link="motor_driver_1"/>
-    <origin xyz="-0.07199 -0.01779 0.091" rpy="0 0 0"/>
+    <origin xyz="0.11773 -0.086 0.091" rpy="0 0 1.570796"/>
   </joint>
   <joint name="motor_driver_1_tray_mount" type="fixed">
     <parent link="base_link"/>
@@ -640,7 +640,7 @@
   <joint name="motor_driver_2_mount" type="fixed">
     <parent link="base_link"/>
     <child link="motor_driver_2"/>
-    <origin xyz="0.02102 -0.01779 0.091" rpy="0 0 0"/>
+    <origin xyz="0.03973 0.00701 0.091" rpy="0 0 0"/>
   </joint>
   <joint name="motor_driver_2_tray_mount" type="fixed">
     <parent link="base_link"/>
@@ -650,7 +650,7 @@
   <joint name="imu_mount" type="fixed">
     <parent link="base_link"/>
     <child link="imu"/>
-    <origin xyz="-0.136 0.04201 0.091" rpy="0 0 0"/>
+    <origin xyz="-0.1133 -0.086 0.091" rpy="0 0 1.570796"/>
   </joint>
   <joint name="imu_tray_mount" type="fixed">
     <parent link="base_link"/>
@@ -660,7 +660,7 @@
   <joint name="regulator_5v_mount" type="fixed">
     <parent link="base_link"/>
     <child link="regulator_5v"/>
-    <origin xyz="-0.10239 0.05822 0.091" rpy="0 0 0"/>
+    <origin xyz="-0.00308 0.03801 0.091" rpy="0 0 1.570796"/>
   </joint>
   <joint name="regulator_5v_tray_mount" type="fixed">
     <parent link="base_link"/>
@@ -670,7 +670,7 @@
   <joint name="main_switch_mount" type="fixed">
     <parent link="base_link"/>
     <child link="main_switch"/>
-    <origin xyz="0.100088 0.09302 0.1005" rpy="0 -1.570796 -1.570796"/>
+    <origin xyz="-0.103471 0.09441 0.10655" rpy="0 -1.570796 -1.570796"/>
   </joint>
   <joint name="electronics_enclosure_front_mount" type="fixed">
     <parent link="base_link"/>
@@ -700,6 +700,6 @@
   <joint name="lidar_mount" type="fixed">
     <parent link="base_link"/>
     <child link="lidar"/>
-    <origin xyz="-0.114 0 0.0966" rpy="0 0 0"/>
+    <origin xyz="-0.114 0 0.1087" rpy="0 0 0"/>
   </joint>
 </robot>

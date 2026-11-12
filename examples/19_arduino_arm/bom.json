@@ -69,9 +69,9 @@
       "category": "Printed structure",
       "name": "PETG filament for 9 printed parts",
       "qty": 1,
-      "unit_cost": 9.55,
-      "subtotal": 9.55,
-      "spec": "377 g of parts (+15 % supports/waste), about 34.4 h of printing",
+      "unit_cost": 10.78,
+      "subtotal": 10.78,
+      "spec": "426 g of parts (+15 % supports/waste), about 38.8 h of printing",
       "note": "base_link, turntable, upper_arm, forearm, claw_jaw, console, console_lid, supply_case, supply_case_lid"
     },
     {
@@ -84,47 +84,56 @@
     },
     {
       "category": "Wiring",
-      "name": "20 AWG silicone wire",
+      "name": "18 AWG silicone wire",
       "qty": 0.7,
+      "unit_cost": 0.7,
+      "subtotal": 0.49,
+      "spec": "0.7 m: 0.823 mm2, rated 8 A in a bundle; 0.59 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "20 AWG silicone wire",
+      "qty": 0.8,
       "unit_cost": 0.5,
-      "subtotal": 0.35,
-      "spec": "0.7 m: 0.519 mm2, rated 5.5 A in a bundle; 0.61 m cut + 10 % waste",
+      "subtotal": 0.4,
+      "spec": "0.8 m: 0.519 mm2, rated 5.5 A in a bundle; 0.71 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "24 AWG silicone wire",
-      "qty": 4.8,
+      "qty": 5.2,
       "unit_cost": 0.35,
-      "subtotal": 1.68,
-      "spec": "4.8 m: 0.205 mm2, rated 1.75 A in a bundle; 4.35 m cut + 10 % waste",
+      "subtotal": 1.82,
+      "spec": "5.2 m: 0.205 mm2, rated 1.75 A in a bundle; 4.67 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "26 AWG silicone wire",
-      "qty": 2.3,
+      "qty": 2.6,
       "unit_cost": 0.3,
-      "subtotal": 0.69,
-      "spec": "2.3 m: 0.128 mm2, rated 1.1 A in a bundle; 2.05 m cut + 10 % waste",
+      "subtotal": 0.78,
+      "spec": "2.6 m: 0.128 mm2, rated 1.1 A in a bundle; 2.31 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "6.3 mm spade contacts",
-      "qty": 6,
+      "qty": 5,
       "unit_cost": 0.08,
-      "subtotal": 0.48,
-      "spec": "6 pc: rated 15 A per contact",
+      "subtotal": 0.4,
+      "spec": "5 pc: rated 15 A per contact",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "Bootlace ferrule contacts",
-      "qty": 6,
+      "qty": 7,
       "unit_cost": 0.03,
-      "subtotal": 0.18,
-      "spec": "6 pc: rated 17.5 A per contact",
+      "subtotal": 0.21,
+      "spec": "7 pc: rated 17.5 A per contact",
       "note": "price estimated"
     },
     {
@@ -157,10 +166,10 @@
     {
       "category": "Wiring",
       "name": "Cable tie 100 x 2.5 mm",
-      "qty": 21,
+      "qty": 17,
       "unit_cost": 0.02,
-      "subtotal": 0.42,
-      "spec": "21 pc: at every clip, cable end and strain-relief anchor",
+      "subtotal": 0.34,
+      "spec": "17 pc: at every clip, cable end and strain-relief anchor",
       "note": "price estimated"
     },
     {
@@ -193,14 +202,14 @@
     {
       "category": "Wiring",
       "name": "Nylon braided sleeving 6 mm",
-      "qty": 1,
+      "qty": 1.2,
       "unit_cost": 0.4,
-      "subtotal": 0.4,
-      "spec": "1 m: over every cable where it crosses a joint",
+      "subtotal": 0.48,
+      "spec": "1.2 m: over every cable where it crosses a joint",
       "note": "price estimated"
     }
   ],
-  "total": 63.54,
+  "total": 65.49,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
@@ -224,7 +233,7 @@
   ],
   "warnings": [],
   "notes": [
-    "Arduino desk arm: 3 DOF + claw, 280 mm reach, 20 g payload, 0.82 kg, $50 of parts",
+    "Arduino desk arm: 3 DOF + claw, 280 mm reach, 20 g payload, 0.87 kg, $51 of parts",
     "Sized for a 0.02 kg payload.",
     "Joint limits trimmed to the collision-free range found by exact solid sweeps: claw [-0.60, 0.35] -> [0.00, 0.29].",
     "each joint runs on its servo's own output bearing (no extra bearings), as in MeArm-class kits: links are kept short so the servo holds them continuously",

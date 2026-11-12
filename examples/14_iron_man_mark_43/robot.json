@@ -56416,7 +56416,7 @@
   "end_effectors": [],
   "metadata": {
     "generator": "text-to-robot design engine (real components + printed structure)",
-    "created": "2026-11-09T02:07:18.687Z",
+    "created": "2026-11-12T07:03:49.517Z",
     "inferred_fields": [
       "links.arc_reactor.inertia",
       "links.arm_back_left.inertia",
@@ -73769,7 +73769,7 @@
                 "typical_a": 0.8,
                 "peak_a": 2.9,
                 "length_mm": 340,
-                "drop_v": 0.099
+                "drop_v": 0.1
               },
               {
                 "id": "W25",
@@ -73782,7 +73782,7 @@
                 "typical_a": 0.8,
                 "peak_a": 2.9,
                 "length_mm": 340,
-                "drop_v": 0.099
+                "drop_v": 0.1
               }
             ],
             "od_mm": 3.2,
@@ -76768,7 +76768,7 @@
                 "typical_a": 0.25,
                 "peak_a": 0.7,
                 "length_mm": 1310,
-                "drop_v": 0.092
+                "drop_v": 0.093
               },
               {
                 "id": "W55",
@@ -76781,7 +76781,7 @@
                 "typical_a": 0.25,
                 "peak_a": 0.7,
                 "length_mm": 1310,
-                "drop_v": 0.092
+                "drop_v": 0.093
               }
             ],
             "od_mm": 3.2,
@@ -77476,7 +77476,7 @@
                 "typical_a": 0.25,
                 "peak_a": 0.7,
                 "length_mm": 1465,
-                "drop_v": 0.103
+                "drop_v": 0.104
               },
               {
                 "id": "W61",
@@ -77489,7 +77489,7 @@
                 "typical_a": 0.25,
                 "peak_a": 0.7,
                 "length_mm": 1465,
-                "drop_v": 0.103
+                "drop_v": 0.104
               }
             ],
             "od_mm": 3.2,
@@ -78389,7 +78389,7 @@
                 "typical_a": 0.8,
                 "peak_a": 2.9,
                 "length_mm": 285,
-                "drop_v": 0.083
+                "drop_v": 0.084
               },
               {
                 "id": "W67",
@@ -78402,7 +78402,7 @@
                 "typical_a": 0.8,
                 "peak_a": 2.9,
                 "length_mm": 285,
-                "drop_v": 0.083
+                "drop_v": 0.084
               }
             ],
             "od_mm": 3.2,
@@ -78524,7 +78524,7 @@
                 "typical_a": 0.25,
                 "peak_a": 0.7,
                 "length_mm": 1620,
-                "drop_v": 0.114
+                "drop_v": 0.115
               },
               {
                 "id": "W70",
@@ -78537,7 +78537,7 @@
                 "typical_a": 0.25,
                 "peak_a": 0.7,
                 "length_mm": 1620,
-                "drop_v": 0.114
+                "drop_v": 0.115
               }
             ],
             "od_mm": 3.2,
@@ -82581,7 +82581,7 @@
                 "typical_a": 2.72,
                 "peak_a": 7.935,
                 "length_mm": 150,
-                "drop_v": 0.046
+                "drop_v": 0.048
               }
             ],
             "od_mm": 1.5,
@@ -82687,7 +82687,7 @@
                 "typical_a": 2.72,
                 "peak_a": 7.935,
                 "length_mm": 150,
-                "drop_v": 0.046
+                "drop_v": 0.048
               }
             ],
             "od_mm": 1.5,
@@ -82866,7 +82866,7 @@
                 "typical_a": 0.588,
                 "peak_a": 1.765,
                 "length_mm": 160,
-                "drop_v": 0.028
+                "drop_v": 0.029
               },
               {
                 "id": "W104",
@@ -82879,7 +82879,7 @@
                 "typical_a": 0.588,
                 "peak_a": 1.765,
                 "length_mm": 160,
-                "drop_v": 0.028
+                "drop_v": 0.029
               }
             ],
             "od_mm": 2.7,
@@ -82932,7 +82932,7 @@
                 "typical_a": 1.658,
                 "peak_a": 4.926,
                 "length_mm": 160,
-                "drop_v": 0.049
+                "drop_v": 0.05
               },
               {
                 "id": "W106",
@@ -82945,7 +82945,7 @@
                 "typical_a": 1.658,
                 "peak_a": 4.926,
                 "length_mm": 160,
-                "drop_v": 0.049
+                "drop_v": 0.05
               }
             ],
             "od_mm": 2.7,
@@ -83130,7 +83130,7 @@
                 "typical_a": 2.03,
                 "peak_a": 6.03,
                 "length_mm": 160,
-                "drop_v": 0.038
+                "drop_v": 0.039
               },
               {
                 "id": "W112",
@@ -83143,7 +83143,7 @@
                 "typical_a": 2.03,
                 "peak_a": 6.03,
                 "length_mm": 160,
-                "drop_v": 0.038
+                "drop_v": 0.039
               }
             ],
             "od_mm": 2.7,

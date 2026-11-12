@@ -29,9 +29,9 @@
       <geometry><mesh filename="package://arduino_arm/meshes/base_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.032668 -0.0000157789 0.00418" rpy="0 0 0"/>
-      <mass value="0.108979"/>
-      <inertia ixx="0.000111242" ixy="3.82913e-8" ixz="-0.00000556329" iyy="0.000287109" iyz="2.41940e-8" izz="0.00039062"/>
+      <origin xyz="-0.029969 -0.0000145309 0.005858" rpy="0 0 0"/>
+      <mass value="0.118339"/>
+      <inertia ixx="0.000116582" ixy="3.36504e-8" ixz="-0.0000111518" iyy="0.000299729" iyz="4.02248e-8" izz="0.000398147"/>
     </inertial>
   </link>
   <link name="yaw_servo">
@@ -93,9 +93,9 @@
       <geometry><mesh filename="package://arduino_arm/meshes/upper_arm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.102294 -0.0000971774 0.01274" rpy="0 0 0"/>
-      <mass value="0.034146"/>
-      <inertia ixx="0.0000130564" ixy="-1.43861e-7" ixz="0.00000972246" iyy="0.0000945778" iyz="-8.92436e-9" izz="0.0000936555"/>
+      <origin xyz="-0.10249 -0.0000978399 0.012771" rpy="0 0 0"/>
+      <mass value="0.033914"/>
+      <inertia ixx="0.0000130473" ixy="-1.43211e-7" ixz="0.00000969139" iyy="0.0000943784" iyz="-9.02938e-9" izz="0.0000934599"/>
     </inertial>
   </link>
   <link name="elbow_servo">
@@ -125,9 +125,9 @@
       <geometry><mesh filename="package://arduino_arm/meshes/forearm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.097872 0.006124 0.009824" rpy="0 0 0"/>
-      <mass value="0.024826"/>
-      <inertia ixx="0.00000684845" ixy="0.00000910718" ixz="0.00000798221" iyy="0.0000850889" iyz="-0.00000125716" izz="0.0000866286"/>
+      <origin xyz="-0.098082 0.00617 0.009843" rpy="0 0 0"/>
+      <mass value="0.024641"/>
+      <inertia ixx="0.00000683814" ixy="0.00000907531" ixz="0.00000796894" iyy="0.0000849406" iyz="-0.00000125426" izz="0.0000864738"/>
     </inertial>
   </link>
   <link name="claw_servo">
@@ -173,9 +173,9 @@
       <geometry><mesh filename="package://arduino_arm/meshes/console.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.072328 -0.00027792 0.015664" rpy="0 0 0"/>
-      <mass value="0.049577"/>
-      <inertia ixx="0.0000699885" ixy="-7.77488e-7" ixz="-1.95616e-7" iyy="0.0000641893" iyz="1.25363e-7" izz="0.000123488"/>
+      <origin xyz="-0.07273 -0.000384546 0.020205" rpy="0 0 0"/>
+      <mass value="0.065952"/>
+      <inertia ixx="0.000126282" ixy="-9.12746e-7" ixz="-6.59844e-8" iyy="0.0000965845" iyz="2.27578e-7" izz="0.00019665"/>
     </inertial>
   </link>
   <link name="console_lid">
@@ -189,9 +189,9 @@
       <geometry><mesh filename="package://arduino_arm/meshes/console_lid.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.073443 -0.002032 0.038785" rpy="0 0 0"/>
-      <mass value="0.022926"/>
-      <inertia ixx="0.0000194182" ixy="-9.11708e-8" ixz="2.14095e-10" iyy="0.0000184877" iyz="1.00389e-8" izz="0.00003785"/>
+      <origin xyz="-0.073366 -0.002746 0.04979" rpy="0 0 0"/>
+      <mass value="0.025457"/>
+      <inertia ixx="0.000028475" ixy="-1.42174e-7" ixz="-1.82342e-10" iyy="0.0000208798" iyz="1.46483e-8" izz="0.0000492935"/>
     </inertial>
   </link>
   <link name="controller">
@@ -253,9 +253,9 @@
       <geometry><mesh filename="package://arduino_arm/meshes/supply_case.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.219513 -0.00000117224 0.014095" rpy="0 0 0"/>
-      <mass value="0.073304"/>
-      <inertia ixx="0.000113147" ixy="1.16115e-9" ixz="-8.11475e-7" iyy="0.000216112" iyz="-8.07212e-10" izz="0.000298271"/>
+      <origin xyz="-0.235886 -0.000294477 0.013745" rpy="0 0 0"/>
+      <mass value="0.085857"/>
+      <inertia ixx="0.000132824" ixy="-0.00000220858" ixz="-6.60226e-7" iyy="0.000349446" iyz="2.42493e-7" izz="0.000446277"/>
     </inertial>
   </link>
   <link name="supply_case_lid">
@@ -269,9 +269,9 @@
       <geometry><mesh filename="package://arduino_arm/meshes/supply_case_lid.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.225855 1.93644e-12 0.045784" rpy="0 0 0"/>
-      <mass value="0.029182"/>
-      <inertia ixx="0.0000257361" ixy="6.06425e-15" ixz="3.05706e-8" iyy="0.0000579594" iyz="-2.17786e-16" izz="0.0000836243"/>
+      <origin xyz="-0.244182 9.87019e-12 0.045807" rpy="0 0 0"/>
+      <mass value="0.037261"/>
+      <inertia ixx="0.000032158" ixy="3.22034e-14" ixz="5.17243e-8" iyy="0.000103751" iyz="1.56289e-16" izz="0.000135822"/>
     </inertial>
   </link>
   <link name="power_supply">
@@ -309,12 +309,12 @@
   <joint name="yaw_servo_mount" type="fixed">
     <parent link="base_link"/>
     <child link="yaw_servo"/>
-    <origin xyz="0 0 0.0417" rpy="0 0 0"/>
+    <origin xyz="0 0 0.0527" rpy="0 0 0"/>
   </joint>
   <joint name="yaw" type="revolute">
     <parent link="base_link"/>
     <child link="turntable"/>
-    <origin xyz="0 0 0.0417" rpy="0 0 0"/>
+    <origin xyz="0 0 0.0527" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
     <limit lower="-1.571" upper="1.571" effort="0.1765" velocity="10.472"/>
     <dynamics damping="0.0034" friction="0.0035"/>
@@ -371,17 +371,17 @@
   <joint name="controller_mount" type="fixed">
     <parent link="console"/>
     <child link="controller"/>
-    <origin xyz="-0.1099 -0.044 0.0124" rpy="0 0 0"/>
+    <origin xyz="-0.1099 -0.051 0.0124" rpy="0 0 0"/>
   </joint>
   <joint name="servo_driver_mount" type="fixed">
     <parent link="console"/>
     <child link="servo_driver"/>
-    <origin xyz="-0.0934 0.016 0.0124" rpy="0 0 0"/>
+    <origin xyz="-0.0934 0.009 0.0124" rpy="0 0 0"/>
   </joint>
   <joint name="main_switch_mount" type="fixed">
     <parent link="console"/>
     <child link="main_switch"/>
-    <origin xyz="-0.1198 0.032 0.0224" rpy="0 -1.570796 0"/>
+    <origin xyz="-0.1054 0.0556 0.0279" rpy="0 -1.570796 -1.570796"/>
   </joint>
   <joint name="supply_case_mount" type="fixed">
     <parent link="base_link"/>
@@ -401,6 +401,6 @@
   <joint name="mains_inlet_mount" type="fixed">
     <parent link="supply_case"/>
     <child link="mains_inlet"/>
-    <origin xyz="-0.2924 0 0.0234" rpy="0 -1.570796 0"/>
+    <origin xyz="-0.3244 0.01 0.0234" rpy="0 -1.570796 0"/>
   </joint>
 </robot>

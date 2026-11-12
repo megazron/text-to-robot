@@ -31,6 +31,15 @@
     },
     {
       "category": "Power",
+      "name": "Half-size solderless breadboard, 400 points, adhesive back",
+      "qty": 2,
+      "unit_cost": 2,
+      "subtotal": 4,
+      "spec": "https://www.adafruit.com/product/64",
+      "note": "plug-in wiring for the ESP32-S3 (stuck to the deck by its adhesive back); plug-in wiring for the three stepper drivers (stuck to the deck by its adhesive back) · https://www.adafruit.com/product/64"
+    },
+    {
+      "category": "Power",
       "name": "Aluminium flexible beam coupler 5 mm to 8 mm (D19 L25)",
       "qty": 1,
       "unit_cost": 2.5,
@@ -177,9 +186,9 @@
       "category": "Printed structure",
       "name": "PETG filament for 13 printed parts",
       "qty": 1,
-      "unit_cost": 49.69,
-      "subtotal": 49.69,
-      "spec": "1964 g of parts (+15 % supports/waste), about 179.0 h of printing",
+      "unit_cost": 52.66,
+      "subtotal": 52.66,
+      "spec": "2081 g of parts (+15 % supports/waste), about 189.7 h of printing",
       "note": "base_link, column, column_top, inner_arm, outer_arm, wrist_flange, gripper_body, pinion, finger_a, finger_b, controller_box, controller_deck, controller_lid"
     },
     {
@@ -193,37 +202,37 @@
     {
       "category": "Wiring",
       "name": "20 AWG silicone wire",
-      "qty": 10.9,
+      "qty": 12.3,
       "unit_cost": 0.5,
-      "subtotal": 5.45,
-      "spec": "10.9 m: 0.519 mm2, rated 5.5 A in a bundle; 9.88 m cut + 10 % waste",
+      "subtotal": 6.15,
+      "spec": "12.3 m: 0.519 mm2, rated 5.5 A in a bundle; 11.11 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "22 AWG silicone wire",
-      "qty": 5.5,
+      "qty": 6.1,
       "unit_cost": 0.4,
-      "subtotal": 2.2,
-      "spec": "5.5 m: 0.327 mm2, rated 3.5 A in a bundle; 4.96 m cut + 10 % waste",
+      "subtotal": 2.44,
+      "spec": "6.1 m: 0.327 mm2, rated 3.5 A in a bundle; 5.51 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "24 AWG silicone wire",
-      "qty": 6.8,
+      "qty": 6.3,
       "unit_cost": 0.35,
-      "subtotal": 2.38,
-      "spec": "6.8 m: 0.205 mm2, rated 1.75 A in a bundle; 6.15 m cut + 10 % waste",
+      "subtotal": 2.2,
+      "spec": "6.3 m: 0.205 mm2, rated 1.75 A in a bundle; 5.66 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "26 AWG silicone wire",
-      "qty": 3.6,
+      "qty": 3.9,
       "unit_cost": 0.3,
-      "subtotal": 1.08,
-      "spec": "3.6 m: 0.128 mm2, rated 1.1 A in a bundle; 3.25 m cut + 10 % waste",
+      "subtotal": 1.17,
+      "spec": "3.9 m: 0.128 mm2, rated 1.1 A in a bundle; 3.51 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
@@ -292,10 +301,10 @@
     {
       "category": "Wiring",
       "name": "Cable tie 100 x 2.5 mm",
-      "qty": 32,
+      "qty": 22,
       "unit_cost": 0.02,
-      "subtotal": 0.64,
-      "spec": "32 pc: at every clip, cable end and strain-relief anchor",
+      "subtotal": 0.44,
+      "spec": "22 pc: at every clip, cable end and strain-relief anchor",
       "note": "price estimated"
     },
     {
@@ -310,49 +319,49 @@
     {
       "category": "Wiring",
       "name": "Nylon braided sleeving 6 mm",
-      "qty": 1.3,
+      "qty": 1.9,
       "unit_cost": 0.4,
-      "subtotal": 0.52,
-      "spec": "1.3 m: over every cable where it crosses a joint",
+      "subtotal": 0.76,
+      "spec": "1.9 m: over every cable where it crosses a joint",
       "note": "price estimated"
     }
   ],
-  "total": 359,
+  "total": 366.86,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
   "actuator_sizing": [
     {
       "joint": "j1",
-      "required_effort": 1.224,
+      "required_effort": 1.235,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.224,
+      "required_torque_nm": 1.235,
       "chosen": "NEMA17 stepper + 5.18:1 planetary gearbox (StepperOnline 17HS19-1684S-PG5)",
-      "margin": "1.63x"
+      "margin": "1.62x"
     },
     {
       "joint": "j2",
-      "required_effort": 0.369,
+      "required_effort": 0.372,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.369,
+      "required_torque_nm": 0.372,
       "chosen": "NEMA17 stepper + 5.18:1 planetary gearbox (StepperOnline 17HS19-1684S-PG5)",
-      "margin": "5.42x"
+      "margin": "5.37x"
     },
     {
       "joint": "z",
-      "required_effort": 36.6,
+      "required_effort": 36.8,
       "effort_unit": "N",
-      "required_force_n": 36.6,
+      "required_force_n": 36.8,
       "chosen": "NEMA17 stepper 42x42x40 mm, 0.45 N.m (StepperOnline 17HS16-2004S1)",
-      "margin": "4.3x"
+      "margin": "4.29x"
     },
     {
       "joint": "wrist_roll",
-      "required_effort": 0.047,
+      "required_effort": 0.048,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.047,
+      "required_torque_nm": 0.048,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "20.88x"
+      "margin": "20.5x"
     },
     {
       "joint": "finger_a",
@@ -365,10 +374,10 @@
   ],
   "warnings": [],
   "notes": [
-    "SCARA arm: 0.30 m reach, 159 mm Z stroke, 0.5 kg payload; NEMA17 + 5.18:1 planetary on J1/J2, Tr8x8 lead-screw Z, Feetech STS3215 C047 12 V 30 kg.cm (1:345) wrist, parallel gripper",
+    "SCARA arm: 0.30 m reach, 153 mm Z stroke, 0.5 kg payload; NEMA17 + 5.18:1 planetary on J1/J2, Tr8x8 lead-screw Z, Feetech STS3215 C047 12 V 30 kg.cm (1:345) wrist, parallel gripper",
     "Sized for a 0.5 kg payload.",
     "J1: a direct-drive NEMA17 (0.3 N·m pull-out) would give only 0.27x margin, so the 5.18:1 planetary is used.",
-    "J2: a direct-drive NEMA17 (0.3 N·m pull-out) would give only 0.88x margin, so the 5.18:1 planetary is used.",
+    "J2: a direct-drive NEMA17 (0.3 N·m pull-out) would give only 0.87x margin, so the 5.18:1 planetary is used.",
     "Unpowered, the Z carriage slowly back-drives the 8 mm-lead screw and settles on its lower stop; a 2 mm-lead screw would self-lock at a quarter of the speed.",
     "Sizing targets: J1 8 rad/s², J2 12 rad/s², wrist 30 rad/s², Z 2 m/s² with 0.5 kg at full reach; steppers keep >= 1.5x margin on their usable torque so they do not lose steps.",
     "J1 and J2 are vertical axes: gravity loads their bearings, not their motors. Each output hub runs in two thin-section bearings that carry the overhung moment; the gearbox shaft only transmits torque.",
@@ -378,6 +387,7 @@
     "J2 is limited to ±127° so the gripper never swings into the column or base.",
     "Steppers run open loop with sensorless homing (TMC2209 StallGuard) or end-stop switches (not modelled); the ESP32-S3 runs the kinematics and talks to the drivers over STEP/DIR + UART and to the servos over the bus adapter.",
     "Controller box: printed case with a screwed lid and an electronics deck; mains come in through a fused, switched IEC inlet, earth wired first.",
+    "The ESP32-S3 and the three TMC2209 StepSticks plug into two solderless breadboards on the deck and are wired with jumpers. Breadboard contacts are meant for about 1 A: the drivers are set to the motors' run current (60 % of the phase current, about 1 to 1.2 A), and a soldered StepStick carrier is the step up for continuous duty.",
     "Prices are list/street prices from the linked suppliers at the time the catalog was written; check before ordering."
   ]
 }

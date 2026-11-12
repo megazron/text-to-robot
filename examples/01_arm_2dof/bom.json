@@ -60,9 +60,9 @@
       "category": "Printed structure",
       "name": "PETG filament for 6 printed parts",
       "qty": 1,
-      "unit_cost": 12.76,
-      "subtotal": 12.76,
-      "spec": "504 g of parts (+15 % supports/waste), about 46.0 h of printing",
+      "unit_cost": 13.66,
+      "subtotal": 13.66,
+      "spec": "540 g of parts (+15 % supports/waste), about 49.2 h of printing",
       "note": "base_link, upper_arm, forearm, gripper_jaw, control_case, control_case_lid"
     },
     {
@@ -75,29 +75,38 @@
     },
     {
       "category": "Wiring",
+      "name": "20 AWG silicone wire",
+      "qty": 0.6,
+      "unit_cost": 0.5,
+      "subtotal": 0.3,
+      "spec": "0.6 m: 0.519 mm2, rated 5.5 A in a bundle; 0.51 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
       "name": "22 AWG silicone wire",
-      "qty": 2.1,
+      "qty": 2.4,
       "unit_cost": 0.4,
-      "subtotal": 0.84,
-      "spec": "2.1 m: 0.327 mm2, rated 3.5 A in a bundle; 1.89 m cut + 10 % waste",
+      "subtotal": 0.96,
+      "spec": "2.4 m: 0.327 mm2, rated 3.5 A in a bundle; 2.15 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "24 AWG silicone wire",
-      "qty": 2.3,
+      "qty": 2.4,
       "unit_cost": 0.35,
-      "subtotal": 0.8,
-      "spec": "2.3 m: 0.205 mm2, rated 1.75 A in a bundle; 2.06 m cut + 10 % waste",
+      "subtotal": 0.84,
+      "spec": "2.4 m: 0.205 mm2, rated 1.75 A in a bundle; 2.12 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "26 AWG silicone wire",
-      "qty": 1.7,
+      "qty": 1.8,
       "unit_cost": 0.3,
-      "subtotal": 0.51,
-      "spec": "1.7 m: 0.128 mm2, rated 1.1 A in a bundle; 1.50 m cut + 10 % waste",
+      "subtotal": 0.54,
+      "spec": "1.8 m: 0.128 mm2, rated 1.1 A in a bundle; 1.61 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
@@ -148,10 +157,10 @@
     {
       "category": "Wiring",
       "name": "Cable tie 100 x 2.5 mm",
-      "qty": 10,
+      "qty": 7,
       "unit_cost": 0.02,
-      "subtotal": 0.2,
-      "spec": "10 pc: at every clip, cable end and strain-relief anchor",
+      "subtotal": 0.14,
+      "spec": "7 pc: at every clip, cable end and strain-relief anchor",
       "note": "price estimated"
     },
     {
@@ -166,33 +175,33 @@
     {
       "category": "Wiring",
       "name": "Nylon braided sleeving 6 mm",
-      "qty": 0.4,
+      "qty": 0.5,
       "unit_cost": 0.4,
-      "subtotal": 0.16,
-      "spec": "0.4 m: over every cable where it crosses a joint",
+      "subtotal": 0.2,
+      "spec": "0.5 m: over every cable where it crosses a joint",
       "note": "price estimated"
     }
   ],
-  "total": 145.15,
+  "total": 146.52,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
   "actuator_sizing": [
     {
       "joint": "shoulder_pitch",
-      "required_effort": 1.332,
+      "required_effort": 1.329,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.332,
+      "required_torque_nm": 1.329,
       "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
-      "margin": "3.68x"
+      "margin": "3.69x"
     },
     {
       "joint": "elbow_pitch",
-      "required_effort": 0.543,
+      "required_effort": 0.542,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.543,
+      "required_torque_nm": 0.542,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "5.42x"
+      "margin": "5.43x"
     }
   ],
   "warnings": [],

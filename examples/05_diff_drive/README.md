@@ -6,37 +6,37 @@
 
 Interpreted as: differential-drive base · lidar (base_link) · imu (base_link)
 
-**Differential-drive base: pololu_37d_30to1_64cpr gearmotors, 1.487 kg, 1.24 m/s, 1.8 h on 1 x lipo_3s_2200, rpi5**
+**Differential-drive base: pololu_37d_30to1_64cpr gearmotors, 1.521 kg, 1.24 m/s, 1.8 h on 1 x lipo_3s_2200, rpi5**
 
-Parts cost **$512.23** · printed structure 15 parts, 565 g · checks passed 49/49
+Parts cost **$513.72** · printed structure 15 parts, 599 g · checks passed 49/49
 
 ## What it can do
 
 | | |
 |---|--:|
-| mass kg | 1.487 |
-| loaded mass kg | 2.487 |
+| mass kg | 1.521 |
+| loaded mass kg | 2.521 |
 | top speed m s | 1.24 |
-| wheel torque nm | 0.14 |
+| wheel torque nm | 0.141 |
 | drive motor | pololu_37d_30to1_64cpr |
 | battery | 1 x lipo_3s_2200 |
-| average power w | 10.8 |
+| average power w | 10.9 |
 | runtime h | 1.8 |
-| tip angle deg | 37.7 |
+| tip angle deg | 36.7 |
 | compute | rpi5 |
 | slope deg | 10 |
 | turn rate rad s | 5.22 |
 | turn slip factor | 1 |
 | cargo kg | 1 |
-| cost usd | 514 |
-| cost breakdown | catalog parts $479, filament 0.65 kg $16, fasteners $8, fabricated/other $0 (power switch, 15 A fuse, wiring) |
+| cost usd | 516 |
+| cost breakdown | catalog parts $479, filament 0.69 kg $17, fasteners $8, fabricated/other $0 (power switch, 15 A fuse, wiring) |
 
 ## Actuators (sized from this robot's own loads)
 
 | Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
 |---|---|--:|--:|--:|--:|
-| left_wheel_joint | pololu_37d_30to1_64cpr | 0.14 | 0.686 / 1.373 | 4.92x | 34.558 |
-| right_wheel_joint | pololu_37d_30to1_64cpr | 0.14 | 0.686 / 1.373 | 4.92x | 34.558 |
+| left_wheel_joint | pololu_37d_30to1_64cpr | 0.141 | 0.686 / 1.373 | 4.85x | 34.558 |
+| right_wheel_joint | pololu_37d_30to1_64cpr | 0.141 | 0.686 / 1.373 | 4.85x | 34.558 |
 
 ## Engineering checks
 
@@ -60,7 +60,7 @@ All 49 checks pass (torque, speed, power, stability, print-bed fit). Details in 
 |---|---|---|
 | ✅ | drive straight | 3.44 m in 4.01 s, cruise speed 1.212 m/s vs claimed 1.240 m/s, heading drift 0.1 deg, lateral 0.3 cm |
 | ✅ | ramp 10deg | from standstill on a 10 deg slope (speed ramped over 4.7 s at 0.5 m/s^2): 5.19 m uphill in 6.7 s, speed 1.205 m/s of 1.240 commanded |
-| ✅ | turn in place | mean yaw rate 5.22 rad/s with 5.06 commanded (no-slip), claimed 5.22 rad/s (needs >= 4.44), centre moved 0.1 cm over 2.1 turn(s) (0.1 cm per turn) |
+| ✅ | turn in place | mean yaw rate 5.21 rad/s with 5.06 commanded (no-slip), claimed 5.22 rad/s (needs >= 4.44), centre moved 0.7 cm over 2.1 turn(s) (0.3 cm per turn) |
 
 _PASS means the modelled actuators (datasheet peak torque as a hard limit, a linear torque-speed line to no-load speed, reflected rotor inertia, URDF damping/friction) can produce the torques and speeds the task needs in this geometry and mass distribution, and that mean torque over the hold stays within the continuous (rated) torque. Joint control uses an ideal model-based feedforward (computed torque) through the force-limited servo for fixed-base robots and plain position servos for floating robots; a pass therefore proves torque/speed capacity, not that a given controller achieves it. Untested: thermal limits over long duty cycles (only the mean-vs-rated proxy), gearbox backlash and compliance, link and joint flexibility, encoder resolution, supply voltage sag and current limits, bus latency, controller tuning, and contact/friction values (nominal friction only)._
 <!-- /SIM -->

@@ -1,6 +1,6 @@
 # Bill of materials: mecanum_robot
 
-**Estimated total: $816.72**  ·  tier: hobby
+**Estimated total: $818.51**  ·  tier: hobby
 
 **Effort sizing: passes catalogue estimate; hardware verified: no.**
 
@@ -17,21 +17,21 @@
 | Sensor | Slamtec RPLIDAR C1 (DTOF 360 deg, 12 m) _(2D lidar · https://www.waveshare.com/rplidar-c1.htm)_ | 1 | 79.99 | 79.99 | 5 V |
 | Power | KCD4 double-pole rocker switch, 16 A 250 VAC / 20 A 125 VAC _(main power switch · https://www.aliexpress.com/w/wholesale-kcd4-rocker-switch.html)_ | 1 | 1 | 1 | https://www.aliexpress.com/w/wholesale-kcd4-rocker-switch.html |
 | Power | WAGO 221-415 five-way lever splice _(rail splices, the star ground and bus hubs · https://www.wago.com/global/electrical-interconnections/compact-splicing-connector/p/221-415)_ | 3 | 0.8 | 2.4 | 450 V |
-| Printed structure | PETG filament for 15 printed parts _(front_left_bracket, front_right_bracket, rear_left_bracket, rear_right_bracket, battery_tray, computer_tray, motor_driver_1_tray, motor_driver_2_tray, imu_tray, regulator_5v_tray, electronics_enclosure_front, electronics_enclosure_rear, electronics_lid_front, electronics_lid_rear, lidar_mast)_ | 1 | 8.22 | 8.22 | 325 g of parts (+15 % supports/waste), about 29.6 h of printing |
+| Printed structure | PETG filament for 15 printed parts _(front_left_bracket, front_right_bracket, rear_left_bracket, rear_right_bracket, battery_tray, computer_tray, motor_driver_1_tray, motor_driver_2_tray, imu_tray, regulator_5v_tray, electronics_enclosure_front, electronics_enclosure_rear, electronics_lid_front, electronics_lid_rear, lidar_mast)_ | 1 | 9.21 | 9.21 | 364 g of parts (+15 % supports/waste), about 33.2 h of printing |
 | Fasteners | Screws, nuts and inserts | 84 | 0.12 | 10.08 | 24x M3 x 8 socket head (motor face); 8x M3 x 10 socket head + nut (bracket to deck); 1x 20 mm hook-and-loop battery strap; 12x M3 x 8 socket head (tray to deck); 19x M2.5 x 6 screws (board to standoffs); 8x M3 x 8 + nut (enclosure pieces lap joint); 4x M3 x 10 self-tapping (enclosure lid); 4x M3 x 8 + nut (enclosure tabs to deck; drill 3.4 mm through the deck at the tabs); 4x M2.5 x 6 (lidar) |
-| Wiring | 14 AWG silicone wire _(price estimated)_ | 0.8 | 1.5 | 1.2 | 0.8 m: 2.082 mm2, rated 16 A in a bundle; 0.67 m cut + 10 % waste |
-| Wiring | 18 AWG silicone wire _(price estimated)_ | 1.3 | 0.7 | 0.91 | 1.3 m: 0.823 mm2, rated 8 A in a bundle; 1.11 m cut + 10 % waste |
-| Wiring | 20 AWG silicone wire _(price estimated)_ | 1 | 0.5 | 0.5 | 1 m: 0.519 mm2, rated 5.5 A in a bundle; 0.88 m cut + 10 % waste |
-| Wiring | 22 AWG silicone wire _(price estimated)_ | 3.4 | 0.4 | 1.36 | 3.4 m: 0.327 mm2, rated 3.5 A in a bundle; 3.03 m cut + 10 % waste |
-| Wiring | 24 AWG silicone wire _(price estimated)_ | 4.9 | 0.35 | 1.72 | 4.9 m: 0.205 mm2, rated 1.75 A in a bundle; 4.40 m cut + 10 % waste |
-| Wiring | 26 AWG silicone wire _(price estimated)_ | 5.9 | 0.3 | 1.77 | 5.9 m: 0.128 mm2, rated 1.1 A in a bundle; 5.36 m cut + 10 % waste |
+| Wiring | 14 AWG silicone wire _(price estimated)_ | 1 | 1.5 | 1.5 | 1 m: 2.082 mm2, rated 16 A in a bundle; 0.83 m cut + 10 % waste |
+| Wiring | 18 AWG silicone wire _(price estimated)_ | 1.3 | 0.7 | 0.91 | 1.3 m: 0.823 mm2, rated 8 A in a bundle; 1.15 m cut + 10 % waste |
+| Wiring | 20 AWG silicone wire _(price estimated)_ | 2.4 | 0.5 | 1.2 | 2.4 m: 0.519 mm2, rated 5.5 A in a bundle; 2.10 m cut + 10 % waste |
+| Wiring | 22 AWG silicone wire _(price estimated)_ | 2.7 | 0.4 | 1.08 | 2.7 m: 0.327 mm2, rated 3.5 A in a bundle; 2.43 m cut + 10 % waste |
+| Wiring | 24 AWG silicone wire _(price estimated)_ | 5.1 | 0.35 | 1.78 | 5.1 m: 0.205 mm2, rated 1.75 A in a bundle; 4.63 m cut + 10 % waste |
+| Wiring | 26 AWG silicone wire _(price estimated)_ | 6.7 | 0.3 | 2.01 | 6.7 m: 0.128 mm2, rated 1.1 A in a bundle; 6.01 m cut + 10 % waste |
 | Wiring | Dupont 2.54 mm contacts _(price estimated)_ | 46 | 0.02 | 0.92 | 46 pc: rated 3 A per contact |
 | Wiring | Dupont 2.54 mm housings _(price estimated)_ | 11 | 0.02 | 0.22 | 11 pc: one per cable end |
 | Wiring | Bootlace ferrule contacts _(price estimated)_ | 12 | 0.03 | 0.36 | 12 pc: rated 17.5 A per contact |
 | Wiring | XT60 contacts _(price estimated)_ | 2 | 0.9 | 1.8 | 2 pc: rated 35 A per contact |
 | Wiring | 6.3 mm spade contacts _(price estimated)_ | 2 | 0.08 | 0.16 | 2 pc: rated 15 A per contact |
 | Wiring | Heat shrink 3 mm, 2:1 _(price estimated)_ | 2.2 | 0.2 | 0.44 | 2.2 m: 31 solder joints + a boot on each cable end |
-| Wiring | Cable tie 100 x 2.5 mm _(price estimated)_ | 40 | 0.02 | 0.8 | 40 pc: at every clip, cable end and strain-relief anchor |
+| Wiring | Cable tie 100 x 2.5 mm _(price estimated)_ | 29 | 0.02 | 0.58 | 29 pc: at every clip, cable end and strain-relief anchor |
 | Wiring | Rubber grommet, 6.4 mm panel hole, 3.2 mm bore _(price estimated)_ | 2 | 0.08 | 0.16 | 2 pc: 9.5 mm panel hole |
 | Wiring | USB _(price estimated)_ | 1 | 3 | 3 | 1 pc: lidar to computer |
 | Wiring | 15 A ATM blade fuse _(price estimated)_ | 1 | 0.25 | 0.25 | 1 pc: plus spares |
@@ -41,13 +41,13 @@
 
 | Joint | Required effort | Unit | Chosen actuator | Margin |
 |---|--:|---|---|--:|
-| front_left_wheel_joint | 0.173 | N·m | Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752) | 3.96x |
-| front_right_wheel_joint | 0.173 | N·m | Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752) | 3.96x |
-| rear_left_wheel_joint | 0.173 | N·m | Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752) | 3.96x |
-| rear_right_wheel_joint | 0.173 | N·m | Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752) | 3.96x |
+| front_left_wheel_joint | 0.175 | N·m | Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752) | 3.93x |
+| front_right_wheel_joint | 0.175 | N·m | Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752) | 3.93x |
+| rear_left_wheel_joint | 0.175 | N·m | Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752) | 3.93x |
+| rear_right_wheel_joint | 0.175 | N·m | Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752) | 3.93x |
 
 ## Notes
-- Mecanum holonomic base: pololu_37d_30to1_64cpr gearmotors, 2.919 kg, 1.33 m/s, 1.58 h on 1 x lipo_3s_2200, rpi5
+- Mecanum holonomic base: pololu_37d_30to1_64cpr gearmotors, 2.958 kg, 1.33 m/s, 1.58 h on 1 x lipo_3s_2200, rpi5
 - Drive sized for the robot plus 2 kg cargo on a 10 deg slope accelerating at 0.5 m/s^2, rolling resistance 0.03; motors compared at their continuous (not stall) rating.
 - All motors and servos are 12 V parts run straight from a 3S LiPo (9.9-12.6 V) through the main fuse and switch; see WIRING.md.
 - Printed parts: PETG; brackets bolt to the deck with M3 screws and nuts; the motor face screws are the gearmotor's own six M3 holes.

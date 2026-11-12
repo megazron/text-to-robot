@@ -33,7 +33,7 @@
 <path d="M1240 543 H1344 V585.5 H946 V628 H1050" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C8 W22 GND: wrist_roll_actuator.bus_b.GND to gripper_actuator.bus_a.GND, 24 AWG</title></path>
 <path d="M1240 556 H1354 V598.5 H936 V641 H1050" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C8 W23 BUS_SERVO_BUS: wrist_roll_actuator.bus_b.DATA to gripper_actuator.bus_a.DATA, 26 AWG</title></path>
 <path d="M220 144 H344 V137.5 H926 V131 H1050" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C9 W24 VBUS: power_supply.dc_out.DC OUTPUT +V to base_yaw_actuator.bus_a.VDD, 20 AWG</title></path>
-<path d="M220 157 H234 V137.5 H1036 V118 H1050" fill="none" stroke="#111111" stroke-width="2" opacity="0.8"><title>C9 W25 GND: power_supply.dc_out.DC OUTPUT -V to base_yaw_actuator.bus_a.GND, 18 AWG</title></path>
+<path d="M220 157 H234 V137.5 H1036 V118 H1050" fill="none" stroke="#111111" stroke-width="2" opacity="0.8"><title>C9 W25 GND: power_supply.dc_out.DC OUTPUT -V to base_yaw_actuator.bus_a.GND, 16 AWG</title></path>
 <rect x="1050" y="74" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1057" y="89" font-weight="700">base_yaw_actuator</text>
 <text x="1057" y="108.5" fill="#333">DATA</text>
 <text x="1057" y="121.5" fill="#333">GND</text>

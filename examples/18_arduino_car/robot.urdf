@@ -3,7 +3,7 @@
      robot: arduino_car
      prompt: An Arduino 4WD obstacle avoiding car with an ultrasonic sensor
 
-     19 links, 18 joints, 19 inferred values
+     20 links, 19 joints, 20 inferred values
 -->
 <robot name="arduino_car">
   <material name="printed"><color rgba="0.93 0.93 0.95 1"/></material>
@@ -29,9 +29,9 @@
       <geometry><mesh filename="package://arduino_car/meshes/chassis.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.0000226652 -3.49945e-12 0.044352" rpy="0 0 0"/>
-      <mass value="0.091938"/>
-      <inertia ixx="0.0000996459" ixy="7.43887e-15" ixz="3.32992e-9" iyy="0.000298592" iyz="-6.91661e-15" izz="0.000393585"/>
+      <origin xyz="0.004846 0.0000127583 0.044581" rpy="0 0 0"/>
+      <mass value="0.108909"/>
+      <inertia ixx="0.000141764" ixy="5.53085e-7" ixz="-7.22808e-7" iyy="0.00043158" iyz="7.91396e-10" izz="0.000568484"/>
     </inertial>
   </link>
   <link name="front_left_motor">
@@ -173,9 +173,9 @@
       <geometry><mesh filename="package://arduino_car/meshes/electronics_bay.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.004697 -0.000365364 0.060963" rpy="0 0 0"/>
-      <mass value="0.029696"/>
-      <inertia ixx="0.0000566367" ixy="-0.00000151428" ixz="-3.63865e-8" iyy="0.000147388" iyz="9.81567e-9" izz="0.00020063"/>
+      <origin xyz="0.000428992 0.000416399 0.066033" rpy="0 0 0"/>
+      <mass value="0.045696"/>
+      <inertia ixx="0.000108661" ixy="-0.00000264154" ixz="-1.05382e-7" iyy="0.000280626" iyz="1.16300e-7" izz="0.000379408"/>
     </inertial>
   </link>
   <link name="electronics_bay_lid">
@@ -189,9 +189,9 @@
       <geometry><mesh filename="package://arduino_car/meshes/electronics_bay_lid.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.009152 4.61394e-18 0.07506" rpy="0 0 0"/>
-      <mass value="0.034913"/>
-      <inertia ixx="0.0000314806" ixy="-5.15533e-21" ixz="2.62810e-8" iyy="0.0000919613" iyz="1.42576e-22" izz="0.00012338"/>
+      <origin xyz="0.004775 -0.001689 0.085075" rpy="0 0 0"/>
+      <mass value="0.042798"/>
+      <inertia ixx="0.0000455941" ixy="-0.00000415751" ixz="-2.97002e-8" iyy="0.000145105" iyz="1.26179e-8" izz="0.000190627"/>
     </inertial>
   </link>
   <link name="battery">
@@ -211,6 +211,22 @@
     </inertial>
   </link>
   <link name="breadboard">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://arduino_car/meshes/breadboard_400.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://arduino_car/meshes/breadboard_400.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.04125 0.02725 0.003903" rpy="0 0 0"/>
+      <mass value="0.03"/>
+      <inertia ixx="0.0000079669" ixy="-1.24894e-21" ixz="-1.43274e-22" iyy="0.0000174921" iyz="5.69046e-24" izz="0.0000251433"/>
+    </inertial>
+  </link>
+  <link name="breadboard_2">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry><mesh filename="package://arduino_car/meshes/breadboard_400.stl"/></geometry>
@@ -301,9 +317,9 @@
       <geometry><mesh filename="package://arduino_car/meshes/sensor_bracket.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.094167 -7.79695e-18 0.05685" rpy="0 0 0"/>
-      <mass value="0.006325"/>
-      <inertia ixx="0.00000230467" ixy="4.58869e-23" ixz="-1.17242e-7" iyy="6.26832e-7" iyz="1.97071e-22" izz="0.0000019826"/>
+      <origin xyz="0.111225 2.58309e-19 0.057376" rpy="0 0 0"/>
+      <mass value="0.005878"/>
+      <inertia ixx="0.00000226904" ixy="4.88957e-23" ixz="-1.14693e-7" iyy="6.01287e-7" iyz="6.37972e-22" izz="0.00000196851"/>
     </inertial>
   </link>
   <link name="ultrasonic">
@@ -325,12 +341,12 @@
   <joint name="front_left_motor_mount" type="fixed">
     <parent link="chassis"/>
     <child link="front_left_motor"/>
-    <origin xyz="0.066 0.056 0.0325" rpy="1.570796 0 3.141593"/>
+    <origin xyz="0.07 0.061 0.0325" rpy="1.570796 0 3.141593"/>
   </joint>
   <joint name="front_left_wheel_joint" type="continuous">
     <parent link="chassis"/>
     <child link="front_left_wheel"/>
-    <origin xyz="0.066 0.057 0.0325" rpy="-1.570796 0 0"/>
+    <origin xyz="0.07 0.062 0.0325" rpy="-1.570796 0 0"/>
     <axis xyz="0 0 1"/>
     <limit effort="0.0785" velocity="20.944"/>
     <dynamics damping="0.000375" friction="0.0016"/>
@@ -338,12 +354,12 @@
   <joint name="front_right_motor_mount" type="fixed">
     <parent link="chassis"/>
     <child link="front_right_motor"/>
-    <origin xyz="0.066 -0.056 0.0325" rpy="-1.570796 0 3.141593"/>
+    <origin xyz="0.07 -0.061 0.0325" rpy="-1.570796 0 3.141593"/>
   </joint>
   <joint name="front_right_wheel_joint" type="continuous">
     <parent link="chassis"/>
     <child link="front_right_wheel"/>
-    <origin xyz="0.066 -0.057 0.0325" rpy="1.570796 0 0"/>
+    <origin xyz="0.07 -0.062 0.0325" rpy="1.570796 0 0"/>
     <axis xyz="0 0 1"/>
     <limit effort="0.0785" velocity="20.944"/>
     <dynamics damping="0.000375" friction="0.0016"/>
@@ -351,12 +367,12 @@
   <joint name="rear_left_motor_mount" type="fixed">
     <parent link="chassis"/>
     <child link="rear_left_motor"/>
-    <origin xyz="-0.066 0.056 0.0325" rpy="-1.570796 0 0"/>
+    <origin xyz="-0.07 0.061 0.0325" rpy="-1.570796 0 0"/>
   </joint>
   <joint name="rear_left_wheel_joint" type="continuous">
     <parent link="chassis"/>
     <child link="rear_left_wheel"/>
-    <origin xyz="-0.066 0.057 0.0325" rpy="-1.570796 0 0"/>
+    <origin xyz="-0.07 0.062 0.0325" rpy="-1.570796 0 0"/>
     <axis xyz="0 0 1"/>
     <limit effort="0.0785" velocity="20.944"/>
     <dynamics damping="0.000375" friction="0.0016"/>
@@ -364,12 +380,12 @@
   <joint name="rear_right_motor_mount" type="fixed">
     <parent link="chassis"/>
     <child link="rear_right_motor"/>
-    <origin xyz="-0.066 -0.056 0.0325" rpy="1.570796 0 0"/>
+    <origin xyz="-0.07 -0.061 0.0325" rpy="1.570796 0 0"/>
   </joint>
   <joint name="rear_right_wheel_joint" type="continuous">
     <parent link="chassis"/>
     <child link="rear_right_wheel"/>
-    <origin xyz="-0.066 -0.057 0.0325" rpy="1.570796 0 0"/>
+    <origin xyz="-0.07 -0.062 0.0325" rpy="1.570796 0 0"/>
     <axis xyz="0 0 1"/>
     <limit effort="0.0785" velocity="20.944"/>
     <dynamics damping="0.000375" friction="0.0016"/>
@@ -387,32 +403,37 @@
   <joint name="battery_mount" type="fixed">
     <parent link="electronics_bay"/>
     <child link="battery"/>
-    <origin xyz="-0.0902 0 0.04795" rpy="0 0 0"/>
+    <origin xyz="-0.094 -0.0295 0.04795" rpy="0 0 0"/>
   </joint>
   <joint name="breadboard_mount" type="fixed">
     <parent link="electronics_bay"/>
     <child link="breadboard"/>
-    <origin xyz="0.079 -0.04125 0.04795" rpy="0 0 1.570796"/>
+    <origin xyz="-0.094 -0.0045 0.04795" rpy="0 0 0"/>
+  </joint>
+  <joint name="breadboard_2_mount" type="fixed">
+    <parent link="electronics_bay"/>
+    <child link="breadboard_2"/>
+    <origin xyz="-0.0115 -0.0045 0.04795" rpy="0 0 0"/>
   </joint>
   <joint name="main_switch_mount" type="fixed">
     <parent link="electronics_bay"/>
     <child link="main_switch"/>
-    <origin xyz="-0.0517 0.049 0.06095" rpy="0 -1.570796 -1.570796"/>
+    <origin xyz="0.086 -0.054 0.05995" rpy="1.570796 0 0"/>
   </joint>
   <joint name="controller_mount" type="fixed">
     <parent link="breadboard"/>
     <child link="controller"/>
-    <origin xyz="0.004 0.031 0.0085" rpy="0 0 0"/>
+    <origin xyz="0.00273 0.01963 0.0085" rpy="0 0 0"/>
   </joint>
   <joint name="motor_driver_1_mount" type="fixed">
     <parent link="breadboard"/>
     <child link="motor_driver_1"/>
-    <origin xyz="0.004 0.004 0.0085" rpy="0 0 0"/>
+    <origin xyz="0.06877 0.01709 0.0085" rpy="0 0 1.570796"/>
   </joint>
   <joint name="motor_driver_2_mount" type="fixed">
-    <parent link="breadboard"/>
+    <parent link="breadboard_2"/>
     <child link="motor_driver_2"/>
-    <origin xyz="0.028 0.004 0.0085" rpy="0 0 0"/>
+    <origin xyz="0.02813 0.01709 0.0085" rpy="0 0 1.570796"/>
   </joint>
   <joint name="sensor_bracket_mount" type="fixed">
     <parent link="chassis"/>
@@ -422,6 +443,6 @@
   <joint name="ultrasonic_mount" type="fixed">
     <parent link="sensor_bracket"/>
     <child link="ultrasonic"/>
-    <origin xyz="0.0954 -0.0225 0.05395" rpy="1.570796 0 1.570796"/>
+    <origin xyz="0.1124 -0.0225 0.05395" rpy="1.570796 0 1.570796"/>
   </joint>
 </robot>

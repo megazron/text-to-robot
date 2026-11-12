@@ -1,6 +1,6 @@
 # Wiring: baymax
 
-36 cables, 83 conductors, 32.82 m of wire, wiring parts $33.65.
+36 cables, 83 conductors, 36.33 m of wire, wiring parts $35.77.
 
 Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), [breadboard.svg](breadboard.svg) (every wire in its colour, pin to pin) and the cable diagram [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
 
@@ -8,8 +8,8 @@ Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), 
 
 | Rail | Volts | Source | Source limit A (cont / peak) | Load A (typical / peak) | Margin (typical) | Fuse A | Worst wire drop V |
 |---|--:|---|--:|--:|--:|--:|--:|
-| VBAT | 11.1 | main_switch | 35 / 70 | 10.701 / 27.001 | 3.3x | 15 | 0.317 |
-| 5V | 5 | regulator_5v | 5.5 / 8 | 1 / 5 | 5.5x | - | 0.052 |
+| VBAT | 11.1 | main_switch | 35 / 70 | 10.701 / 27.001 | 3.3x | 15 | 0.269 |
+| 5V | 5 | regulator_5v | 5.5 / 8 | 1 / 5 | 5.5x | - | 0.054 |
 
 **VBAT loads** (peak assumes two drive motors stalling at once, the rest running):
 
@@ -36,8 +36,8 @@ Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), 
 - Fuse **F2**: 2 A ATM blade fuse, inline holder, protects branch regulator_5v (22 AWG).
 - Fuse **F3**: 2 A ATM blade fuse, inline holder, protects branch servo_bus (22 AWG).
 - Fuse **F4**: 2 A ATM blade fuse, inline holder, protects branch head_pan_actuator (22 AWG).
-- Fuse **F5**: 3 A ATM blade fuse, inline holder, protects branch left_arm_base_yaw_actuator (22 AWG).
-- Fuse **F6**: 3 A ATM blade fuse, inline holder, protects branch right_arm_base_yaw_actuator (22 AWG).
+- Fuse **F5**: 3 A ATM blade fuse, inline holder, protects branch left_arm_base_yaw_actuator (20 AWG).
+- Fuse **F6**: 3 A ATM blade fuse, inline holder, protects branch right_arm_base_yaw_actuator (20 AWG).
 - All grounds meet at one star point. Every signal has its return through that common ground.
 
 ## Pin-to-pin table
@@ -54,14 +54,14 @@ Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), 
 | C3 | W8 | LEFT_FRONT_MOTOR_DIR | computer.GPIO13 | motor_driver_1.DIR1 | 26 | yellow | 0.02 | 0.02 |
 | C3 | W9 | LEFT_REAR_MOTOR_PWM | computer.GPIO5 | motor_driver_1.PWM2 | 26 | blue | 0.02 | 0.02 |
 | C3 | W10 | LEFT_REAR_MOTOR_DIR | computer.GPIO6 | motor_driver_1.DIR2 | 26 | blue | 0.02 | 0.02 |
-| C4 | W11 | LEFT_FRONT_MOTOR_PHASE_A | motor_driver_1.M1A | left_front_motor.Motor (red) | 20 | orange | 1.4 | 5.5 |
-| C4 | W12 | LEFT_FRONT_MOTOR_PHASE_B | motor_driver_1.M1B | left_front_motor.Motor (black) | 20 | orange | 1.4 | 5.5 |
+| C4 | W11 | LEFT_FRONT_MOTOR_PHASE_A | motor_driver_1.M1A | left_front_motor.Motor (red) | 22 | orange | 1.4 | 5.5 |
+| C4 | W12 | LEFT_FRONT_MOTOR_PHASE_B | motor_driver_1.M1B | left_front_motor.Motor (black) | 22 | orange | 1.4 | 5.5 |
 | C5 | W13 | LEFT_FRONT_MOTOR_ENC_VCC | computer.3V3 | left_front_motor.Encoder Vcc (blue) | 24 | red | 0.01 | 0.01 |
 | C5 | W14 | GND | computer.GND | left_front_motor.Encoder GND (green) | 24 | black | 0.01 | 0.01 |
 | C5 | W15 | LEFT_FRONT_MOTOR_ENC_A | computer.GPIO18 | left_front_motor.Encoder A (yellow) | 26 | blue | 0.02 | 0.02 |
 | C5 | W16 | LEFT_FRONT_MOTOR_ENC_B | computer.GPIO19 | left_front_motor.Encoder B (white) | 26 | blue | 0.02 | 0.02 |
-| C6 | W17 | LEFT_REAR_MOTOR_PHASE_A | motor_driver_1.M2A | left_rear_motor.Motor (red) | 18 | orange | 1.4 | 5.5 |
-| C6 | W18 | LEFT_REAR_MOTOR_PHASE_B | motor_driver_1.M2B | left_rear_motor.Motor (black) | 18 | orange | 1.4 | 5.5 |
+| C6 | W17 | LEFT_REAR_MOTOR_PHASE_A | motor_driver_1.M2A | left_rear_motor.Motor (red) | 20 | orange | 1.4 | 5.5 |
+| C6 | W18 | LEFT_REAR_MOTOR_PHASE_B | motor_driver_1.M2B | left_rear_motor.Motor (black) | 20 | orange | 1.4 | 5.5 |
 | C7 | W19 | LEFT_REAR_MOTOR_ENC_VCC | computer.3V3 | left_rear_motor.Encoder Vcc (blue) | 24 | red | 0.01 | 0.01 |
 | C7 | W20 | GND | computer.GND | left_rear_motor.Encoder GND (green) | 24 | black | 0.01 | 0.01 |
 | C7 | W21 | LEFT_REAR_MOTOR_ENC_A | computer.GPIO16 | left_rear_motor.Encoder A (yellow) | 26 | blue | 0.02 | 0.02 |
@@ -77,8 +77,8 @@ Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), 
 | C10 | W31 | GND | computer.GND | right_front_motor.Encoder GND (green) | 24 | black | 0.01 | 0.01 |
 | C10 | W32 | RIGHT_FRONT_MOTOR_ENC_A | computer.GPIO17 | right_front_motor.Encoder A (yellow) | 26 | blue | 0.02 | 0.02 |
 | C10 | W33 | RIGHT_FRONT_MOTOR_ENC_B | computer.GPIO27 | right_front_motor.Encoder B (white) | 26 | blue | 0.02 | 0.02 |
-| C11 | W34 | RIGHT_REAR_MOTOR_PHASE_A | motor_driver_2.M2A | right_rear_motor.Motor (red) | 22 | orange | 1.4 | 5.5 |
-| C11 | W35 | RIGHT_REAR_MOTOR_PHASE_B | motor_driver_2.M2B | right_rear_motor.Motor (black) | 22 | orange | 1.4 | 5.5 |
+| C11 | W34 | RIGHT_REAR_MOTOR_PHASE_A | motor_driver_2.M2A | right_rear_motor.Motor (red) | 20 | orange | 1.4 | 5.5 |
+| C11 | W35 | RIGHT_REAR_MOTOR_PHASE_B | motor_driver_2.M2B | right_rear_motor.Motor (black) | 20 | orange | 1.4 | 5.5 |
 | C12 | W36 | RIGHT_REAR_MOTOR_ENC_VCC | computer.3V3 | right_rear_motor.Encoder Vcc (blue) | 24 | red | 0.01 | 0.01 |
 | C12 | W37 | GND | computer.GND | right_rear_motor.Encoder GND (green) | 24 | black | 0.01 | 0.01 |
 | C12 | W38 | RIGHT_REAR_MOTOR_ENC_A | computer.GPIO24 | right_rear_motor.Encoder A (yellow) | 26 | blue | 0.02 | 0.02 |
@@ -93,17 +93,17 @@ Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), 
 | C17 | W47 | GND | left_arm_shoulder_pitch_actuator.GND | left_arm_elbow_pitch_actuator.GND | 22 | black | 0.9 | 3.15 |
 | C17 | W48 | BUS_SERVO_BUS | left_arm_shoulder_pitch_actuator.DATA | left_arm_elbow_pitch_actuator.DATA | 26 | yellow | 0.02 | 0.02 |
 | C18 | W49 | VBAT | left_arm_elbow_pitch_actuator.VCC | left_arm_wrist_pitch_actuator.VCC | 24 | red | 0.45 | 2.7 |
-| C18 | W50 | GND | left_arm_elbow_pitch_actuator.GND | left_arm_wrist_pitch_actuator.GND | 24 | black | 0.45 | 2.7 |
+| C18 | W50 | GND | left_arm_elbow_pitch_actuator.GND | left_arm_wrist_pitch_actuator.GND | 22 | black | 0.45 | 2.7 |
 | C18 | W51 | BUS_SERVO_BUS | left_arm_elbow_pitch_actuator.DATA | left_arm_wrist_pitch_actuator.DATA | 26 | yellow | 0.02 | 0.02 |
 | C19 | W52 | BUS_SERVO_BUS | servo_bus_hub.P2 | right_arm_base_yaw_actuator.DATA | 26 | red | 0.02 | 0.02 |
 | C20 | W53 | VBAT | right_arm_base_yaw_actuator.VCC | right_arm_shoulder_pitch_actuator.VCC | 22 | red | 1.55 | 5.1 |
-| C20 | W54 | GND | right_arm_base_yaw_actuator.GND | right_arm_shoulder_pitch_actuator.GND | 22 | black | 1.55 | 5.1 |
+| C20 | W54 | GND | right_arm_base_yaw_actuator.GND | right_arm_shoulder_pitch_actuator.GND | 20 | black | 1.55 | 5.1 |
 | C20 | W55 | BUS_SERVO_BUS | right_arm_base_yaw_actuator.DATA | right_arm_shoulder_pitch_actuator.DATA | 26 | yellow | 0.02 | 0.02 |
 | C21 | W56 | VBAT | right_arm_shoulder_pitch_actuator.VCC | right_arm_elbow_pitch_actuator.VCC | 22 | red | 0.9 | 3.15 |
 | C21 | W57 | GND | right_arm_shoulder_pitch_actuator.GND | right_arm_elbow_pitch_actuator.GND | 22 | black | 0.9 | 3.15 |
 | C21 | W58 | BUS_SERVO_BUS | right_arm_shoulder_pitch_actuator.DATA | right_arm_elbow_pitch_actuator.DATA | 26 | yellow | 0.02 | 0.02 |
 | C22 | W59 | VBAT | right_arm_elbow_pitch_actuator.VCC | right_arm_wrist_pitch_actuator.VCC | 24 | red | 0.45 | 2.7 |
-| C22 | W60 | GND | right_arm_elbow_pitch_actuator.GND | right_arm_wrist_pitch_actuator.GND | 24 | black | 0.45 | 2.7 |
+| C22 | W60 | GND | right_arm_elbow_pitch_actuator.GND | right_arm_wrist_pitch_actuator.GND | 22 | black | 0.45 | 2.7 |
 | C22 | W61 | BUS_SERVO_BUS | right_arm_elbow_pitch_actuator.DATA | right_arm_wrist_pitch_actuator.DATA | 26 | yellow | 0.02 | 0.02 |
 | C23 | W62 | SERVO_BUS_USB | servo_bus.VBUS | computer.LINK | made | red | 0.05 | 0.1 |
 | C24 | W63 | VBAT | battery.BAT+ | main_fuse.IN | 12 | red | 10.701 | 27.001 |
@@ -120,10 +120,10 @@ Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), 
 | C31 | W74 | GND | star_ground.P2 | servo_bus.GND | 24 | black | 0.05 | 0.1 |
 | C32 | W75 | VBAT | splice_vbat.P2 | head_pan_actuator.VCC | 22 | red | 0.45 | 2.7 |
 | C32 | W76 | GND | star_ground.P2 | head_pan_actuator.GND | 20 | black | 0.45 | 2.7 |
-| C33 | W77 | VBAT | splice_vbat.P2 | left_arm_base_yaw_actuator.VCC | 22 | red | 2 | 5.55 |
-| C33 | W78 | GND | star_ground.P2 | left_arm_base_yaw_actuator.GND | 18 | black | 2 | 5.55 |
-| C34 | W79 | VBAT | splice_vbat.P2 | right_arm_base_yaw_actuator.VCC | 22 | red | 2 | 5.55 |
-| C34 | W80 | GND | star_ground.P2 | right_arm_base_yaw_actuator.GND | 18 | black | 2 | 5.55 |
+| C33 | W77 | VBAT | splice_vbat.P2 | left_arm_base_yaw_actuator.VCC | 20 | red | 2 | 5.55 |
+| C33 | W78 | GND | star_ground.P2 | left_arm_base_yaw_actuator.GND | 16 | black | 2 | 5.55 |
+| C34 | W79 | VBAT | splice_vbat.P2 | right_arm_base_yaw_actuator.VCC | 20 | red | 2 | 5.55 |
+| C34 | W80 | GND | star_ground.P2 | right_arm_base_yaw_actuator.GND | 16 | black | 2 | 5.55 |
 | C35 | W81 | GND | regulator_5v.GND | star_ground.P2 | 22 | black | 1 | 5 |
 | C36 | W82 | 5V | regulator_5v.VOUT | computer.5V | 22 | red | 1 | 5 |
 | C36 | W83 | GND | star_ground.P2 | computer.GND | 22 | black | 1 | 5 |
@@ -134,42 +134,42 @@ Length is route + service loop + joint slack + termination, rounded up to 5 mm; 
 
 | Cable | What | Conductors | Length mm | Route | Service | Joint slack | Ends | Connectors | Exit |
 |---|---|--:|--:|--:|--:|--:|--:|---|---|
-| C1 | head_camera to computer | 1 | 1125 | 1081.5 | 0 | 40 | 0 | FFC | electronics_enclosure.deck_left |
-| C2 | computer to imu | 4 | 185 | 80.9 | 40 | 0 | 60 | 40-pin header / 12-pin breadboard-friendly header | - |
-| C3 | motor_driver_1 to computer | 5 | 225 | 124.1 | 40 | 0 | 60 | 5-pin 2.54 mm header / 40-pin header | - |
-| C4 | motor_driver_1 channel 1 to left_front_motor | 2 | 460 | 358.5 | 40 | 0 | 60 | 2-position screw terminal / 1x6 female header | electronics_enclosure.deck_left |
-| C5 | left_front_motor encoder to computer | 4 | 405 | 301.9 | 40 | 0 | 60 | 40-pin header / 1x6 female header | electronics_enclosure.deck_left |
-| C6 | motor_driver_1 channel 2 to left_rear_motor | 2 | 695 | 590.7 | 40 | 0 | 60 | 2-position screw terminal / 1x6 female header | electronics_enclosure.rear_slot |
-| C7 | left_rear_motor encoder to computer | 4 | 575 | 470.7 | 40 | 0 | 60 | 40-pin header / 1x6 female header | electronics_enclosure.rear_slot |
-| C8 | motor_driver_2 to computer | 5 | 295 | 193.4 | 40 | 0 | 60 | 5-pin 2.54 mm header / 40-pin header | - |
-| C9 | motor_driver_2 channel 1 to right_front_motor | 2 | 465 | 362.5 | 40 | 0 | 60 | 2-position screw terminal / 1x6 female header | electronics_enclosure.deck_left |
-| C10 | right_front_motor encoder to computer | 4 | 365 | 264.1 | 40 | 0 | 60 | 40-pin header / 1x6 female header | electronics_enclosure.deck_left |
-| C11 | motor_driver_2 channel 2 to right_rear_motor | 2 | 235 | 133.6 | 40 | 0 | 60 | 2-position screw terminal / 1x6 female header | electronics_enclosure.rear_slot |
-| C12 | right_rear_motor encoder to computer | 4 | 420 | 316.2 | 40 | 0 | 60 | 40-pin header / 1x6 female header | electronics_enclosure.rear_slot |
-| C13 | servo_bus to servo_bus_hub | 1 | 370 | 265.3 | 40 | 0 | 60 | 3-pin 2.5 mm bus servo header (5264 class) / lever clamp | electronics_enclosure.rear_slot |
-| C14 | servo_bus_hub to head_pan_actuator | 1 | 960 | 858.1 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | - |
-| C15 | servo_bus_hub to left_arm_base_yaw_actuator | 1 | 940 | 838.7 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | - |
-| C16 | left_arm_base_yaw_actuator to left_arm_shoulder_pitch_actuator | 3 | 265 | 82.3 | 40 | 80 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
-| C17 | left_arm_shoulder_pitch_actuator to left_arm_elbow_pitch_actuator | 3 | 370 | 206.1 | 40 | 60 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
-| C18 | left_arm_elbow_pitch_actuator to left_arm_wrist_pitch_actuator | 3 | 380 | 206.1 | 40 | 70 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
-| C19 | servo_bus_hub to right_arm_base_yaw_actuator | 1 | 860 | 759.9 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | - |
-| C20 | right_arm_base_yaw_actuator to right_arm_shoulder_pitch_actuator | 3 | 265 | 82.3 | 40 | 80 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
-| C21 | right_arm_shoulder_pitch_actuator to right_arm_elbow_pitch_actuator | 3 | 370 | 206.1 | 40 | 60 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
-| C22 | right_arm_elbow_pitch_actuator to right_arm_wrist_pitch_actuator | 3 | 380 | 206.1 | 40 | 70 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
-| C23 | servo_bus to computer | 1 | 115 | 111.6 | 0 | 0 | 0 | USB | - |
-| C24 | battery positive to main fuse | 1 | 100 | 0 | 40 | 0 | 60 | XT60 / soldered leads | - |
-| C25 | main fuse to main switch | 1 | 390 | 289 | 40 | 0 | 60 | soldered leads / 6.3 mm quick-connect tabs | electronics_enclosure.deck_left |
-| C26 | battery negative to star ground | 1 | 100 | 0 | 40 | 0 | 60 | XT60 / lever clamp | - |
-| C27 | main_switch to the VBAT splice | 1 | 100 | 0 | 40 | 0 | 60 | 6.3 mm quick-connect tabs / lever clamp | - |
-| C28 | VBAT to regulator_5v | 2 | 260 | 156.3 | 40 | 0 | 60 | lever clamp / 0.1 in through holes | electronics_enclosure.deck_left |
-| C29 | VBAT to motor_driver_1 | 2 | 370 | 265.4 | 40 | 0 | 60 | lever clamp / 2-position screw terminal | electronics_enclosure.deck_left |
-| C30 | VBAT to motor_driver_2 | 2 | 410 | 307.7 | 40 | 0 | 60 | lever clamp / 2-position screw terminal | electronics_enclosure.deck_left |
-| C31 | VBAT to servo_bus | 2 | 335 | 234.7 | 40 | 0 | 60 | lever clamp / green screw terminal | electronics_enclosure.deck_left |
-| C32 | VBAT to head_pan_actuator | 2 | 955 | 851.7 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | - |
-| C33 | VBAT to left_arm_base_yaw_actuator | 2 | 900 | 799.1 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | - |
-| C34 | VBAT to right_arm_base_yaw_actuator | 2 | 885 | 782 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | - |
-| C35 | regulator_5v to star_ground | 1 | 240 | 138.1 | 40 | 0 | 60 | 0.1 in through holes / lever clamp | - |
-| C36 | 5V to computer | 2 | 165 | 63.7 | 40 | 0 | 60 | 0.1 in through holes / 40-pin header | - |
+| C1 | head_camera to computer | 1 | 1215 | 1151 | 0 | 60 | 0 | FFC | electronics_enclosure.lid_up |
+| C2 | computer to imu | 4 | 165 | 63.1 | 40 | 0 | 60 | 40-pin header / 12-pin breadboard-friendly header | - |
+| C3 | motor_driver_1 to computer | 5 | 245 | 144.4 | 40 | 0 | 60 | 5-pin 2.54 mm header / 40-pin header | - |
+| C4 | motor_driver_1 channel 1 to left_front_motor | 2 | 390 | 285.4 | 40 | 0 | 60 | 2-position screw terminal / 1x6 female header | electronics_enclosure.deck_left |
+| C5 | left_front_motor encoder to computer | 4 | 375 | 272.8 | 40 | 0 | 60 | 40-pin header / 1x6 female header | electronics_enclosure.deck_left |
+| C6 | motor_driver_1 channel 2 to left_rear_motor | 2 | 475 | 373.1 | 40 | 0 | 60 | 2-position screw terminal / 1x6 female header | electronics_enclosure.deck_left |
+| C7 | left_rear_motor encoder to computer | 4 | 465 | 362.9 | 40 | 0 | 60 | 40-pin header / 1x6 female header | electronics_enclosure.deck_left |
+| C8 | motor_driver_2 to computer | 5 | 355 | 253.2 | 40 | 0 | 60 | 5-pin 2.54 mm header / 40-pin header | - |
+| C9 | motor_driver_2 channel 1 to right_front_motor | 2 | 495 | 390.8 | 40 | 0 | 60 | 2-position screw terminal / 1x6 female header | electronics_enclosure.deck_right_front_motor |
+| C10 | right_front_motor encoder to computer | 4 | 350 | 249.7 | 40 | 0 | 60 | 40-pin header / 1x6 female header | electronics_enclosure.deck_right_front_motor |
+| C11 | motor_driver_2 channel 2 to right_rear_motor | 2 | 570 | 466.4 | 40 | 0 | 60 | 2-position screw terminal / 1x6 female header | electronics_enclosure.deck_left |
+| C12 | right_rear_motor encoder to computer | 4 | 450 | 346.1 | 40 | 0 | 60 | 40-pin header / 1x6 female header | electronics_enclosure.deck_left |
+| C13 | servo_bus to servo_bus_hub | 1 | 160 | 55.4 | 40 | 0 | 60 | 3-pin 2.5 mm bus servo header (5264 class) / lever clamp | - |
+| C14 | servo_bus_hub to head_pan_actuator | 1 | 920 | 818.9 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | electronics_enclosure.lid_up |
+| C15 | servo_bus_hub to left_arm_base_yaw_actuator | 1 | 1000 | 895.8 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | electronics_enclosure.lid_up |
+| C16 | left_arm_base_yaw_actuator to left_arm_shoulder_pitch_actuator | 3 | 460 | 197.2 | 40 | 160 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
+| C17 | left_arm_shoulder_pitch_actuator to left_arm_elbow_pitch_actuator | 3 | 460 | 283.8 | 40 | 75 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
+| C18 | left_arm_elbow_pitch_actuator to left_arm_wrist_pitch_actuator | 3 | 575 | 365.6 | 40 | 105 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
+| C19 | servo_bus_hub to right_arm_base_yaw_actuator | 1 | 995 | 891.9 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | electronics_enclosure.lid_up |
+| C20 | right_arm_base_yaw_actuator to right_arm_shoulder_pitch_actuator | 3 | 505 | 219 | 40 | 185 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
+| C21 | right_arm_shoulder_pitch_actuator to right_arm_elbow_pitch_actuator | 3 | 450 | 274 | 40 | 75 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
+| C22 | right_arm_elbow_pitch_actuator to right_arm_wrist_pitch_actuator | 3 | 560 | 350 | 40 | 105 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
+| C23 | servo_bus to computer | 1 | 190 | 188.6 | 0 | 0 | 0 | USB | - |
+| C24 | battery positive to main fuse | 1 | 195 | 92 | 40 | 0 | 60 | XT60 / soldered leads | - |
+| C25 | main fuse to main switch | 1 | 350 | 248.7 | 40 | 0 | 60 | soldered leads / 6.3 mm quick-connect tabs | - |
+| C26 | battery negative to star ground | 1 | 170 | 67.8 | 40 | 0 | 60 | XT60 / lever clamp | - |
+| C27 | main_switch to the VBAT splice | 1 | 165 | 62.3 | 40 | 0 | 60 | 6.3 mm quick-connect tabs / lever clamp | - |
+| C28 | VBAT to regulator_5v | 2 | 220 | 118.6 | 40 | 0 | 60 | lever clamp / 0.1 in through holes | - |
+| C29 | VBAT to motor_driver_1 | 2 | 330 | 229.4 | 40 | 0 | 60 | lever clamp / 2-position screw terminal | - |
+| C30 | VBAT to motor_driver_2 | 2 | 375 | 274.8 | 40 | 0 | 60 | lever clamp / 2-position screw terminal | - |
+| C31 | VBAT to servo_bus | 2 | 290 | 186.8 | 40 | 0 | 60 | lever clamp / green screw terminal | - |
+| C32 | VBAT to head_pan_actuator | 2 | 985 | 884.6 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | electronics_enclosure.lid_up |
+| C33 | VBAT to left_arm_base_yaw_actuator | 2 | 1060 | 958.2 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | electronics_enclosure.lid_up |
+| C34 | VBAT to right_arm_base_yaw_actuator | 2 | 1085 | 983.6 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | electronics_enclosure.lid_up |
+| C35 | regulator_5v to star_ground | 1 | 210 | 105.2 | 40 | 0 | 60 | 0.1 in through holes / lever clamp | - |
+| C36 | 5V to computer | 2 | 180 | 79.5 | 40 | 0 | 60 | 0.1 in through holes / 40-pin header | - |
 
 ## Slack at the joints
 
@@ -177,13 +177,13 @@ Each loop is at least the extra length the joint needs at the far end of its tra
 
 | Cable | Joint | Travel rad | Length at home mm | Length at full travel mm | Slack loop mm |
 |---|---|---|--:|--:|--:|
-| C1 | head_pan | -1.4 to 1.4 | 10.7 | 30.3 | 40 |
-| C16 | left_arm_base_yaw | -2.97 to 2.97 | 23.1 | 63.5 | 80 |
-| C17 | left_arm_shoulder_pitch | -1.75 to 1.75 | 44.3 | 68.3 | 60 |
-| C18 | left_arm_elbow_pitch | -2.1 to 2.3 | 44.3 | 75.9 | 70 |
-| C20 | right_arm_base_yaw | -2.97 to 2.97 | 23.1 | 63.5 | 80 |
-| C21 | right_arm_shoulder_pitch | -1.75 to 1.75 | 44.3 | 68.3 | 60 |
-| C22 | right_arm_elbow_pitch | -2.1 to 2.3 | 44.3 | 75.9 | 70 |
+| C1 | head_pan | -1.4 to 1.4 | 30.6 | 67.9 | 60 |
+| C16 | left_arm_base_yaw | -2.97 to 2.97 | 35.1 | 145.6 | 160 |
+| C17 | left_arm_shoulder_pitch | -1.75 to 1.75 | 36.6 | 73.2 | 75 |
+| C18 | left_arm_elbow_pitch | -2.1 to 2.3 | 36.4 | 100.4 | 105 |
+| C20 | right_arm_base_yaw | -2.97 to 2.97 | 36.8 | 166.8 | 185 |
+| C21 | right_arm_shoulder_pitch | -1.75 to 1.75 | 36.6 | 72.5 | 75 |
+| C22 | right_arm_elbow_pitch | -2.1 to 2.3 | 37 | 101 | 105 |
 
 ## Electrical calculations
 
@@ -370,12 +370,13 @@ Not checked (no logic levels in the parts data): Feetech STS3215 C047 12 V 30 kg
 
 | Item | Qty | Unit | Unit $ | Subtotal $ | Spec | Price source |
 |---|--:|---|--:|--:|---|---|
-| 12 AWG silicone wire | 0.8 | m | 2.2 | 1.76 | 3.308 mm2, rated 20.5 A in a bundle; 0.69 m cut + 10 % waste | estimated |
-| 18 AWG silicone wire | 5.3 | m | 0.7 | 3.71 | 0.823 mm2, rated 8 A in a bundle; 4.74 m cut + 10 % waste | estimated |
-| 20 AWG silicone wire | 3.1 | m | 0.5 | 1.55 | 0.519 mm2, rated 5.5 A in a bundle; 2.81 m cut + 10 % waste | estimated |
-| 22 AWG silicone wire | 7.7 | m | 0.4 | 3.08 | 0.327 mm2, rated 3.5 A in a bundle; 6.92 m cut + 10 % waste | estimated |
-| 24 AWG silicone wire | 7.2 | m | 0.35 | 2.52 | 0.205 mm2, rated 1.75 A in a bundle; 6.53 m cut + 10 % waste | estimated |
-| 26 AWG silicone wire | 12.3 | m | 0.3 | 3.69 | 0.128 mm2, rated 1.1 A in a bundle; 11.14 m cut + 10 % waste | estimated |
+| 12 AWG silicone wire | 1 | m | 2.2 | 2.20 | 3.308 mm2, rated 20.5 A in a bundle; 0.88 m cut + 10 % waste | estimated |
+| 16 AWG silicone wire | 2.4 | m | 1 | 2.40 | 1.308 mm2, rated 11 A in a bundle; 2.13 m cut + 10 % waste | estimated |
+| 18 AWG silicone wire | 1.4 | m | 0.7 | 0.98 | 0.823 mm2, rated 8 A in a bundle; 1.23 m cut + 10 % waste | estimated |
+| 20 AWG silicone wire | 7.3 | m | 0.5 | 3.65 | 0.519 mm2, rated 5.5 A in a bundle; 6.59 m cut + 10 % waste | estimated |
+| 22 AWG silicone wire | 7.9 | m | 0.4 | 3.16 | 0.327 mm2, rated 3.5 A in a bundle; 7.15 m cut + 10 % waste | estimated |
+| 24 AWG silicone wire | 6.2 | m | 0.35 | 2.17 | 0.205 mm2, rated 1.75 A in a bundle; 5.64 m cut + 10 % waste | estimated |
+| 26 AWG silicone wire | 12.7 | m | 0.3 | 3.81 | 0.128 mm2, rated 1.1 A in a bundle; 11.54 m cut + 10 % waste | estimated |
 | Dupont 2.54 mm contacts | 46 | pc | 0.02 | 0.92 | rated 3 A per contact | estimated |
 | Dupont 2.54 mm housings | 11 | pc | 0.02 | 0.22 | one per cable end | estimated |
 | Bootlace ferrule contacts | 14 | pc | 0.03 | 0.42 | rated 17.5 A per contact | estimated |
@@ -384,9 +385,10 @@ Not checked (no logic levels in the parts data): Feetech STS3215 C047 12 V 30 kg
 | XT60 contacts | 2 | pc | 0.9 | 1.80 | rated 35 A per contact | estimated |
 | 6.3 mm spade contacts | 2 | pc | 0.08 | 0.16 | rated 15 A per contact | estimated |
 | Heat shrink 3 mm, 2:1 | 3.1 | m | 0.2 | 0.62 | 31 solder joints + a boot on each cable end | estimated |
-| Cable tie 100 x 2.5 mm | 66 | pc | 0.02 | 1.32 | at every clip, cable end and strain-relief anchor | estimated |
-| Rubber grommet, 6.4 mm panel hole, 3.2 mm bore | 1 | pc | 0.08 | 0.08 | 9.5 mm panel hole | estimated |
-| Nylon braided sleeving 6 mm | 1.2 | m | 0.4 | 0.48 | over every cable where it crosses a joint | estimated |
+| Cable tie 100 x 2.5 mm | 55 | pc | 0.02 | 1.10 | at every clip, cable end and strain-relief anchor | estimated |
+| Rubber grommet, 6.4 mm panel hole, 3.2 mm bore | 2 | pc | 0.08 | 0.16 | 9.5 mm panel hole | estimated |
+| Rubber grommet, 6.4 mm panel hole, 3.2 mm bore | 1 | pc | 0.08 | 0.08 | 12 mm panel hole | estimated |
+| Nylon braided sleeving 6 mm | 1.5 | m | 0.4 | 0.60 | over every cable where it crosses a joint | estimated |
 | FFC | 1 | pc | 3 | 3.00 | head_camera to computer | estimated |
 | USB | 1 | pc | 3 | 3.00 | servo_bus to computer | estimated |
 | 15 A ATM blade fuse | 1 | pc | 0.25 | 0.25 | plus spares | estimated |

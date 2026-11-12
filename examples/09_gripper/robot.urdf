@@ -45,9 +45,9 @@
       <geometry><mesh filename="package://parallel_gripper/meshes/gripper_body.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.001205 0.0000719748 0.053141" rpy="0 0 0"/>
-      <mass value="0.224581"/>
-      <inertia ixx="0.000392192" ixy="1.95523e-8" ixz="-0.00000459495" iyy="0.000964972" iyz="-5.37327e-8" izz="0.00071851"/>
+      <origin xyz="-0.001246 0.0000649685 0.055619" rpy="0 0 0"/>
+      <mass value="0.23887"/>
+      <inertia ixx="0.000441477" ixy="-1.99278e-8" ixz="-0.00000459418" iyy="0.001043" iyz="-2.97153e-8" izz="0.000757226"/>
     </inertial>
   </link>
   <link name="gripper_servo">
@@ -93,7 +93,7 @@
       <geometry><mesh filename="package://parallel_gripper/meshes/finger_a.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.042244 0.00079349 0.121285" rpy="0 0 0"/>
+      <origin xyz="0.042244 0.00079349 0.127285" rpy="0 0 0"/>
       <mass value="0.070594"/>
       <inertia ixx="0.0000731724" ixy="8.62208e-7" ixz="0.00000253887" iyy="0.0000722375" iyz="0.00000257564" izz="0.0000151087"/>
     </inertial>
@@ -141,7 +141,7 @@
       <geometry><mesh filename="package://parallel_gripper/meshes/finger_b.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.042244 -0.00079349 0.121285" rpy="0 0 0"/>
+      <origin xyz="-0.042244 -0.00079349 0.127285" rpy="0 0 0"/>
       <mass value="0.070594"/>
       <inertia ixx="0.0000731724" ixy="8.62208e-7" ixz="-0.00000253887" iyy="0.0000722375" iyz="-0.00000257564" izz="0.0000151087"/>
     </inertial>
@@ -221,9 +221,9 @@
       <geometry><mesh filename="package://parallel_gripper/meshes/control_case.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.228996 0.013211 -0.109365" rpy="0 0 0"/>
-      <mass value="0.100052"/>
-      <inertia ixx="0.000303367" ixy="0.00000351989" ixz="-0.00000207784" iyy="0.000294768" iyz="-0.00000306657" izz="0.000557029"/>
+      <origin xyz="-0.202286 0.013567 -0.110302" rpy="0 0 0"/>
+      <mass value="0.125208"/>
+      <inertia ixx="0.000379564" ixy="0.00000478167" ixz="-0.00000316074" iyy="0.000622358" iyz="-0.00000470824" izz="0.000951908"/>
     </inertial>
   </link>
   <link name="control_case_lid">
@@ -237,9 +237,9 @@
       <geometry><mesh filename="package://parallel_gripper/meshes/control_case_lid.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.231 0.0105 -0.076605" rpy="0 0 0"/>
-      <mass value="0.038251"/>
-      <inertia ixx="0.0000806367" ixy="4.53275e-15" ixz="-1.04544e-12" iyy="0.0000778906" iyz="-2.81425e-13" izz="0.000158435"/>
+      <origin xyz="-0.2045 0.0105 -0.076584" rpy="0 0 0"/>
+      <mass value="0.050743"/>
+      <inertia ixx="0.000107895" ixy="-3.74391e-14" ixz="-2.20216e-12" iyy="0.000187681" iyz="-3.95175e-13" izz="0.000295459"/>
     </inertial>
   </link>
   <link name="power_supply">
@@ -298,12 +298,12 @@
   <joint name="gripper_servo_mount" type="fixed">
     <parent link="gripper_body"/>
     <child link="gripper_servo"/>
-    <origin xyz="0 0 0.0671" rpy="0 0 0"/>
+    <origin xyz="0 0 0.0731" rpy="0 0 0"/>
   </joint>
   <joint name="gripper_pinion" type="revolute">
     <parent link="gripper_body"/>
     <child link="pinion"/>
-    <origin xyz="0 0 0.0671" rpy="0 0 0"/>
+    <origin xyz="0 0 0.0731" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
     <limit lower="0" upper="2.8571" effort="2.942" velocity="4.712"/>
     <dynamics damping="0.1249" friction="0.0588"/>
@@ -320,12 +320,12 @@
   <joint name="finger_a_bushing_lower_mount" type="fixed">
     <parent link="finger_a"/>
     <child link="finger_a_bushing_lower"/>
-    <origin xyz="0.045 0 0.0906" rpy="0 -1.570796 -3.141593"/>
+    <origin xyz="0.045 0 0.0966" rpy="0 -1.570796 -3.141593"/>
   </joint>
   <joint name="finger_a_bushing_upper_mount" type="fixed">
     <parent link="finger_a"/>
     <child link="finger_a_bushing_upper"/>
-    <origin xyz="0.045 0 0.1266" rpy="0 -1.570796 -3.141593"/>
+    <origin xyz="0.045 0 0.1326" rpy="0 -1.570796 -3.141593"/>
   </joint>
   <joint name="finger_b" type="prismatic">
     <parent link="gripper_body"/>
@@ -339,22 +339,22 @@
   <joint name="finger_b_bushing_lower_mount" type="fixed">
     <parent link="finger_b"/>
     <child link="finger_b_bushing_lower"/>
-    <origin xyz="-0.045 0 0.0906" rpy="0 -1.570796 -3.141593"/>
+    <origin xyz="-0.045 0 0.0966" rpy="0 -1.570796 -3.141593"/>
   </joint>
   <joint name="finger_b_bushing_upper_mount" type="fixed">
     <parent link="finger_b"/>
     <child link="finger_b_bushing_upper"/>
-    <origin xyz="-0.045 0 0.1266" rpy="0 -1.570796 -3.141593"/>
+    <origin xyz="-0.045 0 0.1326" rpy="0 -1.570796 -3.141593"/>
   </joint>
   <joint name="gripper_rod_lower_mount" type="fixed">
     <parent link="gripper_body"/>
     <child link="gripper_rod_lower"/>
-    <origin xyz="-0.065 0 0.0906" rpy="0 -1.570796 -3.141593"/>
+    <origin xyz="-0.065 0 0.0966" rpy="0 -1.570796 -3.141593"/>
   </joint>
   <joint name="gripper_rod_upper_mount" type="fixed">
     <parent link="gripper_body"/>
     <child link="gripper_rod_upper"/>
-    <origin xyz="-0.065 0 0.1266" rpy="0 -1.570796 -3.141593"/>
+    <origin xyz="-0.065 0 0.1326" rpy="0 -1.570796 -3.141593"/>
   </joint>
   <joint name="control_case_mount" type="fixed">
     <parent link="base_link"/>
@@ -369,7 +369,7 @@
   <joint name="power_supply_mount" type="fixed">
     <parent link="control_case"/>
     <child link="power_supply"/>
-    <origin xyz="-0.264 -0.056 -0.115" rpy="0 0 0"/>
+    <origin xyz="-0.232 -0.056 -0.115" rpy="0 0 0"/>
   </joint>
   <joint name="servo_bus_mount" type="fixed">
     <parent link="control_case"/>

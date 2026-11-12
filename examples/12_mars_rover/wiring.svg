@@ -84,7 +84,7 @@
 <path d="M560 406 H674 V569 H1616 V732 H1730" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C32 W71 VBAT: splice_vbat.levers.P2 to arm_base_yaw_actuator.bus_a.VDD, 20 AWG</title></path>
 <path d="M560 334 H684 V539.5 H1606 V745 H1730" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C32 W72 GND: star_ground.levers.P2 to arm_base_yaw_actuator.bus_a.GND, 20 AWG</title></path>
 <path d="M560 406 H574 V775 H1716 V1144 H1730" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C33 W73 VBAT: splice_vbat.levers.P2 to arm_wrist_roll_actuator.bus_a.VDD, 22 AWG</title></path>
-<path d="M560 334 H584 V745.5 H1706 V1157 H1730" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C33 W74 GND: star_ground.levers.P2 to arm_wrist_roll_actuator.bus_a.GND, 20 AWG</title></path>
+<path d="M560 334 H584 V745.5 H1706 V1157 H1730" fill="none" stroke="#111111" stroke-width="2" opacity="0.8"><title>C33 W74 GND: star_ground.levers.P2 to arm_wrist_roll_actuator.bus_a.GND, 18 AWG</title></path>
 <path d="M710 118 H676 V226 H594 V334 H560" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C34 W75 GND: regulator_5v.power_and_control.GND to star_ground.levers.P2, 24 AWG</title></path>
 <path d="M900 131 H944 V284 H1006 V437 H1050" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C35 W76 5V: regulator_5v.power_and_control.VOUT to io_controller.j1.5V, 24 AWG</title></path>
 <path d="M560 334 H614 V268.5 H996 V203 H1050" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C35 W77 GND: star_ground.levers.P2 to io_controller.j1.G, 24 AWG</title></path>

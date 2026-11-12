@@ -50,20 +50,20 @@
 <path d="M220 118 H244 V219.5 H346 V321 H370" fill="none" stroke="#111111" stroke-width="2" opacity="0.8"><title>C19 W38 GND: battery.main.BAT- to star_ground.levers.P1, 16 AWG</title></path>
 <path d="M560 118 H594 V255.5 H336 V393 H370" fill="none" stroke="#c8102e" stroke-width="2" opacity="0.8"><title>C20 W39 VBAT: main_switch.contacts.OUT to splice_vbat.levers.P1, 16 AWG</title></path>
 <path d="M560 406 H604 V255.5 H666 V105 H710" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C21 W40 VBAT: splice_vbat.levers.P2 to regulator_5v.power_and_control.VIN, 22 AWG</title></path>
-<path d="M560 334 H614 V226 H656 V118 H710" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C21 W41 GND: star_ground.levers.P2 to regulator_5v.power_and_control.GND, 24 AWG</title></path>
-<path d="M560 406 H624 V330.5 H986 V255 H1050" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C22 W42 VBAT: splice_vbat.levers.P2 to actuator_bus.screw_in.VIN, 22 AWG</title></path>
-<path d="M560 334 H634 V301 H976 V268 H1050" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C22 W43 GND: star_ground.levers.P2 to actuator_bus.screw_in.GND, 24 AWG</title></path>
-<path d="M560 406 H644 V340.5 H1306 V275 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C23 W44 VBAT: splice_vbat.levers.P2 to fl_hip_abduction_actuator.bus_a.VCC, 22 AWG</title></path>
-<path d="M560 334 H654 V311 H1296 V288 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C23 W45 GND: star_ground.levers.P2 to fl_hip_abduction_actuator.bus_a.GND, 22 AWG</title></path>
-<path d="M560 406 H664 V468 H1286 V530 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C24 W46 VBAT: splice_vbat.levers.P2 to fr_hip_abduction_actuator.bus_a.VCC, 22 AWG</title></path>
-<path d="M560 334 H674 V438.5 H1276 V543 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C24 W47 GND: star_ground.levers.P2 to fr_hip_abduction_actuator.bus_a.GND, 22 AWG</title></path>
-<path d="M560 406 H684 V595.5 H1266 V785 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C25 W48 VBAT: splice_vbat.levers.P2 to rl_hip_abduction_actuator.bus_a.VCC, 22 AWG</title></path>
-<path d="M560 334 H574 V566 H1376 V798 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C25 W49 GND: star_ground.levers.P2 to rl_hip_abduction_actuator.bus_a.GND, 22 AWG</title></path>
-<path d="M560 406 H584 V723 H1366 V1040 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C26 W50 VBAT: splice_vbat.levers.P2 to rr_hip_abduction_actuator.bus_a.VCC, 22 AWG</title></path>
-<path d="M560 334 H594 V693.5 H1356 V1053 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C26 W51 GND: star_ground.levers.P2 to rr_hip_abduction_actuator.bus_a.GND, 22 AWG</title></path>
-<path d="M710 118 H666 V226 H604 V334 H560" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C27 W52 GND: regulator_5v.power_and_control.GND to star_ground.levers.P2, 22 AWG</title></path>
-<path d="M900 131 H954 V150.5 H996 V170 H1050" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C28 W53 5V: regulator_5v.power_and_control.VOUT to computer.gpio40.5V, 22 AWG</title></path>
-<path d="M560 334 H624 V219.5 H986 V105 H1050" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C28 W54 GND: star_ground.levers.P2 to computer.gpio40.GND, 22 AWG</title></path>
+<path d="M560 406 H614 V330.5 H996 V255 H1050" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C22 W41 VBAT: splice_vbat.levers.P2 to actuator_bus.screw_in.VIN, 22 AWG</title></path>
+<path d="M560 406 H624 V340.5 H1326 V275 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C23 W42 VBAT: splice_vbat.levers.P2 to fl_hip_abduction_actuator.bus_a.VCC, 22 AWG</title></path>
+<path d="M560 406 H634 V468 H1316 V530 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C24 W43 VBAT: splice_vbat.levers.P2 to fr_hip_abduction_actuator.bus_a.VCC, 22 AWG</title></path>
+<path d="M560 406 H644 V595.5 H1306 V785 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C25 W44 VBAT: splice_vbat.levers.P2 to rl_hip_abduction_actuator.bus_a.VCC, 22 AWG</title></path>
+<path d="M560 406 H654 V723 H1296 V1040 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C26 W45 VBAT: splice_vbat.levers.P2 to rr_hip_abduction_actuator.bus_a.VCC, 22 AWG</title></path>
+<path d="M710 118 H606 V226 H664 V334 H560" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C27 W46 GND: regulator_5v.power_and_control.GND to star_ground.levers.P2, 22 AWG</title></path>
+<path d="M900 131 H1014 V150.5 H936 V170 H1050" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C28 W47 5V: regulator_5v.power_and_control.VOUT to computer.gpio40.5V, 22 AWG</title></path>
+<path d="M560 334 H684 V226 H586 V118 H710" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C29 W48 GND: star_ground.levers.P2 to regulator_5v.power_and_control.GND, 24 AWG</title></path>
+<path d="M560 334 H574 V301 H1036 V268 H1050" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C30 W49 GND: star_ground.levers.P2 to actuator_bus.screw_in.GND, 24 AWG</title></path>
+<path d="M560 334 H584 V311 H1366 V288 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C31 W50 GND: star_ground.levers.P2 to fl_hip_abduction_actuator.bus_a.GND, 22 AWG</title></path>
+<path d="M560 334 H594 V438.5 H1356 V543 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C32 W51 GND: star_ground.levers.P2 to fr_hip_abduction_actuator.bus_a.GND, 22 AWG</title></path>
+<path d="M560 334 H604 V566 H1346 V798 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C33 W52 GND: star_ground.levers.P2 to rl_hip_abduction_actuator.bus_a.GND, 22 AWG</title></path>
+<path d="M560 334 H614 V693.5 H1336 V1053 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C34 W53 GND: star_ground.levers.P2 to rr_hip_abduction_actuator.bus_a.GND, 22 AWG</title></path>
+<path d="M560 334 H624 V219.5 H986 V105 H1050" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C35 W54 GND: star_ground.levers.P2 to computer.gpio40.GND, 22 AWG</title></path>
 <rect x="30" y="74" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="37" y="89" font-weight="700">battery</text>
 <text x="37" y="108.5" fill="#333">BAT+</text>
 <text x="37" y="121.5" fill="#333">BAT-</text>

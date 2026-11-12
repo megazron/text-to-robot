@@ -87,7 +87,7 @@
 <path d="M560 478 H594 V602 H1356 V726 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C41 W75 VBAT: splice_vbat.levers.P2 to r_hip_yaw_actuator.bus_a.VCC, 22 AWG</title></path>
 <path d="M560 406 H604 V572.5 H1346 V739 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C41 W76 GND: star_ground.levers.P2 to r_hip_yaw_actuator.bus_a.GND, 24 AWG</title></path>
 <path d="M560 478 H614 V772 H1336 V1066 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C42 W77 VBAT: splice_vbat.levers.P2 to r_ankle_pitch_actuator.bus_a.VCC, 22 AWG</title></path>
-<path d="M560 406 H624 V742.5 H1326 V1079 H1390" fill="none" stroke="#111111" stroke-width="2" opacity="0.8"><title>C42 W78 GND: star_ground.levers.P2 to r_ankle_pitch_actuator.bus_a.GND, 18 AWG</title></path>
+<path d="M560 406 H624 V742.5 H1326 V1079 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C42 W78 GND: star_ground.levers.P2 to r_ankle_pitch_actuator.bus_a.GND, 20 AWG</title></path>
 <path d="M560 478 H634 V396 H1316 V314 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C43 W79 VBAT: splice_vbat.levers.P2 to l_hip_roll_actuator.bus_a.VDD, 20 AWG</title></path>
 <path d="M560 406 H644 V347 H1306 V288 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C43 W80 GND: star_ground.levers.P2 to l_hip_roll_actuator.bus_a.GND, 20 AWG</title></path>
 <path d="M560 478 H654 V644.5 H1296 V811 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C44 W81 VBAT: splice_vbat.levers.P2 to r_hip_roll_actuator.bus_a.VDD, 20 AWG</title></path>
@@ -101,10 +101,10 @@
 <path d="M560 406 H614 V255.5 H996 V105 H1050" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C48 W89 GND: star_ground.levers.P2 to computer.gpio40.GND, 22 AWG</title></path>
 <path d="M710 216 H646 V376.5 H624 V537 H560" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C49 W90 5V_ARMS: regulator_5v_arms.power_and_control.VOUT to splice_5v_arms.levers.P1, 22 AWG</title></path>
 <path d="M710 203 H636 V304.5 H634 V406 H560" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C49 W91 GND: regulator_5v_arms.power_and_control.GND to star_ground.levers.P2, 22 AWG</title></path>
-<path d="M560 550 H644 V1020.5 H1306 V1491 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C50 W92 5V_ARMS: splice_5v_arms.levers.P2 to l_elbow_actuator.bus_a.VDD, 24 AWG</title></path>
-<path d="M560 406 H654 V955 H1296 V1504 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C50 W93 GND: star_ground.levers.P2 to l_elbow_actuator.bus_a.GND, 24 AWG</title></path>
-<path d="M560 550 H664 V1233 H1286 V1916 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C51 W94 5V_ARMS: splice_5v_arms.levers.P2 to r_elbow_actuator.bus_a.VDD, 24 AWG</title></path>
-<path d="M560 406 H674 V1167.5 H1276 V1929 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C51 W95 GND: star_ground.levers.P2 to r_elbow_actuator.bus_a.GND, 24 AWG</title></path>
+<path d="M560 550 H644 V1020.5 H1306 V1491 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C50 W92 5V_ARMS: splice_5v_arms.levers.P2 to l_elbow_actuator.bus_a.VDD, 22 AWG</title></path>
+<path d="M560 406 H654 V955 H1296 V1504 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C50 W93 GND: star_ground.levers.P2 to l_elbow_actuator.bus_a.GND, 22 AWG</title></path>
+<path d="M560 550 H664 V1233 H1286 V1916 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C51 W94 5V_ARMS: splice_5v_arms.levers.P2 to r_elbow_actuator.bus_a.VDD, 22 AWG</title></path>
+<path d="M560 406 H674 V1167.5 H1276 V1929 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C51 W95 GND: star_ground.levers.P2 to r_elbow_actuator.bus_a.GND, 22 AWG</title></path>
 <path d="M560 550 H684 V1318 H1266 V2086 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C52 W96 5V_ARMS: splice_5v_arms.levers.P2 to neck_pan_actuator.bus_a.VDD, 24 AWG</title></path>
 <path d="M560 406 H574 V1252.5 H1376 V2099 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C52 W97 GND: star_ground.levers.P2 to neck_pan_actuator.bus_a.GND, 24 AWG</title></path>
 <rect x="30" y="74" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="37" y="89" font-weight="700">battery</text>

@@ -1,6 +1,6 @@
 # Wiring: diff_drive_robot
 
-15 cables, 33 conductors, 7.9 m of wire, wiring parts $11.19.
+15 cables, 33 conductors, 10.13 m of wire, wiring parts $11.83.
 
 Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), [breadboard.svg](breadboard.svg) (every wire in its colour, pin to pin) and the cable diagram [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
 
@@ -8,8 +8,8 @@ Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), 
 
 | Rail | Volts | Source | Source limit A (cont / peak) | Load A (typical / peak) | Margin (typical) | Fuse A | Worst wire drop V |
 |---|--:|---|--:|--:|--:|--:|--:|
-| VBAT | 11.1 | main_switch | 35 / 70 | 3.366 / 13.503 | 10.4x | 7.5 | 0.083 |
-| 5V | 5 | regulator_5v | 5.5 / 8 | 1.03 / 5 | 5.3x | - | 0.066 |
+| VBAT | 11.1 | main_switch | 35 / 70 | 3.366 / 13.503 | 10.4x | 7.5 | 0.076 |
+| 5V | 5 | regulator_5v | 5.5 / 8 | 1.03 / 5 | 5.3x | - | 0.059 |
 
 **VBAT loads** (peak assumes two drive motors stalling at once, the rest running):
 
@@ -45,7 +45,7 @@ Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), 
 | C3 | W8 | LEFT_MOTOR_DIR | computer.GPIO13 | motor_driver_1.DIR1 | 26 | yellow | 0.02 | 0.02 |
 | C3 | W9 | RIGHT_MOTOR_PWM | computer.GPIO5 | motor_driver_1.PWM2 | 26 | blue | 0.02 | 0.02 |
 | C3 | W10 | RIGHT_MOTOR_DIR | computer.GPIO6 | motor_driver_1.DIR2 | 26 | blue | 0.02 | 0.02 |
-| C4 | W11 | LEFT_MOTOR_PHASE_A | motor_driver_1.M1A | left_motor.Motor (red) | 22 | orange | 1.4 | 5.5 |
+| C4 | W11 | LEFT_MOTOR_PHASE_A | motor_driver_1.M1A | left_motor.Motor (red) | 20 | orange | 1.4 | 5.5 |
 | C4 | W12 | LEFT_MOTOR_PHASE_B | motor_driver_1.M1B | left_motor.Motor (black) | 22 | orange | 1.4 | 5.5 |
 | C5 | W13 | LEFT_MOTOR_ENC_VCC | computer.3V3 | left_motor.Encoder Vcc (blue) | 24 | red | 0.01 | 0.01 |
 | C5 | W14 | GND | computer.GND | left_motor.Encoder GND (green) | 24 | black | 0.01 | 0.01 |
@@ -75,21 +75,21 @@ Length is route + service loop + joint slack + termination, rounded up to 5 mm; 
 
 | Cable | What | Conductors | Length mm | Route | Service | Joint slack | Ends | Connectors | Exit |
 |---|---|--:|--:|--:|--:|--:|--:|---|---|
-| C1 | lidar to computer | 1 | 170 | 166.8 | 0 | 0 | 0 | USB | electronics_enclosure.rear_slot |
-| C2 | computer to imu | 4 | 235 | 132.5 | 40 | 0 | 60 | 40-pin header / 12-pin breadboard-friendly header | - |
-| C3 | motor_driver_1 to computer | 5 | 185 | 84.9 | 40 | 0 | 60 | 5-pin 2.54 mm header / 40-pin header | - |
-| C4 | motor_driver_1 channel 1 to left_motor | 2 | 360 | 255.4 | 40 | 0 | 60 | 2-position screw terminal / 1x6 female header | electronics_enclosure.deck_left |
-| C5 | left_motor encoder to computer | 4 | 300 | 197 | 40 | 0 | 60 | 40-pin header / 1x6 female header | electronics_enclosure.deck_left |
-| C6 | motor_driver_1 channel 2 to right_motor | 2 | 315 | 213.8 | 40 | 0 | 60 | 2-position screw terminal / 1x6 female header | electronics_enclosure.deck_right |
-| C7 | right_motor encoder to computer | 4 | 260 | 155.6 | 40 | 0 | 60 | 40-pin header / 1x6 female header | electronics_enclosure.deck_right |
-| C8 | battery positive to main fuse | 1 | 100 | 0 | 40 | 0 | 60 | XT60 / soldered leads | - |
-| C9 | main fuse to main switch | 1 | 230 | 129.9 | 40 | 0 | 60 | soldered leads / 4.8 mm quick-connect tabs | electronics_enclosure.deck_left |
-| C10 | battery negative to star ground | 1 | 100 | 0 | 40 | 0 | 60 | XT60 / lever clamp | - |
-| C11 | main_switch to the VBAT splice | 1 | 100 | 0 | 40 | 0 | 60 | 4.8 mm quick-connect tabs / lever clamp | - |
-| C12 | VBAT to regulator_5v | 2 | 290 | 185.2 | 40 | 0 | 60 | lever clamp / 0.1 in through holes | electronics_enclosure.deck_left |
-| C13 | VBAT to motor_driver_1 | 2 | 305 | 202 | 40 | 0 | 60 | lever clamp / 2-position screw terminal | electronics_enclosure.deck_left |
-| C14 | regulator_5v to star_ground | 1 | 310 | 208 | 40 | 0 | 60 | 0.1 in through holes / lever clamp | - |
-| C15 | 5V to computer | 2 | 210 | 106.4 | 40 | 0 | 60 | 0.1 in through holes / 40-pin header | - |
+| C1 | lidar to computer | 1 | 150 | 145.9 | 0 | 0 | 0 | USB | - |
+| C2 | computer to imu | 4 | 290 | 188.8 | 40 | 0 | 60 | 40-pin header / 12-pin breadboard-friendly header | - |
+| C3 | motor_driver_1 to computer | 5 | 280 | 176.6 | 40 | 0 | 60 | 5-pin 2.54 mm header / 40-pin header | - |
+| C4 | motor_driver_1 channel 1 to left_motor | 2 | 435 | 330.9 | 40 | 0 | 60 | 2-position screw terminal / 1x6 female header | electronics_enclosure.deck_left |
+| C5 | left_motor encoder to computer | 4 | 400 | 296.3 | 40 | 0 | 60 | 40-pin header / 1x6 female header | electronics_enclosure.deck_left |
+| C6 | motor_driver_1 channel 2 to right_motor | 2 | 390 | 287.8 | 40 | 0 | 60 | 2-position screw terminal / 1x6 female header | electronics_enclosure.deck_right |
+| C7 | right_motor encoder to computer | 4 | 365 | 262.6 | 40 | 0 | 60 | 40-pin header / 1x6 female header | electronics_enclosure.deck_right |
+| C8 | battery positive to main fuse | 1 | 160 | 58.4 | 40 | 0 | 60 | XT60 / soldered leads | - |
+| C9 | main fuse to main switch | 1 | 225 | 121.4 | 40 | 0 | 60 | soldered leads / 4.8 mm quick-connect tabs | - |
+| C10 | battery negative to star ground | 1 | 165 | 62 | 40 | 0 | 60 | XT60 / lever clamp | - |
+| C11 | main_switch to the VBAT splice | 1 | 160 | 57.5 | 40 | 0 | 60 | 4.8 mm quick-connect tabs / lever clamp | - |
+| C12 | VBAT to regulator_5v | 2 | 350 | 248.3 | 40 | 0 | 60 | lever clamp / 0.1 in through holes | - |
+| C13 | VBAT to motor_driver_1 | 2 | 260 | 158.7 | 40 | 0 | 60 | lever clamp / 2-position screw terminal | - |
+| C14 | regulator_5v to star_ground | 1 | 350 | 249.3 | 40 | 0 | 60 | 0.1 in through holes / lever clamp | - |
+| C15 | 5V to computer | 2 | 290 | 187.7 | 40 | 0 | 60 | 0.1 in through holes / 40-pin header | - |
 
 ## Electrical calculations
 
@@ -148,18 +148,19 @@ A driver's high level is its I/O supply; the receiver needs it above its input t
 
 | Item | Qty | Unit | Unit $ | Subtotal $ | Spec | Price source |
 |---|--:|---|--:|--:|---|---|
-| 16 AWG silicone wire | 0.6 | m | 1 | 0.60 | 1.308 mm2, rated 11 A in a bundle; 0.53 m cut + 10 % waste | estimated |
-| 18 AWG silicone wire | 0.7 | m | 0.7 | 0.49 | 0.823 mm2, rated 8 A in a bundle; 0.61 m cut + 10 % waste | estimated |
-| 22 AWG silicone wire | 2.7 | m | 0.4 | 1.08 | 0.327 mm2, rated 3.5 A in a bundle; 2.37 m cut + 10 % waste | estimated |
-| 24 AWG silicone wire | 2.3 | m | 0.35 | 0.80 | 0.205 mm2, rated 1.75 A in a bundle; 2.06 m cut + 10 % waste | estimated |
-| 26 AWG silicone wire | 2.6 | m | 0.3 | 0.78 | 0.128 mm2, rated 1.1 A in a bundle; 2.33 m cut + 10 % waste | estimated |
+| 16 AWG silicone wire | 0.8 | m | 1 | 0.80 | 1.308 mm2, rated 11 A in a bundle; 0.71 m cut + 10 % waste | estimated |
+| 18 AWG silicone wire | 0.6 | m | 0.7 | 0.42 | 0.823 mm2, rated 8 A in a bundle; 0.51 m cut + 10 % waste | estimated |
+| 20 AWG silicone wire | 0.5 | m | 0.5 | 0.25 | 0.519 mm2, rated 5.5 A in a bundle; 0.43 m cut + 10 % waste | estimated |
+| 22 AWG silicone wire | 2.6 | m | 0.4 | 1.04 | 0.327 mm2, rated 3.5 A in a bundle; 2.33 m cut + 10 % waste | estimated |
+| 24 AWG silicone wire | 2.9 | m | 0.35 | 1.01 | 0.205 mm2, rated 1.75 A in a bundle; 2.64 m cut + 10 % waste | estimated |
+| 26 AWG silicone wire | 3.5 | m | 0.3 | 1.05 | 0.128 mm2, rated 1.1 A in a bundle; 3.13 m cut + 10 % waste | estimated |
 | Dupont 2.54 mm contacts | 28 | pc | 0.02 | 0.56 | rated 3 A per contact | estimated |
 | Dupont 2.54 mm housings | 7 | pc | 0.02 | 0.14 | one per cable end | estimated |
 | Bootlace ferrule contacts | 6 | pc | 0.03 | 0.18 | rated 17.5 A per contact | estimated |
 | XT60 contacts | 2 | pc | 0.9 | 1.80 | rated 35 A per contact | estimated |
 | 6.3 mm spade contacts | 2 | pc | 0.08 | 0.16 | rated 15 A per contact | estimated |
 | Heat shrink 3 mm, 2:1 | 1.5 | m | 0.2 | 0.30 | 19 solder joints + a boot on each cable end | estimated |
-| Cable tie 100 x 2.5 mm | 32 | pc | 0.02 | 0.64 | at every clip, cable end and strain-relief anchor | estimated |
+| Cable tie 100 x 2.5 mm | 23 | pc | 0.02 | 0.46 | at every clip, cable end and strain-relief anchor | estimated |
 | Rubber grommet, 6.4 mm panel hole, 3.2 mm bore | 2 | pc | 0.08 | 0.16 | 9.5 mm panel hole | estimated |
 | USB | 1 | pc | 3 | 3.00 | lidar to computer | estimated |
 | 7.5 A ATM blade fuse | 1 | pc | 0.25 | 0.25 | plus spares | estimated |

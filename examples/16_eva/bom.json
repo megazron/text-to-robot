@@ -150,9 +150,9 @@
       "category": "Printed structure",
       "name": "PETG filament for 38 printed parts",
       "qty": 1,
-      "unit_cost": 47.2,
-      "subtotal": 47.2,
-      "spec": "1866 g of parts (+15 % supports/waste), about 170.0 h of printing",
+      "unit_cost": 47.38,
+      "subtotal": 47.38,
+      "spec": "1873 g of parts (+15 % supports/waste), about 170.7 h of printing",
       "note": "left_bracket, right_bracket, front_caster_post, rear_caster_post, skirt_left_front, skirt_left_rear, skirt_right_front, skirt_right_rear, battery_tray, servo_bus_tray, imu_tray, regulator_5v_tray, electronics_enclosure, electronics_lid, spine_foot, rib_mid_left, rib_mid_right, rib_top_left, rib_top_right, computer_tray, motor_driver_1_tray, shell_lower_left, shell_lower_right, shell_upper_left, shell_upper_right, neck_mount, head, left_eye, right_eye, camera_bracket, left_arm_base_link, left_arm_upper_arm, left_arm_tool_link, left_arm_shoulder, right_arm_base_link, right_arm_upper_arm, right_arm_tool_link, right_arm_shoulder"
     },
     {
@@ -166,55 +166,55 @@
     {
       "category": "Wiring",
       "name": "16 AWG silicone wire",
-      "qty": 0.7,
+      "qty": 1.5,
       "unit_cost": 1,
-      "subtotal": 0.7,
-      "spec": "0.7 m: 1.308 mm2, rated 11 A in a bundle; 0.60 m cut + 10 % waste",
+      "subtotal": 1.5,
+      "spec": "1.5 m: 1.308 mm2, rated 11 A in a bundle; 1.33 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "18 AWG silicone wire",
-      "qty": 1.1,
+      "qty": 2.3,
       "unit_cost": 0.7,
-      "subtotal": 0.77,
-      "spec": "1.1 m: 0.823 mm2, rated 8 A in a bundle; 0.97 m cut + 10 % waste",
+      "subtotal": 1.61,
+      "spec": "2.3 m: 0.823 mm2, rated 8 A in a bundle; 2.05 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "20 AWG silicone wire",
-      "qty": 3.6,
+      "qty": 2.8,
       "unit_cost": 0.5,
-      "subtotal": 1.8,
-      "spec": "3.6 m: 0.519 mm2, rated 5.5 A in a bundle; 3.21 m cut + 10 % waste",
+      "subtotal": 1.4,
+      "spec": "2.8 m: 0.519 mm2, rated 5.5 A in a bundle; 2.51 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "22 AWG silicone wire",
-      "qty": 4.6,
+      "qty": 5,
       "unit_cost": 0.4,
-      "subtotal": 1.84,
-      "spec": "4.6 m: 0.327 mm2, rated 3.5 A in a bundle; 4.18 m cut + 10 % waste",
+      "subtotal": 2,
+      "spec": "5 m: 0.327 mm2, rated 3.5 A in a bundle; 4.53 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "24 AWG silicone wire",
-      "qty": 5.6,
+      "qty": 6.6,
       "unit_cost": 0.35,
-      "subtotal": 1.96,
-      "spec": "5.6 m: 0.205 mm2, rated 1.75 A in a bundle; 5.09 m cut + 10 % waste",
+      "subtotal": 2.31,
+      "spec": "6.6 m: 0.205 mm2, rated 1.75 A in a bundle; 5.92 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "26 AWG silicone wire",
-      "qty": 7.2,
+      "qty": 8.3,
       "unit_cost": 0.3,
-      "subtotal": 2.16,
-      "spec": "7.2 m: 0.128 mm2, rated 1.1 A in a bundle; 6.54 m cut + 10 % waste",
+      "subtotal": 2.49,
+      "spec": "8.3 m: 0.128 mm2, rated 1.1 A in a bundle; 7.49 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
@@ -292,10 +292,10 @@
     {
       "category": "Wiring",
       "name": "Cable tie 100 x 2.5 mm",
-      "qty": 53,
+      "qty": 42,
       "unit_cost": 0.02,
-      "subtotal": 1.06,
-      "spec": "53 pc: at every clip, cable end and strain-relief anchor",
+      "subtotal": 0.84,
+      "spec": "42 pc: at every clip, cable end and strain-relief anchor",
       "note": "price estimated"
     },
     {
@@ -310,19 +310,19 @@
     {
       "category": "Wiring",
       "name": "Rubber grommet, 6.4 mm panel hole, 3.2 mm bore",
-      "qty": 1,
+      "qty": 2,
       "unit_cost": 0.08,
-      "subtotal": 0.08,
-      "spec": "1 pc: 12 mm panel hole",
+      "subtotal": 0.16,
+      "spec": "2 pc: 12 mm panel hole",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "Nylon braided sleeving 6 mm",
-      "qty": 0.5,
+      "qty": 0.6,
       "unit_cost": 0.4,
-      "subtotal": 0.2,
-      "spec": "0.5 m: over every cable where it crosses a joint",
+      "subtotal": 0.24,
+      "spec": "0.6 m: over every cable where it crosses a joint",
       "note": "price estimated"
     },
     {
@@ -362,18 +362,18 @@
       "note": "price estimated"
     }
   ],
-  "total": 649.04,
+  "total": 651.2,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
   "actuator_sizing": [
     {
       "joint": "left_arm_shoulder_pitch",
-      "required_effort": 0.253,
+      "required_effort": 0.252,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.253,
+      "required_torque_nm": 0.252,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "11.62x"
+      "margin": "11.66x"
     },
     {
       "joint": "left_arm_elbow_pitch",
@@ -385,11 +385,11 @@
     },
     {
       "joint": "right_arm_shoulder_pitch",
-      "required_effort": 0.253,
+      "required_effort": 0.252,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.253,
+      "required_torque_nm": 0.252,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "11.62x"
+      "margin": "11.66x"
     },
     {
       "joint": "right_arm_elbow_pitch",
@@ -401,24 +401,24 @@
     },
     {
       "joint": "left_wheel_joint",
-      "required_effort": 0.194,
+      "required_effort": 0.195,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.194,
+      "required_torque_nm": 0.195,
       "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
-      "margin": "3.53x"
+      "margin": "3.52x"
     },
     {
       "joint": "right_wheel_joint",
-      "required_effort": 0.194,
+      "required_effort": 0.195,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.194,
+      "required_torque_nm": 0.195,
       "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
-      "margin": "3.53x"
+      "margin": "3.52x"
     }
   ],
   "warnings": [],
   "notes": [
-    "EVA-style companion robot: 3.463 kg, hidden diff-drive base, pan head with camera, two servo fins",
+    "EVA-style companion robot: 3.471 kg, hidden diff-drive base, pan head with camera, two servo fins",
     "EVA cannot hover: this EVA rolls on a hidden differential-drive base (two 37D gearmotors, two ball casters) under a dark skirt; the egg rides on a 20 mm aluminium spine above it, so the gap reads as the film's hover.",
     "The egg body is four printed PETG shell segments (two bands, two halves) screwed to two printed ribs on the spine; the head is one print (230 x 200 x 150 mm) with a dark visor band and two LED eye diffusers.",
     "The head turns on a single pan servo; the film's free-floating head tilt is not reproduced. The arms are two-servo fins hanging beside the egg (they cannot fold flush into the body like the film's).",

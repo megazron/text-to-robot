@@ -4,45 +4,45 @@
 
 ![studio render](studio.gif)
 
-Interpreted as: four-wheel skid-steer base · lidar (upper_deck) · camera (base_link) · imu (upper_deck)
+Interpreted as: four-wheel skid-steer base · lidar (base_link) · camera (base_link) · imu (base_link)
 
-**Four-wheel skid-steer base: pololu_37d_30to1_64cpr gearmotors, 2.396 kg, 1.24 m/s, 1.47 h on 1 x lipo_3s_2200, rpi5**
+**Four-wheel skid-steer base: pololu_37d_30to1_64cpr gearmotors, 2.322 kg, 1.24 m/s, 1.47 h on 1 x lipo_3s_2200, rpi5**
 
-Parts cost **$695.1** · printed structure 21 parts, 539 g · checks passed 61/61
+Parts cost **$688.79** · printed structure 16 parts, 375 g · checks passed 53/53
 
 ## What it can do
 
 | | |
 |---|--:|
-| mass kg | 2.396 |
-| loaded mass kg | 4.396 |
+| mass kg | 2.322 |
+| loaded mass kg | 4.322 |
 | top speed m s | 1.24 |
-| wheel torque nm | 0.123 |
+| wheel torque nm | 0.121 |
 | drive motor | pololu_37d_30to1_64cpr |
 | battery | 1 x lipo_3s_2200 |
 | average power w | 13.3 |
 | runtime h | 1.47 |
-| tip angle deg | 39.3 |
+| tip angle deg | 40.4 |
 | compute | rpi5 |
 | slope deg | 10 |
 | turn rate rad s | 2.44 |
 | turn slip factor | 2.14 |
 | cargo kg | 2 |
-| cost usd | 741 |
-| cost breakdown | catalog parts $651, filament 0.62 kg $15, fasteners $11, fabricated/other $44 (300 x 200 x 3 mm 5052 aluminium deck, laser cut (~$44); power switch, 15 A fuse, wiring) |
+| cost usd | 738 |
+| cost breakdown | catalog parts $651, filament 0.43 kg $11, fasteners $10, fabricated/other $48 (356 x 200 x 3 mm 5052 aluminium deck, laser cut (~$48); power switch, 15 A fuse, wiring) |
 
 ## Actuators (sized from this robot's own loads)
 
 | Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
 |---|---|--:|--:|--:|--:|
-| front_left_wheel_joint | pololu_37d_30to1_64cpr | 0.123 | 0.686 / 1.373 | 5.56x | 34.558 |
-| front_right_wheel_joint | pololu_37d_30to1_64cpr | 0.123 | 0.686 / 1.373 | 5.56x | 34.558 |
-| rear_left_wheel_joint | pololu_37d_30to1_64cpr | 0.123 | 0.686 / 1.373 | 5.56x | 34.558 |
-| rear_right_wheel_joint | pololu_37d_30to1_64cpr | 0.123 | 0.686 / 1.373 | 5.56x | 34.558 |
+| front_left_wheel_joint | pololu_37d_30to1_64cpr | 0.121 | 0.686 / 1.373 | 5.66x | 34.558 |
+| front_right_wheel_joint | pololu_37d_30to1_64cpr | 0.121 | 0.686 / 1.373 | 5.66x | 34.558 |
+| rear_left_wheel_joint | pololu_37d_30to1_64cpr | 0.121 | 0.686 / 1.373 | 5.66x | 34.558 |
+| rear_right_wheel_joint | pololu_37d_30to1_64cpr | 0.121 | 0.686 / 1.373 | 5.66x | 34.558 |
 
 ## Engineering checks
 
-All 61 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
+All 53 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
 
 ## Assumptions and limits
 
@@ -62,8 +62,8 @@ All 61 checks pass (torque, speed, power, stability, print-bed fit). Details in 
 | | Test | Result |
 |---|---|---|
 | ✅ | drive straight | 3.44 m in 4.01 s, cruise speed 1.213 m/s vs claimed 1.240 m/s, heading drift -0.0 deg, lateral -0.0 cm |
-| ✅ | ramp 10deg | from standstill on a 10 deg slope (speed ramped over 4.7 s at 0.5 m/s^2): 5.20 m uphill in 6.7 s, speed 1.207 m/s of 1.240 commanded |
-| ✅ | turn in place | mean yaw rate 2.21 rad/s with 4.85 commanded (no-slip), claimed 2.44 rad/s (needs >= 2.07), centre moved 0.6 cm over 1.0 turn(s) (0.6 cm per turn) |
+| ✅ | ramp 10deg | from standstill on a 10 deg slope (speed ramped over 4.7 s at 0.5 m/s^2): 5.20 m uphill in 6.7 s, speed 1.208 m/s of 1.240 commanded |
+| ✅ | turn in place | mean yaw rate 2.27 rad/s with 4.94 commanded (no-slip), claimed 2.44 rad/s (needs >= 2.07), centre moved 3.0 cm over 1.0 turn(s) (3.0 cm per turn) |
 
 _PASS means the modelled actuators (datasheet peak torque as a hard limit, a linear torque-speed line to no-load speed, reflected rotor inertia, URDF damping/friction) can produce the torques and speeds the task needs in this geometry and mass distribution, and that mean torque over the hold stays within the continuous (rated) torque. Joint control uses an ideal model-based feedforward (computed torque) through the force-limited servo for fixed-base robots and plain position servos for floating robots; a pass therefore proves torque/speed capacity, not that a given controller achieves it. Untested: thermal limits over long duty cycles (only the mean-vs-rated proxy), gearbox backlash and compliance, link and joint flexibility, encoder resolution, supply voltage sag and current limits, bus latency, controller tuning, and contact/friction values (nominal friction only)._
 <!-- /SIM -->

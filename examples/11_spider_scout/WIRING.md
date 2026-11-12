@@ -1,6 +1,6 @@
 # Wiring: hexapod
 
-37 cables, 73 conductors, 16.04 m of wire, wiring parts $31.20.
+37 cables, 73 conductors, 22.08 m of wire, wiring parts $34.10.
 
 Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), [breadboard.svg](breadboard.svg) (every wire in its colour, pin to pin) and the cable diagram [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
 
@@ -8,7 +8,7 @@ Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), 
 
 | Rail | Volts | Source | Source limit A (cont / peak) | Load A (typical / peak) | Margin (typical) | Fuse A | Worst wire drop V |
 |---|--:|---|--:|--:|--:|--:|--:|
-| VBAT | 11.1 | main_switch | 35 / 70 | 10.916 / 32.216 | 3.2x | 20 | 0.077 |
+| VBAT | 11.1 | main_switch | 35 / 70 | 10.916 / 32.216 | 3.2x | 20 | 0.11 |
 | 5V | 5 | regulator_5v | 5.5 / 8 | 0 / 0 | -x | - | 0 |
 
 **VBAT loads** (peak assumes six joints at peak at once, the rest at half load):
@@ -129,43 +129,43 @@ Length is route + service loop + joint slack + termination, rounded up to 5 mm; 
 
 | Cable | What | Conductors | Length mm | Route | Service | Joint slack | Ends | Connectors | Exit |
 |---|---|--:|--:|--:|--:|--:|--:|---|---|
-| C1 | lidar to computer | 1 | 185 | 181.4 | 0 | 0 | 0 | USB | computer_hood.deck |
-| C2 | camera to computer | 1 | 175 | 170.6 | 0 | 0 | 0 | FFC | computer_hood.deck |
-| C3 | computer to imu | 4 | 325 | 220.5 | 40 | 0 | 60 | 40-pin header / 12-pin breadboard-friendly header | computer_hood.deck + board_hood.deck |
-| C4 | actuator_bus to actuator_bus_hub | 1 | 225 | 123.1 | 40 | 0 | 60 | 3-pin 2.5 mm bus servo header (5264 class) / lever clamp | board_hood.deck |
-| C5 | actuator_bus_hub to lf_coxa_actuator | 1 | 235 | 130.7 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | - |
-| C6 | lf_coxa_actuator to lf_femur_actuator | 3 | 200 | 57.3 | 40 | 40 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
-| C7 | lf_femur_actuator to lf_tibia_actuator | 3 | 265 | 114.5 | 40 | 50 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
-| C8 | actuator_bus_hub to lm_coxa_actuator | 1 | 270 | 166.3 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | - |
-| C9 | lm_coxa_actuator to lm_femur_actuator | 3 | 200 | 57.3 | 40 | 40 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
-| C10 | lm_femur_actuator to lm_tibia_actuator | 3 | 265 | 114.5 | 40 | 50 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
-| C11 | actuator_bus_hub to lr_coxa_actuator | 1 | 255 | 151.4 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | - |
-| C12 | lr_coxa_actuator to lr_femur_actuator | 3 | 200 | 57.3 | 40 | 40 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
-| C13 | lr_femur_actuator to lr_tibia_actuator | 3 | 265 | 114.5 | 40 | 50 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
-| C14 | actuator_bus_hub to rr_coxa_actuator | 1 | 195 | 93.2 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | - |
-| C15 | rr_coxa_actuator to rr_femur_actuator | 3 | 200 | 57.3 | 40 | 40 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
-| C16 | rr_femur_actuator to rr_tibia_actuator | 3 | 265 | 114.5 | 40 | 50 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
-| C17 | actuator_bus_hub to rm_coxa_actuator | 1 | 170 | 65.9 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | - |
-| C18 | rm_coxa_actuator to rm_femur_actuator | 3 | 200 | 57.3 | 40 | 40 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
-| C19 | rm_femur_actuator to rm_tibia_actuator | 3 | 265 | 114.5 | 40 | 50 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
-| C20 | actuator_bus_hub to rf_coxa_actuator | 1 | 235 | 130.2 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | - |
-| C21 | rf_coxa_actuator to rf_femur_actuator | 3 | 200 | 57.3 | 40 | 40 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
-| C22 | rf_femur_actuator to rf_tibia_actuator | 3 | 265 | 114.5 | 40 | 50 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
-| C23 | actuator_bus to computer | 1 | 240 | 238.7 | 0 | 0 | 0 | USB | board_hood.deck + computer_hood.deck |
-| C24 | battery positive to main fuse | 1 | 100 | 0 | 40 | 0 | 60 | XT60 (male discharge plug on the pack per the listing) / soldered leads | - |
-| C25 | main fuse to main switch | 1 | 245 | 144.2 | 40 | 0 | 60 | soldered leads / 6.3 mm quick-connect tabs | battery_tray.up |
-| C26 | battery negative to star ground | 1 | 100 | 0 | 40 | 0 | 60 | XT60 (male discharge plug on the pack per the listing) / lever clamp | - |
-| C27 | main_switch to the VBAT splice | 1 | 100 | 0 | 40 | 0 | 60 | 6.3 mm quick-connect tabs / lever clamp | - |
-| C28 | VBAT to regulator_5v | 2 | 210 | 107.6 | 40 | 0 | 60 | lever clamp / 0.1 in through holes | board_hood.deck |
-| C29 | VBAT to computer | 2 | 295 | 193.4 | 40 | 0 | 60 | lever clamp / Singatron 2DC-0005D206F DC power jack (J16) | computer_hood.deck |
-| C30 | VBAT to actuator_bus | 2 | 165 | 63.6 | 40 | 0 | 60 | lever clamp / green screw terminal | board_hood.deck |
-| C31 | VBAT to lf_coxa_actuator | 2 | 170 | 68 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | - |
-| C32 | VBAT to lm_coxa_actuator | 2 | 235 | 132.4 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | - |
-| C33 | VBAT to lr_coxa_actuator | 2 | 230 | 128.5 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | - |
-| C34 | VBAT to rr_coxa_actuator | 2 | 240 | 137.8 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | - |
-| C35 | VBAT to rm_coxa_actuator | 2 | 225 | 121.5 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | - |
-| C36 | VBAT to rf_coxa_actuator | 2 | 180 | 78.8 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | - |
-| C37 | regulator_5v to star_ground | 1 | 340 | 237 | 40 | 0 | 60 | 0.1 in through holes / lever clamp | board_hood.deck + battery_tray.up |
+| C1 | lidar to computer | 1 | 110 | 105.2 | 0 | 0 | 0 | USB | computer_hood.usb |
+| C2 | camera to computer | 1 | 160 | 159.5 | 0 | 0 | 0 | FFC | computer_hood.usb |
+| C3 | computer to imu | 4 | 385 | 282.2 | 40 | 0 | 60 | 40-pin header / 12-pin breadboard-friendly header | computer_hood.deck + board_hood.usb |
+| C4 | actuator_bus to actuator_bus_hub | 1 | 185 | 81.2 | 40 | 0 | 60 | 3-pin 2.5 mm bus servo header (5264 class) / lever clamp | - |
+| C5 | actuator_bus_hub to lf_coxa_actuator | 1 | 295 | 193.2 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | board_hood.legs_left |
+| C6 | lf_coxa_actuator to lf_femur_actuator | 3 | 300 | 152.9 | 40 | 45 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
+| C7 | lf_femur_actuator to lf_tibia_actuator | 3 | 345 | 188.7 | 40 | 55 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
+| C8 | actuator_bus_hub to lm_coxa_actuator | 1 | 340 | 237.6 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | board_hood.legs_left |
+| C9 | lm_coxa_actuator to lm_femur_actuator | 3 | 295 | 148.2 | 40 | 45 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
+| C10 | lm_femur_actuator to lm_tibia_actuator | 3 | 340 | 174.3 | 40 | 65 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
+| C11 | actuator_bus_hub to lr_coxa_actuator | 1 | 325 | 222.4 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | board_hood.legs_left |
+| C12 | lr_coxa_actuator to lr_femur_actuator | 3 | 310 | 157.4 | 40 | 50 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
+| C13 | lr_femur_actuator to lr_tibia_actuator | 3 | 345 | 187.1 | 40 | 55 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
+| C14 | actuator_bus_hub to rr_coxa_actuator | 1 | 295 | 194 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | board_hood.legs_right |
+| C15 | rr_coxa_actuator to rr_femur_actuator | 3 | 305 | 154.9 | 40 | 50 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
+| C16 | rr_femur_actuator to rr_tibia_actuator | 3 | 350 | 182.6 | 40 | 65 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
+| C17 | actuator_bus_hub to rm_coxa_actuator | 1 | 340 | 238.2 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | board_hood.legs_right |
+| C18 | rm_coxa_actuator to rm_femur_actuator | 3 | 295 | 149.6 | 40 | 45 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
+| C19 | rm_femur_actuator to rm_tibia_actuator | 3 | 345 | 176.7 | 40 | 65 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
+| C20 | actuator_bus_hub to rf_coxa_actuator | 1 | 330 | 226.1 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | board_hood.legs_right |
+| C21 | rf_coxa_actuator to rf_femur_actuator | 3 | 310 | 155.4 | 40 | 50 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
+| C22 | rf_femur_actuator to rf_tibia_actuator | 3 | 345 | 185.9 | 40 | 55 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
+| C23 | actuator_bus to computer | 1 | 155 | 152.9 | 0 | 0 | 0 | USB | board_hood.usb + computer_hood.usb |
+| C24 | battery positive to main fuse | 1 | 215 | 114.1 | 40 | 0 | 60 | XT60 (male discharge plug on the pack per the listing) / soldered leads | battery_tray.up + board_hood.power |
+| C25 | main fuse to main switch | 1 | 130 | 26.4 | 40 | 0 | 60 | soldered leads / 6.3 mm quick-connect tabs | - |
+| C26 | battery negative to star ground | 1 | 260 | 157.3 | 40 | 0 | 60 | XT60 (male discharge plug on the pack per the listing) / lever clamp | battery_tray.up + board_hood.power |
+| C27 | main_switch to the VBAT splice | 1 | 175 | 74.3 | 40 | 0 | 60 | 6.3 mm quick-connect tabs / lever clamp | - |
+| C28 | VBAT to regulator_5v | 2 | 190 | 89.5 | 40 | 0 | 60 | lever clamp / 0.1 in through holes | - |
+| C29 | VBAT to computer | 2 | 365 | 264.8 | 40 | 0 | 60 | lever clamp / Singatron 2DC-0005D206F DC power jack (J16) | board_hood.usb + computer_hood.deck |
+| C30 | VBAT to actuator_bus | 2 | 210 | 106.5 | 40 | 0 | 60 | lever clamp / green screw terminal | - |
+| C31 | VBAT to lf_coxa_actuator | 2 | 335 | 230.3 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | board_hood.legs_left |
+| C32 | VBAT to lm_coxa_actuator | 2 | 375 | 271 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | board_hood.legs_left |
+| C33 | VBAT to lr_coxa_actuator | 2 | 375 | 270.4 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | board_hood.legs_left |
+| C34 | VBAT to rr_coxa_actuator | 2 | 325 | 221.5 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | board_hood.legs_right |
+| C35 | VBAT to rm_coxa_actuator | 2 | 365 | 261 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | board_hood.legs_right |
+| C36 | VBAT to rf_coxa_actuator | 2 | 360 | 256.1 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | board_hood.legs_right |
+| C37 | regulator_5v to star_ground | 1 | 190 | 88.1 | 40 | 0 | 60 | 0.1 in through holes / lever clamp | - |
 
 ## Slack at the joints
 
@@ -173,18 +173,18 @@ Each loop is at least the extra length the joint needs at the far end of its tra
 
 | Cable | Joint | Travel rad | Length at home mm | Length at full travel mm | Slack loop mm |
 |---|---|---|--:|--:|--:|
-| C6 | lf_coxa | -0.6 to 0.6 | 14 | 18.6 | 40 |
-| C7 | lf_femur | -1.2 to 1.2 | 39.5 | 55.9 | 50 |
-| C9 | lm_coxa | -0.6 to 0.6 | 14 | 18.6 | 40 |
-| C10 | lm_femur | -1.2 to 1.2 | 39.5 | 55.9 | 50 |
-| C12 | lr_coxa | -0.6 to 0.6 | 14 | 18.6 | 40 |
-| C13 | lr_femur | -1.2 to 1.2 | 39.5 | 55.9 | 50 |
-| C15 | rr_coxa | -0.6 to 0.6 | 14 | 18.6 | 40 |
-| C16 | rr_femur | -1.2 to 1.2 | 39.5 | 55.9 | 50 |
-| C18 | rm_coxa | -0.6 to 0.6 | 14 | 18.6 | 40 |
-| C19 | rm_femur | -1.2 to 1.2 | 39.5 | 55.9 | 50 |
-| C21 | rf_coxa | -0.6 to 0.6 | 14 | 18.6 | 40 |
-| C22 | rf_femur | -1.2 to 1.2 | 39.5 | 55.9 | 50 |
+| C6 | lf_coxa | -0.6 to 0.6 | 36.3 | 48.1 | 45 |
+| C7 | lf_femur | -1.2 to 1.2 | 36.5 | 55.6 | 55 |
+| C9 | lm_coxa | -0.6 to 0.6 | 36.2 | 45.7 | 45 |
+| C10 | lm_femur | -1.2 to 1.2 | 36.5 | 62.2 | 65 |
+| C12 | lr_coxa | -0.6 to 0.6 | 20.5 | 35.1 | 50 |
+| C13 | lr_femur | -1.2 to 1.2 | 36.5 | 55.7 | 55 |
+| C15 | rr_coxa | -0.6 to 0.6 | 35.3 | 47.8 | 50 |
+| C16 | rr_femur | -1.2 to 1.2 | 34.7 | 61.9 | 65 |
+| C18 | rm_coxa | -0.6 to 0.6 | 36.5 | 46.5 | 45 |
+| C19 | rm_femur | -1.2 to 1.2 | 36.5 | 62.5 | 65 |
+| C21 | rf_coxa | -0.521 to 0.6 | 22.1 | 35.3 | 50 |
+| C22 | rf_femur | -1.2 to 1.2 | 36.5 | 55.4 | 55 |
 
 ## Electrical calculations
 
@@ -727,10 +727,10 @@ Not checked (no logic levels in the parts data): Feetech STS3215 C047 12 V 30 kg
 
 | Item | Qty | Unit | Unit $ | Subtotal $ | Spec | Price source |
 |---|--:|---|--:|--:|---|---|
-| 12 AWG silicone wire | 0.6 | m | 2.2 | 1.32 | 3.308 mm2, rated 20.5 A in a bundle; 0.54 m cut + 10 % waste | estimated |
-| 22 AWG silicone wire | 6.6 | m | 0.4 | 2.64 | 0.327 mm2, rated 3.5 A in a bundle; 5.92 m cut + 10 % waste | estimated |
-| 24 AWG silicone wire | 5 | m | 0.35 | 1.75 | 0.205 mm2, rated 1.75 A in a bundle; 4.55 m cut + 10 % waste | estimated |
-| 26 AWG silicone wire | 5.6 | m | 0.3 | 1.68 | 0.128 mm2, rated 1.1 A in a bundle; 5.03 m cut + 10 % waste | estimated |
+| 12 AWG silicone wire | 0.9 | m | 2.2 | 1.98 | 3.308 mm2, rated 20.5 A in a bundle; 0.78 m cut + 10 % waste | estimated |
+| 22 AWG silicone wire | 9.4 | m | 0.4 | 3.76 | 0.327 mm2, rated 3.5 A in a bundle; 8.52 m cut + 10 % waste | estimated |
+| 24 AWG silicone wire | 6 | m | 0.35 | 2.10 | 0.205 mm2, rated 1.75 A in a bundle; 5.45 m cut + 10 % waste | estimated |
+| 26 AWG silicone wire | 7.5 | m | 0.3 | 2.25 | 0.128 mm2, rated 1.1 A in a bundle; 6.73 m cut + 10 % waste | estimated |
 | Dupont 2.54 mm contacts | 8 | pc | 0.02 | 0.16 | rated 3 A per contact | estimated |
 | Dupont 2.54 mm housings | 2 | pc | 0.02 | 0.04 | one per cable end | estimated |
 | Molex 5264 contacts | 91 | pc | 0.05 | 4.55 | rated 3 A per contact | estimated |
@@ -739,9 +739,9 @@ Not checked (no logic levels in the parts data): Feetech STS3215 C047 12 V 30 kg
 | 6.3 mm spade contacts | 2 | pc | 0.08 | 0.16 | rated 15 A per contact | estimated |
 | Bootlace ferrule contacts | 2 | pc | 0.03 | 0.06 | rated 17.5 A per contact | estimated |
 | Heat shrink 3 mm, 2:1 | 2.5 | m | 0.2 | 0.50 | 7 solder joints + a boot on each cable end | estimated |
-| Cable tie 100 x 2.5 mm | 56 | pc | 0.02 | 1.12 | at every clip, cable end and strain-relief anchor | estimated |
-| Rubber grommet, 6.4 mm panel hole, 3.2 mm bore | 3 | pc | 0.08 | 0.24 | 9.5 mm panel hole | estimated |
-| Nylon braided sleeving 6 mm | 1.8 | m | 0.4 | 0.72 | over every cable where it crosses a joint | estimated |
+| Cable tie 100 x 2.5 mm | 52 | pc | 0.02 | 1.04 | at every clip, cable end and strain-relief anchor | estimated |
+| Rubber grommet, 6.4 mm panel hole, 3.2 mm bore | 6 | pc | 0.08 | 0.48 | 9.5 mm panel hole | estimated |
+| Nylon braided sleeving 6 mm | 1.9 | m | 0.4 | 0.76 | over every cable where it crosses a joint | estimated |
 | USB | 1 | pc | 3 | 3.00 | lidar to computer | estimated |
 | FFC | 1 | pc | 3 | 3.00 | camera to computer | estimated |
 | USB | 1 | pc | 3 | 3.00 | actuator_bus to computer | estimated |

@@ -1,6 +1,6 @@
 # Wiring: quadruped
 
-28 cables, 54 conductors, 11.78 m of wire, wiring parts $22.03.
+35 cables, 54 conductors, 15.25 m of wire, wiring parts $24.39.
 
 Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), [breadboard.svg](breadboard.svg) (every wire in its colour, pin to pin) and the cable diagram [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
 
@@ -8,8 +8,8 @@ Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), 
 
 | Rail | Volts | Source | Source limit A (cont / peak) | Load A (typical / peak) | Margin (typical) | Fuse A | Worst wire drop V |
 |---|--:|---|--:|--:|--:|--:|--:|
-| VBAT | 11.1 | main_switch | 35 / 70 | 5.951 / 14.951 | 5.9x | 7.5 | 0.079 |
-| 5V | 5 | regulator_5v | 5.5 / 8 | 1 / 5 | 5.5x | - | 0.055 |
+| VBAT | 11.1 | main_switch | 35 / 70 | 5.951 / 14.951 | 5.9x | 7.5 | 0.101 |
+| 5V | 5 | regulator_5v | 5.5 / 8 | 1 / 5 | 5.5x | - | 0.078 |
 
 **VBAT loads** (peak assumes four joints at peak at once, the rest at half load):
 
@@ -84,20 +84,20 @@ Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), 
 | C19 | W38 | GND | battery.BAT- | star_ground.P1 | 16 | black | 5.951 | 14.951 |
 | C20 | W39 | VBAT | main_switch.OUT | splice_vbat.P1 | 16 | red | 5.951 | 14.951 |
 | C21 | W40 | VBAT | splice_vbat.P2 | regulator_5v.VIN | 22 | red | 0.501 | 2.503 |
-| C21 | W41 | GND | star_ground.P2 | regulator_5v.GND | 24 | black | 0.501 | 2.503 |
-| C22 | W42 | VBAT | splice_vbat.P2 | actuator_bus.VIN | 22 | red | 0.05 | 0.1 |
-| C22 | W43 | GND | star_ground.P2 | actuator_bus.GND | 24 | black | 0.05 | 0.1 |
-| C23 | W44 | VBAT | splice_vbat.P2 | fl_hip_abduction_actuator.VCC | 22 | red | 1.35 | 3.6 |
-| C23 | W45 | GND | star_ground.P2 | fl_hip_abduction_actuator.GND | 22 | black | 1.35 | 3.6 |
-| C24 | W46 | VBAT | splice_vbat.P2 | fr_hip_abduction_actuator.VCC | 22 | red | 1.35 | 3.6 |
-| C24 | W47 | GND | star_ground.P2 | fr_hip_abduction_actuator.GND | 22 | black | 1.35 | 3.6 |
-| C25 | W48 | VBAT | splice_vbat.P2 | rl_hip_abduction_actuator.VCC | 22 | red | 1.35 | 3.6 |
-| C25 | W49 | GND | star_ground.P2 | rl_hip_abduction_actuator.GND | 22 | black | 1.35 | 3.6 |
-| C26 | W50 | VBAT | splice_vbat.P2 | rr_hip_abduction_actuator.VCC | 22 | red | 1.35 | 3.6 |
-| C26 | W51 | GND | star_ground.P2 | rr_hip_abduction_actuator.GND | 22 | black | 1.35 | 3.6 |
-| C27 | W52 | GND | regulator_5v.GND | star_ground.P2 | 22 | black | 1 | 5 |
-| C28 | W53 | 5V | regulator_5v.VOUT | computer.5V | 22 | red | 1 | 5 |
-| C28 | W54 | GND | star_ground.P2 | computer.GND | 22 | black | 1 | 5 |
+| C22 | W41 | VBAT | splice_vbat.P2 | actuator_bus.VIN | 22 | red | 0.05 | 0.1 |
+| C23 | W42 | VBAT | splice_vbat.P2 | fl_hip_abduction_actuator.VCC | 22 | red | 1.35 | 3.6 |
+| C24 | W43 | VBAT | splice_vbat.P2 | fr_hip_abduction_actuator.VCC | 22 | red | 1.35 | 3.6 |
+| C25 | W44 | VBAT | splice_vbat.P2 | rl_hip_abduction_actuator.VCC | 22 | red | 1.35 | 3.6 |
+| C26 | W45 | VBAT | splice_vbat.P2 | rr_hip_abduction_actuator.VCC | 22 | red | 1.35 | 3.6 |
+| C27 | W46 | GND | regulator_5v.GND | star_ground.P2 | 22 | black | 1 | 5 |
+| C28 | W47 | 5V | regulator_5v.VOUT | computer.5V | 22 | red | 1 | 5 |
+| C29 | W48 | GND | star_ground.P2 | regulator_5v.GND | 24 | black | 0.501 | 2.503 |
+| C30 | W49 | GND | star_ground.P2 | actuator_bus.GND | 24 | black | 0.05 | 0.1 |
+| C31 | W50 | GND | star_ground.P2 | fl_hip_abduction_actuator.GND | 22 | black | 1.35 | 3.6 |
+| C32 | W51 | GND | star_ground.P2 | fr_hip_abduction_actuator.GND | 22 | black | 1.35 | 3.6 |
+| C33 | W52 | GND | star_ground.P2 | rl_hip_abduction_actuator.GND | 22 | black | 1.35 | 3.6 |
+| C34 | W53 | GND | star_ground.P2 | rr_hip_abduction_actuator.GND | 22 | black | 1.35 | 3.6 |
+| C35 | W54 | GND | star_ground.P2 | computer.GND | 22 | black | 1 | 5 |
 
 ## Cut list
 
@@ -105,34 +105,41 @@ Length is route + service loop + joint slack + termination, rounded up to 5 mm; 
 
 | Cable | What | Conductors | Length mm | Route | Service | Joint slack | Ends | Connectors | Exit |
 |---|---|--:|--:|--:|--:|--:|--:|---|---|
-| C1 | camera to computer | 1 | 185 | 181.8 | 0 | 0 | 0 | FFC | electronics_hood.deck |
-| C2 | computer to imu | 4 | 225 | 124.4 | 40 | 0 | 60 | 40-pin header / 12-pin breadboard-friendly header | - |
-| C3 | actuator_bus to actuator_bus_hub | 1 | 190 | 87.4 | 40 | 0 | 60 | 3-pin 2.5 mm bus servo header (5264 class) / lever clamp | electronics_hood.deck |
-| C4 | actuator_bus_hub to fl_hip_abduction_actuator | 1 | 215 | 113.7 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | - |
-| C5 | fl_hip_abduction_actuator to fl_hip_pitch_actuator | 3 | 210 | 72.2 | 40 | 35 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
-| C6 | fl_hip_pitch_actuator to fl_knee_actuator | 3 | 290 | 134.8 | 40 | 55 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
-| C7 | actuator_bus_hub to fr_hip_abduction_actuator | 1 | 195 | 92.8 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | - |
-| C8 | fr_hip_abduction_actuator to fr_hip_pitch_actuator | 3 | 210 | 72.2 | 40 | 35 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
-| C9 | fr_hip_pitch_actuator to fr_knee_actuator | 3 | 290 | 134.8 | 40 | 55 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
-| C10 | actuator_bus_hub to rl_hip_abduction_actuator | 1 | 235 | 130.3 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | - |
-| C11 | rl_hip_abduction_actuator to rl_hip_pitch_actuator | 3 | 215 | 72.2 | 40 | 40 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
-| C12 | rl_hip_pitch_actuator to rl_knee_actuator | 3 | 290 | 134.8 | 40 | 55 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
-| C13 | actuator_bus_hub to rr_hip_abduction_actuator | 1 | 215 | 112.5 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | - |
-| C14 | rr_hip_abduction_actuator to rr_hip_pitch_actuator | 3 | 215 | 72.2 | 40 | 40 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
-| C15 | rr_hip_pitch_actuator to rr_knee_actuator | 3 | 290 | 134.8 | 40 | 55 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
-| C16 | actuator_bus to computer | 1 | 85 | 83.5 | 0 | 0 | 0 | USB | - |
-| C17 | battery positive to main fuse | 1 | 100 | 0 | 40 | 0 | 60 | XT60 / soldered leads | - |
-| C18 | main fuse to main switch | 1 | 260 | 159.5 | 40 | 0 | 60 | soldered leads / 6.3 mm quick-connect tabs | body_bay.right |
-| C19 | battery negative to star ground | 1 | 100 | 0 | 40 | 0 | 60 | XT60 / lever clamp | - |
-| C20 | main_switch to the VBAT splice | 1 | 100 | 0 | 40 | 0 | 60 | 6.3 mm quick-connect tabs / lever clamp | - |
-| C21 | VBAT to regulator_5v | 2 | 200 | 98.4 | 40 | 0 | 60 | lever clamp / 0.1 in through holes | electronics_hood.deck |
-| C22 | VBAT to actuator_bus | 2 | 205 | 102.4 | 40 | 0 | 60 | lever clamp / green screw terminal | electronics_hood.deck |
-| C23 | VBAT to fl_hip_abduction_actuator | 2 | 170 | 69.1 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | - |
-| C24 | VBAT to fr_hip_abduction_actuator | 2 | 145 | 40.5 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | - |
-| C25 | VBAT to rl_hip_abduction_actuator | 2 | 305 | 202.2 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | - |
-| C26 | VBAT to rr_hip_abduction_actuator | 2 | 295 | 194.3 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | - |
-| C27 | regulator_5v to star_ground | 1 | 250 | 149.5 | 40 | 0 | 60 | 0.1 in through holes / lever clamp | electronics_hood.deck + body_bay.left |
-| C28 | 5V to computer | 2 | 175 | 74.3 | 40 | 0 | 60 | 0.1 in through holes / 40-pin header | - |
+| C1 | camera to computer | 1 | 230 | 228.3 | 0 | 0 | 0 | FFC | electronics_hood.camera |
+| C2 | computer to imu | 4 | 275 | 173 | 40 | 0 | 60 | 40-pin header / 12-pin breadboard-friendly header | - |
+| C3 | actuator_bus to actuator_bus_hub | 1 | 175 | 72 | 40 | 0 | 60 | 3-pin 2.5 mm bus servo header (5264 class) / lever clamp | - |
+| C4 | actuator_bus_hub to fl_hip_abduction_actuator | 1 | 275 | 172 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | electronics_hood.deck |
+| C5 | fl_hip_abduction_actuator to fl_hip_pitch_actuator | 3 | 310 | 166.7 | 40 | 40 | 60 | Feetech 5264-3P / Feetech 5264-3P | body_bay.front_left |
+| C6 | fl_hip_pitch_actuator to fl_knee_actuator | 3 | 370 | 209.6 | 40 | 60 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
+| C7 | actuator_bus_hub to fr_hip_abduction_actuator | 1 | 235 | 134.4 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | electronics_hood.deck |
+| C8 | fr_hip_abduction_actuator to fr_hip_pitch_actuator | 3 | 315 | 166.8 | 40 | 45 | 60 | Feetech 5264-3P / Feetech 5264-3P | body_bay.front_right |
+| C9 | fr_hip_pitch_actuator to fr_knee_actuator | 3 | 360 | 174 | 40 | 85 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
+| C10 | actuator_bus_hub to rl_hip_abduction_actuator | 1 | 325 | 221 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | electronics_hood.deck |
+| C11 | rl_hip_abduction_actuator to rl_hip_pitch_actuator | 3 | 315 | 167.4 | 40 | 45 | 60 | Feetech 5264-3P / Feetech 5264-3P | body_bay.rear_left |
+| C12 | rl_hip_pitch_actuator to rl_knee_actuator | 3 | 355 | 194.1 | 40 | 60 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
+| C13 | actuator_bus_hub to rr_hip_abduction_actuator | 1 | 315 | 213.2 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | electronics_hood.deck |
+| C14 | rr_hip_abduction_actuator to rr_hip_pitch_actuator | 3 | 310 | 166 | 40 | 40 | 60 | Feetech 5264-3P / Feetech 5264-3P | body_bay.rear_right |
+| C15 | rr_hip_pitch_actuator to rr_knee_actuator | 3 | 365 | 204.9 | 40 | 60 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
+| C16 | actuator_bus to computer | 1 | 80 | 75.7 | 0 | 0 | 0 | USB | - |
+| C17 | battery positive to main fuse | 1 | 165 | 63.6 | 40 | 0 | 60 | XT60 / soldered leads | - |
+| C18 | main fuse to main switch | 1 | 215 | 110.4 | 40 | 0 | 60 | soldered leads / 6.3 mm quick-connect tabs | electronics_hood.deck |
+| C19 | battery negative to star ground | 1 | 195 | 91.6 | 40 | 0 | 60 | XT60 / lever clamp | - |
+| C20 | main_switch to the VBAT splice | 1 | 200 | 96.2 | 40 | 0 | 60 | 6.3 mm quick-connect tabs / lever clamp | - |
+| C21 | VBAT to regulator_5v | 1 | 160 | 57.7 | 40 | 0 | 60 | lever clamp / 0.1 in through holes | - |
+| C22 | VBAT to actuator_bus | 1 | 165 | 64.1 | 40 | 0 | 60 | lever clamp / green screw terminal | - |
+| C23 | VBAT to fl_hip_abduction_actuator | 1 | 285 | 183.3 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | electronics_hood.deck |
+| C24 | VBAT to fr_hip_abduction_actuator | 1 | 245 | 141.1 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | electronics_hood.deck |
+| C25 | VBAT to rl_hip_abduction_actuator | 1 | 330 | 228.9 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | electronics_hood.deck |
+| C26 | VBAT to rr_hip_abduction_actuator | 1 | 325 | 220 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | electronics_hood.deck |
+| C27 | regulator_5v to star_ground | 1 | 325 | 222.9 | 40 | 0 | 60 | 0.1 in through holes / lever clamp | electronics_hood.deck |
+| C28 | 5V to computer | 1 | 245 | 143.6 | 40 | 0 | 60 | 0.1 in through holes / 40-pin header | - |
+| C29 | VBAT to regulator_5v | 1 | 325 | 220.8 | 40 | 0 | 60 | lever clamp / 0.1 in through holes | electronics_hood.deck |
+| C30 | VBAT to actuator_bus | 1 | 295 | 193.1 | 40 | 0 | 60 | lever clamp / green screw terminal | electronics_hood.deck |
+| C31 | VBAT to fl_hip_abduction_actuator | 1 | 230 | 125.6 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | - |
+| C32 | VBAT to fr_hip_abduction_actuator | 1 | 240 | 138.1 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | - |
+| C33 | VBAT to rl_hip_abduction_actuator | 1 | 170 | 68.7 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | - |
+| C34 | VBAT to rr_hip_abduction_actuator | 1 | 205 | 105 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | - |
+| C35 | 5V to computer | 1 | 405 | 301.7 | 40 | 0 | 60 | lever clamp / 40-pin header | electronics_hood.deck |
 
 ## Slack at the joints
 
@@ -140,14 +147,14 @@ Each loop is at least the extra length the joint needs at the far end of its tra
 
 | Cable | Joint | Travel rad | Length at home mm | Length at full travel mm | Slack loop mm |
 |---|---|---|--:|--:|--:|
-| C5 | fl_hip_abduction | -0.165 to 0.6 | 25.4 | 26.8 | 35 |
-| C6 | fl_hip_pitch | -1.4 to 1.4 | 33.1 | 52.2 | 55 |
-| C8 | fr_hip_abduction | -0.6 to 0.165 | 25.4 | 26.8 | 35 |
-| C9 | fr_hip_pitch | -1.4 to 1.4 | 33.1 | 52.2 | 55 |
-| C11 | rl_hip_abduction | -0.6 to 0.165 | 25.4 | 30.2 | 40 |
-| C12 | rl_hip_pitch | -1.4 to 1.4 | 33.1 | 52.2 | 55 |
-| C14 | rr_hip_abduction | -0.165 to 0.6 | 25.4 | 30.2 | 40 |
-| C15 | rr_hip_pitch | -1.4 to 1.4 | 33.1 | 52.2 | 55 |
+| C5 | fl_hip_abduction | -0.165 to 0.6 | 36.5 | 41.8 | 40 |
+| C6 | fl_hip_pitch | -1.4 to 1.4 | 33.2 | 55.4 | 60 |
+| C8 | fr_hip_abduction | -0.6 to 0.165 | 36.5 | 45.6 | 45 |
+| C9 | fr_hip_pitch | -1.4 to 1.4 | 36.6 | 81.1 | 85 |
+| C11 | rl_hip_abduction | -0.6 to 0.165 | 36.5 | 45.8 | 45 |
+| C12 | rl_hip_pitch | -1.4 to 1.4 | 34.9 | 60.3 | 60 |
+| C14 | rr_hip_abduction | -0.165 to 0.6 | 36.5 | 41.6 | 40 |
+| C15 | rr_hip_pitch | -1.4 to 1.4 | 36.5 | 58.9 | 60 |
 
 ## Electrical calculations
 
@@ -238,22 +245,22 @@ Not checked (no logic levels in the parts data): Feetech STS3215 C047 12 V 30 kg
 
 | Item | Qty | Unit | Unit $ | Subtotal $ | Spec | Price source |
 |---|--:|---|--:|--:|---|---|
-| 16 AWG silicone wire | 0.7 | m | 1 | 0.70 | 1.308 mm2, rated 11 A in a bundle; 0.56 m cut + 10 % waste | estimated |
-| 22 AWG silicone wire | 5 | m | 0.4 | 2.00 | 0.327 mm2, rated 3.5 A in a bundle; 4.54 m cut + 10 % waste | estimated |
-| 24 AWG silicone wire | 3.5 | m | 0.35 | 1.22 | 0.205 mm2, rated 1.75 A in a bundle; 3.18 m cut + 10 % waste | estimated |
-| 26 AWG silicone wire | 3.9 | m | 0.3 | 1.17 | 0.128 mm2, rated 1.1 A in a bundle; 3.51 m cut + 10 % waste | estimated |
+| 16 AWG silicone wire | 0.9 | m | 1 | 0.90 | 1.308 mm2, rated 11 A in a bundle; 0.77 m cut + 10 % waste | estimated |
+| 22 AWG silicone wire | 6.4 | m | 0.4 | 2.56 | 0.327 mm2, rated 3.5 A in a bundle; 5.81 m cut + 10 % waste | estimated |
+| 24 AWG silicone wire | 4.5 | m | 0.35 | 1.57 | 0.205 mm2, rated 1.75 A in a bundle; 4.05 m cut + 10 % waste | estimated |
+| 26 AWG silicone wire | 5 | m | 0.3 | 1.50 | 0.128 mm2, rated 1.1 A in a bundle; 4.54 m cut + 10 % waste | estimated |
 | Dupont 2.54 mm contacts | 10 | pc | 0.02 | 0.20 | rated 3 A per contact | estimated |
-| Dupont 2.54 mm housings | 3 | pc | 0.02 | 0.06 | one per cable end | estimated |
+| Dupont 2.54 mm housings | 4 | pc | 0.02 | 0.08 | one per cable end | estimated |
 | Molex 5264 contacts | 61 | pc | 0.05 | 3.05 | rated 3 A per contact | estimated |
-| Molex 5264 housings | 25 | pc | 0.08 | 2.00 | one per cable end | estimated |
+| Molex 5264 housings | 29 | pc | 0.08 | 2.32 | one per cable end | estimated |
 | XT60 contacts | 2 | pc | 0.9 | 1.80 | rated 35 A per contact | estimated |
 | 6.3 mm spade contacts | 2 | pc | 0.08 | 0.16 | rated 15 A per contact | estimated |
 | Bootlace ferrule contacts | 2 | pc | 0.03 | 0.06 | rated 17.5 A per contact | estimated |
-| Heat shrink 3 mm, 2:1 | 1.9 | m | 0.2 | 0.38 | 7 solder joints + a boot on each cable end | estimated |
-| Cable tie 100 x 2.5 mm | 38 | pc | 0.02 | 0.76 | at every clip, cable end and strain-relief anchor | estimated |
+| Heat shrink 3 mm, 2:1 | 2.3 | m | 0.2 | 0.46 | 6 solder joints + a boot on each cable end | estimated |
+| Cable tie 100 x 2.5 mm | 53 | pc | 0.02 | 1.06 | at every clip, cable end and strain-relief anchor | estimated |
 | Rubber grommet, 6.4 mm panel hole, 3.2 mm bore | 1 | pc | 0.08 | 0.08 | 9.5 mm panel hole | estimated |
-| Rubber grommet, 6.4 mm panel hole, 3.2 mm bore | 2 | pc | 0.08 | 0.16 | 10 mm panel hole | estimated |
-| Nylon braided sleeving 6 mm | 1.2 | m | 0.4 | 0.48 | over every cable where it crosses a joint | estimated |
+| Rubber grommet, 6.4 mm panel hole, 3.2 mm bore | 4 | pc | 0.08 | 0.32 | 10 mm panel hole | estimated |
+| Nylon braided sleeving 6 mm | 1.3 | m | 0.4 | 0.52 | over every cable where it crosses a joint | estimated |
 | FFC | 1 | pc | 3 | 3.00 | camera to computer | estimated |
 | USB | 1 | pc | 3 | 3.00 | actuator_bus to computer | estimated |
 | 7.5 A ATM blade fuse | 1 | pc | 0.25 | 0.25 | plus spares | estimated |

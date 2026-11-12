@@ -27,8 +27,8 @@
 <path d="M1240 203 H1264 V173.5 H1706 V144 H1730" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C5 W14 GND: computer.gpio40.GND to left_motor.leads.Encoder GND (green), 24 AWG</title></path>
 <path d="M1240 307 H1274 V232 H1696 V157 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C5 W15 LEFT_MOTOR_ENC_A: computer.gpio40.GPIO18 to left_motor.leads.Encoder A (yellow), 26 AWG</title></path>
 <path d="M1240 320 H1284 V245 H1686 V170 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C5 W16 LEFT_MOTOR_ENC_B: computer.gpio40.GPIO19 to left_motor.leads.Encoder B (white), 26 AWG</title></path>
-<path d="M1580 196 H1634 V212.5 H1676 V229 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C6 W17 RIGHT_MOTOR_PHASE_A: motor_driver_1.motor_2.M2A to right_motor.leads.Motor (red), 20 AWG</title></path>
-<path d="M1580 209 H1644 V225.5 H1666 V242 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C6 W18 RIGHT_MOTOR_PHASE_B: motor_driver_1.motor_2.M2B to right_motor.leads.Motor (black), 20 AWG</title></path>
+<path d="M1580 196 H1634 V212.5 H1676 V229 H1730" fill="none" stroke="#1f6fd1" stroke-width="2" opacity="0.8"><title>C6 W17 RIGHT_MOTOR_PHASE_A: motor_driver_1.motor_2.M2A to right_motor.leads.Motor (red), 18 AWG</title></path>
+<path d="M1580 209 H1644 V225.5 H1666 V242 H1730" fill="none" stroke="#1f6fd1" stroke-width="2" opacity="0.8"><title>C6 W18 RIGHT_MOTOR_PHASE_B: motor_driver_1.motor_2.M2B to right_motor.leads.Motor (black), 18 AWG</title></path>
 <path d="M1240 216 H1314 V235.5 H1656 V255 H1730" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C7 W19 RIGHT_MOTOR_ENC_VCC: computer.gpio40.3V3 to right_motor.leads.Encoder Vcc (blue), 24 AWG</title></path>
 <path d="M1240 203 H1324 V235.5 H1646 V268 H1730" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C7 W20 GND: computer.gpio40.GND to right_motor.leads.Encoder GND (green), 24 AWG</title></path>
 <path d="M1240 333 H1334 V307 H1636 V281 H1730" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C7 W21 RIGHT_MOTOR_ENC_A: computer.gpio40.GPIO16 to right_motor.leads.Encoder A (yellow), 26 AWG</title></path>
@@ -51,7 +51,7 @@
 <path d="M560 406 H584 V255.5 H686 V105 H710" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C19 W38 VBAT: splice_vbat.levers.P2 to regulator_5v.power_and_control.VIN, 22 AWG</title></path>
 <path d="M560 334 H594 V226 H676 V118 H710" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C19 W39 GND: star_ground.levers.P2 to regulator_5v.power_and_control.GND, 24 AWG</title></path>
 <path d="M560 406 H604 V314 H1346 V222 H1390" fill="none" stroke="#c8102e" stroke-width="2" opacity="0.8"><title>C20 W40 VBAT: splice_vbat.levers.P2 to motor_driver_1.power.POWER+, 18 AWG</title></path>
-<path d="M560 334 H614 V284.5 H1336 V235 H1390" fill="none" stroke="#111111" stroke-width="2" opacity="0.8"><title>C20 W41 GND: star_ground.levers.P2 to motor_driver_1.power.POWER-, 18 AWG</title></path>
+<path d="M560 334 H614 V284.5 H1336 V235 H1390" fill="none" stroke="#111111" stroke-width="2" opacity="0.8"><title>C20 W41 GND: star_ground.levers.P2 to motor_driver_1.power.POWER-, 16 AWG</title></path>
 <path d="M560 406 H624 V268.5 H986 V131 H1050" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C21 W42 VBAT: splice_vbat.levers.P2 to servo_bus.screw_in.VIN, 22 AWG</title></path>
 <path d="M560 334 H634 V239 H976 V144 H1050" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C21 W43 GND: star_ground.levers.P2 to servo_bus.screw_in.GND, 24 AWG</title></path>
 <path d="M560 406 H644 V435 H1646 V464 H1730" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C22 W44 VBAT: splice_vbat.levers.P2 to head_pan_actuator.bus_a.VCC, 22 AWG</title></path>

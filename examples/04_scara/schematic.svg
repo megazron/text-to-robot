@@ -662,7 +662,7 @@
 <text x="3281" y="2224" font-size="8" text-anchor="end" fill="#840000" data-g="title">generated from design.wiring</text>
 <text x="2873" y="2241" font-size="7" fill="#840000" data-g="title">Title:</text>
 <text x="2873" y="2256" font-size="13" font-weight="700" data-g="title">scara: schematic</text>
-<text x="2873" y="2276" font-size="9" data-g="title">15 parts, 34 nets, 48 wires, 2 rails</text>
+<text x="2873" y="2276" font-size="9" data-g="title">17 parts, 34 nets, 48 wires, 2 rails</text>
 <text x="2873" y="2295" font-size="9" data-g="title">Size: A1</text>
 <text x="3083" y="2295" font-size="9" data-g="title">Rev: f8eaca92</text>
 <text x="3183" y="2295" font-size="9" data-g="title">Sheet 1 / 1</text>

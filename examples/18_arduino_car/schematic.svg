@@ -442,7 +442,7 @@
 <text x="1628" y="1054" font-size="8" text-anchor="end" fill="#840000" data-g="title">generated from design.wiring</text>
 <text x="1220" y="1071" font-size="7" fill="#840000" data-g="title">Title:</text>
 <text x="1220" y="1086" font-size="13" font-weight="700" data-g="title">arduino_car: schematic</text>
-<text x="1220" y="1106" font-size="9" data-g="title">16 parts, 27 nets, 41 wires, 2 rails</text>
+<text x="1220" y="1106" font-size="9" data-g="title">17 parts, 27 nets, 41 wires, 2 rails</text>
 <text x="1220" y="1125" font-size="9" data-g="title">Size: A3</text>
 <text x="1430" y="1125" font-size="9" data-g="title">Rev: 51a34fa8</text>
 <text x="1530" y="1125" font-size="9" data-g="title">Sheet 1 / 1</text>

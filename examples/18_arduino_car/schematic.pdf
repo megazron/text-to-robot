@@ -681,7 +681,7 @@ BT 0.52 0 0 rg /F2 10 Tf 1 0 0 1 1220 115 Tm (Text to Robot) Tj ET
 BT 0.52 0 0 rg /F1 8 Tf 1 0 0 1 1524.85 115 Tm (generated from design.wiring) Tj ET
 BT 0.52 0 0 rg /F1 7 Tf 1 0 0 1 1220 98 Tm (Title:) Tj ET
 BT 0 0 0 rg /F2 13 Tf 1 0 0 1 1220 83 Tm (arduino_car: schematic) Tj ET
-BT 0 0 0 rg /F1 9 Tf 1 0 0 1 1220 63 Tm (16 parts, 27 nets, 41 wires, 2 rails) Tj ET
+BT 0 0 0 rg /F1 9 Tf 1 0 0 1 1220 63 Tm (17 parts, 27 nets, 41 wires, 2 rails) Tj ET
 BT 0 0 0 rg /F1 9 Tf 1 0 0 1 1220 44 Tm (Size: A3) Tj ET
 BT 0 0 0 rg /F1 9 Tf 1 0 0 1 1430 44 Tm (Rev: 51a34fa8) Tj ET
 BT 0 0 0 rg /F1 9 Tf 1 0 0 1 1530 44 Tm (Sheet 1 / 1) Tj ET

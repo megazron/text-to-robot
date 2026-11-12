@@ -1,6 +1,6 @@
 # Wiring: humanoid_robot
 
-52 cables, 97 conductors, 29.25 m of wire, wiring parts $40.08.
+52 cables, 97 conductors, 38.93 m of wire, wiring parts $44.30.
 
 Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), [breadboard.svg](breadboard.svg) (every wire in its colour, pin to pin) and the cable diagram [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
 
@@ -8,9 +8,9 @@ Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), 
 
 | Rail | Volts | Source | Source limit A (cont / peak) | Load A (typical / peak) | Margin (typical) | Fuse A | Worst wire drop V |
 |---|--:|---|--:|--:|--:|--:|--:|
-| VBAT | 11.1 | main_switch | 35 / 70 | 10.011 / 29.911 | 3.5x | 15 | 0.254 |
-| 5V | 5 | regulator_5v | 5.5 / 8 | 1 / 5 | 5.5x | - | 0.066 |
-| 5V_ARMS | 5 | regulator_5v_arms | 5.5 / 8 | 1.32 / 5.07 | 4.2x | - | 0.13 |
+| VBAT | 11.1 | main_switch | 35 / 70 | 10.011 / 29.911 | 3.5x | 15 | 0.269 |
+| 5V | 5 | regulator_5v | 5.5 / 8 | 1 / 5 | 5.5x | - | 0.084 |
+| 5V_ARMS | 5 | regulator_5v_arms | 5.5 / 8 | 1.32 / 5.07 | 4.2x | - | 0.1 |
 
 **VBAT loads** (peak assumes one leg at peak, the rest at half load):
 
@@ -140,7 +140,7 @@ Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), 
 | C41 | W75 | VBAT | splice_vbat.P2 | r_hip_yaw_actuator.VCC | 22 | red | 0.45 | 2.7 |
 | C41 | W76 | GND | star_ground.P2 | r_hip_yaw_actuator.GND | 24 | black | 0.45 | 2.7 |
 | C42 | W77 | VBAT | splice_vbat.P2 | r_ankle_pitch_actuator.VCC | 22 | red | 1.1 | 4.65 |
-| C42 | W78 | GND | star_ground.P2 | r_ankle_pitch_actuator.GND | 18 | black | 1.1 | 4.65 |
+| C42 | W78 | GND | star_ground.P2 | r_ankle_pitch_actuator.GND | 20 | black | 1.1 | 4.65 |
 | C43 | W79 | VBAT | splice_vbat.P2 | l_hip_roll_actuator.VDD | 20 | red | 2.25 | 6.4 |
 | C43 | W80 | GND | star_ground.P2 | l_hip_roll_actuator.GND | 20 | black | 2.25 | 6.4 |
 | C44 | W81 | VBAT | splice_vbat.P2 | r_hip_roll_actuator.VDD | 20 | red | 2.25 | 6.4 |
@@ -154,10 +154,10 @@ Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), 
 | C48 | W89 | GND | star_ground.P2 | computer.GND | 22 | black | 1 | 5 |
 | C49 | W90 | 5V_ARMS | regulator_5v_arms.VOUT | splice_5v_arms.P1 | 22 | red | 1.32 | 5.07 |
 | C49 | W91 | GND | regulator_5v_arms.GND | star_ground.P2 | 22 | black | 1.32 | 5.07 |
-| C50 | W92 | 5V_ARMS | splice_5v_arms.P2 | l_elbow_actuator.VDD | 24 | red | 0.44 | 1.69 |
-| C50 | W93 | GND | star_ground.P2 | l_elbow_actuator.GND | 24 | black | 0.44 | 1.69 |
-| C51 | W94 | 5V_ARMS | splice_5v_arms.P2 | r_elbow_actuator.VDD | 24 | red | 0.44 | 1.69 |
-| C51 | W95 | GND | star_ground.P2 | r_elbow_actuator.GND | 24 | black | 0.44 | 1.69 |
+| C50 | W92 | 5V_ARMS | splice_5v_arms.P2 | l_elbow_actuator.VDD | 22 | red | 0.44 | 1.69 |
+| C50 | W93 | GND | star_ground.P2 | l_elbow_actuator.GND | 22 | black | 0.44 | 1.69 |
+| C51 | W94 | 5V_ARMS | splice_5v_arms.P2 | r_elbow_actuator.VDD | 22 | red | 0.44 | 1.69 |
+| C51 | W95 | GND | star_ground.P2 | r_elbow_actuator.GND | 22 | black | 0.44 | 1.69 |
 | C52 | W96 | 5V_ARMS | splice_5v_arms.P2 | neck_pan_actuator.VDD | 24 | red | 0.44 | 1.69 |
 | C52 | W97 | GND | star_ground.P2 | neck_pan_actuator.GND | 24 | black | 0.44 | 1.69 |
 
@@ -167,58 +167,58 @@ Length is route + service loop + joint slack + termination, rounded up to 5 mm; 
 
 | Cable | What | Conductors | Length mm | Route | Service | Joint slack | Ends | Connectors | Exit |
 |---|---|--:|--:|--:|--:|--:|--:|---|---|
-| C1 | head_camera to computer | 1 | 350 | 283.2 | 0 | 65 | 0 | FFC | torso_bay.neck |
-| C2 | computer to imu | 4 | 265 | 160.9 | 40 | 0 | 60 | 40-pin header / 12-pin breadboard-friendly header | torso_bay.legs + imu_hood.up |
-| C3 | leg_bus to leg_bus_hub | 1 | 190 | 87 | 40 | 0 | 60 | 3-pin 2.5 mm bus servo header (5264 class) / lever clamp | torso_bay.arm_r |
-| C4 | leg_bus_hub to l_hip_yaw_actuator | 1 | 300 | 199.8 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | - |
-| C5 | leg_bus_hub to l_ankle_pitch_actuator | 1 | 770 | 530.8 | 40 | 135 | 60 | lever clamp / Feetech 5264-3P | - |
-| C6 | l_ankle_pitch_actuator to l_ankle_roll_actuator | 3 | 235 | 88.5 | 40 | 45 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
-| C7 | leg_bus_hub to r_hip_yaw_actuator | 1 | 185 | 83.2 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | - |
-| C8 | leg_bus_hub to r_ankle_pitch_actuator | 1 | 690 | 450.7 | 40 | 135 | 60 | lever clamp / Feetech 5264-3P | - |
-| C9 | r_ankle_pitch_actuator to r_ankle_roll_actuator | 3 | 235 | 88.5 | 40 | 45 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
-| C10 | arm_bus to arm_bus_hub | 1 | 155 | 53.8 | 40 | 0 | 60 | JST B3B-EH-A header / lever clamp | torso_bay.legs |
-| C11 | arm_bus to l_hip_roll_actuator | 1 | 315 | 186.8 | 40 | 25 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | torso_bay.legs |
-| C12 | arm_bus_hub to l_hip_roll_actuator | 1 | 280 | 151 | 40 | 25 | 60 | lever clamp / JST B3B-EH-A header | - |
-| C13 | l_hip_roll_actuator to l_hip_pitch_actuator | 3 | 250 | 114.1 | 40 | 35 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
-| C14 | l_hip_pitch_actuator to l_knee_actuator | 3 | 290 | 132.5 | 40 | 55 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
-| C15 | arm_bus_hub to r_hip_roll_actuator | 1 | 340 | 212.3 | 40 | 25 | 60 | lever clamp / JST B3B-EH-A header | - |
-| C16 | r_hip_roll_actuator to r_hip_pitch_actuator | 3 | 250 | 114.1 | 40 | 35 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
-| C17 | r_hip_pitch_actuator to r_knee_actuator | 3 | 290 | 132.5 | 40 | 55 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
-| C18 | arm_bus_hub to l_shoulder_pitch_actuator | 1 | 275 | 170.8 | 40 | 0 | 60 | lever clamp / JST B3B-EH-A header | - |
-| C19 | l_shoulder_pitch_actuator to l_shoulder_roll_actuator | 3 | 235 | 64 | 40 | 70 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
-| C20 | l_shoulder_roll_actuator to l_upper_arm_yaw_actuator | 3 | 245 | 93 | 40 | 50 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
-| C21 | arm_bus_hub to r_shoulder_pitch_actuator | 1 | 240 | 135.1 | 40 | 0 | 60 | lever clamp / JST B3B-EH-A header | - |
-| C22 | r_shoulder_pitch_actuator to r_shoulder_roll_actuator | 3 | 235 | 64 | 40 | 70 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
-| C23 | r_shoulder_roll_actuator to r_upper_arm_yaw_actuator | 3 | 245 | 93 | 40 | 50 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
-| C24 | arm_bus_hub to l_elbow_actuator | 1 | 655 | 399 | 40 | 155 | 60 | lever clamp / JST B3B-EH-A header | - |
-| C25 | l_elbow_actuator to l_gripper_actuator | 3 | 240 | 70.2 | 40 | 65 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
-| C26 | arm_bus_hub to r_elbow_actuator | 1 | 595 | 335.6 | 40 | 155 | 60 | lever clamp / JST B3B-EH-A header | - |
-| C27 | r_elbow_actuator to r_gripper_actuator | 3 | 240 | 70.2 | 40 | 65 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
-| C28 | arm_bus_hub to neck_pan_actuator | 1 | 255 | 152.6 | 40 | 0 | 60 | lever clamp / JST B3B-EH-A header | - |
-| C29 | neck_pan_actuator to neck_tilt_actuator | 3 | 270 | 110.6 | 40 | 55 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
-| C30 | leg_bus to computer | 1 | 125 | 124.2 | 0 | 0 | 0 | USB | - |
-| C31 | arm_bus to computer | 1 | 45 | 43.5 | 0 | 0 | 0 | USB | - |
-| C32 | battery positive to main fuse | 1 | 100 | 0 | 40 | 0 | 60 | XT60 (male discharge plug on the pack per the listing) / soldered leads | - |
-| C33 | main fuse to main switch | 1 | 305 | 202.3 | 40 | 0 | 60 | soldered leads / 6.3 mm quick-connect tabs | torso_bay.arm_l |
-| C34 | battery negative to star ground | 1 | 100 | 0 | 40 | 0 | 60 | XT60 (male discharge plug on the pack per the listing) / lever clamp | - |
-| C35 | main_switch to the VBAT splice | 1 | 100 | 0 | 40 | 0 | 60 | 6.3 mm quick-connect tabs / lever clamp | - |
-| C36 | VBAT to regulator_5v | 2 | 255 | 152.1 | 40 | 0 | 60 | lever clamp / 0.1 in through holes | torso_bay.arm_l |
-| C37 | VBAT to regulator_5v_arms | 2 | 235 | 130.8 | 40 | 0 | 60 | lever clamp / 0.1 in through holes | torso_bay.arm_l |
-| C38 | VBAT to leg_bus | 2 | 340 | 239.4 | 40 | 0 | 60 | lever clamp / green screw terminal | torso_bay.arm_l |
-| C39 | VBAT to l_hip_yaw_actuator | 2 | 230 | 126.6 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | - |
-| C40 | VBAT to l_ankle_pitch_actuator | 2 | 790 | 490.1 | 40 | 195 | 60 | lever clamp / Feetech 5264-3P | - |
-| C41 | VBAT to r_hip_yaw_actuator | 2 | 295 | 190.8 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | - |
-| C42 | VBAT to r_ankle_pitch_actuator | 2 | 860 | 563.8 | 40 | 195 | 60 | lever clamp / Feetech 5264-3P | - |
-| C43 | VBAT to l_hip_roll_actuator | 2 | 335 | 194.1 | 40 | 40 | 60 | lever clamp / JST B3B-EH-A header | - |
-| C44 | VBAT to r_hip_roll_actuator | 2 | 405 | 264.2 | 40 | 40 | 60 | lever clamp / JST B3B-EH-A header | - |
-| C45 | VBAT to l_shoulder_pitch_actuator | 2 | 180 | 79.5 | 40 | 0 | 60 | lever clamp / JST B3B-EH-A header | - |
-| C46 | VBAT to r_shoulder_pitch_actuator | 2 | 255 | 153.7 | 40 | 0 | 60 | lever clamp / JST B3B-EH-A header | - |
-| C47 | regulator_5v to star_ground | 1 | 150 | 49.2 | 40 | 0 | 60 | 0.1 in through holes / lever clamp | - |
-| C48 | 5V to computer | 2 | 210 | 108.7 | 40 | 0 | 60 | 0.1 in through holes / 40-pin header | - |
-| C49 | regulator_5v_arms to the 5V_ARMS splice | 2 | 100 | 0 | 40 | 0 | 60 | 0.1 in through holes / lever clamp | - |
-| C50 | 5V_ARMS to l_elbow_actuator | 2 | 665 | 364.3 | 40 | 200 | 60 | lever clamp / JST B3B-EH-A header | torso_bay.arm_l |
-| C51 | 5V_ARMS to r_elbow_actuator | 2 | 765 | 461.4 | 40 | 200 | 60 | lever clamp / JST B3B-EH-A header | torso_bay.arm_r |
-| C52 | 5V_ARMS to neck_pan_actuator | 2 | 285 | 181.1 | 40 | 0 | 60 | lever clamp / JST B3B-EH-A header | torso_bay.neck |
+| C1 | head_camera to computer | 1 | 390 | 298.6 | 0 | 90 | 0 | FFC | torso_bay.neck |
+| C2 | computer to imu | 4 | 440 | 338.9 | 40 | 0 | 60 | 40-pin header / 12-pin breadboard-friendly header | torso_bay.imu + imu_hood.out |
+| C3 | leg_bus to leg_bus_hub | 1 | 145 | 43.6 | 40 | 0 | 60 | 3-pin 2.5 mm bus servo header (5264 class) / lever clamp | - |
+| C4 | leg_bus_hub to l_hip_yaw_actuator | 1 | 315 | 210.9 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | torso_bay.legs |
+| C5 | leg_bus_hub to l_ankle_pitch_actuator | 1 | 815 | 490.6 | 40 | 220 | 60 | lever clamp / Feetech 5264-3P | torso_bay.legs |
+| C6 | l_ankle_pitch_actuator to l_ankle_roll_actuator | 3 | 300 | 138.8 | 40 | 60 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
+| C7 | leg_bus_hub to r_hip_yaw_actuator | 1 | 305 | 203.7 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | torso_bay.legs |
+| C8 | leg_bus_hub to r_ankle_pitch_actuator | 1 | 835 | 490 | 40 | 245 | 60 | lever clamp / Feetech 5264-3P | torso_bay.legs |
+| C9 | r_ankle_pitch_actuator to r_ankle_roll_actuator | 3 | 275 | 114.4 | 40 | 60 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
+| C10 | arm_bus to arm_bus_hub | 1 | 140 | 39.2 | 40 | 0 | 60 | JST B3B-EH-A header / lever clamp | - |
+| C11 | arm_bus to l_hip_roll_actuator | 1 | 445 | 306.3 | 40 | 35 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | torso_bay.legs |
+| C12 | arm_bus_hub to l_hip_roll_actuator | 1 | 435 | 298.5 | 40 | 35 | 60 | lever clamp / JST B3B-EH-A header | torso_bay.legs |
+| C13 | l_hip_roll_actuator to l_hip_pitch_actuator | 3 | 275 | 117.4 | 40 | 55 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
+| C14 | l_hip_pitch_actuator to l_knee_actuator | 3 | 370 | 146 | 40 | 120 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
+| C15 | arm_bus_hub to r_hip_roll_actuator | 1 | 355 | 223 | 40 | 30 | 60 | lever clamp / JST B3B-EH-A header | torso_bay.legs |
+| C16 | r_hip_roll_actuator to r_hip_pitch_actuator | 3 | 325 | 187.9 | 40 | 35 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
+| C17 | r_hip_pitch_actuator to r_knee_actuator | 3 | 345 | 133.1 | 40 | 110 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
+| C18 | arm_bus_hub to l_shoulder_pitch_actuator | 1 | 390 | 286 | 40 | 0 | 60 | lever clamp / JST B3B-EH-A header | torso_bay.arm_l |
+| C19 | l_shoulder_pitch_actuator to l_shoulder_roll_actuator | 3 | 730 | 455.8 | 40 | 170 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
+| C20 | l_shoulder_roll_actuator to l_upper_arm_yaw_actuator | 3 | 320 | 143.3 | 40 | 75 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
+| C21 | arm_bus_hub to r_shoulder_pitch_actuator | 1 | 315 | 211.7 | 40 | 0 | 60 | lever clamp / JST B3B-EH-A header | torso_bay.arm_r |
+| C22 | r_shoulder_pitch_actuator to r_shoulder_roll_actuator | 3 | 425 | 152.8 | 40 | 170 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
+| C23 | r_shoulder_roll_actuator to r_upper_arm_yaw_actuator | 3 | 295 | 128.9 | 40 | 65 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
+| C24 | arm_bus_hub to l_elbow_actuator | 1 | 950 | 355.7 | 40 | 490 | 60 | lever clamp / JST B3B-EH-A header | torso_bay.arm_l |
+| C25 | l_elbow_actuator to l_gripper_actuator | 3 | 280 | 72.9 | 40 | 105 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
+| C26 | arm_bus_hub to r_elbow_actuator | 1 | 825 | 235.8 | 40 | 485 | 60 | lever clamp / JST B3B-EH-A header | torso_bay.arm_r |
+| C27 | r_elbow_actuator to r_gripper_actuator | 3 | 305 | 109.3 | 40 | 95 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
+| C28 | arm_bus_hub to neck_pan_actuator | 1 | 375 | 273.3 | 40 | 0 | 60 | lever clamp / JST B3B-EH-A header | torso_bay.neck |
+| C29 | neck_pan_actuator to neck_tilt_actuator | 3 | 385 | 190.5 | 40 | 90 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
+| C30 | leg_bus to computer | 1 | 150 | 147.4 | 0 | 0 | 0 | USB | - |
+| C31 | arm_bus to computer | 1 | 165 | 164.1 | 0 | 0 | 0 | USB | - |
+| C32 | battery positive to main fuse | 1 | 210 | 105.2 | 40 | 0 | 60 | XT60 (male discharge plug on the pack per the listing) / soldered leads | - |
+| C33 | main fuse to main switch | 1 | 185 | 80.6 | 40 | 0 | 60 | soldered leads / 6.3 mm quick-connect tabs | - |
+| C34 | battery negative to star ground | 1 | 230 | 127.7 | 40 | 0 | 60 | XT60 (male discharge plug on the pack per the listing) / lever clamp | - |
+| C35 | main_switch to the VBAT splice | 1 | 170 | 66.7 | 40 | 0 | 60 | 6.3 mm quick-connect tabs / lever clamp | - |
+| C36 | VBAT to regulator_5v | 2 | 265 | 161.5 | 40 | 0 | 60 | lever clamp / 0.1 in through holes | - |
+| C37 | VBAT to regulator_5v_arms | 2 | 235 | 134.6 | 40 | 0 | 60 | lever clamp / 0.1 in through holes | - |
+| C38 | VBAT to leg_bus | 2 | 315 | 212.7 | 40 | 0 | 60 | lever clamp / green screw terminal | - |
+| C39 | VBAT to l_hip_yaw_actuator | 2 | 390 | 286.9 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | torso_bay.legs |
+| C40 | VBAT to l_ankle_pitch_actuator | 2 | 910 | 570.9 | 40 | 235 | 60 | lever clamp / Feetech 5264-3P | torso_bay.legs |
+| C41 | VBAT to r_hip_yaw_actuator | 2 | 380 | 279.4 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | torso_bay.legs |
+| C42 | VBAT to r_ankle_pitch_actuator | 2 | 910 | 570.1 | 40 | 235 | 60 | lever clamp / Feetech 5264-3P | torso_bay.legs |
+| C43 | VBAT to l_hip_roll_actuator | 2 | 575 | 426.6 | 40 | 45 | 60 | lever clamp / JST B3B-EH-A header | torso_bay.legs |
+| C44 | VBAT to r_hip_roll_actuator | 2 | 500 | 350.8 | 40 | 45 | 60 | lever clamp / JST B3B-EH-A header | torso_bay.legs |
+| C45 | VBAT to l_shoulder_pitch_actuator | 2 | 320 | 217.5 | 40 | 0 | 60 | lever clamp / JST B3B-EH-A header | torso_bay.arm_l |
+| C46 | VBAT to r_shoulder_pitch_actuator | 2 | 345 | 242.7 | 40 | 0 | 60 | lever clamp / JST B3B-EH-A header | torso_bay.arm_r |
+| C47 | regulator_5v to star_ground | 1 | 150 | 46.7 | 40 | 0 | 60 | 0.1 in through holes / lever clamp | - |
+| C48 | 5V to computer | 2 | 280 | 177.9 | 40 | 0 | 60 | 0.1 in through holes / 40-pin header | - |
+| C49 | regulator_5v_arms to the 5V_ARMS splice | 2 | 170 | 66.9 | 40 | 0 | 60 | 0.1 in through holes / lever clamp | - |
+| C50 | 5V_ARMS to l_elbow_actuator | 2 | 965 | 329.7 | 40 | 535 | 60 | lever clamp / JST B3B-EH-A header | torso_bay.arm_l |
+| C51 | 5V_ARMS to r_elbow_actuator | 2 | 935 | 314.7 | 40 | 520 | 60 | lever clamp / JST B3B-EH-A header | torso_bay.arm_r |
+| C52 | 5V_ARMS to neck_pan_actuator | 2 | 350 | 247 | 40 | 0 | 60 | lever clamp / JST B3B-EH-A header | torso_bay.neck |
 
 ## Slack at the joints
 
@@ -226,54 +226,54 @@ Each loop is at least the extra length the joint needs at the far end of its tra
 
 | Cable | Joint | Travel rad | Length at home mm | Length at full travel mm | Slack loop mm |
 |---|---|---|--:|--:|--:|
-| C1 | neck_tilt | -0.7 to 0.377 | 22 | 27.3 | 25 |
-| C1 | neck_pan | -1.6 to 1.6 | 19.5 | 38.9 | 40 |
-| C5 | l_hip_yaw | -0.6 to 0.6 | 18.5 | 26.9 | 25 |
-| C5 | l_hip_roll | -0.128 to 0.45 | 39.5 | 41.3 | 20 |
-| C5 | l_hip_pitch | -1.6 to 1.6 | 37 | 59.4 | 40 |
-| C5 | l_knee | -2.042 to 2.2 | 40.8 | 71.6 | 50 |
-| C6 | l_ankle_pitch | -1.2 to 1.2 | 7.7 | 18.5 | 45 |
-| C8 | r_hip_yaw | -0.6 to 0.6 | 7.2 | 15.6 | 25 |
-| C8 | r_hip_roll | -0.45 to 0.128 | 39.5 | 41.3 | 20 |
-| C8 | r_hip_pitch | -1.6 to 1.6 | 37 | 59.4 | 40 |
-| C8 | r_knee | -2.2 to 2.042 | 40.8 | 71.6 | 50 |
-| C9 | r_ankle_pitch | -1.2 to 1.2 | 7.7 | 18.5 | 45 |
-| C11 | l_hip_yaw | -0.6 to 0.6 | 3.8 | 12.2 | 25 |
-| C12 | l_hip_yaw | -0.6 to 0.6 | 1.5 | 9.9 | 25 |
-| C13 | l_hip_roll | -0.128 to 0.45 | 4.7 | 8.4 | 35 |
-| C14 | l_hip_pitch | -1.6 to 1.6 | 4.8 | 25.6 | 55 |
-| C15 | r_hip_yaw | -0.6 to 0.6 | 39.2 | 47.6 | 25 |
-| C16 | r_hip_roll | -0.45 to 0.128 | 4.7 | 8.4 | 35 |
-| C17 | r_hip_pitch | -1.6 to 1.6 | 4.8 | 25.6 | 55 |
-| C19 | l_shoulder_pitch | -3 to 3 | 0 | 30 | 70 |
-| C20 | l_shoulder_roll | -0.134 to 1.6 | 7.7 | 23.5 | 50 |
-| C22 | r_shoulder_pitch | -3 to 3 | 0 | 30 | 70 |
-| C23 | r_shoulder_roll | -1.6 to 0.134 | 7.7 | 23.5 | 50 |
-| C24 | l_shoulder_pitch | -3 to 3 | 20.6 | 62.6 | 65 |
-| C24 | l_shoulder_roll | -0.134 to 1.6 | 22 | 44.4 | 40 |
-| C24 | l_upper_arm_yaw | -2 to 2 | 22 | 50 | 50 |
-| C25 | l_elbow | -2.3 to 2.3 | 22.1 | 48.1 | 65 |
-| C26 | r_shoulder_pitch | -3 to 3 | 20.6 | 62.6 | 65 |
-| C26 | r_shoulder_roll | -1.6 to 0.134 | 22 | 44.4 | 40 |
-| C26 | r_upper_arm_yaw | -2 to 2 | 22 | 50 | 50 |
-| C27 | r_elbow | -2.3 to 2.3 | 22.1 | 48.1 | 65 |
-| C29 | neck_pan | -1.6 to 1.6 | 22.1 | 39.9 | 55 |
-| C40 | l_hip_yaw | -0.6 to 0.6 | 3.5 | 13 | 40 |
-| C40 | l_hip_roll | -0.128 to 0.45 | 45.1 | 47.1 | 30 |
-| C40 | l_hip_pitch | -1.6 to 1.6 | 41.9 | 67.5 | 55 |
-| C40 | l_knee | -2.042 to 2.2 | 46.5 | 81.6 | 70 |
-| C42 | r_hip_yaw | -0.6 to 0.6 | 19.1 | 28.7 | 40 |
-| C42 | r_hip_roll | -0.45 to 0.128 | 45.1 | 47.1 | 30 |
-| C42 | r_hip_pitch | -1.6 to 1.6 | 41.9 | 67.5 | 55 |
-| C42 | r_knee | -2.2 to 2.042 | 46.5 | 81.6 | 70 |
-| C43 | l_hip_yaw | -0.6 to 0.6 | 21.6 | 31.2 | 40 |
-| C44 | r_hip_yaw | -0.6 to 0.6 | 44.2 | 53.8 | 40 |
-| C50 | l_shoulder_pitch | -3 to 3 | 16 | 62.6 | 80 |
-| C50 | l_shoulder_roll | -0.134 to 1.6 | 25.1 | 50.6 | 55 |
-| C50 | l_upper_arm_yaw | -2 to 2 | 24.5 | 55.6 | 65 |
-| C51 | r_shoulder_pitch | -3 to 3 | 16 | 62.6 | 80 |
-| C51 | r_shoulder_roll | -1.6 to 0.134 | 25.1 | 50.6 | 55 |
-| C51 | r_upper_arm_yaw | -2 to 2 | 24.5 | 55.6 | 65 |
+| C1 | neck_tilt | -0.7 to 0.377 | 30.6 | 40.8 | 30 |
+| C1 | neck_pan | -1.6 to 1.6 | 29.9 | 68.4 | 60 |
+| C5 | l_hip_yaw | -0.6 to 0.6 | 29 | 46.9 | 35 |
+| C5 | l_hip_roll | -0.128 to 0.45 | 29.4 | 52.9 | 45 |
+| C5 | l_hip_pitch | -1.6 to 1.6 | 30 | 82.4 | 75 |
+| C5 | l_knee | -2.042 to 2.2 | 32.4 | 73.4 | 65 |
+| C6 | l_ankle_pitch | -1.2 to 1.2 | 28.7 | 51.2 | 60 |
+| C8 | r_hip_yaw | -0.6 to 0.6 | 29 | 47.4 | 40 |
+| C8 | r_hip_roll | -0.45 to 0.128 | 29.4 | 53.1 | 45 |
+| C8 | r_hip_pitch | -1.6 to 1.6 | 29.9 | 85.4 | 80 |
+| C8 | r_knee | -2.2 to 2.042 | 30.3 | 83.7 | 80 |
+| C9 | r_ankle_pitch | -1.2 to 1.2 | 23.3 | 46.6 | 60 |
+| C11 | l_hip_yaw | -0.6 to 0.6 | 29.4 | 47 | 35 |
+| C12 | l_hip_yaw | -0.6 to 0.6 | 29.4 | 47.5 | 35 |
+| C13 | l_hip_roll | -0.128 to 0.45 | 27.1 | 44.4 | 55 |
+| C14 | l_hip_pitch | -1.6 to 1.6 | 26.6 | 102.9 | 120 |
+| C15 | r_hip_yaw | -0.6 to 0.6 | 29.2 | 42.9 | 30 |
+| C16 | r_hip_roll | -0.45 to 0.128 | 34 | 36.3 | 35 |
+| C17 | r_hip_pitch | -1.6 to 1.6 | 26 | 93.6 | 110 |
+| C19 | l_shoulder_pitch | -3 to 3 | 37.7 | 156.4 | 170 |
+| C20 | l_shoulder_roll | -0.115 to 1.6 | 41.5 | 79.7 | 75 |
+| C22 | r_shoulder_pitch | -3 to 3 | 21.4 | 138.3 | 170 |
+| C23 | r_shoulder_roll | -1.6 to 0.115 | 21.3 | 47.1 | 65 |
+| C24 | l_shoulder_pitch | -3 to 3 | 16.4 | 230.9 | 265 |
+| C24 | l_shoulder_roll | -0.115 to 1.6 | 25.7 | 143.8 | 150 |
+| C24 | l_upper_arm_yaw | -2 to 2 | 29.2 | 78.1 | 75 |
+| C25 | l_elbow | -2.3 to 2.3 | 24.9 | 87.7 | 105 |
+| C26 | r_shoulder_pitch | -3 to 3 | 16.7 | 231.5 | 265 |
+| C26 | r_shoulder_roll | -1.6 to 0.115 | 25.2 | 144.1 | 155 |
+| C26 | r_upper_arm_yaw | -2 to 2 | 29.1 | 72.9 | 65 |
+| C27 | r_elbow | -2.3 to 2.3 | 30 | 85.9 | 95 |
+| C29 | neck_pan | -1.6 to 1.6 | 29.1 | 77.4 | 90 |
+| C40 | l_hip_yaw | -0.6 to 0.6 | 32.9 | 49.4 | 45 |
+| C40 | l_hip_roll | -0.128 to 0.45 | 33.4 | 58.4 | 55 |
+| C40 | l_hip_pitch | -1.6 to 1.6 | 38.2 | 70.9 | 65 |
+| C40 | l_knee | -2.042 to 2.2 | 42 | 81.1 | 70 |
+| C42 | r_hip_yaw | -0.6 to 0.6 | 32.9 | 49 | 45 |
+| C42 | r_hip_roll | -0.45 to 0.128 | 33.4 | 58.3 | 55 |
+| C42 | r_hip_pitch | -1.6 to 1.6 | 36.5 | 73.9 | 70 |
+| C42 | r_knee | -2.2 to 2.042 | 51.2 | 84.7 | 65 |
+| C43 | l_hip_yaw | -0.6 to 0.6 | 34 | 50.9 | 45 |
+| C44 | r_hip_yaw | -0.6 to 0.6 | 33.1 | 47.6 | 45 |
+| C50 | l_shoulder_pitch | -3 to 3 | 18.3 | 235.1 | 275 |
+| C50 | l_shoulder_roll | -0.115 to 1.6 | 29.1 | 147.9 | 165 |
+| C50 | l_upper_arm_yaw | -2 to 2 | 33 | 89.6 | 95 |
+| C51 | r_shoulder_pitch | -3 to 3 | 17.2 | 233 | 275 |
+| C51 | r_shoulder_roll | -1.6 to 0.115 | 28 | 147.8 | 165 |
+| C51 | r_upper_arm_yaw | -2 to 2 | 33 | 79.5 | 80 |
 
 ## Electrical calculations
 
@@ -992,12 +992,11 @@ Not checked (no logic levels in the parts data): DYNAMIXEL XH540-W270-T(R), DYNA
 
 | Item | Qty | Unit | Unit $ | Subtotal $ | Spec | Price source |
 |---|--:|---|--:|--:|---|---|
-| 12 AWG silicone wire | 0.7 | m | 2.2 | 1.54 | 3.308 mm2, rated 20.5 A in a bundle; 0.60 m cut + 10 % waste | estimated |
-| 18 AWG silicone wire | 1 | m | 0.7 | 0.70 | 0.823 mm2, rated 8 A in a bundle; 0.86 m cut + 10 % waste | estimated |
-| 20 AWG silicone wire | 2.5 | m | 0.5 | 1.25 | 0.519 mm2, rated 5.5 A in a bundle; 2.27 m cut + 10 % waste | estimated |
-| 22 AWG silicone wire | 7.1 | m | 0.4 | 2.84 | 0.327 mm2, rated 3.5 A in a bundle; 6.37 m cut + 10 % waste | estimated |
-| 24 AWG silicone wire | 11.5 | m | 0.35 | 4.02 | 0.205 mm2, rated 1.75 A in a bundle; 10.43 m cut + 10 % waste | estimated |
-| 26 AWG silicone wire | 9.6 | m | 0.3 | 2.88 | 0.128 mm2, rated 1.1 A in a bundle; 8.72 m cut + 10 % waste | estimated |
+| 12 AWG silicone wire | 0.9 | m | 2.2 | 1.98 | 3.308 mm2, rated 20.5 A in a bundle; 0.80 m cut + 10 % waste | estimated |
+| 20 AWG silicone wire | 3.9 | m | 0.5 | 1.95 | 0.519 mm2, rated 5.5 A in a bundle; 3.46 m cut + 10 % waste | estimated |
+| 22 AWG silicone wire | 12.6 | m | 0.4 | 5.04 | 0.327 mm2, rated 3.5 A in a bundle; 11.41 m cut + 10 % waste | estimated |
+| 24 AWG silicone wire | 11.2 | m | 0.35 | 3.92 | 0.205 mm2, rated 1.75 A in a bundle; 10.15 m cut + 10 % waste | estimated |
+| 26 AWG silicone wire | 12.9 | m | 0.3 | 3.87 | 0.128 mm2, rated 1.1 A in a bundle; 11.68 m cut + 10 % waste | estimated |
 | Dupont 2.54 mm contacts | 10 | pc | 0.02 | 0.20 | rated 3 A per contact | estimated |
 | Dupont 2.54 mm housings | 3 | pc | 0.02 | 0.06 | one per cable end | estimated |
 | Molex 5264 contacts | 25 | pc | 0.05 | 1.25 | rated 3 A per contact | estimated |
@@ -1008,11 +1007,10 @@ Not checked (no logic levels in the parts data): DYNAMIXEL XH540-W270-T(R), DYNA
 | 6.3 mm spade contacts | 2 | pc | 0.08 | 0.16 | rated 15 A per contact | estimated |
 | Bootlace ferrule contacts | 2 | pc | 0.03 | 0.06 | rated 17.5 A per contact | estimated |
 | Heat shrink 3 mm, 2:1 | 3.5 | m | 0.2 | 0.70 | 11 solder joints + a boot on each cable end | estimated |
-| Cable tie 100 x 2.5 mm | 86 | pc | 0.02 | 1.72 | at every clip, cable end and strain-relief anchor | estimated |
+| Cable tie 100 x 2.5 mm | 71 | pc | 0.02 | 1.42 | at every clip, cable end and strain-relief anchor | estimated |
 | Rubber grommet, 6.4 mm panel hole, 3.2 mm bore | 1 | pc | 0.08 | 0.08 | 12 mm panel hole | estimated |
-| Rubber grommet, 6.4 mm panel hole, 3.2 mm bore | 3 | pc | 0.08 | 0.24 | 9.5 mm panel hole | estimated |
-| Rubber grommet, 5.0 mm panel hole, 3.0 mm bore | 1 | pc | 0.05 | 0.05 | 5 mm panel hole | estimated |
-| Nylon braided sleeving 6 mm | 7.1 | m | 0.4 | 2.84 | over every cable where it crosses a joint | estimated |
+| Rubber grommet, 6.4 mm panel hole, 3.2 mm bore | 5 | pc | 0.08 | 0.40 | 9.5 mm panel hole | estimated |
+| Nylon braided sleeving 6 mm | 9.3 | m | 0.4 | 3.72 | over every cable where it crosses a joint | estimated |
 | FFC | 1 | pc | 3 | 3.00 | head_camera to computer | estimated |
 | USB | 1 | pc | 3 | 3.00 | leg_bus to computer | estimated |
 | USB | 1 | pc | 3 | 3.00 | arm_bus to computer | estimated |
@@ -1040,3 +1038,7 @@ Not checked (no logic levels in the parts data): DYNAMIXEL XH540-W270-T(R), DYNA
 | KCD4 double-pole rocker switch, 16 A 250 VAC / 20 A 125 VAC | estimated | estimated | estimated | estimated |
 | WAGO 221-415 five-way lever splice | estimated | estimated | estimated | estimated |
 | Waveshare Bus Servo Adapter | [datasheet](https://www.waveshare.com/bus-servo-adapter-a.htm) | estimated | estimated | [datasheet](https://www.waveshare.com/wiki/Bus_Servo_Adapter_(A)) |
+
+## Notes
+
+- Routing: 1 wire runs pass through solid parts at the home pose (27 mm in all), for example W70 through battery for 27 mm at -4,-36,90. Lay those wires round the part by hand.

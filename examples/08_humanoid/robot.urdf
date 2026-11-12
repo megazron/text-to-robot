@@ -29,9 +29,9 @@
       <geometry><mesh filename="package://humanoid_robot/meshes/base_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.01002 0.00019529 0.036341" rpy="0 0 0"/>
-      <mass value="0.086813"/>
-      <inertia ixx="0.000225837" ixy="-2.61173e-7" ixz="-0.0000015228" iyy="0.0000439151" iyz="-5.82101e-8" izz="0.000244136"/>
+      <origin xyz="-0.009822 0.0000723509 0.036088" rpy="0 0 0"/>
+      <mass value="0.083398"/>
+      <inertia ixx="0.000214486" ixy="8.67568e-8" ixz="-0.00000163228" iyy="0.0000437103" iyz="1.95357e-8" izz="0.000232889"/>
     </inertial>
   </link>
   <link name="battery">
@@ -157,9 +157,9 @@
       <geometry><mesh filename="package://humanoid_robot/meshes/torso.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.00079834 -0.000338589 0.106553" rpy="0 0 0"/>
-      <mass value="0.332298"/>
-      <inertia ixx="0.00181" ixy="0.00000232793" ixz="0.00000107029" iyy="0.00101" iyz="-0.00000597379" izz="0.001572"/>
+      <origin xyz="-0.000710839 -0.000332269 0.12936" rpy="0 0 0"/>
+      <mass value="0.372426"/>
+      <inertia ixx="0.002287" ixy="0.00000251236" ixz="0.00000398782" iyy="0.001415" iyz="-0.00000670392" izz="0.00182"/>
     </inertial>
   </link>
   <link name="l_hip_yaw_actuator">
@@ -189,9 +189,9 @@
       <geometry><mesh filename="package://humanoid_robot/meshes/l_hip_yaw_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.005922 -0.000125116 0.032892" rpy="0 0 0"/>
-      <mass value="0.031553"/>
-      <inertia ixx="0.0000255633" ixy="-5.06417e-8" ixz="5.68135e-7" iyy="0.0000262975" iyz="9.31993e-8" izz="0.0000141754"/>
+      <origin xyz="-0.00566 -0.000127675 0.032716" rpy="0 0 0"/>
+      <mass value="0.03092"/>
+      <inertia ixx="0.0000252895" ixy="-5.16775e-8" ixz="4.96885e-7" iyy="0.0000261284" iyz="9.38942e-8" izz="0.0000138488"/>
     </inertial>
   </link>
   <link name="l_hip_roll_actuator">
@@ -221,9 +221,9 @@
       <geometry><mesh filename="package://humanoid_robot/meshes/l_hip_roll_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.076097 -0.004255 -0.012319" rpy="0 0 0"/>
-      <mass value="0.046285"/>
-      <inertia ixx="0.000022709" ixy="0.00000221883" ixz="0.00000761886" iyy="0.0000644709" iyz="-0.00000157191" izz="0.0000613778"/>
+      <origin xyz="0.075711 -0.003894 -0.012344" rpy="0 0 0"/>
+      <mass value="0.045163"/>
+      <inertia ixx="0.0000220905" ixy="0.00000196013" ixz="0.000007594" iyy="0.000063802" iyz="-0.00000158889" izz="0.0000608272"/>
     </inertial>
   </link>
   <link name="l_hip_pitch_actuator">
@@ -253,9 +253,9 @@
       <geometry><mesh filename="package://humanoid_robot/meshes/l_hip_pitch_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.085263 0.003046 -0.010201" rpy="0 0 0"/>
-      <mass value="0.043382"/>
-      <inertia ixx="0.0000200229" ixy="-0.0000043313" ixz="0.0000108116" iyy="0.0000781463" iyz="3.90541e-7" izz="0.0000768755"/>
+      <origin xyz="0.084905 0.003021 -0.010274" rpy="0 0 0"/>
+      <mass value="0.042749"/>
+      <inertia ixx="0.0000197965" ixy="-0.00000435222" ixz="0.0000108884" iyy="0.0000777292" iyz="3.95966e-7" izz="0.000076273"/>
     </inertial>
   </link>
   <link name="l_knee_actuator">
@@ -285,9 +285,9 @@
       <geometry><mesh filename="package://humanoid_robot/meshes/l_knee_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.081447 0.001198 -0.007477" rpy="0 0 0"/>
-      <mass value="0.036944"/>
-      <inertia ixx="0.0000105571" ixy="-0.00000117976" ixz="0.00000728314" iyy="0.0000577311" iyz="6.50761e-8" izz="0.0000556803"/>
+      <origin xyz="0.080367 0.001173 -0.007883" rpy="0 0 0"/>
+      <mass value="0.034907"/>
+      <inertia ixx="0.0000103775" ixy="-0.00000116198" ixz="0.00000758188" iyy="0.0000565121" iyz="7.16717e-8" izz="0.0000545165"/>
     </inertial>
   </link>
   <link name="l_ankle_pitch_actuator">
@@ -317,9 +317,9 @@
       <geometry><mesh filename="package://humanoid_robot/meshes/l_ankle_pitch_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.06012 0.003531 -0.007939" rpy="0 0 0"/>
-      <mass value="0.037255"/>
-      <inertia ixx="0.0000109978" ixy="-7.94488e-7" ixz="0.00000303217" iyy="0.0000288185" iyz="5.67100e-7" izz="0.000028145"/>
+      <origin xyz="0.059967 0.003265 -0.007767" rpy="0 0 0"/>
+      <mass value="0.03669"/>
+      <inertia ixx="0.0000107379" ixy="-6.96327e-7" ixz="0.00000296883" iyy="0.0000286657" iyz="4.57249e-7" izz="0.0000279111"/>
     </inertial>
   </link>
   <link name="l_ankle_roll_actuator">
@@ -397,9 +397,9 @@
       <geometry><mesh filename="package://humanoid_robot/meshes/r_hip_yaw_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.005922 -0.000125116 0.032892" rpy="0 0 0"/>
-      <mass value="0.031553"/>
-      <inertia ixx="0.0000255633" ixy="-5.06417e-8" ixz="5.68135e-7" iyy="0.0000262975" iyz="9.31993e-8" izz="0.0000141754"/>
+      <origin xyz="-0.00566 -0.000127675 0.032716" rpy="0 0 0"/>
+      <mass value="0.03092"/>
+      <inertia ixx="0.0000252895" ixy="-5.16775e-8" ixz="4.96885e-7" iyy="0.0000261284" iyz="9.38942e-8" izz="0.0000138488"/>
     </inertial>
   </link>
   <link name="r_hip_roll_actuator">
@@ -429,9 +429,9 @@
       <geometry><mesh filename="package://humanoid_robot/meshes/r_hip_roll_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.076277 0.004355 -0.012051" rpy="0 0 0"/>
-      <mass value="0.046609"/>
-      <inertia ixx="0.0000227246" ixy="-0.00000233999" ixz="0.00000723144" iyy="0.0000646305" iyz="0.00000139211" izz="0.0000616601"/>
+      <origin xyz="0.075899 0.004 -0.01207" rpy="0 0 0"/>
+      <mass value="0.045487"/>
+      <inertia ixx="0.00002211" ixy="-0.00000208612" ixz="0.00000720165" iyy="0.0000639685" iyz="0.00000140453" izz="0.0000611192"/>
     </inertial>
   </link>
   <link name="r_hip_pitch_actuator">
@@ -461,9 +461,9 @@
       <geometry><mesh filename="package://humanoid_robot/meshes/r_hip_pitch_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.08522 -0.003223 -0.010201" rpy="0 0 0"/>
-      <mass value="0.043382"/>
-      <inertia ixx="0.0000201024" ixy="0.0000046188" ixz="0.0000108209" iyy="0.0000780008" iyz="-3.52573e-7" izz="0.0000768096"/>
+      <origin xyz="0.084861 -0.0032 -0.010274" rpy="0 0 0"/>
+      <mass value="0.042749"/>
+      <inertia ixx="0.0000198764" ixy="0.00000464241" ixz="0.0000108978" iyy="0.0000775824" iyz="-3.57437e-7" izz="0.0000762061"/>
     </inertial>
   </link>
   <link name="r_knee_actuator">
@@ -493,9 +493,9 @@
       <geometry><mesh filename="package://humanoid_robot/meshes/r_knee_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.081428 -0.00136 -0.007477" rpy="0 0 0"/>
-      <mass value="0.036944"/>
-      <inertia ixx="0.0000105765" ixy="0.00000137382" ixz="0.00000728117" iyy="0.0000576841" iyz="-8.13870e-8" izz="0.0000556526"/>
+      <origin xyz="0.080347 -0.001345 -0.007883" rpy="0 0 0"/>
+      <mass value="0.034907"/>
+      <inertia ixx="0.0000103971" ixy="0.00000136249" ixz="0.00000758021" iyy="0.0000564635" iyz="-8.55527e-8" izz="0.0000544875"/>
     </inertial>
   </link>
   <link name="r_ankle_pitch_actuator">
@@ -525,9 +525,9 @@
       <geometry><mesh filename="package://humanoid_robot/meshes/r_ankle_pitch_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.059775 -0.003354 -0.008243" rpy="0 0 0"/>
-      <mass value="0.036625"/>
-      <inertia ixx="0.0000110135" ixy="6.62436e-7" ixz="0.00000325975" iyy="0.0000286389" iyz="-6.83488e-7" izz="0.0000278087"/>
+      <origin xyz="0.059614 -0.003081 -0.008073" rpy="0 0 0"/>
+      <mass value="0.03606"/>
+      <inertia ixx="0.0000107538" ixy="5.59794e-7" ixz="0.00000319598" iyy="0.0000284859" iyz="-5.75521e-7" izz="0.0000275673"/>
     </inertial>
   </link>
   <link name="r_ankle_roll_actuator">
@@ -605,9 +605,9 @@
       <geometry><mesh filename="package://humanoid_robot/meshes/l_shoulder_pitch_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.011018 -0.003687 0.024979" rpy="0 0 0"/>
-      <mass value="0.035241"/>
-      <inertia ixx="0.000014441" ixy="1.34535e-7" ixz="0.00000161313" iyy="0.0000189022" iyz="0.00000124938" izz="0.0000145519"/>
+      <origin xyz="-0.010803 -0.00304 0.025291" rpy="0 0 0"/>
+      <mass value="0.033032"/>
+      <inertia ixx="0.0000136438" ixy="2.08185e-7" ixz="0.00000162751" iyy="0.000018291" iyz="0.00000134574" izz="0.000014262"/>
     </inertial>
   </link>
   <link name="l_shoulder_roll_actuator">
@@ -637,9 +637,9 @@
       <geometry><mesh filename="package://humanoid_robot/meshes/l_shoulder_roll_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.054136 0.0000963599 -0.015671" rpy="0 0 0"/>
-      <mass value="0.035417"/>
-      <inertia ixx="0.0000199877" ixy="6.09416e-9" ixz="0.00000395689" iyy="0.0000306456" iyz="9.73641e-8" izz="0.0000200725"/>
+      <origin xyz="0.054165 0.0000714823 -0.01537" rpy="0 0 0"/>
+      <mass value="0.034843"/>
+      <inertia ixx="0.0000196388" ixy="4.52081e-9" ixz="0.0000039759" iyy="0.0000304368" iyz="7.58422e-8" izz="0.0000199198"/>
     </inertial>
   </link>
   <link name="l_upper_arm_yaw_actuator">
@@ -669,9 +669,9 @@
       <geometry><mesh filename="package://humanoid_robot/meshes/l_upper_arm_yaw_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.000249978 0.004512 0.019027" rpy="0 0 0"/>
-      <mass value="0.010161"/>
-      <inertia ixx="0.00000302251" ixy="8.48067e-9" ixz="3.29517e-8" iyy="0.00000315028" iyz="-2.24590e-7" izz="0.00000175186"/>
+      <origin xyz="-0.000266096 0.005161 0.018384" rpy="0 0 0"/>
+      <mass value="0.009546"/>
+      <inertia ixx="0.00000287638" ixy="6.83176e-9" ixz="3.45851e-8" iyy="0.00000298998" iyz="-2.90376e-7" izz="0.00000159588"/>
     </inertial>
   </link>
   <link name="l_elbow_actuator">
@@ -701,9 +701,9 @@
       <geometry><mesh filename="package://humanoid_robot/meshes/l_elbow_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.008273 -0.000631588 0.03775" rpy="0 0 0"/>
-      <mass value="0.019972"/>
-      <inertia ixx="0.000012694" ixy="-8.98459e-7" ixz="-0.00000346683" iyy="0.0000132306" iyz="-0.00000197314" izz="0.00000510055"/>
+      <origin xyz="0.008544 -0.000830458 0.038232" rpy="0 0 0"/>
+      <mass value="0.019339"/>
+      <inertia ixx="0.0000125126" ixy="-9.31319e-7" ixz="-0.00000338713" iyy="0.0000129465" iyz="-0.00000203172" izz="0.00000494001"/>
     </inertial>
   </link>
   <link name="l_gripper_actuator">
@@ -765,9 +765,9 @@
       <geometry><mesh filename="package://humanoid_robot/meshes/r_shoulder_pitch_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.011352 0.003932 0.024567" rpy="0 0 0"/>
-      <mass value="0.036136"/>
-      <inertia ixx="0.0000144173" ixy="-1.79114e-8" ixz="0.00000141561" iyy="0.0000189585" iyz="-0.00000110589" izz="0.0000148106"/>
+      <origin xyz="-0.011077 0.003225 0.02499" rpy="0 0 0"/>
+      <mass value="0.033624"/>
+      <inertia ixx="0.0000136226" ixy="-1.12435e-7" ixz="0.00000147121" iyy="0.0000183477" iyz="-0.00000124062" izz="0.0000144747"/>
     </inertial>
   </link>
   <link name="r_shoulder_roll_actuator">
@@ -797,9 +797,9 @@
       <geometry><mesh filename="package://humanoid_robot/meshes/r_shoulder_roll_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.054136 0.0000963599 -0.015671" rpy="0 0 0"/>
-      <mass value="0.035417"/>
-      <inertia ixx="0.0000199877" ixy="6.09416e-9" ixz="0.00000395689" iyy="0.0000306456" iyz="9.73641e-8" izz="0.0000200725"/>
+      <origin xyz="0.054165 0.0000714823 -0.01537" rpy="0 0 0"/>
+      <mass value="0.034843"/>
+      <inertia ixx="0.0000196388" ixy="4.52081e-9" ixz="0.0000039759" iyy="0.0000304368" iyz="7.58422e-8" izz="0.0000199198"/>
     </inertial>
   </link>
   <link name="r_upper_arm_yaw_actuator">
@@ -829,9 +829,9 @@
       <geometry><mesh filename="package://humanoid_robot/meshes/r_upper_arm_yaw_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.000249978 -0.004512 0.019027" rpy="0 0 0"/>
-      <mass value="0.010161"/>
-      <inertia ixx="0.00000302251" ixy="8.48067e-9" ixz="-3.29517e-8" iyy="0.00000315028" iyz="2.24590e-7" izz="0.00000175186"/>
+      <origin xyz="0.000266096 -0.005161 0.018384" rpy="0 0 0"/>
+      <mass value="0.009546"/>
+      <inertia ixx="0.00000287638" ixy="6.83176e-9" ixz="-3.45851e-8" iyy="0.00000298998" iyz="2.90376e-7" izz="0.00000159588"/>
     </inertial>
   </link>
   <link name="r_elbow_actuator">
@@ -861,9 +861,9 @@
       <geometry><mesh filename="package://humanoid_robot/meshes/r_elbow_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.008273 0.000631588 0.03775" rpy="0 0 0"/>
-      <mass value="0.019972"/>
-      <inertia ixx="0.000012694" ixy="-8.98459e-7" ixz="0.00000346683" iyy="0.0000132306" iyz="0.00000197314" izz="0.00000510055"/>
+      <origin xyz="-0.008544 0.000830458 0.038232" rpy="0 0 0"/>
+      <mass value="0.019339"/>
+      <inertia ixx="0.0000125126" ixy="-9.31319e-7" ixz="0.00000338713" iyy="0.0000129465" iyz="0.00000203172" izz="0.00000494001"/>
     </inertial>
   </link>
   <link name="r_gripper_actuator">
@@ -925,9 +925,9 @@
       <geometry><mesh filename="package://humanoid_robot/meshes/neck_pan_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.000107311 -0.003182 0.040054" rpy="0 0 0"/>
-      <mass value="0.023671"/>
-      <inertia ixx="0.0000160353" ixy="1.18585e-8" ixz="-8.24160e-8" iyy="0.0000161164" iyz="8.26141e-7" izz="0.00000352294"/>
+      <origin xyz="0.000110257 -0.003419 0.039245" rpy="0 0 0"/>
+      <mass value="0.023038"/>
+      <inertia ixx="0.0000154084" ixy="1.12566e-8" ixz="-8.44692e-8" iyy="0.0000154557" iyz="9.91295e-7" izz="0.00000338283"/>
     </inertial>
   </link>
   <link name="neck_tilt_actuator">
@@ -957,9 +957,9 @@
       <geometry><mesh filename="package://humanoid_robot/meshes/neck_tilt_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.009424 -0.046314 -0.012027" rpy="0 0 0"/>
-      <mass value="0.188436"/>
-      <inertia ixx="0.00015541" ixy="0.0000149303" ixz="5.48544e-7" iyy="0.000174819" iyz="-0.00000402825" izz="0.000130822"/>
+      <origin xyz="-0.008877 -0.046186 -0.01198" rpy="0 0 0"/>
+      <mass value="0.178639"/>
+      <inertia ixx="0.000154153" ixy="0.0000152657" ixz="6.59054e-7" iyy="0.000173165" iyz="-0.00000398632" izz="0.000128584"/>
     </inertial>
   </link>
   <link name="head_camera">
@@ -989,9 +989,9 @@
       <geometry><mesh filename="package://humanoid_robot/meshes/side_panel_left.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-2.95695e-19 0.0912 0.064013" rpy="0 0 0"/>
-      <mass value="0.005391"/>
-      <inertia ixx="3.98823e-7" ixy="-9.60240e-24" ixz="5.45582e-23" iyy="0.00000445054" iyz="-1.23237e-24" izz="0.00000405689"/>
+      <origin xyz="6.35119e-18 0.0912 0.09229" rpy="0 0 0"/>
+      <mass value="0.007009"/>
+      <inertia ixx="0.00000112458" ixy="1.46806e-23" ixz="3.20754e-22" iyy="0.00000672184" iyz="-3.67961e-24" izz="0.00000560399"/>
     </inertial>
   </link>
   <link name="side_panel_right">
@@ -1005,9 +1005,9 @@
       <geometry><mesh filename="package://humanoid_robot/meshes/side_panel_right.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="9.87650e-18 -0.0912 0.064013" rpy="0 0 0"/>
-      <mass value="0.005391"/>
-      <inertia ixx="3.98823e-7" ixy="1.17837e-23" ixz="1.66311e-22" iyy="0.00000445054" iyz="1.34221e-24" izz="0.00000405689"/>
+      <origin xyz="5.97347e-18 -0.0912 0.09229" rpy="0 0 0"/>
+      <mass value="0.007009"/>
+      <inertia ixx="0.00000112458" ixy="-9.97173e-24" ixz="-2.25183e-22" iyy="0.00000672184" iyz="6.28067e-24" izz="0.00000560399"/>
     </inertial>
   </link>
   <link name="chest_panel">
@@ -1021,9 +1021,9 @@
       <geometry><mesh filename="package://humanoid_robot/meshes/chest_panel.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.0512 -0.002695 0.105137" rpy="0 0 0"/>
+      <origin xyz="0.0512 -0.002695 0.139337" rpy="0 0 0"/>
       <mass value="0.011409"/>
-      <inertia ixx="0.0000282303" ixy="-9.35350e-24" ixz="8.76558e-24" iyy="0.00000249708" iyz="2.26811e-8" izz="0.0000257442"/>
+      <inertia ixx="0.0000282303" ixy="-3.19316e-23" ixz="8.81779e-25" iyy="0.00000249708" iyz="2.26810e-8" izz="0.0000257442"/>
     </inertial>
   </link>
   <link name="main_switch">
@@ -1053,45 +1053,45 @@
       <geometry><mesh filename="package://humanoid_robot/meshes/imu_hood.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="7.04731e-19 3.03577e-18 0.033503" rpy="0 0 0"/>
-      <mass value="0.006424"/>
-      <inertia ixx="0.00000106766" ixy="-5.64471e-16" ixz="-5.24439e-23" iyy="0.0000011498" iyz="-5.05973e-23" izz="0.00000204321"/>
+      <origin xyz="-0.000215375 -3.13063e-18 0.020708" rpy="0 0 0"/>
+      <mass value="0.012349"/>
+      <inertia ixx="0.00000377261" ixy="-1.14441e-15" ixz="2.63080e-8" iyy="0.0000038783" iyz="-1.92048e-22" izz="0.00000406535"/>
     </inertial>
   </link>
   <joint name="battery_mount" type="fixed">
     <parent link="torso"/>
     <child link="battery"/>
-    <origin xyz="-0.02475 -0.071 0.0496" rpy="0 0 1.570796"/>
+    <origin xyz="-0.02475 -0.071 0.0716" rpy="0 0 1.570796"/>
   </joint>
   <joint name="computer_mount" type="fixed">
     <parent link="torso"/>
     <child link="computer"/>
-    <origin xyz="-0.045 -0.0274 0.0863" rpy="0 0 0"/>
+    <origin xyz="-0.045 -0.0274 0.1205" rpy="0 0 0"/>
   </joint>
   <joint name="leg_bus_mount" type="fixed">
     <parent link="torso"/>
     <child link="leg_bus"/>
-    <origin xyz="0.0335 -0.086 0.0526" rpy="0 0 1.570796"/>
+    <origin xyz="0.0335 -0.086 0.0746" rpy="0 0 1.570796"/>
   </joint>
   <joint name="arm_bus_mount" type="fixed">
     <parent link="torso"/>
     <child link="arm_bus"/>
-    <origin xyz="0.0095 -0.0405 0.0526" rpy="0 0 1.570796"/>
+    <origin xyz="0.0095 -0.0405 0.0746" rpy="0 0 1.570796"/>
   </joint>
   <joint name="regulator_5v_mount" type="fixed">
     <parent link="torso"/>
     <child link="regulator_5v"/>
-    <origin xyz="0.0259 0.0105 0.0526" rpy="0 0 1.570796"/>
+    <origin xyz="0.0259 0.0105 0.0746" rpy="0 0 1.570796"/>
   </joint>
   <joint name="regulator_5v_arms_mount" type="fixed">
     <parent link="torso"/>
     <child link="regulator_5v_arms"/>
-    <origin xyz="0.0259 0.0379 0.0526" rpy="0 0 1.570796"/>
+    <origin xyz="0.0259 0.0379 0.0746" rpy="0 0 1.570796"/>
   </joint>
   <joint name="imu_mount" type="fixed">
     <parent link="base_link"/>
     <child link="imu"/>
-    <origin xyz="-0.0128 -0.01135 0.0346" rpy="0 0 0"/>
+    <origin xyz="-0.0128 -0.01135 0.0106" rpy="0 0 0"/>
   </joint>
   <joint name="torso_mount" type="fixed">
     <parent link="base_link"/>
@@ -1267,12 +1267,12 @@
   <joint name="l_shoulder_pitch_actuator_mount" type="fixed">
     <parent link="torso"/>
     <child link="l_shoulder_pitch_actuator"/>
-    <origin xyz="0 0.09 0.15065" rpy="0 -1.570796 -1.570796"/>
+    <origin xyz="0 0.09 0.18485" rpy="0 -1.570796 -1.570796"/>
   </joint>
   <joint name="l_shoulder_pitch" type="revolute">
     <parent link="torso"/>
     <child link="l_shoulder_pitch_link"/>
-    <origin xyz="0 0.09 0.15065" rpy="0 -1.570796 -1.570796"/>
+    <origin xyz="0 0.09 0.18485" rpy="0 -1.570796 -1.570796"/>
     <axis xyz="0 0 1"/>
     <limit lower="-3" upper="3" effort="1.4" velocity="5.969"/>
     <dynamics damping="0.0469" friction="0.028"/>
@@ -1287,7 +1287,7 @@
     <child link="l_shoulder_roll_link"/>
     <origin xyz="0 0.01895 0.03895" rpy="1.570796 0 3.141593"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-0.134" upper="1.6" effort="1.4" velocity="5.969"/>
+    <limit lower="-0.115" upper="1.6" effort="1.4" velocity="5.969"/>
     <dynamics damping="0.0469" friction="0.028"/>
   </joint>
   <joint name="l_upper_arm_yaw_actuator_mount" type="fixed">
@@ -1332,12 +1332,12 @@
   <joint name="r_shoulder_pitch_actuator_mount" type="fixed">
     <parent link="torso"/>
     <child link="r_shoulder_pitch_actuator"/>
-    <origin xyz="0 -0.09 0.15065" rpy="0 -1.570796 1.570796"/>
+    <origin xyz="0 -0.09 0.18485" rpy="0 -1.570796 1.570796"/>
   </joint>
   <joint name="r_shoulder_pitch" type="revolute">
     <parent link="torso"/>
     <child link="r_shoulder_pitch_link"/>
-    <origin xyz="0 -0.09 0.15065" rpy="0 -1.570796 1.570796"/>
+    <origin xyz="0 -0.09 0.18485" rpy="0 -1.570796 1.570796"/>
     <axis xyz="0 0 1"/>
     <limit lower="-3" upper="3" effort="1.4" velocity="5.969"/>
     <dynamics damping="0.0469" friction="0.028"/>
@@ -1352,7 +1352,7 @@
     <child link="r_shoulder_roll_link"/>
     <origin xyz="0 -0.01895 0.03895" rpy="-1.570796 0 3.141593"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-1.6" upper="0.134" effort="1.4" velocity="5.969"/>
+    <limit lower="-1.6" upper="0.115" effort="1.4" velocity="5.969"/>
     <dynamics damping="0.0469" friction="0.028"/>
   </joint>
   <joint name="r_upper_arm_yaw_actuator_mount" type="fixed">
@@ -1397,12 +1397,12 @@
   <joint name="neck_pan_actuator_mount" type="fixed">
     <parent link="torso"/>
     <child link="neck_pan_actuator"/>
-    <origin xyz="0 0 0.1679" rpy="0 0 0"/>
+    <origin xyz="0 0 0.2021" rpy="0 0 0"/>
   </joint>
   <joint name="neck_pan" type="revolute">
     <parent link="torso"/>
     <child link="neck_pan_link"/>
-    <origin xyz="0 0 0.1679" rpy="0 0 0"/>
+    <origin xyz="0 0 0.2021" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
     <limit lower="-1.6" upper="1.6" effort="0.52" velocity="10.786"/>
     <dynamics damping="0.0096" friction="0.0104"/>
@@ -1443,7 +1443,7 @@
   <joint name="main_switch_mount" type="fixed">
     <parent link="chest_panel"/>
     <child link="main_switch"/>
-    <origin xyz="0.0524 0.048 0.104975" rpy="0 -1.570796 -3.141593"/>
+    <origin xyz="0.0524 0.048 0.139175" rpy="0 -1.570796 -3.141593"/>
   </joint>
   <joint name="imu_hood_mount" type="fixed">
     <parent link="base_link"/>

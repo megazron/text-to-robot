@@ -6,44 +6,44 @@
 
 Interpreted as: quadruped · imu (base_link) · camera (base_link)
 
-**Servo quadruped, 1.41 kg, hip height 0.18 m, 12 DOF, 33 min runtime, $530 of parts**
+**Servo quadruped, 1.43 kg, hip height 0.18 m, 12 DOF, 32 min runtime, $530 of parts**
 
-Parts cost **$578.75** · printed structure 15 parts, 538 g · checks passed 62/62
+Parts cost **$582.04** · printed structure 15 parts, 575 g · checks passed 62/62
 
 ## What it can do
 
 | | |
 |---|--:|
-| average power w | 36 |
+| average power w | 36.4 |
 | com height m | 0.145 |
-| mass kg | 1.409 |
-| standing height m | 0.199 |
+| mass kg | 1.431 |
+| standing height m | 0.205 |
 | hip height m | 0.18 |
 | payload kg | 0.3 |
 | legs | 4 |
 | dof | 12 |
 | actuators | Feetech STS3215 C047 12 V 30 kg.cm (1:345) (abduction), Feetech STS3215 C047 12 V 30 kg.cm (1:345) (hip), Feetech STS3215 C047 12 V 30 kg.cm (1:345) (knee) |
-| runtime min | 33 |
+| runtime min | 32 |
 | cost usd | 530.15 |
 | stance width m | 0.13 |
-| wheelbase m | 0.301 |
+| wheelbase m | 0.319 |
 
 ## Actuators (sized from this robot's own loads)
 
 | Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
 |---|---|--:|--:|--:|--:|
-| fl_hip_abduction | feetech_sts3215_c047 | 0.841 | 0.9807 / 2.942 | 3.5x | 4.712 |
-| fl_hip_pitch | feetech_sts3215_c047 | 1.26 | 0.9807 / 2.942 | 2.34x | 4.712 |
-| fl_knee | feetech_sts3215_c047 | 1.26 | 0.9807 / 2.942 | 2.33x | 4.712 |
-| fr_hip_abduction | feetech_sts3215_c047 | 0.841 | 0.9807 / 2.942 | 3.5x | 4.712 |
-| fr_hip_pitch | feetech_sts3215_c047 | 1.26 | 0.9807 / 2.942 | 2.34x | 4.712 |
-| fr_knee | feetech_sts3215_c047 | 1.26 | 0.9807 / 2.942 | 2.33x | 4.712 |
-| rl_hip_abduction | feetech_sts3215_c047 | 0.841 | 0.9807 / 2.942 | 3.5x | 4.712 |
-| rl_hip_pitch | feetech_sts3215_c047 | 1.26 | 0.9807 / 2.942 | 2.34x | 4.712 |
-| rl_knee | feetech_sts3215_c047 | 1.26 | 0.9807 / 2.942 | 2.33x | 4.712 |
-| rr_hip_abduction | feetech_sts3215_c047 | 0.841 | 0.9807 / 2.942 | 3.5x | 4.712 |
-| rr_hip_pitch | feetech_sts3215_c047 | 1.26 | 0.9807 / 2.942 | 2.34x | 4.712 |
-| rr_knee | feetech_sts3215_c047 | 1.26 | 0.9807 / 2.942 | 2.33x | 4.712 |
+| fl_hip_abduction | feetech_sts3215_c047 | 0.852 | 0.9807 / 2.942 | 3.45x | 4.712 |
+| fl_hip_pitch | feetech_sts3215_c047 | 1.276 | 0.9807 / 2.942 | 2.3x | 4.712 |
+| fl_knee | feetech_sts3215_c047 | 1.277 | 0.9807 / 2.942 | 2.3x | 4.712 |
+| fr_hip_abduction | feetech_sts3215_c047 | 0.852 | 0.9807 / 2.942 | 3.45x | 4.712 |
+| fr_hip_pitch | feetech_sts3215_c047 | 1.276 | 0.9807 / 2.942 | 2.3x | 4.712 |
+| fr_knee | feetech_sts3215_c047 | 1.277 | 0.9807 / 2.942 | 2.3x | 4.712 |
+| rl_hip_abduction | feetech_sts3215_c047 | 0.852 | 0.9807 / 2.942 | 3.45x | 4.712 |
+| rl_hip_pitch | feetech_sts3215_c047 | 1.276 | 0.9807 / 2.942 | 2.3x | 4.712 |
+| rl_knee | feetech_sts3215_c047 | 1.277 | 0.9807 / 2.942 | 2.3x | 4.712 |
+| rr_hip_abduction | feetech_sts3215_c047 | 0.852 | 0.9807 / 2.942 | 3.45x | 4.712 |
+| rr_hip_pitch | feetech_sts3215_c047 | 1.276 | 0.9807 / 2.942 | 2.3x | 4.712 |
+| rr_knee | feetech_sts3215_c047 | 1.277 | 0.9807 / 2.942 | 2.3x | 4.712 |
 
 ## Engineering checks
 
@@ -68,7 +68,7 @@ All 62 checks pass (torque, speed, power, stability, print-bed fit). Details in 
 
 | | Test | Result |
 |---|---|---|
-| ✅ | stand free | base z 0.185 -> 0.180 m (creep after settling 0.2 mm), upright 1.000; worst leg joint fr_knee at 0.25x rated |
+| ✅ | stand free | base z 0.185 -> 0.180 m (creep after settling 0.2 mm), upright 1.000; worst leg joint fr_knee at 0.26x rated |
 | ✅ | squat | free standing: commanded body drop 38 mm (20 % of 188 mm leg), achieved 38 mm, back up to 37 mm above the low point, upright 1.000 |
 
 _PASS means the modelled actuators (datasheet peak torque as a hard limit, a linear torque-speed line to no-load speed, reflected rotor inertia, URDF damping/friction) can produce the torques and speeds the task needs in this geometry and mass distribution, and that mean torque over the hold stays within the continuous (rated) torque. Joint control uses an ideal model-based feedforward (computed torque) through the force-limited servo for fixed-base robots and plain position servos for floating robots; a pass therefore proves torque/speed capacity, not that a given controller achieves it. Untested: thermal limits over long duty cycles (only the mean-vs-rated proxy), gearbox backlash and compliance, link and joint flexibility, encoder resolution, supply voltage sag and current limits, bus latency, controller tuning, and contact/friction values (nominal friction only)._

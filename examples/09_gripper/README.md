@@ -8,7 +8,7 @@ Interpreted as: standalone parallel gripper
 
 **Parallel gripper: 60 mm stroke, 47 N rated squeeze per finger, Feetech STS3215 C047 12 V 30 kg.cm (1:345)**
 
-Parts cost **$93.49** · printed structure 7 parts, 530 g · checks passed 29/29
+Parts cost **$95.06** · printed structure 7 parts, 582 g · checks passed 29/29
 
 ## What it can do
 
@@ -22,12 +22,12 @@ Parts cost **$93.49** · printed structure 7 parts, 530 g · checks passed 29/29
 | finger speed mm s | 49.5 |
 | close time s | 0.61 |
 | payload kg | 0.5 |
-| mass kg | 1.032 |
-| height mm | 199.1 |
+| mass kg | 1.084 |
+| height mm | 205.1 |
 | actuator | Feetech STS3215 C047 12 V 30 kg.cm (1:345) |
 | mount | ISO 9409-1-50-4-M6 style adapter (4 x M6 on PCD 50, 31.5 mm centring recess) |
-| cost usd | 94.23 |
-| cost breakdown | parts 71.52 USD, filament 13.26 USD (0.53 kg), fasteners ~4.50 USD, wiring 4.95 USD |
+| cost usd | 95.78 |
+| cost breakdown | parts 71.52 USD, filament 14.55 USD (0.58 kg), fasteners ~4.50 USD, wiring 5.21 USD |
 
 ## Actuators (sized from this robot's own loads)
 

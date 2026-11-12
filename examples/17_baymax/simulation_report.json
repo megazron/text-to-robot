@@ -25,24 +25,24 @@
    ],
    "joints": {
     "left_front_wheel_joint": {
-     "peak_nm": 0.2826,
-     "peak_rating_nm": 1.373,
-     "util_peak": 0.206,
-     "mean_cruise_nm": 0.2404,
-     "rated_nm": 0.686,
-     "util_rated": 0.35,
-     "max_err": 0.6813,
-     "max_err_hold": 0.6052,
-     "saturated_frac": 0.0
-    },
-    "left_rear_wheel_joint": {
      "peak_nm": 0.2825,
      "peak_rating_nm": 1.373,
      "util_peak": 0.206,
      "mean_cruise_nm": 0.2404,
      "rated_nm": 0.686,
      "util_rated": 0.35,
-     "max_err": 0.681,
+     "max_err": 0.6811,
+     "max_err_hold": 0.6052,
+     "saturated_frac": 0.0
+    },
+    "left_rear_wheel_joint": {
+     "peak_nm": 0.2824,
+     "peak_rating_nm": 1.373,
+     "util_peak": 0.206,
+     "mean_cruise_nm": 0.2404,
+     "rated_nm": 0.686,
+     "util_rated": 0.35,
+     "max_err": 0.6808,
      "max_err_hold": 0.6052,
      "saturated_frac": 0.0
     },
@@ -53,18 +53,18 @@
      "mean_cruise_nm": 0.2404,
      "rated_nm": 0.686,
      "util_rated": 0.35,
-     "max_err": 0.6814,
+     "max_err": 0.6813,
      "max_err_hold": 0.6051,
      "saturated_frac": 0.0
     },
     "right_rear_wheel_joint": {
-     "peak_nm": 0.2825,
+     "peak_nm": 0.2824,
      "peak_rating_nm": 1.373,
      "util_peak": 0.206,
      "mean_cruise_nm": 0.2404,
      "rated_nm": 0.686,
      "util_rated": 0.35,
-     "max_err": 0.6811,
+     "max_err": 0.681,
      "max_err_hold": 0.6051,
      "saturated_frac": 0.0
     }
@@ -75,21 +75,43 @@
    "explanation": "from standstill on a 10 deg slope (speed ramped over 4.7 s at 0.5 m/s^2): 5.15 m uphill in 6.7 s, speed 1.201 m/s of 1.240 commanded",
    "slope_deg": 10.0,
    "claim_key": "slope_deg",
-   "uphill_m": 5.1515,
-   "speed_m_s": 1.2007,
+   "uphill_m": 5.1516,
+   "speed_m_s": 1.2008,
    "joints": {
     "left_front_wheel_joint": {
+     "peak_nm": 0.3549,
+     "peak_rating_nm": 1.373,
+     "util_peak": 0.259,
+     "mean_climb_nm": 0.345,
+     "rated_nm": 0.686,
+     "util_rated": 0.503,
+     "max_err": 0.885,
+     "max_err_hold": 0.8684,
+     "saturated_frac": 0.0
+    },
+    "left_rear_wheel_joint": {
+     "peak_nm": 0.3546,
+     "peak_rating_nm": 1.373,
+     "util_peak": 0.258,
+     "mean_climb_nm": 0.3447,
+     "rated_nm": 0.686,
+     "util_rated": 0.502,
+     "max_err": 0.8841,
+     "max_err_hold": 0.8675,
+     "saturated_frac": 0.0
+    },
+    "right_front_wheel_joint": {
      "peak_nm": 0.3552,
      "peak_rating_nm": 1.373,
      "util_peak": 0.259,
      "mean_climb_nm": 0.3452,
      "rated_nm": 0.686,
      "util_rated": 0.503,
-     "max_err": 0.8856,
-     "max_err_hold": 0.8689,
+     "max_err": 0.8855,
+     "max_err_hold": 0.8688,
      "saturated_frac": 0.0
     },
-    "left_rear_wheel_joint": {
+    "right_rear_wheel_joint": {
      "peak_nm": 0.3548,
      "peak_rating_nm": 1.373,
      "util_peak": 0.258,
@@ -99,88 +121,66 @@
      "max_err": 0.8846,
      "max_err_hold": 0.868,
      "saturated_frac": 0.0
-    },
-    "right_front_wheel_joint": {
-     "peak_nm": 0.3554,
-     "peak_rating_nm": 1.373,
-     "util_peak": 0.259,
-     "mean_climb_nm": 0.3454,
-     "rated_nm": 0.686,
-     "util_rated": 0.503,
-     "max_err": 0.8861,
-     "max_err_hold": 0.8693,
-     "saturated_frac": 0.0
-    },
-    "right_rear_wheel_joint": {
-     "peak_nm": 0.355,
-     "peak_rating_nm": 1.373,
-     "util_peak": 0.259,
-     "mean_climb_nm": 0.345,
-     "rated_nm": 0.686,
-     "util_rated": 0.503,
-     "max_err": 0.8851,
-     "max_err_hold": 0.8684,
-     "saturated_frac": 0.0
     }
    }
   },
   "turn_in_place": {
    "pass": 1.0,
-   "explanation": "mean yaw rate 1.95 rad/s with 3.59 commanded (no-slip), claimed 1.42 rad/s (needs >= 1.21), centre moved 4.4 cm over 1.0 turn(s) (4.4 cm per turn)",
+   "explanation": "mean yaw rate 2.02 rad/s with 3.58 commanded (no-slip), claimed 1.42 rad/s (needs >= 1.21), centre moved 10.4 cm over 1.0 turn(s) (10.4 cm per turn)",
    "claimed_rad_s": 1.42,
-   "commanded_rad_s": 3.5875,
-   "yaw_rate_rad_s": 1.9519,
-   "drift_m": 0.0436,
-   "track_m": 0.3456,
+   "commanded_rad_s": 3.5803,
+   "yaw_rate_rad_s": 2.0168,
+   "drift_m": 0.104,
+   "track_m": 0.3463,
    "joints": {
     "left_front_wheel_joint": {
-     "peak_nm": 1.2545,
+     "peak_nm": 1.3604,
      "peak_rating_nm": 1.373,
-     "util_peak": 0.914,
-     "mean_turn_nm": 0.3232,
+     "util_peak": 0.991,
+     "mean_turn_nm": 0.3543,
      "rated_nm": 0.686,
-     "util_rated": 0.471,
-     "max_err": 8.663,
-     "max_err_hold": 7.6274,
-     "saturated_frac": 0.097
+     "util_rated": 0.517,
+     "max_err": 14.0517,
+     "max_err_hold": 14.0517,
+     "saturated_frac": 0.114
     },
     "left_rear_wheel_joint": {
-     "peak_nm": 1.254,
+     "peak_nm": 1.1738,
      "peak_rating_nm": 1.373,
-     "util_peak": 0.913,
-     "mean_turn_nm": 0.1782,
+     "util_peak": 0.855,
+     "mean_turn_nm": 0.1641,
      "rated_nm": 0.686,
-     "util_rated": 0.26,
-     "max_err": 8.49,
-     "max_err_hold": 6.9609,
-     "saturated_frac": 0.043
+     "util_rated": 0.239,
+     "max_err": 7.6787,
+     "max_err_hold": 7.6787,
+     "saturated_frac": 0.02
     },
     "right_front_wheel_joint": {
-     "peak_nm": 1.2338,
+     "peak_nm": 1.1775,
      "peak_rating_nm": 1.373,
-     "util_peak": 0.899,
-     "mean_turn_nm": 0.1751,
+     "util_peak": 0.858,
+     "mean_turn_nm": 0.174,
      "rated_nm": 0.686,
-     "util_rated": 0.255,
-     "max_err": 6.501,
-     "max_err_hold": 6.501,
-     "saturated_frac": 0.031
+     "util_rated": 0.254,
+     "max_err": 7.1564,
+     "max_err_hold": 7.0051,
+     "saturated_frac": 0.026
     },
     "right_rear_wheel_joint": {
-     "peak_nm": 1.2624,
+     "peak_nm": 1.2857,
      "peak_rating_nm": 1.373,
-     "util_peak": 0.919,
-     "mean_turn_nm": 0.3409,
+     "util_peak": 0.936,
+     "mean_turn_nm": 0.3169,
      "rated_nm": 0.686,
-     "util_rated": 0.497,
-     "max_err": 9.2905,
-     "max_err_hold": 9.2905,
-     "saturated_frac": 0.088
+     "util_rated": 0.462,
+     "max_err": 9.1546,
+     "max_err_hold": 9.1546,
+     "saturated_frac": 0.083
     }
    }
   }
  },
  "passed": 3,
  "total": 3,
- "source_urdf_sha256": "13b94c5682e41cda6bc939ab08071f1b30be1a059c114187d30e9f297115baee"
+ "source_urdf_sha256": "916a92430443d62f69670f556a0549e8773f00c6b1d8a4f0bcc0fa6542469244"
 }

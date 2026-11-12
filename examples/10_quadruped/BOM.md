@@ -1,6 +1,6 @@
 # Bill of materials: quadruped
 
-**Estimated total: $578.75**  ·  tier: hobby
+**Estimated total: $582.04**  ·  tier: hobby
 
 **Effort sizing: passes catalogue estimate; hardware verified: no.**
 
@@ -16,24 +16,24 @@
 | Power | KCD4 double-pole rocker switch, 16 A 250 VAC / 20 A 125 VAC _(main power switch · https://www.aliexpress.com/w/wholesale-kcd4-rocker-switch.html)_ | 1 | 1 | 1 | https://www.aliexpress.com/w/wholesale-kcd4-rocker-switch.html |
 | Power | WAGO 221-415 five-way lever splice _(rail splices, the star ground and bus hubs · https://www.wago.com/global/electrical-interconnections/compact-splicing-connector/p/221-415)_ | 7 | 0.8 | 5.6 | 450 V |
 | Electronics | Waveshare Bus Servo Adapter (A) _(USB to servo bus · https://www.waveshare.com/bus-servo-adapter-a.htm)_ | 1 | 10.6 | 10.6 | 12 V |
-| Printed structure | PETG filament for 15 printed parts _(base_link, top_deck, fl_shoulder, fl_thigh, fl_shin, fr_shoulder, fr_thigh, fr_shin, rl_shoulder, rl_thigh, rl_shin, rr_shoulder, rr_thigh, rr_shin, electronics_hood)_ | 1 | 13.61 | 13.61 | 538 g of parts (+15 % supports/waste), about 49.0 h of printing |
+| Printed structure | PETG filament for 15 printed parts _(base_link, top_deck, fl_shoulder, fl_thigh, fl_shin, fr_shoulder, fr_thigh, fr_shin, rl_shoulder, rl_thigh, rl_shin, rr_shoulder, rr_thigh, rr_shin, electronics_hood)_ | 1 | 14.54 | 14.54 | 575 g of parts (+15 % supports/waste), about 52.4 h of printing |
 | Fasteners | Screws, nuts and inserts | 108 | 0.12 | 12.96 | 4x M2.5 x 10 board screws; 4x M3 x 10 deck screws; 48x M2 x 6 case screws; 48x horn screws; 4x M3 x 12 self-tapping (hood to deck) |
-| Wiring | 16 AWG silicone wire _(price estimated)_ | 0.7 | 1 | 0.7 | 0.7 m: 1.308 mm2, rated 11 A in a bundle; 0.56 m cut + 10 % waste |
-| Wiring | 22 AWG silicone wire _(price estimated)_ | 5 | 0.4 | 2 | 5 m: 0.327 mm2, rated 3.5 A in a bundle; 4.54 m cut + 10 % waste |
-| Wiring | 24 AWG silicone wire _(price estimated)_ | 3.5 | 0.35 | 1.22 | 3.5 m: 0.205 mm2, rated 1.75 A in a bundle; 3.18 m cut + 10 % waste |
-| Wiring | 26 AWG silicone wire _(price estimated)_ | 3.9 | 0.3 | 1.17 | 3.9 m: 0.128 mm2, rated 1.1 A in a bundle; 3.51 m cut + 10 % waste |
+| Wiring | 16 AWG silicone wire _(price estimated)_ | 0.9 | 1 | 0.9 | 0.9 m: 1.308 mm2, rated 11 A in a bundle; 0.77 m cut + 10 % waste |
+| Wiring | 22 AWG silicone wire _(price estimated)_ | 6.4 | 0.4 | 2.56 | 6.4 m: 0.327 mm2, rated 3.5 A in a bundle; 5.81 m cut + 10 % waste |
+| Wiring | 24 AWG silicone wire _(price estimated)_ | 4.5 | 0.35 | 1.57 | 4.5 m: 0.205 mm2, rated 1.75 A in a bundle; 4.05 m cut + 10 % waste |
+| Wiring | 26 AWG silicone wire _(price estimated)_ | 5 | 0.3 | 1.5 | 5 m: 0.128 mm2, rated 1.1 A in a bundle; 4.54 m cut + 10 % waste |
 | Wiring | Dupont 2.54 mm contacts _(price estimated)_ | 10 | 0.02 | 0.2 | 10 pc: rated 3 A per contact |
-| Wiring | Dupont 2.54 mm housings _(price estimated)_ | 3 | 0.02 | 0.06 | 3 pc: one per cable end |
+| Wiring | Dupont 2.54 mm housings _(price estimated)_ | 4 | 0.02 | 0.08 | 4 pc: one per cable end |
 | Wiring | Molex 5264 contacts _(price estimated)_ | 61 | 0.05 | 3.05 | 61 pc: rated 3 A per contact |
-| Wiring | Molex 5264 housings _(price estimated)_ | 25 | 0.08 | 2 | 25 pc: one per cable end |
+| Wiring | Molex 5264 housings _(price estimated)_ | 29 | 0.08 | 2.32 | 29 pc: one per cable end |
 | Wiring | XT60 contacts _(price estimated)_ | 2 | 0.9 | 1.8 | 2 pc: rated 35 A per contact |
 | Wiring | 6.3 mm spade contacts _(price estimated)_ | 2 | 0.08 | 0.16 | 2 pc: rated 15 A per contact |
 | Wiring | Bootlace ferrule contacts _(price estimated)_ | 2 | 0.03 | 0.06 | 2 pc: rated 17.5 A per contact |
-| Wiring | Heat shrink 3 mm, 2:1 _(price estimated)_ | 1.9 | 0.2 | 0.38 | 1.9 m: 7 solder joints + a boot on each cable end |
-| Wiring | Cable tie 100 x 2.5 mm _(price estimated)_ | 38 | 0.02 | 0.76 | 38 pc: at every clip, cable end and strain-relief anchor |
+| Wiring | Heat shrink 3 mm, 2:1 _(price estimated)_ | 2.3 | 0.2 | 0.46 | 2.3 m: 6 solder joints + a boot on each cable end |
+| Wiring | Cable tie 100 x 2.5 mm _(price estimated)_ | 53 | 0.02 | 1.06 | 53 pc: at every clip, cable end and strain-relief anchor |
 | Wiring | Rubber grommet, 6.4 mm panel hole, 3.2 mm bore _(price estimated)_ | 1 | 0.08 | 0.08 | 1 pc: 9.5 mm panel hole |
-| Wiring | Rubber grommet, 6.4 mm panel hole, 3.2 mm bore _(price estimated)_ | 2 | 0.08 | 0.16 | 2 pc: 10 mm panel hole |
-| Wiring | Nylon braided sleeving 6 mm _(price estimated)_ | 1.2 | 0.4 | 0.48 | 1.2 m: over every cable where it crosses a joint |
+| Wiring | Rubber grommet, 6.4 mm panel hole, 3.2 mm bore _(price estimated)_ | 4 | 0.08 | 0.32 | 4 pc: 10 mm panel hole |
+| Wiring | Nylon braided sleeving 6 mm _(price estimated)_ | 1.3 | 0.4 | 0.52 | 1.3 m: over every cable where it crosses a joint |
 | Wiring | FFC _(price estimated)_ | 1 | 3 | 3 | 1 pc: camera to computer |
 | Wiring | USB _(price estimated)_ | 1 | 3 | 3 | 1 pc: actuator_bus to computer |
 | Wiring | 7.5 A ATM blade fuse _(price estimated)_ | 1 | 0.25 | 0.25 | 1 pc: plus spares |
@@ -43,21 +43,21 @@
 
 | Joint | Required effort | Unit | Chosen actuator | Margin |
 |---|--:|---|---|--:|
-| fl_hip_abduction | 0.841 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 3.5x |
-| fl_hip_pitch | 1.26 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 2.34x |
-| fl_knee | 1.26 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 2.33x |
-| fr_hip_abduction | 0.841 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 3.5x |
-| fr_hip_pitch | 1.26 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 2.34x |
-| fr_knee | 1.26 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 2.33x |
-| rl_hip_abduction | 0.841 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 3.5x |
-| rl_hip_pitch | 1.26 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 2.34x |
-| rl_knee | 1.26 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 2.33x |
-| rr_hip_abduction | 0.841 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 3.5x |
-| rr_hip_pitch | 1.26 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 2.34x |
-| rr_knee | 1.26 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 2.33x |
+| fl_hip_abduction | 0.852 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 3.45x |
+| fl_hip_pitch | 1.276 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 2.3x |
+| fl_knee | 1.277 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 2.3x |
+| fr_hip_abduction | 0.852 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 3.45x |
+| fr_hip_pitch | 1.276 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 2.3x |
+| fr_knee | 1.277 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 2.3x |
+| rl_hip_abduction | 0.852 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 3.45x |
+| rl_hip_pitch | 1.276 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 2.3x |
+| rl_knee | 1.277 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 2.3x |
+| rr_hip_abduction | 0.852 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 3.45x |
+| rr_hip_pitch | 1.276 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 2.3x |
+| rr_knee | 1.277 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 2.3x |
 
 ## Notes
-- Servo quadruped, 1.41 kg, hip height 0.18 m, 12 DOF, 33 min runtime, $530 of parts
+- Servo quadruped, 1.43 kg, hip height 0.18 m, 12 DOF, 32 min runtime, $530 of parts
 - Sized for a 0.3 kg payload.
 - A trot has two diagonal feet on the ground: the COM sits on the support line, so trotting needs the dynamic balance of the gait controller; the creep gait keeps three feet down (statically stable).
 - Every joint's limits are inside its collision-free range (exact solid sweeps).

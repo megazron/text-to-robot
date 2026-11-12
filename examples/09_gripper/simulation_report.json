@@ -9,11 +9,11 @@
   "grip": {
    "pass": null,
    "explanation": "untested: the TCP is not between two finger surfaces",
-   "gap_plus": -0.0371,
-   "gap_minus": 0.0639
+   "gap_plus": 0.0636,
+   "gap_minus": -0.0071
   }
  },
  "passed": 0,
  "total": 0,
- "source_urdf_sha256": "ed9af2c782696e8638f02e345b97716aca102c8afc56c8f22422b1e4069fb7cb"
+ "source_urdf_sha256": "95570ef8b4aef903c8a0c5cae6c1960c17f2706555d424152899308adb077781"
 }

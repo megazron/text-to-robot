@@ -6,9 +6,9 @@
 
 Interpreted as: Arduino desk arm (3 DOF + claw)
 
-**Arduino desk arm: 3 DOF + claw, 280 mm reach, 20 g payload, 0.82 kg, $50 of parts**
+**Arduino desk arm: 3 DOF + claw, 280 mm reach, 20 g payload, 0.87 kg, $51 of parts**
 
-Parts cost **$63.54** · printed structure 9 parts, 377 g · checks passed 40/40
+Parts cost **$65.49** · printed structure 9 parts, 426 g · checks passed 40/40
 
 ## What it can do
 
@@ -16,8 +16,8 @@ Parts cost **$63.54** · printed structure 9 parts, 377 g · checks passed 40/40
 |---|--:|
 | reach m | 0.28 |
 | payload kg | 0.02 |
-| mass kg | 0.818 |
-| cost usd | 49.91 |
+| mass kg | 0.866 |
+| cost usd | 50.63 |
 | dof | 3 |
 | gripper | one-servo claw |
 | servos | TowerPro SG90 micro servo / TowerPro MG996R standard servo |

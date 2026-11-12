@@ -60,9 +60,9 @@
       "category": "Printed structure",
       "name": "PETG filament for 7 printed parts",
       "qty": 1,
-      "unit_cost": 13.42,
-      "subtotal": 13.42,
-      "spec": "530 g of parts (+15 % supports/waste), about 48.3 h of printing",
+      "unit_cost": 14.73,
+      "subtotal": 14.73,
+      "spec": "582 g of parts (+15 % supports/waste), about 53.1 h of printing",
       "note": "base_link, gripper_body, pinion, finger_a, finger_b, control_case, control_case_lid"
     },
     {
@@ -76,10 +76,10 @@
     {
       "category": "Wiring",
       "name": "24 AWG silicone wire",
-      "qty": 2.1,
+      "qty": 2.9,
       "unit_cost": 0.35,
-      "subtotal": 0.73,
-      "spec": "2.1 m: 0.205 mm2, rated 1.75 A in a bundle; 1.89 m cut + 10 % waste",
+      "subtotal": 1.01,
+      "spec": "2.9 m: 0.205 mm2, rated 1.75 A in a bundle; 2.58 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
@@ -88,7 +88,7 @@
       "qty": 0.6,
       "unit_cost": 0.3,
       "subtotal": 0.18,
-      "spec": "0.6 m: 0.128 mm2, rated 1.1 A in a bundle; 0.47 m cut + 10 % waste",
+      "spec": "0.6 m: 0.128 mm2, rated 1.1 A in a bundle; 0.53 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
@@ -139,10 +139,10 @@
     {
       "category": "Wiring",
       "name": "Cable tie 100 x 2.5 mm",
-      "qty": 6,
+      "qty": 5,
       "unit_cost": 0.02,
-      "subtotal": 0.12,
-      "spec": "6 pc: at every clip, cable end and strain-relief anchor",
+      "subtotal": 0.1,
+      "spec": "5 pc: at every clip, cable end and strain-relief anchor",
       "note": "price estimated"
     },
     {
@@ -155,7 +155,7 @@
       "note": "price estimated"
     }
   ],
-  "total": 93.49,
+  "total": 95.06,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,

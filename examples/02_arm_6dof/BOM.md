@@ -1,6 +1,6 @@
 # Bill of materials: arm_6dof
 
-**Estimated total: $1168.42**  ·  tier: prosumer
+**Estimated total: $1170.16**  ·  tier: prosumer
 
 **Effort sizing: passes catalogue estimate; hardware verified: no.**
 
@@ -13,32 +13,32 @@
 | Actuator | DYNAMIXEL XM430-W350-T(R) _(joint elbow_pitch · https://www.robotshop.com/products/robotis-dynamixel-xm430-w350-t-smart-servo-actuator)_ | 1 | 310.39 | 310.39 | 1.23 N·m rated / 4.1 N·m peak, 12 V |
 | Power | IEC C14 panel inlet with fuse drawer and rocker switch, 10 A _(fused, switched mains inlet · https://www.aliexpress.com/w/wholesale-iec-c14-inlet-fuse-switch.html)_ | 1 | 3 | 3 | https://www.aliexpress.com/w/wholesale-iec-c14-inlet-fuse-switch.html |
 | Power | Mean Well LRS-75-12 enclosed PSU, 12 V 6 A (75 W) _(12 V actuator supply · https://www.digikey.com/en/products/result?keywords=LRS-75-12)_ | 1 | 22 | 22 | 12 V |
-| Printed structure | PETG filament for 10 printed parts _(base_link, turret, upper_arm, forearm, forearm_rotator, wrist, wrist_rotator, gripper_jaw, control_case, control_case_lid)_ | 1 | 13.71 | 13.71 | 542 g of parts (+15 % supports/waste), about 49.4 h of printing |
+| Printed structure | PETG filament for 10 printed parts _(base_link, turret, upper_arm, forearm, forearm_rotator, wrist, wrist_rotator, gripper_jaw, control_case, control_case_lid)_ | 1 | 14.37 | 14.37 | 568 g of parts (+15 % supports/waste), about 51.8 h of printing |
 | Fasteners | Screws, nuts and inserts | 90 | 0.12 | 10.8 | 4x M5 x 12 socket head (base to bench); 24x M2.5 x 6 case screws; 52x horn screws; 3x M5 x 16 socket head + M5 washer + M5 heat-set insert (clevis bearing axle); 4x M3 x 10 self-tapping (lid to compartment); 2x M3 x 6 self-tapping (Mean Well LRS-75-12 enclosed PSU, 12 V 6 A to standoffs); 1x M2 x 6 self-tapping (ROBOTIS U2D2 USB to TTL/RS-485 interface to standoffs) |
-| Wiring | 18 AWG silicone wire _(price estimated)_ | 1 | 0.7 | 0.7 | 1 m: 0.823 mm2, rated 8 A in a bundle; 0.83 m cut + 10 % waste |
-| Wiring | 20 AWG silicone wire _(price estimated)_ | 1.6 | 0.5 | 0.8 | 1.6 m: 0.519 mm2, rated 5.5 A in a bundle; 1.39 m cut + 10 % waste |
-| Wiring | 22 AWG silicone wire _(price estimated)_ | 0.8 | 0.4 | 0.32 | 0.8 m: 0.327 mm2, rated 3.5 A in a bundle; 0.65 m cut + 10 % waste |
-| Wiring | 24 AWG silicone wire _(price estimated)_ | 4.1 | 0.35 | 1.43 | 4.1 m: 0.205 mm2, rated 1.75 A in a bundle; 3.68 m cut + 10 % waste |
-| Wiring | 26 AWG silicone wire _(price estimated)_ | 2.9 | 0.3 | 0.87 | 2.9 m: 0.128 mm2, rated 1.1 A in a bundle; 2.62 m cut + 10 % waste |
+| Wiring | 16 AWG silicone wire _(price estimated)_ | 1.1 | 1 | 1.1 | 1.1 m: 1.308 mm2, rated 11 A in a bundle; 0.93 m cut + 10 % waste |
+| Wiring | 20 AWG silicone wire _(price estimated)_ | 1.9 | 0.5 | 0.95 | 1.9 m: 0.519 mm2, rated 5.5 A in a bundle; 1.71 m cut + 10 % waste |
+| Wiring | 22 AWG silicone wire _(price estimated)_ | 0.9 | 0.4 | 0.36 | 0.9 m: 0.327 mm2, rated 3.5 A in a bundle; 0.73 m cut + 10 % waste |
+| Wiring | 24 AWG silicone wire _(price estimated)_ | 4.9 | 0.35 | 1.72 | 4.9 m: 0.205 mm2, rated 1.75 A in a bundle; 4.41 m cut + 10 % waste |
+| Wiring | 26 AWG silicone wire _(price estimated)_ | 3.5 | 0.3 | 1.05 | 3.5 m: 0.128 mm2, rated 1.1 A in a bundle; 3.17 m cut + 10 % waste |
 | Wiring | 6.3 mm spade contacts _(price estimated)_ | 3 | 0.08 | 0.24 | 3 pc: rated 15 A per contact |
 | Wiring | Bootlace ferrule contacts _(price estimated)_ | 5 | 0.03 | 0.15 | 5 pc: rated 17.5 A per contact |
 | Wiring | JST EH 2.5 mm contacts _(price estimated)_ | 42 | 0.03 | 1.26 | 42 pc: rated 3 A per contact |
 | Wiring | JST EH 2.5 mm housings _(price estimated)_ | 15 | 0.05 | 0.75 | 15 pc: one per cable end |
 | Wiring | Heat shrink 3 mm, 2:1 _(price estimated)_ | 0.6 | 0.2 | 0.12 | 0.6 m: 0 solder joints + a boot on each cable end |
-| Wiring | Cable tie 100 x 2.5 mm _(price estimated)_ | 16 | 0.02 | 0.32 | 16 pc: at every clip, cable end and strain-relief anchor |
+| Wiring | Cable tie 100 x 2.5 mm _(price estimated)_ | 11 | 0.02 | 0.22 | 11 pc: at every clip, cable end and strain-relief anchor |
 | Wiring | PG7 cable gland _(price estimated)_ | 1 | 2.97 | 2.97 | 1 pc: cable exit with strain relief |
-| Wiring | Nylon braided sleeving 6 mm _(price estimated)_ | 1.1 | 0.4 | 0.44 | 1.1 m: over every cable where it crosses a joint |
+| Wiring | Nylon braided sleeving 6 mm _(price estimated)_ | 1.4 | 0.4 | 0.56 | 1.4 m: over every cable where it crosses a joint |
 
 ## Actuator sizing
 
 | Joint | Required effort | Unit | Chosen actuator | Margin |
 |---|--:|---|---|--:|
 | base_yaw | 0 | N·m | DYNAMIXEL XL430-W250-T | 99x |
-| shoulder_pitch | 2.315 | N·m | DYNAMIXEL XH540-W270-T(R) | 4.28x |
-| elbow_pitch | 1.353 | N·m | DYNAMIXEL XM430-W350-T(R) | 3.03x |
+| shoulder_pitch | 2.292 | N·m | DYNAMIXEL XH540-W270-T(R) | 4.32x |
+| elbow_pitch | 1.34 | N·m | DYNAMIXEL XM430-W350-T(R) | 3.06x |
 | forearm_roll | 0.009 | N·m | DYNAMIXEL XL430-W250-T | 99x |
-| wrist_pitch | 0.488 | N·m | DYNAMIXEL XL430-W250-T | 2.87x |
-| wrist_roll | 0.001 | N·m | DYNAMIXEL XL430-W250-T | 99x |
+| wrist_pitch | 0.485 | N·m | DYNAMIXEL XL430-W250-T | 2.89x |
+| wrist_roll | 0.002 | N·m | DYNAMIXEL XL430-W250-T | 99x |
 
 ## Notes
 - 6-DOF arm, 455 mm reach, 0.1 kg payload, ROBOTIS DYNAMIXEL X-series (12 V)

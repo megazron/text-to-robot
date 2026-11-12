@@ -34,9 +34,9 @@
       <geometry><mesh filename="package://baymax/meshes/base_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.00000169886 0.0000172332 0.0795" rpy="0 0 0"/>
-      <mass value="0.887625"/>
-      <inertia ixx="0.006173" ixy="-4.51428e-7" ixz="9.07715e-21" iyy="0.010639" iyz="5.63485e-22" izz="0.016811"/>
+      <origin xyz="-0.000106703 0.0000412654 0.0795" rpy="0 0 0"/>
+      <mass value="0.887047"/>
+      <inertia ixx="0.006172" ixy="-0.00000433719" ixz="1.91511e-20" iyy="0.010626" iyz="1.37218e-20" izz="0.016797"/>
     </inertial>
   </link>
   <link name="left_front_motor">
@@ -258,9 +258,9 @@
       <geometry><mesh filename="package://baymax/meshes/battery_tray.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.087771 -0.11925 0.085051" rpy="0 0 0"/>
-      <mass value="0.01646"/>
-      <inertia ixx="0.00000350695" ixy="-5.70958e-14" ixz="-1.63706e-7" iyy="0.0000170783" iyz="8.63446e-14" izz="0.0000200757"/>
+      <origin xyz="-0.122854 -0.11925 0.084813" rpy="0 0 0"/>
+      <mass value="0.018149"/>
+      <inertia ixx="0.00000373795" ixy="1.53865e-13" ixz="1.83077e-8" iyy="0.0000235104" iyz="9.13135e-14" izz="0.0000267163"/>
     </inertial>
   </link>
   <link name="computer">
@@ -482,9 +482,9 @@
       <geometry><mesh filename="package://baymax/meshes/electronics_enclosure_front.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.119221 -0.077994 0.097104" rpy="0 0 0"/>
-      <mass value="0.037916"/>
-      <inertia ixx="0.000126847" ixy="6.64697e-7" ixz="6.54530e-8" iyy="0.000161477" iyz="-2.64671e-7" izz="0.000280527"/>
+      <origin xyz="0.120672 -0.075463 0.10339" rpy="0 0 0"/>
+      <mass value="0.051851"/>
+      <inertia ixx="0.000196474" ixy="-0.0000148108" ixz="0.00000135599" iyy="0.000234723" iyz="4.57060e-7" izz="0.00041157"/>
     </inertial>
   </link>
   <link name="electronics_enclosure_rear">
@@ -498,9 +498,9 @@
       <geometry><mesh filename="package://baymax/meshes/electronics_enclosure_rear.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.113575 -0.080066 0.097155" rpy="0 0 0"/>
-      <mass value="0.037337"/>
-      <inertia ixx="0.000130082" ixy="-0.00000505538" ixz="8.47905e-7" iyy="0.000154857" iyz="-1.77045e-7" izz="0.000277357"/>
+      <origin xyz="-0.114596 -0.074295 0.103161" rpy="0 0 0"/>
+      <mass value="0.050941"/>
+      <inertia ixx="0.000200273" ixy="-0.00000937205" ixz="0.00000128075" iyy="0.000222208" iyz="-2.96695e-7" izz="0.0004032"/>
     </inertial>
   </link>
   <link name="electronics_lid_front">
@@ -514,9 +514,9 @@
       <geometry><mesh filename="package://baymax/meshes/electronics_lid_front.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.101442 -0.082437 0.11526" rpy="0 0 0"/>
-      <mass value="0.041271"/>
-      <inertia ixx="0.000069052" ixy="-0.00000592192" ixz="1.40373e-7" iyy="0.000133209" iyz="-3.79007e-8" izz="0.000202187"/>
+      <origin xyz="0.102481 -0.078208 0.127365" rpy="0 0 0"/>
+      <mass value="0.043454"/>
+      <inertia ixx="0.0000829994" ixy="-0.00000889211" ixz="1.46215e-7" iyy="0.00013909" iyz="-3.63420e-8" izz="0.000222013"/>
     </inertial>
   </link>
   <link name="electronics_lid_rear">
@@ -530,9 +530,9 @@
       <geometry><mesh filename="package://baymax/meshes/electronics_lid_rear.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.102544 -0.082241 0.115256" rpy="0 0 0"/>
-      <mass value="0.041407"/>
-      <inertia ixx="0.0000695411" ixy="0.00000623253" ixz="-1.55309e-7" iyy="0.000134057" iyz="-2.61181e-8" izz="0.000203524"/>
+      <origin xyz="-0.103722 -0.078043 0.12736" rpy="0 0 0"/>
+      <mass value="0.043518"/>
+      <inertia ixx="0.0000836596" ixy="0.00000950536" ixz="-1.59812e-7" iyy="0.000139477" iyz="-2.29111e-8" izz="0.000223059"/>
     </inertial>
   </link>
   <link name="spine_foot">
@@ -562,9 +562,9 @@
       <geometry><mesh filename="package://baymax/meshes/spine.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.0000486622 -0.0000355616 0.450216" rpy="0 0 0"/>
-      <mass value="0.331677"/>
-      <inertia ixx="0.014633" ixy="-1.17692e-7" ixz="5.80749e-7" iyy="0.014633" iyz="0.00000148604" izz="0.0000224105"/>
+      <origin xyz="7.06378e-19 -1.81798e-19 0.45" rpy="0 0 0"/>
+      <mass value="0.330221"/>
+      <inertia ixx="0.014595" ixy="1.17253e-22" ixz="3.75209e-21" iyy="0.014595" iyz="5.71405e-21" izz="0.0000220147"/>
     </inertial>
   </link>
   <link name="shoulder_yoke">
@@ -578,9 +578,9 @@
       <geometry><mesh filename="package://baymax/meshes/shoulder_yoke.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="1.31648e-19 -4.73787e-19 0.817" rpy="0 0 0"/>
-      <mass value="0.271928"/>
-      <inertia ixx="0.003991" ixy="-2.79201e-21" ixz="-1.46667e-23" iyy="0.0000370192" iyz="-5.41819e-22" izz="0.004027"/>
+      <origin xyz="0.000466215 5.00034e-18 0.817012" rpy="0 0 0"/>
+      <mass value="0.262305"/>
+      <inertia ixx="0.003872" ixy="-1.93048e-20" ixz="4.40533e-8" iyy="0.000035197" iyz="-8.42505e-22" izz="0.003906"/>
     </inertial>
   </link>
   <link name="left_arm_shoulder_wedge">
@@ -594,25 +594,25 @@
       <geometry><mesh filename="package://baymax/meshes/left_arm_shoulder_wedge.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-5.32764e-9 0.182435 0.803922" rpy="0 0 0"/>
-      <mass value="0.044304"/>
-      <inertia ixx="0.0000116412" ixy="2.12777e-12" ixz="-1.23831e-12" iyy="0.0000129869" iyz="-0.00000220296" izz="0.00002049"/>
+      <origin xyz="0.002751 0.181889 0.803723" rpy="0 0 0"/>
+      <mass value="0.038307"/>
+      <inertia ixx="0.0000111913" ixy="-4.43043e-7" ixz="-1.27937e-7" iyy="0.0000105021" iyz="-0.00000218152" izz="0.0000178587"/>
     </inertial>
   </link>
   <link name="left_arm_base_link">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://baymax/meshes/left_arm_base_link.stl"/></geometry>
+      <geometry><mesh filename="package://baymax/meshes/base_link.stl"/></geometry>
       <material name="fabric"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://baymax/meshes/left_arm_base_link.stl"/></geometry>
+      <geometry><mesh filename="package://baymax/meshes/base_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.00692 -0.0000631035 0.010432" rpy="0 0 0"/>
-      <mass value="0.04781"/>
-      <inertia ixx="0.000020495" ixy="-5.21328e-8" ixz="0.0000019614" iyy="0.0000279616" iyz="1.45372e-8" izz="0.000034253"/>
+      <origin xyz="-0.003923 -0.000072921 0.011264" rpy="0 0 0"/>
+      <mass value="0.041373"/>
+      <inertia ixx="0.0000200041" ixy="-6.11761e-8" ixz="0.00000271232" iyy="0.0000242461" iyz="1.20255e-8" izz="0.0000306048"/>
     </inertial>
   </link>
   <link name="left_arm_base_yaw_actuator">
@@ -642,9 +642,9 @@
       <geometry><mesh filename="package://baymax/meshes/left_arm_turret.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.000159668 -0.005284 0.026023" rpy="0 0 0"/>
-      <mass value="0.018895"/>
-      <inertia ixx="0.00000974084" ixy="-2.56918e-8" ixz="-1.81712e-8" iyy="0.00000924656" iyz="4.73053e-7" izz="0.0000054271"/>
+      <origin xyz="-0.000164593 -0.004807 0.025896" rpy="0 0 0"/>
+      <mass value="0.01833"/>
+      <inertia ixx="0.00000958448" ixy="-2.71311e-8" ixz="-1.77871e-8" iyy="0.00000921138" iyz="4.35842e-7" izz="0.00000526881"/>
     </inertial>
   </link>
   <link name="left_arm_shoulder_pitch_actuator">
@@ -674,9 +674,9 @@
       <geometry><mesh filename="package://baymax/meshes/upper_arm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.085908 0.000021361 -0.021724" rpy="0 0 0"/>
-      <mass value="0.141237"/>
-      <inertia ixx="0.0000546376" ixy="-1.80297e-7" ixz="-0.0000202091" iyy="0.000288258" iyz="-4.97006e-8" izz="0.000259759"/>
+      <origin xyz="0.085417 -0.0000306578 -0.021768" rpy="0 0 0"/>
+      <mass value="0.14093"/>
+      <inertia ixx="0.0000546609" ixy="-6.72817e-7" ixz="-0.0000184974" iyy="0.000286484" iyz="1.46254e-7" izz="0.000258242"/>
     </inertial>
   </link>
   <link name="left_arm_elbow_pitch_actuator">
@@ -698,17 +698,17 @@
   <link name="left_arm_forearm">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://baymax/meshes/forearm.stl"/></geometry>
+      <geometry><mesh filename="package://baymax/meshes/left_arm_forearm.stl"/></geometry>
       <material name="fabric"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://baymax/meshes/forearm.stl"/></geometry>
+      <geometry><mesh filename="package://baymax/meshes/left_arm_forearm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.085908 0.000021361 -0.021724" rpy="0 0 0"/>
-      <mass value="0.141237"/>
-      <inertia ixx="0.0000546376" ixy="-1.80297e-7" ixz="-0.0000202091" iyy="0.000288258" iyz="-4.97006e-8" izz="0.000259759"/>
+      <origin xyz="0.085582 0.0000214606 -0.021834" rpy="0 0 0"/>
+      <mass value="0.140582"/>
+      <inertia ixx="0.0000542479" ixy="-1.81279e-7" ixz="-0.0000191223" iyy="0.00028467" iyz="-5.00330e-8" izz="0.000256517"/>
     </inertial>
   </link>
   <link name="left_arm_wrist_pitch_actuator">
@@ -802,25 +802,25 @@
       <geometry><mesh filename="package://baymax/meshes/right_arm_shoulder_wedge.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="5.32764e-9 -0.182435 0.803922" rpy="0 0 0"/>
-      <mass value="0.044304"/>
-      <inertia ixx="0.0000116412" ixy="1.44361e-12" ixz="1.55734e-12" iyy="0.0000129869" iyz="0.00000220296" izz="0.00002049"/>
+      <origin xyz="0.002541 -0.181769 0.80365" rpy="0 0 0"/>
+      <mass value="0.038538"/>
+      <inertia ixx="0.0000113206" ixy="6.04207e-7" ixz="-2.25427e-7" iyy="0.0000108193" iyz="0.00000223718" izz="0.0000182349"/>
     </inertial>
   </link>
   <link name="right_arm_base_link">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://baymax/meshes/right_arm_base_link.stl"/></geometry>
+      <geometry><mesh filename="package://baymax/meshes/base_link.stl"/></geometry>
       <material name="fabric"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://baymax/meshes/right_arm_base_link.stl"/></geometry>
+      <geometry><mesh filename="package://baymax/meshes/base_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.00692 -0.0000631035 0.010432" rpy="0 0 0"/>
-      <mass value="0.04781"/>
-      <inertia ixx="0.000020495" ixy="-5.21328e-8" ixz="0.0000019614" iyy="0.0000279616" iyz="1.45372e-8" izz="0.000034253"/>
+      <origin xyz="-0.003923 -0.000072921 0.011264" rpy="0 0 0"/>
+      <mass value="0.041373"/>
+      <inertia ixx="0.0000200041" ixy="-6.11761e-8" ixz="0.00000271232" iyy="0.0000242461" iyz="1.20255e-8" izz="0.0000306048"/>
     </inertial>
   </link>
   <link name="right_arm_base_yaw_actuator">
@@ -850,9 +850,9 @@
       <geometry><mesh filename="package://baymax/meshes/right_arm_turret.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.000159668 -0.005284 0.026023" rpy="0 0 0"/>
-      <mass value="0.018895"/>
-      <inertia ixx="0.00000974084" ixy="-2.56918e-8" ixz="-1.81712e-8" iyy="0.00000924656" iyz="4.73053e-7" izz="0.0000054271"/>
+      <origin xyz="-0.000164593 -0.004807 0.025896" rpy="0 0 0"/>
+      <mass value="0.01833"/>
+      <inertia ixx="0.00000958448" ixy="-2.71311e-8" ixz="-1.77871e-8" iyy="0.00000921138" iyz="4.35842e-7" izz="0.00000526881"/>
     </inertial>
   </link>
   <link name="right_arm_shoulder_pitch_actuator">
@@ -874,17 +874,17 @@
   <link name="right_arm_upper_arm">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://baymax/meshes/upper_arm.stl"/></geometry>
+      <geometry><mesh filename="package://baymax/meshes/right_arm_upper_arm.stl"/></geometry>
       <material name="fabric"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://baymax/meshes/upper_arm.stl"/></geometry>
+      <geometry><mesh filename="package://baymax/meshes/right_arm_upper_arm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.085908 0.000021361 -0.021724" rpy="0 0 0"/>
-      <mass value="0.141237"/>
-      <inertia ixx="0.0000546376" ixy="-1.80297e-7" ixz="-0.0000202091" iyy="0.000288258" iyz="-4.97006e-8" izz="0.000259759"/>
+      <origin xyz="0.085582 0.0000214606 -0.021834" rpy="0 0 0"/>
+      <mass value="0.140582"/>
+      <inertia ixx="0.0000542479" ixy="-1.81279e-7" ixz="-0.0000191223" iyy="0.00028467" iyz="-5.00330e-8" izz="0.000256517"/>
     </inertial>
   </link>
   <link name="right_arm_elbow_pitch_actuator">
@@ -906,17 +906,17 @@
   <link name="right_arm_forearm">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://baymax/meshes/forearm.stl"/></geometry>
+      <geometry><mesh filename="package://baymax/meshes/right_arm_forearm.stl"/></geometry>
       <material name="fabric"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://baymax/meshes/forearm.stl"/></geometry>
+      <geometry><mesh filename="package://baymax/meshes/right_arm_forearm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.085908 0.000021361 -0.021724" rpy="0 0 0"/>
-      <mass value="0.141237"/>
-      <inertia ixx="0.0000546376" ixy="-1.80297e-7" ixz="-0.0000202091" iyy="0.000288258" iyz="-4.97006e-8" izz="0.000259759"/>
+      <origin xyz="0.085582 0.0000214606 -0.021834" rpy="0 0 0"/>
+      <mass value="0.140582"/>
+      <inertia ixx="0.0000542479" ixy="-1.81279e-7" ixz="-0.0000191223" iyy="0.00028467" iyz="-5.00330e-8" izz="0.000256517"/>
     </inertial>
   </link>
   <link name="right_arm_wrist_pitch_actuator">
@@ -1010,9 +1010,9 @@
       <geometry><mesh filename="package://baymax/meshes/neck_mount.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.006841 -0.000105114 0.833601" rpy="0 0 0"/>
-      <mass value="0.028702"/>
-      <inertia ixx="0.00000973796" ixy="-5.23708e-8" ixz="0.00000171993" iyy="0.0000142655" iyz="-1.36048e-9" izz="0.0000139095"/>
+      <origin xyz="-0.005917 -0.000117986 0.834807" rpy="0 0 0"/>
+      <mass value="0.025571"/>
+      <inertia ixx="0.000009233" ixy="-5.51606e-8" ixz="0.00000198138" iyy="0.0000136099" iyz="-4.99995e-9" izz="0.0000134605"/>
     </inertial>
   </link>
   <link name="head_pan_actuator">
@@ -1042,9 +1042,9 @@
       <geometry><mesh filename="package://baymax/meshes/head.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.000880721 1.61970e-11 0.057666" rpy="0 0 0"/>
-      <mass value="0.137543"/>
-      <inertia ixx="0.000650312" ixy="-1.21898e-12" ixz="0.00000296724" iyy="0.000427017" iyz="-4.57490e-14" izz="0.000870241"/>
+      <origin xyz="-0.000887724 -0.000262856 0.057975" rpy="0 0 0"/>
+      <mass value="0.136458"/>
+      <inertia ixx="0.00064742" ixy="3.18405e-8" ixz="0.00000292982" iyy="0.000425319" iyz="-0.0000013958" izz="0.000868958"/>
     </inertial>
   </link>
   <link name="head_dome">
@@ -1106,9 +1106,9 @@
       <geometry><mesh filename="package://baymax/meshes/camera_bracket.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.051336 -4.33681e-19 0.072938" rpy="0 0 0"/>
-      <mass value="0.007491"/>
-      <inertia ixx="0.00000181055" ixy="-4.43188e-23" ixz="-4.64083e-7" iyy="0.00000172279" iyz="-1.32956e-22" izz="0.00000115427"/>
+      <origin xyz="0.051254 0.001081 0.072525" rpy="0 0 0"/>
+      <mass value="0.007858"/>
+      <inertia ixx="0.00000203654" ixy="1.42500e-8" ixz="-4.68563e-7" iyy="0.00000175558" iyz="7.19043e-8" izz="0.00000135336"/>
     </inertial>
   </link>
   <link name="soft_cover">
@@ -1202,7 +1202,7 @@
   <joint name="battery_mount" type="fixed">
     <parent link="base_link"/>
     <child link="battery"/>
-    <origin xyz="-0.144 -0.11925 0.084" rpy="0 0 0"/>
+    <origin xyz="-0.169 -0.11925 0.084" rpy="0 0 0"/>
   </joint>
   <joint name="battery_tray_mount" type="fixed">
     <parent link="base_link"/>
@@ -1272,7 +1272,7 @@
   <joint name="main_switch_mount" type="fixed">
     <parent link="base_link"/>
     <child link="main_switch"/>
-    <origin xyz="0.133147 -0.01609 0.0975" rpy="0 -1.570796 -1.570796"/>
+    <origin xyz="0.056783 -0.00609 0.10355" rpy="0 -1.570796 -1.570796"/>
   </joint>
   <joint name="electronics_enclosure_front_mount" type="fixed">
     <parent link="base_link"/>

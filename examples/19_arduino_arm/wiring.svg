@@ -26,12 +26,12 @@
 <path d="M1240 118 H1264 V245.5 H1366 V373 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C5 W14 SERVO3_V: servo_driver.ch3.V+ to claw_servo.servo_lead.V+ (red), 24 AWG</title></path>
 <path d="M1240 131 H1274 V258.5 H1356 V386 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C5 W15 GND: servo_driver.ch3.GND to claw_servo.servo_lead.GND (brown), 24 AWG</title></path>
 <path d="M900 105 H944 V144 H1006 V183 H1050" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C6 W16 5V_LOGIC: controller.janalog.5V to servo_driver.control_in.VCC, 24 AWG</title></path>
-<path d="M900 118 H954 V124.5 H996 V131 H1050" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C6 W17 GND: controller.power_jack.GND to servo_driver.control_in.GND, 24 AWG</title></path>
+<path d="M900 118 H954 V124.5 H996 V131 H1050" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C6 W17 GND: controller.janalog.GND to servo_driver.control_in.GND, 24 AWG</title></path>
 <path d="M900 131 H964 V163.5 H986 V196 H1050" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C6 W18 I2C_SDA: controller.janalog.A4/SDA to servo_driver.control_in.SDA, 26 AWG</title></path>
 <path d="M900 144 H974 V176.5 H976 V209 H1050" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C6 W19 I2C_SCL: controller.janalog.A5/SCL to servo_driver.control_in.SCL, 26 AWG</title></path>
 <path d="M220 144 H304 V124.5 H286 V105 H370" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C7 W20 V_SERVO: power_supply.dc_out.DC OUTPUT +V to main_switch.contacts.IN, 20 AWG</title></path>
 <path d="M560 118 H654 V118 H956 V118 H1050" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C8 W21 V_SERVO: main_switch.contacts.OUT to servo_driver.v_plus.V+, 20 AWG</title></path>
-<path d="M220 157 H324 V144 H946 V131 H1050" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C8 W22 GND: power_supply.dc_out.DC OUTPUT -V to servo_driver.v_plus.GND, 20 AWG</title></path>
+<path d="M220 157 H324 V144 H946 V131 H1050" fill="none" stroke="#111111" stroke-width="2" opacity="0.8"><title>C9 W22 GND: power_supply.dc_out.DC OUTPUT -V to servo_driver.v_plus.GND, 18 AWG</title></path>
 <rect x="1390" y="74" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="89" font-weight="700">yaw_servo</text>
 <text x="1397" y="108.5" fill="#333">Signal (yellow)</text>
 <text x="1397" y="121.5" fill="#333">V+ (red)</text>

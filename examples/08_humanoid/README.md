@@ -6,19 +6,19 @@
 
 Interpreted as: humanoid · parallel gripper · imu (base_link) · camera (neck_pan_link)
 
-**Humanoid, 0.653 m, 3.60 kg, 24 DOF (4-DOF arms + grippers), 44 min, $4221 of parts**
+**Humanoid, 0.687 m, 3.61 kg, 24 DOF (4-DOF arms + grippers), 44 min, $4221 of parts**
 
-Parts cost **$4318.9** · printed structure 30 parts, 1337 g · checks passed 94/94
+Parts cost **$4323.54** · printed structure 30 parts, 1353 g · checks passed 94/94
 
 ## What it can do
 
 | | |
 |---|--:|
-| average power w | 60.4 |
-| com height m | 0.347 |
-| com x over sole mm | -8.9 |
-| mass kg | 3.599 |
-| height m | 0.653 |
+| average power w | 60.5 |
+| com height m | 0.362 |
+| com x over sole mm | -9 |
+| mass kg | 3.607 |
+| height m | 0.687 |
 | hip height m | 0.378 |
 | dof | 24 |
 | arm dof | 4 |
@@ -33,30 +33,30 @@ Parts cost **$4318.9** · printed structure 30 parts, 1337 g · checks passed 94
 
 | Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
 |---|---|--:|--:|--:|--:|
-| l_hip_yaw | feetech_sts3215_c047 | 0.403 | 0.9807 / 2.942 | 7.3x | 4.712 |
-| l_hip_roll | dxl_xh540_w270 | 4.215 | 2.97 / 9.9 | 2.35x | 4.084 |
-| l_hip_pitch | dxl_xh540_w270 | 5.422 | 2.97 / 9.9 | 1.83x | 4.084 |
-| l_knee | dxl_xh540_w270 | 5.118 | 2.97 / 9.9 | 1.93x | 4.084 |
-| l_ankle_pitch | feetech_sts3250 | 2.786 | 1.5691 / 4.9033 | 1.76x | 7.854 |
-| l_ankle_roll | feetech_sts3215_c047 | 1.165 | 0.9807 / 2.942 | 2.53x | 4.712 |
-| r_hip_yaw | feetech_sts3215_c047 | 0.403 | 0.9807 / 2.942 | 7.3x | 4.712 |
-| r_hip_roll | dxl_xh540_w270 | 4.215 | 2.97 / 9.9 | 2.35x | 4.084 |
-| r_hip_pitch | dxl_xh540_w270 | 5.422 | 2.97 / 9.9 | 1.83x | 4.084 |
-| r_knee | dxl_xh540_w270 | 5.118 | 2.97 / 9.9 | 1.93x | 4.084 |
-| r_ankle_pitch | feetech_sts3250 | 2.786 | 1.5691 / 4.9033 | 1.76x | 7.854 |
-| r_ankle_roll | feetech_sts3215_c047 | 1.165 | 0.9807 / 2.942 | 2.53x | 4.712 |
-| l_shoulder_pitch | dxl_xl430_w250 | 0.381 | 0.42 / 1.4 | 3.67x | 5.969 |
-| l_shoulder_roll | dxl_xl430_w250 | 0.368 | 0.42 / 1.4 | 3.81x | 5.969 |
-| l_upper_arm_yaw | dxl_xl430_w250 | 0.216 | 0.42 / 1.4 | 6.49x | 5.969 |
-| l_elbow | dxl_xl330_m288 | 0.033 | 0.156 / 0.52 | 15.54x | 10.786 |
+| l_hip_yaw | feetech_sts3215_c047 | 0.404 | 0.9807 / 2.942 | 7.28x | 4.712 |
+| l_hip_roll | dxl_xh540_w270 | 4.224 | 2.97 / 9.9 | 2.34x | 4.084 |
+| l_hip_pitch | dxl_xh540_w270 | 5.434 | 2.97 / 9.9 | 1.82x | 4.084 |
+| l_knee | dxl_xh540_w270 | 5.13 | 2.97 / 9.9 | 1.93x | 4.084 |
+| l_ankle_pitch | feetech_sts3250 | 2.792 | 1.5691 / 4.9033 | 1.76x | 7.854 |
+| l_ankle_roll | feetech_sts3215_c047 | 1.168 | 0.9807 / 2.942 | 2.52x | 4.712 |
+| r_hip_yaw | feetech_sts3215_c047 | 0.404 | 0.9807 / 2.942 | 7.28x | 4.712 |
+| r_hip_roll | dxl_xh540_w270 | 4.224 | 2.97 / 9.9 | 2.34x | 4.084 |
+| r_hip_pitch | dxl_xh540_w270 | 5.434 | 2.97 / 9.9 | 1.82x | 4.084 |
+| r_knee | dxl_xh540_w270 | 5.13 | 2.97 / 9.9 | 1.93x | 4.084 |
+| r_ankle_pitch | feetech_sts3250 | 2.792 | 1.5691 / 4.9033 | 1.76x | 7.854 |
+| r_ankle_roll | feetech_sts3215_c047 | 1.168 | 0.9807 / 2.942 | 2.52x | 4.712 |
+| l_shoulder_pitch | dxl_xl430_w250 | 0.379 | 0.42 / 1.4 | 3.7x | 5.969 |
+| l_shoulder_roll | dxl_xl430_w250 | 0.365 | 0.42 / 1.4 | 3.83x | 5.969 |
+| l_upper_arm_yaw | dxl_xl430_w250 | 0.215 | 0.42 / 1.4 | 6.5x | 5.969 |
+| l_elbow | dxl_xl330_m288 | 0.033 | 0.156 / 0.52 | 15.56x | 10.786 |
 | l_gripper | dxl_xl330_m288 | 0.002 | 0.156 / 0.52 | 99x | 10.786 |
-| r_shoulder_pitch | dxl_xl430_w250 | 0.384 | 0.42 / 1.4 | 3.65x | 5.969 |
-| r_shoulder_roll | dxl_xl430_w250 | 0.37 | 0.42 / 1.4 | 3.79x | 5.969 |
-| r_upper_arm_yaw | dxl_xl430_w250 | 0.216 | 0.42 / 1.4 | 6.49x | 5.969 |
-| r_elbow | dxl_xl330_m288 | 0.033 | 0.156 / 0.52 | 15.54x | 10.786 |
+| r_shoulder_pitch | dxl_xl430_w250 | 0.381 | 0.42 / 1.4 | 3.67x | 5.969 |
+| r_shoulder_roll | dxl_xl430_w250 | 0.368 | 0.42 / 1.4 | 3.81x | 5.969 |
+| r_upper_arm_yaw | dxl_xl430_w250 | 0.215 | 0.42 / 1.4 | 6.5x | 5.969 |
+| r_elbow | dxl_xl330_m288 | 0.033 | 0.156 / 0.52 | 15.56x | 10.786 |
 | r_gripper | dxl_xl330_m288 | 0.002 | 0.156 / 0.52 | 99x | 10.786 |
 | neck_pan | dxl_xl330_m288 | 0 | 0.156 / 0.52 | 99x | 10.786 |
-| neck_tilt | dxl_xl330_m288 | 0.114 | 0.156 / 0.52 | 4.55x | 10.786 |
+| neck_tilt | dxl_xl330_m288 | 0.108 | 0.156 / 0.52 | 4.8x | 10.786 |
 
 ## Engineering checks
 
@@ -64,7 +64,7 @@ All 94 checks pass (torque, speed, power, stability, print-bed fit). Details in 
 
 ## Assumptions and limits
 
-- Joint limits trimmed to the collision-free range found by exact solid sweeps: l_hip_roll [-0.45, 0.45] -> [-0.13, 0.45]; l_knee [-2.20, 2.20] -> [-2.04, 2.20]; l_ankle_roll [-0.50, 0.50] -> [-0.50, 0.13]; r_hip_roll [-0.45, 0.45] -> [-0.45, 0.13]; r_knee [-2.20, 2.20] -> [-2.20, 2.04]; r_ankle_roll [-0.50, 0.50] -> [-0.13, 0.50]; l_shoulder_roll [-1.60, 1.60] -> [-0.13, 1.60]; r_shoulder_roll [-1.60, 1.60] -> [-1.60, 0.13]; neck_tilt [-0.70, 0.70] -> [-0.70, 0.38].
+- Joint limits trimmed to the collision-free range found by exact solid sweeps: l_hip_roll [-0.45, 0.45] -> [-0.13, 0.45]; l_knee [-2.20, 2.20] -> [-2.04, 2.20]; l_ankle_roll [-0.50, 0.50] -> [-0.50, 0.13]; r_hip_roll [-0.45, 0.45] -> [-0.45, 0.13]; r_knee [-2.20, 2.20] -> [-2.20, 2.04]; r_ankle_roll [-0.50, 0.50] -> [-0.13, 0.50]; l_shoulder_roll [-1.60, 1.60] -> [-0.12, 1.60]; r_shoulder_roll [-1.60, 1.60] -> [-1.60, 0.12]; neck_tilt [-0.70, 0.70] -> [-0.70, 0.38].
 - Joint ranges are swept with the arms held 0.35 rad out to the side (the walking posture); with the arms hanging straight the hands touch the thighs when a leg abducts or a wrist turns.
 - Zero joint angles are the standing pose (knees bent 0.25 rad, soles flat); the base origin is on the hip-yaw output plane.
 - Leg loads are J^T F at the sole with the whole robot on one foot and the centre of pressure anywhere on the central 60 % of the sole, over squat / lean / step poses, ±10 % traction, x 1.3 dynamic factor; continuous duty checked at 71 % of the worst stance load (RMS over a gait cycle with half of it in stance).

@@ -6,19 +6,19 @@
 
 Interpreted as: humanoid battle mech · imu (base_link) · camera (neck_pan_link)
 
-**Battle mech, 1.182 m, 23.07 kg, 30 DOF (7-DOF arms + grippers), 170 min, $16183 of parts**
+**Battle mech, 1.204 m, 23.05 kg, 30 DOF (7-DOF arms + grippers), 170 min, $16183 of parts**
 
-Parts cost **$16646.65** · printed structure 51 parts, 6532 g · checks passed 132/132
+Parts cost **$16664.31** · printed structure 52 parts, 6550 g · checks passed 133/133
 
 ## What it can do
 
 | | |
 |---|--:|
-| average power w | 125.6 |
-| com height m | 0.647 |
+| average power w | 125.5 |
+| com height m | 0.659 |
 | com x over sole mm | -27.3 |
-| mass kg | 23.07 |
-| height m | 1.182 |
+| mass kg | 23.055 |
+| height m | 1.204 |
 | hip height m | 0.74 |
 | dof | 30 |
 | arm dof | 7 |
@@ -33,40 +33,40 @@ Parts cost **$16646.65** · printed structure 51 parts, 6532 g · checks passed 
 
 | Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
 |---|---|--:|--:|--:|--:|
-| l_hip_yaw | cubemars_ak60_6 | 4.746 | 3 / 9 | 1.9x | 51.313 |
-| l_hip_roll | cubemars_ak80_64 | 50.488 | 48 / 120 | 2.38x | 5.027 |
-| l_hip_pitch | cubemars_ak80_64 | 64.349 | 48 / 120 | 1.86x | 5.027 |
-| l_knee | cubemars_ak80_64 | 61.583 | 48 / 120 | 1.95x | 5.027 |
-| l_ankle_pitch | cubemars_ak80_64 | 31.8 | 48 / 120 | 3.77x | 5.027 |
-| l_ankle_roll | cubemars_ak70_10 | 13.443 | 8.3 / 24.8 | 1.84x | 32.463 |
-| r_hip_yaw | cubemars_ak60_6 | 4.746 | 3 / 9 | 1.9x | 51.313 |
-| r_hip_roll | cubemars_ak80_64 | 50.488 | 48 / 120 | 2.38x | 5.027 |
-| r_hip_pitch | cubemars_ak80_64 | 64.349 | 48 / 120 | 1.86x | 5.027 |
-| r_knee | cubemars_ak80_64 | 61.583 | 48 / 120 | 1.95x | 5.027 |
-| r_ankle_pitch | cubemars_ak80_64 | 31.8 | 48 / 120 | 3.77x | 5.027 |
-| r_ankle_roll | cubemars_ak70_10 | 13.443 | 8.3 / 24.8 | 1.84x | 32.463 |
-| l_shoulder_pitch | cubemars_ak70_10 | 7.576 | 8.3 / 24.8 | 3.27x | 32.463 |
-| l_shoulder_roll | cubemars_ak70_10 | 7.576 | 8.3 / 24.8 | 3.27x | 32.463 |
-| l_upper_arm_yaw | dxl_xm430_w350 | 0.103 | 1.23 / 4.1 | 39.75x | 4.817 |
-| l_elbow | dxl_xh540_w270 | 3.487 | 2.97 / 9.9 | 2.84x | 4.084 |
-| l_wrist_yaw | dxl_xm430_w350 | 0.124 | 1.23 / 4.1 | 32.97x | 4.817 |
-| l_wrist_pitch | dxl_xh540_w270 | 1.879 | 2.97 / 9.9 | 5.27x | 4.084 |
-| l_wrist_roll | dxl_xm430_w350 | 0.146 | 1.23 / 4.1 | 28.16x | 4.817 |
+| l_hip_yaw | cubemars_ak60_6 | 4.743 | 3 / 9 | 1.9x | 51.313 |
+| l_hip_roll | cubemars_ak80_64 | 50.455 | 48 / 120 | 2.38x | 5.027 |
+| l_hip_pitch | cubemars_ak80_64 | 64.308 | 48 / 120 | 1.87x | 5.027 |
+| l_knee | cubemars_ak80_64 | 61.543 | 48 / 120 | 1.95x | 5.027 |
+| l_ankle_pitch | cubemars_ak80_64 | 31.779 | 48 / 120 | 3.78x | 5.027 |
+| l_ankle_roll | cubemars_ak70_10 | 13.435 | 8.3 / 24.8 | 1.85x | 32.463 |
+| r_hip_yaw | cubemars_ak60_6 | 4.743 | 3 / 9 | 1.9x | 51.313 |
+| r_hip_roll | cubemars_ak80_64 | 50.455 | 48 / 120 | 2.38x | 5.027 |
+| r_hip_pitch | cubemars_ak80_64 | 64.308 | 48 / 120 | 1.87x | 5.027 |
+| r_knee | cubemars_ak80_64 | 61.543 | 48 / 120 | 1.95x | 5.027 |
+| r_ankle_pitch | cubemars_ak80_64 | 31.779 | 48 / 120 | 3.78x | 5.027 |
+| r_ankle_roll | cubemars_ak70_10 | 13.435 | 8.3 / 24.8 | 1.85x | 32.463 |
+| l_shoulder_pitch | cubemars_ak70_10 | 7.546 | 8.3 / 24.8 | 3.29x | 32.463 |
+| l_shoulder_roll | cubemars_ak70_10 | 7.547 | 8.3 / 24.8 | 3.29x | 32.463 |
+| l_upper_arm_yaw | dxl_xm430_w350 | 0.104 | 1.23 / 4.1 | 39.35x | 4.817 |
+| l_elbow | dxl_xh540_w270 | 3.477 | 2.97 / 9.9 | 2.85x | 4.084 |
+| l_wrist_yaw | dxl_xm430_w350 | 0.125 | 1.23 / 4.1 | 32.82x | 4.817 |
+| l_wrist_pitch | dxl_xh540_w270 | 1.876 | 2.97 / 9.9 | 5.28x | 4.084 |
+| l_wrist_roll | dxl_xm430_w350 | 0.146 | 1.23 / 4.1 | 28.14x | 4.817 |
 | l_gripper | dxl_xm430_w350 | 0.006 | 1.23 / 4.1 | 99x | 4.817 |
-| r_shoulder_pitch | cubemars_ak70_10 | 7.566 | 8.3 / 24.8 | 3.28x | 32.463 |
-| r_shoulder_roll | cubemars_ak70_10 | 7.566 | 8.3 / 24.8 | 3.28x | 32.463 |
-| r_upper_arm_yaw | dxl_xm430_w350 | 0.104 | 1.23 / 4.1 | 39.37x | 4.817 |
-| r_elbow | dxl_xh540_w270 | 3.484 | 2.97 / 9.9 | 2.84x | 4.084 |
-| r_wrist_yaw | dxl_xm430_w350 | 0.125 | 1.23 / 4.1 | 32.84x | 4.817 |
-| r_wrist_pitch | dxl_xh540_w270 | 1.878 | 2.97 / 9.9 | 5.27x | 4.084 |
-| r_wrist_roll | dxl_xm430_w350 | 0.146 | 1.23 / 4.1 | 28.16x | 4.817 |
+| r_shoulder_pitch | cubemars_ak70_10 | 7.539 | 8.3 / 24.8 | 3.29x | 32.463 |
+| r_shoulder_roll | cubemars_ak70_10 | 7.539 | 8.3 / 24.8 | 3.29x | 32.463 |
+| r_upper_arm_yaw | dxl_xm430_w350 | 0.105 | 1.23 / 4.1 | 39.05x | 4.817 |
+| r_elbow | dxl_xh540_w270 | 3.474 | 2.97 / 9.9 | 2.85x | 4.084 |
+| r_wrist_yaw | dxl_xm430_w350 | 0.125 | 1.23 / 4.1 | 32.71x | 4.817 |
+| r_wrist_pitch | dxl_xh540_w270 | 1.875 | 2.97 / 9.9 | 5.28x | 4.084 |
+| r_wrist_roll | dxl_xm430_w350 | 0.146 | 1.23 / 4.1 | 28.14x | 4.817 |
 | r_gripper | dxl_xm430_w350 | 0.006 | 1.23 / 4.1 | 99x | 4.817 |
 | neck_pan | dxl_xl430_w250 | 0 | 0.42 / 1.4 | 99x | 5.969 |
-| neck_tilt | dxl_xm430_w350 | 0.862 | 1.23 / 4.1 | 4.76x | 4.817 |
+| neck_tilt | dxl_xm430_w350 | 0.847 | 1.23 / 4.1 | 4.84x | 4.817 |
 
 ## Engineering checks
 
-All 132 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
+All 133 checks pass (torque, speed, power, stability, print-bed fit). Details in `robot.json` → `metadata.design.checks`.
 
 ## Assumptions and limits
 
@@ -88,7 +88,7 @@ All 132 checks pass (torque, speed, power, stability, print-bed fit). Details in
 
 | | Test | Result |
 |---|---|---|
-| ➖ | stand free | informational (no balance controller; a biped is not statically stable): base z 0.745 -> 0.739 m (creep after settling 0.6 mm), upright 0.999; worst leg joint l_knee at 0.10x rated |
+| ➖ | stand free | informational (no balance controller; a biped is not statically stable): base z 0.745 -> 0.739 m (creep after settling 0.7 mm), upright 0.999; worst leg joint r_knee at 0.10x rated |
 | ✅ | stand rail | on a vertical guide rail (balance removed, full weight on the legs): base z 0.745 -> 0.740 m (creep after settling 0.1 mm), upright 1.000; worst leg joint l_knee at 0.03x rated |
 | ✅ | single leg rail | one leg (l_hip_yaw chain) carrying the full body weight on the rail, the other legs out of contact: base z 0.745 -> 0.740 m (creep after settling 0.1 mm), upright 1.000; worst leg joint l_knee at 0.06x rated |
 | ✅ | squat rail | on the rail: commanded body drop 148 mm (20 % of 741 mm leg), achieved 152 mm, back up to 152 mm above the low point, upright 1.000 |

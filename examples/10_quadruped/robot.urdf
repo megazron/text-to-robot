@@ -29,9 +29,9 @@
       <geometry><mesh filename="package://quadruped/meshes/base_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="2.16840e-18 1.26310e-17 -0.007118" rpy="0 0 0"/>
-      <mass value="0.143219"/>
-      <inertia ixx="0.000185476" ixy="-4.55200e-7" ixz="-1.85312e-20" iyy="0.000686211" iyz="-2.23130e-20" izz="0.00082922"/>
+      <origin xyz="0.0002395 1.06874e-14 -0.008775" rpy="0 0 0"/>
+      <mass value="0.169746"/>
+      <inertia ixx="0.000253485" ixy="-5.10750e-7" ixz="4.15677e-7" iyy="0.001001" iyz="-8.91396e-18" izz="0.001174"/>
     </inertial>
   </link>
   <link name="battery">
@@ -61,9 +61,9 @@
       <geometry><mesh filename="package://quadruped/meshes/top_deck.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.006233 -0.000783678 0.018635" rpy="0 0 0"/>
-      <mass value="0.065584"/>
-      <inertia ixx="0.000049029" ixy="0.00000103707" ixz="-0.00000471248" iyy="0.000228755" iyz="1.18050e-7" izz="0.000275579"/>
+      <origin xyz="0.005131 -0.000649648 0.024557" rpy="0 0 0"/>
+      <mass value="0.070463"/>
+      <inertia ixx="0.0000529132" ixy="4.53453e-7" ixz="-0.00000496384" iyy="0.000287863" iyz="1.28028e-7" izz="0.000338552"/>
     </inertial>
   </link>
   <link name="computer">
@@ -173,9 +173,9 @@
       <geometry><mesh filename="package://quadruped/meshes/fl_shoulder.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.016327 -0.000118022 0.025327" rpy="0 0 0"/>
-      <mass value="0.025563"/>
-      <inertia ixx="0.0000119641" ixy="1.15332e-8" ixz="-8.77683e-7" iyy="0.0000135902" iyz="-1.75807e-8" izz="0.00000769167"/>
+      <origin xyz="0.015567 -0.000125043 0.02507" rpy="0 0 0"/>
+      <mass value="0.024127"/>
+      <inertia ixx="0.0000118715" ixy="1.38256e-8" ixz="-7.93703e-7" iyy="0.0000132914" iyz="-1.68047e-8" izz="0.00000739127"/>
     </inertial>
   </link>
   <link name="fl_hip_pitch_actuator">
@@ -205,9 +205,9 @@
       <geometry><mesh filename="package://quadruped/meshes/fl_thigh.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.073731 0.000115012 -0.007809" rpy="0 0 0"/>
-      <mass value="0.02632"/>
-      <inertia ixx="0.00000701681" ixy="-2.10804e-8" ixz="0.0000048234" iyy="0.000035918" iyz="-7.77201e-9" izz="0.0000347658"/>
+      <origin xyz="0.073335 0.00011904 -0.008151" rpy="0 0 0"/>
+      <mass value="0.025353"/>
+      <inertia ixx="0.00000690295" ixy="-2.24466e-8" ixz="0.00000494622" iyy="0.0000355215" iyz="-8.76283e-9" izz="0.0000344289"/>
     </inertial>
   </link>
   <link name="fl_knee_actuator">
@@ -239,7 +239,7 @@
     <inertial>
       <origin xyz="0.047751 3.76281e-7 0.003" rpy="0 0 0"/>
       <mass value="0.013522"/>
-      <inertia ixx="5.16611e-7" ixy="-1.37679e-10" ixz="-4.79395e-17" iyy="0.0000183181" iyz="5.86387e-19" izz="0.0000187536"/>
+      <inertia ixx="5.16611e-7" ixy="-1.37679e-10" ixz="-4.79395e-17" iyy="0.0000183181" iyz="5.86389e-19" izz="0.0000187536"/>
     </inertial>
   </link>
   <link name="fl_foot">
@@ -285,9 +285,9 @@
       <geometry><mesh filename="package://quadruped/meshes/fr_shoulder.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.016327 -0.000118022 0.025327" rpy="0 0 0"/>
-      <mass value="0.025563"/>
-      <inertia ixx="0.0000119641" ixy="1.15332e-8" ixz="-8.77683e-7" iyy="0.0000135902" iyz="-1.75807e-8" izz="0.00000769167"/>
+      <origin xyz="0.015567 -0.000125043 0.02507" rpy="0 0 0"/>
+      <mass value="0.024127"/>
+      <inertia ixx="0.0000118715" ixy="1.38256e-8" ixz="-7.93703e-7" iyy="0.0000132914" iyz="-1.68047e-8" izz="0.00000739127"/>
     </inertial>
   </link>
   <link name="fr_hip_pitch_actuator">
@@ -317,9 +317,9 @@
       <geometry><mesh filename="package://quadruped/meshes/fr_thigh.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.073731 0.00011424 -0.007809" rpy="0 0 0"/>
-      <mass value="0.02632"/>
-      <inertia ixx="0.00000701682" ixy="-2.15727e-8" ixz="0.0000048234" iyy="0.000035918" iyz="-7.66893e-9" izz="0.0000347658"/>
+      <origin xyz="0.073335 0.000118959 -0.008151" rpy="0 0 0"/>
+      <mass value="0.025353"/>
+      <inertia ixx="0.00000690295" ixy="-2.25985e-8" ixz="0.00000494622" iyy="0.0000355215" iyz="-8.74201e-9" izz="0.0000344289"/>
     </inertial>
   </link>
   <link name="fr_knee_actuator">
@@ -351,7 +351,7 @@
     <inertial>
       <origin xyz="0.047751 -3.76281e-7 0.003" rpy="0 0 0"/>
       <mass value="0.013522"/>
-      <inertia ixx="5.16611e-7" ixy="1.37679e-10" ixz="1.57758e-17" iyy="0.0000183181" iyz="-1.86241e-18" izz="0.0000187536"/>
+      <inertia ixx="5.16611e-7" ixy="1.37679e-10" ixz="1.53578e-17" iyy="0.0000183181" iyz="-1.91534e-18" izz="0.0000187536"/>
     </inertial>
   </link>
   <link name="fr_foot">
@@ -397,9 +397,9 @@
       <geometry><mesh filename="package://quadruped/meshes/rl_shoulder.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.016327 -0.000118022 0.025327" rpy="0 0 0"/>
-      <mass value="0.025563"/>
-      <inertia ixx="0.0000119641" ixy="1.15332e-8" ixz="-8.77683e-7" iyy="0.0000135902" iyz="-1.75807e-8" izz="0.00000769167"/>
+      <origin xyz="0.015567 -0.000125043 0.02507" rpy="0 0 0"/>
+      <mass value="0.024127"/>
+      <inertia ixx="0.0000118715" ixy="1.38256e-8" ixz="-7.93703e-7" iyy="0.0000132914" iyz="-1.68047e-8" izz="0.00000739127"/>
     </inertial>
   </link>
   <link name="rl_hip_pitch_actuator">
@@ -429,9 +429,9 @@
       <geometry><mesh filename="package://quadruped/meshes/rl_thigh.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.073731 0.00011424 -0.007809" rpy="0 0 0"/>
-      <mass value="0.02632"/>
-      <inertia ixx="0.00000701682" ixy="-2.15727e-8" ixz="0.0000048234" iyy="0.000035918" iyz="-7.66893e-9" izz="0.0000347658"/>
+      <origin xyz="0.073335 0.000118959 -0.008151" rpy="0 0 0"/>
+      <mass value="0.025353"/>
+      <inertia ixx="0.00000690295" ixy="-2.25985e-8" ixz="0.00000494622" iyy="0.0000355215" iyz="-8.74201e-9" izz="0.0000344289"/>
     </inertial>
   </link>
   <link name="rl_knee_actuator">
@@ -463,7 +463,7 @@
     <inertial>
       <origin xyz="0.047751 -3.76281e-7 0.003" rpy="0 0 0"/>
       <mass value="0.013522"/>
-      <inertia ixx="5.16611e-7" ixy="1.37679e-10" ixz="1.57758e-17" iyy="0.0000183181" iyz="-1.86241e-18" izz="0.0000187536"/>
+      <inertia ixx="5.16611e-7" ixy="1.37679e-10" ixz="1.53578e-17" iyy="0.0000183181" iyz="-1.91534e-18" izz="0.0000187536"/>
     </inertial>
   </link>
   <link name="rl_foot">
@@ -509,9 +509,9 @@
       <geometry><mesh filename="package://quadruped/meshes/rr_shoulder.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.016327 -0.000118022 0.025327" rpy="0 0 0"/>
-      <mass value="0.025563"/>
-      <inertia ixx="0.0000119641" ixy="1.15332e-8" ixz="-8.77683e-7" iyy="0.0000135902" iyz="-1.75807e-8" izz="0.00000769167"/>
+      <origin xyz="0.015567 -0.000125043 0.02507" rpy="0 0 0"/>
+      <mass value="0.024127"/>
+      <inertia ixx="0.0000118715" ixy="1.38256e-8" ixz="-7.93703e-7" iyy="0.0000132914" iyz="-1.68047e-8" izz="0.00000739127"/>
     </inertial>
   </link>
   <link name="rr_hip_pitch_actuator">
@@ -541,9 +541,9 @@
       <geometry><mesh filename="package://quadruped/meshes/rr_thigh.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.073731 0.000115012 -0.007809" rpy="0 0 0"/>
-      <mass value="0.02632"/>
-      <inertia ixx="0.00000701681" ixy="-2.10804e-8" ixz="0.0000048234" iyy="0.000035918" iyz="-7.77201e-9" izz="0.0000347658"/>
+      <origin xyz="0.073335 0.00011904 -0.008151" rpy="0 0 0"/>
+      <mass value="0.025353"/>
+      <inertia ixx="0.00000690295" ixy="-2.24466e-8" ixz="0.00000494622" iyy="0.0000355215" iyz="-8.76283e-9" izz="0.0000344289"/>
     </inertial>
   </link>
   <link name="rr_knee_actuator">
@@ -575,7 +575,7 @@
     <inertial>
       <origin xyz="0.047751 3.76281e-7 0.003" rpy="0 0 0"/>
       <mass value="0.013522"/>
-      <inertia ixx="5.16611e-7" ixy="-1.37679e-10" ixz="-4.79395e-17" iyy="0.0000183181" iyz="5.86387e-19" izz="0.0000187536"/>
+      <inertia ixx="5.16611e-7" ixy="-1.37679e-10" ixz="-4.79395e-17" iyy="0.0000183181" iyz="5.86389e-19" izz="0.0000187536"/>
     </inertial>
   </link>
   <link name="rr_foot">
@@ -605,9 +605,9 @@
       <geometry><mesh filename="package://quadruped/meshes/electronics_hood.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.004157 -0.002617 0.044529" rpy="0 0 0"/>
-      <mass value="0.067714"/>
-      <inertia ixx="0.0000763076" ixy="-0.00000688005" ixz="-1.10182e-7" iyy="0.000303666" iyz="-9.94347e-7" izz="0.000359464"/>
+      <origin xyz="-0.006666 -0.002666 0.055857" rpy="0 0 0"/>
+      <mass value="0.082672"/>
+      <inertia ixx="0.000104014" ixy="-0.0000070167" ixz="4.72141e-7" iyy="0.000426547" iyz="-0.00000157153" izz="0.000491144"/>
     </inertial>
   </link>
   <link name="main_switch">
@@ -629,32 +629,32 @@
   <joint name="battery_mount" type="fixed">
     <parent link="base_link"/>
     <child link="battery"/>
-    <origin xyz="-0.0475 0 -0.0155" rpy="0 0 0"/>
+    <origin xyz="0.0605 0 -0.0215" rpy="0 0 3.141593"/>
   </joint>
   <joint name="computer_mount" type="fixed">
     <parent link="top_deck"/>
     <child link="computer"/>
-    <origin xyz="-0.0966 -0.0274 0.025" rpy="0 0 0"/>
+    <origin xyz="-0.1056 -0.0274 0.031" rpy="0 0 0"/>
   </joint>
   <joint name="actuator_bus_mount" type="fixed">
     <parent link="top_deck"/>
     <child link="actuator_bus"/>
-    <origin xyz="-0.0006 -0.0369 0.023" rpy="0 0 0"/>
+    <origin xyz="-0.0096 -0.0369 0.029" rpy="0 0 0"/>
   </joint>
   <joint name="regulator_5v_mount" type="fixed">
     <parent link="top_deck"/>
     <child link="regulator_5v"/>
-    <origin xyz="-0.0006 0.006 0.023" rpy="0 0 0"/>
+    <origin xyz="-0.0096 0.006 0.029" rpy="0 0 0"/>
   </joint>
   <joint name="imu_mount" type="fixed">
     <parent link="top_deck"/>
     <child link="imu"/>
-    <origin xyz="0.0474 -0.01135 0.023" rpy="0 0 0"/>
+    <origin xyz="0.0384 -0.01135 0.029" rpy="0 0 0"/>
   </joint>
   <joint name="camera_mount" type="fixed">
     <parent link="top_deck"/>
     <child link="camera"/>
-    <origin xyz="0.1056 0.0125 0.049" rpy="-1.570796 0 -1.570796"/>
+    <origin xyz="0.1146 0.0125 0.055" rpy="-1.570796 0 -1.570796"/>
   </joint>
   <joint name="top_deck_mount" type="fixed">
     <parent link="base_link"/>
@@ -664,12 +664,12 @@
   <joint name="fl_hip_abduction_actuator_mount" type="fixed">
     <parent link="base_link"/>
     <child link="fl_hip_abduction_actuator"/>
-    <origin xyz="0.1066 0.0367 0" rpy="1.570796 0 1.570796"/>
+    <origin xyz="0.1156 0.0367 0" rpy="1.570796 0 1.570796"/>
   </joint>
   <joint name="fl_hip_abduction" type="revolute">
     <parent link="base_link"/>
     <child link="fl_shoulder"/>
-    <origin xyz="0.1066 0.0367 0" rpy="1.570796 0 1.570796"/>
+    <origin xyz="0.1156 0.0367 0" rpy="1.570796 0 1.570796"/>
     <axis xyz="0 0 1"/>
     <limit lower="-0.165" upper="0.6" effort="2.942" velocity="4.712"/>
     <dynamics damping="0.1249" friction="0.0588"/>
@@ -708,12 +708,12 @@
   <joint name="fr_hip_abduction_actuator_mount" type="fixed">
     <parent link="base_link"/>
     <child link="fr_hip_abduction_actuator"/>
-    <origin xyz="0.1066 -0.0367 0" rpy="-1.570796 0 -1.570796"/>
+    <origin xyz="0.1156 -0.0367 0" rpy="-1.570796 0 -1.570796"/>
   </joint>
   <joint name="fr_hip_abduction" type="revolute">
     <parent link="base_link"/>
     <child link="fr_shoulder"/>
-    <origin xyz="0.1066 -0.0367 0" rpy="-1.570796 0 -1.570796"/>
+    <origin xyz="0.1156 -0.0367 0" rpy="-1.570796 0 -1.570796"/>
     <axis xyz="0 0 1"/>
     <limit lower="-0.6" upper="0.165" effort="2.942" velocity="4.712"/>
     <dynamics damping="0.1249" friction="0.0588"/>
@@ -752,12 +752,12 @@
   <joint name="rl_hip_abduction_actuator_mount" type="fixed">
     <parent link="base_link"/>
     <child link="rl_hip_abduction_actuator"/>
-    <origin xyz="-0.1066 0.0367 0" rpy="-1.570796 0 1.570796"/>
+    <origin xyz="-0.1156 0.0367 0" rpy="-1.570796 0 1.570796"/>
   </joint>
   <joint name="rl_hip_abduction" type="revolute">
     <parent link="base_link"/>
     <child link="rl_shoulder"/>
-    <origin xyz="-0.1066 0.0367 0" rpy="-1.570796 0 1.570796"/>
+    <origin xyz="-0.1156 0.0367 0" rpy="-1.570796 0 1.570796"/>
     <axis xyz="0 0 1"/>
     <limit lower="-0.6" upper="0.165" effort="2.942" velocity="4.712"/>
     <dynamics damping="0.1249" friction="0.0588"/>
@@ -796,12 +796,12 @@
   <joint name="rr_hip_abduction_actuator_mount" type="fixed">
     <parent link="base_link"/>
     <child link="rr_hip_abduction_actuator"/>
-    <origin xyz="-0.1066 -0.0367 0" rpy="1.570796 0 -1.570796"/>
+    <origin xyz="-0.1156 -0.0367 0" rpy="1.570796 0 -1.570796"/>
   </joint>
   <joint name="rr_hip_abduction" type="revolute">
     <parent link="base_link"/>
     <child link="rr_shoulder"/>
-    <origin xyz="-0.1066 -0.0367 0" rpy="1.570796 0 -1.570796"/>
+    <origin xyz="-0.1156 -0.0367 0" rpy="1.570796 0 -1.570796"/>
     <axis xyz="0 0 1"/>
     <limit lower="-0.165" upper="0.6" effort="2.942" velocity="4.712"/>
     <dynamics damping="0.1249" friction="0.0588"/>
@@ -845,6 +845,6 @@
   <joint name="main_switch_mount" type="fixed">
     <parent link="electronics_hood"/>
     <child link="main_switch"/>
-    <origin xyz="0.096 -0.02675 0.0365" rpy="1.570796 0 1.570796"/>
+    <origin xyz="0.0999 -0.023733 0.047125" rpy="1.570796 0 1.570796"/>
   </joint>
 </robot>

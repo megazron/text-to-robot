@@ -1,6 +1,6 @@
 # Wiring: parallel_gripper
 
-3 cables, 8 conductors, 2.35 m of wire, wiring parts $4.95.
+3 cables, 8 conductors, 3.13 m of wire, wiring parts $5.21.
 
 Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), [breadboard.svg](breadboard.svg) (every wire in its colour, pin to pin) and the cable diagram [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
 
@@ -8,7 +8,7 @@ Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), 
 
 | Rail | Volts | Source | Source limit A (cont / peak) | Load A (typical / peak) | Margin (typical) | Fuse A | Worst wire drop V |
 |---|--:|---|--:|--:|--:|--:|--:|
-| VBUS | 12 | power_supply | 6 / 6.6 | 0.45 / 2.7 | 13.3x | - | 0.126 |
+| VBUS | 12 | power_supply | 6 / 6.6 | 0.45 / 2.7 | 13.3x | - | 0.146 |
 
 **VBUS loads** (peak assumes every load at its peak at once):
 
@@ -40,9 +40,9 @@ Length is route + service loop + joint slack + termination, rounded up to 5 mm; 
 
 | Cable | What | Conductors | Length mm | Route | Service | Joint slack | Ends | Connectors | Exit |
 |---|---|--:|--:|--:|--:|--:|--:|---|---|
-| C1 | mains inlet to the supply (crimped, insulated spades; earth first) | 3 | 185 | 80.5 | 40 | 0 | 60 | 6.3 mm quick-connect tabs / barrier screw terminal | - |
-| C2 | servo_bus to gripper_servo | 3 | 465 | 360.2 | 40 | 0 | 60 | 3-pin 2.5 mm bus servo header (5264 class) / Feetech 5264-3P | control_case.harness |
-| C3 | VBUS to servo_bus | 2 | 200 | 99.1 | 40 | 0 | 60 | barrier screw terminal / green screw terminal | - |
+| C1 | mains inlet to the supply (crimped, insulated spades; earth first) | 3 | 165 | 63.9 | 40 | 0 | 60 | 6.3 mm quick-connect tabs / barrier screw terminal | - |
+| C2 | servo_bus to gripper_servo | 3 | 535 | 434.3 | 40 | 0 | 60 | 3-pin 2.5 mm bus servo header (5264 class) / Feetech 5264-3P | control_case.harness |
+| C3 | VBUS to servo_bus | 2 | 515 | 414.5 | 40 | 0 | 60 | barrier screw terminal / green screw terminal | - |
 
 ## Electrical calculations
 
@@ -77,14 +77,14 @@ Not checked (no logic levels in the parts data): Feetech STS3215 C047 12 V 30 kg
 
 | Item | Qty | Unit | Unit $ | Subtotal $ | Spec | Price source |
 |---|--:|---|--:|--:|---|---|
-| 24 AWG silicone wire | 2.1 | m | 0.35 | 0.73 | 0.205 mm2, rated 1.75 A in a bundle; 1.89 m cut + 10 % waste | estimated |
-| 26 AWG silicone wire | 0.6 | m | 0.3 | 0.18 | 0.128 mm2, rated 1.1 A in a bundle; 0.47 m cut + 10 % waste | estimated |
+| 24 AWG silicone wire | 2.9 | m | 0.35 | 1.01 | 0.205 mm2, rated 1.75 A in a bundle; 2.58 m cut + 10 % waste | estimated |
+| 26 AWG silicone wire | 0.6 | m | 0.3 | 0.18 | 0.128 mm2, rated 1.1 A in a bundle; 0.53 m cut + 10 % waste | estimated |
 | 6.3 mm spade contacts | 3 | pc | 0.08 | 0.24 | rated 15 A per contact | estimated |
 | Bootlace ferrule contacts | 7 | pc | 0.03 | 0.21 | rated 17.5 A per contact | estimated |
 | Molex 5264 contacts | 6 | pc | 0.05 | 0.30 | rated 3 A per contact | estimated |
 | Molex 5264 housings | 2 | pc | 0.08 | 0.16 | one per cable end | estimated |
 | Heat shrink 3 mm, 2:1 | 0.2 | m | 0.2 | 0.04 | 0 solder joints + a boot on each cable end | estimated |
-| Cable tie 100 x 2.5 mm | 6 | pc | 0.02 | 0.12 | at every clip, cable end and strain-relief anchor | estimated |
+| Cable tie 100 x 2.5 mm | 5 | pc | 0.02 | 0.10 | at every clip, cable end and strain-relief anchor | estimated |
 | PG7 cable gland | 1 | pc | 2.97 | 2.97 | cable exit with strain relief | estimated |
 
 ## Data sources

@@ -1,6 +1,6 @@
 # Wiring: arduino_car
 
-18 cables, 40 conductors, 6.83 m of wire, wiring parts $5.89.
+18 cables, 40 conductors, 9.77 m of wire, wiring parts $6.61.
 
 Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), [breadboard.svg](breadboard.svg) (every wire in its colour, pin to pin) and the cable diagram [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
 
@@ -8,7 +8,7 @@ Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), 
 
 | Rail | Volts | Source | Source limit A (cont / peak) | Load A (typical / peak) | Margin (typical) | Fuse A | Worst wire drop V |
 |---|--:|---|--:|--:|--:|--:|--:|
-| VBAT | 7.2 | main_switch | 20 / 100 | 1.636 / 6.036 | 12.2x | 4 | 0.048 |
+| VBAT | 7.2 | main_switch | 20 / 100 | 1.636 / 6.036 | 12.2x | 4 | 0.054 |
 | 5V_LOGIC | 5 | controller | 0.2 / 0.4 | 0.019 / 0.019 | 10.5x | - | 0.001 |
 
 **VBAT loads** (peak assumes two motors stalling at once, the rest running):
@@ -85,24 +85,24 @@ Length is route + service loop + joint slack + termination, rounded up to 5 mm; 
 
 | Cable | What | Conductors | Length mm | Route | Service | Joint slack | Ends | Connectors | Exit |
 |---|---|--:|--:|--:|--:|--:|--:|---|---|
-| C1 | controller to motor_driver_1 | 7 | 135 | 30.7 | 40 | 0 | 60 | 15-pin 2.54 mm male header / 0.1 in header | - |
-| C2 | motor_driver_1 to front_left_motor | 2 | 250 | 146 | 40 | 0 | 60 | 0.1 in header / Two factory-soldered 28 AWG leads | electronics_bay.motor_leads_1_l |
-| C3 | motor_driver_1 to front_right_motor | 2 | 215 | 112 | 40 | 0 | 60 | 0.1 in header / Two factory-soldered 28 AWG leads | electronics_bay.motor_leads_1_r |
-| C4 | controller to motor_driver_2 | 7 | 135 | 31.9 | 40 | 0 | 60 | 15-pin 2.54 mm male header / 0.1 in header | - |
-| C5 | motor_driver_2 to rear_left_motor | 2 | 240 | 136.3 | 40 | 0 | 60 | 0.1 in header / Two factory-soldered 28 AWG leads | electronics_bay.motor_leads_0_l |
-| C6 | motor_driver_2 to rear_right_motor | 2 | 235 | 132.7 | 40 | 0 | 60 | 0.1 in header / Two factory-soldered 28 AWG leads | electronics_bay.motor_leads_0_r |
-| C7 | controller to ultrasonic | 2 | 180 | 75.1 | 40 | 0 | 60 | 15-pin 2.54 mm male header / 4-pin 2.54 mm right-angle male header | electronics_bay.sensor |
-| C8 | battery positive to main fuse | 1 | 100 | 0 | 40 | 0 | 60 | flying leads / soldered leads | - |
-| C9 | main fuse to main switch | 1 | 150 | 48.5 | 40 | 0 | 60 | soldered leads / 4.8 mm quick-connect tabs | - |
-| C10 | battery negative to star ground | 1 | 100 | 0 | 40 | 0 | 60 | flying leads / lever clamp | - |
-| C11 | main_switch to the VBAT splice | 1 | 100 | 0 | 40 | 0 | 60 | 4.8 mm quick-connect tabs / lever clamp | - |
-| C12 | VBAT to controller | 2 | 220 | 119.2 | 40 | 0 | 60 | lever clamp / 15-pin 2.54 mm male header | - |
-| C13 | VBAT to motor_driver_1 | 2 | 250 | 149.2 | 40 | 0 | 60 | lever clamp / 0.1 in header | - |
-| C14 | VBAT to motor_driver_2 | 2 | 240 | 137.9 | 40 | 0 | 60 | lever clamp / 0.1 in header | - |
-| C15 | controller to the 5V_LOGIC splice | 2 | 100 | 0 | 40 | 0 | 60 | 15-pin 2.54 mm male header / lever clamp | - |
-| C16 | 5V_LOGIC to motor_driver_1 | 1 | 135 | 30.7 | 40 | 0 | 60 | lever clamp / 0.1 in header | - |
-| C17 | 5V_LOGIC to motor_driver_2 | 1 | 135 | 31.9 | 40 | 0 | 60 | lever clamp / 0.1 in header | - |
-| C18 | 5V_LOGIC to ultrasonic | 2 | 180 | 75.1 | 40 | 0 | 60 | lever clamp / 4-pin 2.54 mm right-angle male header | electronics_bay.sensor |
+| C1 | controller to motor_driver_1 | 7 | 190 | 85.4 | 40 | 0 | 60 | 15-pin 2.54 mm male header / 0.1 in header | - |
+| C2 | motor_driver_1 to front_left_motor | 2 | 295 | 194.2 | 40 | 0 | 60 | 0.1 in header / Two factory-soldered 28 AWG leads | electronics_bay.motor_leads_l |
+| C3 | motor_driver_1 to front_right_motor | 2 | 260 | 155 | 40 | 0 | 60 | 0.1 in header / Two factory-soldered 28 AWG leads | electronics_bay.motor_leads_r |
+| C4 | controller to motor_driver_2 | 7 | 225 | 124.9 | 40 | 0 | 60 | 15-pin 2.54 mm male header / 0.1 in header | - |
+| C5 | motor_driver_2 to rear_left_motor | 2 | 285 | 183 | 40 | 0 | 60 | 0.1 in header / Two factory-soldered 28 AWG leads | electronics_bay.motor_leads_l |
+| C6 | motor_driver_2 to rear_right_motor | 2 | 250 | 148 | 40 | 0 | 60 | 0.1 in header / Two factory-soldered 28 AWG leads | electronics_bay.motor_leads_r |
+| C7 | controller to ultrasonic | 2 | 395 | 294.9 | 40 | 0 | 60 | 15-pin 2.54 mm male header / 4-pin 2.54 mm right-angle male header | electronics_bay.sensor |
+| C8 | battery positive to main fuse | 1 | 145 | 42.7 | 40 | 0 | 60 | flying leads / soldered leads | - |
+| C9 | main fuse to main switch | 1 | 140 | 35.9 | 40 | 0 | 60 | soldered leads / 4.8 mm quick-connect tabs | - |
+| C10 | battery negative to star ground | 1 | 155 | 54.1 | 40 | 0 | 60 | flying leads / lever clamp | - |
+| C11 | main_switch to the VBAT splice | 1 | 145 | 43.6 | 40 | 0 | 60 | 4.8 mm quick-connect tabs / lever clamp | - |
+| C12 | VBAT to controller | 2 | 305 | 202.2 | 40 | 0 | 60 | lever clamp / 15-pin 2.54 mm male header | - |
+| C13 | VBAT to motor_driver_1 | 2 | 285 | 183.8 | 40 | 0 | 60 | lever clamp / 0.1 in header | - |
+| C14 | VBAT to motor_driver_2 | 2 | 265 | 163.6 | 40 | 0 | 60 | lever clamp / 0.1 in header | - |
+| C15 | controller to the 5V_LOGIC splice | 2 | 245 | 140.8 | 40 | 0 | 60 | 15-pin 2.54 mm male header / lever clamp | - |
+| C16 | 5V_LOGIC to motor_driver_1 | 1 | 230 | 126.5 | 40 | 0 | 60 | lever clamp / 0.1 in header | - |
+| C17 | 5V_LOGIC to motor_driver_2 | 1 | 210 | 109.3 | 40 | 0 | 60 | lever clamp / 0.1 in header | - |
+| C18 | 5V_LOGIC to ultrasonic | 2 | 335 | 233.1 | 40 | 0 | 60 | lever clamp / 4-pin 2.54 mm right-angle male header | electronics_bay.sensor |
 
 ## Electrical calculations
 
@@ -158,17 +158,16 @@ A driver's high level is its I/O supply; the receiver needs it above its input t
 
 | Item | Qty | Unit | Unit $ | Subtotal $ | Spec | Price source |
 |---|--:|---|--:|--:|---|---|
-| 20 AWG silicone wire | 0.5 | m | 0.5 | 0.25 | 0.519 mm2, rated 5.5 A in a bundle; 0.45 m cut + 10 % waste | estimated |
-| 22 AWG silicone wire | 1.4 | m | 0.4 | 0.56 | 0.327 mm2, rated 3.5 A in a bundle; 1.20 m cut + 10 % waste | estimated |
-| 24 AWG silicone wire | 1.2 | m | 0.35 | 0.42 | 0.205 mm2, rated 1.75 A in a bundle; 1.05 m cut + 10 % waste | estimated |
-| 26 AWG silicone wire | 4.6 | m | 0.3 | 1.38 | 0.128 mm2, rated 1.1 A in a bundle; 4.13 m cut + 10 % waste | estimated |
+| 20 AWG silicone wire | 0.7 | m | 0.5 | 0.35 | 0.519 mm2, rated 5.5 A in a bundle; 0.59 m cut + 10 % waste | estimated |
+| 22 AWG silicone wire | 1.4 | m | 0.4 | 0.56 | 0.327 mm2, rated 3.5 A in a bundle; 1.24 m cut + 10 % waste | estimated |
+| 24 AWG silicone wire | 2.1 | m | 0.35 | 0.73 | 0.205 mm2, rated 1.75 A in a bundle; 1.83 m cut + 10 % waste | estimated |
+| 26 AWG silicone wire | 6.3 | m | 0.3 | 1.89 | 0.128 mm2, rated 1.1 A in a bundle; 5.65 m cut + 10 % waste | estimated |
 | Dupont 2.54 mm contacts | 52 | pc | 0.02 | 1.04 | rated 3 A per contact | estimated |
 | Dupont 2.54 mm housings | 17 | pc | 0.02 | 0.34 | one per cable end | estimated |
 | 6.3 mm spade contacts | 2 | pc | 0.08 | 0.16 | rated 15 A per contact | estimated |
 | Heat shrink 3 mm, 2:1 | 1.5 | m | 0.2 | 0.30 | 12 solder joints + a boot on each cable end | estimated |
-| Cable tie 100 x 2.5 mm | 33 | pc | 0.02 | 0.66 | at every clip, cable end and strain-relief anchor | estimated |
-| Rubber grommet, 5.0 mm panel hole, 3.0 mm bore | 4 | pc | 0.05 | 0.20 | 5 mm panel hole | estimated |
-| Rubber grommet, 6.4 mm panel hole, 3.2 mm bore | 1 | pc | 0.08 | 0.08 | 6.5 mm panel hole | estimated |
+| Cable tie 100 x 2.5 mm | 25 | pc | 0.02 | 0.50 | at every clip, cable end and strain-relief anchor | estimated |
+| Rubber grommet, 6.4 mm panel hole, 3.2 mm bore | 3 | pc | 0.08 | 0.24 | 6.5 mm panel hole | estimated |
 | 4 A ATM blade fuse | 1 | pc | 0.25 | 0.25 | plus spares | estimated |
 | 2 A ATM blade fuse | 1 | pc | 0.25 | 0.25 | plus spares | estimated |
 

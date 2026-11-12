@@ -1,6 +1,6 @@
 # Wiring: wall_e
 
-37 cables, 77 conductors, 19.51 m of wire, wiring parts $12.83.
+37 cables, 77 conductors, 21.93 m of wire, wiring parts $13.37.
 
 Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), [breadboard.svg](breadboard.svg) (every wire in its colour, pin to pin) and the cable diagram [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
 
@@ -8,10 +8,10 @@ Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), 
 
 | Rail | Volts | Source | Source limit A (cont / peak) | Load A (typical / peak) | Margin (typical) | Fuse A | Worst wire drop V |
 |---|--:|---|--:|--:|--:|--:|--:|
-| VBAT | 7.2 | main_switch | 20 / 100 | 3.041 / 7.441 | 6.6x | 4 | 0.067 |
+| VBAT | 7.2 | main_switch | 20 / 100 | 3.041 / 7.441 | 6.6x | 4 | 0.058 |
 | 5V_LOGIC | 5 | controller | 0.2 / 0.4 | 0.029 / 0.029 | 6.9x | - | 0.001 |
-| 5V_SERVO | 5 | servo_regulator | 2 / 3 | 0.81 / 2.61 | 2.5x | - | 0.063 |
-| 5V_ARMS | 5 | arm_regulator | 2 / 3 | 0.9 / 2.7 | 2.2x | - | 0.027 |
+| 5V_SERVO | 5 | servo_regulator | 2 / 3 | 0.81 / 2.61 | 2.5x | - | 0.066 |
+| 5V_ARMS | 5 | arm_regulator | 2 / 3 | 0.9 / 2.7 | 2.2x | - | 0.044 |
 
 **VBAT loads** (peak assumes two motors stalling at once, the rest running):
 
@@ -144,43 +144,43 @@ Length is route + service loop + joint slack + termination, rounded up to 5 mm; 
 
 | Cable | What | Conductors | Length mm | Route | Service | Joint slack | Ends | Connectors | Exit |
 |---|---|--:|--:|--:|--:|--:|--:|---|---|
-| C1 | controller to motor_driver_1 | 7 | 135 | 30.7 | 40 | 0 | 60 | 15-pin 2.54 mm male header / 0.1 in header | - |
-| C2 | motor_driver_1 to front_left_motor | 2 | 280 | 176.4 | 40 | 0 | 60 | 0.1 in header / Two factory-soldered 28 AWG leads | - |
-| C3 | motor_driver_1 to front_right_motor | 2 | 240 | 139.5 | 40 | 0 | 60 | 0.1 in header / Two factory-soldered 28 AWG leads | - |
-| C4 | controller to motor_driver_2 | 7 | 135 | 31.9 | 40 | 0 | 60 | 15-pin 2.54 mm male header / 0.1 in header | - |
-| C5 | motor_driver_2 to rear_left_motor | 2 | 210 | 106.1 | 40 | 0 | 60 | 0.1 in header / Two factory-soldered 28 AWG leads | - |
-| C6 | motor_driver_2 to rear_right_motor | 2 | 180 | 77 | 40 | 0 | 60 | 0.1 in header / Two factory-soldered 28 AWG leads | - |
-| C7 | servo_driver to neck_pan_servo | 3 | 270 | 169.6 | 40 | 0 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | - |
-| C8 | servo_driver to neck_tilt_servo | 3 | 425 | 274.7 | 40 | 50 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | body_bay.neck_leads |
-| C9 | servo_driver to left_hand_servo | 3 | 605 | 399.8 | 40 | 105 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | body_bay.neck_leads |
-| C10 | servo_driver to right_hand_servo | 3 | 605 | 399.8 | 40 | 105 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | body_bay.neck_leads |
-| C11 | servo_driver to left_arm_servo | 1 | 265 | 161.8 | 40 | 0 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | - |
-| C12 | servo_driver to right_arm_servo | 1 | 265 | 161.8 | 40 | 0 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | - |
-| C13 | servo_driver to left_elbow_servo | 1 | 430 | 301.8 | 40 | 25 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | body_bay.neck_leads |
-| C14 | servo_driver to right_elbow_servo | 1 | 430 | 301.8 | 40 | 25 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | body_bay.neck_leads |
-| C15 | controller to servo_driver | 2 | 280 | 175.4 | 40 | 0 | 60 | 15-pin 2.54 mm male header / 6-pin 0.1 in header | - |
-| C16 | controller to ultrasonic | 2 | 285 | 183.8 | 40 | 0 | 60 | 15-pin 2.54 mm male header / 4-pin 2.54 mm right-angle male header | - |
-| C17 | battery positive to main fuse | 1 | 100 | 0 | 40 | 0 | 60 | flying leads / soldered leads | - |
-| C18 | main fuse to main switch | 1 | 225 | 123.7 | 40 | 0 | 60 | soldered leads / 4.8 mm quick-connect tabs | - |
-| C19 | battery negative to star ground | 1 | 100 | 0 | 40 | 0 | 60 | flying leads / lever clamp | - |
-| C20 | main_switch to the VBAT splice | 1 | 100 | 0 | 40 | 0 | 60 | 4.8 mm quick-connect tabs / lever clamp | - |
-| C21 | VBAT to controller | 2 | 185 | 81.6 | 40 | 0 | 60 | lever clamp / 15-pin 2.54 mm male header | - |
-| C22 | VBAT to servo_regulator | 2 | 190 | 89.3 | 40 | 0 | 60 | lever clamp / solder pads | - |
-| C23 | VBAT to arm_regulator | 2 | 270 | 168.7 | 40 | 0 | 60 | lever clamp / solder pads | - |
-| C24 | VBAT to motor_driver_1 | 2 | 195 | 94.2 | 40 | 0 | 60 | lever clamp / 0.1 in header | - |
-| C25 | VBAT to motor_driver_2 | 2 | 170 | 68.4 | 40 | 0 | 60 | lever clamp / 0.1 in header | - |
-| C26 | controller to the 5V_LOGIC splice | 2 | 100 | 0 | 40 | 0 | 60 | 15-pin 2.54 mm male header / lever clamp | - |
-| C27 | 5V_LOGIC to motor_driver_1 | 1 | 135 | 30.7 | 40 | 0 | 60 | lever clamp / 0.1 in header | - |
-| C28 | 5V_LOGIC to motor_driver_2 | 1 | 135 | 31.9 | 40 | 0 | 60 | lever clamp / 0.1 in header | - |
-| C29 | 5V_LOGIC to servo_driver | 2 | 280 | 175.4 | 40 | 0 | 60 | lever clamp / 6-pin 0.1 in header | - |
-| C30 | 5V_LOGIC to ultrasonic | 2 | 285 | 183.8 | 40 | 0 | 60 | lever clamp / 4-pin 2.54 mm right-angle male header | - |
-| C31 | servo_regulator to star_ground | 1 | 180 | 76.3 | 40 | 0 | 60 | solder pads / lever clamp | - |
-| C32 | 5V_SERVO to servo_driver | 2 | 240 | 139.7 | 40 | 0 | 60 | solder pads / 2-position screw terminal | - |
-| C33 | arm_regulator to the 5V_ARMS splice | 2 | 100 | 0 | 40 | 0 | 60 | solder pads / lever clamp | - |
-| C34 | 5V_ARMS to left_arm_servo | 2 | 220 | 115.6 | 40 | 0 | 60 | lever clamp / JR plug | - |
-| C35 | 5V_ARMS to right_arm_servo | 2 | 220 | 115.9 | 40 | 0 | 60 | lever clamp / JR plug | - |
-| C36 | 5V_ARMS to left_elbow_servo | 2 | 420 | 280.6 | 40 | 35 | 60 | lever clamp / JR plug | body_bay.neck_leads |
-| C37 | 5V_ARMS to right_elbow_servo | 2 | 420 | 280.6 | 40 | 35 | 60 | lever clamp / JR plug | body_bay.neck_leads |
+| C1 | controller to motor_driver_1 | 7 | 190 | 85.4 | 40 | 0 | 60 | 15-pin 2.54 mm male header / 0.1 in header | - |
+| C2 | motor_driver_1 to front_left_motor | 2 | 265 | 164.5 | 40 | 0 | 60 | 0.1 in header / Two factory-soldered 28 AWG leads | - |
+| C3 | motor_driver_1 to front_right_motor | 2 | 260 | 156.3 | 40 | 0 | 60 | 0.1 in header / Two factory-soldered 28 AWG leads | - |
+| C4 | controller to motor_driver_2 | 7 | 245 | 143.7 | 40 | 0 | 60 | 15-pin 2.54 mm male header / 0.1 in header | - |
+| C5 | motor_driver_2 to rear_left_motor | 2 | 190 | 89.9 | 40 | 0 | 60 | 0.1 in header / Two factory-soldered 28 AWG leads | - |
+| C6 | motor_driver_2 to rear_right_motor | 2 | 235 | 132.5 | 40 | 0 | 60 | 0.1 in header / Two factory-soldered 28 AWG leads | - |
+| C7 | servo_driver to neck_pan_servo | 3 | 240 | 138.4 | 40 | 0 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | - |
+| C8 | servo_driver to neck_tilt_servo | 3 | 430 | 270.1 | 40 | 55 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | body_bay.neck_leads |
+| C9 | servo_driver to left_hand_servo | 3 | 620 | 410.9 | 40 | 105 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | body_bay.neck_leads |
+| C10 | servo_driver to right_hand_servo | 3 | 655 | 444.5 | 40 | 110 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | body_bay.neck_leads |
+| C11 | servo_driver to left_arm_servo | 1 | 225 | 121.4 | 40 | 0 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | - |
+| C12 | servo_driver to right_arm_servo | 1 | 245 | 144.3 | 40 | 0 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | - |
+| C13 | servo_driver to left_elbow_servo | 1 | 485 | 350.7 | 40 | 30 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | body_bay.neck_leads |
+| C14 | servo_driver to right_elbow_servo | 1 | 445 | 303.7 | 40 | 40 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | body_bay.neck_leads |
+| C15 | controller to servo_driver | 2 | 280 | 178.9 | 40 | 0 | 60 | 15-pin 2.54 mm male header / 6-pin 0.1 in header | - |
+| C16 | controller to ultrasonic | 2 | 290 | 188 | 40 | 0 | 60 | 15-pin 2.54 mm male header / 4-pin 2.54 mm right-angle male header | - |
+| C17 | battery positive to main fuse | 1 | 155 | 52.2 | 40 | 0 | 60 | flying leads / soldered leads | - |
+| C18 | main fuse to main switch | 1 | 195 | 92.1 | 40 | 0 | 60 | soldered leads / 4.8 mm quick-connect tabs | - |
+| C19 | battery negative to star ground | 1 | 225 | 122.6 | 40 | 0 | 60 | flying leads / lever clamp | - |
+| C20 | main_switch to the VBAT splice | 1 | 140 | 36.2 | 40 | 0 | 60 | 4.8 mm quick-connect tabs / lever clamp | - |
+| C21 | VBAT to controller | 2 | 215 | 113.3 | 40 | 0 | 60 | lever clamp / 15-pin 2.54 mm male header | - |
+| C22 | VBAT to servo_regulator | 2 | 210 | 107 | 40 | 0 | 60 | lever clamp / solder pads | - |
+| C23 | VBAT to arm_regulator | 2 | 240 | 138.4 | 40 | 0 | 60 | lever clamp / solder pads | - |
+| C24 | VBAT to motor_driver_1 | 2 | 200 | 98.4 | 40 | 0 | 60 | lever clamp / 0.1 in header | - |
+| C25 | VBAT to motor_driver_2 | 2 | 185 | 83.2 | 40 | 0 | 60 | lever clamp / 0.1 in header | - |
+| C26 | controller to the 5V_LOGIC splice | 2 | 205 | 104.8 | 40 | 0 | 60 | 15-pin 2.54 mm male header / lever clamp | - |
+| C27 | 5V_LOGIC to motor_driver_1 | 1 | 165 | 61.4 | 40 | 0 | 60 | lever clamp / 0.1 in header | - |
+| C28 | 5V_LOGIC to motor_driver_2 | 1 | 225 | 123.8 | 40 | 0 | 60 | lever clamp / 0.1 in header | - |
+| C29 | 5V_LOGIC to servo_driver | 2 | 285 | 182 | 40 | 0 | 60 | lever clamp / 6-pin 0.1 in header | - |
+| C30 | 5V_LOGIC to ultrasonic | 2 | 300 | 196.4 | 40 | 0 | 60 | lever clamp / 4-pin 2.54 mm right-angle male header | - |
+| C31 | servo_regulator to star_ground | 1 | 175 | 71.6 | 40 | 0 | 60 | solder pads / lever clamp | - |
+| C32 | 5V_SERVO to servo_driver | 2 | 250 | 146.9 | 40 | 0 | 60 | solder pads / 2-position screw terminal | - |
+| C33 | arm_regulator to the 5V_ARMS splice | 2 | 240 | 138.5 | 40 | 0 | 60 | solder pads / lever clamp | - |
+| C34 | 5V_ARMS to left_arm_servo | 2 | 225 | 122.8 | 40 | 0 | 60 | lever clamp / JR plug | - |
+| C35 | 5V_ARMS to right_arm_servo | 2 | 225 | 120.5 | 40 | 0 | 60 | lever clamp / JR plug | - |
+| C36 | 5V_ARMS to left_elbow_servo | 2 | 465 | 322.7 | 40 | 40 | 60 | lever clamp / JR plug | body_bay.neck_leads |
+| C37 | 5V_ARMS to right_elbow_servo | 2 | 420 | 279.6 | 40 | 40 | 60 | lever clamp / JR plug | body_bay.neck_leads |
 
 ## Slack at the joints
 
@@ -188,15 +188,15 @@ Each loop is at least the extra length the joint needs at the far end of its tra
 
 | Cable | Joint | Travel rad | Length at home mm | Length at full travel mm | Slack loop mm |
 |---|---|---|--:|--:|--:|
-| C8 | neck_pan | -1.4 to 1.4 | 22 | 37.2 | 50 |
-| C9 | left_arm_lift | -1 to 0.476 | 37.5 | 45.9 | 45 |
-| C9 | left_elbow | -1.5 to 1.271 | 55.1 | 77.7 | 60 |
-| C10 | right_arm_lift | -0.476 to 1 | 37.5 | 45.9 | 45 |
-| C10 | right_elbow | -1.271 to 1.5 | 55.1 | 77.7 | 60 |
-| C13 | left_arm_lift | -1 to 0.476 | 29.6 | 36.2 | 25 |
-| C14 | right_arm_lift | -0.476 to 1 | 29.6 | 36.2 | 25 |
-| C36 | left_arm_lift | -1 to 0.476 | 33.7 | 41.3 | 35 |
-| C37 | right_arm_lift | -0.476 to 1 | 33.7 | 41.3 | 35 |
+| C8 | neck_pan | -1.4 to 1.4 | 36.4 | 56 | 55 |
+| C9 | left_arm_lift | -1 to 0.494 | 36.8 | 48.8 | 45 |
+| C9 | left_elbow | -1.5 to 1.252 | 52 | 74.7 | 60 |
+| C10 | right_arm_lift | -0.494 to 1 | 35.9 | 44 | 40 |
+| C10 | right_elbow | -1.252 to 1.5 | 46 | 76 | 70 |
+| C13 | left_arm_lift | -1 to 0.494 | 32.4 | 42.2 | 30 |
+| C14 | right_arm_lift | -0.494 to 1 | 29.8 | 48.4 | 40 |
+| C36 | left_arm_lift | -1 to 0.494 | 36.8 | 47.9 | 40 |
+| C37 | right_arm_lift | -0.494 to 1 | 27.4 | 38 | 40 |
 
 ## Electrical calculations
 
@@ -271,18 +271,18 @@ A driver's high level is its I/O supply; the receiver needs it above its input t
 
 | Item | Qty | Unit | Unit $ | Subtotal $ | Spec | Price source |
 |---|--:|---|--:|--:|---|---|
-| 20 AWG silicone wire | 0.6 | m | 0.5 | 0.30 | 0.519 mm2, rated 5.5 A in a bundle; 0.53 m cut + 10 % waste | estimated |
+| 20 AWG silicone wire | 0.8 | m | 0.5 | 0.40 | 0.519 mm2, rated 5.5 A in a bundle; 0.71 m cut + 10 % waste | estimated |
 | 22 AWG silicone wire | 1.6 | m | 0.4 | 0.64 | 0.327 mm2, rated 3.5 A in a bundle; 1.38 m cut + 10 % waste | estimated |
-| 24 AWG silicone wire | 10.5 | m | 0.35 | 3.67 | 0.205 mm2, rated 1.75 A in a bundle; 9.47 m cut + 10 % waste | estimated |
-| 26 AWG silicone wire | 9 | m | 0.3 | 2.70 | 0.128 mm2, rated 1.1 A in a bundle; 8.13 m cut + 10 % waste | estimated |
+| 24 AWG silicone wire | 11 | m | 0.35 | 3.85 | 0.205 mm2, rated 1.75 A in a bundle; 9.95 m cut + 10 % waste | estimated |
+| 26 AWG silicone wire | 10 | m | 0.3 | 3.00 | 0.128 mm2, rated 1.1 A in a bundle; 9.09 m cut + 10 % waste | estimated |
 | Dupont 2.54 mm contacts | 74 | pc | 0.02 | 1.48 | rated 3 A per contact | estimated |
 | Dupont 2.54 mm housings | 28 | pc | 0.02 | 0.56 | one per cable end | estimated |
 | 6.3 mm spade contacts | 2 | pc | 0.08 | 0.16 | rated 15 A per contact | estimated |
 | Bootlace ferrule contacts | 2 | pc | 0.03 | 0.06 | rated 17.5 A per contact | estimated |
 | Heat shrink 3 mm, 2:1 | 3.6 | m | 0.2 | 0.72 | 45 solder joints + a boot on each cable end | estimated |
-| Cable tie 100 x 2.5 mm | 47 | pc | 0.02 | 0.94 | at every clip, cable end and strain-relief anchor | estimated |
+| Cable tie 100 x 2.5 mm | 43 | pc | 0.02 | 0.86 | at every clip, cable end and strain-relief anchor | estimated |
 | Rubber grommet, 7.9 mm panel hole, 4.8 mm bore | 1 | pc | 0.08 | 0.08 | 8 mm panel hole | estimated |
-| Nylon braided sleeving 6 mm | 1.3 | m | 0.4 | 0.52 | over every cable where it crosses a joint | estimated |
+| Nylon braided sleeving 6 mm | 1.4 | m | 0.4 | 0.56 | over every cable where it crosses a joint | estimated |
 | 4 A ATM blade fuse | 1 | pc | 0.25 | 0.25 | plus spares | estimated |
 | 2 A ATM blade fuse | 3 | pc | 0.25 | 0.75 | plus spares | estimated |
 

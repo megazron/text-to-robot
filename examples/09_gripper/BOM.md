@@ -1,6 +1,6 @@
 # Bill of materials: parallel_gripper
 
-**Estimated total: $93.49**  ·  tier: hobby
+**Estimated total: $95.06**  ·  tier: hobby
 
 **Effort sizing: passes catalogue estimate; hardware verified: no.**
 
@@ -12,16 +12,16 @@
 | Power | Mean Well LRS-75-12 enclosed PSU, 12 V 6 A (75 W) _(12 V servo supply · https://www.digikey.com/en/products/result?keywords=LRS-75-12)_ | 1 | 22 | 22 | 12 V |
 | Power | Hardened chromed linear rod 8 mm h6, 130 mm _(finger guide rods · https://us.misumi-ec.com/vona2/mech/M0100000000/M0101000000/M0101010000/)_ | 2 | 4.56 | 9.12 | https://us.misumi-ec.com/vona2/mech/M0100000000/M0101000000/M0101010000/ |
 | Electronics | Waveshare Bus Servo Adapter (A) _(USB to servo bus · https://www.waveshare.com/bus-servo-adapter-a.htm)_ | 1 | 10.6 | 10.6 | 12 V |
-| Printed structure | PETG filament for 7 printed parts _(base_link, gripper_body, pinion, finger_a, finger_b, control_case, control_case_lid)_ | 1 | 13.42 | 13.42 | 530 g of parts (+15 % supports/waste), about 48.3 h of printing |
+| Printed structure | PETG filament for 7 printed parts _(base_link, gripper_body, pinion, finger_a, finger_b, control_case, control_case_lid)_ | 1 | 14.73 | 14.73 | 582 g of parts (+15 % supports/waste), about 53.1 h of printing |
 | Fasteners | Screws, nuts and inserts | 30 | 0.12 | 3.6 | 4x M6 x 16 socket head (adapter to robot flange); 4x M4 x 10 socket head + M4 heat-set insert (housing to adapter, radial); 4x M3 x 6 set screw (rod retention); 4x servo case screws (M2 x 6); 4x horn screws; 4x M3 x 10 self-tapping (lid to compartment); 2x M3 x 6 self-tapping (Mean Well LRS-75-12 enclosed PSU, 12 V 6 A to standoffs); 4x M2 x 6 self-tapping (Waveshare Bus Servo Adapter to standoffs) |
-| Wiring | 24 AWG silicone wire _(price estimated)_ | 2.1 | 0.35 | 0.73 | 2.1 m: 0.205 mm2, rated 1.75 A in a bundle; 1.89 m cut + 10 % waste |
-| Wiring | 26 AWG silicone wire _(price estimated)_ | 0.6 | 0.3 | 0.18 | 0.6 m: 0.128 mm2, rated 1.1 A in a bundle; 0.47 m cut + 10 % waste |
+| Wiring | 24 AWG silicone wire _(price estimated)_ | 2.9 | 0.35 | 1.01 | 2.9 m: 0.205 mm2, rated 1.75 A in a bundle; 2.58 m cut + 10 % waste |
+| Wiring | 26 AWG silicone wire _(price estimated)_ | 0.6 | 0.3 | 0.18 | 0.6 m: 0.128 mm2, rated 1.1 A in a bundle; 0.53 m cut + 10 % waste |
 | Wiring | 6.3 mm spade contacts _(price estimated)_ | 3 | 0.08 | 0.24 | 3 pc: rated 15 A per contact |
 | Wiring | Bootlace ferrule contacts _(price estimated)_ | 7 | 0.03 | 0.21 | 7 pc: rated 17.5 A per contact |
 | Wiring | Molex 5264 contacts _(price estimated)_ | 6 | 0.05 | 0.3 | 6 pc: rated 3 A per contact |
 | Wiring | Molex 5264 housings _(price estimated)_ | 2 | 0.08 | 0.16 | 2 pc: one per cable end |
 | Wiring | Heat shrink 3 mm, 2:1 _(price estimated)_ | 0.2 | 0.2 | 0.04 | 0.2 m: 0 solder joints + a boot on each cable end |
-| Wiring | Cable tie 100 x 2.5 mm _(price estimated)_ | 6 | 0.02 | 0.12 | 6 pc: at every clip, cable end and strain-relief anchor |
+| Wiring | Cable tie 100 x 2.5 mm _(price estimated)_ | 5 | 0.02 | 0.1 | 5 pc: at every clip, cable end and strain-relief anchor |
 | Wiring | PG7 cable gland _(price estimated)_ | 1 | 2.97 | 2.97 | 1 pc: cable exit with strain relief |
 
 ## Actuator sizing

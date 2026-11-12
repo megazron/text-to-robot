@@ -29,9 +29,9 @@
       <geometry><mesh filename="package://hexapod/meshes/base_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.000112673 1.00873e-7 -0.035997" rpy="0 0 0"/>
-      <mass value="0.232336"/>
-      <inertia ixx="0.00077455" ixy="6.03065e-8" ixz="-1.85946e-7" iyy="0.000788489" iyz="1.66473e-10" izz="0.00148"/>
+      <origin xyz="-0.000934367 4.08958e-12 -0.035758" rpy="0 0 0"/>
+      <mass value="0.223256"/>
+      <inertia ixx="0.00079369" ixy="-0.0000313954" ixz="-0.00000385741" iyy="0.000698261" iyz="-2.71316e-15" izz="0.00141"/>
     </inertial>
   </link>
   <link name="battery">
@@ -48,22 +48,6 @@
       <origin xyz="0.076786 0.00000258572 0.01235" rpy="0 0 0"/>
       <mass value="0.355"/>
       <inertia ixx="0.0000713003" ixy="7.37888e-8" ixz="-5.31727e-21" iyy="0.000723328" iyz="-3.68187e-22" izz="0.000758622"/>
-    </inertial>
-  </link>
-  <link name="imu">
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://hexapod/meshes/bno085_breakout.stl"/></geometry>
-      <material name="electronics"/>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://hexapod/meshes/bno085_breakout.stl"/></geometry>
-    </collision>
-    <inertial>
-      <origin xyz="0.0128 0.01114 0.001089" rpy="0 0 0"/>
-      <mass value="0.0025"/>
-      <inertia ixx="1.00000e-7" ixy="-7.18056e-24" ixz="1.50030e-24" iyy="1.47883e-7" iyz="4.24673e-10" izz="2.39851e-7"/>
     </inertial>
   </link>
   <link name="actuator_bus">
@@ -98,6 +82,22 @@
       <inertia ixx="2.56895e-7" ixy="8.14755e-9" ixz="1.85795e-9" iyy="3.06643e-7" iyz="1.94440e-9" izz="4.54796e-7"/>
     </inertial>
   </link>
+  <link name="imu">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://hexapod/meshes/bno085_breakout.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://hexapod/meshes/bno085_breakout.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.0128 0.01114 0.001089" rpy="0 0 0"/>
+      <mass value="0.0025"/>
+      <inertia ixx="1.00000e-7" ixy="-7.18056e-24" ixz="1.50030e-24" iyy="1.47883e-7" iyz="4.24673e-10" izz="2.39851e-7"/>
+    </inertial>
+  </link>
   <link name="deck_pillar_1">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -109,9 +109,9 @@
       <geometry><mesh filename="package://hexapod/meshes/deck_pillar_1.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.051779 0.000116913 0.001177" rpy="0 0 0"/>
-      <mass value="0.006103"/>
-      <inertia ixx="0.00000344312" ixy="4.52939e-9" ixz="1.34533e-8" iyy="0.00000344925" iyz="-6.81518e-9" izz="1.00000e-7"/>
+      <origin xyz="0.026 0.045033 0.00085" rpy="0 0 0"/>
+      <mass value="0.005908"/>
+      <inertia ixx="0.00000341887" ixy="1.47562e-24" ixz="-1.70293e-23" iyy="0.00000341887" iyz="2.52165e-24" izz="1.00000e-7"/>
     </inertial>
   </link>
   <link name="deck_pillar_2">
@@ -125,9 +125,9 @@
       <geometry><mesh filename="package://hexapod/meshes/deck_pillar_2.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.025617 0.04478 0.000926376" rpy="0 0 0"/>
-      <mass value="0.006216"/>
-      <inertia ixx="0.00000343244" ixy="1.09217e-8" ixz="-3.00571e-9" iyy="0.00000344181" iyz="2.95589e-9" izz="1.08130e-7"/>
+      <origin xyz="-0.0578 2.05591e-19 0.00085" rpy="0 0 0"/>
+      <mass value="0.005908"/>
+      <inertia ixx="0.00000341887" ixy="-1.66310e-24" ixz="-9.10287e-24" iyy="0.00000341887" iyz="5.95173e-24" izz="1.00000e-7"/>
     </inertial>
   </link>
   <link name="deck_pillar_3">
@@ -141,9 +141,9 @@
       <geometry><mesh filename="package://hexapod/meshes/deck_pillar_3.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.026 -0.045033 0.00085" rpy="0 0 0"/>
+      <origin xyz="0.026 -0.045033 0.00085" rpy="0 0 0"/>
       <mass value="0.005908"/>
-      <inertia ixx="0.00000341887" ixy="-7.35264e-25" ixz="-1.85534e-24" iyy="0.00000341887" iyz="-2.27912e-23" izz="1.00000e-7"/>
+      <inertia ixx="0.00000341887" ixy="-3.32490e-24" ixz="1.09354e-23" iyy="0.00000341887" iyz="-6.56041e-24" izz="1.00000e-7"/>
     </inertial>
   </link>
   <link name="computer">
@@ -205,9 +205,9 @@
       <geometry><mesh filename="package://hexapod/meshes/top_deck.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.003513 -0.000257335 0.045225" rpy="0 0 0"/>
+      <origin xyz="0.003517 0.000256528 0.045225" rpy="0 0 0"/>
       <mass value="0.037106"/>
-      <inertia ixx="0.000035859" ixy="-9.08374e-8" ixz="-0.00000183211" iyy="0.0000433567" iyz="-6.23243e-9" izz="0.0000779594"/>
+      <inertia ixx="0.0000356588" ixy="9.05896e-8" ixz="-0.00000183198" iyy="0.0000433397" iyz="1.14131e-8" izz="0.0000777422"/>
     </inertial>
   </link>
   <link name="lf_coxa_actuator">
@@ -237,9 +237,9 @@
       <geometry><mesh filename="package://hexapod/meshes/lf_coxa_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.007884 -0.004727 0.016936" rpy="0 0 0"/>
-      <mass value="0.020112"/>
-      <inertia ixx="0.00000627326" ixy="2.51358e-8" ixz="-1.53069e-7" iyy="0.00000935699" iyz="3.54250e-7" izz="0.00000944904"/>
+      <origin xyz="0.00794 -0.004264 0.016807" rpy="0 0 0"/>
+      <mass value="0.019547"/>
+      <inertia ixx="0.00000609344" ixy="4.31555e-8" ixz="-1.58089e-7" iyy="0.00000931798" iyz="3.12639e-7" izz="0.00000929049"/>
     </inertial>
   </link>
   <link name="lf_femur_actuator">
@@ -269,9 +269,9 @@
       <geometry><mesh filename="package://hexapod/meshes/lf_femur_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.060034 0.000125352 -0.008685" rpy="0 0 0"/>
-      <mass value="0.024071"/>
-      <inertia ixx="0.00000665374" ixy="-2.29071e-9" ixz="0.00000322038" iyy="0.0000237881" iyz="-1.03678e-8" izz="0.0000227217"/>
+      <origin xyz="0.059667 0.000129567 -0.009051" rpy="0 0 0"/>
+      <mass value="0.023288"/>
+      <inertia ixx="0.00000653132" ixy="-3.39820e-9" ixz="0.00000331654" iyy="0.0000235856" iyz="-1.14721e-8" izz="0.0000225903"/>
     </inertial>
   </link>
   <link name="lf_tibia_actuator">
@@ -349,9 +349,9 @@
       <geometry><mesh filename="package://hexapod/meshes/lm_coxa_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.007884 -0.004727 0.016936" rpy="0 0 0"/>
-      <mass value="0.020112"/>
-      <inertia ixx="0.00000627326" ixy="2.51358e-8" ixz="-1.53069e-7" iyy="0.00000935699" iyz="3.54250e-7" izz="0.00000944904"/>
+      <origin xyz="0.00794 -0.004264 0.016807" rpy="0 0 0"/>
+      <mass value="0.019547"/>
+      <inertia ixx="0.00000609344" ixy="4.31555e-8" ixz="-1.58089e-7" iyy="0.00000931798" iyz="3.12639e-7" izz="0.00000929049"/>
     </inertial>
   </link>
   <link name="lm_femur_actuator">
@@ -381,9 +381,9 @@
       <geometry><mesh filename="package://hexapod/meshes/lm_femur_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.060034 0.000125352 -0.008685" rpy="0 0 0"/>
-      <mass value="0.024071"/>
-      <inertia ixx="0.00000665374" ixy="-2.29071e-9" ixz="0.00000322038" iyy="0.0000237881" iyz="-1.03678e-8" izz="0.0000227217"/>
+      <origin xyz="0.059667 0.000129567 -0.009051" rpy="0 0 0"/>
+      <mass value="0.023288"/>
+      <inertia ixx="0.00000653132" ixy="-3.39820e-9" ixz="0.00000331654" iyy="0.0000235856" iyz="-1.14721e-8" izz="0.0000225903"/>
     </inertial>
   </link>
   <link name="lm_tibia_actuator">
@@ -461,9 +461,9 @@
       <geometry><mesh filename="package://hexapod/meshes/lr_coxa_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.007884 -0.004727 0.016936" rpy="0 0 0"/>
-      <mass value="0.020112"/>
-      <inertia ixx="0.00000627326" ixy="2.51358e-8" ixz="-1.53069e-7" iyy="0.00000935699" iyz="3.54250e-7" izz="0.00000944904"/>
+      <origin xyz="0.00794 -0.004264 0.016807" rpy="0 0 0"/>
+      <mass value="0.019547"/>
+      <inertia ixx="0.00000609344" ixy="4.31555e-8" ixz="-1.58089e-7" iyy="0.00000931798" iyz="3.12639e-7" izz="0.00000929049"/>
     </inertial>
   </link>
   <link name="lr_femur_actuator">
@@ -493,9 +493,9 @@
       <geometry><mesh filename="package://hexapod/meshes/lr_femur_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.060034 0.000125352 -0.008685" rpy="0 0 0"/>
-      <mass value="0.024071"/>
-      <inertia ixx="0.00000665374" ixy="-2.29071e-9" ixz="0.00000322038" iyy="0.0000237881" iyz="-1.03678e-8" izz="0.0000227217"/>
+      <origin xyz="0.059667 0.000129567 -0.009051" rpy="0 0 0"/>
+      <mass value="0.023288"/>
+      <inertia ixx="0.00000653132" ixy="-3.39820e-9" ixz="0.00000331654" iyy="0.0000235856" iyz="-1.14721e-8" izz="0.0000225903"/>
     </inertial>
   </link>
   <link name="lr_tibia_actuator">
@@ -573,9 +573,9 @@
       <geometry><mesh filename="package://hexapod/meshes/rr_coxa_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.007884 -0.004727 0.016936" rpy="0 0 0"/>
-      <mass value="0.020112"/>
-      <inertia ixx="0.00000627326" ixy="2.51358e-8" ixz="-1.53069e-7" iyy="0.00000935699" iyz="3.54250e-7" izz="0.00000944904"/>
+      <origin xyz="0.00794 -0.004264 0.016807" rpy="0 0 0"/>
+      <mass value="0.019547"/>
+      <inertia ixx="0.00000609344" ixy="4.31555e-8" ixz="-1.58089e-7" iyy="0.00000931798" iyz="3.12639e-7" izz="0.00000929049"/>
     </inertial>
   </link>
   <link name="rr_femur_actuator">
@@ -605,9 +605,9 @@
       <geometry><mesh filename="package://hexapod/meshes/rr_femur_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.060034 0.000125352 -0.008685" rpy="0 0 0"/>
-      <mass value="0.024071"/>
-      <inertia ixx="0.00000665374" ixy="-2.29071e-9" ixz="0.00000322038" iyy="0.0000237881" iyz="-1.03678e-8" izz="0.0000227217"/>
+      <origin xyz="0.059667 0.000129567 -0.009051" rpy="0 0 0"/>
+      <mass value="0.023288"/>
+      <inertia ixx="0.00000653132" ixy="-3.39820e-9" ixz="0.00000331654" iyy="0.0000235856" iyz="-1.14721e-8" izz="0.0000225903"/>
     </inertial>
   </link>
   <link name="rr_tibia_actuator">
@@ -685,9 +685,9 @@
       <geometry><mesh filename="package://hexapod/meshes/rm_coxa_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.007884 -0.004727 0.016936" rpy="0 0 0"/>
-      <mass value="0.020112"/>
-      <inertia ixx="0.00000627326" ixy="2.51358e-8" ixz="-1.53069e-7" iyy="0.00000935699" iyz="3.54250e-7" izz="0.00000944904"/>
+      <origin xyz="0.00794 -0.004264 0.016807" rpy="0 0 0"/>
+      <mass value="0.019547"/>
+      <inertia ixx="0.00000609344" ixy="4.31555e-8" ixz="-1.58089e-7" iyy="0.00000931798" iyz="3.12639e-7" izz="0.00000929049"/>
     </inertial>
   </link>
   <link name="rm_femur_actuator">
@@ -717,9 +717,9 @@
       <geometry><mesh filename="package://hexapod/meshes/rm_femur_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.060034 0.000125352 -0.008685" rpy="0 0 0"/>
-      <mass value="0.024071"/>
-      <inertia ixx="0.00000665374" ixy="-2.29071e-9" ixz="0.00000322038" iyy="0.0000237881" iyz="-1.03678e-8" izz="0.0000227217"/>
+      <origin xyz="0.059667 0.000129567 -0.009051" rpy="0 0 0"/>
+      <mass value="0.023288"/>
+      <inertia ixx="0.00000653132" ixy="-3.39820e-9" ixz="0.00000331654" iyy="0.0000235856" iyz="-1.14721e-8" izz="0.0000225903"/>
     </inertial>
   </link>
   <link name="rm_tibia_actuator">
@@ -797,9 +797,9 @@
       <geometry><mesh filename="package://hexapod/meshes/rf_coxa_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.007884 -0.004727 0.016936" rpy="0 0 0"/>
-      <mass value="0.020112"/>
-      <inertia ixx="0.00000627326" ixy="2.51358e-8" ixz="-1.53069e-7" iyy="0.00000935699" iyz="3.54250e-7" izz="0.00000944904"/>
+      <origin xyz="0.00794 -0.004264 0.016807" rpy="0 0 0"/>
+      <mass value="0.019547"/>
+      <inertia ixx="0.00000609344" ixy="4.31555e-8" ixz="-1.58089e-7" iyy="0.00000931798" iyz="3.12639e-7" izz="0.00000929049"/>
     </inertial>
   </link>
   <link name="rf_femur_actuator">
@@ -829,9 +829,9 @@
       <geometry><mesh filename="package://hexapod/meshes/rf_femur_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.060034 0.000125352 -0.008685" rpy="0 0 0"/>
-      <mass value="0.024071"/>
-      <inertia ixx="0.00000665374" ixy="-2.29071e-9" ixz="0.00000322038" iyy="0.0000237881" iyz="-1.03678e-8" izz="0.0000227217"/>
+      <origin xyz="0.059667 0.000129567 -0.009051" rpy="0 0 0"/>
+      <mass value="0.023288"/>
+      <inertia ixx="0.00000653132" ixy="-3.39820e-9" ixz="0.00000331654" iyy="0.0000235856" iyz="-1.14721e-8" izz="0.0000225903"/>
     </inertial>
   </link>
   <link name="rf_tibia_actuator">
@@ -893,9 +893,9 @@
       <geometry><mesh filename="package://hexapod/meshes/computer_hood.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.005885 0.001805 0.076432" rpy="0 0 0"/>
-      <mass value="0.055535"/>
-      <inertia ixx="0.0000893221" ixy="-9.87727e-9" ixz="3.62382e-8" iyy="0.000113638" iyz="6.10304e-7" izz="0.000175781"/>
+      <origin xyz="-0.005877 -0.005273 0.081235" rpy="0 0 0"/>
+      <mass value="0.067047"/>
+      <inertia ixx="0.000138447" ixy="-1.00679e-8" ixz="5.29718e-8" iyy="0.000148121" iyz="8.62870e-7" izz="0.000241581"/>
     </inertial>
   </link>
   <link name="board_hood">
@@ -909,9 +909,9 @@
       <geometry><mesh filename="package://hexapod/meshes/board_hood.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.011837 0.000180961 -0.017156" rpy="0 0 0"/>
-      <mass value="0.03753"/>
-      <inertia ixx="0.000063399" ixy="-2.09875e-8" ixz="-2.81204e-7" iyy="0.000026041" iyz="-2.24840e-7" izz="0.0000776275"/>
+      <origin xyz="0.00562 0.0000050644 0.002809" rpy="0 0 0"/>
+      <mass value="0.063439"/>
+      <inertia ixx="0.0000903664" ixy="-6.24593e-7" ixz="6.39793e-7" iyy="0.000120972" iyz="-4.84643e-7" izz="0.000133888"/>
     </inertial>
   </link>
   <link name="main_switch">
@@ -941,30 +941,30 @@
       <geometry><mesh filename="package://hexapod/meshes/battery_tray.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-4.27718e-17 -4.60786e-19 -0.066297" rpy="0 0 0"/>
-      <mass value="0.053454"/>
-      <inertia ixx="0.0000290876" ixy="-3.35178e-14" ixz="2.30221e-20" iyy="0.000175604" iyz="8.00102e-21" izz="0.000194056"/>
+      <origin xyz="-3.26345e-17 1.98138e-17 -0.066424" rpy="0 0 0"/>
+      <mass value="0.059605"/>
+      <inertia ixx="0.0000325742" ixy="-3.79736e-14" ixz="5.67280e-21" iyy="0.000243983" iyz="-1.24329e-20" izz="0.000264788"/>
     </inertial>
   </link>
   <joint name="battery_mount" type="fixed">
     <parent link="base_link"/>
     <child link="battery"/>
-    <origin xyz="-0.071 0 -0.0703" rpy="0 0 0"/>
-  </joint>
-  <joint name="imu_mount" type="fixed">
-    <parent link="base_link"/>
-    <child link="imu"/>
-    <origin xyz="-0.0128 -0.01135 -0.0381" rpy="0 0 0"/>
+    <origin xyz="-0.0825 0 -0.0703" rpy="0 0 0"/>
   </joint>
   <joint name="actuator_bus_mount" type="fixed">
     <parent link="base_link"/>
     <child link="actuator_bus"/>
-    <origin xyz="-0.011 -0.05 -0.0381" rpy="0 0 0"/>
+    <origin xyz="-0.04 -0.031 -0.0381" rpy="0 0 0"/>
   </joint>
   <joint name="regulator_5v_mount" type="fixed">
     <parent link="base_link"/>
     <child link="regulator_5v"/>
-    <origin xyz="-0.0127 0.024 -0.0381" rpy="0 0 0"/>
+    <origin xyz="0.005 -0.031 -0.0381" rpy="0 0 0"/>
+  </joint>
+  <joint name="imu_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="imu"/>
+    <origin xyz="-0.012 0.005 -0.0381" rpy="0 0 0"/>
   </joint>
   <joint name="deck_pillar_1_mount" type="fixed">
     <parent link="base_link"/>
@@ -989,7 +989,7 @@
   <joint name="lidar_mount" type="fixed">
     <parent link="top_deck"/>
     <child link="lidar"/>
-    <origin xyz="0 0 0.09242" rpy="0 0 0"/>
+    <origin xyz="0 0 0.10042" rpy="0 0 0"/>
   </joint>
   <joint name="camera_mount" type="fixed">
     <parent link="top_deck"/>
@@ -1004,7 +1004,7 @@
   <joint name="lf_coxa_actuator_mount" type="fixed">
     <parent link="base_link"/>
     <child link="lf_coxa_actuator"/>
-    <origin xyz="0.07621 0.044 0" rpy="0 0 2.094395"/>
+    <origin xyz="0.07621 0.044 0" rpy="0 0 -1.047198"/>
   </joint>
   <joint name="lf_coxa" type="revolute">
     <parent link="base_link"/>
@@ -1037,7 +1037,7 @@
     <child link="lf_tibia_link"/>
     <origin xyz="0.085 0 -0.0381" rpy="3.141593 0 1.660796"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-0.802" upper="1.2" effort="2.942" velocity="4.712"/>
+    <limit lower="-0.765" upper="1.2" effort="2.942" velocity="4.712"/>
     <dynamics damping="0.1249" friction="0.0588"/>
   </joint>
   <joint name="lf_foot_mount" type="fixed">
@@ -1136,7 +1136,7 @@
   <joint name="rr_coxa_actuator_mount" type="fixed">
     <parent link="base_link"/>
     <child link="rr_coxa_actuator"/>
-    <origin xyz="-0.07621 -0.044 0" rpy="0 0 -1.047198"/>
+    <origin xyz="-0.07621 -0.044 0" rpy="0 0 2.094395"/>
   </joint>
   <joint name="rr_coxa" type="revolute">
     <parent link="base_link"/>
@@ -1169,7 +1169,7 @@
     <child link="rr_tibia_link"/>
     <origin xyz="0.085 0 -0.0381" rpy="3.141593 0 1.660796"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-0.802" upper="1.2" effort="2.942" velocity="4.712"/>
+    <limit lower="-0.765" upper="1.2" effort="2.942" velocity="4.712"/>
     <dynamics damping="0.1249" friction="0.0588"/>
   </joint>
   <joint name="rr_foot_mount" type="fixed">
@@ -1231,7 +1231,7 @@
     <child link="rf_coxa_link"/>
     <origin xyz="0.07621 -0.044 0" rpy="0 0 -0.523599"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-0.6" upper="0.6" effort="2.942" velocity="4.712"/>
+    <limit lower="-0.521" upper="0.6" effort="2.942" velocity="4.712"/>
     <dynamics damping="0.1249" friction="0.0588"/>
   </joint>
   <joint name="rf_femur_actuator_mount" type="fixed">
@@ -1278,7 +1278,7 @@
   <joint name="main_switch_mount" type="fixed">
     <parent link="board_hood"/>
     <child link="main_switch"/>
-    <origin xyz="0.0434 -0.0003 -0.0236" rpy="1.570796 0 1.570796"/>
+    <origin xyz="-0.0454 0.012 -0.00505" rpy="-1.570796 0 1.570796"/>
   </joint>
   <joint name="battery_tray_mount" type="fixed">
     <parent link="base_link"/>

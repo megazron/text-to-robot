@@ -3,7 +3,7 @@
      robot: wall_e
      prompt: Build WALL-E: a tracked trash-compactor robot with a telescoping neck, binocular eyes and two gripper arms
 
-     47 links, 46 joints, 47 inferred values
+     48 links, 47 joints, 48 inferred values
 -->
 <robot name="wall_e">
   <material name="printed"><color rgba="0.93 0.93 0.95 1"/></material>
@@ -33,9 +33,9 @@
       <geometry><mesh filename="package://wall_e/meshes/body.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.005094 -0.0000179537 0.06843" rpy="0 0 0"/>
-      <mass value="0.196144"/>
-      <inertia ixx="0.00078194" ixy="-5.75469e-7" ixz="0.00000245086" iyy="0.001182" iyz="-7.97509e-8" izz="0.001272"/>
+      <origin xyz="0.005094 -0.0000179782 0.068372" rpy="0 0 0"/>
+      <mass value="0.196125"/>
+      <inertia ixx="0.000780483" ixy="-5.75842e-7" ixz="0.00000279459" iyy="0.001178" iyz="1.39876e-7" izz="0.001269"/>
     </inertial>
   </link>
   <link name="front_band">
@@ -225,9 +225,9 @@
       <geometry><sphere radius="0.002"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.000419932 0.0785 -0.037194" rpy="0 0 0"/>
-      <mass value="0.03081"/>
-      <inertia ixx="0.0000454662" ixy="1.08586e-12" ixz="0.0000020802" iyy="0.000175784" iyz="-3.37696e-12" izz="0.000134046"/>
+      <origin xyz="-0.000445735 0.0785 -0.037273" rpy="0 0 0"/>
+      <mass value="0.031131"/>
+      <inertia ixx="0.0000459407" ixy="-2.02058e-12" ixz="0.00000180146" iyy="0.000183042" iyz="-2.97744e-13" izz="0.000140868"/>
     </inertial>
   </link>
   <link name="left_idler">
@@ -257,9 +257,9 @@
       <geometry><sphere radius="0.002"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.000419932 -0.0785 -0.037194" rpy="0 0 0"/>
-      <mass value="0.03081"/>
-      <inertia ixx="0.0000454662" ixy="1.16130e-12" ixz="0.0000020802" iyy="0.000175784" iyz="-3.25043e-12" izz="0.000134046"/>
+      <origin xyz="-0.000445735 -0.0785 -0.037273" rpy="0 0 0"/>
+      <mass value="0.031131"/>
+      <inertia ixx="0.0000459407" ixy="-2.03002e-12" ixz="0.00000180146" iyy="0.000183042" iyz="-2.97208e-13" izz="0.000140868"/>
     </inertial>
   </link>
   <link name="right_idler">
@@ -311,6 +311,22 @@
     </inertial>
   </link>
   <link name="breadboard">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://wall_e/meshes/breadboard_400.stl"/></geometry>
+      <material name="printed"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://wall_e/meshes/breadboard_400.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.04125 0.02725 0.003903" rpy="0 0 0"/>
+      <mass value="0.03"/>
+      <inertia ixx="0.0000079669" ixy="-1.24894e-21" ixz="-1.43274e-22" iyy="0.0000174921" iyz="5.69046e-24" izz="0.0000251433"/>
+    </inertial>
+  </link>
+  <link name="breadboard_2">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry><mesh filename="package://wall_e/meshes/breadboard_400.stl"/></geometry>
@@ -792,12 +808,12 @@
   <joint name="front_left_motor_mount" type="fixed">
     <parent link="body"/>
     <child link="front_left_motor"/>
-    <origin xyz="0.065 0.064 0.0355" rpy="1.570796 0 3.141593"/>
+    <origin xyz="0.067 0.064 0.0355" rpy="1.570796 0 3.141593"/>
   </joint>
   <joint name="front_left_wheel_joint" type="continuous">
     <parent link="body"/>
     <child link="front_left_wheel"/>
-    <origin xyz="0.065 0.065 0.0355" rpy="-1.570796 0 0"/>
+    <origin xyz="0.067 0.065 0.0355" rpy="-1.570796 0 0"/>
     <axis xyz="0 0 1"/>
     <limit effort="0.0785" velocity="20.944"/>
     <dynamics damping="0.000375" friction="0.0016"/>
@@ -805,12 +821,12 @@
   <joint name="front_right_motor_mount" type="fixed">
     <parent link="body"/>
     <child link="front_right_motor"/>
-    <origin xyz="0.065 -0.064 0.0355" rpy="-1.570796 0 3.141593"/>
+    <origin xyz="0.067 -0.064 0.0355" rpy="-1.570796 0 3.141593"/>
   </joint>
   <joint name="front_right_wheel_joint" type="continuous">
     <parent link="body"/>
     <child link="front_right_wheel"/>
-    <origin xyz="0.065 -0.065 0.0355" rpy="1.570796 0 0"/>
+    <origin xyz="0.067 -0.065 0.0355" rpy="1.570796 0 0"/>
     <axis xyz="0 0 1"/>
     <limit effort="0.0785" velocity="20.944"/>
     <dynamics damping="0.000375" friction="0.0016"/>
@@ -818,12 +834,12 @@
   <joint name="rear_left_motor_mount" type="fixed">
     <parent link="body"/>
     <child link="rear_left_motor"/>
-    <origin xyz="-0.065 0.064 0.0355" rpy="-1.570796 0 0"/>
+    <origin xyz="-0.067 0.064 0.0355" rpy="-1.570796 0 0"/>
   </joint>
   <joint name="rear_left_wheel_joint" type="continuous">
     <parent link="body"/>
     <child link="rear_left_wheel"/>
-    <origin xyz="-0.065 0.065 0.0355" rpy="-1.570796 0 0"/>
+    <origin xyz="-0.067 0.065 0.0355" rpy="-1.570796 0 0"/>
     <axis xyz="0 0 1"/>
     <limit effort="0.0785" velocity="20.944"/>
     <dynamics damping="0.000375" friction="0.0016"/>
@@ -831,12 +847,12 @@
   <joint name="rear_right_motor_mount" type="fixed">
     <parent link="body"/>
     <child link="rear_right_motor"/>
-    <origin xyz="-0.065 -0.064 0.0355" rpy="1.570796 0 0"/>
+    <origin xyz="-0.067 -0.064 0.0355" rpy="1.570796 0 0"/>
   </joint>
   <joint name="rear_right_wheel_joint" type="continuous">
     <parent link="body"/>
     <child link="rear_right_wheel"/>
-    <origin xyz="-0.065 -0.065 0.0355" rpy="1.570796 0 0"/>
+    <origin xyz="-0.067 -0.065 0.0355" rpy="1.570796 0 0"/>
     <axis xyz="0 0 1"/>
     <limit effort="0.0785" velocity="20.944"/>
     <dynamics damping="0.000375" friction="0.0016"/>
@@ -882,25 +898,30 @@
     <child link="breadboard"/>
     <origin xyz="-0.0823 -0.0583 0.07" rpy="1.570796 0 1.570796"/>
   </joint>
+  <joint name="breadboard_2_mount" type="fixed">
+    <parent link="body"/>
+    <child link="breadboard_2"/>
+    <origin xyz="-0.062 0.0613 0.133" rpy="0 1.570796 -1.570796"/>
+  </joint>
   <joint name="controller_mount" type="fixed">
     <parent link="breadboard"/>
     <child link="controller"/>
-    <origin xyz="0.004 0.031 0.0085" rpy="0 0 0"/>
+    <origin xyz="0.00273 0.01963 0.0085" rpy="0 0 0"/>
   </joint>
   <joint name="motor_driver_1_mount" type="fixed">
     <parent link="breadboard"/>
     <child link="motor_driver_1"/>
-    <origin xyz="0.004 0.004 0.0085" rpy="0 0 0"/>
+    <origin xyz="0.06877 0.01709 0.0085" rpy="0 0 1.570796"/>
   </joint>
   <joint name="motor_driver_2_mount" type="fixed">
-    <parent link="breadboard"/>
+    <parent link="breadboard_2"/>
     <child link="motor_driver_2"/>
-    <origin xyz="0.028 0.004 0.0085" rpy="0 0 0"/>
+    <origin xyz="0.05099 0.01709 0.0085" rpy="0 0 1.570796"/>
   </joint>
   <joint name="servo_driver_mount" type="fixed">
     <parent link="body"/>
     <child link="servo_driver"/>
-    <origin xyz="0.0704 -0.0311 0.0234" rpy="0 0 1.570796"/>
+    <origin xyz="0.0804 -0.0311 0.0234" rpy="0 0 1.570796"/>
   </joint>
   <joint name="servo_regulator_mount" type="fixed">
     <parent link="body"/>
@@ -961,14 +982,14 @@
   <joint name="left_arm_servo_mount" type="fixed">
     <parent link="body"/>
     <child link="left_arm_servo"/>
-    <origin xyz="0.01 0.0645 0.12" rpy="0 -1.570796 -1.570796"/>
+    <origin xyz="0.01 0.0645 0.123" rpy="0 -1.570796 -1.570796"/>
   </joint>
   <joint name="left_arm_lift" type="revolute">
     <parent link="body"/>
     <child link="left_arm"/>
-    <origin xyz="0.01 0.0645 0.12" rpy="0 -1.570796 -1.570796"/>
+    <origin xyz="0.01 0.0645 0.123" rpy="0 -1.570796 -1.570796"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-1" upper="0.476" effort="0.2157" velocity="13.09"/>
+    <limit lower="-1" upper="0.494" effort="0.2157" velocity="13.09"/>
     <dynamics damping="0.0033" friction="0.0043"/>
   </joint>
   <joint name="left_elbow_servo_mount" type="fixed">
@@ -986,7 +1007,7 @@
     <child link="left_forearm"/>
     <origin xyz="0 0.056 0.031" rpy="0 0 1.570796"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-1.5" upper="1.271" effort="0.1765" velocity="10.472"/>
+    <limit lower="-1.5" upper="1.252" effort="0.1765" velocity="10.472"/>
     <dynamics damping="0.0034" friction="0.0035"/>
   </joint>
   <joint name="left_hand_servo_mount" type="fixed">
@@ -1005,14 +1026,14 @@
   <joint name="right_arm_servo_mount" type="fixed">
     <parent link="body"/>
     <child link="right_arm_servo"/>
-    <origin xyz="0.01 -0.0645 0.12" rpy="0 -1.570796 1.570796"/>
+    <origin xyz="0.01 -0.0645 0.123" rpy="0 -1.570796 1.570796"/>
   </joint>
   <joint name="right_arm_lift" type="revolute">
     <parent link="body"/>
     <child link="right_arm"/>
-    <origin xyz="0.01 -0.0645 0.12" rpy="0 -1.570796 1.570796"/>
+    <origin xyz="0.01 -0.0645 0.123" rpy="0 -1.570796 1.570796"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-0.476" upper="1" effort="0.2157" velocity="13.09"/>
+    <limit lower="-0.494" upper="1" effort="0.2157" velocity="13.09"/>
     <dynamics damping="0.0033" friction="0.0043"/>
   </joint>
   <joint name="right_elbow_servo_mount" type="fixed">
@@ -1030,7 +1051,7 @@
     <child link="right_forearm"/>
     <origin xyz="0 -0.056 0.031" rpy="0 0 -1.570796"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-1.271" upper="1.5" effort="0.1765" velocity="10.472"/>
+    <limit lower="-1.252" upper="1.5" effort="0.1765" velocity="10.472"/>
     <dynamics damping="0.0034" friction="0.0035"/>
   </joint>
   <joint name="right_hand_servo_mount" type="fixed">

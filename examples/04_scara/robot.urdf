@@ -3,7 +3,7 @@
      robot: scara
      prompt: Create a SCARA robot
 
-     46 links, 45 joints, 46 inferred values
+     48 links, 47 joints, 48 inferred values
 -->
 <robot name="scara">
   <material name="printed"><color rgba="0.93 0.93 0.95 1"/></material>
@@ -29,9 +29,9 @@
       <geometry><mesh filename="package://scara/meshes/base_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.0000280144 0.0000105573 0.030218" rpy="0 0 0"/>
-      <mass value="0.422396"/>
-      <inertia ixx="0.001372" ixy="1.78767e-7" ixz="3.66719e-7" iyy="0.001372" iyz="-1.38384e-7" izz="0.001461"/>
+      <origin xyz="-0.000145485 -2.74333e-12 0.030258" rpy="0 0 0"/>
+      <mass value="0.420244"/>
+      <inertia ixx="0.001371" ixy="3.77309e-14" ixz="-8.55585e-7" iyy="0.001369" iyz="3.95463e-15" izz="0.001458"/>
     </inertial>
   </link>
   <link name="j1_motor">
@@ -93,9 +93,9 @@
       <geometry><mesh filename="package://scara/meshes/column.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.000123932 0.0000231468 0.036793" rpy="0 0 0"/>
-      <mass value="0.149958"/>
-      <inertia ixx="0.000134838" ixy="1.36403e-8" ixz="2.56068e-8" iyy="0.000126991" iyz="-9.84535e-8" izz="0.000240086"/>
+      <origin xyz="-0.000124168 -0.00000972144 0.036766" rpy="0 0 0"/>
+      <mass value="0.149673"/>
+      <inertia ixx="0.000134695" ixy="1.42512e-8" ixz="2.60963e-8" iyy="0.000126929" iyz="-3.02158e-8" izz="0.000239996"/>
     </inertial>
   </link>
   <link name="z_rod_right">
@@ -221,9 +221,9 @@
       <geometry><mesh filename="package://scara/meshes/inner_arm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.02924 2.53429e-12 0.034479" rpy="0 0 0"/>
-      <mass value="0.460775"/>
-      <inertia ixx="0.000362518" ixy="-1.49216e-13" ixz="-0.000190623" iyy="0.002037" iyz="-1.07770e-15" izz="0.002177"/>
+      <origin xyz="0.029171 2.53699e-12 0.034468" rpy="0 0 0"/>
+      <mass value="0.460285"/>
+      <inertia ixx="0.000362339" ixy="-1.49295e-13" ixz="-0.000190108" iyy="0.002034" iyz="-1.09068e-15" izz="0.002174"/>
     </inertial>
   </link>
   <link name="z_bushing_r1">
@@ -365,9 +365,9 @@
       <geometry><mesh filename="package://scara/meshes/outer_arm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.045857 -0.0000211337 0.036751" rpy="0 0 0"/>
-      <mass value="0.105787"/>
-      <inertia ixx="0.0000256237" ixy="2.31760e-7" ixz="0.00000417217" iyy="0.000240124" iyz="-3.80950e-8" izz="0.000243538"/>
+      <origin xyz="0.045717 -0.0000211982 0.036794" rpy="0 0 0"/>
+      <mass value="0.105465"/>
+      <inertia ixx="0.0000255238" ixy="2.32073e-7" ixz="0.00000388573" iyy="0.000239143" iyz="-3.81928e-8" izz="0.000242645"/>
     </inertial>
   </link>
   <link name="wrist_servo">
@@ -413,9 +413,9 @@
       <geometry><mesh filename="package://scara/meshes/gripper_body.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.001217 0.0000728769 0.054567" rpy="0 0 0"/>
-      <mass value="0.212948"/>
-      <inertia ixx="0.000374871" ixy="-1.94817e-8" ixz="-0.0000044382" iyy="0.000765319" iyz="-6.15614e-8" izz="0.000524536"/>
+      <origin xyz="-0.001314 0.0000685036 0.057013" rpy="0 0 0"/>
+      <mass value="0.226543"/>
+      <inertia ixx="0.000422403" ixy="-2.09800e-8" ixz="-0.0000050092" iyy="0.000832697" iyz="-8.07657e-9" izz="0.000553385"/>
     </inertial>
   </link>
   <link name="gripper_servo">
@@ -461,7 +461,7 @@
       <geometry><mesh filename="package://scara/meshes/finger_a.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.032851 0.000725432 0.118242" rpy="0 0 0"/>
+      <origin xyz="0.032851 0.000725432 0.124242" rpy="0 0 0"/>
       <mass value="0.066307"/>
       <inertia ixx="0.0000566342" ixy="5.33105e-7" ixz="0.00000241067" iyy="0.0000546913" iyz="0.00000206373" izz="0.0000135352"/>
     </inertial>
@@ -509,7 +509,7 @@
       <geometry><mesh filename="package://scara/meshes/finger_b.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.032851 -0.000725432 0.118242" rpy="0 0 0"/>
+      <origin xyz="-0.032851 -0.000725432 0.124242" rpy="0 0 0"/>
       <mass value="0.066307"/>
       <inertia ixx="0.0000566342" ixy="5.33105e-7" ixz="-0.00000241067" iyy="0.0000546913" iyz="-0.00000206373" izz="0.0000135352"/>
     </inertial>
@@ -589,9 +589,9 @@
       <geometry><mesh filename="package://scara/meshes/controller_box.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.548227 0.000779567 0.028094" rpy="0 0 0"/>
-      <mass value="0.248874"/>
-      <inertia ixx="0.001515" ixy="0.00000829309" ixz="-0.0000117534" iyy="0.001208" iyz="-0.00000630337" izz="0.002322"/>
+      <origin xyz="-0.578484 -0.000221516 0.02936" rpy="0 0 0"/>
+      <mass value="0.323587"/>
+      <inertia ixx="0.00211" ixy="-0.00000139393" ixz="-0.0000150505" iyy="0.00252" iyz="0.00000278166" izz="0.004034"/>
     </inertial>
   </link>
   <link name="psu_24v">
@@ -637,9 +637,41 @@
       <geometry><mesh filename="package://scara/meshes/controller_deck.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.548704 0.001091 0.047963" rpy="0 0 0"/>
-      <mass value="0.073297"/>
-      <inertia ixx="0.000244924" ixy="0.00000183174" ixz="-3.94193e-7" iyy="0.000172286" iyz="9.27041e-7" izz="0.000416419"/>
+      <origin xyz="-0.548338 0.006431 0.047523" rpy="0 0 0"/>
+      <mass value="0.071368"/>
+      <inertia ixx="0.000241381" ixy="0.00000696562" ixz="-8.21243e-8" iyy="0.000164213" iyz="5.81435e-8" izz="0.000405471"/>
+    </inertial>
+  </link>
+  <link name="breadboard_controller">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://scara/meshes/breadboard_400.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://scara/meshes/breadboard_400.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.04125 0.02725 0.003903" rpy="0 0 0"/>
+      <mass value="0.03"/>
+      <inertia ixx="0.0000079669" ixy="-1.24894e-21" ixz="-1.43274e-22" iyy="0.0000174921" iyz="5.69046e-24" izz="0.0000251433"/>
+    </inertial>
+  </link>
+  <link name="breadboard_drivers">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://scara/meshes/breadboard_400.stl"/></geometry>
+      <material name="electronics"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://scara/meshes/breadboard_400.stl"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.04125 0.02725 0.003903" rpy="0 0 0"/>
+      <mass value="0.03"/>
+      <inertia ixx="0.0000079669" ixy="-1.24894e-21" ixz="-1.43274e-22" iyy="0.0000174921" iyz="5.69046e-24" izz="0.0000251433"/>
     </inertial>
   </link>
   <link name="controller">
@@ -733,9 +765,9 @@
       <geometry><mesh filename="package://scara/meshes/controller_lid.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.54992 -0.000140089 0.087315" rpy="0 0 0"/>
-      <mass value="0.078954"/>
-      <inertia ixx="0.000311254" ixy="2.12391e-8" ixz="6.14994e-9" iyy="0.000225987" iyz="2.04869e-9" izz="0.000537037"/>
+      <origin xyz="-0.583891 -0.0000978268 0.093349" rpy="0 0 0"/>
+      <mass value="0.113063"/>
+      <inertia ixx="0.00043657183" ixy="3.30615e-7" ixz="8.33846e-8" iyy="0.000567267599" iyz="1.66759e-9" izz="0.00100356953"/>
     </inertial>
   </link>
   <link name="mains_inlet">
@@ -815,9 +847,9 @@
   <joint name="z" type="prismatic">
     <parent link="column"/>
     <child link="inner_arm"/>
-    <origin xyz="0 0 0.1077" rpy="0 0 0"/>
+    <origin xyz="0 0 0.1137" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
-    <limit lower="0" upper="0.159" effort="236.4" velocity="0.08"/>
+    <limit lower="0" upper="0.153" effort="236.4" velocity="0.08"/>
     <dynamics damping="20" friction="3"/>
   </joint>
   <joint name="z_bushing_r1_mount" type="fixed">
@@ -889,12 +921,12 @@
   <joint name="gripper_servo_mount" type="fixed">
     <parent link="gripper_body"/>
     <child link="gripper_servo"/>
-    <origin xyz="0 0 0.0671" rpy="0 0 0"/>
+    <origin xyz="0 0 0.0731" rpy="0 0 0"/>
   </joint>
   <joint name="gripper_pinion" type="revolute">
     <parent link="gripper_body"/>
     <child link="pinion"/>
-    <origin xyz="0 0 0.0671" rpy="0 0 0"/>
+    <origin xyz="0 0 0.0731" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
     <limit lower="0" upper="1.9048" effort="2.942" velocity="4.712"/>
     <dynamics damping="0.1249" friction="0.0588"/>
@@ -911,12 +943,12 @@
   <joint name="finger_a_bushing_lower_mount" type="fixed">
     <parent link="finger_a"/>
     <child link="finger_a_bushing_lower"/>
-    <origin xyz="0.035 0 0.0906" rpy="0 -1.570796 -3.141593"/>
+    <origin xyz="0.035 0 0.0966" rpy="0 -1.570796 -3.141593"/>
   </joint>
   <joint name="finger_a_bushing_upper_mount" type="fixed">
     <parent link="finger_a"/>
     <child link="finger_a_bushing_upper"/>
-    <origin xyz="0.035 0 0.1266" rpy="0 -1.570796 -3.141593"/>
+    <origin xyz="0.035 0 0.1326" rpy="0 -1.570796 -3.141593"/>
   </joint>
   <joint name="finger_b" type="prismatic">
     <parent link="gripper_body"/>
@@ -930,22 +962,22 @@
   <joint name="finger_b_bushing_lower_mount" type="fixed">
     <parent link="finger_b"/>
     <child link="finger_b_bushing_lower"/>
-    <origin xyz="-0.035 0 0.0906" rpy="0 -1.570796 -3.141593"/>
+    <origin xyz="-0.035 0 0.0966" rpy="0 -1.570796 -3.141593"/>
   </joint>
   <joint name="finger_b_bushing_upper_mount" type="fixed">
     <parent link="finger_b"/>
     <child link="finger_b_bushing_upper"/>
-    <origin xyz="-0.035 0 0.1266" rpy="0 -1.570796 -3.141593"/>
+    <origin xyz="-0.035 0 0.1326" rpy="0 -1.570796 -3.141593"/>
   </joint>
   <joint name="gripper_rod_lower_mount" type="fixed">
     <parent link="gripper_body"/>
     <child link="gripper_rod_lower"/>
-    <origin xyz="-0.055 0 0.0906" rpy="0 -1.570796 -3.141593"/>
+    <origin xyz="-0.055 0 0.0966" rpy="0 -1.570796 -3.141593"/>
   </joint>
   <joint name="gripper_rod_upper_mount" type="fixed">
     <parent link="gripper_body"/>
     <child link="gripper_rod_upper"/>
-    <origin xyz="-0.055 0 0.1266" rpy="0 -1.570796 -3.141593"/>
+    <origin xyz="-0.055 0 0.1326" rpy="0 -1.570796 -3.141593"/>
   </joint>
   <joint name="controller_box_mount" type="fixed">
     <parent link="base_link"/>
@@ -967,30 +999,40 @@
     <child link="controller_deck"/>
     <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
-  <joint name="controller_mount" type="fixed">
+  <joint name="breadboard_controller_mount" type="fixed">
     <parent link="controller_deck"/>
+    <child link="breadboard_controller"/>
+    <origin xyz="-0.621 0.097 0.049" rpy="0 0 -1.570796"/>
+  </joint>
+  <joint name="breadboard_drivers_mount" type="fixed">
+    <parent link="controller_deck"/>
+    <child link="breadboard_drivers"/>
+    <origin xyz="-0.553 0.02 0.049" rpy="0 0 0"/>
+  </joint>
+  <joint name="controller_mount" type="fixed">
+    <parent link="breadboard_controller"/>
     <child link="controller"/>
-    <origin xyz="-0.615 -0.06 0.058" rpy="0 0 0"/>
+    <origin xyz="0.0015 0.01455 0.0085" rpy="0 0 0"/>
   </joint>
   <joint name="driver_j1_mount" type="fixed">
-    <parent link="controller_deck"/>
+    <parent link="breadboard_drivers"/>
     <child link="driver_j1"/>
-    <origin xyz="-0.535 -0.06 0.061" rpy="0 0 0"/>
+    <origin xyz="0.004 0.01965 0.0085" rpy="0 0 0"/>
   </joint>
   <joint name="driver_j2_mount" type="fixed">
-    <parent link="controller_deck"/>
+    <parent link="breadboard_drivers"/>
     <child link="driver_j2"/>
-    <origin xyz="-0.535 -0.038 0.061" rpy="0 0 0"/>
+    <origin xyz="0.03 0.01965 0.0085" rpy="0 0 0"/>
   </joint>
   <joint name="driver_z_mount" type="fixed">
-    <parent link="controller_deck"/>
+    <parent link="breadboard_drivers"/>
     <child link="driver_z"/>
-    <origin xyz="-0.535 -0.016 0.061" rpy="0 0 0"/>
+    <origin xyz="0.056 0.01965 0.0085" rpy="0 0 0"/>
   </joint>
   <joint name="servo_bus_mount" type="fixed">
     <parent link="controller_deck"/>
     <child link="servo_bus"/>
-    <origin xyz="-0.615 0.02 0.055" rpy="0 0 0"/>
+    <origin xyz="-0.52 -0.045 0.055" rpy="0 0 0"/>
   </joint>
   <joint name="controller_lid_mount" type="fixed">
     <parent link="controller_box"/>
@@ -1000,6 +1042,6 @@
   <joint name="mains_inlet_mount" type="fixed">
     <parent link="controller_box"/>
     <child link="mains_inlet"/>
-    <origin xyz="-0.635 -0.008 0.066" rpy="0 -1.570796 0"/>
+    <origin xyz="-0.694 -0.008 0.066" rpy="0 -1.570796 0"/>
   </joint>
 </robot>

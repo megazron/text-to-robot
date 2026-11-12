@@ -160,9 +160,9 @@
       "category": "Printed structure",
       "name": "PETG filament for 21 printed parts",
       "qty": 1,
-      "unit_cost": 21.04,
-      "subtotal": 21.04,
-      "spec": "832 g of parts (+15 % supports/waste), about 75.8 h of printing",
+      "unit_cost": 20.86,
+      "subtotal": 20.86,
+      "spec": "824 g of parts (+15 % supports/waste), about 75.1 h of printing",
       "note": "left_rocker_rear_arm, left_rocker_frame, right_rocker_rear_arm, right_rocker_frame, battery_tray, computer_tray, motor_driver_1_tray, motor_driver_2_tray, io_controller_tray, servo_bus_tray, regulator_5v_tray, depth_camera_bracket, camera_mast, arm_base_link, arm_turret, arm_upper_arm, arm_forearm, arm_forearm_rotator, arm_wrist, arm_wrist_rotator, arm_gripper_jaw"
     },
     {
@@ -176,28 +176,28 @@
     {
       "category": "Wiring",
       "name": "12 AWG silicone wire",
-      "qty": 0.8,
+      "qty": 1,
       "unit_cost": 2.2,
-      "subtotal": 1.76,
-      "spec": "0.8 m: 3.308 mm2, rated 20.5 A in a bundle; 0.72 m cut + 10 % waste",
+      "subtotal": 2.2,
+      "spec": "1 m: 3.308 mm2, rated 20.5 A in a bundle; 0.90 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "18 AWG silicone wire",
-      "qty": 1.6,
+      "qty": 2.6,
       "unit_cost": 0.7,
-      "subtotal": 1.12,
-      "spec": "1.6 m: 0.823 mm2, rated 8 A in a bundle; 1.43 m cut + 10 % waste",
+      "subtotal": 1.82,
+      "spec": "2.6 m: 0.823 mm2, rated 8 A in a bundle; 2.29 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "20 AWG silicone wire",
-      "qty": 7.3,
+      "qty": 7.2,
       "unit_cost": 0.5,
-      "subtotal": 3.65,
-      "spec": "7.3 m: 0.519 mm2, rated 5.5 A in a bundle; 6.64 m cut + 10 % waste",
+      "subtotal": 3.6,
+      "spec": "7.2 m: 0.519 mm2, rated 5.5 A in a bundle; 6.55 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
@@ -212,19 +212,19 @@
     {
       "category": "Wiring",
       "name": "24 AWG silicone wire",
-      "qty": 8.3,
+      "qty": 9.3,
       "unit_cost": 0.35,
-      "subtotal": 2.91,
-      "spec": "8.3 m: 0.205 mm2, rated 1.75 A in a bundle; 7.46 m cut + 10 % waste",
+      "subtotal": 3.25,
+      "spec": "9.3 m: 0.205 mm2, rated 1.75 A in a bundle; 8.45 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "26 AWG silicone wire",
-      "qty": 8.8,
+      "qty": 9.9,
       "unit_cost": 0.3,
-      "subtotal": 2.64,
-      "spec": "8.8 m: 0.128 mm2, rated 1.1 A in a bundle; 7.95 m cut + 10 % waste",
+      "subtotal": 2.97,
+      "spec": "9.9 m: 0.128 mm2, rated 1.1 A in a bundle; 8.98 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
@@ -320,28 +320,28 @@
     {
       "category": "Wiring",
       "name": "Cable tie 100 x 2.5 mm",
-      "qty": 67,
+      "qty": 54,
       "unit_cost": 0.02,
-      "subtotal": 1.34,
-      "spec": "67 pc: at every clip, cable end and strain-relief anchor",
+      "subtotal": 1.08,
+      "spec": "54 pc: at every clip, cable end and strain-relief anchor",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "Rubber grommet, 6.4 mm panel hole, 3.2 mm bore",
-      "qty": 3,
+      "qty": 4,
       "unit_cost": 0.08,
-      "subtotal": 0.24,
-      "spec": "3 pc: 9.5 mm panel hole",
+      "subtotal": 0.32,
+      "spec": "4 pc: 9.5 mm panel hole",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "Nylon braided sleeving 6 mm",
-      "qty": 3,
+      "qty": 3.6,
       "unit_cost": 0.4,
-      "subtotal": 1.2,
-      "spec": "3 m: over every cable where it crosses a joint",
+      "subtotal": 1.44,
+      "spec": "3.6 m: over every cable where it crosses a joint",
       "note": "price estimated"
     },
     {
@@ -417,7 +417,7 @@
       "note": "price estimated"
     }
   ],
-  "total": 3859.75,
+  "total": 3861.39,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
@@ -432,35 +432,35 @@
     },
     {
       "joint": "arm_shoulder_pitch",
-      "required_effort": 3.626,
+      "required_effort": 3.6,
       "effort_unit": "N·m",
-      "required_torque_nm": 3.626,
+      "required_torque_nm": 3.6,
       "chosen": "DYNAMIXEL XH540-W270-T(R)",
-      "margin": "2.73x"
+      "margin": "2.75x"
     },
     {
       "joint": "arm_elbow_pitch",
-      "required_effort": 2.116,
+      "required_effort": 2.102,
       "effort_unit": "N·m",
-      "required_torque_nm": 2.116,
+      "required_torque_nm": 2.102,
       "chosen": "DYNAMIXEL XH540-W270-T(R)",
-      "margin": "4.68x"
+      "margin": "4.71x"
     },
     {
       "joint": "arm_forearm_roll",
-      "required_effort": 0.79,
+      "required_effort": 0.787,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.79,
+      "required_torque_nm": 0.787,
       "chosen": "DYNAMIXEL XM430-W350-T(R)",
-      "margin": "5.19x"
+      "margin": "5.21x"
     },
     {
       "joint": "arm_wrist_pitch",
-      "required_effort": 0.79,
+      "required_effort": 0.787,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.79,
+      "required_torque_nm": 0.787,
       "chosen": "DYNAMIXEL XM430-W350-T(R)",
-      "margin": "5.19x"
+      "margin": "5.21x"
     },
     {
       "joint": "arm_wrist_roll",
@@ -468,7 +468,7 @@
       "effort_unit": "N·m",
       "required_torque_nm": 0.058,
       "chosen": "DYNAMIXEL XM430-W350-T(R)",
-      "margin": "70.64x"
+      "margin": "70.52x"
     },
     {
       "joint": "left_front_wheel_joint",
@@ -476,7 +476,7 @@
       "effort_unit": "N·m",
       "required_torque_nm": 0.13,
       "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
-      "margin": "5.26x"
+      "margin": "5.27x"
     },
     {
       "joint": "left_rear_wheel_joint",
@@ -484,7 +484,7 @@
       "effort_unit": "N·m",
       "required_torque_nm": 0.13,
       "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
-      "margin": "5.26x"
+      "margin": "5.27x"
     },
     {
       "joint": "right_front_wheel_joint",
@@ -492,7 +492,7 @@
       "effort_unit": "N·m",
       "required_torque_nm": 0.13,
       "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
-      "margin": "5.26x"
+      "margin": "5.27x"
     },
     {
       "joint": "right_rear_wheel_joint",
@@ -500,12 +500,12 @@
       "effort_unit": "N·m",
       "required_torque_nm": 0.13,
       "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
-      "margin": "5.26x"
+      "margin": "5.27x"
     }
   ],
   "warnings": [],
   "notes": [
-    "4-wheel rocker-bogie rover with a 6-DOF arm: 4.648 kg, 1.24 m/s, 1.53 h, jetson_orin_nano_super",
+    "4-wheel rocker-bogie rover with a 6-DOF arm: 4.64 kg, 1.24 m/s, 1.53 h, jetson_orin_nano_super",
     "Rocker-bogie after the JPL Open Source Rover, 4 driven wheels, skid steering (the OSR's four corner-steering servos are left out; add them for less tyre scrub).",
     "The differential bar linking the two rockers through the body is modelled as a URDF mimic between the rocker pivots: a passive bar has no motor, and the model's rockers turn equally and opposite.",
     "Rockers and bogies are printed in PETG; for outdoor use print them in 6 bolt-on sections from aluminium channel instead (as the OSR does).",

@@ -1,6 +1,6 @@
 # Wiring: four_wheel_robot
 
-22 cables, 53 conductors, 17.13 m of wire, wiring parts $19.91.
+22 cables, 53 conductors, 15.62 m of wire, wiring parts $18.69.
 
 Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), [breadboard.svg](breadboard.svg) (every wire in its colour, pin to pin) and the cable diagram [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
 
@@ -8,8 +8,8 @@ Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), 
 
 | Rail | Volts | Source | Source limit A (cont / peak) | Load A (typical / peak) | Margin (typical) | Fuse A | Worst wire drop V |
 |---|--:|---|--:|--:|--:|--:|--:|
-| VBAT | 11.1 | main_switch | 35 / 70 | 6.316 / 22.616 | 5.5x | 15 | 0.126 |
-| 5V | 5 | regulator_5v | 5.5 / 8 | 1.23 / 5 | 4.5x | - | 0.056 |
+| VBAT | 11.1 | main_switch | 35 / 70 | 6.316 / 22.616 | 5.5x | 15 | 0.098 |
+| 5V | 5 | regulator_5v | 5.5 / 8 | 1.23 / 5 | 4.5x | - | 0.083 |
 
 **VBAT loads** (peak assumes two drive motors stalling at once, the rest running):
 
@@ -47,14 +47,14 @@ Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), 
 | C4 | W9 | FRONT_LEFT_MOTOR_DIR | computer.GPIO13 | motor_driver_1.DIR1 | 26 | yellow | 0.02 | 0.02 |
 | C4 | W10 | FRONT_RIGHT_MOTOR_PWM | computer.GPIO5 | motor_driver_1.PWM2 | 26 | blue | 0.02 | 0.02 |
 | C4 | W11 | FRONT_RIGHT_MOTOR_DIR | computer.GPIO6 | motor_driver_1.DIR2 | 26 | blue | 0.02 | 0.02 |
-| C5 | W12 | FRONT_LEFT_MOTOR_PHASE_A | motor_driver_1.M1A | front_left_motor.Motor (red) | 20 | orange | 1.4 | 5.5 |
-| C5 | W13 | FRONT_LEFT_MOTOR_PHASE_B | motor_driver_1.M1B | front_left_motor.Motor (black) | 20 | orange | 1.4 | 5.5 |
+| C5 | W12 | FRONT_LEFT_MOTOR_PHASE_A | motor_driver_1.M1A | front_left_motor.Motor (red) | 22 | orange | 1.4 | 5.5 |
+| C5 | W13 | FRONT_LEFT_MOTOR_PHASE_B | motor_driver_1.M1B | front_left_motor.Motor (black) | 22 | orange | 1.4 | 5.5 |
 | C6 | W14 | FRONT_LEFT_MOTOR_ENC_VCC | computer.3V3 | front_left_motor.Encoder Vcc (blue) | 24 | red | 0.01 | 0.01 |
 | C6 | W15 | GND | computer.GND | front_left_motor.Encoder GND (green) | 24 | black | 0.01 | 0.01 |
 | C6 | W16 | FRONT_LEFT_MOTOR_ENC_A | computer.GPIO18 | front_left_motor.Encoder A (yellow) | 26 | blue | 0.02 | 0.02 |
 | C6 | W17 | FRONT_LEFT_MOTOR_ENC_B | computer.GPIO19 | front_left_motor.Encoder B (white) | 26 | blue | 0.02 | 0.02 |
-| C7 | W18 | FRONT_RIGHT_MOTOR_PHASE_A | motor_driver_1.M2A | front_right_motor.Motor (red) | 20 | orange | 1.4 | 5.5 |
-| C7 | W19 | FRONT_RIGHT_MOTOR_PHASE_B | motor_driver_1.M2B | front_right_motor.Motor (black) | 20 | orange | 1.4 | 5.5 |
+| C7 | W18 | FRONT_RIGHT_MOTOR_PHASE_A | motor_driver_1.M2A | front_right_motor.Motor (red) | 22 | orange | 1.4 | 5.5 |
+| C7 | W19 | FRONT_RIGHT_MOTOR_PHASE_B | motor_driver_1.M2B | front_right_motor.Motor (black) | 22 | orange | 1.4 | 5.5 |
 | C8 | W20 | FRONT_RIGHT_MOTOR_ENC_VCC | computer.3V3 | front_right_motor.Encoder Vcc (blue) | 24 | red | 0.01 | 0.01 |
 | C8 | W21 | GND | computer.GND | front_right_motor.Encoder GND (green) | 24 | black | 0.01 | 0.01 |
 | C8 | W22 | FRONT_RIGHT_MOTOR_ENC_A | computer.GPIO16 | front_right_motor.Encoder A (yellow) | 26 | blue | 0.02 | 0.02 |
@@ -96,28 +96,28 @@ Length is route + service loop + joint slack + termination, rounded up to 5 mm; 
 
 | Cable | What | Conductors | Length mm | Route | Service | Joint slack | Ends | Connectors | Exit |
 |---|---|--:|--:|--:|--:|--:|--:|---|---|
-| C1 | lidar to computer | 1 | 180 | 178.3 | 0 | 0 | 0 | USB | electronics_enclosure.rear_slot |
-| C2 | front_camera to computer | 1 | 250 | 245.4 | 0 | 0 | 0 | FFC | electronics_enclosure.deck_left |
-| C3 | computer to imu | 4 | 210 | 105.1 | 40 | 0 | 60 | 40-pin header / 12-pin breadboard-friendly header | - |
-| C4 | motor_driver_1 to computer | 5 | 370 | 266.5 | 40 | 0 | 60 | 5-pin 2.54 mm header / 40-pin header | power_bay.deck_right + electronics_enclosure.deck_right |
-| C5 | motor_driver_1 channel 1 to front_left_motor | 2 | 450 | 348.2 | 40 | 0 | 60 | 2-position screw terminal / 1x6 female header | power_bay.rear_slot |
-| C6 | front_left_motor encoder to computer | 4 | 325 | 224.9 | 40 | 0 | 60 | 40-pin header / 1x6 female header | electronics_enclosure.deck_left |
-| C7 | motor_driver_1 channel 2 to front_right_motor | 2 | 435 | 334.1 | 40 | 0 | 60 | 2-position screw terminal / 1x6 female header | power_bay.deck_right |
-| C8 | front_right_motor encoder to computer | 4 | 350 | 247.4 | 40 | 0 | 60 | 40-pin header / 1x6 female header | electronics_enclosure.deck_left |
-| C9 | motor_driver_2 to computer | 5 | 530 | 427.2 | 40 | 0 | 60 | 5-pin 2.54 mm header / 40-pin header | power_bay.deck_right + electronics_enclosure.deck_left |
-| C10 | motor_driver_2 channel 1 to rear_left_motor | 2 | 395 | 294.3 | 40 | 0 | 60 | 2-position screw terminal / 1x6 female header | power_bay.rear_slot |
-| C11 | rear_left_motor encoder to computer | 4 | 325 | 223.9 | 40 | 0 | 60 | 40-pin header / 1x6 female header | electronics_enclosure.deck_left |
-| C12 | motor_driver_2 channel 2 to rear_right_motor | 2 | 315 | 213.4 | 40 | 0 | 60 | 2-position screw terminal / 1x6 female header | power_bay.deck_right |
-| C13 | rear_right_motor encoder to computer | 4 | 280 | 177 | 40 | 0 | 60 | 40-pin header / 1x6 female header | electronics_enclosure.deck_right |
-| C14 | battery positive to main fuse | 1 | 100 | 0 | 40 | 0 | 60 | XT60 / soldered leads | - |
-| C15 | main fuse to main switch | 1 | 435 | 330.6 | 40 | 0 | 60 | soldered leads / 6.3 mm quick-connect tabs | power_bay.rear_slot |
-| C16 | battery negative to star ground | 1 | 100 | 0 | 40 | 0 | 60 | XT60 / lever clamp | - |
-| C17 | main_switch to the VBAT splice | 1 | 100 | 0 | 40 | 0 | 60 | 6.3 mm quick-connect tabs / lever clamp | - |
-| C18 | VBAT to regulator_5v | 2 | 180 | 78.6 | 40 | 0 | 60 | lever clamp / 0.1 in through holes | electronics_enclosure.deck_left |
-| C19 | VBAT to motor_driver_1 | 2 | 355 | 254.8 | 40 | 0 | 60 | lever clamp / 2-position screw terminal | power_bay.rear_slot |
-| C20 | VBAT to motor_driver_2 | 2 | 460 | 355.1 | 40 | 0 | 60 | lever clamp / 2-position screw terminal | power_bay.rear_slot |
-| C21 | regulator_5v to star_ground | 1 | 395 | 292.1 | 40 | 0 | 60 | 0.1 in through holes / lever clamp | electronics_enclosure.deck_right + power_bay.rear_slot |
-| C22 | 5V to computer | 2 | 180 | 77.4 | 40 | 0 | 60 | 0.1 in through holes / 40-pin header | - |
+| C1 | lidar to computer | 1 | 270 | 270 | 0 | 0 | 0 | USB | - |
+| C2 | front_camera to computer | 1 | 295 | 294.8 | 0 | 0 | 0 | FFC | electronics_enclosure.deck_front_left_motor |
+| C3 | computer to imu | 4 | 250 | 148.1 | 40 | 0 | 60 | 40-pin header / 12-pin breadboard-friendly header | - |
+| C4 | motor_driver_1 to computer | 5 | 285 | 184.6 | 40 | 0 | 60 | 5-pin 2.54 mm header / 40-pin header | - |
+| C5 | motor_driver_1 channel 1 to front_left_motor | 2 | 360 | 259.5 | 40 | 0 | 60 | 2-position screw terminal / 1x6 female header | electronics_enclosure.deck_front_left_motor |
+| C6 | front_left_motor encoder to computer | 4 | 290 | 189.7 | 40 | 0 | 60 | 40-pin header / 1x6 female header | electronics_enclosure.deck_front_left_motor |
+| C7 | motor_driver_1 channel 2 to front_right_motor | 2 | 415 | 310.6 | 40 | 0 | 60 | 2-position screw terminal / 1x6 female header | electronics_enclosure.deck_right |
+| C8 | front_right_motor encoder to computer | 4 | 410 | 305.8 | 40 | 0 | 60 | 40-pin header / 1x6 female header | electronics_enclosure.deck_right |
+| C9 | motor_driver_2 to computer | 5 | 190 | 87.3 | 40 | 0 | 60 | 5-pin 2.54 mm header / 40-pin header | - |
+| C10 | motor_driver_2 channel 1 to rear_left_motor | 2 | 415 | 310.3 | 40 | 0 | 60 | 2-position screw terminal / 1x6 female header | electronics_enclosure.deck_left |
+| C11 | rear_left_motor encoder to computer | 4 | 430 | 329.6 | 40 | 0 | 60 | 40-pin header / 1x6 female header | electronics_enclosure.deck_left |
+| C12 | motor_driver_2 channel 2 to rear_right_motor | 2 | 370 | 266.9 | 40 | 0 | 60 | 2-position screw terminal / 1x6 female header | electronics_enclosure.deck_right |
+| C13 | rear_right_motor encoder to computer | 4 | 290 | 185.1 | 40 | 0 | 60 | 40-pin header / 1x6 female header | electronics_enclosure.deck_right |
+| C14 | battery positive to main fuse | 1 | 170 | 65.7 | 40 | 0 | 60 | XT60 / soldered leads | - |
+| C15 | main fuse to main switch | 1 | 365 | 264 | 40 | 0 | 60 | soldered leads / 6.3 mm quick-connect tabs | - |
+| C16 | battery negative to star ground | 1 | 175 | 74.8 | 40 | 0 | 60 | XT60 / lever clamp | - |
+| C17 | main_switch to the VBAT splice | 1 | 160 | 57.9 | 40 | 0 | 60 | 6.3 mm quick-connect tabs / lever clamp | - |
+| C18 | VBAT to regulator_5v | 2 | 275 | 174.3 | 40 | 0 | 60 | lever clamp / 0.1 in through holes | - |
+| C19 | VBAT to motor_driver_1 | 2 | 355 | 252.8 | 40 | 0 | 60 | lever clamp / 2-position screw terminal | - |
+| C20 | VBAT to motor_driver_2 | 2 | 260 | 159.3 | 40 | 0 | 60 | lever clamp / 2-position screw terminal | - |
+| C21 | regulator_5v to star_ground | 1 | 275 | 174.6 | 40 | 0 | 60 | 0.1 in through holes / lever clamp | - |
+| C22 | 5V to computer | 2 | 260 | 159.9 | 40 | 0 | 60 | 0.1 in through holes / 40-pin header | - |
 
 ## Electrical calculations
 
@@ -184,19 +184,18 @@ A driver's high level is its I/O supply; the receiver needs it above its input t
 
 | Item | Qty | Unit | Unit $ | Subtotal $ | Spec | Price source |
 |---|--:|---|--:|--:|---|---|
-| 14 AWG silicone wire | 0.9 | m | 1.5 | 1.35 | 2.082 mm2, rated 16 A in a bundle; 0.73 m cut + 10 % waste | estimated |
-| 18 AWG silicone wire | 1.8 | m | 0.7 | 1.26 | 0.823 mm2, rated 8 A in a bundle; 1.63 m cut + 10 % waste | estimated |
-| 20 AWG silicone wire | 2 | m | 0.5 | 1.00 | 0.519 mm2, rated 5.5 A in a bundle; 1.77 m cut + 10 % waste | estimated |
-| 22 AWG silicone wire | 2.6 | m | 0.4 | 1.04 | 0.327 mm2, rated 3.5 A in a bundle; 2.35 m cut + 10 % waste | estimated |
-| 24 AWG silicone wire | 4.5 | m | 0.35 | 1.57 | 0.205 mm2, rated 1.75 A in a bundle; 4.06 m cut + 10 % waste | estimated |
-| 26 AWG silicone wire | 7.3 | m | 0.3 | 2.19 | 0.128 mm2, rated 1.1 A in a bundle; 6.58 m cut + 10 % waste | estimated |
+| 14 AWG silicone wire | 1 | m | 1.5 | 1.50 | 2.082 mm2, rated 16 A in a bundle; 0.87 m cut + 10 % waste | estimated |
+| 18 AWG silicone wire | 1.3 | m | 0.7 | 0.91 | 0.823 mm2, rated 8 A in a bundle; 1.11 m cut + 10 % waste | estimated |
+| 22 AWG silicone wire | 4.5 | m | 0.4 | 1.80 | 0.327 mm2, rated 3.5 A in a bundle; 4.07 m cut + 10 % waste | estimated |
+| 24 AWG silicone wire | 4.3 | m | 0.35 | 1.50 | 0.205 mm2, rated 1.75 A in a bundle; 3.87 m cut + 10 % waste | estimated |
+| 26 AWG silicone wire | 5.6 | m | 0.3 | 1.68 | 0.128 mm2, rated 1.1 A in a bundle; 5.09 m cut + 10 % waste | estimated |
 | Dupont 2.54 mm contacts | 46 | pc | 0.02 | 0.92 | rated 3 A per contact | estimated |
 | Dupont 2.54 mm housings | 11 | pc | 0.02 | 0.22 | one per cable end | estimated |
 | Bootlace ferrule contacts | 12 | pc | 0.03 | 0.36 | rated 17.5 A per contact | estimated |
 | XT60 contacts | 2 | pc | 0.9 | 1.80 | rated 35 A per contact | estimated |
 | 6.3 mm spade contacts | 2 | pc | 0.08 | 0.16 | rated 15 A per contact | estimated |
 | Heat shrink 3 mm, 2:1 | 2.3 | m | 0.2 | 0.46 | 31 solder joints + a boot on each cable end | estimated |
-| Cable tie 100 x 2.5 mm | 42 | pc | 0.02 | 0.84 | at every clip, cable end and strain-relief anchor | estimated |
+| Cable tie 100 x 2.5 mm | 32 | pc | 0.02 | 0.64 | at every clip, cable end and strain-relief anchor | estimated |
 | Rubber grommet, 6.4 mm panel hole, 3.2 mm bore | 3 | pc | 0.08 | 0.24 | 9.5 mm panel hole | estimated |
 | USB | 1 | pc | 3 | 3.00 | lidar to computer | estimated |
 | FFC | 1 | pc | 3 | 3.00 | front_camera to computer | estimated |

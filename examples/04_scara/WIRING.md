@@ -1,6 +1,6 @@
 # Wiring: scara
 
-17 cables, 48 conductors, 24.24 m of wire, wiring parts $18.51.
+17 cables, 48 conductors, 26.12 m of wire, wiring parts $19.40.
 
 Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), [breadboard.svg](breadboard.svg) (every wire in its colour, pin to pin) and the cable diagram [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
 
@@ -8,8 +8,8 @@ Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), 
 
 | Rail | Volts | Source | Source limit A (cont / peak) | Load A (typical / peak) | Margin (typical) | Fuse A | Worst wire drop V |
 |---|--:|---|--:|--:|--:|--:|--:|
-| V24 | 24 | psu_24v | 6.5 / 7.1 | 3.216 / 5.36 | 2.0x | - | 0.043 |
-| V12 | 12 | psu_12v | 6 / 6.6 | 0.9 / 3.15 | 6.7x | - | 0.288 |
+| V24 | 24 | psu_24v | 6.5 / 7.1 | 3.216 / 5.36 | 2.0x | - | 0.068 |
+| V12 | 12 | psu_12v | 6 / 6.6 | 0.9 / 3.15 | 6.7x | - | 0.255 |
 
 **V24 loads** (peak assumes all three steppers at full current):
 
@@ -89,23 +89,23 @@ Length is route + service loop + joint slack + termination, rounded up to 5 mm; 
 
 | Cable | What | Conductors | Length mm | Route | Service | Joint slack | Ends | Connectors | Exit |
 |---|---|--:|--:|--:|--:|--:|--:|---|---|
-| C1 | mains_inlet to psu_24v | 3 | 430 | 327.2 | 40 | 0 | 60 | 6.3 mm quick-connect tabs / barrier screw terminal | controller_bay.harness |
-| C2 | mains_inlet to psu_12v | 3 | 420 | 318.4 | 40 | 0 | 60 | 6.3 mm quick-connect tabs / barrier screw terminal | controller_bay.harness |
-| C3 | controller to driver_j1 | 5 | 170 | 67.8 | 40 | 0 | 60 | 22-pin male header / same header | - |
-| C4 | driver_j1 to j1_motor | 4 | 745 | 640.7 | 40 | 0 | 60 | 2.54 mm pin header / Four bare leads | controller_bay.harness |
-| C5 | controller to driver_j2 | 4 | 170 | 67.9 | 40 | 0 | 60 | 22-pin male header / same header | - |
-| C6 | driver_j2 to j2_motor | 4 | 1200 | 958.4 | 40 | 140 | 60 | 2.54 mm pin header / Four bare leads | controller_bay.harness |
-| C7 | controller to driver_z | 4 | 180 | 78.2 | 40 | 0 | 60 | 22-pin male header / same header | - |
-| C8 | driver_z to z_motor | 4 | 1220 | 1015.4 | 40 | 100 | 60 | 2.54 mm pin header / Harwin-type 2.54 mm 4-pin housing on the end of a 1000 mm cable | controller_bay.harness |
-| C9 | servo_bus to wrist_servo | 3 | 1440 | 1133.4 | 40 | 205 | 60 | 3-pin 2.5 mm bus servo header (5264 class) / Feetech 5264-3P | controller_bay.harness |
-| C10 | wrist_servo to gripper_servo | 3 | 245 | 74.2 | 40 | 70 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
-| C11 | battery negative to star ground | 1 | 100 | 0 | 40 | 0 | 60 | barrier screw terminal / lever clamp | - |
-| C12 | psu_24v to the V24 splice | 1 | 100 | 0 | 40 | 0 | 60 | barrier screw terminal / lever clamp | - |
-| C13 | V24 to driver_j1 | 2 | 155 | 55 | 40 | 0 | 60 | lever clamp / same header | - |
-| C14 | V24 to driver_j2 | 2 | 160 | 59.3 | 40 | 0 | 60 | lever clamp / same header | - |
-| C15 | V24 to driver_z | 2 | 175 | 72 | 40 | 0 | 60 | lever clamp / same header | - |
-| C16 | psu_12v to star_ground | 1 | 230 | 128.3 | 40 | 0 | 60 | barrier screw terminal / lever clamp | - |
-| C17 | V12 to servo_bus | 2 | 155 | 52.6 | 40 | 0 | 60 | barrier screw terminal / green screw terminal | - |
+| C1 | mains_inlet to psu_24v | 3 | 220 | 119.4 | 40 | 0 | 60 | 6.3 mm quick-connect tabs / barrier screw terminal | - |
+| C2 | mains_inlet to psu_12v | 3 | 190 | 85.7 | 40 | 0 | 60 | 6.3 mm quick-connect tabs / barrier screw terminal | - |
+| C3 | controller to driver_j1 | 5 | 195 | 92.3 | 40 | 0 | 60 | 22-pin male header / same header | - |
+| C4 | driver_j1 to j1_motor | 4 | 855 | 753.6 | 40 | 0 | 60 | 2.54 mm pin header / Four bare leads | controller_bay.harness |
+| C5 | controller to driver_j2 | 4 | 205 | 103.2 | 40 | 0 | 60 | 22-pin male header / same header | - |
+| C6 | driver_j2 to j2_motor | 4 | 1200 | 949.3 | 40 | 150 | 60 | 2.54 mm pin header / Four bare leads | controller_bay.harness |
+| C7 | controller to driver_z | 4 | 230 | 129 | 40 | 0 | 60 | 22-pin male header / same header | - |
+| C8 | driver_z to z_motor | 4 | 1465 | 826.4 | 40 | 535 | 60 | 2.54 mm pin header / Harwin-type 2.54 mm 4-pin housing on the end of a 1000 mm cable | controller_bay.harness |
+| C9 | servo_bus to wrist_servo | 3 | 1275 | 909.4 | 40 | 265 | 60 | 3-pin 2.5 mm bus servo header (5264 class) / Feetech 5264-3P | controller_bay.harness |
+| C10 | wrist_servo to gripper_servo | 3 | 440 | 177.2 | 40 | 160 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
+| C11 | battery negative to star ground | 1 | 240 | 136.8 | 40 | 0 | 60 | barrier screw terminal / lever clamp | - |
+| C12 | psu_24v to the V24 splice | 1 | 245 | 141.9 | 40 | 0 | 60 | barrier screw terminal / lever clamp | - |
+| C13 | V24 to driver_j1 | 2 | 245 | 141.6 | 40 | 0 | 60 | lever clamp / same header | - |
+| C14 | V24 to driver_j2 | 2 | 255 | 152.5 | 40 | 0 | 60 | lever clamp / same header | - |
+| C15 | V24 to driver_z | 2 | 270 | 169.6 | 40 | 0 | 60 | lever clamp / same header | - |
+| C16 | psu_12v to star_ground | 1 | 275 | 170.1 | 40 | 0 | 60 | barrier screw terminal / lever clamp | - |
+| C17 | V12 to servo_bus | 2 | 325 | 222.1 | 40 | 0 | 60 | barrier screw terminal / green screw terminal | - |
 
 ## Slack at the joints
 
@@ -113,13 +113,13 @@ Each loop is at least the extra length the joint needs at the far end of its tra
 
 | Cable | Joint | Travel rad | Length at home mm | Length at full travel mm | Slack loop mm |
 |---|---|---|--:|--:|--:|
-| C6 | j1 | -2.9 to 2.9 | 28.6 | 84.4 | 100 |
-| C6 | z | 0 to 0.159 | 24.7 | 24.7 | 40 |
-| C8 | j1 | -2.9 to 2.9 | 1.7 | 57.5 | 100 |
-| C9 | j1 | -2.9 to 2.9 | 26.3 | 77.8 | 90 |
-| C9 | z | 0 to 0.159 | 22.7 | 22.7 | 35 |
-| C9 | j2 | -2.208 to 2.208 | 55.7 | 94.9 | 80 |
-| C10 | wrist_roll | -3 to 3 | 0 | 30 | 70 |
+| C6 | j1 | -2.9 to 2.9 | 43.4 | 105 | 110 |
+| C6 | z | 0 to 0.153 | 39.5 | 39.5 | 40 |
+| C8 | j1 | -2.9 to 2.9 | 39.5 | 470.5 | 535 |
+| C9 | j1 | -2.9 to 2.9 | 39.1 | 99.1 | 100 |
+| C9 | z | 0 to 0.153 | 36.5 | 36.5 | 35 |
+| C9 | j2 | -2.208 to 2.208 | 37.6 | 123.7 | 130 |
+| C10 | wrist_roll | -3 to 3 | 36.5 | 148.3 | 160 |
 
 ## Electrical calculations
 
@@ -171,10 +171,10 @@ Not checked (no logic levels in the parts data): Feetech STS3215 C047 12 V 30 kg
 
 | Item | Qty | Unit | Unit $ | Subtotal $ | Spec | Price source |
 |---|--:|---|--:|--:|---|---|
-| 20 AWG silicone wire | 10.9 | m | 0.5 | 5.45 | 0.519 mm2, rated 5.5 A in a bundle; 9.88 m cut + 10 % waste | estimated |
-| 22 AWG silicone wire | 5.5 | m | 0.4 | 2.20 | 0.327 mm2, rated 3.5 A in a bundle; 4.96 m cut + 10 % waste | estimated |
-| 24 AWG silicone wire | 6.8 | m | 0.35 | 2.38 | 0.205 mm2, rated 1.75 A in a bundle; 6.15 m cut + 10 % waste | estimated |
-| 26 AWG silicone wire | 3.6 | m | 0.3 | 1.08 | 0.128 mm2, rated 1.1 A in a bundle; 3.25 m cut + 10 % waste | estimated |
+| 20 AWG silicone wire | 12.3 | m | 0.5 | 6.15 | 0.519 mm2, rated 5.5 A in a bundle; 11.11 m cut + 10 % waste | estimated |
+| 22 AWG silicone wire | 6.1 | m | 0.4 | 2.44 | 0.327 mm2, rated 3.5 A in a bundle; 5.51 m cut + 10 % waste | estimated |
+| 24 AWG silicone wire | 6.3 | m | 0.35 | 2.20 | 0.205 mm2, rated 1.75 A in a bundle; 5.66 m cut + 10 % waste | estimated |
+| 26 AWG silicone wire | 3.9 | m | 0.3 | 1.17 | 0.128 mm2, rated 1.1 A in a bundle; 3.51 m cut + 10 % waste | estimated |
 | 6.3 mm spade contacts | 6 | pc | 0.08 | 0.48 | rated 15 A per contact | estimated |
 | Bootlace ferrule contacts | 13 | pc | 0.03 | 0.39 | rated 17.5 A per contact | estimated |
 | Dupont 2.54 mm contacts | 48 | pc | 0.02 | 0.96 | rated 3 A per contact | estimated |
@@ -182,14 +182,15 @@ Not checked (no logic levels in the parts data): Feetech STS3215 C047 12 V 30 kg
 | Molex 5264 contacts | 12 | pc | 0.05 | 0.60 | rated 3 A per contact | estimated |
 | Molex 5264 housings | 4 | pc | 0.08 | 0.32 | one per cable end | estimated |
 | Heat shrink 3 mm, 2:1 | 1.3 | m | 0.2 | 0.26 | 8 solder joints + a boot on each cable end | estimated |
-| Cable tie 100 x 2.5 mm | 32 | pc | 0.02 | 0.64 | at every clip, cable end and strain-relief anchor | estimated |
+| Cable tie 100 x 2.5 mm | 22 | pc | 0.02 | 0.44 | at every clip, cable end and strain-relief anchor | estimated |
 | PG7 cable gland | 1 | pc | 2.97 | 2.97 | cable exit with strain relief | estimated |
-| Nylon braided sleeving 6 mm | 1.3 | m | 0.4 | 0.52 | over every cable where it crosses a joint | estimated |
+| Nylon braided sleeving 6 mm | 1.9 | m | 0.4 | 0.76 | over every cable where it crosses a joint | estimated |
 
 ## Data sources
 
 | Part | Voltage | Current | Pins | Connector |
 |---|---|---|---|---|
+| Half-size solderless breadboard, 400 points, adhesive back | estimated | estimated | estimated | estimated |
 | Espressif ESP32-S3-DevKitC-1 | estimated | [datasheet](https://www.espressif.com/sites/default/files/documentation/esp32-s3-wroom-1_wroom-1u_datasheet_en.pdf) | estimated | [datasheet](https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32s3/esp32-s3-devkitc-1/user_guide_v1.1.html) |
 | Feetech STS3215 C047 12 V 30 kg.cm | [datasheet](https://files.seeedstudio.com/Bazaar/product_pdf/108090003.pdf) | estimated | [datasheet](https://files.waveshare.com/wiki/Bus-Servo-Adapter-(A)/Bus%20Servo%20Adapter%20(A)-Sch.pdf) | estimated |
 | IEC C14 panel inlet with fuse drawer and rocker switch, 10 A | estimated | estimated | estimated | estimated |

@@ -1,6 +1,6 @@
 # Wiring: arduino_arm
 
-8 cables, 22 conductors, 7.01 m of wire, wiring parts $8.11.
+9 cables, 22 conductors, 8.32 m of wire, wiring parts $8.83.
 
 Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), [breadboard.svg](breadboard.svg) (every wire in its colour, pin to pin) and the cable diagram [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
 
@@ -8,7 +8,7 @@ Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), 
 
 | Rail | Volts | Source | Source limit A (cont / peak) | Load A (typical / peak) | Margin (typical) | Fuse A | Worst wire drop V |
 |---|--:|---|--:|--:|--:|--:|--:|
-| V_SERVO | 5 | main_switch | 10 / 11 | 2.21 / 6.31 | 4.5x | - | 0.071 |
+| V_SERVO | 5 | main_switch | 10 / 11 | 2.21 / 6.31 | 4.5x | - | 0.131 |
 
 **V_SERVO loads** (peak assumes every servo stalled at once):
 
@@ -46,7 +46,7 @@ Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), 
 | C6 | W19 | I2C_SCL | controller.A5/SCL | servo_driver.SCL | 26 | yellow | 0.02 | 0.02 |
 | C7 | W20 | V_SERVO | power_supply.DC OUTPUT +V | main_switch.IN | 20 | red | 2.21 | 6.31 |
 | C8 | W21 | V_SERVO | main_switch.OUT | servo_driver.V+ | 20 | red | 2.21 | 6.31 |
-| C8 | W22 | GND | power_supply.DC OUTPUT -V | servo_driver.GND | 20 | black | 2.21 | 6.31 |
+| C9 | W22 | GND | power_supply.DC OUTPUT -V | servo_driver.GND | 18 | black | 2.21 | 6.31 |
 
 ## Cut list
 
@@ -54,14 +54,15 @@ Length is route + service loop + joint slack + termination, rounded up to 5 mm; 
 
 | Cable | What | Conductors | Length mm | Route | Service | Joint slack | Ends | Connectors | Exit |
 |---|---|--:|--:|--:|--:|--:|--:|---|---|
-| C1 | mains inlet to the supply (crimped, insulated spades; earth first) | 3 | 185 | 80.5 | 40 | 0 | 60 | 6.3 mm quick-connect tabs / barrier screw terminal | - |
-| C2 | PCA9685 channel 0 to yaw_servo | 3 | 185 | 84.5 | 40 | 0 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | console.yaw_lead |
-| C3 | PCA9685 channel 1 to shoulder_servo | 3 | 305 | 146.8 | 40 | 55 | 60 | 3-pin 0.1 in header row (3x4 groups) / 3-pin S-type female header | console.arm_leads |
-| C4 | PCA9685 channel 2 to elbow_servo | 3 | 515 | 286 | 40 | 125 | 60 | 3-pin 0.1 in header row (3x4 groups) / 3-pin S-type female header | console.arm_leads |
-| C5 | PCA9685 channel 3 to claw_servo | 3 | 730 | 427.5 | 40 | 200 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | console.arm_leads |
-| C6 | controller to servo_driver | 4 | 160 | 58.2 | 40 | 0 | 60 | female 2.54 mm socket header / 6-pin 0.1 in header | - |
-| C7 | battery positive to main fuse | 1 | 280 | 179.9 | 40 | 0 | 60 | barrier screw terminal / 4.8 mm quick-connect tabs | supply_case.dc_out + console.power_in |
-| C8 | V_SERVO to servo_driver | 2 | 165 | 60.5 | 40 | 0 | 60 | 4.8 mm quick-connect tabs / 2-position screw terminal | - |
+| C1 | mains inlet to the supply (crimped, insulated spades; earth first) | 3 | 170 | 66.1 | 40 | 0 | 60 | 6.3 mm quick-connect tabs / barrier screw terminal | - |
+| C2 | PCA9685 channel 0 to yaw_servo | 3 | 250 | 149.8 | 40 | 0 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | console.arm_leads |
+| C3 | PCA9685 channel 1 to shoulder_servo | 3 | 320 | 144.4 | 40 | 75 | 60 | 3-pin 0.1 in header row (3x4 groups) / 3-pin S-type female header | console.arm_leads |
+| C4 | PCA9685 channel 2 to elbow_servo | 3 | 540 | 253.9 | 40 | 185 | 60 | 3-pin 0.1 in header row (3x4 groups) / 3-pin S-type female header | console.arm_leads |
+| C5 | PCA9685 channel 3 to claw_servo | 3 | 775 | 365 | 40 | 305 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | console.arm_leads |
+| C6 | controller to servo_driver | 4 | 215 | 113.3 | 40 | 0 | 60 | female 2.54 mm socket header / 6-pin 0.1 in header | - |
+| C7 | battery positive to main fuse | 1 | 520 | 419.9 | 40 | 0 | 60 | barrier screw terminal / 4.8 mm quick-connect tabs | supply_case.dc_out + console.power_in |
+| C8 | V_SERVO to servo_driver | 1 | 185 | 83.8 | 40 | 0 | 60 | 4.8 mm quick-connect tabs / 2-position screw terminal | - |
+| C9 | V_SERVO to servo_driver | 1 | 595 | 493.3 | 40 | 0 | 60 | barrier screw terminal / 2-position screw terminal | supply_case.dc_out + console.power_in |
 
 ## Slack at the joints
 
@@ -69,12 +70,12 @@ Each loop is at least the extra length the joint needs at the far end of its tra
 
 | Cable | Joint | Travel rad | Length at home mm | Length at full travel mm | Slack loop mm |
 |---|---|---|--:|--:|--:|
-| C3 | yaw | -1.571 to 1.571 | 22.1 | 39.4 | 55 |
-| C4 | yaw | -1.571 to 1.571 | 23.7 | 45.9 | 60 |
-| C4 | shoulder | -1.571 to 1.571 | 55.7 | 83.6 | 65 |
-| C5 | yaw | -1.571 to 1.571 | 23.7 | 45.9 | 60 |
-| C5 | shoulder | -1.571 to 1.571 | 55.7 | 83.6 | 65 |
-| C5 | elbow | -2.1 to 2.1 | 55.7 | 93 | 75 |
+| C3 | yaw | -1.571 to 1.571 | 33.9 | 71.7 | 75 |
+| C4 | yaw | -1.571 to 1.571 | 33.9 | 71.7 | 75 |
+| C4 | shoulder | -1.571 to 1.571 | 37.6 | 103.5 | 110 |
+| C5 | yaw | -1.571 to 1.571 | 33.9 | 71.7 | 75 |
+| C5 | shoulder | -1.571 to 1.571 | 37.4 | 102.4 | 110 |
+| C5 | elbow | -2.1 to 2.1 | 38 | 112.9 | 120 |
 
 ## Electrical calculations
 
@@ -116,19 +117,20 @@ A driver's high level is its I/O supply; the receiver needs it above its input t
 
 | Item | Qty | Unit | Unit $ | Subtotal $ | Spec | Price source |
 |---|--:|---|--:|--:|---|---|
-| 20 AWG silicone wire | 0.7 | m | 0.5 | 0.35 | 0.519 mm2, rated 5.5 A in a bundle; 0.61 m cut + 10 % waste | estimated |
-| 24 AWG silicone wire | 4.8 | m | 0.35 | 1.68 | 0.205 mm2, rated 1.75 A in a bundle; 4.35 m cut + 10 % waste | estimated |
-| 26 AWG silicone wire | 2.3 | m | 0.3 | 0.69 | 0.128 mm2, rated 1.1 A in a bundle; 2.05 m cut + 10 % waste | estimated |
-| 6.3 mm spade contacts | 6 | pc | 0.08 | 0.48 | rated 15 A per contact | estimated |
-| Bootlace ferrule contacts | 6 | pc | 0.03 | 0.18 | rated 17.5 A per contact | estimated |
+| 18 AWG silicone wire | 0.7 | m | 0.7 | 0.49 | 0.823 mm2, rated 8 A in a bundle; 0.59 m cut + 10 % waste | estimated |
+| 20 AWG silicone wire | 0.8 | m | 0.5 | 0.40 | 0.519 mm2, rated 5.5 A in a bundle; 0.71 m cut + 10 % waste | estimated |
+| 24 AWG silicone wire | 5.2 | m | 0.35 | 1.82 | 0.205 mm2, rated 1.75 A in a bundle; 4.67 m cut + 10 % waste | estimated |
+| 26 AWG silicone wire | 2.6 | m | 0.3 | 0.78 | 0.128 mm2, rated 1.1 A in a bundle; 2.31 m cut + 10 % waste | estimated |
+| 6.3 mm spade contacts | 5 | pc | 0.08 | 0.40 | rated 15 A per contact | estimated |
+| Bootlace ferrule contacts | 7 | pc | 0.03 | 0.21 | rated 17.5 A per contact | estimated |
 | Dupont 2.54 mm contacts | 20 | pc | 0.02 | 0.40 | rated 3 A per contact | estimated |
 | Dupont 2.54 mm housings | 6 | pc | 0.02 | 0.12 | one per cable end | estimated |
 | Heat shrink 3 mm, 2:1 | 0.9 | m | 0.2 | 0.18 | 12 solder joints + a boot on each cable end | estimated |
-| Cable tie 100 x 2.5 mm | 21 | pc | 0.02 | 0.42 | at every clip, cable end and strain-relief anchor | estimated |
+| Cable tie 100 x 2.5 mm | 17 | pc | 0.02 | 0.34 | at every clip, cable end and strain-relief anchor | estimated |
 | Rubber grommet, 7.9 mm panel hole, 4.8 mm bore | 2 | pc | 0.08 | 0.16 | 8 mm panel hole | estimated |
 | Rubber grommet, 6.4 mm panel hole, 3.2 mm bore | 1 | pc | 0.08 | 0.08 | 6.5 mm panel hole | estimated |
 | PG7 cable gland | 1 | pc | 2.97 | 2.97 | cable exit with strain relief | estimated |
-| Nylon braided sleeving 6 mm | 1 | m | 0.4 | 0.40 | over every cable where it crosses a joint | estimated |
+| Nylon braided sleeving 6 mm | 1.2 | m | 0.4 | 0.48 | over every cable where it crosses a joint | estimated |
 
 ## Data sources
 

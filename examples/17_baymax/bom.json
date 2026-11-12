@@ -141,9 +141,9 @@
       "category": "Printed structure",
       "name": "PETG filament for 33 printed parts",
       "qty": 1,
-      "unit_cost": 34.92,
-      "subtotal": 34.92,
-      "spec": "1380 g of parts (+15 % supports/waste), about 125.8 h of printing",
+      "unit_cost": 34.97,
+      "subtotal": 34.97,
+      "spec": "1382 g of parts (+15 % supports/waste), about 126.0 h of printing",
       "note": "left_front_bracket, left_rear_bracket, right_front_bracket, right_rear_bracket, battery_tray, computer_tray, motor_driver_1_tray, motor_driver_2_tray, servo_bus_tray, imu_tray, regulator_5v_tray, electronics_enclosure_front, electronics_enclosure_rear, electronics_lid_front, electronics_lid_rear, spine_foot, left_arm_shoulder_wedge, left_arm_base_link, left_arm_turret, left_arm_upper_arm, left_arm_forearm, left_arm_tool_link, right_arm_shoulder_wedge, right_arm_base_link, right_arm_turret, right_arm_upper_arm, right_arm_forearm, right_arm_tool_link, neck_mount, head, head_dome, eyes, camera_bracket"
     },
     {
@@ -157,55 +157,64 @@
     {
       "category": "Wiring",
       "name": "12 AWG silicone wire",
-      "qty": 0.8,
+      "qty": 1,
       "unit_cost": 2.2,
-      "subtotal": 1.76,
-      "spec": "0.8 m: 3.308 mm2, rated 20.5 A in a bundle; 0.69 m cut + 10 % waste",
+      "subtotal": 2.2,
+      "spec": "1 m: 3.308 mm2, rated 20.5 A in a bundle; 0.88 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "16 AWG silicone wire",
+      "qty": 2.4,
+      "unit_cost": 1,
+      "subtotal": 2.4,
+      "spec": "2.4 m: 1.308 mm2, rated 11 A in a bundle; 2.13 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "18 AWG silicone wire",
-      "qty": 5.3,
+      "qty": 1.4,
       "unit_cost": 0.7,
-      "subtotal": 3.71,
-      "spec": "5.3 m: 0.823 mm2, rated 8 A in a bundle; 4.74 m cut + 10 % waste",
+      "subtotal": 0.98,
+      "spec": "1.4 m: 0.823 mm2, rated 8 A in a bundle; 1.23 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "20 AWG silicone wire",
-      "qty": 3.1,
+      "qty": 7.3,
       "unit_cost": 0.5,
-      "subtotal": 1.55,
-      "spec": "3.1 m: 0.519 mm2, rated 5.5 A in a bundle; 2.81 m cut + 10 % waste",
+      "subtotal": 3.65,
+      "spec": "7.3 m: 0.519 mm2, rated 5.5 A in a bundle; 6.59 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "22 AWG silicone wire",
-      "qty": 7.7,
+      "qty": 7.9,
       "unit_cost": 0.4,
-      "subtotal": 3.08,
-      "spec": "7.7 m: 0.327 mm2, rated 3.5 A in a bundle; 6.92 m cut + 10 % waste",
+      "subtotal": 3.16,
+      "spec": "7.9 m: 0.327 mm2, rated 3.5 A in a bundle; 7.15 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "24 AWG silicone wire",
-      "qty": 7.2,
+      "qty": 6.2,
       "unit_cost": 0.35,
-      "subtotal": 2.52,
-      "spec": "7.2 m: 0.205 mm2, rated 1.75 A in a bundle; 6.53 m cut + 10 % waste",
+      "subtotal": 2.17,
+      "spec": "6.2 m: 0.205 mm2, rated 1.75 A in a bundle; 5.64 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "26 AWG silicone wire",
-      "qty": 12.3,
+      "qty": 12.7,
       "unit_cost": 0.3,
-      "subtotal": 3.69,
-      "spec": "12.3 m: 0.128 mm2, rated 1.1 A in a bundle; 11.14 m cut + 10 % waste",
+      "subtotal": 3.81,
+      "spec": "12.7 m: 0.128 mm2, rated 1.1 A in a bundle; 11.54 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
@@ -283,10 +292,19 @@
     {
       "category": "Wiring",
       "name": "Cable tie 100 x 2.5 mm",
-      "qty": 66,
+      "qty": 55,
       "unit_cost": 0.02,
-      "subtotal": 1.32,
-      "spec": "66 pc: at every clip, cable end and strain-relief anchor",
+      "subtotal": 1.1,
+      "spec": "55 pc: at every clip, cable end and strain-relief anchor",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Rubber grommet, 6.4 mm panel hole, 3.2 mm bore",
+      "qty": 2,
+      "unit_cost": 0.08,
+      "subtotal": 0.16,
+      "spec": "2 pc: 9.5 mm panel hole",
       "note": "price estimated"
     },
     {
@@ -295,16 +313,16 @@
       "qty": 1,
       "unit_cost": 0.08,
       "subtotal": 0.08,
-      "spec": "1 pc: 9.5 mm panel hole",
+      "spec": "1 pc: 12 mm panel hole",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "Nylon braided sleeving 6 mm",
-      "qty": 1.2,
+      "qty": 1.5,
       "unit_cost": 0.4,
-      "subtotal": 0.48,
-      "spec": "1.2 m: over every cable where it crosses a joint",
+      "subtotal": 0.6,
+      "spec": "1.5 m: over every cable where it crosses a joint",
       "note": "price estimated"
     },
     {
@@ -353,32 +371,32 @@
       "note": "price estimated"
     }
   ],
-  "total": 920.04,
+  "total": 922.21,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
   "actuator_sizing": [
     {
       "joint": "left_arm_base_yaw",
-      "required_effort": 0.92,
+      "required_effort": 0.918,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.92,
+      "required_torque_nm": 0.918,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "3.2x"
+      "margin": "3.21x"
     },
     {
       "joint": "left_arm_shoulder_pitch",
-      "required_effort": 1.972,
+      "required_effort": 1.968,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.972,
+      "required_torque_nm": 1.968,
       "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
       "margin": "2.49x"
     },
     {
       "joint": "left_arm_elbow_pitch",
-      "required_effort": 0.839,
+      "required_effort": 0.838,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.839,
+      "required_torque_nm": 0.838,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
       "margin": "3.51x"
     },
@@ -392,25 +410,25 @@
     },
     {
       "joint": "right_arm_base_yaw",
-      "required_effort": 0.92,
+      "required_effort": 0.918,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.92,
+      "required_torque_nm": 0.918,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
-      "margin": "3.2x"
+      "margin": "3.21x"
     },
     {
       "joint": "right_arm_shoulder_pitch",
-      "required_effort": 1.972,
+      "required_effort": 1.968,
       "effort_unit": "N·m",
-      "required_torque_nm": 1.972,
+      "required_torque_nm": 1.968,
       "chosen": "Feetech STS3250 C002 12 V 50 kg.cm (1:345)",
       "margin": "2.49x"
     },
     {
       "joint": "right_arm_elbow_pitch",
-      "required_effort": 0.839,
+      "required_effort": 0.838,
       "effort_unit": "N·m",
-      "required_torque_nm": 0.839,
+      "required_torque_nm": 0.838,
       "chosen": "Feetech STS3215 C047 12 V 30 kg.cm (1:345)",
       "margin": "3.51x"
     },
@@ -428,7 +446,7 @@
       "effort_unit": "N·m",
       "required_torque_nm": 0.156,
       "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
-      "margin": "4.39x"
+      "margin": "4.4x"
     },
     {
       "joint": "left_rear_wheel_joint",
@@ -436,7 +454,7 @@
       "effort_unit": "N·m",
       "required_torque_nm": 0.156,
       "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
-      "margin": "4.39x"
+      "margin": "4.4x"
     },
     {
       "joint": "right_front_wheel_joint",
@@ -444,7 +462,7 @@
       "effort_unit": "N·m",
       "required_torque_nm": 0.156,
       "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
-      "margin": "4.39x"
+      "margin": "4.4x"
     },
     {
       "joint": "right_rear_wheel_joint",
@@ -452,12 +470,12 @@
       "effort_unit": "N·m",
       "required_torque_nm": 0.156,
       "chosen": "Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752)",
-      "margin": "4.39x"
+      "margin": "4.4x"
     }
   ],
   "warnings": [],
   "notes": [
-    "Baymax-style service robot: 5.571 kg, 1.01 m tall, 4WD hidden base, two 4-servo arms, pan head with camera",
+    "Baymax-style service robot: 5.561 kg, 1.01 m tall, 4WD hidden base, two 4-servo arms, pan head with camera",
     "Baymax's inflatable vinyl body is a sewn ripstop cover with a foam-lined zip, bought or sewn, with negligible structural role; it hangs on the shoulder yoke and hides a 4WD skid-steer base. It is not inflated, so it does not cushion like the film's.",
     "Structure: 2020 aluminium extrusion spine and a 6 mm aluminium shoulder yoke; arms are four servos each (shoulder yaw, shoulder pitch, elbow, wrist) splayed 25 deg so they clear the belly; the hands are printed mittens covered with the same fabric.",
     "Each arm is sized as mounted to lift 0.1 kg in the mitten at full reach; the tipping check includes both arms stretched forward with that payload.",
