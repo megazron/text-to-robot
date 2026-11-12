@@ -17,6 +17,8 @@ import { answerJob } from "./jobs.ts";
 const R_BARREL = 6.0, R_SLOT = 7.5, BORE = 4.2, KNUCKLE = 5.6, FIXED_H = 19.0, POD_WALL = 2.4, POCKET = 0.3, AIR = 0.6;
 export const PAWL_TRAVEL = 0.2;
 const LATCH_SERVO = "hobby_mg90s", PAWL_H = 9.0, LATCH_BACK = 16.0, LATCH_REACH = 18.0, LATCH_IN = 9.5;
+/** where a latch may move along its seam (mm) when its planned place has no shell for it: the planned place first */
+const LATCH_SHIFTS = [0, 8, -8, 16, -16, 24, -24, 32, -32];
 export const STAGES = [["forearm"], ["shin"], ["upper_arm"], ["thigh"], ["torso"], ["head"]];
 const TOUCH = 2.0, CRUMB = 0.05, COLLIDE = 400.0;
 export const HARD = ["armour_red", "armour_gold", "armour_silver"];
@@ -178,18 +180,27 @@ export async function build(pieces: Piece[], doors: DoorRecord[], tick: Tick, lo
   }
   // latches: one per limb door on its free edge, between the back doors and the helmet doors on the centre line
   for (const d of doors) {
-    let carrier: Shells, catcher: Shells, parent: string, f: P3, w: P3, u: P3; const seams: P3[] = [];
+    let carrier: Shells, catcher: Shells, parent: string, f: P3, w: P3, u: P3, seamAt: (t: number) => P3 | null;
     if (d.part === "torso" || d.part === "head") {
       if (d.side === "right") continue;
       const other = doors.find((x) => x.part === d.part && x.side === "right")!;
       carrier = groups([d.link]); catcher = groups([other.link]); parent = d.link; f = [0, 1, 0]; w = [1, 0, 0]; u = [0, 0, 1];
-      for (const t of d.latch_t) { const O: P3 = [-20.0, 3.0, t], h = carrier.hit([O], scl(w, -1), O)[0]!; seams.push([h[0], 0.0, t]); }
+      seamAt = (t) => { const O: P3 = [-20.0, 3.0, t], h = carrier.hit([O], scl(w, -1), O)[0]; return h ? [h[0], 0.0, t] : null; };
     } else {
       carrier = groups([d.parent]); catcher = groups([d.link]); parent = d.parent; f = d.normal; w = d.out; u = scl(d.seam_up, -1);
-      for (const t of d.latch_t) { const c = add(d.base, scl(d.seam_up, t)), h = carrier.hit([add(c, scl(f, 3.0))], scl(w, -1), c)[0]!; seams.push(sub(h, scl(f, 3.0))); }
+      seamAt = (t) => { const c = add(d.base, scl(d.seam_up, t)), h = carrier.hit([add(c, scl(f, 3.0))], scl(w, -1), c)[0]; return h ? sub(h, scl(f, 3.0)) : null; };
     }
-    seams.forEach((seam, k) => scope(() => {
-      const name = `latch_${d.name}_${k}`, L = latch(name, seam, u, f, w, carrier, catcher);
+    d.latch_t.forEach((t, k) => scope(() => {
+      // the latch sits at its planned place on the seam; where a reshaped suit (a bulkier build) leaves no shell there for its block or its
+      // ledge, it moves along the seam to the nearest place that has both, and says so
+      const name = `latch_${d.name}_${k}`;
+      let L: ReturnType<typeof latch> | undefined, seam: P3 | null = null, err: unknown;
+      for (const dt of LATCH_SHIFTS) {
+        seam = seamAt(t + dt); if (!seam) continue;
+        try { L = latch(name, seam, u, f, w, carrier, catcher); if (dt) log(`${name} moved ${dt} mm along the seam: no shell for it at its planned place`); break; }
+        catch (e) { if (!/no shell/.test(String(e))) throw e; err = e; }
+      }
+      if (!L || !seam) throw err ?? new Error(`${name}: no seam`);
       hw.push({ name: `${name}_block`, link: parent, mesh: asMesh(biggest(L.block)), anchor: L.A, region: d.region });
       hw.push({ name: `${name}_ledge`, link: catcher.items[0].row.link, mesh: asMesh(biggest(L.ledge)), anchor: L.A, region: d.region });
       hw.push({ name: `${name}_pawl`, link: `${name}_pawl_link`, mesh: asMesh(L.pawl), anchor: L.A, region: d.region });
