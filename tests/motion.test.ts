@@ -37,7 +37,8 @@ test("every example has a joint tour and a purpose demo, inside its position and
       if (tr.limits.torque_ok === false && !known[ex]?.[`${name}:torque`]) assert.fail(`${ex} ${name}: ${tr.limits.violations.join("; ")}`);
       // what the robot was asked to do, it does: the demo moves something
       const moving = tr.joints.filter((_, c) => tr.q.some((r) => Math.abs(r[c] - tr.q[0][c]) > 1e-3));
-      assert.ok(moving.length || tr.base, `${ex} ${name}: nothing moves`);
+      // a robot with no joints (a thruster ROV) has nothing to tour: its demo moves it as a whole
+      assert.ok(moving.length || tr.base || (name === "tour" && !tr.joints.length), `${ex} ${name}: nothing moves`);
     }
   }
 });
@@ -47,6 +48,7 @@ test("the purpose demo follows what the joints are for, not the family name", ()
     "01_arm_2dof": "pick_place", "02_arm_6dof": "pick_place", "03_arm_7dof": "pick_place", "04_scara": "pick_place", "05_diff_drive": "drive", "06_four_wheel": "drive", "07_mecanum": "drive",
     "08_humanoid": "step", "09_gripper": "grip", "10_quadruped": "gait", "11_spider_scout": "gait", "12_mars_rover": "drive", "13_battle_mech": "step", [SUIT]: "suit_up",
     "15_wall_e": "drive", "16_eva": "drive", "17_baymax": "drive", "18_arduino_car": "drive", "19_arduino_arm": "pick_place",
+    "20_quadcopter": "fly", "21_underwater_rov": "swim", "22_pen_plotter": "plot", "23_robot_hand": "grasp", "24_plant_waterer": "drive",
   };
   for (const ex of EXAMPLES) assert.equal(motions(spec(ex)).find((m) => m.default)?.name, want[ex], ex);
   // a robot with no family at all: the same arm with its design record removed still picks and places
