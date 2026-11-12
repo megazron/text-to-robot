@@ -61,7 +61,10 @@ function buildHexapod(req: LeggedRequest, cfg: HexCfg, sensors: string[]) {
   const zBatt = zPlate - 4 - 0.5 - bh;
   for (const s of [-1, 1]) bodyOps.push({ op: "box", min: [bx0 + battB.min[0] + 14, s > 0 ? bw + 0.5 : -bw - 3.5, zBatt + 4], max: [bx0 + battB.max[0] - 14, s > 0 ? bw + 3.5 : -bw - 0.5, zPlate - 3.5] });
   for (const x of [-35, 35]) bodyOps.push({ op: "cutbox", min: [x - 10, -bw - 8, zPlate - 5], max: [x + 10, -bw - 4, zPlate + 1] }, { op: "cutbox", min: [x - 10, bw + 4, zPlate - 5], max: [x + 10, bw + 8, zPlate + 1] });
-  for (const deg of PILLARS) { const t = (deg * Math.PI) / 180; bodyOps.push({ op: "hole", a: [52 * Math.cos(t), 52 * Math.sin(t), zPlate - 6], b: [52 * Math.cos(t), 52 * Math.sin(t), zPlate + 1], d: 3.4 }); }
+  // the pillars stand 52 mm out; the one at the -x end further (the main switch's body comes through the board hood's -x
+  // wall there), as far as the deck over it allows
+  const Rd = Rf - (-bF.min[0]) - WALL - 6, pillarR = (deg: number) => (deg === 180 ? Math.max(52, Math.min(Rd - 6, 58)) : 52);
+  for (const deg of PILLARS) { const t = (deg * Math.PI) / 180, r = pillarR(deg); bodyOps.push({ op: "hole", a: [r * Math.cos(t), r * Math.sin(t), zPlate - 6], b: [r * Math.cos(t), r * Math.sin(t), zPlate + 1], d: 3.4 }); }
   printed(A, base, bodyOps, { role: "base", material: "printed_dark" });
   mountAt(A, base, cfg.batt, translation([bx0, 0, zBatt]), "battery", "main battery (strapped under the body plate)");
   // small boards on the plate over the battery tray, on the -y side of the board hood and at its -x end, low: the hood
@@ -74,12 +77,12 @@ function buildHexapod(req: LeggedRequest, cfg: HexCfg, sensors: string[]) {
   addSensor(A, "imu", "imu", "base_link", [0.0008, 0.0164, (zPlate + 5) / 1000], [0, 0, 0], { model: "BNO085" });
   // ---- top deck on three pillars: computer, LiDAR turret, camera ----
   const zDeck = zf + bF.max[1] + WALL + 6;         // above the femur cradles
-  const Rd = Rf - (-bF.min[0]) - WALL - 6;          // inside the femur cradles' inner ends
+  // (the deck's radius Rd: inside the femur cradles' inner ends)
   const deck: Frame = { name: "top_deck", W: translation([0, 0, 0]) };
   const deckOps: Op[] = [disc(Rd, zDeck, zDeck + 3)];
   // three pillars of their own: the deck then prints flat, with the computer's bosses standing up from it
   PILLARS.forEach((deg, i) => {
-    const t = (deg * Math.PI) / 180, p: Vec3 = [52 * Math.cos(t), 52 * Math.sin(t), 0], name = `deck_pillar_${i + 1}`;
+    const r = pillarR(deg), t = (deg * Math.PI) / 180, p: Vec3 = [r * Math.cos(t), r * Math.sin(t), 0], name = `deck_pillar_${i + 1}`;
     deckOps.push({ op: "hole", a: [p[0], p[1], zDeck - 1], b: [p[0], p[1], zDeck + 4], d: 3.4 });
     printed(A, { name, W: base.W }, [{ op: "box", min: [p[0] - 5, p[1] - 5, zPlate], max: [p[0] + 5, p[1] + 5, zDeck], r: 4.9 }, { op: "hole", a: [p[0], p[1], zPlate - 1], b: [p[0], p[1], zPlate + 12], d: 2.6 }, { op: "hole", a: [p[0], p[1], zDeck - 12], b: [p[0], p[1], zDeck + 1], d: 2.6 }], { role: "structure", material: "printed_dark" });
     A.fixed(`${name}_mount`, "base_link", name, translation([0, 0, 0]));

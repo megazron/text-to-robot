@@ -71,13 +71,21 @@ export function wiring3d(spec: RobotSpecification, record?: WiringRecord | null)
     if (!bb) continue;
     let k = 1, best = -1, acc = 0; const at: number[] = [0];
     for (let q = 1; q < F.pts.length; q++) { const d = len(sub(F.pts[q], F.pts[q - 1])); acc += d; at.push(acc); if (F.on[q] === F.on[q - 1] && d > best) { best = d; k = q; } }
-    const L = bb.max[0] - bb.min[0], half = Math.min(L, best) / 2, mid = lerp(F.pts[k - 1], F.pts[k], 0.5), dir = unit(sub(F.pts[k], F.pts[k - 1])), g = F.on[k], G = f.link[g];
+    const L = bb.max[0] - bb.min[0];
+    let half = Math.min(L, best) / 2, mid = lerp(F.pts[k - 1], F.pts[k], 0.5), dir = unit(sub(F.pts[k], F.pts[k - 1])), centre = (at[k - 1] + at[k]) / 2;
+    // a lead with no stretch as long as the holder: the holder at the lead's middle, along it there, its halves on either side
+    if (best < L && acc > 0) {
+      centre = acc / 2; half = Math.min(L / 2, acc / 2 - 1);
+      let q = 1; while (q < at.length - 1 && at[q] < centre) q++;
+      const t = (centre - at[q - 1]) / Math.max(1e-6, at[q] - at[q - 1]); mid = lerp(F.pts[q - 1], F.pts[q], t); dir = unit(sub(F.pts[q], F.pts[q - 1])); k = q;
+    }
+    const g = F.on[k], G = f.link[g];
     // the holder's x axis along the wire, in the body's frame
     const x = applyInv({ R: G.R, p: [0, 0, 0] }, dir), y = perp(x), z = cross(x, y), c = lerp(bb.min, bb.max, 0.5), o = applyInv(G, mid);
     const Rl = [[x[0], y[0], z[0]], [x[1], y[1], z[1]], [x[2], y[2], z[2]]], pl = sub(o, [0, 1, 2].map((r) => Rl[r][0] * c[0] + Rl[r][1] * c[1] + Rl[r][2] * c[2]) as V3);
     const inLink: Tf = { R: Rl, p: scale(pl, 0.001) as V3 };
     const Rw = [0, 1, 2].map((r) => [0, 1, 2].map((cc) => G.R[r][0] * Rl[0][cc] + G.R[r][1] * Rl[1][cc] + G.R[r][2] * Rl[2][cc]));
-    fuseT.set(i.name, { link: g, inLink, world: { R: Rw, p: scale(apply(G, pl), 0.001) as V3 }, cut: [(at[k - 1] + at[k]) / 2 - half, (at[k - 1] + at[k]) / 2 + half], line: { pts: F.pts, on: F.on } });
+    fuseT.set(i.name, { link: g, inLink, world: { R: Rw, p: scale(apply(G, pl), 0.001) as V3 }, cut: [centre - half, centre + half], line: { pts: F.pts, on: F.on } });
   }
   for (const c of cables) { if (!c.path_mm.length) continue; for (const [end, at] of [[c.from, c.path_mm[0]], [c.to, c.path_mm[c.path_mm.length - 1]]] as const) { const i = inst.get(end); if (i && !i.link && !harnessAt.has(end)) harnessAt.set(end, at as V3); } }
   // branch fuses: on their lead, as far along the route from the splice as the record's short lead to them
@@ -139,8 +147,6 @@ export function wiring3d(spec: RobotSpecification, record?: WiringRecord | null)
         const fuseEnd = [x.from, x.to].map((t) => t.split(".")[0]).find((n2) => fuseT.has(n2)), ft = fuseEnd ? fuseT.get(fuseEnd)! : null;
         let F = ft ? ft.line : roundWire(x.pts as V3[], unrun(x.on), minBend);
         if (ft) F = x.to.startsWith(`${fuseEnd}.`) ? slice(F, 0, ft.cut[0]) : slice(F, ft.cut[1], Infinity);
-        // the cut ends on the holder's lead itself (a stretch shorter than the holder leaves the cut a little short of it)
-        if (ft && F.pts.length) { if (x.to.startsWith(`${fuseEnd}.`)) F.pts[F.pts.length - 1] = b.p; else F.pts[0] = a.p; }
         wires.push({ id: x.id, cable: c.id, net: x.net, kind: x.kind, color: x.color, awg: x.awg, od_mm: od, from: x.from, to: x.to, typical_a: x.typical_a, peak_a: x.peak_a, cut_mm: x.length_mm,
           pts: F.pts.map((p, i) => ({ link: F.on[i], p: r2(applyInv(f.link[F.on[i]] ?? f.link[spec.links[0].name], p)) })), ends: [a.kind, b.kind], min_bend_mm: Math.round(minBend * 10) / 10, flex_bend_mm: Math.round(flexBend * 10) / 10 });
         return;

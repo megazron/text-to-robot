@@ -31,7 +31,8 @@ for (const ex of examples) {
         assert.ok(pin, `${ex}: ${t} has no pin on ${p.key}`);
         const T = p.T, at = pin!.at, inLink: V3 = [T[0] * at[0] + T[1] * at[1] + T[2] * at[2] + T[3], T[4] * at[0] + T[5] * at[1] + T[6] * at[2] + T[7], T[8] * at[0] + T[9] * at[1] + T[10] * at[2] + T[11]];
         const d = dist(world(f, p.link, inLink), world(f, q.link, q.p));
-        assert.ok(d < (pin!.kind === "header" ? 20 : 0.6), `${ex}: ${x.id} ends ${d.toFixed(1)} mm from ${t}`);
+        // (a branch fuse is laid on its lead after the lead is routed: the lead ends at the holder, within its own leads' reach)
+        assert.ok(d < (pin!.kind === "header" || /^branch_fuse_/.test(t) ? 20 : 0.6), `${ex}: ${x.id} ends ${d.toFixed(1)} mm from ${t}`);
       }
     }
   });

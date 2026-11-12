@@ -187,7 +187,7 @@ export function designPartsCar(req: PartsCarRequest = {}): RobotSpecification {
   const wheelJoints: string[] = [], motorNames: string[] = [];
   for (const { xa, can } of axles) for (const side of [1, -1] as const) {
     const tag = `${xa > 0 ? "front" : xa < 0 ? "rear" : "drive"}_${side > 0 ? "left" : "right"}`;
-    A.mount("chassis", MOTOR, motorT(xa, side, can), `${tag}_motor`, "drive motor");
+    A.mount("chassis", MOTOR, motorT(xa, side, can, YF, ZC), `${tag}_motor`, "drive motor");
     A.fastener("M3x25 socket head + nut (motor through-bolt)", 2);
     const Tw = mul(translation([xa, side * (YF + 1), ZC]), frame([0, 0, 0], [0, side, 0], [1, 0, 0]));
     A.mount("chassis", WHEEL, Tw, `${tag}_wheel`, "drive wheel");

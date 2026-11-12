@@ -596,7 +596,9 @@ function designBiped(req: LeggedRequest, mech: boolean): RobotSpecification {
   const legLadder = mech ? ["cubemars_ak60_6", "cubemars_ak70_10", "cubemars_ak80_9", "cubemars_ak80_64"] : ["feetech_sts3215_c047", "feetech_sts3250", "dxl_xh540_w270"];
   const armLadder = mech ? ["dxl_xm430_w350", "dxl_xh540_w270", "cubemars_ak60_6", "cubemars_ak70_10"] : ["dxl_xl330_m288", "dxl_xl430_w250", "dxl_xm430_w350"];
   const neckLadder = mech ? ["dxl_xl430_w250", "dxl_xm430_w350"] : ["dxl_xl330_m288", "dxl_xl430_w250"];
-  const sc = mech ? Math.max(0.75, Math.min(1.3, (req.heightM ?? 1.0) / 1.0)) : Math.max(0.8, Math.min(1.3, (req.heightM ?? 0.6) / 0.6));
+  // a mech's height grows slower than its scale (its torso electronics, plenum and backpack do not scale): built 1.204 m at
+  // scale 1.0 and 1.25 m at 1.2, so a stated height sets the scale through that line
+  const sc = mech ? (req.heightM ? Math.max(0.75, Math.min(1.3, (req.heightM - 0.974) / 0.23)) : 1) : Math.max(0.8, Math.min(1.3, (req.heightM ?? 0.6) / 0.6));
   const legKeys = (k: string) => Object.fromEntries(LEG.map((j) => [j, k])) as Record<LegJ, string>;
   const armKeys = (k: string) => Object.fromEntries(ARM_JOINTS[7].map((j) => [j, k]));
   const cfg: BipedCfg = mech

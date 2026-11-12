@@ -352,9 +352,9 @@ export function designArduinoWallE(req: ArduinoWallERequest = {}): RobotSpecific
   A.check("drive:skid_turn", tauTurn * DYNAMIC_FACTOR <= rt.peak_nm, `turning on the spot (mu 1.0, contact ${L * 1000} mm, track gauge ${(B * 1000).toFixed(0)} mm): ${tauTurn.toFixed(4)} N·m per wheel x ${DYNAMIC_FACTOR} vs stall ${rt.peak_nm} N·m (short transient, as for the skid-steer bases)`);
   const vmax = rt.speed_rad_s * rr * 0.8;
   // a tracked base turns slower than its no-slip rate: the tracks slide sideways (same model as the skid-steer bases), and
-  // a track drags along its whole length, so its TT motors run at their torque limit through the turn; the extra 0.4 is the
-  // shortfall that limit causes in simulation (mean 1.3 rad/s on the grippy test floor)
-  const chi = 1 + 2 * (L / B) ** 2 + 0.4, turnRate = (0.5 * vmax) / (B / 2) / chi;
+  // a track drags along its whole length, so its TT motors run at their torque limit through the turn; the extra 0.8 is the
+  // shortfall that limit causes in simulation (mean 1.05 rad/s on the grippy test floor, with the tracks' contact 134 mm long)
+  const chi = 1 + 2 * (L / B) ** 2 + 0.8, turnRate = (0.5 * vmax) / (B / 2) / chi;
   A.check("drive:top_speed", vmax >= 0.3, `${vmax.toFixed(2)} m/s`);
   const servoStall = 2 * electrical(SERVO)!.current_a.v.peak + 2 * electrical(SHOULDER)!.current_a.v.peak, buckA = electrical("buck_lm2596")!.current_a.v.peak;
   A.check("power:servo_supply", servoStall <= buckA, `the four servos on the busier regulator stalled together draw ${servoStall.toFixed(1)} A of the LM2596's ${buckA} A peak (2 A continuous)`);

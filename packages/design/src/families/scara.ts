@@ -225,6 +225,9 @@ function build(name: string, prompt: string | undefined, p: Plan) {
     for (const [xa, xb, ya, yb] of kept) if (ya < y1 + 1 && yb > y0 - 1) xs = xs.flatMap(([a, b]) => [[a, Math.min(b, xa - 2)], [Math.max(a, xb + 2), b]] as [number, number][]).filter(([a, b]) => b - a > 6);
     for (const [a, b] of xs) deck.push({ op: "cutbox", min: [a, y0, 45], max: [b, y1, 50] });
   }
+  // a StepStick's header pins are longer than the breadboard is deep: their ends pass on through a slot in the deck
+  { const pb = part("tmc2209_stepstick").bbox_mm!; for (const T of tmcOn) { const a = apply(bbB, apply(T, [pb.min[0], pb.min[1], 0])), b = apply(bbB, apply(T, [pb.max[0], pb.max[1], 0]));
+    deck.push({ op: "cutbox", min: [Math.min(a[0], b[0]) - 0.5, Math.min(a[1], b[1]) - 0.5, 45], max: [Math.max(a[0], b[0]) + 0.5, Math.max(a[1], b[1]) + 0.5, 50] }); } }
   for (const [hx, hy] of [[3, 3], [39, 3], [3, 30], [39, 30]]) { const q = apply(wsT, [hx, hy, 0]); deck.push({ op: "rod", a: [q[0], q[1], dz - 0.1], b: [q[0], q[1], dz + 6], r: 2.5 }, { op: "hole", a: [q[0], q[1], dz - 1], b: [q[0], q[1], dz + 6.1], d: 1.8 }); }
   // fused, switched mains inlet in the far wall, over the wiring well; gland where the harness leaves; USB of the controller
   box.push({ op: "cutbox", min: [bx0 - 1, -31.6, 52.3], max: [bx0 + 4, 15.6, 79.7] });

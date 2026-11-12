@@ -12,7 +12,7 @@ import { Assembly } from "../assembly.ts";
 import { gravityTorques, totalMass, axisInertias, type PointLoad } from "../kin.ts";
 import { DYNAMIC_FACTOR, MIN_SPEED, loadedSpeed } from "../sizing.ts";
 import { limitsFromGeometry } from "./legkit.ts";
-import { bay, enclosureChecks, supplyBox, type ExitSpec } from "../enclosure.ts";
+import { bay, enclosureChecks, supplyBox, panelPose, type ExitSpec } from "../enclosure.ts";
 import { Harness, finishWiring } from "../wiring.ts";
 import { boardProfile, PinPlan, type FirmwareRecord } from "./parts-pins.ts";
 
@@ -126,7 +126,8 @@ function console_(A: Assembly, req: ArduinoArmRequest, supplyA: number): Harness
     { id: "usb", face: "x-", u: uno ? 2 + 38.1 : 18 + 9, v: 5 + (uno ? 7 : 3), kind: "usb", w: 14, h: 13 },
     batt ? { id: "power_in", face: "x-", u: 61, v: CH / 2, kind: "grommet", d: 8, noAnchor: true } : supplyA === 4 ? { id: "power_in", face: "x-", u: 61, v: CH / 2, kind: "jack", d: 8, part: { name: "power_jack", key: "dc_jack_5521_panel", use: "adapter socket" } } : { id: "power_in", face: "x-", u: 61, v: CH / 2, kind: "grommet", d: 8, noAnchor: true },
     // the switch in the side wall by the rear corner: nothing stands behind it there, its leads turn over the Uno
-    { id: "switch", face: "y+", u: 12, v: CH / 2, kind: "switch", w: 19.4, h: 13.4, part: { name: "main_switch", key: "switch_kcd1", use: "servo power switch" } },
+    // (its bezel 0.2 mm proud of the wall's face: flush, the two meshes share a face and read as touching)
+    { id: "switch", face: "y+", u: 12, v: CH / 2, kind: "switch", w: 19.4, h: 13.4, part: { name: "main_switch", key: "switch_kcd1", use: "servo power switch", Tpanel: panelPose([12, Wd + 0.2, CH / 2], [0, 1, 0], 2.4) } },
     // the yaw servo's lead leaves its cradle by the slot low in the cradle's +y wall: the grommet faces past that wall, far
     // enough to the side for the lead to turn into the slot
     { id: "yaw_lead", face: "x+", u: Wd / 2 + 32, v: 22, kind: "grommet", d: 6.5 },
