@@ -6,6 +6,7 @@ import { Dial, Sheet, followKeyboard, haptic, popIn, transformFlash } from "./ui
 import { h, safeHttpUrl, safeJsonParse, MAX_PROMPT_CHARS, MAX_ROBOT_BYTES } from "./safe.js";
 import { createElectronics } from "./electronics3d.js";
 import { createMotion } from "./motion.js";
+import { createSim } from "./simview.js";
 
 // Clickjacking guard: GitHub Pages cannot send frame-ancestors or X-Frame-Options, so a page that frames this site gets
 // a link to open it in its own tab instead of a working (and invisible-overlay-able) copy.
@@ -187,7 +188,7 @@ function buildRobot(spec) {
   updateFK();
   frameRobot();
   showPreviewStatus();
-  resetElectronics();
+  resetElectronics(); resetSim();
   Promise.all(pending).then(() => {
     if (revision !== previewRevision) return;
     frameRobot();
@@ -300,6 +301,14 @@ function frameOn(box) {
 for (const b of document.querySelectorAll(".viewmode")) b.addEventListener("click", () => setViewMode(b.dataset.mode));
 $("#railFilter").addEventListener("change", (e) => { electronics?.setFilter(e.target.value); invalidate(); });
 /** a new robot: the electronics view is rebuilt when it is next shown */
+// ---------------- the Run tab: the robot's compiled sketch on a virtual ATmega328P, driving the model (simview.js) ----------------
+let sim = null, simFor = null;
+async function openSim() {
+  if (!state.robot || simFor === state.robot) return;
+  sim?.dispose(); simFor = state.robot;
+  sim = await createSim({ THREE, scene, robotGroup, state, updateFK, invalidate, api, el, box: $("#simPanel"), frameOn: (b) => { const inv = new THREE.Matrix4().copy(robotGroup.matrixWorld).invert(); frameOn(b.clone().applyMatrix4(inv)); } });
+}
+function resetSim() { sim?.dispose(); sim = null; simFor = null; if ($("#tab-run").classList.contains("active")) openSim(); }
 function resetElectronics() { electronics?.dispose(); electronics = null; electronicsFor = null; focusedNet = null; if (viewMode !== "robot") setViewMode(viewMode); }
 // hover: what the wire or pin under the pointer carries
 renderer.domElement.addEventListener("pointermove", (e) => {
@@ -922,6 +931,7 @@ function setTab(name) {
     const pane = $("#tab-" + t.dataset.tab); pane.classList.toggle("active", on);
     if (on) popIn(pane, { y: 6, duration: 260 });
   });
+  if (name === "run") openSim();
   if (name === "circuit") showCircuit(document.querySelector(".seg.circ .tab.active").dataset.tab.slice(5));
   else if (name.startsWith("circ-")) showCircuit(name.slice(5));
 }
@@ -1149,7 +1159,9 @@ initExamples(); initTemplates(); initMode();
   }
   doGenerate("Create a 6 DOF robotic arm with a parallel gripper");
 })();
-window.__ttr = { get motion() { return window.__ttrMotion; }, robotGroup, renderer, get preview() { return { ...preview, parts: [...state.meshes].filter(([name]) => state.robot.links.find(l => l.name === name)?.geometry.type === 'mesh').map(([name, group]) => ({ name, loaded: !!group.children[0].userData.meshLoaded, triangles: group.children[0].geometry.getAttribute('position').count / 3 })) }; }, camera, controls, frameRobot, get robot(){return state.robot} };
+window.__ttr = { get motion() { return window.__ttrMotion; }, robotGroup, renderer, get preview() { return { ...preview, parts: [...state.meshes].filter(([name]) => state.robot.links.find(l => l.name === name)?.geometry.type === 'mesh').map(([name, group]) => ({ name, loaded: !!group.children[0].userData.meshLoaded, triangles: group.children[0].geometry.getAttribute('position').count / 3 })) }; }, camera, controls, frameRobot, get robot(){return state.robot},
+  // the Run tab's board as it runs, for the browser tests (scripts/check_sim.py)
+  get sim() { return sim ? { running: sim.running, pose: sim.pose, shipped: sim.shipped, ms: sim.board?.ms ?? 0, motors: sim.board?.motors() ?? [], servos: sim.board?.servos() ?? [], sensor: sim.board ? { ...sim.board.sensor } : null, joints: { ...state.jointValues } } : null; } };
 
 // ---------------- how it reads: the sentence model and a bring-your-own-key model (website only) ----------------
 // The settings live in this browser (apps/web/src/browser-api.ts); the key never leaves it except to the provider chosen.

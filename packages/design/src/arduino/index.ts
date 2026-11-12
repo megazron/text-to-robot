@@ -7,6 +7,8 @@ import type { RobotSpecification } from "@ttr/robot-schema";
 import { safeName } from "@ttr/robot-schema";
 import type { DesignRecord } from "../assembly.ts";
 import type { WiringRecord } from "../wiring.ts";
+import { fk, rpyToR } from "../kin.ts";
+import { part } from "@ttr/parts";
 import { plan, type FirmwareBoard, type FirmwarePin, type MotorPlan, type ServoPlan, type PcaPlan, type RangePlan } from "./plan.ts";
 import { sketch, poses, libraries, behaviourOf, SERIAL_BAUD, type Pose } from "./sketch.ts";
 
@@ -27,11 +29,21 @@ export interface ArduinoFirmware {
   notes: string[];
   behaviour: string;
   serial_baud: number;
-  motors: MotorPlan[]; servos: ServoPlan[]; servo_drivers: PcaPlan[]; range_sensor: RangePlan | null;
+  motors: MotorPlan[]; servos: ServoPlan[]; servo_drivers: PcaPlan[];
+  /** with where its beam starts in its link's frame (m) and which way it looks: the middle of the transducer face, out of the board's top (+z), and its beam angle */
+  range_sensor: (RangePlan & { face_m: [number, number, number]; axis: [number, number, number]; beam_deg: number }) | null;
   /** highest motor PWM duty the sketch writes, 0..255 */
   pwm_max: number;
   /** the pose sequence: joint angles in degrees, in the order of `servos` */
   poses: Pose[];
+  /**
+   * How the robot moves on its wheels, for a simulator driving the 3D model from the motor pins (null: no drive motors).
+   * The design's own figures: its top speed (at the motors' rated voltage) and the slip factor its turning check uses;
+   * per motor the wheel joint it turns; the supply its driver switches; the motors' rated voltage.
+   */
+  drive: { supply_v: number; rated_v: number; top_speed_m_s: number; turn_slip_factor: number; track_m: number; wheel_radius_m: number;
+    /** per motor the wheel joint it turns and the sign that joint turns with when the wheel rolls the robot forwards (+x) */
+    wheels: Record<string, { joint: string; sign: 1 | -1 } | null> } | null;
 }
 
 /** Families whose motion I do not script: see the note at the top. */
@@ -48,8 +60,39 @@ export function arduinoFirmware(spec: RobotSpecification, wiring?: WiringRecord)
   return {
     files: { [path]: sketch(spec.robot_name, `${name}.ino`, p), "README.md": readme(spec.robot_name, name, p, libs, behaviour) },
     sketch: path, board: p.board, pins: p.pins, libraries: libs, notes, behaviour, serial_baud: SERIAL_BAUD,
-    motors: p.motors, servos: p.servos, servo_drivers: p.pca, range_sensor: p.range, pwm_max: p.pwm_max, poses: poses(p.servos),
+    motors: p.motors, servos: p.servos, servo_drivers: p.pca, range_sensor: p.range && { ...p.range, ...beamOf(p.range.key) }, pwm_max: p.pwm_max, poses: poses(p.servos),
+    drive: driveOf(spec, w, p.motors, design),
   };
+}
+
+/** An ultrasonic module's transducers stand on its board's top face and look out along +z (catalog body box, beam angle from its specs). */
+function beamOf(key: string) {
+  const c = part(key), b = c.bbox_mm!;
+  return { face_m: [(b.min[0] + b.max[0]) / 2000, (b.min[1] + b.max[1]) / 2000, b.max[2] / 1000] as [number, number, number], axis: [0, 0, 1] as [number, number, number], beam_deg: Number(c.specs.beam_deg ?? 15) };
+}
+/** The drive figures for a simulator: from the design record, the wiring record and the catalog, nothing invented. */
+function driveOf(spec: RobotSpecification, w: WiringRecord, motors: MotorPlan[], design?: DesignRecord): ArduinoFirmware["drive"] {
+  const perf = design?.performance as { top_speed_m_s?: number; turn_slip_factor?: number } | undefined;
+  if (!motors.length || !perf?.top_speed_m_s) return null;
+  const f = fk(spec), at = (l: string) => f.link[l]?.p as [number, number, number] | undefined;
+  // each motor turns the wheel on the continuous joint nearest to it
+  const wheelJoints = spec.joints.filter((j) => j.type === "continuous" && spec.links.find((l) => l.name === j.child)?.role === "wheel");
+  const wheels: Record<string, { joint: string; sign: 1 | -1 } | null> = {};
+  for (const m of motors) {
+    const p = at(m.name); let best: string | null = null, bd = Infinity;
+    if (p) for (const j of wheelJoints) { const q = at(j.child); if (!q) continue; const d = Math.hypot(q[0] - p[0], q[1] - p[1], q[2] - p[2]); if (d < bd) { bd = d; best = j.name; } }
+    // rolling forwards along +x is a positive turn about +y: the sign is the joint axis (in its parent's frame) along y
+    const J = best ? spec.joints.find((j) => j.name === best)! : null, ay = J ? rpyToR(J.origin.rpy as [number, number, number]).reduce((a, row, i) => (i === 1 ? row[0] * J.axis[0] + row[1] * J.axis[1] + row[2] * J.axis[2] : a), 0) : 0;
+    wheels[m.name] = J ? { joint: J.name, sign: ay < 0 ? -1 : 1 } : null;
+  }
+  const ys = (side: string) => motors.filter((m) => m.side === side && wheels[m.name]).map((m) => at(spec.joints.find((j) => j.name === wheels[m.name]!.joint)!.child)![1]);
+  const yl = ys("left"), yr = ys("right"), mean = (a: number[]) => a.reduce((x, y) => x + y, 0) / a.length;
+  const wheel = spec.links.find((l) => l.name === spec.joints.find((j) => j.name === Object.values(wheels).find(Boolean)?.joint)?.child);
+  const bb = (wheel?.geometry as { bbox?: { min: number[]; max: number[] } } | undefined)?.bbox;
+  const rail = w.rails.find((r) => r.loads.some((l) => motors.some((m) => m.driver === l.inst)));
+  const rated = Number(part(motors[0].key).specs.voltage_v ?? 0);
+  if (!rail || !rated || !yl.length || !yr.length || !bb) return null;
+  return { supply_v: rail.voltage_v, rated_v: rated, top_speed_m_s: perf.top_speed_m_s, turn_slip_factor: perf.turn_slip_factor ?? 1, track_m: +(mean(yl) - mean(yr)).toFixed(4), wheel_radius_m: +((bb.max[0] - bb.min[0]) / 2).toFixed(4), wheels };
 }
 
 /** Flashing steps and the pin map, beside the sketch. */

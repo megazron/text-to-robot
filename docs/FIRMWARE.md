@@ -57,6 +57,12 @@ In the Arduino IDE: open the `.ino`, pick the board (Arduino Nano with processor
 
 The robot hand's five flexion servos pull tendons over spools. The sketch does not yet turn a finger joint angle into a servo angle through the spool radius and the moment arms, so it holds those five servos at their centres (its notes say so) and its pose sequence moves only the thumb swing.
 
+## Run it in the browser
+
+The website's **Run** tab runs a robot's compiled sketch on a virtual ATmega328P ([avr8js](https://github.com/wokwi/avr8js), MIT) in the page, and the 3D model follows its pins: `apps/web/public/avrsim.js` models what is wired to the board (TB6612FNG and L298N channels from their direction inputs and the measured PWM duty, hobby servos from the Servo library's pulses, PCA9685 boards from the registers the sketch writes over I2C, the HC-SR04 from its trigger and an echo timed by the distance measured in the 3D scene), and `apps/web/public/simview.js` drives the model: wheel speeds from the duty times the supply over the motors' rated voltage and the design's top speed, turning by the design's own slip factor, servo joints to the angles their pulses give, a small arena of walls and boxes for the sensor to see. The serial monitor shows what the sketch prints and sends what you type ('s' stops it).
+
+The page cannot compile a sketch. It runs the shipped `.hex` of an example when a robot's sketch is byte for byte that example's (checked by its SHA-256), and otherwise says so and runs a `.hex` you compile yourself (`arduino-cli compile --fqbn <fqbn> --output-dir out <sketch>`) and load. `python3 scripts/compile_firmware.py --site` writes the shipped files (`apps/web/public/firmware/`); `--check-site` fails when they are not what the compile gives. `tests/avrsim.test.ts` runs them in node (the car's cruise duty, its stop, back-off and turn at an obstacle 12 cm away, 's' on the serial port, the arm's pulses through the PCA9685), and `scripts/check_sim.py` runs the Run tab in Chromium under the site's policy.
+
 ## Regenerate
 
-`node scripts/export_firmware.ts` writes the sketches of the examples from their shipped `robot.json` (and into their `robot.cad.zip`); `scripts/build_examples.ts` writes the same files in a full rebuild. The generator is `packages/design/src/firmware/`: `plan.ts` reads the wiring record, `sketch.ts` writes the code.
+`node scripts/export_firmware.ts` writes the sketches of the examples from their shipped `robot.json` (and into their `robot.cad.zip`); `scripts/build_examples.ts` writes the same files in a full rebuild. The generator is `packages/design/src/arduino/`: `plan.ts` reads the wiring record, `sketch.ts` writes the code.

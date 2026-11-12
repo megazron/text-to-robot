@@ -42,8 +42,8 @@ jobs:
           arduino-cli core install arduino:avr@1.8.8
           arduino-cli lib install --no-deps "Servo@1.3.0" "Adafruit BusIO@1.17.4" "Adafruit PWM Servo Driver Library@3.0.3"
           arduino-cli version && arduino-cli core list && arduino-cli lib list
-      - name: Every example's Arduino sketch compiles for its board without warnings, the rewired variants too
-        run: python3 scripts/compile_firmware.py --variants
+      - name: Every example's Arduino sketch compiles for its board without warnings, the rewired variants too; the site's compiled examples are this compile
+        run: python3 scripts/compile_firmware.py --variants --check-site
   browser:
     runs-on: ubuntu-latest
     steps:
@@ -81,6 +81,8 @@ jobs:
         run: python scripts/check_xss.py
       - name: Build from my parts on the site (the My parts picker, option cards, have / to buy, the sketch)
         run: python scripts/check_parts.py
+      - name: The Run tab runs the examples' compiled sketches on the virtual ATmega328P and the model follows the pins
+        run: python scripts/check_sim.py
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         if: always()
         with:
@@ -88,6 +90,7 @@ jobs:
           path: |
             out/site-check/
             out/xss-check/
+            out/sim-check/
             out/parts-check/
   community:
     # the community board: the Worker's unit and API tests on Miniflare, then Chromium against wrangler dev and the site.
