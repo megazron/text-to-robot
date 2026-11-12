@@ -199,6 +199,7 @@
         <button class="tab" data-tab="bom" type="button" role="tab">Parts</button>
         <button class="tab" data-tab="circuit" type="button" role="tab">Circuit</button>
         <button class="tab" data-tab="files" type="button" role="tab">Files</button>
+        <button class="tab" data-tab="run" type="button" role="tab">Run</button>
       </div>
       <div id="tab-summary" class="tabpane active">
         <div class="sk" aria-hidden="true"><i class="tall"></i><i></i><i></i><i></i></div>
@@ -226,13 +227,16 @@
           <button class="tab active" data-tab="circ-schematic" type="button" role="tab">Schematic</button>
           <button class="tab" data-tab="circ-breadboard" type="button" role="tab">Breadboard</button>
           <button class="tab" data-tab="circ-wiring" type="button" role="tab">Wiring</button>
+          <button class="tab" data-tab="circ-power" type="button" role="tab">Power</button>
         </div>
         <div id="circNote" class="hint">Generate a robot to see its circuit.</div>
         <div id="tab-circ-schematic" class="tabpane active"><div class="circview" data-view="schematic"></div></div>
         <div id="tab-circ-breadboard" class="tabpane"><div class="circview" data-view="breadboard"></div></div>
         <div id="tab-circ-wiring" class="tabpane"><div class="circview" data-view="wiring"></div></div>
+        <div id="tab-circ-power" class="tabpane"><div class="circview powersim" data-view="power"></div></div>
         <div id="circElectrical" class="circcalc"></div>
       </div>
+      <div id="tab-run" class="tabpane"><div id="simPanel" class="simpanel"><div class="hint">Run the robot's Arduino program on a virtual board: the motors, servos and sensor in the 3D view follow its pins.</div></div></div>
       <div id="tab-files" class="tabpane">
         <div class="list downloads">
           <button data-dl="cad" type="button"><svg class="ico" aria-hidden="true"><use href="#i-down"/></svg><span class="t"><b>CAD</b><small>STEP + STL</small></span></button>

@@ -16,7 +16,7 @@ import type { Mount, WorldMount } from "./snap.ts";
 // @ts-expect-error: plain JavaScript module without types
 import { makeZip } from "../../public/robotkit.js";
 
-export const API_VERSION = "1.1.0";
+export const API_VERSION = "1.3.0";
 export type { RobotSpecification, EditOp, PrintedParams, Mount, WorldMount };
 export { applyEdits, toScene, fromScene, worldFrames, rootLink, subtree, parentJoint, kindOf, poseMat, matPose, mul, inv, apply, emptyRobot, freeName, type Scene, type SceneNode } from "./edit.ts";
 export { snapPart, mate, mountFrame, compatible, patternsMatch, MATES, type Snap } from "./snap.ts";
@@ -35,6 +35,33 @@ export type Files = Record<string, string | Uint8Array>;
 export interface SchematicNode { name: string; nets: string[]; kind: string; voltage_v?: number; drawn: string; pins: { id: string; ref: string; num: string; members: string[] }[]; }
 export interface Schematic { svg: string; pdf: Uint8Array; size: string; netlist: { robot: string; parts: { ref: string; inst: string; key: string; value: string }[]; nodes: SchematicNode[]; empty_nets: string[]; splices: string[] }; layout: string[]; electrical: { runtime: unknown[]; supplies: unknown[]; regulators: unknown[]; logic: { net: string; from: string; to: string; voh: number | null; vih: number | null; max_in: number | null; verdict: string; advice: string }[]; unchecked: string[]; sources: unknown[] }; }
 export interface Breadboard { svg: string; layout: string[]; unrouted: string[]; }
+/** A board pin the sketch uses, with the wires of the wiring record that end on it. */
+export interface FirmwarePin { pin: string; number: number; mode: "pwm" | "output" | "input" | "i2c" | "servo" | "unused"; drives: string; wires: { id: string; net: string; from: string; to: string }[]; }
+/** A servo in the sketch: its output (PCA9685 board and channel, or a board pin), catalog pulse range, the joint it turns and that joint's range and home in degrees. */
+export interface FirmwareServo { name: string; key: string; via: { board: number; channel: number } | { pin: number }; pulse_us: [number, number]; range_deg: number; joint: string | null; lower_deg: number; upper_deg: number; home_deg: number; max_dps: number | null; cut_from?: [number, number]; }
+export interface FirmwareMotor { name: string; key: string; driver: string; driver_key: string; channel: string; pwm: number; pwm_is_pwm: boolean; in1: number; in2: number; side: "left" | "right" | null; forward: 1 | -1; }
+/** A robot's program; the optional fields come with a sketch written from the wiring record. */
+export type Program = { name: string; language: "arduino" | "python"; code: string; fqbn: string; libraries: string[] } & Partial<Omit<Firmware, "libraries">>;
+/** What a sketch written from the wiring record drives. */
+export interface Firmware {
+  /** `<name>/<name>.ino` (the sketch, in a folder of its own name as the Arduino IDE wants) and `README.md` (flashing steps, pin map) */
+  files: Record<string, string>;
+  /** the sketch's path in `files` */
+  sketch: string;
+  board: { instance: string; key: string; name: string; fqbn: string; mcu: string; pwm_pins: number[] };
+  pins: FirmwarePin[];
+  /** Library Manager names of what the sketch includes */
+  libraries: string[];
+  /** what is wired but not driven, and what to check on the bench */
+  notes: string[];
+  behaviour: string; serial_baud: number;
+  motors: FirmwareMotor[]; servos: FirmwareServo[]; servo_drivers: { name: string; key: string; address: number }[];
+  range_sensor: { name: string; key: string; trig: number; echo: number; range_cm: [number, number] } | null;
+  /** highest motor PWM duty the sketch writes, 0..255 */
+  pwm_max: number;
+  /** the pose sequence, joint angles in degrees in the order of `servos` */
+  poses: { name: string; angles_deg: number[] }[];
+}
 type V3 = [number, number, number];
 /** A part's 3D model in its own frame (mm): meshes per material, silkscreen labels, and each pin's place and lead direction (`port.pin`). */
 export interface ElectronicsModel { meshes: { mat: string; v: number[]; f: number[] }[]; labels: { text: string; at: V3; w: number; h: number; normal: V3; up: V3; color: string }[]; pins: Record<string, { at: V3; out: V3; kind: string }>; source: string; detailed: boolean; /** stands in for the part's catalog body (false: a motor keeps its datasheet CAD) */ replaces: boolean; }
@@ -51,6 +78,84 @@ export interface Electronics3D {
   /** link -> the rigid body it moves with */
   groups: Record<string, string>;
   notes: string[]; checks?: HarnessCheck;
+}
+/** A fault for `electricalSim`: short a rail to ground, open a wire, lock a motor or servo, or run the battery down. */
+export type ElectricalFault = { kind: "short"; rail?: string; net?: string; at?: string; ohm?: number } | { kind: "open"; wire: string } | { kind: "stall"; inst: string } | { kind: "low_battery"; soc?: number; volts?: number };
+export interface ElectricalSimOptions {
+  faults?: ElectricalFault[];
+  /** "idle", "typical" (every part at its record's typical current), "stall" (every motor and servo locked) or "peak" (that, and every other part at its peak) */
+  scenario?: "idle" | "typical" | "peak" | "stall";
+  /** battery state of charge, 0..1 (default 0.5) */
+  soc?: number;
+  /** also step in time, with the faults applied at `t_fault_s` (default a tenth of `t_end_s`); `capacitors` are ones you fitted, from a pin to that part's ground */
+  transient?: { t_end_s: number; dt_s: number; t_fault_s?: number; method?: "trap" | "be"; capacitors?: { at: string; uf: number }[] };
+  /** a part's current in amperes, in place of its record's */
+  loads?: Record<string, number>;
+  /** share of its typical current every motor and servo draws in the "typical" scenario, 0..1 (default 1) */
+  actuator_load?: number;
+}
+export interface ElectricalEvent {
+  kind: "brown_out" | "unpowered" | "over_voltage" | "motor_over_voltage" | "regulator_dropout" | "regulator_limit" | "regulator_off" | "regulator_overload" | "fuse_blown" | "fuse_overload" | "wire_overcurrent" | "connector_overcurrent" | "switch_overcurrent" | "source_limit" | "supply_overload" | "battery_cutoff" | "battery_overcurrent" | "logic_level" | "short";
+  severity: "info" | "warning" | "error"; message: string;
+  inst?: string; wire?: string; rail?: string; fuse?: string; pin?: string; value?: number; limit?: number; opens_s?: [number, number];
+}
+/** One solved state of the harness. Voltages are against the main source's negative terminal unless said otherwise. */
+export interface ElectricalState {
+  /** voltage of every wired pin, `inst.port.pin` */
+  pins: Record<string, number>;
+  /** the conductors: pins joined by a splice or inside a part */
+  nodes: { id: string; v: number; pins: string[]; nets: string[] }[];
+  nets: Record<string, { kind: string; nominal_v: number | null; min_v: number; max_v: number }>;
+  /** by wire id as `electronics3d` names them; `current_a` runs from the wire's `from` end to its `to` end */
+  wires: Record<string, { current_a: number; from_v: number; to_v: number; drop_v: number; loss_w: number; ohm: number; awg: number | null; ampacity_a: number | null; free_air_a: number | null; load_pct: number | null; open: boolean }>;
+  /** per rail: the voltage at its source, the lowest supply any load on it sees (against that load's own ground), and the current into it */
+  rails: Record<string, { nominal_v: number; source: string; source_v: number | null; min_v: number | null; min_at: string | null; sag_v: number | null; current_a: number | null; budget: { typical_a: number; peak_a: number; simultaneous: string } }>;
+  parts: Record<string, {
+    key: string; role: string; state: "ok" | "brown_out" | "unpowered" | "over_voltage" | "external" | "not_simulated";
+    supply_pin: string | null; supply_v: number | null; ground_v: number | null; min_v: number | null; max_v: number | null;
+    supplies: { pin: string; v: number; nominal_v: number | null }[]; current_a: number; power_w: number; basis: string;
+    motor?: { stalled: boolean; speed_rad_s: number | null; stall_ohm: number; heat_w: number }; note?: string;
+  }>;
+  sources: Record<string, { key: string; type: "battery" | "supply" | "external"; emf_v: number; ohm: number; terminal_v: number; current_a: number; power_w: number; internal_w: number; soc: number | null; limit_a: number | null; state: string; min_v: number | null }>;
+  regulators: Record<string, { inst: string; type: "buck" | "linear"; from: string; to: string | null; set_v: number; vin: number; vout: number; iin: number; iout: number; loss_w: number; efficiency: number | null; limit_a: number | null; state: "regulating" | "dropout" | "limit" | "off" | "blocked" }>;
+  fuses: Record<string, { inst: string; rating_a: number; ohm: number; current_a: number; load_pct: number; blown: boolean; opens_s: [number, number] | null }>;
+  /** where the power goes; `balance_w` is what is left over (zero when every watt is accounted for) */
+  power: { sources_w: number; source_internal_w: number; wires_w: number; switches_fuses_w: number; regulators_w: number; drivers_w: number; loads_w: number; fault_w: number; balance_w: number };
+  events: ElectricalEvent[];
+}
+export interface ElectricalSim extends ElectricalState {
+  robot: string; scenario: "idle" | "typical" | "peak" | "stall"; soc: number | null;
+  /** false: no steady operating point exists; `reason` says why and the tables are empty */
+  converged: boolean; reason?: string; iterations: number;
+  kcl_max_residual_a: number | null;
+  faults: { fault: ElectricalFault; note: string }[];
+  warnings: string[];
+  /** fuses that opened: the state is the settled one after they did, `before_trip` the moment before the first opened */
+  trips: { fuse: string; rating_a: number; current_a: number; opens_s: [number, number] }[];
+  before_trip?: ElectricalState;
+  elements: { name: string; kind: string; nodes: string[]; i_a: number[] }[];
+  /** every estimate the result rests on, with the parts it was used for */
+  assumptions: { id: string; value: number | string; unit: string; note: string; parts: string[] }[];
+  /** what the model leaves out */
+  model: string[];
+  not_simulated: string[];
+  transient?: {
+    ok: boolean; reason?: string; t_s: number[]; t_fault_s: number; method: "trap" | "be";
+    rails: Record<string, { source_v: (number | null)[]; min_v: (number | null)[] }>;
+    sources: Record<string, { current_a: number[]; terminal_v: number[] }>;
+    fuses: Record<string, { current_a: number[]; blown_at_s: number | null }>;
+    events: (ElectricalEvent & { t_s: number })[]; note: string;
+  };
+}
+/** Battery life by simulation: an operating point per step of charge from full, until the first error or empty. */
+export interface BatteryLife {
+  ok: boolean; reason?: string; robot: string; scenario: "idle" | "typical" | "peak" | "stall"; source: string | null; capacity_ah: number | null;
+  /** hours from full until the run ends */
+  life_h: number | null;
+  /** the first error as the pack runs down, or "empty" */
+  ends: string | null; ends_at_soc: number | null;
+  points: { soc: number; t_h: number; emf_v: number; terminal_v: number; current_a: number; power_w: number; rails: Record<string, number | null> }[];
+  note: string;
 }
 export interface ForgeProgress { stage: string; [k: string]: unknown; }
 export interface InventoryItem { key: string; qty: number; name: string; raw: string; match: string; assumed?: string; note?: string; }
@@ -120,14 +225,33 @@ export interface Engine {
    * top), with the designs asked for (`design`: "top" by default, "all", "none" or an option id). (1.1)
    */
   fromParts(inventory: string | { key: string; qty?: number }[] | Record<string, number> | Inventory, options?: { design?: string; limit?: number; budget?: number; prompt?: string }): Promise<FromPartsResult>;
-  /** The Arduino sketch (or Pi script) of a robot built from a parts list, with its pin assignments. (1.1) */
-  firmware(robot: RobotSpecification): Promise<{ name: string; language: "arduino" | "python"; code: string; fqbn: string; libraries: string[] }>;
+  /**
+   * The program of a robot (1.1): the Arduino sketch (or Pi script) of a robot built from a parts list, with its pin
+   * assignments; for any other robot with an Arduino-class board (Uno, Nano), a sketch whose every pin is a wire of its
+   * wiring record (motor driver, servo and range sensor code, a simple behaviour, serial reports), with the sketch folder
+   * and flashing steps in `files` and what it drives in the other fields. Rejects when the robot has none (no such board,
+   * or the wearable Mark 43, whose door sequence is not written).
+   */
+  firmware(robot: RobotSpecification): Promise<Program>;
   /** The motions a robot has: the joint tour, its purpose demo (picked from what its joints are for), human motion for a wearable. */
   motions(robot: RobotSpecification): Promise<MotionInfo[]>;
   /** A motion sampled at `fps` (default 30), checked against the joint limits, speeds and torques and, unless `collision: false`, for self-collision on every frame. `files: true` adds its CSV, ROS 2 JointTrajectory YAML and BVH. */
   motion(robot: RobotSpecification, name: string, options?: { fps?: number; collision?: boolean; to?: [number, number]; files?: boolean }): Promise<Trajectory & { files?: Record<string, string> }>;
   /** Inverse kinematics: joint values that bring a point on `link` to a world pose (the root at the origin unless `base`), within the joint limits, and whether that reached it. */
   ik(robot: RobotSpecification, link: string, target: IkTarget, options?: IkOptions): Promise<IkResult>;
+  /**
+   * Electrical simulation of the harness: the operating point (voltage at every pin, current in every wire, each
+   * rail's lowest voltage, each part's supply, heat in wires and regulators) in a scenario, with faults (short a rail,
+   * open a wire, stall a motor, low battery) and what they trip: fuses, regulator limits, brown-outs. Every estimate
+   * the numbers rest on is in `assumptions`. With `transient`, also the same in time.
+   */
+  electricalSim(robot: RobotSpecification, options?: ElectricalSimOptions): Promise<ElectricalSim>;
+  /**
+   * Battery life by simulation: the pack run down from full in steps of charge (`step`, default 0.02), the harness
+   * solved at every step, the time from the current each solution draws. It ends at the first error (a brown-out, the
+   * pack under its cutoff) or empty. Not for a robot on a supply or with more than one battery (`ok: false`).
+   */
+  batteryLife(robot: RobotSpecification, options?: Omit<ElectricalSimOptions, "soc" | "transient"> & { step?: number }): Promise<BatteryLife>;
   /** A zip archive of export files. */
   zip(files: Files): Blob;
   /** How many times the engine's worker was replaced (its CAD kernel memory was full, or it aborted). */
@@ -272,6 +396,8 @@ export async function createEngine(opts: { base?: string | URL; onProgress?: (p:
     motions: async (robot) => (await byHandle<{ motions: MotionInfo[] }>(robot, "/api/engine/motions", {})).motions,
     motion: async (robot, name, o) => { const r = await byHandle<{ trajectory: Trajectory; files?: Record<string, string> }>(robot, "/api/engine/motion", { name, ...o }); return { ...r.trajectory, ...(r.files ? { files: r.files } : {}) }; },
     ik: (robot, link, target, o) => byHandle<IkResult>(robot, "/api/engine/ik", { link, target, options: o ?? {} }),
+    electricalSim: (robot, options) => json("POST", "/api/engine/electrical-sim", { robot, options: options ?? {} }),
+    batteryLife: (robot, options) => json("POST", "/api/engine/battery-life", { robot, options: options ?? {} }),
     zip: (f) => makeZip(f) as Blob,
     get recycles() { return recycles; },
     terminate: () => worker.terminate(),

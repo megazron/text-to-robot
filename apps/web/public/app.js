@@ -6,6 +6,8 @@ import { Dial, Sheet, followKeyboard, haptic, popIn, transformFlash } from "./ui
 import { h, safeHttpUrl, safeJsonParse, MAX_PROMPT_CHARS, MAX_ROBOT_BYTES } from "./safe.js";
 import { createElectronics } from "./electronics3d.js";
 import { createMotion } from "./motion.js";
+import { createSim } from "./simview.js";
+import { createPowerSim } from "./esimview.js";
 
 // Clickjacking guard: GitHub Pages cannot send frame-ancestors or X-Frame-Options, so a page that frames this site gets
 // a link to open it in its own tab instead of a working (and invisible-overlay-able) copy.
@@ -187,7 +189,7 @@ function buildRobot(spec) {
   updateFK();
   frameRobot();
   showPreviewStatus();
-  resetElectronics();
+  resetElectronics(); resetSim();
   Promise.all(pending).then(() => {
     if (revision !== previewRevision) return;
     frameRobot();
@@ -300,6 +302,14 @@ function frameOn(box) {
 for (const b of document.querySelectorAll(".viewmode")) b.addEventListener("click", () => setViewMode(b.dataset.mode));
 $("#railFilter").addEventListener("change", (e) => { electronics?.setFilter(e.target.value); invalidate(); });
 /** a new robot: the electronics view is rebuilt when it is next shown */
+// ---------------- the Run tab: the robot's compiled sketch on a virtual ATmega328P, driving the model (simview.js) ----------------
+let sim = null, simFor = null;
+async function openSim() {
+  if (!state.robot || simFor === state.robot) return;
+  sim?.dispose(); simFor = state.robot;
+  sim = await createSim({ THREE, scene, robotGroup, state, updateFK, invalidate, api, el, box: $("#simPanel"), frameOn: (b) => { const inv = new THREE.Matrix4().copy(robotGroup.matrixWorld).invert(); frameOn(b.clone().applyMatrix4(inv)); } });
+}
+function resetSim() { sim?.dispose(); sim = null; simFor = null; if ($("#tab-run").classList.contains("active")) openSim(); }
 function resetElectronics() { electronics?.dispose(); electronics = null; electronicsFor = null; focusedNet = null; if (viewMode !== "robot") setViewMode(viewMode); }
 // hover: what the wire or pin under the pointer carries
 renderer.domElement.addEventListener("pointermove", (e) => {
@@ -313,6 +323,9 @@ renderer.domElement.addEventListener("pointermove", (e) => {
   const w = hit.wire, pin = hit.type === "pin" ? hit.pin : null;
   tip.replaceChildren(el("b", "", w.net), el("div", "", pin ? `pin ${pin}` : `${w.from} to ${w.to}`),
     el("div", "", `${w.typical_a} A typical, ${w.peak_a} A peak${w.awg ? `, ${w.awg} AWG` : ""}, ${w.color}`), el("div", "", `${w.id}, cut ${w.cut_mm} mm`));
+  // the last Power simulation of this robot: the solved current in this wire and the voltage at this pin
+  const sim = powerResult?.robot === state.robot ? powerResult.r : null, sw = sim?.wires?.[w.id], pv = pin && sim?.pins?.[pin];
+  if (sw) tip.append(el("div", "", `simulated (${sim.scenario}): ${Math.abs(sw.current_a).toFixed(3)} A, ${sw.drop_v.toFixed(3)} V drop${sw.open ? ", open" : ""}${pv != null && pv !== undefined ? `, ${(+pv).toFixed(2)} V at the pin` : ""}`));
   tip.style.left = `${e.clientX + 14}px`; tip.style.top = `${e.clientY + 14}px`; tip.hidden = false;
 });
 renderer.domElement.addEventListener("pointerleave", () => { $("#wireTip").hidden = true; });
@@ -701,7 +714,8 @@ function renderCards() {
   const printedNames = new Set((d?.printed ?? []).map((p) => p.name));
   const step = !!r?.links.some((l) => l.geometry.type === "mesh" && l.geometry.part === "cad" && printedNames.has(l.name));
   $("[data-dl=cad] small").textContent = !r ? "STEP + STL" : !d ? "OpenSCAD + STL" : step ? "STEP + STL" : "STL";
-  $("[data-dl=sketch]").hidden = !d?.firmware;
+  // a program for a robot built from a parts list, or for any robot wired to an Arduino-class board (the suit has none: its door sequence is not written)
+  $("[data-dl=sketch]").hidden = !d?.firmware && (!d?.wiring?.instances?.some((i) => /^arduino_/.test(i.key)) || d.family === "mark43_wearable");
   $("[data-dl=sketch] b").textContent = d?.firmware?.language === "python" ? "Pi script" : "Arduino sketch";
   $("[data-dl=shopping]").hidden = !r?.metadata?.inventory;
   document.title = r ? `${r.robot_name.replace(/_/g, " ")} · Text to Robot` : "Text to Robot";
@@ -842,7 +856,8 @@ async function handleDownload(kind) {
   if (kind === "schematic") { const r = await circuits("schematic"); return download(`${name}_schematic.zip`, await makeZipDeflated({ [`${name}_schematic.pdf`]: Uint8Array.from(atob(r.pdf.b64), (c) => c.charCodeAt(0)), [`${name}_schematic.svg`]: r.svg })); }
   if (kind === "wiring3d") { const res = await fetch(API + "/api/engine/electronics-glb", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ robot: state.robot }) }); if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? `HTTP ${res.status}`); return download(`${name}_electronics.glb`, new Blob([await res.arrayBuffer()], { type: "model/gltf-binary" })); }
   if (kind === "breadboard") { const r = await circuits("breadboard"); return download(`${name}_breadboard.svg`, r.svg, "image/svg+xml"); }
-  if (kind === "sketch") { const f = await api("/api/engine/firmware", { robot: state.robot }); return download(f.name, f.code, "text/plain"); }
+  // a sketch written from the wiring comes with its flashing steps and pin map: the folder as the IDE wants it, zipped
+  if (kind === "sketch") { const f = await api("/api/engine/firmware", { robot: state.robot }); return f.files ? download(`${name}_firmware.zip`, await makeZipDeflated(f.files)) : download(f.name, f.code, "text/plain"); }
   if (kind === "shopping") { const bom = state.bom ?? (await api("/api/robots/bom", { robot: state.robot })).bom; return download(`${name}_still_to_buy.md`, shoppingMarkdown(bom), "text/markdown"); }
   if (kind === "train") { const { files } = await api("/api/robots/training", { robot: state.robot }); return download(`${name}_training.zip`, await makeZipDeflated(files)); }
   if (kind === "share") {
@@ -874,11 +889,14 @@ async function circuits(which) {
 /** a new robot redraws the open circuit view */
 function refreshCircuit() { if ($("#tab-circuit").classList.contains("active")) showCircuit(document.querySelector(".seg.circ .tab.active").dataset.tab.slice(5)); }
 function svgUrl(svg) { return URL.createObjectURL(new Blob([svg], { type: "image/svg+xml" })); }
+// the Power view: the harness solved as a circuit by the engine's electricalSim (esimview.js)
+let powerSim = null, powerResult = null;
 async function showCircuit(which) {
   if (!state.robot) return;
   const box = document.querySelector(`.circview[data-view="${which}"]`), robot = state.robot;
   if (box._robot === robot && box.firstChild) return;
   box._robot = robot;
+  if (which === "power") { $("#circNote").hidden = true; powerSim?.dispose(); powerSim = createPowerSim({ api, el, box, robot, onResult: (r) => { powerResult = r ? { r, robot } : null; } }); return; }
   box.replaceChildren(el("div", "hint", which === "breadboard" ? "Laying out every wire..." : "Drawing..."));
   $("#circNote").hidden = true;
   try {
@@ -920,6 +938,7 @@ function setTab(name) {
     const pane = $("#tab-" + t.dataset.tab); pane.classList.toggle("active", on);
     if (on) popIn(pane, { y: 6, duration: 260 });
   });
+  if (name === "run") openSim();
   if (name === "circuit") showCircuit(document.querySelector(".seg.circ .tab.active").dataset.tab.slice(5));
   else if (name.startsWith("circ-")) showCircuit(name.slice(5));
 }
@@ -1147,7 +1166,9 @@ initExamples(); initTemplates(); initMode();
   }
   doGenerate("Create a 6 DOF robotic arm with a parallel gripper");
 })();
-window.__ttr = { get motion() { return window.__ttrMotion; }, robotGroup, renderer, get preview() { return { ...preview, parts: [...state.meshes].filter(([name]) => state.robot.links.find(l => l.name === name)?.geometry.type === 'mesh').map(([name, group]) => ({ name, loaded: !!group.children[0].userData.meshLoaded, triangles: group.children[0].geometry.getAttribute('position').count / 3 })) }; }, camera, controls, frameRobot, get robot(){return state.robot} };
+window.__ttr = { get motion() { return window.__ttrMotion; }, robotGroup, renderer, get preview() { return { ...preview, parts: [...state.meshes].filter(([name]) => state.robot.links.find(l => l.name === name)?.geometry.type === 'mesh').map(([name, group]) => ({ name, loaded: !!group.children[0].userData.meshLoaded, triangles: group.children[0].geometry.getAttribute('position').count / 3 })) }; }, camera, controls, frameRobot, get robot(){return state.robot},
+  // the Run tab's board as it runs, for the browser tests (scripts/check_sim.py)
+  get sim() { return sim ? { running: sim.running, pose: sim.pose, shipped: sim.shipped, ms: sim.board?.ms ?? 0, motors: sim.board?.motors() ?? [], servos: sim.board?.servos() ?? [], sensor: sim.board ? { ...sim.board.sensor } : null, joints: { ...state.jointValues } } : null; } };
 
 // ---------------- how it reads: the sentence model and a bring-your-own-key model (website only) ----------------
 // The settings live in this browser (apps/web/src/browser-api.ts); the key never leaves it except to the provider chosen.

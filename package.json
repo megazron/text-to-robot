@@ -50,5 +50,8 @@
     "@types/node": "^22.20.3",
     "esbuild": "0.25.10",
     "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "avr8js": "0.21.1"
   }
 }

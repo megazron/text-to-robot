@@ -135,7 +135,7 @@ test("a robot built by hand has a valid URDF, a sized joint and the same exports
 const spec0 = () => example("18_arduino_car");
 test("the /api/engine endpoints answer like the client expects", async () => {
   const get = async (method: string, path: string, body: unknown = {}) => { const r = await engineApi(method, path, body); return { status: r.status, body: r.headers.get("Content-Type")?.includes("json") ? await r.json() : await r.arrayBuffer() }; };
-  assert.equal((await get("GET", "/api/engine/version")).body.api, "1.1.0");
+  assert.equal((await get("GET", "/api/engine/version")).body.api, "1.3.0");
   const cat = (await get("GET", "/api/engine/catalog")).body;
   assert.ok(cat.parts.length > 80 && cat.parts.every((p: { mounts: unknown[] }) => p.mounts.length >= 1) && cat.printed.length >= 6);
   assert.ok(cat.parts.find((p: { key: string }) => p.key === "hobby_sg90").rating.range_deg === 180);
@@ -146,7 +146,10 @@ test("the /api/engine endpoints answer like the client expects", async () => {
   assert.equal(fp.options[0].kind, "obstacle_car"); assert.match(fp.options[0].headline, /^uses 4\/4 of your parts/);
   assert.equal((await get("POST", "/api/engine/from-parts", {})).status, 400);
   assert.equal((await get("POST", "/api/engine/parts-search", { query: "sg90" })).body.parts[0].key, "hobby_sg90");
-  assert.equal((await get("POST", "/api/engine/firmware", { robot: spec0() })).status, 404, "a stock design carries no pin plan");
+  // a stock Arduino design has no parts-list pin plan: its sketch is written from its wiring record; a robot on a Pi 5 and a bus servo board has no program
+  const car = (await get("POST", "/api/engine/firmware", { robot: spec0() })).body;
+  assert.equal(car.name, "arduino_car.ino"); assert.equal(car.language, "arduino"); assert.equal(car.code, car.files[car.sketch]); assert.match(car.fqbn, /^arduino:avr:nano/);
+  assert.equal((await get("POST", "/api/engine/firmware", { robot: example("05_diff_drive") })).status, 404, "no Arduino-class board");
   const stl = (await get("GET", "/api/engine/part/hobby_sg90.stl")).body as ArrayBuffer;
   assert.ok(new DataView(stl).getUint32(80, true) > 10);
   const spec = example("18_arduino_car");
@@ -163,8 +166,20 @@ test("the /api/engine endpoints answer like the client expects", async () => {
   assert.ok(sch.electrical.runtime.length === 1 && sch.electrical.logic.length >= 10);
   const bb = (await get("POST", "/api/engine/breadboard", { robot: spec })).body;
   assert.ok(bb.svg.includes('class="wire"') && !bb.layout.length && !bb.unrouted.length);
+  // firmware: the car's sketch, pins from its wiring record (a robot without an Arduino-class board: 404, above)
+  const fw = (await get("POST", "/api/engine/firmware", { robot: spec })).body;
+  assert.ok(fw.files["arduino_car/arduino_car.ino"].includes("void loop()") && fw.board.fqbn.startsWith("arduino:avr:") && fw.pins.length === 14, JSON.stringify(fw.pins.map((p: { pin: string }) => p.pin)));
   const edited = await get("POST", "/api/engine/schematic", { robot: ed.robot });
   assert.ok(edited.status === 200 ? edited.body.svg.startsWith("<svg") : typeof edited.body.error === "string", JSON.stringify(edited.body).slice(0, 200));
+  // electrical simulation: the car's operating point, a fault that opens its fuse, and a fault that does not exist
+  const sim = (await get("POST", "/api/engine/electrical-sim", { robot: spec })).body;
+  assert.ok(sim.converged && sim.rails.VBAT.min_v > 7 && sim.wires.W25.current_a > 1 && sim.pins["battery.leads.BAT+"] > 7 && sim.assumptions.length > 3);
+  const shorted = (await get("POST", "/api/engine/electrical-sim", { robot: spec, options: { faults: [{ kind: "short", rail: "VBAT" }] } })).body;
+  assert.ok(shorted.trips[0].fuse === "F1" && shorted.events[0].kind === "fuse_blown");
+  const refused = await get("POST", "/api/engine/electrical-sim", { robot: spec, options: { faults: [{ kind: "open", wire: "W999" }] } });
+  const life = (await get("POST", "/api/engine/battery-life", { robot: spec, options: { scenario: "typical" } })).body;
+  assert.ok(life.ok && life.life_h > 0.5 && life.life_h < 3 && life.points.length > 10, JSON.stringify(life).slice(0, 300));
+  assert.ok(refused.status === 422 && /W999/.test(refused.body.error));
   assert.equal((await get("GET", "/api/engine/nothing")).status, 404);
 });
 

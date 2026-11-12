@@ -7,7 +7,7 @@ import { part } from "@ttr/parts";
 import { buildBom, bomToMarkdown, designRecord } from "@ttr/components";
 import { assemblyStl } from "./stl.ts";
 import { partFiles } from "@ttr/kernel/ready";
-import { circuitFiles, wiring3d, electronicsGlb, type WiringRecord } from "@ttr/design";
+import { circuitFiles, wiring3d, electronicsGlb, arduinoFirmware, firmwareFor, type WiringRecord } from "@ttr/design";
 
 const PRINT_CM3_PER_HOUR = 12;
 const isPrinted = (l: Link) => l.geometry.type === "mesh" && (l.geometry.part === "printed" || l.geometry.part === "cad" || l.geometry.part === "armour");
@@ -49,6 +49,12 @@ export function generateBuildPackage(spec: RobotSpecification): Record<string, s
   if (wiring) for (const [f, c] of Object.entries(circuitFiles(wiring, spec.robot_name))) files[`cad/${f}`] = c;
   // the electronics and every wire in 3D at the home pose, a body per part and per wire (glTF binary)
   if (wiring) files["cad/electronics.glb"] = electronicsGlb(spec, wiring3d(spec, wiring));
+  // an Arduino robot gets its sketch (in a folder of the sketch's name, as the IDE wants) and the flashing steps
+  const fw = arduinoFirmware(spec, wiring);
+  if (fw) for (const [f, c] of Object.entries(fw.files)) files[`cad/firmware/${f}`] = c;
+  // a robot built from a parts list carries its own pin plan: its sketch or Pi script
+  const own = fw ? undefined : firmwareFor(spec);
+  if (own) files[`cad/firmware/${own.name}`] = own.code;
   files[`cad/${name}_assembly.stl`] = assemblyStl(spec);
   files["cad/ASSEMBLY.md"] = assemblyGuide(spec);
   files["cad/design.json"] = JSON.stringify(d, null, 2);
@@ -58,11 +64,15 @@ export function generateBuildPackage(spec: RobotSpecification): Record<string, s
     "2. **Print** every STL in `print/` (see `print/PRINT_LIST.md`).\n" +
     "3. **Assemble** in the order of `ASSEMBLY.md`.\n" +
     (wiring ? "   **Wire** from `WIRING.md` (pin-to-pin table, cut list, power budget, battery runtime, regulator heat, logic levels), `schematic.svg` / `schematic.pdf` the picture view `breadboard.svg` and the harness in 3D `electronics.glb`.\n" : "") +
+    (fw ? firmwareLine(fw.sketch) : "") +
     "4. **Check** against `design.json`: each actuator's required vs rated torque, the speed it reaches loaded, battery runtime, stability and every other check the design passed.\n\n" +
     "`reference/` holds the bought parts' models (from their datasheet drawings) for your own CAD; `" + name + "_assembly.stl` is the whole robot in its build pose.\n\n" +
     "## Assumptions\n\n" + d.assumptions.map((a) => `- ${a}`).join("\n") + "\n";
   return files;
 }
+
+/** The build package README's line about the sketch (scripts/export_firmware.ts writes the same line into shipped packages). */
+export const firmwareLine = (sketch: string) => `   **Flash** the Arduino with \`firmware/${sketch}\`: board, libraries, port and the pin map are in \`firmware/README.md\`.\n`;
 
 /** Root-first build order: every mounted part, every joint, with the screws the design counted. */
 function assemblyGuide(spec: RobotSpecification): string {

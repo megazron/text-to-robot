@@ -34,6 +34,7 @@ These are the checks CI runs. Run the first four before every pull request.
 | `python3 scripts/check_links.py` | Every relative link and image in the Markdown files resolves |
 | `python3 -m unittest discover -s python/tests -v` | Python layer. Modules whose optional dependencies are missing are skipped. |
 | `python3 scripts/verify_examples.py` | Each example matches its pipeline and its report came from the shipped URDF |
+| `python3 scripts/compile_firmware.py --variants` | Every example's Arduino sketch compiles for its board without warnings (needs arduino-cli with the `arduino:avr` core, Servo and Adafruit PWM Servo Driver Library; CI pins the versions) |
 | `python3 scripts/print_audit.py --check` | Every printed part is printable, or listed with a reason |
 | `MUJOCO_GL=disable python3 scripts/simulate_examples.py --check` | Re-runs every example's MuJoCo task tests |
 | `MUJOCO_GL=disable python3 scripts/check_motion.py --record` | No two parts pass through each other in any film frame |
@@ -49,6 +50,7 @@ Never edit files under `examples/` by hand. Regenerate them:
 ```bash
 node scripts/build_examples.ts                                  # every deliverable from each prompt
 node scripts/export_circuits.ts                                 # only WIRING.md, schematic and breadboard view from the shipped robot.json
+node scripts/export_firmware.ts                                 # only the Arduino sketches (firmware/) from the shipped robot.json
 MUJOCO_GL=osmesa python3 -B scripts/simulate_examples.py         # task tests, GIFs, README results, gallery
 python3 -B scripts/studio/film.py 15_wall_e                      # studio.gif: MuJoCo motion loop, Cycles frames (Blender 4.5, ffmpeg)
 python3 scripts/verify_examples.py                               # what CI checks
@@ -74,7 +76,7 @@ Logo files and rules are in [docs/brand](docs/brand/README.md). `python docs/bra
 
 ## Further reading
 
-[Architecture](docs/ARCHITECTURE.md) · [Design engine](docs/DESIGN_ENGINE.md) · [Parts data](docs/PARTS_DATA.md) · [Printability](docs/PRINTABILITY.md) · [Physical fidelity](docs/PHYSICAL_FIDELITY.md) · [Python layer](python/README.md) · [Engineering references](references/engineering/README.md) · [Rebuild plan](docs/REBUILD_PLAN.md)
+[Architecture](docs/ARCHITECTURE.md) · [Design engine](docs/DESIGN_ENGINE.md) · [Arduino firmware](docs/FIRMWARE.md) · [Parts data](docs/PARTS_DATA.md) · [Printability](docs/PRINTABILITY.md) · [Physical fidelity](docs/PHYSICAL_FIDELITY.md) · [Python layer](python/README.md) · [Engineering references](references/engineering/README.md) · [Rebuild plan](docs/REBUILD_PLAN.md)
 
 ## How it works
 

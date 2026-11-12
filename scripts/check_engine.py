@@ -74,6 +74,9 @@ SCRIPT = """async ([url, prompt]) => {
   const sch = await engine.schematic(d.robot), bb = await engine.breadboard(d.robot);
   out.schematic = { svg: sch.svg.startsWith("<svg") && sch.svg.includes('class="pin"'), pdf: String.fromCharCode(...sch.pdf.slice(0, 5)), layout: sch.layout, nodes: sch.netlist.nodes.length, logic: sch.electrical.logic.length };
   out.breadboard = { svg: bb.svg.startsWith("<svg") && bb.svg.includes('class="wire"'), layout: bb.layout, unrouted: bb.unrouted.length };
+  const fw = await engine.firmware(d.robot);
+  out.firmware = fw && { sketch: fw.sketch, ino: fw.files[fw.sketch].includes("void setup()") && fw.files[fw.sketch].includes("void loop()"), readme: !!fw.files["README.md"], fqbn: fw.board.fqbn, pins: fw.pins.length,
+    wired: fw.pins.every((p) => p.wires.length && p.wires.every((w) => d.robot.metadata.design.wiring.cables.some((c) => c.wires.some((x) => x.id === w.id && x.from === w.from && x.to === w.to)))) };
   const e3 = await engine.electronics3d(d.robot), glb = new Uint8Array(await engine.electronicsGlb(d.robot));
   out.electronics3d = { parts: e3.parts.length, wires: e3.wires.length, models: Object.keys(e3.models).length, linked: e3.wires.every((w) => w.pts.every((q) => d.robot.links.some((l) => l.name === q.link))), glb: String.fromCharCode(...glb.slice(0, 4)), notes: e3.notes };
   const moved = await engine.edit(d.robot, [{ op: "translate", link: "ultrasonic", by: [0.002, 0, 0] }]);
@@ -141,7 +144,7 @@ if result.get("error"): sys.exit(f"FAIL: {result['error']} (after {list(result)}
 report = {"engine": engine_url, "page_origin": other_origin, "result": result, "errors": errors}
 (args.out / "report.json").write_text(json.dumps(report, indent=2) + "\n")
 fail = []
-if result["version"] != "1.1.0": fail.append("version")
+if result["version"] != "1.3.0": fail.append("version")
 if result["parts"] < 80 or result["withMounts"] != result["parts"] or result["printed"] < 6: fail.append("catalog")
 if result["design"] != {"name": expected["robot_name"], "links": len(expected["links"]), "joints": len(expected["joints"])}: fail.append(f"design differs from the example: {result['design']}")
 for k in ["roundTrip", "edited", "urdf", "pure"]:
@@ -149,6 +152,8 @@ for k in ["roundTrip", "edited", "urdf", "pure"]:
 sch, bb = result.get("schematic", {}), result.get("breadboard", {})
 if not sch.get("svg") or sch.get("pdf") != "%PDF-" or sch.get("layout") or sch.get("nodes", 0) < 5: fail.append("schematic")
 if not bb.get("svg") or bb.get("layout") or bb.get("unrouted"): fail.append("breadboard")
+fw = result.get("firmware") or {}
+if not fw.get("ino") or not fw.get("readme") or not fw.get("wired") or not str(fw.get("fqbn", "")).startswith("arduino:avr:") or fw.get("sketch") != f"{expected['robot_name']}/{expected['robot_name']}.ino": fail.append(f"firmware: {fw}")
 e3 = result.get("electronics3d", {})
 if e3.get("parts", 0) < 3 or e3.get("wires", 0) < 3 or not e3.get("linked") or e3.get("glb") != "glTF" or e3.get("notes"): fail.append("electronics3d")
 pm = result.get("parts_mode", {})
