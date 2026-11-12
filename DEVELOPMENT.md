@@ -127,7 +127,7 @@ Every check below runs in CI on each push:
   free-standing bipeds are reported as untested (no roller joints / no balance controller), not as passes.
   CI re-runs them with `simulate_examples.py --check` and `scripts/verify_examples.py` checks every report was
   produced from the shipped URDF.
-- **Browser**: all 19 examples render in headless Chromium with third-party requests blocked and rendered
+- **Browser**: all 24 examples render in headless Chromium with third-party requests blocked and rendered
   triangles compared with the served STL files (`scripts/check_web.py`).
 - **Mark 43**: door ranges come from exact sweeps of armour against armour in the order the suit opens, `door:*` checks cover
   range, torque, clutch, pinch force and latch strength, its faceplate and door servos are simulated like every other actuator, and a

@@ -1,0 +1,37 @@
+{
+ "model": "robot.urdf",
+ "family": "rov_underwater",
+ "group": "marine",
+ "scope": "PASS means the modelled actuators (datasheet peak torque as a hard limit, a linear torque-speed line to no-load speed, reflected rotor inertia, URDF damping/friction) can produce the torques and speeds the task needs in this geometry and mass distribution, and that mean torque over the hold stays within the continuous (rated) torque. Joint control uses an ideal model-based feedforward (computed torque) through the force-limited servo for fixed-base robots and plain position servos for floating robots; a pass therefore proves torque/speed capacity, not that a given controller achieves it. Untested: thermal limits over long duty cycles (only the mean-vs-rated proxy), gearbox backlash and compliance, link and joint flexibility, encoder resolution, supply voltage sag and current limits, bus latency, controller tuning, and contact/friction values (nominal friction only).",
+ "untested": [
+  "water: a simple model (buoyancy at the design record's centre of buoyancy, quadratic drag from its Cd and frontal area, the maker's bollard thrust at each mount); no added mass, tether drag, waves or currents"
+ ],
+ "fidelity": "URDF effort limits enforced; position gains inferred; speed/thermal/electrical limits unmodelled; geometry and hardware uncalibrated",
+ "tests": {
+  "float": {
+   "pass": true,
+   "explanation": "released unpowered it rises at 0.27 m/s and sits 0.0 deg from level (slightly buoyant: it surfaces if power is lost)",
+   "rise_m_s": 0.274,
+   "tilt_deg": 0.01
+  },
+  "righting": {
+   "pass": true,
+   "explanation": "released rolled 30 deg it is 3.4 deg from level after 6 s, with no roll control: the buoyancy above the mass rights it",
+   "tilt_after_6s_deg": 3.42
+  },
+  "depth_hold": {
+   "pass": true,
+   "explanation": "dives 0.3 m and holds depth within 1 mm on the two vertical thrusters",
+   "depth_error_m": 0.0013
+  },
+  "surge": {
+   "pass": true,
+   "explanation": "full thrust ahead settles at 1.74 m/s, 11 deg from level, holding its heading (design record: about 1.73 m/s; the heading loop takes some thrust)",
+   "speed_m_s": 1.741,
+   "tilt_deg": 11.3
+  }
+ },
+ "passed": 4,
+ "total": 4,
+ "source_urdf_sha256": "234df5dd1290ea088d4e2b8b23069d5649bb94b840cc8f208b105a6800ca5e05"
+}

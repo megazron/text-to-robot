@@ -52,6 +52,7 @@ All 74 checks pass (torque, speed, power, stability, print-bed fit). Details in 
 
 ## Assumptions and limits
 
+- Joint limits trimmed to the collision-free range found by exact solid sweeps: arm_shoulder_pitch [-1.75, 1.75] -> [-0.62, 1.57]; arm_elbow_pitch [-2.10, 2.30] -> [-2.10, 1.45].
 - Rocker-bogie after the JPL Open Source Rover, 4 driven wheels, skid steering (the OSR's four corner-steering servos are left out; add them for less tyre scrub).
 - The differential bar linking the two rockers through the body is modelled as a URDF mimic between the rocker pivots: a passive bar has no motor, and the model's rockers turn equally and opposite.
 - Rockers and bogies are printed in PETG; for outdoor use print them in 6 bolt-on sections from aluminium channel instead (as the OSR does).

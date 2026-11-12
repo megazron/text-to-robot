@@ -23,6 +23,8 @@
   "author": "megazron",
   "type": "module",
   "dependencies": {
+    "@anthropic-ai/sdk": "1.7.0",
+    "@huggingface/transformers": "4.3.2",
     "gifenc": "1.0.3",
     "three": "0.160.0"
   }

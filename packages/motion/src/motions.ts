@@ -10,6 +10,7 @@ import { type T34, type V3, apply, sub, add, scale, unit, norm, cross, dot, plan
 import { gait, gaitAvailable } from "./gait.ts";
 import { HUMAN_MOTIONS, humanMotion, suitUp, doorsOnly, } from "./human.ts";
 import { checkCollisions, countCollisions, groundOf, type CollisionModel } from "./collision.ts";
+import { rotorsOf, swims, gantryAxes, fingersOf, fly, swim, plot, grasp } from "./vehicle.ts";
 
 export interface MotionInfo {
   name: string; title: string; description: string;
@@ -44,10 +45,15 @@ export function motions(spec: RobotSpecification): MotionInfo[] {
   } else if (sem.purpose === "legged") {
     if (gaitAvailable(m, sem)) out.push({ name: "gait", title: sem.legs.length === 6 ? "Tripod gait" : sem.legs.length === 4 ? "Trot" : "Walk", description: "walks forward, turns round and walks back, feet planted while they carry the body", kind: "demo", moves_base: true, default: true });
   }
+  if (rotorsOf(m, sem).length >= 3) out.push({ name: "fly", title: "Fly", description: "props spin up, it takes off, flies out and back tilting into the acceleration, and lands", kind: "demo", moves_base: true, default: true });
+  else if (swims(m, sem)) out.push({ name: "swim", title: "Swim", description: "lifts off the bottom on its vertical thrusters, cruises out and back, turns on its side thrusters and settles", kind: "demo", moves_base: true, default: true });
+  const gantry = !sem.legs.length && !sem.wheels.length && gantryAxes(m);
+  if (gantry) out.push({ name: "plot", title: "Draw", description: "the pen goes down and draws a square and a circle, lifting between them", kind: "demo", moves_base: false, default: !out.length });
+  if (fingersOf(m, sem).length) out.push({ name: "grasp", title: "Fist and open", description: "the fingers curl into a fist, the thumb wraps over, the hand opens, then two fingers up", kind: "demo", moves_base: false, default: !out.length });
   if (sem.wheels.length >= 2 && !sem.legs.length) out.push({ name: "drive", title: "Drive", description: sem.mecanum ? "forward, reverse, a turn on the spot and a sideways strafe, wheels turning at the ground speed" : "forward, reverse and a turn on the spot, wheels turning at the ground speed", kind: "demo", moves_base: true, default: !out.length });
   const arm = pickArm(sem);
   if (arm && arm.grip.length) out.push({ name: "pick_place", title: "Pick and place", description: "reaches, closes the gripper on a block, lifts it and puts it down elsewhere", kind: "demo", moves_base: false, default: !out.length });
-  else if (sem.purpose !== "humanoid" && waveArm(sem)) out.push({ name: "wave", title: "Wave", description: "raises an arm and waves", kind: "demo", moves_base: false, default: !out.length });
+  else if (sem.purpose !== "humanoid" && !gantry && waveArm(sem)) out.push({ name: "wave", title: "Wave", description: "raises an arm and waves", kind: "demo", moves_base: false, default: !out.length });
   if (sem.grips.length) out.push({ name: "grip", title: "Open and close", description: "the gripper opens and closes", kind: "demo", moves_base: false, default: !out.length });
   out.push({ ...tour, default: !out.length });
   return out;
@@ -70,6 +76,10 @@ export function motion(spec: RobotSpecification, name: string, o: MotionOptions 
     case "gait": case "step": tr = gait(m, sem, b, name, info.title, o.to); break;
     case "suit_up": tr = suitUp(m, sem, b); break;
     case "doors": tr = doorsOnly(m, sem, b); break;
+    case "fly": tr = fly(m, sem, b); break;
+    case "swim": tr = swim(m, sem, b); break;
+    case "plot": tr = plot(m, sem, b); break;
+    case "grasp": tr = grasp(m, sem, b); break;
     default: tr = humanMotion(m, sem, b, name);
   }
   tr.title = info.title;
@@ -145,13 +155,24 @@ function tour(m: Model, sem: Semantics, b: Builder, cm: CollisionModel | null): 
     let amp = 0.55;
     if (cm) for (const a of [0.55, 0.4, 0.28, 0.18, 0.1]) {
       amp = a;
-      const frames = [-1, -0.5, 0.5, 1].map((k) => { const q = new Float64Array(home); for (const [i, v] of at(k < 0 ? -1 : 1, a * Math.abs(k))) q[i] = v; return { q: resolve(m, q), base: null }; });
+      // the poses the move really passes through: home to one end, across to the other end, and back home
+      const lo = at(-1, a), hi = at(1, a), pose = (f: (i: number) => number) => { const q = new Float64Array(home); for (const i of together) q[i] = f(i); return { q: resolve(m, q), base: null }; };
+      const frames = [0.5, 1].map((u) => pose((i) => home[i] + u * (lo.get(i)! - home[i])))
+        .concat([0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1].map((u) => pose((i) => lo.get(i)! + u * (hi.get(i)! - lo.get(i)!))))
+        .concat([0.5].map((u) => pose((i) => hi.get(i)! + u * (home[i] - hi.get(i)!))));
       if (countCollisions(cm, frames, { ground: floor0, exempt }) === 0) break;
     }
-    b.segment("all together", () => { b.move(at(-1, amp), { minT: 1.2 }); b.hold(0.2); b.move(at(1, amp), { minT: 1.6 }); b.hold(0.2); b.move(new Map(together.map((i) => [i, home[i]])), { minT: 1.2 }); });
+    // then the frames themselves: a contact between the sampled poses takes the next smaller swing
+    const n0 = b.frames.length, s0 = b.segments.length, q0 = new Float64Array(b.q);
+    for (const a of [amp, 0.4, 0.28, 0.18, 0.1].filter((x) => x <= amp)) {
+      b.frames.length = n0; b.segments.length = s0; b.q = new Float64Array(q0);
+      b.segment("all together", () => { b.move(at(-1, a), { minT: 1.2 }); b.hold(0.2); b.move(at(1, a), { minT: 1.6 }); b.hold(0.2); b.move(new Map(together.map((i) => [i, home[i]])), { minT: 1.2 }); });
+      if (!cm || countCollisions(cm, b.frames.slice(n0).map((f) => ({ q: f.q, base: null })), { ground: floor0, exempt }) === 0) break;
+    }
   }
-  b.hold(0.4);
+  b.hold(joints.length ? 0.4 : 1.6);
   const tr = b.finish("tour", "Joint tour");
+  if (!joints.length) tr.notes.push("This robot has no moving joints: it moves as a whole (see its purpose demo).");
   if (unclear.length) tr.notes.push(`No pose of the other joints lets ${unclear.join(", ")} sweep its full range clear of the robot${mobile ? "" : " and the floor"}: those frames are marked.`);
   if (mobile) standOff(m, b, tr, "On a stand: the tour holds the body still and clear of the floor so every joint can swing freely.");
   return tr;

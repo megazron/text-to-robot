@@ -53,7 +53,12 @@ WHEELED = {"diff_drive", "four_wheel", "mecanum", "rover", "skid_steer", "wheele
 LEGGED = {"quadruped", "hexapod", "humanoid", "biped", "legged", "battle_mech", "mech"}
 GRIPPER = {"gripper", "end_effector"}
 EXO = {"exo", "exoskeleton"}
-WEARABLE = {"wearable", "mark43"}   # worn armour: the wearer moves; only the suit's own servos (faceplate) are actuated
+WEARABLE = {"wearable", "mark43"}
+AERIAL = {"drone", "multirotor", "quadcopter"}
+GANTRY = {"gantry", "cartesian"}
+PARALLEL = {"delta", "parallel"}
+MARINE = {"rov", "underwater"}
+HAND = {"hand_dexterous"}   # worn armour: the wearer moves; only the suit's own servos (faceplate) are actuated
 
 
 # ----------------------------------------------------------------------------- helpers
@@ -1051,6 +1056,258 @@ def _open_hold(xml):
     return {"open_and_hold": _result(passed, why, joints=util, reached=reached)}
 
 
+# ----------------------------------------------------------------------------- aerial (multirotor)
+def _quat_rpy(q):
+    w, x, y, z = q
+    roll = np.arctan2(2 * (w * x + y * z), 1 - 2 * (x * x + y * y))
+    pitch = np.arcsin(np.clip(2 * (w * y - z * x), -1, 1))
+    yaw = np.arctan2(2 * (w * z + x * y), 1 - 2 * (y * y + z * z))
+    return np.array([roll, pitch, yaw])
+
+
+def _thrust_rig(xml, design):
+    """The quad with one thrust actuator per rotor hub: force along the hub axis plus the prop's drag torque about it."""
+    perf = (design or {}).get("performance") or {}
+    rotors = (design or {}).get("rotors") or []
+    fmax = float(perf.get("max_thrust_per_motor_n") or 0)
+    s = _spec_xml(xml)
+    sites = []
+    for r in rotors:
+        j = s.joint(r["joint"])
+        if j is None: continue
+        b = j.parent
+        sites.append((b.add_site(name=f"ttr_hub_{r['joint']}", pos=[0, 0, 0]), r))
+    for site, r in sites:
+        # prop drag torque ~ 1.5 % of thrust x 1 m for a 5 in prop: it is what the yaw control works with
+        # a plain force actuator (the model's default class carries servo gains and force limits: override them)
+        a = s.add_actuator(name=f"ttr_thrust_{r['joint']}", trntype=mujoco.mjtTrn.mjTRN_SITE, target=site.name,
+                           gear=[0, 0, 1, 0, 0, 0.015 * float(r.get("spin", 1))], ctrllimited=True, ctrlrange=[0, fmax])
+        a.gaintype = mujoco.mjtGain.mjGAIN_FIXED; a.biastype = mujoco.mjtBias.mjBIAS_NONE
+        a.gainprm[:] = 0; a.gainprm[0] = 1.0; a.biasprm[:] = 0; a.forcelimited = False; a.dyntype = mujoco.mjtDyn.mjDYN_NONE
+    m = s.compile()
+    pos = np.array([r["at"] for _, r in sites], float)
+    spin = np.array([float(r.get("spin", 1)) for _, r in sites])
+    thr = [m.actuator(f"ttr_thrust_{r['joint']}").id for _, r in sites]
+    return m, pos, spin, thr, fmax
+
+
+def _mixer(pos, spin, com):
+    """Total thrust and body torques (roll, pitch, yaw) -> per-rotor force."""
+    rel = pos - com
+    Mx = np.vstack([np.ones(len(pos)), rel[:, 1], -rel[:, 0], 0.015 * spin])
+    return np.linalg.pinv(Mx)
+
+
+class Hover:
+    """The stand-in flight controller: a height PID and a critically damped attitude PD (8 rad/s) on the true state,
+    mixed onto the rotors' thrusts. The task tests and the studio film fly the same one."""
+
+    def __init__(self, m, pos, spin, thr, fmax):
+        self.m, self.thr, self.fmax = m, thr, fmax
+        self.mass = float(np.sum(m.body_mass)); self.i_err = 0.0
+        d = mujoco.MjData(m); mujoco.mj_forward(m, d)
+        com_b = d.xmat[1].reshape(3, 3).T @ (d.subtree_com[1] - d.xpos[1])   # in the body frame, where the rotor positions are
+        self.mix = _mixer(pos, spin, np.zeros(3) if np.linalg.norm(com_b) > 0.05 else com_b)
+        Mf = np.zeros((m.nv, m.nv)); mujoco.mj_fullM(m, d, Mf); self.Ib = np.diag(Mf[3:6, 3:6]).copy()   # attitude PD on the body inertia
+
+    def thrusts(self, d, z_ref, yaw_ref=0.0):
+        rpy = _quat_rpy(d.qpos[3:7]); w = d.qvel[3:6]; z = d.qpos[2]; vz = d.qvel[2]
+        self.i_err += (z_ref - z) * self.m.opt.timestep
+        a_cmd = 16.0 * (z_ref - z) - 8.0 * vz + 8.0 * self.i_err   # height PID in m/s^2
+        tz = self.mass * (G + a_cmd) / max(0.5, np.cos(rpy[0]) * np.cos(rpy[1]))
+        dyaw = (yaw_ref - rpy[2] + np.pi) % (2 * np.pi) - np.pi
+        tau = self.Ib * np.array([-64.0 * rpy[0] - 16.0 * w[0], -64.0 * rpy[1] - 16.0 * w[1], 16.0 * dyaw - 8.0 * w[2]])
+        return np.clip(self.mix @ np.array([tz, *tau]), 0, self.fmax)
+
+    def apply(self, d, f):
+        for k, a in enumerate(self.thr): d.ctrl[a] = f[k]
+
+
+def aerial_tasks(xml, design):
+    m, pos, spin, thr, fmax = _thrust_rig(xml, design)
+    if not _is_free(m) or not thr or fmax <= 0: return {"hover": _result(None, "untested: no free base, rotor list or thrust rating in the design record")}
+    mass = float(np.sum(m.body_mass)); weight = mass * G
+    out = {}
+
+    def fly(seconds, z_ref, tilt0=0.0, full_at=None):
+        d = mujoco.MjData(m)
+        if tilt0:   # released in the air at the hover height
+            d.qpos[2] = z_ref; d.qpos[3:7] = [np.cos(tilt0 / 2), np.sin(tilt0 / 2), 0, 0]
+        mujoco.mj_forward(m, d)
+        ctl = Hover(m, pos, spin, thr, fmax)
+        log = []; t0 = d.time
+        while d.time - t0 < seconds:
+            f = np.full(len(thr), fmax) if full_at is not None and d.time - t0 >= full_at else ctl.thrusts(d, z_ref)
+            ctl.apply(d, f)
+            mujoco.mj_step(m, d)
+            if not _finite(d): return log, False
+            log.append((d.time - t0, d.qpos[2], *_quat_rpy(d.qpos[3:7]), *f, d.qvel[2]))
+        return np.array(log), True
+
+    # hover: lift off and hold 0.8 m; measured over the last 3 s of 8
+    log, ok = fly(8.0, 0.8)
+    if ok and len(log):
+        tail = log[log[:, 0] > 5.0]
+        zerr = float(np.max(np.abs(tail[:, 1] - 0.8))); tilt = float(np.degrees(np.max(np.abs(tail[:, 2:4]))))
+        fr = tail[:, 5:5 + len(thr)] / fmax; frac = float(np.mean(fr)); peak = float(np.max(fr))
+        claim = ((design or {}).get("performance") or {}).get("hover_thrust_per_motor_n")
+        passed = zerr < 0.05 and tilt < 3 and peak < 0.95
+        out["hover"] = _result(passed, f"lifts off and holds 0.8 m for 3 s: height within {zerr * 1000:.0f} mm, tilt under {tilt:.1f} deg, rotors at {frac * 100:.0f} % of full thrust on average"
+                               f" ({weight / len(thr):.2f} N each for {mass:.3f} kg{'; design record says ' + str(claim) + ' N' if claim else ''}), peak {peak * 100:.0f} %",
+                               mean_thrust_fraction=_r(frac, 3), peak_thrust_fraction=_r(peak, 3), height_error_m=_r(zerr), tilt_deg=_r(tilt, 2), mass_kg=_r(mass))
+    else:
+        out["hover"] = _result(False, "the simulation diverged during hover")
+    # punch-out: from hover, all rotors at full thrust for 0.4 s; the climb acceleration measures thrust-to-weight
+    log, ok = fly(5.4, 0.8, full_at=5.0)
+    if ok and len(log):
+        seg = log[log[:, 0] >= 5.05]
+        acc = float(np.polyfit(seg[:, 0], seg[:, -1], 1)[0]) if len(seg) > 5 else 0.0
+        twr = 1 + acc / G
+        claim = ((design or {}).get("performance") or {}).get("thrust_to_weight")
+        out["thrust_to_weight"] = _result(twr >= 2.0, f"full throttle from hover climbs at {acc:.1f} m/s^2: thrust-to-weight {twr:.2f}" + (f" (design record {claim})" if claim else "") + "; 2.0 is the least that flies with control margin",
+                                          thrust_to_weight=_r(twr, 3), climb_accel_m_s2=_r(acc, 3))
+    # recovery: released 15 deg tilted at 0.8 m, it levels within 1 s and keeps its height
+    log, ok = fly(3.0, 0.8, tilt0=np.radians(15))
+    if ok and len(log):
+        after = log[log[:, 0] > 1.0]
+        tilt = float(np.degrees(np.max(np.abs(after[:, 2:4])))) if len(after) else 99.0
+        out["attitude_recovery"] = _result(tilt < 3, f"released 15 deg tilted, it is level to {tilt:.1f} deg after 1 s (attitude control within the rotors' thrust range)", tilt_after_1s_deg=_r(tilt, 2))
+    return out
+
+
+# ----------------------------------------------------------------------------- gantry, delta
+def gantry_tasks(xml, design, kind="slide"):
+    """Each axis drives to 95 % of its travel under its force limit and gravity (a gantry's carriages, a hand's fingers)."""
+    m = mujoco.MjModel.from_xml_string(xml)
+    rig = Rig(m)
+    jt = mujoco.mjtJoint.mjJNT_SLIDE if kind == "slide" else mujoco.mjtJoint.mjJNT_HINGE
+    slides = [A for A in rig.acts if m.jnt_type[A["jid"]] == jt and not A["velocity"]]
+    if not slides: return {"stroke": _result(None, "untested: no axes found")}
+    unit, scale, tol = ("mm", 1000, 0.002) if kind == "slide" else ("deg", 180 / np.pi, 0.03)
+    out = {}
+    for A in slides:
+        mm = mujoco.MjModel.from_xml_string(xml); r = Rig(mm); mujoco.mj_forward(mm, r.d)
+        lo, hi = mm.jnt_range[A["jid"]]; q0 = np.array([r.d.qpos[B["qadr"]] for B in r.acts]); target = q0.copy()
+        k = [B["name"] for B in r.acts].index(A["name"]); target[k] = lo + 0.95 * (hi - lo)
+        T = max(1.0, 3.0 * (hi - lo) / max(A["noload"] or 0.04, 1e-3)); ok = True; err = 0.0
+        t0 = r.t
+        while r.t - t0 < T + 1.0:
+            s_, _, _ = _min_jerk(r.t - t0, T); ok = r.step(q0 + (target - q0) * s_) and ok
+            if not ok: break
+        err = abs(r.d.qpos[A["qadr"]] - target[k])
+        util = r.utilisation({A["joint"]}, hold=(T, None))
+        u = util.get(A["joint"], {})
+        out[f"stroke:{A['joint']}"] = _result(ok and err < tol, f"{A['joint']} runs {(hi - lo) * 0.95 * scale:.0f} {unit} in {T:.1f} s and stops within {err * scale:.2f} {unit} of the target (peak {100 * (u.get('util_peak') or 0):.0f} % of its force limit)",
+                                              error_m=_r(err, 5), joints=util)
+    return out
+
+
+def delta_tasks(xml, design):
+    """Close the parallelogram loops listed in the design record (connect constraints), then hold the platform with its payload."""
+    loops = (design or {}).get("loops") or []
+    s = _spec_xml(xml)
+    # the passive universal joints carry only rods and rod ends (grams): a little armature and damping, as the rod ends'
+    # own friction gives, keeps the loop solver stable
+    acted = {a.target for a in s.actuators}
+    for j in s.joints:
+        if j.name and j.name not in acted and j.type == mujoco.mjtJoint.mjJNT_HINGE: j.armature = max(float(j.armature), 2e-4); j.damping = np.maximum(np.asarray(j.damping, float).reshape(-1), 0.02).reshape(-1, 1) if np.ndim(j.damping) else max(float(j.damping), 0.02)
+    for k, L in enumerate(loops):
+        e = s.add_equality(); e.type = mujoco.mjtEq.mjEQ_CONNECT; e.name1 = L["body"]; e.name2 = L["to"]; e.objtype = mujoco.mjtObj.mjOBJ_BODY
+        e.data[0:3] = L["anchor_m"]
+    # arm 1 carries the platform in the tree: its parallelogram keeps the platform level, which the single rod with a
+    # universal joint at each end does not. Couple the wrist to the elbow (side tilt cancels, swing cancels) as the
+    # parallelogram does, exactly at home and to first order near it
+    for a, b in (("wrist_1_a", "elbow_1_b"), ("wrist_1_b", "elbow_1_a")):
+        if s.joint(a) is None or s.joint(b) is None: continue
+        e = s.add_equality(); e.type = mujoco.mjtEq.mjEQ_JOINT; e.name1 = a; e.name2 = b; e.objtype = mujoco.mjtObj.mjOBJ_JOINT
+        e.data[0:5] = [0, -1, 0, 0, 0]
+    s.option.timestep = min(s.option.timestep, 0.0005); s.option.integrator = mujoco.mjtIntegrator.mjINT_IMPLICITFAST
+    xml2 = s.to_xml()
+    r = generic_hold(xml2, f"delta robot with its {len(loops)} loop closures and arm 1's parallelogram coupling")
+    return {"hold_home": r["hold_home"]}
+
+
+# ----------------------------------------------------------------------------- marine (thruster ROV)
+class Water:
+    """The ROV in water: buoyancy (the displaced volume from the design record, pushing up at the centre of buoyancy),
+    quadratic drag on the hull (the design record's Cd and frontal area, with the same figure sideways and a rotational
+    term), and each thruster's thrust at its mount. A simple model: no added mass, no tether, no free surface."""
+
+    def __init__(self, xml, design):
+        b = (design or {}).get("buoyancy") or {}; perf = (design or {}).get("performance") or {}
+        self.thrusters = (design or {}).get("thrusters") or []
+        self.fmax = float(perf.get("max_thrust_per_thruster_n") or 0)
+        self.V = float(b.get("displaced_l") or 0) / 1000; self.cob = np.array(b.get("cob_m") or [0, 0, 0], float)
+        self.cda = float(b.get("drag_cd") or 1.0) * float(b.get("frontal_area_m2") or 0.06)
+        self.m = mujoco.MjModel.from_xml_string(xml); self.d = mujoco.MjData(self.m)
+        self.mass = float(np.sum(self.m.body_mass))
+        self.at = np.array([t["at"] for t in self.thrusters], float).reshape(-1, 3); self.dir = np.array([t["dir"] for t in self.thrusters], float).reshape(-1, 3)
+        self.ok = _is_free(self.m) and self.V > 0 and len(self.thrusters) > 0 and self.fmax > 0
+
+    def step(self, thrust):
+        m, d = self.m, self.d
+        R = d.xmat[1].reshape(3, 3); p = d.xpos[1]
+        d.qfrc_applied[:] = 0
+        def push(force_w, point_w): mujoco.mj_applyFT(m, d, force_w, np.zeros(3), point_w, 1, d.qfrc_applied)
+        push(np.array([0, 0, 1000.0 * self.V * G]), p + R @ self.cob)
+        v = d.qvel[:3]; sp = float(np.linalg.norm(v))
+        if sp > 1e-6: push(-0.5 * 1000.0 * self.cda * sp * v, d.subtree_com[1])
+        w = d.qvel[3:6]   # body-frame angular velocity of the free joint
+        tq = -(0.4 * np.abs(w) * w + 0.05 * w)   # N·m: rotational drag of a 0.4 m open frame, estimated
+        mujoco.mj_applyFT(m, d, np.zeros(3), R @ tq, p, 1, d.qfrc_applied)
+        for k, f in enumerate(np.clip(thrust, -self.fmax, self.fmax)): push(R @ self.dir[k] * f, p + R @ self.at[k])
+        mujoco.mj_step(m, d)
+        return _finite(d)
+
+    def release(self, z=1.0, roll=0.0):
+        mujoco.mj_resetData(self.m, self.d); self.d.qpos[2] = z; self.d.qpos[3:7] = [np.cos(roll / 2), np.sin(roll / 2), 0, 0]; mujoco.mj_forward(self.m, self.d); self.heading = 0.0
+
+    def hold(self, z_ref, surge=0.0, yaw_rate=0.0):
+        """Thrusts that hold depth with the vertical pair and drive with the horizontal pair (differential for yaw)."""
+        d = self.d; f = np.zeros(len(self.thrusters)); lift = (1000.0 * self.V - self.mass) * G
+        vert = [k for k in range(len(f)) if abs(self.dir[k][2]) > 0.9]; hor = [k for k in range(len(f)) if abs(self.dir[k][0]) > 0.9]
+        fz = (-lift + self.mass * (6.0 * (z_ref - d.qpos[2]) - 5.0 * d.qvel[2])) / max(len(vert), 1)
+        for k in vert: f[k] = fz * self.dir[k][2]
+        # heading: a commanded turn rate, else hold the heading it has (a compass loop on the horizontal pair)
+        yaw = _quat_rpy(d.qpos[3:7])[2]
+        if yaw_rate: self.heading = yaw; turn = yaw_rate
+        else:
+            self.heading = getattr(self, "heading", yaw)
+            turn = float(np.clip(1.5 * ((self.heading - yaw + np.pi) % (2 * np.pi) - np.pi) - 0.4 * d.qvel[5], -0.3, 0.3))
+        for k in hor: f[k] = surge * self.fmax - np.sign(self.at[k][1]) * turn * self.fmax
+        return f
+
+
+def marine_tasks(xml, design):
+    W = Water(xml, design)
+    if not W.ok: return {"float": _result(None, "untested: no free base, buoyancy record or thrusters in the design record")}
+    out = {}; dt = W.m.opt.timestep; n = lambda s: int(s / dt)
+    tilt = lambda: float(np.degrees(np.arccos(np.clip(W.d.xmat[1].reshape(3, 3)[2, 2], -1, 1))))
+    # unpowered: it rises slowly and stays level
+    W.release(1.0); ok = True
+    for _ in range(n(4.0)): ok = W.step(np.zeros(len(W.thrusters))) and ok
+    vz = float(W.d.qvel[2]); t0 = tilt()
+    out["float"] = _result(ok and 0 < vz < 0.5 and t0 < 5, f"released unpowered it rises at {vz:.2f} m/s and sits {t0:.1f} deg from level (slightly buoyant: it surfaces if power is lost)", rise_m_s=_r(vz, 3), tilt_deg=_r(t0, 2))
+    # righting: released rolled 30 deg
+    W.release(1.0, roll=np.radians(30)); ok = True
+    for _ in range(n(6.0)): ok = W.step(W.hold(1.0)) and ok
+    t1 = tilt()
+    out["righting"] = _result(ok and t1 < 6, f"released rolled 30 deg it is {t1:.1f} deg from level after 6 s, with no roll control: the buoyancy above the mass rights it", tilt_after_6s_deg=_r(t1, 2))
+    # depth hold with the vertical pair
+    W.release(1.0); ok = True; zs = []
+    for k in range(n(6.0)):
+        ok = W.step(W.hold(0.7)) and ok
+        if k * dt > 4.0: zs.append(W.d.qpos[2])
+    err = float(np.max(np.abs(np.array(zs) - 0.7))) if zs else 9.0
+    out["depth_hold"] = _result(ok and err < 0.03, f"dives 0.3 m and holds depth within {err * 1000:.0f} mm on the two vertical thrusters", depth_error_m=_r(err, 4))
+    # surge: both horizontal thrusters at full thrust
+    W.release(1.0); ok = True
+    for _ in range(n(6.0)): ok = W.step(W.hold(1.0, surge=1.0)) and ok
+    v = float(np.linalg.norm(W.d.qvel[:2])); claim = ((design or {}).get("performance") or {}).get("top_speed_m_s"); pitch = tilt()
+    out["surge"] = _result(ok and v > 0.5 and pitch < 25, f"full thrust ahead settles at {v:.2f} m/s, {pitch:.0f} deg from level, holding its heading" + (f" (design record: about {claim} m/s; the heading loop takes some thrust)" if claim else ""), speed_m_s=_r(v, 3), tilt_deg=_r(pitch, 1))
+    return out
+
+
 # ----------------------------------------------------------------------------- entry point
 def family_of(spec, urdf_xml=""):
     design = ((spec or {}).get("metadata") or {}).get("design") or {}
@@ -1072,8 +1329,8 @@ def run_tasks(urdf_path, spec=None, verbose=True, family=None):
     family = (family or family_of(spec, urdf_xml)).lower()
     has = lambda words: family in words or any(w in family for w in words)  # design families are prefixed: mobile_diff_drive, character_walle
     group = ("arm" if family in ARM else "wheeled" if has(WHEELED) or "wheel" in family else "legged" if has(LEGGED)
-             else "gripper" if has(GRIPPER) else "wearable" if has(WEARABLE) else "exo" if has(EXO) else "unknown")
-    floating = {"arm": False, "gripper": False, "wheeled": True, "legged": True, "wearable": False, "exo": None, "unknown": None}[group]
+             else "gripper" if has(GRIPPER) else "wearable" if has(WEARABLE) else "exo" if has(EXO) else "aerial" if has(AERIAL) else "gantry" if has(GANTRY) else "parallel" if has(PARALLEL) else "marine" if has(MARINE) else "hand" if has(HAND) else "unknown")
+    floating = {"arm": False, "gripper": False, "wheeled": True, "legged": True, "wearable": False, "exo": None, "aerial": True, "gantry": False, "parallel": False, "marine": True, "hand": False, "unknown": None}[group]
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
         xml = urdf_to_mjcf(urdf_path, floating=floating, spec=spec)
@@ -1102,6 +1359,20 @@ def run_tasks(urdf_path, spec=None, verbose=True, family=None):
         tests.update(wearable_tasks(xml, design))
     elif group == "exo":
         tests.update(exo_tasks(xml))
+    elif group == "aerial":
+        tests.update(aerial_tasks(xml, design))
+        untested.append("aerodynamics: each rotor is its static thrust curve applied at the hub (no drag, ground effect, prop wash or battery sag); stabilisation is an ideal cascaded PD on the true state, standing in for the flight controller")
+    elif group == "gantry":
+        tests.update(gantry_tasks(xml, design))
+    elif group == "parallel":
+        tests.update(delta_tasks(xml, design))
+    elif group == "hand":
+        tests.update(generic_hold(xml, "five-finger hand"))
+        tests.update(gantry_tasks(xml, design, kind="hinge"))
+        untested.append("grip force: the tendon drive is modelled as one motor per finger with its other joints following (mimic); contact with an object is not simulated, the grip is checked in the design record")
+    elif group == "marine":
+        tests.update(marine_tasks(xml, design))
+        untested.append("water: a simple model (buoyancy at the design record's centre of buoyancy, quadratic drag from its Cd and frontal area, the maker's bollard thrust at each mount); no added mass, tether drag, waves or currents")
     else:
         tests.update(generic_hold(xml, f"unknown family '{family}': only a generic hold was run"))
         untested.append(f"family '{family}' has no task tests; only the home pose hold under gravity was checked")

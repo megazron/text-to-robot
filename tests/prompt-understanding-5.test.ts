@@ -20,7 +20,8 @@ test("families: legs, wheels, SCARA grippers, suction on mobile manipulators, ar
   // the designed SCARA carries its parallel gripper
   assert.deepEqual(parsePrompt("a SCARA robot").end_effectors.map((e) => e.type), ["parallel_gripper"]);
   assert.deepEqual(parsePrompt("a mobile manipulator with a suction cup").end_effectors.map((e) => e.type), ["suction_gripper"]);
-  assert.match(read("a quadruped with an arm").ignored.join(), /legged base/);
+  assert.equal(read("a quadruped with an arm").family, "quadruped_arm");
+  assert.match(read("a hexapod with an arm").ignored.join(), /a quadruped carries one/);
   assert.match(read("7-DOF arm with a force torque sensor").ignored.join(), /only cameras/);
 });
 

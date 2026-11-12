@@ -11,6 +11,12 @@ import * as _hexapod from "./families/hexapod.ts";
 import * as _humanoid from "./families/humanoid.ts";
 import * as _scara from "./families/scara.ts";
 import * as _gripper from "./families/gripper.ts";
+import * as _drone from "./families/drone.ts";
+import * as _gantry from "./families/gantry.ts";
+import * as _rov from "./families/rov.ts";
+import * as _snake from "./families/snake.ts";
+import * as _delta from "./families/delta.ts";
+import * as _hand from "./families/hand.ts";
 /** Designer per record family: edits re-run the designer with an updated request. */
 export const DESIGNERS: Record<string, (req: any) => RobotSpecification> = {
   arm: _arm,
@@ -18,6 +24,12 @@ export const DESIGNERS: Record<string, (req: any) => RobotSpecification> = {
   mobile_rocker_bogie: _mobile.designRover, character_walle: _mobile.designWallE, character_eva: _mobile.designEva, character_baymax: _mobile.designBaymax,
   quadruped: _legged.designQuadruped, hexapod: _hexapod.designHexapod, humanoid: _humanoid.designHumanoid, mech: _humanoid.designBattleMech,
   scara: _scara.designScara, gripper: _gripper.designGripper,
+  drone_quad: _drone.designDrone,
+  rov_underwater: _rov.designRov,
+  gantry_xyz: _gantry.designGantry,
+  snake: _snake.designSnake,
+  delta_parallel: _delta.designDelta,
+  hand_dexterous: _hand.designHand,
 };
 /** The record a designed robot carries (undefined for template robots). */
 export const designOf = (spec: RobotSpecification) => (spec.metadata as { design?: import("./assembly.ts").DesignRecord }).design;
@@ -52,3 +64,9 @@ export { designRadar, type RadarRequest } from "./families/radar.ts";
 export { designServoWalker, type WalkerRequest } from "./families/servo-walker.ts";
 export { boardProfile, driverProfile, regulatorFor, BOARDS, DRIVERS, type FirmwareRecord } from "./families/parts-pins.ts";
 export { firmwareFor, pinTable, type FirmwareFile } from "./firmware.ts";
+export { designDrone, motorAt, throttleFor, type DroneRequest } from "./families/drone.ts";
+export { designGantry, type GantryRequest } from "./families/gantry.ts";
+export { designRov } from "./families/rov.ts";
+export { designSnake, type SnakeRequest } from "./families/snake.ts";
+export { designDelta, deltaIk, deltaHome } from "./families/delta.ts";
+export { designHand } from "./families/hand.ts";

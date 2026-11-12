@@ -5,7 +5,7 @@ import type { Link, SensorType } from "@ttr/robot-schema";
 import { part, rating, bboxM, hornRadiusMm, outputHoles, type Vec3 } from "@ttr/parts";
 import { frame, invert, mul, apply, translation, type Mat4, type Op } from "@ttr/solid";
 import { Assembly } from "../assembly.ts";
-import { contactTorques, gravityTorques, totalMass } from "../kin.ts";
+import { contactTorques, gravityTorques, totalMass, fk } from "../kin.ts";
 import { withSolids, interferences, freeRange } from "../clearance.ts";
 import { evaluate as evalChoice, DYNAMIC_FACTOR, DUTY, GAIT_DUTY } from "../sizing.ts";
 
@@ -185,9 +185,10 @@ export function addSensor(A: Assembly, type: SensorType, name: string, parent: s
 // ---- geometry-derived joint limits ----
 /**
  * Shrink each listed joint's limits to its collision-free range (other joints at home), keeping a margin,
- * then record an interference check at home and at sampled limit combinations.
+ * then record an interference check at home and at sampled limit combinations (`record`; off when a robot's joints are swept
+ * again after its own checks were recorded).
  */
-export function limitsFromGeometry(A: Assembly, joints: string[], combos: Record<string, number>[] = [], margin = 0.06, skipPairs: [string, string][] = [], baseFor: (joint: string) => Record<string, number> = () => ({})) {
+export function limitsFromGeometry(A: Assembly, joints: string[], combos: Record<string, number>[] = [], margin = 0.06, skipPairs: [string, string][] = [], baseFor: (joint: string) => Record<string, number> | Record<string, number>[] = () => ({}), floor?: number | "base", record = true) {
   const skip = new Set(skipPairs.map(([a, b]) => `${a}|${b}`));
   // bought boards/packs/pads sit on the part that carries them; their box approximations (PCB with
   // under-board connectors, pads clamped over a shin tip) overlap that carrier by design
@@ -205,11 +206,24 @@ export function limitsFromGeometry(A: Assembly, joints: string[], combos: Record
     const body = new Map<string, string>(), of = (n: string): string => { if (body.has(n)) return body.get(n)!; const j = A.spec.joints.find((x) => x.child === n), g = j && j.type === "fixed" ? of(j.parent) : n; body.set(n, g); return g; };
     const names = A.spec.links.map((l) => l.name);
     for (let i = 0; i < names.length; i++) for (let k = i + 1; k < names.length; k++) if (of(names[i]) === of(names[k])) skip.add(`${names[i]}|${names[k]}`);
-    A.check("clearance:home", home.length === 0, home.length ? `intersecting at the home pose: ${home.map((x) => `${x.a}/${x.b} ${x.volume_mm3} mm^3`).join(", ")}` : "no printed part or component intersects another at the home pose");
+    // "base": the surface the robot's base stands on (the lowest point of every part bolted to the root)
+    let floorMm: number | undefined = typeof floor === "number" ? floor : undefined;
+    if (floor === "base") {
+      const root = of(names[0]); floorMm = Infinity;
+      const f0 = fk(A.spec, {});
+      names.forEach((n, i) => {
+        const b = m.boxes[i], T = f0.link[n]; if (!b || !T || of(n) !== of(root)) return;
+        for (const x of [b.min[0], b.max[0]]) for (const y of [b.min[1], b.max[1]]) for (const z of [b.min[2], b.max[2]]) floorMm = Math.min(floorMm!, T.R[2][0] * x + T.R[2][1] * y + T.R[2][2] * z + T.p[2] * 1000);
+      });
+      if (!Number.isFinite(floorMm)) floorMm = undefined;
+    }
+    if (record) A.check("clearance:home", home.length === 0, home.length ? `intersecting at the home pose: ${home.map((x) => `${x.a}/${x.b} ${x.volume_mm3} mm^3`).join(", ")}` : "no printed part or component intersects another at the home pose");
     for (const name of joints) {
       const j = A.spec.joints.find((x) => x.name === name)!;
       const lo = j.limit!.lower!, hi = j.limit!.upper!;
-      const [a, b] = freeRange(m, name, baseFor(name), lo, hi, 0.04, skip);
+      // every pose of the others it is swept from must stay clear (a joint swung with the robot at home, and with its arms out)
+      let a = -Infinity, b = Infinity;
+      for (const base of ([] as Record<string, number>[]).concat(baseFor(name))) { const [x, y] = freeRange(m, name, base, lo, hi, 0.04, skip, floorMm); a = Math.max(a, x); b = Math.min(b, y); }
       const nlo = a > lo ? Math.min(0, a + margin) : lo, nhi = b < hi ? Math.max(0, b - margin) : hi;
       j.limit!.lower = +nlo.toFixed(3); j.limit!.upper = +nhi.toFixed(3);
       if (a > lo || b < hi) report.push(`${name} [${lo.toFixed(2)}, ${hi.toFixed(2)}] -> [${nlo.toFixed(2)}, ${nhi.toFixed(2)}]`);
@@ -221,9 +235,9 @@ export function limitsFromGeometry(A: Assembly, joints: string[], combos: Record
       const hit = interferences(m, q, undefined, 2, skip);
       if (hit.length) bad = bad.concat(hit.map((x) => `${x.a}/${x.b}`));
     }
-    A.check("clearance:motion", bad.length === 0, bad.length ? `interference at combined limit poses: ${[...new Set(bad)].slice(0, 8).join(", ")}` : `no interference over ${combos.length} combined poses at the joint limits`);
+    if (record) A.check("clearance:motion", bad.length === 0, bad.length ? `interference at combined limit poses: ${[...new Set(bad)].slice(0, 8).join(", ")}` : `no interference over ${combos.length} combined poses at the joint limits`);
   });
-  A.design.assumptions.push(report.length ? `Joint limits trimmed to the collision-free range found by exact solid sweeps: ${report.join("; ")}.` : "Every joint's limits are inside its collision-free range (exact solid sweeps).");
+  if (record || report.length) A.design.assumptions.push(report.length ? `Joint limits trimmed to the collision-free range found by exact solid sweeps: ${report.join("; ")}.` : "Every joint's limits are inside its collision-free range (exact solid sweeps).");
 }
 
 export const sum = (xs: number[]) => xs.reduce((s, x) => s + x, 0);

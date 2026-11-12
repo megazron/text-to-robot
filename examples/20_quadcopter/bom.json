@@ -1,0 +1,226 @@
+{
+  "robot_name": "quadcopter",
+  "tier": "hobby",
+  "lines": [
+    {
+      "category": "Actuator",
+      "name": "2207 brushless motor 1750 KV for 5 in props, 4S (e.g. iFlight XING2 2207)",
+      "qty": 4,
+      "unit_cost": 19,
+      "subtotal": 76,
+      "spec": "0.06 N·m rated / 0.2 N·m peak, 14.8 V",
+      "note": "drive motor (2207 1750 KV) · https://shop.iflight.com/xing2-2207-unibell-fpv-motor-pro1504"
+    },
+    {
+      "category": "Power",
+      "name": "ExpressLRS 2.4 GHz nano receiver with T antenna (e.g. RadioMaster RP1)",
+      "qty": 1,
+      "unit_cost": 16,
+      "subtotal": 16,
+      "spec": "5 V",
+      "note": "radio receiver (taped on the FC) · https://www.radiomasterrc.com/products/rp1-expresslrs-2-4ghz-nano-receiver"
+    },
+    {
+      "category": "Electronics",
+      "name": "4-in-1 BLHeli_S ESC 45 A per motor, 3-6S, 30.5 mm mount (e.g. SpeedyBee BLS 50A)",
+      "qty": 1,
+      "unit_cost": 45,
+      "subtotal": 45,
+      "spec": "14.8 V",
+      "note": "4-in-1 ESC (motor drive) · https://www.speedybee.com/speedybee-bls-50a-30x30-4-in-1-esc/"
+    },
+    {
+      "category": "Compute",
+      "name": "F405 flight controller, BMI270 IMU, OSD, barometer, 30.5 mm mount (e.g. SpeedyBee F405 V4)",
+      "qty": 1,
+      "unit_cost": 40,
+      "subtotal": 40,
+      "spec": "5 V",
+      "note": "flight controller (runs Betaflight / INAV) · https://www.speedybee.com/speedybee-f405-v4-bls-55a-30x30-fc-esc-stack/"
+    },
+    {
+      "category": "Sensor",
+      "name": "Micro analog FPV camera, 19 mm, 1/1.8 in sensor (e.g. Caddx Ratel 2)",
+      "qty": 1,
+      "unit_cost": 30,
+      "subtotal": 30,
+      "spec": "5 V",
+      "note": "FPV camera, tilted up 25 deg for forward flight · https://caddxfpv.com/products/caddxfpv-ratel-2-starlight-hdr-fpv-camera"
+    },
+    {
+      "category": "Power",
+      "name": "LiPo 4S 1500 mAh 100C, XT60 (e.g. CNHL Black Series)",
+      "qty": 1,
+      "unit_cost": 32,
+      "subtotal": 32,
+      "spec": "14.8 V, 22.2 Wh",
+      "note": "4S 1500 mAh pack (strapped on top) · https://chinahobbyline.com/products/cnhl-black-series-1500mah-14-8v-4s-100c-lipo-battery-with-xt60-plug"
+    },
+    {
+      "category": "Power",
+      "name": "5 x 4.3 x 3 tri-blade propeller, M5 hub (HQProp 5043 V1S), one",
+      "qty": 4,
+      "unit_cost": 1,
+      "subtotal": 4,
+      "spec": "https://www.hqprop.com/hq-durable-prop-5x43x3v1s-2cw2ccw-poly-carbonate-p0081.html",
+      "note": "propeller (2 CW + 2 CCW per set) · https://www.hqprop.com/hq-durable-prop-5x43x3v1s-2cw2ccw-poly-carbonate-p0081.html"
+    },
+    {
+      "category": "Power",
+      "name": "50 mm hook-and-loop strap with D-ring buckle, 600 mm",
+      "qty": 1,
+      "unit_cost": 4.5,
+      "subtotal": 4.5,
+      "spec": "https://www.velcro.com/business/products/",
+      "note": "battery strap through the frame slots · https://www.aliexpress.com/w/wholesale-50mm-hook-and-loop-strap-d-ring.html"
+    },
+    {
+      "category": "Power",
+      "name": "WAGO 221-415 five-way lever splice",
+      "qty": 1,
+      "unit_cost": 0.8,
+      "subtotal": 0.8,
+      "spec": "450 V",
+      "note": "rail splices, the star ground and bus hubs · https://www.wago.com/global/electrical-interconnections/compact-splicing-connector/p/221-415"
+    },
+    {
+      "category": "Printed structure",
+      "name": "PETG filament for 4 printed parts",
+      "qty": 1,
+      "unit_cost": 2.44,
+      "subtotal": 2.44,
+      "spec": "97 g of parts (+15 % supports/waste), about 8.8 h of printing",
+      "note": "base_link, canopy, canopy_lid, camera_cradle"
+    },
+    {
+      "category": "Fasteners",
+      "name": "Screws, nuts and inserts",
+      "qty": 32,
+      "unit_cost": 0.12,
+      "subtotal": 3.84,
+      "spec": "16x M3 x 8 socket head (motor to arm, from below); 4x M5 nyloc prop nut; 4x M3 x 10 self-tapping (lid to compartment); 4x M3 x 25 socket head + 8 mm nylon spacers (flight-controller stack); 2x M3 x 10 + nut (camera cradle); 2x M2 x 4 (camera side screws)"
+    },
+    {
+      "category": "Wiring",
+      "name": "8 AWG silicone wire",
+      "qty": 0.5,
+      "unit_cost": 4.5,
+      "subtotal": 2.25,
+      "spec": "0.5 m: 8.37 mm2, rated 36.5 A in a bundle; 0.43 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "18 AWG silicone wire",
+      "qty": 3.2,
+      "unit_cost": 0.7,
+      "subtotal": 2.24,
+      "spec": "3.2 m: 0.823 mm2, rated 8 A in a bundle; 2.82 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "24 AWG silicone wire",
+      "qty": 1,
+      "unit_cost": 0.35,
+      "subtotal": 0.35,
+      "spec": "1 m: 0.205 mm2, rated 1.75 A in a bundle; 0.84 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "26 AWG silicone wire",
+      "qty": 0.5,
+      "unit_cost": 0.3,
+      "subtotal": 0.15,
+      "spec": "0.5 m: 0.128 mm2, rated 1.1 A in a bundle; 0.38 m cut + 10 % waste",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "XT60 contacts",
+      "qty": 5,
+      "unit_cost": 0.9,
+      "subtotal": 4.5,
+      "spec": "5 pc: rated 35 A per contact",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Heat shrink 3 mm, 2:1",
+      "qty": 2,
+      "unit_cost": 0.2,
+      "subtotal": 0.4,
+      "spec": "2 m: 40 solder joints + a boot on each cable end",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Cable tie 100 x 2.5 mm",
+      "qty": 30,
+      "unit_cost": 0.02,
+      "subtotal": 0.6,
+      "spec": "30 pc: at every clip, cable end and strain-relief anchor",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Rubber grommet, 6.4 mm panel hole, 3.2 mm bore",
+      "qty": 4,
+      "unit_cost": 0.08,
+      "subtotal": 0.32,
+      "spec": "4 pc: 6.5 mm panel hole",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Rubber grommet, 6.4 mm panel hole, 3.2 mm bore",
+      "qty": 1,
+      "unit_cost": 0.08,
+      "subtotal": 0.08,
+      "spec": "1 pc: 8.5 mm panel hole",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Rubber grommet, 6.4 mm panel hole, 3.2 mm bore",
+      "qty": 1,
+      "unit_cost": 0.08,
+      "subtotal": 0.08,
+      "spec": "1 pc: 4 mm panel hole",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "Rubber grommet, 5.0 mm panel hole, 3.0 mm bore",
+      "qty": 1,
+      "unit_cost": 0.05,
+      "subtotal": 0.05,
+      "spec": "1 pc: 5 mm panel hole",
+      "note": "price estimated"
+    },
+    {
+      "category": "Wiring",
+      "name": "8-pin JST-SH stack cable (supplied with the ESC)",
+      "qty": 1,
+      "unit_cost": 4,
+      "subtotal": 4,
+      "spec": "1 pc: esc to controller",
+      "note": "price estimated"
+    }
+  ],
+  "total": 269.6,
+  "feasible": true,
+  "sizing_pass": true,
+  "hardware_verified": false,
+  "actuator_sizing": [],
+  "warnings": [],
+  "notes": [
+    "Quadcopter, 5 in props on 2207 motors: 0.47 kg take-off, thrust-to-weight 6.6, hover at 15 % throttle, about 10 min",
+    "Thrust and current come from a typical 2207 1750 KV static thrust table with 5 x 4.3 x 3 props on a full 4S pack (estimated; real motors vary by about 10 %). Thrust falls as the pack sags and in forward flight.",
+    "The frame is printed flat in PETG (or better, CF-nylon). It is stiff enough for gentle flying; it does not survive crashes like a carbon frame. Balance the props.",
+    "The flight controller runs Betaflight, INAV or ArduPilot: it does the stabilisation. Configure motor order, direction (props in), failsafe and the 60 A current limit before the first flight, without props.",
+    "Fly where it is legal: in most countries a drone over 250 g must be registered and flown within sight, away from people.",
+    "Prices are list/street prices from the linked suppliers at the time the catalog was written; check before ordering."
+  ]
+}

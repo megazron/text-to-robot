@@ -12,6 +12,7 @@ import { Assembly, componentGeometry, printedGeometry } from "../assembly.ts";
 import { frame, invert, mul, apply, I4, translation, toPose, type Mat4, type Op } from "@ttr/solid";
 import { fk, linkCom, totalMass, gravityTorques, type PointLoad } from "../kin.ts";
 import { designArm, graftArm, type ArmRequest } from "./arm.ts";
+import { limitsFromGeometry } from "./legkit.ts";
 import { evaluate, DYNAMIC_FACTOR, type Ladder } from "../sizing.ts";
 import { registerBay, enclosureChecks, exposed, baysOf, worldBox as partBox, heatOf, ventNeed, type BayRecord, type Face } from "../enclosure.ts";
 import { Harness, finishWiring } from "../wiring.ts";
@@ -621,6 +622,10 @@ function batteryTray(key: string, T: Mat4): Op[] {
 
 /** The netlist of a battery robot on this chassis: pack, fuse, switch; 5 V buck; computer; drives; sensors; servo bus. Then routed and checked. */
 function wireMobile(b: Build, compute: string, battery: [string, number], sensors: MobileSensor[]) {
+  // an arm's limits come from its own sweep on a bench; on the robot it is swept again against everything else it carries
+  // (a camera mast, the covers of a character's arms)
+  const armJoints = b.arms.flatMap((a) => a.joints).filter((n) => { const j = b.A.spec.joints.find((x) => x.name === n); return j?.type === "revolute" && !j.mimic && !/gripper/.test(n); });
+  if (armJoints.length) limitsFromGeometry(b.A, armJoints, [], 0.06, [], () => b.A.design.home ?? {}, undefined, false);
   const H = b.H, A = b.A;
   H.scan();
   const motors = A.spec.links.filter((l) => /_motor$/.test(l.name)).map((l) => l.name);

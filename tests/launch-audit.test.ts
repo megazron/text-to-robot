@@ -1,15 +1,15 @@
 // Prompts from the launch audit (docs/LAUNCH_AUDIT.md) that built the wrong robot or reported something untrue.
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { interpretPrompt, describeInterpretation, arduinoOptions } from "@ttr/robot-generator";
+import { interpretPrompt, describeInterpretation, arduinoOptions, understandPrompt } from "@ttr/robot-generator";
 import { buildBom } from "@ttr/components";
 
 const read = (prompt: string) => interpretPrompt(prompt).interpretation;
 const notes = (prompt: string) => { const i = read(prompt); return [...i.ignored, ...i.approximations, ...i.conflicts].join(" | "); };
 
-test("a hand asked for as the robot is refused; a hand on a robot is approximated by a gripper and said", () => {
+test("a hand asked for as the robot is the five-finger hand; a hand on a robot is approximated by a gripper and said", () => {
   for (const p of ["a humanoid hand", "a dexterous five finger robot hand", "a robotic hand", "bionic hands"])
-    assert.throws(() => interpretPrompt(p), /Dexterous robot hands are not supported/, p);
+    assert.equal(understandPrompt(p).family, "hand", p);
   const humanoid = read("a humanoid robot with robotic hands");
   assert.equal(humanoid.family, "humanoid");
   assert.match(humanoid.approximations.join(), /"robotic hands" approximated by a two-finger parallel gripper/);
@@ -69,7 +69,13 @@ test("misspelt robot words and a few emoji are read, and said; other scripts are
   assert.equal(read("🐕 robot").family, "quadruped");
   assert.equal(read("un perro robot").family, "quadruped");
   assert.doesNotMatch(notes("a 6 dof arm with a gripper"), /misspelt/, "English prompts are left alone");
-  assert.throws(() => interpretPrompt("ロボットアーム"), /a language the parser does not read yet/);
+  // common robot words in Hindi, Urdu, Japanese and Chinese are read, and said; a script with no known words is told what the parser reads
+  for (const p of ["एक रोबोटिक हाथ जिसमें ग्रिपर हो", "ایک روبوٹک بازو گرپر کے ساتھ", "ロボットアーム"]) {
+    assert.equal(read(p).family, "serial_arm", p);
+    assert.match(notes(p), /read non-English keywords as English/, p);
+  }
+  assert.equal(read("机器狗").family, "quadruped");
+  assert.throws(() => interpretPrompt("หุ่นยนต์ที่บินได้"), /a language the parser does not read yet/);
 });
 
 test("weapons and robots meant to hurt are refused, whatever body they have; tools are not weapons", () => {

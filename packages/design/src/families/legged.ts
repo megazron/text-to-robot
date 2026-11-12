@@ -12,6 +12,7 @@ import { part, type Vec3 } from "@ttr/parts";
 import { frame, translation, type Mat4, type Op } from "@ttr/solid";
 import { Assembly } from "../assembly.ts";
 import { totalMass, pointWorld, comWorld } from "../kin.ts";
+import { designArm, graftArm } from "./arm.ts";
 import { choose, DYNAMIC_FACTOR, GAIT_DUTY } from "../sizing.ts";
 import { hoodAround, worldBox, BATTERY_SWITCH, registerBay, enclosureChecks, exposed, type Face } from "../enclosure.ts";
 import { Harness, finishWiring } from "../wiring.ts";
@@ -276,6 +277,11 @@ function boxQuad(A: Assembly, H: Harness, b: ReturnType<typeof buildQuadruped>, 
     if (sw) H.spot.set("actuator_bus_hub", { by: "actuator_bus", at: [hole[0] - 10, hole[1] - s * 24, zt + 8] });
   }
   H.scan();
+  bodyBay(A, H, b);
+  return hood;
+}
+function bodyBay(A: Assembly, H: Harness, b: ReturnType<typeof buildQuadruped>) {
+  const rear = A.spec.links.some((l) => l.name === "top_deck_rear");
   const side = (s: number, sx: number): { id: string; kind: string; face: Face; at: Vec3; normal: Vec3; hole_mm: number } => ({ id: `body_bay.${sx > 0 ? "front" : "rear"}_${s > 0 ? "left" : "right"}`, kind: "grommet", face: s > 0 ? "y+" : "y-", at: [sx * b.xg, s * b.Wo, sx * s * 4.5], normal: [0, s, 0], hole_mm: 10 });
   // the abduction actuators stand in the tub's cradles: their cables leave by the side grommets
   for (const n of ["fl", "fr", "rl", "rr"]) H.bayOf.set(`${n}_hip_abduction_actuator`, "body_bay");
@@ -283,7 +289,7 @@ function boxQuad(A: Assembly, H: Harness, b: ReturnType<typeof buildQuadruped>, 
     solids: ["base_link", ...(A.spec.links.some((l) => l.name === "body_rear") ? ["body_rear"] : []), "top_deck", ...(rear ? ["top_deck_rear"] : [])] }, H);
 }
 /** Netlist: pack, fuse, switch, 5 V, computer, sensors; one bus branch per leg, each with its own feed. */
-function wireQuad(A: Assembly, H: Harness, compute: string, qdd: boolean, nBatt: number) {
+function wireQuad(A: Assembly, H: Harness, compute: string, qdd: boolean, nBatt: number, extraChains: string[][] = []) {
   const named: { name: string; kind: "lidar" | "depth" | "camera" | "imu" }[] = [];
   for (const [n, k] of [["lidar", "lidar"], ["depth_camera", "depth"], ["camera", "camera"], ["imu", "imu"]] as const) if (H.instances.has(n)) named.push({ name: n, kind: k });
   for (const x of ["lidar", "depth_camera", "camera"]) if (H.instances.has(x)) exposed(A, x, x === "lidar" ? "on a mast above the deck, scan plane clear of the hood" : "on the front edge of the deck, looking forward", [20, 20]);
@@ -291,7 +297,7 @@ function wireQuad(A: Assembly, H: Harness, compute: string, qdd: boolean, nBatt:
   void nBatt;
   const legs = ["fl", "fr", "rl", "rr"].map((l) => actuatorsUnder(H, new RegExp(`^${l}_.*_actuator$|^${l}_knee_actuator$`)));
   if (qdd) { canTree(H, { adapter: "actuator_bus", motors: legs.flat(), rail: "VBAT", duty: 0.15 }); H.bought("actuator_bus.usb.VBUS", compute === "rpi5" ? "computer.usb_a.LINK" : "computer.usb_a_j6_j7.LINK", "USB", 0.1, 0.5, "CAN_USB"); }
-  else { busTree(H, { adapter: "actuator_bus", chains: legs, rail: "VBAT" }); H.spare("actuator_bus.dc_in"); H.bought("actuator_bus.usb.VBUS", compute === "rpi5" ? "computer.usb_a.LINK" : "computer.usb_a_j6_j7.LINK", "USB", 0.05, 0.1, "BUS_USB"); }
+  else { busTree(H, { adapter: "actuator_bus", chains: [...legs, ...extraChains.filter((c) => c.length)], rail: "VBAT" }); H.spare("actuator_bus.dc_in"); H.bought("actuator_bus.usb.VBUS", compute === "rpi5" ? "computer.usb_a.LINK" : "computer.usb_a_j6_j7.LINK", "USB", 0.05, 0.1, "BUS_USB"); }
   finishWiring(H);
   enclosureChecks(A);
 }
@@ -306,6 +312,10 @@ export function designQuadruped(req: LeggedRequest): RobotSpecification {
   const cfg: QuadCfg = big
     ? { cls: "qdd", keys: { abd: ladder[0], hip: ladder[1], knee: ladder[1] }, L1: 170 * scaleL, L2: 210 * scaleL, footR: 22, batt: "lipo_6s_10000", nBatt: 1, extraKg: payload }
     : { cls: "servo", keys: { abd: ladder[0], hip: ladder[0], knee: ladder[0] }, L1: 105 * scaleL, L2: 115 * scaleL, footR: 13, batt: "lipo_3s_2200", nBatt: 1, extraKg: payload };
+  // an arm on the back (a "robot dog with an arm"): designed first as an embedded arm on the servo bus, its mass and
+  // payload carried by the legs; it is grafted on the electronics hood once the legs are sized
+  const armSpec = req.armDof && cfg.cls === "servo" ? designArm({ name: "arm", dof: Math.max(3, Math.min(6, req.armDof)), reachM: 0.28, payloadKg: 0.15, gripper: req.gripper !== false, ladder: "feetech", maxSupplyV: 12.6, embedded: true, prompt: req.prompt }) : null;
+  if (armSpec) cfg.extraKg += totalMass(armSpec) + 0.15;
   let built = buildQuadruped(req, cfg, sensors), torques: Record<string, number> = {};
   const poses = gaitPoses(["fl", "fr", "rl", "rr"], { abd: 0.12, hip: 0.35, knee: 0.3 });
   const trot = [["fl_foot", "rr_foot"], ["fr_foot", "rl_foot"]];
@@ -337,16 +347,33 @@ export function designQuadruped(req: LeggedRequest): RobotSpecification {
   A.design.assumptions.push("A trot has two diagonal feet on the ground: the COM sits on the support line, so trotting needs the dynamic balance of the gait controller; the creep gait keeps three feet down (statically stable).");
   // compartments before the joint limits, so the limits see them
   const H = new Harness(A);
-  boxQuad(A, H, built, cfg.cls === "qdd");
+  const hoodRec = boxQuad(A, H, built, cfg.cls === "qdd");
   // joint limits from exact solid sweeps
   const actuated = A.spec.joints.filter((j) => j.type === "revolute").map((j) => j.name);
   limitsFromGeometry(A, actuated, gaitCombos(["fl", "fr", "rl", "rr"]));
   if (cfg.cls === "qdd") derateSpeed(A, 24 / 48, "6S pack (24 V)");
-  wireQuad(A, H, built.compute, cfg.cls === "qdd", cfg.nBatt);
+  let armChain: string[] = [];
+  if (armSpec) {
+    // the arm's base plate bolts to the hood roof, towards the front
+    const ax = Math.min(hoodRec.max[0] - 45, built.Xb - 50), top = hoodRec.max[2] + 2.8;
+    const g = graftArm(A, armSpec, hoodRec.name, translation([ax, 0, top]), "arm");
+    A.fastener("M3 x 12 + nut (arm base through the hood roof)", 4);
+    H.scan();
+    armChain = actuatorsUnder(H, /^arm_/);
+    A.design.performance.arm = `${req.armDof}-DOF, reach ${g.performance.reach_m} m, ${g.performance.payload_kg ?? 0.15} kg`;
+    if (g.tool) A.design.tool = g.tool;
+    const tip = g.tool ? pointWorld(A.spec, {}, g.tool.link, g.tool.xyz_m) : [0, 0, 0];
+    const com = comWorld(A.spec), feetXY = built.feet.map((f) => pointWorld(A.spec, {}, f.link));
+    const mAll = totalMass(A.spec) + 0.15, cx = (com[0] * totalMass(A.spec) + tip[0] * 0.15) / mAll;
+    const xMax = Math.max(...feetXY.map((p) => p[0]));
+    A.check("stability:arm_reach", cx < xMax - 0.02, `with the arm at rest holding 0.15 kg the centre of mass is at x ${(cx * 1000).toFixed(0)} mm, ${((xMax - cx) * 1000).toFixed(0)} mm inside the front feet; reaching out moves it forward, so the gait controller leans back while the arm works`);
+    A.design.assumptions.push(`Arm: ${req.armDof} DOF on the servo bus, bolted to the electronics hood; its mass and a 0.15 kg payload were added to the load every leg was sized for.`);
+  }
+  wireQuad(A, H, built.compute, cfg.cls === "qdd", cfg.nBatt, [armChain]);
   const bom = A.bom();
   A.design.performance = {
     ...A.design.performance, mass_kg: +m.toFixed(3), standing_height_m: +((built.H + built.zHi + 3) / 1000).toFixed(3), hip_height_m: +(built.H / 1000).toFixed(3),
-    payload_kg: cfg.extraKg, legs: 4, dof: 12, actuators: `${part(cfg.keys.abd).name} (abduction), ${part(cfg.keys.hip).name} (hip), ${part(cfg.keys.knee).name} (knee)`,
+    payload_kg: payload, ...(armSpec ? { carried_kg: +cfg.extraKg.toFixed(3) } : {}), legs: 4, dof: 12, actuators: `${part(cfg.keys.abd).name} (abduction), ${part(cfg.keys.hip).name} (hip), ${part(cfg.keys.knee).name} (knee)`,
     runtime_min: +batt.minutes.toFixed(0), cost_usd: bom.cost_usd, stance_width_m: +(2 * Math.abs(pointWorld(A.spec, {}, "fl_foot")[1])).toFixed(3), wheelbase_m: +(2 * built.Xh / 1000).toFixed(3),
   };
   if (req.budget !== undefined) A.check("budget", bom.cost_usd <= req.budget, `bought parts $${bom.cost_usd.toFixed(0)} vs budget $${req.budget}`);

@@ -1,0 +1,195 @@
+{
+ "model": "robot.urdf",
+ "family": "hand_dexterous",
+ "group": "hand",
+ "scope": "PASS means the modelled actuators (datasheet peak torque as a hard limit, a linear torque-speed line to no-load speed, reflected rotor inertia, URDF damping/friction) can produce the torques and speeds the task needs in this geometry and mass distribution, and that mean torque over the hold stays within the continuous (rated) torque. Joint control uses an ideal model-based feedforward (computed torque) through the force-limited servo for fixed-base robots and plain position servos for floating robots; a pass therefore proves torque/speed capacity, not that a given controller achieves it. Untested: thermal limits over long duty cycles (only the mean-vs-rated proxy), gearbox backlash and compliance, link and joint flexibility, encoder resolution, supply voltage sag and current limits, bus latency, controller tuning, and contact/friction values (nominal friction only).",
+ "untested": [
+  "grip force: the tendon drive is modelled as one motor per finger with its other joints following (mimic); contact with an object is not simulated, the grip is checked in the design record"
+ ],
+ "fidelity": "URDF effort limits enforced; position gains inferred; speed/thermal/electrical limits unmodelled; geometry and hardware uncalibrated; armature = rotor inertia x gear ratio^2 from the actuator record: index_mcp: 0.0192 kg m^2 (estimate (hobby_pwm motor) x gear ratio 400^2); middle_mcp: 0.0192 kg m^2 (estimate (hobby_pwm motor) x gear ratio 400^2); ring_mcp: 0.0192 kg m^2 (estimate (hobby_pwm motor) x gear ratio 400^2); little_mcp: 0.0192 kg m^2 (estimate (hobby_pwm motor) x gear ratio 400^2); thumb_swing: 0.00045 kg m^2 (estimate (hobby_pwm_micro motor) x gear ratio 300^2)",
+ "tests": {
+  "hold_home": {
+   "pass": true,
+   "explanation": "five-finger hand: holds the home pose for 3 s",
+   "joints": {
+    "index_mcp": {
+     "peak_nm": 0.0051,
+     "peak_rating_nm": 0.518,
+     "util_peak": 0.01,
+     "mean_hold_nm": 0.0049,
+     "rated_nm": 0.431,
+     "util_rated": 0.011,
+     "max_err": 0.0001,
+     "max_err_hold": 0.0001,
+     "saturated_frac": 0.0
+    },
+    "middle_mcp": {
+     "peak_nm": 0.0057,
+     "peak_rating_nm": 0.518,
+     "util_peak": 0.011,
+     "mean_hold_nm": 0.0055,
+     "rated_nm": 0.431,
+     "util_rated": 0.013,
+     "max_err": 0.0001,
+     "max_err_hold": 0.0001,
+     "saturated_frac": 0.0
+    },
+    "ring_mcp": {
+     "peak_nm": 0.0051,
+     "peak_rating_nm": 0.518,
+     "util_peak": 0.01,
+     "mean_hold_nm": 0.0049,
+     "rated_nm": 0.431,
+     "util_rated": 0.011,
+     "max_err": 0.0001,
+     "max_err_hold": 0.0001,
+     "saturated_frac": 0.0
+    },
+    "little_mcp": {
+     "peak_nm": 0.0038,
+     "peak_rating_nm": 0.518,
+     "util_peak": 0.007,
+     "mean_hold_nm": 0.0037,
+     "rated_nm": 0.431,
+     "util_rated": 0.009,
+     "max_err": 0.0001,
+     "max_err_hold": 0.0001,
+     "saturated_frac": 0.0
+    },
+    "thumb_swing": {
+     "peak_nm": 0.0046,
+     "peak_rating_nm": 0.2157,
+     "util_peak": 0.021,
+     "mean_hold_nm": 0.0042,
+     "rated_nm": 0.0647,
+     "util_rated": 0.065,
+     "max_err": 0.0001,
+     "max_err_hold": 0.0001,
+     "saturated_frac": 0.0
+    },
+    "thumb_mcp": {
+     "peak_nm": 0.0029,
+     "peak_rating_nm": 0.518,
+     "util_peak": 0.006,
+     "mean_hold_nm": 0.002,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.0001,
+     "max_err_hold": 0.0001,
+     "saturated_frac": 0.0
+    }
+   }
+  },
+  "stroke:index_mcp": {
+   "pass": 1.0,
+   "explanation": "index_mcp runs 79 deg in 1.0 s and stops within 0.01 deg of the target (peak 59 % of its force limit)",
+   "error_m": 0.00014,
+   "joints": {
+    "index_mcp": {
+     "peak_nm": 0.3037,
+     "peak_rating_nm": 0.518,
+     "util_peak": 0.586,
+     "mean_hold_nm": 0.0123,
+     "rated_nm": 0.431,
+     "util_rated": 0.028,
+     "max_err": 0.1127,
+     "max_err_hold": 0.0036,
+     "saturated_frac": 0.0
+    }
+   }
+  },
+  "stroke:middle_mcp": {
+   "pass": 1.0,
+   "explanation": "middle_mcp runs 79 deg in 1.0 s and stops within 0.01 deg of the target (peak 59 % of its force limit)",
+   "error_m": 0.00013,
+   "joints": {
+    "middle_mcp": {
+     "peak_nm": 0.3038,
+     "peak_rating_nm": 0.518,
+     "util_peak": 0.586,
+     "mean_hold_nm": 0.0119,
+     "rated_nm": 0.431,
+     "util_rated": 0.028,
+     "max_err": 0.1128,
+     "max_err_hold": 0.0037,
+     "saturated_frac": 0.0
+    }
+   }
+  },
+  "stroke:ring_mcp": {
+   "pass": 1.0,
+   "explanation": "ring_mcp runs 79 deg in 1.0 s and stops within 0.01 deg of the target (peak 59 % of its force limit)",
+   "error_m": 0.00014,
+   "joints": {
+    "ring_mcp": {
+     "peak_nm": 0.3037,
+     "peak_rating_nm": 0.518,
+     "util_peak": 0.586,
+     "mean_hold_nm": 0.0123,
+     "rated_nm": 0.431,
+     "util_rated": 0.028,
+     "max_err": 0.1127,
+     "max_err_hold": 0.0036,
+     "saturated_frac": 0.0
+    }
+   }
+  },
+  "stroke:little_mcp": {
+   "pass": 1.0,
+   "explanation": "little_mcp runs 79 deg in 1.0 s and stops within 0.01 deg of the target (peak 59 % of its force limit)",
+   "error_m": 0.00011,
+   "joints": {
+    "little_mcp": {
+     "peak_nm": 0.3042,
+     "peak_rating_nm": 0.518,
+     "util_peak": 0.587,
+     "mean_hold_nm": 0.0109,
+     "rated_nm": 0.431,
+     "util_rated": 0.025,
+     "max_err": 0.1127,
+     "max_err_hold": 0.0035,
+     "saturated_frac": 0.0
+    }
+   }
+  },
+  "stroke:thumb_swing": {
+   "pass": 1.0,
+   "explanation": "thumb_swing runs 54 deg in 1.0 s and stops within 0.01 deg of the target (peak 9 % of its force limit)",
+   "error_m": 0.00012,
+   "joints": {
+    "thumb_swing": {
+     "peak_nm": 0.019,
+     "peak_rating_nm": 0.2157,
+     "util_peak": 0.088,
+     "mean_hold_nm": 0.0046,
+     "rated_nm": 0.0647,
+     "util_rated": 0.072,
+     "max_err": 0.0092,
+     "max_err_hold": 0.0001,
+     "saturated_frac": 0.0
+    }
+   }
+  },
+  "stroke:thumb_mcp": {
+   "pass": 1.0,
+   "explanation": "thumb_mcp runs 65 deg in 1.0 s and stops within 0.00 deg of the target (peak 23 % of its force limit)",
+   "error_m": 1e-05,
+   "joints": {
+    "thumb_mcp": {
+     "peak_nm": 0.1192,
+     "peak_rating_nm": 0.518,
+     "util_peak": 0.23,
+     "mean_hold_nm": 0.001,
+     "rated_nm": null,
+     "util_rated": null,
+     "max_err": 0.0005,
+     "max_err_hold": 0.0001,
+     "saturated_frac": 0.0
+    }
+   }
+  }
+ },
+ "passed": 7,
+ "total": 7,
+ "source_urdf_sha256": "385f26801a22696aff3cf53a5a3c51c40785dcaa70c5063f09e87eed78674fd8"
+}

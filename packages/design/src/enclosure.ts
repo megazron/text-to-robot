@@ -47,6 +47,8 @@ export interface BayRecord {
   name: string; tub: string; lid: string; parent: string; T: Mat4; min: Vec3; max: Vec3;
   parts: string[]; exits: { id: string; kind: string; face: Face; at: Vec3; normal: Vec3; hole_mm: number; part?: string }[];
   screws: number; vent_area_mm2: number; heat_w: number; note?: string;
+  /** a sealed hull (underwater): no vents, no USB from outside; heat leaves by conduction through its wall */
+  sealed?: boolean;
   /** printed links that make up the walls and lid, when a compartment is in several pieces */
   solids?: string[];
 }
@@ -311,14 +313,16 @@ export function controlCase(A: Assembly, H: Harness, o: { parent: string; T: Mat
   const PSU_X = 68, inPsu = !!o.psu, pb = inPsu ? part(o.psu!).bbox_mm! : null, L = inPsu ? PSU_X + pb!.max[0] + 24 : 26 + o.boards.reduce((s, b) => s + part(b.key).bbox_mm!.max[0] + 6, 0);
   const sizes = o.boards.map((b) => { const q = part(b.key).bbox_mm!; return { l: q.max[0] - q.min[0], w: q.max[1] - q.min[1], h: q.max[2] - q.min[2], q }; });
   // boards in a row along the long wall, behind the supply
-  const yB = inPsu ? pb!.max[1] + 7 : 3, bw = Math.max(...sizes.map((s) => s.w), 0), Wd = yB + bw + 4;
+  // header-pin boards drop between corner locators that stand 3 mm proud of them: they need that much more room behind the supply
+  const pinBoards = sizes.some((s) => s.q.min[2] < 0) ? 3 : 0;
+  const yB = inPsu ? pb!.max[1] + 7 + pinBoards : 3, bw = Math.max(...sizes.map((s) => s.w), 0), Wd = yB + bw + 4;
   const rowL = sizes.reduce((s, b) => s + b.l + 6, 6), L2 = Math.max(L, rowL + 6);
   const Hh = Math.max(inPsu ? pb!.max[2] + 12 : 0, Math.max(...sizes.map((s) => s.h), 0) + 5 + 14, 36);
   const parts: BayPart[] = [], exits: ExitSpec[] = [];
   if (inPsu) parts.push({ name: "power_supply", key: o.psu!, T: translation([PSU_X, 4, 5]), use: o.psuUse ?? "bench supply" });
   let x = 6;
   o.boards.forEach((b, i) => {
-    const s = sizes[i]; parts.push({ name: b.name, key: b.key, T: translation([x - s.q.min[0], yB - s.q.min[1], 5]), use: b.use });
+    const s = sizes[i]; parts.push({ name: b.name, key: b.key, T: translation([x - s.q.min[0], yB - s.q.min[1], 5 + Math.max(0, -s.q.min[2])]), use: b.use });   // header-pin boards stand on their pins
     const c = part(b.key).category;
     if (c === "compute" || /usb|u2d2|adapter/.test(b.key)) exits.push({ id: `usb_${b.name}`, face: "y+", u: x + s.l / 2, v: 5 + 8, kind: "usb", w: 16, h: 13 });
     x += s.l + 6;
@@ -473,6 +477,7 @@ export function enclosureChecks(A: Assembly) {
     const cableExits = b.exits.filter((e) => ["grommet", "gland", "slot"].includes(e.kind));
     A.check(`enclosure:exits:${b.name}`, cableExits.length > 0, `${cableExits.length} cable exits with strain relief: ${cableExits.map((e) => `${e.id.split(".").pop()} (${e.kind}, ${e.hole_mm} mm)`).join(", ")}`);
     const need = ventNeed(b.heat_w);
+    if (b.sealed) { A.check(`enclosure:sealed:${b.name}`, true, `${b.heat_w} W inside a sealed hull: no vents by design; the designer checks the heat path through the wall (hull:heat)`); continue; }
     A.check(`enclosure:vent:${b.name}`, b.vent_area_mm2 >= need, `${b.heat_w} W inside, ${(b.vent_area_mm2 / 100).toFixed(1)} cm^2 of vents (needs ${(need / 100).toFixed(1)} cm^2: 3 cm^2 per watt, natural convection rule of thumb)`);
   }
   // USB and switches must be reachable: controller ports through a cut-out near the board, the main switch in a wall
@@ -481,6 +486,7 @@ export function enclosureChecks(A: Assembly) {
     for (const n of b.parts) {
       // an I/O board talks to the computer inside the bay: only the main controller needs a USB port from outside
       const k = keyOf(spec, n); if (!k || part(k).category !== "compute" || n === "io_controller") continue;
+      if (b.sealed) { A.check(`enclosure:usb:${n}`, true, `${n} is reached over the tether (Ethernet); the sealed hull is opened at its end cap for anything else`); continue; }
       const c = inv(n), span = Math.max(...[0, 1, 2].map((i) => part(k).bbox_mm!.max[i] - part(k).bbox_mm!.min[i]));
       const near = usbs.find((e) => Math.hypot(e.at[0] - c[0], e.at[1] - c[1], e.at[2] - c[2]) <= span / 2 + 45);
       A.check(`enclosure:usb:${n}`, !!near, near ? `USB of ${n} reached through ${near.id} without opening the lid` : `no USB cut-out near ${n}`);

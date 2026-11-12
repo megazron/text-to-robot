@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1610 637" width="1610" height="637" font-family="Helvetica, Arial, sans-serif" font-size="10.5">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="30" y="26" font-size="17" font-weight="700">quadcopter: wiring diagram</text>
+<line x1="30" y1="44" x2="54" y2="44" stroke="#c8102e" stroke-width="2"/><text x="60" y="48">power</text>
+<line x1="120" y1="44" x2="144" y2="44" stroke="#111111" stroke-width="2"/><text x="150" y="48">ground</text>
+<line x1="210" y1="44" x2="234" y2="44" stroke="#1f6fd1" stroke-width="2"/><text x="240" y="48">signal</text>
+<line x1="300" y1="44" x2="324" y2="44" stroke="#0a8f5b" stroke-width="2"/><text x="330" y="48">bus</text>
+<text x="30" y="66" font-weight="700" fill="#555">Source</text>
+<text x="370" y="66" font-weight="700" fill="#555">Protection</text>
+<text x="710" y="66" font-weight="700" fill="#555">Control</text>
+<text x="1050" y="66" font-weight="700" fill="#555">Drivers</text>
+<text x="1390" y="66" font-weight="700" fill="#555">Loads</text>
+<path d="M1240 105 H1254 V105 H1376 V105 H1390" fill="none" stroke="#1f6fd1" stroke-width="2" opacity="0.8"><title>C1 W1 FRONT_LEFT_MOTOR_A: esc.motor1.M1A to front_left_motor.phases.A, 18 AWG</title></path>
+<path d="M1240 118 H1264 V118 H1366 V118 H1390" fill="none" stroke="#1f6fd1" stroke-width="2" opacity="0.8"><title>C1 W2 FRONT_LEFT_MOTOR_B: esc.motor1.M1B to front_left_motor.phases.B, 18 AWG</title></path>
+<path d="M1240 131 H1274 V131 H1356 V131 H1390" fill="none" stroke="#1f6fd1" stroke-width="2" opacity="0.8"><title>C1 W3 FRONT_LEFT_MOTOR_C: esc.motor1.M1C to front_left_motor.phases.C, 18 AWG</title></path>
+<path d="M1240 144 H1284 V167 H1346 V190 H1390" fill="none" stroke="#1f6fd1" stroke-width="2" opacity="0.8"><title>C2 W4 REAR_LEFT_MOTOR_A: esc.motor2.M2A to rear_left_motor.phases.A, 18 AWG</title></path>
+<path d="M1240 157 H1294 V180 H1336 V203 H1390" fill="none" stroke="#1f6fd1" stroke-width="2" opacity="0.8"><title>C2 W5 REAR_LEFT_MOTOR_B: esc.motor2.M2B to rear_left_motor.phases.B, 18 AWG</title></path>
+<path d="M1240 170 H1304 V193 H1326 V216 H1390" fill="none" stroke="#1f6fd1" stroke-width="2" opacity="0.8"><title>C2 W6 REAR_LEFT_MOTOR_C: esc.motor2.M2C to rear_left_motor.phases.C, 18 AWG</title></path>
+<path d="M1240 183 H1314 V229 H1316 V275 H1390" fill="none" stroke="#1f6fd1" stroke-width="2" opacity="0.8"><title>C3 W7 REAR_RIGHT_MOTOR_A: esc.motor3.M3A to rear_right_motor.phases.A, 18 AWG</title></path>
+<path d="M1240 196 H1324 V242 H1306 V288 H1390" fill="none" stroke="#1f6fd1" stroke-width="2" opacity="0.8"><title>C3 W8 REAR_RIGHT_MOTOR_B: esc.motor3.M3B to rear_right_motor.phases.B, 18 AWG</title></path>
+<path d="M1240 209 H1334 V255 H1296 V301 H1390" fill="none" stroke="#1f6fd1" stroke-width="2" opacity="0.8"><title>C3 W9 REAR_RIGHT_MOTOR_C: esc.motor3.M3C to rear_right_motor.phases.C, 18 AWG</title></path>
+<path d="M1240 222 H1344 V291 H1286 V360 H1390" fill="none" stroke="#1f6fd1" stroke-width="2" opacity="0.8"><title>C4 W10 FRONT_RIGHT_MOTOR_A: esc.motor4.M4A to front_right_motor.phases.A, 18 AWG</title></path>
+<path d="M1240 235 H1354 V304 H1276 V373 H1390" fill="none" stroke="#1f6fd1" stroke-width="2" opacity="0.8"><title>C4 W11 FRONT_RIGHT_MOTOR_B: esc.motor4.M4B to front_right_motor.phases.B, 18 AWG</title></path>
+<path d="M1240 248 H1364 V317 H1266 V386 H1390" fill="none" stroke="#1f6fd1" stroke-width="2" opacity="0.8"><title>C4 W12 FRONT_RIGHT_MOTOR_C: esc.motor4.M4C to front_right_motor.phases.C, 18 AWG</title></path>
+<path d="M1050 261 H1036 V183 H914 V105 H900" fill="none" stroke="#0a8f5b" stroke-width="1.1" opacity="0.8"><title>C5 W13 ESC_CONTROLLER_LINK: esc.fc.VBAT to controller.esc.VBAT</title></path>
+<path d="M900 118 H924 V281.5 H1366 V445 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C6 W14 CONTROLLER_TX2: controller.rx.TX2 to receiver.main.RX, 26 AWG</title></path>
+<path d="M900 131 H934 V294.5 H1356 V458 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C6 W15 CONTROLLER_RX2: controller.rx.RX2 to receiver.main.TX, 26 AWG</title></path>
+<path d="M1390 543 H1346 V343.5 H944 V144 H900" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C7 W16 FPV_CAMERA_VIDEO: fpv_camera.main.VIDEO to controller.cam.VIDEO_IN, 26 AWG</title></path>
+<path d="M220 105 H274 V105 H316 V105 H370" fill="none" stroke="#111111" stroke-width="2" opacity="0.8"><title>C8 W17 GND: battery.main.BAT- to star_ground.levers.P1, 8 AWG</title></path>
+<path d="M220 118 H284 V196 H986 V274 H1050" fill="none" stroke="#c8102e" stroke-width="2" opacity="0.8"><title>C9 W18 VBAT: battery.main.BAT+ to esc.power.VBAT+, 8 AWG</title></path>
+<path d="M560 118 H634 V202.5 H976 V287 H1050" fill="none" stroke="#111111" stroke-width="2" opacity="0.8"><title>C9 W19 GND: star_ground.levers.P2 to esc.power.GND, 8 AWG</title></path>
+<path d="M710 157 H626 V137.5 H644 V118 H560" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C10 W20 GND: controller.rx.GND_RX to star_ground.levers.P2, 24 AWG</title></path>
+<path d="M710 170 H616 V144 H654 V118 H560" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C10 W21 GND: controller.cam.GND_CAM to star_ground.levers.P2, 24 AWG</title></path>
+<path d="M900 183 H1004 V327 H1286 V471 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C11 W22 5V_FC: controller.rx.5V to receiver.main.5V, 24 AWG</title></path>
+<path d="M560 118 H674 V301 H1276 V484 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C11 W23 GND: star_ground.levers.P2 to receiver.main.GND, 24 AWG</title></path>
+<path d="M900 196 H1024 V376 H1266 V556 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C12 W24 VCAM: controller.cam.VCAM to fpv_camera.main.VIN, 24 AWG</title></path>
+<path d="M560 118 H574 V343.5 H1376 V569 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C12 W25 GND: star_ground.levers.P2 to fpv_camera.main.GND, 24 AWG</title></path>
+<rect x="1390" y="74" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="89" font-weight="700">front_left_motor</text>
+<text x="1397" y="108.5" fill="#333">A</text>
+<text x="1397" y="121.5" fill="#333">B</text>
+<text x="1397" y="134.5" fill="#333">C</text>
+<rect x="1390" y="159" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="174" font-weight="700">rear_left_motor</text>
+<text x="1397" y="193.5" fill="#333">A</text>
+<text x="1397" y="206.5" fill="#333">B</text>
+<text x="1397" y="219.5" fill="#333">C</text>
+<rect x="1390" y="244" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="259" font-weight="700">rear_right_motor</text>
+<text x="1397" y="278.5" fill="#333">A</text>
+<text x="1397" y="291.5" fill="#333">B</text>
+<text x="1397" y="304.5" fill="#333">C</text>
+<rect x="1390" y="329" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="344" font-weight="700">front_right_motor</text>
+<text x="1397" y="363.5" fill="#333">A</text>
+<text x="1397" y="376.5" fill="#333">B</text>
+<text x="1397" y="389.5" fill="#333">C</text>
+<rect x="1050" y="74" width="190" height="223" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1057" y="89" font-weight="700">esc</text>
+<text x="1057" y="108.5" fill="#333">M1A</text>
+<text x="1057" y="121.5" fill="#333">M1B</text>
+<text x="1057" y="134.5" fill="#333">M1C</text>
+<text x="1057" y="147.5" fill="#333">M2A</text>
+<text x="1057" y="160.5" fill="#333">M2B</text>
+<text x="1057" y="173.5" fill="#333">M2C</text>
+<text x="1057" y="186.5" fill="#333">M3A</text>
+<text x="1057" y="199.5" fill="#333">M3B</text>
+<text x="1057" y="212.5" fill="#333">M3C</text>
+<text x="1057" y="225.5" fill="#333">M4A</text>
+<text x="1057" y="238.5" fill="#333">M4B</text>
+<text x="1057" y="251.5" fill="#333">M4C</text>
+<text x="1057" y="264.5" fill="#333">VBAT</text>
+<text x="1057" y="277.5" fill="#333">VBAT+</text>
+<text x="1057" y="290.5" fill="#333">GND</text>
+<rect x="710" y="74" width="190" height="132" rx="5" fill="#f4f6f8" stroke="#333"/><text x="717" y="89" font-weight="700">controller</text>
+<text x="717" y="108.5" fill="#333">VBAT</text>
+<text x="717" y="121.5" fill="#333">TX2</text>
+<text x="717" y="134.5" fill="#333">RX2</text>
+<text x="717" y="147.5" fill="#333">VIDEO_IN</text>
+<text x="717" y="160.5" fill="#333">GND_RX</text>
+<text x="717" y="173.5" fill="#333">GND_CAM</text>
+<text x="717" y="186.5" fill="#333">5V</text>
+<text x="717" y="199.5" fill="#333">VCAM</text>
+<rect x="1390" y="414" width="190" height="80" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="429" font-weight="700">receiver</text>
+<text x="1397" y="448.5" fill="#333">RX</text>
+<text x="1397" y="461.5" fill="#333">TX</text>
+<text x="1397" y="474.5" fill="#333">5V</text>
+<text x="1397" y="487.5" fill="#333">GND</text>
+<rect x="30" y="74" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="37" y="89" font-weight="700">battery</text>
+<text x="37" y="108.5" fill="#333">BAT-</text>
+<text x="37" y="121.5" fill="#333">BAT+</text>
+<rect x="1390" y="512" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="527" font-weight="700">fpv_camera</text>
+<text x="1397" y="546.5" fill="#333">VIDEO</text>
+<text x="1397" y="559.5" fill="#333">VIN</text>
+<text x="1397" y="572.5" fill="#333">GND</text>
+<rect x="370" y="74" width="190" height="54" rx="5" fill="#f4f6f8" stroke="#333"/><text x="377" y="89" font-weight="700">star_ground</text>
+<text x="377" y="108.5" fill="#333">P1</text>
+<text x="377" y="121.5" fill="#333">P2</text>
+</svg>

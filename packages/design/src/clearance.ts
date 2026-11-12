@@ -9,6 +9,8 @@ import { partFiles } from "@ttr/kernel/ready";
 import { buildPart } from "@ttr/mesh";
 
 type Vec3 = [number, number, number];
+/** Bought parts that are round about their z axis with their bores (rods, lead screws, bearings, bushings, couplers, lead nuts, pulleys, tubes). */
+export const ROUND_BOUGHT = /^(?:rod_|leadscrew_|bearing_|lm8uu|coupler_|leadnut_|cf_tube_|gt2_pulley|gt2_idler)/;
 /** Solid of a link in its own frame (mm), or null when it has no physical body worth checking. */
 export function linkSolid(l: Link): M | null {
   const g = l.geometry;
@@ -30,6 +32,21 @@ export function linkSolid(l: Link): M | null {
     // actuators: the case only; the output face and horn are where the driven link bolts on
     // wheels are discs about their axle (component z), not their bounding box
     if ((c.category === "wheel" && !c.specs.ball_d_mm) || (c.specs.od_mm && c.specs.id_mm)) { const r = (b.max[0] - b.min[0]) / 2; return Manifold.cylinder(b.max[2] - b.min[2], r, r, 64).translate([(b.max[0] + b.min[0]) / 2, (b.max[1] + b.min[1]) / 2, b.min[2]]); }
+    // round bought parts (rods, lead screws, bearings, bushings, couplers, lead nuts, pulleys, tubes) are cylinders about z,
+    // with their bores: a rod runs through its bushing, a screw through its nut and into its coupler, as built
+    if (ROUND_BOUGHT.test(key) && Math.abs((b.max[0] - b.min[0]) - (b.max[1] - b.min[1])) < 0.5) {
+      const r = (b.max[0] - b.min[0]) / 2, cx = (b.max[0] + b.min[0]) / 2, cy = (b.max[1] + b.min[1]) / 2, z0 = b.min[2], z1 = b.max[2];
+      // a stepped part (a lead nut: flange and body) gives its profile as (radius, z0, z1) steps
+      const prof = c.specs.round_profile_mm as [number, number, number][] | undefined;
+      let solid = prof ? prof.map(([rr, a, e]) => Manifold.cylinder(e - a, rr, rr, 64).translate([cx, cy, a])).reduce((x, y) => x.add(y)) : Manifold.cylinder(z1 - z0, r, r, 64).translate([cx, cy, z0]);
+      const bores = c.holes.filter((h) => Math.hypot(h.pos[0] - cx, h.pos[1] - cy) < 0.5 && Math.abs(h.axis[2]) > 0.9 && h.dia_mm < 1.8 * r);
+      for (const h of bores) {
+        // one bore runs through; two (a coupler's motor and screw bores) each reach the middle from their own end
+        const [a, e] = bores.length === 1 ? [z0 - 1, z1 + 1] : h.pos[2] - z0 < z1 - h.pos[2] ? [z0 - 1, (z0 + z1) / 2] : [(z0 + z1) / 2, z1 + 1];
+        solid = solid.subtract(Manifold.cylinder(e - a, h.dia_mm / 2, h.dia_mm / 2, 48).translate([cx, cy, a]));
+      }
+      return solid;
+    }
     const top = c.category === "actuator" ? Math.min(b.max[2], -0.8) : b.max[2];
     return box(b.min as Vec3, [b.max[0], b.max[1], top]);
   }
@@ -91,11 +108,34 @@ function interferencesIn(m: ClearanceModel, q: Record<string, number>, moving: S
  * Collision-free interval of one joint around `q0` (others as in `base`), scanning out to `lo`/`hi`.
  * Returns the last collision-free angle in each direction.
  */
-export function freeRange(m: ClearanceModel, joint: string, base: Record<string, number>, lo: number, hi: number, step = 0.04, skip?: Set<string>): [number, number] {
+/** Volume (mm^3) the moving links put below a floor at z = floorMm (world, mm) in configuration q. */
+export function belowFloor(m: ClearanceModel, q: Record<string, number>, moving: Set<string>, floorMm: number): number {
+  return build(() => {
+    const f = fk(m.spec, q), slab = box([-5000, -5000, floorMm - 2000], [5000, 5000, floorMm]);
+    let v = 0;
+    m.names.forEach((n, i) => {
+      const s0 = m.solids[i]; if (!s0 || !moving.has(n)) return;
+      const T = f.link[n]; if (!T) return;
+      const M4 = toMat(T.R, T.p), b = m.boxes[i]!;
+      // the box first: most parts are nowhere near the floor
+      let low = Infinity;
+      for (const x of [b.min[0], b.max[0]]) for (const y of [b.min[1], b.max[1]]) for (const z of [b.min[2], b.max[2]]) low = Math.min(low, M4[2] * x + M4[6] * y + M4[10] * z + M4[14]);
+      if (low >= floorMm) return;
+      v += s0.transform(M4).intersect(slab).volume();
+    });
+    return v;
+  });
+}
+
+/**
+ * The range of one joint (others at `base`) over which what it carries meets nothing it did not meet at the start, and,
+ * with `floorMm`, stays above the surface the robot stands on (world z, mm).
+ */
+export function freeRange(m: ClearanceModel, joint: string, base: Record<string, number>, lo: number, hi: number, step = 0.04, skip?: Set<string>, floorMm?: number): [number, number] {
   const j = m.spec.joints.find((x) => x.name === joint)!;
   const moving = descendants(m.spec, j.child);
   const q0 = base[joint] ?? 0, res: number[] = [];
-  const hits = (q: number) => interferences(m, { ...base, [joint]: q }, moving, 2, skip).length > 0;
+  const hits = (q: number) => interferences(m, { ...base, [joint]: q }, moving, 2, skip).length > 0 || (floorMm !== undefined && belowFloor(m, { ...base, [joint]: q }, moving, floorMm) > 2);
   // every exact intersection costs WASM memory the CSG library never returns (~60 kB each): scan coarsely (4 steps)
   // and bisect the first contact down to `step / 2`, instead of testing every step
   const coarse = step * 4;

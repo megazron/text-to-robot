@@ -23,3 +23,8 @@ Every printed part of every designed example, audited by `scripts/print_audit.py
 | 17_baymax | 32/33 | 5 | 5 | head_dome: needs supports under 232.5 cm^2 (30% of its surface) even in its best orientation |
 | 18_arduino_car | 4/4 | 0 | 0 | - |
 | 19_arduino_arm | 9/9 | 0 | 0 | - |
+| 20_quadcopter | 4/4 | 0 | 1 | - |
+| 21_underwater_rov | 12/12 | 3 | 1 | - |
+| 22_pen_plotter | 14/14 | 0 | 2 | - |
+| 23_robot_hand | 25/25 | 15 | 0 | - |
+| 24_plant_waterer | 12/12 | 0 | 0 | - |

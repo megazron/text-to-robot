@@ -2509,6 +2509,165 @@
    "notes": "DC current per I/O pin 20 mA, 3.3 V pin 50 mA (store tech specs). 5 V logic. A4/A5 and the SDA/SCL pins are the same bus. Do not power servos from the 5V pin."
   }
  },
+ "basic_esc_30a": {
+  "dimensions": {
+   "body_mm": {
+    "v": [
+     40,
+     22,
+     8
+    ],
+    "src": "datasheet",
+    "url": "https://bluerobotics.com/store/thrusters/speed-controllers/besc30-r3/"
+   },
+   "holes": {
+    "v": [],
+    "src": "estimated",
+    "note": "zip-tied"
+   }
+  },
+  "electrical": {
+   "role": "driver",
+   "voltage_v": {
+    "v": {
+     "min": 7.0,
+     "nom": 16.0,
+     "max": 26.0
+    },
+    "src": "datasheet",
+    "url": "https://bluerobotics.com/store/thrusters/speed-controllers/besc30-r3/"
+   },
+   "current_a": {
+    "v": {
+     "typical": 6.0,
+     "peak": 30.0
+    },
+    "src": "datasheet",
+    "url": "https://bluerobotics.com/store/thrusters/speed-controllers/besc30-r3/"
+   },
+   "ports": [
+    {
+     "name": "power",
+     "connector": {
+      "v": "Two 16 AWG leads",
+      "src": "estimated",
+      "note": "red / black"
+     },
+     "mate": {
+      "v": "battery bus, solder or bullets",
+      "src": "estimated",
+      "note": "red / black"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "+",
+        "name": "VBAT+",
+        "signal": "power",
+        "dir": "power_in"
+       },
+       {
+        "pin": "-",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       }
+      ],
+      "src": "estimated",
+      "note": "red / black"
+     }
+    },
+    {
+     "name": "signal",
+     "connector": {
+      "v": "3-pin 0.1 in servo plug (signal, ground)",
+      "src": "estimated",
+      "note": "the 5 V pin is not connected on the Basic ESC"
+     },
+     "mate": {
+      "v": "PWM driver header",
+      "src": "estimated",
+      "note": "the 5 V pin is not connected on the Basic ESC"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "S",
+        "name": "PWM",
+        "signal": "pwm",
+        "dir": "in"
+       },
+       {
+        "pin": "G",
+        "name": "GND_SIG",
+        "signal": "ground",
+        "dir": "in"
+       },
+       {
+        "pin": "+",
+        "name": "NC",
+        "signal": "power",
+        "dir": "power_in"
+       }
+      ],
+      "src": "estimated",
+      "note": "the 5 V pin is not connected on the Basic ESC"
+     }
+    },
+    {
+     "name": "motor",
+     "connector": {
+      "v": "Three 16 AWG leads",
+      "src": "estimated",
+      "note": "three phases"
+     },
+     "mate": {
+      "v": "thruster leads",
+      "src": "estimated",
+      "note": "three phases"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "A",
+        "name": "A",
+        "signal": "motor_phase",
+        "dir": "out"
+       },
+       {
+        "pin": "B",
+        "name": "B",
+        "signal": "motor_phase",
+        "dir": "out"
+       },
+       {
+        "pin": "C",
+        "name": "C",
+        "signal": "motor_phase",
+        "dir": "out"
+       }
+      ],
+      "src": "estimated",
+      "note": "three phases"
+     }
+    }
+   ],
+   "heat_w": {
+    "v": 2.0,
+    "src": "estimated",
+    "note": "about 1 % of 200 W"
+   },
+   "output": {
+    "v": {
+     "voltage_v": 16.0,
+     "current_a": 30.0
+    },
+    "src": "estimated",
+    "note": "per motor"
+   }
+  },
+  "no_holes": true
+ },
  "battery_9v_pp3": {
   "dimensions": {
    "body_mm": {
@@ -2799,6 +2958,192 @@
    ],
    "notes": "Energy 15 Wh is the effective figure at 0.5 A (6 x 1.25 V x 2.0 Ah); an AA gives about 2500 mAh at 0.1 A (Energizer) but less at robot currents. Voltage falls steadily through the discharge: a 5 V logic rail needs a regulator or buck-boost, not the raw pack. NiMH cells (1.2 V) give 7.2 V and handle 2 A far better."
   }
+ },
+ "bldc_2207_1750kv": {
+  "dimensions": {
+   "body_mm": {
+    "v": [
+     27.5,
+     27.5,
+     32.5
+    ],
+    "src": "datasheet",
+    "url": "https://shop.iflight.com/xing2-2207-unibell-fpv-motor-pro1504"
+   },
+   "holes": {
+    "v": [
+     {
+      "x": 8,
+      "y": 8,
+      "d": 3.0,
+      "thread": "M3"
+     },
+     {
+      "x": -8,
+      "y": 8,
+      "d": 3.0,
+      "thread": "M3"
+     },
+     {
+      "x": 8,
+      "y": -8,
+      "d": 3.0,
+      "thread": "M3"
+     },
+     {
+      "x": -8,
+      "y": -8,
+      "d": 3.0,
+      "thread": "M3"
+     }
+    ],
+    "src": "datasheet",
+    "url": "https://shop.iflight.com/xing2-2207-unibell-fpv-motor-pro1504",
+    "note": "16 x 16 mm M3 pattern"
+   }
+  },
+  "electrical": {
+   "role": "actuator",
+   "voltage_v": {
+    "v": {
+     "min": 11.1,
+     "nom": 14.8,
+     "max": 25.2
+    },
+    "src": "datasheet",
+    "url": "https://shop.iflight.com/xing2-2207-unibell-fpv-motor-pro1504",
+    "note": "rated 4-6S"
+   },
+   "current_a": {
+    "v": {
+     "typical": 8.8,
+     "peak": 33.0
+    },
+    "src": "estimated",
+    "note": "hover about 8.8 A, full throttle about 33 A with a 5 x 4.3 x 3 prop on 4S, read off typical 2207 1750 KV test charts"
+   },
+   "ports": [
+    {
+     "name": "phases",
+     "connector": {
+      "v": "Three 20 AWG motor leads, soldered to the ESC pads",
+      "src": "estimated",
+      "note": "brushless motor leads; any two swapped reverses the direction"
+     },
+     "mate": {
+      "v": "ESC motor pads, solder",
+      "src": "estimated",
+      "note": "brushless motor leads; any two swapped reverses the direction"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "A",
+        "name": "A",
+        "signal": "motor_phase",
+        "dir": "in"
+       },
+       {
+        "pin": "B",
+        "name": "B",
+        "signal": "motor_phase",
+        "dir": "in"
+       },
+       {
+        "pin": "C",
+        "name": "C",
+        "signal": "motor_phase",
+        "dir": "in"
+       }
+      ],
+      "src": "estimated",
+      "note": "brushless motor leads; any two swapped reverses the direction"
+     }
+    }
+   ],
+   "heat_w": {
+    "v": 12.0,
+    "src": "estimated",
+    "note": "about 15 % loss at hover current in a 2207 motor"
+   }
+  }
+ },
+ "blower_5015_12v": {
+  "dimensions": {
+   "body_mm": {
+    "v": [
+     50,
+     62,
+     15
+    ],
+    "src": "estimated",
+    "note": "5015 class"
+   },
+   "holes": {
+    "v": [],
+    "src": "estimated",
+    "note": "clamped in a duct"
+   }
+  },
+  "electrical": {
+   "role": "actuator",
+   "voltage_v": {
+    "v": {
+     "min": 7.0,
+     "nom": 12.0,
+     "max": 13.2
+    },
+    "src": "estimated",
+    "note": "typical of the part class; no datasheet table was read"
+   },
+   "current_a": {
+    "v": {
+     "typical": 0.15,
+     "peak": 0.25
+    },
+    "src": "estimated",
+    "note": "5015 blowers are rated about 0.15 A at 12 V"
+   },
+   "ports": [
+    {
+     "name": "main",
+     "connector": {
+      "v": "2-pin JST-PH 2.0 lead",
+      "src": "estimated",
+      "note": "brushless fan with built-in driver, polarity matters"
+     },
+     "mate": {
+      "v": "lead to the switch module",
+      "src": "estimated",
+      "note": "brushless fan with built-in driver, polarity matters"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "+",
+        "name": "V+",
+        "signal": "motor_phase",
+        "dir": "in"
+       },
+       {
+        "pin": "-",
+        "name": "V-",
+        "signal": "motor_phase",
+        "dir": "in"
+       }
+      ],
+      "src": "estimated",
+      "note": "brushless fan with built-in driver, polarity matters"
+     }
+    }
+   ],
+   "heat_w": {
+    "v": 1.0,
+    "src": "estimated",
+    "note": "fan losses"
+   }
+  },
+  "no_holes": true
  },
  "bno085_breakout": {
   "dimensions": {
@@ -5863,6 +6208,507 @@
    "notes": "Standby 40 mA (e-Manual). Two bus ports wired in parallel for daisy chain, so the whole chain's current passes through the first port. Ports listed are the -T (TTL) variant. Stall 2.1 A at 11.1 V, 2.7 A at 14.8 V. -R variant (RS-485), not the default ports above: JST B4B-EH-A header, EHR-04 housing, SEH-001T-P0.6 crimps; pins 1 GND, 2 VDD, 3 DATA+, 4 DATA-. -T and -R are not harness compatible."
   }
  },
+ "elrs_receiver_nano": {
+  "dimensions": {
+   "body_mm": {
+    "v": [
+     18,
+     11,
+     4
+    ],
+    "src": "datasheet",
+    "url": "https://www.radiomasterrc.com/products/rp1-expresslrs-2-4ghz-nano-receiver"
+   },
+   "holes": {
+    "v": [],
+    "src": "estimated",
+    "note": "no holes: heat-shrunk and taped"
+   }
+  },
+  "electrical": {
+   "role": "sensor",
+   "voltage_v": {
+    "v": {
+     "min": 4.5,
+     "nom": 5.0,
+     "max": 5.5
+    },
+    "src": "datasheet",
+    "url": "https://www.radiomasterrc.com/products/rp1-expresslrs-2-4ghz-nano-receiver"
+   },
+   "current_a": {
+    "v": {
+     "typical": 0.05,
+     "peak": 0.1
+    },
+    "src": "estimated",
+    "note": "ELRS nano receivers draw about 50 mA"
+   },
+   "ports": [
+    {
+     "name": "main",
+     "connector": {
+      "v": "4 solder pads",
+      "src": "estimated",
+      "note": "CRSF at 420 kbaud"
+     },
+     "mate": {
+      "v": "leads to the flight controller UART",
+      "src": "estimated",
+      "note": "CRSF at 420 kbaud"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "5V",
+        "name": "5V",
+        "signal": "power",
+        "dir": "power_in"
+       },
+       {
+        "pin": "G",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "T",
+        "name": "TX",
+        "signal": "uart_tx",
+        "dir": "out"
+       },
+       {
+        "pin": "R",
+        "name": "RX",
+        "signal": "uart_rx",
+        "dir": "in"
+       }
+      ],
+      "src": "estimated",
+      "note": "CRSF at 420 kbaud"
+     }
+    }
+   ]
+  },
+  "no_holes": true
+ },
+ "endstop_microswitch": {
+  "dimensions": {
+   "body_mm": {
+    "v": [
+     40,
+     16,
+     7.6
+    ],
+    "src": "estimated",
+    "note": "generic 3D-printer end stop board"
+   },
+   "holes": {
+    "v": [
+     {
+      "x": 5,
+      "y": 3.5,
+      "d": 3.0,
+      "thread": "M3"
+     },
+     {
+      "x": 24,
+      "y": 3.5,
+      "d": 3.0,
+      "thread": "M3"
+     }
+    ],
+    "src": "estimated",
+    "note": "two M3 holes"
+   }
+  },
+  "electrical": {
+   "role": "sensor",
+   "voltage_v": {
+    "v": {
+     "min": 3.3,
+     "nom": 5.0,
+     "max": 5.0
+    },
+    "src": "estimated",
+    "note": "typical of the part class; no datasheet table was read"
+   },
+   "current_a": {
+    "v": {
+     "typical": 0.005,
+     "peak": 0.02
+    },
+    "src": "estimated",
+    "note": "pull-up and LED"
+   },
+   "ports": [
+    {
+     "name": "main",
+     "connector": {
+      "v": "3-pin JST-XH",
+      "src": "estimated",
+      "note": "common Makerbot-style board"
+     },
+     "mate": {
+      "v": "XH lead to the controller",
+      "src": "estimated",
+      "note": "common Makerbot-style board"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "V",
+        "name": "VCC",
+        "signal": "power",
+        "dir": "power_in"
+       },
+       {
+        "pin": "G",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "S",
+        "name": "SIG",
+        "signal": "digital",
+        "dir": "out"
+       }
+      ],
+      "src": "estimated",
+      "note": "common Makerbot-style board"
+     }
+    }
+   ]
+  }
+ },
+ "esc_4in1_45a": {
+  "dimensions": {
+   "body_mm": {
+    "v": [
+     41,
+     41,
+     5.8
+    ],
+    "src": "datasheet",
+    "url": "https://www.speedybee.com/speedybee-bls-50a-30x30-4-in-1-esc/"
+   },
+   "holes": {
+    "v": [
+     {
+      "x": 5.25,
+      "y": 5.25,
+      "d": 4.0,
+      "thread": "M3"
+     },
+     {
+      "x": 35.75,
+      "y": 5.25,
+      "d": 4.0,
+      "thread": "M3"
+     },
+     {
+      "x": 5.25,
+      "y": 35.75,
+      "d": 4.0,
+      "thread": "M3"
+     },
+     {
+      "x": 35.75,
+      "y": 35.75,
+      "d": 4.0,
+      "thread": "M3"
+     }
+    ],
+    "src": "datasheet",
+    "url": "https://www.speedybee.com/speedybee-bls-50a-30x30-4-in-1-esc/",
+    "note": "30.5 mm square, holes for M3 grommets"
+   }
+  },
+  "electrical": {
+   "role": "driver",
+   "voltage_v": {
+    "v": {
+     "min": 11.1,
+     "nom": 14.8,
+     "max": 25.2
+    },
+    "src": "datasheet",
+    "url": "https://www.speedybee.com/speedybee-bls-50a-30x30-4-in-1-esc/",
+    "note": "3-6S"
+   },
+   "current_a": {
+    "v": {
+     "typical": 35.0,
+     "peak": 160.0
+    },
+    "src": "datasheet",
+    "url": "https://www.speedybee.com/speedybee-bls-50a-30x30-4-in-1-esc/",
+    "note": "45-50 A continuous per motor; typical is a hover estimate for four motors"
+   },
+   "ports": [
+    {
+     "name": "power",
+     "connector": {
+      "v": "Battery solder pads, XT60 pigtail with low-ESR capacitor",
+      "src": "estimated",
+      "note": "standard 4-in-1 pads"
+     },
+     "mate": {
+      "v": "XT60 lead to the pack",
+      "src": "estimated",
+      "note": "standard 4-in-1 pads"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "+",
+        "name": "VBAT+",
+        "signal": "power",
+        "dir": "power_in"
+       },
+       {
+        "pin": "-",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       }
+      ],
+      "src": "estimated",
+      "note": "standard 4-in-1 pads"
+     }
+    },
+    {
+     "name": "fc",
+     "connector": {
+      "v": "8-pin JST-SH 1.0 mm, cable supplied with the stack",
+      "src": "estimated",
+      "note": "SpeedyBee / Betaflight 8-pin order; check the silk on the board you buy"
+     },
+     "mate": {
+      "v": "matching cable to the flight controller",
+      "src": "estimated",
+      "note": "SpeedyBee / Betaflight 8-pin order; check the silk on the board you buy"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "VBAT",
+        "signal": "power",
+        "dir": "power_out"
+       },
+       {
+        "pin": "2",
+        "name": "GND_FC",
+        "signal": "ground",
+        "dir": "power_out"
+       },
+       {
+        "pin": "3",
+        "name": "CUR",
+        "signal": "analog",
+        "dir": "out"
+       },
+       {
+        "pin": "4",
+        "name": "TLM",
+        "signal": "uart_tx",
+        "dir": "out"
+       },
+       {
+        "pin": "5",
+        "name": "M1",
+        "signal": "digital",
+        "dir": "in"
+       },
+       {
+        "pin": "6",
+        "name": "M2",
+        "signal": "digital",
+        "dir": "in"
+       },
+       {
+        "pin": "7",
+        "name": "M3",
+        "signal": "digital",
+        "dir": "in"
+       },
+       {
+        "pin": "8",
+        "name": "M4",
+        "signal": "digital",
+        "dir": "in"
+       }
+      ],
+      "src": "estimated",
+      "note": "SpeedyBee / Betaflight 8-pin order; check the silk on the board you buy"
+     }
+    },
+    {
+     "name": "motor1",
+     "connector": {
+      "v": "Motor solder pads",
+      "src": "estimated",
+      "note": "three pads per motor"
+     },
+     "mate": {
+      "v": "motor leads, solder",
+      "src": "estimated",
+      "note": "three pads per motor"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1A",
+        "name": "M1A",
+        "signal": "motor_phase",
+        "dir": "out"
+       },
+       {
+        "pin": "1B",
+        "name": "M1B",
+        "signal": "motor_phase",
+        "dir": "out"
+       },
+       {
+        "pin": "1C",
+        "name": "M1C",
+        "signal": "motor_phase",
+        "dir": "out"
+       }
+      ],
+      "src": "estimated",
+      "note": "three pads per motor"
+     }
+    },
+    {
+     "name": "motor2",
+     "connector": {
+      "v": "Motor solder pads",
+      "src": "estimated",
+      "note": "three pads per motor"
+     },
+     "mate": {
+      "v": "motor leads, solder",
+      "src": "estimated",
+      "note": "three pads per motor"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "2A",
+        "name": "M2A",
+        "signal": "motor_phase",
+        "dir": "out"
+       },
+       {
+        "pin": "2B",
+        "name": "M2B",
+        "signal": "motor_phase",
+        "dir": "out"
+       },
+       {
+        "pin": "2C",
+        "name": "M2C",
+        "signal": "motor_phase",
+        "dir": "out"
+       }
+      ],
+      "src": "estimated",
+      "note": "three pads per motor"
+     }
+    },
+    {
+     "name": "motor3",
+     "connector": {
+      "v": "Motor solder pads",
+      "src": "estimated",
+      "note": "three pads per motor"
+     },
+     "mate": {
+      "v": "motor leads, solder",
+      "src": "estimated",
+      "note": "three pads per motor"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "3A",
+        "name": "M3A",
+        "signal": "motor_phase",
+        "dir": "out"
+       },
+       {
+        "pin": "3B",
+        "name": "M3B",
+        "signal": "motor_phase",
+        "dir": "out"
+       },
+       {
+        "pin": "3C",
+        "name": "M3C",
+        "signal": "motor_phase",
+        "dir": "out"
+       }
+      ],
+      "src": "estimated",
+      "note": "three pads per motor"
+     }
+    },
+    {
+     "name": "motor4",
+     "connector": {
+      "v": "Motor solder pads",
+      "src": "estimated",
+      "note": "three pads per motor"
+     },
+     "mate": {
+      "v": "motor leads, solder",
+      "src": "estimated",
+      "note": "three pads per motor"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "4A",
+        "name": "M4A",
+        "signal": "motor_phase",
+        "dir": "out"
+       },
+       {
+        "pin": "4B",
+        "name": "M4B",
+        "signal": "motor_phase",
+        "dir": "out"
+       },
+       {
+        "pin": "4C",
+        "name": "M4C",
+        "signal": "motor_phase",
+        "dir": "out"
+       }
+      ],
+      "src": "estimated",
+      "note": "three pads per motor"
+     }
+    }
+   ],
+   "heat_w": {
+    "v": 1.2,
+    "src": "estimated",
+    "note": "about 0.3 W per channel at the 2 A hover current of a 5 in quad (conduction and switching losses)"
+   },
+   "output": {
+    "v": {
+     "voltage_v": 14.8,
+     "current_a": 45.0
+    },
+    "src": "estimated",
+    "note": "per motor channel"
+   }
+  }
+ },
  "esp32_cam": {
   "dimensions": {
    "body_mm": {
@@ -6910,6 +7756,264 @@
     }
    ],
    "notes": "1 NC slow-break, positive opening per IEC 60947-5-1. Rated for control circuits: drive a contactor coil, do not break actuator current through it. Mechanical 300000 cycles. Weight 60 g."
+  }
+ },
+ "fc_f405_30x30": {
+  "dimensions": {
+   "body_mm": {
+    "v": [
+     41,
+     38.5,
+     4.8
+    ],
+    "src": "datasheet",
+    "url": "https://www.speedybee.com/speedybee-f405-v4-bls-55a-30x30-fc-esc-stack/"
+   },
+   "holes": {
+    "v": [
+     {
+      "x": 5.25,
+      "y": 3.75,
+      "d": 4.0,
+      "thread": "M3"
+     },
+     {
+      "x": 35.75,
+      "y": 3.75,
+      "d": 4.0,
+      "thread": "M3"
+     },
+     {
+      "x": 5.25,
+      "y": 34.25,
+      "d": 4.0,
+      "thread": "M3"
+     },
+     {
+      "x": 35.75,
+      "y": 34.25,
+      "d": 4.0,
+      "thread": "M3"
+     }
+    ],
+    "src": "datasheet",
+    "url": "https://www.speedybee.com/speedybee-f405-v4-bls-55a-30x30-fc-esc-stack/",
+    "note": "30.5 mm square"
+   }
+  },
+  "electrical": {
+   "role": "controller",
+   "voltage_v": {
+    "v": {
+     "min": 7.0,
+     "nom": 14.8,
+     "max": 26.0
+    },
+    "src": "datasheet",
+    "url": "https://www.speedybee.com/speedybee-f405-v4-bls-55a-30x30-fc-esc-stack/",
+    "note": "powered through the ESC connector, 2-6S"
+   },
+   "current_a": {
+    "v": {
+     "typical": 0.15,
+     "peak": 0.4
+    },
+    "src": "estimated",
+    "note": "F405 boards draw 100-200 mA from the pack without peripherals"
+   },
+   "ports": [
+    {
+     "name": "esc",
+     "connector": {
+      "v": "8-pin JST-SH 1.0 mm, cable supplied with the stack",
+      "src": "estimated",
+      "note": "mirror of the ESC side"
+     },
+     "mate": {
+      "v": "matching cable to the ESC",
+      "src": "estimated",
+      "note": "mirror of the ESC side"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "VBAT",
+        "signal": "power",
+        "dir": "power_in"
+       },
+       {
+        "pin": "2",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "3",
+        "name": "CUR",
+        "signal": "analog",
+        "dir": "in"
+       },
+       {
+        "pin": "4",
+        "name": "TLM",
+        "signal": "uart_rx",
+        "dir": "in"
+       },
+       {
+        "pin": "5",
+        "name": "M1",
+        "signal": "digital",
+        "dir": "out"
+       },
+       {
+        "pin": "6",
+        "name": "M2",
+        "signal": "digital",
+        "dir": "out"
+       },
+       {
+        "pin": "7",
+        "name": "M3",
+        "signal": "digital",
+        "dir": "out"
+       },
+       {
+        "pin": "8",
+        "name": "M4",
+        "signal": "digital",
+        "dir": "out"
+       }
+      ],
+      "src": "estimated",
+      "note": "mirror of the ESC side"
+     }
+    },
+    {
+     "name": "rx",
+     "connector": {
+      "v": "Solder pads (UART2, 5 V)",
+      "src": "estimated",
+      "note": "UART pads with a 5 V pad beside them"
+     },
+     "mate": {
+      "v": "receiver leads, solder",
+      "src": "estimated",
+      "note": "UART pads with a 5 V pad beside them"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "5V",
+        "name": "5V",
+        "signal": "power",
+        "dir": "power_out"
+       },
+       {
+        "pin": "G",
+        "name": "GND_RX",
+        "signal": "ground",
+        "dir": "power_out"
+       },
+       {
+        "pin": "T2",
+        "name": "TX2",
+        "signal": "uart_tx",
+        "dir": "out"
+       },
+       {
+        "pin": "R2",
+        "name": "RX2",
+        "signal": "uart_rx",
+        "dir": "in"
+       }
+      ],
+      "src": "estimated",
+      "note": "UART pads with a 5 V pad beside them"
+     }
+    },
+    {
+     "name": "cam",
+     "connector": {
+      "v": "Solder pads (camera)",
+      "src": "estimated",
+      "note": "camera pads beside the OSD chip"
+     },
+     "mate": {
+      "v": "camera leads, solder",
+      "src": "estimated",
+      "note": "camera pads beside the OSD chip"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "9V",
+        "name": "VCAM",
+        "signal": "power",
+        "dir": "power_out"
+       },
+       {
+        "pin": "G",
+        "name": "GND_CAM",
+        "signal": "ground",
+        "dir": "power_out"
+       },
+       {
+        "pin": "CAM",
+        "name": "VIDEO_IN",
+        "signal": "analog",
+        "dir": "in"
+       }
+      ],
+      "src": "estimated",
+      "note": "camera pads beside the OSD chip"
+     }
+    },
+    {
+     "name": "usb",
+     "connector": {
+      "v": "USB-C",
+      "src": "estimated",
+      "note": "for Betaflight / INAV setup"
+     },
+     "mate": {
+      "v": "USB-C cable to a computer (setup only)",
+      "src": "estimated",
+      "note": "for Betaflight / INAV setup"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "VBUS",
+        "name": "VBUS",
+        "signal": "usb",
+        "dir": "power_in"
+       },
+       {
+        "pin": "D",
+        "name": "USB_D",
+        "signal": "usb",
+        "dir": "bidir"
+       }
+      ],
+      "src": "estimated",
+      "note": "for Betaflight / INAV setup"
+     }
+    }
+   ],
+   "heat_w": {
+    "v": 0.8,
+    "src": "estimated",
+    "note": "MCU, IMU and OSD at about 150 mA"
+   },
+   "output": {
+    "v": {
+     "voltage_v": 5.0,
+     "current_a": 2.0
+    },
+    "src": "estimated",
+    "note": "on-board 5 V BEC"
+   }
   }
  },
  "feetech_fe_urt1": {
@@ -8320,6 +9424,84 @@
    ],
    "notes": "Two bus ports for daisy chain (Waveshare ST3215 wiki), so chain current passes through each lead. VCC is the centre pin. Pin numbers follow the Waveshare adapter header (1 DATA, 2 VCC, 3 GND); OpenELAB lists the same order from the GND end, so check the numbering direction before relying on it. Supply must match the servo voltage class: 7.4 V and 12 V variants share a connector. Idle 280 mA at 12 V (Evelta); servodatabase says 24 mA, so the sources disagree. Lead 15 cm."
   }
+ },
+ "fpv_camera_micro": {
+  "dimensions": {
+   "body_mm": {
+    "v": [
+     19,
+     19,
+     22
+    ],
+    "src": "datasheet",
+    "url": "https://caddxfpv.com/products/caddxfpv-ratel-2-starlight-hdr-fpv-camera"
+   },
+   "holes": {
+    "v": [],
+    "src": "estimated",
+    "note": "side M2 screws only"
+   }
+  },
+  "electrical": {
+   "role": "sensor",
+   "voltage_v": {
+    "v": {
+     "min": 5.0,
+     "nom": 9.0,
+     "max": 40.0
+    },
+    "src": "datasheet",
+    "url": "https://caddxfpv.com/products/caddxfpv-ratel-2-starlight-hdr-fpv-camera"
+   },
+   "current_a": {
+    "v": {
+     "typical": 0.15,
+     "peak": 0.2
+    },
+    "src": "estimated",
+    "note": "about 150 mA at 9 V"
+   },
+   "ports": [
+    {
+     "name": "main",
+     "connector": {
+      "v": "3-pin JST-SH 1.0 mm lead (supplied)",
+      "src": "estimated",
+      "note": "standard FPV camera lead"
+     },
+     "mate": {
+      "v": "lead soldered to the FC camera pads",
+      "src": "estimated",
+      "note": "standard FPV camera lead"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "+",
+        "name": "VIN",
+        "signal": "power",
+        "dir": "power_in"
+       },
+       {
+        "pin": "-",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       },
+       {
+        "pin": "V",
+        "name": "VIDEO",
+        "signal": "analog",
+        "dir": "out"
+       }
+      ],
+      "src": "estimated",
+      "note": "standard FPV camera lead"
+     }
+    }
+   ]
+  },
+  "no_holes": true
  },
  "fuse_holder_anl": {
   "dimensions": {
@@ -11315,6 +12497,135 @@
    "notes": "60C / 100C burst, 355 g +/-20 g. Listing also has a G-Tech charge plug. XT60 is 35 A max (Amass): the plug, not the pack, limits current."
   }
  },
+ "lipo_4s_1500": {
+  "dimensions": {
+   "body_mm": {
+    "v": [
+     74,
+     35,
+     36
+    ],
+    "src": "estimated",
+    "note": "CNHL listing, about 74 x 35 x 36 mm"
+   },
+   "holes": {
+    "v": [],
+    "src": "estimated",
+    "note": "soft pack, strap only"
+   }
+  },
+  "electrical": {
+   "role": "battery",
+   "voltage_v": {
+    "v": {
+     "min": 12.0,
+     "nom": 14.8,
+     "max": 16.8
+    },
+    "src": "estimated",
+    "note": "LiPo 3.0 / 3.7 / 4.2 V per cell"
+   },
+   "current_a": {
+    "v": {
+     "typical": 150.0,
+     "peak": 300.0
+    },
+    "src": "estimated",
+    "note": "100C x 1.5 Ah; the XT60 is rated 60 A continuous, so that is the real limit"
+   },
+   "ports": [
+    {
+     "name": "main",
+     "connector": {
+      "v": "XT60",
+      "src": "estimated",
+      "note": "keyed housing"
+     },
+     "mate": {
+      "v": "XT60 mating half, 14 AWG",
+      "src": "estimated",
+      "note": "keyed housing"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "+",
+        "name": "BAT+",
+        "signal": "power",
+        "dir": "power_out"
+       },
+       {
+        "pin": "-",
+        "name": "BAT-",
+        "signal": "ground",
+        "dir": "power_out"
+       }
+      ],
+      "src": "estimated",
+      "note": "keyed housing"
+     }
+    },
+    {
+     "name": "balance",
+     "connector": {
+      "v": "JST-XH 5-pin balance lead",
+      "src": "estimated",
+      "note": "pin 1 at pack negative"
+     },
+     "mate": {
+      "v": "charger balance board",
+      "src": "estimated",
+      "note": "pin 1 at pack negative"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "1",
+        "name": "B-",
+        "signal": "ground",
+        "dir": "power_out"
+       },
+       {
+        "pin": "2",
+        "name": "C1",
+        "signal": "analog",
+        "dir": "power_out"
+       },
+       {
+        "pin": "3",
+        "name": "C2",
+        "signal": "analog",
+        "dir": "power_out"
+       },
+       {
+        "pin": "4",
+        "name": "C3",
+        "signal": "analog",
+        "dir": "power_out"
+       },
+       {
+        "pin": "5",
+        "name": "B+",
+        "signal": "power",
+        "dir": "power_out"
+       }
+      ],
+      "src": "estimated",
+      "note": "pin 1 at pack negative"
+     }
+    }
+   ],
+   "output": {
+    "v": {
+     "voltage_v": 14.8,
+     "current_a": 60.0
+    },
+    "src": "estimated",
+    "note": "XT60 continuous limit"
+   }
+  },
+  "no_holes": true
+ },
  "lipo_4s_5000": {
   "no_holes": true,
   "dimensions": {
@@ -11597,6 +12908,311 @@
     }
    ],
    "notes": "30C / 60C burst, 1350 g +/-20 g, 10 AWG discharge wire 150 mm, EC5 rating itself not sourced."
+  }
+ },
+ "max98357a_amp": {
+  "dimensions": {
+   "body_mm": {
+    "v": [
+     19.4,
+     17.8,
+     2.6
+    ],
+    "src": "datasheet",
+    "url": "https://www.adafruit.com/product/3006"
+   },
+   "holes": {
+    "v": [],
+    "src": "estimated",
+    "note": "pins only"
+   }
+  },
+  "electrical": {
+   "role": "driver",
+   "voltage_v": {
+    "v": {
+     "min": 2.5,
+     "nom": 5.0,
+     "max": 5.5
+    },
+    "src": "datasheet",
+    "url": "https://www.adafruit.com/product/3006"
+   },
+   "current_a": {
+    "v": {
+     "typical": 0.3,
+     "peak": 0.8
+    },
+    "src": "datasheet",
+    "url": "https://www.adafruit.com/product/3006",
+    "note": "3.2 W into 4 ohm at 5 V"
+   },
+   "ports": [
+    {
+     "name": "power",
+     "connector": {
+      "v": "0.1 in header",
+      "src": "estimated",
+      "note": "header"
+     },
+     "mate": {
+      "v": "Dupont jumper",
+      "src": "estimated",
+      "note": "header"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "VIN",
+        "name": "VIN",
+        "signal": "power",
+        "dir": "power_in"
+       },
+       {
+        "pin": "GND",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       }
+      ],
+      "src": "estimated",
+      "note": "header"
+     }
+    },
+    {
+     "name": "i2s",
+     "connector": {
+      "v": "0.1 in header",
+      "src": "estimated",
+      "note": "I2S input"
+     },
+     "mate": {
+      "v": "Dupont jumper",
+      "src": "estimated",
+      "note": "I2S input"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "BCLK",
+        "name": "BCLK",
+        "signal": "digital",
+        "dir": "in"
+       },
+       {
+        "pin": "LRC",
+        "name": "LRC",
+        "signal": "digital",
+        "dir": "in"
+       },
+       {
+        "pin": "DIN",
+        "name": "DIN",
+        "signal": "digital",
+        "dir": "in"
+       }
+      ],
+      "src": "estimated",
+      "note": "I2S input"
+     }
+    },
+    {
+     "name": "speaker",
+     "connector": {
+      "v": "Screw terminal",
+      "src": "estimated",
+      "note": "bridge-tied output"
+     },
+     "mate": {
+      "v": "speaker leads",
+      "src": "estimated",
+      "note": "bridge-tied output"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "+",
+        "name": "SPK+",
+        "signal": "analog",
+        "dir": "out"
+       },
+       {
+        "pin": "-",
+        "name": "SPK-",
+        "signal": "analog",
+        "dir": "out"
+       }
+      ],
+      "src": "estimated",
+      "note": "bridge-tied output"
+     }
+    }
+   ],
+   "heat_w": {
+    "v": 0.4,
+    "src": "estimated",
+    "note": "class-D at 85 % efficiency"
+   }
+  },
+  "no_holes": true
+ },
+ "mosfet_switch_module": {
+  "dimensions": {
+   "body_mm": {
+    "v": [
+     34,
+     17,
+     10.6
+    ],
+    "src": "estimated",
+    "note": "generic AOD4184 board"
+   },
+   "holes": {
+    "v": [
+     {
+      "x": 3,
+      "y": 3,
+      "d": 3.0,
+      "thread": "M3"
+     },
+     {
+      "x": 31,
+      "y": 3,
+      "d": 3.0,
+      "thread": "M3"
+     }
+    ],
+    "src": "estimated",
+    "note": "two M3 holes on common boards"
+   }
+  },
+  "electrical": {
+   "role": "driver",
+   "voltage_v": {
+    "v": {
+     "min": 5.0,
+     "nom": 12.0,
+     "max": 36.0
+    },
+    "src": "estimated",
+    "note": "typical of the part class; no datasheet table was read"
+   },
+   "current_a": {
+    "v": {
+     "typical": 0.8,
+     "peak": 15.0
+    },
+    "src": "estimated",
+    "note": "rated 15 A; typical is the pump"
+   },
+   "ports": [
+    {
+     "name": "power",
+     "connector": {
+      "v": "Screw terminal",
+      "src": "estimated",
+      "note": "screw terminals on the module"
+     },
+     "mate": {
+      "v": "ferrules",
+      "src": "estimated",
+      "note": "screw terminals on the module"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "VIN+",
+        "name": "VIN+",
+        "signal": "power",
+        "dir": "power_in"
+       },
+       {
+        "pin": "VIN-",
+        "name": "GND",
+        "signal": "ground",
+        "dir": "power_in"
+       }
+      ],
+      "src": "estimated",
+      "note": "screw terminals on the module"
+     }
+    },
+    {
+     "name": "load",
+     "connector": {
+      "v": "Screw terminal",
+      "src": "estimated",
+      "note": "low-side switched output"
+     },
+     "mate": {
+      "v": "ferrules",
+      "src": "estimated",
+      "note": "low-side switched output"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "OUT+",
+        "name": "OUT+",
+        "signal": "motor_phase",
+        "dir": "out"
+       },
+       {
+        "pin": "OUT-",
+        "name": "OUT-",
+        "signal": "motor_phase",
+        "dir": "out"
+       }
+      ],
+      "src": "estimated",
+      "note": "low-side switched output"
+     }
+    },
+    {
+     "name": "signal",
+     "connector": {
+      "v": "0.1 in header (PWM, GND)",
+      "src": "estimated",
+      "note": "logic input"
+     },
+     "mate": {
+      "v": "Dupont jumper",
+      "src": "estimated",
+      "note": "logic input"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "PWM",
+        "name": "PWM",
+        "signal": "pwm",
+        "dir": "in"
+       },
+       {
+        "pin": "GND",
+        "name": "GND_SIG",
+        "signal": "ground",
+        "dir": "in"
+       }
+      ],
+      "src": "estimated",
+      "note": "logic input"
+     }
+    }
+   ],
+   "heat_w": {
+    "v": 0.2,
+    "src": "estimated",
+    "note": "low Rds(on) at under 1 A"
+   },
+   "output": {
+    "v": {
+     "voltage_v": 12.0,
+     "current_a": 15.0
+    },
+    "src": "estimated",
+    "note": "follows VIN"
+   }
   }
  },
  "mpu6050_gy521": {
@@ -15283,6 +16899,95 @@
    "notes": "Weight 0.21 kg. 1 AC/L 2 AC/N 3 FG 4 -V 5 +V. Derate 5 V from 40 C to 60 % at 70 C; 100 VAC or lower reduces load. Mean Well notes tolerance +/-1 mm. \u00d83.5 slots in the flanges are for chassis screws."
   }
  },
+ "pump_12v_diaphragm": {
+  "dimensions": {
+   "body_mm": {
+    "v": [
+     34,
+     28,
+     66
+    ],
+    "src": "estimated",
+    "note": "R385 class"
+   },
+   "holes": {
+    "v": [
+     {
+      "x": -6,
+      "y": 0,
+      "d": 2.5,
+      "thread": "M2.5"
+     },
+     {
+      "x": 6,
+      "y": 0,
+      "d": 2.5,
+      "thread": "M2.5"
+     }
+    ],
+    "src": "estimated",
+    "note": "two M2.5 in the motor end face, typical of 385 motors"
+   }
+  },
+  "electrical": {
+   "role": "actuator",
+   "voltage_v": {
+    "v": {
+     "min": 6.0,
+     "nom": 12.0,
+     "max": 12.0
+    },
+    "src": "estimated",
+    "note": "typical of the part class; no datasheet table was read"
+   },
+   "current_a": {
+    "v": {
+     "typical": 0.5,
+     "peak": 0.8
+    },
+    "src": "estimated",
+    "note": "R385 pumps draw 0.5-0.8 A at 12 V"
+   },
+   "ports": [
+    {
+     "name": "motor",
+     "connector": {
+      "v": "Two solder tabs",
+      "src": "estimated",
+      "note": "brushed DC motor"
+     },
+     "mate": {
+      "v": "leads to the switch module, solder",
+      "src": "estimated",
+      "note": "brushed DC motor"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "+",
+        "name": "M+",
+        "signal": "motor_phase",
+        "dir": "in"
+       },
+       {
+        "pin": "-",
+        "name": "M-",
+        "signal": "motor_phase",
+        "dir": "in"
+       }
+      ],
+      "src": "estimated",
+      "note": "brushed DC motor"
+     }
+    }
+   ],
+   "heat_w": {
+    "v": 1.5,
+    "src": "estimated",
+    "note": "brushed motor losses"
+   }
+  }
+ },
  "realsense_d435i": {
   "dimensions": {
    "body_mm": {
@@ -18185,6 +19890,78 @@
    "notes": "3.3 V TTL UART, 460800 8N1, input high min 2.4 V, 3.5 V max, so a 5 V host needs level shifting. One 5 V feed for core and motor. Motor follows the scan command, no separate control. Size the 5 V rail for 0.8 A at start."
   }
  },
+ "speaker_40mm_3w": {
+  "dimensions": {
+   "body_mm": {
+    "v": [
+     40,
+     40,
+     18
+    ],
+    "src": "estimated",
+    "note": "40 mm speaker"
+   },
+   "holes": {
+    "v": [],
+    "src": "estimated",
+    "note": "clamped by its rim"
+   }
+  },
+  "electrical": {
+   "role": "actuator",
+   "voltage_v": {
+    "v": {
+     "min": 0.0,
+     "nom": 3.5,
+     "max": 5.0
+    },
+    "src": "estimated",
+    "note": "driven by the amplifier, not a supply"
+   },
+   "current_a": {
+    "v": {
+     "typical": 0.2,
+     "peak": 0.8
+    },
+    "src": "estimated",
+    "note": "follows the amplifier"
+   },
+   "ports": [
+    {
+     "name": "main",
+     "connector": {
+      "v": "Two solder tabs",
+      "src": "estimated",
+      "note": "polarity sets the phase only"
+     },
+     "mate": {
+      "v": "leads to the amplifier",
+      "src": "estimated",
+      "note": "polarity sets the phase only"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "+",
+        "name": "SPK+",
+        "signal": "analog",
+        "dir": "in"
+       },
+       {
+        "pin": "-",
+        "name": "SPK-",
+        "signal": "analog",
+        "dir": "in"
+       }
+      ],
+      "src": "estimated",
+      "note": "polarity sets the phase only"
+     }
+    }
+   ]
+  },
+  "no_holes": true
+ },
  "stepper_28byj48": {
   "dimensions": {
    "body_mm": {
@@ -18529,6 +20306,103 @@
     }
    ],
    "notes": "Both poles can be wired in parallel above 16 A."
+  }
+ },
+ "t200_thruster": {
+  "dimensions": {
+   "body_mm": {
+    "v": [
+     100,
+     110,
+     95
+    ],
+    "src": "datasheet",
+    "url": "https://bluerobotics.com/store/thrusters/t100-t200-thrusters/t200-thruster-r2-rp/"
+   },
+   "holes": {
+    "v": [
+     {
+      "x": -9.5,
+      "y": -60,
+      "d": 3.0,
+      "thread": "M3"
+     },
+     {
+      "x": 9.5,
+      "y": -60,
+      "d": 3.0,
+      "thread": "M3"
+     }
+    ],
+    "src": "datasheet",
+    "url": "https://bluerobotics.com/store/thrusters/t100-t200-thrusters/t200-thruster-r2-rp/",
+    "note": "two M3 in the mounting foot; spacing from the drawing is estimated"
+   }
+  },
+  "electrical": {
+   "role": "actuator",
+   "voltage_v": {
+    "v": {
+     "min": 7.0,
+     "nom": 16.0,
+     "max": 20.0
+    },
+    "src": "datasheet",
+    "url": "https://bluerobotics.com/store/thrusters/t100-t200-thrusters/t200-thruster-r2-rp/"
+   },
+   "current_a": {
+    "v": {
+     "typical": 6.0,
+     "peak": 24.0
+    },
+    "src": "datasheet",
+    "url": "https://bluerobotics.com/store/thrusters/t100-t200-thrusters/t200-thruster-r2-rp/",
+    "note": "24 A at 16 V full thrust; typical is cruise"
+   },
+   "ports": [
+    {
+     "name": "phases",
+     "connector": {
+      "v": "Three 18 AWG leads in a 1 m potted cable",
+      "src": "estimated",
+      "note": "swap two to reverse"
+     },
+     "mate": {
+      "v": "ESC motor leads, bullet connectors or solder",
+      "src": "estimated",
+      "note": "swap two to reverse"
+     },
+     "pins": {
+      "v": [
+       {
+        "pin": "A",
+        "name": "A",
+        "signal": "motor_phase",
+        "dir": "in"
+       },
+       {
+        "pin": "B",
+        "name": "B",
+        "signal": "motor_phase",
+        "dir": "in"
+       },
+       {
+        "pin": "C",
+        "name": "C",
+        "signal": "motor_phase",
+        "dir": "in"
+       }
+      ],
+      "src": "estimated",
+      "note": "swap two to reverse"
+     }
+    }
+   ],
+   "heat_w": {
+    "v": 0.0,
+    "src": "estimated",
+    "note": "cooled by the water it runs in"
+   }
   }
  },
  "tb6612fng_module": {

@@ -11,3 +11,9 @@ export { buildPart, meshGeometry, listParts, toStlBinary, toStlAscii } from "@tt
 export { arduinoOptions, type ArduinoOption, type ArduinoResult } from "./arduino.ts";
 export * from "./inventory.ts";
 export * from "./parts-mode.ts";
+export { triage, PromptRefusal, MAX_PROMPT_CHARS, type RefusalKind } from "./triage.ts";
+export { KNOWLEDGE, lookup, type KnowledgeEntry } from "./knowledge.ts";
+export { registerEmbedder, activeEmbedder, nearestEntry, LexicalEmbedder, type Embedder } from "./similarity.ts";
+export { TOOL_LABEL, TOOL_WORDS, type ToolKind } from "./tools.ts";
+export { translateScripts } from "./multilingual.ts";
+export { planFromModel, planPrompt, PLAN_SCHEMA, PLAN_SYSTEM_PROMPT, type BodyPlan } from "./plan.ts";

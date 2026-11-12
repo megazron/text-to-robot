@@ -13,6 +13,7 @@ export function createMotion(ctx) {
   const M = {
     handle: null, list: [], kin: null, cache: new Map(), traj: null, name: null, playing: false, t: 0, speed: 1, loop: true, origin: null,
     drag: null, move: false, depth: false, orient: false, recording: null, clips: [], undo: [], tinted: new Set(), busy: false, label: "", warn: "",
+    lod: null, lodBudget: 250000,
   };
   window.__ttrMotion = M;
 
@@ -235,7 +236,7 @@ export function createMotion(ctx) {
     if (o.follow && !M.noFollow) {
       // the camera keeps the robot in view without hiding that it moves: it follows only what goes past a margin
       const span = Math.max(0.15, M.kin?.span ?? 0.5), off = robotGroup.position.clone().sub(controls.target); off.z = 0;
-      const past = off.length() - 0.45 * span;
+      const past = off.length() - 0.2 * span;
       if (past > 0) { const d = off.setLength(past); camera.position.add(d); controls.target.add(d); }
       void old;
     }
@@ -378,6 +379,35 @@ export function createMotion(ctx) {
     }
     return null;
   }
+  // a lower level of detail while dragging a heavy model (the Mark 43's armour): the smallest parts are hidden until the rest fits the
+  // triangle budget (the large plates always stay, so the suit keeps its shape) and the view renders at one pixel per CSS pixel
+  function lowDetail(on) {
+    if (!on) {
+      if (!M.lod) return;
+      for (const o of M.lod.hidden) o.visible = true;
+      if (M.lod.ratio !== renderer.getPixelRatio()) renderer.setPixelRatio(M.lod.ratio);
+      M.lod = null; invalidate(); return;
+    }
+    if (M.lod) return;
+    const parts = []; let tris = 0;
+    robotGroup.traverse((o) => {
+      if (!o.isMesh || !o.visible || !o.geometry?.attributes?.position) return;
+      const g = o.geometry, n = (g.index ? g.index.count : g.attributes.position.count) / 3;
+      if (!g.boundingSphere) g.computeBoundingSphere();
+      const sc = o.getWorldScale(new THREE.Vector3());
+      parts.push({ o, n, r: g.boundingSphere.radius * Math.max(sc.x, sc.y, sc.z) }); tris += n;
+    });
+    if (tris <= M.lodBudget) return;
+    const span = Math.max(0.15, M.kin?.span ?? 0.5), keep = span * 0.08, hidden = [];
+    let left = tris;
+    for (const p of parts.sort((a, b) => a.r - b.r)) {
+      if (left <= M.lodBudget || p.r >= keep) break;
+      p.o.visible = false; hidden.push(p.o); left -= p.n;
+    }
+    const ratio = renderer.getPixelRatio();
+    if (ratio > 1) renderer.setPixelRatio(1);
+    M.lod = { hidden, ratio, triangles: tris, shown: left };
+  }
   function planeThrough(p) { const n = camera.getWorldDirection(new THREE.Vector3()).negate(); return new THREE.Plane().setFromNormalAndCoplanarPoint(n, p); }
   renderer.domElement.parentElement.addEventListener("pointerdown", (e) => {
     if (!M.move || !state.robot || e.button > 0) return;
@@ -392,7 +422,7 @@ export function createMotion(ctx) {
     if (!kind) return;
     e.preventDefault(); controls.enabled = false;
     renderer.domElement.setPointerCapture?.(e.pointerId);
-    pushUndo(); pause(); M.origin = null;
+    pushUndo(); pause(); M.origin = null; lowDetail(true);
     const start = near ? new THREE.Vector3(...near.p.world) : hit ? hit.point.clone() : groundPoint(e) ?? new THREE.Vector3();
     M.drag = { ...kind, id: e.pointerId, start, plane: planeThrough(start), y0: e.clientY, values0: { ...state.jointValues }, base0: [...baseNow()], good: { ...state.jointValues }, goodBase: [...baseNow()], pending: false, next: null };
     if (kind.kind === "ik") {
@@ -431,7 +461,7 @@ export function createMotion(ctx) {
   function endDrag(e) {
     const d = M.drag; if (!d || e.pointerId !== d.id) return;
     M.drag = null; controls.enabled = true; ghost.visible = false; dash.visible = false;
-    clearTint(); syncSliders();
+    lowDetail(false); clearTint(); syncSliders();
     if (d.kind === "body" && d.far) walkTo(d.far);
     const done = () => { M.lastDrag = { kind: d.kind, link: d.link ?? null, target: d.lastTarget ? [d.lastTarget.x, d.lastTarget.y, d.lastTarget.z] : null, result: d.result ?? null }; };
     // the pose kept is the answer for where the pointer was let go, solved to the end (the solves while dragging are short
@@ -631,7 +661,7 @@ export function createMotion(ctx) {
 
   return {
     robotChanged() {
-      stop(); M.handle = null; M.list = []; M.kin = null; M.cache.clear(); M.traj = null; M.name = null; M.clips = []; M.undo = []; state.base = null; setBase(null);
+      lowDetail(false); stop(); M.handle = null; M.list = []; M.kin = null; M.cache.clear(); M.traj = null; M.name = null; M.clips = []; M.undo = []; state.base = null; setBase(null);
       pick.replaceChildren(); info.textContent = ""; warnEl.hidden = true; renderPoses();
       refreshList().catch(() => {});
     },

@@ -5,10 +5,11 @@
 import type { RobotSpecification } from "@ttr/robot-schema";
 import { CATALOG, part, electrical } from "@ttr/parts";
 import { partsCarLength, regulatorFor, designPartsCar, designArduinoArm, designArduinoWallE, designRadar, designServoWalker, type PartsCarRequest, type ArduinoArmRequest, type RadarRequest, type WalkerRequest } from "@ttr/design";
+import { designHand, designGantry } from "@ttr/design";
 import { buildBom, type BillOfMaterials } from "@ttr/components";
 import { toInventory, counts, type Inventory, type InventoryInput } from "./inventory.ts";
 
-export type OptionKind = "obstacle_car" | "obstacle_car_4wd" | "scan_car" | "line_follower" | "camera_car" | "servo_arm" | "radar" | "walker" | "wall_e";
+export type OptionKind = "obstacle_car" | "obstacle_car_4wd" | "scan_car" | "line_follower" | "camera_car" | "servo_arm" | "radar" | "walker" | "wall_e" | "robot_hand" | "pen_plotter";
 export interface PartsOption {
   id: string; kind: OptionKind; label: string; blurb: string;
   /** catalog key -> how many of the user's parts it uses / how many it needs to buy (named parts, not filament or wire) */
@@ -22,7 +23,7 @@ export interface PartsOption {
   honesty: string[];
   score: number;
   /** the designer and its request */
-  designer: "parts_car" | "arduino_arm" | "radar" | "servo_walker" | "arduino_walle";
+  designer: "parts_car" | "arduino_arm" | "radar" | "servo_walker" | "arduino_walle" | "hand" | "gantry";
   request: Record<string, unknown>;
   thumbnail: string;
 }
@@ -253,6 +254,19 @@ function walleCandidate(inv: Record<string, number>): Cand | null {
 }
 
 
+/** Robots built from their own fixed parts list, offered when the list already holds the parts that set them apart. */
+function fixedCandidate(inv: Record<string, number>, kind: OptionKind, need: [string, number][], key: [string[], number], label: string, blurb: string, designer: PartsOption["designer"], honesty: string): Cand | null {
+  if (key[0].reduce((s, k) => s + (inv[k] ?? 0), 0) < key[1] || !need.every(([k]) => has(k))) return null;
+  const p = new Picker(inv);
+  for (const [k, q] of need) for (let i = 0; i < q; i++) p.one([k], k);
+  return { kind, label, blurb, p, honesty: [honesty], designer, request: {} };
+}
+const handCandidate = (inv: Record<string, number>) => fixedCandidate(inv, "robot_hand",
+  [["hobby_mg996r", 5], ["hobby_mg90s", 1], ["arduino_nano_clone", 1], ["pca9685_clone", 1], ["psu_5v_lrs50", 1], ["iec_c14_fused_switched", 1]], [["hobby_mg996r"], 3],
+  "Five-finger robot hand", "tendon fingers on standard servos curl around a cup or a ball", "hand", "The hand is built from its own parts list (five MG996R in the forearm, an MG90S thumb swing, a Nano and a PCA9685 on a 5 V 10 A supply).");
+const plotterCandidate = (inv: Record<string, number>) => fixedCandidate(inv, "pen_plotter",
+  [["nema17_42x40", 3], ["tmc2209_stepstick", 3], ["esp32_s3_devkitc1", 1], ["psu_24v_lrs150", 1], ["leadscrew_t8x8_300", 2], ["leadscrew_t8x8_150", 1], ["rod_8mm_h8_300", 4], ["rod_8mm_h8_130", 2], ["lm8uu", 10]], [["nema17_42x40"], 2],
+  "Pen plotter (XYZ gantry)", "three lead-screw axes draw with a pen", "gantry", "The plotter is built from its own parts list (three NEMA17 on TMC2209 drivers, an ESP32-S3, lead screws and 8 mm rods on a 24 V supply).");
 
 function toOption(c: Cand, inv: Record<string, number>, total: number): PartsOption {
   const used = Object.values(c.p.uses).reduce((a, b) => a + b, 0);
@@ -272,7 +286,7 @@ export function rankOptions(inventory: Inventory): PartsOption[] {
   const cands = [
     carCandidate(inv, "obstacle", false, true), carCandidate(inv, "obstacle", false, false), carCandidate(inv, "obstacle", true, false), carCandidate(inv, "obstacle", true, true),
     carCandidate(inv, "line", false, false), carCandidate(inv, "line", true, false), carCandidate(inv, "camera", false, false),
-    armCandidate(inv), radarCandidate(inv), walkerCandidate(inv), walleCandidate(inv),
+    armCandidate(inv), radarCandidate(inv), walkerCandidate(inv), walleCandidate(inv), handCandidate(inv), plotterCandidate(inv),
   ].filter((c): c is Cand => !!c);
   const opts = cands.map((c) => toOption(c, inv, total));
   // one card per kind (the 4WD scan car counts as a scan car), best first
@@ -295,6 +309,8 @@ function design(o: PartsOption, prompt?: string): RobotSpecification {
     : o.designer === "arduino_arm" ? designArduinoArm({ name: "parts_arm", prompt, ...(o.request as ArduinoArmRequest) })
     : o.designer === "radar" ? designRadar({ name: "radar_scanner", prompt, ...(o.request as RadarRequest) })
     : o.designer === "servo_walker" ? designServoWalker({ name: "servo_walker", prompt, ...(o.request as WalkerRequest) })
+    : o.designer === "hand" ? designHand({ name: "robot_hand", prompt })
+    : o.designer === "gantry" ? designGantry({ name: "pen_plotter", prompt, tool: "pen" })
     : designArduinoWallE({ name: "wall_e", prompt });
   DESIGN_CACHE.set(key, structuredClone(s));
   if (DESIGN_CACHE.size > 24) DESIGN_CACHE.delete(DESIGN_CACHE.keys().next().value!);

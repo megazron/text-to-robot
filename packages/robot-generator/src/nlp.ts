@@ -9,7 +9,7 @@
 //   modify.ts     natural-language modification of an existing spec
 import { parseBudget, extractMasses } from "./text.ts";
 
-export { MAX_ARM_DOF, extractDof, interpretPrompt, parsePrompt, describeInterpretation, type Interpretation, type PromptResult } from "./interpret.ts";
+export { MAX_ARM_DOF, extractDof, interpretPrompt, understandPrompt, type InterpretOptions, parsePrompt, describeInterpretation, type Interpretation, type PromptResult } from "./interpret.ts";
 export { applyModification, splitClauses, type ModResult } from "./modify.ts";
 export { bodyEnvelope } from "./sensors.ts";
 

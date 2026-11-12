@@ -141,6 +141,22 @@
         <input id="modify" aria-label="Describe a change to this robot" placeholder="Make the forearm longer" autocomplete="off" enterkeyhint="done" />
         <button id="modbtn" type="submit" class="tonal">Modify</button>
       </form>
+      <div id="readingBox" hidden>
+        <h2 class="label">How it reads</h2>
+        <button id="embedBtn" class="switch-row" type="button" role="switch" aria-checked="false" title="A small language model compares a prompt the word table cannot place with the tasks it knows">
+          <span class="t"><b>Smarter reading</b><small id="embedSub">Downloads a 30 MB sentence model once, from Hugging Face</small></span>
+          <span class="switch" aria-hidden="true"></span>
+        </button>
+        <details id="byok" class="field-group">
+          <summary>Your own model <small id="byokState">off</small></summary>
+          <p class="hint">A model you have a key for writes the robot's body plan; this page still builds it from real parts and checks it. The key stays in this browser and goes only to the provider you choose.</p>
+          <label>Provider <select id="byokKind"><option value="">Off</option><option value="anthropic">Anthropic</option><option value="openai">OpenAI-compatible</option></select></label>
+          <label>API key <input id="byokKey" type="password" autocomplete="off" spellcheck="false" placeholder="sk-..." /></label>
+          <label id="byokBaseRow" hidden>Base URL <input id="byokBase" type="url" placeholder="https://api.openai.com/v1" /></label>
+          <label>Model <input id="byokModel" placeholder="claude-opus-5-5" /></label>
+          <label class="check"><input id="byokRemember" type="checkbox" /> Remember on this device</label>
+        </details>
+      </div>
       <h2 class="label">Engine log</h2>
       <div id="status" class="status" role="log"></div>
       <h2 class="label">Templates</h2>

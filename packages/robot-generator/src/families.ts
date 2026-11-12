@@ -2,11 +2,15 @@
 import type { RobotSpecification } from "@ttr/robot-schema";
 import type { ArmourShape } from "@ttr/mesh";
 import type { SuitPaint } from "./suit.ts";
-import { designArm, designDiffDrive, designFourWheel, designMecanum, designRover, designEva, designBaymax, designArduinoWallE, designMark43Wearable, designArduinoCar, designArduinoArm, designQuadruped, designHexapod, designHumanoid, designBattleMech, designScara, designGripper, type LeggedRequest } from "@ttr/design";
+import { designArm, designDiffDrive, designFourWheel, designMecanum, designRover, designEva, designBaymax, designArduinoWallE, designMark43Wearable, designArduinoCar, designArduinoArm, designQuadruped, designHexapod, designHumanoid, designBattleMech, designScara, designGripper, designDrone, designGantry, designRov, designSnake, designDelta, designHand, type LeggedRequest } from "@ttr/design";
 import type { SensorType } from "@ttr/robot-schema";
 import { nDofArm, scara, roverArm, wearableExosuit, attachParallelGripper, attachSuctionGripper } from "@ttr/robot-templates";
-import { find, mentions, negates, isDirectlyNegated } from "./text.ts";
+import { find, mentions, negates, isDirectlyNegated, extractDofMentions } from "./text.ts";
+const planDof = (t: string) => extractDofMentions(t)[0]?.value;
 import { armTip, replaceGripperWithSuction } from "./grippers.ts";
+import { readKnowledge } from "./reading.ts";
+import { PromptRefusal } from "./refusal.ts";
+import type { ToolKind } from "./tools.ts";
 
 export const MAX_ARM_DOF = 7; // the arm designer builds 1–7 DOF chains
 
@@ -45,29 +49,41 @@ export const RX = {
 };
 /** the arm a gripper or tool is meant for ("a gripper for my arm"): not a second robot */
 export const ARM_IT_FITS = /\b(?:for|to\s+fit|that\s+fits)\s+(?:my|an?|the|your|our)?\s*(?:[\w-]+\s+){0,3}?arms?\b/;
-export const HAND_REFUSAL = "Dexterous robot hands are not supported yet. Try \"two-finger parallel gripper\" or a humanoid.";
+export const HAND_REFUSAL = "A hand on its own is built as the five-finger tendon hand; on a robot it is a two-finger gripper.";
 
 /** Weapons and robots meant to hurt: refused whatever body they would have (a glue gun or a heat gun is a tool, not a weapon). */
 export const WEAPONS = /(?<!\b(?:glue|nail|spray|heat|massage|paint|staple|soldering|caulk|caulking|grease|rivet|hot[\s-]glue)\s)\b(?:guns?|rifles?|pistols?|firearms?)\b|\bweapon\w*|\bflame[\s-]?throwers?\b|\bbombs?\b|\bexplosives?\b|\bgrenades?\b|\bmissiles?\b|\btasers?\b|\b(?:kill|stab|shoot|attack|hurt|injure|harm)(?:s|ing)?\s+(?:people|humans?|someone|anyone|persons?|animals?|enemies)\b|\bto\s+(?:kill|stab)\b|\bthat\s+(?:can\s+|will\s+)?kills?\b/;
 export const WEAPON_REFUSAL = "Text to Robot does not design weapons or robots meant to hurt people or animals.";
 
 /** Families we do not generate; each says why and what to try instead. */
-export const UNSUPPORTED: [RegExp, string][] = [
-  [/\bdrones?\b|quad[\s-]?copter|multi[\s-]?rotor|\buav\b|hexacopter|\baircraft\b/, "Aerial robots (drones, multirotors) are not supported yet. Try a wheeled rover, legged robot or arm."],
-  [/\bdelta\s+robot|parallel\s+(?:robot|manipulator|kinematic)|stewart\s+platform|\bhexapod\s+platform/, "Parallel-kinematics robots (delta, Stewart) are not supported yet. Try a SCARA or a serial arm."],
-  [/\bgantry\b|\bcartesian\s+robot|\bxyz\s+(?:stage|robot)/, "Cartesian/gantry robots are not supported yet. Try a SCARA or a serial arm."],
-  [/\bsnake\s+robot|\bserpentine\b/, "Snake robots are not supported yet. Try a hexapod or a serial arm."],
-  [/underwater|\bauv\b|\brov\b|submarine|\bboat\b|\bfish\s+robot/, "Underwater and marine robots are not supported yet. Try a wheeled rover."],
+/** Robot types with their own designers that are found by name before the general rules (drones, ROVs, snakes, gantries, deltas). */
+export const SPECIAL: { rx: RegExp; family: string; label: string; approx?: (t: string) => string | undefined; build: (ctx: DesignContext, t: string) => RobotSpecification }[] = [
+  { rx: /\bdrones?\b|quad[\s-]?copter|multi[\s-]?rotor|\buav\b|hexa[\s-]?copter|octo[\s-]?copter|\bhelicopter\b|\baircraft\b|\bairplane\b|\baeroplane\b|\bflying\b|\bflies\b|\bfly\b/, family: "drone", label: "quadcopter (5 in props)",
+    approx: (t) => /hexa|octo|helicopter|airplane|aeroplane|aircraft|fixed[\s-]?wing/.test(t) ? "built as a four-rotor quadcopter, the simplest machine that hovers" : undefined,
+    build: (ctx) => designDrone({ name: "quadcopter", prompt: ctx.prompt, budget: ctx.budget, sensors: ctx.sensors, ...(ctx.payloadKg !== undefined ? { payloadKg: ctx.payloadKg } : {}) }) },
+  { rx: /underwater|\bauv\b|\brovs?\b|submarine|submersible|\bboats?\b|\bfish\s+robot|\brobot(?:ic)?\s+fish\b|\bswim(?:s|ming)?\b|\bdiv(?:e|es|ing)\b|\bocean\b|\bsea\s?bed\b|\bpool\s+inspection/, family: "rov", label: "tethered underwater ROV",
+    approx: (t) => /\bboats?\b/.test(t) ? "a boat is built as a small underwater ROV that also runs on the surface" : /fish/.test(t) ? "a robot fish is built as a thruster ROV (fins are not designed)" : undefined,
+    build: (ctx) => designRov({ name: "underwater_rov", prompt: ctx.prompt, budget: ctx.budget, ...(ctx.payloadKg !== undefined ? { payloadKg: ctx.payloadKg } : {}) }) },
+  { rx: /\bsnakes?(?:\s+robots?|\s+bot)?\b|\bserpentine\b|\bserpent\b|\bpipe\s+(?:crawler|inspection)/, family: "snake", label: "snake robot (yaw-pitch servo chain)",
+    build: (ctx, t) => { const m = t.match(/\b(\d{1,2})\s+(?:segments?|joints?|links?)\b/); return designSnake({ name: "snake_robot", prompt: ctx.prompt, budget: ctx.budget, ...(m ? { segments: +m[1] } : {}) }); } },
+  { rx: /\bgantry\b|\bcartesian\s+(?:robot|gantry)|\bxyz\s+(?:stage|robot|table|gantry)|\bplotter\b|\bpen\s+plotter|\bcnc\b|\b3d\s+printer\b|\blaser\s+(?:cutter|engraver)|\bdrawing\s+(?:robot|machine)/, family: "gantry", label: "Cartesian XYZ gantry",
+    approx: (t) => /3d\s+printer|cnc|laser/.test(t) ? "built as the XYZ motion system with a tool plate; the hot end, spindle or laser is not designed" : undefined,
+    build: (ctx, t) => designGantry({ name: "cartesian_gantry", prompt: ctx.prompt, budget: ctx.budget, sensors: ctx.sensors, tool: /\bpen\b|plot|draw|writ|sketch|portrait|letter/.test(t) ? "pen" : "plate", ...(ctx.payloadKg !== undefined ? { payloadKg: ctx.payloadKg } : {}) }) },
+  { rx: /\bdelta\s+(?:robot|arm|bot)|\bparallel\s+(?:robot|manipulator|kinematic\w*)|\bstewart\s+platform|\bhexapod\s+platform|\bpick[\s-]and[\s-]place\s+delta/, family: "delta", label: "delta robot (parallel arms)",
+    approx: (t) => /stewart|hexapod\s+platform/.test(t) ? "a Stewart platform (six legs) is built as a three-arm delta robot, the other parallel robot" : undefined,
+    build: (ctx) => designDelta({ name: "delta_robot", prompt: ctx.prompt, budget: ctx.budget, ...(ctx.payloadKg !== undefined ? { payloadKg: ctx.payloadKg } : {}) }) },
 ];
+/** Kept for tools that list the robot types still refused; every former entry now has a designer. */
+export const UNSUPPORTED: [RegExp, string][] = [];
 
-export const SUPPORTED_HINT = "Try an arm (\"6 DOF arm with a gripper\"), SCARA, gripper, wheeled base (differential, four-wheel, mecanum), mobile manipulator, quadruped, hexapod, humanoid, wearable exosuit or a character (WALL-E, EVA, Baymax, Iron Man).";
+export const SUPPORTED_HINT = "Try an arm (\"6 DOF arm with a gripper\"), SCARA, gripper, robot hand, wheeled base (differential, four-wheel, mecanum), mobile manipulator, quadruped (with or without an arm), hexapod, humanoid, drone, underwater ROV, snake robot, Cartesian gantry or plotter, delta robot, wearable exosuit or a character (WALL-E, EVA, Baymax, Iron Man).";
 
 export function gripperRequest(t: string): { kind: GripperKind; explicit: boolean; note?: string } {
   const noGripper = negates(t, /gripper|end[\s-]?effector|claw|hand/) && !mentions(t, /gripper|end[\s-]?effector|claw|suction/);
   if (noGripper) return { kind: "none", explicit: true };
   if (mentions(t, /suction|vacuum\s+(?:gripper|cup|tool)|\bvacuum\b(?!\s+(?:cleaner|robot))/) && !mentions(t, /robot(?:ic)?\s+vacuum|vacuum\s+(?:cleaner|robot)/)) return { kind: "suction", explicit: true };
   const hand = find(t, RX.handRobot);
-  if (hand) return { kind: "parallel", explicit: true, note: `"${hand.text}" approximated by a two-finger parallel gripper (dexterous hands are not designed yet)` };
+  if (hand) return { kind: "parallel", explicit: true, note: `"${hand.text}" approximated by a two-finger parallel gripper on a robot (the five-finger hand is designed on its own: ask for "a robot hand")` };
   const multi = find(t, /\b(?:three|four|five|3|4|5|multi)[\s-]?finger(?:ed)?\b|dexterous/);
   if (multi) return { kind: "parallel", explicit: true, note: `"${multi.text}" gripper approximated by a two-finger parallel gripper` };
   return { kind: "parallel", explicit: mentions(t, RX.gripper) };
@@ -80,7 +96,11 @@ export interface DesignContext { hobby?: HobbyServos; prompt: string; budget?: n
   /** the Mark 43's own shape (forged) and paint */ suit?: { shape: ArmourShape; paint: SuitPaint }; }
 export interface Choice { family: string; label: string; matched: string; build: (ctx: DesignContext) => RobotSpecification; usesDof?: boolean; usesGripper?: boolean; approx?: string;
   /** built by the parts-first design engine (sized from real components) rather than a fixed template */
-  designed?: boolean; }
+  designed?: boolean;
+  /** task tools the body plan carries (tools.ts) */ tools?: ToolKind[];
+  /** how the robot type was found: "rules" (default), "knowledge table", "similarity (...)" */ path?: string;
+  /** the knowledge entry used */ knowledge?: string;
+  /** the body plan in words, read for sensors as well as the prompt */ sensorWords?: string; }
 
 const NUM: Record<string, number> = { two: 2, three: 3, four: 4, five: 5, six: 6, eight: 8 };
 /** "four wheels", "6-wheeled" */
@@ -96,11 +116,28 @@ const leggedReq = (ctx: DesignContext, heightM = ctx.heightM): LeggedRequest => 
   sensors: ctx.sensors.filter((x) => ["camera", "depth", "lidar", "imu"].includes(x)) as LeggedRequest["sensors"],
   ...(ctx.payloadKg !== undefined ? { payloadKg: ctx.payloadKg } : {}), ...(heightM ? { heightM } : {}) });
 
-export function chooseFamily(t: string, prompt: string, dof: number | undefined, g: GripperKind, heightM?: number, explicitGripper = false): Choice {
+let knowledgeDepth = 0;
+const art = (label: string) => `${/^(?:[aeio]|u(?!ni))/i.test(label) ? "an" : "a"} ${label}`;
+const handChoice = (matched: string): Choice => ({ family: "hand", label: "five-finger tendon hand", matched, designed: true, build: (ctx) => designHand({ name: "robot_hand", prompt: ctx.prompt, budget: ctx.budget }) });
+/** A robot, machine or "something" with a job the knowledge table does not know, as the body that job needs: getting somewhere
+ * (a wheeled base) or doing something with things (an arm with a gripper, the general-purpose manipulator). */
+export function generalJob(t: string): { id: string; task: string; canonical: string; why: string } | undefined {
+  const body = /\b(?:robots?|robotic|bots?|machines?|devices?|gadgets?|contraptions?|automat(?:on|a)|something|helpers?|assistants?)\b/;
+  const clause = t.match(/\b(?:that|which|who|to|can|could|will|for)\s+((?:(?:can|could|will|help(?:s)?(?:\s+me)?|automatically|always)\s+)*([a-z]{3,}(?:s|es|ing)?)\b[^.!?]{0,60})/);
+  if (!body.test(t) || !clause) return undefined;
+  const task = clause[1].trim().replace(/\s+/g, " ").slice(0, 60), verb = clause[2];
+  if (/^(?:is|are|be|was|has|have|do|does|looks?|sounds?|the|a|an|my|me|you|it|this|that|and|with|make(?:s)?\s+me)$/.test(verb)) return undefined;
+  if (/^(?:go(?:es)?|travel\w*|roam\w*|wander\w*|ride\w*|drive\w*|move\w*|explor\w*|visit\w*|run(?:s)?|race\w*|patrol\w*|tow\w*|push(?:es)?|pull\w*)$/.test(verb))
+    return { id: "general_mobile", task, canonical: "differential drive robot with a camera", why: "because the job is getting somewhere: a wheeled base with a camera carries whatever else it needs; the behaviour is software, written after the body exists" };
+  return { id: "general_manipulator", task, canonical: "6 dof robot arm with a gripper",
+    why: "the general-purpose body for a job done with things (reach, hold, move, use a tool); the skill itself is software, started from the training scaffold, so say more about the job and I can fit the body to it" };
+}
+
+export function chooseFamily(t: string, prompt: string, dof: number | undefined, g: GripperKind, heightM?: number, explicitGripper = false, knowledgeHint?: string): Choice {
   // "no camera on my quadruped" negates the camera, not the quadruped: only "not a quadruped" rejects a family
   const hit = (rx: RegExp) => find(t, rx)?.text ?? [...t.matchAll(new RegExp(rx.source, "g"))].find((m) => !isDirectlyNegated(t, m.index!))?.[0];
   let m: string | undefined;
-  if (mentions(t, WEAPONS)) throw new Error(WEAPON_REFUSAL);
+  if (mentions(t, WEAPONS)) throw new PromptRefusal("harmful", WEAPON_REFUSAL);
 
   if ((m = hit(RX.suit))) {
     // a suit is WORN: build the wearable exoskeleton; "battle mech" (standalone robot) is a humanoid
@@ -120,14 +157,15 @@ export function chooseFamily(t: string, prompt: string, dof: number | undefined,
   if (!wallEIsTheFilm && (m = hit(RX.wallE))) return { family: "wall_e", label: "WALL-E character", matched: m, designed: true, build: (ctx) => designArduinoWallE({ name: "wall_e", prompt: ctx.prompt, budget: ctx.budget }) };
   if ((m = hit(RX.eva))) return { family: "eva", label: "EVA character", matched: m, designed: true, build: (ctx) => designEva({ name: "eva", ...mobileReq(ctx) }) };
   if ((m = hit(RX.baymax))) return { family: "baymax", label: "Baymax character", matched: m, designed: true, build: (ctx) => designBaymax({ name: "baymax", ...mobileReq(ctx) }) };
-  for (const [rx, why] of UNSUPPORTED) if (mentions(t, rx)) throw new Error(why);
+  for (const sp of SPECIAL) if ((m = hit(sp.rx))) { const tt = t, a = sp.approx?.(tt); return { family: sp.family, label: sp.label, matched: m, designed: true, ...(a ? { approx: a } : {}), build: (ctx) => sp.build(ctx, tt) }; }
   // a hand is the robot asked for ("a humanoid hand"), or a part of one ("a humanoid with robotic hands", "an arm with a robot hand"):
   // without the hand words, whatever robot is left is the one to build; nothing left means a hand alone, which is refused
   const hand = find(t, RX.handRobot);
   if (hand) {
     const rest = `${t.slice(0, hand.index)} ${t.slice(hand.index + hand.text.length)}`.replace(/\s+/g, " ").trim();
-    try { return chooseFamily(rest, prompt, dof, g, heightM, explicitGripper); }
-    catch (e) { if (/not recognised/.test((e as Error).message)) throw new Error(HAND_REFUSAL); throw e; }
+    // what is left only names a task or an object ("a robot hand that plays rock paper scissors"): the hand is the robot
+    try { const c = chooseFamily(rest, prompt, dof, g, heightM, explicitGripper); return c.knowledge ? handChoice(hand.text) : c; }
+    catch (e) { if (/not recognised/.test((e as Error).message)) return handChoice(hand.text); throw e; }
   }
   const humanoidOf = (matched: string, approx?: string): Choice => ({ family: "humanoid", label: "humanoid", matched, approx, usesDof: true, usesGripper: true, designed: true,
     // above ~0.9 m servo legs cannot carry the robot: full-size humanoids use the QDD (CubeMars) design
@@ -142,7 +180,13 @@ export function chooseFamily(t: string, prompt: string, dof: number | undefined,
     approx: mentions(t, RX.tracked) ? "tracks approximated by the wheeled rover base" : mentions(t, RX.mecanum) || mentions(t, RX.omni) ? "the arm is mounted on the wheeled rover base, not a mecanum base" : undefined,
     ...(g === "suction" ? { build: () => { const s = roverArm("rover_arm", dof ?? 6, prompt, { gripper: "parallel" }); replaceGripperWithSuction(s); return s; } }
       : { designed: true, build: (ctx: DesignContext) => designRover({ name: "rover_arm", ...mobileReq(ctx), payloadKg: undefined, wheels: wheelCount(t) ?? 6, arm: { dof: dof ?? 6, ...(ctx.payloadKg !== undefined ? { payloadKg: ctx.payloadKg } : {}) } }) }) };
-  if ((m = hit(RX.quadruped))) return { family: "quadruped", label: "quadruped", matched: m, designed: true, build: (ctx) => designQuadruped({ name: "quadruped", ...leggedReq(ctx) }) };
+  if ((m = hit(RX.quadruped))) {
+    // "a robot dog with an arm", "Spot with an arm": the servo dog carries an arm on its back
+    const withArm = mentions(t.replace(/\b(?:four|4)[\s-]?(?:legged|legs?)\b/g, " "), /\b(?:with|and|plus|carrying|has|having)\s+(?:an?\s+|one\s+)?(?:\d\s*(?:dof|axis)\s+)?(?:robot(?:ic)?\s+)?(?:arm|manipulator)\b/);
+    if (withArm) return { family: "quadruped_arm", label: "quadruped with an arm", matched: m, usesDof: true, usesGripper: true, designed: true,
+      build: (ctx) => designQuadruped({ name: "quadruped_arm", ...leggedReq(ctx), armDof: dof ?? 4, gripper: g !== "none" }) };
+    return { family: "quadruped", label: "quadruped", matched: m, designed: true, build: (ctx) => designQuadruped({ name: "quadruped", ...leggedReq(ctx) }) };
+  }
   if ((m = hit(RX.scara))) {
     // "selective compliance assembly robot arm" is the name, not an assembly task
     const task = /\bpick(?:s|ing)?\b|\bplace\b|\bsort(?:s|ing)?\b|\bgrab(?:s|bing)?\b|\bpackag(?:e|ing)\b|\bassembl(?:e|y|ing)\b/.test(t.replace(/selective[\s-]+compliance[\s-]+(?:assembly|articulated)\b/g, "scara"));
@@ -177,13 +221,31 @@ export function chooseFamily(t: string, prompt: string, dof: number | undefined,
   if ((m = hit(RX.gripper)) && !mentions(t.replace(ARM_IT_FITS, " "), RX.arm)) return { family: "gripper", label: `standalone ${g === "suction" ? "suction" : "parallel"} gripper`, matched: m, usesGripper: true,
     ...(g === "suction" ? { build: () => standaloneGripper("suction", prompt) }
       : { designed: true, build: (ctx: DesignContext) => designGripper({ name: "parallel_gripper", prompt: ctx.prompt, budget: ctx.budget, payloadKg: ctx.payloadKg }) }) };
-  if (mentions(t, RX.hand)) throw new Error(HAND_REFUSAL);
+  if ((m = hit(RX.hand))) return handChoice(m);
   m = hit(RX.arm);
   if (!m && dof === undefined) {
-    // only a task was described: pick the robot type that does it, and say why
-    for (const [rx, as, why] of TASKS) {
-      const tm = t.match(rx);
-      if (tm) { const c = chooseFamily(as, as, dof, g, heightM, explicitGripper); return { ...c, matched: tm[0], approx: `"${tm[0]}" is a task, not a robot type: built a ${c.label} (${why})${c.approx ? `; ${c.approx}` : ""}` }; }
+    // no robot type named: a task, an object or an animal from the knowledge table, then the closest entry by meaning (said either way)
+    const r = knowledgeDepth < 2 ? readKnowledge(t, knowledgeHint) : undefined;
+    if (r) {
+      // a body plan always names a robot type the rules know; the depth guard stops a bad table entry from looping
+      knowledgeDepth++;
+      let c: Choice;
+      try { c = chooseFamily(r.entry.canonical, r.entry.canonical, dof ?? planDof(r.entry.canonical), g, heightM, explicitGripper); } finally { knowledgeDepth--; }
+      const lead = r.entry.kind === "task" ? `"${r.matched}" is a task, not a robot type: built ${art(c.label)} (${r.entry.why})`
+        : r.entry.kind === "object" ? `"${r.matched}" ${r.entry.why}: built ${art(c.label)}`
+        : `"${r.matched}" ${r.entry.why}: built ${art(c.label)}`;
+      const via = r.path === "keywords" ? "" : ` (no keyword matched; closest by meaning: "${r.entry.id.replace(/_/g, " ")}", similarity ${r.score} by the ${r.by})`;
+      return { ...c, matched: r.matched, approx: `${lead}${via}${c.approx ? `; ${c.approx}` : ""}`, tools: [...new Set([...(c.tools ?? []), ...(r.entry.tools ?? [])])],
+        path: r.path === "keywords" ? "knowledge table" : `similarity (${r.by})`, knowledge: r.entry.id, sensorWords: r.entry.canonical };
+    }
+    // a job no table entry knows ("a robot that peels potatoes"): the general-purpose body for it, said plainly
+    const job = knowledgeDepth < 2 ? generalJob(t) : undefined;
+    if (job) {
+      knowledgeDepth++;
+      let c: Choice;
+      try { c = chooseFamily(job.canonical, job.canonical, planDof(job.canonical), g, heightM, explicitGripper); } finally { knowledgeDepth--; }
+      return { ...c, matched: job.task, approx: `"${job.task}" is a job I have no module for: built ${art(c.label)}, ${job.why}${c.approx ? `; ${c.approx}` : ""}`,
+        path: "general job", knowledge: job.id, sensorWords: job.canonical };
     }
     throw new Error(`Robot type not recognised. ${SUPPORTED_HINT}`);
   }
@@ -205,17 +267,6 @@ export function chooseFamily(t: string, prompt: string, dof: number | undefined,
     build: (ctx) => designArm({ name: `arm_${n}dof`, dof: n, gripper: g !== "none", prompt: ctx.prompt, budget: ctx.budget, payloadKg: ctx.payloadKg, reachM: ctx.reachM, segments: ctx.segments, sensors: ctx.sensors,
       ...(ctx.hobby ? { ladder: "hobby" as const, ...(ctx.hobby.only ? { onlyActuators: ctx.hobby.only } : {}) } : {}) }) };
 }
-
-/** Task words -> the robot that does the task (used only when no robot type is named). Most specific first. */
-const TASKS: [RegExp, string, string][] = [
-  [/\bwater(?:s|ing)?\b[\w\s]{0,20}\b(?:plants?|garden|flowers?|pots?)\b|\b(?:garden(?:ing)?|weed(?:s|ing)?|harvest(?:s|ing)?|fruit[\s-]?pick\w*)\b/, "mobile manipulator rover with an arm", "it drives to each plant and aims the tool with the arm"],
-  [/\b(?:fetch(?:es|ing)?|tidy|tidies|tidying|clean(?:s|ing)? up|pick(?:s|ing)? up (?:toys|things|stuff|clothes|trash|litter)|serve(?:s|ing)? (?:drinks|food|tea|coffee))\b/, "mobile manipulator rover with an arm", "it moves around the room and picks things up"],
-  [/\b(?:climb(?:s|ing)? stairs|stairs|rough terrain|hik(?:e|es|ing)|off[\s-]?road|rocky|uneven ground)\b/, "quadruped", "legs handle steps and rough ground"],
-  [/\b(?:deliver(?:s|y|ing)?|carr(?:y|ies|ying)|transport(?:s|ing)?|haul(?:s|ing)?|patrol(?:s|ling)?|security|explor(?:e|es|ing)|map(?:s|ping)? (?:the |my )?(?:house|room|office|area)|follow(?:s|ing)? me|vacuum(?:s|ing)? (?:the )?floor|mow(?:s|ing)?)\b/, "four-wheel robot with a camera", "a wheeled base carries the load and covers distance"],
-  [/\b(?:pick(?:s|ing)?(?:[\s-]+(?:and|&|n)[\s-]+place)?|sort(?:s|ing)?|stack(?:s|ing)?|assembl(?:e|es|y|ing)|pack(?:s|ing)?|solder(?:s|ing)?|paint(?:s|ing)?|draw(?:s|ing)?|writ(?:e|es|ing)|pour(?:s|ing)?|cook(?:s|ing)?|grab(?:s|bing)?|lift(?:s|ing)?|weld(?:s|ing)?|3d[\s-]?print\w*|play(?:s|ing)? chess)\b/, "6 dof robot arm with a gripper", "a fixed arm does precise work at a bench"],
-  [/\b(?:walk(?:s|ing)?|run(?:s|ning)?|jump(?:s|ing)?|dance|dancing)\b/, "quadruped", "legged robots walk; a quadruped is the most stable"],
-  [/\b(?:companion|pet|friend|talk(?:s|ing)? to me|greet(?:s|ing)?|reception(?:ist)?)\b/, "differential drive robot", "a small wheeled robot that can follow people around"],
-];
 
 export const ARM_FAMILIES = new Set(["serial_arm", "rover_arm", "scara"]);
 /** templates with a generic structural material we may recolour (characters keep their livery) */

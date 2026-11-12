@@ -1,0 +1,67 @@
+{
+ "model": "robot.urdf",
+ "family": "gantry_xyz",
+ "group": "gantry",
+ "scope": "PASS means the modelled actuators (datasheet peak torque as a hard limit, a linear torque-speed line to no-load speed, reflected rotor inertia, URDF damping/friction) can produce the torques and speeds the task needs in this geometry and mass distribution, and that mean torque over the hold stays within the continuous (rated) torque. Joint control uses an ideal model-based feedforward (computed torque) through the force-limited servo for fixed-base robots and plain position servos for floating robots; a pass therefore proves torque/speed capacity, not that a given controller achieves it. Untested: thermal limits over long duty cycles (only the mean-vs-rated proxy), gearbox backlash and compliance, link and joint flexibility, encoder resolution, supply voltage sag and current limits, bus latency, controller tuning, and contact/friction values (nominal friction only).",
+ "untested": [],
+ "fidelity": "URDF effort limits enforced; position gains inferred; speed/thermal/electrical limits unmodelled; geometry and hardware uncalibrated; armature = rotor inertia x gear ratio^2 from the actuator record: y_axis: 5.4e-06 kg m^2 (estimate (stepper motor) x gear ratio 1^2); x_axis: 5.4e-06 kg m^2 (estimate (stepper motor) x gear ratio 1^2); z_axis: 5.4e-06 kg m^2 (estimate (stepper motor) x gear ratio 1^2)",
+ "tests": {
+  "stroke:y_axis": {
+   "pass": 1.0,
+   "explanation": "y_axis runs 174 mm in 1.0 s and stops within 0.00 mm of the target (peak 7 % of its force limit)",
+   "error_m": 0.0,
+   "joints": {
+    "y_axis": {
+     "peak_nm": 10.4274,
+     "peak_rating_nm": 158.0,
+     "util_peak": 0.066,
+     "mean_hold_nm": 0.3559,
+     "rated_nm": 158.0,
+     "util_rated": 0.002,
+     "max_err": 0.007,
+     "max_err_hold": 0.0002,
+     "saturated_frac": 0.0
+    }
+   }
+  },
+  "stroke:x_axis": {
+   "pass": 1.0,
+   "explanation": "x_axis runs 174 mm in 1.0 s and stops within 0.00 mm of the target (peak 6 % of its force limit)",
+   "error_m": 0.0,
+   "joints": {
+    "x_axis": {
+     "peak_nm": 9.8319,
+     "peak_rating_nm": 158.0,
+     "util_peak": 0.062,
+     "mean_hold_nm": 0.1352,
+     "rated_nm": 158.0,
+     "util_rated": 0.001,
+     "max_err": 0.005,
+     "max_err_hold": 0.0002,
+     "saturated_frac": 0.0
+    }
+   }
+  },
+  "stroke:z_axis": {
+   "pass": 1.0,
+   "explanation": "z_axis runs 22 mm in 1.0 s and stops within 0.01 mm of the target (peak 2 % of its force limit)",
+   "error_m": 1e-05,
+   "joints": {
+    "z_axis": {
+     "peak_nm": 2.5971,
+     "peak_rating_nm": 158.0,
+     "util_peak": 0.016,
+     "mean_hold_nm": 1.2296,
+     "rated_nm": 158.0,
+     "util_rated": 0.008,
+     "max_err": 0.0,
+     "max_err_hold": 0.0,
+     "saturated_frac": 0.0
+    }
+   }
+  }
+ },
+ "passed": 3,
+ "total": 3,
+ "source_urdf_sha256": "0814887e89237d454942b866f91ed1d6f85ebcfd06ab8a37c0c9b8923634dfa7"
+}

@@ -1337,7 +1337,7 @@
     <child link="left_arm_upper_arm"/>
     <origin xyz="0 0.01905 0.0442" rpy="0 -1.570796 -1.570796"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-1.75" upper="1.75" effort="4.9033" velocity="4.86"/>
+    <limit lower="-1.113" upper="1.233" effort="4.9033" velocity="4.86"/>
     <dynamics damping="0.1249" friction="0.0981"/>
   </joint>
   <joint name="left_arm_elbow_pitch_actuator_mount" type="fixed">
@@ -1350,7 +1350,7 @@
     <child link="left_arm_forearm"/>
     <origin xyz="0.169869 0 -0.0381" rpy="3.141593 0 0"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-2.1" upper="2.3" effort="2.942" velocity="4.02"/>
+    <limit lower="-0.24" upper="0.247" effort="2.942" velocity="4.02"/>
     <dynamics damping="0.1249" friction="0.0588"/>
   </joint>
   <joint name="left_arm_wrist_pitch_actuator_mount" type="fixed">
@@ -1363,7 +1363,7 @@
     <child link="left_arm_tool_link"/>
     <origin xyz="0.169869 0 -0.0381" rpy="3.141593 0 0"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-1.7" upper="2.3" effort="2.942" velocity="4.48"/>
+    <limit lower="-0.964" upper="0.975" effort="2.942" velocity="4.48"/>
     <dynamics damping="0.1249" friction="0.0588"/>
   </joint>
   <joint name="left_arm_mount" type="fixed">
@@ -1414,7 +1414,7 @@
     <child link="right_arm_upper_arm"/>
     <origin xyz="0 0.01905 0.0442" rpy="0 -1.570796 -1.570796"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-1.75" upper="1.75" effort="4.9033" velocity="4.86"/>
+    <limit lower="-1.113" upper="1.233" effort="4.9033" velocity="4.86"/>
     <dynamics damping="0.1249" friction="0.0981"/>
   </joint>
   <joint name="right_arm_elbow_pitch_actuator_mount" type="fixed">
@@ -1427,7 +1427,7 @@
     <child link="right_arm_forearm"/>
     <origin xyz="0.169869 0 -0.0381" rpy="3.141593 0 0"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-2.1" upper="2.3" effort="2.942" velocity="4.02"/>
+    <limit lower="-0.24" upper="0.247" effort="2.942" velocity="4.02"/>
     <dynamics damping="0.1249" friction="0.0588"/>
   </joint>
   <joint name="right_arm_wrist_pitch_actuator_mount" type="fixed">
@@ -1440,7 +1440,7 @@
     <child link="right_arm_tool_link"/>
     <origin xyz="0.169869 0 -0.0381" rpy="3.141593 0 0"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-1.7" upper="2.3" effort="2.942" velocity="4.48"/>
+    <limit lower="-0.964" upper="0.975" effort="2.942" velocity="4.48"/>
     <dynamics damping="0.1249" friction="0.0588"/>
   </joint>
   <joint name="right_arm_mount" type="fixed">
