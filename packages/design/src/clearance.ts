@@ -9,6 +9,8 @@ import { partFiles } from "@ttr/kernel/ready";
 import { buildPart } from "@ttr/mesh";
 
 type Vec3 = [number, number, number];
+/** Bought parts that are round about their z axis with their bores (rods, lead screws, bearings, bushings, couplers, lead nuts, pulleys, tubes). */
+export const ROUND_BOUGHT = /^(?:rod_|leadscrew_|bearing_|lm8uu|coupler_|leadnut_|cf_tube_|gt2_pulley|gt2_idler)/;
 /** Solid of a link in its own frame (mm), or null when it has no physical body worth checking. */
 export function linkSolid(l: Link): M | null {
   const g = l.geometry;
@@ -32,7 +34,7 @@ export function linkSolid(l: Link): M | null {
     if ((c.category === "wheel" && !c.specs.ball_d_mm) || (c.specs.od_mm && c.specs.id_mm)) { const r = (b.max[0] - b.min[0]) / 2; return Manifold.cylinder(b.max[2] - b.min[2], r, r, 64).translate([(b.max[0] + b.min[0]) / 2, (b.max[1] + b.min[1]) / 2, b.min[2]]); }
     // round bought parts (rods, lead screws, bearings, bushings, couplers, lead nuts, pulleys, tubes) are cylinders about z,
     // with their bores: a rod runs through its bushing, a screw through its nut and into its coupler, as built
-    if (/^(?:rod_|leadscrew_|bearing_|lm8uu|coupler_|leadnut_|cf_tube_|gt2_pulley|gt2_idler)/.test(key) && Math.abs((b.max[0] - b.min[0]) - (b.max[1] - b.min[1])) < 0.5) {
+    if (ROUND_BOUGHT.test(key) && Math.abs((b.max[0] - b.min[0]) - (b.max[1] - b.min[1])) < 0.5) {
       const r = (b.max[0] - b.min[0]) / 2, cx = (b.max[0] + b.min[0]) / 2, cy = (b.max[1] + b.min[1]) / 2, z0 = b.min[2], z1 = b.max[2];
       // a stepped part (a lead nut: flange and body) gives its profile as (radius, z0, z1) steps
       const prof = c.specs.round_profile_mm as [number, number, number][] | undefined;

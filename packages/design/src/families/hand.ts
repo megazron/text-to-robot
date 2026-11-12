@@ -123,10 +123,10 @@ export function designHand(req: DesignRequest = {}): RobotSpecification {
   const t1: Vec3 = [t0[0] + u[0] * 32, t0[1] + u[1] * 32, 0];
   const tiW = bend("thumb_ip", "thumb_proximal", tmW, t1, ax, u, "thumb_distal", [0, 1.3], { joint: "thumb_mcp", m: 0.9 });
   const t2: Vec3 = [t1[0] + u[0] * 26, t1[1] + u[1] * 26, 0];
-  // the base: a round horn disc on the swing servo, an arm out to a fork at t0 (cheeks either side of the proximal tongue)
+  // the base: a round disc screwed onto the swing servo's horn (above its 2.8 mm hub), an arm out to a fork at t0 (cheeks either side of the proximal tongue)
   const back: Vec3 = [t0[0] - u[0] * 15, t0[1] - u[1] * 15, 0];
   A.printedLink("thumb_base", { name: "thumb_base", ops: [{ op: "at", T: invert(swingW), of: [
-    { op: "at", T: thumbServoT, of: [{ op: "rod", a: [0, 0, 1.0], b: [0, 0, 4.0], r: 6 }, { op: "hole", a: [0, 0, 0], b: [0, 0, 4.5], d: 2.2 }] },
+    { op: "at", T: thumbServoT, of: [{ op: "rod", a: [0, 0, 3.0], b: [0, 0, 6.0], r: 6 }, { op: "hole", a: [0, 0, 0], b: [0, 0, 6.5], d: 2.2 }] },
     { op: "hull", of: [{ op: "rod", a: [31.5, 20, 20.5], b: [35, 20, 20.5], r: 7 }, { op: "rod", a: [44, 46, 18], b: [48, 46, 18], r: 6 }] },
     { op: "hull", of: [{ op: "rod", a: [44, 46, 18], b: [48, 46, 18], r: 6 }, { op: "rod", a: [back[0], back[1], -6], b: [back[0], back[1], 6], r: 6 }] },
     { op: "at", T: thumbF(t0), of: [...[-1, 1].map((sy): Op => ({ op: "box", min: [-16, sy > 0 ? 4.5 : -7.5, -6], max: [4, sy > 0 ? 7.5 : -4.5, 6], r: 1 })), { op: "hole", a: [0, -9, 0], b: [0, 9, 0], d: 2.1 }] }] }] }, { material: "printed_accent" });

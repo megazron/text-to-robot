@@ -445,9 +445,9 @@
       <geometry><mesh filename="package://robot_hand/meshes/thumb_base.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.02093 -0.009299 0.017104" rpy="0 0 0"/>
-      <mass value="0.006798"/>
-      <inertia ixx="0.00000107342" ixy="5.82510e-7" ixz="-5.82078e-7" iyy="0.00000147867" iyz="3.96571e-7" izz="0.0000016452"/>
+      <origin xyz="0.021582 -0.009588 0.017571" rpy="0 0 0"/>
+      <mass value="0.006592"/>
+      <inertia ixx="0.00000100552" ixy="5.41269e-7" ixz="-5.15617e-7" iyy="0.00000133627" iyz="3.67044e-7" izz="0.00000153037"/>
     </inertial>
   </link>
   <link name="thumb_proximal">

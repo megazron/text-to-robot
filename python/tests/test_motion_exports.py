@@ -23,6 +23,8 @@ class MotionExports(unittest.TestCase):
                 names = z.namelist(); pkg = names[0].split("/")[0]
                 free, joints = urdf_joints(z.read(f"{pkg}/urdf/{pkg}.urdf"))
                 motions = [n for n in names if n.startswith(f"{pkg}/motions/") and n.endswith(".yaml")]
+                if not free:   # no motor-driven joint (a thruster ROV): nothing for a JointTrajectory to drive
+                    self.assertFalse(motions, "joint trajectories for a robot without joints"); continue
                 self.assertTrue(motions, "no motions in the ROS 2 package")
                 self.assertIn(f"{pkg}/scripts/replay_motion.py", names)
                 for n in motions:

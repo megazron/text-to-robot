@@ -5,6 +5,7 @@ import { build, Manifold, evaluate, componentMesh, type Mat4, type Program } fro
 import { partFiles } from "@ttr/kernel/ready";
 import { buildPart } from "@ttr/mesh";
 import { fk } from "./kin.ts";
+import { linkSolid, ROUND_BOUGHT } from "./clearance.ts";
 
 export interface Overlap { a: string; b: string; volume_mm3: number; min: number[]; max: number[] }
 
@@ -30,7 +31,9 @@ export function interference(spec: RobotSpecification, minMm3 = 20): { overlaps:
       let m: any;
       try {
         if (g.part === "printed") m = evaluate(JSON.parse(String(g.params.program)) as Program);
-        else if (g.part === "component") m = componentSolid(String(g.params.key));
+        // round bought parts as their round bodies with their bores (a screw runs into its coupler, a rod through its bushing),
+        // the same solids the design's own clearance sweep uses; every other bought part as its exact mesh
+        else if (g.part === "component") m = ROUND_BOUGHT.test(String(g.params.key)) ? linkSolid(l) ?? componentSolid(String(g.params.key)) : componentSolid(String(g.params.key));
         else if (g.part === "cad") {
           // CAD-kernel parts: their welded print mesh (metres -> mm)
           const cm = partFiles(String(g.params.program)).mesh;

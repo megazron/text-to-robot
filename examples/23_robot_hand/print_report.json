@@ -558,11 +558,11 @@
   {
    "name": "thumb_base",
    "watertight": true,
-   "volume_cm3": 7.43,
+   "volume_cm3": 7.21,
    "size_mm": [
     53.7,
     33.5,
-    38.7
+    36.7
    ],
    "orientation": [
     0.0,
@@ -570,8 +570,8 @@
     0.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 2.06,
-   "support_frac": 0.059,
+   "support_area_cm2": 1.87,
+   "support_frac": 0.055,
    "bed_contact_cm2": 2.2,
    "min_wall_mm": 3.0,
    "thin_wall_frac": 0.0,
