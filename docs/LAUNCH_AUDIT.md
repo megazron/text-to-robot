@@ -6,7 +6,7 @@ Audited on 2026-11-09 against main at 327f92a (the commit the live site was buil
 
 ## Recommendation
 
-**No-go as the live site stood (327f92a). The first fixes are live (b60a82b, CI green on every job). Re-checked on 2026-11-10 on `launch-audit`: one blocker is left, and its fix is waiting on the `suit-gate` branch. Go once `suit-gate` (the Mark 43 one-tap forge) is merged and CI is green on main with both branches.**
+**Go, as of main at 0b7670d (2026-11-12).** The live site at 327f92a was a no-go. The first fixes went live at b60a82b. The last blocker, the Mark 43 one-tap forge, is fixed on main (1f8b180 and the commits after it), CI is green, and I re-ran every Mark 43 prompt on the new build (see [Re-check of the Mark 43](#re-check-of-the-mark-43-2026-11-12)).
 
 Since then the medium items 3, 4, 5, 6 and 19, the modify box's basic verbs (item 21) and the low items 10, 12, 14, 16 and 20 are fixed on `launch-audit` (see [Bugs remaining](#bugs-remaining)).
 
@@ -15,9 +15,41 @@ The live site would have lost a visitor's tab after a few dozen designs (memory)
 Blockers before launch:
 
 1. ~~CI must be green on main.~~ **Cleared.** It was red at 327f92a on the Mark 43 film check (3 hits); the forge owner's 8bf0877 fixed it, and CI on b60a82b (this audit's fixes on top) passed all four jobs: test, browser, mujoco and site, the site job including both Mark 43 cases.
-2. **The Mark 43 must not start a 25 to 65 minute, up to 6 GB forge on one tap without warning.** The "Suit" stop on the dial and the "Iron Man Mark 43 suit" example chip do exactly that. Either ask first (with the real time and memory), or ship the default suit precomputed so the first one opens at once. I did not see a forge finish in this audit.
+2. ~~The Mark 43 must not start a 25 to 65 minute, up to 6 GB forge on one tap without warning.~~ **Cleared.** The reference suit (the dial's "Suit" stop, the example chip, the template chips, any paint, height, tier or budget) now opens from the shipped pack, which is the forge's own output, in about 35 s headless. A custom shape (build, pauldrons, panels) first opens a dialog with the time and memory it will take on the visitor's device. It forges only after a yes, and it has a cancel button.
 
 Not blockers, but worth doing soon: the same memory leak in the Node API server and the `engine/v1` API (item 3 under [Bugs remaining](#bugs-remaining)), the arm designer's undersized power supplies (item 4), and the quick start's self-collision test that fails on the arm it builds (item 5).
+
+
+## Re-check of the Mark 43 (2026-11-12)
+
+I built the site from main at 0b7670d and ran `scripts/launch_audit/run_prompts.py` again on every Mark 43 prompt in the corpus, the two template chips, and two shape words from item 7. Each prompt ran in its own tab. Where the site asked before forging, the harness recorded the question and answered Cancel.
+
+| # | Prompt | Time | Result |
+|--:|---|--:|---|
+| 1 | Build me a movie-accurate wearable Iron Man Mark 43 suit from Age of Ultron with all the s... | 35.7 s | reference suit opened ready-made, preview drawn, all 475 pass |
+| 2 | Iron Man Mark 43 suit | 34.7 s | reference suit opened ready-made, preview drawn, all 474 pass |
+| 3 | Iron Man suit | 34.4 s | reference suit opened ready-made, preview drawn, all 474 pass |
+| 4 | an iron man mark 43 armour | 35.6 s | reference suit opened ready-made, preview drawn, all 474 pass |
+| 5 | Iron Man Mark 43 suit for a 1.85 m wearer | 35.5 s | reference suit opened ready-made, preview drawn, 2 failing: faceplate and back-door servos short of torque at 1.85 m scale, stated with the numbers |
+| 6 | a bulky Iron Man Mark 43 suit | 1.5 s | asked first (build 1.12): time and memory shown, nothing forged on Cancel |
+| 7 | a sleek Iron Man Mark 43 | 2.5 s | asked first (build 0.9): time and memory shown, nothing forged on Cancel |
+| 8 | Iron Man Mark 43 suit, 10 % bulkier | 4.3 s | asked first (build 1.1): time and memory shown, nothing forged on Cancel |
+| 9 | Iron Man Mark 43 with bigger shoulders | 1.6 s | asked first (pauldrons 1.2): time and memory shown, nothing forged on Cancel |
+| 10 | Iron Man Mark 43 with smooth panels | 2.7 s | asked first (smooth panels): time and memory shown, nothing forged on Cancel |
+| 11 | Iron Man Mark 43 suit in black and gold | 35.3 s | reference suit opened ready-made, preview drawn, all 474 pass |
+| 12 | Iron Man Mark 43 with silver joints | 34.7 s | reference suit opened ready-made, preview drawn, all 474 pass |
+| 13 | Iron Man Mark 43 suit, budget $500 | 35.7 s | reference suit opened ready-made, preview drawn, 1 failing: parts and filament $528.76 against the $500 budget, stated |
+| 14 | Iron Man Mark 43 with heavy plates | 2.5 s | asked first (heavy panels): time and memory shown, nothing forged on Cancel |
+| 15 | a purple Iron Man Mark 43 with 300 % bigger shoulders | 1.6 s | asked first (pauldrons 1.2): time and memory shown, nothing forged on Cancel |
+| 16 | Iron Man Mark 43 suit | 34.9 s | reference suit opened ready-made, preview drawn, all 474 pass |
+| 17 | Create a Iron Man Mark 43 (wearable) | 36.0 s | reference suit opened ready-made, preview drawn, all 474 pass |
+| 18 | Create a Iron Man Mark suit (primitive) | 37.7 s | reference suit opened ready-made, preview drawn, all 474 pass |
+| 19 | iron man mark 43 with tiny shoulders | 1.9 s | asked first (pauldrons 0.85): time and memory shown, nothing forged on Cancel |
+| 20 | iron man mark 43 with 2x bigger shoulders | 1.6 s | asked first (pauldrons 1.2): time and memory shown, nothing forged on Cancel |
+
+No page errors, failed requests or external requests in any row. The site's own check (`scripts/check_site.py`) passed 25/25 on the same code; the Mark 43 example took 34.7 s and its Arduino tiers 45.3 s, with downloads equal to the shipped example.
+
+I also forged custom shapes in Node with the site's code (`scripts/forge_suit.ts`). The reference shape comes out byte-identical to the shipped pack: 386 pieces, 1193 s on 4 helpers, 6.3 GB peak. A bulkier build (1.12) stopped at a latch with "no shell for the ledge". After 0b7670d it forges to the end: 410 pieces, 1343 s on 2 helpers, 3.5 GB peak. Its door checks then fail honestly for four doors (the right back door opens 4 deg, the right upper arm 6, both shins 0, against 70 needed). The README says so. Other custom shapes were not forged to the end in this re-check.
 
 ## How I tested
 
@@ -549,12 +581,12 @@ Run on the branch before pushing, reading the full output of each:
 | # | Severity | What | Where | Notes |
 |--:|---|---|---|---|
 | 1 | Cleared | CI was red on main at 327f92a: `check_motion.py` found 3 film hits in the Mark 43 | Mark 43 example | Fixed by the forge owner in 8bf0877; CI green on b60a82b |
-| 2 | **High** | The Mark 43 forge takes 25 minutes in Chrome on a laptop (about 65 headless here) and up to 6 GB, and the "Suit" dial stop and the "Iron Man Mark 43 suit" example chip start it with one tap, before the visitor knows | Mark 43 forge, site | Being fixed on the `suit-gate` branch (7761a8f, not on main yet): the reference suit is served ready-made, a custom shape asks first with the time and memory, and the forge can be cancelled |
+| 2 | Fixed | The Mark 43 forge takes 25 minutes in Chrome on a laptop (about 65 headless here) and up to 6 GB, and the "Suit" dial stop and the "Iron Man Mark 43 suit" example chip start it with one tap, before the visitor knows | Mark 43 forge, site | On main (1f8b180, 6edf0cc): the reference suit is served ready-made, a custom shape asks first in a modal dialog with the time and memory, and the forge can be cancelled. Re-checked on 0b7670d: all 20 Mark 43 prompts right |
 | 3 | Fixed | The CAD kernel leak (manifold-3d 3.5.4, about 90 kB per boolean) is fixed on the site by recycling the worker, but the Node API server (`npm run api`, `docker compose`) and pages using `engine/v1` keep one engine for their whole life and will abort after some tens of designs | `apps/api`, `apps/web/src/engine/client.ts` | The API server and `engine/v1` replace their worker before the kernel memory is full and after an abort (`TTR_RECYCLE_MB`, `createEngine({ recycleMb })`) |
 | 4 | Fixed | Many ordinary arm prompts end with a failing wiring check: the designer keeps a power supply that cannot give the peak current (`6 DOF arm with 60 cm reach`, `2 kg payload`, `24 inch reach`, `0.45 m, 0.3 kg`, the README's own example) | arm designer | An arm whose peak current is over the 75 W supply is designed again on the 150 W supply; its rails pass |
 | 5 | Fixed | The README quick start's `ttr-mujoco test ... --self-collision` reports 4/5 on the arm it builds: the base-yaw servo body touches the turret | arm designer or the sweep test | The servo and the link its horn is bolted to no longer collide in MuJoCo: `actuator_sweep` 5/5 |
 | 6 | Fixed | The big quadruped (QDD actuators) fails its own connector and switch checks: 18.97 A through a 15 A spade and a 16 A switch | quadruped designer | The QDD quadruped switches its 19 A on a Blue Sea 6006 battery switch standing over the boards in its hood; every check passes |
-| 7 | Medium | Mark 43 shape words: "300 % bigger shoulders" and "2x bigger shoulders" become 1.2 with no note; "tiny shoulders" does nothing and says nothing | `packages/robot-generator/src/suit.ts` | The README promises out-of-range shape words are reported. Left for the forge owner |
+| 7 | Fixed | Mark 43 shape words: "300 % bigger shoulders" and "2x bigger shoulders" become 1.2 with no note; "tiny shoulders" does nothing and says nothing | `packages/robot-generator/src/suit.ts` | A stated amount is built at the checked limit and the result says what was asked and what was built; "tiny" and "little" shoulders make smaller pauldrons (5c786f8) |
 | 8 | Medium | Arduino arm tiers take 3.5 to 6 minutes and WALL-E about 5 minutes the first time, on this machine | design engine | Measured: about 40 % of an Arduino arm tier is the exact bounding box taken before each printed part is meshed (77 s to 47 s without it). It sets the mesh tolerance, so removing it changes every shipped mesh and needs every example rebuilt and re-checked: left for a release that rebuilds the examples anyway |
 | 9 | Low | Silent drops: a slope target ("climbs 20 degree slopes"), a runtime target ("2 hour runtime"), a second colour, a second budget, "a tracked mecanum robot" (no conflict), "a gripper with no gripper", "lift a car" on a car, "a self driving car for the road", "pequeño", a non-Latin robot name, "robo dawg" | parser | Each listed in the prompt table |
 | 10 | Fixed | Em dashes in generated docs (7 to 12 files per robot) and in check details | `packages/cad`, `components`, `ros2-export`, `training-export`, design checks | Colons and commas instead; every example archive regenerated (the Mark 43's documents edited in place) |

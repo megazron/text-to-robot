@@ -4,6 +4,7 @@
 import {readFileSync,readdirSync} from "node:fs";
 import type { RobotSpecification } from "@ttr/robot-schema";
 import { safeName } from "@ttr/robot-schema";
+import { motions, motion, toCsv, baseCsv } from "@ttr/motion";
 import { generateUrdf } from "@ttr/urdf-generator";
 import { buildPart, toStlBinary } from "@ttr/mesh";
 import { classify, type RobotClass } from "./classify.ts";
@@ -438,6 +439,7 @@ report = run_tests(urdf_to_mjcf("${mujocoSource}", self_collision=True))        
 env = MujocoRobotEnv("${mujocoSource}", self_collision=True, task="${cls === "manipulator" ? "reach" : cls === "gripper" ? "aperture" : "stand"}"${cls === "manipulator" ? `, tip_body="${tip}"` : ""})
 \`\`\`
 `;
+  const refs = referenceMotions(spec, files);
   files[`training/README.md`] =
 `# Train ${spec.robot_name}
 
@@ -474,6 +476,55 @@ python evaluate.py --task ${TASKS[cls][0].id} --bc bc_${name}.pt
 
 Add your own task by dropping a reward function into \`tasks.py\`; it is picked up automatically.
 Classical motion planning is available via the exported ROS 2 / MoveIt 2 package.
-`;
+${refs.length ? `
+## Reference motions
+\`reference_motions/\` holds ${refs.map((r) => `\`${r}.csv\``).join(", ")}: the motions the website plays, as joint positions at 30 Hz (one column per joint, \`time_s\` first; \`<motion>_base.csv\` is the base path when the whole robot moves). Use them as targets for motion imitation or as a tracking reward:
+
+\`\`\`python
+from reference_motion import ReferenceMotion
+ref = ReferenceMotion("reference_motions/${refs[0]}.csv")
+target = ref.at(t)            # {joint: position} at time t (seconds), interpolated, looped
+\`\`\`
+` : ""}`;
   return files;
+}
+
+/** the robot's motions as reference trajectories for imitation (joint CSV, base path) and a loader */
+function referenceMotions(spec: RobotSpecification, files: FileMap): string[] {
+  let list: ReturnType<typeof motions>;
+  try { list = motions(spec); } catch { return []; }
+  const out: string[] = [];
+  for (const m of list.filter((x) => x.default || x.kind === "demo" || x.name === "tour").slice(0, 3)) {
+    let tr: ReturnType<typeof motion>; try { tr = motion(spec, m.name); } catch { continue; }
+    files[`training/reference_motions/${m.name}.csv`] = toCsv(tr);
+    const b = baseCsv(tr); if (b) files[`training/reference_motions/${m.name}_base.csv`] = b;
+    out.push(m.name);
+  }
+  if (out.length) files["training/reference_motion.py"] = `"""Reference motions made by Text to Robot: joint positions over time, for imitation or a tracking reward."""
+import csv
+
+
+class ReferenceMotion:
+    def __init__(self, path, loop=True):
+        with open(path) as f:
+            rows = list(csv.reader(f))
+        self.joints = rows[0][1:]
+        self.t = [float(r[0]) for r in rows[1:]]
+        self.q = [[float(x) for x in r[1:]] for r in rows[1:]]
+        self.loop = loop
+        self.duration = self.t[-1]
+
+    def at(self, t):
+        """joint positions at time t (s), linearly interpolated; looped or held at the end"""
+        if self.loop and self.duration > 0:
+            t = t % self.duration
+        t = min(max(t, 0.0), self.duration)
+        k = min(len(self.t) - 2, max(0, int(t / (self.duration or 1) * (len(self.t) - 1))))
+        while k > 0 and self.t[k] > t: k -= 1
+        while k < len(self.t) - 2 and self.t[k + 1] < t: k += 1
+        a, b = self.t[k], self.t[k + 1] if len(self.t) > 1 else self.t[k]
+        s = 0.0 if b == a else (t - a) / (b - a)
+        return {n: self.q[k][i] + (self.q[min(k + 1, len(self.q) - 1)][i] - self.q[k][i]) * s for i, n in enumerate(self.joints)}
+`;
+  return out;
 }

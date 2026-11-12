@@ -11,10 +11,10 @@ import { listTemplates } from "@ttr/robot-templates";
 import { buildBom } from "@ttr/components";
 import { generateCadFiles } from "@ttr/cad";
 import { exportTraining } from "@ttr/training-export";
-import { buildPart, toStlBinary, meshTopology, setArmourSource, setArmourCache, setForgeListener, type ArmourManifest } from "@ttr/mesh";
+import { buildPart, toStlBinary, meshTopology, setArmourSource, setArmourCache, setForgeListener, setPrebuilt, setForgeGate, cancelForge, ForgeNeedsConsent, type ArmourManifest } from "@ttr/mesh";
 import { providerStatus } from "@ttr/llm-providers";
 import { engineApi } from "./engine/api.ts";
-import { setPool, workerPool } from "@ttr/mesh/forge/pool";
+import { setPool, getPool, workerPool } from "@ttr/mesh/forge/pool";
 // @ts-expect-error: plain JavaScript module without types
 import { safeJsonParse, MAX_PROMPT_CHARS } from "../public/safe.js";
 
@@ -123,6 +123,17 @@ if (helpers) setPool(workerPool(helpers, () => {
   w.postMessage({ wasm: new URL("./manifold.wasm", base).href });
   return { post: (m) => w.postMessage(m), on: (fn) => { w.onmessage = ({ data }) => fn(data); }, end: () => w.terminate() };
 }));
+// The reference suit is served ready-made: the shipped pack, fetched once (about 13 MB). Any other shape is forged here, and only after
+// the visitor has said yes to the time and memory it takes (the page asks, then sends the request again with forgeConsent).
+setPrebuilt(async () => {
+  const base = (self as { TTR_ENGINE_BASE?: string }).TTR_ENGINE_BASE ?? location.href;
+  try {
+    const [m, b] = await Promise.all([fetch(new URL("mark43_pack.json", base)), fetch(new URL("mark43_pack.bin", base))]);
+    return m.ok && b.ok ? { manifest: (await m.json()) as ArmourManifest, bytes: new Uint8Array(await b.arrayBuffer()) } : undefined;
+  } catch { return undefined; }
+});
+let consent = false;
+setForgeGate(() => consent);
 const forgeStart = { t: 0 };
 setForgeListener((p) => { if (!forgeStart.t) forgeStart.t = Date.now(); post({ forge: { ...p, elapsed_s: Math.round((Date.now() - forgeStart.t) / 1000) } }); if (p.stage === "done") forgeStart.t = 0; },
   undefined, (parts) => post({ forgePreview: parts }, parts.flatMap((p) => [p.v.buffer, p.f.buffer])));
@@ -135,15 +146,21 @@ async function answer(method: string, path: string, text: string): Promise<Respo
     // the parser's time grows faster than the text (about 7 s for 4,000 characters of repeated words); share links replay prompts
     for (const k of ["prompt", "instruction"]) if (typeof body[k] === "string" && body[k].length > MAX_PROMPT_CHARS) return json(400, { error: `the ${k} is longer than ${MAX_PROMPT_CHARS} characters` });
     if (body.robot) { const bad = validateSpec(body.robot).issues.find((i) => /^bad_(robot|joint|link|material)_name$/.test(i.code)); if (bad) return json(400, { error: bad.message }); }
+    consent = !!body.forgeConsent;
     // a suit's armour must be the one its robot was designed with before anything is exported from it
     if (body.robot) await forgeForRobot(body.robot as RobotSpecification);
     if (path === "/api/arduino" && body.prompt) await forgeForPrompt(String(body.prompt));
     const meshMatch = /^\/api\/robots\/([^/]+)\/mesh\//.exec(path), stored = meshMatch && store.get(meshMatch[1]);
     if (stored) await forgeForRobot(stored);
     return await handle(method, path, body);
-  } catch (e) { return json(400, { error: (e as Error).message }); }
+  } catch (e) {
+    if (e instanceof ForgeNeedsConsent) return json(409, { error: "This Mark 43 shape is not made yet: forging it in the browser takes many minutes and gigabytes of memory, so it needs a go-ahead (send the request again with forgeConsent: true). The reference suit opens at once.", forgeNeeded: { shape: e.shape } });
+    return json(400, { error: (e as Error).message });
+  }
 }
 self.onmessage = async ({ data }: MessageEvent) => {
+  // the visitor stopped a forge: it throws at its next step, and the helpers' jobs end now
+  if (data.cancelForge) { cancelForge(); getPool()?.abort?.(); return; }
   if (data.robots) { for (const [k, v] of safeJsonParse(data.robots, 256 * 1024 * 1024)) store.set(k, v); return; }
   const r = await answer(data.method, data.path, data.body), buffer = await r.arrayBuffer();
   post({ id: data.id, status: r.status, type: r.headers.get("Content-Type") ?? "application/json", buffer, wasm_mb: wasmPeakMb() }, [buffer]);

@@ -16,7 +16,7 @@ import type { Mount, WorldMount } from "./snap.ts";
 // @ts-expect-error: plain JavaScript module without types
 import { makeZip } from "../../public/robotkit.js";
 
-export const API_VERSION = "1.0.0";
+export const API_VERSION = "1.1.0";
 export type { RobotSpecification, EditOp, PrintedParams, Mount, WorldMount };
 export { applyEdits, toScene, fromScene, worldFrames, rootLink, subtree, parentJoint, kindOf, poseMat, matPose, mul, inv, apply, emptyRobot, freeName, type Scene, type SceneNode } from "./edit.ts";
 export { snapPart, mate, mountFrame, compatible, patternsMatch, MATES, type Snap } from "./snap.ts";
@@ -53,6 +53,11 @@ export interface Electronics3D {
   notes: string[]; checks?: HarnessCheck;
 }
 export interface ForgeProgress { stage: string; [k: string]: unknown; }
+export interface InventoryItem { key: string; qty: number; name: string; raw: string; match: string; assumed?: string; note?: string; }
+export interface Inventory { items: InventoryItem[]; extras: { what: string; qty: number; raw: string; note: string }[]; unknown: { raw: string; qty: number; suggestions: { key: string; name: string; score: number }[] }[]; notes: string[]; }
+export interface PartsOption { id: string; kind: string; label: string; blurb: string; uses: Record<string, number>; buys: Record<string, number>; used_count: number; inventory_count: number; extra_usd: number; headline: string; honesty: string[]; score: number; thumbnail: string; [k: string]: unknown; }
+export interface PartsDesign { option: PartsOption; robot: RobotSpecification; bom: unknown; failing: string[]; shopping: { key: string | null; name: string; qty: number; unit_usd: number; subtotal_usd: number; url: string | null; why: string }[]; to_buy_usd: number; summary: string; }
+export interface FromPartsResult { inventory: Inventory; options: PartsOption[]; designs: Record<string, PartsDesign>; cannot?: { reason: string; add: { key: string; qty: number; usd: number }[]; then: string }; notes: string[]; }
 
 export interface Engine {
   readonly version: string;
@@ -106,12 +111,56 @@ export interface Engine {
   electronics3d(robot: RobotSpecification, options?: { checks?: boolean }): Promise<Electronics3D>;
   /** The electronics and harness at the home pose as one binary glTF (metres, Y up): a node per part and per wire. */
   electronicsGlb(robot: RobotSpecification): Promise<ArrayBuffer>;
+  /** Read a parts list ("I have an Arduino Uno, 2 TT motors, an L298N ..."): catalog parts with quantities, extras, not recognised lines with suggestions. (1.1) */
+  parseInventory(text: string): Promise<Inventory>;
+  /** Search the parts catalog for a parts picker. (1.1) */
+  searchParts(query: string, limit?: number): Promise<{ key: string; name: string; category: string; price_usd: number }[]>;
+  /**
+   * Build from my parts: the robots a parts list can build, best first (how much of the list each uses, what it needs on
+   * top), with the designs asked for (`design`: "top" by default, "all", "none" or an option id). (1.1)
+   */
+  fromParts(inventory: string | { key: string; qty?: number }[] | Record<string, number> | Inventory, options?: { design?: string; limit?: number; budget?: number; prompt?: string }): Promise<FromPartsResult>;
+  /** The Arduino sketch (or Pi script) of a robot built from a parts list, with its pin assignments. (1.1) */
+  firmware(robot: RobotSpecification): Promise<{ name: string; language: "arduino" | "python"; code: string; fqbn: string; libraries: string[] }>;
+  /** The motions a robot has: the joint tour, its purpose demo (picked from what its joints are for), human motion for a wearable. */
+  motions(robot: RobotSpecification): Promise<MotionInfo[]>;
+  /** A motion sampled at `fps` (default 30), checked against the joint limits, speeds and torques and, unless `collision: false`, for self-collision on every frame. `files: true` adds its CSV, ROS 2 JointTrajectory YAML and BVH. */
+  motion(robot: RobotSpecification, name: string, options?: { fps?: number; collision?: boolean; to?: [number, number]; files?: boolean }): Promise<Trajectory & { files?: Record<string, string> }>;
+  /** Inverse kinematics: joint values that bring a point on `link` to a world pose (the root at the origin unless `base`), within the joint limits, and whether that reached it. */
+  ik(robot: RobotSpecification, link: string, target: IkTarget, options?: IkOptions): Promise<IkResult>;
   /** A zip archive of export files. */
   zip(files: Files): Blob;
   /** How many times the engine's worker was replaced (its CAD kernel memory was full, or it aborted). */
   readonly recycles: number;
   terminate(): void;
 }
+
+/** A motion a robot has (`motions`). */
+export interface MotionInfo { name: string; title: string; description: string; kind: "tour" | "demo" | "human" | "servo"; moves_base: boolean; default?: boolean; }
+/** A sampled motion (`motion`): joint values per frame, the root's path, what collides when. */
+export interface Trajectory {
+  name: string; title: string; robot: string; fps: number; duration_s: number;
+  /** columns of q: every joint the motion sets (not fixed, not mimic) */
+  joints: string[];
+  /** the motor-driven ones (a ROS 2 JointTrajectory's joint_names) */
+  actuated: string[];
+  t: number[]; q: number[][];
+  /** root pose per frame [x, y, z, qx, qy, qz, qw] (floor at z = 0), or null when the root stays put */
+  base: number[][] | null;
+  /** per frame, the joint a joint tour is moving */
+  focus: (string | null)[] | null;
+  props: { kind: "box" | "table" | "wearer"; size: [number, number, number]; path: ([number, number, number] | null)[] }[];
+  segments: { t0: number; t1: number; label: string }[];
+  limits: { position_ok: boolean; velocity_ok: boolean; torque_ok: boolean | null; max_velocity_ratio: number; max_torque_ratio: number | null; violations: string[] };
+  collisions: { checked: boolean; voxel_mm: number; tol_mm: number; frames: boolean[]; colliding_frames: number; pairs: { a: string; b: string; frames: number; first_s: number; last_s: number; depth_mm: number }[]; floor: { link: string; frames: number; depth_mm: number }[]; skipped: string[]; note: string } | null;
+  clamped: { joint: string; frames: number; beyond_deg: number; note: string }[];
+  measures: Record<string, number>;
+  warnings: string[]; notes: string[];
+}
+/** What `ik` answers: joint values, whether the target was reached, how far off the closest pose is. */
+export interface IkResult { values: Record<string, number>; reached: boolean; error_mm: number; error_deg: number; position: [number, number, number]; at_limit: string[]; collisions: { a: string; b: string; depth_mm: number }[] | null; }
+export interface IkTarget { xyz: [number, number, number]; rpy?: [number, number, number]; quat?: [number, number, number, number]; }
+export interface IkOptions { point?: [number, number, number]; seed?: Record<string, number>; joints?: string[]; base?: number[]; orientation?: boolean; restarts?: number; iterations?: number; collision?: boolean; }
 
 interface Reply { status: number; type: string; buffer: ArrayBuffer; }
 const dec = new TextDecoder();
@@ -181,6 +230,13 @@ export async function createEngine(opts: { base?: string | URL; onProgress?: (p:
   };
   const bytes = async (method: string, path: string, body?: unknown) => { const r = await call(method, path, body); if (r.status >= 400) throw new Error(JSON.parse(dec.decode(r.buffer)).error ?? `engine answered ${r.status}`); return r.buffer; };
   let catalog: Promise<Catalog> | undefined;
+  // a robot is sent to the worker once; motions and IK solves refer to it by handle (one small message per drag step)
+  const handles = new WeakMap<RobotSpecification, Promise<string>>();
+  const handle = (robot: RobotSpecification) => { let h = handles.get(robot); if (!h) { h = json<{ handle: string }>("POST", "/api/engine/motion-session", { robot }).then((r) => r.handle); handles.set(robot, h); } return h; };
+  const byHandle = async <T>(robot: RobotSpecification, path: string, body: Record<string, unknown>): Promise<T> => {
+    try { return await json<T>("POST", path, { handle: await handle(robot), ...body }); }
+    catch (e) { if (!/unknown motion session/.test((e as Error).message)) throw e; handles.delete(robot); return json<T>("POST", path, { handle: await handle(robot), ...body }); }
+  };
   const v = await json<{ api: string }>("GET", "/api/engine/version");
   return {
     version: v.api,
@@ -209,6 +265,13 @@ export async function createEngine(opts: { base?: string | URL; onProgress?: (p:
     breadboard: (robot) => json("POST", "/api/engine/breadboard", { robot }),
     electronicsGlb: (robot) => bytes("POST", "/api/engine/electronics-glb", { robot }),
     electronics3d: (robot, options) => json("POST", "/api/engine/electronics3d", { robot, options: options ?? {} }),
+    parseInventory: (text) => json("POST", "/api/engine/parse-inventory", { text }),
+    searchParts: async (query, limit) => (await json<{ parts: never }>("POST", "/api/engine/parts-search", { query, limit })).parts,
+    fromParts: (inventory, options) => json("POST", "/api/engine/from-parts", { inventory, options }),
+    firmware: (robot) => json("POST", "/api/engine/firmware", { robot }),
+    motions: async (robot) => (await byHandle<{ motions: MotionInfo[] }>(robot, "/api/engine/motions", {})).motions,
+    motion: async (robot, name, o) => { const r = await byHandle<{ trajectory: Trajectory; files?: Record<string, string> }>(robot, "/api/engine/motion", { name, ...o }); return { ...r.trajectory, ...(r.files ? { files: r.files } : {}) }; },
+    ik: (robot, link, target, o) => byHandle<IkResult>(robot, "/api/engine/ik", { link, target, options: o ?? {} }),
     zip: (f) => makeZip(f) as Blob,
     get recycles() { return recycles; },
     terminate: () => worker.terminate(),

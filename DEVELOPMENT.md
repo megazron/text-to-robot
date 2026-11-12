@@ -54,6 +54,8 @@ python3 -B scripts/studio/film.py 15_wall_e                      # studio.gif: M
 python3 scripts/verify_examples.py                               # what CI checks
 ```
 
+When only the motions change (`packages/motion`), `node scripts/export_motions.ts [example ...]` re-exports each example's ROS 2 package and training scaffold from its `robot.json`. The human motion clips come from the Quaternius Universal Animation Library (CC0, not in the repository): `python3 scripts/human_clips.py <gltf-universal-animation-library>` rewrites `packages/motion/src/clips.ts`. Known motion findings, each with its reason, are in `examples/motion_play_known_issues.json` (checked by `tests/motion.test.ts`).
+
 Text between `<!-- MANUAL_NOTES -->` and `<!-- /MANUAL_NOTES -->` in an example's README survives regeneration.
 
 ## Website

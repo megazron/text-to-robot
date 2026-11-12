@@ -5,12 +5,20 @@ import { designRecord, buildDesignedBom } from "./designed.ts";
 import { WIRING } from "@ttr/parts";
 import { ACTUATORS, SENSORS, COMPUTE, POWER, STRUCTURE, type Tier, type Actuator } from "./catalog.ts";
 
-export interface BomLine { category: string; name: string; qty: number; unit_cost: number; subtotal: number; spec: string; note?: string; }
+export interface BomLine {
+  category: string; name: string; qty: number; unit_cost: number; subtotal: number; spec: string; note?: string;
+  /** catalog key (designed robots) */
+  key?: string;
+  /** built from the user's parts: how many of this line they have and how many to buy */
+  have?: number; buy?: number;
+}
 export interface BillOfMaterials {
   robot_name: string; budget?: number; tier: Tier;
   lines: BomLine[]; total: number; feasible: boolean; sizing_pass: boolean; hardware_verified: false;
   actuator_sizing: { joint: string; required_effort: number; effort_unit: "N" | "N·m"; required_torque_nm?: number; required_force_n?: number; chosen: string; margin: string }[];
   warnings: string[]; notes: string[];
+  /** built from the user's parts: the price of what is still to buy (parts, filament, screws, wire) and of what they have */
+  to_buy_total?: number; owned_total?: number;
 }
 
 const awgPrice = (awg: number) => WIRING.awg.find((w) => w.awg === awg)?.usd_per_m ?? 0.4;

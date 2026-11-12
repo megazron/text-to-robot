@@ -8,7 +8,7 @@ import type { RobotSpecification } from "@ttr/robot-schema";
 import { validateUrdf } from "@ttr/urdf-validator";
 import { exportRos2Package } from "@ttr/ros2-export";
 import { generateXacro } from "@ttr/urdf-generator";
-import { toScene, fromScene, applyEdits, emptyRobot, worldFrames, poseMat, mul, apply, matPose, type EditOp } from "../apps/web/src/engine/edit.ts";
+import { toScene, fromScene, applyEdits, emptyRobot, worldFrames, poseMat, mul, apply, matPose, type EditOp, type PrintedParams } from "../apps/web/src/engine/edit.ts";
 import { snapPart, mate, patternsMatch } from "../apps/web/src/engine/snap.ts";
 import { partMounts, printedMounts, worldMounts } from "../apps/web/src/engine/mounts.ts";
 import { engineApi, parts, checkRobot, clearanceOf, catalog as engineCatalog } from "../apps/web/src/engine/api.ts";
@@ -132,12 +132,21 @@ test("a robot built by hand has a valid URDF, a sized joint and the same exports
   assert.match(generateXacro(report.robot), /<robot/);
 });
 
+const spec0 = () => example("18_arduino_car");
 test("the /api/engine endpoints answer like the client expects", async () => {
   const get = async (method: string, path: string, body: unknown = {}) => { const r = await engineApi(method, path, body); return { status: r.status, body: r.headers.get("Content-Type")?.includes("json") ? await r.json() : await r.arrayBuffer() }; };
-  assert.equal((await get("GET", "/api/engine/version")).body.api, "1.0.0");
+  assert.equal((await get("GET", "/api/engine/version")).body.api, "1.1.0");
   const cat = (await get("GET", "/api/engine/catalog")).body;
   assert.ok(cat.parts.length > 80 && cat.parts.every((p: { mounts: unknown[] }) => p.mounts.length >= 1) && cat.printed.length >= 6);
   assert.ok(cat.parts.find((p: { key: string }) => p.key === "hobby_sg90").rating.range_deg === 180);
+  // build from my parts (1.1)
+  const inv = (await get("POST", "/api/engine/parse-inventory", { text: "mere paas 2 motor aur ek Arduino hai" })).body;
+  assert.deepEqual(inv.items.map((i: { key: string; qty: number }) => [i.key, i.qty]), [["tt_gearmotor_1to48", 2], ["arduino_uno_clone", 1]]);
+  const fp = (await get("POST", "/api/engine/from-parts", { inventory: { tt_gearmotor_1to48: 2, arduino_uno_clone: 1, hc_sr04: 1 }, options: { design: "none" } })).body;
+  assert.equal(fp.options[0].kind, "obstacle_car"); assert.match(fp.options[0].headline, /^uses 4\/4 of your parts/);
+  assert.equal((await get("POST", "/api/engine/from-parts", {})).status, 400);
+  assert.equal((await get("POST", "/api/engine/parts-search", { query: "sg90" })).body.parts[0].key, "hobby_sg90");
+  assert.equal((await get("POST", "/api/engine/firmware", { robot: spec0() })).status, 404, "a stock design carries no pin plan");
   const stl = (await get("GET", "/api/engine/part/hobby_sg90.stl")).body as ArrayBuffer;
   assert.ok(new DataView(stl).getUint32(80, true) > 10);
   const spec = example("18_arduino_car");
@@ -219,4 +228,24 @@ test("every catalog part set down on a plate touches it and none of it is inside
   assert.ok(hits.length === 1 && hits[0].b === "plate" && hits[0].volume_mm3 > 1000, JSON.stringify(hits));
   const check = checkRobot(sunk, { wiring: false }).checks.find((c) => c.name === "clearance:home")!;
   assert.ok(!check.pass && /servo/.test(check.detail), check.detail);
+});
+
+test("every board on the standoff plate made for it clears the plate and the surface under it (posts as tall as its pins need)", () => {
+  const plate = { shape: "plate", size_mm: [160, 120, 4], fillet_mm: 0.8, hole_mm: 3.2, holes: 4 } as const;
+  const base = applyEdits(emptyRobot("t"), [{ op: "add", printed: plate, world: { xyz: [0, 0, 0], rpy: [0, 0, 0] }, name: "plate" } as EditOp], parts);
+  const top = { point: [0, 0, 0.004] as [number, number, number], normal: [0, 0, 1] as [number, number, number], link: "plate" };
+  let n = 0;
+  for (const c of engineCatalog()) {
+    if (!c.mounts.some((m) => m.kind === "board")) continue;
+    const params: PrintedParams = { shape: "standoff_plate", size_mm: [80, 60, 8], wall_mm: 3, fillet_mm: 0.6, key: c.key };
+    const s1 = snapPart(printedMounts(params), worldMounts(base), top);
+    let spec = applyEdits(base, [{ op: "add", printed: params, parent: "plate", world: s1.world, name: "bp" } as EditOp], parts);
+    const st = worldMounts(spec).find((m) => m.link === "bp" && m.kind === "standoffs")!;
+    const s2 = snapPart(partMounts(c.key), worldMounts(spec).filter((m) => m.link === "bp"), { point: st.pos, normal: [0, 0, 1], link: "bp" });
+    assert.equal(s2.how, "mate", c.key);
+    spec = applyEdits(spec, [{ op: "add", key: c.key, parent: "bp", world: s2.world, name: "board" } as EditOp], parts);
+    assert.deepEqual(clearanceOf(spec, "board"), [], c.key);
+    n++;
+  }
+  assert.ok(n >= 10, `${n} boards`);
 });

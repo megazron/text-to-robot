@@ -56,7 +56,9 @@ cp node_modules/manifold-3d/manifold.wasm "$OUT/manifold.wasm"
 # OpenCascade CAD kernel (exact solids, fillets, STEP export)
 cp node_modules/replicad-opencascadejs/dist/replicad_single.wasm "$OUT/replicad_single.wasm"
 
-# The Mark 43 armour is not shipped to the site: the worker forges it from the prompt (packages/mesh/src/forge)
+# The reference Mark 43 armour ships ready-made (the forge's own output, packages/parts/data/mark43_pack.*): the default suit opens at once.
+# Any other shape is forged in the tab, after the visitor agrees to the time it takes.
+cp packages/parts/data/mark43_pack.json packages/parts/data/mark43_pack.bin "$OUT/"
 
 touch "$OUT/.nojekyll"
 SHA="$(git rev-parse HEAD 2>/dev/null || echo unknown)"

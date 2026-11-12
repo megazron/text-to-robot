@@ -1,0 +1,41 @@
+/* The community board (community.js), for Text to Robot and Robot Studio alike. Its own variables, so it looks the
+   same on both pages. */
+.cm-root,.cm-dialog{--cm-bg:#06110a;--cm-panel:rgba(12,20,15,.98);--cm-tile:rgba(255,255,255,.05);--cm-line:rgba(170,255,205,.16);
+  --cm-ink:#ecfbf1;--cm-mute:#a3b9ab;--cm-green:#3dfa46;--cm-on:#00190b;--cm-red:#ff8591;color:var(--cm-ink)}
+.cm-root button,.cm-dialog button,.cm-root select,.cm-dialog input,.cm-dialog textarea{font:inherit;color:inherit}
+.cm-filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:4px 0 10px}
+.cm-product,.cm-refresh,.cm-more{min-height:40px;padding:0 14px;border-radius:999px;border:1px solid var(--cm-line);background:var(--cm-tile);cursor:pointer}
+.cm-more{width:100%;margin-top:10px}
+.cm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.cm-card{display:flex;flex-direction:column;background:var(--cm-tile);border:1px solid var(--cm-line);border-radius:18px;overflow:hidden;min-width:0}
+.cm-thumb{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:var(--cm-bg)}
+.cm-body{display:flex;flex-direction:column;gap:6px;padding:10px 12px 12px;flex:1}
+.cm-title{margin:0;font-size:15px;font-weight:700;overflow-wrap:anywhere}
+.cm-by{font-size:12px;color:var(--cm-mute)}.cm-name{color:var(--cm-ink);font-weight:600}.cm-name.anon{color:var(--cm-mute);font-style:italic}
+.cm-desc{margin:0;font-size:13px;color:var(--cm-mute);overflow-wrap:anywhere;max-height:7.2em;overflow:auto}
+.cm-desc a{color:var(--cm-green)}
+.cm-tags{display:flex;gap:4px;flex-wrap:wrap}
+.cm-tag{font-size:12px;padding:2px 8px;border-radius:999px;background:rgba(61,250,70,.1);color:var(--cm-green);border:0;cursor:pointer}
+.cm-tag.on{min-height:32px;padding:0 12px}
+.cm-actions{display:flex;gap:6px;margin-top:auto;padding-top:4px}
+.cm-open,.cm-primary{min-height:40px;padding:0 16px;border-radius:999px;border:0;background:var(--cm-green);color:var(--cm-on);font-weight:700;cursor:pointer}
+.cm-open{flex:1}
+.cm-report,.cm-ghost{min-height:40px;padding:0 14px;border-radius:999px;border:1px solid var(--cm-line);background:none;color:var(--cm-mute);cursor:pointer}
+.cm-danger{min-height:40px;padding:0 16px;border-radius:999px;border:0;background:var(--cm-red);color:#2a0006;font-weight:700;cursor:pointer}
+.cm-note{margin:6px 0;color:var(--cm-mute);font-size:13px;min-height:1.2em}
+.cm-note.cm-offline{color:#ffc95e}
+.cm-small{margin:6px 0;font-size:12px;color:var(--cm-mute)}
+.cm-dialog{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.62)}
+.cm-panel{width:min(720px,100%);max-height:calc(100vh - 32px);overflow:auto;background:var(--cm-panel);border:1px solid var(--cm-line);border-radius:24px;padding:18px;box-shadow:0 24px 60px -12px #000}
+.cm-dtitle{margin:0 0 10px;font-size:18px}
+.cm-dactions{display:flex;gap:8px;justify-content:flex-end;margin-top:12px;flex-wrap:wrap}
+.cm-share .cm-dbody{display:grid;grid-template-columns:1fr 240px;gap:14px}
+.cm-share .cm-privacy,.cm-share .cm-check,.cm-share .cm-note,.cm-share .cm-done{grid-column:1/-1}
+.cm-form{display:flex;flex-direction:column;gap:8px}
+.cm-field{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--cm-mute)}
+.cm-input{width:100%;min-height:40px;padding:8px 12px;border-radius:12px;border:1px solid var(--cm-line);background:rgba(0,0,0,.35);color:var(--cm-ink);font-size:14px;resize:vertical}
+.cm-label{font-size:12px;color:var(--cm-mute);margin-bottom:6px}
+.cm-preview .cm-card{pointer-events:none}
+.cm-check:empty{display:none}
+.cm-delete-link{font-family:ui-monospace,monospace;font-size:12px}
+@media (max-width:620px){.cm-share .cm-dbody{grid-template-columns:1fr}}

@@ -43,7 +43,8 @@ export function validateSpec(spec: RobotSpecification): ValidationResult {
   // --- names ---
   // Every name ends up in generated files (URDF, xacro, Python, YAML, shell commands, zip paths) and on the page, so it
   // must be a plain identifier: a share link or an imported file cannot smuggle quotes, markup or "../" through a name.
-  const IDENT = /^[A-Za-z_][A-Za-z0-9_]{0,127}$/;
+  // __proto__, constructor and prototype are identifiers too, but as names they would be used as object keys all over the engine
+  const IDENT = /^(?!(?:__proto__|constructor|prototype)$)[A-Za-z_][A-Za-z0-9_]{0,127}$/;
   if (typeof spec.robot_name !== "string" || !IDENT.test(spec.robot_name)) err("bad_robot_name", `robot name '${String(spec.robot_name).slice(0, 40)}' is not a valid identifier (letters, digits and _)`, "robot_name");
   for (const m of spec.materials ?? []) if (typeof m?.name !== "string" || !IDENT.test(m.name)) err("bad_material_name", `material name '${String(m?.name).slice(0, 40)}' is not a valid identifier`, "materials");
   for (const l of spec.links) if (l.material !== undefined && (typeof l.material !== "string" || !IDENT.test(l.material))) err("bad_material_name", `link '${String(l.name).slice(0, 40)}' names material '${String(l.material).slice(0, 40)}', which is not a valid identifier`, `links.${l.name}.material`);

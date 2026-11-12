@@ -3,6 +3,7 @@
 // measured sweeps and limits, tidy, then the pack's quantised storage. The result is what setArmourPack() takes.
 import { atan2, cos, sin } from "./dmath.ts";
 import { forgePrint, NAMES, MASK_OPEN, type ForgeParams } from "./mark43.ts";
+import { getPool } from "./pool.ts";
 import { components, area, isWatertight, type TriMesh } from "./mc.ts";
 import { useManifold, solidStats } from "./geo.ts";
 import { intake, resolve, workingHelmet, trimNeck, trimSwings, finishShells, jointPositions, encode, measured, r2, HINGE, type Piece, type Row, type Tick } from "./pack.ts";
@@ -49,7 +50,8 @@ export async function forgeSuit(mf: unknown, params: ForgeParams = {}, onProgres
     await onProgress({ stage: STAGES[stage][0], done: before, total: 1, detail: what });
     await new Promise((r) => setTimeout(r, 0));
   };
-  const next = async (name: string) => { stage = STAGES.findIndex((s) => s[0] === name); last = 0; await tick(name); };
+  // each stage starts on fresh helpers, so the last stage's WebAssembly heaps are given back
+  const next = async (name: string) => { stage = STAGES.findIndex((s) => s[0] === name); last = 0; await getPool()?.recycle?.(); await tick(name); };
   const t0 = Date.now(), lap = (s: string) => say(`${s} at ${((Date.now() - t0) / 1000).toFixed(1)} s ${JSON.stringify(solidStats())}`);
 
   // a stage kept by `ck` is taken from it; otherwise it runs and is kept

@@ -47,3 +47,8 @@ export { designArduinoArm, type ArduinoArmRequest } from "./families/arduino-arm
 export { designArduinoWallE, type ArduinoWallERequest } from "./families/arduino-walle.ts";
 export { designMark43Wearable, type Mark43Request, type Mark43Tier } from "./families/mark43-wearable.ts";
 export { busChain } from "./netlist.ts";
+export { designPartsCar, partsCarLength, type PartsCarRequest, type CarMission } from "./families/parts-car.ts";
+export { designRadar, type RadarRequest } from "./families/radar.ts";
+export { designServoWalker, type WalkerRequest } from "./families/servo-walker.ts";
+export { boardProfile, driverProfile, regulatorFor, BOARDS, DRIVERS, type FirmwareRecord } from "./families/parts-pins.ts";
+export { firmwareFor, pinTable, type FirmwareFile } from "./firmware.ts";

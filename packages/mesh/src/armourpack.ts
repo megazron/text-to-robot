@@ -73,6 +73,8 @@ export function armourShape(): ArmourShape {
 /** Where packs come from: "file" reads the shipped cache for the reference shape (Node), "forge" always forges (the website). */
 let source: "file" | "forge" = "file";
 export const setArmourSource = (s: "file" | "forge") => { source = s; };
+/** can armour meshes be built now without forging (the pack is loaded, or Node reads the shipped one) */
+export const armourAvailable = () => !!manifest || source === "file";
 /** a store for forged packs that outlives the page (the website gives IndexedDB) */
 export interface ArmourCache { get(key: string): Promise<{ manifest: ArmourManifest; bytes: Uint8Array } | undefined>; put(key: string, manifest: ArmourManifest, bytes: Uint8Array): Promise<void>; }
 let cache: ArmourCache | undefined;
@@ -82,20 +84,36 @@ export interface PreviewPart { material: string; v: Float32Array; f: Uint32Array
 let forging: Promise<unknown> | undefined, hear: ((p: ForgeProgress) => void | Promise<void>) | undefined, say: ((s: string) => void) | undefined, look: ((parts: PreviewPart[]) => void) | undefined;
 /** who hears the forge when a caller passes no listener (the website's worker posts it to the page); `preview` gets a coarse look first */
 export const setForgeListener = (onProgress?: (p: ForgeProgress) => void | Promise<void>, log?: (s: string) => void, preview?: (parts: PreviewPart[]) => void) => { hear = onProgress; say = log; look = preview; };
+/** The site serves the reference suit ready-made (the shipped pack): the function given here returns it, or undefined when it cannot. */
+let prebuilt: (() => Promise<{ manifest: ArmourManifest; bytes: Uint8Array } | undefined>) | undefined;
+export const setPrebuilt = (f: typeof prebuilt) => { prebuilt = f; };
+/** Thrown instead of forging when the forge needs the visitor's go-ahead (setForgeGate): its shape says which suit would be made. */
+export class ForgeNeedsConsent extends Error { shape: ArmourShape; constructor(shape: ArmourShape) { super("forging this Mark 43 armour takes many minutes: it needs a go-ahead first"); this.name = "ForgeNeedsConsent"; this.shape = shape; } }
+let gate: ((shape: ArmourShape) => boolean) | undefined;
+/** Asked before any forge: false throws ForgeNeedsConsent (the website asks the visitor first). */
+export const setForgeGate = (g: typeof gate) => { gate = g; };
+let cancelled = false;
+/** Stops a forge that is running: it throws at its next step. */
+export const cancelForge = () => { cancelled = true; };
+export const forgeCancelled = () => cancelled;
 /**
- * Makes the loaded pack the one for `shape`: the loaded one if it matches, then the shipped file (reference shape, Node only), then the
- * cache, else the forge runs (minutes; `onProgress` hears from it). Returns where the pack came from.
+ * Makes the loaded pack the one for `shape`: the loaded one if it matches, then the shipped file (reference shape: read in Node, fetched on
+ * the website), then the cache, else the forge runs (minutes; `onProgress` hears from it), once the gate allows it. Returns where it came from.
  */
-export async function ensureArmourPack(shape: ArmourShape = DEFAULT_SHAPE, onProgress?: (p: ForgeProgress) => void | Promise<void>, log?: (s: string) => void): Promise<"loaded" | "file" | "cache" | "forged"> {
+export async function ensureArmourPack(shape: ArmourShape = DEFAULT_SHAPE, onProgress?: (p: ForgeProgress) => void | Promise<void>, log?: (s: string) => void): Promise<"loaded" | "file" | "prebuilt" | "cache" | "forged"> {
   while (forging) await forging.catch(() => {});
   if (manifest && sameShape(armourShape(), shape)) return "loaded";
   if (source === "file" && sameShape(shape, DEFAULT_SHAPE)) { manifest = undefined; load(); return "file"; }
+  if (prebuilt && sameShape(shape, DEFAULT_SHAPE)) { const got = await prebuilt(); if (got) { setArmourPack(got.manifest, got.bytes); return "prebuilt"; } }
   const key = shapeKey(shape), hit = await cache?.get(key);
   if (hit) { setArmourPack(hit.manifest, hit.bytes); return "cache"; }
+  if (gate && !gate(shape)) throw new ForgeNeedsConsent(shape);
+  cancelled = false;
   const job = (async () => {
     const [{ forgeSuit }, { forgePreview }, { manifoldModule }] = await Promise.all([import("./forge/suit.ts"), import("./forge/mark43.ts"), import("@ttr/kernel")]);
     if (look) look((await forgePreview(shape)).map((p) => ({ material: p.material, v: Float32Array.from(p.mesh.v), f: p.mesh.f })));
-    const r = await forgeSuit(await manifoldModule(), { voxel: 2, ...shape }, onProgress ?? hear, log ?? say);
+    const tell = onProgress ?? hear;
+    const r = await forgeSuit(await manifoldModule(), { voxel: 2, ...shape }, async (p) => { if (cancelled) throw new Error("the forge was cancelled"); await tell?.(p); }, log ?? say);
     setArmourPack(r.manifest, r.bytes);
     await cache?.put(key, r.manifest, r.bytes);
   })();

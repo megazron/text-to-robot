@@ -3,6 +3,7 @@ import type { RobotSpecification, Joint } from "@ttr/robot-schema";
 import { safeName, findRoot } from "@ttr/robot-schema";
 import { generateUrdf, generateXacro } from "@ttr/urdf-generator";
 import { buildPart, toStlBinary } from "@ttr/mesh";
+import { motions, motion, toJointTrajectoryYaml, baseCsv, replayScript } from "@ttr/motion";
 import { exportMoveIt } from "./moveit.ts";
 import { exportGazebo } from "./gazebo.ts";
 
@@ -24,7 +25,8 @@ export function exportRos2Package(spec: RobotSpecification, opts: { ros2_control
   let anyMesh = false;
   for (const l of spec.links) { const g = l.geometry; if (g.type === "mesh" && !files[`${pkg}/meshes/${g.file}`]) { files[`${pkg}/meshes/${g.file}`] = toStlBinary(buildPart(g), 1); anyMesh = true; } }
   if (!anyMesh) files[`${pkg}/meshes/.gitkeep`] = "";
-  files[`${pkg}/README.md`] = readme(pkg, spec);
+  const replay = motionFiles(spec, pkg, files);
+  files[`${pkg}/README.md`] = readme(pkg, spec, replay);
   if (opts.ros2_control || (opts.moveit ?? true)) {
     files[`${pkg}/config/controllers.yaml`] = controllersYaml(spec);
     files[`${pkg}/urdf/${pkg}.urdf.xacro`] = String(files[`${pkg}/urdf/${pkg}.urdf.xacro`]).replace("</robot>",`  <xacro:include filename="$(find ${pkg})/config/ros2_control.xacro"/>\n</robot>`);
@@ -84,11 +86,14 @@ install(
   DIRECTORY urdf launch config rviz meshes
   DESTINATION share/\${PROJECT_NAME}
 )
-foreach(optional_dir moveit worlds)
+foreach(optional_dir moveit worlds motions)
   if(EXISTS "\${CMAKE_CURRENT_SOURCE_DIR}/\${optional_dir}")
     install(DIRECTORY \${optional_dir} DESTINATION share/\${PROJECT_NAME})
   endif()
 endforeach()
+if(EXISTS "\${CMAKE_CURRENT_SOURCE_DIR}/scripts/replay_motion.py")
+  install(PROGRAMS scripts/replay_motion.py DESTINATION lib/\${PROJECT_NAME})
+endif()
 
 ament_package()
 `;
@@ -101,7 +106,7 @@ from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.conditions import IfCondition, UnlessCondition
-from launch.substitutions import Command, LaunchConfiguration
+from launch.substitutions import Command, LaunchConfiguration, PythonExpression
 from launch_ros.actions import Node
 from launch_ros.parameter_descriptions import ParameterValue
 
@@ -119,6 +124,7 @@ def generate_launch_description():
 
     return LaunchDescription([
         DeclareLaunchArgument("gui", default_value="true", description="joint sliders window (false: joint_state_publisher without a window)"),
+        DeclareLaunchArgument("motion", default_value="", description="replay motions/<motion>.yaml (for example tour) instead of the sliders"),
         Node(package="tf2_ros", executable="static_transform_publisher", arguments=["--frame-id", "world", "--child-frame-id", "${root}"]),
         Node(
             package="robot_state_publisher",
@@ -129,12 +135,19 @@ def generate_launch_description():
         Node(
             package="joint_state_publisher_gui",
             executable="joint_state_publisher_gui",
-            condition=IfCondition(LaunchConfiguration("gui")),
+            condition=IfCondition(PythonExpression(["'", LaunchConfiguration("gui"), "' == 'true' and '", LaunchConfiguration("motion"), "' == ''"])),
         ),
         Node(
             package="joint_state_publisher",
             executable="joint_state_publisher",
-            condition=UnlessCondition(LaunchConfiguration("gui")),
+            condition=IfCondition(PythonExpression(["'", LaunchConfiguration("gui"), "' != 'true' and '", LaunchConfiguration("motion"), "' == ''"])),
+        ),
+        Node(
+            package=pkg,
+            executable="replay_motion.py",
+            arguments=[[share, "/motions/", LaunchConfiguration("motion"), ".yaml"], "--loop", "--all-joints", os.path.join(share, "urdf", pkg + ".urdf")],
+            output="screen",
+            condition=UnlessCondition(PythonExpression(["'", LaunchConfiguration("motion"), "' == ''"])),
         ),
         Node(
             package="rviz2",
@@ -236,7 +249,26 @@ ${moveit ? `    - Class: moveit_rviz_plugin/MotionPlanning
 `;
 }
 
-function readme(pkg: string, spec: RobotSpecification): string {
+/** the robot's motions as ROS 2 JointTrajectory files, and the script that replays them; returns the names */
+function motionFiles(spec: RobotSpecification, pkg: string, files: FileMap): { names: string[]; base: boolean } {
+  let list: ReturnType<typeof motions>;
+  try { list = motions(spec); } catch { return { names: [], base: false }; }
+  const pickN = [...new Set([...list.filter((m) => m.default || m.kind === "servo").map((m) => m.name), "tour"])];
+  const out: string[] = [];
+  for (const name of pickN) {
+    let tr: ReturnType<typeof motion>; try { tr = motion(spec, name); } catch { continue; }
+    const act = tr.actuated.filter((n) => { const c = tr.joints.indexOf(n); return c >= 0 && tr.q.some((r) => Math.abs(r[c] - tr.q[0][c]) > 1e-6); });
+    if (!act.length) continue;
+    files[`${pkg}/motions/${name}.yaml`] = toJointTrajectoryYaml(tr, act);
+    const b = baseCsv(tr); if (b) files[`${pkg}/motions/${name}_base.csv`] = b;
+    out.push(name);
+  }
+  if (out.length) files[`${pkg}/scripts/replay_motion.py`] = replayScript(pkg);
+  return { names: out, base: out.some((n) => files[`${pkg}/motions/${n}_base.csv`] !== undefined) };
+}
+
+function readme(pkg: string, spec: RobotSpecification, motionSet: { names: string[]; base: boolean } = { names: [], base: false }): string {
+  const replay = motionSet.names;
   return `# ${pkg}
 
 Robot description generated by [text-to-robot](https://github.com/megazron/text-to-robot).
@@ -261,5 +293,14 @@ ros2 launch ${pkg} display.launch.py
 \`\`\`
 
 This starts \`robot_state_publisher\`, \`joint_state_publisher_gui\` (sliders) and RViz2.
-`;
+${replay.length ? `
+## Motions
+
+\`motions/\` holds ${replay.map((n) => `\`${n}.yaml\``).join(", ")}: \`trajectory_msgs/JointTrajectory\` messages of the motor-driven joints, sampled at 30 Hz from the motions the website plays.
+
+\`\`\`bash
+ros2 launch ${pkg} display.launch.py motion:=${replay[0]}             # RViz replays it in a loop
+python3 scripts/replay_motion.py motions/${replay[0]}.yaml --controller /joint_trajectory_controller   # Gazebo or the robot
+\`\`\`
+${motionSet.base ? "A motion that moves the whole robot (a drive or a gait) also has \`<motion>_base.csv\`, the path of the base (x, y, z and a quaternion): RViz shows the joints with the base held still.\n" : ""}` : ""}`;
 }

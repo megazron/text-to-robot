@@ -1,0 +1,16 @@
+{
+  "name": "ttr-community",
+  "private": true,
+  "type": "module",
+  "description": "The Text to Robot community board: a Cloudflare Worker on D1.",
+  "license": "MIT",
+  "scripts": {
+    "dev": "wrangler d1 migrations apply DB --local && wrangler dev --var TURNSTILE_SECRET:1x0000000000000000000000000000000AA",
+    "test": "node --test --test-force-exit test/*.test.js",
+    "e2e": "python3 test/e2e.py"
+  },
+  "devDependencies": {
+    "miniflare": "4.20260730.0",
+    "wrangler": "4.159.0"
+  }
+}

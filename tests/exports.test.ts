@@ -144,8 +144,10 @@ test("ROS 2 launch files pass robot_description as a string and the display layo
       assert.match(text, /from launch_ros\.parameter_descriptions import ParameterValue/);
     }
     const display = String(f[`${pkg}/launch/display.launch.py`]);
-    assert.match(display, /IfCondition\(LaunchConfiguration\("gui"\)\)/, "the gui argument chooses the slider window");
-    assert.match(display, /UnlessCondition\(LaunchConfiguration\("gui"\)\)/);
+    // the gui argument chooses the slider window; motion:=<name> replays motions/<name>.yaml instead of either publisher
+    assert.match(display, /LaunchConfiguration\("gui"\), "' == 'true' and '", LaunchConfiguration\("motion"\), "' == ''"/, "the gui argument chooses the slider window");
+    assert.match(display, /LaunchConfiguration\("gui"\), "' != 'true' and '", LaunchConfiguration\("motion"\), "' == ''"/);
+    assert.match(display, /executable="replay_motion\.py"/);
     const xml = String(f[`${pkg}/package.xml`]);
     for (const dep of ["joint_state_publisher", "joint_state_publisher_gui", "ros_gz_sim", "ros_gz_bridge"]) assert.ok(xml.includes(`<exec_depend>${dep}</exec_depend>`), dep);
     // display.launch.py runs without move_group: its RViz layout must not load the MoveIt panel

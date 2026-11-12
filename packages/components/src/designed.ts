@@ -27,10 +27,12 @@ export function buildDesignedBom(spec: RobotSpecification, budget?: number, payl
   const d = designRecord(spec)!;
   const lines: BomLine[] = [];
   const category: Record<string, string> = { actuator: "Actuator", sensor: "Sensor", compute: "Compute", battery: "Power", misc: "Power", motor_driver: "Electronics", wheel: "Drive", bearing: "Mechanical", horn: "Mechanical", fastener: "Fasteners", insert: "Fasteners" };
+  // built from the user's parts (metadata.inventory): every line says how many they have and how many to buy
+  const owned = (spec.metadata as { inventory?: { owned?: Record<string, number> } }).inventory?.owned;
   for (const p of d.purchased) {
-    const c = part(p.key);
+    const c = part(p.key), have = owned ? Math.min(p.qty, owned[p.key] ?? 0) : undefined;
     lines.push({ category: category[c.category] ?? "Other", name: c.name, qty: p.qty, unit_cost: c.price_usd, subtotal: +(c.price_usd * p.qty).toFixed(2),
-      spec: specLine(p.key), note: `${p.uses.slice(0, 4).join("; ")}${p.uses.length > 4 ? "; …" : ""} · ${c.supplier_url}` });
+      spec: specLine(p.key), note: `${p.uses.slice(0, 4).join("; ")}${p.uses.length > 4 ? "; …" : ""} · ${c.supplier_url}`, ...(owned ? { key: p.key, have, buy: p.qty - have! } : {}) });
   }
   const grams = d.printed.reduce((s, p) => s + p.mass_kg * 1000, 0), cm3 = d.printed.reduce((s, p) => s + p.check.volume_cm3, 0);
   lines.push({ category: "Printed structure", name: `PETG filament for ${d.printed.length} printed parts`, qty: 1, unit_cost: +((grams / 1000) * FILAMENT_USD_PER_KG * 1.15).toFixed(2),
@@ -40,12 +42,15 @@ export function buildDesignedBom(spec: RobotSpecification, budget?: number, payl
   // wiring: every line comes from the routed harness (wire by gauge and length, contacts, shrink, ties, grommets)
   for (const w of d.wiring?.bom ?? []) lines.push({ category: "Wiring", name: w.item, qty: w.qty, unit_cost: w.unit_usd, subtotal: w.subtotal_usd, spec: `${w.qty} ${w.unit}: ${w.spec}`, note: `price ${w.source}` });
   const total = +lines.reduce((s, l) => s + l.subtotal, 0).toFixed(2);
+  if (owned) for (const l of lines) if (l.have === undefined) { l.have = 0; l.buy = l.qty; }
+  const toBuy = owned ? +lines.reduce((s, l) => s + (l.buy ?? 0) * l.unit_cost, 0).toFixed(2) : undefined;
   const torqueChecks = d.checks.filter((c) => c.name.startsWith("torque:"));
   const sizingPass = torqueChecks.every((c) => c.pass);
   const failing = d.checks.filter((c) => !c.pass);
   const tier: Tier = d.joints.some((j) => j.actuator.startsWith("cubemars")) ? "research" : d.joints.some((j) => j.actuator.startsWith("dxl")) ? "prosumer" : "hobby";
   return {
-    robot_name: spec.robot_name, ...(budget !== undefined ? { budget } : {}), tier, lines, total, feasible: budget === undefined || total <= budget, sizing_pass: sizingPass, hardware_verified: false,
+    robot_name: spec.robot_name, ...(budget !== undefined ? { budget } : {}), tier, lines, total, feasible: budget === undefined || (toBuy ?? total) <= budget,
+    ...(toBuy !== undefined ? { to_buy_total: toBuy, owned_total: +(total - toBuy).toFixed(2) } : {}), sizing_pass: sizingPass, hardware_verified: false,
     actuator_sizing: d.joints.map((j) => ({ joint: j.joint, required_effort: j.required_nm, effort_unit: (j.unit ?? "N·m") as "N" | "N·m",
       ...(j.unit === "N" ? { required_force_n: j.required_nm } : { required_torque_nm: j.required_nm }), chosen: part(j.actuator).name, margin: `${j.margin}x` })),
     warnings: [...failing.map((c) => `${c.name}: ${c.detail}`), ...(budget !== undefined && total > budget ? [`total $${total} exceeds the $${budget} budget`] : [])],

@@ -114,6 +114,15 @@ The community board's origins come from `apps/web/public/community.json` (`api`,
 
 Enabled with `gh` on 2026-11-10: Dependabot alerts and security updates, secret scanning with push protection, private vulnerability reporting (the contact in `SECURITY.md`), CodeQL code scanning (`.github/workflows/codeql.yml`, JavaScript and TypeScript, `security-extended` queries), and branch protection on `main` that requires the CI checks but no reviews and does not apply to administrators, so I can still push directly.
 
+## CodeQL triage
+
+The first CodeQL run on `main` (2026-11-10, `security-extended`) opened 30 alerts. None is a new exploitable finding; I am leaving them open in the Security tab until each is either fixed in code or dismissed there with its reason:
+
+- **`js/remote-property-injection` (11, `apps/web/src/engine/edit.ts`, `api.ts`, `browser-engine.ts`, `urdf-validator/src/xml.ts`):** objects keyed by link, joint or attribute names. Names must now be identifiers and may not be `__proto__`, `constructor` or `prototype` (`validateSpec`), and request bodies drop those keys, so no key can reach a prototype. The lasting fix is `Map` or `Object.create(null)` for these tables.
+- **`js/polynomial-redos` (10, `packages/robot-generator/src/text.ts`, two in tests):** quadratic at worst, on prompts capped at 2,000 characters; measured under L4.
+- **`js/missing-origin-check` (2, the engine and forge workers' `onmessage`):** dedicated workers only hear the page that created them; there is no origin to check.
+- **`js/regex/missing-regexp-anchor` (3), `js/insecure-temporary-file` (2), `js/file-system-race` (1):** tests and developer scripts that run on my machine or in CI, not in the site.
+
 ## Community board review
 
 Reviewed `community/` (Cloudflare Worker, D1, KV) while it was being written. Already right: every query parameterised, the admin token compared in constant time and never sent to the client, Turnstile verified on the server, a daily-salted visitor hash instead of any stored address, images checked by magic bytes and served with `nosniff` and `default-src 'none'`, posts shown with `textContent` on the admin page, delete tokens stored as SHA-256. Fixed on review: IPv6 visitors hashed by /64 so one connection cannot rotate identities to mass-report or flood; restored posts no longer re-hidden by reports; a global daily post cap and cached public reads; hashed inline script and style in the admin page CSP with Trusted Types; delete tokens only in a header, never a URL; Turnstile action and hostname checked; request bodies read with a byte cap; `default-src 'none'; frame-ancestors 'none'` and `Referrer-Policy: no-referrer` on every answer.

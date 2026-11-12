@@ -28,6 +28,8 @@ test("names that would break out of generated files or the page are refused", ()
     ["material name", (s) => { s.materials[0].name = "<b>"; }, "bad_material_name"],
     ["link material reference", (s) => { s.links[0].material = "x' onload='y"; }, "bad_material_name"],
     ["link name", (s) => { s.links[0].name = "a b"; }, "bad_link_name"],
+    ["joint named __proto__", (s) => { s.joints[0].name = "__proto__"; }, "bad_joint_name"],
+    ["robot named constructor", (s) => { s.robot_name = "constructor"; }, "bad_robot_name"],
   ];
   for (const [what, mutate, code] of cases) { const s = example(); mutate(s); assert.ok(errors(s).includes(code), `${what}: ${errors(s)}`); }
   assert.deepEqual(errors(example()), [], "the shipped example stays valid");

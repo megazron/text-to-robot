@@ -39,7 +39,13 @@ test("forge: armour words in a prompt reach the forge and the paint", () => {
   assert.equal(t("a bulky iron man suit").shape.bulk, 1.12);
   assert.equal(t("a sleek iron man suit").shape.bulk, 0.9);
   assert.equal(t("iron man suit 10% bulkier").shape.bulk, 1.1);
-  assert.match(t("iron man suit 40% bulkier").ignored.join(), /limited to 0\.85-1\.20/);
+  assert.match(t("iron man suit 40% bulkier").ignored.join(), /asks for 1\.40 .* built at 1\.20/);
+  // a stated amount is never quietly clamped: it is honoured within the checked range, and the result says what was built
+  const big = t("iron man mark 43 with 300% bigger shoulders");
+  assert.equal(big.shape.shoulder, 1.2);
+  assert.match(big.ignored.join(), /asks for 4\.00 times .* built at 1\.20/);
+  assert.equal(t("iron man with 15% smaller shoulders").shape.shoulder, 0.85);
+  assert.equal(t("iron man mark 43 with tiny shoulders").shape.shoulder, 0.85);
   assert.equal(t("iron man armour with bigger shoulders").shape.shoulder, 1.2);
   assert.equal(t("iron man armour with smooth panels").shape.panels, "smooth");
   assert.equal(t("iron man armour with heavy plates").shape.panels, "heavy");

@@ -11,6 +11,7 @@ import { listTemplates } from "@ttr/robot-templates";
 import { buildBom } from "@ttr/components";
 import { providerStatus } from "@ttr/llm-providers";
 import { EnginePool, EngineError } from "./pool.ts";
+import { motionApi } from "../../web/src/engine/motion.ts";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const WEB_ROOT = join(__dirname, "..", "..", "web", "public");
@@ -93,6 +94,11 @@ const server = createServer(async (req, res) => {
   if (req.method === "OPTIONS") { json(res, 204, {}); return; }
 
   try {
+    // motions, posing and their files (the same answers the site's engine worker gives)
+    if (req.method === "POST" && p.startsWith("/api/engine/")) {
+      const r = motionApi(p.slice("/api/engine/".length), await readBody(req));
+      if (r) { res.writeHead(r.status, { "Content-Type": "application/json" }); res.end(Buffer.from(await r.arrayBuffer())); return; }
+    }
     if (req.method === "POST" && p === "/api/robots/import") {
       const { robot } = await readBody(req);
       const result = await engine.call<{ robot: RobotSpecification }>("import", { robot });

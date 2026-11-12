@@ -5,6 +5,7 @@ import { forwardKinematics, findRoot, download, makeZipDeflated } from "./robotk
 import { Dial, Sheet, followKeyboard, haptic, popIn, transformFlash } from "./ui.js";
 import { h, safeHttpUrl, safeJsonParse, MAX_PROMPT_CHARS, MAX_ROBOT_BYTES } from "./safe.js";
 import { createElectronics } from "./electronics3d.js";
+import { createMotion } from "./motion.js";
 
 // Clickjacking guard: GitHub Pages cannot send frame-ancestors or X-Frame-Options, so a page that frames this site gets
 // a link to open it in its own tab instead of a working (and invisible-overlay-able) copy.
@@ -69,7 +70,8 @@ let dirty = true;
 function invalidate() { dirty = true; }
 controls.addEventListener("change", invalidate);
 new ResizeObserver(resize).observe(viewport); resize();
-(function loop() { requestAnimationFrame(loop); controls.update(); if (dirty) { dirty = false; renderer.render(scene, camera); } })();
+let motionUI = null;   // motion.js: playback, posing, recording
+(function loop() { requestAnimationFrame(loop); controls.update(); if (motionUI?.tick(performance.now())) dirty = true; if (dirty) { dirty = false; renderer.render(scene, camera); } })();
 
 // The sheet's top edge decides how much room the model gets: on phones the canvas scales from its
 // top edge to stay in the visible area, using transform alone so dragging stays smooth.
@@ -342,6 +344,7 @@ function markCircuitNet() {
   }
 }
 
+motionUI = createMotion({ scene, camera, controls, renderer, robotGroup, state, api, updateFK, invalidate, renderSliders, toast, el, $, highlight });
 
 function selectLink(name) {
   state.selection = { kind: "link", name };
@@ -417,7 +420,8 @@ function renderInspector() {
 function renderSliders() {
   const box = $("#sliders"); box.replaceChildren();
   if (!state.robot) return;
-  const actuated = state.robot.joints.filter((j) => j.type !== "fixed" && !j.passive);
+  // mimic joints follow their leader; a wearable's limbs are passive (the wearer moves them) but they are posed here too
+  const actuated = state.robot.joints.filter((j) => j.type !== "fixed" && !j.mimic && (!j.passive || /shoulder|elbow|hip|knee|neck/.test(j.name) && state.robot.metadata?.design?.doors));
   if (!actuated.length) { box.append(el("div", "hint", "This robot has no actuated joints.")); return; }
   for (const j of actuated) {
     const cont = j.type === "continuous";
@@ -449,14 +453,15 @@ function renderBom(bom) {
   const totalEl = $("#bomtotal");
   if (!bom) { totalEl.textContent = ""; return; }
   const over = bom.budget != null && !bom.feasible;
-  totalEl.textContent = "$" + bom.total + (bom.budget != null ? (bom.feasible ? " ✓ within" : " ✗ over") : "");
+  totalEl.textContent = (bom.to_buy_total != null ? `$${bom.to_buy_total} to buy` : "$" + bom.total) + (bom.budget != null ? (bom.feasible ? " ✓ within" : " ✗ over") : "");
   totalEl.className = "bomtotal " + (bom.budget == null ? "" : over ? "over" : "ok");
   // built from elements, never from HTML strings: every value here can come from an imported file or a share link
+  if (bom.to_buy_total != null) box.append(shoppingBox(bom));
   const tb = h("tbody");
   for (const l of bom.lines) {
     const raw = String(l.note ?? ""), url = safeHttpUrl(raw.match(/https?:\/\/\S+$/)?.[0]), note = url ? raw.slice(0, raw.lastIndexOf("http")).replace(/\s*·\s*$/, "") : raw;
     tb.append(h("tr", null,
-      h("td", null, h("div", { class: "bomcat" }, l.category), url ? h("a", { href: url, target: "_blank", rel: "noopener noreferrer" }, l.name) : String(l.name),
+      h("td", null, h("div", { class: "bomcat" }, l.category, ownBadge(l)), url ? h("a", { href: url, target: "_blank", rel: "noopener noreferrer" }, l.name) : String(l.name),
         note ? [" · ", h("span", { class: "mute" }, note)] : null, h("div", { class: "mute small" }, l.spec)),
       h("td", { class: "n" }, l.qty), h("td", { class: "n" }, `$${l.unit_cost}`), h("td", { class: "n" }, `$${l.subtotal}`)));
   }
@@ -490,9 +495,31 @@ async function refreshBom() {
   try { const { bom } = await api("/api/robots/bom", { robot: state.robot, budget: v === "" ? undefined : Number(v) }); state.bom = bom; renderBom(bom); }
   catch { /* keep last */ }
 }
+/** "What you still need to buy": the parts first, then print, screws and wire, each with its link and the total */
+function toBuyLines(bom) { return bom.lines.filter((l) => (l.buy ?? l.qty) > 0 && l.unit_cost > 0).map((l) => ({ ...l, n: l.buy ?? l.qty, url: (l.note ?? "").match(/https?:\/\/\S+$/)?.[0] })); }
+/** "you have it", "have 1, buy 1" or "to buy" on a parts list line of a robot built from a parts list */
+function ownBadge(l) {
+  if (l.have == null) return null;
+  if (l.have >= l.qty) return h("span", { class: "bomhave" }, "you have it");
+  return l.have > 0 ? [h("span", { class: "bomhave" }, `have ${l.have}`), h("span", { class: "bombuy" }, `buy ${l.buy}`)] : h("span", { class: "bombuy" }, "to buy");
+}
+function shoppingBox(bom) {
+  const lines = toBuyLines(bom), parts = lines.filter((l) => l.key), rest = lines.filter((l) => !l.key);
+  const sum = (ls) => ls.reduce((s, l) => s + l.n * l.unit_cost, 0);
+  const item = (l) => { const url = safeHttpUrl(l.url); return h("li", null, `${+l.n.toFixed(2)}x `, url ? h("a", { href: url, target: "_blank", rel: "noopener noreferrer" }, l.name) : String(l.name), `: $${(l.n * l.unit_cost).toFixed(2)}`); };
+  return h("div", { class: "tobuy" }, h("div", { class: "panel-h" }, `What you still need to buy: $${Number(bom.to_buy_total).toFixed(2)}`),
+    h("ul", null, parts.length ? parts.map(item) : h("li", null, "No parts: you have them all.")),
+    h("div", { class: "hint" }, `Parts $${sum(parts).toFixed(2)}, plus $${sum(rest).toFixed(2)} of filament, screws and wire. You already have $${Number(bom.owned_total ?? 0).toFixed(2)} of the parts.`));
+}
+function shoppingMarkdown(bom) {
+  const lines = toBuyLines(bom);
+  let md = `# Still to buy: ${bom.robot_name}\n\n**Total: $${bom.to_buy_total ?? bom.total}** (you already have $${bom.owned_total ?? 0} of the parts)\n\n| Part | Qty | Unit $ | Subtotal $ | Link |\n|---|--:|--:|--:|---|\n`;
+  for (const l of lines) md += `| ${l.name} | ${+l.n.toFixed(2)} | ${l.unit_cost} | ${(l.n * l.unit_cost).toFixed(2)} | ${l.url ?? ""} |\n`;
+  return md;
+}
 function bomMarkdown(bom) {
   let md = `# Bill of materials: ${bom.robot_name}\n\n**Total: $${bom.total}** · tier ${bom.tier}` + (bom.budget != null ? ` · budget $${bom.budget} ${bom.feasible ? "(within)" : "(OVER)"}` : "") + "\n\n| Category | Component | Qty | Unit $ | Subtotal $ | Spec |\n|---|---|--:|--:|--:|---|\n";
-  for (const l of bom.lines) md += `| ${l.category} | ${l.name}${l.note ? " ("+l.note+")" : ""} | ${l.qty} | ${l.unit_cost} | ${l.subtotal} | ${l.spec} |\n`;
+  for (const l of bom.lines) md += `| ${l.category} | ${l.name}${l.have != null ? (l.have >= l.qty ? " **(you have it)**" : l.have > 0 ? ` **(have ${l.have}, buy ${l.buy})**` : " **(to buy)**") : ""}${l.note ? " ("+l.note+")" : ""} | ${l.qty} | ${l.unit_cost} | ${l.subtotal} | ${l.spec} |\n`;
   return md;
 }
 
@@ -516,7 +543,10 @@ function status(lines, kind) {
 addEventListener("ttr-forge", ({ detail: p }) => {
   if (p.stage === "done") return;
   const pct = Math.round(100 * p.done / (p.total || 1)), names = { forge: "shaping the shells", pack: "trimming overlaps", doors: "fitting hinges, servos and latches", trims: "clearing the doors' swing", wiring: "fitting cable channels and bays", measure: "measuring joint and door ranges", store: "storing the pieces" };
-  status(`Forging the Mark 43 armour in your browser: ${names[p.stage] ?? p.stage} (${pct} %, ${p.elapsed_s ?? 0} s). The first suit takes about 25 minutes on a fast laptop and longer on a slow one; the page stays usable, and the result is kept for next time.`);
+  status(`Forging the Mark 43 armour in your browser: ${names[p.stage] ?? p.stage} (${pct} %, ${p.elapsed_s ?? 0} s). The page stays usable, and the result is kept for next time.`);
+  const stop = Object.assign(document.createElement("button"), { type: "button", textContent: "Cancel the forge", className: "forge-cancel" });
+  stop.addEventListener("click", () => { globalThis.ttrStatic?.cancelForge(); stop.disabled = true; stop.textContent = "Cancelling..."; });
+  $("#status").append(document.createElement("br"), stop);
 });
 // while the full armour is forged, a coarse look at it (4 mm voxels, no doors or trims) stands on the pad
 addEventListener("ttr-forge-preview", ({ detail: parts }) => {
@@ -549,8 +579,34 @@ function checksToText(res) {
 // ---------------- API ----------------
 async function api(path, body) {
   const res = await fetch(API + path, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+  if (res.status === 409) {
+    // a Mark 43 shape that is not made yet: forging it takes many minutes, so ask first, and only then send the request again
+    const info = await res.json().catch(() => ({}));
+    if (info.forgeNeeded && await askToForge(info.forgeNeeded.shape)) return api(path, { ...body, forgeConsent: true });
+    throw new Error("Not forged: the reference Mark 43 opens at once; this shape is made only when you agree to the time it takes.");
+  }
   if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? `HTTP ${res.status}`);
   return res.json();
+}
+/** What forging a custom Mark 43 costs on this device, from the measured runs: 25 minutes in Chrome with four helper workers, about 2.6 times
+ *  that in a slow headless browser; up to 6 GB of memory. */
+function forgeEstimate() {
+  const cores = navigator.hardwareConcurrency || 4, helpers = Math.min(4, Math.max(0, cores - 2)), lo = Math.round((25 * 5) / (1 + helpers)), hi = Math.round(lo * 2.6);
+  const mem = navigator.deviceMemory;
+  return { lo, hi, cores, memNote: mem && mem < 8 ? ` This device reports ${mem} GB of memory, so the forge may run out of memory and stop.` : "" };
+}
+function askToForge(shape) {
+  const e = forgeEstimate(), what = [shape.bulk !== 1 ? `build ${shape.bulk}` : "", shape.shoulder !== 1 ? `pauldrons ${shape.shoulder}` : "", shape.panels !== "film" ? `${shape.panels} panels` : ""].filter(Boolean).join(", ");
+  return new Promise((done) => {
+    // a native modal dialog: focus stays inside it, and Escape is the same as Cancel
+    const box = h("dialog", { id: "forgeAsk", class: "forge-ask", "aria-labelledby": "forgeAskTitle" },
+      h("form", { method: "dialog", class: "forge-ask-card" }, h("h3", { id: "forgeAskTitle" }, "Forge a custom Mark 43?"),
+        h("p", null, `The reference suit opens at once. This one (${what || "a custom shape"}) has to be made in your browser: about ${e.lo} to ${e.hi} minutes on this device (${e.cores} cores) and up to 6 GB of memory.${e.memNote} The page stays usable, you can cancel at any time, and the result is kept for next time.`),
+        h("div", { class: "forge-ask-buttons" }, h("button", { value: "cancel" }, "Cancel"), h("button", { value: "forge", class: "primary", autofocus: "" }, "Forge it"))));
+    box.addEventListener("close", () => { const yes = box.returnValue === "forge"; box.remove(); done(yes); });
+    document.body.append(box);
+    box.showModal();
+  });
 }
 
 function applyResult(res, label, diffLines) {
@@ -564,6 +620,7 @@ function applyResult(res, label, diffLines) {
   revealNext = revealNext ?? "soft";
   document.body.classList.remove("busy");
   buildRobot(res.robot); renderTree(); renderSliders(); renderInspector(); renderHistory(); renderDiff(diffLines); renderBom(state.bom);
+  motionUI.robotChanged();
   renderCards(); refreshCircuit();
   status(checksToText(res));
 }
@@ -572,6 +629,7 @@ function loadVersion(i) {
   const v = state.versions[i]; if (!v) return;
   state.version = i; state.id = v.id; state.robot = v.robot; state.recipe = v.recipe ?? null; state.urdf = v.urdf; state.xacro = v.xacro; state.jointValues = { ...(v.robot?.metadata?.design?.home ?? {}) }; state.selection = null;
   buildRobot(v.robot); renderTree(); renderSliders(); renderInspector(); renderHistory(); renderCards(); refreshCircuit();
+  motionUI.robotChanged();
 }
 
 async function doGenerate(prompt) {
@@ -583,7 +641,8 @@ async function doGenerate(prompt) {
   if (!first) sheet.go("peek");   // on phones, get out of the way of the reveal
   first = false;
   try {
-    if (state.arduino) await doArduino(prompt);
+    if (looksLikeParts(prompt)) await doPartsPrompt(prompt);
+    else if (state.arduino) await doArduino(prompt);
     else { const res = await api("/api/robots/generate", { prompt }); state.versions = []; state.recipe = { p: prompt }; applyResult(res, prompt.slice(0, 40)); }
   }
   catch (e) { revealNext = null; status("✗ " + e.message, "err"); }
@@ -642,6 +701,9 @@ function renderCards() {
   const printedNames = new Set((d?.printed ?? []).map((p) => p.name));
   const step = !!r?.links.some((l) => l.geometry.type === "mesh" && l.geometry.part === "cad" && printedNames.has(l.name));
   $("[data-dl=cad] small").textContent = !r ? "STEP + STL" : !d ? "OpenSCAD + STL" : step ? "STEP + STL" : "STL";
+  $("[data-dl=sketch]").hidden = !d?.firmware;
+  $("[data-dl=sketch] b").textContent = d?.firmware?.language === "python" ? "Pi script" : "Arduino sketch";
+  $("[data-dl=shopping]").hidden = !r?.metadata?.inventory;
   document.title = r ? `${r.robot_name.replace(/_/g, " ")} · Text to Robot` : "Text to Robot";
   // the parts list total (bought parts, filament, fasteners, wiring), so the summary, the parts list and the tier cards agree
   const cost = state.bom?.total ?? d?.performance?.cost_usd;
@@ -673,7 +735,7 @@ function renderCards() {
 }
 
 // ---------------- navigation ----------------
-const PANES = ["design", "arduino", "model", "build", "share"];
+const PANES = ["design", "arduino", "model", "build", "share", "community"];
 function jump(section) {
   const i = PANES.indexOf(section), pane = document.querySelector(`.pane[data-section="${section}"]`);
   if (!pane) return;
@@ -687,6 +749,38 @@ function jump(section) {
   document.querySelectorAll(".pane").forEach((p) => p.classList.toggle("active", p === pane));
   $("#panes").scrollTop = 0;
   popIn(pane);
+}
+
+// ---------------- community board (community.js) ----------------
+// Hidden unless community.json names a server. Nothing is sent until the person presses "Post publicly" in the share
+// form, and the feed is read only when the Community tab is opened.
+async function initCommunity() {
+  const cm = await import("./community.js");
+  const cfg = await cm.loadConfig();
+  if (!cfg) return;
+  const board = cm.createBoard(cfg, { product: "text-to-robot" });
+  document.body.classList.add("community");
+  document.querySelectorAll("[data-cm]").forEach((x) => { x.hidden = false; });
+  document.querySelectorAll("[data-gallery]").forEach((x) => { x.hidden = true; });
+  let feed;
+  $('.dock-btn[data-jump="community"]').addEventListener("click", () => { if (feed) feed.reload(); else feed = board.feed($("#communityFeed")); });
+  $("#shareBlog").onclick = async () => {
+    if (!state.robot) return;
+    try {
+      // how it was made (prompt, Arduino tier, changes) when there is a recipe, else the whole design as a share link
+      const recipe = state.recipe?.p ? `make=${cm.b64url(JSON.stringify(state.recipe))}`
+        : /#(robot=[A-Za-z0-9_-]+)/.exec(STATIC ? await STATIC.shareUrl(state.robot) : "")?.[1];
+      if (!recipe) { status("✗ This design cannot be shared from here.", "err"); return; }
+      await board.share({ title: state.robot.robot_name.replace(/_/g, " "), recipe, snapshot: () => {
+        renderer.render(scene, camera);
+        // only the part of the view not under the docked panel
+        const c = renderer.domElement, r = c.getBoundingClientRect(), panel = $("#sheet").getBoundingClientRect();
+        const w = panel.left > r.left + r.width * 0.4 && panel.left < r.right ? panel.left - r.left : r.width;
+        return { canvas: c, crop: { x: 0, y: 0, w, h: r.height } };
+      } });
+    } catch (e) { status(`✗ ${e.message}`, "err"); }
+  };
+  board.deleteFromLink();
 }
 
 // ---------------- publish (opt-in) and gallery ----------------
@@ -748,6 +842,8 @@ async function handleDownload(kind) {
   if (kind === "schematic") { const r = await circuits("schematic"); return download(`${name}_schematic.zip`, await makeZipDeflated({ [`${name}_schematic.pdf`]: Uint8Array.from(atob(r.pdf.b64), (c) => c.charCodeAt(0)), [`${name}_schematic.svg`]: r.svg })); }
   if (kind === "wiring3d") { const res = await fetch(API + "/api/engine/electronics-glb", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ robot: state.robot }) }); if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? `HTTP ${res.status}`); return download(`${name}_electronics.glb`, new Blob([await res.arrayBuffer()], { type: "model/gltf-binary" })); }
   if (kind === "breadboard") { const r = await circuits("breadboard"); return download(`${name}_breadboard.svg`, r.svg, "image/svg+xml"); }
+  if (kind === "sketch") { const f = await api("/api/engine/firmware", { robot: state.robot }); return download(f.name, f.code, "text/plain"); }
+  if (kind === "shopping") { const bom = state.bom ?? (await api("/api/robots/bom", { robot: state.robot })).bom; return download(`${name}_still_to_buy.md`, shoppingMarkdown(bom), "text/markdown"); }
   if (kind === "train") { const { files } = await api("/api/robots/training", { robot: state.robot }); return download(`${name}_training.zip`, await makeZipDeflated(files)); }
   if (kind === "share") {
     if (!state.id) return;
@@ -851,6 +947,7 @@ document.querySelectorAll("[data-arduino]").forEach((b) => (b.onclick = () => se
 document.querySelectorAll(".dock-btn").forEach((b) => (b.onclick = () => { haptic(6); jump(b.dataset.jump); }));
 $("#publishBtn").onclick = publish;
 $("#loadGallery").onclick = loadGallery;
+initCommunity().catch(() => {});
 $("#importRobot").onclick = () => $("#robotFile").click();
 $("#robotFile").onchange = async (event) => {
   const file=event.target.files[0];if(!file)return;
@@ -863,6 +960,109 @@ $("#robotFile").onchange = async (event) => {
   finally {setBusy(button,false,"Import JSON");event.target.value="";}
 };
 $("#budget").oninput = () => { clearTimeout(window.__bt); window.__bt = setTimeout(refreshBom, 350); };
+
+// ---------------- My parts: what you have -> the robots it builds ----------------
+// state.parts: catalog key -> qty, from the text box, the search and the suggestion buttons; unknown lines stay listed
+const parts = { have: new Map(), names: new Map(), unknown: [], extras: [], notes: [], options: [], text: "" };
+const looksLikeParts = (t) => /^\s*(i\s+(have|got|own|bought)|i've\s+got|i\s+already\s+have|mere\s+(paas|pass|pas)|मेरे\s+पास|my\s+(parts|kit|parts\s+bin)\s+(has|have|contains?|is)|(parts|inventory|kit\s+contents|shopping\s+list|contents)\s*:)/i.test(t) || t.split("\n").filter((l) => /^\s*([-*•]|\d+\s*x?\s)/.test(l)).length >= 3;
+function openParts(open = true) { $("#partsPanel").hidden = !open; $("#partsBtn").setAttribute("aria-expanded", String(open)); haptic(8); if (open) sheet.atLeast("half"); }
+$("#partsBtn").onclick = () => openParts($("#partsPanel").hidden);
+async function readPartsText(text) {
+  parts.text = text;
+  const inv = await api("/api/engine/parse-inventory", { text });
+  // the text owns what it lists; parts added by search or suggestion stay
+  for (const [k, v] of [...parts.have]) if (v.from === "text") parts.have.delete(k);
+  for (const i of inv.items) { const cur = parts.have.get(i.key); parts.have.set(i.key, { qty: (cur?.qty ?? 0) + i.qty, from: cur ? cur.from : "text", name: i.name, assumed: i.assumed, note: i.note }); }
+  parts.unknown = inv.unknown; parts.extras = inv.extras; parts.notes = inv.notes;
+  renderParts();
+}
+function renderParts() {
+  const list = $("#partsList"); list.replaceChildren();
+  for (const [key, v] of parts.have) {
+    const row = el("div", "partrow"), nm = el("div", "nm", v.name.split(" (")[0]);
+    if (v.assumed || v.note) nm.append(el("small", null, v.assumed ? `read as ${v.assumed}` : v.note));
+    const q = el("div", "qty"), minus = el("button", null, "−"), plus = el("button", null, "+"), n = el("b", null, String(v.qty));
+    minus.type = plus.type = "button"; minus.setAttribute("aria-label", `one ${v.name} less`); plus.setAttribute("aria-label", `one more ${v.name}`);
+    minus.onclick = () => { v.qty--; if (v.qty <= 0) parts.have.delete(key); renderParts(); };
+    plus.onclick = () => { v.qty++; renderParts(); };
+    q.append(minus, n, plus);
+    row.dataset.key = key;
+    row.append(nm, q); list.append(row);
+  }
+  const unk = $("#partsUnknown"); unk.replaceChildren();
+  for (const u of parts.unknown) {
+    const d = el("div", "unk"); d.append(el("b", null, "Not recognised: "), document.createTextNode(`"${u.raw}". Closest parts I know: `));
+    for (const sg of u.suggestions) { const b = el("button", null, sg.name.split(" (")[0]); b.type = "button"; b.onclick = () => { addPart(sg.key, sg.name, u.qty); parts.unknown = parts.unknown.filter((x) => x !== u); renderParts(); }; d.append(b); }
+    unk.append(d);
+  }
+  for (const e of parts.extras) unk.append(el("div", "unk", `Kept aside: ${e.qty > 1 ? e.qty + "x " : ""}${e.what} (${e.note}).`));
+  $("#partsGo").disabled = !parts.have.size;
+}
+function addPart(key, name, qty = 1) { const cur = parts.have.get(key); parts.have.set(key, { qty: (cur?.qty ?? 0) + qty, from: cur?.from ?? "picked", name: name ?? cur?.name ?? key }); }
+$("#partsText").oninput = () => { clearTimeout(window.__pt); window.__pt = setTimeout(() => readPartsText($("#partsText").value).catch((e) => toast("✗ " + e.message, "err")), 350); };
+$("#partsSearch").oninput = () => { clearTimeout(window.__ps); window.__ps = setTimeout(searchPartsBox, 200); };
+async function searchPartsBox() {
+  const q = $("#partsSearch").value, box = $("#partsResults"); box.replaceChildren();
+  if (!q.trim()) return;
+  const { parts: found } = await api("/api/engine/parts-search", { query: q, limit: 8 });
+  for (const f of found) {
+    const b = el("button", "chip", `+ ${f.name.split(" (")[0]}`); b.type = "button"; b.setAttribute("role", "option"); b.title = `${f.name}, $${f.price_usd}`;
+    b.onclick = () => { addPart(f.key, f.name); renderParts(); toast(`Added ${f.name.split(" (")[0]}`); };
+    box.append(b);
+  }
+  if (!found.length) box.append(el("div", "hint", "No catalog part matches. Describe it in the text box and it will be listed as not recognised."));
+}
+const inventoryOf = () => Object.fromEntries([...parts.have].map(([k, v]) => [k, v.qty]));
+async function findRobots() {
+  if (!parts.have.size) return;
+  const go = $("#partsGo"); setBusy(go, true);
+  try {
+    const r = await api("/api/engine/from-parts", { inventory: inventoryOf(), options: { design: "none" } });
+    parts.options = r.options; renderPartCards(r);
+    if (r.options.length) await choosePart(0);
+  } finally { setBusy(go, false, "Find robots"); }
+}
+$("#partsGo").onclick = () => findRobots().catch((e) => status("✗ " + e.message, "err"));
+function renderPartCards(r) {
+  const box = $("#partsCards"); box.replaceChildren();
+  $("#partsNotes").textContent = [...(r.notes ?? [])].join("  ·  ");
+  if (!r.options.length) {
+    const c = r.cannot;
+    box.append(h("div", { class: "tobuy" }, h("div", { class: "panel-h" }, "Nothing safe to build yet"),
+      h("div", { class: "hint" }, `Can't build anything safe because ${c?.reason ?? "the list is empty"}. Add ${c?.add.map((a) => `${a.qty}x ${a.key.replace(/_/g, " ")} ($${a.usd})`).join(", ") || "a motor or a servo"} and it makes ${c?.then ?? "a robot"}.`))); status([`✗ Can't build anything safe because ${c?.reason}.`, `Add: ${c?.add.map((a) => `${a.qty}x ${a.key}`).join(", ")}`], "err"); return;
+  }
+  r.options.forEach((o, i) => {
+    const b = el("button", "pcard"); b.type = "button"; b.style.setProperty("--k", i); b.dataset.option = o.id;
+    const img = el("img"); img.src = o.thumbnail; img.alt = o.label; img.loading = "lazy"; img.draggable = false; img.onerror = () => img.classList.add("noimg");
+    b.append(img, el("div", "pl", o.label), el("div", "ph", o.headline), el("div", "pb", o.blurb));
+    for (const h of o.honesty) b.append(el("div", "pw", "⚠ " + h));
+    b.onclick = () => choosePart(i).catch((e) => status("✗ " + e.message, "err"));
+    box.append(b);
+  });
+}
+async function choosePart(i) {
+  const o = parts.options[i]; if (!o) return;
+  document.querySelectorAll(".pcard").forEach((c, k) => c.classList.toggle("sel", k === i));
+  status(`Designing the ${o.label.toLowerCase()} from your parts… (a car takes about a minute, an arm a few)`);
+  document.body.classList.add("busy"); revealNext = "strong";
+  try {
+    const r = await api("/api/engine/from-parts", { inventory: inventoryOf(), options: { design: o.id } });
+    const d = r.designs[o.id]; if (!d) throw new Error("that option could not be designed");
+    const res = await api("/api/robots/import", { robot: d.robot });
+    state.versions = []; state.recipe = null;
+    applyResult({ ...res, summary: d.summary, warnings: [...o.honesty, ...(d.failing.length ? [`failing checks: ${d.failing.join(", ")}`] : [])] }, `${o.label} (my parts)`);
+    toast(`${o.label}: $${d.to_buy_usd.toFixed(0)} still to buy`);
+  } finally { document.body.classList.remove("busy"); }
+}
+/** "I have ..." typed in the prompt bar: read it into the panel and design the best option */
+async function doPartsPrompt(prompt) {
+  openParts(true); $("#partsText").value = prompt; parts.have.clear();
+  await readPartsText(prompt);
+  status(`Reading your parts: ${[...parts.have.values()].map((v) => `${v.qty}x ${v.name.split(" (")[0]}`).join(", ") || "none recognised"}`);
+  await findRobots();
+  jump("design");
+}
+window.__ttrParts = parts;
 
 // ---------------- the dial: choose a body, press the core ----------------
 const FAMILIES = [
@@ -929,6 +1129,8 @@ initExamples(); initTemplates(); initMode();
       return;
     } catch { status("\u2717 gallery link is damaged; generating a default", "err"); }
   }
+  // #parts: straight to My parts (a link from a tutorial or another page), nothing designed until the list is in
+  if (/^#parts\b/.test(location.hash)) { openParts(true); $("#partsText").focus(); return; }
   if (STATIC && location.hash.includes("robot=")) {
     try { const robot = await STATIC.sharedRobot(); history.replaceState(null, "", location.pathname); applyResult(await api("/api/robots/import", { robot }), "shared robot"); return; }
     catch { status("\u2717 shared robot link is damaged; generating a default", "err"); }
@@ -945,4 +1147,4 @@ initExamples(); initTemplates(); initMode();
   }
   doGenerate("Create a 6 DOF robotic arm with a parallel gripper");
 })();
-window.__ttr = { get preview() { return { ...preview, parts: [...state.meshes].filter(([name]) => state.robot.links.find(l => l.name === name)?.geometry.type === 'mesh').map(([name, group]) => ({ name, loaded: !!group.children[0].userData.meshLoaded, triangles: group.children[0].geometry.getAttribute('position').count / 3 })) }; }, camera, controls, frameRobot, get robot(){return state.robot} };
+window.__ttr = { get motion() { return window.__ttrMotion; }, robotGroup, renderer, get preview() { return { ...preview, parts: [...state.meshes].filter(([name]) => state.robot.links.find(l => l.name === name)?.geometry.type === 'mesh').map(([name, group]) => ({ name, loaded: !!group.children[0].userData.meshLoaded, triangles: group.children[0].geometry.getAttribute('position').count / 3 })) }; }, camera, controls, frameRobot, get robot(){return state.robot} };

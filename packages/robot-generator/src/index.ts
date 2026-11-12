@@ -9,3 +9,5 @@ export { exportTraining, classify } from "@ttr/training-export";
 export * from "./meshes.ts";
 export { buildPart, meshGeometry, listParts, toStlBinary, toStlAscii } from "@ttr/mesh";
 export { arduinoOptions, type ArduinoOption, type ArduinoResult } from "./arduino.ts";
+export * from "./inventory.ts";
+export * from "./parts-mode.ts";

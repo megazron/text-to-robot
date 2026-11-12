@@ -12,3 +12,5 @@ for (const [source, destination] of Object.entries(files)) {
   mkdirSync(dirname(target), { recursive: true });
   copyFileSync(`node_modules/three/${source}`, target);
 }
+// GIF encoder for "Download animation" (gifenc, MIT)
+for (const [source, destination] of Object.entries({ 'dist/gifenc.esm.js': 'gifenc.esm.js', 'LICENSE.md': 'GIFENC-LICENSE.md' })) copyFileSync(`node_modules/gifenc/${source}`, `apps/web/public/vendor/${destination}`);

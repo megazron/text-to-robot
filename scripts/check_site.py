@@ -10,6 +10,10 @@ with one. Arduino cases flip the Arduino switch first and check the price tiers.
     python scripts/check_site.py --only 12_mars_rover,18_arduino_car --no-downloads
     python scripts/check_site.py --update            (also writes examples/site_generation.json)
 
+The motion case (motion_ui) plays the site's default arm's purpose demo, downloads its GIF, joint CSV and ROS 2 trajectory, drags
+the arm's tool tip with the mouse in the Move mode (the joints must change and the tip must reach the dragged-to point), and
+drags it by touch in a phone-sized tab.
+
 Exit code 1 if any robot fails to generate, differs from its example, or logs a page error.
 """
 import argparse, base64, functools, hashlib, http.server, io, json, os, re, struct, sys, threading, time, zipfile
@@ -112,6 +116,87 @@ def press_generate(page, ms):
 
 
 forge_ctx = None
+
+
+def drag(page, x0, y0, dx, dy, touch=False, steps=12):
+    if not touch:
+        page.mouse.move(x0, y0); page.mouse.down()
+        for k in range(1, steps + 1): page.mouse.move(x0 + dx * k / steps, y0 + dy * k / steps); page.wait_for_timeout(40)
+        page.wait_for_timeout(400); page.mouse.up(); return
+    cdp = page.context.new_cdp_session(page)
+    pt = lambda x, y: [{"x": x, "y": y, "id": 1, "radiusX": 4, "radiusY": 4, "force": 1}]
+    cdp.send("Input.dispatchTouchEvent", {"type": "touchStart", "touchPoints": pt(x0, y0)})
+    for k in range(1, steps + 1): cdp.send("Input.dispatchTouchEvent", {"type": "touchMove", "touchPoints": pt(x0 + dx * k / steps, y0 + dy * k / steps)}); page.wait_for_timeout(40)
+    page.wait_for_timeout(400); cdp.send("Input.dispatchTouchEvent", {"type": "touchEnd", "touchPoints": []})
+
+
+def motion_case(browser, case):
+    """Play the default arm's purpose demo, download the GIF and the trajectory files, drag the tool tip by mouse and by touch."""
+    row = {"case": case["id"], "prompt": "(the arm the site opens with)", "mode": "motion", "pass": False, "problems": []}
+    ms = args.timeout * 1000
+    for profile in ("desktop", "phone"):
+        opts = {"viewport": {"width": 1400, "height": 900}, "accept_downloads": True} if profile == "desktop" else {"viewport": {"width": 390, "height": 844}, "device_scale_factor": 2, "is_mobile": True, "has_touch": True, "accept_downloads": True}
+        ctx = browser.new_context(**opts); page = ctx.new_page(); errors = []
+        page.route("**/*", lambda r: r.continue_() if r.request.url.startswith(origin) or r.request.url.startswith(("data:", "blob:")) else r.abort())
+        page.on("pageerror", lambda e: errors.append(str(e)))
+        page.on("console", lambda m: errors.append(m.text[:300]) if m.type == "error" else None)
+        try:
+            page.goto(url)
+            page.wait_for_function("window.__ttr?.robot?.links.length>0 && window.__ttr.preview.ready && window.__ttr.motion?.list?.length>0", timeout=ms); wait_idle(page, ms)
+            m = page.evaluate("(()=>{const M=__ttr.motion;return {list:M.list.map(x=>x.name),def:(M.list.find(x=>x.default)||{}).name,tips:M.kin.tips.length}})()")
+            row[f"{profile}_motions"] = m["list"]
+            if profile == "desktop":
+                page.click("#motionBtn")
+                page.select_option("#motionPick", m["def"])
+                page.wait_for_function(f"__ttr.motion.traj && __ttr.motion.traj.name==={json.dumps(m['def'])} && __ttr.motion.traj.collisions", timeout=ms)
+                page.click("#motionPlay"); page.wait_for_timeout(2500)
+                played = page.evaluate("(()=>{const M=__ttr.motion;return {t:M.t,playing:M.playing,collide:M.traj.collisions?M.traj.collisions.colliding_frames:null,checked:!!M.traj.collisions?.checked,limits:M.traj.limits}})()")
+                row["played"] = played
+                if played["t"] < 0.3: row["problems"].append(f"the motion did not play: {played}")
+                if played["collide"]: row["problems"].append(f"{m['def']} collides in {played['collide']} frames")
+                if not played["checked"]: row["problems"].append("the motion was not checked for collisions")
+                page.click("#motionPlay")
+                for kind, ext in (("gif", ".gif"), ("csv", ".csv"), ("ros2", ".yaml")):
+                    with page.expect_download(timeout=ms) as dl: page.select_option("#motionGet", kind)
+                    data = Path(dl.value.path()).read_bytes(); name = dl.value.suggested_filename
+                    row[f"download_{kind}"] = {"file": name, "bytes": len(data)}
+                    if not name.endswith(ext): row["problems"].append(f"{kind}: got {name}")
+                    if kind == "gif":
+                        frames = data.count(b"\x21\xf9\x04")   # one graphic control extension per frame
+                        row["download_gif"]["frames"] = frames
+                        if data[:6] != b"GIF89a" or frames < 20: row["problems"].append(f"GIF: {data[:6]!r}, {frames} frames")
+                        (args.out / "motion_ui.gif").write_bytes(data)
+                    if kind == "csv":
+                        head = data.decode().splitlines()[0].split(",")
+                        want = ["time_s"] + page.evaluate("__ttr.motion.traj.joints")
+                        if head != want: row["problems"].append(f"CSV columns {head} are not the joints {want}")
+                    if kind == "ros2" and b"joint_names:" not in data: row["problems"].append("ROS 2 trajectory has no joint_names")
+            # drag the tool tip in the Move mode (the motion bar closed, the robot framed in view)
+            if profile == "desktop":
+                page.click("#motionBtn"); page.evaluate("__ttr.frameRobot()"); page.wait_for_timeout(500)
+                page.click("label:has(#moveMode)")
+            else: page.evaluate("document.querySelector('#moveMode').click()")
+            page.wait_for_timeout(300)
+            tip = page.evaluate("__ttr.motion.tipScreen(0)")
+            on = page.evaluate(f"(()=>{{const e=document.elementFromPoint({tip['x']},{tip['y']});return e&&e.tagName}})()")
+            if on != "CANVAS": row["problems"].append(f"{profile}: the tool tip is under {on}, not in the open 3D view")
+            page.evaluate("__ttr.motion.lastDrag = null")
+            drag(page, tip["x"], tip["y"], -40, -30, touch=(profile == "phone"))
+            page.wait_for_function("__ttr.motion.lastDrag", timeout=60000)
+            res = page.evaluate("(()=>{const d=__ttr.motion.lastDrag;return d&&{kind:d.kind,reached:d.result?.reached,error_mm:d.result?.error_mm,values:d.result?.values,target:d.target}})()")
+            row[f"{profile}_drag"] = res
+            if not res or res["kind"] != "ik": row["problems"].append(f"{profile}: dragging the tool tip did not start an IK drag: {res}")
+            else:
+                moved = sum(abs(v - page.evaluate(f"__ttr.motion.kin.home[{json.dumps(k)}] ?? 0")) for k, v in (res["values"] or {}).items())
+                if moved < 0.02: row["problems"].append(f"{profile}: the joints did not move ({moved:.4f} rad)")
+                if not res["reached"] or res["error_mm"] > 1: row["problems"].append(f"{profile}: the tip is {res['error_mm']} mm from where it was dragged")
+            page.screenshot(path=str(args.out / f"motion_{profile}.png"))
+        except Exception as e:
+            row["problems"].append(f"{profile}: {type(e).__name__}: {str(e)[:300]}")
+        if errors: row["problems"].append(f"{profile} page errors: {errors[:2]}")
+        ctx.close()
+    row["pass"] = not row["problems"]
+    return row
 
 
 def run(browser, case):
@@ -262,14 +347,15 @@ cases = [{"id": f.name, "example": f.name, "mode": "prompt", "prompt": (f / "pro
 if not args.no_arduino:
     cases += [{"id": i, "example": e, "mode": "arduino", "must_match": m, "prompt": (root / "examples" / e / "prompt.txt").read_text()} for i, e, m in ARDUINO]
     cases += [{"id": i, "mode": "arduino", "prompt": p} for i, p in ARDUINO_TEXT]
-if args.only: keep = set(args.only.split(",")); cases = [c for c in cases if c["id"] in keep]
+cases += [{"id": "motion_ui", "mode": "motion", "prompt": ""}]
+if args.only: keep = set(args.only.split(",")); cases = [c for c in cases if c["id"] in keep or c.get("example") in keep]
 rows = []
 with sync_playwright() as p:
     opts = {"headless": True, "args": ["--no-sandbox", "--use-gl=angle", "--use-angle=swiftshader", "--enable-unsafe-swiftshader"]}
     if os.getenv("TTR_CHROMIUM"): opts["executable_path"] = os.environ["TTR_CHROMIUM"]
     browser = p.chromium.launch(**opts)
     for case in cases:
-        row = run(browser, case); rows.append(row)
+        row = motion_case(browser, case) if case["mode"] == "motion" else run(browser, case); rows.append(row)
         print(f"{'PASS' if row['pass'] else 'FAIL'} {row['case']:<24} generate {row.get('generate_s', '-')}s preview {row.get('preview_s', '-')}s {row.get('robot_name', '')}", flush=True)
         for problem in row["problems"]: print("     ", problem, flush=True)
         (args.out / "report.json").write_text(json.dumps({"rows": rows}, indent=2) + "\n")

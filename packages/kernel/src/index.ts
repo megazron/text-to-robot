@@ -415,6 +415,12 @@ function binaryStl(v: Vec3[], f: [number, number, number][], name: string): Uint
   return u8;
 }
 /** Build a part program into its exact solid and every file a maker needs. Call initKernel() first. */
+/** A quick bounding box from the shape's own geometry bounds: it contains the exact box, and costs almost nothing. */
+function looseBounds(s: Shape3D): number[][] {
+  const O = oc(), b = new O.Bnd_Box();
+  try { O.BRepBndLib.Add(s.wrapped, b, false); const lo = b.CornerMin(), hi = b.CornerMax(); const r = [[lo.X(), lo.Y(), lo.Z()], [hi.X(), hi.Y(), hi.Z()]]; lo.delete(); hi.delete(); return r; }
+  finally { b.delete(); }
+}
 export function exportPart(p: Program, quality: { tolerance?: number; angular?: number } = {}): PartFiles {
   if (!mf) throw new Error("initKernel() has not finished");
   // OpenCascade's mesher occasionally leaves a surface the weld cannot close (tangent fillets, near-coincident faces):
@@ -433,11 +439,21 @@ export function exportPart(p: Program, quality: { tolerance?: number; angular?: 
       const r = scoped(() => {
         let s = evaluate(a.edge ? p : { ...p, edge: 0 });
         if (a.clean) { try { s = keep(s.simplify() as Shape3D); } catch { /* keep the raw shape */ } }
-        const bb0 = s.boundingBox.bounds, diag = Math.hypot(bb0[1][0] - bb0[0][0], bb0[1][1] - bb0[0][1], bb0[1][2] - bb0[0][2]);
-        const tol = a.tol > 0 ? a.tol : Math.min(0.25, Math.max(0.05, diag / 1600));
-        const m = s.mesh({ tolerance: tol, angularTolerance: a.ang });
+        // The mesh tolerance comes from the part's exact bounding box, and on a filleted part that box costs more than the mesh
+        // when it is taken first (about 40 % of an Arduino arm's design time). Taken after a mesh it is cheap, so: a quick loose
+        // box (never smaller than the exact one) gives a first tolerance, the part is meshed, the exact box is read, and only if
+        // the exact box gives another tolerance is the mesh thrown away and made again. The result is the same mesh as before.
+        const tolOf = (b: number[][]) => Math.min(0.25, Math.max(0.05, Math.hypot(b[1][0] - b[0][0], b[1][1] - b[0][1], b[1][2] - b[0][2]) / 1600));
+        let m: ReturnType<Shape3D["mesh"]>, bb: Shape3D["boundingBox"];
+        if (a.tol > 0) {
+          m = s.mesh({ tolerance: a.tol, angularTolerance: a.ang }); bb = s.boundingBox;
+        } else {
+          const first = tolOf(looseBounds(s));
+          m = s.mesh({ tolerance: first, angularTolerance: a.ang }); bb = s.boundingBox;
+          const tol = tolOf(bb.bounds);
+          if (tol !== first) { oc().BRepTools.Clean(s.wrapped, true); m = s.mesh({ tolerance: tol, angularTolerance: a.ang }); }
+        }
         const w = weld(m.vertices, m.triangles);
-        const bb = s.boundingBox;
         return {
           stl: binaryStl(w.v, w.f, p.name), step: stepText(s),
           mesh: { v: w.v.map((x) => [x[0] / 1000, x[1] / 1000, x[2] / 1000] as Vec3), f: w.f },

@@ -27,6 +27,7 @@
   "dependencies": {
     "@ttr/robot-schema": "*",
     "@ttr/urdf-generator": "*",
-    "@ttr/mesh": "*"
+    "@ttr/mesh": "*",
+    "@ttr/motion": "*"
   }
 }
