@@ -1214,7 +1214,7 @@
       ],
       "limit": {
         "lower": -1.75,
-        "upper": 1.75,
+        "upper": 0.79,
         "effort": 4.9033,
         "velocity": 5.94
       },
@@ -1269,7 +1269,7 @@
         1
       ],
       "limit": {
-        "lower": -2.1,
+        "lower": -1.48,
         "upper": 2.3,
         "effort": 2.942,
         "velocity": 4.42
@@ -1571,7 +1571,7 @@
   ],
   "metadata": {
     "generator": "text-to-robot design engine (real components + printed structure)",
-    "created": "2026-11-07T18:22:45.818Z",
+    "created": "2026-11-12T02:32:53.809Z",
     "inferred_fields": [
       "links.base_link.inertia",
       "links.control_case.inertia",
@@ -4242,6 +4242,16 @@
           "detail": "holding the payload stretched out draws ~1.3 A of the 6 A supply"
         },
         {
+          "name": "clearance:home",
+          "pass": true,
+          "detail": "no printed part or component intersects another at the home pose"
+        },
+        {
+          "name": "clearance:motion",
+          "pass": true,
+          "detail": "no interference over 0 combined poses at the joint limits"
+        },
+        {
           "name": "wiring:ports",
           "pass": true,
           "detail": "all 28 terminals in use are wired; spare pins are declared"
@@ -4372,7 +4382,8 @@
         "Arm clamps or bolts to the bench through the four M5 holes in the base; it is not free-standing at full reach.",
         "Every pitch joint is a clevis: one cheek bolts to the servo horn, the other turns on a 625ZZ bearing on an M5 bolt screwed into a heat-set insert in a boss on the back of the servo's cradle, so the servo's own bearing carries no bending moment. An M5 washer sits between the boss and the bearing's inner race.",
         "Print the links in PETG or PLA+ with 4 perimeters and 30 % gyroid infill, cradle opening up; press the 625ZZ bearings into their seats (16.15 mm) and set the M5 inserts with a soldering iron.",
-        "Torques are exact static gravity loads of this geometry: the worst pose (stretched out with the payload) must be held within each actuator's rated continuous torque, peaks get +30 %, and each joint must still reach >= 1 rad/s loaded on its torque-speed line."
+        "Torques are exact static gravity loads of this geometry: the worst pose (stretched out with the payload) must be held within each actuator's rated continuous torque, peaks get +30 %, and each joint must still reach >= 1 rad/s loaded on its torque-speed line.",
+        "Joint limits trimmed to the collision-free range found by exact solid sweeps: shoulder_pitch [-1.75, 1.75] -> [-1.75, 0.79]; elbow_pitch [-2.10, 2.30] -> [-1.48, 2.30]."
       ],
       "fasteners": {
         "M5 x 12 socket head (base to bench)": 4,
@@ -4823,8 +4834,8 @@
                 "color": "red",
                 "typical_a": 0.9,
                 "peak_a": 3.15,
-                "length_mm": 340,
-                "drop_v": 0.068
+                "length_mm": 325,
+                "drop_v": 0.065
               },
               {
                 "id": "W8",
@@ -4836,8 +4847,8 @@
                 "color": "black",
                 "typical_a": 0.9,
                 "peak_a": 3.15,
-                "length_mm": 340,
-                "drop_v": 0.068
+                "length_mm": 325,
+                "drop_v": 0.065
               },
               {
                 "id": "W9",
@@ -4849,16 +4860,16 @@
                 "color": "yellow",
                 "typical_a": 0.02,
                 "peak_a": 0.02,
-                "length_mm": 340,
+                "length_mm": 325,
                 "drop_v": 0.002
               }
             ],
             "od_mm": 3.2,
             "route_mm": 178,
             "service_mm": 40,
-            "slack_mm": 60,
+            "slack_mm": 45,
             "termination_mm": 60,
-            "length_mm": 340,
+            "length_mm": 325,
             "path_mm": [
               [
                 0,
@@ -4898,12 +4909,12 @@
                 "type": "revolute",
                 "travel": [
                   -1.75,
-                  1.75
+                  0.79
                 ],
                 "home_mm": 44.3,
-                "need_mm": 68.3,
-                "slack_mm": 60,
-                "provided_mm": 104.3
+                "need_mm": 55.1,
+                "slack_mm": 45,
+                "provided_mm": 89.3
               }
             ],
             "exit": null
@@ -5001,7 +5012,7 @@
                 "joint": "elbow_pitch",
                 "type": "revolute",
                 "travel": [
-                  -2.1,
+                  -1.48,
                   2.3
                 ],
                 "home_mm": 44.2,
@@ -5178,7 +5189,7 @@
             "unit": "m",
             "unit_usd": 0.4,
             "subtotal_usd": 0.84,
-            "spec": "0.327 mm2, rated 3.5 A in a bundle; 1.89 m cut + 10 % waste",
+            "spec": "0.327 mm2, rated 3.5 A in a bundle; 1.86 m cut + 10 % waste",
             "source": "estimated"
           },
           {
@@ -5196,7 +5207,7 @@
             "unit": "m",
             "unit_usd": 0.3,
             "subtotal_usd": 0.51,
-            "spec": "0.128 mm2, rated 1.1 A in a bundle; 1.50 m cut + 10 % waste",
+            "spec": "0.128 mm2, rated 1.1 A in a bundle; 1.48 m cut + 10 % waste",
             "source": "estimated"
           },
           {
@@ -5273,7 +5284,7 @@
           }
         ],
         "cost_usd": 7.37,
-        "total_wire_m": 5.46,
+        "total_wire_m": 5.41,
         "notes": [
           "Mains side: IEC inlet to the supply's AC terminals with insulated spades, earth wired first, case closed before plugging in. Have it checked if you are not qualified to wire mains."
         ],

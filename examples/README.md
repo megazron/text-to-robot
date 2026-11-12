@@ -8,9 +8,9 @@ Every example is regenerated from its prompt by `node scripts/build_examples.ts`
 
 | Example | Robot | Parts cost | Mass | Design checks | Simulation |
 |---|---|--:|--:|--:|--:|
-| [01_arm_2dof](01_arm_2dof/README.md)<br><img src="01_arm_2dof/studio.gif" width="220"> | 2-DOF arm, 350 mm reach, 0.1 kg payload, Feetech STS serial-bus servos (12 V) | $145.15 | 0.55 kg | 29/29 | 4/4 |
-| [02_arm_6dof](02_arm_6dof/README.md)<br><img src="02_arm_6dof/studio.gif" width="220"> | 6-DOF arm, 455 mm reach, 0.1 kg payload, ROBOTIS DYNAMIXEL X-series (12 V) | $1168.42 | 0.948 kg | 41/41 | 4/4 |
-| [03_arm_7dof](03_arm_7dof/README.md)<br><img src="03_arm_7dof/studio.gif" width="220"> | 7-DOF arm, 500 mm reach, 0.1 kg payload, ROBOTIS DYNAMIXEL X-series (12 V) | $1216.73 | 1.053 kg | 44/44 | 4/4 |
+| [01_arm_2dof](01_arm_2dof/README.md)<br><img src="01_arm_2dof/studio.gif" width="220"> | 2-DOF arm, 350 mm reach, 0.1 kg payload, Feetech STS serial-bus servos (12 V) | $145.15 | 0.55 kg | 31/31 | 4/4 |
+| [02_arm_6dof](02_arm_6dof/README.md)<br><img src="02_arm_6dof/studio.gif" width="220"> | 6-DOF arm, 455 mm reach, 0.1 kg payload, ROBOTIS DYNAMIXEL X-series (12 V) | $1168.28 | 0.948 kg | 43/43 | 4/4 |
+| [03_arm_7dof](03_arm_7dof/README.md)<br><img src="03_arm_7dof/studio.gif" width="220"> | 7-DOF arm, 500 mm reach, 0.1 kg payload, ROBOTIS DYNAMIXEL X-series (12 V) | $1216.62 | 1.053 kg | 46/46 | 4/4 |
 | [04_scara](04_scara/README.md)<br><img src="04_scara/studio.gif" width="220"> | SCARA arm: 0.30 m reach, 159 mm Z stroke, 0.5 kg payload; NEMA17 + 5.18:1 planetary on J1/J2, Tr8x8 lead-screw Z, Feetech STS3215 C047 12 V 30 kg.cm (1:345) wrist, parallel gripper | $359 | 4.985 kg | 56/56 | 2/2 |
 | [05_diff_drive](05_diff_drive/README.md)<br><img src="05_diff_drive/studio.gif" width="220"> | Differential-drive base: pololu_37d_30to1_64cpr gearmotors, 1.487 kg, 1.24 m/s, 1.8 h on 1 x lipo_3s_2200, rpi5 | $512.23 | 1.487 kg | 49/49 | 3/3 |
 | [06_four_wheel](06_four_wheel/README.md)<br><img src="06_four_wheel/studio.gif" width="220"> | Four-wheel skid-steer base: pololu_37d_30to1_64cpr gearmotors, 2.396 kg, 1.24 m/s, 1.47 h on 1 x lipo_3s_2200, rpi5 | $695.1 | 2.396 kg | 61/61 | 3/3 |
@@ -24,6 +24,6 @@ Every example is regenerated from its prompt by `node scripts/build_examples.ts`
 | [14_iron_man_mark_43](14_iron_man_mark_43/README.md)<br><img src="14_iron_man_mark_43/studio.gif" width="220"> | Iron Man Mark 43 (full wearable suit): 358 printed pieces, 8.6 kg filament, motorised faceplate, $529 incl. filament | $565.86 | 9.99 kg | 475/475 | 2/2 |
 | [15_wall_e](15_wall_e/README.md)<br><img src="15_wall_e/studio.gif" width="220"> | Arduino WALL-E: TPU tracks on 4 TT motors, pan/tilt binocular head, two-joint arms with gripping hands, 1.14 kg, $98 of parts | $117.27 | 1.141 kg | 71/71 | 3/3 |
 | [16_eva](16_eva/README.md)<br><img src="16_eva/studio.gif" width="220"> | EVA-style companion robot: 3.463 kg, hidden diff-drive base, pan head with camera, two servo fins | $649.04 | 3.463 kg | 85/85 | 3/3 |
-| [17_baymax](17_baymax/README.md)<br><img src="17_baymax/studio.gif" width="220"> | Baymax-style service robot: 5.571 kg, 1.01 m tall, 4WD hidden base, two 4-servo arms, pan head with camera | $920.04 | 5.571 kg | 87/87 | 3/3 |
+| [17_baymax](17_baymax/README.md)<br><img src="17_baymax/studio.gif" width="220"> | Baymax-style service robot: 5.571 kg, 1.01 m tall, 4WD hidden base, two 4-servo arms, pan head with camera | $919.89 | 5.571 kg | 87/87 | 3/3 |
 | [18_arduino_car](18_arduino_car/README.md)<br><img src="18_arduino_car/studio.gif" width="220"> | Arduino car (stronger (4WD, ramps up to 10 deg)): 4WD on TT gear motors, 0.60 kg, 0.54 m/s, 99 min, $51 of parts | $58.13 | 0.605 kg | 36/36 | 3/3 |
 | [19_arduino_arm](19_arduino_arm/README.md)<br><img src="19_arduino_arm/studio.gif" width="220"> | Arduino desk arm: 3 DOF + claw, 280 mm reach, 20 g payload, 0.82 kg, $50 of parts | $63.54 | 0.818 kg | 40/40 | 3/3 |

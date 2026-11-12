@@ -5560,8 +5560,8 @@
         1
       ],
       "limit": {
-        "lower": -1.75,
-        "upper": 1.75,
+        "lower": -0.616,
+        "upper": 1.571,
         "effort": 9.9,
         "velocity": 3.24
       },
@@ -5617,7 +5617,7 @@
       ],
       "limit": {
         "lower": -2.1,
-        "upper": 2.3,
+        "upper": 1.454,
         "effort": 9.9,
         "velocity": 3.88
       },
@@ -6084,7 +6084,7 @@
   ],
   "metadata": {
     "generator": "text-to-robot design engine (real components + printed structure)",
-    "created": "2026-11-07T21:49:26.811Z",
+    "created": "2026-11-12T02:36:57.621Z",
     "inferred_fields": [
       "links.arm_base_link.inertia",
       "links.arm_base_yaw_actuator.inertia",
@@ -11723,6 +11723,7 @@
         "cost_breakdown": "catalog parts $3785, filament 0.96 kg $24, fasteners $18, fabricated/other $95 (320 x 210 x 100 mm folded 2 mm aluminium body box (~$60); 320 x 210 x 3 mm aluminium lid, laser cut (~$35); power switch, 15 A fuse, wiring)"
       },
       "assumptions": [
+        "Joint limits trimmed to the collision-free range found by exact solid sweeps: arm_shoulder_pitch [-1.75, 1.75] -> [-0.62, 1.57]; arm_elbow_pitch [-2.10, 2.30] -> [-2.10, 1.45].",
         "Rocker-bogie after the JPL Open Source Rover, 4 driven wheels, skid steering (the OSR's four corner-steering servos are left out; add them for less tyre scrub).",
         "The differential bar linking the two rockers through the body is modelled as a URDF mimic between the rocker pivots: a passive bar has no motor, and the model's rockers turn equally and opposite.",
         "Rockers and bogies are printed in PETG; for outdoor use print them in 6 bolt-on sections from aluminium channel instead (as the OSR does).",
@@ -14029,8 +14030,8 @@
                 "color": "red",
                 "typical_a": 1.45,
                 "peak_a": 5.6,
-                "length_mm": 330,
-                "drop_v": 0.117
+                "length_mm": 325,
+                "drop_v": 0.115
               },
               {
                 "id": "W44",
@@ -14042,8 +14043,8 @@
                 "color": "black",
                 "typical_a": 1.45,
                 "peak_a": 5.6,
-                "length_mm": 330,
-                "drop_v": 0.117
+                "length_mm": 325,
+                "drop_v": 0.115
               },
               {
                 "id": "W45",
@@ -14055,16 +14056,16 @@
                 "color": "yellow",
                 "typical_a": 0.02,
                 "peak_a": 0.02,
-                "length_mm": 330,
+                "length_mm": 325,
                 "drop_v": 0.002
               }
             ],
             "od_mm": 3.2,
             "route_mm": 163.1,
             "service_mm": 40,
-            "slack_mm": 65,
+            "slack_mm": 60,
             "termination_mm": 60,
-            "length_mm": 330,
+            "length_mm": 325,
             "path_mm": [
               [
                 0,
@@ -14103,13 +14104,13 @@
                 "joint": "arm_shoulder_pitch",
                 "type": "revolute",
                 "travel": [
-                  -1.75,
-                  1.75
+                  -0.616,
+                  1.571
                 ],
                 "home_mm": 48.5,
-                "need_mm": 75.3,
-                "slack_mm": 65,
-                "provided_mm": 113.5
+                "need_mm": 72.6,
+                "slack_mm": 60,
+                "provided_mm": 108.5
               }
             ],
             "exit": null
@@ -14208,7 +14209,7 @@
                 "type": "revolute",
                 "travel": [
                   -2.1,
-                  2.3
+                  1.454
                 ],
                 "home_mm": 46.5,
                 "need_mm": 78.7,
@@ -15240,8 +15241,8 @@
                 "color": "red",
                 "typical_a": 0.7,
                 "peak_a": 2.65,
-                "length_mm": 1165,
-                "drop_v": 0.311
+                "length_mm": 1130,
+                "drop_v": 0.301
               },
               {
                 "id": "W74",
@@ -15253,16 +15254,16 @@
                 "color": "black",
                 "typical_a": 0.7,
                 "peak_a": 2.65,
-                "length_mm": 1165,
-                "drop_v": 0.123
+                "length_mm": 1130,
+                "drop_v": 0.119
               }
             ],
             "od_mm": 2.7,
             "route_mm": 700.9,
             "service_mm": 40,
-            "slack_mm": 360,
+            "slack_mm": 325,
             "termination_mm": 60,
-            "length_mm": 1165,
+            "length_mm": 1130,
             "path_mm": [
               [
                 112,
@@ -15377,25 +15378,25 @@
                 "joint": "arm_shoulder_pitch",
                 "type": "revolute",
                 "travel": [
-                  -1.75,
-                  1.75
+                  -0.616,
+                  1.571
                 ],
                 "home_mm": 50.1,
-                "need_mm": 78,
-                "slack_mm": 60,
-                "provided_mm": 110.1
+                "need_mm": 60,
+                "slack_mm": 40,
+                "provided_mm": 90.1
               },
               {
                 "joint": "arm_elbow_pitch",
                 "type": "revolute",
                 "travel": [
                   -2.1,
-                  2.3
+                  1.454
                 ],
                 "home_mm": 50.1,
-                "need_mm": 86.8,
-                "slack_mm": 70,
-                "provided_mm": 120.1
+                "need_mm": 73.3,
+                "slack_mm": 55,
+                "provided_mm": 105.1
               },
               {
                 "joint": "arm_forearm_roll",
@@ -15597,7 +15598,7 @@
               }
             ],
             "fuse_a": 15,
-            "worst_drop_v": 0.311,
+            "worst_drop_v": 0.301,
             "ok": true
           },
           {
@@ -15829,7 +15830,7 @@
             "unit": "m",
             "unit_usd": 0.5,
             "subtotal_usd": 3.65,
-            "spec": "0.519 mm2, rated 5.5 A in a bundle; 6.64 m cut + 10 % waste",
+            "spec": "0.519 mm2, rated 5.5 A in a bundle; 6.60 m cut + 10 % waste",
             "source": "estimated"
           },
           {
@@ -15838,7 +15839,7 @@
             "unit": "m",
             "unit_usd": 0.4,
             "subtotal_usd": 1.44,
-            "spec": "0.327 mm2, rated 3.5 A in a bundle; 3.25 m cut + 10 % waste",
+            "spec": "0.327 mm2, rated 3.5 A in a bundle; 3.20 m cut + 10 % waste",
             "source": "estimated"
           },
           {
@@ -15856,7 +15857,7 @@
             "unit": "m",
             "unit_usd": 0.3,
             "subtotal_usd": 2.64,
-            "spec": "0.128 mm2, rated 1.1 A in a bundle; 7.95 m cut + 10 % waste",
+            "spec": "0.128 mm2, rated 1.1 A in a bundle; 7.94 m cut + 10 % waste",
             "source": "estimated"
           },
           {
@@ -16050,7 +16051,7 @@
           }
         ],
         "cost_usd": 35.73,
-        "total_wire_m": 27.45,
+        "total_wire_m": 27.36,
         "notes": [],
         "unconnected": [],
         "estimated_inputs": []

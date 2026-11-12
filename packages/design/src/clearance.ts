@@ -91,11 +91,34 @@ function interferencesIn(m: ClearanceModel, q: Record<string, number>, moving: S
  * Collision-free interval of one joint around `q0` (others as in `base`), scanning out to `lo`/`hi`.
  * Returns the last collision-free angle in each direction.
  */
-export function freeRange(m: ClearanceModel, joint: string, base: Record<string, number>, lo: number, hi: number, step = 0.04, skip?: Set<string>): [number, number] {
+/** Volume (mm^3) the moving links put below a floor at z = floorMm (world, mm) in configuration q. */
+export function belowFloor(m: ClearanceModel, q: Record<string, number>, moving: Set<string>, floorMm: number): number {
+  return build(() => {
+    const f = fk(m.spec, q), slab = box([-5000, -5000, floorMm - 2000], [5000, 5000, floorMm]);
+    let v = 0;
+    m.names.forEach((n, i) => {
+      const s0 = m.solids[i]; if (!s0 || !moving.has(n)) return;
+      const T = f.link[n]; if (!T) return;
+      const M4 = toMat(T.R, T.p), b = m.boxes[i]!;
+      // the box first: most parts are nowhere near the floor
+      let low = Infinity;
+      for (const x of [b.min[0], b.max[0]]) for (const y of [b.min[1], b.max[1]]) for (const z of [b.min[2], b.max[2]]) low = Math.min(low, M4[2] * x + M4[6] * y + M4[10] * z + M4[14]);
+      if (low >= floorMm) return;
+      v += s0.transform(M4).intersect(slab).volume();
+    });
+    return v;
+  });
+}
+
+/**
+ * The range of one joint (others at `base`) over which what it carries meets nothing it did not meet at the start, and,
+ * with `floorMm`, stays above the surface the robot stands on (world z, mm).
+ */
+export function freeRange(m: ClearanceModel, joint: string, base: Record<string, number>, lo: number, hi: number, step = 0.04, skip?: Set<string>, floorMm?: number): [number, number] {
   const j = m.spec.joints.find((x) => x.name === joint)!;
   const moving = descendants(m.spec, j.child);
   const q0 = base[joint] ?? 0, res: number[] = [];
-  const hits = (q: number) => interferences(m, { ...base, [joint]: q }, moving, 2, skip).length > 0;
+  const hits = (q: number) => interferences(m, { ...base, [joint]: q }, moving, 2, skip).length > 0 || (floorMm !== undefined && belowFloor(m, { ...base, [joint]: q }, moving, floorMm) > 2);
   // every exact intersection costs WASM memory the CSG library never returns (~60 kB each): scan coarsely (4 steps)
   // and bisect the first contact down to `step / 2`, instead of testing every step
   const coarse = step * 4;

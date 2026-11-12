@@ -2046,7 +2046,7 @@
       ],
       "limit": {
         "lower": -1.75,
-        "upper": 1.75,
+        "upper": 1.052,
         "effort": 9.9,
         "velocity": 3.86
       },
@@ -2101,7 +2101,7 @@
         1
       ],
       "limit": {
-        "lower": -2.1,
+        "lower": -1.8,
         "upper": 2.3,
         "effort": 4.1,
         "velocity": 3.96
@@ -2157,8 +2157,8 @@
         1
       ],
       "limit": {
-        "lower": -2.97,
-        "upper": 2.97,
+        "lower": -1.874,
+        "upper": 1.874,
         "effort": 1.4,
         "velocity": 5.67
       },
@@ -2214,7 +2214,7 @@
       ],
       "limit": {
         "lower": -1.7,
-        "upper": 2.3,
+        "upper": 0.051,
         "effort": 1.4,
         "velocity": 4.65
       },
@@ -2571,7 +2571,7 @@
   ],
   "metadata": {
     "generator": "text-to-robot design engine (real components + printed structure)",
-    "created": "2026-11-07T18:23:12.172Z",
+    "created": "2026-11-12T02:32:59.732Z",
     "inferred_fields": [
       "links.base_link.inertia",
       "links.base_yaw_actuator.inertia",
@@ -5809,6 +5809,16 @@
           "detail": "holding the payload stretched out draws ~1.8 A of the 6 A supply"
         },
         {
+          "name": "clearance:home",
+          "pass": true,
+          "detail": "no printed part or component intersects another at the home pose"
+        },
+        {
+          "name": "clearance:motion",
+          "pass": true,
+          "detail": "no interference over 0 combined poses at the joint limits"
+        },
+        {
           "name": "wiring:ports",
           "pass": true,
           "detail": "all 49 terminals in use are wired; spare pins are declared"
@@ -5959,7 +5969,8 @@
         "Arm clamps or bolts to the bench through the four M5 holes in the base; it is not free-standing at full reach.",
         "Every pitch joint is a clevis: one cheek bolts to the servo horn, the other turns on a 625ZZ bearing on an M5 bolt screwed into a heat-set insert in a boss on the back of the servo's cradle, so the servo's own bearing carries no bending moment. An M5 washer sits between the boss and the bearing's inner race.",
         "Print the links in PETG or PLA+ with 4 perimeters and 30 % gyroid infill, cradle opening up; press the 625ZZ bearings into their seats (16.15 mm) and set the M5 inserts with a soldering iron.",
-        "Torques are exact static gravity loads of this geometry: the worst pose (stretched out with the payload) must be held within each actuator's rated continuous torque, peaks get +30 %, and each joint must still reach >= 1 rad/s loaded on its torque-speed line."
+        "Torques are exact static gravity loads of this geometry: the worst pose (stretched out with the payload) must be held within each actuator's rated continuous torque, peaks get +30 %, and each joint must still reach >= 1 rad/s loaded on its torque-speed line.",
+        "Joint limits trimmed to the collision-free range found by exact solid sweeps: shoulder_pitch [-1.75, 1.75] -> [-1.75, 1.05]; elbow_pitch [-2.10, 2.30] -> [-1.80, 2.30]; forearm_roll [-2.97, 2.97] -> [-1.87, 1.87]; wrist_pitch [-1.70, 2.30] -> [-1.70, 0.05]."
       ],
       "fasteners": {
         "M5 x 12 socket head (base to bench)": 4,
@@ -6543,8 +6554,8 @@
                 "color": "red",
                 "typical_a": 1.15,
                 "peak_a": 3.1,
-                "length_mm": 325,
-                "drop_v": 0.063
+                "length_mm": 310,
+                "drop_v": 0.06
               },
               {
                 "id": "W10",
@@ -6556,8 +6567,8 @@
                 "color": "black",
                 "typical_a": 1.15,
                 "peak_a": 3.1,
-                "length_mm": 325,
-                "drop_v": 0.063
+                "length_mm": 310,
+                "drop_v": 0.06
               },
               {
                 "id": "W11",
@@ -6569,16 +6580,16 @@
                 "color": "yellow",
                 "typical_a": 0.02,
                 "peak_a": 0.02,
-                "length_mm": 325,
+                "length_mm": 310,
                 "drop_v": 0.002
               }
             ],
             "od_mm": 3.2,
             "route_mm": 156.4,
             "service_mm": 40,
-            "slack_mm": 65,
+            "slack_mm": 50,
             "termination_mm": 60,
-            "length_mm": 325,
+            "length_mm": 310,
             "path_mm": [
               [
                 0,
@@ -6618,12 +6629,12 @@
                 "type": "revolute",
                 "travel": [
                   -1.75,
-                  1.75
+                  1.052
                 ],
                 "home_mm": 48.5,
-                "need_mm": 75.3,
-                "slack_mm": 65,
-                "provided_mm": 113.5
+                "need_mm": 64.6,
+                "slack_mm": 50,
+                "provided_mm": 98.5
               }
             ],
             "exit": null
@@ -6647,8 +6658,8 @@
                 "color": "red",
                 "typical_a": 0.8,
                 "peak_a": 1.9,
-                "length_mm": 295,
-                "drop_v": 0.057
+                "length_mm": 290,
+                "drop_v": 0.056
               },
               {
                 "id": "W13",
@@ -6660,8 +6671,8 @@
                 "color": "black",
                 "typical_a": 0.8,
                 "peak_a": 1.9,
-                "length_mm": 295,
-                "drop_v": 0.057
+                "length_mm": 290,
+                "drop_v": 0.056
               },
               {
                 "id": "W14",
@@ -6673,16 +6684,16 @@
                 "color": "yellow",
                 "typical_a": 0.02,
                 "peak_a": 0.02,
-                "length_mm": 295,
+                "length_mm": 290,
                 "drop_v": 0.002
               }
             ],
             "od_mm": 3.2,
             "route_mm": 129.6,
             "service_mm": 40,
-            "slack_mm": 65,
+            "slack_mm": 60,
             "termination_mm": 60,
-            "length_mm": 295,
+            "length_mm": 290,
             "path_mm": [
               [
                 0,
@@ -6721,13 +6732,13 @@
                 "joint": "elbow_pitch",
                 "type": "revolute",
                 "travel": [
-                  -2.1,
+                  -1.8,
                   2.3
                 ],
                 "home_mm": 42.3,
-                "need_mm": 71.1,
-                "slack_mm": 65,
-                "provided_mm": 107.3
+                "need_mm": 67,
+                "slack_mm": 60,
+                "provided_mm": 102.3
               }
             ],
             "exit": null
@@ -6751,8 +6762,8 @@
                 "color": "red",
                 "typical_a": 0.6,
                 "peak_a": 1.7,
-                "length_mm": 265,
-                "drop_v": 0.045
+                "length_mm": 245,
+                "drop_v": 0.042
               },
               {
                 "id": "W16",
@@ -6764,8 +6775,8 @@
                 "color": "black",
                 "typical_a": 0.6,
                 "peak_a": 1.7,
-                "length_mm": 265,
-                "drop_v": 0.045
+                "length_mm": 245,
+                "drop_v": 0.042
               },
               {
                 "id": "W17",
@@ -6777,16 +6788,16 @@
                 "color": "yellow",
                 "typical_a": 0.02,
                 "peak_a": 0.02,
-                "length_mm": 265,
+                "length_mm": 245,
                 "drop_v": 0.002
               }
             ],
             "od_mm": 3.2,
             "route_mm": 84.4,
             "service_mm": 40,
-            "slack_mm": 80,
+            "slack_mm": 60,
             "termination_mm": 60,
-            "length_mm": 265,
+            "length_mm": 245,
             "path_mm": [
               [
                 -12.5,
@@ -6820,13 +6831,13 @@
                 "joint": "forearm_roll",
                 "type": "revolute",
                 "travel": [
-                  -2.97,
-                  2.97
+                  -1.874,
+                  1.874
                 ],
                 "home_mm": 23.1,
-                "need_mm": 63.5,
-                "slack_mm": 80,
-                "provided_mm": 103.1
+                "need_mm": 48.4,
+                "slack_mm": 60,
+                "provided_mm": 83.1
               }
             ],
             "exit": null
@@ -6850,8 +6861,8 @@
                 "color": "red",
                 "typical_a": 0.4,
                 "peak_a": 1.5,
-                "length_mm": 285,
-                "drop_v": 0.043
+                "length_mm": 250,
+                "drop_v": 0.037
               },
               {
                 "id": "W19",
@@ -6863,8 +6874,8 @@
                 "color": "black",
                 "typical_a": 0.4,
                 "peak_a": 1.5,
-                "length_mm": 285,
-                "drop_v": 0.043
+                "length_mm": 250,
+                "drop_v": 0.037
               },
               {
                 "id": "W20",
@@ -6876,16 +6887,16 @@
                 "color": "yellow",
                 "typical_a": 0.02,
                 "peak_a": 0.02,
-                "length_mm": 285,
+                "length_mm": 250,
                 "drop_v": 0.002
               }
             ],
             "od_mm": 3.2,
             "route_mm": 110.6,
             "service_mm": 40,
-            "slack_mm": 70,
+            "slack_mm": 35,
             "termination_mm": 60,
-            "length_mm": 285,
+            "length_mm": 250,
             "path_mm": [
               [
                 0,
@@ -6925,12 +6936,12 @@
                 "type": "revolute",
                 "travel": [
                   -1.7,
-                  2.3
+                  0.051
                 ],
                 "home_mm": 41.7,
-                "need_mm": 73.3,
-                "slack_mm": 70,
-                "provided_mm": 111.7
+                "need_mm": 42.4,
+                "slack_mm": 35,
+                "provided_mm": 76.7
               }
             ],
             "exit": null
@@ -7250,29 +7261,29 @@
           },
           {
             "item": "22 AWG silicone wire",
-            "qty": 0.8,
+            "qty": 0.7,
             "unit": "m",
             "unit_usd": 0.4,
-            "subtotal_usd": 0.32,
-            "spec": "0.327 mm2, rated 3.5 A in a bundle; 0.65 m cut + 10 % waste",
+            "subtotal_usd": 0.28,
+            "spec": "0.327 mm2, rated 3.5 A in a bundle; 0.62 m cut + 10 % waste",
             "source": "estimated"
           },
           {
             "item": "24 AWG silicone wire",
-            "qty": 4.1,
+            "qty": 4,
             "unit": "m",
             "unit_usd": 0.35,
-            "subtotal_usd": 1.43,
-            "spec": "0.205 mm2, rated 1.75 A in a bundle; 3.68 m cut + 10 % waste",
+            "subtotal_usd": 1.4,
+            "spec": "0.205 mm2, rated 1.75 A in a bundle; 3.56 m cut + 10 % waste",
             "source": "estimated"
           },
           {
             "item": "26 AWG silicone wire",
-            "qty": 2.9,
+            "qty": 2.8,
             "unit": "m",
             "unit_usd": 0.3,
-            "subtotal_usd": 0.87,
-            "spec": "0.128 mm2, rated 1.1 A in a bundle; 2.62 m cut + 10 % waste",
+            "subtotal_usd": 0.84,
+            "spec": "0.128 mm2, rated 1.1 A in a bundle; 2.54 m cut + 10 % waste",
             "source": "estimated"
           },
           {
@@ -7340,16 +7351,16 @@
           },
           {
             "item": "Nylon braided sleeving 6 mm",
-            "qty": 1.1,
+            "qty": 1,
             "unit": "m",
             "unit_usd": 0.4,
-            "subtotal_usd": 0.44,
+            "subtotal_usd": 0.4,
             "spec": "over every cable where it crosses a joint",
             "source": "estimated"
           }
         ],
-        "cost_usd": 10.37,
-        "total_wire_m": 9.16,
+        "cost_usd": 10.23,
+        "total_wire_m": 8.94,
         "notes": [
           "Mains side: IEC inlet to the supply's AC terminals with insulated spades, earth wired first, case closed before plugging in. Have it checked if you are not qualified to wire mains.",
           "clips on upper_arm not printed: mass properties require a closed manifold mesh"

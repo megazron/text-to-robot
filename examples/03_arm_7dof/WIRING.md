@@ -1,6 +1,6 @@
 # Wiring: arm_7dof
 
-10 cables, 28 conductors, 10.16 m of wire, wiring parts $11.11.
+10 cables, 28 conductors, 9.99 m of wire, wiring parts $11.00.
 
 Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), [breadboard.svg](breadboard.svg) (every wire in its colour, pin to pin) and the cable diagram [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
 
@@ -63,11 +63,11 @@ Length is route + service loop + joint slack + termination, rounded up to 5 mm; 
 | C1 | mains inlet to the supply (crimped, insulated spades; earth first) | 3 | 185 | 80.5 | 40 | 0 | 60 | 6.3 mm quick-connect tabs / barrier screw terminal | - |
 | C2 | servo_bus to base_yaw_actuator | 2 | 955 | 854.3 | 40 | 0 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | control_case.harness |
 | C3 | base_yaw_actuator to shoulder_pitch_actuator | 3 | 275 | 92.1 | 40 | 80 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
-| C4 | shoulder_pitch_actuator to upper_arm_roll_actuator | 3 | 320 | 150.3 | 40 | 65 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
+| C4 | shoulder_pitch_actuator to upper_arm_roll_actuator | 3 | 310 | 150.3 | 40 | 55 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
 | C5 | upper_arm_roll_actuator to elbow_pitch_actuator | 3 | 265 | 84.4 | 40 | 80 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
-| C6 | elbow_pitch_actuator to forearm_roll_actuator | 3 | 300 | 129.6 | 40 | 70 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
-| C7 | forearm_roll_actuator to wrist_pitch_actuator | 3 | 265 | 84.4 | 40 | 80 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
-| C8 | wrist_pitch_actuator to wrist_roll_actuator | 3 | 285 | 110.6 | 40 | 70 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
+| C6 | elbow_pitch_actuator to forearm_roll_actuator | 3 | 295 | 129.6 | 40 | 65 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
+| C7 | forearm_roll_actuator to wrist_pitch_actuator | 3 | 255 | 84.4 | 40 | 70 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
+| C8 | wrist_pitch_actuator to wrist_roll_actuator | 3 | 255 | 110.6 | 40 | 40 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
 | C9 | wrist_roll_actuator to gripper_actuator | 3 | 265 | 84.4 | 40 | 80 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
 | C10 | VBUS to base_yaw_actuator | 2 | 885 | 783.4 | 40 | 0 | 60 | barrier screw terminal / JST B3B-EH-A header | control_case.harness |
 
@@ -78,11 +78,11 @@ Each loop is at least the extra length the joint needs at the far end of its tra
 | Cable | Joint | Travel rad | Length at home mm | Length at full travel mm | Slack loop mm |
 |---|---|---|--:|--:|--:|
 | C3 | base_yaw | -2.97 to 2.97 | 23.1 | 63.5 | 80 |
-| C4 | shoulder_pitch | -1.75 to 1.75 | 46.5 | 73.3 | 65 |
+| C4 | shoulder_pitch | -1.75 to 1.109 | 46.5 | 63.5 | 55 |
 | C5 | upper_arm_roll | -2.97 to 2.97 | 23.1 | 63.5 | 80 |
-| C6 | elbow_pitch | -2.1 to 2.3 | 42.3 | 73.9 | 70 |
-| C7 | forearm_roll | -2.97 to 2.97 | 23.1 | 63.5 | 80 |
-| C8 | wrist_pitch | -1.7 to 2.3 | 41.7 | 73.3 | 70 |
+| C6 | elbow_pitch | -1.905 to 1.936 | 42.3 | 68.8 | 65 |
+| C7 | forearm_roll | -2.285 to 2.285 | 23.1 | 54 | 70 |
+| C8 | wrist_pitch | -1.7 to 0.302 | 41.7 | 45.9 | 40 |
 | C9 | wrist_roll | -2.97 to 2.97 | 23.1 | 63.5 | 80 |
 
 ## Electrical calculations
@@ -244,9 +244,9 @@ Not checked (no logic levels in the parts data): DYNAMIXEL XH540-W270-T(R), DYNA
 |---|--:|---|--:|--:|---|---|
 | 18 AWG silicone wire | 1 | m | 0.7 | 0.70 | 0.823 mm2, rated 8 A in a bundle; 0.89 m cut + 10 % waste | estimated |
 | 20 AWG silicone wire | 1.6 | m | 0.5 | 0.80 | 0.519 mm2, rated 5.5 A in a bundle; 1.44 m cut + 10 % waste | estimated |
-| 22 AWG silicone wire | 1.3 | m | 0.4 | 0.52 | 0.327 mm2, rated 3.5 A in a bundle; 1.17 m cut + 10 % waste | estimated |
-| 24 AWG silicone wire | 4.2 | m | 0.35 | 1.47 | 0.205 mm2, rated 1.75 A in a bundle; 3.74 m cut + 10 % waste | estimated |
-| 26 AWG silicone wire | 3.3 | m | 0.3 | 0.99 | 0.128 mm2, rated 1.1 A in a bundle; 2.93 m cut + 10 % waste | estimated |
+| 22 AWG silicone wire | 1.3 | m | 0.4 | 0.52 | 0.327 mm2, rated 3.5 A in a bundle; 1.15 m cut + 10 % waste | estimated |
+| 24 AWG silicone wire | 4.1 | m | 0.35 | 1.43 | 0.205 mm2, rated 1.75 A in a bundle; 3.65 m cut + 10 % waste | estimated |
+| 26 AWG silicone wire | 3.2 | m | 0.3 | 0.96 | 0.128 mm2, rated 1.1 A in a bundle; 2.88 m cut + 10 % waste | estimated |
 | 6.3 mm spade contacts | 3 | pc | 0.08 | 0.24 | rated 15 A per contact | estimated |
 | Bootlace ferrule contacts | 5 | pc | 0.03 | 0.15 | rated 17.5 A per contact | estimated |
 | JST EH 2.5 mm contacts | 48 | pc | 0.03 | 1.44 | rated 3 A per contact | estimated |
@@ -254,7 +254,7 @@ Not checked (no logic levels in the parts data): DYNAMIXEL XH540-W270-T(R), DYNA
 | Heat shrink 3 mm, 2:1 | 0.6 | m | 0.2 | 0.12 | 0 solder joints + a boot on each cable end | estimated |
 | Cable tie 100 x 2.5 mm | 17 | pc | 0.02 | 0.34 | at every clip, cable end and strain-relief anchor | estimated |
 | PG7 cable gland | 1 | pc | 2.97 | 2.97 | cable exit with strain relief | estimated |
-| Nylon braided sleeving 6 mm | 1.3 | m | 0.4 | 0.52 | over every cable where it crosses a joint | estimated |
+| Nylon braided sleeving 6 mm | 1.2 | m | 0.4 | 0.48 | over every cable where it crosses a joint | estimated |
 
 ## Data sources
 

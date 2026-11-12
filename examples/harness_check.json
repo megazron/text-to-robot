@@ -61,8 +61,8 @@
  },
  "02_arm_6dof": {
   "wires": 25,
-  "through": 88,
-  "bend": 10,
+  "through": 87,
+  "bend": 11,
   "length": 0,
   "through_mm": 836,
   "skipped_solids": 0,
@@ -111,9 +111,9 @@
      "min_mm": 4.8
     },
     {
-     "wire": "W1",
-     "radius_mm": 2.8,
-     "min_mm": 4.8
+     "wire": "W15",
+     "radius_mm": 8.9,
+     "min_mm": 16
     }
    ],
    "length": []
@@ -1171,10 +1171,10 @@
  },
  "17_baymax": {
   "wires": 88,
-  "through": 183,
+  "through": 184,
   "bend": 40,
   "length": 13,
-  "through_mm": 2014,
+  "through_mm": 2005,
   "skipped_solids": 0,
   "worst": {
    "through": [
@@ -1186,7 +1186,7 @@
       -249,
       719
      ],
-     "run_mm": 51
+     "run_mm": 48
     },
     {
      "wire": "W46",
@@ -1194,9 +1194,9 @@
      "at": [
       1,
       213,
-      701
+      702
      ],
-     "run_mm": 39
+     "run_mm": 37
     },
     {
      "wire": "W16",

@@ -1,6 +1,6 @@
 # Bill of materials: arm_7dof
 
-**Estimated total: $1216.73**  ·  tier: prosumer
+**Estimated total: $1216.62**  ·  tier: prosumer
 
 **Effort sizing: passes catalogue estimate; hardware verified: no.**
 
@@ -17,9 +17,9 @@
 | Fasteners | Screws, nuts and inserts | 102 | 0.12 | 12.24 | 4x M5 x 12 socket head (base to bench); 28x M2.5 x 6 case screws; 60x horn screws; 3x M5 x 16 socket head + M5 washer + M5 heat-set insert (clevis bearing axle); 4x M3 x 10 self-tapping (lid to compartment); 2x M3 x 6 self-tapping (Mean Well LRS-75-12 enclosed PSU, 12 V 6 A to standoffs); 1x M2 x 6 self-tapping (ROBOTIS U2D2 USB to TTL/RS-485 interface to standoffs) |
 | Wiring | 18 AWG silicone wire _(price estimated)_ | 1 | 0.7 | 0.7 | 1 m: 0.823 mm2, rated 8 A in a bundle; 0.89 m cut + 10 % waste |
 | Wiring | 20 AWG silicone wire _(price estimated)_ | 1.6 | 0.5 | 0.8 | 1.6 m: 0.519 mm2, rated 5.5 A in a bundle; 1.44 m cut + 10 % waste |
-| Wiring | 22 AWG silicone wire _(price estimated)_ | 1.3 | 0.4 | 0.52 | 1.3 m: 0.327 mm2, rated 3.5 A in a bundle; 1.17 m cut + 10 % waste |
-| Wiring | 24 AWG silicone wire _(price estimated)_ | 4.2 | 0.35 | 1.47 | 4.2 m: 0.205 mm2, rated 1.75 A in a bundle; 3.74 m cut + 10 % waste |
-| Wiring | 26 AWG silicone wire _(price estimated)_ | 3.3 | 0.3 | 0.99 | 3.3 m: 0.128 mm2, rated 1.1 A in a bundle; 2.93 m cut + 10 % waste |
+| Wiring | 22 AWG silicone wire _(price estimated)_ | 1.3 | 0.4 | 0.52 | 1.3 m: 0.327 mm2, rated 3.5 A in a bundle; 1.15 m cut + 10 % waste |
+| Wiring | 24 AWG silicone wire _(price estimated)_ | 4.1 | 0.35 | 1.43 | 4.1 m: 0.205 mm2, rated 1.75 A in a bundle; 3.65 m cut + 10 % waste |
+| Wiring | 26 AWG silicone wire _(price estimated)_ | 3.2 | 0.3 | 0.96 | 3.2 m: 0.128 mm2, rated 1.1 A in a bundle; 2.88 m cut + 10 % waste |
 | Wiring | 6.3 mm spade contacts _(price estimated)_ | 3 | 0.08 | 0.24 | 3 pc: rated 15 A per contact |
 | Wiring | Bootlace ferrule contacts _(price estimated)_ | 5 | 0.03 | 0.15 | 5 pc: rated 17.5 A per contact |
 | Wiring | JST EH 2.5 mm contacts _(price estimated)_ | 48 | 0.03 | 1.44 | 48 pc: rated 3 A per contact |
@@ -27,7 +27,7 @@
 | Wiring | Heat shrink 3 mm, 2:1 _(price estimated)_ | 0.6 | 0.2 | 0.12 | 0.6 m: 0 solder joints + a boot on each cable end |
 | Wiring | Cable tie 100 x 2.5 mm _(price estimated)_ | 17 | 0.02 | 0.34 | 17 pc: at every clip, cable end and strain-relief anchor |
 | Wiring | PG7 cable gland _(price estimated)_ | 1 | 2.97 | 2.97 | 1 pc: cable exit with strain relief |
-| Wiring | Nylon braided sleeving 6 mm _(price estimated)_ | 1.3 | 0.4 | 0.52 | 1.3 m: over every cable where it crosses a joint |
+| Wiring | Nylon braided sleeving 6 mm _(price estimated)_ | 1.2 | 0.4 | 0.48 | 1.2 m: over every cable where it crosses a joint |
 
 ## Actuator sizing
 
@@ -48,4 +48,5 @@
 - Every pitch joint is a clevis: one cheek bolts to the servo horn, the other turns on a 625ZZ bearing on an M5 bolt screwed into a heat-set insert in a boss on the back of the servo's cradle, so the servo's own bearing carries no bending moment. An M5 washer sits between the boss and the bearing's inner race.
 - Print the links in PETG or PLA+ with 4 perimeters and 30 % gyroid infill, cradle opening up; press the 625ZZ bearings into their seats (16.15 mm) and set the M5 inserts with a soldering iron.
 - Torques are exact static gravity loads of this geometry: the worst pose (stretched out with the payload) must be held within each actuator's rated continuous torque, peaks get +30 %, and each joint must still reach >= 1 rad/s loaded on its torque-speed line.
+- Joint limits trimmed to the collision-free range found by exact solid sweeps: shoulder_pitch [-1.75, 1.75] -> [-1.75, 1.11]; elbow_pitch [-2.10, 2.30] -> [-1.90, 1.94]; forearm_roll [-2.97, 2.97] -> [-2.28, 2.28]; wrist_pitch [-1.70, 2.30] -> [-1.70, 0.30].
 - Prices are list/street prices from the linked suppliers at the time the catalog was written; check before ordering.

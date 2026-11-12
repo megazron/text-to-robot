@@ -634,6 +634,8 @@ function designBiped(req: LeggedRequest, mech: boolean): RobotSpecification {
   const armsOut = Object.fromEntries(["l", "r"].filter(() => armDof >= 3).map((p) => [`${p}_shoulder_roll`, (p === "l" ? 1 : -1) * 0.35]));
   for (const q of combos) Object.assign(q, armsOut);
   limitsFromGeometry(A, actuated, combos, 0.06, [], () => armsOut);
+  // the ready pose is the posture the ranges were swept from, so every joint can travel its full range from it
+  if (Object.keys(armsOut).length) A.design.home = { ...(A.design.home ?? {}), ...armsOut };
   A.design.assumptions.push("Joint ranges are swept with the arms held 0.35 rad out to the side (the walking posture); with the arms hanging straight the hands touch the thighs when a leg abducts or a wrist turns.");
   if (mech) A.design.assumptions.push("CubeMars actuators run on a 12S bus (two 6S packs in series, 44.4 V nominal) at their 48 V ratings; DYNAMIXEL arms and the computer run from the 12 V DC-DC converter.");
   wireBiped(A, H, built.compute, mech, cfg.nBatt);

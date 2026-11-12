@@ -118,16 +118,22 @@ def press_generate(page, ms):
 forge_ctx = None
 
 
-def drag(page, x0, y0, dx, dy, touch=False, steps=12):
+def drag(page, x0, y0, dx, dy, touch=False, steps=12, probe=None):
+    """Drag by mouse or by touch; `probe` is evaluated in the page just before the release and returned."""
+    seen = None
     if not touch:
         page.mouse.move(x0, y0); page.mouse.down()
         for k in range(1, steps + 1): page.mouse.move(x0 + dx * k / steps, y0 + dy * k / steps); page.wait_for_timeout(40)
-        page.wait_for_timeout(400); page.mouse.up(); return
+        page.wait_for_timeout(400)
+        if probe: seen = page.evaluate(probe)
+        page.mouse.up(); return seen
     cdp = page.context.new_cdp_session(page)
     pt = lambda x, y: [{"x": x, "y": y, "id": 1, "radiusX": 4, "radiusY": 4, "force": 1}]
     cdp.send("Input.dispatchTouchEvent", {"type": "touchStart", "touchPoints": pt(x0, y0)})
     for k in range(1, steps + 1): cdp.send("Input.dispatchTouchEvent", {"type": "touchMove", "touchPoints": pt(x0 + dx * k / steps, y0 + dy * k / steps)}); page.wait_for_timeout(40)
-    page.wait_for_timeout(400); cdp.send("Input.dispatchTouchEvent", {"type": "touchEnd", "touchPoints": []})
+    page.wait_for_timeout(400)
+    if probe: seen = page.evaluate(probe)
+    cdp.send("Input.dispatchTouchEvent", {"type": "touchEnd", "touchPoints": []}); return seen
 
 
 def motion_case(browser, case):
@@ -181,8 +187,20 @@ def motion_case(browser, case):
             on = page.evaluate(f"(()=>{{const e=document.elementFromPoint({tip['x']},{tip['y']});return e&&e.tagName}})()")
             if on != "CANVAS": row["problems"].append(f"{profile}: the tool tip is under {on}, not in the open 3D view")
             page.evaluate("__ttr.motion.lastDrag = null")
-            drag(page, tip["x"], tip["y"], -40, -30, touch=(profile == "phone"))
+            # the lower level of detail a heavy model (the Mark 43) is dragged at: with the triangle budget set below this arm's
+            # count the smallest parts hide while the pointer is down and all come back when it is let go
+            hidden0 = page.evaluate("(()=>{let n=0;__ttr.robotGroup.traverse(o=>{if(o.isMesh&&!o.visible)n++});return n})()")
+            if profile == "desktop": page.evaluate("__ttr.motion.lodBudget = 1")
+            probe = "(()=>{const l=__ttr.motion.lod;return l&&{hidden:l.hidden.length,triangles:l.triangles,shown:l.shown}})()"
+            lod = drag(page, tip["x"], tip["y"], -40, -30, touch=(profile == "phone"), probe=probe)
             page.wait_for_function("__ttr.motion.lastDrag", timeout=60000)
+            if profile == "desktop":
+                row["drag_lod"] = lod
+                back = {"lod": page.evaluate("__ttr.motion.lod"), "hidden": page.evaluate("(()=>{let n=0;__ttr.robotGroup.traverse(o=>{if(o.isMesh&&!o.visible)n++});return n})()") - hidden0}
+                page.evaluate("__ttr.motion.lodBudget = 250000")
+                if not lod or lod["hidden"] < 1 or lod["shown"] >= lod["triangles"]: row["problems"].append(f"the drag did not lower the level of detail: {lod}")
+                if back["lod"] is not None or back["hidden"]: row["problems"].append(f"the full detail did not come back after the drag: {back}")
+            elif lod: row["problems"].append(f"{profile}: a light arm was dragged at the lower level of detail: {lod}")
             res = page.evaluate("(()=>{const d=__ttr.motion.lastDrag;return d&&{kind:d.kind,reached:d.result?.reached,error_mm:d.result?.error_mm,values:d.result?.values,target:d.target}})()")
             row[f"{profile}_drag"] = res
             if not res or res["kind"] != "ik": row["problems"].append(f"{profile}: dragging the tool tip did not start an IK drag: {res}")

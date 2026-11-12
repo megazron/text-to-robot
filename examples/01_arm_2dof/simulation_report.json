@@ -8,36 +8,36 @@
  "tests": {
   "payload_hold": {
    "pass": true,
-   "explanation": "stretched_plus: holds 0.1 kg with the arm stretched out for 3 s; worst continuous utilisation 0.65x rated at shoulder_pitch | stretched_minus: holds 0.1 kg with the arm stretched out for 3 s; worst continuous utilisation 0.65x rated at shoulder_pitch",
+   "explanation": "stretched_plus: holds 0.1 kg with the arm stretched out for 3 s; worst continuous utilisation 0.48x rated at shoulder_pitch | stretched_minus: holds 0.1 kg with the arm stretched out for 3 s; worst continuous utilisation 0.65x rated at shoulder_pitch",
    "poses": {
     "stretched_plus": {
      "pass": true,
-     "explanation": "holds 0.1 kg with the arm stretched out for 3 s; worst continuous utilisation 0.65x rated at shoulder_pitch",
+     "explanation": "holds 0.1 kg with the arm stretched out for 3 s; worst continuous utilisation 0.48x rated at shoulder_pitch",
      "shoulder": "shoulder_pitch",
-     "shoulder_target_rad": 1.5708,
+     "shoulder_target_rad": 0.789,
      "move_s": 2.0,
      "hold_s": 3.0,
      "payload_kg": 0.1,
      "joints": {
       "shoulder_pitch": {
-       "peak_nm": 1.0672,
+       "peak_nm": 0.7601,
        "peak_rating_nm": 4.9033,
-       "util_peak": 0.218,
-       "mean_hold_nm": 1.0246,
+       "util_peak": 0.155,
+       "mean_hold_nm": 0.7461,
        "rated_nm": 1.5691,
-       "util_rated": 0.653,
-       "max_err": 0.0029,
+       "util_rated": 0.476,
+       "max_err": 0.0015,
        "max_err_hold": 0.0,
        "saturated_frac": 0.0
       },
       "elbow_pitch": {
-       "peak_nm": 0.4711,
+       "peak_nm": 0.3336,
        "peak_rating_nm": 2.942,
-       "util_peak": 0.16,
-       "mean_hold_nm": 0.4176,
+       "util_peak": 0.113,
+       "mean_hold_nm": 0.3149,
        "rated_nm": 0.9807,
-       "util_rated": 0.426,
-       "max_err": 0.0008,
+       "util_rated": 0.321,
+       "max_err": 0.0004,
        "max_err_hold": 0.0,
        "saturated_frac": 0.0
       }
@@ -96,49 +96,49 @@
   },
   "speed": {
    "pass": true,
-   "explanation": "1.24 s move at 80 % rated speed tracks within 0.1 rad; most saturated shoulder_pitch (0 % of the move)",
-   "move_s": 1.24,
+   "explanation": "0.93 s move at 80 % rated speed tracks within 0.1 rad; most saturated shoulder_pitch (0 % of the move)",
+   "move_s": 0.931,
    "payload_kg": 0.1,
    "start": {
-    "shoulder_pitch": 1.5707963267948966
+    "shoulder_pitch": 0.789
    },
    "end": {
     "shoulder_pitch": -1.5707963267948966
    },
    "joints": {
     "shoulder_pitch": {
-     "peak_nm": 2.1294,
+     "peak_nm": 1.9707,
      "peak_rating_nm": 4.9033,
-     "util_peak": 0.434,
-     "mean_move_nm": 1.3417,
+     "util_peak": 0.402,
+     "mean_move_nm": 1.3024,
      "rated_nm": 1.5691,
-     "util_rated": 0.855,
-     "max_err": 0.0093,
-     "max_err_hold": 0.0093,
+     "util_rated": 0.83,
+     "max_err": 0.0092,
+     "max_err_hold": 0.0092,
      "saturated_frac": 0.0,
-     "ideal_peak_nm": 2.0575,
-     "ideal_worst_vs_available": 0.629,
-     "at_speed_rad_s": 3.736,
-     "needs_nm": 1.91,
-     "available_nm": 3.0377,
+     "ideal_peak_nm": 1.8712,
+     "ideal_worst_vs_available": 0.531,
+     "at_speed_rad_s": 3.308,
+     "needs_nm": 1.7278,
+     "available_nm": 3.2513,
      "peak_speed_rad_s": 4.752,
      "rated_speed_rad_s": 5.94,
      "err_after_0p5s": 0.0
     },
     "elbow_pitch": {
-     "peak_nm": 0.5815,
+     "peak_nm": 0.6192,
      "peak_rating_nm": 2.942,
-     "util_peak": 0.198,
-     "mean_move_nm": 0.4306,
+     "util_peak": 0.21,
+     "mean_move_nm": 0.4237,
      "rated_nm": 0.9807,
-     "util_rated": 0.439,
+     "util_rated": 0.432,
      "max_err": 0.002,
      "max_err_hold": 0.002,
      "saturated_frac": 0.0,
-     "ideal_peak_nm": 0.5679,
-     "ideal_worst_vs_available": 0.193,
+     "ideal_peak_nm": 0.6161,
+     "ideal_worst_vs_available": 0.209,
      "at_speed_rad_s": 0.0,
-     "needs_nm": 0.5679,
+     "needs_nm": 0.6161,
      "available_nm": 2.942,
      "peak_speed_rad_s": 0.0,
      "rated_speed_rad_s": 4.42,
@@ -180,5 +180,5 @@
  },
  "passed": 4,
  "total": 4,
- "source_urdf_sha256": "693a17e41d34d8c26b446fcffba59cc10bdaee4e0300e58c185df121018f11ae"
+ "source_urdf_sha256": "7d0f3db73967726e71a7fec57bf3d0f460b5f619136392fc63f655e195256ace"
 }

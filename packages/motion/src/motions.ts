@@ -145,10 +145,20 @@ function tour(m: Model, sem: Semantics, b: Builder, cm: CollisionModel | null): 
     let amp = 0.55;
     if (cm) for (const a of [0.55, 0.4, 0.28, 0.18, 0.1]) {
       amp = a;
-      const frames = [-1, -0.5, 0.5, 1].map((k) => { const q = new Float64Array(home); for (const [i, v] of at(k < 0 ? -1 : 1, a * Math.abs(k))) q[i] = v; return { q: resolve(m, q), base: null }; });
+      // the poses the move really passes through: home to one end, across to the other end, and back home
+      const lo = at(-1, a), hi = at(1, a), pose = (f: (i: number) => number) => { const q = new Float64Array(home); for (const i of together) q[i] = f(i); return { q: resolve(m, q), base: null }; };
+      const frames = [0.5, 1].map((u) => pose((i) => home[i] + u * (lo.get(i)! - home[i])))
+        .concat([0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1].map((u) => pose((i) => lo.get(i)! + u * (hi.get(i)! - lo.get(i)!))))
+        .concat([0.5].map((u) => pose((i) => hi.get(i)! + u * (home[i] - hi.get(i)!))));
       if (countCollisions(cm, frames, { ground: floor0, exempt }) === 0) break;
     }
-    b.segment("all together", () => { b.move(at(-1, amp), { minT: 1.2 }); b.hold(0.2); b.move(at(1, amp), { minT: 1.6 }); b.hold(0.2); b.move(new Map(together.map((i) => [i, home[i]])), { minT: 1.2 }); });
+    // then the frames themselves: a contact between the sampled poses takes the next smaller swing
+    const n0 = b.frames.length, s0 = b.segments.length, q0 = new Float64Array(b.q);
+    for (const a of [amp, 0.4, 0.28, 0.18, 0.1].filter((x) => x <= amp)) {
+      b.frames.length = n0; b.segments.length = s0; b.q = new Float64Array(q0);
+      b.segment("all together", () => { b.move(at(-1, a), { minT: 1.2 }); b.hold(0.2); b.move(at(1, a), { minT: 1.6 }); b.hold(0.2); b.move(new Map(together.map((i) => [i, home[i]])), { minT: 1.2 }); });
+      if (!cm || countCollisions(cm, b.frames.slice(n0).map((f) => ({ q: f.q, base: null })), { ground: floor0, exempt }) === 0) break;
+    }
   }
   b.hold(0.4);
   const tr = b.finish("tour", "Joint tour");

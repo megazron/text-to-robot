@@ -1,26 +1,3 @@
 {
-  "_about": "What the motion check (packages/motion, tests/motion.test.ts) finds in the shipped examples and is not fixed yet, each with its reason. Keys are '<motion>:<part>/<part>', '<motion>:~<regular expression over part/part>' or '<motion>:floor'. Every purpose demo is clear; these are all joint tours, which take each joint through the full limits the design gives it.",
-  "01_arm_2dof": {
-    "tour:floor": "The shoulder and elbow limits let the forearm and gripper reach up to 56 mm below the surface the arm stands on, whatever the other joint does: the limits come from the arm's own clearances, not from the table. The tour shows those frames red."
-  },
-  "02_arm_6dof": {
-    "tour:floor": "At the end of the shoulder's range the folded wrist and gripper reach 7 mm below the surface the arm stands on. The tour shows those frames red."
-  },
-  "03_arm_7dof": {
-    "tour:upper_arm/forearm": "Design finding: at its lower limit (-2.1 rad) the elbow folds the forearm into the upper arm (2380 mm^3 on the exact solids, @ttr/design interferences); its limit should be about -1.95 rad.",
-    "tour:upper_arm_roll_actuator/forearm": "The same elbow fold as upper_arm/forearm.",
-    "tour:floor": "The shoulder and elbow limits let the wrist and gripper reach up to 100 mm below the surface the arm stands on."
-  },
-  "08_humanoid": {
-    "tour:~(^|/)[lr]_gripper_jaw(/|$)": "The arms' joint limits are set for each arm alone: at the ends of the upper-arm yaw and elbow ranges the gripper reaches the torso, its side panel or its own shoulder (exact solids: up to 560 mm^3 into the torso at 48 s, 120 mm^3 into the right shoulder at 80 s). The tour marks those frames."
-  },
-  "12_mars_rover": {
-    "tour:~^(camera_mast|mast_camera|depth_camera|depth_camera_bracket)/arm_|^arm_.*/(camera_mast|mast_camera|depth_camera|depth_camera_bracket)$": "Design finding: the arm's shoulder and elbow limits let it swing into the camera mast and the depth camera (confirmed on the exact solids: up to 10900 mm^3). The arm's limits are set for the arm alone, not for what else is on the deck."
-  },
-  "13_battle_mech": {
-    "tour:~^[lr]_(hip_pitch_link|hip_pitch_link_b|hip_pitch_armour_front|knee_actuator)/[lr]_(wrist|gripper)|^[lr]_(wrist|gripper).*/[lr]_(hip_pitch|knee)": "Swinging a hip through its full pitch range with the arms hanging at the sides brings the thigh into that side's hand. A walking mech holds its hands clear; the tour keeps the arms at home while it sweeps a leg."
-  },
-  "17_baymax": {
-    "tour:~_sleeve|_mitten": "Baymax's arm sleeves and mittens are soft vinyl covers drawn over the arm; at the ends of the elbow and wrist ranges the cover meshes overlap the next segment by up to 7 mm, where the real covers fold."
-  }
+  "_about": "What the motion check (packages/motion, tests/motion.test.ts) finds in the shipped examples and is not fixed yet, each with its reason. Keys are '<motion>:<part>/<part>', '<motion>:~<regular expression over part/part>' or '<motion>:floor'. Nothing is listed: every joint tour and purpose demo of every example is clear."
 }

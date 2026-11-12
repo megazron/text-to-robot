@@ -12,6 +12,7 @@ import { LADDERS, choose, evaluate, passes, ladderFor, type Ladder, DYNAMIC_FACT
 import { controlCase, enclosureChecks, exposed } from "../enclosure.ts";
 import { Harness, finishWiring } from "../wiring.ts";
 import { busChain, canTree, actuatorsUnder } from "../netlist.ts";
+import { limitsFromGeometry } from "./legkit.ts";
 
 export interface ArmRequest {
   name?: string; dof: number; reachM?: number; payloadKg?: number; gripper?: boolean; budget?: number; prompt?: string; ladder?: Ladder;
@@ -490,6 +491,9 @@ function designArmOn(req: ArmRequest): RobotSpecification {
   const ready = [0.7, 1.3, -0.8]; // physical bend; a pitch actuator mounted on the other side turns the other way
   A.design.home = Object.fromEntries(pjs.slice(0, 3).map((j, k) => [j.name, +(ready[k] * sign(j)).toFixed(3)]));
   A.design.request = { ...req, dof };
+  // the limits are where the links meet each other, or the bench the arm is bolted to, swept on the exact solids from the
+  // ready pose; an arm on a robot is swept again there, against the rest of that robot
+  if (!req.embedded) limitsFromGeometry(A, joints.map((j) => j.name), [], 0.06, [], () => A.design.home ?? {}, "base");
   if (!req.embedded) wireFixedArm(A, H, ladder, supplyA, gripKeyUsed(A), req.supply12 ?? "psu_12v_lrs75");
   return A.finish(`${dof}-DOF arm, ${(reachActual * 1000).toFixed(0)} mm reach, ${payload} kg payload, ${LADDERS[ladder].label}`);
 }

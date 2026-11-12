@@ -7519,8 +7519,8 @@
         1
       ],
       "limit": {
-        "lower": -1.75,
-        "upper": 1.75,
+        "lower": -1.113,
+        "upper": 1.233,
         "effort": 4.9033,
         "velocity": 4.86
       },
@@ -7575,8 +7575,8 @@
         1
       ],
       "limit": {
-        "lower": -2.1,
-        "upper": 2.3,
+        "lower": -0.24,
+        "upper": 0.247,
         "effort": 2.942,
         "velocity": 4.02
       },
@@ -7631,8 +7631,8 @@
         1
       ],
       "limit": {
-        "lower": -1.7,
-        "upper": 2.3,
+        "lower": -0.964,
+        "upper": 0.975,
         "effort": 2.942,
         "velocity": 4.48
       },
@@ -7858,8 +7858,8 @@
         1
       ],
       "limit": {
-        "lower": -1.75,
-        "upper": 1.75,
+        "lower": -1.113,
+        "upper": 1.233,
         "effort": 4.9033,
         "velocity": 4.86
       },
@@ -7914,8 +7914,8 @@
         1
       ],
       "limit": {
-        "lower": -2.1,
-        "upper": 2.3,
+        "lower": -0.24,
+        "upper": 0.247,
         "effort": 2.942,
         "velocity": 4.02
       },
@@ -7970,8 +7970,8 @@
         1
       ],
       "limit": {
-        "lower": -1.7,
-        "upper": 2.3,
+        "lower": -0.964,
+        "upper": 0.975,
         "effort": 2.942,
         "velocity": 4.48
       },
@@ -8469,7 +8469,7 @@
   "end_effectors": [],
   "metadata": {
     "generator": "text-to-robot design engine (real components + printed structure)",
-    "created": "2026-11-07T18:25:21.151Z",
+    "created": "2026-11-12T02:37:11.851Z",
     "inferred_fields": [
       "links.base_link.inertia",
       "links.battery.inertia",
@@ -19890,6 +19890,7 @@
         "cost_breakdown": "catalog parts $831, filament 1.59 kg $40, fasteners $21, fabricated/other $145 (380 x 290 x 3 mm 5052 aluminium deck, laser cut (~$64); 2020 aluminium extrusion, 0.75 m (~$9); 420 x 40 x 6 mm aluminium flat bar shoulder yoke (~$12); upper_arm fabric sleeve (in the cover kit); forearm fabric sleeve (in the cover kit); foam-filled fabric mitten on a printed wrist plate (in the cover kit); upper_arm fabric sleeve (in the cover kit); forearm fabric sleeve (in the cover kit); foam-filled fabric mitten on a printed wrist plate (in the cover kit); sewn white ripstop body cover with zip and foam lining, about 2 m^2 (~$60); power switch, 15 A fuse, wiring)"
       },
       "assumptions": [
+        "Joint limits trimmed to the collision-free range found by exact solid sweeps: left_arm_shoulder_pitch [-1.75, 1.75] -> [-1.11, 1.23]; left_arm_elbow_pitch [-2.10, 2.30] -> [-0.24, 0.25]; left_arm_wrist_pitch [-1.70, 2.30] -> [-0.96, 0.97]; right_arm_shoulder_pitch [-1.75, 1.75] -> [-1.11, 1.23]; right_arm_elbow_pitch [-2.10, 2.30] -> [-0.24, 0.25]; right_arm_wrist_pitch [-1.70, 2.30] -> [-0.96, 0.97].",
         "Baymax's inflatable vinyl body is a sewn ripstop cover with a foam-lined zip, bought or sewn, with negligible structural role; it hangs on the shoulder yoke and hides a 4WD skid-steer base. It is not inflated, so it does not cushion like the film's.",
         "Structure: 2020 aluminium extrusion spine and a 6 mm aluminium shoulder yoke; arms are four servos each (shoulder yaw, shoulder pitch, elbow, wrist) splayed 25 deg so they clear the belly; the hands are printed mittens covered with the same fabric.",
         "Each arm is sized as mounted to lift 0.1 kg in the mitten at full reach; the tipping check includes both arms stretched forward with that payload.",
@@ -22135,8 +22136,8 @@
                 "color": "red",
                 "typical_a": 0.9,
                 "peak_a": 3.15,
-                "length_mm": 370,
-                "drop_v": 0.073
+                "length_mm": 365,
+                "drop_v": 0.072
               },
               {
                 "id": "W47",
@@ -22148,8 +22149,8 @@
                 "color": "black",
                 "typical_a": 0.9,
                 "peak_a": 3.15,
-                "length_mm": 370,
-                "drop_v": 0.073
+                "length_mm": 365,
+                "drop_v": 0.072
               },
               {
                 "id": "W48",
@@ -22161,16 +22162,16 @@
                 "color": "yellow",
                 "typical_a": 0.02,
                 "peak_a": 0.02,
-                "length_mm": 370,
+                "length_mm": 365,
                 "drop_v": 0.002
               }
             ],
             "od_mm": 3.2,
             "route_mm": 206.1,
             "service_mm": 40,
-            "slack_mm": 60,
+            "slack_mm": 55,
             "termination_mm": 60,
-            "length_mm": 370,
+            "length_mm": 365,
             "path_mm": [
               [
                 0,
@@ -22214,13 +22215,13 @@
                 "joint": "left_arm_shoulder_pitch",
                 "type": "revolute",
                 "travel": [
-                  -1.75,
-                  1.75
+                  -1.113,
+                  1.233
                 ],
                 "home_mm": 44.3,
-                "need_mm": 68.3,
-                "slack_mm": 60,
-                "provided_mm": 104.3
+                "need_mm": 61.2,
+                "slack_mm": 55,
+                "provided_mm": 99.3
               }
             ],
             "exit": null
@@ -22244,8 +22245,8 @@
                 "color": "red",
                 "typical_a": 0.45,
                 "peak_a": 2.7,
-                "length_mm": 380,
-                "drop_v": 0.103
+                "length_mm": 345,
+                "drop_v": 0.093
               },
               {
                 "id": "W50",
@@ -22257,8 +22258,8 @@
                 "color": "black",
                 "typical_a": 0.45,
                 "peak_a": 2.7,
-                "length_mm": 380,
-                "drop_v": 0.103
+                "length_mm": 345,
+                "drop_v": 0.093
               },
               {
                 "id": "W51",
@@ -22270,16 +22271,16 @@
                 "color": "yellow",
                 "typical_a": 0.02,
                 "peak_a": 0.02,
-                "length_mm": 380,
-                "drop_v": 0.003
+                "length_mm": 345,
+                "drop_v": 0.002
               }
             ],
             "od_mm": 3.2,
             "route_mm": 206.1,
             "service_mm": 40,
-            "slack_mm": 70,
+            "slack_mm": 35,
             "termination_mm": 60,
-            "length_mm": 380,
+            "length_mm": 345,
             "path_mm": [
               [
                 0,
@@ -22323,13 +22324,13 @@
                 "joint": "left_arm_elbow_pitch",
                 "type": "revolute",
                 "travel": [
-                  -2.1,
-                  2.3
+                  -0.24,
+                  0.247
                 ],
                 "home_mm": 44.3,
-                "need_mm": 75.9,
-                "slack_mm": 70,
-                "provided_mm": 114.3
+                "need_mm": 47.6,
+                "slack_mm": 35,
+                "provided_mm": 79.3
               }
             ],
             "exit": null
@@ -22530,8 +22531,8 @@
                 "color": "red",
                 "typical_a": 0.9,
                 "peak_a": 3.15,
-                "length_mm": 370,
-                "drop_v": 0.073
+                "length_mm": 365,
+                "drop_v": 0.072
               },
               {
                 "id": "W57",
@@ -22543,8 +22544,8 @@
                 "color": "black",
                 "typical_a": 0.9,
                 "peak_a": 3.15,
-                "length_mm": 370,
-                "drop_v": 0.073
+                "length_mm": 365,
+                "drop_v": 0.072
               },
               {
                 "id": "W58",
@@ -22556,16 +22557,16 @@
                 "color": "yellow",
                 "typical_a": 0.02,
                 "peak_a": 0.02,
-                "length_mm": 370,
+                "length_mm": 365,
                 "drop_v": 0.002
               }
             ],
             "od_mm": 3.2,
             "route_mm": 206.1,
             "service_mm": 40,
-            "slack_mm": 60,
+            "slack_mm": 55,
             "termination_mm": 60,
-            "length_mm": 370,
+            "length_mm": 365,
             "path_mm": [
               [
                 0,
@@ -22609,13 +22610,13 @@
                 "joint": "right_arm_shoulder_pitch",
                 "type": "revolute",
                 "travel": [
-                  -1.75,
-                  1.75
+                  -1.113,
+                  1.233
                 ],
                 "home_mm": 44.3,
-                "need_mm": 68.3,
-                "slack_mm": 60,
-                "provided_mm": 104.3
+                "need_mm": 61.2,
+                "slack_mm": 55,
+                "provided_mm": 99.3
               }
             ],
             "exit": null
@@ -22639,8 +22640,8 @@
                 "color": "red",
                 "typical_a": 0.45,
                 "peak_a": 2.7,
-                "length_mm": 380,
-                "drop_v": 0.103
+                "length_mm": 345,
+                "drop_v": 0.093
               },
               {
                 "id": "W60",
@@ -22652,8 +22653,8 @@
                 "color": "black",
                 "typical_a": 0.45,
                 "peak_a": 2.7,
-                "length_mm": 380,
-                "drop_v": 0.103
+                "length_mm": 345,
+                "drop_v": 0.093
               },
               {
                 "id": "W61",
@@ -22665,16 +22666,16 @@
                 "color": "yellow",
                 "typical_a": 0.02,
                 "peak_a": 0.02,
-                "length_mm": 380,
-                "drop_v": 0.003
+                "length_mm": 345,
+                "drop_v": 0.002
               }
             ],
             "od_mm": 3.2,
             "route_mm": 206.1,
             "service_mm": 40,
-            "slack_mm": 70,
+            "slack_mm": 35,
             "termination_mm": 60,
-            "length_mm": 380,
+            "length_mm": 345,
             "path_mm": [
               [
                 0,
@@ -22718,13 +22719,13 @@
                 "joint": "right_arm_elbow_pitch",
                 "type": "revolute",
                 "travel": [
-                  -2.1,
-                  2.3
+                  -0.24,
+                  0.247
                 ],
                 "home_mm": 44.3,
-                "need_mm": 75.9,
-                "slack_mm": 70,
-                "provided_mm": 114.3
+                "need_mm": 47.6,
+                "slack_mm": 35,
+                "provided_mm": 79.3
               }
             ],
             "exit": null
@@ -24147,29 +24148,29 @@
           },
           {
             "item": "22 AWG silicone wire",
-            "qty": 7.7,
+            "qty": 7.6,
             "unit": "m",
             "unit_usd": 0.4,
-            "subtotal_usd": 3.08,
-            "spec": "0.327 mm2, rated 3.5 A in a bundle; 6.92 m cut + 10 % waste",
+            "subtotal_usd": 3.04,
+            "spec": "0.327 mm2, rated 3.5 A in a bundle; 6.90 m cut + 10 % waste",
             "source": "estimated"
           },
           {
             "item": "24 AWG silicone wire",
-            "qty": 7.2,
+            "qty": 7.1,
             "unit": "m",
             "unit_usd": 0.35,
-            "subtotal_usd": 2.52,
-            "spec": "0.205 mm2, rated 1.75 A in a bundle; 6.53 m cut + 10 % waste",
+            "subtotal_usd": 2.48,
+            "spec": "0.205 mm2, rated 1.75 A in a bundle; 6.39 m cut + 10 % waste",
             "source": "estimated"
           },
           {
             "item": "26 AWG silicone wire",
-            "qty": 12.3,
+            "qty": 12.2,
             "unit": "m",
             "unit_usd": 0.3,
-            "subtotal_usd": 3.69,
-            "spec": "0.128 mm2, rated 1.1 A in a bundle; 11.14 m cut + 10 % waste",
+            "subtotal_usd": 3.66,
+            "spec": "0.128 mm2, rated 1.1 A in a bundle; 11.06 m cut + 10 % waste",
             "source": "estimated"
           },
           {
@@ -24264,10 +24265,10 @@
           },
           {
             "item": "Nylon braided sleeving 6 mm",
-            "qty": 1.2,
+            "qty": 1.1,
             "unit": "m",
             "unit_usd": 0.4,
-            "subtotal_usd": 0.48,
+            "subtotal_usd": 0.44,
             "spec": "over every cable where it crosses a joint",
             "source": "estimated"
           },
@@ -24317,8 +24318,8 @@
             "source": "estimated"
           }
         ],
-        "cost_usd": 33.65,
-        "total_wire_m": 32.82,
+        "cost_usd": 33.5,
+        "total_wire_m": 32.58,
         "notes": [],
         "unconnected": [],
         "estimated_inputs": []

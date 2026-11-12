@@ -220,7 +220,7 @@
     <child link="upper_arm"/>
     <origin xyz="0 0.01905 0.0452" rpy="0 -1.570796 -1.570796"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-1.75" upper="1.75" effort="4.9033" velocity="5.94"/>
+    <limit lower="-1.75" upper="0.79" effort="4.9033" velocity="5.94"/>
     <dynamics damping="0.1249" friction="0.0981"/>
   </joint>
   <joint name="elbow_pitch_actuator_mount" type="fixed">
@@ -233,7 +233,7 @@
     <child link="forearm"/>
     <origin xyz="0.144165 0 -0.0381" rpy="3.141593 0 0"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-2.1" upper="2.3" effort="2.942" velocity="4.42"/>
+    <limit lower="-1.48" upper="2.3" effort="2.942" velocity="4.42"/>
     <dynamics damping="0.1249" friction="0.0588"/>
   </joint>
   <joint name="gripper_actuator_mount" type="fixed">

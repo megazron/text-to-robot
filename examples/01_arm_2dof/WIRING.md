@@ -1,6 +1,6 @@
 # Wiring: arm_2dof
 
-5 cables, 14 conductors, 5.46 m of wire, wiring parts $7.37.
+5 cables, 14 conductors, 5.41 m of wire, wiring parts $7.37.
 
 Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), [breadboard.svg](breadboard.svg) (every wire in its colour, pin to pin) and the cable diagram [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
 
@@ -48,7 +48,7 @@ Length is route + service loop + joint slack + termination, rounded up to 5 mm; 
 |---|---|--:|--:|--:|--:|--:|--:|---|---|
 | C1 | mains inlet to the supply (crimped, insulated spades; earth first) | 3 | 185 | 80.5 | 40 | 0 | 60 | 6.3 mm quick-connect tabs / barrier screw terminal | - |
 | C2 | servo_bus to shoulder_pitch_actuator | 3 | 810 | 706.9 | 40 | 0 | 60 | 3-pin 2.5 mm bus servo header (5264 class) / Feetech 5264-3P | control_case.harness |
-| C3 | shoulder_pitch_actuator to elbow_pitch_actuator | 3 | 340 | 178 | 40 | 60 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
+| C3 | shoulder_pitch_actuator to elbow_pitch_actuator | 3 | 325 | 178 | 40 | 45 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
 | C4 | elbow_pitch_actuator to gripper_actuator | 3 | 350 | 177.9 | 40 | 70 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
 | C5 | VBUS to servo_bus | 2 | 200 | 99.1 | 40 | 0 | 60 | barrier screw terminal / green screw terminal | - |
 
@@ -58,8 +58,8 @@ Each loop is at least the extra length the joint needs at the far end of its tra
 
 | Cable | Joint | Travel rad | Length at home mm | Length at full travel mm | Slack loop mm |
 |---|---|---|--:|--:|--:|
-| C3 | shoulder_pitch | -1.75 to 1.75 | 44.3 | 68.3 | 60 |
-| C4 | elbow_pitch | -2.1 to 2.3 | 44.2 | 75.8 | 70 |
+| C3 | shoulder_pitch | -1.75 to 0.79 | 44.3 | 55.1 | 45 |
+| C4 | elbow_pitch | -1.48 to 2.3 | 44.2 | 75.8 | 70 |
 
 ## Electrical calculations
 
@@ -114,9 +114,9 @@ Not checked (no logic levels in the parts data): Feetech STS3215 C047 12 V 30 kg
 
 | Item | Qty | Unit | Unit $ | Subtotal $ | Spec | Price source |
 |---|--:|---|--:|--:|---|---|
-| 22 AWG silicone wire | 2.1 | m | 0.4 | 0.84 | 0.327 mm2, rated 3.5 A in a bundle; 1.89 m cut + 10 % waste | estimated |
+| 22 AWG silicone wire | 2.1 | m | 0.4 | 0.84 | 0.327 mm2, rated 3.5 A in a bundle; 1.86 m cut + 10 % waste | estimated |
 | 24 AWG silicone wire | 2.3 | m | 0.35 | 0.80 | 0.205 mm2, rated 1.75 A in a bundle; 2.06 m cut + 10 % waste | estimated |
-| 26 AWG silicone wire | 1.7 | m | 0.3 | 0.51 | 0.128 mm2, rated 1.1 A in a bundle; 1.50 m cut + 10 % waste | estimated |
+| 26 AWG silicone wire | 1.7 | m | 0.3 | 0.51 | 0.128 mm2, rated 1.1 A in a bundle; 1.48 m cut + 10 % waste | estimated |
 | 6.3 mm spade contacts | 3 | pc | 0.08 | 0.24 | rated 15 A per contact | estimated |
 | Bootlace ferrule contacts | 7 | pc | 0.03 | 0.21 | rated 17.5 A per contact | estimated |
 | Molex 5264 contacts | 18 | pc | 0.05 | 0.90 | rated 3 A per contact | estimated |

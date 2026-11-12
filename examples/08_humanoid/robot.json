@@ -8083,7 +8083,7 @@
   ],
   "metadata": {
     "generator": "text-to-robot design engine (real components + printed structure)",
-    "created": "2026-11-06T11:49:07.298Z",
+    "created": "2026-11-12T02:33:16.158Z",
     "inferred_fields": [
       "links.arm_bus.inertia",
       "links.base_link.inertia",
@@ -17200,6 +17200,10 @@
           "heat_w": 0
         }
       ],
+      "home": {
+        "l_shoulder_roll": 0.35,
+        "r_shoulder_roll": -0.35
+      },
       "exposed": [
         {
           "name": "head_camera",

@@ -184,28 +184,28 @@
     {
       "category": "Wiring",
       "name": "22 AWG silicone wire",
-      "qty": 7.7,
+      "qty": 7.6,
       "unit_cost": 0.4,
-      "subtotal": 3.08,
-      "spec": "7.7 m: 0.327 mm2, rated 3.5 A in a bundle; 6.92 m cut + 10 % waste",
+      "subtotal": 3.04,
+      "spec": "7.6 m: 0.327 mm2, rated 3.5 A in a bundle; 6.90 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "24 AWG silicone wire",
-      "qty": 7.2,
+      "qty": 7.1,
       "unit_cost": 0.35,
-      "subtotal": 2.52,
-      "spec": "7.2 m: 0.205 mm2, rated 1.75 A in a bundle; 6.53 m cut + 10 % waste",
+      "subtotal": 2.48,
+      "spec": "7.1 m: 0.205 mm2, rated 1.75 A in a bundle; 6.39 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "26 AWG silicone wire",
-      "qty": 12.3,
+      "qty": 12.2,
       "unit_cost": 0.3,
-      "subtotal": 3.69,
-      "spec": "12.3 m: 0.128 mm2, rated 1.1 A in a bundle; 11.14 m cut + 10 % waste",
+      "subtotal": 3.66,
+      "spec": "12.2 m: 0.128 mm2, rated 1.1 A in a bundle; 11.06 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
@@ -301,10 +301,10 @@
     {
       "category": "Wiring",
       "name": "Nylon braided sleeving 6 mm",
-      "qty": 1.2,
+      "qty": 1.1,
       "unit_cost": 0.4,
-      "subtotal": 0.48,
-      "spec": "1.2 m: over every cable where it crosses a joint",
+      "subtotal": 0.44,
+      "spec": "1.1 m: over every cable where it crosses a joint",
       "note": "price estimated"
     },
     {
@@ -353,7 +353,7 @@
       "note": "price estimated"
     }
   ],
-  "total": 920.04,
+  "total": 919.89,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
@@ -458,6 +458,7 @@
   "warnings": [],
   "notes": [
     "Baymax-style service robot: 5.571 kg, 1.01 m tall, 4WD hidden base, two 4-servo arms, pan head with camera",
+    "Joint limits trimmed to the collision-free range found by exact solid sweeps: left_arm_shoulder_pitch [-1.75, 1.75] -> [-1.11, 1.23]; left_arm_elbow_pitch [-2.10, 2.30] -> [-0.24, 0.25]; left_arm_wrist_pitch [-1.70, 2.30] -> [-0.96, 0.97]; right_arm_shoulder_pitch [-1.75, 1.75] -> [-1.11, 1.23]; right_arm_elbow_pitch [-2.10, 2.30] -> [-0.24, 0.25]; right_arm_wrist_pitch [-1.70, 2.30] -> [-0.96, 0.97].",
     "Baymax's inflatable vinyl body is a sewn ripstop cover with a foam-lined zip, bought or sewn, with negligible structural role; it hangs on the shoulder yoke and hides a 4WD skid-steer base. It is not inflated, so it does not cushion like the film's.",
     "Structure: 2020 aluminium extrusion spine and a 6 mm aluminium shoulder yoke; arms are four servos each (shoulder yaw, shoulder pitch, elbow, wrist) splayed 25 deg so they clear the belly; the hands are printed mittens covered with the same fabric.",
     "Each arm is sized as mounted to lift 0.1 kg in the mitten at full reach; the tipping check includes both arms stretched forward with that payload.",
