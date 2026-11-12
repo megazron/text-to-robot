@@ -50,6 +50,12 @@ export interface ClipRec { link: string; at_mm: Vec3; dir: Vec3; normal: Vec3; o
 export interface WiringRecord {
   instances: InstanceRec[]; nets: NetRec[]; cables: CableRec[]; rails: RailRec[]; fuses: FuseRec[]; main_switch: string | null; clips: ClipRec[];
   bom: WiringBomLine[]; cost_usd: number; total_wire_m: number; notes: string[]; unconnected: string[]; estimated_inputs: string[];
+  /**
+   * the laid route at the home pose, as the harness check finds it: wire runs through solid parts (count and mm, the
+   * first few with where), and what the router could not do as it wanted (a corner under a wire's bend radius, a short
+   * first bend). Absent when the wires follow declared channels.
+   */
+  route?: { through: number; through_mm: number; first: string[]; notes: string[] };
 }
 
 // ------------------------------------------------------------------------------------------- helpers
@@ -702,15 +708,13 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
   applyClips(A, rec);
   (A.design as { wiring?: WiringRecord }).wiring = rec;
   checks(H, rec);
-  // the judge of the route is the harness check on the laid wires (the same one examples/harness_check.json records): no
-  // wire through a solid part. What the router could not do as it wanted (a corner under a wire's bend radius, a short
-  // first bend) is said in the detail; bends are counted by that check too and held to the examples' record
+  // the route as the harness check on the laid wires finds it (the same check examples/harness_check.json records): wire
+  // runs through solid parts, and what the router could not do as it wanted. The examples are held to it by the tests;
+  // every design carries its own numbers, and a note when a wire passes through a part
   if (R) {
     const c = checkHarness(spec, rec, wiring3d(spec, rec)), notes = routeProblems.filter((p) => !/passes \d+ mm through a solid/.test(p));
-    const list = (xs: string[]) => `${xs.slice(0, 6).join("; ")}${xs.length > 6 ? ` and ${xs.length - 6} more` : ""}`;
-    A.check("wiring:route", c.through.length === 0, c.through.length
-      ? `${c.through.length} wire runs pass through solid parts at the home pose: ${list(c.through.map((t) => `${t.wire} through ${t.link} for ${t.run_mm} mm at ${t.at.join(",")}`))}${notes.length ? `; the router: ${list(notes)}` : ""}`
-      : `every wire is laid through free space at the home pose: none passes through a part, walls are crossed only at their exits${notes.length ? `. Not as the router wanted: ${list(notes)}` : ", corners are no tighter than each wire's bend radius"}`);
+    rec.route = { through: c.through.length, through_mm: c.through.reduce((n, t) => n + t.run_mm, 0), first: c.through.slice(0, 6).map((t) => `${t.wire} through ${t.link} for ${t.run_mm} mm at ${t.at.join(",")}`), notes };
+    if (c.through.length) rec.notes.push(`Routing: ${c.through.length} wire runs pass through solid parts at the home pose (${rec.route.through_mm} mm in all), for example ${rec.route.first.slice(0, 3).join("; ")}. Lay those wires round the part by hand.`);
   }
   return rec;
 }

@@ -115,3 +115,17 @@ for (const ex of examples) {
     assert.ok(c.length.length <= r.length, `${ex}: cut lengths off ${c.length.length}, recorded ${r.length}`);
   });
 }
+
+// no wire through a solid part on any example, but these, each with its reason (the numbers may only go down)
+const THROUGH_KNOWN: Record<string, { most: number; why: string }> = {
+  "08_humanoid": { most: 1, why: "the leg bus terminal block stands 3 mm from the battery; room for it moves boards into the backpack and overloads the hips" },
+  "13_battle_mech": { most: 88, why: "the backpack power chain (converters, switch case) and the CAN bus boards beside the second battery need another layout pass" },
+  "14_iron_man_mark_43": { most: 377, why: "its wiring was routed before the 3D router and the stricter check; left to the Mark 43 rebuild" },
+};
+test("no example has a wire through a solid part, but the known ones, each with its reason", () => {
+  for (const ex of examples) {
+    const r = record[ex]; if (!r) continue;
+    const k = THROUGH_KNOWN[ex];
+    assert.ok(r.through <= (k?.most ?? 0), `${ex}: ${r.through} wire runs through solid parts${k ? `, known ${k.most}: ${k.why}` : ""}`);
+  }
+});

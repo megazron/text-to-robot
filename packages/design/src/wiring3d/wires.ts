@@ -139,6 +139,8 @@ export function wiring3d(spec: RobotSpecification, record?: WiringRecord | null)
         const fuseEnd = [x.from, x.to].map((t) => t.split(".")[0]).find((n2) => fuseT.has(n2)), ft = fuseEnd ? fuseT.get(fuseEnd)! : null;
         let F = ft ? ft.line : roundWire(x.pts as V3[], unrun(x.on), minBend);
         if (ft) F = x.to.startsWith(`${fuseEnd}.`) ? slice(F, 0, ft.cut[0]) : slice(F, ft.cut[1], Infinity);
+        // the cut ends on the holder's lead itself (a stretch shorter than the holder leaves the cut a little short of it)
+        if (ft && F.pts.length) { if (x.to.startsWith(`${fuseEnd}.`)) F.pts[F.pts.length - 1] = b.p; else F.pts[0] = a.p; }
         wires.push({ id: x.id, cable: c.id, net: x.net, kind: x.kind, color: x.color, awg: x.awg, od_mm: od, from: x.from, to: x.to, typical_a: x.typical_a, peak_a: x.peak_a, cut_mm: x.length_mm,
           pts: F.pts.map((p, i) => ({ link: F.on[i], p: r2(applyInv(f.link[F.on[i]] ?? f.link[spec.links[0].name], p)) })), ends: [a.kind, b.kind], min_bend_mm: Math.round(minBend * 10) / 10, flex_bend_mm: Math.round(flexBend * 10) / 10 });
         return;

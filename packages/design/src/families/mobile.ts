@@ -605,13 +605,14 @@ function standoffPlate(key: string, T: Mat4, deckTop: number): Op[] {
 /** Subtract a bought (non-actuator) component's body, plus clearance, from a printed part. */
 const bodyCut = (key: string, T: Mat4, c = 0.5): Op => { const bb = part(key).bbox_mm!; return { op: "at", T, of: [{ op: "cutbox", min: [bb.min[0] - c, bb.min[1] - c, bb.min[2] - c], max: [bb.max[0] + c, bb.max[1] + c, bb.max[2] + c] }] }; };
 function batteryTray(key: string, T: Mat4): Op[] {
-  const c = part(key), L = c.bbox_mm!.max[0], W = c.bbox_mm!.max[1] * 2, H = c.bbox_mm!.max[2];
+  const c = part(key), L = c.bbox_mm!.max[0], W = c.bbox_mm!.max[1] * 2, H = c.bbox_mm!.max[2], x0 = Math.min(0, c.bbox_mm!.min[0]);
   const loc: Op[] = [
-    { op: "box", min: [-3.6, -W / 2 - 3, -3], max: [L + 3, W / 2 + 3, 0] },
+    { op: "box", min: [x0 - 3.6, -W / 2 - 3, -3], max: [L + 3, W / 2 + 3, 0] },
     { op: "box", min: [L * 0.1, -W / 2 - 3.6, -0.1], max: [L * 0.9, -W / 2 - 0.6, H * 0.5] },
     { op: "box", min: [L * 0.1, W / 2 + 0.6, -0.1], max: [L * 0.9, W / 2 + 3.6, H * 0.5] },
     // the end stop is at the -x end: the leads leave the +x end
-    { op: "box", min: [-3.6, -W / 4, -0.1], max: [-0.6, W / 4, H * 0.6] },
+    // (at the pack's own -x face: a pack's body can reach behind its origin)
+    { op: "box", min: [x0 - 3.6, -W / 4, -0.1], max: [x0 - 0.6, W / 4, H * 0.6] },
     { op: "cutbox", min: [L * 0.45, -W / 2 - 5, -4], max: [L * 0.45 + 22, W / 2 + 5, -1.5] }, // strap channel
     { op: "hole", a: [L * 0.2, 0, -4], b: [L * 0.2, 0, 1], d: 3.4 }, { op: "hole", a: [L * 0.8, 0, -4], b: [L * 0.8, 0, 1], d: 3.4 },
   ];
