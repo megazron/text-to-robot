@@ -9,7 +9,7 @@ import { validateUrdf } from "@ttr/urdf-validator";
 import { CATALOG, part, rating, electrical, hornRadiusMm } from "@ttr/parts";
 import { buildPart, toStlBinary, meshGeometry } from "@ttr/mesh";
 import { buildBom } from "@ttr/components";
-import { schematic, breadboard, electricalReport, layoutProblems, wiringSvg, wiringMarkdown, wiring3d, checkHarness, electronicsGlb, firmwareFor, arduinoFirmware, type FirmwareFile, type ArduinoFirmware, type WiringRecord } from "@ttr/design";
+import { schematic, breadboard, electricalReport, layoutProblems, wiringSvg, wiringMarkdown, wiring3d, checkHarness, electronicsGlb, firmwareFor, arduinoFirmware, simulate, discharge, type FirmwareFile, type ArduinoFirmware, type WiringRecord, type SimOptions } from "@ttr/design";
 import { componentGeometry, PRINT_DENSITY, MATERIALS, withSolids, interferences, worstTorques, comWorld, totalMass, evaluate, axisInertias, descendants, type DesignRecord } from "@ttr/design";
 import { partFiles } from "@ttr/kernel/ready";
 import { applyEdits, emptyRobot, kindOf, rootLink, worldFrames, mul, inv, poseMat, rotate, unit, partsBaseline, type EditOp, type PartProvider, type PrintedParams, type StudioMeta } from "./edit.ts";
@@ -18,7 +18,7 @@ import { clearanceAtHome, autoWireCached } from "./incremental.ts";
 import { stability, type Stability } from "./stability.ts";
 import { motionApi } from "./motion.ts";
 
-export const ENGINE_API_VERSION = "1.2.0";
+export const ENGINE_API_VERSION = "1.3.0";
 const MATERIAL: Record<string, string> = { actuator: "actuator", wheel: "rubber", battery: "battery", compute: "electronics", sensor: "electronics", motor_driver: "electronics", misc: "electronics", bearing: "metal", horn: "metal" };
 const BED_MM: Vec3 = [250, 210, 220];
 
@@ -305,6 +305,14 @@ export function electronics3dOf(robot: RobotSpecification, opts: { checks?: bool
   return { robot: h.robot, rails, models, parts: h.parts.map(({ model: _m, ...p }) => p), wires: h.wires, groups: h.groups, notes: h.notes, ...(opts.checks ? { checks: checkHarness(spec, w, h) } : {}) };
 }
 
+/**
+ * Electrical simulation of the robot's harness (its own wiring record, or the one wired for an edited robot): the
+ * operating point in a scenario, with faults, and what trips. See packages/design/src/esim.
+ */
+export function electricalSimOf(robot: RobotSpecification, opts: SimOptions = {}) { return simulate(robot, wiringOf(robot), opts); }
+/** Battery life by simulation: the harness solved as the pack runs down from full, until the first error or empty. */
+export function batteryLifeOf(robot: RobotSpecification, opts: SimOptions & { step?: number } = {}) { return discharge(robot, wiringOf(robot), opts); }
+
 const json = (code: number, body: unknown) => new Response(JSON.stringify(body), { status: code, headers: { "Content-Type": "application/json" } });
 /** /api/engine/* requests. */
 export async function engineApi(method: string, path: string, body: any): Promise<Response> {
@@ -324,6 +332,8 @@ export async function engineApi(method: string, path: string, body: any): Promis
   if (method === "POST" && p === "wiring") { try { const w = wiringOf(body.robot); return json(200, { svg: wiringSvg(w, body.robot.robot_name), markdown: wiringMarkdown(w, body.robot.robot_name) }); } catch (e) { return json(422, { error: (e as Error).message }); } }
   if (method === "POST" && p === "electronics-glb") { try { const spec = finalizeSpec(structuredClone(body.robot)); return new Response(electronicsGlb(spec, wiring3d(spec, wiringOf(body.robot))) as BodyInit, { headers: { "Content-Type": "model/gltf-binary" } }); } catch (e) { return json(422, { error: (e as Error).message }); } }
   if (method === "POST" && p === "electronics3d") { try { return json(200, electronics3dOf(body.robot, body.options ?? {})); } catch (e) { return json(422, { error: (e as Error).message }); } }
+  if (method === "POST" && p === "battery-life") { try { return json(200, batteryLifeOf(body.robot, body.options ?? {})); } catch (e) { return json(422, { error: (e as Error).message }); } }
+  if (method === "POST" && p === "electrical-sim") { try { return json(200, electricalSimOf(body.robot, body.options ?? {})); } catch (e) { return json(422, { error: (e as Error).message }); } }
   if (method === "POST" && p === "breadboard") { try { return json(200, breadboardOf(body.robot)); } catch (e) { return json(422, { error: (e as Error).message }); } }
   if (method === "POST" && p === "clearance") return json(200, { hits: clearanceOf(body.robot, String(body.link)) });
   if (method === "POST" && (p.startsWith("motion") || p === "ik" || p === "body-ik" || p === "pose-collisions")) { const r = motionApi(p, body); if (r) return r; }

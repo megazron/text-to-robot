@@ -7,6 +7,7 @@ import { h, safeHttpUrl, safeJsonParse, MAX_PROMPT_CHARS, MAX_ROBOT_BYTES } from
 import { createElectronics } from "./electronics3d.js";
 import { createMotion } from "./motion.js";
 import { createSim } from "./simview.js";
+import { createPowerSim } from "./esimview.js";
 
 // Clickjacking guard: GitHub Pages cannot send frame-ancestors or X-Frame-Options, so a page that frames this site gets
 // a link to open it in its own tab instead of a working (and invisible-overlay-able) copy.
@@ -322,6 +323,9 @@ renderer.domElement.addEventListener("pointermove", (e) => {
   const w = hit.wire, pin = hit.type === "pin" ? hit.pin : null;
   tip.replaceChildren(el("b", "", w.net), el("div", "", pin ? `pin ${pin}` : `${w.from} to ${w.to}`),
     el("div", "", `${w.typical_a} A typical, ${w.peak_a} A peak${w.awg ? `, ${w.awg} AWG` : ""}, ${w.color}`), el("div", "", `${w.id}, cut ${w.cut_mm} mm`));
+  // the last Power simulation of this robot: the solved current in this wire and the voltage at this pin
+  const sim = powerResult?.robot === state.robot ? powerResult.r : null, sw = sim?.wires?.[w.id], pv = pin && sim?.pins?.[pin];
+  if (sw) tip.append(el("div", "", `simulated (${sim.scenario}): ${Math.abs(sw.current_a).toFixed(3)} A, ${sw.drop_v.toFixed(3)} V drop${sw.open ? ", open" : ""}${pv != null && pv !== undefined ? `, ${(+pv).toFixed(2)} V at the pin` : ""}`));
   tip.style.left = `${e.clientX + 14}px`; tip.style.top = `${e.clientY + 14}px`; tip.hidden = false;
 });
 renderer.domElement.addEventListener("pointerleave", () => { $("#wireTip").hidden = true; });
@@ -885,11 +889,14 @@ async function circuits(which) {
 /** a new robot redraws the open circuit view */
 function refreshCircuit() { if ($("#tab-circuit").classList.contains("active")) showCircuit(document.querySelector(".seg.circ .tab.active").dataset.tab.slice(5)); }
 function svgUrl(svg) { return URL.createObjectURL(new Blob([svg], { type: "image/svg+xml" })); }
+// the Power view: the harness solved as a circuit by the engine's electricalSim (esimview.js)
+let powerSim = null, powerResult = null;
 async function showCircuit(which) {
   if (!state.robot) return;
   const box = document.querySelector(`.circview[data-view="${which}"]`), robot = state.robot;
   if (box._robot === robot && box.firstChild) return;
   box._robot = robot;
+  if (which === "power") { $("#circNote").hidden = true; powerSim?.dispose(); powerSim = createPowerSim({ api, el, box, robot, onResult: (r) => { powerResult = r ? { r, robot } : null; } }); return; }
   box.replaceChildren(el("div", "hint", which === "breadboard" ? "Laying out every wire..." : "Drawing..."));
   $("#circNote").hidden = true;
   try {

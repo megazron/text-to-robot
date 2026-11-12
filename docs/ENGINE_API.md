@@ -1,6 +1,6 @@
 # Engine API (version 1)
 
-The current release is 1.2.0: version 1.1 added the parts-list methods (`parseInventory`, `searchParts`, `fromParts`, `firmware`), and 1.2 gives `firmware` a sketch for every Arduino robot, written from its wiring record; nothing in 1.0 changed.
+The current release is 1.3.0: version 1.1 added the parts-list methods (`parseInventory`, `searchParts`, `fromParts`, `firmware`), 1.2 gives `firmware` a sketch for every Arduino robot, written from its wiring record, and 1.3 adds the electrical simulation (`electricalSim`, `batteryLife`); nothing in 1.0 changed.
 
 The Text to Robot engine can be used from any web page. It is the same engine the website runs: the prompt parser, the design engine, the checks and every export. It runs in a Web Worker in the visitor's browser; nothing is sent to a server.
 
@@ -55,6 +55,8 @@ Types: [`engine/v1/engine.d.ts`](https://megazron.github.io/text-to-robot/engine
 | `motions(robot)` | The motions a robot has: its joint tour, its purpose demo and, for a wearable, human motion. See [Motions](#motions). |
 | `motion(robot, name, { fps, collision, to, files })` | A motion sampled at `fps` (30), with its limit, speed, torque and self-collision checks; `files: true` adds its CSV, ROS 2 JointTrajectory and BVH. |
 | `ik(robot, link, target, options)` | Inverse kinematics: joint values that bring a point on `link` to a world pose, and whether they reach it. |
+| `electricalSim(robot, { scenario, faults, soc, transient, loads, actuator_load })` | The harness solved as a circuit (a solver of its own, modified nodal analysis): every power, ground and motor wire a resistor from its gauge and cut length, the battery its rest voltage at `soc` behind its internal resistance, regulators, fuses, switches, drivers and loads from their records. `scenario` is `"idle"`, `"typical"` (default), `"stall"` or `"peak"`; `faults` are `{ kind: "short", rail }`, `{ kind: "open", wire }`, `{ kind: "stall", inst }` and `{ kind: "low_battery", soc }`. Returns the operating point (`pins`, `wires`, `rails`, `parts`, `sources`, `regulators`, `fuses`, `power` with its balance) and `events` for what trips (fuses by their datasheet curve, brown-outs, regulator dropout and limit, wires over their rating); `converged: false` when there is no steady state. `transient: { t_end_s, dt_s, t_fault_s }` also steps it in time. Every estimate is in `assumptions`. Added in 1.3. |
+| `batteryLife(robot, { scenario, faults, step })` | Battery life by simulation: the pack run down from full in steps of charge (2 %), the harness solved at every step, the time from the current each solution draws. Returns `{ ok, life_h, ends, ends_at_soc, points, capacity_ah, source }`; `ends` is the first error as the pack runs down (a brown-out, the pack under its cutoff) or `"empty"`. `ok: false` with a reason for a robot on a supply or with more than one battery. Added in 1.3. |
 | `zip(files)` | A zip archive of a file map. |
 
 The module also exports the pure functions behind editing, for use on the page without a round trip to the worker: `applyEdits`, `toScene` and `fromScene` (the spec as a tree of parts and joints; an unedited spec round-trips exactly), `worldFrames`, `snapPart` and `mate` (placing a part on a matching mount or on a surface grid), and the transform helpers.

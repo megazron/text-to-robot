@@ -83,6 +83,8 @@ jobs:
         run: python scripts/check_parts.py
       - name: The Run tab runs the examples' compiled sketches on the virtual ATmega328P and the model follows the pins
         run: python scripts/check_sim.py
+      - name: The Power view solves the harness in the page and shows the engine's own numbers (operating point, a short, battery life)
+        run: python scripts/check_power.py
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         if: always()
         with:
@@ -91,6 +93,7 @@ jobs:
             out/site-check/
             out/xss-check/
             out/sim-check/
+            out/power-check/
             out/parts-check/
   community:
     # the community board: the Worker's unit and API tests on Miniflare, then Chromium against wrangler dev and the site.
