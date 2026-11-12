@@ -361,7 +361,7 @@
     <child link="upper_arm"/>
     <origin xyz="0 0.024 0.055" rpy="0 -1.570796 -1.570796"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-1.75" upper="1.75" effort="9.9" velocity="3.88"/>
+    <limit lower="-1.75" upper="1.052" effort="9.9" velocity="3.88"/>
     <dynamics damping="0.4848" friction="0.198"/>
   </joint>
   <joint name="elbow_pitch_actuator_mount" type="fixed">
@@ -374,7 +374,7 @@
     <child link="forearm"/>
     <origin xyz="0.113905 0 -0.04295" rpy="3.141593 0 0"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-2.1" upper="2.3" effort="4.1" velocity="3.96"/>
+    <limit lower="-1.8" upper="2.3" effort="4.1" velocity="3.96"/>
     <dynamics damping="0.1702" friction="0.082"/>
   </joint>
   <joint name="forearm_roll_actuator_mount" type="fixed">
@@ -387,7 +387,7 @@
     <child link="forearm_rotator"/>
     <origin xyz="0.103901 0 -0.01895" rpy="-1.570796 0 -1.570796"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-2.97" upper="2.97" effort="1.4" velocity="5.67"/>
+    <limit lower="-1.874" upper="1.874" effort="1.4" velocity="5.67"/>
     <dynamics damping="0.0469" friction="0.028"/>
   </joint>
   <joint name="wrist_pitch_actuator_mount" type="fixed">
@@ -400,7 +400,7 @@
     <child link="wrist"/>
     <origin xyz="0 0.01895 0.04525" rpy="0 -1.570796 -1.570796"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-1.7" upper="2.3" effort="1.4" velocity="4.67"/>
+    <limit lower="-1.7" upper="0.051" effort="1.4" velocity="4.67"/>
     <dynamics damping="0.0469" friction="0.028"/>
   </joint>
   <joint name="wrist_roll_actuator_mount" type="fixed">

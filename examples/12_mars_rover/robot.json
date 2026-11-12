@@ -5560,8 +5560,8 @@
         1
       ],
       "limit": {
-        "lower": -1.75,
-        "upper": 1.75,
+        "lower": -0.616,
+        "upper": 1.571,
         "effort": 9.9,
         "velocity": 3.26
       },
@@ -5617,7 +5617,7 @@
       ],
       "limit": {
         "lower": -2.1,
-        "upper": 2.3,
+        "upper": 1.454,
         "effort": 9.9,
         "velocity": 3.88
       },
@@ -6084,7 +6084,7 @@
   ],
   "metadata": {
     "generator": "text-to-robot design engine (real components + printed structure)",
-    "created": "2026-11-12T08:34:06.665Z",
+    "created": "2026-11-12T20:30:28.004Z",
     "inferred_fields": [
       "links.arm_base_link.inertia",
       "links.arm_base_yaw_actuator.inertia",
@@ -11695,6 +11695,7 @@
         "cost_breakdown": "catalog parts $3785, filament 0.95 kg $24, fasteners $18, fabricated/other $95 (320 x 210 x 100 mm folded 2 mm aluminium body box (~$60); 320 x 210 x 3 mm aluminium lid, laser cut (~$35); power switch, 15 A fuse, wiring)"
       },
       "assumptions": [
+        "Joint limits trimmed to the collision-free range found by exact solid sweeps: arm_shoulder_pitch [-1.75, 1.75] -> [-0.62, 1.57]; arm_elbow_pitch [-2.10, 2.30] -> [-2.10, 1.45].",
         "Rocker-bogie after the JPL Open Source Rover, 4 driven wheels, skid steering (the OSR's four corner-steering servos are left out; add them for less tyre scrub).",
         "The differential bar linking the two rockers through the body is modelled as a URDF mimic between the rocker pivots: a passive bar has no motor, and the model's rockers turn equally and opposite.",
         "Rockers and bogies are printed in PETG; for outdoor use print them in 6 bolt-on sections from aluminium channel instead (as the OSR does).",
@@ -16670,8 +16671,8 @@
                 "color": "red",
                 "typical_a": 1.45,
                 "peak_a": 5.6,
-                "length_mm": 370,
-                "drop_v": 0.132,
+                "length_mm": 325,
+                "drop_v": 0.116,
                 "pts": [
                   [
                     6.7,
@@ -16736,8 +16737,8 @@
                 "color": "black",
                 "typical_a": 1.45,
                 "peak_a": 5.6,
-                "length_mm": 370,
-                "drop_v": 0.132,
+                "length_mm": 325,
+                "drop_v": 0.116,
                 "pts": [
                   [
                     6.7,
@@ -16802,7 +16803,7 @@
                 "color": "yellow",
                 "typical_a": 0.02,
                 "peak_a": 0.02,
-                "length_mm": 370,
+                "length_mm": 325,
                 "drop_v": 0.002,
                 "pts": [
                   [
@@ -16862,9 +16863,9 @@
             "od_mm": 3.2,
             "route_mm": 164.8,
             "service_mm": 40,
-            "slack_mm": 105,
+            "slack_mm": 60,
             "termination_mm": 60,
-            "length_mm": 370,
+            "length_mm": 325,
             "path_mm": [
               [
                 32,
@@ -16898,13 +16899,13 @@
                 "joint": "arm_shoulder_pitch",
                 "type": "revolute",
                 "travel": [
-                  -1.75,
-                  1.75
+                  -0.616,
+                  1.571
                 ],
                 "home_mm": 37.9,
-                "need_mm": 101.8,
-                "slack_mm": 105,
-                "provided_mm": 142.9
+                "need_mm": 60,
+                "slack_mm": 60,
+                "provided_mm": 97.9
               }
             ],
             "exit": null
@@ -17182,7 +17183,7 @@
                 "type": "revolute",
                 "travel": [
                   -2.1,
-                  2.3
+                  1.454
                 ],
                 "home_mm": 35.6,
                 "need_mm": 84.4,
@@ -19348,8 +19349,8 @@
                 "color": "red",
                 "typical_a": 0.7,
                 "peak_a": 2.65,
-                "length_mm": 1445,
-                "drop_v": 0.243,
+                "length_mm": 1435,
+                "drop_v": 0.242,
                 "pts": [
                   [
                     118.3,
@@ -19490,8 +19491,8 @@
                 "color": "black",
                 "typical_a": 0.7,
                 "peak_a": 2.65,
-                "length_mm": 1365,
-                "drop_v": 0.091,
+                "length_mm": 1355,
+                "drop_v": 0.09,
                 "pts": [
                   [
                     16.1,
@@ -19636,9 +19637,9 @@
             "od_mm": 2.7,
             "route_mm": 700.4,
             "service_mm": 40,
-            "slack_mm": 640,
+            "slack_mm": 630,
             "termination_mm": 60,
-            "length_mm": 1445,
+            "length_mm": 1435,
             "path_mm": [
               [
                 75.9,
@@ -19743,20 +19744,20 @@
                 "joint": "arm_shoulder_pitch",
                 "type": "revolute",
                 "travel": [
-                  -1.75,
-                  1.75
+                  -0.616,
+                  1.571
                 ],
                 "home_mm": 33.6,
-                "need_mm": 113.6,
-                "slack_mm": 120,
-                "provided_mm": 153.6
+                "need_mm": 105.4,
+                "slack_mm": 110,
+                "provided_mm": 143.6
               },
               {
                 "joint": "arm_elbow_pitch",
                 "type": "revolute",
                 "travel": [
                   -2.1,
-                  2.3
+                  1.454
                 ],
                 "home_mm": 34.1,
                 "need_mm": 110.9,
@@ -20080,7 +20081,7 @@
               }
             ],
             "fuse_a": 15,
-            "worst_drop_v": 0.243,
+            "worst_drop_v": 0.242,
             "ok": true
           },
           {
@@ -20273,11 +20274,11 @@
           },
           {
             "item": "22 AWG silicone wire",
-            "qty": 3.6,
+            "qty": 3.5,
             "unit": "m",
             "unit_usd": 0.4,
-            "subtotal_usd": 1.44,
-            "spec": "0.327 mm2, rated 3.5 A in a bundle; 3.25 m cut + 10 % waste",
+            "subtotal_usd": 1.4,
+            "spec": "0.327 mm2, rated 3.5 A in a bundle; 3.15 m cut + 10 % waste",
             "source": "estimated"
           },
           {
@@ -20295,7 +20296,7 @@
             "unit": "m",
             "unit_usd": 0.3,
             "subtotal_usd": 2.97,
-            "spec": "0.128 mm2, rated 1.1 A in a bundle; 8.98 m cut + 10 % waste",
+            "spec": "0.128 mm2, rated 1.1 A in a bundle; 8.93 m cut + 10 % waste",
             "source": "estimated"
           },
           {
@@ -20408,10 +20409,10 @@
           },
           {
             "item": "Nylon braided sleeving 6 mm",
-            "qty": 3.6,
+            "qty": 3.5,
             "unit": "m",
             "unit_usd": 0.4,
-            "subtotal_usd": 1.44,
+            "subtotal_usd": 1.4,
             "spec": "over every cable where it crosses a joint",
             "source": "estimated"
           },
@@ -20488,11 +20489,12 @@
             "source": "estimated"
           }
         ],
-        "cost_usd": 37.55,
-        "total_wire_m": 31.48,
+        "cost_usd": 37.47,
+        "total_wire_m": 31.32,
         "notes": [],
         "unconnected": [],
         "estimated_inputs": [],
+        "laid": "3d",
         "route": {
           "through": 0,
           "through_mm": 0,

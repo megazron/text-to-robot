@@ -203,10 +203,10 @@
     {
       "category": "Wiring",
       "name": "22 AWG silicone wire",
-      "qty": 3.6,
+      "qty": 3.5,
       "unit_cost": 0.4,
-      "subtotal": 1.44,
-      "spec": "3.6 m: 0.327 mm2, rated 3.5 A in a bundle; 3.25 m cut + 10 % waste",
+      "subtotal": 1.4,
+      "spec": "3.5 m: 0.327 mm2, rated 3.5 A in a bundle; 3.15 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
@@ -224,7 +224,7 @@
       "qty": 9.9,
       "unit_cost": 0.3,
       "subtotal": 2.97,
-      "spec": "9.9 m: 0.128 mm2, rated 1.1 A in a bundle; 8.98 m cut + 10 % waste",
+      "spec": "9.9 m: 0.128 mm2, rated 1.1 A in a bundle; 8.93 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
@@ -338,10 +338,10 @@
     {
       "category": "Wiring",
       "name": "Nylon braided sleeving 6 mm",
-      "qty": 3.6,
+      "qty": 3.5,
       "unit_cost": 0.4,
-      "subtotal": 1.44,
-      "spec": "3.6 m: over every cable where it crosses a joint",
+      "subtotal": 1.4,
+      "spec": "3.5 m: over every cable where it crosses a joint",
       "note": "price estimated"
     },
     {
@@ -417,7 +417,7 @@
       "note": "price estimated"
     }
   ],
-  "total": 3861.39,
+  "total": 3861.31,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
@@ -506,6 +506,7 @@
   "warnings": [],
   "notes": [
     "4-wheel rocker-bogie rover with a 6-DOF arm: 4.64 kg, 1.24 m/s, 1.53 h, jetson_orin_nano_super",
+    "Joint limits trimmed to the collision-free range found by exact solid sweeps: arm_shoulder_pitch [-1.75, 1.75] -> [-0.62, 1.57]; arm_elbow_pitch [-2.10, 2.30] -> [-2.10, 1.45].",
     "Rocker-bogie after the JPL Open Source Rover, 4 driven wheels, skid steering (the OSR's four corner-steering servos are left out; add them for less tyre scrub).",
     "The differential bar linking the two rockers through the body is modelled as a URDF mimic between the rocker pivots: a passive bar has no motor, and the model's rockers turn equally and opposite.",
     "Rockers and bogies are printed in PETG; for outdoor use print them in 6 bolt-on sections from aluminium channel instead (as the OSR does).",

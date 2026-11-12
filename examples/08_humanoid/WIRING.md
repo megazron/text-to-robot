@@ -1041,4 +1041,4 @@ Not checked (no logic levels in the parts data): DYNAMIXEL XH540-W270-T(R), DYNA
 
 ## Notes
 
-- Routing: 1 wire runs pass through solid parts at the home pose (27 mm in all), for example W70 through battery for 27 mm at -4,-36,90. Lay those wires round the part by hand.
+- Routing: 3 wire runs could only be laid through solid parts at the home pose (53 mm in all), for example l_shoulder_roll_actuator~l_upper_arm_yaw_actuator wire 1 through a printed part for 1 mm at -19,102,169; l_shoulder_roll_actuator~l_upper_arm_yaw_actuator wire 2 through a printed part for 1 mm at -19,102,167; VBAT~leg_bus (star_ground) wire 2 through battery for 51 mm at -3,-15,96. Lay those wires round the part by hand.

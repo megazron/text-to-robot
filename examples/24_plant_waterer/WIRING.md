@@ -1,6 +1,6 @@
 # Wiring: diff_drive_robot
 
-14 cables, 29 conductors, 6.99 m of wire, wiring parts $10.45.
+14 cables, 29 conductors, 8.58 m of wire, wiring parts $10.99.
 
 Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), [breadboard.svg](breadboard.svg) (every wire in its colour, pin to pin) and the cable diagram [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
 
@@ -8,8 +8,8 @@ Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), 
 
 | Rail | Volts | Source | Source limit A (cont / peak) | Load A (typical / peak) | Margin (typical) | Fuse A | Worst wire drop V |
 |---|--:|---|--:|--:|--:|--:|--:|
-| VBAT | 11.1 | main_switch | 35 / 70 | 3.351 / 13.503 | 10.4x | 7.5 | 0.081 |
-| 5V | 5 | regulator_5v | 5.5 / 8 | 1 / 5 | 5.5x | - | 0.076 |
+| VBAT | 11.1 | main_switch | 35 / 70 | 3.351 / 13.503 | 10.4x | 7.5 | 0.07 |
+| 5V | 5 | regulator_5v | 5.5 / 8 | 1 / 5 | 5.5x | - | 0.083 |
 
 **VBAT loads** (peak assumes two drive motors stalling at once, the rest running):
 
@@ -71,20 +71,20 @@ Length is route + service loop + joint slack + termination, rounded up to 5 mm; 
 
 | Cable | What | Conductors | Length mm | Route | Service | Joint slack | Ends | Connectors | Exit |
 |---|---|--:|--:|--:|--:|--:|--:|---|---|
-| C1 | front_camera to computer | 1 | 260 | 257.8 | 0 | 0 | 0 | FFC | electronics_enclosure.deck_left |
-| C2 | motor_driver_1 to computer | 5 | 220 | 119.3 | 40 | 0 | 60 | 5-pin 2.54 mm header / 40-pin header | - |
-| C3 | motor_driver_1 channel 1 to left_motor | 2 | 290 | 185.7 | 40 | 0 | 60 | 2-position screw terminal / 1x6 female header | electronics_enclosure.deck_left |
-| C4 | left_motor encoder to computer | 4 | 235 | 132.9 | 40 | 0 | 60 | 40-pin header / 1x6 female header | electronics_enclosure.deck_left |
-| C5 | motor_driver_1 channel 2 to right_motor | 2 | 360 | 255.9 | 40 | 0 | 60 | 2-position screw terminal / 1x6 female header | electronics_enclosure.deck_left |
-| C6 | right_motor encoder to computer | 4 | 305 | 203 | 40 | 0 | 60 | 40-pin header / 1x6 female header | electronics_enclosure.deck_left |
-| C7 | battery positive to main fuse | 1 | 100 | 0 | 40 | 0 | 60 | XT60 / soldered leads | - |
-| C8 | main fuse to main switch | 1 | 275 | 173.2 | 40 | 0 | 60 | soldered leads / 4.8 mm quick-connect tabs | electronics_enclosure.deck_left |
-| C9 | battery negative to star ground | 1 | 100 | 0 | 40 | 0 | 60 | XT60 / lever clamp | - |
-| C10 | main_switch to the VBAT splice | 1 | 100 | 0 | 40 | 0 | 60 | 4.8 mm quick-connect tabs / lever clamp | - |
-| C11 | VBAT to regulator_5v | 2 | 320 | 219.5 | 40 | 0 | 60 | lever clamp / 0.1 in through holes | electronics_enclosure.deck_left |
-| C12 | VBAT to motor_driver_1 | 2 | 270 | 166.8 | 40 | 0 | 60 | lever clamp / 2-position screw terminal | electronics_enclosure.deck_left |
-| C13 | regulator_5v to star_ground | 1 | 195 | 90.8 | 40 | 0 | 60 | 0.1 in through holes / lever clamp | - |
-| C14 | 5V to computer | 2 | 240 | 137.7 | 40 | 0 | 60 | 0.1 in through holes / 40-pin header | - |
+| C1 | front_camera to computer | 1 | 370 | 368.8 | 0 | 0 | 0 | FFC | electronics_enclosure.deck_left |
+| C2 | motor_driver_1 to computer | 5 | 280 | 176.6 | 40 | 0 | 60 | 5-pin 2.54 mm header / 40-pin header | - |
+| C3 | motor_driver_1 channel 1 to left_motor | 2 | 385 | 282.6 | 40 | 0 | 60 | 2-position screw terminal / 1x6 female header | electronics_enclosure.deck_left |
+| C4 | left_motor encoder to computer | 4 | 385 | 282.3 | 40 | 0 | 60 | 40-pin header / 1x6 female header | electronics_enclosure.deck_left |
+| C5 | motor_driver_1 channel 2 to right_motor | 2 | 375 | 270.6 | 40 | 0 | 60 | 2-position screw terminal / 1x6 female header | electronics_enclosure.deck_left |
+| C6 | right_motor encoder to computer | 4 | 400 | 296.6 | 40 | 0 | 60 | 40-pin header / 1x6 female header | electronics_enclosure.deck_left |
+| C7 | battery positive to main fuse | 1 | 165 | 63.7 | 40 | 0 | 60 | XT60 / soldered leads | - |
+| C8 | main fuse to main switch | 1 | 265 | 160.9 | 40 | 0 | 60 | soldered leads / 4.8 mm quick-connect tabs | - |
+| C9 | battery negative to star ground | 1 | 170 | 65.1 | 40 | 0 | 60 | XT60 / lever clamp | - |
+| C10 | main_switch to the VBAT splice | 1 | 165 | 63.4 | 40 | 0 | 60 | 4.8 mm quick-connect tabs / lever clamp | - |
+| C11 | VBAT to regulator_5v | 2 | 220 | 117.5 | 40 | 0 | 60 | lever clamp / 0.1 in through holes | - |
+| C12 | VBAT to motor_driver_1 | 2 | 285 | 180.5 | 40 | 0 | 60 | lever clamp / 2-position screw terminal | - |
+| C13 | regulator_5v to star_ground | 1 | 220 | 118.6 | 40 | 0 | 60 | 0.1 in through holes / lever clamp | - |
+| C14 | 5V to computer | 2 | 260 | 158.4 | 40 | 0 | 60 | 0.1 in through holes / 40-pin header | - |
 
 ## Electrical calculations
 
@@ -138,18 +138,18 @@ A driver's high level is its I/O supply; the receiver needs it above its input t
 
 | Item | Qty | Unit | Unit $ | Subtotal $ | Spec | Price source |
 |---|--:|---|--:|--:|---|---|
-| 16 AWG silicone wire | 0.7 | m | 1 | 0.70 | 1.308 mm2, rated 11 A in a bundle; 0.57 m cut + 10 % waste | estimated |
+| 16 AWG silicone wire | 0.9 | m | 1 | 0.90 | 1.308 mm2, rated 11 A in a bundle; 0.77 m cut + 10 % waste | estimated |
 | 18 AWG silicone wire | 0.6 | m | 0.7 | 0.42 | 0.823 mm2, rated 8 A in a bundle; 0.54 m cut + 10 % waste | estimated |
-| 22 AWG silicone wire | 2.6 | m | 0.4 | 1.04 | 0.327 mm2, rated 3.5 A in a bundle; 2.29 m cut + 10 % waste | estimated |
-| 24 AWG silicone wire | 1.8 | m | 0.35 | 0.63 | 0.205 mm2, rated 1.75 A in a bundle; 1.62 m cut + 10 % waste | estimated |
-| 26 AWG silicone wire | 2.2 | m | 0.3 | 0.66 | 0.128 mm2, rated 1.1 A in a bundle; 1.96 m cut + 10 % waste | estimated |
+| 22 AWG silicone wire | 2.7 | m | 0.4 | 1.08 | 0.327 mm2, rated 3.5 A in a bundle; 2.41 m cut + 10 % waste | estimated |
+| 24 AWG silicone wire | 2.3 | m | 0.35 | 0.80 | 0.205 mm2, rated 1.75 A in a bundle; 2.06 m cut + 10 % waste | estimated |
+| 26 AWG silicone wire | 2.9 | m | 0.3 | 0.87 | 0.128 mm2, rated 1.1 A in a bundle; 2.56 m cut + 10 % waste | estimated |
 | Dupont 2.54 mm contacts | 20 | pc | 0.02 | 0.40 | rated 3 A per contact | estimated |
 | Dupont 2.54 mm housings | 5 | pc | 0.02 | 0.10 | one per cable end | estimated |
 | Bootlace ferrule contacts | 6 | pc | 0.03 | 0.18 | rated 17.5 A per contact | estimated |
 | XT60 contacts | 2 | pc | 0.9 | 1.80 | rated 35 A per contact | estimated |
 | 6.3 mm spade contacts | 2 | pc | 0.08 | 0.16 | rated 15 A per contact | estimated |
 | Heat shrink 3 mm, 2:1 | 1.5 | m | 0.2 | 0.30 | 19 solder joints + a boot on each cable end | estimated |
-| Cable tie 100 x 2.5 mm | 24 | pc | 0.02 | 0.48 | at every clip, cable end and strain-relief anchor | estimated |
+| Cable tie 100 x 2.5 mm | 20 | pc | 0.02 | 0.40 | at every clip, cable end and strain-relief anchor | estimated |
 | Rubber grommet, 6.4 mm panel hole, 3.2 mm bore | 1 | pc | 0.08 | 0.08 | 9.5 mm panel hole | estimated |
 | FFC | 1 | pc | 3 | 3.00 | front_camera to computer | estimated |
 | 7.5 A ATM blade fuse | 1 | pc | 0.25 | 0.25 | plus spares | estimated |

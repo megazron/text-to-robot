@@ -32,9 +32,9 @@
 <path d="M710 157 H626 V137.5 H644 V118 H560" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C10 W20 GND: controller.rx.GND_RX to star_ground.levers.P2, 24 AWG</title></path>
 <path d="M710 170 H616 V144 H654 V118 H560" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C10 W21 GND: controller.cam.GND_CAM to star_ground.levers.P2, 24 AWG</title></path>
 <path d="M900 183 H1004 V327 H1286 V471 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C11 W22 5V_FC: controller.rx.5V to receiver.main.5V, 24 AWG</title></path>
-<path d="M560 118 H674 V301 H1276 V484 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C11 W23 GND: star_ground.levers.P2 to receiver.main.GND, 24 AWG</title></path>
-<path d="M900 196 H1024 V376 H1266 V556 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C12 W24 VCAM: controller.cam.VCAM to fpv_camera.main.VIN, 24 AWG</title></path>
-<path d="M560 118 H574 V343.5 H1376 V569 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C12 W25 GND: star_ground.levers.P2 to fpv_camera.main.GND, 24 AWG</title></path>
+<path d="M900 196 H1014 V376 H1276 V556 H1390" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C12 W23 VCAM: controller.cam.VCAM to fpv_camera.main.VIN, 24 AWG</title></path>
+<path d="M560 118 H684 V301 H1266 V484 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C13 W24 GND: star_ground.levers.P2 to receiver.main.GND, 24 AWG</title></path>
+<path d="M560 118 H574 V343.5 H1376 V569 H1390" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C14 W25 GND: star_ground.levers.P2 to fpv_camera.main.GND, 24 AWG</title></path>
 <rect x="1390" y="74" width="190" height="67" rx="5" fill="#f4f6f8" stroke="#333"/><text x="1397" y="89" font-weight="700">front_left_motor</text>
 <text x="1397" y="108.5" fill="#333">A</text>
 <text x="1397" y="121.5" fill="#333">B</text>

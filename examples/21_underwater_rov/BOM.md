@@ -1,6 +1,6 @@
 # Bill of materials: underwater_rov
 
-**Estimated total: $1820.43**  ·  tier: hobby
+**Estimated total: $1821.33**  ·  tier: hobby
 
 **Effort sizing: passes catalogue estimate; hardware verified: no.**
 
@@ -26,17 +26,17 @@
 | Power | Blue Robotics 4 in watertight enclosure, 298 mm acrylic tube, aluminium end caps (rated 100 m) _(watertight electronics hull · https://bluerobotics.com/store/watertight-enclosures/4-series/wte4-asm-r1/)_ | 1 | 285 | 285 | https://bluerobotics.com/store/watertight-enclosures/4-series/wte4-asm-r1/ |
 | Printed structure | PETG filament for 12 printed parts _(base_link, skid_fore, bow_frame, stern_frame, saddle_fore, saddle_aft, hull_tray_aft, hull_tray_fore, thruster_left_post, thruster_right_post, thruster_vert_left_post, thruster_vert_right_post)_ | 1 | 22.11 | 22.11 | 874 g of parts (+15 % supports/waste), about 79.7 h of printing |
 | Fasteners | Screws, nuts and inserts | 44 | 0.12 | 5.28 | 2x M3 x 20 + nut (skid halves, through the joining lugs); 16x M4 x 25 + nyloc (tube sockets, through the tube); 2x M3 x 20 + nut (tray halves); 16x M2.5 x 6 self-tapping (boards to tray); 8x M3 x 12 (thruster foot to post) |
-| Wiring | 4 AWG silicone wire _(price estimated)_ | 0.6 | 10 | 6 | 0.6 m: 21.2 mm2, rated 70 A in a bundle; 0.52 m cut + 10 % waste |
-| Wiring | 14 AWG silicone wire _(price estimated)_ | 2.7 | 1.5 | 4.05 | 2.7 m: 2.082 mm2, rated 16 A in a bundle; 2.45 m cut + 10 % waste |
-| Wiring | 16 AWG silicone wire _(price estimated)_ | 6.2 | 1 | 6.2 | 6.2 m: 1.308 mm2, rated 11 A in a bundle; 5.63 m cut + 10 % waste |
-| Wiring | 22 AWG silicone wire _(price estimated)_ | 0.8 | 0.4 | 0.32 | 0.8 m: 0.327 mm2, rated 3.5 A in a bundle; 0.65 m cut + 10 % waste |
-| Wiring | 24 AWG silicone wire _(price estimated)_ | 2 | 0.35 | 0.7 | 2 m: 0.205 mm2, rated 1.75 A in a bundle; 1.76 m cut + 10 % waste |
-| Wiring | 26 AWG silicone wire _(price estimated)_ | 1.8 | 0.3 | 0.54 | 1.8 m: 0.128 mm2, rated 1.1 A in a bundle; 1.63 m cut + 10 % waste |
+| Wiring | 4 AWG silicone wire _(price estimated)_ | 0.9 | 10 | 9 | 0.9 m: 21.2 mm2, rated 70 A in a bundle; 0.76 m cut + 10 % waste |
+| Wiring | 14 AWG silicone wire _(price estimated)_ | 2.3 | 1.5 | 3.45 | 2.3 m: 2.082 mm2, rated 16 A in a bundle; 2.06 m cut + 10 % waste |
+| Wiring | 16 AWG silicone wire _(price estimated)_ | 4.3 | 1 | 4.3 | 4.3 m: 1.308 mm2, rated 11 A in a bundle; 3.85 m cut + 10 % waste |
+| Wiring | 22 AWG silicone wire _(price estimated)_ | 1.4 | 0.4 | 0.56 | 1.4 m: 0.327 mm2, rated 3.5 A in a bundle; 1.24 m cut + 10 % waste |
+| Wiring | 24 AWG silicone wire _(price estimated)_ | 2.7 | 0.35 | 0.94 | 2.7 m: 0.205 mm2, rated 1.75 A in a bundle; 2.41 m cut + 10 % waste |
+| Wiring | 26 AWG silicone wire _(price estimated)_ | 2 | 0.3 | 0.6 | 2 m: 0.128 mm2, rated 1.1 A in a bundle; 1.77 m cut + 10 % waste |
 | Wiring | Dupont 2.54 mm contacts _(price estimated)_ | 28 | 0.02 | 0.56 | 28 pc: rated 3 A per contact |
 | Wiring | Dupont 2.54 mm housings _(price estimated)_ | 14 | 0.02 | 0.28 | 14 pc: one per cable end |
 | Wiring | XT90 contacts _(price estimated)_ | 2 | 1.6 | 3.2 | 2 pc: rated 45 A per contact |
 | Wiring | Heat shrink 3 mm, 2:1 _(price estimated)_ | 2.6 | 0.2 | 0.52 | 2.6 m: 38 solder joints + a boot on each cable end |
-| Wiring | Cable tie 100 x 2.5 mm _(price estimated)_ | 41 | 0.02 | 0.82 | 41 pc: at every clip, cable end and strain-relief anchor |
+| Wiring | Cable tie 100 x 2.5 mm _(price estimated)_ | 34 | 0.02 | 0.68 | 34 pc: at every clip, cable end and strain-relief anchor |
 | Wiring | PG7 cable gland _(price estimated)_ | 5 | 2.97 | 14.85 | 5 pc: cable exit with strain relief |
 | Wiring | camera FFC, 200 mm (Pi 5 22-pin to 15-pin) _(price estimated)_ | 1 | 4 | 4 | 1 pc: camera to controller |
 | Wiring | 50 A ANL fuse _(price estimated)_ | 1 | 6 | 6 | 1 pc: plus spares |

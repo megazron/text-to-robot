@@ -10,18 +10,18 @@
  "tests": {
   "hover": {
    "pass": true,
-   "explanation": "lifts off and holds 0.8 m for 3 s: height within 17 mm, tilt under 0.0 deg, rotors at 15 % of full thrust on average (1.15 N each for 0.467 kg; design record says 1.15 N), peak 15 %",
+   "explanation": "lifts off and holds 0.8 m for 3 s: height within 17 mm, tilt under 0.0 deg, rotors at 15 % of full thrust on average (1.14 N each for 0.467 kg; design record says 1.14 N), peak 15 %",
    "mean_thrust_fraction": 0.151,
-   "peak_thrust_fraction": 0.153,
+   "peak_thrust_fraction": 0.152,
    "height_error_m": 0.0173,
    "tilt_deg": 0.0,
-   "mass_kg": 0.4671
+   "mass_kg": 0.4666
   },
   "thrust_to_weight": {
    "pass": true,
-   "explanation": "full throttle from hover climbs at 45.1 m/s^2: thrust-to-weight 5.60 (design record 6.63); 2.0 is the least that flies with control margin",
-   "thrust_to_weight": 5.597,
-   "climb_accel_m_s2": 45.1
+   "explanation": "full throttle from hover climbs at 45.1 m/s^2: thrust-to-weight 5.60 (design record 6.64); 2.0 is the least that flies with control margin",
+   "thrust_to_weight": 5.599,
+   "climb_accel_m_s2": 45.112
   },
   "attitude_recovery": {
    "pass": true,
@@ -31,5 +31,5 @@
  },
  "passed": 3,
  "total": 3,
- "source_urdf_sha256": "2780ed95e416dd5c3fae6c451992d1eed86ea5407f314cd784fb5fed6dccbff5"
+ "source_urdf_sha256": "35e0e023288c8ff6942badc9f862e8c7fc5aab2463a479c45f66f0111bca3e15"
 }

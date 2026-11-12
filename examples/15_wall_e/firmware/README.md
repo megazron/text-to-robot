@@ -60,10 +60,10 @@ Angle 0 is the servo's centre and the joint's zero pose in `ASSEMBLY.md`. Pulse 
 | neck_tilt_servo (hobby_sg90) | servo_driver 0x40 channel 1 | neck_tilt | -40.1 to 40.1 | 0 | 500 to 2400 over 180 deg |
 | left_hand_servo (hobby_sg90) | servo_driver 0x40 channel 2 | left_hand | -0.8 to 34.3 | 0 | 500 to 2400 over 180 deg |
 | right_hand_servo (hobby_sg90) | servo_driver 0x40 channel 3 | right_hand | -34.3 to 0.8 | 0 | 500 to 2400 over 180 deg |
-| left_arm_servo (hobby_mg90s) | servo_driver 0x40 channel 4 | left_arm_lift | -57.2 to 27.2 | 0 | 500 to 2400 over 180 deg |
-| right_arm_servo (hobby_mg90s) | servo_driver 0x40 channel 5 | right_arm_lift | -27.2 to 57.2 | 0 | 500 to 2400 over 180 deg |
-| left_elbow_servo (hobby_sg90) | servo_driver 0x40 channel 6 | left_elbow | -85.9 to 72.8 | 0 | 500 to 2400 over 180 deg |
-| right_elbow_servo (hobby_sg90) | servo_driver 0x40 channel 7 | right_elbow | -72.8 to 85.9 | 0 | 500 to 2400 over 180 deg |
+| left_arm_servo (hobby_mg90s) | servo_driver 0x40 channel 4 | left_arm_lift | -57.2 to 28.3 | 0 | 500 to 2400 over 180 deg |
+| right_arm_servo (hobby_mg90s) | servo_driver 0x40 channel 5 | right_arm_lift | -28.3 to 57.2 | 0 | 500 to 2400 over 180 deg |
+| left_elbow_servo (hobby_sg90) | servo_driver 0x40 channel 6 | left_elbow | -85.9 to 71.7 | 0 | 500 to 2400 over 180 deg |
+| right_elbow_servo (hobby_sg90) | servo_driver 0x40 channel 7 | right_elbow | -71.7 to 85.9 | 0 | 500 to 2400 over 180 deg |
 
 ## Motors
 

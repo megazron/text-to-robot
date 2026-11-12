@@ -30,7 +30,7 @@
    "error_m": 0.0,
    "joints": {
     "x_axis": {
-     "peak_nm": 9.8319,
+     "peak_nm": 9.8318,
      "peak_rating_nm": 158.0,
      "util_peak": 0.062,
      "mean_hold_nm": 0.1352,
@@ -63,5 +63,5 @@
  },
  "passed": 3,
  "total": 3,
- "source_urdf_sha256": "0814887e89237d454942b866f91ed1d6f85ebcfd06ab8a37c0c9b8923634dfa7"
+ "source_urdf_sha256": "78559052a4269d048f2e619504b3d87178cb432ad71e4d034c1480a7380afff3"
 }

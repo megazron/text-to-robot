@@ -8,7 +8,7 @@ Interpreted as: Cartesian XYZ gantry
 
 **Cartesian XYZ robot on three lead-screw modules: 183 x 183 x 23 mm, 158 N per axis, 80 mm/s, pen holder**
 
-Parts cost **$234.23** · printed structure 14 parts, 999 g · checks passed 48/48
+Parts cost **$235.74** · printed structure 14 parts, 1025 g · checks passed 48/48
 
 ## What it can do
 
@@ -21,11 +21,11 @@ Parts cost **$234.23** · printed structure 14 parts, 999 g · checks passed 48/
 | axis thrust n | 158 |
 | max speed mm s | 80 |
 | resolution um | 2.5 |
-| mass kg | 3.47 |
+| mass kg | 3.5 |
 | tool | pen holder |
 | x sag mm | 1.28 |
-| cost usd | 234.74 |
-| cost breakdown | parts 192.02 USD, filament 24.97 USD (1.00 kg), fasteners ~4.05 USD, wiring 13.70 USD |
+| cost usd | 236.24 |
+| cost breakdown | parts 192.02 USD, filament 25.63 USD (1.03 kg), fasteners ~4.05 USD, wiring 14.54 USD |
 
 ## Actuators (sized from this robot's own loads)
 

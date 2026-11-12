@@ -56416,7 +56416,7 @@
   "end_effectors": [],
   "metadata": {
     "generator": "text-to-robot design engine (real components + printed structure)",
-    "created": "2026-11-12T07:03:49.517Z",
+    "created": "2026-11-12T20:33:43.915Z",
     "inferred_fields": [
       "links.arc_reactor.inertia",
       "links.arm_back_left.inertia",
@@ -84005,7 +84005,8 @@
           "Run time from the 2.5 Ah pack at the typical 2.72 A: about 0.7 h, keeping 20 % back (estimate; lights and faceplate never all run like that for hours)."
         ],
         "unconnected": [],
-        "estimated_inputs": []
+        "estimated_inputs": [],
+        "laid": "channels"
       },
       "exposed": [],
       "doors": [

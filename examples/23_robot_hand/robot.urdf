@@ -29,9 +29,9 @@
       <geometry><mesh filename="package://robot_hand/meshes/base_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.137648 0.000704532 -0.012527" rpy="0 0 0"/>
-      <mass value="0.224254"/>
-      <inertia ixx="0.000247773" ixy="-6.18036e-7" ixz="0.0000245224" iyy="0.001306" iyz="-9.72257e-7" izz="0.001427"/>
+      <origin xyz="-0.137727 0.000692113 -0.012507" rpy="0 0 0"/>
+      <mass value="0.224069"/>
+      <inertia ixx="0.000247619" ixy="-3.49743e-7" ixz="0.0000240896" iyy="0.001304" iyz="-0.00000104007" izz="0.001426"/>
     </inertial>
   </link>
   <link name="forearm_lid">
@@ -509,9 +509,9 @@
       <geometry><mesh filename="package://robot_hand/meshes/control_case.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.449475 0.00409 -0.189033" rpy="0 0 0"/>
-      <mass value="0.092225"/>
-      <inertia ixx="0.000219976" ixy="0.00000542715" ixz="-0.0000020608" iyy="0.000268881" iyz="-0.00000235668" izz="0.000451228"/>
+      <origin xyz="-0.423056 0.004262 -0.189884" rpy="0 0 0"/>
+      <mass value="0.115101"/>
+      <inertia ixx="0.000274691" ixy="0.00000843624" ixz="-0.00000314038" iyy="0.000568503" iyz="-0.00000377984" izz="0.000797121"/>
     </inertial>
   </link>
   <link name="control_case_lid">
@@ -525,9 +525,9 @@
       <geometry><mesh filename="package://robot_hand/meshes/control_case_lid.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.451 0.000699999 -0.156621" rpy="0 0 0"/>
-      <mass value="0.032891"/>
-      <inertia ixx="0.0000517091" ixy="2.61049e-14" ixz="1.85094e-12" iyy="0.0000672978" iyz="-2.25933e-15" izz="0.000118925"/>
+      <origin xyz="-0.4245 0.000699999 -0.156602" rpy="0 0 0"/>
+      <mass value="0.043592"/>
+      <inertia ixx="0.0000690616" ixy="1.53133e-13" ixz="2.58233e-12" iyy="0.00016188" iyz="-4.21726e-15" izz="0.000230837"/>
     </inertial>
   </link>
   <link name="power_supply">
@@ -806,7 +806,7 @@
   <joint name="power_supply_mount" type="fixed">
     <parent link="control_case"/>
     <child link="power_supply"/>
-    <origin xyz="-0.484 -0.056 -0.195" rpy="0 0 0"/>
+    <origin xyz="-0.452 -0.056 -0.195" rpy="0 0 0"/>
   </joint>
   <joint name="controller_mount" type="fixed">
     <parent link="control_case"/>

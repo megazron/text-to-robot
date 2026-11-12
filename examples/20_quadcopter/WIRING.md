@@ -1,6 +1,6 @@
 # Wiring: quadcopter
 
-12 cables, 25 conductors, 4.46 m of wire, wiring parts $15.02.
+14 cables, 25 conductors, 7.12 m of wire, wiring parts $18.53.
 
 Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), [breadboard.svg](breadboard.svg) (every wire in its colour, pin to pin) and the cable diagram [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
 
@@ -8,9 +8,9 @@ Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), 
 
 | Rail | Volts | Source | Source limit A (cont / peak) | Load A (typical / peak) | Margin (typical) | Fuse A | Worst wire drop V |
 |---|--:|---|--:|--:|--:|--:|--:|
-| VBAT | 14.8 | battery | 60 / 150 | 14.433 / 60.1 | 4.2x | - | 0.024 |
+| VBAT | 14.8 | battery | 60 / 150 | 14.433 / 60.1 | 4.2x | - | 0.058 |
 | 5V_FC | 5 | controller | 2 / 2 | 0.05 / 0.1 | 40.0x | - | 0.001 |
-| VCAM | 9 | controller | 2 / 2 | 0.15 / 0.2 | 13.3x | - | 0.005 |
+| VCAM | 9 | controller | 2 / 2 | 0.15 / 0.2 | 13.3x | - | 0.006 |
 
 **VBAT loads** (peak assumes four motors at the 60 A current limit in a punch-out):
 
@@ -56,9 +56,9 @@ Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), 
 | C10 | W20 | GND | controller.GND_RX | star_ground.P2 | 24 | black | 0.05 | 0.1 |
 | C10 | W21 | GND | controller.GND_CAM | star_ground.P2 | 24 | black | 0.15 | 0.2 |
 | C11 | W22 | 5V_FC | controller.5V | receiver.5V | 24 | red | 0.05 | 0.1 |
-| C11 | W23 | GND | star_ground.P2 | receiver.GND | 24 | black | 0.05 | 0.1 |
-| C12 | W24 | VCAM | controller.VCAM | fpv_camera.VIN | 24 | red | 0.15 | 0.2 |
-| C12 | W25 | GND | star_ground.P2 | fpv_camera.GND | 24 | black | 0.15 | 0.2 |
+| C12 | W23 | VCAM | controller.VCAM | fpv_camera.VIN | 24 | red | 0.15 | 0.2 |
+| C13 | W24 | GND | star_ground.P2 | receiver.GND | 24 | black | 0.05 | 0.1 |
+| C14 | W25 | GND | star_ground.P2 | fpv_camera.GND | 24 | black | 0.15 | 0.2 |
 
 ## Cut list
 
@@ -66,18 +66,20 @@ Length is route + service loop + joint slack + termination, rounded up to 5 mm; 
 
 | Cable | What | Conductors | Length mm | Route | Service | Joint slack | Ends | Connectors | Exit |
 |---|---|--:|--:|--:|--:|--:|--:|---|---|
-| C1 | esc to front_left_motor | 3 | 235 | 132.2 | 40 | 0 | 60 | Motor solder pads / Three 20 AWG motor leads | canopy.leads_fl |
-| C2 | esc to rear_left_motor | 3 | 235 | 132.2 | 40 | 0 | 60 | Motor solder pads / Three 20 AWG motor leads | canopy.leads_rl |
-| C3 | esc to rear_right_motor | 3 | 235 | 132.2 | 40 | 0 | 60 | Motor solder pads / Three 20 AWG motor leads | canopy.leads_rr |
-| C4 | esc to front_right_motor | 3 | 235 | 132.2 | 40 | 0 | 60 | Motor solder pads / Three 20 AWG motor leads | canopy.leads_fr |
-| C5 | esc to controller | 1 | 20 | 15.7 | 0 | 0 | 0 | 8-pin JST-SH stack cable (supplied with the ESC) | - |
-| C6 | controller to receiver | 2 | 110 | 5.5 | 40 | 0 | 60 | Solder pads (UART2 / 4 solder pads | - |
-| C7 | fpv_camera to controller | 1 | 155 | 54 | 40 | 0 | 60 | 3-pin JST-SH 1.0 mm lead (supplied) / Solder pads (camera) | canopy.camera |
-| C8 | battery negative to star ground | 1 | 100 | 0 | 40 | 0 | 60 | XT60 / lever clamp | - |
-| C9 | VBAT to esc | 2 | 165 | 63 | 40 | 0 | 60 | XT60 / Battery solder pads | canopy.antenna |
-| C10 | controller to star_ground | 2 | 155 | 52.1 | 40 | 0 | 60 | Solder pads (UART2 / lever clamp | canopy.antenna |
-| C11 | 5V_FC to receiver | 2 | 110 | 5.5 | 40 | 0 | 60 | Solder pads (UART2 / 4 solder pads | - |
-| C12 | VCAM to fpv_camera | 2 | 155 | 54 | 40 | 0 | 60 | Solder pads (camera) / 3-pin JST-SH 1.0 mm lead (supplied) | canopy.camera |
+| C1 | esc to front_left_motor | 3 | 350 | 247.9 | 40 | 0 | 60 | Motor solder pads / Three 20 AWG motor leads | canopy.leads_fl |
+| C2 | esc to rear_left_motor | 3 | 360 | 255.5 | 40 | 0 | 60 | Motor solder pads / Three 20 AWG motor leads | canopy.leads_rl |
+| C3 | esc to rear_right_motor | 3 | 345 | 241.7 | 40 | 0 | 60 | Motor solder pads / Three 20 AWG motor leads | canopy.leads_rr |
+| C4 | esc to front_right_motor | 3 | 320 | 217.1 | 40 | 0 | 60 | Motor solder pads / Three 20 AWG motor leads | canopy.leads_fr |
+| C5 | esc to controller | 1 | 20 | 18.5 | 0 | 0 | 0 | 8-pin JST-SH stack cable (supplied with the ESC) | - |
+| C6 | controller to receiver | 2 | 290 | 186.5 | 40 | 0 | 60 | Solder pads (UART2 / 4 solder pads | - |
+| C7 | fpv_camera to controller | 1 | 205 | 103.7 | 40 | 0 | 60 | 3-pin JST-SH 1.0 mm lead (supplied) / Solder pads (camera) | canopy.camera |
+| C8 | battery negative to star ground | 1 | 285 | 183.2 | 40 | 0 | 60 | XT60 / lever clamp | - |
+| C9 | VBAT to esc | 2 | 390 | 289.1 | 40 | 0 | 60 | XT60 / Battery solder pads | canopy.battery |
+| C10 | controller to star_ground | 2 | 200 | 95.6 | 40 | 0 | 60 | Solder pads (UART2 / lever clamp | canopy.antenna |
+| C11 | 5V_FC to receiver | 1 | 135 | 31.1 | 40 | 0 | 60 | Solder pads (UART2 / 4 solder pads | - |
+| C12 | VCAM to fpv_camera | 1 | 205 | 104.3 | 40 | 0 | 60 | Solder pads (camera) / 3-pin JST-SH 1.0 mm lead (supplied) | canopy.camera |
+| C13 | 5V_FC to receiver | 1 | 165 | 62.1 | 40 | 0 | 60 | lever clamp / 4 solder pads | canopy.antenna |
+| C14 | VCAM to fpv_camera | 1 | 240 | 137.1 | 40 | 0 | 60 | lever clamp / 3-pin JST-SH 1.0 mm lead (supplied) | - |
 
 ## Electrical calculations
 
@@ -115,13 +117,13 @@ Not checked (no logic levels in the parts data): ExpressLRS 2.4 GHz nano receive
 
 | Item | Qty | Unit | Unit $ | Subtotal $ | Spec | Price source |
 |---|--:|---|--:|--:|---|---|
-| 8 AWG silicone wire | 0.5 | m | 4.5 | 2.25 | 8.37 mm2, rated 36.5 A in a bundle; 0.43 m cut + 10 % waste | estimated |
-| 18 AWG silicone wire | 3.2 | m | 0.7 | 2.24 | 0.823 mm2, rated 8 A in a bundle; 2.82 m cut + 10 % waste | estimated |
-| 24 AWG silicone wire | 1 | m | 0.35 | 0.35 | 0.205 mm2, rated 1.75 A in a bundle; 0.84 m cut + 10 % waste | estimated |
-| 26 AWG silicone wire | 0.5 | m | 0.3 | 0.15 | 0.128 mm2, rated 1.1 A in a bundle; 0.38 m cut + 10 % waste | estimated |
+| 8 AWG silicone wire | 1 | m | 4.5 | 4.50 | 8.37 mm2, rated 36.5 A in a bundle; 0.90 m cut + 10 % waste | estimated |
+| 18 AWG silicone wire | 4.6 | m | 0.7 | 3.22 | 0.823 mm2, rated 8 A in a bundle; 4.09 m cut + 10 % waste | estimated |
+| 24 AWG silicone wire | 1.3 | m | 0.35 | 0.45 | 0.205 mm2, rated 1.75 A in a bundle; 1.14 m cut + 10 % waste | estimated |
+| 26 AWG silicone wire | 0.9 | m | 0.3 | 0.27 | 0.128 mm2, rated 1.1 A in a bundle; 0.78 m cut + 10 % waste | estimated |
 | XT60 contacts | 5 | pc | 0.9 | 4.50 | rated 35 A per contact | estimated |
-| Heat shrink 3 mm, 2:1 | 2 | m | 0.2 | 0.40 | 40 solder joints + a boot on each cable end | estimated |
-| Cable tie 100 x 2.5 mm | 30 | pc | 0.02 | 0.60 | at every clip, cable end and strain-relief anchor | estimated |
+| Heat shrink 3 mm, 2:1 | 2 | m | 0.2 | 0.40 | 38 solder joints + a boot on each cable end | estimated |
+| Cable tie 100 x 2.5 mm | 33 | pc | 0.02 | 0.66 | at every clip, cable end and strain-relief anchor | estimated |
 | Rubber grommet, 6.4 mm panel hole, 3.2 mm bore | 4 | pc | 0.08 | 0.32 | 6.5 mm panel hole | estimated |
 | Rubber grommet, 6.4 mm panel hole, 3.2 mm bore | 1 | pc | 0.08 | 0.08 | 8.5 mm panel hole | estimated |
 | Rubber grommet, 6.4 mm panel hole, 3.2 mm bore | 1 | pc | 0.08 | 0.08 | 4 mm panel hole | estimated |
@@ -143,3 +145,4 @@ Not checked (no logic levels in the parts data): ExpressLRS 2.4 GHz nano receive
 ## Notes
 
 - Motor leads are cut to length and soldered straight to the ESC pads; the XT60 pigtail carries a 470 uF low-ESR capacitor across the pads.
+- Routing: 7 wire runs could only be laid through solid parts at the home pose (117 mm in all), for example controller~fpv_camera wire 1 through a printed part for 4 mm at 14,-19,37; VBAT~esc (star_ground) wire 2 through a printed part for 31 mm at -1,14,37; controller~star_ground wire 1 through a printed part for 4 mm at 2,-18,35. Lay those wires round the part by hand.

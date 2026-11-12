@@ -8083,7 +8083,7 @@
   ],
   "metadata": {
     "generator": "text-to-robot design engine (real components + printed structure)",
-    "created": "2026-11-12T08:32:14.212Z",
+    "created": "2026-11-12T19:47:27.699Z",
     "inferred_fields": [
       "links.arm_bus.inertia",
       "links.base_link.inertia",
@@ -17021,6 +17021,10 @@
           "heat_w": 0
         }
       ],
+      "home": {
+        "l_shoulder_roll": 0.35,
+        "r_shoulder_roll": -0.35
+      },
       "exposed": [
         {
           "name": "head_camera",
@@ -29793,15 +29797,18 @@
         "cost_usd": 44.3,
         "total_wire_m": 38.93,
         "notes": [
-          "Routing: 1 wire runs pass through solid parts at the home pose (27 mm in all), for example W70 through battery for 27 mm at -4,-36,90. Lay those wires round the part by hand."
+          "Routing: 3 wire runs could only be laid through solid parts at the home pose (53 mm in all), for example l_shoulder_roll_actuator~l_upper_arm_yaw_actuator wire 1 through a printed part for 1 mm at -19,102,169; l_shoulder_roll_actuator~l_upper_arm_yaw_actuator wire 2 through a printed part for 1 mm at -19,102,167; VBAT~leg_bus (star_ground) wire 2 through battery for 51 mm at -3,-15,96. Lay those wires round the part by hand."
         ],
         "unconnected": [],
         "estimated_inputs": [],
+        "laid": "3d",
         "route": {
-          "through": 1,
-          "through_mm": 27,
+          "through": 3,
+          "through_mm": 53,
           "first": [
-            "W70 through battery for 27 mm at -4,-36,90"
+            "l_shoulder_roll_actuator~l_upper_arm_yaw_actuator wire 1 through a printed part for 1 mm at -19,102,169",
+            "l_shoulder_roll_actuator~l_upper_arm_yaw_actuator wire 2 through a printed part for 1 mm at -19,102,167",
+            "VBAT~leg_bus (star_ground) wire 2 through battery for 51 mm at -3,-15,96"
           ],
           "notes": [
             "computer~imu: wire 1 has a bend of 0.1 mm, under its 6.4 mm",

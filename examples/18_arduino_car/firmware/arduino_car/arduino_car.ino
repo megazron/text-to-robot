@@ -59,7 +59,7 @@ const unsigned int STOP_CM = 20;             // closer than this is an obstacle
 enum DriveState : uint8_t { DRIVE_WAIT, DRIVE_FORWARD, DRIVE_BRAKE, DRIVE_REVERSE, DRIVE_TURN };
 const unsigned long BRAKE_MS = 200;
 const unsigned long REVERSE_MS = 400;
-const unsigned long TURN_MS = 1122;      // a quarter turn at the design's 1.40 rad/s on a hard floor; no encoders, so tune it on your floor
+const unsigned long TURN_MS = 1190;      // a quarter turn at the design's 1.32 rad/s on a hard floor; no encoders, so tune it on your floor
 
 bool running = true;       // 's' on Serial toggles it
 bool started = false;

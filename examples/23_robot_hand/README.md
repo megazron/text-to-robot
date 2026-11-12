@@ -8,7 +8,7 @@ Interpreted as: five-finger tendon hand
 
 **Five-finger tendon hand: 5 MG996R flexion servos in the forearm, an MG90S thumb swing, 16 joints, squeezes about 10 N, holds about 1.17 kg**
 
-Parts cost **$87.6** · printed structure 25 parts, 579 g · checks passed 49/49
+Parts cost **$88.57** · printed structure 25 parts, 613 g · checks passed 49/49
 
 ## What it can do
 
@@ -23,11 +23,11 @@ Parts cost **$87.6** · printed structure 25 parts, 579 g · checks passed 49/49
 | holds kg | 1.17 |
 | payload kg | 1.17 |
 | close time s | 0.26 |
-| mass kg | 1.161 |
+| mass kg | 1.195 |
 | actuator | TowerPro MG996R standard servo (metal gears) + round horn |
 | mount | rear flange, 4 x M6 on PCD 50 (fits the arms' tool flange) |
-| cost usd | 89.07 |
-| cost breakdown | parts 56.00 USD, filament 14.48 USD (0.58 kg), fasteners ~8.25 USD, wiring 10.34 USD |
+| cost usd | 90.04 |
+| cost breakdown | parts 56.00 USD, filament 15.32 USD (0.61 kg), fasteners ~8.25 USD, wiring 10.47 USD |
 
 ## Actuators (sized from this robot's own loads)
 

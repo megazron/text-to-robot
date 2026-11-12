@@ -8,7 +8,7 @@ Interpreted as: tethered underwater ROV · camera (hull_tray_fore) · imu (hull_
 
 **Tethered ROV: 4 in sealed hull, 4 x T200 (surge, yaw, heave, roll), 6.1 kg, 239 g net lift, about 1.7 m/s, 18 min**
 
-Parts cost **$1820.43** · printed structure 12 parts, 874 g · checks passed 55/55
+Parts cost **$1821.33** · printed structure 12 parts, 874 g · checks passed 55/55
 
 ## What it can do
 
@@ -27,8 +27,8 @@ Parts cost **$1820.43** · printed structure 12 parts, 874 g · checks passed 55
 | foam blocks | 1 |
 | ballast weights | 5 |
 | payload kg | 0 |
-| cost usd | 1821.49 |
-| cost breakdown | parts 1743.75 USD, filament 21.85 USD (0.87 kg), fasteners ~6.60 USD, wiring 49.29 USD |
+| cost usd | 1822.39 |
+| cost breakdown | parts 1743.75 USD, filament 21.85 USD (0.87 kg), fasteners ~6.60 USD, wiring 50.19 USD |
 
 ## Engineering checks
 

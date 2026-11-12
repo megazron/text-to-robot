@@ -2181,7 +2181,7 @@
   ],
   "metadata": {
     "generator": "text-to-robot design engine (real components + printed structure)",
-    "created": "2026-11-12T08:33:30.613Z",
+    "created": "2026-11-12T19:48:51.498Z",
     "inferred_fields": [
       "links.base_link.inertia",
       "links.control_case.inertia",
@@ -7447,6 +7447,7 @@
         ],
         "unconnected": [],
         "estimated_inputs": [],
+        "laid": "3d",
         "route": {
           "through": 0,
           "through_mm": 0,

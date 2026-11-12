@@ -18,7 +18,7 @@
 //
 // Not driven, or to check:
 //   - elbow: the robot allows -120 to 120 deg but the TowerPro MG996R standard servo turns 180 deg (-90 to 90 about its centre): the sketch stays inside -90 to 90 deg.
-//   - shoulder: the pose sequence turns it to 56.6 deg, not 67.8: further and a link would go under the surface the robot stands on.
+//   - shoulder: the pose sequence turns it to 62.2 deg, not 67.8: further and a link would go under the surface the robot stands on.
 //
 // First run: keep clear of the joints, open the serial monitor, then switch the robot's power on.
 // A joint that turns the wrong way: change its dir in JOINTS from +1 to -1. Fit each horn with the servo at its centre
@@ -61,7 +61,7 @@ const int16_t POSES[][4] PROGMEM = {
   {540, 344, 688, 0},   // yaw to 54 deg
   {-540, 344, 688, 0},   // yaw to -54 deg
   {0, 344, 688, 0},   // home
-  {0, 566, 688, 0},   // shoulder to 56.6 deg
+  {0, 622, 688, 0},   // shoulder to 62.2 deg
   {0, -402, 688, 0},   // shoulder to -40.2 deg
   {0, 344, 688, 0},   // home
   {0, 344, 815, 0},   // elbow to 81.5 deg

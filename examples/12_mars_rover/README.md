@@ -8,7 +8,7 @@ Interpreted as: mobile manipulator (wheeled rover + arm) · parallel gripper · 
 
 **4-wheel rocker-bogie rover with a 6-DOF arm: 4.64 kg, 1.24 m/s, 1.53 h, jetson_orin_nano_super**
 
-Parts cost **$3861.39** (budget $4000: within) · printed structure 21 parts, 824 g · checks passed 74/74
+Parts cost **$3861.31** (budget $4000: within) · printed structure 21 parts, 824 g · checks passed 74/74
 
 ## What it can do
 

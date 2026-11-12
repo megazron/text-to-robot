@@ -7519,8 +7519,8 @@
         1
       ],
       "limit": {
-        "lower": -1.75,
-        "upper": 1.75,
+        "lower": -1.113,
+        "upper": 1.233,
         "effort": 4.9033,
         "velocity": 4.86
       },
@@ -7575,8 +7575,8 @@
         1
       ],
       "limit": {
-        "lower": -2.1,
-        "upper": 2.3,
+        "lower": -0.24,
+        "upper": 0.247,
         "effort": 2.942,
         "velocity": 4.02
       },
@@ -7631,8 +7631,8 @@
         1
       ],
       "limit": {
-        "lower": -1.7,
-        "upper": 2.3,
+        "lower": -0.964,
+        "upper": 0.975,
         "effort": 2.942,
         "velocity": 4.48
       },
@@ -7858,8 +7858,8 @@
         1
       ],
       "limit": {
-        "lower": -1.75,
-        "upper": 1.75,
+        "lower": -1.113,
+        "upper": 1.233,
         "effort": 4.9033,
         "velocity": 4.86
       },
@@ -7914,8 +7914,8 @@
         1
       ],
       "limit": {
-        "lower": -2.1,
-        "upper": 2.3,
+        "lower": -0.24,
+        "upper": 0.247,
         "effort": 2.942,
         "velocity": 4.02
       },
@@ -7970,8 +7970,8 @@
         1
       ],
       "limit": {
-        "lower": -1.7,
-        "upper": 2.3,
+        "lower": -0.964,
+        "upper": 0.975,
         "effort": 2.942,
         "velocity": 4.48
       },
@@ -8469,7 +8469,7 @@
   "end_effectors": [],
   "metadata": {
     "generator": "text-to-robot design engine (real components + printed structure)",
-    "created": "2026-11-12T08:39:20.779Z",
+    "created": "2026-11-12T20:36:20.922Z",
     "inferred_fields": [
       "links.base_link.inertia",
       "links.battery.inertia",
@@ -19801,6 +19801,7 @@
         "cost_breakdown": "catalog parts $831, filament 1.59 kg $40, fasteners $21, fabricated/other $145 (380 x 290 x 3 mm 5052 aluminium deck, laser cut (~$64); 2020 aluminium extrusion, 0.75 m (~$9); 420 x 40 x 6 mm aluminium flat bar shoulder yoke (~$12); upper_arm fabric sleeve (in the cover kit); forearm fabric sleeve (in the cover kit); foam-filled fabric mitten on a printed wrist plate (in the cover kit); upper_arm fabric sleeve (in the cover kit); forearm fabric sleeve (in the cover kit); foam-filled fabric mitten on a printed wrist plate (in the cover kit); sewn white ripstop body cover with zip and foam lining, about 2 m^2 (~$60); power switch, 15 A fuse, wiring)"
       },
       "assumptions": [
+        "Joint limits trimmed to the collision-free range found by exact solid sweeps: left_arm_shoulder_pitch [-1.75, 1.75] -> [-1.11, 1.23]; left_arm_elbow_pitch [-2.10, 2.30] -> [-0.24, 0.25]; left_arm_wrist_pitch [-1.70, 2.30] -> [-0.96, 0.97]; right_arm_shoulder_pitch [-1.75, 1.75] -> [-1.11, 1.23]; right_arm_elbow_pitch [-2.10, 2.30] -> [-0.24, 0.25]; right_arm_wrist_pitch [-1.70, 2.30] -> [-0.96, 0.97].",
         "Baymax's inflatable vinyl body is a sewn ripstop cover with a foam-lined zip, bought or sewn, with negligible structural role; it hangs on the shoulder yoke and hides a 4WD skid-steer base. It is not inflated, so it does not cushion like the film's.",
         "Structure: 2020 aluminium extrusion spine and a 6 mm aluminium shoulder yoke; arms are four servos each (shoulder yaw, shoulder pitch, elbow, wrist) splayed 25 deg so they clear the belly; the hands are printed mittens covered with the same fabric.",
         "Each arm is sized as mounted to lift 0.1 kg in the mitten at full reach; the tipping check includes both arms stretched forward with that payload.",
@@ -24460,8 +24461,8 @@
                 "color": "red",
                 "typical_a": 0.9,
                 "peak_a": 3.15,
-                "length_mm": 455,
-                "drop_v": 0.091,
+                "length_mm": 440,
+                "drop_v": 0.088,
                 "pts": [
                   [
                     4.5,
@@ -24536,8 +24537,8 @@
                 "color": "black",
                 "typical_a": 0.9,
                 "peak_a": 3.15,
-                "length_mm": 460,
-                "drop_v": 0.092,
+                "length_mm": 445,
+                "drop_v": 0.089,
                 "pts": [
                   [
                     4.5,
@@ -24612,7 +24613,7 @@
                 "color": "yellow",
                 "typical_a": 0.02,
                 "peak_a": 0.02,
-                "length_mm": 440,
+                "length_mm": 425,
                 "drop_v": 0.003,
                 "pts": [
                   [
@@ -24682,9 +24683,9 @@
             "od_mm": 3.2,
             "route_mm": 283.8,
             "service_mm": 40,
-            "slack_mm": 75,
+            "slack_mm": 60,
             "termination_mm": 60,
-            "length_mm": 460,
+            "length_mm": 445,
             "path_mm": [
               [
                 3.1,
@@ -24728,13 +24729,13 @@
                 "joint": "left_arm_shoulder_pitch",
                 "type": "revolute",
                 "travel": [
-                  -1.75,
-                  1.75
+                  -1.113,
+                  1.233
                 ],
                 "home_mm": 36.6,
-                "need_mm": 73.2,
-                "slack_mm": 75,
-                "provided_mm": 111.6
+                "need_mm": 60.5,
+                "slack_mm": 60,
+                "provided_mm": 96.6
               }
             ],
             "exit": null
@@ -24758,8 +24759,8 @@
                 "color": "red",
                 "typical_a": 0.45,
                 "peak_a": 2.7,
-                "length_mm": 575,
-                "drop_v": 0.157,
+                "length_mm": 510,
+                "drop_v": 0.139,
                 "pts": [
                   [
                     -4.5,
@@ -24840,12 +24841,12 @@
                 "kind": "ground",
                 "from": "left_arm_elbow_pitch_actuator.bus_b.GND",
                 "to": "left_arm_wrist_pitch_actuator.bus_a.GND",
-                "awg": 22,
+                "awg": 24,
                 "color": "black",
                 "typical_a": 0.45,
                 "peak_a": 2.7,
-                "length_mm": 575,
-                "drop_v": 0.099,
+                "length_mm": 510,
+                "drop_v": 0.139,
                 "pts": [
                   [
                     -4.5,
@@ -24918,7 +24919,7 @@
                     7
                   ]
                 ],
-                "bend_mm": 6.8
+                "bend_mm": 6.4
               },
               {
                 "id": "W51",
@@ -24930,7 +24931,7 @@
                 "color": "yellow",
                 "typical_a": 0.02,
                 "peak_a": 0.02,
-                "length_mm": 460,
+                "length_mm": 395,
                 "drop_v": 0.003,
                 "pts": [
                   [
@@ -25005,9 +25006,9 @@
             "od_mm": 3.2,
             "route_mm": 365.6,
             "service_mm": 40,
-            "slack_mm": 105,
+            "slack_mm": 40,
             "termination_mm": 60,
-            "length_mm": 575,
+            "length_mm": 510,
             "path_mm": [
               [
                 -0.2,
@@ -25061,13 +25062,13 @@
                 "joint": "left_arm_elbow_pitch",
                 "type": "revolute",
                 "travel": [
-                  -2.1,
-                  2.3
+                  -0.24,
+                  0.247
                 ],
                 "home_mm": 36.4,
-                "need_mm": 100.4,
-                "slack_mm": 105,
-                "provided_mm": 141.4
+                "need_mm": 42.5,
+                "slack_mm": 40,
+                "provided_mm": 76.4
               }
             ],
             "exit": null
@@ -25551,8 +25552,8 @@
                 "color": "red",
                 "typical_a": 0.9,
                 "peak_a": 3.15,
-                "length_mm": 450,
-                "drop_v": 0.09,
+                "length_mm": 435,
+                "drop_v": 0.087,
                 "pts": [
                   [
                     4.5,
@@ -25632,8 +25633,8 @@
                 "color": "black",
                 "typical_a": 0.9,
                 "peak_a": 3.15,
-                "length_mm": 450,
-                "drop_v": 0.09,
+                "length_mm": 435,
+                "drop_v": 0.087,
                 "pts": [
                   [
                     4.5,
@@ -25708,7 +25709,7 @@
                 "color": "yellow",
                 "typical_a": 0.02,
                 "peak_a": 0.02,
-                "length_mm": 445,
+                "length_mm": 430,
                 "drop_v": 0.003,
                 "pts": [
                   [
@@ -25783,9 +25784,9 @@
             "od_mm": 3.2,
             "route_mm": 274,
             "service_mm": 40,
-            "slack_mm": 75,
+            "slack_mm": 60,
             "termination_mm": 60,
-            "length_mm": 450,
+            "length_mm": 435,
             "path_mm": [
               [
                 -9.2,
@@ -25829,13 +25830,13 @@
                 "joint": "right_arm_shoulder_pitch",
                 "type": "revolute",
                 "travel": [
-                  -1.75,
-                  1.75
+                  -1.113,
+                  1.233
                 ],
                 "home_mm": 36.6,
-                "need_mm": 72.5,
-                "slack_mm": 75,
-                "provided_mm": 111.6
+                "need_mm": 60.1,
+                "slack_mm": 60,
+                "provided_mm": 96.6
               }
             ],
             "exit": null
@@ -25859,8 +25860,8 @@
                 "color": "red",
                 "typical_a": 0.45,
                 "peak_a": 2.7,
-                "length_mm": 460,
-                "drop_v": 0.125,
+                "length_mm": 395,
+                "drop_v": 0.108,
                 "pts": [
                   [
                     -4.5,
@@ -25936,12 +25937,12 @@
                 "kind": "ground",
                 "from": "right_arm_elbow_pitch_actuator.bus_b.GND",
                 "to": "right_arm_wrist_pitch_actuator.bus_a.GND",
-                "awg": 22,
+                "awg": 24,
                 "color": "black",
                 "typical_a": 0.45,
                 "peak_a": 2.7,
-                "length_mm": 560,
-                "drop_v": 0.096,
+                "length_mm": 495,
+                "drop_v": 0.135,
                 "pts": [
                   [
                     -4.5,
@@ -26019,7 +26020,7 @@
                     8
                   ]
                 ],
-                "bend_mm": 6.8
+                "bend_mm": 6.4
               },
               {
                 "id": "W61",
@@ -26031,7 +26032,7 @@
                 "color": "yellow",
                 "typical_a": 0.02,
                 "peak_a": 0.02,
-                "length_mm": 460,
+                "length_mm": 395,
                 "drop_v": 0.003,
                 "pts": [
                   [
@@ -26106,9 +26107,9 @@
             "od_mm": 3.2,
             "route_mm": 350,
             "service_mm": 40,
-            "slack_mm": 105,
+            "slack_mm": 40,
             "termination_mm": 60,
-            "length_mm": 560,
+            "length_mm": 495,
             "path_mm": [
               [
                 -8.2,
@@ -26167,13 +26168,13 @@
                 "joint": "right_arm_elbow_pitch",
                 "type": "revolute",
                 "travel": [
-                  -2.1,
-                  2.3
+                  -0.24,
+                  0.247
                 ],
                 "home_mm": 37,
-                "need_mm": 101,
-                "slack_mm": 105,
-                "provided_mm": 142
+                "need_mm": 43.1,
+                "slack_mm": 40,
+                "provided_mm": 77
               }
             ],
             "exit": null
@@ -28416,29 +28417,29 @@
           },
           {
             "item": "22 AWG silicone wire",
-            "qty": 7.9,
+            "qty": 6.6,
             "unit": "m",
             "unit_usd": 0.4,
-            "subtotal_usd": 3.16,
-            "spec": "0.327 mm2, rated 3.5 A in a bundle; 7.15 m cut + 10 % waste",
+            "subtotal_usd": 2.64,
+            "spec": "0.327 mm2, rated 3.5 A in a bundle; 5.96 m cut + 10 % waste",
             "source": "estimated"
           },
           {
             "item": "24 AWG silicone wire",
-            "qty": 6.2,
+            "qty": 7.2,
             "unit": "m",
             "unit_usd": 0.35,
-            "subtotal_usd": 2.17,
-            "spec": "0.205 mm2, rated 1.75 A in a bundle; 5.64 m cut + 10 % waste",
+            "subtotal_usd": 2.52,
+            "spec": "0.205 mm2, rated 1.75 A in a bundle; 6.51 m cut + 10 % waste",
             "source": "estimated"
           },
           {
             "item": "26 AWG silicone wire",
-            "qty": 12.7,
+            "qty": 12.6,
             "unit": "m",
             "unit_usd": 0.3,
-            "subtotal_usd": 3.81,
-            "spec": "0.128 mm2, rated 1.1 A in a bundle; 11.54 m cut + 10 % waste",
+            "subtotal_usd": 3.78,
+            "spec": "0.128 mm2, rated 1.1 A in a bundle; 11.38 m cut + 10 % waste",
             "source": "estimated"
           },
           {
@@ -28542,10 +28543,10 @@
           },
           {
             "item": "Nylon braided sleeving 6 mm",
-            "qty": 1.5,
+            "qty": 1.4,
             "unit": "m",
             "unit_usd": 0.4,
-            "subtotal_usd": 0.6,
+            "subtotal_usd": 0.56,
             "spec": "over every cable where it crosses a joint",
             "source": "estimated"
           },
@@ -28595,15 +28596,24 @@
             "source": "estimated"
           }
         ],
-        "cost_usd": 35.77,
-        "total_wire_m": 36.33,
-        "notes": [],
+        "cost_usd": 35.53,
+        "total_wire_m": 35.85,
+        "notes": [
+          "Routing: 5 wire runs could only be laid through solid parts at the home pose (7 mm in all), for example right_arm_base_yaw_actuator~right_arm_shoulder_pitch_actuator wire 1 through a printed part for 1 mm at -4,-195,714; right_arm_elbow_pitch_actuator~right_arm_shoulder_pitch_actuator wire 1 through a printed part for 1 mm at 5,-196,714; main_feed_a wire 1 through servo_bus_hub for 3 mm at -38,-79,112. Lay those wires round the part by hand."
+        ],
         "unconnected": [],
         "estimated_inputs": [],
+        "laid": "3d",
         "route": {
-          "through": 0,
-          "through_mm": 0,
-          "first": [],
+          "through": 5,
+          "through_mm": 7,
+          "first": [
+            "right_arm_base_yaw_actuator~right_arm_shoulder_pitch_actuator wire 1 through a printed part for 1 mm at -4,-195,714",
+            "right_arm_elbow_pitch_actuator~right_arm_shoulder_pitch_actuator wire 1 through a printed part for 1 mm at 5,-196,714",
+            "main_feed_a wire 1 through servo_bus_hub for 3 mm at -38,-79,112",
+            "VBAT~right_arm_base_yaw_actuator (star_ground) wire 2 through a printed part for 1 mm at -24,-175,810",
+            "5V~computer (star_ground) wire 2 through servo_bus_hub for 1 mm at -38,-101,114"
+          ],
           "notes": [
             "left_front_motor~motor_driver_1: wire 1 has a bend of 3.1 mm, under its 6.8 mm",
             "left_front_motor~motor_driver_1: wire 2 has a bend of 3.1 mm, under its 6.8 mm",

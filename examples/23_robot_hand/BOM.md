@@ -1,6 +1,6 @@
 # Bill of materials: robot_hand
 
-**Estimated total: $87.6**  ·  tier: hobby
+**Estimated total: $88.57**  ·  tier: hobby
 
 **Effort sizing: passes catalogue estimate; hardware verified: no.**
 
@@ -12,18 +12,18 @@
 | Power | IEC C14 panel inlet with fuse drawer and rocker switch, 10 A _(fused, switched mains inlet · https://www.aliexpress.com/w/wholesale-iec-c14-inlet-fuse-switch.html)_ | 1 | 3 | 3 | https://www.aliexpress.com/w/wholesale-iec-c14-inlet-fuse-switch.html |
 | Electronics | PCA9685 16-channel PWM servo driver board (generic, I2C) _(16-channel PWM servo driver · https://www.aliexpress.com/w/wholesale-pca9685-16-channel-servo-driver.html)_ | 1 | 2.5 | 2.5 | 5 V |
 | Power | Mean Well LRS-50-5 enclosed PSU, 5 V 10 A (50 W) _(5 V 10 A servo supply (V+ terminal of the PCA9685) · https://www.digikey.com/en/products/result?keywords=LRS-50-5)_ | 1 | 13 | 13 | 5 V |
-| Printed structure | PETG filament for 25 printed parts _(base_link, forearm_lid, spool_1, spool_2, spool_3, spool_4, spool_5, palm, index_proximal, index_middle, index_distal, middle_proximal, middle_middle, middle_distal, ring_proximal, ring_middle, ring_distal, little_proximal, little_middle, little_distal, thumb_base, thumb_proximal, thumb_distal, control_case, control_case_lid)_ | 1 | 14.66 | 14.66 | 579 g of parts (+15 % supports/waste), about 52.8 h of printing |
+| Printed structure | PETG filament for 25 printed parts _(base_link, forearm_lid, spool_1, spool_2, spool_3, spool_4, spool_5, palm, index_proximal, index_middle, index_distal, middle_proximal, middle_middle, middle_distal, ring_proximal, ring_middle, ring_distal, little_proximal, little_middle, little_distal, thumb_base, thumb_proximal, thumb_distal, control_case, control_case_lid)_ | 1 | 15.5 | 15.5 | 613 g of parts (+15 % supports/waste), about 55.8 h of printing |
 | Fasteners | Screws, nuts and inserts | 55 | 0.12 | 6.6 | 20x M4 x 12 (servo ears); 1x braided fishing line 0.5 mm (40 kg), 2 m (tendons); 4x M3 x 8 (lid); 4x M3 x 12 (palm to forearm); 12x 2 mm steel pin, 18 mm (finger joints); 4x elastic cord (finger return), 0.3 m; 4x M3 x 10 self-tapping (lid to compartment); 2x M3 x 6 self-tapping (Mean Well LRS-50-5 enclosed PSU, 5 V 10 A to standoffs); 4x M2.5 x 6 self-tapping (PCA9685 16-channel PWM servo driver board to standoffs) |
-| Wiring | 18 AWG silicone wire _(price estimated)_ | 0.4 | 0.7 | 0.28 | 0.4 m: 0.823 mm2, rated 8 A in a bundle; 0.34 m cut + 10 % waste |
-| Wiring | 22 AWG silicone wire _(price estimated)_ | 7.3 | 0.4 | 2.92 | 7.3 m: 0.327 mm2, rated 3.5 A in a bundle; 6.63 m cut + 10 % waste |
-| Wiring | 24 AWG silicone wire _(price estimated)_ | 2.8 | 0.35 | 0.98 | 2.8 m: 0.205 mm2, rated 1.75 A in a bundle; 2.52 m cut + 10 % waste |
-| Wiring | 26 AWG silicone wire _(price estimated)_ | 5 | 0.3 | 1.5 | 5 m: 0.128 mm2, rated 1.1 A in a bundle; 4.47 m cut + 10 % waste |
+| Wiring | 18 AWG silicone wire _(price estimated)_ | 0.7 | 0.7 | 0.49 | 0.7 m: 0.823 mm2, rated 8 A in a bundle; 0.59 m cut + 10 % waste |
+| Wiring | 22 AWG silicone wire _(price estimated)_ | 7.5 | 0.4 | 3 | 7.5 m: 0.327 mm2, rated 3.5 A in a bundle; 6.81 m cut + 10 % waste |
+| Wiring | 24 AWG silicone wire _(price estimated)_ | 2.7 | 0.35 | 0.94 | 2.7 m: 0.205 mm2, rated 1.75 A in a bundle; 2.36 m cut + 10 % waste |
+| Wiring | 26 AWG silicone wire _(price estimated)_ | 5 | 0.3 | 1.5 | 5 m: 0.128 mm2, rated 1.1 A in a bundle; 4.54 m cut + 10 % waste |
 | Wiring | 6.3 mm spade contacts _(price estimated)_ | 3 | 0.08 | 0.24 | 3 pc: rated 15 A per contact |
 | Wiring | Bootlace ferrule contacts _(price estimated)_ | 7 | 0.03 | 0.21 | 7 pc: rated 17.5 A per contact |
 | Wiring | Dupont 2.54 mm contacts _(price estimated)_ | 26 | 0.02 | 0.52 | 26 pc: rated 3 A per contact |
 | Wiring | Dupont 2.54 mm housings _(price estimated)_ | 8 | 0.02 | 0.16 | 8 pc: one per cable end |
 | Wiring | Heat shrink 3 mm, 2:1 _(price estimated)_ | 1.1 | 0.2 | 0.22 | 1.1 m: 18 solder joints + a boot on each cable end |
-| Wiring | Cable tie 100 x 2.5 mm _(price estimated)_ | 17 | 0.02 | 0.34 | 17 pc: at every clip, cable end and strain-relief anchor |
+| Wiring | Cable tie 100 x 2.5 mm _(price estimated)_ | 11 | 0.02 | 0.22 | 11 pc: at every clip, cable end and strain-relief anchor |
 | Wiring | PG7 cable gland _(price estimated)_ | 1 | 2.97 | 2.97 | 1 pc: cable exit with strain relief |
 
 ## Actuator sizing

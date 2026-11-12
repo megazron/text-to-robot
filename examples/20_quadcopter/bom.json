@@ -87,9 +87,9 @@
       "category": "Printed structure",
       "name": "PETG filament for 4 printed parts",
       "qty": 1,
-      "unit_cost": 2.44,
-      "subtotal": 2.44,
-      "spec": "97 g of parts (+15 % supports/waste), about 8.8 h of printing",
+      "unit_cost": 2.43,
+      "subtotal": 2.43,
+      "spec": "96 g of parts (+15 % supports/waste), about 8.8 h of printing",
       "note": "base_link, canopy, canopy_lid, camera_cradle"
     },
     {
@@ -103,37 +103,37 @@
     {
       "category": "Wiring",
       "name": "8 AWG silicone wire",
-      "qty": 0.5,
+      "qty": 1,
       "unit_cost": 4.5,
-      "subtotal": 2.25,
-      "spec": "0.5 m: 8.37 mm2, rated 36.5 A in a bundle; 0.43 m cut + 10 % waste",
+      "subtotal": 4.5,
+      "spec": "1 m: 8.37 mm2, rated 36.5 A in a bundle; 0.90 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "18 AWG silicone wire",
-      "qty": 3.2,
+      "qty": 4.6,
       "unit_cost": 0.7,
-      "subtotal": 2.24,
-      "spec": "3.2 m: 0.823 mm2, rated 8 A in a bundle; 2.82 m cut + 10 % waste",
+      "subtotal": 3.22,
+      "spec": "4.6 m: 0.823 mm2, rated 8 A in a bundle; 4.09 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "24 AWG silicone wire",
-      "qty": 1,
+      "qty": 1.3,
       "unit_cost": 0.35,
-      "subtotal": 0.35,
-      "spec": "1 m: 0.205 mm2, rated 1.75 A in a bundle; 0.84 m cut + 10 % waste",
+      "subtotal": 0.45,
+      "spec": "1.3 m: 0.205 mm2, rated 1.75 A in a bundle; 1.14 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "26 AWG silicone wire",
-      "qty": 0.5,
+      "qty": 0.9,
       "unit_cost": 0.3,
-      "subtotal": 0.15,
-      "spec": "0.5 m: 0.128 mm2, rated 1.1 A in a bundle; 0.38 m cut + 10 % waste",
+      "subtotal": 0.27,
+      "spec": "0.9 m: 0.128 mm2, rated 1.1 A in a bundle; 0.78 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
@@ -151,16 +151,16 @@
       "qty": 2,
       "unit_cost": 0.2,
       "subtotal": 0.4,
-      "spec": "2 m: 40 solder joints + a boot on each cable end",
+      "spec": "2 m: 38 solder joints + a boot on each cable end",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "Cable tie 100 x 2.5 mm",
-      "qty": 30,
+      "qty": 33,
       "unit_cost": 0.02,
-      "subtotal": 0.6,
-      "spec": "30 pc: at every clip, cable end and strain-relief anchor",
+      "subtotal": 0.66,
+      "spec": "33 pc: at every clip, cable end and strain-relief anchor",
       "note": "price estimated"
     },
     {
@@ -209,7 +209,7 @@
       "note": "price estimated"
     }
   ],
-  "total": 269.6,
+  "total": 273.1,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,

@@ -1,6 +1,6 @@
 # Wiring: rover_arm
 
-35 cables, 77 conductors, 31.48 m of wire, wiring parts $37.55.
+35 cables, 77 conductors, 31.32 m of wire, wiring parts $37.47.
 
 Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), [breadboard.svg](breadboard.svg) (every wire in its colour, pin to pin) and the cable diagram [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
 
@@ -8,7 +8,7 @@ Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), 
 
 | Rail | Volts | Source | Source limit A (cont / peak) | Load A (typical / peak) | Margin (typical) | Fuse A | Worst wire drop V |
 |---|--:|---|--:|--:|--:|--:|--:|
-| VBAT | 11.1 | main_switch | 35 / 70 | 10.806 / 27.106 | 3.2x | 15 | 0.243 |
+| VBAT | 11.1 | main_switch | 35 / 70 | 10.806 / 27.106 | 3.2x | 15 | 0.242 |
 | 5V | 5 | regulator_5v | 5.5 / 8 | 0.1 / 0.5 | 55.0x | - | 0.015 |
 
 **VBAT loads** (peak assumes two drive motors stalling at once, the rest running):
@@ -144,7 +144,7 @@ Length is route + service loop + joint slack + termination, rounded up to 5 mm; 
 | C14 | servo_bus to servo_bus_hub | 1 | 165 | 64.3 | 40 | 0 | 60 | 3-pin 2.5 mm bus servo header (5264 class) / lever clamp | - |
 | C15 | servo_bus_hub to arm_base_yaw_actuator | 1 | 355 | 250.2 | 40 | 0 | 60 | lever clamp / JST B3B-EH-A header | body_bay.lid_leads |
 | C16 | arm_base_yaw_actuator to arm_shoulder_pitch_actuator | 3 | 370 | 127.4 | 40 | 140 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
-| C17 | arm_shoulder_pitch_actuator to arm_elbow_pitch_actuator | 3 | 370 | 164.8 | 40 | 105 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
+| C17 | arm_shoulder_pitch_actuator to arm_elbow_pitch_actuator | 3 | 325 | 164.8 | 40 | 60 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
 | C18 | arm_elbow_pitch_actuator to arm_forearm_roll_actuator | 3 | 370 | 176.7 | 40 | 90 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
 | C19 | arm_forearm_roll_actuator to arm_wrist_pitch_actuator | 3 | 385 | 136 | 40 | 145 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
 | C20 | arm_wrist_roll_actuator to arm_gripper_actuator | 3 | 335 | 112.3 | 40 | 120 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
@@ -160,7 +160,7 @@ Length is route + service loop + joint slack + termination, rounded up to 5 mm; 
 | C30 | VBAT to motor_driver_2 | 2 | 270 | 168.2 | 40 | 0 | 60 | lever clamp / 2-position screw terminal | - |
 | C31 | VBAT to servo_bus | 2 | 220 | 118.7 | 40 | 0 | 60 | lever clamp / green screw terminal | - |
 | C32 | VBAT to arm_base_yaw_actuator | 2 | 405 | 302.3 | 40 | 0 | 60 | lever clamp / JST B3B-EH-A header | body_bay.lid_leads |
-| C33 | VBAT to arm_wrist_roll_actuator | 2 | 1445 | 700.4 | 40 | 640 | 60 | lever clamp / JST B3B-EH-A header | body_bay.lid_leads |
+| C33 | VBAT to arm_wrist_roll_actuator | 2 | 1435 | 700.4 | 40 | 630 | 60 | lever clamp / JST B3B-EH-A header | body_bay.lid_leads |
 | C34 | regulator_5v to star_ground | 1 | 215 | 114.1 | 40 | 0 | 60 | 0.1 in through holes / lever clamp | - |
 | C35 | 5V to io_controller | 2 | 295 | 191.8 | 40 | 0 | 60 | 0.1 in through holes / 22-pin male header | - |
 
@@ -179,14 +179,14 @@ Each loop is at least the extra length the joint needs at the far end of its tra
 | C12 | right_rocker_pivot | -0.24 to 0.24 | 38.7 | 43.4 | 35 |
 | C13 | right_rocker_pivot | -0.24 to 0.24 | 56.3 | 61 | 45 |
 | C16 | arm_base_yaw | -2.97 to 2.97 | 36.5 | 129.9 | 140 |
-| C17 | arm_shoulder_pitch | -1.75 to 1.75 | 37.9 | 101.8 | 105 |
-| C18 | arm_elbow_pitch | -2.1 to 2.3 | 35.6 | 84.4 | 90 |
+| C17 | arm_shoulder_pitch | -0.616 to 1.571 | 37.9 | 60 | 60 |
+| C18 | arm_elbow_pitch | -2.1 to 1.454 | 35.6 | 84.4 | 90 |
 | C19 | arm_forearm_roll | -2.97 to 2.97 | 36.6 | 132.2 | 145 |
 | C20 | arm_wrist_roll | -2.97 to 2.97 | 36.5 | 112.2 | 120 |
 | C21 | arm_wrist_pitch | -1.7 to 2.3 | 30.1 | 74.1 | 65 |
 | C33 | arm_base_yaw | -2.97 to 2.97 | 32.9 | 147.7 | 160 |
-| C33 | arm_shoulder_pitch | -1.75 to 1.75 | 33.6 | 113.6 | 120 |
-| C33 | arm_elbow_pitch | -2.1 to 2.3 | 34.1 | 110.9 | 115 |
+| C33 | arm_shoulder_pitch | -0.616 to 1.571 | 33.6 | 105.4 | 110 |
+| C33 | arm_elbow_pitch | -2.1 to 1.454 | 34.1 | 110.9 | 115 |
 | C33 | arm_forearm_roll | -2.97 to 2.97 | 32.9 | 139 | 150 |
 | C33 | arm_wrist_pitch | -1.7 to 2.3 | 35.6 | 95.7 | 95 |
 
@@ -353,9 +353,9 @@ Not checked (no logic levels in the parts data): DYNAMIXEL XH540-W270-T(R), DYNA
 | 12 AWG silicone wire | 1 | m | 2.2 | 2.20 | 3.308 mm2, rated 20.5 A in a bundle; 0.90 m cut + 10 % waste | estimated |
 | 18 AWG silicone wire | 2.6 | m | 0.7 | 1.82 | 0.823 mm2, rated 8 A in a bundle; 2.29 m cut + 10 % waste | estimated |
 | 20 AWG silicone wire | 7.2 | m | 0.5 | 3.60 | 0.519 mm2, rated 5.5 A in a bundle; 6.55 m cut + 10 % waste | estimated |
-| 22 AWG silicone wire | 3.6 | m | 0.4 | 1.44 | 0.327 mm2, rated 3.5 A in a bundle; 3.25 m cut + 10 % waste | estimated |
+| 22 AWG silicone wire | 3.5 | m | 0.4 | 1.40 | 0.327 mm2, rated 3.5 A in a bundle; 3.15 m cut + 10 % waste | estimated |
 | 24 AWG silicone wire | 9.3 | m | 0.35 | 3.25 | 0.205 mm2, rated 1.75 A in a bundle; 8.45 m cut + 10 % waste | estimated |
-| 26 AWG silicone wire | 9.9 | m | 0.3 | 2.97 | 0.128 mm2, rated 1.1 A in a bundle; 8.98 m cut + 10 % waste | estimated |
+| 26 AWG silicone wire | 9.9 | m | 0.3 | 2.97 | 0.128 mm2, rated 1.1 A in a bundle; 8.93 m cut + 10 % waste | estimated |
 | Dupont 2.54 mm contacts | 38 | pc | 0.02 | 0.76 | rated 3 A per contact | estimated |
 | Dupont 2.54 mm housings | 9 | pc | 0.02 | 0.18 | one per cable end | estimated |
 | Bootlace ferrule contacts | 14 | pc | 0.03 | 0.42 | rated 17.5 A per contact | estimated |
@@ -368,7 +368,7 @@ Not checked (no logic levels in the parts data): DYNAMIXEL XH540-W270-T(R), DYNA
 | Heat shrink 3 mm, 2:1 | 3.1 | m | 0.2 | 0.62 | 33 solder joints + a boot on each cable end | estimated |
 | Cable tie 100 x 2.5 mm | 54 | pc | 0.02 | 1.08 | at every clip, cable end and strain-relief anchor | estimated |
 | Rubber grommet, 6.4 mm panel hole, 3.2 mm bore | 4 | pc | 0.08 | 0.32 | 9.5 mm panel hole | estimated |
-| Nylon braided sleeving 6 mm | 3.6 | m | 0.4 | 1.44 | over every cable where it crosses a joint | estimated |
+| Nylon braided sleeving 6 mm | 3.5 | m | 0.4 | 1.40 | over every cable where it crosses a joint | estimated |
 | USB-C | 1 | pc | 3 | 3.00 | depth_camera to computer | estimated |
 | FFC | 1 | pc | 3 | 3.00 | mast_camera to computer | estimated |
 | USB | 1 | pc | 3 | 3.00 | io_controller to computer | estimated |

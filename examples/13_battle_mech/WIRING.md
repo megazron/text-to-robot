@@ -947,4 +947,4 @@ Not checked (no logic levels in the parts data): DYNAMIXEL XH540-W270-T(R), DYNA
 
 - CAN: keep the branches short and fit a 120 ohm terminator at each end of the longest run.
 - CAN: keep the branches short and fit a 120 ohm terminator at each end of the longest run.
-- Routing: 88 wire runs pass through solid parts at the home pose (2236 mm in all), for example W2 through dcdc_12v for 33 mm at -212,-25,153; W2 through backpack_hood for 3 mm at -314,-25,152; W3 through dcdc_12v for 33 mm at -212,-30,153. Lay those wires round the part by hand.
+- Routing: 25 wire runs could only be laid through solid parts at the home pose (2733 mm in all), for example leg_bus~leg_bus_hub_h wire 1 through battery_2 for 9 mm at 49,-91,90; leg_bus~leg_bus_hub_l wire 1 through battery_2 for 10 mm at 49,-86,91; can~l_shoulder_roll_actuator (leg_bus_hub_l) wire 2 through a printed part for 56 mm at 22,139,213. Lay those wires round the part by hand.

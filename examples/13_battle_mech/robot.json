@@ -11863,7 +11863,7 @@
   ],
   "metadata": {
     "generator": "text-to-robot design engine (real components + printed structure)",
-    "created": "2026-11-12T08:34:25.969Z",
+    "created": "2026-11-12T20:30:50.937Z",
     "inferred_fields": [
       "links.arm_bus.inertia",
       "links.backpack_hood.inertia",
@@ -30938,6 +30938,10 @@
           "heat_w": 0
         }
       ],
+      "home": {
+        "l_shoulder_roll": 0.35,
+        "r_shoulder_roll": -0.35
+      },
       "exposed": [
         {
           "name": "head_camera",
@@ -53310,20 +53314,21 @@
         "notes": [
           "CAN: keep the branches short and fit a 120 ohm terminator at each end of the longest run.",
           "CAN: keep the branches short and fit a 120 ohm terminator at each end of the longest run.",
-          "Routing: 88 wire runs pass through solid parts at the home pose (2236 mm in all), for example W2 through dcdc_12v for 33 mm at -212,-25,153; W2 through backpack_hood for 3 mm at -314,-25,152; W3 through dcdc_12v for 33 mm at -212,-30,153. Lay those wires round the part by hand."
+          "Routing: 25 wire runs could only be laid through solid parts at the home pose (2733 mm in all), for example leg_bus~leg_bus_hub_h wire 1 through battery_2 for 9 mm at 49,-91,90; leg_bus~leg_bus_hub_l wire 1 through battery_2 for 10 mm at 49,-86,91; can~l_shoulder_roll_actuator (leg_bus_hub_l) wire 2 through a printed part for 56 mm at 22,139,213. Lay those wires round the part by hand."
         ],
         "unconnected": [],
         "estimated_inputs": [],
+        "laid": "3d",
         "route": {
-          "through": 88,
-          "through_mm": 2236,
+          "through": 25,
+          "through_mm": 2733,
           "first": [
-            "W2 through dcdc_12v for 33 mm at -212,-25,153",
-            "W2 through backpack_hood for 3 mm at -314,-25,152",
-            "W3 through dcdc_12v for 33 mm at -212,-30,153",
-            "W3 through backpack_hood for 4 mm at -313,-30,152",
-            "W4 through battery_2 for 2 mm at 46,-93,91",
-            "W20 through l_shoulder_pitch_link for 15 mm at 20,140,215"
+            "leg_bus~leg_bus_hub_h wire 1 through battery_2 for 9 mm at 49,-91,90",
+            "leg_bus~leg_bus_hub_l wire 1 through battery_2 for 10 mm at 49,-86,91",
+            "can~l_shoulder_roll_actuator (leg_bus_hub_l) wire 2 through a printed part for 56 mm at 22,139,213",
+            "can~l_shoulder_roll_actuator wire 1 through a printed part for 56 mm at 22,140,213",
+            "l_hip_yaw_actuator~leg_bus wire 1 through battery_2 for 61 mm at 49,-80,90",
+            "leg_bus_2~leg_bus_2_hub_h wire 1 through battery_2 for 9 mm at 49,19,91"
           ],
           "notes": [
             "battery.BAT-: 20 mm for the first bend, the wire wants 27.2 mm",

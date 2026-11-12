@@ -251,3 +251,7 @@ Not checked (no logic levels in the parts data): Feetech STS3215 C047 12 V 30 kg
 | KCD4 double-pole rocker switch, 16 A 250 VAC / 20 A 125 VAC | estimated | estimated | estimated | estimated |
 | WAGO 221-415 five-way lever splice | estimated | estimated | estimated | estimated |
 | Waveshare Bus Servo Adapter | [datasheet](https://www.waveshare.com/bus-servo-adapter-a.htm) | estimated | estimated | [datasheet](https://www.waveshare.com/wiki/Bus_Servo_Adapter_(A)) |
+
+## Notes
+
+- Routing: 2 wire runs could only be laid through solid parts at the home pose (11 mm in all), for example VBAT~left_arm_shoulder_pitch_actuator (star_ground) wire 2 through a printed part for 5 mm at -4,198,446; VBAT~right_arm_shoulder_pitch_actuator (star_ground) wire 2 through a printed part for 6 mm at -6,-129,445. Lay those wires round the part by hand.

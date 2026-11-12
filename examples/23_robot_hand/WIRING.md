@@ -1,6 +1,6 @@
 # Wiring: robot_hand
 
-9 cables, 27 conductors, 13.96 m of wire, wiring parts $10.34.
+9 cables, 27 conductors, 14.37 m of wire, wiring parts $10.47.
 
 Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), [breadboard.svg](breadboard.svg) (every wire in its colour, pin to pin) and the cable diagram [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
 
@@ -8,7 +8,7 @@ Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), 
 
 | Rail | Volts | Source | Source limit A (cont / peak) | Load A (typical / peak) | Margin (typical) | Fuse A | Worst wire drop V |
 |---|--:|---|--:|--:|--:|--:|--:|
-| V_SERVO | 5 | power_supply | 10 / 11 | 4.76 / 9.56 | 2.1x | - | 0.042 |
+| V_SERVO | 5 | power_supply | 10 / 11 | 4.76 / 9.56 | 2.1x | - | 0.074 |
 
 **V_SERVO loads** (peak assumes three flexion servos stalled on an object, the rest moving):
 
@@ -59,15 +59,15 @@ Length is route + service loop + joint slack + termination, rounded up to 5 mm; 
 
 | Cable | What | Conductors | Length mm | Route | Service | Joint slack | Ends | Connectors | Exit |
 |---|---|--:|--:|--:|--:|--:|--:|---|---|
-| C1 | mains inlet to the supply (crimped, insulated spades; earth first) | 3 | 185 | 80.5 | 40 | 0 | 60 | 6.3 mm quick-connect tabs / barrier screw terminal | - |
-| C2 | servo_driver to index_servo | 3 | 630 | 527.9 | 40 | 0 | 60 | 3-pin 0.1 in header row (3x4 groups) / 3-pin S-type female header | control_case.harness |
-| C3 | servo_driver to middle_servo | 3 | 660 | 559.6 | 40 | 0 | 60 | 3-pin 0.1 in header row (3x4 groups) / 3-pin S-type female header | control_case.harness |
-| C4 | servo_driver to ring_servo | 3 | 700 | 599.6 | 40 | 0 | 60 | 3-pin 0.1 in header row (3x4 groups) / 3-pin S-type female header | control_case.harness |
-| C5 | servo_driver to little_servo | 3 | 645 | 543.7 | 40 | 0 | 60 | 3-pin 0.1 in header row (3x4 groups) / 3-pin S-type female header | control_case.harness |
-| C6 | servo_driver to thumb_servo | 3 | 680 | 579 | 40 | 0 | 60 | 3-pin 0.1 in header row (3x4 groups) / 3-pin S-type female header | control_case.harness |
-| C7 | servo_driver to thumb_swing_servo | 3 | 815 | 713.8 | 40 | 0 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | control_case.harness |
-| C8 | controller to servo_driver | 4 | 170 | 65.6 | 40 | 0 | 60 | 15-pin 2.54 mm male header / 6-pin 0.1 in header | - |
-| C9 | V_SERVO to servo_driver | 2 | 170 | 66.6 | 40 | 0 | 60 | barrier screw terminal / 2-position screw terminal | - |
+| C1 | mains inlet to the supply (crimped, insulated spades; earth first) | 3 | 160 | 57.4 | 40 | 0 | 60 | 6.3 mm quick-connect tabs / barrier screw terminal | - |
+| C2 | servo_driver to index_servo | 3 | 665 | 560.7 | 40 | 0 | 60 | 3-pin 0.1 in header row (3x4 groups) / 3-pin S-type female header | control_case.harness |
+| C3 | servo_driver to middle_servo | 3 | 680 | 578.4 | 40 | 0 | 60 | 3-pin 0.1 in header row (3x4 groups) / 3-pin S-type female header | control_case.harness |
+| C4 | servo_driver to ring_servo | 3 | 705 | 603.7 | 40 | 0 | 60 | 3-pin 0.1 in header row (3x4 groups) / 3-pin S-type female header | control_case.harness |
+| C5 | servo_driver to little_servo | 3 | 675 | 572.5 | 40 | 0 | 60 | 3-pin 0.1 in header row (3x4 groups) / 3-pin S-type female header | control_case.harness |
+| C6 | servo_driver to thumb_servo | 3 | 695 | 593.6 | 40 | 0 | 60 | 3-pin 0.1 in header row (3x4 groups) / 3-pin S-type female header | control_case.harness |
+| C7 | servo_driver to thumb_swing_servo | 3 | 795 | 693.5 | 40 | 0 | 60 | 3-pin 0.1 in header row (3x4 groups) / JR plug | control_case.harness |
+| C8 | controller to servo_driver | 4 | 160 | 59.6 | 40 | 0 | 60 | 15-pin 2.54 mm male header / 6-pin 0.1 in header | - |
+| C9 | V_SERVO to servo_driver | 2 | 300 | 200 | 40 | 0 | 60 | barrier screw terminal / 2-position screw terminal | - |
 
 ## Electrical calculations
 
@@ -111,16 +111,16 @@ A driver's high level is its I/O supply; the receiver needs it above its input t
 
 | Item | Qty | Unit | Unit $ | Subtotal $ | Spec | Price source |
 |---|--:|---|--:|--:|---|---|
-| 18 AWG silicone wire | 0.4 | m | 0.7 | 0.28 | 0.823 mm2, rated 8 A in a bundle; 0.34 m cut + 10 % waste | estimated |
-| 22 AWG silicone wire | 7.3 | m | 0.4 | 2.92 | 0.327 mm2, rated 3.5 A in a bundle; 6.63 m cut + 10 % waste | estimated |
-| 24 AWG silicone wire | 2.8 | m | 0.35 | 0.98 | 0.205 mm2, rated 1.75 A in a bundle; 2.52 m cut + 10 % waste | estimated |
-| 26 AWG silicone wire | 5 | m | 0.3 | 1.50 | 0.128 mm2, rated 1.1 A in a bundle; 4.47 m cut + 10 % waste | estimated |
+| 18 AWG silicone wire | 0.7 | m | 0.7 | 0.49 | 0.823 mm2, rated 8 A in a bundle; 0.59 m cut + 10 % waste | estimated |
+| 22 AWG silicone wire | 7.5 | m | 0.4 | 3.00 | 0.327 mm2, rated 3.5 A in a bundle; 6.81 m cut + 10 % waste | estimated |
+| 24 AWG silicone wire | 2.7 | m | 0.35 | 0.94 | 0.205 mm2, rated 1.75 A in a bundle; 2.36 m cut + 10 % waste | estimated |
+| 26 AWG silicone wire | 5 | m | 0.3 | 1.50 | 0.128 mm2, rated 1.1 A in a bundle; 4.54 m cut + 10 % waste | estimated |
 | 6.3 mm spade contacts | 3 | pc | 0.08 | 0.24 | rated 15 A per contact | estimated |
 | Bootlace ferrule contacts | 7 | pc | 0.03 | 0.21 | rated 17.5 A per contact | estimated |
 | Dupont 2.54 mm contacts | 26 | pc | 0.02 | 0.52 | rated 3 A per contact | estimated |
 | Dupont 2.54 mm housings | 8 | pc | 0.02 | 0.16 | one per cable end | estimated |
 | Heat shrink 3 mm, 2:1 | 1.1 | m | 0.2 | 0.22 | 18 solder joints + a boot on each cable end | estimated |
-| Cable tie 100 x 2.5 mm | 17 | pc | 0.02 | 0.34 | at every clip, cable end and strain-relief anchor | estimated |
+| Cable tie 100 x 2.5 mm | 11 | pc | 0.02 | 0.22 | at every clip, cable end and strain-relief anchor | estimated |
 | PG7 cable gland | 1 | pc | 2.97 | 2.97 | cable exit with strain relief | estimated |
 
 ## Data sources
@@ -138,3 +138,4 @@ A driver's high level is its I/O supply; the receiver needs it above its input t
 
 - Mains side: IEC inlet to the supply's AC terminals with insulated spades, earth wired first, case closed before plugging in. Have it checked if you are not qualified to wire mains.
 - The Nano runs from its USB cable (serial commands from the PC); the servos from the adapter. Servo leads are extended to the forearm in one braided sleeve.
+- Routing: 3 wire runs could only be laid through solid parts at the home pose (38 mm in all), for example servo_driver~thumb_swing_servo wire 1 through a printed part for 13 mm at -54,8,166; servo_driver~thumb_swing_servo wire 2 through a printed part for 12 mm at -53,8,166; servo_driver~thumb_swing_servo wire 3 through a printed part for 13 mm at -53,8,166. Lay those wires round the part by hand.

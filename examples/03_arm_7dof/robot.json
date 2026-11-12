@@ -2240,7 +2240,7 @@
       ],
       "limit": {
         "lower": -1.75,
-        "upper": 1.75,
+        "upper": 1.109,
         "effort": 9.9,
         "velocity": 3.64
       },
@@ -2351,8 +2351,8 @@
         1
       ],
       "limit": {
-        "lower": -2.1,
-        "upper": 2.3,
+        "lower": -1.905,
+        "upper": 1.936,
         "effort": 4.1,
         "velocity": 3.96
       },
@@ -2407,8 +2407,8 @@
         1
       ],
       "limit": {
-        "lower": -2.97,
-        "upper": 2.97,
+        "lower": -2.285,
+        "upper": 2.285,
         "effort": 1.4,
         "velocity": 5.67
       },
@@ -2464,7 +2464,7 @@
       ],
       "limit": {
         "lower": -1.7,
-        "upper": 2.3,
+        "upper": 0.302,
         "effort": 1.4,
         "velocity": 4.67
       },
@@ -2821,7 +2821,7 @@
   ],
   "metadata": {
     "generator": "text-to-robot design engine (real components + printed structure)",
-    "created": "2026-11-12T08:31:37.366Z",
+    "created": "2026-11-12T19:30:08.189Z",
     "inferred_fields": [
       "links.base_link.inertia",
       "links.base_yaw_actuator.inertia",
@@ -6220,6 +6220,16 @@
           "detail": "holding the payload stretched out draws ~2.0 A of the 6 A supply"
         },
         {
+          "name": "clearance:home",
+          "pass": true,
+          "detail": "no printed part or component intersects another at the home pose"
+        },
+        {
+          "name": "clearance:motion",
+          "pass": true,
+          "detail": "no interference over 0 combined poses at the joint limits"
+        },
+        {
           "name": "wiring:ports",
           "pass": true,
           "detail": "all 55 terminals in use are wired; spare pins are declared"
@@ -6375,7 +6385,8 @@
         "Arm clamps or bolts to the bench through the four M5 holes in the base; it is not free-standing at full reach.",
         "Every pitch joint is a clevis: one cheek bolts to the servo horn, the other turns on a 625ZZ bearing on an M5 bolt screwed into a heat-set insert in a boss on the back of the servo's cradle, so the servo's own bearing carries no bending moment. An M5 washer sits between the boss and the bearing's inner race.",
         "Print the links in PETG or PLA+ with 4 perimeters and 30 % gyroid infill, cradle opening up; press the 625ZZ bearings into their seats (16.15 mm) and set the M5 inserts with a soldering iron.",
-        "Torques are exact static gravity loads of this geometry: the worst pose (stretched out with the payload) must be held within each actuator's rated continuous torque, peaks get +30 %, and each joint must still reach >= 1 rad/s loaded on its torque-speed line."
+        "Torques are exact static gravity loads of this geometry: the worst pose (stretched out with the payload) must be held within each actuator's rated continuous torque, peaks get +30 %, and each joint must still reach >= 1 rad/s loaded on its torque-speed line.",
+        "Joint limits trimmed to the collision-free range found by exact solid sweeps: shoulder_pitch [-1.75, 1.75] -> [-1.75, 1.11]; elbow_pitch [-2.10, 2.30] -> [-1.90, 1.94]; forearm_roll [-2.97, 2.97] -> [-2.28, 2.28]; wrist_pitch [-1.70, 2.30] -> [-1.70, 0.30]."
       ],
       "fasteners": {
         "M5 x 12 socket head (base to bench)": 4,
@@ -7623,7 +7634,7 @@
                 "type": "revolute",
                 "travel": [
                   -1.75,
-                  1.75
+                  1.109
                 ],
                 "home_mm": 36,
                 "need_mm": 97.6,
@@ -7945,8 +7956,8 @@
                 "color": "red",
                 "typical_a": 0.8,
                 "peak_a": 1.9,
-                "length_mm": 405,
-                "drop_v": 0.078,
+                "length_mm": 395,
+                "drop_v": 0.076,
                 "pts": [
                   [
                     4.2,
@@ -8036,8 +8047,8 @@
                 "color": "black",
                 "typical_a": 0.8,
                 "peak_a": 1.9,
-                "length_mm": 405,
-                "drop_v": 0.078,
+                "length_mm": 395,
+                "drop_v": 0.076,
                 "pts": [
                   [
                     4.2,
@@ -8122,7 +8133,7 @@
                 "color": "yellow",
                 "typical_a": 0.02,
                 "peak_a": 0.02,
-                "length_mm": 400,
+                "length_mm": 390,
                 "drop_v": 0.003,
                 "pts": [
                   [
@@ -8197,9 +8208,9 @@
             "od_mm": 3.2,
             "route_mm": 192.7,
             "service_mm": 40,
-            "slack_mm": 110,
+            "slack_mm": 100,
             "termination_mm": 60,
-            "length_mm": 405,
+            "length_mm": 395,
             "path_mm": [
               [
                 29.7,
@@ -8243,13 +8254,13 @@
                 "joint": "elbow_pitch",
                 "type": "revolute",
                 "travel": [
-                  -2.1,
-                  2.3
+                  -1.905,
+                  1.936
                 ],
                 "home_mm": 36.6,
-                "need_mm": 102.4,
-                "slack_mm": 110,
-                "provided_mm": 146.6
+                "need_mm": 96.3,
+                "slack_mm": 100,
+                "provided_mm": 136.6
               }
             ],
             "exit": null
@@ -8273,8 +8284,8 @@
                 "color": "red",
                 "typical_a": 0.6,
                 "peak_a": 1.7,
-                "length_mm": 370,
-                "drop_v": 0.064,
+                "length_mm": 345,
+                "drop_v": 0.059,
                 "pts": [
                   [
                     -15.5,
@@ -8344,8 +8355,8 @@
                 "color": "black",
                 "typical_a": 0.6,
                 "peak_a": 1.7,
-                "length_mm": 370,
-                "drop_v": 0.064,
+                "length_mm": 345,
+                "drop_v": 0.059,
                 "pts": [
                   [
                     -18,
@@ -8415,8 +8426,8 @@
                 "color": "yellow",
                 "typical_a": 0.02,
                 "peak_a": 0.02,
-                "length_mm": 375,
-                "drop_v": 0.003,
+                "length_mm": 350,
+                "drop_v": 0.002,
                 "pts": [
                   [
                     -13,
@@ -8480,9 +8491,9 @@
             "od_mm": 3.2,
             "route_mm": 125.6,
             "service_mm": 40,
-            "slack_mm": 145,
+            "slack_mm": 120,
             "termination_mm": 60,
-            "length_mm": 375,
+            "length_mm": 350,
             "path_mm": [
               [
                 -16.3,
@@ -8521,13 +8532,13 @@
                 "joint": "forearm_roll",
                 "type": "revolute",
                 "travel": [
-                  -2.97,
-                  2.97
+                  -2.285,
+                  2.285
                 ],
                 "home_mm": 38,
-                "need_mm": 135,
-                "slack_mm": 145,
-                "provided_mm": 183
+                "need_mm": 112.1,
+                "slack_mm": 120,
+                "provided_mm": 158
               }
             ],
             "exit": null
@@ -8855,7 +8866,7 @@
                 "type": "revolute",
                 "travel": [
                   -1.7,
-                  2.3
+                  0.302
                 ],
                 "home_mm": 38.2,
                 "need_mm": 95.3,
@@ -9383,11 +9394,11 @@
           },
           {
             "item": "24 AWG silicone wire",
-            "qty": 4.9,
+            "qty": 4.8,
             "unit": "m",
             "unit_usd": 0.35,
-            "subtotal_usd": 1.72,
-            "spec": "0.205 mm2, rated 1.75 A in a bundle; 4.41 m cut + 10 % waste",
+            "subtotal_usd": 1.68,
+            "spec": "0.205 mm2, rated 1.75 A in a bundle; 4.34 m cut + 10 % waste",
             "source": "estimated"
           },
           {
@@ -9396,7 +9407,7 @@
             "unit": "m",
             "unit_usd": 0.3,
             "subtotal_usd": 1.2,
-            "spec": "0.128 mm2, rated 1.1 A in a bundle; 3.63 m cut + 10 % waste",
+            "spec": "0.128 mm2, rated 1.1 A in a bundle; 3.60 m cut + 10 % waste",
             "source": "estimated"
           },
           {
@@ -9472,13 +9483,14 @@
             "source": "estimated"
           }
         ],
-        "cost_usd": 12.39,
-        "total_wire_m": 12.43,
+        "cost_usd": 12.35,
+        "total_wire_m": 12.33,
         "notes": [
           "Mains side: IEC inlet to the supply's AC terminals with insulated spades, earth wired first, case closed before plugging in. Have it checked if you are not qualified to wire mains."
         ],
         "unconnected": [],
         "estimated_inputs": [],
+        "laid": "3d",
         "route": {
           "through": 0,
           "through_mm": 0,

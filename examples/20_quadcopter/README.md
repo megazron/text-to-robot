@@ -8,7 +8,7 @@ Interpreted as: quadcopter (5 in props) · camera (camera_cradle) · imu (canopy
 
 **Quadcopter, 5 in props on 2207 motors: 0.47 kg take-off, thrust-to-weight 6.6, hover at 15 % throttle, about 10 min**
 
-Parts cost **$269.6** · printed structure 4 parts, 97 g · checks passed 34/34
+Parts cost **$273.1** · printed structure 4 parts, 96 g · checks passed 34/34
 
 ## What it can do
 
@@ -18,9 +18,9 @@ Parts cost **$269.6** · printed structure 4 parts, 97 g · checks passed 34/34
 | payload kg | 0 |
 | takeoff mass kg | 0.467 |
 | max thrust kg | 3.1 |
-| thrust to weight | 6.63 |
+| thrust to weight | 6.64 |
 | hover throttle | 0.154 |
-| hover thrust per motor n | 1.15 |
+| hover thrust per motor n | 1.14 |
 | max thrust per motor n | 7.6 |
 | hover current a | 7.3 |
 | burst current a | 60 |
@@ -29,8 +29,8 @@ Parts cost **$269.6** · printed structure 4 parts, 97 g · checks passed 34/34
 | wheelbase mm | 225 |
 | prop | 5 x 4.3 x 3 tri-blade propeller, M5 hub (HQProp 5043 V1S), one |
 | motor | 2207 brushless motor 1750 KV for 5 in props, 4S (e.g. iFlight XING2 2207) |
-| cost usd | 270.53 |
-| cost breakdown | parts 248.30 USD, filament 2.41 USD (0.10 kg), fasteners ~4.80 USD, wiring 15.02 USD |
+| cost usd | 274.03 |
+| cost breakdown | parts 248.30 USD, filament 2.40 USD (0.10 kg), fasteners ~4.80 USD, wiring 18.53 USD |
 
 ## Engineering checks
 
@@ -52,8 +52,8 @@ All 34 checks pass (torque, speed, power, stability, print-bed fit). Details in 
 
 | | Test | Result |
 |---|---|---|
-| ✅ | hover | lifts off and holds 0.8 m for 3 s: height within 17 mm, tilt under 0.0 deg, rotors at 15 % of full thrust on average (1.15 N each for 0.467 kg; design record says 1.15 N), peak 15 % |
-| ✅ | thrust to weight | full throttle from hover climbs at 45.1 m/s^2: thrust-to-weight 5.60 (design record 6.63); 2.0 is the least that flies with control margin |
+| ✅ | hover | lifts off and holds 0.8 m for 3 s: height within 17 mm, tilt under 0.0 deg, rotors at 15 % of full thrust on average (1.14 N each for 0.467 kg; design record says 1.14 N), peak 15 % |
+| ✅ | thrust to weight | full throttle from hover climbs at 45.1 m/s^2: thrust-to-weight 5.60 (design record 6.64); 2.0 is the least that flies with control margin |
 | ✅ | attitude recovery | released 15 deg tilted, it is level to 0.1 deg after 1 s (attitude control within the rotors' thrust range) |
 
 Not tested: aerodynamics: each rotor is its static thrust curve applied at the hub (no drag, ground effect, prop wash or battery sag); stabilisation is an ideal cascaded PD on the true state, standing in for the flight controller

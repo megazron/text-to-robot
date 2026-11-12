@@ -1,6 +1,6 @@
 # Wiring: baymax
 
-36 cables, 83 conductors, 36.33 m of wire, wiring parts $35.77.
+36 cables, 83 conductors, 35.85 m of wire, wiring parts $35.53.
 
 Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), [breadboard.svg](breadboard.svg) (every wire in its colour, pin to pin) and the cable diagram [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
 
@@ -93,7 +93,7 @@ Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), 
 | C17 | W47 | GND | left_arm_shoulder_pitch_actuator.GND | left_arm_elbow_pitch_actuator.GND | 22 | black | 0.9 | 3.15 |
 | C17 | W48 | BUS_SERVO_BUS | left_arm_shoulder_pitch_actuator.DATA | left_arm_elbow_pitch_actuator.DATA | 26 | yellow | 0.02 | 0.02 |
 | C18 | W49 | VBAT | left_arm_elbow_pitch_actuator.VCC | left_arm_wrist_pitch_actuator.VCC | 24 | red | 0.45 | 2.7 |
-| C18 | W50 | GND | left_arm_elbow_pitch_actuator.GND | left_arm_wrist_pitch_actuator.GND | 22 | black | 0.45 | 2.7 |
+| C18 | W50 | GND | left_arm_elbow_pitch_actuator.GND | left_arm_wrist_pitch_actuator.GND | 24 | black | 0.45 | 2.7 |
 | C18 | W51 | BUS_SERVO_BUS | left_arm_elbow_pitch_actuator.DATA | left_arm_wrist_pitch_actuator.DATA | 26 | yellow | 0.02 | 0.02 |
 | C19 | W52 | BUS_SERVO_BUS | servo_bus_hub.P2 | right_arm_base_yaw_actuator.DATA | 26 | red | 0.02 | 0.02 |
 | C20 | W53 | VBAT | right_arm_base_yaw_actuator.VCC | right_arm_shoulder_pitch_actuator.VCC | 22 | red | 1.55 | 5.1 |
@@ -103,7 +103,7 @@ Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), 
 | C21 | W57 | GND | right_arm_shoulder_pitch_actuator.GND | right_arm_elbow_pitch_actuator.GND | 22 | black | 0.9 | 3.15 |
 | C21 | W58 | BUS_SERVO_BUS | right_arm_shoulder_pitch_actuator.DATA | right_arm_elbow_pitch_actuator.DATA | 26 | yellow | 0.02 | 0.02 |
 | C22 | W59 | VBAT | right_arm_elbow_pitch_actuator.VCC | right_arm_wrist_pitch_actuator.VCC | 24 | red | 0.45 | 2.7 |
-| C22 | W60 | GND | right_arm_elbow_pitch_actuator.GND | right_arm_wrist_pitch_actuator.GND | 22 | black | 0.45 | 2.7 |
+| C22 | W60 | GND | right_arm_elbow_pitch_actuator.GND | right_arm_wrist_pitch_actuator.GND | 24 | black | 0.45 | 2.7 |
 | C22 | W61 | BUS_SERVO_BUS | right_arm_elbow_pitch_actuator.DATA | right_arm_wrist_pitch_actuator.DATA | 26 | yellow | 0.02 | 0.02 |
 | C23 | W62 | SERVO_BUS_USB | servo_bus.VBUS | computer.LINK | made | red | 0.05 | 0.1 |
 | C24 | W63 | VBAT | battery.BAT+ | main_fuse.IN | 12 | red | 10.701 | 27.001 |
@@ -150,12 +150,12 @@ Length is route + service loop + joint slack + termination, rounded up to 5 mm; 
 | C14 | servo_bus_hub to head_pan_actuator | 1 | 920 | 818.9 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | electronics_enclosure.lid_up |
 | C15 | servo_bus_hub to left_arm_base_yaw_actuator | 1 | 1000 | 895.8 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | electronics_enclosure.lid_up |
 | C16 | left_arm_base_yaw_actuator to left_arm_shoulder_pitch_actuator | 3 | 460 | 197.2 | 40 | 160 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
-| C17 | left_arm_shoulder_pitch_actuator to left_arm_elbow_pitch_actuator | 3 | 460 | 283.8 | 40 | 75 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
-| C18 | left_arm_elbow_pitch_actuator to left_arm_wrist_pitch_actuator | 3 | 575 | 365.6 | 40 | 105 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
+| C17 | left_arm_shoulder_pitch_actuator to left_arm_elbow_pitch_actuator | 3 | 445 | 283.8 | 40 | 60 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
+| C18 | left_arm_elbow_pitch_actuator to left_arm_wrist_pitch_actuator | 3 | 510 | 365.6 | 40 | 40 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
 | C19 | servo_bus_hub to right_arm_base_yaw_actuator | 1 | 995 | 891.9 | 40 | 0 | 60 | lever clamp / Feetech 5264-3P | electronics_enclosure.lid_up |
 | C20 | right_arm_base_yaw_actuator to right_arm_shoulder_pitch_actuator | 3 | 505 | 219 | 40 | 185 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
-| C21 | right_arm_shoulder_pitch_actuator to right_arm_elbow_pitch_actuator | 3 | 450 | 274 | 40 | 75 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
-| C22 | right_arm_elbow_pitch_actuator to right_arm_wrist_pitch_actuator | 3 | 560 | 350 | 40 | 105 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
+| C21 | right_arm_shoulder_pitch_actuator to right_arm_elbow_pitch_actuator | 3 | 435 | 274 | 40 | 60 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
+| C22 | right_arm_elbow_pitch_actuator to right_arm_wrist_pitch_actuator | 3 | 495 | 350 | 40 | 40 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
 | C23 | servo_bus to computer | 1 | 190 | 188.6 | 0 | 0 | 0 | USB | - |
 | C24 | battery positive to main fuse | 1 | 195 | 92 | 40 | 0 | 60 | XT60 / soldered leads | - |
 | C25 | main fuse to main switch | 1 | 350 | 248.7 | 40 | 0 | 60 | soldered leads / 6.3 mm quick-connect tabs | - |
@@ -179,11 +179,11 @@ Each loop is at least the extra length the joint needs at the far end of its tra
 |---|---|---|--:|--:|--:|
 | C1 | head_pan | -1.4 to 1.4 | 30.6 | 67.9 | 60 |
 | C16 | left_arm_base_yaw | -2.97 to 2.97 | 35.1 | 145.6 | 160 |
-| C17 | left_arm_shoulder_pitch | -1.75 to 1.75 | 36.6 | 73.2 | 75 |
-| C18 | left_arm_elbow_pitch | -2.1 to 2.3 | 36.4 | 100.4 | 105 |
+| C17 | left_arm_shoulder_pitch | -1.113 to 1.233 | 36.6 | 60.5 | 60 |
+| C18 | left_arm_elbow_pitch | -0.24 to 0.247 | 36.4 | 42.5 | 40 |
 | C20 | right_arm_base_yaw | -2.97 to 2.97 | 36.8 | 166.8 | 185 |
-| C21 | right_arm_shoulder_pitch | -1.75 to 1.75 | 36.6 | 72.5 | 75 |
-| C22 | right_arm_elbow_pitch | -2.1 to 2.3 | 37 | 101 | 105 |
+| C21 | right_arm_shoulder_pitch | -1.113 to 1.233 | 36.6 | 60.1 | 60 |
+| C22 | right_arm_elbow_pitch | -0.24 to 0.247 | 37 | 43.1 | 40 |
 
 ## Electrical calculations
 
@@ -374,9 +374,9 @@ Not checked (no logic levels in the parts data): Feetech STS3215 C047 12 V 30 kg
 | 16 AWG silicone wire | 2.4 | m | 1 | 2.40 | 1.308 mm2, rated 11 A in a bundle; 2.13 m cut + 10 % waste | estimated |
 | 18 AWG silicone wire | 1.4 | m | 0.7 | 0.98 | 0.823 mm2, rated 8 A in a bundle; 1.23 m cut + 10 % waste | estimated |
 | 20 AWG silicone wire | 7.3 | m | 0.5 | 3.65 | 0.519 mm2, rated 5.5 A in a bundle; 6.59 m cut + 10 % waste | estimated |
-| 22 AWG silicone wire | 7.9 | m | 0.4 | 3.16 | 0.327 mm2, rated 3.5 A in a bundle; 7.15 m cut + 10 % waste | estimated |
-| 24 AWG silicone wire | 6.2 | m | 0.35 | 2.17 | 0.205 mm2, rated 1.75 A in a bundle; 5.64 m cut + 10 % waste | estimated |
-| 26 AWG silicone wire | 12.7 | m | 0.3 | 3.81 | 0.128 mm2, rated 1.1 A in a bundle; 11.54 m cut + 10 % waste | estimated |
+| 22 AWG silicone wire | 6.6 | m | 0.4 | 2.64 | 0.327 mm2, rated 3.5 A in a bundle; 5.96 m cut + 10 % waste | estimated |
+| 24 AWG silicone wire | 7.2 | m | 0.35 | 2.52 | 0.205 mm2, rated 1.75 A in a bundle; 6.51 m cut + 10 % waste | estimated |
+| 26 AWG silicone wire | 12.6 | m | 0.3 | 3.78 | 0.128 mm2, rated 1.1 A in a bundle; 11.38 m cut + 10 % waste | estimated |
 | Dupont 2.54 mm contacts | 46 | pc | 0.02 | 0.92 | rated 3 A per contact | estimated |
 | Dupont 2.54 mm housings | 11 | pc | 0.02 | 0.22 | one per cable end | estimated |
 | Bootlace ferrule contacts | 14 | pc | 0.03 | 0.42 | rated 17.5 A per contact | estimated |
@@ -388,7 +388,7 @@ Not checked (no logic levels in the parts data): Feetech STS3215 C047 12 V 30 kg
 | Cable tie 100 x 2.5 mm | 55 | pc | 0.02 | 1.10 | at every clip, cable end and strain-relief anchor | estimated |
 | Rubber grommet, 6.4 mm panel hole, 3.2 mm bore | 2 | pc | 0.08 | 0.16 | 9.5 mm panel hole | estimated |
 | Rubber grommet, 6.4 mm panel hole, 3.2 mm bore | 1 | pc | 0.08 | 0.08 | 12 mm panel hole | estimated |
-| Nylon braided sleeving 6 mm | 1.5 | m | 0.4 | 0.60 | over every cable where it crosses a joint | estimated |
+| Nylon braided sleeving 6 mm | 1.4 | m | 0.4 | 0.56 | over every cable where it crosses a joint | estimated |
 | FFC | 1 | pc | 3 | 3.00 | head_camera to computer | estimated |
 | USB | 1 | pc | 3 | 3.00 | servo_bus to computer | estimated |
 | 15 A ATM blade fuse | 1 | pc | 0.25 | 0.25 | plus spares | estimated |
@@ -412,3 +412,7 @@ Not checked (no logic levels in the parts data): Feetech STS3215 C047 12 V 30 kg
 | KCD4 double-pole rocker switch, 16 A 250 VAC / 20 A 125 VAC | estimated | estimated | estimated | estimated |
 | WAGO 221-415 five-way lever splice | estimated | estimated | estimated | estimated |
 | Waveshare Bus Servo Adapter | [datasheet](https://www.waveshare.com/bus-servo-adapter-a.htm) | estimated | estimated | [datasheet](https://www.waveshare.com/wiki/Bus_Servo_Adapter_(A)) |
+
+## Notes
+
+- Routing: 5 wire runs could only be laid through solid parts at the home pose (7 mm in all), for example right_arm_base_yaw_actuator~right_arm_shoulder_pitch_actuator wire 1 through a printed part for 1 mm at -4,-195,714; right_arm_elbow_pitch_actuator~right_arm_shoulder_pitch_actuator wire 1 through a printed part for 1 mm at 5,-196,714; main_feed_a wire 1 through servo_bus_hub for 3 mm at -38,-79,112. Lay those wires round the part by hand.

@@ -54,4 +54,4 @@ Angle 0 is the servo's centre and the joint's zero pose in `ASSEMBLY.md`. Pulse 
 ## Not driven, or to check
 
 - elbow: the robot allows -120 to 120 deg but the TowerPro MG996R standard servo turns 180 deg (-90 to 90 about its centre): the sketch stays inside -90 to 90 deg.
-- shoulder: the pose sequence turns it to 56.6 deg, not 67.8: further and a link would go under the surface the robot stands on.
+- shoulder: the pose sequence turns it to 62.2 deg, not 67.8: further and a link would go under the surface the robot stands on.

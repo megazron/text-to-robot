@@ -1,6 +1,6 @@
 # Bill of materials: rover_arm
 
-**Estimated total: $3861.39**  ·  tier: prosumer  ·  budget: $4000 ✅ within budget
+**Estimated total: $3861.31**  ·  tier: prosumer  ·  budget: $4000 ✅ within budget
 
 **Effort sizing: passes catalogue estimate; hardware verified: no.**
 
@@ -28,9 +28,9 @@
 | Wiring | 12 AWG silicone wire _(price estimated)_ | 1 | 2.2 | 2.2 | 1 m: 3.308 mm2, rated 20.5 A in a bundle; 0.90 m cut + 10 % waste |
 | Wiring | 18 AWG silicone wire _(price estimated)_ | 2.6 | 0.7 | 1.82 | 2.6 m: 0.823 mm2, rated 8 A in a bundle; 2.29 m cut + 10 % waste |
 | Wiring | 20 AWG silicone wire _(price estimated)_ | 7.2 | 0.5 | 3.6 | 7.2 m: 0.519 mm2, rated 5.5 A in a bundle; 6.55 m cut + 10 % waste |
-| Wiring | 22 AWG silicone wire _(price estimated)_ | 3.6 | 0.4 | 1.44 | 3.6 m: 0.327 mm2, rated 3.5 A in a bundle; 3.25 m cut + 10 % waste |
+| Wiring | 22 AWG silicone wire _(price estimated)_ | 3.5 | 0.4 | 1.4 | 3.5 m: 0.327 mm2, rated 3.5 A in a bundle; 3.15 m cut + 10 % waste |
 | Wiring | 24 AWG silicone wire _(price estimated)_ | 9.3 | 0.35 | 3.25 | 9.3 m: 0.205 mm2, rated 1.75 A in a bundle; 8.45 m cut + 10 % waste |
-| Wiring | 26 AWG silicone wire _(price estimated)_ | 9.9 | 0.3 | 2.97 | 9.9 m: 0.128 mm2, rated 1.1 A in a bundle; 8.98 m cut + 10 % waste |
+| Wiring | 26 AWG silicone wire _(price estimated)_ | 9.9 | 0.3 | 2.97 | 9.9 m: 0.128 mm2, rated 1.1 A in a bundle; 8.93 m cut + 10 % waste |
 | Wiring | Dupont 2.54 mm contacts _(price estimated)_ | 38 | 0.02 | 0.76 | 38 pc: rated 3 A per contact |
 | Wiring | Dupont 2.54 mm housings _(price estimated)_ | 9 | 0.02 | 0.18 | 9 pc: one per cable end |
 | Wiring | Bootlace ferrule contacts _(price estimated)_ | 14 | 0.03 | 0.42 | 14 pc: rated 17.5 A per contact |
@@ -43,7 +43,7 @@
 | Wiring | Heat shrink 3 mm, 2:1 _(price estimated)_ | 3.1 | 0.2 | 0.62 | 3.1 m: 33 solder joints + a boot on each cable end |
 | Wiring | Cable tie 100 x 2.5 mm _(price estimated)_ | 54 | 0.02 | 1.08 | 54 pc: at every clip, cable end and strain-relief anchor |
 | Wiring | Rubber grommet, 6.4 mm panel hole, 3.2 mm bore _(price estimated)_ | 4 | 0.08 | 0.32 | 4 pc: 9.5 mm panel hole |
-| Wiring | Nylon braided sleeving 6 mm _(price estimated)_ | 3.6 | 0.4 | 1.44 | 3.6 m: over every cable where it crosses a joint |
+| Wiring | Nylon braided sleeving 6 mm _(price estimated)_ | 3.5 | 0.4 | 1.4 | 3.5 m: over every cable where it crosses a joint |
 | Wiring | USB-C _(price estimated)_ | 1 | 3 | 3 | 1 pc: depth_camera to computer |
 | Wiring | FFC _(price estimated)_ | 1 | 3 | 3 | 1 pc: mast_camera to computer |
 | Wiring | USB _(price estimated)_ | 1 | 3 | 3 | 1 pc: io_controller to computer |
@@ -70,6 +70,7 @@
 
 ## Notes
 - 4-wheel rocker-bogie rover with a 6-DOF arm: 4.64 kg, 1.24 m/s, 1.53 h, jetson_orin_nano_super
+- Joint limits trimmed to the collision-free range found by exact solid sweeps: arm_shoulder_pitch [-1.75, 1.75] -> [-0.62, 1.57]; arm_elbow_pitch [-2.10, 2.30] -> [-2.10, 1.45].
 - Rocker-bogie after the JPL Open Source Rover, 4 driven wheels, skid steering (the OSR's four corner-steering servos are left out; add them for less tyre scrub).
 - The differential bar linking the two rockers through the body is modelled as a URDF mimic between the rocker pivots: a passive bar has no motor, and the model's rockers turn equally and opposite.
 - Rockers and bogies are printed in PETG; for outdoor use print them in 6 bolt-on sections from aluminium channel instead (as the OSR does).

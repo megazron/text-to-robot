@@ -94,10 +94,10 @@
     {
       "category": "Wiring",
       "name": "24 AWG silicone wire",
-      "qty": 2.4,
+      "qty": 2.3,
       "unit_cost": 0.35,
-      "subtotal": 0.84,
-      "spec": "2.4 m: 0.205 mm2, rated 1.75 A in a bundle; 2.12 m cut + 10 % waste",
+      "subtotal": 0.8,
+      "spec": "2.3 m: 0.205 mm2, rated 1.75 A in a bundle; 2.07 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
@@ -106,7 +106,7 @@
       "qty": 1.8,
       "unit_cost": 0.3,
       "subtotal": 0.54,
-      "spec": "1.8 m: 0.128 mm2, rated 1.1 A in a bundle; 1.61 m cut + 10 % waste",
+      "spec": "1.8 m: 0.128 mm2, rated 1.1 A in a bundle; 1.58 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
@@ -175,14 +175,14 @@
     {
       "category": "Wiring",
       "name": "Nylon braided sleeving 6 mm",
-      "qty": 0.5,
+      "qty": 0.4,
       "unit_cost": 0.4,
-      "subtotal": 0.2,
-      "spec": "0.5 m: over every cable where it crosses a joint",
+      "subtotal": 0.16,
+      "spec": "0.4 m: over every cable where it crosses a joint",
       "note": "price estimated"
     }
   ],
-  "total": 146.52,
+  "total": 146.44,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
@@ -212,6 +212,7 @@
     "Every pitch joint is a clevis: one cheek bolts to the servo horn, the other turns on a 625ZZ bearing on an M5 bolt screwed into a heat-set insert in a boss on the back of the servo's cradle, so the servo's own bearing carries no bending moment. An M5 washer sits between the boss and the bearing's inner race.",
     "Print the links in PETG or PLA+ with 4 perimeters and 30 % gyroid infill, cradle opening up; press the 625ZZ bearings into their seats (16.15 mm) and set the M5 inserts with a soldering iron.",
     "Torques are exact static gravity loads of this geometry: the worst pose (stretched out with the payload) must be held within each actuator's rated continuous torque, peaks get +30 %, and each joint must still reach >= 1 rad/s loaded on its torque-speed line.",
+    "Joint limits trimmed to the collision-free range found by exact solid sweeps: shoulder_pitch [-1.75, 1.75] -> [-1.75, 0.79]; elbow_pitch [-2.10, 2.30] -> [-1.48, 2.30].",
     "Prices are list/street prices from the linked suppliers at the time the catalog was written; check before ordering."
   ]
 }

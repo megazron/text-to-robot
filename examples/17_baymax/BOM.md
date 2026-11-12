@@ -1,6 +1,6 @@
 # Bill of materials: baymax
 
-**Estimated total: $922.21**  ·  tier: hobby
+**Estimated total: $921.97**  ·  tier: hobby
 
 **Effort sizing: passes catalogue estimate; hardware verified: no.**
 
@@ -27,9 +27,9 @@
 | Wiring | 16 AWG silicone wire _(price estimated)_ | 2.4 | 1 | 2.4 | 2.4 m: 1.308 mm2, rated 11 A in a bundle; 2.13 m cut + 10 % waste |
 | Wiring | 18 AWG silicone wire _(price estimated)_ | 1.4 | 0.7 | 0.98 | 1.4 m: 0.823 mm2, rated 8 A in a bundle; 1.23 m cut + 10 % waste |
 | Wiring | 20 AWG silicone wire _(price estimated)_ | 7.3 | 0.5 | 3.65 | 7.3 m: 0.519 mm2, rated 5.5 A in a bundle; 6.59 m cut + 10 % waste |
-| Wiring | 22 AWG silicone wire _(price estimated)_ | 7.9 | 0.4 | 3.16 | 7.9 m: 0.327 mm2, rated 3.5 A in a bundle; 7.15 m cut + 10 % waste |
-| Wiring | 24 AWG silicone wire _(price estimated)_ | 6.2 | 0.35 | 2.17 | 6.2 m: 0.205 mm2, rated 1.75 A in a bundle; 5.64 m cut + 10 % waste |
-| Wiring | 26 AWG silicone wire _(price estimated)_ | 12.7 | 0.3 | 3.81 | 12.7 m: 0.128 mm2, rated 1.1 A in a bundle; 11.54 m cut + 10 % waste |
+| Wiring | 22 AWG silicone wire _(price estimated)_ | 6.6 | 0.4 | 2.64 | 6.6 m: 0.327 mm2, rated 3.5 A in a bundle; 5.96 m cut + 10 % waste |
+| Wiring | 24 AWG silicone wire _(price estimated)_ | 7.2 | 0.35 | 2.52 | 7.2 m: 0.205 mm2, rated 1.75 A in a bundle; 6.51 m cut + 10 % waste |
+| Wiring | 26 AWG silicone wire _(price estimated)_ | 12.6 | 0.3 | 3.78 | 12.6 m: 0.128 mm2, rated 1.1 A in a bundle; 11.38 m cut + 10 % waste |
 | Wiring | Dupont 2.54 mm contacts _(price estimated)_ | 46 | 0.02 | 0.92 | 46 pc: rated 3 A per contact |
 | Wiring | Dupont 2.54 mm housings _(price estimated)_ | 11 | 0.02 | 0.22 | 11 pc: one per cable end |
 | Wiring | Bootlace ferrule contacts _(price estimated)_ | 14 | 0.03 | 0.42 | 14 pc: rated 17.5 A per contact |
@@ -41,7 +41,7 @@
 | Wiring | Cable tie 100 x 2.5 mm _(price estimated)_ | 55 | 0.02 | 1.1 | 55 pc: at every clip, cable end and strain-relief anchor |
 | Wiring | Rubber grommet, 6.4 mm panel hole, 3.2 mm bore _(price estimated)_ | 2 | 0.08 | 0.16 | 2 pc: 9.5 mm panel hole |
 | Wiring | Rubber grommet, 6.4 mm panel hole, 3.2 mm bore _(price estimated)_ | 1 | 0.08 | 0.08 | 1 pc: 12 mm panel hole |
-| Wiring | Nylon braided sleeving 6 mm _(price estimated)_ | 1.5 | 0.4 | 0.6 | 1.5 m: over every cable where it crosses a joint |
+| Wiring | Nylon braided sleeving 6 mm _(price estimated)_ | 1.4 | 0.4 | 0.56 | 1.4 m: over every cable where it crosses a joint |
 | Wiring | FFC _(price estimated)_ | 1 | 3 | 3 | 1 pc: head_camera to computer |
 | Wiring | USB _(price estimated)_ | 1 | 3 | 3 | 1 pc: servo_bus to computer |
 | Wiring | 15 A ATM blade fuse _(price estimated)_ | 1 | 0.25 | 0.25 | 1 pc: plus spares |
@@ -67,6 +67,7 @@
 
 ## Notes
 - Baymax-style service robot: 5.561 kg, 1.01 m tall, 4WD hidden base, two 4-servo arms, pan head with camera
+- Joint limits trimmed to the collision-free range found by exact solid sweeps: left_arm_shoulder_pitch [-1.75, 1.75] -> [-1.11, 1.23]; left_arm_elbow_pitch [-2.10, 2.30] -> [-0.24, 0.25]; left_arm_wrist_pitch [-1.70, 2.30] -> [-0.96, 0.97]; right_arm_shoulder_pitch [-1.75, 1.75] -> [-1.11, 1.23]; right_arm_elbow_pitch [-2.10, 2.30] -> [-0.24, 0.25]; right_arm_wrist_pitch [-1.70, 2.30] -> [-0.96, 0.97].
 - Baymax's inflatable vinyl body is a sewn ripstop cover with a foam-lined zip, bought or sewn, with negligible structural role; it hangs on the shoulder yoke and hides a 4WD skid-steer base. It is not inflated, so it does not cushion like the film's.
 - Structure: 2020 aluminium extrusion spine and a 6 mm aluminium shoulder yoke; arms are four servos each (shoulder yaw, shoulder pitch, elbow, wrist) splayed 25 deg so they clear the belly; the hands are printed mittens covered with the same fabric.
 - Each arm is sized as mounted to lift 0.1 kg in the mitten at full reach; the tipping check includes both arms stretched forward with that payload.

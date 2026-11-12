@@ -1,6 +1,6 @@
 # Wiring: arm_6dof
 
-9 cables, 25 conductors, 10.99 m of wire, wiring parts $11.45.
+9 cables, 25 conductors, 10.83 m of wire, wiring parts $11.37.
 
 Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), [breadboard.svg](breadboard.svg) (every wire in its colour, pin to pin) and the cable diagram [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
 
@@ -61,8 +61,8 @@ Length is route + service loop + joint slack + termination, rounded up to 5 mm; 
 | C2 | servo_bus to base_yaw_actuator | 2 | 900 | 796.3 | 40 | 0 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | control_case.harness |
 | C3 | base_yaw_actuator to shoulder_pitch_actuator | 3 | 395 | 137.1 | 40 | 155 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
 | C4 | shoulder_pitch_actuator to elbow_pitch_actuator | 3 | 365 | 159.3 | 40 | 105 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
-| C5 | elbow_pitch_actuator to forearm_roll_actuator | 3 | 360 | 147 | 40 | 110 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
-| C6 | forearm_roll_actuator to wrist_pitch_actuator | 3 | 380 | 132.1 | 40 | 145 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
+| C5 | elbow_pitch_actuator to forearm_roll_actuator | 3 | 350 | 147 | 40 | 100 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
+| C6 | forearm_roll_actuator to wrist_pitch_actuator | 3 | 335 | 132.1 | 40 | 100 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
 | C7 | wrist_pitch_actuator to wrist_roll_actuator | 3 | 455 | 274.3 | 40 | 80 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
 | C8 | wrist_roll_actuator to gripper_actuator | 3 | 325 | 102.3 | 40 | 120 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
 | C9 | VBUS to base_yaw_actuator | 2 | 930 | 825.5 | 40 | 0 | 60 | barrier screw terminal / JST B3B-EH-A header | control_case.harness |
@@ -74,10 +74,10 @@ Each loop is at least the extra length the joint needs at the far end of its tra
 | Cable | Joint | Travel rad | Length at home mm | Length at full travel mm | Slack loop mm |
 |---|---|---|--:|--:|--:|
 | C3 | base_yaw | -2.97 to 2.97 | 37.6 | 141.4 | 155 |
-| C4 | shoulder_pitch | -1.75 to 1.75 | 38.1 | 99.8 | 105 |
-| C5 | elbow_pitch | -2.1 to 2.3 | 37.4 | 103.9 | 110 |
-| C6 | forearm_roll | -2.97 to 2.97 | 37.2 | 134.1 | 145 |
-| C7 | wrist_pitch | -1.7 to 2.3 | 41.2 | 82.8 | 80 |
+| C4 | shoulder_pitch | -1.75 to 1.052 | 38.1 | 99.8 | 105 |
+| C5 | elbow_pitch | -1.8 to 2.3 | 37.4 | 93.9 | 100 |
+| C6 | forearm_roll | -1.874 to 1.874 | 37.2 | 97.4 | 100 |
+| C7 | wrist_pitch | -1.7 to 0.051 | 41.2 | 82.8 | 80 |
 | C8 | wrist_roll | -2.97 to 2.97 | 36.5 | 111.9 | 120 |
 
 ## Electrical calculations
@@ -220,8 +220,8 @@ Not checked (no logic levels in the parts data): DYNAMIXEL XH540-W270-T(R), DYNA
 | 16 AWG silicone wire | 1.1 | m | 1 | 1.10 | 1.308 mm2, rated 11 A in a bundle; 0.93 m cut + 10 % waste | estimated |
 | 20 AWG silicone wire | 1.9 | m | 0.5 | 0.95 | 0.519 mm2, rated 5.5 A in a bundle; 1.71 m cut + 10 % waste | estimated |
 | 22 AWG silicone wire | 0.9 | m | 0.4 | 0.36 | 0.327 mm2, rated 3.5 A in a bundle; 0.73 m cut + 10 % waste | estimated |
-| 24 AWG silicone wire | 4.9 | m | 0.35 | 1.72 | 0.205 mm2, rated 1.75 A in a bundle; 4.41 m cut + 10 % waste | estimated |
-| 26 AWG silicone wire | 3.5 | m | 0.3 | 1.05 | 0.128 mm2, rated 1.1 A in a bundle; 3.17 m cut + 10 % waste | estimated |
+| 24 AWG silicone wire | 4.8 | m | 0.35 | 1.68 | 0.205 mm2, rated 1.75 A in a bundle; 4.30 m cut + 10 % waste | estimated |
+| 26 AWG silicone wire | 3.5 | m | 0.3 | 1.05 | 0.128 mm2, rated 1.1 A in a bundle; 3.11 m cut + 10 % waste | estimated |
 | 6.3 mm spade contacts | 3 | pc | 0.08 | 0.24 | rated 15 A per contact | estimated |
 | Bootlace ferrule contacts | 5 | pc | 0.03 | 0.15 | rated 17.5 A per contact | estimated |
 | JST EH 2.5 mm contacts | 42 | pc | 0.03 | 1.26 | rated 3 A per contact | estimated |
@@ -229,7 +229,7 @@ Not checked (no logic levels in the parts data): DYNAMIXEL XH540-W270-T(R), DYNA
 | Heat shrink 3 mm, 2:1 | 0.6 | m | 0.2 | 0.12 | 0 solder joints + a boot on each cable end | estimated |
 | Cable tie 100 x 2.5 mm | 11 | pc | 0.02 | 0.22 | at every clip, cable end and strain-relief anchor | estimated |
 | PG7 cable gland | 1 | pc | 2.97 | 2.97 | cable exit with strain relief | estimated |
-| Nylon braided sleeving 6 mm | 1.4 | m | 0.4 | 0.56 | over every cable where it crosses a joint | estimated |
+| Nylon braided sleeving 6 mm | 1.3 | m | 0.4 | 0.52 | over every cable where it crosses a joint | estimated |
 
 ## Data sources
 

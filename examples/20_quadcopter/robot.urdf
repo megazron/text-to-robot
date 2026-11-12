@@ -29,9 +29,9 @@
       <geometry><mesh filename="package://quadcopter/meshes/base_link.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.001172 -3.44992e-12 0.002699" rpy="0 0 0"/>
-      <mass value="0.065874"/>
-      <inertia ixx="0.000193188" ixy="6.75790e-14" ixz="5.39469e-8" iyy="0.000197714" iyz="1.30012e-15" izz="0.000390508"/>
+      <origin xyz="0.00118 -1.20016e-13 0.002653" rpy="0 0 0"/>
+      <mass value="0.065422"/>
+      <inertia ixx="0.000192059" ixy="-9.26650e-18" ixz="5.03878e-8" iyy="0.00019616" iyz="1.84288e-17" izz="0.00038787"/>
     </inertial>
   </link>
   <link name="front_left_motor">

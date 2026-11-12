@@ -77,7 +77,7 @@ const unsigned int STOP_CM = 20;             // closer than this is an obstacle
 enum DriveState : uint8_t { DRIVE_WAIT, DRIVE_FORWARD, DRIVE_BRAKE, DRIVE_REVERSE, DRIVE_TURN };
 const unsigned long BRAKE_MS = 200;
 const unsigned long REVERSE_MS = 400;
-const unsigned long TURN_MS = 1147;      // a quarter turn at the design's 1.37 rad/s on a hard floor; no encoders, so tune it on your floor
+const unsigned long TURN_MS = 1354;      // a quarter turn at the design's 1.16 rad/s on a hard floor; no encoders, so tune it on your floor
 
 // ---------------------------------------------------------------- servo joints
 struct Joint {
@@ -94,10 +94,10 @@ const Joint JOINTS[] = {
   {"neck_tilt", 0, 1, 500, 2400, 180, +1, -401, 401, 0},   // neck_tilt_servo: hobby_sg90
   {"left_hand", 0, 2, 500, 2400, 180, +1, -8, 343, 0},   // left_hand_servo: hobby_sg90
   {"right_hand", 0, 3, 500, 2400, 180, +1, -343, 8, 0},   // right_hand_servo: hobby_sg90
-  {"left_arm_lift", 0, 4, 500, 2400, 180, +1, -572, 272, 0},   // left_arm_servo: hobby_mg90s
-  {"right_arm_lift", 0, 5, 500, 2400, 180, +1, -272, 572, 0},   // right_arm_servo: hobby_mg90s
-  {"left_elbow", 0, 6, 500, 2400, 180, +1, -859, 728, 0},   // left_elbow_servo: hobby_sg90
-  {"right_elbow", 0, 7, 500, 2400, 180, +1, -728, 859, 0},   // right_elbow_servo: hobby_sg90
+  {"left_arm_lift", 0, 4, 500, 2400, 180, +1, -572, 283, 0},   // left_arm_servo: hobby_mg90s
+  {"right_arm_lift", 0, 5, 500, 2400, 180, +1, -283, 572, 0},   // right_arm_servo: hobby_mg90s
+  {"left_elbow", 0, 6, 500, 2400, 180, +1, -859, 717, 0},   // left_elbow_servo: hobby_sg90
+  {"right_elbow", 0, 7, 500, 2400, 180, +1, -717, 859, 0},   // right_elbow_servo: hobby_sg90
 };
 const uint8_t JOINT_COUNT = sizeof(JOINTS) / sizeof(JOINTS[0]);
 const uint16_t SERVO_HZ = 50;            // hobby servo frame rate
@@ -119,17 +119,17 @@ const int16_t POSES[][8] PROGMEM = {
   {0, 0, 0, 0, 0, 0, 0, 0},   // home
   {0, 0, 0, -206, 0, 0, 0, 0},   // right_hand to -20.6 deg
   {0, 0, 0, 0, 0, 0, 0, 0},   // home
-  {0, 0, 0, 0, 163, 0, 0, 0},   // left_arm_lift to 16.3 deg
+  {0, 0, 0, 0, 170, 0, 0, 0},   // left_arm_lift to 17 deg
   {0, 0, 0, 0, -343, 0, 0, 0},   // left_arm_lift to -34.3 deg
   {0, 0, 0, 0, 0, 0, 0, 0},   // home
   {0, 0, 0, 0, 0, 343, 0, 0},   // right_arm_lift to 34.3 deg
-  {0, 0, 0, 0, 0, -163, 0, 0},   // right_arm_lift to -16.3 deg
+  {0, 0, 0, 0, 0, -170, 0, 0},   // right_arm_lift to -17 deg
   {0, 0, 0, 0, 0, 0, 0, 0},   // home
-  {0, 0, 0, 0, 0, 0, 437, 0},   // left_elbow to 43.7 deg
+  {0, 0, 0, 0, 0, 0, 430, 0},   // left_elbow to 43 deg
   {0, 0, 0, 0, 0, 0, -515, 0},   // left_elbow to -51.5 deg
   {0, 0, 0, 0, 0, 0, 0, 0},   // home
   {0, 0, 0, 0, 0, 0, 0, 515},   // right_elbow to 51.5 deg
-  {0, 0, 0, 0, 0, 0, 0, -437},   // right_elbow to -43.7 deg
+  {0, 0, 0, 0, 0, 0, 0, -430},   // right_elbow to -43 deg
   {0, 0, 0, 0, 0, 0, 0, 0},   // home
 };
 const uint8_t POSE_COUNT = sizeof(POSES) / sizeof(POSES[0]);

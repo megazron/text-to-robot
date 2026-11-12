@@ -1,6 +1,6 @@
 # Wiring: cartesian_gantry
 
-19 cables, 47 conductors, 17.67 m of wire, wiring parts $13.70.
+19 cables, 47 conductors, 20.52 m of wire, wiring parts $14.54.
 
 Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), [breadboard.svg](breadboard.svg) (every wire in its colour, pin to pin) and the cable diagram [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
 
@@ -8,7 +8,7 @@ Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), 
 
 | Rail | Volts | Source | Source limit A (cont / peak) | Load A (typical / peak) | Margin (typical) | Fuse A | Worst wire drop V |
 |---|--:|---|--:|--:|--:|--:|--:|
-| V24 | 24 | power_supply | 6.5 / 7.1 | 3.6 / 6 | 1.8x | - | 0.044 |
+| V24 | 24 | power_supply | 6.5 / 7.1 | 3.6 / 6 | 1.8x | - | 0.096 |
 | 3V3 | 3.3 | controller | 0.5 / 0.6 | 0.015 / 0.06 | 33.3x | - | 0.002 |
 
 **V24 loads** (peak assumes all three steppers at full current):
@@ -44,10 +44,10 @@ Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), 
 | C2 | W6 | X_DIR | controller.5 | driver_x.DIR | 26 | blue | 0.02 | 0.02 |
 | C2 | W7 | X_EN | controller.6 | driver_x.EN | 26 | blue | 0.02 | 0.02 |
 | C2 | W8 | GND | controller.G | driver_x.GND | 24 | black | 0.02 | 0.02 |
-| C3 | W9 | X_M1A | driver_x.M1A | x_motor.A (black) | 24 | orange | 1.2 | 2 |
-| C3 | W10 | X_M1B | driver_x.M1B | x_motor.A\ (green) | 24 | orange | 1.2 | 2 |
-| C3 | W11 | X_M2A | driver_x.M2A | x_motor.B (red) | 24 | orange | 1.2 | 2 |
-| C3 | W12 | X_M2B | driver_x.M2B | x_motor.B\ (blue) | 24 | orange | 1.2 | 2 |
+| C3 | W9 | X_M1A | driver_x.M1A | x_motor.A (black) | 22 | orange | 1.2 | 2 |
+| C3 | W10 | X_M1B | driver_x.M1B | x_motor.A\ (green) | 22 | orange | 1.2 | 2 |
+| C3 | W11 | X_M2A | driver_x.M2A | x_motor.B (red) | 22 | orange | 1.2 | 2 |
+| C3 | W12 | X_M2B | driver_x.M2B | x_motor.B\ (blue) | 22 | orange | 1.2 | 2 |
 | C4 | W13 | X_HOME | x_endstop.SIG | controller.10 | 26 | blue | 0.02 | 0.02 |
 | C5 | W14 | Y_VIO | controller.3V3 | driver_y.VIO | 24 | red | 0.02 | 0.02 |
 | C5 | W15 | Y_STEP | controller.7 | driver_y.STEP | 26 | blue | 0.02 | 0.02 |
@@ -90,25 +90,25 @@ Length is route + service loop + joint slack + termination, rounded up to 5 mm; 
 
 | Cable | What | Conductors | Length mm | Route | Service | Joint slack | Ends | Connectors | Exit |
 |---|---|--:|--:|--:|--:|--:|--:|---|---|
-| C1 | mains inlet to the supply (crimped, insulated spades; earth first) | 3 | 215 | 113.5 | 40 | 0 | 60 | 6.3 mm quick-connect tabs / barrier screw terminal | - |
-| C2 | controller to driver_x | 5 | 155 | 53.6 | 40 | 0 | 60 | 22-pin male header / same header | - |
-| C3 | driver_x to x_motor | 4 | 575 | 434.6 | 40 | 40 | 60 | 2.54 mm pin header / Harwin-type 2.54 mm 4-pin housing on the end of a 1000 mm cable | control_case.harness |
-| C4 | x_endstop to controller | 1 | 635 | 516.6 | 40 | 15 | 60 | 3-pin JST-XH / 22-pin male header | control_case.harness |
-| C5 | controller to driver_y | 4 | 185 | 82.4 | 40 | 0 | 60 | 22-pin male header / same header | - |
-| C6 | driver_y to y_motor | 4 | 420 | 317.5 | 40 | 0 | 60 | 2.54 mm pin header / Harwin-type 2.54 mm 4-pin housing on the end of a 1000 mm cable | control_case.harness |
-| C7 | y_endstop to controller | 1 | 510 | 408.9 | 40 | 0 | 60 | 3-pin JST-XH / 22-pin male header | control_case.harness |
-| C8 | controller to driver_z | 4 | 215 | 111.2 | 40 | 0 | 60 | 22-pin male header / same header | - |
-| C9 | driver_z to z_motor | 4 | 790 | 606.2 | 40 | 80 | 60 | 2.54 mm pin header / Harwin-type 2.54 mm 4-pin housing on the end of a 1000 mm cable | control_case.harness |
-| C10 | z_endstop to controller | 1 | 860 | 727.8 | 40 | 30 | 60 | 3-pin JST-XH / 22-pin male header | control_case.harness |
-| C11 | battery negative to star ground | 1 | 100 | 0 | 40 | 0 | 60 | barrier screw terminal / lever clamp | - |
-| C12 | power_supply to the V24 splice | 1 | 100 | 0 | 40 | 0 | 60 | barrier screw terminal / lever clamp | - |
-| C13 | V24 to driver_x | 2 | 180 | 75.6 | 40 | 0 | 60 | lever clamp / same header | - |
-| C14 | V24 to driver_y | 2 | 170 | 68.5 | 40 | 0 | 60 | lever clamp / same header | - |
-| C15 | V24 to driver_z | 2 | 175 | 73.1 | 40 | 0 | 60 | lever clamp / same header | - |
-| C16 | controller to the 3V3 splice | 2 | 100 | 0 | 40 | 0 | 60 | 22-pin male header / lever clamp | - |
-| C17 | 3V3 to x_endstop | 2 | 645 | 517.4 | 40 | 25 | 60 | lever clamp / 3-pin JST-XH | control_case.harness |
-| C18 | 3V3 to y_endstop | 2 | 510 | 408.9 | 40 | 0 | 60 | lever clamp / 3-pin JST-XH | control_case.harness |
-| C19 | 3V3 to z_endstop | 2 | 875 | 723.1 | 40 | 50 | 60 | lever clamp / 3-pin JST-XH | control_case.harness |
+| C1 | mains inlet to the supply (crimped, insulated spades; earth first) | 3 | 160 | 58.2 | 40 | 0 | 60 | 6.3 mm quick-connect tabs / barrier screw terminal | - |
+| C2 | controller to driver_x | 5 | 200 | 97.4 | 40 | 0 | 60 | 22-pin male header / same header | - |
+| C3 | driver_x to x_motor | 4 | 670 | 529.2 | 40 | 40 | 60 | 2.54 mm pin header / Harwin-type 2.54 mm 4-pin housing on the end of a 1000 mm cable | control_case.harness |
+| C4 | x_endstop to controller | 1 | 730 | 611.7 | 40 | 15 | 60 | 3-pin JST-XH / 22-pin male header | control_case.harness |
+| C5 | controller to driver_y | 4 | 205 | 101.7 | 40 | 0 | 60 | 22-pin male header / same header | - |
+| C6 | driver_y to y_motor | 4 | 490 | 387.8 | 40 | 0 | 60 | 2.54 mm pin header / Harwin-type 2.54 mm 4-pin housing on the end of a 1000 mm cable | control_case.harness |
+| C7 | y_endstop to controller | 1 | 520 | 416.6 | 40 | 0 | 60 | 3-pin JST-XH / 22-pin male header | control_case.harness |
+| C8 | controller to driver_z | 4 | 360 | 258.8 | 40 | 0 | 60 | 22-pin male header / same header | - |
+| C9 | driver_z to z_motor | 4 | 825 | 643.3 | 40 | 80 | 60 | 2.54 mm pin header / Harwin-type 2.54 mm 4-pin housing on the end of a 1000 mm cable | control_case.harness |
+| C10 | z_endstop to controller | 1 | 695 | 560.1 | 40 | 30 | 60 | 3-pin JST-XH / 22-pin male header | control_case.harness |
+| C11 | battery negative to star ground | 1 | 290 | 186.8 | 40 | 0 | 60 | barrier screw terminal / lever clamp | - |
+| C12 | power_supply to the V24 splice | 1 | 320 | 215.6 | 40 | 0 | 60 | barrier screw terminal / lever clamp | - |
+| C13 | V24 to driver_x | 2 | 260 | 156.4 | 40 | 0 | 60 | lever clamp / same header | - |
+| C14 | V24 to driver_y | 2 | 240 | 138.3 | 40 | 0 | 60 | lever clamp / same header | - |
+| C15 | V24 to driver_z | 2 | 185 | 83.6 | 40 | 0 | 60 | lever clamp / same header | - |
+| C16 | controller to the 3V3 splice | 2 | 250 | 148.9 | 40 | 0 | 60 | 22-pin male header / lever clamp | - |
+| C17 | 3V3 to x_endstop | 2 | 775 | 641.9 | 40 | 30 | 60 | lever clamp / 3-pin JST-XH | control_case.harness |
+| C18 | 3V3 to y_endstop | 2 | 595 | 491.9 | 40 | 0 | 60 | lever clamp / 3-pin JST-XH | control_case.harness |
+| C19 | 3V3 to z_endstop | 2 | 835 | 676.6 | 40 | 55 | 60 | lever clamp / 3-pin JST-XH | control_case.harness |
 
 ## Slack at the joints
 
@@ -116,15 +116,15 @@ Each loop is at least the extra length the joint needs at the far end of its tra
 
 | Cable | Joint | Travel rad | Length at home mm | Length at full travel mm | Slack loop mm |
 |---|---|---|--:|--:|--:|
-| C3 | y_axis | 0 to 0.183 | 28.5 | 28.5 | 40 |
-| C4 | y_axis | 0 to 0.183 | 19.5 | 19.5 | 15 |
-| C9 | y_axis | 0 to 0.183 | 14 | 14 | 40 |
-| C9 | x_axis | 0 to 0.183 | 32.3 | 32.3 | 40 |
-| C10 | x_axis | 0 to 0.183 | 24 | 24 | 15 |
-| C10 | y_axis | 0 to 0.183 | 8.3 | 8.3 | 15 |
-| C17 | y_axis | 0 to 0.183 | 22.2 | 22.2 | 25 |
-| C19 | y_axis | 0 to 0.183 | 11.6 | 11.6 | 25 |
-| C19 | x_axis | 0 to 0.183 | 26 | 26 | 25 |
+| C3 | y_axis | 0 to 0.183 | 39.5 | 39.6 | 40 |
+| C4 | y_axis | 0 to 0.183 | 29 | 29 | 15 |
+| C9 | y_axis | 0 to 0.183 | 30.9 | 31 | 40 |
+| C9 | x_axis | 0 to 0.183 | 31.2 | 31.2 | 40 |
+| C10 | x_axis | 0 to 0.183 | 29 | 29 | 15 |
+| C10 | y_axis | 0 to 0.183 | 29 | 29.1 | 15 |
+| C17 | y_axis | 0 to 0.183 | 32.9 | 32.9 | 30 |
+| C19 | y_axis | 0 to 0.183 | 32.4 | 32.4 | 25 |
+| C19 | x_axis | 0 to 0.183 | 32.9 | 33.1 | 30 |
 
 ## Electrical calculations
 
@@ -171,10 +171,10 @@ Not checked (no logic levels in the parts data): Mechanical end stop, microswitc
 
 | Item | Qty | Unit | Unit $ | Subtotal $ | Spec | Price source |
 |---|--:|---|--:|--:|---|---|
-| 20 AWG silicone wire | 0.3 | m | 0.5 | 0.15 | 0.519 mm2, rated 5.5 A in a bundle; 0.20 m cut + 10 % waste | estimated |
-| 22 AWG silicone wire | 3.5 | m | 0.4 | 1.40 | 0.327 mm2, rated 3.5 A in a bundle; 3.16 m cut + 10 % waste | estimated |
-| 24 AWG silicone wire | 11.8 | m | 0.35 | 4.13 | 0.205 mm2, rated 1.75 A in a bundle; 10.64 m cut + 10 % waste | estimated |
-| 26 AWG silicone wire | 4.1 | m | 0.3 | 1.23 | 0.128 mm2, rated 1.1 A in a bundle; 3.67 m cut + 10 % waste | estimated |
+| 20 AWG silicone wire | 0.7 | m | 0.5 | 0.35 | 0.519 mm2, rated 5.5 A in a bundle; 0.61 m cut + 10 % waste | estimated |
+| 22 AWG silicone wire | 6.6 | m | 0.4 | 2.64 | 0.327 mm2, rated 3.5 A in a bundle; 5.96 m cut + 10 % waste | estimated |
+| 24 AWG silicone wire | 9.9 | m | 0.35 | 3.46 | 0.205 mm2, rated 1.75 A in a bundle; 8.98 m cut + 10 % waste | estimated |
+| 26 AWG silicone wire | 4.6 | m | 0.3 | 1.38 | 0.128 mm2, rated 1.1 A in a bundle; 4.10 m cut + 10 % waste | estimated |
 | 6.3 mm spade contacts | 3 | pc | 0.08 | 0.24 | rated 15 A per contact | estimated |
 | Bootlace ferrule contacts | 5 | pc | 0.03 | 0.15 | rated 17.5 A per contact | estimated |
 | Dupont 2.54 mm contacts | 61 | pc | 0.02 | 1.22 | rated 3 A per contact | estimated |
@@ -182,7 +182,7 @@ Not checked (no logic levels in the parts data): Mechanical end stop, microswitc
 | JST XH 2.5 mm contacts | 9 | pc | 0.03 | 0.27 | rated 3 A per contact | estimated |
 | JST XH 2.5 mm housings | 6 | pc | 0.05 | 0.30 | one per cable end | estimated |
 | Heat shrink 3 mm, 2:1 | 1.2 | m | 0.2 | 0.24 | 0 solder joints + a boot on each cable end | estimated |
-| Cable tie 100 x 2.5 mm | 27 | pc | 0.02 | 0.54 | at every clip, cable end and strain-relief anchor | estimated |
+| Cable tie 100 x 2.5 mm | 23 | pc | 0.02 | 0.46 | at every clip, cable end and strain-relief anchor | estimated |
 | PG7 cable gland | 1 | pc | 2.97 | 2.97 | cable exit with strain relief | estimated |
 | Nylon braided sleeving 6 mm | 1.2 | m | 0.4 | 0.48 | over every cable where it crosses a joint | estimated |
 
@@ -202,3 +202,4 @@ Not checked (no logic levels in the parts data): Mechanical end stop, microswitc
 
 - Mains side: IEC inlet to the supply's AC terminals with insulated spades, earth wired first, case closed before plugging in. Have it checked if you are not qualified to wire mains.
 - The ESP32-S3 runs from its USB lead to the PC; its 3V3 feeds the drivers' logic and the home switches. Motor and switch leads run in drag chain or spiral wrap along each module.
+- Routing: 15 wire runs could only be laid through solid parts at the home pose (834 mm in all), for example driver_x~x_motor wire 4 through a printed part for 2 mm at -17,-277,18; controller~x_endstop wire 1 through power_supply for 146 mm at 112,-309,31; driver_y~y_motor wire 4 through a printed part for 2 mm at 9,-277,18. Lay those wires round the part by hand.

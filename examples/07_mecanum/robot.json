@@ -3939,7 +3939,7 @@
   "end_effectors": [],
   "metadata": {
     "generator": "text-to-robot design engine (real components + printed structure)",
-    "created": "2026-11-12T08:32:03.667Z",
+    "created": "2026-11-12T19:47:18.115Z",
     "inferred_fields": [
       "links.base_link.inertia",
       "links.battery.inertia",
@@ -14965,6 +14965,7 @@
         "notes": [],
         "unconnected": [],
         "estimated_inputs": [],
+        "laid": "3d",
         "route": {
           "through": 0,
           "through_mm": 0,

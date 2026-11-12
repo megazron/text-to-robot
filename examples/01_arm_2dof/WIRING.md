@@ -1,6 +1,6 @@
 # Wiring: arm_2dof
 
-5 cables, 14 conductors, 6.44 m of wire, wiring parts $7.84.
+5 cables, 14 conductors, 6.36 m of wire, wiring parts $7.76.
 
 Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), [breadboard.svg](breadboard.svg) (every wire in its colour, pin to pin) and the cable diagram [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
 
@@ -49,7 +49,7 @@ Length is route + service loop + joint slack + termination, rounded up to 5 mm; 
 | C1 | mains inlet to the supply (crimped, insulated spades; earth first) | 3 | 165 | 63.9 | 40 | 0 | 60 | 6.3 mm quick-connect tabs / barrier screw terminal | - |
 | C2 | servo_bus to shoulder_pitch_actuator | 3 | 795 | 692.8 | 40 | 0 | 60 | 3-pin 2.5 mm bus servo header (5264 class) / Feetech 5264-3P | control_case.harness |
 | C3 | shoulder_pitch_actuator to elbow_pitch_actuator | 3 | 420 | 222.4 | 40 | 95 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
-| C4 | elbow_pitch_actuator to gripper_actuator | 3 | 420 | 200.3 | 40 | 115 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
+| C4 | elbow_pitch_actuator to gripper_actuator | 3 | 395 | 200.3 | 40 | 90 | 60 | Feetech 5264-3P / Feetech 5264-3P | - |
 | C5 | VBUS to servo_bus | 2 | 520 | 415.8 | 40 | 0 | 60 | barrier screw terminal / green screw terminal | - |
 
 ## Slack at the joints
@@ -58,8 +58,8 @@ Each loop is at least the extra length the joint needs at the far end of its tra
 
 | Cable | Joint | Travel rad | Length at home mm | Length at full travel mm | Slack loop mm |
 |---|---|---|--:|--:|--:|
-| C3 | shoulder_pitch | -1.75 to 1.75 | 37.5 | 92.9 | 95 |
-| C4 | elbow_pitch | -2.1 to 2.3 | 38.4 | 109.5 | 115 |
+| C3 | shoulder_pitch | -1.75 to 0.79 | 37.5 | 92.9 | 95 |
+| C4 | elbow_pitch | -1.48 to 2.3 | 38.4 | 88.3 | 90 |
 
 ## Electrical calculations
 
@@ -116,8 +116,8 @@ Not checked (no logic levels in the parts data): Feetech STS3215 C047 12 V 30 kg
 |---|--:|---|--:|--:|---|---|
 | 20 AWG silicone wire | 0.6 | m | 0.5 | 0.30 | 0.519 mm2, rated 5.5 A in a bundle; 0.51 m cut + 10 % waste | estimated |
 | 22 AWG silicone wire | 2.4 | m | 0.4 | 0.96 | 0.327 mm2, rated 3.5 A in a bundle; 2.15 m cut + 10 % waste | estimated |
-| 24 AWG silicone wire | 2.4 | m | 0.35 | 0.84 | 0.205 mm2, rated 1.75 A in a bundle; 2.12 m cut + 10 % waste | estimated |
-| 26 AWG silicone wire | 1.8 | m | 0.3 | 0.54 | 0.128 mm2, rated 1.1 A in a bundle; 1.61 m cut + 10 % waste | estimated |
+| 24 AWG silicone wire | 2.3 | m | 0.35 | 0.80 | 0.205 mm2, rated 1.75 A in a bundle; 2.07 m cut + 10 % waste | estimated |
+| 26 AWG silicone wire | 1.8 | m | 0.3 | 0.54 | 0.128 mm2, rated 1.1 A in a bundle; 1.58 m cut + 10 % waste | estimated |
 | 6.3 mm spade contacts | 3 | pc | 0.08 | 0.24 | rated 15 A per contact | estimated |
 | Bootlace ferrule contacts | 7 | pc | 0.03 | 0.21 | rated 17.5 A per contact | estimated |
 | Molex 5264 contacts | 18 | pc | 0.05 | 0.90 | rated 3 A per contact | estimated |
@@ -125,7 +125,7 @@ Not checked (no logic levels in the parts data): Feetech STS3215 C047 12 V 30 kg
 | Heat shrink 3 mm, 2:1 | 0.3 | m | 0.2 | 0.06 | 0 solder joints + a boot on each cable end | estimated |
 | Cable tie 100 x 2.5 mm | 7 | pc | 0.02 | 0.14 | at every clip, cable end and strain-relief anchor | estimated |
 | PG7 cable gland | 1 | pc | 2.97 | 2.97 | cable exit with strain relief | estimated |
-| Nylon braided sleeving 6 mm | 0.5 | m | 0.4 | 0.20 | over every cable where it crosses a joint | estimated |
+| Nylon braided sleeving 6 mm | 0.4 | m | 0.4 | 0.16 | over every cable where it crosses a joint | estimated |
 
 ## Data sources
 

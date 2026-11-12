@@ -60,9 +60,9 @@
       "category": "Printed structure",
       "name": "PETG filament for 25 printed parts",
       "qty": 1,
-      "unit_cost": 14.66,
-      "subtotal": 14.66,
-      "spec": "579 g of parts (+15 % supports/waste), about 52.8 h of printing",
+      "unit_cost": 15.5,
+      "subtotal": 15.5,
+      "spec": "613 g of parts (+15 % supports/waste), about 55.8 h of printing",
       "note": "base_link, forearm_lid, spool_1, spool_2, spool_3, spool_4, spool_5, palm, index_proximal, index_middle, index_distal, middle_proximal, middle_middle, middle_distal, ring_proximal, ring_middle, ring_distal, little_proximal, little_middle, little_distal, thumb_base, thumb_proximal, thumb_distal, control_case, control_case_lid"
     },
     {
@@ -76,28 +76,28 @@
     {
       "category": "Wiring",
       "name": "18 AWG silicone wire",
-      "qty": 0.4,
+      "qty": 0.7,
       "unit_cost": 0.7,
-      "subtotal": 0.28,
-      "spec": "0.4 m: 0.823 mm2, rated 8 A in a bundle; 0.34 m cut + 10 % waste",
+      "subtotal": 0.49,
+      "spec": "0.7 m: 0.823 mm2, rated 8 A in a bundle; 0.59 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "22 AWG silicone wire",
-      "qty": 7.3,
+      "qty": 7.5,
       "unit_cost": 0.4,
-      "subtotal": 2.92,
-      "spec": "7.3 m: 0.327 mm2, rated 3.5 A in a bundle; 6.63 m cut + 10 % waste",
+      "subtotal": 3,
+      "spec": "7.5 m: 0.327 mm2, rated 3.5 A in a bundle; 6.81 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "24 AWG silicone wire",
-      "qty": 2.8,
+      "qty": 2.7,
       "unit_cost": 0.35,
-      "subtotal": 0.98,
-      "spec": "2.8 m: 0.205 mm2, rated 1.75 A in a bundle; 2.52 m cut + 10 % waste",
+      "subtotal": 0.94,
+      "spec": "2.7 m: 0.205 mm2, rated 1.75 A in a bundle; 2.36 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
@@ -106,7 +106,7 @@
       "qty": 5,
       "unit_cost": 0.3,
       "subtotal": 1.5,
-      "spec": "5 m: 0.128 mm2, rated 1.1 A in a bundle; 4.47 m cut + 10 % waste",
+      "spec": "5 m: 0.128 mm2, rated 1.1 A in a bundle; 4.54 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
@@ -157,10 +157,10 @@
     {
       "category": "Wiring",
       "name": "Cable tie 100 x 2.5 mm",
-      "qty": 17,
+      "qty": 11,
       "unit_cost": 0.02,
-      "subtotal": 0.34,
-      "spec": "17 pc: at every clip, cable end and strain-relief anchor",
+      "subtotal": 0.22,
+      "spec": "11 pc: at every clip, cable end and strain-relief anchor",
       "note": "price estimated"
     },
     {
@@ -173,7 +173,7 @@
       "note": "price estimated"
     }
   ],
-  "total": 87.6,
+  "total": 88.57,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,

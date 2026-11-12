@@ -301,9 +301,9 @@
       <geometry><mesh filename="package://cartesian_gantry/meshes/x_module_end_a.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.045054 0.007911 0.035" rpy="0 0 0"/>
-      <mass value="0.038443"/>
-      <inertia ixx="0.0000196516" ixy="-6.37989e-9" ixz="6.95977e-15" iyy="0.0000258776" iyz="8.45669e-15" izz="0.00000787662"/>
+      <origin xyz="0.045137 0.00786 0.034748" rpy="0 0 0"/>
+      <mass value="0.038686"/>
+      <inertia ixx="0.0000200574" ixy="1.89181e-8" ixz="1.28577e-7" iyy="0.0000263104" iyz="-7.77391e-8" izz="0.00000793765"/>
     </inertial>
   </link>
   <link name="x_module_end_b">
@@ -541,9 +541,9 @@
       <geometry><mesh filename="package://cartesian_gantry/meshes/z_bracket.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.083611 0.025077 0.034909" rpy="0 0 0"/>
-      <mass value="0.06417"/>
-      <inertia ixx="0.0000527019" ixy="-0.0000438023" ixz="-3.93555e-8" iyy="0.000250241" iyz="2.71495e-8" izz="0.000251376"/>
+      <origin xyz="0.083636 0.025059 0.035" rpy="0 0 0"/>
+      <mass value="0.063929"/>
+      <inertia ixx="0.0000525515" ixy="-0.00004381" ixz="3.50832e-13" iyy="0.000250086" iyz="1.44250e-13" izz="0.000251357"/>
     </inertial>
   </link>
   <link name="z_module_end_a">
@@ -781,9 +781,9 @@
       <geometry><mesh filename="package://cartesian_gantry/meshes/control_case.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.001064 -0.306009 0.009683" rpy="0 0 0"/>
-      <mass value="0.134016"/>
-      <inertia ixx="0.000378374" ixy="0.00000596544" ixz="-0.00000327206" iyy="0.000675537" iyz="-0.00000456787" izz="0.001003"/>
+      <origin xyz="0.01913 -0.306239 0.009281" rpy="0 0 0"/>
+      <mass value="0.151813"/>
+      <inertia ixx="0.000429832" ixy="0.0000134174" ixz="-0.00000403737" iyy="0.001031" iyz="-0.00000574742" izz="0.001404"/>
     </inertial>
   </link>
   <link name="control_case_lid">
@@ -797,9 +797,9 @@
       <geometry><mesh filename="package://cartesian_gantry/meshes/control_case_lid.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.001 -0.3118 0.043412" rpy="0 0 0"/>
-      <mass value="0.049959"/>
-      <inertia ixx="0.0000983024" ixy="7.20979e-16" ixz="2.41391e-17" iyy="0.000198507" iyz="-1.43220e-12" izz="0.000296693"/>
+      <origin xyz="0.018 -0.3118 0.04342" rpy="0 0 0"/>
+      <mass value="0.058468"/>
+      <inertia ixx="0.000115424" ixy="8.73351e-16" ixz="8.89600e-13" iyy="0.000321825" iyz="-1.72424e-12" izz="0.000437115"/>
     </inertial>
   </link>
   <link name="power_supply">
@@ -1150,7 +1150,7 @@
   <joint name="power_supply_mount" type="fixed">
     <parent link="control_case"/>
     <child link="power_supply"/>
-    <origin xyz="-0.064 -0.376 0.005" rpy="0 0 0"/>
+    <origin xyz="-0.047 -0.376 0.005" rpy="0 0 0"/>
   </joint>
   <joint name="controller_mount" type="fixed">
     <parent link="control_case"/>

@@ -1,6 +1,6 @@
 # Bill of materials: arm_6dof
 
-**Estimated total: $1170.16**  ·  tier: prosumer
+**Estimated total: $1170.08**  ·  tier: prosumer
 
 **Effort sizing: passes catalogue estimate; hardware verified: no.**
 
@@ -18,8 +18,8 @@
 | Wiring | 16 AWG silicone wire _(price estimated)_ | 1.1 | 1 | 1.1 | 1.1 m: 1.308 mm2, rated 11 A in a bundle; 0.93 m cut + 10 % waste |
 | Wiring | 20 AWG silicone wire _(price estimated)_ | 1.9 | 0.5 | 0.95 | 1.9 m: 0.519 mm2, rated 5.5 A in a bundle; 1.71 m cut + 10 % waste |
 | Wiring | 22 AWG silicone wire _(price estimated)_ | 0.9 | 0.4 | 0.36 | 0.9 m: 0.327 mm2, rated 3.5 A in a bundle; 0.73 m cut + 10 % waste |
-| Wiring | 24 AWG silicone wire _(price estimated)_ | 4.9 | 0.35 | 1.72 | 4.9 m: 0.205 mm2, rated 1.75 A in a bundle; 4.41 m cut + 10 % waste |
-| Wiring | 26 AWG silicone wire _(price estimated)_ | 3.5 | 0.3 | 1.05 | 3.5 m: 0.128 mm2, rated 1.1 A in a bundle; 3.17 m cut + 10 % waste |
+| Wiring | 24 AWG silicone wire _(price estimated)_ | 4.8 | 0.35 | 1.68 | 4.8 m: 0.205 mm2, rated 1.75 A in a bundle; 4.30 m cut + 10 % waste |
+| Wiring | 26 AWG silicone wire _(price estimated)_ | 3.5 | 0.3 | 1.05 | 3.5 m: 0.128 mm2, rated 1.1 A in a bundle; 3.11 m cut + 10 % waste |
 | Wiring | 6.3 mm spade contacts _(price estimated)_ | 3 | 0.08 | 0.24 | 3 pc: rated 15 A per contact |
 | Wiring | Bootlace ferrule contacts _(price estimated)_ | 5 | 0.03 | 0.15 | 5 pc: rated 17.5 A per contact |
 | Wiring | JST EH 2.5 mm contacts _(price estimated)_ | 42 | 0.03 | 1.26 | 42 pc: rated 3 A per contact |
@@ -27,7 +27,7 @@
 | Wiring | Heat shrink 3 mm, 2:1 _(price estimated)_ | 0.6 | 0.2 | 0.12 | 0.6 m: 0 solder joints + a boot on each cable end |
 | Wiring | Cable tie 100 x 2.5 mm _(price estimated)_ | 11 | 0.02 | 0.22 | 11 pc: at every clip, cable end and strain-relief anchor |
 | Wiring | PG7 cable gland _(price estimated)_ | 1 | 2.97 | 2.97 | 1 pc: cable exit with strain relief |
-| Wiring | Nylon braided sleeving 6 mm _(price estimated)_ | 1.4 | 0.4 | 0.56 | 1.4 m: over every cable where it crosses a joint |
+| Wiring | Nylon braided sleeving 6 mm _(price estimated)_ | 1.3 | 0.4 | 0.52 | 1.3 m: over every cable where it crosses a joint |
 
 ## Actuator sizing
 
@@ -47,4 +47,5 @@
 - Every pitch joint is a clevis: one cheek bolts to the servo horn, the other turns on a 625ZZ bearing on an M5 bolt screwed into a heat-set insert in a boss on the back of the servo's cradle, so the servo's own bearing carries no bending moment. An M5 washer sits between the boss and the bearing's inner race.
 - Print the links in PETG or PLA+ with 4 perimeters and 30 % gyroid infill, cradle opening up; press the 625ZZ bearings into their seats (16.15 mm) and set the M5 inserts with a soldering iron.
 - Torques are exact static gravity loads of this geometry: the worst pose (stretched out with the payload) must be held within each actuator's rated continuous torque, peaks get +30 %, and each joint must still reach >= 1 rad/s loaded on its torque-speed line.
+- Joint limits trimmed to the collision-free range found by exact solid sweeps: shoulder_pitch [-1.75, 1.75] -> [-1.75, 1.05]; elbow_pitch [-2.10, 2.30] -> [-1.80, 2.30]; forearm_roll [-2.97, 2.97] -> [-1.87, 1.87]; wrist_pitch [-1.70, 2.30] -> [-1.70, 0.05].
 - Prices are list/street prices from the linked suppliers at the time the catalog was written; check before ordering.

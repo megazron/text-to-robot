@@ -1,6 +1,6 @@
 # Wiring: underwater_rov
 
-23 cables, 46 conductors, 12.63 m of wire, wiring parts $49.29.
+23 cables, 46 conductors, 12.68 m of wire, wiring parts $50.19.
 
 Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), [breadboard.svg](breadboard.svg) (every wire in its colour, pin to pin) and the cable diagram [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
 
@@ -8,8 +8,8 @@ Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), 
 
 | Rail | Volts | Source | Source limit A (cont / peak) | Load A (typical / peak) | Margin (typical) | Fuse A | Worst wire drop V |
 |---|--:|---|--:|--:|--:|--:|--:|
-| VBAT | 14.8 | main_fuse | 60 / 120 | 24.485 / 96.485 | 2.5x | 50 | 0.083 |
-| 5V | 5 | regulator | 5 / 5 | 1.221 / 3.035 | 4.1x | - | 0.033 |
+| VBAT | 14.8 | main_fuse | 60 / 120 | 24.485 / 96.485 | 2.5x | 50 | 0.085 |
+| 5V | 5 | regulator | 5 / 5 | 1.221 / 3.035 | 4.1x | - | 0.054 |
 
 **VBAT loads** (peak assumes all four thrusters at full thrust):
 
@@ -96,29 +96,29 @@ Length is route + service loop + joint slack + termination, rounded up to 5 mm; 
 
 | Cable | What | Conductors | Length mm | Route | Service | Joint slack | Ends | Connectors | Exit |
 |---|---|--:|--:|--:|--:|--:|--:|---|---|
-| C1 | controller to pwm_driver | 2 | 130 | 29.5 | 40 | 0 | 60 | 40-pin header / 6-pin 0.1 in header | - |
-| C2 | controller to imu | 2 | 175 | 73.3 | 40 | 0 | 60 | 40-pin header / 12-pin breadboard-friendly header | - |
-| C3 | pwm_driver to esc_1 | 2 | 295 | 193 | 40 | 0 | 60 | 3-pin 0.1 in header row (3x4 groups) / 3-pin 0.1 in servo plug (signal | - |
-| C4 | esc_1 to thruster_left | 3 | 360 | 258.7 | 40 | 0 | 60 | Three 16 AWG leads / Three 18 AWG leads in a 1 m potted cable | hull_bay.tether |
-| C5 | pwm_driver to esc_2 | 2 | 295 | 193 | 40 | 0 | 60 | 3-pin 0.1 in header row (3x4 groups) / 3-pin 0.1 in servo plug (signal | - |
-| C6 | esc_2 to thruster_right | 3 | 360 | 258.7 | 40 | 0 | 60 | Three 16 AWG leads / Three 18 AWG leads in a 1 m potted cable | hull_bay.tether |
-| C7 | pwm_driver to esc_3 | 2 | 215 | 111.2 | 40 | 0 | 60 | 3-pin 0.1 in header row (3x4 groups) / 3-pin 0.1 in servo plug (signal | - |
-| C8 | esc_3 to thruster_vert_left | 3 | 580 | 475.7 | 40 | 0 | 60 | Three 16 AWG leads / Three 18 AWG leads in a 1 m potted cable | hull_bay.pen_4 |
-| C9 | pwm_driver to esc_4 | 2 | 215 | 111.2 | 40 | 0 | 60 | 3-pin 0.1 in header row (3x4 groups) / 3-pin 0.1 in servo plug (signal | - |
-| C10 | esc_4 to thruster_vert_right | 3 | 575 | 474.6 | 40 | 0 | 60 | Three 16 AWG leads / Three 18 AWG leads in a 1 m potted cable | hull_bay.pen_1 |
-| C11 | camera to controller | 1 | 90 | 88.6 | 0 | 0 | 0 | camera FFC, 200 mm (Pi 5 22-pin to 15-pin) | - |
-| C12 | battery positive to main fuse | 1 | 100 | 0 | 40 | 0 | 60 | XT90 / soldered leads | - |
-| C13 | battery negative to star ground | 1 | 100 | 0 | 40 | 0 | 60 | XT90 / lever clamp | - |
-| C14 | main_fuse to the VBAT splice | 1 | 315 | 210.2 | 40 | 0 | 60 | soldered leads / lever clamp | - |
-| C15 | VBAT to regulator | 2 | 100 | 0 | 40 | 0 | 60 | lever clamp / 0.1 in through holes | - |
-| C16 | VBAT to esc_1 | 2 | 345 | 240.5 | 40 | 0 | 60 | lever clamp / Two 16 AWG leads | - |
-| C17 | VBAT to esc_2 | 2 | 350 | 247.6 | 40 | 0 | 60 | lever clamp / Two 16 AWG leads | - |
-| C18 | VBAT to esc_3 | 2 | 260 | 157.3 | 40 | 0 | 60 | lever clamp / Two 16 AWG leads | - |
-| C19 | VBAT to esc_4 | 2 | 270 | 167.8 | 40 | 0 | 60 | lever clamp / Two 16 AWG leads | - |
-| C20 | regulator to the 5V splice | 2 | 100 | 0 | 40 | 0 | 60 | 0.1 in through holes / lever clamp | - |
-| C21 | 5V to controller | 2 | 175 | 73.9 | 40 | 0 | 60 | lever clamp / USB-C | - |
-| C22 | 5V to pwm_driver | 2 | 160 | 59.9 | 40 | 0 | 60 | lever clamp / 6-pin 0.1 in header | - |
-| C23 | 5V to imu | 2 | 160 | 56.7 | 40 | 0 | 60 | lever clamp / 12-pin breadboard-friendly header | - |
+| C1 | controller to pwm_driver | 2 | 165 | 60.3 | 40 | 0 | 60 | 40-pin header / 6-pin 0.1 in header | - |
+| C2 | controller to imu | 2 | 215 | 110.6 | 40 | 0 | 60 | 40-pin header / 12-pin breadboard-friendly header | - |
+| C3 | pwm_driver to esc_1 | 2 | 295 | 193.9 | 40 | 0 | 60 | 3-pin 0.1 in header row (3x4 groups) / 3-pin 0.1 in servo plug (signal | - |
+| C4 | esc_1 to thruster_left | 3 | 340 | 235.4 | 40 | 0 | 60 | Three 16 AWG leads / Three 18 AWG leads in a 1 m potted cable | hull_bay.pen_4 |
+| C5 | pwm_driver to esc_2 | 2 | 300 | 195.2 | 40 | 0 | 60 | 3-pin 0.1 in header row (3x4 groups) / 3-pin 0.1 in servo plug (signal | - |
+| C6 | esc_2 to thruster_right | 3 | 320 | 217.7 | 40 | 0 | 60 | Three 16 AWG leads / Three 18 AWG leads in a 1 m potted cable | hull_bay.pen_1 |
+| C7 | pwm_driver to esc_3 | 2 | 230 | 125.2 | 40 | 0 | 60 | 3-pin 0.1 in header row (3x4 groups) / 3-pin 0.1 in servo plug (signal | - |
+| C8 | esc_3 to thruster_vert_left | 3 | 325 | 224.7 | 40 | 0 | 60 | Three 16 AWG leads / Three 18 AWG leads in a 1 m potted cable | hull_bay.pen_4 |
+| C9 | pwm_driver to esc_4 | 2 | 230 | 125.7 | 40 | 0 | 60 | 3-pin 0.1 in header row (3x4 groups) / 3-pin 0.1 in servo plug (signal | - |
+| C10 | esc_4 to thruster_vert_right | 3 | 310 | 205.9 | 40 | 0 | 60 | Three 16 AWG leads / Three 18 AWG leads in a 1 m potted cable | hull_bay.pen_1 |
+| C11 | camera to controller | 1 | 85 | 80.5 | 0 | 0 | 0 | camera FFC, 200 mm (Pi 5 22-pin to 15-pin) | - |
+| C12 | battery positive to main fuse | 1 | 205 | 100 | 40 | 0 | 60 | XT90 / soldered leads | - |
+| C13 | battery negative to star ground | 1 | 210 | 106.5 | 40 | 0 | 60 | XT90 / lever clamp | - |
+| C14 | main_fuse to the VBAT splice | 1 | 345 | 242.5 | 40 | 0 | 60 | soldered leads / lever clamp | - |
+| C15 | VBAT to regulator | 2 | 280 | 179.4 | 40 | 0 | 60 | lever clamp / 0.1 in through holes | - |
+| C16 | VBAT to esc_1 | 2 | 340 | 237.4 | 40 | 0 | 60 | lever clamp / Two 16 AWG leads | - |
+| C17 | VBAT to esc_2 | 2 | 355 | 253.9 | 40 | 0 | 60 | lever clamp / Two 16 AWG leads | - |
+| C18 | VBAT to esc_3 | 2 | 265 | 163.1 | 40 | 0 | 60 | lever clamp / Two 16 AWG leads | - |
+| C19 | VBAT to esc_4 | 2 | 290 | 187.9 | 40 | 0 | 60 | lever clamp / Two 16 AWG leads | - |
+| C20 | regulator to the 5V splice | 2 | 280 | 179.2 | 40 | 0 | 60 | 0.1 in through holes / lever clamp | - |
+| C21 | 5V to controller | 2 | 220 | 115.1 | 40 | 0 | 60 | lever clamp / USB-C | - |
+| C22 | 5V to pwm_driver | 2 | 255 | 155 | 40 | 0 | 60 | lever clamp / 6-pin 0.1 in header | - |
+| C23 | 5V to imu | 2 | 300 | 196.6 | 40 | 0 | 60 | lever clamp / 12-pin breadboard-friendly header | - |
 
 ## Electrical calculations
 
@@ -180,17 +180,17 @@ Not checked (no logic levels in the parts data): Blue Robotics Basic ESC 30 A (7
 
 | Item | Qty | Unit | Unit $ | Subtotal $ | Spec | Price source |
 |---|--:|---|--:|--:|---|---|
-| 4 AWG silicone wire | 0.6 | m | 10 | 6.00 | 21.2 mm2, rated 70 A in a bundle; 0.52 m cut + 10 % waste | estimated |
-| 14 AWG silicone wire | 2.7 | m | 1.5 | 4.05 | 2.082 mm2, rated 16 A in a bundle; 2.45 m cut + 10 % waste | estimated |
-| 16 AWG silicone wire | 6.2 | m | 1 | 6.20 | 1.308 mm2, rated 11 A in a bundle; 5.63 m cut + 10 % waste | estimated |
-| 22 AWG silicone wire | 0.8 | m | 0.4 | 0.32 | 0.327 mm2, rated 3.5 A in a bundle; 0.65 m cut + 10 % waste | estimated |
-| 24 AWG silicone wire | 2 | m | 0.35 | 0.70 | 0.205 mm2, rated 1.75 A in a bundle; 1.76 m cut + 10 % waste | estimated |
-| 26 AWG silicone wire | 1.8 | m | 0.3 | 0.54 | 0.128 mm2, rated 1.1 A in a bundle; 1.63 m cut + 10 % waste | estimated |
+| 4 AWG silicone wire | 0.9 | m | 10 | 9.00 | 21.2 mm2, rated 70 A in a bundle; 0.76 m cut + 10 % waste | estimated |
+| 14 AWG silicone wire | 2.3 | m | 1.5 | 3.45 | 2.082 mm2, rated 16 A in a bundle; 2.06 m cut + 10 % waste | estimated |
+| 16 AWG silicone wire | 4.3 | m | 1 | 4.30 | 1.308 mm2, rated 11 A in a bundle; 3.85 m cut + 10 % waste | estimated |
+| 22 AWG silicone wire | 1.4 | m | 0.4 | 0.56 | 0.327 mm2, rated 3.5 A in a bundle; 1.24 m cut + 10 % waste | estimated |
+| 24 AWG silicone wire | 2.7 | m | 0.35 | 0.94 | 0.205 mm2, rated 1.75 A in a bundle; 2.41 m cut + 10 % waste | estimated |
+| 26 AWG silicone wire | 2 | m | 0.3 | 0.60 | 0.128 mm2, rated 1.1 A in a bundle; 1.77 m cut + 10 % waste | estimated |
 | Dupont 2.54 mm contacts | 28 | pc | 0.02 | 0.56 | rated 3 A per contact | estimated |
 | Dupont 2.54 mm housings | 14 | pc | 0.02 | 0.28 | one per cable end | estimated |
 | XT90 contacts | 2 | pc | 1.6 | 3.20 | rated 45 A per contact | estimated |
 | Heat shrink 3 mm, 2:1 | 2.6 | m | 0.2 | 0.52 | 38 solder joints + a boot on each cable end | estimated |
-| Cable tie 100 x 2.5 mm | 41 | pc | 0.02 | 0.82 | at every clip, cable end and strain-relief anchor | estimated |
+| Cable tie 100 x 2.5 mm | 34 | pc | 0.02 | 0.68 | at every clip, cable end and strain-relief anchor | estimated |
 | PG7 cable gland | 5 | pc | 2.97 | 14.85 | cable exit with strain relief | estimated |
 | camera FFC, 200 mm (Pi 5 22-pin to 15-pin) | 1 | pc | 4 | 4.00 | camera to controller | estimated |
 | 50 A ANL fuse | 1 | pc | 6 | 6.00 | plus spares | estimated |
@@ -215,3 +215,4 @@ Not checked (no logic levels in the parts data): Blue Robotics Basic ESC 30 A (7
 ## Notes
 
 - The tether's twisted pairs carry 100 Mbit Ethernet from the Pi to the surface laptop; it enters through a potted penetrator in the rear end cap like the thruster cables.
+- Routing: 12 wire runs could only be laid through solid parts at the home pose (1053 mm in all), for example camera~controller wire 1 through hull for 77 mm at 139,0,-14; main_feed_a wire 1 through hull for 37 mm at 13,-23,-1; main_return wire 1 through hull for 44 mm at 13,-19,-1. Lay those wires round the part by hand.

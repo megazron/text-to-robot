@@ -18,10 +18,10 @@
 <path d="M900 131 H964 V131 H986 V131 H1050" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C2 W6 X_DIR: controller.j1.5 to driver_x.control.DIR, 26 AWG</title></path>
 <path d="M900 144 H974 V144 H976 V144 H1050" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C2 W7 X_EN: controller.j1.6 to driver_x.control.EN, 26 AWG</title></path>
 <path d="M900 157 H984 V157 H966 V157 H1050" fill="none" stroke="#111111" stroke-width="1.1" opacity="0.8"><title>C2 W8 GND: controller.j1.G to driver_x.power.GND, 24 AWG</title></path>
-<path d="M1240 170 H1334 V229 H1296 V288 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C3 W9 X_M1A: driver_x.motor.M1A to x_motor.motor.A (black), 24 AWG</title></path>
-<path d="M1240 183 H1344 V242 H1286 V301 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C3 W10 X_M1B: driver_x.motor.M1B to x_motor.motor.A\ (green), 24 AWG</title></path>
-<path d="M1240 196 H1354 V255 H1276 V314 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C3 W11 X_M2A: driver_x.motor.M2A to x_motor.motor.B (red), 24 AWG</title></path>
-<path d="M1240 209 H1364 V268 H1266 V327 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C3 W12 X_M2B: driver_x.motor.M2B to x_motor.motor.B\ (blue), 24 AWG</title></path>
+<path d="M1240 170 H1334 V229 H1296 V288 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C3 W9 X_M1A: driver_x.motor.M1A to x_motor.motor.A (black), 22 AWG</title></path>
+<path d="M1240 183 H1344 V242 H1286 V301 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C3 W10 X_M1B: driver_x.motor.M1B to x_motor.motor.A\ (green), 22 AWG</title></path>
+<path d="M1240 196 H1354 V255 H1276 V314 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C3 W11 X_M2A: driver_x.motor.M2A to x_motor.motor.B (red), 22 AWG</title></path>
+<path d="M1240 209 H1364 V268 H1266 V327 H1390" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C3 W12 X_M2B: driver_x.motor.M2B to x_motor.motor.B\ (blue), 22 AWG</title></path>
 <path d="M1390 386 H1376 V278 H914 V170 H900" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C4 W13 X_HOME: x_endstop.main.SIG to controller.j1.10, 26 AWG</title></path>
 <path d="M900 105 H924 V193 H1026 V281 H1050" fill="none" stroke="#c8102e" stroke-width="1.1" opacity="0.8"><title>C5 W14 Y_VIO: controller.j1.3V3 to driver_y.power.VIO, 24 AWG</title></path>
 <path d="M900 183 H934 V238.5 H1016 V294 H1050" fill="none" stroke="#1f6fd1" stroke-width="1.1" opacity="0.8"><title>C5 W15 Y_STEP: controller.j1.7 to driver_y.control.STEP, 26 AWG</title></path>

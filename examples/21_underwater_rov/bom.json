@@ -184,55 +184,55 @@
     {
       "category": "Wiring",
       "name": "4 AWG silicone wire",
-      "qty": 0.6,
+      "qty": 0.9,
       "unit_cost": 10,
-      "subtotal": 6,
-      "spec": "0.6 m: 21.2 mm2, rated 70 A in a bundle; 0.52 m cut + 10 % waste",
+      "subtotal": 9,
+      "spec": "0.9 m: 21.2 mm2, rated 70 A in a bundle; 0.76 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "14 AWG silicone wire",
-      "qty": 2.7,
+      "qty": 2.3,
       "unit_cost": 1.5,
-      "subtotal": 4.05,
-      "spec": "2.7 m: 2.082 mm2, rated 16 A in a bundle; 2.45 m cut + 10 % waste",
+      "subtotal": 3.45,
+      "spec": "2.3 m: 2.082 mm2, rated 16 A in a bundle; 2.06 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "16 AWG silicone wire",
-      "qty": 6.2,
+      "qty": 4.3,
       "unit_cost": 1,
-      "subtotal": 6.2,
-      "spec": "6.2 m: 1.308 mm2, rated 11 A in a bundle; 5.63 m cut + 10 % waste",
+      "subtotal": 4.3,
+      "spec": "4.3 m: 1.308 mm2, rated 11 A in a bundle; 3.85 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "22 AWG silicone wire",
-      "qty": 0.8,
+      "qty": 1.4,
       "unit_cost": 0.4,
-      "subtotal": 0.32,
-      "spec": "0.8 m: 0.327 mm2, rated 3.5 A in a bundle; 0.65 m cut + 10 % waste",
+      "subtotal": 0.56,
+      "spec": "1.4 m: 0.327 mm2, rated 3.5 A in a bundle; 1.24 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "24 AWG silicone wire",
-      "qty": 2,
+      "qty": 2.7,
       "unit_cost": 0.35,
-      "subtotal": 0.7,
-      "spec": "2 m: 0.205 mm2, rated 1.75 A in a bundle; 1.76 m cut + 10 % waste",
+      "subtotal": 0.94,
+      "spec": "2.7 m: 0.205 mm2, rated 1.75 A in a bundle; 2.41 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "26 AWG silicone wire",
-      "qty": 1.8,
+      "qty": 2,
       "unit_cost": 0.3,
-      "subtotal": 0.54,
-      "spec": "1.8 m: 0.128 mm2, rated 1.1 A in a bundle; 1.63 m cut + 10 % waste",
+      "subtotal": 0.6,
+      "spec": "2 m: 0.128 mm2, rated 1.1 A in a bundle; 1.77 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
@@ -274,10 +274,10 @@
     {
       "category": "Wiring",
       "name": "Cable tie 100 x 2.5 mm",
-      "qty": 41,
+      "qty": 34,
       "unit_cost": 0.02,
-      "subtotal": 0.82,
-      "spec": "41 pc: at every clip, cable end and strain-relief anchor",
+      "subtotal": 0.68,
+      "spec": "34 pc: at every clip, cable end and strain-relief anchor",
       "note": "price estimated"
     },
     {
@@ -326,7 +326,7 @@
       "note": "price estimated"
     }
   ],
-  "total": 1820.43,
+  "total": 1821.33,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
