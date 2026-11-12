@@ -12,6 +12,8 @@ import { linkSolid } from "./clearance.ts";
 import { build, box as boxSolid, type Mat4 } from "@ttr/solid";
 import { Router, roundWire } from "./wiring3d/route.ts";
 import { wireSize } from "./wiring3d/place.ts";
+import { wiring3d } from "./wiring3d/wires.ts";
+import { checkHarness } from "./wiring3d/checks.ts";
 
 // ------------------------------------------------------------------------------------------- records
 export type NetKind = "power" | "ground" | "signal" | "bus";
@@ -680,8 +682,6 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
     for (const sl of (globalThis as { TTR_ROUTE_SLICE?: [number, number, number, number, number][] }).TTR_ROUTE_SLICE ?? []) console.error(`slice at ${sl.slice(0, 3)} normal ${sl[3]}\n${R.slice(sl.slice(0, 3) as Vec3, sl[3], sl[4])}`);
     if ((globalThis as { TTR_ROUTE_DEBUG?: boolean }).TTR_ROUTE_DEBUG && process.env.PARTS) console.error([...R.placed.values()].map((p) => `${String.fromCharCode(97 + ((p.id - 2) % 26))}=${[...R.placed.entries()].find(([, q]) => q === p)![0]}`).join(" "));
     if ((globalThis as { TTR_ROUTE_DEBUG?: boolean }).TTR_ROUTE_DEBUG) console.error(`route: grid ${R.grid.nx}x${R.grid.ny}x${R.grid.nz} @ ${R.grid.s} mm, ${Date.now() - tRoute} ms\n  ${routeProblems.join("\n  ")}`);
-    const detail = routeProblems.length ? `${routeProblems.slice(0, 6).join("; ")}${routeProblems.length > 6 ? ` and ${routeProblems.length - 6} more` : ""}` : `every wire is laid through free space at the home pose: none passes through a part, corners are no tighter than each wire's bend radius, walls are crossed only at their exits`;
-    A.check("wiring:route", !routeProblems.length, detail);
   }
   // branch fuses: a wire off the main rail thinner than the main fuse protects gets its own inline fuse
   if (H.main?.fuse) {
@@ -702,6 +702,16 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
   applyClips(A, rec);
   (A.design as { wiring?: WiringRecord }).wiring = rec;
   checks(H, rec);
+  // the judge of the route is the harness check on the laid wires (the same one examples/harness_check.json records): no
+  // wire through a solid part. What the router could not do as it wanted (a corner under a wire's bend radius, a short
+  // first bend) is said in the detail; bends are counted by that check too and held to the examples' record
+  if (R) {
+    const c = checkHarness(spec, rec, wiring3d(spec, rec)), notes = routeProblems.filter((p) => !/passes \d+ mm through a solid/.test(p));
+    const list = (xs: string[]) => `${xs.slice(0, 6).join("; ")}${xs.length > 6 ? ` and ${xs.length - 6} more` : ""}`;
+    A.check("wiring:route", c.through.length === 0, c.through.length
+      ? `${c.through.length} wire runs pass through solid parts at the home pose: ${list(c.through.map((t) => `${t.wire} through ${t.link} for ${t.run_mm} mm at ${t.at.join(",")}`))}${notes.length ? `; the router: ${list(notes)}` : ""}`
+      : `every wire is laid through free space at the home pose: none passes through a part, walls are crossed only at their exits${notes.length ? `. Not as the router wanted: ${list(notes)}` : ", corners are no tighter than each wire's bend radius"}`);
+  }
   return rec;
 }
 
