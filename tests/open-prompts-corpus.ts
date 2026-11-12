@@ -17,6 +17,10 @@ add("robot", undefined, "a robot that waters my plants", "something to clean sol
   "a robot for my kid", "help me water the tomatoes on my balcony", "a robot that cooks pancakes", "a robot that solves a rubik's cube",
   "a machine that sorts candy by colour", "a robot that maps my house", "something that follows me around carrying groceries", "a robot barista",
   "a robot that hydrates my succulents", "a gadget that tidies my desk", "a robot that inspects my roof", "aerial photos of my farm", "a robot that swims");
+// ---- jobs no table entry knows: the general-purpose body for that kind of job, said plainly
+add("robot", undefined, "a robot that untangles headphones", "a robot that peels potatoes", "a machine that juggles", "a robot that sharpens pencils",
+  "a robot that folds paper cranes", "something to sort my socks", "a robot that goes to the shop for me", "a robot that makes me feel loved",
+  "a robot that explores the bottom of my pond", "a robot hand that can play rock paper scissors");
 // ---- named and fictional robots (body plans only)
 add("robot", undefined, "R2-D2", "build me C-3PO", "a Dalek", "Johnny 5", "a Roomba", "the Curiosity rover", "Spot from Boston Dynamics", "spot with an arm",
   "a Terminator", "Optimus Prime", "a Gundam", "BB-8", "a robot like Tesla Optimus", "a UR5 robot arm", "Baymax", "WALL-E", "EVA from WALL-E", "the Iron Giant",

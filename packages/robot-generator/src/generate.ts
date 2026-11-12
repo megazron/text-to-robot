@@ -65,7 +65,15 @@ function repairLoop(spec: RobotSpecification): { validation: ValidationResult; r
 
 /** The local parser; a prompt it cannot place is tried once more with the closest knowledge entry by the registered sentence-embedding model. */
 async function localInterpret(prompt: string): Promise<{ spec: RobotSpecification; interpretation?: Interpretation }> {
-  try { return interpretPrompt(prompt); }
+  try {
+    const r = interpretPrompt(prompt);
+    // a job no table entry knew got the general-purpose body: a sentence model, when switched on, may still find the task it means
+    if (r.interpretation.path === "general job" && activeEmbedder().name !== "built-in word table") {
+      const hit = await nearestEntry(prompt);
+      if (hit) { const s = interpretPrompt(prompt, { knowledgeHint: hit.entry.id }); if (s.interpretation.path !== "general job") { s.interpretation.path = `similarity (${hit.by}, ${hit.score})`; return s; } }
+    }
+    return r;
+  }
   catch (e) {
     if (!(e instanceof PromptRefusal) || e.kind !== "not_understood" || activeEmbedder().name === "built-in word table") throw e;
     const hit = await nearestEntry(prompt);
@@ -150,6 +158,7 @@ export function designedBy(i: Interpretation | undefined, provider: LlmProvider)
   if (!i) return `the ${provider.name} model wrote the robot file directly (checked and repaired locally; not sized from real parts)`;
   if (i.path.startsWith("model")) return `${i.path.replace(/^model \((.*)\)$/, "the $1 model")} wrote a body plan; the local design engine built it from real parts`;
   if (i.path === "knowledge table") return "the local task and object table chose the body plan; the local design engine built it";
+  if (i.path === "general job") return "no task in the local table matched, so the general-purpose body for that kind of job was chosen; the local design engine built it";
   if (i.path.startsWith("similarity")) return `the closest task by meaning (${i.path.replace(/^similarity \((.*)\)$/, "$1")}) chose the body plan; the local design engine built it`;
   return "the local rule parser read the robot type; the local design engine built it";
 }

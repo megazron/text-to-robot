@@ -64,4 +64,11 @@ test("every result says which path designed it", () => {
   assert.equal(understandPrompt("a robot that waters my plants").path, "knowledge table");
   assert.match(understandPrompt("something to hydrate my succulents").path, /^similarity/);
   assert.match(understandPrompt("R2-D2").notes.join(), /read as its body plan/);
+  // a job no entry knows: the general-purpose body for its kind, said; a robot with no job at all is still asked about
+  const peel = understandPrompt("a robot that peels potatoes");
+  assert.equal(peel.path, "general job"); assert.equal(peel.family, "serial_arm"); assert.match(peel.approx ?? "", /no module for/);
+  assert.equal(understandPrompt("a robot that goes to the shop for me").family, "diff_drive");
+  assert.equal(understandPrompt("a robot hand that can play rock paper scissors").family, "hand");
+  assert.equal(understandPrompt("a robot that explores the bottom of my pond").family, "rov");
+  assert.throws(() => understandPrompt("a robot that is blue"), PromptRefusal);
 });

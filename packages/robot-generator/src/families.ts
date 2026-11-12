@@ -119,6 +119,20 @@ const leggedReq = (ctx: DesignContext, heightM = ctx.heightM): LeggedRequest => 
 let knowledgeDepth = 0;
 const art = (label: string) => `${/^(?:[aeio]|u(?!ni))/i.test(label) ? "an" : "a"} ${label}`;
 const handChoice = (matched: string): Choice => ({ family: "hand", label: "five-finger tendon hand", matched, designed: true, build: (ctx) => designHand({ name: "robot_hand", prompt: ctx.prompt, budget: ctx.budget }) });
+/** A robot, machine or "something" with a job the knowledge table does not know, as the body that job needs: getting somewhere
+ * (a wheeled base) or doing something with things (an arm with a gripper, the general-purpose manipulator). */
+export function generalJob(t: string): { id: string; task: string; canonical: string; why: string } | undefined {
+  const body = /\b(?:robots?|robotic|bots?|machines?|devices?|gadgets?|contraptions?|automat(?:on|a)|something|helpers?|assistants?)\b/;
+  const clause = t.match(/\b(?:that|which|who|to|can|could|will|for)\s+((?:(?:can|could|will|help(?:s)?(?:\s+me)?|automatically|always)\s+)*([a-z]{3,}(?:s|es|ing)?)\b[^.!?]{0,60})/);
+  if (!body.test(t) || !clause) return undefined;
+  const task = clause[1].trim().replace(/\s+/g, " ").slice(0, 60), verb = clause[2];
+  if (/^(?:is|are|be|was|has|have|do|does|looks?|sounds?|the|a|an|my|me|you|it|this|that|and|with|make(?:s)?\s+me)$/.test(verb)) return undefined;
+  if (/^(?:go(?:es)?|travel\w*|roam\w*|wander\w*|ride\w*|drive\w*|move\w*|explor\w*|visit\w*|run(?:s)?|race\w*|patrol\w*|tow\w*|push(?:es)?|pull\w*)$/.test(verb))
+    return { id: "general_mobile", task, canonical: "differential drive robot with a camera", why: "because the job is getting somewhere: a wheeled base with a camera carries whatever else it needs; the behaviour is software, written after the body exists" };
+  return { id: "general_manipulator", task, canonical: "6 dof robot arm with a gripper",
+    why: "the general-purpose body for a job done with things (reach, hold, move, use a tool); the skill itself is software, started from the training scaffold, so say more about the job and I can fit the body to it" };
+}
+
 export function chooseFamily(t: string, prompt: string, dof: number | undefined, g: GripperKind, heightM?: number, explicitGripper = false, knowledgeHint?: string): Choice {
   // "no camera on my quadruped" negates the camera, not the quadruped: only "not a quadruped" rejects a family
   const hit = (rx: RegExp) => find(t, rx)?.text ?? [...t.matchAll(new RegExp(rx.source, "g"))].find((m) => !isDirectlyNegated(t, m.index!))?.[0];
@@ -149,7 +163,8 @@ export function chooseFamily(t: string, prompt: string, dof: number | undefined,
   const hand = find(t, RX.handRobot);
   if (hand) {
     const rest = `${t.slice(0, hand.index)} ${t.slice(hand.index + hand.text.length)}`.replace(/\s+/g, " ").trim();
-    try { return chooseFamily(rest, prompt, dof, g, heightM, explicitGripper); }
+    // what is left only names a task or an object ("a robot hand that plays rock paper scissors"): the hand is the robot
+    try { const c = chooseFamily(rest, prompt, dof, g, heightM, explicitGripper); return c.knowledge ? handChoice(hand.text) : c; }
     catch (e) { if (/not recognised/.test((e as Error).message)) return handChoice(hand.text); throw e; }
   }
   const humanoidOf = (matched: string, approx?: string): Choice => ({ family: "humanoid", label: "humanoid", matched, approx, usesDof: true, usesGripper: true, designed: true,
@@ -222,6 +237,15 @@ export function chooseFamily(t: string, prompt: string, dof: number | undefined,
       const via = r.path === "keywords" ? "" : ` (no keyword matched; closest by meaning: "${r.entry.id.replace(/_/g, " ")}", similarity ${r.score} by the ${r.by})`;
       return { ...c, matched: r.matched, approx: `${lead}${via}${c.approx ? `; ${c.approx}` : ""}`, tools: [...new Set([...(c.tools ?? []), ...(r.entry.tools ?? [])])],
         path: r.path === "keywords" ? "knowledge table" : `similarity (${r.by})`, knowledge: r.entry.id, sensorWords: r.entry.canonical };
+    }
+    // a job no table entry knows ("a robot that peels potatoes"): the general-purpose body for it, said plainly
+    const job = knowledgeDepth < 2 ? generalJob(t) : undefined;
+    if (job) {
+      knowledgeDepth++;
+      let c: Choice;
+      try { c = chooseFamily(job.canonical, job.canonical, planDof(job.canonical), g, heightM, explicitGripper); } finally { knowledgeDepth--; }
+      return { ...c, matched: job.task, approx: `"${job.task}" is a job I have no module for: built ${art(c.label)}, ${job.why}${c.approx ? `; ${c.approx}` : ""}`,
+        path: "general job", knowledge: job.id, sensorWords: job.canonical };
     }
     throw new Error(`Robot type not recognised. ${SUPPORTED_HINT}`);
   }

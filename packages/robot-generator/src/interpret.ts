@@ -110,7 +110,11 @@ export function interpretPrompt(original: string, opts: InterpretOptions = {}): 
   }
 
   let choice: Choice;
-  try { choice = chooseFamily(t, prompt, dof, g, heightM, grip.explicit, opts.knowledgeHint); }
+  try {
+    choice = chooseFamily(t, prompt, dof, g, heightM, grip.explicit, opts.knowledgeHint);
+    // the only job in it is the impossible part ("a robot that reads my mind"): say that, not a general-purpose arm
+    if (choice.path === "general job" && tri.impossible) throw new Error("not recognised");
+  }
   catch (e) {
     if (e instanceof PromptRefusal || !/not recognised/.test((e as Error).message)) throw e;
     // a prompt in another script (Hindi, Urdu, Chinese...) whose words are not in the list: say that, rather than only "not recognised"
@@ -421,7 +425,10 @@ export function understandPrompt(original: string, opts: InterpretOptions = {}):
   const rawDof = extractDofMentions(t)[0]?.value, dof = rawDof === undefined ? undefined : Math.min(MAX_ARM_DOF, Math.max(1, Math.round(rawDof)));
   const grip = gripperRequest(t);
   let c: Choice;
-  try { c = chooseFamily(t, tri.text, dof, grip.kind, undefined, grip.explicit, opts.knowledgeHint); }
+  try {
+    c = chooseFamily(t, tri.text, dof, grip.kind, undefined, grip.explicit, opts.knowledgeHint);
+    if (c.path === "general job" && tri.impossible) throw new Error("not recognised");
+  }
   catch (e) {
     if (e instanceof PromptRefusal || !/not recognised/.test((e as Error).message)) throw e;
     if (tri.impossible) throw new PromptRefusal("impossible", `${tri.impossible.replace(/;[^;]*$/, "")}. ${tri.nearest ?? ""}`.trim());
