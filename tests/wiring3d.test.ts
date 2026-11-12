@@ -31,8 +31,17 @@ for (const ex of examples) {
         assert.ok(pin, `${ex}: ${t} has no pin on ${p.key}`);
         const T = p.T, at = pin!.at, inLink: V3 = [T[0] * at[0] + T[1] * at[1] + T[2] * at[2] + T[3], T[4] * at[0] + T[5] * at[1] + T[6] * at[2] + T[7], T[8] * at[0] + T[9] * at[1] + T[10] * at[2] + T[11]];
         const d = dist(world(f, p.link, inLink), world(f, q.link, q.p));
-        // (a branch fuse is laid on its lead after the lead is routed: the lead ends at the holder, within its own leads' reach)
-        assert.ok(d < (pin!.kind === "header" || /^branch_fuse_/.test(t) ? 20 : 0.6), `${ex}: ${x.id} ends ${d.toFixed(1)} mm from ${t}`);
+        // a branch fuse lies straight on its routed lead with both pins on it; on a lead with no straight chord as long as
+        // the holder's pin span (its ends closer together than that: the rest of its cut length is the service loop, not
+        // drawn) each half falls short by half the difference, no more
+        let tol = pin!.kind === "header" ? 20 : 0.6;
+        if (/^branch_fuse_/.test(t)) {
+          const base = x.id.replace(/[ab]$/, ""), lp: V3[] = h.wires.filter((y) => y.id === `${base}a` || y.id === `${base}b`).flatMap((y) => y.pts.map((q) => world(f, q.link, q.p)));
+          const chord = Math.max(0, ...lp.flatMap((a) => lp.map((b) => dist(a, b))));
+          const ps = [...p.model.pins.values()].map((q) => q.at as V3), span = Math.max(...ps.map((q) => dist(q, ps[0])));
+          tol = 0.6 + Math.max(0, (span - chord) / 2);
+        }
+        assert.ok(d < tol, `${ex}: ${x.id} ends ${d.toFixed(1)} mm from ${t}`);
       }
     }
   });

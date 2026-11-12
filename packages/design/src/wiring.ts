@@ -12,8 +12,6 @@ import { linkSolid } from "./clearance.ts";
 import { build, box as boxSolid, type Mat4 } from "@ttr/solid";
 import { Router, roundWire } from "./wiring3d/route.ts";
 import { wireSize } from "./wiring3d/place.ts";
-import { wiring3d } from "./wiring3d/wires.ts";
-import { checkHarness } from "./wiring3d/checks.ts";
 
 // ------------------------------------------------------------------------------------------- records
 export type NetKind = "power" | "ground" | "signal" | "bus";
@@ -51,9 +49,9 @@ export interface WiringRecord {
   instances: InstanceRec[]; nets: NetRec[]; cables: CableRec[]; rails: RailRec[]; fuses: FuseRec[]; main_switch: string | null; clips: ClipRec[];
   bom: WiringBomLine[]; cost_usd: number; total_wire_m: number; notes: string[]; unconnected: string[]; estimated_inputs: string[];
   /**
-   * the laid route at the home pose, as the harness check finds it: wire runs through solid parts (count and mm, the
-   * first few with where), and what the router could not do as it wanted (a corner under a wire's bend radius, a short
-   * first bend). Absent when the wires follow declared channels.
+   * the laid route at the home pose, as the router lays it: the wire runs it could only lay through solid parts (count and
+   * mm, the first few with where), and what it could not do as it wanted (a corner under a wire's bend radius, a short
+   * first bend). Absent when the wires follow declared channels. The exact check is checkHarness.
    */
   route?: { through: number; through_mm: number; first: string[]; notes: string[] };
 }
@@ -708,13 +706,14 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
   applyClips(A, rec);
   (A.design as { wiring?: WiringRecord }).wiring = rec;
   checks(H, rec);
-  // the route as the harness check on the laid wires finds it (the same check examples/harness_check.json records): wire
-  // runs through solid parts, and what the router could not do as it wanted. The examples are held to it by the tests;
-  // every design carries its own numbers, and a note when a wire passes through a part
+  // the route as the router lays it: the runs it could only lay through a solid part, and what it could not do as it
+  // wanted. (The exact harness check on the laid wires, examples/harness_check.json, is the judge; the tests hold the
+  // examples to it. Running it here would rebuild every printed part's solid once more for each design.)
   if (R) {
-    const c = checkHarness(spec, rec, wiring3d(spec, rec)), notes = routeProblems.filter((p) => !/passes \d+ mm through a solid/.test(p));
-    rec.route = { through: c.through.length, through_mm: c.through.reduce((n, t) => n + t.run_mm, 0), first: c.through.slice(0, 6).map((t) => `${t.wire} through ${t.link} for ${t.run_mm} mm at ${t.at.join(",")}`), notes };
-    if (c.through.length) rec.notes.push(`Routing: ${c.through.length} wire runs pass through solid parts at the home pose (${rec.route.through_mm} mm in all), for example ${rec.route.first.slice(0, 3).join("; ")}. Lay those wires round the part by hand.`);
+    const through = routeProblems.map((p) => /^(.*?): wire (\d+) passes (\d+) mm through a solid \(from ([-\d.,]+), (.*)\)$/.exec(p)).filter((m): m is RegExpExecArray => !!m);
+    const notes = routeProblems.filter((p) => !/passes \d+ mm through a solid/.test(p));
+    rec.route = { through: through.length, through_mm: through.reduce((n, m) => n + +m[3], 0), first: through.slice(0, 6).map((m) => `${m[1]} wire ${m[2]} through ${m[5]} for ${m[3]} mm at ${m[4]}`), notes };
+    if (through.length) rec.notes.push(`Routing: ${through.length} wire runs could only be laid through solid parts at the home pose (${rec.route.through_mm} mm in all), for example ${rec.route.first.slice(0, 3).join("; ")}. Lay those wires round the part by hand.`);
   }
   return rec;
 }
