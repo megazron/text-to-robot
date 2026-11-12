@@ -192,7 +192,9 @@ def motion_case(browser, case):
             hidden0 = page.evaluate("(()=>{let n=0;__ttr.robotGroup.traverse(o=>{if(o.isMesh&&!o.visible)n++});return n})()")
             if profile == "desktop": page.evaluate("__ttr.motion.lodBudget = 1")
             probe = "(()=>{const l=__ttr.motion.lod;return l&&{hidden:l.hidden.length,triangles:l.triangles,shown:l.shown}})()"
-            lod = drag(page, tip["x"], tip["y"], -40, -30, touch=(profile == "phone"), probe=probe)
+            # desktop pulls the tip in and up; on the phone the same pixels are a larger move, so it lifts the tip straight up
+            # (pulled in that far, the arm's elbow and wrist reach their limits before the tip gets there)
+            lod = drag(page, tip["x"], tip["y"], *((-40, -30) if profile == "desktop" else (0, -40)), touch=(profile == "phone"), probe=probe)
             page.wait_for_function("__ttr.motion.lastDrag", timeout=60000)
             if profile == "desktop":
                 row["drag_lod"] = lod
