@@ -1191,7 +1191,7 @@ initExamples(); initTemplates(); initMode();
   }
   doGenerate("Create a 6 DOF robotic arm with a parallel gripper");
 })();
-window.__ttr = { get routing() { return routing; }, get motion() { return window.__ttrMotion; }, robotGroup, renderer, get preview() { return { ...preview, parts: [...state.meshes].filter(([name]) => state.robot.links.find(l => l.name === name)?.geometry.type === 'mesh').map(([name, group]) => ({ name, loaded: !!group.children[0].userData.meshLoaded, triangles: group.children[0].geometry.getAttribute('position').count / 3 })) }; }, camera, controls, frameRobot, get robot(){return state.robot},
+window.__ttr = { get routing() { return routing; }, get id() { return state.id; }, get motion() { return window.__ttrMotion; }, robotGroup, renderer, get preview() { return { ...preview, parts: [...state.meshes].filter(([name]) => state.robot.links.find(l => l.name === name)?.geometry.type === 'mesh').map(([name, group]) => ({ name, loaded: !!group.children[0].userData.meshLoaded, triangles: group.children[0].geometry.getAttribute('position').count / 3 })) }; }, camera, controls, frameRobot, get robot(){return state.robot},
   // the Run tab's board as it runs, for the browser tests (scripts/check_sim.py)
   get sim() { return sim ? { running: sim.running, pose: sim.pose, shipped: sim.shipped, ms: sim.board?.ms ?? 0, motors: sim.board?.motors() ?? [], servos: sim.board?.servos() ?? [], sensor: sim.board ? { ...sim.board.sensor } : null, joints: { ...state.jointValues } } : null; } };
 

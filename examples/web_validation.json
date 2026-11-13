@@ -1,5 +1,5 @@
 {
-  "scope": "Chromium generation of all 17 examples with external network blocked; shared URL reload; not physical validation",
+  "scope": "Chromium generation of every example with external network blocked; shared URL reload; not physical validation",
   "external_requests": [],
   "page_errors": [],
   "failed_responses": [],
@@ -7,180 +7,262 @@
   "mesh_failure_and_retry_pass": true,
   "examples": [
     {
-      "rendered_meshes": 7,
+      "rendered_meshes": 12,
       "mesh_triangles_verified": true,
       "example": "01_arm_2dof",
       "pass": true,
-      "source_robot_sha256": "3f74caac80fb0b49cb3ba1114ff40f70d452abd35837114e49be038ddf8e4308",
+      "source_robot_sha256": "a9699301a27a9161d8cc0f01cd849c81503147337b196fc0d5d803664c2cfae5",
       "name": "arm_2dof",
-      "links": 7,
-      "joints": 6
+      "links": 12,
+      "joints": 11
     },
     {
-      "rendered_meshes": 15,
+      "rendered_meshes": 20,
       "mesh_triangles_verified": true,
       "example": "02_arm_6dof",
       "pass": true,
-      "source_robot_sha256": "1265a7e3ed358006c2b8d8ccf9317611695aaf0fe68451ade5076568578c0b92",
+      "source_robot_sha256": "982eed37df54e3673b68c511d9d04e56e6f8b3339718f7c21e314130536f31c9",
       "name": "arm_6dof",
-      "links": 15,
-      "joints": 14
+      "links": 20,
+      "joints": 19
     },
     {
-      "rendered_meshes": 17,
+      "rendered_meshes": 22,
       "mesh_triangles_verified": true,
       "example": "03_arm_7dof",
       "pass": true,
-      "source_robot_sha256": "bb23860633d6f5a47207373d7868e1c2c1037553e1242dfb8cdec46d71407f02",
+      "source_robot_sha256": "bb3d4cdcfca6441aa1b66c959f8b5f928508a74a3896ab99349b007ff46add92",
       "name": "arm_7dof",
-      "links": 17,
-      "joints": 16
+      "links": 22,
+      "joints": 21
     },
     {
-      "rendered_meshes": 6,
+      "rendered_meshes": 48,
       "mesh_triangles_verified": true,
       "example": "04_scara",
       "pass": true,
-      "source_robot_sha256": "8cf9e15066b9e99c76cad8cd8ee78fc720122966b93c6902216054d96b16d79d",
+      "source_robot_sha256": "6d8c01d4572f24937b392f3fff5e6bd625dd7f2ca6bed2bd9f655d4e806144da",
       "name": "scara",
-      "links": 14,
-      "joints": 13
+      "links": 48,
+      "joints": 47
     },
     {
-      "rendered_meshes": 23,
+      "rendered_meshes": 28,
       "mesh_triangles_verified": true,
       "example": "05_diff_drive",
       "pass": true,
-      "source_robot_sha256": "755e97b2c5aae8da117d4e835bae90ec01c43c633c86f51ff89427e1de236faa",
+      "source_robot_sha256": "60b72d12cdd31eafbfc4e914c168ce6524e307ddfd5c03ed374c6b8ca5801981",
       "name": "diff_drive_robot",
-      "links": 27,
-      "joints": 26
+      "links": 32,
+      "joints": 31
     },
     {
-      "rendered_meshes": 29,
+      "rendered_meshes": 34,
       "mesh_triangles_verified": true,
       "example": "06_four_wheel",
       "pass": true,
-      "source_robot_sha256": "2b3549e89757417c78e49654b3143557a2ed907707671c080363868469ce4bcb",
+      "source_robot_sha256": "07917877e26a0fcb19d9345d369f853f97c8e0575f6f7b06ef56ed10b48dfd8e",
       "name": "four_wheel_robot",
-      "links": 29,
-      "joints": 28
+      "links": 34,
+      "joints": 33
     },
     {
-      "rendered_meshes": 27,
+      "rendered_meshes": 32,
       "mesh_triangles_verified": true,
       "example": "07_mecanum",
       "pass": true,
-      "source_robot_sha256": "3c1c6661fae9e784af1e11918f2b86dbbe093004c8fe1896d930ca04fe631073",
+      "source_robot_sha256": "517aaa97d6a26a997b1e0b5f6aebaf394705c026e4cbaf334f120674ca25279e",
       "name": "mecanum_robot",
-      "links": 27,
-      "joints": 26
-    },
-    {
-      "rendered_meshes": 6,
-      "mesh_triangles_verified": true,
-      "example": "08_humanoid",
-      "pass": true,
-      "source_robot_sha256": "f78eb151ccf618a18a8aa8aac2cd639dec5eeeff91bc402319cf16f1eec5cecd",
-      "name": "humanoid_robot",
-      "links": 47,
-      "joints": 46
-    },
-    {
-      "rendered_meshes": 6,
-      "mesh_triangles_verified": true,
-      "example": "09_gripper",
-      "pass": true,
-      "source_robot_sha256": "d6242caaff9bf646689a2c84bf0c27b3537fac69164b8cdc3c74935f627fc946",
-      "name": "parallel_gripper",
-      "links": 15,
-      "joints": 14
-    },
-    {
-      "rendered_meshes": 6,
-      "mesh_triangles_verified": true,
-      "example": "10_quadruped",
-      "pass": true,
-      "source_robot_sha256": "8aea1f206f8f383c889ee5478cdbeb26483066d3f1729b42509436de0d8822c2",
-      "name": "quadruped",
-      "links": 26,
-      "joints": 25
-    },
-    {
-      "rendered_meshes": 6,
-      "mesh_triangles_verified": true,
-      "example": "11_spider_scout",
-      "pass": true,
-      "source_robot_sha256": "00686da471ffca57faecf5d867e08a217607a16e041b1f519e0d019818ecd349",
-      "name": "hexapod",
-      "links": 35,
-      "joints": 34
-    },
-    {
-      "rendered_meshes": 45,
-      "mesh_triangles_verified": true,
-      "example": "12_mars_rover",
-      "pass": true,
-      "source_robot_sha256": "3850b9fb8eeafd82d11eeb2b525446cc04c173a4f0fbc2f8002343948a159ec9",
-      "name": "rover_arm",
-      "links": 47,
-      "joints": 46
-    },
-    {
-      "rendered_meshes": 6,
-      "mesh_triangles_verified": true,
-      "example": "13_battle_mech",
-      "pass": true,
-      "source_robot_sha256": "de419ef50632ff0c536fb4d463d28d3aff846dc04c14449d8e9a6db4f1776371",
-      "name": "battle_mech",
-      "links": 42,
-      "joints": 41
-    },
-    {
-      "rendered_meshes": 232,
-      "mesh_triangles_verified": true,
-      "example": "14_iron_man_mark_43",
-      "pass": true,
-      "source_robot_sha256": "de5963f103b46853f8eb061938d2abd3ad095106501c6ed0bcb21f945fdff5d3",
-      "name": "iron_man_mark_43",
-      "links": 268,
-      "joints": 267
-    },
-    {
-      "rendered_meshes": 53,
-      "mesh_triangles_verified": true,
-      "example": "15_wall_e",
-      "pass": true,
-      "source_robot_sha256": "dee267acd9e9c091887bb5db1296caa6c186c1360c724f22d2433c7c370597ce",
-      "name": "wall_e",
-      "links": 53,
-      "joints": 52
-    },
-    {
-      "rendered_meshes": 55,
-      "mesh_triangles_verified": true,
-      "example": "16_eva",
-      "pass": true,
-      "source_robot_sha256": "80e3639b278adc3c6557c1580b5c41927fa350310d55ce0b12f6b6db98e997ec",
-      "name": "eva",
-      "links": 59,
-      "joints": 58
+      "links": 32,
+      "joints": 31
     },
     {
       "rendered_meshes": 63,
       "mesh_triangles_verified": true,
+      "example": "08_humanoid",
+      "pass": true,
+      "source_robot_sha256": "271d9aca8cdaeedf062d9406677d40d7424c645bf4ca60c7aed902083c04db9a",
+      "name": "humanoid_robot",
+      "links": 65,
+      "joints": 64
+    },
+    {
+      "rendered_meshes": 17,
+      "mesh_triangles_verified": true,
+      "example": "09_gripper",
+      "pass": true,
+      "source_robot_sha256": "9a0a61cb0571cd9e6227bbd1d10bcd46b582d782f2f122299db89c07e0865c36",
+      "name": "parallel_gripper",
+      "links": 17,
+      "joints": 16
+    },
+    {
+      "rendered_meshes": 34,
+      "mesh_triangles_verified": true,
+      "example": "10_quadruped",
+      "pass": true,
+      "source_robot_sha256": "0c07a2f1a1ffbdbbd175ac5a86cb55b30a3a540cbd0d604b16988d4b1a3778be",
+      "name": "quadruped",
+      "links": 38,
+      "joints": 37
+    },
+    {
+      "rendered_meshes": 52,
+      "mesh_triangles_verified": true,
+      "example": "11_spider_scout",
+      "pass": true,
+      "source_robot_sha256": "12075bc105281622f87efd1dac0b2f97e6b9df9a3735144c9dbf54debe98a6ff",
+      "name": "hexapod",
+      "links": 58,
+      "joints": 57
+    },
+    {
+      "rendered_meshes": 48,
+      "mesh_triangles_verified": true,
+      "example": "12_mars_rover",
+      "pass": true,
+      "source_robot_sha256": "6a266192d7398b8b2464b3bd285a7d6b7879dabb36f2b8cc786e1adef8c1cacb",
+      "name": "rover_arm",
+      "links": 50,
+      "joints": 49
+    },
+    {
+      "rendered_meshes": 94,
+      "mesh_triangles_verified": true,
+      "example": "13_battle_mech",
+      "pass": true,
+      "source_robot_sha256": "bb8cf770e144bee0bac0ea36166a31db4703091e6e12eeae1dd82b61246f2a57",
+      "name": "battle_mech",
+      "links": 96,
+      "joints": 95
+    },
+    {
+      "rendered_meshes": 434,
+      "mesh_triangles_verified": true,
+      "example": "14_iron_man_mark_43",
+      "pass": true,
+      "source_robot_sha256": "e3b6ae5aa8503c3f440f75e25f5e2442b3e9d296ea0941d3b110418f9fd44442",
+      "name": "iron_man_mark_43",
+      "links": 473,
+      "joints": 472
+    },
+    {
+      "rendered_meshes": 48,
+      "mesh_triangles_verified": true,
+      "example": "15_wall_e",
+      "pass": true,
+      "source_robot_sha256": "ff7400cb4b296b7c1fc4566717493e5ea32054b00c6d3858a93ee8edf8315b5b",
+      "name": "wall_e",
+      "links": 48,
+      "joints": 47
+    },
+    {
+      "rendered_meshes": 60,
+      "mesh_triangles_verified": true,
+      "example": "16_eva",
+      "pass": true,
+      "source_robot_sha256": "ca755785edd0840a630a2b313518a6eff3361662eaa8a7a02bdfdcb9309e0021",
+      "name": "eva",
+      "links": 64,
+      "joints": 63
+    },
+    {
+      "rendered_meshes": 69,
+      "mesh_triangles_verified": true,
       "example": "17_baymax",
       "pass": true,
-      "source_robot_sha256": "6e94a4bc935f535e9858a589427d6b64dd75065e3b4484baec50a552a6db349b",
+      "source_robot_sha256": "a05267567511d958cffc090db52f0c66d2648fff5cc65fd2d5dc70b5b8d0f5a1",
       "name": "baymax",
-      "links": 63,
-      "joints": 62
+      "links": 69,
+      "joints": 68
+    },
+    {
+      "rendered_meshes": 20,
+      "mesh_triangles_verified": true,
+      "example": "18_arduino_car",
+      "pass": true,
+      "source_robot_sha256": "39a7b541564639ea7ec7fd28e52a2c2a2284d23dc8a5d4f4914246738d662274",
+      "name": "arduino_car",
+      "links": 20,
+      "joints": 19
+    },
+    {
+      "rendered_meshes": 18,
+      "mesh_triangles_verified": true,
+      "example": "19_arduino_arm",
+      "pass": true,
+      "source_robot_sha256": "718316ff29663a696d45826c5633f39605d6c8e5dedcc007f2e02d3c6700857a",
+      "name": "arduino_arm",
+      "links": 18,
+      "joints": 17
+    },
+    {
+      "rendered_meshes": 17,
+      "mesh_triangles_verified": true,
+      "example": "20_quadcopter",
+      "pass": true,
+      "source_robot_sha256": "1f6a5e34708179e553b6cd45281e145324ab0f3655e575002e155cf716d93bba",
+      "name": "quadcopter",
+      "links": 17,
+      "joints": 16
+    },
+    {
+      "rendered_meshes": 33,
+      "mesh_triangles_verified": true,
+      "example": "21_underwater_rov",
+      "pass": true,
+      "source_robot_sha256": "388e97e44c92b8c5f0826de5a707b2501b59f32df54f1ff9b564c6f573b95178",
+      "name": "underwater_rov",
+      "links": 37,
+      "joints": 36
+    },
+    {
+      "rendered_meshes": 54,
+      "mesh_triangles_verified": true,
+      "example": "22_pen_plotter",
+      "pass": true,
+      "source_robot_sha256": "f663f19a18c432a9dbbbf8e2829f2a8b3e777a68467c548cd27b5f45246ea91c",
+      "name": "cartesian_gantry",
+      "links": 55,
+      "joints": 54
+    },
+    {
+      "rendered_meshes": 35,
+      "mesh_triangles_verified": true,
+      "example": "23_robot_hand",
+      "pass": true,
+      "source_robot_sha256": "5ac5a8fd3c0d14dda46822188f822597b3a61fb32a84a1b184f8e3a530153049",
+      "name": "robot_hand",
+      "links": 36,
+      "joints": 35
+    },
+    {
+      "rendered_meshes": 24,
+      "mesh_triangles_verified": true,
+      "example": "24_plant_waterer",
+      "pass": true,
+      "source_robot_sha256": "0fe0e5e2c27d3b1ef348b3520f9ac725e9b1f18fcc7ef38552d0380b0471c781",
+      "name": "diff_drive_robot",
+      "links": 28,
+      "joints": 27
     }
   ],
   "web_source_sha256": {
-    "styles.css": "342c87496418c8fc3a911f9f2f5d3145e70788698041938b9810fc11a3f0d7d1",
-    "robotkit.js": "973e3dfec5021cef16560317682cf522b34e58ae46687503c9cca52912f0c412",
-    "index.html": "7ce6f562cfeb822e8023628794aa4aa8b3d411474979bb12661082c00565cba2",
-    "app.js": "260ef65aea7db18a4b5bc04e006436a4b2a4a9de4d2422fceda16008647d3e14"
+    "simview.js": "f27473e242c7692d18a91cc595c6fec2ea5c27f1eab383f50ca7694b078d79bc",
+    "styles.css": "626788c954a603ab988cb6cae20b2e6c542c56e09b19e4a6b8ef3946701d3eaf",
+    "safe.js": "d9dcadf21edef5f3531d6d978e05005060899d17c91b5dc32b93e37a528c4b3d",
+    "motion.js": "30e50425de2bc2083cd338d157169c9e2b94921a463db33db8c1a781ef0d8ca5",
+    "community.css": "16338f5bacdfc336626c6ad5e8eb3152d05a8877c20f37529a6d2dd96fcb9438",
+    "mark.svg": "b4437bbf0724639ff187820c8a4153e5e6b3c2109b5aca9f476094fffa7bb5ae",
+    "robotkit.js": "77f98f220e040f61fcc6053feec05e4c83074bc1507f0d297dcc4780b59c2d29",
+    "community.js": "34bdc6be8ff164a2a0cde16e416873f6a436baf2d9672af706731d699363f491",
+    "index.html": "fa29b1ea9d53e308877094f7ebe6a55f34c4b11be63f994b4b1520eb55018268",
+    "app.js": "d8025346487dc07d2505636df0325c7bca96f95697517717f828274d8b5912fe",
+    "community.json": "60e1667fa43003a5e99f6224c6ae55d639e1afe1f1942ffbfc2369c811e715dc",
+    "electronics3d.js": "8169c4faae37f77b7cd0f7148d2062fc2e6a7839b208197096e94030dada1ee3",
+    "ui.js": "5f4180fde29588b88d5b1b619786bb14422e3af16c722a5507bdda456fbde3f5",
+    "avrsim.js": "8599f12e05c13482e2396a5ca7ad65f70bca3bca66d422c6cf5ccc3a6a72c0fc",
+    "esimview.js": "210289c18f4ca5d617a2967653a84f23766b519e69c6c82601e6e4c3bb10ea07",
+    "manifest.webmanifest": "04e68ba90ca92076dc5d456ca8ed71ce93bfb16bbf5565fc22bba80a32c5380a"
   }
 }

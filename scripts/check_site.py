@@ -60,8 +60,10 @@ url = f"{origin}{BASE}/" + (f"?helpers={args.helpers}" if args.helpers is not No
 
 def canon(data):
     """What may legitimately differ between two runs: the clock, the newline a prompt.txt ends with (an input box drops it),
-    and the last bits of a float (Chromium and Node ship different sin and cos, one unit in the last place apart)."""
+    the last bits of a float (Chromium and Node ship different sin and cos, one unit in the last place apart) and the STEP
+    translator's count of the models it has written in that worker (the site designs a robot twice: straight runs, then the 3D harness)."""
     data = re.sub(rb"FILE_NAME\('([^']*)','[0-9T:-]+'", rb"FILE_NAME('\1',''", data)
+    data = re.sub(rb"(Open CASCADE STEP translator [0-9.]+) [0-9]+'", rb"\1'", data)   # its count of models written so far in that worker
     data = re.sub(rb'"created": ?"[^"]*"', b'"created":""', data)
     data = re.sub(rb"-?\d+(?:\.\d{8,}(?:[eE][-+]?\d+)?|(?:\.\d+)?[eE]-\d+)", lambda m: (b"%.8f" % (round(float(m.group()), 8) + 0.0)).rstrip(b"0").rstrip(b"."), data)
     data = data.replace(b"\\n\"", b'"').replace(b"\n\"", b'"').replace(b"\r\n", b"\n")
@@ -285,7 +287,7 @@ def run(browser, case):
                 row["problems"].append("robot.json differs from the example: " + ", ".join(k for k in want if got.get(k) != want.get(k)))
             # every mesh the viewer shows, byte for byte against the example's meshes/
             meshes = page.evaluate("""async()=>{const r=__ttr.robot,o={};
-              const id=JSON.parse(localStorage.getItem('ttr.robots')||'[]').at(-1)?.[0];
+              const id=__ttr.id;
               const b64=b=>{const u=new Uint8Array(b);let s='';for(let i=0;i<u.length;i+=32768)s+=String.fromCharCode(...u.subarray(i,i+32768));return btoa(s)};
               for(const l of r.links){if(l.geometry.type!=='mesh'||o[l.geometry.file])continue;const res=await fetch(`/api/robots/${id}/mesh/${l.geometry.file}`);o[l.geometry.file]=res.ok?b64(await res.arrayBuffer()):'';}return o}""")
             exact, bad = 0, []
