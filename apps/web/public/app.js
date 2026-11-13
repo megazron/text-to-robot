@@ -272,24 +272,53 @@ renderer.domElement.addEventListener("pointerup", (e) => {
 // ---------------- electronics and harness in 3D ----------------
 // the engine's electronics3d answer for this robot, drawn on the robot's links; Robot keeps it hidden
 let electronics = null, electronicsFor = null, viewMode = "robot", focusedNet = null;
+// the Bench view: the same electronics laid out on a desk (the engine's bench answer), in a group of its own
+let robotElectronics = null, benchElectronics = null, benchFor = null;
+const benchRoot = new THREE.Group(); benchRoot.visible = false; scene.add(benchRoot);
+function fillRails(data) {
+  const sel = $("#railFilter"); sel.replaceChildren(el("option", "", "All wires")); sel.options[0].value = "all";
+  for (const r of data.rails) { const o = el("option", "", `${r.name} ${+r.voltage_v.toFixed(2)} V`); o.value = r.name; sel.append(o); }
+  for (const [v, t] of [["signal", "Signals and buses"], ["ground", "Ground"]]) { const o = el("option", "", t); o.value = v; sel.append(o); }
+}
 async function setViewMode(m) {
-  viewMode = m;
+  const was = viewMode; viewMode = m;
   for (const b of document.querySelectorAll(".viewmode")) { const on = b.dataset.mode === m; b.classList.toggle("active", on); b.setAttribute("aria-pressed", String(on)); }
-  if (m !== "robot" && state.robot && electronicsFor !== state.robot) {
-    const robot = state.robot;
+  const robot = state.robot;
+  if (m === "bench") {
+    if (robot && benchFor !== robot) {
+      try {
+        const data = await api("/api/engine/bench", { robot });
+        if (robot !== state.robot || viewMode !== "bench") return;
+        benchElectronics?.dispose(); benchRoot.clear();
+        const desk = new THREE.Group(), d = data.desk, w = (d.max[0] - d.min[0]) / 1000, h = (d.max[1] - d.min[1]) / 1000;
+        const top = new THREE.Mesh(new THREE.BoxGeometry(w, h, 0.018), new THREE.MeshStandardMaterial({ color: 0x3a2f24, roughness: 0.85 }));
+        top.position.set((d.min[0] + d.max[0]) / 2000, (d.min[1] + d.max[1]) / 2000, -0.009); benchRoot.add(top, desk);
+        benchElectronics = createElectronics(THREE, { root: benchRoot, links: new Map([["desk", desk]]), data, robotMeshes: () => new Map() }); benchFor = robot;
+      } catch (e) { toast(`Bench view: ${e.message}`, "err"); return; }
+    }
+    robotElectronics?.setMode("robot"); robotGroup.visible = false; pad.visible = false; benchRoot.visible = true;
+    electronics = benchElectronics; if (!electronics) return;
+    fillRails(electronics.data); electronics.setMode("electronics"); electronics.highlight(focusedNet);
+    $("#railFilter").hidden = false;
+    if (!electronics.framed) { electronics.framed = true; frameOn(electronics.bounds()); }
+    invalidate(); return;
+  }
+  benchRoot.visible = false; robotGroup.visible = true; pad.visible = true; benchElectronics?.setMode("robot");
+  if (m !== "robot" && robot && electronicsFor !== robot) {
     try {
       const data = await api("/api/engine/electronics3d", { robot });
       if (robot !== state.robot) return;
-      electronics?.dispose(); electronics = createElectronics(THREE, { root: robotGroup, links: state.meshes, data, robotMeshes: () => state.meshes }); electronicsFor = robot;
-      const sel = $("#railFilter"); sel.replaceChildren(el("option", "", "All wires")); sel.options[0].value = "all";
-      for (const r of data.rails) { const o = el("option", "", `${r.name} ${+r.voltage_v.toFixed(2)} V`); o.value = r.name; sel.append(o); }
-      for (const [v, t] of [["signal", "Signals and buses"], ["ground", "Ground"]]) { const o = el("option", "", t); o.value = v; sel.append(o); }
+      robotElectronics?.dispose(); robotElectronics = createElectronics(THREE, { root: robotGroup, links: state.meshes, data, robotMeshes: () => state.meshes }); electronicsFor = robot;
     } catch (e) { toast(`Electronics view: ${e.message}`, "err"); return; }
   }
+  electronics = robotElectronics;
+  if (electronics) fillRails(electronics.data);
   $("#railFilter").hidden = m === "robot" || !electronics;
-  electronics?.setMode(m); electronics?.update(true);
+  electronics?.setMode(m); electronics?.update(true); electronics?.highlight(focusedNet);
   // the first time the electronics show for this robot, the camera moves in on them
   if (m !== "robot" && electronics && !electronics.framed) { electronics.framed = true; frameOn(electronics.bounds()); }
+  // back from the desk: the camera goes back to the robot
+  if (was === "bench") { if (m === "robot") frameRobot(); else if (electronics) frameOn(electronics.bounds()); }
   invalidate();
 }
 function frameOn(box) {
@@ -310,7 +339,7 @@ async function openSim() {
   sim = await createSim({ THREE, scene, robotGroup, state, updateFK, invalidate, api, el, box: $("#simPanel"), frameOn: (b) => { const inv = new THREE.Matrix4().copy(robotGroup.matrixWorld).invert(); frameOn(b.clone().applyMatrix4(inv)); } });
 }
 function resetSim() { sim?.dispose(); sim = null; simFor = null; if ($("#tab-run").classList.contains("active")) openSim(); }
-function resetElectronics() { electronics?.dispose(); electronics = null; electronicsFor = null; focusedNet = null; if (viewMode !== "robot") setViewMode(viewMode); }
+function resetElectronics() { robotElectronics?.dispose(); benchElectronics?.dispose(); benchRoot.clear(); robotElectronics = benchElectronics = electronics = null; electronicsFor = benchFor = null; focusedNet = null; if (viewMode !== "robot") setViewMode(viewMode); }
 // hover: what the wire or pin under the pointer carries
 renderer.domElement.addEventListener("pointermove", (e) => {
   const tip = $("#wireTip");
