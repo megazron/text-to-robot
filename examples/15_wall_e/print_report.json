@@ -8,7 +8,7 @@
   {
    "name": "body",
    "watertight": true,
-   "volume_cm3": 214.51,
+   "volume_cm3": 214.49,
    "size_mm": [
     172.5,
     128.0,
@@ -20,7 +20,7 @@
     -1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 16.04,
+   "support_area_cm2": 16.05,
    "support_frac": 0.009,
    "bed_contact_cm2": 216.87,
    "min_wall_mm": 1.6,
@@ -489,9 +489,9 @@
   {
    "name": "track_left",
    "watertight": true,
-   "volume_cm3": 33.69,
+   "volume_cm3": 34.05,
    "size_mm": [
-    201.0,
+    205.0,
     27.0,
     106.5
    ],
@@ -503,7 +503,7 @@
    "fits_bed": true,
    "support_area_cm2": 0.0,
    "support_frac": 0.0,
-   "bed_contact_cm2": 9.9,
+   "bed_contact_cm2": 9.98,
    "min_wall_mm": 1.5,
    "thin_wall_frac": 0.0,
    "passed": true,
@@ -514,9 +514,9 @@
   {
    "name": "track_right",
    "watertight": true,
-   "volume_cm3": 33.69,
+   "volume_cm3": 34.05,
    "size_mm": [
-    201.0,
+    205.0,
     27.0,
     106.5
    ],
@@ -528,7 +528,7 @@
    "fits_bed": true,
    "support_area_cm2": 0.0,
    "support_frac": 0.0,
-   "bed_contact_cm2": 9.9,
+   "bed_contact_cm2": 9.98,
    "min_wall_mm": 1.5,
    "thin_wall_frac": 0.0,
    "passed": true,

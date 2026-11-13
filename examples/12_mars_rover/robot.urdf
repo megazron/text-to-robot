@@ -130,9 +130,9 @@
       <geometry><mesh filename="package://rover_arm/meshes/left_rocker_rear_arm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.084401 0.052968 0.000815925" rpy="0 0 0"/>
-      <mass value="0.048103"/>
-      <inertia ixx="0.0000388589" ixy="0.0000474228" ixz="0.00000343704" iyy="0.0000737249" iyz="-0.00000324048" izz="0.000110033"/>
+      <origin xyz="-0.085209 0.053472 0.000787634" rpy="0 0 0"/>
+      <mass value="0.048933"/>
+      <inertia ixx="0.0000396193" ixy="0.0000485632" ixz="0.0000033731" iyy="0.0000760105" iyz="-0.00000320016" izz="0.00011304"/>
     </inertial>
   </link>
   <link name="left_rocker_frame">
@@ -146,9 +146,9 @@
       <geometry><mesh filename="package://rover_arm/meshes/left_rocker_frame.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.06972 0.043774 0.000460056" rpy="0 0 0"/>
-      <mass value="0.058926"/>
-      <inertia ixx="0.0000637503" ixy="-0.0000852472" ixz="-0.00000500968" iyy="0.00013582" iyz="-0.00000421839" izz="0.000196432"/>
+      <origin xyz="0.0703 0.044157 0.000495039" rpy="0 0 0"/>
+      <mass value="0.060026"/>
+      <inertia ixx="0.0000654007" ixy="-0.0000878373" ixz="-0.00000473611" iyy="0.000140628" iyz="-0.00000406543" izz="0.000202772"/>
     </inertial>
   </link>
   <link name="left_rocker">
@@ -242,9 +242,9 @@
       <geometry><mesh filename="package://rover_arm/meshes/right_rocker_rear_arm.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.08458 -0.052968 0.000815925" rpy="0 0 0"/>
-      <mass value="0.048103"/>
-      <inertia ixx="0.0000388589" ixy="-0.0000476996" ixz="0.00000341944" iyy="0.0000745092" iyz="0.00000324048" izz="0.000110817"/>
+      <origin xyz="-0.085391 -0.053472 0.000787634" rpy="0 0 0"/>
+      <mass value="0.048933"/>
+      <inertia ixx="0.0000396193" ixy="-0.0000488442" ixz="0.00000335345" iyy="0.0000768049" iyz="0.00000320016" izz="0.000113834"/>
     </inertial>
   </link>
   <link name="right_rocker_frame">
@@ -258,9 +258,9 @@
       <geometry><mesh filename="package://rover_arm/meshes/right_rocker_frame.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.069216 -0.043556 0.000548472" rpy="0 0 0"/>
-      <mass value="0.058913"/>
-      <inertia ixx="0.0000639651" ixy="0.0000854995" ixz="-0.00000474024" iyy="0.000136221" iyz="0.00000414625" izz="0.000196959"/>
+      <origin xyz="0.070564 -0.044281 0.000392844" rpy="0 0 0"/>
+      <mass value="0.059103"/>
+      <inertia ixx="0.0000648601" ixy="0.0000868524" ixz="-0.00000501813" iyy="0.000138234" iyz="0.00000423252" izz="0.000200057"/>
     </inertial>
   </link>
   <link name="right_rocker">
@@ -586,12 +586,12 @@
   <link name="arm_base_link">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://rover_arm/meshes/base_link.stl"/></geometry>
+      <geometry><mesh filename="package://rover_arm/meshes/arm_base_link.stl"/></geometry>
       <material name="printed_dark"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://rover_arm/meshes/base_link.stl"/></geometry>
+      <geometry><mesh filename="package://rover_arm/meshes/arm_base_link.stl"/></geometry>
     </collision>
     <inertial>
       <origin xyz="-0.003172 -0.0000333481 0.007967" rpy="0 0 0"/>

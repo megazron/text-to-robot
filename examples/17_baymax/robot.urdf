@@ -594,20 +594,20 @@
       <geometry><mesh filename="package://baymax/meshes/left_arm_shoulder_wedge.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.002751 0.181889 0.803723" rpy="0 0 0"/>
-      <mass value="0.038307"/>
-      <inertia ixx="0.0000111913" ixy="-4.43043e-7" ixz="-1.27937e-7" iyy="0.0000105021" iyz="-0.00000218152" izz="0.0000178587"/>
+      <origin xyz="0.002909 0.181887 0.803657" rpy="0 0 0"/>
+      <mass value="0.037985"/>
+      <inertia ixx="0.0000111308" ixy="-4.46608e-7" ixz="-1.74774e-7" iyy="0.0000103606" iyz="-0.00000217981" izz="0.0000176979"/>
     </inertial>
   </link>
   <link name="left_arm_base_link">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://baymax/meshes/base_link.stl"/></geometry>
+      <geometry><mesh filename="package://baymax/meshes/left_arm_base_link.stl"/></geometry>
       <material name="fabric"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://baymax/meshes/base_link.stl"/></geometry>
+      <geometry><mesh filename="package://baymax/meshes/left_arm_base_link.stl"/></geometry>
     </collision>
     <inertial>
       <origin xyz="-0.003923 -0.000072921 0.011264" rpy="0 0 0"/>
@@ -666,12 +666,12 @@
   <link name="left_arm_upper_arm">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://baymax/meshes/upper_arm.stl"/></geometry>
+      <geometry><mesh filename="package://baymax/meshes/left_arm_upper_arm.stl"/></geometry>
       <material name="fabric"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://baymax/meshes/upper_arm.stl"/></geometry>
+      <geometry><mesh filename="package://baymax/meshes/left_arm_upper_arm.stl"/></geometry>
     </collision>
     <inertial>
       <origin xyz="0.085417 -0.0000306578 -0.021768" rpy="0 0 0"/>
@@ -802,20 +802,20 @@
       <geometry><mesh filename="package://baymax/meshes/right_arm_shoulder_wedge.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="0.002541 -0.181769 0.80365" rpy="0 0 0"/>
-      <mass value="0.038538"/>
-      <inertia ixx="0.0000113206" ixy="6.04207e-7" ixz="-2.25427e-7" iyy="0.0000108193" iyz="0.00000223718" izz="0.0000182349"/>
+      <origin xyz="0.002909 -0.181887 0.803657" rpy="0 0 0"/>
+      <mass value="0.037985"/>
+      <inertia ixx="0.0000111308" ixy="4.46607e-7" ixz="-1.74775e-7" iyy="0.0000103606" iyz="0.00000217981" izz="0.0000176979"/>
     </inertial>
   </link>
   <link name="right_arm_base_link">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://baymax/meshes/base_link.stl"/></geometry>
+      <geometry><mesh filename="package://baymax/meshes/right_arm_base_link.stl"/></geometry>
       <material name="fabric"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><mesh filename="package://baymax/meshes/base_link.stl"/></geometry>
+      <geometry><mesh filename="package://baymax/meshes/right_arm_base_link.stl"/></geometry>
     </collision>
     <inertial>
       <origin xyz="-0.003923 -0.000072921 0.011264" rpy="0 0 0"/>

@@ -1,6 +1,6 @@
 # Wiring: rover_arm
 
-35 cables, 77 conductors, 31.32 m of wire, wiring parts $37.47.
+35 cables, 77 conductors, 31.34 m of wire, wiring parts $37.54.
 
 Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), [breadboard.svg](breadboard.svg) (every wire in its colour, pin to pin) and the cable diagram [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
 
@@ -134,13 +134,13 @@ Length is route + service loop + joint slack + termination, rounded up to 5 mm; 
 | C4 | motor_driver_1 to io_controller | 5 | 280 | 178 | 40 | 0 | 60 | 5-pin 2.54 mm header / 22-pin male header | - |
 | C5 | motor_driver_1 channel 1 to left_front_motor | 2 | 605 | 463.4 | 40 | 40 | 60 | 2-position screw terminal / 1x6 female header | body_bay.left_rocker |
 | C6 | left_front_motor encoder to io_controller | 4 | 610 | 459.7 | 40 | 50 | 60 | 22-pin male header / 1x6 female header | body_bay.left_rocker |
-| C7 | motor_driver_1 channel 2 to left_rear_motor | 2 | 640 | 501.6 | 40 | 35 | 60 | 2-position screw terminal / 1x6 female header | body_bay.left_rocker |
+| C7 | motor_driver_1 channel 2 to left_rear_motor | 2 | 645 | 506.7 | 40 | 35 | 60 | 2-position screw terminal / 1x6 female header | body_bay.left_rocker |
 | C8 | left_rear_motor encoder to io_controller | 4 | 635 | 487.3 | 40 | 45 | 60 | 22-pin male header / 1x6 female header | body_bay.left_rocker |
 | C9 | motor_driver_2 to io_controller | 5 | 155 | 53.3 | 40 | 0 | 60 | 5-pin 2.54 mm header / 22-pin male header | - |
-| C10 | motor_driver_2 channel 1 to right_front_motor | 2 | 630 | 487.7 | 40 | 40 | 60 | 2-position screw terminal / 1x6 female header | body_bay.right_rocker |
-| C11 | right_front_motor encoder to io_controller | 4 | 585 | 432.3 | 40 | 50 | 60 | 22-pin male header / 1x6 female header | body_bay.right_rocker |
-| C12 | motor_driver_2 channel 2 to right_rear_motor | 2 | 670 | 531.7 | 40 | 35 | 60 | 2-position screw terminal / 1x6 female header | body_bay.right_rocker |
-| C13 | right_rear_motor encoder to io_controller | 4 | 620 | 473.5 | 40 | 45 | 60 | 22-pin male header / 1x6 female header | body_bay.right_rocker |
+| C10 | motor_driver_2 channel 1 to right_front_motor | 2 | 630 | 488.1 | 40 | 40 | 60 | 2-position screw terminal / 1x6 female header | body_bay.right_rocker |
+| C11 | right_front_motor encoder to io_controller | 4 | 585 | 433.7 | 40 | 50 | 60 | 22-pin male header / 1x6 female header | body_bay.right_rocker |
+| C12 | motor_driver_2 channel 2 to right_rear_motor | 2 | 675 | 535.7 | 40 | 35 | 60 | 2-position screw terminal / 1x6 female header | body_bay.right_rocker |
+| C13 | right_rear_motor encoder to io_controller | 4 | 620 | 471.3 | 40 | 45 | 60 | 22-pin male header / 1x6 female header | body_bay.right_rocker |
 | C14 | servo_bus to servo_bus_hub | 1 | 165 | 64.3 | 40 | 0 | 60 | 3-pin 2.5 mm bus servo header (5264 class) / lever clamp | - |
 | C15 | servo_bus_hub to arm_base_yaw_actuator | 1 | 355 | 250.2 | 40 | 0 | 60 | lever clamp / JST B3B-EH-A header | body_bay.lid_leads |
 | C16 | arm_base_yaw_actuator to arm_shoulder_pitch_actuator | 3 | 370 | 127.4 | 40 | 140 | 60 | JST B3B-EH-A header / JST B3B-EH-A header | - |
@@ -172,11 +172,11 @@ Each loop is at least the extra length the joint needs at the far end of its tra
 |---|---|---|--:|--:|--:|
 | C5 | left_rocker_pivot | -0.24 to 0.24 | 33.7 | 44.5 | 40 |
 | C6 | left_rocker_pivot | -0.24 to 0.24 | 33.2 | 43.8 | 50 |
-| C7 | left_rocker_pivot | -0.24 to 0.24 | 39.2 | 43.9 | 35 |
+| C7 | left_rocker_pivot | -0.24 to 0.24 | 39.7 | 44.2 | 35 |
 | C8 | left_rocker_pivot | -0.24 to 0.24 | 56.4 | 61.1 | 45 |
-| C10 | right_rocker_pivot | -0.24 to 0.24 | 33.7 | 44.3 | 40 |
-| C11 | right_rocker_pivot | -0.24 to 0.24 | 40.9 | 51.4 | 50 |
-| C12 | right_rocker_pivot | -0.24 to 0.24 | 38.7 | 43.4 | 35 |
+| C10 | right_rocker_pivot | -0.24 to 0.24 | 30.7 | 41.5 | 40 |
+| C11 | right_rocker_pivot | -0.24 to 0.24 | 35 | 45.7 | 50 |
+| C12 | right_rocker_pivot | -0.24 to 0.24 | 39.4 | 44 | 35 |
 | C13 | right_rocker_pivot | -0.24 to 0.24 | 56.3 | 61 | 45 |
 | C16 | arm_base_yaw | -2.97 to 2.97 | 36.5 | 129.9 | 140 |
 | C17 | arm_shoulder_pitch | -0.616 to 1.571 | 37.9 | 60 | 60 |
@@ -352,9 +352,9 @@ Not checked (no logic levels in the parts data): DYNAMIXEL XH540-W270-T(R), DYNA
 |---|--:|---|--:|--:|---|---|
 | 12 AWG silicone wire | 1 | m | 2.2 | 2.20 | 3.308 mm2, rated 20.5 A in a bundle; 0.90 m cut + 10 % waste | estimated |
 | 18 AWG silicone wire | 2.6 | m | 0.7 | 1.82 | 0.823 mm2, rated 8 A in a bundle; 2.29 m cut + 10 % waste | estimated |
-| 20 AWG silicone wire | 7.2 | m | 0.5 | 3.60 | 0.519 mm2, rated 5.5 A in a bundle; 6.55 m cut + 10 % waste | estimated |
+| 20 AWG silicone wire | 7.3 | m | 0.5 | 3.65 | 0.519 mm2, rated 5.5 A in a bundle; 6.56 m cut + 10 % waste | estimated |
 | 22 AWG silicone wire | 3.5 | m | 0.4 | 1.40 | 0.327 mm2, rated 3.5 A in a bundle; 3.15 m cut + 10 % waste | estimated |
-| 24 AWG silicone wire | 9.3 | m | 0.35 | 3.25 | 0.205 mm2, rated 1.75 A in a bundle; 8.45 m cut + 10 % waste | estimated |
+| 24 AWG silicone wire | 9.4 | m | 0.35 | 3.29 | 0.205 mm2, rated 1.75 A in a bundle; 8.46 m cut + 10 % waste | estimated |
 | 26 AWG silicone wire | 9.9 | m | 0.3 | 2.97 | 0.128 mm2, rated 1.1 A in a bundle; 8.93 m cut + 10 % waste | estimated |
 | Dupont 2.54 mm contacts | 38 | pc | 0.02 | 0.76 | rated 3 A per contact | estimated |
 | Dupont 2.54 mm housings | 9 | pc | 0.02 | 0.18 | one per cable end | estimated |
@@ -366,7 +366,7 @@ Not checked (no logic levels in the parts data): DYNAMIXEL XH540-W270-T(R), DYNA
 | XT60 contacts | 2 | pc | 0.9 | 1.80 | rated 35 A per contact | estimated |
 | 6.3 mm spade contacts | 2 | pc | 0.08 | 0.16 | rated 15 A per contact | estimated |
 | Heat shrink 3 mm, 2:1 | 3.1 | m | 0.2 | 0.62 | 33 solder joints + a boot on each cable end | estimated |
-| Cable tie 100 x 2.5 mm | 54 | pc | 0.02 | 1.08 | at every clip, cable end and strain-relief anchor | estimated |
+| Cable tie 100 x 2.5 mm | 53 | pc | 0.02 | 1.06 | at every clip, cable end and strain-relief anchor | estimated |
 | Rubber grommet, 6.4 mm panel hole, 3.2 mm bore | 4 | pc | 0.08 | 0.32 | 9.5 mm panel hole | estimated |
 | Nylon braided sleeving 6 mm | 3.5 | m | 0.4 | 1.40 | over every cable where it crosses a joint | estimated |
 | USB-C | 1 | pc | 3 | 3.00 | depth_camera to computer | estimated |

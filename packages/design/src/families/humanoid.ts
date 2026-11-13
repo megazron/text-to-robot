@@ -179,7 +179,14 @@ function buildBiped(req: LeggedRequest, cfg: BipedCfg, sensors: SensorKind[]) {
   const armR = Math.max(...ARM_JOINTS[cfg.armDof].slice(1).map((n) => bodyRadius(cfg.arm[n]))) + WALL + 8;
   const armIn = Math.max(0, hipOuter + armR - Wt);
   const arms = SIDES.map(({ p, s }) => ({ p, s, chain: placeChain([0, s * Wt, zSh], armChain(cfg, s, p).map((j) => (j.name.endsWith("shoulder_roll") ? { ...j, minLen: Math.max(j.minLen ?? 0, armIn) } : j))) }));
-  for (const L of arms) tOps.push({ op: "cradle", key: L.chain[0].key, T: L.chain[0].W, wall: WALL });
+  for (const L of arms) {
+    tOps.push({ op: "cradle", key: L.chain[0].key, T: L.chain[0].W, wall: WALL });
+    // the shoulder actuator's output face is flush with the side wall: its keep-out stops 0.4 mm short of that face, which
+    // left a 0.4 mm skin of side wall over the case, too thin to print and of no use (the cradle holds the actuator); the
+    // wall is open over the case
+    const sb = bodyMm(L.chain[0].key), zf = Math.min(sb.max[2], -0.8);
+    tOps.push({ op: "at", T: L.chain[0].W, of: [{ op: "cutbox", min: [sb.min[0] - 0.4, sb.min[1] - 0.4, zf], max: [sb.max[0] + 0.4, sb.max[1] + 0.4, sb.max[2] + 1] }] });
+  }
   // ---- neck ----
   const neck = placeChain([0, 0, zTop], [
     { name: "neck_pan", key: cfg.neck[0], axis: Z, xdir: X, dirIn: Z, centred: false, limit: [-1.6, 1.6] },

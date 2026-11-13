@@ -160,7 +160,7 @@ function linkOps(cur: JointPlan, nextKey: string, nextT: Mat4, nextKind: Kind | 
     if (nextKind === "G") ops.push({ op: "at", T: nextT, of: [{ op: "hole", a: [0, 0, -2.0], b: [0, 0, 10], d: 2 * Math.hypot(14, 13) + 2 }] }); // from the cradle top: no skin left
     // a DYNAMIXEL plugs in through the sides of its back case: the slots run on out through the link that tapers in round the cradle
     const slot = dxlPlug(nextKey);
-    if (slot) ops.push({ op: "at", T: nextT, of: [{ op: "cutbox", min: [slot.x - 7, -60, slot.z - 4.5], max: [slot.x + 7, 60, slot.z + 5] }] });
+    if (slot) ops.push({ op: "at", T: nextT, of: [{ op: "cutbox", min: [slot.x - 7, -60, slot.z0], max: [slot.x + 7, 60, slot.z1] }] });
     void lo; void hi;
   }
   if (nextKind === "P") ops.push({ op: "at", T: nextT, of: bossOps(nextKey) });

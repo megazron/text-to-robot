@@ -119,7 +119,7 @@ export class Assembly {
   /** A link whose body is a printed part modelled on the CAD kernel (exact solid, fillets, STEP export). */
   cadLink(name: string, program: CadProgram, opts: { role?: string; material?: string; extraMassKg?: number; printed?: boolean; massKg?: number } = {}): Link {
     const json = JSON.stringify({ ...program, name });
-    const geometry = memo(`cad:${json}`, () => meshGeometry("cad", `${name}.stl`, { program: json }));
+    const geometry = memo(`cad:${name}.stl:${json}`, () => meshGeometry("cad", `${name}.stl`, { program: json }));
     const f = partFiles(json), size = [0, 1, 2].map((k) => f.bbox_mm.max[k] - f.bbox_mm.min[k]) as Vec3;
     const fits = [[0, 1, 2], [1, 0, 2], [0, 2, 1], [2, 0, 1], [1, 2, 0], [2, 1, 0]].some((o) => o.every((k, i) => size[k] <= [250, 210, 220][i]));
     const check: PrintCheck = { volume_cm3: +(f.volume_mm3 / 1000).toFixed(2), bbox_mm: size.map((x) => +x.toFixed(1)) as Vec3, fits_bed: fits,
@@ -147,15 +147,17 @@ export class Assembly {
   amendProgram(name: string, ops: unknown[]) {
     const l = this.spec.links.find((x) => x.name === name);
     if (!l || l.geometry.type !== "mesh" || (l.geometry.part !== "printed" && l.geometry.part !== "cad")) throw new Error(`amendProgram: ${name} is not a printed link`);
-    const before = l.geometry.volume, cad = l.geometry.part === "cad", program = JSON.parse(String(l.geometry.params!.program));
+    // the link keeps its mesh file: a grafted arm's links are named with its prefix, their programs are not, and a file
+    // named from the program would be the host's own (an arm's base_link.stl over the rover's base_link.stl)
+    const before = l.geometry.volume, cad = l.geometry.part === "cad", program = JSON.parse(String(l.geometry.params!.program)), file = l.geometry.file;
     program.ops = [...program.ops, ...ops];
     const rec = this.design.printed.find((p) => p.name === name);
     if (cad) {
       const json = JSON.stringify(program), f = partFiles(json), size = [0, 1, 2].map((k) => f.bbox_mm.max[k] - f.bbox_mm.min[k]) as Vec3;
-      l.geometry = memo(`cad:${json}`, () => meshGeometry("cad", `${name}.stl`, { program: json })) as Link["geometry"];
+      l.geometry = memo(`cad:${file}:${json}`, () => meshGeometry("cad", file, { program: json })) as Link["geometry"];
       if (rec) { rec.program = program; rec.check = { ...rec.check, volume_cm3: +(f.volume_mm3 / 1000).toFixed(2), bbox_mm: size.map((x) => +x.toFixed(1)) as Vec3, watertight: f.watertight && f.bodies === 1, genus: f.genus }; }
     } else {
-      l.geometry = printedGeometry(program) as Link["geometry"];
+      l.geometry = { ...printedGeometry(program), file } as Link["geometry"];
       if (rec) { rec.program = program; rec.check = checkOf(program); }
     }
     const v = (l.geometry as { volume: number }).volume;

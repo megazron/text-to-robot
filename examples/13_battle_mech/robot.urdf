@@ -237,9 +237,9 @@
       <geometry><mesh filename="package://battle_mech/meshes/torso_b.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.01052 -0.070641 0.170157" rpy="0 0 0"/>
-      <mass value="0.693708"/>
-      <inertia ixx="0.005135" ixy="0.000087808" ixz="-0.000305361" iyy="0.007573" iyz="0.0000625808" izz="0.004362"/>
+      <origin xyz="-0.010558 -0.07046 0.169911" rpy="0 0 0"/>
+      <mass value="0.691156"/>
+      <inertia ixx="0.005116" ixy="0.0000864832" ixz="-0.000303566" iyy="0.007557" iyz="0.0000541918" izz="0.004354"/>
     </inertial>
   </link>
   <link name="torso_b_b">
@@ -253,9 +253,9 @@
       <geometry><mesh filename="package://battle_mech/meshes/torso_b_b.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.010531 0.070594 0.170252" rpy="0 0 0"/>
-      <mass value="0.692819"/>
-      <inertia ixx="0.005125" ixy="-0.0000873393" ixz="-0.000303636" iyy="0.007559" iyz="-0.0000674418" izz="0.004357"/>
+      <origin xyz="-0.01057 0.070412 0.170006" rpy="0 0 0"/>
+      <mass value="0.690267"/>
+      <inertia ixx="0.005105" ixy="-0.0000860119" ixz="-0.000301841" iyy="0.007544" iyz="-0.0000590567" izz="0.004349"/>
     </inertial>
   </link>
   <link name="l_hip_yaw_actuator">

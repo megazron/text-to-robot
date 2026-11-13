@@ -141,9 +141,9 @@
       "category": "Printed structure",
       "name": "PETG filament for 33 printed parts",
       "qty": 1,
-      "unit_cost": 34.97,
-      "subtotal": 34.97,
-      "spec": "1382 g of parts (+15 % supports/waste), about 126.0 h of printing",
+      "unit_cost": 34.95,
+      "subtotal": 34.95,
+      "spec": "1382 g of parts (+15 % supports/waste), about 125.9 h of printing",
       "note": "left_front_bracket, left_rear_bracket, right_front_bracket, right_rear_bracket, battery_tray, computer_tray, motor_driver_1_tray, motor_driver_2_tray, servo_bus_tray, imu_tray, regulator_5v_tray, electronics_enclosure_front, electronics_enclosure_rear, electronics_lid_front, electronics_lid_rear, spine_foot, left_arm_shoulder_wedge, left_arm_base_link, left_arm_turret, left_arm_upper_arm, left_arm_forearm, left_arm_tool_link, right_arm_shoulder_wedge, right_arm_base_link, right_arm_turret, right_arm_upper_arm, right_arm_forearm, right_arm_tool_link, neck_mount, head, head_dome, eyes, camera_bracket"
     },
     {
@@ -166,37 +166,37 @@
     {
       "category": "Wiring",
       "name": "16 AWG silicone wire",
-      "qty": 2.4,
+      "qty": 1.2,
       "unit_cost": 1,
-      "subtotal": 2.4,
-      "spec": "2.4 m: 1.308 mm2, rated 11 A in a bundle; 2.13 m cut + 10 % waste",
+      "subtotal": 1.2,
+      "spec": "1.2 m: 1.308 mm2, rated 11 A in a bundle; 1.06 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "18 AWG silicone wire",
-      "qty": 1.4,
+      "qty": 2.6,
       "unit_cost": 0.7,
-      "subtotal": 0.98,
-      "spec": "1.4 m: 0.823 mm2, rated 8 A in a bundle; 1.23 m cut + 10 % waste",
+      "subtotal": 1.82,
+      "spec": "2.6 m: 0.823 mm2, rated 8 A in a bundle; 2.29 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "20 AWG silicone wire",
-      "qty": 7.3,
+      "qty": 7.8,
       "unit_cost": 0.5,
-      "subtotal": 3.65,
-      "spec": "7.3 m: 0.519 mm2, rated 5.5 A in a bundle; 6.59 m cut + 10 % waste",
+      "subtotal": 3.9,
+      "spec": "7.8 m: 0.519 mm2, rated 5.5 A in a bundle; 7.05 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
       "category": "Wiring",
       "name": "22 AWG silicone wire",
-      "qty": 6.6,
+      "qty": 6.1,
       "unit_cost": 0.4,
-      "subtotal": 2.64,
-      "spec": "6.6 m: 0.327 mm2, rated 3.5 A in a bundle; 5.96 m cut + 10 % waste",
+      "subtotal": 2.44,
+      "spec": "6.1 m: 0.327 mm2, rated 3.5 A in a bundle; 5.50 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
@@ -214,7 +214,7 @@
       "qty": 12.6,
       "unit_cost": 0.3,
       "subtotal": 3.78,
-      "spec": "12.6 m: 0.128 mm2, rated 1.1 A in a bundle; 11.38 m cut + 10 % waste",
+      "spec": "12.6 m: 0.128 mm2, rated 1.1 A in a bundle; 11.41 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
@@ -292,10 +292,10 @@
     {
       "category": "Wiring",
       "name": "Cable tie 100 x 2.5 mm",
-      "qty": 55,
+      "qty": 53,
       "unit_cost": 0.02,
-      "subtotal": 1.1,
-      "spec": "55 pc: at every clip, cable end and strain-relief anchor",
+      "subtotal": 1.06,
+      "spec": "53 pc: at every clip, cable end and strain-relief anchor",
       "note": "price estimated"
     },
     {
@@ -371,7 +371,7 @@
       "note": "price estimated"
     }
   ],
-  "total": 921.97,
+  "total": 921.6,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
@@ -475,7 +475,7 @@
   ],
   "warnings": [],
   "notes": [
-    "Baymax-style service robot: 5.561 kg, 1.01 m tall, 4WD hidden base, two 4-servo arms, pan head with camera",
+    "Baymax-style service robot: 5.56 kg, 1.01 m tall, 4WD hidden base, two 4-servo arms, pan head with camera",
     "Joint limits trimmed to the collision-free range found by exact solid sweeps: left_arm_shoulder_pitch [-1.75, 1.75] -> [-1.11, 1.23]; left_arm_elbow_pitch [-2.10, 2.30] -> [-0.24, 0.25]; left_arm_wrist_pitch [-1.70, 2.30] -> [-0.96, 0.97]; right_arm_shoulder_pitch [-1.75, 1.75] -> [-1.11, 1.23]; right_arm_elbow_pitch [-2.10, 2.30] -> [-0.24, 0.25]; right_arm_wrist_pitch [-1.70, 2.30] -> [-0.96, 0.97].",
     "Baymax's inflatable vinyl body is a sewn ripstop cover with a foam-lined zip, bought or sewn, with negligible structural role; it hangs on the shoulder yoke and hides a 4WD skid-steer base. It is not inflated, so it does not cushion like the film's.",
     "Structure: 2020 aluminium extrusion spine and a 6 mm aluminium shoulder yoke; arms are four servos each (shoulder yaw, shoulder pitch, elbow, wrist) splayed 25 deg so they clear the belly; the hands are printed mittens covered with the same fabric.",

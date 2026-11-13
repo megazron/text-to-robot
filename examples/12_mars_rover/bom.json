@@ -160,9 +160,9 @@
       "category": "Printed structure",
       "name": "PETG filament for 21 printed parts",
       "qty": 1,
-      "unit_cost": 20.86,
-      "subtotal": 20.86,
-      "spec": "824 g of parts (+15 % supports/waste), about 75.1 h of printing",
+      "unit_cost": 20.93,
+      "subtotal": 20.93,
+      "spec": "827 g of parts (+15 % supports/waste), about 75.4 h of printing",
       "note": "left_rocker_rear_arm, left_rocker_frame, right_rocker_rear_arm, right_rocker_frame, battery_tray, computer_tray, motor_driver_1_tray, motor_driver_2_tray, io_controller_tray, servo_bus_tray, regulator_5v_tray, depth_camera_bracket, camera_mast, arm_base_link, arm_turret, arm_upper_arm, arm_forearm, arm_forearm_rotator, arm_wrist, arm_wrist_rotator, arm_gripper_jaw"
     },
     {
@@ -194,10 +194,10 @@
     {
       "category": "Wiring",
       "name": "20 AWG silicone wire",
-      "qty": 7.2,
+      "qty": 7.3,
       "unit_cost": 0.5,
-      "subtotal": 3.6,
-      "spec": "7.2 m: 0.519 mm2, rated 5.5 A in a bundle; 6.55 m cut + 10 % waste",
+      "subtotal": 3.65,
+      "spec": "7.3 m: 0.519 mm2, rated 5.5 A in a bundle; 6.56 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
@@ -212,10 +212,10 @@
     {
       "category": "Wiring",
       "name": "24 AWG silicone wire",
-      "qty": 9.3,
+      "qty": 9.4,
       "unit_cost": 0.35,
-      "subtotal": 3.25,
-      "spec": "9.3 m: 0.205 mm2, rated 1.75 A in a bundle; 8.45 m cut + 10 % waste",
+      "subtotal": 3.29,
+      "spec": "9.4 m: 0.205 mm2, rated 1.75 A in a bundle; 8.46 m cut + 10 % waste",
       "note": "price estimated"
     },
     {
@@ -320,10 +320,10 @@
     {
       "category": "Wiring",
       "name": "Cable tie 100 x 2.5 mm",
-      "qty": 54,
+      "qty": 53,
       "unit_cost": 0.02,
-      "subtotal": 1.08,
-      "spec": "54 pc: at every clip, cable end and strain-relief anchor",
+      "subtotal": 1.06,
+      "spec": "53 pc: at every clip, cable end and strain-relief anchor",
       "note": "price estimated"
     },
     {
@@ -417,7 +417,7 @@
       "note": "price estimated"
     }
   ],
-  "total": 3861.31,
+  "total": 3861.45,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
@@ -505,7 +505,7 @@
   ],
   "warnings": [],
   "notes": [
-    "4-wheel rocker-bogie rover with a 6-DOF arm: 4.64 kg, 1.24 m/s, 1.53 h, jetson_orin_nano_super",
+    "4-wheel rocker-bogie rover with a 6-DOF arm: 4.643 kg, 1.24 m/s, 1.53 h, jetson_orin_nano_super",
     "Joint limits trimmed to the collision-free range found by exact solid sweeps: arm_shoulder_pitch [-1.75, 1.75] -> [-0.62, 1.57]; arm_elbow_pitch [-2.10, 2.30] -> [-2.10, 1.45].",
     "Rocker-bogie after the JPL Open Source Rover, 4 driven wheels, skid steering (the OSR's four corner-steering servos are left out; add them for less tyre scrub).",
     "The differential bar linking the two rockers through the body is modelled as a URDF mimic between the rocker pivots: a passive bar has no motor, and the model's rockers turn equally and opposite.",

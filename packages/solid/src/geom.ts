@@ -138,12 +138,15 @@ export function cradle(a: ActuatorPlacement, wall = 3): M {
  * length from the motor end, the cable leaving sideways (ROBOTIS e-manual, X-series, the figures "cable assembly" and
  * "wiring through back case"). x along the body and z in the servo frame; null for any other actuator.
  */
-export function dxlPlug(key: string): { x: number; z: number; inset: number } | null {
+export function dxlPlug(key: string): { x: number; z: number; inset: number; z0: number; z1: number } | null {
   const { min, max } = bodyBox(key);
-  if (/^dxl_x.(430|540)/.test(key)) return { x: min[0] + 0.437 * (max[0] - min[0]), z: min[2] + 5, inset: 10 };
+  // the window through the cradle wall: 4.5 mm under the socket to 5 mm over it, but never closer than 1.2 mm (3 lines)
+  // to the cradle's open rim, or the rim over the window is a strip too thin to print
+  const win = (x: number, z: number, inset: number) => ({ x, z, inset, z0: z - 4.5, z1: Math.min(z + 5, Math.min(max[2], -0.8) - 1.2 - 1.2) });
+  if (/^dxl_x.(430|540)/.test(key)) return win(min[0] + 0.437 * (max[0] - min[0]), min[2] + 5, 10);
   // XL330: also one in each side face, in the half away from the horn and towards the front (ROBOTIS e-manual XL330
   // product photo; the drawing is behind a login: about +-4 mm), the 20 mm case leaving the header 6 mm deep
-  if (/^dxl_xl330/.test(key)) return { x: min[0] + 0.4 * (max[0] - min[0]), z: min[2] + 0.7 * (max[2] - min[2]), inset: 6 };
+  if (/^dxl_xl330/.test(key)) return win(min[0] + 0.4 * (max[0] - min[0]), min[2] + 0.7 * (max[2] - min[2]), 6);
   return null;
 }
 export function cradleCuts(a: ActuatorPlacement, wall = 3): M[] {
@@ -162,7 +165,7 @@ export function cradleCuts(a: ActuatorPlacement, wall = 3): M[] {
   // there, inside the screw circle, and on through whatever lies behind it, for the plugs and their first bends
   if (a.key.startsWith("cubemars_")) cuts.push(box([-15, -15, min[2] - 30], [15, 15, min[2] + 1]).transform(a.T));
   const slot = dxlPlug(a.key);
-  if (slot) cuts.push(box([slot.x - 7, min[1] - wall - 30, slot.z - 4.5], [slot.x + 7, max[1] + wall + 30, slot.z + 5]).transform(a.T));   // on out through any bracket round the cradle: the plug and its first bend, then a way out
+  if (slot) cuts.push(box([slot.x - 7, min[1] - wall - 30, slot.z0], [slot.x + 7, max[1] + wall + 30, slot.z1]).transform(a.T));   // on out through any bracket round the cradle: the plug and its first bend, then a way out
   else if (a.key.startsWith("dxl_")) cuts.push(box([min[0] - 8, -11, min[2] + 0.5], [min[0] + 0.5, 11, min[2] + 12]).transform(a.T));
   void top;
   return cuts;

@@ -142,7 +142,7 @@ export function plugWindowOps(key: string, T: Mat4): Op[] {
   if (key.startsWith("feetech_sts")) return [at(T, [{ op: "cutbox", min: [-20, -10, b.min[2] - 20], max: [-8, 10, b.min[2] + 6] }])];   // plugs on the bottom face: through whatever lies on it, for the plug (10 mm) and its first bend
   if (key.startsWith("cubemars_")) return [at(T, [{ op: "cutbox", min: [-15, -15, b.min[2] - 30], max: [15, 15, b.min[2] + 1] }])];   // connectors on the back cover
   const slot = dxlPlug(key);
-  if (slot) return [at(T, [{ op: "cutbox", min: [slot.x - 7, b.min[1] - 33, slot.z - 4.5], max: [slot.x + 7, b.max[1] + 33, slot.z + 5] }])];   // a plug in each long side of the back case
+  if (slot) return [at(T, [{ op: "cutbox", min: [slot.x - 7, b.min[1] - 33, slot.z0], max: [slot.x + 7, b.max[1] + 33, slot.z1] }])];   // a plug in each long side of the back case
   if (key.startsWith("dxl_")) return [at(T, [{ op: "cutbox", min: [b.min[0] - 8, -11, b.min[2] + 0.5], max: [b.min[0] + 0.5, 11, b.min[2] + 12] }])]; // plugs on the far end face
   return [];
 }

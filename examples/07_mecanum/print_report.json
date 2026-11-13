@@ -8,21 +8,21 @@
   {
    "name": "battery_tray",
    "watertight": true,
-   "volume_cm3": 18.0,
+   "volume_cm3": 19.85,
    "size_mm": [
-    110.6,
     40.7,
+    125.6,
     16.2
    ],
    "orientation": [
-    1.0,
     0.0,
+    -1.0,
     0.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 2.58,
-   "support_frac": 0.018,
-   "bed_contact_cm2": 2.23,
+   "support_area_cm2": 1.41,
+   "support_frac": 0.009,
+   "bed_contact_cm2": 3.4,
    "min_wall_mm": 1.5,
    "thin_wall_frac": 0.0,
    "passed": true,
@@ -35,8 +35,8 @@
    "watertight": true,
    "volume_cm3": 16.33,
    "size_mm": [
-    90.0,
     59.2,
+    90.0,
     7.0
    ],
    "orientation": [
@@ -48,7 +48,7 @@
    "support_area_cm2": 0.0,
    "support_frac": 0.0,
    "bed_contact_cm2": 53.02,
-   "min_wall_mm": 1.84,
+   "min_wall_mm": 1.83,
    "thin_wall_frac": 0.0,
    "passed": true,
    "supports": "none",
@@ -58,11 +58,11 @@
   {
    "name": "electronics_enclosure_front",
    "watertight": true,
-   "volume_cm3": 37.35,
+   "volume_cm3": 53.85,
    "size_mm": [
-    157.4,
-    214.4,
-    33.0
+    152.8,
+    215.8,
+    45.1
    ],
    "orientation": [
     0.0,
@@ -70,24 +70,26 @@
     -1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 3.9,
-   "support_frac": 0.012,
-   "bed_contact_cm2": 15.89,
-   "min_wall_mm": 1.4,
-   "thin_wall_frac": 0.0,
+   "support_area_cm2": 3.39,
+   "support_frac": 0.007,
+   "bed_contact_cm2": 16.29,
+   "min_wall_mm": 1.04,
+   "thin_wall_frac": 0.007,
    "passed": true,
    "supports": "none",
    "problems": [],
-   "warnings": []
+   "warnings": [
+    "thin wall 1.04 mm (prints with 2 perimeters; 3 recommended)"
+   ]
   },
   {
    "name": "electronics_enclosure_rear",
    "watertight": true,
-   "volume_cm3": 50.5,
+   "volume_cm3": 64.73,
    "size_mm": [
-    157.4,
-    214.4,
-    33.0
+    152.8,
+    215.8,
+    45.1
    ],
    "orientation": [
     0.0,
@@ -95,11 +97,11 @@
     -1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 2.82,
+   "support_area_cm2": 3.29,
    "support_frac": 0.006,
-   "bed_contact_cm2": 19.65,
+   "bed_contact_cm2": 19.46,
    "min_wall_mm": 2.4,
-   "thin_wall_frac": 0.001,
+   "thin_wall_frac": 0.0,
    "passed": true,
    "supports": "none",
    "problems": [],
@@ -108,10 +110,10 @@
   {
    "name": "electronics_lid_front",
    "watertight": true,
-   "volume_cm3": 50.9,
+   "volume_cm3": 50.03,
    "size_mm": [
-    144.4,
-    196.3,
+    139.8,
+    205.6,
     5.4
    ],
    "orientation": [
@@ -122,7 +124,7 @@
    "fits_bed": true,
    "support_area_cm2": 0.0,
    "support_frac": 0.0,
-   "bed_contact_cm2": 204.68,
+   "bed_contact_cm2": 201.16,
    "min_wall_mm": 2.0,
    "thin_wall_frac": 0.0,
    "passed": true,
@@ -133,10 +135,10 @@
   {
    "name": "electronics_lid_rear",
    "watertight": true,
-   "volume_cm3": 42.42,
+   "volume_cm3": 41.43,
    "size_mm": [
-    144.4,
-    204.2,
+    139.8,
+    205.6,
     5.4
    ],
    "orientation": [
@@ -147,9 +149,9 @@
    "fits_bed": true,
    "support_area_cm2": 0.0,
    "support_frac": 0.0,
-   "bed_contact_cm2": 170.61,
-   "min_wall_mm": 1.45,
-   "thin_wall_frac": 0.005,
+   "bed_contact_cm2": 166.59,
+   "min_wall_mm": 2.0,
+   "thin_wall_frac": 0.004,
    "passed": true,
    "supports": "none",
    "problems": [],
@@ -210,8 +212,8 @@
    "watertight": true,
    "volume_cm3": 2.4,
    "size_mm": [
-    27.6,
     24.7,
+    27.6,
     7.0
    ],
    "orientation": [
@@ -233,11 +235,11 @@
   {
    "name": "lidar_mast",
    "watertight": true,
-   "volume_cm3": 32.59,
+   "volume_cm3": 44.83,
    "size_mm": [
     62.0,
     62.0,
-    12.6
+    24.7
    ],
    "orientation": [
     0.0,
@@ -245,8 +247,8 @@
     0.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 3.76,
-   "support_frac": 0.028,
+   "support_area_cm2": 7.18,
+   "support_frac": 0.049,
    "bed_contact_cm2": 2.66,
    "min_wall_mm": 4.0,
    "thin_wall_frac": 0.0,
@@ -260,8 +262,8 @@
    "watertight": true,
    "volume_cm3": 17.05,
    "size_mm": [
-    87.0,
     64.0,
+    87.0,
     7.0
    ],
    "orientation": [

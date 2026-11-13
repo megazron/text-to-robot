@@ -8,21 +8,21 @@
   {
    "name": "battery_tray",
    "watertight": true,
-   "volume_cm3": 18.0,
+   "volume_cm3": 19.85,
    "size_mm": [
-    110.6,
+    125.6,
     40.7,
     16.2
    ],
    "orientation": [
-    1.0,
+    -1.0,
     0.0,
     0.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 2.58,
-   "support_frac": 0.018,
-   "bed_contact_cm2": 2.23,
+   "support_area_cm2": 1.41,
+   "support_frac": 0.009,
+   "bed_contact_cm2": 3.4,
    "min_wall_mm": 1.5,
    "thin_wall_frac": 0.0,
    "passed": true,
@@ -56,13 +56,13 @@
    "warnings": []
   },
   {
-   "name": "electronics_enclosure",
+   "name": "electronics_enclosure_front",
    "watertight": true,
-   "volume_cm3": 46.52,
+   "volume_cm3": 49.96,
    "size_mm": [
-    196.8,
-    138.4,
-    32.6
+    172.0,
+    191.0,
+    45.1
    ],
    "orientation": [
     0.0,
@@ -70,23 +70,48 @@
     -1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 4.13,
+   "support_area_cm2": 4.61,
    "support_frac": 0.01,
-   "bed_contact_cm2": 20.37,
-   "min_wall_mm": 2.4,
-   "thin_wall_frac": 0.001,
+   "bed_contact_cm2": 16.03,
+   "min_wall_mm": 1.4,
+   "thin_wall_frac": 0.0,
    "passed": true,
    "supports": "none",
    "problems": [],
    "warnings": []
   },
   {
-   "name": "electronics_lid",
+   "name": "electronics_enclosure_rear",
    "watertight": true,
-   "volume_cm3": 36.23,
+   "volume_cm3": 65.29,
    "size_mm": [
-    183.8,
-    128.2,
+    172.0,
+    191.0,
+    45.1
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 3.4,
+   "support_frac": 0.006,
+   "bed_contact_cm2": 19.79,
+   "min_wall_mm": 2.0,
+   "thin_wall_frac": 0.0,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "electronics_lid_front",
+   "watertight": true,
+   "volume_cm3": 48.99,
+   "size_mm": [
+    159.0,
+    172.9,
     5.4
    ],
    "orientation": [
@@ -97,9 +122,34 @@
    "fits_bed": true,
    "support_area_cm2": 0.0,
    "support_frac": 0.0,
-   "bed_contact_cm2": 142.94,
+   "bed_contact_cm2": 196.4,
    "min_wall_mm": 2.0,
-   "thin_wall_frac": 0.0,
+   "thin_wall_frac": 0.001,
+   "passed": true,
+   "supports": "none",
+   "problems": [],
+   "warnings": []
+  },
+  {
+   "name": "electronics_lid_rear",
+   "watertight": true,
+   "volume_cm3": 40.51,
+   "size_mm": [
+    159.0,
+    180.8,
+    5.4
+   ],
+   "orientation": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "fits_bed": true,
+   "support_area_cm2": 0.0,
+   "support_frac": 0.0,
+   "bed_contact_cm2": 162.33,
+   "min_wall_mm": 2.0,
+   "thin_wall_frac": 0.004,
    "passed": true,
    "supports": "none",
    "problems": [],
@@ -208,11 +258,11 @@
   {
    "name": "lidar_mast",
    "watertight": true,
-   "volume_cm3": 32.19,
+   "volume_cm3": 44.83,
    "size_mm": [
     62.0,
     62.0,
-    12.2
+    24.7
    ],
    "orientation": [
     0.0,
@@ -220,8 +270,8 @@
     0.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 3.65,
-   "support_frac": 0.028,
+   "support_area_cm2": 7.18,
+   "support_frac": 0.049,
    "bed_contact_cm2": 2.66,
    "min_wall_mm": 4.0,
    "thin_wall_frac": 0.0,
@@ -275,156 +325,6 @@
    "bed_contact_cm2": 55.42,
    "min_wall_mm": 2.08,
    "thin_wall_frac": 0.0,
-   "passed": true,
-   "supports": "none",
-   "problems": [],
-   "warnings": []
-  },
-  {
-   "name": "pillar_1",
-   "watertight": true,
-   "volume_cm3": 7.34,
-   "size_mm": [
-    14.0,
-    14.0,
-    50.0
-   ],
-   "orientation": [
-    0.0,
-    0.0,
-    1.0
-   ],
-   "fits_bed": true,
-   "support_area_cm2": 0.0,
-   "support_frac": 0.0,
-   "bed_contact_cm2": 1.47,
-   "min_wall_mm": 5.56,
-   "thin_wall_frac": 0.0,
-   "passed": true,
-   "supports": "none",
-   "problems": [],
-   "warnings": []
-  },
-  {
-   "name": "pillar_2",
-   "watertight": true,
-   "volume_cm3": 7.34,
-   "size_mm": [
-    14.0,
-    14.0,
-    50.0
-   ],
-   "orientation": [
-    0.0,
-    0.0,
-    1.0
-   ],
-   "fits_bed": true,
-   "support_area_cm2": 0.0,
-   "support_frac": 0.0,
-   "bed_contact_cm2": 1.47,
-   "min_wall_mm": 5.56,
-   "thin_wall_frac": 0.0,
-   "passed": true,
-   "supports": "none",
-   "problems": [],
-   "warnings": []
-  },
-  {
-   "name": "pillar_3",
-   "watertight": true,
-   "volume_cm3": 7.34,
-   "size_mm": [
-    14.0,
-    14.0,
-    50.0
-   ],
-   "orientation": [
-    0.0,
-    0.0,
-    1.0
-   ],
-   "fits_bed": true,
-   "support_area_cm2": 0.0,
-   "support_frac": 0.0,
-   "bed_contact_cm2": 1.47,
-   "min_wall_mm": 5.56,
-   "thin_wall_frac": 0.0,
-   "passed": true,
-   "supports": "none",
-   "problems": [],
-   "warnings": []
-  },
-  {
-   "name": "pillar_4",
-   "watertight": true,
-   "volume_cm3": 7.34,
-   "size_mm": [
-    14.0,
-    14.0,
-    50.0
-   ],
-   "orientation": [
-    0.0,
-    0.0,
-    1.0
-   ],
-   "fits_bed": true,
-   "support_area_cm2": 0.0,
-   "support_frac": 0.0,
-   "bed_contact_cm2": 1.47,
-   "min_wall_mm": 5.56,
-   "thin_wall_frac": 0.0,
-   "passed": true,
-   "supports": "none",
-   "problems": [],
-   "warnings": []
-  },
-  {
-   "name": "power_bay",
-   "watertight": true,
-   "volume_cm3": 59.33,
-   "size_mm": [
-    222.8,
-    156.3,
-    33.0
-   ],
-   "orientation": [
-    0.0,
-    0.0,
-    -1.0
-   ],
-   "fits_bed": true,
-   "support_area_cm2": 5.09,
-   "support_frac": 0.01,
-   "bed_contact_cm2": 24.96,
-   "min_wall_mm": 1.4,
-   "thin_wall_frac": 0.0,
-   "passed": true,
-   "supports": "none",
-   "problems": [],
-   "warnings": []
-  },
-  {
-   "name": "power_bay_lid",
-   "watertight": true,
-   "volume_cm3": 50.27,
-   "size_mm": [
-    196.8,
-    146.1,
-    5.4
-   ],
-   "orientation": [
-    0.0,
-    0.0,
-    1.0
-   ],
-   "fits_bed": true,
-   "support_area_cm2": 0.0,
-   "support_frac": 0.0,
-   "bed_contact_cm2": 199.0,
-   "min_wall_mm": 1.4,
-   "thin_wall_frac": 0.001,
    "passed": true,
    "supports": "none",
    "problems": [],
@@ -499,31 +399,6 @@
    "support_frac": 0.0,
    "bed_contact_cm2": 7.24,
    "min_wall_mm": 1.6,
-   "thin_wall_frac": 0.0,
-   "passed": true,
-   "supports": "none",
-   "problems": [],
-   "warnings": []
-  },
-  {
-   "name": "upper_deck",
-   "watertight": true,
-   "volume_cm3": 176.24,
-   "size_mm": [
-    236.0,
-    188.0,
-    4.0
-   ],
-   "orientation": [
-    0.0,
-    0.0,
-    1.0
-   ],
-   "fits_bed": true,
-   "support_area_cm2": 0.0,
-   "support_frac": 0.0,
-   "bed_contact_cm2": 440.6,
-   "min_wall_mm": 4.0,
    "thin_wall_frac": 0.0,
    "passed": true,
    "supports": "none",

@@ -6,16 +6,16 @@
 
 Interpreted as: Baymax character · imu (base_link) · camera (head)
 
-**Baymax-style service robot: 5.561 kg, 1.01 m tall, 4WD hidden base, two 4-servo arms, pan head with camera**
+**Baymax-style service robot: 5.56 kg, 1.01 m tall, 4WD hidden base, two 4-servo arms, pan head with camera**
 
-Parts cost **$921.97** · printed structure 33 parts, 1382 g · checks passed 87/87
+Parts cost **$921.6** · printed structure 33 parts, 1382 g · checks passed 87/87
 
 ## What it can do
 
 | | |
 |---|--:|
-| mass kg | 5.561 |
-| loaded mass kg | 5.561 |
+| mass kg | 5.56 |
+| loaded mass kg | 5.56 |
 | top speed m s | 1.24 |
 | wheel torque nm | 0.156 |
 | drive motor | pololu_37d_30to1_64cpr |
@@ -28,7 +28,7 @@ Parts cost **$921.97** · printed structure 33 parts, 1382 g · checks passed 87
 | turn rate rad s | 1.42 |
 | turn slip factor | 2.67 |
 | height m | 1.01 |
-| cost usd | 1072 |
+| cost usd | 1071 |
 | cost breakdown | catalog parts $831, filament 1.59 kg $40, fasteners $21, fabricated/other $145 (380 x 290 x 3 mm 5052 aluminium deck, laser cut (~$64); 2020 aluminium extrusion, 0.75 m (~$9); 420 x 40 x 6 mm aluminium flat bar shoulder yoke (~$12); upper_arm fabric sleeve (in the cover kit); forearm fabric sleeve (in the cover kit); foam-filled fabric mitten on a printed wrist plate (in the cover kit); upper_arm fabric sleeve (in the cover kit); forearm fabric sleeve (in the cover kit); foam-filled fabric mitten on a printed wrist plate (in the cover kit); sewn white ripstop body cover with zip and foam lining, about 2 m^2 (~$60); power switch, 15 A fuse, wiring) |
 
 ## Actuators (sized from this robot's own loads)
@@ -71,7 +71,7 @@ All 87 checks pass (torque, speed, power, stability, print-bed fit). Details in 
 |---|---|---|
 | ✅ | drive straight | 3.44 m in 4.01 s, cruise speed 1.213 m/s vs claimed 1.240 m/s, heading drift -0.0 deg, lateral -0.0 cm |
 | ✅ | ramp 10deg | from standstill on a 10 deg slope (speed ramped over 4.7 s at 0.5 m/s^2): 5.15 m uphill in 6.7 s, speed 1.201 m/s of 1.240 commanded |
-| ✅ | turn in place | mean yaw rate 2.02 rad/s with 3.58 commanded (no-slip), claimed 1.42 rad/s (needs >= 1.21), centre moved 10.4 cm over 1.0 turn(s) (10.4 cm per turn) |
+| ✅ | turn in place | mean yaw rate 2.02 rad/s with 3.58 commanded (no-slip), claimed 1.42 rad/s (needs >= 1.21), centre moved 5.3 cm over 1.0 turn(s) (5.3 cm per turn) |
 
 _PASS means the modelled actuators (datasheet peak torque as a hard limit, a linear torque-speed line to no-load speed, reflected rotor inertia, URDF damping/friction) can produce the torques and speeds the task needs in this geometry and mass distribution, and that mean torque over the hold stays within the continuous (rated) torque. Joint control uses an ideal model-based feedforward (computed torque) through the force-limited servo for fixed-base robots and plain position servos for floating robots; a pass therefore proves torque/speed capacity, not that a given controller achieves it. Untested: thermal limits over long duty cycles (only the mean-vs-rated proxy), gearbox backlash and compliance, link and joint flexibility, encoder resolution, supply voltage sag and current limits, bus latency, controller tuning, and contact/friction values (nominal friction only)._
 <!-- /SIM -->

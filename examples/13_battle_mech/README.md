@@ -8,16 +8,16 @@ Interpreted as: humanoid battle mech · imu (base_link) · camera (neck_pan_link
 
 **Battle mech, 1.204 m, 23.05 kg, 30 DOF (7-DOF arms + grippers), 170 min, $16183 of parts**
 
-Parts cost **$16664.31** · printed structure 52 parts, 6550 g · checks passed 133/133
+Parts cost **$16664.19** · printed structure 52 parts, 6545 g · checks passed 133/133
 
 ## What it can do
 
 | | |
 |---|--:|
 | average power w | 125.5 |
-| com height m | 0.659 |
+| com height m | 0.658 |
 | com x over sole mm | -27.3 |
-| mass kg | 23.055 |
+| mass kg | 23.05 |
 | height m | 1.204 |
 | hip height m | 0.74 |
 | dof | 30 |
@@ -33,18 +33,18 @@ Parts cost **$16664.31** · printed structure 52 parts, 6550 g · checks passed 
 
 | Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
 |---|---|--:|--:|--:|--:|
-| l_hip_yaw | cubemars_ak60_6 | 4.743 | 3 / 9 | 1.9x | 51.313 |
-| l_hip_roll | cubemars_ak80_64 | 50.455 | 48 / 120 | 2.38x | 5.027 |
-| l_hip_pitch | cubemars_ak80_64 | 64.308 | 48 / 120 | 1.87x | 5.027 |
-| l_knee | cubemars_ak80_64 | 61.543 | 48 / 120 | 1.95x | 5.027 |
-| l_ankle_pitch | cubemars_ak80_64 | 31.779 | 48 / 120 | 3.78x | 5.027 |
-| l_ankle_roll | cubemars_ak70_10 | 13.435 | 8.3 / 24.8 | 1.85x | 32.463 |
-| r_hip_yaw | cubemars_ak60_6 | 4.743 | 3 / 9 | 1.9x | 51.313 |
-| r_hip_roll | cubemars_ak80_64 | 50.455 | 48 / 120 | 2.38x | 5.027 |
-| r_hip_pitch | cubemars_ak80_64 | 64.308 | 48 / 120 | 1.87x | 5.027 |
-| r_knee | cubemars_ak80_64 | 61.543 | 48 / 120 | 1.95x | 5.027 |
-| r_ankle_pitch | cubemars_ak80_64 | 31.779 | 48 / 120 | 3.78x | 5.027 |
-| r_ankle_roll | cubemars_ak70_10 | 13.435 | 8.3 / 24.8 | 1.85x | 32.463 |
+| l_hip_yaw | cubemars_ak60_6 | 4.742 | 3 / 9 | 1.9x | 51.313 |
+| l_hip_roll | cubemars_ak80_64 | 50.445 | 48 / 120 | 2.38x | 5.027 |
+| l_hip_pitch | cubemars_ak80_64 | 64.294 | 48 / 120 | 1.87x | 5.027 |
+| l_knee | cubemars_ak80_64 | 61.53 | 48 / 120 | 1.95x | 5.027 |
+| l_ankle_pitch | cubemars_ak80_64 | 31.773 | 48 / 120 | 3.78x | 5.027 |
+| l_ankle_roll | cubemars_ak70_10 | 13.432 | 8.3 / 24.8 | 1.85x | 32.463 |
+| r_hip_yaw | cubemars_ak60_6 | 4.742 | 3 / 9 | 1.9x | 51.313 |
+| r_hip_roll | cubemars_ak80_64 | 50.445 | 48 / 120 | 2.38x | 5.027 |
+| r_hip_pitch | cubemars_ak80_64 | 64.294 | 48 / 120 | 1.87x | 5.027 |
+| r_knee | cubemars_ak80_64 | 61.53 | 48 / 120 | 1.95x | 5.027 |
+| r_ankle_pitch | cubemars_ak80_64 | 31.773 | 48 / 120 | 3.78x | 5.027 |
+| r_ankle_roll | cubemars_ak70_10 | 13.432 | 8.3 / 24.8 | 1.85x | 32.463 |
 | l_shoulder_pitch | cubemars_ak70_10 | 7.546 | 8.3 / 24.8 | 3.29x | 32.463 |
 | l_shoulder_roll | cubemars_ak70_10 | 7.547 | 8.3 / 24.8 | 3.29x | 32.463 |
 | l_upper_arm_yaw | dxl_xm430_w350 | 0.104 | 1.23 / 4.1 | 39.35x | 4.817 |

@@ -1198,11 +1198,15 @@ export function designRover(req: MobileRequest = {}): RobotSpecification {
       const rockerJoint = b.passiveHinge(`${side}_rocker_pivot`, "base_link", rocker, Tp, -0.24, 0.24);   // past 0.26 rad the rocker frame meets the body box, past 0.29 the motors do
       if (s < 0) rockerJoint.mimic = { joint: "left_rocker_pivot", multiplier: 1, offset: 0 };
       const ry0 = s > 0 ? 110 : -124.5, ry1 = s > 0 ? 124.5 : -110;
+      // the blocks round a drive motor: the motor runs through them, its case 20 mm one side of the axle (the encoder
+      // connector) and 18.4 mm the other, so the block stands 1.2 mm (3 lines) of wall plus its 2 mm edge round past
+      // the motor's keep-out on both sides (at 22 mm with 4 mm edges the wall on the connector side came to a sliver)
+      const mb = part(motor).bbox_mm!, POD = Math.max(22, Math.max(-mb.min[1], mb.max[1]) + 0.4 + 1.2 + 2);
       const front = wheelStation(b, { tag: `${side}_front`, parent: rocker, x: xF, side: s, yFace, motor, wheel });
       const rOps: Op[] = [
         { op: "rod", a: [pivot[0], ry0, pivot[2]], b: [pivot[0], ry1, pivot[2]], r: 18 },
         { op: "beam", a: [pivot[0], (ry0 + ry1) / 2, pivot[2]], b: [xF, (ry0 + ry1) / 2, h + 28], w: 22, h: 14.5, up: [0, 1, 0] },
-        { op: "box", min: [xF - 22, ry0, h + 14], max: [xF + 22, ry1, h + 32], r: 4 },
+        { op: "box", min: [xF - POD, ry0, h + 14], max: [xF + POD, ry1, h + 32], r: 2 },
         ...front.plate(h + 32),
         { op: "hole", a: [pivot[0], ry0 - 1, pivot[2]], b: [pivot[0], ry1 + 1, pivot[2]], d: 8.4 },
         { op: "hole", a: [pivot[0], s > 0 ? 116 : -124.6, pivot[2]], b: [pivot[0], s > 0 ? 124.6 : -116, pivot[2]], d: 22.1 },
@@ -1222,7 +1226,7 @@ export function designRover(req: MobileRequest = {}): RobotSpecification {
           { op: "beam", a: [xBog, (by0 + by1) / 2, zBog], b: [0, (by0 + by1) / 2, h + 28], w: 20, h: 8.5, up: [0, 1, 0] },
           { op: "beam", a: [xBog, (by0 + by1) / 2, zBog], b: [-130, (by0 + by1) / 2, h + 28], w: 20, h: 8.5, up: [0, 1, 0] },
           ...mid.plate(h + 32), ...rear.plate(h + 32),
-          { op: "box", min: [-22, by0, h + 14], max: [22, by1, h + 32], r: 4 }, { op: "box", min: [-152, by0, h + 14], max: [-108, by1, h + 32], r: 4 },
+          { op: "box", min: [-POD, by0, h + 14], max: [POD, by1, h + 32], r: 2 }, { op: "box", min: [-130 - POD, by0, h + 14], max: [-130 + POD, by1, h + 32], r: 2 },
           { op: "hole", a: [xBog, by0 - 1, zBog], b: [xBog, by1 + 1, zBog], d: 22.1 },
           { op: "keepout", key: motor, T: mid.Tm }, { op: "keepout", key: motor, T: rear.Tm }];
         b.printed(`${bog}_frame`, bog, bOps, "printed_accent");
@@ -1232,7 +1236,7 @@ export function designRover(req: MobileRequest = {}): RobotSpecification {
         // a 4-wheel rocker is too long for the bed: the rear arm is a second print bolted to the hub
         const rear = wheelStation(b, { tag: `${side}_rear`, parent: rocker, x: -xF, side: s, yFace, motor, wheel });
         b.printed(`${rocker}_rear_arm`, rocker, [{ op: "beam", a: [pivot[0], (ry0 + ry1) / 2, pivot[2]], b: [-xF, (ry0 + ry1) / 2, h + 28], w: 22, h: 14.5, up: [0, 1, 0] },
-          { op: "box", min: [-xF - 22, ry0, h + 14], max: [-xF + 22, ry1, h + 32], r: 4 }, ...rear.plate(h + 32), { op: "keepout", key: motor, T: rear.Tm }, { op: "hole", a: [-xF, ry0 - 1, h], b: [-xF, ry1 + 1, h], d: 14 }, { op: "cutbox", min: [-xF - 19.5, s > 0 ? yFace - 1.5 : -yFace, h + 7 - 19.5], max: [-xF + 19.5, s > 0 ? yFace : -yFace + 1.5, h + 7 + 19.5] },
+          { op: "box", min: [-xF - POD, ry0, h + 14], max: [-xF + POD, ry1, h + 32], r: 2 }, ...rear.plate(h + 32), { op: "keepout", key: motor, T: rear.Tm }, { op: "hole", a: [-xF, ry0 - 1, h], b: [-xF, ry1 + 1, h], d: 14 }, { op: "cutbox", min: [-xF - 19.5, s > 0 ? yFace - 1.5 : -yFace, h + 7 - 19.5], max: [-xF + 19.5, s > 0 ? yFace : -yFace + 1.5, h + 7 + 19.5] },
           { op: "hole", a: [pivot[0], ry0 - 1, pivot[2]], b: [pivot[0], ry1 + 1, pivot[2]], d: 36.2 }], "printed_accent");
         b.A.fastener("M4 x 20 + nut (rocker rear arm to hub)", 2);
       }
@@ -1683,8 +1687,18 @@ export function designBaymax(req: MobileRequest = {}): RobotSpecification {
       // turn down (in the yoke, a notch in the bar's edge)
       const baseKey = b.A.design.joints.find((j) => j.joint === `${prefix}_base_yaw`)?.actuator;
       if (baseKey && /^feetech_sts/.test(baseKey)) {
-        const zb = part(baseKey).bbox_mm!.min[2], win: Op = { op: "at", T: b.pose(`${prefix}_base_yaw_actuator`), of: [{ op: "cutbox", min: [-48, -10, zb - 30], max: [-8, 10, zb + 6] }] };
-        for (const n of [`${prefix}_base_link`, `${prefix}_shoulder_wedge`, "shoulder_yoke"]) { b.W.set(n, b.pose(n)); try { b.A.amendProgram(n, b.in(n, [win])); } catch { /* a fabricated yoke: its notch is cut by hand, see the assumptions */ } }
+        const P = b.pose(`${prefix}_base_yaw_actuator`), zb = part(baseKey).bbox_mm!.min[2];
+        const win: Op = { op: "at", T: P, of: [{ op: "cutbox", min: [-48, -10, zb - 30], max: [-8, 10, zb + 6] }] };
+        // the window leans with the arm's splay, so in the wedge one side wall would leave the wedge's flat top at 65 deg, a
+        // knife edge along it: there the window turns upright half way up the wedge (the walls meet at 155 deg), the lower
+        // half square to the arm's plate, the upper half square to the top and as wide as the leaning window is at the top
+        // on its other side (a 115 deg step there), so the leads keep the room they had
+        const zBend = zSh - 12, ez = [P[8], P[9], P[10]], p0 = [P[12], P[13], P[14]], ey = [P[4], P[5], P[6]];
+        const wallY = (yf: number, z: number) => { const t = (z - p0[2] - yf * ey[2]) / ez[2]; return p0[1] + yf * ey[1] + t * ez[1]; };
+        const walls = [-10, 10].map((yf) => [wallY(yf, zBend), wallY(yf, zSh - 6)]), lowSide = walls[0][0] < walls[1][0] ? 0 : 1;
+        const ya = Math.min(...walls[lowSide]), yb = Math.max(...walls[1 - lowSide]);
+        const winWedge: Op[] = [{ op: "subtract", of: [{ op: "at", T: P, of: [{ op: "box", min: [-48, -10, zb - 30], max: [-8, 10, zb + 6] }] }, { op: "cutbox", min: [-1e3, -1e4, zBend], max: [1e3, 1e4, 1e4] }] }, { op: "cutbox", min: [P[12] - 48, ya, zBend], max: [P[12] - 8, yb, zSh + 1] }];
+        for (const n of [`${prefix}_base_link`, `${prefix}_shoulder_wedge`, "shoulder_yoke"]) { b.W.set(n, b.pose(n)); try { b.A.amendProgram(n, b.in(n, n.endsWith("_wedge") ? winWedge : [win])); } catch { /* a fabricated yoke: its notch is cut by hand, see the assumptions */ } }
       }
       // fabric sleeves over the upper arm and forearm (Baymax's soft limbs) and a foam mitten on the wrist
       const jp = fk(b.A.spec).joint, c0 = apply(T, [0, 0, 0]);

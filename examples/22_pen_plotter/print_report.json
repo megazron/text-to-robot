@@ -8,9 +8,9 @@
   {
    "name": "control_case",
    "watertight": true,
-   "volume_cm3": 146.56,
+   "volume_cm3": 166.02,
    "size_mm": [
-    211.7,
+    249.7,
     150.1,
     44.4
    ],
@@ -20,9 +20,9 @@
     -1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 4.13,
+   "support_area_cm2": 4.51,
    "support_frac": 0.003,
-   "bed_contact_cm2": 288.23,
+   "bed_contact_cm2": 341.89,
    "min_wall_mm": 2.38,
    "thin_wall_frac": 0.0,
    "passed": true,
@@ -33,9 +33,9 @@
   {
    "name": "control_case_lid",
    "watertight": true,
-   "volume_cm3": 54.64,
+   "volume_cm3": 63.94,
    "size_mm": [
-    211.7,
+    249.7,
     150.1,
     5.8
    ],
@@ -47,9 +47,9 @@
    "fits_bed": true,
    "support_area_cm2": 0.85,
    "support_frac": 0.001,
-   "bed_contact_cm2": 182.18,
-   "min_wall_mm": 1.48,
-   "thin_wall_frac": 0.004,
+   "bed_contact_cm2": 213.95,
+   "min_wall_mm": 1.64,
+   "thin_wall_frac": 0.001,
    "passed": true,
    "supports": "none",
    "problems": [],
@@ -135,22 +135,22 @@
   {
    "name": "x_module_end_a",
    "watertight": true,
-   "volume_cm3": 42.04,
+   "volume_cm3": 42.31,
    "size_mm": [
     44.0,
-    16.0,
-    72.0
+    21.0,
+    80.1
    ],
    "orientation": [
     0.0,
-    -1.0,
+    1.0,
     0.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 0.46,
-   "support_frac": 0.004,
-   "bed_contact_cm2": 27.06,
-   "min_wall_mm": 4.07,
+   "support_area_cm2": 2.39,
+   "support_frac": 0.02,
+   "bed_contact_cm2": 25.94,
+   "min_wall_mm": 1.6,
    "thin_wall_frac": 0.0,
    "passed": true,
    "supports": "none",
@@ -262,7 +262,7 @@
   {
    "name": "z_bracket",
    "watertight": true,
-   "volume_cm3": 70.18,
+   "volume_cm3": 69.91,
    "size_mm": [
     180.0,
     76.0,
@@ -274,10 +274,10 @@
     0.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 2.26,
-   "support_frac": 0.006,
+   "support_area_cm2": 1.87,
+   "support_frac": 0.005,
    "bed_contact_cm2": 120.71,
-   "min_wall_mm": 2.87,
+   "min_wall_mm": 3.99,
    "thin_wall_frac": 0.0,
    "passed": true,
    "supports": "none",

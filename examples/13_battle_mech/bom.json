@@ -159,9 +159,9 @@
       "category": "Printed structure",
       "name": "PETG filament for 52 printed parts",
       "qty": 1,
-      "unit_cost": 165.71,
-      "subtotal": 165.71,
-      "spec": "6550 g of parts (+15 % supports/waste), about 596.9 h of printing",
+      "unit_cost": 165.59,
+      "subtotal": 165.59,
+      "spec": "6545 g of parts (+15 % supports/waste), about 596.5 h of printing",
       "note": "base_link, base_link_b, torso, torso_b, torso_b_b, l_hip_yaw_link, l_hip_roll_link, l_hip_pitch_link, l_hip_pitch_link_b, l_knee_link, l_knee_link_b, l_ankle_pitch_link, l_ankle_roll_link, r_hip_yaw_link, r_hip_roll_link, r_hip_pitch_link, r_hip_pitch_link_b, r_knee_link, r_knee_link_b, r_ankle_pitch_link, r_ankle_roll_link, l_shoulder_pitch_link, l_shoulder_roll_link, l_upper_arm_yaw_link, l_elbow_link, l_wrist_yaw_link, l_wrist_pitch_link, l_wrist_roll_link, l_gripper_jaw, r_shoulder_pitch_link, r_shoulder_roll_link, r_upper_arm_yaw_link, r_elbow_link, r_wrist_yaw_link, r_wrist_pitch_link, r_wrist_roll_link, r_gripper_jaw, neck_pan_link, neck_tilt_link, torso_armour_front, l_hip_pitch_armour_front, l_knee_armour_front, l_shoulder_roll_armour_out, r_hip_pitch_armour_front, r_knee_armour_front, r_shoulder_roll_armour_out, side_panel_left, side_panel_right, chest_panel, backpack_hood, switch_case, imu_hood"
     },
     {
@@ -461,104 +461,104 @@
       "note": "price estimated"
     }
   ],
-  "total": 16664.31,
+  "total": 16664.19,
   "feasible": true,
   "sizing_pass": true,
   "hardware_verified": false,
   "actuator_sizing": [
     {
       "joint": "l_hip_yaw",
-      "required_effort": 4.743,
+      "required_effort": 4.742,
       "effort_unit": "N·m",
-      "required_torque_nm": 4.743,
+      "required_torque_nm": 4.742,
       "chosen": "CubeMars AK60-6 V3.0 KV80",
       "margin": "1.9x"
     },
     {
       "joint": "l_hip_roll",
-      "required_effort": 50.455,
+      "required_effort": 50.445,
       "effort_unit": "N·m",
-      "required_torque_nm": 50.455,
+      "required_torque_nm": 50.445,
       "chosen": "CubeMars AK80-64 KV80",
       "margin": "2.38x"
     },
     {
       "joint": "l_hip_pitch",
-      "required_effort": 64.308,
+      "required_effort": 64.294,
       "effort_unit": "N·m",
-      "required_torque_nm": 64.308,
+      "required_torque_nm": 64.294,
       "chosen": "CubeMars AK80-64 KV80",
       "margin": "1.87x"
     },
     {
       "joint": "l_knee",
-      "required_effort": 61.543,
+      "required_effort": 61.53,
       "effort_unit": "N·m",
-      "required_torque_nm": 61.543,
+      "required_torque_nm": 61.53,
       "chosen": "CubeMars AK80-64 KV80",
       "margin": "1.95x"
     },
     {
       "joint": "l_ankle_pitch",
-      "required_effort": 31.779,
+      "required_effort": 31.773,
       "effort_unit": "N·m",
-      "required_torque_nm": 31.779,
+      "required_torque_nm": 31.773,
       "chosen": "CubeMars AK80-64 KV80",
       "margin": "3.78x"
     },
     {
       "joint": "l_ankle_roll",
-      "required_effort": 13.435,
+      "required_effort": 13.432,
       "effort_unit": "N·m",
-      "required_torque_nm": 13.435,
+      "required_torque_nm": 13.432,
       "chosen": "CubeMars AK70-10 KV100",
       "margin": "1.85x"
     },
     {
       "joint": "r_hip_yaw",
-      "required_effort": 4.743,
+      "required_effort": 4.742,
       "effort_unit": "N·m",
-      "required_torque_nm": 4.743,
+      "required_torque_nm": 4.742,
       "chosen": "CubeMars AK60-6 V3.0 KV80",
       "margin": "1.9x"
     },
     {
       "joint": "r_hip_roll",
-      "required_effort": 50.455,
+      "required_effort": 50.445,
       "effort_unit": "N·m",
-      "required_torque_nm": 50.455,
+      "required_torque_nm": 50.445,
       "chosen": "CubeMars AK80-64 KV80",
       "margin": "2.38x"
     },
     {
       "joint": "r_hip_pitch",
-      "required_effort": 64.308,
+      "required_effort": 64.294,
       "effort_unit": "N·m",
-      "required_torque_nm": 64.308,
+      "required_torque_nm": 64.294,
       "chosen": "CubeMars AK80-64 KV80",
       "margin": "1.87x"
     },
     {
       "joint": "r_knee",
-      "required_effort": 61.543,
+      "required_effort": 61.53,
       "effort_unit": "N·m",
-      "required_torque_nm": 61.543,
+      "required_torque_nm": 61.53,
       "chosen": "CubeMars AK80-64 KV80",
       "margin": "1.95x"
     },
     {
       "joint": "r_ankle_pitch",
-      "required_effort": 31.779,
+      "required_effort": 31.773,
       "effort_unit": "N·m",
-      "required_torque_nm": 31.779,
+      "required_torque_nm": 31.773,
       "chosen": "CubeMars AK80-64 KV80",
       "margin": "3.78x"
     },
     {
       "joint": "r_ankle_roll",
-      "required_effort": 13.435,
+      "required_effort": 13.432,
       "effort_unit": "N·m",
-      "required_torque_nm": 13.435,
+      "required_torque_nm": 13.432,
       "chosen": "CubeMars AK70-10 KV100",
       "margin": "1.85x"
     },

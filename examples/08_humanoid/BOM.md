@@ -21,7 +21,7 @@
 | Power | KCD4 double-pole rocker switch, 16 A 250 VAC / 20 A 125 VAC _(main power switch · https://www.aliexpress.com/w/wholesale-kcd4-rocker-switch.html)_ | 1 | 1 | 1 | https://www.aliexpress.com/w/wholesale-kcd4-rocker-switch.html |
 | Power | WAGO 221-415 five-way lever splice _(rail splices, the star ground and bus hubs · https://www.wago.com/global/electrical-interconnections/compact-splicing-connector/p/221-415)_ | 14 | 0.8 | 11.2 | 450 V |
 | Electronics | Waveshare Bus Servo Adapter (A) _(USB to leg servo bus · https://www.waveshare.com/bus-servo-adapter-a.htm)_ | 1 | 10.6 | 10.6 | 12 V |
-| Printed structure | PETG filament for 30 printed parts _(base_link, torso, l_hip_yaw_link, l_hip_roll_link, l_hip_pitch_link, l_knee_link, l_ankle_pitch_link, l_ankle_roll_link, r_hip_yaw_link, r_hip_roll_link, r_hip_pitch_link, r_knee_link, r_ankle_pitch_link, r_ankle_roll_link, l_shoulder_pitch_link, l_shoulder_roll_link, l_upper_arm_yaw_link, l_elbow_link, l_gripper_jaw, r_shoulder_pitch_link, r_shoulder_roll_link, r_upper_arm_yaw_link, r_elbow_link, r_gripper_jaw, neck_pan_link, neck_tilt_link, side_panel_left, side_panel_right, chest_panel, imu_hood)_ | 1 | 34.23 | 34.23 | 1353 g of parts (+15 % supports/waste), about 123.4 h of printing |
+| Printed structure | PETG filament for 30 printed parts _(base_link, torso, l_hip_yaw_link, l_hip_roll_link, l_hip_pitch_link, l_knee_link, l_ankle_pitch_link, l_ankle_roll_link, r_hip_yaw_link, r_hip_roll_link, r_hip_pitch_link, r_knee_link, r_ankle_pitch_link, r_ankle_roll_link, l_shoulder_pitch_link, l_shoulder_roll_link, l_upper_arm_yaw_link, l_elbow_link, l_gripper_jaw, r_shoulder_pitch_link, r_shoulder_roll_link, r_upper_arm_yaw_link, r_elbow_link, r_gripper_jaw, neck_pan_link, neck_tilt_link, side_panel_left, side_panel_right, chest_panel, imu_hood)_ | 1 | 34.23 | 34.23 | 1353 g of parts (+15 % supports/waste), about 123.3 h of printing |
 | Fasteners | Screws, nuts and inserts | 196 | 0.12 | 23.52 | 4x M3 x 12 torso-to-pelvis bolts; 88x M2/M2.5 x 6 case screws; 88x horn / hub screws; 4x M3 x 8 self-tapping (side_panel_left); 4x M3 x 8 self-tapping (side_panel_right); 4x M3 x 8 self-tapping (chest_panel); 4x M3 x 12 self-tapping (hood to deck) |
 | Wiring | 12 AWG silicone wire _(price estimated)_ | 0.9 | 2.2 | 1.98 | 0.9 m: 3.308 mm2, rated 20.5 A in a bundle; 0.80 m cut + 10 % waste |
 | Wiring | 20 AWG silicone wire _(price estimated)_ | 3.9 | 0.5 | 1.95 | 3.9 m: 0.519 mm2, rated 5.5 A in a bundle; 3.46 m cut + 10 % waste |
@@ -55,19 +55,19 @@
 | Joint | Required effort | Unit | Chosen actuator | Margin |
 |---|--:|---|---|--:|
 | l_hip_yaw | 0.404 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 7.28x |
-| l_hip_roll | 4.224 | N·m | DYNAMIXEL XH540-W270-T(R) | 2.34x |
-| l_hip_pitch | 5.434 | N·m | DYNAMIXEL XH540-W270-T(R) | 1.82x |
-| l_knee | 5.13 | N·m | DYNAMIXEL XH540-W270-T(R) | 1.93x |
+| l_hip_roll | 4.223 | N·m | DYNAMIXEL XH540-W270-T(R) | 2.34x |
+| l_hip_pitch | 5.433 | N·m | DYNAMIXEL XH540-W270-T(R) | 1.82x |
+| l_knee | 5.129 | N·m | DYNAMIXEL XH540-W270-T(R) | 1.93x |
 | l_ankle_pitch | 2.792 | N·m | Feetech STS3250 C002 12 V 50 kg.cm (1:345) | 1.76x |
-| l_ankle_roll | 1.168 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 2.52x |
+| l_ankle_roll | 1.167 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 2.52x |
 | r_hip_yaw | 0.404 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 7.28x |
-| r_hip_roll | 4.224 | N·m | DYNAMIXEL XH540-W270-T(R) | 2.34x |
-| r_hip_pitch | 5.434 | N·m | DYNAMIXEL XH540-W270-T(R) | 1.82x |
-| r_knee | 5.13 | N·m | DYNAMIXEL XH540-W270-T(R) | 1.93x |
+| r_hip_roll | 4.223 | N·m | DYNAMIXEL XH540-W270-T(R) | 2.34x |
+| r_hip_pitch | 5.433 | N·m | DYNAMIXEL XH540-W270-T(R) | 1.82x |
+| r_knee | 5.129 | N·m | DYNAMIXEL XH540-W270-T(R) | 1.93x |
 | r_ankle_pitch | 2.792 | N·m | Feetech STS3250 C002 12 V 50 kg.cm (1:345) | 1.76x |
-| r_ankle_roll | 1.168 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 2.52x |
+| r_ankle_roll | 1.167 | N·m | Feetech STS3215 C047 12 V 30 kg.cm (1:345) | 2.52x |
 | l_shoulder_pitch | 0.379 | N·m | DYNAMIXEL XL430-W250-T | 3.7x |
-| l_shoulder_roll | 0.365 | N·m | DYNAMIXEL XL430-W250-T | 3.83x |
+| l_shoulder_roll | 0.366 | N·m | DYNAMIXEL XL430-W250-T | 3.83x |
 | l_upper_arm_yaw | 0.215 | N·m | DYNAMIXEL XL430-W250-T | 6.5x |
 | l_elbow | 0.033 | N·m | DYNAMIXEL XL330-M288-T | 15.56x |
 | l_gripper | 0.002 | N·m | DYNAMIXEL XL330-M288-T | 99x |

@@ -1,6 +1,6 @@
 # Bill of materials: battle_mech
 
-**Estimated total: $16664.31**  ·  tier: research
+**Estimated total: $16664.19**  ·  tier: research
 
 **Effort sizing: passes catalogue estimate; hardware verified: no.**
 
@@ -23,7 +23,7 @@
 | Power | Blue Sea 6006 m-Series battery switch, ON-OFF, 48 VDC _(main battery switch · https://www.bluesea.com/products/6006)_ | 1 | 35 | 35 | https://www.bluesea.com/products/6006 |
 | Electronics | EYOU Robotics CANable PRO isolated USB-CAN adapter _(USB-CAN bus (left leg); USB-CAN bus (right leg) · https://www.robotshop.com/products/eyou-robotics-can-usb-adapter-canable-pro)_ | 2 | 42 | 84 | 5 V |
 | Power | WAGO 221-415 five-way lever splice _(rail splices, the star ground and bus hubs · https://www.wago.com/global/electrical-interconnections/compact-splicing-connector/p/221-415)_ | 29 | 0.8 | 23.2 | 450 V |
-| Printed structure | PETG filament for 52 printed parts _(base_link, base_link_b, torso, torso_b, torso_b_b, l_hip_yaw_link, l_hip_roll_link, l_hip_pitch_link, l_hip_pitch_link_b, l_knee_link, l_knee_link_b, l_ankle_pitch_link, l_ankle_roll_link, r_hip_yaw_link, r_hip_roll_link, r_hip_pitch_link, r_hip_pitch_link_b, r_knee_link, r_knee_link_b, r_ankle_pitch_link, r_ankle_roll_link, l_shoulder_pitch_link, l_shoulder_roll_link, l_upper_arm_yaw_link, l_elbow_link, l_wrist_yaw_link, l_wrist_pitch_link, l_wrist_roll_link, l_gripper_jaw, r_shoulder_pitch_link, r_shoulder_roll_link, r_upper_arm_yaw_link, r_elbow_link, r_wrist_yaw_link, r_wrist_pitch_link, r_wrist_roll_link, r_gripper_jaw, neck_pan_link, neck_tilt_link, torso_armour_front, l_hip_pitch_armour_front, l_knee_armour_front, l_shoulder_roll_armour_out, r_hip_pitch_armour_front, r_knee_armour_front, r_shoulder_roll_armour_out, side_panel_left, side_panel_right, chest_panel, backpack_hood, switch_case, imu_hood)_ | 1 | 165.71 | 165.71 | 6550 g of parts (+15 % supports/waste), about 596.9 h of printing |
+| Printed structure | PETG filament for 52 printed parts _(base_link, base_link_b, torso, torso_b, torso_b_b, l_hip_yaw_link, l_hip_roll_link, l_hip_pitch_link, l_hip_pitch_link_b, l_knee_link, l_knee_link_b, l_ankle_pitch_link, l_ankle_roll_link, r_hip_yaw_link, r_hip_roll_link, r_hip_pitch_link, r_hip_pitch_link_b, r_knee_link, r_knee_link_b, r_ankle_pitch_link, r_ankle_roll_link, l_shoulder_pitch_link, l_shoulder_roll_link, l_upper_arm_yaw_link, l_elbow_link, l_wrist_yaw_link, l_wrist_pitch_link, l_wrist_roll_link, l_gripper_jaw, r_shoulder_pitch_link, r_shoulder_roll_link, r_upper_arm_yaw_link, r_elbow_link, r_wrist_yaw_link, r_wrist_pitch_link, r_wrist_roll_link, r_gripper_jaw, neck_pan_link, neck_tilt_link, torso_armour_front, l_hip_pitch_armour_front, l_knee_armour_front, l_shoulder_roll_armour_out, r_hip_pitch_armour_front, r_knee_armour_front, r_shoulder_roll_armour_out, side_panel_left, side_panel_right, chest_panel, backpack_hood, switch_case, imu_hood)_ | 1 | 165.59 | 165.59 | 6545 g of parts (+15 % supports/waste), about 596.5 h of printing |
 | Fasteners | Screws, nuts and inserts | 354 | 0.12 | 42.48 | 42x M3 x 16 split-joint bolts + nuts; 4x M3 x 12 torso-to-pelvis bolts; 96x M3 x 8 housing screws; 112x horn / hub screws; 48x M2/M2.5 x 6 case screws; 28x M3 x 10 armour screws + printed standoffs; 4x M3 x 8 self-tapping (side_panel_left); 4x M3 x 8 self-tapping (side_panel_right); 4x M3 x 8 self-tapping (chest_panel); 12x M3 x 12 self-tapping (hood to deck) |
 | Wiring | 4 AWG silicone wire _(price estimated)_ | 1.4 | 10 | 14 | 1.4 m: 21.2 mm2, rated 70 A in a bundle; 1.27 m cut + 10 % waste |
 | Wiring | 8 AWG silicone wire _(price estimated)_ | 0.3 | 4.5 | 1.35 | 0.3 m: 8.37 mm2, rated 36.5 A in a bundle; 0.20 m cut + 10 % waste |
@@ -62,18 +62,18 @@
 
 | Joint | Required effort | Unit | Chosen actuator | Margin |
 |---|--:|---|---|--:|
-| l_hip_yaw | 4.743 | N·m | CubeMars AK60-6 V3.0 KV80 | 1.9x |
-| l_hip_roll | 50.455 | N·m | CubeMars AK80-64 KV80 | 2.38x |
-| l_hip_pitch | 64.308 | N·m | CubeMars AK80-64 KV80 | 1.87x |
-| l_knee | 61.543 | N·m | CubeMars AK80-64 KV80 | 1.95x |
-| l_ankle_pitch | 31.779 | N·m | CubeMars AK80-64 KV80 | 3.78x |
-| l_ankle_roll | 13.435 | N·m | CubeMars AK70-10 KV100 | 1.85x |
-| r_hip_yaw | 4.743 | N·m | CubeMars AK60-6 V3.0 KV80 | 1.9x |
-| r_hip_roll | 50.455 | N·m | CubeMars AK80-64 KV80 | 2.38x |
-| r_hip_pitch | 64.308 | N·m | CubeMars AK80-64 KV80 | 1.87x |
-| r_knee | 61.543 | N·m | CubeMars AK80-64 KV80 | 1.95x |
-| r_ankle_pitch | 31.779 | N·m | CubeMars AK80-64 KV80 | 3.78x |
-| r_ankle_roll | 13.435 | N·m | CubeMars AK70-10 KV100 | 1.85x |
+| l_hip_yaw | 4.742 | N·m | CubeMars AK60-6 V3.0 KV80 | 1.9x |
+| l_hip_roll | 50.445 | N·m | CubeMars AK80-64 KV80 | 2.38x |
+| l_hip_pitch | 64.294 | N·m | CubeMars AK80-64 KV80 | 1.87x |
+| l_knee | 61.53 | N·m | CubeMars AK80-64 KV80 | 1.95x |
+| l_ankle_pitch | 31.773 | N·m | CubeMars AK80-64 KV80 | 3.78x |
+| l_ankle_roll | 13.432 | N·m | CubeMars AK70-10 KV100 | 1.85x |
+| r_hip_yaw | 4.742 | N·m | CubeMars AK60-6 V3.0 KV80 | 1.9x |
+| r_hip_roll | 50.445 | N·m | CubeMars AK80-64 KV80 | 2.38x |
+| r_hip_pitch | 64.294 | N·m | CubeMars AK80-64 KV80 | 1.87x |
+| r_knee | 61.53 | N·m | CubeMars AK80-64 KV80 | 1.95x |
+| r_ankle_pitch | 31.773 | N·m | CubeMars AK80-64 KV80 | 3.78x |
+| r_ankle_roll | 13.432 | N·m | CubeMars AK70-10 KV100 | 1.85x |
 | l_shoulder_pitch | 7.546 | N·m | CubeMars AK70-10 KV100 | 3.29x |
 | l_shoulder_roll | 7.547 | N·m | CubeMars AK70-10 KV100 | 3.29x |
 | l_upper_arm_yaw | 0.104 | N·m | DYNAMIXEL XM430-W350-T(R) | 39.35x |

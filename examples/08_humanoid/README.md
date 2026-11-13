@@ -34,19 +34,19 @@ Parts cost **$4323.54** · printed structure 30 parts, 1353 g · checks passed 9
 | Joint | Actuator | Needs (peak) N·m | Rated / peak N·m | Margin | Speed loaded rad/s |
 |---|---|--:|--:|--:|--:|
 | l_hip_yaw | feetech_sts3215_c047 | 0.404 | 0.9807 / 2.942 | 7.28x | 4.712 |
-| l_hip_roll | dxl_xh540_w270 | 4.224 | 2.97 / 9.9 | 2.34x | 4.084 |
-| l_hip_pitch | dxl_xh540_w270 | 5.434 | 2.97 / 9.9 | 1.82x | 4.084 |
-| l_knee | dxl_xh540_w270 | 5.13 | 2.97 / 9.9 | 1.93x | 4.084 |
+| l_hip_roll | dxl_xh540_w270 | 4.223 | 2.97 / 9.9 | 2.34x | 4.084 |
+| l_hip_pitch | dxl_xh540_w270 | 5.433 | 2.97 / 9.9 | 1.82x | 4.084 |
+| l_knee | dxl_xh540_w270 | 5.129 | 2.97 / 9.9 | 1.93x | 4.084 |
 | l_ankle_pitch | feetech_sts3250 | 2.792 | 1.5691 / 4.9033 | 1.76x | 7.854 |
-| l_ankle_roll | feetech_sts3215_c047 | 1.168 | 0.9807 / 2.942 | 2.52x | 4.712 |
+| l_ankle_roll | feetech_sts3215_c047 | 1.167 | 0.9807 / 2.942 | 2.52x | 4.712 |
 | r_hip_yaw | feetech_sts3215_c047 | 0.404 | 0.9807 / 2.942 | 7.28x | 4.712 |
-| r_hip_roll | dxl_xh540_w270 | 4.224 | 2.97 / 9.9 | 2.34x | 4.084 |
-| r_hip_pitch | dxl_xh540_w270 | 5.434 | 2.97 / 9.9 | 1.82x | 4.084 |
-| r_knee | dxl_xh540_w270 | 5.13 | 2.97 / 9.9 | 1.93x | 4.084 |
+| r_hip_roll | dxl_xh540_w270 | 4.223 | 2.97 / 9.9 | 2.34x | 4.084 |
+| r_hip_pitch | dxl_xh540_w270 | 5.433 | 2.97 / 9.9 | 1.82x | 4.084 |
+| r_knee | dxl_xh540_w270 | 5.129 | 2.97 / 9.9 | 1.93x | 4.084 |
 | r_ankle_pitch | feetech_sts3250 | 2.792 | 1.5691 / 4.9033 | 1.76x | 7.854 |
-| r_ankle_roll | feetech_sts3215_c047 | 1.168 | 0.9807 / 2.942 | 2.52x | 4.712 |
+| r_ankle_roll | feetech_sts3215_c047 | 1.167 | 0.9807 / 2.942 | 2.52x | 4.712 |
 | l_shoulder_pitch | dxl_xl430_w250 | 0.379 | 0.42 / 1.4 | 3.7x | 5.969 |
-| l_shoulder_roll | dxl_xl430_w250 | 0.365 | 0.42 / 1.4 | 3.83x | 5.969 |
+| l_shoulder_roll | dxl_xl430_w250 | 0.366 | 0.42 / 1.4 | 3.83x | 5.969 |
 | l_upper_arm_yaw | dxl_xl430_w250 | 0.215 | 0.42 / 1.4 | 6.5x | 5.969 |
 | l_elbow | dxl_xl330_m288 | 0.033 | 0.156 / 0.52 | 15.56x | 10.786 |
 | l_gripper | dxl_xl330_m288 | 0.002 | 0.156 / 0.52 | 99x | 10.786 |

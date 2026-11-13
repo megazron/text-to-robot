@@ -475,7 +475,7 @@
  "17_baymax": {
   "wires": 88,
   "through": 0,
-  "bend": 14,
+  "bend": 13,
   "length": 7,
   "through_mm": 0,
   "skipped_solids": 0,
@@ -501,9 +501,9 @@
    "length": [
     {
      "wire": "W44",
-     "drawn_mm": 192,
-     "allowance_mm": 260,
-     "cut_mm": 460
+     "drawn_mm": 191,
+     "allowance_mm": 265,
+     "cut_mm": 465
     },
     {
      "wire": "W46",

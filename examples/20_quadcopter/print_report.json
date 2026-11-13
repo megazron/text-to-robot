@@ -8,11 +8,11 @@
   {
    "name": "base_link",
    "watertight": true,
-   "volume_cm3": 72.04,
+   "volume_cm3": 71.55,
    "size_mm": [
     191.1,
     191.1,
-    12.0
+    7.8
    ],
    "orientation": [
     0.0,
@@ -20,11 +20,11 @@
     -1.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 0.94,
-   "support_frac": 0.002,
+   "support_area_cm2": 0.0,
+   "support_frac": 0.0,
    "bed_contact_cm2": 140.29,
    "min_wall_mm": 1.73,
-   "thin_wall_frac": 0.002,
+   "thin_wall_frac": 0.0,
    "passed": true,
    "supports": "none",
    "problems": [],

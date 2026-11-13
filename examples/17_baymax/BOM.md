@@ -1,6 +1,6 @@
 # Bill of materials: baymax
 
-**Estimated total: $921.97**  ·  tier: hobby
+**Estimated total: $921.6**  ·  tier: hobby
 
 **Effort sizing: passes catalogue estimate; hardware verified: no.**
 
@@ -21,15 +21,15 @@
 | Power | WAGO 221-415 five-way lever splice _(rail splices, the star ground and bus hubs · https://www.wago.com/global/electrical-interconnections/compact-splicing-connector/p/221-415)_ | 6 | 0.8 | 4.8 | 450 V |
 | Electronics | Waveshare Bus Servo Adapter (A) _(servo bus adapter · https://www.waveshare.com/bus-servo-adapter-a.htm)_ | 1 | 10.6 | 10.6 | 12 V |
 | Drive | Pololu 90x10 mm wheel + 6 mm universal aluminium hub (for 37D gearmotors) _(driven wheel · https://www.pololu.com/product/1435)_ | 4 | 11.22 | 44.88 | https://www.pololu.com/file/0J161/1083-6mm-4-40-hub-dimensions.pdf |
-| Printed structure | PETG filament for 33 printed parts _(left_front_bracket, left_rear_bracket, right_front_bracket, right_rear_bracket, battery_tray, computer_tray, motor_driver_1_tray, motor_driver_2_tray, servo_bus_tray, imu_tray, regulator_5v_tray, electronics_enclosure_front, electronics_enclosure_rear, electronics_lid_front, electronics_lid_rear, spine_foot, left_arm_shoulder_wedge, left_arm_base_link, left_arm_turret, left_arm_upper_arm, left_arm_forearm, left_arm_tool_link, right_arm_shoulder_wedge, right_arm_base_link, right_arm_turret, right_arm_upper_arm, right_arm_forearm, right_arm_tool_link, neck_mount, head, head_dome, eyes, camera_bracket)_ | 1 | 34.97 | 34.97 | 1382 g of parts (+15 % supports/waste), about 126.0 h of printing |
+| Printed structure | PETG filament for 33 printed parts _(left_front_bracket, left_rear_bracket, right_front_bracket, right_rear_bracket, battery_tray, computer_tray, motor_driver_1_tray, motor_driver_2_tray, servo_bus_tray, imu_tray, regulator_5v_tray, electronics_enclosure_front, electronics_enclosure_rear, electronics_lid_front, electronics_lid_rear, spine_foot, left_arm_shoulder_wedge, left_arm_base_link, left_arm_turret, left_arm_upper_arm, left_arm_forearm, left_arm_tool_link, right_arm_shoulder_wedge, right_arm_base_link, right_arm_turret, right_arm_upper_arm, right_arm_forearm, right_arm_tool_link, neck_mount, head, head_dome, eyes, camera_bracket)_ | 1 | 34.95 | 34.95 | 1382 g of parts (+15 % supports/waste), about 125.9 h of printing |
 | Fasteners | Screws, nuts and inserts | 172 | 0.12 | 20.64 | 24x M3 x 8 socket head (motor face); 8x M3 x 10 socket head + nut (bracket to deck); 1x 20 mm hook-and-loop battery strap; 14x M3 x 8 socket head (tray to deck); 23x M2.5 x 6 screws (board to standoffs); 8x M3 x 8 + nut (enclosure pieces lap joint); 4x M3 x 10 self-tapping (enclosure lid); 4x M3 x 8 + nut (enclosure tabs to deck; drill 3.4 mm through the deck at the tabs); 8x M5 x 12 socket head (base to bench); 32x M2 x 6 case screws; 36x horn screws; 6x M5 x 16 socket head + M5 washer + M5 heat-set insert (clevis bearing axle); 4x M3 x 10 (head dome to head) |
 | Wiring | 12 AWG silicone wire _(price estimated)_ | 1 | 2.2 | 2.2 | 1 m: 3.308 mm2, rated 20.5 A in a bundle; 0.88 m cut + 10 % waste |
-| Wiring | 16 AWG silicone wire _(price estimated)_ | 2.4 | 1 | 2.4 | 2.4 m: 1.308 mm2, rated 11 A in a bundle; 2.13 m cut + 10 % waste |
-| Wiring | 18 AWG silicone wire _(price estimated)_ | 1.4 | 0.7 | 0.98 | 1.4 m: 0.823 mm2, rated 8 A in a bundle; 1.23 m cut + 10 % waste |
-| Wiring | 20 AWG silicone wire _(price estimated)_ | 7.3 | 0.5 | 3.65 | 7.3 m: 0.519 mm2, rated 5.5 A in a bundle; 6.59 m cut + 10 % waste |
-| Wiring | 22 AWG silicone wire _(price estimated)_ | 6.6 | 0.4 | 2.64 | 6.6 m: 0.327 mm2, rated 3.5 A in a bundle; 5.96 m cut + 10 % waste |
+| Wiring | 16 AWG silicone wire _(price estimated)_ | 1.2 | 1 | 1.2 | 1.2 m: 1.308 mm2, rated 11 A in a bundle; 1.06 m cut + 10 % waste |
+| Wiring | 18 AWG silicone wire _(price estimated)_ | 2.6 | 0.7 | 1.82 | 2.6 m: 0.823 mm2, rated 8 A in a bundle; 2.29 m cut + 10 % waste |
+| Wiring | 20 AWG silicone wire _(price estimated)_ | 7.8 | 0.5 | 3.9 | 7.8 m: 0.519 mm2, rated 5.5 A in a bundle; 7.05 m cut + 10 % waste |
+| Wiring | 22 AWG silicone wire _(price estimated)_ | 6.1 | 0.4 | 2.44 | 6.1 m: 0.327 mm2, rated 3.5 A in a bundle; 5.50 m cut + 10 % waste |
 | Wiring | 24 AWG silicone wire _(price estimated)_ | 7.2 | 0.35 | 2.52 | 7.2 m: 0.205 mm2, rated 1.75 A in a bundle; 6.51 m cut + 10 % waste |
-| Wiring | 26 AWG silicone wire _(price estimated)_ | 12.6 | 0.3 | 3.78 | 12.6 m: 0.128 mm2, rated 1.1 A in a bundle; 11.38 m cut + 10 % waste |
+| Wiring | 26 AWG silicone wire _(price estimated)_ | 12.6 | 0.3 | 3.78 | 12.6 m: 0.128 mm2, rated 1.1 A in a bundle; 11.41 m cut + 10 % waste |
 | Wiring | Dupont 2.54 mm contacts _(price estimated)_ | 46 | 0.02 | 0.92 | 46 pc: rated 3 A per contact |
 | Wiring | Dupont 2.54 mm housings _(price estimated)_ | 11 | 0.02 | 0.22 | 11 pc: one per cable end |
 | Wiring | Bootlace ferrule contacts _(price estimated)_ | 14 | 0.03 | 0.42 | 14 pc: rated 17.5 A per contact |
@@ -38,7 +38,7 @@
 | Wiring | XT60 contacts _(price estimated)_ | 2 | 0.9 | 1.8 | 2 pc: rated 35 A per contact |
 | Wiring | 6.3 mm spade contacts _(price estimated)_ | 2 | 0.08 | 0.16 | 2 pc: rated 15 A per contact |
 | Wiring | Heat shrink 3 mm, 2:1 _(price estimated)_ | 3.1 | 0.2 | 0.62 | 3.1 m: 31 solder joints + a boot on each cable end |
-| Wiring | Cable tie 100 x 2.5 mm _(price estimated)_ | 55 | 0.02 | 1.1 | 55 pc: at every clip, cable end and strain-relief anchor |
+| Wiring | Cable tie 100 x 2.5 mm _(price estimated)_ | 53 | 0.02 | 1.06 | 53 pc: at every clip, cable end and strain-relief anchor |
 | Wiring | Rubber grommet, 6.4 mm panel hole, 3.2 mm bore _(price estimated)_ | 2 | 0.08 | 0.16 | 2 pc: 9.5 mm panel hole |
 | Wiring | Rubber grommet, 6.4 mm panel hole, 3.2 mm bore _(price estimated)_ | 1 | 0.08 | 0.08 | 1 pc: 12 mm panel hole |
 | Wiring | Nylon braided sleeving 6 mm _(price estimated)_ | 1.4 | 0.4 | 0.56 | 1.4 m: over every cable where it crosses a joint |
@@ -66,7 +66,7 @@
 | right_rear_wheel_joint | 0.156 | N·m | Pololu 30:1 Metal Gearmotor 37Dx68L 12 V with 64 CPR encoder (#4752) | 4.4x |
 
 ## Notes
-- Baymax-style service robot: 5.561 kg, 1.01 m tall, 4WD hidden base, two 4-servo arms, pan head with camera
+- Baymax-style service robot: 5.56 kg, 1.01 m tall, 4WD hidden base, two 4-servo arms, pan head with camera
 - Joint limits trimmed to the collision-free range found by exact solid sweeps: left_arm_shoulder_pitch [-1.75, 1.75] -> [-1.11, 1.23]; left_arm_elbow_pitch [-2.10, 2.30] -> [-0.24, 0.25]; left_arm_wrist_pitch [-1.70, 2.30] -> [-0.96, 0.97]; right_arm_shoulder_pitch [-1.75, 1.75] -> [-1.11, 1.23]; right_arm_elbow_pitch [-2.10, 2.30] -> [-0.24, 0.25]; right_arm_wrist_pitch [-1.70, 2.30] -> [-0.96, 0.97].
 - Baymax's inflatable vinyl body is a sewn ripstop cover with a foam-lined zip, bought or sewn, with negligible structural role; it hangs on the shoulder yoke and hides a 4WD skid-steer base. It is not inflated, so it does not cushion like the film's.
 - Structure: 2020 aluminium extrusion spine and a 6 mm aluminium shoulder yoke; arms are four servos each (shoulder yaw, shoulder pitch, elbow, wrist) splayed 25 deg so they clear the belly; the hands are printed mittens covered with the same fabric.
