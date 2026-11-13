@@ -144,7 +144,7 @@ if result.get("error"): sys.exit(f"FAIL: {result['error']} (after {list(result)}
 report = {"engine": engine_url, "page_origin": other_origin, "result": result, "errors": errors}
 (args.out / "report.json").write_text(json.dumps(report, indent=2) + "\n")
 fail = []
-if result["version"] != "1.3.0": fail.append("version")
+if result["version"] != "1.4.0": fail.append("version")
 if result["parts"] < 80 or result["withMounts"] != result["parts"] or result["printed"] < 6: fail.append("catalog")
 if result["design"] != {"name": expected["robot_name"], "links": len(expected["links"]), "joints": len(expected["joints"])}: fail.append(f"design differs from the example: {result['design']}")
 for k in ["roundTrip", "edited", "urdf", "pure"]:

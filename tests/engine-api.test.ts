@@ -135,7 +135,7 @@ test("a robot built by hand has a valid URDF, a sized joint and the same exports
 const spec0 = () => example("18_arduino_car");
 test("the /api/engine endpoints answer like the client expects", async () => {
   const get = async (method: string, path: string, body: unknown = {}) => { const r = await engineApi(method, path, body); return { status: r.status, body: r.headers.get("Content-Type")?.includes("json") ? await r.json() : await r.arrayBuffer() }; };
-  assert.equal((await get("GET", "/api/engine/version")).body.api, "1.3.0");
+  assert.equal((await get("GET", "/api/engine/version")).body.api, "1.4.0");
   const cat = (await get("GET", "/api/engine/catalog")).body;
   assert.ok(cat.parts.length > 80 && cat.parts.every((p: { mounts: unknown[] }) => p.mounts.length >= 1) && cat.printed.length >= 6);
   assert.ok(cat.parts.find((p: { key: string }) => p.key === "hobby_sg90").rating.range_deg === 180);

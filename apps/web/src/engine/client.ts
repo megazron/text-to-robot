@@ -16,7 +16,7 @@ import type { Mount, WorldMount } from "./snap.ts";
 // @ts-expect-error: plain JavaScript module without types
 import { makeZip } from "../../public/robotkit.js";
 
-export const API_VERSION = "1.3.0";
+export const API_VERSION = "1.4.0";
 export type { RobotSpecification, EditOp, PrintedParams, Mount, WorldMount };
 export { applyEdits, toScene, fromScene, worldFrames, rootLink, subtree, parentJoint, kindOf, poseMat, matPose, mul, inv, apply, emptyRobot, freeName, type Scene, type SceneNode } from "./edit.ts";
 export { snapPart, mate, mountFrame, compatible, patternsMatch, MATES, type Snap } from "./snap.ts";
@@ -214,6 +214,13 @@ export interface Engine {
    * also the harness checks at the home pose (wires through solids, bend radius, cut length).
    */
   electronics3d(robot: RobotSpecification, options?: { checks?: boolean }): Promise<Electronics3D>;
+  /**
+   * The Bench view: the same electronics laid out on a desk (sensors, controller, drivers, motors and servos in columns,
+   * the power parts in front, a board with a downward header in a breadboard), every wire pin to pin through its real
+   * connector and over the parts between. The shape of electronics3d with every point on the one body "desk", and
+   * `desk`, its extent in mm. (1.4)
+   */
+  bench(robot: RobotSpecification): Promise<Omit<Electronics3D, "checks"> & { desk: { min: V3; max: V3 } }>;
   /** The electronics and harness at the home pose as one binary glTF (metres, Y up): a node per part and per wire. */
   electronicsGlb(robot: RobotSpecification): Promise<ArrayBuffer>;
   /** Read a parts list ("I have an Arduino Uno, 2 TT motors, an L298N ..."): catalog parts with quantities, extras, not recognised lines with suggestions. (1.1) */
@@ -398,6 +405,7 @@ export async function createEngine(opts: { base?: string | URL; onProgress?: (p:
     ik: (robot, link, target, o) => byHandle<IkResult>(robot, "/api/engine/ik", { link, target, options: o ?? {} }),
     electricalSim: (robot, options) => json("POST", "/api/engine/electrical-sim", { robot, options: options ?? {} }),
     batteryLife: (robot, options) => json("POST", "/api/engine/battery-life", { robot, options: options ?? {} }),
+    bench: (robot) => json("POST", "/api/engine/bench", { robot }),
     zip: (f) => makeZip(f) as Blob,
     get recycles() { return recycles; },
     terminate: () => worker.terminate(),

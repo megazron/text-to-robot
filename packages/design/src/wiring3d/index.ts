@@ -5,3 +5,4 @@ export { partModel, FOOTPRINT_SOURCES, type PartModel, type PinAt } from "./mode
 export { checkHarness, type HarnessCheck } from "./checks.ts";
 export type { Model, MeshPart, Label, Mat } from "./geom.ts";
 export { electronicsGlb, tube } from "./glb.ts";
+export { bench, type Bench } from "./bench.ts";
