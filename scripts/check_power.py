@@ -31,6 +31,9 @@ def design(page, prompt):
     page.evaluate("""()=>{const b=document.querySelector('#genbtn');window.__started=false;new MutationObserver(()=>{if(b.disabled)window.__started=true}).observe(b,{attributes:true})}""")
     page.click("#genbtn"); page.wait_for_function("window.__started", timeout=60_000)
     page.wait_for_function('!document.querySelector("#genbtn").disabled && !document.body.classList.contains("busy")', timeout=1_800_000)
+    # the robot shows with its wires as straight runs and is replaced in place when its 3D harness is laid, which opens this
+    # tab again for the new robot: test the robot that stays on screen (on a slow machine the swap came mid-run)
+    page.wait_for_function("window.__ttr.routing !== 'running'", timeout=1_800_000)
 
 def open_power(page):
     page.evaluate('document.querySelector(".dock-btn[data-jump=build]")?.click()')
