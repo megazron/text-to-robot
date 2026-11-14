@@ -18,8 +18,7 @@
     "r_ankle_pitch_link": "splits into 3 pieces: the ankle cradle's keep-out separates the foot plate from the cradle; open issue in the mech designer",
     "l_hip_pitch_link_b": "the bed-size split of the hip link leaves a second loose piece; open issue in the mech designer",
     "l_shoulder_roll_armour_out": "0.35-0.5 mm edge on the armour panel's bevel (1-2 % of the surface); open issue",
-    "r_shoulder_roll_armour_out": "0.35-0.5 mm edge on the armour panel's bevel (1-2 % of the surface); open issue",
-    "torso": "0.6 mm strip between the back-wall vent slots and the USB window (1 % of the surface); open issue in the mech designer"
+    "r_shoulder_roll_armour_out": "0.35-0.5 mm edge on the armour panel's bevel (1-2 % of the surface); open issue"
   },
   "14_iron_man_mark_43": {
     "arm_back_left": "feather edge where a hinge, pod or latch part is cut to the shell it sits on: file it flush after printing",

@@ -237,7 +237,9 @@ function buildBiped(req: LeggedRequest, cfg: BipedCfg, sensors: SensorKind[]) {
   if (usedBackpack) {
     const R = regions[2];
     tOps.push({ op: "box", min: [R.x0, R.y0, R.z - BW], max: [-Dt + 1, R.y1, R.z], r: 6 }, { op: "box", min: [R.x0, R.y0, R.z - 40], max: [R.x0 + BW, R.y1, R.z] },
-      { op: "hull", of: [{ op: "box", min: [-Dt - 2, R.y0, R.z - 50], max: [-Dt + 1, R.y1, R.z - 47] }, { op: "box", min: [-Dt - 30, R.y0, R.z - BW], max: [-Dt + 1, R.y1, R.z] }] });
+      // the gusset under the shelf: its foot runs 18 mm out flat, so the bed-size cut through the shelf (about 15 mm behind the
+      // back wall) crosses a flat underside at a right angle, not the slope, which left a 0.6 mm knife edge on the shelf piece
+      { op: "hull", of: [{ op: "box", min: [-Dt - 18, R.y0, R.z - 50], max: [-Dt + 1, R.y1, R.z - 47] }, { op: "box", min: [-Dt - 30, R.y0, R.z - BW], max: [-Dt + 1, R.y1, R.z] }] });
   }
   // IMU under the pelvis plate between the hip yaw actuators (closest point to the floating base)
   // (hung 30 mm below the plate: its header points up, and its jumpers need the Dupont housing and a bend under the plate)

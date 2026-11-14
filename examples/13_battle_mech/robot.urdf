@@ -45,9 +45,9 @@
       <geometry><mesh filename="package://battle_mech/meshes/base_link_b.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.00609 0.07874 0.041501" rpy="0 0 0"/>
-      <mass value="0.114743"/>
-      <inertia ixx="0.000207697" ixy="-0.00000575721" ixz="0.0000058787" iyy="0.000103405" iyz="0.0000150017" izz="0.000269017"/>
+      <origin xyz="-0.006088 0.078739 0.041501" rpy="0 0 0"/>
+      <mass value="0.114742"/>
+      <inertia ixx="0.000207694" ixy="-0.00000576324" ixz="0.00000587309" iyy="0.000103389" iyz="0.000015003" izz="0.000269002"/>
     </inertial>
   </link>
   <link name="battery">
@@ -221,9 +221,9 @@
       <geometry><mesh filename="package://battle_mech/meshes/torso.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.2075 -0.007481 0.137614" rpy="0 0 0"/>
-      <mass value="0.364277"/>
-      <inertia ixx="0.001519" ixy="-0.0000067699" ixz="-0.0000293404" iyy="0.00169" iyz="0.0000173462" izz="0.003161"/>
+      <origin xyz="-0.196241 -0.006589 0.134554" rpy="0 0 0"/>
+      <mass value="0.413583"/>
+      <inertia ixx="0.001773" ixy="-0.0000374508" ixz="0.0000773976" iyy="0.002112" iyz="0.0000256845" izz="0.003768"/>
     </inertial>
   </link>
   <link name="torso_b">
@@ -237,9 +237,9 @@
       <geometry><mesh filename="package://battle_mech/meshes/torso_b.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.010558 -0.07046 0.169911" rpy="0 0 0"/>
-      <mass value="0.691156"/>
-      <inertia ixx="0.005116" ixy="0.0000864832" ixz="-0.000303566" iyy="0.007557" iyz="0.0000541918" izz="0.004354"/>
+      <origin xyz="-0.012297 -0.070217 0.168585" rpy="0 0 0"/>
+      <mass value="0.704359"/>
+      <inertia ixx="0.005197" ixy="0.00010206" ixz="-0.00038847" iyy="0.007734" iyz="0.0000660649" izz="0.004482"/>
     </inertial>
   </link>
   <link name="torso_b_b">
@@ -253,9 +253,9 @@
       <geometry><mesh filename="package://battle_mech/meshes/torso_b_b.stl"/></geometry>
     </collision>
     <inertial>
-      <origin xyz="-0.01057 0.070412 0.170006" rpy="0 0 0"/>
-      <mass value="0.690267"/>
-      <inertia ixx="0.005105" ixy="-0.0000860119" ixz="-0.000301841" iyy="0.007544" iyz="-0.0000590567" izz="0.004349"/>
+      <origin xyz="-0.012311 0.07017 0.168677" rpy="0 0 0"/>
+      <mass value="0.70347"/>
+      <inertia ixx="0.005187" ixy="-0.00010153" ixz="-0.000386847" iyy="0.007721" iyz="-0.0000709019" izz="0.004477"/>
     </inertial>
   </link>
   <link name="l_hip_yaw_actuator">

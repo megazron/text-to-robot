@@ -1,6 +1,6 @@
 # Wiring: battle_mech
 
-97 cables, 140 conductors, 87.8 m of wire, wiring parts $272.98.
+97 cables, 140 conductors, 87.82 m of wire, wiring parts $272.98.
 
 Drawings: [schematic.svg](schematic.svg) (also [schematic.pdf](schematic.pdf)), [breadboard.svg](breadboard.svg) (every wire in its colour, pin to pin) and the cable diagram [wiring.svg](wiring.svg). Cable routes in 3D: `design.wiring.cables[].path_mm` in `robot.json`.
 
@@ -276,9 +276,9 @@ Length is route + service loop + joint slack + termination, rounded up to 5 mm; 
 | C49 | main_switch to the VBAT splice | 1 | 215 | 112.2 | 40 | 0 | 60 | 3/8 in-16 studs / lever clamp | - |
 | C50 | VBAT to dcdc_12v | 1 | 255 | 150.9 | 40 | 0 | 60 | lever clamp / barrier screw terminal | switch_case.down |
 | C51 | VBAT to dcdc_12v_2 | 1 | 270 | 166.3 | 40 | 0 | 60 | lever clamp / barrier screw terminal | switch_case.down |
-| C52 | VBAT to l_hip_yaw_actuator | 1 | 630 | 527.7 | 40 | 0 | 60 | lever clamp / AMASS XT30PW(2+2)-M | switch_case.down |
+| C52 | VBAT to l_hip_yaw_actuator | 1 | 640 | 538 | 40 | 0 | 60 | lever clamp / AMASS XT30PW(2+2)-M | switch_case.down |
 | C53 | VBAT to l_hip_roll_actuator | 1 | 700 | 555.4 | 40 | 40 | 60 | lever clamp / AMASS XT30PW-M | switch_case.down |
-| C54 | VBAT to l_hip_pitch_actuator | 1 | 920 | 697.9 | 40 | 120 | 60 | lever clamp / AMASS XT30PW-M | switch_case.down |
+| C54 | VBAT to l_hip_pitch_actuator | 1 | 935 | 713.7 | 40 | 120 | 60 | lever clamp / AMASS XT30PW-M | switch_case.down |
 | C55 | VBAT to l_knee_actuator | 1 | 1085 | 850.6 | 40 | 130 | 60 | lever clamp / AMASS XT30PW-M | switch_case.down |
 | C56 | VBAT to l_ankle_pitch_actuator | 1 | 1410 | 1026.6 | 40 | 280 | 60 | lever clamp / AMASS XT30PW-M | switch_case.down |
 | C57 | VBAT to l_ankle_roll_actuator | 1 | 1755 | 1153 | 40 | 500 | 60 | lever clamp / AMASS XT30PW-M | switch_case.down |
@@ -892,7 +892,7 @@ Not checked (no logic levels in the parts data): DYNAMIXEL XH540-W270-T(R), DYNA
 | 8 AWG silicone wire | 0.3 | m | 4.5 | 1.35 | 8.37 mm2, rated 36.5 A in a bundle; 0.20 m cut + 10 % waste | estimated |
 | 10 AWG silicone wire | 6 | m | 3.2 | 19.20 | 5.261 mm2, rated 27.5 A in a bundle; 5.37 m cut + 10 % waste | estimated |
 | 12 AWG silicone wire | 6.1 | m | 2.2 | 13.42 | 3.308 mm2, rated 20.5 A in a bundle; 5.50 m cut + 10 % waste | estimated |
-| 14 AWG silicone wire | 18.3 | m | 1.5 | 27.45 | 2.082 mm2, rated 16 A in a bundle; 16.61 m cut + 10 % waste | estimated |
+| 14 AWG silicone wire | 18.3 | m | 1.5 | 27.45 | 2.082 mm2, rated 16 A in a bundle; 16.63 m cut + 10 % waste | estimated |
 | 16 AWG silicone wire | 1.4 | m | 1 | 1.40 | 1.308 mm2, rated 11 A in a bundle; 1.19 m cut + 10 % waste | estimated |
 | 18 AWG silicone wire | 4.2 | m | 0.7 | 2.94 | 0.823 mm2, rated 8 A in a bundle; 3.75 m cut + 10 % waste | estimated |
 | 20 AWG silicone wire | 0.8 | m | 0.5 | 0.40 | 0.519 mm2, rated 5.5 A in a bundle; 0.71 m cut + 10 % waste | estimated |

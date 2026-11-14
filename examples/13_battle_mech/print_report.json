@@ -58,11 +58,11 @@
   {
    "name": "base_link_b",
    "watertight": true,
-   "volume_cm3": 125.49,
+   "volume_cm3": 125.48,
    "size_mm": [
     89.0,
     141.5,
-    65.3
+    65.2
    ],
    "orientation": [
     1.0,
@@ -1216,28 +1216,26 @@
   {
    "name": "torso",
    "watertight": true,
-   "volume_cm3": 398.38,
+   "volume_cm3": 452.3,
    "size_mm": [
     200.5,
     230.0,
-    43.0
+    53.0
    ],
    "orientation": [
-    -1.0,
+    1.0,
     0.0,
     0.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 76.98,
-   "support_frac": 0.061,
-   "bed_contact_cm2": 92.0,
-   "min_wall_mm": 0.6,
-   "thin_wall_frac": 0.01,
-   "passed": false,
+   "support_area_cm2": 90.18,
+   "support_frac": 0.067,
+   "bed_contact_cm2": 114.81,
+   "min_wall_mm": 3.93,
+   "thin_wall_frac": 0.0,
+   "passed": true,
    "supports": "none",
-   "problems": [
-    "walls down to 0.60 mm (< 0.8 mm = 2 extrusion lines) on 1% of the surface"
-   ],
+   "problems": [],
    "warnings": []
   },
   {
@@ -1268,7 +1266,7 @@
   {
    "name": "torso_b",
    "watertight": true,
-   "volume_cm3": 755.86,
+   "volume_cm3": 770.3,
    "size_mm": [
     200.5,
     120.0,
@@ -1280,11 +1278,11 @@
     0.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 98.78,
+   "support_area_cm2": 100.04,
    "support_frac": 0.03,
    "bed_contact_cm2": 273.57,
-   "min_wall_mm": 2.2,
-   "thin_wall_frac": 0.003,
+   "min_wall_mm": 2.0,
+   "thin_wall_frac": 0.004,
    "passed": true,
    "supports": "none",
    "problems": [],
@@ -1293,7 +1291,7 @@
   {
    "name": "torso_b_b",
    "watertight": true,
-   "volume_cm3": 754.88,
+   "volume_cm3": 769.32,
    "size_mm": [
     200.5,
     120.0,
@@ -1305,11 +1303,11 @@
     0.0
    ],
    "fits_bed": true,
-   "support_area_cm2": 96.91,
+   "support_area_cm2": 98.16,
    "support_frac": 0.029,
    "bed_contact_cm2": 273.57,
-   "min_wall_mm": 1.69,
-   "thin_wall_frac": 0.005,
+   "min_wall_mm": 2.2,
+   "thin_wall_frac": 0.003,
    "passed": true,
    "supports": "none",
    "problems": [],
