@@ -16,7 +16,7 @@ import type { Mount, WorldMount } from "./snap.ts";
 // @ts-expect-error: plain JavaScript module without types
 import { makeZip } from "../../public/robotkit.js";
 
-export const API_VERSION = "1.4.0";
+export const API_VERSION = "1.5.0";
 export type { RobotSpecification, EditOp, PrintedParams, Mount, WorldMount };
 export { applyEdits, toScene, fromScene, worldFrames, rootLink, subtree, parentJoint, kindOf, poseMat, matPose, mul, inv, apply, emptyRobot, freeName, type Scene, type SceneNode } from "./edit.ts";
 export { snapPart, mate, mountFrame, compatible, patternsMatch, MATES, type Snap } from "./snap.ts";

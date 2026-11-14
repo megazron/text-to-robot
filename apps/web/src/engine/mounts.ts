@@ -4,7 +4,7 @@
 // holes on its case, a board's mounting holes (the electrical record's drawing where the catalog has none), a wheel's
 // bore. Every part also has a base for plain surface placement: its lowest face, so that set down on a surface it
 // touches it and nothing of it is inside (a servo's tabs are screwed down in a servo bracket, not through the surface).
-import { part, CATALOG, ELECTRICAL, type Vec3 } from "@ttr/parts";
+import { part, caseHoles, CATALOG, ELECTRICAL, type Vec3 } from "@ttr/parts";
 import type { RobotSpecification } from "@ttr/robot-schema";
 import type { PrintedParams } from "./edit.ts";
 import { worldFrames, poseMat, mul, apply, rotate, kindOf } from "./edit.ts";
@@ -99,13 +99,83 @@ export function printedProgram(p: PrintedParams, name: string): { name: string; 
     }
     case "servo_bracket": {
       if (!p.key) throw new Error("a servo bracket needs the servo it holds (key)");
-      const bb = part(p.key).bbox_mm!;
-      ops.push({ op: "cradle", key: p.key, T: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -(bb.min[0] + bb.max[0]) / 2, -(bb.min[1] + bb.max[1]) / 2, -bb.min[2] + w, 1], wall: w });
+      ops.push(...servoBracket(p.key, w).ops);
       break;
     }
     default: throw new Error(`unknown printed shape '${(p as { shape: string }).shape}'`);
   }
   return { name, ops, ...(f > 0 ? { edge: +f.toFixed(2) } : {}) };
+}
+/** Pilot hole (mm) for a case screw driven straight into the printed part (self-tapping in PETG). */
+const PILOT: Record<string, number> = { M2: 1.6, "M2.5": 2.1, M3: 2.5 };
+/** Clearance hole (mm) for a screw that passes through. */
+const CLEAR = (h: { thread?: string | null; dia_mm: number }) => (h.thread ? Number(h.thread.replace(/^M/, "")) + 0.4 : h.dia_mm + 0.3);
+/**
+ * A servo bracket the way they are made for these servos: a base that screws down (M3 at both ends) and holds the servo by
+ * the screws its maker put on it, leaving most of the body in view.
+ *   tabs (hobby servos): a pillar under each mounting tab, the case screws into pilot holes in it; the body hangs between
+ *     the pillars 2 mm clear of the base, with an arch in each pillar for the lead
+ *   bottom screws (Feetech STS, Dynamixel XL330): a plate the case stands on, screwed from below (the heads sunk in the
+ *     plate), low lips along the sides and the front to locate it; the back stays open for the leads
+ *   side screws (Dynamixel X): two cheeks up to the lowest row of side screws, clearance holes for them
+ * Bracket frame: the middle of its underside, z up. `seat` is where the servo's own frame (its output) sits, in mm.
+ * Everything is cut from the catalog's holes, case size and outline; a servo with none of these keeps the old closed
+ * cradle round its body box.
+ */
+export function servoBracket(key: string, wall = 3): { ops: unknown[]; seat: Vec3; holds: string } {
+  const c = part(key), bb = c.bbox_mm!, w = Math.max(2, Math.min(wall, 6)), holes = caseHoles(key), ops: unknown[] = [];
+  const down = holes.filter((h) => h.axis[2] < -0.9), side = holes.filter((h) => Math.abs(h.axis[1]) > 0.9);
+  const tabs = down.filter((h) => h.pos[2] > bb.min[2] + 6), bottom = down.filter((h) => h.pos[2] <= bb.min[2] + 6);
+  const caseMm = c.specs.case_mm as number[] | undefined;
+  // the base plate with its own M3 screws, along x past the servo by `flange` at each end
+  const flange = 10, base = (x0: number, x1: number, y0: number, y1: number) => {
+    ops.push({ op: "box", min: [x0 - flange, y0, 0], max: [x1 + flange, y1, w], r: 2 });
+    for (const x of [x0 - flange / 2, x1 + flange / 2]) for (const y of y1 - y0 > 26 ? [y0 + 7, y1 - 7] : [(y0 + y1) / 2]) ops.push({ op: "hole", a: [x, y, -1], b: [x, y, w + 1], d: 3.4 });
+  };
+  if (tabs.length >= 2 && caseMm) {
+    const g = 2, sx = -(tabs.reduce((a, h) => a + h.pos[0], 0) / tabs.length), sy = -(bb.min[1] + bb.max[1]) / 2, sz = -bb.min[2] + w + g;
+    const half = caseMm[0] / 2, ends = [-1, 1].map((sgn) => tabs.filter((h) => Math.sign(h.pos[0] + sx) === sgn));
+    const hy = Math.max(caseMm[1] / 2, ...tabs.map((h) => Math.abs(h.pos[1] + sy) + 4.5));
+    let xLo = 0, xHi = 0;
+    for (const [i, hs] of ends.entries()) {
+      if (!hs.length) continue;
+      const sgn = i ? 1 : -1, hx = hs[0].pos[0] + sx, inner = sgn * (half + 0.6), outer = hx + sgn * Math.max(4, Math.abs(hx - inner));
+      const top = sz + Math.max(...hs.map((h) => h.pos[2]));   // the tab's underside rests on the pillar
+      const [a, b] = sgn > 0 ? [inner, outer] : [outer, inner];
+      ops.push({ op: "box", min: [a, -hy, 0], max: [b, hy, top], r: 0 });
+      // an arch for the lead, which leaves the case low on one end (either, so both pillars have one)
+      ops.push({ op: "cutbox", min: [a - 1, -Math.min(4, hy - 2.5), w], max: [b + 1, Math.min(4, hy - 2.5), Math.min(top - 4, w + g + 7)] });
+      for (const h of hs) { const x = h.pos[0] + sx, y = h.pos[1] + sy; ops.push({ op: "hole", a: [x, y, -1], b: [x, y, top + 1], d: PILOT[h.thread ?? ""] ?? Math.max(1.2, h.dia_mm - 0.6) }); }
+      if (sgn > 0) xHi = b; else xLo = a;
+    }
+    base(xLo, xHi, -hy, hy);
+    return { ops, seat: [sx, sy, sz], holds: "its mounting tabs, screwed into two pillars" };
+  }
+  if (bottom.length >= 2) {
+    const sx = -(bb.min[0] + bb.max[0]) / 2, sy = -(bb.min[1] + bb.max[1]) / 2, sz = -bb.min[2] + w, x0 = bb.min[0] + sx, x1 = bb.max[0] + sx, hy = (bb.max[1] - bb.min[1]) / 2;
+    const cl = 0.4, lip = 6;
+    base(x0 - cl - w, x1 + cl + w, -hy - cl - w, hy + cl + w);
+    // lips: both sides and the output end; the back end stays open for the leads
+    ops.push({ op: "box", min: [x0 - cl - w, -hy - cl - w, w], max: [x1 + cl + w, -hy - cl, w + lip], r: 0 }, { op: "box", min: [x0 - cl - w, hy + cl, w], max: [x1 + cl + w, hy + cl + w, w + lip], r: 0 },
+      { op: "box", min: [x1 + cl, -hy - cl - w, w], max: [x1 + cl + w, hy + cl + w, w + lip], r: 0 });
+    for (const h of bottom) {
+      const x = h.pos[0] + sx, y = h.pos[1] + sy, d = CLEAR(h);
+      ops.push({ op: "hole", a: [x, y, -1], b: [x, y, w + 1], d }, { op: "hole", a: [x, y, -1], b: [x, y, Math.max(0.6, w - 1.4)], d: 2 * d + 0.6 });   // the head sunk into the underside
+    }
+    return { ops, seat: [sx, sy, sz], holds: "screws through the plate into its case" };
+  }
+  if (side.length >= 2) {
+    const sx = -(bb.min[0] + bb.max[0]) / 2, sy = -(bb.min[1] + bb.max[1]) / 2, sz = -bb.min[2] + w, hy = (bb.max[1] - bb.min[1]) / 2, cl = 0.3;
+    const low = Math.min(...side.map((h) => h.pos[2])), row = side.filter((h) => h.pos[2] < low + 0.5), xs = row.map((h) => h.pos[0] + sx);
+    const a = Math.min(...xs) - 5, b = Math.max(...xs) + 5, top = sz + low + 4.5;
+    base(Math.min(a, bb.min[0] + sx), Math.max(b, bb.max[0] + sx), -hy - cl - w, hy + cl + w);
+    for (const sgn of [-1, 1]) ops.push({ op: "box", min: [a, sgn > 0 ? hy + cl : -hy - cl - w, 0], max: [b, sgn > 0 ? hy + cl + w : -hy - cl, top], r: 0 });
+    for (const h of row) { const x = h.pos[0] + sx, y = h.pos[1] + sy, z = h.pos[2] + sz, s = Math.sign(y); ops.push({ op: "hole", a: [x, y - s * 1, z], b: [x, y + s * (w + cl + 1), z], d: CLEAR(h) }); }
+    return { ops, seat: [sx, sy, sz], holds: "its lowest row of side screws, through two cheeks" };
+  }
+  const sx = -(bb.min[0] + bb.max[0]) / 2, sy = -(bb.min[1] + bb.max[1]) / 2, sz = -bb.min[2] + w;
+  ops.push({ op: "cradle", key, T: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, sx, sy, sz, 1], wall: w });
+  return { ops, seat: [sx, sy, sz], holds: "a closed cradle round its case" };
 }
 /**
  * Height (mm) of a standoff plate's posts above its underside: the height asked for, or more when the board it is made
@@ -136,7 +206,7 @@ export function printedMounts(p: PrintedParams): Mount[] {
       if (p.shape === "beam") out.push({ id: "end", kind: "face", pos: [x - Math.max((p.hole_mm ?? 3.2) / 1000, 0.004), 0, z], axis: [0, 0, 1], ref: [1, 0, 0], label: "far end" });
       break;
     case "standoff_plate": out.push({ id: "standoffs", kind: "standoffs", pos: [0, 0, standoffTop(p) / 1000], axis: [0, 0, 1], ref: [1, 0, 0], holes: standoffPattern(p), ...(p.key ? { fits: p.key } : {}), label: p.key ? `standoffs for ${part(p.key).name}` : "standoffs" }); break;
-    case "servo_bracket": { const bb = part(p.key!).bbox_mm!; out.push({ id: "seat", kind: "seat", pos: [-(bb.min[0] + bb.max[0]) / 2000, -(bb.min[1] + bb.max[1]) / 2000, (-bb.min[2]) / 1000 + w], axis: [0, 0, -1], ref: [1, 0, 0], fits: p.key, label: `seat for ${part(p.key!).name}` }); break; }
+    case "servo_bracket": { const b = servoBracket(p.key!, (p.wall_mm ?? 3)); out.push({ id: "seat", kind: "seat", pos: mm(b.seat), axis: [0, 0, -1], ref: [1, 0, 0], fits: p.key, label: `seat for ${part(p.key!).name}, held by ${b.holds}` }); break; }
   }
   return out;
 }

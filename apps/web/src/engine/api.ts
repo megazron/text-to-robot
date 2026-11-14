@@ -18,7 +18,7 @@ import { clearanceAtHome, autoWireCached } from "./incremental.ts";
 import { stability, type Stability } from "./stability.ts";
 import { motionApi } from "./motion.ts";
 
-export const ENGINE_API_VERSION = "1.4.0";
+export const ENGINE_API_VERSION = "1.5.0";
 const MATERIAL: Record<string, string> = { actuator: "actuator", wheel: "rubber", battery: "battery", compute: "electronics", sensor: "electronics", motor_driver: "electronics", misc: "electronics", bearing: "metal", horn: "metal" };
 const BED_MM: Vec3 = [250, 210, 220];
 
@@ -232,8 +232,13 @@ function onItsStandoffs(spec: RobotSpecification): Set<string> {
   const out = new Set<string>(), printed = meta(spec).studio?.printed ?? {}, M = worldMounts(spec);
   for (const j of spec.joints) {
     const p = printed[j.parent], child = spec.links.find((l) => l.name === j.child);
-    if (p?.shape !== "standoff_plate" || !p.key || !child || kindOf(child).key !== p.key) continue;
-    const s = M.find((m) => m.link === j.parent && m.kind === "standoffs"), b = M.find((m) => m.link === j.child && m.kind === "board");
+    if (!p?.key || !child || kindOf(child).key !== p.key) continue;
+    // a board on its standoffs; a servo in the bracket made for it, its frame on the seat (its tabs rest on the pillars,
+    // inside the box that stands for the servo in this check; the bracket is cut round the case from the datasheet,
+    // tests/servo-bracket.test.ts)
+    const [mine, theirs] = p.shape === "standoff_plate" ? ["standoffs", "board"] : p.shape === "servo_bracket" ? ["seat", "case"] : ["", ""];
+    if (!mine) continue;
+    const s = M.find((m) => m.link === j.parent && m.kind === mine), b = M.find((m) => m.link === j.child && m.kind === theirs);
     if (s && b && Math.hypot(s.pos[0] - b.pos[0], s.pos[1] - b.pos[1], s.pos[2] - b.pos[2]) < 2e-4 && s.axis[0] * b.axis[0] + s.axis[1] * b.axis[1] + s.axis[2] * b.axis[2] < -0.99) out.add(`${j.parent}|${j.child}`);
   }
   return out;
