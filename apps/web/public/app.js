@@ -72,6 +72,9 @@ let dirty = true;
 function invalidate() { dirty = true; }
 controls.addEventListener("change", invalidate);
 new ResizeObserver(resize).observe(viewport); resize();
+// the view options wrap over one or more rows on a wide screen; the 3D view starts under them (styles.css, --hud-h)
+const hud = $("#viewhud");
+new ResizeObserver(() => document.documentElement.style.setProperty("--hud-h", `${hud.offsetHeight}px`)).observe(hud);
 let motionUI = null;   // motion.js: playback, posing, recording
 (function loop() { requestAnimationFrame(loop); controls.update(); if (motionUI?.tick(performance.now())) dirty = true; if (dirty) { dirty = false; renderer.render(scene, camera); } })();
 
@@ -159,30 +162,7 @@ function buildRobot(spec) {
   preview = { ready: false, expected: 0, loaded: 0, errors: [] };
   const pending = [];
   for (const l of spec.links) {
-    const group = new THREE.Group(); group.matrixAutoUpdate = false;
-    const isCol = $("#showCollision").checked;
-    const g = isCol ? (l.collision ?? l.geometry) : l.geometry;
-    let shapes=[g];
-    if(isCol && g.type==='mesh' && g.part==='arm_spar' && (!g.scale || g.scale[0]===g.scale[1])) {
-      const radial=g.scale?.[0]??1,axial=g.scale?.[2]??1;
-      const p=Object.fromEntries(Object.entries({length:.25,radius:.025,neck:.010,gap:.04}).map(([key,value])=>[key,typeof g.params?.[key]==='number'?g.params[key]:value]));
-      shapes=[{type:'cylinder',radius:p.neck*radial,length:p.length*axial},
-        {type:'cylinder',radius:p.radius*radial,length:(p.length-2*p.gap+2*Math.min(p.gap*.3,.006))*axial}];
-    }
-    for(const shape of shapes) {
-      const geom = makeGeom(shape);
-      const color = matColor(spec, l.material, l.role === "gripper" ? 0x2a5bd0 : l.role === "wheel" ? 0x1a1a1f : l.role === "base" ? 0x3f3f46 : 0xd8d8dc);
-      const mesh = new THREE.Mesh(geom, new THREE.MeshStandardMaterial({ color, metalness: l.material?.startsWith("armour_") ? 0.6 : l.material === "wearer" ? 0 : 0.25, roughness: l.material?.startsWith("armour_") ? 0.4 : l.material === "wearer" ? 0.9 : 0.55,
-        ...(l.material === "lens_glow" ? { emissive: new THREE.Color(0x9fe8ff), emissiveIntensity: 1.2 } : {}), transparent: isCol, opacity: isCol ? 0.45 : 1, wireframe: isCol }));
-      mesh.matrixAutoUpdate = false; mesh.matrix.copy(mat4(poseArr(l.origin)));
-      mesh.userData.linkName = l.name;
-      if (g.type === "mesh" && !isCol) {
-        preview.expected++;
-        if (state.id) pending.push(loadMeshInto(mesh, g, revision, state.id));
-        else preview.errors.push(`${g.file}: missing robot identifier`);
-      }
-      group.add(mesh);
-    }
+    const group = linkGroup(spec, l, revision, pending);
     robotGroup.add(group);
     state.meshes.set(l.name, group);
   }
@@ -199,6 +179,48 @@ function buildRobot(spec) {
     showPreviewStatus();
     if (revealNext) { const strong = revealNext === "strong"; revealNext = null; reveal(strong); }
   });
+}
+/** One link's meshes (its visual or, with Collision on, its collision shapes); mesh files load into `pending`. */
+function linkGroup(spec, l, revision, pending) {
+  const group = new THREE.Group(); group.matrixAutoUpdate = false;
+  const isCol = $("#showCollision").checked;
+  const g = isCol ? (l.collision ?? l.geometry) : l.geometry;
+  let shapes=[g];
+  if(isCol && g.type==='mesh' && g.part==='arm_spar' && (!g.scale || g.scale[0]===g.scale[1])) {
+    const radial=g.scale?.[0]??1,axial=g.scale?.[2]??1;
+    const p=Object.fromEntries(Object.entries({length:.25,radius:.025,neck:.010,gap:.04}).map(([key,value])=>[key,typeof g.params?.[key]==='number'?g.params[key]:value]));
+    shapes=[{type:'cylinder',radius:p.neck*radial,length:p.length*axial},
+      {type:'cylinder',radius:p.radius*radial,length:(p.length-2*p.gap+2*Math.min(p.gap*.3,.006))*axial}];
+  }
+  for(const shape of shapes) {
+    const geom = makeGeom(shape);
+    const color = matColor(spec, l.material, l.role === "gripper" ? 0x2a5bd0 : l.role === "wheel" ? 0x1a1a1f : l.role === "base" ? 0x3f3f46 : 0xd8d8dc);
+    const mesh = new THREE.Mesh(geom, new THREE.MeshStandardMaterial({ color, metalness: l.material?.startsWith("armour_") ? 0.6 : l.material === "wearer" ? 0 : 0.25, roughness: l.material?.startsWith("armour_") ? 0.4 : l.material === "wearer" ? 0.9 : 0.55,
+      ...(l.material === "lens_glow" ? { emissive: new THREE.Color(0x9fe8ff), emissiveIntensity: 1.2 } : {}), transparent: isCol, opacity: isCol ? 0.45 : 1, wireframe: isCol }));
+    mesh.matrixAutoUpdate = false; mesh.matrix.copy(mat4(poseArr(l.origin)));
+    mesh.userData.linkName = l.name;
+    if (g.type === "mesh" && !isCol) {
+      preview.expected++; mesh.userData.counted = true;
+      if (state.id) pending.push(loadMeshInto(mesh, g, revision, state.id));
+      else preview.errors.push(`${g.file}: missing robot identifier`);
+    }
+    group.add(mesh);
+  }
+  return group;
+}
+/** The same robot with some links made again (the 3D harness cuts its clip and grommet holes into the parts it passes):
+ *  only those links' meshes are replaced, in place; the camera, the pose and everything else on screen stay. */
+function rebuildLinks(spec, names) {
+  const revision = previewRevision, pending = [];
+  for (const name of names) {
+    const l = spec.links.find((x) => x.name === name), old = state.meshes.get(name); if (!l || !old) continue;
+    for (const c of old.children) { if (c.userData.counted) preview.expected--; if (c.userData.meshLoaded) preview.loaded--; }
+    const group = linkGroup(spec, l, revision, pending);
+    robotGroup.add(group); robotGroup.remove(old); old.traverse((child) => { child.geometry?.dispose(); child.material?.dispose(); });
+    state.meshes.set(name, group);
+  }
+  preview.ready = false; updateFK();
+  Promise.all(pending).then(() => { if (revision !== previewRevision) return; preview.ready = preview.errors.length === 0 && preview.loaded === preview.expected; showPreviewStatus(); invalidate(); });
 }
 
 function poseArr(p) {
@@ -271,7 +293,7 @@ renderer.domElement.addEventListener("pointerup", (e) => {
 
 // ---------------- electronics and harness in 3D ----------------
 // the engine's electronics3d answer for this robot, drawn on the robot's links; Robot keeps it hidden
-let electronics = null, electronicsFor = null, viewMode = "robot", focusedNet = null;
+let electronics = null, electronicsFor = null, viewMode = "robot", focusedNet = null, keepCamera = false;
 // the Bench view: the same electronics laid out on a desk (the engine's bench answer), in a group of its own
 let robotElectronics = null, benchElectronics = null, benchFor = null;
 const benchRoot = new THREE.Group(); benchRoot.visible = false; scene.add(benchRoot);
@@ -300,7 +322,7 @@ async function setViewMode(m) {
     electronics = benchElectronics; if (!electronics) return;
     fillRails(electronics.data); electronics.setMode("electronics"); electronics.highlight(focusedNet);
     $("#railFilter").hidden = false;
-    if (!electronics.framed) { electronics.framed = true; frameOn(electronics.bounds()); }
+    if (!electronics.framed) { electronics.framed = true; if (!keepCamera) frameOn(electronics.bounds()); }
     invalidate(); return;
   }
   benchRoot.visible = false; robotGroup.visible = true; pad.visible = true; benchElectronics?.setMode("robot");
@@ -315,8 +337,8 @@ async function setViewMode(m) {
   if (electronics) fillRails(electronics.data);
   $("#railFilter").hidden = m === "robot" || !electronics;
   electronics?.setMode(m); electronics?.update(true); electronics?.highlight(focusedNet);
-  // the first time the electronics show for this robot, the camera moves in on them
-  if (m !== "robot" && electronics && !electronics.framed) { electronics.framed = true; frameOn(electronics.bounds()); }
+  // the first time the electronics show for this robot, the camera moves in on them (not when the same robot is rewired)
+  if (m !== "robot" && electronics && !electronics.framed) { electronics.framed = true; if (!keepCamera) frameOn(electronics.bounds()); }
   // back from the desk: the camera goes back to the robot
   if (was === "bench") { if (m === "robot") frameRobot(); else if (electronics) frameOn(electronics.bounds()); }
   invalidate();
@@ -332,14 +354,22 @@ for (const b of document.querySelectorAll(".viewmode")) b.addEventListener("clic
 $("#railFilter").addEventListener("change", (e) => { electronics?.setFilter(e.target.value); invalidate(); });
 /** a new robot: the electronics view is rebuilt when it is next shown */
 // ---------------- the Run tab: the robot's compiled sketch on a virtual ATmega328P, driving the model (simview.js) ----------------
-let sim = null, simFor = null;
+let sim = null, simFor = null, simOpens = 0;
 async function openSim() {
   if (!state.robot || simFor === state.robot) return;
-  sim?.dispose(); simFor = state.robot;
+  sim?.dispose(); simFor = state.robot; simOpens++;
   sim = await createSim({ THREE, scene, robotGroup, state, updateFK, invalidate, api, el, box: $("#simPanel"), frameOn: (b) => { const inv = new THREE.Matrix4().copy(robotGroup.matrixWorld).invert(); frameOn(b.clone().applyMatrix4(inv)); } });
 }
 function resetSim() { sim?.dispose(); sim = null; simFor = null; if ($("#tab-run").classList.contains("active")) openSim(); }
 function resetElectronics() { robotElectronics?.dispose(); benchElectronics?.dispose(); benchRoot.clear(); robotElectronics = benchElectronics = electronics = null; electronicsFor = benchFor = null; focusedNet = null; if (viewMode !== "robot") setViewMode(viewMode); }
+/** the same robot with its harness laid again: the electronics are drawn from the new wiring record when the open view has
+ *  it, keeping the camera and the net in focus; the robot's meshes stay */
+async function rewireElectronics() {
+  const net = focusedNet; robotElectronics?.dispose(); benchElectronics?.dispose(); benchRoot.clear(); robotElectronics = benchElectronics = electronics = null; electronicsFor = benchFor = null;
+  if (viewMode === "robot") return;
+  keepCamera = true; focusedNet = net;
+  try { await setViewMode(viewMode); } finally { keepCamera = false; }
+}
 // hover: what the wire or pin under the pointer carries
 renderer.domElement.addEventListener("pointermove", (e) => {
   const tip = $("#wireTip");
@@ -708,10 +738,31 @@ async function routeWires(prompt, first) {
   try {
     const res = await api("/api/robots/generate", { prompt, route: true });
     if (state.robot !== shown) return;   // a newer robot or an edit: the routed one is not this anymore
-    state.versions.pop(); revealNext = null;
-    applyResult(res, label);
+    swapRouted(res, label);
   } catch (e) { if (e.message !== "superseded" && mine === routeSeq) status([...checksToText(first), "⚠ Wiring: the 3D harness could not be laid: " + e.message]); }
   finally { if (mine === routeSeq) { routing = "done"; $("#routingNote").hidden = true; } }   // (an older robot's pass says nothing about this one)
+}
+
+/** The routed robot in place of the one on screen. Its links and joints are the same; its wiring record is new and the
+ *  parts the harness passes have their clip and grommet holes, so nothing the visitor is doing starts again: the pose, the
+ *  camera, the open tab and view, the selection, saved poses, a sketch running in the Run tab and the Power view all stay;
+ *  the wiring's values and those parts' meshes update. */
+function swapRouted(res, label) {
+  // the harness cuts clip and grommet holes into the parts it passes: those links are made again, the rest stay as they are
+  const old = state.robot, J = (x) => JSON.stringify(x), names = (r) => J(r.links.map((l) => l.name));
+  if (names(old) !== names(res.robot) || J(old.joints) !== J(res.robot.joints) || J(old.materials) !== J(res.robot.materials)) { state.versions.pop(); revealNext = null; applyResult(res, label); return; }
+  const changed = res.robot.links.filter((l, i) => J(l) !== J(old.links[i])).map((l) => l.name);
+  const poses = old.metadata?.poses; if (poses) res.robot.metadata.poses = poses;
+  state.robot = res.robot; state.urdf = res.urdf; state.xacro = res.xacro; state.id = res.id ?? state.id; state.bom = res.bom ?? state.bom;
+  if (state.id && !STATIC) history.replaceState(null, "", `/r/${state.id}`);
+  if (changed.length) rebuildLinks(state.robot, changed);
+  const v = state.versions.at(-1); if (v?.robot === old) Object.assign(v, { id: state.id, label, robot: res.robot, urdf: res.urdf, xacro: res.xacro });
+  // what follows the robot: the Run tab's board keeps running (the pins are the same), the electronics and the open
+  // circuit view take the new wires
+  if (simFor === old) simFor = state.robot;
+  rewireElectronics();
+  rewireCircuit(old);
+  renderBom(state.bom); renderCards(); status(checksToText(res));
 }
 
 // ---------------- Arduino mode: price tiers ----------------
@@ -940,6 +991,23 @@ async function circuits(which) {
   c[which] ??= api(path, { robot: state.robot });
   return c[which];
 }
+/** the same robot rewired (swapRouted): the Power view solves its result on show again; a drawing on show is fetched again and
+ *  replaces the old one in place (zoom and scroll kept); views not on show draw the new robot when they are opened */
+function rewireCircuit(old) {
+  for (const box of document.querySelectorAll(".circview")) {
+    if (box._robot !== old) continue;
+    const which = box.dataset.view, robot = state.robot; box._robot = robot;
+    if (which === "power") { powerSim?.rewire?.(robot); continue; }
+    const img = box.querySelector("img.circimg"); if (!img) { box._robot = null; continue; }
+    circuits(which).then((r) => {
+      if (robot !== state.robot || box._robot !== robot) return;
+      const open = box.querySelector(".circbar a"), url = svgUrl(r.svg), was = new Set([img.src, open?.href]);
+      img.src = url; if (open) open.href = url; box._svg = r.svg; box._lit = null; markCircuitNet();
+      for (const u of was) if (u?.startsWith("blob:")) URL.revokeObjectURL(u);
+      if (which === "schematic") renderElectrical(r.electrical);
+    }).catch(() => {});
+  }
+}
 /** a new robot redraws the open circuit view */
 function refreshCircuit() { if ($("#tab-circuit").classList.contains("active")) showCircuit(document.querySelector(".seg.circ .tab.active").dataset.tab.slice(5)); }
 function svgUrl(svg) { return URL.createObjectURL(new Blob([svg], { type: "image/svg+xml" })); }
@@ -950,7 +1018,7 @@ async function showCircuit(which) {
   const box = document.querySelector(`.circview[data-view="${which}"]`), robot = state.robot;
   if (box._robot === robot && box.firstChild) return;
   box._robot = robot;
-  if (which === "power") { $("#circNote").hidden = true; powerSim?.dispose(); powerSim = createPowerSim({ api, el, box, robot, onResult: (r) => { powerResult = r ? { r, robot } : null; } }); return; }
+  if (which === "power") { $("#circNote").hidden = true; powerSim?.dispose(); powerSim = createPowerSim({ api, el, box, robot, onResult: (r, on) => { powerResult = r ? { r, robot: on } : null; } }); return; }
   box.replaceChildren(el("div", "hint", which === "breadboard" ? "Laying out every wire..." : "Drawing..."));
   $("#circNote").hidden = true;
   try {
@@ -1220,9 +1288,14 @@ initExamples(); initTemplates(); initMode();
   }
   doGenerate("Create a 6 DOF robotic arm with a parallel gripper");
 })();
-window.__ttr = { get routing() { return routing; }, get id() { return state.id; }, get motion() { return window.__ttrMotion; }, robotGroup, renderer, get preview() { return { ...preview, parts: [...state.meshes].filter(([name]) => state.robot.links.find(l => l.name === name)?.geometry.type === 'mesh').map(([name, group]) => ({ name, loaded: !!group.children[0].userData.meshLoaded, triangles: group.children[0].geometry.getAttribute('position').count / 3 })) }; }, camera, controls, frameRobot, get robot(){return state.robot},
+window.__ttr = { get routing() { return routing; },
+  // the robot's outline on screen (px), for the layout check (scripts/check_site.py): no control may lie on it
+  robotScreenBox() { const b = new THREE.Box3().setFromObject(robotGroup); if (b.isEmpty()) return null; const r = renderer.domElement.getBoundingClientRect(), out = [Infinity, Infinity, -Infinity, -Infinity];
+    for (let i = 0; i < 8; i++) { const p = new THREE.Vector3(i & 1 ? b.max.x : b.min.x, i & 2 ? b.max.y : b.min.y, i & 4 ? b.max.z : b.min.z).project(camera), x = r.left + ((p.x + 1) / 2) * r.width, y = r.top + ((1 - p.y) / 2) * r.height;
+      out[0] = Math.min(out[0], x); out[1] = Math.min(out[1], y); out[2] = Math.max(out[2], x); out[3] = Math.max(out[3], y); }
+    return out; }, get viewMode() { return viewMode; }, get powerResult() { return powerResult?.robot === state.robot ? powerResult.r : null; }, get id() { return state.id; }, get motion() { return window.__ttrMotion; }, robotGroup, renderer, get preview() { return { ...preview, parts: [...state.meshes].filter(([name]) => state.robot.links.find(l => l.name === name)?.geometry.type === 'mesh').map(([name, group]) => ({ name, loaded: !!group.children[0].userData.meshLoaded, triangles: group.children[0].geometry.getAttribute('position').count / 3 })) }; }, camera, controls, frameRobot, get robot(){return state.robot},
   // the Run tab's board as it runs, for the browser tests (scripts/check_sim.py)
-  get sim() { return sim ? { running: sim.running, pose: sim.pose, shipped: sim.shipped, ms: sim.board?.ms ?? 0, motors: sim.board?.motors() ?? [], servos: sim.board?.servos() ?? [], sensor: sim.board ? { ...sim.board.sensor } : null, joints: { ...state.jointValues } } : null; } };
+  get sim() { return sim ? { opens: simOpens, running: sim.running, pose: sim.pose, shipped: sim.shipped, ms: sim.board?.ms ?? 0, motors: sim.board?.motors() ?? [], servos: sim.board?.servos() ?? [], sensor: sim.board ? { ...sim.board.sensor } : null, joints: { ...state.jointValues } } : null; } };
 
 // ---------------- how it reads: the sentence model and a bring-your-own-key model (website only) ----------------
 // The settings live in this browser (apps/web/src/browser-api.ts); the key never leaves it except to the provider chosen.

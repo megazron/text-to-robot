@@ -10,7 +10,8 @@ with one. Arduino cases flip the Arduino switch first and check the price tiers.
     python scripts/check_site.py --only 12_mars_rover,18_arduino_car --no-downloads
     python scripts/check_site.py --update            (also writes examples/site_generation.json)
 
-The motion case (motion_ui) plays the site's default arm's purpose demo, downloads its GIF, joint CSV and ROS 2 trajectory, drags
+The layout case checks the 3D view's toolbar at desktop and phone sizes: every control on screen, none on another, on the 3D
+scene or on the rest of the page. The motion case (motion_ui) plays the site's default arm's purpose demo, downloads its GIF, joint CSV and ROS 2 trajectory, drags
 the arm's tool tip with the mouse in the Move mode (the joints must change and the tip must reach the dragged-to point), and
 drags it by touch in a phone-sized tab.
 
@@ -221,6 +222,78 @@ def motion_case(browser, case):
     return row
 
 
+# the view toolbar (Collision, Axes, Frames, Motion, Move, Reset, Robot / Electronics / Exploded / Bench, the wires menu): every
+# control is on screen (a phone's one-row toolbar scrolls sideways: each control is scrolled to), no two overlap, none lies
+# on the robot, the top bar, the sheet, the dock or the prompt bar (nor, on a wide screen, on the 3D view at all), and the
+# motion bar lies on none of them but the 3D view
+LAYOUT_SIZES = [("desktop", 1200, 760), ("desktop", 1500, 950), ("desktop", 1000, 640), ("desktop", 900, 700), ("phone", 390, 844), ("phone", 360, 740), ("phone", 430, 932)]
+LAYOUT_PROBE = """()=>{
+  const vis = (e) => { if (!e || e.hidden || e.closest('[hidden]')) return false; const r = e.getBoundingClientRect(), s = getComputedStyle(e); return r.width > 0 && r.height > 0 && s.visibility !== 'hidden' && s.display !== 'none'; };
+  const box = (e) => { const r = e.getBoundingClientRect(); return [r.left, r.top, r.right, r.bottom]; };
+  const name = (e) => (e.id ? '#' + e.id : '') || (e.dataset.mode ? 'mode ' + e.dataset.mode : '') || e.textContent.trim().slice(0, 20) || e.tagName;
+  const hud = document.querySelector('#viewhud'), ctl = [...hud.querySelectorAll(':scope > :not(.chipgroup), .chipgroup > *')].filter(vis);
+  const out = { controls: [], others: [] };
+  for (const e of ctl) {
+    e.scrollIntoView({ block: 'nearest', inline: 'nearest' });   // (a phone's toolbar scrolls sideways)
+    const r = box(e), clip = box(hud);
+    out.controls.push({ name: name(e), box: r, inWindow: r[0] >= -0.5 && r[1] >= -0.5 && r[2] <= innerWidth + 0.5 && r[3] <= innerHeight + 0.5, inHud: r[0] >= clip[0] - 0.5 && r[2] <= clip[2] + 0.5 });
+  }
+  hud.scrollLeft = 0;
+  out.controls.forEach((c, i) => { c.box = box(ctl[i]); });
+  const add = (label, e) => { if (vis(e)) out.others.push({ name: label, box: box(e) }); };
+  // on a wide screen the toolbar is a band above the 3D view; on a phone the view runs under the whole page, so there no
+  // control may lie on the robot itself
+  if (innerWidth >= 900) add('3D scene', document.querySelector('#viewport canvas'));
+  const rb = window.__ttr.robotScreenBox(); if (rb) out.others.push({ name: 'robot', box: rb }); add('brand', document.querySelector('#topbar .brand')); add('robot name', document.querySelector('#robotName')); add('mode pill', document.querySelector('#mode'));
+  add('dock', document.querySelector('#dock')); add('prompt bar', document.querySelector('.capsule')); add('motion bar', document.querySelector('#motionbar')); add('preview status', document.querySelector('#previewStatus'));
+  const sh = document.querySelector('#sheet'); if (vis(sh)) { const r = box(sh); if (r[1] < innerHeight - 1) out.others.push({ name: 'sheet', box: r }); }
+  return out;
+}"""
+
+def layout_case(browser, case):
+    """The view toolbar at desktop and phone sizes, in the Robot and the Electronics view and with the motion bar open."""
+    row = {"case": case["id"], "prompt": "(the arm the site opens with)", "mode": "layout", "pass": False, "problems": [], "sizes": []}
+    ms = args.timeout * 1000
+    hit = lambda a, b: min(a[2], b[2]) - max(a[0], b[0]) > 0.5 and min(a[3], b[3]) - max(a[1], b[1]) > 0.5
+    for profile, w, h in LAYOUT_SIZES:
+        opts = {"viewport": {"width": w, "height": h}} if profile == "desktop" else {"viewport": {"width": w, "height": h}, "device_scale_factor": 2, "is_mobile": True, "has_touch": True}
+        ctx = browser.new_context(**opts); page = ctx.new_page(); errors = []
+        page.route("**/*", lambda r: r.continue_() if r.request.url.startswith(origin) or r.request.url.startswith(("data:", "blob:")) else r.abort())
+        page.on("pageerror", lambda e: errors.append(str(e)))
+        try:
+            page.goto(url)
+            page.wait_for_function("window.__ttr?.robot?.links.length>0 && window.__ttr.preview.ready && window.__ttr.motion?.list?.length>0", timeout=ms); wait_idle(page, ms)
+            for state in ("robot", "electronics", "motion"):
+                if state == "electronics":
+                    page.evaluate('document.querySelector(".viewmode[data-mode=electronics]").click()')
+                    page.wait_for_function("!document.querySelector('#railFilter').hidden", timeout=ms)
+                if state == "motion": page.evaluate('document.querySelector("#motionBtn").click()'); page.wait_for_function("!document.querySelector('#motionbar').hidden", timeout=60000)
+                page.wait_for_timeout(700)   # springs and the sheet settle
+                got = page.evaluate(LAYOUT_PROBE); c = got["controls"]
+                where = f"{w}x{h} {state}"
+                for x in c:
+                    if not x["inWindow"] or not x["inHud"]: row["problems"].append(f"{where}: {x['name']} is off screen {[round(v) for v in x['box']]}")
+                for i in range(len(c)):
+                    for j in range(i + 1, len(c)):
+                        if hit(c[i]["box"], c[j]["box"]): row["problems"].append(f"{where}: {c[i]['name']} overlaps {c[j]['name']}")
+                    for o in got["others"]:
+                        if o["name"] == "robot" and state != "robot": continue   # (the Electronics view moves in close on the parts)
+                        if hit(c[i]["box"], o["box"]): row["problems"].append(f"{where}: {c[i]['name']} lies on the {o['name']}")
+                mb = next((o for o in got["others"] if o["name"] == "motion bar"), None)
+                if mb:
+                    for o in got["others"]:
+                        if o["name"] in ("brand", "robot name", "mode pill", "dock", "prompt bar") and hit(mb["box"], o["box"]): row["problems"].append(f"{where}: the motion bar lies on the {o['name']}")
+                if state == "robot": page.screenshot(path=str(args.out / f"layout_{w}x{h}.png"))
+                row["sizes"].append({"size": where, "controls": len(c)})
+            page.evaluate('document.querySelector("#motionBtn").click()'); page.evaluate('document.querySelector(".viewmode[data-mode=robot]").click()')
+        except Exception as e:
+            row["problems"].append(f"{w}x{h}: {type(e).__name__}: {str(e)[:300]}")
+        if errors: row["problems"].append(f"{w}x{h} page errors: {errors[:2]}")
+        ctx.close()
+    row["pass"] = not row["problems"]
+    return row
+
+
 def run(browser, case):
     """One robot in a fresh tab. Returns the row for the report."""
     # the Mark 43 is forged live in the tab (packages/mesh/src/forge): its armour takes far longer than any other robot
@@ -381,7 +454,7 @@ cases = [{"id": f.name, "example": f.name, "mode": "prompt", "prompt": (f / "pro
 if not args.no_arduino:
     cases += [{"id": i, "example": e, "mode": "arduino", "must_match": m, "prompt": (root / "examples" / e / "prompt.txt").read_text()} for i, e, m in ARDUINO]
     cases += [{"id": i, "mode": "arduino", "prompt": p} for i, p in ARDUINO_TEXT]
-cases += [{"id": "motion_ui", "mode": "motion", "prompt": ""}]
+cases += [{"id": "motion_ui", "mode": "motion", "prompt": ""}, {"id": "layout", "mode": "layout", "prompt": ""}]
 if args.only: keep = set(args.only.split(",")); cases = [c for c in cases if c["id"] in keep or c.get("example") in keep]
 rows = []
 with sync_playwright() as p:
@@ -389,7 +462,7 @@ with sync_playwright() as p:
     if os.getenv("TTR_CHROMIUM"): opts["executable_path"] = os.environ["TTR_CHROMIUM"]
     browser = p.chromium.launch(**opts)
     for case in cases:
-        row = motion_case(browser, case) if case["mode"] == "motion" else run(browser, case); rows.append(row)
+        row = motion_case(browser, case) if case["mode"] == "motion" else layout_case(browser, case) if case["mode"] == "layout" else run(browser, case); rows.append(row)
         print(f"{'PASS' if row['pass'] else 'FAIL'} {row['case']:<24} generate {row.get('generate_s', '-')}s preview {row.get('preview_s', '-')}s {row.get('robot_name', '')}", flush=True)
         for problem in row["problems"]: print("     ", problem, flush=True)
         (args.out / "report.json").write_text(json.dumps({"rows": rows}, indent=2) + "\n")

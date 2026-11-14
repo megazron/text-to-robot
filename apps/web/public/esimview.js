@@ -3,13 +3,16 @@
 // (fuses, brown-outs, regulators in dropout or limit, wires over their rating, logic levels), every rail's voltage at
 // its source and at its worst load, and, over time, each rail's lowest supply; every estimate the model used is listed.
 // The result goes back to the page (`onResult`), so the 3D view's hover shows the voltage at a pin and the current in a wire.
-// Usage: createPowerSim({ api, el, box, robot, onResult }). Nothing here builds markup from strings (the page's policy).
+// Usage: createPowerSim({ api, el, box, robot, onResult }); .rewire(robot) when the same robot's harness is laid again (the
+// 3D harness replacing the straight runs): the controls stay as they are and a result on show is solved again on the new wires.
+// Nothing here builds markup from strings (the page's policy).
 const SVG = "http://www.w3.org/2000/svg";
 // rail lines: the first four slots of the validated categorical palette, dark steps (worst adjacent CVD dE 8.4 on this surface)
 const LINE = ["#3987e5", "#d95926", "#199e70", "#c98500"];
 const fmt = (v, d = 2) => (v == null || !Number.isFinite(v) ? "-" : (+v).toFixed(d));
 
 export function createPowerSim({ api, el, box, robot, onResult }) {
+  let solved = null;   // the options of the result on show, to solve it again on a new harness
   const w = robot.metadata?.design?.wiring;
   if (!w) { box.replaceChildren(el("div", "hint", "This robot has no wiring to simulate.")); return { dispose() {} }; }
   const rails = w.rails.map((r) => r.name), wires = w.cables.flatMap((c) => (c.premade ? [] : c.wires.map((x) => x.id)));
@@ -51,10 +54,18 @@ export function createPowerSim({ api, el, box, robot, onResult }) {
     try {
       const f = faultList(), options = { scenario: scen.value, faults: f, ...(hasBattery ? { soc: Number(soc.value) / 100 } : {}), ...(f.length ? { transient: { t_end_s: 4, dt_s: 0.02, t_fault_s: 0.5 } } : {}) };
       const r = await api("/api/engine/electrical-sim", { robot, options });
-      show(r); onResult?.(r);
-    } catch (e) { out.replaceChildren(el("div", "hint", `Not simulated: ${e.message}`)); onResult?.(null); }
+      show(r); onResult?.(r, robot); solved = options;
+    } catch (e) { out.replaceChildren(el("div", "hint", `Not simulated: ${e.message}`)); onResult?.(null); solved = null; }
     go.disabled = false;
   });
+  /** the same robot with its harness laid again: only the wiring's values change, so the page keeps everything on show */
+  async function rewire(next) {
+    robot = next;
+    if (!solved) return;
+    const options = solved;
+    try { const r = await api("/api/engine/electrical-sim", { robot, options }); if (robot === next && solved === options) { show(r); onResult?.(r, robot); } }
+    catch { /* the result on show stays: the visitor can press Simulate again */ }
+  }
 
   function show(r) {
     const parts = [];
@@ -133,5 +144,5 @@ export function createPowerSim({ api, el, box, robot, onResult }) {
     wrap.append(legend, s, tip, el("div", "hint", tr.note));
     return wrap;
   }
-  return { dispose() { onResult?.(null); } };
+  return { rewire, dispose() { onResult?.(null); } };
 }

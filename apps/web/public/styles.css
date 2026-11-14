@@ -63,7 +63,9 @@ body.busy #charge{opacity:1}
 #robotName{background:rgba(0,0,0,.55);color:var(--ink);display:block;min-height:0;line-height:24px;flex:0 1 auto;min-width:0}
 
 /* ---------- view options ---------- */
-.viewhud{position:fixed;z-index:20;top:calc(var(--sat) + 56px);left:calc(var(--sal) + 14px);right:calc(var(--sar) + 14px);display:flex;gap:6px;justify-content:center;overflow-x:auto;scrollbar-width:none}
+.viewhud{position:fixed;z-index:20;top:calc(var(--sat) + 56px);left:calc(var(--sal) + 14px);right:calc(var(--sar) + 14px);display:flex;gap:6px;justify-content:safe center;overflow-x:auto;scrollbar-width:none}
+.viewhud>*{flex:none}
+.viewhud{align-items:center}
 .viewhud::-webkit-scrollbar{display:none}
 .chip{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 14px;border-radius:999px;font-size:13px;font-weight:600;color:var(--mute);background:rgba(10,16,12,.72);border:1px solid var(--line);white-space:nowrap;cursor:pointer;transition:transform .3s var(--spring),color .2s,background-color .2s,border-color .2s}
 .chip:active{transform:scale(.94)}
@@ -324,14 +326,15 @@ body.busy .skhide{display:none}
 /* ---------- wide screens: the sheet docks, the bottom bar becomes a side rail ---------- */
 @media (min-width:900px){
   :root{--chrome:0px}
-  #viewport{left:104px;right:calc(var(--sheet-w) + 24px);top:64px;height:calc(100dvh - 64px - 104px)}
+  /* the view options are a toolbar band above the 3D view (its height, --hud-h, is set by app.js as it wraps): nothing of it lies over the scene */
+  #viewport{left:104px;right:calc(var(--sheet-w) + 24px);top:calc(72px + var(--hud-h,86px));height:calc(100dvh - 72px - var(--hud-h,86px) - 104px)}
   #aura{left:calc((100% - var(--sheet-w))/2 + 40px);top:46%}
   #charge{left:calc((100% - var(--sheet-w))/2 + 40px);top:calc(50% - 170px)}
   #topbar{left:24px;right:calc(var(--sheet-w) + 36px);top:16px}
   .brand b{font-size:19px}
-  .viewhud{left:auto;right:calc(var(--sheet-w) + 36px);top:72px;flex-direction:column;align-items:stretch}
-  .chip{min-height:40px}
-  #previewStatus{left:calc((100% - var(--sheet-w))/2 + 40px);top:76px}
+  .viewhud{left:112px;right:calc(var(--sheet-w) + 32px);top:64px;flex-wrap:wrap;align-items:center;justify-content:center;overflow:visible}
+  .chip{min-height:36px}
+  #previewStatus{left:calc((100% - var(--sheet-w))/2 + 40px);top:calc(80px + var(--hud-h,86px))}
   .motionbar{left:calc((100% - var(--sheet-w))/2 + 40px);top:auto;bottom:96px;width:min(600px,calc(100vw - var(--sheet-w) - 190px))}
   #dock{left:18px;top:50%;bottom:auto;width:72px;height:auto;transform:translateY(-50%);grid-template-columns:none;grid-auto-rows:64px;padding:6px;border-radius:40px}
   .dock-glow{left:6px;right:6px;top:6px;bottom:auto;width:auto;height:64px;border-radius:32px;transform:translateY(calc(var(--i,0)*100%))}
@@ -383,6 +386,7 @@ body.busy .skhide{display:none}
 .framed{padding:24px;font-size:16px}
 /* 3D electronics view: mode buttons, rail filter, hover card */
 .chipgroup { display: inline-flex; gap: 4px; }
+@media (min-width:900px){ .chipgroup { flex-wrap: wrap; justify-content: center; max-width: 100%; } }
 .chip.viewmode.active { background: rgba(57, 255, 136, 0.22); border-color: rgba(57, 255, 136, 0.7); }
 .wiretip { position: fixed; z-index: 30; pointer-events: none; max-width: 280px; padding: 8px 10px; border-radius: 10px; font: 12px/1.35 system-ui, sans-serif;
   background: rgba(8, 18, 12, 0.92); color: #e8fff1; border: 1px solid rgba(57, 255, 136, 0.45); box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4); }
