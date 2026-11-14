@@ -131,7 +131,7 @@
       "mesh_triangles_verified": true,
       "example": "13_battle_mech",
       "pass": true,
-      "source_robot_sha256": "bb8cf770e144bee0bac0ea36166a31db4703091e6e12eeae1dd82b61246f2a57",
+      "source_robot_sha256": "35eb20dc8397e8bd4157af667bfa60f6caef8f239f36b95cc50c824c71cc10d7",
       "name": "battle_mech",
       "links": 96,
       "joints": 95
@@ -249,7 +249,7 @@
   ],
   "web_source_sha256": {
     "simview.js": "f27473e242c7692d18a91cc595c6fec2ea5c27f1eab383f50ca7694b078d79bc",
-    "styles.css": "626788c954a603ab988cb6cae20b2e6c542c56e09b19e4a6b8ef3946701d3eaf",
+    "styles.css": "5783186f90a22ae1e3fbf9e31bafd7d5fe50a1576aa9e14e92ca8a3155e64f19",
     "safe.js": "d9dcadf21edef5f3531d6d978e05005060899d17c91b5dc32b93e37a528c4b3d",
     "motion.js": "30e50425de2bc2083cd338d157169c9e2b94921a463db33db8c1a781ef0d8ca5",
     "community.css": "16338f5bacdfc336626c6ad5e8eb3152d05a8877c20f37529a6d2dd96fcb9438",
@@ -257,12 +257,12 @@
     "robotkit.js": "77f98f220e040f61fcc6053feec05e4c83074bc1507f0d297dcc4780b59c2d29",
     "community.js": "34bdc6be8ff164a2a0cde16e416873f6a436baf2d9672af706731d699363f491",
     "index.html": "035a742e38bb1fa5bd9cb3949d653e6861dc81ca88f31c11ebb28eb25e17d5fe",
-    "app.js": "44fdbbae8e26a05ce7be34c23197d57a8a722a0f6913ef3568b7c000f47ceeb4",
+    "app.js": "40871e1d687cc2bd22a24d7075e1680c950ea463147537ba7d97f09c1dd0f589",
     "community.json": "60e1667fa43003a5e99f6224c6ae55d639e1afe1f1942ffbfc2369c811e715dc",
     "electronics3d.js": "8169c4faae37f77b7cd0f7148d2062fc2e6a7839b208197096e94030dada1ee3",
     "ui.js": "5f4180fde29588b88d5b1b619786bb14422e3af16c722a5507bdda456fbde3f5",
     "avrsim.js": "8599f12e05c13482e2396a5ca7ad65f70bca3bca66d422c6cf5ccc3a6a72c0fc",
-    "esimview.js": "210289c18f4ca5d617a2967653a84f23766b519e69c6c82601e6e4c3bb10ea07",
+    "esimview.js": "fbcae015c33f648112d7067a1020ae3467510b0e130d3c888ccbff36b4be0bad",
     "manifest.webmanifest": "04e68ba90ca92076dc5d456ca8ed71ce93bfb16bbf5565fc22bba80a32c5380a"
   }
 }
