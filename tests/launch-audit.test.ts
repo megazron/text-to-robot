@@ -92,7 +92,8 @@ test("misspelt robot words and a few emoji are read, and said; other scripts are
 test("weapons and robots meant to hurt are refused, whatever body they have; tools are not weapons", () => {
   for (const p of ["a robot with a gun", "a weaponised drone that shoots people", "a battle robot with a flamethrower", "a robot that can kill", "a 6 DOF arm with a knife to stab", "WALL-E with a gun"])
     // the weapon is left out, a safe robot is built and the note says why; the harmful words are not kept in the robot
-    { const r = interpretPrompt(p); assert.match([...r.interpretation.approximations].join(" "), /does not design weapons.*left out/, p); assert.doesNotMatch(JSON.stringify(r.spec), /\bgun\b|flamethrower|\bstab\b|\bkill\b/i, p); }
+    // (read, not designed: the safe robots are designed by tests/fidelity)
+    { const u = understandPrompt(p); assert.match(u.notes.join(" "), /does not design weapons.*left out/, p); assert.doesNotMatch(u.text, /\bgun\b|flamethrower|\bstab\b|\bkill\b/i, p); }
   assert.equal(read("a 6 dof arm holding a hot glue gun").family, "serial_arm");
   assert.equal(read("a robot arm that cuts vegetables with a knife").family, "serial_arm");
 });
