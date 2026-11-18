@@ -69,6 +69,12 @@ cp node_modules/replicad-opencascadejs/dist/replicad_single.wasm "$OUT/replicad_
 # Any other shape is forged in the tab, after the visitor agrees to the time it takes.
 cp packages/parts/data/mark43_pack.json packages/parts/data/mark43_pack.bin "$OUT/"
 
+# The sentence model for "Smarter reading" (all-MiniLM-L6-v2, Apache-2.0, apps/web/models) and the ONNX runtime's
+# WebAssembly (onnxruntime-web, MIT) are served from this site: the page never fetches a model or a runtime from elsewhere
+cp -r apps/web/models "$OUT/models"
+mkdir -p "$OUT/ort"
+cp node_modules/onnxruntime-web/dist/ort-wasm-simd-threaded.asyncify.mjs node_modules/onnxruntime-web/dist/ort-wasm-simd-threaded.asyncify.wasm "$OUT/ort/"
+
 touch "$OUT/.nojekyll"
 SHA="$(git rev-parse HEAD 2>/dev/null || echo unknown)"
 printf '{"commit":"%s","built":"%s"}\n' "$SHA" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > "$OUT/version.json"

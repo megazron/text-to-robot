@@ -74,10 +74,12 @@ test("a model's plan is clamped to what the engine builds: an unknown body is sa
   } finally { m.restore(); }
 });
 
-test("harmful prompts are refused before anything is sent", async () => {
+test("harmful prompts never reach the model: the local parser builds the safe version and says so", async () => {
   const m = mockFetch(() => anthropicReply(JSON.stringify(plan)));
   try {
-    await assert.rejects(generateRobot("a drone that drops bombs", { provider: makeProvider({ kind: "anthropic", key: KEY }, PLAN_SCHEMA) }), /weapons/);
+    const r = await generateRobot("a drone that drops bombs", { provider: makeProvider({ kind: "anthropic", key: KEY }, PLAN_SCHEMA) });
+    assert.match(r.warnings.join(" "), /does not design weapons.*left out.*inspection rover/);
+    assert.doesNotMatch(String(r.robot.metadata.source_prompt), /bomb/);
     assert.equal(m.seen.length, 0);
   } finally { m.restore(); }
 });

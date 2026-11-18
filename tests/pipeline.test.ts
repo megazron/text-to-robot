@@ -25,6 +25,9 @@ test("acceptance: modify forearm keeps validity and recomputes inertia", async (
 test("empty prompt throws", async () => {
   await assert.rejects(() => generateRobot("", { provider: new DemoProvider() }));
 });
-test("unrecognised requests do not silently become unrelated arms", async () => {
-  await assert.rejects(generateRobot("asdf qwerty zzz"), /Robot type not recognised/);
+test("unrecognised requests get the general-purpose robot as a starting point, said plainly, never silently", async () => {
+  const r = await generateRobot("asdf qwerty zzz");
+  assert.equal(r.interpretation?.path, "fallback");
+  assert.match(r.warnings.join(" "), /could not find a robot type.*starting point/);
+  assert.match(r.designedBy, /general-purpose robot was built as a starting point/);
 });

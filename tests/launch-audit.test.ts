@@ -82,12 +82,14 @@ test("misspelt robot words and a few emoji are read, and said; other scripts are
     assert.match(notes(p), /read non-English keywords as English/, p);
   }
   assert.equal(read("机器狗").family, "quadruped");
-  assert.throws(() => interpretPrompt("หุ่นยนต์ที่บินได้"), /a language the parser does not read yet/);
+  // a language it does not read yet still gets a robot, and the note says why it is the general-purpose one
+  assert.match(notes("หุ่นยนต์ที่บินได้"), /a language the parser does not read yet.*starting point/i);
 });
 
 test("weapons and robots meant to hurt are refused, whatever body they have; tools are not weapons", () => {
   for (const p of ["a robot with a gun", "a weaponised drone that shoots people", "a battle robot with a flamethrower", "a robot that can kill", "a 6 DOF arm with a knife to stab", "WALL-E with a gun"])
-    assert.throws(() => interpretPrompt(p), /does not design weapons/, p);
+    // the weapon is left out, a safe robot is built and the note says why; the harmful words are not kept in the robot
+    { const r = interpretPrompt(p); assert.match([...r.interpretation.approximations].join(" "), /does not design weapons.*left out/, p); assert.doesNotMatch(JSON.stringify(r.spec), /\bgun\b|flamethrower|\bstab\b|\bkill\b/i, p); }
   assert.equal(read("a 6 dof arm holding a hot glue gun").family, "serial_arm");
   assert.equal(read("a robot arm that cuts vegetables with a knife").family, "serial_arm");
 });

@@ -185,10 +185,14 @@ async function applyReading(r: Reading) {
   if (!!r.embeddings === embedderOn) return;
   embedderOn = !!r.embeddings;
   if (!embedderOn) { registerEmbedder(undefined); return; }
-  try {
-    const mod = await import(/* @vite-ignore */ sibling("embed.js"));
-    registerEmbedder(mod.createEmbedder((p: { status: string; file?: string; progress?: number }) => post({ reading: p })));
-  } catch (e) { embedderOn = false; post({ reading: { status: "error", error: (e as Error).message } }); }
+  // the runtime and the model load the first time a prompt needs them, not when the page opens
+  let inner: { embed(t: string[]): Promise<number[][]> } | undefined;
+  registerEmbedder({ name: "MiniLM sentence model", threshold: 0.3, async embed(texts: string[]) {
+    try {
+      if (!inner) { const mod = await import(/* @vite-ignore */ sibling("embed.js")); inner = mod.createEmbedder((p: { status: string; file?: string; progress?: number }) => post({ reading: p })); }
+      return await inner!.embed(texts);
+    } catch (e) { post({ reading: { status: "error", error: (e as Error).message } }); throw e; }
+  } });
 }
 self.onmessage = async ({ data }: MessageEvent) => {
   // the visitor stopped a forge: it throws at its next step, and the helpers' jobs end now

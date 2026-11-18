@@ -51,7 +51,8 @@ test("families: synonyms and approximations are explicit", () => {
   assert.equal(omni.family, "mecanum"); assert.match(omni.approximations.join(), /mecanum/);
   const tracked = read("tracked tank robot");
   assert.equal(tracked.family, "four_wheel"); assert.match(tracked.approximations.join(), /tracks/);
-  assert.match(read("a dual-arm robot").approximations.join(), /humanoid/);
+  // a dual-arm robot is two arms on one plate (a work cell), not a humanoid with legs
+  assert.equal(read("a dual-arm robot").family, "arm_workcell");
 });
 
 
@@ -60,7 +61,8 @@ test("drones, ROVs, snakes, gantries, deltas and hands are robot types of their 
     ["a pen plotter", "gantry"], ["a robot dog with an arm", "quadruped_arm"], ["spot with a 5 dof arm", "quadruped_arm"]] as const)
     assert.equal(understandPrompt(p).family, f, p);
   assert.match(understandPrompt("a stewart platform").approx ?? "", /Stewart platform .* delta/);
-  assert.throws(() => parsePrompt("asdf qwerty"), /not recognised.*Try an arm/);
+  // nonsense gets the general-purpose robot as a starting point, with what to say instead
+  assert.match(understandPrompt("asdf qwerty").approx ?? "", /could not find a robot type.*starting point.*for example/);
 });
 
 

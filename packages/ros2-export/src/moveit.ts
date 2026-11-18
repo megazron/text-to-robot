@@ -24,6 +24,20 @@ export function planningGroups(spec:RobotSpecification):Group[] {
     return groups;
   }
   const excluded=(j:Joint)=>/_hinge$|finger|thumb|gripper|suction|wheel|track/.test(j.name);
+  // several arms grafted with a prefix (a work cell, a rover with two arms): one group per arm, root to its last link
+  const fam=String((spec.metadata as {design?:{family?:string}}).design?.family??'');
+  const prefixes=[...new Set(spec.links.map(l=>l.name.match(/^((?:left|right)_arm|arm_\d+)_base_link$/)?.[1]).filter((x):x is string=>!!x))];
+  if(prefixes.length>=2&&/^(?:arm_workcell|mobile_rocker_bogie)$/.test(fam)) {
+    for(const p of prefixes) {
+      const chains=spec.links.filter(l=>l.name.startsWith(p+'_')).map(l=>path(root,l.name)).filter(c=>c.length&&!c.some(excluded));
+      chains.sort((a,b)=>b.filter(j=>j.type!=='fixed'&&!j.passive).length-a.filter(j=>j.type!=='fixed'&&!j.passive).length);
+      const moving=(chains[0]??[]).filter(j=>j.type!=='fixed'&&!j.passive);
+      if(moving.length)groups.push({name:p,base:root,tip:moving.at(-1)!.child,joints:moving});
+      const grip=spec.joints.filter(j=>j.name.startsWith(p+'_')&&/gripper/.test(j.name)&&j.type!=='fixed'&&!j.mimic);
+      if(grip.length)groups.push({name:`${p}_gripper`,joints:grip});
+    }
+    return groups;
+  }
   // Every named limb has its own chain; a quadruped leg is not an "arm".
   for(const side of ['left','right']) {
     const tips=spec.links.filter(l=>l.name.startsWith(side+'_')&&/hand$|forearm$|wrist_[123]$/.test(l.name));

@@ -68,9 +68,9 @@ async function localInterpret(prompt: string): Promise<{ spec: RobotSpecificatio
   try {
     const r = interpretPrompt(prompt);
     // a job no table entry knew got the general-purpose body: a sentence model, when switched on, may still find the task it means
-    if (r.interpretation.path === "general job" && activeEmbedder().name !== "built-in word table") {
+    if ((r.interpretation.path === "general job" || r.interpretation.path === "fallback") && activeEmbedder().name !== "built-in word table") {
       const hit = await nearestEntry(prompt);
-      if (hit) { const s = interpretPrompt(prompt, { knowledgeHint: hit.entry.id }); if (s.interpretation.path !== "general job") { s.interpretation.path = `similarity (${hit.by}, ${hit.score})`; return s; } }
+      if (hit) { const s = interpretPrompt(prompt, { knowledgeHint: hit.entry.id }); if (s.interpretation.path !== "general job" && s.interpretation.path !== "fallback") { s.interpretation.path = `similarity (${hit.by}, ${hit.score})`; return s; } }
     }
     return r;
   }
@@ -86,8 +86,8 @@ async function localInterpret(prompt: string): Promise<{ spec: RobotSpecificatio
 
 async function specFromProvider(provider: LlmProvider, prompt: string, warnings: string[]): Promise<{ spec: RobotSpecification; interpretation?: Interpretation }> {
   if (provider instanceof LocalProvider) return localInterpret(prompt);
-  // harmful and impossible requests are refused before any text leaves the page
-  interpretTriage(prompt);
+  // harmful, empty and impossible requests never leave the page: the local parser builds the safe or nearest version
+  try { interpretTriage(prompt); } catch (e) { if (e instanceof PromptRefusal) return localInterpret(prompt); throw e; }
   try {
     // a model that writes a body plan: the plan is checked field by field, then designed from real parts like any prompt
     if (provider.generatePlan) {
@@ -137,7 +137,7 @@ export async function forgeForRobot(spec: RobotSpecification): Promise<void> {
 
 export async function generateRobot(prompt: string, opts: GenerateOptions = {}): Promise<GenerateResult> {
   const warnings: string[] = [];
-  if (!prompt || !prompt.trim()) throw new PromptRefusal("empty", "The prompt is empty. Describe a robot, or what it should do, for example \"a robot that waters my plants\" or \"a 6 DOF arm with a gripper\".");
+  prompt = typeof prompt === "string" ? prompt : String(prompt ?? "");
   await forgeForPrompt(prompt);
   const provider = opts.provider ?? new LocalProvider();
   const { spec: raw, interpretation } = await specFromProvider(provider, prompt, warnings);
@@ -158,6 +158,7 @@ export function designedBy(i: Interpretation | undefined, provider: LlmProvider)
   if (!i) return `the ${provider.name} model wrote the robot file directly (checked and repaired locally; not sized from real parts)`;
   if (i.path.startsWith("model")) return `${i.path.replace(/^model \((.*)\)$/, "the $1 model")} wrote a body plan; the local design engine built it from real parts`;
   if (i.path === "knowledge table") return "the local task and object table chose the body plan; the local design engine built it";
+  if (i.path === "fallback") return "nothing in the prompt named a robot, a task or an object I know, so a general-purpose robot was built as a starting point (said with the result); the local design engine built it";
   if (i.path === "general job") return "no task in the local table matched, so the general-purpose body for that kind of job was chosen; the local design engine built it";
   if (i.path.startsWith("similarity")) return `the closest task by meaning (${i.path.replace(/^similarity \((.*)\)$/, "$1")}) chose the body plan; the local design engine built it`;
   return "the local rule parser read the robot type; the local design engine built it";

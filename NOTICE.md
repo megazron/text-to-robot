@@ -23,6 +23,9 @@ Text to Robot's own code is under the [MIT licence](LICENSE). The website and th
 | [replicad-opencascadejs](https://github.com/sgenoud/replicad) | LGPL-2.1 | OpenCascade compiled to WebAssembly |
 | [earcut](https://github.com/mapbox/earcut) | ISC | Polygon triangulation |
 | [gifenc](https://github.com/mattdesl/gifenc) | MIT | Downloading a motion as a GIF |
+| [Transformers.js](https://github.com/huggingface/transformers.js) | Apache-2.0 | Running the sentence model in the browser (Smarter reading) |
+| [ONNX Runtime Web](https://github.com/microsoft/onnxruntime) | MIT | The sentence model's runtime (WebAssembly, served by the site) |
+| [all-MiniLM-L6-v2](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2), 8-bit ONNX export by [Xenova](https://huggingface.co/Xenova/all-MiniLM-L6-v2) | Apache-2.0 | The sentence model, vendored in `apps/web/models/` (see the README there) |
 
 The marching-cubes triangle table in `packages/mesh/src/forge/mctable.ts` is from Paul Bourke's "Polygonising a scalar field" (from Cory Gene Bloyd), taken from three.js (`examples/jsm/objects/MarchingCubes.js`), MIT licence, copyright 2010-2023 three.js authors. The Gaussian filter, gradient and monotone cubic in `packages/mesh/src/forge/num.ts` are written to give the same numbers as SciPy (BSD-3-Clause) and NumPy (BSD-3-Clause); no code is copied from them.
 

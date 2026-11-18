@@ -144,8 +144,8 @@
       </form>
       <div id="readingBox" hidden>
         <h2 class="label">How it reads</h2>
-        <button id="embedBtn" class="switch-row" type="button" role="switch" aria-checked="false" title="A small language model compares a prompt the word table cannot place with the tasks it knows">
-          <span class="t"><b>Smarter reading</b><small id="embedSub">Downloads a 30 MB sentence model once, from Hugging Face</small></span>
+        <button id="embedBtn" class="switch-row" type="button" role="switch" aria-checked="false" title="A small sentence model, run in this browser, compares a prompt the word table cannot place with the tasks it knows">
+          <span class="t"><b>Smarter reading</b><small id="embedSub">A 30 MB sentence model from this site, loaded once when a prompt needs it</small></span>
           <span class="switch" aria-hidden="true"></span>
         </button>
         <details id="byok" class="field-group">
@@ -157,6 +157,18 @@
           <label>Model <input id="byokModel" placeholder="claude-opus-5-5" /></label>
           <label class="check"><input id="byokRemember" type="checkbox" /> Remember on this device</label>
         </details>
+      </div>
+      <div id="understood" class="understood" hidden>
+        <h2 class="label">Here's what I understood</h2>
+        <div id="understoodBuilt" class="chips ucheck" aria-live="polite"></div>
+        <div id="understoodEdit" class="uedit" role="group" aria-label="Change what was understood and build again">
+          <label>Arms <select id="uArms"><option value="0">none</option><option>1</option><option>2</option><option>3</option><option>4</option></select></label>
+          <label>DOF per arm <select id="uDof"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option></select></label>
+          <label>On <select id="uBase"><option value="none">nothing (bench)</option><option value="table">a shared base plate</option><option value="mobile">a wheeled base</option><option value="quadruped">a quadruped</option><option value="torso">a torso column</option></select></label>
+          <label>Wheels <select id="uWheels"><option value="">any</option><option>2</option><option>3</option><option>4</option><option>6</option></select></label>
+          <button id="uBuild" class="tonal" type="button">Build this</button>
+        </div>
+        <ul id="understoodNotes" class="unotes"></ul>
       </div>
       <h2 class="label">Engine log</h2>
       <div id="status" class="status" role="log"></div>

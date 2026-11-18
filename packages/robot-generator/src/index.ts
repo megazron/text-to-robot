@@ -17,3 +17,5 @@ export { registerEmbedder, activeEmbedder, nearestEntry, LexicalEmbedder, type E
 export { TOOL_LABEL, TOOL_WORDS, type ToolKind } from "./tools.ts";
 export { translateScripts } from "./multilingual.ts";
 export { planFromModel, planPrompt, PLAN_SCHEMA, PLAN_SYSTEM_PROMPT, type BodyPlan } from "./plan.ts";
+export { readShape, shapeChips, countOf, type RequestShape, type ArmsAsked, type BaseAsked } from "./request.ts";
+export { builtShape, shapeGaps, type BuiltShape } from "./fidelity.ts";

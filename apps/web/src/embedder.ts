@@ -1,16 +1,26 @@
-// "Smarter reading" on the website: a small sentence-embedding model (all-MiniLM-L6-v2, 8-bit, about 23 MB of weights
-// plus the ONNX runtime's WebAssembly) compares a prompt the word table could not place with every task, object and
-// animal the table knows. Built as its own file (embed.js) and imported by the engine worker only when the visitor
-// switches it on; the browser caches the model, so it downloads once. If it cannot load, the word table answers.
+// "Smarter reading" on the website: a small sentence-embedding model (all-MiniLM-L6-v2, 8-bit, 23 MB of weights plus the
+// ONNX runtime's WebAssembly) compares a prompt the word table could not place with every task, object and animal the
+// table knows. Built as its own file (embed.js) and imported by the engine worker only when it is needed; the model and the
+// runtime are served by this site (apps/web/models, copied with the runtime by deploy/build-pages.sh), so nothing is fetched
+// from anywhere else and nothing typed leaves the page. The browser caches both, so they download once. If they cannot
+// load, the word table answers. Counts and structure ("two 6 DOF arms on a rover") never depend on it: the grammar in
+// packages/robot-generator/src/request.ts reads those.
 import { pipeline, env } from "@huggingface/transformers";
 import type { Embedder } from "@ttr/robot-generator";
 
 /** What switching it on downloads, measured from the files (scripts/check_site.py keeps the site itself free of it). */
 export const DOWNLOAD_MB = 30;   // 23 MB of weights (served as is) + the 27 MB runtime, 7 MB compressed
 export const MODEL = "Xenova/all-MiniLM-L6-v2";
+/** where this site serves the model and the runtime: beside embed.js */
+const SITE = new URL("./", import.meta.url).href;
 
 export function createEmbedder(onProgress?: (p: { file?: string; progress?: number; status: string }) => void): Embedder {
-  env.allowLocalModels = false;   // nothing is looked up on this site's own server
+  // only this site's own copy: no Hugging Face, no CDN
+  env.allowRemoteModels = false;
+  env.allowLocalModels = true;
+  env.localModelPath = `${SITE}models/`;
+  const wasm = env.backends.onnx.wasm as { wasmPaths?: unknown } | undefined;
+  if (wasm) wasm.wasmPaths = { mjs: `${SITE}ort/ort-wasm-simd-threaded.asyncify.mjs`, wasm: `${SITE}ort/ort-wasm-simd-threaded.asyncify.wasm` };
   let fe: Promise<(t: string[], o: object) => Promise<{ tolist(): number[][] }>> | undefined;
   const load = () => (fe ??= pipeline("feature-extraction", MODEL, { dtype: "q8", progress_callback: onProgress as never }) as never);
   return {

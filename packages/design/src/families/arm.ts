@@ -11,7 +11,7 @@ import { worstTorques, axisInertias, pointWorld, totalMass, type PointLoad } fro
 import { LADDERS, choose, evaluate, passes, ladderFor, type Ladder, DYNAMIC_FACTOR } from "../sizing.ts";
 import { controlCase, enclosureChecks, exposed } from "../enclosure.ts";
 import { Harness, finishWiring } from "../wiring.ts";
-import { busChain, canTree, actuatorsUnder } from "../netlist.ts";
+import { busChain, busTree, canTree, actuatorsUnder } from "../netlist.ts";
 import { limitsFromGeometry } from "./legkit.ts";
 
 export interface ArmRequest {
@@ -503,9 +503,11 @@ function designArmOn(req: ArmRequest): RobotSpecification {
 
 const gripKeyUsed = (A: Assembly) => A.spec.links.some((l) => l.name === "gripper_actuator");
 /** Netlist of an arm on a bench: mains supply to the actuator rail, the bus through every joint in order; a hobby arm on a PCA9685. */
-function wireFixedArm(A: Assembly, H: Harness, ladder: Ladder, supplyA: number, _grip: boolean, supply12: string) {
+export function wireFixedArm(A: Assembly, H: Harness, ladder: Ladder, supplyA: number, _grip: boolean, supply12: string, arms?: string[], second?: string[]) {
   H.scan();
   const actuators = actuatorsUnder(H, /_actuator$/);
+  // several arms on one supply (a work cell): one bus branch per arm, each arm's joints in order
+  const chains = arms && arms.length > 1 ? arms.map((p) => actuators.filter((s) => s.startsWith(`${p}_`))) : null;
   if (ladder === "hobby") {
     if (supplyA === 4) { H.bought("power_supply.dc_out.@power", "power_jack.plug_side.+", "barrel", 0.5, 4, "ADAPTER"); H.mainPower("V_SERVO", { source: "power_jack", pos: "CENTRE", neg: "SLEEVE", sw: "main_switch", fuse: false, volts: 5, cont: 4, peakLimit: 4, simNote: "every servo stalled at once" }); }
     else H.mainPower("V_SERVO", { source: "power_supply", pos: "DC OUTPUT +V", neg: "DC OUTPUT -V", fuse: false, volts: 5, cont: 10, peakLimit: 11, simNote: "every servo stalled at once" });
@@ -532,8 +534,17 @@ function wireFixedArm(A: Assembly, H: Harness, ladder: Ladder, supplyA: number, 
     // the supply's own datasheet rating: 6 A / 6.6 A for the LRS-75, 12.5 A / 13.75 A for the LRS-150
     const out = electrical(supply12)!.current_a.v;
     H.mainPower("VBUS", { source: "power_supply", pos: "DC OUTPUT +V", neg: "DC OUTPUT -V", fuse: false, volts: 12, cont: supply12 === "psu_12v_lrs75" ? 6 : out.typical, peakLimit: supply12 === "psu_12v_lrs75" ? 6.6 : out.peak, simultaneous: 2, simNote: "two joints at peak at once, the rest at half load" });
-    busChain(H, { adapter: "servo_bus", servos: actuators, rail: "VBUS" });
+    // a work cell's later arms on a second supply and bus adapter (power_supply_2, servo_bus_2, in their own case)
+    const two = chains && second?.length ? chains.filter((c, i) => second.includes(arms![i])) : [];
+    const one = chains ? chains.filter((c) => !two.includes(c)) : null;
+    if (one) busTree(H, { adapter: "servo_bus", chains: one, rail: "VBUS" }); else busChain(H, { adapter: "servo_bus", servos: actuators, rail: "VBUS" });
     H.spare("servo_bus.dc_in");
+    if (two.length) {
+      const o2 = electrical("psu_12v_lrs150")!.current_a.v;
+      H.rail("VBUS2", { source: "power_supply_2", out: "DC OUTPUT +V", gnd: "DC OUTPUT -V", volts: 12, cont: o2.typical, peakLimit: o2.peak, simultaneous: 2, simNote: "two joints at peak at once, the rest at half load" });
+      busTree(H, { adapter: "servo_bus_2", chains: two, rail: "VBUS2" });
+      H.spare("servo_bus_2.dc_in");
+    }
   }
   // sensors go to the host PC on their own leads
   for (const x of ["workspace_depth", "wrist_camera", "wrist_depth", "base_imu"]) if (H.instances.has(x)) { exposed(A, x, x === "base_imu" ? "under the base plate, wired to the host PC" : "on its mount, looking at the workspace, wired to the host PC", [20, 20]); for (const p of H.rec(x).ports) H.spare(`${x}.${p.name}`); }

@@ -14,7 +14,7 @@ import { fk, linkCom, totalMass, gravityTorques, type PointLoad } from "../kin.t
 import { designArm, graftArm, type ArmRequest } from "./arm.ts";
 import { limitsFromGeometry } from "./legkit.ts";
 import { evaluate, DYNAMIC_FACTOR, type Ladder } from "../sizing.ts";
-import { registerBay, enclosureChecks, exposed, baysOf, worldBox as partBox, heatOf, ventNeed, type BayRecord, type Face } from "../enclosure.ts";
+import { BATTERY_SWITCH, registerBay, enclosureChecks, exposed, baysOf, worldBox as partBox, heatOf, ventNeed, type BayRecord, type Face } from "../enclosure.ts";
 import { Harness, finishWiring } from "../wiring.ts";
 import { busTree, dualDriver, pinsOf, coreTree, actuatorsUnder } from "../netlist.ts";
 import { partModel } from "../wiring3d/models.ts";
@@ -30,6 +30,10 @@ export interface MobileRequest {
   excludeSensors?: string[];
   wheels?: number;
   arm?: { dof: number; reachM?: number; payloadKg?: number; gripper?: boolean };
+  /** two arms side by side (the rover): when given, used instead of `arm` */
+  arms?: { dof: number; reachM?: number; payloadKg?: number; gripper?: boolean }[];
+  /** differential drive only: one caster at the rear (a three-wheeled robot) instead of one at each end */
+  casters?: 1 | 2;
 }
 
 // ---------------------------------------------------------------- requirements and constants
@@ -74,6 +78,8 @@ class Build {
   packRoom = false;
   /** printed rings standing in a compartment (round a lidar mast), world mm, for seating harness parts clear of them */
   keepOut: { x0: number; x1: number; y0: number; y1: number; z0: number; z1: number }[] = [];
+  /** the running current is past a rocker's 16 A (a rover with two arms): the main switch is the battery switch */
+  bigSwitch = false;
   H: Harness;
   constructor(name: string, family: string, prompt?: string) {
     this.A = new Assembly(name, family, prompt);
@@ -457,7 +463,10 @@ function wallFixtures(b: Build, plan: Placement[], w: { x0: number; x1: number; 
   if (only.sw === false) return { cuts, exits, lidCuts: [] as Op[] };
   // main switch: first spot along the walls with nothing behind it (the big rocker: its 25.5 mm body, the tabs' ferrules
   // and the first bend of its 10 AWG leads; the small one stands high in its wall instead, see below)
-  const spots: { p: Vec3; n: Vec3; face: Face; q: Rect }[] = [], deep = b.A.design.family === "mobile_diff_drive" ? 25 : 50, wide = b.A.design.family === "mobile_diff_drive" ? 12 : 18;
+  const big = b.bigSwitch, spots: { p: Vec3; n: Vec3; face: Face; q: Rect }[] = [], deep = big ? 64 : b.A.design.family === "mobile_diff_drive" ? 25 : 50, wide = big ? 30 : b.A.design.family === "mobile_diff_drive" ? 12 : 18;
+  // (the battery switch tries the end walls first: the side walls carry the vent slots)
+  if (big) for (const f of [0.5, 0.35, 0.65, 0.25, 0.75]) { const y = w.y0 + (w.y1 - w.y0) * f;
+    spots.push({ p: [w.x0, y, zc], n: [-1, 0, 0], face: "x-", q: { x0: w.x0, x1: w.x0 + deep, y0: y - wide, y1: y + wide } }, { p: [w.x1, y, zc], n: [1, 0, 0], face: "x+", q: { x0: w.x1 - deep, x1: w.x1, y0: y - wide, y1: y + wide } }); }
   for (const f of [0.15, 0.85, 0.3, 0.7, 0.5, 0.1, 0.9, 0.2, 0.8, 0.25, 0.75, 0.35, 0.65, 0.4, 0.6, 0.45, 0.55]) {
     const x = w.x0 + (w.x1 - w.x0) * f, y = w.y0 + (w.y1 - w.y0) * f;
     spots.push({ p: [x, w.y1, zc], n: [0, 1, 0], face: "y+", q: { x0: x - wide, x1: x + wide, y0: w.y1 - deep, y1: w.y1 } }, { p: [x, w.y0, zc], n: [0, -1, 0], face: "y-", q: { x0: x - wide, x1: x + wide, y0: w.y0, y1: w.y0 + deep } },
@@ -474,6 +483,14 @@ function wallFixtures(b: Build, plan: Placement[], w: { x0: number; x1: number; 
     b.mount(parent, "switch_kcd4", frame([x, y, zl], [0, 0, 1], [1, 0, 0]), "main_switch", "main power switch");
     exits.push({ id: `${bayName}.switch`, kind: "switch", face: "lid", at: [x, y, zl], normal: [0, 0, 1], hole_mm: 22, part: "main_switch" });
     return { cuts, exits, lidCuts: [{ op: "cutbox", min: [x - 11.2, y - 15.2, w.z1 - 4], max: [x + 11.2, y + 15.2, zl + 1] }] as Op[] };
+  }
+  if (big) {
+    // the battery switch through a 52 mm hole in the wall, its body inside (its face and knob outside)
+    const a: Vec3 = [s.p[0] - s.n[0] * (w.t + 1), s.p[1] - s.n[1] * (w.t + 1), s.p[2]], c: Vec3 = [s.p[0] + s.n[0] * (w.t + 1), s.p[1] + s.n[1] * (w.t + 1), s.p[2]];
+    cuts.push({ op: "hole", a, b: c, d: 52.4 });
+    b.mount(parent, BATTERY_SWITCH, frame(s.p, s.n, [0, 0, 1]), "main_switch", "main battery switch (the running current is past a rocker's 16 A)");
+    exits.push({ id: `${bayName}.switch`, kind: "switch", face: s.face, at: s.p, normal: s.n, hole_mm: 52, part: "main_switch" });
+    return { cuts, exits, lidCuts: [] as Op[] };
   }
   const small = b.A.design.family === "mobile_diff_drive", hw = small ? 9.7 : 15.2, hz = small ? 6.7 : 11.2, along = s.n[0] !== 0;
   // the small rocker stands high in the wall: its leads run off over the boards and the pack (their bend radius has room
@@ -1070,11 +1087,15 @@ function defaults(req: MobileRequest, sensors: MobileSensor[]) {
 
 // ============================================================================ wheeled bases
 type BaseKind = "diff" | "four" | "mecanum";
+const TRI_AXLE_X = 50;
 function designBase(kind: BaseKind, req: MobileRequest): RobotSpecification {
   const sensors = defaults(req, kind === "four" ? ["lidar", "imu", "camera"] : ["lidar", "imu"]);
   const cargo = req.payloadKg ?? (kind === "diff" ? 1 : 2);
   const wheel = kind === "mecanum" ? "mecanum_96mm_gobilda" : "wheel_90mm_37d";
-  const name = req.name ?? { diff: "diff_drive_robot", four: "four_wheel_robot", mecanum: "mecanum_robot" }[kind];
+  // three wheels: the drive axle moves forward of the middle and one caster stays at the rear, so the centre of mass is
+  // inside the triangle of contacts
+  const tri = kind === "diff" && req.casters === 1;
+  const name = req.name ?? (tri ? "three_wheel_robot" : { diff: "diff_drive_robot", four: "four_wheel_robot", mecanum: "mecanum_robot" }[kind]);
   const family = { diff: "mobile_diff_drive", four: "mobile_skid_steer", mecanum: "mobile_mecanum" }[kind];
   const result = sizeAndBuild((motor, battery) => {
     const b = new Build(name, family, req.prompt);
@@ -1090,10 +1111,10 @@ function designBase(kind: BaseKind, req: MobileRequest): RobotSpecification {
     const L = lengths.find((l) => { const d = deckRects(l, W, sensors); return !!packBay(parts.items, d.area, pad(d.reserved)); }) ?? lengths.find((l) => !!deckLayout(l, W, sensors, parts.items)) ?? base;
     deck(b, L, W, zB, [], kind === "diff" ? 60 : 20);
     const stations: WheelOpts[] = kind === "diff"
-      ? [1, -1].map((s) => ({ tag: s > 0 ? "left" : "right", parent: "base_link", x: 0, side: s as 1 | -1, yFace, motor, wheel }))
+      ? [1, -1].map((s) => ({ tag: s > 0 ? "left" : "right", parent: "base_link", x: tri ? TRI_AXLE_X : 0, side: s as 1 | -1, yFace, motor, wheel }))
       : [[90, 1, "front_left"], [90, -1, "front_right"], [-90, 1, "rear_left"], [-90, -1, "rear_right"]].map(([x, s, t]) => ({ tag: String(t), parent: "base_link", x: Number(x), side: Number(s) as 1 | -1, yFace, motor, wheel }));
     for (const o of stations) deckBracket(b, wheelStation(b, o), o, zB);
-    if (kind === "diff") for (const [t, x] of [["front_caster", 98], ["rear_caster", -98]] as const) ballCaster(b, t, x, 0, zB);
+    if (kind === "diff") for (const [t, x] of (tri ? [["rear_caster", -98]] : [["front_caster", 98], ["rear_caster", -98]]) as [string, number][]) ballCaster(b, t, x, 0, zB);
     const { items, compute } = parts;
     const top = b.deckTop;
     const front = L / 2, lidarAt: [number, number] = [-L / 2 + 36, 0];
@@ -1146,7 +1167,8 @@ function designBase(kind: BaseKind, req: MobileRequest): RobotSpecification {
     "All motors and servos are 12 V parts run straight from a 3S LiPo (9.9-12.6 V) through the main fuse and switch; see WIRING.md.",
     "Printed parts: PETG; brackets bolt to the deck with M3 screws and nuts; the motor face screws are the gearmotor's own six M3 holes.",
   );
-  if (kind === "diff") A.design.assumptions.push("Two ball casters (front and rear) keep the deck level; on rough floors fit only one or add the Pololu spacer set so the drive wheels never lift.");
+  if (tri) A.design.assumptions.push(`Three wheels: the two driven wheels ${TRI_AXLE_X} mm ahead of the middle and one ball caster at the rear; the tipping check uses that triangle of contacts.`);
+  else if (kind === "diff") A.design.assumptions.push("Two ball casters (front and rear) keep the deck level; on rough floors fit only one or add the Pololu spacer set so the drive wheels never lift.");
   if (kind === "four") A.design.assumptions.push("Skid steering: both wheels on a side get the same command; turning on the spot scrubs the tyres sideways (checked as a short-transient torque).");
   if (kind === "mecanum") A.design.assumptions.push("Mecanum wheels mount in an X pattern seen from above (front-left and rear-right left-handed, the others right-handed); goBILDA sells them as a 2+2 set.",
     "The simulation contacts each mecanum wheel as a plain cylinder: free rollers are not simulated, so sideways motion is a kinematics claim, not a physics-tested one.",
@@ -1168,21 +1190,26 @@ export function designMecanum(req: MobileRequest = {}): RobotSpecification { ret
  * rocker carries a front wheel and a bogie with the middle and rear wheels, with 4 wheels each rocker
  * carries a front and a rear wheel. Optionally carries an arm on the deck.
  */
+/** Arms a rover's lid takes side by side. */
+export const MAX_ROVER_ARMS = 2;
 export function designRover(req: MobileRequest = {}): RobotSpecification {
   const nW = Math.max(4, req.wheels ?? 6) >= 6 ? 6 : 4;
   const sensors = defaults(req, ["depth", "imu", "camera"]);
-  const armReq = req.arm;
+  // one arm on the lid's middle, or two side by side across it (a dual-arm mobile manipulator)
+  const armReqs = (req.arms?.length ? req.arms : req.arm ? [req.arm] : []).slice(0, MAX_ROVER_ARMS);
+  const armReq = armReqs[0];
   const payload = armReq?.payloadKg ?? req.payloadKg ?? 0.2;
   const wheel = "wheel_90mm_37d", wi = wheelInfo(wheel), h = wi.r;
   const BL = 320, BW = 210, zBody = 112, BH = 100, yFace = 124;
   const pivot: Vec3 = [0, 0, 150], xF = 130, xBog = -65, zBog = 105;
-  const name = req.name ?? (armReq ? "mars_rover_with_arm" : "mars_rover");
-  const armPrefix = "arm";
-  // the arm does not depend on the drive choice: size it once
-  const armMount = translation([0, 0, zBody + BH + 3]);
-  const armSpec = armReq ? sizeArm({ dof: armReq.dof, reachM: armReq.reachM ?? 0.35, payloadKg: payload, budget: req.budget, ladder: "feetech", basePlateMm: 100, ...(armReq.gripper === false ? { gripper: false } : {}) }, I4()) : null;
+  const name = req.name ?? (armReqs.length > 1 ? "rover_with_two_arms" : armReq ? "mars_rover_with_arm" : "mars_rover");
+  const dual = armReqs.length > 1, ARM_Y = 55;
+  // the arms do not depend on the drive choice: size them once
+  const armsOn = armReqs.map((a, i) => ({ prefix: dual ? (i === 0 ? "left_arm" : "right_arm") : "arm", y: dual ? (i === 0 ? ARM_Y : -ARM_Y) : 0, req: a,
+    spec: sizeArm({ dof: a.dof, reachM: a.reachM ?? 0.35, payloadKg: a.payloadKg ?? payload, budget: req.budget, ladder: "feetech", basePlateMm: 100, ...(a.gripper === false ? { gripper: false } : {}) }, I4()) }));
   const result = sizeAndBuild((motor, battery) => {
     const b = new Build(name, "mobile_rocker_bogie", req.prompt);
+    b.bigSwitch = dual;
     // body: folded 2 mm aluminium box (open top) with a 3 mm lid that carries arm and sensors
     const body: Op[] = [{ op: "box", min: [-BL / 2, -BW / 2, zBody], max: [BL / 2, BW / 2, zBody + BH], r: 6 }, { op: "cutbox", min: [-BL / 2 + 2, -BW / 2 + 2, zBody + 2], max: [BL / 2 - 2, BW / 2 - 2, zBody + BH + 1] }];
     b.fabricated("base_link", null, body, { density: ALU, material: "aluminium", item: `${BL} x ${BW} x ${BH} mm folded 2 mm aluminium body box (~$60)`, usd: 60, role: "base" });
@@ -1263,10 +1290,10 @@ export function designRover(req: MobileRequest = {}): RobotSpecification {
     b.A.amendProgram("base_link", [...fx.cuts, ...slots, ...pivotExits.map((e): Op => ({ op: "hole", a: [e.at[0], e.at[1] - e.normal[1] * 4, e.at[2]], b: [e.at[0], e.at[1] + e.normal[1] * 2, e.at[2]], d: 9.5 }))]);
     // the arm's bus and power leads up through the lid into its pedestal (which gets the same hole); the mast camera's
     // ribbon down through a hole by the mast's foot
-    const lidExit: Vec3 = [-40, 0, zBody + BH + 3], mastExit: Vec3 = [-BL / 2 + 72, 0, zBody + BH + 3];
-    b.A.amendProgram("deck_lid", [lidExit, ...(sensors.includes("camera") ? [mastExit] : [])].map((p): Op => ({ op: "hole", a: [p[0], p[1], zBody + BH - 2], b: [p[0], p[1], zBody + BH + 5], d: 9.5 })));
+    const lidExits: Vec3[] = (armsOn.length ? armsOn : [{ y: 0 }]).map((a) => [-40, a.y, zBody + BH + 3]), mastExit: Vec3 = [-BL / 2 + 72, 0, zBody + BH + 3];
+    b.A.amendProgram("deck_lid", [...lidExits, ...(sensors.includes("camera") ? [mastExit] : [])].map((p): Op => ({ op: "hole", a: [p[0], p[1], zBody + BH - 2], b: [p[0], p[1], zBody + BH + 5], d: 9.5 })));
     registerBay(b.A, { name: "body_bay", tub: "base_link", lid: "deck_lid", parent: "base_link", T: I4(), min: [-BL / 2 + 2, -BW / 2 + 2, zBody + 2], max: [BL / 2 - 2, BW / 2 - 2, zBody + BH], parts: items.map((i) => i.name), screws: 8, vent_area_mm2: ventArea, note: "the folded aluminium body box",
-      exits: [...fx.exits.map((e) => ({ ...e, id: e.id.replace("electronics_enclosure", "body_bay") })), ...pivotExits, { id: "body_bay.lid_leads", kind: "grommet", face: "lid", at: lidExit, normal: [0, 0, 1], hole_mm: 9.5 },
+      exits: [...fx.exits.map((e) => ({ ...e, id: e.id.replace("electronics_enclosure", "body_bay") })), ...pivotExits, ...lidExits.map((at, i) => ({ id: `body_bay.lid_leads${i ? `_${i + 1}` : ""}`, kind: "grommet" as const, face: "lid" as Face, at, normal: [0, 0, 1] as Vec3, hole_mm: 9.5 })),
         ...(sensors.includes("camera") ? [{ id: "body_bay.mast_leads", kind: "grommet", face: "lid" as Face, at: mastExit, normal: [0, 0, 1] as Vec3, hole_mm: 9.5 }] : [])] }, b.H);
     b.A.fastener("M3 x 8 countersunk (body lid)", 8);
     // sensors on the lid: depth camera at the front, camera on a mast, lidar behind the arm
@@ -1280,19 +1307,20 @@ export function designRover(req: MobileRequest = {}): RobotSpecification {
     }
     if (sensors.includes("lidar")) lidarMast(b, -BL / 2 + 45, sensors.includes("camera") ? 62 : 0, lidTop, lidTop, "deck_lid");
     if (sensors.includes("imu")) b.sensor("imu_frame", "imu", "imu", translation([12.8, 11.35, 2]), { rate_hz: 400 });
-    if (armSpec) {
+    armsOn.forEach((a, i) => {
+      const armPrefix = a.prefix, exit = lidExits[i];
       const n0 = b.A.spec.joints.length;
-      const g = graftArm(b.A, armSpec, "deck_lid", b.local("deck_lid", armMount), armPrefix);
+      const g = graftArm(b.A, a.spec, "deck_lid", b.local("deck_lid", translation([0, a.y, zBody + BH + 3])), armPrefix);
       // the lid's lead hole goes on up through the floor of the arm's pedestal
       const pb = `${armPrefix}_base_link`;
       const Tpb = fk(b.A.spec).link[pb];
-      if (Tpb) b.A.amendProgram(pb, [{ op: "hole", a: applyInv(Tpb, [lidExit[0], lidExit[1], zBody + BH]), b: applyInv(Tpb, [lidExit[0], lidExit[1], zBody + BH + 14]), d: 9.5 }]);
+      if (Tpb) b.A.amendProgram(pb, [{ op: "hole", a: applyInv(Tpb, [exit[0], exit[1], zBody + BH]), b: applyInv(Tpb, [exit[0], exit[1], zBody + BH + 14]), d: 9.5 }]);
       b.A.design.checks = b.A.design.checks.filter((c) => !c.name.startsWith(`${armPrefix}:torque:`));
       const joints = b.A.spec.joints.slice(n0).filter((j) => j.type !== "fixed").map((j) => j.name);
       b.servoJoints.push(...joints);
       b.arms.push({ prefix: armPrefix, tool: g.tool!, joints, ladder: String(g.performance.actuators) });
-      b.A.design.performance.arm = `${armReq!.dof}-DOF, reach ${g.performance.reach_m} m, ${payload} kg, ${g.performance.actuators}`;
-    }
+      b.A.design.performance[dual ? armPrefix : "arm"] = `${a.req.dof}-DOF, reach ${g.performance.reach_m} m, ${a.req.payloadKg ?? payload} kg, ${g.performance.actuators}`;
+    });
     const eng = engineer(b, { motor, wheel, nDriven: nW, battery, compute, skid: true });
     return { b, eng, compute, battery };
   });
@@ -1305,9 +1333,10 @@ export function designRover(req: MobileRequest = {}): RobotSpecification {
     "Body: folded 2 mm aluminium box with a 3 mm lid; electronics on printed standoff plates on its floor.",
     "All motors and servos are 12 V parts run straight from a 3S LiPo; arm servos share the pack through the bus adapter.",
   );
-  if (armReq) A.design.assumptions.push(`Arm: ${armReq.dof} DOF bolted to the lid front, sized as mounted for a ${payload} kg sample at full reach; the rover's tipping check includes the arm stretched forward, sideways and back with the sample.`);
+  if (dual) A.design.assumptions.push(`Two arms (${armReqs.map((a) => `${a.dof} DOF`).join(" and ")}) bolted side by side on the lid, ${2 * ARM_Y} mm apart, each sized as mounted for a ${payload} kg sample at full reach; each has its own bus branch and lead hole, and the rover's tipping check has both arms stretched forward, sideways and back with their samples. Every arm joint's limits are swept against the other arm.`);
+  else if (armReq) A.design.assumptions.push(`Arm: ${armReq.dof} DOF bolted to the lid front, sized as mounted for a ${payload} kg sample at full reach; the rover's tipping check includes the arm stretched forward, sideways and back with the sample.`);
   A.design.request = { ...req };
-  const spec = A.finish(`${nW}-wheel rocker-bogie rover${armReq ? ` with a ${armReq.dof}-DOF arm` : ""}: ${A.design.performance.mass_kg} kg, ${A.design.performance.top_speed_m_s} m/s, ${A.design.performance.runtime_h} h, ${compute}`);
+  const spec = A.finish(`${nW}-wheel rocker-bogie rover${dual ? ` with two arms (${armReqs.map((a) => `${a.dof}-DOF`).join(" + ")})` : armReq ? ` with a ${armReq.dof}-DOF arm` : ""}: ${A.design.performance.mass_kg} kg, ${A.design.performance.top_speed_m_s} m/s, ${A.design.performance.runtime_h} h, ${compute}`);
   costing(b, spec, req.budget);
   return spec;
 }

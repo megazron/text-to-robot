@@ -69,8 +69,13 @@ startEngine();
 // sessionStorage, or in localStorage if the visitor asks this device to remember it; it goes to the engine worker in this
 // tab and from there only to the provider chosen. It is never put in a robot, a share link or a download.
 const READING_KEY = "ttr.reading";
+// The sentence model is on by default where the device can take it (4+ cores, 4+ GB): it is served by this site and loaded
+// only when a prompt needs it. Counts and structure never depend on it.
+const capable = () => (navigator.hardwareConcurrency ?? 2) >= 4 && ((navigator as { deviceMemory?: number }).deviceMemory ?? 8) >= 4;
 function readingSettings() {
-  try { return JSON.parse(sessionStorage.getItem(READING_KEY) ?? localStorage.getItem(READING_KEY) ?? "{}"); } catch { return {}; }
+  let r: Record<string, unknown> = {};
+  try { r = JSON.parse(sessionStorage.getItem(READING_KEY) ?? localStorage.getItem(READING_KEY) ?? "{}"); } catch { /* defaults */ }
+  return { embeddings: capable(), ...r };
 }
 (globalThis as any).ttrReading = {
   get: readingSettings,

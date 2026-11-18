@@ -24,7 +24,9 @@ test("a prompt nothing else reads is matched by the registered sentence model, a
 test("a sentence model that fails to load falls back to the word table and never blocks a design", async () => {
   registerEmbedder({ name: "broken", threshold: 0.3, embed: () => Promise.reject(new Error("offline")) });
   try {
-    await assert.rejects(generateRobot("keep my koi content"), /not recognised|could not find/i);
+    // the word table cannot place it either: the general-purpose robot, said as a starting point
+    const koi = await generateRobot("keep my koi content");
+    assert.equal(koi.interpretation?.path, "fallback");
     const r = await generateRobot("a robot that waters my plants");
     assert.equal(r.interpretation?.path, "knowledge table");
   } finally { registerEmbedder(undefined); }

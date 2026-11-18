@@ -1,4 +1,5 @@
-// Anything a visitor can type gets a robot, an honest explanation or a clear refusal, quickly, and never a crash:
+// Anything a visitor can type gets a robot, quickly, and never a crash: harmful parts left out (a safe robot built), nonsense
+// and empty prompts the starting robot, impossible asks the nearest real thing, each with a note:
 // a large corpus of open-ended, odd, multilingual, adversarial and generated prompts through the parser's reading
 // (understandPrompt: the robot type, the path that chose it and the tools, without designing it). Designing each
 // prompt's robot from real parts is checked in prompt-suite.test.ts.
@@ -8,7 +9,7 @@ import { understandPrompt, interpretPrompt, PromptRefusal } from "@ttr/robot-gen
 import { corpus } from "./open-prompts-corpus.ts";
 
 /** Families the parser can hand to a designer (rules or knowledge table). */
-const FAMILIES = new Set(["serial_arm", "rover_arm", "scara", "gripper", "diff_drive", "four_wheel", "mecanum", "quadruped", "hexapod", "humanoid", "battle_mech",
+const FAMILIES = new Set(["serial_arm", "rover_arm", "rover", "arm_workcell", "scara", "gripper", "diff_drive", "four_wheel", "mecanum", "quadruped", "hexapod", "humanoid", "battle_mech",
   "arduino_car", "arduino_arm", "wall_e", "eva", "baymax", "iron_man_mark_43", "exosuit", "drone", "rov", "gantry", "delta", "snake", "hand", "quadruped_arm"]);
 const LIMIT_MS = 1500;
 /** Robot types still answered with "not supported yet" while their family is being built: removed one by one as each lands. */
@@ -24,7 +25,11 @@ test(`the open-ended corpus (${corpus.length} prompts): every prompt is read, re
     let got: string, detail: string;
     try {
       const u = understandPrompt(p);
-      got = FAMILIES.has(u.family) ? "robot" : "unknown-family"; detail = `${u.family} via ${u.path}`;
+      got = FAMILIES.has(u.family) ? "robot" : "unknown-family"; detail = `${u.family} via ${u.path}: ${[u.approx ?? "", ...u.notes].join(" ")}`;
+      // an impossible request is built as the nearest real thing, and that is said
+      if (want === "impossible" && got === "robot" && /nearest real thing|cannot hold itself up|not parts I can design|no machine/.test(detail)) got = "impossible";
+      if (want === "harmful" && got === "robot" && /left out: built/.test(detail)) got = "harmful";
+      if (want === "refused" && got === "robot" && /starting point/.test(detail)) got = "refused";
       assert.ok(u.path, "the path is said");
     } catch (e) {
       got = kindOf(e); detail = (e as Error).message;
@@ -35,7 +40,7 @@ test(`the open-ended corpus (${corpus.length} prompts): every prompt is read, re
     if (ms > LIMIT_MS) problems.push(`${JSON.stringify(p.slice(0, 60))}: ${ms.toFixed(0)} ms`);
     if (got === "crash" || got === "unknown-family") problems.push(`${JSON.stringify(p.slice(0, 60))}: ${got}: ${detail}`);
     const pending = got === "not_supported" && PENDING.some((rx) => rx.test(detail));
-    const ok = want === "either" || (want === "robot" ? got === "robot" || pending : want === "refused" ? ["empty", "not_understood", "not_supported", "impossible"].includes(got) : want === got);
+    const ok = want === "either" || (want === "robot" ? got === "robot" || pending : want === got);
     if (!ok) problems.push(`${JSON.stringify(p.slice(0, 60))}: expected ${want}, got ${got} (${detail.slice(0, 120)})`);
   }
   console.log(`open-prompt corpus: ${corpus.length} prompts -> ${Object.entries(tally).map(([k, v]) => `${k} ${v}`).join(", ")}`);
@@ -70,5 +75,7 @@ test("every result says which path designed it", () => {
   assert.equal(understandPrompt("a robot that goes to the shop for me").family, "diff_drive");
   assert.equal(understandPrompt("a robot hand that can play rock paper scissors").family, "hand");
   assert.equal(understandPrompt("a robot that explores the bottom of my pond").family, "rov");
-  assert.throws(() => understandPrompt("a robot that is blue"), PromptRefusal);
+  // a robot with no job and no type is still built: the general-purpose robot as a starting point, said
+  const blue = understandPrompt("a robot that is blue");
+  assert.equal(blue.path, "fallback"); assert.match(blue.approx ?? "", /starting point/);
 });

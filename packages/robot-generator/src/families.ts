@@ -2,13 +2,14 @@
 import type { RobotSpecification } from "@ttr/robot-schema";
 import type { ArmourShape } from "@ttr/mesh";
 import type { SuitPaint } from "./suit.ts";
-import { designArm, designDiffDrive, designFourWheel, designMecanum, designRover, designEva, designBaymax, designArduinoWallE, designMark43Wearable, designArduinoCar, designArduinoArm, designQuadruped, designHexapod, designHumanoid, designBattleMech, designScara, designGripper, designDrone, designGantry, designRov, designSnake, designDelta, designHand, type LeggedRequest } from "@ttr/design";
+import { designWorkcell, MAX_CELL_ARMS, designArm, designDiffDrive, designFourWheel, designMecanum, designRover, designEva, designBaymax, designArduinoWallE, designMark43Wearable, designArduinoCar, designArduinoArm, designQuadruped, designHexapod, designHumanoid, designBattleMech, designScara, designGripper, designDrone, designGantry, designRov, designSnake, designDelta, designHand, type LeggedRequest } from "@ttr/design";
 import type { SensorType } from "@ttr/robot-schema";
 import { nDofArm, scara, roverArm, wearableExosuit, attachParallelGripper, attachSuctionGripper } from "@ttr/robot-templates";
 import { find, mentions, negates, isDirectlyNegated, extractDofMentions } from "./text.ts";
 const planDof = (t: string) => extractDofMentions(t)[0]?.value;
 import { armTip, replaceGripperWithSuction } from "./grippers.ts";
 import { readKnowledge } from "./reading.ts";
+import { readShape, type RequestShape } from "./request.ts";
 import { PromptRefusal } from "./refusal.ts";
 import type { ToolKind } from "./tools.ts";
 
@@ -22,14 +23,14 @@ export const RX = {
   wallE: /wall[\s-]?e\b|trash[\s-]?compactor|garbage\s+robot/,
   eva: /\beva\b|probe\s+droid|egg[\s-]?shaped|hover(?:ing)?\s+(?:robot|droid|bot)/,
   baymax: /baymax|\binflatable\b|healthcare\s+companion/,
-  humanoid: /humanoid|\bbiped(?:al)?\b|\b(?:two|2)[\s-]?legged\b|\b(?:two|2) legs\b|torso.*\barms\b|\btwo\s+arms\b/,
+  humanoid: /humanoid|\bbiped(?:al)?\b|\b(?:two|2)[\s-]?legged\b|\b(?:two|2) legs\b|\btorso\b.*\b(?:head|legs?)\b|\bhead\b.*\btorso\b/,
   dualArm: /\bdual[\s-]?arm(?:ed)?\b|\bbimanual\b|\btwo[\s-]armed\b/,
   hexapod: /hexapod|\b(?:six|6)[\s-]?legged\b|\b(?:six|6) legs\b|spider|insect|ant[\s-]?bot/,
   octopod: /\b(?:eight|8)[\s-]?legged\b|\b(?:eight|8) legs\b|octopod/,
   // a wheeled/tracked base and an arm in either order, or "mobile manipulator"
   roverArm: new RegExp([
     String.raw`(rover|mars|planetary|explorer|loader|wheel(?:ed|s)|track(?:ed|s)|\btank\b|crawler|skid[\s-]?steer|\b4wd\b|mecanum|mobile\s+(?:base|robot|platform)).*\b(arms?|manipulat\w*)\b`,
-    String.raw`\b(arms?|manipulat\w*)\b.*(rover|mars|planetary|mobile\s+base|wheels|wheeled|tracks|tracked)`,
+    String.raw`\b(arms?|manipulat\w*)\b.*(rover|mars|planetary|mobile\s+(?:base|robot|platform|chassis)|wheels|wheeled|tracks|tracked|\bagv\b|\bamr\b|\bcart\b|\bvehicle\b)`,
     String.raw`mobile\s+manipulat`,
   ].join("|")),
   quadruped: /quadruped|\b(?:four|4)[\s-]?legged\b|\b(?:four|4) legs\b|\bdog\b|robo[\s-]?dog|\blegged\b/,
@@ -167,16 +168,21 @@ export function chooseFamily(t: string, prompt: string, dof: number | undefined,
     try { const c = chooseFamily(rest, prompt, dof, g, heightM, explicitGripper); return c.knowledge ? handChoice(hand.text) : c; }
     catch (e) { if (/not recognised/.test((e as Error).message)) return handChoice(hand.text); throw e; }
   }
+  // a torso is a body with arms and no legs ("a dual arm humanoid torso"): two arms on the shoulders of a fixed column
+  const shape = readShape(t);
+  if (shape.base?.kind === "torso" && !/\bwith\s+(?:an?\s+|the\s+)?torso\b/.test(t) && !/\blegs?\b|\bwalk/.test(t)) return composed(shape, "torso", dof, g, t);
   const humanoidOf = (matched: string, approx?: string): Choice => ({ family: "humanoid", label: "humanoid", matched, approx, usesDof: true, usesGripper: true, designed: true,
     // above ~0.9 m servo legs cannot carry the robot: full-size humanoids use the QDD (CubeMars) design
     build: (ctx) => (ctx.heightM ?? 0) > 0.9 ? designBattleMech({ name: "humanoid_robot", ...leggedReq(ctx), ...(dof ? { armDof: dof } : {}) })
       : designHumanoid({ name: "humanoid_robot", ...leggedReq(ctx), ...(dof ? { armDof: dof } : {}), gripper: g !== "none" }) });
   if ((m = hit(RX.humanoid))) return humanoidOf(m);
-  if ((m = hit(RX.dualArm))) return humanoidOf(m, "dual-arm robot built on the humanoid template (includes legs)");
+  if (hit(RX.hexapod) || hit(RX.octopod)) { /* a hexapod with arms says so below */ }
+  // two or more arms: on a mobile base (a dual-arm mobile manipulator), on a legged base, or side by side on one plate
+  else if (shape.arms && shape.arms.count >= 2) return composed(shape, shape.base?.kind === "quadruped" || shape.base?.kind === "legs" ? "quadruped" : shape.base && shape.base.kind !== "table" ? "mobile" : "cell", dof, g, t);
   if ((m = hit(RX.hexapod))) return { family: "hexapod", label: "hexapod", matched: m, designed: true, build: (ctx) => designHexapod({ name: "hexapod", ...leggedReq(ctx) }) };
   if ((m = hit(RX.octopod))) return { family: "hexapod", label: "hexapod", matched: m, approx: "eight legs approximated by the six-legged hexapod",
       designed: true, build: (ctx) => designHexapod({ name: "hexapod", ...leggedReq(ctx) }) };
-  if ((m = hit(RX.roverArm))) return { family: "rover_arm", label: "mobile manipulator (wheeled rover + arm)", matched: m, usesDof: true, usesGripper: true,
+  if ((m = hit(RX.roverArm)) && mentions(t, RX.arm)) return { family: "rover_arm", label: "mobile manipulator (wheeled rover + arm)", matched: m, usesDof: true, usesGripper: true,
     approx: mentions(t, RX.tracked) ? "tracks approximated by the wheeled rover base" : mentions(t, RX.mecanum) || mentions(t, RX.omni) ? "the arm is mounted on the wheeled rover base, not a mecanum base" : undefined,
     ...(g === "suction" ? { build: () => { const s = roverArm("rover_arm", dof ?? 6, prompt, { gripper: "parallel" }); replaceGripperWithSuction(s); return s; } }
       : { designed: true, build: (ctx: DesignContext) => designRover({ name: "rover_arm", ...mobileReq(ctx), payloadKg: undefined, wheels: wheelCount(t) ?? 6, arm: { dof: dof ?? 6, ...(ctx.payloadKg !== undefined ? { payloadKg: ctx.payloadKg } : {}) } }) }) };
@@ -205,6 +211,17 @@ export function chooseFamily(t: string, prompt: string, dof: number | undefined,
     const four = !!hit(RX.fourWheel);
     return { family: "arduino_car", label: four ? "Arduino car (4WD)" : "Arduino car", matched: (hit(RX.fourWheel) ?? hit(RX.diffDrive) ?? hit(RX.wheels))!, designed: true,
       build: (ctx) => designArduinoCar({ name: "arduino_car", prompt: ctx.prompt, budget: ctx.budget, tier: four ? "stronger" : "cheapest", ...(ctx.payloadKg !== undefined ? { payloadKg: ctx.payloadKg } : {}) }) };
+  }
+  // a number of wheels said outright: three is two driven wheels and a rear caster, five or more the rocker-bogie rover
+  const nWheels = wheelCount(t) ?? (/\btri(?:cycle|ke)\b/.test(t) ? 3 : undefined), wheelWords = find(t, /\b(?:one|two|three|four|five|six|seven|eight|ten|twelve|\d{1,3})[\s-]+wheel(?:s|ed)?\b|\btri(?:cycle|ke)\b/)?.text;
+  if (wheelWords && !mentions(t, RX.mecanum) && !mentions(t, RX.omni) && !mentions(t, RX.tracked)) {
+    if (nWheels === 3) return { family: "diff_drive", label: "three-wheel differential-drive base", matched: wheelWords, designed: true, build: (ctx) => designDiffDrive({ name: "three_wheel_robot", ...mobileReq(ctx), casters: 1 }) };
+    if (nWheels !== undefined && nWheels >= 5) return { family: "rover", label: "6-wheel rocker-bogie rover", matched: wheelWords, designed: true,
+      ...(nWheels !== 6 ? { approx: `${nWheels} wheels: built the 6-wheel rocker-bogie rover, the most wheels the rover designer carries` } : {}),
+      build: (ctx) => designRover({ name: "six_wheel_rover", ...mobileReq(ctx), wheels: 6 }) };
+    if (nWheels !== undefined && nWheels <= 1) return { family: "diff_drive", label: "differential-drive base", matched: wheelWords, designed: true,
+      approx: `${nWheels === 1 ? "one wheel" : "no wheels"}: a robot cannot balance on ${nWheels === 1 ? "one wheel" : "none"} without a self-balancing controller; built the two-wheel differential-drive base with casters`,
+      build: (ctx) => designDiffDrive({ name: "diff_drive_robot", ...mobileReq(ctx) }) };
   }
   if ((m = hit(RX.fourWheel))) return { family: "four_wheel", label: "four-wheel skid-steer base", matched: m,
       designed: true, build: (ctx) => designFourWheel({ name: "four_wheel_robot", ...mobileReq(ctx) }) };
@@ -268,9 +285,50 @@ export function chooseFamily(t: string, prompt: string, dof: number | undefined,
       ...(ctx.hobby ? { ladder: "hobby" as const, ...(ctx.hobby.only ? { onlyActuators: ctx.hobby.only } : {}) } : {}) }) };
 }
 
-export const ARM_FAMILIES = new Set(["serial_arm", "rover_arm", "scara"]);
+/** Several arms, or arms on something: a work cell, a dual-arm torso, a rover with two arms, a quadruped with its one arm.
+ *  Every arm count, joint count and wheel count asked for is built, or the result says what was built instead and why. */
+function composed(shape: RequestShape, on: "torso" | "cell" | "mobile" | "quadruped", dof: number | undefined, g: GripperKind, t: string): Choice {
+  const asked = shape.arms?.count ?? 2, said = shape.arms?.said ?? (on === "torso" ? shape.base!.said : "arms");
+  const notes: string[] = [];
+  const dofs = (n: number) => Array.from({ length: n }, (_, i) => {
+    const d = shape.arms?.dofs[i] ?? shape.arms?.dofs[0] ?? dof ?? 6, c = Math.min(MAX_ARM_DOF, Math.max(1, Math.round(d)));
+    if (c !== d && !notes.some((x) => x.includes(`${d} DOF`))) notes.push(`${d} DOF per arm clamped to ${c} (the arm designer builds 1-${MAX_ARM_DOF} joints; a longer chain is a snake robot)`);
+    return c;
+  });
+  if (shape.arms?.assumed) notes.push(`"${said}" with no number: built two arms`);
+  if (g === "suction") notes.push("suction cups on several arms are not designed yet: each arm has a two-finger gripper");
+  const grip = g !== "none";
+  // "three small arms", "two big arms": the size word on the arms sets their reach (a reach said in numbers wins)
+  const sizeReach = /\b(?:small|mini|tiny|compact|desktop|little|micro)\b/.test(said) ? 0.28 : /\b(?:big|large|long|huge|industrial)\b/.test(said) ? 0.6 : undefined;
+  if (on === "quadruped") {
+    notes.push(`${asked} arms on a quadruped: a robot dog carries one arm on its back, so one arm was built (ask for "a rover with two arms" for two arms on a mobile base)`);
+    const d = dofs(1)[0];
+    return { family: "quadruped_arm", label: "quadruped with an arm", matched: said, usesDof: true, usesGripper: true, designed: true, approx: notes.join("; "),
+      build: (ctx) => designQuadruped({ name: "quadruped_arm", ...leggedReq(ctx), armDof: d, gripper: grip }) };
+  }
+  if (on === "mobile") {
+    const n = Math.min(asked, 2), ds = dofs(n);
+    if (asked > 2) notes.push(`${asked} arms on a mobile base: the rover's lid takes two side by side, so two were built (a work cell takes up to ${MAX_CELL_ARMS}: "${asked} arms on a table")`);
+    const base = shape.base!;
+    if (base.kind === "tracks") notes.push("tracks approximated by the wheeled rocker-bogie rover base, which carries the arms");
+    else if (base.kind === "mecanum" || base.kind === "omni") notes.push("the arms are mounted on the wheeled rocker-bogie rover base, not a mecanum base");
+    const wheels = wheelCount(t) ?? base.wheels;
+    return { family: "rover_arm", label: `mobile manipulator (wheeled rover + ${n} arms)`, matched: `${said} ${base.said}`.trim(), usesDof: true, usesGripper: true, designed: true, approx: notes.join("; ") || undefined,
+      build: (ctx) => designRover({ name: "rover_two_arms", ...mobileReq(ctx), payloadKg: undefined, wheels: wheels ?? 6, arms: ds.map((d) => ({ dof: d, gripper: grip, ...(ctx.payloadKg !== undefined ? { payloadKg: ctx.payloadKg } : {}), ...(ctx.reachM ?? sizeReach ? { reachM: ctx.reachM ?? sizeReach } : {}) })) }) };
+  }
+  const n = on === "torso" ? 2 : Math.min(asked, MAX_CELL_ARMS), ds = dofs(n);
+  if (on === "torso" && asked !== 2) notes.push(`a torso has two shoulders: built two arms (${asked} asked)`);
+  if (on === "cell" && asked > MAX_CELL_ARMS) notes.push(`${asked} arms: a work cell takes up to ${MAX_CELL_ARMS} side by side on one plate, so ${MAX_CELL_ARMS} were built`);
+  if (on === "torso" && /\bhumanoid\b|\bandroid\b/.test(t)) notes.push("a humanoid torso is built as two arms on the shoulders of a fixed column (no legs or head)");
+  if (on === "cell") notes.push(`${n} separate arms are built as one work cell: ${n} arms side by side on a shared aluminium base plate, one supply and one bus`);
+  return { family: "arm_workcell", label: on === "torso" ? "dual-arm torso" : `${n}-arm work cell`, matched: said, usesDof: true, usesGripper: true, designed: true, approx: notes.join("; ") || undefined,
+    build: (ctx) => designWorkcell({ prompt: ctx.prompt, budget: ctx.budget, payloadKg: ctx.payloadKg, reachM: ctx.reachM ?? sizeReach, segments: ctx.segments, sensors: ctx.sensors, layout: on === "torso" ? "torso" : "row", arms: ds.map((d) => ({ dof: d, gripper: grip })),
+      ...(ctx.hobby ? { ladder: "hobby" as const, ...(ctx.hobby.only ? { onlyActuators: ctx.hobby.only } : {}) } : {}) }) };
+}
+
+export const ARM_FAMILIES = new Set(["serial_arm", "rover_arm", "scara", "arm_workcell"]);
 /** templates with a generic structural material we may recolour (characters keep their livery) */
-export const RECOLOURABLE = new Set(["serial_arm", "rover_arm", "scara", "humanoid", "quadruped", "hexapod", "diff_drive", "four_wheel", "mecanum", "gripper", "arduino_car", "arduino_arm"]);
+export const RECOLOURABLE = new Set(["serial_arm", "rover_arm", "arm_workcell", "scara", "humanoid", "quadruped", "hexapod", "diff_drive", "four_wheel", "mecanum", "gripper", "arduino_car", "arduino_arm"]);
 
 export function standaloneGripper(kind: "parallel" | "suction", prompt: string): RobotSpecification {
   const spec = nDofArm(0, { name: kind === "suction" ? "suction_gripper" : "parallel_gripper", prompt, gripper: "none" });

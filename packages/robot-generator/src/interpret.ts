@@ -13,11 +13,13 @@ import { translateKeywords, correctTypos } from "./lexicon.ts";
 import { applySizeDirectives, designedSizes, reportDesignedReach } from "./sizing.ts";
 import { applyInlineSensors, requestedSensors, sensorCount, SENSOR_WORDS, UNMODELLED_SENSORS } from "./sensors.ts";
 import { dofOf } from "./spec-utils.ts";
-import { triage, PromptRefusal } from "./triage.ts";
+import { triage, PromptRefusal, type Triage } from "./triage.ts";
 import { translateScripts } from "./multilingual.ts";
 import { readNamed } from "./reading.ts";
 import { TOOL_WORDS, type ToolKind } from "./tools.ts";
 import { toolPlan } from "./tool-plan.ts";
+import { readShape, shapeChips, oneRobot, type RequestShape } from "./request.ts";
+import { builtShape, shapeGaps, type BuiltShape } from "./fidelity.ts";
 
 export { MAX_ARM_DOF } from "./families.ts";
 
@@ -66,6 +68,8 @@ export interface Interpretation {
   path: string;
   /** task tools asked for or implied by the task, and whether each was built */
   tools?: { kind: ToolKind; label: string; built: boolean; note?: string }[];
+  /** the structure read from the prompt (arms, joints per arm, base, wheels, legs) and the structure built, as chips */
+  understood?: { asked: RequestShape; built: BuiltShape; chips: string[]; askedChips: string[] };
 }
 
 export interface PromptResult { spec: RobotSpecification; interpretation: Interpretation; }
@@ -77,7 +81,7 @@ const designedSensors = (spec: RobotSpecification) => spec.sensors.map((x) => ({
 export interface InterpretOptions { /** a knowledge entry chosen beforehand by a sentence-embedding model (similarity.ts) */ knowledgeHint?: string; }
 export function interpretPrompt(original: string, opts: InterpretOptions = {}): PromptResult {
   // markup, instructions to the parser and over-long text are removed first (and said); harmful and impossible requests stop here
-  const tri = triage(original), prompt = tri.text;
+  const tri = buildableTriage(original), prompt = tri.text;
   // names and quoted text ("named Tiny", "called 'Unit 50'") never describe the robot's features
   // robot words in other scripts, then basic German/French/Spanish/Hinglish keywords, are mapped onto the English vocabulary first
   const scripts = translateScripts(maskNames(prompt));
@@ -109,25 +113,11 @@ export function interpretPrompt(original: string, opts: InterpretOptions = {}): 
     else ignored.push(`wearer height ${stature.raw} is outside the supported 1.50–2.05 m range; fitted to 1.75 m`);
   }
 
-  let choice: Choice;
-  try {
-    choice = chooseFamily(t, prompt, dof, g, heightM, grip.explicit, opts.knowledgeHint);
-    // the only job in it is the impossible part ("a robot that reads my mind"): say that, not a general-purpose arm
-    if (choice.path === "general job" && tri.impossible) throw new Error("not recognised");
-  }
-  catch (e) {
-    if (e instanceof PromptRefusal || !/not recognised/.test((e as Error).message)) throw e;
-    // a prompt in another script (Hindi, Urdu, Chinese...) whose words are not in the list: say that, rather than only "not recognised"
-    if (/[^\p{Script=Latin}\p{N}\p{P}\p{S}\s]/u.test(prompt) && !/[a-z]{3,}/.test(t))
-      throw new PromptRefusal("not_understood", `This prompt is in a language the parser does not read yet: it reads English, with common robot words in Hindi, Urdu, Arabic, Japanese, Chinese, German, French and Spanish, and romanised Hindi. ${SUPPORTED_HINT}`);
-    // "a robot the size of the moon": the impossible part is the whole request
-    if (tri.impossible) throw new PromptRefusal("impossible", `${tri.impossible.replace(/;[^;]*$/, "")}. ${tri.nearest ?? ""}`.trim());
-    throw new PromptRefusal("not_understood", notUnderstood(t));
-  }
+  const choice = chooseOrFallback(oneRobot(t, readShape(t)), prompt, tri, dof, g, heightM, grip.explicit, opts.knowledgeHint);
   const budget = parseBudget(t);
   const masses = extractMasses(t);
   const payload = masses.find((x) => x.context === "payload");
-  const asked = choice.designed && (choice.family === "serial_arm" || choice.family === "scara") ? designedSizes(t, choice.label, lengths, stature, { dimensions, approximations, ignored, conflicts }) : undefined;
+  const asked = choice.designed && (choice.family === "serial_arm" || choice.family === "scara" || choice.family === "arm_workcell") ? designedSizes(t, choice.label, lengths, stature, { dimensions, approximations, ignored, conflicts }) : undefined;
   const hobby = hobbyServos(t);
   // the Mark 43's own shape and paint: the forge makes the armour from them (generateRobot forges it before this runs)
   const suit = choice.family === "iron_man_mark_43" ? suitOptions(t) : undefined;
@@ -229,8 +219,15 @@ export function interpretPrompt(original: string, opts: InterpretOptions = {}): 
   // "-5 kg payload": a load cannot be negative, so the number is not used as one
   if (payload && /-\s*$/.test(t.slice(0, t.indexOf(payload.raw)))) ignored.push(`payload -${payload.raw}: a payload cannot be negative; sized for ${payload.raw}`);
   // "a rover with 6 wheels" on a base that has another number of wheels
-  const wheelsAsked = wheelCount(t), wheelsBuilt = spec.joints.filter((j) => (j.type === "continuous" || j.type === "revolute") && /wheel/.test(j.name) && !/steer/.test(j.name)).length;
-  if (wheelsAsked !== undefined && wheelsBuilt > 0 && wheelsAsked !== wheelsBuilt) ignored.push(`${wheelsAsked} wheels: the ${choice.label} has ${wheelsBuilt}`);
+  // (casters count: "a 3 wheel robot" is two driven wheels and a caster)
+  const shape = readShape(t), built = builtShape(spec);
+  const wheelsAsked = wheelCount(t) ?? shape.wheels?.count, wheelsBuilt = built.wheels;
+  if (wheelsAsked !== undefined && wheelsBuilt > 0 && wheelsAsked !== wheelsBuilt && wheelsAsked !== built.driven) ignored.push(`${wheelsAsked} wheels: the ${choice.label} has ${built.driven}${wheelsBuilt > built.driven ? ` and ${wheelsBuilt - built.driven} caster${wheelsBuilt - built.driven > 1 ? "s" : ""}` : ""}`);
+  else if (wheelsAsked !== undefined && wheelsBuilt === 0 && !/drone|rov|gantry|delta|snake|hand|gripper/.test(choice.family)) ignored.push(`${wheelsAsked} wheels: the ${choice.label} has no wheels`);
+  if (shape.robots && choice.family !== "arm_workcell") approximations.push(`"${shape.robots.said}": one prompt designs one robot, so one ${choice.label} was built; ask again for each of the others`);
+  // every arm, joint and leg count asked for and not built is said, even where no rule above said it
+  const said = [...approximations, ...ignored, ...conflicts].join(" ");
+  for (const gap of shapeGaps(shape, built)) if (!(/arms? asked/.test(gap) && /\barms?\b[^.;]*\bbuilt\b|\bone arm\b/.test(said)) && !(/DOF asked/.test(gap) && /DOF/.test(said)) && !(/legs asked/.test(gap) && /legs?/.test(said))) ignored.push(gap);
   let payloadKg: number | undefined;
   if (payload) {
     if (spec.end_effectors.length || choice.designed) payloadKg = +payload.kg.toFixed(3); // designed bases carry it as cargo
@@ -262,10 +259,78 @@ export function interpretPrompt(original: string, opts: InterpretOptions = {}): 
     ...(heightM ? { wearer_height_m: heightM } : {}),
     approximations, ignored, conflicts, ...(warnings.length ? { warnings } : {}),
     path: choice.path ?? "rules", ...(tools.length ? { tools } : {}),
+    understood: { asked: shape, built, askedChips: shapeChips(shape), chips: builtChips(built, choice, g, spec) },
   };
   // a robot read by the rules carries nothing new (the shipped examples stay byte-identical); any other path is recorded with it
   if (interpretation.path !== "rules" || named.entry) (spec.metadata as unknown as Record<string, unknown>).understood = { path: interpretation.path, ...(choice.knowledge ? { knowledge: choice.knowledge } : {}), ...(named.entry ? { named: named.entry.id } : {}) };
   return { spec, interpretation };
+}
+
+/** What was built, as short chips: "2x 6-DOF arm", "6-wheel rover", "gripper", "camera". */
+function builtChips(b: BuiltShape, choice: Choice, g: GripperKind, spec: RobotSpecification): string[] {
+  const chips: string[] = [];
+  const dofs = b.arms.map((a) => a.dof);
+  if (dofs.length && dofs.every((d) => d === dofs[0])) chips.push(`${dofs.length}x ${dofs[0]}-DOF arm`);
+  else chips.push(...dofs.map((d) => `1x ${d}-DOF arm`));
+  if (choice.family === "arm_workcell") chips.push(/torso/.test(choice.label) ? "on a torso column" : "on a shared base plate");
+  else if (b.wheels) chips.push(`${b.arms.length ? "on " : ""}${b.wheels}-wheel ${/rover/.test(choice.family) || /rocker/.test(String((spec.metadata as { design?: { family?: string } }).design?.family)) ? "rover" : "base"}`);
+  if (b.legs) chips.push(`${b.arms.length ? "on " : ""}${b.legs} legs`);
+  if (!b.arms.length && !b.wheels && !b.legs) chips.push(choice.label);
+  if (spec.end_effectors.length) chips.push(spec.end_effectors.length > 1 ? `${spec.end_effectors.length}x ${g === "suction" ? "suction cup" : "gripper"}` : g === "suction" ? "suction cup" : "gripper");
+  for (const [type, n] of Object.entries(spec.sensors.reduce((m, x) => ({ ...m, [x.type]: (m[x.type] ?? 0) + 1 }), {} as Record<string, number>))) chips.push(n > 1 ? `${n}x ${type}` : type);
+  return chips;
+}
+
+/** Every prompt gets a robot: one that cannot be placed is built as the general-purpose robot, an impossible one as the
+ *  nearest real thing, each said with the result (only harmful requests and empty prompts are refused). */
+const GENERAL_ROBOT = "6 dof robot arm with a gripper";
+/** The safe build in place of a harmful request: what it asked for is left out and said. */
+export function safeInstead(original: string): { body: string; what: string } {
+  const t = normalize(original);
+  // weapons and explosives: the robot people build to deal with them, an inspection rover with an arm and a camera
+  if (/\b(?:guns?|rifles?|pistols?|firearms?|weapon\w*|bombs?|explosives?|grenades?|missiles?|kamikaze|flame[\s-]?throwers?|tasers?|pepper\s+spray|tear\s+gas|stun)\b/.test(t))
+    return { body: "a tracked inspection rover with a 6 dof arm and a camera", what: "an inspection rover of the bomb-disposal kind (a camera and an arm, no weapon)" };
+  // watching or following a person: a robot with no camera, that goes where it is driven
+  if (/\b(?:spy|spies|spying|stalk\w*|track(?:s|ing)?\s+(?:my|a|her|his|their|the)\b|follow(?:s|ing)?\s+(?:my\s+ex|her|him|someone)|hidden\s+camera|without\s+(?:her|his|their)\s+knowing|bathroom|neighbou?r)\b/.test(t))
+    return { body: "a differential drive robot without a camera", what: "a plain wheeled robot with no camera" };
+  return { body: "a 4 dof robot arm with a gripper", what: "a small desk arm with a gripper" };
+}
+function buildableTriage(original: string): Triage & { fallback?: string } {
+  try { return triage(original); }
+  catch (e) {
+    if (e instanceof PromptRefusal && e.kind === "harmful") {
+      const s = safeInstead(original);
+      return { text: s.body, notes: [`${e.message} That part was left out: built ${s.what} instead.`], fallback: "harmful" };
+    }
+    if (e instanceof PromptRefusal && e.kind === "empty")
+      return { text: GENERAL_ROBOT, notes: [`${e.message.split(". ")[0]}: built the general-purpose robot (a 6 DOF arm with a gripper) as a starting point. Describe the robot or its job to change it.`], fallback: "empty" };
+    if (!(e instanceof PromptRefusal) || e.kind !== "impossible") throw e;
+    const instead = e.message.match(/\btry\s+"([^"]+)"/)?.[1] ?? GENERAL_ROBOT;
+    return { text: instead, notes: [`${e.message.replace(/\s*(?:The nearest thing[^:]*:\s*)?try\s+".*$/is, "").replace(/\s*Try\s+.*$/s, "").trim()} I built the nearest real thing instead: "${instead}"`], fallback: "impossible" };
+  }
+}
+function chooseOrFallback(t: string, prompt: string, tri: Triage & { fallback?: string }, dof: number | undefined, g: GripperKind, heightM: number | undefined, explicitGripper: boolean, knowledgeHint?: string): Choice {
+  try {
+    const c = chooseFamily(t, prompt, dof, g, heightM, explicitGripper, knowledgeHint);
+    // the only job in it is the impossible part ("a robot that reads my mind"): the nearest real thing, not a general-purpose arm
+    if (c.path === "general job" && tri.impossible) throw new Error("not recognised");
+    return c;
+  }
+  catch (e) {
+    if (e instanceof PromptRefusal || !/not recognised/.test((e as Error).message)) throw e;
+    let why: string;
+    if (tri.impossible) why = `${tri.impossible.replace(/;[^;]*$/, "")}; I built the nearest real thing`;
+    // a prompt in another script (Hindi, Urdu, Chinese...) whose words are not in the list
+    else if (/[^\p{Script=Latin}\p{N}\p{P}\p{S}\s]/u.test(prompt) && !/[a-z]{3,}/.test(t)) why = "this prompt is in a language the parser does not read yet (it reads English, with common robot words in Hindi, Urdu, Arabic, Japanese, Chinese, German, French and Spanish, and romanised Hindi)";
+    // a greeting, a thank-you or a question about the site: answered, with a robot to start from
+    else if (/^\W*(?:hi|hello|hey|hiya|yo|hola|namaste|salam|thanks?|thank\s+you|ty|ok(?:ay)?|cool|nice|lol|help|test(?:ing)?|what\s+(?:can|do)\s+you\s+do|how\s+does\s+(?:this|it)\s+work|who\s+are\s+you)\b[^a-z]*$/.test(t))
+      why = "Hello! Describe any robot, or what it should do, and I design it from real parts; here is one to start from";
+    else why = notUnderstood(t).replace(/^Robot type not recognised\. /, "").replace(/ Describe the robot.*$/s, "").replace(/\.$/, "");
+    const suggestion = tri.impossible && tri.nearest ? tri.nearest.match(/\btry\s+"([^"]+)"/)?.[1] : undefined;
+    const body = suggestion ?? GENERAL_ROBOT, nt = normalize(body);
+    const c = chooseFamily(nt, body, extractDofMentions(nt)[0]?.value ?? dof, g, heightM, explicitGripper);
+    return { ...c, matched: body, path: "fallback", approx: `${why.replace(/^./, (x) => x.toUpperCase())}: built ${/^an?\s/.test(body) ? body : `a ${body}`} as a starting point. Describe the robot or its job to change it, for example "a robot that waters my plants" or "two 6 DOF arms on a mobile robot"${c.approx ? `; ${c.approx}` : ""}` };
+  }
 }
 
 /** The tool the built robot carries: its end effector, else the design's own record (the Arduino arm's one-servo claw). */
@@ -350,14 +415,14 @@ function dofConflicts(mentions: DofMention[], choice: Choice): string[] {
 
 /** Robot types named in the prompt that the chosen template does not provide. */
 const OTHER_TYPES: { rx: RegExp; what: string; fits: string[] }[] = [
-  { rx: /humanoid|\bbiped(?:al)?\b|\b(?:two|2)[\s-]?legged\b/, what: "humanoid", fits: ["humanoid"] },
-  { rx: /quadruped|\b(?:four|4)[\s-]?legged\b|\b(?:four|4) legs\b|robo(?:t)?[\s-]?dog\b/, what: "quadruped", fits: ["quadruped"] },
+  { rx: /humanoid|\bbiped(?:al)?\b|\b(?:two|2)[\s-]?legged\b/, what: "humanoid", fits: ["humanoid", "arm_workcell"] },
+  { rx: /quadruped|\b(?:four|4)[\s-]?legged\b|\b(?:four|4) legs\b|robo(?:t)?[\s-]?dog\b/, what: "quadruped", fits: ["quadruped", "quadruped_arm"] },
   { rx: RX.hexapod, what: "hexapod", fits: ["hexapod"] },
   { rx: RX.scara, what: "SCARA", fits: ["scara"] },
   { rx: new RegExp([RX.wheels.source, RX.diffDrive.source, RX.fourWheel.source, RX.mecanum.source, RX.omni.source, RX.tracked.source].join("|")),
     what: "wheeled base", fits: ["diff_drive", "four_wheel", "mecanum", "rover_arm", "arduino_car"] },
   // legged bases already report an arm as not applied
-  { rx: RX.arm, what: "arm", fits: ["serial_arm", "rover_arm", "scara", "humanoid", "quadruped", "hexapod", "arduino_arm"] },
+  { rx: RX.arm, what: "arm", fits: ["serial_arm", "rover_arm", "scara", "humanoid", "quadruped", "quadruped_arm", "hexapod", "arduino_arm", "arm_workcell"] },
 ];
 /** Characters and suits are themed designs; their keywords overlap by design. */
 const THEMED = new Set(["wall_e", "eva", "baymax", "iron_man_mark_43", "exosuit", "battle_mech"]);
@@ -418,22 +483,13 @@ function namedParts(t: string, spec: RobotSpecification, out: { dimensions: stri
 
 /** What a prompt would build, without designing it (fast): the family, the path that chose it and the tools. Throws PromptRefusal like interpretPrompt. */
 export function understandPrompt(original: string, opts: InterpretOptions = {}): { family: string; label: string; path: string; matched: string; approx?: string; tools: ToolKind[]; notes: string[]; text: string; designed: boolean } {
-  const tri = triage(original);
+  const tri = buildableTriage(original);
   const scripts = translateScripts(maskNames(tri.text));
   const translation = translateKeywords(scripts.text), typos = correctTypos(translation.text);
   const named = readNamed(normalize(typos.text)), t = named.text;
   const rawDof = extractDofMentions(t)[0]?.value, dof = rawDof === undefined ? undefined : Math.min(MAX_ARM_DOF, Math.max(1, Math.round(rawDof)));
   const grip = gripperRequest(t);
-  let c: Choice;
-  try {
-    c = chooseFamily(t, tri.text, dof, grip.kind, undefined, grip.explicit, opts.knowledgeHint);
-    if (c.path === "general job" && tri.impossible) throw new Error("not recognised");
-  }
-  catch (e) {
-    if (e instanceof PromptRefusal || !/not recognised/.test((e as Error).message)) throw e;
-    if (tri.impossible) throw new PromptRefusal("impossible", `${tri.impossible.replace(/;[^;]*$/, "")}. ${tri.nearest ?? ""}`.trim());
-    throw new PromptRefusal("not_understood", notUnderstood(t));
-  }
+  const c = chooseOrFallback(oneRobot(t, readShape(t)), tri.text, tri, dof, grip.kind, undefined, grip.explicit, opts.knowledgeHint);
   const tools = [...new Set<ToolKind>([...(c.tools ?? []), ...TOOL_WORDS.filter(([rx]) => mentions(t, rx)).map(([, k]) => k)])];
   return { family: c.family, label: c.label, path: c.path ?? "rules", matched: c.matched, ...(c.approx ? { approx: c.approx } : {}), tools, text: t, designed: !!c.designed,
     notes: [...tri.notes, ...(tri.impossible ? [tri.impossible] : []), ...scripts.mapped, ...translation.mapped, ...typos.mapped, ...(named.note ? [named.note] : [])] };

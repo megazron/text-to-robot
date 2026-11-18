@@ -12,9 +12,9 @@ The website at megazron.github.io/text-to-robot runs in your browser. Your promp
 
 ## Reading options
 
-Both are off until you switch them on in **Create > How it reads**.
+Your own model is off until you switch it on in **Create > How it reads**; Smarter reading is on by default on capable devices and can be switched off there.
 
-- **Smarter reading** downloads a small sentence model once from Hugging Face (huggingface.co, cdn.jsdelivr.net for its runtime). Your prompts are read by that model in your browser; they are not sent anywhere.
+- **Smarter reading** is a small sentence model (all-MiniLM-L6-v2) and its runtime, served by this site itself and loaded once, only when a prompt needs it. It is on by default on devices with 4 or more cores and 4 GB or more of memory; switch it off in **Create > How it reads**. Your prompts are read by that model in your browser; they are not sent anywhere, and nothing is fetched from another site.
 - **Your own model** sends each prompt you design to the provider you chose (Anthropic, or the OpenAI-compatible address you typed), with your key. The key is kept in this browser only: for this tab, or on this device if you tick *Remember on this device*. It is never put in a design, a share link, a download or a post. What that provider keeps is under its own policy.
 
 ## The community blog

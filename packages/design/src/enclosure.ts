@@ -309,7 +309,9 @@ export function hood(A: Assembly, H: Harness | undefined, o: { name: string; dec
  * The bench control case of a robot fixed to a table: the supply (mains supply with a fused inlet, or a jack and switch for a
  * wall adapter) and the control boards in one printed case, USB windows in the long wall, a gland where the harness leaves.
  */
-export function controlCase(A: Assembly, H: Harness, o: { parent: string; T: Mat4; psu: string | null; psuUse?: string; boards: { name: string; key: string; use: string }[]; cad?: boolean }) {
+export function controlCase(A: Assembly, H: Harness, o: { parent: string; T: Mat4; psu: string | null; psuUse?: string; boards: { name: string; key: string; use: string }[]; cad?: boolean;
+  /** a second case beside the first (a work cell with two supplies): its supply, inlet and case are named with this suffix */ suffix?: string }) {
+  const sx = o.suffix ?? "", PSU = `power_supply${sx}`, INLET = `mains_inlet${sx}`;
   // the supply 68 mm in from the inlet wall (the spade and DC leads turn there), less where a long supply would make the case
   // longer than the 250 mm bed (its walls, lid lip and corners add about 14 mm), never under 36 mm
   const inPsu = !!o.psu, pb = inPsu ? part(o.psu!).bbox_mm! : null, PSU_X = inPsu ? Math.max(36, Math.min(68, 236 - 24 - pb!.max[0])) : 68;
@@ -322,7 +324,7 @@ export function controlCase(A: Assembly, H: Harness, o: { parent: string; T: Mat
   const rowL = sizes.reduce((s, b) => s + b.l + 6, 6), L2 = Math.max(L, rowL + 6);
   const Hh = Math.max(inPsu ? pb!.max[2] + 12 : 0, Math.max(...sizes.map((s) => s.h), 0) + 5 + 14, 36);
   const parts: BayPart[] = [], exits: ExitSpec[] = [];
-  if (inPsu) parts.push({ name: "power_supply", key: o.psu!, T: translation([PSU_X, 4, 5]), use: o.psuUse ?? "bench supply" });
+  if (inPsu) parts.push({ name: PSU, key: o.psu!, T: translation([PSU_X, 4, 5]), use: o.psuUse ?? "bench supply" });
   let x = 6;
   o.boards.forEach((b, i) => {
     const s = sizes[i]; parts.push({ name: b.name, key: b.key, T: translation([x - s.q.min[0], yB - s.q.min[1], 5 + Math.max(0, -s.q.min[2])]), use: b.use });   // header-pin boards stand on their pins
@@ -330,16 +332,17 @@ export function controlCase(A: Assembly, H: Harness, o: { parent: string; T: Mat
     if (c === "compute" || /usb|u2d2|adapter/.test(b.key)) exits.push({ id: `usb_${b.name}`, face: "y+", u: x + s.l / 2, v: 5 + 8, kind: "usb", w: 16, h: 13 });
     x += s.l + 6;
   });
-  if (inPsu) exits.push({ id: "mains", face: "x-", u: 4 + pb!.max[1] / 2, v: Hh / 2, kind: "switch", w: 47, h: 27.5, part: { name: "mains_inlet", key: "iec_c14_fused_switched", use: "fused, switched mains inlet" } });
+  if (inPsu) exits.push({ id: "mains", face: "x-", u: 4 + pb!.max[1] / 2, v: Hh / 2, kind: "switch", w: 47, h: 27.5, part: { name: INLET, key: "iec_c14_fused_switched", use: "fused, switched mains inlet" } });
   else {
     exits.push({ id: "power_in", face: "x-", u: Wd * 0.3, v: Hh / 2, kind: "jack", d: 8, part: { name: "power_jack", key: "dc_jack_5521_panel", use: "adapter socket" } }, { id: "switch", face: "x-", u: Wd * 0.72, v: Hh / 2, kind: "switch", w: 19.4, h: 13.4, part: { name: "main_switch", key: "switch_kcd1", use: "main power switch" } });
   }
   exits.push({ id: "harness", face: "x+", u: Wd / 2, v: Hh - 11, kind: "gland", d: 12.5, noAnchor: true });
   const vents: VentZone[] = [{ face: "lid", a0: 8, a1: L2 - 8, b0: 6, b1: Wd - 6 }, { face: "y-", a0: 8, a1: Hh - 6, b0: 8, b1: L2 - 8 }];
-  bay(A, { name: "control_case", parent: o.parent, T: o.T, size: [L2, Wd, Hh], cad: o.cad, corner: 5, bolted: false, material: "printed_dark", lidMaterial: "printed_accent", parts, exits, vents }, H);
+  bay(A, { name: `control_case${sx}`, parent: o.parent, T: o.T, size: [L2, Wd, Hh], cad: o.cad, corner: 5, bolted: false, material: "printed_dark", lidMaterial: "printed_accent", parts, exits, vents }, H);
   if (inPsu) {
-    for (const [n, a, b] of [["MAINS_L", "L", "AC/L"], ["MAINS_N", "N", "AC/N"], ["MAINS_E", "E", "FG"]] as const) { H.net(n, "power", 230); H.wire(n, `mains_inlet.load.${a}`, `power_supply.ac_in.${b}`, { typ: 1, peak: 2 }); }
-    H.label(["mains_inlet", "power_supply"].sort().join("~"), "mains inlet to the supply (crimped, insulated spades; earth first)");
+    for (const [n, a, b] of [["MAINS_L", "L", "AC/L"], ["MAINS_N", "N", "AC/N"], ["MAINS_E", "E", "FG"]] as const) { H.net(`${n}${sx.toUpperCase()}`, "power", 230); H.wire(`${n}${sx.toUpperCase()}`, `${INLET}.load.${a}`, `${PSU}.ac_in.${b}`, { typ: 1, peak: 2 }); }
+    H.label([INLET, PSU].sort().join("~"), "mains inlet to the supply (crimped, insulated spades; earth first)");
+    if (sx) return;
     H.mainSwitch = "mains_inlet";
     H.notes.push("Mains side: IEC inlet to the supply's AC terminals with insulated spades, earth wired first, case closed before plugging in. Have it checked if you are not qualified to wire mains.");
   }

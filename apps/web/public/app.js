@@ -700,8 +700,37 @@ function applyResult(res, label, diffLines) {
   buildRobot(res.robot); renderTree(); renderSliders(); renderInspector(); renderHistory(); renderDiff(diffLines); renderBom(state.bom);
   motionUI.robotChanged();
   renderCards(); refreshCircuit();
+  renderUnderstood(res);
   status(checksToText(res));
 }
+
+// ---------------- "Here's what I understood" ----------------
+// The structure read from the prompt (arms, joints per arm, what they stand on, wheels) and what was built, as chips, with
+// every count that was not built said under them. The selects change the request and build it again.
+function renderUnderstood(res) {
+  const box = $("#understood"), u = res.interpretation?.understood;
+  box.hidden = !u;
+  if (!u) return;
+  const notes = [...(res.interpretation.approximations ?? []), ...(res.interpretation.ignored ?? [])];
+  const gaps = notes.filter((n) => /\b(?:arms?|wheels?|legs?|DOF)\b/i.test(n));
+  $("#understoodBuilt").replaceChildren(...u.chips.map((c) => h("span", { class: "chip" + (gaps.length && /arm|wheel|leg/.test(c) ? " gap" : "") }, c)));
+  $("#understoodNotes").replaceChildren(...gaps.slice(0, 6).map((n) => h("li", null, n)));
+  const arms = u.built.arms ?? [], a = u.asked ?? {};
+  $("#uArms").value = String(Math.min(4, arms.length));
+  $("#uDof").value = String(arms[0]?.dof ?? a.arms?.dofs?.[0] ?? 6);
+  $("#uBase").value = u.built.family === "arm_workcell" ? (/torso/.test(res.interpretation.label) ? "torso" : "table") : u.built.wheels ? "mobile" : u.built.legs === 4 ? "quadruped" : "none";
+  $("#uWheels").value = ["2", "3", "4", "6"].includes(String(u.built.wheels)) ? String(u.built.wheels) : "";
+}
+/** The request in the selects as a prompt the parser reads the same way every time. */
+function understoodPrompt() {
+  const n = +$("#uArms").value, dof = $("#uDof").value, base = $("#uBase").value, wheels = $("#uWheels").value;
+  const arm = n === 0 ? "" : n === 1 ? `a ${dof} dof robot arm` : `${["", "one", "two", "three", "four"][n]} ${dof} dof robot arms`;
+  const on = base === "mobile" ? `${wheels ? `a ${wheels} wheel` : "a"} mobile robot` : base === "quadruped" ? "a quadruped" : base === "torso" ? "a torso" : base === "table" ? "a table" : "";
+  if (!arm) return on ? on.replace(/^an? /, "a ") : wheels ? `a ${wheels} wheel robot` : "a 6 dof robot arm";
+  if (base === "quadruped") return `a quadruped with ${n === 1 ? "an arm" : arm}`;
+  return on ? `${arm} on ${on}` : arm;
+}
+$("#uBuild").addEventListener("click", () => { const p = understoodPrompt(); $("#prompt").value = p; doGenerate(p); });
 
 function loadVersion(i) {
   const v = state.versions[i]; if (!v) return;
@@ -711,7 +740,7 @@ function loadVersion(i) {
 }
 
 async function doGenerate(prompt) {
-  if (!prompt.trim()) { toast("Describe a robot first, for example \"a 6 DOF arm with a gripper\"."); $("#prompt").focus(); return; }
+  // an empty prompt still gets a robot: the general-purpose one, with a note on what to type
   if (prompt.length > MAX_PROMPT_CHARS) { toast(`Keep the description under ${MAX_PROMPT_CHARS} characters.`, "err"); return; }
   setBusy($("#genbtn"), true); document.body.classList.add("busy"); revealNext = "strong";
   const family = FAMILIES.findIndex((f) => f.prompt === prompt);

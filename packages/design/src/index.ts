@@ -37,6 +37,7 @@ export { designDiffDrive } from "./families/mobile.ts";
 export { designFourWheel } from "./families/mobile.ts";
 export { designMecanum } from "./families/mobile.ts";
 export { designRover } from "./families/mobile.ts";
+export { designWorkcell, MAX_CELL_ARMS, type WorkcellRequest } from "./families/workcell.ts";
 export { designWallE } from "./families/mobile.ts";
 export { designEva } from "./families/mobile.ts";
 export { designBaymax } from "./families/mobile.ts";
