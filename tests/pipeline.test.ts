@@ -22,8 +22,10 @@ test("acceptance: modify forearm keeps validity and recomputes inertia", async (
   assert.ok(afterMass > beforeMass, "mass should grow with length");
   assert.ok(m.changes.length > 0);
 });
-test("empty prompt throws", async () => {
-  await assert.rejects(() => generateRobot("", { provider: new DemoProvider() }));
+test("an empty prompt gets the general-purpose robot as a starting point, said", async () => {
+  const r = await generateRobot("", { provider: new DemoProvider() });
+  assert.ok(r.robot.links.length > 0);
+  assert.match(r.warnings.join(" "), /empty.*starting point/i);
 });
 test("unrecognised requests get the general-purpose robot as a starting point, said plainly, never silently", async () => {
   const r = await generateRobot("asdf qwerty zzz");

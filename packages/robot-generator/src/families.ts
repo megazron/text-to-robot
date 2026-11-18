@@ -217,7 +217,7 @@ export function chooseFamily(t: string, prompt: string, dof: number | undefined,
   if (wheelWords && !mentions(t, RX.mecanum) && !mentions(t, RX.omni) && !mentions(t, RX.tracked)) {
     if (nWheels === 3) return { family: "diff_drive", label: "three-wheel differential-drive base", matched: wheelWords, designed: true, build: (ctx) => designDiffDrive({ name: "three_wheel_robot", ...mobileReq(ctx), casters: 1 }) };
     if (nWheels !== undefined && nWheels >= 5) return { family: "rover", label: "6-wheel rocker-bogie rover", matched: wheelWords, designed: true,
-      ...(nWheels !== 6 ? { approx: `${nWheels} wheels: built the 6-wheel rocker-bogie rover, the most wheels the rover designer carries` } : {}),
+      ...(nWheels !== 6 ? { approx: `${nWheels} wheels: built the 6-wheel rocker-bogie rover (the rover is designed with 4 or 6 wheels)` } : {}),
       build: (ctx) => designRover({ name: "six_wheel_rover", ...mobileReq(ctx), wheels: 6 }) };
     if (nWheels !== undefined && nWheels <= 1) return { family: "diff_drive", label: "differential-drive base", matched: wheelWords, designed: true,
       approx: `${nWheels === 1 ? "one wheel" : "no wheels"}: a robot cannot balance on ${nWheels === 1 ? "one wheel" : "none"} without a self-balancing controller; built the two-wheel differential-drive base with casters`,

@@ -51,7 +51,10 @@ test("a gripper for an arm is a gripper; EVA from WALL-E is EVA; the SCARA's ful
 });
 
 test("numbers that cannot be applied are said: wheels, a $0 budget, a negative payload, leg DOF the design already has", () => {
-  assert.match(notes("a rover with 6 wheels"), /6 wheels: the differential-drive base has 2/);
+  // six wheels asked for are built (the rocker-bogie rover), with nothing said against it
+  assert.equal(read("a rover with 6 wheels").family, "rover");
+  assert.doesNotMatch(notes("a rover with 6 wheels"), /wheels:|asks for a wheeled base/);
+  assert.match(notes("a 5 wheel robot"), /5 wheels/);
   assert.doesNotMatch(notes("a 4 wheel robot car"), /wheels:/);
   const zero = read("a 6 DOF arm with a budget of $0");
   assert.equal(zero.budget_usd, undefined);

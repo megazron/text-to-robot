@@ -420,7 +420,7 @@ const OTHER_TYPES: { rx: RegExp; what: string; fits: string[] }[] = [
   { rx: RX.hexapod, what: "hexapod", fits: ["hexapod"] },
   { rx: RX.scara, what: "SCARA", fits: ["scara"] },
   { rx: new RegExp([RX.wheels.source, RX.diffDrive.source, RX.fourWheel.source, RX.mecanum.source, RX.omni.source, RX.tracked.source].join("|")),
-    what: "wheeled base", fits: ["diff_drive", "four_wheel", "mecanum", "rover_arm", "arduino_car"] },
+    what: "wheeled base", fits: ["diff_drive", "four_wheel", "mecanum", "rover_arm", "rover", "arduino_car"] },
   // legged bases already report an arm as not applied
   { rx: RX.arm, what: "arm", fits: ["serial_arm", "rover_arm", "scara", "humanoid", "quadruped", "quadruped_arm", "hexapod", "arduino_arm", "arm_workcell"] },
 ];

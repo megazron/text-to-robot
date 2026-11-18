@@ -62,9 +62,9 @@ test('the API server replaces its engine worker when the CAD kernel memory is fu
     }
     const status=await (await fetch(api+'/api/status')).json() as any;
     assert.ok(status.engine.recycles>=3,`recycled ${status.engine.recycles} times`);
-    // anything that names a robot, a task or an object is designed now; random letters are still answered with why not
-    const refused=await post('/api/robots/generate',{prompt:'qzxv bnmk wrtp'});assert.equal(refused.status,400);
-    assert.match((await refused.json() as any).error,/random letters|could not find/);
+    // anything gets a robot now; random letters get the general-purpose one, with why
+    const odd=await post('/api/robots/generate',{prompt:'qzxv bnmk wrtp'});assert.equal(odd.status,200);
+    assert.match(((await odd.json() as any).warnings as string[]).join(' '),/random letters|could not find/);
   }finally{
     if(child.exitCode===null && child.signalCode===null){const exited=new Promise<void>(resolve=>child.once('exit',()=>resolve()));child.kill();await exited;}
     rmSync(directory,{recursive:true,force:true});
