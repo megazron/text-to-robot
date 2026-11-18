@@ -73,3 +73,4 @@ export { designRov } from "./families/rov.ts";
 export { designSnake, type SnakeRequest } from "./families/snake.ts";
 export { designDelta, deltaIk, deltaHome } from "./families/delta.ts";
 export { designHand } from "./families/hand.ts";
+export { fitShell, shapeOps, splitForBed, SHAPES, STYLES, SHAPE_COLOUR, type Shape, type Style, type ShellRequest } from "./shell.ts";

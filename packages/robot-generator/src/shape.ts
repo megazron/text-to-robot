@@ -1,0 +1,82 @@
+// The look asked for: a shape ("a heart shaped robot", "a sneaker on wheels", "❤️ robot", "looks like a teapot") and a
+// style ("cartoon", "cute", "retro", "steampunk"). The robot underneath is designed as always; the shape becomes a printed
+// shell over it (packages/design/src/shell.ts). A film or game character named as a style gets an original robot
+// inspired by it, never a replica.
+import type { Shape, Style } from "@ttr/design";
+
+/** a word or emoji that names a shape, and the shape it is */
+const SHAPE_WORDS: [RegExp, Shape, boolean][] = [
+  // [words, shape, is a thing that is not a robot body (so "a heart robot" is enough, no "shaped" needed)]
+  [/\bhearts?\b|❤️?|♥️?|💖|💗|💓|💕|💞|🧡|💛|💚|💙|💜|🖤|🤍|💘|😍/u, "heart", true],
+  [/\bstars?\b(?!\s+wars)|⭐|🌟|★|✨/u, "star", true],
+  [/\beggs?\b|🥚/u, "egg", true],
+  [/\b(?:sphere|spherical|ball|orb)\b|⚽|🏀|🔵|🟢|🔴|🟣/u, "sphere", true],
+  [/\bcubes?\b|\bcubic\b|🧊|📦/u, "cube", true],
+  [/\b(?:capsules?|pills?)\b|💊/u, "capsule", true],
+  [/\b(?:shoes?|sneakers?|trainers?|boots?|slippers?|high[\s-]?heels?)\b|👟|👞|👠|🥾|🩴/u, "shoe", true],
+  [/\b(?:teapots?|kettles?)\b|🫖/u, "teapot", true],
+  [/\blamps?\b|💡|🪔/u, "lamp", true],
+  [/\btoasters?\b/u, "toaster", true],
+  [/\b(?:soda\s+)?cans?\b(?!\s+(?:you|it|i|we|he|she|they|be|do))|\btin\s+can\b|🥫/u, "can", true],
+  [/\b(?:burgers?|hamburgers?|cheeseburgers?)\b|🍔/u, "burger", true],
+  [/\bpizza(?:\s+slice)?\b|🍕/u, "pizza", true],
+  [/\b(?:donuts?|doughnuts?)\b|🍩/u, "donut", true],
+  [/\b(?:blob|jelly|slime|cloud|bean|marshmallow)\b|☁️?/u, "blob", true],
+  [/\b(?:dragons?|dinosaurs?|dinos?|t[\s-]?rex)\b|🐉|🐲|🦖|🦕/u, "dragon", true],
+  [/\bcar\b|🚗|🚙|🏎️?/u, "car", false],
+  [/\b(?:dog|puppy|doggy)\b|🐶|🐕/u, "dog", false],
+  [/\b(?:cat|kitty|kitten)\b|🐱|🐈/u, "cat", false],
+  [/\bspiders?\b|🕷️?/u, "spider", false],
+  [/\bfish\b|🐟|🐠|🐡/u, "fish", false],
+  [/\b(?:bird|duck|penguin|owl|chicken)\b|🐦|🐧|🦆|🦉|🐔/u, "bird", false],
+];
+const STYLE_WORDS: [RegExp, Style][] = [
+  [/\b(?:cartoon(?:y|ish)?|toon|chibi|kawaii|anime|pixar[\s-]?like|disney[\s-]?like)\b/, "cartoon"],
+  [/\b(?:cute|adorable|cuddly|friendly[\s-]looking)\b|🥰|😊/u, "cute"],
+  [/\b(?:sleek|streamlined|futuristic|minimalist?)\b/, "sleek"],
+  [/\b(?:boxy|blocky|square)\b/, "boxy"],
+  [/\b(?:retro|vintage|tin[\s-]toy|1950s|50s|old[\s-]school)\b/, "retro"],
+  [/\b(?:steampunk|brass|victorian|clockwork)\b/, "steampunk"],
+  [/\b(?:mecha|mech[\s-]style|armou?red|gundam[\s-]like|transformer[\s-]like)\b/, "mecha"],
+];
+/** a shape said as a shape: "heart shaped", "looks like a shoe", "in the shape of a teapot", an emoji */
+const CUE = /\b(?:shaped|shape\s+of|form\s+of|looks?\s+like|looking\s+like|resembl\w*|disguised\s+as|styled\s+(?:as|like)|in\s+the\s+style\s+of|emoji)\b|-shaped/;
+/** robot bodies a shell is not fitted to (they keep their own look) */
+export const NOT_WHEELED = /\b(?:arms?|manipulators?|cobots?|scara|grippers?|hands?|humanoids?|biped|legs?|legged|quadrupeds?|hexapods?|drones?|quadcopters?|rovs?|underwater|snakes?|gantry|plotters?|delta|exo\w*|suits?|wearable)\b/;
+/** characters named as a style: an original robot inspired by them, said so */
+const INSPIRED = /\b(?:star\s+wars|pixar|disney|marvel|transformers?|gundam|pokemon|pok[eé]mon|studio\s+ghibli|ghibli|futurama|doctor\s+who|minecraft|mario|sonic|astro\s*boy|big\s+hero\s+6)\b/;
+
+export interface ShellAsk { shape: Shape; style: Style; said: string; note?: string }
+
+/** The shape and style asked for, or nothing when the prompt names neither. */
+export function readShell(t: string, original = t): ShellAsk | undefined {
+  const cue = CUE.test(t) || /\p{Extended_Pictographic}/u.test(original);
+  const style = STYLE_WORDS.find(([rx]) => rx.test(t))?.[1];
+  let hit: { shape: Shape; said: string } | undefined;
+  for (const [rx, shape, thing] of SHAPE_WORDS) {
+    const m = t.match(rx), e = m ? undefined : original.match(rx);
+    if (!m && !e) continue;
+    // an animal or a car is a robot body of its own ("a robot dog" walks, "a robot car" drives) unless it is said as a shape
+    if (!thing && !CUE.test(t)) continue;   // (an emoji of an animal is that animal's robot: 🐕 is a robot dog)
+    // a thing names the look only when it describes the robot: "a heart robot", "a sneaker on wheels", "a robot teapot",
+    // "heart shaped", an emoji; not "a robot that cooks eggs" or "a robot that hands out pills"
+    if (m && !cue) {
+      const after = t.slice(m.index! + m[0].length, m.index! + m[0].length + 24), before = t.slice(Math.max(0, m.index! - 14), m.index!);
+      if (!/^\s*(?:-?\s*)?(?:robot|bot|droid|rover|buggy|on\s+wheels|with\s+wheels|that\s+(?:drives|rolls|moves))\b/.test(after) && !/\brobot(?:ic)?\s+$/.test(before)) continue;
+    }
+    hit = { shape, said: (m ?? e)![0] }; break;
+  }
+  const ref = t.match(INSPIRED)?.[0];
+  // a franchise named as the look ("a star wars style droid"): an original rounded robot inspired by it
+  if (!hit && !style && ref && /\b(?:style|styled|like|inspired|themed|looking|droid|bot)\b/.test(t))
+    return { shape: "capsule", style: "retro", said: ref, note: `"${ref}": an original robot inspired by its style, not a copy of any character` };
+  if (!hit && !style) {
+    // "looks like a cloud", "shaped like a banana": a shape the library does not have is a rounded blob, said
+    const m = t.match(/\b(?:shaped\s+like|looks?\s+like|in\s+the\s+shape\s+of|resembling)\s+(?:an?\s+|the\s+)?([a-z][a-z\s-]{1,24}?)(?=$|[,.;!?]|\s+(?:with|and|on|that|which|robot))/) ?? t.match(/\b([a-z]{3,16})[\s-]shaped\b/);
+    if (!m || /^(?:robot|wheel|wheeled|normal|regular)$/.test(m[1].trim())) return undefined;
+    return { shape: "blob", style: "plain", said: m[0], note: `"${m[1].trim()}" is not in the shape library yet (heart, star, egg, sphere, cube, capsule, shoe, car, dog, cat, spider, fish, bird, dragon, teapot, lamp, toaster, can, burger, pizza, donut): built a rounded shell instead` };
+  }
+  const shape: Shape = hit?.shape ?? (style === "boxy" || style === "retro" || style === "steampunk" || style === "mecha" ? "cube" : style === "sleek" ? "egg" : "capsule");
+  return { shape, style: style ?? "plain", said: [hit?.said, style].filter(Boolean).join(", "),
+    ...(ref ? { note: `"${ref}": an original robot inspired by its style, not a copy of any character` } : {}) };
+}

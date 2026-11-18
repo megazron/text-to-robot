@@ -19,6 +19,8 @@ import { readNamed } from "./reading.ts";
 import { TOOL_WORDS, type ToolKind } from "./tools.ts";
 import { toolPlan } from "./tool-plan.ts";
 import { readShape, shapeChips, oneRobot, type RequestShape } from "./request.ts";
+import { readShell } from "./shape.ts";
+import { COLOURS as SHELL_COLOURS } from "./text.ts";
 import { builtShape, shapeGaps, type BuiltShape } from "./fidelity.ts";
 
 export { MAX_ARM_DOF } from "./families.ts";
@@ -126,7 +128,12 @@ export function interpretPrompt(original: string, opts: InterpretOptions = {}): 
     const loaded = armourShape();
     if (shapeKey(loaded) !== shapeKey(suit.shape)) ignored.push(`armour shape (${suit.said.filter((x) => !/paint|steel parts/.test(x)).join(", ")}): not applied, the loaded armour was forged as ${shapeKey(loaded)}; generate it again to forge this one`);
   }
-  const ctx: DesignContext = { ...(suit ? { suit: { shape: armourShape(), paint: suit.paint } } : {}), ...(hobby ? { hobby } : {}), prompt, budget: budget.usd, payloadKg: payload ? +payload.kg.toFixed(3) : undefined, reachM: asked?.reachM, segments: asked?.segments,
+  // a look asked for goes on a wheeled base as a shell; on any other body it is said (characters keep their own look)
+  const look = readShell(t, prompt), wheeled = ["diff_drive", "four_wheel", "mecanum"].includes(choice.family) && choice.designed;
+  const lookColour = look ? extractColour(t) : undefined;
+  if (look && !wheeled && !["wall_e", "eva", "baymax", "iron_man_mark_43", "exosuit", "battle_mech", "arduino_car"].includes(choice.family))
+    ignored.push(`"${look.said}": shape shells are fitted over wheeled bases so far; the ${choice.label} keeps its own look`);
+  const ctx: DesignContext = { ...(look && wheeled ? { shell: { shape: look.shape, style: look.style, ...(lookColour ? { colour: SHELL_COLOURS[lookColour].slice(0, 3) as [number, number, number] } : {}) } } : {}), ...(suit ? { suit: { shape: armourShape(), paint: suit.paint } } : {}), ...(hobby ? { hobby } : {}), prompt, budget: budget.usd, payloadKg: payload ? +payload.kg.toFixed(3) : undefined, reachM: asked?.reachM, segments: asked?.segments,
     sensors: requestedSensors(choice.sensorWords ? `${t} ; ${choice.sensorWords}` : t).filter((type) => !negates(t, SENSOR_WORDS.find(([, k]) => k === type)![0])),
     excludeSensors: SENSOR_WORDS.filter(([rx]) => negates(t, rx)).map(([, k]) => k), ...(heightM ? { heightM } : {}) };
   // a standing robot's stated height is a design input of the humanoid / mech designers
@@ -276,6 +283,8 @@ function builtChips(b: BuiltShape, choice: Choice, g: GripperKind, spec: RobotSp
   else if (b.wheels) chips.push(`${b.arms.length ? "on " : ""}${b.wheels}-wheel ${/rover/.test(choice.family) || /rocker/.test(String((spec.metadata as { design?: { family?: string } }).design?.family)) ? "rover" : "base"}`);
   if (b.legs) chips.push(`${b.arms.length ? "on " : ""}${b.legs} legs`);
   if (!b.arms.length && !b.wheels && !b.legs) chips.push(choice.label);
+  const shell = (spec.metadata as { design?: { performance?: { shell?: string } } }).design?.performance?.shell;
+  if (shell) chips.push(`${shell.split(",")[0]} shell`);
   if (spec.end_effectors.length) chips.push(spec.end_effectors.length > 1 ? `${spec.end_effectors.length}x ${g === "suction" ? "suction cup" : "gripper"}` : g === "suction" ? "suction cup" : "gripper");
   for (const [type, n] of Object.entries(spec.sensors.reduce((m, x) => ({ ...m, [x.type]: (m[x.type] ?? 0) + 1 }), {} as Record<string, number>))) chips.push(n > 1 ? `${n}x ${type}` : type);
   return chips;

@@ -12,6 +12,8 @@ import { Assembly, componentGeometry, printedGeometry } from "../assembly.ts";
 import { frame, invert, mul, apply, I4, translation, toPose, type Mat4, type Op } from "@ttr/solid";
 import { fk, linkCom, totalMass, gravityTorques, type PointLoad } from "../kin.ts";
 import { designArm, graftArm, type ArmRequest } from "./arm.ts";
+import { fitShell, splitForBed, SHAPE_COLOUR, type ShellRequest } from "../shell.ts";
+import { printCheck } from "@ttr/solid";
 import { limitsFromGeometry } from "./legkit.ts";
 import { evaluate, DYNAMIC_FACTOR, type Ladder } from "../sizing.ts";
 import { BATTERY_SWITCH, registerBay, enclosureChecks, exposed, baysOf, worldBox as partBox, heatOf, ventNeed, type BayRecord, type Face } from "../enclosure.ts";
@@ -34,6 +36,8 @@ export interface MobileRequest {
   arms?: { dof: number; reachM?: number; payloadKg?: number; gripper?: boolean }[];
   /** differential drive only: one caster at the rear (a three-wheeled robot) instead of one at each end */
   casters?: 1 | 2;
+  /** a shape shell over the deck (a heart, a shoe, a cartoon head): shell.ts */
+  shell?: ShellRequest;
 }
 
 // ---------------------------------------------------------------- requirements and constants
@@ -1082,7 +1086,43 @@ function deck(b: Build, L: number, W: number, zB: number, extra: Op[] = [], corn
 
 function defaults(req: MobileRequest, sensors: MobileSensor[]) {
   const out = req.sensors?.length ? [...new Set(req.sensors)] : sensors;
-  return out.filter((s) => !(req.excludeSensors ?? []).includes(s));
+  // under a shape shell a lidar could not see: it is left out (the result says so)
+  return out.filter((s) => !(req.excludeSensors ?? []).includes(s) && !(req.shell && s === "lidar"));
+}
+
+/** A shape shell over everything on the deck: sized round it, windows for the cameras, cut to fit the bed, bolted down. */
+function addShell(b: Build, req: ShellRequest, deck: { x0: number; x1: number; y0: number; y1: number; z0: number }) {
+  // (deck.z0 moves up to the bay's lid below)
+  const f = fk(b.A.spec), boxes: { lo: Vec3; hi: Vec3 }[] = [], windows: { at: Vec3; dir: Vec3; d: number }[] = [];
+  for (const l of b.A.spec.links) {
+    if (l.name === "base_link" || l.geometry.type !== "mesh" || !f.link[l.name]) continue;
+    let q: { lo: Vec3; hi: Vec3 } | null = null;
+    if (l.geometry.part === "component" && part(String(l.geometry.params?.key)).bbox_mm) q = partBox(b.A, l.name);
+    else { const bb = l.geometry.bbox as unknown as { min: number[]; max: number[] } | undefined, p = f.link[l.name].p; if (bb) q = { lo: [0, 1, 2].map((k) => bb.min[k] * 1000 + p[k] * 1000) as Vec3, hi: [0, 1, 2].map((k) => bb.max[k] * 1000 + p[k] * 1000) as Vec3 }; }
+    // what stands on the deck (not the deck itself, the drive under it or the wheels beside it)
+    if (q && q.lo[2] >= deck.z0 - 3 && q.hi[2] > deck.z0 + 1 && !/wheel|motor|caster|bracket/.test(l.name)) boxes.push(q);
+  }
+  // the shell sits on the electronics bay's lid (the bay keeps the electronics closed in) and covers what stands above it;
+  // above the wheels' tops it may reach out past the deck's sides
+  const bayTop = Math.max(deck.z0, ...b.A.spec.links.filter((l) => /^(?:electronics_enclosure|power_bay|upper_deck)/.test(l.name)).map((l) => { const bb = l.geometry.type === "mesh" ? (l.geometry.bbox as unknown as { max: number[] } | undefined) : undefined; return bb && f.link[l.name] ? bb.max[2] * 1000 + f.link[l.name].p[2] * 1000 : -Infinity; }));
+  const above = boxes.filter((q) => q.hi[2] > bayTop + 0.5).map((q) => ({ lo: [q.lo[0], q.lo[1], Math.max(q.lo[2], bayTop)] as Vec3, hi: q.hi }));
+  boxes.length = 0; boxes.push(...above);
+  // the shell stands on the bay's lid: as long and wide as the bay, else the deck
+  const lid = b.A.spec.links.filter((l) => /^(?:electronics_enclosure|power_bay|upper_deck)/.test(l.name) && l.geometry.type === "mesh" && l.geometry.bbox && f.link[l.name]).map((l) => { const bb = (l.geometry as unknown as { bbox: { min: number[]; max: number[] } }).bbox, p = f.link[l.name].p; return { x0: bb.min[0] * 1000 + p[0] * 1000, x1: bb.max[0] * 1000 + p[0] * 1000, y0: bb.min[1] * 1000 + p[1] * 1000, y1: bb.max[1] * 1000 + p[1] * 1000 }; });
+  deck = lid.length ? { x0: Math.min(...lid.map((r) => r.x0)), x1: Math.max(...lid.map((r) => r.x1)), y0: Math.min(...lid.map((r) => r.y0)), y1: Math.max(...lid.map((r) => r.y1)), z0: bayTop } : { ...deck, z0: bayTop };
+  // the main switch and the USB port stay reachable through the shell
+  for (const bay of baysOf(b.A)) for (const e of bay.exits) if ((e.kind === "switch" || e.kind === "usb") && e.at && e.normal && e.face !== "floor")
+    windows.push({ at: e.at as Vec3, dir: e.normal as Vec3, d: e.kind === "switch" ? 40 : 34 });
+  for (const sn of b.A.spec.sensors) if (sn.type === "camera" || sn.type === "depth") { const T = f.link[sn.parent]; if (T && T.p[2] * 1000 > deck.z0) windows.push({ at: T.p.map((x) => x * 1000) as Vec3, dir: [1, 0, 0], d: sn.type === "depth" ? 60 : 26 }); }
+  const fitted = fitShell(req, { boxes, windows: windows.filter((w) => w.at[2] > deck.z0 - 2), deck, maxHalfWidth: (deck.y1 - deck.y0) / 2 });
+  const colour = req.colour ?? SHAPE_COLOUR[req.shape];
+  b.A.spec.materials.push({ name: "shell", color: [colour[0], colour[1], colour[2], 1] });
+  const pieces = splitForBed(fitted.ops, fitted.envelope, (ops) => printCheck({ name: "probe", ops }).fits_bed);
+  for (const p of pieces) b.printed(p.name, "base_link", p.ops, "shell", "shell");
+  b.A.fastener(`M3 x 10 + insert (shell to deck, ${pieces.length > 1 ? "and the pieces to each other along the seams" : "four lugs"})`, 4 * pieces.length);
+  b.A.check("shell:clearance", fitted.overlapMm3 < 1, `the ${req.shape} shell (${req.style ?? "plain"}) touches no part on the robot (overlap ${fitted.overlapMm3} mm^3; ${Math.round(2 * fitted.envelope.a)} x ${Math.round(2 * fitted.envelope.b)} x ${Math.round(fitted.envelope.h)} mm over the bay, cut 3 mm clear round anything it would meet)`);
+  b.A.design.performance.shell = `${req.shape}${req.style && req.style !== "plain" ? ` (${req.style})` : ""}, ${pieces.length} printed piece${pieces.length > 1 ? "s" : ""}`;
+  b.A.design.assumptions.push(`Shell: a ${req.shape} shape${req.style && req.style !== "plain" ? ` in a ${req.style} style` : ""}, printed in ${pieces.length} piece${pieces.length > 1 ? "s" : ""} with a 2 mm wall, open underneath and bolted to the deck; it sits on the electronics bay's lid and covers what stands above it (with a window for each camera and for the switch and USB port), and leaves the wheels free. Its mass is in the drive sizing and the tipping check. ${pieces.length > 1 ? "Glue the pieces along their seams or join them with M3 through lugs. " : ""}Print it upright on its open bottom; tall rounded tops may need supports.`);
 }
 
 // ============================================================================ wheeled bases
@@ -1153,6 +1193,7 @@ function designBase(kind: BaseKind, req: MobileRequest): RobotSpecification {
         { op: "hole", a: [x + 4, y, top - 1], b: [x + 4, y, top + 5], d: 3.4 }], "printed_dark");
     }
     if (sensors.includes("imu")) b.sensor("imu_frame", "imu", "imu", translation([12.8, 11.35, 2]), { rate_hz: 400 });
+    if (req.shell) addShell(b, req.shell, { x0: -L / 2, x1: L / 2, y0: -W / 2, y1: W / 2, z0: top });
     // cargo sits on the deck top over the centre
     const extraLoads: PointLoad[] = cargo > 0 ? [{ link: "base_link", at: [0, 0, (top + 40) / 1000], massKg: cargo }] : [];
     const eng = engineer(b, { motor, wheel, nDriven: stations.length, battery, compute, eff: kind === "mecanum" ? 0.85 : 1, skid: kind === "four", casterMaxKg: kind === "diff" ? Number(part("ball_caster_pololu_2692").specs.max_robot_mass_kg) : undefined, extraMassKg: cargo, extraLoads });

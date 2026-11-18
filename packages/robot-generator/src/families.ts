@@ -10,6 +10,8 @@ const planDof = (t: string) => extractDofMentions(t)[0]?.value;
 import { armTip, replaceGripperWithSuction } from "./grippers.ts";
 import { readKnowledge } from "./reading.ts";
 import { readShape, type RequestShape } from "./request.ts";
+import { readShell, NOT_WHEELED } from "./shape.ts";
+import type { ShellRequest } from "@ttr/design";
 import { PromptRefusal } from "./refusal.ts";
 import type { ToolKind } from "./tools.ts";
 
@@ -21,7 +23,7 @@ export type GripperKind = "parallel" | "suction" | "none";
 export const RX = {
   suit: /iron[\s-]?man|exosuit|exo[\s-]?skeleton|wearable|power(?:ed)?\s+(?:armou?r|suit)|mech\s+suit|battle\s+(?:suit|mech)/,
   wallE: /wall[\s-]?e\b|trash[\s-]?compactor|garbage\s+robot/,
-  eva: /\beva\b|probe\s+droid|egg[\s-]?shaped|hover(?:ing)?\s+(?:robot|droid|bot)/,
+  eva: /\beva\b|probe\s+droid|hover(?:ing)?\s+(?:robot|droid|bot)/,
   baymax: /baymax|\binflatable\b|healthcare\s+companion/,
   humanoid: /humanoid|\bbiped(?:al)?\b|\b(?:two|2)[\s-]?legged\b|\b(?:two|2) legs\b|\btorso\b.*\b(?:head|legs?)\b|\bhead\b.*\btorso\b/,
   dualArm: /\bdual[\s-]?arm(?:ed)?\b|\bbimanual\b|\btwo[\s-]armed\b/,
@@ -93,7 +95,7 @@ export function gripperRequest(t: string): { kind: GripperKind; explicit: boolea
 /** What the prompt asks for, known before the robot is designed. */
 /** "SG90 servos", "MG996R", "Arduino": an Arduino + PCA9685 hobby-servo build, optionally limited to the named servos */
 export interface HobbyServos { only?: string[] }
-export interface DesignContext { hobby?: HobbyServos; prompt: string; budget?: number; payloadKg?: number; reachM?: number; segments?: { upper_arm: number; forearm: number }; sensors: SensorType[]; /** sensor types the prompt rules out ("no lidar") */ excludeSensors: SensorType[]; heightM?: number;
+export interface DesignContext { /** a shape shell over a wheeled base (shape.ts) */ shell?: ShellRequest; hobby?: HobbyServos; prompt: string; budget?: number; payloadKg?: number; reachM?: number; segments?: { upper_arm: number; forearm: number }; sensors: SensorType[]; /** sensor types the prompt rules out ("no lidar") */ excludeSensors: SensorType[]; heightM?: number;
   /** the Mark 43's own shape (forged) and paint */ suit?: { shape: ArmourShape; paint: SuitPaint }; }
 export interface Choice { family: string; label: string; matched: string; build: (ctx: DesignContext) => RobotSpecification; usesDof?: boolean; usesGripper?: boolean; approx?: string;
   /** built by the parts-first design engine (sized from real components) rather than a fixed template */
@@ -110,7 +112,7 @@ export function wheelCount(t: string): number | undefined {
   return m ? (NUM[m[1]] ?? parseInt(m[1], 10)) : undefined;
 }
 /** common inputs of every wheeled designer */
-const mobileReq = (ctx: DesignContext) => ({ prompt: ctx.prompt, budget: ctx.budget, sensors: ctx.sensors as never, ...(ctx.excludeSensors.length ? { excludeSensors: ctx.excludeSensors as never } : {}), ...(ctx.payloadKg !== undefined ? { payloadKg: ctx.payloadKg } : {}) });
+const mobileReq = (ctx: DesignContext) => ({ ...(ctx.shell ? { shell: ctx.shell } : {}), prompt: ctx.prompt, budget: ctx.budget, sensors: ctx.sensors as never, ...(ctx.excludeSensors.length ? { excludeSensors: ctx.excludeSensors as never } : {}), ...(ctx.payloadKg !== undefined ? { payloadKg: ctx.payloadKg } : {}) });
 
 /** common inputs of the legged designers (they fit camera, depth, lidar and IMU parts) */
 const leggedReq = (ctx: DesignContext, heightM = ctx.heightM): LeggedRequest => ({ prompt: ctx.prompt, budget: ctx.budget,
@@ -167,6 +169,15 @@ export function chooseFamily(t: string, prompt: string, dof: number | undefined,
     // what is left only names a task or an object ("a robot hand that plays rock paper scissors"): the hand is the robot
     try { const c = chooseFamily(rest, prompt, dof, g, heightM, explicitGripper); return c.knowledge ? handChoice(hand.text) : c; }
     catch (e) { if (/not recognised/.test((e as Error).message)) return handChoice(hand.text); throw e; }
+  }
+  // a look with no other body named ("a heart shaped robot", "a sneaker on wheels", "a cartoon robot"): a wheeled base under
+  // a shell of that shape (the shell is added where the base is designed: DesignContext.shell)
+  const look = readShell(t, prompt);
+  if (look && !mentions(t, NOT_WHEELED) && !find(t, /\b(?:four|4)[\s-]?wheel|\b4wd\b|mecanum|omni|\b(?:two|2|three|3)[\s-]?wheel|diff(?:erential)?[\s-]?drive|track(?:ed|s)\b/)) {
+    const four = /dragon|car|shoe|pizza|toaster/.test(look.shape);
+    return { family: four ? "four_wheel" : "diff_drive", label: `${look.shape}-shaped robot${look.style !== "plain" ? ` (${look.style})` : ""} on a ${four ? "four-wheel" : "differential-drive"} base`, matched: look.said, designed: true,
+      approx: [`"${look.said}": a ${look.shape} shell${look.style !== "plain" ? ` in a ${look.style} style` : ""} printed over a working ${four ? "four-wheel" : "differential-drive"} base (the look is the shell; the robot under it is the same as any other)`, look.note].filter(Boolean).join("; "),
+      build: (ctx) => four ? designFourWheel({ name: `${look.shape}_robot`, ...mobileReq(ctx) }) : designDiffDrive({ name: `${look.shape}_robot`, ...mobileReq(ctx) }) };
   }
   // a torso is a body with arms and no legs ("a dual arm humanoid torso"): two arms on the shoulders of a fixed column
   const shape = readShape(t);

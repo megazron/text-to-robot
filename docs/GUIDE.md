@@ -81,6 +81,7 @@ $ node cli/src/index.ts "a red 6 dof arm with 70 cm reach, a wrist camera and no
 | `two 6 DOF arms`, `a pair of 4-axis arms`, `a 6 DOF and a 4 DOF arm`, `three arms on a table`, `dual arm torso` | several arms: a work cell on one plate, or a dual-arm torso |
 | `2 robot arms on a mobile robot`, `an AGV with two arms`, `a 4 wheel rover with a 6 dof arm`, `a quadruped with an arm` | arms on a base, with its wheel count |
 | `a 3 wheel robot`, `a tricycle robot`, `a six wheeled rover` | wheel count (casters counted) |
+| `a heart emoji robot`, `a sneaker on wheels`, `looks like a teapot`, `a cartoon robot`, `steampunk` | the look: a printed shape shell over a wheeled robot |
 | `2 kg payload`, `budget $1500` | actuator sizing and BOM tier |
 | `wrist camera`, `lidar on the front`, `no lidar`, `suction cup` | sensors and gripper, including negation |
 | `robot dog`, `mobile manipulator`, `mecanum`, `hexapod`, `cobot` | template family |
