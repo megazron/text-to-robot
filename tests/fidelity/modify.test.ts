@@ -25,7 +25,7 @@ type Step = [string, (s: RobotSpecification, before: RobotSpecification, changes
 const CHAINS: [string, Step[]][] = [
   ["a 6 wheel rover", [
     // the owner's change: red, and four wheels, not a part stacked on six
-    ["change to red colour and only 4 wheels", (s, b, c) => { assert.equal(wheels(s), 4); assert.equal(colour(s, "printed"), RED); assert.ok(s.links.length < b.links.length, "nothing stacked on it"); assert.ok(c.some((x) => /6 wheels -> 4 wheels/.test(x)) && c.some((x) => /colour -> red/.test(x)), c.join(" | ")); assert.doesNotMatch(s.robot_name, /six/, "the name says four wheels"); }],
+    ["change to red colour and only 4 wheels", (s, b, c) => { assert.equal(wheels(s), 4); assert.equal(colour(s, "printed"), RED); assert.notEqual(colour(s, "aluminium"), "0.56,0.58,0.62", "the aluminium body is painted too"); assert.ok(s.links.length < b.links.length, "nothing stacked on it"); assert.ok(c.some((x) => /6 wheels -> 4 wheels/.test(x)) && c.some((x) => /colour -> red/.test(x)), c.join(" | ")); assert.doesNotMatch(s.robot_name, /six/, "the name says four wheels"); }],
     ["make it blue", (s, b, c) => { assert.equal(colour(s, "printed"), BLUE); assert.equal(geometry(s), geometry(b), "a colour adds no geometry"); assert.ok(c.some((x) => /colour -> blue/.test(x))); }],
     ["only 3 wheels", (s, _b, c) => { assert.equal(wheels(s), 3); assert.equal(design(s).family, "mobile_diff_drive"); assert.equal(colour(s, "printed"), BLUE, "the colour stays"); assert.ok(c.some((x) => /4 wheels -> 3 wheels/.test(x)), c.join(" | ")); }],
     ["make it look like a shoe", (s, _b, c) => { assert.match(shell(s), /^shoe/); assert.equal(wheels(s), 3); assert.ok(c.some((x) => /\+ shoe shell/.test(x))); }],
@@ -33,7 +33,7 @@ const CHAINS: [string, Step[]][] = [
     ["no shell", (s, _b, c) => { assert.equal(shell(s), ""); assert.ok(!s.links.some((l) => /^shell/.test(l.name))); assert.ok(c.some((x) => /- shoe shell/.test(x))); }],
     ["add an arm", (s, _b, c) => { assert.equal(arms(s), 1); assert.ok(s.end_effectors.length >= 1, "a new arm comes with its gripper"); assert.ok(c.some((x) => /0 arms -> 1 arm/.test(x)), c.join(" | ")); }],
     ["change the arm to 4 dof", (s) => { assert.equal(s.joints.filter((j) => j.type === "revolute" && /^arm_/.test(j.name) && !/gripper/.test(j.name)).length, 4); }],
-    ["remove one arm", (s, _b, c) => { assert.equal(arms(s), 0); assert.ok(c.some((x) => /1 arm -> 0 arms/.test(x))); }],
+    ["remove one arm", (s, _b, c) => { assert.equal(arms(s), 0); assert.ok(c.some((x) => /1 arm -> 0 arms/.test(x))); assert.equal(colour(s, "printed"), BLUE, "the colour stays through every change"); }],
     ["6 wheels", (s) => { assert.equal(wheels(s), 6); assert.equal(design(s).family, "mobile_rocker_bogie"); }],
   ]],
   ["three 6 dof robot arms on a table", [

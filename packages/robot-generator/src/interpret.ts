@@ -133,6 +133,9 @@ export function interpretPrompt(original: string, opts: InterpretOptions = {}): 
   }
   // a look asked for is a printed shell on the robot (shell.ts): over a wheeled deck, a legged body, a humanoid's head and
   // chest, an arm's base, a drone's canopy; on any other body it is said (characters keep their own look)
+  // asks no designer here builds, said rather than dropped
+  if (/\bbalanc(?:e|es|ing)\b|\bself[\s-]?balancing\b|\bsegway\b/.test(t) && ["diff_drive", "four_wheel", "mecanum", "arduino_car"].includes(choice.family))
+    approximations.push("self-balancing on two wheels is not designed yet (it needs a balance controller tuned to the robot): built with a caster, so it stands on its own");
   const look = readShell(t, prompt), fits = SHELL_FAMILIES.has(choice.family) && !!choice.designed;
   const lookColour = look ? extractColour(t) : undefined;
   if (look && !fits && !["wall_e", "eva", "baymax", "iron_man_mark_43", "exosuit", "arduino_car"].includes(choice.family))

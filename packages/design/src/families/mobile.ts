@@ -478,6 +478,16 @@ function wallFixtures(b: Build, plan: Placement[], w: { x0: number; x1: number; 
   // corner bosses stand inside the walls: keep off the corners
   const offCorner = (c: { p: Vec3; n: Vec3 }) => (c.n[1] !== 0 ? c.p[0] - w.x0 > wide + 12 && w.x1 - c.p[0] > wide + 12 : c.p[1] - w.y0 > wide + 12 && w.y1 - c.p[1] > wide + 12);
   const s = spots.find((c) => offCorner(c) && clearOf(c.q) && !exits.some((e) => Math.hypot(e.at[0] - c.p[0], e.at[1] - c.p[1]) < 45));
+  if (!s && big) {
+    // no wall has room behind it, and the running current needs the battery switch: it stands in the lid over a free
+    // patch of floor, its 52 mm face up (never the 16 A rocker in its place)
+    let at: [number, number] | null = null;
+    for (let x = w.x0 + 36; x < w.x1 - 36 && !at; x += 4) for (let y = w.y0 + 36; y < w.y1 - 36 && !at; y += 4) if (clearOf({ x0: x - 34, x1: x + 34, y0: y - 34, y1: y + 34 })) at = [x, y];
+    const [x, y] = at ?? [(w.x0 + w.x1) / 2, (w.y0 + w.y1) / 2], zl = w.z1 + 0.2 + w.t;
+    b.mount(parent, BATTERY_SWITCH, frame([x, y, zl], [0, 0, 1], [1, 0, 0]), "main_switch", "main battery switch (the running current is past a rocker's 16 A)");
+    exits.push({ id: `${bayName}.switch`, kind: "switch", face: "lid", at: [x, y, zl], normal: [0, 0, 1], hole_mm: 52, part: "main_switch" });
+    return { cuts, exits, lidCuts: [{ op: "hole", a: [x, y, w.z1 - 4], b: [x, y, zl + 1], d: 52.4 }] as Op[] };
+  }
   if (!s) {
     // no wall has room behind it: the rocker stands in the lid over a free patch of floor
     let at: [number, number] | null = null;

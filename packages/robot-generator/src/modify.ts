@@ -405,6 +405,8 @@ function modifyDesigned(specIn: RobotSpecification, instruction: string): ModRes
     spec = designer({ ...req, name });
     spec.metadata.source_prompt = specIn.metadata.source_prompt;
     spec.materials = structuredClone(specIn.materials);
+    // what the robot was painted and first asked for go with it into the new design (a later change starts from them)
+    for (const k of ["colour", "palette", "original_prompt"] as const) { const v = (specIn.metadata as unknown as Record<string, unknown>)[k]; if (v !== undefined) (spec.metadata as unknown as Record<string, unknown>)[k] = v; }
     const was = new Map(record.joints.map((j) => [j.joint, j.actuator]));
     for (const j of designOf(spec)!.joints) { const before = was.get(j.joint); if (before && before !== j.actuator) changes.push(`~ ${j.joint}: ${before} -> ${j.actuator} (load ${j.required_nm} N·m)`); }
     for (const ck of designOf(spec)!.checks.filter((x) => !x.pass)) changes.push(`! check failed: ${ck.name}: ${ck.detail}`);

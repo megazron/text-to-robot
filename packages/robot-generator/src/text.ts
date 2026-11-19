@@ -262,7 +262,7 @@ export function extractColour(text: string): string | undefined {
 }
 
 /** Paint a designed robot: its printed body in the colour, its accent parts in a deeper shade of it, a shape shell in the
- *  colour; the dark trim, bought parts, wheels and sensors keep theirs. Only materials change, never geometry. The colour's
+ *  colour, a cut aluminium body powder-coated in it; the dark trim, bought parts, wheels and sensors keep theirs. Only materials change, never geometry. The colour's
  *  name is kept with the robot (the BOM names the filament by it, a later change starts from it). */
 export function paintSpec(spec: { materials: { name: string; color: number[] }[]; metadata: object }, colour: string): boolean {
   const c = COLOURS[colour]; if (!c) return false;
@@ -270,6 +270,8 @@ export function paintSpec(spec: { materials: { name: string; color: number[] }[]
   for (const m of spec.materials) {
     if (m.name === "printed" || m.name === "shell" || m.name === "link_mat") { m.color = [...c]; any = true; }
     else if (m.name === "printed_accent") { m.color = [c[0] * 0.72, c[1] * 0.72, c[2] * 0.72, 1].map((v, i) => (i < 3 ? +v.toFixed(3) : v)); any = true; }
+    // a cut aluminium body (a rover's deck) is powder-coated in the colour: a little of the metal's grey shows through
+    else if (m.name === "aluminium") { m.color = [0.85 * c[0] + 0.15 * 0.56, 0.85 * c[1] + 0.15 * 0.58, 0.85 * c[2] + 0.15 * 0.62, 1].map((v, i) => (i < 3 ? +v.toFixed(3) : v)); any = true; }
   }
   if (any) (spec.metadata as { colour?: string }).colour = colour;
   return any;

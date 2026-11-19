@@ -35,7 +35,8 @@ export const RX = {
     String.raw`\b(arms?|manipulat\w*)\b.*(rover|mars|planetary|mobile\s+(?:base|robot|platform|chassis)|wheels|wheeled|tracks|tracked|\bagv\b|\bamr\b|\bcart\b|\bvehicle\b)`,
     String.raw`mobile\s+manipulat`,
   ].join("|")),
-  quadruped: /quadruped|\b(?:four|4)[\s-]?legged\b|\b(?:four|4) legs\b|\bdog\b|robo[\s-]?dog|\blegged\b/,
+  // ("my dog", "her dog": the visitor's own dog is what the robot is for, not the robot)
+  quadruped: /quadruped|\b(?:four|4)[\s-]?legged\b|\b(?:four|4) legs\b|(?<!\b(?:my|our|your|his|her|their)\s)\bdog\b|robo[\s-]?dog|\blegged\b/,
   scara: /\bscara\b|selective[\s-]+compliance/,
   mecanum: /mecanum/,
   omni: /omni[\s-]?(?:wheels?|directional)|holonomic/,
@@ -61,7 +62,7 @@ export const WEAPON_REFUSAL = "Text to Robot does not design weapons or robots m
 /** Families we do not generate; each says why and what to try instead. */
 /** Robot types with their own designers that are found by name before the general rules (drones, ROVs, snakes, gantries, deltas). */
 export const SPECIAL: { rx: RegExp; family: string; label: string; approx?: (t: string) => string | undefined; build: (ctx: DesignContext, t: string) => RobotSpecification }[] = [
-  { rx: /\bdrones?\b|quad[\s-]?copter|multi[\s-]?rotor|\buav\b|hexa[\s-]?copter|octo[\s-]?copter|\bhelicopter\b|\baircraft\b|\bairplane\b|\baeroplane\b|\bflying\b|\bflies\b|\bfly\b/, family: "drone", label: "quadcopter (5 in props)",
+  { rx: /(?<!\b(?:underwater|submarine|water|sea|lake|pool)\s)\bdrones?\b|quad[\s-]?copter|multi[\s-]?rotor|\buav\b|hexa[\s-]?copter|octo[\s-]?copter|\bhelicopter\b|\baircraft\b|\bairplane\b|\baeroplane\b|\bflying\b|\bflies\b|\bfly\b/, family: "drone", label: "quadcopter (5 in props)",
     approx: (t) => /hexa|octo|helicopter|airplane|aeroplane|aircraft|fixed[\s-]?wing/.test(t) ? "built as a four-rotor quadcopter, the simplest machine that hovers" : undefined,
     build: (ctx) => designDrone({ name: "quadcopter", prompt: ctx.prompt, budget: ctx.budget, sensors: ctx.sensors, ...(ctx.payloadKg !== undefined ? { payloadKg: ctx.payloadKg } : {}), ...(ctx.shell ? { shell: ctx.shell } : {}) }) },
   { rx: /underwater|\bauv\b|\brovs?\b|submarine|submersible|\bboats?\b|\bfish\s+robot|\brobot(?:ic)?\s+fish\b|\bswim(?:s|ming)?\b|\bdiv(?:e|es|ing)\b|\bocean\b|\bsea\s?bed\b|\bpool\s+inspection/, family: "rov", label: "tethered underwater ROV",
@@ -250,6 +251,10 @@ export function chooseFamily(t: string, prompt: string, dof: number | undefined,
     ...(g === "suction" ? { build: () => standaloneGripper("suction", prompt) }
       : { designed: true, build: (ctx: DesignContext) => designGripper({ name: "parallel_gripper", prompt: ctx.prompt, budget: ctx.budget, payloadKg: ctx.payloadKg }) }) };
   if ((m = hit(RX.hand))) return handChoice(m);
+  // "an arduino robot" with no body named: the Arduino car, the cheapest robot that moves (an Arduino arm needs "arm")
+  if (/\barduino\b/.test(t) && !mentions(t, RX.arm) && dof === undefined && !/\bservos?\b|\bsg90\b|\bmg9\d/.test(t))
+    return { family: "arduino_car", label: "Arduino car", matched: "arduino", designed: true, approx: "\"Arduino robot\" with no body named: built the Arduino car, the cheapest robot that moves (say \"arm\" for the Arduino desk arm)",
+      build: (ctx) => designArduinoCar({ name: "arduino_car", prompt: ctx.prompt, budget: ctx.budget, tier: "cheapest", ...(ctx.payloadKg !== undefined ? { payloadKg: ctx.payloadKg } : {}) }) };
   m = hit(RX.arm);
   if (!m && dof === undefined) {
     // no robot type named: a task, an object or an animal from the knowledge table, then the closest entry by meaning (said either way)
