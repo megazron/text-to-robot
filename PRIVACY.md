@@ -2,7 +2,7 @@
 
 This is a template that has not been reviewed by a lawyer.
 
-The website at megazron.github.io/text-to-robot runs in your browser. Your prompts and designs stay on your device, stored in your browser's local storage until you clear them.
+The website at megazron.github.io/text-to-robot runs in your browser. Your prompts and designs stay on your device, stored in your browser's local storage until you clear them. To open a robot made before at once, the engine also keeps what it computed (designs, part meshes and solids, up to 200 MB) in your browser's IndexedDB, on your device only; clearing the site's data removes it.
 
 - No account, no analytics, no tracking.
 - GitHub hosts the page and may keep standard server logs, under GitHub's own policies.

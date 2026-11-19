@@ -8,7 +8,7 @@
 // squatting and leaning poses (tau = J^T F at the sole), and from the arms lifting a payload.
 import type { RobotSpecification } from "@ttr/robot-schema";
 import { part, type Vec3 } from "@ttr/parts";
-import { frame, invert, mul, apply, translation, build, evaluate, type Mat4, type Op } from "@ttr/solid";
+import { frame, invert, mul, apply, translation, programBounds, type Mat4, type Op } from "@ttr/solid";
 import { Assembly } from "../assembly.ts";
 import { totalMass, pointWorld, contactTorques, gravityTorques, comWorld, type PointLoad } from "../kin.ts";
 import { choose, DYNAMIC_FACTOR, GAIT_DUTY } from "../sizing.ts";
@@ -48,7 +48,7 @@ function worldBox(ops: Op[]): { lo: Vec3; hi: Vec3 } {
   // the sizing loop rebuilds identical parts: cache their boxes by recipe
   const key = JSON.stringify(ops), hit = boxCache.get(key);
   if (hit) return { lo: [...hit.lo] as Vec3, hi: [...hit.hi] as Vec3 };
-  const b = build(() => { const bb = evaluate({ name: "probe", ops }).boundingBox(); return { lo: [...bb.min] as Vec3, hi: [...bb.max] as Vec3 }; });
+  const b = programBounds(ops);
   if (boxCache.size > 500) boxCache.delete(boxCache.keys().next().value as string);
   boxCache.set(key, b);
   return { lo: [...b.lo] as Vec3, hi: [...b.hi] as Vec3 };

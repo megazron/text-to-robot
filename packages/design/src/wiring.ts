@@ -3,6 +3,7 @@
 // power budget per rail. Cables are routed along the links in 3D at the robot's home pose, and every joint a cable
 // crosses gets a slack loop at least as long as the length that joint's full travel needs (swept with the real limits).
 // Output: `design.wiring` (robot.json), WIRING.md, a wiring diagram SVG and real BOM lines. Lengths are mm, currents A.
+import { stage } from "@ttr/parts/profile";
 import type { RobotSpecification, Joint, Link } from "@ttr/robot-schema";
 import { part, electrical, WIRING, type ElectricalRecord, type Vec3 } from "@ttr/parts";
 import { buildPart } from "@ttr/mesh";
@@ -400,7 +401,10 @@ export interface WireOptions {
  */
 let defaultRouter: "3d" | "legacy" = "3d";
 export function setDefaultRouter(mode: "3d" | "legacy") { defaultRouter = mode; }
-export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
+/** the router a design made now uses (part of a design's cache key: the same request wired another way is another robot) */
+export const defaultRouterMode = () => defaultRouter;
+export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord { return stage("wiring", () => finishWiringIn(H, opts)); }
+function finishWiringIn(H: Harness, opts: WireOptions): WiringRecord {
   const A = H.A, spec = A.spec, f = fk(spec);
   const termMm = opts.terminationMm ?? 30, serviceMm = opts.serviceMm ?? 40, tort = opts.tortuosity ?? 1.1;
 
@@ -499,7 +503,7 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
   // ---- the router: every solid of the robot at home as a grid, the parts and their pins in it (the Mark 43's cables lie
   // in the channels its armour was fitted with instead: see the legacy branch below)
   const routed = !H.channels.size && (opts.router ?? (defaultRouter === "legacy" ? "legacy" : undefined)) !== "legacy", tRoute = Date.now();
-  const R = routed ? new Router(spec, f, { bays: baysOfDesign(A).map((b) => ({ name: b.name, link: b.tub, T: b.T as number[], min: b.min, max: b.max })) }) : null;
+  const R = routed ? stage("harness: voxel grid", () => new Router(spec, f, { bays: baysOfDesign(A).map((b) => ({ name: b.name, link: b.tub, T: b.T as number[], min: b.min, max: b.max })) })) : null;
   const routeProblems: string[] = [], lateCables: string[] = [];
   const pinsOf = (inst: string) => { const out: [string, string][] = []; for (const w of H.wires) for (const e of [w.a, w.b]) if (e.inst === inst && !out.some((x) => x[0] === e.port && x[1] === e.pin)) out.push([e.port, e.pin]); return out; };
   // the parts on links first, and the room their pins need, then the harness parts round them
@@ -514,10 +518,10 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
     if (spot && !spot.by && home.p) home.p = spot.at;
     if (!home.p || !home.link) continue;
     if (home.inst && !H.bayOf.get(i.name) && !spot?.free) H.bayOf.set(i.name, H.bayOf.get(home.inst) ?? "");
-    const g = groupOf.get(home.link) ?? home.link, at = R.placeHarness(i.name, i.key, home.p, g, pinsOf(i.name), H.bayOf.get(i.name) || undefined, (port, pin) => {
+    const g = groupOf.get(home.link) ?? home.link, at = stage("harness: routing", () => R.placeHarness(i.name, i.key, home.p!, g, pinsOf(i.name), H.bayOf.get(i.name) || undefined, (port, pin) => {
       for (const ws of groups.values()) for (const w of ws) for (const [me, other] of [[w.a, w.b], [w.b, w.a]]) if (me.inst === i.name && me.port === port && me.pin === pin && other.inst !== i.name) { const q = R.pinAt(other.inst, other.port, other.pin); if (q) return q; }
       return null;
-    }, !!spot, spot ? (spot.turn ?? (spot.turned ? 2 : undefined)) : undefined);
+    }, !!spot, spot ? (spot.turn ?? (spot.turned ? 2 : undefined)) : undefined));
     if (at) { i.at_mm = at.at.map(r1) as Vec3; i.on = g; delete i.turned; if (at.turn) i.turn = at.turn; else delete i.turn; R.reserve(i.name, pinsOf(i.name)); } else routeProblems.push(`${i.name}: no free place beside ${home.inst ?? home.link}`);
   }
   // a cable is the wires between two parts; a feed's cable also carries the return from the star ground. Where the star
@@ -594,12 +598,12 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
       // and its laid points are turned back so they run from its own first end
       const flip = (w: WireDecl) => w.a.inst === ib && w.b.inst !== ib;
       let awg = ws.map((w) => awgOf(w, straight * 1.4 + svc + term, pm)?.awg ?? null);
-      let out = R.cable({ key, a: ia, b: ib, od, crossing, exitA: exitAt(exA), exitB: exitAt(exB), bayA, bayB, via, wires: ws.map((w, i) => (flip(w) ? { from: [w.b.port, w.b.pin], to: [w.a.port, w.a.pin], awg: awg[i], ai: w.b.inst, bi: w.a.inst } : { from: [w.a.port, w.a.pin], to: [w.b.port, w.b.pin], awg: awg[i], ai: w.a.inst, bi: w.b.inst })) });
+      let out = stage("harness: routing", () => R.cable({ key, a: ia, b: ib, od, crossing, exitA: exitAt(exA), exitB: exitAt(exB), bayA, bayB, via, wires: ws.map((w, i) => (flip(w) ? { from: [w.b.port, w.b.pin], to: [w.a.port, w.a.pin], awg: awg[i], ai: w.b.inst, bi: w.a.inst } : { from: [w.a.port, w.a.pin], to: [w.b.port, w.b.pin], awg: awg[i], ai: w.a.inst, bi: w.b.inst })) }));
       let sl = slackOf(out.anchors);
       const final = ws.map((w, i) => awgOf(w, Math.ceil(((out.wires[i]?.drawn_mm ?? straight) + svc + sl.slackMm + term) / 5) * 5, pm)?.awg ?? null);
       if (final.some((x, i) => x !== null && awg[i] !== null && x < awg[i]!)) {
         awg = final.map((x, i) => (x !== null && awg[i] !== null ? Math.min(x, awg[i]!) : x));
-        out = R.cable({ key, a: ia, b: ib, od, crossing, exitA: exitAt(exA), exitB: exitAt(exB), bayA, bayB, via, wires: ws.map((w, i) => (flip(w) ? { from: [w.b.port, w.b.pin], to: [w.a.port, w.a.pin], awg: awg[i], ai: w.b.inst, bi: w.a.inst } : { from: [w.a.port, w.a.pin], to: [w.b.port, w.b.pin], awg: awg[i], ai: w.a.inst, bi: w.b.inst })) });
+        out = stage("harness: routing", () => R.cable({ key, a: ia, b: ib, od, crossing, exitA: exitAt(exA), exitB: exitAt(exB), bayA, bayB, via, wires: ws.map((w, i) => (flip(w) ? { from: [w.b.port, w.b.pin], to: [w.a.port, w.a.pin], awg: awg[i], ai: w.b.inst, bi: w.a.inst } : { from: [w.a.port, w.a.pin], to: [w.b.port, w.b.pin], awg: awg[i], ai: w.a.inst, bi: w.b.inst })) }));
         sl = slackOf(out.anchors);
       }
       // a wire of the cable that ends on another part (the return of a feed pair, from the star ground) is laid from its own

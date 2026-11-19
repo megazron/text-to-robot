@@ -69,6 +69,8 @@ function resize() {
 }
 // Draw only when something changed: an idle GPU keeps the glass panels and springs at full frame rate.
 let dirty = true;
+// new part geometry waiting for its frame (takeUploads, below)
+const uploads = [], UPLOAD_BYTES = 96 * 1024 * 1024;
 function invalidate() { dirty = true; }
 controls.addEventListener("change", invalidate);
 new ResizeObserver(resize).observe(viewport); resize();
@@ -76,7 +78,64 @@ new ResizeObserver(resize).observe(viewport); resize();
 const hud = $("#viewhud");
 new ResizeObserver(() => document.documentElement.style.setProperty("--hud-h", `${hud.offsetHeight}px`)).observe(hud);
 let motionUI = null;   // motion.js: playback, posing, recording
-(function loop() { requestAnimationFrame(loop); controls.update(); if (motionUI?.tick(performance.now())) dirty = true; if (dirty) { dirty = false; renderer.render(scene, camera); } })();
+// A slow or software GPU can take longer over a frame than the page waits between frames: the page then queues frame after
+// frame behind it and blocks on the GPU (a robot with hundreds of parts froze the page for seconds). Each frame leaves a
+// fence, and a frame is drawn only while fewer than two are still on the GPU, so the page does not queue frames behind it.
+// The picture is the same, it just changes less often while a big robot streams in on a slow GPU.
+const gl2 = typeof WebGL2RenderingContext !== "undefined" && renderer.getContext?.() instanceof WebGL2RenderingContext ? renderer.getContext() : null;
+// (two frames may be on their way: the GPU always has the next one, and the page never queues a third behind them)
+const fences = [];
+const gpuBusy = () => {
+  while (fences.length) {
+    const [f, at] = fences[0];
+    // (a lost context never signals, and a frame is never held back more than 3 s: the view cannot stall for good)
+    const done = gl2.isContextLost() || performance.now() - at > 3000 || gl2.getSyncParameter(f, gl2.SYNC_STATUS) === gl2.SIGNALED;
+    if (!done) break;
+    if (!gl2.isContextLost()) gl2.deleteSync(f);
+    fences.shift();
+  }
+  return fences.length >= 2;
+};
+const fenceFrame = () => { if (gl2 && !gl2.isContextLost()) { fences.push([gl2.fenceSync(gl2.SYNC_GPU_COMMANDS_COMPLETE, 0), performance.now()]); gl2.flush(); } };
+// A new shader program blocks the page the first time it is drawn with, until the GPU has linked it (up to a second on a
+// software GPU). A frame with a material not drawn before waits until its program is compiled in the background
+// (KHR_parallel_shader_compile, polled, never waited on); the robot comes in the frame after, the page never blocks for it.
+const parallelCompile = !!renderer.extensions?.has?.("KHR_parallel_shader_compile");
+// (each material is waited for once: one the compile could not prepare is drawn as before, so no frame is held for good)
+let compiling = false; const compileTried = new WeakSet();
+const shadersPending = () => {
+  if (!parallelCompile) return false;
+  if (compiling) return true;
+  let fresh = false;
+  scene.traverseVisible((o) => {
+    const m = o.material;
+    if (m && !Array.isArray(m) && !compileTried.has(m) && !renderer.properties.get(m).currentProgram) { compileTried.add(m); fresh = true; }
+  });
+  if (!fresh) return false;
+  compiling = true;
+  // (a lost context never reports a program ready: a compile is never waited on more than 3 s)
+  Promise.race([renderer.compileAsync(scene, camera), new Promise((ok) => setTimeout(ok, 3000))]).catch(() => {}).finally(() => { compiling = false; invalidate(); });
+  return true;
+};
+/** Draw a frame as soon as the GPU has finished the last one (polled once a frame, never waited on), then call `then`.
+ *  (Drawing at once while the GPU is behind blocks the page until it catches up: seconds on a slow GPU.) */
+function drawNow(then) {
+  const go = () => {
+    if ((gl2 && gpuBusy()) || shadersPending()) { keepMatrices(); requestAnimationFrame(go); return; }
+    dirty = false; takeUploads(); renderer.render(scene, camera); fenceFrame();
+    if (uploads.length) { requestAnimationFrame(go); return; }
+    then?.();
+  };
+  go();
+}
+// (a frame held back still moves the camera and the parts: picking, dragging and screen positions work on where things are)
+const keepMatrices = () => { scene.updateMatrixWorld(); camera.updateMatrixWorld(); };
+(function loop() {
+  requestAnimationFrame(loop); controls.update(); if (motionUI?.tick(performance.now())) dirty = true;
+  if (!dirty) return;
+  if ((gl2 && gpuBusy()) || shadersPending()) { keepMatrices(); return; }
+  dirty = false; takeUploads(); renderer.render(scene, camera); fenceFrame();
+})();
 
 // The sheet's top edge decides how much room the model gets: on phones the canvas scales from its
 // top edge to stay in the visible area, using transform alone so dragging stays smooth.
@@ -91,6 +150,21 @@ const sheet = new Sheet({ el: $("#sheet"), grabber: $("#grabber"), onMove(top) {
 const stlLoader = new STLLoader(); const meshCache = new Map();
 let previewRevision = 0;
 let preview = { ready: false, expected: 0, loaded: 0, errors: [] };
+// the 3D harness pass of the robot on screen (routeWires): "idle", "running" or "done"
+let routing = "idle", routeSeq = 0;
+// New geometry goes into the scene up to 96 MB a frame: a robot of hundreds of parts uploaded in one frame held the page
+// while the GPU took it all in. Each part shows as soon as its frame is drawn.
+function takeUploads() {
+  let budget = UPLOAD_BYTES;
+  while (uploads.length && budget > 0) {
+    const u = uploads.shift();
+    // (a part of this robot still in the scene: one its harness pass has replaced meanwhile is not counted or shown)
+    if (u.revision === previewRevision && u.mesh.parent?.parent === robotGroup) { u.mesh.geometry.dispose(); u.mesh.geometry = u.geometry; u.mesh.userData.meshLoaded = true; preview.loaded++; budget -= u.bytes; }
+    else u.geometry.dispose();
+    u.done();
+  }
+  if (uploads.length) dirty = true;
+}
 async function loadMeshInto(mesh, g, revision, robotId) {
   const key = `${robotId}/${g.file}`;
   try {
@@ -108,9 +182,9 @@ async function loadMeshInto(mesh, g, revision, robotId) {
       }
     }
     if (revision !== previewRevision) return;
-    mesh.geometry.dispose(); mesh.geometry = geometry.clone();
-    mesh.userData.meshLoaded = true;
-    preview.loaded++; invalidate();
+    // to the GPU with the next frames, up to 96 MB a frame (resolves once it is in the scene)
+    const g2 = geometry.clone(), bytes = Object.values(g2.attributes).reduce((n, a) => n + a.array.byteLength, 0);
+    await new Promise((done) => { uploads.push({ mesh, geometry: g2, revision, bytes, done }); invalidate(); });
   } catch (error) {
     if (revision !== previewRevision) return;
     preview.errors.push(`${g.file}: ${error.message}`);
@@ -173,11 +247,16 @@ function buildRobot(spec) {
   Promise.all(pending).then(() => {
     if (revision !== previewRevision) return;
     frameRobot();
-    // Explicitly draw the loaded geometry. Network-idle does not imply a painted frame.
-    renderer.render(scene, camera);
-    preview.ready = preview.errors.length === 0 && preview.loaded === preview.expected;
-    showPreviewStatus();
-    if (revealNext) { const strong = revealNext === "strong"; revealNext = null; reveal(strong); }
+    // Explicitly draw the loaded geometry (network-idle does not imply a painted frame), once the GPU is free for it
+    const tLoaded = performance.now();
+    drawNow(() => {
+      if (revision !== previewRevision) return;
+      // (for the benchmark: when the meshes were in and when the frame with them was drawn, from Generate)
+      if (window.__ttrTimes?.t0 && !window.__ttrTimes.drawn_ms) Object.assign(window.__ttrTimes, { loaded_ms: Math.round(tLoaded - window.__ttrTimes.t0), drawn_ms: Math.round(performance.now() - window.__ttrTimes.t0) });
+      preview.ready = preview.errors.length === 0 && preview.loaded === preview.expected;
+      showPreviewStatus();
+      if (revealNext) { const strong = revealNext === "strong"; revealNext = null; reveal(strong); }
+    });
   });
 }
 /** One link's meshes (its visual or, with Collision on, its collision shapes); mesh files load into `pending`. */
@@ -742,7 +821,7 @@ function loadVersion(i) {
 async function doGenerate(prompt) {
   // an empty prompt still gets a robot: the general-purpose one, with a note on what to type
   if (prompt.length > MAX_PROMPT_CHARS) { toast(`Keep the description under ${MAX_PROMPT_CHARS} characters.`, "err"); return; }
-  setBusy($("#genbtn"), true); document.body.classList.add("busy"); revealNext = "strong";
+  setBusy($("#genbtn"), true); document.body.classList.add("busy"); revealNext = "strong"; $("#cancelbtn").hidden = !STATIC;
   const family = FAMILIES.findIndex((f) => f.prompt === prompt);
   if (family >= 0) familyDial.go(family, { silent: true });   // chips and the bar keep the ring honest
   if (!first) sheet.go("peek");   // on phones, get out of the way of the reveal
@@ -750,26 +829,29 @@ async function doGenerate(prompt) {
   try {
     if (looksLikeParts(prompt)) await doPartsPrompt(prompt);
     else if (state.arduino) await doArduino(prompt);
-    else { const res = await api("/api/robots/generate", { prompt }); state.versions = []; state.recipe = { p: prompt }; applyResult(res, prompt.slice(0, 40)); if (res.routing === "pending") routeWires(prompt, res); }
+    else { const t0 = performance.now(); const res = await api("/api/robots/generate", { prompt }); window.__ttrTimes = { answered_ms: Math.round(performance.now() - t0), t0 }; state.versions = []; state.recipe = { p: prompt }; applyResult(res, prompt.slice(0, 40)); if (res.routing === "pending") routeWires(prompt, res); }
   }
-  catch (e) { revealNext = null; status("✗ " + e.message, "err"); }
-  finally { setBusy($("#genbtn"), false, "Generate"); document.body.classList.remove("busy"); }
+  catch (e) { revealNext = null; status(e.message === "cancelled" ? "Cancelled: nothing is running now." : "✗ " + e.message, e.message === "cancelled" ? undefined : "err"); }
+  finally { setBusy($("#genbtn"), false, "Generate"); document.body.classList.remove("busy"); $("#cancelbtn").hidden = true; }
 }
+// Cancel: every worker of the tab is ended at once (browser-api.ts), whatever it was doing; the robot on screen stays
+function cancelWork() { globalThis.ttrStatic?.cancel(); routeSeq++; routing = "done"; $("#routingNote").hidden = true; $("#cancelbtn").hidden = true; renderCards(); }
+$("#cancelbtn").addEventListener("click", cancelWork);
+$("#routeCancel").addEventListener("click", cancelWork);
 
 // ---------------- the 3D harness, laid after the robot is on screen ----------------
 // The robot comes back first with its wires as straight runs; the engine then designs it again with every wire laid
 // through free space, which takes a while on the big robots. That version replaces the first in place, unless the visitor
 // has moved on to another robot or changed this one.
-let routing = "idle", routeSeq = 0;
 async function routeWires(prompt, first) {
   const mine = ++routeSeq; routing = "running"; const shown = state.robot, label = state.versions.at(-1)?.label ?? prompt.slice(0, 40);
-  $("#routingNote").hidden = false;
+  $("#routingNote").hidden = false; renderCards();
   try {
     const res = await api("/api/robots/generate", { prompt, route: true });
     if (state.robot !== shown) return;   // a newer robot or an edit: the routed one is not this anymore
     swapRouted(res, label);
-  } catch (e) { if (e.message !== "superseded" && mine === routeSeq) status([...checksToText(first), "⚠ Wiring: the 3D harness could not be laid: " + e.message]); }
-  finally { if (mine === routeSeq) { routing = "done"; $("#routingNote").hidden = true; } }   // (an older robot's pass says nothing about this one)
+  } catch (e) { if (e.message !== "superseded" && e.message !== "cancelled" && mine === routeSeq) status([...checksToText(first), "⚠ Wiring: the 3D harness could not be laid: " + e.message]); }
+  finally { if (mine === routeSeq) { routing = "done"; $("#routingNote").hidden = true; renderCards(); } }   // (an older robot's pass says nothing about this one)
 }
 
 /** The routed robot in place of the one on screen. Its links and joints are the same; its wiring record is new and the
@@ -869,17 +951,20 @@ function renderCards() {
     const m = Math.min(j.margin, 6), bar = el("div", "bar" + (j.margin < 1 ? " bad" : "")), i = el("i");
     i.style.height = `${Math.max(6, (m / maxM) * 100)}%`; bar.title = `${j.joint}: ${j.margin}x margin (${j.actuator})`; bar.onclick = () => toast(bar.title); bar.append(i); chart.append(bar);
   }
-  const checks = d?.checks ?? [], bad = checks.filter((c) => !c.pass), through = routeThrough(d);
-  $("#checksPill").textContent = checks.length ? (bad.length ? `${bad.length} failing` : `all ${checks.length} pass`) + (through ? ` · ${through.text}` : "") : "";
-  $("#checksPill").className = "pill " + (checks.length ? (bad.length ? "red" : through ? "amber" : "green") : "");
+  // while the 3D harness is laid, the wiring checks are running on it: they show as running until it lands, then as they come out
+  const running = routing === "running" && d?.wiring?.laid === "legacy" ? (c) => c.name.startsWith("wiring:") : () => false;
+  const all = d?.checks ?? [], pending = all.filter(running), checks = all.filter((c) => !running(c)), bad = checks.filter((c) => !c.pass), through = routing === "running" ? null : routeThrough(d);
+  $("#checksPill").textContent = all.length ? (bad.length ? `${bad.length} failing` : `${pending.length ? "" : "all "}${checks.length} pass`) + (pending.length ? ` · ${pending.length} running` : "") + (through ? ` · ${through.text}` : "") : "";
+  $("#checksPill").className = "pill " + (all.length ? (bad.length ? "red" : through || pending.length ? "amber" : "green") : "");
   const list = $("#checksList"); list.replaceChildren();
   // wires the router could only lay through a part: said first, in amber (the wiring record carries the same)
   if (through) { const row = el("div", "check route-through"); row.append(el("span", "warn", "⚠")); const t = el("div"); t.append(el("b", null, through.text + " "), document.createTextNode(through.detail)); row.append(t); list.append(row); }
+  for (const c of pending) { const row = el("div", "check pending"); row.append(el("span", "run", "⋯")); const t = el("div"); t.append(el("b", null, c.name + " "), document.createTextNode("running on the 3D harness")); row.append(t); list.append(row); }
   for (const c of [...bad, ...checks.filter((x) => x.pass)].slice(0, 60)) {
     const row = el("div", "check"); row.append(el("span", c.pass ? "ok" : "no", c.pass ? "✓" : "✗"));
     const t = el("div"); t.append(el("b", null, c.name + " "), document.createTextNode(c.detail)); row.append(t); list.append(row);
   }
-  if (!checks.length) list.append(el("div", "hint", r ? "Template robots carry no engineering checks: switch on Arduino or describe a designed robot." : ""));
+  if (!all.length) list.append(el("div", "hint", r ? "Template robots carry no engineering checks: switch on Arduino or describe a designed robot." : ""));
 }
 
 // ---------------- navigation ----------------

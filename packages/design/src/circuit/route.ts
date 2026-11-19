@@ -6,9 +6,25 @@ import type { Box, Pt } from "./draw.ts";
 const DIRS: Pt[] = [[1, 0], [0, 1], [-1, 0], [0, -1]];
 export type Heading = 0 | 1 | 2 | 3; // +x, +y, -x, -y
 
-class Heap { a: [number, number][] = []; push(k: number, v: number) { const a = this.a; a.push([k, v]); let i = a.length - 1; while (i) { const p = (i - 1) >> 1; if (a[p][0] <= a[i][0]) break; [a[p], a[i]] = [a[i], a[p]]; i = p; } }
-  pop(): number { const a = this.a, top = a[0][1], last = a.pop()!; if (a.length) { a[0] = last; let i = 0; for (;;) { const l = 2 * i + 1, r = l + 1; let m = i; if (l < a.length && a[l][0] < a[m][0]) m = l; if (r < a.length && a[r][0] < a[m][0]) m = r; if (m === i) break; [a[m], a[i]] = [a[i], a[m]]; i = m; } } return top; }
-  get size() { return this.a.length; } }
+/** A binary min-heap of (key, value) in typed arrays: the same moves, and so the same order among equal keys, as the plain
+ *  array-of-pairs heap it replaced (tests/route-search.test.ts holds the router to the plain version). */
+class Heap {
+  k = new Float64Array(1024); v = new Int32Array(1024); n = 0;
+  push(key: number, val: number) {
+    if (this.n === this.k.length) { const k2 = new Float64Array(this.n * 2), v2 = new Int32Array(this.n * 2); k2.set(this.k); v2.set(this.v); this.k = k2; this.v = v2; }
+    const k = this.k, v = this.v; let i = this.n++; k[i] = key; v[i] = val;
+    while (i) { const p = (i - 1) >> 1; if (k[p] <= k[i]) break; const tk = k[p], tv = v[p]; k[p] = k[i]; v[p] = v[i]; k[i] = tk; v[i] = tv; i = p; }
+  }
+  pop(): number {
+    const k = this.k, v = this.v, top = v[0], n = --this.n;
+    if (n) {
+      k[0] = k[n]; v[0] = v[n]; let i = 0;
+      for (;;) { const l = 2 * i + 1, r = l + 1; let m = i; if (l < n && k[l] < k[m]) m = l; if (r < n && k[r] < k[m]) m = r; if (m === i) break; const tk = k[m], tv = v[m]; k[m] = k[i]; v[m] = v[i]; k[i] = tk; v[i] = tv; i = m; }
+    }
+    return top;
+  }
+  get size() { return this.n; }
+}
 
 export interface RouteEnd { at: Pt; /** heading the wire must leave this end with (outward from the pin) */ out: Heading; }
 export class Router {
@@ -18,6 +34,7 @@ export class Router {
   node: Int32Array; // net id + 1 owning the cell as a corner or an end
   reserved: Int32Array; // pin ends: only that net may enter
   w: number; hgt: number; g: number;
+  private sc?: { cost: Float64Array; from: Int32Array; st: Uint32Array; gen: number };
   constructor(w: number, hgt: number, g: number) {
     this.w = w; this.hgt = hgt; this.g = g;
     this.nx = Math.ceil(w / g) + 1; this.ny = Math.ceil(hgt / g) + 1;
@@ -48,12 +65,15 @@ export class Router {
     const s = this.cell(a.at), t = this.cell(b.at);
     // the end the wire arrives at is entered heading against its outward direction
     const tIn = ((b.out + 2) % 4) as Heading;
-    const cost = new Float64Array(N * 4).fill(Infinity), from = new Int32Array(N * 4).fill(-1);
+    // a state's cost so far and where it came from, valid where its stamp is this search's (buffers kept from search to search)
+    if (!this.sc || this.sc.cost.length < N * 4) this.sc = { cost: new Float64Array(N * 4), from: new Int32Array(N * 4), st: new Uint32Array(N * 4), gen: 0 };
+    const sc = this.sc, cost = sc.cost, from = sc.from, stamp = sc.st, gen = ++sc.gen;
+    const costOf = (x: number) => (stamp[x] === gen ? cost[x] : Infinity);
     const heap = new Heap(), hx = (c: number) => Math.abs((c % nx) - (t % nx)) + Math.abs(Math.floor(c / nx) - Math.floor(t / nx));
-    const start = s * 4 + a.out; cost[start] = 0; heap.push(hx(s), start);
+    const start = s * 4 + a.out; cost[start] = 0; from[start] = -1; stamp[start] = gen; heap.push(hx(s), start);
     let limit = o.limit ?? 400000, done = -1;
     while (heap.size && limit-- > 0) {
-      const st = heap.pop(), c = st >> 2, d = st & 3, base = cost[st];
+      const st = heap.pop(), c = st >> 2, d = st & 3, base = costOf(st);
       if (c === t && d === tIn) { done = st; break; }
       for (let nd = 0; nd < 4; nd++) {
         if (nd === ((d + 2) & 3)) continue;
@@ -68,12 +88,13 @@ export class Router {
         // `late` makes a bend a little cheaper near the far end, so of equal routes the one that turns late wins and bundles nest
         const step = 1 + (turn ? bend + (o.late ?? 0) * hx(c) : 0) + (other && other !== net + 1 ? crossC : 0);
         const st2 = c2 * 4 + nd, nc = base + step;
-        if (nc < cost[st2]) { cost[st2] = nc; from[st2] = st; heap.push(nc + hx(c2), st2); }
+        if (nc < costOf(st2)) { cost[st2] = nc; from[st2] = st; stamp[st2] = gen; heap.push(nc + hx(c2), st2); }
       }
     }
     if (done < 0) return null;
     const cells: number[] = [];
-    for (let st = done; st >= 0; st = from[st]) cells.unshift(st);
+    for (let st = done; st >= 0; st = from[st]) cells.push(st);
+    cells.reverse();
     // occupy and keep the corners
     const pts: Pt[] = [];
     for (let i = 0; i < cells.length; i++) {

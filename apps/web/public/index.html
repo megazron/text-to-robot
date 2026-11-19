@@ -104,6 +104,7 @@
   <button class="arduino-tag" type="button" data-arduino hidden title="Arduino mode is on. Press to turn it off.">Arduino</button>
   <input id="prompt" aria-label="Describe the robot you want" placeholder="Describe any robot" autocomplete="off" enterkeyhint="go" />
   <button id="genbtn" type="submit" class="primary">Generate</button>
+  <button id="cancelbtn" type="button" class="tonal cancel" hidden title="Stop designing: every worker of this tab is ended now">Cancel</button>
 </form>
 
 <aside id="sheet" aria-label="Controls">
@@ -172,7 +173,7 @@
       </div>
       <h2 class="label">Engine log</h2>
       <div id="status" class="status" role="log"></div>
-      <div id="routingNote" class="routing-note" role="status" hidden>Laying the wires in 3D: the harness and its checks update when it is done.</div>
+      <div id="routingNote" class="routing-note" role="status" hidden>Laying the wires in 3D: the harness and its checks update when it is done. <button id="routeCancel" type="button" class="forge-cancel">Stop</button></div>
       <h2 class="label">Templates</h2>
       <div id="templates" class="chips"></div>
     </section>

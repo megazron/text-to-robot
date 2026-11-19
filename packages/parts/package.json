@@ -22,7 +22,9 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
-    "./data/*": "./data/*"
+    "./data/*": "./data/*",
+    "./memo": "./src/memo.ts",
+    "./profile": "./src/profile.ts"
   },
   "dependencies": {}
 }

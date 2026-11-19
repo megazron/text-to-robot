@@ -2,9 +2,10 @@
 // keyword/regex rules, negation-aware matching and unit-aware quantities. Every
 // request is either applied, approximated with a stated substitute, or reported as
 // ignored; nothing is dropped silently.
+import { stage } from "@ttr/parts/profile";
 import type { RobotSpecification, SensorType } from "@ttr/robot-schema";
 import { safeName } from "@ttr/robot-schema";
-import { fk } from "@ttr/design";
+import { fk, defaultRouterMode } from "@ttr/design";
 import { normalize, find, findAll, mentions, negates, extractDofMentions, type DofMention, extractLengths, extractMasses, extractSpeeds, parseBudget, extractName, extractColour, maskNames, paintSpec, paintRgb, STYLE_PALETTE, variantPalette, jobKey } from "./text.ts";
 import { armourShape, shapeKey } from "@ttr/mesh";
 import { suitOptions } from "./suit.ts";
@@ -33,9 +34,10 @@ export { MAX_ARM_DOF } from "./families.ts";
 const designCache = new Map<string, RobotSpecification>();
 function buildCached(choice: Choice, ctx: DesignContext): RobotSpecification {
   if (!choice.designed) return choice.build(ctx);
-  const key = `${choice.family}|${choice.label}|${JSON.stringify(ctx)}`, hit = designCache.get(key);
+  // (the router is part of the key: the same request wired another way is another robot)
+  const key = `${choice.family}|${choice.label}|${defaultRouterMode()}|${JSON.stringify(ctx)}`, hit = designCache.get(key);
   if (hit) return structuredClone(hit);
-  const spec = choice.build(ctx);
+  const spec = stage("design", () => choice.build(ctx));
   if (budgetNotes().length) return spec;   // cut short by the time budget: not kept, the next ask designs it in full
   if (designCache.size >= 64) designCache.delete(designCache.keys().next().value as string);
   designCache.set(key, structuredClone(spec));
@@ -84,7 +86,8 @@ const designedSensors = (spec: RobotSpecification) => spec.sensors.map((x) => ({
 
 /** Deterministic NL -> RobotSpecification plus a record of how each request was handled. */
 export interface InterpretOptions { /** a knowledge entry chosen beforehand by a sentence-embedding model (similarity.ts) */ knowledgeHint?: string; }
-export function interpretPrompt(original: string, opts: InterpretOptions = {}): PromptResult {
+export function interpretPrompt(original: string, opts: InterpretOptions = {}): PromptResult { return stage("parse", () => interpretIn(original, opts)); }
+function interpretIn(original: string, opts: InterpretOptions): PromptResult {
   // markup, instructions to the parser and over-long text are removed first (and said); harmful and impossible requests stop here
   const tri = buildableTriage(original), prompt = tri.text;
   // names and quoted text ("named Tiny", "called 'Unit 50'") never describe the robot's features

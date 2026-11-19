@@ -16,7 +16,11 @@ import { buildPart, toStlBinary, meshTopology, setArmourSource, setArmourCache, 
 import { providerStatus } from "@ttr/llm-providers";
 import { engineApi } from "./engine/api.ts";
 import { setDefaultRouter } from "@ttr/design";
-import { setPool, getPool, workerPool } from "@ttr/mesh/forge/pool";
+import { setPool, getPool, lazyPool, Budget } from "@ttr/mesh/forge/pool";
+import { setPartsPool, prefetchParts } from "@ttr/mesh/parts-pool";
+import { startResultCache } from "./result-cache.ts";
+import { profiling, profile } from "@ttr/parts/profile";
+import { primeRemembered } from "@ttr/parts/memo";
 // @ts-expect-error: plain JavaScript module without types
 import { safeJsonParse, MAX_PROMPT_CHARS } from "../public/safe.js";
 
@@ -38,6 +42,12 @@ function encodeFiles(files: Record<string, string | Uint8Array>): Record<string,
   }
   return out;
 }
+// The engine's build: a hash of its sources and locked dependencies, written in by deploy/build-pages.sh. Every result the
+// persistent cache keeps is keyed by it, so a changed engine never reads what an older one made. (No hash, no cache.)
+declare const TTR_ENGINE_HASH: string | undefined;
+const ENGINE_HASH = typeof TTR_ENGINE_HASH === "string" ? TTR_ENGINE_HASH : "";
+const workerFlags = (self as { name?: string }).name ?? "";
+const results = ENGINE_HASH && !/nocache/.test(workerFlags) ? startResultCache(ENGINE_HASH) : undefined;
 const json = (code: number, body: unknown) => new Response(JSON.stringify(body), { status: code, headers: { "Content-Type": "application/json" } });
 
 async function handle(method: string, p: string, body: any): Promise<Response> {
@@ -124,17 +134,40 @@ setArmourCache({
     catch { /* private mode or quota: the pack stays in memory only */ }
   },
 });
-// the forge shares its solid work out to helpers, each a worker with its own manifold-3d (one per spare core, at most four: each takes memory)
-const asked = /helpers=(\d+)/.exec((self as { name?: string }).name ?? "")?.[1];
+// Helper workers: as many as the page's worker plan leaves (helpers=N in this worker's name, device.ts), shared by the armour
+// forge (each helper its own manifold-3d) and the parts pool (each its own CAD kernels, building a robot's parts in parallel
+// where they are known ahead). Both start their workers with their first job and end them when idle.
+const asked = /helpers=(\d+)/.exec(workerFlags)?.[1];
 const helpers = asked !== undefined ? Math.min(8, Number(asked)) : Math.max(0, Math.min(4, (navigator.hardwareConcurrency || 2) - 2));
-if (helpers) setPool(workerPool(helpers, () => {
-  const base = (self as { TTR_ENGINE_BASE?: string }).TTR_ENGINE_BASE ?? location.href;   // set when another site started this worker
-  // a worker must come from its page's origin: from another site the helper boots from a blob that imports the script
-  const script = new URL("./forge-worker.js", base), same = script.origin === location.origin;
-  const w = new Worker(same ? script : URL.createObjectURL(new Blob([`await import(${JSON.stringify(script.href)});`], { type: "text/javascript" })), { type: "module" });
-  w.postMessage({ wasm: new URL("./manifold.wasm", base).href });
-  return { post: (m) => w.postMessage(m), on: (fn) => { w.onmessage = ({ data }) => fn(data); }, end: () => w.terminate() };
-}));
+const budget = new Budget(helpers);
+const engineBase = () => (self as { TTR_ENGINE_BASE?: string }).TTR_ENGINE_BASE ?? location.href;   // set when another site started this worker
+// a worker must come from its page's origin: from another site the helper boots from a blob that imports the script
+const helperWorker = (file: string) => {
+  const script = new URL(`./${file}`, engineBase()), same = script.origin === location.origin;
+  return new Worker(same ? script : URL.createObjectURL(new Blob([`await import(${JSON.stringify(script.href)});`], { type: "text/javascript" })), { type: "module" });
+};
+if (helpers) {
+  // (each helper's messages wait until it says it listens; one that cannot start fails its jobs instead of holding them)
+  const helper = (file: string, first: unknown) => () => {
+    const w = helperWorker(file);
+    let ready = false, listener: (m: any) => void = () => {}, dead: () => void = () => {};
+    const held: unknown[] = [first];
+    w.onmessage = ({ data }) => { if (data?.ready) { ready = true; for (const m of held.splice(0)) w.postMessage(m); return; } listener(data); };
+    w.onerror = (e) => { e.preventDefault(); w.terminate(); dead(); };
+    return { post: (m: unknown) => { if (ready) w.postMessage(m); else held.push(m); }, on: (fn: (m: any) => void) => { listener = fn; }, end: () => w.terminate(), dead: (fn: () => void) => { dead = fn; } };
+  };
+  setPool(lazyPool(helpers, helper("forge-worker.js", { wasm: new URL("./manifold.wasm", engineBase()).href }), budget, { wait: true, idleMs: 60000 }));
+  setPartsPool(lazyPool(helpers, helper("parts-worker.js", { base: engineBase() }), budget, { idleMs: 15000 }));
+}
+/** what the request just answered waited for (the page's benchmark reads it) */
+let note: Record<string, unknown> = {};
+/** a robot's parts built ahead on the helpers, once per robot (its meshes are asked for one by one, all at once) */
+const prefetched = new Map<string, Promise<unknown>>();
+function prefetchRobot(id: string, robot: RobotSpecification) {
+  let p = prefetched.get(id);
+  if (!p) { p = prefetchParts(robot).catch(() => undefined); prefetched.set(id, p); while (prefetched.size > MAX_STORE) prefetched.delete(prefetched.keys().next().value as string); }
+  return p;
+}
 // The reference suit is served ready-made: the shipped pack, fetched once (about 13 MB). Any other shape is forged here, and only after
 // the visitor has said yes to the time and memory it takes (the page asks, then sends the request again with forgeConsent).
 setPrebuilt(async () => {
@@ -150,7 +183,7 @@ const forgeStart = { t: 0 };
 setForgeListener((p) => { if (!forgeStart.t) forgeStart.t = Date.now(); post({ forge: { ...p, elapsed_s: Math.round((Date.now() - forgeStart.t) / 1000) } }); if (p.stage === "done") forgeStart.t = 0; },
   undefined, (parts) => post({ forgePreview: parts }, parts.flatMap((p) => [p.v.buffer, p.f.buffer])));
 
-async function answer(method: string, path: string, text: string): Promise<Response> {
+async function answer(method: string, path: string, text: string, cacheOnly = false): Promise<Response> {
   try {
     // __proto__ / constructor / prototype keys are dropped: request bodies carry robots from files and share links
     const body = text ? safeJsonParse(text, 64 * 1024 * 1024) : {};
@@ -163,13 +196,69 @@ async function answer(method: string, path: string, text: string): Promise<Respo
     if (body.robot) await forgeForRobot(body.robot as RobotSpecification);
     if (path === "/api/arduino" && body.prompt) await forgeForPrompt(String(body.prompt));
     const meshMatch = /^\/api\/robots\/([^/]+)\/mesh\//.exec(path), stored = meshMatch && store.get(meshMatch[1]);
-    if (stored) await forgeForRobot(stored);
-    return await handle(method, path, body);
+    if (stored) { await forgeForRobot(stored); const t = performance.now(), pf = await prefetchRobot(meshMatch[1], stored); note.prefetch = { ...(pf as object), waited_s: +((performance.now() - t) / 1000).toFixed(3) }; }
+    // a robot from a file, a link or an export: its parts are known, so they are built ahead on the helpers
+    if (body.robot && /^\/api\/robots\/(import|cad|export|training)$/.test(path)) await prefetchParts(body.robot as RobotSpecification).catch(() => undefined);
+    if (cacheOnly && (!results || method !== "POST")) return json(202, { cached: false });
+    if (!results || method !== "POST") return await handle(method, path, body);
+    return await cached(method, path, text, body, cacheOnly);
   } catch (e) {
     if (e instanceof ForgeNeedsConsent) return json(409, { error: "This Mark 43 shape is not made yet: forging it in the browser takes many minutes and gigabytes of memory, so it needs a go-ahead (send the request again with forgeConsent: true). The reference suit opens at once.", forgeNeeded: { shape: e.shape } });
     return json(400, { error: (e as Error).message });
   }
 }
+// ---- the persistent cache around a request (result-cache.ts). A request names the groups whose results it loads first: a
+// design loads its own pass's parts and the other pass's (the 3D harness pass finds every part the first pass made, all
+// but the few its clips cut into), an export loads the robot's. A design the engine answered before, with the same
+// engine, prompt and settings, is answered from the cache with a new id: the engine is deterministic, so it is the same robot.
+const DESIGNS = new Set(["/api/robots/generate", "/api/robots/modify", "/api/arduino"]);
+let lastStored: Promise<void> = Promise.resolve();
+// requests in progress, and when the last one ended: the cache is written when the worker has been free for a moment
+let inFlight = 0, lastEnded = 0;
+const quiet = () => new Promise<void>((ok) => {
+  const t0 = performance.now();
+  const check = () => (inFlight === 0 && performance.now() - lastEnded > 200) || performance.now() - t0 > 5000 ? ok() : void setTimeout(check, 100);
+  setTimeout(check, 100);
+});
+const madeFor = new WeakMap<Response, { kind: string; input: string; rec: unknown; bytes: number }[]>();
+async function cached(method: string, path: string, text: string, body: any, cacheOnly = false): Promise<Response> {
+  const origin = String(body.prompt ?? body.robot?.metadata?.source_prompt ?? body.instruction ?? "");
+  const pass = body.route === true ? "route" : "quick", mine = `${path}|${pass}|${origin}`;
+  const groups = path === "/api/robots/generate" ? [mine, `${path}|${pass === "route" ? "quick" : "route"}|${origin}`] : [mine, `/api/robots/generate|route|${origin}`, `/api/robots/generate|quick|${origin}`];
+  // a model of the visitor's own may read a prompt differently from one time to the next: its answers are not kept. The
+  // sentence model is this site's own (its files are in the build hash) and reads a prompt the same way every time, so its
+  // answers are kept, apart from the plain reader's
+  const keep = DESIGNS.has(path) && !reading.model, answerKey = `${method} ${path} ${embedderOn ? "[sentence model] " : ""}${text}`;
+  if (keep) {
+    const hit = await results!.response(answerKey);
+    if (hit) {
+      const out = JSON.parse(hit.body);
+      if (out.id && out.robot) {
+        out.id = crypto.randomUUID(); remember(out.id, out.robot);
+        // its meshes are asked for next: their parts load from the cache meanwhile (the wiring worker serves no meshes)
+        if (!/\brouter\b/.test(workerFlags)) { const t = performance.now(); prefetched.set(out.id, results!.begin(groups).then(async () => { const b = performance.now() - t; return { ...(await prefetchParts(out.robot)), loaded_s: +(b / 1000).toFixed(3) }; }).catch(() => undefined)); }
+      }
+      return new Response(JSON.stringify(out), { status: hit.status, headers: { "Content-Type": hit.type } });
+    }
+  }
+  // only asked whether it is kept (the page answers a 3D harness pass from here when it is, without starting a worker for it)
+  if (cacheOnly) return json(202, { cached: false });
+
+  await results!.begin(groups);
+  const r = await handle(method, path, body);
+  // the wiring worker hands the parts it made to the engine with the robot (its meshes are served there next)
+  if (/\brouter\b/.test(workerFlags) && r.ok) madeFor.set(r, results!.made());
+  // written after the answer is sent (the page waits for "stored" before it starts a pass that needs these parts)
+  // (an answer the time budget cut short is not kept: asked again, the robot is designed in full)
+  const text0 = keep && r.ok ? await r.clone().text() : undefined, answerText = text0 !== undefined && !/time budget: /.test(text0) ? text0 : undefined, snap = results!.snapshot(mine);
+  lastStored = (async () => {
+    await quiet();   // the page asks for the robot's meshes first: the cache is written once they are served
+    await results!.write(snap);
+    if (answerText !== undefined) await results!.keepResponse(answerKey, { status: r.status, type: r.headers.get("Content-Type") ?? "application/json", body: answerText });
+  })().catch(() => {});
+  return r;
+}
+
 // ---- reading settings from the page: the sentence model and a bring-your-own-key model, both off unless switched on.
 // Each lives in its own file, imported only when it is first used, so the site itself downloads neither.
 interface Reading { embeddings?: boolean; model?: { kind: "anthropic" | "openai"; key: string; baseUrl?: string; model?: string } | null }
@@ -200,9 +289,24 @@ self.onmessage = async ({ data }: MessageEvent) => {
   if (data.cancelForge) { cancelForge(); getPool()?.abort?.(); return; }
   if (data.robots) { for (const [k, v] of safeJsonParse(data.robots, 256 * 1024 * 1024)) store.set(k, v); return; }
   // a robot whose harness the wiring worker laid (browser-api.ts): kept here, where its meshes are served from
-  if (data.adopt) { remember(String(data.adopt.id), data.adopt.robot as RobotSpecification); return; }
+  if (data.adopt) {
+    const robot = data.adopt.robot as RobotSpecification, origin = String(robot?.metadata?.source_prompt ?? "");
+    remember(String(data.adopt.id), robot);
+    // the parts the wiring worker made for it (its clips cut into them): kept here as if made here
+    for (const x of (data.adopt.parts ?? []) as { kind: string; input: string; rec: unknown; bytes: number }[]) primeRemembered(x.kind, x.input, x.rec, x.bytes);
+    // its parts: from the cache, where the wiring worker put them, else built ahead on the helpers
+    if (results) { await lastStored; await results.begin([`/api/robots/generate|route|${origin}`, `/api/robots/generate|quick|${origin}`]); }
+    void prefetchRobot(String(data.adopt.id), robot);
+    return;
+  }
   if (data.reading) { await applyReading(data.reading); return; }
-  const r = await answer(data.method, data.path, data.body), buffer = await r.arrayBuffer();
-  post({ id: data.id, status: r.status, type: r.headers.get("Content-Type") ?? "application/json", buffer, wasm_mb: wasmPeakMb() }, [buffer]);
+  // the page asks when everything this worker made is in the cache (a benchmark, before it closes the tab)
+  if (data.whenStored) { void lastStored.then(() => post({ allStored: data.whenStored })); return; }
+  profiling(true); note = {}; inFlight++;
+  const t0 = performance.now(), r = await answer(data.method, data.path, data.body, !!data.cacheOnly).finally(() => { inFlight--; lastEnded = performance.now(); }), parts = madeFor.get(r), buffer = await r.arrayBuffer();
+  const took = { s: +((performance.now() - t0) / 1000).toFixed(3), stages: profile(), ...note };
+  post({ id: data.id, status: r.status, type: r.headers.get("Content-Type") ?? "application/json", buffer, wasm_mb: wasmPeakMb(), took, ...(parts?.length ? { parts } : {}) }, [buffer]);
+  // the page starts the 3D harness pass once this request's results are in the cache (it loads them from there)
+  void lastStored.then(() => post({ stored: data.id }));
 };
 post({ ready: true });

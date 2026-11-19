@@ -13,6 +13,8 @@ export interface Box { min: V3; max: V3; }
 const DCAP = 8;
 const NB: [number, number, number, number][] = [];
 for (let a = -1; a <= 1; a++) for (let b = -1; b <= 1; b++) for (let c = -1; c <= 1; c++) if (a || b || c) NB.push([a, b, c, Math.sqrt(a * a + b * b + c * c)]);
+/** the six face neighbours, in the order NB has them */
+const FACES = NB.filter((n) => n[3] === 1);
 
 export class Grid {
   s: number; o: V3; nx: number; ny: number; nz: number;
@@ -175,56 +177,97 @@ export class Grid {
   /**
    * The cheapest way from a to b through cubes with clearance `need` (a and b are free points), as cube centres pulled
    * straight. `within` keeps it inside a box (a compartment). Null if there is none inside the search region.
+   * (The search is written for speed and gives the very path the plain version gives: the same costs in the same order,
+   * the same float32 rounding of a cube's cost so far, the same heap and its ties. tests/route-search.test.ts holds it to
+   * that version on recorded searches.)
    */
   path(a: V3, b: V3, need: number, within?: Box, limit = 150000): V3[] | null {
     const direct = this.line(a, b, need, within);
     if (direct >= 0 && direct < 40) return [a, b];
     const s = this.s, A = this.ix(a), B = this.ix(b);
     if (this.pocket(A, B, need, within) || this.pocket(B, A, need, within)) return direct >= 0 ? [a, b] : null;
+    const { nx, ny, o, d: D } = this, sxy = nx * ny;
+    // the cost of a step to a neighbour at each clearance, as the search sums it: length * cube * rate
+    const K = DCAP + 1, step = new Float64Array(26 * K);
+    for (let q = 0; q < 26; q++) for (let dd = 0; dd < K; dd++) step[q * K + dd] = NB[q][3] * s * this.rate(dd, need);
+    const hs = 1.35 * s;
     for (const margin of [48, 200]) {
       const m = Math.ceil(margin / s);
       const lo = [0, 1, 2].map((q) => Math.max(0, Math.min(A[q], B[q]) - m)), hi = [Math.min(this.nx - 1, Math.max(A[0], B[0]) + m), Math.min(this.ny - 1, Math.max(A[1], B[1]) + m), Math.min(this.nz - 1, Math.max(A[2], B[2]) + m)];
       if ([0, 1, 2].some((q) => A[q] < lo[q] || A[q] > hi[q] || B[q] < lo[q] || B[q] > hi[q])) return direct >= 0 ? [a, b] : null;
-      const w = hi[0] - lo[0] + 1, h = hi[1] - lo[1] + 1, dp = hi[2] - lo[2] + 1, N = w * h * dp;
+      const w = hi[0] - lo[0] + 1, h = hi[1] - lo[1] + 1, dp = hi[2] - lo[2] + 1, N = w * h * dp, wh = w * h;
       const whole = lo[0] === 0 && lo[1] === 0 && lo[2] === 0 && hi[0] === this.nx - 1 && hi[1] === this.ny - 1 && hi[2] === this.nz - 1;
-      const g = new Float32Array(N).fill(Infinity), from = new Int32Array(N).fill(-1), done = new Uint8Array(N);
-      const loc = (i: number, j: number, k: number) => (i - lo[0]) + w * ((j - lo[1]) + h * (k - lo[2]));
+      // the cubes a step may land in: the search box, and inside `within` (a cube centre is in it over an unbroken run of
+      // indices on each axis, the centres growing with the index)
+      const vlo = [...lo], vhi = [...hi];
+      if (within) for (let q = 0; q < 3; q++) {
+        let first = -1, last = -2;
+        for (let i = lo[q]; i <= hi[q]; i++) { const c = o[q] + (i + 0.5) * s; if (c >= within.min[q] && c <= within.max[q]) { if (first < 0) first = i; last = i; } }
+        vlo[q] = first < 0 ? 1 : first; vhi[q] = first < 0 ? 0 : last;
+      }
+      const [ilo, jlo, klo] = vlo, [ihi, jhi, khi] = vhi;
       const pass = (i: number, j: number, k: number) => {
-        if (i < lo[0] || j < lo[1] || k < lo[2] || i > hi[0] || j > hi[1] || k > hi[2]) return -1;
-        const d = this.d[this.id(i, j, k)]; if (d < need) return -1;
-        if (within) { const q = this.centre(i, j, k); if (!inBox(within, q)) return -1; }
-        return d;
+        if (i < ilo || j < jlo || k < klo || i > ihi || j > jhi || k > khi) return -1;
+        const dd = D[i + nx * j + sxy * k]; return dd < need ? -1 : dd;
       };
-      const heapN: number[] = [], heapF: number[] = [];
-      const push = (n: number, f: number) => { let c = heapN.length; heapN.push(n); heapF.push(f); while (c > 0) { const p = (c - 1) >> 1; if (heapF[p] <= f) break; heapN[c] = heapN[p]; heapF[c] = heapF[p]; c = p; } heapN[c] = n; heapF[c] = f; };
-      const pop = () => { const top = heapN[0], n = heapN.pop()!, f = heapF.pop()!; const len = heapN.length; if (len) { let c = 0; for (;;) { let l = 2 * c + 1; if (l >= len) break; if (l + 1 < len && heapF[l + 1] < heapF[l]) l++; if (heapF[l] >= f) break; heapN[c] = heapN[l]; heapF[c] = heapF[l]; c = l; } heapN[c] = n; heapF[c] = f; } return top; };
-      // the estimate is weighted: a little dearer than the cheapest way at most, found many times sooner across open air
-      const hEst = (i: number, j: number, k: number) => 1.35 * s * Math.sqrt((i - B[0]) ** 2 + (j - B[1]) ** 2 + (k - B[2]) ** 2);
-      const start = loc(A[0], A[1], A[2]), goal = loc(B[0], B[1], B[2]);
-      g[start] = 0; push(start, hEst(A[0], A[1], A[2]));
+      // per search: a cube's cost so far (float32, as it always was), where it came from, and whether it is seen or done
+      const sc = this.scratch(N), g = sc.g, from = sc.from, st = sc.st, seen = sc.gen, fin = sc.gen + 1;
+      let hn = sc.hn, hf = sc.hf, size = 0;
+      const push = (n: number, f: number) => {
+        if (size === hn.length) { const n2 = new Int32Array(size * 2), f2 = new Float64Array(size * 2); n2.set(hn); f2.set(hf); hn = n2; hf = f2; sc.hn = hn; sc.hf = hf; }
+        let c = size++;
+        while (c > 0) { const p = (c - 1) >> 1; if (hf[p] <= f) break; hn[c] = hn[p]; hf[c] = hf[p]; c = p; }
+        hn[c] = n; hf[c] = f;
+      };
+      const pop = () => {
+        const top = hn[0], n = hn[--size], f = hf[size];
+        if (size) { let c = 0; for (;;) { let l = 2 * c + 1; if (l >= size) break; if (l + 1 < size && hf[l + 1] < hf[l]) l++; if (hf[l] >= f) break; hn[c] = hn[l]; hf[c] = hf[l]; c = l; } hn[c] = n; hf[c] = f; }
+        return top;
+      };
+      const start = (A[0] - lo[0]) + w * ((A[1] - lo[1]) + h * (A[2] - lo[2])), goal = (B[0] - lo[0]) + w * ((B[1] - lo[1]) + h * (B[2] - lo[2]));
+      g[start] = 0; from[start] = -1; st[start] = seen;
+      push(start, hs * Math.sqrt((A[0] - B[0]) ** 2 + (A[1] - B[1]) ** 2 + (A[2] - B[2]) ** 2));
       let found = false, popped = 0;
-      while (heapN.length) {
-        const n = pop(); if (done[n]) continue; done[n] = 1;
+      while (size) {
+        const n = pop(); if (st[n] === fin) continue; st[n] = fin;
         if (n === goal) { found = true; break; }
         if (++popped > limit) break;
-        const i = (n % w) + lo[0], j = (Math.floor(n / w) % h) + lo[1], k = Math.floor(n / (w * h)) + lo[2];
-        for (const [di, dj, dk, len] of NB) {
+        const i = (n % w) + lo[0], j = (Math.floor(n / w) % h) + lo[1], k = Math.floor(n / wh) + lo[2];
+        // the six face neighbours, for the rule against squeezing diagonally between two blocked cubes
+        const xm = pass(i - 1, j, k) < 0, xp = pass(i + 1, j, k) < 0, ym = pass(i, j - 1, k) < 0, yp = pass(i, j + 1, k) < 0, zm = pass(i, j, k - 1) < 0, zp = pass(i, j, k + 1) < 0;
+        const gn = g[n];
+        for (let q = 0; q < 26; q++) {
+          const nb = NB[q], di = nb[0], dj = nb[1], dk = nb[2];
           const d = pass(i + di, j + dj, k + dk); if (d < 0) continue;
-          // no squeezing diagonally between two blocked cubes
-          if (len > 1 && ((di && pass(i + di, j, k) < 0) || (dj && pass(i, j + dj, k) < 0) || (dk && pass(i, j, k + dk) < 0))) continue;
-          const m2 = loc(i + di, j + dj, k + dk); if (done[m2]) continue;
-          const c = g[n] + len * s * this.rate(d, need);
-          if (c < g[m2]) { g[m2] = c; from[m2] = n; push(m2, c + hEst(i + di, j + dj, k + dk)); }
+          if (nb[3] > 1 && ((di && (di < 0 ? xm : xp)) || (dj && (dj < 0 ? ym : yp)) || (dk && (dk < 0 ? zm : zp)))) continue;
+          const m2 = n + di + w * dj + wh * dk;
+          const sm = st[m2]; if (sm === fin) continue;
+          const c = gn + step[q * K + d];
+          if (sm !== seen || c < g[m2]) { g[m2] = c; from[m2] = n; st[m2] = seen; push(m2, c + hs * Math.sqrt((i + di - B[0]) ** 2 + (j + dj - B[1]) ** 2 + (k + dk - B[2]) ** 2)); }
         }
       }
+      const gGoal = st[goal] === fin || st[goal] === seen ? g[goal] : Infinity;
       if (!found) { if (whole) break; continue; }
       const cells: V3[] = [];
-      for (let n = goal; n >= 0; n = from[n]) { const i = (n % w) + lo[0], j = (Math.floor(n / w) % h) + lo[1], k = Math.floor(n / (w * h)) + lo[2]; cells.unshift(this.centre(i, j, k)); }
+      for (let n = goal; n >= 0; n = from[n]) { const i = (n % w) + lo[0], j = (Math.floor(n / w) % h) + lo[1], k = Math.floor(n / wh) + lo[2]; cells.push(this.centre(i, j, k)); }
+      cells.reverse();
       cells[0] = a; cells[cells.length - 1] = b;
-      if (direct >= 0 && direct <= g[goal] * 1.02) return [a, b];
+      if (direct >= 0 && direct <= gGoal * 1.02) return [a, b];
       return this.pull(cells, need, within);
     }
     return direct >= 0 ? [a, b] : null;
+  }
+  private sc?: { cap: number; g: Float32Array; from: Int32Array; st: Uint32Array; gen: number; hn: Int32Array; hf: Float64Array };
+  /** Buffers for a search over N cubes, reused while they are small enough to keep (a fresh pair of stamps per search). */
+  private scratch(N: number) {
+    const KEEP = 4_000_000;
+    let sc = this.sc;
+    if (!sc || sc.cap < N || sc.gen > 0xfffffff0) {
+      sc = { cap: N, g: new Float32Array(N), from: new Int32Array(N), st: new Uint32Array(N), gen: 0, hn: sc?.hn ?? new Int32Array(1024), hf: sc?.hf ?? new Float64Array(1024) };
+      if (N <= KEEP) this.sc = sc;
+    }
+    sc.gen += 2;
+    return sc;
   }
   /** Is `from` shut in a small pocket (under 4000 cubes at clearance `need`) that does not hold `to`? Then there is no way, found cheaply. */
   private pocket(from: number[], to: number[], need: number, within?: Box): boolean {
@@ -234,9 +277,8 @@ export class Grid {
       const i = q[h], j = q[h + 1], k = q[h + 2];
       if (i === to[0] && j === to[1] && k === to[2]) return false;
       if (seen.size > 4000) return false;
-      for (const [di, dj, dk, l] of NB) {
-        if (l > 1) continue;
-        const a = i + di, b = j + dj, c = k + dk; if (a < 0 || b < 0 || c < 0 || a >= nx || b >= ny || c >= nz) return false;
+      for (let fi = 0; fi < 6; fi++) {
+        const f = FACES[fi], a = i + f[0], b = j + f[1], c = k + f[2]; if (a < 0 || b < 0 || c < 0 || a >= nx || b >= ny || c >= nz) return false;
         const n = this.id(a, b, c); if (seen.has(n) || this.d[n] < need) continue;
         if (within && !inBox(within, this.centre(a, b, c))) continue;
         seen.add(n); q.push(a, b, c);

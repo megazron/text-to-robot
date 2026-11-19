@@ -16,6 +16,8 @@ if (typeof g.WorkerGlobalScope !== "undefined" && g instanceof g.WorkerGlobalSco
     try { await init(); g.postMessage({ id: data.id, result: await answerJob(data.job) }); }
     catch (e) { g.postMessage({ id: data.id, error: String((e as Error)?.message ?? e) }); }
   };
+  // listening now: the engine sends nothing before this (a message sent to a worker still loading its script can be lost)
+  g.postMessage({ ready: true });
 } else {
   const wt = await import("node:worker_threads");
   if (!wt.isMainThread && wt.parentPort) {

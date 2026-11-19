@@ -121,6 +121,9 @@ body.kb .capsule{transform:translateX(-50%) translateY(calc((var(--kb) - var(--d
 .primary:active,.tonal:active{transform:scale(.95)}
 .wide{width:100%;margin-top:10px;min-height:52px}
 .capsule .primary{flex:none;align-self:stretch;min-width:104px}
+.capsule .cancel{flex:none;align-self:stretch;min-height:0;padding:0 16px}
+.capsule .cancel[hidden]{display:none}
+.check .run{color:var(--amber)}
 .spin{display:inline-block;width:20px;height:20px;border-radius:50%;border:2.5px solid currentColor;border-right-color:transparent;animation:turn .8s linear infinite}
 
 /* ---------- sheet ---------- */

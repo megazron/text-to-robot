@@ -2,10 +2,12 @@
 // B-rep solids on OpenCascade (Replicad, WASM in Node and the browser). Real fillets, STEP export for
 // Fusion / FreeCAD / Onshape, and print meshes welded and validated by manifold-3d (closed, one solid).
 //   await initKernel();  const { stl, step, volume_mm3 } = exportPart(program);
+import { stage } from "@ttr/parts/profile";
 import opencascade from "replicad-opencascadejs";
 import { setOC, getOC, cast, measureShapeVolumeProperties, measureVolume, makeBox, makeCylinder, makePolygon, makeSolid, makeSphere, makePlane, drawEllipse, draw, type Shape3D, type AnyShape } from "replicad";
 import Manifold from "manifold-3d";
 import { part, caseHoles, outputHoles, hornRadiusMm, type Hole, type Vec3 } from "@ttr/parts";
+import { remembered, packMesh, unpackMesh, makers } from "@ttr/parts/memo";
 
 export type Mat4 = [number, number, number, number, number, number, number, number, number, number, number, number, number, number, number, number];
 export type Op =
@@ -507,14 +509,21 @@ function stepText(s: Shape3D): string {
   } finally { progress.delete(); writer.delete(); }
 }
 
-// Designers rebuild identical parts many times (sizing loops, edits): keep the last builds by recipe.
+// Designers rebuild identical parts many times (sizing loops, edits): every build is kept by its recipe, in memory and in the
+// persistent store when one is set (@ttr/parts/memo).
+type PartRec = Omit<PartFiles, "mesh"> & { v: Float64Array; f: Uint32Array };
+const partEncode = (r: PartFiles) => { const { mesh, ...rest } = r, m = packMesh(mesh); return { rec: { ...rest, ...m } as PartRec, bytes: r.stl.byteLength + r.step.length + m.v.byteLength + m.f.byteLength }; };
+const partMake = (programJson: string) => stage("CAD parts", () => exportPart(JSON.parse(programJson) as Program));
+/** exportPart, remembered by the program JSON (the STL and STEP of a result are shared: do not mutate them). */
 const built = new Map<string, PartFiles>();
-/** exportPart with a bounded cache keyed by the program JSON (results are shared: do not mutate them). */
 export function partFiles(programJson: string): PartFiles {
   const hit = built.get(programJson);
   if (hit) return hit;
-  const r = exportPart(JSON.parse(programJson) as Program);
+  const r = remembered<PartFiles, PartRec>("cad", programJson, () => partMake(programJson), partEncode,
+    ({ v, f, ...rest }) => ({ ...rest, bbox_mm: { min: [...rest.bbox_mm.min] as Vec3, max: [...rest.bbox_mm.max] as Vec3 }, mesh: unpackMesh({ v, f }) }));
   if (built.size >= 300) built.delete(built.keys().next().value as string);
   built.set(programJson, r);
   return r;
 }
+// a helper worker makes the same record from the same program (apps/web/src/parts-worker.ts)
+makers.set("cad", (programJson) => partEncode(partMake(programJson)));

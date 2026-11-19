@@ -22,7 +22,7 @@ export async function runAll<T>(jobs: Job[], local: (job: Job) => T | Promise<T>
 }
 
 /** A pool over workers that each answer {id, job} with {id, result} or {id, error}. `make` starts one worker. */
-export function workerPool(size: number, make: () => { post(m: unknown, transfer?: ArrayBuffer[]): void; on(fn: (m: { id: number; result?: unknown; error?: string }) => void): void; end(): void }): Pool {
+export function workerPool(size: number, make: () => { post(m: unknown, transfer?: ArrayBuffer[]): void; on(fn: (m: { id: number; result?: unknown; error?: string }) => void): void; end(): void; dead?(fn: () => void): void }): Pool {
   let ws = Array.from({ length: size }, make), idle = [...ws];
   const queue: [Job, (x: unknown) => void, (e: Error) => void][] = [], waiting = new Map<number, [(x: unknown) => void, (e: Error) => void, (typeof ws)[number]]>();
   let next = 1;
@@ -39,7 +39,13 @@ export function workerPool(size: number, make: () => { post(m: unknown, transfer
     if (m.error) h[1](new Error(m.error)); else h[0](m.result);
     pump();
   });
-  for (const w of ws) listen(w);
+  // a worker that stops (it could not load, it ran out of memory) fails its job and leaves the pool; with none left, so do all queued jobs
+  const watch = (w: (typeof ws)[number]) => w.dead?.(() => {
+    for (const [id, h] of waiting) if (h[2] === w) { waiting.delete(id); h[1](new Error("a helper worker stopped")); }
+    ws = ws.filter((x) => x !== w); idle = idle.filter((x) => x !== w);
+    if (!ws.length) { const failed = new Error("no helper worker is left"); for (const q of queue.splice(0)) q[2](failed); }
+  });
+  for (const w of ws) { listen(w); watch(w); }
   return {
     size,
     run: <T>(job: Job) => new Promise<T>((ok, fail) => { queue.push([job, ok as (x: unknown) => void, fail]); pump(); }),
@@ -63,3 +69,54 @@ export function workerPool(size: number, make: () => { post(m: unknown, transfer
 export type MeshMsg = { v: Float64Array; f: Uint32Array };
 export const msg = (m: TriMesh): MeshMsg => ({ v: m.v, f: m.f });
 export type Box = [P3, P3];
+
+/** Helper workers a tab may run at once, shared by its pools (the website's worker plan, apps/web/src/device.ts). */
+export class Budget {
+  private waiters: (() => void)[] = [];
+  free: number;
+  constructor(free: number) { this.free = free; }
+  /** up to n now (maybe none) */
+  take(n: number) { const k = Math.max(0, Math.min(n, this.free)); this.free -= k; return k; }
+  /** at least one, waiting for it when none is free */
+  async takeSome(n: number): Promise<number> { while (this.free < 1) await new Promise<void>((ok) => this.waiters.push(ok)); return this.take(n); }
+  give(n: number) { this.free += n; for (const w of this.waiters.splice(0)) w(); }
+}
+
+/**
+ * A pool whose workers start with its first job and end after `idleMs` with nothing to do, so a visitor who never needs
+ * them never holds their memory. Its workers come out of `budget`: a pool that must have workers (`wait`) waits for one to
+ * be free; one that need not (the parts pool) fails its jobs when none is, and the work is done where it is needed instead.
+ */
+export function lazyPool(size: number, make: Parameters<typeof workerPool>[1], budget: Budget, opts: { idleMs?: number; wait?: boolean } = {}): Pool {
+  let inner: Pool | undefined, held = 0, busy = 0, idle: ReturnType<typeof setTimeout> | undefined, starting: Promise<Pool | undefined> | undefined;
+  const stop = () => { inner?.close(); inner = undefined; budget.give(held); held = 0; };
+  const start = (): Promise<Pool | undefined> => {
+    if (!starting) {
+      starting = (async () => {
+        const n = opts.wait ? await budget.takeSome(size) : budget.take(size);
+        if (n) { held = n; inner = workerPool(n, make); }
+        return inner;
+      })();
+      starting.finally(() => { starting = undefined; }).catch(() => {});
+    }
+    return starting;
+  };
+  const pool: Pool = {
+    size,
+    async run<T>(job: Job): Promise<T> {
+      if (idle) { clearTimeout(idle); idle = undefined; }
+      busy++;
+      try {
+        const p = inner ?? await start();
+        if (!p) throw new Error("no helper worker is free");
+        return await p.run<T>(job);
+      } finally {
+        if (--busy === 0) idle = setTimeout(() => { if (busy === 0) stop(); }, opts.idleMs ?? 20000);
+      }
+    },
+    close: () => { if (idle) clearTimeout(idle); stop(); },
+    abort: () => { if (inner) { inner.abort?.(); } },
+    recycle: async () => { await inner?.recycle?.(); },
+  };
+  return pool;
+}

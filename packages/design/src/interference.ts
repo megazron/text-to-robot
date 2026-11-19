@@ -1,5 +1,6 @@
 // Interference check: every pair of solids (printed programs and catalog component bodies) at the
 // home pose, intersected exactly with manifold-3d. Moving parts are not swept; this is the static check.
+import { stage } from "@ttr/parts/profile";
 import type { RobotSpecification } from "@ttr/robot-schema";
 import { build, Manifold, evaluate, componentMesh, type Mat4, type Program } from "@ttr/solid";
 import { partFiles } from "@ttr/kernel/ready";
@@ -23,7 +24,7 @@ function componentSolid(key: string) {
 /** Pairs of links whose solids overlap by more than `minMm3` at the home pose. Links that cannot be made solid are listed in `skipped`. */
 export function interference(spec: RobotSpecification, minMm3 = 20): { overlaps: Overlap[]; skipped: string[]; solids: number } {
   const f = fk(spec);
-  return build(() => {
+  return stage("interference check", () => build(() => {
     const solids: { name: string; m: any; lo: number[]; hi: number[] }[] = [], skipped: string[] = [];
     for (const l of spec.links) {
       const g = l.geometry;
@@ -67,5 +68,5 @@ export function interference(spec: RobotSpecification, minMm3 = 20): { overlaps:
       if (v > minMm3) { const bb = I.boundingBox(); overlaps.push({ a: a.name, b: b.name, volume_mm3: Math.round(v), min: bb.min.map(Math.round), max: bb.max.map(Math.round) }); }
     }
     return { overlaps: overlaps.sort((x, y) => y.volume_mm3 - x.volume_mm3), skipped, solids: solids.length };
-  });
+  }));
 }

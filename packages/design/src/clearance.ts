@@ -1,6 +1,7 @@
 // Exact interference checks between the solids of a built robot (printed parts as their CSG
 // solids, bought parts as their body boxes, contact spheres as spheres) in any configuration.
 // Used to set joint limits from geometry and to prove that nothing intersects.
+import { stage } from "@ttr/parts/profile";
 import type { RobotSpecification, Link } from "@ttr/robot-schema";
 import { part } from "@ttr/parts";
 import { build, evaluate, Manifold, box, fromRt, type Manifold as M, type Program, type Mat4 } from "@ttr/solid";
@@ -60,13 +61,13 @@ const toMat = (R: number[][], p: Vec3): Mat4 => fromRt(R, [p[0] * 1000, p[1] * 1
 
 /** Run `fn` with the robot's solids built once (all freed afterwards). */
 export function withSolids<T>(spec: RobotSpecification, fn: (m: ClearanceModel) => T): T {
-  return build(() => {
+  return stage("clearance checks", () => build(() => {
     const names = spec.links.map((l) => l.name);
     const solids = spec.links.map(linkSolid);
     // local boxes once: manifold's boundingBox() leaks wasm memory on every call
     const boxes = solids.map((x) => { if (!x) return null; const b = x.boundingBox(); return { min: [...b.min] as Vec3, max: [...b.max] as Vec3 }; });
     return fn({ names, solids, boxes, spec });
-  });
+  }));
 }
 
 /**

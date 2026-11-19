@@ -17,9 +17,13 @@ for (const dir of ["ttr_cad", "ttr_mujoco"])
     if (/\.(py|json)$/.test(f)) out[`python/${dir}/${f}`] = fs.readFileSync(`python/${dir}/${f}`, "utf8");
 fs.writeFileSync("apps/web/src/.generated/python-files.json", JSON.stringify(out));'
 
+# The engine's build hash: its sources, the Python helpers its packages embed, the sentence model it may read prompts with
+# and the locked dependencies (the WASM kernels).
+# Every result the site's persistent cache keeps is keyed by it, so a changed engine never reads what an older one made.
+ENGINE_HASH="$( { find packages apps/web/src python/ttr_cad python/ttr_mujoco -type f \( -name '*.ts' -o -name '*.js' -o -name '*.json' -o -name '*.py' -o -name '*.bin' \) -not -path '*/node_modules/*' -print0 | LC_ALL=C sort -z | xargs -0 sha256sum; find apps/web/models -type f -print0 | LC_ALL=C sort -z | xargs -0 sha256sum; sha256sum package-lock.json; } | sha256sum | cut -c1-32)"
 # the engine runs in a Web Worker; the page script stays tiny
 npx --no-install esbuild apps/web/src/browser-engine.ts \
-  --bundle --format=esm --platform=browser --target=es2022 --minify \
+  --bundle --format=esm --platform=browser --target=es2022 --minify --define:TTR_ENGINE_HASH="\"$ENGINE_HASH\"" \
   --alias:node:fs=./apps/web/src/fs-shim.ts --external:node:module --external:node:url --external:node:path --external:node:crypto --external:node:worker_threads --external:node:os --external:module --external:fs --external:path \
   --outfile="$OUT/browser-engine.js" --log-level=warning
 # the armour forge's helpers: each a worker with its own manifold-3d, sharing out the solid work of the Mark 43
@@ -27,6 +31,11 @@ npx --no-install esbuild packages/mesh/src/forge/poolworker.ts \
   --bundle --format=esm --platform=browser --target=es2022 --minify \
   --external:node:worker_threads --external:node:module --external:node:url --external:node:path --external:module --external:fs --external:path \
   --outfile="$OUT/forge-worker.js" --log-level=warning
+# the parts pool's helpers: each a worker with its own CAD kernels, building a robot's parts in parallel where they are known ahead
+npx --no-install esbuild packages/mesh/src/parts-pool/worker.ts \
+  --bundle --format=esm --platform=browser --target=es2022 --minify \
+  --alias:node:fs=./apps/web/src/fs-shim.ts --external:node:worker_threads --external:node:module --external:node:url --external:node:path --external:node:crypto --external:node:os --external:module --external:fs --external:path \
+  --outfile="$OUT/parts-worker.js" --log-level=warning
 # reading options, each loaded by the worker only when the visitor switches it on: a bring-your-own-key model (the
 # Anthropic SDK and an OpenAI-compatible call) and the sentence-embedding model's runtime (the weights come from Hugging Face)
 npx --no-install esbuild apps/web/src/byok.ts \
@@ -77,5 +86,5 @@ cp node_modules/onnxruntime-web/dist/ort-wasm-simd-threaded.asyncify.mjs node_mo
 
 touch "$OUT/.nojekyll"
 SHA="$(git rev-parse HEAD 2>/dev/null || echo unknown)"
-printf '{"commit":"%s","built":"%s"}\n' "$SHA" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > "$OUT/version.json"
+printf '{"commit":"%s","engine":"%s","built":"%s"}\n' "$SHA" "$ENGINE_HASH" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > "$OUT/version.json"
 echo "pages site: $OUT ($(du -sh "$OUT" | cut -f1), commit ${SHA:0:7})"

@@ -1,4 +1,5 @@
 import type { RobotSpecification, ValidationResult } from "@ttr/robot-schema";
+import { stage } from "@ttr/parts/profile";
 import { validateSpec } from "@ttr/robot-schema";
 import { generateUrdf, generateXacro } from "@ttr/urdf-generator";
 import { validateUrdf } from "@ttr/urdf-validator";
@@ -165,14 +166,15 @@ export async function generateRobot(prompt: string, opts: GenerateOptions = {}):
   let got: Awaited<ReturnType<typeof specFromProvider>>;
   try { got = await specFromProvider(provider, prompt, warnings); } finally { warnings.push(...budgetNotes().map((n) => `approximated: time budget: ${n}`)); startBudget(); }
   const { spec: raw, interpretation } = got;
-  const spec = finalizeSpec(raw);
+  const spec = stage("finalize", () => finalizeSpec(raw));
   warnings.push(...interpretationWarnings(interpretation));
-  const { validation, repairs } = repairLoop(spec);
-  const urdf = generateUrdf(spec);
-  const xacro = generateXacro(spec);
-  const urdfValidation = validateUrdf(urdf);
-  const { budget, payloadKg } = requirements(spec, prompt);
-  const bom = buildBom(spec, budget, { payloadKg: interpretation ? interpretation.payload_kg : payloadKg });
+  const { validation, repairs, urdf, xacro, urdfValidation, bom } = stage("validate, URDF, BOM", () => {
+    const { validation, repairs } = repairLoop(spec);
+    const urdf = generateUrdf(spec), xacro = generateXacro(spec), urdfValidation = validateUrdf(urdf);
+    const { budget, payloadKg } = requirements(spec, prompt);
+    const bom = buildBom(spec, budget, { payloadKg: interpretation ? interpretation.payload_kg : payloadKg });
+    return { validation, repairs, urdf, xacro, urdfValidation, bom };
+  });
   return { robot: spec, urdf, xacro, validation, urdfValidation, warnings, repairs, provider: provider.name, dof: dofCount(spec), bom, designedBy: designedBy(interpretation, provider),
     ...(interpretation ? { interpretation, summary: describeInterpretation(interpretation) } : {}) };
 }

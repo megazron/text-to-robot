@@ -1,9 +1,11 @@
 // Printed parts as small, serializable CSG programs. A robot spec stores the program; anyone
 // (exporters, browser, MuJoCo) rebuilds the identical watertight solid from it.
+import { stage } from "@ttr/parts/profile";
 import { componentMesh, type Vec3 } from "@ttr/parts";
+import { remembered, packMesh, unpackMesh, makers } from "@ttr/parts/memo";
 import {
   build, box, rod, roundedBox, unionAll, frame, Manifold, toMesh, cradle, cradleCuts, hornPlate, hornCuts,
-  actuatorKeepout, type Mat4, type Manifold as M,
+  actuatorKeepout, type Mat4, type Manifold as M, type TriMesh,
 } from "./geom.ts";
 export type { Mat4 } from "./geom.ts";
 
@@ -72,17 +74,38 @@ export function evaluate(p: Program): M {
 export interface PrintCheck { volume_cm3: number; bbox_mm: Vec3; fits_bed: boolean; watertight: boolean; min_feature_ok: boolean; genus: number; }
 const BED: Vec3 = [250, 210, 220]; // Prusa MK4 / Bambu-class build volume
 
-export function printCheck(p: Program): PrintCheck {
-  return build(() => {
-    const s = evaluate(p), bb = s.boundingBox();
-    const size: Vec3 = [bb.max[0] - bb.min[0], bb.max[1] - bb.min[1], bb.max[2] - bb.min[2]];
-    // some orientation of the part's three sizes must fit X x Y x Z of the bed
-    const fits = [[0, 1, 2], [1, 0, 2], [0, 2, 1], [2, 0, 1], [1, 2, 0], [2, 1, 0]].some((p) => p.every((k, i) => size[k] <= BED[i]));
-    return { volume_cm3: +(s.volume() / 1000).toFixed(2), bbox_mm: size.map((x) => +x.toFixed(1)) as Vec3, fits_bed: fits,
-      watertight: s.status() === "NoError" && !s.isEmpty(), min_feature_ok: s.volume() > 50, genus: s.genus() };
-  });
+/**
+ * A printed part's solid, evaluated once for both of its uses: the mesh (metres) and the print check. Keyed by the ops alone
+ * (the name changes neither), kept in memory and in the persistent store when one is set (@ttr/parts/memo).
+ */
+const printedMake = (ops: string) => stage("printed solids", () => build(() => {
+  const s = evaluate({ name: "part", ops: JSON.parse(ops) as Op[] }), bb = s.boundingBox();
+  const size: Vec3 = [bb.max[0] - bb.min[0], bb.max[1] - bb.min[1], bb.max[2] - bb.min[2]];
+  // some orientation of the part's three sizes must fit X x Y x Z of the bed
+  const fits = [[0, 1, 2], [1, 0, 2], [0, 2, 1], [2, 0, 1], [1, 2, 0], [2, 1, 0]].some((p) => p.every((k, i) => size[k] <= BED[i]));
+  const check: PrintCheck = { volume_cm3: +(s.volume() / 1000).toFixed(2), bbox_mm: size.map((x) => +x.toFixed(1)) as Vec3, fits_bed: fits,
+    watertight: s.status() === "NoError" && !s.isEmpty(), min_feature_ok: s.volume() > 50, genus: s.genus() };
+  return { mesh: toMesh(s), check };
+}));
+type PrintedRec = { v: Float64Array; f: Uint32Array; check: PrintCheck };
+const printedEncode = (x: { mesh: TriMesh; check: PrintCheck }) => { const m = packMesh(x.mesh); return { rec: { ...m, check: x.check } as PrintedRec, bytes: m.v.byteLength + m.f.byteLength + 200 }; };
+function printedSolid(ops: string): { mesh: TriMesh; check: PrintCheck } {
+  return remembered("printed", ops, () => printedMake(ops), printedEncode,
+    (r: PrintedRec) => ({ mesh: unpackMesh(r), check: { ...r.check, bbox_mm: [...r.check.bbox_mm] as Vec3 } }));
 }
+// a helper worker makes the same record from the same ops (apps/web/src/parts-worker.ts)
+makers.set("printed", (ops) => printedEncode(printedMake(ops)));
+
+export function printCheck(p: Program): PrintCheck { return printedSolid(JSON.stringify(p.ops)).check; }
 
 /** Triangle mesh (metres) of a serialized program, as stored in a spec's mesh params. */
-export const programMesh = (program: string) => build(() => toMesh(evaluate(JSON.parse(program) as Program)));
+export const programMesh = (program: string) => printedSolid(JSON.stringify((JSON.parse(program) as Program).ops)).mesh;
 export { componentMesh };
+
+/** The exact bounding box (mm) of a program's solid, remembered like the solid itself (a designer that sizes a part by its
+ *  box, then cuts it to the bed, asks for it again on every pass). */
+export function programBounds(ops: Op[]): { lo: Vec3; hi: Vec3 } {
+  const key = JSON.stringify(ops);
+  return remembered("bounds", key, () => stage("printed solids", () => build(() => { const bb = evaluate({ name: "probe", ops: JSON.parse(key) as Op[] }).boundingBox(); return { lo: [...bb.min] as Vec3, hi: [...bb.max] as Vec3 }; })),
+    (b) => ({ rec: b, bytes: 64 }), (b) => ({ lo: [...b.lo] as Vec3, hi: [...b.hi] as Vec3 }));
+}

@@ -23,7 +23,9 @@
   "exports": {
     ".": "./src/index.ts",
     "./forge/pool": "./src/forge/pool.ts",
-    "./dmath": "./src/forge/dmath.ts"
+    "./dmath": "./src/forge/dmath.ts",
+    "./parts-pool": "./src/parts-pool/prefetch.ts",
+    "./parts-pool/node": "./src/parts-pool/node.ts"
   },
   "dependencies": {
     "earcut": "3.0.2",
