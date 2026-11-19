@@ -7,7 +7,8 @@ import type { LlmProvider } from "@ttr/llm-providers";
 import { finalizeSpec, dofCount } from "./finalize.ts";
 import { interpretPrompt, applyModification, extractBudget, extractPayload, describeInterpretation, type Interpretation } from "./nlp.ts";
 import { repair } from "./repair.ts";
-import { ensureArmourPack, DEFAULT_SHAPE, type ArmourShape } from "@ttr/mesh";
+import { ensureArmourPack, setForgeDeadline, ForgeTimeout, DEFAULT_SHAPE, type ArmourShape } from "@ttr/mesh";
+import { startBudget, budgetNotes } from "@ttr/design";
 import { normalize, mentions } from "./text.ts";
 import { RX, WEAPONS } from "./families.ts";
 import { suitOptions } from "./suit.ts";
@@ -46,7 +47,18 @@ export interface GenerateResult {
   designedBy: string;
 }
 
-export interface GenerateOptions { provider?: LlmProvider; }
+export interface GenerateOptions { provider?: LlmProvider;
+  /** the time the design may take, ms (default TIME_BUDGET_MS): past it, work that can stop early gives its best so far, said */
+  timeBudgetMs?: number;
+  /** the time forging a Mark 43 armour shape may take, minutes (default FORGE_BUDGET_MIN): past it, the reference suit is built */
+  forgeBudgetMin?: number; }
+
+/** Ten minutes for a design (the longest prompts take about a minute in Node and a few on the website); the 3D harness is
+ *  what can run long, and past the budget it lays the cables it has not reached as straight runs. TTR_TIME_BUDGET_MS sets it. */
+const envMs = Number((globalThis as { process?: { env?: Record<string, string | undefined> } }).process?.env?.TTR_TIME_BUDGET_MS);
+export const TIME_BUDGET_MS = Number.isFinite(envMs) && envMs > 0 ? envMs : 10 * 60000;
+/** Forty-five minutes to forge a Mark 43 armour shape (about 25 in Chrome on a desktop); past it the reference suit is built. */
+export const FORGE_BUDGET_MIN = 45;
 
 const MAX_REPAIRS = 3;
 
@@ -119,12 +131,20 @@ function requirements(spec: RobotSpecification, text: string) {
   return { budget: extractBudget(text) ?? extractBudget(origin), payloadKg: extractPayload(text) ?? extractPayload(origin) };
 }
 
-/** A Mark 43 prompt needs its armour forged (or found) before the designer places it: the forge makes it from the prompt's shape words. */
-export async function forgeForPrompt(prompt: string): Promise<void> {
+/** A Mark 43 prompt needs its armour forged (or found) before the designer places it: the forge makes it from the prompt's shape words.
+ *  A forge past its time budget stops, and the reference suit is built instead (the returned note says so). */
+export async function forgeForPrompt(prompt: string, budgetMin = FORGE_BUDGET_MIN): Promise<string | undefined> {
   const t = normalize(prompt);
   if (mentions(t, WEAPONS)) return;   // refused by the parser: nothing to forge
   if (!mentions(t, RX.suit) || !/iron[\s-]?man|mark\s*(?:[ivx]+|\d+)|armou?r|movie|ultron/.test(t) || (/\bmech\b(?!\s+suit)/.test(t) && !/iron[\s-]?man|exo|wearable|suit/.test(t))) return;
-  await ensureArmourPack(suitOptions(t).shape);
+  setForgeDeadline(budgetMin);
+  try { await ensureArmourPack(suitOptions(t).shape); }
+  catch (e) {
+    if (!(e instanceof ForgeTimeout)) throw e;
+    await ensureArmourPack(DEFAULT_SHAPE);
+    return `time budget: ${e.message}, so the reference suit was built (its armour shape is the film's); ask again to forge the shape asked for`;
+  } finally { setForgeDeadline(); }
+  return undefined;
 }
 /** the armour shape a built suit was designed with (its pack must be loaded to export its meshes) */
 export async function forgeForRobot(spec: RobotSpecification): Promise<void> {
@@ -138,9 +158,13 @@ export async function forgeForRobot(spec: RobotSpecification): Promise<void> {
 export async function generateRobot(prompt: string, opts: GenerateOptions = {}): Promise<GenerateResult> {
   const warnings: string[] = [];
   prompt = typeof prompt === "string" ? prompt : String(prompt ?? "");
-  await forgeForPrompt(prompt);
+  const forged = await forgeForPrompt(prompt, opts.forgeBudgetMin);
+  if (forged) warnings.push(`approximated: ${forged}`);
   const provider = opts.provider ?? new LocalProvider();
-  const { spec: raw, interpretation } = await specFromProvider(provider, prompt, warnings);
+  startBudget(opts.timeBudgetMs ?? TIME_BUDGET_MS);
+  let got: Awaited<ReturnType<typeof specFromProvider>>;
+  try { got = await specFromProvider(provider, prompt, warnings); } finally { warnings.push(...budgetNotes().map((n) => `approximated: time budget: ${n}`)); startBudget(); }
+  const { spec: raw, interpretation } = got;
   const spec = finalizeSpec(raw);
   warnings.push(...interpretationWarnings(interpretation));
   const { validation, repairs } = repairLoop(spec);

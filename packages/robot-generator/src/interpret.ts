@@ -20,6 +20,7 @@ import { TOOL_WORDS, type ToolKind } from "./tools.ts";
 import { toolPlan } from "./tool-plan.ts";
 import { readShape, shapeChips, oneRobot, type RequestShape } from "./request.ts";
 import { readShell } from "./shape.ts";
+import { budgetNotes } from "@ttr/design";
 import { COLOURS as SHELL_COLOURS } from "./text.ts";
 import { builtShape, shapeGaps, type BuiltShape } from "./fidelity.ts";
 
@@ -34,6 +35,7 @@ function buildCached(choice: Choice, ctx: DesignContext): RobotSpecification {
   const key = `${choice.family}|${choice.label}|${JSON.stringify(ctx)}`, hit = designCache.get(key);
   if (hit) return structuredClone(hit);
   const spec = choice.build(ctx);
+  if (budgetNotes().length) return spec;   // cut short by the time budget: not kept, the next ask designs it in full
   if (designCache.size >= 64) designCache.delete(designCache.keys().next().value as string);
   designCache.set(key, structuredClone(spec));
   return spec;

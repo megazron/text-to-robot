@@ -13,6 +13,7 @@ import { build, box as boxSolid, type Mat4 } from "@ttr/solid";
 import { Router, roundWire } from "./wiring3d/route.ts";
 import { wireSize } from "./wiring3d/place.ts";
 import { simulate } from "./esim/robot.ts";
+import { overBudget, budgetText, budgetNote } from "./budget.ts";
 
 // ------------------------------------------------------------------------------------------- records
 export type NetKind = "power" | "ground" | "signal" | "bus";
@@ -499,7 +500,7 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
   // in the channels its armour was fitted with instead: see the legacy branch below)
   const routed = !H.channels.size && (opts.router ?? (defaultRouter === "legacy" ? "legacy" : undefined)) !== "legacy", tRoute = Date.now();
   const R = routed ? new Router(spec, f, { bays: baysOfDesign(A).map((b) => ({ name: b.name, link: b.tub, T: b.T as number[], min: b.min, max: b.max })) }) : null;
-  const routeProblems: string[] = [];
+  const routeProblems: string[] = [], lateCables: string[] = [];
   const pinsOf = (inst: string) => { const out: [string, string][] = []; for (const w of H.wires) for (const e of [w.a, w.b]) if (e.inst === inst && !out.some((x) => x[0] === e.port && x[1] === e.pin)) out.push([e.port, e.pin]); return out; };
   // the parts on links first, and the room their pins need, then the harness parts round them
   if (R) for (const pass of [0, 1]) for (const i of H.instances.values()) {
@@ -549,7 +550,10 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
     const pm = H.premade.get(key) ?? null;
     const svc = pm ? 0 : serviceMm, term = pm ? 0 : termMm * 2;
     let geom: { path: Vec3[]; joints: SlackRec[]; links: Set<string>; exit: string | null; routeMm: number; slackMm: number; channelMm: number; clipHere: ClipAt[]; wires?: { pts: Vec3[]; on: string[]; drawn_mm: number; bend_mm: number }[]; awg?: (number | null)[] };
-    if (R && R.placed.has(ia) && R.placed.has(ib) && la.link && lb.link) {
+    // past the time budget, the cables not laid yet are laid as straight runs (budget.ts)
+    const late = !!R && overBudget();
+    if (late) lateCables.push(key);
+    if (R && !late && R.placed.has(ia) && R.placed.has(ib) && la.link && lb.link) {
       const leaves = (bay?: string, other?: string) => !!bay && bay !== other;
       const pick = (bay: string, to: Vec3) => H.exits.find((e) => H.exitsOf(key).includes(e.id) && e.bay === bay) ?? nearestExit(H, bay, to);
       // a hole that opens into the other compartment (a deck grommet between a hood and the tub under it) is the one wall between the two
@@ -619,7 +623,7 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
         clipHere: clipsAlong(surf, R, out.trunk as Vec3[], out.trunkOn), wires: out.wires.map((w, i) => ({ pts: flip(ws[i]) ? [...w.pts].reverse() as Vec3[] : w.pts as Vec3[], on: flip(ws[i]) ? [...w.on].reverse() : w.on, drawn_mm: w.drawn_mm, bend_mm: wireSize(awg[i]).bend })), awg };
     } else {
       const od = bundleOd(ws);
-      if (R && !offBoard) routeProblems.push(`${key}: ${!R.placed.has(ia) ? ia : ib} has no place, its cable is not laid`);
+      if (R && !offBoard && !late) routeProblems.push(`${key}: ${!R.placed.has(ia) ? ia : ib} has no place, its cable is not laid`);
     const path: Vec3[] = []; const joints: SlackRec[] = []; const links = new Set<string>(); let exit: string | null = null;
     let routeMm = 0, slackMm = 0, channelMm = 0;
     const clipHere: { at: Vec3; dir: Vec3; normal: Vec3; link: string }[] = [];
@@ -727,6 +731,10 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
     const through = routeProblems.map((p) => /^(.*?): wire (\d+) passes (\d+) mm through a solid \(from ([-\d.,]+), (.*)\)$/.exec(p)).filter((m): m is RegExpExecArray => !!m);
     const notes = routeProblems.filter((p) => !/passes \d+ mm through a solid/.test(p));
     rec.route = { through: through.length, through_mm: through.reduce((n, m) => n + +m[3], 0), first: through.slice(0, 6).map((m) => `${m[1]} wire ${m[2]} through ${m[5]} for ${m[3]} mm at ${m[4]}`), notes };
+    if (lateCables.length) {
+      const said = `the 3D harness ran past the ${budgetText()} time budget: ${lateCables.length === groups.size ? `all ${groups.size} cables are` : `${lateCables.length} of ${groups.size} cables are`} laid as straight runs (as in the first pass)${lateCables.length < groups.size ? ", the rest through free space" : ""}`;
+      rec.notes.push(`Routing: ${said}. Ask again to lay them all.`); budgetNote(said);
+    }
     if (through.length) rec.notes.push(`Routing: ${through.length} wire runs could only be laid through solid parts at the home pose (${rec.route.through_mm} mm in all), for example ${rec.route.first.slice(0, 3).join("; ")}. Lay those wires round the part by hand.`);
   }
   return rec;

@@ -95,6 +95,11 @@ export const setForgeGate = (g: typeof gate) => { gate = g; };
 let cancelled = false;
 /** Stops a forge that is running: it throws at its next step. */
 export const cancelForge = () => { cancelled = true; };
+/** A forge that ran past its time budget (setForgeDeadline): the caller builds the reference suit instead. */
+export class ForgeTimeout extends Error { constructor(minutes: number) { super(`forging this armour took longer than its ${minutes} min time budget`); this.name = "ForgeTimeout"; } }
+let deadline = Infinity, deadlineMin = 0;
+/** the forge stops (ForgeTimeout) when it is still working `minutes` from now; Infinity or undefined: no limit */
+export function setForgeDeadline(minutes?: number) { deadlineMin = minutes ?? 0; deadline = minutes && Number.isFinite(minutes) ? Date.now() + minutes * 60000 : Infinity; }
 export const forgeCancelled = () => cancelled;
 /**
  * Makes the loaded pack the one for `shape`: the loaded one if it matches, then the shipped file (reference shape: read in Node, fetched on
@@ -113,7 +118,7 @@ export async function ensureArmourPack(shape: ArmourShape = DEFAULT_SHAPE, onPro
     const [{ forgeSuit }, { forgePreview }, { manifoldModule }] = await Promise.all([import("./forge/suit.ts"), import("./forge/mark43.ts"), import("@ttr/kernel")]);
     if (look) look((await forgePreview(shape)).map((p) => ({ material: p.material, v: Float32Array.from(p.mesh.v), f: p.mesh.f })));
     const tell = onProgress ?? hear;
-    const r = await forgeSuit(await manifoldModule(), { voxel: 2, ...shape }, async (p) => { if (cancelled) throw new Error("the forge was cancelled"); await tell?.(p); }, log ?? say);
+    const r = await forgeSuit(await manifoldModule(), { voxel: 2, ...shape }, async (p) => { if (cancelled) throw new Error("the forge was cancelled"); if (Date.now() > deadline) throw new ForgeTimeout(deadlineMin); await tell?.(p); }, log ?? say);
     setArmourPack(r.manifest, r.bytes);
     await cache?.put(key, r.manifest, r.bytes);
   })();
