@@ -3023,18 +3023,18 @@
     {
       "name": "printed",
       "color": [
-        0.93,
-        0.93,
-        0.95,
+        0.789,
+        0.754,
+        0.331,
         1
       ]
     },
     {
       "name": "printed_accent",
       "color": [
-        0.95,
-        0.5,
-        0.12,
+        0.16,
+        0.46,
+        0.68,
         1
       ]
     },
@@ -3201,7 +3201,7 @@
   "end_effectors": [],
   "metadata": {
     "generator": "text-to-robot design engine (real components + printed structure)",
-    "created": "2026-11-12T20:44:02.187Z",
+    "created": "2026-11-19T03:04:28.580Z",
     "inferred_fields": [
       "links.base_link.inertia",
       "links.battery.inertia",
@@ -9822,6 +9822,7 @@
         ]
       }
     },
+    "palette": "hue 55",
     "understood": {
       "path": "knowledge table",
       "knowledge": "water_plants"

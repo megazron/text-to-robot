@@ -580,7 +580,8 @@ export function wireFixedArm(A: Assembly, H: Harness, ladder: Ladder, supplyA: n
     }
   }
   // sensors go to the host PC on their own leads
-  for (const x of ["workspace_depth", "wrist_camera", "wrist_depth", "base_imu"]) if (H.instances.has(x)) { exposed(A, x, x === "base_imu" ? "under the base plate, wired to the host PC" : "on its mount, looking at the workspace, wired to the host PC", [20, 20]); for (const p of H.rec(x).ports) H.spare(`${x}.${p.name}`); }
+  // (a work cell's arms carry theirs under the arm's prefix: "left_arm_wrist_camera")
+  for (const k of ["workspace_depth", "wrist_camera", "wrist_depth", "base_imu"]) for (const x of [k, ...[...H.instances.keys()].filter((n) => n.endsWith(`_${k}`))]) if (H.instances.has(x)) { exposed(A, x, k === "base_imu" ? "under the base plate, wired to the host PC" : "on its mount, looking at the workspace, wired to the host PC", [20, 20]); for (const p of H.rec(x).ports) H.spare(`${x}.${p.name}`); }
   finishWiring(H);
   enclosureChecks(A);
 }
@@ -602,6 +603,8 @@ export function graftArm(host: Assembly, arm: RobotSpecification, parent: string
   for (const j of arm.joints) host.spec.joints.push({ ...structuredClone(j), name: n(j.name), parent: n(j.parent), child: n(j.child) });
   host.fixed(n("mount"), parent, n(arm.root ?? "base_link"), T);
   for (const e of arm.end_effectors) host.spec.end_effectors.push({ ...e, name: n(e.name), attach_link: n(e.attach_link) });
+  // the arm's own sensors (a wrist camera) go with it, as sensors of the robot
+  for (const x of arm.sensors) host.spec.sensors.push({ ...structuredClone(x), name: n(x.name), parent: n(x.parent) });
   for (const p of rec.printed) host.design.printed.push({ ...p, name: n(p.name), link: n(p.link) });
   for (const j of rec.joints) host.design.joints.push({ ...j, joint: n(j.joint) });
   for (const c of rec.checks) if (!c.name.startsWith("print:") && !c.name.startsWith("power:")) host.check(`${prefix}:${c.name}`, c.pass, c.detail);

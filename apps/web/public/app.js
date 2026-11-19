@@ -966,6 +966,12 @@ async function loadGallery() {
 }
 async function doModify(instruction) {
   if (!state.robot || !instruction.trim()) return;
+  // "undo": back to the version before this one (every version stays in the history, so "redo" is a click there)
+  if (/^\s*(?:undo|undo (?:that|it|the last change)|go back|revert|step back)\s*[.!]*\s*$/i.test(instruction)) {
+    if (state.version <= 0) { status("Nothing to undo: this is the first version."); return; }
+    const from = state.versions[state.version]?.label ?? "the last change";
+    loadVersion(state.version - 1); renderDiff([`~ undone: ${from}`]); $("#modify").value = ""; return;
+  }
   if (instruction.length > MAX_PROMPT_CHARS) { toast(`Keep the change under ${MAX_PROMPT_CHARS} characters.`, "err"); return; }
   setBusy($("#modbtn"), true); revealNext = "soft"; sheet.go("peek");
   try { const res = await api("/api/robots/modify", { robot: state.robot, instruction }); state.recipe = state.recipe && { ...state.recipe, m: [...(state.recipe.m ?? []), instruction] }; applyResult(res, instruction.slice(0, 40), res.changes ?? res.diff?.lines); }

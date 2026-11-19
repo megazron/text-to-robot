@@ -5,7 +5,7 @@
 import type { RobotSpecification, SensorType } from "@ttr/robot-schema";
 import { safeName } from "@ttr/robot-schema";
 import { fk } from "@ttr/design";
-import { normalize, find, findAll, mentions, negates, extractDofMentions, type DofMention, extractLengths, extractMasses, extractSpeeds, parseBudget, extractName, extractColour, maskNames, COLOURS } from "./text.ts";
+import { normalize, find, findAll, mentions, negates, extractDofMentions, type DofMention, extractLengths, extractMasses, extractSpeeds, parseBudget, extractName, extractColour, maskNames, COLOURS, paintSpec, paintRgb, STYLE_PALETTE, variantPalette, jobKey } from "./text.ts";
 import { armourShape, shapeKey } from "@ttr/mesh";
 import { suitOptions } from "./suit.ts";
 import { MAX_ARM_DOF, RX, ARM_IT_FITS, SUPPORTED_HINT, wheelCount, gripperRequest, chooseFamily, RECOLOURABLE, type Choice, type GripperKind, type DesignContext } from "./families.ts";
@@ -20,6 +20,7 @@ import { TOOL_WORDS, type ToolKind } from "./tools.ts";
 import { toolPlan } from "./tool-plan.ts";
 import { readShape, shapeChips, oneRobot, type RequestShape } from "./request.ts";
 import { readShell, SHELL_FAMILIES } from "./shape.ts";
+import { KNOWLEDGE } from "./knowledge.ts";
 import { budgetNotes } from "@ttr/design";
 import { COLOURS as SHELL_COLOURS } from "./text.ts";
 import { builtShape, shapeGaps, type BuiltShape } from "./fidelity.ts";
@@ -219,9 +220,23 @@ export function interpretPrompt(original: string, opts: InterpretOptions = {}): 
 
   const colour = suit ? undefined : extractColour(t);
   if (colour) {
-    const mat = spec.materials.find((x) => x.name === (choice.designed ? "printed_accent" : "link_mat"));
-    if (RECOLOURABLE.has(choice.family) && mat) mat.color = [...COLOURS[colour]];
-    else ignored.push(`colour "${colour}": the ${choice.label} keeps its own livery`);
+    // the printed body in the colour, accents a shade deeper (text.ts paintSpec); characters keep their livery
+    if (!(RECOLOURABLE.has(choice.family) && paintSpec(spec, colour))) ignored.push(`colour "${colour}": the ${choice.label} keeps its own livery`);
+  } else if (!suit && RECOLOURABLE.has(choice.family) && choice.designed) {
+    // no colour named: a style word brings its palette ("sci-fi", "rugged", "retro"), and a robot made for a job its own
+    // (the job's words choose it: the same job, the same palette); a robot asked for by its type keeps the house colours
+    const style = look && look.style !== "plain" ? STYLE_PALETTE[look.style] : undefined;
+    if (style) paintRgb(spec, style[0], style[1], `${look!.style} style`);
+    else {
+      // the job: a table entry's own words, or the clause that says what the robot does ("that takes photos of my dog")
+      const job = jobKey(t, choice.knowledge || choice.path === "general job" ? t : "");
+      const clause = /\b(?:that|which|who|to)\s+\S/.test(t);
+      if (job && (choice.knowledge || choice.path === "general job" || clause)) {
+        const i = choice.knowledge ? KNOWLEDGE.findIndex((k) => k.id === choice.knowledge) : -1;
+        // a table entry sets the hue (the golden angle apart from the other entries), the job's own words move it a little
+        const [p, a, label] = variantPalette(`${choice.knowledge ?? ""}|${job}`, i >= 0 ? i : undefined, job); paintRgb(spec, p, a, label);
+      }
+    }
   }
 
   if (budget.unsupported) ignored.push(`budget "${budget.unsupported}": only US-dollar budgets are supported`);

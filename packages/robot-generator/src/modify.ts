@@ -3,7 +3,7 @@
 import type { RobotSpecification, SensorType } from "@ttr/robot-schema";
 import { safeName, pose } from "@ttr/robot-schema";
 import { nDofArm, attachParallelGripper, attachSuctionGripper, cyl, link, joint } from "@ttr/robot-templates";
-import { normalize, find, mentions, negates, extractDofRaw, extractLengths, extractMasses, parseBudget, extractColour, maskNames, COLOURS } from "./text.ts";
+import { normalize, find, mentions, negates, extractDofRaw, extractLengths, extractMasses, parseBudget, extractColour, maskNames, COLOURS, paintSpec } from "./text.ts";
 import { MAX_ARM_DOF, chooseFamily, RECOLOURABLE } from "./families.ts";
 import { interpretPrompt } from "./interpret.ts";
 import { translateKeywords } from "./lexicon.ts";
@@ -12,6 +12,7 @@ import { addSensor, removeSensor, SENSOR_WORDS, UNMODELLED_SENSORS, cameraHit, l
 import { swapGrippers, replaceGripperWithSuction, removeGripper, armTip } from "./grippers.ts";
 import { geometryLength, linksByRoles } from "./spec-utils.ts";
 import { DESIGNERS, designOf } from "@ttr/design";
+import { planFromSpec, planPrompt, planDiff, editPlan, needsReplan, type Plan } from "./replan.ts";
 
 export interface ModResult { spec: RobotSpecification; changes: string[]; }
 
@@ -233,10 +234,8 @@ function modifyColour(spec: RobotSpecification, c: string): Outcome | undefined 
   if (/\b(?:camera|lidar|sensor|imu|gripper|wheels?|eyes?|visor)\b/.test(c)) return { changes: ["! Only the body colour can be changed; sensors, grippers and wheels keep theirs"], understood: true };
   const family = familyOf(spec);
   if (family && !RECOLOURABLE.has(family)) return { changes: [`! The ${family.replace(/_/g, " ")} keeps its own livery`], understood: true };
-  const mat = spec.materials.find((x) => x.name === "link_mat");
-  if (!mat) return { changes: [`! This robot has no generic body material to recolour`], understood: true };
-  mat.color = [...COLOURS[colour]];
-  return { changes: [`~ body colour -> ${colour}`], understood: true };
+  if (!paintSpec(spec, colour)) return { changes: [`! This robot has no generic body material to recolour`], understood: true };
+  return { changes: [`~ colour -> ${colour}`], understood: true };
 }
 
 /** "fit it to a 1.85 m wearer": rebuild a suit from its prompt at the new stature. */
@@ -293,7 +292,7 @@ function modifyDesigned(specIn: RobotSpecification, instruction: string): ModRes
     if (col && /^(?:paint|colou?r|make|change|turn|set)\b/.test(rest) && !lengthRequest(rest)) {
       if (/\b(?:camera|lidar|sensor|imu|gripper|wheels?|eyes?|visor|servos?|motors?)\b/.test(rest)) { changes.push("! Only the body colour can be changed; sensors, grippers, wheels and bought parts keep theirs"); continue; }
       if (record.family.startsWith("character_")) { changes.push(`! The ${record.family.replace("character_", "").replace("walle", "WALL-E")} keeps its own livery`); continue; }
-      colour = col; changes.push(`~ body colour -> ${col} (printed accent parts)`); continue;
+      colour = col; changes.push(`~ colour -> ${col} (printed parts; accents a shade deeper)`); continue;
     }
     const payload = extractMasses(rest).find((x) => x.context === "payload") ?? (/\b(?:carry|lift|hold|payload)\b/.test(rest) ? extractMasses(rest)[0] : undefined);
     if (payload) { req.payloadKg = +payload.kg.toFixed(3); redesign = true; changes.push(`~ payload ${payload.raw}: actuators re-sized for it`); continue; }
@@ -411,13 +410,21 @@ function modifyDesigned(specIn: RobotSpecification, instruction: string): ModRes
     }
   } else spec = structuredClone(specIn);
   spec.robot_name = name;
-  if (colour) { const mat = spec.materials.find((x) => x.name === "printed_accent"); if (mat) mat.color = [...COLOURS[colour]]; }
+  if (colour) paintSpec(spec, colour);
   if (!changes.length) changes.push(`(no structural change matched "${instruction}")`);
   return { spec, changes };
 }
 
 /** Apply a natural-language modification to a spec (mutates a clone). */
 export function applyModification(specIn: RobotSpecification, instruction: string): ModResult {
+  // a change that needs another body (a wheel count, more or fewer arms, a look, a size) re-plans the robot (replan.ts)
+  const plan = planFromSpec(specIn);
+  if (plan) {
+    const clauses = splitClauses(instruction), inPlace = plan.base === "rover" && !plan.shell ? [4, 6] : [];
+    // (a design whose family has no in-place editor, a work cell, is always re-planned: nothing is stacked on it)
+    const fam = designOf(specIn)?.family ?? "";
+    if (!DESIGNERS[fam] || clauses.some((c) => needsReplan(plan, c, inPlace))) return replanModify(specIn, plan, clauses);
+  }
   const designed = modifyDesigned(specIn, instruction);
   if (designed) return designed;
   let spec = structuredClone(specIn);
@@ -483,5 +490,33 @@ export function applyModification(specIn: RobotSpecification, instruction: strin
 
   if (!changes.length) changes.push(`(no structural change matched "${instruction}")`);
   return { spec, changes };
+}
+
+/** Re-plan: every clause edits the plan (or, if it is not a plan edit, the new design in place afterwards); the robot is
+ *  designed again from the plan's prompt, and every changed field is said. */
+function replanModify(specIn: RobotSpecification, plan: Plan, clauses: string[]): ModResult {
+  const next: Plan = structuredClone(plan), notes: string[] = [], rest: string[] = [];
+  let name: string | undefined;
+  for (const c of clauses) {
+    const rename = RENAME.exec(c);
+    if (rename) { name = safeName(c.slice(rename.index + rename[0].length).replace(/^["']|["']$/g, "").trim(), specIn.robot_name); continue; }
+    const r = editPlan(next, c, c);
+    if (r) notes.push(...r); else rest.push(c);
+  }
+  const prompt = planPrompt(next), built = interpretPrompt(prompt);
+  let spec = built.spec;
+  // a name given by the visitor stays; a name that only described the old body ("six_wheel_rover") follows the new one
+  const generic = /wheel|rover|arm|dof|robot$|quadruped|hexapod|humanoid|quadcopter|cell|torso/.test(specIn.robot_name);
+  spec.robot_name = name ?? (generic ? spec.robot_name : specIn.robot_name);
+  spec.metadata.original_prompt = specIn.metadata.original_prompt ?? specIn.metadata.source_prompt;
+  spec.metadata.source_prompt = prompt;
+  const changes = [...planDiff(plan, planFromSpec(spec) ?? next), ...notes.filter((n) => !n.startsWith("="))];
+  if (name && name !== specIn.robot_name) changes.push(`~ renamed ${specIn.robot_name} -> ${name}`);
+  // what the new design could not do, as the parser said it
+  for (const x of [...built.interpretation.ignored, ...built.interpretation.conflicts]) changes.push(`! ${x}`);
+  for (const ck of (designOf(spec)?.checks ?? []).filter((x) => !x.pass)) changes.push(`! check failed: ${ck.name}: ${ck.detail}`);
+  if (rest.length) { const more = applyModification(spec, rest.join("; ")); spec = more.spec; changes.push(...more.changes.filter((x) => !/^\(no structural change/.test(x))); }
+  if (!changes.length) changes.push("= Nothing to change: the robot already is what was asked");
+  return { spec, changes: [`~ Redesigned from its plan: "${prompt}"`, ...changes] };
 }
 

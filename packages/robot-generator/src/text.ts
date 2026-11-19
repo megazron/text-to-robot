@@ -246,7 +246,7 @@ const colourWords = () => [...Object.keys(COLOURS), ...Object.keys(COLOUR_ALIASE
 const canonical = (c: string) => COLOUR_ALIASES[c] ?? c;
 
 /** Robot nouns a colour can describe (characters included, so "a red Baymax" is reported). */
-export const ROBOT_NOUN = String.raw`(?:robot|robotic|arm|manipulator|rover|humanoid|quadruped|hexapod|scara|bot|dog|chassis|body|base|machine|cobot|suit|exosuit|exoskeleton|droid|mech|walker|baymax|eva|wall-?e|iron man|gripper)`;
+export const ROBOT_NOUN = String.raw`(?:robot|robotic|drone|quadcopter|car|vehicle|arm|manipulator|rover|humanoid|quadruped|hexapod|scara|bot|dog|chassis|body|base|machine|cobot|suit|exosuit|exoskeleton|droid|mech|walker|baymax|eva|wall-?e|iron man|gripper)`;
 
 /** A body colour that describes the robot itself: "a red 6 DOF arm", "painted blue",
  *  "colour: red", "(blue)". "Sorts red blocks" or "a red camera" are not body colours. */
@@ -260,3 +260,56 @@ export function extractColour(text: string): string | undefined {
   const c = m?.slice(1).find(Boolean);
   return c ? canonical(c) : undefined;
 }
+
+/** Paint a designed robot: its printed body in the colour, its accent parts in a deeper shade of it, a shape shell in the
+ *  colour; the dark trim, bought parts, wheels and sensors keep theirs. Only materials change, never geometry. The colour's
+ *  name is kept with the robot (the BOM names the filament by it, a later change starts from it). */
+export function paintSpec(spec: { materials: { name: string; color: number[] }[]; metadata: object }, colour: string): boolean {
+  const c = COLOURS[colour]; if (!c) return false;
+  let any = false;
+  for (const m of spec.materials) {
+    if (m.name === "printed" || m.name === "shell" || m.name === "link_mat") { m.color = [...c]; any = true; }
+    else if (m.name === "printed_accent") { m.color = [c[0] * 0.72, c[1] * 0.72, c[2] * 0.72, 1].map((v, i) => (i < 3 ? +v.toFixed(3) : v)); any = true; }
+  }
+  if (any) (spec.metadata as { colour?: string }).colour = colour;
+  return any;
+}
+
+type RGB = [number, number, number];
+/** Paint with a primary and an accent colour (a style's or a variant's palette): the same parts as paintSpec. */
+export function paintRgb(spec: { materials: { name: string; color: number[] }[]; metadata: object }, primary: RGB, accent: RGB, label: string): boolean {
+  let any = false;
+  for (const m of spec.materials) {
+    if (m.name === "printed" || m.name === "shell" || m.name === "link_mat") { m.color = [...primary, 1]; any = true; }
+    else if (m.name === "printed_accent") { m.color = [...accent, 1]; any = true; }
+  }
+  if (any) (spec.metadata as { palette?: string }).palette = label;
+  return any;
+}
+/** Palettes the style words bring (primary, accent): sci-fi white and cyan, rugged olive and safety yellow, retro cream and teal... */
+export const STYLE_PALETTE: Record<string, [RGB, RGB]> = {
+  sleek: [[0.9, 0.92, 0.95], [0.12, 0.72, 0.92]], boxy: [[0.36, 0.4, 0.33], [0.96, 0.74, 0.08]], retro: [[0.93, 0.88, 0.74], [0.16, 0.56, 0.56]],
+  steampunk: [[0.72, 0.53, 0.25], [0.38, 0.22, 0.1]], mecha: [[0.84, 0.85, 0.88], [0.78, 0.14, 0.12]], cute: [[0.99, 0.8, 0.86], [0.55, 0.78, 0.98]],
+};
+const hsl = (h: number, s: number, l: number): RGB => { const f = (n: number) => { const k = (n + h / 30) % 12, a = s * Math.min(l, 1 - l); return +(l - a * Math.max(-1, Math.min(k - 3, 9 - k, 1))).toFixed(3); }; return [f(0), f(8), f(4)]; };
+/** A palette of its own for what a robot is for (its task or job): a hue from the words that mean it, the accent opposite on
+ *  the colour wheel. The same meaning gives the same palette; another meaning another. */
+export function variantPalette(key: string, index?: number, words = ""): [RGB, RGB, string] {
+  // a table entry by its place in the table, the golden angle apart (any two entries' hues far apart), its job's words
+  // moving it up to 24 degrees; a free-text job by a hash
+  const fnv = (s: string) => { let h = 2166136261; for (const ch of s) { h ^= ch.codePointAt(0)!; h = Math.imul(h, 16777619) >>> 0; } return h; };
+  const hue = index !== undefined ? +((150 + index * 137.508 + ((fnv(words) % 481) / 10 - 24)) % 360 + 360).toFixed(1) % 360 : (fnv(key) % 3600) / 10;
+  return [hsl(hue, 0.52, 0.56), hsl((hue + 150) % 360, 0.62, 0.42), `hue ${Math.round(hue)}`];
+}
+
+const STOP = new Set("a an the my our your his her their its this that these those to for of on in at with and or but robot robots robotic bot machine which who please can could would will it them me us some any very".split(" "));
+/** The words that say what a robot is for, stemmed and sorted ("waters my plants", "water my plants", "plant watering" all
+ *  give "plant water"): the same job said another way is the same key, another job another. From the clause after
+ *  "that / which / who / to" when there is one, else from the job words given. */
+export function jobKey(text: string, fallback = ""): string {
+  const t = text.toLowerCase(), m = t.match(/\b(?:that|which|who|to)\s+(.{3,160})$/);
+  const words = (m ? m[1] : fallback || t).replace(/[^a-z\s]/g, " ").split(/\s+/).filter((w) => w.length > 1 && !STOP.has(w));
+  const stem = (w: string) => (w.length > 5 ? w.replace(/ing$/, "") : w).replace(/(?<=..)s$/, "");
+  return [...new Set(words.map(stem))].sort().join(" ");
+}
+

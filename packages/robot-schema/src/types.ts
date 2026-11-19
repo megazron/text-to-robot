@@ -123,6 +123,10 @@ export interface SpecMetadata {
   inferred_fields: string[];
   notes: string[];
   source_prompt?: string;
+  /** the prompt the robot was first made from, when changes have since re-planned it (source_prompt is then its plan) */
+  original_prompt?: string;
+  /** the colour it was painted, by name ("red"): the BOM names the filament by it */
+  colour?: string;
 }
 
 export interface RobotSpecification {

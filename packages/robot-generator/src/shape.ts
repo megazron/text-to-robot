@@ -34,8 +34,8 @@ const SHAPE_WORDS: [RegExp, Shape, boolean][] = [
 const STYLE_WORDS: [RegExp, Style][] = [
   [/\b(?:cartoon(?:y|ish)?|toon|chibi|kawaii|anime|pixar[\s-]?like|disney[\s-]?like)\b/, "cartoon"],
   [/\b(?:cute|adorable|cuddly|friendly[\s-]looking)\b|🥰|😊/u, "cute"],
-  [/\b(?:sleek|streamlined|futuristic|minimalist?)\b/, "sleek"],
-  [/\b(?:boxy|blocky|square)\b/, "boxy"],
+  [/\b(?:sleek|streamlined|futuristic|minimalist?|sci[\s-]?fi|science[\s-]fiction|space[\s-]age)\b/, "sleek"],
+  [/\b(?:boxy|blocky|square|rugged|tough[\s-]looking)\b/, "boxy"],
   [/\b(?:retro|vintage|tin[\s-]toy|1950s|50s|old[\s-]school)\b/, "retro"],
   [/\b(?:steampunk|brass|victorian|clockwork)\b/, "steampunk"],
   [/\b(?:mecha|mech[\s-]style|armou?red|gundam[\s-]like|transformer[\s-]like)\b/, "mecha"],

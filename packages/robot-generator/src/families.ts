@@ -339,7 +339,7 @@ function composed(shape: RequestShape, on: "torso" | "cell" | "mobile" | "quadru
 
 export const ARM_FAMILIES = new Set(["serial_arm", "rover_arm", "scara", "arm_workcell"]);
 /** templates with a generic structural material we may recolour (characters keep their livery) */
-export const RECOLOURABLE = new Set(["serial_arm", "rover_arm", "arm_workcell", "scara", "humanoid", "quadruped", "hexapod", "diff_drive", "four_wheel", "mecanum", "gripper", "arduino_car", "arduino_arm"]);
+export const RECOLOURABLE = new Set(["drone", "rover", "quadruped_arm", "serial_arm", "rover_arm", "arm_workcell", "scara", "humanoid", "quadruped", "hexapod", "diff_drive", "four_wheel", "mecanum", "gripper", "arduino_car", "arduino_arm"]);
 
 export function standaloneGripper(kind: "parallel" | "suction", prompt: string): RobotSpecification {
   const spec = nDofArm(0, { name: kind === "suction" ? "suction_gripper" : "parallel_gripper", prompt, gripper: "none" });

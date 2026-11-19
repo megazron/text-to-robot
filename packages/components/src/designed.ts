@@ -35,7 +35,9 @@ export function buildDesignedBom(spec: RobotSpecification, budget?: number, payl
       spec: specLine(p.key), note: `${p.uses.slice(0, 4).join("; ")}${p.uses.length > 4 ? "; …" : ""} · ${c.supplier_url}`, ...(owned ? { key: p.key, have, buy: p.qty - have! } : {}) });
   }
   const grams = d.printed.reduce((s, p) => s + p.mass_kg * 1000, 0), cm3 = d.printed.reduce((s, p) => s + p.check.volume_cm3, 0);
-  lines.push({ category: "Printed structure", name: `PETG filament for ${d.printed.length} printed parts`, qty: 1, unit_cost: +((grams / 1000) * FILAMENT_USD_PER_KG * 1.15).toFixed(2),
+  // a painted robot's filament is bought in its colour (the dark trim and the accents as before)
+  const colour = (spec.metadata as { colour?: string }).colour;
+  lines.push({ category: "Printed structure", name: `PETG filament${colour ? ` (${colour} for the body)` : ""} for ${d.printed.length} printed parts`, qty: 1, unit_cost: +((grams / 1000) * FILAMENT_USD_PER_KG * 1.15).toFixed(2),
     subtotal: +((grams / 1000) * FILAMENT_USD_PER_KG * 1.15).toFixed(2), spec: `${grams.toFixed(0)} g of parts (+15 % supports/waste), about ${(cm3 / PRINT_CM3_PER_HOUR).toFixed(1)} h of printing`, note: d.printed.map((p) => p.name).join(", ") });
   const nFast = Object.values(d.fasteners).reduce((a, b) => a + b, 0);
   if (nFast) lines.push({ category: "Fasteners", name: "Screws, nuts and inserts", qty: nFast, unit_cost: FASTENER_USD, subtotal: +(nFast * FASTENER_USD).toFixed(2), spec: Object.entries(d.fasteners).map(([k, v]) => `${v}x ${k}`).join("; ") });
