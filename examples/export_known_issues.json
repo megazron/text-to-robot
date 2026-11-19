@@ -1,0 +1,5 @@
+{
+  "16_eva": {
+    "camera_bracket": "two bodies of the bracket touch along an edge (4 faces share 2 edges), so its STL is not a closed manifold although the solid kernel calls it one; slicers print it; open issue in the EVA designer"
+  }
+}

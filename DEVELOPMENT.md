@@ -38,6 +38,7 @@ These are the checks CI runs. Run the first four before every pull request.
 | `python3 scripts/print_audit.py --check` | Every printed part is printable, or listed with a reason |
 | `MUJOCO_GL=disable python3 scripts/simulate_examples.py --check` | Re-runs every example's MuJoCo task tests |
 | `MUJOCO_GL=disable python3 scripts/check_motion.py --record` | No two parts pass through each other in any film frame |
+| `python3 scripts/check_exports.py [--designs] [--ros --moveit --rviz]` | Every export opened with its own tool: check_urdf, MuJoCo, trimesh, OpenCascade, the BOM's sums, the firmware's pins, the wiring's pins; with `--ros` also xacro, robot_state_publisher, colcon, the display launch and RViz under Xvfb, MoveIt planning (needs ROS 2 Jazzy, Xvfb, ffmpeg); `--designs` adds 40 generated designs. Report: `--report docs/EXPORT_CHECK.md` |
 | `python3 scripts/check_web.py` | All examples render in headless Chromium with external requests blocked |
 | `deploy/build-pages.sh pages-dist && python3 scripts/check_site.py` | Every example prompt generated on the static website and compared with the shipped example |
 

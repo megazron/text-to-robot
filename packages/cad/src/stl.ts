@@ -100,7 +100,8 @@ export function assemblyStl(spec: RobotSpecification): Uint8Array {
   for (const l of spec.links) {
     const w = world.get(l.name); if (!w) continue;
     const m = multiply(w, poseToMat(l.origin));
-    for (const t of geometryTris(l.geometry)) tris.push(t.map((v) => xf(m, v)) as Tri);
+    // in millimetres, like every other STL of the package (the robot's own frames are in metres)
+    for (const t of geometryTris(l.geometry)) tris.push(t.map((v) => xf(m, v).map((x) => x * 1000)) as Tri);
   }
   const buf = new ArrayBuffer(84 + tris.length * 50), dv = new DataView(buf);
   new Uint8Array(buf).set(new TextEncoder().encode(safeName(spec.robot_name).slice(0, 79)));

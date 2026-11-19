@@ -71,11 +71,19 @@ export function rigidBodyCollisionExclusions(spec:RobotSpecification) {
   for(const j of spec.joints)if(j.type==='fixed')parent.set(find(j.child),find(j.parent));
   const key=(a:string,b:string)=>[a,b].sort().join('\0');
   const adjacent=new Set(spec.joints.filter(j=>j.type!=='fixed').map(j=>key(find(j.parent),find(j.child))));
+  // a pinion and the racks it drives (one turns, the other slides, one follows the other by a mimic joint) mesh by
+  // design: they touch at every position, so they are not checked against each other. Two fingers both sliding stay
+  // checked: closing them onto each other is a real collision.
+  const coupled=new Set<string>(),byName=new Map(spec.joints.map(j=>[j.name,j]));
+  const turns=(j:{type:string})=>j.type==='revolute'||j.type==='continuous';
+  const mesh=(a:typeof spec.joints[number],b:typeof spec.joints[number])=>{if(a!==b&&turns(a)!==turns(b)&&(a.type==='prismatic'||b.type==='prismatic')&&find(a.parent)===find(b.parent))coupled.add(key(find(a.child),find(b.child)));};
+  for(const j of spec.joints){const m=j.mimic?.joint?byName.get(j.mimic.joint):undefined;if(!m)continue;mesh(j,m);for(const k of spec.joints)if(k.mimic?.joint===m.name)mesh(j,k);}
   const pairs:{link1:string;link2:string;reason:string}[]=[];
   for(let a=0;a<spec.links.length;a++)for(let b=a+1;b<spec.links.length;b++) {
     const link1=spec.links[a].name,link2=spec.links[b].name,x=find(link1),y=find(link2);
     if(x===y)pairs.push({link1,link2,reason:'RigidAssembly'});
     else if(adjacent.has(key(x,y)))pairs.push({link1,link2,reason:'AdjacentRigidBodies'});
+    else if(coupled.has(key(x,y)))pairs.push({link1,link2,reason:'CoupledByMimic'});
   }
   return pairs;
 }

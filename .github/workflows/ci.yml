@@ -161,6 +161,9 @@ jobs:
         run: python scripts/check_motion.py --record
       - name: Independent STL topology and mass-integral audit
         run: python scripts/check_mesh_assets.py
+      - name: Every example's exports opened with the tools they are for (URDF, MuJoCo, STL, STEP, BOM, firmware pins, wiring; the ROS 2 steps run locally, docs/EXPORT_CHECK.md)
+        env: { MUJOCO_GL: disable }
+        run: python scripts/check_exports.py
       # These concepts are not engineered hardware. Keep physical failures visible
       # without encoding "every character can balance" as a software invariant.
       - name: Concept-model diagnostics (physical failures expected)

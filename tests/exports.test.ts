@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { finalizeSpec } from "@ttr/robot-generator";
@@ -19,6 +20,10 @@ test("STL: assembly is a valid binary STL with one part file per link", () => {
   const stl = assemblyStl(spec), n = new DataView(stl.buffer, stl.byteOffset).getUint32(80, true);
   assert.ok(n > 500);
   assert.equal(stl.byteLength, 84 + n * 50);
+  // in millimetres, like the print STLs beside it: a 6 DOF arm is hundreds of mm tall, not a fraction of one
+  const dv = new DataView(stl.buffer, stl.byteOffset); let zMax = -Infinity;
+  for (let i = 0; i < n; i++) for (let v = 0; v < 3; v++) zMax = Math.max(zMax, dv.getFloat32(84 + i * 50 + 12 + v * 12 + 8, true));
+  assert.ok(zMax > 100, `assembly ${zMax} high: not in mm`);
   const files = generateStlFiles(spec);
   for (const l of spec.links) assert.ok(files[`cad/stl/parts/${l.name}.stl`], `missing ${l.name}.stl`);
   assert.ok(files["cad/PRINTABILITY.md"]);
@@ -131,6 +136,14 @@ test('mock control starts sliding fingers open without excluding opposing pad co
   assert.match(finger,/<param name="initial_value">0.01<\/param>/);
   const srdf=files['arm_6dof/moveit/arm_6dof.srdf'] as string;
   assert.ok(!/link1="left_finger_pad" link2="right_finger_pad"|link1="right_finger_pad" link2="left_finger_pad"/.test(srdf));
+});
+
+test("SRDF: a pinion is not checked against the racks it drives (they mesh at home); sliding fingers stay checked", () => {
+  const spec = finalizeSpec(JSON.parse(readFileSync(new URL("../examples/04_scara/robot.json", import.meta.url), "utf8")));
+  const srdf = Object.entries(exportRos2Package(spec)).find(([f]) => f.endsWith(".srdf"))![1] as string;
+  const off = (a: string, b: string) => new RegExp(`link1="${a}" link2="${b}"|link1="${b}" link2="${a}"`).test(srdf);
+  assert.ok(off("pinion", "finger_a") && off("pinion", "finger_b"), "pinion and racks");
+  assert.ok(!off("finger_a", "finger_b"), "the two fingers are still checked against each other");
 });
 
 test("ROS 2 launch files pass robot_description as a string and the display layout needs no MoveIt", () => {
