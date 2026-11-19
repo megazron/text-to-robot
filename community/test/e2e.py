@@ -153,6 +153,8 @@ try:
         expect(prev.locator(".cm-name")).to_have_text("Anonymous")
         expect(prev.locator(".cm-title")).to_have_text("E2E arm")
         expect(dlg.locator(".cm-privacy")).to_contain_text("No login, email or IP address")
+        # (the picture is decoded after the form opens: read its size once it has loaded)
+        page.wait_for_function("() => { const i = document.querySelector('.cm-preview img'); return i && i.complete && i.naturalWidth > 0; }", timeout=30000)
         assert page.evaluate("() => document.querySelector('.cm-preview img').naturalWidth") == 480, "the preview shows the real picture"
         page.screenshot(path=str(args.out / "share-form.png"))
         assert api("/posts")[1]["posts"] == [], "opening the form posts nothing"
