@@ -63,8 +63,9 @@ function deckElectronics(A: Assembly, deck: Frame, d: Deck, e: Electronics, sens
   xFree += wImu + 14;   // room for the hood's wall in front of the IMU
   // lidar: on a mast so its scan plane clears the computer and the legs
   if (sensors.includes("lidar")) {
+    // past the hood's end wall and the rocker switch the hood stands behind it (30 mm past the boards, enclosure.ts)
     const key = "rplidar_c1", lb = bodyMm(key), mast = 30;
-    const lx = Math.max(xFree - lb.min[0] + 2, (d.lo[0] + d.hi[0]) / 2);
+    const lx = Math.max(xFree + 34 - lb.min[0] + 2, (d.lo[0] + d.hi[0]) / 2);
     const T = translation([lx, 0, zt + mast]);
     mountAt(A, deck, key, T, "lidar", "360 deg LiDAR");
     ops.push({ op: "box", min: [lx + lb.min[0], lb.min[1], zt - 1], max: [lx + lb.max[0], lb.max[1], zt + mast], r: 6 });
@@ -105,6 +106,9 @@ function standingAngles(L1: number, L2: number, h: number): [number, number] {
   const a = (lo + hi) / 2; return [a, Math.asin(Math.min(1, (L1 * Math.sin(a)) / L2))];
 }
 
+/** A depth camera needs the Jetson; a 2D LiDAR's SLAM runs on the Pi 5, and the Jetson's 100 x 90 mm board is wider than a
+ * servo dog's body (its hood would cut through it), so a servo dog with a LiDAR alone takes the Pi 5. */
+const quadCompute = (sensors: SensorKind[], qdd: boolean) => sensors.includes("depth") || (sensors.includes("lidar") && qdd) ? "jetson_orin_nano_super" : "rpi5";
 function buildQuadruped(req: LeggedRequest, cfg: QuadCfg, sensors: SensorKind[]) {
   const name = req.name ?? (cfg.cls === "servo" ? "servo_quadruped" : "qdd_quadruped");
   const A = new Assembly(name, "quadruped", req.prompt);
@@ -113,7 +117,10 @@ function buildQuadruped(req: LeggedRequest, cfg: QuadCfg, sensors: SensorKind[])
   const qdd = cfg.cls === "qdd", BW = qdd ? 5 : WALL; // body wall
   const battB = bodyMm(cfg.batt);
   // ---- body layout ----
-  const Ya = -bA.min[0] + 1.5;                                    // abduction axis: case reaches the mid-plane
+  // abduction axis: case reaches the mid-plane; with the Jetson (100 x 90 mm) on the deck, the body is wide enough for the
+  // hood round it (its 3.5 mm pad and wall inside the deck's 6 mm margin)
+  const jet = quadCompute(sensors, qdd) === "jetson_orin_nano_super" ? bodyMm("jetson_orin_nano_super") : null;
+  const Ya = Math.max(-bA.min[0] + 1.5, jet ? (jet.max[1] - jet.min[1]) / 2 + 3.5 + 6 + 1 - bA.max[0] - WALL : 0);
   const Wo = Ya + bA.max[0] + WALL;                               // body half width (outer)
   // tub half height: over the pack the cables that come down through the deck turn and cross to the far side (a bend radius and the cable)
   const zHalf = Math.max(bA.max[1] + WALL, (battB.max[2] + 4 + (qdd ? 24 : 12)) / 2 + BW);
@@ -123,7 +130,12 @@ function buildQuadruped(req: LeggedRequest, cfg: QuadCfg, sensors: SensorKind[])
   // channel beside the pack, runs forward through the inline fuse and up through the deck to the switch at the front of
   // the hood, without doubling back
   const leadRoom = qdd ? 44 : 28;
-  const Xa = Math.max(battLen / 2 + (leadRoom + 2) / 2 + dA + WALL, 95);            // abduction output face
+  // with a LiDAR the deck carries a row (computer, bus and 5 V boards, IMU, the LiDAR's mast, the camera's) longer than the
+  // pack needs: the body is as long as that row (deckElectronics lays it out; 84 mm is its gaps, the hood's rocker and the camera mast)
+  const deckKey = (k: string) => { const b = bodyMm(k); return b.max[0] - b.min[0]; };
+  const lidarRow = sensors.includes("lidar") ? 84 + deckKey(quadCompute(sensors, qdd)) +
+    Math.max(deckKey(qdd ? "usb_can_adapter" : "waveshare_bus_servo_adapter"), deckKey("buck_5v_5a")) + deckKey("bno085_breakout") + deckKey("rplidar_c1") : 0;
+  const Xa = Math.max(battLen / 2 + (leadRoom + 2) / 2 + dA + WALL, 95, lidarRow / 2 + 2);            // abduction output face
   const Xb = Xa - 2;                                              // body end = cradle rim
   const Xh = Xa + PLATE + 1.5 + (-bH.min[0]) + WALL;             // hip axis
   const Yl = (qdd ? 40 : 20) + dH / 2 + PLATE;                    // leg plane (hip/knee actuator centres)
@@ -175,7 +187,7 @@ function buildQuadruped(req: LeggedRequest, cfg: QuadCfg, sensors: SensorKind[])
   const busKey = qdd ? "usb_can_adapter" : "waveshare_bus_servo_adapter";
   // ---- top deck (lid) with computer and sensors ----
   const deck: Frame = { name: "top_deck", W: translation([0, 0, 0]) };
-  const compute = sensors.includes("depth") || sensors.includes("lidar") ? "jetson_orin_nano_super" : "rpi5";
+  const compute = quadCompute(sensors, qdd);
   const deckOps: Op[] = [{ op: "box", min: [-Xb + 2, -Wo + 0.5, zHi], max: [Xb - 2, Wo - 0.5, zHi + 3], r: 6 }];
   for (const s of [-1, 1]) for (const t of [-1, 1]) deckOps.push({ op: "hole", a: [s * (Xb - 12), t * (Wo - 8), zHi - 1], b: [s * (Xb - 12), t * (Wo - 8), zHi + 4], d: 3.4 });
   const e: Electronics = { battery: cfg.batt, cells: Number(part(cfg.batt).specs.cells), nBatt: cfg.nBatt, compute, bus: busKey, busQty: 1, buck: [buckKey] };

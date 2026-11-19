@@ -52,6 +52,8 @@ const INSPIRED = /\b(?:star\s+wars|pixar|disney|marvel|transformers?|gundam|poke
 export interface ShellAsk { shape: Shape; style: Style; said: string; note?: string; /** shape "emoji": the emoji whose outline is inflated */ emoji?: string; /** what the shape is called ("unicorn emoji") */ name: string }
 
 /** The shape and style asked for, or nothing when the prompt names neither. */
+/** a style word ("cute", "sci-fi", "steampunk", "rugged") is said: a look asked for */
+export const saysStyle = (t: string) => STYLE_WORDS.some(([rx]) => rx.test(t));
 export function readShell(t: string, original = t): ShellAsk | undefined {
   const cue = CUE.test(t) || /\p{Extended_Pictographic}/u.test(original);
   const style = STYLE_WORDS.find(([rx]) => rx.test(t))?.[1];

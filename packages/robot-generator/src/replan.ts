@@ -9,7 +9,7 @@ import type { RobotSpecification } from "@ttr/robot-schema";
 import { designOf, type ShellRequest } from "@ttr/design";
 import { normalize, extractColour, extractDofRaw, extractMasses, parseBudget, COLOURS } from "./text.ts";
 import { builtShape } from "./fidelity.ts";
-import { readShell } from "./shape.ts";
+import { readShell, saysStyle } from "./shape.ts";
 import { MAX_ARM_DOF } from "./families.ts";
 
 export type Base = "diff" | "three" | "four" | "mecanum" | "rover" | "quadruped" | "hexapod" | "humanoid" | "drone" | "arm" | "cell" | "torso";
@@ -130,7 +130,7 @@ export function editPlan(p: Plan, clause: string, original: string): string[] | 
   const c = normalize(clause);
   // a look: "make it look like a shoe", "heart shaped", "🦄", "no shell"
   if (removesShell(c, p.shell)) { if (!p.shell) return ["! It has no shell to take off"]; delete p.shell; return []; }
-  const look = /\b(?:look|looks|looking|shaped|shape|style|styled|cartoon|cute|retro|steampunk|sleek|boxy)\b|\p{Extended_Pictographic}/u.test(clause) ? readShell(c, clause.trim()) : undefined;
+  const look = /\b(?:look|looks|looking|shaped|shape|style|styled)\b|\p{Extended_Pictographic}/u.test(clause) || saysStyle(c) ? readShell(c, clause.trim()) : undefined;
   if (look) { p.shell = { shape: look.shape, style: look.style, ...(look.emoji ? { emoji: look.emoji } : {}) }; return look.note ? [`= ${look.note}`] : []; }
   const wheeled = ["diff", "three", "four", "mecanum", "rover"].includes(p.base), counted = /\b(?:\d+|two|three|four|five|six|eight)[\s-]+wheel/.test(c) && !/\b(?:add|remove|drop|more|fewer|less|extra|another|take\s+off)\b/.test(c);
   // (more or fewer: of the driven wheels, a two-wheel base's casters not counted)
@@ -195,7 +195,7 @@ export function editPlan(p: Plan, clause: string, original: string): string[] | 
 export function needsReplan(p: Plan, clause: string, inPlaceWheels: number[]): boolean {
   const c = normalize(clause);
   if (removesShell(c, p.shell)) return true;
-  if (/\b(?:look|looks|looking|shaped|shape|styled)\b|\p{Extended_Pictographic}/u.test(clause) && readShell(c, clause.trim())) return true;
+  if ((/\b(?:look|looks|looking|shaped|shape|styled)\b|\p{Extended_Pictographic}/u.test(clause) || saysStyle(c)) && readShell(c, clause.trim())) return true;
   const wheeled = ["diff", "three", "four", "mecanum", "rover"].includes(p.base), counted = /\b(?:\d+|two|three|four|five|six|eight)[\s-]+wheel/.test(c) && !/\b(?:add|remove|drop|more|fewer|less|extra|another|take\s+off)\b/.test(c);
   const w = /\bwheel/.test(c) && (wheeled || counted) ? wheelAsk(c, !counted && (p.base === "diff" || p.base === "three") ? 2 : p.wheels) : undefined;
   const now = !counted && (p.base === "diff" || p.base === "three") ? 2 : p.wheels;
