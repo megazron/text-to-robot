@@ -28,7 +28,7 @@ test("modify verbs on the arm", () => {
   says("02_arm_6dof", "add a suction cup", /Suction cups are not in the parts library yet/);
   refusals("02_arm_6dof", [["add wheels", /no wheels to change.*mobile manipulator/], ["add legs", /has no legs/]]);
   const s = says("02_arm_6dof", "remove the gripper, add a camera, make it 5 dof, make the arm longer, paint it blue",
-    /^- Removed gripper/, /^\+ Added camera/, /Redesigned with a 5-DOF arm \(was 6-DOF\)/, /reach .* m -> .* m requested/, /body colour -> blue/);
+    /^- Removed gripper/, /^\+ Added camera/, /Redesigned with a 5-DOF arm \(was 6-DOF\)/, /reach .* m -> .* m requested/, /colour -> blue/);
   assert.equal(s.end_effectors.length, 0);
   assert.ok(s.sensors.some((x) => x.type === "camera"));
 });
@@ -37,7 +37,7 @@ test("modify verbs on the rover with an arm (the mobile manipulator)", () => {
   says("12_mars_rover", "add a gripper", /already has a two-finger gripper/);
   refusals("12_mars_rover", [["add legs", /has no legs/]]);
   const s = says("12_mars_rover", "remove the gripper, add a lidar, give it more dof, make the arm longer, 6 wheels, paint it red",
-    /^- Removed gripper/, /^\+ Added lidar/, /Redesigned with a 7-DOF arm \(was 6-DOF\)/, /arm reach 0\.350 m -> 0\.420 m/, /6 wheels \(was 4\)/, /body colour -> red/);
+    /^- Removed gripper/, /^\+ Added lidar/, /Redesigned with a 7-DOF arm \(was 6-DOF\)/, /arm reach 0\.350 m -> 0\.420 m/, /4 wheels -> 6 wheels/, /colour -> red/);
   assert.equal(s.end_effectors.length, 0);
   assert.equal(s.links.filter((l) => l.role === "wheel").length, 6);
   says("12_mars_rover", "add a gripper", /already has/);   // the original still has it: the edit made a new spec
@@ -46,8 +46,10 @@ test("modify verbs on the rover with an arm (the mobile manipulator)", () => {
 test("modify verbs on a wheeled base", () => {
   says("05_diff_drive", "add a gripper", /no arm to hold a gripper; .*mobile manipulator/);
   says("05_diff_drive", "make it 5 dof", /fixed joint layout.*mobile manipulator/);
-  refusals("05_diff_drive", [["add two wheels", /2 wheels by design/], ["add legs", /has no legs/]]);
-  const s = says("05_diff_drive", "add a lidar, paint it green", /^\+ Added lidar/, /body colour -> green/);
+  refusals("05_diff_drive", [["add legs", /has no legs/]]);
+  // two more wheels on a two-wheel base: the four-wheel base, designed again (not wheels stacked on the old one)
+  assert.equal(says("05_diff_drive", "add two wheels", /two-wheel base -> four-wheel base/).joints.filter((j) => /wheel/.test(j.name) && !/caster/.test(j.name) && j.type !== "fixed").length, 4);
+  const s = says("05_diff_drive", "add a lidar, paint it green", /^\+ Added lidar/, /colour -> green/);
   assert.ok(s.sensors.some((x) => x.type === "lidar"));
 });
 
@@ -56,7 +58,7 @@ test("modify verbs on a quadruped", () => {
   says("10_quadruped", "add two more legs", /4 legs by design; .*hexapod/);
   says("10_quadruped", "make it 5 dof", /fixed joint layout/);
   refusals("10_quadruped", [["add wheels", /no wheels to change/]]);
-  const s = says("10_quadruped", "add a camera, paint it orange", /^\+ Added camera/, /body colour -> orange/);
+  const s = says("10_quadruped", "add a camera, paint it orange", /^\+ Added camera/, /colour -> orange/);
   assert.ok(s.sensors.some((x) => x.type === "camera"));
 });
 

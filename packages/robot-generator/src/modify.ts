@@ -348,7 +348,11 @@ function modifyDesigned(specIn: RobotSpecification, instruction: string): ModRes
       if (record.family === "mobile_rocker_bogie") {
         const cur = Number(req.wheels ?? 6) >= 6 ? 6 : 4, want = n === 4 || n === 6 ? n : REMOVE_VERB.test(verb) || /\b(?:fewer|less)\b/.test(rest) ? 4 : 6;
         if (want === cur) changes.push(`! The rover already has ${cur} wheels (4 or 6 are supported)`);
-        else { req.wheels = want; redesign = true; changes.push(`~ ${want} wheels (was ${cur}); drive re-sized`); }
+        else {
+          req.wheels = want; redesign = true; changes.push(`~ ${cur} wheels -> ${want} wheels; drive re-sized`);
+          // a name that said the old wheel count says the new one ("six_wheel_rover" -> "four_wheel_rover")
+          name = name.replace(/\b(?:six|four)_wheel/, want === 4 ? "four_wheel" : "six_wheel");
+        }
         continue;
       }
       if (WHEELS_OF[record.family]) { changes.push(`! The ${label} has ${WHEELS_OF[record.family]} wheels by design; for another layout ask for "a four-wheel robot", "a mecanum robot" or "a six-wheel rover"`); continue; }

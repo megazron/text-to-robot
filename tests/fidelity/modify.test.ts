@@ -25,7 +25,7 @@ type Step = [string, (s: RobotSpecification, before: RobotSpecification, changes
 const CHAINS: [string, Step[]][] = [
   ["a 6 wheel rover", [
     // the owner's change: red, and four wheels, not a part stacked on six
-    ["change to red colour and only 4 wheels", (s, b, c) => { assert.equal(wheels(s), 4); assert.equal(colour(s, "printed"), RED); assert.ok(s.links.length < b.links.length, "nothing stacked on it"); assert.ok(c.some((x) => /4 wheels/.test(x)) && c.some((x) => /colour -> red/.test(x)), c.join(" | ")); }],
+    ["change to red colour and only 4 wheels", (s, b, c) => { assert.equal(wheels(s), 4); assert.equal(colour(s, "printed"), RED); assert.ok(s.links.length < b.links.length, "nothing stacked on it"); assert.ok(c.some((x) => /6 wheels -> 4 wheels/.test(x)) && c.some((x) => /colour -> red/.test(x)), c.join(" | ")); assert.doesNotMatch(s.robot_name, /six/, "the name says four wheels"); }],
     ["make it blue", (s, b, c) => { assert.equal(colour(s, "printed"), BLUE); assert.equal(geometry(s), geometry(b), "a colour adds no geometry"); assert.ok(c.some((x) => /colour -> blue/.test(x))); }],
     ["only 3 wheels", (s, _b, c) => { assert.equal(wheels(s), 3); assert.equal(design(s).family, "mobile_diff_drive"); assert.equal(colour(s, "printed"), BLUE, "the colour stays"); assert.ok(c.some((x) => /4 wheels -> 3 wheels/.test(x)), c.join(" | ")); }],
     ["make it look like a shoe", (s, _b, c) => { assert.match(shell(s), /^shoe/); assert.equal(wheels(s), 3); assert.ok(c.some((x) => /\+ shoe shell/.test(x))); }],

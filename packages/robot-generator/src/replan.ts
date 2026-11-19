@@ -48,7 +48,7 @@ export function planPrompt(p: Plan): string {
     case "rover": body = `a ${n(p.wheels)} wheel rover${arms.length ? ` with ${armWords}` : ""}`; break;
     case "quadruped": body = `a quadruped${arms.length ? ` with ${armWords}` : ""}`; break;
     case "hexapod": body = "a hexapod"; break;
-    case "humanoid": body = `a humanoid${arms.length ? ` with ${dof} dof arms` : ""}`; break;
+    case "humanoid": body = `a humanoid${arms.length ? `, ${dof} dof per arm` : ""}`; break;
     case "drone": body = "a quadcopter drone"; break;
     case "mecanum": body = "a mecanum wheel robot"; break;
     case "three": body = "a three wheel robot"; break;
@@ -117,7 +117,7 @@ export const removesShell = (c: string, shell?: ShellRequest) => /\b(?:no|remove
   || (!!shell && new RegExp(String.raw`\b(?:remove|without|drop|take\s+off|no)\s+(?:the\s+)?${shell.shape}\b`).test(c));
 /** "make it bigger", "twice as big", "20 % smaller": a size factor */
 export function sizeAsk(c: string): number | undefined {
-  if (!/\b(?:bigger|larger|smaller|tinier|big|large|small|size|scale|taller|shorter)\b/.test(c) || /\b(?:arm|forearm|upper|wrist|leg|wheel|base|deck|reach)s?\b/.test(c)) return undefined;
+  if (!/\b(?:bigger|larger|smaller|tinier|big|large|small|size|scale|taller|shorter)\b/.test(c) || /\b(?:arm|forearm|upper|wrist|leg|wheel|base|deck|reach|battery|batteries|pack|motor|servo|camera|lidar|screen|gripper|head|budget|payload)s?\b/.test(c)) return undefined;
   const down = /\b(?:smaller|tinier|small|shorter|less|reduce|shrink)\b/.test(c), pct = c.match(/(\d+(?:\.\d+)?)\s*(?:%|percent)/);
   if (pct) return down ? 1 - parseFloat(pct[1]) / 100 : 1 + parseFloat(pct[1]) / 100;
   if (/\btwice\b|\bdouble\b|\b2x\b/.test(c)) return 2;
@@ -132,13 +132,13 @@ export function editPlan(p: Plan, clause: string, original: string): string[] | 
   if (removesShell(c, p.shell)) { if (!p.shell) return ["! It has no shell to take off"]; delete p.shell; return []; }
   const look = /\b(?:look|looks|looking|shaped|shape|style|styled|cartoon|cute|retro|steampunk|sleek|boxy)\b|\p{Extended_Pictographic}/u.test(clause) ? readShell(c, clause.trim()) : undefined;
   if (look) { p.shell = { shape: look.shape, style: look.style, ...(look.emoji ? { emoji: look.emoji } : {}) }; return look.note ? [`= ${look.note}`] : []; }
-  const w = /\bwheel/.test(c) ? wheelAsk(c, p.wheels) : undefined;
+  const wheeled = ["diff", "three", "four", "mecanum", "rover"].includes(p.base), counted = /\b(?:\d+|two|three|four|five|six|eight)[\s-]+wheel/.test(c) && !/\b(?:add|remove|drop|more|fewer|less|extra|another|take\s+off)\b/.test(c);
+  // (more or fewer: of the driven wheels, a two-wheel base's casters not counted)
+  const w = /\bwheel/.test(c) && (wheeled || counted) ? wheelAsk(c, !counted && (p.base === "diff" || p.base === "three") ? 2 : p.wheels) : undefined;
   if (w !== undefined) {
-    if (["quadruped", "hexapod", "humanoid", "drone", "arm", "cell", "torso"].includes(p.base) && !/\b(?:on|instead)\b/.test(c)) {
-      // a walking or flying robot asked for wheels becomes a wheeled one with its arms
-      p.base = p.arms.length ? "rover" : "four";
-    }
     if (w <= 1) return [`! ${w === 1 ? "One wheel" : "No wheels"}: a robot cannot balance on ${w === 1 ? "one" : "none"} without a self-balancing controller; kept ${p.wheels}`];
+    // a walking, flying or fixed robot asked for a number of wheels becomes a wheeled one (an arm rides on the rover)
+    if (!wheeled) p.base = p.arms.length ? "rover" : "four";
     p.wheels = w;
     if (p.arms.length) { p.base = "rover"; if (w !== 4 && w !== 6) { p.wheels = w < 5 ? 4 : 6; return [`! a rover carrying an arm is designed on 4 or 6 wheels: built ${p.wheels}`]; } return []; }
     p.base = w === 2 ? "diff" : w === 3 ? "three" : w === 4 ? (p.base === "mecanum" ? "mecanum" : "four") : "rover";
@@ -162,7 +162,7 @@ export function editPlan(p: Plan, clause: string, original: string): string[] | 
   }
   const size = sizeAsk(c);
   if (size !== undefined) {
-    if (p.base === "humanoid") { const cur = p.heightM ?? 0.6; p.heightM = +Math.min(1.3, Math.max(0.5, cur * size)).toFixed(3); return []; }
+    if (p.base === "humanoid") { const cur = p.heightM ?? 0.6, f = size > 1 ? Math.min(size, 1.1) : Math.max(size, 0.9); p.heightM = +Math.min(1.3, Math.max(0.5, cur * f)).toFixed(3); return f !== size ? [`! a humanoid grows or shrinks 10 % a step (its legs are re-sized each time): built ${p.heightM} m`] : []; }
     if (p.base === "arm" || p.base === "cell") { const cur = p.reachM ?? 0.42; p.reachM = +Math.min(0.8, Math.max(0.15, cur * size)).toFixed(3); return []; }
     if (p.shell) { return [`! The ${p.base === "drone" ? "drone" : "base"} is sized from what it carries, so it is not made bigger; its shell follows it. "carry 3 kg" sizes the drive and the deck for a load`]; }
     return [`! A ${p.base === "drone" ? "drone" : "wheeled base"} is sized from its parts and what it carries, not by a scale: say what it should carry ("carry 3 kg") and it is designed for that`];
@@ -196,8 +196,10 @@ export function needsReplan(p: Plan, clause: string, inPlaceWheels: number[]): b
   const c = normalize(clause);
   if (removesShell(c, p.shell)) return true;
   if (/\b(?:look|looks|looking|shaped|shape|styled)\b|\p{Extended_Pictographic}/u.test(clause) && readShell(c, clause.trim())) return true;
-  const w = /\bwheel/.test(c) ? wheelAsk(c, p.wheels) : undefined;
-  if (w !== undefined && w !== p.wheels && !inPlaceWheels.includes(w)) return true;
+  const wheeled = ["diff", "three", "four", "mecanum", "rover"].includes(p.base), counted = /\b(?:\d+|two|three|four|five|six|eight)[\s-]+wheel/.test(c) && !/\b(?:add|remove|drop|more|fewer|less|extra|another|take\s+off)\b/.test(c);
+  const w = /\bwheel/.test(c) && (wheeled || counted) ? wheelAsk(c, !counted && (p.base === "diff" || p.base === "three") ? 2 : p.wheels) : undefined;
+  const now = !counted && (p.base === "diff" || p.base === "three") ? 2 : p.wheels;
+  if (w !== undefined && w > 1 && w !== now && !inPlaceWheels.includes(w)) return true;
   if (/\barms?\b/.test(c) && armAsk(c, p.arms.length) !== undefined) return true;
   if (sizeAsk(c) !== undefined && p.base === "humanoid") return true;
   return false;
