@@ -5,7 +5,7 @@
 import type { RobotSpecification, SensorType } from "@ttr/robot-schema";
 import { safeName } from "@ttr/robot-schema";
 import { fk } from "@ttr/design";
-import { normalize, find, findAll, mentions, negates, extractDofMentions, type DofMention, extractLengths, extractMasses, extractSpeeds, parseBudget, extractName, extractColour, maskNames, COLOURS, paintSpec, paintRgb, STYLE_PALETTE, variantPalette, jobKey } from "./text.ts";
+import { normalize, find, findAll, mentions, negates, extractDofMentions, type DofMention, extractLengths, extractMasses, extractSpeeds, parseBudget, extractName, extractColour, maskNames, paintSpec, paintRgb, STYLE_PALETTE, variantPalette, jobKey } from "./text.ts";
 import { armourShape, shapeKey } from "@ttr/mesh";
 import { suitOptions } from "./suit.ts";
 import { MAX_ARM_DOF, RX, ARM_IT_FITS, SUPPORTED_HINT, wheelCount, gripperRequest, chooseFamily, RECOLOURABLE, type Choice, type GripperKind, type DesignContext } from "./families.ts";
