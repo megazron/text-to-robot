@@ -1,7 +1,7 @@
 // Runs xver-run.ts over every prompt in batches, one process at a time, appending to out/xver/<label>.jsonl (resumable).
 //   node out/xver.ts <label> [passes: quick,route,arduino]
 import { spawnSync } from "node:child_process";
-import { existsSync, readFileSync, appendFileSync, mkdirSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, mkdirSync } from "node:fs";
 const only = process.env.XVER_ONLY ? new Set(process.env.XVER_ONLY.split(",").map(Number)) : null;
 const label = process.argv[2], passArg = process.argv[3] ?? "quick,route,arduino", list = JSON.parse(readFileSync("out/xver/prompts.json", "utf8")) as { prompt: string }[];
 mkdirSync("out/xver", { recursive: true });
