@@ -56,6 +56,15 @@ URDF structural validation                            (packages/urdf-validator)
 | `training-export` | Training suite: MuJoCo quick-start + PyBullet/Gymnasium fallback, task catalogue per robot class, PPO/SAC, demo collection, behaviour cloning, evaluation |
 | `python/ttr_mujoco` (Python) | URDF → actuated MuJoCo MJCF (mass-scaled servos, preserved inertials, free base, floor), simulation test battery, headless GIF renderer, Gymnasium env with delta actions + perturbations, PPO trainer, `ttr-mujoco` CLI; `exo.py` straps an anthropometric wearer into a wearable exoskeleton and runs a powered-vs-unpowered support test; the renderer drives `*_hinge` armour servos through a donning sequence |
 
+## In the browser
+
+The website runs the same packages in Web Workers sized to the device (`apps/web/src/device.ts`): the engine worker designs
+the robot with its wires as straight runs and shows it; a second worker, started while the first works, designs it again
+with the 3D harness and swaps it in; spare cores are helpers for the armour forge and for building a known robot's parts in
+parallel. Pure results (printed solids, CAD part files, part boxes, whole answers) are kept in IndexedDB keyed by the engine's
+build hash and the exact input, so a robot made before opens at once and a changed engine starts afresh. Cancel ends every
+worker. Times, the stage breakdown and how the outputs are proved unchanged: [Performance](PERFORMANCE.md).
+
 ## Persistence and sharing
 
 The API keeps generated robots in memory and persists them to `data/robots.json`

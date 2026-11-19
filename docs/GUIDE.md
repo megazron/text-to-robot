@@ -110,6 +110,11 @@ On the website there are two reading options in **Create > How it reads**. **Sma
 3. **Check it.** Torque, speed, power, runtime, tipping, clearance and printability are computed and shown with their numbers. A request that cannot be met is still built, with a warning that names the failing check.
 4. **Export it.** Every output is generated from one typed `RobotSpecification`: URDF and Xacro, ROS 2 and MoveIt, MuJoCo, STL, BOM, wiring and training scaffolds.
 
+On the website the robot is shown as soon as it is designed and its 3D harness follows; the work runs in background workers
+sized to your device (fewer on a phone or a small-memory laptop), the page stays usable, **Cancel** stops everything at once,
+and results are kept in the browser, so a robot made before opens at once. Nothing about the robot changes with the device
+or the cache: see [Performance](PERFORMANCE.md).
+
 The same engine runs in the CLI, the local server and, compiled for the browser, the website. Other web pages can load it too, from `engine/v1/engine.js` on the website: see [Engine API](ENGINE_API.md). More in [Architecture](ARCHITECTURE.md) and [Design engine](DESIGN_ENGINE.md).
 
 ## Limits
