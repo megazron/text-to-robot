@@ -241,7 +241,7 @@
       "mesh_triangles_verified": true,
       "example": "24_plant_waterer",
       "pass": true,
-      "source_robot_sha256": "0fe0e5e2c27d3b1ef348b3520f9ac725e9b1f18fcc7ef38552d0380b0471c781",
+      "source_robot_sha256": "b810c7492f27aed10e6b5afe567f89e2175ef9394074864b861be7985e7b7563",
       "name": "diff_drive_robot",
       "links": 28,
       "joints": 27
@@ -257,7 +257,7 @@
     "robotkit.js": "77f98f220e040f61fcc6053feec05e4c83074bc1507f0d297dcc4780b59c2d29",
     "community.js": "34bdc6be8ff164a2a0cde16e416873f6a436baf2d9672af706731d699363f491",
     "index.html": "0487d923716d068887ac1111ae0300284b5c3c99d5df4b9fdcf52106d4abb602",
-    "app.js": "78c044a70c5f5e41d91a3188c4c50a4f1df05cb4b74ad1b26cd609c32ab08937",
+    "app.js": "61a69bd849cff68e04bec1f36ea5d34d1fa909647aa6dc626b2372ee2875eec9",
     "community.json": "60e1667fa43003a5e99f6224c6ae55d639e1afe1f1942ffbfc2369c811e715dc",
     "electronics3d.js": "8169c4faae37f77b7cd0f7148d2062fc2e6a7839b208197096e94030dada1ee3",
     "ui.js": "5f4180fde29588b88d5b1b619786bb14422e3af16c722a5507bdda456fbde3f5",
