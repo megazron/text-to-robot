@@ -170,7 +170,7 @@ const FILLER = /\b(?:some|of|the|my|x|pcs?|pieces?|units?|nos?|qty|quantity|piec
 
 /** chunks that name no part: "these components", "that's it", "a robot" */
 const SKIP = /^(?:hai|i|me|and|also|also have|have|got|that's it|thats all|that is all|thanks?|thank you|please|pls|plz|robot|a robot|something|lots|stuff|things|(?:these|the following|following|this|those|some|my|a few)\s+(?:components?|parts?|things|items|bits|stuff)|components?|parts?|items?|kit|following|the|a|an|kit\s+v?\d(?:\.\d)?|kit\s+contents|(?:the\s+)?box)$/;
-const clean = (s: string) => s.toLowerCase().replace(/[‐-―−]/g, "-").replace(/[‘’]/g, "'").replace(/[“”]/g, '"').replace(/\r/g, "").replace(/[^\S\n]+/g, " ").replace(/ *\n */g, "\n").trim();
+const clean = (s: string) => s.toLowerCase().replace(/[‐-―−]/g, "-").replace(/[‘’]/g, "'").replace(/[“”]/g, '"').replace(/\r/g, "").replace(/[^\S\n]+/g, " ").split("\n").map((l) => l.trim()).join("\n").trim();   // (line by line: " *\n *" is quadratic on long runs of spaces)
 const compact = (s: string) => s.replace(/[^a-z0-9]/g, "");
 
 /** Split a text into one chunk per part: lines, commas, "and", "plus", bullets. Kit names stay whole. */
@@ -205,7 +205,7 @@ export function quantity(chunk: string): { qty: number; rest: string; explicit: 
   take(/\b(?:qty|quantity|count|nos?)\s*[:.=]?\s*(\d+)\b/, (m) => +m[1]);
   // "3-channel", "2S", "9V", "65 mm" are part of the name, not a count
   take(/^(\d+)(?![\d.]|-|\s*(?:ch\b|channel|way\b|s\b|v\b|volt|mm\b|cm\b|kg|g\b|a\b|ah\b|mah|cell|dof\b|rpm\b))\s*(?:x|×|\*|pcs?\b|pieces?\b|nos?\b|units?\b)?\s*/, (m) => +m[1]);
-  take(/\s(?:x|×|\*)\s?(\d+)\s*$/, (m) => +m[1]);
+  c = c.trimEnd(); take(/\s(?:x|×|\*)\s?(\d+)$/, (m) => +m[1]);   // (trimmed first: "\s*$" is quadratic on a long run of spaces)
   take(/\s(\d+)\s*(?:pcs?|pieces?|nos?|units?)\b/, (m) => +m[1]);
   take(/^(?:a\s+)?(?:pair|couple)\s+of\s+/, () => 2);
   take(/^(?:a\s+)?dozen\s+/, () => 12);

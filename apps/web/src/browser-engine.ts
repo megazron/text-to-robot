@@ -6,7 +6,7 @@ import { generateRobot, modifyRobot, finalizeSpec, arduinoOptions, forgeForPromp
 import type { LlmProvider } from "@ttr/llm-providers";
 import { generateUrdf, generateXacro } from "@ttr/urdf-generator";
 import { validateUrdf } from "@ttr/urdf-validator";
-import { validateSpec, type RobotSpecification } from "@ttr/robot-schema";
+import { validateSpec, badName, type RobotSpecification } from "@ttr/robot-schema";
 import { exportRos2Package } from "@ttr/ros2-export";
 import { listTemplates } from "@ttr/robot-templates";
 import { buildBom } from "@ttr/components";
@@ -45,6 +45,7 @@ async function handle(method: string, p: string, body: any): Promise<Response> {
   if (method === "POST" && p === "/api/robots/import") {
     const { robot } = body;
     if (!robot || !Array.isArray(robot.links) || !Array.isArray(robot.joints)) return json(400, { error: "provide a RobotSpecification JSON" });
+    { const bad = badName(robot); if (bad !== undefined) return json(400, { error: `This is not a robot file this site can open: '${bad}' is not a valid name (letters, digits and _)` }); }
     // a file that is not a robot from here (no metadata, links without geometry) is refused with a reason, not a TypeError
     let spec: RobotSpecification;
     try { spec = finalizeSpec(structuredClone({ ...robot, metadata: robot.metadata ?? { notes: [], inferred_fields: [] } }) as RobotSpecification); }

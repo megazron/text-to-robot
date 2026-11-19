@@ -161,3 +161,16 @@ function checkInertia(l: Link, err: (c: string, m: string, p?: string) => void, 
   if (a + b < c - 1e-9 || b + c < a - 1e-9 || a + c < b - 1e-9)
     warn("inertia_triangle", `link '${l.name}' inertia violates the triangle inequality (physically unusual)`, path);
 }
+
+const NAME = /^(?!(?:__proto__|constructor|prototype)$)[A-Za-z_][A-Za-z0-9_]{0,127}$/;
+/** The first name in a robot file that is not a plain identifier (links, joints, materials, sensors, end effectors), or
+ *  undefined. Checked before anything else reads a file sent to the engine: names are used as object keys. */
+export function badName(spec: unknown): string | undefined {
+  const s = spec as { links?: { name?: unknown }[]; joints?: { name?: unknown; parent?: unknown; child?: unknown }[]; materials?: { name?: unknown }[]; sensors?: { name?: unknown; parent?: unknown }[]; end_effectors?: { name?: unknown; attach_link?: unknown }[] } | null;
+  if (!s || typeof s !== "object") return undefined;
+  const all: unknown[] = [...(s.links ?? []).map((x) => x?.name), ...(s.joints ?? []).flatMap((x) => [x?.name, x?.parent, x?.child]), ...(s.materials ?? []).map((x) => x?.name),
+    ...(s.sensors ?? []).flatMap((x) => [x?.name, x?.parent]), ...(s.end_effectors ?? []).flatMap((x) => [x?.name, x?.attach_link])];
+  for (const n of all) if (typeof n !== "string" || !NAME.test(n)) return String(n).slice(0, 40);
+  return undefined;
+}
+

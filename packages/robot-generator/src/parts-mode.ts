@@ -325,7 +325,9 @@ export function shoppingList(bom: BillOfMaterials): ShoppingLine[] {
   const out: ShoppingLine[] = [];
   for (const l of bom.lines) {
     const buy = l.buy ?? l.qty; if (!(buy > 0) || !(l.unit_cost > 0)) continue;
-    const url = (l.note ?? "").match(/https?:\/\/\S+$/)?.[0] ?? null;
+    // a link at the end: within the last word (/https?:\/\/\S+$/ on the whole note is quadratic on "http://http://...")
+    const note = l.note ?? "", last = note.slice(Math.max(note.lastIndexOf(" "), note.lastIndexOf("\t"), note.lastIndexOf("\n")) + 1), at = last.search(/https?:\/\/\S/);
+    const url = at >= 0 ? last.slice(at) : null;
     out.push({ key: l.key ?? null, name: l.name, qty: buy, unit_usd: l.unit_cost, subtotal_usd: +(buy * l.unit_cost).toFixed(2), url, why: l.category });
   }
   return out;

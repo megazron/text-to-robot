@@ -9,7 +9,11 @@ const WORDS: Record<string, number> = { one: 1, single: 1, a: 1, an: 1, two: 2, 
 /** "two", "2", "a pair of", "a couple of", "dual", "twin", "2x", "x2" */
 export const COUNT = String.raw`(?:an?\s+)?(?:pair|couple)\s+of|dual|twin|double|triple|both|single|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|a\s+dozen|\d{1,3}(?!\s*x\b)`;
 export function countOf(word: string): number {
-  const w = word.trim().replace(/^an?\s+/, "").replace(/\s+of$/, "").replace(/^(\d+)\s*x$/, "$1");
+  // (word by word, not "\s+of$": that regular expression is quadratic on a long run of spaces)
+  const parts = word.trim().split(/\s+/);
+  if (parts[0] === "a" || parts[0] === "an") parts.shift();
+  if (parts.length > 1 && parts[parts.length - 1] === "of") parts.pop();
+  const w = parts.join(" ").replace(/^(\d+)\s?x$/, "$1");
   return WORDS[w] ?? WORDS[w.replace(/^a\s+/, "")] ?? (/^\d+$/.test(w) ? parseInt(w, 10) : 1);
 }
 
@@ -143,6 +147,6 @@ export function shapeChips(s: RequestShape): string[] {
 /** "two rovers" read as "a rover": the robot type of a prompt that asks for several robots (one is built, and that is said). */
 export function oneRobot(t: string, s: RequestShape): string {
   if (!s.robots) return t;
-  const single = s.robots.what.replace(/s$/, "").replace(/\bdog$/, "dog");
+  const single = s.robots.what.replace(/s$/, "");
   return t.replace(s.robots.said, `a ${single}`);
 }

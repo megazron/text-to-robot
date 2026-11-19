@@ -2,7 +2,7 @@
 // Everything here is a thin layer over the generator packages: the catalog with mounting points, edits on a spec,
 // the checks and engineering numbers of any spec (designed, edited or built from nothing), URDF and xacro, and meshes.
 import type { RobotSpecification, Geometry, Vec3 } from "@ttr/robot-schema";
-import { validateSpec } from "@ttr/robot-schema";
+import { validateSpec, badName } from "@ttr/robot-schema";
 import { finalizeSpec, parseInventory, searchParts, fromParts, type FromPartsOptions } from "@ttr/robot-generator";
 import { generateUrdf, generateXacro } from "@ttr/urdf-generator";
 import { validateUrdf } from "@ttr/urdf-validator";
@@ -333,6 +333,8 @@ const json = (code: number, body: unknown) => new Response(JSON.stringify(body),
 /** /api/engine/* requests. */
 export async function engineApi(method: string, path: string, body: any): Promise<Response> {
   const p = path.slice("/api/engine/".length);
+  // every name in a robot sent here is a plain identifier before anything reads it (names are object keys in the engine)
+  for (const r of [body?.robot, body?.spec]) { const bad = r ? badName(r) : undefined; if (bad !== undefined) return json(400, { error: `'${bad}' is not a valid name (letters, digits and _)` }); }
   if (method === "GET" && p === "version") return json(200, { api: ENGINE_API_VERSION });
   if (method === "GET" && p === "catalog") return json(200, { parts: catalog(), printed: PRINTED_SHAPES.map((s) => ({ ...s, mounts: s.shape === "servo_bracket" ? printedMounts(s.defaults) : printedMounts(s.defaults) })) });
   if (method === "POST" && p === "empty") return json(200, { robot: emptyRobot(body.name) });

@@ -47,7 +47,7 @@ function openaiProvider(s: ModelSettings, PLAN_SCHEMA: object): LlmProvider {
   const base = (s.baseUrl?.trim() || "https://api.openai.com/v1").replace(/\/+$/, ""), model = s.model?.trim() || "gpt-4o-mini";
   return {
     name: `${new URL(base).host} ${model}`,
-    available: () => !!s.key || !/api\.openai\.com/.test(base),
+    available: () => !!s.key || new URL(base).hostname !== "api.openai.com",   // (the host itself, not "api.openai.com" anywhere in the URL)
     generateSpec: noSpec("This model"), modifySpec: noSpec("This model") as never,
     async generatePlan(prompt: string, system: string) {
       const r = await fetch(`${base}/chat/completions`, {

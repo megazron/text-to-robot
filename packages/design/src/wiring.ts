@@ -728,7 +728,7 @@ export function finishWiring(H: Harness, opts: WireOptions = {}): WiringRecord {
   // examples to it. Running it here would rebuild every printed part's solid once more for each design.)
   rec.laid = R ? "3d" : H.channels.size ? "channels" : "legacy";
   if (R) {
-    const through = routeProblems.map((p) => /^(.*?): wire (\d+) passes (\d+) mm through a solid \(from ([-\d.,]+), (.*)\)$/.exec(p)).filter((m): m is RegExpExecArray => !!m);
+    const through = routeProblems.map(throughRun).filter((m): m is string[] => !!m);
     const notes = routeProblems.filter((p) => !/passes \d+ mm through a solid/.test(p));
     rec.route = { through: through.length, through_mm: through.reduce((n, m) => n + +m[3], 0), first: through.slice(0, 6).map((m) => `${m[1]} wire ${m[2]} through ${m[5]} for ${m[3]} mm at ${m[4]}`), notes };
     if (lateCables.length) {
@@ -1012,3 +1012,15 @@ function checks(H: Harness, rec: WiringRecord) {
   const cont = rec.notes.filter((n) => n.includes("slip ring"));
   A.check("wiring:slack", !short.length && !moved.length && !cont.length, short.length ? `short at ${short.map(({ c, j }) => `${c.id}/${j.joint}`).join(", ")}` : moved.length ? `limits changed after routing: ${moved.map((j) => j.name).join(", ")}` : cont.length ? cont.join("; ") : js.length ? `${js.length} joint crossings, each with a loop at least the length its full travel needs` : "no cable crosses a moving joint");
 }
+
+/** "<cable>: wire <n> passes <mm> mm through a solid (from <x,y,z>, <what>)" read into its fields ([whole, cable, n, mm,
+ *  x,y,z, what]), in one pass (the regular expression it replaces took quadratic time on a long line). */
+export function throughRun(p: string): string[] | null {
+  const i = p.indexOf(": wire "); if (i < 0) return null;
+  const rest = p.slice(i + 7), m = /^(\d+) passes (\d+) mm through a solid \(from /.exec(rest);
+  if (!m || !rest.endsWith(")")) return null;
+  const inner = rest.slice(m[0].length, -1), sp = inner.indexOf(" ");
+  if (sp < 2 || inner[sp - 1] !== "," || !/^[-\d.,]+$/.test(inner.slice(0, sp - 1))) return null;
+  return [p, p.slice(0, i), m[1], m[2], inner.slice(0, sp - 1), inner.slice(sp + 1)];
+}
+

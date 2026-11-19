@@ -639,6 +639,7 @@ export interface Forged { pieces: ForgedPiece[]; doors: DoorRecord[]; log: strin
 /** Every printed shell of the suit as forge_mark43.py --print writes it (pack.json + pack_<name>.stl), in the same order. */
 /** One body part forged on its own (a pool job): its shells with their zones, its doors' records, its log lines. */
 export async function forgeOnePart(k: string, params: ForgeParams = {}, tick: Tick = () => {}): Promise<{ shells: Shell[]; doors: DoorRecord[]; log: string[] }> {
+  if (!Object.hasOwn(BUILD, k)) throw new Error(`no such body part: ${String(k).slice(0, 40)}`);   // (a job names one of BUILD's own parts)
   const c = ctxOf(params), log: string[] = [], p = BUILD[k](c); await tick(`${k} field`);
   // each door's hinge line comes from its part's field, before the reactor is set in the chest (it lies far from the flanks)
   const doors = k in DOOR_PLAN ? doorRecords({ [k]: p }) : [];
