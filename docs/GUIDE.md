@@ -82,6 +82,8 @@ $ node cli/src/index.ts "a red 6 dof arm with 70 cm reach, a wrist camera and no
 | `2 robot arms on a mobile robot`, `an AGV with two arms`, `a 4 wheel rover with a 6 dof arm`, `a quadruped with an arm` | arms on a base, with its wheel count |
 | `a 3 wheel robot`, `a tricycle robot`, `a six wheeled rover` | wheel count (casters counted) |
 | `a heart emoji robot`, `a sneaker on wheels`, `looks like a teapot`, `a cartoon robot`, `steampunk` | the look: a printed shape shell over a wheeled robot |
+| `a heart shaped robot arm`, `a cartoon robot dog`, `a star shaped hexapod`, `a heart shaped humanoid`, `🦄 drone` | the look on that robot: round an arm's base, over a legged body, on a humanoid's head and chest, a light canopy on a drone; the joints are swept and the legs, neck and props sized with it on |
+| `🦄 robot`, `shaped like a banana`, `looks like a rocket`, any emoji | a shape the library does not have: that emoji's own outline (Twemoji), inflated like a cushion |
 | `2 kg payload`, `budget $1500` | actuator sizing and BOM tier |
 | `wrist camera`, `lidar on the front`, `no lidar`, `suction cup` | sensors and gripper, including negation |
 | `robot dog`, `mobile manipulator`, `mecanum`, `hexapod`, `cobot` | template family |

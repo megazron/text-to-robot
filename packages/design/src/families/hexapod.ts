@@ -16,6 +16,7 @@ import {
 } from "./legkit.ts";
 import { sensorsOf, keyOf, quadPower, stabilityCheck, type LeggedRequest } from "./legged.ts";
 import { hood, hoodAround, enclosureChecks, exposed } from "../enclosure.ts";
+import { bodyShell, bodyEnvelope, shellMassEstimate } from "../shell.ts";
 import { Harness, finishWiring } from "../wiring.ts";
 import { busTree, coreTree, actuatorsUnder } from "../netlist.ts";
 
@@ -205,6 +206,9 @@ export function designHexapod(req: LeggedRequest): RobotSpecification {
   const sensors = sensorsOf(req, ["camera", "lidar"]);
   const ladder = [...LADDERS.feetech.keys] as string[];
   const cfg: HexCfg = { keys: { coxa: ladder[0], femur: ladder[0], tibia: ladder[0] }, Lf: 85, Lt: 160, footR: 10, batt: "lipo_3s_2200", extraKg: req.payloadKg ?? 0.2 };
+  // a shape shell: the legs carry its estimated mass (the most it can weigh, from the body's size)
+  const shellKg = req.shell ? shellMassEstimate(bodyEnvelope(buildHexapod(req, cfg, sensors).A, /^top_deck/)) : 0;
+  cfg.extraKg += shellKg;
   let built = buildHexapod(req, cfg, sensors), torques: Record<string, number> = {};
   const poses: Record<string, number>[] = [{}];
   for (const c of [-0.3, 0, 0.3]) for (const f of [-0.3, 0, 0.3]) for (const t of [-0.25, 0, 0.25]) {
@@ -244,6 +248,7 @@ export function designHexapod(req: LeggedRequest): RobotSpecification {
   for (const s of [-1, 1]) { const q: Record<string, number> = {}; for (const L of LEGS6) q[`${L.n}_coxa`] = s * 0.45; combos.push(q); }
   const H = new Harness(A);
   boxHex(A, H, built);
+  if (req.shell) { bodyShell(A, req.shell, { lids: /^computer_hood$/, sizedKg: shellKg }); stabilityCheck(A, [{ name: "standing with the shell", feet: built.feet.map((f) => f.link) }], 0.03); }
   limitsFromGeometry(A, actuated, combos);
   wireHex(A, H, built.compute);
   const bom = A.bom();

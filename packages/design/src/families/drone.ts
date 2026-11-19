@@ -15,6 +15,7 @@ import { bay, enclosureChecks, exposed, type ExitSpec } from "../enclosure.ts";
 import { Harness, finishWiring } from "../wiring.ts";
 import { withSolids, interferences } from "../clearance.ts";
 import { recordCost, fmt } from "./common.ts";
+import { deckShellFit, linkBoxes, placeShell, shellName, type ShellRequest } from "../shell.ts";
 
 export interface DroneRequest {
   name?: string; prompt?: string; budget?: number;
@@ -22,6 +23,8 @@ export interface DroneRequest {
   payloadKg?: number;
   /** "camera" fits the FPV camera; other sensor names are reported as not fitted */
   sensors?: string[];
+  /** a shape canopy over the stack and the pack (a heart, a star, a cartoon head): shell.ts */
+  shell?: ShellRequest;
 }
 
 const MOTOR = "bldc_2207_1750kv", PROP = "prop_5x4_3x3", ESC = "esc_4in1_45a", FC = "fc_f405_30x30", RX = "elrs_receiver_nano", CAM = "fpv_camera_micro", PACK = "lipo_4s_1500";
@@ -156,6 +159,7 @@ export function designDrone(req: DroneRequest = {}): RobotSpecification {
     exposed(A, "fpv_camera", "looks forward from its cradle on the frame nose", [19, 19]);
     A.spec.sensors.push({ name: "fpv_camera", type: "camera", parent: "fpv_camera", origin: { xyz: [0, 0, 0.008], rpy: [0, 0, 0] }, params: { part: CAM, fov_deg: 165, output: "analog live video" } });
   }
+  if (req.shell) droneShell(A, req.shell, rotors);
   for (const s of other) A.check(`sensor:${s}`, false, `a ${s} was requested; this quadcopter carries only the FPV camera and the flight controller's IMU and barometer (a lidar or depth camera needs a larger drone)`);
   A.spec.sensors.push({ name: "flight_imu", type: "imu", parent: "controller", origin: { xyz: [0.02, 0.019, 0.003], rpy: [0, 0, 0] }, params: { part: "BMI270 on the F405 board" } });
 
@@ -218,8 +222,9 @@ export function designDrone(req: DroneRequest = {}): RobotSpecification {
 
   A.design.tcp = { link: "base_link", xyz: [0, 0, 0] };
   (A.design as unknown as { rotors: typeof rotors }).rotors = rotors;
+  const shellPerf = A.design.performance.shell;
   A.design.performance = {
-    mass_kg: +mass.toFixed(3), payload_kg: payload, takeoff_mass_kg: +all.toFixed(3), max_thrust_kg: +(maxThrustG / 1000).toFixed(2), thrust_to_weight: +twr.toFixed(2),
+    ...(shellPerf ? { shell: shellPerf } : {}), mass_kg: +mass.toFixed(3), payload_kg: payload, takeoff_mass_kg: +all.toFixed(3), max_thrust_kg: +(maxThrustG / 1000).toFixed(2), thrust_to_weight: +twr.toFixed(2),
     hover_throttle: Number.isFinite(hoverThr) ? +hoverThr.toFixed(3) : "cannot hover", hover_thrust_per_motor_n: +(perMotorG / 1000 * G).toFixed(2), max_thrust_per_motor_n: +(full.thrust_g / 1000 * G).toFixed(2),
     hover_current_a: +hoverA.toFixed(1), burst_current_a: BURST_LIMIT_A, unlimited_full_throttle_a: +fullA.toFixed(0), flight_time_min: +flightMin.toFixed(1), wheelbase_mm: WHEELBASE, prop: part(PROP).name, motor: part(MOTOR).name,
   };
@@ -231,4 +236,28 @@ export function designDrone(req: DroneRequest = {}): RobotSpecification {
   );
   recordCost(A);
   return A.finish(`Quadcopter, 5 in props on 2207 motors: ${all.toFixed(2)} kg take-off, thrust-to-weight ${twr.toFixed(1)}, hover at ${Number.isFinite(hoverThr) ? (hoverThr * 100).toFixed(0) : ">100"} % throttle, about ${flightMin.toFixed(0)} min`);
+}
+
+/** A light shape canopy (1.2 mm wall) on the canopy's lid: a pod over the pack with the shape standing on it as a crest,
+ *  above the props' plane, the air column over every prop left open, a hole for the antenna. Added before the wiring and
+ *  the flight checks, so its mass is in every one of them. */
+function droneShell(A: Assembly, req: ShellRequest, rotors: { at: Vec3 }[]) {
+  // on the canopy's lid, over the pack strapped there (and as far out as the pack overhangs the lid)
+  const fit = deckShellFit(A, { x0: -40, x1: 40, y0: -40, y1: 40, z0: PLATE_T }, /^canopy_lid$/, /motor|prop|cradle|fpv_camera/, true);
+  const propR = Number(part(PROP).specs.diameter_mm) / 2, cuts: Op[] = [];
+  // the air column over every prop's disc stays open (the canopy is above the props' plane, so nothing can touch them)
+  for (const r of rotors) cuts.push({ op: "hole", a: [r.at[0] * 1000, r.at[1] * 1000, -200], b: [r.at[0] * 1000, r.at[1] * 1000, 2000], d: 2 * propR + 4 });
+  // the antenna stands up through the roof
+  for (const bay of (A.design as { enclosures?: { exits: { id: string; at?: number[] }[] }[] }).enclosures ?? []) for (const e of bay.exits)
+    if (/antenna/.test(e.id) && e.at) cuts.push({ op: "hole", a: [e.at[0], e.at[1], e.at[2] - 5], b: [e.at[0], e.at[1], 2000], d: 10 });
+  // a pod round the pack (its shape kept 5 mm clear of the props) with the shape standing on it as a crest, 36 mm thick
+  const pack = fit.boxes.reduce((m, q) => ({ lo: [0, 1, 2].map((k) => Math.min(m.lo[k], q.lo[k])) as Vec3, hi: [0, 1, 2].map((k) => Math.max(m.hi[k], q.hi[k])) as Vec3 }), { lo: [Infinity, Infinity, Infinity] as Vec3, hi: [-Infinity, -Infinity, -Infinity] as Vec3 });
+  const envelope = { cx: (pack.lo[0] + pack.hi[0]) / 2, cy: 0, a: 18, b: 40, h: 72, z0: pack.hi[2] - 6 };
+  const { pieces, fitted } = placeShell(A, req, { ...fit, wall: 1.2, wrap: true, envelope, floorZ: fit.deck.z0, maxHalfWidth: 40, parent: "base_link", cuts });
+  const mass = pieces.reduce((s, p) => s + (A.spec.links.find((l) => l.name === p.name)?.mass ?? 0), 0);
+  A.fastener("M3 x 6 (canopy shell to the canopy's lid, four lugs)", 4);
+  const propTop = Math.max(...[...linkBoxes(A, (n) => /_prop$/.test(n)).values()].map((q) => q.hi[2]));
+  A.check("shell:clearance", fitted.overlapMm3 < 1 && fit.deck.z0 >= propTop + 2, `the ${shellName(req)} canopy (${req.style ?? "plain"}) touches no part (overlap ${fitted.overlapMm3} mm^3), stands ${(fit.deck.z0 - propTop).toFixed(0)} mm above the props' plane on the canopy's lid and leaves the air column over every prop's disc open`);
+  A.design.performance.shell = `${shellName(req)}${req.style && req.style !== "plain" ? ` (${req.style})` : ""}, ${pieces.length} printed piece${pieces.length > 1 ? "s" : ""}, ${Math.round(mass * 1000)} g`;
+  A.design.assumptions.push(`Shell: a ${shellName(req)} canopy${req.style && req.style !== "plain" ? ` in a ${req.style} style` : ""}, ${pieces.length} piece${pieces.length > 1 ? "s" : ""} with a 1.2 mm wall (${Math.round(mass * 1000)} g, counted in every flight check), screwed to the canopy's lid over the pack; lift it off to swap the pack. Print it in PETG or light PLA, upright on its open bottom.`);
 }

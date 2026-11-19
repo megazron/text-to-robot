@@ -20,6 +20,8 @@ import { placeChain, bracketOps, cradleSamples, type ChainJoint, type PlacedJoin
 import { gripperOps } from "./arm.ts";
 import { hood, hoodAround, registerBay, enclosureChecks, exposed, worldBox as partBox, freeSpot, type Face } from "../enclosure.ts";
 import { Harness, finishWiring } from "../wiring.ts";
+import { linkBoxes, rigidWith, placeShell, shellName, type ShellRequest } from "../shell.ts";
+import { fk } from "../kin.ts";
 import { limbBuses, canTree, coreTree, actuatorsUnder, sensorsOnComputer } from "../netlist.ts";
 const sensorsOnComputerFor = (H: Harness, s: Parameters<typeof sensorsOnComputer>[2]) => sensorsOnComputer(H, "computer", s);
 import { supportMargin, keyOf, type LeggedRequest, type SensorKind } from "./legged.ts";
@@ -514,7 +516,7 @@ function boxBiped(A: Assembly, H: Harness, b: ReturnType<typeof buildBiped>, mec
   const zb = (zT0 + zShelf) / 2, backCase = !mech && xs === null && ys === null;
   if (backCase) {
     const x = -Dt - 31;
-    A.printedLink("switch_case", { name: "switch_case", ops: [{ op: "solid", of: [{ op: "box", min: [x, -20, zb - 16], max: [-Dt + 0.2, 20, zb + 16], r: 3 }, { op: "subtract", of: [{ op: "box", min: [x + 2.4, -17.6, zb - 13.6], max: [-Dt + 1, 17.6, zb + 13.6], r: 1.5 }] }] },
+    A.printedLink("switch_case", { name: "switch_case", ops: [{ op: "solid", of: [{ op: "box", min: [x, -20, zb - 16], max: [-Dt, 20, zb + 16], r: 3 }, { op: "subtract", of: [{ op: "box", min: [x + 2.4, -17.6, zb - 13.6], max: [-Dt + 1, 17.6, zb + 13.6], r: 1.5 }] }] },
       { op: "cutbox", min: [x - 1, -15.2, zb - 11.2], max: [x + 3.4, 15.2, zb + 11.2] }] }, { material: mat });
     A.fixed("switch_case_mount", torsos[0], "switch_case", translation([0, 0, 0]));
     A.mount("switch_case", swKey, frame([x, 0, zb], [-1, 0, 0], [0, 0, 1]), "main_switch", "main power switch");
@@ -616,6 +618,14 @@ function designBiped(req: LeggedRequest, mech: boolean): RobotSpecification {
     : { mech, leg: legKeys(legLadder[0]), arm: armKeys(armLadder[0]), grip: "dxl_xl330_m288", neck: [neckLadder[0], neckLadder[0]], armDof, gripper: req.gripper !== false,
       L1: 90 * sc, L2: 90 * sc, Yh: 46, bend: 0.12, upperArm: 0, batt: "lipo_3s_2200", nBatt: 1, extraKg: req.payloadKg ?? 0.15, t: 4, bodyWall: 3, footLen: 120 * sc, footW: 62 };
   let built = buildBiped(req, cfg, sensors), torques: Record<string, number> = {};
+  // a shape shell (head and chest): the most it can weigh rides on the head and the torso while the joints are sized
+  const shellKg = req.shell ? shellBudget(buildBiped(req, cfg, sensors), req.shell) : undefined;
+  const ballast = (b: typeof built) => { if (shellKg) for (const [l, kg] of [["neck_tilt_link", shellKg.head], ["torso", shellKg.chest]] as const) { const x = b.A.spec.links.find((k) => k.name === l); if (x) x.mass += kg; } return b; };
+  // with no payload asked for, the hands' default payload makes room for the shells: the legs carry what they carry
+  // without them (said with the shells)
+  if (shellKg && req.payloadKg === undefined) cfg.extraKg = +Math.max(0.05, cfg.extraKg - (shellKg.head + shellKg.chest) / 2).toFixed(3);
+  if (shellKg) built = buildBiped(req, cfg, sensors);
+  ballast(built);
   let batt = { key: cfg.batt, n: cfg.nBatt, wh: 0, minutes: 0 };
   for (let iter = 0; iter < 8; iter++) {
     torques = bipedTorques(built.A, built.feet, built.hands, cfg.extraKg);
@@ -632,7 +642,7 @@ function designBiped(req: LeggedRequest, mech: boolean): RobotSpecification {
     const same = nDcdc === cfg.nDcdc && LEG.every((j) => leg[j] === cfg.leg[j]) && ARM_JOINTS[7].every((j) => arm[j] === cfg.arm[j]) && neck[0] === cfg.neck[0] && neck[1] === cfg.neck[1] && batt.key === cfg.batt && batt.n === cfg.nBatt && (grip === cfg.grip || mech);
     if (same) break;
     Object.assign(cfg, { leg, arm, neck, batt: batt.key, nBatt: batt.n, grip: mech ? cfg.grip : grip, nDcdc });
-    built = buildBiped(req, cfg, sensors);
+    built = ballast(buildBiped(req, cfg, sensors));
   }
   const { A } = built;
   const m = totalMass(A.spec);
@@ -662,6 +672,13 @@ function designBiped(req: LeggedRequest, mech: boolean): RobotSpecification {
   // joint limits from geometry
   const H = new Harness(A);
   boxBiped(A, H, built, mech);
+  if (req.shell && shellKg) {
+    // the ballast comes off; the real shells go on before the joints are swept, so the sweeps see them
+    for (const [l, kg] of [["neck_tilt_link", shellKg.head], ["torso", shellKg.chest]] as const) { const x = A.spec.links.find((k) => k.name === l); if (x) x.mass -= kg; }
+    bipedShell(A, req.shell, shellKg, built.Dt, req.payloadKg === undefined);
+    const c2 = comWorld(A.spec), m2 = supportMargin(built.feet.flatMap(corners), c2);
+    A.check("stability:double_support_with_shell", m2 >= 0.015, `with the shells on, the COM projection is ${(m2 * 1000).toFixed(0)} mm inside the two-foot support polygon (need 15 mm)`);
+  }
   const actuated = A.spec.joints.filter((j) => j.type === "revolute" && !j.name.endsWith("_gripper")).map((j) => j.name);
   const combos: Record<string, number>[] = [];
   for (const q of legPoses(A).filter((_, i) => i % 9 === 0)) combos.push(q);
@@ -704,6 +721,50 @@ function designBiped(req: LeggedRequest, mech: boolean): RobotSpecification {
   A.design.request = { ...req };
   const label = mech ? "Battle mech" : "Humanoid";
   return A.finish(`${label}, ${A.design.performance.height_m} m, ${m.toFixed(2)} kg, ${A.design.performance.dof} DOF (${armDof}-DOF arms${cfg.gripper ? " + grippers" : ""}), ${batt.minutes.toFixed(0)} min, $${bom.cost_usd.toFixed(0)} of parts`);
+}
+
+/** The most the head and chest shells can weigh: they are made once on a copy of the robot and weighed, plus 15 % and
+ *  15 g (the robot's joints and its chest panel change it a little). */
+function shellBudget(probe: ReturnType<typeof buildBiped>, req: ShellRequest): { head: number; chest: number } {
+  const m = bipedShell(probe.A, req, { head: Infinity, chest: Infinity }, probe.Dt);
+  return { head: +(1.15 * m.head + 0.015).toFixed(3), chest: +(1.15 * m.chest + 0.015).toFixed(3) };
+}
+/**
+ * A humanoid's shape shells: a head shell round the head (a window for its camera, cut clear of the neck bracket inside
+ * it) and a chest shell on the chest panel (the shape's front view, open at the back, a window for the switch), between
+ * the shoulders. Its joints are swept with them on afterwards, so the arms and the nod keep clear.
+ */
+function bipedShell(A: Assembly, req: ShellRequest, budget: { head: number; chest: number }, Dt: number, lighterHands = false): { head: number; chest: number } {
+  const f = fk(A.spec), bx = linkBoxes(A), headGroup = rigidWith(A, "neck_tilt_link");
+  const head = [...bx].filter(([n]) => headGroup.has(n)).map(([, q]) => q);
+  const hlo = [0, 1, 2].map((k) => Math.min(...head.map((q) => q.lo[k]))), hhi = [0, 1, 2].map((k) => Math.max(...head.map((q) => q.hi[k])));
+  const cam = A.spec.sensors.find((s) => (s.type === "camera" || s.type === "depth") && headGroup.has(s.parent));
+  const windows = cam && f.link[cam.parent] ? [{ at: f.link[cam.parent].p.map((x) => x * 1000) as Vec3, dir: [1, 0, 0] as Vec3, d: cam.type === "depth" ? 60 : 30 }] : [];
+  // the neck's bracket and the tilt servo stand inside the head: the shell is cut 6 mm clear of them
+  const neck = [...bx].filter(([n]) => /^neck_pan_link$|^neck_tilt_actuator$/.test(n)).map(([, q]): Op => ({ op: "cutbox", min: [q.lo[0] - 6, q.lo[1] - 6, q.lo[2] - 6], max: [q.hi[0] + 6, q.hi[1] + 6, q.hi[2] + 6] }));
+  // its open bottom a little under the nod axis, so nodding swings it clear of the neck and the shoulders
+  const tilt = bx.get("neck_tilt_actuator"), floor = Math.max(hlo[2], tilt ? (tilt.lo[2] + tilt.hi[2]) / 2 - 14 : hlo[2]);
+  const covered = head.filter((q) => q.hi[2] > floor + 1).map((q) => ({ lo: [q.lo[0], q.lo[1], Math.max(q.lo[2], floor)] as Vec3, hi: q.hi }));
+  const hd = { x0: hlo[0] - 6, x1: hhi[0] + 6, y0: hlo[1] - 6, y1: hhi[1] + 6, z0: floor };
+  const H1 = placeShell(A, req, { boxes: covered, windows, deck: hd, maxHalfWidth: (hd.y1 - hd.y0) / 2, wrap: true, wall: 1.6, parent: "neck_tilt_link", name: "shell_head", cuts: neck });
+  // the chest: the torso's front, between the shoulders, from the hips' top to below the shoulders
+  const torso = bx.get("torso")!, front = Math.max(Dt, ...[...bx].filter(([n]) => /^(?:chest_panel|main_switch)$/.test(n)).map(([, q]) => q.hi[0]));
+  const arms = [...bx].filter(([n]) => /shoulder/.test(n)).map(([, q]) => Math.min(Math.abs(q.lo[1]), Math.abs(q.hi[1])));
+  const half = Math.max(30, Math.min(...arms, torso.hi[1]) - 10), z0 = torso.lo[2] + 10, z1 = torso.hi[2] - 8;
+  const env = { cx: front + 2, cy: 0, a: 26, b: half, h: (z1 - z0) / 1.0, z0 };
+  const sw = (A.design as { enclosures?: { exits: { kind: string; at?: number[]; normal?: number[] }[] }[] }).enclosures?.flatMap((b) => b.exits).filter((e) => e.kind === "switch" && e.at && e.normal && e.normal[0] > 0.5) ?? [];
+  const onChest = [...bx].filter(([n]) => /^(?:torso|chest_panel|main_switch)$/.test(n)).map(([, q]) => q);
+  const H2 = placeShell(A, req, { boxes: onChest, windows: sw.map((e) => ({ at: e.at as Vec3, dir: e.normal as Vec3, d: 40 })), deck: { x0: env.cx - env.a, x1: env.cx + env.a, y0: -half, y1: half, z0 }, maxHalfWidth: half, envelope: env, floorZ: z0, parent: "torso", name: "shell_chest",
+    // open at the back, where it meets the chest
+    cuts: [{ op: "cutbox", min: [front - 400, -400, z0 - 400], max: [front + 1, 400, z1 + 400] }] });
+  const mass = (ps: { name: string }[]) => ps.reduce((s, p) => s + (A.spec.links.find((l) => l.name === p.name)?.mass ?? 0), 0), mh = mass(H1.pieces), mc = mass(H2.pieces);
+  A.fastener("M3 x 8 self-tapping (head shell to the head, chest shell to the chest panel)", 8);
+  A.check("shell:clearance", H1.fitted.overlapMm3 < 1 && H2.fitted.overlapMm3 < 1, `the ${shellName(req)} head and chest shells touch no part at home (overlap ${H1.fitted.overlapMm3} and ${H2.fitted.overlapMm3} mm^3); the joints are swept with them on`);
+  A.check("shell:mass", mh <= budget.head + 1e-6 && mc <= budget.chest + 1e-6, `head shell ${Math.round(mh * 1000)} g, chest shell ${Math.round(mc * 1000)} g; the neck, legs and hips were sized carrying ${Math.round(budget.head * 1000)} and ${Math.round(budget.chest * 1000)} g for them`);
+  const style = req.style && req.style !== "plain" ? ` (${req.style})` : "";
+  A.design.performance.shell = `${shellName(req)}${style}, head and chest, ${H1.pieces.length + H2.pieces.length} printed pieces, ${Math.round((mh + mc) * 1000)} g`;
+  A.design.assumptions.push(`Shells: a ${shellName(req)} head${req.style && req.style !== "plain" ? ` in a ${req.style} style` : ""} round the head (a window for its camera, 1.6 mm wall) and a ${shellName(req)} chest plate on the chest panel (2 mm wall), ${Math.round((mh + mc) * 1000)} g in all, counted where the joints were sized${lighterHands ? " (the hands' default payload is lighter by as much, so the legs carry what they would without them)" : ""}. Print them upright on their open sides.`);
+  return { head: mh, chest: mc };
 }
 
 /** Small humanoid (ToddlerBot / Robotis-OP class) with 6-DOF legs, head pan/tilt + camera and N-DOF arms with grippers. */

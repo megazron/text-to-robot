@@ -13,6 +13,7 @@ import { controlCase, enclosureChecks, exposed } from "../enclosure.ts";
 import { Harness, finishWiring } from "../wiring.ts";
 import { busChain, busTree, canTree, actuatorsUnder } from "../netlist.ts";
 import { limitsFromGeometry } from "./legkit.ts";
+import { linkBoxes, rigidWith, placeShell, shellName, type ShellRequest } from "../shell.ts";
 
 export interface ArmRequest {
   name?: string; dof: number; reachM?: number; payloadKg?: number; gripper?: boolean; budget?: number; prompt?: string; ladder?: Ladder;
@@ -36,6 +37,8 @@ export interface ArmRequest {
   embedded?: boolean;
   /** the 12 V bench supply of a serial-bus arm (default the 75 W one; designArm moves up to 150 W when the peak needs it) */
   supply12?: "psu_12v_lrs75" | "psu_12v_lrs150";
+  /** a shape shell round the base (a heart, a teapot, a cartoon body) under the arm: shell.ts */
+  shell?: ShellRequest;
 }
 export type Kind = "Y" | "P" | "R";
 const KINDS: Record<number, Kind[]> = { 1: ["Y"], 2: ["P", "P"], 3: ["Y", "P", "P"], 4: ["Y", "P", "P", "P"], 5: ["Y", "P", "P", "P", "R"], 6: ["Y", "P", "P", "R", "P", "R"], 7: ["Y", "P", "R", "P", "R", "P", "R"] };
@@ -496,9 +499,39 @@ function designArmOn(req: ArmRequest): RobotSpecification {
   A.design.request = { ...req, dof };
   // the limits are where the links meet each other, or the bench the arm is bolted to, swept on the exact solids from the
   // ready pose; an arm on a robot is swept again there, against the rest of that robot
+  if (req.shell && !req.embedded) baseShell(A, req.shell);
   if (!req.embedded) limitsFromGeometry(A, joints.map((j) => j.name), [], 0.06, [], () => A.design.home ?? {}, "base");
   if (!req.embedded) wireFixedArm(A, H, ladder, supplyA, gripKeyUsed(A), req.supply12 ?? "psu_12v_lrs75");
   return A.finish(`${dof}-DOF arm, ${(reachActual * 1000).toFixed(0)} mm reach, ${payload} kg payload, ${LADDERS[ladder].label}`);
+}
+
+/**
+ * A shape shell round an arm's base: it stands on the base plate round the pedestal and the first servo, up to just under
+ * the turret, with a round opening the turret turns in (4 mm clear of its turning circle), a hole down to each of the
+ * plate's bench screws and a window at the back for the cables. The joints are swept with it on afterwards, so the arm's
+ * limits keep clear of it.
+ */
+function baseShell(A: Assembly, req: ShellRequest) {
+  const rigid = rigidWith(A, "base_link"), bx = linkBoxes(A);
+  const plate = bx.get("base_link")!, near = (q: { lo: Vec3; hi: Vec3 }) => q.hi[0] > plate.lo[0] - 1 && q.lo[0] < plate.hi[0] + 1 && q.hi[1] > plate.lo[1] - 1 && q.lo[1] < plate.hi[1] + 1;
+  const moving = [...bx].filter(([n]) => !rigid.has(n)).map(([, q]) => q).filter(near), turretZ = Math.min(...moving.map((q) => q.lo[2]));
+  const covered = [...bx].filter(([n, q]) => rigid.has(n) && n !== "base_link" && near(q) && q.lo[2] < turretZ).map(([, q]) => q);
+  covered.push({ lo: [plate.lo[0] + 12, plate.lo[1] + 12, 6], hi: [plate.hi[0] - 12, plate.hi[1] - 12, Math.min(plate.hi[2], turretZ - 2)] });
+  // the turret's turning circle: the farthest point of anything above it from the yaw axis
+  const R = Math.max(...moving.filter((q) => q.lo[2] < turretZ + 80).flatMap((q) => [Math.hypot(q.lo[0], q.lo[1]), Math.hypot(q.hi[0], q.lo[1]), Math.hypot(q.lo[0], q.hi[1]), Math.hypot(q.hi[0], q.hi[1])]));
+  const side = plate.hi[0] - plate.lo[0], z0 = 6;
+  const cuts: Op[] = [{ op: "hole", a: [0, 0, turretZ - 3], b: [0, 0, 2000], d: 2 * R + 8 }];
+  for (const x of [-1, 1]) for (const y of [-1, 1]) cuts.push({ op: "hole", a: [x * (side / 2 - 10), y * (side / 2 - 10), z0 - 1], b: [x * (side / 2 - 10), y * (side / 2 - 10), 2000], d: 12 });
+  const deck = { x0: plate.lo[0], x1: plate.hi[0], y0: plate.lo[1], y1: plate.hi[1], z0 };
+  // 1.4 times the plate, overhanging it a little: big enough to read as its shape under the arm
+  const env = { cx: (deck.x0 + deck.x1) / 2, cy: (deck.y0 + deck.y1) / 2, a: 0.7 * (deck.x1 - deck.x0), b: 0.7 * (deck.y1 - deck.y0), h: Math.max(turretZ - z0 + 4, 0.75 * side), z0 };
+  const { pieces, fitted } = placeShell(A, req, { boxes: covered, windows: [{ at: [env.cx, env.cy, z0 + 14], dir: [-1, 0, 0], d: 18 }], deck, maxHalfWidth: env.b, envelope: env, wrap: true, parent: "base_link", name: "shell_base", cuts });
+  const mass = pieces.reduce((s, p) => s + (A.spec.links.find((l) => l.name === p.name)?.mass ?? 0), 0);
+  const style = req.style && req.style !== "plain" ? ` (${req.style})` : "";
+  A.fastener("M3 x 10 + insert (base shell to the base plate)", 4);
+  A.check("shell:clearance", fitted.overlapMm3 < 1, `the ${shellName(req)} base shell${style} touches no part (overlap ${fitted.overlapMm3} mm^3), leaves the turret ${4} mm round its turning circle (${(2 * R).toFixed(0)} mm) and the four bench screws reachable; the joints are swept with it on`);
+  A.design.performance.shell = `${shellName(req)}${style} base, ${pieces.length} printed piece${pieces.length > 1 ? "s" : ""}, ${Math.round(mass * 1000)} g`;
+  A.design.assumptions.push(`Shell: a ${shellName(req)} shape${req.style && req.style !== "plain" ? ` in a ${req.style} style` : ""} round the arm's base, ${pieces.length} printed piece${pieces.length > 1 ? "s" : ""} with a 2 mm wall (${Math.round(mass * 1000)} g), screwed to the base plate; the turret turns in its round opening, the bench screws are reached through its four holes and the cables leave by the window at the back. The arm's joint limits are swept with it on. Print it upright on its open bottom.`);
 }
 
 const gripKeyUsed = (A: Assembly) => A.spec.links.some((l) => l.name === "gripper_actuator");

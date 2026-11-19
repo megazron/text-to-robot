@@ -9,6 +9,9 @@ The armour is made by the forge in `packages/mesh/src/forge/`, an original model
 ## Human motion
 The human motion clips in `packages/motion/src/clips.ts` are joint angles taken by `scripts/human_clips.py` from the [Universal Animation Library](https://quaternius.com) by Quaternius, released under CC0 1.0 (public domain). The library itself is not in this repository.
 
+## Emoji outlines
+`packages/design/src/emoji-outlines.ts` holds the outlines of 950 emoji, traced from [Twemoji](https://github.com/jdecked/twemoji) 17.0.2 (Copyright 2020 Twitter, Inc and other contributors; graphics licensed under [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/)) by `scripts/vendor_emoji.ts`. Changes: each emoji is reduced to its filled silhouette, simplified to at most 32 points per piece, and its mean colour; no artwork, SVG or picture of it is kept. A robot shell made from an emoji's outline inflates that outline.
+
 ## Name and logo
 The Text to Robot name and logo (`docs/brand`) identify this project. You are welcome to use them to refer to it. Please do not use them in a way that suggests your work is made or endorsed by me. See the [brand guide](docs/brand/README.md).
 

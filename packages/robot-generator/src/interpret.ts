@@ -19,7 +19,7 @@ import { readNamed } from "./reading.ts";
 import { TOOL_WORDS, type ToolKind } from "./tools.ts";
 import { toolPlan } from "./tool-plan.ts";
 import { readShape, shapeChips, oneRobot, type RequestShape } from "./request.ts";
-import { readShell } from "./shape.ts";
+import { readShell, SHELL_FAMILIES } from "./shape.ts";
 import { budgetNotes } from "@ttr/design";
 import { COLOURS as SHELL_COLOURS } from "./text.ts";
 import { builtShape, shapeGaps, type BuiltShape } from "./fidelity.ts";
@@ -130,12 +130,13 @@ export function interpretPrompt(original: string, opts: InterpretOptions = {}): 
     const loaded = armourShape();
     if (shapeKey(loaded) !== shapeKey(suit.shape)) ignored.push(`armour shape (${suit.said.filter((x) => !/paint|steel parts/.test(x)).join(", ")}): not applied, the loaded armour was forged as ${shapeKey(loaded)}; generate it again to forge this one`);
   }
-  // a look asked for goes on a wheeled base as a shell; on any other body it is said (characters keep their own look)
-  const look = readShell(t, prompt), wheeled = ["diff_drive", "four_wheel", "mecanum"].includes(choice.family) && choice.designed;
+  // a look asked for is a printed shell on the robot (shell.ts): over a wheeled deck, a legged body, a humanoid's head and
+  // chest, an arm's base, a drone's canopy; on any other body it is said (characters keep their own look)
+  const look = readShell(t, prompt), fits = SHELL_FAMILIES.has(choice.family) && !!choice.designed;
   const lookColour = look ? extractColour(t) : undefined;
-  if (look && !wheeled && !["wall_e", "eva", "baymax", "iron_man_mark_43", "exosuit", "battle_mech", "arduino_car"].includes(choice.family))
-    ignored.push(`"${look.said}": shape shells are fitted over wheeled bases so far; the ${choice.label} keeps its own look`);
-  const ctx: DesignContext = { ...(look && wheeled ? { shell: { shape: look.shape, style: look.style, ...(lookColour ? { colour: SHELL_COLOURS[lookColour].slice(0, 3) as [number, number, number] } : {}) } } : {}), ...(suit ? { suit: { shape: armourShape(), paint: suit.paint } } : {}), ...(hobby ? { hobby } : {}), prompt, budget: budget.usd, payloadKg: payload ? +payload.kg.toFixed(3) : undefined, reachM: asked?.reachM, segments: asked?.segments,
+  if (look && !fits && !["wall_e", "eva", "baymax", "iron_man_mark_43", "exosuit", "arduino_car"].includes(choice.family))
+    ignored.push(`"${look.said}": shape shells are fitted to wheeled, legged, humanoid, arm and drone robots; the ${choice.label} keeps its own look`);
+  const ctx: DesignContext = { ...(look && fits ? { shell: { shape: look.shape, style: look.style, ...(look.emoji ? { emoji: look.emoji } : {}), ...(lookColour ? { colour: SHELL_COLOURS[lookColour].slice(0, 3) as [number, number, number] } : {}) } } : {}), ...(suit ? { suit: { shape: armourShape(), paint: suit.paint } } : {}), ...(hobby ? { hobby } : {}), prompt, budget: budget.usd, payloadKg: payload ? +payload.kg.toFixed(3) : undefined, reachM: asked?.reachM, segments: asked?.segments,
     sensors: requestedSensors(choice.sensorWords ? `${t} ; ${choice.sensorWords}` : t).filter((type) => !negates(t, SENSOR_WORDS.find(([, k]) => k === type)![0])),
     excludeSensors: SENSOR_WORDS.filter(([rx]) => negates(t, rx)).map(([, k]) => k), ...(heightM ? { heightM } : {}) };
   // a standing robot's stated height is a design input of the humanoid / mech designers

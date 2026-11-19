@@ -137,6 +137,8 @@ function distance(a: string, b: string): number {
 /** Read a few emoji as words, and correct a misspelt robot-type word: one slip in a word of up to 7 letters, two in a longer one. Each one is reported. */
 const EMOJI: [RegExp, string][] = [[/🐕|🐶|🦮|🐩/gu, "robot dog"], [/🚗|🚙|🏎️?|🚕/gu, "car"], [/🕷️?|🕸️?|🐜/gu, "spider"], [/🦾/gu, "robot arm"], [/🦿/gu, "legs"], [/🤏|🦞|🦀/gu, "gripper"], [/🤖/gu, "robot"], [/🚁|🛸|🛩️?|✈️?/gu, "drone"], [/🐍/gu, "snake robot"], [/🐟|🐠|🐡|🦈|🐙|🐬|🐳|🤿/gu, "underwater"],
   [/🌱|🪴|🌻|🌷|🌿|🌵|🍅/gu, "plants"], [/💧|🚿|💦/gu, "water"], [/🧹|🧽|🧼/gu, "cleaning"], [/📷|📸|🎥|📹/gu, "camera"], [/🐈|🐱/gu, "cat"], [/🖐️?|✋|🤚/gu, "robot hand"], [/🚜/gu, "tractor"], [/☀️?🔋?|🔆/gu, "solar panels"]];
+/** an emoji read as a word (a robot dog, a drone, a plant to water), not as a look */
+export const wordEmoji = (ch: string) => EMOJI.some(([rx]) => { rx.lastIndex = 0; const hit = rx.test(ch); rx.lastIndex = 0; return hit; });
 const SHORT_TYPOS: Record<string, string> = { arsm: "arms", amrs: "arms", rovr: "rover", robbot: "robot", robbots: "robots", rbot: "robot", roobt: "robot", mobil: "mobile", moblie: "mobile", wheal: "wheel", wheals: "wheels", whels: "wheels", weels: "wheels", wheeles: "wheels", maniplator: "manipulator" };
 const SHORT_TYPO_RX = new RegExp(`\\b(?:${Object.keys(SHORT_TYPOS).join("|")})\\b`, "gi");
 export function correctTypos(text: string): Translation {

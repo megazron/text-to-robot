@@ -13,6 +13,7 @@ import { frame, translation, type Mat4, type Op } from "@ttr/solid";
 import { Assembly } from "../assembly.ts";
 import { totalMass, pointWorld, comWorld } from "../kin.ts";
 import { designArm, graftArm } from "./arm.ts";
+import { bodyShell, bodyEnvelope, shellMassEstimate, type ShellRequest } from "../shell.ts";
 import { choose, DYNAMIC_FACTOR, GAIT_DUTY } from "../sizing.ts";
 import { hoodAround, worldBox, BATTERY_SWITCH, registerBay, enclosureChecks, exposed, type Face } from "../enclosure.ts";
 import { Harness, finishWiring } from "../wiring.ts";
@@ -27,6 +28,8 @@ export type SensorKind = "camera" | "depth" | "lidar" | "imu";
 export interface LeggedRequest {
   name?: string; prompt?: string; budget?: number; payloadKg?: number; sensors?: SensorKind[];
   armDof?: number; gripper?: boolean; heightM?: number;
+  /** a shape shell over the body (shell.ts); a humanoid gets it on its head and chest */
+  shell?: ShellRequest;
 }
 
 // ---------------------------------------------------------------- shared body electronics
@@ -244,7 +247,9 @@ function buildQuadruped(req: LeggedRequest, cfg: QuadCfg, sensors: SensorKind[])
 const lerp3 = (p: Vec3, q: Vec3, t: number): Vec3 => add(p, scale(sub(q, p), t));
 
 export function sensorsOf(req: LeggedRequest, dflt: SensorKind[]): SensorKind[] {
-  const s = new Set<SensorKind>([...dflt, ...(req.sensors ?? [])]); s.add("imu"); return [...s];
+  const s = new Set<SensorKind>([...dflt, ...(req.sensors ?? [])]); s.add("imu");
+  if (req.shell) s.delete("lidar");   // under a shape shell a LiDAR could not see (said with the shell)
+  return [...s];
 }
 
 /** Quadruped: servo dog by default, QDD (CubeMars) when the request implies a big or load-carrying robot. */
@@ -316,6 +321,9 @@ export function designQuadruped(req: LeggedRequest): RobotSpecification {
   // payload carried by the legs; it is grafted on the electronics hood once the legs are sized
   const armSpec = req.armDof && cfg.cls === "servo" ? designArm({ name: "arm", dof: Math.max(3, Math.min(6, req.armDof)), reachM: 0.28, payloadKg: 0.15, gripper: req.gripper !== false, ladder: "feetech", maxSupplyV: 12.6, embedded: true, prompt: req.prompt }) : null;
   if (armSpec) cfg.extraKg += totalMass(armSpec) + 0.15;
+  // a shape shell: the legs carry its estimated mass (the most it can weigh, from the body's size)
+  const shellKg = req.shell ? shellMassEstimate(bodyEnvelope(buildQuadruped(req, cfg, sensors).A, /^top_deck/)) : 0;
+  cfg.extraKg += shellKg;
   let built = buildQuadruped(req, cfg, sensors), torques: Record<string, number> = {};
   const poses = gaitPoses(["fl", "fr", "rl", "rr"], { abd: 0.12, hip: 0.35, knee: 0.3 });
   const trot = [["fl_foot", "rr_foot"], ["fr_foot", "rl_foot"]];
@@ -348,6 +356,7 @@ export function designQuadruped(req: LeggedRequest): RobotSpecification {
   // compartments before the joint limits, so the limits see them
   const H = new Harness(A);
   const hoodRec = boxQuad(A, H, built, cfg.cls === "qdd");
+  if (req.shell && !armSpec) { bodyShell(A, req.shell, { lids: /^electronics_hood$/, sizedKg: shellKg }); stabilityCheck(A, [{ name: "standing with the shell", feet: built.feet.map((f) => f.link) }], 0.03); }
   // joint limits from exact solid sweeps
   const actuated = A.spec.joints.filter((j) => j.type === "revolute").map((j) => j.name);
   limitsFromGeometry(A, actuated, gaitCombos(["fl", "fr", "rl", "rr"]));

@@ -63,7 +63,7 @@ export const WEAPON_REFUSAL = "Text to Robot does not design weapons or robots m
 export const SPECIAL: { rx: RegExp; family: string; label: string; approx?: (t: string) => string | undefined; build: (ctx: DesignContext, t: string) => RobotSpecification }[] = [
   { rx: /\bdrones?\b|quad[\s-]?copter|multi[\s-]?rotor|\buav\b|hexa[\s-]?copter|octo[\s-]?copter|\bhelicopter\b|\baircraft\b|\bairplane\b|\baeroplane\b|\bflying\b|\bflies\b|\bfly\b/, family: "drone", label: "quadcopter (5 in props)",
     approx: (t) => /hexa|octo|helicopter|airplane|aeroplane|aircraft|fixed[\s-]?wing/.test(t) ? "built as a four-rotor quadcopter, the simplest machine that hovers" : undefined,
-    build: (ctx) => designDrone({ name: "quadcopter", prompt: ctx.prompt, budget: ctx.budget, sensors: ctx.sensors, ...(ctx.payloadKg !== undefined ? { payloadKg: ctx.payloadKg } : {}) }) },
+    build: (ctx) => designDrone({ name: "quadcopter", prompt: ctx.prompt, budget: ctx.budget, sensors: ctx.sensors, ...(ctx.payloadKg !== undefined ? { payloadKg: ctx.payloadKg } : {}), ...(ctx.shell ? { shell: ctx.shell } : {}) }) },
   { rx: /underwater|\bauv\b|\brovs?\b|submarine|submersible|\bboats?\b|\bfish\s+robot|\brobot(?:ic)?\s+fish\b|\bswim(?:s|ming)?\b|\bdiv(?:e|es|ing)\b|\bocean\b|\bsea\s?bed\b|\bpool\s+inspection/, family: "rov", label: "tethered underwater ROV",
     approx: (t) => /\bboats?\b/.test(t) ? "a boat is built as a small underwater ROV that also runs on the surface" : /fish/.test(t) ? "a robot fish is built as a thruster ROV (fins are not designed)" : undefined,
     build: (ctx) => designRov({ name: "underwater_rov", prompt: ctx.prompt, budget: ctx.budget, ...(ctx.payloadKg !== undefined ? { payloadKg: ctx.payloadKg } : {}) }) },
@@ -115,7 +115,7 @@ export function wheelCount(t: string): number | undefined {
 const mobileReq = (ctx: DesignContext) => ({ ...(ctx.shell ? { shell: ctx.shell } : {}), prompt: ctx.prompt, budget: ctx.budget, sensors: ctx.sensors as never, ...(ctx.excludeSensors.length ? { excludeSensors: ctx.excludeSensors as never } : {}), ...(ctx.payloadKg !== undefined ? { payloadKg: ctx.payloadKg } : {}) });
 
 /** common inputs of the legged designers (they fit camera, depth, lidar and IMU parts) */
-const leggedReq = (ctx: DesignContext, heightM = ctx.heightM): LeggedRequest => ({ prompt: ctx.prompt, budget: ctx.budget,
+const leggedReq = (ctx: DesignContext, heightM = ctx.heightM): LeggedRequest => ({ ...(ctx.shell ? { shell: ctx.shell } : {}), prompt: ctx.prompt, budget: ctx.budget,
   sensors: ctx.sensors.filter((x) => ["camera", "depth", "lidar", "imu"].includes(x)) as LeggedRequest["sensors"],
   ...(ctx.payloadKg !== undefined ? { payloadKg: ctx.payloadKg } : {}), ...(heightM ? { heightM } : {}) });
 
@@ -175,9 +175,9 @@ export function chooseFamily(t: string, prompt: string, dof: number | undefined,
   const look = readShell(t, prompt);
   if (look && !mentions(t, NOT_WHEELED) && !find(t, /\b(?:four|4)[\s-]?wheel|\b4wd\b|mecanum|omni|\b(?:two|2|three|3)[\s-]?wheel|diff(?:erential)?[\s-]?drive|track(?:ed|s)\b/)) {
     const four = /dragon|car|shoe|pizza|toaster/.test(look.shape);
-    return { family: four ? "four_wheel" : "diff_drive", label: `${look.shape}-shaped robot${look.style !== "plain" ? ` (${look.style})` : ""} on a ${four ? "four-wheel" : "differential-drive"} base`, matched: look.said, designed: true,
-      approx: [`"${look.said}": a ${look.shape} shell${look.style !== "plain" ? ` in a ${look.style} style` : ""} printed over a working ${four ? "four-wheel" : "differential-drive"} base (the look is the shell; the robot under it is the same as any other)`, look.note].filter(Boolean).join("; "),
-      build: (ctx) => four ? designFourWheel({ name: `${look.shape}_robot`, ...mobileReq(ctx) }) : designDiffDrive({ name: `${look.shape}_robot`, ...mobileReq(ctx) }) };
+    return { family: four ? "four_wheel" : "diff_drive", label: `${look.name}-shaped robot${look.style !== "plain" ? ` (${look.style})` : ""} on a ${four ? "four-wheel" : "differential-drive"} base`, matched: look.said, designed: true,
+      approx: [`"${look.said}": a ${look.name} shell${look.style !== "plain" ? ` in a ${look.style} style` : ""} printed over a working ${four ? "four-wheel" : "differential-drive"} base (the look is the shell; the robot under it is the same as any other)`, look.note].filter(Boolean).join("; "),
+      build: (ctx) => four ? designFourWheel({ name: `${look.name.replace(/\W+/g, "_")}_robot`, ...mobileReq(ctx) }) : designDiffDrive({ name: `${look.name.replace(/\W+/g, "_")}_robot`, ...mobileReq(ctx) }) };
   }
   // a torso is a body with arms and no legs ("a dual arm humanoid torso"): two arms on the shoulders of a fixed column
   const shape = readShape(t);
@@ -286,13 +286,13 @@ export function chooseFamily(t: string, prompt: string, dof: number | undefined,
   if (g === "suction") return { family: "serial_arm", label: `${n}-DOF serial arm`, matched: m ?? `${n} DOF`, usesDof: true, usesGripper: true, designed: true,
     build: (ctx) => {
       // the designed arm without jaws, a suction cup on its tool flange
-      const s = designArm({ name: `arm_${n}dof`, dof: n, gripper: false, prompt: ctx.prompt, budget: ctx.budget, payloadKg: ctx.payloadKg, reachM: ctx.reachM, segments: ctx.segments, sensors: ctx.sensors,
+      const s = designArm({ name: `arm_${n}dof`, dof: n, gripper: false, prompt: ctx.prompt, budget: ctx.budget, payloadKg: ctx.payloadKg, reachM: ctx.reachM, segments: ctx.segments, sensors: ctx.sensors, ...(ctx.shell ? { shell: ctx.shell } : {}),
         ...(ctx.hobby ? { ladder: "hobby" as const, ...(ctx.hobby.only ? { onlyActuators: ctx.hobby.only } : {}) } : {}) });
       const tool = (s.metadata as { design?: { tool?: { link: string; xyz_m: number[] } } }).design?.tool;
       if (tool) attachSuctionGripper(s, tool.link, tool.xyz_m[2]); else { const tip = armTip(s); if (tip) attachSuctionGripper(s, tip.link, tip.atZ); }
       return s; } };
   return { family: "serial_arm", label: `${n}-DOF serial arm`, matched: m ?? `${n} DOF`, usesDof: true, usesGripper: true, designed: true,
-    build: (ctx) => designArm({ name: `arm_${n}dof`, dof: n, gripper: g !== "none", prompt: ctx.prompt, budget: ctx.budget, payloadKg: ctx.payloadKg, reachM: ctx.reachM, segments: ctx.segments, sensors: ctx.sensors,
+    build: (ctx) => designArm({ name: `arm_${n}dof`, dof: n, gripper: g !== "none", prompt: ctx.prompt, budget: ctx.budget, payloadKg: ctx.payloadKg, reachM: ctx.reachM, segments: ctx.segments, sensors: ctx.sensors, ...(ctx.shell ? { shell: ctx.shell } : {}),
       ...(ctx.hobby ? { ladder: "hobby" as const, ...(ctx.hobby.only ? { onlyActuators: ctx.hobby.only } : {}) } : {}) }) };
 }
 
