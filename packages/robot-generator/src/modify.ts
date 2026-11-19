@@ -272,7 +272,7 @@ function modifyBase(spec: RobotSpecification, c: string): Outcome | undefined {
 
 /** Designed robots: each clause edits the design request; the designer then re-sizes everything. */
 function modifyDesigned(specIn: RobotSpecification, instruction: string): ModResult | undefined {
-  const record = designOf(specIn), designer = record && DESIGNERS[record.family];
+  const record = designOf(specIn), designer = record && Object.hasOwn(DESIGNERS, record.family) ? DESIGNERS[record.family] : undefined;
   if (!record?.request || !designer) return undefined;
   const req: Record<string, any> = structuredClone(record.request);
   const changes: string[] = [];
@@ -429,7 +429,7 @@ export function applyModification(specIn: RobotSpecification, instruction: strin
     const clauses = splitClauses(instruction), inPlace = plan.base === "rover" && !plan.shell ? [4, 6] : [];
     // (a design whose family has no in-place editor, a work cell, is always re-planned: nothing is stacked on it)
     const fam = designOf(specIn)?.family ?? "";
-    if (!DESIGNERS[fam] || clauses.some((c) => needsReplan(plan, c, inPlace))) return replanModify(specIn, plan, clauses);
+    if (!Object.hasOwn(DESIGNERS, fam) || clauses.some((c) => needsReplan(plan, c, inPlace))) return replanModify(specIn, plan, clauses);
   }
   const designed = modifyDesigned(specIn, instruction);
   if (designed) return designed;

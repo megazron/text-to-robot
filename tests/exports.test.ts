@@ -138,6 +138,14 @@ test('mock control starts sliding fingers open without excluding opposing pad co
   assert.ok(!/link1="left_finger_pad" link2="right_finger_pad"|link1="right_finger_pad" link2="left_finger_pad"/.test(srdf));
 });
 
+test("URDF: a prompt with dashes never breaks the header comment (XML allows no \"--\" inside a comment)", async () => {
+  const { generateUrdf } = await import("@ttr/urdf-generator");
+  const spec = finalizeSpec(nDofArm(2)); spec.metadata.source_prompt = "a 2 dof arm -- no gripper --> and a tail-";
+  const urdf = generateUrdf(spec), body = urdf.slice(urdf.indexOf("<!--") + 4, urdf.indexOf("-->"));
+  assert.ok(!body.includes("--") && !body.endsWith("-"), body);
+  assert.match(body, /a 2 dof arm - no gripper -> and a tail-/);
+});
+
 test("SRDF: a pinion is not checked against the racks it drives (they mesh at home); sliding fingers stay checked", () => {
   const spec = finalizeSpec(JSON.parse(readFileSync(new URL("../examples/04_scara/robot.json", import.meta.url), "utf8")));
   const srdf = Object.entries(exportRos2Package(spec)).find(([f]) => f.endsWith(".srdf"))![1] as string;

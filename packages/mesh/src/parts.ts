@@ -78,7 +78,7 @@ export function buildPart(g: { part: string; params?: Params; scale?: [number, n
     const m=orient({v:g.vertices,f:g.triangles});
     return g.scale ? scaleMesh(m,g.scale) : m;
   }
-  const gen = PARTS[g.part]; if (!gen) throw new Error(`unknown mesh part '${g.part}'`);
+  const gen = Object.hasOwn(PARTS, g.part) ? PARTS[g.part] : undefined; if (!gen) throw new Error(`unknown mesh part '${g.part}'`);
   // consistent outward winding for every part (renderers cull back faces); manifold CSG output is already
   // watertight and outward, and welding its near-coincident vertices would break it
   const raw = gen(g.params ?? {}), m = g.part === "printed" || g.part === "cad" || g.part === "armour" ? raw : orient(raw);
