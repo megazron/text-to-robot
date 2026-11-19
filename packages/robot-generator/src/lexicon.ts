@@ -141,17 +141,31 @@ const EMOJI: [RegExp, string][] = [[/🐕|🐶|🦮|🐩/gu, "robot dog"], [/�
 export const wordEmoji = (ch: string) => EMOJI.some(([rx]) => { rx.lastIndex = 0; const hit = rx.test(ch); rx.lastIndex = 0; return hit; });
 const SHORT_TYPOS: Record<string, string> = { arsm: "arms", amrs: "arms", rovr: "rover", robbot: "robot", robbots: "robots", rbot: "robot", roobt: "robot", mobil: "mobile", moblie: "mobile", wheal: "wheel", wheals: "wheels", whels: "wheels", weels: "wheels", wheeles: "wheels", maniplator: "manipulator" };
 const SHORT_TYPO_RX = new RegExp(`\\b(?:${Object.keys(SHORT_TYPOS).join("|")})\\b`, "gi");
+/** the robot-type word a word is a slip for, or the word itself. A target more than two letters longer or shorter is at
+ * least three edits away, more than any slip allowed, so it is not measured; a word's answer is kept (words repeat). */
+const typoSeen = new Map<string, string>();
+function typoFix(w: string): string {
+  const seen = typoSeen.get(w);
+  if (seen !== undefined) return seen;
+  let to = w;
+  if (!TYPO_TARGETS.some((t) => w.includes(t))) {   // "hexapods", "grippers": already the word
+    const near = TYPO_TARGETS.filter((t) => Math.abs(t.length - w.length) <= 2);
+    const best = near.map((t) => ({ t, d: distance(w, t) })).sort((x, y) => x.d - y.d)[0];
+    if (best && best.d > 0 && best.d <= (best.t.length <= 7 ? 1 : 2)) to = best.t;
+  }
+  if (typoSeen.size > 5000) typoSeen.clear();
+  typoSeen.set(w, to);
+  return to;
+}
 export function correctTypos(text: string): Translation {
   const mapped: string[] = [];
   for (const [rx, to] of EMOJI) text = text.replace(rx, (e) => { mapped.push(`${e} -> ${to}`); return ` ${to} `; });
   // short robot words people often slip on, mapped outright (too short for the edit distance below to be safe)
   text = text.replace(SHORT_TYPO_RX, (w) => { const to = SHORT_TYPOS[w.toLowerCase()]; mapped.push(`${w} -> ${to}`); return to; });
   const out = text.replace(/[a-z]{5,}/g, (w) => {
-    if (TYPO_TARGETS.some((t) => w.includes(t))) return w;   // "hexapods", "grippers": already the word
-    const best = TYPO_TARGETS.map((t) => ({ t, d: distance(w, t) })).sort((x, y) => x.d - y.d)[0];
-    if (best.d === 0 || best.d > (best.t.length <= 7 ? 1 : 2) || Math.abs(best.t.length - w.length) > 2) return w;
-    mapped.push(`${w} -> ${best.t}`);
-    return best.t;
+    const to = typoFix(w);
+    if (to !== w) mapped.push(`${w} -> ${to}`);
+    return to;
   });
   return { text: out, mapped };
 }
