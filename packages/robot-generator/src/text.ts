@@ -17,7 +17,7 @@ const BLANKET = /\b(?:no|without|nothing|zero)\s+(?:other\s+)?(?:sensors?|extras
 // positive again ("no lidar, but a camera"; "no lidar and a camera").
 const SCOPE_END = /[,;.:!?]|\b(?:but|with|plus|and (?:a|an|one|two|three|four|\d))\b/g;
 // "lidar is not needed", "camera not required"
-const POSTFIX_NEGATION = /^\s*(?:is|are|isn't|aren't)?\s*(?:not\s+(?:needed|required|wanted|necessary|included)|unnecessary|unneeded|optional)\b/;
+const POSTFIX_NEGATION = /^\s*(?:(?:is|are|isn't|aren't)\s*)?(?:not\s+(?:needed|required|wanted|necessary|included)|unnecessary|unneeded|optional)\b/;
 
 function lastNegator(before: string): { start: number; end: number; word: string } | undefined {
   let last: { start: number; end: number; word: string } | undefined;
@@ -165,7 +165,7 @@ const WEIGHT_AFTER = /^\s*(?:total|in\s+total|overall|robot|arm|body|weight|mass
  *  ("lifts 3 kg", "2 kg boxes", "10 kg capacity"); "weighs under 20 kg" is robot mass. */
 export function extractMasses(text: string): Mass[] {
   const t = normalize(text), out: Mass[] = [];
-  for (const m of t.matchAll(/(\d+(?:\.\d+)?)\s*(kg|kilo(?:gram)?s?|g|grams?|lbs?|pounds?)(?![a-z])/g)) {
+  for (const m of t.matchAll(/(?<![\d.])(\d+(?:\.\d+)?)\s*(kg|kilo(?:gram)?s?|g|grams?|lbs?|pounds?)(?![a-z])/g)) {
     const unit = m[2], v = parseFloat(m[1]);
     const kg = /^(?:kg|kilo)/.test(unit) ? v : /^(?:g|gram)/.test(unit) ? v / 1000 : v * 0.45359237;
     const s = m.index!, e = s + m[0].length;
@@ -188,13 +188,13 @@ const amount = (digits: string, k?: string) => {
 /** A budget stated in US dollars. Other currencies are reported, not converted. */
 export function parseBudget(text: string): Budget {
   const t = normalize(text);
-  const other = t.match(/(?:[€£₹¥]\s*[\d,.]+\s*k?\b|[\d,.]+\s*k?\s*(?:eur|euros?|gbp|pounds? sterling|inr|rupees?|rs\.?|yen|jpy|cny|yuan)\b)/);
-  const grand = t.match(/(\d[\d,]*(?:\.\d+)?)\s*(?:grand|thousand\s+(?:dollars?|usd|bucks))\b/);
+  const other = t.match(/(?:[€£₹¥]\s*[\d,.]+\s*k?\b|(?<![\d,.])[\d,.]+\s*(?:k\s*)?(?:eur|euros?|gbp|pounds? sterling|inr|rupees?|rs\.?|yen|jpy|cny|yuan)\b)/);
+  const grand = t.match(/(?<![\d,.])(\d[\d,]*(?:\.\d+)?)\s*(?:grand|thousand\s+(?:dollars?|usd|bucks))\b/);
   if (grand && !other) return { usd: amount(grand[1], "k") };
   const m = t.match(/(?:us)?\$\s*(\d[\d,]*(?:\.\d+)?)\s*(k)?\b/)
-    ?? t.match(/(\d[\d,]*(?:\.\d+)?)\s*(k)?\s*(?:usd|us dollars?|dollars?|bucks|\$)/)
+    ?? t.match(/(?<![\d,.])(\d[\d,]*(?:\.\d+)?)\s*(?:(k)\s*)?(?:usd|us dollars?|dollars?|bucks|\$)/)
     ?? t.match(/\bbudget\b(?:\s+(?:of|is|around|about|under|below|up to|max(?:imum)?|at most|:|=|≈))*\s*(\d[\d,]*(?:\.\d+)?)\s*(k)?(?!\s*(?:%|kg|g\b|m\b|cm|mm|dof|axis|joints?))/)
-    ?? t.match(/(\d[\d,]*(?:\.\d+)?)\s*(k)?\s+budget\b/);
+    ?? t.match(/(?<![\d,.])(\d[\d,]*(?:\.\d+)?)(?:\s*(k))?\s+budget\b/);
   const explicitUsd = /\$|\busd\b|dollars?|\bbucks\b|\bgrand\b/.test(t);
   if (other && !explicitUsd) return { unsupported: other[0].trim() };
   if (m) { const usd = amount(m[1], m[2]); return usd !== undefined ? { usd } : { invalid: m[0].trim() }; }

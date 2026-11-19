@@ -26,8 +26,10 @@ export function emptySpec(name: string, prompt?: string): RobotSpecification {
 export function safeName(raw: string, fallback = "robot"): string {
   const s = (raw || "").toString().trim().toLowerCase()
     .replace(/[^a-z0-9_]+/g, "_")
-    .replace(/^_+|_+$/g, "")
+    .replace(/^_+/, "")
     .replace(/_{2,}/g, "_");
-  if (!s || !/^[a-z_]/.test(s)) return fallback;
-  return s.slice(0, 64);
+  // (the trailing "_" by hand: an unanchored /_+$/ tries every start in a long run of underscores)
+  const t = s.endsWith("_") ? s.slice(0, -1) : s;
+  if (!t || !/^[a-z_]/.test(t)) return fallback;
+  return t.slice(0, 64);
 }

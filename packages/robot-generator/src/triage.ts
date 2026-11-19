@@ -24,7 +24,7 @@ export interface Triage {
   nearest?: string;
 }
 
-const MARKUP = /<\s*\/?\s*[a-z!?][^>]{0,400}>|&lt;|&gt;|\bjavascript:\S*|\bon\w+\s*=\s*["'][^"']*["']|\{\{[^{}]*\}\}|\$\{[^{}$]*\}/gi;
+const MARKUP = /<\s*(?:\/\s*)?[a-z!?][^>]{0,400}>|&lt;|&gt;|\bjavascript:\S*|\bon\w+\s*=\s*["'][^"']*["']|\{\{[^{}]*\}\}|\$\{[^{}$]*\}/gi;
 const INJECTION = /\b(?:ignore|disregard|forget|override|bypass)\b[^.!?\n]{0,40}\b(?:rules?|instructions?|prompts?|guidelines?|polic(?:y|ies)|safety|filters?|system|above|previous|everything)\b[^.!?\n]*|\b(?:you\s+are\s+now|act\s+as|pretend\s+(?:to\s+be|you\s+are)|jailbreak|developer\s+mode|dan\s+mode|system\s+prompt|reveal\s+your|print\s+your\s+(?:prompt|instructions))\b[^.!?\n]*/gi;
 
 /** Harmful requests, refused whatever body they would have. Each pattern says what it refuses. */
@@ -73,7 +73,7 @@ export function triage(raw: string): Triage {
   if (WEAPONS.test(whole)) throw new PromptRefusal("harmful", WEAPON_REFUSAL);
   for (const [rx, why] of HARMFUL) if (rx.test(whole)) throw new PromptRefusal("harmful", why);
   const markup = text.match(MARKUP);
-  if (markup) { text = text.replace(MARKUP, " "); const what = [...new Set(markup.map((m) => m.match(/^<\s*\/?\s*([a-z][a-z0-9]*)/i)?.[1]?.toLowerCase() ?? (/^&/.test(m) ? "escaped tag" : /^javascript:/i.test(m) ? "javascript link" : /^on/i.test(m) ? "event handler" : "template code")))];
+  if (markup) { text = text.replace(MARKUP, " "); const what = [...new Set(markup.map((m) => m.match(/^<\s*(?:\/\s*)?([a-z][a-z0-9]*)/i)?.[1]?.toLowerCase() ?? (/^&/.test(m) ? "escaped tag" : /^javascript:/i.test(m) ? "javascript link" : /^on/i.test(m) ? "event handler" : "template code")))];
     notes.push(`removed ${markup.length} piece${markup.length > 1 ? "s" : ""} of markup or code (${what.slice(0, 4).join(", ")}): only the words are read`); }
   const inj = text.match(INJECTION);
   if (inj) { text = text.replace(INJECTION, " "); notes.push(`ignored instructions to the parser ("${inj[0].trim().slice(0, 60)}"): it only reads what the robot should be and do`); }

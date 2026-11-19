@@ -24,6 +24,25 @@ test("10,000-character adversarial prompts are read in under 50 ms each", () => 
   assert.deepEqual(slow, []);
 });
 
+test("the readers below the prompt's first cut are linear too: numbers, names, part lists, markup, model output", async () => {
+  const { parseBudget, extractMasses, isNegated } = await import("../packages/robot-generator/src/text.ts");
+  const { quantity } = await import("../packages/robot-generator/src/inventory.ts");
+  const { triage } = await import("@ttr/robot-generator");
+  const { safeName } = await import("@ttr/robot-schema");
+  const { extractJson } = await import("../packages/llm-providers/src/json.ts");
+  const sp = " ".repeat(N), digits = "9".repeat(N);
+  const runs: [string, () => unknown][] = [["budget digits", () => parseBudget(digits)], ["budget commas", () => parseBudget(`9${",".repeat(N)}`)], ["mass digits", () => extractMasses(digits)],
+    ["negation spaces", () => isNegated(`arm${sp}x`, 0, 3)], ["qty spaces", () => quantity(`qty${sp}`)], ["markup <", () => { try { triage(`<${sp}`); } catch { /* refused */ } }],
+    ["name underscores", () => safeName(`a${"_".repeat(N)}a`)], ["fence", () => { try { extractJson("```json ".repeat(N / 8)); } catch { /* no JSON */ } }]];
+  for (const [, f] of runs) f();
+  const slow = runs.map(([name, f]) => { const t0 = performance.now(); f(); return [name, performance.now() - t0] as const; }).filter(([, ms]) => ms >= 50).map(([n, ms]) => `${n}: ${ms.toFixed(0)} ms`);
+  assert.deepEqual(slow, []);
+  assert.equal(parseBudget("a robot arm under 300 dollars").usd, 300);
+  assert.equal(parseBudget("budget 2k").usd, 2000);
+  assert.equal(safeName("__My Robot__"), "my_robot");
+  assert.deepEqual(extractJson('here:\n```json\n{"a": 1}\n```'), { a: 1 });
+});
+
 test("a long route note is read in one pass", () => {
   const t0 = performance.now();
   assert.equal(throughRun(": wire ".repeat(N)), null);

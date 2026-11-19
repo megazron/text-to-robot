@@ -202,7 +202,7 @@ export function quantity(chunk: string): { qty: number; rest: string; explicit: 
   const pack = /\(?\b(?:pack|set|bag|box|lot)\s+of\s+(\d+)\b\)?|\b(\d+)\s*(?:pcs?|pieces?)\s+(?:pack|set)\b/.exec(c);
   if (pack) { per = +(pack[1] ?? pack[2]); c = (c.slice(0, pack.index) + " " + c.slice(pack.index + pack[0].length)).trim(); }
   take(/\((?:x\s*)?(\d+)\s*(?:pcs?|pieces?|x)?\)/, (m) => +m[1]);
-  take(/\b(?:qty|quantity|count|nos?)\s*[:.=]?\s*(\d+)\b/, (m) => +m[1]);
+  take(/\b(?:qty|quantity|count|nos?)\s*(?:[:.=]\s*)?(\d+)\b/, (m) => +m[1]);
   // "3-channel", "2S", "9V", "65 mm" are part of the name, not a count
   take(/^(\d+)(?![\d.]|-|\s*(?:ch\b|channel|way\b|s\b|v\b|volt|mm\b|cm\b|kg|g\b|a\b|ah\b|mah|cell|dof\b|rpm\b))\s*(?:x|×|\*|pcs?\b|pieces?\b|nos?\b|units?\b)?\s*/, (m) => +m[1]);
   c = c.trimEnd(); take(/\s(?:x|×|\*)\s?(\d+)$/, (m) => +m[1]);   // (trimmed first: "\s*$" is quadratic on a long run of spaces)

@@ -52,7 +52,7 @@ export const RX = {
   handRobot: /\b(?:humanoid|robot(?:ic)?|dexterous|bionic|prosthetic|anthropomorphic|mechanical|(?:three|four|five|3|4|5|multi)[\s-]?finger(?:ed)?)(?:\s+(?:robot(?:ic)?|dexterous|bionic|humanoid|mechanical))*\s+hands?\b/,
 };
 /** the arm a gripper or tool is meant for ("a gripper for my arm"): not a second robot */
-export const ARM_IT_FITS = /\b(?:for|to\s+fit|that\s+fits)\s+(?:my|an?|the|your|our)?\s*(?:[\w-]+\s+){0,3}?arms?\b/;
+export const ARM_IT_FITS = /\b(?:for|to\s+fit|that\s+fits)\s+(?:(?:my|an?|the|your|our)\s*)?(?:[\w-]+\s+){0,3}?arms?\b/;
 export const HAND_REFUSAL = "A hand on its own is built as the five-finger tendon hand; on a robot it is a two-finger gripper.";
 
 /** Weapons and robots meant to hurt: refused whatever body they would have (a glue gun or a heat gun is a tool, not a weapon). */

@@ -5,8 +5,16 @@ import type { RobotSpecification } from "@ttr/robot-schema";
 import { emptySpec, safeName } from "@ttr/robot-schema";
 
 export function extractJson(text: string): unknown {
-  const fence = text.match(/```(?:json)?\s*([\s\S]*?)```/);
-  const body = fence ? fence[1] : text;
+  // the first ``` fenced block (an optional "json" after the opening fence), found by position: one pass over the text
+  let body = text;
+  const open = text.indexOf("```");
+  if (open >= 0) {
+    let from = open + 3;
+    if (text.startsWith("json", from)) from += 4;
+    while (from < text.length && /\s/.test(text[from])) from++;
+    const close = text.indexOf("```", from);
+    if (close >= 0) body = text.slice(from, close);
+  }
   const start = body.indexOf("{");
   const end = body.lastIndexOf("}");
   if (start < 0 || end < 0) throw new Error("no JSON object found in model output");
