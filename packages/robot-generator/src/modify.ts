@@ -292,7 +292,7 @@ function modifyDesigned(specIn: RobotSpecification, instruction: string): ModRes
     if (col && /^(?:paint|colou?r|make|change|turn|set)\b/.test(rest) && !lengthRequest(rest)) {
       if (/\b(?:camera|lidar|sensor|imu|gripper|wheels?|eyes?|visor|servos?|motors?)\b/.test(rest)) { changes.push("! Only the body colour can be changed; sensors, grippers, wheels and bought parts keep theirs"); continue; }
       if (record.family.startsWith("character_")) { changes.push(`! The ${record.family.replace("character_", "").replace("walle", "WALL-E")} keeps its own livery`); continue; }
-      colour = col; changes.push(`~ colour -> ${col} (printed parts; accents a shade deeper)`); continue;
+      colour = col; changes.push(`~ colour -> ${col} (${(specIn.metadata as { look?: unknown }).look ? "the body and its fairing; the accents and trim keep their colours" : "printed parts; accents a shade deeper"})`); continue;
     }
     const payload = extractMasses(rest).find((x) => x.context === "payload") ?? (/\b(?:carry|lift|hold|payload)\b/.test(rest) ? extractMasses(rest)[0] : undefined);
     if (payload) { req.payloadKg = +payload.kg.toFixed(3); redesign = true; changes.push(`~ payload ${payload.raw}: actuators re-sized for it`); continue; }

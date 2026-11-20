@@ -7,7 +7,7 @@ import { part, rating, electrical, bboxM, hornRadiusMm, type Vec3 } from "@ttr/p
 import { Assembly } from "../assembly.ts";
 import { frame, invert, mul, apply, I4, translation, dxlPlug, type Mat4, type Op } from "@ttr/solid";
 export { linkOps as servoLinkOps, gripperOps as servoGripperOps };
-import { worstTorques, axisInertias, pointWorld, totalMass, type PointLoad } from "../kin.ts";
+import { fk, worstTorques, axisInertias, pointWorld, totalMass, type PointLoad } from "../kin.ts";
 import { LADDERS, choose, evaluate, passes, ladderFor, type Ladder, DYNAMIC_FACTOR } from "../sizing.ts";
 import { controlCase, enclosureChecks, exposed } from "../enclosure.ts";
 import { Harness, finishWiring } from "../wiring.ts";
@@ -300,9 +300,10 @@ function mountSensors(A: Assembly, sensors: string[], parent: string, parentW: M
     const T = frame([x - b.max[0] - 4, -(b.min[1] + b.max[1]) / 2, anchor[2] - b.min[2]], [0, 0, 1], [1, 0, 0]);
     const lo = apply(T, b.min), hi = apply(T, b.max);
     A.printedLink(`${type}_bracket`, { name: `${type}_bracket`, ops: [{ op: "at", T: toLocal, of: [
-      { op: "box", min: [Math.min(lo[0], hi[0]) - 2, Math.min(lo[1], hi[1]) - 2, anchor[2] - 6], max: [anchor[0] + 2, Math.max(lo[1], hi[1]) + 2, anchor[2]], r: 2 },
+      { op: "box", min: [Math.min(lo[0], hi[0]) - 2, Math.min(lo[1], hi[1]) - 2, anchor[2] - 6], max: [anchor[0], Math.max(lo[1], hi[1]) + 2, anchor[2]], r: 2 },
     ] }] }, { role: "sensor_mount", material: "printed_dark" });
-    A.fixed(`${type}_bracket_mount`, parent, `${type}_bracket`, mul(toLocal, I4()));
+    // (its solid is already in the parent's frame: the mount is the identity)
+    A.fixed(`${type}_bracket_mount`, parent, `${type}_bracket`, I4());
     A.mount(parent, key, mul(toLocal, T), `wrist_${type}`, `${type} on the wrist`);
     A.spec.sensors.push({ name: `wrist_${type}`, type, parent: `wrist_${type}`, origin: { xyz: [0, 0, 0], rpy: [0, 0, 0] } });
     x -= thick + 6;
@@ -501,6 +502,11 @@ function designArmOn(req: ArmRequest): RobotSpecification {
   // ready pose; an arm on a robot is swept again there, against the rest of that robot
   if (req.shell && !req.embedded) baseShell(A, req.shell);
   if (!req.embedded) limitsFromGeometry(A, joints.map((j) => j.name), [], 0.06, [], () => A.design.home ?? {}, "base");
+  // a fairing round the base must leave every joint its range (the folded arm sweeps close past it)
+  if (req.shell?.fairing && !req.embedded) {
+    const tight = A.spec.joints.filter((j) => j.type === "revolute" && j.limit && !/gripper|finger/.test(j.name) && (j.limit.upper ?? 0) - (j.limit.lower ?? 0) < 0.5);
+    A.check("shell:range", !tight.length, tight.length ? `with the base fairing on, ${tight.map((j) => `${j.name} keeps ${((j.limit?.upper ?? 0) - (j.limit?.lower ?? 0)).toFixed(2)} rad`).join(", ")}` : "with the base fairing on, every joint keeps at least 0.5 rad of range (the sweeps are made with it on)");
+  }
   if (!req.embedded) wireFixedArm(A, H, ladder, supplyA, gripKeyUsed(A), req.supply12 ?? "psu_12v_lrs75");
   return A.finish(`${dof}-DOF arm, ${(reachActual * 1000).toFixed(0)} mm reach, ${payload} kg payload, ${LADDERS[ladder].label}`);
 }
@@ -514,18 +520,40 @@ function designArmOn(req: ArmRequest): RobotSpecification {
 function baseShell(A: Assembly, req: ShellRequest) {
   const rigid = rigidWith(A, "base_link"), bx = linkBoxes(A);
   const plate = bx.get("base_link")!, near = (q: { lo: Vec3; hi: Vec3 }) => q.hi[0] > plate.lo[0] - 1 && q.lo[0] < plate.hi[0] + 1 && q.hi[1] > plate.lo[1] - 1 && q.lo[1] < plate.hi[1] + 1;
-  const moving = [...bx].filter(([n]) => !rigid.has(n)).map(([, q]) => q).filter(near), turretZ = Math.min(...moving.map((q) => q.lo[2]));
+  // (a fairing, wider than the plate, keeps under anything that moves over its whole footprint: a folded wrist, a camera)
+  const side0 = plate.hi[0] - plate.lo[0], cx0 = (plate.lo[0] + plate.hi[0]) / 2, cy0 = (plate.lo[1] + plate.hi[1]) / 2, reach = 0.75 * side0 + 6;
+  const wide = (q: { lo: Vec3; hi: Vec3 }) => q.hi[0] > cx0 - reach && q.lo[0] < cx0 + reach && q.hi[1] > cy0 - reach && q.lo[1] < cy0 + reach;
+  // (the turret only turns about the vertical: it sweeps nothing lower than it stands)
+  const yawOnly = new Set(A.spec.joints.filter((j) => /(?:^|_)(?:base|turret)_yaw$/.test(j.name)).map((j) => j.child));
+  const movingNamed = [...bx].filter(([n, q]) => !rigid.has(n) && (req.fairing ? wide(q) : near(q)));
+  const moving = movingNamed.map(([, q]) => q), turretZ = Math.min(...moving.map((q) => q.lo[2]));
+  // (and under what they sweep as their joints turn: a part that hangs low at home reaches as low as the joint that moves
+  // it less its farthest corner from that joint, a sphere round it, whichever way it turns; the turret only turns about
+  // the vertical)
+  const fkA = fk(A.spec), parentJ = new Map(A.spec.joints.map((j) => [j.child, j] as const));
+  const mover = (n: string): string | undefined => { let c = n; for (let k = 0; k < 64; k++) { const j = parentJ.get(c); if (!j) return undefined; if (j.type !== "fixed") return j.child; c = j.parent; } return undefined; };
+  const sweptZ = Math.min(turretZ, ...movingNamed.filter(([n, q]) => !yawOnly.has(n) && !yawOnly.has(mover(n) ?? "") && q.lo[2] < turretZ + 60).map(([n, q]) => {
+    const m = mover(n), T = m ? fkA.link[m] : undefined;
+    if (!T) return q.lo[2];
+    const o = T.p.map((x: number) => x * 1000), r = Math.max(...[q.lo[0], q.hi[0]].flatMap((x) => [q.lo[1], q.hi[1]].flatMap((y) => [q.lo[2], q.hi[2]].map((z) => Math.hypot(x - o[0], y - o[1], z - o[2])))));
+    return o[2] - r;
+  }));
   const covered = [...bx].filter(([n, q]) => rigid.has(n) && n !== "base_link" && near(q) && q.lo[2] < turretZ).map(([, q]) => q);
   covered.push({ lo: [plate.lo[0] + 12, plate.lo[1] + 12, 6], hi: [plate.hi[0] - 12, plate.hi[1] - 12, Math.min(plate.hi[2], turretZ - 2)] });
   // the turret's turning circle: the farthest point of anything above it from the yaw axis
   const R = Math.max(...moving.filter((q) => q.lo[2] < turretZ + 80).flatMap((q) => [Math.hypot(q.lo[0], q.lo[1]), Math.hypot(q.hi[0], q.lo[1]), Math.hypot(q.lo[0], q.hi[1]), Math.hypot(q.hi[0], q.hi[1])]));
   const side = plate.hi[0] - plate.lo[0], z0 = 6;
   const cuts: Op[] = [{ op: "hole", a: [0, 0, turretZ - 3], b: [0, 0, 2000], d: 2 * R + 8 }];
+  // a fairing's cables leave by a slot at the back, at the floor, as wide as the base's cable window and as high as the
+  // turret allows: the harness runs straight out under it
+  if (req.fairing) cuts.push({ op: "cutbox", min: [-2000, -22, 6 - 1], max: [plate.lo[0] + 0.3 * (plate.hi[0] - plate.lo[0]), 22, Math.min(6 + 34, turretZ - 6)] });
   for (const x of [-1, 1]) for (const y of [-1, 1]) cuts.push({ op: "hole", a: [x * (side / 2 - 10), y * (side / 2 - 10), z0 - 1], b: [x * (side / 2 - 10), y * (side / 2 - 10), 2000], d: 12 });
   const deck = { x0: plate.lo[0], x1: plate.hi[0], y0: plate.lo[1], y1: plate.hi[1], z0 };
   // 1.4 times the plate, overhanging it a little: big enough to read as its shape under the arm
-  const env = { cx: (deck.x0 + deck.x1) / 2, cy: (deck.y0 + deck.y1) / 2, a: 0.7 * (deck.x1 - deck.x0), b: 0.7 * (deck.y1 - deck.y0), h: Math.max(turretZ - z0 + 4, 0.75 * side), z0 };
-  const { pieces, fitted } = placeShell(A, req, { boxes: covered, windows: [{ at: [env.cx, env.cy, z0 + 14], dir: [-1, 0, 0], d: 18 }], deck, maxHalfWidth: env.b, envelope: env, wrap: true, parent: "base_link", name: "shell_base", cuts });
+  const env = { cx: (deck.x0 + deck.x1) / 2, cy: (deck.y0 + deck.y1) / 2, a: 0.7 * (deck.x1 - deck.x0), b: 0.7 * (deck.y1 - deck.y0), h: req.fairing ? Math.max(sweptZ - z0 - 4, 10) : Math.max(turretZ - z0 + 4, 0.75 * side), z0 };
+  // a fairing round the base: a 2.4 mm wall for its panel lines, a two-tone skirt and its badge (no lamp, no bumper on a bench)
+  const fair = req.fairing ? { ...req, fairing: { ...req.fairing, light: "none" as const, bumper: false } } : req;
+  const { pieces, fitted } = placeShell(A, fair, { boxes: covered, windows: [{ at: [env.cx, env.cy, z0 + 14], dir: [-1, 0, 0], d: 18 }], deck, maxHalfWidth: env.b, envelope: env, wrap: true, parent: "base_link", name: "shell_base", cuts, ...(req.fairing ? { wall: 2.4, twoTone: false, trims: false } : {}) });
   const mass = pieces.reduce((s, p) => s + (A.spec.links.find((l) => l.name === p.name)?.mass ?? 0), 0);
   const style = req.style && req.style !== "plain" ? ` (${req.style})` : "";
   A.fastener("M3 x 10 + insert (base shell to the base plate)", 4);

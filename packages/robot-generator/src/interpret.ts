@@ -6,7 +6,7 @@ import { stage } from "@ttr/parts/profile";
 import type { RobotSpecification, SensorType } from "@ttr/robot-schema";
 import { safeName } from "@ttr/robot-schema";
 import { fk, defaultRouterMode } from "@ttr/design";
-import { normalize, find, findAll, mentions, negates, extractDofMentions, type DofMention, extractLengths, extractMasses, extractSpeeds, parseBudget, extractName, extractColour, maskNames, paintSpec, paintRgb, STYLE_PALETTE, variantPalette, jobKey } from "./text.ts";
+import { normalize, find, findAll, mentions, negates, extractDofMentions, type DofMention, extractLengths, extractMasses, extractSpeeds, parseBudget, extractName, extractColour, maskNames, paintSpec, paintRgb, paintLook, STYLE_PALETTE, variantPalette, jobKey } from "./text.ts";
 import { armourShape, shapeKey } from "@ttr/mesh";
 import { suitOptions } from "./suit.ts";
 import { MAX_ARM_DOF, RX, ARM_IT_FITS, SUPPORTED_HINT, wheelCount, gripperRequest, chooseFamily, RECOLOURABLE, type Choice, type GripperKind, type DesignContext } from "./families.ts";
@@ -20,7 +20,9 @@ import { readNamed } from "./reading.ts";
 import { TOOL_WORDS, type ToolKind } from "./tools.ts";
 import { toolPlan } from "./tool-plan.ts";
 import { readShape, shapeChips, oneRobot, type RequestShape } from "./request.ts";
-import { readShell, SHELL_FAMILIES } from "./shape.ts";
+import { readShell, SHELL_FAMILIES, lookKey } from "./shape.ts";
+import { isGalleryPrompt, isGalleryJob } from "./gallery.ts";
+import { chooseFairing, PALETTES, type BodyKind } from "@ttr/design";
 import { KNOWLEDGE } from "./knowledge.ts";
 import { budgetNotes } from "@ttr/design";
 import { COLOURS as SHELL_COLOURS } from "./text.ts";
@@ -71,6 +73,8 @@ export interface Interpretation {
   conflicts: string[];
   /** engineering checks the designed robot fails (it was built, but would not work as asked) */
   warnings?: string[];
+  /** the designed look (styling.ts), in words: "look: pod body in teal, sand and graphite" */
+  look?: string;
   /** which path designed the robot: "rules" (keyword rules), "knowledge table", "similarity (...)", or a model provider */
   path: string;
   /** task tools asked for or implied by the task, and whether each was built */
@@ -143,7 +147,14 @@ function interpretIn(original: string, opts: InterpretOptions): PromptResult {
   const lookColour = look ? extractColour(t) : undefined;
   if (look && !fits && !["wall_e", "eva", "baymax", "iron_man_mark_43", "exosuit", "arduino_car"].includes(choice.family))
     ignored.push(`"${look.said}": shape shells are fitted to wheeled, legged, humanoid, arm and drone robots; the ${choice.label} keeps its own look`);
-  const ctx: DesignContext = { ...(look && fits ? { shell: { shape: look.shape, style: look.style, ...(look.emoji ? { emoji: look.emoji } : {}), ...(lookColour ? { colour: SHELL_COLOURS[lookColour].slice(0, 3) as [number, number, number] } : {}) } } : {}), ...(suit ? { suit: { shape: armourShape(), paint: suit.paint } } : {}), ...(hobby ? { hobby } : {}), prompt, budget: budget.usd, payloadKg: payload ? +payload.kg.toFixed(3) : undefined, reachM: asked?.reachM, segments: asked?.segments,
+  // every other designed robot of these kinds gets an industrial look of its own (styling.ts): a fairing silhouette, a preset
+  // (a style word's, else the studio look) and a palette, chosen by what the prompt means; the gallery's own prompts keep
+  // the gallery robots as built, and "no fairing" / "bare chassis" leaves the robot bare
+  const kind = FAIRING_KIND[choice.family], bare = /\b(?:no|without)\s+(?:a\s+|the\s+)?(?:fairing|body\s*shell|cover|bodywork)s?\b|\bbare\s+(?:chassis|frame|robot|look)\b|\bplain\s+look\b/.test(t);
+  const styled = fits && kind && choice.designed && !hobby && !bare && !isGalleryPrompt(original) && !isGalleryJob(t) && (!look || !!look.preset) ? chooseFairing(kind, lookKey(t), look?.preset ?? "studio") : undefined;
+  const shellCtx = styled ? { shell: { shape: styled.shape, fairing: styled.fairing } }
+    : look && fits ? { shell: { shape: look.shape, style: look.style, ...(look.emoji ? { emoji: look.emoji } : {}), ...(lookColour ? { colour: SHELL_COLOURS[lookColour].slice(0, 3) as [number, number, number] } : {}) } } : {};
+  const ctx: DesignContext = { ...shellCtx, ...(suit ? { suit: { shape: armourShape(), paint: suit.paint } } : {}), ...(hobby ? { hobby } : {}), prompt, budget: budget.usd, payloadKg: payload ? +payload.kg.toFixed(3) : undefined, reachM: asked?.reachM, segments: asked?.segments,
     sensors: requestedSensors(choice.sensorWords ? `${t} ; ${choice.sensorWords}` : t).filter((type) => !negates(t, SENSOR_WORDS.find(([, k]) => k === type)![0])),
     excludeSensors: SENSOR_WORDS.filter(([rx]) => negates(t, rx)).map(([, k]) => k), ...(heightM ? { heightM } : {}) };
   // a standing robot's stated height is a design input of the humanoid / mech designers
@@ -158,6 +169,12 @@ function interpretIn(original: string, opts: InterpretOptions): PromptResult {
     if (h0 > 0 && Math.abs(h0 - robotHeight.metres) / robotHeight.metres > 0.03) {
       const again = buildCached(choice, { ...ctx, heightM: +(robotHeight.metres * robotHeight.metres / h0).toFixed(3) });
       if (Math.abs(built(again) - robotHeight.metres) < Math.abs(h0 - robotHeight.metres)) spec = again;
+      // a helmet adds a height that does not scale: one more step, from the two built so far (a secant)
+      const h1 = built(again), x0 = robotHeight.metres, x1 = +(robotHeight.metres * robotHeight.metres / h0).toFixed(3);
+      if (ctx.shell?.fairing && Math.abs(h1 - x0) / x0 > 0.03 && Math.abs(h1 - h0) > 1e-4) {
+        const third = buildCached(choice, { ...ctx, heightM: +(x1 + (x0 - h1) * (x1 - x0) / (h1 - h0)).toFixed(3) });
+        if (Math.abs(built(third) - x0) < Math.abs(built(spec) - x0)) spec = third;
+      }
     }
     const h = built(spec);
     if (Math.abs(h - robotHeight.metres) / robotHeight.metres <= 0.03) dimensions.push(`height ${h.toFixed(2)} m`);
@@ -225,7 +242,29 @@ function interpretIn(original: string, opts: InterpretOptions): PromptResult {
   for (const x of findAll(t, UNMODELLED_SENSORS)) if (!(ranger && /ultrasonic|sonar|proximity/.test(x.text))) ignored.push(`${x.text}: only cameras, depth cameras, lidars, IMUs and (on the Arduino designs) ultrasonic rangers are modelled`);
 
   const colour = suit ? undefined : extractColour(t);
-  if (colour) {
+  let lookSaid: string | undefined;
+  if (styled) {
+    // the look's palette: the body in its primary (or the colour named, or the job's own hue), accents, the dark trim
+    const pal = PALETTES[styled.fairing.palette], job = jobKey(t, choice.knowledge || choice.path === "general job" ? t : "");
+    const clause = /\b(?:that|which|who|to)\s+\S/.test(t), jobbed = !colour && !!job && (!!choice.knowledge || choice.path === "general job" || clause);
+    let primary = pal.primary, accent = pal.accent, body = pal.names.primary, accentName = pal.names.accent;
+    const named = !!colour && !!SHELL_COLOURS[colour];
+    if (named) {
+      primary = SHELL_COLOURS[colour!].slice(0, 3) as typeof primary; body = colour!;
+      // an accent too close to the colour named: the palette's own body colour, else silver (or graphite on a pale body)
+      if (paletteClash(primary, accent)) {
+        const pale = primary[0] + primary[1] + primary[2] > 2.2;
+        [accent, accentName] = !paletteClash(primary, pal.primary) ? [pal.primary, pal.names.primary] : pale ? [[0.25, 0.26, 0.29], "graphite grey"] : [[0.8, 0.81, 0.84], "silver"];
+      }
+    }
+    else if (jobbed) { const i = choice.knowledge ? KNOWLEDGE.findIndex((k) => k.id === choice.knowledge) : -1; const [p, a, label] = variantPalette(`${choice.knowledge ?? ""}|${job}`, i >= 0 ? i : undefined, job); primary = p; accent = a; body = `custom colour (${label})`; accentName = `custom accent (${label})`; }
+    paintLook(spec, primary, accent, pal.trim);
+    (spec.metadata as unknown as Record<string, unknown>).look = { silhouette: styled.shape, preset: styled.fairing.preset, palette: pal.id, hub: styled.fairing.hub, colours: { body, accent: accentName, trim: pal.names.trim } };
+    // a colour named paints the body (an aluminium body powder-coated); the accent parts, the band, the badge and the hub
+    // caps keep the look's accent, so a red robot is red with its accent, not red all over
+    if (named) paintSpec(spec, colour!);
+    lookSaid = `look: ${styled.fairing.preset === "studio" ? "" : `${styled.fairing.preset} `}${styled.shape} body in ${body}, ${accentName} and ${pal.names.trim}`;
+  } else if (colour) {
     // the printed body in the colour, accents a shade deeper (text.ts paintSpec); characters keep their livery
     if (!(RECOLOURABLE.has(choice.family) && paintSpec(spec, colour))) ignored.push(`colour "${colour}": the ${choice.label} keeps its own livery`);
   } else if (!suit && RECOLOURABLE.has(choice.family) && choice.designed) {
@@ -284,7 +323,7 @@ function interpretIn(original: string, opts: InterpretOptions): PromptResult {
     // report the tool that was actually built (a pick-and-place SCARA gets a suction cup without asking)
     ...(choice.usesGripper ? { gripper: builtTool(spec, g) } : {}),
     sensors, dimensions, ...(name ? { name: spec.robot_name } : {}),
-    ...(colour && !ignored.some((i) => i.startsWith("colour")) ? { colour } : {}),
+    ...(colour && !ignored.some((i) => i.startsWith("colour")) ? { colour } : {}), ...(lookSaid ? { look: lookSaid } : {}),
     ...(budget.usd !== undefined ? { budget_usd: budget.usd } : {}),
     ...(payloadKg !== undefined ? { payload_kg: payloadKg } : {}),
     ...(heightM ? { wearer_height_m: heightM } : {}),
@@ -296,6 +335,11 @@ function interpretIn(original: string, opts: InterpretOptions): PromptResult {
   if (interpretation.path !== "rules" || named.entry) (spec.metadata as unknown as Record<string, unknown>).understood = { path: interpretation.path, ...(choice.knowledge ? { knowledge: choice.knowledge } : {}), ...(named.entry ? { named: named.entry.id } : {}) };
   return { spec, interpretation };
 }
+
+/** the body each family's fairing is drawn for (styling.ts) */
+const FAIRING_KIND: Record<string, BodyKind> = { diff_drive: "wheeled", four_wheel: "wheeled", mecanum: "wheeled", quadruped: "legged", hexapod: "legged", serial_arm: "arm", drone: "drone", humanoid: "humanoid" };
+/** two colours too alike to tell apart on a robot (a red body with a ruby accent) */
+const paletteClash = (a: number[], b: number[]) => Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]) < 0.35;
 
 /** What was built, as short chips: "2x 6-DOF arm", "6-wheel rover", "gripper", "camera". */
 function builtChips(b: BuiltShape, choice: Choice, g: GripperKind, spec: RobotSpecification): string[] {
@@ -421,6 +465,7 @@ export function describeInterpretation(i: Interpretation): string {
   if (i.colour) parts.push(i.colour);
   if (i.payload_kg !== undefined) parts.push(`payload ${i.payload_kg} kg`);
   if (i.budget_usd !== undefined) parts.push(`budget $${i.budget_usd}`);
+  if (i.look) parts.push(i.look);
   return parts.join(" · ");
 }
 

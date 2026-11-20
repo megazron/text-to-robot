@@ -269,11 +269,16 @@ export function paintSpec(spec: { materials: { name: string; color: number[] }[]
   let any = false;
   for (const m of spec.materials) {
     if (m.name === "printed" || m.name === "shell" || m.name === "link_mat") { m.color = [...c]; any = true; }
-    else if (m.name === "printed_accent") { m.color = [c[0] * 0.72, c[1] * 0.72, c[2] * 0.72, 1].map((v, i) => (i < 3 ? +v.toFixed(3) : v)); any = true; }
+    else if (m.name === "printed_accent" && !(spec.metadata as { look?: unknown }).look) { m.color = [c[0] * 0.72, c[1] * 0.72, c[2] * 0.72, 1].map((v, i) => (i < 3 ? +v.toFixed(3) : v)); any = true; }
     // a cut aluminium body (a rover's deck) is powder-coated in the colour: a little of the metal's grey shows through
     else if (m.name === "aluminium") { m.color = [0.85 * c[0] + 0.15 * 0.56, 0.85 * c[1] + 0.15 * 0.58, 0.85 * c[2] + 0.15 * 0.62, 1].map((v, i) => (i < 3 ? +v.toFixed(3) : v)); any = true; }
   }
-  if (any) (spec.metadata as { colour?: string }).colour = colour;
+  if (any) {
+    (spec.metadata as { colour?: string }).colour = colour;
+    // a designed look's body colour is bought by this name now (its accents and trim stay)
+    const look = (spec.metadata as { look?: { colours: { body: string } } }).look;
+    if (look) look.colours.body = colour;
+  }
   return any;
 }
 
@@ -283,15 +288,26 @@ export function paintRgb(spec: { materials: { name: string; color: number[] }[];
   let any = false;
   for (const m of spec.materials) {
     if (m.name === "printed" || m.name === "shell" || m.name === "link_mat") { m.color = [...primary, 1]; any = true; }
-    else if (m.name === "printed_accent") { m.color = [...accent, 1]; any = true; }
+    else if (m.name === "printed_accent" && !(spec.metadata as { look?: unknown }).look) { m.color = [...accent, 1]; any = true; }
   }
   if (any) (spec.metadata as { palette?: string }).palette = label;
   return any;
+}
+/** Paint a robot in its look's palette (styling.ts): the printed body and its fairing in the primary, the accent parts, the
+ *  badge and the hub caps in the accent, the dark structure and the fairing's skirt in the trim. Only materials change. */
+export function paintLook(spec: { materials: { name: string; color: number[] }[] }, primary: RGB, accent: RGB, trim: RGB) {
+  const set = (m: { color: number[] }, c: RGB) => { m.color = [+c[0].toFixed(3), +c[1].toFixed(3), +c[2].toFixed(3), 1]; };
+  for (const m of spec.materials) {
+    if (m.name === "printed" || m.name === "shell" || m.name === "link_mat") set(m, primary);
+    else if (m.name === "printed_accent" || m.name === "badge") set(m, accent);
+    else if (m.name === "printed_dark" || m.name === "shell_trim") set(m, trim);
+  }
 }
 /** Palettes the style words bring (primary, accent): sci-fi white and cyan, rugged olive and safety yellow, retro cream and teal... */
 export const STYLE_PALETTE: Record<string, [RGB, RGB]> = {
   sleek: [[0.9, 0.92, 0.95], [0.12, 0.72, 0.92]], boxy: [[0.36, 0.4, 0.33], [0.96, 0.74, 0.08]], retro: [[0.93, 0.88, 0.74], [0.16, 0.56, 0.56]],
   steampunk: [[0.72, 0.53, 0.25], [0.38, 0.22, 0.1]], mecha: [[0.84, 0.85, 0.88], [0.78, 0.14, 0.12]], cute: [[0.99, 0.8, 0.86], [0.55, 0.78, 0.98]],
+  scifi: [[0.92, 0.93, 0.95], [0.1, 0.78, 0.9]], rugged: [[0.37, 0.43, 0.31], [0.95, 0.52, 0.12]], industrial: [[0.97, 0.75, 0.09], [0.12, 0.12, 0.13]], minimal: [[0.92, 0.93, 0.95], [0.25, 0.26, 0.29]],
 };
 const hsl = (h: number, s: number, l: number): RGB => { const f = (n: number) => { const k = (n + h / 30) % 12, a = s * Math.min(l, 1 - l); return +(l - a * Math.max(-1, Math.min(k - 3, 9 - k, 1))).toFixed(3); }; return [f(0), f(8), f(4)]; };
 /** A palette of its own for what a robot is for (its task or job): a hue from the words that mean it, the accent opposite on

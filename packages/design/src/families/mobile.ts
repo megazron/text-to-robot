@@ -12,7 +12,8 @@ import { Assembly, componentGeometry, printedGeometry } from "../assembly.ts";
 import { frame, invert, mul, apply, I4, translation, toPose, type Mat4, type Op } from "@ttr/solid";
 import { fk, linkCom, totalMass, gravityTorques, type PointLoad } from "../kin.ts";
 import { designArm, graftArm, type ArmRequest } from "./arm.ts";
-import { deckShellFit, placeShell, shellName, type ShellRequest } from "../shell.ts";
+import { deckShellFit, placeShell, shellName, linkBoxes, isFairing, outsideShare, outsideVolume, type ShellRequest, type ShellFit } from "../shell.ts";
+import { PROPORTION, WHEELED_RATIO, PALETTES, hubCapOps, type FairingShape } from "../styling.ts";
 import { limitsFromGeometry } from "./legkit.ts";
 import { evaluate, DYNAMIC_FACTOR, type Ladder } from "../sizing.ts";
 import { BATTERY_SWITCH, registerBay, enclosureChecks, exposed, baysOf, worldBox as partBox, heatOf, ventNeed, type BayRecord, type Face } from "../enclosure.ts";
@@ -1096,7 +1097,7 @@ function deck(b: Build, L: number, W: number, zB: number, extra: Op[] = [], corn
 function defaults(req: MobileRequest, sensors: MobileSensor[]) {
   const out = req.sensors?.length ? [...new Set(req.sensors)] : sensors;
   // under a shape shell a lidar could not see: it is left out (the result says so)
-  return out.filter((s) => !(req.excludeSensors ?? []).includes(s) && !(req.shell && s === "lidar"));
+  return out.filter((s) => !(req.excludeSensors ?? []).includes(s) && !(req.shell && !req.shell.fairing && s === "lidar"));
 }
 
 /** A shape shell over everything on the deck: sized round it, windows for the cameras, cut to fit the bed, bolted down. */
@@ -1109,6 +1110,80 @@ function addShell(b: Build, req: ShellRequest, deck: { x0: number; x1: number; y
   b.A.check("shell:clearance", fitted.overlapMm3 < 1, `the ${shellName(req)} shell (${req.style ?? "plain"}) touches no part on the robot (overlap ${fitted.overlapMm3} mm^3; ${Math.round(2 * fitted.envelope.a)} x ${Math.round(2 * fitted.envelope.b)} x ${Math.round(fitted.envelope.h)} mm over the bay, cut 3 mm clear round anything it would meet)`);
   b.A.design.performance.shell = `${shellName(req)}${req.style && req.style !== "plain" ? ` (${req.style})` : ""}, ${pieces.length} printed piece${pieces.length > 1 ? "s" : ""}`;
   b.A.design.assumptions.push(`Shell: a ${shellName(req)} shape${req.style && req.style !== "plain" ? ` in a ${req.style} style` : ""}, printed in ${pieces.length} piece${pieces.length > 1 ? "s" : ""} with a 2 mm wall, open underneath and bolted to the deck; it sits on the electronics bay's lid and covers what stands above it (with a window for each camera and for the switch and USB port), and leaves the wheels free. Its mass is in the drive sizing and the tipping check. ${pieces.length > 1 ? "Glue the pieces along their seams or join them with M3 through lugs. " : ""}Print it upright on its open bottom; tall rounded tops may need supports.`);
+}
+
+/**
+ * An industrial fairing over a wheeled base: it stands on the deck itself (not on the bay's lid), as long as the deck and
+ * reaching past what stands at its nose, as tall as its silhouette's proportion of the wheel's diameter (never lower than
+ * what it covers), and always under a LiDAR's scan plane (the LiDAR looks out over it through a well cut round its head).
+ * Windows for the cameras and for the bay's switch and USB port; parts it cannot cover are cut 3 mm clear.
+ */
+function addFairing(b: Build, req: ShellRequest, L: number, W: number, top: number, wheelR: number) {
+  const shape = req.shape as keyof typeof PROPORTION, prop = PROPORTION[shape];
+  const all = linkBoxes(b.A, (n) => n !== "base_link");
+  const boxes = [...all].filter(([n, q]) => q.lo[2] >= top - 3 && q.hi[2] > top + 1 && !/_wheel$|_motor$|caster|hub_cap/.test(n)).map(([, q]) => q);
+  const lidar = b.A.spec.sensors.find((x) => x.type === "lidar"), scanZ = lidar ? fk(b.A.spec).link[lidar.parent].p[2] * 1000 + lidar.origin.xyz[2] * 1000 : Infinity;
+  const coverTop = Math.max(top, ...[...all].filter(([n, q]) => q.lo[2] >= top - 3 && q.hi[2] > top + 1 && !/_wheel$|_motor$|caster|hub_cap|^lidar/.test(n)).map(([, q]) => q.hi[2]));
+  // the proportion: body height over the deck from the wheel's diameter, at least what it covers, under the scan plane
+  let h = fairingHeight(shape, wheelR, L, coverTop - top);
+  if (lidar) h = Math.min(h, scanZ - 7 - top);
+  // the nose reaches past anything standing at the deck's front edge (a camera's upright), with its wall and 1 mm to spare
+  const nose = Math.max(L / 2 + prop.overhang, ...boxes.filter((q) => q.hi[2] > top + 4).map((q) => q.hi[0] + 3 + 2.4 + 1));
+  const tail = Math.min(-L / 2 - prop.overhang, ...boxes.filter((q) => q.hi[2] > top + 4).map((q) => q.lo[0] - 3 - 2.4 - 1));
+  // as wide as the deck, or as what stands on it (a bay's wall fixtures) with its wall and 1.5 mm to spare; where it then
+  // reaches over the wheels it is cut clear of them (wheel arches)
+  const half = Math.max(W / 2 - 1, ...boxes.map((q) => Math.max(-q.lo[1], q.hi[1]) + 3 + 2.4 + 1.5));
+  if (half > W / 2) boxes.push(...[...all].filter(([n]) => /_wheel$/.test(n)).map(([, q]) => q));
+  const envelope = { cx: (nose + tail) / 2, cy: 0, a: (nose - tail) / 2, b: half, h, z0: top };
+  const windows: ShellFit["windows"] = [];
+  for (const bay of (b.A.design as { enclosures?: { exits: { kind: string; at?: number[]; normal?: number[]; face?: string }[] }[] }).enclosures ?? []) for (const e of bay.exits)
+    if ((e.kind === "switch" || e.kind === "usb") && e.at && e.normal && e.face !== "floor") windows.push({ at: e.at as Vec3, dir: e.normal as Vec3, d: e.kind === "switch" ? 40 : 34 });
+  const f = fk(b.A.spec);
+  for (const sn of b.A.spec.sensors) if (sn.type === "camera" || sn.type === "depth") { const T = f.link[sn.parent]; if (T) windows.push({ at: T.p.map((x) => x * 1000) as Vec3, dir: [1, 0, 0], d: sn.type === "depth" ? 60 : 26 }); }
+  // taller (up to 1.6 times, never into the scan plane) until what it covers is inside it: no part shows through its roof
+  // (and until nothing it covers stands through its roof with its 3 mm clearance: a bay's lid under a wedge's nose; the
+  // LiDAR and its mast look out over it)
+  const inner = boxes.filter((q) => q.lo[2] >= top - 3);
+  const underNamed = [...all].filter(([n, q]) => q.lo[2] >= top - 3 && q.hi[2] > top + 1 && !/_wheel$|_motor$|caster|hub_cap|^lidar/.test(n)), under = underNamed.map(([, q]) => q);
+  // (a part's top, 15 mm in from its sides: a rounded fairing's corners are cut clear of a bay's corners instead)
+  const roof = (e: typeof envelope) => outsideVolume(req, e, under, 2.4, 3, 15);
+  for (let k = 0; k < 6 && (outsideShare(req, envelope, inner.filter((q) => q.hi[2] < (lidar ? scanZ - 40 : Infinity)), 2.4) > 0.03 || roof(envelope) > 1); k++) {
+    const next = Math.min(envelope.h * 1.1, lidar ? scanZ - 7 - top : Infinity, 1.6 * h);
+    if (next <= envelope.h + 0.5) break;
+    envelope.h = next;
+  }
+  h = envelope.h;
+  const poke = roof(envelope), poking = poke > 1 ? underNamed.filter(([, q]) => outsideVolume(req, envelope, [q], 2.4, 3, 15) > 1).map(([n]) => n) : [];
+  const deck = { x0: tail, x1: nose, y0: -half, y1: half, z0: top };
+  const { pieces, fitted, trims } = placeShell(b.A, req, { boxes, windows, deck, maxHalfWidth: half, envelope, wall: 2.4, parent: "base_link", emit: (name, ops, material) => b.printed(name, "base_link", ops, material ?? "shell", "shell") });
+  const shellOnly = pieces.filter((p) => !trims.includes(p.name));
+  b.A.fastener(`M3 x 10 + insert (fairing to deck, ${shellOnly.length > 1 ? "and the pieces to each other along the seams" : "four lugs"})`, 4 * shellOnly.length);
+  if (trims.length) b.A.fastener("M2 x 6 self-tapping (light lens and badge, from inside)", 2 * trims.length);
+  const ratio = h / (2 * wheelR);
+  b.A.check("shell:clearance", fitted.overlapMm3 < 1, `the ${shape} fairing touches no part on the robot (overlap ${fitted.overlapMm3} mm^3; ${Math.round(2 * fitted.envelope.a)} x ${Math.round(2 * fitted.envelope.b)} x ${Math.round(fitted.envelope.h)} mm over the deck, cut 3 mm clear round anything it would meet)`);
+  b.A.check("look:proportion", ratio >= WHEELED_RATIO[0] && ratio <= WHEELED_RATIO[1], `body ${Math.round(h)} mm over the deck on ${Math.round(2 * wheelR)} mm wheels (${ratio.toFixed(2)} x the wheel; ${WHEELED_RATIO[0]}-${WHEELED_RATIO[1]} reads as a designed body), ${Math.round(top - wheelR * 0)} mm deck height, ${Math.round(2 * envelope.a)} mm long`);
+  b.A.check("look:covered", poke <= 1, poke <= 1 ? "nothing on the deck stands through the fairing's roof (3 mm under it at least; a rounded corner is cut clear of a bay's corner)" : `${Math.round(poke)} mm^3 of what stands on the deck (with its 3 mm clearance) stands through the fairing's roof (${poking.join(", ")}): it is cut open round it`);
+  if (lidar) b.A.check("look:lidar_view", top + h <= scanZ - 6, `the fairing's top (${Math.round(top + h)} mm) is ${Math.round(scanZ - top - h)} mm under the LiDAR's scan plane (${Math.round(scanZ)} mm): it sees all round over the body`);
+  const pal = req.fairing ? PALETTES[req.fairing.palette] : undefined;
+  b.A.design.performance.shell = `${shape} fairing${req.fairing && req.fairing.preset !== "studio" ? ` (${req.fairing.preset})` : ""}, ${shellOnly.length} printed piece${shellOnly.length > 1 ? "s" : ""}${trims.length ? ` + ${trims.map((t) => t.replace(/^shell_/, "")).join(" and ")}` : ""}`;
+  b.A.design.assumptions.push(`Fairing: a ${shape} body${req.fairing && req.fairing.preset !== "studio" ? ` in the ${req.fairing.preset} style` : ""} over the deck, ${Math.round(2 * envelope.a)} x ${Math.round(2 * envelope.b)} x ${Math.round(h)} mm (${ratio.toFixed(2)} x the wheel's diameter), printed in ${shellOnly.length} piece${shellOnly.length > 1 ? "s" : ""} with a 2.4 mm wall: the upper body${pal ? ` in ${pal.names.primary}` : ""} and the skirt under the seam${pal ? ` in ${pal.names.trim}` : ""}, joined along the seam by M3 screws into heat-set inserts. Panel lines are 0.9 mm deep (1.5 mm of wall under them)${req.fairing?.vents ? ", the vent slots run through the flanks behind the middle" : ""}${trims.length ? `; the light lens and the badge sit in 1.2 mm pockets (1.2 mm of wall behind them) and screw in from inside` : ""}. It is open underneath, screwed to the deck, with a window for each camera and for the switch and USB port${lidar ? ", and stays under the LiDAR's scan plane" : ""}. Its mass is carried in the drive sizing and the tipping check. Print the pieces upright on their open bottoms with supports under the roof, or the flat-topped silhouettes upside down.`);
+}
+/** A wheeled fairing's height over the deck: its silhouette's share of the wheel's diameter, at least 10 mm over what it
+ *  covers (under its low part, a wedge's nose) and a quarter of the deck's length. */
+function fairingHeight(shape: FairingShape, wheelR: number, L: number, cover: number) {
+  // (a wedge's nose and a cab's hood are its low part: that part clears what it covers)
+  return Math.max(PROPORTION[shape].toWheel * 2 * wheelR, (cover + 10) / PROPORTION[shape].shoulder, 0.24 * L);
+}
+/** Printed hub caps on every wheel, in the fairing's accent: a shallow dish, spokes or a turbine, pressed onto the wheel's
+ *  outer face (a 0.3 mm gap is modelled) and turning with it. */
+function hubCaps(b: Build, style: import("../styling.ts").HubStyle) {
+  if (!b.A.spec.materials.some((m) => m.name === "badge")) b.A.spec.materials.push({ name: "badge", color: [0.96, 0.45, 0.1, 1] });
+  for (const l of [...b.A.spec.links]) {
+    if (!/_wheel$/.test(l.name) || l.role !== "wheel") continue;
+    const key = String((l.geometry as { params?: { key?: unknown } }).params?.key ?? ""), wi = wheelInfo(key), r = wi.mec ? 0.36 * wi.r : 0.5 * wi.r;
+    b.printed(`${l.name.replace(/_wheel$/, "")}_hub_cap`, l.name, [{ op: "at", T: b.w(l.name), of: hubCapOps(style, r, wi.zFar) }], "badge", "trim");
+  }
+  b.A.fastener("printed hub cap (pressed onto the wheel's hub, a drop of glue)", b.A.spec.links.filter((l) => /_hub_cap$/.test(l.name)).length);
 }
 
 // ============================================================================ wheeled bases
@@ -1144,12 +1219,15 @@ function designBase(kind: BaseKind, req: MobileRequest): RobotSpecification {
     const { items, compute } = parts;
     const top = b.deckTop;
     const front = L / 2, lidarAt: [number, number] = [-L / 2 + 36, 0];
+    // a fairing's top (styling.ts proportions): a LiDAR stands on a mast that lifts its scan plane over it
+    const fair = req.shell?.fairing && isFairing(req.shell.shape) ? req.shell : undefined;
+    const fairTop = (bayTop: number) => fair ? top + fairingHeight(fair.shape as FairingShape, wi.r, L, bayTop + 3 - top) : -Infinity;
     const { reserved, area } = deckRects(L, W, sensors);
     if (packBay(items, area, pad(reserved))) {
       const clear = electronicsBay(b, items, area, pad(reserved), top);
       const zT = enclosure(b, items, area, pad(reserved), top, clear, "base_link", "electronics_enclosure", true, { mast: sensors.includes("lidar") ? 0 : undefined }) ?? clear + 8;
       // the lidar stands in a ring inside the compartment: its lead stays inside, through the ring's window
-      if (sensors.includes("lidar")) { lidarMast(b, lidarAt[0], lidarAt[1], top, zT - 8 + 10.4); b.H.bayOf.set("lidar", "electronics_enclosure"); }
+      if (sensors.includes("lidar")) { lidarMast(b, lidarAt[0], lidarAt[1], top, Math.max(zT - 8 + 10.4, fairTop(zT) + 1)); b.H.bayOf.set("lidar", "electronics_enclosure"); }
     } else {
       // too much for one deck (TurtleBot "waffle" layout): battery and drivers below, computer, IMU and
       // regulator on an upper deck on four printed pillars, the lidar on top of it
@@ -1167,7 +1245,7 @@ function designBase(kind: BaseKind, req: MobileRequest): RobotSpecification {
       const upTop = zU + 4;
       const clear = electronicsBay(b, high, uArea, pad(uRes), upTop, "upper_deck");
       const zT = enclosure(b, high, uArea, pad(uRes), upTop, clear, "upper_deck", "electronics_enclosure", { sw: false }, { mast: sensors.includes("lidar") ? uRes.length - 1 : undefined }) ?? clear + 8;
-      if (sensors.includes("lidar")) { lidarMast(b, ux0 + 37, 0, upTop, zT - 8 + 10.4, "upper_deck"); b.H.bayOf.set("lidar", "electronics_enclosure"); }
+      if (sensors.includes("lidar")) { lidarMast(b, ux0 + 37, 0, upTop, Math.max(zT - 8 + 10.4, fairTop(zT) + 1), "upper_deck"); b.H.bayOf.set("lidar", "electronics_enclosure"); }
       lidGrommets(b, "power_bay", "electronics_enclosure");
     }
     if (sensors.includes("depth")) depthCamera(b, front - 14, 0, top + 40, top);
@@ -1179,7 +1257,8 @@ function designBase(kind: BaseKind, req: MobileRequest): RobotSpecification {
         { op: "hole", a: [x + 4, y, top - 1], b: [x + 4, y, top + 5], d: 3.4 }], "printed_dark");
     }
     if (sensors.includes("imu")) b.sensor("imu_frame", "imu", "imu", translation([12.8, 11.35, 2]), { rate_hz: 400 });
-    if (req.shell) addShell(b, req.shell, { x0: -L / 2, x1: L / 2, y0: -W / 2, y1: W / 2, z0: top });
+    if (req.shell?.fairing && isFairing(req.shell.shape)) { hubCaps(b, req.shell.fairing.hub); addFairing(b, req.shell, L, W, top, wi.r); }
+    else if (req.shell) addShell(b, req.shell, { x0: -L / 2, x1: L / 2, y0: -W / 2, y1: W / 2, z0: top });
     // cargo sits on the deck top over the centre
     const extraLoads: PointLoad[] = cargo > 0 ? [{ link: "base_link", at: [0, 0, (top + 40) / 1000], massKg: cargo }] : [];
     const eng = engineer(b, { motor, wheel, nDriven: stations.length, battery, compute, eff: kind === "mecanum" ? 0.85 : 1, skid: kind === "four", casterMaxKg: kind === "diff" ? Number(part("ball_caster_pololu_2692").specs.max_robot_mass_kg) : undefined, extraMassKg: cargo, extraLoads });

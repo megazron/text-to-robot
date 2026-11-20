@@ -88,10 +88,12 @@ $ node cli/src/index.ts "a red 6 dof arm with 70 cm reach, a wrist camera and no
 | `wrist camera`, `lidar on the front`, `no lidar`, `suction cup` | sensors and gripper, including negation |
 | `robot dog`, `mobile manipulator`, `mecanum`, `hexapod`, `cobot` | template family |
 | `called Atlas`, `painted blue`, `for a 1.85 m wearer` | name, colour, suit size (a Mark 43 is scaled as a whole; there is no body model) |
-| `sci-fi`, `rugged`, `retro`, `steampunk`, `cute` | a style: its shell and its palette (sci-fi white and cyan, rugged olive and safety yellow, retro cream and teal...) |
+| `sleek`, `sci-fi`, `rugged`, `retro`, `industrial style`, `minimalist` | a design preset: its fairing silhouettes, details and palettes (sleek: wedge or dome, few lines, no vents; rugged: slab or cab, deep panel lines, vents, a bumper; retro: round lamps and a belt line in cream and teal...) |
+| `steampunk`, `cute`, `cartoon`, `boxy` | a costume shell: a cube with rivets, a capsule with a big head and eyes |
+| `no fairing`, `bare chassis` | the robot without its fairing |
 | `bulky`, `sleek`, `bigger shoulders`, `smooth panels`, `black and gold` | the Mark 43 armour itself: forged again with that build, pauldrons, panels or paint |
 
-A robot asked for by its type keeps the house colours; one made for a job (`a robot that waters my plants`) gets a palette of its own, chosen by the job, so two different jobs never give the same-looking robot and the same job always the same one (`tests/fidelity/variety.test.ts` holds 100 prompts to that). A colour you name paints the printed body, its accents a shade deeper.
+Every wheeled base, legged robot, arm, drone and humanoid gets a **designed look** of its own: a fairing silhouette (pod, wedge, cab, dome, slab or drum), a palette of a body colour, an accent and a dark trim, and printed details, chosen by what the prompt means (the same prompt always gives the same robot, different prompts different-looking ones; `tests/fidelity/design-look.test.ts` holds 100 prompts to that). A colour you name is the body colour; a robot made for a job (`a robot that waters my plants`) gets its job's own hue. The 24 gallery prompts, typed in as they are (and the gallery's jobs, said any way: `a robot to water my plants`), keep the gallery robots as they were designed, simulated and rendered. See [Designed looks](#designed-looks).
 
 **Changing a robot** (the Modify box, or `text-to-robot modify`) edits the robot that is there. Small edits are made in place: `make it blue` changes colours and nothing else, `change the arm to 4 dof`, `add a camera`, `remove the gripper`, `carry 1 kg` re-size its parts. A change that needs another body re-plans it: `only 4 wheels`, `only 3 wheels`, `add an arm`, `remove one arm`, `make it look like a shoe`, `no shell`, `make it bigger` (a humanoid's height, an arm's reach) read the robot back into its plan (body, wheels, arms and joints, gripper, sensors, look, colour, payload, budget), change that, and design the robot again from it, so six wheels become four with the drive, wiring, power, BOM, URDF, CAD and firmware made for four. Every change is listed (`~ 6 wheels -> 4 wheels`, `~ colour -> red`), and what could not be done is said, never dropped. `undo` goes back one version; every version stays in the history. `tests/fidelity/modify.test.ts` runs chains of changes.
 
@@ -102,6 +104,35 @@ Families: 1-7 DOF arms (a larger count is built as 7 and says so), work cells of
 Prompts that name no robot type are read in three steps, and the result says which one was used: the rules above; a knowledge table of tasks, objects, animals and named robots (`a robot that waters my plants`, `a toaster`, `a robot fish`, `R2-D2` read as its body plan); and, when no keyword matches, the closest table entry by meaning. Markup and scripts are removed before reading, a harmful request gets a safe robot with the harmful part left out, an impossible one the nearest real thing, nonsense or an empty prompt the general-purpose robot (each said), and words in Hindi, Urdu, Japanese and Chinese are read for the common robot terms.
 
 On the website there are two reading options in **Create > How it reads**. **Smarter reading** is a small sentence model (all-MiniLM-L6-v2, about 30 MB with its runtime, served by this site and cached by the browser) that runs in the tab when the word table cannot place a prompt; it is on by default on devices with 4 or more cores and 4 GB or more of memory. Counts and structure never depend on it. **Your own model** takes an Anthropic key (`claude-opus-5-5` by default) or any OpenAI-compatible endpoint: the model writes a body plan as JSON, and the page checks it field by field and builds it from real parts like any other prompt. The key stays in that browser (this tab, or this device if *Remember on this device* is ticked) and goes only to the provider chosen; if the model fails, refuses or returns something unusable, the local parser designs the robot and the log says so. Every result starts with a *Designed by* line that names the path. [docs/OPEN_PROMPTS.md](OPEN_PROMPTS.md) has how 396 open prompts are answered.
+
+## Designed looks
+
+A robot should look designed, not like boxes on wheels, and still be a robot you can print and build. Every robot of the
+kinds above wears a printed fairing, sized by proportion rules and fitted like any other part:
+
+- **Proportions.** A wheeled body is 0.75 to 1.1 times its wheel's diameter tall over the deck (by silhouette), reaches past
+  whatever stands at its nose, overhangs the deck a little and covers the bay's wall fixtures; a check (`look:proportion`)
+  says where it landed. A wedge's nose and a cab's hood stand clear of what is under them, and a check (`look:covered`)
+  says nothing on the deck stands through the roof. A legged body's fairing follows the body's length; an arm's base fairing stands round the
+  pedestal under the turret and under anything the folded arm sweeps past (a check holds every joint's range); a humanoid wears a helmet; a drone a canopy over its pack.
+- **Silhouettes.** Pod (soft and pillowed), wedge (a sloped nose), cab (a raised cabin), dome, slab (chamfered,
+  industrial) and drum (an arm's base), chosen per body kind. A LiDAR stands on a mast that lifts its scan plane over the
+  fairing (`look:lidar_view` checks it sees all round).
+- **Details, all printable.** On wheeled, legged and arm fairings, a 2.4 mm wall; panel lines and a belt line 1.2 mm wide and 0.9 mm deep (1.5 mm of wall
+  left); vent slots through the flanks; a bumper rail on the skirt's nose; a light bar or two round lamps and a badge
+  with the prompt chevron, each its own part in a 1.2 mm pocket (1.2 mm of wall behind it); a two-tone split: the upper
+  body in the body colour, the skirt in the dark trim, and (but in the minimal look) an accent band over the seam, a ring of
+  the wall printed in the accent. The light bar glows in the 3D view. Printed hub caps (a dish, five spokes or a turbine) on every wheel,
+  in the accent. An arm's base fairing keeps to panel lines and vents in one colour (a folded wrist sweeps close by). No third-party logos.
+- **Palettes.** Fourteen, each named the way its filament is sold (arctic white, signal orange, graphite...). A colour you
+  name is the body colour; the accent parts, the band, the badge and the hub caps keep the look's accent (silver or graphite
+  when the accent is too close to the colour named), so a red arm is red and silver, not red all over; the parts
+  list buys the filament per colour. The 3D view shows printed parts as matte plastic, aluminium anodised, tyres as rubber
+  and the light lenses lit.
+- **Still a robot.** The fairing is cut 3 mm clear of every part and given windows for cameras, the switch and USB; its
+  pieces are cut to the bed; its mass is in the drive, leg and flight sizing and the tipping checks; the joints are swept
+  with it on. Shell pieces print upright on their open bottoms with supports under the roof (the flat-topped ones also
+  upside down).
 
 ## How it works
 

@@ -259,6 +259,18 @@ function buildRobot(spec) {
     });
   });
 }
+/** How a part's surface reads: matte printed plastic, anodised aluminium, rubber tyres, a lit lens, bare metal. */
+function finish(l) {
+  const m = l.material ?? "";
+  if (m.startsWith("armour_")) return { metalness: 0.6, roughness: 0.4 };
+  if (m === "wearer") return { metalness: 0, roughness: 0.9 };
+  if (m === "aluminium") return { metalness: 0.65, roughness: 0.38 };
+  if (m === "metal") return { metalness: 0.8, roughness: 0.3 };
+  if (m === "rubber" || l.role === "wheel") return { metalness: 0, roughness: 0.95 };
+  if (m === "trim_light") return { metalness: 0, roughness: 0.18 };
+  if (/^(?:printed|shell|badge|link_mat)/.test(m)) return { metalness: 0.02, roughness: 0.6 };
+  return { metalness: 0.25, roughness: 0.55 };
+}
 /** One link's meshes (its visual or, with Collision on, its collision shapes); mesh files load into `pending`. */
 function linkGroup(spec, l, revision, pending) {
   const group = new THREE.Group(); group.matrixAutoUpdate = false;
@@ -274,10 +286,11 @@ function linkGroup(spec, l, revision, pending) {
   for(const shape of shapes) {
     const geom = makeGeom(shape);
     const color = matColor(spec, l.material, l.role === "gripper" ? 0x2a5bd0 : l.role === "wheel" ? 0x1a1a1f : l.role === "base" ? 0x3f3f46 : 0xd8d8dc);
-    const mesh = new THREE.Mesh(geom, new THREE.MeshStandardMaterial({ color, metalness: l.material?.startsWith("armour_") ? 0.6 : l.material === "wearer" ? 0 : 0.25, roughness: l.material?.startsWith("armour_") ? 0.4 : l.material === "wearer" ? 0.9 : 0.55,
-      ...(l.material === "lens_glow" ? { emissive: new THREE.Color(0x9fe8ff), emissiveIntensity: 1.2 } : {}), transparent: isCol, opacity: isCol ? 0.45 : 1, wireframe: isCol }));
+    const fin = finish(l);
+    const mesh = new THREE.Mesh(geom, new THREE.MeshStandardMaterial({ color, metalness: fin.metalness, roughness: fin.roughness,
+      ...(l.material === "lens_glow" ? { emissive: new THREE.Color(0x9fe8ff), emissiveIntensity: 1.2 } : l.material === "trim_light" ? { emissive: color.clone(), emissiveIntensity: 0.55 } : {}), transparent: isCol, opacity: isCol ? 0.45 : 1, wireframe: isCol }));
     mesh.matrixAutoUpdate = false; mesh.matrix.copy(mat4(poseArr(l.origin)));
-    mesh.userData.linkName = l.name;
+    mesh.userData.linkName = l.name; mesh.userData.glow = mesh.material.emissive?.getHex() ?? 0;   // a lens's own light
     if (g.type === "mesh" && !isCol) {
       preview.expected++; mesh.userData.counted = true;
       if (state.id) pending.push(loadMeshInto(mesh, g, revision, state.id));
@@ -509,7 +522,7 @@ function highlight() {
   for (const [name, group] of state.meshes) {
     const mesh = group.children[0];
     if (!mesh.material.emissive) continue;
-    const glow = mesh.material.emissiveIntensity > 1 ? 0x9fe8ff : 0x000000;   // lenses keep their light
+    const glow = mesh.userData.glow ?? 0;   // lenses and light bars keep their light
     mesh.material.emissive = new THREE.Color(state.selection?.kind === "link" && state.selection.name === name ? 0x0e6b3a : glow);
   }
   invalidate();

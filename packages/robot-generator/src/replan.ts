@@ -15,9 +15,11 @@ import { MAX_ARM_DOF } from "./families.ts";
 export type Base = "diff" | "three" | "four" | "mecanum" | "rover" | "quadruped" | "hexapod" | "humanoid" | "drone" | "arm" | "cell" | "torso";
 export interface Plan {
   base: Base; wheels: number; arms: number[]; gripper: boolean; sensors: string[];
-  shell?: ShellRequest & { said?: string }; colour?: string; payloadKg?: number; budget?: number; reachM?: number; heightM?: number;
+  shell?: ShellRequest & { said?: string }; /** a style word's industrial preset (the fairing comes with the new prompt) */ style?: string; /** asked for with no fairing */ bare?: boolean; colour?: string; payloadKg?: number; budget?: number; reachM?: number; heightM?: number;
 }
 const BASE_OF: Record<string, Base> = { mobile_diff_drive: "diff", mobile_skid_steer: "four", mobile_mecanum: "mecanum", mobile_rocker_bogie: "rover", quadruped: "quadruped", hexapod: "hexapod", humanoid: "humanoid", drone_quad: "drone", arm: "arm", arm_workcell: "cell" };
+/** the bodies that wear a fairing (styling.ts) */
+const FAIRED = new Set<Base>(["diff", "three", "four", "mecanum", "quadruped", "hexapod", "humanoid", "drone", "arm"]);
 const NUM: Record<string, number> = { a: 1, an: 1, one: 1, single: 1, two: 2, both: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, another: 1, second: 1 };
 const WORD = ["no", "one", "two", "three", "four", "five", "six", "seven", "eight"];
 
@@ -31,7 +33,7 @@ export function planFromSpec(spec: RobotSpecification): Plan | undefined {
   if (base === "cell" && req.layout === "torso") base = "torso";
   const sensors = [...new Set(((req.sensors as string[] | undefined) ?? spec.sensors.map((s) => s.type)).filter((s) => ["camera", "depth", "lidar", "imu"].includes(s)))].filter((s) => s !== "imu" || base === "arm");
   return { base, wheels: base === "rover" ? (Number(req.wheels ?? b.driven) >= 6 ? 6 : 4) : b.wheels, arms: b.arms.map((a) => a.dof),
-    gripper: spec.end_effectors.length > 0, sensors, ...(req.shell ? { shell: req.shell } : {}), ...(meta.colour ? { colour: meta.colour } : {}),
+    gripper: spec.end_effectors.length > 0, sensors, ...(req.shell && !req.shell.fairing ? { shell: req.shell } : {}), ...(req.shell?.fairing && req.shell.fairing.preset !== "studio" ? { style: req.shell.fairing.preset } : {}), ...(meta.colour ? { colour: meta.colour } : {}),
     ...(req.payloadKg !== undefined && base !== "humanoid" ? { payloadKg: req.payloadKg } : {}), ...(req.budget !== undefined ? { budget: req.budget } : {}),
     ...(req.reachM !== undefined ? { reachM: req.reachM } : {}), ...(req.heightM !== undefined ? { heightM: req.heightM } : {}) };
 }
@@ -58,9 +60,11 @@ export function planPrompt(p: Plan): string {
   const parts = [body];
   const shell = p.shell ? `${p.shell.shape === "emoji" && p.shell.emoji ? p.shell.emoji : p.shell.shape} shaped${p.shell.style && p.shell.style !== "plain" ? `, ${p.shell.style}` : ""}` : "";
   if (shell) parts[0] = `${parts[0]}, ${shell}`;
+  else if (p.style) parts[0] = `${p.style === "scifi" ? "a sci-fi" : /^[aeiou]/.test(p.style) ? `an ${p.style}` : `a ${p.style}`} ${parts[0].replace(/^an?\s+/, "")}`;
   const withs = [...p.sensors.map((s) => (s === "depth" ? "a depth camera" : s === "imu" ? "an imu" : `a ${s}`))];
   if (["arm", "cell", "torso", "rover", "quadruped", "humanoid"].includes(p.base) && arms.length) withs.push(p.gripper ? "a gripper" : "no gripper");
   if (withs.length) parts.push(`with ${withs.join(" and ")}`);
+  if (p.bare) parts.push("with no fairing");
   if (p.colour) parts.push(`painted ${p.colour}`);
   if (p.payloadKg !== undefined) parts.push(`carrying ${p.payloadKg} kg`);
   if (p.reachM !== undefined && ["arm", "cell"].includes(p.base)) parts.push(`with ${Math.round(p.reachM * 1000)} mm reach`);
@@ -81,6 +85,8 @@ export function planDiff(a: Plan, b: Plan): string[] {
   for (const s of b.sensors) if (!a.sensors.includes(s)) out.push(`+ ${s}`);
   for (const s of a.sensors) if (!b.sensors.includes(s)) out.push(`- ${s}`);
   const sh = (p: Plan) => (p.shell ? `${p.shell.shape === "emoji" ? `${p.shell.emoji} emoji` : p.shell.shape}${p.shell.style && p.shell.style !== "plain" ? ` (${p.shell.style})` : ""}` : "");
+  if ((a.style ?? "") !== (b.style ?? "")) out.push(!b.style ? `- ${a.style} style` : !a.style ? `+ ${b.style} style` : `~ ${a.style} style -> ${b.style} style`);
+  if (!!a.bare !== !!b.bare) out.push(b.bare ? "- fairing" : "+ fairing");
   if (sh(a) !== sh(b)) out.push(!b.shell ? `- ${sh(a)} shell` : !a.shell ? `+ ${sh(b)} shell` : `~ ${sh(a)} shell -> ${sh(b)} shell`);
   if (a.colour !== b.colour && b.colour) out.push(`~ colour -> ${b.colour}`);
   if (a.payloadKg !== b.payloadKg && b.payloadKg !== undefined) out.push(`~ payload -> ${b.payloadKg} kg`);
@@ -113,7 +119,7 @@ export function armAsk(c: string, cur: number): number | undefined {
   return undefined;
 }
 /** "no shell", "remove the shape", "without the heart", "plain look": the look taken off. */
-export const removesShell = (c: string, shell?: ShellRequest) => /\b(?:no|remove|without|drop|take\s+off|get\s+rid\s+of|delete)\s+(?:the\s+|its\s+|any\s+)?(?:shells?|shape|look|cover|costume|disguise)\b|\bplain\s+(?:look|robot)\b/.test(c)
+export const removesShell = (c: string, shell?: ShellRequest) => /\b(?:no|remove|without|drop|take\s+off|get\s+rid\s+of|delete)\s+(?:the\s+|its\s+|any\s+)?(?:shells?|shape|look|cover|costume|disguise|fairings?|bodywork)\b|\bplain\s+(?:look|robot)\b/.test(c)
   || (!!shell && new RegExp(String.raw`\b(?:remove|without|drop|take\s+off|no)\s+(?:the\s+)?${shell.shape}\b`).test(c));
 /** "make it bigger", "twice as big", "20 % smaller": a size factor */
 export function sizeAsk(c: string): number | undefined {
@@ -129,9 +135,16 @@ export function sizeAsk(c: string): number | undefined {
 export function editPlan(p: Plan, clause: string, original: string): string[] | undefined {
   const c = normalize(clause);
   // a look: "make it look like a shoe", "heart shaped", "🦄", "no shell"
-  if (removesShell(c, p.shell)) { if (!p.shell) return ["! It has no shell to take off"]; delete p.shell; return []; }
+  if (removesShell(c, p.shell)) {
+    // (no shell is no shell: the fairing does not come back in its place)
+    if (p.shell) { delete p.shell; if (FAIRED.has(p.base)) p.bare = true; return []; }
+    if (p.bare || !FAIRED.has(p.base)) return ["! It has no shell to take off"];
+    delete p.style; p.bare = true; return [];
+  }
   const look = /\b(?:look|looks|looking|shaped|shape|style|styled)\b|\p{Extended_Pictographic}/u.test(clause) || saysStyle(c) ? readShell(c, clause.trim()) : undefined;
-  if (look) { p.shell = { shape: look.shape, style: look.style, ...(look.emoji ? { emoji: look.emoji } : {}) }; return look.note ? [`= ${look.note}`] : []; }
+  // a style word alone is a preset of the robot's own fairing; a shape is a shell over it
+  if (look?.preset) { delete p.shell; delete p.bare; p.style = look.preset; return look.note ? [`= ${look.note}`] : []; }
+  if (look) { delete p.style; p.shell = { shape: look.shape, style: look.style, ...(look.emoji ? { emoji: look.emoji } : {}) }; return look.note ? [`= ${look.note}`] : []; }
   const wheeled = ["diff", "three", "four", "mecanum", "rover"].includes(p.base), counted = /\b(?:\d+|two|three|four|five|six|eight)[\s-]+wheel/.test(c) && !/\b(?:add|remove|drop|more|fewer|less|extra|another|take\s+off)\b/.test(c);
   // (more or fewer: of the driven wheels, a two-wheel base's casters not counted)
   const w = /\bwheel/.test(c) && (wheeled || counted) ? wheelAsk(c, !counted && (p.base === "diff" || p.base === "three") ? 2 : p.wheels) : undefined;

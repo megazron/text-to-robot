@@ -207,7 +207,7 @@ export function designHexapod(req: LeggedRequest): RobotSpecification {
   const ladder = [...LADDERS.feetech.keys] as string[];
   const cfg: HexCfg = { keys: { coxa: ladder[0], femur: ladder[0], tibia: ladder[0] }, Lf: 85, Lt: 160, footR: 10, batt: "lipo_3s_2200", extraKg: req.payloadKg ?? 0.2 };
   // a shape shell: the legs carry its estimated mass (the most it can weigh, from the body's size)
-  const shellKg = req.shell ? shellMassEstimate(bodyEnvelope(buildHexapod(req, cfg, sensors).A, /^top_deck/)) : 0;
+  const shellKg = req.shell ? shellMassEstimate(bodyEnvelope(buildHexapod(req, cfg, sensors).A, /^top_deck/), req.shell.fairing ? 2.6 : 2) : 0;
   cfg.extraKg += shellKg;
   let built = buildHexapod(req, cfg, sensors), torques: Record<string, number> = {};
   const poses: Record<string, number>[] = [{}];

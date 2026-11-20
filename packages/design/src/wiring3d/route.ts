@@ -56,6 +56,10 @@ export class Router {
     this.grid = new Grid([lo[0] - pad, lo[1] - pad, lo[2] - pad], [hi[0] + pad, hi[1] + pad, hi[2] + pad], s);
     for (const l of spec.links) {
       const T = f.link[l.name]; if (!T) continue;
+      // (an arm's base shell is a cover over the base: the harness runs under it and out by its slot at the back, so it
+      // is not searched round as a solid, which made routing several times slower; the wiring check still holds every
+      // wire clear of it)
+      if (l.role === "shell" && /^shell_base/.test(l.name)) continue;
       const tri = linkTriangles(l, T);
       if (tri === "skip") this.skipped.push(l.name); else if (tri) this.grid.addMesh(tri, 1);
     }

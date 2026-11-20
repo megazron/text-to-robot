@@ -4,15 +4,18 @@
 // everything on the deck and checked not to touch it, cut where it is bigger than the print bed, with windows for the
 // cameras. Its printed mass is part of the robot before the drive is sized and the tipping check is run. Deterministic.
 import { part, type Vec3 } from "@ttr/parts";
-import { Manifold, build, evaluate, invert, I4, printCheck, type Mat4, type Op } from "@ttr/solid";
+import { Manifold, build, evaluate, invert, I4, printCheck, programBounds, type Mat4, type Op } from "@ttr/solid";
+import { linkSolid } from "./clearance.ts";
 import { fk } from "./kin.ts";
 import { emojiShape, emojiDiscs } from "./emoji.ts";
+import { FAIRINGS, PALETTES, PROPORTION, badgeOps, lightOps, type Fairing, type FairingShape } from "./styling.ts";
 
-export const SHAPES = ["heart", "star", "egg", "sphere", "cube", "capsule", "shoe", "car", "dog", "cat", "spider", "fish", "bird", "dragon", "teapot", "lamp", "toaster", "can", "burger", "pizza", "donut", "blob", "emoji"] as const;
+export const SHAPES = ["heart", "star", "egg", "sphere", "cube", "capsule", "shoe", "car", "dog", "cat", "spider", "fish", "bird", "dragon", "teapot", "lamp", "toaster", "can", "burger", "pizza", "donut", "blob", "emoji", ...FAIRINGS] as const;
 export type Shape = typeof SHAPES[number];
-export const STYLES = ["plain", "cartoon", "cute", "sleek", "boxy", "retro", "steampunk", "mecha"] as const;
+export const STYLES = ["plain", "cartoon", "cute", "sleek", "boxy", "retro", "steampunk", "mecha", "scifi", "rugged", "industrial", "minimal"] as const;
 export type Style = typeof STYLES[number];
-export interface ShellRequest { shape: Shape; style?: Style; colour?: [number, number, number]; /** shape "emoji": the emoji whose outline is inflated (emoji.ts) */ emoji?: string }
+export interface ShellRequest { shape: Shape; style?: Style; colour?: [number, number, number]; /** shape "emoji": the emoji whose outline is inflated (emoji.ts) */ emoji?: string;
+  /** an industrial fairing (styling.ts): panel lines, vents, a light bar or eyes, a badge, a two-tone skirt; a LiDAR keeps its view */ fairing?: Fairing }
 
 /** The colour each shape is printed in unless the prompt names one. */
 export const SHAPE_COLOUR: Record<Shape, [number, number, number]> = {
@@ -20,7 +23,10 @@ export const SHAPE_COLOUR: Record<Shape, [number, number, number]> = {
   shoe: [0.95, 0.95, 0.97], car: [0.85, 0.15, 0.12], dog: [0.78, 0.58, 0.36], cat: [0.45, 0.45, 0.5], spider: [0.15, 0.15, 0.17], fish: [0.98, 0.55, 0.15],
   bird: [0.2, 0.55, 0.9], dragon: [0.2, 0.6, 0.3], teapot: [0.93, 0.93, 0.9], lamp: [0.95, 0.85, 0.5], toaster: [0.75, 0.77, 0.8], can: [0.85, 0.1, 0.1],
   burger: [0.8, 0.55, 0.25], pizza: [0.95, 0.75, 0.3], donut: [0.92, 0.55, 0.7], blob: [0.6, 0.85, 0.75], emoji: [0.98, 0.8, 0.2],
+  pod: [0.92, 0.93, 0.95], wedge: [0.92, 0.93, 0.95], cab: [0.92, 0.93, 0.95], dome: [0.92, 0.93, 0.95], slab: [0.92, 0.93, 0.95], drum: [0.92, 0.93, 0.95],
 };
+/** a fairing silhouette, not a thing's shape */
+export const isFairing = (s: Shape): s is FairingShape => (FAIRINGS as readonly string[]).includes(s);
 
 const D = Math.PI / 180;
 /** unit sphere, turned from a half circle */
@@ -69,6 +75,15 @@ export function shapeOps(shape: Shape, style: Style, e: { cx: number; cy: number
       case "burger": return [E(P(0, 0, 0.12), [a, b, 0.28 * h]), E(P(0, 0, 0.42), [1.02 * a, 1.02 * b, 0.16 * h]), E(P(0, 0, 0.6), [a, b, 0.42 * h])];
       case "pizza": return [H(B([cx - a, cy - b, zb], [cx - 0.75 * a, cy + b, z0 + 0.5 * h], 18), E(P(0.92, 0, 0.18), [0.12 * a, 0.12 * b, 0.33 * h])), C(P(-0.88, -0.95, 0.45), P(-0.88, 0.95, 0.45), Math.min(0.14 * a, 0.12 * h))];
       case "donut": return [E(P(0, 0, 0.32), [a, b, 0.5 * h])];
+      // fairings (styling.ts): soft, chamfered and sloped bodies that read as designed products
+      case "pod": { const r = Math.min(0.42 * Math.min(a, b, 0.575 * h), 34);
+        return [H(B([cx - a, cy - b, zb], [cx + a, cy + b, z0 + 0.72 * h], r), B([cx - 0.9 * a, cy - 0.88 * b, zb], [cx + 0.9 * a, cy + 0.88 * b, z0 + h], r))]; }
+      case "wedge": return [H(B([cx - a, cy - b, zb], [cx + a, cy + b, z0 + 0.55 * h], Math.min(12, 0.2 * h)), B([cx - a, cy - 0.94 * b, zb], [cx + 0.1 * a, cy + 0.94 * b, z0 + h], Math.min(16, 0.25 * h)))];
+      case "cab": return [B([cx - a, cy - b, zb], [cx + a, cy + b, z0 + 0.56 * h], Math.min(12, 0.2 * h)),
+        H(B([cx - 0.86 * a, cy - 0.86 * b, z0 + 0.4 * h], [cx + 0.2 * a, cy + 0.86 * b, z0 + h], Math.min(16, 0.22 * h)), B([cx - 0.9 * a, cy - 0.9 * b, z0 + 0.4 * h], [cx + 0.5 * a, cy + 0.9 * b, z0 + 0.52 * h], 6))];
+      case "dome": return [H(B([cx - a, cy - b, zb], [cx + a, cy + b, z0 + 0.55 * h], Math.min(14, 0.2 * h)), E(P(0, 0, 0.4), [0.94 * a, 0.92 * b, 0.6 * h]))];
+      case "slab": return [H(B([cx - a, cy - b, zb], [cx + a, cy + b, z0 + 0.8 * h], 5), B([cx - 0.88 * a, cy - 0.84 * b, zb], [cx + 0.88 * a, cy + 0.84 * b, z0 + h], 5))];
+      case "drum": return [H(E(P(0, 0, 0.0), [a, b, 0.16 * h]), E(P(0, 0, 0.9), [0.84 * a, 0.84 * b, 0.1 * h]))];
       case "emoji": {
         // the outline in the front view (u to +y, v down), 90 % of the envelope's width and as tall as it is wide, its foot a
         // little under the deck; each disc a cushion: as thick as the envelope at the middle, thinner towards the edge
@@ -127,6 +142,27 @@ function details(shape: Shape, style: Style, e: { cx: number; cy: number; a: num
 }
 
 export type Env = { cx: number; cy: number; a: number; b: number; h: number; z0: number };
+/** The share of these boxes' volume that lies outside a shape's cavity (0: all covered). */
+export function outsideShare(req: ShellRequest, e: Env, boxes: { lo: Vec3; hi: Vec3 }[], wall: number): number {
+  if (!boxes.length) return 0;
+  return build(() => {
+    const C = evaluate({ name: "cavity", ops: [{ op: "solid", of: shapeWorld(req.shape, req.style ?? "plain", e, wall, undefined, req.emoji) }] });
+    let out = 0, all = 0;
+    for (const q of boxes) { const Bx = evaluate({ name: "b", ops: [{ op: "box", min: q.lo, max: q.hi }] }), v = Bx.volume(); all += v; out += v - Manifold.intersection(C, Bx).volume(); }
+    return all > 0 ? out / all : 0;
+  });
+}
+/** The volume (mm^3) of these boxes, each grown `clear` mm up (and sideways, or drawn in by `inset` mm from its sides to
+ *  look only at its top), that lies outside a shape's cavity: what would stand through its roof (0: all covered). */
+export function outsideVolume(req: ShellRequest, e: Env, boxes: { lo: Vec3; hi: Vec3 }[], wall: number, clear = 3, inset = 0): number {
+  if (!boxes.length) return 0;
+  return build(() => {
+    const C = evaluate({ name: "cavity", ops: [{ op: "solid", of: shapeWorld(req.shape, req.style ?? "plain", e, wall, undefined, req.emoji) }] });
+    let out = 0;
+    for (const q of boxes.filter((b) => b.hi[0] - b.lo[0] > 2 * inset + 1 && b.hi[1] - b.lo[1] > 2 * inset + 1)) { const Bx = evaluate({ name: "b", ops: [{ op: "box", min: [q.lo[0] - (inset ? -inset : clear), q.lo[1] - (inset ? -inset : clear), Math.max(q.lo[2], e.z0 + 0.5)], max: [q.hi[0] + (inset ? -inset : clear), q.hi[1] + (inset ? -inset : clear), q.hi[2] + clear] }] }); out += Bx.volume() - Manifold.intersection(C, Bx).volume(); }
+    return out;
+  });
+}
 export interface FittedShell { ops: Op[]; envelope: { cx: number; cy: number; a: number; b: number; h: number; z0: number }; scale: number; overlapMm3: number; tries: number }
 /** World boxes (mm) the shell must clear, windows (camera lenses) it must leave open, and where it sits. */
 export interface ShellFit { boxes: { lo: Vec3; hi: Vec3 }[]; windows: { at: Vec3; dir: Vec3; d: number }[]; deck: { x0: number; x1: number; y0: number; y1: number; z0: number }; maxHalfWidth: number; wall?: number; grow?: boolean; wrap?: boolean; /** the most `grow` may scale it */ maxScale?: number; /** solids the shell's outside must not meet as it grows (it shrinks to 0.8 for them if it must) */ avoid?: Op[]; /** "top": the shape lies on the deck, its outline seen from above */ orient?: "front" | "top";
@@ -181,6 +217,7 @@ function shellProgram(req: ShellRequest, style: Style, e: FittedShell["envelope"
   const bumps = (w: number): Op[] => fit.wrap ? fit.boxes.filter((q) => q.hi[2] > e.z0 + 10).map((q) => ({ op: "box", min: [q.lo[0] - 3 - wall + w, q.lo[1] - 3 - wall + w, q.lo[2] - 3 - wall + w], max: [q.hi[0] + 3 + wall - w, q.hi[1] + 3 + wall - w, q.hi[2] + 3 + wall - w], r: Math.max(0.5, 8 - w) })) : [];
   const outer = [...shapeWorld(req.shape, style, e, 0, fit.orient, req.emoji), ...bumps(0)], inner = [...shapeWorld(req.shape, style, e, wall, fit.orient, req.emoji), ...bumps(wall)];
   const ops: Op[] = [{ op: "solid", of: [...outer, { op: "subtract", of: inner }] }, ...oriented(e, fit.orient, (es) => details(req.shape, style, es))];
+  if (req.fairing && isFairing(req.shape) && fit.orient !== "top" && wall >= 2.4) ops.push(...fairingDetails(req.shape, req.fairing, e, (w) => [...shapeWorld(req.shape, style, e, w, fit.orient), ...bumps(w)]));
   // the floor: everything below the deck top is cut away, so the cavity opens onto the deck
   const floor = fit.floorZ ?? e.z0;
   ops.push({ op: "cutbox", min: [e.cx - 4 * e.a - 400, e.cy - 4 * e.b - 400, floor - 2000], max: [e.cx + 4 * e.a + 400, e.cy + 4 * e.b + 400, floor] });
@@ -192,6 +229,38 @@ function shellProgram(req: ShellRequest, style: Style, e: FittedShell["envelope"
   for (const wdw of fit.windows) ops.push({ op: "hole", a: wdw.at, b: [wdw.at[0] + wdw.dir[0] * 4 * e.a, wdw.at[1] + wdw.dir[1] * 4 * e.a, wdw.at[2] + wdw.dir[2] * 4 * e.a], d: wdw.d });
   // four lugs at the foot of the wall, an M3 down into the deck through each
   return ops;
+}
+
+/** Where a fairing's two-tone seam runs (world z, mm). */
+export const skirtZ = (shape: FairingShape, e: Env) => e.z0 + PROPORTION[shape].skirt * e.h;
+/** The height of a fairing's accent band, printed in the accent over the skirt's seam (mm; 0: none, the minimal look). */
+export const bandH = (f: Fairing, e: Env) => (f.preset === "minimal" ? 0 : Math.round(Math.min(12, Math.max(6, 0.08 * e.h))));
+/**
+ * A fairing's industrial details, all printable in the shell's own wall (2.4 mm): panel lines 1.2 mm wide and 0.9 mm deep
+ * (1.5 mm of wall left under them), a belt line, rows of vent slots through the flanks, and a bumper rail on the skirt's nose.
+ * The grooves stay above the two-tone seam, so the skirt and its bumper are never cut through.
+ */
+function fairingDetails(shape: FairingShape, f: Fairing, e: Env, at: (w: number) => Op[]): Op[] {
+  const { cx, cy, a, b, h, z0 } = e, zs = skirtZ(shape, e) + bandH(f, e), out: Op[] = [], BIG = 4 * Math.max(a, b, h) + 50, depth = 0.9;
+  const groove = (min: Vec3, max: Vec3): Op => ({ op: "subtract", of: [{ op: "box", min, max }, { op: "subtract", of: at(depth) }] });
+  // panel lines across the body, front to back pattern by count
+  for (const u of [-0.5, 0.42, -0.08].slice(0, f.panels)) out.push(groove([cx + u * a - 0.6, cy - BIG, zs + 3], [cx + u * a + 0.6, cy + BIG, z0 + BIG]));
+  // a belt line round the body, high on the flank (clear of the light bar)
+  const zl = z0 + PROPORTION[shape].light * h;
+  if (f.belt) { const zb = z0 + 0.8 * h; if (Math.abs(zb - zl) > 8 && zb > zs + 6) out.push(groove([cx - BIG, cy - BIG, zb - 0.6], [cx + BIG, cy + BIG, zb + 0.6])); }
+  // vents: four slots 3 mm high through each flank, behind the middle
+  if (f.vents) for (let k = 0; k < 4; k++) {
+    const z = zs + 6 + k * 6;
+    if (z + 3 > z0 + 0.62 * h) break;
+    for (const s of [-1, 1]) out.push({ op: "cutbox", min: [cx - 0.72 * a, s > 0 ? cy + 0.5 * b : cy - BIG, z], max: [cx - 0.38 * a, s > 0 ? cy + BIG : cy - 0.5 * b, z + 3] });
+  }
+  // a bumper rail on the skirt's nose (and its tail when there is room), solid, sunk into the wall
+  if (f.bumper) for (const s of [1, -1]) {
+    const zt = Math.min(skirtZ(shape, e) - 2, z0 + 0.16 * h), zb = Math.max(z0 + 2, zt - 12);
+    if (zt - zb < 5) continue;
+    out.push({ op: "box", min: [s > 0 ? cx + a - 16 : cx - a - 5, cy - 0.7 * b, zb], max: [s > 0 ? cx + a + 5 : cx - a + 16, cy + 0.7 * b, zt], r: 2 });
+  }
+  return out;
 }
 
 /** Split a shell program into pieces that each fit the bed (250 x 210 x 220 mm, any orientation): halves, then quarters. */
@@ -221,7 +290,11 @@ export interface PlaceShell extends ShellFit {
   /** extra cuts, world mm: what the moving parts sweep, a turret's turning circle, a prop's disc */
   cuts?: Op[];
   /** how a piece is added (the wheeled designer adds its own way, so its parts keep their names and frames) */
-  emit?: (name: string, ops: Op[]) => void;
+  emit?: (name: string, ops: Op[], material?: string) => void;
+  /** a fairing's skirt in the trim colour (default on when it has the wall for its details) */
+  twoTone?: boolean;
+  /** a fairing's lamp and badge, parts of their own standing proud of it (default on; off where a folded arm sweeps past) */
+  trims?: boolean;
 }
 type Asm = import("./assembly.ts").Assembly;
 const mat4Of = (T: { R: number[][]; p: number[] }): Mat4 => [T.R[0][0], T.R[1][0], T.R[2][0], 0, T.R[0][1], T.R[1][1], T.R[2][1], 0, T.R[0][2], T.R[1][2], T.R[2][2], 0, T.p[0] * 1000, T.p[1] * 1000, T.p[2] * 1000, 1];
@@ -250,18 +323,99 @@ export function rigidWith(A: Asm, link: string): Set<string> {
   return new Set(A.spec.links.map((l) => l.name).filter((n) => bodyOf(n) === root));
 }
 
-/** Fit, cut, split and bolt on a shell. Returns its pieces and fit; the caller records what it means for its robot. */
-export function placeShell(A: Asm, req: ShellRequest, o: PlaceShell): { pieces: { name: string; ops: Op[] }[]; fitted: FittedShell } {
+/** Cut boxes (3 mm clear) round where a shell program still meets the exact solids of the parts rigid with `parent`. */
+function exactClearance(A: Asm, parent: string, ops: Op[]): Op[] {
+  const rigid = rigidWith(A, parent), f = fk(A.spec), out: Op[] = [];
+  const S0 = programBounds(ops);
+  const near = [...linkBoxes(A, (n) => rigid.has(n) && !/^shell/.test(n))].filter(([, q]) => [0, 1, 2].every((k) => q.lo[k] < S0.hi[k] + 1 && q.hi[k] > S0.lo[k] - 1));
+  if (!near.length) return out;
+  build(() => {
+    const S = evaluate({ name: "shell", ops });
+    for (const [n] of near) {
+      const l = A.spec.links.find((x) => x.name === n), T = f.link[n];
+      if (!l || !T) continue;
+      const solid = linkSolid(l);
+      if (!solid) continue;
+      const I = Manifold.intersection(S, solid.transform(mat4Of(T)));
+      if (I.volume() < 0.01) continue;
+      const bb = I.boundingBox();
+      out.push({ op: "cutbox", min: [bb.min[0] - 3, bb.min[1] - 3, bb.min[2] - 3], max: [bb.max[0] + 3, bb.max[1] + 3, bb.max[2] + 3] });
+    }
+  });
+  return out;
+}
+
+/** Fit, cut, split and bolt on a shell. Returns its pieces and fit; the caller records what it means for its robot.
+ *  A fairing (req.fairing) is also split at its two-tone seam (the skirt printed in the trim colour) and gets its light
+ *  lenses and its badge as parts of their own, each in a pocket of the wall that leaves at least 1.2 mm behind it. */
+export function placeShell(A: Asm, req: ShellRequest, o: PlaceShell): { pieces: { name: string; ops: Op[] }[]; fitted: FittedShell; trims: string[] } {
   const fitted = fitShell(req, o);
   if (o.cuts?.length) fitted.ops.push(...o.cuts);
-  const colour = req.colour ?? (req.shape === "emoji" && req.emoji ? emojiShape(req.emoji)?.colour : undefined) ?? SHAPE_COLOUR[req.shape];
+  const f = req.fairing && isFairing(req.shape) ? req.fairing : undefined, pal = f ? PALETTES[f.palette] : undefined;
+  // a fairing is also cut 3 mm clear of the exact solid of anything on its body it would still meet (a part whose box the
+  // fit did not take in: a bracket rising out of a deck that lies under the fairing's floor)
+  if (f) fitted.ops.push(...exactClearance(A, o.parent, fitted.ops));
+  const colour = req.colour ?? pal?.primary ?? (req.shape === "emoji" && req.emoji ? emojiShape(req.emoji)?.colour : undefined) ?? SHAPE_COLOUR[req.shape];
   if (!A.spec.materials.some((m) => m.name === "shell")) A.spec.materials.push({ name: "shell", color: [colour[0], colour[1], colour[2], 1] });
-  const base = o.name ?? "shell";
-  const pieces = splitForBed(fitted.ops, fitted.envelope, (ops) => printCheck({ name: "probe", ops }).fits_bed).map((p) => ({ ...p, name: p.name.replace(/^shell/, base) }));
+  const base = o.name ?? "shell", trims: string[] = [];
   const T = fk(A.spec).link[o.parent], inv = invert(mat4Of(T));
-  const emit = o.emit ?? ((name: string, ops: Op[]) => { A.printedLink(name, { name, ops: [{ op: "at", T: inv, of: ops }] }, { role: "shell", material: "shell" }); A.fixed(`${name}_mount`, o.parent, name, I4()); });
-  for (const p of pieces) emit(p.name, p.ops);
-  return { pieces, fitted };
+  const emit = o.emit ?? ((name: string, ops: Op[], material = "shell") => { A.printedLink(name, { name, ops: [{ op: "at", T: inv, of: ops }] }, { role: "shell", material }); A.fixed(`${name}_mount`, o.parent, name, I4()); });
+  const detailed = !!f && o.orient !== "top" && (o.wall ?? 2) >= 2.4;
+  if (f && pal && detailed) for (const [name, c] of [["shell_trim", pal.trim], ["badge", pal.accent]] as const)
+    if (!A.spec.materials.some((m) => m.name === name)) A.spec.materials.push({ name, color: [c[0], c[1], c[2], 1] });
+  if (f && pal && detailed && o.trims !== false) {
+    for (const [name, c] of [["shell_trim", pal.trim], ["trim_light", [0.86, 0.95, 1] as const], ["badge", pal.accent]] as const)
+      if (!A.spec.materials.some((m) => m.name === name)) A.spec.materials.push({ name, color: [c[0], c[1], c[2], 1] });
+    const e = fitted.envelope, shape = req.shape as FairingShape, zs = skirtZ(shape, e);
+    const free = (lo: Vec3, hi: Vec3) => !o.boxes.some((q) => q.lo[0] - 4 < hi[0] && lo[0] < q.hi[0] + 4 && q.lo[1] - 4 < hi[1] && lo[1] < q.hi[1] + 4 && q.lo[2] - 4 < hi[2] && lo[2] < q.hi[2] + 4)
+      && !o.windows.some((w) => Math.abs(w.at[1] - (lo[1] + hi[1]) / 2) < (hi[1] - lo[1]) / 2 + w.d / 2 + 2 && Math.abs(w.at[2] - (lo[2] + hi[2]) / 2) < (hi[2] - lo[2]) / 2 + w.d / 2 + 2 && Math.sign(w.dir[0]) === Math.sign((lo[0] + hi[0]) / 2 - e.cx) && Math.abs(w.dir[0]) > 0.5)
+      && !(o.cuts ?? []).some((c) => c.op === "hole" ? Math.abs(c.a[1] - (lo[1] + hi[1]) / 2) < (hi[1] - lo[1]) / 2 + c.d / 2 + 2 && Math.abs(c.a[0] - (lo[0] + hi[0]) / 2) < (hi[0] - lo[0]) / 2 + c.d / 2 + 2
+        : c.op === "cutbox" && [0, 1, 2].every((k) => c.min[k] - 3 < hi[k] && lo[k] < c.max[k] + 3));
+    // the outside surface along x at (y, z) and its width there: where a lens or a badge sits (measured in one pass)
+    const place = build(() => {
+      const S = evaluate({ name: "outer", ops: shapeWorld(req.shape, req.style ?? "plain", e, 0, o.orient) });
+      const at = (y: number, z: number, dir: 1 | -1) => { const bb = Manifold.intersection(S, evaluate({ name: "ray", ops: [{ op: "box", min: [e.cx - 4 * e.a - 50, y - 0.5, z - 0.5], max: [e.cx + 4 * e.a + 50, y + 0.5, z + 0.5] }] })).boundingBox(); return bb.min[0] > bb.max[0] ? undefined : dir > 0 ? bb.max[0] : bb.min[0]; };
+      const width = (x: number, z: number) => { const bb = Manifold.intersection(S, evaluate({ name: "ray", ops: [{ op: "box", min: [x - 0.5, e.cy - 4 * e.b - 50, z - 0.5], max: [x + 0.5, e.cy + 4 * e.b + 50, z + 0.5] }] })).boundingBox(); return bb.min[1] > bb.max[1] ? 0 : bb.max[1] - bb.min[1]; };
+      let light: { x: number; z: number; span: number; kind: "bar" | "eyes" } | undefined, badge: { x: number; y: number; z: number } | undefined;
+      // the light: a bar (or two eyes) on the nose, at the silhouette's light line or the nearest free height above the seam
+      if (f.light !== "none") for (const dz of [0, 0.1, -0.08, 0.2, 0.3]) {
+        const z = e.z0 + (PROPORTION[shape].light + dz) * e.h;
+        if (z < zs + bandH(f, e) + 7 || z > e.z0 + 0.92 * e.h) continue;
+        const x = at(e.cy, z, 1); if (x === undefined) continue;
+        const span = Math.min(0.62 * width(x - 2.5, z), 1.2 * e.b, 150);
+        if (span < 24) continue;
+        if (free([x - 2, e.cy - span / 2 - 2, z - 6], [x + 3, e.cy + span / 2 + 2, z + 6])) { light = { x, z, span, kind: f.light }; break; }
+        // a camera window in the middle: two lamps either side of it instead
+        if (f.light === "bar" && free([x - 2, e.cy + span / 4 - 11, z - 10], [x + 3, e.cy + span / 2 + 2, z + 10]) && free([x - 2, e.cy - span / 2 - 2, z - 10], [x + 3, e.cy - span / 4 + 11, z + 10])) { light = { x, z, span, kind: "eyes" }; break; }
+      }
+      // the badge: on the tail, a little above the seam
+      for (const [dy, dz] of [[0, 0.45], [0, 0.6], [0.4, 0.45], [-0.4, 0.45]] as const) {
+        const z = e.z0 + dz * e.h, y = e.cy + dy * e.b;
+        if (z < zs + bandH(f, e) + 10 || z > e.z0 + 0.9 * e.h) continue;
+        const x = at(y, z, -1); if (x === undefined || width(x + 2.5, z) < 44 || !free([x - 3, y - 20, z - 10], [x + 2, y + 20, z + 10])) continue;
+        badge = { x, y, z }; break;
+      }
+      return { light, badge };
+    });
+    if (place.light) { const L = lightOps(place.light.kind, place.light.x, e.cy, place.light.z, place.light.span); fitted.ops.push(...L.pocket); emit(`${base}_light`, L.lens, "trim_light"); trims.push(`${base}_light`); }
+    if (place.badge) { const B = badgeOps([place.badge.x, place.badge.y, place.badge.z], -1); fitted.ops.push(B.pocket); emit(`${base}_badge`, B.plate, "badge"); trims.push(`${base}_badge`); }
+  }
+  const fits = (ops: Op[]) => printCheck({ name: "probe", ops }).fits_bed;
+  let pieces: { name: string; ops: Op[]; material?: string }[];
+  if (detailed && o.twoTone !== false) {
+    // two tones: the upper body in the body colour, the skirt under the seam in the trim colour, each cut to the bed
+    const zs = skirtZ(req.shape as FairingShape, fitted.envelope), BIG = 5000;
+    // (and, but in the minimal look, an accent band over the seam: a ring of the wall printed in the accent)
+    const bh = f ? bandH(f, fitted.envelope) : 0, zu = zs + bh;
+    const upper = splitForBed([...fitted.ops, { op: "cutbox", min: [-BIG, -BIG, -BIG], max: [BIG, BIG, zu] }], fitted.envelope, fits).map((p) => ({ ...p, name: p.name.replace(/^shell/, base) }));
+    const band = bh ? splitForBed([...fitted.ops, { op: "cutbox", min: [-BIG, -BIG, -BIG], max: [BIG, BIG, zs] }, { op: "cutbox", min: [-BIG, -BIG, zu], max: [BIG, BIG, BIG] }], fitted.envelope, fits).map((p) => ({ ...p, name: p.name.replace(/^shell/, `${base}_band`), material: "badge" })) : [];
+    const skirt = splitForBed([...fitted.ops, { op: "cutbox", min: [-BIG, -BIG, zs], max: [BIG, BIG, BIG] }], fitted.envelope, fits).map((p) => ({ ...p, name: p.name.replace(/^shell/, `${base}_skirt`), material: "shell_trim" }));
+    pieces = [...upper, ...band, ...skirt];
+  } else pieces = splitForBed(fitted.ops, fitted.envelope, fits).map((p) => ({ ...p, name: p.name.replace(/^shell/, base) }));
+  // (a piece the cuts left empty, an arm's base under a turret as wide as it, is not printed)
+  pieces = pieces.filter((p) => printCheck({ name: "probe", ops: p.ops }).volume_cm3 > 0.05);
+  for (const p of pieces) emit(p.name, p.ops, p.material ?? "shell");
+  return { pieces: [...pieces, ...trims.map((name) => ({ name, ops: [] }))], fitted, trims };
 }
 
 /**
@@ -300,20 +454,37 @@ export function bodyShell(A: Asm, req: ShellRequest, o: { lids: RegExp; sizedKg:
   // it covers the hood and everything on the body from the hood's foot up (the camera looks out through a window)
   const rigid = rigidWith(A, "base_link"), all = linkBoxes(A, (n) => rigid.has(n) && n !== "base_link");
   const z0 = Math.min(...[...all].filter(([n]) => o.lids.test(n)).map(([, q]) => q.lo[2]));
-  const boxes = [...all].filter(([n, q]) => q.lo[2] >= z0 - 3 && !o.skip?.test(n)).map(([, q]) => q);
-  const deck = { x0: Math.min(...boxes.map((q) => q.lo[0])) - 6, x1: Math.max(...boxes.map((q) => q.hi[0])) + 6, y0: Math.min(...boxes.map((q) => q.lo[1])) - 6, y1: Math.max(...boxes.map((q) => q.hi[1])) + 6, z0 };
+  const kept = [...all].filter(([n, q]) => q.lo[2] >= z0 - 3 && !o.skip?.test(n)), boxes = kept.map(([, q]) => q), names = kept.map(([n]) => n);
+  const inBody = req.fairing ? boxes.filter((_, i) => !/^lidar/.test(names[i])) : boxes;
+  const deck = { x0: Math.min(...inBody.map((q) => q.lo[0])) - 6, x1: Math.max(...inBody.map((q) => q.hi[0])) + 6, y0: Math.min(...inBody.map((q) => q.lo[1])) - 6, y1: Math.max(...inBody.map((q) => q.hi[1])) + 6, z0 };
   const windows: ShellFit["windows"] = [], f = fk(A.spec);
   for (const bay of (A.design as { enclosures?: { exits: { kind: string; at?: number[]; normal?: number[]; face?: string }[] }[] }).enclosures ?? []) for (const e of bay.exits)
     if ((e.kind === "switch" || e.kind === "usb") && e.at && e.normal && e.face !== "floor" && e.at[2] > z0 - 2) windows.push({ at: e.at as Vec3, dir: e.normal as Vec3, d: e.kind === "switch" ? 40 : 34 });
   for (const sn of A.spec.sensors) if (sn.type === "camera" || sn.type === "depth") { const T = f.link[sn.parent]; if (T && T.p[2] * 1000 > z0 - 2) windows.push({ at: T.p.map((x) => x * 1000) as Vec3, dir: [1, 0, 0], d: sn.type === "depth" ? 60 : 30 }); }
-  const { pieces, fitted } = placeShell(A, req, { boxes, windows, deck, grow: true, wrap: true, maxHalfWidth: 1.5 * (deck.y1 - deck.y0) / 2, parent: "base_link" });
+  let placed: ReturnType<typeof placeShell>;
+  if (req.fairing && isFairing(req.shape)) {
+    // a fairing: sized from its silhouette's proportion of the body's length, at least 10 mm over what it covers, taller
+    // until no part shows through its roof, always under a LiDAR's scan plane (the LiDAR and its mast stand in a well)
+    const lidar = A.spec.sensors.find((x) => x.type === "lidar"), scanZ = lidar ? f.link[lidar.parent].p[2] * 1000 + lidar.origin.xyz[2] * 1000 : Infinity;
+    const cover = boxes.filter((q, i) => !/^lidar/.test(names[i]));
+    const top = Math.max(z0, ...cover.map((q) => q.hi[2])), a = (deck.x1 - deck.x0) / 2 + 4, b = (deck.y1 - deck.y0) / 2 + 4;
+    const env: Env = { cx: (deck.x0 + deck.x1) / 2, cy: (deck.y0 + deck.y1) / 2, a, b, h: Math.min(Math.max(top - z0 + 12, PROPORTION[req.shape as FairingShape].toLength * 2 * a), lidar ? scanZ - 7 - z0 : Infinity), z0 };
+    for (let k = 0; k < 6 && outsideShare(req, env, cover, 2.4) > 0.03; k++) { const n = Math.min(env.h * 1.1, lidar ? scanZ - 7 - z0 : Infinity); if (n <= env.h + 0.5) break; env.h = n; }
+    // (no bumper rails on a walking body: the legs swing close under its skirt)
+    // the LiDAR's well goes down to the deck: its mast (part of the deck, under the LiDAR) stands in it
+    const wells: Op[] = boxes.filter((_, i) => /^lidar$/.test(names[i])).map((q) => ({ op: "cutbox", min: [q.lo[0] - 6, q.lo[1] - 6, z0 - 50], max: [q.hi[0] + 6, q.hi[1] + 6, q.hi[2] + 50] }));
+    placed = placeShell(A, { ...req, fairing: { ...req.fairing, bumper: false } }, { boxes, windows, deck, envelope: env, wall: 2.4, maxHalfWidth: env.b, parent: "base_link", cuts: wells });
+    if (lidar) A.check("look:lidar_view", env.z0 + env.h <= scanZ - 6, `the fairing's top (${Math.round(env.z0 + env.h)} mm) is ${Math.round(scanZ - env.z0 - env.h)} mm under the LiDAR's scan plane: it sees all round over the body`);
+  } else placed = placeShell(A, req, { boxes, windows, deck, grow: true, wrap: true, maxHalfWidth: 1.5 * (deck.y1 - deck.y0) / 2, parent: "base_link" });
+  const { pieces, fitted } = placed;
   const mass = pieces.reduce((s, p) => s + (A.spec.links.find((l) => l.name === p.name)?.mass ?? 0), 0);
   const style = req.style && req.style !== "plain" ? ` (${req.style})` : "";
   A.fastener(`M3 x 10 + insert (shell to the hood${pieces.length > 1 ? ", and the pieces to each other along the seams" : ""})`, 4 * pieces.length);
   A.check("shell:clearance", fitted.overlapMm3 < 1, `the ${shellName(req)} shell${style} touches no part on the body (overlap ${fitted.overlapMm3} mm^3; ${Math.round(2 * fitted.envelope.a)} x ${Math.round(2 * fitted.envelope.b)} x ${Math.round(fitted.envelope.h)} mm over the electronics hood); the legs' sweeps are checked with it on`);
   A.check("shell:mass", mass <= o.sizedKg + 1e-6, `the shell weighs ${Math.round(mass * 1000)} g; the legs were sized carrying ${Math.round(o.sizedKg * 1000)} g for it`);
   A.design.performance.shell = `${shellName(req)}${style}, ${pieces.length} printed piece${pieces.length > 1 ? "s" : ""}, ${Math.round(mass * 1000)} g`;
-  A.design.assumptions.push(`Shell: a ${shellName(req)} shape${req.style && req.style !== "plain" ? ` in a ${req.style} style` : ""} over the body's electronics hood, ${pieces.length} printed piece${pieces.length > 1 ? "s" : ""} with a 2 mm wall (${Math.round(mass * 1000)} g, carried in the legs' sizing), open underneath and screwed to the hood; the legs swing clear of it (their sweeps are checked with it on). A LiDAR could not see out of it, so none is fitted. Print it upright on its open bottom.`);
+  if (req.fairing) A.design.assumptions.push(`Fairing: a ${shellName(req)} body${req.fairing.preset !== "studio" ? ` in the ${req.fairing.preset} style` : ""} over the electronics hood, ${pieces.length} printed piece${pieces.length > 1 ? "s" : ""} with a 2.4 mm wall (${Math.round(mass * 1000)} g, carried in the legs' sizing): the upper body and a skirt under the seam in the trim colour, panel lines 0.9 mm deep (1.5 mm of wall under them), the light lens and badge in 1.2 mm pockets. Open underneath and screwed to the hood; the legs swing clear of it (their sweeps are checked with it on)${A.spec.sensors.some((x) => x.type === "lidar") ? ", and the LiDAR on its mast looks out over it" : ""}. Print the pieces upright on their open bottoms with supports under the roof.`);
+  else A.design.assumptions.push(`Shell: a ${shellName(req)} shape${req.style && req.style !== "plain" ? ` in a ${req.style} style` : ""} over the body's electronics hood, ${pieces.length} printed piece${pieces.length > 1 ? "s" : ""} with a 2 mm wall (${Math.round(mass * 1000)} g, carried in the legs' sizing), open underneath and screwed to the hood; the legs swing clear of it (their sweeps are checked with it on). A LiDAR could not see out of it, so none is fitted. Print it upright on its open bottom.`);
   return mass;
 }
 /** The envelope a body shell will have at most (the deck it stands over, grown 1.5x), for shellMassEstimate. */

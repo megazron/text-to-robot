@@ -727,7 +727,7 @@ function designBiped(req: LeggedRequest, mech: boolean): RobotSpecification {
  *  15 g (the robot's joints and its chest panel change it a little). */
 function shellBudget(probe: ReturnType<typeof buildBiped>, req: ShellRequest): { head: number; chest: number } {
   const m = bipedShell(probe.A, req, { head: Infinity, chest: Infinity }, probe.Dt);
-  return { head: +(1.15 * m.head + 0.015).toFixed(3), chest: +(1.15 * m.chest + 0.015).toFixed(3) };
+  return { head: +(1.15 * m.head + 0.015).toFixed(3), chest: req.fairing ? 0 : +(1.15 * m.chest + 0.015).toFixed(3) };
 }
 /**
  * A humanoid's shape shells: a head shell round the head (a window for its camera, cut clear of the neck bracket inside
@@ -754,7 +754,8 @@ function bipedShell(A: Assembly, req: ShellRequest, budget: { head: number; ches
   const env = { cx: front + 2, cy: 0, a: 26, b: half, h: (z1 - z0) / 1.0, z0 };
   const sw = (A.design as { enclosures?: { exits: { kind: string; at?: number[]; normal?: number[] }[] }[] }).enclosures?.flatMap((b) => b.exits).filter((e) => e.kind === "switch" && e.at && e.normal && e.normal[0] > 0.5) ?? [];
   const onChest = [...bx].filter(([n]) => /^(?:torso|chest_panel|main_switch)$/.test(n)).map(([, q]) => q);
-  const H2 = placeShell(A, req, { boxes: onChest, windows: sw.map((e) => ({ at: e.at as Vec3, dir: e.normal as Vec3, d: 40 })), deck: { x0: env.cx - env.a, x1: env.cx + env.a, y0: -half, y1: half, z0 }, maxHalfWidth: half, envelope: env, floorZ: z0, parent: "torso", name: "shell_chest",
+  // a fairing is a helmet: the chest keeps its own printed panel in the palette (a plate there would cost the hips' margin)
+  const H2 = req.fairing ? { pieces: [] as { name: string }[], fitted: { overlapMm3: 0 } } : placeShell(A, req, { boxes: onChest, windows: sw.map((e) => ({ at: e.at as Vec3, dir: e.normal as Vec3, d: 40 })), deck: { x0: env.cx - env.a, x1: env.cx + env.a, y0: -half, y1: half, z0 }, maxHalfWidth: half, envelope: env, floorZ: z0, parent: "torso", name: "shell_chest",
     // open at the back, where it meets the chest
     cuts: [{ op: "cutbox", min: [front - 400, -400, z0 - 400], max: [front + 1, 400, z1 + 400] }] });
   const mass = (ps: { name: string }[]) => ps.reduce((s, p) => s + (A.spec.links.find((l) => l.name === p.name)?.mass ?? 0), 0), mh = mass(H1.pieces), mc = mass(H2.pieces);
@@ -762,7 +763,7 @@ function bipedShell(A: Assembly, req: ShellRequest, budget: { head: number; ches
   A.check("shell:clearance", H1.fitted.overlapMm3 < 1 && H2.fitted.overlapMm3 < 1, `the ${shellName(req)} head and chest shells touch no part at home (overlap ${H1.fitted.overlapMm3} and ${H2.fitted.overlapMm3} mm^3); the joints are swept with them on`);
   A.check("shell:mass", mh <= budget.head + 1e-6 && mc <= budget.chest + 1e-6, `head shell ${Math.round(mh * 1000)} g, chest shell ${Math.round(mc * 1000)} g; the neck, legs and hips were sized carrying ${Math.round(budget.head * 1000)} and ${Math.round(budget.chest * 1000)} g for them`);
   const style = req.style && req.style !== "plain" ? ` (${req.style})` : "";
-  A.design.performance.shell = `${shellName(req)}${style}, head and chest, ${H1.pieces.length + H2.pieces.length} printed pieces, ${Math.round((mh + mc) * 1000)} g`;
+  A.design.performance.shell = req.fairing ? `${shellName(req)} helmet${req.fairing.preset !== "studio" ? ` (${req.fairing.preset})` : ""}, ${H1.pieces.length} printed piece${H1.pieces.length > 1 ? "s" : ""}, ${Math.round(mh * 1000)} g` : `${shellName(req)}${style}, head and chest, ${H1.pieces.length + H2.pieces.length} printed pieces, ${Math.round((mh + mc) * 1000)} g`;
   A.design.assumptions.push(`Shells: a ${shellName(req)} head${req.style && req.style !== "plain" ? ` in a ${req.style} style` : ""} round the head (a window for its camera, 1.6 mm wall) and a ${shellName(req)} chest plate on the chest panel (2 mm wall), ${Math.round((mh + mc) * 1000)} g in all, counted where the joints were sized${lighterHands ? " (the hands' default payload is lighter by as much, so the legs carry what they would without them)" : ""}. Print them upright on their open sides.`);
   return { head: mh, chest: mc };
 }

@@ -73,6 +73,7 @@ export { designRov } from "./families/rov.ts";
 export { designSnake, type SnakeRequest } from "./families/snake.ts";
 export { designDelta, deltaIk, deltaHome } from "./families/delta.ts";
 export { designHand } from "./families/hand.ts";
-export { fitShell, shapeOps, splitForBed, SHAPES, STYLES, SHAPE_COLOUR, type Shape, type Style, type ShellRequest } from "./shell.ts";
+export { fitShell, shapeOps, splitForBed, SHAPES, STYLES, SHAPE_COLOUR, isFairing, type Shape, type Style, type ShellRequest } from "./shell.ts";
+export { chooseFairing, PALETTES, PRESETS, PRESET, FAIRINGS, PROPORTION, paletteNames, fnv, type Palette, type Preset, type Fairing, type FairingShape, type BodyKind, type HubStyle } from "./styling.ts";
 export { emojiShape, emojiShapes, type EmojiShape } from "./emoji.ts";
 export { startBudget, overBudget, budgetNotes, budgetText } from "./budget.ts";

@@ -252,7 +252,10 @@ function droneShell(A: Assembly, req: ShellRequest, rotors: { at: Vec3 }[]) {
     if (/antenna/.test(e.id) && e.at) cuts.push({ op: "hole", a: [e.at[0], e.at[1], e.at[2] - 5], b: [e.at[0], e.at[1], 2000], d: 10 });
   // a pod round the pack (its shape kept 5 mm clear of the props) with the shape standing on it as a crest, 36 mm thick
   const pack = fit.boxes.reduce((m, q) => ({ lo: [0, 1, 2].map((k) => Math.min(m.lo[k], q.lo[k])) as Vec3, hi: [0, 1, 2].map((k) => Math.max(m.hi[k], q.hi[k])) as Vec3 }), { lo: [Infinity, Infinity, Infinity] as Vec3, hi: [-Infinity, -Infinity, -Infinity] as Vec3 });
-  const envelope = { cx: (pack.lo[0] + pack.hi[0]) / 2, cy: 0, a: 18, b: 40, h: 72, z0: pack.hi[2] - 6 };
+  // (a fairing is a low canopy over the whole pack instead, its silhouette seen from the side)
+  const envelope = req.fairing
+    ? { cx: (pack.lo[0] + pack.hi[0]) / 2, cy: 0, a: Math.max(32, (pack.hi[0] - pack.lo[0]) / 2 + 8), b: Math.min(44, Math.max(28, (pack.hi[1] - pack.lo[1]) / 2 + 8)), h: pack.hi[2] - fit.deck.z0 + 12, z0: fit.deck.z0 }
+    : { cx: (pack.lo[0] + pack.hi[0]) / 2, cy: 0, a: 18, b: 40, h: 72, z0: pack.hi[2] - 6 };
   const { pieces, fitted } = placeShell(A, req, { ...fit, wall: 1.2, wrap: true, envelope, floorZ: fit.deck.z0, maxHalfWidth: 40, parent: "base_link", cuts });
   const mass = pieces.reduce((s, p) => s + (A.spec.links.find((l) => l.name === p.name)?.mass ?? 0), 0);
   A.fastener("M3 x 6 (canopy shell to the canopy's lid, four lugs)", 4);

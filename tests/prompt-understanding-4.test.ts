@@ -78,9 +78,11 @@ test("payload is sized into the BOM actuators", async () => {
 test("colour applies to the robot body, not to objects it handles", () => {
   assert.equal(extractColour("a red 6 dof arm that sorts blue blocks"), "red");
   assert.equal(extractColour("an arm that sorts red blocks"), undefined);
-  // designed robots take the colour on their printed body, the accent parts a shade deeper
+  // designed robots take the colour on their printed body; the accent parts keep the look's accent (its badge colour), so
+  // the robot is not one colour all over
   const blue = parsePrompt("a blue quadruped").materials;
   assert.deepEqual(blue.find((m) => m.name === "printed")!.color, [0.15, 0.35, 0.8, 1]);
-  assert.deepEqual(blue.find((m) => m.name === "printed_accent")!.color, [0.108, 0.252, 0.576, 1]);
+  assert.deepEqual(blue.find((m) => m.name === "printed_accent")!.color, blue.find((m) => m.name === "badge")!.color);
+  assert.deepEqual(blue.find((m) => m.name === "printed_accent")!.color, [0.97, 0.97, 0.97, 1]);
   assert.match(read("a red Baymax robot").ignored.join(), /livery/);
 });

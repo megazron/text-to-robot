@@ -2,7 +2,7 @@
 // style ("cartoon", "cute", "retro", "steampunk"). The robot underneath is designed as always; the shape becomes a printed
 // shell over it (packages/design/src/shell.ts). A film or game character named as a style gets an original robot
 // inspired by it, never a replica.
-import { emojiShape, emojiShapes, type Shape, type Style } from "@ttr/design";
+import { emojiShape, emojiShapes, chooseFairing, type Shape, type Style, type Preset } from "@ttr/design";
 import { wordEmoji } from "./lexicon.ts";
 
 /** a word or emoji that names a shape, and the shape it is */
@@ -34,8 +34,13 @@ const SHAPE_WORDS: [RegExp, Shape, boolean][] = [
 const STYLE_WORDS: [RegExp, Style][] = [
   [/\b(?:cartoon(?:y|ish)?|toon|chibi|kawaii|anime|pixar[\s-]?like|disney[\s-]?like)\b/, "cartoon"],
   [/\b(?:cute|adorable|cuddly|friendly[\s-]looking)\b|🥰|😊/u, "cute"],
-  [/\b(?:sleek|streamlined|futuristic|minimalist?|sci[\s-]?fi|science[\s-]fiction|space[\s-]age)\b/, "sleek"],
-  [/\b(?:boxy|blocky|square|rugged|tough[\s-]looking)\b/, "boxy"],
+  [/\b(?:sci[\s-]?fi|science[\s-]fiction|futuristic|space[\s-]age)\b/, "scifi"],
+  [/\b(?:sleek|streamlined)\b/, "sleek"],
+  [/\bminimalist(?:ic)?\b|\bminimal[\s-](?:style|styled|look(?:ing)?|design)\b|\bunderstated\b/, "minimal"],
+  // ("an industrial robot" is an arm on a factory floor: the style is said as a look)
+  [/\bindustrial[\s-](?:style|styled|look(?:ing)?|design)\b|\butilitarian\b/, "industrial"],
+  [/\b(?:rugged|tough[\s-]looking|outdoor[\s-]style)\b/, "rugged"],
+  [/\b(?:boxy|blocky|square)\b/, "boxy"],
   [/\b(?:retro|vintage|tin[\s-]toy|1950s|50s|old[\s-]school)\b/, "retro"],
   [/\b(?:steampunk|brass|victorian|clockwork)\b/, "steampunk"],
   [/\b(?:mecha|mech[\s-]style|armou?red|gundam[\s-]like|transformer[\s-]like)\b/, "mecha"],
@@ -49,7 +54,7 @@ export const NOT_WHEELED = /\brobot(?:ic)?\s+(?:dogs?|pupp(?:y|ies)|cats?|spider
 /** characters named as a style: an original robot inspired by them, said so */
 const INSPIRED = /\b(?:star\s+wars|pixar|disney|marvel|transformers?|gundam|pokemon|pok[eé]mon|studio\s+ghibli|ghibli|futurama|doctor\s+who|minecraft|mario|sonic|astro\s*boy|big\s+hero\s+6)\b/;
 
-export interface ShellAsk { shape: Shape; style: Style; said: string; note?: string; /** shape "emoji": the emoji whose outline is inflated */ emoji?: string; /** what the shape is called ("unicorn emoji") */ name: string }
+export interface ShellAsk { shape: Shape; style: Style; said: string; /** a style word alone: the industrial preset it means (styling.ts) */ preset?: Preset; note?: string; /** shape "emoji": the emoji whose outline is inflated */ emoji?: string; /** what the shape is called ("unicorn emoji") */ name: string }
 
 /** The shape and style asked for, or nothing when the prompt names neither. */
 /** a style word ("cute", "sci-fi", "steampunk", "rugged") is said: a look asked for */
@@ -89,11 +94,29 @@ export function readShell(t: string, original = t): ShellAsk | undefined {
     if (em) return { shape: "emoji", emoji: em.char, name: `${em.name} emoji`, style: "plain", said: m[0], note: EMOJI_NOTE(m[1].trim(), em.name) };
     return { shape: "blob", name: "blob", style: "plain", said: m[0], note: `"${m[1].trim()}" is not in the shape library yet (heart, star, egg, sphere, cube, capsule, shoe, car, dog, cat, spider, fish, bird, dragon, teapot, lamp, toaster, can, burger, pizza, donut): built a rounded shell instead` };
   }
-  const shape: Shape = hit?.shape ?? (style === "boxy" || style === "retro" || style === "steampunk" || style === "mecha" ? "cube" : style === "sleek" ? "egg" : "capsule");
+  // a style word alone is an industrial preset: a fairing whose silhouette the prompt's meaning picks among the preset's
+  const preset = !hit && style ? PRESET_OF[style] : undefined;
+  if (preset) {
+    const shape = chooseFairing("wheeled", lookKey(t), preset).shape;
+    return { shape, name: shape, style: style!, preset, said: style!, ...(ref ? { note: `"${ref}": an original robot inspired by its style, not a copy of any character` } : {}) };
+  }
+  const shape: Shape = hit?.shape ?? (style === "boxy" || style === "steampunk" || style === "mecha" ? "cube" : "capsule");
   return { shape, name: shape, style: style ?? "plain", said: [hit?.said, style].filter(Boolean).join(", "),
     ...(ref ? { note: `"${ref}": an original robot inspired by its style, not a copy of any character` } : {}) };
 }
 
+/** the style words that mean an industrial preset rather than a character shape */
+export const PRESET_OF: Partial<Record<Style, Preset>> = { sleek: "sleek", scifi: "scifi", rugged: "rugged", retro: "retro", industrial: "industrial", minimal: "minimal" };
+const NUMBER_WORDS: Record<string, string> = { one: "1", two: "2", three: "3", four: "4", five: "5", six: "6", seven: "7", eight: "8", single: "1", pair: "2", twin: "2" };
+const LOOK_STOP = new Set("a an the my our your his her their its this that these those to for of on in at with and or but robot robots robotic bot machine which who please can could would will it them me us some any very create build make design generate give want need i im i'm like wheeled wheel wheels".split(" "));
+/** What a prompt means, as a key the look is chosen by: its content words, stemmed, numbers as digits, sorted ("a six dof
+ *  robotic arm", "Create a 6 DOF robotic arm" and "a 6 dof robot arm" are one key; "a robot that waters my plants" and
+ *  "plant watering robot" another). */
+export function lookKey(t: string): string {
+  const words = t.toLowerCase().replace(/(\d)\s*-\s*(?=[a-z])/g, "$1 ").replace(/[^a-z0-9\s]/g, " ").split(/\s+/).filter((w) => w && !LOOK_STOP.has(w)).map((w) => NUMBER_WORDS[w] ?? w);
+  const stem = (w: string) => (w.length > 5 ? w.replace(/ing$/, "") : w).replace(/(?<=..)s$/, "");
+  return [...new Set(words.map(stem))].sort().join(" ");
+}
 const EMOJI_NOTE = (said: string, name: string) => `"${said}": the shell is the ${name} emoji's outline (Twemoji, CC-BY 4.0), inflated like a cushion`;
 /** the emoji whose name is the thing said: "banana", "rocket", "hot dog", "ghosts", "a unicorn" */
 function emojiNamed(thing: string): ReturnType<typeof emojiShape> {

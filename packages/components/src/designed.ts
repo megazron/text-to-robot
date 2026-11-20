@@ -37,7 +37,19 @@ export function buildDesignedBom(spec: RobotSpecification, budget?: number, payl
   const grams = d.printed.reduce((s, p) => s + p.mass_kg * 1000, 0), cm3 = d.printed.reduce((s, p) => s + p.check.volume_cm3, 0);
   // a painted robot's filament is bought in its colour (the dark trim and the accents as before)
   const colour = (spec.metadata as { colour?: string }).colour;
-  lines.push({ category: "Printed structure", name: `PETG filament${colour ? ` (${colour} for the body)` : ""} for ${d.printed.length} printed parts`, qty: 1, unit_cost: +((grams / 1000) * FILAMENT_USD_PER_KG * 1.15).toFixed(2),
+  const look = (spec.metadata as { look?: { colours: { body: string; accent: string; trim: string } } }).look;
+  if (look) {
+    // a designed look is bought as filament in its colours: the body, the dark trim, the accents and a clear spool for the lenses
+    const tone = (m?: string) => (m === "trim_light" ? "lens" : m === "printed_accent" || m === "badge" ? "accent" : m === "printed_dark" || m === "shell_trim" ? "trim" : "body");
+    const label: Record<string, string> = { body: `${look.colours.body} for the body`, trim: `${look.colours.trim} for the trim`, accent: `${look.colours.accent} for the accents`, lens: "clear, for the light lenses" };
+    for (const t of ["body", "trim", "accent", "lens"]) {
+      const ps = d.printed.filter((p) => tone(spec.links.find((l) => l.name === ((p as { link?: string }).link ?? p.name))?.material) === t);
+      if (!ps.length) continue;
+      const g = ps.reduce((s, p) => s + p.mass_kg * 1000, 0), v = ps.reduce((s, p) => s + p.check.volume_cm3, 0), usd = +((g / 1000) * FILAMENT_USD_PER_KG * 1.15).toFixed(2);
+      lines.push({ category: "Printed structure", name: `PETG filament (${label[t]}) for ${ps.length} printed part${ps.length > 1 ? "s" : ""}`, qty: 1, unit_cost: usd, subtotal: usd,
+        spec: `${g.toFixed(0)} g of parts (+15 % supports/waste), about ${(v / PRINT_CM3_PER_HOUR).toFixed(1)} h of printing`, note: ps.map((p) => p.name).join(", ") });
+    }
+  } else lines.push({ category: "Printed structure", name: `PETG filament${colour ? ` (${colour} for the body)` : ""} for ${d.printed.length} printed parts`, qty: 1, unit_cost: +((grams / 1000) * FILAMENT_USD_PER_KG * 1.15).toFixed(2),
     subtotal: +((grams / 1000) * FILAMENT_USD_PER_KG * 1.15).toFixed(2), spec: `${grams.toFixed(0)} g of parts (+15 % supports/waste), about ${(cm3 / PRINT_CM3_PER_HOUR).toFixed(1)} h of printing`, note: d.printed.map((p) => p.name).join(", ") });
   const nFast = Object.values(d.fasteners).reduce((a, b) => a + b, 0);
   if (nFast) lines.push({ category: "Fasteners", name: "Screws, nuts and inserts", qty: nFast, unit_cost: FASTENER_USD, subtotal: +(nFast * FASTENER_USD).toFixed(2), spec: Object.entries(d.fasteners).map(([k, v]) => `${v}x ${k}`).join("; ") });

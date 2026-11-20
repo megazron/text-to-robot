@@ -260,7 +260,7 @@ const lerp3 = (p: Vec3, q: Vec3, t: number): Vec3 => add(p, scale(sub(q, p), t))
 
 export function sensorsOf(req: LeggedRequest, dflt: SensorKind[]): SensorKind[] {
   const s = new Set<SensorKind>([...dflt, ...(req.sensors ?? [])]); s.add("imu");
-  if (req.shell) s.delete("lidar");   // under a shape shell a LiDAR could not see (said with the shell)
+  if (req.shell && !req.shell.fairing) s.delete("lidar");   // under a shape shell a LiDAR could not see (said with the shell; a fairing keeps it in view)
   return [...s];
 }
 
@@ -334,7 +334,7 @@ export function designQuadruped(req: LeggedRequest): RobotSpecification {
   const armSpec = req.armDof && cfg.cls === "servo" ? designArm({ name: "arm", dof: Math.max(3, Math.min(6, req.armDof)), reachM: 0.28, payloadKg: 0.15, gripper: req.gripper !== false, ladder: "feetech", maxSupplyV: 12.6, embedded: true, prompt: req.prompt }) : null;
   if (armSpec) cfg.extraKg += totalMass(armSpec) + 0.15;
   // a shape shell: the legs carry its estimated mass (the most it can weigh, from the body's size)
-  const shellKg = req.shell ? shellMassEstimate(bodyEnvelope(buildQuadruped(req, cfg, sensors).A, /^top_deck/)) : 0;
+  const shellKg = req.shell ? shellMassEstimate(bodyEnvelope(buildQuadruped(req, cfg, sensors).A, /^top_deck/), req.shell.fairing ? 2.6 : 2) : 0;
   cfg.extraKg += shellKg;
   let built = buildQuadruped(req, cfg, sensors), torques: Record<string, number> = {};
   const poses = gaitPoses(["fl", "fr", "rl", "rr"], { abd: 0.12, hip: 0.35, knee: 0.3 });
