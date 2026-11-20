@@ -151,7 +151,7 @@ function interpretIn(original: string, opts: InterpretOptions): PromptResult {
   // (a style word's, else the studio look) and a palette, chosen by what the prompt means; the gallery's own prompts keep
   // the gallery robots as built, and "no fairing" / "bare chassis" leaves the robot bare
   const kind = FAIRING_KIND[choice.family], bare = /\b(?:no|without)\s+(?:a\s+|the\s+)?(?:fairing|body\s*shell|cover|bodywork)s?\b|\bbare\s+(?:chassis|frame|robot|look)\b|\bplain\s+look\b/.test(t);
-  const styled = fits && kind && choice.designed && !hobby && !bare && !isGalleryPrompt(original) && !isGalleryJob(t) && (!look || !!look.preset) ? chooseFairing(kind, lookKey(t), look?.preset ?? "studio") : undefined;
+  const styled = fits && kind && choice.designed && !hobby && !bare && !isGalleryPrompt(original) && !isGalleryJob(t) && (!look || !!look.preset) ? chooseFairing(kind, lookKey(t), look?.preset ?? "studio", undefined, CARGO.test(t)) : undefined;
   const shellCtx = styled ? { shell: { shape: styled.shape, fairing: styled.fairing } }
     : look && fits ? { shell: { shape: look.shape, style: look.style, ...(look.emoji ? { emoji: look.emoji } : {}), ...(lookColour ? { colour: SHELL_COLOURS[lookColour].slice(0, 3) as [number, number, number] } : {}) } } : {};
   const ctx: DesignContext = { ...shellCtx, ...(suit ? { suit: { shape: armourShape(), paint: suit.paint } } : {}), ...(hobby ? { hobby } : {}), prompt, budget: budget.usd, payloadKg: payload ? +payload.kg.toFixed(3) : undefined, reachM: asked?.reachM, segments: asked?.segments,
@@ -259,7 +259,7 @@ function interpretIn(original: string, opts: InterpretOptions): PromptResult {
     }
     else if (jobbed) { const i = choice.knowledge ? KNOWLEDGE.findIndex((k) => k.id === choice.knowledge) : -1; const [p, a, label] = variantPalette(`${choice.knowledge ?? ""}|${job}`, i >= 0 ? i : undefined, job); primary = p; accent = a; body = `custom colour (${label})`; accentName = `custom accent (${label})`; }
     paintLook(spec, primary, accent, pal.trim);
-    (spec.metadata as unknown as Record<string, unknown>).look = { silhouette: styled.shape, preset: styled.fairing.preset, palette: pal.id, hub: styled.fairing.hub, colours: { body, accent: accentName, trim: pal.names.trim } };
+    (spec.metadata as unknown as Record<string, unknown>).look = { silhouette: styled.shape, preset: styled.fairing.preset, palette: pal.id, hub: styled.fairing.hub, extras: styled.fairing.extras ?? [], paint: styled.fairing.paint ?? "none", ...(styled.fairing.cargo ? { cargo: true } : {}), colours: { body, accent: accentName, trim: pal.names.trim } };
     // a colour named paints the body (an aluminium body powder-coated); the accent parts, the band, the badge and the hub
     // caps keep the look's accent, so a red robot is red with its accent, not red all over
     if (named) paintSpec(spec, colour!);
@@ -339,6 +339,8 @@ function interpretIn(original: string, opts: InterpretOptions): PromptResult {
 /** the body each family's fairing is drawn for (styling.ts) */
 const FAIRING_KIND: Record<string, BodyKind> = { diff_drive: "wheeled", four_wheel: "wheeled", mecanum: "wheeled", quadruped: "legged", hexapod: "legged", serial_arm: "arm", drone: "drone", humanoid: "humanoid" };
 /** two colours too alike to tell apart on a robot (a red body with a ruby accent) */
+/** a robot that carries or delivers things: its body gets somewhere to carry them (styling.ts) */
+const CARGO = /\b(?:deliver\w*|carr(?:y|ies|ying)|haul\w*|transport\w*|parcels?|packages?|groceries|cargo|courier|fetch\w*|brings?|serv(?:e|es|ing))\b/;
 const paletteClash = (a: number[], b: number[]) => Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]) < 0.35;
 
 /** What was built, as short chips: "2x 6-DOF arm", "6-wheel rover", "gripper", "camera". */

@@ -116,7 +116,8 @@ kinds above wears a printed fairing, sized by proportion rules and fitted like a
   says nothing on the deck stands through the roof. A legged body's fairing follows the body's length; an arm's base fairing stands round the
   pedestal under the turret and under anything the folded arm sweeps past (a check holds every joint's range); a humanoid wears a helmet; a drone a canopy over its pack.
 - **Silhouettes.** Pod (soft and pillowed), wedge (a sloped nose), cab (a raised cabin), dome, slab (chamfered,
-  industrial) and drum (an arm's base), chosen per body kind. A LiDAR stands on a mast that lifts its scan plane over the
+  industrial), truck (a cab at the nose and a load bed behind), buggy (a low tub under a roll cage), tower (a tall body that
+  narrows upward), skate (a low deck with a spine) and drum (an arm's base), chosen per body kind: nine for a wheeled base. A LiDAR stands on a mast that lifts its scan plane over the
   fairing (`look:lidar_view` checks it sees all round).
 - **Details, all printable.** On wheeled, legged and arm fairings, a 2.4 mm wall; panel lines and a belt line 1.2 mm wide and 0.9 mm deep (1.5 mm of wall
   left); vent slots through the flanks; a bumper rail on the skirt's nose; a light bar or two round lamps and a badge
@@ -124,10 +125,20 @@ kinds above wears a printed fairing, sized by proportion rules and fitted like a
   body in the body colour, the skirt in the dark trim, and (but in the minimal look) an accent band over the seam, a ring of
   the wall printed in the accent. The light bar glows in the 3D view. Printed hub caps (a dish, five spokes or a turbine) on every wheel,
   in the accent. An arm's base fairing keeps to panel lines and vents in one colour (a folded wrist sweeps close by). No third-party logos.
+- **Style details on wheeled bodies.** Each style word brings its own, printed with the fairing or as small parts: `rugged`
+  a bull bar, a roof rack, wheel-arch flares and a grille; `industrial` an amber roof beacon, a rack and flares; `sci-fi`
+  light strips along the flanks and tail fins; `retro` round lamps, tail fins and a grille; `sleek` stripes and nothing
+  else; `minimalist` nothing at all. Every body but the minimal one has two red tail lamps. A robot that carries or delivers
+  things gets a truck, a tower or a cab with a lid line and a handle on its roof (the fairing lifts off there to load it).
+  Roof details stand under a LiDAR's scan plane: its mast is raised by their height. `cute` is still the older rounded
+  character shell, not one of these presets.
+- **Paint.** Panels 1.2 mm thick that lie on the fairing's surface, printed in the accent and bonded on: a centre stripe,
+  twin stripes, a bonnet panel or flank panels, chosen with the look. A humanoid's helmet gets a dark visor with two lit
+  eyes and a crest stripe; a drone's canopy a dark screen, a nose light and a stripe.
 - **Palettes.** Fourteen, each named the way its filament is sold (arctic white, signal orange, graphite...). A colour you
   name is the body colour; the accent parts, the band, the badge and the hub caps keep the look's accent (silver or graphite
   when the accent is too close to the colour named), so a red arm is red and silver, not red all over; the parts
-  list buys the filament per colour. The 3D view shows printed parts as matte plastic, aluminium anodised, tyres as rubber
+  list buys the filament per colour. The 3D view shows a fairing's paint as a satin coat under a rim light, with a soft shadow on the floor; printed structure as matte plastic, aluminium anodised, tyres as rubber
   and the light lenses lit.
 - **Still a robot.** The fairing is cut 3 mm clear of every part and given windows for cameras, the switch and USB; its
   pieces are cut to the bed; its mass is in the drive, leg and flight sizing and the tipping checks; the joints are swept

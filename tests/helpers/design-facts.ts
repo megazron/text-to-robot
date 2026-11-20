@@ -11,7 +11,7 @@ type Design = { checks: { name: string; pass: boolean; detail: string }[]; print
 const out: Record<string, unknown> = {};
 for (const p of JSON.parse(process.argv[2] ?? "[]") as string[]) {
   const r = await generateRobot(p), s = r.robot, d = (s.metadata as unknown as { design?: Design }).design;
-  const look = (s.metadata as unknown as { look?: { silhouette: string; preset: string; palette: string; hub: string; colours: Record<string, string> } }).look;
+  const look = (s.metadata as unknown as { look?: { silhouette: string; preset: string; palette: string; hub: string; extras?: string[]; paint?: string; colours: Record<string, string> } }).look;
   const mat = new Map(s.materials.map((m) => [m.name, m.color.slice(0, 3).map((c) => +c.toFixed(2))]));
   // the colours a person sees on the printed parts (bought parts keep theirs)
   const printed = new Set((d?.printed ?? []).map((x) => x.name));
@@ -25,7 +25,7 @@ for (const p of JSON.parse(process.argv[2] ?? "[]") as string[]) {
     for (const x of [g.bbox.min[0], g.bbox.max[0]]) for (const y of [g.bbox.min[1], g.bbox.max[1]]) for (const z of [g.bbox.min[2], g.bbox.max[2]]) for (let i = 0; i < 3; i++) { const v = T.R[i][0] * x + T.R[i][1] * y + T.R[i][2] * z + T.p[i]; lo[i] = Math.min(lo[i], v); hi[i] = Math.max(hi[i], v); } }
   const size = [0, 1, 2].map((i) => Math.round((hi[i] - lo[i]) * 100));
   const b = builtShape(s), structure = { arms: b.arms.map((a) => a.dof), wheels: b.wheels, legs: b.legs, sensors: s.sensors.map((x) => x.type).sort() };
-  const sig = createHash("sha256").update(JSON.stringify([look?.silhouette, look?.preset, colours, structure, size, shell.length])).digest("hex").slice(0, 16);
+  const sig = createHash("sha256").update(JSON.stringify([look?.silhouette, look?.preset, look?.paint, look?.extras, colours, structure, size, shell.length])).digest("hex").slice(0, 16);
   const filament = (r.bom?.lines ?? []).filter((l: { category: string }) => l.category === "Printed structure").map((l: { name: string }) => l.name);
   out[p] = { sig, family: r.interpretation?.family, look, colours, shell, wheels, hubs, size, structure, filament,
     failing: (d?.checks ?? []).filter((c) => !c.pass).map((c) => `${c.name}: ${c.detail.slice(0, 160)}`),

@@ -40,8 +40,8 @@ export function buildDesignedBom(spec: RobotSpecification, budget?: number, payl
   const look = (spec.metadata as { look?: { colours: { body: string; accent: string; trim: string } } }).look;
   if (look) {
     // a designed look is bought as filament in its colours: the body, the dark trim, the accents and a clear spool for the lenses
-    const tone = (m?: string) => (m === "trim_light" ? "lens" : m === "printed_accent" || m === "badge" ? "accent" : m === "printed_dark" || m === "shell_trim" ? "trim" : "body");
-    const label: Record<string, string> = { body: `${look.colours.body} for the body`, trim: `${look.colours.trim} for the trim`, accent: `${look.colours.accent} for the accents`, lens: "clear, for the light lenses" };
+    const tone = (m?: string) => (m?.startsWith("trim_light") ? "lens" : m === "printed_accent" || m === "badge" ? "accent" : m === "printed_dark" || m === "shell_trim" ? "trim" : "body");
+    const label: Record<string, string> = { body: `${look.colours.body} for the body`, trim: `${look.colours.trim} for the trim`, accent: `${look.colours.accent} for the accents`, lens: "clear and tinted, for the light lenses" };
     for (const t of ["body", "trim", "accent", "lens"]) {
       const ps = d.printed.filter((p) => tone(spec.links.find((l) => l.name === ((p as { link?: string }).link ?? p.name))?.material) === t);
       if (!ps.length) continue;

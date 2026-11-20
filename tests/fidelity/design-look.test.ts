@@ -14,7 +14,7 @@ import { execFileSync } from "node:child_process";
 import { PRESET, type Preset } from "@ttr/design";
 
 const [shard, shards] = (process.env.TTR_SHARD ?? "1/1").split("/").map(Number);
-type Facts = { sig: string; family: string; look?: { silhouette: string; preset: Preset; palette: string; hub: string; colours: Record<string, string> }; colours: string[]; shell: string[]; wheels: string[]; hubs: string[]; filament: string[]; failing: string[]; unprintable: string[]; checks: string[]; valid: boolean };
+type Facts = { sig: string; family: string; look?: { silhouette: string; preset: Preset; palette: string; hub: string; extras?: string[]; paint?: string; cargo?: boolean; colours: Record<string, string> }; colours: string[]; shell: string[]; wheels: string[]; hubs: string[]; filament: string[]; failing: string[]; unprintable: string[]; checks: string[]; valid: boolean };
 function facts(prompts: string[]): Record<string, Facts> {
   const out: Record<string, Facts> = {};
   for (let i = 0; i < prompts.length; i += 8) Object.assign(out, JSON.parse(execFileSync(process.execPath, [new URL("../helpers/design-facts.ts", import.meta.url).pathname, JSON.stringify(prompts.slice(i, i + 8))], { encoding: "utf8", maxBuffer: 1 << 24 }).trim().split("\n").pop()!));
@@ -59,10 +59,29 @@ test(`${PROMPTS.length} prompts give ${PROMPTS.length} different-looking designe
 
 test(`the looks are spread: several silhouettes per body, many palettes (shard ${shard}/${shards})`, { skip: shards > 2 }, () => {
   const by = (fams: string[]) => new Set(SAMPLE.filter((p) => fams.includes(got[p].family) && got[p].look).map((p) => got[p].look!.silhouette));
-  assert.ok(by(["diff_drive", "four_wheel", "mecanum"]).size >= 4, `wheeled silhouettes: ${[...by(["diff_drive", "four_wheel", "mecanum"])]}`);
+  assert.ok(by(["diff_drive", "four_wheel", "mecanum"]).size >= 7, `wheeled silhouettes: ${[...by(["diff_drive", "four_wheel", "mecanum"])]}`);
   assert.ok(by(["serial_arm"]).size >= 2, `arm silhouettes: ${[...by(["serial_arm"])]}`);
   assert.ok(by(["quadruped", "hexapod"]).size >= 2, `legged silhouettes: ${[...by(["quadruped", "hexapod"])]}`);
   assert.ok(new Set(SAMPLE.filter((p) => got[p].look).map((p) => got[p].look!.palette)).size >= 8);
+});
+
+test(`a style word shows: each preset's own details are on its wheeled robots, a carrier has a lid, a helmet a face (shard ${shard}/${shards})`, () => {
+  const problems: string[] = [], wheeled = (p: string) => ["diff_drive", "four_wheel", "mecanum"].includes(got[p].family);
+  for (const p of SAMPLE.filter((x) => got[x].look)) {
+    const f = got[p], l = f.look!, say = (x: string) => problems.push(`${JSON.stringify(p)}: ${x}`), has = (rx: RegExp) => f.shell.some((n) => rx.test(n));
+    if (wheeled(p)) {
+      // the preset's details are asked for (those a silhouette cannot carry aside), and the ones that are parts are there
+      for (const x of PRESET[l.preset].extras) if (!(l.extras ?? []).includes(x) && !["rack", "fins"].includes(x)) say(`no ${x} (${l.preset})`);
+      if ((l.extras ?? []).includes("rear") && !has(/_tail_/)) say("no tail lamps");
+      if (l.preset === "scifi" && !has(/_strip_/)) say("no light strips on a sci-fi body");
+      if (l.preset === "industrial" && l.silhouette !== "tower" && !has(/_beacon$/)) say("no beacon on an industrial body");
+      if (l.paint && l.paint !== "none" && l.paint !== "bonnet" && !has(/_paint_/)) say(`no ${l.paint} paint panels`);
+      if (/deliver|carr|groceries/.test(p) && !l.cargo) say("a carrier with no lid");
+    }
+    if (f.family === "humanoid" && !(has(/_visor$/) && has(/_eye_/))) say("a helmet with no visor and eyes");
+    if (f.family === "drone" && !has(/_screen$/)) say("a canopy with no screen");
+  }
+  assert.deepEqual(problems, []);
 });
 
 test(`every designed robot has a fairing, three colours, styled wheels, its filament in its colours and every check passing (shard ${shard}/${shards})`, () => {

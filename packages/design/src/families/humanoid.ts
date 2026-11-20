@@ -746,7 +746,13 @@ function bipedShell(A: Assembly, req: ShellRequest, budget: { head: number; ches
   const tilt = bx.get("neck_tilt_actuator"), floor = Math.max(hlo[2], tilt ? (tilt.lo[2] + tilt.hi[2]) / 2 - 14 : hlo[2]);
   const covered = head.filter((q) => q.hi[2] > floor + 1).map((q) => ({ lo: [q.lo[0], q.lo[1], Math.max(q.lo[2], floor)] as Vec3, hi: q.hi }));
   const hd = { x0: hlo[0] - 6, x1: hhi[0] + 6, y0: hlo[1] - 6, y1: hhi[1] + 6, z0: floor };
-  const H1 = placeShell(A, req, { boxes: covered, windows, deck: hd, maxHalfWidth: (hd.y1 - hd.y0) / 2, wrap: true, wall: 1.6, parent: "neck_tilt_link", name: "shell_head", cuts: neck });
+  const H1 = placeShell(A, req, { boxes: covered, windows, deck: hd, maxHalfWidth: (hd.y1 - hd.y0) / 2, wrap: true, wall: 1.6, parent: "neck_tilt_link", name: "shell_head", cuts: neck,
+    // a helmet's face: a dark visor band across the front with two lit eyes in it, and a crest stripe over the top in the accent
+    ...(req.fairing ? { panels: (e: { cx: number; cy: number; a: number; b: number; h: number; z0: number }) => [
+      { name: "visor", lo: [e.cx + 0.1 * e.a, e.cy - 0.84 * e.b, e.z0 + 0.4 * e.h] as Vec3, hi: [5000, e.cy + 0.84 * e.b, e.z0 + 0.72 * e.h] as Vec3, material: "shell_trim" as const },
+      ...[-1, 1].map((s) => ({ name: `eye_${s > 0 ? "left" : "right"}`, lo: [e.cx + 0.3 * e.a, e.cy + Math.min(s * 0.24, s * 0.72) * e.b, e.z0 + 0.47 * e.h] as Vec3, hi: [5000, e.cy + Math.max(s * 0.24, s * 0.72) * e.b, e.z0 + 0.65 * e.h] as Vec3, material: "trim_light" as const, layer: 1 as const })),
+      ...(req.fairing!.preset !== "minimal" ? [{ name: "crest", lo: [-5000, e.cy - 0.16 * e.b, e.z0 + 0.76 * e.h] as Vec3, hi: [5000, e.cy + 0.16 * e.b, 5000] as Vec3, material: "badge" as const }] : []),
+    ] } : {}) });
   // the chest: the torso's front, between the shoulders, from the hips' top to below the shoulders
   const torso = bx.get("torso")!, front = Math.max(Dt, ...[...bx].filter(([n]) => /^(?:chest_panel|main_switch)$/.test(n)).map(([, q]) => q.hi[0]));
   const arms = [...bx].filter(([n]) => /shoulder/.test(n)).map(([, q]) => Math.min(Math.abs(q.lo[1]), Math.abs(q.hi[1])));

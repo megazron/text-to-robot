@@ -256,7 +256,13 @@ function droneShell(A: Assembly, req: ShellRequest, rotors: { at: Vec3 }[]) {
   const envelope = req.fairing
     ? { cx: (pack.lo[0] + pack.hi[0]) / 2, cy: 0, a: Math.max(32, (pack.hi[0] - pack.lo[0]) / 2 + 8), b: Math.min(44, Math.max(28, (pack.hi[1] - pack.lo[1]) / 2 + 8)), h: pack.hi[2] - fit.deck.z0 + 12, z0: fit.deck.z0 }
     : { cx: (pack.lo[0] + pack.hi[0]) / 2, cy: 0, a: 18, b: 40, h: 72, z0: pack.hi[2] - 6 };
-  const { pieces, fitted } = placeShell(A, req, { ...fit, wall: 1.2, wrap: true, envelope, floorZ: fit.deck.z0, maxHalfWidth: 40, parent: "base_link", cuts });
+  const { pieces, fitted } = placeShell(A, req, { ...fit, wall: 1.2, wrap: true, envelope, floorZ: fit.deck.z0, maxHalfWidth: 40, parent: "base_link", cuts,
+    // a canopy's screen (a dark band round its nose), a lit strip in it, and a stripe along its back in the accent
+    ...(req.fairing ? { panels: (e: { cx: number; cy: number; a: number; b: number; h: number; z0: number }) => [
+      { name: "screen", lo: [e.cx + 0.25 * e.a, e.cy - 5000, e.z0 + 0.35 * e.h] as Vec3, hi: [5000, e.cy + 5000, e.z0 + 0.8 * e.h] as Vec3, material: "shell_trim" as const },
+      { name: "nose_light", lo: [e.cx + 0.6 * e.a, e.cy - 0.5 * e.b, e.z0 + 0.5 * e.h] as Vec3, hi: [5000, e.cy + 0.5 * e.b, e.z0 + 0.62 * e.h] as Vec3, material: "trim_light" as const, layer: 1 as const },
+      { name: "stripe", lo: [-5000, e.cy - 0.2 * e.b, e.z0 + 0.5 * e.h] as Vec3, hi: [e.cx + 0.2 * e.a, e.cy + 0.2 * e.b, 5000] as Vec3, material: "badge" as const },
+    ] } : {}) });
   const mass = pieces.reduce((s, p) => s + (A.spec.links.find((l) => l.name === p.name)?.mass ?? 0), 0);
   A.fastener("M3 x 6 (canopy shell to the canopy's lid, four lugs)", 4);
   const propTop = Math.max(...[...linkBoxes(A, (n) => /_prop$/.test(n)).values()].map((q) => q.hi[2]));

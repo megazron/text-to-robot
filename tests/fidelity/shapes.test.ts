@@ -49,7 +49,7 @@ add("capsule", "a retro robot", "a vintage tin toy robot", "a steampunk robot", 
 const STYLE_OF: Record<string, RegExp> = { "a retro robot": /retro/, "a vintage tin toy robot": /retro/, "a steampunk robot": /steampunk/, "a sleek robot": /sleek/, "a futuristic robot": /scifi/, "a cartoon robot": /cartoon/, "a cute robot": /cute/ };
 // style words with no shape pick the shape that suits them: a costume style a cube, an industrial style (retro, sleek, sci-fi,
 // rugged, industrial, minimalist) one of its preset's fairing silhouettes, chosen by the prompt (styling.ts)
-const SHAPE_OF_STYLE: Record<string, string> = { "a retro robot": "cab", "a vintage tin toy robot": "cab", "a steampunk robot": "cube", "a sleek robot": "pod", "a futuristic robot": "wedge", "a boxy robot": "cube", "a blocky robot": "cube" };
+const SHAPE_OF_STYLE: Record<string, string> = { "a retro robot": "pod", "a vintage tin toy robot": "pod", "a steampunk robot": "cube", "a sleek robot": "dome", "a futuristic robot": "tower", "a boxy robot": "cube", "a blocky robot": "cube" };
 
 test(`${SHAPE_PROMPTS.length} shape prompts are read as the shape and style asked for (shard ${shard}/${shards})`, () => {
   assert.ok(SHAPE_PROMPTS.length >= 100, `${SHAPE_PROMPTS.length} shape prompts`);

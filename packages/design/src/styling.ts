@@ -29,27 +29,33 @@ export const PALETTES: Record<string, Palette> = Object.fromEntries(([
 ] as [string, RGB, RGB, RGB, string, string, string][]).map(([id, primary, accent, trim, p, a, t]) => [id, { id, primary, accent, trim, names: { primary: p, accent: a, trim: t } }]));
 
 /** The silhouettes a fairing can have (shell.ts draws them). */
-export const FAIRINGS = ["pod", "wedge", "cab", "dome", "slab", "drum"] as const;
+export const FAIRINGS = ["pod", "wedge", "cab", "dome", "slab", "drum", "truck", "buggy", "tower", "skate"] as const;
 export type FairingShape = typeof FAIRINGS[number];
 export type BodyKind = "wheeled" | "legged" | "arm" | "drone" | "humanoid";
 export type HubStyle = "spoke" | "turbine" | "dish";
 /** What a style word means. "studio" is the look a robot gets when no style is said. */
 export const PRESETS = ["studio", "sleek", "scifi", "rugged", "retro", "industrial", "minimal"] as const;
 export type Preset = typeof PRESETS[number];
-interface PresetSpec { shapes: Record<BodyKind, FairingShape[]>; palettes: string[]; panels: number; belt: boolean; vents: boolean; light: "bar" | "eyes" | "none"; bumper: boolean; hubs: HubStyle[] }
-const ALL: Record<BodyKind, FairingShape[]> = { wheeled: ["pod", "wedge", "cab", "dome", "slab"], legged: ["pod", "wedge", "dome"], arm: ["drum", "pod", "dome", "slab"], drone: ["pod", "dome", "wedge"], humanoid: ["pod", "dome", "slab"] };
+/** Details a preset adds to a wheeled body: wheel-arch flares, a grille, tail lamps, a roof rack, an antenna, a roof
+ *  beacon, tail fins, flank light strips, a bull bar. Each is fitted only where it has room (a LiDAR keeps its view). */
+export type Extra = "fenders" | "grille" | "rear" | "rack" | "antenna" | "beacon" | "fins" | "strips" | "bullbar";
+/** Paint breaks in the accent that follow the body's surface: a centre stripe, twin stripes, a bonnet panel, flank panels. */
+export const PAINTS = ["centre", "twin", "bonnet", "flank", "none"] as const;
+export type Paint = typeof PAINTS[number];
+interface PresetSpec { shapes: Record<BodyKind, FairingShape[]>; palettes: string[]; panels: number; belt: boolean; vents: boolean; light: "bar" | "eyes" | "none"; bumper: boolean; hubs: HubStyle[]; extras: Extra[]; paints: Paint[] }
+const ALL: Record<BodyKind, FairingShape[]> = { wheeled: ["pod", "wedge", "cab", "dome", "slab", "truck", "buggy", "tower", "skate"], legged: ["pod", "wedge", "dome"], arm: ["drum", "pod", "dome", "slab"], drone: ["pod", "dome", "wedge"], humanoid: ["pod", "dome", "slab"] };
 export const PRESET: Record<Preset, PresetSpec> = {
-  studio: { shapes: ALL, palettes: ["arctic", "cobalt", "signal", "coral", "teal", "graphite", "ruby", "sky", "tangerine", "sage", "lilac", "midnight"], panels: 2, belt: false, vents: true, light: "bar", bumper: true, hubs: ["spoke", "turbine", "dish"] },
-  sleek: { shapes: { wheeled: ["wedge", "dome", "pod"], legged: ["wedge", "dome"], arm: ["dome", "pod"], drone: ["wedge", "dome"], humanoid: ["dome", "pod"] }, palettes: ["arctic", "graphite", "sky", "midnight"], panels: 1, belt: false, vents: false, light: "bar", bumper: false, hubs: ["dish", "turbine"] },
-  scifi: { shapes: { wheeled: ["wedge", "dome"], legged: ["wedge", "dome"], arm: ["dome", "drum"], drone: ["wedge", "dome"], humanoid: ["dome", "slab"] }, palettes: ["arctic", "graphite", "midnight", "cobalt"], panels: 3, belt: true, vents: false, light: "bar", bumper: false, hubs: ["turbine"] },
-  rugged: { shapes: { wheeled: ["slab", "cab"], legged: ["pod", "wedge"], arm: ["slab", "drum"], drone: ["pod"], humanoid: ["slab"] }, palettes: ["forest", "signal", "graphite", "tangerine"], panels: 3, belt: true, vents: true, light: "bar", bumper: true, hubs: ["spoke"] },
-  retro: { shapes: { wheeled: ["pod", "dome", "cab"], legged: ["pod", "dome"], arm: ["drum", "dome"], drone: ["dome"], humanoid: ["pod", "dome"] }, palettes: ["ivory", "teal", "coral", "sage"], panels: 1, belt: true, vents: true, light: "eyes", bumper: true, hubs: ["dish"] },
-  industrial: { shapes: { wheeled: ["slab", "cab"], legged: ["pod"], arm: ["slab", "drum"], drone: ["pod"], humanoid: ["slab"] }, palettes: ["signal", "tangerine", "arctic", "graphite"], panels: 2, belt: true, vents: true, light: "bar", bumper: true, hubs: ["spoke", "turbine"] },
-  minimal: { shapes: { wheeled: ["pod", "slab"], legged: ["pod"], arm: ["drum", "pod"], drone: ["pod"], humanoid: ["pod"] }, palettes: ["arctic", "graphite", "sage", "ivory"], panels: 0, belt: false, vents: false, light: "none", bumper: false, hubs: ["dish"] },
+  studio: { shapes: ALL, palettes: ["arctic", "cobalt", "signal", "coral", "teal", "graphite", "ruby", "sky", "tangerine", "sage", "lilac", "midnight"], panels: 2, belt: false, vents: true, light: "bar", bumper: true, hubs: ["spoke", "turbine", "dish"], extras: ["fenders", "grille", "rear"], paints: ["centre", "twin", "bonnet", "flank", "none"] },
+  sleek: { shapes: { wheeled: ["wedge", "skate", "dome"], legged: ["wedge", "dome"], arm: ["dome", "pod"], drone: ["wedge", "dome"], humanoid: ["dome", "pod"] }, palettes: ["arctic", "graphite", "sky", "midnight"], panels: 1, belt: false, vents: false, light: "bar", bumper: false, hubs: ["dish", "turbine"], extras: ["rear"], paints: ["centre", "twin"] },
+  scifi: { shapes: { wheeled: ["wedge", "skate", "tower"], legged: ["wedge", "dome"], arm: ["dome", "drum"], drone: ["wedge", "dome"], humanoid: ["dome", "slab"] }, palettes: ["arctic", "graphite", "midnight", "cobalt"], panels: 3, belt: true, vents: false, light: "bar", bumper: false, hubs: ["turbine"], extras: ["strips", "fins", "rear"], paints: ["flank", "bonnet"] },
+  rugged: { shapes: { wheeled: ["buggy", "truck", "slab"], legged: ["pod", "wedge"], arm: ["slab", "drum"], drone: ["pod"], humanoid: ["slab"] }, palettes: ["forest", "signal", "graphite", "tangerine"], panels: 3, belt: true, vents: true, light: "bar", bumper: true, hubs: ["spoke"], extras: ["fenders", "bullbar", "rack", "grille", "antenna", "rear"], paints: ["none", "bonnet"] },
+  retro: { shapes: { wheeled: ["dome", "cab", "pod"], legged: ["pod", "dome"], arm: ["drum", "dome"], drone: ["dome"], humanoid: ["pod", "dome"] }, palettes: ["ivory", "teal", "coral", "sage"], panels: 1, belt: true, vents: true, light: "eyes", bumper: true, hubs: ["dish"], extras: ["fins", "grille", "rear", "fenders", "antenna"], paints: ["twin", "flank"] },
+  industrial: { shapes: { wheeled: ["truck", "slab", "tower"], legged: ["pod"], arm: ["slab", "drum"], drone: ["pod"], humanoid: ["slab"] }, palettes: ["signal", "tangerine", "arctic", "graphite"], panels: 2, belt: true, vents: true, light: "bar", bumper: true, hubs: ["spoke", "turbine"], extras: ["beacon", "rack", "grille", "rear", "fenders"], paints: ["flank", "none"] },
+  minimal: { shapes: { wheeled: ["pod", "skate"], legged: ["pod"], arm: ["drum", "pod"], drone: ["pod"], humanoid: ["pod"] }, palettes: ["arctic", "graphite", "sage", "ivory"], panels: 0, belt: false, vents: false, light: "none", bumper: false, hubs: ["dish"], extras: [], paints: ["none"] },
 };
 
 /** The fairing a robot gets: carried in its request (ShellRequest.fairing), so a redesign gives the same one. */
-export interface Fairing { preset: Preset; palette: string; hub: HubStyle; panels: number; belt: boolean; vents: boolean; light: "bar" | "eyes" | "none"; bumper: boolean }
+export interface Fairing { preset: Preset; palette: string; hub: HubStyle; panels: number; belt: boolean; vents: boolean; light: "bar" | "eyes" | "none"; bumper: boolean; extras?: Extra[]; paint?: Paint; /** a robot that carries things: a lid line and a handle on its roof */ cargo?: boolean }
 
 /** FNV-1a, the hash every choice here is made with (stable across engines). */
 export function fnv(s: string): number { let h = 2166136261; for (const ch of s) { h ^= ch.codePointAt(0)!; h = Math.imul(h, 16777619) >>> 0; } return h; }
@@ -61,10 +67,15 @@ const pick = <T,>(xs: readonly T[], key: string, salt: string): T => xs[fnv(`${s
  * its colour), so prompts said another way give the same robot. A palette named by the caller (a colour or a job's palette
  * is applied over it) is kept.
  */
-export function chooseFairing(kind: BodyKind, key: string, preset: Preset = "studio", palette?: string): { shape: FairingShape; fairing: Fairing } {
+export function chooseFairing(kind: BodyKind, key: string, preset: Preset = "studio", palette?: string, cargo = false): { shape: FairingShape; fairing: Fairing } {
   const p = PRESET[preset];
-  const shape = pick(p.shapes[kind], key, "shape"), pal = palette && PALETTES[palette] ? palette : pick(p.palettes, key, "palette");
-  return { shape, fairing: { preset, palette: pal, hub: pick(p.hubs, key, "hub"), panels: p.panels, belt: p.belt, vents: p.vents, light: p.light, bumper: p.bumper } };
+  // a robot that carries things gets a body with somewhere to carry them, where its preset has one
+  const carriers = p.shapes[kind].filter((x) => x === "truck" || x === "tower" || x === "cab");
+  const shape = pick(cargo && carriers.length ? carriers : p.shapes[kind], key, "shape"), pal = palette && PALETTES[palette] ? palette : pick(p.palettes, key, "palette");
+  // (a dome has no flat roof for a rack; a buggy's cage is its roof)
+  const extras = p.extras.filter((x) => !(x === "rack" && (shape === "dome" || shape === "buggy" || shape === "skate")) && !(x === "fins" && shape === "buggy"));
+  const paint = shape === "buggy" || extras.includes("rack") ? pick(p.paints.filter((x) => x === "flank" || x === "none").concat("none"), key, "paint") : pick(p.paints, key, "paint");
+  return { shape, fairing: { preset, palette: pal, hub: pick(p.hubs, key, "hub"), panels: p.panels, belt: p.belt, vents: p.vents, light: p.light, bumper: p.bumper, extras, paint, ...(cargo ? { cargo: true } : {}) } };
 }
 
 /**
@@ -81,6 +92,12 @@ export const PROPORTION: Record<FairingShape, { toWheel: number; toLength: numbe
   dome: { toWheel: 1.0, toLength: 0.46, overhang: 4, skirt: 0.22, light: 0.3, shoulder: 1 },
   slab: { toWheel: 0.75, toLength: 0.34, overhang: 8, skirt: 0.3, light: 0.6, shoulder: 1 },
   drum: { toWheel: 0.9, toLength: 0.6, overhang: 0, skirt: 0.25, light: 0.5, shoulder: 1 },
+  // a cab-forward truck (a load bed behind the cab), an open buggy (a low tub under a roll cage), a tall tower (a delivery
+  // body) and a low skate (a flat deck with a spine)
+  truck: { toWheel: 1.25, toLength: 0.5, overhang: 6, skirt: 0.2, light: 0.3, shoulder: 0.5 },
+  buggy: { toWheel: 1.2, toLength: 0.5, overhang: 8, skirt: 0.2, light: 0.3, shoulder: 0.5 },
+  tower: { toWheel: 1.7, toLength: 0.7, overhang: 2, skirt: 0.14, light: 0.62, shoulder: 1 },
+  skate: { toWheel: 0.6, toLength: 0.3, overhang: 10, skirt: 0.32, light: 0.56, shoulder: 0.72 },
 };
 /** The body-height-to-wheel-diameter range a wheeled robot's fairing is held to (a check says where it landed). */
 export const WHEELED_RATIO: [number, number] = [0.45, 2.2];
@@ -140,3 +157,16 @@ export function lightOps(kind: "bar" | "eyes", x: number, y: number, z: number, 
 
 /** The names a robot's colours are bought by, for the BOM. */
 export const paletteNames = (id: string) => PALETTES[id]?.names;
+
+/** Where a silhouette's roof is flat enough to carry a rack, a beacon or a lid (x in half lengths, y in half widths). */
+export const ROOF: Record<FairingShape, { x0: number; x1: number; y: number } | undefined> = {
+  pod: { x0: -0.6, x1: 0.6, y: 0.62 }, wedge: { x0: -0.82, x1: -0.08, y: 0.66 }, cab: { x0: -0.66, x1: 0.02, y: 0.6 }, dome: { x0: -0.16, x1: 0.16, y: 0.2 },
+  slab: { x0: -0.72, x1: 0.72, y: 0.62 }, drum: undefined, truck: { x0: 0.42, x1: 0.84, y: 0.62 }, buggy: undefined, tower: { x0: -0.5, x1: 0.5, y: 0.56 }, skate: { x0: -0.55, x1: 0.55, y: 0.24 },
+};
+
+/** How far (mm) a fairing's roof details stand above it: a LiDAR's mast is raised by as much, so it sees over them. */
+export function crownOf(f: Fairing, shape: FairingShape): number {
+  const X = new Set(f.extras ?? []), roof = ROOF[shape];
+  if (!roof) return 0;
+  return Math.max(X.has("beacon") ? 18 : 0, X.has("rack") ? 13 : 0, f.cargo ? 11 : 0);
+}

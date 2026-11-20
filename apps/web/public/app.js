@@ -53,6 +53,17 @@ controls.enableDamping = true; controls.target.set(0, 0, 0.25);
 scene.add(new THREE.HemisphereLight(0xd8ffe6, 0x0b1a10, 0.95));
 const key = new THREE.DirectionalLight(0xffffff, 1.6); key.position.set(1.5, -2, 3); scene.add(key);
 const fill = new THREE.DirectionalLight(0x7dffb0, 0.35); fill.position.set(-2, 1, 1); scene.add(fill);
+// a rim light from behind and above: it draws a bright edge round a body, so a shell reads as a shaped product
+const rim = new THREE.DirectionalLight(0xeafff2, 0.6); rim.position.set(-1.6, 2.4, 2.2); scene.add(rim);
+// a soft contact shadow on the floor under the robot (a radial gradient, sized to the robot in frameRobot)
+const contact = (() => {
+  const c = document.createElement("canvas"); c.width = c.height = 128;
+  const g = c.getContext("2d"), grad = g.createRadialGradient(64, 64, 4, 64, 64, 64);
+  grad.addColorStop(0, "rgba(0,0,0,0.62)"); grad.addColorStop(0.55, "rgba(0,0,0,0.34)"); grad.addColorStop(1, "rgba(0,0,0,0)");
+  g.fillStyle = grad; g.fillRect(0, 0, 128, 128);
+  const m = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(c), transparent: true, depthWrite: false }));
+  m.renderOrder = -1; m.visible = false; scene.add(m); return m;
+})();
 
 // projection pad under the robot: three soft rings, sized to the robot in frameRobot()
 const pad = new THREE.Group();
@@ -267,8 +278,10 @@ function finish(l) {
   if (m === "aluminium") return { metalness: 0.65, roughness: 0.38 };
   if (m === "metal") return { metalness: 0.8, roughness: 0.3 };
   if (m === "rubber" || l.role === "wheel") return { metalness: 0, roughness: 0.95 };
-  if (m === "trim_light") return { metalness: 0, roughness: 0.18 };
-  if (/^(?:printed|shell|badge|link_mat)/.test(m)) return { metalness: 0.02, roughness: 0.6 };
+  if (m.startsWith("trim_light")) return { metalness: 0, roughness: 0.18 };
+  // a fairing's paint is a satin coat (a clear edge highlight under the rim light); printed structure stays matte
+  if (/^(?:shell|badge)/.test(m)) return { metalness: 0.05, roughness: 0.44 };
+  if (/^(?:printed|link_mat)/.test(m)) return { metalness: 0.02, roughness: 0.6 };
   return { metalness: 0.25, roughness: 0.55 };
 }
 /** One link's meshes (its visual or, with Collision on, its collision shapes); mesh files load into `pending`. */
@@ -288,7 +301,7 @@ function linkGroup(spec, l, revision, pending) {
     const color = matColor(spec, l.material, l.role === "gripper" ? 0x2a5bd0 : l.role === "wheel" ? 0x1a1a1f : l.role === "base" ? 0x3f3f46 : 0xd8d8dc);
     const fin = finish(l);
     const mesh = new THREE.Mesh(geom, new THREE.MeshStandardMaterial({ color, metalness: fin.metalness, roughness: fin.roughness,
-      ...(l.material === "lens_glow" ? { emissive: new THREE.Color(0x9fe8ff), emissiveIntensity: 1.2 } : l.material === "trim_light" ? { emissive: color.clone(), emissiveIntensity: 0.55 } : {}), transparent: isCol, opacity: isCol ? 0.45 : 1, wireframe: isCol }));
+      ...(l.material === "lens_glow" ? { emissive: new THREE.Color(0x9fe8ff), emissiveIntensity: 1.2 } : (l.material ?? "").startsWith("trim_light") ? { emissive: color.clone(), emissiveIntensity: l.material === "trim_light" ? 0.55 : 0.85 } : {}), transparent: isCol, opacity: isCol ? 0.45 : 1, wireframe: isCol }));
     mesh.matrixAutoUpdate = false; mesh.matrix.copy(mat4(poseArr(l.origin)));
     mesh.userData.linkName = l.name; mesh.userData.glow = mesh.material.emissive?.getHex() ?? 0;   // a lens's own light
     if (g.type === "mesh" && !isCol) {
@@ -364,6 +377,8 @@ function frameRobot() {
   controls.update();
   pad.position.set(sphere.center.x, sphere.center.y, bb.min.z);
   pad.scale.setScalar(Math.max(0.08, Math.hypot(bb.max.x - bb.min.x, bb.max.y - bb.min.y) * 0.56));
+  contact.visible = true; contact.position.set((bb.min.x + bb.max.x) / 2, (bb.min.y + bb.max.y) / 2, bb.min.z + 0.0006);
+  contact.scale.set(Math.max(0.06, (bb.max.x - bb.min.x) * 1.3), Math.max(0.06, (bb.max.y - bb.min.y) * 1.3), 1);
   invalidate();
 }
 

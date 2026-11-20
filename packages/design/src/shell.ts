@@ -8,7 +8,7 @@ import { Manifold, build, evaluate, invert, I4, printCheck, programBounds, type 
 import { linkSolid } from "./clearance.ts";
 import { fk } from "./kin.ts";
 import { emojiShape, emojiDiscs } from "./emoji.ts";
-import { FAIRINGS, PALETTES, PROPORTION, badgeOps, lightOps, type Fairing, type FairingShape } from "./styling.ts";
+import { FAIRINGS, PALETTES, PROPORTION, ROOF, badgeOps, lightOps, type Fairing, type FairingShape } from "./styling.ts";
 
 export const SHAPES = ["heart", "star", "egg", "sphere", "cube", "capsule", "shoe", "car", "dog", "cat", "spider", "fish", "bird", "dragon", "teapot", "lamp", "toaster", "can", "burger", "pizza", "donut", "blob", "emoji", ...FAIRINGS] as const;
 export type Shape = typeof SHAPES[number];
@@ -24,6 +24,7 @@ export const SHAPE_COLOUR: Record<Shape, [number, number, number]> = {
   bird: [0.2, 0.55, 0.9], dragon: [0.2, 0.6, 0.3], teapot: [0.93, 0.93, 0.9], lamp: [0.95, 0.85, 0.5], toaster: [0.75, 0.77, 0.8], can: [0.85, 0.1, 0.1],
   burger: [0.8, 0.55, 0.25], pizza: [0.95, 0.75, 0.3], donut: [0.92, 0.55, 0.7], blob: [0.6, 0.85, 0.75], emoji: [0.98, 0.8, 0.2],
   pod: [0.92, 0.93, 0.95], wedge: [0.92, 0.93, 0.95], cab: [0.92, 0.93, 0.95], dome: [0.92, 0.93, 0.95], slab: [0.92, 0.93, 0.95], drum: [0.92, 0.93, 0.95],
+  truck: [0.92, 0.93, 0.95], buggy: [0.92, 0.93, 0.95], tower: [0.92, 0.93, 0.95], skate: [0.92, 0.93, 0.95],
 };
 /** a fairing silhouette, not a thing's shape */
 export const isFairing = (s: Shape): s is FairingShape => (FAIRINGS as readonly string[]).includes(s);
@@ -84,6 +85,18 @@ export function shapeOps(shape: Shape, style: Style, e: { cx: number; cy: number
       case "dome": return [H(B([cx - a, cy - b, zb], [cx + a, cy + b, z0 + 0.55 * h], Math.min(14, 0.2 * h)), E(P(0, 0, 0.4), [0.94 * a, 0.92 * b, 0.6 * h]))];
       case "slab": return [H(B([cx - a, cy - b, zb], [cx + a, cy + b, z0 + 0.8 * h], 5), B([cx - 0.88 * a, cy - 0.84 * b, zb], [cx + 0.88 * a, cy + 0.84 * b, z0 + h], 5))];
       case "drum": return [H(E(P(0, 0, 0.0), [a, b, 0.16 * h]), E(P(0, 0, 0.9), [0.84 * a, 0.84 * b, 0.1 * h]))];
+      // a cab-forward truck: a low load bed behind a cab that stands at the nose
+      case "truck": return [B([cx - a, cy - b, zb], [cx + a, cy + b, z0 + 0.5 * h], Math.min(10, 0.15 * h)),
+        H(B([cx + 0.3 * a, cy - 0.92 * b, z0 + 0.3 * h], [cx + 0.96 * a, cy + 0.92 * b, z0 + h], Math.min(14, 0.2 * h)), B([cx + 0.16 * a, cy - 0.92 * b, z0 + 0.3 * h], [cx + a, cy + 0.92 * b, z0 + 0.5 * h], 6))];
+      // an open buggy: a low tub with a cowl at the nose (its roll cage is added solid, fairingExtras)
+      case "buggy": return [B([cx - a, cy - b, zb], [cx + a, cy + b, z0 + 0.5 * h], Math.min(14, 0.2 * h)),
+        H(B([cx + 0.3 * a, cy - 0.8 * b, z0 + 0.3 * h], [cx + a, cy + 0.8 * b, z0 + 0.5 * h], 6), B([cx + 0.48 * a, cy - 0.66 * b, z0 + 0.3 * h], [cx + 0.9 * a, cy + 0.66 * b, z0 + 0.66 * h], Math.min(10, 0.12 * h)))];
+      // a tall tower that narrows upward from a wide foot
+      case "tower": { const r = Math.min(30, 0.3 * Math.min(a, b));
+        return [H(B([cx - a, cy - b, zb], [cx + a, cy + b, z0 + 0.3 * h], Math.min(14, 0.1 * h)), B([cx - 0.84 * a, cy - 0.86 * b, zb], [cx + 0.84 * a, cy + 0.86 * b, z0 + h], r))]; }
+      // a low skate: a flat deck with a raised spine down its middle
+      case "skate": return [B([cx - a, cy - b, zb], [cx + a, cy + b, z0 + 0.72 * h], Math.min(18, 0.3 * h)),
+        H(B([cx - 0.7 * a, cy - 0.3 * b, z0 + 0.5 * h], [cx + 0.55 * a, cy + 0.3 * b, z0 + h], 8), B([cx - 0.8 * a, cy - 0.38 * b, z0 + 0.5 * h], [cx + 0.75 * a, cy + 0.38 * b, z0 + 0.72 * h], 4))];
       case "emoji": {
         // the outline in the front view (u to +y, v down), 90 % of the envelope's width and as tall as it is wide, its foot a
         // little under the deck; each disc a cushion: as thick as the envelope at the middle, thinner towards the edge
@@ -163,9 +176,10 @@ export function outsideVolume(req: ShellRequest, e: Env, boxes: { lo: Vec3; hi: 
     return out;
   });
 }
-export interface FittedShell { ops: Op[]; envelope: { cx: number; cy: number; a: number; b: number; h: number; z0: number }; scale: number; overlapMm3: number; tries: number }
+export interface FittedShell { /** the rounded bumps the shell wraps round parts it does not cover (their outsides) */ bumps?: Op[]; ops: Op[]; envelope: { cx: number; cy: number; a: number; b: number; h: number; z0: number }; scale: number; overlapMm3: number; tries: number }
 /** World boxes (mm) the shell must clear, windows (camera lenses) it must leave open, and where it sits. */
 export interface ShellFit { boxes: { lo: Vec3; hi: Vec3 }[]; windows: { at: Vec3; dir: Vec3; d: number }[]; deck: { x0: number; x1: number; y0: number; y1: number; z0: number }; maxHalfWidth: number; wall?: number; grow?: boolean; wrap?: boolean; /** the most `grow` may scale it */ maxScale?: number; /** solids the shell's outside must not meet as it grows (it shrinks to 0.8 for them if it must) */ avoid?: Op[]; /** "top": the shape lies on the deck, its outline seen from above */ orient?: "front" | "top";
+  /** a wheeled body's wheels (world mm: centre x, the tyre's outer face y, its top z, its radius): wheel-arch flares stand over them */ wheels?: { x: number; y: number; top: number; r: number }[]; /** how far (mm) anything may stand above the envelope (a LiDAR looks out over it); no limit when not given */ headroom?: number;
   /** the shape's own envelope, when the designer places it (a crest standing on a pack) */ envelope?: Env; /** where its open bottom is cut, when not at the envelope's foot */ floorZ?: number }
 
 /** The shell over the bay: as long and wide as it (or the deck), tall enough for its shape and for what stands on it.
@@ -200,7 +214,8 @@ export function fitShell(req: ShellRequest, fit: ShellFit): FittedShell {
     scale = best?.s ?? 1;
     e = scaled(scale);
   }
-  const ops = shellProgram(req, style, e, wall, fit);
+  const note: { bumps?: Op[] } = {};
+  const ops = shellProgram(req, style, e, wall, fit, note);
   for (const q of fit.boxes) ops.push({ op: "cutbox", min: [q.lo[0] - 3, q.lo[1] - 3, q.lo[2] - 3], max: [q.hi[0] + 3, q.hi[1] + 3, q.hi[2] + 3] });
   const overlap = build(() => {
     const S = evaluate({ name: "shell", ops });
@@ -208,16 +223,22 @@ export function fitShell(req: ShellRequest, fit: ShellFit): FittedShell {
     for (const q of fit.boxes) { const Bx = evaluate({ name: "b", ops: [{ op: "box", min: q.lo, max: q.hi }] }); v += Manifold.intersection(S, Bx).volume(); }
     return v;
   });
-  return { ops, envelope: e, scale, overlapMm3: +overlap.toFixed(1), tries };
+  return { ops, bumps: note.bumps, envelope: e, scale, overlapMm3: +overlap.toFixed(1), tries };
 }
 
-function shellProgram(req: ShellRequest, style: Style, e: FittedShell["envelope"], wall: number, fit: ShellFit): Op[] {
+function shellProgram(req: ShellRequest, style: Style, e: FittedShell["envelope"], wall: number, fit: ShellFit, note?: { bumps?: Op[] }): Op[] {
   // `wrap`: a part the shape does not cover gets a rounded bump of the shell round it (3 mm clear) instead of a hole
   // (not round what lies low on the deck, a plate or a board: the shell's foot is cut clear of those instead)
   const bumps = (w: number): Op[] => fit.wrap ? fit.boxes.filter((q) => q.hi[2] > e.z0 + 10).map((q) => ({ op: "box", min: [q.lo[0] - 3 - wall + w, q.lo[1] - 3 - wall + w, q.lo[2] - 3 - wall + w], max: [q.hi[0] + 3 + wall - w, q.hi[1] + 3 + wall - w, q.hi[2] + 3 + wall - w], r: Math.max(0.5, 8 - w) })) : [];
+  if (note) note.bumps = bumps(-0.1);
   const outer = [...shapeWorld(req.shape, style, e, 0, fit.orient, req.emoji), ...bumps(0)], inner = [...shapeWorld(req.shape, style, e, wall, fit.orient, req.emoji), ...bumps(wall)];
   const ops: Op[] = [{ op: "solid", of: [...outer, { op: "subtract", of: inner }] }, ...oriented(e, fit.orient, (es) => details(req.shape, style, es))];
-  if (req.fairing && isFairing(req.shape) && fit.orient !== "top" && wall >= 2.4) ops.push(...fairingDetails(req.shape, req.fairing, e, (w) => [...shapeWorld(req.shape, style, e, w, fit.orient), ...bumps(w)]));
+  if (req.fairing && isFairing(req.shape) && fit.orient !== "top" && wall >= 2.4) {
+    // solid details standing on the body (a roll cage, flares, a rack...): whatever of them would lie inside the cavity is left out
+    const extra = fairingExtras(req.shape, req.fairing, e, fit);
+    if (extra.length) ops.push({ op: "solid", of: [...extra, { op: "subtract", of: inner }] });
+    ops.push(...fairingDetails(req.shape, req.fairing, e, (w) => [...shapeWorld(req.shape, style, e, w, fit.orient), ...bumps(w)], fit));
+  }
   // the floor: everything below the deck top is cut away, so the cavity opens onto the deck
   const floor = fit.floorZ ?? e.z0;
   ops.push({ op: "cutbox", min: [e.cx - 4 * e.a - 400, e.cy - 4 * e.b - 400, floor - 2000], max: [e.cx + 4 * e.a + 400, e.cy + 4 * e.b + 400, floor] });
@@ -240,25 +261,88 @@ export const bandH = (f: Fairing, e: Env) => (f.preset === "minimal" ? 0 : Math.
  * (1.5 mm of wall left under them), a belt line, rows of vent slots through the flanks, and a bumper rail on the skirt's nose.
  * The grooves stay above the two-tone seam, so the skirt and its bumper are never cut through.
  */
-function fairingDetails(shape: FairingShape, f: Fairing, e: Env, at: (w: number) => Op[]): Op[] {
+function fairingDetails(shape: FairingShape, f: Fairing, e: Env, at: (w: number) => Op[], fit?: ShellFit): Op[] {
   const { cx, cy, a, b, h, z0 } = e, zs = skirtZ(shape, e) + bandH(f, e), out: Op[] = [], BIG = 4 * Math.max(a, b, h) + 50, depth = 0.9;
-  const groove = (min: Vec3, max: Vec3): Op => ({ op: "subtract", of: [{ op: "box", min, max }, { op: "subtract", of: at(depth) }] });
+  // (a groove with no room, on a body lower than its seam, is not cut)
+  const groove = (min: Vec3, max: Vec3): Op[] => ([0, 1, 2].some((k) => max[k] - min[k] < 0.5) ? [] : [{ op: "subtract", of: [{ op: "box", min, max }, { op: "subtract", of: at(depth) }] }]);
+  // (grooves stop at the roof, and on an open buggy at its tub, so the solid details standing on the body are left whole)
+  const zTop = shape === "buggy" ? z0 + 0.5 * h + 0.3 : z0 + h + 0.3, sh = PROPORTION[shape].shoulder;
   // panel lines across the body, front to back pattern by count
-  for (const u of [-0.5, 0.42, -0.08].slice(0, f.panels)) out.push(groove([cx + u * a - 0.6, cy - BIG, zs + 3], [cx + u * a + 0.6, cy + BIG, z0 + BIG]));
+  for (const u of [-0.5, 0.42, -0.08].slice(0, f.panels)) out.push(...groove([cx + u * a - 0.6, cy - b - 0.5, zs + 3], [cx + u * a + 0.6, cy + b + 0.5, zTop]));
   // a belt line round the body, high on the flank (clear of the light bar)
   const zl = z0 + PROPORTION[shape].light * h;
-  if (f.belt) { const zb = z0 + 0.8 * h; if (Math.abs(zb - zl) > 8 && zb > zs + 6) out.push(groove([cx - BIG, cy - BIG, zb - 0.6], [cx + BIG, cy + BIG, zb + 0.6])); }
+  if (f.belt) { const zb = z0 + 0.8 * sh * h; if (Math.abs(zb - zl) > 8 && zb > zs + 6) out.push(...groove([cx - a - 0.5, cy - b - 0.5, zb - 0.6], [cx + a + 0.5, cy + b + 0.5, zb + 0.6])); }
   // vents: four slots 3 mm high through each flank, behind the middle
   if (f.vents) for (let k = 0; k < 4; k++) {
     const z = zs + 6 + k * 6;
     if (z + 3 > z0 + 0.62 * h) break;
     for (const s of [-1, 1]) out.push({ op: "cutbox", min: [cx - 0.72 * a, s > 0 ? cy + 0.5 * b : cy - BIG, z], max: [cx - 0.38 * a, s > 0 ? cy + BIG : cy - 0.5 * b, z + 3] });
   }
-  // a bumper rail on the skirt's nose (and its tail when there is room), solid, sunk into the wall
+  // a grille: up to four fine lines across the nose, under the light line (over it where there is no room under)
+  if (f.extras?.includes("grille") && fit?.wheels) {
+    const lo = zs + 3, under = Math.floor((zl - 8 - lo) / 4), z0g = under >= 2 ? lo : zl + 8, n = Math.min(4, under >= 2 ? under : Math.floor((z0 + 0.86 * h - z0g) / 4));
+    for (let k = 0; k < n; k++) out.push(...groove([cx + 0.5 * a, cy - 0.42 * b, z0g + 4 * k], [cx + a + 1.5, cy + 0.42 * b, z0g + 4 * k + 1.4]));
+  }
+  // a robot that carries things: a lid line round its roof (the fairing lifts off there to load it)
+  const roof = ROOF[shape];
+  if (f.cargo && roof && fit?.wheels) {
+    const x0 = cx + roof.x0 * a, x1 = cx + roof.x1 * a, y1 = roof.y * b, zr = z0 + 0.7 * h;
+    for (const x of [x0, x1]) out.push(...groove([x - 0.6, cy - y1, zr], [x + 0.6, cy + y1, zTop]));
+    for (const y of [-y1, y1]) out.push(...groove([x0, cy + y - 0.6, zr], [x1, cy + y + 0.6, zTop]));
+  }
+  // a bumper rail on the skirt's nose (and its tail when there is room), solid, sunk into the wall (a bull bar stands in its place at the nose)
   if (f.bumper) for (const s of [1, -1]) {
+    if (s > 0 && f.extras?.includes("bullbar") && fit?.wheels) continue;
     const zt = Math.min(skirtZ(shape, e) - 2, z0 + 0.16 * h), zb = Math.max(z0 + 2, zt - 12);
     if (zt - zb < 5) continue;
     out.push({ op: "box", min: [s > 0 ? cx + a - 16 : cx - a - 5, cy - 0.7 * b, zb], max: [s > 0 ? cx + a + 5 : cx - a + 16, cy + 0.7 * b, zt], r: 2 });
+  }
+  return out;
+}
+
+/**
+ * Solid details that stand on a wheeled fairing, printed with it: a buggy's roll cage, flares over the wheels, a roof rack,
+ * an antenna, a beacon's boss, tail fins, a bull bar, a lid's handle. Tubes are 7 to 8 mm, blades 3.2 mm. Nothing stands
+ * above the body when a LiDAR looks out over it (`capTop`).
+ */
+export function fairingExtras(shape: FairingShape, f: Fairing, e: Env, fit: ShellFit): Op[] {
+  if (!fit.wheels) return [];
+  const { cx, cy, a, b, h, z0 } = e, out: Op[] = [], X = new Set(f.extras ?? []), roof = ROOF[shape], top = z0 + h, room = fit.headroom ?? Infinity;
+  const rod = (p: Vec3, q: Vec3, r: number): Op => ({ op: "rod", a: p, b: q, r });
+  // (a tube's end and elbow: a short stub of the same tube across it, cheap to union)
+  const ball = (p: Vec3, r: number): Op => ({ op: "rod", a: [p[0], p[1], p[2] - 0.7 * r], b: [p[0], p[1], p[2] + 0.7 * r], r });
+  if (shape === "buggy") {
+    // two hoops over the tub, two bars along their tops, two braces down to the cowl
+    const r = 4, zt = z0 + 0.5 * h - 2, zc = top - r, yb = 0.82 * b, yt = 0.7 * b, xs = [cx - 0.6 * a, cx + 0.16 * a];
+    for (const x of xs) { for (const s of [-1, 1]) out.push(rod([x, cy + s * yb, zt], [x, cy + s * yt, zc], r), ball([x, cy + s * yt, zc], r)); out.push(rod([x, cy - yt, zc], [x, cy + yt, zc], r)); }
+    for (const s of [-1, 1]) out.push(rod([xs[0], cy + s * yt, zc], [xs[1], cy + s * yt, zc], r), rod([xs[1], cy + s * yt, zc], [cx + 0.62 * a, cy + s * 0.6 * b, z0 + 0.6 * h], r));
+  }
+  if (X.has("fenders")) for (const w of fit.wheels) {
+    const s = Math.sign(w.y - cy) || 1, z1 = Math.max(w.top + 3.5, z0 + 1), yIn = cy + s * (b - 3), yOut = cy + s * Math.min(Math.abs(w.y - cy) + 2, 123.5);   // (the body with its flares still prints in halves: 248 mm across)
+    if (Math.abs(yOut - cy) < b + 4 || z1 + 8 > z0 + 0.5 * h || Math.abs(w.x - cx) + w.r > a + 12) continue;
+    const y0 = Math.min(yIn, yOut), y1 = Math.max(yIn, yOut);
+    out.push({ op: "hull", of: [{ op: "box", min: [w.x - w.r - 7, y0, z1], max: [w.x + w.r + 7, y1, z1 + 3.4], r: 1.2 }, { op: "box", min: [w.x - 0.55 * w.r, y0, z1], max: [w.x + 0.55 * w.r, y1, z1 + 7.5], r: 1.2 }] });
+  }
+  if (X.has("rack") && roof && room >= 12 && (roof.x1 - roof.x0) * a > 50 && roof.y * b > 22) {
+    const x0 = cx + roof.x0 * a + 6, x1 = cx + roof.x1 * a - 6, zr = top + 9;
+    for (const s of [-1, 1]) { const y = cy + s * roof.y * b; out.push(rod([x0, y, zr], [x1, y, zr], 3), ball([x0, y, zr], 3), ball([x1, y, zr], 3)); for (const x of [x0, (x0 + x1) / 2, x1]) out.push(rod([x, y, top - 3], [x, y, zr], 3)); }
+    for (const x of [x0, x1]) out.push(rod([x, cy - roof.y * b, zr], [x, cy + roof.y * b, zr], 3));
+  }
+  if (X.has("antenna") && roof && room >= 50) { const p: Vec3 = [cx + roof.x0 * a + 8, cy - 0.8 * roof.y * b, top - 3]; const up = Math.min(46, room - 5); out.push(rod(p, [p[0], p[1], top + up], 2.2), ball([p[0], p[1], top + up + 1], 3.6)); }
+  if (X.has("beacon") && roof && room >= 17) { const x = cx + ((roof.x0 + roof.x1) / 2) * a; out.push(rod([x, cy, top - 3], [x, cy, top + 3], 13)); }
+  if (X.has("fins") && shape !== "buggy") for (const s of [-1, 1]) {
+    const y = cy + s * 0.78 * b, zb = z0 + 0.5 * h - 2, zt = top + Math.min(0.14 * h, Math.max(0, room));
+    out.push({ op: "hull", of: [{ op: "box", min: [cx - a + 3, y - 1.6, zb], max: [cx - 0.56 * a, y + 1.6, zb + 2] }, { op: "box", min: [cx - a + 3, y - 1.6, zb], max: [cx - a + 14, y + 1.6, zt] }] });
+  }
+  if (X.has("bullbar")) {
+    const x = cx + a + 8, zl = Math.max(z0 + 4, z0 + 0.07 * h), zu = Math.min(z0 + Math.max(0.2 * h, 16), z0 + PROPORTION[shape].light * h - 9), r = 3.5, y1 = 0.62 * b, yu = 0.4 * b;
+    for (const z of [zl, zu]) out.push(rod([x, cy - y1, z], [x, cy + y1, z], r), ball([x, cy - y1, z], r), ball([x, cy + y1, z], r));
+    for (const s of [-1, 1]) { out.push(rod([x, cy + s * yu, zl], [x, cy + s * yu, zu], r)); for (const z of [zl, zu]) out.push(rod([cx + a - 3, cy + s * yu, z], [x, cy + s * yu, z], r)); }
+  }
+  if (f.cargo && roof && room >= 10 && !X.has("beacon")) {
+    // the lid's handle: a bar on two posts across the roof
+    const x = cx + ((roof.x0 + roof.x1) / 2) * a, y1 = Math.min(18, 0.4 * roof.y * b);
+    out.push(rod([x, cy - y1, top + 7], [x, cy + y1, top + 7], 2.6)); for (const s of [-1, 1]) out.push(rod([x, cy + s * y1, top - 3], [x, cy + s * y1, top + 7], 2.6), ball([x, cy + s * y1, top + 7], 2.6));
   }
   return out;
 }
@@ -295,6 +379,9 @@ export interface PlaceShell extends ShellFit {
   twoTone?: boolean;
   /** a fairing's lamp and badge, parts of their own standing proud of it (default on; off where a folded arm sweeps past) */
   trims?: boolean;
+  /** paint panels a designer asks for on a fairing (a helmet's visor, a canopy's screen): thin parts lying on its surface in
+   *  a material of the look, each within a box given in the fitted envelope; layer 1 lies on a layer 0 panel */
+  panels?: (e: Env) => { name: string; lo: Vec3; hi: Vec3; material: "shell_trim" | "badge" | "trim_light"; layer?: 0 | 1 }[];
 }
 type Asm = import("./assembly.ts").Assembly;
 const mat4Of = (T: { R: number[][]; p: number[] }): Mat4 => [T.R[0][0], T.R[1][0], T.R[2][0], 0, T.R[0][1], T.R[1][1], T.R[2][1], 0, T.R[0][2], T.R[1][2], T.R[2][2], 0, T.p[0] * 1000, T.p[1] * 1000, T.p[2] * 1000, 1];
@@ -364,7 +451,7 @@ export function placeShell(A: Asm, req: ShellRequest, o: PlaceShell): { pieces: 
   if (f && pal && detailed) for (const [name, c] of [["shell_trim", pal.trim], ["badge", pal.accent]] as const)
     if (!A.spec.materials.some((m) => m.name === name)) A.spec.materials.push({ name, color: [c[0], c[1], c[2], 1] });
   if (f && pal && detailed && o.trims !== false) {
-    for (const [name, c] of [["shell_trim", pal.trim], ["trim_light", [0.86, 0.95, 1] as const], ["badge", pal.accent]] as const)
+    for (const [name, c] of [["shell_trim", pal.trim], ["trim_light", [0.86, 0.95, 1] as const], ["badge", pal.accent], ...(f.extras?.includes("rear") ? [["trim_light_red", [0.95, 0.12, 0.1]] as const] : []), ...(f.extras?.includes("beacon") ? [["trim_light_amber", [1, 0.62, 0.05]] as const] : [])] as const)
       if (!A.spec.materials.some((m) => m.name === name)) A.spec.materials.push({ name, color: [c[0], c[1], c[2], 1] });
     const e = fitted.envelope, shape = req.shape as FairingShape, zs = skirtZ(shape, e);
     const free = (lo: Vec3, hi: Vec3) => !o.boxes.some((q) => q.lo[0] - 4 < hi[0] && lo[0] < q.hi[0] + 4 && q.lo[1] - 4 < hi[1] && lo[1] < q.hi[1] + 4 && q.lo[2] - 4 < hi[2] && lo[2] < q.hi[2] + 4)
@@ -376,6 +463,8 @@ export function placeShell(A: Asm, req: ShellRequest, o: PlaceShell): { pieces: 
       const S = evaluate({ name: "outer", ops: shapeWorld(req.shape, req.style ?? "plain", e, 0, o.orient) });
       const at = (y: number, z: number, dir: 1 | -1) => { const bb = Manifold.intersection(S, evaluate({ name: "ray", ops: [{ op: "box", min: [e.cx - 4 * e.a - 50, y - 0.5, z - 0.5], max: [e.cx + 4 * e.a + 50, y + 0.5, z + 0.5] }] })).boundingBox(); return bb.min[0] > bb.max[0] ? undefined : dir > 0 ? bb.max[0] : bb.min[0]; };
       const width = (x: number, z: number) => { const bb = Manifold.intersection(S, evaluate({ name: "ray", ops: [{ op: "box", min: [x - 0.5, e.cy - 4 * e.b - 50, z - 0.5], max: [x + 0.5, e.cy + 4 * e.b + 50, z + 0.5] }] })).boundingBox(); return bb.min[1] > bb.max[1] ? 0 : bb.max[1] - bb.min[1]; };
+      const atY = (x: number, z: number, dir: 1 | -1) => { const bb = Manifold.intersection(S, evaluate({ name: "ray", ops: [{ op: "box", min: [x - 0.5, e.cy - 4 * e.b - 50, z - 0.5], max: [x + 0.5, e.cy + 4 * e.b + 50, z + 0.5] }] })).boundingBox(); return bb.min[1] > bb.max[1] ? undefined : dir > 0 ? bb.max[1] : bb.min[1]; };
+      const X = new Set(o.wheels ? f.extras ?? [] : []), rear: { x: number; y: number; z: number }[] = [], strips: { y: number; z: number; s: 1 | -1 }[] = [];
       let light: { x: number; z: number; span: number; kind: "bar" | "eyes" } | undefined, badge: { x: number; y: number; z: number } | undefined;
       // the light: a bar (or two eyes) on the nose, at the silhouette's light line or the nearest free height above the seam
       if (f.light !== "none") for (const dz of [0, 0.1, -0.08, 0.2, 0.3]) {
@@ -395,12 +484,77 @@ export function placeShell(A: Asm, req: ShellRequest, o: PlaceShell): { pieces: 
         const x = at(y, z, -1); if (x === undefined || width(x + 2.5, z) < 44 || !free([x - 3, y - 20, z - 10], [x + 2, y + 20, z + 10])) continue;
         badge = { x, y, z }; break;
       }
-      return { light, badge };
+      // tail lamps: two round red lenses either side of the badge
+      if (X.has("rear")) for (const s of [-1, 1]) {
+        const z = Math.max(e.z0 + 0.45 * e.h, zs + bandH(f, e) + 9), y = e.cy + s * 0.62 * e.b;
+        if (z > e.z0 + 0.9 * e.h) continue;
+        const x = at(y, z, -1); if (x === undefined || !free([x - 3, y - 7, z - 7], [x + 2, y + 7, z + 7])) continue;
+        rear.push({ x, y, z });
+      }
+      // light strips along the flanks, where the flank is flat
+      if (X.has("strips")) for (const s of [-1, 1] as const) {
+        const z = Math.max(e.z0 + Math.min(0.42, 0.8 * PROPORTION[shape].shoulder) * e.h, zs + bandH(f, e) + 7);
+        const ys = [-0.5, 0, 0.5].map((u) => atY(e.cx + u * e.a, z, s));
+        if (ys.some((y) => y === undefined) || Math.max(...(ys as number[])) - Math.min(...(ys as number[])) > 0.4) continue;
+        const y = s > 0 ? Math.min(...(ys as number[])) : Math.max(...(ys as number[]));
+        if (!free([e.cx - 0.5 * e.a, Math.min(y - 2 * s, y + 3 * s), z - 4], [e.cx + 0.5 * e.a, Math.max(y - 2 * s, y + 3 * s), z + 4])) continue;
+        strips.push({ y, z, s });
+      }
+      return { light, badge, rear, strips };
     });
+    for (const [i, r] of place.rear.entries()) {
+      fitted.ops.push({ op: "hole", a: [r.x + 1.2, r.y, r.z], b: [r.x - 40, r.y, r.z], d: 10.6 });
+      emit(`${base}_tail_${i ? "left" : "right"}`, [{ op: "hull", of: [{ op: "rod", a: [r.x + 1.0, r.y, r.z], b: [r.x - 0.8, r.y, r.z], r: 5 }, { op: "rod", a: [r.x + 1.0, r.y, r.z], b: [r.x - 2.0, r.y, r.z], r: 3.6 }] }], "trim_light_red"); trims.push(`${base}_tail_${i ? "left" : "right"}`);
+    }
+    for (const t of place.strips) {
+      const e = fitted.envelope, x0 = e.cx - 0.5 * e.a, x1 = e.cx + 0.5 * e.a, yi = t.y - t.s * 1.0, yo = t.y + t.s * 1.4, name = `${base}_strip_${t.s > 0 ? "left" : "right"}`;
+      fitted.ops.push({ op: "cutbox", min: [x0 - 0.3, Math.min(t.y - t.s * 1.2, t.y + t.s * 40), t.z - 2.8], max: [x1 + 0.3, Math.max(t.y - t.s * 1.2, t.y + t.s * 40), t.z + 2.8] });
+      emit(name, [{ op: "box", min: [x0, Math.min(yi, yo), t.z - 2.5], max: [x1, Math.max(yi, yo), t.z + 2.5], r: 1 }], "trim_light"); trims.push(name);
+    }
+    // a beacon: an amber lens on its boss on the roof
+    const roof = ROOF[shape];
+    if (o.wheels && f.extras?.includes("beacon") && roof && (o.headroom ?? Infinity) >= 17) {
+      const x = e.cx + ((roof.x0 + roof.x1) / 2) * e.a, top = e.z0 + e.h;
+      emit(`${base}_beacon`, [{ op: "hull", of: [{ op: "rod", a: [x, e.cy, top + 3.15], b: [x, e.cy, top + 13], r: 11 }, { op: "rod", a: [x, e.cy, top + 3.15], b: [x, e.cy, top + 17], r: 6.5 }] }], "trim_light_amber"); trims.push(`${base}_beacon`);
+    }
     if (place.light) { const L = lightOps(place.light.kind, place.light.x, e.cy, place.light.z, place.light.span); fitted.ops.push(...L.pocket); emit(`${base}_light`, L.lens, "trim_light"); trims.push(`${base}_light`); }
     if (place.badge) { const B = badgeOps([place.badge.x, place.badge.y, place.badge.z], -1); fitted.ops.push(B.pocket); emit(`${base}_badge`, B.plate, "badge"); trims.push(`${base}_badge`); }
   }
   const fits = (ops: Op[]) => printCheck({ name: "probe", ops }).fits_bed;
+  // paint breaks that follow the body: panels 1.2 mm thick lying on the fairing's surface, printed in the accent and bonded
+  // on (a centre stripe, twin stripes, a bonnet panel or flank panels), cut wherever the fairing itself is cut
+  if (f && pal && detailed && o.trims !== false && !o.wrap && f.paint && f.paint !== "none") {
+    const e = fitted.envelope, shape = req.shape as FairingShape, style = req.style ?? "plain", BIG = 5000;
+    const zlo = skirtZ(shape, e) + bandH(f, e) + 3, cuts = fitted.ops.filter((x) => x.op === "cutbox" || x.op === "hole");
+    const extra = fairingExtras(shape, f, e, o);
+    const skin: Op = { op: "solid", of: [...shapeWorld(req.shape, style, e, -1.3, o.orient), { op: "subtract", of: [...shapeWorld(req.shape, style, e, -0.1, o.orient), ...extra] }] };
+    const only = (lo: Vec3, hi: Vec3): Op[] => [0, 1, 2].flatMap((k) => { const a: Vec3 = [-BIG, -BIG, -BIG], b: Vec3 = [BIG, BIG, BIG], c: Vec3 = [-BIG, -BIG, -BIG], d: Vec3 = [BIG, BIG, BIG]; b[k] = lo[k]; c[k] = hi[k]; return [{ op: "cutbox", min: a, max: b }, { op: "cutbox", min: c, max: d }] as Op[]; });
+    const zl = e.z0 + (PROPORTION[shape].light + 0.14) * e.h, zst = f.light === "none" ? zlo : Math.max(zlo, zl - 0.06 * e.h);   // (stripes start over the light line)
+    // (a lid's handle stands on the centre line: its robot wears its paint on the flanks)
+    const paint = f.cargo && (f.paint === "centre" || f.paint === "twin") ? "flank" : f.paint;
+    const regions: [Vec3, Vec3][] = paint === "centre" ? [[[-BIG, e.cy - 0.2 * e.b, zst], [BIG, e.cy + 0.2 * e.b, BIG]]]
+      : paint === "twin" ? [-1, 1].map((s) => [[-BIG, e.cy + Math.min(s * 0.12, s * 0.3) * e.b, zst], [BIG, e.cy + Math.max(s * 0.12, s * 0.3) * e.b, BIG]] as [Vec3, Vec3])
+      : paint === "bonnet" ? (zl < e.z0 + 0.85 * e.h ? [[[e.cx + 0.3 * e.a, e.cy - 0.8 * e.b, Math.max(zl, zlo)], [BIG, e.cy + 0.8 * e.b, BIG]]] : [])
+      : [-1, 1].map((s) => [[e.cx - 0.55 * e.a, s > 0 ? e.cy + e.b - 6 : -BIG, zlo], [e.cx + 0.55 * e.a, s > 0 ? BIG : e.cy - e.b + 6, Math.max(zlo + 8, e.z0 + 0.6 * PROPORTION[shape].shoulder * e.h)]] as [Vec3, Vec3]);
+    let k = 0;
+    for (const [lo, hi] of regions) for (const p of splitForBed([skin, ...only(lo, hi), ...cuts], e, fits)) {
+      if (printCheck({ name: "probe", ops: p.ops }).volume_cm3 < 0.3) continue;
+      const name = `${base}_paint_${++k}`; emit(name, p.ops, "badge"); trims.push(name);
+    }
+  }
+  if (f && pal && o.panels) {
+    for (const [name, c] of [["shell_trim", pal.trim], ["trim_light", [0.86, 0.95, 1] as const], ["badge", pal.accent]] as const)
+      if (!A.spec.materials.some((m) => m.name === name)) A.spec.materials.push({ name, color: [c[0], c[1], c[2], 1] });
+    const e = fitted.envelope, style = req.style ?? "plain", BIG = 5000, cuts = fitted.ops.filter((x) => x.op === "cutbox" || x.op === "hole");
+    const only = (lo: Vec3, hi: Vec3): Op[] => [0, 1, 2].flatMap((k) => { const a: Vec3 = [-BIG, -BIG, -BIG], b: Vec3 = [BIG, BIG, BIG], c: Vec3 = [-BIG, -BIG, -BIG], d: Vec3 = [BIG, BIG, BIG]; b[k] = lo[k]; c[k] = hi[k]; return [{ op: "cutbox", min: a, max: b }, { op: "cutbox", min: c, max: d }] as Op[]; });
+    for (const q of o.panels(e)) {
+      // (0.1 mm off the surface under it, and off any bump the shell wraps round a part there)
+      const [t0, t1] = q.layer ? [1.4, 2.4] : [0.1, 1.3];
+      const ops: Op[] = [{ op: "solid", of: [...shapeWorld(req.shape, style, e, -t1, o.orient), { op: "subtract", of: [...shapeWorld(req.shape, style, e, -t0, o.orient), ...(fitted.bumps ?? [])] }] }, ...only(q.lo, q.hi), ...cuts];
+      if (printCheck({ name: "probe", ops }).volume_cm3 < 0.05) continue;
+      emit(`${base}_${q.name}`, ops, q.material); trims.push(`${base}_${q.name}`);
+    }
+  }
   let pieces: { name: string; ops: Op[]; material?: string }[];
   if (detailed && o.twoTone !== false) {
     // two tones: the upper body in the body colour, the skirt under the seam in the trim colour, each cut to the bed
