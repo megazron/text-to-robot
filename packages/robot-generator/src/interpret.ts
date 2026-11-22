@@ -23,7 +23,7 @@ import { readShape, shapeChips, oneRobot, type RequestShape } from "./request.ts
 import { readShell, SHELL_FAMILIES, lookKey } from "./shape.ts";
 import { isGalleryPrompt, isGalleryJob } from "./gallery.ts";
 import { chooseFairing, PALETTES, type BodyKind } from "@ttr/design";
-import { KNOWLEDGE } from "./knowledge.ts";
+import { paletteIndex } from "./knowledge.ts";
 import { budgetNotes } from "@ttr/design";
 import { COLOURS as SHELL_COLOURS } from "./text.ts";
 import { builtShape, shapeGaps, type BuiltShape } from "./fidelity.ts";
@@ -257,7 +257,7 @@ function interpretIn(original: string, opts: InterpretOptions): PromptResult {
         [accent, accentName] = !paletteClash(primary, pal.primary) ? [pal.primary, pal.names.primary] : pale ? [[0.25, 0.26, 0.29], "graphite grey"] : [[0.8, 0.81, 0.84], "silver"];
       }
     }
-    else if (jobbed) { const i = choice.knowledge ? KNOWLEDGE.findIndex((k) => k.id === choice.knowledge) : -1; const [p, a, label] = variantPalette(`${choice.knowledge ?? ""}|${job}`, i >= 0 ? i : undefined, job); primary = p; accent = a; body = `custom colour (${label})`; accentName = `custom accent (${label})`; }
+    else if (jobbed) { const i = paletteIndex(choice.knowledge); const [p, a, label] = variantPalette(`${choice.knowledge ?? ""}|${job}`, i >= 0 ? i : undefined, job); primary = p; accent = a; body = `custom colour (${label})`; accentName = `custom accent (${label})`; }
     paintLook(spec, primary, accent, pal.trim);
     (spec.metadata as unknown as Record<string, unknown>).look = { silhouette: styled.shape, preset: styled.fairing.preset, palette: pal.id, hub: styled.fairing.hub, extras: styled.fairing.extras ?? [], paint: styled.fairing.paint ?? "none", ...(styled.fairing.cargo ? { cargo: true } : {}), colours: { body, accent: accentName, trim: pal.names.trim } };
     // a colour named paints the body (an aluminium body powder-coated); the accent parts, the band, the badge and the hub
@@ -277,7 +277,7 @@ function interpretIn(original: string, opts: InterpretOptions): PromptResult {
       const job = jobKey(t, choice.knowledge || choice.path === "general job" ? t : "");
       const clause = /\b(?:that|which|who|to)\s+\S/.test(t);
       if (job && (choice.knowledge || choice.path === "general job" || clause)) {
-        const i = choice.knowledge ? KNOWLEDGE.findIndex((k) => k.id === choice.knowledge) : -1;
+        const i = paletteIndex(choice.knowledge);
         // a table entry sets the hue (the golden angle apart from the other entries), the job's own words move it a little
         const [p, a, label] = variantPalette(`${choice.knowledge ?? ""}|${job}`, i >= 0 ? i : undefined, job); paintRgb(spec, p, a, label);
       }
@@ -346,6 +346,17 @@ const paletteClash = (a: number[], b: number[]) => Math.hypot(a[0] - b[0], a[1] 
 /** What was built, as short chips: "2x 6-DOF arm", "6-wheel rover", "gripper", "camera". */
 function builtChips(b: BuiltShape, choice: Choice, g: GripperKind, spec: RobotSpecification): string[] {
   const chips: string[] = [];
+  if (choice.family === "surgical") {
+    // instrument arms and the camera arm on remote-centre mechanisms, over the trainer box
+    const inst = b.arms.filter((a) => a.prefix !== "camera_arm");
+    if (inst.length) chips.push(`${inst.length}x ${inst[0].dof}-DOF instrument arm (RCM)`);
+    if (b.arms.some((a) => a.prefix === "camera_arm")) chips.push("camera arm (RCM)");
+    if (spec.end_effectors.length) chips.push(`${spec.end_effectors.length}x grasper`);
+    const holder = String((spec.metadata as { design?: { performance?: { instruments?: string } } }).design?.performance?.instruments ?? "").match(/scalpel holder|needle guide|drill guide/);
+    if (holder) chips.push(holder[0]);
+    chips.push("trainer box");
+    return chips;
+  }
   const dofs = b.arms.map((a) => a.dof);
   if (dofs.length && dofs.every((d) => d === dofs[0])) chips.push(`${dofs.length}x ${dofs[0]}-DOF arm`);
   else chips.push(...dofs.map((d) => `1x ${d}-DOF arm`));
@@ -502,7 +513,7 @@ const OTHER_TYPES: { rx: RegExp; what: string; fits: string[] }[] = [
   { rx: new RegExp([RX.wheels.source, RX.diffDrive.source, RX.fourWheel.source, RX.mecanum.source, RX.omni.source, RX.tracked.source].join("|")),
     what: "wheeled base", fits: ["diff_drive", "four_wheel", "mecanum", "rover_arm", "rover", "arduino_car"] },
   // legged bases already report an arm as not applied
-  { rx: RX.arm, what: "arm", fits: ["serial_arm", "rover_arm", "scara", "humanoid", "quadruped", "quadruped_arm", "hexapod", "arduino_arm", "arm_workcell"] },
+  { rx: RX.arm, what: "arm", fits: ["serial_arm", "rover_arm", "scara", "humanoid", "quadruped", "quadruped_arm", "hexapod", "arduino_arm", "arm_workcell", "surgical"] },
 ];
 /** Characters and suits are themed designs; their keywords overlap by design. */
 const THEMED = new Set(["wall_e", "eva", "baymax", "iron_man_mark_43", "exosuit", "battle_mech"]);

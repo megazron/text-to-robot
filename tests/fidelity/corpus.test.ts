@@ -10,7 +10,7 @@ import { LAUNCH, DESIGNED, HOSTILE, generated, type Want } from "./corpus.ts";
 const [shard, shards] = (process.env.TTR_SHARD ?? "1/1").split("/").map(Number);
 const mine = <T,>(xs: T[]) => xs.filter((_, i) => i % shards === shard - 1);
 const FAMILIES = new Set(["serial_arm", "rover_arm", "rover", "arm_workcell", "scara", "gripper", "diff_drive", "four_wheel", "mecanum", "quadruped", "hexapod", "humanoid", "battle_mech",
-  "arduino_car", "arduino_arm", "wall_e", "eva", "baymax", "iron_man_mark_43", "exosuit", "drone", "rov", "gantry", "delta", "snake", "hand", "quadruped_arm"]);
+  "arduino_car", "arduino_arm", "wall_e", "eva", "baymax", "iron_man_mark_43", "exosuit", "drone", "rov", "gantry", "delta", "snake", "hand", "quadruped_arm", "surgical"]);
 const pct = (xs: number[], p: number) => { const s = [...xs].sort((a, b) => a - b); return s[Math.min(s.length - 1, Math.floor(p * s.length))] ?? 0; };
 
 function check(prompt: string, want: Want & { typo?: boolean }, problems: string[], times: number[]) {
