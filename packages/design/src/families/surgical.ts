@@ -232,8 +232,8 @@ function buildArm(A: Assembly, p: ArmPlan, portR: number) {
   if (p.tool === "grasper") {
     A.mount(n("instrument"), tipKey, rel(Wr, Wjs), n("gripper_actuator"), `${p.prefix}: jaws (cable drive)`);
     // fixed jaw on the clevis, the moving jaw on its own pin
-    for (const z of [-1, 1]) wristOps.push(at(Wtip, [{ op: "box", min: [-18, -3.5, z > 0 ? 1.7 : -3.5], max: [-10.5, 3.5, z > 0 ? 3.5 : -1.7] }]));
-    wristOps.push(at(Wtip, [{ op: "box", min: [-32, -3.5, -3.5], max: [-18, -0.8, 3.5], r: 0.6 }, { op: "hole", a: [-14, 0, -5], b: [-14, 0, 5], d: 1.6 }]));
+    for (const z of [-1, 1]) wristOps.push(at(Wtip, [{ op: "box", min: [-18, -3.5, z > 0 ? 1.7 : -3.5], max: [-9.5, 3.5, z > 0 ? 3.5 : -1.7] }]));
+    wristOps.push(at(Wtip, [{ op: "box", min: [-32, -3.5, -3.5], max: [-17.2, -0.8, 3.5] }, { op: "hole", a: [-14, 0, -5], b: [-14, 0, 5], d: 1.6 }]));
     A.printedLink(n("wrist"), { name: n("wrist"), ops: inFrame(Wtip, wristOps) }, { material: "printed_accent" });
     const Wjaw = mul(Wtip, translation(v(-14, 0, 0)));
     A.revolute(n("gripper"), n("wrist"), n("jaw"), rel(Wtip, Wjaw), tipKey, -0.6, 0);
