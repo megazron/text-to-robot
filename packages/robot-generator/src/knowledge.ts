@@ -24,6 +24,31 @@ export interface KnowledgeEntry {
 
 // ---------------------------------------------------------------- tasks
 export const TASKS: KnowledgeEntry[] = [
+  // ---- healthcare and the lab (surgery itself is read by the rules as the surgical robot: families.ts SURGICAL)
+  { id: "pharmacy", kind: "task", rx: /\bpharmac(?:y|ies|ist)\b|\b(?:dispens\w*|sort\w*|pick\w*|count\w*)\s+(?:pills|tablets|medicines?|medications?|prescriptions?|drugs)\b|\bpill\s+(?:dispenser|sorter|counter)\b|\bmedication\s+(?:dispenser|cart)\b/,
+    canonical: "6 dof robot arm with a suction gripper", about: "pharmacy pills tablets medicine prescriptions dispense pick boxes shelves",
+    why: "pharmacy pickers lift medicine boxes from shelves by suction; a bench arm with a suction cup is the buildable version (a dispensing robot handles medicine, so a pharmacist checks every pick)" },
+  { id: "pipetting", kind: "task", rx: /\bpipett\w*|\bliquid[\s-]+handl\w*|\bwell[\s-]?plates?\b|\bmicroplates?\b|\bdispens\w*\s+(?:liquids?|samples?|reagents?)\b/,
+    canonical: "cartesian gantry robot", about: "lab pipette pipetting liquid handling well plate microplate samples reagents",
+    why: "liquid handlers are Cartesian: a pipette on the Z carriage moves over a well plate; the pipette head (a syringe pump) is not designed here, the tool plate takes one" },
+  { id: "lab_samples", kind: "task", rx: /\b(?:lab(?:oratory)?|test[\s-]?tubes?|petri\s+dish\w*|centrifuge\w*|vials?|samples?|specimens?|blood\s+samples?|cuvettes?)\b[\w\s]{0,30}\b(?:robot|arm|automat\w*|sort\w*|handl\w*|mov\w*|load\w*)\b|\blab(?:oratory)?\s+(?:robot|automation|assistant|arm)\b|\bsample\s+(?:sort\w*|handl\w*)\b/,
+    canonical: "6 dof robot arm with a gripper", about: "laboratory lab automation test tubes samples vials petri dish centrifuge sort racks",
+    why: "lab arms move tubes, vials and plates between racks and instruments; a bench arm with a gripper does that at desk scale" },
+  { id: "disinfect", kind: "task", rx: /\b(?:disinfect\w*|steril(?:is|iz)\w*|sanit(?:is|iz)\w*|decontaminat\w*|ultraviolet|uv[\s-]?c?\s+(?:light|lamp|robot|disinfection|steril\w*))\b|\bkills?\s+(?:germs|bacteria|viruses|microbes|pathogens)\b/,
+    canonical: "differential drive robot with a camera", tools: ["camera_mast", "led_panel"], about: "disinfection UV ultraviolet sterilise sanitise germs bacteria hospital room",
+    why: "a wheeled base carries a lamp mast through an empty room; UV-C burns eyes and skin, so the UV lamp and its interlock are not in this design: the mast carries an LED panel where the lamp goes" },
+  { id: "patient_lift", kind: "task", rx: /\bpatient\s+(?:lift\w*|hoist\w*|transfer\w*|mov\w*)\b|\b(?:lift\w*|transfer\w*|carr(?:y|ies|ying))\s+(?:a\s+|the\s+)?(?:patients?|people|persons?|elderly|bedridden)\b/,
+    canonical: "four wheel robot with a camera", tools: ["tray"], about: "patient lift transfer hoist carry people bed wheelchair nursing",
+    why: "lifting a person is the job of a certified patient hoist, which I do not design (a fall injures); the nearest robot I design is a base that carries the things a carer needs" },
+  { id: "rehab", kind: "task", rx: /\brehab\w*|\bphysio(?:therap\w*)?\b|\bphysical\s+therap\w*|\bstroke\s+recovery\b|\bmotor\s+therap\w*/,
+    canonical: "4 dof robot arm", about: "rehabilitation physiotherapy physical therapy stroke recovery exercise arm handle",
+    why: "end-effector rehabilitation robots are arms the patient holds a handle on; forces on a person need certified limits, so this is a training-scaffold body only (for a worn one ask for \"a rehabilitation exoskeleton\")" },
+  { id: "ultrasound", kind: "task", rx: /\bultrasound\b|\bsonograph\w*|\bechocardiog\w*|\bultrasonic\s+(?:scan\w*|imaging|probe)\b/,
+    canonical: "6 dof robot arm with a camera", about: "ultrasound scan probe sonography imaging patient",
+    why: "robotic ultrasound holds the probe on an arm; contact force on a body is safety-critical and not certified by this design, so it scans phantoms only" },
+  { id: "nurse", kind: "task", rx: /\bnurs(?:e|es|ing)\b|\bhospital\b|\bwards?\b|\bcare\s+home\b|\bclinic\b|\bpatients?\b|\belderly\s+care\b|\bhealth\s?care\s+(?:robot|assistant)\b/,
+    canonical: "mobile manipulator rover with an arm", about: "nurse hospital ward patients care home assistant fetch carry help",
+    why: "hospital assistant robots drive the corridors and fetch and carry supplies; a wheeled base with an arm does that (caring for a patient is a person's job, not this robot's)" },
   { id: "water_plants", kind: "task", rx: /\bwater(?:s|ing)?\b[\w\s]{0,24}\b(?:plants?|garden|flowers?|pots?|lawn|seedlings?|herbs?|vegetables?|crops?|tomato(?:es)?|succulents?|orchids?|ferns?|bonsai|trees?|roses?|basil|balcony|terrace|greenhouse)\b|\b(?:irrigat\w*|sprinkl\w*)\b/,
     canonical: "differential drive robot with a camera", tools: ["water_tank", "pump_hose"], about: "water plants garden flowers pots irrigate hose pump watering can",
     why: "a small wheeled base drives to each pot; a pump pushes water from the tank on its deck through a hose to a nozzle" },
@@ -141,6 +166,9 @@ export const TASKS: KnowledgeEntry[] = [
   { id: "massage", kind: "task", rx: /\bmassag\w*\b/,
     canonical: "6 dof robot arm", about: "massage back shoulders",
     why: "a bench arm with a padded tool; force limits on a body are safety-critical and not certified by this design" },
+  { id: "medical", kind: "task", rx: /\bmedical\b|\bmedicine\b|\bhealth\s?care\b|\bdoctors?\b|\bsurgeons?\b/,
+    canonical: "surgical robot", about: "medical robot surgery doctor surgeon healthcare",
+    why: "the robot people mean by a medical robot is the surgical one: instrument arms and a camera arm on remote-centre mechanisms, built as an educational trainer (ask for \"a hospital delivery robot\", \"a lab pipetting robot\" or \"a pharmacy robot\" for the others)" },
 ];
 
 // ---------------------------------------------------------------- objects that are not robots
@@ -220,7 +248,8 @@ export const NAMED: KnowledgeEntry[] = [
   N("curiosity", /\bcuriosity\b|\bperseverance\b|\bopportunity\s+rover\b|\bspirit\s+rover\b|\bsojourner\b|\blunokhod\b|\byutu\b|\bpragyan\b/, "mars rover with an arm and a camera", "a six-wheel planetary rover with a sampling arm"),
   N("ingenuity", /\bingenuity\b|\bdji\b|\bmavic\b|\bphantom\s+drone\b/, "quadcopter drone with a camera", "a small rotorcraft"),
   N("canadarm", /\bcanadarm\b|\bdextre\b/, "7 dof robot arm with a gripper", "a long seven-joint arm"),
-  N("industrial_arms", /\bur[3-9]e?\b|\bur1[06]e?\b|\buniversal\s+robots?\b|\bkuka\b|\bfanuc\b|\babb\s+(?:irb|yumi)\b|\bfranka\b|\bpanda\s+arm\b|\bkinova\b|\bxarm\b|\bso[\s-]?10[01]\b|\bkoch\s+arm\b|\bdobot\b|\bda\s*vinci\b/, "6 dof robot arm with a gripper", "an industrial or research arm"),
+  N("industrial_arms", /\bur[3-9]e?\b|\bur1[06]e?\b|\buniversal\s+robots?\b|\bkuka\b|\bfanuc\b|\babb\s+(?:irb|yumi)\b|\bfranka\b|\bpanda\s+arm\b|\bkinova\b|\bxarm\b|\bso[\s-]?10[01]\b|\bkoch\s+arm\b|\bdobot\b/, "6 dof robot arm with a gripper", "an industrial or research arm"),
+  N("surgical_system", /(?<!\b(?:like|by|of|as|leonardo)\s)\bda\s*vinci\b|\bversius\b|\braven\s+(?:ii|2|robot)\b|\bhugo\s+ras\b/, "surgical robot", "a teleoperated surgical robot: instrument arms and a camera arm on remote-centre mechanisms, built as an educational trainer"),
   N("pepper", /\bpepper\s+(?:robot|humanoid)\b|\btemi\s+robot\b|\bamazon\s+astro\b|\bjibo\b|\banki\s+vector\b|\bvector\s+robot\b|\bcozmo\b|\bemo\s+robot\b|\bloona\b/, "differential drive robot with a camera", "a small home robot on wheels", ["speaker", "led_panel"]),
   N("stretch", /\bhello\s+robot\s+stretch\b|\bstretch\s+(?:re\d|robot)\b|\bpr2\b|\bfetch\s+robot\b|\btiago\b|\bmobile\s+aloha\b/, "mobile manipulator rover with an arm", "a mobile manipulator"),
   N("gundam", /\bgundams?\b|\bmechas?\b|\bjaegers?\b|\bpacific\s+rim\b|\bevangelion\b|\bmegazord\b|\bvoltron\b|\biron\s+giant\b/, "humanoid battle mech with a camera", "a giant piloted humanoid in the films; built as the walking QDD humanoid at buildable size"),

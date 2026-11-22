@@ -45,6 +45,7 @@ DESIGNS = [
     "a 2 dof robot arm", "a 5 dof robot arm with a camera", "a 7 dof robot arm", "an arduino robot arm with sg90 servos", "a cheap arduino car",
     "a quadruped", "a hexapod", "a humanoid robot", "a quadcopter drone with a camera", "a robot that waters my plants", "a robot that delivers packages",
     "a sci-fi robot", "a rugged four wheel robot", "a red 6 dof robot arm",
+    "surgical robot", "surgical robot arm with a scalpel", "a surgical robot with 2 arms", "an endoscope holder robot",
 ]
 CHANGED = [("a 6 wheel rover", ["change to red colour and only 4 wheels"]), ("three 6 dof robot arms on a table", ["remove one arm", "make them blue"])]
 PARTS = "Build a robot from my parts: Arduino Uno, L298N motor driver, 2 TT gear motors, HC-SR04, 4 AA battery holder"

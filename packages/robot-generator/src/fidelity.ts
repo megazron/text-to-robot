@@ -30,13 +30,15 @@ function armPrefix(name: string): string | undefined {
   for (let i = 0; i < n; i++) {
     const a = w[i], tail = n - i;
     if ((a === "shoulder" || a === "elbow" || a === "wrist") && rest(i + 1)) return w.slice(0, i).join("_");
+    // a surgical arm's remote-centre joints, its insertion and its instrument roll
+    if ((a === "rcm" || (a === "insertion" && tail === 1) || (a === "instrument" && w[i + 1] === "roll" && tail === 2)) && rest(i + 1)) return w.slice(0, i).join("_");
     if (tail === 2 && ((a === "base" && w[i + 1] === "yaw") || (a === "forearm" && w[i + 1] === "roll") || (a === "turret" && w[i + 1] === "yaw"))) return w.slice(0, i).join("_");
     if (tail === 3 && a === "upper" && w[i + 1] === "arm" && (w[i + 2] === "roll" || w[i + 2] === "yaw")) return w.slice(0, i).join("_");
   }
   return undefined;
 }
 /** a joint that roots an arm: a shoulder (any shoulder joint), a base yaw or a turret yaw */
-const rootsArm = (name: string) => { const w = name.split("_"), n = w.length, i = w.findIndex((x) => x.startsWith("shoulder")); return (i >= 0 && w.slice(i).every(word)) || (n >= 2 && (w[n - 2] === "base" || w[n - 2] === "turret") && w[n - 1] === "yaw"); };
+const rootsArm = (name: string) => { const w = name.split("_"), n = w.length, i = w.findIndex((x) => x.startsWith("shoulder")); return (i >= 0 && w.slice(i).every(word)) || (n >= 2 && (w[n - 2] === "base" || w[n - 2] === "turret" || w[n - 2] === "rcm") && w[n - 1] === "yaw"); };
 
 export function builtShape(spec: RobotSpecification): BuiltShape {
   const moving = spec.joints.filter((j) => (j.type === "revolute" || j.type === "continuous" || j.type === "prismatic") && !j.mimic && !j.passive);

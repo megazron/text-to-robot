@@ -2,14 +2,14 @@
 import type { RobotSpecification } from "@ttr/robot-schema";
 import type { ArmourShape } from "@ttr/mesh";
 import type { SuitPaint } from "./suit.ts";
-import { designWorkcell, MAX_CELL_ARMS, designArm, designDiffDrive, designFourWheel, designMecanum, designRover, designEva, designBaymax, designArduinoWallE, designMark43Wearable, designArduinoCar, designArduinoArm, designQuadruped, designHexapod, designHumanoid, designBattleMech, designScara, designGripper, designDrone, designGantry, designRov, designSnake, designDelta, designHand, type LeggedRequest } from "@ttr/design";
+import { designSurgical, MAX_SURGICAL_ARMS, type SurgicalTool, designWorkcell, MAX_CELL_ARMS, designArm, designDiffDrive, designFourWheel, designMecanum, designRover, designEva, designBaymax, designArduinoWallE, designMark43Wearable, designArduinoCar, designArduinoArm, designQuadruped, designHexapod, designHumanoid, designBattleMech, designScara, designGripper, designDrone, designGantry, designRov, designSnake, designDelta, designHand, type LeggedRequest } from "@ttr/design";
 import type { SensorType } from "@ttr/robot-schema";
 import { nDofArm, scara, roverArm, wearableExosuit, attachParallelGripper, attachSuctionGripper } from "@ttr/robot-templates";
 import { find, mentions, negates, isDirectlyNegated, extractDofMentions } from "./text.ts";
 const planDof = (t: string) => extractDofMentions(t)[0]?.value;
 import { armTip, replaceGripperWithSuction } from "./grippers.ts";
 import { readKnowledge } from "./reading.ts";
-import { readShape, type RequestShape } from "./request.ts";
+import { readShape, countOf, type RequestShape } from "./request.ts";
 import { readShell, NOT_WHEELED } from "./shape.ts";
 import type { ShellRequest } from "@ttr/design";
 import { PromptRefusal } from "./refusal.ts";
@@ -56,7 +56,7 @@ export const ARM_IT_FITS = /\b(?:for|to\s+fit|that\s+fits)\s+(?:(?:my|an?|the|yo
 export const HAND_REFUSAL = "A hand on its own is built as the five-finger tendon hand; on a robot it is a two-finger gripper.";
 
 /** Weapons and robots meant to hurt: refused whatever body they would have (a glue gun or a heat gun is a tool, not a weapon). */
-export const WEAPONS = /(?<!\b(?:glue|nail|spray|heat|massage|paint|staple|soldering|caulk|caulking|grease|rivet|hot[\s-]glue)\s)\b(?:guns?|rifles?|pistols?|firearms?)\b|\bweapon\w*|\bflame[\s-]?throwers?\b|\bbombs?\b|\bexplosives?\b|\bgrenades?\b|\bmissiles?\b|\btasers?\b|\b(?:kill|stab|shoot|attack|hurt|injure|harm)(?:s|ing)?\s+(?:people|humans?|someone|anyone|persons?|animals?|enemies)\b|\bto\s+(?:kill|stab)\b|\bthat\s+(?:can\s+|will\s+)?kills?\b/;
+export const WEAPONS = /(?<!\b(?:glue|nail|spray|heat|massage|paint|staple|soldering|caulk|caulking|grease|rivet|hot[\s-]glue)\s)\b(?:guns?|rifles?|pistols?|firearms?)\b|\bweapon\w*|\bflame[\s-]?throwers?\b|\bbombs?\b|\bexplosives?\b|\bgrenades?\b|\bmissiles?\b|\btasers?\b|\b(?:kill|stab|shoot|attack|hurt|injure|harm)(?:s|ing)?\s+(?:people|humans?|someone|anyone|persons?|animals?|enemies)\b|\bto\s+(?:kill|stab)\b(?!\s+(?:germs|bacteria|viruses|microbes|pathogens|mou?ld|weeds)\b)|\bthat\s+(?:can\s+|will\s+)?kills?\b(?!\s+(?:germs|bacteria|viruses|microbes|pathogens|mou?ld|weeds)\b)/;
 export const WEAPON_REFUSAL = "Text to Robot does not design weapons or robots meant to hurt people or animals.";
 
 /** Families we do not generate; each says why and what to try instead. */
@@ -80,7 +80,7 @@ export const SPECIAL: { rx: RegExp; family: string; label: string; approx?: (t: 
 /** Kept for tools that list the robot types still refused; every former entry now has a designer. */
 export const UNSUPPORTED: [RegExp, string][] = [];
 
-export const SUPPORTED_HINT = "Try an arm (\"6 DOF arm with a gripper\"), SCARA, gripper, robot hand, wheeled base (differential, four-wheel, mecanum), mobile manipulator, quadruped (with or without an arm), hexapod, humanoid, drone, underwater ROV, snake robot, Cartesian gantry or plotter, delta robot, wearable exosuit or a character (WALL-E, EVA, Baymax, Iron Man).";
+export const SUPPORTED_HINT = "Try an arm (\"6 DOF arm with a gripper\"), SCARA, gripper, robot hand, wheeled base (differential, four-wheel, mecanum), mobile manipulator, quadruped (with or without an arm), hexapod, humanoid, drone, underwater ROV, snake robot, Cartesian gantry or plotter, delta robot, surgical robot (instrument arms on remote-centre mechanisms), wearable exosuit or a character (WALL-E, EVA, Baymax, Iron Man).";
 
 export function gripperRequest(t: string): { kind: GripperKind; explicit: boolean; note?: string } {
   const noGripper = negates(t, /gripper|end[\s-]?effector|claw|hand/) && !mentions(t, /gripper|end[\s-]?effector|claw|suction/);
@@ -137,6 +137,51 @@ export function generalJob(t: string): { id: string; task: string; canonical: st
     why: "the general-purpose body for a job done with things (reach, hold, move, use a tool); the skill itself is software, started from the training scaffold, so say more about the job and I can fit the body to it" };
 }
 
+/** Surgery, and procedures done through a port with an instrument: read as the surgical robot (medical words never trip the
+ *  harm filter: a scalpel or a needle on a surgical arm is a tool, only an intent to hurt someone is refused). */
+export const SURGICAL = /\bsurg(?:ery|eries|ical(?:ly)?|eons?)\b|\b(?:micro|neuro|tele|robo)surg\w*|\blaparoscop\w*|\bminimally[\s-]+invasive\b|\bkeyhole\s+(?:surgery|operation)s?\b|\bda\s*vinci\s+(?:style|like|robot|system|xi|si|surgical)\b|\bscalpels?\b|\bincisions?\b|\bsutur\w*|\boperating\s+(?:room|theatre|theater|table)\b|\btrocars?\b|\bbiops(?:y|ies)\b|\bendoscop\w*|\bneedle\s+(?:insertion|guide|steering|placement|driver)s?\b|\bcatheters?\b|\bstereotac\w*|\b(?:draws?|drawing|take|takes|taking)\s+blood\b|\bblood\s+draw\w*|\bvenipuncture\b|\bphlebotom\w*|\binject(?:s|ion|ions|ing)?\b(?!\s+mou?ld)|\bvaccinat\w*|\bhair\s+transplant\w*|\bdental\s+(?:robot|implant|surgery|drill)s?\b|\bdentist\s+robot\b|\bmedical\s+(?:arm|manipulator)s?\b|\bpatient[\s-]+side\s+cart\b|\bcuts?\s+open\s+(?:a\s+|the\s+)?patients?\b|\boperat(?:e|es|ing)\s+on\s+(?:a\s+|the\s+)?patients?\b/;
+/** one-tool procedures: one instrument arm, not the multi-arm cart */
+const ONE_TOOL = /\bneedle\b|\bbiops|\bcatheter|\binject|\bvaccinat|\bblood\b|\bvenipuncture|\bphlebotom|\bhair\s+transplant|\bdental|\bdentist|\beye\s+surg|\bretina|\bophthalm|\bstereotac|\bneurosurg|\bbrain\s+surg|\borthop(?:a)?edic|\bbone\b|\bspine\b|\bspinal\b/;
+const toolOf = (t: string): SurgicalTool => /\borthop(?:a)?edic|\bbone\b|\bspin(?:e|al)\b|\bdental|\bdentist|\bdrill|\bburr?\b/.test(t) ? "drill" : /\bneedle|\bbiops|\bcatheter|\binject|\bvaccinat|\bblood\b|\bvenipuncture|\bphlebotom|\bhair\s+transplant/.test(t) ? "needle" : /\bscalpels?\b|\bblades?\b|\bknife\b|\bknives\b|\bincisions?\b|\bcut(?:s|ting)?\b|\bdissect/.test(t) ? "blade" : "grasper";
+function surgicalChoice(t: string, matched: string): Choice {
+  const shape = readShape(t), notes: string[] = [];
+  const noCamera = negates(t, /\bcamera|endoscope|scope\b/) || /\b(?:no|without)\s+(?:a\s+|the\s+)?(?:camera|endoscope|scope)\b/.test(t);
+  const askedCam = /\bcamera\s+arm|\bendoscope\s+(?:arm|holder)|\bscope\s+arm|\bcamera\b|\bendoscop/.test(t) && !noCamera;
+  // instrument arms named as such ("3 instrument arms") keep the camera arm beside them
+  const instrumentArms = t.match(/\b(one|two|three|a\s+single|single|1|2|3)\s+(?:surgical\s+|robotic\s+)?(?:instrument|tool|working|operating)\s+arms?\b/);
+  let instruments: number, cameraArm: boolean;
+  if (instrumentArms) { instruments = countOf(instrumentArms[1].replace(/^a\s+/, "")); cameraArm = !noCamera; }
+  else if (shape.arms && !shape.arms.assumed) {
+    const n = shape.arms.count;
+    if (n > MAX_SURGICAL_ARMS) notes.push(`${n} arms: the trainer cart takes ${MAX_SURGICAL_ARMS} arms round its lid (three instruments and the camera), so ${MAX_SURGICAL_ARMS} were built`);
+    const k = Math.max(1, Math.min(MAX_SURGICAL_ARMS, n));
+    cameraArm = !noCamera && (k >= 3 || (k === 2 && askedCam));
+    instruments = cameraArm ? k - 1 : k;
+  } else {
+    // "a surgical arm", "a needle insertion robot", "an eye surgery robot": one instrument arm; the robot itself, the cart
+    const camPhrase = /\b(?:camera|endoscope|scope)\s+(?:arm|holder|holding\s+arm)\b/g, rest = t.replace(camPhrase, " ");
+    const oneArm = /\b(?:surgical|surgery|robotic|medical|instrument|laparoscopic|operating)\s+(?:robot(?:ic)?\s+)?(?:arm|manipulator)\b|\barm\b|\bmanipulator\b/.test(rest) && !/\barms\b/.test(rest);
+    // an endoscope (or camera) holder on its own: one RCM arm that carries the camera
+    const holderOnly = /\b(?:endoscop\w*|laparoscope|camera|scope)\s+(?:holder|holding|positioner)\b|\bendoscop\w*\s+(?:arm|robot)\b/.test(t) && !/\binstruments?\b|\bgraspers?\b|\bscalpel|\bneedle|\bsurgical\s+robot\b|\bsurgery\s+robot\b/.test(t);
+    if (holderOnly && !noCamera) { instruments = 0; cameraArm = true; }
+    else if (oneArm || ONE_TOOL.test(t)) { instruments = 1; cameraArm = askedCam && /\bcamera\s+arm|\bendoscope\s+arm|\bscope\s+arm/.test(t); }
+    else { instruments = 3; cameraArm = !noCamera; }
+  }
+  if (cameraArm && instruments + 1 > MAX_SURGICAL_ARMS) instruments = MAX_SURGICAL_ARMS - 1;
+  if (!cameraArm) instruments = Math.max(1, instruments);
+  const tool = toolOf(t), tools: SurgicalTool[] = Array.from({ length: instruments }, (_, i) => (tool !== "grasper" && i === (instruments >= 3 ? 1 : 0) ? tool : "grasper"));
+  const total = instruments + (cameraArm ? 1 : 0), single = total === 1;
+  if (shape.arms?.dofs.some((d) => d !== undefined)) notes.push(`DOF per arm: a surgical arm's joints are set by its mechanism (RCM yaw, RCM pitch, insertion, roll, wrist and jaws); the DOF asked for is not applied`);
+  if (/\bendoscop/.test(t) && !cameraArm && instruments === 1 && /\bendoscop/.test(matched)) notes.push("an endoscope on its own is built as one RCM arm; for the camera on an arm beside the instruments ask for \"a surgical robot with a camera arm\"");
+  const label = single && cameraArm ? "surgical camera arm (RCM endoscope holder)" : single ? `surgical arm (RCM instrument arm, ${tool === "blade" ? "scalpel holder" : tool === "needle" ? "needle guide" : tool === "drill" ? "drill guide" : "grasper"})` : `surgical robot (${instruments} instrument arm${instruments > 1 ? "s" : ""}${cameraArm ? " + camera arm" : ""})`;
+  notes.push(`${single && cameraArm ? "One camera arm (an endoscope holder)" : single ? "One instrument arm" : `${instruments} instrument arm${instruments > 1 ? "s" : ""}${cameraArm ? " and a camera arm" : ""}`} on remote-centre-of-motion mechanisms over a laparoscopic trainer box: an educational and research model of a surgical robot, not a medical device; it is never to be used on a person or an animal`);
+  if (tool === "blade") notes.push("the scalpel holder is a tool mount only: practise with a marker or a blunt dummy blade");
+  if (tool === "needle") notes.push("the needle guide is a clamp on the wrist for practice on a phantom pad");
+  if (tool === "drill") notes.push("the drill guide is a clamp on the wrist that holds a rotary tool's guide sleeve; the drill is not designed here");
+  return { family: "surgical", label, matched, designed: true, usesGripper: true, approx: notes.join("; "),
+    build: (ctx) => designSurgical({ name: single && cameraArm ? "endoscope_holder" : single ? "surgical_arm" : "surgical_robot", prompt: ctx.prompt, budget: ctx.budget, instruments: tools, camera: cameraArm }) };
+}
+
 export function chooseFamily(t: string, prompt: string, dof: number | undefined, g: GripperKind, heightM?: number, explicitGripper = false, knowledgeHint?: string): Choice {
   // "no camera on my quadruped" negates the camera, not the quadruped: only "not a quadruped" rejects a family
   const hit = (rx: RegExp) => find(t, rx)?.text ?? [...t.matchAll(new RegExp(rx.source, "g"))].find((m) => !isDirectlyNegated(t, m.index!))?.[0];
@@ -161,6 +206,9 @@ export function chooseFamily(t: string, prompt: string, dof: number | undefined,
   if (!wallEIsTheFilm && (m = hit(RX.wallE))) return { family: "wall_e", label: "WALL-E character", matched: m, designed: true, build: (ctx) => designArduinoWallE({ name: "wall_e", prompt: ctx.prompt, budget: ctx.budget }) };
   if ((m = hit(RX.eva))) return { family: "eva", label: "EVA character", matched: m, designed: true, build: (ctx) => designEva({ name: "eva", ...mobileReq(ctx) }) };
   if ((m = hit(RX.baymax))) return { family: "baymax", label: "Baymax character", matched: m, designed: true, build: (ctx) => designBaymax({ name: "baymax", ...mobileReq(ctx) }) };
+  // surgery and the medical procedures done with an instrument through a port: the surgical robot (a multi-arm trainer
+  // cart, or one instrument arm when one arm or one tool is asked for); a snake named with an endoscope stays the snake
+  if ((m = hit(SURGICAL)) && !/\bsnakes?\b|\bserpent/.test(t)) return surgicalChoice(t, m);
   for (const sp of SPECIAL) if ((m = hit(sp.rx))) { const tt = t, a = sp.approx?.(tt); return { family: sp.family, label: sp.label, matched: m, designed: true, ...(a ? { approx: a } : {}), build: (ctx) => sp.build(ctx, tt) }; }
   // a hand is the robot asked for ("a humanoid hand"), or a part of one ("a humanoid with robotic hands", "an arm with a robot hand"):
   // without the hand words, whatever robot is left is the one to build; nothing left means a hand alone, which is refused
@@ -344,7 +392,7 @@ function composed(shape: RequestShape, on: "torso" | "cell" | "mobile" | "quadru
 
 export const ARM_FAMILIES = new Set(["serial_arm", "rover_arm", "scara", "arm_workcell"]);
 /** templates with a generic structural material we may recolour (characters keep their livery) */
-export const RECOLOURABLE = new Set(["drone", "rover", "quadruped_arm", "serial_arm", "rover_arm", "arm_workcell", "scara", "humanoid", "quadruped", "hexapod", "diff_drive", "four_wheel", "mecanum", "gripper", "arduino_car", "arduino_arm"]);
+export const RECOLOURABLE = new Set(["surgical", "drone", "rover", "quadruped_arm", "serial_arm", "rover_arm", "arm_workcell", "scara", "humanoid", "quadruped", "hexapod", "diff_drive", "four_wheel", "mecanum", "gripper", "arduino_car", "arduino_arm"]);
 
 export function standaloneGripper(kind: "parallel" | "suction", prompt: string): RobotSpecification {
   const spec = nDofArm(0, { name: kind === "suction" ? "suction_gripper" : "parallel_gripper", prompt, gripper: "none" });
