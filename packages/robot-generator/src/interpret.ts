@@ -346,6 +346,17 @@ const paletteClash = (a: number[], b: number[]) => Math.hypot(a[0] - b[0], a[1] 
 /** What was built, as short chips: "2x 6-DOF arm", "6-wheel rover", "gripper", "camera". */
 function builtChips(b: BuiltShape, choice: Choice, g: GripperKind, spec: RobotSpecification): string[] {
   const chips: string[] = [];
+  if (choice.family === "surgical") {
+    // instrument arms and the camera arm on remote-centre mechanisms, over the trainer box
+    const inst = b.arms.filter((a) => a.prefix !== "camera_arm");
+    if (inst.length) chips.push(`${inst.length}x ${inst[0].dof}-DOF instrument arm (RCM)`);
+    if (b.arms.some((a) => a.prefix === "camera_arm")) chips.push("camera arm (RCM)");
+    if (spec.end_effectors.length) chips.push(`${spec.end_effectors.length}x grasper`);
+    const holder = String((spec.metadata as { design?: { performance?: { instruments?: string } } }).design?.performance?.instruments ?? "").match(/scalpel holder|needle guide|drill guide/);
+    if (holder) chips.push(holder[0]);
+    chips.push("trainer box");
+    return chips;
+  }
   const dofs = b.arms.map((a) => a.dof);
   if (dofs.length && dofs.every((d) => d === dofs[0])) chips.push(`${dofs.length}x ${dofs[0]}-DOF arm`);
   else chips.push(...dofs.map((d) => `1x ${d}-DOF arm`));
@@ -502,7 +513,7 @@ const OTHER_TYPES: { rx: RegExp; what: string; fits: string[] }[] = [
   { rx: new RegExp([RX.wheels.source, RX.diffDrive.source, RX.fourWheel.source, RX.mecanum.source, RX.omni.source, RX.tracked.source].join("|")),
     what: "wheeled base", fits: ["diff_drive", "four_wheel", "mecanum", "rover_arm", "rover", "arduino_car"] },
   // legged bases already report an arm as not applied
-  { rx: RX.arm, what: "arm", fits: ["serial_arm", "rover_arm", "scara", "humanoid", "quadruped", "quadruped_arm", "hexapod", "arduino_arm", "arm_workcell"] },
+  { rx: RX.arm, what: "arm", fits: ["serial_arm", "rover_arm", "scara", "humanoid", "quadruped", "quadruped_arm", "hexapod", "arduino_arm", "arm_workcell", "surgical"] },
 ];
 /** Characters and suits are themed designs; their keywords overlap by design. */
 const THEMED = new Set(["wall_e", "eva", "baymax", "iron_man_mark_43", "exosuit", "battle_mech"]);
